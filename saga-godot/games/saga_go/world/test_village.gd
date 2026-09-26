@@ -48,6 +48,10 @@ func _ready() -> void:
 	var crossing := preload("res://games/saga_go/world/region6_crossing.gd").new()
 	crossing.name = "Region6Crossing"
 	add_child(crossing)
+	## PLAN 106장 ㊿ — 일곱째 지역 잠긴 도읍(포구 남쪽 바다, 5부 뒤 해무가 걷힘).
+	var sunken := preload("res://games/saga_go/world/region7_sunken.gd").new()
+	sunken.name = "Region7Sunken"
+	add_child(sunken)
 	var era := preload("res://games/saga_go/world/era_sites.gd").new()
 	era.name = "EraSites"
 	add_child(era)
@@ -197,6 +201,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_skyport.gd").new())
 	if OS.get_environment("SAGA_CROSSING_PROBE") != "": # 106장 ㊾ 여섯째 지역 틈새 갈림길
 		add_child(load("res://tools/probe_crossing.gd").new())
+	if OS.get_environment("SAGA_SUNKEN_PROBE") != "": # 106장 ㊿ 일곱째 지역 잠긴 도읍
+		add_child(load("res://tools/probe_sunken.gd").new())
 
 	## PLAN 106장 ㊸ — 업적(다른 노드 신호에 붙으므로 맨 뒤).
 	var achievements := preload("res://games/saga_go/world/achievements.gd").new()
@@ -258,7 +264,7 @@ func _print_density_report() -> void:
 	var test_map := load("res://games/saga_go/data/test_map.gd")
 	var density := load("res://saga_core/world/density_report.gd")
 	var terrain := load("res://games/saga_go/world/terrain_builder.gd")
-	for region_id in ["village", "coast", "ruins", "frost", "skyport", "crossing"]:
+	for region_id in ["village", "coast", "ruins", "frost", "skyport", "crossing", "sunken"]:
 		var origin: Vector3 = test_map.origin_of(region_id)
 		var size: Vector2i = test_map.size(region_id)
 		var tile: float = test_map.tile_size_of(region_id)

@@ -87,6 +87,11 @@ const PATCHES := [
 	["x_mint", "mint", "crossing", Vector2(6.4, 2.6), 2],
 	["x_apple", "apple", "crossing", Vector2(1.3, 4.3), 2],
 	["x_honey", "honey_flower", "crossing", Vector2(6.2, 7.1), 2],
+	## 106장 ㊿ 잠긴 도읍 — 있는 채집물만(바다 것 위주).
+	["u_clam_w", "clam", "sunken", Vector2(1.4, 3.0), 3],
+	["u_conch", "conch", "sunken", Vector2(5.6, 2.8), 2],
+	["u_mint", "mint", "sunken", Vector2(6.6, 1.5), 2],
+	["u_clam_isle", "clam", "sunken", Vector2(6.85, 7.15), 2],
 	["r_ash_se", "ash_flower", "ruins", Vector2(4.8, 5.5), 2],
 ]
 const PATCH_RING_M := 1.4

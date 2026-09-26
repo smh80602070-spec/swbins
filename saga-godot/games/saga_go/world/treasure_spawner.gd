@@ -53,6 +53,12 @@ const CHESTS := [
 	["x_ridge_w", "crossing", Vector2(0.38, 5.0), "exquisite", "none", []],  # (0,5) 서쪽 테두리 산 턱 — 벽 타기
 	["x_camp_fox", "crossing", Vector2(2.05, 2.05), "precious", "camp", []], # 들판 무리 (2,2) 눈여우 둘+매
 	["x_torch_gate", "crossing", Vector2(3.4, 5.3), "luxurious", "torch", ["fire", "fire", "fire"]], # 뒤엉킨 성문 등롱(주인공 혼자서도)
+	## 잠긴 도읍 9×9(106장 ㊿)
+	["u_sand_n", "sunken", Vector2(3.6, 1.3), "common", "none", []],
+	["u_sand_e", "sunken", Vector2(7.4, 3.2), "common", "none", []],
+	["u_islet", "sunken", Vector2(7.15, 7.12), "exquisite", "none", []],      # 등대 바위섬 — 헤엄쳐서
+	["u_camp_turtle", "sunken", Vector2(2.05, 2.05), "precious", "camp", []], # 들판 무리 (2,2) 물거북 둘+매
+	["u_dome", "sunken", Vector2(4.75, 5.85), "luxurious", "none", []],       # 빛 돔 안 마른 바닥 — 22장 뒤 문이 열려야
 ]
 
 

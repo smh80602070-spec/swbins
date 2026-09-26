@@ -37,6 +37,10 @@ const CAMPS := [
 	["crossing", Vector2i(2, 2), ["ice_fox", "ice_fox", "wind_hawk"]],
 	["crossing", Vector2i(6, 4), ["rock_bear", "thunder_cat"]],
 	["crossing", Vector2i(1, 6), ["fire_imp", "fire_imp", "grass_snake"]],
+	## PLAN 106장 ㊿ 잠긴 도읍 — 모래밭에만(바다 칸은 물 밑이라 안 둔다).
+	["sunken", Vector2i(2, 2), ["water_turtle", "water_turtle", "wind_hawk"]],
+	["sunken", Vector2i(5, 1), ["thunder_cat", "thunder_cat"]],
+	["sunken", Vector2i(7, 2), ["water_turtle", "grass_snake", "wind_hawk"]],
 ]
 const SPREAD := 5.0
 

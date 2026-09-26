@@ -38,13 +38,18 @@ func _physics_process(_delta: float) -> void:
 				by_grade[c.grade] = by_grade.get(c.grade, 0) + 1
 				if c.sealed:
 					sealed += 1
-			var ok: bool = chests.size() == 33 and by_grade.get("common", 0) == 13 and by_grade.get("exquisite", 0) == 8 \
-				and by_grade.get("precious", 0) == 7 and by_grade.get("luxurious", 0) == 5 and sealed == 13 # 106장 ㊺ 고원 다섯 · ㊽ 은하 나루 다섯 · ㊾ 틈새 갈림길 다섯 더함
+			var ok: bool = chests.size() == 38 and by_grade.get("common", 0) == 15 and by_grade.get("exquisite", 0) == 9 \
+				and by_grade.get("precious", 0) == 8 and by_grade.get("luxurious", 0) == 6 and sealed == 14 # 106장 ㊺ 고원 다섯 · ㊽ 은하 나루 다섯 · ㊾ 틈새 갈림길 다섯 · ㊿ 잠긴 도읍 다섯 더함
 			_check("chest_count", ok, "n=%d grades=%s sealed=%d" % [chests.size(), by_grade, sealed])
 			var bad: Array = []
 			for c in chests:
 				var y: float = (c as Node3D).global_position.y
-				if c.grade == "exquisite" and c.lock != "target": # 106장 ㊵ 과녁 상자는 모래밭
+				## 106장 ㊿ 잠긴 도읍 — 등대 바위섬 꼭대기(헤엄쳐 가는 정교 상자, 약 3m)·빛 돔 안 마른 바닥(−10)은 제자리 높이로 본다.
+				if c.chest_id == "u_islet" or c.chest_id == "u_dome":
+					var want := 3.0 if c.chest_id == "u_islet" else -10.0
+					if absf(y - want) > 0.6:
+						bad.append("%s y=%.1f" % [c.chest_id, y])
+				elif c.grade == "exquisite" and c.lock != "target": # 106장 ㊵ 과녁 상자는 모래밭
 					if y < 9.0:
 						bad.append("%s y=%.1f" % [c.chest_id, y])
 				elif y < -0.6 or y > 2.5:
@@ -117,7 +122,7 @@ func _physics_process(_delta: float) -> void:
 			add_child(sp)
 			var n := sp.get_child_count()
 			sp.free()
-			_check("persist_skip", n == 31 and TreasureSpawner.opened_count() == 2, "rebuilt=%d opened=%d" % [n, TreasureSpawner.opened_count()])
+			_check("persist_skip", n == 36 and TreasureSpawner.opened_count() == 2, "rebuilt=%d opened=%d" % [n, TreasureSpawner.opened_count()])
 			_next()
 		6:
 			print("TREASURE_PROBE_DONE fails=%d" % _fails)

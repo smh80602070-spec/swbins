@@ -51,8 +51,13 @@ const SPOTS := {
 		"desc": "여러 시대 손님이 두고 간 짐에서 쓸 만한 것을 고른다"},
 	"x_gate": {"region": "crossing", "name": "뒤엉킨 성문 아래", "era": "과거", "element": "rock", "base": {"iron": 2, "mushroom": 1},
 		"desc": "허공에 멈춘 성벽 조각 밑에서 옛 쇠붙이를 줍는다"},
+	## ㊿ 잠긴 도읍 — 현대 해저 연구 기지(수)·과거 잠긴 궁궐(암). 도읍 신상 u_statue 를 켜야 열린다.
+	"u_base": {"region": "sunken", "name": "해저 연구 기지 창고", "era": "현대", "element": "water", "base": {"clam": 2, "ore_s": 1, "polish": 1},
+		"desc": "물이 샌 기지 창고에서 쓸 만한 부품과 조개를 건진다"},
+	"u_palace": {"region": "sunken", "name": "잠긴 궁궐 기단", "era": "과거", "element": "rock", "base": {"iron": 2, "clam": 1},
+		"desc": "물 빠진 틈에 기단 둘레에서 옛 쇠붙이를 줍는다"},
 }
-const ORDER := ["d_road", "d_wood", "d_mudflat", "d_shipyard", "d_quarry", "d_rift", "f_fortress", "f_wreck", "s_depot", "s_temple", "x_stop", "x_gate"]
+const ORDER := ["d_road", "d_wood", "d_mudflat", "d_shipyard", "d_quarry", "d_rift", "f_fortress", "f_wreck", "s_depot", "s_temple", "x_stop", "x_gate", "u_base", "u_palace"]
 
 
 static func spot(id: String) -> Dictionary:

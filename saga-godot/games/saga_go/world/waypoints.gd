@@ -40,6 +40,10 @@ const POINTS := [
 	["x_stop", "crossing", Vector2(4.6, 1.1), false, "첫 정거장"],
 	["x_statue", "crossing", Vector2(4.0, 3.6), true, "갈림길 신상"],
 	["x_stones", "crossing", Vector2(4.1, 7.1), false, "떠 있는 섬돌"],
+	## 106장 ㊿ 잠긴 도읍 — 고개 어귀·모래밭 신상·등대 바위섬(헤엄쳐 와야 켜진다).
+	["u_pass", "sunken", Vector2(1.6, 1.25), false, "도읍 어귀"],
+	["u_statue", "sunken", Vector2(4.0, 2.4), true, "도읍 신상"],
+	["u_light", "sunken", Vector2(6.8, 6.82), false, "옛 등대"],
 ]
 
 const INACTIVE := Color(0.46, 0.5, 0.58)

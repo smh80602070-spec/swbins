@@ -56,6 +56,10 @@ const SHARDS := [
 	["x_peak_w", "crossing", Vector2(0.0, 3.0), "peak"],
 	["x_peak_se", "crossing", Vector2(8.0, 6.0), "peak"],
 	["x_tree_e", "crossing", Vector2(7.0, 3.0), "air"],
+	## 106장 ㊿ 잠긴 도읍
+	["u_peak_w", "sunken", Vector2(0.0, 5.0), "peak"],
+	["u_peak_s", "sunken", Vector2(4.0, 8.0), "peak"],
+	["u_sea", "sunken", Vector2(3.0, 6.0), "water"],
 ]
 
 var _nodes: Dictionary = {} # id → MeshInstance3D
