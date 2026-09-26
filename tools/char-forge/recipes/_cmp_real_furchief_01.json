@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_furchief_01",
- "_note": "단계 3 GO 인물 비교용 — saga-unity Heraklios(Mixamo) 자리 후보(GO '두건·가죽·털 대장', 109-7). 게임 인물 아님. 우람한 중년 남자·얼굴 트인 밤빛 두건·어깨를 덮는 두꺼운 털 망토(잿빛 밤빛)·가죽 조끼·가죽 팔 가리개·짙은 바지·털 감은 장화.",
+ "_note": "단계 3 GO 인물 비교용 — saga-unity Heraklios(Mixamo) 자리 후보(GO '두건·가죽·털 대장', 109-7). 게임 인물 아님. 우람한 중년 남자·얼굴 트인 밤빛 두건·어깨를 덮는 두꺼운 털 망토(잿빛 밤빛)·가죽 조끼·가죽 팔 가리개·짙은 바지·털 감은 장화. 09-27 진짜 옷(바이킹 사슬 윗옷·가죽 치마·바지·털 장화(CC0), 두건 껍데기 그대로 — 어깨 털 망토(윗옷 면 껍데기)는 풍선처럼 부풀어 지웠다).",
  "macro": {
   "gender": 1.0,
   "age": 0.6,
@@ -27,112 +27,6 @@
  "kitbash": [
   {
    "part": "shell",
-   "slot": "cloth",
-   "color": "#5a4a36",
-   "rough": 0.95,
-   "offset": 0.006,
-   "thick": 0.004,
-   "groups": [
-    "spine_0*",
-    "clavicle_*",
-    "pelvis",
-    "neck_01",
-    "upperarm_*",
-    "lowerarm_*"
-   ],
-   "z": [
-    0.44,
-    0.84
-   ],
-   "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "cloth_pants",
-   "color": "#2e2a26",
-   "rough": 0.95,
-   "offset": 0.006,
-   "thick": 0.004,
-   "groups": [
-    "pelvis",
-    "thigh_*",
-    "calf_*"
-   ],
-   "z": [
-    0.02,
-    0.58
-   ],
-   "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "leather",
-   "color": "#4a3222",
-   "rough": 0.7,
-   "offset": 0.016,
-   "thick": 0.007,
-   "groups": [
-    "spine_0*",
-    "pelvis"
-   ],
-   "z": [
-    0.5,
-    0.8
-   ],
-   "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "leather",
-   "color": "#4a3222",
-   "rough": 0.7,
-   "offset": 0.012,
-   "thick": 0.005,
-   "groups": [
-    "lowerarm_*"
-   ],
-   "minw": 0.7
-  },
-  {
-   "part": "shell",
-   "slot": "cloth_fur",
-   "color": "#6b5c48",
-   "rough": 1.0,
-   "offset": 0.045,
-   "thick": 0.02,
-   "groups": [
-    "spine_03",
-    "spine_02",
-    "clavicle_*",
-    "upperarm_*",
-    "neck_01"
-   ],
-   "z": [
-    0.7,
-    0.88
-   ],
-   "minw": 0.35
-  },
-  {
-   "part": "shell",
-   "slot": "cloth_fur",
-   "color": "#6b5c48",
-   "rough": 1.0,
-   "offset": 0.02,
-   "thick": 0.012,
-   "groups": [
-    "foot_*",
-    "ball_*",
-    "calf_*"
-   ],
-   "z": [
-    0.0,
-    0.2
-   ],
-   "minw": 0.3
-  },
-  {
-   "part": "shell",
    "slot": "cloth_hood",
    "color": "#3e2e20",
    "rough": 0.9,
@@ -153,5 +47,10 @@
   "attack": "Sword_Attack",
   "hit": "Hit_Chest",
   "death": "Death01"
- }
+ },
+ "clothes": [
+  "rehmanpolanski_viking_tunic/rehmanpolanski_viking_tunic.mhclo",
+  "rehmanpolanski_viking_pants/rehmanpolanski_viking_pants.mhclo",
+  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
+ ]
 }

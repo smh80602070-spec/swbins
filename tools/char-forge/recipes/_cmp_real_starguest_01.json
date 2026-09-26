@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_starguest_01",
- "_note": "단계 3 STORY 비교용 — saga-unity Mremireh(Mixamo) 자리 후보(STORY 미래 '별바다 손님', 비경 3~4층, 키 1.05배). 게임 인물 아님. 크고 가는 외계 무인 — 짙은 쪽빛 피부·민머리·길고 뾰족한 귀·뒤로 누운 짧은 뿔 둘·먹보라 몸 옷·금빛 가슴판·어깨판·팔 가리개. 별 너머 방문자(큰 머리·더듬이·은빛)와 겹치지 않게.",
+ "_note": "단계 3 STORY 비교용 — saga-unity Mremireh(Mixamo) 자리 후보(STORY 미래 '별바다 손님', 비경 3~4층, 키 1.05배). 게임 인물 아님. 크고 가는 외계 무인 — 짙은 쪽빛 피부·민머리·길고 뾰족한 귀·뒤로 누운 짧은 뿔 둘·먹보라 몸 옷·금빛 가슴판·어깨판·팔 가리개. 별 너머 방문자(큰 머리·더듬이·은빛)와 겹치지 않게. 09-27 진짜 옷(먹보라 염색 몸 옷·금빛 염색 가디언 판·민 장화(CC0), 뿔 그대로 — 공방 가슴판은 상자처럼 보여 안 씀).",
  "macro": {
   "gender": 1.0,
   "age": 0.4,
@@ -27,7 +27,9 @@
   "measure-neck-height-incr": 0.5
  },
  "tints": {
-  "skin": "#6f7fc4"
+  "matcreator_mc-skinsuit_2022": "=#2a2238",
+  "matcreator_mc-scifi-armor_guardian": "=#b08a3a",
+  "culturalibre_hero_boots_2": "=#1a1522"
  },
  "kitbash": [
   {
@@ -36,90 +38,6 @@
    "radius": 0.018,
    "curl": 0.5,
    "color": "#1e2233"
-  },
-  {
-   "part": "shell",
-   "slot": "cloth",
-   "color": "#2a2238",
-   "rough": 0.85,
-   "offset": 0.004,
-   "thick": 0.003,
-   "groups": [
-    "pelvis",
-    "spine_0*",
-    "clavicle_*",
-    "upperarm_*",
-    "lowerarm_*",
-    "thigh_*",
-    "calf_*",
-    "neck_01"
-   ],
-   "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "leather",
-   "color": "#1a1522",
-   "rough": 0.65,
-   "offset": 0.014,
-   "thick": 0.005,
-   "groups": [
-    "foot_*",
-    "ball_*",
-    "calf_*"
-   ],
-   "z": [
-    0.0,
-    0.22
-   ],
-   "minw": 0.3
-  },
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#b08a3a",
-   "rough": 0.3,
-   "offset": 0.018,
-   "thick": 0.006,
-   "groups": [
-    "spine_01",
-    "spine_02",
-    "spine_03"
-   ],
-   "z": [
-    0.54,
-    0.8
-   ],
-   "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#b08a3a",
-   "rough": 0.3,
-   "offset": 0.026,
-   "thick": 0.006,
-   "groups": [
-    "upperarm_*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.74,
-    0.86
-   ],
-   "minw": 0.4
-  },
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#b08a3a",
-   "rough": 0.3,
-   "offset": 0.014,
-   "thick": 0.005,
-   "groups": [
-    "lowerarm_*"
-   ],
-   "minw": 0.7
   }
  ],
  "anims": {
@@ -129,5 +47,10 @@
   "attack": "Sword_Attack",
   "hit": "Hit_Chest",
   "death": "Death01"
- }
+ },
+ "clothes": [
+  "matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
+  "matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
+  "culturalibre_hero_boots_2/culturalibre_hero_boots_2.mhclo"
+ ]
 }

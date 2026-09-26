@@ -9561,3 +9561,13 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 판별 헤드리스(GO·DUNGEON·FOREST·STORY·흐름)는 이 PC 에서 Missing Prefab 로 FAIL — 변경을 빼고 돌린 기준선도 같은 실패(GO 소품 등불·스킬 모양 몸, DUNGEON 컷·무기 칼날, STORY 무명 옷)라 환경 탓. REALM 헤드리스 OK. 묶음 있는 PC 에서 다시 돌릴 것.
 - 점검기 보탬: 세션 정리 카드는 모달(REALM "다음 달"에 정산 알림과 같이 뜬다 — 카드가 5초 덮음) · 단추 없이 저절로 닫히는 카드는 6초 기다림(전엔 "못 닫음"). 결과 3연속 OK: 문제 0 · 패널 40 · 속 패널 7 · 상태 38(영어 바퀴 한글은 국지 문답 사자성어 — 무작위 문제라 수가 바뀜).
 - 남음: ⑥ 마감. 실기: 결투 화면 새 자리·DUNGEON/STORY 대사 줄 아래쪽·지역 배너.
+
+## 2026-09-27 char-forge — 남은 껍데기 17 → 진짜 옷 (몸 껍데기 0)
+
+"남은 껍데기 옷 17개 진짜 옷으로 바꿔".
+
+- 레시피 17(Archer·Eve·Heraklios·Dreyar·Arissa·Kachujin·Sophie·Y Bot·X Bot·Dummy·Mannequin·Yaku·Mremireh·Zlorp·Demon·Ganfaul·Maw 자리): 몸 껍데기 → CC0 옷(skinsuit·heroine 몸 옷·바이킹 윗옷/바지·수도복+진짜 두건·toigo 민소매/층 치마/더블 정장·SF 판금 곱하기 색) + 공방 `dopo` 색 변형·새 틀 `breastplate`·`guards`. 인형 머리·눈 띠·투구·두건·띠·베레모 껍데기는 그대로.
+- garments.py: 틀 +2(`breastplate` 맨몸 가슴판·어깨판, `guards` 어깨판·팔 가리개·정강이) + 소매 `start`(팔 가리개). `start` 가 없으면 칸 수가 예전 그대로 — 찰갑을 다시 지어 .obj·.mhclo md5 같음.
+- 렌더로 세 번 고침: 새로 지은 공방 판금 온몸·유격복·가죽 기사·몸 옷 위 가슴판·다리 판·트렌치(officer_coat)는 모두 자루·상자처럼 부풀어 버리고 CC0 로 · 짙은 `=#` 염색은 거친 그림(bodysuit·헬리오스·털 단 장화)을 털처럼 만들어 skinsuit·곱하기 색 · 털 망토 `src` 껍데기는 풍선이라 지움 · 뜨개 윗옷은 여자 몸에서 살이 뚫어(체형 바꿔도 같음) 몸 옷으로 · skinsuit 발이 해적 장화를 뚫어 heroine 장화로.
+- 검사: 빌드 17 실패 0, verify fbx·glb 실패 0(팔다리 ≤ 0.67°·땅 ≤ 2.5mm), 두 번 빌드 glb sha256 17/17 같음.
+- 남은 흠: 빈칸(가죽 기사 은 어깨판·겉옷판, 검은 기사 망토, 유격 가죽 조끼, 사진작가 목폴라, 별바다 손님 가슴판) · 판금 옷이 SF 셋뿐이라 판금 입은 사람·인형 실루엣이 겹침 · `_cmp_real_courier_f_01` 도 같은 뜨개 윗옷이라 살 뚫림 확인할 것. CharactersForge FBX 는 아직 옛 판(Unity 쉴 때 §3 ⑥~⑧) → 그 뒤 사용자 판정.

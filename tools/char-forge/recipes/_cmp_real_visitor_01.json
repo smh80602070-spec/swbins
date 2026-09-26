@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_visitor_01",
- "_note": "단계 3 잡졸 비교용 — saga-unity Zlorp(Mixamo) 자리 후보(DUNGEON 미래 '별 너머 방문자', 층 50~). 게임 인물 아님. 가는 몸·큰 머리·큰 눈·민머리·옅은 잿빛 초록 피부·가는 더듬이 둘·은빛 몸 옷.",
+ "_note": "단계 3 잡졸 비교용 — saga-unity Zlorp(Mixamo) 자리 후보(DUNGEON 미래 '별 너머 방문자', 층 50~). 게임 인물 아님. 가는 몸·큰 머리·큰 눈·민머리·옅은 잿빛 초록 피부·가는 더듬이 둘·은빛 몸 옷. 09-27 진짜 옷(은빛 염색 몸 옷·장갑·민 장화(CC0 — bodysuit·털 단 장화는 털처럼 보여 skinsuit·민 장화), 더듬이 그대로).",
  "macro": {
   "gender": 0.5,
   "age": 0.3,
@@ -28,7 +28,9 @@
  },
  "skin": "young_caucasian_female/young_caucasian_female.mhmat",
  "tints": {
-  "skin": "#a8bca4"
+  "matcreator_mc-skinsuit_2022": "=#8a9098",
+  "culturalibre_hero-heroine_gloves_1": "=#8a9098",
+  "culturalibre_hero_boots_2": "=#8a9098"
  },
  "eyes": "high-poly/high-poly.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
@@ -39,33 +41,6 @@
    "radius": 0.006,
    "curl": 0.15,
    "color": "#8aa08a"
-  },
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#b8bec6",
-   "rough": 0.3,
-   "offset": 0.004,
-   "thick": 0.003,
-   "groups": [
-    "pelvis",
-    "spine_0*",
-    "clavicle_*",
-    "upperarm_*",
-    "lowerarm_*",
-    "thigh_*",
-    "calf_*",
-    "neck_01",
-    "hand_*",
-    "index_*",
-    "middle_*",
-    "ring_*",
-    "pinky_*",
-    "thumb_*",
-    "foot_*",
-    "ball_*"
-   ],
-   "minw": 0.5
   }
  ],
  "anims": {
@@ -75,5 +50,10 @@
   "attack": "Spell_Simple_Shoot",
   "hit": "Hit_Chest",
   "death": "Death01"
- }
+ },
+ "clothes": [
+  "matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
+  "culturalibre_hero-heroine_gloves_1/culturalibre_hero-heroine_gloves_1.mhclo",
+  "culturalibre_hero_boots_2/culturalibre_hero_boots_2.mhclo"
+ ]
 }

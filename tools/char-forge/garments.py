@@ -6,7 +6,7 @@
 껍데기(shell)와 다른 점: 살을 복제해 띄우지 않고 **옷의 모양을 따로 짓는다**. 옷 하나 = 부품 여럿(`parts`):
   tube    몸통 통 — 위(목·가슴·허리)에서 아래(발목·무릎·엉덩이)까지. 가랑이 아래는 치마 도우미(helper-skirt)에 붙어 다리 사이가 안 갈라진다.
           `over` 만큼 밖에 겹쳐 입는다(저고리 위 치마 끝, 갑옷 위 비늘 치마). `mono` 면 아래로 좁아지지 않는다(가슴에서 시작하는 치마).
-  sleeves 소매 — `length` 팔 몫(1 = 손목, 0.35 = 어깨 갑옷), `drop` 처짐, `flare` 끝 넓힘
+  sleeves 소매 — `length` 팔 몫(1 = 손목, 0.35 = 어깨 갑옷), `start` 시작(0.6 = 팔꿈치 아래 팔 가리개, 윗팔 살은 안 지운다), `drop` 처짐, `flare` 끝 넓힘
           `arc`(도) = 팔 바깥쪽만 두르는 판(소데), `bag` = 팔꿈치부터 네모나게 늘어진 자루(기모노)
   band    띠 — 그 높이 통 둘레 바깥
   leggings 다리 통(정강이 가리개·바지) · discs 가슴 둥근 판(호심경) · bow 등 매듭(오비) · sash 비스듬한 띠(토가)
@@ -370,6 +370,23 @@ GARMENTS = {
         dict(kind='helmet', ease=0.02, knob=False, dome=0.03, slot=0, paint=dict(base='C1', pattern='plate')),
         dict(kind='neckguard', drop=0.15, flare=0.45, open=60, slot=1, paint=dict(base='C1', pattern='mail')),
     ]),
+    # ---- 맨몸 괴물 쇠붙이(남은 껍데기 17, 09-27) ----
+    # 쇠 가슴판·어깨판 — 맨몸 괴물 두목(가슴·어깨만)
+    'breastplate': dict(desc='쇠 가슴판·어깨판(맨몸 위)', tags=['armor', 'monster'], colors=dict(C1='#6b5646', C2='#3a2a1e'), parts=[
+        dict(kind='tube', top=('shoulder', -0.05), bottom=('waist', -0.03), ease=0.02, slot=0,
+             paint=dict(base='C1', pattern='plate', trims=[('top', 0.014, 'C2'), ('bottom', 0.014, 'C2')])),
+        dict(kind='sleeves', length=0.32, ease=0.03, over=0.02, flare=0.5, arc=200, cuff=0.0, slot=4,
+             paint=dict(base='C1', pattern='plate', trims=[('top', 0.02, 'C2')])),
+    ]),
+    # 어깨판·팔 가리개·정강이 가리개 — 맨몸 괴물(허리 천은 kitbash loincloth)
+    'guards': dict(desc='쇠 어깨판·팔 가리개·정강이 가리개(맨몸 위)', tags=['armor', 'monster'], colors=dict(C1='#2f3034', C2='#141416'), parts=[
+        dict(kind='sleeves', length=0.32, ease=0.03, over=0.02, flare=0.5, arc=200, cuff=0.0, slot=4,
+             paint=dict(base='C1', pattern='plate', trims=[('top', 0.02, 'C2')])),
+        dict(kind='sleeves', start=0.6, length=0.96, ease=0.016, flare=0.12, cuff=0.0, slot=2,
+             paint=dict(base='C1', pattern='plate', trims=[('top', 0.012, 'C2')])),
+        dict(kind='leggings', top=('knee', -0.02), bottom=('ankle', 0.04), ease=0.014, flare=0.1, slot=5,
+             paint=dict(base='C1', pattern='plate', trims=[('top', 0.015, 'C2')])),
+    ]),
     # 상투 — 빗어 올린 머리·망건·상투(갓 없는 선비·무장). 머리카락 메시 대신이다
     'sangtu': dict(desc='빗어 올린 머리·망건·상투', tags=['hair', 'historical', 'east'], colors=dict(C1='#1b1512'), parts=[
         dict(kind='hairdome', front=0.055, side=0.015, back=-0.03, ease=0.0045, slot=0, paint=dict(base='C1', pattern='sleek')),
@@ -584,11 +601,12 @@ class Builder:
             L1, L2 = (E - S).length, (Wr - E).length
             L = L1 + L2
             tend = p.get('length', 1.0) + p.get('cuff', 0.0) / L
-            NT = max(4, int(16 * tend))
+            t0 = p.get('start', 0.02)           # 팔 가리개 = 팔꿈치 아래부터(start 0.6)
+            NT = max(4, int(16 * (tend - t0 if 'start' in p else tend)))   # start 없으면 예전 칸 수 그대로
             down = Vector((0, 0, -1))
             rows, refs = [], []
             for k in range(NT + 1):
-                t = 0.02 + (tend - 0.02) * k / NT
+                t = t0 + (tend - t0) * k / NT
                 d = t * L
                 if d <= L1:
                     P, dirv = S + (E - S) * (d / L1), (E - S).normalized()
@@ -627,7 +645,8 @@ class Builder:
                 refs.append(P)
             # 소매 격자는 둘레 방향이 반대(안쪽을 보게 지어진다) — 기준점으로 뒤집는다
             self.grid(rows, p['slot'], refs, closed=not arc)
-        self.cover.append(('sleeves', p.get('length', 1.0)))
+        if t0 <= 0.05:                          # 팔 가리개 밑 윗팔 살은 드러나니 지우지 않는다
+            self.cover.append(('sleeves', p.get('length', 1.0)))
 
     def band(self, p):
         B = self.B

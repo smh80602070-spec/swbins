@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_plasma_01",
- "_note": "단계 3 STORY 비교용 — saga-unity Yaku(Mixamo) 자리 후보(STORY 미래 '플라즈마 변이체', 비경 5층~, 키 1.05배). 게임 인물 아님. 우람한 변이체 — 자줏빛 피부·민머리·굵은 목·어깨·등·팔에 반쯤 묻힌 청록 플라즈마 혹·찢긴 먹빛 바지·맨발. 포자괴물(마른 몸·누런 혹)과 겹치지 않게.",
+ "_note": "단계 3 STORY 비교용 — saga-unity Yaku(Mixamo) 자리 후보(STORY 미래 '플라즈마 변이체', 비경 5층~, 키 1.05배). 게임 인물 아님. 우람한 변이체 — 자줏빛 피부·민머리·굵은 목·어깨·등·팔에 반쯤 묻힌 청록 플라즈마 혹·찢긴 먹빛 바지·맨발. 포자괴물(마른 몸·누런 혹)과 겹치지 않게. 09-27 진짜 옷(먹빛 염색 가죽 바지(CC0), 플라즈마 혹 그대로·맨발).",
  "macro": {
   "gender": 1.0,
   "age": 0.45,
@@ -26,7 +26,7 @@
   "ear-scale-decr": 0.5
  },
  "tints": {
-  "skin": "#b88ab8"
+  "rehmanpolanski_viking_pants": "=#1c1a24"
  },
  "kitbash": [
   {
@@ -37,24 +37,6 @@
     0.032
    ],
    "color": "#3fe0e8"
-  },
-  {
-   "part": "shell",
-   "slot": "cloth_pants",
-   "color": "#1c1a24",
-   "rough": 0.95,
-   "offset": 0.006,
-   "thick": 0.004,
-   "groups": [
-    "pelvis",
-    "thigh_*",
-    "calf_*"
-   ],
-   "z": [
-    0.18,
-    0.58
-   ],
-   "minw": 0.5
   }
  ],
  "anims": {
@@ -64,5 +46,8 @@
   "attack": "Punch_Cross",
   "hit": "Hit_Chest",
   "death": "Death01"
- }
+ },
+ "clothes": [
+  "rehmanpolanski_viking_pants/rehmanpolanski_viking_pants.mhclo"
+ ]
 }

@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_steelbot_01",
- "_note": "단계 3 잡졸 비교용 — saga-unity Y Bot(Mixamo) 자리 후보(DUNGEON 미래 '강철 인형 병정', 층 25~49). 게임 인물 아님. 큰 강철 인형 — 온몸 검은 쇠 껍데기 위 가슴판·넓은 어깨판·팔·정강이 판, 얼굴 없는 투구에 붉은 눈 띠(앞). 시험 기동 인형(흰·주황)과 겹치지 않게.",
+ "_note": "단계 3 잡졸 비교용 — saga-unity Y Bot(Mixamo) 자리 후보(DUNGEON 미래 '강철 인형 병정', 층 25~49). 게임 인물 아님. 큰 강철 인형 — 온몸 검은 쇠 껍데기 위 가슴판·넓은 어깨판·팔·정강이 판, 얼굴 없는 투구에 붉은 눈 띠(앞). 시험 기동 인형(흰·주황)과 겹치지 않게. 09-27 진짜 옷(먹빛 염색 몸 옷·잿빛으로 곱한 헬리오스 판금(염색은 결이 털처럼 거칠어 곱하기)·장갑·민 장화(CC0), 얼굴 없는 쇠 머리·붉은 눈 띠 껍데기 그대로 — bodysuit 는 짙게 염색하면 털처럼 거칠어 skinsuit).",
  "macro": {
   "gender": 1.0,
   "age": 0.4,
@@ -25,86 +25,10 @@
    "offset": 0.008,
    "thick": 0.005,
    "groups": [
-    "pelvis",
-    "spine_0*",
-    "clavicle_*",
-    "upperarm_*",
-    "lowerarm_*",
-    "thigh_*",
-    "calf_*",
-    "neck_01",
-    "hand_*",
-    "index_*",
-    "middle_*",
-    "ring_*",
-    "pinky_*",
-    "thumb_*",
-    "foot_*",
-    "ball_*",
-    "head"
+    "head",
+    "neck_01"
    ],
    "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "metal_plate",
-   "color": "#5a5f66",
-   "rough": 0.3,
-   "offset": 0.026,
-   "thick": 0.008,
-   "groups": [
-    "spine_0*",
-    "pelvis"
-   ],
-   "z": [
-    0.52,
-    0.8
-   ]
-  },
-  {
-   "part": "shell",
-   "slot": "metal_plate",
-   "color": "#5a5f66",
-   "rough": 0.3,
-   "offset": 0.038,
-   "thick": 0.009,
-   "groups": [
-    "upperarm_*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.72,
-    0.87
-   ],
-   "minw": 0.35
-  },
-  {
-   "part": "shell",
-   "slot": "metal_plate",
-   "color": "#5a5f66",
-   "rough": 0.3,
-   "offset": 0.02,
-   "thick": 0.006,
-   "groups": [
-    "lowerarm_*"
-   ],
-   "minw": 0.75
-  },
-  {
-   "part": "shell",
-   "slot": "metal_plate",
-   "color": "#5a5f66",
-   "rough": 0.3,
-   "offset": 0.022,
-   "thick": 0.006,
-   "groups": [
-    "calf_*"
-   ],
-   "z": [
-    0.1,
-    0.27
-   ],
-   "minw": 0.7
   },
   {
    "part": "shell",
@@ -131,5 +55,17 @@
   "attack": "Sword_Attack",
   "hit": "Hit_Chest",
   "death": "Death01"
+ },
+ "clothes": [
+  "matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
+  "matcreator_mc-scifi-armor_helios/matcreator_mc-scifi-armor_helios.mhclo",
+  "culturalibre_hero-heroine_gloves_1/culturalibre_hero-heroine_gloves_1.mhclo",
+  "culturalibre_hero_boots_2/culturalibre_hero_boots_2.mhclo"
+ ],
+ "tints": {
+  "matcreator_mc-skinsuit_2022": "=#3b3f45",
+  "matcreator_mc-scifi-armor_helios": "#6a7078",
+  "culturalibre_hero-heroine_gloves_1": "=#3b3f45",
+  "culturalibre_hero_boots_2": "=#3b3f45"
  }
 }

@@ -1,25 +1,67 @@
 {
  "id": "_cmp_real_maw_01",
- "_note": "단계 3 두목 비교용 — saga-unity Maw(Mixamo) 자리 후보(GO 망루 수호장 107-7). 게임 인물 아님(이름 없음). 가장 큰 살찐 근육 몸·잿빛 보랏빛 피부·민머리·아래로 튀어나온 큰 턱·큰 입·긴 엄니·작은 눈·녹슨 쇠 가슴판·어깨판·허리 천.",
- "macro": {"gender": 1.0, "age": 0.55, "muscle": 1.0, "weight": 1.0, "height": 1.0, "proportions": 0.3,
-           "race": {"asian": 0.3, "caucasian": 0.4, "african": 0.3}},
- "targets": {"chin-prognathism-incr": 1.0, "chin-width-incr": 1.0, "chin-jaw-drop-incr": 0.6, "mouth-scale-horiz-incr": 1.0,
-             "mouth-lowerlip-volume-incr": 0.6, "eye-scale-decr": 0.5, "eyebrows-trans-down": 0.8, "forehead-nubian-incr": 0.5,
-             "head-scale-horiz-incr": 0.4, "head-back-scale-depth-decr": 0.4, "neck-scale-horiz-incr": 1.0, "neck-double-incr": 0.6,
-             "nose-scale-horiz-incr": 0.5, "torso-scale-horiz-incr": 0.5},
+ "_note": "단계 3 두목 비교용 — saga-unity Maw(Mixamo) 자리 후보(GO 망루 수호장 107-7). 게임 인물 아님(이름 없음). 가장 큰 살찐 근육 몸·잿빛 보랏빛 피부·민머리·아래로 튀어나온 큰 턱·큰 입·긴 엄니·작은 눈·녹슨 쇠 가슴판·어깨판·허리 천. 09-27 진짜 옷(녹슨 쇠 가슴판·어깨판(공방 breastplate), 엄니·허리 천 그대로).",
+ "macro": {
+  "gender": 1.0,
+  "age": 0.55,
+  "muscle": 1.0,
+  "weight": 1.0,
+  "height": 1.0,
+  "proportions": 0.3,
+  "race": {
+   "asian": 0.3,
+   "caucasian": 0.4,
+   "african": 0.3
+  }
+ },
+ "targets": {
+  "chin-prognathism-incr": 1.0,
+  "chin-width-incr": 1.0,
+  "chin-jaw-drop-incr": 0.6,
+  "mouth-scale-horiz-incr": 1.0,
+  "mouth-lowerlip-volume-incr": 0.6,
+  "eye-scale-decr": 0.5,
+  "eyebrows-trans-down": 0.8,
+  "forehead-nubian-incr": 0.5,
+  "head-scale-horiz-incr": 0.4,
+  "head-back-scale-depth-decr": 0.4,
+  "neck-scale-horiz-incr": 1.0,
+  "neck-double-incr": 0.6,
+  "nose-scale-horiz-incr": 0.5,
+  "torso-scale-horiz-incr": 0.5
+ },
  "skin": "middleage_caucasian_male/middleage_caucasian_male.mhmat",
- "tints": {"skin": "#9d92a6"},
+ "tints": {
+  "skin": "#9d92a6"
+ },
  "eyes": "high-poly/high-poly.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "kitbash": [
-  {"part": "tusks", "length": 0.07, "radius": 0.013, "color": "#e3d6b2"},
-  {"part": "shell", "slot": "metal", "color": "#6b5646", "rough": 0.6, "offset": 0.02, "thick": 0.008,
-   "groups": ["spine_01", "spine_02", "spine_03"], "z": [0.55, 0.8], "facing": -0.1},
-  {"part": "shell", "slot": "metal", "color": "#6b5646", "rough": 0.6, "offset": 0.028, "thick": 0.008,
-   "groups": ["upperarm_*", "clavicle_*"], "z": [0.73, 0.86], "minw": 0.4},
-  {"part": "loincloth", "color": "#3b3326", "length": 0.65}
+  {
+   "part": "tusks",
+   "length": 0.07,
+   "radius": 0.013,
+   "color": "#e3d6b2"
+  },
+  {
+   "part": "loincloth",
+   "color": "#3b3326",
+   "length": 0.65
+  }
  ],
- "anims": {"idle": "Sword_Idle", "walk": "Walk_Loop", "run": "Jog_Fwd_Loop", "attack": "Sword_Attack",
-           "hit": "Hit_Chest", "death": "Death01"}
+ "anims": {
+  "idle": "Sword_Idle",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01"
+ },
+ "_garments": [
+  "breastplate"
+ ],
+ "clothes": [
+  "cf_breastplate/cf_breastplate.mhclo"
+ ]
 }

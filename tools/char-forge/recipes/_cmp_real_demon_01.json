@@ -1,28 +1,72 @@
 {
  "id": "_cmp_real_demon_01",
- "_note": "단계 3 두목 비교용 — saga-unity Demon(Mixamo) 자리 후보(DUNGEON 층 주인 lord). 게임 인물 아님(이름 없음). 가장 큰 근육 몸·검붉은 피부·길게 말린 뿔 둘·뾰족 긴 귀·작은 엄니·짙은 눈두덩·검은 쇠 어깨판·팔 가리개·정강이 가리개·허리 천. 두목 Brute(돼지 코·잿빛 붉은·짧은 뿔·맨몸)와 겹치지 않게.",
- "macro": {"gender": 1.0, "age": 0.5, "muscle": 1.0, "weight": 0.6, "height": 1.0, "proportions": 1.0,
-           "race": {"asian": 0.2, "caucasian": 0.4, "african": 0.4}},
- "targets": {"ear-shape-pointed": 1.0, "ear-scale-vert-incr": 0.8, "forehead-nubian-incr": 0.8,
-             "eyebrows-trans-down": 0.7, "eyebrows-angle-down": 0.8, "cheek-bones-incr": 0.7, "chin-prominent-incr": 0.5,
-             "chin-triangle": 0.5, "neck-scale-horiz-incr": 0.6, "torso-muscle-pectoral-incr": 0.8, "torso-muscle-dorsi-incr": 0.8},
+ "_note": "단계 3 두목 비교용 — saga-unity Demon(Mixamo) 자리 후보(DUNGEON 층 주인 lord). 게임 인물 아님(이름 없음). 가장 큰 근육 몸·검붉은 피부·길게 말린 뿔 둘·뾰족 긴 귀·작은 엄니·짙은 눈두덩·검은 쇠 어깨판·팔 가리개·정강이 가리개·허리 천. 두목 Brute(돼지 코·잿빛 붉은·짧은 뿔·맨몸)와 겹치지 않게. 09-27 진짜 옷(검은 쇠 어깨판·팔 가리개·정강이 가리개(공방 guards), 뿔·엄니·허리 천 그대로).",
+ "macro": {
+  "gender": 1.0,
+  "age": 0.5,
+  "muscle": 1.0,
+  "weight": 0.6,
+  "height": 1.0,
+  "proportions": 1.0,
+  "race": {
+   "asian": 0.2,
+   "caucasian": 0.4,
+   "african": 0.4
+  }
+ },
+ "targets": {
+  "ear-shape-pointed": 1.0,
+  "ear-scale-vert-incr": 0.8,
+  "forehead-nubian-incr": 0.8,
+  "eyebrows-trans-down": 0.7,
+  "eyebrows-angle-down": 0.8,
+  "cheek-bones-incr": 0.7,
+  "chin-prominent-incr": 0.5,
+  "chin-triangle": 0.5,
+  "neck-scale-horiz-incr": 0.6,
+  "torso-muscle-pectoral-incr": 0.8,
+  "torso-muscle-dorsi-incr": 0.8
+ },
  "skin": "young_african_male/young_african_male.mhmat",
- "tints": {"skin": "#c0503c"},
+ "tints": {
+  "skin": "#c0503c"
+ },
  "eyes": "high-poly/high-poly.mhclo",
  "eyebrows": "eyebrow010/eyebrow010.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "kitbash": [
-  {"part": "horns", "length": 0.34, "radius": 0.032, "curl": 1.0, "color": "#2a2420"},
-  {"part": "tusks", "length": 0.022, "radius": 0.006, "color": "#e8dfc4"},
-  {"part": "shell", "slot": "metal", "color": "#2f3034", "rough": 0.4, "offset": 0.026, "thick": 0.008,
-   "groups": ["upperarm_*", "clavicle_*"], "z": [0.74, 0.86], "minw": 0.4},
-  {"part": "shell", "slot": "metal", "color": "#2f3034", "rough": 0.4, "offset": 0.014, "thick": 0.006,
-   "groups": ["lowerarm_*"], "minw": 0.75},
-  {"part": "shell", "slot": "metal", "color": "#2f3034", "rough": 0.4, "offset": 0.016, "thick": 0.006,
-   "groups": ["calf_*"], "z": [0.08, 0.27], "minw": 0.7},
-  {"part": "loincloth", "color": "#26160f", "length": 0.7}
+  {
+   "part": "horns",
+   "length": 0.34,
+   "radius": 0.032,
+   "curl": 1.0,
+   "color": "#2a2420"
+  },
+  {
+   "part": "tusks",
+   "length": 0.022,
+   "radius": 0.006,
+   "color": "#e8dfc4"
+  },
+  {
+   "part": "loincloth",
+   "color": "#26160f",
+   "length": 0.7
+  }
  ],
- "anims": {"idle": "Sword_Idle", "walk": "Walk_Loop", "run": "Jog_Fwd_Loop", "attack": "Sword_Attack",
-           "hit": "Hit_Chest", "death": "Death01"}
+ "anims": {
+  "idle": "Sword_Idle",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01"
+ },
+ "_garments": [
+  "guards"
+ ],
+ "clothes": [
+  "cf_guards/cf_guards.mhclo"
+ ]
 }

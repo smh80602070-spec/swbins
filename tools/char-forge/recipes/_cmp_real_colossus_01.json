@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_colossus_01",
- "_note": "단계 3 STORY 비교용 — saga-unity Mannequin(Mixamo) 자리 후보(STORY 미래 '강철 거신', 비경 5층~, 키 1.3배). 게임 인물 아님. 가장 큰 강철 거신 — 푸른 무쇠 온몸·두꺼운 놋쇠 가슴판·넓은 어깨판·팔·정강이·허벅지 판·얼굴 없는 투구에 호박빛 눈 띠. 강철 인형(검은·붉은 눈)·시험 기동 인형(흰·주황)·강철 경비병(붉은 판)과 겹치지 않게.",
+ "_note": "단계 3 STORY 비교용 — saga-unity Mannequin(Mixamo) 자리 후보(STORY 미래 '강철 거신', 비경 5층~, 키 1.3배). 게임 인물 아님. 가장 큰 강철 거신 — 푸른 무쇠 온몸·두꺼운 놋쇠 가슴판·넓은 어깨판·팔·정강이·허벅지 판·얼굴 없는 투구에 호박빛 눈 띠. 강철 인형(검은·붉은 눈)·시험 기동 인형(흰·주황)·강철 경비병(붉은 판)과 겹치지 않게. 09-27 진짜 옷(푸른 무쇠 염색 몸 옷·놋쇠빛으로 곱한 주피터 판금·장갑·민 장화(CC0), 얼굴 없는 머리·호박빛 눈 띠 껍데기 그대로 — 공방 가슴판·다리 판은 부풀고 몸 옷이 뚫려 안 씀).",
  "macro": {
   "gender": 1.0,
   "age": 0.4,
@@ -28,103 +28,10 @@
    "offset": 0.01,
    "thick": 0.006,
    "groups": [
-    "pelvis",
-    "spine_0*",
-    "clavicle_*",
-    "upperarm_*",
-    "lowerarm_*",
-    "thigh_*",
-    "calf_*",
-    "neck_01",
-    "hand_*",
-    "index_*",
-    "middle_*",
-    "ring_*",
-    "pinky_*",
-    "thumb_*",
-    "foot_*",
-    "ball_*",
-    "head"
+    "head",
+    "neck_01"
    ],
    "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "metal_plate",
-   "color": "#a88438",
-   "rough": 0.3,
-   "offset": 0.034,
-   "thick": 0.01,
-   "groups": [
-    "spine_0*",
-    "pelvis"
-   ],
-   "z": [
-    0.5,
-    0.82
-   ],
-   "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "metal_plate",
-   "color": "#a88438",
-   "rough": 0.3,
-   "offset": 0.048,
-   "thick": 0.01,
-   "groups": [
-    "upperarm_*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.72,
-    0.88
-   ],
-   "minw": 0.35
-  },
-  {
-   "part": "shell",
-   "slot": "metal_plate",
-   "color": "#a88438",
-   "rough": 0.3,
-   "offset": 0.024,
-   "thick": 0.007,
-   "groups": [
-    "lowerarm_*"
-   ],
-   "minw": 0.75
-  },
-  {
-   "part": "shell",
-   "slot": "metal_plate",
-   "color": "#a88438",
-   "rough": 0.3,
-   "offset": 0.026,
-   "thick": 0.007,
-   "groups": [
-    "thigh_*"
-   ],
-   "z": [
-    0.36,
-    0.48
-   ],
-   "minw": 0.6
-  },
-  {
-   "part": "shell",
-   "slot": "metal_plate",
-   "color": "#a88438",
-   "rough": 0.3,
-   "offset": 0.026,
-   "thick": 0.007,
-   "groups": [
-    "calf_*"
-   ],
-   "z": [
-    0.08,
-    0.27
-   ],
-   "minw": 0.7
   },
   {
    "part": "shell",
@@ -151,5 +58,17 @@
   "attack": "Punch_Cross",
   "hit": "Hit_Chest",
   "death": "Death01"
+ },
+ "clothes": [
+  "matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
+  "matcreator_mc-scifi-armor_jupiter7/matcreator_mc-scifi-armor_jupiter7.mhclo",
+  "culturalibre_hero-heroine_gloves_1/culturalibre_hero-heroine_gloves_1.mhclo",
+  "culturalibre_hero_boots_2/culturalibre_hero_boots_2.mhclo"
+ ],
+ "tints": {
+  "matcreator_mc-skinsuit_2022": "=#48546a",
+  "matcreator_mc-scifi-armor_jupiter7": "#c9a04a",
+  "culturalibre_hero-heroine_gloves_1": "=#48546a",
+  "culturalibre_hero_boots_2": "=#48546a"
  }
 }

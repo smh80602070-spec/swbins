@@ -1,28 +1,60 @@
 {
  "id": "_cmp_real_archer_f_01",
- "_note": "단계 3 사람 비교용 — saga-unity Archer(Mixamo Erika) 자리 후보(STORY 유격 106-10). 게임 인물 아님(이름 없음). 날랜 여자·몸에 붙는 짙은 풀빛 옷·가죽 조끼·팔 가리개·장갑·무릎 아래 장화·얼굴 트인 두건 — 살을 본뜬 껍데기.",
- "macro": {"gender": 0.0, "age": 0.45, "muscle": 0.65, "weight": 0.3, "height": 0.637, "proportions": 0.9,
-           "race": {"asian": 0.5, "caucasian": 0.35, "african": 0.15}},
- "targets": {"chin-prognathism-incr": 0.1, "eyebrows-angle-up": 0.3},
+ "_note": "단계 3 사람 비교용 — saga-unity Archer(Mixamo Erika) 자리 후보(STORY 유격 106-10). 게임 인물 아님(이름 없음). 날랜 여자·몸에 붙는 짙은 풀빛 옷·가죽 조끼·팔 가리개·장갑·무릎 아래 장화·얼굴 트인 두건 — 살을 본뜬 껍데기. 09-27 진짜 옷(짙은 풀빛 염색 몸 옷·가죽 장갑·밤빛 염색 무릎 장화(CC0 — 해적 장화는 몸 옷 발이 뚫고 나와), 두건 껍데기 그대로 — 공방 붙는 옷 틀(새 유격 틀·닌자 틀)은 몸통이 통으로 부풀고, 뜨개 윗옷(toigo_fisherman_sweater)은 체형을 바꿔도 가슴·어깨뼈 살이 뚫고 나와 안 씀, 가죽 조끼는 빈칸).",
+ "macro": {
+  "gender": 0.0,
+  "age": 0.45,
+  "muscle": 0.65,
+  "weight": 0.3,
+  "height": 0.637,
+  "proportions": 0.9,
+  "race": {
+   "asian": 0.5,
+   "caucasian": 0.35,
+   "african": 0.15
+  }
+ },
+ "targets": {
+  "chin-prognathism-incr": 0.1,
+  "eyebrows-angle-up": 0.3
+ },
  "skin": "young_caucasian_female/young_caucasian_female.mhmat",
  "eyes": "high-poly/high-poly.mhclo",
  "eyebrows": "eyebrow001/eyebrow001.mhclo",
  "eyelashes": "eyelashes02/eyelashes02.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "kitbash": [
-  {"part": "shell", "slot": "cloth", "color": "#34482f", "rough": 0.85, "offset": 0.003, "thick": 0.003,
-   "groups": ["pelvis", "spine_0*", "clavicle_*", "upperarm_*", "lowerarm_*", "thigh_*", "calf_*"], "minw": 0.5},
-  {"part": "shell", "slot": "leather", "color": "#6a4a2e", "rough": 0.6, "offset": 0.011, "thick": 0.004,
-   "groups": ["spine_0*", "pelvis"], "z": [0.5, 0.78]},
-  {"part": "shell", "slot": "leather", "color": "#6a4a2e", "rough": 0.6, "offset": 0.009, "thick": 0.004,
-   "groups": ["lowerarm_*"], "minw": 0.7},
-  {"part": "shell", "slot": "leather", "color": "#6a4a2e", "rough": 0.6, "offset": 0.005, "thick": 0.003,
-   "groups": ["hand_*", "index_*", "middle_*", "ring_*", "pinky_*", "thumb_*"], "minw": 0.3},
-  {"part": "shell", "slot": "leather", "color": "#3b2a1c", "rough": 0.65, "offset": 0.01, "thick": 0.004,
-   "groups": ["foot_*", "ball_*", "calf_*"], "z": [0.0, 0.28], "minw": 0.3},
-  {"part": "shell", "slot": "cloth", "color": "#2c3d28", "rough": 0.9, "offset": 0.014, "thick": 0.004,
-   "groups": ["head", "neck_01"], "open_face": true, "minw": 0.5}
+  {
+   "part": "shell",
+   "slot": "cloth",
+   "color": "#2c3d28",
+   "rough": 0.9,
+   "offset": 0.014,
+   "thick": 0.004,
+   "groups": [
+    "head",
+    "neck_01"
+   ],
+   "open_face": true,
+   "minw": 0.5
+  }
  ],
- "anims": {"idle": "CF_Bow_Idle_Loop", "walk": "Walk_Loop", "run": "Jog_Fwd_Loop", "attack": "CF_Bow_Shoot",
-           "hit": "Hit_Chest", "death": "Death01"}
+ "anims": {
+  "idle": "CF_Bow_Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "CF_Bow_Shoot",
+  "hit": "Hit_Chest",
+  "death": "Death01"
+ },
+ "clothes": [
+  "matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
+  "toigo_gloves_medium/toigo_gloves_medium.mhclo",
+  "culturalibre_heroine_boots_2/culturalibre_heroine_boots_2.mhclo"
+ ],
+ "tints": {
+  "matcreator_mc-skinsuit_2022": "=#2c3d28",
+  "toigo_gloves_medium": "=#6a4a2e",
+  "culturalibre_heroine_boots_2": "=#3b2a1c"
+ }
 }

@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_crashdummy_01",
- "_note": "단계 3 STORY 비교용 — saga-unity Dummy(Mixamo) 자리 후보(STORY 미래 '시험 인형', 비경 1~2층). 게임 인물 아님. 충돌 시험 인형 — 온몸 노란 합성수지 껍데기·목·팔꿈치·무릎·허리 검은 마디 띠·얼굴 없는 노란 머리. 시험 기동 인형(흰 쇠·주황 눈 띠)·강철 인형(검은 쇠)과 겹치지 않게 눈 띠 없음.",
+ "_note": "단계 3 STORY 비교용 — saga-unity Dummy(Mixamo) 자리 후보(STORY 미래 '시험 인형', 비경 1~2층). 게임 인물 아님. 충돌 시험 인형 — 온몸 노란 합성수지 껍데기·목·팔꿈치·무릎·허리 검은 마디 띠·얼굴 없는 노란 머리. 시험 기동 인형(흰 쇠·주황 눈 띠)·강철 인형(검은 쇠)과 겹치지 않게 눈 띠 없음. 09-27 진짜 옷(노란 염색 몸 옷·장갑·검은 민 장화(CC0), 마디 띠는 몸 옷 면 껍데기(src), 노란 머리 껍데기 그대로).",
  "macro": {
   "gender": 0.5,
   "age": 0.4,
@@ -25,23 +25,8 @@
    "offset": 0.008,
    "thick": 0.005,
    "groups": [
-    "pelvis",
-    "spine_0*",
-    "clavicle_*",
-    "upperarm_*",
-    "lowerarm_*",
-    "thigh_*",
-    "calf_*",
-    "neck_01",
-    "hand_*",
-    "index_*",
-    "middle_*",
-    "ring_*",
-    "pinky_*",
-    "thumb_*",
-    "foot_*",
-    "ball_*",
-    "head"
+    "head",
+    "neck_01"
    ],
    "minw": 0.5
   },
@@ -61,7 +46,8 @@
     0.82,
     0.86
    ],
-   "minw": 0.5
+   "minw": 0.5,
+   "src": "matcreator_mc-skinsuit_2022"
   },
   {
    "part": "shell",
@@ -78,7 +64,8 @@
     0.6,
     0.66
    ],
-   "minw": 0.3
+   "minw": 0.3,
+   "src": "matcreator_mc-skinsuit_2022"
   },
   {
    "part": "shell",
@@ -95,7 +82,8 @@
     0.26,
     0.31
    ],
-   "minw": 0.3
+   "minw": 0.3,
+   "src": "matcreator_mc-skinsuit_2022"
   },
   {
    "part": "shell",
@@ -112,7 +100,8 @@
     0.55,
     0.59
    ],
-   "minw": 0.5
+   "minw": 0.5,
+   "src": "matcreator_mc-skinsuit_2022"
   }
  ],
  "anims": {
@@ -122,5 +111,15 @@
   "attack": "Punch_Jab",
   "hit": "Hit_Chest",
   "death": "Death01"
+ },
+ "clothes": [
+  "matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
+  "culturalibre_hero-heroine_gloves_1/culturalibre_hero-heroine_gloves_1.mhclo",
+  "culturalibre_hero_boots_2/culturalibre_hero_boots_2.mhclo"
+ ],
+ "tints": {
+  "matcreator_mc-skinsuit_2022": "=#e8c21e",
+  "culturalibre_hero-heroine_gloves_1": "=#e8c21e",
+  "culturalibre_hero_boots_2": "=#18181a"
  }
 }

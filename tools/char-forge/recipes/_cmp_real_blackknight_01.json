@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_blackknight_01",
- "_note": "단계 3 GO 인물 비교용 — saga-unity Dreyar(Mixamo) 자리 후보(GO 인물 105 몸 '검은 판금 기사', 109-7). 게임 인물 아님. 큰 남자·검게 칠한 판금 온몸(가슴·어깨·팔·다리 판 겹)·얼굴 트인 투구·등에 검붉은 망토 판·검은 가죽 장갑. 강철 인형(얼굴 없는 투구·붉은 눈 띠)·무사(붉은 누비옷·은 판)·성 파수병(사슬·쪽빛 겉옷)과 겹치지 않게.",
+ "_note": "단계 3 GO 인물 비교용 — saga-unity Dreyar(Mixamo) 자리 후보(GO 인물 105 몸 '검은 판금 기사', 109-7). 게임 인물 아님. 큰 남자·검게 칠한 판금 온몸(가슴·어깨·팔·다리 판 겹)·얼굴 트인 투구·등에 검붉은 망토 판·검은 가죽 장갑. 강철 인형(얼굴 없는 투구·붉은 눈 띠)·무사(붉은 누비옷·은 판)·성 파수병(사슬·쪽빛 겉옷)과 겹치지 않게. 09-27 진짜 옷(검게 염색한 사슬 윗옷·가죽 치마·바지·가디언 판(팔·정강이)·장화·장갑(CC0), 투구 껍데기 그대로 — 공방 판금 틀은 고무 자루처럼 보여 안 씀, 등 망토 판은 빈칸).",
  "macro": {
   "gender": 1.0,
   "age": 0.55,
@@ -26,125 +26,6 @@
  "kitbash": [
   {
    "part": "shell",
-   "slot": "cloth",
-   "color": "#1a1a1d",
-   "rough": 0.9,
-   "offset": 0.004,
-   "thick": 0.003,
-   "groups": [
-    "pelvis",
-    "spine_0*",
-    "clavicle_*",
-    "upperarm_*",
-    "lowerarm_*",
-    "thigh_*",
-    "calf_*",
-    "neck_01"
-   ],
-   "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "leather",
-   "color": "#141416",
-   "rough": 0.65,
-   "offset": 0.004,
-   "thick": 0.003,
-   "groups": [
-    "hand_*",
-    "index_*",
-    "middle_*",
-    "ring_*",
-    "pinky_*",
-    "thumb_*"
-   ],
-   "minw": 0.3
-  },
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#141416",
-   "rough": 0.65,
-   "offset": 0.016,
-   "thick": 0.005,
-   "groups": [
-    "foot_*",
-    "ball_*",
-    "calf_*"
-   ],
-   "z": [
-    0.0,
-    0.22
-   ],
-   "minw": 0.3
-  },
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#2a2c31",
-   "rough": 0.35,
-   "offset": 0.02,
-   "thick": 0.007,
-   "groups": [
-    "spine_0*",
-    "pelvis",
-    "clavicle_*"
-   ],
-   "z": [
-    0.5,
-    0.82
-   ],
-   "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#2a2c31",
-   "rough": 0.35,
-   "offset": 0.03,
-   "thick": 0.008,
-   "groups": [
-    "upperarm_*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.72,
-    0.87
-   ],
-   "minw": 0.35
-  },
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#2a2c31",
-   "rough": 0.35,
-   "offset": 0.014,
-   "thick": 0.006,
-   "groups": [
-    "lowerarm_*",
-    "upperarm_*"
-   ],
-   "minw": 0.6
-  },
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#2a2c31",
-   "rough": 0.35,
-   "offset": 0.014,
-   "thick": 0.006,
-   "groups": [
-    "thigh_*",
-    "calf_*"
-   ],
-   "z": [
-    0.06,
-    0.5
-   ],
-   "minw": 0.6
-  },
-  {
-   "part": "shell",
    "slot": "metal",
    "color": "#2a2c31",
    "rough": 0.35,
@@ -155,24 +36,6 @@
    ],
    "open_face": true,
    "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "cloth_cape",
-   "color": "#4a1418",
-   "rough": 0.9,
-   "offset": 0.05,
-   "thick": 0.008,
-   "groups": [
-    "spine_0*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.45,
-    0.86
-   ],
-   "facing_back": 0.3,
-   "minw": 0.5
   }
  ],
  "anims": {
@@ -182,5 +45,19 @@
   "attack": "Sword_Attack",
   "hit": "Hit_Chest",
   "death": "Death01"
+ },
+ "clothes": [
+  "rehmanpolanski_viking_tunic/rehmanpolanski_viking_tunic.mhclo",
+  "rehmanpolanski_viking_pants/rehmanpolanski_viking_pants.mhclo",
+  "matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
+  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo",
+  "culturalibre_hero-heroine_gloves_1/culturalibre_hero-heroine_gloves_1.mhclo"
+ ],
+ "tints": {
+  "rehmanpolanski_viking_tunic": "=#2a2c31",
+  "rehmanpolanski_viking_pants": "=#1a1a1d",
+  "matcreator_mc-scifi-armor_guardian": "=#2a2c31",
+  "rehmanpolanski_viking_boots": "=#141416",
+  "culturalibre_hero-heroine_gloves_1": "=#141416"
  }
 }

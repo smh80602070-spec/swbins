@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_testbot_01",
- "_note": "단계 3 잡졸 비교용 — saga-unity X Bot(Mixamo) 자리 후보(DUNGEON 미래 '시험 기동 인형', 층 2~9). 게임 인물 아님. 매끈한 흰 인형 — 온몸(손·발·머리까지) 흰 쇠 껍데기, 얼굴 없는 투구에 주황 눈 띠 한 바퀴. 속 얼굴·눈썹은 안 단다(안 보이는 낭비).",
+ "_note": "단계 3 잡졸 비교용 — saga-unity X Bot(Mixamo) 자리 후보(DUNGEON 미래 '시험 기동 인형', 층 2~9). 게임 인물 아님. 매끈한 흰 인형 — 온몸(손·발·머리까지) 흰 쇠 껍데기, 얼굴 없는 투구에 주황 눈 띠 한 바퀴. 속 얼굴·눈썹은 안 단다(안 보이는 낭비). 09-27 진짜 옷(흰 염색 몸 옷·장갑·민 장화(CC0), 얼굴 없는 흰 쇠 머리·주황 눈 띠 껍데기 그대로).",
  "macro": {
   "gender": 0.5,
   "age": 0.4,
@@ -25,23 +25,8 @@
    "offset": 0.01,
    "thick": 0.006,
    "groups": [
-    "pelvis",
-    "spine_0*",
-    "clavicle_*",
-    "upperarm_*",
-    "lowerarm_*",
-    "thigh_*",
-    "calf_*",
-    "neck_01",
-    "hand_*",
-    "index_*",
-    "middle_*",
-    "ring_*",
-    "pinky_*",
-    "thumb_*",
-    "foot_*",
-    "ball_*",
-    "head"
+    "head",
+    "neck_01"
    ],
    "minw": 0.5
   },
@@ -69,5 +54,15 @@
   "attack": "Punch_Cross",
   "hit": "Hit_Chest",
   "death": "Death01"
+ },
+ "clothes": [
+  "matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
+  "culturalibre_hero-heroine_gloves_1/culturalibre_hero-heroine_gloves_1.mhclo",
+  "culturalibre_hero_boots_2/culturalibre_hero_boots_2.mhclo"
+ ],
+ "tints": {
+  "matcreator_mc-skinsuit_2022": "=#d9dcdf",
+  "culturalibre_hero-heroine_gloves_1": "=#d9dcdf",
+  "culturalibre_hero_boots_2": "=#d9dcdf"
  }
 }

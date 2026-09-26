@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_leatherknight_f_01",
- "_note": "단계 3 GO 인물 비교용 — saga-unity Eve(Mixamo) 자리 후보(GO '가죽 옷 — 성녀 기사·여왕', 109-7). 게임 인물 아님. 키 큰 여자·땋은 머리·밤빛 가죽 갑옷 온몸·은 어깨판·앞뒤 상아빛 겉옷판·가죽 장화. 유격(풀빛·두건)·금빛 외골격과 겹치지 않게.",
+ "_note": "단계 3 GO 인물 비교용 — saga-unity Eve(Mixamo) 자리 후보(GO '가죽 옷 — 성녀 기사·여왕', 109-7). 게임 인물 아님. 키 큰 여자·땋은 머리·밤빛 가죽 갑옷 온몸·은 어깨판·앞뒤 상아빛 겉옷판·가죽 장화. 유격(풀빛·두건)·금빛 외골격과 겹치지 않게. 09-27 진짜 옷(밤빛 염색 가죽 몸 옷(선 무늬가 판 이음처럼 남는다)·긴 장갑·허벅지 장화(CC0) — 공방 가죽 기사 틀(겉옷·은 어깨판)은 자루처럼 부풀어 안 씀, 은 어깨판·상아빛 겉옷판은 빈칸).",
  "macro": {
   "gender": 0.0,
   "age": 0.45,
@@ -20,117 +20,6 @@
  "eyes": "high-poly/high-poly.mhclo",
  "eyelashes": "eyelashes02/eyelashes02.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
- "kitbash": [
-  {
-   "part": "shell",
-   "slot": "leather",
-   "color": "#5a3a24",
-   "rough": 0.65,
-   "offset": 0.005,
-   "thick": 0.004,
-   "groups": [
-    "pelvis",
-    "spine_0*",
-    "clavicle_*",
-    "upperarm_*",
-    "lowerarm_*",
-    "thigh_*",
-    "calf_*",
-    "neck_01"
-   ],
-   "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "leather",
-   "color": "#3a2616",
-   "rough": 0.65,
-   "offset": 0.016,
-   "thick": 0.005,
-   "groups": [
-    "foot_*",
-    "ball_*",
-    "calf_*"
-   ],
-   "z": [
-    0.0,
-    0.24
-   ],
-   "minw": 0.3
-  },
-  {
-   "part": "shell",
-   "slot": "leather",
-   "color": "#3a2616",
-   "rough": 0.65,
-   "offset": 0.004,
-   "thick": 0.003,
-   "groups": [
-    "hand_*",
-    "index_*",
-    "middle_*",
-    "ring_*",
-    "pinky_*",
-    "thumb_*"
-   ],
-   "minw": 0.3
-  },
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#b8bec6",
-   "rough": 0.3,
-   "offset": 0.026,
-   "thick": 0.006,
-   "groups": [
-    "upperarm_*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.74,
-    0.86
-   ],
-   "minw": 0.4
-  },
-  {
-   "part": "shell",
-   "slot": "cloth_tabard",
-   "color": "#e6ddc6",
-   "rough": 0.9,
-   "offset": 0.016,
-   "thick": 0.005,
-   "groups": [
-    "spine_0*",
-    "pelvis",
-    "thigh_*"
-   ],
-   "z": [
-    0.38,
-    0.8
-   ],
-   "facing": 0.3,
-   "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "cloth_tabard",
-   "color": "#e6ddc6",
-   "rough": 0.9,
-   "offset": 0.016,
-   "thick": 0.005,
-   "groups": [
-    "spine_0*",
-    "pelvis",
-    "thigh_*"
-   ],
-   "z": [
-    0.38,
-    0.8
-   ],
-   "facing_back": 0.3,
-   "minw": 0.5
-  }
- ],
  "anims": {
   "idle": "Sword_Idle",
   "walk": "Walk_Loop",
@@ -138,5 +27,15 @@
   "attack": "Sword_Attack",
   "hit": "Hit_Chest",
   "death": "Death01"
+ },
+ "clothes": [
+  "culturalibre_heroine_suit_2/culturalibre_heroine_suit_2.mhclo",
+  "toigo_gloves_long/toigo_gloves_long.mhclo",
+  "culturalibre_heroine_boots_1/culturalibre_heroine_boots_1.mhclo"
+ ],
+ "tints": {
+  "culturalibre_heroine_suit_2": "=#3a2618",
+  "toigo_gloves_long": "=#3a2616",
+  "culturalibre_heroine_boots_1": "=#3a2616"
  }
 }
