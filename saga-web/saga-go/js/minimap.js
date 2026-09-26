@@ -53,8 +53,39 @@
     shrine:      { c: '#f0d878', r: 3.0 },
     stele:       { c: '#d9d2c0', r: 2.2 },
     drop:        { c: '#ffb36b', r: 3.4 },
-    story:       { c: '#ffd24a', r: 4.2 }
+    story:       { c: '#ffd24a', r: 4.2 },
+    wq:          { c: '#5fb8ff', r: 4.2 },
+    'q-idle':    { c: '#ffd24a', r: 4.2 },
+    'q-avail':   { c: '#5fb8ff', r: 4.2 }
   };
+
+  /** ⑲-23 임무 표식 빛깔 — 이야기 금빛·세계 임무 푸른빛 */
+  var QTONE = { story: '#ffd24a', wq: '#5fb8ff' };
+
+  /**
+   * ⑲-23 임무 표식 하나 — 미니맵·지도(overworld.js)가 같이 쓴다.
+   * kind 'track' 찬 마름모 · 'idle' 빈 마름모 · 'avail' 둥근 판 "!". r = 반지름(px)
+   */
+  function questIcon(g, x, y, r, kind, tone) {
+    var c = QTONE[tone] || QTONE.story;
+    g.save();
+    g.lineJoin = 'round';
+    if (kind === 'avail') {
+      g.fillStyle = 'rgba(14,20,30,.88)';
+      g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+      g.strokeStyle = c; g.lineWidth = Math.max(1.2, r * 0.28); g.stroke();
+      g.fillStyle = c;
+      g.font = '800 ' + Math.round(r * 1.5) + 'px system-ui, sans-serif';
+      g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.fillText('!', x, y + r * 0.06);
+    } else {
+      g.beginPath();
+      g.moveTo(x, y - r * 1.2); g.lineTo(x + r, y); g.lineTo(x, y + r * 1.2); g.lineTo(x - r, y); g.closePath();
+      g.strokeStyle = 'rgba(0,0,0,.7)'; g.lineWidth = kind === 'track' ? 1.2 : Math.max(2.6, r * 0.6); g.stroke();
+      if (kind === 'track') { g.fillStyle = c; g.fill(); } else { g.strokeStyle = c; g.lineWidth = Math.max(1.4, r * 0.34); g.stroke(); }
+    }
+    g.restore();
+  }
 
   var node = null, canvas = null, ctx = null;
   var step = 0, folded = false;
@@ -135,9 +166,10 @@
 
     function put(kind, x, y, name, keepEdge) {
       pr = project(pos, x, y, r);
-      if (pr.edge && !keepEdge) { return; }
+      if (pr.edge && !keepEdge) { return null; }
       out.push({ t: kind, x: x, y: y, dx: pr.dx, dy: pr.dy,
                  d: pr.d * r, edge: pr.edge, name: name || '' });
+      return out[out.length - 1];
     }
 
     /* 조우 대상 — 5급(돌파·특별)은 크고 진하게 */
@@ -234,9 +266,14 @@
       for (i = 0; i < dl.length; i++) { put('drop', dl[i].x, dl[i].y, '🎒 ' + dl[i].gold, true); }
     }
 
-    /* 이야기 임무 목표(PLAN §5 ⑲-12) — 금빛, 테두리에도 붙어 방향을 알린다 */
-    var STY = global.DG.story, sm = STY && STY.marker ? STY.marker() : null;
-    if (sm) { put('story', sm.x, sm.y, '📖 ' + sm.name, true); }
+    /* 임무 표식(PLAN §5 ⑲-12·⑲-23) — 따라가는 것(이야기 금·세계 임무 푸른 찬 마름모)은 테두리에도 붙어 방향을 알린다.
+       맡았지만 안 따라가는 것(빈 마름모)·맡을 수 있는 것(!)은 둘레 안일 때만 */
+    var STY = global.DG.story, qm = STY && STY.mapMarks ? STY.mapMarks() : [];
+    for (i = 0; i < qm.length; i++) {
+      var qk = qm[i], track = qk.kind === 'track';
+      var qb = put(track ? (qk.tone === 'wq' ? 'wq' : 'story') : 'q-' + qk.kind, qk.x, qk.y, (qk.tone === 'wq' ? '🔷 ' : '📖 ') + qk.text, track);
+      if (qb) { qb.q = qk.kind; qb.tone = qk.tone; }
+    }
 
     return out;
   }
@@ -385,6 +422,9 @@
     for (i = 0; i < bs.length; i++) {
       st = STYLE[bs[i].t] || STYLE.spawn;
       ctx.globalAlpha = bs[i].edge ? 0.55 : 1;
+      if (bs[i].q) {                                   // ⑲-23 임무 표식 — 맨 위에 따로 그린다
+        continue;
+      }
       ctx.fillStyle = st.c;
       ctx.beginPath();
       /* 테두리에 붙은 것은 조금 안으로 들인다 — 선에 반쯤 잘려 안 보인다 */
@@ -392,6 +432,13 @@
       ctx.arc(c + bs[i].dx * rr, c + bs[i].dy * rr,
               bs[i].edge ? st.r * 0.7 : st.r, 0, Math.PI * 2);
       ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    for (i = 0; i < bs.length; i++) {
+      if (!bs[i].q) { continue; }
+      var qr = bs[i].edge ? rad * 0.9 : rad;
+      ctx.globalAlpha = bs[i].edge ? 0.75 : 1;
+      questIcon(ctx, c + bs[i].dx * qr, c + bs[i].dy * qr, bs[i].edge ? 3.6 : 4.5, bs[i].q, bs[i].tone);
     }
     ctx.globalAlpha = 1;
 
@@ -456,7 +503,7 @@
   global.DG.minimap = {
     RANGES: RANGES, GRID: GRID, TINT: TINT, STYLE: STYLE,
     /* 값을 내는 함수 — 순수하다 (자가진단이 이것만 따로 본다) */
-    project: project, cells: cells, blips: blips,
+    project: project, cells: cells, blips: blips, questIcon: questIcon, QTONE: QTONE,
     /* 화면 */
     init: init, tick: tick, draw: draw, resize: resize, stats: stats,
     on: on, range: range,

@@ -11456,6 +11456,74 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '무늬 절반 과녁 · 9·12·15m · 점 셋 · 10초 빛남 · 셋 → 풀림 · 늦으면 ✕ · 서책도 · 석등 조준 점' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-23 지도 임무 표식 (story mapMarks · minimap questIcon · overworld 고르기, PLAN §5 ⑲-23) ── */
+    function qmOf(ST) { return ST.mapMarks().map(function (m) { return m.kind + ':' + m.tone + ':' + (m.id || '-'); }).sort().join(); }
+    t('지도 임무 표식 ⑲-23 — 꼴: 이야기 찬 금 · 등급 전 ! 없음 · 등급 닿은 ! · 세계 임무 따라가면 푸른 찬·이야기 빈 금 · 못 찾은 지역엔 빈 마름모·! 없음(찾으면 생김) · 미니맵 따라가는 것 테두리·빈 것 둘레 밖 없음', function () {
+      var rig = wqRig(2), ST = rig.ST, B = DG.biome, MM = DG.minimap, r = {};
+      try {
+        C.save.regions = {};
+        r.lock = qmOf(ST) === 'track:story:-';
+        C.save.player.level = 10;
+        var rp = ST.npcPos('wq_researcher'), gk = B.regionAt(rp.x, rp.y).cell.key;
+        r.avail = gk !== '0_0' && qmOf(ST) === 'avail:wq:wq_letters,track:story:-';
+        C.save.regions[gk] = 1;
+        r.found = qmOf(ST) === 'avail:wq:wq_letters,avail:wq:wq_lighthouse,track:story:-';
+        delete C.save.regions[gk];
+        ST.wqStart('wq_lighthouse');
+        r.wqTrack = qmOf(ST) === 'avail:wq:wq_letters,idle:story:-,track:wq:wq_lighthouse';     // 따라가는 것은 못 찾은 지역이어도 낸다
+        ST.wqStart('wq_letters');
+        r.idleHid = qmOf(ST) === 'idle:story:-,track:wq:wq_letters';
+        C.save.regions[gk] = 1;
+        r.idle = qmOf(ST) === 'idle:story:-,idle:wq:wq_lighthouse,track:wq:wq_letters';
+        var tm = ST.mapMarks().filter(function (m) { return m.kind === 'track'; })[0], tg = ST.targetOf(ST.step());
+        r.pos = tm.x === tg.x && tm.y === tg.y && tm.text === ST.step().text && tm.name === ST.WQ.QUESTS.wq_letters.name;
+        var ep = ST.npcPos('elder');
+        stGo({ x: ep.x + 5, y: ep.y });
+        var qb = MM.blips(C.save.player.pos, 180, MMT).filter(function (b) { return b.q; });
+        r.mini = qb.some(function (b) { return b.q === 'track' && b.t === 'wq' && !b.edge; }) && qb.some(function (b) { return b.q === 'idle' && b.tone === 'story'; }) &&
+          qb.every(function (b) { return b.q === 'track' || !b.edge; });
+        stGo({ x: 5000, y: 5000 });
+        qb = MM.blips(C.save.player.pos, 180, MMT).filter(function (b) { return b.q; });
+        r.miniFar = qb.length === 1 && qb[0].q === 'track' && qb[0].t === 'wq' && qb[0].edge;
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '찬 금 · 등급 전 ✕ · ! · 푸른 찬 + 빈 금 · 못 찾은 지역 ✕ → 찾으면 ○ · 미니맵 테두리' : ('실패 ' + bad.join(','));
+    });
+
+    t('지도 임무 표식 ⑲-23 — 지도: 따라가는 표식은 멀어도 범위 안 · 다른 것은 가장자리 · 고르기 → 따라가기 → 추적 바뀜 · ! 는 따라가기 막힘 · 가까운 순간이동 지점(그 지역 탑) · 순간이동 · GPS 판 막힘', function () {
+      var rig = wqRig(10), ST = rig.ST, B = DG.biome, OW = DG.overworld, W0 = DG.world, r = {};
+      function lay(kind, tone) { return OW.questLayout().marks.filter(function (m) { return m.kind === kind && m.tone === tone; })[0]; }
+      try {
+        C.save.regions = {}; C.save.player.trail = [];
+        var rp = ST.npcPos('wq_researcher'), gk = B.regionAt(rp.x, rp.y).cell.key;
+        C.save.regions[gk] = 1;
+        ST.wqStart('wq_lighthouse'); ST.setTrack(null);
+        stGo(ST.npcPos('elder'));
+        var fi = lay('idle', 'wq');
+        r.edge = !!fi && fi.edge && Math.abs(Math.max(Math.abs(fi.x), Math.abs(fi.y)) - 0.97) < 1e-9;
+        stGo({ x: rp.x + 10, y: rp.y });
+        var tr = lay('track', 'story');
+        r.fit = !!tr && !tr.edge && Math.abs(tr.x) <= 1 && Math.abs(tr.y) <= 1;
+        var inf = OW.select(lay('idle', 'wq')) && OW.pickInfo();
+        r.pick = !!inf && inf.m.id === 'wq_lighthouse' && inf.canTrack && inf.way.key === gk && Math.abs(inf.d - 10) < 1e-6;
+        r.track = OW.trackPicked() && ST.tracking() === 'wq_lighthouse' && OW.pickInfo().m.kind === 'track' && !OW.pickInfo().canTrack && !OW.trackPicked();
+        r.back = OW.select(lay('idle', 'story')) && OW.trackPicked() && ST.tracking() === null;
+        var av = lay('avail', 'wq');
+        r.avail = !!av && av.id === 'wq_letters' && OW.select(av) && !OW.pickInfo().canTrack && !OW.trackPicked() && ST.tracking() === null && ST.wqStepOf('wq_letters') === null;
+        OW.select(lay('idle', 'wq'));
+        stGo({ x: 0, y: 0 });
+        DG.world = Object.create(W0, { mode: { value: 'geo' } });
+        r.geo = !OW.pickInfo().canJump && !OW.jumpPicked() && C.save.player.pos.x === 0 && C.save.player.pos.y === 0;
+        DG.world = W0;
+        var cell = B.cellAt.apply(null, gk.split('_').map(Number));
+        r.jump = OW.pickInfo().canJump && OW.jumpPicked() && C.save.player.pos.x === cell.x && C.save.player.pos.y === cell.y + 8;
+        OW.select(null);
+        r.clear = OW.picked === null && OW.pickInfo() === null;
+      } finally { DG.world = W0; OW.reset(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '가장자리 0.97 · 따라가는 것 범위 안 · 고르기 → 따라가기 ↔ 이야기 · ! 막힘 · 그 지역 탑 · 순간이동 · GPS ✕' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */
     t('원작 겹침 ⑳ — 화면 글자(보패·무기·무예·반응·상자·숨은 터 표 · 인물 상세 · 등급 카드)에 옛 원작 용어가 없다', function () {
       var OLD = ['성유물', '비경', '지맥', '운명의 자리', '원소 시야', '모험 등급', '세계 등급', '원소 폭발', '신상', '재련', '돌파',

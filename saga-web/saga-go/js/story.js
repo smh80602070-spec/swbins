@@ -756,6 +756,33 @@
     });
     return out;
   }
+  /** ⑲-23 탑을 찾은 지역인가 — 빈 마름모·! 는 찾은 지역에만(고향은 늘 찾음) */
+  function revealed(x, y) { var B = BM(); return !B || B.found(B.regionAt(x, y).cell.key); }
+  /**
+   * ⑲-23 지도 임무 표식 — [{ kind, tone, id, x, y, name, text }]. 세이브·표만 읽는다.
+   * kind 'track' 따라가는 임무(찬 마름모) · 'idle' 맡았지만 안 따라가는 임무(빈 마름모, 그 단계 자리) · 'avail' 맡을 수 있는 세계 임무(!)
+   * tone 'story'(금빛) · 'wq'(푸른빛). id = 세계 임무 id, 이야기는 null. 따라가는 것 말고는 못 찾은 지역에 안 낸다
+   */
+  function mapMarks() {
+    var out = [];
+    if (!on()) { return out; }
+    var tq = tracking(), w = wqs();
+    function put(kind, tone, id, st, name) {
+      var t = st ? targetOf(st) : null;
+      if (!t || (kind !== 'track' && !revealed(t.x, t.y))) { return; }
+      out.push({ kind: kind, tone: tone, id: id, x: t.x, y: t.y, name: name, text: st.text });
+    }
+    var ss = storyStep();
+    if (ss) { put(tq ? 'idle' : 'track', 'story', null, ss, chapter().name); }
+    if (WQD) {
+      WQD.ORDER.forEach(function (id) {
+        var q = wqDef(id);
+        if (typeof w.steps[id] === 'number') { put(id === tq ? 'track' : 'idle', 'wq', id, q.steps[w.steps[id]], q.name); }
+        else if (wqAvail(id)) { put('avail', 'wq', id, q.steps[0], q.name); }
+      });
+    }
+    return out;
+  }
 
   /* ── 나아가기 ─────────────────────────────────────────── */
 
@@ -1531,7 +1558,7 @@
     THIEF_PATH: THIEF_PATH, CHASE_SPEED: CHASE_SPEED, CHASE_PAUSE: CHASE_PAUSE, CHASE_START: CHASE_START, CHASE_CATCH: CHASE_CATCH, ISLE_R: ISLE_R,
     isleSpot: isleSpot, wetNeighbors: wetNeighbors, stepChase: stepChase, thiefAt: thiefAt, chaseState: function () { return chase && chase.key === keyOf() ? chase : null; }, isTalk: isTalk,
     sealLamps: sealLamps, sealHit: sealHit, sealLit: sealLit, duelBoss: duelBoss, stepDuel: stepDuel, npcInfo: npcInfo, skyOf: skyOf,
-    WQ: WQD, wqs: wqs, wqDef: wqDef, wqStepOf: wqStepOf, tracking: tracking, setTrack: setTrack, wqStart: wqStart, wqAvail: wqAvail, wqMarks: wqMarks,
+    WQ: WQD, wqs: wqs, wqDef: wqDef, wqStepOf: wqStepOf, tracking: tracking, setTrack: setTrack, wqStart: wqStart, wqAvail: wqAvail, wqMarks: wqMarks, mapMarks: mapMarks, revealed: revealed,
     talkables: talkables, storyStep: storyStep, stepAt: stepAt, aimPoints: aimPoints,
     FOLLOW_NEAR: FOLLOW_NEAR, FOLLOW_LOST: FOLLOW_LOST,
     on: on, anchorOf: anchorOf, npcPos: npcPos, visible: visible, targetOf: targetOf, trackText: trackText, listHtml: listHtml,

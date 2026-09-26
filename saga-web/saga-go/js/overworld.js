@@ -36,10 +36,13 @@
    * 뭉개진다. 그래서 `extra`는 발자취·지금 위치로만 정한 같은 축척 위에
    * 얹힐 뿐이고, 화면 밖으로 나가면(±1 밖) 그린 쪽에서 지운다(진짜 지도가
    * 화면 밖 표식을 안 그리는 것과 같다).
+   *
+   * `fit`(선택, PLAN §5 ⑲-23) — 범위에 **넣을** 점({lat,lng}). 따라가는 임무 표식 — 지도를 열면 늘 보인다.
+   * 그리지는 않는다(그것은 extra 로 따로 넘긴다).
    */
-  function project(points, cur, extra) {
+  function project(points, cur, extra, fit) {
     extra = extra || [];
-    var all = points.concat([cur]);
+    var all = points.concat([cur], fit || []);
     var minLat = Infinity, maxLat = -Infinity, minLng = Infinity, maxLng = -Infinity;
     var i, p;
     for (i = 0; i < all.length; i++) {
@@ -86,12 +89,14 @@
       '<small class="muted">지금까지 밟아 본 곳</small>' +
       '<button class="icon-btn ow-close" title="닫기 (M / Esc)">✕</button></div>' +
       '<canvas></canvas>' +
+      '<div class="ow-pick"></div>' +
       '<div class="ow-way"></div>' +
       '</div>';
     global.document.body.appendChild(node);
     canvas = node.querySelector('canvas');
     node.querySelector('.ow-scrim').addEventListener('click', close);
     node.querySelector('.ow-close').addEventListener('click', close);
+    canvas.addEventListener('click', tapCanvas);
     return node;
   }
 
@@ -190,7 +195,8 @@
       });
     }
 
-    var pr = project(trail, cur, pois);
+    var ql = questLayout();
+    var pr = project(trail, cur, pois, ql.fit);
     var pad = 26;
     var side = Math.min(cw, ch) - pad * 2;
     var ox = (cw - side) / 2, oy = (ch - side) / 2;
@@ -262,6 +268,22 @@
       }
     }
 
+    /* 임무 표식(§5 ⑲-23) — 봉수대·지명 위, 지금 위치 아래. 화면 밖이면 가장자리에 흐리게 */
+    var MMq = MM(), sel = selMark(ql.marks);
+    lastMarks = [];
+    for (i = 0; i < ql.marks.length; i++) {
+      var qm = ql.marks[i], qp = px(qm);
+      lastMarks.push({ sx: qp.x, sy: qp.y, m: qm });
+      if (!MMq || !MMq.questIcon) { continue; }
+      ctx.globalAlpha = qm.edge ? 0.6 : 1;
+      if (sel === qm) {
+        ctx.strokeStyle = 'rgba(255,255,255,.85)'; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(qp.x, qp.y, MARK_R + 5, 0, Math.PI * 2); ctx.stroke();
+      }
+      MMq.questIcon(ctx, qp.x, qp.y, qm.edge ? MARK_R * 0.75 : MARK_R, qm.kind, qm.tone);
+    }
+    ctx.globalAlpha = 1;
+
     /* 지금 위치 — 금빛으로 크게 강조 */
     var cp = px(pr.cur);
     ctx.fillStyle = '#f5b445';
@@ -286,17 +308,137 @@
     if (btn) { btn.classList.toggle('on', opened); }
   }
 
+  /* ── 임무 표식 고르기 (PLAN §5 ⑲-23) ─────────────────────── */
+
+  var MARK_R = 7, PICK_PX = 18;
+  var lastMarks = [];      // 지난번에 그린 표식의 화면 자리 [{sx, sy, m}]
+  var picked = null;       // 고른 표식 — { tone, id }(이야기는 id null). 표식 꼴은 따라가기로 바뀔 수 있어 이것만 쥔다
+
+  /**
+   * 임무 표식을 지도 축척(-1~1)에 얹는다 — 캔버스 없이도 돈다(진단이 이것만 본다).
+   * 따라가는 것은 범위(fit)에 넣는다. 화면 밖이면 가장자리로 끌어 edge
+   */
+  function questLayout() {
+    var STY = global.DG.story, wl = W();
+    var list = STY && STY.mapMarks && wl && core.save ? STY.mapMarks() : [];
+    if (!list.length) { return { marks: [], fit: [] }; }
+    var pos = core.save.player.pos, cur = wl.worldToLatLng(pos.x, pos.y);
+    var ext = [], fit = [], i;
+    for (i = 0; i < list.length; i++) {
+      var ll = wl.worldToLatLng(list[i].x, list[i].y);
+      ext.push({ lat: ll.lat, lng: ll.lng });
+      if (list[i].kind === 'track') { fit.push({ lat: ll.lat, lng: ll.lng }); }
+    }
+    var pr = project(core.save.player.trail || [], cur, ext, fit), marks = [];
+    for (i = 0; i < list.length; i++) {
+      var q = pr.pois[i], m = Math.max(Math.abs(q.x), Math.abs(q.y)), k = m > 1 ? 0.97 / m : 1;
+      marks.push({ kind: list[i].kind, tone: list[i].tone, id: list[i].id, name: list[i].name, text: list[i].text,
+        wx: list[i].x, wy: list[i].y, x: q.x * k, y: q.y * k, edge: m > 1 });
+    }
+    return { marks: marks, fit: fit };
+  }
+  function selMark(marks) {
+    if (!picked) { return null; }
+    for (var i = 0; i < marks.length; i++) { if (marks[i].tone === picked.tone && marks[i].id === picked.id) { return marks[i]; } }
+    return null;
+  }
+  /** 고르기 — 표식(questLayout 의 하나) 또는 null */
+  function select(m) {
+    picked = m ? { tone: m.tone, id: m.id } : null;
+    renderPick();
+    draw();
+    return !!m;
+  }
+  /** 캔버스를 누른 자리 — PICK_PX 안 가장 가까운 표식을 고른다(없으면 고르기를 푼다) */
+  function tapCanvas(e) {
+    if (!canvas) { return; }
+    var r = canvas.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, best = null, bd = PICK_PX;
+    for (var i = 0; i < lastMarks.length; i++) {
+      var d = Math.hypot(lastMarks[i].sx - x, lastMarks[i].sy - y);
+      if (d <= bd) { bd = d; best = lastMarks[i].m; }
+    }
+    select(best);
+  }
+
+  /** 순간이동 지점 — 고향·찾은 탑(⑩)·오른 정상(⑰). [{key, x, y, name}] */
+  function wayList() {
+    var BMo = global.DG.biome;
+    if (!BMo || !BMo.on()) { return []; }
+    var list = BMo.waypoints();
+    /* 오른 정상(landform.js, §5 ⑰)도 지점이다 — 정상으로 건너가 활공으로 내려온다 */
+    var LFw = global.DG.landform;
+    if (LFw && LFw.on() && LFw.waypoints) { list = list.concat(LFw.waypoints()); }
+    return list;
+  }
+  /** (x, y)에서 가장 가까운 순간이동 지점 — { key, x, y, name, d } 또는 null */
+  function nearestWay(x, y) {
+    var best = null, L = wayList();
+    for (var i = 0; i < L.length; i++) {
+      var d = Math.hypot(L[i].x - x, L[i].y - y);
+      if (!best || d < best.d) { best = { key: L[i].key, x: L[i].x, y: L[i].y, name: L[i].name, d: d }; }
+    }
+    return best;
+  }
+  function geoMode() { var wl = W(); return !!wl && wl.mode !== 'keyboard'; }
+  /** 순간이동 — 키보드 판만(biome·landform 이 스스로 막는다). 되면 지도를 닫고 true */
+  function jump(wk) {
+    var BMo = global.DG.biome, LFw = global.DG.landform;
+    if (!wk || !BMo) { return false; }
+    var ok = wk.indexOf('pk:') === 0 ? !!(LFw && LFw.teleport(wk.slice(3))) : BMo.teleport(wk);
+    if (ok) { close(); }
+    return ok;
+  }
+  function fmtD(d) { return d < 1000 ? Math.round(d) + 'm' : (d / 1000).toFixed(1) + 'km'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var ICON = { track: '◆', idle: '◇', avail: '!' };
+
+  /** 고른 표식 — 거리·가장 가까운 지점·따라가기·순간이동 되나. 화면 없이도 돈다 */
+  function pickInfo() {
+    var m = selMark(questLayout().marks);
+    if (!m) { return null; }
+    var pos = core.save.player.pos, way = nearestWay(m.wx, m.wy);
+    return { m: m, d: Math.hypot(m.wx - pos.x, m.wy - pos.y), way: way,
+      canTrack: m.kind === 'idle', canJump: !!way && !geoMode() };
+  }
+  /** 고른 표식을 따라간다 — 안 따라가는 임무·이야기만(맡기 전 ! 는 막힘) */
+  function trackPicked() {
+    var inf = pickInfo(), STY = global.DG.story;
+    if (!inf || !inf.canTrack || !STY) { return false; }
+    STY.setTrack(inf.m.id);
+    renderPick();
+    draw();
+    return true;
+  }
+  function jumpPicked() { var inf = pickInfo(); return !!inf && inf.canJump && jump(inf.way.key); }
+
+  function renderPick() {
+    var box = node && node.querySelector('.ow-pick');
+    if (!box) { return; }
+    var inf = pickInfo();
+    if (!inf) {
+      box.innerHTML = questLayout().marks.length ? '<small class="muted"><b class="q-story">◆</b> 따라가는 임무 · <b class="q-story">◇</b> 맡은 임무 · ' +
+        '<b class="q-wq">!</b> 맡을 수 있는 임무 — 금빛 이야기 · 푸른빛 세계 임무. 표식을 누르면 고른다</small>' : '';
+      return;
+    }
+    var m = inf.m, tb = m.kind === 'track' ? '따라가는 중' : (m.kind === 'avail' ? '맡길 사람에게 말을 걸어 맡는다' : '따라가기');
+    box.innerHTML = '<div class="ow-pick-card"><b class="q-' + m.tone + '">' + ICON[m.kind] + '</b> <b>' + esc(m.name) + '</b> ' +
+      '<small class="muted">' + fmtD(inf.d) + '</small><br><small>' + esc(m.text) + '</small><br>' +
+      '<small class="muted">🌀 가까운 지점 — ' + (inf.way ? esc(inf.way.name) + ' (표식에서 ' + fmtD(inf.way.d) + ')' : '없음') + '</small>' +
+      '<div class="ow-pick-btns"><button class="btn sm" data-pick="track"' + (inf.canTrack ? '' : ' disabled') + '>' + tb + '</button>' +
+      '<button class="btn sm" data-pick="jump"' + (inf.canJump ? '' : ' disabled') + '>' + (geoMode() ? '실제 위치로 걷는 중엔 순간이동 없음' : '가까운 지점으로 순간이동') + '</button></div></div>';
+    var bt = box.querySelector('[data-pick="track"]'), bj = box.querySelector('[data-pick="jump"]');
+    if (bt) { bt.addEventListener('click', trackPicked); }
+    if (bj) { bj.addEventListener('click', jumpPicked); }
+  }
+
   /** 순간이동 지점 단추 — 열 때마다 다시 그린다(발견이 늘었을 수 있다) */
   function renderWay() {
     var box = node && node.querySelector('.ow-way');
     var BMo = global.DG.biome;
     if (!box) { return; }
     if (!BMo || !BMo.on()) { box.innerHTML = ''; return; }
-    var pos = core.save.player.pos, list = BMo.waypoints(), html = '', i;
-    /* 오른 정상(landform.js, §5 ⑰)도 지점이다 — 정상으로 건너가 활공으로 내려온다 */
-    var LFw = global.DG.landform;
-    if (LFw && LFw.on() && LFw.waypoints) { list = list.concat(LFw.waypoints()); }
-    var wl = W(), geo = wl && wl.mode !== 'keyboard';
+    var pos = core.save.player.pos, list = wayList(), html = '', i;
+    var geo = geoMode();
     list.forEach(function (p) { p.d = Math.hypot(p.x - pos.x, p.y - pos.y); });
     list.sort(function (a, b) { return a.d - b.d; });
     html += '<small class="muted">🌀 순간이동 지점' + (geo ? ' — 실제 위치로 걷는 중엔 쓸 수 없다' : '') + '</small><div class="ow-way-list">';
@@ -308,10 +450,7 @@
     var bs = box.querySelectorAll('[data-way]');
     for (i = 0; i < bs.length; i++) {
       (function (b) {
-        b.addEventListener('click', function () {
-          var wk = b.getAttribute('data-way');
-          if (wk.indexOf('pk:') === 0 ? (LFw && LFw.teleport(wk.slice(3))) : BMo.teleport(wk)) { close(); }
-        });
+        b.addEventListener('click', function () { jump(b.getAttribute('data-way')); });
       })(bs[i]);
     }
   }
@@ -320,6 +459,7 @@
     if (!node) { mount(); }
     opened = true;
     apply();
+    renderPick();
     renderWay();
     draw();
   }
@@ -366,12 +506,14 @@
   global.DG = global.DG || {};
   global.DG.overworld = {
     /* 값을 내는 함수 — 순수하다 (자가진단이 이것만 따로 본다) */
-    project: project,
+    project: project, questLayout: questLayout, nearestWay: nearestWay, pickInfo: pickInfo,
+    select: select, trackPicked: trackPicked, jumpPicked: jumpPicked,
+    get picked() { return picked; },
     /* 화면 */
     init: init, tick: tick, draw: draw, open: open, close: close, toggle: toggle,
     get opened() { return opened; },
     stats: stats,
     /** 진단이 제 뒤를 치울 때 */
-    reset: function () { opened = false; lastDrawn = 0; }
+    reset: function () { opened = false; lastDrawn = 0; picked = null; lastMarks = []; }
   };
 })(window);

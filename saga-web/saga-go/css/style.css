@@ -1740,6 +1740,11 @@ body.fc-on #dock, body.fc-on #near { display: none !important; }
 #overworld-map .ow-way { margin-top: 8px; max-height: 120px; overflow-y: auto; }
 #overworld-map .ow-way-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 #overworld-map .ow-way-list .btn em { font-style: normal; opacity: .6; font-size: 11px; }
+#overworld-map .ow-pick { margin-top: 8px; line-height: 1.5; }
+#overworld-map .ow-pick-card { padding: 6px 8px; border-radius: var(--r-md); background: rgba(255,255,255,.05); }
+#overworld-map .ow-pick-btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+#overworld-map .q-story { color: #ffd24a; }
+#overworld-map .q-wq { color: #5fb8ff; }
 
 /* ── 폰 배치 점검(tools/mobile-layout) 으로 잰 자리 ─────────────────────
    폰 가로(844×390)는 폭이 넓어 데스크톱 규칙을 받는데 키가 390 뿐이다 — 세로로 선 독(8칸 = 522px)이
