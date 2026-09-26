@@ -87,20 +87,20 @@ namespace Saga.Dungeon.UI
             _panel.transform.SetParent(canvasGo.transform, false);
             var prt = (RectTransform)_panel.transform;
             prt.anchorMin = prt.anchorMax = prt.pivot = new Vector2(0.5f, 0.5f);
-            prt.sizeDelta = new Vector2(940f, 1000f);
+            prt.sizeDelta = new Vector2(940f, 840f); // 110 ⑤c-3: 1000 은 가로 화면 높이(900)를 넘어 닫기가 잘렸다
             _panel.AddComponent<Image>().color = new Color(0.05f, 0.04f, 0.02f, 0.9f);
 
             _title = NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -25f), new Vector2(880f, 100f), 28);
             for (int i = 0; i < _stageButtons.Length; i++)
             {
                 int idx = i;
-                var b = NewButton(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2((i - 1) * 290f, -150f), new Vector2(260f, 150f),
+                var b = NewButton(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2((i - 1) * 290f, -140f), new Vector2(260f, 150f),
                     new Color(0.8f, 0.62f, 0.2f, 0.45f), 28);
                 b.onClick.AddListener(() => Pick(idx));
                 _stageButtons[i] = b;
                 _stageTexts[i] = b.GetComponentInChildren<TextMeshProUGUI>();
             }
-            _board = NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -330f), new Vector2(880f, 480f), 24);
+            _board = NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -315f), new Vector2(880f, 380f), 24);
             _board.alignment = TextAlignmentOptions.Top;
             var close = NewButton(_panel.transform, DungeonLocalization.T("secret.close", "닫기"), new Vector2(0.5f, 0f),
                 new Vector2(0f, 30f), new Vector2(260f, 80f), new Color(1f, 1f, 1f, 0.16f), 26);

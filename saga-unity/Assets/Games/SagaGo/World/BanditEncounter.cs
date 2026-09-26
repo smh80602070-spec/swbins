@@ -251,7 +251,7 @@ namespace Saga.Go.World
             var panel = EncounterUiKit.NewPanel(canvas.transform, new Vector2(0.5f, 0.5f), new Vector2(700f, 480f), new Color(0f, 0f, 0f, 0.72f));
 
             EncounterUiKit.NewText(panel.transform, GoLocalization.T("encounter.bandit_intro", "🗡 도적의 습격\n\"길세를 내고 가라. 아니면 두고 가든지.\""),
-                new Vector2(0.5f, 1f), new Vector2(0f, -110f), new Vector2(620f, 180f), 30);
+                new Vector2(0.5f, 1f), new Vector2(0f, -28f), new Vector2(620f, 176f), 30); // 110 ⑤c-3: 글 상자가 첫 단추(-220)까지 내려와 겹쳤다
 
             EncounterUiKit.NewButton(panel.transform, GoLocalization.T("encounter.fight"), new Vector2(0.5f, 1f), new Vector2(0f, -220f), new Vector2(560f, 74f), ChooseFight);
             EncounterUiKit.NewButton(panel.transform, GoLocalization.T("encounter.pay"), new Vector2(0.5f, 1f), new Vector2(0f, -304f), new Vector2(560f, 74f), ChoosePay);
@@ -305,17 +305,17 @@ namespace Saga.Go.World
             _flashImage.color = new Color(1f, 0.15f, 0.15f, 0f);
             _flashImage.raycastTarget = false;
 
-            var titleText = EncounterUiKit.NewText(canvas.transform, $"🗡 {GoLocalization.T("foe.bandit", FoeName)}", new Vector2(0f, 1f), new Vector2(220f, -50f), new Vector2(380f, 60f), 30);
+            var titleText = EncounterUiKit.NewText(canvas.transform, $"🗡 {GoLocalization.T("foe.bandit", FoeName)}", new Vector2(0f, 1f), new Vector2(EncounterUiKit.DuelTitleX, EncounterUiKit.DuelTitleY), new Vector2(380f, 60f), 30);
             titleText.alignment = TextAlignmentOptions.Left;
 
-            _timerText = EncounterUiKit.NewText(canvas.transform, string.Format(GoLocalization.T("combat.timer", "{0}초"), 60), new Vector2(1f, 1f), new Vector2(-140f, -50f), new Vector2(220f, 60f), 30);
+            _timerText = EncounterUiKit.NewText(canvas.transform, string.Format(GoLocalization.T("combat.timer", "{0}초"), 60), new Vector2(0f, 1f), EncounterUiKit.DuelTimerPos, new Vector2(220f, 60f), 30);
             _timerText.alignment = TextAlignmentOptions.Right;
 
-            _hpFill = EncounterUiKit.NewBarRow(canvas.transform, GoLocalization.T("combat.momentum", "기세"), -110f, out _);
-            _moraleFill = EncounterUiKit.NewBarRow(canvas.transform, GoLocalization.T("combat.morale", "사기"), -160f, out _);
-            _kiFill = EncounterUiKit.NewBarRow(canvas.transform, GoLocalization.T("combat.ki", "기(氣)"), -210f, out _);
+            _hpFill = EncounterUiKit.NewBarRow(canvas.transform, GoLocalization.T("combat.momentum", "기세"), EncounterUiKit.DuelRowY(0), out _);
+            _moraleFill = EncounterUiKit.NewBarRow(canvas.transform, GoLocalization.T("combat.morale", "사기"), EncounterUiKit.DuelRowY(1), out _);
+            _kiFill = EncounterUiKit.NewBarRow(canvas.transform, GoLocalization.T("combat.ki", "기(氣)"), EncounterUiKit.DuelRowY(2), out _);
 
-            Saga.Core.ButtonWiring.Wire(EncounterUiKit.NewButton(canvas.transform, GoLocalization.T("combat.quick"), new Vector2(0f, 0f), new Vector2(150f, 130f), new Vector2(220f, 110f), null), DoAct, "quick");
+            Saga.Core.ButtonWiring.Wire(EncounterUiKit.NewButton(canvas.transform, GoLocalization.T("combat.quick"), new Vector2(0f, 0f), EncounterUiKit.DuelQuickPos, new Vector2(220f, 110f), null), DoAct, "quick");
             _ultButton = EncounterUiKit.NewButton(canvas.transform, GoLocalization.T("combat.ult"), new Vector2(0.5f, 0f), new Vector2(0f, 130f), new Vector2(220f, 110f), null);
             Saga.Core.ButtonWiring.Wire(_ultButton, DoAct, "ult");
             Saga.Core.ButtonWiring.Wire(EncounterUiKit.NewButton(canvas.transform, GoLocalization.T("combat.dodge"), new Vector2(1f, 0f), new Vector2(-150f, 130f), new Vector2(220f, 110f), null), DoAct, "dodge");

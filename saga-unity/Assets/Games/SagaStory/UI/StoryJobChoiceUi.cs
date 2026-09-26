@@ -34,6 +34,19 @@ namespace Saga.Story.UI
         {
             Instance = this;
             WireButtons();
+            ApplyLayout();
+        }
+
+        /// <summary>
+        /// 판·직업 단추 자리 한 곳 — <see cref="Build"/>(씬 빌더)와 <see cref="Awake"/> 가 같이 부른다(씬을 다시 안 지어도 실행 때 맞는다).
+        /// PLAN.md 110 ⑤c-3: 판 640·간격 100 이면 넷째 직업 단추가 아래 닫기에 파고들었다 → 판 720·첫 단추 -190·간격 95.
+        /// </summary>
+        private void ApplyLayout()
+        {
+            if (_panel != null) ((RectTransform)_panel.transform).sizeDelta = new Vector2(680f, 720f);
+            if (_jobButtons == null) return;
+            for (int i = 0; i < _jobButtons.Length; i++)
+                if (_jobButtons[i] != null) ((RectTransform)_jobButtons[i].transform).anchoredPosition = new Vector2(0f, -190f - 95f * i);
         }
 
         private void WireButtons()
@@ -75,6 +88,7 @@ namespace Saga.Story.UI
             _closeButton = NewButton(_panel.transform, StoryLocalization.T("settings.close"),
                 new Vector2(0.5f, 0f), new Vector2(0f, 40f), new Vector2(300f, 70f));
             _closeLabel = _closeButton.GetComponentInChildren<TextMeshProUGUI>();
+            ApplyLayout();
         }
 
         private static string JobLabel(string jobKey)

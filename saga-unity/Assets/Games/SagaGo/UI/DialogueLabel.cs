@@ -24,8 +24,23 @@ namespace Saga.Go.UI
             Instance = this;
             if (label != null)
             {
+                ApplyLayout(label);
                 label.gameObject.SetActive(false);
             }
+        }
+
+        /// <summary>
+        /// 자리 한 곳 — 씬 빌더와 <see cref="Awake"/> 가 같이 부른다(씬을 다시 안 지어도 실행 때 맞는다).
+        /// PLAN.md 110 ⑤c-3: 가운데 정렬이면 세 줄(영어)이 위로 번져 목표판·Ⅱ 단추에 닿았다 → 목표판 밑에서 시작해 아래로.
+        /// </summary>
+        public static void ApplyLayout(TextMeshProUGUI text)
+        {
+            var rect = text.rectTransform;
+            rect.anchorMin = rect.anchorMax = rect.pivot = new Vector2(0.5f, 1f);
+            rect.anchoredPosition = new Vector2(0f, -112f);
+            rect.sizeDelta = new Vector2(920f, 140f);
+            text.fontSize = 34;
+            text.alignment = TextAlignmentOptions.Top;
         }
 
         public void Show(string text, float seconds)

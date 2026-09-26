@@ -88,6 +88,15 @@ namespace Saga.Go.UI
             return button;
         }
 
+        // PLAN.md 110 ⑤c-3 — 옛 결투(도적·흰 늑대·사당) 화면 자리 한 곳. 늘 있는 HUD 를 피한다:
+        // 제목·남은 시간·막대 셋은 왼쪽 위 레벨·돈 줄(위에서 ~195)·두 줄 대사(위에서 112~) 밑, 속공은 조이스틱(왼쪽 아래 70~210) 오른쪽.
+        // NewText 는 피벗 = 앵커(왼쪽 위)라 x·y 가 상자의 왼쪽 위 모서리다.
+        public const float DuelTitleX = 30f;
+        public const float DuelTitleY = -250f;
+        public static readonly Vector2 DuelTimerPos = new Vector2(430f, DuelTitleY); // 폭 220, 오른쪽 정렬 = 막대 끝(650)에 맞춤
+        public static float DuelRowY(int row) => -320f - 50f * row;
+        public static readonly Vector2 DuelQuickPos = new Vector2(380f, 130f);
+
         /// <summary>왼쪽 라벨 + 오른쪽으로 차는 막대 하나(Image.fillAmount 기반).</summary>
         public static Image NewBarRow(Transform parent, string label, float y, out Image background)
         {

@@ -29,6 +29,26 @@ namespace Saga.Dungeon.UI
         private static readonly string[] AxisLabel = { "공(攻)", "수(守)", "선(旋)" };
         private static readonly string[] AxisKey = { "blessing.axis.atk", "blessing.axis.def", "blessing.axis.sweep" };
 
+        private static readonly Vector2 CardSize = new Vector2(600f, 130f);
+
+        private void Awake() => ApplyLayout();
+
+        /// <summary>
+        /// 카드 자리 한 곳 — <see cref="Build"/>(씬 빌더)와 <see cref="Awake"/> 가 같이 부른다(씬을 다시 안 지어도 실행 때 맞는다).
+        /// PLAN.md 110 ⑤c-3: 카드 140·간격 170 이면 셋째 카드가 아래 거절 단추에 30 파고들었다 → 130·150.
+        /// </summary>
+        private void ApplyLayout()
+        {
+            for (int i = 0; i < _cardButtons.Length; i++)
+            {
+                if (_cardButtons[i] == null) continue;
+                var rt = (RectTransform)_cardButtons[i].transform;
+                rt.anchoredPosition = new Vector2(0f, -170f - 150f * i);
+                rt.sizeDelta = CardSize;
+                if (_cardLabels[i] != null) _cardLabels[i].rectTransform.sizeDelta = CardSize;
+            }
+        }
+
         public void Build()
         {
             var canvas = NewCanvas("BlessingChoiceUI");
@@ -41,16 +61,15 @@ namespace Saga.Dungeon.UI
             _titleLabel = NewText(_panel.transform, DungeonLocalization.T("blessing.title", "축복! 하나를 고르세요"),
                 new Vector2(0.5f, 1f), new Vector2(0f, -60f), new Vector2(620f, 90f), 28);
 
-            float y = -190f;
             for (int i = 0; i < _cardButtons.Length; i++)
             {
                 _cardButtons[i] = NewButton(_panel.transform, "", new Vector2(0.5f, 1f),
-                    new Vector2(0f, y), new Vector2(600f, 140f), null);
+                    new Vector2(0f, -170f - 150f * i), CardSize, null);
                 // 영속 리스너(인자 int) — 람다는 씬 저장 때 사라진다(SagaCore/ButtonWiring.cs).
                 Saga.Core.ButtonWiring.Wire(_cardButtons[i], ChooseIndex, i);
                 _cardLabels[i] = _cardButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-                y -= 170f;
             }
+            ApplyLayout();
 
             _rejectLabel = NewButton(_panel.transform,
                 DungeonLocalization.T("blessing.reject", "거절 — 층수만큼 금 획득"),

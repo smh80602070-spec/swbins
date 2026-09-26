@@ -537,16 +537,8 @@ namespace Saga.EditorTools
 
             var textGo = new GameObject("Label", typeof(RectTransform));
             textGo.transform.SetParent(canvasGo.transform, false);
-            var rect = (RectTransform)textGo.transform;
-            rect.anchorMin = new Vector2(0.5f, 1f);
-            rect.anchorMax = new Vector2(0.5f, 1f);
-            rect.pivot = new Vector2(0.5f, 1f);
-            rect.anchoredPosition = new Vector2(0f, -80f);
-            rect.sizeDelta = new Vector2(920f, 140f);
-
             var text = textGo.AddComponent<TextMeshProUGUI>();
-            text.fontSize = 34;
-            text.alignment = TextAlignmentOptions.Center;
+            DialogueLabel.ApplyLayout(text); // 자리·크기는 런타임 쪽 한 곳(110 ⑤c-3)
             text.color = Color.white;
             text.textWrappingMode = TextWrappingModes.Normal;
             text.text = "";

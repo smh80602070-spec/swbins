@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using TMPro;
 using UnityEditor;
@@ -26,6 +27,10 @@ namespace Saga.EditorTools
     /// - **패널 속 패널(⑤c-2b)**: 판 패널 안의 단추(닫기 류 빼고, 패널마다 <see cref="MaxSubPresses"/> 까지)를 또 눌러 둘째 단계
     ///   (탭·목표 고르기 등)가 뜨면 같은 식으로 잰다 — 같은 모양(새 그래픽 이름 묶음)은 한 번만. 누르면 설정 값도 도니
     ///   판 설정 PlayerPrefs 는 `SagaPrefsBackup` 으로 떠 뒀다 되돌린다.
+    /// - **상태(⑤c-3)**: 단추로는 안 열리고 놀다가 켜지는 것 — GO 들판 전투 명단 넷·폭발 준비·지역 사명 줄, 옛 결투 셋(결투 중엔
+    ///   들판 전투 HUD 가 숨는다)·조우 알림 셋·승급 3택 / DUNGEON 축복 3택·시련 카드·지역 배너 / FOREST 밀어내기 / STORY 전직·선택 /
+    ///   REALM 알림 / 판마다 긴 대사 줄. 알림·고르기는 패널처럼 새로 뜬 것만, 나머지는 화면 전체를 다시 잰다(늘 있는 HUD 와 겹치면 문제).
+    ///   `-uiHidden` 이면 재지 않고 판마다 첫 화면에 숨은 UI 목록만 쓴다(새 상태를 찾을 때).
     /// - 세이브는 백업했다 되돌린다. 결과 "[UiLayoutCheck] OK/FAIL", 자세한 목록은 `Logs/ui_layout_report.txt`.
     /// `-executeMethod Saga.EditorTools.UiLayoutCheck.Run`
     /// </summary>
@@ -63,7 +68,7 @@ namespace Saga.EditorTools
         [MenuItem("Saga/Check/UI Layout (3 aspect ratios)")]
         public static void Run()
         {
-            Report.Clear(); Map.Clear(); Summary.Clear(); _issues = 0; _done = false; _panels = 0; _subPanels = 0; Unclosed.Clear(); HangulBy.Clear(); HangulLines.Clear(); _lang = "ko";
+            Report.Clear(); Map.Clear(); Summary.Clear(); _issues = 0; _done = false; _panels = 0; _subPanels = 0; _states = 0; Unclosed.Clear(); HangulBy.Clear(); HangulLines.Clear(); _lang = "ko";
             SaveBackup.Clear();
             foreach (var f in Directory.GetFiles(Application.persistentDataPath, "save*.json")) SaveBackup[f] = File.ReadAllBytes(f);
             SagaPrefsBackup.Backup();
@@ -96,7 +101,7 @@ namespace Saga.EditorTools
                 Directory.CreateDirectory(Path.GetDirectoryName(ReportPath));
                 File.WriteAllText(ReportPath, Report.ToString() + System.Environment.NewLine + Map + System.Environment.NewLine + "== 영어 바퀴에 남은 한글(16:9)" + System.Environment.NewLine + HangulLines, new UTF8Encoding(false));
                 bool ok = _done && _issues == 0;
-                Debug.Log($"{T} {(ok ? "OK" : "FAIL")} - 문제 {_issues} (done={_done}) · 패널 {_panels} · 속 패널 {_subPanels} · 영어에 한글 {HangulBy.Values.Sum()} [{string.Join(", ", HangulBy.Select(kv => kv.Key + " " + kv.Value))}] · 못 닫음 {Unclosed.Count}{(Unclosed.Count > 0 ? " [" + string.Join(", ", Unclosed) + "]" : "")} | {string.Join(" · ", Summary)}");
+                Debug.Log($"{T} {(ok ? "OK" : "FAIL")} - 문제 {_issues} (done={_done}) · 패널 {_panels} · 속 패널 {_subPanels} · 상태 {_states} · 영어에 한글 {HangulBy.Values.Sum()} [{string.Join(", ", HangulBy.Select(kv => kv.Key + " " + kv.Value))}] · 못 닫음 {Unclosed.Count}{(Unclosed.Count > 0 ? " [" + string.Join(", ", Unclosed) + "]" : "")} | {string.Join(" · ", Summary)}");
                 if (Application.isBatchMode) EditorApplication.Exit(ok ? 0 : 1);
             }
         }
@@ -116,10 +121,37 @@ namespace Saga.EditorTools
         /// <summary>한국어 한 바퀴 → 다섯 판 언어를 영어로 바꿔 타이틀부터 한 바퀴 더(110 ⑤c-2b — 영어 글자가 길어 넘치는 것).</summary>
         private static readonly string[] Langs = { "ko", "en" };
 
+        /// <summary>`-uiHidden`: 재지 않고 판마다 첫 화면에 숨은 UI 목록만(상태 고르기용 조사).</summary>
+        private static bool Quick => System.Environment.GetCommandLineArgs().Contains("-uiHidden");
+
+        private static void Hidden(string scene)
+        {
+            Map.AppendLine($"== {scene} 첫 화면에 숨은 UI");
+            foreach (var c in Resources.FindObjectsOfTypeAll<Canvas>())
+            {
+                if (EditorUtility.IsPersistent(c) || !c.gameObject.scene.IsValid()) continue;
+                if (c.transform.parent != null && c.transform.parent.GetComponentInParent<Canvas>(true) != null) continue;
+                if (c.renderMode != RenderMode.ScreenSpaceOverlay) continue;
+                if (!c.gameObject.activeInHierarchy) { Map.AppendLine($"  [캔버스 꺼짐] {c.name} 그래픽 {c.GetComponentsInChildren<Graphic>(true).Length}"); continue; }
+                Walk(c.transform, 1);
+            }
+            void Walk(Transform t, int depth)
+            {
+                foreach (Transform ch in t)
+                {
+                    int n = ch.GetComponentsInChildren<Graphic>(true).Length;
+                    if (n == 0) continue;
+                    if (!ch.gameObject.activeSelf) Map.AppendLine($"  {PathOf(ch)} 그래픽 {n}");
+                    else if (depth < 3) Walk(ch, depth + 1);
+                }
+            }
+        }
+
         private static IEnumerator Script()
         {
             foreach (var lang in Langs)
             {
+                if (Quick && lang != Langs[0]) break;
                 SetLanguage(lang);
                 _lang = lang;
                 for (int i = 0; i < Scenes.Length; i++)
@@ -129,8 +161,10 @@ namespace Saga.EditorTools
                     int frames = 0;
                     while (frames < 60 || Time.realtimeSinceStartup - t0 < 1.5f) { frames++; yield return null; }
                     string label = (lang == Langs[0] ? "" : lang + ":") + Path.GetFileNameWithoutExtension(Scenes[i]);
+                    if (Quick) { Hidden(label); continue; }
                     foreach (var sc in Screens) Measure(label, sc.name, sc.w, sc.h);
                     yield return Panels(label, i == 0);
+                    yield return States(label, Path.GetFileNameWithoutExtension(Scenes[i]));
                 }
             }
             _done = true;
@@ -227,6 +261,9 @@ namespace Saga.EditorTools
             else if (Saga.Core.SagaPauseMenu.IsOpen) Saga.Core.SagaPauseMenu.Close();
             else if (opener != null && opener.isActiveAndEnabled) opener.onClick.Invoke();
             for (int f = 0; f < 20; f++) yield return null;
+            // 단추 없이 저절로 닫히는 카드(세션 정리 카드 5초 — REALM "다음 달")는 기다린다
+            float t0 = Time.realtimeSinceStartup;
+            while (Alive(fresh) >= 3 && Time.realtimeSinceStartup - t0 < 6f) yield return null;
             int left = Alive(fresh);
             if (left >= 3)
             {
@@ -268,6 +305,288 @@ namespace Saga.EditorTools
         {
             var t = b.GetComponentInChildren<TMP_Text>();
             return t != null ? t.text.Replace("\n", " ") : "";
+        }
+
+        // ───────── 상태 — 단추로는 안 열리고 놀다가 켜지는 것(110 ⑤c-3) ─────────
+
+        /// <summary>
+        /// 상태 하나 = 켜기·끄기. <c>panel</c> 이면 패널처럼 새로 뜬 것만 재고(가운데를 일부러 덮는 알림·고르기),
+        /// 아니면 화면 전체를 다시 잰다(전투 HUD·대사 줄·배너 — 늘 있는 HUD 와 겹치면 안 된다).
+        /// 켜기가 false 면 그 판에 그 상태가 없다(요약에 "없음").
+        /// </summary>
+        private sealed class UiState
+        {
+            public string name;
+            public System.Func<bool> enter;
+            public System.Action exit;
+            public bool panel;
+            public float settle = 0.4f;          // 켠 뒤 기다릴 실제 초(배너 서서히 나타남 등)
+            public System.Action everyFrame;     // 기다리는 동안 매 틱(결투 보고 등)
+        }
+
+        private static int _states;
+
+        private static IEnumerator States(string label, string scene)
+        {
+            int n = 0;
+            foreach (var st in StatesFor(scene))
+            {
+                var before = new HashSet<int>(VisibleGraphics().Select(g => g.GetInstanceID()));
+                bool on;
+                try { on = st.enter(); }
+                catch (System.Exception e) { Debug.LogError($"{T} 상태 켜기 예외 {label} {st.name}: {e}"); _issues++; continue; }
+                if (!on) { Summary.Add($"{label} 상태 {st.name} 없음"); _issues++; continue; }
+                float t0 = Time.realtimeSinceStartup;
+                for (int f = 0; f < 20 || Time.realtimeSinceStartup - t0 < st.settle; f++) { st.everyFrame?.Invoke(); yield return null; }
+                st.everyFrame?.Invoke();
+                string what = $"{label} ▸ 상태 {st.name}";
+                if (st.panel)
+                {
+                    var fresh = VisibleGraphics().Where(g => !before.Contains(g.GetInstanceID())).ToList();
+                    if (fresh.Count < 3) { Summary.Add($"{what} 안 뜸"); _issues++; }
+                    else { var only = new HashSet<Graphic>(fresh); foreach (var sc in Screens) Measure(what, sc.name, sc.w, sc.h, only); }
+                }
+                else foreach (var sc in Screens) Measure(what, sc.name, sc.w, sc.h);
+                n++; _states++;
+                try { st.exit?.Invoke(); }
+                catch (System.Exception e) { Debug.LogError($"{T} 상태 끄기 예외 {label} {st.name}: {e}"); _issues++; }
+                for (int f = 0; f < 10; f++) yield return null;
+            }
+            if (n > 0) Summary.Add($"{label} 상태 {n}");
+        }
+
+        private const BindingFlags Any = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+        private static object Get(object o, string field) => o.GetType().GetField(field, Any).GetValue(o);
+        private static void Set(object o, string field, object v) => o.GetType().GetField(field, Any).SetValue(o, v);
+        private static object Call(object o, string method, params object[] args) => o.GetType().GetMethod(method, Any).Invoke(o, args);
+
+        /// <summary>대사 줄에 넣을 긴 한 줄 — 실제 대사 중 긴 편(두 줄 넘김)과 같은 길이.</summary>
+        private static string LongLine => _lang == "en"
+            ? "Village chief: Bandits have blocked the mountain pass again. Would you go and take a look? I will make it worth your while."
+            : "촌장: 도적 떼가 또 고갯길을 막았다네. 자네가 한번 가 봐 주겠나? 보답은 섭섭지 않게 하겠네.";
+
+        private static UiState Dialogue(System.Func<MonoBehaviour> find) => new UiState
+        {
+            name = "대사 줄",
+            enter = () => { var d = find(); if (d == null) return false; Call(d, "Show", LongLine, 60f); return true; },
+            exit = () => { var d = find(); if (d != null) Call(d, "Show", "", 0.01f); },
+        };
+
+        private static List<UiState> StatesFor(string scene)
+        {
+            var list = new List<UiState>();
+            switch (scene)
+            {
+                case "TestVillage": GoStates(list); list.Add(Dialogue(() => Saga.Go.UI.DialogueLabel.Instance)); break;
+                case "TestDungeon": DungeonStates(list); list.Add(Dialogue(() => Saga.Dungeon.UI.DialogueLabel.Instance)); break;
+                case "TestVillageForest": ForestStates(list); list.Add(Dialogue(() => Saga.Forest.UI.DialogueLabel.Instance)); break;
+                case "TestField": StoryStates(list); list.Add(Dialogue(() => Saga.Story.UI.DialogueLabel.Instance)); break;
+                case "TestCity":
+                    list.Add(new UiState
+                    {
+                        name = "알림",
+                        enter = () => { var t = Saga.Realm.UI.RealmToast.Instance; if (t == null) return false; t.Show(LongLine, 60f); return true; },
+                        exit = () => Saga.Realm.UI.RealmToast.Instance?.Show("", 0.01f),
+                    });
+                    break;
+            }
+            return list;
+        }
+
+        private static void GoStates(List<UiState> list)
+        {
+            // ① 들판 전투 — 명단 넷(이름 긴 인물 셋)·다 폭발 준비·지역 사명 줄. 첫 화면은 주인공 하나라 명단 한 칸뿐이다.
+            List<string> savedMembers = null;
+            float savedEnergy = 0f;
+            list.Add(new UiState
+            {
+                name = "전투 명단 넷",
+                enter = () =>
+                {
+                    var fc = Saga.Go.Combat.FieldCombat.Instance;
+                    if (fc == null) return false;
+                    savedMembers = Saga.Go.Data.PartyState.MemberIds.ToList();
+                    savedEnergy = fc.Party[0].Energy;
+                    var add = Saga.Go.Data.GoHeroes.All.Where(h => !savedMembers.Contains(h.Id))
+                        .OrderByDescending(h => Saga.Go.Data.GoHeroes.Name(h).Length).ThenBy(h => h.Id).Take(3).Select(h => h.Id);
+                    Saga.Go.Data.PartyState.Restore(savedMembers.Concat(add).ToList());
+                    fc.RebuildParty();
+                    foreach (var m in fc.Party) m.Energy = Saga.Go.Combat.FieldCombat.BurstCost;
+                    fc.GetComponent<Saga.Go.Combat.FieldCombatHud>()?.Refresh();
+                    var mission = Saga.Go.UI.RegionMissionHud.Instance;
+                    if (mission != null)
+                    {
+                        var line = (TextMeshProUGUI)Get(mission, "_line");
+                        string region = Saga.Go.Data.GoWorldMap.Regions.Select(r => Saga.Go.Data.GoWorldMap.RegionName(r.Id)).OrderByDescending(s => s.Length).First();
+                        line.text = string.Format(Saga.Go.Data.GoLocalization.T("mission.clear", "◆ {0} 평정! — 금 {1}냥 · 경험치 {2}"), region, 1200, 3400);
+                        line.gameObject.SetActive(true);
+                        Set(mission, "_flashLeft", 999f);
+                    }
+                    return fc.Party.Count == Saga.Go.Combat.FieldCombat.MaxParty;
+                },
+                exit = () =>
+                {
+                    var fc = Saga.Go.Combat.FieldCombat.Instance;
+                    Saga.Go.Data.PartyState.Restore(savedMembers);
+                    if (fc != null)
+                    {
+                        fc.RebuildParty();
+                        foreach (var m in fc.Party) m.Energy = m.Id == fc.Party[0].Id ? savedEnergy : 0f;
+                    }
+                    var mission = Saga.Go.UI.RegionMissionHud.Instance;
+                    if (mission != null) Set(mission, "_flashLeft", 0f);
+                },
+            });
+
+            // ② 옛 결투 셋·③ 조우 알림 셋 — 사건마다 첫 개체의 UI 를 그대로 켠다(게임 상태는 안 건드림).
+            // 결투 중엔 들판 전투 HUD 가 숨는다(DuelGate) — 기다리는 동안 결투를 보고해 그 모습 그대로.
+            foreach (var type in new[] { typeof(Saga.Go.World.BanditEncounter), typeof(Saga.Go.World.RareWolfEncounter), typeof(Saga.Go.World.ShrineTrialEncounter) })
+            {
+                string tn = type.Name.Replace("Encounter", "");
+                GameObject root = null;
+                list.Add(new UiState
+                {
+                    name = $"결투 {tn}",
+                    enter = () =>
+                    {
+                        var enc = Object.FindFirstObjectByType(type);
+                        if (enc == null) return false;
+                        root = (GameObject)Get(enc, "_combatRoot");
+                        root.SetActive(true);
+                        return true;
+                    },
+                    everyFrame = () => Saga.Go.Combat.DuelGate.Report(true),
+                    exit = () => { root.SetActive(false); Saga.Go.Combat.DuelGate.ResetForTest(); },
+                });
+                GameObject prompt = null;
+                list.Add(new UiState
+                {
+                    name = $"조우 {tn}",
+                    panel = true,
+                    enter = () =>
+                    {
+                        var enc = Object.FindFirstObjectByType(type);
+                        if (enc == null) return false;
+                        prompt = (GameObject)Get(enc, "_promptRoot");
+                        prompt.SetActive(true);
+                        return true;
+                    },
+                    exit = () => prompt.SetActive(false),
+                });
+            }
+
+            // ④ 승급 3택 — 레벨이 오를 때 뜬다.
+            list.Add(new UiState
+            {
+                name = "승급 3택",
+                panel = true,
+                enter = () =>
+                {
+                    var ui = Object.FindFirstObjectByType<Saga.Go.UI.PerkChoiceUi>();
+                    if (ui == null) return false;
+                    ui.Show(Saga.Go.Data.PerkState.RollChoice(new System.Random(20260824)), null, null);
+                    return true;
+                },
+                exit = () => { var ui = Object.FindFirstObjectByType<Saga.Go.UI.PerkChoiceUi>(); if (ui != null) Call(ui, "Reject"); },
+            });
+        }
+
+        private static void DungeonStates(List<UiState> list)
+        {
+            list.Add(new UiState
+            {
+                name = "축복 3택",
+                panel = true,
+                enter = () =>
+                {
+                    var ui = Object.FindFirstObjectByType<Saga.Dungeon.UI.BlessingChoiceUi>();
+                    if (ui == null) return false;
+                    ui.Show(Saga.Dungeon.Data.BlessingState.RollChoice(new System.Random(20260824)), null, null);
+                    return true;
+                },
+                exit = () => { var ui = Object.FindFirstObjectByType<Saga.Dungeon.UI.BlessingChoiceUi>(); if (ui != null) Call(ui, "Reject"); },
+            });
+            list.Add(new UiState
+            {
+                name = "시련 카드",
+                panel = true,
+                enter = () =>
+                {
+                    var ui = Saga.Dungeon.UI.TrialCardUi.Instance;
+                    if (ui == null) return false;
+                    ui.Show(Vector3.zero);
+                    return true;
+                },
+                exit = () => Saga.Dungeon.UI.TrialCardUi.Instance?.Close(),
+            });
+            // 지역 배너 — 서서히 떠서 머문다. 이름 가장 긴 지역으로.
+            int announced = -1;
+            list.Add(new UiState
+            {
+                name = "지역 배너",
+                settle = 1.2f,
+                enter = () =>
+                {
+                    var tr = Object.FindFirstObjectByType<Saga.Dungeon.World.DungeonRegionTracker>();
+                    if (tr == null) return false;
+                    announced = tr.Announced;
+                    int longest = Enumerable.Range(0, Saga.Dungeon.Data.DungeonWorldMap.All.Length)
+                        .OrderByDescending(i => (Saga.Dungeon.Data.DungeonWorldMap.BannerTitle(i) + Saga.Dungeon.Data.DungeonWorldMap.BannerLine(i)).Length).First();
+                    Call(tr, "Announce", longest);
+                    return true;
+                },
+                exit = () => Object.FindFirstObjectByType<Saga.Dungeon.World.DungeonRegionTracker>()?.ResetState(announced),
+            });
+        }
+
+        private static void ForestStates(List<UiState> list)
+        {
+            list.Add(new UiState
+            {
+                name = "밀어내기",
+                enter = () =>
+                {
+                    var ui = Saga.Forest.UI.ForestHostileEncounterUi.Instance;
+                    if (ui == null) return false;
+                    ui.StartEncounter(null);
+                    return ui.IsActive;
+                },
+                exit = () =>
+                {
+                    var ui = Saga.Forest.UI.ForestHostileEncounterUi.Instance;
+                    for (int k = 0; k < 50 && ui != null && ui.IsActive; k++) ui.DebugPress();
+                },
+            });
+        }
+
+        private static void StoryStates(List<UiState> list)
+        {
+            list.Add(new UiState
+            {
+                name = "전직 고르기",
+                panel = true,
+                enter = () =>
+                {
+                    var ui = Saga.Story.UI.StoryJobChoiceUi.Instance;
+                    if (ui == null) return false;
+                    ui.Show(Saga.Story.Data.StoryLocalization.T("npc.trainer_choice_prompt", "전직할 수 있습니다 — 원하는 길을 고르세요"), null);
+                    return true;
+                },
+                exit = () => { var ui = Saga.Story.UI.StoryJobChoiceUi.Instance; if (ui != null) ((GameObject)Get(ui, "_panel")).SetActive(false); },
+            });
+            list.Add(new UiState
+            {
+                name = "선택",
+                panel = true,
+                enter = () =>
+                {
+                    var ui = Saga.Story.UI.StoryChoiceUi.Instance;
+                    if (ui == null) return false;
+                    ui.Show(LongLine, LongLine.Substring(0, LongLine.Length / 2), LongLine.Substring(LongLine.Length / 2), null);
+                    return true;
+                },
+                exit = () => { var ui = Saga.Story.UI.StoryChoiceUi.Instance; if (ui != null) ((GameObject)Get(ui, "panel")).SetActive(false); },
+            });
         }
 
         // ───────── 재기 ─────────
@@ -452,6 +771,8 @@ namespace Saga.EditorTools
                 }
                 var widget = WidgetOf(g.transform, c.transform, w / k, h / k, widgetOf);
                 if (px.width * px.height > screenArea * 0.3f) modalWidgets.Add(widget);
+                // 세션 정리 카드는 뒤를 흐리고(DoF) 5초 위를 덮는 카드 — 화면 30% 가 안 돼도 모달(REALM "다음 달" 알림과 같이 뜬다)
+                if (g.GetComponentInParent<Saga.Core.SessionCard>() != null) modalWidgets.Add(widget);
                 found.Add(new Item { g = g, px = px, widget = widget });
             }
             foreach (var it in found)

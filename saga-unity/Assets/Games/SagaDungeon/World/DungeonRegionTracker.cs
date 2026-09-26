@@ -135,6 +135,9 @@ namespace Saga.Dungeon.World
             }
         }
 
+        /// <summary>HUD 빈 틈(왼쪽 기둥 ~230 ↔ 오른쪽 단추 1010, 1600×900 기준)의 가운데 x — 지역 배너·대사 줄이 쓴다(110 ⑤c-3).</summary>
+        public const float FreeCenterX = 615f;
+
         private void BuildBanner()
         {
             var canvasGo = new GameObject("RegionBannerCanvas");
@@ -150,10 +153,11 @@ namespace Saga.Dungeon.World
             var go = new GameObject("RegionBanner", typeof(RectTransform));
             go.transform.SetParent(canvasGo.transform, false);
             var rt = (RectTransform)go.transform;
-            rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 1f);
-            // 대사 줄(-80, 높이 140) 바로 밑 — 가로 PC 캔버스(1080×607)에서도 가운데 캐릭터 위에서 끝난다.
-            rt.anchoredPosition = new Vector2(0f, -225f);
-            rt.sizeDelta = new Vector2(1000f, 90f);
+            // PLAN.md 110 ⑤c-3 — 가운데 1000 폭은 왼쪽 파티 줄·오른쪽 소환·비결 단추와 겹쳤다 → 둘 사이 빈 틈 가운데, 파티 줄 밑.
+            rt.anchorMin = rt.anchorMax = new Vector2(0f, 1f);
+            rt.pivot = new Vector2(0.5f, 1f);
+            rt.anchoredPosition = new Vector2(FreeCenterX, -330f);
+            rt.sizeDelta = new Vector2(760f, 110f);
             _bannerGroup = go.AddComponent<CanvasGroup>();
             _bannerGroup.blocksRaycasts = false;
             _bannerGroup.interactable = false;

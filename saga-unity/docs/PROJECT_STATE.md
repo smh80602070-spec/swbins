@@ -1,7 +1,7 @@
 # PROJECT_STATE — saga-unity (상태만, ≤15KB, 덮어쓴다)
 
 **규칙**(SAGA-DESIGN §9): 지금 상태만, 세션 끝에 덮어쓴다. 경위·이유는 `docs/HISTORY.md` 에 append.
-마지막 갱신: 2026-09-26 (110 ⑤c-2c-2 상태 글 영어·그림 문자 글꼴 — ③ 폰 결과 대기).
+마지막 갱신: 2026-09-27 (110 ⑤c-3 놀다가 켜지는 UI 배치 — ③ 폰 결과 대기).
 
 ## 캐릭터 자산 — 이 PC 기준 (2026-09-19)
 
@@ -21,7 +21,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 
 ## 다음 작업 (우선순위, 상세는 PLAN 해당 장)
 
-0. **다음 = PLAN 110 ⑤c-3**(전투 중에만 켜지는 단추 배치 — GO 폭발·교체 명단) → ⑥ 마감 — ③b 폰 결과 대기. 글자 TMP(`SagaWorldText`·`TmpEffect`, 대체 글꼴 굵게·Noto Emoji), HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`·영어 감시 `HangulWatch`(`-hangulWatch`), 재빌드 `SagaRebuildScenes`. 109 멈춤.
+0. **다음 = PLAN 110 ⑥ 마감**(크레딧·버전·앱 id·아이콘·영어 검수 목록·충돌 로그·AAB 나누기) — ③b 폰 결과 대기. 글자 TMP(`SagaWorldText`·`TmpEffect`), HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`(첫 화면·패널·상태 38, `-uiHidden`)·`HangulWatch`, 재빌드 `SagaRebuildScenes`. 109 멈춤.
 0-1. **남은 것**: en 번역 검수 전. GO 동료 몸 Maria.controller 리타깃·무기는 주인공 손에만.
 1. STORY 판수(15→20 약 11판·20→25 약 28판)가 무거우면 `JobPromoteLevel3/4`만.
 2. **101-2·104-1 잔여(보류)** — GO⑤·Kenney 폴백·헤어카드.
@@ -30,6 +30,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 
 ## 알려진 오류
 
+- **사실 몸 묶음이 없는 PC 에서 `SagaRebuildScenes` 금지** — 씬이 폴백 몸으로 지어진다(`realistic-pack.sh verify` 먼저). 그런 PC 의 판별 진단은 Missing Prefab 로 FAIL(코드 탓 아님). 구운 UI 자리는 런타임 `ApplyLayout()`(빌더·`Awake` 공용)이라 재빌드 없이 맞는다.
 - **씬 빌더(에디터)에서 건 `onClick.AddListener`는 저장 안 된다** — 새 버튼은 `Saga.Core.ButtonWiring.Wire(button, 메서드)`(에디터면 영속·Play면 런타임, 인자 하나는 string/int 오버로드). 람다 불가(경고 남김) → 이름 있는 메서드로. 정적 메서드는 대상 컴포넌트 하나(`XxxSaveButton`). STORY는 `[SerializeField]`+`Awake()` 방식(둘 다 유효). 진단은 `Editor/ButtonWiringCheck.cs`(씬 전체 죽은 버튼 + 진짜 onClick).
 - 영속 리스너 메서드 이름을 바꾸면 **씬 재빌드** 필요 — 안 하면 먹통(`ButtonWiringCheck`가 대상 메서드 존재까지 보니 진단이 잡는다).
 - **`Destroy()`로 자식을 지우고 같은 프레임에 다시 그리면 쌓인다** — onClick 중이면 `DestroyImmediate` 말고 떼어 내고(`SetParent(null)`)·끄고 `Destroy`(`StoryLabyrinthMapUi.ClearChildren`).
@@ -50,19 +51,19 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 
 | 검증 | 결과 |
 |---|---|
-| 재빌드·전체 | 배치 점검·흐름·판별 다섯 3연속 OK(⑤c-2c-2) · **영어(`-hangulWatch`)로도 OK** — **DUNGEON·STORY 는 남은 고레벨 세이브면 실패**, 빼고 돈다 |
-| `PlaytestStorySlice` | **3연속 OK(2026-09-25, 세 시대 뒤)** — `PlaytestStoryEras`·`PlaytestStoryCompanions`·`PlaytestStorySummon`·`PlaytestStoryBossIntro`·`CheckOutfitTint`·`CheckUpperTiersAndPins`·`CheckPromotionAndSchools`·`CheckButtonWiring`(진짜 onClick)·`CheckJobSkills`·무예 세이브 왕복·옛 형식 로드 |
+| 재빌드·전체 | 배치 점검 3연속 OK(⑤c-3, 상태 38 포함) · 흐름·판별 다섯 3연속 OK(⑤c-2c-2) · 영어(`-hangulWatch`)로도 OK — DUNGEON·STORY 는 남은 고레벨 세이브면 실패, 빼고 돈다 |
+| `PlaytestStorySlice` | **3연속 OK(2026-09-25)** — Eras·Companions·Summon·BossIntro·옷 빛깔·상위 차수·전직·ButtonWiring·JobSkills·무예 세이브 왕복·옛 형식 |
 | `PlaytestDungeonHeadless` | **3연속 OK(2026-09-26, 지역 뒤)** — Regions·Trial·Secrets·EraDecor·Eras·Landmarks·BossIntro·Party·Explore·NpcModels·Temple(+컷)·LockOn·EnemyTelegraph. 같은 씬 `FloorProgression`·`OverworldMap` OK |
-| GO `PlaytestHeadless` | **3연속 OK(2026-09-25, 109-9 뒤)** — `PlaytestGo` Peaks·SkillShapes·HeroLooks·HeroDex·Heroes·Eras·RegionProps·RegionTraits·RegionMission·Guardian·SlopesBiome·PartyBodies·ElementalFoe·Treasure·WorldMap·Traversal·FieldCombat |
+| GO `PlaytestHeadless` | **3연속 OK(2026-09-25)** — Peaks·SkillShapes·HeroLooks·HeroDex·Heroes·Eras·Region*·Guardian·SlopesBiome·PartyBodies·ElementalFoe·Treasure·WorldMap·Traversal·FieldCombat |
 | `PlaytestForestHeadless` | **3연속 OK(2026-09-25, 세 시대 뒤)** — `PlaytestForestEras`(사람 6/6 몸·소품 38%·잔해 돎 6)·`Zones`·`ZoneProps` 포함 · `PlaytestForestCreatures` 3연속 · Finish·Furniture·HouseTransition OK |
 | REALM 헤드리스 | **3연속 OK(2026-09-25, 세 시대 뒤)** — `PlaytestRealmEras`(전 성 함락 뒤·문답 앞)·`CheckButtonWiring` |
 | GUI 실제 Play | GO 라이팅·Maria 동작·Dungeon 카메라(yaw=180)·SSS(Intensity=15) |
 
 ## 실기 확인 대기 (항목명만 — 경위는 HISTORY grep)
 
-- GO: **정상·폭포·카메라(109-9) — 폭포 물살·물보라·턱, 정상 판정 넓이, ▲ 순간이동 자리, 집 뒤 카메라 튐** · **스킬 모양(109-8) — 띠·돌진·장판·정령·소환 세기·교체 연출** · **인물 몸(109-7) — 등·허리·머리 꾸밈 자리·몸 너비·금빛 갑옷 열 명** · **들판 인물(109-6a) — 7m 겨루기 거리·★5 두 겹 난이도·지(智) 원거리 예고 원·굴복 무릎 동작·다음 사람 4초** · **세 시대(109-1) — 현대·미래 적 몸·발 미끄럼, 역참 사람 오가기·자리, 위험 줄 길이, 잔해 크기·청록 세기·차 크기** · **수호장 Maw 몸(걷기·공격 박자)** · **마을 사람 셋 모델(106-4)** · **지역 소품·식생(108 ①·107-3)** · **지역 사명(107-8)** · **망루 수호장(107-7·106-9) — 크기·탑 겹침·겉→속 알림·난이도·컷** · **동료 모델(107 ⑥) — Maria 리타깃(등반·활공·수영)·교체·날개** · **원소 쓰는 적(107 ⑤) — 해골이 괴물로 읽히는지·방패 막대·상성·반응 체감** · **지역 지도(107 ③) — 망루·M 지도 가독성** · **이동(107 ②) — 등반 클립이 벽에 붙는지·넘어오르기 0.45s·활공·수영 높이·스태미나·카메라 끼임** · **들판 전투(107 ①) — 3타 간격·예고 0.6s·적 체력·HUD 자리**, 옛 VS 항목, **폰에서 설정·승급 3택·저장 버튼**
-- DUNGEON: **109-10 비결·비전·시련 체감·진척 속도, 지역 배너 자리·땅빛 세기·M 지도 칸 글** · **꾸밈 시대 층(109-2b) — 잔해 크기·빛·카메라 가림** · **세 시대 잡졸 여덟 크기·타격감·손님 대사·행상 몸** · 두목 전용 몸(살수 Ninja·층 주인 Demon·정찰병 Alien Soldier·능묘지기 Ganfaul) · 바위 거신 · 명소 층(108 ③) 주인 세기·방 길이·첫 토벌 무기 · 컷(106-3·106-7 두목·능묘 셋) 길이·샷이 벽에 박히는지·이름표 · 파티·소환(106-6) 클립·게이지·도발/치유 · 탐험(106-5) 점프·등반·탑 불빛 · 사실 모델 NPC 발 미끄럼·자리 · 잊힌 능묘 한 바퀴 · 락온 · 옛 VS·101 항목 — 세부는 HISTORY grep · **폰에서 버튼 전부**
+- GO: **정상·폭포·카메라(109-9)** · **스킬 모양(109-8)** · **인물 몸(109-7) — 꾸밈 자리·몸 너비** · **들판 인물(109-6a) — 겨루기 거리·★5 난이도·굴복 동작** · **세 시대(109-1) — 적 몸·역참 사람·잔해 크기** · 수호장 Maw 몸 · 마을 사람 셋 모델 · 지역 소품·식생·사명 · 망루 수호장·컷 · 동료 모델(Maria 리타깃·교체·날개) · 원소 쓰는 적 · 지역 지도 · 이동(등반·넘어오르기·활공·수영·스태미나·카메라 끼임) · 들판 전투(3타 간격·예고·HUD 자리), 옛 VS 항목 — 세부는 HISTORY grep · **폰에서 설정·승급 3택·저장 버튼**
+- DUNGEON: **109-10 비결·비전·시련 체감, 지역 배너·땅빛·M 지도** · **꾸밈 시대 층(109-2b)** · **세 시대 잡졸 여덟·손님·행상** · 두목 전용 몸 넷 · 바위 거신 · 명소 층(108 ③) · 컷(106-3·106-7·능묘 셋) · 파티·소환(106-6) · 탐험(106-5) · 사실 모델 NPC · 잊힌 능묘 · 락온 · 옛 VS·101 항목 — 세부는 HISTORY grep · **폰에서 버튼 전부**
 - FOREST: **세 시대(109-4) — 잔해 크기·뜬 높이, 덮개 차, 마을 사람 여섯 발·키·대사** · **숲지기 모델** · **존 소품 — 실측 크기·휨 따라 내림·걸림** · **짐승 여덟 모델 — 키·꾸밈 자리·안개유령 투명도·숲 톤** · **특색 존(108 ②) — 명소 크기·휨 따라 내림이 가까이서 튀는지·점광 세기·자막 세 줄**, 옛 101 항목(벽지·가구·생물·좌판·번들·채집·평가·택배·축제·톤 — 세부는 HISTORY grep), **폰에서 저장·설정·밀어내기 버튼**
 - STORY: **세 시대(109-3) — 시대 적 키·타격감·알림·손님** · 두목 Morak(훅 박자) · 척후병·전직관 모델 · 곁의 동료·소환(106-10) · 두목 등장 컷(106-8) · 사건·관계·선택·전직 팝업·관문 대장·비경 · 무예 1~4차(패널 K·칸·손맛·판수·유파 세트·옷 빛깔) — 세부는 HISTORY grep · **폰에서 버튼 전부**
 - REALM: **세 시대(109-5) — 사연 한 토막 줄바꿈·퓨전 카드 뜨는 빈도·이계 무장 셈** · 월드맵, 적국 사슬, 패널 여덟, 목표판/세션카드, 공격·계략, 특성·야망, 전술 토글, 서사 카드, 계승 토글, 일기토·설전, 승리 결과 카드, 성벽 실루엣, 오빗 카메라 pull-in, **폰에서 버튼 전부**
-- 공통: 그림 문자(Noto Emoji 흑백)·영어 대사, Ⅱ 단추·타이틀 설정·새 패널 배치(GO 지도·STORY 무예 2열·REALM 성 스크롤), 폰 발열(30fps·"저" 버튼), BGM 음량, 설정 패널 6줄, SessionCard DoF, 접지 blob 그림자(Mobile 품질), LUT 톤 5장, Screen Space Shadows, Maria 피부 SSS
+- 공통: **⑤c-3 새 자리 — GO 옛 결투 화면(레벨 줄 밑·속공 조이스틱 오른쪽)·DUNGEON/STORY 대사 줄 아래쪽·DUNGEON 지역 배너** · 그림 문자(Noto Emoji 흑백)·영어 대사, Ⅱ 단추·타이틀 설정·새 패널 배치(GO 지도·STORY 무예 2열·REALM 성 스크롤), 폰 발열(30fps·"저" 버튼), BGM 음량, 설정 패널 6줄, SessionCard DoF, 접지 blob 그림자(Mobile 품질), LUT 톤 5장, Screen Space Shadows, Maria 피부 SSS
