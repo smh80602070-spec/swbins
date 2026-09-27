@@ -502,6 +502,11 @@
     { "key": "gesture.job.courier", "value": "📦 배달" },
     { "key": "gesture.job.salaryman", "value": "📱 통화" },
     { "key": "gesture.job.chrononaut", "value": "⌛ 좌표" },
-    { "key": "gesture.job.surveyor", "value": "📡 측정" }
+    { "key": "gesture.job.surveyor", "value": "📡 측정" },
+    { "key": "allysig.guard", "value": "철벽 진동" },
+    { "key": "allysig.mystic", "value": "서리꽃 파동" },
+    { "key": "allysig.combo", "value": "⚡ 합격! {0} · {1} {2}" },
+    { "key": "gesture.sig", "value": "✨ 서명" },
+    { "key": "gesture.combo", "value": "⚡ 합격" }
   ]
 }

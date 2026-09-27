@@ -51,7 +51,8 @@ namespace Saga.Dungeon.World
             if (transform.childCount == 0) BuildVisual();
             var playerGo = GameObject.FindWithTag("Player");
             _player = playerGo != null ? playerGo.transform : null;
-            Gesturer.Attach(gameObject, GestureState.AllyKey, npc: false); // PLAN.md 109-10-7 몸짓 — 호응은 제 시전 클립.
+            Gesturer.Attach(gameObject, GestureState.AllyKey, npc: false, ownKey: GestureState.MysticKey); // PLAN.md 109-10-7 몸짓 — 호응은 제 시전 클립.
+            AllySigCaster.Attach(gameObject, PartyRole.Mystic, null, () => BoltDamage, () => Trigger("Attack")); // PLAN.md 109-10-8 ❄ 서리꽃 파동.
         }
 
         private void OnDestroy()

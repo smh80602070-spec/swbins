@@ -19,6 +19,7 @@ namespace Saga.Dungeon.World
         {
             if (Instance != null) return;
             GestureState.Reset();
+            AllySigState.Reset(); // PLAN.md 109-10-8 — 세션 셈(서명·합격)도 여기서 비운다.
             new GameObject("GestureRunner").AddComponent<GestureRunner>();
         }
 

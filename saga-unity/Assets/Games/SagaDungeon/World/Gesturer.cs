@@ -31,7 +31,7 @@ namespace Saga.Dungeon.World
         };
         private const int BSpine = 0, BHead = 1, BRUpper = 2, BRLower = 3, BLUpper = 4, BLLower = 5;
 
-        private string _key;
+        private string _key, _ownKey;
         private bool _npc;
         private Func<bool> _extraBusy;
         private Animator _animator;
@@ -53,6 +53,8 @@ namespace Saga.Dungeon.World
         private float _triggeredT0 = float.NaN; // NaN 은 무엇과도 같지 않다 — 첫 몸짓은 늘 건다
 
         public string Key => _key;
+        /// <summary>이 배우만 읽는 키(동행 서명) — 걸려 있으면 <see cref="Key"/> 보다 먼저.</summary>
+        public string OwnKey => _ownKey;
         public bool IsNpc => _npc;
         public bool Humanoid => _bones != null;
         /// <summary>진단 — 마지막 프레임 몸짓·글자·걸어 둔 트리거.</summary>
@@ -65,13 +67,14 @@ namespace Saga.Dungeon.World
         public int Greets { get; private set; }
 
         /// <summary>붙이기(이미 있으면 그것을 돌려준다). key 는 "역할@x,z" 식 — 틈틈이 주기가 키로 정해진다.</summary>
-        public static Gesturer Attach(GameObject root, string key, bool npc, Func<bool> extraBusy = null)
+        public static Gesturer Attach(GameObject root, string key, bool npc, Func<bool> extraBusy = null, string ownKey = null)
         {
             var g = root.GetComponent<Gesturer>();
             if (g == null) g = root.AddComponent<Gesturer>();
             g._key = key;
             g._npc = npc;
             g._extraBusy = extraBusy;
+            g._ownKey = ownKey;
             return g;
         }
 
@@ -145,11 +148,13 @@ namespace Saga.Dungeon.World
             if (_key == null) return;
             bool busy = IsBusy();
             LastBusy = busy;
-            var p = GestureState.Plan(_key, now, busy, _npc);
+            var p = _ownKey != null && GestureState.TryActive(_ownKey, now, out _)
+                ? GestureState.Plan(_ownKey, now, busy, false)
+                : GestureState.Plan(_key, now, busy, _npc);
             LastPose = p;
 
             RestoreUntouched();
-            if (p.Kind != GestureState.Kind.None && p.Slot != GestureState.Slot.Idle)
+            if (p.Kind != GestureState.Kind.None && p.Slot != GestureState.Slot.Idle && p.Slot != GestureState.Slot.None)
             {
                 float w = Envelope(p.K);
                 if (p.Slot == GestureState.Slot.Attack && !_npc && HasTrigger("Attack"))

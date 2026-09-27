@@ -15,12 +15,12 @@ namespace Saga.Dungeon.Data
     /// 웹의 마을 사람 일곱(대장·야장·서생…)은 이 판에 없다 — 이 판 마을에 선 사람으로 표를 새로 짰다: 촌민(두 몸 번갈아)·행상(시대 행상 포함)·
     /// 시대 손님 넷(웹 ERA_FOLK 넷과 짝: 택배 기사 courier·회사원 officeworker→salaryman·시간 여행자 timetraveler→chrononaut·탐사 대원 explorer→surveyor).
     /// 걷거나 치는 중인 배우는 몸짓 대신 제 동작을 두고 글자만 띄운다. 웹 손잡이 `dungeon.gesture` 는 <see cref="Enabled"/>(끄면 예전 그대로).
-    /// 5.17 동행 서명(✨ 서명·⚡ 합격)은 다음 조각이라 여기 없다.
+    /// 5.17 동행 서명(109-10-8): 쓴 동행만 ✨ 서명 / ⚡ 합격 1.0초 — 몸은 서명 쪽(<c>AllySigCaster</c>)이 제 공격 클립을 틀어 여기선 글자만.
     /// </summary>
     public static class GestureState
     {
         /// <summary>몸짓 동작 — 웹 asset3d 슬롯 이름에 맞춘다.</summary>
-        public enum Slot { Idle, Attack, Interaction, Wave, Jump }
+        public enum Slot { Idle, Attack, Interaction, Wave, Jump, None }
 
         public struct Job
         {
@@ -41,7 +41,7 @@ namespace Saga.Dungeon.Data
             new Job { Key = "surveyor",   Work = Slot.Interaction, TextKey = "gesture.job.surveyor",   TextKo = "📡 측정" },
         };
 
-        public enum Kind { None, Work, Greet, Serve, Rally, Cheer }
+        public enum Kind { None, Work, Greet, Serve, Rally, Cheer, Sig }
 
         private struct KindDef
         {
@@ -57,11 +57,14 @@ namespace Saga.Dungeon.Data
             { Kind.Serve, new KindDef { Dur = 1.6f, Slot = Slot.Idle } },
             { Kind.Rally, new KindDef { Dur = 0.8f, Slot = Slot.Attack, TextKey = "gesture.rally", TextKo = "❗ 호응" } },
             { Kind.Cheer, new KindDef { Dur = 1.4f, Slot = Slot.Jump, TextKey = "gesture.cheer", TextKo = "🎉", Bob = true } },
+            { Kind.Sig, new KindDef { Dur = 1.0f, Slot = Slot.None, TextKey = "gesture.sig", TextKo = "✨ 서명" } },
         };
 
         public const float WorkMin = 7f, WorkSpan = 5f, WorkDur = 1.4f;
         /// <summary>동행 둘이 같이 읽는 키(웹 'ally').</summary>
         public const string AllyKey = "ally";
+        /// <summary>동행 하나만 읽는 키(서명은 쓴 쪽만) — <c>Gesturer</c> 는 제 키를 먼저 본다.</summary>
+        public const string GuardKey = "ally.guard", MysticKey = "ally.mystic";
 
         /// <summary>웹 손잡이 `dungeon.gesture` — 끄면 몸짓·글자 없음.</summary>
         public static bool Enabled = true;
@@ -199,6 +202,10 @@ namespace Saga.Dungeon.Data
         public static bool OnLeadSignature(float now) => Start(AllyKey, Kind.Rally, now);
 
         public static bool OnLevelUp(float now) => Start(AllyKey, Kind.Cheer, now, DungeonLocalization.T("gesture.cheer_level", "🎉 경하"));
+
+        /// <summary>동행 서명(109-10-8) — 쓴 동행 키에 ✨ 서명, 합격이면 ⚡ 합격.</summary>
+        public static bool OnAllySig(string allyKey, bool combo, float now) =>
+            Start(allyKey, Kind.Sig, now, combo ? DungeonLocalization.T("gesture.combo", "⚡ 합격") : null);
 
         /// <summary>두목급 처치만 — 잡졸은 null(false).</summary>
         public static bool OnKill(bool bossClass, float now) =>

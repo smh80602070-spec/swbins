@@ -502,6 +502,11 @@
     { "key": "gesture.job.courier", "value": "📦 Delivering" },
     { "key": "gesture.job.salaryman", "value": "📱 On a call" },
     { "key": "gesture.job.chrononaut", "value": "⌛ Plotting" },
-    { "key": "gesture.job.surveyor", "value": "📡 Surveying" }
+    { "key": "gesture.job.surveyor", "value": "📡 Surveying" },
+    { "key": "allysig.guard", "value": "Iron Wall Quake" },
+    { "key": "allysig.mystic", "value": "Frostbloom Wave" },
+    { "key": "allysig.combo", "value": "⚡ Combo! {0} · {1} {2}" },
+    { "key": "gesture.sig", "value": "✨ Signature" },
+    { "key": "gesture.combo", "value": "⚡ Combo" }
   ]
 }

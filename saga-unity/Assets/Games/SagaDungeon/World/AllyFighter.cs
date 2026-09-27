@@ -40,7 +40,7 @@ namespace Saga.Dungeon.World
         // 동행 stats: might=24, wisdom=12, command=18(방어 기여는 이번
         // 슬라이스에 안 씀, 동행이 안 죽어 체력 계산이 필요 없다).
         private const float Atk = 24f * 0.7f + 12f * 0.3f; // 20.4
-        private static float HitDamage => Mathf.Max(4f, Atk / 6f); // dungeon.js atkOf()와 같은 공식
+        public static float HitDamage => Mathf.Max(4f, Atk / 6f); // dungeon.js atkOf()와 같은 공식
 
         private static readonly Color BodyColor = new Color(0.3f, 0.45f, 0.7f); // 동행 — 청색 갑주
         private const float TargetHeight = 1.7f; // 기존 primitive capsule 기준(높이 2m × 0.85) 그대로 유지.
@@ -86,7 +86,9 @@ namespace Saga.Dungeon.World
             var playerGo = GameObject.FindWithTag("Player");
             _player = playerGo != null ? playerGo.transform : null;
             // PLAN.md 109-10-7 몸짓 — 선두 회전베기에 ❗ 호응(제 베기 클립)·두목급 처치·레벨업에 환호. 쓰러졌거나 도발 중이면 글자만.
-            Gesturer.Attach(gameObject, GestureState.AllyKey, npc: false, () => !IsUp || Taunting);
+            Gesturer.Attach(gameObject, GestureState.AllyKey, npc: false, () => !IsUp || Taunting, ownKey: GestureState.GuardKey);
+            // PLAN.md 109-10-8 동행 서명 — 💥 철벽 진동(쓰러져 있으면 못 씀).
+            AllySigCaster.Attach(gameObject, PartyRole.Guard, () => IsUp, () => HitDamage, () => Trigger("Attack"));
         }
 
         private void OnDestroy()
