@@ -485,12 +485,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var list = DG.rogue.darkList();
       if (!list.length) { return false; }
       var d = list[0];
+      delete C.save.dex.pets[d.pet.id];            // 앞 진단(세이브를 나눠 쓴다)이 같은 종을 도감에 넣어 두었으면 '처음부터 도감'으로 실패했다(09-28)
       C.save.dust = 0;
       var no = DG.rogue.purify(d.pet.id);          // 단사가 없으면 안 풀린다
       DG.growth.addDust(d.cost.dust);
       var dex0 = !!C.save.dex.pets[d.pet.id];
       var herb0 = DG.growth.herbOf(d.pet.id);
       var yes = DG.rogue.purify(d.pet.id);
+      var why = [!no.ok ? '' : '단사 없이 풀림', yes.ok ? '' : '안 풀림 ' + JSON.stringify(yes), !dex0 ? '' : '처음부터 도감', C.save.dex.pets[d.pet.id] ? '' : '도감 안 듦',
+        DG.growth.herbOf(d.pet.id) > herb0 ? '' : '약초 안 늚', DG.rogue.darkCount() === 0 ? '' : '남은 적도 ' + DG.rogue.darkCount()].filter(Boolean);
+      if (why.length) { return '실패 ' + why.join(' · '); }
       return !no.ok && yes.ok && !dex0 && !!C.save.dex.pets[d.pet.id] &&
         DG.growth.herbOf(d.pet.id) > herb0 && DG.rogue.darkCount() === 0 &&
         (d.pet.name + ' — ✨ −' + d.cost.dust + ' · 도감 등록 · 🌿 +' +
@@ -1049,6 +1053,19 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var hit = FC.attack(S, 0, 0);
       return Math.abs(stand - want) < 0.2 && stand > 3.5 && hurt >= 1 && hit.ok && !hit.miss &&
         ('섬영마 몸 ' + body.toFixed(1) + 'm → ' + stand.toFixed(1) + 'm 에서 멈춤(옛 1.8m) · 그 자리에서 맞음 ' + hurt + ' · 내 공격 닿음');
+    });
+
+    t('들판 전투 — 자동 전투: 나를 칠 공격이 막 떨어질 때만 위협(자동 회피가 비킨다) · 멀거나 아직 이르면 아님', function () {
+      /* 2026-09-28 실기 Q6 — 🤖 가 예고를 하나도 안 피하고 0.3초마다만 눌러 보통 무리에 60초·체력 바닥 */
+      var FC = DG.fieldCombat, S = fcState(), f = fcFoe(S, 'boar', 3.5, 0), far = fcFoe(S, 'boar', 30, 0);
+      f.st = 'wind'; f.stT = 0.6; f.atkT = 'melee'; f.mark = null;
+      var early = FC.autoThreat(S, 0, 0);
+      f.stT = 0.1;
+      var now = FC.autoThreat(S, 0, 0);
+      var away = FC.autoThreat(S, -8, 0);
+      far.st = 'wind'; far.stT = 0.1; far.atkT = 'melee';
+      var onlyNear = FC.autoThreat(S, 0, 0) === f;
+      return early === null && now === f && away === null && onlyNear && '0.6초 전엔 아님 · 0.1초 전 코앞이면 위협 · 8m 떨어지면 아님 · 30m 적은 안 셈';
     });
 
     t('들판 전투 ⑲-2 — 낙하 공격: 둘레 3.5m ×(1.2 + 0.1×떨어진 m), 15m 에서 막힘', function () {

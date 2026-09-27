@@ -1777,6 +1777,30 @@
     return !!((st && st.autoBattle) || (sv.auto && sv.auto.on));
   }
 
+  /** 자동 회피(2026-09-28 실기 Q6) — 🤖 는 예고(붉은 원·코앞 휘두름)를 하나도 안 피해 혼자면 보통 무리에도 거의 쓰러졌다.
+      나를 칠 공격이 막 떨어지려 할 때(무적 시간 안) 기력이 있으면 그 자리에서 비켜 난다. 매 프레임 본다 */
+  function autoThreat(S, px, py) {
+    var L = living(S), i;
+    for (i = 0; i < L.length; i++) {
+      var f = L[i];
+      if (f.st !== 'wind' || f.stT > DODGE_IFRAME() * 0.7) { continue; }
+      var F = FOES[f.kind], WT = f.atkT || F.type, WR = F.rot ? ROT[WT] : F;
+      if (f.mark ? markHit(f.mark, px, py, 0) : (!f.atkSiege && Math.hypot(f.x - px, f.y - py) - BODY(f) <= WR.reach + 0.6)) { return f; }
+    }
+    return null;
+  }
+  function autoDodge(pos) {
+    if (S.iframe > 0 || S.dash || !K('autoDodge', 1)) { return false; }
+    var f = autoThreat(S, pos.x, pos.y);
+    if (!f) { return false; }
+    var c = f.mark ? (f.mark.list ? f.mark.list[0] : f.mark) : f;
+    var dx = pos.x - c.x, dy = pos.y - c.y;
+    if (Math.hypot(dx, dy) < 0.3) { dx = pos.x - f.x; dy = pos.y - f.y; }        // 내 발밑에 떨어지는 침 — 쏜 적 반대쪽으로
+    var r = dodge(S, dx, dy, pos.x, pos.y);
+    if (r.ok) { handle(drain(S), pos); }
+    return r.ok;
+  }
+
   function autoFight(pos) {
     var m = active(S);
     if (!m || m.down) { return; }
@@ -1808,7 +1832,9 @@
     step(S, dt, { px: pos.x, py: pos.y, blocked: bl });
     if (!bl && autoOn() && engaged(S)) {
       lastAuto += dt;
-      if (lastAuto > 0.3) { lastAuto = 0; autoFight(pos); }
+      /* 2026-09-28 실기 Q6 "너무 오래 걸림" — 0.3초마다만 눌러 칼 3타(0.34초 박자)의 절반을 놓쳤다(초당 46 피해,
+         손으로 연타하면 159). 공격 쿨이 풀리는 그 프레임에도 누른다 */
+      if (!autoDodge(pos) && (lastAuto > 0.3 || S.atkCd <= 0)) { lastAuto = 0; autoFight(pos); }
     }
     handle(drain(S), pos);
     if (!global.DG_NO_DRAW) { paint(dt); }
@@ -2416,7 +2442,7 @@
     SKILL_CD: SKILL_CD, SWAP_CD: SWAP_CD, BODY: BODY, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */
     elementOf: elementOf, EL_KEYS: EL_KEYS, heavy: heavy, plunge: plunge, plungeMul: plungeMul, plungeLand: plungeLand, PLUNGE_R: PLUNGE_R(), CHARGE_COST: CHARGE_COST(), REACT: REACT, attaches: attaches, shapeOf: shapeOf, SHAPES: SHAPES, kitFor: kitFor, segDist: segDist, react: react, shieldMul: shieldMul, campAt: campAt, tierAt: tierAt, guardianAt: guardianAt, COUNTER: COUNTER,
-    create: create, reparty: reparty, populate: populate, spawnCamp: spawnCamp, step: step, drain: drain,
+    autoThreat: autoThreat, create: create, reparty: reparty, populate: populate, spawnCamp: spawnCamp, step: step, drain: drain,
     attack: attack, skill: skill, burst: burst, dodge: dodge, swap: swap, hitFoe: hitFoe,
     canAim: canAim, aimStart: aimStart, aimEnd: aimEnd, aimSteer: aimSteer, aimHold: aimHold, aimShoot: aimShoot, aimLock: aimLock, stepArrows: stepArrows,
     AIM_R: AIM_R(), AIM_FULL: AIM_FULL(), AIM_PART: AIM_PART(), AIM_FULLMUL: AIM_FULLMUL(), ARROW_V: ARROW_V(), ARROW_RANGE: ARROW_RANGE(),
