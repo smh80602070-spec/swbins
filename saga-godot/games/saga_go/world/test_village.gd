@@ -233,6 +233,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_aftermath.gd").new())
 	if OS.get_environment("SAGA_AMBER_PROBE") != "": # 106장 53-1 여덟째 지역 굳은 거리
 		add_child(load("res://tools/probe_amber.gd").new())
+	if OS.get_environment("SAGA_STORY9_PROBE") != "": # 106장 53 이야기 9부(30장~)
+		add_child(load("res://tools/probe_story9.gd").new())
 
 	## PLAN 106장 ㊸ — 업적(다른 노드 신호에 붙으므로 맨 뒤).
 	var achievements := preload("res://games/saga_go/world/achievements.gd").new()
