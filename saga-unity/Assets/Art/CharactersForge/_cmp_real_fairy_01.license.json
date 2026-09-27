@@ -12,6 +12,6 @@
   "makehuman_system_assets: eyelashes02/eyelashes02.mhclo",
   "makehuman_system_assets: teeth_base/teeth_base.mhclo",
   "makehuman_system_assets: bob02/bob02.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): robe"
+  "makehuman_system_assets: cf_leafdress/cf_leafdress.mhclo"
  ]
 }

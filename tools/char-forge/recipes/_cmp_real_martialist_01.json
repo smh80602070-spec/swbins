@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_martialist_01",
- "_note": "단계 3 GO 인물 비교용 — saga-unity Brady(Mixamo) 자리 후보(GO '무도복 수행자', 109-7). 게임 인물 아님. 마른 근육질 남자·짧은 머리·흰 무도복 저고리·흰 바지·검은 띠·맨발. 정찰병(삼베 저고리·감발)과 겹치지 않게. 09-26 진짜 옷(흰 바지저고리(공방)·맨발, 검은 띠는 옷 면 껍데기).",
+ "_note": "단계 3 GO 인물 비교용 — saga-unity Brady(Mixamo) 자리 후보(GO '무도복 수행자', 109-7). 게임 인물 아님. 마른 근육질 남자·짧은 머리·흰 무도복 저고리·흰 바지·검은 띠·맨발. 정찰병(삼베 저고리·감발)과 겹치지 않게. 09-26 진짜 옷(흰 바지저고리(공방)·맨발, 검은 띠는 옷 면 껍데기). 09-27 belt = 공방 옷(옷 면 껍데기 띠는 구겨진 고리).",
  "macro": {
   "gender": 1.0,
   "age": 0.45,
@@ -21,27 +21,8 @@
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "_garments": [
-  "baji_jeogori@ece6d6,ece6d6"
- ],
- "kitbash": [
-  {
-   "part": "shell",
-   "slot": "leather_belt",
-   "color": "#141414",
-   "rough": 0.8,
-   "offset": 0.022,
-   "thick": 0.007,
-   "groups": [
-    "pelvis",
-    "spine_01"
-   ],
-   "z": [
-    0.54,
-    0.58
-   ],
-   "minw": 0.5,
-   "src": "cf_baji_jeogori_ece6d6_ece6d6"
-  }
+  "baji_jeogori@ece6d6,ece6d6",
+  "belt"
  ],
  "anims": {
   "idle": "Idle_Loop",
@@ -52,6 +33,7 @@
   "death": "Death01"
  },
  "clothes": [
-  "cf_baji_jeogori_ece6d6_ece6d6/cf_baji_jeogori_ece6d6_ece6d6.mhclo"
+  "cf_baji_jeogori_ece6d6_ece6d6/cf_baji_jeogori_ece6d6_ece6d6.mhclo",
+  "cf_belt/cf_belt.mhclo"
  ]
 }

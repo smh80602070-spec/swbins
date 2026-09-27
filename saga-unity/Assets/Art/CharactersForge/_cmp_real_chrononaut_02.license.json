@@ -14,6 +14,7 @@
   "makehuman_system_assets: afro01/afro01.mhclo",
   "makehuman_system_assets: matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
   "makehuman_system_assets: matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell"
+  "makehuman_system_assets: cf_neckring/cf_neckring.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell"
  ]
 }

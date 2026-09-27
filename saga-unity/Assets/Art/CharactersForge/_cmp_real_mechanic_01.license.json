@@ -15,6 +15,7 @@
   "makehuman_system_assets: male_worksuit01/male_worksuit01.mhclo",
   "makehuman_system_assets: culturalibre_male_boots/culturalibre_male_boots.mhclo",
   "makehuman_system_assets: toigo_gloves_medium/toigo_gloves_medium.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell"
+  "makehuman_system_assets: cf_belt_low/cf_belt_low.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell"
  ]
 }

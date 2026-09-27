@@ -5,7 +5,7 @@
 
 껍데기(shell)와 다른 점: 살을 복제해 띄우지 않고 **옷의 모양을 따로 짓는다**. 옷 하나 = 부품 여럿(`parts`):
   tube    몸통 통 — 위(목·가슴·허리)에서 아래(발목·무릎·엉덩이)까지. `arc`(가운데 도, 폭 도)면 앞(270)·뒤(90) 한쪽 판(겉옷판·망토, 살 안 지움). 가랑이 아래는 치마 도우미(helper-skirt)에 붙어 다리 사이가 안 갈라진다.
-          `over` 만큼 밖에 겹쳐 입는다(저고리 위 치마 끝, 갑옷 위 비늘 치마). `mono` 면 아래로 좁아지지 않는다(가슴에서 시작하는 치마).
+          `over` 만큼 밖에 겹쳐 입는다(저고리 위 치마 끝, 갑옷 위 비늘 치마). `mono` 면 아래로 좁아지지 않는다(가슴에서 시작하는 치마). `teeth`·`tooth` 면 끝단이 톱니(잎 옷·해진 옷자락).
   sleeves 소매 — `length` 팔 몫(1 = 손목, 0.35 = 어깨 갑옷), `start` 시작(0.6 = 팔꿈치 아래 팔 가리개, 윗팔 살은 안 지운다), `drop` 처짐, `flare` 끝 넓힘
           `arc`(도) = 팔 바깥쪽만 두르는 판(소데), `bag` = 팔꿈치부터 네모나게 늘어진 자루(기모노)
   band    띠 — 그 높이 통 둘레 바깥(`ease` 면 통 대신 몸 볼록 둘레 + ease — 앞뒤 판만 있는 겉옷판 위 허리띠)
@@ -452,6 +452,32 @@ GARMENTS = {
     'beanie': dict(desc='비니 — 뜨개 몸통·접어 올린 단', tags=['hat', 'modern'], colors=dict(C1='#b0206a'), parts=[
         dict(kind='crown', ease=0.02, brow=0.055, dome=0.035, cuff=0.032, slot=6, paint=dict(base='C1', pattern='knit')),
     ]),
+    # 잎 옷 — 요정·정령. 몸에 붙는 윗판 + 허벅지까지 퍼지는 톱니 끝단
+    'leafdress': dict(desc='잎 옷 — 톱니 끝단 민소매 짧은 옷', tags=['dress', 'fantasy'], colors=dict(C1='#5f8a3c'), parts=[
+        dict(kind='tube', top=('neck', 0), bottom=('crotch', -0.16), ease=0.008, fit=True, flare=0.35, folds=0.03, nfolds=9, teeth=9, tooth=0.06, slot=0,
+             paint=dict(base='C1', pattern='leaf', teeth=9, trims=[('top', 0.015, '#3e5e24')])),
+    ]),
+    # 해진 옷자락 — 안개유령. 목부터 발목 아래까지, 넓게 처진 소매, 해진 끝단(다리는 옷 밑에서 지운다)
+    'wraith': dict(desc='해진 긴 옷자락·처진 넓은 소매', tags=['robe', 'fantasy'], colors=dict(C1='#4a5a70', C2='#2e3a4c'), parts=[
+        dict(kind='tube', top=('neck', 0), bottom=('ankle', -0.02), ease=0.014, flare=0.5, folds=0.04, nfolds=11, teeth=14, tooth=0.08, slot=0,
+             paint=dict(base='C1', pattern='weave', trims=[('bottom', 0.025, 'C2'), ('top', 0.015, 'C2')])),
+        dict(kind='sleeves', length=1.0, ease=0.02, drop=0.14, flare=0.5, cuff=0.0, slot=2, paint=dict(base='C1', pattern='weave')),
+    ]),
+    # 띠 — 허리(무도 띠)·엉덩이(연장 띠). 옷 면 껍데기 띠는 구겨진 고리였다(09-27)
+    'belt': dict(desc='허리띠', tags=['belt'], colors=dict(C1='#141414'), parts=[
+        dict(kind='band', at=('waist', 0.02), width=0.045, ease=0.03, slot=3, paint=dict(base='C1', pattern='weave')),
+    ]),
+    'belt_low': dict(desc='엉덩이 띠(연장 띠)', tags=['belt'], colors=dict(C1='#5a4028'), parts=[
+        dict(kind='band', at=('hip', 0.04), width=0.05, ease=0.03, slot=3, paint=dict(base='C1', pattern='studs', motif='#9a9a9a')),
+    ]),
+    # 무릎 받이
+    'kneepads': dict(desc='무릎 받이', tags=['armor', 'modern'], colors=dict(C1='#1f1f1f'), parts=[
+        dict(kind='leggings', top=('knee', 0.045), bottom=('knee', -0.045), ease=0.022, smooth=2, slot=5, paint=dict(base='C1', pattern='plate')),
+    ]),
+    # 쇠 목 고리
+    'neckring': dict(desc='쇠 목 고리', tags=['armor', 'future'], colors=dict(C1='#bcc2ca'), parts=[
+        dict(kind='collar', bottom=-0.025, height=0.03, ease=0.014, roll=0.004, slot=1, paint=dict(base='C1', pattern='plate')),
+    ]),
     # 베레모 — 한쪽으로 쏠려 처진 둥근 납작 모자(현대)
     'beret': dict(desc='베레모 — 한쪽으로 쏠린 둥근 납작 모자', tags=['hat', 'modern'], colors=dict(C1='#6a1f2a'), parts=[
         dict(kind='beret', slot=6, paint=dict(base='C1', pattern='weave', trims=[('bottom', 0.1, '#4a141c')])),
@@ -654,6 +680,11 @@ class Builder:
             rows.append(ring)
             refs.append(Vector((B.cx, B.cy, z)))
             ringz.append(z)
+        if p.get('teeth'):   # 톱니 끝단(잎 옷·해진 옷자락) — 맨 아래 줄을 세모꼴로 내린다. 살 껍데기 옷자락(robe)은 거친 통이었다(09-27)
+            nt, dep = p['teeth'], p.get('tooth', 0.05)
+            for j, v in enumerate(rows[0]):
+                t = (j * nt / len(rows[0])) % 1.0
+                v.co.z -= dep * (1 - abs(2 * t - 1)) * (0.75 + 0.25 * math.sin(j * 2.3))
         if neck_top:  # 어깨 → 목둘레(목 살 둘레 + 여유)
             zn = B.lv['neck']
             npts = [(B.co[i].x, B.co[i].y) for i in B.body if abs(B.co[i].z - zn) < 0.02 and B.W[i].get('neck_01', 0) > 0.3]
@@ -1487,6 +1518,13 @@ def paint(g, dpath, npath):
             ln = (xx % 22) < 3
             shade = 1 - 0.22 * ln + 0.03 * noise + 0.03 * np.sin(yy * 0.9)
             h = -0.4 * ln
+        elif pat == 'leaf':                          # 잎 — 톱니마다 가운데 잎맥 + 비스듬한 곁맥(teeth 개수에 맞춘다)
+            nt = P.get('teeth', 9)
+            u = (s * nt) % 1.0
+            mid = np.abs(u - 0.5) < 0.012
+            side = np.abs(((np.abs(u - 0.5) * 2.2 + t * 6) % 1.0) - 0.5) < 0.03
+            shade = 1 - 0.16 * mid - 0.08 * side + 0.04 * noise
+            h = -0.6 * mid - 0.3 * side
         elif pat == 'knit':                          # 골진 뜨개(목폴라) — 가는 세로 골, 결 부드럽게
             cr = np.sin(xx * 0.6)
             shade = 1 + 0.07 * cr + 0.03 * noise

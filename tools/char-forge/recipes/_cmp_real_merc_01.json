@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_merc_01",
- "_note": "단계 3 STORY 비교용 — saga-unity Steve(Mixamo) 자리 후보(STORY 현대 '용병 돌격대', 비경 5층~). 게임 인물 아님. 09-26 진짜 옷(CC0 모래빛 티·바지·군화·장갑, 방탄 조끼·무릎 받이·모자는 껍데기). 다부진 용병 — 모래빛 전투복·국방색 방탄 조끼(앞뒤)·검은 장갑·무릎 받이·모래빛 군화·검은 야구모자. 진압 특공대(먹빛)·순찰 대원(남색)과 겹치지 않게. 09-27 모자 = 공방 cap_peaked(살 껍데기 모자는 가장자리가 톱니·구김). 09-27 조끼 = 공방 tacvest(옷 면 껍데기 조끼는 구겨진 판).",
+ "_note": "단계 3 STORY 비교용 — saga-unity Steve(Mixamo) 자리 후보(STORY 현대 '용병 돌격대', 비경 5층~). 게임 인물 아님. 09-26 진짜 옷(CC0 모래빛 티·바지·군화·장갑, 방탄 조끼·무릎 받이·모자는 껍데기). 다부진 용병 — 모래빛 전투복·국방색 방탄 조끼(앞뒤)·검은 장갑·무릎 받이·모래빛 군화·검은 야구모자. 진압 특공대(먹빛)·순찰 대원(남색)과 겹치지 않게. 09-27 모자 = 공방 cap_peaked(살 껍데기 모자는 가장자리가 톱니·구김). 09-27 조끼 = 공방 tacvest(옷 면 껍데기 조끼는 구겨진 판). 09-27 kneepads = 공방 옷(옷 면 껍데기 띠는 구겨진 고리).",
  "macro": {
   "gender": 1.0,
   "age": 0.5,
@@ -24,26 +24,6 @@
   "chin-width-incr": 0.4,
   "neck-scale-horiz-incr": 0.4
  },
- "kitbash": [
-  {
-   "part": "shell",
-   "slot": "leather",
-   "color": "#1f1f1f",
-   "rough": 0.6,
-   "offset": 0.012,
-   "thick": 0.008,
-   "groups": [
-    "thigh_*",
-    "calf_*"
-   ],
-   "z": [
-    0.27,
-    0.32
-   ],
-   "minw": 0.4,
-   "src": "toigo_wool_pants"
-  }
- ],
  "anims": {
   "idle": "Pistol_Idle_Loop",
   "walk": "Walk_Loop",
@@ -58,7 +38,8 @@
   "culturalibre_male_boots/culturalibre_male_boots.mhclo",
   "toigo_gloves_short/toigo_gloves_short.mhclo",
   "cf_cap_peaked_18181a_101012/cf_cap_peaked_18181a_101012.mhclo",
-  "cf_tacvest_4a5236_2a3020/cf_tacvest_4a5236_2a3020.mhclo"
+  "cf_tacvest_4a5236_2a3020/cf_tacvest_4a5236_2a3020.mhclo",
+  "cf_kneepads/cf_kneepads.mhclo"
  ],
  "tints": {
   "elvs_crude_t-shirt_male": "#c8b48c",
@@ -66,7 +47,8 @@
  },
  "_garments": [
   "cap_peaked@18181a,101012",
-  "tacvest@4a5236,2a3020"
+  "tacvest@4a5236,2a3020",
+  "kneepads"
  ],
  "under": {
   "cf_tacvest_4a5236_2a3020": [

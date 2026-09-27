@@ -1,21 +1,52 @@
 {
  "id": "_cmp_real_nightshade_01",
- "_note": "단계 3 괴물 비교용 — saga-unity Nightshade(Mixamo) 자리 후보(사가의숲 안개유령, 게임은 반투명·떠 있음). 게임 인물 아님(이름 없음). 마른 여자 몸·긴 머리·창백한 잿빛 푸른 피부·꺼진 눈·쇄골 아래부터 발목까지 드리운 해진 옷자락.",
- "macro": {"gender": 0.0, "age": 0.4, "muscle": 0.3, "weight": 0.1, "height": 0.7, "proportions": 0.8,
-           "race": {"asian": 0.6, "caucasian": 0.3, "african": 0.1}},
- "targets": {"measure-neck-height-incr": 0.6, "neck-scale-horiz-decr": 0.4, "measure-lowerarm-length-incr": 0.4,
-             "hand-fingers-length-incr": 0.8, "head-oval": 0.6, "eye-bag-incr": 0.8, "eye-scale-incr": 0.3,
-             "mouth-scale-horiz-decr": 0.3, "mouth-angles-down": 0.5, "nose-scale-horiz-decr": 0.4},
+ "_note": "단계 3 괴물 비교용 — saga-unity Nightshade(Mixamo) 자리 후보(사가의숲 안개유령, 게임은 반투명·떠 있음). 게임 인물 아님(이름 없음). 마른 여자 몸·긴 머리·창백한 잿빛 푸른 피부·꺼진 눈·쇄골 아래부터 발목까지 드리운 해진 옷자락. 09-27 해진 옷자락 = 공방 wraith(옛 kitbash robe 는 거친 통·종이 같은 끝단이었다).",
+ "macro": {
+  "gender": 0.0,
+  "age": 0.4,
+  "muscle": 0.3,
+  "weight": 0.1,
+  "height": 0.7,
+  "proportions": 0.8,
+  "race": {
+   "asian": 0.6,
+   "caucasian": 0.3,
+   "african": 0.1
+  }
+ },
+ "targets": {
+  "measure-neck-height-incr": 0.6,
+  "neck-scale-horiz-decr": 0.4,
+  "measure-lowerarm-length-incr": 0.4,
+  "hand-fingers-length-incr": 0.8,
+  "head-oval": 0.6,
+  "eye-bag-incr": 0.8,
+  "eye-scale-incr": 0.3,
+  "mouth-scale-horiz-decr": 0.3,
+  "mouth-angles-down": 0.5,
+  "nose-scale-horiz-decr": 0.4
+ },
  "skin": "young_asian_female/young_asian_female.mhmat",
- "tints": {"skin": "#b9c9d9"},
+ "tints": {
+  "skin": "#b9c9d9"
+ },
  "eyes": "high-poly/high-poly.mhclo",
  "eyebrows": "eyebrow010/eyebrow010.mhclo",
  "eyelashes": "eyelashes02/eyelashes02.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "hair": "long01/long01.mhclo",
- "kitbash": [
-  {"part": "robe", "color": "#4a5a70", "top": 0.05, "hem": 0.05, "flare": 0.55, "jag": 0.06, "hide_legs": true}
+ "anims": {
+  "idle": "Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Spell_Simple_Shoot",
+  "hit": "Hit_Chest",
+  "death": "Death01"
+ },
+ "clothes": [
+  "cf_wraith/cf_wraith.mhclo"
  ],
- "anims": {"idle": "Idle_Loop", "walk": "Walk_Loop", "run": "Jog_Fwd_Loop", "attack": "Spell_Simple_Shoot",
-           "hit": "Hit_Chest", "death": "Death01"}
+ "_garments": [
+  "wraith"
+ ]
 }

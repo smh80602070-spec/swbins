@@ -9683,3 +9683,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - `docs/store/privacy.md`: 개인정보처리방침 한·영 초안 — 수집 없음·세이브/설정/오류 기록은 기기 안(오류 기록은 사용자가 설정에서 복사할 때만)·광고/분석/결제 없음·Unity 하드웨어 통계는 ㉮ 끔 / ㉯ 켬 두 갈래(결정 뒤 하나만)·시행일·연락처·주소는 사람.
 - `STORE_CHECKLIST.md` 등록 정보·방침 칸을 초안 가리키게. Unity 는 안 돌림(Assets 변경 없음).
 - 남음: 묶음 있는 PC 에서 전체 AAB 실측 · 사람 칸(키·스크린숏·방침 주소·IARC·비공개 테스트·하드웨어 통계·이름 판단) · 그 뒤 109 재개/시나리오 순서는 사용자.
+
+## 2026-09-27 char-forge — 요정·안개유령 옷, 띠 껍데기 넷 (6벌)
+
+"vroid 자체툴 이어해".
+
+- garments 통 `teeth`(톱니 끝단)·무늬 `leaf` → 틀 `leafdress`(Jolleen 자리 요정)·`wraith`(Nightshade 자리 안개유령) — 옛 kitbash robe(종이 통·풍선) 대신.
+- 띠 껍데기 → `belt`·`belt_low`·`kneepads`·`neckring`(무도 수행자·수리 기사·용병·시간 여행자(남)). 황건 두목 조끼 등 점은 대기 자세 팔 근육이라 못 풀어 그대로.
+- 검사: 6벌 verify fbx ≤ 0.36° · glb 0.0° · sha256 같음 · CMP_RESULT OK(FBX 로컬 전용). 다음 = HOW_TO_PLAYTEST §9 사용자 판정.

@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_chrononaut_02",
- "_note": "단계 3 STORY 비교용 — saga-unity Ely(Mixamo) 자리 후보(STORY 미래 '시간 여행자'). 게임 인물 아님. 남자·곱슬 머리·옅은 연보라 몸 옷·은빛 목 고리·가슴 청록 빛 띠·은 팔 가리개·흰 장화. GO 시간 여행자(여·쪽빛 긴 겉옷자락·놋쇠)와 겹치지 않게. 09-26 진짜 옷(연보라로 염색한 몸 옷·가디언 은 팔 가리개·장화(CC0), 은빛 목 고리·가슴 빛 띠는 옷 면 껍데기).",
+ "_note": "단계 3 STORY 비교용 — saga-unity Ely(Mixamo) 자리 후보(STORY 미래 '시간 여행자'). 게임 인물 아님. 남자·곱슬 머리·옅은 연보라 몸 옷·은빛 목 고리·가슴 청록 빛 띠·은 팔 가리개·흰 장화. GO 시간 여행자(여·쪽빛 긴 겉옷자락·놋쇠)와 겹치지 않게. 09-26 진짜 옷(연보라로 염색한 몸 옷·가디언 은 팔 가리개·장화(CC0), 은빛 목 고리·가슴 빛 띠는 옷 면 껍데기). 09-27 neckring = 공방 옷(옷 면 껍데기 띠는 구겨진 고리).",
  "macro": {
   "gender": 1.0,
   "age": 0.35,
@@ -21,25 +21,6 @@
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "kitbash": [
-  {
-   "part": "shell",
-   "slot": "metal",
-   "color": "#bcc2ca",
-   "rough": 0.3,
-   "offset": 0.018,
-   "thick": 0.006,
-   "groups": [
-    "neck_01",
-    "clavicle_*",
-    "spine_03"
-   ],
-   "z": [
-    0.8,
-    0.86
-   ],
-   "minw": 0.4,
-   "src": "matcreator_mc-skinsuit_2022"
-  },
   {
    "part": "shell",
    "slot": "metal_glow",
@@ -68,9 +49,13 @@
  },
  "clothes": [
   "matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
-  "matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo"
+  "matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
+  "cf_neckring/cf_neckring.mhclo"
  ],
  "tints": {
   "matcreator_mc-skinsuit_2022": "=#c9c3dc"
- }
+ },
+ "_garments": [
+  "neckring"
+ ]
 }

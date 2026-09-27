@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_mechanic_01",
- "_note": "단계 3 역참 사람 비교용 — saga-unity Vanguard(Mixamo) 자리 후보(GO 미래 수리 기사). 게임 인물 아님. 09-26 진짜 옷(CC0 푸른 멜빵 작업복·흰 티·장화·장갑, 연장 띠·보안경은 껍데기). 땅딸막한 남자·짧은 머리·주황 작업복(온몸)·가죽 연장 띠·두꺼운 장갑·장화·이마에 걸친 보안경 띠.",
+ "_note": "단계 3 역참 사람 비교용 — saga-unity Vanguard(Mixamo) 자리 후보(GO 미래 수리 기사). 게임 인물 아님. 09-26 진짜 옷(CC0 푸른 멜빵 작업복·흰 티·장화·장갑, 연장 띠·보안경은 껍데기). 땅딸막한 남자·짧은 머리·주황 작업복(온몸)·가죽 연장 띠·두꺼운 장갑·장화·이마에 걸친 보안경 띠. 09-27 belt_low = 공방 옷(옷 면 껍데기 띠는 구겨진 고리).",
  "macro": {
   "gender": 1.0,
   "age": 0.55,
@@ -24,24 +24,6 @@
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "kitbash": [
-  {
-   "part": "shell",
-   "slot": "leather",
-   "color": "#5a4028",
-   "rough": 0.6,
-   "offset": 0.02,
-   "thick": 0.008,
-   "groups": [
-    "pelvis",
-    "spine_01"
-   ],
-   "z": [
-    0.5,
-    0.56
-   ],
-   "minw": 0.4,
-   "src": "male_worksuit01"
-  },
   {
    "part": "shell",
    "slot": "metal_lens",
@@ -70,6 +52,10 @@
  "clothes": [
   "male_worksuit01/male_worksuit01.mhclo",
   "culturalibre_male_boots/culturalibre_male_boots.mhclo",
-  "toigo_gloves_medium/toigo_gloves_medium.mhclo"
+  "toigo_gloves_medium/toigo_gloves_medium.mhclo",
+  "cf_belt_low/cf_belt_low.mhclo"
+ ],
+ "_garments": [
+  "belt_low"
  ]
 }
