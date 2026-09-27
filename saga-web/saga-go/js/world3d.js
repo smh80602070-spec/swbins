@@ -1603,17 +1603,20 @@
   function instGlb(key, want, x, z, h, gx, gy, rot) {
     var P3 = global.DG.prop3d;
     if (!P3) { return false; }
-    var got = P3.parts(want, gx, gy);
+    /* ⑲-33 고원 땅 나무는 눈 재질 — 덩이 이름을 갈라 다른 땅 나무와 안 섞인다 */
+    var FRs = global.DG.frost, snow = want === 'tree' && FRs && FRs.treeSnow ? FRs.treeSnow(x, z) : 0;
+    var got = P3.parts(want, gx, gy, undefined, snow);
     if (!got || !got.parts.length) { return false; }
+    var tag = got.snow ? '#snow' + got.snow : '';
     /* 자리마다 조금씩 돌려 세운다 — 안 돌리면 나무 백 그루가 같은 쪽을 본다.
        집은 제 회전을 이미 갖고 있으므로(길을 보고 선다) 그것을 그대로 쓴다 */
     var ry = typeof rot === 'number' ? rot : h1(gx * 41 + 7, gy * 83 + 13) * Math.PI * 2;
     var hh = h * P3.heightMul(want);
     var i, ok = true;
     for (i = 0; i < got.parts.length; i++) {
-      var K = instMake(got.url + '#' + i, got.parts[i].geometry,
+      var K = instMake(got.url + tag + '#' + i, got.parts[i].geometry,
                         got.parts[i].material, P3.casts(want), GLB_CAP());
-      ok = instAt(K, key, got.url + '#' + i, x, groundY(x, z), z, hh, hh, hh, 0, ry, 0) && ok;
+      ok = instAt(K, key, got.url + tag + '#' + i, x, groundY(x, z), z, hh, hh, hh, 0, ry, 0) && ok;
     }
     return ok;
   }
@@ -1645,8 +1648,9 @@
       return true;
     }
     if (p.t === 'tree') {
-      var SS = global.DG.season;
+      var SS = global.DG.season, FRt = global.DG.frost;
       var leafHex = SS ? SS.leaf(0x2f5a34) : 0x2f5a34;
+      if (FRt && FRt.treeSnow && FRt.treeSnow(x, z) > 0) { leafHex = 0xc4d2d8; }   // ⑲-33 먼 곳 원뿔 나무도 눈빛
       var a = instPut(key, 'trunk', 'cyl', 0x4a3a2a, '', true,
         x, p.h * 0.21, z, 1.2, p.h * 0.42, 1.2);
       var bb = instPut(key, 'leaf:' + leafHex, 'cone', leafHex, 'sway', true,

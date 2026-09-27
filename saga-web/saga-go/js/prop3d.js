@@ -504,6 +504,31 @@
     return m;
   }
 
+  /**
+   * ⑲-33 눈 나무 — 재질 사본에 **위를 보는 면일수록 눈빛**을 섞는다(saga-godot 106 ㊻-4 `snow_amount` 셰이더와 같은 뜻).
+   * 새 GLB(겨울 저다각형)로 바꾸지 않는 까닭: 이 판 나무는 실사 GLB 라 모양이 튀고, 색만 바꾸면 "가지 위 눈"이 안 생긴다.
+   * 면의 위쪽은 인스턴스 행렬까지 곱한 **월드 법선의 y** — 나무를 자리마다 돌려 세워도 눈은 늘 위에 앉는다.
+   * 텍스처(map) 뒤에 섞으므로 실사 잎 결은 눈 밑으로 비친다. 사본마다 프로그램 캐시 키를 따로 둔다
+   */
+  var snowCache = {}, SNOW_RGB = '0.90, 0.94, 0.98';
+  function snowOf(mat, key, amt) {
+    var k = key + '|snow' + amt;
+    if (snowCache[k]) { return snowCache[k]; }
+    var m = mat.clone();
+    m.onBeforeCompile = function (shader) {
+      shader.uniforms.uSnow = { value: amt };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying float vSnowUp;')
+        .replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\n  vec3 snN = objectNormal;\n#ifdef USE_INSTANCING\n  snN = mat3(instanceMatrix) * snN;\n#endif\n  vSnowUp = normalize(mat3(modelMatrix) * snN).y;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform float uSnow;\nvarying float vSnowUp;')
+        .replace('#include <color_fragment>', '#include <color_fragment>\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(' + SNOW_RGB + '), uSnow * smoothstep(0.2, 0.75, vSnowUp));');
+    };
+    m.customProgramCacheKey = function () { return 'snow' + amt; };
+    snowCache[k] = m;
+    return m;
+  }
+
   /** 다 받으면 세워 둔 소품을 한 번 갈아 준다 — 여러 개가 몰려 오므로 뭉쳐서 */
   function scheduleRefresh() {
     if (refreshTimer) { return; }
@@ -540,7 +565,7 @@
    * 이 소품의 조각들 — 아직 안 왔으면 **받기 시작하고 null 을 준다**.
    * 부르는 쪽(`world3d`)은 null 을 받으면 그냥 여태 쓰던 도형으로 세운다.
    */
-  function parts(name, gx, gy, sk) {
+  function parts(name, gx, gy, sk, snow) {
     if (!three()) { return null; }
     var url = pick(name, gx, gy, sk);
     if (!url) { return null; }
@@ -551,11 +576,14 @@
        (lambertOf 를 거친 옛 저다각형·되돌림용)은 이미 그 재질 자체가 계절별
        파일에서 왔으므로 더 안 물들인다 — `material.map` 이 있는 것만 대상 */
     var hex = name === 'tree' ? seasonTintHex(sk) : null;
-    if (!hex) { return { url: url, parts: c.parts }; }
-    var tinted = c.parts.map(function (p) {
+    var tinted = !hex ? c.parts : c.parts.map(function (p) {
       return p.material.map ? { geometry: p.geometry, material: tintedOf(p.material, url, hex) } : p;
     });
-    return { url: url, parts: tinted };
+    /* ⑲-33 고원 나무 — 철 색 위에 눈(부르는 쪽이 snow 0~1 을 준다, 0 이면 그대로) */
+    if (!(snow > 0) || name !== 'tree') { return { url: url, parts: tinted }; }
+    return { url: url, snow: snow, parts: tinted.map(function (p, i) {
+      return { geometry: p.geometry, material: snowOf(p.material, url + '#' + i + ':' + (hex || 0), snow) };
+    }) };
   }
 
   /* 시작 자리(0,0)는 마을 한복판이라(`land.js`) 이 안은 늘 눈에 든다 — 그래서
@@ -614,7 +642,7 @@
     ready: ready, casts: casts, PALETTE: PALETTE, snapPalette: snapPalette,
     houseOn: houseOn, heightMul: heightMul, FUSION: FUSION,
     /* 그림 층 */
-    parts: parts, preload: preload, stats: stats,
+    parts: parts, snowOf: snowOf, preload: preload, stats: stats,
     /** 진단이 제 뒤를 치울 때 */
     reset: function () { cache = {}; matCache = {}; arrived = 0; pending = 0; }
   };

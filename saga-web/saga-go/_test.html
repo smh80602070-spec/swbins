@@ -12355,6 +12355,31 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '자리 3 × 2 · 옆 칸 0 · 해시 풀 3 · 하람 ❄️3(★1) · 한 번 줍기 · 끄면 0' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-33 눈 나무 (frost treeSnow · prop3d snowOf · world3d instGlb, PLAN §5 ⑲-33) ── */
+    t('눈 나무 ⑲-33 — 고원 땅 나무만 눈 0.7(손잡이·소수 한 자리) · 고향 0 · 고원 끄면 0 · 눈 재질: 위를 보는 월드 법선(인스턴스 행렬 포함)으로 텍스처 뒤에 섞음 · 사본·캐시 키 따로', function () {
+      var FR = DG.frost, P3 = DG.prop3d, T3 = window.THREE, r = {};
+      var st = FR.sites()[0];
+      r.plateau = FR.treeSnow(st.x, st.y) === 0.7 && FR.treeSnow(0, 0) === 0;
+      try {
+        C.setTune('frost.treeSnow', 0.35); r.knob = FR.treeSnow(st.x, st.y) === 0.4;
+        C.setTune('frost.treeSnow', 0); r.zero = FR.treeSnow(st.x, st.y) === 0;
+      } finally { C.setTune('frost.treeSnow', null); }
+      try { C.setTune('frost.on', 0); r.off = FR.treeSnow(st.x, st.y) === 0; } finally { C.setTune('frost.on', null); }
+      if (T3 && P3.snowOf) {
+        var base = new T3.MeshLambertMaterial({ color: 0x2f7a34 }), m = P3.snowOf(base, 'test:snow', 0.7);
+        r.copy = m !== base && P3.snowOf(base, 'test:snow', 0.7) === m && !Object.prototype.hasOwnProperty.call(base, 'onBeforeCompile') &&
+          m.customProgramCacheKey() === 'snow0.7';
+        r.inject = ['lambert', 'standard'].every(function (k) {
+          var L = T3.ShaderLib[k], sh = { uniforms: {}, vertexShader: L.vertexShader, fragmentShader: L.fragmentShader };
+          m.onBeforeCompile(sh);
+          return sh.uniforms.uSnow.value === 0.7 && /mat3\(instanceMatrix\) \* snN/.test(sh.vertexShader) && /vSnowUp = normalize\(mat3\(modelMatrix\)/.test(sh.vertexShader) &&
+            /#include <color_fragment>\s+diffuseColor\.rgb = mix\(/.test(sh.fragmentShader) && sh.fragmentShader.indexOf('#include <map_fragment>') < sh.fragmentShader.indexOf('uSnow * smoothstep');
+        });
+      } else { r.copy = r.inject = false; }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '고원 0.7 · 고향 0 · 0.35 → 0.4 · 끄면 0 · lambert·standard 주입(텍스처 뒤)' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */
     t('원작 겹침 ⑳ — 화면 글자(보패·무기·무예·반응·상자·숨은 터 표 · 인물 상세 · 등급 카드)에 옛 원작 용어가 없다', function () {
       var OLD = ['성유물', '비경', '지맥', '운명의 자리', '원소 시야', '모험 등급', '세계 등급', '원소 폭발', '신상', '재련', '돌파',

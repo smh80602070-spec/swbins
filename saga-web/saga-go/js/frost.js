@@ -8,6 +8,7 @@
  *   발견    작은 발견 일곱(위성 조각·장수 석상·사냥꾼 오두막·눈사람·케이블카·얼음굴·봉화) — 14m(GPS 30m) 안
  *   이동    서리 고개(경계비)·기상 관측소 — 찾으면 지도(M) 순간이동 지점(키보드 판만)
  *   눈꽃    고원 특산물 채집 자리 셋(북서·가운데·동쪽, ⑲-32) — 자리만 여기서 잡고 채집은 cooking.js 가 한다
+ *   눈 나무 고원 땅 나무는 위를 보는 잎·가지에 눈(⑲-33, `treeSnow` → world3d `instGlb` → prop3d `snowOf` 셰이더)
  *   벽      산성 담·관측소·비행선·오두막·석상·경계비는 world3d `houseRects` 로 막는다(산성은 남쪽 문으로 든다)
  *
  * 자리는 가운데에서 어긋난 곳(off)에서 가장 가까운 들·숲 칸(물·마을·길·산·강 아님, 같은 땅, 서로 떨어짐) — 해시·지형만, 늘 같다.
@@ -132,6 +133,13 @@
 
   /** 이 자리가 눈 땅(북방 설산)인가 */
   function snowAt(x, y) { return on() && zoneAt(x, y) === ZONE; }
+  /** ⑲-33 이 자리 나무의 눈 양(0~1) — 고원 땅이면 손잡이 frost.treeSnow(기본 0.7, saga-godot 106 ㊻-4 REGION_TREE_SNOW), 아니면 0.
+      화면에서 한 단계로만 쓰도록 소수 한 자리로 자른다(재질·덩이가 값마다 갈린다) */
+  function treeSnow(x, y) {
+    if (!snowAt(x, y)) { return 0; }
+    var v = Math.max(0, Math.min(1, +K('treeSnow', 0.7) || 0));
+    return Math.round(v * 10) / 10;
+  }
   /** 땅빛 격자 한 칸(48m)이 눈밭인가 — world3d terrainTexture 가 칸마다 묻는다(캐시) */
   function snowCell(gx, gy) {
     var k = gx + ',' + gy;
@@ -442,7 +450,7 @@
     ZONE: ZONE, LANDMARKS: LANDMARKS, SMALL: SMALL, LANDMARK_R: LANDMARK_R, SMALL_R: SMALL_R, REWARD_BIG: REWARD_BIG, REWARD_SMALL: REWARD_SMALL,
     SEP_BIG: SEP_BIG, SEP_SMALL: SEP_SMALL, TOWER_CLEAR: TOWER_CLEAR, LAKE_R: LAKE_R, FORT_SIDE: FORT_SIDE, FORT_GATE: FORT_GATE,
     /* 판정 층(순수) */
-    on: on, center: center, sites: sites, bloomSpots: bloomSpots, siteById: siteById, snowAt: snowAt, snowCell: snowCell, rectsOf: rectsOf, rectsIn: rectsIn,
+    on: on, center: center, sites: sites, bloomSpots: bloomSpots, treeSnow: treeSnow, siteById: siteById, snowAt: snowAt, snowCell: snowCell, rectsOf: rectsOf, rectsIn: rectsIn,
     /* 세이브·상태 */
     snowingHere: snowingHere, calm: calm, snowCount: snowCount, SNOW_N: SNOW_N, SNOW_CALM: SNOW_CALM, found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks,
     tick: tick,
