@@ -15,6 +15,8 @@ A=saga-unity/Assets/Art/CharactersRealistic
 "$B" -b --factory-startup -P tools/char-forge/render/render_heads.py -- heads.png a.glb b.glb "$A/Maria WProp J J Ong.fbx"
 # 한 몸 앞·비스듬·옆·뒤 네 방향(등 매듭·소데·모자 날개처럼 앞에서 안 보이는 것) — 모델 하나가 한 줄
 "$B" -b --factory-startup -P tools/char-forge/render/render_turn.py -- turn.png a.glb b.glb c.glb
+# 여럿 한눈에 — 모델마다 앞·뒤, 한 줄에 넷(비교 몸 전부 점검: ls tools/char-forge/_out/_cmp_real_*.glb 를 여덟씩 나눠 한 장씩)
+"$B" -b --factory-startup -P tools/char-forge/render/render_grid.py -- grid.png a.glb b.glb …
 ```
 
 - `render_common.py` — 가져오기(glTF 뼈 모양 Icosphere 지움)·대기 동작 한 프레임·빛·Eevee·`fix_materials`
