@@ -1664,8 +1664,34 @@
       }
       if (f.moving) { f.phase += dt * 9; }
     }
+    if (!inp.blocked) { separate(S, dt); }
     duelCheck(S, dt);
     return S;
+  }
+
+  /** 적끼리 밀어내기(2026-09-28 실기 Q6 "난리") — 모두 같은 자리(내 코앞)로 몰려 몸 5~8m 짜리가 한 덩이로 겹쳤다.
+      두 몸 반지름 합 × SEP_K 보다 가까우면 반씩 비킨다(한 프레임에 다 안 밀고 dt × 8 만큼 — 튀지 않게) */
+  function SEP_K() { return K('sepK', 1.0); }
+  function separate(S, dt) {
+    var L = living(S), n = L.length, i, j, k = SEP_K();
+    if (!k || n < 2) { return; }
+    var rate = Math.min(1, dt * 8);
+    for (i = 0; i < n; i++) {
+      var a = L[i], ba = BODY(a);
+      for (j = i + 1; j < n; j++) {
+        var b = L[j], want = (ba + BODY(b)) * k, dx = b.x - a.x, dy = b.y - a.y;
+        if (Math.abs(dx) > want || Math.abs(dy) > want) { continue; }
+        var d = Math.hypot(dx, dy);
+        if (d >= want) { continue; }
+        if (d < 1e-3) { dx = (a.uid % 2 ? 1 : -1); dy = 0.3; d = Math.hypot(dx, dy); }   // 한 점이면 번호로 갈라 비킨다
+        var push = (want - d) / 2 * rate, ux = dx / d, uy = dy / d;
+        var fa = a.frozenT > 0 ? 0 : 1, fb = b.frozenT > 0 ? 0 : 1;                  // 얼어붙은 적은 제자리 — 상대가 다 비킨다
+        if (!fa && !fb) { continue; }
+        var sa = fa && fb ? 1 : (fa ? 2 : 0), sb = fa && fb ? 1 : (fb ? 2 : 0);
+        a.x -= ux * push * sa; a.y -= uy * push * sa;
+        b.x += ux * push * sb; b.y += uy * push * sb;
+      }
+    }
   }
 
   function moveToward(f, tx, ty, stepM) {
@@ -2439,7 +2465,7 @@
   global.DG = global.DG || {};
   global.DG.fieldCombat = {
     EL: EL, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, RIFT_STEP: RIFT_STEP, RIFT_SLOPE: RIFT_SLOPE, riftOk: riftOk, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
-    SKILL_CD: SKILL_CD, SWAP_CD: SWAP_CD, BODY: BODY, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
+    SKILL_CD: SKILL_CD, SWAP_CD: SWAP_CD, BODY: BODY, separate: separate, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */
     elementOf: elementOf, EL_KEYS: EL_KEYS, heavy: heavy, plunge: plunge, plungeMul: plungeMul, plungeLand: plungeLand, PLUNGE_R: PLUNGE_R(), CHARGE_COST: CHARGE_COST(), REACT: REACT, attaches: attaches, shapeOf: shapeOf, SHAPES: SHAPES, kitFor: kitFor, segDist: segDist, react: react, shieldMul: shieldMul, campAt: campAt, tierAt: tierAt, guardianAt: guardianAt, COUNTER: COUNTER,
     autoThreat: autoThreat, create: create, reparty: reparty, populate: populate, spawnCamp: spawnCamp, step: step, drain: drain,

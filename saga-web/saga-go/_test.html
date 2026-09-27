@@ -1068,6 +1068,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return early === null && now === f && away === null && onlyNear && '0.6초 전엔 아님 · 0.1초 전 코앞이면 위협 · 8m 떨어지면 아님 · 30m 적은 안 셈';
     });
 
+    t('들판 전투 — 적끼리 밀어내기: 한 점에 몰린 셋이 몸 반지름 합만큼 벌어진다 · 얼어붙은 적은 제자리', function () {
+      /* 2026-09-28 실기 Q6 "난리" — 모두 내 코앞 한 자리로 몰려 한 덩이로 겹쳤다 */
+      var FC = DG.fieldCombat, S = fcState(), a = fcFoe(S, 'boar', 20, 0), b = fcFoe(S, 'boar', 20, 0), c = fcFoe(S, 'bear', 20.1, 0), i;
+      c.frozenT = 99; var cx = c.x;
+      for (i = 0; i < 60; i++) { FC.separate(S, 1 / 30); }
+      var want = function (p, q) { return FC.BODY(p) + FC.BODY(q); }, gap = function (p, q) { return Math.hypot(p.x - q.x, p.y - q.y); };
+      var ok = gap(a, b) >= want(a, b) * 0.97 && gap(a, c) >= want(a, c) * 0.9 && gap(b, c) >= want(b, c) * 0.9 && c.x === cx;
+      return ok && ('멧돼지 둘 ' + gap(a, b).toFixed(1) + 'm(≥' + want(a, b).toFixed(1) + ') · 곰과 ' + gap(a, c).toFixed(1) + '/' + gap(b, c).toFixed(1) + 'm · 언 곰 제자리');
+    });
+
     t('들판 전투 ⑲-2 — 낙하 공격: 둘레 3.5m ×(1.2 + 0.1×떨어진 m), 15m 에서 막힘', function () {
       var FC = DG.fieldCombat, S = fcState(), a = fcFoe(S, 'bear', 2, 0), b = fcFoe(S, 'bear', 0, -3.4), c = fcFoe(S, 'bear', 8, 0);   // 곰 몸 반지름 2.2m(BODY) — 8m 면 가장자리 5.8m 밖
       var r = FC.plunge(S, 0, 0, 10);
