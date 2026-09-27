@@ -491,6 +491,17 @@
     { "key": "saga.all", "value": "🏳 All Nine Regions pacified! — +{0} Gold · +{1} EXP · merit +{2} Gold" },
     { "key": "saga.next", "value": "Next: {0}" },
     { "key": "saga.map_count", "value": "📜 Region tales {0}/{1} pacified" },
-    { "key": "enemy.region_skeleton_grunt", "value": "Skeleton Grunt" }
+    { "key": "enemy.region_skeleton_grunt", "value": "Skeleton Grunt" },
+    { "key": "gesture.greet", "value": "👋" },
+    { "key": "gesture.rally", "value": "❗ Rally" },
+    { "key": "gesture.cheer", "value": "🎉" },
+    { "key": "gesture.cheer_level", "value": "🎉 Congrats" },
+    { "key": "gesture.cheer_win", "value": "🎉 Victory" },
+    { "key": "gesture.job.villager", "value": "🌾 Chores" },
+    { "key": "gesture.job.merchant", "value": "💰 Haggling" },
+    { "key": "gesture.job.courier", "value": "📦 Delivering" },
+    { "key": "gesture.job.salaryman", "value": "📱 On a call" },
+    { "key": "gesture.job.chrononaut", "value": "⌛ Plotting" },
+    { "key": "gesture.job.surveyor", "value": "📡 Surveying" }
   ]
 }

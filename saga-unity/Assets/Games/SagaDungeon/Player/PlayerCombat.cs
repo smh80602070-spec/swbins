@@ -242,6 +242,7 @@ namespace Saga.Dungeon.Player
             SecretState.OnCast(M, Time.time);
             foreach (var enemy in hits) Strike(enemy, damage, false, M); // 모아 두고 친다 — 쓰러지는 적이 목록을 흔들지 않게.
             PartyState.AddPlayerHit(heavy: false); // 여럿을 베도 한 번(게이지가 회전베기 난사로 넘치지 않게).
+            GestureState.OnLeadSignature(GestureState.Now); // PLAN.md 109-10-7 — 동행 둘이 ❗ 호응(웹 선두 서명 무예 자리).
 
             // PLAN.md 101-2 5.1 "축복 3택" 선(旋) 축 — BlessingState.SweepMultiplier로
             // 나눈다(클수록 회전베기를 더 자주 쓴다, 51장 "범위형 빌드"를 직접 강화).

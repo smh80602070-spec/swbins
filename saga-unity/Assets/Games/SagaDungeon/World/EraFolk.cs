@@ -36,6 +36,7 @@ namespace Saga.Dungeon.World
             if (transform.childCount == 0) BuildVisual();
             var playerGo = GameObject.FindWithTag("Player");
             _player = playerGo != null ? playerGo.transform : null;
+            Gesturer.Attach(gameObject, Gesturer.NpcKey(Data.Id, transform.position), npc: true); // PLAN.md 109-10-7 몸짓 — 인사·틈틈이 제 일.
         }
 
         public void BuildVisual()

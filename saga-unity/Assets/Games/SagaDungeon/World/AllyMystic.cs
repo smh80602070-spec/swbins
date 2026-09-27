@@ -51,6 +51,7 @@ namespace Saga.Dungeon.World
             if (transform.childCount == 0) BuildVisual();
             var playerGo = GameObject.FindWithTag("Player");
             _player = playerGo != null ? playerGo.transform : null;
+            Gesturer.Attach(gameObject, GestureState.AllyKey, npc: false); // PLAN.md 109-10-7 몸짓 — 호응은 제 시전 클립.
         }
 
         private void OnDestroy()

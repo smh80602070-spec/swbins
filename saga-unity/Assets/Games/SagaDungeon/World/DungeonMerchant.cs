@@ -62,10 +62,12 @@ namespace Saga.Dungeon.World
 
         private bool _sold;
         private Transform _player;
+        private string _gestureKey; // PLAN.md 109-10-7 — 좌판 뒤 주인이 있을 때만(몸짓은 주인 몸에).
 
         private void Awake()
         {
             if (transform.childCount == 0) BuildVisual();
+            else AttachKeeperGesture();
             var playerGo = GameObject.FindWithTag("Player");
             _player = playerGo != null ? playerGo.transform : null;
         }
@@ -91,6 +93,16 @@ namespace Saga.Dungeon.World
                 keeper.localPosition = new Vector3(0f, 0f, -0.75f); // 좌판 뒤, 앞(+z)을 본다.
                 NpcIdle.SpawnRigged(modelPrefab, keeper, "Idle");
             }
+            AttachKeeperGesture();
+        }
+
+        /// <summary>PLAN.md 109-10-7 몸짓 — 좌판 뒤 주인(씬에 구운 것도)에게. 다가서면 인사, 팔면 💰 흥정.</summary>
+        private void AttachKeeperGesture()
+        {
+            var keeper = transform.Find("Keeper");
+            if (keeper == null) return;
+            _gestureKey = Gesturer.NpcKey("merchant", transform.position);
+            Gesturer.Attach(keeper.gameObject, _gestureKey, npc: true);
         }
 
         private void Update()
@@ -115,6 +127,7 @@ namespace Saga.Dungeon.World
             }
 
             _sold = true;
+            if (_gestureKey != null) GestureState.OnServe(_gestureKey, GestureState.Now);
             if (isGem)
             {
                 bool socketed = HeroState.SocketIfBetter(sellGemId);

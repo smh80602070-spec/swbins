@@ -85,6 +85,8 @@ namespace Saga.Dungeon.World
             _visual = transform.childCount > 0 ? transform.GetChild(0) : null;
             var playerGo = GameObject.FindWithTag("Player");
             _player = playerGo != null ? playerGo.transform : null;
+            // PLAN.md 109-10-7 몸짓 — 선두 회전베기에 ❗ 호응(제 베기 클립)·두목급 처치·레벨업에 환호. 쓰러졌거나 도발 중이면 글자만.
+            Gesturer.Attach(gameObject, GestureState.AllyKey, npc: false, () => !IsUp || Taunting);
         }
 
         private void OnDestroy()

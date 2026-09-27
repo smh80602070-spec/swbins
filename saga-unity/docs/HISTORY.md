@@ -9740,3 +9740,17 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 공방 바지 셋 엉덩이 옆 턱 → leggings `tuck`·`round_bottom`(맨몸 잡졸·무도 수행자·황건 두목·정찰병). 닌자복 가랑이·어깨·발목 살, 카바 속 바지 흰 점(시간 행상), 불량배 조끼 어깨 살.
 - 순찰 대원 조끼 등 파임은 under 거리로 안 풀려 되돌림(팔 뼈 무게 — CF_Guard 어깨 혹과 같은 갈래).
 - 검사: 7벌 verify fbx ≤ 0.7° · glb 0.0° · sha256 같음(넷) · CMP_RESULT OK(FBX 로컬 전용, ProjectVersion·Packages 되돌림). 남은 흠은 char-forge README §8-1 열넷째. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
+
+## 2026-09-27 saga-unity DUNGEON — 109-10-7 몸짓(웹 사가블로 §5.16)
+
+"사가 유니티 이어해"(작업 전 좀비 프로세스 점검 — 없음, 아무것도 안 죽임: 다른 세션의 헤드리스 크롬·Godot 테스트와 MCP 서버뿐).
+
+- 웹 `gesture.js` 를 화면 층만으로 옮김: `GestureState`(순수 — 일 표·갈래 초·FNV-1a 틈틈이·Plan) + `Gesturer`(뿌리마다, 뼈·튐·머리 위 글자) + `GestureRunner`(Play 때 설치 — 촌민에 붙이고 레벨업·두목급 처치 구독). 선두 대기술은 회전베기(`PlayerCombat.TryWhirl`), 볼일은 행상 판매(`DungeonMerchant`), 시대 손님·행상 주인·동행 둘은 제 코드가 붙임.
+- 이 판 마을 사람 몸은 대기 클립뿐이라 웹처럼 슬롯을 못 바꿈 → `LateUpdate` 에서 애니메이터 자세 위에 팔·허리·머리 뼈를 **월드 축**으로 더 돌림(리그 로컬 축이 달라도 같은 쪽). 애니메이터가 그 프레임 뼈를 안 썼으면(컬링·꺼짐) 지난번 더한 걸 먼저 되돌려 안 쌓임. 폴백 몸은 몸 전체 숙임·튐. 마을 아낙(PeasantGirl)의 Attack 트리거는 술사 시전이라 마을 사람엔 트리거를 안 씀(동행만).
+- 함정: `SagaWorldText.Add`(TMP)를 붙이면 Transform 이 RectTransform 으로 **바뀌어 앞서 잡은 Transform 이 파괴됨** → 붙인 뒤 `_label.transform` 을 잡는다(첫 실행 MissingReferenceException).
+- `Quaternion ==` 는 내적 비교라 0 쿼터니언끼리 같다고 안 나옴 → "건드렸나" 표시는 bool 배열.
+- 번역 11 키 ko·en(그림 문자는 Noto Emoji 에 있는 것만, 변형 선택자 없이), loc-review 오류 0.
+- 진단 `PlaytestDungeonGestures`(사연 뒤): 표(일 여섯·손님 넷 모두 일·초·웹 FNV 값 node 로 뽑아 박음·주기 7~11) · 수명·걷는 중 글자만·튐 · 틈틈이(창 안/밖·마을 사람만·비율 ≈1.4/주기) · 볼일 한 번 · 사건(진짜 더미 처치 — 잡졸 안 됨·두목 환호, 진짜 회전베기 → 호응) · 붙임(촌민 3·손님 4·행상 주인·무사·술사, 키 안 겹침) · 화면(다가섬 한 번·나갔다 오면 또·글자·동행 트리거 한 번·폴백 숙임/튐 제자리·휴머노이드 팔 들림 0.16m·쌓임 0·제자리) · 손잡이 끔 · ko/en 22. 주인공 몸 프리팹이 빠진 PC 는 디스크의 Maria FBX 로 휴머노이드를 잰다.
+- 검증(묶음 없는 이 PC, 6000.3.23f1): 컴파일 오류 0 → `PlaytestDungeonHeadless` gestures **3연속 OK(같은 줄)**. 4·5회차에 party(소환) 실패가 끼었는데 party 는 몸짓보다 앞에서 돌고, 쌓인 자동 세이브(Lv.53)를 잠시 치우고 돌리니 party OK·칼날 실패도 사라짐 → 세이브 탓(세이브는 제자리로). 남은 실패는 환경 셋(컷 카메라·씬 열기·Missing Prefab). 글꼴 SDF 둘·Mobile_RPAsset 되돌림, EditorSettings 는 줄 끝만(커밋 안 함).
+- 실기 확인 전: 손짓·망치질 팔 각도가 몸마다 자연스러운지(특히 시대 손님·행상), 머리 위 글자와 이름표·풍선 겹침, 틈틈이 빈도가 산만하지 않은지, 동행 호응이 회전베기와 박자가 맞는지.
+- 다음 = 109-10-8 웹 5.17 동행 서명·합격.

@@ -491,6 +491,17 @@
     { "key": "saga.all", "value": "🏳 구주 평정(九州平定)! — 금 +{0} · 경험치 +{1} · 공적 +{2}냥" },
     { "key": "saga.next", "value": "다음: {0}" },
     { "key": "saga.map_count", "value": "📜 지역 사연 {0}/{1} 평정" },
-    { "key": "enemy.region_skeleton_grunt", "value": "해골 졸개" }
+    { "key": "enemy.region_skeleton_grunt", "value": "해골 졸개" },
+    { "key": "gesture.greet", "value": "👋" },
+    { "key": "gesture.rally", "value": "❗ 호응" },
+    { "key": "gesture.cheer", "value": "🎉" },
+    { "key": "gesture.cheer_level", "value": "🎉 경하" },
+    { "key": "gesture.cheer_win", "value": "🎉 이겼다" },
+    { "key": "gesture.job.villager", "value": "🌾 일손" },
+    { "key": "gesture.job.merchant", "value": "💰 흥정" },
+    { "key": "gesture.job.courier", "value": "📦 배달" },
+    { "key": "gesture.job.salaryman", "value": "📱 통화" },
+    { "key": "gesture.job.chrononaut", "value": "⌛ 좌표" },
+    { "key": "gesture.job.surveyor", "value": "📡 측정" }
   ]
 }
