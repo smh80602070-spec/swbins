@@ -9659,3 +9659,10 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 레시피 `under` 로 셔츠 허리·운동화 뒤축·장화 위 비침 해결, `under` 에 `"skin"`(덮인 살 지우기) → 택배 기사(여) 뜨개 윗옷 등 뚫림.
 - 새 부품 `backpack`(둥근 상자 + 어깨끈) · 틀 `backpack`·`pack_big`·`pack_metal` → 껍데기 등 짐 일곱 교체(Remy 자리 여행자는 흰 풍선 → 주황 배낭).
 - 검사: 14벌 verify fbx ≤ 0.68° · glb 0.0° · sha256 같음 · CMP_RESULT OK(FBX 로컬 전용). 남은 흠은 char-forge README §8-1 열째. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
+
+## 2026-09-27 상용화 — PLAN 110 ⑥e 템플릿 잔재 패키지·파일 정리 ("사가유니티 이어해")
+
+- 코드·asmdef·씬·프리팹·에셋·ProjectSettings 에서 참조 0 확인 → manifest 에서 `com.unity.visualscripting`·`com.unity.multiplayer.center`·`com.unity.collab-proxy`·`com.unity.ai.navigation` 뺌(packages-lock 34줄 줄어듦). URP 템플릿 잔재 `Assets/TutorialInfo/`(Readme·ReadmeEditor·아이콘·레이아웃)·`Assets/Readme.asset`·`Assets/Scenes/SampleScene.unity` 지움(빌드 목록·코드에 없음). test-framework 는 둠. 내장 모듈(ai·cloth·vehicles·vr·xr·wind 등)은 stripEngineCode 로 이미 빠지고 URP 의존이 얽혀 안 건드림.
+- 이번엔 `tools/unity-batch.sh` 를 안 씀 — 그 스크립트가 실행 뒤 manifest·lock 을 되돌려 이 변경을 지운다(설치 버전 = 프로젝트 버전이라 올림 부작용도 없음). 부산물(글꼴 셋·URP 설정 셋·RP 에셋 v13·EditorSettings·ProjectSettings)은 git checkout.
+- 결과: 컴파일 오류 0 · `PlaytestSagaCredits` OK — 법적 고지 `SagaLegal.txt` 92 → 59KB(Visual Scripting 제3자 고지 등 빠짐) · `PlaytestRealmSlice` OK · 배치 점검 OK(문제 0) · `PlaytestSagaAab` OK — 크기 그대로(base 36.8·팩 22.0MB, IL2CPP 코드 제거가 이미 뺐다).
+- 남음: 묶음 있는 PC 에서 전체 AAB 실측 · 제출 목록 사람 칸.

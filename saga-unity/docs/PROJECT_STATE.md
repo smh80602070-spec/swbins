@@ -1,7 +1,7 @@
 # PROJECT_STATE — saga-unity (상태만, ≤15KB, 덮어쓴다)
 
 **규칙**(SAGA-DESIGN §9): 지금 상태만, 세션 끝에 덮어쓴다. 경위·이유는 `docs/HISTORY.md` 에 append.
-마지막 갱신: 2026-09-27 (110 ⑥d 앱 번들·제출 목록 — ③ 폰 결과 대기).
+마지막 갱신: 2026-09-27 (110 ⑥e 잔재 패키지 정리 — ③ 폰 결과 대기).
 
 ## 캐릭터 자산 — 이 PC 기준 (2026-09-19)
 
@@ -51,7 +51,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 
 | 검증 | 결과 |
 |---|---|
-| 재빌드·전체 | `PlaytestSagaAab`(⑥d)·`PlaytestSagaCredits`·`PlaytestRealmSlice`·배치 점검 OK(묶음 없는 PC) · 흐름·판별 다섯 3연속 OK(⑤c-2c-2) · 영어(`-hangulWatch`)로도 OK — DUNGEON·STORY 는 남은 고레벨 세이브면 실패, 빼고 돈다 |
+| 재빌드·전체 | `PlaytestSagaAab`·`PlaytestSagaCredits`·`PlaytestRealmSlice`·배치 점검 OK(⑥e, 묶음 없는 PC) · 흐름·판별 다섯 3연속 OK(⑤c-2c-2) · 영어(`-hangulWatch`)로도 OK — DUNGEON·STORY 는 남은 고레벨 세이브면 실패, 빼고 돈다 |
 | `PlaytestStorySlice` | **3연속 OK(2026-09-25)** — Eras·Companions·Summon·BossIntro·옷 빛깔·상위 차수·전직·ButtonWiring·JobSkills·무예 세이브 왕복·옛 형식 |
 | `PlaytestDungeonHeadless` | **3연속 OK(2026-09-26, 지역 뒤)** — Regions·Trial·Secrets·EraDecor·Eras·Landmarks·BossIntro·Party·Explore·NpcModels·Temple(+컷)·LockOn·EnemyTelegraph. 같은 씬 `FloorProgression`·`OverworldMap` OK |
 | GO `PlaytestHeadless` | **3연속 OK(2026-09-25)** — Peaks·SkillShapes·HeroLooks·HeroDex·Heroes·Eras·Region*·Guardian·SlopesBiome·PartyBodies·ElementalFoe·Treasure·WorldMap·Traversal·FieldCombat |
