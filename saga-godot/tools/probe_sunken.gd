@@ -257,7 +257,7 @@ func _physics_process(_delta: float) -> void:
 			if ring == null or absf(float(ring) - Sunken.DECK_Y) > 0.05 or Sunken.DECK_Y > 0.75:
 				bad.append("ring %s" % ring)
 			var lt := Sunken.light_top()
-			var gal: Variant = _ray_down(lt + Vector3(Sunken.LIGHT_R + 0.5, 0, 0))
+			var gal: Variant = _ray_down(lt + Vector3(Sunken.LIGHT_R - 0.5, 0, 0))
 			if gal == null or absf(float(gal) - lt.y) > 0.1:
 				bad.append("gallery %s want %.2f" % [gal, lt.y])
 			## 헤엄 구간 — 궁궐 → 곁채 지붕 → 돔, 돔 → 석탑 → 등대 섬. 물 위에 발 디딜 곳 없는 가장 긴 줄.

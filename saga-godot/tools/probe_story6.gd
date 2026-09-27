@@ -12,6 +12,10 @@ extends Node
 ## 등불아귀 수·뇌가 방패를 깸 · 받침·돔 안 자리가 명소에 안 묻힘 · 문 잠김) [11] 여울 → 곁채 지붕 [12] 물새(지붕 윗면) → 바지락
 ## [13] 바지락 셋 [14] 물새(받침 위) → 석등 [15] 물길 석등 — 받침 높이·고리 위·차례(틀리면 꺼짐) [16] 물새 → 지키기
 ## [17] 자물쇠 지키기(물결 셋 모두 고리 위) [18] 문이 열림 → 여울 → 대결 [19] 등불아귀(돔 바닥, 고리 예고) [20] 물새(돔 안) → 22장 끝.
+## 23장 "빛 돔의 기록"(㊿-4, 6부 끝): [21] 표·자리(동료 물새 ★4 수·한손검·겹침 없음 · 파랑 미래 조종 기계·돔 바닥 · 오르기·등롱 자리 = 난간 판 ·
+## 반디 난간 판 위 · 파수 거신 암·초가 방패를 깸 · 등대 꺼짐) [22] 파랑 → 등대 [23] 돌탑을 실제로 타고 올라 난간 판에(섬 땅에선 안 넘어감)
+## [24] 등롱(돌 없음·먼 원소 안 됨) → 등대 불·빛줄기·기록 단말 [25] 반디(난간 판) → 기록실 [26] 파랑 → 대결 [27] 파수 거신(돔 바닥)
+## [28] 물새 → 23장 끝·동료 물새·등대 켜진 채.
 ## 이야기 상태·부대 경험·가방은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
@@ -24,7 +28,9 @@ const Gathering := preload("res://games/saga_go/world/gathering.gd")
 
 const CH21 := 20 # 21장(0부터)
 const CH22 := 21
+const CH23 := 22
 const R := "sunken"
+const Kits := preload("res://games/saga_go/data/kits.gd")
 
 var _p: CharacterBody3D
 var _sq: Node
@@ -343,7 +349,159 @@ func _physics_process(_delta: float) -> void:
 				and bool(_sq.call("npc_visible", "mulsae")) and absf(mp.y + 10.0) < 0.1
 			_check("chapter22", ok, "ch=%d mora +%d mulsae=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), mp])
 			_next()
-		21:
+		21: # [21] 23장 표·자리 — 모험 등급 53
+			if _frame == 1:
+				PartyState.exp = maxf(PartyState.exp, 53.0 * PartyState.EXP_PER_LEVEL)
+				PartyState.level = maxi(PartyState.level, 53)
+				PartyState.ar_paid = maxi(PartyState.ar_paid, PartyState.level + 1)
+				_sq.call("_enter_step")
+			if _frame < 70:
+				return
+			var c := Story.chapter(CH23)
+			var steps: Array = c.steps
+			var bad: Array = []
+			if String(c.get("id", "")) != "ch23" or int(c.ar) <= int(Story.chapter(CH22).ar) or int(_sq.call("ch")) != CH23 or bool(_sq.call("locked")) \
+					or steps.size() != 7 or String(c.get("join", "")) != "story_mulsae":
+				bad.append("chapter ch=%d locked=%s steps=%d" % [_sq.call("ch"), _sq.call("locked"), steps.size()])
+			## 동료 물새 — ★4 수·한손검, 이야기 동료 가운데 원소·무기가 겹치는 이가 없다(사공 버들 수·장병기).
+			var m: Dictionary = Story.MEMBERS.get("story_mulsae", {})
+			if int(m.get("rarity", 0)) != 4 or Elements.element_of("story_mulsae") != "water" or String(m.get("weapon", "")) != "sword" or not Kits.KITS.has("story_mulsae"):
+				bad.append("member %s" % m)
+			for id in Story.MEMBERS:
+				var o: Dictionary = Story.MEMBERS[id]
+				if id != "story_mulsae" and String(o.element) == "water" and String(o.weapon) == "sword":
+					bad.append("overlap %s" % id)
+			## 파랑 — 미래·조종 기계 몸, 돔 안 마른 바닥, 명소에 안 묻힘.
+			var info: Dictionary = Story.NPCS.parang
+			var pa: Vector3 = _sq.call("npc_pos", "parang")
+			if String(info.get("era", "")) != "미래" or String(info.get("body", "")) != "drone" or not bool(_sq.call("npc_visible", "parang")) \
+					or absf(pa.y + 10.0) > 0.1 or not _hits(pa).is_empty():
+				bad.append("parang %s hits=%s" % [pa, _hits(pa)])
+			## 오르기·등롱 — 칸이 등대 자리, above = 난간 판 + 2, 등롱 자리 높이 = 난간 판 윗면.
+			var lt := Sunken.light_top()
+			var climb: Dictionary = steps[1]
+			var light: Dictionary = steps[2]
+			if String(climb.type) != "climb" or _flat(_cell_any(R, climb.cell), lt) > 0.5 or absf(float(climb.above) - (Sunken.LIGHT_H + 0.3 + Story.CLIMB_SLACK - 0.5)) > 0.01:
+				bad.append("climb")
+			if String(light.type) != "light" or not bool(light.get("bare", false)) or _flat(_spot(light), lt) > 0.5 or absf(_spot(light).y - lt.y) > 0.1:
+				bad.append("light spot %s want %s" % [_spot(light), lt])
+			## 반디 — 3단계엔 난간 판 위(윗면 높이·판이 받친다).
+			var bw: Array = Story.windows(Story.STATIONS.bandi).filter(func(w: Dictionary) -> bool: return int(w.ch) == CH23 and int(w.from) == 3)
+			if bw.size() != 1 or absf(_spot(bw[0]).y - lt.y) > 0.1 or absf(_surface(_spot(bw[0])) - lt.y) > 0.1:
+				bad.append("bandi top %s" % [bw])
+			## 대결 — 돔 파수 거신(암, 초가 방패를 깸) · 돔 안 마른 바닥.
+			var duel: Dictionary = steps[5]
+			var du := _cell_any(R, duel.cell)
+			if String(duel.kind) != "dome_colossus" or String(FieldEnemy.KINDS.dome_colossus.element) != "rock" or Elements.shield_mul("rock", "grass") <= 1.0 \
+					or absf(du.y + 10.0) > 0.05 or _flat(du, Sunken.dome_center()) + 8.0 > Sunken.RING_IN - 1.0:
+				bad.append("duel %s" % du)
+			var su := get_tree().get_first_node_in_group("go_sunken_region")
+			if bool(su.call("is_light_on")) or float((su.get("_archive_mat") as StandardMaterial3D).emission_energy_multiplier) > 0.5:
+				bad.append("light on at st0")
+			_check("ch23_table", bad.is_empty(), str(bad))
+			_next()
+		22: # [22] 파랑(기록실 앞) → 등대
+			_talk("parang", 1, "ch23_parang", Vector2(7.0, 7.0))
+		23: # [23] 등대 오르기 — 섬 땅에선 안 넘어가고, 돌탑 동쪽 옆면을 실제로 타고 올라 난간 판에 서면 넘어간다
+			var base := Sunken.cell_pos(Sunken.LIGHT_CELL)
+			if _frame == 1:
+				var g := base + Vector3(Sunken.LIGHT_R + 3.0, 0.0, 2.0)
+				g.y = TerrainBuilder.height_at(R, g)
+				_put(g)
+			if _frame == 12:
+				_v = {"ground_st": int(_sq.call("st")), "grab": false}
+				_p.set("stamina", 999.0)
+				var g := base + Vector3(Sunken.LIGHT_R + 1.5, 0.0, 0.0)
+				g.y = TerrainBuilder.height_at(R, g)
+				_put(g)
+			if _frame >= 12:
+				var rig := get_tree().get_first_node_in_group("camera_rig") as Node3D
+				if rig:
+					rig.global_rotation = Vector3(rig.global_rotation.x, 0.0, 0.0)
+				_p.set("stamina", 999.0)
+			if _frame == 30:
+				Input.action_press("move_left")
+			if _frame > 30 and not bool(_v.grab) and _p.mode == _p.Mode.CLIMB:
+				_v.grab = true
+				Input.action_release("move_left")
+				Input.action_press("move_forward")
+			if _frame > 30 and int(_sq.call("st")) == 2 and not _v.has("at"):
+				_v.at = _frame
+			var settled: bool = _v is Dictionary and _v.has("at") and ((_p.mode == _p.Mode.GROUND and _p.is_on_floor()) or _frame > int(_v.at) + 240)
+			if _frame > 30 and (settled or _frame > 1500):
+				Input.action_release("move_forward")
+				Input.action_release("move_left")
+				var lt := Sunken.light_top()
+				var ok: bool = int(_v.ground_st) == 1 and bool(_v.grab) and int(_sq.call("st")) == 2 and _p.global_position.y >= lt.y - 0.6
+				_check("ch23_climb", ok, "ground_st=%d grab=%s st=%d y=%.1f top=%.1f mode=%d frames=%d" % [_v.ground_st, _v.grab, _sq.call("st"), _p.global_position.y, lt.y, _p.mode, _frame])
+				_next()
+		24: # [24] 등롱 — 돌 없음, 먼 원소는 안 되고 닿으면 다음 → 1초 안에 등대 불·빛줄기·기록 단말
+			var su := get_tree().get_first_node_in_group("go_sunken_region")
+			var lt := Sunken.light_top()
+			if _frame == 1:
+				_put(lt + Vector3(Sunken.LIGHT_R - 0.5, 0.0, 0.0))
+				_v = {}
+			if _frame == 4:
+				var alt := _sq.get("_altar") as Node3D
+				_v.stone = alt.get_children().any(func(n: Node) -> bool: return (n as Node3D).visible)
+				_sq.call("receive_element", lt + Vector3(20.0, 0.0, 0.0), 3.0, "water")
+			if _frame == 6:
+				_v.far_st = int(_sq.call("st"))
+				_sq.call("receive_element", lt + Vector3(1.0, 0.0, 0.5), 3.0, "water")
+			if _frame == 160:
+				var beam := su.find_child("Beam", true, false) as Node3D
+				var ok: bool = int(_sq.call("st")) == 3 and int(_v.far_st) == 2 and not bool(_v.stone) and bool(su.call("is_light_on")) and beam.visible \
+					and float((su.get("_archive_mat") as StandardMaterial3D).emission_energy_multiplier) > 1.0
+				_check("ch23_light", ok, "st=%d far_st=%d stone=%s on=%s beam=%s" % [_sq.call("st"), _v.far_st, _v.stone, su.call("is_light_on"), beam.visible])
+				_next()
+		25: # [25] 반디(난간 판 위) → 기록실
+			if _frame == 1:
+				var bp: Vector3 = _sq.call("npc_pos", "bandi")
+				_v = absf(bp.y - Sunken.light_top().y) < 0.15
+			_talk("bandi", 4, "ch23_bandi", Vector2(5.0833, 6.1354), "bandi_on_top=%s" % _v, bool(_v), 1)
+		26: # [26] 파랑(기록 재생) → 대결
+			_talk("parang", 5, "ch23_parang2", Vector2(4.792, 6.042))
+		27: # [27] 돔 파수 거신 — 돔 바닥, 고리 예고
+			if _frame == 1:
+				_put(_target() + Vector3(0, 0, 9))
+			if _frame == 12:
+				var bosses := get_tree().get_nodes_in_group("go_story_boss")
+				var b: Node3D = bosses[0] if not bosses.is_empty() else null
+				_v = {"n": bosses.size(), "marks": 0, "kind": "", "y": 0.0}
+				if b:
+					_v.kind = String(b.get("kind"))
+					_v.y = b.global_position.y
+					b.call("_clear_marks")
+					b.call("_set_tell", false)
+					b.call("begin_skill", "halo", _p)
+					_v.marks = (b.get("_marks") as Array).size()
+					b.call("_clear_marks")
+					b.call("_die")
+			if _frame == 20:
+				var ok: bool = int(_v.n) == 1 and String(_v.kind) == "dome_colossus" and absf(float(_v.y) + 10.0) < 1.5 and int(_v.marks) >= 1 and int(_sq.call("st")) == 6
+				_check("ch23_duel", ok, "n=%d kind=%s y=%.1f marks=%d st=%d" % [_v.n, _v.kind, _v.y, _v.marks, _sq.call("st")])
+				_next()
+		28: # [28] 물새(돔 안) → 23장 끝·동료 물새·등대는 켜진 채
+			if _frame == 1:
+				_v = {"mora": PartyState.count("mora")}
+				_near_npc("mulsae")
+			if _frame == 10:
+				_sq.call("interact")
+				_drain()
+			if _frame < 16:
+				return
+			_dismiss_prompts()
+			if _frame < 80: # 지역 파일은 1초마다 장을 본다
+				return
+			_sq.call("toggle_journal")
+			var jt: String = _sq.call("journal_text")
+			_sq.call("toggle_journal")
+			var su := get_tree().get_first_node_in_group("go_sunken_region")
+			var ok: bool = int(_sq.call("ch")) == CH23 + 1 and jt.contains("✔ 제23장") and PartyState.count("mora") >= int(_v.mora) + 115000 \
+				and PartyState.members.has("story_mulsae") and bool(su.call("is_light_on")) and bool(_sq.call("npc_visible", "parang"))
+			_check("chapter23", ok, "ch=%d mora +%d joined=%s light=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), PartyState.members.has("story_mulsae"), su.call("is_light_on")])
+			_next()
+		29:
 			PartyState.story = _saved.story
 			PartyState.members.assign(_saved.members)
 			PartyState.exp = _saved.exp

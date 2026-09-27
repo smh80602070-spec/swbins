@@ -139,6 +139,14 @@ const KINDS := {
 		"phase_text": "등불아귀가 심해의 물을 두르고 물거북과 매를 부른다 — 뇌로 방패를 깨라",
 		"rotation": ["bite", "tide", "slam", "halo", "tide", "storm"], "summon": ["water_turtle", "wind_hawk"],
 		"shape": "serpent", "height": 3.6, "colors": [Color(0.1, 0.16, 0.24), Color(0.35, 0.5, 0.55), Color(1.0, 0.78, 0.35)]},
+	## 106장 ㊿-4 23장 이야기 보스 "돔 파수 거신"(빛 돔 안 마른 바닥) — 궁궐 돌로 빚고 돔 합금을 두른 파수꾼. 반디의 기록을 지운 자가
+	## 가슴에 먹구름 조각을 박아 "기록을 되살리는 자를 없애라"는 명령을 남겼다. 코드 몸 goblin 4.8m(잿빛 돌·합금·빛 눈).
+	## 패턴은 있는 틀: 내려찍기·바위 줄(tide)·고리·회오리. 2단계 암 방패(초로 깬다).
+	"dome_colossus": {"name": "돔 파수 거신", "hp": 9200.0, "atk": 48.0, "speed": 3.6, "aggro": 26.0,
+		"reach": 3.6, "tell": 0.9, "cd": 1.6, "exp": 0.0, "element": "rock", "shield": 0.0, "phase_shield": 980.0,
+		"phase_text": "파수 거신이 궁궐 돌을 두르고 바위곰과 물거북을 부른다 — 초로 방패를 깨라",
+		"rotation": ["slam", "tide", "halo", "slam", "storm", "tide"], "summon": ["rock_bear", "water_turtle"],
+		"shape": "goblin", "height": 4.8, "colors": [Color(0.5, 0.52, 0.5), Color(0.84, 0.9, 0.94), Color(0.45, 0.9, 1.0)]},
 }
 
 const GRAVITY := 20.0

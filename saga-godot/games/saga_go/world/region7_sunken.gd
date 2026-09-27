@@ -11,7 +11,7 @@ extends Node3D
 ##   현대 — 해저 연구 기지·잠수정 선착장(BASE_CELL): 모래밭 끝 갑판·컨테이너·안테나·기지로 내려가는 통로 + 빛 돔까지 잔교 · 잔교 옆 선착장에 노란 잠수정
 ##   미래 — 빛 돔(DOME_CELL): 물을 밀어낸 둥근 받침(안 반지름 22·바깥 34, 윗면 +0.5) 위 유리 반구, 안은 마른 −10 바닥·경사로·기록실.
 ##     북쪽 문은 22장 자물쇠를 지켜 내기 전(dome_open) 잠겨 있다(빛 막 + 충돌).
-##   과거·미래 — 옛 등대(LIGHT_CELL, K 바위섬): 15m 돌탑(벽 타기)·난간 판·빛 등롱 — 23장을 마치면(ch ≥ LIGHT_ON_CH) 불이 켜지고 빛줄기가 돈다
+##   과거·미래 — 옛 등대(LIGHT_CELL, K 바위섬): 15m 돌탑(벽 타기)·난간 판·빛 등롱 — 23장 등롱에 불을 넣으면(light_on) 불이 켜지고 빛줄기가 돈다
 ##   고개 경계비((1.35,0.65)) · 디딤 지붕 셋(궁궐 곁채·물에 잠긴 대문·석탑 꼭대기)
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
@@ -63,10 +63,12 @@ const STEPS := [
 ## 해무 문 — 이 지역 (1,0) 고개 칸 북쪽 변(y −0.5 = 포구 (1,8) 남쪽 변, 월드 z 192). 5부를 마치면(ch ≥ 20) 걷힌다.
 const GATE_CELL := Vector2(1.0, -0.5)
 const GATE_OPEN_CH := 20
-## 빛 돔 문 — 22장(인덱스 21) 문 자물쇠를 지켜 낸 뒤(DOOR_FROM_STEP 단계부터) 열린다. 등대 — 23장(인덱스 22)을 마치면 켜진다.
+## 빛 돔 문 — 22장(인덱스 21) 문 자물쇠를 지켜 낸 뒤(DOOR_FROM_STEP 단계부터) 열린다.
+## 등대 — 23장(인덱스 22) 등롱에 불을 넣은 뒤(LIGHT_FROM_STEP 단계부터) 켜진다. 그때부터 기록실 단말도 밝아진다.
 const CH22 := 21
 const DOOR_FROM_STEP := 7
-const LIGHT_ON_CH := 23
+const CH23 := 22
+const LIGHT_FROM_STEP := 3
 
 ## 물 위 걷는 판(갑판·잔교·돔 받침) 윗면 — 헤엄쳐 넘어오를 수 있는 높이(수면 −0.45 + 0.95).
 const DECK_Y := 0.5
@@ -104,6 +106,7 @@ var _door_body: StaticBody3D = null
 var _door_veil: Node3D = null
 var _dome_open := false
 var _lamp_mat: StandardMaterial3D = null
+var _archive_mat: StandardMaterial3D = null # 기록 단말 — 등대가 켜지면 밝아진다
 var _beam: Node3D = null
 var _light_on := false
 var _sea_lights: Node3D = null
@@ -165,9 +168,10 @@ static func dome_open() -> bool:
 	var ch := _story_ch()
 	return ch > CH22 or (ch == CH22 and int(PartyState.story.get("step", 0)) >= DOOR_FROM_STEP)
 
-## 23장을 마쳤는가 — 옛 등대에 불이 켜져 있다.
+## 23장 등롱에 불을 넣었거나 지났는가 — 옛 등대에 불이 켜져 있다.
 static func light_on() -> bool:
-	return _story_ch() >= LIGHT_ON_CH
+	var ch := _story_ch()
+	return ch > CH23 or (ch == CH23 and int(PartyState.story.get("step", 0)) >= LIGHT_FROM_STEP)
 
 func is_gate_open() -> bool:
 	return _gate_open
@@ -554,8 +558,9 @@ func _build_dome() -> void:
 		for z in [-3.2, 3.2]:
 			_solid_box(arc, Vector3(0.6, 4.0, 0.6), Vector3(x, 2.6, z), PILLAR)
 	_box(arc, Vector3(13.0, 0.5, 9.0), Vector3(0, 4.85, 0), ROOF)
+	_archive_mat = _glow(GLOW, 0.25)
 	for x in [-2.5, 0.0, 2.5]:
-		_box(arc, Vector3(1.6, 2.2, 0.12), Vector3(x, 1.9, 2.6), GLOW).material_override = _glow(GLOW, 1.1) # 기록 단말
+		_box(arc, Vector3(1.6, 2.2, 0.12), Vector3(x, 1.9, 2.6), GLOW).material_override = _archive_mat # 기록 단말
 	_label(arc, "기록실", Vector3(0, 6.4, 0), Color(0.85, 0.97, 1.0))
 	_label(root, "빛 돔", Vector3(0, DECK_Y + RING_IN + 3.5, 0), Color(0.8, 0.96, 1.0))
 
@@ -594,11 +599,12 @@ func _build_lighthouse() -> void:
 		band.position = Vector3(0, y, 0)
 		root.add_child(band)
 	_box(root, Vector3(1.4, 2.2, 0.3), Vector3(0, 1.1, LIGHT_R), WOOD) # 문
-	## 난간 판(윗면 LIGHT_H + 0.3) — 탑 위로 1m 씩 내민 둥근 판. 가운데 등롱.
+	## 난간 판(윗면 LIGHT_H + 0.3) — 탑 위 둥근 판. 가운데 등롱. 충돌은 탑 벽과 같은 반지름(내민 턱이 있으면 벽 타던 머리가 걸려
+	## 못 넘어선다 — 23장 점검에서 1m 턱 밑 2m 에 멈췄다), 그림만 0.3m 내민다. 서는 자리는 등롱(1.3)~탑 가장자리(LIGHT_R) 1m.
 	var gallery := MeshInstance3D.new()
 	var gl := CylinderMesh.new()
-	gl.top_radius = LIGHT_R + 1.0
-	gl.bottom_radius = LIGHT_R + 1.0
+	gl.top_radius = LIGHT_R + 0.3
+	gl.bottom_radius = LIGHT_R + 0.3
 	gl.height = 0.3
 	gallery.mesh = gl
 	gallery.material_override = _mat(STONE_DARK)
@@ -607,7 +613,7 @@ func _build_lighthouse() -> void:
 	var gbody := StaticBody3D.new()
 	var gcs := CollisionShape3D.new()
 	var gcyl := CylinderShape3D.new()
-	gcyl.radius = LIGHT_R + 1.0
+	gcyl.radius = LIGHT_R
 	gcyl.height = 0.3
 	gcs.shape = gcyl
 	gbody.add_child(gcs)
@@ -623,7 +629,7 @@ func _build_lighthouse() -> void:
 	lamp.material_override = _lamp_mat
 	lamp.position = Vector3(0, LIGHT_H + 1.4, 0)
 	root.add_child(lamp)
-	_collider(root, Vector3(1.8, 2.2, 1.8), lamp.position) # 등롱 충돌(난간 판 위 서는 자리는 둘레 1m)
+	_collider(root, Vector3(1.8, 2.2, 1.8), lamp.position) # 등롱 충돌
 	var roof := MeshInstance3D.new()
 	var rm := CylinderMesh.new()
 	rm.top_radius = 0.05
@@ -669,6 +675,7 @@ func _build_lighthouse() -> void:
 func _set_light(on: bool) -> void:
 	_light_on = on
 	_lamp_mat.emission_energy_multiplier = 3.0 if on else 0.2
+	_archive_mat.emission_energy_multiplier = 1.4 if on else 0.25
 	_beam.visible = on
 
 ## 고개 경계비 — 포구 모래와 같은 돌, 물빛 판.
