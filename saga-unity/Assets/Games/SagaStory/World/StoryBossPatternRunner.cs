@@ -16,6 +16,7 @@ namespace Saga.Story.World
     /// 들판 두목은 등장 컷(106-8)을 튼 뒤부터 문다(비경 두목은 컷이 없어 곧장). 컷 동안·죽은 뒤엔 멈춘다.
     /// 플레이어가 쓰러지면 `ResetPattern` 으로 처음 단계부터(`StoryEnemy.RegroupAfterPlayerFell`).
     ///
+    /// 109-11-3 — 관문 대장으로 승격하면 이번 주 관문 대장의 이름·고유 기술(8초 시계)로 바뀐다(`ApplyOwnerSig`).
     /// 109-11-2 — 고유 기술은 `StoryEnemy.BossSigId`(들판 = 황건 두목 도넛 · 비경 = 관문 수호장 추적)로 찾는다.
     /// 고유 기술을 걸면 "두목 — 기술명" 알림, 그로기면 머리 위 "★★★ 그로기 N초"·받는 피해 ×1.5(`DamageTakenMul`).
     /// </summary>
@@ -51,7 +52,24 @@ namespace Saga.Story.World
         private void Awake()
         {
             _enemy = GetComponent<StoryEnemy>();
-            if (_enemy != null) StoryBossPattern.SetSig(_state, StoryBossPattern.SigIndex(_enemy.BossSigId));
+            ApplyOwnerSig();
+        }
+
+        /// <summary>주인 두목의 고유 기술을 건다 — 관문 대장(`StoryEnemy.IsChampion`)이면 웹 stepSig 식(109-11-3), 아니면 첫 기술·후보 식.
+        /// `StoryEnemy.TryBecomeChampion` 이 승격 뒤 다시 부른다.</summary>
+        public void ApplyOwnerSig()
+        {
+            if (_enemy == null) return;
+            ConfigureSig(StoryBossPattern.SigIndex(_enemy.BossSigId), _enemy.IsChampion);
+        }
+
+        /// <summary>진단도 부른다 — 고유 기술을 바꿔 끼우고 처음부터.</summary>
+        public void ConfigureSig(int sigIndex, bool gate)
+        {
+            if (gate) StoryBossPattern.SetGateSig(_state, sigIndex);
+            else StoryBossPattern.SetSig(_state, sigIndex);
+            StoryBossPattern.Reset(_state);
+            ClearWarns();
         }
 
         private void Update() => Tick(Time.deltaTime);

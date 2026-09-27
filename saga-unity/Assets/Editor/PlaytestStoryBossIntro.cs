@@ -53,7 +53,7 @@ namespace Saga.EditorTools
                 Teleport(cc, playerGo.transform, new Vector3(boss.transform.position.x - 6f, start.y, 0f));
                 int plays = cuts.PlayCount;
                 if (!boss.CheckIntro() || !StoryCutscenes.Playing) Fail("6m 안인데 등장 컷이 안 돌았다");
-                string wantName = Saga.Story.Data.StoryLocalization.T("cut.story_boss_title", "황건 두목");
+                string wantName = boss.DisplayName; // 109-11-3 — 관문 대장(새 게임은 늘 승격)이면 이번 주 관문 대장 이름
                 if (cuts.ShownName != wantName) Fail($"이름표 글자 \"{cuts.ShownName}\" (기대 \"{wantName}\")");
                 if (hud.GetComponentInParent<Canvas>().enabled) Fail("컷 동안 HUD 가 켜져 있다");
 

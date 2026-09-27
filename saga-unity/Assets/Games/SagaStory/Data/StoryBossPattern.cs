@@ -26,6 +26,11 @@ namespace Saga.Story.Data
     /// 하나라 황건 두목(도넛)만 있고, 비경 두목은 웹 비경 보스 그대로 관문 수호장(추적) — 나머지 기술은 11-3
     /// (관문 대장 다섯)이 쓴다.
     ///
+    /// **109-11-3 관문 대장(웹 §5-11)** — 이 판 관문 대장은 들판 두목의 주간 강화판이라 주마다 관문 대장 다섯
+    /// (`GateCaptains`) 중 하나의 이름·고유 기술을 입는다(`GateCaptainIndex`, 주 번호 % 5). 웹 `stepSig` 그대로
+    /// 고유 기술은 공용 후보에 안 끼고 따로 돈다: 첫 4초·그 뒤 8초 간격, 다른 패턴이 걸려 있으면 미룬다.
+    /// 웹 관문 대장의 "제 패턴"(달려들기·내려찍기·소환)은 이 판에 없어 공용 패턴전(단계·광폭 포함)이 그 자리를 맡는다.
+    ///
     /// 판정은 `Step` 하나 — 상태(`State`)만 바꾸고 바깥 일(피해·예고 그림·부하·끌어당김·알림)은 `IApi` 로 한다.
     /// 그래서 진단이 가짜 api 로 단계·예고·판정을 값으로 굴린다(웹 `step(e, dt, api)` 와 같은 결).
     /// </summary>
@@ -99,6 +104,13 @@ namespace Saga.Story.Data
             new Sig { Id = "gate_guardian", BossKo = "관문 수호장", Kind = Kind.Chase, NameKo = "수호 인장 추적" },
         };
 
+        /// <summary>109-11-3 관문 대장 다섯(웹 §5-11 마을 다섯) — 주마다 돌아가며.</summary>
+        public static readonly string[] GateCaptains = { "bandit_chief", "pirate_captain", "khitan_marshal", "horde_commander", "raider_general" };
+        public const float GateSigFirst = 4f, GateSigCd = 8f;
+
+        /// <summary>이번 주(주 번호) 관문 대장의 `Sigs` 번호.</summary>
+        public static int GateCaptainIndex(int week) => SigIndex(GateCaptains[((week % GateCaptains.Length) + GateCaptains.Length) % GateCaptains.Length]);
+
         public static int SigIndex(string id)
         {
             for (int i = 0; i < Sigs.Length; i++) if (Sigs[i].Id == id) return i;
@@ -137,6 +149,9 @@ namespace Saga.Story.Data
             public float Cx, Px;
             /// <summary>진단 — 그로기 횟수.</summary>
             public int GroggyCount;
+            /// <summary>109-11-3 관문 대장 — 고유 기술이 제 시계(`SigCd`)로 따로 돈다.</summary>
+            public bool Gate;
+            public float SigCd;
 
             public Kind SigKind => SigIndex >= 0 ? Sigs[SigIndex].Kind : Kind.None;
         }
@@ -210,7 +225,17 @@ namespace Saga.Story.Data
         public static void SetSig(State s, int sigIndex)
         {
             s.SigIndex = sigIndex;
+            s.Gate = false;
             s.First = s.SigKind;
+        }
+
+        /// <summary>109-11-3 — 관문 대장 고유 기술(웹 stepSig): 첫 기술 강제 없음, 4초 뒤 첫 시전·8초 간격.</summary>
+        public static void SetGateSig(State s, int sigIndex)
+        {
+            s.SigIndex = sigIndex;
+            s.Gate = true;
+            s.First = Kind.None;
+            s.SigCd = GateSigFirst;
         }
 
         /// <summary>걸린 패턴·예고를 거둔다(단계 전환·플레이어가 쓰러져 두목이 태세를 되돌릴 때).</summary>
@@ -234,7 +259,8 @@ namespace Saga.Story.Data
             s.Summoned = 0;
             s.Dodge = 0;
             s.Groggy = 0f;
-            s.First = s.SigKind;
+            s.First = s.Gate ? Kind.None : s.SigKind;
+            s.SigCd = GateSigFirst;
         }
 
         /// <summary>한 걸음. near = 두목이 나를 보고 있나(`IsNear`). hp·hpMax 는 두목 것.</summary>
@@ -253,10 +279,21 @@ namespace Saga.Story.Data
                 return result;
             }
             if (TickBusy(s, dt, api, ref result, baseDmg)) return result;
+            // 관문 대장 고유 기술 — 제 시계로, 다른 패턴이 걸려 있으면(위 TickBusy) 미룬다.
+            if (s.Gate && s.SigIndex >= 0)
+            {
+                s.SigCd -= dt;
+                if (s.SigCd <= 0f && near)
+                {
+                    Begin(s, s.SigKind, api, bossX);
+                    s.SigCd = GateSigCd;
+                    return result;
+                }
+            }
             s.Cd -= dt * (s.Phase >= 2 ? EnragedCdRate : 1f);
             if (s.Cd <= 0f && near)
             {
-                var pool = PoolOf(s.Phase, s.SigKind);
+                var pool = PoolOf(s.Phase, s.Gate ? Kind.None : s.SigKind);
                 // 같은 것을 두 번 잇지 않는다 · 부르기는 단계마다 한 번.
                 var cand = pool.FindAll(k => k != s.Last && !(k == Kind.Summon && s.Summoned >= s.Phase));
                 if (cand.Count == 0) cand = pool;

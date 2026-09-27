@@ -66,7 +66,7 @@ namespace Saga.EditorTools
             try
             {
                 m += CheckPhases() + CheckTransition() + CheckSlamRock() + CheckQuake() + CheckSweep() + CheckPicks()
-                   + CheckSigs() + CheckRingBeam() + CheckVolleyPillar() + CheckPullChase() + CheckGroggy()
+                   + CheckSigs() + CheckRingBeam() + CheckVolleyPillar() + CheckPullChase() + CheckGroggy() + CheckGateSig()
                    + CheckPlayerHp() + CheckField(playerGo.transform) + CheckLabyrinth(playerGo.transform);
             }
             catch (System.Exception ex)
@@ -92,7 +92,7 @@ namespace Saga.EditorTools
                 StoryPlayerHp.Refill();
                 Place(cc, playerGo.transform, pos);
             }
-            if (_ok) Debug.Log($"{T} OK - 단계 문턱·목록·전환 거둠·광폭·내려찍기/낙석 맞음·비킴·지진 섬/점프/발판·휩쓸기 밖/안·잇지 않음·부르기 한 번·체력(최대치·무적·회복)·실제 들판 루프·쓰러짐·비경 두목 · 11-2 고유 기술 열둘·첫 기술·도넛·쇠뇌·화살비·불기둥 두 박자·쇠사슬·추적·그로기(셈·5초·×1.5·실제) |{m}");
+            if (_ok) Debug.Log($"{T} OK - 단계 문턱·목록·전환 거둠·광폭·내려찍기/낙석 맞음·비킴·지진 섬/점프/발판·휩쓸기 밖/안·잇지 않음·부르기 한 번·체력(최대치·무적·회복)·실제 들판 루프·쓰러짐·비경 두목 · 11-2 고유 기술 열둘·첫 기술·도넛·쇠뇌·화살비·불기둥 두 박자·쇠사슬·추적·그로기(셈·5초·×1.5·실제) · 11-3 관문 대장 돌림·4초·8초·미룸·무반응·실제 갈고리 |{m}");
             return _ok;
         }
 
@@ -453,6 +453,93 @@ namespace Saga.EditorTools
                 StoryBossPattern.Step(s, Mathf.Min(0.05f, sec - t), api, false, 100f, 100f, bossX, 10f);
         }
 
+        // ── 109-11-3 관문 대장 고유 기술(웹 §5-11) ─────────────────────
+        private static string CheckGateSig()
+        {
+            // 주마다 다섯이 돌아가며, 다섯 주 뒤 처음으로.
+            var seen = new HashSet<string>();
+            for (int w = 0; w < 5; w++)
+            {
+                int gi = StoryBossPattern.GateCaptainIndex(3000 + w);
+                if (gi < 0) { Fail($"관문 대장 {w} 번이 표에 없음"); continue; }
+                seen.Add(StoryBossPattern.Sigs[gi].Id);
+            }
+            if (seen.Count != 5 || StoryBossPattern.GateCaptainIndex(3000) != StoryBossPattern.GateCaptainIndex(3005) || StoryBossPattern.GateCaptainIndex(-1) < 0)
+                Fail($"관문 대장 돌림 {seen.Count}(다섯)");
+            foreach (var id in StoryBossPattern.GateCaptains) if (id == "hwanggeon_chief" || id == "gate_guardian") Fail("관문 대장에 두목·수호장이 낌");
+
+            // 첫 4초 뒤 첫 시전, 그 뒤 8초 — 공용 후보엔 안 낀다.
+            var api = new FakeApi { FeetPos = new Vector2(20f, 0f) };
+            var s = new StoryBossPattern.State();
+            StoryBossPattern.SetGateSig(s, StoryBossPattern.SigIndex("khitan_marshal"));
+            s.Cd = 100f;
+            if (s.First != StoryBossPattern.Kind.None || s.SigCd != StoryBossPattern.GateSigFirst) Fail("관문 대장 첫 기술 강제·첫 시계");
+            float t = 0f;
+            while (s.Current == StoryBossPattern.Kind.None && t < 6f) { StoryBossPattern.Step(s, 0.02f, api, true, 100f, 100f, 22f, 10f); t += 0.02f; }
+            if (s.Current != StoryBossPattern.Kind.Beam || Mathf.Abs(t - 4f) > 0.05f || s.SigCd != StoryBossPattern.GateSigCd) Fail($"첫 시전 {s.Current} {t:F2}초(4)·다음 {s.SigCd}(8)");
+            StoryBossPattern.Clear(s);
+            s.Cd = 0f;
+            s.SigCd = 100f;
+            for (int i = 0; i < 60; i++)
+            {
+                StoryBossPattern.Clear(s);
+                s.Cd = 0f;
+                StoryBossPattern.Step(s, 0.01f, api, true, 100f, 100f, 22f, 10f);
+                if (s.Current == StoryBossPattern.Kind.Beam) { Fail("공용 후보에 관문 대장 기술이 낌"); break; }
+            }
+            // 다른 패턴이 걸려 있으면 미룬다(그동안 시계도 안 준다).
+            StoryBossPattern.Clear(s);
+            s.Cd = 100f;
+            s.SigCd = 0.5f;
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Slam, api, 22f);
+            api.FeetPos = new Vector2(30f, 0f);
+            StoryBossPattern.Step(s, 0.6f, api, true, 100f, 100f, 22f, 10f);
+            if (s.Current != StoryBossPattern.Kind.Slam || s.SigCd != 0.5f) Fail($"패턴 중인데 시계가 감 {s.SigCd}");
+            StoryBossPattern.Step(s, 0.5f, api, true, 100f, 100f, 22f, 10f); // 내려찍기 판정
+            StoryBossPattern.Step(s, 0.3f, api, true, 100f, 100f, 22f, 10f);
+            if (s.Current != StoryBossPattern.Kind.None) Fail($"시계 전에 시전 {s.Current}");
+            StoryBossPattern.Step(s, 0.3f, api, true, 100f, 100f, 22f, 10f);
+            if (s.Current != StoryBossPattern.Kind.Beam) Fail($"미룬 뒤 시전 안 됨 {s.Current}");
+            // 태세를 되돌리면 다시 4초, 이름 없는 두목은 무반응.
+            StoryBossPattern.Reset(s);
+            if (s.SigCd != StoryBossPattern.GateSigFirst || s.First != StoryBossPattern.Kind.None || !s.Gate) Fail("관문 대장 되돌림");
+            var none = new StoryBossPattern.State();
+            StoryBossPattern.SetGateSig(none, -1);
+            none.Cd = 100f;
+            for (int i = 0; i < 100; i++) StoryBossPattern.Step(none, 0.1f, api, true, 100f, 100f, 22f, 10f);
+            if (none.Begun != 0) Fail("이름 없는 관문 대장이 고유 기술을 씀");
+            return " 관문 대장(돌림·4초·8초·미룸·무반응)";
+        }
+
+        /// <summary>실제 들판 — 이번 주 관문 대장 기술이 공용 패턴 뒤로 미뤄졌다가 제 시계로 걸린다(쇠사슬로 끌림).</summary>
+        private static string CheckFieldGate(Transform player, StoryEnemy boss, StoryBossPatternRunner runner)
+        {
+            var cc = player.GetComponent<CharacterController>();
+            runner.ConfigureSig(StoryBossPattern.SigIndex("pirate_captain"), true);
+            runner.RandOverride = () => 0.1f;
+            runner.OnGroundOverride = () => true;
+            StoryPlayerHp.Refill();
+            Place(cc, player, new Vector3(boss.transform.position.x - 3f, 0.05f, 0f));
+            TickUntil(runner, () => runner.State.Current != StoryBossPattern.Kind.None, 3.5f);
+            if (runner.State.Current != StoryBossPattern.Kind.Slam) Fail($"관문 대장 첫 패턴 {runner.State.Current}(공용 내려찍기 — 고유 기술은 4초 시계)");
+            float sigLeft = runner.State.SigCd;
+            TickUntil(runner, () => runner.State.Current == StoryBossPattern.Kind.None, 1.2f);
+            if (Mathf.Abs(runner.State.SigCd - sigLeft) > 0.06f) Fail($"공용 패턴 중에 고유 기술 시계가 감 {sigLeft:F2}→{runner.State.SigCd:F2}");
+            StoryPlayerHp.Tick(1f);
+            TickUntil(runner, () => runner.State.Current != StoryBossPattern.Kind.None, sigLeft + 0.2f);
+            if (runner.State.Current != StoryBossPattern.Kind.Pull || Mathf.Abs(runner.State.SigCd - StoryBossPattern.GateSigCd) > 1e-3f)
+                Fail($"미룬 뒤 고유 기술 {runner.State.Current}(갈고리)·다음 {runner.State.SigCd:F2}(8)");
+            float x0 = player.position.x;
+            float hp = StoryPlayerHp.Hp;
+            TickUntil(runner, () => runner.State.Current == StoryBossPattern.Kind.None, 1.6f);
+            if (player.position.x - x0 < 1f) Fail($"갈고리에 안 끌림 {x0:F2}→{player.position.x:F2}");
+            if (hp - StoryPlayerHp.Hp != 15f) Fail($"갈고리 피해 {hp - StoryPlayerHp.Hp}(15)");
+            runner.RandOverride = null;
+            runner.OnGroundOverride = null;
+            runner.ApplyOwnerSig();
+            return $" 관문 대장 실제(끌림 {player.position.x - x0:F1}m)";
+        }
+
         private static string CheckField(Transform player)
         {
             StoryEnemy boss = null;
@@ -462,12 +549,20 @@ namespace Saga.EditorTools
             var runner = boss.GetComponent<StoryBossPatternRunner>();
             if (runner == null) { Fail("들판 두목에 패턴 실행기 없음"); return ""; }
             if (!boss.IntroPlayed) { Fail("등장 컷이 먼저 돌지 않음(두목 등장 진단 뒤에 불러야)"); return ""; }
-            if (boss.BossSigId != "hwanggeon_chief" || runner.State.SigKind != StoryBossPattern.Kind.Ring) Fail($"들판 두목 고유 기술 {boss.BossSigId}·{runner.State.SigKind}(도넛)");
+            // 109-11-3 — 새 게임은 관문 대장으로 승격해 있다 → 이번 주 관문 대장의 이름·기술(8초 시계). 아니면 황건 두목 도넛.
+            if (boss.IsChampion)
+            {
+                int gi = StoryBossPattern.GateCaptainIndex(StoryLabyrinthState.CurrentWeekIndex());
+                if (boss.BossSigId != StoryBossPattern.Sigs[gi].Id || !runner.State.Gate || runner.State.SigIndex != gi || boss.DisplayName != StoryBossPattern.SigBoss(gi))
+                    Fail($"관문 대장 {boss.BossSigId}·{boss.DisplayName}·gate {runner.State.Gate}(이번 주 {StoryBossPattern.Sigs[gi].Id})");
+            }
+            else if (boss.BossSigId != "hwanggeon_chief" || runner.State.SigKind != StoryBossPattern.Kind.Ring || runner.State.Gate)
+                Fail($"들판 두목 고유 기술 {boss.BossSigId}·{runner.State.SigKind}(도넛)");
             var cc = player.GetComponent<CharacterController>();
             float hp0 = boss.Hp;
             if (Mathf.Abs(boss.MaxHp - hp0) > 0.01f) Fail($"두목 최대 체력 {boss.MaxHp} ≠ 지금 {hp0}");
             if (runner.MinX != 0f || Mathf.Abs(runner.MaxX - FieldMapData.WidthM) > 1e-3f) Fail($"들판 경계 {runner.MinX}~{runner.MaxX}");
-            runner.ResetPattern();
+            runner.ConfigureSig(StoryBossPattern.SigIndex("hwanggeon_chief"), false); // 아래 1)~7) 은 보통 두목(도넛) 결로 본다
             runner.RandOverride = () => 0.1f; // 고유 기술 뒤로는 목록 첫째
             runner.OnGroundOverride = () => true;
             StoryPlayerHp.Refill();
@@ -553,7 +648,9 @@ namespace Saga.EditorTools
             runner.RandOverride = null;
             runner.OnGroundOverride = null;
             runner.ResetPattern();
-            return $" 들판(피해 {runner.DamageDealt:0}·맞음 {runner.Hits}·그로기 1)";
+            string gateM = CheckFieldGate(player, boss, runner);
+            if (boss.IsChampion && !runner.State.Gate) Fail("관문 대장 기술이 되돌려지지 않음");
+            return $" 들판(피해 {runner.DamageDealt:0}·맞음 {runner.Hits}·그로기 1)" + gateM;
         }
 
         private static string CheckLabyrinth(Transform player)

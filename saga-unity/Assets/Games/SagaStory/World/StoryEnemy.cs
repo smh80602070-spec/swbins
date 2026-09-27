@@ -99,13 +99,17 @@ namespace Saga.Story.World
         public StoryEra Era => era;
         public float HeightMul => heightMul;
         public string DisplayName => era == StoryEra.Past
-            ? (isBoss && isLabyrinthEnemy ? StoryBossPattern.SigBoss(StoryBossPattern.SigIndex(BossSigId))
+            ? (isBoss && (isLabyrinthEnemy || _gateSigIndex >= 0) ? StoryBossPattern.SigBoss(StoryBossPattern.SigIndex(BossSigId))
                 : isBoss ? StoryLocalization.T("cut.story_boss_title", "황건 두목") : StoryLocalization.T("enemy.hwanggeon", "황건적"))
             : StoryLocalization.T(eraNameKey, eraNameKo);
 
         /// <summary>PLAN.md 109-11-2 고유 기술 주인(`StoryBossPattern.Sigs` id) — 들판 두목 = 황건 두목(도넛),
         /// 비경 두목 = 웹 비경 보스 그대로 관문 수호장(추적, 이름도 그렇게 부른다). 두목이 아니면 빈 값.</summary>
-        public string BossSigId => !isBoss ? "" : isLabyrinthEnemy ? "gate_guardian" : "hwanggeon_chief";
+        public string BossSigId => !isBoss ? "" : isLabyrinthEnemy ? "gate_guardian"
+            : _gateSigIndex >= 0 ? StoryBossPattern.Sigs[_gateSigIndex].Id : "hwanggeon_chief";
+
+        /// <summary>PLAN.md 109-11-3 — 관문 대장으로 승격했으면 이번 주 관문 대장(`StoryBossPattern.GateCaptains`)의 `Sigs` 번호, 아니면 −1.</summary>
+        private int _gateSigIndex = -1;
 
         /// <summary>Awake 전(비활성 상태 또는 에디터 빌드)에 부른다 — 몸은 호출부가 `modelPrefab` 으로 넣는다.</summary>
         public void SetEra(StoryEras.Foe foe)
@@ -196,6 +200,9 @@ namespace Saga.Story.World
             _championMaxHp = _hp;
             _championTimeLeft = ChampionTimeLimitSec;
             ActiveChampion = this;
+            // PLAN.md 109-11-3 — 이번 주 관문 대장 다섯 중 하나의 이름·고유 기술을 입는다(웹 마을 다섯 → 이 판은 주마다 돌아가며).
+            _gateSigIndex = StoryBossPattern.GateCaptainIndex(StoryLabyrinthState.CurrentWeekIndex());
+            GetComponent<StoryBossPatternRunner>()?.ApplyOwnerSig();
             DialogueLabel.Instance?.Show(
                 StoryLocalization.T("gatechampion.start", "🚪 관문 대장 — 이번 주 강화판으로 나타났다! 180초 안에 쓰러뜨려라"), 4f);
         }
@@ -317,7 +324,7 @@ namespace Saga.Story.World
             var cuts = StoryCutscenes.Instance;
             if (cuts == null || StoryCutscenes.Playing) return false;
             _introPlayed = true;
-            string title = StoryLocalization.T("cut.story_boss_title", "황건 두목");
+            string title = DisplayName; // 109-11-3 — 관문 대장이면 이번 주 관문 대장 이름
             string sub = _isChampion
                 ? StoryLocalization.T("cut.story_champion_sub", "관문 대장 — 이번 주 강화판, 180초 안에 쓰러뜨려라")
                 : StoryLocalization.T("cut.story_boss_sub", "들판 가장 안쪽을 지키는 우두머리");
