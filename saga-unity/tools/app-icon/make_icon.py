@@ -165,4 +165,6 @@ def main():
     render(sc, os.path.join(OUT, "icon_adaptive_fg.png"), True)
 
 
-main()
+# tools/store/make_store_art.py 가 이 파일의 함수를 불러 쓴다 — 그때는 굽지 않는다.
+if __name__ == "__main__":
+    main()

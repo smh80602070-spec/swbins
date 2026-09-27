@@ -9674,3 +9674,12 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - garments 새 머리 부품 `crown`·`visor`, beret `tilt_a` → 틀 `cap_peaked`·`cap_flat`·`beanie`: 톱니·구김 껍데기 모자 일곱 교체(Cop Zombie·Pete·택배 기사·Swat Guy·Steve·Leonard·불량배 자리).
 - 조끼 껍데기 셋 → `vest`·새 틀 `tacvest`(재킷 위 방탄 조끼) + `under`. 치마저고리 삼각 치마 → A자, 찰갑 치마 벌어짐 절반.
 - 검사: 9벌 verify fbx ≤ 0.7° · glb 0.0° · sha256 같음 · CMP_RESULT OK(FBX 로컬 전용). 남은 흠은 char-forge README §8-1 열한째. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
+
+## 2026-09-27 상용화 — PLAN 110 ⑥f 스토어 등록 자료 초안 ("사가유니티 이어해")
+
+- 109 재개·시나리오는 사용자 몫이라 그 전에 할 수 있는 110 조각으로 — 제출 목록의 등록 정보 칸.
+- `tools/store/make_store_art.py`(Blender 5.2, 31초): `tools/app-icon/make_icon.py` 의 장면 함수(reset·바탕·금빛 테·"史")를 불러 `docs/store/icon_512.png`(512², 네모 꽉 — 모서리는 Play 가) · `feature_ko.png`·`feature_en.png`(1024×500, ortho 폭을 가로비만큼 늘리고 바탕을 가로로 늘림, 왼쪽 무늬 70% + 오른쪽 "SAGA"(Bold 돌출) + 한 줄(상아색 발광), **RGB** — Play 기능 그래픽은 알파 없는 PNG). 첫 판은 글이 작고 "SAGA"·한 줄 사이가 벌어져 한 번 고침(렌더 그림을 직접 봄). `make_icon.py` 는 끝의 `main()` 을 `if __name__ == "__main__":` 로 감쌈(Blender -P 는 __name__ 이 "__main__" 인 것 확인 — 아이콘 다시 안 구움).
+- `docs/store/listing.md`: 앱 이름·짧은 설명(한 45자·영 76자, 80 한도)·전체 설명 한·영 — 판별 한 줄은 타이틀 카드 문구, 수치는 게임 기준(도감 105·성 58·전직 넷), 광고·결제·계정·인터넷 없음. 판단 칸: 판 이름 사가고(Saga GO)·사가블로(Sagablo)의 원작 연상 — 바꾸면 표시 이름만.
+- `docs/store/privacy.md`: 개인정보처리방침 한·영 초안 — 수집 없음·세이브/설정/오류 기록은 기기 안(오류 기록은 사용자가 설정에서 복사할 때만)·광고/분석/결제 없음·Unity 하드웨어 통계는 ㉮ 끔 / ㉯ 켬 두 갈래(결정 뒤 하나만)·시행일·연락처·주소는 사람.
+- `STORE_CHECKLIST.md` 등록 정보·방침 칸을 초안 가리키게. Unity 는 안 돌림(Assets 변경 없음).
+- 남음: 묶음 있는 PC 에서 전체 AAB 실측 · 사람 칸(키·스크린숏·방침 주소·IARC·비공개 테스트·하드웨어 통계·이름 판단) · 그 뒤 109 재개/시나리오 순서는 사용자.

@@ -1,7 +1,7 @@
 # PROJECT_STATE — saga-unity (상태만, ≤15KB, 덮어쓴다)
 
 **규칙**(SAGA-DESIGN §9): 지금 상태만, 세션 끝에 덮어쓴다. 경위·이유는 `docs/HISTORY.md` 에 append.
-마지막 갱신: 2026-09-27 (110 ⑥e 잔재 패키지 정리 — ③ 폰 결과 대기).
+마지막 갱신: 2026-09-27 (110 ⑥f 스토어 등록 자료 초안 — ③ 폰 결과 대기).
 
 ## 캐릭터 자산 — 이 PC 기준 (2026-09-19)
 
@@ -21,7 +21,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 
 ## 다음 작업 (우선순위, 상세는 PLAN 해당 장)
 
-0. **다음 = 110 사람 칸**(`docs/STORE_CHECKLIST.md` — 업로드 키·스크린숏·방침·IARC) + 묶음 PC 에서 `BuildAndroidAab` 실측 — ③b 폰 결과 대기(새 앱 id 라 새 APK 로). 앱 번들 진단 `PlaytestSagaAab`. 영어 검수 `node tools/loc-review.mjs`(오류 0 이어야, 사람은 `docs/en_review.tsv` 검수 칸). 정체성 `SagaPlayerBuild.AppId`(io.github.smh8627jpg.saga)·Company(SAGA Games) · 아이콘 `tools/app-icon/make_icon.py`→`SagaAppIcon`. 크레딧 `SagaCredits`·`SagaCreditsCheck`(새 에셋은 표 한 줄부터)·오류 기록 `SagaCrashLog`·버전 = bundleVersion 한 곳. HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`·`HangulWatch`, 재빌드 `SagaRebuildScenes`. 109 멈춤.
+0. **다음 = 110 사람 칸**(`docs/STORE_CHECKLIST.md`·초안 `docs/store/`) · 그 뒤 109 재개/시나리오는 사용자 + 묶음 PC 에서 `BuildAndroidAab` 실측 — ③b 폰 결과 대기(새 앱 id 라 새 APK 로). 앱 번들 진단 `PlaytestSagaAab`. 영어 검수 `node tools/loc-review.mjs`(오류 0 이어야, 사람은 `docs/en_review.tsv` 검수 칸). 정체성 `SagaPlayerBuild.AppId`(io.github.smh8627jpg.saga)·Company(SAGA Games) · 아이콘 `tools/app-icon/make_icon.py`→`SagaAppIcon`. 크레딧 `SagaCredits`·`SagaCreditsCheck`(새 에셋은 표 한 줄부터)·오류 기록 `SagaCrashLog`·버전 = bundleVersion 한 곳. HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`·`HangulWatch`, 재빌드 `SagaRebuildScenes`. 109 멈춤.
 0-1. **남은 것**: 사람 영어 검수(tsv 순위 1부터). GO 동료 몸 Maria.controller 리타깃·무기는 주인공 손에만.
 1. STORY 판수(15→20 약 11판·20→25 약 28판)가 무거우면 `JobPromoteLevel3/4`만.
 2. **101-2·104-1 잔여(보류)** — GO⑤·Kenney 폴백·헤어카드.
