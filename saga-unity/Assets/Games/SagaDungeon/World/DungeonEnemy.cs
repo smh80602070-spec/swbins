@@ -176,6 +176,8 @@ namespace Saga.Dungeon.World
         /// <summary>PLAN.md 101-2 5.5 "난입" — `HordeRunner`가 처치 수를 세려면
         /// 방을 가리지 않는 이 개체의 roomId를 밖에서 읽어야 한다.</summary>
         public string RoomId => roomId;
+        public int RewardExp => rewardExp;
+        public int RewardGold => rewardGold;
 
         public static readonly List<DungeonEnemy> Active = new List<DungeonEnemy>();
 
@@ -292,6 +294,21 @@ namespace Saga.Dungeon.World
         /// <summary>PLAN.md 109-10-6 지역 사연 ③ 정예 걸음이 세는 적 — 우두머리 호위·사냥터 정예(`MarkElite`). 옛 VS 정예는 안 센다.</summary>
         public bool IsElite { get; private set; }
         public void MarkElite() => IsElite = true;
+
+        /// <summary>PLAN.md 109-10-10 몰이 사냥 — 전투방 잡졸 곁에 붙은 졸개. 첫 공격을 해시로 어긋나게 늦춘다(떼가 한 박자에 치지 않게).</summary>
+        public bool IsMinion { get; private set; }
+        public void MarkMinion(float firstAttackDelay)
+        {
+            IsMinion = true;
+            _attackCooldown = firstAttackDelay;
+        }
+        /// <summary>진단 — 다음 공격까지 남은 시간(경직이 민다).</summary>
+        public float AttackCooldownLeft => _attackCooldown;
+        /// <summary>진단 — 쓰러질 때 넘친 피해·강공격이었나(날림 힘).</summary>
+        public float LastOverkill { get; private set; }
+        private bool _lastHeavy;
+        private Coroutine _flinchRoutine;
+        private Quaternion _flinchBase;
 
         /// <summary>PLAN.md 108 ③ — 명소 층 주인처럼 등장 컷 부제를 따로 줄 때("순장 왕릉의 주인").</summary>
         public void SetIntroSubtitle(string subtitle) => _introSubtitle = subtitle;
@@ -683,6 +700,8 @@ namespace Saga.Dungeon.World
                 }
             }
             _curHp -= amount;
+            _lastHeavy = heavy;
+            if (_curHp <= 0f) LastOverkill = -_curHp;
 
             Vector3 popupPos = transform.position + Vector3.up * (2f * visualScale);
             DamagePopup.Spawn(popupPos, amount, heavy);
@@ -704,6 +723,9 @@ namespace Saga.Dungeon.World
                 _attackCooldown = attackInterval * InterruptCooldownMul;
             }
 
+            // PLAN.md 109-10-10 경직 — 맞으면 다음 공격이 조금 밀린다(두목급은 안 밀린다). 떼를 몰아 치는 동안 숨 쉴 틈.
+            if (!isBoss && DungeonHunt.Stagger > 0f && _curHp > 0f) _attackCooldown = Mathf.Max(_attackCooldown, DungeonHunt.Stagger);
+
             if (_curHp <= 0f)
             {
                 Die();
@@ -711,6 +733,7 @@ namespace Saga.Dungeon.World
             else
             {
                 _animator?.SetTrigger("Hit");
+                if (!HasHitClip && _visualGo != null) Flinch(); // 피격 클립이 없는 몸은 움찔(그림만)
             }
         }
 
@@ -762,6 +785,46 @@ namespace Saga.Dungeon.World
             DialogueLabel.Instance?.Show(msg, ToastSec);
             Destroy(gameObject);
         }
+
+        private bool? _hasHitClip;
+        private bool HasHitClip
+        {
+            get
+            {
+                if (_hasHitClip == null)
+                {
+                    bool has = false;
+                    if (_animator != null && _animator.runtimeAnimatorController != null)
+                        foreach (var p in _animator.parameters) if (p.name == "Hit") { has = true; break; }
+                    _hasHitClip = has;
+                }
+                return _hasHitClip.Value;
+            }
+        }
+
+        /// <summary>PLAN.md 109-10-10 움찔 0.28초 — 몸을 나에게서 먼 쪽으로 살짝 젖혔다 돌아온다(판정 없음).</summary>
+        private void Flinch()
+        {
+            if (_flinchRoutine != null) StopCoroutine(_flinchRoutine);
+            else _flinchBase = _visualGo.transform.localRotation;
+            _flinchRoutine = StartCoroutine(FlinchRoutine());
+        }
+
+        private IEnumerator FlinchRoutine()
+        {
+            var t = _visualGo.transform;
+            for (float e = 0f; e < DungeonHunt.FlinchSec; e += Time.deltaTime)
+            {
+                if (_state == State.Dead || t == null) break;
+                t.localRotation = _flinchBase * Quaternion.Euler(-DungeonHunt.FlinchDeg * Mathf.Sin(e / DungeonHunt.FlinchSec * Mathf.PI), 0f, 0f);
+                yield return null;
+            }
+            if (t != null) t.localRotation = _flinchBase;
+            _flinchRoutine = null;
+        }
+
+        /// <summary>진단 — 움찔 중인가.</summary>
+        public bool Flinching => _flinchRoutine != null;
 
         private IEnumerator FlashHit()
         {
@@ -829,12 +892,24 @@ namespace Saga.Dungeon.World
             if (_animator != null)
             {
                 _animator.SetTrigger("Death");
+                // PLAN.md 109-10-10 — 쓰러지면 나에게서 먼 쪽으로 날아가 가라앉는다(그림만, 파괴 1.2초 안에서).
+                if (_flinchRoutine != null && _visualGo != null) { StopCoroutine(_flinchRoutine); _flinchRoutine = null; _visualGo.transform.localRotation = _flinchBase; }
+                if (_player != null)
+                    DeathFling.Begin(gameObject, _visualGo != null ? _visualGo.transform : null, _player.position,
+                        DungeonHunt.ScatterForce(LastOverkill, hp, _lastHeavy), lie: !HasDeathParam());
                 StartCoroutine(DestroyAfterDeathAnim());
             }
             else
             {
                 Destroy(gameObject);
             }
+        }
+
+        private bool HasDeathParam()
+        {
+            if (_animator == null || _animator.runtimeAnimatorController == null) return false;
+            foreach (var p in _animator.parameters) if (p.name == "Death") return true;
+            return false;
         }
 
         private IEnumerator DestroyAfterDeathAnim()

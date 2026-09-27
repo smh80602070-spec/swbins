@@ -439,10 +439,11 @@ namespace Saga.Dungeon.World
         }
 
         /// <summary>109-2 — 전투 방 잡졸 i 번째. 층 단계의 현대·미래 적이면 몸·이름·배율을 바꾸고 체력·공격·보상은 잡졸 그대로.</summary>
-        private GameObject SpawnGrunt(Vector3 localOffset, int fightSlot)
+        private GameObject SpawnGrunt(Vector3 localOffset, int fightSlot, float minionDelay = -1f)
         {
             DungeonEra era = _landmark >= 0 ? DungeonEra.Past : DungeonEras.GruntEra(_floor, _roomIndex, fightSlot);
-            if (era == DungeonEra.Past) return SpawnGrunt(localOffset);
+            if (era == DungeonEra.Past) return SpawnGrunt(localOffset, minionDelay);
+            bool minion = minionDelay >= 0f;
             var foe = DungeonEras.FoeFor(_floor, era);
             int k = EraFoeIndex(foe.Body);
             var model = k >= 0 && k < eraFoeModels.Length ? eraFoeModels[k] : null;
@@ -454,17 +455,23 @@ namespace Saga.Dungeon.World
             var enemy = go.AddComponent<DungeonEnemy>();
             enemy.SetSpawnContext(RoomId, model != null ? model : gruntModel);
             enemy.ConfigureCombat(
-                DungeonFormulas.EnemyHp(_floor, false) * SigilState.EnemyHpMultiplier(_floor),
-                DungeonFormulas.EnemyDmg(_floor, false) * SigilState.EnemyDamageMultiplier(_floor),
-                DungeonFormulas.RewardExp(_floor, false), DungeonFormulas.RewardGold(_floor, false),
-                "wp_axe", null, false, foe.NameKo,
-                model != null ? Color.white : era == DungeonEra.Future ? EraFusionData.FusionBodyColor : new Color(0.3f, 0.34f, 0.3f), mul);
+                DungeonFormulas.EnemyHp(_floor, false) * SigilState.EnemyHpMultiplier(_floor) * (minion ? DungeonHunt.MinionHpMul : 1f),
+                DungeonFormulas.EnemyDmg(_floor, false) * SigilState.EnemyDamageMultiplier(_floor) * (minion ? DungeonHunt.MinionDmgMul : 1f),
+                MinionReward(DungeonFormulas.RewardExp(_floor, false), minion), MinionReward(DungeonFormulas.RewardGold(_floor, false), minion),
+                minion ? null : "wp_axe", null, false, foe.NameKo,
+                model != null ? Color.white : era == DungeonEra.Future ? EraFusionData.FusionBodyColor : new Color(0.3f, 0.34f, 0.3f),
+                mul * (minion ? DungeonHunt.MinionScale : 1f));
             go.SetActive(true);
+            if (minion) enemy.MarkMinion(minionDelay);
             return go;
         }
 
-        private GameObject SpawnGrunt(Vector3 localOffset)
+        /// <summary>PLAN.md 109-10-10 — 졸개 보상은 절반(웹 "드롭 ½"), 적어도 1.</summary>
+        private static int MinionReward(int v, bool minion) => minion ? Mathf.Max(1, Mathf.RoundToInt(v * DungeonHunt.MinionRewardMul)) : v;
+
+        private GameObject SpawnGrunt(Vector3 localOffset, float minionDelay = -1f)
         {
+            bool minion = minionDelay >= 0f;
             var go = new GameObject("Enemy_Floor_Grunt");
             go.SetActive(false);
             go.transform.SetParent(_contentRoot, false);
@@ -473,18 +480,45 @@ namespace Saga.Dungeon.World
             enemy.SetSpawnContext(RoomId, gruntModel);
             // PLAN.md 101-2 5.3 "부적 던전" 변형자 — 정상 층은 배율 1이라 그대로.
             enemy.ConfigureCombat(
-                DungeonFormulas.EnemyHp(_floor, false) * SigilState.EnemyHpMultiplier(_floor),
-                DungeonFormulas.EnemyDmg(_floor, false) * SigilState.EnemyDamageMultiplier(_floor),
-                DungeonFormulas.RewardExp(_floor, false), DungeonFormulas.RewardGold(_floor, false),
-                "wp_axe", null, false, _landmark >= 0 ? DungeonLandmarkData.GruntName(_landmark) : "황건적",
-                new Color(0.72f, 0.64f, 0.3f), 1f);
+                DungeonFormulas.EnemyHp(_floor, false) * SigilState.EnemyHpMultiplier(_floor) * (minion ? DungeonHunt.MinionHpMul : 1f),
+                DungeonFormulas.EnemyDmg(_floor, false) * SigilState.EnemyDamageMultiplier(_floor) * (minion ? DungeonHunt.MinionDmgMul : 1f),
+                MinionReward(DungeonFormulas.RewardExp(_floor, false), minion), MinionReward(DungeonFormulas.RewardGold(_floor, false), minion),
+                minion ? null : "wp_axe", null, false, _landmark >= 0 ? DungeonLandmarkData.GruntName(_landmark) : "황건적",
+                new Color(0.72f, 0.64f, 0.3f), minion ? DungeonHunt.MinionScale : 1f);
             go.SetActive(true);
+            if (minion) enemy.MarkMinion(minionDelay);
             return go;
         }
 
         private void SpawnFight()
         {
-            for (int i = 0; i < GruntOffsets.Length; i++) SpawnGrunt(GruntOffsets[i], i);
+            var leads = new List<GameObject>();
+            for (int i = 0; i < GruntOffsets.Length; i++) leads.Add(SpawnGrunt(GruntOffsets[i], i));
+            AddPacks(leads);
+        }
+
+        /// <summary>PLAN.md 109-10-10 몰이 사냥 — 전투방 잡졸 하나하나를 무리의 우두머리로 삼아 둘레에 졸개 <see cref="DungeonHunt.PackN"/>
+        /// (같은 몸·이름, 방 적 상한 30). 자리·첫 공격은 층·방 번호 해시 — 무작위 없음. 정예·두목급은 안 붙인다.</summary>
+        private void AddPacks(List<GameObject> leads)
+        {
+            int k0 = DungeonHunt.PackN;
+            if (k0 <= 0) return;
+            int count = DungeonEnemy.CountAliveInRoom(RoomId);
+            int seed = _floor * 131 + _roomIndex;
+            float lim = DungeonRoomBuilder.RoomWidth * 0.5f - 1.5f;
+            for (int i = 0; i < leads.Count && count < DungeonHunt.PackCap; i++)
+            {
+                var lead = leads[i] != null ? leads[i].GetComponent<DungeonEnemy>() : null;
+                if (lead == null || lead.IsBoss || lead.IsElite || lead.IsMinion) continue;
+                for (int k = 0; k < k0 && count < DungeonHunt.PackCap; k++)
+                {
+                    Vector3 p = leads[i].transform.localPosition + DungeonHunt.PackOffset(seed, i, k, k0);
+                    p.x = Mathf.Clamp(p.x, -lim, lim);
+                    p.z = Mathf.Clamp(p.z, -lim, lim);
+                    SpawnGrunt(p, i, DungeonHunt.FirstAttackDelay(seed, i, k));
+                    count++;
+                }
+            }
         }
 
         private void SpawnElite()

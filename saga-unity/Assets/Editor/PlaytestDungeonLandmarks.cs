@@ -139,6 +139,7 @@ namespace Saga.EditorTools
             int gi = 0;
             foreach (var e in RoomEnemies(runner))
             {
+                if (e.IsMinion) continue; // 109-10-10 졸개는 우두머리 몸·이름을 따른다(PlaytestDungeonHunt 가 본다)
                 var era = DungeonEras.GruntEra(6, runner.RoomIndex, gi++);
                 string want = era == DungeonEra.Past ? "황건적" : DungeonEras.FoeFor(6, era).NameKo;
                 if (e.DisplayNameRaw != want) Fail($"보통 층 잡졸 {e.DisplayNameRaw} ≠ {want}");

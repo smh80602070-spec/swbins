@@ -189,7 +189,10 @@ namespace Saga.Dungeon.Player
             float mul = ConsumeCounter();
             float dmg = HeroState.HitDamage * SecretState.DamageMul(M);
             Strike(enemy, dmg * mul, mul > 1f, M);
-            foreach (var extra in ExtraTargets(enemy, range, SecretState.ExtraTargets(M))) Strike(extra, dmg, false, M);
+            var hitList = new List<DungeonEnemy>(ExtraTargets(enemy, range, SecretState.ExtraTargets(M)));
+            foreach (var extra in hitList) Strike(extra, dmg, false, M);
+            // PLAN.md 109-10-10 몰이 사냥 — 앞 120°·사거리 × 1.35 안 곁의 적도 60% 로 휩쓴다.
+            Cleave(enemy, hitList, AttackRange * DungeonHunt.CleaveR * SecretState.RangeMul(M), DungeonHunt.CleaveHalfDeg, dmg * DungeonHunt.CleaveMul, false, M);
             PartyState.AddPlayerHit(heavy: mul > 1f); // PLAN.md 106-6 — 맞힐 때마다 동료 명령·소환 게이지.
             _cameraRig?.Shake(mul > 1f ? HeavyShakeMag : HitShakeMag, mul > 1f ? HeavyShakeSec : HitShakeSec);
             SfxPlayer.PlayHit();
@@ -211,7 +214,10 @@ namespace Saga.Dungeon.Player
             SecretState.OnCast(M, Time.time);
             float dmg = HeroState.HitDamage * HeavyDamageMul * SecretState.DamageMul(M);
             Strike(enemy, dmg * ConsumeCounter(), true, M);
-            foreach (var extra in ExtraTargets(enemy, range, SecretState.ExtraTargets(M))) Strike(extra, dmg, true, M);
+            var hitList = new List<DungeonEnemy>(ExtraTargets(enemy, range, SecretState.ExtraTargets(M)));
+            foreach (var extra in hitList) Strike(extra, dmg, true, M);
+            // PLAN.md 109-10-10 — 강공격은 앞 반원(180°)·사거리 × 1.8, 곁은 강공격의 75%(예비동작도 끊는다).
+            Cleave(enemy, hitList, AttackRange * DungeonHunt.HeavyR * SecretState.RangeMul(M), DungeonHunt.HeavyHalfDeg, dmg * DungeonHunt.HeavySide, true, M);
             PartyState.AddPlayerHit(heavy: true);
             _cameraRig?.Shake(HeavyShakeMag, HeavyShakeSec);
             SfxPlayer.PlayHeavyHit();
@@ -255,6 +261,24 @@ namespace Saga.Dungeon.Player
             // 회전베기는 한 번에 여럿을 때려 "피해자 쪽" 하나를 못 고른다 —
             // 가해자(플레이어) 쪽만 멎는다.
             StartCoroutine(ApplyHitstop(_controller.Animator, null, HitstopSec));
+        }
+
+        /// <summary>진단 — 마지막 휩쓸기에 곁으로 맞은 수.</summary>
+        public int LastCleaveHits { get; private set; }
+
+        /// <summary>PLAN.md 109-10-10 휩쓸기(웹 cleave) — 첫 대상 쪽을 앞으로 한 부채꼴 안, 이미 맞은 적 빼고 곁 피해로.</summary>
+        private void Cleave(DungeonEnemy main, List<DungeonEnemy> already, float radius, float halfDeg, float damage, bool heavy, SecretMove move)
+        {
+            LastCleaveHits = 0;
+            if (!DungeonHunt.CleaveOn || main == null) return;
+            Vector3 origin = transform.position, fwd = main.transform.position - origin;
+            foreach (var e in DungeonEnemy.Active.ToArray())
+            {
+                if (e == null || !e.IsAlive || e == main || already.Contains(e)) continue;
+                if (!DungeonHunt.InCone(origin, fwd, e.transform.position, radius, halfDeg)) continue;
+                Strike(e, damage, heavy, move);
+                LastCleaveHits++;
+            }
         }
 
         /// <summary>한 번 때리기 — 비결 한기면 얼리고, 흡혈 창이면 준 피해로 체력을 되찾는다.</summary>

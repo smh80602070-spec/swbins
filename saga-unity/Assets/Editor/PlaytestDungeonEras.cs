@@ -131,7 +131,7 @@ namespace Saga.EditorTools
                     if (f < 0) { Fail($"단계 {t} {era} 잡졸이 서는 층을 못 찾음"); continue; }
                     runner.JumpToFloor(f);
                     runner.BuildRoomForTest("fight");
-                    var list = RoomEnemies(runner);
+                    var list = RoomEnemies(runner).FindAll(e => !e.IsMinion); // 109-10-10 졸개 빼고 잡졸 넷(졸개는 PlaytestDungeonHunt)
                     if (list.Count != 4) { Fail($"{f}층 전투 방 적 {list.Count} ≠ 4"); continue; }
                     for (int i = 0; i < 4; i++)
                     {
