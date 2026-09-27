@@ -9732,3 +9732,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 검증(묶음 없는 이 PC): 컴파일 오류 0 → `PlaytestDungeonHeadless` regionsagas **3연속 OK**(같은 줄), 실패는 10-5 기준선의 환경 넷 그대로 · `PlaytestOverworldMap` Missing Prefab 만 · `UiLayoutCheck` OK 문제 0. 글꼴 SDF 셋·Mobile_RPAsset 되돌림.
 - 실기 확인 전: 깃발·흔적 자리가 눈에 띄는지, 토벌 수(최대 22)가 지루하지 않은지, 알림 글 길이.
 - 다음 = 109-10-7 웹 5.16 몸짓.
+
+## 2026-09-27 char-forge — 바지 다리 통 tuck·닌자복·카바 속 바지 (7벌)
+
+"vroid 자체툴 이어해".
+
+- 공방 바지 셋 엉덩이 옆 턱 → leggings `tuck`·`round_bottom`(맨몸 잡졸·무도 수행자·황건 두목·정찰병). 닌자복 가랑이·어깨·발목 살, 카바 속 바지 흰 점(시간 행상), 불량배 조끼 어깨 살.
+- 순찰 대원 조끼 등 파임은 under 거리로 안 풀려 되돌림(팔 뼈 무게 — CF_Guard 어깨 혹과 같은 갈래).
+- 검사: 7벌 verify fbx ≤ 0.7° · glb 0.0° · sha256 같음(넷) · CMP_RESULT OK(FBX 로컬 전용, ProjectVersion·Packages 되돌림). 남은 흠은 char-forge README §8-1 열넷째. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.

@@ -12,7 +12,7 @@
   crown·visor 천 모자 몸통(머리 따라 둥글게, `cuff` 접은 단)·앞챙(`taper` 크면 가운데만 길다) — 챙 모자·비니, beret 은 `tilt_a` 로 쏠림 방향(270 = 앞, 납작 모자)
   backpack 등 짐 — 등판 뒤 둥근 모서리 상자(width·depth, top·bottom 높이) + 어깨끈 둘(strap 폭, 끈 칸 strap_slot·색 paint.strap)
   collar  목 깃(목폴라) — 목 살을 따라 목 밑에서 턱 밑까지, 밑단은 윗줄보다 `taper` 배 넘게 안 퍼진다(셔츠 깃 속으로)
-  leggings 다리 통(정강이 가리개·바지) — `ease_bottom` 발목 여유(위로 곧게 ease 까지)·`smooth` 세로 다듬기·`wmin` 허벅지 무게 문턱(바지 0.15 — 엉덩이 옆 살까지) · discs 가슴 둥근 판(호심경) · bow 등 매듭(오비) · sash 비스듬한 띠(토가)
+  leggings 다리 통(정강이 가리개·바지) — `ease_bottom` 발목 여유(위로 곧게 ease 까지)·`smooth` 세로 다듬기·`wmin` 허벅지 무게 문턱(바지 0.15 — 엉덩이 옆 살까지)·`tuck` (n, 여유) 윗줄을 허리 통 속으로·`round_bottom` 끝단 둥글게 · discs 가슴 둥근 판(호심경) · bow 등 매듭(오비) · sash 비스듬한 띠(토가)
   mangeon·topknot·gat·helmet·neckguard·kuwagata·tassel·samo·boktu·myeollyu·beads·eboshi·turban·beret·hairdome·mage  머리 부품 — 머리 살에 붙는다
 색 변형: `<id>@<헥스>[,<헥스>]` — 틀의 `colors`(C1·C2)를 바꾼 cf_<id>_<헥스>… (메시·맞춤은 기본 옷을 베끼고 그림만 새로)
 그다음 MPFB MakeClothes 와 같은 순서(`mesh_is_valid_as_clothes` → `create_mhclo_from_clothes_matching` → `write_mhclo`)로 기본 몸에 맞춘
