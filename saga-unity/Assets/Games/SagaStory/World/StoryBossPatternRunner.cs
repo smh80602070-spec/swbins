@@ -15,6 +15,9 @@ namespace Saga.Story.World
     ///
     /// 들판 두목은 등장 컷(106-8)을 튼 뒤부터 문다(비경 두목은 컷이 없어 곧장). 컷 동안·죽은 뒤엔 멈춘다.
     /// 플레이어가 쓰러지면 `ResetPattern` 으로 처음 단계부터(`StoryEnemy.RegroupAfterPlayerFell`).
+    ///
+    /// 109-11-2 — 고유 기술은 `StoryEnemy.BossSigId`(들판 = 황건 두목 도넛 · 비경 = 관문 수호장 추적)로 찾는다.
+    /// 고유 기술을 걸면 "두목 — 기술명" 알림, 그로기면 머리 위 "★★★ 그로기 N초"·받는 피해 ×1.5(`DamageTakenMul`).
     /// </summary>
     [DisallowMultipleComponent]
     public class StoryBossPatternRunner : MonoBehaviour, StoryBossPattern.IApi
@@ -39,7 +42,17 @@ namespace Saga.Story.World
         /// <summary>진단 — 땅 여부를 고정한다(null 이면 CharacterController).</summary>
         public System.Func<bool> OnGroundOverride;
 
-        private void Awake() => _enemy = GetComponent<StoryEnemy>();
+        private TMPro.TextMeshPro _groggyLabel;
+        private Camera _cam;
+
+        /// <summary>받는 피해 배수 — `StoryEnemy.TakeDamage` 가 곱한다(그로기 ×1.5).</summary>
+        public float DamageTakenMul => StoryBossPattern.DamageTakenMul(_state);
+
+        private void Awake()
+        {
+            _enemy = GetComponent<StoryEnemy>();
+            if (_enemy != null) StoryBossPattern.SetSig(_state, StoryBossPattern.SigIndex(_enemy.BossSigId));
+        }
 
         private void Update() => Tick(Time.deltaTime);
 
@@ -54,15 +67,45 @@ namespace Saga.Story.World
             _minions.RemoveAll(m => m == null || m.IsDead);
             var bossFeet = new Vector2(transform.position.x, transform.position.y);
             bool near = StoryBossPattern.IsNear(bossFeet, Feet);
-            return StoryBossPattern.Step(_state, dt, this, near, _enemy.Hp, _enemy.MaxHp, transform.position.x,
+            var r = StoryBossPattern.Step(_state, dt, this, near, _enemy.Hp, _enemy.MaxHp, transform.position.x,
                 StoryCombat.BossDmgFor(StoryJobState.Level));
+            // 추적 — 예고가 발을 따라온다(마지막 0.5초는 멈춤).
+            if (_state.Current == StoryBossPattern.Kind.Chase && _state.Marks.Count > 0 && _warns.Count > 0 && _warns[0] != null)
+                _warns[0].MoveTo(_state.Marks[0].X, _state.Marks[0].Y);
+            UpdateGroggyLabel();
+            return r;
         }
+
+        private void UpdateGroggyLabel()
+        {
+            bool on = _state.Groggy > 0f;
+            if (!on)
+            {
+                if (_groggyLabel != null) _groggyLabel.gameObject.SetActive(false);
+                return;
+            }
+            if (_groggyLabel == null)
+            {
+                var go = new GameObject("GroggyLabel");
+                go.transform.SetParent(transform, false);
+                go.transform.localPosition = Vector3.up * (_enemy.VisualHeight + 0.6f);
+                _groggyLabel = Saga.Core.SagaWorldText.Add(go, "", 48f * 0.2f, new Color(1f, 0.9f, 0.3f));
+                _cam = Camera.main;
+            }
+            _groggyLabel.gameObject.SetActive(true);
+            _groggyLabel.text = "★★★ " + string.Format(StoryLocalization.T("bp.groggy_hud", "그로기 {0}초"), Mathf.CeilToInt(_state.Groggy));
+            if (_cam != null) _groggyLabel.transform.rotation = _cam.transform.rotation;
+        }
+
+        /// <summary>진단 — 머리 위 그로기 글자(없거나 꺼졌으면 null).</summary>
+        public string GroggyLabelText => _groggyLabel != null && _groggyLabel.gameObject.activeSelf ? _groggyLabel.text : null;
 
         /// <summary>플레이어가 쓰러져 두목이 태세를 되돌릴 때 — 단계·예고·부하를 거둔다.</summary>
         public void ResetPattern()
         {
             StoryBossPattern.Reset(_state);
             ClearWarns();
+            UpdateGroggyLabel();
             foreach (var m in _minions) if (m != null && !m.IsDead) Destroy(m.gameObject);
             _minions.Clear();
         }
@@ -112,6 +155,21 @@ namespace Saga.Story.World
             Hits++;
         }
 
+        public void PullPlayer(float dx)
+        {
+            if (_player == null || Mathf.Abs(dx) < 1e-5f) return;
+            if (_cc != null && _cc.enabled) _cc.Move(new Vector3(dx, 0f, 0f));
+            else _player.position += new Vector3(dx, 0f, 0f);
+        }
+
+        public void GroggyStarted()
+        {
+            ClearWarns();
+            Toast(string.Format(StoryLocalization.T("bp.groggy", "💫 {0} 그로기 — {1}초 동안 받는 피해 ×{2}!"), BossName, StoryBossPattern.GroggyT, StoryBossPattern.GroggyMul), 3f);
+            _enemy.PlayRoar();
+            UpdateGroggyLabel();
+        }
+
         public void Spawn(float x)
         {
             if (_enemy == null) return;
@@ -141,7 +199,30 @@ namespace Saga.Story.World
                     Toast(string.Format(StoryLocalization.T("bp.summon", "👥 {0}이(가) 부하를 불렀다!"), BossName), 2.2f);
                     _enemy.PlayRoar();
                     break;
+                case StoryBossPattern.Kind.Ring:
+                    // 도넛 — 판 전체 붉은 막, 두목 곁 반지름 2m 만 초록.
+                    StoryBossWarnFx.Sweep(MinX, MaxX, FloorY, s.Cx, StoryBossPattern.RingR * 2f, s.T, StoryLocalization.T("bp.ring", "붙어라!"), root, _warns);
+                    break;
+                case StoryBossPattern.Kind.Volley:
+                    foreach (var m in s.Marks) _warns.Add(StoryBossWarnFx.Circle(m.X, m.Y, m.R, s.T, true, root));
+                    break;
+                case StoryBossPattern.Kind.Beam:
+                    _warns.Add(StoryBossWarnFx.Beam(MinX, MaxX, FloorY, StoryBossPattern.BeamY, Feet.x, s.T, StoryLocalization.T("bp.beam", "⬇ 뛰지 마라!"), root));
+                    break;
+                case StoryBossPattern.Kind.Pillar:
+                    foreach (var m in s.Marks) _warns.Add(StoryBossWarnFx.Pillar(m.X, FloorY, m.R, s.T, root));
+                    break;
+                case StoryBossPattern.Kind.Pull:
+                    _warns.Add(StoryBossWarnFx.Circle(s.Cx, FloorY, StoryBossPattern.PullR, s.T, false, root));
+                    Toast(string.Format(StoryLocalization.T("bp.pull", "⛓ {0}의 {1} — 거슬러 달려라!"), BossName, StoryBossPattern.SigName(s.SigIndex)), 2.2f);
+                    break;
+                case StoryBossPattern.Kind.Chase:
+                    foreach (var m in s.Marks) _warns.Add(StoryBossWarnFx.Circle(m.X, m.Y, m.R, s.T, false, root, StoryBossWarnFx.Violet));
+                    break;
             }
+            // 고유 기술 — 이름 띠(웹 bossintro "보스 — 기술명"). 불기둥 둘째 박자는 다시 안 띄운다.
+            if (kind != StoryBossPattern.Kind.None && kind == s.SigKind && s.Wave != 2 && kind != StoryBossPattern.Kind.Pull)
+                Toast(string.Format(StoryLocalization.T("bp.sig_band", "⚔ {0} — {1}"), BossName, StoryBossPattern.SigName(s.SigIndex)), 1.8f);
             if (kind != StoryBossPattern.Kind.Summon) PlayWindup();
         }
 
@@ -155,9 +236,14 @@ namespace Saga.Story.World
                 StoryBossPattern.Kind.Rock => 0.08f,
                 StoryBossPattern.Kind.Quake => 0.18f,
                 StoryBossPattern.Kind.Sweep => 0.24f,
-                _ => 0.08f,
+                StoryBossPattern.Kind.Ring => 0.16f,
+                StoryBossPattern.Kind.Pull => 0.2f,
+                StoryBossPattern.Kind.Pillar => 0.12f,
+                _ => 0.1f, // 화살비·추적·쇠뇌(웹 5)
             };
-            float sec = kind == StoryBossPattern.Kind.Sweep ? 0.6f : kind == StoryBossPattern.Kind.Quake ? 0.5f : 0.3f;
+            float sec = kind == StoryBossPattern.Kind.Sweep ? 0.6f
+                : kind == StoryBossPattern.Kind.Quake || kind == StoryBossPattern.Kind.Pull ? 0.5f
+                : kind == StoryBossPattern.Kind.Ring ? 0.4f : 0.3f;
             StoryCameraFollow.Instance?.Shake(mag, sec);
             StoryGroundDecal.Spawn(new Vector3(Feet.x, FloorY, 0f), StoryGroundDecal.Kind.HitMark);
         }

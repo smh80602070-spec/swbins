@@ -99,8 +99,13 @@ namespace Saga.Story.World
         public StoryEra Era => era;
         public float HeightMul => heightMul;
         public string DisplayName => era == StoryEra.Past
-            ? (isBoss ? StoryLocalization.T("cut.story_boss_title", "황건 두목") : StoryLocalization.T("enemy.hwanggeon", "황건적"))
+            ? (isBoss && isLabyrinthEnemy ? StoryBossPattern.SigBoss(StoryBossPattern.SigIndex(BossSigId))
+                : isBoss ? StoryLocalization.T("cut.story_boss_title", "황건 두목") : StoryLocalization.T("enemy.hwanggeon", "황건적"))
             : StoryLocalization.T(eraNameKey, eraNameKo);
+
+        /// <summary>PLAN.md 109-11-2 고유 기술 주인(`StoryBossPattern.Sigs` id) — 들판 두목 = 황건 두목(도넛),
+        /// 비경 두목 = 웹 비경 보스 그대로 관문 수호장(추적, 이름도 그렇게 부른다). 두목이 아니면 빈 값.</summary>
+        public string BossSigId => !isBoss ? "" : isLabyrinthEnemy ? "gate_guardian" : "hwanggeon_chief";
 
         /// <summary>Awake 전(비활성 상태 또는 에디터 빌드)에 부른다 — 몸은 호출부가 `modelPrefab` 으로 넣는다.</summary>
         public void SetEra(StoryEras.Foe foe)
@@ -230,6 +235,7 @@ namespace Saga.Story.World
         public float MaxHp => _maxHp;
         public bool IsLabyrinthEnemy => isLabyrinthEnemy;
         private float _maxHp;
+        private StoryBossPatternRunner _patternRunner;
 
         private void Awake()
         {
@@ -368,6 +374,9 @@ namespace Saga.Story.World
             if (_dead || amount <= 0f) return;
             StorySummonState.OnEnemyHit(); // PLAN.md 106-10 — 소환 게이지(플레이어 +3 · 동료 +1 · 소환 자체는 0).
             float applied = _isChampion && _shieldBroken ? amount * ShieldVulnerableMul : amount;
+            // PLAN.md 109-11-2 — 그로기 동안 받는 피해 ×1.5(방패 창과 곱한다).
+            if (_patternRunner == null && isBoss) _patternRunner = GetComponent<StoryBossPatternRunner>();
+            if (_patternRunner != null) applied *= _patternRunner.DamageTakenMul;
             _hp -= applied;
             StoryAudio.PlaySfx(hitClip);
 

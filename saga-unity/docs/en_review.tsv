@@ -1112,10 +1112,40 @@
 2	forest	zone.enter	— {0} {1} —	— {0} {1} —		
 2	forest	zone.enter_village	— 마을 —	— Village —		
 2	forest	zone.roster	사는 것: {0}	Lives here: {0}		
+2	story	bp.beam	⬇ 뛰지 마라!	⬇ Don't jump!		
+2	story	bp.boss.bandit_chief	산채 두령	Mountain Bandit Chief		
+2	story	bp.boss.cave_wraith	암굴 귀장	Cave Wraith General		
+2	story	bp.boss.gate_guardian	관문 수호장	Gate Guardian		
+2	story	bp.boss.horde_commander	몽골 만호장	Mongol Myriarch		
+2	story	bp.boss.hwanggeon_chief	황건 두목	Yellow Turban Chief		
+2	story	bp.boss.khitan_marshal	거란 도통	Khitan Marshal		
+2	story	bp.boss.pirate_captain	왜구 선장	Pirate Captain		
+2	story	bp.boss.raider_general	왜장	Raider General		
+2	story	bp.boss.rival_general	적국 대장군	Enemy Grand General		
+2	story	bp.boss.ruin_brute	폐도 흉장	Ruined Capital Brute		
+2	story	bp.boss.steppe_chief	오랑캐 족장	Steppe Chieftain		
+2	story	bp.boss.wei_commander	위군 도독	Wei Army Commander		
 2	story	bp.enrage	🔥 {0} 광폭 — 휩쓸기가 온다!	🔥 {0} is enraged — a sweep is coming!		
+2	story	bp.groggy	💫 {0} 그로기 — {1}초 동안 받는 피해 ×{2}!	💫 {0} is stunned — takes ×{2} damage for {1}s!		
+2	story	bp.groggy_hud	그로기 {0}초	Stunned {0}s		
 2	story	bp.jump	⬆ 점프!	⬆ Jump!		
 2	story	bp.phase2	⚠ {0} 2단계 — 땅이 흔들린다(점프로 피하라)!	⚠ {0} phase 2 — the ground will shake (jump to dodge)!		
+2	story	bp.pull	⛓ {0}의 {1} — 거슬러 달려라!	⛓ {0}'s {1} — run against the pull!		
+2	story	bp.ring	붙어라!	Get close!		
 2	story	bp.safe	안전	Safe		
+2	story	bp.sig.bandit_chief	돌팔매 소나기	Sling Stone Shower		
+2	story	bp.sig.cave_wraith	귀화 추적	Ghostfire Hunt		
+2	story	bp.sig.gate_guardian	수호 인장 추적	Warden Seal Hunt		
+2	story	bp.sig.horde_commander	만호 포위진	Myriad Encirclement		
+2	story	bp.sig.hwanggeon_chief	황천 부적진	Netherworld Talisman Array		
+2	story	bp.sig.khitan_marshal	기마 화살 일제사	Mounted Arrow Volley		
+2	story	bp.sig.pirate_captain	갈고리 끌어당김	Grappling Hook Drag		
+2	story	bp.sig.raider_general	화승총 두 줄 사격	Twin-Rank Musket Fire		
+2	story	bp.sig.rival_general	화계 불기둥	Fire Stratagem Pillars		
+2	story	bp.sig.ruin_brute	쇠사슬 끌어당김	Chain Drag		
+2	story	bp.sig.steppe_chief	초원 화살비	Steppe Arrow Rain		
+2	story	bp.sig.wei_commander	쇠뇌 일제사	Crossbow Volley		
+2	story	bp.sig_band	⚔ {0} — {1}	⚔ {0} — {1}		
 2	story	bp.summon	👥 {0}이(가) 부하를 불렀다!	👥 {0} called in underlings!		
 2	story	bp.sweep	⚠ {0}의 휩쓸기 — 초록 안전지대로!	⚠ {0}'s sweep — get into the green safe zone!		
 2	story	cut.story_boss_sub	들판 가장 안쪽을 지키는 우두머리	The master guarding the far end of the field		

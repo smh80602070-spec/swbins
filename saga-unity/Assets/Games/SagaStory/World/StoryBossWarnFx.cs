@@ -19,7 +19,8 @@ namespace Saga.Story.World
         private const float SweepHeight = 5.5f;
         private const float PillarHeight = 6f;
 
-        public enum Look { Circle, RockCircle, Quake, SweepRed, SweepSafe }
+        public enum Look { Circle, RockCircle, Quake, SweepRed, SweepSafe, Beam, Pillar }
+        public static readonly Color Violet = new Color(0.7f, 0.35f, 1f);
 
         private float _life, _t;
         private Look _look;
@@ -42,9 +43,9 @@ namespace Saga.Story.World
         }
 
         /// <summary>원 — 내려찍기(Circle)·낙석(RockCircle, 그림자 기둥 더함). x·y 는 발 자리, r 은 판정 반지름.</summary>
-        public static StoryBossWarnFx Circle(float x, float y, float r, float life, bool rock, Transform parent)
+        public static StoryBossWarnFx Circle(float x, float y, float r, float life, bool rock, Transform parent, Color? color = null)
         {
-            var fx = Make(rock ? "BossWarnRock" : "BossWarnSlam", new Vector3(x, y, 0f), life, rock ? Look.RockCircle : Look.Circle, rock ? Orange : Red, parent);
+            var fx = Make(rock ? "BossWarnRock" : "BossWarnSlam", new Vector3(x, y, 0f), life, rock ? Look.RockCircle : Look.Circle, color ?? (rock ? Orange : Red), parent);
             fx.AddPiece(PrimitiveType.Cylinder, new Vector3(0f, 0.04f, 0f), new Vector3(r * 2f, 0.01f, Mathf.Min(r * 2f, Depth)), 0.5f);
             fx.AddPiece(PrimitiveType.Cylinder, new Vector3(0f, 0.05f, 0f), new Vector3(r * 2f + 0.14f, 0.005f, Mathf.Min(r * 2f, Depth) + 0.14f), 0.9f);
             if (rock) fx.AddPiece(PrimitiveType.Cylinder, new Vector3(0f, PillarHeight * 0.5f, 0f), new Vector3(r * 1.2f, PillarHeight * 0.5f, r * 1.2f), 0.18f);
@@ -62,7 +63,30 @@ namespace Saga.Story.World
             return fx;
         }
 
-        /// <summary>휩쓸기 — 안전지대 [safeX ± w/2] 밖은 붉은 막, 안은 초록 기둥.</summary>
+        /// <summary>109-11-2 쇠뇌 — 머리 높이(바닥 위 y)에 판 전체 붉은 띠 + "⬇ 뛰지 마라!".</summary>
+        public static StoryBossWarnFx Beam(float minX, float maxX, float floorY, float y, float playerX, float life, string label, Transform parent)
+        {
+            var fx = Make("BossWarnBeam", new Vector3((minX + maxX) * 0.5f, floorY, 0f), life, Look.Beam, Red, parent);
+            fx.AddPiece(PrimitiveType.Cube, new Vector3(0f, y, 0f), new Vector3(maxX - minX, 0.35f, Depth), 0.45f);
+            fx.AddText(label, new Vector3(playerX - (minX + maxX) * 0.5f, y + 1.1f, 0f), Red);
+            fx.Tick(0f);
+            return fx;
+        }
+
+        /// <summary>109-11-2 불기둥 한 칸 — 가운데 x, 반폭 halfW 의 불빛 기둥.</summary>
+        public static StoryBossWarnFx Pillar(float x, float floorY, float halfW, float life, Transform parent)
+        {
+            var fx = Make("BossWarnPillar", new Vector3(x, floorY, 0f), life, Look.Pillar, new Color(1f, 0.32f, 0.08f), parent);
+            fx.AddPiece(PrimitiveType.Cube, new Vector3(0f, PillarHeight * 0.5f, 0f), new Vector3(halfW * 2f, PillarHeight, 0.3f), 0.3f);
+            fx.AddPiece(PrimitiveType.Cube, new Vector3(0f, 0.05f, 0f), new Vector3(halfW * 2f, 0.1f, Depth), 0.55f);
+            fx.Tick(0f);
+            return fx;
+        }
+
+        /// <summary>109-11-2 추적 — 예고가 발을 따라온다.</summary>
+        public void MoveTo(float x, float y) => transform.position = new Vector3(x, y, 0f);
+
+        /// <summary>휩쓸기 — 안전지대 [safeX ± w/2] 밖은 붉은 막, 안은 초록 기둥(109-11-2 도넛도 같은 그림 — 두목 곁이 안전).</summary>
         public static void Sweep(float minX, float maxX, float floorY, float safeX, float w, float life, string label, Transform parent, System.Collections.Generic.List<StoryBossWarnFx> into)
         {
             float lo = safeX - w * 0.5f, hi = safeX + w * 0.5f;

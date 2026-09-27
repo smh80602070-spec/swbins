@@ -11,6 +11,7 @@ namespace Saga.EditorTools
     /// 웹 진단 항목 그대로: 단계 문턱·목록 · 단계 전환 거둠·광폭 · 내려찍기 맞음/비킴 · 지진 섬/점프/발판 · 휩쓸기 밖/안(안전지대 닿는 거리·판 끝) ·
     /// 잇지 않음·부르기 단계에 한 번 · 실제 사냥터 루프(등장 컷 뒤 예고 그림·판정·체력) + 이 트랙 몫: 플레이어 체력(최대치·무적·회복·레벨업),
     /// 들판 쓰러짐(입구·두목 태세 되돌림·부하 거둠), 실제 비경 두목(방 경계·부하가 방 적·쓰러지면 패퇴).
+    /// 109-11-2(웹 §5-10 진단 그대로): 고유 기술 표·첫 기술·후보 / 도넛·쇠뇌 / 화살비·불기둥 두 박자 / 쇠사슬·추적 / 그로기 셈·5초·×1.5 · 실제 들판(도넛 첫 기술·그로기)·비경(관문 수호장 추적).
     /// 끝나면 플레이어 자리·체력·기력·비경·두목을 시작 때로. 이 진단이 만든 적(부하·비경)은 곧바로 지운다(뒤 단계 적 수 검사).
     /// </summary>
     public static class PlaytestStoryBossPattern
@@ -30,6 +31,7 @@ namespace Saga.EditorTools
             public readonly List<float> Spawns = new List<float>();
             public readonly List<StoryBossPattern.Kind> Warns = new List<StoryBossPattern.Kind>();
             public readonly List<int> Phases = new List<int>();
+            public int GroggyCount;
 
             public Vector2 Feet => FeetPos;
             public bool OnGround => Ground;
@@ -43,6 +45,8 @@ namespace Saga.EditorTools
             public void Warn(StoryBossPattern.Kind kind, StoryBossPattern.State s) => Warns.Add(kind);
             public void Resolved(StoryBossPattern.Kind kind, int hit) { }
             public void PhaseChanged(int phase) => Phases.Add(phase);
+            public void PullPlayer(float dx) => FeetPos += new Vector2(dx, 0f);
+            public void GroggyStarted() => GroggyCount++;
         }
 
         public static bool Run()
@@ -62,6 +66,7 @@ namespace Saga.EditorTools
             try
             {
                 m += CheckPhases() + CheckTransition() + CheckSlamRock() + CheckQuake() + CheckSweep() + CheckPicks()
+                   + CheckSigs() + CheckRingBeam() + CheckVolleyPillar() + CheckPullChase() + CheckGroggy()
                    + CheckPlayerHp() + CheckField(playerGo.transform) + CheckLabyrinth(playerGo.transform);
             }
             catch (System.Exception ex)
@@ -87,7 +92,7 @@ namespace Saga.EditorTools
                 StoryPlayerHp.Refill();
                 Place(cc, playerGo.transform, pos);
             }
-            if (_ok) Debug.Log($"{T} OK - 단계 문턱·목록·전환 거둠·광폭·내려찍기/낙석 맞음·비킴·지진 섬/점프/발판·휩쓸기 밖/안·잇지 않음·부르기 한 번·체력(최대치·무적·회복)·실제 들판 루프·쓰러짐·비경 두목 |{m}");
+            if (_ok) Debug.Log($"{T} OK - 단계 문턱·목록·전환 거둠·광폭·내려찍기/낙석 맞음·비킴·지진 섬/점프/발판·휩쓸기 밖/안·잇지 않음·부르기 한 번·체력(최대치·무적·회복)·실제 들판 루프·쓰러짐·비경 두목 · 11-2 고유 기술 열둘·첫 기술·도넛·쇠뇌·화살비·불기둥 두 박자·쇠사슬·추적·그로기(셈·5초·×1.5·실제) |{m}");
             return _ok;
         }
 
@@ -268,6 +273,186 @@ namespace Saga.EditorTools
             return " 체력";
         }
 
+        // ── 109-11-2 고유 기술·그로기(웹 §5-10) ─────────────────────
+        private static string CheckSigs()
+        {
+            var ids = new HashSet<string>();
+            var kinds = new Dictionary<StoryBossPattern.Kind, int>();
+            foreach (var sg in StoryBossPattern.Sigs)
+            {
+                if (!ids.Add(sg.Id)) Fail($"고유 기술 id 겹침 {sg.Id}");
+                kinds[sg.Kind] = (kinds.TryGetValue(sg.Kind, out var c) ? c : 0) + 1;
+            }
+            if (StoryBossPattern.Sigs.Length != 12) Fail($"고유 기술 {StoryBossPattern.Sigs.Length}(웹 열둘)");
+            foreach (var k in new[] { StoryBossPattern.Kind.Ring, StoryBossPattern.Kind.Volley, StoryBossPattern.Kind.Beam, StoryBossPattern.Kind.Pillar, StoryBossPattern.Kind.Pull, StoryBossPattern.Kind.Chase })
+                if (Get(kinds, k) != 2) Fail($"{k} 주인 {Get(kinds, k)}(웹 둘)");
+            int field = StoryBossPattern.SigIndex("hwanggeon_chief"), gate = StoryBossPattern.SigIndex("gate_guardian");
+            if (field < 0 || StoryBossPattern.Sigs[field].Kind != StoryBossPattern.Kind.Ring || gate < 0 || StoryBossPattern.Sigs[gate].Kind != StoryBossPattern.Kind.Chase
+                || StoryBossPattern.SigIndex("nobody") != -1)
+                Fail("황건 두목 = 도넛·관문 수호장 = 추적");
+            // 첫 기술은 늘 고유 기술, 후보 끝에 낀다, 태세를 되돌리면 다시 첫 기술.
+            var api = new FakeApi { FeetPos = new Vector2(20f, 0f) };
+            var s = new StoryBossPattern.State { Cd = 0f };
+            StoryBossPattern.SetSig(s, StoryBossPattern.SigIndex("steppe_chief"));
+            if (string.Join(",", StoryBossPattern.PoolOf(0, s.SigKind)) != "Slam,Rock,Volley") Fail("후보에 고유 기술이 안 낌");
+            api.Rng = new System.Random(1);
+            StoryBossPattern.Step(s, 0.01f, api, true, 100f, 100f, 22f, 10f);
+            if (s.Current != StoryBossPattern.Kind.Volley || s.First != StoryBossPattern.Kind.None) Fail($"첫 기술 {s.Current}(화살비)");
+            StoryBossPattern.Clear(s);
+            s.Cd = 0f;
+            StoryBossPattern.Step(s, 0.01f, api, true, 100f, 100f, 22f, 10f);
+            if (s.Current == StoryBossPattern.Kind.Volley) Fail("고유 기술을 잇달아 씀");
+            StoryBossPattern.Reset(s);
+            if (s.First != StoryBossPattern.Kind.Volley) Fail("되돌린 뒤 첫 기술이 고유 기술이 아님");
+            return " 고유 기술 열둘";
+        }
+
+        private static string CheckRingBeam()
+        {
+            var api = new FakeApi { FeetPos = new Vector2(20.5f, 0f) };
+            var s = new StoryBossPattern.State();
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Ring, api, 22f);
+            if (Mathf.Abs(s.Cx - 22f) > 1e-4f || Mathf.Abs(s.T - 1.3f) > 1e-4f) Fail("도넛 가운데·1.3초");
+            StoryBossPattern.Resolve(s, api, 10f); // 두목 곁 1.5m — 산다
+            if (api.Hurts.Count != 0) Fail("도넛 안(두목 곁)인데 맞음");
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Ring, api, 22f);
+            api.FeetPos = new Vector2(24.2f, 0f);
+            StoryBossPattern.Resolve(s, api, 10f);
+            if (api.Hurts.Count != 1 || api.Hurts[0] != 11f) Fail($"도넛 밖 {string.Join(",", api.Hurts)}(11)");
+            api.Hurts.Clear();
+            api.FeetPos = new Vector2(20f, 0.05f);
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Beam, api, 22f);
+            StoryBossPattern.Resolve(s, api, 10f); // 땅에 붙음 — 산다
+            if (api.Hurts.Count != 0) Fail("쇠뇌 — 땅에 붙었는데 맞음");
+            api.Ground = false;
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Beam, api, 22f);
+            StoryBossPattern.Resolve(s, api, 10f);
+            api.Ground = true;
+            api.FeetPos = new Vector2(20f, FieldMapData.Platforms()[0].Height);
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Beam, api, 22f);
+            StoryBossPattern.Resolve(s, api, 10f);
+            if (api.Hurts.Count != 2 || api.Hurts[0] != 11f) Fail($"쇠뇌 — 뛰었거나 발판 위 {string.Join(",", api.Hurts)}(11 둘)");
+            return " 도넛·쇠뇌";
+        }
+
+        private static string CheckVolleyPillar()
+        {
+            var api = new FakeApi { FeetPos = new Vector2(20f, 0f) };
+            var s = new StoryBossPattern.State();
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Volley, api, 25f);
+            if (s.Marks.Count != 5) Fail($"화살비 {s.Marks.Count} 점");
+            for (int i = 1; i < s.Marks.Count; i++)
+                if (Mathf.Abs(s.Marks[i].X - s.Marks[i - 1].X - StoryBossPattern.VolleyGap) > 1e-3f) Fail("화살비 간격 2.2m");
+            float j0 = s.Marks[2].X - 20f;
+            if (Mathf.Abs(j0) > StoryBossPattern.VolleyJitter / 2f + 1e-4f) Fail($"화살비 흔들림 {j0:F2}");
+            StoryBossPattern.Resolve(s, api, 10f);
+            if (api.Hurts.Count != 1 || api.Hurts[0] != 8f) Fail($"화살비 맞음 {string.Join(",", api.Hurts)}(8)");
+            api.Hurts.Clear();
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Volley, api, 25f);
+            api.FeetPos = new Vector2(s.Marks[2].X + StoryBossPattern.VolleyGap / 2f, 0f); // 틈
+            StoryBossPattern.Resolve(s, api, 10f);
+            if (api.Hurts.Count != 0) Fail("화살비 틈인데 맞음");
+
+            // 불기둥 두 박자 — 첫 박자 홀수 칸(내 칸 빔), 둘째 짝수 칸. 한 칸 옮기면 산다, 두 박자는 그로기 셈 하나.
+            api.FeetPos = new Vector2(20f, 0f);
+            s = new StoryBossPattern.State { Cd = 100f };
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Pillar, api, 25f);
+            if (s.Marks.Count != 4 || s.Wave != 1) Fail($"불기둥 첫 박자 {s.Marks.Count} 칸(넷)");
+            foreach (var mk in s.Marks) if (Mathf.Abs(mk.X - 20f) < StoryBossPattern.PillarW) Fail("첫 박자가 내 칸에");
+            Steps(s, api, 1.05f, 25f);
+            if (s.Wave != 2 || s.Marks.Count != 3 || s.Current != StoryBossPattern.Kind.Pillar || api.Hurts.Count != 0) Fail($"둘째 박자 {s.Wave}·{s.Marks.Count} 칸·맞음 {api.Hurts.Count}");
+            api.FeetPos = new Vector2(20f + StoryBossPattern.PillarGap, 0f); // 한 칸 옮겨 딛음
+            Steps(s, api, 0.85f, 25f);
+            if (s.Current != StoryBossPattern.Kind.None || api.Hurts.Count != 0 || s.Dodge != 1) Fail($"불기둥 비킴 — 맞음 {api.Hurts.Count}·셈 {s.Dodge}(하나)");
+            api.FeetPos = new Vector2(20f, 0f);
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Pillar, api, 25f);
+            Steps(s, api, 1.9f, 25f); // 가만히 — 둘째 박자에 맞음
+            if (api.Hurts.Count != 1 || api.Hurts[0] != 10f || s.Dodge != 0) Fail($"불기둥 제자리 {string.Join(",", api.Hurts)}·셈 {s.Dodge}");
+            return " 화살비·불기둥";
+        }
+
+        private static string CheckPullChase()
+        {
+            // 쇠사슬 — 1.4초 3m/s 로 끌리다 둘레 2.6m 폭발. 두목을 넘어가진 않는다. 거슬러 달리면(6m/s) 산다.
+            var api = new FakeApi { FeetPos = new Vector2(27f, 0f) };
+            var s = new StoryBossPattern.State { Cd = 100f };
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Pull, api, 22f);
+            Steps(s, api, 1.45f, 22f);
+            if (Mathf.Abs(api.FeetPos.x - (27f - StoryBossPattern.PullV * StoryBossPattern.PullT)) > 0.2f) Fail($"끌림 {api.FeetPos.x:F2}(약 22.8~23)");
+            if (api.Hurts.Count != 1 || api.Hurts[0] != 14f) Fail($"쇠사슬 맞음 {string.Join(",", api.Hurts)}(14)");
+            api.Hurts.Clear();
+            api.FeetPos = new Vector2(22.5f, 0f);
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Pull, api, 22f);
+            Steps(s, api, 1.45f, 22f);
+            if (Mathf.Abs(api.FeetPos.x - 22f) > 1e-3f) Fail($"두목을 넘어 끌림 {api.FeetPos.x:F2}");
+            api.Hurts.Clear();
+            api.FeetPos = new Vector2(25f, 0f);
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Pull, api, 22f);
+            for (int i = 0; i < 16 && s.Current != StoryBossPattern.Kind.None; i++)
+            {
+                api.FeetPos += new Vector2(6f * 0.1f, 0f); // 거슬러 달림
+                StoryBossPattern.Step(s, 0.1f, api, false, 100f, 100f, 22f, 10f);
+            }
+            if (api.Hurts.Count != 0) Fail($"쇠사슬 — 거슬러 달렸는데 맞음(끝 자리 {api.FeetPos.x:F2})");
+
+            // 추적 — 1초 따라오다 0.5초 멈춘 뒤 터짐.
+            api.FeetPos = new Vector2(20f, 0f);
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Chase, api, 25f);
+            for (int i = 0; i < 9; i++) { api.FeetPos += new Vector2(0.1f, 0f); StoryBossPattern.Step(s, 0.1f, api, false, 100f, 100f, 25f, 10f); }
+            if (Mathf.Abs(s.Marks[0].X - api.FeetPos.x) > 1e-3f) Fail($"추적이 안 따라옴 {s.Marks[0].X:F2} ≠ {api.FeetPos.x:F2}");
+            Steps(s, api, 0.15f, 25f); // 0.45초 남음 — 멈춤
+            float locked = s.Marks[0].X;
+            api.FeetPos += new Vector2(2f, 0f);
+            Steps(s, api, 0.2f, 25f);
+            if (s.Current != StoryBossPattern.Kind.Chase || Mathf.Abs(s.Marks[0].X - locked) > 1e-4f) Fail("멈춘 뒤에도 따라옴");
+            Steps(s, api, 0.4f, 25f);
+            if (api.Hurts.Count != 0 || s.Current != StoryBossPattern.Kind.None) Fail("추적 — 멈춘 뒤 비켰는데 맞음");
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Chase, api, 25f);
+            Steps(s, api, 1.55f, 25f);
+            if (api.Hurts.Count != 1 || api.Hurts[0] != 14f) Fail($"추적 제자리 {string.Join(",", api.Hurts)}(14)");
+            return " 쇠사슬·추적";
+        }
+
+        private static string CheckGroggy()
+        {
+            var api = new FakeApi { FeetPos = new Vector2(20f, 0f) };
+            var s = new StoryBossPattern.State { Cd = 100f };
+            void Dodge()
+            {
+                StoryBossPattern.Begin(s, StoryBossPattern.Kind.Slam, api, 25f);
+                api.FeetPos = new Vector2(30f, 0f);
+                StoryBossPattern.Resolve(s, api, 10f);
+                api.FeetPos = new Vector2(20f, 0f);
+            }
+            Dodge(); Dodge();
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Slam, api, 25f);
+            StoryBossPattern.Resolve(s, api, 10f); // 맞음 — 셈 0
+            if (s.Dodge != 0 || s.Groggy > 0f) Fail("맞았는데 셈이 남음");
+            Dodge(); Dodge();
+            // 부르기는 셈에 안 든다.
+            StoryBossPattern.Begin(s, StoryBossPattern.Kind.Summon, api, 25f);
+            Steps(s, api, 0.5f, 25f);
+            if (s.Dodge != 2 || s.Groggy > 0f) Fail($"부르기가 셈에 듦 {s.Dodge}");
+            Dodge();
+            if (s.Groggy != StoryBossPattern.GroggyT || s.Dodge != 0 || s.GroggyCount != 1 || api.GroggyCount != 1) Fail($"셋 잇달아 피해도 그로기 아님({s.Groggy}·셈 {s.Dodge})");
+            if (StoryBossPattern.DamageTakenMul(s) != 1.5f) Fail("그로기 받는 피해 ×1.5");
+            // 5초 동안 새 패턴 없음 → 끝나면 1초 안에 다시.
+            s.Cd = 0f;
+            int begun = s.Begun;
+            for (int i = 0; i < 49; i++) StoryBossPattern.Step(s, 0.1f, api, true, 100f, 100f, 25f, 10f);
+            if (s.Begun != begun || s.Groggy <= 0f) Fail("그로기 중 새 패턴");
+            StoryBossPattern.Step(s, 0.11f, api, true, 100f, 100f, 25f, 10f);
+            if (s.Groggy != 0f || s.Cd > 1f || StoryBossPattern.DamageTakenMul(s) != 1f) Fail($"그로기가 안 끝남 {s.Groggy}");
+            return " 그로기";
+        }
+
+        /// <summary>순수 판정을 dt 0.05 로 굴린다(새 패턴은 안 물게 near=false).</summary>
+        private static void Steps(StoryBossPattern.State s, FakeApi api, float sec, float bossX)
+        {
+            for (float t = 0f; t < sec - 1e-4f; t += 0.05f)
+                StoryBossPattern.Step(s, Mathf.Min(0.05f, sec - t), api, false, 100f, 100f, bossX, 10f);
+        }
+
         private static string CheckField(Transform player)
         {
             StoryEnemy boss = null;
@@ -277,42 +462,66 @@ namespace Saga.EditorTools
             var runner = boss.GetComponent<StoryBossPatternRunner>();
             if (runner == null) { Fail("들판 두목에 패턴 실행기 없음"); return ""; }
             if (!boss.IntroPlayed) { Fail("등장 컷이 먼저 돌지 않음(두목 등장 진단 뒤에 불러야)"); return ""; }
+            if (boss.BossSigId != "hwanggeon_chief" || runner.State.SigKind != StoryBossPattern.Kind.Ring) Fail($"들판 두목 고유 기술 {boss.BossSigId}·{runner.State.SigKind}(도넛)");
             var cc = player.GetComponent<CharacterController>();
             float hp0 = boss.Hp;
             if (Mathf.Abs(boss.MaxHp - hp0) > 0.01f) Fail($"두목 최대 체력 {boss.MaxHp} ≠ 지금 {hp0}");
             if (runner.MinX != 0f || Mathf.Abs(runner.MaxX - FieldMapData.WidthM) > 1e-3f) Fail($"들판 경계 {runner.MinX}~{runner.MaxX}");
             runner.ResetPattern();
-            runner.RandOverride = () => 0.1f; // 첫 패턴 = 목록 첫째(내려찍기)
+            runner.RandOverride = () => 0.1f; // 고유 기술 뒤로는 목록 첫째
             runner.OnGroundOverride = () => true;
             StoryPlayerHp.Refill();
             Place(cc, player, new Vector3(boss.transform.position.x - 3f, 0.05f, 0f));
 
-            // 1) 첫 패턴까지 3.2초 — 그 전엔 예고 없음, 뒤엔 예고 그림.
+            // 1) 첫 패턴까지 3.2초 — 첫 기술은 고유 기술 도넛(판 전체 붉은 막 + 두목 곁 초록).
             Ticks(runner, 3.1f);
             if (runner.State.Current != StoryBossPattern.Kind.None || runner.Warns.Count != 0) Fail("3.2초 전에 패턴");
-            Ticks(runner, 0.2f);
-            if (runner.State.Current != StoryBossPattern.Kind.Slam || runner.Warns.Count != 1 || runner.Warns[0] == null || runner.Warns[0].Kind != StoryBossWarnFx.Look.Circle)
-                Fail($"첫 패턴 예고 {runner.State.Current}·그림 {runner.Warns.Count}");
-            // 2) 판정 — 그 자리에 서 있으면 맞는다(Lv.1 힘 11 × 1.3 = 14).
+            TickUntil(runner, () => runner.State.Current != StoryBossPattern.Kind.None, 0.3f);
+            int red = 0, safe = 0;
+            foreach (var w in runner.Warns) if (w != null) { if (w.Kind == StoryBossWarnFx.Look.SweepRed) red++; else if (w.Kind == StoryBossWarnFx.Look.SweepSafe) safe++; }
+            if (runner.State.Current != StoryBossPattern.Kind.Ring || safe != 1 || red < 1) Fail($"첫 기술 {runner.State.Current}·붉은 {red}·초록 {safe}(도넛)");
+            // 2) 도넛 밖(3m)이면 맞는다 — Lv.1 힘 11 × 1.1 = 12.
             float hpBefore = StoryPlayerHp.Hp;
-            Ticks(runner, 1.05f);
+            TickUntil(runner, () => runner.State.Current == StoryBossPattern.Kind.None, 1.5f);
             if (runner.State.Current != StoryBossPattern.Kind.None || runner.Warns.Count != 0) Fail("판정 뒤에도 예고가 남음");
-            if (hpBefore - StoryPlayerHp.Hp != 14f) Fail($"내려찍기 피해 {hpBefore - StoryPlayerHp.Hp}(14)");
-            // 3) 낙석(다음 패턴은 같은 것을 안 잇는다) — 비키면 안 맞는다.
+            if (hpBefore - StoryPlayerHp.Hp != 12f) Fail($"도넛 피해 {hpBefore - StoryPlayerHp.Hp}(12)");
+            // 3) 내려찍기(도넛은 안 잇는다) — 그 자리에 서 있으면 14.
             StoryPlayerHp.Tick(1f);
-            Ticks(runner, 6.6f);
-            if (runner.State.Current != StoryBossPattern.Kind.Rock || runner.Warns.Count != 3) Fail($"둘째 패턴 {runner.State.Current}·그림 {runner.Warns.Count}(낙석 셋)");
-            Place(cc, player, new Vector3(player.position.x + 1.3f, 0.05f, 0f)); // 줄기 사이
+            TickUntil(runner, () => runner.State.Current != StoryBossPattern.Kind.None, 7f);
+            if (runner.State.Current != StoryBossPattern.Kind.Slam || runner.Warns.Count != 1 || runner.Warns[0] == null || runner.Warns[0].Kind != StoryBossWarnFx.Look.Circle)
+                Fail($"둘째 패턴 {runner.State.Current}·그림 {runner.Warns.Count}(내려찍기)");
             hpBefore = StoryPlayerHp.Hp;
-            Ticks(runner, 1.15f);
+            TickUntil(runner, () => runner.State.Current == StoryBossPattern.Kind.None, 1.2f);
+            if (hpBefore - StoryPlayerHp.Hp != 14f) Fail($"내려찍기 피해 {hpBefore - StoryPlayerHp.Hp}(14)");
+            // 4) 낙석 — 비키면 안 맞는다. 셋째로 잇달아 피한 셈이면 그로기.
+            StoryPlayerHp.Tick(1f);
+            TickUntil(runner, () => runner.State.Current != StoryBossPattern.Kind.None, 7f);
+            if (runner.State.Current != StoryBossPattern.Kind.Rock || runner.Warns.Count != 3) Fail($"셋째 패턴 {runner.State.Current}·그림 {runner.Warns.Count}(낙석 셋)");
+            Place(cc, player, new Vector3(player.position.x + 1.3f, 0.05f, 0f)); // 줄기 사이
+            runner.State.Dodge = 2;
+            hpBefore = StoryPlayerHp.Hp;
+            TickUntil(runner, () => runner.State.Current == StoryBossPattern.Kind.None, 1.3f);
             if (StoryPlayerHp.Hp != hpBefore) Fail("낙석 비켰는데 맞음");
-            // 4) 2단계 — 포효·부하 둘(방 적이 아닌 들판 잡졸), 3단계 — 휩쓸기 예고(붉은 막 + 초록 기둥).
+            if (runner.State.Groggy <= 4.5f || runner.State.GroggyCount != 1 || runner.GroggyLabelText == null || !runner.GroggyLabelText.Contains("★"))
+                Fail($"실제 그로기 {runner.State.Groggy:F2}·글자 {runner.GroggyLabelText}");
+            float bh = boss.Hp;
+            boss.TakeDamage(10f);
+            if (Mathf.Abs(bh - boss.Hp - 15f) > 0.01f) Fail($"그로기 받는 피해 {bh - boss.Hp}(15)");
+            runner.State.Cd = 0f;
+            Ticks(runner, 4.4f);
+            if (runner.State.Current != StoryBossPattern.Kind.None || runner.State.Groggy <= 0f) Fail("그로기 중 새 패턴");
+            TickUntil(runner, () => runner.State.Groggy <= 0f, 1f);
+            if (runner.State.Groggy > 0f || runner.GroggyLabelText != null) Fail("그로기가 안 끝남·글자 남음");
+
+            // 5) 2단계 — 포효·부하 둘(들판 잡졸), 3단계 — 휩쓸기 예고(붉은 막 + 초록 기둥).
+            runner.ResetPattern();
+            runner.State.First = StoryBossPattern.Kind.None;
             boss.TakeDamage(boss.MaxHp * 0.4f);
             var r = runner.Tick(0.01f);
             if (r == null || !r.Value.Changed || runner.State.Phase != 1) Fail("실제 2단계 전환");
             runner.State.Cd = 0f;
             runner.State.Last = StoryBossPattern.Kind.None;
-            runner.RandOverride = () => 0.99f; // 목록 끝 = 부르기
+            runner.RandOverride = () => 0.7f; // 목록 [내려찍기·낙석·지진·부르기·도넛] 넷째
             runner.Tick(0.01f);
             if (runner.State.Current != StoryBossPattern.Kind.Summon || runner.Minions.Count != 2) Fail($"부르기 {runner.State.Current}·부하 {runner.Minions.Count}");
             foreach (var mn in runner.Minions) if (mn.IsBoss || mn.IsLabyrinthEnemy || mn.IsDead) Fail("부하가 두목·비경 적이거나 죽음");
@@ -322,30 +531,29 @@ namespace Saga.EditorTools
             if (runner.State.Phase != 2) Fail($"실제 3단계 {runner.State.Phase}");
             runner.State.Cd = 0f;
             runner.State.Last = StoryBossPattern.Kind.None;
-            runner.Tick(0.01f);
-            int red = 0, safe = 0;
+            runner.Tick(0.01f); // [내려찍기·낙석·지진·휩쓸기·도넛] 넷째
+            red = 0; safe = 0;
             foreach (var w in runner.Warns) if (w != null) { if (w.Kind == StoryBossWarnFx.Look.SweepRed) red++; else if (w.Kind == StoryBossWarnFx.Look.SweepSafe) safe++; }
             if (runner.State.Current != StoryBossPattern.Kind.Sweep || safe != 1 || red < 1) Fail($"휩쓸기 예고 {runner.State.Current}·붉은 {red}·안전 {safe}");
-            // 5) 쓰러짐 — 들판 입구에서 일어서고, 두목은 체력 가득·1단계·부하 거둠.
+            // 6) 쓰러짐 — 들판 입구에서 일어서고, 두목은 체력 가득·1단계·부하 거둠·첫 기술 다시 도넛.
             StoryPlayerHp.SetForTest(1f);
             int falls = StoryPlayerHp.Falls;
             StoryPlayerHp.Hurt(5f);
             if (StoryPlayerHp.Falls != falls + 1) Fail("쓰러짐 이벤트 없음");
             if (Mathf.Abs(player.position.x - StoryPlayerVitals.FieldRespawn.x) > 0.01f) Fail($"쓰러진 뒤 자리 {player.position.x:F2}(입구 2m)");
             if (StoryPlayerHp.Hp != StoryPlayerHp.HpMax) Fail($"일어선 체력 {StoryPlayerHp.Hp}");
-            if (Mathf.Abs(boss.Hp - boss.MaxHp) > 0.01f || runner.State.Phase != 0 || runner.State.Current != StoryBossPattern.Kind.None || runner.Warns.Count != 0)
-                Fail($"두목 태세 되돌림(체력 {boss.Hp}/{boss.MaxHp}·단계 {runner.State.Phase}·걸림 {runner.State.Current})");
-            int alive = 0;
-            foreach (var mn in runner.Minions) if (mn != null) alive++;
-            if (alive != 0) Fail($"부하가 남음 {alive}");
-            // 6) 멀면(입구) 새 패턴 없음, 컷 전 두목(등장 안 한 두목)은 안 문다 — 여긴 먼 자리만 본다.
+            if (Mathf.Abs(boss.Hp - boss.MaxHp) > 0.01f || runner.State.Phase != 0 || runner.State.Current != StoryBossPattern.Kind.None || runner.Warns.Count != 0
+                || runner.State.First != StoryBossPattern.Kind.Ring)
+                Fail($"두목 태세 되돌림(체력 {boss.Hp}/{boss.MaxHp}·단계 {runner.State.Phase}·걸림 {runner.State.Current}·첫 기술 {runner.State.First})");
+            if (runner.Minions.Count != 0) Fail($"부하가 남음 {runner.Minions.Count}");
+            // 7) 멀면(입구) 새 패턴 없음.
             runner.State.Cd = 0f;
             runner.Tick(0.01f);
             if (runner.State.Current != StoryBossPattern.Kind.None) Fail("입구(멀리)에서도 패턴");
             runner.RandOverride = null;
             runner.OnGroundOverride = null;
             runner.ResetPattern();
-            return $" 들판(피해 {runner.DamageDealt:0}·맞음 {runner.Hits})";
+            return $" 들판(피해 {runner.DamageDealt:0}·맞음 {runner.Hits}·그로기 1)";
         }
 
         private static string CheckLabyrinth(Transform player)
@@ -363,11 +571,24 @@ namespace Saga.EditorTools
             if (runner == null) { Fail("비경 두목에 패턴 실행기 없음"); return ""; }
             if (runner.MinX != StoryLabyrinthRunner.ArenaMinX || runner.MaxX != StoryLabyrinthRunner.ArenaMaxX) Fail($"비경 경계 {runner.MinX}~{runner.MaxX}");
             if (Mathf.Abs(boss.MaxHp - boss.Hp) > 0.01f) Fail($"비경 두목 최대 체력 {boss.MaxHp} ≠ 지금 {boss.Hp}(배율 곱한 값)");
-            // 컷 없이 곧장 문다.
+            string wantName = StoryBossPattern.SigBoss(StoryBossPattern.SigIndex("gate_guardian"));
+            if (boss.BossSigId != "gate_guardian" || boss.DisplayName != wantName) Fail($"비경 두목 {boss.BossSigId}·{boss.DisplayName}(관문 수호장)");
+            // 컷 없이 곧장 문다 — 첫 기술 = 수호 인장 추적(보라 원이 발을 따라온다).
+            var cc = player.GetComponent<CharacterController>();
+            StoryPlayerHp.Refill();
             runner.RandOverride = () => 0.1f;
             runner.State.Cd = 0f;
             var r = runner.Tick(0.01f);
-            if (r == null || runner.State.Current == StoryBossPattern.Kind.None) Fail("비경 두목이 패턴을 안 문다");
+            if (r == null || runner.State.Current != StoryBossPattern.Kind.Chase || runner.Warns.Count != 1) Fail($"비경 두목 첫 기술 {runner.State.Current}(추적)");
+            Place(cc, player, new Vector3(player.position.x + 1f, player.position.y, 0f));
+            runner.Tick(0.3f);
+            if (runner.Warns.Count == 1 && runner.Warns[0] != null && Mathf.Abs(runner.Warns[0].transform.position.x - player.position.x) > 1e-3f)
+                Fail($"추적 예고가 안 따라옴 {runner.Warns[0].transform.position.x:F2} ≠ {player.position.x:F2}");
+            runner.Tick(0.7f); // 0.5초 남음 — 멈춤(건 걸음은 시간이 안 준다)
+            Place(cc, player, new Vector3(player.position.x + 2f, player.position.y, 0f));
+            int hits = runner.Hits;
+            runner.Tick(0.55f);
+            if (runner.Hits != hits || runner.State.Current != StoryBossPattern.Kind.None) Fail("추적 — 멈춘 뒤 비켰는데 맞음");
             runner.ResetPattern();
             // 부르기 — 부하 둘이 방 적(비경 적)으로 들어 방이 안 끝난다.
             StoryBossPattern.Begin(runner.State, StoryBossPattern.Kind.Summon, runner, boss.transform.position.x);
@@ -381,7 +602,18 @@ namespace Saga.EditorTools
             if (player.position.x > 900f) Fail("비경에서 쓰러진 뒤 방에 남음");
             if (StoryPlayerHp.Hp != StoryPlayerHp.HpMax) Fail("비경에서 쓰러진 뒤 체력이 안 참");
             runner.RandOverride = null;
-            return " 비경";
+            return " 비경(관문 수호장·추적)";
+        }
+
+        /// <summary>조건이 설 때까지 dt 0.05 로 굴린다(부동소수 누적으로 고정 시간이 한 걸음 어긋나지 않게).</summary>
+        private static void TickUntil(StoryBossPatternRunner runner, System.Func<bool> done, float maxSec)
+        {
+            for (float t = 0f; t < maxSec && !done(); t += 0.05f)
+            {
+                runner.Tick(0.05f);
+                StoryPlayerHp.Tick(0f);
+            }
+            if (!done()) Fail($"{maxSec}초 안에 조건이 안 섬(걸림 {runner.State.Current}·T {runner.State.T:F2}·cd {runner.State.Cd:F2})");
         }
 
         private static void Ticks(StoryBossPatternRunner runner, float sec)
