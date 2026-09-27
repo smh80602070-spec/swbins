@@ -195,6 +195,12 @@
       });
     }
 
+    /* 서리봉 고원 명소(§5 ⑲-27) — 찾은 것만 이름 */
+    var FRo = global.DG.frost;
+    if (FRo && FRo.on() && FRo.marks && wl) {
+      FRo.marks().forEach(function (fm) { if (!fm.found) { return; } var fp2 = wl.worldToLatLng(fm.x, fm.y); pois.push({ lat: fp2.lat, lng: fp2.lng, t: 'frost', name: (fm.big ? '🏔️ ' : '❄️ ') + fm.name }); });
+    }
+
     /* 낚시터(§5 ⑲-24) — 탑을 찾은 지역만 */
     var FSo = global.DG.fishing;
     if (FSo && FSo.mapSpots && wl) {
@@ -218,6 +224,7 @@
       'stele-faint': { c: 'rgba(217,210,192,.28)', r: 2.2 },
       waypoint: { c: '#6fd3ff', r: 4.5 },
       fish: { c: '#6ec8ff', r: 3.2 },
+      frost: { c: '#e8f4ff', r: 3.4 },
       landmark: { c: 'rgba(255,211,107,.7)', r: 4 },
       river: { c: 'rgba(90,170,235,.75)', r: 2.2 },
       ridge: { c: 'rgba(170,150,120,.7)', r: 2.6 },
@@ -266,7 +273,7 @@
       sp = px(p);
       ctx.fillStyle = st.c;
       ctx.beginPath(); ctx.arc(sp.x, sp.y, st.r, 0, Math.PI * 2); ctx.fill();
-      if (p.t === 'beacon-lit' || p.t === 'beacon' || p.t === 'waypoint' || p.t === 'landmark' || p.t === 'peak' || p.t === 'peak-found' || p.t === 'fish') {
+      if (p.t === 'beacon-lit' || p.t === 'beacon' || p.t === 'waypoint' || p.t === 'landmark' || p.t === 'peak' || p.t === 'peak-found' || p.t === 'fish' || p.t === 'frost') {
         ctx.font = '600 9px system-ui, sans-serif';
         ctx.fillStyle = 'rgba(255,255,255,.75)';
         ctx.textAlign = 'center';
@@ -375,6 +382,9 @@
     /* 오른 정상(landform.js, §5 ⑰)도 지점이다 — 정상으로 건너가 활공으로 내려온다 */
     var LFw = global.DG.landform;
     if (LFw && LFw.on() && LFw.waypoints) { list = list.concat(LFw.waypoints()); }
+    /* 서리봉 고원(frost.js, §5 ⑲-27) — 찾은 경계비·관측소 */
+    var FRw = global.DG.frost;
+    if (FRw && FRw.on() && FRw.waypoints) { list = list.concat(FRw.waypoints()); }
     return list;
   }
   /** (x, y)에서 가장 가까운 순간이동 지점 — { key, x, y, name, d } 또는 null */
@@ -391,7 +401,8 @@
   function jump(wk) {
     var BMo = global.DG.biome, LFw = global.DG.landform;
     if (!wk || !BMo) { return false; }
-    var ok = wk.indexOf('pk:') === 0 ? !!(LFw && LFw.teleport(wk.slice(3))) : BMo.teleport(wk);
+    var FRj = global.DG.frost;
+    var ok = wk.indexOf('pk:') === 0 ? !!(LFw && LFw.teleport(wk.slice(3))) : wk.indexOf('fr:') === 0 ? !!(FRj && FRj.teleport(wk.slice(3))) : BMo.teleport(wk);
     if (ok) { close(); }
     return ok;
   }

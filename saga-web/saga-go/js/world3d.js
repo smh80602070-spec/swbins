@@ -252,6 +252,8 @@
   }
 
   function weatherKey() {
+    var FRw = global.DG.frost;
+    if (FRw && FRw.snowingHere && FRw.snowingHere()) { return 'snow'; }   // §5 ⑲-27 서리봉 고원 안에서만 눈
     var W = global.DG.weather;
     return W ? W.current().key : 'clear';
   }
@@ -683,8 +685,9 @@
     var gx, gy;
 
     var SSk = global.DG.season;
+    var FRt = global.DG.frost && global.DG.frost.on() ? global.DG.frost : null;   // §5 ⑲-27 서리봉 고원 눈밭
     var ck = 'w|' + g0x + ',' + g0y + '|' + landTexReadyKey() +
-      '|' + (SSk ? SSk.now().key : '-');
+      '|' + (SSk ? SSk.now().key : '-') + (FRt ? '|fr' : '');
     if (landTex[ck]) { landTex[ck].userData.gen = syncGen; return landTex[ck]; }
 
     var S = LAND_TEX_RES();
@@ -729,7 +732,10 @@
             var rh = Math.round((wy + subSpan - y0) * k) - ry;
             var baseCol = LAND_COLOR[useKind] || LAND_COLOR.grass;
             if (SSk) { baseCol = SSk.landColor(useKind, baseCol); }
-            var pat = landPattern(c, useKind, gx * GRID, gy * GRID, k);
+            /* §5 ⑲-27 북방 설산 땅은 눈밭 — 물·길은 그대로, 산은 더 희게 */
+            var snowy = FRt && useKind !== 'water' && useKind !== 'road' && FRt.snowCell(gx, gy);
+            if (snowy) { baseCol = useKind === 'mount' ? '#e6ebf1' : (useKind === 'forest' ? '#cdd7df' : '#dde5ec'); }
+            var pat = snowy ? null : landPattern(c, useKind, gx * GRID, gy * GRID, k);
             if (pat) {
               c.fillStyle = pat;
               c.fillRect(rx, ry, rw, rh);
@@ -1276,6 +1282,8 @@
         out.push({ x: ox + p.x, z: oz + p.z, w: p.h * 2.8, d: p.h * 1.8, rot: p.rot || 0 });
       }
     }
+    var FRh = global.DG.frost;                                   // §5 ⑲-27 서리봉 고원 명소 벽(산성 담·관측소·비행선…)
+    if (FRh && FRh.rectsIn) { var frr = FRh.rectsIn(gx, gy); for (i = 0; i < frr.length; i++) { out.push(frr[i]); } }
     return out;
   }
 

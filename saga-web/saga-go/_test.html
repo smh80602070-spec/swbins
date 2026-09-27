@@ -91,6 +91,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/fishing.js"></script>
 <script src="js/achieve.js"></script>
 <script src="js/dispatch.js"></script>
+<script src="js/frost.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -11856,6 +11857,93 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '모아 한 줄 · 하나씩 한 번 · 사명 한 줄' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-27 서리봉 고원 (frost.js, PLAN §5 ⑲-27) ── */
+    function frRig() {
+      var bak = JSON.stringify(C.save), FR = DG.frost;
+      FR._resetForTest(); delete C.save.frost;
+      return { FR: FR, undo: function () {
+        FR._resetForTest();
+        var snap = JSON.parse(bak);
+        Object.keys(C.save).forEach(function (k) { delete C.save[k]; });
+        Object.keys(snap).forEach(function (k) { C.save[k] = snap[k]; });
+      } };
+    }
+    function frInRect(r, x, y) {
+      var dx = x - r.x, dz = y - r.z, c = Math.cos(r.rot), s = Math.sin(r.rot), lx = dx * c + dz * s, lz = -dx * s + dz * c;
+      return Math.abs(lx) <= r.w / 2 && Math.abs(lz) <= r.d / 2;
+    }
+
+    t('서리봉 고원 ⑲-27 — 자리: 가운데 = 고향에 가장 가까운 북방 설산 칸 · 명소 다섯·작은 발견 일곱이 모두 그 땅 들·숲 칸(억지 없음) · 탑에서 40m 밖 · 명소끼리 60m·나머지 30m 넘게 떨어짐 · 다시 풀어도 같은 자리 · 순간이동 명소 둘', function () {
+      var FR = DG.frost, B = DG.biome, r = {}, bad = [];
+      FR._resetForTest();
+      var c = FR.center(), L = FR.sites();
+      var near = Infinity;
+      for (var j = -14; j <= 14; j++) { for (var i = -14; i <= 14; i++) { var cc = B.cellAt(i, j); if (cc.zone === FR.ZONE) { near = Math.min(near, Math.hypot(cc.x, cc.y)); } } }
+      r.center = !!c && B.regionAt(c.x, c.y).cell.zone === FR.ZONE && Math.abs(Math.hypot(c.x, c.y) - near) < 1e-6;
+      r.count = L.length === 12 && L.filter(function (s) { return s.big; }).length === 5 && L.filter(function (s) { return s.way; }).map(function (s) { return s.id; }).join() === 'obs,stele';
+      L.forEach(function (s, k) {
+        var kind = DG.world.terrainAt(Math.floor(s.x / 48), Math.floor(s.y / 48));
+        if (s.forced || B.regionAt(s.x, s.y).cell.zone !== FR.ZONE || ['grass', 'forest', 'farm'].indexOf(kind) < 0) { bad.push(s.id + '땅'); }
+        if (Math.hypot(s.x - c.x, s.y - c.y) < FR.TOWER_CLEAR) { bad.push(s.id + '탑'); }
+        for (var q = 0; q < k; q++) {
+          var o = L[q], sep = (s.big && o.big) || o.big ? FR.SEP_BIG : FR.SEP_SMALL;
+          if (Math.hypot(o.x - s.x, o.y - s.y) < sep - 1e-6) { bad.push(s.id + '-' + o.id); }
+        }
+      });
+      r.place = bad.length === 0;
+      var j1 = JSON.stringify(L); FR._resetForTest();
+      r.same = JSON.stringify(FR.sites()) === j1;
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? c.name + ' · 열둘 모두 설산 들 · 탑 40m 밖 · 떨어짐 · 고정' : ('실패 ' + bad2.join(',') + ' ' + bad.join(','));
+    });
+
+    t('서리봉 고원 ⑲-27 — 눈: 북방 설산 땅이면 눈(고향 아님) · 땅빛 칸 판정 같음 · 내가 고원 안이면 snowingHere(조명 천후 snow) · 밖이면 아님 · 손잡이 끄면 없음', function () {
+      var rig = frRig(), FR = rig.FR, r = {};
+      try {
+        var c = FR.center(), home = { x: 0, y: 0 };
+        r.at = FR.snowAt(c.x, c.y) && !FR.snowAt(0, 0) && FR.snowCell(Math.floor(c.x / 48), Math.floor(c.y / 48)) && !FR.snowCell(0, 0);
+        stGo(c); FR._resetForTest();
+        var inHere = FR.snowingHere();
+        stGo(home); FR._resetForTest();
+        r.here = inHere && !FR.snowingHere();
+        C.setTune('frost.on', 0);
+        stGo(c); FR._resetForTest();
+        r.off = !FR.snowingHere() && !FR.snowAt(c.x, c.y) && FR.rectsIn(0, 0).length === 0;
+      } finally { C.setTune('frost.on', null); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '설산 눈 · 고향 ✕ · 안에서만 · 끄면 ✕' : ('실패 ' + bad.join(','));
+    });
+
+    t('서리봉 고원 ⑲-27 — 발견·이동·벽: 명소 30m 안 = 발견(금 150·단사 2) 한 번만 · 작은 발견 14m(밖이면 ✕) · 경계비 찾으면 순간이동 지점(키보드만, GPS 막힘) · 산성 담·관측소가 world3d.houseRects 로 막고 남쪽 문은 트임', function () {
+      var rig = frRig(), FR = rig.FR, W0 = DG.world, r = {};
+      try {
+        var fort = FR.siteById('fort'), sm = FR.siteById('snowman'), stl = FR.siteById('stele'), obs = FR.siteById('obs');
+        var g0 = C.save.player.gold || 0, d0 = C.save.dust || 0;
+        var f1 = FR.discoverAt(fort.x + FR.LANDMARK_R - 1, fort.y);
+        r.big = f1.length === 1 && f1[0].id === 'fort' && C.save.player.gold === g0 + FR.REWARD_BIG.gold && C.save.dust === d0 + FR.REWARD_BIG.dust && FR.found('fort');
+        r.once = FR.discoverAt(fort.x, fort.y).length === 0 && C.save.player.gold === g0 + FR.REWARD_BIG.gold;
+        r.small = FR.discoverAt(sm.x + FR.SMALL_R(false) + 1, sm.y).length === 0 && FR.discoverAt(sm.x + FR.SMALL_R(false) - 1, sm.y).map(function (s) { return s.id; }).join() === 'snowman';
+        r.noWay = FR.waypoints().length === 0 && !FR.teleport('stele');
+        FR.discoverAt(stl.x, stl.y);
+        var wp = FR.waypoints();
+        r.way = wp.length === 1 && wp[0].key === 'fr:stele' && /서리 고개/.test(wp[0].name);
+        DG.world = Object.create(W0, { mode: { value: 'geo' } });
+        r.geo = !FR.teleport('stele');
+        DG.world = W0;
+        stGo({ x: 0, y: 0 });
+        r.tp = FR.teleport('stele') && C.save.player.pos.x === stl.x && C.save.player.pos.y === stl.y + 8 && !FR.teleport('fort');
+        var h = FR.FORT_SIDE / 2, gx = Math.floor(fort.x / 48), gy = Math.floor((fort.y - h) / 48);
+        var rs = [];
+        for (var yy = -1; yy <= 1; yy++) { for (var xx = -1; xx <= 1; xx++) { rs = rs.concat(DG.world3d.houseRects(gx + xx, gy + yy)); } }
+        r.wall = rs.some(function (q) { return frInRect(q, fort.x, fort.y - h); }) && rs.some(function (q) { return frInRect(q, fort.x - h, fort.y); }) &&
+          !rs.some(function (q) { return frInRect(q, fort.x, fort.y + h); }) && !rs.some(function (q) { return frInRect(q, fort.x, fort.y); });
+        var ob = DG.world3d.houseRects(Math.floor(obs.x / 48), Math.floor(obs.y / 48));
+        r.obs = ob.some(function (q) { return frInRect(q, obs.x, obs.y); });
+      } finally { DG.world = W0; rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '산성 발견 한 번 · 눈사람 14m · 서리 고개 지점 · GPS ✕ · 담·관측소 막힘 · 문 트임' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

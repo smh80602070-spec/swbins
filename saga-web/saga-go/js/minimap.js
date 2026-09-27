@@ -55,6 +55,8 @@
     drop:        { c: '#ffb36b', r: 3.4 },
     story:       { c: '#ffd24a', r: 4.2 },
     fish:        { c: '#6ec8ff', r: 3.4 },
+    frost:       { c: 'rgba(232,244,255,.45)', r: 3.2 },
+    'frost-found': { c: '#e8f4ff', r: 3.6 },
     wq:          { c: '#5fb8ff', r: 4.2 },
     'q-idle':    { c: '#ffd24a', r: 4.2 },
     'q-avail':   { c: '#5fb8ff', r: 4.2 }
@@ -270,6 +272,10 @@
     /* 낚시터(§5 ⑲-24) — 탑을 찾은 지역만, 둘레 안일 때만 */
     var FSm = global.DG.fishing, fsl = FSm && FSm.mapSpots ? FSm.mapSpots() : [];
     for (i = 0; i < fsl.length; i++) { put('fish', fsl[i].x, fsl[i].y, '🎣 ' + fsl[i].name); }
+
+    /* 서리봉 고원(§5 ⑲-27) — 명소는 늘(안 찾으면 흐리게), 작은 발견은 찾은 것만 */
+    var FRm = global.DG.frost, frl = FRm && FRm.on() && FRm.marks ? FRm.marks() : [];
+    for (i = 0; i < frl.length; i++) { put(frl[i].found ? 'frost-found' : 'frost', frl[i].x, frl[i].y, (frl[i].big ? '🏔️ ' : '❄️ ') + frl[i].name); }
 
     /* 임무 표식(PLAN §5 ⑲-12·⑲-23) — 따라가는 것(이야기 금·세계 임무 푸른 찬 마름모)은 테두리에도 붙어 방향을 알린다.
        맡았지만 안 따라가는 것(빈 마름모)·맡을 수 있는 것(!)은 둘레 안일 때만 */

@@ -400,6 +400,7 @@
     if (global.DG.fishing) { global.DG.fishing.tick(dt); }           // 낚시터·줄다리기·낚시 조합(§5⑲-24)
     if (global.DG.achieve) { global.DG.achieve.tick(dt); }           // 업적 셈·알림(§5⑲-25)
     if (global.DG.dispatch) { global.DG.dispatch.tick(dt); }         // 탐사 파견 — 역참 게시판·다 된 알림(§5⑲-26)
+    if (global.DG.frost) { global.DG.frost.tick(dt); }               // 서리봉 고원 — 발견·눈·명소(§5⑲-27)
     if (global.DG.domain) { global.DG.domain.tick(dt); }             // 숨은 터·원기·주간 보스(§5⑲-9)
     if (global.DG.fieldBoss) { global.DG.fieldBoss.tick(dt); }       // 들판 보스 보상 꽃(§5⑲-10)
     if (global.DG.story) { global.DG.story.tick(dt); }               // 이야기 임무 — 목표·대화·금빛 기둥(§5⑲-12)
