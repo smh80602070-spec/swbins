@@ -8,6 +8,11 @@ extends Node
 ##   반디는 굳은 거리 · 하람은 고원 관측소 앞 · 마루는 창고 앞(보임) · 드론 길 점·야적장·마루 자리가 갈무리 벌 안·명소에 안 걸림)
 ## [2] 반디 → 하람(반디는 고원으로) [3] 하람 → 벌 어귀(반디는 갈무리 벌로) [4] 벌 어귀에 들어섬 [5] 야적장 결정 짐승 넷
 ## [6] 운반 드론 쫓기(드론 몸·갈무리 벌 안) [7] 마루 → 33장 끝·보상.
+## 34장 "곳간의 씨앗"(54-3): [8] 표·자리(단계 일곱 talk·seal·talk·defend·light·light·talk · seal = 곳간 GRANARY_OPEN_STEP ·
+##   light = 동력 기둥 PYLON_OFF_FROM · 문 = DOOR_OPEN_STEP · 곳간 지키기 자리·물결 나오는 자리·인물 자리가 명소에 안 걸림 ·
+##   소담 아직 없음·곳간 잠김·기둥 켜짐·금고 문 닫힘) [9] 마루 → 석등(마루는 곳간 앞으로) [10] 석등 — 해 먼저(틀림) → 별 → 해 → 달 → 곳간 문 열림
+## [11] 소담(보임) → 곳간 지키기 [12] 곳간 지키기(물결 셋) [13] 서쪽 기둥 — 먼 원소는 안 됨 → 꺼짐·소담은 금고 문 앞
+## [14] 동쪽 기둥 → 금고 문 열림 [15] 소담 → 34장 끝·보상.
 ## 이야기 상태·부대 경험·가방은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
@@ -16,6 +21,7 @@ const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const Vault := preload("res://games/saga_go/world/region9_vault.gd")
 
 const CH33 := 32 # 33장(0부터)
+const CH34 := 33
 
 var _p: CharacterBody3D
 var _sq: Node
@@ -137,7 +143,127 @@ func _physics_process(_delta: float) -> void:
 				and bool(_sq.call("npc_visible", "maru")) and TestMap.region_at(_sq.call("npc_pos", "bandi")) == "vault"
 			_check("chapter33", ok, "ch=%d mora +%d bandi=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), TestMap.region_at(_sq.call("npc_pos", "bandi"))])
 			_next()
-		8:
+		8: # [8] 34장 표·자리
+			if _frame < 80:
+				return
+			var c := Story.chapter(CH34)
+			var steps: Array = c.steps
+			var bad: Array = []
+			if String(c.get("id", "")) != "ch34" or int(c.ar) <= int(Story.chapter(CH33).ar) or int(_sq.call("ch")) != CH34 or bool(_sq.call("locked")):
+				bad.append("chapter ch=%d locked=%s" % [_sq.call("ch"), _sq.call("locked")])
+			var types := steps.map(func(sd: Dictionary) -> String: return String(sd.type))
+			if types != ["talk", "seal", "talk", "defend", "light", "light", "talk"]:
+				bad.append("types %s" % [types])
+			var sl: Dictionary = steps[Vault.GRANARY_OPEN_STEP - 1]
+			if Vault.CH34 != CH34 or String(sl.type) != "seal" or sl.cell != Vault.GRANARY_CELL or not bool(sl.get("bare", false)):
+				bad.append("seal/granary")
+			for k in 2:
+				var lt: Dictionary = steps[int(Vault.PYLON_OFF_FROM[k]) - 1]
+				if String(lt.type) != "light" or lt.cell != Vault.PYLONS[k][1] or not bool(lt.get("bare", false)):
+					bad.append("pylon %d" % k)
+			if Vault.DOOR_OPEN_STEP != steps.size() - 1:
+				bad.append("door step %d" % Vault.DOOR_OPEN_STEP)
+			var df: Dictionary = steps[3]
+			var dc := _cell("vault", df.cell)
+			if String(df.type) != "defend" or not _hits(dc).is_empty():
+				bad.append("defend spot %s" % [_hits(dc)])
+			for d in df.dirs: # 물결이 나오는 자리 — 갈무리 벌 안, 명소에 안 걸림
+				var a := deg_to_rad(float(d))
+				var wp := dc + Vector3(sin(a), 0.0, -cos(a)) * Story.DEFEND_RING
+				wp.y = TerrainBuilder.height_at("vault", wp)
+				if TestMap.region_at(wp) != "vault" or not _hits(wp).is_empty():
+					bad.append("wave dir %d %s" % [d, _hits(wp)])
+			for pt in [Vector2(1.15, 5.5), Vector2(1.62, 5.62), Vector2(4.0, 2.3)]:
+				if not _hits(_cell("vault", pt)).is_empty():
+					bad.append("npc spot %s %s" % [pt, _hits(_cell("vault", pt))])
+			if bool(_sq.call("npc_visible", "sodam")) or not bool(_vr.call("granary_locked")) or not bool(_vr.call("pylon_lit", 0)) \
+					or not bool(_vr.call("pylon_lit", 1)) or bool(_vr.call("is_door_open")):
+				bad.append("world at st0 sodam=%s" % _sq.call("npc_visible", "sodam"))
+			if _flat(_sq.call("npc_pos", "maru"), _cell("vault", Vector2(6.2, 5.2))) > 0.5:
+				bad.append("maru %s" % _sq.call("npc_pos", "maru"))
+			_check("ch34_table", bad.is_empty(), str(bad))
+			_next()
+		9: # [9] 마루 → 석등 — 마루는 곳간 앞으로
+			if _frame == 12:
+				_v = _flat(_sq.call("npc_pos", "maru"), _cell("vault", Vector2(1.62, 5.62))) < 0.5
+			_talk("maru", 1, "ch34_maru", "vault", Vault.GRANARY_CELL, 0, "maru_at_granary=%s" % _v, _v == true)
+		10: # [10] 곳간 석등 — 해 먼저(틀림) → 별 → 해 → 달 → 곳간 문 열림
+			if _frame == 1:
+				_put(_target() + Vector3(0.0, 0.0, 9.0))
+			if _frame == 6:
+				_v = {"lit": []}
+				for mk in ["sun", "star", "sun", "moon"]:
+					_sq.call("receive_element", _sq.call("seal_lamp_pos", mk), 0.5, "fire")
+					_v.lit.append(int(_sq.call("seal_lit")))
+			if _frame == 150:
+				var ok: bool = _v.lit == [0, 1, 2, 3] and int(_sq.call("st")) == 2 and not bool(_vr.call("granary_locked"))
+				_check("ch34_seal", ok, "lit=%s st=%d locked=%s" % [_v.lit, _sq.call("st"), _vr.call("granary_locked")])
+				_next()
+		11: # [11] 소담(곳간 문 앞) → 곳간 지키기
+			if _frame == 1:
+				_v = bool(_sq.call("npc_visible", "sodam")) and _flat(_sq.call("npc_pos", "sodam"), _cell("vault", Vector2(1.15, 5.5))) < 0.5
+			_talk("sodam", 3, "ch34_sodam", "vault", Vector2(1.4, 5.55), 0, "sodam=%s" % _v, _v == true)
+		12: # [12] 곳간 지키기 — 물결 셋
+			if _frame == 1:
+				_put(_target() + Vector3(0.0, 0.0, 3.0))
+				_v = {"n": 0, "waves": 0, "label": "", "vault": true}
+			if _frame > 4 and _frame % 6 == 0 and int(_sq.call("st")) == 3:
+				var lbl := _sq.get("_defend_label") as Label3D
+				if lbl and String(_v.label) == "":
+					_v.label = lbl.text
+				for e in _sq.call("alive_quest_enemies"):
+					_v.n += 1
+					_v.vault = bool(_v.vault) and TestMap.region_at(e.global_position) == "vault"
+					e.call("_die")
+				_v.waves = maxi(int(_v.waves), int(_sq.call("defend_wave")) + 1)
+			if _frame > 4 and (int(_sq.call("st")) != 3 or _frame > 600):
+				var ok: bool = int(_sq.call("st")) == 4 and int(_v.n) == 12 and int(_v.waves) == 3 and String(_v.label).begins_with("씨앗 곳간") and bool(_v.vault)
+				_check("ch34_defend", ok, "st=%d n=%d waves=%d label='%s' vault=%s frames=%d" % [_sq.call("st"), _v.n, _v.waves, _v.label, _v.vault, _frame])
+				_next()
+		13: # [13] 서쪽 동력 기둥 — 먼 원소는 안 됨 → 꺼짐(동쪽·문은 그대로), 소담은 금고 문 앞
+			var tp := Vault.pylon_pos(0)
+			if _frame == 1:
+				_put(tp + Vector3(0, 0, 3.0))
+			if _frame == 4:
+				_sq.call("receive_element", tp + Vector3(15, 0, 0), 3.0, "fire")
+			if _frame == 8:
+				_v = int(_sq.call("st"))
+				_sq.call("receive_element", tp + Vector3(0.4, 0, 0.4), 3.0, "thunder")
+			if _frame == 150:
+				var ok: bool = int(_v) == 4 and int(_sq.call("st")) == 5 and not bool(_vr.call("pylon_lit", 0)) and bool(_vr.call("pylon_lit", 1)) \
+					and not bool(_vr.call("is_door_open")) and _flat(_sq.call("npc_pos", "sodam"), _cell("vault", Vector2(4.0, 2.3))) < 0.5
+				_check("ch34_pylon_w", ok, "far_st=%d st=%d lit=%s/%s door=%s" % [_v, _sq.call("st"), _vr.call("pylon_lit", 0), _vr.call("pylon_lit", 1), _vr.call("is_door_open")])
+				_next()
+		14: # [14] 동쪽 동력 기둥 → 금고 문 열림
+			var tp := Vault.pylon_pos(1)
+			if _frame == 1:
+				_put(tp + Vector3(0, 0, 3.0))
+			if _frame == 6:
+				_sq.call("receive_element", tp + Vector3(0.4, 0, 0.4), 3.0, "water")
+			if _frame == 150:
+				var ok: bool = int(_sq.call("st")) == 6 and not bool(_vr.call("pylon_lit", 1)) and bool(_vr.call("is_door_open"))
+				_check("ch34_pylon_e", ok, "st=%d lit=%s door=%s" % [_sq.call("st"), _vr.call("pylon_lit", 1), _vr.call("is_door_open")])
+				_next()
+		15: # [15] 소담(금고 문 앞) → 34장 끝
+			if _frame == 1:
+				_v = {"mora": PartyState.count("mora")}
+				_near_npc("sodam")
+			if _frame == 10:
+				_sq.call("interact")
+				_drain()
+			if _frame < 16:
+				return
+			_dismiss_prompts()
+			if _frame < 60:
+				return
+			_sq.call("toggle_journal")
+			var jt: String = _sq.call("journal_text")
+			_sq.call("toggle_journal")
+			var ok: bool = int(_sq.call("ch")) == CH34 + 1 and jt.contains("✔ 제34장") and PartyState.count("mora") >= int(_v.mora) + 155000 \
+				and bool(_vr.call("is_door_open")) and bool(_sq.call("npc_visible", "sodam")) and _flat(_sq.call("npc_pos", "sodam"), _cell("vault", Vector2(4.0, 2.3))) < 0.5
+			_check("chapter34", ok, "ch=%d mora +%d door=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), _vr.call("is_door_open")])
+			_next()
+		16:
 			_finish()
 
 func _finish() -> void:
