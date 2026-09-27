@@ -20,6 +20,7 @@ namespace Saga.EditorTools
     /// ③ `tools/realistic/build_deps.txt` 에 적힌 몸을 빌드 씬이 여전히 다 쓴다 — 줄었으면 씬이 몸 없는 PC 에서
     ///    다시 지어져 칸이 비었다는 뜻이고, 그러면 게임은 폴백 캡슐·옛 도형으로 선다.
     /// ④ 빌드 씬과 그 텍스트 의존(프리팹·재질·컨트롤러…)에 끊긴 GUID(없는 스크립트·프리팹·에셋 참조)가 없다.
+    /// ⑤ 빌드에 들어가는 에셋이 전부 크레딧 출처 표(`SagaCredits`)에 있다 — 통과하면 법적 고지 파일도 새로 쓴다(110 ⑥).
     /// </summary>
     public static class SagaAssetGate
     {
@@ -72,6 +73,8 @@ namespace Saga.EditorTools
             }
 
             ScanDanglingGuids(deps, fails);
+
+            if (!SagaCreditsCheck.Check(out var credits)) fails.Add("⑤ " + credits);
 
             var sb = new StringBuilder();
             sb.AppendLine($"[SagaAssetGate] {(fails.Count == 0 ? "OK" : "FAIL")} — 사실 몸 {manifest?.Count ?? 0}개 파일 · 빌드가 쓰는 것 {usedRealistic.Count} · 의존 {deps.Length} · {(DateTime.Now - t0).TotalSeconds:F0}초");

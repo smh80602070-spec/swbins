@@ -188,7 +188,7 @@ namespace Saga.EditorTools
             foreach (var b in buttons)
             {
                 if (b == null || !b.isActiveAndEnabled || !b.interactable) continue;
-                if (title && b.name != "Settings") continue; // 타이틀의 나머지는 판을 연다·끈다
+                if (title && b.name != "Settings" && b.name != "Credits") continue; // 타이틀의 나머지는 판을 연다·끈다
                 var before = new HashSet<int>(VisibleGraphics().Select(g => g.GetInstanceID()));
                 string name = b.name + Label(b);
                 b.onClick.Invoke();

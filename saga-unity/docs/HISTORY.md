@@ -9571,3 +9571,16 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 렌더로 세 번 고침: 새로 지은 공방 판금 온몸·유격복·가죽 기사·몸 옷 위 가슴판·다리 판·트렌치(officer_coat)는 모두 자루·상자처럼 부풀어 버리고 CC0 로 · 짙은 `=#` 염색은 거친 그림(bodysuit·헬리오스·털 단 장화)을 털처럼 만들어 skinsuit·곱하기 색 · 털 망토 `src` 껍데기는 풍선이라 지움 · 뜨개 윗옷은 여자 몸에서 살이 뚫어(체형 바꿔도 같음) 몸 옷으로 · skinsuit 발이 해적 장화를 뚫어 heroine 장화로.
 - 검사: 빌드 17 실패 0, verify fbx·glb 실패 0(팔다리 ≤ 0.67°·땅 ≤ 2.5mm), 두 번 빌드 glb sha256 17/17 같음.
 - 남은 흠: 빈칸(가죽 기사 은 어깨판·겉옷판, 검은 기사 망토, 유격 가죽 조끼, 사진작가 목폴라, 별바다 손님 가슴판) · 판금 옷이 SF 셋뿐이라 판금 입은 사람·인형 실루엣이 겹침 · `_cmp_real_courier_f_01` 도 같은 뜨개 윗옷이라 살 뚫림 확인할 것. CharactersForge FBX 는 아직 옛 판(Unity 쉴 때 §3 ⑥~⑧) → 그 뒤 사용자 판정.
+
+## 2026-09-27 상용화 — PLAN 110 ⑥a 크레딧·오류 기록·버전 ("사가유니티 이어해줘")
+
+- ⑥ 이 커서 넷으로 나눔: 6a 크레딧·오류 기록·버전(이번) / 6b 앱 id·회사명·아이콘(앱 id 는 사용자 결정) / 6c 영어 검수 목록 / 6d AAB+PAD.
+- 조사: 앱 id 가 Unity 템플릿 그대로(`com.UnityTechnologies.com.unity.template.urpblank`), 회사명 DefaultCompany, 아이콘 없음, 버전 두 곳(PlayerSettings 0.1.0 · `TitleScreen.Version` 상수), 안드로이드 버전 코드 1. 라이선스 파일은 폴더마다 있었고(CC0 BGM·Kenney·Poly Haven·Quaternius·셰이더 MIT/CC0·글꼴 OFL), 공방 몸 61 은 `license.json`(CC0 — MakeHuman·UAL).
+- 크레딧은 "빌드에 실제로 들어가는 것"만 → Unity 로 의존을 뽑아 표에 맞추는 점검(`SagaCreditsCheck`)을 만들고 빌드 문지기 ⑤ 로 걸었다. 첫 실행 표에 없음 18 = 우리 애니메이터 컨트롤러 17·입력 설정 → `own`. 결과 쓰인 출처 8, 안 쓰인 것(공방 몸·Quaternius·SSS/머리칼 셰이더 셋)은 화면에서 자동으로 빠짐. 이 PC 는 사실 몸 파일이 없어 의존이 안 풀리니 Mixamo 는 `build_deps.txt` 로 센다.
+- 패키지: 플레이어 어셈블리(`CompilationPipeline` Player)의 소스·에셋 의존이 든 패키지 16. Unity Companion·Package Distribution 라이선스는 전문 불필요, glTFast 만 Apache 2.0(LICENSE.md 에 전문 10KB 있음). 제3자 고지는 Burst·Cinemachine·RP Core·URP·Visual Scripting. Visual Scripting·Multiplayer Center 는 템플릿 잔재라 빼면 고지·크기가 준다(후보로만 적음).
+- 발견: Noto Sans KR 의 OFL.txt 에 저작권 줄이 없다(OFL 은 고지 필요) → 글꼴 name 표 0번을 읽어 표의 `Copyright` 칸에(Noto Sans KR © 2014-2021 Adobe · Noto Emoji © 2013 Google LLC · Liberation Sans © 2010 Google·2012 Red Hat).
+- 타이틀: 아래 줄 설정·크레딧·게임 종료(340 간격). 크레딧 창 = 스크롤, 머리 두 언어 + 전문 92KB 를 줄 묶음 ~2400자마다 TMP 하나(한 글에 다 넣으면 정점 한도), 전문은 꺾쇠 URL 이 많아 richText 끔. 설정 맨 아래 "오류 기록" 줄.
+- 오류 기록 `SagaCrashLog`: 빌드에서만 `logMessageReceivedThreaded` 로 예외·오류·단언을 받아 파일에(스택 14줄, 같은 메시지+스택 첫 줄은 ×n, 최근 40, 앱을 다시 켜면 파일에서 이어 읽음). 에디터·배치는 진단이 일부러 내는 오류가 많아 끔 — 진단은 `StartForTest`.
+- 버전: 표시는 `Application.version`, 빌드가 bundleVersion "a.b.c" 로 안드로이드 버전 코드 셈(0.1.0 → 100 — ProjectSettings 도 100 으로 맞춰 빌드가 설정을 안 흔듦).
+- 검증: `PlaytestSagaCredits` OK · 배치 점검 OK(타이틀 패널 2 — 설정·크레딧, 두 언어 × 세 화면비 0건, 전체 문제 0) · 흐름 진단은 이 PC 의 Missing Prefab 로 FAIL 이 전과 같음(타이틀 글 25→26 = 크레딧 단추, 새 실패 없음). 셸 heredoc 이 `\n` 을 먹는 함정 한 번 더 — 백슬래시 든 치환은 Edit 툴로.
+- 남음: 6b 앱 id(사용자)·아이콘 · 6c · 6d. 실기: 크레딧 창 글(□·끊김)·오류 기록 복사.

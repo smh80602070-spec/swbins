@@ -65,6 +65,10 @@ namespace Saga.EditorTools
             SyncEditorBuildScenes();
             // 110 ④ — git 밖 사실 몸이 목록과 다르거나 씬이 폴백으로 지어졌으면 빌드하지 않는다.
             if (!SagaAssetGate.Check(out var gate)) { Finish(false, "자산 검사 실패\n" + gate, null, output); return; }
+            // 110 ⑥ — 버전은 bundleVersion 한 곳, 안드로이드 버전 코드는 거기서 셈(스토어는 올릴 때마다 코드가 커야 한다).
+            int code = VersionCode(PlayerSettings.bundleVersion);
+            if (code <= 0) { Finish(false, $"버전 형식이 a.b.c 가 아님: {PlayerSettings.bundleVersion}", null, output); return; }
+            if (PlayerSettings.Android.bundleVersionCode != code) PlayerSettings.Android.bundleVersionCode = code;
 
             if (EditorUserBuildSettings.activeBuildTarget != target)
                 EditorUserBuildSettings.SwitchActiveBuildTarget(group, target);
@@ -83,6 +87,16 @@ namespace Saga.EditorTools
             bool ok = report.summary.result == BuildResult.Succeeded;
             CleanPerformanceTestArtifacts();
             Finish(ok, report.summary.result.ToString(), report, output);
+        }
+
+        /// <summary>"a.b.c" → a·10000 + b·100 + c (0.1.0 → 100, 1.2.3 → 10203). b·c 는 99 까지, 형식이 틀리면 0.</summary>
+        public static int VersionCode(string version)
+        {
+            var parts = (version ?? "").Split('.');
+            if (parts.Length != 3) return 0;
+            if (!int.TryParse(parts[0], out int a) || !int.TryParse(parts[1], out int b) || !int.TryParse(parts[2], out int c)) return 0;
+            if (a < 0 || b < 0 || c < 0 || b > 99 || c > 99) return 0;
+            return a * 10000 + b * 100 + c;
         }
 
         /// <summary>성능 테스트 패키지가 빌드마다 `Assets/Resources/PerformanceTestRun*.json` 을 남긴다 — 저장소에 안 들이게 치운다.</summary>
