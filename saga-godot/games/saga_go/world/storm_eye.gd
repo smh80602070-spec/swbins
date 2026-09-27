@@ -3,11 +3,11 @@ extends Node3D
 ## PLAN 106장 52-1 — 이야기 8부 "먹구름의 근원"의 무대. 새 고정 지역 없이 첫 지역들로 돌아온다(시나리오 `scenario/saga-go.md` 8부).
 ##   여섯 매듭 — 1부 여섯 제단 자리(폐허·서쪽 옛길·북쪽 봉우리·물마루 곶·바위섬·구름섬)마다 금줄 감은 매듭 돌.
 ##     27장(CH27)부터 보인다. 풀린 매듭은 먹구름 연기를 뿜고, 다시 묶이면(KNOTS 의 장·단계부터) 불이 붙고 하늘로 금빛 줄이 선다.
-##     여섯이 다 묶이면(28장 8단계) 줄이 먹구름 눈 가운데 매듭 등불 한 점으로 모이고, 29장이 끝나면 줄은 거두고 불만 남는다.
+##     여섯이 다 묶이면(28장 8단계) 줄이 먹구름 눈 가운데 매듭 등불 한 점으로 모이고, 눈이 걷히면(eye_clear) 줄은 거두고 불만 남는다.
 ##     매듭 돌은 이야기 제단 칸에서 북쪽 KNOT_OFF m — 단계가 세우는 제단(반지름 0.85)·석등 고리(6m)와 안 겹치게. 보기만(충돌 없음).
 ##   먹구름 눈 — 구름섬(world/sky_isle.gd) 서쪽 EYE_WEST m·윗면 EYE_RISE m 위에 뜬 판(반지름 EYE_R). 28장 가면 그림자가 올라간 뒤(EYE_FROM) 보이고 밟힌다.
 ##     구름섬 서쪽 가장자리 바람 기둥(29장부터 — 구름섬·구름 위 항로와 같은 틀)으로 올라 활공 약 10m. 둘레 먹구름 소용돌이 벽, 가운데 매듭 등불.
-##     29장이 끝나면 소용돌이가 걷혀 "맑은 하늘 뜰"로 남는다(기둥도 남아 다시 올 수 있다). 둘레 낮은 난간(1m, 충돌 — 나는 넘고 적은 못 넘는다).
+##     29장 이야기 보스를 쓰러뜨리면(EYE_CLEAR_STEP) 소용돌이가 걷혀 "맑은 하늘 뜰"로 남는다(기둥도 남아 다시 올 수 있다). 둘레 낮은 난간(1m, 충돌 — 나는 넘고 적은 못 넘는다).
 ## 이야기 단계·인물 칸의 eye = true 는 먹구름 눈 윗면 높이(world/story_quest.gd _spot_pos). 세이브 없음(이야기 진행 PartyState.story 만 읽는다).
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
@@ -30,9 +30,11 @@ const KNOT_OFF := Vector3(0.0, 0.0, -2.4)
 const BEAM_UP := 90.0 # 묶인 매듭 줄 — 다 묶이기 전엔 곧게 위로
 ## 먹구름 눈 — 28장(CH28) 9단계(가면 그림자가 올라간 뒤)부터 보인다 · 바람 기둥은 29장부터 · 29장이 끝나면 맑은 하늘 뜰.
 const EYE_FROM_STEP := 9
+## 29장(CH29) 이야기 보스를 쓰러뜨린 뒤(6단계)부터 소용돌이가 걷힌다.
+const EYE_CLEAR_STEP := 6
 const EYE_WEST := 36.5
 const EYE_RISE := 24.0
-const EYE_R := 16.0
+const EYE_R := 18.0 # 29장 매듭 등불 지키기 물결 둘레(DEFEND_RING 15m)가 난간 안쪽
 const LANTERN_H := 3.6 # 매듭 등불 알 높이(윗면 위)
 const RIM_H := 1.0
 const DRAFT_R := 3.5
@@ -107,9 +109,9 @@ static func eye_shown() -> bool:
 static func draft_open() -> bool:
 	return _ch() >= CH29
 
-## 29장이 끝났는가 — 소용돌이가 걷힌 맑은 하늘 뜰.
+## 29장 이야기 보스를 쓰러뜨렸거나 지났는가 — 소용돌이가 걷힌 맑은 하늘 뜰.
 static func eye_clear() -> bool:
-	return _ch() > CH29
+	return _reached(CH29, EYE_CLEAR_STEP)
 
 static func top_y() -> float:
 	return SkyIsle.top_y() + EYE_RISE

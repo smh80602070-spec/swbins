@@ -368,12 +368,27 @@ func step_text() -> String:
 		if _wave < 0:
 			return "%s — 제단 곁으로 가면 무리가 온다" % s.text
 		return "%s — 제단 %d/%d · 물결 %d/%d" % [s.text, ceili(defend_hp()), ceili(defend_max()), _wave + 1, (s.waves as Array).size()]
+	if String(s.type) == "party":
+		var marks: Array[String] = []
+		var miss := party_missing(s)
+		for e in s.eras:
+			marks.append("%s %s" % [e, "✗" if miss.has(e) else "✔"])
+		return "%s — %s" % [s.text, " · ".join(marks)]
 	if String(s.type) == "seal":
 		var names: Array[String] = []
 		for m in s.order:
 			names.append(String(Story.SEAL_MARKS[m].name))
 		return "%s %d/%d (%s)" % [s.text, _seal_next, (s.order as Array).size(), " → ".join(names)]
 	return String(s.text)
+
+## party 단계 — 들판 명단(PartyState.party())의 이야기 동료가 아직 못 채운 시대(eras 차례).
+func party_missing(s: Dictionary) -> Array:
+	var have: Array = []
+	for id in PartyState.party():
+		var m: Variant = Story.member(id)
+		if m != null:
+			have.append(String((m as Dictionary).get("era", "")))
+	return (s.get("eras", []) as Array).filter(func(e: String) -> bool: return not have.has(e))
 
 ## 지금 장·단계에 맞는 칸(appear·stations, data/story.gd) — 없으면 {}.
 ## 세계 임무 칸({"wq": id, …})은 그 임무 단계로 본다(따라가든 아니든).
@@ -578,6 +593,11 @@ func _enter_step() -> void:
 			_build_thief(s)
 		"defend":
 			_build_altar(_spot_pos(s), true)
+			## bare = 제단 돌 없이 그 자리 장치가 받는다(29장 먹구름 눈 매듭 등불 — 머리 글자만 남긴다).
+			if bool(s.get("bare", false)):
+				for mi in _altar.get_children():
+					if mi is MeshInstance3D:
+						(mi as Node3D).visible = false
 			var sa := _altar as SiegeAltar
 			sa.max_hp = float(s.hp) * Adventure.atk_mul(Adventure.world_level())
 			sa.hp = sa.max_hp
@@ -824,6 +844,10 @@ func _physics_process(delta: float) -> void:
 				return
 		"sky":
 			if SkyIsle.on_isle(_player.global_position):
+				advance()
+				return
+		"party":
+			if party_missing(s).is_empty():
 				advance()
 				return
 		"climb":

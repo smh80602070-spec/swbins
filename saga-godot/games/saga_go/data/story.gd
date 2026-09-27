@@ -23,8 +23,10 @@ extends RefCounted
 ##              CHASE_CATCH m 안으로 따라잡으면 끝, 길 끝까지 놓치면 처음 자리로 돌아가 다시 기다린다(걸어서는 못 잡고 달려야 잡는다)
 ##     sail   — 그 인물(npc)에게 F → 한 줄(line) 뒤 배로 to {region, cell} 에 내린다(106장 ㊲ 사공 버들의 배)
 ##     sky    — 바람 기둥을 타고 구름섬(world/sky_isle.gd — 북쪽 봉우리 옆 하늘) 윗면에 서기(106장 ㊳)
+##     party  — 들판 명단(나 + 동료 셋)의 이야기 동료가 eras 의 시대를 하나씩 다 채우기(MEMBERS era — 106장 52 29장 편성 시험). 편성은 인물 화면
 ##     duel 의 flee = 쓰러뜨렸을 때 알림 글자(없으면 "가면에 금이 가고 — 먹구름 속으로 달아났다")
-##     defend 의 altar = 제단 머리 글자(없으면 "넷째 제단") · start = 첫 물결 알림 · dirs = 무리가 나오는 방향(도, 북쪽 0·시계 방향 — 담이 막는 쪽은 빼게)
+##     defend 의 altar = 제단 머리 글자(없으면 "넷째 제단") · start = 첫 물결 알림 · dirs = 무리가 나오는 방향(도, 북쪽 0·시계 방향 — 담이 막는 쪽은 빼게) ·
+##     bare = true 면 제단 돌 없이 그 자리 장치가 받는다(29장 매듭 등불 — 머리 글자만)
 ##   인물 helmet = true 면 머리에 옛 장수 투구(world/vroid_body.gd add_helmet) · visor = true 면 앞 시대 관측 바이저(add_visor) ·
 ##   hat = true 면 파발꾼 벙거지(add_hat) · halo = true 면 머리 위 빛 고리(add_halo — 은하 나루 나루지기) ·
 ##   beads = true 면 목에 염주·가사 띠(add_beads — 옛 절터 종지기) · goggles = true 면 이마에 기관사 고글(add_goggles — 은하역 기관사).
@@ -38,7 +40,8 @@ extends RefCounted
 ##   lift = m 면 그 칸 땅 높이 + lift(떠 있는 구조물 윗면 — 14장 시간 틈 관측대, world/era_sites.gd OBS_RISE)(kill·duel·appear·stations).
 ##   rift_end = true 면 그 칸의 높이는 갈림길 끝 섬 윗면(world/rift_end.gd top_y — 20장)(kill·duel·light·seal·defend·sail 의 to·appear·stations).
 ##   isle = "<id>" 면 그 칸의 높이는 구름 위 항로 그 섬 윗면(world/sky_route.gd top_y — 7부, shrine·wreck·orbit)(rift_end 와 같은 곳에 다 쓴다).
-##     떠 있는 자리(sky·lift·rift_end·isle)면 kill 둘레·seal 석등·defend 물결도 땅이 아니라 그 윗면 높이에 선다.
+##   eye = true 면 그 칸의 높이는 먹구름 눈 윗면(world/storm_eye.gd top_y — 8부 29장)(isle 과 같은 곳에 다 쓴다).
+##     떠 있는 자리(sky·lift·rift_end·isle·eye)면 kill 둘레·seal 석등·defend 물결도 땅이 아니라 그 윗면 높이에 선다.
 ##   인물 자리: appear(보일 때만 서 있는 인물) · stations(늘 있는 인물이 그 장·단계 동안 옮겨 서는 자리) —
 ##     둘 다 {ch, from, to, region?, cell?} 한 칸 또는 여러 칸. region·cell 이 있으면 그 동안 거기에 선다.
 ##   대화 줄 말하는 이가 바뀌면 카메라가 그쪽으로(player/camera_rig.gd talk_shot — 인물 말은 내 어깨 너머, 내 말은 인물 어깨 너머).
@@ -65,14 +68,22 @@ const NPCS := {
 			{"ch": 6, "from": 2, "to": 6, "region": "coast", "cell": Vector2(3.3, 4.75)},
 			{"ch": 7, "from": 6, "to": 9, "region": "coast", "cell": Vector2(5.9, 1.88)},
 			{"ch": 8, "from": 2, "to": 2, "region": "village", "cell": Vector2(7.35, 1.3)},
-			{"ch": 8, "from": 3, "to": 8, "region": "village", "cell": Vector2(6.95, 1.12), "sky": true}]},
+			{"ch": 8, "from": 3, "to": 8, "region": "village", "cell": Vector2(6.95, 1.12), "sky": true},
+			## 106장 52-2 27장 — 둘째 매듭을 다시 묶은 뒤(5) 옛길 제단 곁(석등 고리 밖 남동).
+			{"ch": 26, "from": 5, "to": 5, "region": "village", "cell": Vector2(1.22, 1.42)},
+			## 52-3 28장 — 먼저 구름섬에 올라가 기다린다(5~9, 9장 자리).
+			{"ch": 27, "from": 5, "to": 9, "region": "village", "cell": Vector2(6.95, 1.12), "sky": true}]},
 	## 8장 — 검은 가면의 참이름. 가면 반쪽이 깨진 채(금 간 파란 줄 가면) 다섯째 제단 곁에 한 번 선다.
 	"haesol": {"name": "해솔", "region": "coast", "cell": Vector2(6.12, 2.05), "rarity": 5, "cloth": Color(0.1, 0.12, 0.17),
 		"idle": "……", "mask": true, "mask_color": Color(0.3, 0.55, 0.9), "mask_face": Color(0.08, 0.07, 0.1), "crack": true,
 		"appear": [{"ch": 7, "from": 8, "to": 8}]},
 	## 9장 — 가면이 떨어진 뒤의 해솔(몸은 해솔과 같게 body). 구름섬에서 되찾은 뒤에만.
 	"haesol_free": {"name": "해솔", "body": "haesol", "region": "village", "cell": Vector2(7.22, 0.9), "rarity": 5, "cloth": Color(0.16, 0.18, 0.26),
-		"idle": "……고맙다. 노래를 다시 부를 수 있을 것 같아.", "appear": [{"ch": 8, "from": 6, "to": 9, "region": "village", "cell": Vector2(7.22, 0.9), "sky": true}]},
+		"idle": "……고맙다. 노래를 다시 부를 수 있을 것 같아.", "appear": [{"ch": 8, "from": 6, "to": 9, "region": "village", "cell": Vector2(7.22, 0.9), "sky": true},
+			## 106장 52-2 27장 — 셋째 매듭을 묶은 뒤(8) 봉우리 꼭대기(6장 나그네 자리).
+			{"ch": 26, "from": 8, "to": 8, "region": "village", "cell": Vector2(7.35, 1.3)},
+			## 52-4 29장 — 임금을 쓰러뜨린 뒤(6) 먹구름 눈 북동쪽(바람 기둥 쪽).
+			{"ch": 28, "from": 6, "to": 6, "region": "village", "cell": Vector2(6.4646, 0.9167), "eye": true}]},
 	## 106장 ㊺ 이야기 2부 — 서리봉 고원(world/region4_frost.gd). 관측원은 기상 관측소 앞, 조종 기계는 추락한 비행선 곁.
 	"haram": {"name": "기상 관측원 하람", "era": "현대", "region": "frost", "cell": Vector2(3.85, 1.7), "rarity": 4, "cloth": Color(0.86, 0.46, 0.2),
 		"idle": "기압계 바늘이 또 얼었네… 사흘째 눈이 안 멎어요."},
@@ -152,7 +163,11 @@ const NPCS := {
 	## 106장 51-4 26장 — 먹구름을 부리는 가면 그림자(정체는 8부까지). 23장 반디 기록 속 그 그림자. 26장 장치 셋을 끈 뒤(6) 한 번만 정거장 서쪽에 선다.
 	"gamyeon": {"name": "가면 그림자", "region": "sunken", "cell": Vector2(4.4063, 7.0876), "rarity": 5, "cloth": Color(0.08, 0.07, 0.11),
 		"idle": "……", "mask": true, "mask_color": Color(0.55, 0.35, 0.85), "mask_face": Color(0.06, 0.05, 0.09),
-		"appear": [{"ch": 25, "from": 6, "to": 6, "region": "sunken", "cell": Vector2(4.4063, 7.0876), "isle": "orbit"}]},
+		"appear": [{"ch": 25, "from": 6, "to": 6, "region": "sunken", "cell": Vector2(4.4063, 7.0876), "isle": "orbit"},
+			## 106장 52-3 28장 — 여섯째 매듭을 묶은 뒤(8) 구름섬 북동쪽에 한 번(정체를 밝히고 먹구름 눈으로 올라간다).
+			{"ch": 27, "from": 8, "to": 8, "region": "village", "cell": Vector2(7.25, 0.85), "sky": true},
+			## 106장 52-4 29장 — 먹구름 눈에 올라서면(3) 눈 서쪽 9m 에 한 번(그 뒤 참몸이 되어 이야기 보스로).
+			{"ch": 28, "from": 3, "to": 3, "region": "village", "cell": Vector2(6.1521, 1.0), "eye": true}]},
 	"bawoo": {"name": "산성지기 바우", "era": "과거", "region": "frost", "cell": Vector2(3.0, 4.11), "rarity": 4, "cloth": Color(0.48, 0.2, 0.16),
 		"helmet": true, "idle": "……불씨가 식지 않게. 그것만이 내 일이다.",
 		"appear": [{"ch": 10, "from": 2, "to": 2},
@@ -166,7 +181,9 @@ const STATIONS := {
 		{"ch": 4, "from": 4, "to": 7, "region": "village", "cell": Vector2(1.5, 1.62)},
 		{"ch": 5, "from": 5, "to": 6, "region": "village", "cell": Vector2(6.85, 1.62)}],
 	## 사공은 8장 섬에 건너간 동안(5~10 단계) 섬 남쪽 물가 배 댄 자리에.
-	"ferryman": [{"ch": 7, "from": 5, "to": 10, "region": "coast", "cell": Vector2(6.03, 2.3)}],
+	"ferryman": [{"ch": 7, "from": 5, "to": 10, "region": "coast", "cell": Vector2(6.03, 2.3)},
+		## 52-3 28장 — 바위섬에 건너간 뒤(4~9) 8장과 같은 배 댄 자리.
+		{"ch": 27, "from": 4, "to": 9, "region": "coast", "cell": Vector2(6.03, 2.3)}],
 	## 106장 ㊺ 10장 — 하람은 따라가기(5) 뒤 비행선 곁(6), 산성 둘러보기(7~8) 동안 산성 터 문루 안쪽.
 	## 12장 — 불씨를 비행선에 붙이는 동안(6~8) 비행선 곁.
 	"haram": [{"ch": 9, "from": 6, "to": 6, "region": "frost", "cell": Vector2(5.85, 4.85)},
@@ -212,7 +229,8 @@ const STATIONS := {
 		{"ch": 24, "from": 1, "to": 999, "region": "sunken", "cell": Vector2(5.573, 7.3584), "isle": "wreck"},
 		## 51-4 26장 — 정거장 조각으로 먼저 날아가(1~, 26장 뒤에도) 동쪽 남동 장치 곁.
 		{"ch": 25, "from": 1, "to": 999, "region": "sunken", "cell": Vector2(4.7813, 7.2126), "isle": "orbit"},
-		{"ch": 26, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(4.7813, 7.2126), "isle": "orbit"},
+		## 52 8부(27장~) — 청하 마을로 돌아와 촌장 동쪽에(매듭 신호를 잰다).
+		{"ch": 26, "ch_to": 999, "from": 0, "to": 999, "region": "village", "cell": Vector2(5.97, 3.22)},
 		{"ch": 25, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(5.573, 7.3584), "isle": "wreck"},
 		{"ch": 24, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(6.323, 7.4417), "isle": "shrine"},
 		{"ch": 22, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(5.208, 5.958)},
@@ -262,27 +280,28 @@ const SEAL_RING := 6.0
 const SEAL_LAYOUT := ["moon", "star", "sun"] # 둘레에 놓는 차례(북쪽부터 시계 방향)
 
 ## 106장 ㉛ 이야기로 만나는 동료 — 도감(saga_core characters) 밖 id. 이름·희귀도·원소·무기를 여기서 정하고(해시 아님),
+## era = 그 인물이 온 시대(시나리오 인물 표 — 29장 편성 시험 party 단계가 본다).
 ## 고유 스킬은 data/kits.gd KITS. npc 는 세상에 서 있는 이야기 인물(동료가 돼도 임무 인물로 계속 선다).
 const MEMBERS := {
-	"story_scholar": {"name": "학자 은비", "rarity": 4, "element": "grass", "weapon": "catalyst", "npc": "scholar"},
-	"story_wanderer": {"name": "가면 쓴 나그네", "rarity": 5, "element": "ice", "weapon": "sword", "npc": "wanderer"},
+	"story_scholar": {"era": "현대", "name": "학자 은비", "rarity": 4, "element": "grass", "weapon": "catalyst", "npc": "scholar"},
+	"story_wanderer": {"era": "과거", "name": "가면 쓴 나그네", "rarity": 5, "element": "ice", "weapon": "sword", "npc": "wanderer"},
 	## 106장 ㉟ 둘 더 — 촌장 누리 6장(치유)·늙은 사공 버들 7장(협동 공격) 보상.
-	"story_elder": {"name": "촌장 누리", "rarity": 4, "element": "wind", "weapon": "catalyst", "npc": "elder"},
-	"story_ferryman": {"name": "사공 버들", "rarity": 4, "element": "water", "weapon": "polearm", "npc": "ferryman"},
+	"story_elder": {"era": "과거", "name": "촌장 누리", "rarity": 4, "element": "wind", "weapon": "catalyst", "npc": "elder"},
+	"story_ferryman": {"era": "과거", "name": "사공 버들", "rarity": 4, "element": "water", "weapon": "polearm", "npc": "ferryman"},
 	## 106장 ㊳ 9장 보상 — 가면을 벗은 해솔(먹구름 벼락·뇌 부여).
-	"story_haesol": {"name": "해솔", "rarity": 5, "element": "thunder", "weapon": "claymore", "npc": "haesol_free"},
+	"story_haesol": {"era": "현대", "name": "해솔", "rarity": 5, "element": "thunder", "weapon": "claymore", "npc": "haesol_free"},
 	## 106장 ㊺-4 12장 보상 — 관측원 하람(현대, 화·활 — 신호탄). 명단에 없던 원소·무기.
-	"story_haram": {"name": "관측원 하람", "rarity": 4, "element": "fire", "weapon": "bow", "npc": "haram"},
+	"story_haram": {"era": "현대", "name": "관측원 하람", "rarity": 4, "element": "fire", "weapon": "bow", "npc": "haram"},
 	## 106장 ㊼-3 15장 보상 — 파발꾼 달음(과거, 암·장병기). 이야기 동료에 없던 원소(암).
-	"story_dareum": {"name": "파발꾼 달음", "rarity": 4, "element": "rock", "weapon": "polearm", "npc": "dareum"},
+	"story_dareum": {"era": "과거", "name": "파발꾼 달음", "rarity": 4, "element": "rock", "weapon": "polearm", "npc": "dareum"},
 	## 106장 ㊽-4 18장 보상 — 기관사 도담(현대, 뇌·양손검 — 대형 렌치). 선로 전류·막차 출발 신호.
-	"story_dodam": {"name": "기관사 도담", "rarity": 4, "element": "thunder", "weapon": "claymore", "npc": "dodam"},
+	"story_dodam": {"era": "현대", "name": "기관사 도담", "rarity": 4, "element": "thunder", "weapon": "claymore", "npc": "dodam"},
 	## 106장 ㊾-3 20장 보상 — 별배 선장 한별(미래, 풍·활 — 별배 신호총). 이야기 동료 첫 ★5 원거리.
-	"story_hanbyeol": {"name": "별배 선장 한별", "rarity": 5, "element": "wind", "weapon": "bow", "npc": "hanbyeol"},
+	"story_hanbyeol": {"era": "미래", "name": "별배 선장 한별", "rarity": 5, "element": "wind", "weapon": "bow", "npc": "hanbyeol"},
 	## 106장 ㊿-4 23장 보상 — 해녀 물새(과거, 수·한손검 — 빗창). 시나리오의 수·장병기는 사공 버들(★4 수·장병기)과 똑같이 겹쳐 한손검으로.
-	"story_mulsae": {"name": "해녀 물새", "rarity": 4, "element": "water", "weapon": "sword", "npc": "mulsae"},
+	"story_mulsae": {"era": "과거", "name": "해녀 물새", "rarity": 4, "element": "water", "weapon": "sword", "npc": "mulsae"},
 	## 106장 51-4 26장 보상 — 비행사 하늬(현대, 빙·장병기 — 비행선 닻 갈고리). 이야기 동료에 없던 짝.
-	"story_haneul": {"name": "비행사 하늬", "rarity": 4, "element": "ice", "weapon": "polearm", "npc": "haneul"},
+	"story_haneul": {"era": "현대", "name": "비행사 하늬", "rarity": 4, "element": "ice", "weapon": "polearm", "npc": "haneul"},
 }
 
 ## 이야기 동료 한 명(도감 인물처럼 name·rarity 를 읽는다) — 아니면 null.
@@ -1294,6 +1313,128 @@ const CHAPTERS := [
 					["?", ["청하 마을로 돌아가 보자.", "하늬 씨는 이제 어떡해요?"]],
 					["하늬", "비행선은 못 뜨지만 닻 갈고리는 멀쩡해요. 먹구름 쫓는 일이라면 기상 비행사가 빠질 수 없죠.", "angry"],
 					["하늬", "비행사 하늬, 오늘부터 같이 날아요 — 날개는 빌려 쓰고요!", "joy"]]},
+		]},
+	## ---------------------------------------------------------------- 이야기 8부(106장 52) — 먹구름의 근원, 1부 여섯 제단 자리의 여섯 매듭(world/storm_eye.gd)
+	## 52-2 — 매듭 셋을 다시 묶는다: 폐허 첫째(1장 제단 칸) · 서쪽 옛길 둘째(5장 석등 칸) · 북쪽 봉우리 셋째(6장 제단 칸).
+	## 매듭 돌은 제단 칸 북쪽 2.4m(storm_eye.gd KNOT_OFF) — 단계가 세우는 제단 곁에서 묶인 뒤 단계부터 불·금빛 줄(KNOTS 장·단계).
+	{"id": "ch27", "name": "제27장 · 풀리는 매듭", "ar": 60,
+		"reward": {"fate_knot": 7, "mora": 135000, "book_l": 6, "talent_3": 3}, "exp": 600.0,
+		"steps": [
+			{"type": "talk", "npc": "elder", "text": "청하 촌장에게 돌아가기",
+				"lines": [["누리", "돌아왔구나! 하늘에 뜬 사당이며 정거장이며… 은비한테 다 들었다. 먼 데까지 잘도 다녀왔어.", "joy"],
+					["누리", "그런데 네가 떠난 그날 밤부터 이상한 일이 생겼단다. 네가 밝혀 둔 옛 제단 불이 하나씩 꺼지고 있어.", "sorrow"],
+					["반디", "삐— 제단 자리마다 먹구름 신호. 가면 그림자가 말한 '여섯 매듭'과 수가 맞습니다."],
+					["?", ["매듭이 풀리고 있다는 거네요.", "자장가 끝 소절이 뭐였죠?"]],
+					["누리", "할머니 자장가 끝 소절이 이제야 떠오르는구나 — '여섯 매듭 풀리면 임금이 눈을 뜬다'. 폐허의 은비에게 가 보렴. 비문은 그 아이가 제일 잘 안다."]]},
+			{"type": "talk", "npc": "scholar", "text": "폐허의 학자 은비와 이야기하기",
+				"lines": [["은비", "왔구나! 비문 탁본을 다시 떠 봤어. 다들 앞면만 읽었지 뒷면은 아무도 안 봤더라고.", "surprised"],
+					["은비", "'매듭 여섯이 틈을 묶고, 틈이 임금을 묶는다' — 제단은 자물쇠이기 전에 매듭이었어. 시간 틈을 꽁꽁 묶어 두는."],
+					["?", ["그래서 가면 그림자가 풀러 왔구나.", "다시 묶을 수 있어?"]],
+					["은비", "원소의 불로 다시 묶으면 돼. 둘째 매듭 석등은 자장가 차례래 — '달이 뜨고, 별이 돌고, 해가 묶는다'."],
+					["은비", "그런데 첫째 매듭 곁에 먹구름 졸개들이 진을 쳤어. 저것부터!", "angry"]]},
+			{"type": "kill", "region": "ruins", "cell": Vector2(2.75, 2.7), "kinds": ["bandit", "bandit", "thunder_cat", "wind_hawk"],
+				"text": "첫째 매듭을 둘러싼 먹구름 졸개 물리치기"},
+			{"type": "light", "region": "ruins", "cell": Vector2(2.75, 2.7), "hit_text": "매듭 돌의 금줄에 불이 옮겨 붙고 — 금빛 줄이 하늘로 솟았다",
+				"text": "첫째 매듭의 제단에 원소 불 다시 밝히기"},
+			{"type": "seal", "region": "village", "cell": Vector2(1.15, 1.3), "order": ["moon", "star", "sun"],
+				"text": "서쪽 옛길 둘째 매듭 석등을 자장가 차례대로 밝히기"},
+			{"type": "talk", "npc": "wanderer", "text": "둘째 매듭 곁의 나그네와 이야기하기",
+				"lines": [["나그네", "……늦지 않았군. 매듭이 풀린 자리마다 이게 떨어져 있었다.", "sorrow"],
+					["나그네", "가면 조각이다. 무늬를 보게 — 은비가 비문 맨 아래에서 찾았던 그 무늬. 신하들 가면이 아니라, 처음 가면이야."],
+					["?", ["처음 가면이라니요?", "가면 그림자의 것인가요?"]],
+					["나그네", "해솔을 삼킨 가면도, 검은 가면들도 전부 이걸 본떴다. 임금의 신하라는 표식이 아니라 — 임금 자신의 얼굴이었던 게지.", "angry"],
+					["나그네", "셋째 매듭은 북쪽 봉우리다. 해솔이 먼저 올라가 있다."]]},
+			{"type": "climb", "region": "village", "cell": Vector2(7.1, 1.5), "radius": 9.0, "text": "북쪽 봉우리 꼭대기로 올라가기(벽 타기)"},
+			{"type": "light", "region": "village", "cell": Vector2(7.0, 1.3), "hit_text": "셋째 매듭이 다시 묶였다 — 봉우리에서 금빛 줄이 솟는다",
+				"text": "봉우리의 셋째 매듭에 원소 불 다시 밝히기"},
+			{"type": "talk", "npc": "haesol_free", "text": "봉우리의 해솔과 이야기하기",
+				"lines": [["해솔", "셋째 매듭까지… 고마워. 매듭에 불이 붙을 때마다 귓가에 맴돌던 노랫소리가 작아져.", "joy"],
+					["해솔", "가면에 먹혀 있을 때 먹구름 속에서 누가 계속 노래를 부르라고 했다고 했지. 그 목소리 — 정거장에서 들은 가면 그림자랑 똑같아.", "sorrow"],
+					["?", ["그자가 널 부렸던 거구나.", "나머지 매듭은?"]],
+					["해솔", "넷째는 물마루 곶, 다섯째는 바위섬, 여섯째는 저 위 구름섬. 그자가 먼저 닿기 전에 — 포구의 버들 할아버지한테 가 보자.", "angry"]]},
+		]},
+	## 52-3 — 매듭 셋을 더 묶는다: 물마루 곶 넷째(7장 제단 칸 — 지키기 뒤 불) · 바위섬 다섯째(8장 석등 칸) · 구름섬 여섯째(9장 자리, sky).
+	## 여섯이 다 묶이면(8) 가면 그림자가 구름섬에 서서 정체(먹구름 임금의 참몸)를 밝히고, 그 뒤(9~) 구름섬 서쪽 하늘에 먹구름 눈이 선다(storm_eye.gd EYE_FROM_STEP).
+	{"id": "ch28", "name": "제28장 · 여섯째 매듭", "ar": 62,
+		"reward": {"fate_knot": 7, "mora": 140000, "book_l": 6, "talent_3": 3}, "exp": 620.0,
+		"steps": [
+			{"type": "talk", "npc": "ferryman", "text": "포구의 사공 버들과 이야기하기",
+				"lines": [["버들", "왔구나. 해솔이 먼저 기별을 넣었더라 — 매듭이니 뭐니, 늙은이 귀엔 어렵다만 곶이 요새 수상한 건 안다.", "surprised"],
+					["버들", "어젯밤부터 곶 제단에 가면 쓴 놈들이 떼로 몰려. 이번엔 제단째 바다에 밀어 넣을 기세야.", "angry"],
+					["하람(무전)", "여기 서리봉 관측소! 먹구름이 전부 한 방향으로 빨려 들고 있어요 — 청하 북쪽 봉우리 위 하늘로!", "surprised"],
+					["한별(신호)", "별배 항로표에 빛 점이 여섯 떴네. 바위섬 점은 해 → 별 → 달 차례로 깜빡이고 있어."],
+					["?", ["곶부터 지킬게요.", "할아버지는 배를 준비해 주세요."]],
+					["버들", "그래, 곶을 지키고 나면 바위섬까지 태워 주마. 조심하거라!"]]},
+			{"type": "defend", "region": "coast", "cell": Vector2(3.0, 4.5), "hp": 1500.0, "altar": "넷째 매듭", "start": "가면 무리가 곶의 매듭으로 몰려온다!",
+				"waves": [["bandit", "bandit", "water_turtle"], ["bandit", "thunder_cat", "wind_hawk", "water_turtle"], ["rock_bear", "bandit", "ice_fox", "thunder_cat", "wind_hawk"]],
+				"text": "물마루 곶의 넷째 매듭을 가면 무리에게서 지키기"},
+			{"type": "light", "region": "coast", "cell": Vector2(3.0, 4.5), "hit_text": "넷째 매듭에 불이 붙었다 — 곶에서 금빛 줄이 솟는다",
+				"text": "넷째 매듭의 제단에 원소 불 다시 밝히기"},
+			{"type": "sail", "npc": "ferryman", "to": {"region": "coast", "cell": Vector2(6.03, 2.3)},
+				"line": ["버들", "자, 타거라. 바위섬 매듭도 우리 손으로 묶자꾸나!"], "text": "버들의 배를 타고 바위섬으로(사공에게 F)",
+				"arrive": "버들이 노를 저어 앞바다 바위섬에 배를 댔다"},
+			{"type": "seal", "region": "coast", "cell": Vector2(6.0, 2.0), "order": ["sun", "star", "moon"],
+				"text": "바위섬 다섯째 매듭 석등을 항로표 차례대로 밝히기"},
+			{"type": "sky", "text": "북쪽 봉우리 바람 기둥을 타고 구름섬에 오르기(기둥 안에서 뛰어올라 활공)"},
+			{"type": "kill", "region": "village", "cell": Vector2(7.1, 1.0), "sky": true, "kinds": ["wind_hawk", "thunder_cat", "bandit", "bandit", "ice_fox"],
+				"text": "여섯째 자리를 덮은 먹구름 무리 물리치기"},
+			{"type": "light", "region": "village", "cell": Vector2(7.1, 1.0), "sky": true, "hit_text": "여섯째 매듭까지 — 여섯 금빛 줄이 휘어 하늘 한 점으로 모인다",
+				"text": "구름섬 여섯째 매듭에 원소 불 다시 밝히기"},
+			{"type": "talk", "npc": "gamyeon", "text": "구름섬에 나타난 가면 그림자와 이야기하기",
+				"lines": [["가면 그림자", "……여섯 줄이 다 묶였군. 매듭이 조여 올수록 내 몸이 틈 밖으로 밀려난다.", "angry"],
+					["나그네", "그 가면 무늬… 비문 맨 아래, 처음 가면. 네가 임금이로구나.", "angry"],
+					["?", ["먹구름 임금의 참몸…!", "구름섬에서 쓰러뜨린 임금은 뭐였지?"]],
+					["가면 그림자", "네가 이 섬에서 친 것은 내 꿈, 정거장에서 친 것은 내 그림자. 나는 여섯 매듭 밑 틈에 묶여 먹구름 한 줄기로만 시대를 떠돌았지."],
+					["가면 그림자", "틈이 닫히자 돌아갈 길도 막혔다. 그래서 뿌리부터 풀러 왔건만 — 좋다. 매듭이 나를 밀어낸다면, 하늘의 먹구름을 전부 한데 모아 매듭째 끊어 주마.", "angry"],
+					["가면 그림자", "올라와라. 먹구름 눈에서 기다리지."]]},
+			{"type": "talk", "npc": "wanderer", "text": "구름섬의 나그네와 이야기하기",
+				"lines": [["나그네", "……먹구름이 저 위로 빨려 든다. 저게 먹구름 눈인가.", "surprised"],
+					["나그네", "혼자서는 못 간다. 마을로 내려가 모두를 불러 모으게 — 은비, 버들, 해솔… 네가 시대를 건너 만난 동무들 전부."],
+					["?", ["다 같이 가요.", "마지막 싸움이네요."]],
+					["나그네", "과거·현대·미래가 다 모여야 틈 위의 임금을 칠 수 있다. 누리 할머니가 광장에서 기다린다.", "joy"]]},
+		]},
+	## 52-4 — 8부 끝, 1차 결말. 광장 촌장 → 편성 시험(과거·현대·미래 이야기 동료 하나씩) → 구름섬 서쪽 바람 기둥으로 먹구름 눈(climb eye) →
+	## 임금의 참몸 → 매듭 등불 지키기(defend bare — 눈 가운데 등불, 물결은 둘레 15m) → 이야기 보스 먹구름 임금 참몸(눈 남쪽 9m) →
+	## 해솔(소용돌이가 걷힘 — storm_eye.gd EYE_CLEAR_STEP) → 활공해 광장 → 잔치. 칸 (6.3396,1.0) = 먹구름 눈 가운데(구름섬 서쪽 36.5m).
+	{"id": "ch29", "name": "제29장 · 먹구름의 근원", "ar": 64,
+		"reward": {"fate_knot": 10, "mora": 300000, "book_l": 10, "talent_3": 5}, "exp": 1000.0,
+		"steps": [
+			{"type": "talk", "npc": "elder", "text": "광장의 청하 촌장에게 가기",
+				"lines": [["누리", "다들 모였구나. 은비, 버들 영감, 해솔, 나그네… 먼 시대에서 온 동무들까지. 청하 광장이 이렇게 북적인 건 처음이다.", "joy"],
+					["도담", "막차 기관은 식혀 두고 왔어요. 신호만 떨어지면 바로 달립니다!", "fun"],
+					["한별", "별배도 닻을 올렸네. 마지막 항로는 대장이 정하게."],
+					["반디", "삐— 먹구름 눈 안쪽 기압 급강하. 세 시대의 힘이 한 부대에 모여야 매듭 등불이 버팁니다."],
+					["?", ["편성을 짤게요.", "누구를 데려가죠?"]],
+					["누리", "과거와 현대와 미래 — 세 시대에서 한 사람씩 네 곁에 세우렴. 매듭은 세 시대를 함께 묶어야 다시는 풀리지 않는단다."]]},
+			{"type": "party", "eras": ["과거", "현대", "미래"], "text": "과거·현대·미래 이야기 동료를 하나씩 들판 명단에 넣기(C 인물 화면 → 편성)"},
+			{"type": "climb", "region": "village", "cell": Vector2(6.3396, 1.0), "eye": true, "radius": 18.0,
+				"text": "구름섬 서쪽 바람 기둥을 타고 먹구름 눈으로(기둥 안에서 뛰어올라 활공)"},
+			{"type": "talk", "npc": "gamyeon", "text": "먹구름 눈의 임금과 맞서기",
+				"lines": [["먹구름 임금", "왔구나, 매듭을 묶는 자. 과거와 현대와 미래를 한 줄에 꿰어 오다니 — 그 줄째 끊어 주마.", "angry"],
+					["먹구름 임금", "매듭 등불만 꺼지면 여섯 줄은 도로 풀린다. 먹구름아, 등불을 덮어라!"],
+					["?", ["등불은 우리가 지킨다!", "여기서 끝내자."]]]},
+			{"type": "defend", "region": "village", "cell": Vector2(6.3396, 1.0), "eye": true, "bare": true, "hp": 2000.0, "altar": "매듭 등불",
+				"start": "먹구름 무리가 매듭 등불로 몰려든다 — 등불을 지켜라!",
+				"waves": [["bandit", "bandit", "wind_hawk"], ["ice_fox", "water_turtle", "thunder_cat", "fire_imp"], ["rock_bear", "grass_snake", "wind_hawk", "thunder_cat", "ice_fox"]],
+				"text": "먹구름 눈의 매듭 등불을 먹구름 무리에게서 지키기"},
+			{"type": "duel", "kind": "storm_king_true", "region": "village", "cell": Vector2(6.3396, 1.1875), "eye": true,
+				"text": "먹구름 임금의 참몸 물리치기",
+				"flee": "먹구름 임금의 흰 가면이 두 쪽으로 갈라지고 — 먹구름이 소용돌이째 흩어진다"},
+			{"type": "talk", "npc": "haesol_free", "text": "먹구름 눈의 해솔과 이야기하기",
+				"lines": [["해솔", "……들려? 바람이 노래해. 먹구름에 먹혀 부르던 노래가 아니라, 내 노래로.", "joy"],
+					["해솔", "가면이 갈라지던 순간 임금이 뭐라고 했는지 알아? '매듭이 이렇게 따뜻한 줄 몰랐다' — 그러고는 틈 아래로 가라앉았어.", "sorrow"],
+					["?", ["이제 정말 끝이야.", "잘 가라, 임금."]],
+					["해솔", "먹구름 눈이 맑은 하늘로 바뀌었어. 자, 날개를 펴고 광장까지 — 할머니가 잔칫상을 차려 놨대!", "fun"]]},
+			{"type": "go", "region": "village", "cell": Vector2(5.8, 3.3), "radius": 20.0, "text": "먹구름 눈에서 활공해 청하 광장으로 내려가기"},
+			{"type": "talk", "npc": "elder", "text": "청하 촌장에게 알리기",
+				"lines": [["누리", "하늘 좀 보렴…! 먹구름 한 점 없이 파랗구나. 여섯 매듭 불빛이 별처럼 반짝이고.", "joy"],
+					["은비", "비문 맨 끝 줄이 새로 보여! '매듭을 다시 묶은 이들이 있어 청하는 오래 맑으리라' — 방금 새겨진 것 같아.", "surprised"],
+					["버들", "허허, 이 늙은이 노가 하늘까지 닿은 셈이로구먼.", "fun"],
+					["하늬", "비행선은 없어도 오늘 하늘은 제 거예요. 이렇게 맑은 날 기상 보고는 처음 써 봐요!", "joy"],
+					["반디", "삐— 틈 신호 안정. 먹구름 발생률 0퍼센트. 선장님, 이제 어디로 갈까요?"],
+					["한별", "……글쎄. 틈이 삼켰다 못 돌려놓은 시대 조각들이 아직 곳곳에 굳어 있다더군. 하지만 그건 잔치 뒤에 생각하세."],
+					["?", ["다 같이 잔치해요!", "모두 고마워요."]],
+					["누리", "약속대로 잔치다! 이건 청하 마을과 세 시대 동무들이 너에게 주는 거란다. 고맙다 — 우리 대장.", "joy"]]},
 		]},
 ]
 

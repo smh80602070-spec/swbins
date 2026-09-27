@@ -91,6 +91,7 @@ func _physics_process(_delta: float) -> void:
 						"go", "kill", "light": ok = ok and s.has("region") and s.has("cell")
 						"gather": ok = ok and Cooking.GATHER.has(String(s.item)) and int(s.count) > 0
 						"cook", "sky": pass
+						"party": ok = ok and (s.eras as Array).size() > 0 # 106장 52-4 29장 편성 시험(probe_story8.gd)
 						"follow": ok = ok and Story.NPCS.has(String(s.npc)) and (s.path as Array).size() >= 2
 						"climb": ok = ok and s.has("region") and s.has("cell") and float(s.radius) > 0.0
 						"duel": ok = ok and FieldEnemy.KINDS.has(String(s.kind)) and s.has("region") and s.has("cell")

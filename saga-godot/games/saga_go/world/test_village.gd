@@ -219,6 +219,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_story7.gd").new())
 	if OS.get_environment("SAGA_STORMEYE_PROBE") != "": # 106장 52-1 8부 여섯 매듭·먹구름 눈
 		add_child(load("res://tools/probe_storm_eye.gd").new())
+	if OS.get_environment("SAGA_STORY8_PROBE") != "": # 106장 52 이야기 8부 27장~
+		add_child(load("res://tools/probe_story8.gd").new())
 
 	## PLAN 106장 ㊸ — 업적(다른 노드 신호에 붙으므로 맨 뒤).
 	var achievements := preload("res://games/saga_go/world/achievements.gd").new()

@@ -317,7 +317,7 @@ func _physics_process(_delta: float) -> void:
 			var orr := SkyRoute.radius("orbit")
 			## 정거장 윗면 자리 — 하늬·반디·가면 그림자·대결.
 			var spots: Array = Story.windows(Story.NPCS.haneul.appear).filter(func(w: Dictionary) -> bool: return String(w.get("isle", "")) == "orbit") \
-				+ Story.windows(Story.STATIONS.bandi).filter(func(w: Dictionary) -> bool: return String(w.get("isle", "")) == "orbit") + Story.windows(Story.NPCS.gamyeon.appear)
+				+ Story.windows(Story.STATIONS.bandi).filter(func(w: Dictionary) -> bool: return String(w.get("isle", "")) == "orbit") + Story.windows(Story.NPCS.gamyeon.appear).filter(func(w: Dictionary) -> bool: return String(w.get("isle", "")) == "orbit")
 			spots.append(steps[7])
 			for d in spots:
 				var sp := _spot(d)

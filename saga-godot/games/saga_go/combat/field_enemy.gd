@@ -156,6 +156,15 @@ const KINDS := {
 		"rotation": ["slam", "halo", "storm", "bite", "shadow", "halo", "tide", "storm"], "summon": ["wind_hawk", "thunder_cat"],
 		"vroid": true, "size": 2.0, "body_r": 0.9, "cloth": Color(0.1, 0.08, 0.14),
 		"mask": Color(0.55, 0.35, 0.85), "mask_face": Color(0.08, 0.06, 0.12), "crown": Color(0.28, 0.22, 0.36)},
+	## 106장 52-4 29장 이야기 보스 "먹구름 임금 — 참몸"(먹구름 눈) — 가면 그림자가 먹구름을 한데 모아 드러낸 참몸. 8부 1차 결말 보스.
+	## 사람 몸 2.4배(먹구름 임금 틀) · 먹빛 옷·먹빛 왕관·흰 처음 가면(4장 비문 무늬). 패턴은 있는 틀: 내려찍기·고리·회오리·그림자·밀물·물기.
+	## 2단계 뇌 방패(불로 깬다). 눈 밖으로 떨어지면 제자리로(story_quest DUEL_FALL).
+	"storm_king_true": {"name": "먹구름 임금 — 참몸", "hp": 11000.0, "atk": 54.0, "speed": 3.8, "aggro": 30.0,
+		"reach": 3.8, "tell": 0.85, "cd": 1.5, "exp": 0.0, "element": "thunder", "shield": 0.0, "phase_shield": 1200.0,
+		"phase_text": "임금이 먹구름 눈의 먹구름을 두르고 매와 살쾡이를 부른다 — 불로 방패를 깨라",
+		"rotation": ["slam", "halo", "storm", "shadow", "tide", "halo", "bite", "storm"], "summon": ["wind_hawk", "thunder_cat"],
+		"vroid": true, "size": 2.4, "body_r": 1.0, "cloth": Color(0.12, 0.1, 0.16),
+		"mask": Color(0.92, 0.9, 0.86), "mask_face": Color(0.1, 0.08, 0.14), "crown": Color(0.2, 0.16, 0.28)},
 }
 
 const GRAVITY := 20.0
