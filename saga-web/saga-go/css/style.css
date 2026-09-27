@@ -1726,6 +1726,8 @@ body.fc-on #dock, body.fc-on #near { display: none !important; }
   padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 700; color: #1b1405; cursor: pointer;
   background: linear-gradient(#ffe38a, #f2b640); border: 1px solid #fff3c4; box-shadow: 0 2px 10px rgba(0,0,0,.45);
 }
+/* story.js 는 글이 바뀔 때만 display 를 만진다 — 첫 글이 빈 채면 빈 노란 알약이 떠 있었다 */
+#story-btn:empty, #story-track:empty { display: none; }
 #story-talk, #story-list { position: fixed; left: 0; right: 0; bottom: calc(18px + var(--safe-b)); z-index: 60; display: none; padding: 0 16px; }
 #story-list { top: calc(70px + var(--safe-t)); bottom: auto; }
 #story-talk.show, #story-list.show { display: block; }
@@ -1763,6 +1765,29 @@ body.fc-on #dock, body.fc-on #near { display: none !important; }
 @media (max-width: 600px) {
   #dock { gap: 4px; }
   #dock button { flex: 0 0 42px; width: 42px; }
+}
+/* 폰 세로 — 화면에 뜨는 게 너무 많아 게임이 안 보였다(2026-09-27 실기 신고).
+   윗 카드는 칭호 한 줄 + "지금" 한 줄만(날씨·일과·이정표 줄은 사명 시트에 그대로 있다), 각 줄은 말줄임.
+   `auto` 칸이던 윗 카드가 글자를 따라 불어나 원처럼 부풀었다 — 도구줄 옆 남은 폭 안에 가둔다 */
+@media (max-width: 600px) {
+  #top { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "profile tools" "wallet wallet"; gap: 8px; }
+  .profile { min-width: 0; padding: 6px 12px 6px 6px; gap: 8px; }
+  .profile .avatar { width: 36px; height: 36px; }
+  .profile .p-meta { min-width: 0; }
+  .profile .p-meta > div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .profile .p-sub, .profile .p-tune, .profile .p-goal:not(.now) { display: none; }
+  .tools { gap: 5px; }
+  /* 자동 순행 띠 → 지역 사명 → 이야기 줄 차례로 윗 카드 밑에 쌓는다(높이는 ui.js syncHeaderStack 이 잰다) */
+  #region-mission { top: calc(var(--top-bottom, 106px) + 6px + var(--autobar-h, 0px)); }
+  #story-track { top: calc(var(--top-bottom, 106px) + 6px + var(--autobar-h, 0px) + var(--mission-h, 0px)); }
+  /* 💬 단추는 근처 카드(+N 칩까지) 위로 비켜 둔다 */
+  #story-btn { bottom: calc(214px + var(--safe-b)); }
+  /* 근처 카드는 한 장(ui.js renderNear) — 나머지는 이 칩으로 펼친다 */
+  .near-card { padding: 6px 6px 6px 10px; gap: 9px; }
+  .near-more {
+    align-self: center; min-height: 40px; padding: 4px 16px; border-radius: 999px; cursor: pointer;
+    background: var(--glass); border: 1px solid var(--glass-br); color: var(--ink-dim); font-size: 12px; font-weight: 700;
+  }
 }
 /* 글자 11px 아래는 폰에서 안 읽힌다 */
 .p-sub, .near-meta small { font-size: 11px; }

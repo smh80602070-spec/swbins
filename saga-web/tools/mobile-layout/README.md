@@ -1,7 +1,7 @@
 # 폰 배치 점검 (mobile-layout)
 
 다섯 판을 헤드리스 크롬 **모바일 에뮬레이션**(390×844 세로 · 844×390 가로, dpr 3, 터치, 안드로이드 UA)으로 띄워
-UI 배치를 **숫자로** 잰다. 스크린샷은 찍지 않는다(루트 `CLAUDE.md` 검증 절).
+UI 배치를 **숫자로** 잰다. 스크린샷은 기본으로 안 찍는다(루트 `CLAUDE.md` 검증 절 — `--shot` 은 사용자가 요청할 때만).
 
 ```
 node saga-web/tools/mobile-layout/probe.js                 다섯 판 · 두 방향 · 장면 전부
@@ -10,6 +10,7 @@ node saga-web/tools/mobile-layout/probe.js saga-go --only=landscape --scene=main
   --eval=<식>             장면마다 그 식 값
   --list                  보이는 단추 목록(장면 짤 때)
   --json=<파일>           결과 전체
+  --shot=<폴더>           장면마다 스크린샷 PNG(390×844 1배) — 사용자가 "직접 봐 달라"고 할 때만
   --perf                  장면마다 한 화면 부하 — GLB·배우·그리기 호출·삼각형·인스턴스(perf.js)
 ```
 

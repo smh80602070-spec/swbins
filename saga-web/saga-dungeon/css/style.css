@@ -627,6 +627,13 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
     box-shadow: var(--shadow);
   }
   .tools-drawer.show { display: flex; }
+  /* 도구가 ⋯ 뒤로 접혀 셋(👤·🤖·⋯ = 120px)만 남으니 프로필과 한 줄에 선다 — 780px 규칙의
+     "세 줄로 편다"는 도구 여섯이 다 줄에 있던 때 것이다. 네 줄(프로필·도구·지갑·목표)이
+     화면 위 ¼ 을 먹어 게임이 안 보였다(2026-09-27 실기 신고) */
+  #top { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "profile tools" "wallet wallet" "goals goals"; }
+  .tools { align-self: center; }
+  #toast { top: 124px; }
+  #autobar { top: calc(168px + var(--safe-t)); }
 }
 
 /* ══ 인물 성장 · 영지 경영 (v0.7) ═══════════════════════════════ */

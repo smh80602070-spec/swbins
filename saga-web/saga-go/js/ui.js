@@ -107,6 +107,7 @@
         if (ns0 && ns0.inRange) { core.emit('shrine:request', ns0.shrine); }
         return;
       }
+      if (e.target.closest('[data-act="near-more"]')) { nearAll = !nearAll; nearUid = null; renderNear(); return; }
       var appr = e.target.closest('[data-act="approach"]');
       if (appr) {
         var tx = parseFloat(appr.getAttribute('data-tx')), ty = parseFloat(appr.getAttribute('data-ty'));
@@ -531,7 +532,11 @@
 
   /* ── 근처 대상 ────────────────────────────────────────── */
 
-  var nearUid = null;
+  var nearUid = null, nearAll = false;
+  /** 폰 세로 폭 — CSS 의 `@media (max-width: 600px)` 와 같은 선 */
+  function isPhonePortrait() {
+    return !!(global.matchMedia && global.matchMedia('(max-width: 600px)').matches);
+  }
 
   /**
    * "가까이 가기" 표시 — 대상이 사거리 밖일 때 뜬다. **시뮬레이션 이동
@@ -677,11 +682,27 @@
         SHR.entry(nsh.shrine).reason : '-') + '||' +
       (ndm ? ndm.d.id + '|' + ndm.inRange + '|' + Math.round(ndm.dist / 5) + '|' + DMN.resin() : '-') + '||' +
       (nfb ? nfb.b.rk + '|' + nfb.inRange + '|' + Math.round(nfb.dist / 5) : '-');
+    var phone = isPhonePortrait();
+    key += '||' + (phone ? (nearAll ? 'P+' : 'P') : 'W');
     if (key !== nearUid) {
       nearUid = key;
-      els.near.innerHTML = (n ? nearSpawnCard(n) : '') + (ns ? nearStationCard(ns) : '') +
-        (nb ? nearBeaconCard({ beacon: nb.beacon, dist: nb.dist, inRange: nb.dist <= BC.HIT_RADIUS }) : '') +
-        (nsh ? nearShrineCard(nsh) : '') + (ndm ? nearDomainCard(ndm) : '') + (nfb ? nearBloomCard(nfb) : '');
+      var cards = [];
+      if (n) { cards.push({ d: n.dist, r: n.inRange, h: nearSpawnCard(n) }); }
+      if (ns) { cards.push({ d: ns.dist, r: ns.inRange, h: nearStationCard(ns) }); }
+      if (nb) { cards.push({ d: nb.dist, r: nb.dist <= BC.HIT_RADIUS, h: nearBeaconCard({ beacon: nb.beacon, dist: nb.dist, inRange: nb.dist <= BC.HIT_RADIUS }) }); }
+      if (nsh) { cards.push({ d: nsh.dist, r: nsh.inRange, h: nearShrineCard(nsh) }); }
+      if (ndm) { cards.push({ d: ndm.dist, r: ndm.inRange, h: nearDomainCard(ndm) }); }
+      if (nfb) { cards.push({ d: nfb.dist, r: nfb.inRange, h: nearBloomCard(nfb) }); }
+      /* 폰 세로 — 카드가 석 장까지 쌓이면 화면 아래 ¼ 을 덮고 조이스틱과 겹쳤다(2026-09-27 실기 신고
+         "세로 화면에 뜨는 게 너무 많아 게임 화면이 안 보인다"). 닿는 것 먼저·가까운 것 먼저 한 장만,
+         나머지는 "+N" 칩으로 펼친다 */
+      var more = '';
+      if (phone && cards.length > 1) {
+        cards.sort(function (a, b) { return (b.r ? 1 : 0) - (a.r ? 1 : 0) || a.d - b.d; });
+        more = '<button class="near-more" data-act="near-more">' + (nearAll ? '접기 ▾' : '+' + (cards.length - 1) + ' 더 ▴') + '</button>';
+        if (!nearAll) { cards = cards.slice(0, 1); }
+      }
+      els.near.innerHTML = more + cards.map(function (c) { return c.h; }).join('');
     }
     els.near.classList.add('show');
   }
@@ -1812,10 +1833,25 @@
     var topBottom = Math.ceil(els.wallet.getBoundingClientRect().bottom);
     document.documentElement.style.setProperty('--top-bottom', topBottom + 'px');
     var belowHeader = topBottom;
+    var root = document.documentElement.style, autoH = 0;
     if (els.autobar && els.autobar.classList.contains('show')) {
-      belowHeader = Math.max(belowHeader, Math.ceil(els.autobar.getBoundingClientRect().bottom));
+      var ab = els.autobar.getBoundingClientRect();
+      belowHeader = Math.max(belowHeader, Math.ceil(ab.bottom));
+      autoH = Math.ceil(ab.height) + 6;
     }
-    document.documentElement.style.setProperty('--below-header', belowHeader + 'px');
+    /* 폰 세로 — 지역 사명·이야기 추적 줄이 `top:58px`·`86px` 고정이라 두 줄로 불어난 윗 카드
+       위에 겹쳤다. 자동 순행 띠 밑으로 차례로 쌓고(CSS 600px 규칙), 미니맵은 그 밑으로 */
+    if (isPhonePortrait()) {
+      root.setProperty('--autobar-h', autoH + 'px');
+      var rm = document.getElementById('region-mission'), mh = 0;
+      if (rm && rm.style.display !== 'none' && rm.textContent) { mh = Math.ceil(rm.getBoundingClientRect().height) + 4; }
+      root.setProperty('--mission-h', mh + 'px');
+      ['region-mission', 'story-track'].forEach(function (id) {
+        var e = document.getElementById(id);
+        if (e && e.style.display !== 'none' && e.textContent) { belowHeader = Math.max(belowHeader, Math.ceil(e.getBoundingClientRect().bottom)); }
+      });
+    }
+    root.setProperty('--below-header', belowHeader + 'px');
   }
 
   /* ── 자동 순행 상태줄 ─────────────────────────────────── */

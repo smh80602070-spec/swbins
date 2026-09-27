@@ -1756,7 +1756,14 @@
     var s = new T.Sprite(m);
     s.position.set(0, y, 0);
     s.scale.set(w, w / 4, 1);
+    s.userData.w = w;
     return s;
+  }
+  /** 세로 폰 — 가로 시야가 좁아 이름표 한 장이 화면 폭 절반을 덮었다(2026-09-27 실기 신고
+      "세로 화면에 뜨는 게 너무 많다"). 화면비만큼 줄이되 0.62배 밑으로는 안 내린다 */
+  function labelK() {
+    var asp = camera && camera.aspect || 1;
+    return asp < 1 ? Math.max(0.62, asp * 1.35) : 1;
   }
 
   /**
@@ -1770,6 +1777,8 @@
     var lb = node.userData.label;
     if (lb && lb.material) {
       lb.material.opacity = near ? 1 : core.clamp(1 - (dist - talkR) / 260, 0.34, 0.9);
+      var lw = (lb.userData.w || lb.scale.x) * labelK();
+      if (lb.scale.x !== lw) { lb.scale.set(lw, lw / 4, 1); }
     }
   }
 

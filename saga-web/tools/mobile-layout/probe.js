@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * 폰 배치 점검 — 다섯 판을 헤드리스 크롬 모바일 에뮬레이션으로 띄워 UI 배치를 **숫자로** 잰다.
- * 스크린샷은 찍지 않는다(루트 CLAUDE.md 검증 절). 재는 것은 measure.js 머리 주석.
+ * 스크린샷은 --shot 을 줄 때만(사용자가 요청할 때 — 루트 CLAUDE.md 검증 절). 재는 것은 measure.js 머리 주석.
  *
  *   node probe.js                     다섯 판 · 세로(390×844)·가로(844×390) · 판마다 장면 전부
  *   node probe.js saga-go saga-realm  고른 판만
@@ -12,6 +12,7 @@
  *   --wait=<초>                       첫 화면 기다림(기본 8)
  *   --eval=<식>                       장면마다 그 식 값을 찍는다(고칠 때)
  *   --rects=#a,.b                     장면마다 그 요소들의 사각형을 찍는다(고칠 때)
+ *   --shot=<폴더>                     장면마다 스크린샷 PNG(사용자가 요청할 때만 — 루트 CLAUDE.md)
  *   --perf                            장면마다 한 화면 부하(GLB·배우·그리기 호출·삼각형·인스턴스, perf.js)
  *
  * - 판 폴더를 자기 포트(빈 포트)에서 `tools/lib/gameserve.js` 로 서빙한다 — 서비스워커는 스스로 풀리는 빈 것,
@@ -174,6 +175,11 @@ async function runGame(game) {
       fmt(res).forEach(l => out.push('  ' + l));
       if (opt.list) { (await c.ev(LIST_JS)).forEach(l => out.push('      · ' + l)); }
       if (opt.eval) { out.push('      = ' + JSON.stringify(await c.ev(String(opt.eval)).catch(e => e.message))); }
+      if (opt.shot) {
+        fs.mkdirSync(String(opt.shot), { recursive: true });
+        const p = await c.send('Page.captureScreenshot', { format: 'png', clip: { x: 0, y: 0, width: res.vw, height: res.vh, scale: 1 / 3 } });
+        fs.writeFileSync(path.join(String(opt.shot), (game + '_' + vName + '_' + s).replace(/[:\/]/g, '-') + '.png'), Buffer.from(p.data, 'base64'));
+      }
       if (opt.perf) { out.push('      ⚙ ' + await c.ev(`(${perf.toString()})()`).catch(e => e.message)); }
       if (opt.rects) {
         const R = await c.ev(`(function(){return ${JSON.stringify(String(opt.rects).split(','))}.map(function(q){var e=document.querySelector(q);if(!e)return q+' 없음';var r=e.getBoundingClientRect();return q+' '+Math.round(r.left)+','+Math.round(r.top)+' ~ '+Math.round(r.right)+','+Math.round(r.bottom)})})()`);

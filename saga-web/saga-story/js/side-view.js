@@ -137,6 +137,7 @@
   function resize() {
     dpr = Math.min(global.devicePixelRatio || 1, 2);
     W = global.innerWidth; H = global.innerHeight;
+    miniBotAt = 0;
     cv.width = Math.floor(W * dpr);
     cv.height = Math.floor(H * dpr);
     cv.style.width = W + 'px';
@@ -691,6 +692,22 @@
    * 사각형 크기로 줄여 전체(문·보스 위치까지)가 정보 손실 없이 다 들어오게
    * 한다(사가블로 미니맵과 같은 수법). 좌하단은 조작판(.pad-l, bottom 150px)
    * 보다 아래(0~142px)라 안 겹친다. */
+  /* 좁은 화면(780px 이하)은 독이 좌하단부터 가로로 눕는다 — 미니맵 원이 그 밑에 깔려
+     반쯤 가렸다(2026-09-27 폰 세로 확인). 독 윗변 위로 올린다. 매 프레임 재지 않고 0.5초마다 */
+  var miniBotAt = 0, miniBotV = 0;
+  function miniBottom() {
+    var now = Date.now();
+    if (now - miniBotAt > 500 || !miniBotV) {
+      miniBotAt = now;
+      miniBotV = H - 14;
+      var dk = W <= 780 && global.document && global.document.getElementById('dock');
+      if (dk && dk.getClientRects().length) {   // 독은 fixed 라 offsetParent 가 늘 null
+        var t = dk.getBoundingClientRect().top;
+        if (t > H / 2 && t < H) { miniBotV = Math.min(miniBotV, t - 10); }
+      }
+    }
+    return miniBotV;
+  }
   function miniBox(stg) {
     var s = Math.min(W <= 560 ? 104 : 128, H - 40);
     var top = 240, bot = stg.floor + 30;          // 세로로 담을 구간
@@ -698,7 +715,7 @@
     var rad = s / 2 - 3;
     /* 원에 내접하는 사각형 축척 — 네 귀퉁이(hw,hh)가 딱 반지름에 닿는 배수 */
     var scale = rad / Math.sqrt(hw * hw + hh * hh);
-    return { cx: 12 + s / 2, cy: H - 14 - s / 2, s: s, rad: rad,
+    return { cx: 12 + s / 2, cy: miniBottom() - s / 2, s: s, rad: rad,
              hw: hw, hh: hh, top: top, scale: scale };
   }
 
