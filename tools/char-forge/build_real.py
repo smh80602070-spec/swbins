@@ -186,7 +186,7 @@ def tuck(arm, keys):
 
 
 def hide_under(arm, spec):
-    """레시피 `under`: {겉옷 폴더 이름: [속옷 폴더 이름…]} — 겉옷에 덮인 속옷 면을 지운다(살의 가림 지우기와 같은 일).
+    """레시피 `under`: {겉옷 폴더 이름: [속옷 폴더 이름… 또는 'skin']} — 겉옷에 덮인 속옷(살) 면을 지운다(살의 가림 지우기와 같은 일).
     공방 옷은 몸통 뼈에만 붙어 동작 중 어깨뼈가 벌어지면 속 몸 옷이 등으로 뚫고 나왔다(09-27 조끼·가슴판).
     속옷 정점의 바깥(+n) 3cm 또는 안쪽(-n) 2cm(쉼 자세부터 속옷이 겉옷 밖 — 등 골) 안에 겉옷이 있으면 덮인 것 — 이웃이 모두 덮인 정점만 지워 가장자리 한 줄은 겉옷 밑에 겹쳐 남긴다."""
     from mathutils.bvhtree import BVHTree
@@ -200,7 +200,8 @@ def hide_under(arm, spec):
         tree = BVHTree.FromBMesh(bm)
         bm.free()
         for inner in inners:
-            ic = cloth_src(arm, inner)
+            ic = cloth_src(arm, inner) if inner != 'skin' else next(   # 'skin' = 살 — 붙는 뜨개 윗옷을 동작 중 어깨뼈 살이 뚫었다(09-27, tuck 은 쉼 자세만)
+                (o for o in arm.children if o.type == 'MESH' and any(sl.material and sl.material.name.startswith('skin') for sl in o.material_slots)), None)
             if ic is None:
                 sys.exit(f'under: 속옷 {inner} 이 레시피 clothes 에 없다')
             mw, nm = ic.matrix_world, ic.matrix_world.to_3x3()

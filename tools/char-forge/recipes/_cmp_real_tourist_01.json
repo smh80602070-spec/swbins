@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_tourist_01",
- "_note": "단계 3 역참 사람 비교용 — saga-unity Remy(Mixamo) 자리 후보(GO 현대 여행자). 게임 인물 아님. 09-26 진짜 옷(CC0 흰 티·푸른 바지·흰 운동화, 배낭은 티셔츠 등판). 젊은 남자·짧은 머리·흰 반소매·청바지·흰 운동화·등에 주황 배낭.",
+ "_note": "단계 3 역참 사람 비교용 — saga-unity Remy(Mixamo) 자리 후보(GO 현대 여행자). 게임 인물 아님. 09-26 진짜 옷(CC0 흰 티·푸른 바지·흰 운동화, 배낭은 티셔츠 등판). 젊은 남자·짧은 머리·흰 반소매·청바지·흰 운동화·등에 주황 배낭. 09-27 등 짐 = 공방 backpack(둥근 모서리 상자·어깨끈 — 살·옷 면 껍데기 짐은 등 굴곡을 따라 구겨진 판이었다).",
  "macro": {
   "gender": 1.0,
   "age": 0.42,
@@ -20,28 +20,6 @@
  "eyes": "high-poly/high-poly.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
- "kitbash": [
-  {
-   "part": "shell",
-   "slot": "cloth",
-   "color": "#e6e4dc",
-   "rough": 0.85,
-   "offset": 0.05,
-   "thick": 0.003,
-   "groups": [
-    "spine_0*",
-    "clavicle_*",
-    "upperarm_*",
-    "pelvis"
-   ],
-   "z": [
-    0.5,
-    0.86
-   ],
-   "minw": 0.5,
-   "src": "elvs_crude_t-shirt_male"
-  }
- ],
  "anims": {
   "idle": "Idle_Talking_Loop",
   "walk": "Walk_Loop",
@@ -53,9 +31,19 @@
  "clothes": [
   "elvs_crude_t-shirt_male/elvs_crude_t-shirt_male.mhclo",
   "toigo_wool_pants/toigo_wool_pants.mhclo",
-  "shoes05/shoes05.mhclo"
+  "shoes05/shoes05.mhclo",
+  "cf_backpack_e0762a_8a3a14/cf_backpack_e0762a_8a3a14.mhclo"
  ],
  "tints": {
   "toigo_wool_pants": "#7d97c8"
- }
+ },
+ "under": {
+  "toigo_wool_pants": [
+   "elvs_crude_t-shirt_male",
+   "shoes05"
+  ]
+ },
+ "_garments": [
+  "backpack@e0762a,8a3a14"
+ ]
 }

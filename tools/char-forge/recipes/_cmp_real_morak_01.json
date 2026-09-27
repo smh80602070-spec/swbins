@@ -59,5 +59,8 @@
   "cf_baji_vest/cf_baji_vest.mhclo",
   "cf_turban_c9a227/cf_turban_c9a227.mhclo",
   "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
+ ],
+ "tuck": [
+  "cf_baji_vest"
  ]
 }

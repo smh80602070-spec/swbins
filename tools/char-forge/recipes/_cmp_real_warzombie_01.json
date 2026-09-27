@@ -44,5 +44,13 @@
   "toigo_wool_pants/toigo_wool_pants.mhclo",
   "culturalibre_male_boots/culturalibre_male_boots.mhclo",
   "mrgreaterthan_m1_helmet/mrgreaterthan_m1_helmet.mhclo"
- ]
+ ],
+ "under": {
+  "toigo_wool_pants": [
+   "elvs_crude_t-shirt_male"
+  ],
+  "culturalibre_male_boots": [
+   "toigo_wool_pants"
+  ]
+ }
 }

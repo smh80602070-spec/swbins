@@ -68,5 +68,11 @@
  "tints": {
   "elvs_crude_t-shirt_male": "#b8403a",
   "toigo_wool_pants": "#6a86b8"
+ },
+ "under": {
+  "toigo_wool_pants": [
+   "elvs_crude_t-shirt_male",
+   "shoes05"
+  ]
  }
 }

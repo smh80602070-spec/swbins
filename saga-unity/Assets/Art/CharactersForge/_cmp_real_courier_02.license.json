@@ -15,6 +15,7 @@
   "makehuman_system_assets: namuhekam_male_polo_shirt/namuhekam_male_polo_shirt.mhclo",
   "makehuman_system_assets: cortu_cargo_pants/cortu_cargo_pants.mhclo",
   "makehuman_system_assets: shoes05/shoes05.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell"
+  "makehuman_system_assets: cf_backpack_b89a6a_6a5638/cf_backpack_b89a6a_6a5638.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell"
  ]
 }

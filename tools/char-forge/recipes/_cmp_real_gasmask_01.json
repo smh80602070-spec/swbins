@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_gasmask_01",
- "_note": "단계 3 들판 적 비교용 — saga-unity Gas Mask(Mixamo) 자리 후보(GO 현대 '방독면 약탈자'). 게임 인물 아님. 09-26 진짜 옷(CC0 국방빛 윗옷·짙은 바지·장화·장갑, 두건·방독면·등 짐은 껍데기). 마른 남자·국방색 누비 윗옷·짙은 작업 바지·가죽 장화·장갑·두건 위 검은 고무 방독면(얼굴 앞 전부)·어두운 유리 눈알·등 짐.",
+ "_note": "단계 3 들판 적 비교용 — saga-unity Gas Mask(Mixamo) 자리 후보(GO 현대 '방독면 약탈자'). 게임 인물 아님. 09-26 진짜 옷(CC0 국방빛 윗옷·짙은 바지·장화·장갑, 두건·방독면·등 짐은 껍데기). 마른 남자·국방색 누비 윗옷·짙은 작업 바지·가죽 장화·장갑·두건 위 검은 고무 방독면(얼굴 앞 전부)·어두운 유리 눈알·등 짐. 09-27 등 짐 = 공방 backpack(둥근 모서리 상자·어깨끈 — 살·옷 면 껍데기 짐은 등 굴곡을 따라 구겨진 판이었다).",
  "macro": {
   "gender": 1.0,
   "age": 0.45,
@@ -66,23 +66,6 @@
    ],
    "facing": 0.75,
    "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "leather_pack",
-   "color": "#3d3324",
-   "rough": 0.8,
-   "offset": 0.05,
-   "thick": 0.01,
-   "groups": [
-    "spine_0*"
-   ],
-   "z": [
-    0.58,
-    0.78
-   ],
-   "facing_back": 0.4,
-   "src": "elvs_crude_t-shirt_male"
   }
  ],
  "anims": {
@@ -97,10 +80,22 @@
   "elvs_crude_t-shirt_male/elvs_crude_t-shirt_male.mhclo",
   "toigo_wool_pants/toigo_wool_pants.mhclo",
   "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo",
-  "toigo_gloves_short/toigo_gloves_short.mhclo"
+  "toigo_gloves_short/toigo_gloves_short.mhclo",
+  "cf_backpack/cf_backpack.mhclo"
  ],
  "tints": {
   "elvs_crude_t-shirt_male": "#8a9070",
   "toigo_wool_pants": "#4a4a44"
- }
+ },
+ "under": {
+  "toigo_wool_pants": [
+   "elvs_crude_t-shirt_male"
+  ],
+  "rehmanpolanski_viking_boots": [
+   "toigo_wool_pants"
+  ]
+ },
+ "_garments": [
+  "backpack"
+ ]
 }

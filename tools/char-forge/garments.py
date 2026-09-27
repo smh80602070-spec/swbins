@@ -9,8 +9,9 @@
   sleeves 소매 — `length` 팔 몫(1 = 손목, 0.35 = 어깨 갑옷), `start` 시작(0.6 = 팔꿈치 아래 팔 가리개, 윗팔 살은 안 지운다), `drop` 처짐, `flare` 끝 넓힘
           `arc`(도) = 팔 바깥쪽만 두르는 판(소데), `bag` = 팔꿈치부터 네모나게 늘어진 자루(기모노)
   band    띠 — 그 높이 통 둘레 바깥(`ease` 면 통 대신 몸 볼록 둘레 + ease — 앞뒤 판만 있는 겉옷판 위 허리띠)
+  backpack 등 짐 — 등판 뒤 둥근 모서리 상자(width·depth, top·bottom 높이) + 어깨끈 둘(strap 폭, 끈 칸 strap_slot·색 paint.strap)
   collar  목 깃(목폴라) — 목 살을 따라 목 밑에서 턱 밑까지, 밑단은 윗줄보다 `taper` 배 넘게 안 퍼진다(셔츠 깃 속으로)
-  leggings 다리 통(정강이 가리개·바지) · discs 가슴 둥근 판(호심경) · bow 등 매듭(오비) · sash 비스듬한 띠(토가)
+  leggings 다리 통(정강이 가리개·바지) — `ease_bottom` 발목 여유(위로 곧게 ease 까지)·`smooth` 세로 다듬기·`wmin` 허벅지 무게 문턱(바지 0.15 — 엉덩이 옆 살까지) · discs 가슴 둥근 판(호심경) · bow 등 매듭(오비) · sash 비스듬한 띠(토가)
   mangeon·topknot·gat·helmet·neckguard·kuwagata·tassel·samo·boktu·myeollyu·beads·eboshi·turban·beret·hairdome·mage  머리 부품 — 머리 살에 붙는다
 색 변형: `<id>@<헥스>[,<헥스>]` — 틀의 `colors`(C1·C2)를 바꾼 cf_<id>_<헥스>… (메시·맞춤은 기본 옷을 베끼고 그림만 새로)
 그다음 MPFB MakeClothes 와 같은 순서(`mesh_is_valid_as_clothes` → `create_mhclo_from_clothes_matching` → `write_mhclo`)로 기본 몸에 맞춘
@@ -254,12 +255,12 @@ GARMENTS = {
     # 바지저고리 — 엉덩이까지 저고리(고름)·통 넓은 바지·발목 대님
     'baji_jeogori': dict(desc='바지저고리 — 저고리·통 넓은 바지·대님', tags=['hanbok', 'historical', 'east'],
                          colors=dict(C1='#e6dfcc', C2='#6b5a48'), parts=[
-        dict(kind='tube', top=('waist', 0.03), bottom=('crotch', 0.0), ease=0.03, slot=0, paint=dict(base='C2', pattern='weave')),
-        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.045, flare=-0.25, slot=5, paint=dict(base='C2', pattern='weave',
+        dict(kind='tube', top=('waist', 0.03), bottom=('crotch', 0.0), ease=0.02, slot=0, paint=dict(base='C2', pattern='weave')),
+        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.022, ease_bottom=0.008, smooth=6, wmin=0.15, slot=5, paint=dict(base='C2', pattern='weave',
              trims=[('bottom', 0.012, '#2a2a2a')])),
-        dict(kind='tube', top=('neck', 0), bottom=('hip', -0.04), ease=0.018, over=0.014, slot=1,
+        dict(kind='tube', top=('neck', 0), bottom=('hip', -0.04), ease=0.012, over=0.01, slot=1,
              paint=dict(base='C1', trims=[('cross', WHITE, 0.7), ('ribbon', 'C2')])),
-        dict(kind='sleeves', length=1.0, ease=0.016, drop=0.03, cuff=0.01, slot=2, paint=dict(base='C1')),
+        dict(kind='sleeves', length=1.0, ease=0.01, drop=0.02, cuff=0.01, slot=2, paint=dict(base='C1')),
     ]),
     # 터번 — 이마 위로 두툼하게 감아 올린 천
     'turban': dict(desc='터번 — 두툼하게 감은 천', tags=['hat', 'historical', 'world'], colors=dict(C1='#e6e0d0'), parts=[
@@ -289,7 +290,7 @@ GARMENTS = {
     # 닌자복 — 몸에 붙는 윗옷·좁은 바지·정강이 감발·허리띠
     'shinobi': dict(desc='닌자복 — 붙는 윗옷·좁은 바지·감발·띠', tags=['ninja', 'historical', 'east'],
                     colors=dict(C1='#1e1e24', C2='#3a3a44'), parts=[
-        dict(kind='tube', top=('waist', 0.02), bottom=('crotch', 0.0), ease=0.014, slot=0, paint=dict(base='C1', pattern='weave')),
+        dict(kind='tube', top=('waist', 0.02), bottom=('crotch', 0.0), ease=0.02, slot=0, paint=dict(base='C1', pattern='weave')),
         dict(kind='leggings', top=('crotch', 0.01), bottom=('knee', -0.02), ease=0.018, slot=5, paint=dict(base='C1', pattern='weave')),
         dict(kind='leggings', top=('knee', 0.0), bottom=('ankle', 0.02), ease=0.01, slot=4, paint=dict(base='C2', pattern='wrap')),
         dict(kind='tube', top=('neck', 0), bottom=('hip', -0.05), ease=0.014, over=0.012, slot=1, paint=dict(base='C1', pattern='weave',
@@ -351,20 +352,20 @@ GARMENTS = {
     # 바지만 — 맨상체 잡졸·장사. 바지저고리 아랫도리 + 넓은 허리 천
     'baji': dict(desc='통 넓은 바지·대님·허리 천(맨상체)', tags=['pants', 'historical', 'east'],
                  colors=dict(C1=NAVY, C2='#9a1f1a'), parts=[
-        dict(kind='tube', top=('waist', 0.03), bottom=('crotch', 0.0), ease=0.03, slot=0, paint=dict(base='C1', pattern='weave')),
-        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.045, flare=-0.25, slot=5, paint=dict(base='C1', pattern='weave',
+        dict(kind='tube', top=('waist', 0.03), bottom=('crotch', 0.0), ease=0.02, slot=0, paint=dict(base='C1', pattern='weave')),
+        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.022, ease_bottom=0.008, smooth=6, wmin=0.15, slot=5, paint=dict(base='C1', pattern='weave',
              trims=[('bottom', 0.012, '#2a2a2a')])),
-        dict(kind='band', at=('waist', 0.03), width=0.075, over=0.03, slot=3, paint=dict(base='C2', pattern='weave')),   # 바지 윗단을 덮는다(맨살 위라 단이 턱으로 보였다)
+        dict(kind='band', at=('waist', 0.03), width=0.065, over=0.012, slot=3, paint=dict(base='C2', pattern='weave')),   # 바지 윗단을 덮는다(맨살 위라 단이 턱으로 보였다)
     ]),
     # 바지 + 맨팔 가죽 조끼 — 도적 두목. 조끼는 배자 틀(민소매)을 저고리 없이 살 위에
     'baji_vest': dict(desc='통 넓은 바지·맨팔 위 누빈 가죽 조끼·허리 천', tags=['pants', 'armor', 'historical', 'east'],
                       colors=dict(C1='#5a4a36', C2='#4a3322', C3='#c9a227'), parts=[
-        dict(kind='tube', top=('waist', 0.03), bottom=('crotch', 0.0), ease=0.03, slot=0, paint=dict(base='C1', pattern='weave')),
-        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.04, flare=-0.25, slot=5, paint=dict(base='C1', pattern='weave',
+        dict(kind='tube', top=('waist', 0.03), bottom=('crotch', 0.0), ease=0.02, slot=0, paint=dict(base='C1', pattern='weave')),
+        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.022, ease_bottom=0.008, smooth=6, wmin=0.15, slot=5, paint=dict(base='C1', pattern='weave',
              trims=[('bottom', 0.012, '#2a2a2a')])),
         dict(kind='tube', top=('neck', 0), bottom=('hip', -0.06), ease=0.016, over=0.012, slot=1,
              paint=dict(base='C2', pattern='quilt', trims=[('front', 0.03, '#2a1c14'), ('top', 0.012, '#2a1c14'), ('bottom', 0.012, '#2a1c14')])),
-        dict(kind='band', at=('waist', 0.03), width=0.075, over=0.035, slot=3, paint=dict(base='C3', pattern='weave')),
+        dict(kind='band', at=('waist', 0.03), width=0.065, over=0.014, slot=3, paint=dict(base='C3', pattern='weave')),
     ]),
     # 둥근 쇠 투구 + 사슬 목가리개 — 서양 파수병·순례 기사(얼굴 트임)
     'helmet_round': dict(desc='둥근 쇠 투구·사슬 목가리개', tags=['helmet', 'historical', 'west'], colors=dict(C1=STEEL), parts=[
@@ -414,6 +415,21 @@ GARMENTS = {
         dict(kind='tube', top=('chest', -0.03), bottom=('knee', 0.02), ease=0.008, over=0.012, flare=0.08, folds=0.015,
              arc=(90, 120), slot=5, paint=dict(base='C1', pattern='weave', trims=[('bottom', 0.02, 'C2')])),
         dict(kind='band', at=('waist', -0.02), width=0.035, ease=0.027, slot=3, paint=dict(base='#3a2616', pattern='weave')),
+    ]),
+    # 등 짐 — 둥근 모서리 상자 + 어깨끈(배낭). 살 껍데기 배낭은 등 굴곡을 따라 구겨진 판이었다(09-27)
+    'backpack': dict(desc='배낭 — 둥근 모서리 천 상자·덮개·어깨끈', tags=['bag', 'modern'], colors=dict(C1='#3d3324', C2='#2a2218'), parts=[
+        dict(kind='backpack', top=('shoulder', -0.05), bottom=('waist', 0.02), width=0.29, depth=0.13, strap=0.04, slot=0, strap_slot=3,
+             paint=dict(base='C1', pattern='weave', strap='C2', trims=[('top', 0.3, 'C2'), ('bottom', 0.04, 'C2')])),
+    ]),
+    # 큰 등 짐 — 고물 행상(어깨 위로 솟고 엉덩이까지)
+    'pack_big': dict(desc='큰 등 짐 — 어깨 위로 솟은 천 상자·어깨끈', tags=['bag', 'modern'], colors=dict(C1='#6a5238', C2='#3a2a1a'), parts=[
+        dict(kind='backpack', top=('shoulder', 0.08), bottom=('hip', -0.02), width=0.36, depth=0.2, strap=0.045, slot=0, strap_slot=3,
+             paint=dict(base='C1', pattern='weave', strap='C2', trims=[('top', 0.18, 'C2'), ('bottom', 0.03, 'C2')])),
+    ]),
+    # 쇠 등 짐 — 탐사 대원·시간 행상·불시착 탐사원(판 상자·끈)
+    'pack_metal': dict(desc='쇠 등 짐 — 판 상자·어깨끈', tags=['bag', 'future'], colors=dict(C1='#5d646b', C2='#2a2c30'), parts=[
+        dict(kind='backpack', top=('shoulder', -0.03), bottom=('waist', 0.03), width=0.3, depth=0.12, strap=0.035, slot=0, strap_slot=3,
+             paint=dict(base='C1', pattern='plate', strap='C2', trims=[('top', 0.08, 'C2'), ('bottom', 0.06, 'C2')])),
     ]),
     # 베레모 — 한쪽으로 쏠려 처진 둥근 납작 모자(현대)
     'beret': dict(desc='베레모 — 한쪽으로 쏠린 둥근 납작 모자', tags=['hat', 'modern'], colors=dict(C1='#6a1f2a'), parts=[
@@ -668,6 +684,49 @@ class Builder:
         self.grid(rows, p['slot'], refs, uvs=[(z - ringz[0]) / (ringz[-1] - ringz[0]) for z in ringz])
         self.cover.append(('collar', ringz[0], ringz[-1]))
 
+    def backpack(self, p):
+        """등 짐(배낭·짐틀) — 등판 뒤 둥근 모서리 상자(`width`·`depth`, 높이는 `top`·`bottom`) + 어깨끈 둘(`strap` 폭, 0 이면 없음).
+        살을 띄운 껍데기 배낭은 등 굴곡을 따라 구겨진 판이 됐다(09-27 61벌 점검). 끈은 몸 세로 단면(x = ±strap_x)을 따라
+        등 위 → 어깨 → 가슴 앞으로 내려오다 옆구리로 빠진다. 상자는 몸통 뼈에만 붙는다(cf_torso)."""
+        B = self.B
+        zt, zb = B.level(p['top']), B.level(p['bottom'])
+        W2, D = p.get('width', 0.3) / 2, p.get('depth', 0.13)
+        y0 = max(B.co[i].y for i in B.torso if zb <= B.co[i].z <= zt and abs(B.co[i].x) < W2) + p.get('gap', 0.012)
+        yc, D2 = y0 + D / 2, D / 2
+        ex = 0.5                     # 둥근 네모 단면(초타원 m=4)
+        def sgn(v):
+            return 1.0 if v >= 0 else -1.0
+        prof = [(zb, 0.03, 0.03), (zb + 0.004, 0.72, 0.72), (zb + 0.018, 0.96, 0.96), (zb + 0.04, 1.0, 1.0),
+                (zt - 0.05, 1.0, 0.94), (zt - 0.022, 0.96, 0.86), (zt - 0.006, 0.72, 0.62), (zt, 0.03, 0.03)]
+        rows, refs = [], []
+        for z, sw, sd in prof:
+            ring = []
+            for s in range(SEG):
+                a = 2 * math.pi * s / SEG
+                c, si = math.cos(a), math.sin(a)
+                ring.append(self.vert((W2 * sw * sgn(c) * abs(c) ** ex, yc + D2 * sd * sgn(si) * abs(si) ** ex, z), 'cf_torso'))
+            rows.append(ring)
+            refs.append(Vector((0.0, yc, z)))
+        self.grid(rows, p['slot'], refs, uvs=[(z - zb) / (zt - zb) for z, _, _ in prof])
+        sw_ = p.get('strap', 0.04)
+        if not sw_:
+            return
+        cy, cz = float(np.mean([B.co[i].y for i in B.torso if abs(B.co[i].z - B.lv['chest']) < 0.03])), B.lv['chest']
+        a0, a1, K = math.radians(40), math.radians(245), 30
+        for sx in (-1, 1):
+            rows, refs = [], []
+            for k in range(K):
+                a = a0 + (a1 - a0) * k / (K - 1)
+                x = sx * (p.get('strap_x', 0.085) + 0.07 * max(0.0, (a - math.radians(185)) / (a1 - math.radians(185))))
+                dy, dz = math.cos(a), math.sin(a)
+                cand = [(B.co[i].y - cy) * dy + (B.co[i].z - cz) * dz for i in B.torso
+                        if abs(B.co[i].x - x) < 0.014 and abs((math.atan2(B.co[i].z - cz, B.co[i].y - cy) - a + math.pi) % (2 * math.pi) - math.pi) < 0.12]
+                r = (max(cand) if cand else (rows and prev_r) or 0.12) + p.get('strap_ease', 0.008)
+                prev_r = r
+                rows.append([self.vert((x + e, cy + r * dy, cz + r * dz), 'cf_torso') for e in (-sw_ / 2, sw_ / 2)])
+                refs.append(Vector((x, cy, cz)))
+            self.grid(rows, p.get('strap_slot', p['slot']), refs, closed=False)
+
     def sleeves(self, p):
         """소매 — `arc`(도) 면 팔 바깥쪽만 두르는 판(소데·어깨판), `bag` 이면 팔꿈치부터 네모나게 늘어지는 자루(기모노)."""
         B = self.B
@@ -753,22 +812,31 @@ class Builder:
         return RR[k]
 
     def leggings(self, p):
-        """다리 통(정강이 가리개·각반) — 다리마다 높이 칸의 살 둘레 + 여유, `flare` 만큼 발목 쪽을 넓힌다."""
+        """다리 통(정강이 가리개·각반·바지) — 다리마다 높이 칸의 살 둘레 + 여유, `flare` 만큼 발목 쪽을 넓힌다.
+        `ease_bottom` 이면 여유가 발목(그 값) → 위(ease)로 곧게 바뀐다(대님 바지 — 같은 여유면 종아리·무릎까지 풍선처럼 부풀었다, 09-27),
+        `smooth` 번 위아래 줄 반지름을 고르게 편다(무릎·종아리 굴곡이 천에 비치지 않게)."""
         B = self.B
         zt, zb = B.level(p['top']), B.level(p['bottom'])
         NR = max(4, int((zt - zb) / 0.03) + 1)
+        e_top = p.get('ease', 0.012) + p.get('over', 0.0)
+        e_bot = p['ease_bottom'] + p.get('over', 0.0) if 'ease_bottom' in p else e_top
         for side in 'lr':
-            legv = [i for i in B.body if part_sum(B.W[i], [f'thigh_{side}', f'calf_{side}']) >= 0.5]
-            rows, refs, prev = [], [], None
+            legv = [i for i in B.body if part_sum(B.W[i], [f'thigh_{side}', f'calf_{side}']) >= p.get('wmin', 0.5)]   # 바지는 낮춰 엉덩이 옆(골반 무게) 살까지 — 윗줄이 좁으면 엉덩이 통 밑단이 턱으로 튀었다
+            ring, prev = [], None
             for k in range(NR):
                 z = zb + (zt - zb) * k / (NR - 1)
                 pts = B.band_pts(legv, z, 0.015)
                 if pts:
                     c = (float(np.mean([q[0] for q in pts])), float(np.mean([q[1] for q in pts])))
-                    r = ring_radii(pts, c[0], c[1], SSEG, p.get('ease', 0.012) + p.get('over', 0.0))
+                    r = ring_radii(pts, c[0], c[1], SSEG, e_bot + (e_top - e_bot) * k / (NR - 1))
                     prev = (c, r)
                 c, r = prev
-                r = r * (1 + p.get('flare', 0.0) * (1 - k / (NR - 1)) ** 2)
+                ring.append((z, c, r * (1 + p.get('flare', 0.0) * (1 - k / (NR - 1)) ** 2)))
+            for _ in range(p.get('smooth', 0)):   # 줄마다 뽑히는 살 정점이 달라 반지름·가운데가 번갈아 튀면 톱니 윤곽이 됐다 — 둘 다 평균
+                ring = [ring[0]] + [(z, tuple((ring[k - 1][1][d] + 2 * c[d] + ring[k + 1][1][d]) / 4 for d in (0, 1)),
+                                     (ring[k - 1][2] + 2 * r + ring[k + 1][2]) / 4) for k, (z, c, r) in enumerate(ring) if 0 < k < NR - 1] + [ring[-1]]
+            rows, refs = [], []
+            for z, c, r in ring:
                 rows.append([self.vert((c[0] + r[s] * math.cos(2 * math.pi * s / SSEG), c[1] + r[s] * math.sin(2 * math.pi * s / SSEG), z),
                                        f'cf_leg_{side}') for s in range(SSEG)])
                 refs.append(Vector((c[0], c[1], z)))
@@ -1317,7 +1385,9 @@ def paint(g, dpath, npath):
     yy, xx = np.mgrid[0:H, 0:W]
     U, V = xx / W, 1 - yy / H
     noise = rng.normal(0, 1, (H, W)).astype(np.float32)
-    for p in g['parts']:
+    extra = [dict(slot=p['strap_slot'], paint=dict(base=p['paint'].get('strap', p['paint']['base']), pattern='weave'))   # 배낭 끈 칸
+             for p in g['parts'] if p.get('strap_slot') is not None]
+    for p in list(g['parts']) + extra:
         P = p['paint']
         u0, v0, u1, v1 = SLOTS[p['slot']]
         m = (U >= u0) & (U < u1) & (V >= v0) & (V < v1)

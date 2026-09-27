@@ -15,6 +15,7 @@
   "makehuman_system_assets: toigo_wool_pants/toigo_wool_pants.mhclo",
   "makehuman_system_assets: rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo",
   "makehuman_system_assets: toigo_gloves_short/toigo_gloves_short.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell, shell"
+  "makehuman_system_assets: cf_backpack/cf_backpack.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell"
  ]
 }

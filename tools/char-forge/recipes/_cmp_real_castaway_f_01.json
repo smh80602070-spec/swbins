@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_castaway_f_01",
- "_note": "단계 3 FOREST 비교용 — saga-unity Jennifer(Mixamo) 자리 후보(FOREST 미래 '불시착 탐사원'). 게임 인물 아님. 젊은 여자·말총머리·하늘빛 비행복(온몸)·흰 가슴판·흰 장화·장갑·등 잿빛 생존 짐·귀 옆 머리띠형 통신기. 탐사 대원(흰 판·흰 투구·청록 눈 띠)·수리 기사(주황 작업복)와 겹치지 않게. 09-26 진짜 옷(하늘빛으로 염색한 몸 옷·가디언 팔 가리개·장화(CC0), 등 짐은 옷 면 껍데기(흰 가슴판 껍데기는 가장자리 톱니라 지움), 장갑·통신 띠 껍데기 그대로).",
+ "_note": "단계 3 FOREST 비교용 — saga-unity Jennifer(Mixamo) 자리 후보(FOREST 미래 '불시착 탐사원'). 게임 인물 아님. 젊은 여자·말총머리·하늘빛 비행복(온몸)·흰 가슴판·흰 장화·장갑·등 잿빛 생존 짐·귀 옆 머리띠형 통신기. 탐사 대원(흰 판·흰 투구·청록 눈 띠)·수리 기사(주황 작업복)와 겹치지 않게. 09-26 진짜 옷(하늘빛으로 염색한 몸 옷·가디언 팔 가리개·장화(CC0), 등 짐은 옷 면 껍데기(흰 가슴판 껍데기는 가장자리 톱니라 지움), 장갑·통신 띠 껍데기 그대로). 09-27 등 짐 = 공방 pack_metal(둥근 모서리 상자·어깨끈 — 살·옷 면 껍데기 짐은 등 굴곡을 따라 구겨진 판이었다).",
  "macro": {
   "gender": 0.0,
   "age": 0.42,
@@ -40,25 +40,6 @@
   },
   {
    "part": "shell",
-   "slot": "metal_pack",
-   "color": "#6a7078",
-   "rough": 0.5,
-   "offset": 0.07,
-   "thick": 0.012,
-   "groups": [
-    "spine_0*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.56,
-    0.82
-   ],
-   "facing_back": 0.35,
-   "minw": 0.5,
-   "src": "matcreator_mc-bodysuit-2021"
-  },
-  {
-   "part": "shell",
    "slot": "metal_band",
    "color": "#2a2c30",
    "rough": 0.3,
@@ -84,9 +65,13 @@
  },
  "clothes": [
   "matcreator_mc-bodysuit-2021/matcreator_mc-bodysuit-2021.mhclo",
-  "matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo"
+  "matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
+  "cf_pack_metal_6a7078_2a2c30/cf_pack_metal_6a7078_2a2c30.mhclo"
  ],
  "tints": {
   "matcreator_mc-bodysuit-2021": "=#4f86b8"
- }
+ },
+ "_garments": [
+  "pack_metal@6a7078,2a2c30"
+ ]
 }

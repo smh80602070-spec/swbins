@@ -9650,3 +9650,12 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 빌드 부산물(①때와 같음): ProjectSettings `preloadedAssets`·Android 배칭, URP 설정 셋 → git checkout. 서명을 비우면 `AndroidKeystoreName: '{inproject}: '` 로 직렬화된다(getter 는 "") — 이것도 같이 되돌림. 에디터 활성 대상은 Android 로 남음.
 - `docs/STORE_CHECKLIST.md`(새, 상태만 덮어씀): 빌드(앱 번들·업로드 키·Play 앱 서명·앱 id·버전·64비트·대상 API·권한·예상 크기) · 등록 정보(설명·아이콘 512·기능 그래픽·스크린숏 — 없음) · 정책 양식(개인정보처리방침 URL·데이터 보안·IARC·연령·비공개 테스트) · 업로드 키 만드는 keytool 한 줄. 게임 코드엔 네트워크·광고·분석 없음, Unity 서비스 설정도 전부 꺼짐 — 단 `submitAnalytics: 1`(Unity 하드웨어 통계)이 켜져 있어 "결정 필요"로.
 - 남음: 묶음 있는 PC 에서 전체 `BuildAndroidAab` 실측(base 는 코드+타이틀이라 ~40MB 예상) · 제출 목록 사람 칸 · 템플릿 잔재 패키지 빼기 후보.
+
+## 2026-09-27 char-forge — 61벌 렌더 점검 · 바지·비침·등 짐 손질 (14벌)
+
+"vroid 자체툴 이어해" (판정 전 손질).
+
+- 비교 몸 61벌을 앞·뒤로 여덟씩 찍어 여러 몸에 겹친 흠부터. garments `leggings` 새 칸 `ease_bottom`·`smooth`·`wmin` → 공방 바지 풍선·톱니·가랑이 턱 해결(Abe·Brady·Morak·정찰병 자리).
+- 레시피 `under` 로 셔츠 허리·운동화 뒤축·장화 위 비침 해결, `under` 에 `"skin"`(덮인 살 지우기) → 택배 기사(여) 뜨개 윗옷 등 뚫림.
+- 새 부품 `backpack`(둥근 상자 + 어깨끈) · 틀 `backpack`·`pack_big`·`pack_metal` → 껍데기 등 짐 일곱 교체(Remy 자리 여행자는 흰 풍선 → 주황 배낭).
+- 검사: 14벌 verify fbx ≤ 0.68° · glb 0.0° · sha256 같음 · CMP_RESULT OK(FBX 로컬 전용). 남은 흠은 char-forge README §8-1 열째. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.

@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_courier_02",
- "_note": "단계 3 FOREST 비교용 — saga-unity Pete(Mixamo) 자리 후보(FOREST 현대 '택배 기사 달음'). 게임 인물 아님. 09-26 진짜 옷(CC0 풀빛 폴로·짙은 카고 바지·운동화, 챙 모자·등 짐은 껍데기(청 반바지는 남자 몸에서 속옷처럼 짧았다)). 땅딸막한 남자·짧은 머리·풀빛 반소매 제복·국방 반바지(맨 종아리)·흰 목양말 운동화·풀빛 챙 모자·등 네모 짐. GO 택배 기사(여·밤빛 겉옷·누런 모자)와 겹치지 않게.",
+ "_note": "단계 3 FOREST 비교용 — saga-unity Pete(Mixamo) 자리 후보(FOREST 현대 '택배 기사 달음'). 게임 인물 아님. 09-26 진짜 옷(CC0 풀빛 폴로·짙은 카고 바지·운동화, 챙 모자·등 짐은 껍데기(청 반바지는 남자 몸에서 속옷처럼 짧았다)). 땅딸막한 남자·짧은 머리·풀빛 반소매 제복·국방 반바지(맨 종아리)·흰 목양말 운동화·풀빛 챙 모자·등 네모 짐. GO 택배 기사(여·밤빛 겉옷·누런 모자)와 겹치지 않게. 09-27 등 짐 = 공방 backpack(둥근 모서리 상자·어깨끈 — 살·옷 면 껍데기 짐은 등 굴곡을 따라 구겨진 판이었다).",
  "macro": {
   "gender": 1.0,
   "age": 0.45,
@@ -39,25 +39,6 @@
     0.2
    ],
    "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "leather_pack",
-   "color": "#b89a6a",
-   "rough": 0.95,
-   "offset": 0.06,
-   "thick": 0.012,
-   "groups": [
-    "spine_0*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.56,
-    0.84
-   ],
-   "facing_back": 0.35,
-   "minw": 0.5,
-   "src": "namuhekam_male_polo_shirt"
   }
  ],
  "anims": {
@@ -71,9 +52,13 @@
  "clothes": [
   "namuhekam_male_polo_shirt/namuhekam_male_polo_shirt.mhclo",
   "cortu_cargo_pants/cortu_cargo_pants.mhclo",
-  "shoes05/shoes05.mhclo"
+  "shoes05/shoes05.mhclo",
+  "cf_backpack_b89a6a_6a5638/cf_backpack_b89a6a_6a5638.mhclo"
  ],
  "tints": {
   "namuhekam_male_polo_shirt": "#86b070"
- }
+ },
+ "_garments": [
+  "backpack@b89a6a,6a5638"
+ ]
 }

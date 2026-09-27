@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_timepeddler_f_01",
- "_note": "단계 3 행상 비교용 — saga-unity Astra(Mixamo) 자리 후보(DUNGEON 미래 '시간 행상'). 게임 인물 아님. 여자·단발·먹빛 몸 옷·발목까지 보랏빛 긴 겉옷자락·은빛 팔 가리개·이마의 은빛 눈 띠·등 짐틀. 09-26 진짜 옷(보랏빛 무릎 겉옷·짙은 은 단·헐렁한 바지(공방 qaba)·발목 장화(CC0), 등 짐틀은 옷 면 껍데기, 은빛 눈 띠 껍데기 그대로).",
+ "_note": "단계 3 행상 비교용 — saga-unity Astra(Mixamo) 자리 후보(DUNGEON 미래 '시간 행상'). 게임 인물 아님. 여자·단발·먹빛 몸 옷·발목까지 보랏빛 긴 겉옷자락·은빛 팔 가리개·이마의 은빛 눈 띠·등 짐틀. 09-26 진짜 옷(보랏빛 무릎 겉옷·짙은 은 단·헐렁한 바지(공방 qaba)·발목 장화(CC0), 등 짐틀은 옷 면 껍데기, 은빛 눈 띠 껍데기 그대로). 09-27 등 짐 = 공방 pack_metal(둥근 모서리 상자·어깨끈 — 살·옷 면 껍데기 짐은 등 굴곡을 따라 구겨진 판이었다).",
  "macro": {
   "gender": 0.0,
   "age": 0.5,
@@ -21,7 +21,8 @@
  "eyelashes": "eyelashes02/eyelashes02.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "_garments": [
-  "qaba@4a3060,7a8088"
+  "qaba@4a3060,7a8088",
+  "pack_metal"
  ],
  "kitbash": [
   {
@@ -39,24 +40,6 @@
     0.09
    ],
    "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "metal_pack",
-   "color": "#5d646b",
-   "rough": 0.4,
-   "offset": 0.055,
-   "thick": 0.012,
-   "groups": [
-    "spine_0*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.6,
-    0.82
-   ],
-   "facing_back": 0.4,
-   "src": "cf_qaba_4a3060_7a8088"
   }
  ],
  "anims": {
@@ -69,6 +52,7 @@
  },
  "clothes": [
   "cf_qaba_4a3060_7a8088/cf_qaba_4a3060_7a8088.mhclo",
-  "toigo_ankle_boots_female/toigo_ankle_boots_female.mhclo"
+  "toigo_ankle_boots_female/toigo_ankle_boots_female.mhclo",
+  "cf_pack_metal/cf_pack_metal.mhclo"
  ]
 }

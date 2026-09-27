@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_junkpeddler_01",
- "_note": "단계 3 행상 비교용 — saga-unity Leonard(Mixamo) 자리 후보(DUNGEON 현대 '고물 행상'). 게임 인물 아님. 09-26 진짜 옷(CC0 밤빛 겉옷·흙빛 바지·장화, 납작 모자는 껍데기(CC0 jujube_newsboy_cap 은 .mhclo 에 material 줄이 없어 재질이 안 붙는다), 목도리·고물 짐은 겉옷을 본뜬 껍데기). 늙은 남자·납작 모자·해진 밤빛 겉옷·목도리·흙빛 바지·장화·등에 큰 고물 짐.",
+ "_note": "단계 3 행상 비교용 — saga-unity Leonard(Mixamo) 자리 후보(DUNGEON 현대 '고물 행상'). 게임 인물 아님. 09-26 진짜 옷(CC0 밤빛 겉옷·흙빛 바지·장화, 납작 모자는 껍데기(CC0 jujube_newsboy_cap 은 .mhclo 에 material 줄이 없어 재질이 안 붙는다), 목도리·고물 짐은 겉옷을 본뜬 껍데기). 늙은 남자·납작 모자·해진 밤빛 겉옷·목도리·흙빛 바지·장화·등에 큰 고물 짐. 09-27 등 짐 = 공방 pack_big(둥근 모서리 상자·어깨끈 — 살·옷 면 껍데기 짐은 등 굴곡을 따라 구겨진 판이었다).",
  "macro": {
   "gender": 1.0,
   "age": 0.85,
@@ -58,24 +58,6 @@
     0.2
    ],
    "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "leather_pack",
-   "color": "#6a5238",
-   "rough": 0.85,
-   "offset": 0.08,
-   "thick": 0.012,
-   "groups": [
-    "spine_0*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.5,
-    0.86
-   ],
-   "facing_back": 0.35,
-   "src": "male_casualsuit05"
   }
  ],
  "anims": {
@@ -88,9 +70,13 @@
  },
  "clothes": [
   "male_casualsuit05/male_casualsuit05.mhclo",
-  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
+  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo",
+  "cf_pack_big/cf_pack_big.mhclo"
  ],
  "tints": {
   "male_casualsuit05": "#b09070"
- }
+ },
+ "_garments": [
+  "pack_big"
+ ]
 }

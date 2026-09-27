@@ -15,6 +15,6 @@
   "makehuman_system_assets: elvs_crude_t-shirt_male/elvs_crude_t-shirt_male.mhclo",
   "makehuman_system_assets: toigo_wool_pants/toigo_wool_pants.mhclo",
   "makehuman_system_assets: shoes05/shoes05.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell"
+  "makehuman_system_assets: cf_backpack_e0762a_8a3a14/cf_backpack_e0762a_8a3a14.mhclo"
  ]
 }

@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_surveyor_01",
- "_note": "단계 3 역참 사람 비교용 — saga-unity Exo Gray(Mixamo) 자리 후보(GO 미래 탐사 대원). 게임 인물 아님. 남자·흰 잿빛 몸 옷·흰 가슴판·어깨판·등 짐틀·얼굴 트인 흰 투구·청록 눈 띠. 09-26 진짜 옷(흰 우주 제복(CC0)·가디언 팔 가리개·장화(CC0), 등 짐틀은 옷 면 껍데기, 흰 투구·청록 눈 띠·장갑 껍데기 그대로).",
+ "_note": "단계 3 역참 사람 비교용 — saga-unity Exo Gray(Mixamo) 자리 후보(GO 미래 탐사 대원). 게임 인물 아님. 남자·흰 잿빛 몸 옷·흰 가슴판·어깨판·등 짐틀·얼굴 트인 흰 투구·청록 눈 띠. 09-26 진짜 옷(흰 우주 제복(CC0)·가디언 팔 가리개·장화(CC0), 등 짐틀은 옷 면 껍데기, 흰 투구·청록 눈 띠·장갑 껍데기 그대로). 09-27 등 짐 = 공방 pack_metal(둥근 모서리 상자·어깨끈 — 살·옷 면 껍데기 짐은 등 굴곡을 따라 구겨진 판이었다).",
  "macro": {
   "gender": 1.0,
   "age": 0.4,
@@ -66,24 +66,6 @@
     0.055
    ],
    "minw": 0.5
-  },
-  {
-   "part": "shell",
-   "slot": "metal_pack",
-   "color": "#5d646b",
-   "rough": 0.4,
-   "offset": 0.055,
-   "thick": 0.012,
-   "groups": [
-    "spine_0*",
-    "clavicle_*"
-   ],
-   "z": [
-    0.6,
-    0.82
-   ],
-   "facing_back": 0.4,
-   "src": "thegreatengineer_galactic_warrior_uniform"
   }
  ],
  "anims": {
@@ -96,6 +78,10 @@
  },
  "clothes": [
   "thegreatengineer_galactic_warrior_uniform/thegreatengineer_galactic_warrior_uniform.mhclo",
-  "matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo"
+  "matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
+  "cf_pack_metal/cf_pack_metal.mhclo"
+ ],
+ "_garments": [
+  "pack_metal"
  ]
 }

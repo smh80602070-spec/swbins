@@ -58,5 +58,13 @@
  },
  "tuck": [
   "toigo_fisherman_sweater"
- ]
+ ],
+ "under": {
+  "toigo_fisherman_sweater": [
+   "skin"
+  ],
+  "toigo_wool_pants": [
+   "shoes05"
+  ]
+ }
 }
