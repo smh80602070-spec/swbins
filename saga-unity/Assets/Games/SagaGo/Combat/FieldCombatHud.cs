@@ -141,6 +141,9 @@ namespace Saga.Go.Combat
             if (m == null) return;
 
             _nameText.text = $"{m.Name}  <color=#{ColorUtility.ToHtmlStringRGB(GoElements.ColorOf(m.Element))}>● {GoElements.NameOf(m.Element)}</color>  {Mathf.CeilToInt(m.Hp)}/{Mathf.CeilToInt(m.MaxHp)}";
+            if (_combat.GuardHp > 0f) // 109-14-1a 굳힘 보호막 — 남은 양·초
+                _nameText.text += $"  <color=#{ColorUtility.ToHtmlStringRGB(GoElements.ColorOf(GoElement.Geo))}>" +
+                    string.Format(GoLocalization.T("field.hud.guard", "굳힘 {0} · {1}초"), Mathf.CeilToInt(_combat.GuardHp), Mathf.CeilToInt(_combat.GuardLeft)) + "</color>";
             _hpFill.fillAmount = m.MaxHp > 0f ? m.Hp / m.MaxHp : 0f;
             _energyFill.fillAmount = m.Energy / FieldCombat.BurstCost;
             _staminaFill.fillAmount = GoStamina.Value / GoStamina.Max;

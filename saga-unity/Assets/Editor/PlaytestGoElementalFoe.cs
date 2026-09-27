@@ -60,16 +60,11 @@ namespace Saga.EditorTools
             return null;
         }
 
-        private static GoElement CounterOf(GoElement shield)
-        {
-            foreach (GoElement a in new[] { GoElement.Pyro, GoElement.Hydro, GoElement.Electro })
-                if (GoElements.Counters(a, shield)) return a;
-            return GoElement.Physical;
-        }
+        private static GoElement CounterOf(GoElement shield) => GoElements.CounterOf(shield); // 109-14-1a 일곱
 
         private static GoElement NeutralOf(GoElement shield)
         {
-            foreach (GoElement a in new[] { GoElement.Pyro, GoElement.Hydro, GoElement.Electro })
+            foreach (GoElement a in GoElements.All)
                 if (a != shield && !GoElements.Counters(a, shield)) return a;
             return GoElement.Physical;
         }

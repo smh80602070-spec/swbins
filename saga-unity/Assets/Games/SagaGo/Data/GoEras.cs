@@ -103,6 +103,10 @@ namespace Saga.Go.Data
                 case Combat.GoElement.Pyro: return GoLocalization.T("era.foe.pre_pyro", "불꽃") + " " + name;
                 case Combat.GoElement.Hydro: return GoLocalization.T("era.foe.pre_hydro", "물결") + " " + name;
                 case Combat.GoElement.Electro: return GoLocalization.T("era.foe.pre_electro", "벼락") + " " + name;
+                case Combat.GoElement.Anemo: return GoLocalization.T("era.foe.pre_anemo", "바람") + " " + name;
+                case Combat.GoElement.Cryo: return GoLocalization.T("era.foe.pre_cryo", "서리") + " " + name;
+                case Combat.GoElement.Geo: return GoLocalization.T("era.foe.pre_geo", "바위") + " " + name;
+                case Combat.GoElement.Dendro: return GoLocalization.T("era.foe.pre_dendro", "덩굴") + " " + name;
                 default: return name;
             }
         }

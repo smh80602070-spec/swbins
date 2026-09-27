@@ -41,6 +41,7 @@ namespace Saga.EditorTools
             {
                 CheckBasicAttackAndKill(fc, pc, e1, e2, e3, origin);
                 CheckReactions(fc, e1, e2, origin);
+                CheckReactions7(fc, e1, e2, origin);
                 CheckSkillAndBurst(fc, pc, e1, e2, e3, origin);
                 CheckEnemyStrikeAndDodge(fc, pc, e1, origin);
                 CheckSwapAndWipe(fc, e1, origin);
@@ -56,7 +57,7 @@ namespace Saga.EditorTools
                 GoStamina.ResetFull();
             }
 
-            if (_ok) Debug.Log($"[{_tag}] field combat OK - enemies {FieldEnemy.All.Count}, party {fc.Party.Count}, reactions·3타·스킬·폭발·피격·회피·교체·전멸 복귀·결투 경계·버튼");
+            if (_ok) Debug.Log($"[{_tag}] field combat OK - enemies {FieldEnemy.All.Count}, party {fc.Party.Count}, reactions·원소 일곱 반응 열셋·3타·스킬·폭발·피격·회피·교체·전멸 복귀·결투 경계·버튼");
             return _ok;
         }
 
@@ -159,6 +160,149 @@ namespace Saga.EditorTools
             float hp3 = e1.Hp;
             e1.Tick(GoElements.ChargedTickSec + 0.01f);
             if (Mathf.Abs(hp3 - e1.Hp - Atk * GoElements.ChargedTickAtkMul) > 0.5f) Fail($"감전 틱 피해 {hp3 - e1.Hp} ≠ {Atk * GoElements.ChargedTickAtkMul}");
+            Park(e2, origin, 0f);
+        }
+
+        /// <summary>PLAN.md 109-14-1a 원소 일곱·반응 열셋(웹 사가고 ⑲-1 진단 항목) — 표 · 방패 상성 일곱 · 녹임 · 풍/암 안 붙음 · 얼어붙음 → 3타·암 깨뜨림 · 서리번개 ·
+        /// 회오리가 옆 적에 원소를 옮김 · 굳힘 보호막이 피해를 막음 · 꽃피움 씨앗 · 들불 · 싹틈 → 번개싹·덩굴뻗음 · 새 원소 적 상태 넷.</summary>
+        private static void CheckReactions7(FieldCombat fc, FieldEnemy e1, FieldEnemy e2, Vector3 origin)
+        {
+            const float Atk = 100f;
+            var P = GoElement.Pyro; var H = GoElement.Hydro; var El = GoElement.Electro; var A = GoElement.Anemo;
+            var C = GoElement.Cryo; var G = GoElement.Geo; var D = GoElement.Dendro; var Ph = GoElement.Physical;
+
+            // 표
+            void Pair(GoElement a, GoElement b, GoReaction want)
+            {
+                if (GoElements.Resolve(a, b) != want) Fail($"반응 {a}+{b} = {GoElements.Resolve(a, b)} ≠ {want}");
+                if (GoElements.Attaches(a) && GoElements.Attaches(b) && GoElements.Resolve(b, a) != want) Fail($"반응 {b}+{a} 순서 따라 다름");
+            }
+            Pair(P, H, GoReaction.Vaporize); Pair(P, El, GoReaction.Overload); Pair(H, El, GoReaction.ElectroCharged);
+            Pair(C, P, GoReaction.Melt); Pair(H, C, GoReaction.Frozen); Pair(El, C, GoReaction.Superconduct);
+            Pair(H, D, GoReaction.Bloom); Pair(P, D, GoReaction.Burning); Pair(El, D, GoReaction.Quicken);
+            Pair(C, D, GoReaction.None);
+            foreach (var x in new[] { P, H, El, C }) { Pair(x, A, GoReaction.Swirl); Pair(x, G, GoReaction.Crystallize); }
+            Pair(D, A, GoReaction.None); Pair(D, G, GoReaction.None);
+            if (GoElements.Attaches(A) || GoElements.Attaches(G) || GoElements.Attaches(Ph)) Fail("풍·암·물리가 붙음");
+            foreach (var s in GoElements.All)
+            {
+                if (GoElements.ShieldMul(s, s) != 0f) Fail($"{s} 방패가 같은 원소에 면역 아님");
+                if (Mathf.Abs(GoElements.ShieldMul(s, GoElements.CounterOf(s)) - GoElements.ShieldCounterMul) > 0.001f) Fail($"{s} 방패 상성 {GoElements.CounterOf(s)} 배율");
+                float phys = GoElements.ShieldMul(s, Ph);
+                if (Mathf.Abs(phys - (s == G ? 1f : GoElements.ShieldPhysicalMul)) > 0.001f) Fail($"{s} 방패 물리 {phys}");
+            }
+            if (GoElements.CounterOf(A) != G || GoElements.CounterOf(C) != P || GoElements.CounterOf(G) != D || GoElements.CounterOf(D) != A) Fail("새 상성 넷(암>풍·화>빙·초>암·풍>초)");
+            if (GoElements.ForMember("산적") != H) Fail("산적 원소가 수가 아님(107 상자 퍼즐)");
+            if (GoHeroes.InnerOf(C) != P || GoHeroes.InnerOf(A) != D || GoHeroes.InnerOf(P) != El) Fail("★5 속 방패(빙→화·풍→초·화→뇌)");
+
+            void Fresh(FieldEnemy e, Vector3 pos) { e.ReviveNow(); Place(e, pos); }
+            Vector3 at = origin + new Vector3(30f, 0f, 30f), near = at + new Vector3(2f, 0f, 0f);
+            float hp;
+
+            // 녹임 · 풍 안 붙음
+            Fresh(e1, at);
+            e1.TakeHit(1f, A, Atk, out var ra);
+            if (ra != GoReaction.None || e1.AuraLeft > 0f) Fail("풍이 맨 적에 붙음/반응");
+            e1.TakeHit(1f, C, Atk, out _);
+            hp = e1.Hp; e1.TakeHit(100f, P, Atk, out var rm);
+            if (rm != GoReaction.Melt || Mathf.Abs(hp - e1.Hp - 150f) > 0.5f) Fail($"녹임 {rm} 피해 {hp - e1.Hp} ≠ 150");
+
+            // 얼어붙음 → 3타째 깨뜨림 · 암 깨뜨림 · 시간 지나면 풀림
+            Fresh(e1, at);
+            e1.TakeHit(1f, H, Atk, out _); e1.TakeHit(1f, C, Atk, out var rf);
+            if (rf != GoReaction.Frozen || !e1.Frozen) Fail($"얼어붙음 안 남 ({rf})");
+            e1.Tick(1f);
+            if (!e1.Frozen) Fail("얼어붙음이 1초에 풀림");
+            hp = e1.Hp; e1.TakeHit(100f, Ph, Atk, out var rs, heavy: true);
+            if (rs != GoReaction.Shatter || e1.Frozen || Mathf.Abs(hp - e1.Hp - 150f) > 0.5f) Fail($"3타째 깨뜨림 {rs} 피해 {hp - e1.Hp}");
+            Fresh(e1, at);
+            e1.TakeHit(1f, H, Atk, out _); e1.TakeHit(1f, C, Atk, out _);
+            e1.TakeHit(1f, Ph, Atk, out var rn);
+            if (rn != GoReaction.None || !e1.Frozen) Fail("보통 물리 한 타가 얼음을 깸");
+            e1.TakeHit(10f, G, Atk, out var rg);
+            if (rg != GoReaction.Shatter || e1.Frozen) Fail($"암 깨뜨림 {rg}");
+            Fresh(e1, at);
+            e1.TakeHit(1f, H, Atk, out _); e1.TakeHit(1f, C, Atk, out _);
+            e1.Tick(GoElements.FrozenSec + 0.1f);
+            if (e1.Frozen) Fail("얼어붙음이 2.5초 지나도 안 풀림");
+
+            // 서리번개 — 옆 적 광역 ×0.5 + 물리 ×1.4
+            Fresh(e1, at); Fresh(e2, near);
+            e1.TakeHit(1f, El, Atk, out _);
+            hp = e2.Hp; e1.TakeHit(1f, C, Atk, out var rc);
+            if (rc != GoReaction.Superconduct || Mathf.Abs(hp - e2.Hp - Atk * GoElements.SuperAtkMul) > 0.5f || e2.SuperLeft <= 0f) Fail($"서리번개 {rc} 옆 피해 {hp - e2.Hp}");
+            hp = e2.Hp; e2.TakeHit(100f, Ph, Atk, out _);
+            if (Mathf.Abs(hp - e2.Hp - 140f) > 0.5f) Fail($"서리번개 뒤 물리 {hp - e2.Hp} ≠ 140");
+
+            // 회오리 — 옆 적에 원소를 옮겨 붙인다
+            Fresh(e1, at); Fresh(e2, near);
+            e1.TakeHit(1f, P, Atk, out _);
+            hp = e2.Hp; e1.TakeHit(1f, A, Atk, out var rw);
+            if (rw != GoReaction.Swirl || e2.Aura != P || e2.AuraLeft <= 0f || Mathf.Abs(hp - e2.Hp - Atk * GoElements.SwirlAtkMul) > 0.5f)
+                Fail($"회오리 {rw} 옆 원소 {e2.Aura} 피해 {hp - e2.Hp}");
+            Park(e2, origin, 0f);
+
+            // 굳힘 — 보호막이 피해를 먼저 막는다
+            fc.ResetForTest();
+            Fresh(e1, at);
+            e1.TakeHit(1f, H, Atk, out _); e1.TakeHit(1f, G, Atk, out var rcr);
+            float want = fc.Active.MaxHp * GoElements.CrystalHpFrac;
+            if (rcr != GoReaction.Crystallize || Mathf.Abs(fc.GuardHp - want) > 0.5f) Fail($"굳힘 {rcr} 보호막 {fc.GuardHp} ≠ {want}");
+            float mhp = fc.Active.Hp, g0 = fc.GuardHp;
+            fc.ReceiveStrike(5f, null);
+            if (fc.Active.Hp != mhp || fc.GuardHp >= g0) Fail("굳힘이 피해를 안 막음");
+            fc.TickTimers(GoElements.CrystalSec + 0.1f);
+            if (fc.GuardHp > 0f) Fail("굳힘이 15초 뒤에도 남음");
+
+            // 꽃피움 — 1.5초 뒤 씨앗이 터진다
+            Fresh(e1, at);
+            e1.TakeHit(1f, H, Atk, out _); e1.TakeHit(1f, D, Atk, out var rb);
+            if (rb != GoReaction.Bloom || fc.SeedCount != 1) Fail($"꽃피움 {rb} 씨앗 {fc.SeedCount}");
+            hp = e1.Hp; fc.TickTimers(1f);
+            if (e1.Hp != hp) Fail("씨앗이 1.5초 전에 터짐");
+            fc.TickTimers(0.6f);
+            if (fc.SeedCount != 0 || Mathf.Abs(hp - e1.Hp - Atk * GoElements.BloomAtkMul) > 0.5f) Fail($"씨앗 터짐 피해 {hp - e1.Hp}");
+
+            // 들불 — 0.5초마다 ×0.2 여덟 번
+            Fresh(e1, at);
+            e1.TakeHit(1f, P, Atk, out _); e1.TakeHit(1f, D, Atk, out var rbu);
+            if (rbu != GoReaction.Burning || e1.BurningLeft != GoElements.BurningTicks) Fail($"들불 {rbu} 틱 {e1.BurningLeft}");
+            hp = e1.Hp; e1.Tick(GoElements.BurningTickSec + 0.01f);
+            if (Mathf.Abs(hp - e1.Hp - Atk * GoElements.BurningAtkMul) > 0.5f) Fail($"들불 틱 {hp - e1.Hp}");
+
+            // 싹틈 → 번개싹·덩굴뻗음 ×1.25
+            Fresh(e1, at);
+            e1.TakeHit(1f, El, Atk, out _); e1.TakeHit(1f, D, Atk, out var rq);
+            if (rq != GoReaction.Quicken || e1.QuickenLeft <= 0f) Fail($"싹틈 {rq}");
+            hp = e1.Hp; e1.TakeHit(80f, El, Atk, out var rag);
+            if (rag != GoReaction.Aggravate || Mathf.Abs(hp - e1.Hp - 100f) > 0.5f) Fail($"번개싹 {rag} {hp - e1.Hp}");
+            hp = e1.Hp; e1.TakeHit(80f, D, Atk, out var rsp);
+            if (rsp != GoReaction.Spread || Mathf.Abs(hp - e1.Hp - 100f) > 0.5f || e1.QuickenLeft <= 0f) Fail($"덩굴뻗음 {rsp} {hp - e1.Hp}");
+
+            // 새 원소 적에게 맞으면 — 휘말림·한기·짓눌림·중독
+            fc.ResetForTest();
+            var m = fc.Active;
+            fc.ApplyFoeStatus(A, 100f);
+            if (Mathf.Abs(m.SkillCd - GoElements.SweptSkillCdAdd) > 0.01f) Fail($"휘말림 스킬 쿨 {m.SkillCd}");
+            GoStamina.SetForTest(50f);
+            fc.ApplyFoeStatus(C, 100f);
+            GoStamina.Tick(2f);
+            if (GoStamina.Value > 50.01f) Fail("한기인데 스태미나가 돎");
+            GoStamina.Tick(1.5f); GoStamina.Tick(1f);
+            if (GoStamina.Value <= 50.01f) Fail("한기가 3초 뒤에도 안 풀림");
+            m.Hp = 10f;
+            fc.ApplyFoeStatus(G, 100f);
+            if (m.Hp < 1f || m.Hp > 1.01f) Fail($"짓눌림이 쓰러뜨리거나 안 깎음 hp={m.Hp}");
+            m.Hp = m.MaxHp;
+            fc.ReceiveStrike(1f, null); // 회복 대기(8초)를 새로 걸어 틱 피해만 잰다
+            fc.ApplyFoeStatus(D, 100f);
+            if (fc.BurnTicksLeft != GoElements.PoisonTicks || fc.BurnElement != D) Fail($"중독 틱 {fc.BurnTicksLeft} {fc.BurnElement}");
+            hp = m.Hp; fc.TickTimers(GoElements.PoisonTickSec + 0.01f);
+            if (Mathf.Abs(hp - m.Hp - 100f * GoElements.PoisonMul) > 0.5f) Fail($"중독 틱 피해 {hp - m.Hp}");
+
+            fc.ResetForTest();
+            GoStamina.ResetFull();
+            e1.ReviveNow(); e2.ReviveNow();
             Park(e2, origin, 0f);
         }
 

@@ -101,11 +101,20 @@ namespace Saga.Go.Combat
         private float _attackCd;
         private float _sinceHit = 999f;
 
-        // 107 ⑤ — 불도깨비에게 맞은 화상(맞은 인물에게 남은 틱)
+        // 107 ⑤ — 불도깨비에게 맞은 화상(맞은 인물에게 남은 틱). 109-14-1a 초 적의 중독도 이 자리(틱 수·간격·빛깔만 다르다)
         public int BurnTicksLeft { get; private set; }
+        public GoElement BurnElement { get; private set; } = GoElement.Pyro;
         private float _burnTimer;
+        private float _burnTickSec = GoElements.BurnTickSec;
         private float _burnDmg;
         private Member _burnTarget;
+
+        // 109-14-1a 굳힘 보호막(명단 전체 — 나선 사람이 받는 피해를 먼저 막는다) · 꽃피움 씨앗
+        public float GuardHp { get; private set; }
+        public float GuardMax { get; private set; }
+        public float GuardLeft { get; private set; }
+        private readonly List<(Vector3 pos, float dmg, float left)> _seeds = new List<(Vector3, float, float)>();
+        public int SeedCount => _seeds.Count;
 
         public float Atk => (PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus) * PerkState.AtkMultiplier * BondState.AtkMultiplier;
         public float Def => (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier;
@@ -155,6 +164,12 @@ namespace Saga.Go.Combat
             ActiveIndex = 0;
             for (int i = 0; i < _party.Count; i++) if (_party[i].Id == activeId) ActiveIndex = i;
             ApplyLook();
+            // 109-14-1a — 원소가 일곱이 되어 옛 동행 원소가 바뀌었다(세이브엔 원소가 없다) — 동료가 있을 때 한 번만 알린다
+            if (!GoElements.SevenNoticed && _party.Count > 1 && Application.isPlaying)
+            {
+                GoElements.SevenNoticed = true;
+                ToastLine(GoLocalization.T("field.el7_notice", "원소가 일곱이 되었다 — 풍·빙·암·초. 동료 원소가 바뀌었을 수 있다"), 5f);
+            }
         }
 
         /// <summary>동료 이름 — 도감 인물은 가명, 그 밖(산적)은 id 그대로.</summary>
@@ -167,6 +182,7 @@ namespace Saga.Go.Combat
                 float ratio = m.MaxHp > 0f ? m.Hp / m.MaxHp : 1f;
                 m.MaxHp = maxHp;
                 m.Hp = maxHp * ratio;
+                m.Element = el;
             }
             else
             {
@@ -203,6 +219,7 @@ namespace Saga.Go.Combat
             foreach (var m in _party) if (m.SkillCd > 0f) m.SkillCd = Mathf.Max(0f, m.SkillCd - dt);
             TickZones(dt);
             TickBurn(dt);
+            TickGuardAndSeeds(dt);
             _sinceHit += dt;
             if (_sinceHit >= RegenDelaySec)
             {
@@ -236,7 +253,7 @@ namespace Saga.Go.Combat
                 Vector3 d = Flat(e.transform.position - transform.position);
                 if (d.magnitude > AttackReach) continue;
                 if (d.sqrMagnitude > 0.25f && Vector3.Dot(d.normalized, fwd) < 0.5f) continue; // 앞 120°
-                e.TakeHit(atk * ComboMul[step], GoElement.Physical, atk, out _);
+                e.TakeHit(atk * ComboMul[step], GoElement.Physical, atk, out _, heavy: step == ComboMul.Length - 1); // 3타째는 얼어붙은 적을 깨뜨린다
                 hits++;
             }
             if (hits > 0)
@@ -480,6 +497,16 @@ namespace Saga.Go.Combat
                 return false;
             }
             float dmg = enemyAtk * 200f / (200f + Mathf.Max(0f, Def));
+            if (GuardHp > 0f)
+            {
+                // 109-14-1a 굳힘 — 받는 피해를 먼저 막고, 다 막으면 원소 효과도 막는다
+                float absorbed = Mathf.Min(GuardHp, dmg);
+                GuardHp -= absorbed;
+                dmg -= absorbed;
+                if (GuardHp <= 0f) { GuardHp = 0f; GuardLeft = 0f; }
+                FieldDamageText.Spawn(transform.position + Vector3.up * 4.6f, string.Format(GoLocalization.T("field.guard_block", "굳힘 −{0}"), Mathf.RoundToInt(absorbed)), GoElements.ColorOf(GoElement.Geo), 0.9f);
+                if (dmg <= 0f) { _sinceHit = 0f; return true; }
+            }
             m.Hp = Mathf.Max(0f, m.Hp - dmg);
             _sinceHit = 0f;
             FieldDamageText.Spawn(transform.position + Vector3.up * 4f, Mathf.RoundToInt(dmg).ToString(), new Color(1f, 0.3f, 0.25f));
@@ -499,11 +526,27 @@ namespace Saga.Go.Combat
             switch (el)
             {
                 case GoElement.Pyro:
-                    _burnTarget = m;
-                    BurnTicksLeft = GoElements.BurnTicks;
-                    _burnTimer = GoElements.BurnTickSec;
-                    _burnDmg = strikeDmg * GoElements.BurnMul;
+                    StartDot(m, GoElement.Pyro, GoElements.BurnTicks, GoElements.BurnTickSec, strikeDmg * GoElements.BurnMul);
                     FieldDamageText.Spawn(textPos, GoLocalization.T("field.st.burn", "화상"), GoElements.ColorOf(el), 1f);
+                    break;
+                case GoElement.Anemo:
+                    m.SkillCd += GoElements.SweptSkillCdAdd;
+                    FieldDamageText.Spawn(textPos, GoLocalization.T("field.st.swept", "휘말림 — 스킬 +2초"), GoElements.ColorOf(el), 1f);
+                    break;
+                case GoElement.Cryo:
+                    GoStamina.BlockRegen(GoElements.ChillSec);
+                    FieldDamageText.Spawn(textPos, GoLocalization.T("field.st.chill", "한기 — 스태미나 3초 멈춤"), GoElements.ColorOf(el), 1f);
+                    break;
+                case GoElement.Geo:
+                {
+                    float before = m.Hp;
+                    m.Hp = Mathf.Max(Mathf.Min(1f, before), before - strikeDmg * GoElements.CrushMul); // 짓눌림만으로는 안 쓰러진다
+                    FieldDamageText.Spawn(textPos, string.Format(GoLocalization.T("field.st.crush", "짓눌림 −{0}"), Mathf.RoundToInt(before - m.Hp)), GoElements.ColorOf(el), 1f);
+                    break;
+                }
+                case GoElement.Dendro:
+                    StartDot(m, GoElement.Dendro, GoElements.PoisonTicks, GoElements.PoisonTickSec, strikeDmg * GoElements.PoisonMul);
+                    FieldDamageText.Spawn(textPos, GoLocalization.T("field.st.poison", "중독"), GoElements.ColorOf(el), 1f);
                     break;
                 case GoElement.Hydro:
                     GoStamina.Use(GoElements.WetStaminaLoss);
@@ -516,6 +559,16 @@ namespace Saga.Go.Combat
             }
         }
 
+        private void StartDot(Member m, GoElement el, int ticks, float every, float dmg)
+        {
+            _burnTarget = m;
+            BurnElement = el;
+            BurnTicksLeft = ticks;
+            _burnTickSec = every;
+            _burnTimer = every;
+            _burnDmg = dmg;
+        }
+
         private void TickBurn(float dt)
         {
             if (BurnTicksLeft <= 0) return;
@@ -523,11 +576,49 @@ namespace Saga.Go.Combat
             _burnTimer -= dt;
             while (_burnTimer <= 0f && BurnTicksLeft > 0)
             {
-                _burnTimer += GoElements.BurnTickSec;
+                _burnTimer += _burnTickSec;
                 BurnTicksLeft--;
                 float before = _burnTarget.Hp;
-                _burnTarget.Hp = Mathf.Max(Mathf.Min(1f, before), before - _burnDmg); // 화상만으로는 안 쓰러진다
-                FieldDamageText.Spawn(transform.position + Vector3.up * 4f, Mathf.RoundToInt(before - _burnTarget.Hp).ToString(), GoElements.ColorOf(GoElement.Pyro), 0.8f);
+                _burnTarget.Hp = Mathf.Max(Mathf.Min(1f, before), before - _burnDmg); // 화상·중독만으로는 안 쓰러진다
+                FieldDamageText.Spawn(transform.position + Vector3.up * 4f, Mathf.RoundToInt(before - _burnTarget.Hp).ToString(), GoElements.ColorOf(BurnElement), 0.8f);
+            }
+        }
+
+        /// <summary>109-14-1a 굳힘 — 나선 사람 최대 체력 20% 보호막 15초(이미 더 크면 그대로, 시간만 새로).</summary>
+        public void AddCrystalGuard()
+        {
+            var m = Active;
+            float hp = (m != null ? m.MaxHp : 600f) * GoElements.CrystalHpFrac;
+            GuardMax = Mathf.Max(hp, GuardHp);
+            GuardHp = Mathf.Max(hp, GuardHp);
+            GuardLeft = GoElements.CrystalSec;
+            FieldRingFx.Spawn(transform.position, 2.2f, GoElements.ColorOf(GoElement.Geo), 0.5f);
+        }
+
+        /// <summary>109-14-1a 꽃피움 — 1.5초 뒤 그 자리 반경 5.5m 적에게 터진다.</summary>
+        public void AddBloomSeed(Vector3 pos, float dmg)
+        {
+            _seeds.Add((pos, dmg, GoElements.BloomDelay));
+            FieldRingFx.Spawn(pos, 1.2f, GoElements.ColorOf(GoElement.Dendro), 0.4f);
+        }
+
+        private void TickGuardAndSeeds(float dt)
+        {
+            if (GuardLeft > 0f)
+            {
+                GuardLeft -= dt;
+                if (GuardLeft <= 0f) { GuardLeft = 0f; GuardHp = 0f; }
+            }
+            for (int i = _seeds.Count - 1; i >= 0; i--)
+            {
+                var sd = _seeds[i];
+                sd.left -= dt;
+                if (sd.left > 0f) { _seeds[i] = sd; continue; }
+                _seeds.RemoveAt(i);
+                FieldRingFx.Spawn(sd.pos, GoElements.BloomRadius, GoElements.ColorOf(GoElement.Dendro), 0.5f);
+                foreach (var e in Snapshot())
+                    if (Flat(e.transform.position - sd.pos).magnitude <= GoElements.BloomRadius)
+                        e.TakeRaw(sd.dmg, GoElements.ColorOf(GoElement.Dendro));
             }
         }
 
@@ -553,6 +644,8 @@ namespace Saga.Go.Combat
         {
             foreach (var m in _party) { m.Hp = m.MaxHp; m.SkillCd = 0f; }
             BurnTicksLeft = 0;
+            GuardHp = GuardLeft = 0f;
+            _seeds.Clear();
             ClearZones();
             ActiveIndex = 0;
             ApplyLook();
@@ -624,6 +717,8 @@ namespace Saga.Go.Combat
             SwapCooldown = 0f;
             _sinceHit = 999f;
             BurnTicksLeft = 0;
+            GuardHp = GuardMax = GuardLeft = 0f;
+            _seeds.Clear();
             ClearZones();
             ApplyLook();
         }

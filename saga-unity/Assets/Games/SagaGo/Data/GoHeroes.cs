@@ -6,7 +6,7 @@ namespace Saga.Go.Data
 {
     public enum HeroEra { ThreeKingdoms, Korea, Japan, World }
     public enum HeroTrait { Might, Wisdom, Virtue, Command }
-    /// <summary>웹 원소 일곱(`field-combat.js` EL_KEYS) — 이 트랙 전투는 셋(<see cref="GoElement"/>)이라 <see cref="GoHeroes.ElementOf"/> 로 접는다.
+    /// <summary>웹 원소 일곱(`field-combat.js` EL_KEYS) — 109-14-1a 부터 이 트랙 전투도 일곱(<see cref="GoElement"/>, <see cref="GoHeroes.ElementOf"/>).
     /// 원래 값은 PLAN 109 줄 8(인물마다 다른 원소 스킬 모양)이 쓰려고 남긴다.</summary>
     public enum WebElement { Fire, Water, Elec, Wind, Ice, Rock, Grass }
 
@@ -48,25 +48,27 @@ namespace Saga.Go.Data
         public static int ShieldLayers(int rarity) => rarity >= 5 ? 2 : rarity == 4 ? 1 : 0;
         public static int Minions(int rarity) => rarity >= 4 ? 2 : 1;
 
+        /// <summary>109-14-1a — 전투도 일곱이라 그대로(옛 107 은 셋으로 접었다: 암 → 화 · 빙·초 → 수 · 풍 → 뇌).</summary>
         public static GoElement ElementOf(WebElement w)
         {
             switch (w)
             {
-                case WebElement.Fire:
-                case WebElement.Rock: return GoElement.Pyro;
-                case WebElement.Water:
-                case WebElement.Ice:
-                case WebElement.Grass: return GoElement.Hydro;
-                default: return GoElement.Electro;
+                case WebElement.Fire: return GoElement.Pyro;
+                case WebElement.Water: return GoElement.Hydro;
+                case WebElement.Elec: return GoElement.Electro;
+                case WebElement.Wind: return GoElement.Anemo;
+                case WebElement.Ice: return GoElement.Cryo;
+                case WebElement.Rock: return GoElement.Geo;
+                default: return GoElement.Dendro;
             }
         }
 
         /// <summary>★5 속 방패 — 제 원소가 누르는 원소(화 → 뇌 · 수 → 화 · 뇌 → 수). 겉을 상성으로 깬 뒤 다른 동료로 바꿔야 한다.</summary>
         public static GoElement InnerOf(GoElement outer)
         {
-            foreach (GoElement e in new[] { GoElement.Pyro, GoElement.Hydro, GoElement.Electro })
+            foreach (GoElement e in GoElements.All)
                 if (GoElements.Counters(outer, e)) return e;
-            return outer;
+            return GoElements.CounterOf(outer); // 빙은 누르는 원소가 없어 — 빙을 누르는 화(웹 방식)
         }
 
         public static GoElement ElementOf(Hero h) => ElementOf(h.WebElement);

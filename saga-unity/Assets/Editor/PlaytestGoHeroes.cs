@@ -59,7 +59,7 @@ namespace Saga.EditorTools
                 DuelGate.ResetForTest();
             }
             if (FieldEnemy.All.Count != enemies) Fail($"끝난 뒤 들판 적 {FieldEnemy.All.Count} ≠ {enemies}(졸개·인물이 남았다)");
-            if (_ok) Debug.Log($"[{_tag}] heroes OK - 도감 105(시대 넷·원소 셋)·명단·자리·서 있는 사람·겨루기 ★3/★4/★5·기질·굴복→동행·끌고 감·전멸 |{duel}");
+            if (_ok) Debug.Log($"[{_tag}] heroes OK - 도감 105(시대 넷·원소 일곱)·명단·자리·서 있는 사람·겨루기 ★3/★4/★5·기질·굴복→동행·끌고 감·전멸 |{duel}");
             return _ok;
         }
 
@@ -84,8 +84,8 @@ namespace Saga.EditorTools
                 if (!GoHeroes.Label(h).Contains(GoHeroes.Name(h)) || !GoHeroes.Label(h).StartsWith(new string('★', h.Rarity))) Fail($"{h.Id} 이름표 {GoHeroes.Label(h)}");
             }
             if (era[0] != 22 || era[1] != 26 || era[2] != 20 || era[3] != 37) Fail($"시대 넷 {era[0]}/{era[1]}/{era[2]}/{era[3]} ≠ 22/26/20/37");
-            foreach (var kv in el) if (kv.Value < 25) Fail($"원소 {kv.Key} {kv.Value} 명 — 치우침");
-            if (el.Count != 3) Fail($"원소 {el.Count} 가지");
+            foreach (var kv in el) if (kv.Value < 5) Fail($"원소 {kv.Key} {kv.Value} 명 — 치우침"); // 109-14-1a 일곱(웹 해시 그대로 — 초 여섯이 가장 적다)
+            if (el.Count != 7) Fail($"원소 {el.Count} 가지");
             // 웹 elementOf 표본(웹 `field-combat.js` 로 뽑은 값)
             if (GoHeroes.TryGet("sg_guanyu", out var g) && g.WebElement != WebElement.Elec) Fail("웹 원소 표본(sg_guanyu = elec) 다름");
             if (GoHeroes.TryGet("sg_zhangfei", out var z) && z.WebElement != WebElement.Ice) Fail("웹 원소 표본(sg_zhangfei = ice) 다름");

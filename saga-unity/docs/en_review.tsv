@@ -326,7 +326,11 @@
 2	go	era.foe.copzombie	떠도는 망자	Wandering Dead		
 2	go	era.foe.exored	강철 경비병	Steel Sentry		
 2	go	era.foe.gasmask	방독면 약탈자	Gas-Mask Raider		
+2	go	era.foe.pre_anemo	바람	Gale		
+2	go	era.foe.pre_cryo	서리	Frost		
+2	go	era.foe.pre_dendro	덩굴	Vine		
 2	go	era.foe.pre_electro	벼락	Thunder		
+2	go	era.foe.pre_geo	바위	Stone		
 2	go	era.foe.pre_hydro	물결	Tidal		
 2	go	era.foe.pre_pyro	불꽃	Blazing		
 2	go	era.future	미래	Future		
@@ -340,10 +344,15 @@
 2	go	field.burst	{0} — 원소 해방!	{0} — Elemental Release!		
 2	go	field.counter	상성!	Counter!		
 2	go	field.down	{0} 쓰러짐	{0} is down		
+2	go	field.el.anemo	풍	Wind		
+2	go	field.el.cryo	빙	Ice		
+2	go	field.el.dendro	초	Grass		
 2	go	field.el.electro	뇌	Thunder		
+2	go	field.el.geo	암	Stone		
 2	go	field.el.hydro	수	Water		
 2	go	field.el.physical	물리	Physical		
 2	go	field.el.pyro	화	Fire		
+2	go	field.el7_notice	원소가 일곱이 되었다 — 풍·빙·암·초. 동료 원소가 바뀌었을 수 있다	Seven elements now — Wind, Ice, Stone, Grass. Companion elements may have changed		
 2	go	field.evade	회피!	Evade!		
 2	go	field.foe.bandit	산적	Bandit		
 2	go	field.foe.ghost	물귀신	Drowned Ghost		
@@ -352,15 +361,32 @@
 2	go	field.foe.imp	불도깨비	Ember Imp		
 2	go	field.foe.skeleton	해골 병사	Skeleton Soldier		
 2	go	field.foe.wraith	번개귀	Storm Wraith		
+2	go	field.guard_block	굳힘 −{0}	Harden −{0}		
 2	go	field.guard_down	속 방패 깨짐! — 드러누웠다	Inner shield broken! — it collapsed		
 2	go	field.guard_inner	속 방패 {0} — {1} 원소 동료로 바꿔라	Inner shield {0} — switch to a {1} ally		
 2	go	field.guard_layers	방패 {0}겹	Shield ×{0}		
 2	go	field.guard_outer_break	겉 방패 깨짐!	Outer shield broken!		
 2	go	field.guard_slain	망루 수호장 토벌! 금 {0}냥 · 경험치 {1}	Watchtower Warden defeated! {0} Gold · {1} EXP		
 2	go	field.hero	주인공	Hero		
+2	go	field.hud.guard	굳힘 {0} · {1}초	Harden {0} · {1}s		
 2	go	field.immune	면역	Immune		
+2	go	field.minion.anemo	풍 졸개	Wind minion		
+2	go	field.minion.cryo	빙 졸개	Ice minion		
+2	go	field.minion.dendro	초 졸개	Grass minion		
+2	go	field.minion.geo	암 졸개	Stone minion		
+2	go	field.re.aggravate	번개싹	Spark Sprout		
+2	go	field.re.bloom	꽃피움	Blossom		
+2	go	field.re.burning	들불	Wildfire		
 2	go	field.re.charged	물벼락	Surge		
+2	go	field.re.crystallize	굳힘	Harden		
+2	go	field.re.frozen	얼어붙음	Frozen		
+2	go	field.re.melt	녹임	Thaw		
 2	go	field.re.overload	터짐	Blast		
+2	go	field.re.quicken	싹틈	Sprout		
+2	go	field.re.shatter	깨뜨림	Shatter		
+2	go	field.re.spread	덩굴뻗음	Vine Spread		
+2	go	field.re.superconduct	서리번개	Frostbolt		
+2	go	field.re.swirl	회오리	Whirl		
 2	go	field.re.vaporize	물안개	Steam		
 2	go	field.shape.dash	돌진	Dash		
 2	go	field.shape.field	장판	Zone		
@@ -368,7 +394,11 @@
 2	go	field.shape.thrust	찌르기	Thrust		
 2	go	field.shield_break	방패 깨짐!	Shield broken!		
 2	go	field.st.burn	화상	Burn		
+2	go	field.st.chill	한기 — 스태미나 3초 멈춤	Chill — Stamina paused 3s		
+2	go	field.st.crush	짓눌림 −{0}	Crushed −{0}		
+2	go	field.st.poison	중독	Poisoned		
 2	go	field.st.shock	감전 — 기력 -25	Shock — Energy -25		
+2	go	field.st.swept	휘말림 — 스킬 +2초	Swept — Skill +2s		
 2	go	field.st.wet	젖음 — 스태미나 -25	Wet — Stamina -25		
 2	go	field.wipe	모두 쓰러졌다 — 마을에서 기운을 차렸다(잃은 것 없음)	Everyone fell — you came to in the village (nothing lost)		
 2	go	foe.bandit	산적	Bandit		

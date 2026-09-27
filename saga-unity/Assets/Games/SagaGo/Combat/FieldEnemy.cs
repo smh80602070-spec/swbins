@@ -87,6 +87,14 @@ namespace Saga.Go.Combat
         public GoElement Aura { get; private set; }
         public float AuraLeft { get; private set; }
         public bool Charged => _chargedLeft > 0f;
+        // PLAN.md 109-14-1a 새 반응이 남기는 상태 — 얼어붙음(제자리 멎음) · 서리번개(물리 ×1.4) · 싹틈(뇌·초 ×1.25) · 들불(틱 피해)
+        public float FrozenLeft { get; private set; }
+        public bool Frozen => FrozenLeft > 0f;
+        public float SuperLeft { get; private set; }
+        public float QuickenLeft { get; private set; }
+        public int BurningLeft { get; private set; }
+        private float _burningTick;
+        private float _burningDmg;
         public string GroupId { get; private set; }
         /// <summary>PLAN.md 109-1 — 이 적이 온 시대(무리 시대). 과거면 옛 몸·옛 이름.</summary>
         public GoEra Era { get; private set; } = GoEra.Past;
@@ -148,6 +156,7 @@ namespace Saga.Go.Combat
         private float _chargedLeft;
         private float _chargedTick;
         private float _chargedAtk;
+        private GoElement _elementOverride;
         private Vector3 _knock;
         private bool _tinted;
 
@@ -171,12 +180,14 @@ namespace Saga.Go.Combat
             => Spawn(kind, home, model, groupId, parent, GoEra.Past, null);
 
         /// <summary>PLAN.md 109-1 — 다른 시대 무리의 적. 종류(체력·원소·방패)는 그대로, 몸(`eraBody`)·이름만 그 시대 것.</summary>
-        public static FieldEnemy Spawn(Kind kind, Vector3 home, GameObject model, string groupId, Transform parent, GoEra era, string eraBody)
+        public static FieldEnemy Spawn(Kind kind, Vector3 home, GameObject model, string groupId, Transform parent, GoEra era, string eraBody,
+            GoElement elementOverride = GoElement.Physical)
         {
             var go = new GameObject($"FieldEnemy_{kind}");
             go.transform.SetParent(parent, false);
             var e = go.AddComponent<FieldEnemy>();
             e.kind = kind;
+            e._elementOverride = elementOverride;
             e.model = model;
             e.GroupId = groupId;
             e.Era = era;
@@ -273,6 +284,12 @@ namespace Saga.Go.Combat
                     DisplayName = KindName(kind);
                     MaxHp = 220f; Atk = 20f; ExpReward = 10;
                     break;
+            }
+            if (_elementOverride != GoElement.Physical && IsElemental)
+            {
+                // 109-14-1a — 새 원소(풍·빙·암·초) 인물의 졸개는 옛 원소 적 몸에 그 원소 방패(제 괴물은 14-1b)
+                Element = _elementOverride;
+                DisplayName = GoLocalization.T("field.minion." + Element.ToString().ToLowerInvariant(), GoElements.NameOf(Element) + " 졸개");
             }
             if (EraBody != null) DisplayName = GoEras.FoeName(EraBody, Element);
             Hp = MaxHp;
@@ -537,6 +554,7 @@ namespace Saga.Go.Combat
                 return;
             }
             if (DuelGate.Active || Saga.Go.Cinematics.GoCutscenes.Playing) { SetMoveAnim(0f); return; } // 106-9 — 등장 컷 동안도 선다.
+            if (Frozen) { SetMoveAnim(0f); return; } // 109-14-1a 얼어붙음 — 제자리에 멎는다(시간은 TickStatus 가 줄인다)
 
             var fc = FieldCombat.Instance;
             bool playerOk = fc != null && fc.CanBeTargeted;
@@ -656,6 +674,23 @@ namespace Saga.Go.Combat
                 AuraLeft -= dt;
                 if (AuraLeft <= 0f) Aura = GoElement.Physical;
             }
+            if (FrozenLeft > 0f)
+            {
+                FrozenLeft -= dt;
+                if (FrozenLeft <= 0f) { FrozenLeft = 0f; TintVisual(Color.white, false); }
+            }
+            if (SuperLeft > 0f) SuperLeft = Mathf.Max(0f, SuperLeft - dt);
+            if (QuickenLeft > 0f) QuickenLeft = Mathf.Max(0f, QuickenLeft - dt);
+            if (BurningLeft > 0 && Alive)
+            {
+                _burningTick -= dt;
+                while (_burningTick <= 0f && BurningLeft > 0 && Alive)
+                {
+                    _burningTick += GoElements.BurningTickSec;
+                    BurningLeft--;
+                    ApplyDamage(_burningDmg, GoElements.ColorOf(GoReaction.Burning), 0.8f);
+                }
+            }
             if (_chargedLeft > 0f && Alive)
             {
                 _chargedLeft -= dt;
@@ -671,29 +706,50 @@ namespace Saga.Go.Combat
         // ---- 피해 -------------------------------------------------------------
 
         /// <summary>플레이어 공격 한 번. 반응을 풀고 실제로 들어간 피해를 돌려준다.
-        /// <paramref name="atk"/> 는 과부하·감전 피해를 셀 공격력.</summary>
-        public float TakeHit(float amount, GoElement element, float atk, out GoReaction reaction)
+        /// <paramref name="atk"/> 는 반응 피해를 셀 공격력. <paramref name="heavy"/> = 기본 공격 3타째(얼어붙은 적을 깨뜨린다, 109-14-1a).</summary>
+        public float TakeHit(float amount, GoElement element, float atk, out GoReaction reaction, bool heavy = false)
         {
             reaction = GoReaction.None;
             if (!Alive) return 0f;
             if (Shielded) return HitShield(amount, element);
 
-            if (element != GoElement.Physical)
+            GoElement from = GoElement.Physical; // 반응 전에 붙어 있던 원소(회오리가 옮겨 붙인다)
+            if (element == GoElement.Physical && SuperLeft > 0f) amount *= GoElements.SuperPhysMul; // 서리번개 뒤 물리
+            if (Frozen && (element == GoElement.Geo || heavy))
+            {
+                // 깨뜨림 — 얼어 멈춘 적을 암이나 3타째로 치면 크게 들어가고 풀린다
+                reaction = GoReaction.Shatter;
+                amount *= GoElements.ShatterMul;
+                FrozenLeft = 0f;
+                TintVisual(Color.white, false);
+            }
+            else if (QuickenLeft > 0f && (element == GoElement.Electro || element == GoElement.Dendro))
+            {
+                // 싹틈 상태 — 뇌는 번개싹, 초는 덩굴뻗음(붙은 원소는 안 건드린다)
+                reaction = element == GoElement.Electro ? GoReaction.Aggravate : GoReaction.Spread;
+                amount *= GoElements.QuickenMul;
+            }
+            else if (element != GoElement.Physical)
             {
                 reaction = AuraLeft > 0f ? GoElements.Resolve(Aura, element) : GoReaction.None;
                 if (reaction == GoReaction.None)
                 {
-                    Aura = element;
-                    AuraLeft = GoElements.AuraSec;
+                    if (GoElements.Attaches(element))
+                    {
+                        Aura = element;
+                        AuraLeft = GoElements.AuraSec;
+                    }
                 }
                 else
                 {
+                    from = Aura;
                     Aura = GoElement.Physical;
                     AuraLeft = 0f;
                 }
             }
 
             if (reaction == GoReaction.Vaporize) amount *= GoElements.VaporizeMul;
+            if (reaction == GoReaction.Melt) amount *= GoElements.MeltMul;
 
             if (reaction != GoReaction.None)
             {
@@ -729,9 +785,87 @@ namespace Saga.Go.Combat
                     other.StartCharged(atk);
                 }
             }
+            else if (reaction == GoReaction.Frozen)
+            {
+                if (Alive) Freeze();
+            }
+            else if (reaction == GoReaction.Superconduct)
+            {
+                // 서리번개 — 둘레 적(자기 포함) 광역 ×0.5 + 8초 동안 물리 ×1.4
+                foreach (var other in _all.ToArray())
+                {
+                    if (!other.Alive || Flat(other.transform.position - transform.position).magnitude > GoElements.SuperRadius) continue;
+                    other.SuperLeft = GoElements.SuperSec;
+                    other.ApplyDamage(atk * GoElements.SuperAtkMul, GoElements.ColorOf(GoReaction.Superconduct), 1f);
+                    other.Aggro();
+                }
+            }
+            else if (reaction == GoReaction.Swirl)
+            {
+                // 회오리 — 둘레 다른 적에게 그 원소를 옮겨 붙이고 ×0.6
+                foreach (var other in _all.ToArray())
+                {
+                    if (other == this || !other.Alive) continue;
+                    if (Flat(other.transform.position - transform.position).magnitude > GoElements.SwirlRadius) continue;
+                    if (!other.Shielded && (other.AuraLeft <= 0f || other.Aura == from))
+                    {
+                        other.Aura = from;
+                        other.AuraLeft = GoElements.AuraSec;
+                    }
+                    other.ApplyDamage(atk * GoElements.SwirlAtkMul, GoElements.ColorOf(from), 1f);
+                    other.Aggro();
+                }
+            }
+            else if (reaction == GoReaction.Crystallize)
+            {
+                FieldCombat.Instance?.AddCrystalGuard();
+            }
+            else if (reaction == GoReaction.Bloom)
+            {
+                FieldCombat.Instance?.AddBloomSeed(transform.position, atk * GoElements.BloomAtkMul);
+            }
+            else if (reaction == GoReaction.Burning)
+            {
+                BurningLeft = GoElements.BurningTicks;
+                _burningTick = GoElements.BurningTickSec;
+                _burningDmg = atk * GoElements.BurningAtkMul;
+            }
+            else if (reaction == GoReaction.Quicken)
+            {
+                QuickenLeft = GoElements.QuickenSec;
+            }
 
             Aggro();
             return dealt;
+        }
+
+        /// <summary>얼어붙음 — 2.5초 제자리에 멎고, 예고하던 수도 끊긴다.</summary>
+        private void Freeze()
+        {
+            FrozenLeft = GoElements.FrozenSec;
+            if (CurrentState == State.Telegraph)
+            {
+                CurrentState = State.Chase;
+                _warnRing.enabled = false;
+            }
+            TintVisual(GoElements.ColorOf(GoElement.Cryo), true);
+        }
+
+        /// <summary>원소 없는 날 피해(꽃피움 씨앗 터짐 등) — 반응·부착 없이.</summary>
+        public float TakeRaw(float amount, Color color)
+        {
+            if (!Alive) return 0f;
+            Aggro();
+            return ApplyDamage(amount, color, 1f);
+        }
+
+        private void ClearReactionStates()
+        {
+            if (FrozenLeft > 0f) TintVisual(Color.white, false);
+            FrozenLeft = 0f;
+            SuperLeft = 0f;
+            QuickenLeft = 0f;
+            BurningLeft = 0;
         }
 
         /// <summary>원소 방패에 한 번 — 체력은 안 깎이고 반응·부착도 없다. 방패에 들어간 양을 돌려준다.</summary>
@@ -837,9 +971,7 @@ namespace Saga.Go.Combat
         /// <summary>그 원소를 누르는 원소(수 → 화 · 뇌 → 수 · 화 → 뇌).</summary>
         private static GoElement CounterOf(GoElement e)
         {
-            foreach (GoElement a in new[] { GoElement.Pyro, GoElement.Hydro, GoElement.Electro })
-                if (GoElements.Counters(a, e)) return a;
-            return GoElement.Physical;
+            return GoElements.CounterOf(e); // 109-14-1a 일곱
         }
 
         private void StartCharged(float atk)
@@ -890,6 +1022,7 @@ namespace Saga.Go.Combat
             CurrentState = State.Dead;
             _timer = RespawnSec;
             _chargedLeft = 0f;
+            ClearReactionStates();
             Aura = GoElement.Physical;
             AuraLeft = 0f;
             _alertText.gameObject.SetActive(false);
@@ -919,6 +1052,7 @@ namespace Saga.Go.Combat
             CurrentState = State.Dead;
             _timer = float.MaxValue;
             _chargedLeft = 0f;
+            ClearReactionStates();
             Aura = GoElement.Physical;
             AuraLeft = 0f;
             _alertText.gameObject.SetActive(false);
@@ -998,6 +1132,7 @@ namespace Saga.Go.Combat
             Aura = GoElement.Physical;
             AuraLeft = 0f;
             _chargedLeft = 0f;
+            ClearReactionStates();
         }
 
         // ---- 움직임 ------------------------------------------------------------

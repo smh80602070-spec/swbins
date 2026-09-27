@@ -90,7 +90,9 @@ namespace Saga.Go.Combat
             string body = GoEras.FoeBodyFor(era, groupId, index);
             GameObject model = skeletonModel;
             if (body != null) { var m = EraModel(body); if (m != null) model = m; }
-            return FieldEnemy.Spawn(kind, home, model, groupId, transform, era, body);
+            // 109-14-1a — 풍·빙·암·초 인물은 제 괴물이 아직 없어(14-1b) 옛 몸에 그 원소를 입힌다
+            var over = element == GoElement.Pyro || element == GoElement.Hydro || element == GoElement.Electro ? GoElement.Physical : element;
+            return FieldEnemy.Spawn(kind, home, model, groupId, transform, era, body, over);
         }
 
         /// <summary>세우는 들판 적 수 — 이미 쓰러뜨린 수호장은 안 센다.</summary>

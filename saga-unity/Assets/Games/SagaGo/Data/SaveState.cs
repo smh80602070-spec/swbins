@@ -95,6 +95,8 @@ namespace Saga.Go.Data
             public List<string> heroesSeen;
             // v18 — PLAN.md 109-9 오른 정상(발견 보상 한 번·지도에서 순간이동).
             public List<string> peaksFound;
+            // PLAN.md 109-14-1a 원소 일곱 안내를 했는가 — 버전 그대로(옛 세이브엔 없어 false → 한 번 안내, 웹 save.field.el7 와 같은 결).
+            public bool el7Noticed;
         }
 
         public static bool Save()
@@ -154,6 +156,7 @@ namespace Saga.Go.Data
                 missions = RegionMissionState.Snapshot(),
                 heroesSeen = HeroDexState.Snapshot(),
                 peaksFound = WorldMapState.SnapshotPeaks(),
+                el7Noticed = Combat.GoElements.SevenNoticed,
             };
             return JsonUtility.ToJson(data);
         }
@@ -214,6 +217,7 @@ namespace Saga.Go.Data
             RegionMissionState.Restore(data.missions);
             HeroDexState.Restore(data.heroesSeen);
             WorldMapState.RestorePeaks(data.peaksFound);
+            Combat.GoElements.SevenNoticed = data.el7Noticed;
 
             Transform player = FindPlayer();
             if (player != null && data.playerPos != null && data.playerPos.Length == 3)

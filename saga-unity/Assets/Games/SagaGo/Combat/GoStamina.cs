@@ -58,9 +58,15 @@ namespace Saga.Go.Combat
         }
 
         /// <summary>`PlayerController.Update` 가 프레임마다 한 번 부른다.</summary>
+        /// <summary>109-14-1a 빙 적의 한기 — 이 초 동안 스태미나가 안 돈다.</summary>
+        public static float RegenBlockLeft { get; private set; }
+
+        public static void BlockRegen(float sec) => RegenBlockLeft = Mathf.Max(RegenBlockLeft, sec);
+
         public static void Tick(float dt)
         {
             _sinceUse += dt;
+            if (RegenBlockLeft > 0f) { RegenBlockLeft = Mathf.Max(0f, RegenBlockLeft - dt); return; }
             if (_sinceUse >= RegenDelaySec && Value < Max)
             {
                 Value = Mathf.Min(Max, Value + RegenPerSec * dt);
@@ -70,6 +76,7 @@ namespace Saga.Go.Combat
 
         public static void ResetFull()
         {
+            RegenBlockLeft = 0f;
             Value = Max;
             SprintLocked = false;
             _sinceUse = 999f;
