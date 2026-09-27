@@ -16,6 +16,9 @@ namespace Saga.Forest.World
     {
         // 67장 "사운드" BGM(2026-09-15, ForestAudio.cs 클래스 주석 참고).
         [SerializeField] private AudioClip bgmClip;
+        // PLAN.md 109-12-1 떠돌이 방문객 — 빌린 몸 표(다른 판 씬이 이미 쓰는 몸, 이름 순). 없는 PC 는 null → 캡슐.
+        [SerializeField] private string[] visitorBodyNames = new string[0];
+        [SerializeField] private GameObject[] visitorBodyModels = new GameObject[0];
 
         private void Start()
         {
@@ -25,6 +28,7 @@ namespace Saga.Forest.World
             ForestSettingsState.ApplyGraphicsQuality();
             ForestAudio.PlayBgm(bgmClip);
             if (GetComponent<ForestZoneTracker>() == null) gameObject.AddComponent<ForestZoneTracker>(); // PLAN.md 108 ② 존 자막
+            ForestVisitorRunner.Install(visitorBodyNames, visitorBodyModels); // PLAN.md 109-12-1 떠돌이 방문객(세이브 뒤라 오늘 기록을 읽는다)
 
             // PLAN.md 101-2 5.3 "마을 번들" — 실시간 완성은 이벤트로,
             // 로드 직후 "이미 완성돼 있던 것"은 이벤트 없이 상태를 직접

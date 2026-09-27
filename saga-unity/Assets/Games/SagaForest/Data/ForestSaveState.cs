@@ -12,7 +12,7 @@ namespace Saga.Forest.Data
     /// </summary>
     public static class ForestSaveState
     {
-        private const int SaveVersion = 7; // v4 — 가구 "자유 배치"로 재설계, homeAnchors(고정 여섯)를 homePlaceX/Y/Ids(격자 칸)로 교체.
+        private const int SaveVersion = 8; // v4 — 가구 "자유 배치"로 재설계, homeAnchors(고정 여섯)를 homePlaceX/Y/Ids(격자 칸)로 교체.
         // v5 — PLAN.md 101-2 5.3 "마을 번들"(ForestMuseumState) 저장. v4 이하 세이브는
         // museumDiscovered가 null로 채워지고 Restore(null)은 조용히 빈 도감으로 둔다.
         // v6 — PLAN.md 101-2 5.7 "택배 사슬"(ForestDeliveryState) 누적 배달 수만 저장 —
@@ -20,6 +20,7 @@ namespace Saga.Forest.Data
         // v7 — PLAN.md 101-2 5.6 "축제 하루"(ForestFestivalState) — 오늘 치른 행사 날짜와
         // 소원 버프 만료 시각(Ticks, 앱을 완전히 껐다 켜도 흐르게 — GO DropState와 같은 결).
         // 꽃놀이 진행 중인 60초 창은 회차성이라 세이브 대상이 아니다.
+        // v8 — PLAN.md 109-12-1 떠돌이 방문객(ForestVisitors) 오늘 기록 — 날·손님·주운 조각·끝냄·여우 권함·만남·가져오기 수.
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save_forest.json";
@@ -51,6 +52,14 @@ namespace Saga.Forest.Data
             public int deliveredCount;
             public string festivalDoneDate;
             public long festivalWishUntilTicks;
+            public int visitDay;
+            public string visitKey;
+            public int visitGot;
+            public bool visitDone;
+            public bool visitOffered;
+            public bool visitMet;
+            public int visitBring1;
+            public int visitBring2;
         }
 
         /// <summary>Playtest*.cs 전용 — GameBootstrap이 매 Play 시작마다
@@ -111,6 +120,15 @@ namespace Saga.Forest.Data
                 festivalDoneDate = ForestFestivalState.SnapshotDoneDate(),
                 festivalWishUntilTicks = ForestFestivalState.SnapshotWishUntilTicks(),
             };
+            var visit = ForestVisitors.Snapshot();
+            data.visitDay = visit.Day;
+            data.visitKey = visit.Key;
+            data.visitGot = visit.Got;
+            data.visitDone = visit.Done;
+            data.visitOffered = visit.Offered;
+            data.visitMet = visit.Met;
+            data.visitBring1 = visit.B1;
+            data.visitBring2 = visit.B2;
             return JsonUtility.ToJson(data);
         }
 
@@ -172,6 +190,10 @@ namespace Saga.Forest.Data
             {
                 ForestFestivalState.Restore(data.festivalDoneDate, data.festivalWishUntilTicks);
             }
+            if (data.version >= 8)
+                ForestVisitors.Restore(data.visitDay, data.visitKey, data.visitGot, data.visitDone, data.visitOffered, data.visitMet, data.visitBring1, data.visitBring2);
+            else
+                ForestVisitors.ResetForTest(); // v7 이하 — 오늘 손님 기록 없음
 
             Transform player = FindPlayer();
             if (player != null && data.playerPos != null && data.playerPos.Length == 3)

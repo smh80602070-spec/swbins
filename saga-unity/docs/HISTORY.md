@@ -9889,3 +9889,15 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 레시피 칸 `under_keep` {겉옷: {속옷: 팔 무게}}(build_real hide_under) — 순찰 대원 조끼 밑 재킷 소매 머리를 안 지워 뒤 진동 검은 네모 홈 없앰(0.8, 0.5 는 소매가 조끼 어깨 위로 비침).
 - 닌자 옆 엉덩이 점 = 자락 틈 살 → `under_rows` 살 0.
 - 검사: 6벌 verify fbx ≤ 0.7° · glb 0.0° · sha256 두 번 같음 · 칸 없는 몸 sha 그대로 · CMP_RESULT OK(FBX 로컬 전용). 적어 둔 렌더 흠 0 → 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
+
+## 2026-09-27 FOREST — 109-12-1 떠돌이 방문객(웹 §5.9)
+
+"사가 유니티 이어해" → PLAN 109 표 12번 첫 조각.
+
+- `ForestVisitors`(순수 — 손님 여섯·날짜 해시·여우 물건·조각 자리·방위·오늘 기록·말하기·세이브) · `ForestVisitorRunner`(부트스트랩이 Play 때) · `ForestVisitorNpc`(다가서기 말하기·이름표·빛 구슬·땅 휨) · `ForestVisitorPiece`(떠 돌며 빛남·1.6m 줍기). `ForestCollectSpot` → `OnGather`. 가구 `VisitorGifts` 다섯 + 세트 잔치, `All`·`AddStock`, 갈래 이름 `CategoryName`. 세이브 v8.
+- 재해석 결정: 과일 = 금 ÷ 100 · 다가서기/물러나기 = 웹 "말 걸기" · 가방 대신 "만난 뒤 채집 수" · 물고기·광석 없음 → 버섯·화석·꽃 · 바깥 고리 대신 존 넷.
+- 몸: 묶음 없는 PC — 씬 재빌드 대신 `TestVillageForest.unity` ForestBootstrap 에 `visitorBodyNames/Models` 12줄 손으로(Arissa·Heraklios·Brady GUID 는 TestVillage lookBodies, Leonard = TestDungeon modernPeddlerModel, XBot = TestDungeon eraFoeModels). 빌더도 같은 표. 이 PC 는 몸이 없어 캡슐로 선다(진단 "캡슐(몸 없는 PC)") — 묶음 PC 에서 몸 확인.
+- 진단 중 발견: 앞 진단이 집 격자를 다 채워 둬 가구 놓기 확인이 빈 칸을 못 찾음 → 그 진단 안에서만 비우고 되돌림. loc-review 경고 둘(첫 기호·용어 흔들림) 고침.
+- 검증(묶음 없는 PC): 컴파일 0 · `PlaytestForestHeadless` 3연속 `visitors OK`(eras 등 다른 줄도 OK), 오류는 기준선 둘(Missing Prefab·씬 열기) 그대로 · loc-review 오류·경고 0. 글꼴 SDF·Mobile_RPAsset 되돌림.
+- 실기 확인 전: 조각 다섯 찾기 난도(방위 힌트로 충분한지), "물러났다 다시 다가서기"가 자연스러운지, 빛 구슬 도깨비불, 보상 과일 7~10 이 가구 값에 비해 적당한지, 이름표 크기.
+- 다음 = 12-2 §5.10 새 손님 둘(도깨비 대장·불시착 탐사원)·단골 눌러앉기·몸짓.

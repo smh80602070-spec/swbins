@@ -39,6 +39,15 @@ namespace Saga.Forest.Data
 
         public static string[] ItemsOf(Category c) => Items[c];
 
+        /// <summary>PLAN.md 109-12-1 — 갈래 이름(방문객 부탁 글).</summary>
+        public static string CategoryName(Category c) => c switch
+        {
+            Category.Insect => ForestLocalization.T("museum.cat.insect", "곤충"),
+            Category.Mushroom => ForestLocalization.T("museum.cat.mushroom", "버섯"),
+            Category.Fossil => ForestLocalization.T("museum.cat.fossil", "화석"),
+            _ => ForestLocalization.T("museum.cat.flower", "꽃"),
+        };
+
         // 110 ⑤c-2c-2 — 한국어 이름이 세이브 키라 그대로 두고, 화면 글만 번역 표 `museum.item.<id>` 로.
         private static readonly Dictionary<string, string> ItemKeys = new Dictionary<string, string>
         {

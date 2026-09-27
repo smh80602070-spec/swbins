@@ -5,7 +5,7 @@ namespace Saga.Forest.Data
     /// <summary>계열 — saga-forest 웹판 `js/data-village.js`의 `FURN_SETS`
     /// (안방·사랑방·부엌·뜰). 셋 이상 같은 계열을 놓으면 집 평가에 보탬이
     /// 된다(`ForestHomeState.Score()`).</summary>
-    public enum FurnitureSet { Anbang, Sarang, Buok, Ddeul }
+    public enum FurnitureSet { Anbang, Sarang, Buok, Ddeul, Janchi }
 
     /// <summary>
     /// FOREST "집 꾸미기(가구)" 슬라이스(2026-09-12, saga-unity 열한 번째
@@ -60,12 +60,32 @@ namespace Saga.Forest.Data
             new FurnitureItem("geomungo",   "거문고",   FurnitureSet.Sarang, 5200, false),
         };
 
+        /// <summary>PLAN.md 109-12-1 떠돌이 방문객 보상(웹 `fest:'visit'`) — 가구전 룰렛(`Catalog`)엔 없다. 웹 값·세트(잔치) 그대로.</summary>
+        public static readonly FurnitureItem[] VisitorGifts =
+        {
+            new FurnitureItem("visit_sailor", "선장의 궤짝",     FurnitureSet.Janchi, 2400, false),
+            new FurnitureItem("visit_wisp",   "도깨비 등롱",     FurnitureSet.Janchi, 2400, true),
+            new FurnitureItem("visit_angler", "명인의 어탁",     FurnitureSet.Janchi, 2000, false),
+            new FurnitureItem("visit_bug",    "나비 표본 액자",  FurnitureSet.Janchi, 2000, false),
+            new FurnitureItem("visit_future", "시간의 탁상시계", FurnitureSet.Janchi, 3000, true),
+        };
+
+        /// <summary>가구전 물건 + 방문객 가구(창고에서 놓을 때).</summary>
+        public static IEnumerable<FurnitureItem> All
+        {
+            get
+            {
+                foreach (var item in Catalog) yield return item;
+                foreach (var item in VisitorGifts) yield return item;
+            }
+        }
+
         private static readonly Dictionary<string, FurnitureItem> ById = Build();
 
         private static Dictionary<string, FurnitureItem> Build()
         {
             var map = new Dictionary<string, FurnitureItem>();
-            foreach (var item in Catalog) map[item.Id] = item;
+            foreach (var item in All) map[item.Id] = item;
             return map;
         }
 
@@ -77,6 +97,7 @@ namespace Saga.Forest.Data
             FurnitureSet.Sarang => ForestLocalization.T("furniture.set.sarang", "사랑방"),
             FurnitureSet.Buok => ForestLocalization.T("furniture.set.buok", "부엌"),
             FurnitureSet.Ddeul => ForestLocalization.T("furniture.set.ddeul", "뜰"),
+            FurnitureSet.Janchi => ForestLocalization.T("furniture.set.janchi", "잔치"),
             _ => "",
         };
 

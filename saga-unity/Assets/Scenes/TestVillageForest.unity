@@ -15950,6 +15950,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: SagaForest::Saga.Forest.World.ForestBootstrap
   bgmClip: {fileID: 8300000, guid: 724ae90833250514ea3fa52832790694, type: 3}
+  visitorBodyNames:
+  - Arissa
+  - Heraklios
+  - Brady
+  - Leonard
+  - XBot
+  visitorBodyModels:
+  - {fileID: 5484003341056005700, guid: 75978c56f793711409fb48a1ddef5223, type: 3}
+  - {fileID: 5462503857374905867, guid: 668cf51cf4ad39441b845ef3827f55da, type: 3}
+  - {fileID: 2467220281102201925, guid: bbe9292fa75c0784a9e91039382ada79, type: 3}
+  - {fileID: 1647040426612610059, guid: 76f322a024251ed47a98cc49adf4920e, type: 3}
+  - {fileID: 6628827046597372185, guid: b6917135937f0914ca9f75c374e1329d, type: 3}
 --- !u!4 &636572282
 Transform:
   m_ObjectHideFlags: 0

@@ -73,6 +73,14 @@ namespace Saga.Forest.Data
 
         public static IEnumerable<KeyValuePair<Vector2Int, string>> AllPlacements() => Placements;
 
+        /// <summary>PLAN.md 109-12-1 — 사지 않고 창고에 넣는다(방문객 보상·여우 화상).</summary>
+        public static void AddStock(string id, int n)
+        {
+            if (FurnitureItem.Get(id) == null || n <= 0) return;
+            Stock[id] = StockCount(id) + n;
+            Changed?.Invoke();
+        }
+
         /// <summary>과일로 산다 — 모자라면 false(창고 안 늘어남).</summary>
         public static bool TryBuy(string id)
         {
@@ -94,7 +102,7 @@ namespace Saga.Forest.Data
 
             string best = null;
             int bestValue = -1;
-            foreach (var item in FurnitureItem.Catalog)
+            foreach (var item in FurnitureItem.All) // 109-12-1 — 방문객 가구도 놓인다
             {
                 if (StockCount(item.Id) <= 0) continue;
                 if (item.Value > bestValue) { bestValue = item.Value; best = item.Id; }

@@ -901,6 +901,18 @@ namespace Saga.EditorTools
             var bgmClip = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Art/Audio/CC0_BGM/forest_peaceful_town.ogg");
             if (bgmClip == null) Debug.LogWarning("[BuildTestVillageForestScene] BGM 클립을 못 찾음 — 소리 없이 동작.");
             SetPrivateField(bootstrap, "bgmClip", bgmClip);
+
+            // PLAN.md 109-12-1 떠돌이 방문객 — 다른 판 씬이 이미 쓰는 몸을 빌린다(`ForestVisitors.List` 의 Body, 도깨비불은 몸 없음).
+            var names = new System.Collections.Generic.List<string>();
+            var models = new System.Collections.Generic.List<GameObject>();
+            foreach (var v in ForestVisitors.List)
+            {
+                if (string.IsNullOrEmpty(v.Body) || names.Contains(v.Body)) continue;
+                names.Add(v.Body);
+                models.Add(AssetDatabase.LoadAssetAtPath<GameObject>(SetupNpcCharacterImports.PrefabPath(v.Body)));
+            }
+            SetPrivateField(bootstrap, "visitorBodyNames", names.ToArray());
+            SetPrivateField(bootstrap, "visitorBodyModels", models.ToArray());
         }
 
         private static void SetPrivateField(object target, string fieldName, object value)

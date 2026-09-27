@@ -144,6 +144,7 @@ namespace Saga.Forest.World
             FurnitureSet.Sarang => new Color(0.478f, 0.416f, 0.604f),
             FurnitureSet.Buok => new Color(0.659f, 0.353f, 0.235f),
             FurnitureSet.Ddeul => new Color(0.353f, 0.604f, 0.353f),
+            FurnitureSet.Janchi => new Color(0.816f, 0.271f, 0.353f), // 109-12-1 — 웹 잔치 #d0455a
             _ => Color.gray,
         };
     }

@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **2259** (표 2204 · 코드 55) — go 508 · dungeon 515 · forest 177 · story 425 · realm 579
-- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **125**
-- 사람 검수 **0/2259** — 순위1 0/258 · 순위2 0/1301 · 순위3 0/700
+- 짝 **2301** (표 2246 · 코드 55) — go 508 · dungeon 515 · forest 219 · story 425 · realm 579
+- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **132**
+- 사람 검수 **0/2301** — 순위1 0/258 · 순위2 0/1337 · 순위3 0/706
 
 ## 검수 순서
 
@@ -26,12 +26,13 @@
 
 없음.
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 125)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 132)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
 | 폭 한→영 | 판 | 키 | 영어 |
 |---|---|---|---|
+| 9→22 | forest | `visitor.dirs` | somewhere in the woods to the {0} of the village |
 | 4→13 | dungeon | `item.wp_lm_cloud` | Cloud General's Gold Sword |
 | 6→15 | dungeon | `landmark.cloud` | Golden Palace Above the Clouds |
 | 2→9 | forest | `finish.jangpan` | Oiled Paper Floor |
@@ -61,4 +62,3 @@
 | 6→12 | dungeon | `saga.silkroad.title` | The Severed Caravan Road |
 | 14→25 | story | `npc.trainer_status_locked` | Class change available from Lv.{0} (currently Lv.{1}) |
 | 4→10 | dungeon | `landmark.tomb.room1` | Grave-Goods Chamber |
-| 4→10 | dungeon | `region.snowfort` | Northern Snow Peaks |

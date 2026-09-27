@@ -1071,10 +1071,16 @@
 2	forest	furniture.set.anbang	안방	Master Bedroom		
 2	forest	furniture.set.buok	부엌	Kitchen		
 2	forest	furniture.set.ddeul	뜰	Courtyard		
+2	forest	furniture.set.janchi	잔치	Festive		
 2	forest	furniture.set.sarang	사랑방	Study		
 2	forest	furniture.soban	소반	Small Table		
 2	forest	furniture.stall.bought	가구전 — {0}을(를) 샀다(과일 -{1}) — 빈 자리에 다가가면 창고에서 놓인다.	Furniture Shop — Bought {0} (-{1} fruit) — approach an empty spot to place it from storage.		
 2	forest	furniture.stall.cant_afford	가구전 — 오늘 눈에 든 건 {0}(과일 {1}개)인데, 과일이 모자라 못 샀다(보유 {2}개).	Furniture Shop — Today's pick is {0} ({1} fruit), but you don't have enough fruit (have {2}).		
+2	forest	furniture.visit_angler	명인의 어탁	Master's Fish Print		
+2	forest	furniture.visit_bug	나비 표본 액자	Butterfly Specimen Frame		
+2	forest	furniture.visit_future	시간의 탁상시계	Clock of Time		
+2	forest	furniture.visit_sailor	선장의 궤짝	Captain's Chest		
+2	forest	furniture.visit_wisp	도깨비 등롱	Wisp Lantern		
 2	forest	home.grade0	휑한 방	Bare Room		
 2	forest	home.grade1	살림이 든 방	Furnished Room		
 2	forest	home.grade2	정갈한 집	Tidy House		
@@ -1091,6 +1097,10 @@
 2	forest	landmark.rocky	거인 선돌	Giant's Standing Stone		
 2	forest	museum.all_done_toast	🚩 네 갈래를 모두 채웠다 — 마을 어귀에 깃발이 섰다!	🚩 All four lines complete — a flag now stands at the town entrance!		
 2	forest	museum.bundle_done_toast	🎉 도감 한 갈래를 다 채웠다 — 마을에 새 시설이 생겼다!	🎉 You completed a collection line — a new facility opened in town!		
+2	forest	museum.cat.flower	꽃	Flower		
+2	forest	museum.cat.fossil	화석	Fossil		
+2	forest	museum.cat.insect	곤충	Insect		
+2	forest	museum.cat.mushroom	버섯	Mushroom		
 2	forest	museum.gather_new_toast	{0}을(를) 처음으로 발견했다! (도감에 기록됨)	Found {0} for the first time! (recorded in the collection)		
 2	forest	museum.gather_toast	{0}을(를) 발견했다(이미 도감에 있음)	Found {0} (already in the collection)		
 2	forest	museum.item.bell_cap	방울버섯	Bell Cap		
@@ -1109,6 +1119,32 @@
 2	forest	town_score.home_line	집 꾸미기 {0}개 (+{1}점)	Home decor {0} (+{1} pts)		
 2	forest	town_score.museum_line	박물관 기증 {0}/12 (+{1}점)	Museum donations {0}/12 (+{1} pts)		
 2	forest	villager.keeper.name	숲지기	Forest Keeper		
+2	forest	visitor.angler.name	낚시 명인 청파	Cheongpa the Master Angler		
+2	forest	visitor.bring_hint	(지금부터 채집한 것만 보여 줄 수 있다)	(only what you gather from now on counts)		
+2	forest	visitor.bring_ready	{0} {1}에게 보여 줄 것을 다 모았다 — 광장으로!	{0} You have everything to show {1} — to the square!		
+2	forest	visitor.bugdoc.name	곤충 박사 나비	Dr. Nabi the Entomologist		
+2	forest	visitor.dir.e	동	east		
+2	forest	visitor.dir.n	북	north		
+2	forest	visitor.dir.ne	북동	northeast		
+2	forest	visitor.dir.nw	북서	northwest		
+2	forest	visitor.dir.s	남	south		
+2	forest	visitor.dir.se	남동	southeast		
+2	forest	visitor.dir.sw	남서	southwest		
+2	forest	visitor.dir.w	서	west		
+2	forest	visitor.dirs	마을 {0}쪽 숲 어딘가	somewhere in the woods to the {0} of the village		
+2	forest	visitor.fox.name	여우 화상 호연	Hoyeon the Fox Peddler		
+2	forest	visitor.fox_offer	오늘의 물건은 「{0}」 — 과일 {1}개. 마음에 들면 물러났다 다시 오시오	Today's item is "{0}" — {1} fruit. If you like it, step away and come back		
+2	forest	visitor.fox_short	과일 {0}개가 있어야 하오(지금 {1}개) — 오늘 해 지기 전에 다시 오시오	You need {0} fruit (you have {1}) — come back before the day is out		
+2	forest	visitor.fox_sold	좋은 눈이시오 — 「{0}」은(는) 집 창고에 넣어 두었소	You have a good eye — I put "{0}" in your storage		
+2	forest	visitor.piece_all	{0} ({1}/{2}) — 다 모았다! 광장의 {3}에게 가져가자	{0} ({1}/{2}) — all found! Take them to {3} in the square		
+2	forest	visitor.piece_some	{0} ({1}/{2}) — 아직 {3}개 남았다	{0} ({1}/{2}) — {3} left		
+2	forest	visitor.reward	고맙소! 과일 {0}개 · 「{1}」(집 창고에)	Thank you! {0} fruit · "{1}" (in your storage)		
+2	forest	visitor.sailor.name	난파 선원 풍랑	Pungnang the Castaway		
+2	forest	visitor.sailor.piece	🧭 나침반 조각	🧭 Compass piece		
+2	forest	visitor.thanks	오늘 고마웠소 — 또 들르리다	Thank you for today — I will drop by again		
+2	forest	visitor.traveler.name	시간 여행자 K-7	K-7 the Time Traveler		
+2	forest	visitor.wisp.name	도깨비불 반디	Bandi the Wisp		
+2	forest	visitor.wisp.piece	👻 도깨비불 조각	👻 Wisp piece		
 2	forest	zone.enter	— {0} {1} —	— {0} {1} —		
 2	forest	zone.enter_village	— 마을 —	— Village —		
 2	forest	zone.roster	사는 것: {0}	Lives here: {0}		
@@ -1794,6 +1830,12 @@
 3	forest	landmark.mushroom_forest.lore	달 밝은 밤이면 버섯정령이 이 돌고리 안에서 춤춘다.	On bright moonlit nights the mushroom spirits dance inside this ring.		
 3	forest	landmark.rocky.lore	거인이 땅에 꽂고 간 지팡이라는 선돌. 두드리면 낮게 운다.	Said to be a staff a giant left stuck in the earth. Knock on it and it hums low.		
 3	forest	villager.keeper.line	이 숲은 내가 돌본다 — 짐승을 함부로 놀라게 하지 마시게.	I look after this forest — don't go frightening the animals.		
+3	forest	visitor.angler.line	물 없는 숲이라 낚싯대가 심심하구먼 — 미끼 궁리나 하게 버섯 셋만 보여 주게	No water in these woods, so my rod's idle — show me three mushrooms and I'll work out new bait		
+3	forest	visitor.bugdoc.line	표본이 모자라요! 곤충 세 마리만 보여 주실래요?	I'm short on specimens! Could you show me three insects?		
+3	forest	visitor.fox.line	눈이 밝은 손님만 알아보는 물건이 있지요 — 오늘 하루뿐이랍니다	Only a sharp-eyed guest spots my wares — today only		
+3	forest	visitor.sailor.line	배가 뒤집혀 나침반이 산산이… 숲 어디에 조각이 떨어졌을 텐데	My ship capsized and my compass shattered… the pieces must be somewhere in the woods		
+3	forest	visitor.traveler.line	삐빗. 2387년에서 왔습니다. 화석 둘과 꽃 하나가 있으면 귀환 부품을 만들 수 있습니다	Beep. I come from the year 2387. With two fossils and one flower I can build a return part		
+3	forest	visitor.wisp.line	히잉… 놀라서 몸이 다섯 조각으로 흩어졌어. 숲에서 좀 찾아 줘	Eek… I got startled and burst into five pieces. Please find them in the woods		
 3	story	era_folk.photographer	사진 찍는 여행자	Traveling Photographer		
 3	story	era_folk.photographer.0	황건 난리 한복판이라니, 이건 꼭 찍어 가야 해요. 저 두목 쪽으로 좀 비켜 주실래요?	Right in the middle of the Yellow Turban uprising? I have to get a shot. Could you step toward that chief a bit?		
 3	story	era_folk.photographer.1	휴대폰 배터리가 12% 남았어요. 이 시대엔 충전할 데가 없겠죠?	My phone's at 12%. I guess there's nowhere to charge it in this era.		

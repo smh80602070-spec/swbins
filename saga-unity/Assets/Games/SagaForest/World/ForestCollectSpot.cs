@@ -81,6 +81,10 @@ namespace Saga.Forest.World
             // PLAN.md 101-2 5.6 "축제 하루"(2026-09-21) — 꽃놀이(매달 8일)만
             // 이 채집 자리 넷이 맡는다(웹판 "1분 안에 꽃 8종류"를 이 트랙의
             // 실제 갈래 수 4로 좁힘).
+            // PLAN.md 109-12-1 — 가져오기 손님(낚시 명인·곤충 박사·시간 여행자)을 만났으면 이 채집을 센다.
+            string visitLine = ForestVisitors.OnGather(category);
+            if (visitLine != null) DialogueLabel.Instance?.Show(visitLine, ToastSec);
+
             int flowerHuntReward = ForestFestivalState.ReportCollectSpotGather(category);
             if (flowerHuntReward > 0)
             {
