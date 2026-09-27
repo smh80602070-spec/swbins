@@ -303,7 +303,7 @@ func _step_target(s: Dictionary, tracked: bool) -> Vector3:
 	if not tracked:
 		match String(s.type):
 			"chase":
-				return _cell_pos(String(s.region), (s.path as Array)[0])
+				return _path_pos(s, (s.path as Array)[0])
 			"duel":
 				return _spot_pos(s)
 			"gather", "cook":
@@ -493,6 +493,12 @@ static func _spot_pos(d: Dictionary) -> Vector3:
 		p.y = RiftEnd.top_y()
 		return p
 	return _cell_pos(String(d.region), d.cell, bool(d.get("sky", false)), float(d.get("lift", 0.0)))
+
+## 쫓기 길 점 자리 — 단계에 isle 이 있으면 그 섬 윗면(51 7부), 아니면 땅.
+static func _path_pos(s: Dictionary, cell: Vector2) -> Vector3:
+	if s.has("isle"):
+		return _spot_pos({"region": s.region, "cell": cell, "isle": s.isle})
+	return _cell_pos(String(s.region), cell)
 
 ## 떠 있는 자리인가(구름섬·떠 있는 구조물·갈림길 끝) — 둘레·물결·석등도 그 윗면 높이로.
 static func _floating(d: Dictionary) -> bool:
@@ -817,7 +823,12 @@ func _physics_process(delta: float) -> void:
 		"climb":
 			var t := _cell_pos(String(s.region), s.cell)
 			var pp := _player.global_position
-			if Vector2(pp.x - t.x, pp.z - t.z).length() <= float(s.radius) and pp.y >= t.y + float(s.get("above", 0.0)) - Story.CLIMB_SLACK:
+			## isle = 구름 위 항로 그 섬 윗면에 서면(51 7부 — 바람 기둥을 타고 올라 활공으로 건너와서)
+			if s.has("isle"):
+				if SkyRoute.on_isle(String(s.isle), pp) and _player.is_on_floor():
+					advance()
+					return
+			elif Vector2(pp.x - t.x, pp.z - t.z).length() <= float(s.radius) and pp.y >= t.y + float(s.get("above", 0.0)) - Story.CLIMB_SLACK:
 				advance()
 				return
 	## 세계 임무 "!" — 모험 등급이 올라 새로 맡을 수 있게 되면(1초마다 본다).
@@ -867,13 +878,13 @@ func _chase_tick(s: Dictionary, delta: float) -> bool:
 		return false
 	if _chase_i >= path.size():
 		## 놓쳤다 — 처음 자리로 돌아가 다시 기다린다.
-		_thief.global_position = _cell_pos(String(s.region), path[0])
+		_thief.global_position = _path_pos(s, path[0])
 		_chase_run = false
 		_chase_i = 0
 		Toast.show(self, "%s을(를) 놓쳤다 — 처음 자리로 돌아갔다. 다시 쫓아 보자" % String(s.name), 2.5)
 		_refresh()
 		return false
-	var goal := _cell_pos(String(s.region), path[_chase_i])
+	var goal := _path_pos(s, path[_chase_i])
 	var step := goal - _thief.global_position
 	step.y = 0.0
 	var move := Story.CHASE_SPEED * chase_speed_mul * delta
@@ -883,7 +894,7 @@ func _chase_tick(s: Dictionary, delta: float) -> bool:
 		_chase_pause = Story.CHASE_PAUSE
 	else:
 		var np := _thief.global_position + step.normalized() * move
-		np.y = _ground_y(String(s.region), np)
+		np.y = SkyRoute.top_y(String(s.isle)) if s.has("isle") else _ground_y(String(s.region), np)
 		_thief.global_position = np
 		var body := _thief.get_node_or_null("Body") as Node3D
 		if body:
@@ -1518,7 +1529,7 @@ func _build_thief(s: Dictionary) -> void:
 	_thief = Node3D.new()
 	_thief.name = "StoryThief"
 	add_child(_thief)
-	_thief.global_position = _cell_pos(String(s.region), (s.path as Array)[0])
+	_thief.global_position = _path_pos(s, (s.path as Array)[0])
 	var drone := String(s.get("body", "")) == "drone"
 	var horse := String(s.get("body", "")) == "horse" # 106장 ㊼-3 놀란 역마(코드 몸 말, 앞 = +Z)
 	var captain := String(s.get("body", "")) == "captain" # 106장 ㊽-4 선장의 잔상(사람 몸 + 선장 모자, 가면 없음)

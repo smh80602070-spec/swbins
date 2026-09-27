@@ -131,7 +131,7 @@ func _physics_process(_delta: float) -> void:
 			var cs := get_tree().get_first_node_in_group("go_character_screen")
 			if _frame == 1:
 				cs.call("open_screen")
-			if _frame == 3:
+			if _frame == 10: # 시야는 _process(그리는 프레임)에서 창을 본다 — 부하가 크면 물리 2프레임 사이에 그리는 프레임이 없을 수 있다
 				var off: bool = not _s.get("active")
 				var reopen: bool = _s.call("set_active", true) == null and not _s.get("active")
 				cs.call("close_screen")
