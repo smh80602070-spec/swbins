@@ -60,6 +60,9 @@
   "toigo_gloves_long": "=#4a3020",
   "toigo_flats": "=#4a3020"
  },
+ "under_reach": {
+  "toigo_tiered_mini_skirt": [0.06, 0.06]
+ },
  "under": {
   "toigo_tiered_mini_skirt": [
    "toigo_wool_pants"
