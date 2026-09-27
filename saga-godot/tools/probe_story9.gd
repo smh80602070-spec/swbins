@@ -13,6 +13,10 @@ extends Node
 ## [11] 초롱 → 석등(초롱은 장터 앞으로) [12] 석등 — 달 먼저(틀림) → 해 → 달 → 별 · 제단 돌 안 보임 → 장터 결정 깨짐
 ## [13] 너울(보임) → 도둑 [14] 조각 도둑 쫓기(드론) [15] 너울 → 괘종시계 [16] 괘종시계 지키기(물결 셋·돌 안 보임·바늘 돎)
 ## [17] 초롱 → 31장 끝·보상·바늘 멈춤.
+## 32장 "짓다 만 부양탑"(53-4, 9부 끝): [18] 표·자리(단계 여섯 talk·climb·light·talk·duel·talk · 심장 = 탑 칸·녹는 단계 HEART_OFF_STEP ·
+##   초록 = FLOW_STEP(대결 뒤) · 거북 암·초가 방패를 깸 · 동료 초롱 암·법구·고유 · 새길은 탑 발치 · 심장 그대로·신호등 빨강)
+## [19] 새길 → 탑 [20] 탑 — 발치에선 안 넘어가고 윗면에 서면 넘어감 [21] 태엽 심장 → 녹음 [22] 새길 → 광장
+## [23] 호박 등딱지 거북(광장, 바위 줄 예고) → 신호등 초록 [24] 초롱(광장) → 32장 끝·동료 초롱.
 ## 이야기 상태·부대 경험·가방은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
@@ -22,6 +26,10 @@ const Amber := preload("res://games/saga_go/world/region8_amber.gd")
 
 const CH30 := 29 # 30장(0부터)
 const CH31 := 30
+const CH32 := 31
+const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
+const Elements := preload("res://games/saga_go/combat/elements.gd")
+const Kits := preload("res://games/saga_go/data/kits.gd")
 
 var _p: CharacterBody3D
 var _sq: Node
@@ -248,7 +256,96 @@ func _physics_process(_delta: float) -> void:
 				and bool(_sq.call("npc_visible", "neoul")) and _flat(_sq.call("npc_pos", "chorong"), _cell("amber", Vector2(6.25, 5.3))) < 0.5
 			_check("chapter31", ok, "ch=%d mora +%d" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora)])
 			_next()
-		18:
+		18: # [18] 32장 표·자리
+			if _frame < 80:
+				return
+			var c := Story.chapter(CH32)
+			var steps: Array = c.steps
+			var bad: Array = []
+			if String(c.get("id", "")) != "ch32" or int(c.ar) <= int(Story.chapter(CH31).ar) or int(_sq.call("ch")) != CH32 or bool(_sq.call("locked")) \
+					or String(c.get("join", "")) != "story_chorong":
+				bad.append("chapter ch=%d locked=%s" % [_sq.call("ch"), _sq.call("locked")])
+			var types := steps.map(func(sd: Dictionary) -> String: return String(sd.type))
+			if types != ["talk", "climb", "light", "talk", "duel", "talk"]:
+				bad.append("types %s" % [types])
+			var lt: Dictionary = steps[Amber.HEART_OFF_STEP - 1]
+			if Amber.CH32 != CH32 or String(lt.type) != "light" or lt.cell != Amber.TOWER_CELL or not bool(lt.get("bare", false)) \
+					or absf(_sq.call("_spot_pos", lt).y - Amber.tower_top().y) > 0.3 or String(steps[1].type) != "climb" or steps[1].cell != Amber.TOWER_CELL:
+				bad.append("heart/climb")
+			var du: Dictionary = steps[Amber.FLOW_STEP - 1]
+			if String(du.type) != "duel" or String(du.kind) != "amber_turtle" or String(FieldEnemy.KINDS.amber_turtle.element) != "rock" \
+					or Elements.shield_mul("rock", "grass") <= 1.0:
+				bad.append("duel")
+			var m: Dictionary = Story.MEMBERS.get("story_chorong", {})
+			if String(m.get("era", "")) != "현대" or Elements.element_of("story_chorong") != "rock" or String(m.get("weapon", "")) != "catalyst" or not Kits.KITS.has("story_chorong"):
+				bad.append("member %s" % m)
+			if not bool(_sq.call("npc_visible", "saegil")) or _flat(_sq.call("npc_pos", "saegil"), _cell("amber", Vector2(4.0, 1.62))) > 0.5:
+				bad.append("saegil %s" % _sq.call("npc_pos", "saegil"))
+			if not bool(_am.call("heart_lit")) or bool(_am.call("lamp_green")):
+				bad.append("heart/lamp at st0")
+			_check("ch32_table", bad.is_empty(), str(bad))
+			_next()
+		19: # [19] 새길 → 탑
+			_talk("saegil", 1, "ch32_saegil", "amber", Amber.TOWER_CELL)
+		20: # [20] 탑 — 발치에선 안 넘어가고, 윗면에 서면 넘어간다
+			if _frame == 1:
+				_put(_cell("amber", Vector2(4.0, 1.55)))
+			if _frame == 20:
+				_v = int(_sq.call("st"))
+				_put(Amber.tower_top() + Vector3(1.5, 0.3, 1.5))
+			if _frame == 60:
+				var ok: bool = int(_v) == 1 and int(_sq.call("st")) == 2 and absf(_p.global_position.y - Amber.tower_top().y) < 0.6
+				_check("ch32_climb", ok, "base_st=%d st=%d y=%.2f/%.2f" % [_v, _sq.call("st"), _p.global_position.y, Amber.tower_top().y])
+				_next()
+		21: # [21] 태엽 심장 — 녹음
+			if _frame == 4:
+				_sq.call("receive_element", Amber.tower_top() + Vector3(0.3, 0, 0.3), 3.0, "fire")
+			if _frame == 150:
+				var ok: bool = int(_sq.call("st")) == 3 and not bool(_am.call("heart_lit")) and not bool(_am.call("lamp_green"))
+				_check("ch32_heart", ok, "st=%d heart=%s lamp=%s" % [_sq.call("st"), _am.call("heart_lit"), _am.call("lamp_green")])
+				_next()
+		22: # [22] 새길 → 광장
+			_talk("saegil", 4, "ch32_saegil2", "amber", Vector2(4.8, 1.6))
+		23: # [23] 호박 등딱지 거북 — 광장, 바위 줄 예고 → 쓰러뜨리면 신호등 초록
+			if _frame == 1:
+				_put(_target() + Vector3(0, 0, 8))
+			if _frame == 12:
+				var bosses := get_tree().get_nodes_in_group("go_story_boss")
+				var bo: Node3D = bosses[0] if not bosses.is_empty() else null
+				_v = {"n": bosses.size(), "marks": 0, "kind": "", "amber": false}
+				if bo:
+					_v.kind = String(bo.get("kind"))
+					_v.amber = TestMap.region_at(bo.global_position) == "amber"
+					bo.call("_clear_marks")
+					bo.call("_set_tell", false)
+					bo.call("begin_skill", "tide", _p)
+					_v.marks = (bo.get("_marks") as Array).size()
+					bo.call("_clear_marks")
+					bo.call("_die")
+			if _frame == 150:
+				var ok: bool = int(_v.n) == 1 and String(_v.kind) == "amber_turtle" and bool(_v.amber) and int(_v.marks) >= 1 and int(_sq.call("st")) == 5 and bool(_am.call("lamp_green"))
+				_check("ch32_duel", ok, "n=%d kind=%s marks=%d st=%d green=%s" % [_v.n, _v.kind, _v.marks, _sq.call("st"), _am.call("lamp_green")])
+				_next()
+		24: # [24] 초롱(광장) → 32장 끝·동료 초롱
+			if _frame == 1:
+				_v = {"mora": PartyState.count("mora"), "plaza": _flat(_sq.call("npc_pos", "chorong"), _cell("amber", Vector2(4.55, 1.75))) < 0.5}
+				_near_npc("chorong")
+			if _frame == 10:
+				_sq.call("interact")
+				_drain()
+			if _frame < 16:
+				return
+			_dismiss_prompts()
+			if _frame < 60:
+				return
+			_sq.call("toggle_journal")
+			var jt: String = _sq.call("journal_text")
+			_sq.call("toggle_journal")
+			var ok: bool = int(_sq.call("ch")) == CH32 + 1 and jt.contains("✔ 제32장") and PartyState.count("mora") >= int(_v.mora) + 160000 \
+				and bool(_v.plaza) and PartyState.members.has("story_chorong") and bool(_sq.call("npc_visible", "chorong"))
+			_check("chapter32", ok, "ch=%d mora +%d plaza=%s joined=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), _v.plaza, PartyState.members.has("story_chorong")])
+			_next()
+		25:
 			_finish()
 
 ## light bare 한 번 — 굳은 자리 k 에 원소, 다음 단계 want_st 로 넘어가고 아직 굳은 것이 frozen 이면 통과.
@@ -355,3 +452,4 @@ func _next() -> void:
 	_step += 1
 	_frame = 0
 	_v = null
+	_pressed.clear() # 장 끝 카드는 같은 노드가 다시 뜬다 — 단계마다 다시 누를 수 있게
