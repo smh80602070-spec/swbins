@@ -201,6 +201,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_skyport.gd").new())
 	if OS.get_environment("SAGA_CROSSING_PROBE") != "": # 106장 ㊾ 여섯째 지역 틈새 갈림길
 		add_child(load("res://tools/probe_crossing.gd").new())
+	if OS.get_environment("SAGA_STORY6_PROBE") != "": # 106장 ㊿-2~ 이야기 6부
+		add_child(load("res://tools/probe_story6.gd").new())
 	if OS.get_environment("SAGA_SUNKEN_PROBE") != "": # 106장 ㊿ 일곱째 지역 잠긴 도읍
 		add_child(load("res://tools/probe_sunken.gd").new())
 

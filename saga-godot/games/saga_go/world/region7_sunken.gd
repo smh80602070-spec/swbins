@@ -105,6 +105,7 @@ var _dome_open := false
 var _lamp_mat: StandardMaterial3D = null
 var _beam: Node3D = null
 var _light_on := false
+var _sea_lights: Node3D = null
 var _floaters: Array = [] # [node, base_y, phase] — 물 위에 뜬 것들이 느리게 오르내린다(충돌 없는 것만)
 var _t := 0.0
 var _check_t := 0.0
@@ -122,6 +123,7 @@ func _ready() -> void:
 	veg.set("region_id", REGION)
 	add_child(veg)
 	_build_palace()
+	_build_sea_lights()
 	_build_causeway()
 	_build_steps()
 	_build_base()
@@ -137,6 +139,7 @@ func _ready() -> void:
 	_set_gate(gate_open())
 	_set_door(dome_open())
 	_set_light(light_on())
+	_sea_lights.visible = sea_lights_on()
 
 static func cell_pos(c: Vector2) -> Vector3:
 	var p := TestMap.world_pos(c.x, c.y, REGION)
@@ -193,6 +196,20 @@ static func pier_ends() -> Array:
 	var p1 := c + dir * (RING_OUT - 1.0)
 	return [p0, p1]
 
+## 잠수정 선착장 판 가운데(월드, 판 윗면) — 잔교 40% 자리에서 잔교 진행 방향 오른쪽 4.5m(_build_base 와 같은 식).
+## 이야기 21장 go·여울 자리 칸(data/story.gd)이 이 자리를 쓴다.
+static func dock_pos() -> Vector3:
+	var ends := pier_ends()
+	var a: Vector3 = ends[0]
+	var b: Vector3 = ends[1]
+	var dir := (b - a).normalized()
+	var right := Vector3(dir.z, 0, -dir.x)
+	return (a + b) * 0.5 + right * 4.5 + dir * (-0.1 * a.distance_to(b))
+
+## 5부(20장)를 마친 뒤 — 궁궐 둘레 물 위에 불 켜진 테왁이 떠 있다(틈이 닫힌 날부터, 21장 "물속 불빛").
+static func sea_lights_on() -> bool:
+	return _story_ch() >= GATE_OPEN_CH
+
 func _process(delta: float) -> void:
 	_t += delta
 	for f in _floaters:
@@ -206,6 +223,7 @@ func _process(delta: float) -> void:
 			_set_door(dome_open())
 		if light_on() != _light_on:
 			_set_light(light_on())
+		_sea_lights.visible = sea_lights_on()
 	if _light_on and _beam != null:
 		_beam.rotation.y += delta * 0.5
 
@@ -247,6 +265,35 @@ func _build_palace() -> void:
 		var wall := _box(root, Vector3(10.0, 2.0, 0.8), w[0], STONE_DARK)
 		wall.rotation.y = float(w[1])
 	_label(root, "잠긴 궁궐", Vector3(0, 11.5, 0), Color(0.95, 0.88, 0.72))
+
+## 물속 불빛 — 궁궐 둘레 물 위에 뜬 불 켜진 테왁 여덟과 그 밑 물속 빛 망울(충돌 없음). 20장 뒤에만 보인다(sea_lights_on).
+func _build_sea_lights() -> void:
+	_sea_lights = _root_at("SeaLights", PALACE_CELL, 0.0)
+	var warm := Color(1.0, 0.72, 0.35)
+	for k in 8:
+		var a := TAU * float(k) / 8.0 + 0.3
+		var r := 17.0 + (k % 3) * 3.0
+		var t := Node3D.new()
+		t.position = Vector3(cos(a) * r, TerrainBuilder.WATER_LEVEL, sin(a) * r * 0.8)
+		_sea_lights.add_child(t)
+		var gourd := MeshInstance3D.new()
+		var gm := SphereMesh.new()
+		gm.radius = 0.45
+		gm.height = 0.8
+		gourd.mesh = gm
+		gourd.material_override = _glow(warm, 2.2)
+		gourd.position = Vector3(0, 0.15, 0)
+		t.add_child(gourd)
+		var orb := MeshInstance3D.new()
+		var om := SphereMesh.new()
+		om.radius = 0.9
+		om.height = 1.8
+		orb.mesh = om
+		orb.material_override = _glow(Color(1.0, 0.85, 0.55), 1.2)
+		orb.position = Vector3(0, -1.4, 0)
+		orb.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		t.add_child(orb)
+		_floaters.append([t, TerrainBuilder.WATER_LEVEL, float(k)])
 
 ## 돌다리 — 모래밭에서 궁궐 기단까지 물 위 +0.25 로 이어진 옛 다리(받침 기둥이 물속까지).
 func _build_causeway() -> void:

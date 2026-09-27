@@ -13,7 +13,7 @@ extends Node
 ## 바람 기둥·별까마귀 빙·불이 방패를 깸·동료 한별 풍·활) [13] 선장 → 막차 [14] 막차 타기(섬 위에 내림) [15] 반디(섬 위) → 한가운데
 ## [16] 무리 다섯이 섬 위에 [17] 선장(섬 위) → 매듭 [18] 매듭 석등이 섬 높이에·차례(틀리면 꺼짐) → 닻이 켜지고 틈이 오므라듦
 ## [19] 선장 → 지키기 [20] 매듭 제단 지키기(물결 셋이 섬 위에서) [21] 선장 → 대결 [22] 별까마귀(섬 위, 고리 예고)
-## [23] 선장 → 20장 끝·✔ 제20장·동료 한별·틈 닫힘(고요한 별빛)·선장은 첫 정거장 곁 [24] 바람 기둥 — 공중이면 솟아 섬 윗면 위로.
+## [23] 선장 → 20장 끝·✔ 제20장·동료 한별·틈 닫힘(고요한 별빛)·선장은 은하 나루 별배 곁(㊿-2 21장 처음 자리) [24] 바람 기둥 — 공중이면 솟아 섬 윗면 위로.
 ## 이야기 상태·부대 경험·가방은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
@@ -398,7 +398,7 @@ func _physics_process(_delta: float) -> void:
 			var cap: Vector3 = _sq.call("npc_pos", "hanbyeol")
 			var ok: bool = int(_sq.call("ch")) == CH20 + 1 and jt.contains("✔ 제20장") and PartyState.count("mora") >= int(_v.mora) + 100000 \
 				and PartyState.members.has("story_hanbyeol") and not bool(re.call("tear_visible")) and bool(re.call("anchors_lit")) \
-				and RiftEnd.tear_state() == 2 and _flat(cap, _cell3(Vector2(4.8, 2.4))) < 1.0
+				and RiftEnd.tear_state() == 2 and _flat(cap, _cell_any("skyport", Vector2(5.2, 1.95))) < 1.0 # 106장 ㊿-2 — 20장 뒤(21장 처음)엔 은하 나루 별배 곁
 			_check("chapter20", ok, "ch=%d mora +%d joined=%s tear=%s cap=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), PartyState.members.has("story_hanbyeol"),
 				re.call("tear_visible"), cap])
 			_next()
