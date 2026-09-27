@@ -93,6 +93,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/dispatch.js"></script>
 <script src="js/frost.js"></script>
 <script src="js/era-sites.js"></script>
+<script src="js/skyport.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -12740,6 +12741,82 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         kt.burst.name === '마패 호령' && kt.burst.type === 'ward' && kt.burst.taken === 0.75 && kt.burst.sec === 10 && kt.burst.r === 7;
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '암 창 · 파발 질주 dash 6m · 마패 호령 ward ×0.75 10초' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-37 4부 무대 · 다섯째 지역 은하 나루 (skyport.js, PLAN §5 ⑲-37) ── */
+    function spRig() {
+      var rig = stRig(36);
+      DG.skyport._resetForTest(); delete C.save.skyport;
+      return { SP: DG.skyport, undo: function () { DG.skyport._resetForTest(); rig.undo(); } };
+    }
+    t('은하 나루 ⑲-37 — 자리: 가운데 = 고향에 가장 가까운 태양 신도시 칸 · 명소 다섯·작은 발견 열이 모두 그 땅 들·숲 칸(억지 없음) · 탑 40m 밖 · 명소끼리 60m·나머지 30m 넘게 · 다시 풀어도 같은 자리 · 순간이동 명소 셋', function () {
+      var SP = DG.skyport, B = DG.biome, r = {}, bad = [];
+      SP._resetForTest();
+      var c = SP.center(), L = SP.sites(), near = Infinity;
+      for (var j = -14; j <= 14; j++) { for (var i = -14; i <= 14; i++) { var cc = B.cellAt(i, j); if (cc.zone === SP.ZONE) { near = Math.min(near, Math.hypot(cc.x, cc.y)); } } }
+      r.center = !!c && B.regionAt(c.x, c.y).cell.zone === SP.ZONE && Math.abs(Math.hypot(c.x, c.y) - near) < 1e-6 && SP.inRegion(c.x, c.y) && !SP.inRegion(0, 0);
+      r.count = L.length === 15 && L.filter(function (s) { return s.big; }).length === 5 && L.filter(function (s) { return s.way; }).map(function (s) { return s.id; }).join() === 'port,station,gate';
+      L.forEach(function (s, k) {
+        var kind = DG.world.terrainAt(Math.floor(s.x / 48), Math.floor(s.y / 48));
+        if (s.forced || B.regionAt(s.x, s.y).cell.zone !== SP.ZONE || ['grass', 'forest', 'farm'].indexOf(kind) < 0) { bad.push(s.id + '땅'); }
+        if (Math.hypot(s.x - c.x, s.y - c.y) < SP.TOWER_CLEAR) { bad.push(s.id + '탑'); }
+        for (var q = 0; q < k; q++) {
+          var o = L[q], sep = o.big ? SP.SEP_BIG : SP.SEP_SMALL;
+          if (Math.hypot(o.x - s.x, o.y - s.y) < sep - 1e-6) { bad.push(s.id + '-' + o.id); }
+        }
+      });
+      r.place = bad.length === 0;
+      var j1 = JSON.stringify(L); SP._resetForTest();
+      r.same = JSON.stringify(SP.sites()) === j1;
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? c.name + '(' + Math.round(Math.hypot(c.x, c.y)) + 'm) · 열다섯 모두 그 땅 들 · 탑 40m 밖 · 떨어짐 · 고정' : ('실패 ' + bad2.join(',') + ' ' + bad.join(','));
+    });
+
+    t('은하 나루 ⑲-37 — 발견·이동·벽: 명소 30m 안 = 발견(금 150·단사 2) 한 번만 · 작은 발견 14m(밖이면 ✕) · 나루 찾으면 순간이동 지점(키보드만, GPS 막힘) · 계류 탑·객차가 world3d.houseRects 로 막음 · 지도 표식(명소 늘·작은 것 찾은 것만)', function () {
+      var rig = spRig(), SP = rig.SP, W0 = DG.world, r = {};
+      try {
+        var port = SP.siteById('port'), bell = SP.siteById('bell'), stn = SP.siteById('station');
+        var g0 = C.save.player.gold || 0, d0 = C.save.dust || 0;
+        r.marks0 = SP.marks().length === 5 && SP.marks().every(function (m) { return m.big && !m.found; });
+        var f1 = SP.discoverAt(port.x + SP.LANDMARK_R - 1, port.y);
+        r.big = f1.length === 1 && f1[0].id === 'port' && C.save.player.gold === g0 + SP.REWARD_BIG.gold && C.save.dust === d0 + SP.REWARD_BIG.dust && SP.found('port');
+        r.once = SP.discoverAt(port.x, port.y).length === 0;
+        r.small = SP.discoverAt(bell.x + SP.SMALL_R(false) + 1, bell.y).length === 0 && SP.discoverAt(bell.x + SP.SMALL_R(false) - 1, bell.y).map(function (s) { return s.id; }).join() === 'bell' &&
+          SP.marks().length === 6;
+        var wp = SP.waypoints();
+        r.way = wp.length === 1 && wp[0].key === 'sp:port' && /별배 나루/.test(wp[0].name) && !SP.teleport('station');
+        DG.world = Object.create(W0, { mode: { value: 'geo' } });
+        r.geo = !SP.teleport('port');
+        DG.world = W0;
+        stGo({ x: 0, y: 0 });
+        r.tp = SP.teleport('port') && C.save.player.pos.x === port.x && C.save.player.pos.y === port.y + 8;
+        var tw = DG.world3d.houseRects(Math.floor(port.x / 48), Math.floor(port.y / 48));
+        var co = DG.world3d.houseRects(Math.floor(stn.x / 48), Math.floor((stn.y - 3.4) / 48));
+        r.walls = tw.some(function (q) { return frInRect(q, port.x, port.y); }) && co.some(function (q) { return frInRect(q, stn.x, stn.y - 3.4); }) &&
+          !tw.some(function (q) { return frInRect(q, port.x + 5, port.y + 5); });       // 착륙판은 걸어 다닌다
+      } finally { DG.world = W0; rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '나루 발견 한 번 · 절 종 14m · 나루 지점 · GPS ✕ · 계류 탑·객차 막힘 · 착륙판 트임' : ('실패 ' + bad.join(','));
+    });
+
+    t('은하 나루 ⑲-37 — 틈 문: 15장을 마치기 전엔 틈 고개 문이 막고(기둥 둘도) · 15장을 마치면 문만 사라지고 기둥 둘은 남는다 · 손잡이 끄면 벽·자리 없음', function () {
+      var rig = spRig(), SP = rig.SP, ST = DG.story, r = {};
+      try {
+        var gt = SP.siteById('gate'), gx = Math.floor(gt.x / 48), gy = Math.floor(gt.y / 48), h = SP.GATE_HALF;
+        function rs() { var o = []; for (var yy = -1; yy <= 1; yy++) { for (var xx = -1; xx <= 1; xx++) { o = o.concat(DG.world3d.houseRects(gx + xx, gy + yy)); } } return o; }
+        function hit(L, x, y) { return L.some(function (q) { return frInRect(q, x, y); }); }
+        var i15 = -1; ST.CHAPTERS.forEach(function (c, i) { if (c.id === 'ch15') { i15 = i; } });
+        C.save.story = { ch: i15, step: 10 };
+        var a = rs();
+        r.closed = !SP.gateOpen() && hit(a, gt.x, gt.y) && hit(a, gt.x - h, gt.y) && hit(a, gt.x + h, gt.y);
+        C.save.story = { ch: i15 + 1, step: 0 };
+        var b = rs();
+        r.open = SP.gateOpen() && !hit(b, gt.x, gt.y) && hit(b, gt.x - h, gt.y) && hit(b, gt.x + h, gt.y);
+        C.setTune('skyport.on', 0);
+        r.off = SP.sites().length >= 0 && SP.rectsIn(gx, gy).length === 0 && SP.marks().length === 0 && SP.waypoints().length === 0;
+      } finally { C.setTune('skyport.on', null); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '15장 전 막힘 · 뒤 문만 열림(기둥 남음) · 끄면 없음' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

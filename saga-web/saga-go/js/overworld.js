@@ -201,6 +201,12 @@
       FRo.marks().forEach(function (fm) { if (!fm.found) { return; } var fp2 = wl.worldToLatLng(fm.x, fm.y); pois.push({ lat: fp2.lat, lng: fp2.lng, t: 'frost', name: (fm.big ? '🏔️ ' : '❄️ ') + fm.name }); });
     }
 
+    /* 은하 나루 명소(§5 ⑲-37) — 찾은 것만 이름 */
+    var SPo = global.DG.skyport;
+    if (SPo && SPo.on() && SPo.marks && wl) {
+      SPo.marks().forEach(function (sm) { if (!sm.found) { return; } var sp2 = wl.worldToLatLng(sm.x, sm.y); pois.push({ lat: sp2.lat, lng: sp2.lng, t: 'frost', name: (sm.big ? '🌌 ' : '✨ ') + sm.name }); });
+    }
+
     /* 낚시터(§5 ⑲-24) — 탑을 찾은 지역만 */
     var FSo = global.DG.fishing;
     if (FSo && FSo.mapSpots && wl) {
@@ -385,6 +391,9 @@
     /* 서리봉 고원(frost.js, §5 ⑲-27) — 찾은 경계비·관측소 */
     var FRw = global.DG.frost;
     if (FRw && FRw.on() && FRw.waypoints) { list = list.concat(FRw.waypoints()); }
+    /* 은하 나루(skyport.js, §5 ⑲-37) — 찾은 나루·은하역·틈 고개 */
+    var SPw = global.DG.skyport;
+    if (SPw && SPw.on() && SPw.waypoints) { list = list.concat(SPw.waypoints()); }
     return list;
   }
   /** (x, y)에서 가장 가까운 순간이동 지점 — { key, x, y, name, d } 또는 null */
@@ -402,7 +411,9 @@
     var BMo = global.DG.biome, LFw = global.DG.landform;
     if (!wk || !BMo) { return false; }
     var FRj = global.DG.frost;
-    var ok = wk.indexOf('pk:') === 0 ? !!(LFw && LFw.teleport(wk.slice(3))) : wk.indexOf('fr:') === 0 ? !!(FRj && FRj.teleport(wk.slice(3))) : BMo.teleport(wk);
+    var SPj = global.DG.skyport;
+    var ok = wk.indexOf('pk:') === 0 ? !!(LFw && LFw.teleport(wk.slice(3))) : wk.indexOf('fr:') === 0 ? !!(FRj && FRj.teleport(wk.slice(3))) :
+      wk.indexOf('sp:') === 0 ? !!(SPj && SPj.teleport(wk.slice(3))) : BMo.teleport(wk);
     if (ok) { close(); }
     return ok;
   }

@@ -401,6 +401,7 @@
     if (global.DG.achieve) { global.DG.achieve.tick(dt); }           // 업적 셈·알림(§5⑲-25)
     if (global.DG.dispatch) { global.DG.dispatch.tick(dt); }         // 탐사 파견 — 역참 게시판·다 된 알림(§5⑲-26)
     if (global.DG.frost) { global.DG.frost.tick(dt); }               // 서리봉 고원 — 발견·눈·명소(§5⑲-27)
+    if (global.DG.skyport) { global.DG.skyport.tick(dt); }           // 은하 나루 — 발견·명소·틈 문(§5⑲-37)
     if (global.DG.eraSites) { global.DG.eraSites.tick(dt); }         // 3부 시대 명소 — 조선소 발견·그림(§5⑲-34)
     if (global.DG.domain) { global.DG.domain.tick(dt); }             // 숨은 터·원기·주간 보스(§5⑲-9)
     if (global.DG.fieldBoss) { global.DG.fieldBoss.tick(dt); }       // 들판 보스 보상 꽃(§5⑲-10)
