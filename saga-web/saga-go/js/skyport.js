@@ -11,6 +11,8 @@
  *   계류 탑 ⑲-38 16장 — 옆면을 타고 오른다(landform 기둥 타기, `poles`) · 꼭대기 빛 공은 16장 탑 단계를 지나면 켜진다(`beaconLit`)
  *   매인 별배 ⑲-38 — 16장 여섯째 단계부터 착륙판 위 SHIP_UP m 에 수평으로 떠 있다(`docked`, 그림만 — 밑은 비어 지나간다).
  *           그때부터 고원 별배는 떠났다(frost `away`)
+ *   종각    ⑲-39 17장 — 옛 절터 동쪽 BELFRY_OFF m(돌 기단 벽). 17장 여덟째 단계부터 종이 걸리고(`bellHung`) 작은 발견
+ *           "떨어진 절 종"의 종 몸은 숨는다(나무 틀은 남음). `ringBell` = 3초 잦아드는 흔들림(그림만)
  *
  * 자리 잡기는 frost.js 와 같은 규칙 — 가운데에서 off 만큼 간 곳에서 가장 가까운 그 땅 들·숲 칸(물·마을·길·산·강 아님), 서로 떨어짐.
  * 판정 층(`center`·`sites`·`rectsIn`·`gateOpen`)은 순수. 세이브 `save.skyport = { found }`(읽는 쪽 기본값).
@@ -57,6 +59,10 @@
   var TOWER_DRAIN = 0.75;   // 18m 를 꽉 찬 기력(100)으로 오를 수 있게 — 오르기 기력 ×0.75 ≈ 86
   var DOCK_CH = 'ch16', BEACON_AFTER = 5, DOCK_FROM = 6, SHIP_UP = 6, TOWER_HALF = 1.2;
   var PORT_PARTS = { ara: [PAD_R + 3, 5.5], bandi: [-5, 9], fight: [0, 6], altar: [0, 6] };
+  /* ⑲-39 17장 — 옛 절터(temple)·떨어진 종(작은 발견 bell) 곁 자리 [명소, m, m]. 종각 = 절터 동쪽, 한결은 그 남쪽 */
+  var BELFRY_OFF = [10, 0], BELFRY_HALF = 2, BELL_CH = 'ch17', BELL_FROM = 8, RING_SEC = 3;
+  var TEMPLE_PARTS = { belfry: ['temple', 10, 0], hangyeol: ['temple', 10, 3.6], tp_bandi: ['temple', 14.5, -1],
+    bell_fight: ['bell', -4, 7], bell_duel: ['bell', 3, 6], hg_bell: ['bell', -3, 3], bell_bandi: ['bell', 4, -3] };
   var GRID = 48;
 
   /* ── 자리(순수 — 지형·해시만) ───────────────────────────── */
@@ -122,8 +128,11 @@
     return out;
   }
   function siteById(id) { var L = sites(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
-  /** ⑲-38 나루 틀 자리 — 'ara'·'bandi'·'fight'·'altar'(계류대) — 나루가 없으면 null */
-  function portSpot(part) { var p = siteById('port'), o = PORT_PARTS[part]; return p && o ? { x: p.x + o[0], y: p.y + o[1] } : null; }
+  /** ⑲-38 나루 틀 자리 — 'ara'·'bandi'·'fight'·'altar'(계류대) · ⑲-39 절터·종 곁(TEMPLE_PARTS) — 그 명소가 없으면 null */
+  function portSpot(part) {
+    var tp = TEMPLE_PARTS[part], p = siteById(tp ? tp[0] : 'port'), o = tp ? [tp[1], tp[2]] : PORT_PARTS[part];
+    return p && o ? { x: p.x + o[0], y: p.y + o[1] } : null;
+  }
   function storyAt() { var s = core() && core().save ? core().save.story : null; return s || { ch: 0, step: 0 }; }
   function chIndex(id) { var ST = global.DG.story; if (!ST || !ST.CHAPTERS) { return -1; } for (var i = 0; i < ST.CHAPTERS.length; i++) { if (ST.CHAPTERS[i].id === id) { return i; } } return -1; }
   function passed(id, step) { var i = chIndex(id), s = storyAt(); return i >= 0 && (s.ch > i || (s.ch === i && (s.step || 0) >= step)); }
@@ -131,6 +140,11 @@
   function beaconLit() { return passed(DOCK_CH, BEACON_AFTER + 1); }
   /** 별배가 나루에 매였나 — 16장 여섯째 단계부터 늘 */
   function docked() { return passed(DOCK_CH, DOCK_FROM); }
+  /** ⑲-39 종이 종각에 걸렸나 — 17장 여덟째 단계(종 울리기)부터 늘 */
+  function bellHung() { return passed(BELL_CH, BELL_FROM); }
+  var ringT = 0;
+  /** ⑲-39 종을 울린다(그림만 — RING_SEC 초 잦아드는 흔들림) */
+  function ringBell() { ringT = RING_SEC; }
   var poleMemo = null;
   /** landform 기둥 타기 — 계류 탑 하나. 꼭대기는 네모(길 = 가운데 가로 1.8m·폭 2.2m) */
   function poles() {
@@ -162,7 +176,8 @@
     var x = st.x, y = st.y;
     switch (st.model) {
       case 'port': return [{ x: x, z: y, w: TOWER_HALF * 2, d: TOWER_HALF * 2, rot: 0 }, { x: x + PAD_R + 3, z: y + 2, w: 2.2, d: 2.2, rot: 0 }];
-      case 'temple': return [{ x: x, z: y - 4, w: 3.6, d: 3.6, rot: 0 }];
+      case 'temple': return [{ x: x, z: y - 4, w: 3.6, d: 3.6, rot: 0 },
+        { x: x + BELFRY_OFF[0], z: y + BELFRY_OFF[1], w: BELFRY_HALF * 2, d: BELFRY_HALF * 2, rot: 0 }];   // ⑲-39 종각 기단
       case 'station': return [{ x: x, z: y - 3.4, w: 12, d: 2.8, rot: 0 }];
       case 'gate': return [{ x: x - GATE_HALF, z: y, w: 1, d: 1, rot: 0 }, { x: x + GATE_HALF, z: y, w: 1, d: 1, rot: 0 },
         { x: x, z: y, w: GATE_HALF * 2 - 1, d: 0.6, rot: 0, door: true }, { x: x + GATE_HALF + 3, z: y + 2, w: 1.2, d: 0.6, rot: 0 }];
@@ -289,6 +304,15 @@
         ball(T3, g, m.stone, 0.35, 0, 6.6, -4);
         for (j = 0; j < 2; j++) { for (i = 0; i < 4; i++) { cyl(T3, g, m.stoneD, 0.45, 0.55, 0.35, -4.5 + i * 3, 0.17, 2 + j * 4, 10); } }   // 주춧돌 줄
         for (i = 0; i < 3; i++) { box(T3, g, m.stone, 4, 0.3, 1, 0, 0.15 + i * 0.3, 8 + i * 1); }       // 돌계단
+        /* ⑲-39 종각 — 돌 기단·기둥 넷·들보·기와 지붕 둘. 종(o.hung)은 들보에 매달려 17장 여덟째부터 보인다 */
+        var bx = BELFRY_OFF[0], bz = BELFRY_OFF[1], bh = BELFRY_HALF;
+        box(T3, g, m.stoneD, bh * 2, 0.6, bh * 2, bx, 0.3, bz);
+        for (i = 0; i < 4; i++) { cyl(T3, g, m.wood, 0.16, 0.18, 4.4, bx + (i < 2 ? -1.5 : 1.5), 2.8, bz + (i % 2 ? 1.5 : -1.5), 8); }
+        box(T3, g, m.wood, 3.4, 0.3, 0.3, bx, 4.9, bz - 1.5); box(T3, g, m.wood, 3.4, 0.3, 0.3, bx, 4.9, bz + 1.5); box(T3, g, m.wood, 0.3, 0.3, 3.4, bx, 4.9, bz);
+        box(T3, g, m.roof, 5, 0.25, 5, bx, 5.2, bz); box(T3, g, m.roof, 3.4, 0.9, 3.4, bx, 5.7, bz, Math.PI / 4);
+        o.hung = new T3.Group(); o.hung.position.set(bx, 4.75, bz); g.add(o.hung);
+        cyl(T3, o.hung, m.dark, 0.06, 0.06, 0.5, 0, -0.25, 0, 6);                                        // 종고리(별배 쇠)
+        cyl(T3, o.hung, m.bronze, 0.5, 0.85, 1.6, 0, -1.3, 0, 16); ball(T3, o.hung, m.bronze, 0.5, 0, -0.5, 0).scale.y = 0.5;
         break;
       }
       case 'station': {
@@ -324,7 +348,7 @@
       case 'courier': box(T3, g, m.alloy, 1.2, 0.9, 0.9, 0, 0.75, 0); for (i = 0; i < 4; i++) { cyl(T3, g, m.dark, 0.2, 0.2, 0.15, i < 2 ? -0.45 : 0.45, 0.2, i % 2 ? 0.5 : -0.5, 8).rotation.x = Math.PI / 2; } box(T3, g, m.glow, 0.5, 0.2, 0.05, 0, 0.9, 0.47); break;
       case 'bell': {
         box(T3, g, m.wood, 0.25, 2.6, 0.25, -1.2, 1.3, 0); box(T3, g, m.wood, 0.25, 2.6, 0.25, 1.2, 1.3, 0); box(T3, g, m.wood, 2.8, 0.25, 0.3, 0, 2.6, 0);
-        var bl = new T3.Mesh(new T3.CylinderGeometry(0.55, 0.8, 1.4, 14, 1, true), m.bronze); bl.position.set(0.3, 0.7, 0.6); bl.rotation.z = 1.2; g.add(bl);   // 떨어져 누운 종
+        var bl = new T3.Mesh(new T3.CylinderGeometry(0.55, 0.8, 1.4, 14, 1, true), m.bronze); bl.position.set(0.3, 0.7, 0.6); bl.rotation.z = 1.2; g.add(bl); o.bellBody = bl;   // 떨어져 누운 종 — ⑲-39 종각에 걸리면 숨김
         break;
       }
       case 'phone': box(T3, g, m.red, 1, 2.2, 1, 0, 1.1, 0); box(T3, g, m.glow, 0.7, 1.2, 0.05, 0, 1.3, 0.51); break;
@@ -350,7 +374,8 @@
     if (!w) { fx = {}; return; }
     var T3 = w.three();
     if (!T3) { return; }
-    var p = core().save.player.pos, seen = {}, L = sites(), i, open = gateOpen();
+    var p = core().save.player.pos, seen = {}, L = sites(), i, open = gateOpen(), hung = bellHung();
+    ringT = Math.max(0, ringT - (dt || 0));
     for (i = 0; i < L.length; i++) {
       var st = L[i];
       if (Math.hypot(st.x - p.x, st.y - p.y) > 280) { continue; }
@@ -361,6 +386,8 @@
       if (o.door) { o.door.visible = !open; if (!open) { o.door.material.opacity = 0.35 + Math.sin(clock * 2) * 0.1; } }
       if (o.beacon) { o.beacon.material = beaconLit() ? M(T3).glow : M(T3).dark; }
       if (st.id === 'port') { paintShip(w, T3, st, o); }
+      if (o.hung) { o.hung.visible = hung; o.hung.rotation.x = Math.sin(clock * 7) * 0.3 * (ringT / RING_SEC); }   // ⑲-39 울리면 잦아드는 흔들림
+      if (o.bellBody) { o.bellBody.visible = !hung; }
     }
     for (var id in fx) { if (fx.hasOwnProperty(id) && !seen[id]) { w.removeFx(fx[id].root); delete fx[id]; } }
   }
@@ -395,7 +422,8 @@
     ZONE: ZONE, REGION: REGION, LANDMARKS: LANDMARKS, SMALL: SMALL, LANDMARK_R: LANDMARK_R, SMALL_R: SMALL_R, REWARD_BIG: REWARD_BIG, REWARD_SMALL: REWARD_SMALL,
     SEP_BIG: SEP_BIG, SEP_SMALL: SEP_SMALL, TOWER_CLEAR: TOWER_CLEAR, PAD_R: PAD_R, PAVE_R: PAVE_R, TOWER_H: TOWER_H, GATE_HALF: GATE_HALF,
     on: on, center: center, sites: sites, siteById: siteById, inRegion: inRegion, gateOpen: gateOpen, rectsOf: rectsOf, rectsIn: rectsIn,
-    PORT_PARTS: PORT_PARTS, TOWER_HALF: TOWER_HALF, TOWER_DRAIN: TOWER_DRAIN, SHIP_UP: SHIP_UP, DOCK_FROM: DOCK_FROM, portSpot: portSpot, beaconLit: beaconLit, docked: docked, poles: poles,
+    PORT_PARTS: PORT_PARTS, TEMPLE_PARTS: TEMPLE_PARTS, BELFRY_OFF: BELFRY_OFF, BELFRY_HALF: BELFRY_HALF, BELL_FROM: BELL_FROM,
+    bellHung: bellHung, ringBell: ringBell, ringing: function () { return ringT; }, TOWER_HALF: TOWER_HALF, TOWER_DRAIN: TOWER_DRAIN, SHIP_UP: SHIP_UP, DOCK_FROM: DOCK_FROM, portSpot: portSpot, beaconLit: beaconLit, docked: docked, poles: poles,
     found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks, tick: tick,
     _resetForTest: function () { memo = null; rectMemo = null; centerMemo = undefined; poleMemo = null; }
   };

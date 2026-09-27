@@ -10266,8 +10266,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     t('이야기 ⑲-12 — 표·자리: 장 둘(단계 8·4, 여정 등급 1·5) · 인물 셋 = ⑮ 땅 탑 + 자리(고향 촌장·갈대 나루 사공·옛 성터 학자) · 모든 단계에 목표 · 같은 세계면 같은 자리 · 몸 셋 고정', function () {
       var ST = DG.story, A3 = DG.asset3d, r = {};
-      r.table = ST.CHAPTERS.length === 16 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
-        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30·34~36·38 가 3~16장을 더했다
+      r.table = ST.CHAPTERS.length === 17 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
+        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30·34~36·38·39 가 3~17장을 더했다
       var e = ST.npcPos('elder'), f = ST.npcPos('ferryman'), s = ST.npcPos('scholar'), ga = ST.anchorOf('galdae'), go = ST.anchorOf('gojeong');
       r.npc = e.x === -22 && e.y === 16 && f.x === ga.x - 18 && f.y === ga.y - 24 && s.x === go.x - 18 && s.y === go.y - 24 &&
         DG.biome.cellAt.apply(null, ga.key.split('_').map(Number)).zone === 'galdae' && DG.biome.cellAt.apply(null, go.key.split('_').map(Number)).zone === 'gojeong';
@@ -12853,7 +12853,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       try {
         LF._resetForTest(); SP._resetForTest();
         var c16 = ST.CHAPTERS[15], S16 = c16.steps;
-        r.table = ST.CHAPTERS.length === 16 && c16.id === 'ch16' && c16.ar === 38 && !c16.join && S16.length === 9 && c16.reward.knot === 6 && c16.reward.gold === 4500 &&
+        r.table = ST.CHAPTERS.length >= 16 && c16.id === 'ch16' && c16.ar === 38 && !c16.join && S16.length === 9 && c16.reward.knot === 6 && c16.reward.gold === 4500 &&
           S16.map(function (q) { return q.type; }).join() === 'talk,go,talk,kill,talk,climb,talk,defend,talk' && S16[5].pole === 'sp_tower' &&
           S16[7].dirs.join() === '0,45,135,180,225,270,315' && ST.defendSlots(S16[7]).length === 7;
         C.save.story = { ch: 15, step: 0 };
@@ -12920,6 +12920,84 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '5째 고원 · 6째부터 나루 · 끝나도 나루 · 15장엔 없음' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-39 이야기 4부 제17장 · 옛 절터의 종 (story ch17·한결·이끼 이무기 · skyport 종각·걸린 종, PLAN §5 ⑲-39) ── */
+    t('이야기 ⑲-39 — 17장 열 단계(Lv40)·보상 · 한결 종각 남쪽(4~7째 쓰러진 종 곁) · 반디 0~6 나루/7 종 곁/8~9 종각 · 흐름: 아라 → 옛 절터 → 한결 → 종 곁 무리 4 → 한결 → 이끼 이무기(🌿방패 — 풍 + 덩굴뱀·매) → 한결 → 반디 → 종 울리기(먼 ✕) → 한결 · 끝', function () {
+      var rig = stRig(40), ST = rig.ST, FC = DG.fieldCombat, SP = DG.skyport, TL = DG.talent, r = {};
+      try {
+        SP._resetForTest();
+        var c17 = ST.CHAPTERS[16], S17 = c17.steps;
+        r.table = ST.CHAPTERS.length === 17 && c17.id === 'ch17' && c17.ar === 40 && !c17.join && S17.length === 10 && c17.reward.knot === 6 && c17.reward.gold === 4750 &&
+          S17.map(function (q) { return q.type; }).join() === 'talk,go,talk,kill,talk,duel,talk,talk,light,talk' && S17[5].kind === 'moss_serpent' && S17[5].shield === 'grass' &&
+          S17[8].bell === true && FC.COUNTER.grass === 'wind';
+        function np(k, si) { C.save.story = { ch: 16, step: si }; return ST.npcPos(k); }
+        r.hangyeol = st10Eq(np('hangyeol', 0), SP.portSpot('hangyeol')) && st10Eq(np('hangyeol', 4), SP.portSpot('hg_bell')) &&
+          st10Eq(np('hangyeol', 7), SP.portSpot('hg_bell')) && st10Eq(np('hangyeol', 8), SP.portSpot('hangyeol')) && ST.visible('hangyeol');
+        r.bandi = st10Eq(np('bandi', 0), SP.portSpot('bandi')) && st10Eq(np('bandi', 7), SP.portSpot('bell_bandi')) && st10Eq(np('bandi', 9), SP.portSpot('tp_bandi'));
+        var bellSite = SP.siteById('bell'), belfry = SP.portSpot('belfry');
+        r.spots = ['bell_fight', 'bell_duel', 'hg_bell', 'bell_bandi', 'hangyeol'].every(function (k) { var q = SP.portSpot(k); return ST.landAt(q.x, q.y); }) &&
+          Math.hypot(SP.portSpot('bell_fight').x - bellSite.x, SP.portSpot('bell_fight').y - bellSite.y) < 10;
+        C.save.story = { ch: 16, step: 0 };
+        stGo(ST.npcPos('ara')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        r.temple = st10Eq(ST.targetOf(ST.step()), SP.siteById('temple'));
+        stGo(ST.targetOf(ST.step())); ST.check(); r.go = C.save.story.step === 2;
+        stGo(ST.npcPos('hangyeol')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        var kt = ST.targetOf(ST.step());
+        stGo({ x: kt.x + 20, y: kt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.map(function (u) { return S.foes[u].kind; }).join() === 'vine,vine,raptor,hawk';
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 4;
+        stGo(ST.npcPos('hangyeol')); r.t4 = stTalkAll(ST) && C.save.story.step === 5;
+        var dt = ST.targetOf(ST.step());
+        stGo({ x: dt.x + 20, y: dt.y }); FC.tick(0.05); ST.check();
+        var cb = S.camps[ST.keyOf()], b = cb && S.foes[cb.uids[0]];
+        var lv = b && FC.live().filter(function (x) { return x.uid === b.uid; })[0];
+        r.boss = !!b && b.kind === 'moss_serpent' && b.el === 'grass' && !!lv && lv.ref.id === 'pt_cheongryong' && FC.FOES.moss_serpent.boss;
+        b.hp = Math.round(b.hpMax * 0.4); ST.check();
+        var ad = S.camps[ST.keyOf() + ':add'];
+        r.p2 = b.shEl === 'grass' && !!ad && ad.uids.map(function (u) { return S.foes[u].kind; }).join(',') === 'vine,hawk' && FC.shieldMul('grass', 'wind') > 1;
+        b.shield = 0; b.layers = [];
+        for (var k = 0; k < 3 && !b.dead; k++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); }
+        FC.tick(0.05);
+        r.duel = C.save.story.step === 6 && !S.camps[ST.keyOf() + ':add'];
+        stGo(ST.npcPos('hangyeol')); r.t6 = stTalkAll(ST) && C.save.story.step === 7;
+        var hungBefore = SP.bellHung();
+        stGo(ST.npcPos('bandi')); r.t7 = stTalkAll(ST) && C.save.story.step === 8 && !hungBefore && SP.bellHung();
+        r.target = st10Eq(ST.targetOf(ST.step()), belfry) && ST.aimPoints().length === 1;
+        stGo({ x: belfry.x, y: belfry.y + 4 });
+        C.emit('field:element', { el: 'wind', x: belfry.x + 30, y: belfry.y, r: 3, t: 'skill' });
+        var still = C.save.story.step === 8 && !SP.ringing();
+        C.emit('field:element', { el: 'wind', x: belfry.x, y: belfry.y + 3, r: 2, t: 'skill' });
+        r.ring = still && C.save.story.step === 9 && SP.ringing() > 0;
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('hangyeol'));
+        r.end = stTalkAll(ST) && C.save.story.ch === 17 && C.save.story.step === 0 && m.knot === k0 + 6 && C.save.player.gold === gold0 + 4750 && SP.bellHung();
+      } finally { SP._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '열 단계 · 아라 → 절터 → 한결 → 무리 4 → 한결 → 이끼 이무기(🌿방패 + 덩굴뱀·매) → 한결 → 반디(종 걸림) → 종 울림(먼 ✕) → 한결 · 🪢+6 🪙+4750' : ('실패 ' + bad.join(','));
+    });
+
+    t('종각 ⑲-39 — 옛 절터 동쪽 10m 종각 기단이 벽(4m 네모) · 한결·종 울리는 자리는 기단 밖 · 17장 여덟째 단계 전엔 종 없음 · 여덟째부터 걸림 · 장이 끝나도 그대로 · 16장엔 없음', function () {
+      var SP = DG.skyport, rig = stRig(40), r = {};
+      try {
+        SP._resetForTest();
+        var tp = SP.siteById('temple'), bf = SP.portSpot('belfry'), hg = SP.portSpot('hangyeol');
+        var rs = SP.rectsIn(Math.floor(bf.x / 48), Math.floor(bf.y / 48)).filter(function (q) { return Math.abs(q.x - bf.x) < 1e-6 && Math.abs(q.z - bf.y) < 1e-6; });
+        r.rect = bf.x === tp.x + SP.BELFRY_OFF[0] && bf.y === tp.y && rs.length === 1 && rs[0].w === SP.BELFRY_HALF * 2;
+        r.outside = Math.abs(hg.y - bf.y) > SP.BELFRY_HALF && SP.TEMPLE_PARTS.hangyeol[0] === 'temple' && SP.TEMPLE_PARTS.bell_fight[0] === 'bell';
+        C.save.story = { ch: 16, step: 7 };
+        r.before = !SP.bellHung();
+        C.save.story = { ch: 16, step: 8 };
+        r.hung = SP.bellHung();
+        C.save.story = { ch: 17, step: 0 };
+        r.after = SP.bellHung();
+        C.save.story = { ch: 15, step: 8 };
+        r.old = !SP.bellHung();
+      } finally { SP._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '기단 벽 4m · 한결 기단 밖 · 7째 없음 · 8째부터 걸림 · 끝나도 · 16장엔 없음' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

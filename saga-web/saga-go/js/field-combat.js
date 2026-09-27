@@ -263,7 +263,11 @@
                 boss: true, rot: ['rift', 'melee', 'spit', 'rift', 'slam', 'halo'] },
     /* ⑲-36 15장 옛 역참 길 — 12장에 달아난 구미호가 옛 시대 여우불을 먹었다(화). 같은 몸·틀, 2단계 화 방패·졸개는 story.js */
     rift_fox_ember: { name: '여우불 구미호', ref: 'pt_gumiho', el: 'fire', hp: 16, atk: 2.3, spd: 6.0, reach: 3.0, type: 'melee', wind: 0.6, cd: 1.4, h: 2.3, exp: 0,
-                boss: true, rot: ['rift', 'shadow', 'melee', 'rift', 'tide', 'halo'] }
+                boss: true, rot: ['rift', 'shadow', 'melee', 'rift', 'tide', 'halo'] },
+    /* ⑲-39 17장 옛 절터 — 틈에서 기어 나와 떨어진 종에 똬리를 틀고 수백 년 이끼를 먹은 이무기(먹구름 이무기와 같은 청룡 몸, 초 — 덩굴뱀 몸은 새 원소 괴물 몫).
+       있는 패턴만 — 이끼 침·밀물 원·내려치기·고리. 2단계 초 방패(풍으로 깬다)·졸개는 story.js 가 두른다 */
+    moss_serpent: { name: '이끼 이무기', ref: 'pt_cheongryong', el: 'grass', hp: 17, atk: 2.3, spd: 4.2, reach: 4.0, type: 'slam', wind: 1.0, cd: 1.8, h: 2.6, exp: 0, r: 4.4,
+                boss: true, rot: ['spit', 'tide', 'slam', 'melee', 'halo', 'spit'] }
   };
   /* ⑲-14 공격 차례(`rot`)의 한 수씩 — reach 안이면 휘두른다. shadow 는 내 등 뒤 SHADOW_BACK m 로 옮겨 붙어 제 둘레 원 */
   var ROT = {

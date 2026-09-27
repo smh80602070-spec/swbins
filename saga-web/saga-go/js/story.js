@@ -1,11 +1,11 @@
 /**
- * 이야기 임무 1~16장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~38, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2)
+ * 이야기 임무 1~17장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~39, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2·3)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
  *              가면 쓴 나그네는 4장 둘째~여섯째 단계에만 고향 남쪽 다리목에 서고, 따라가기를 지나면 길 끝에 선다
  *   단계       talk(곁에서 💬/F → 대화) · go(그 자리 반경 안) · boss(그 탑 ⑪ 수호자 — 이미 쓰러져 꽃을 기다리면 바로 넘김) ·
- *              kill(임무 적 무리 `sq:` — 되살아나지 않고 전리품 없음) · light(옛 제단에 어느 원소든 스킬·해방) ·
+ *              kill(임무 적 무리 `sq:` — 되살아나지 않고 전리품 없음) · light(옛 제단에 어느 원소든 스킬·해방 — ⑲-39 bell 이면 등롱 없이 종각 종을 울린다) ·
  *              domain(먹구름 제단 또는 id 로 고른 숨은 터 깨기 — `domain:clear`) · gather(그 채집물 n 번 — `cook:gather`) ·
  *              cook(아무 요리 하나 — `cook:done`) · follow(인물이 길 점을 따라 걷는다 — 가까우면 걷고 멀면 선다) ·
  *              seal(제단 둘레 석등 해·달·별을 비문 차례대로 — 틀리면 다 꺼진다) · climb(⑰ 봉우리 꼭대기) ·
@@ -65,7 +65,10 @@
     /* ⑲-36 고향 남쪽 옛 역참 터 — 마당 가운데·달음·여우불 무리·구미호 */
     station: { era: 'station' }, st_dareum: { era: 'st_dareum' }, st_fight: { era: 'st_fight' }, st_duel: { era: 'st_duel' },
     /* ⑲-38 은하 나루(skyport.js) — 명소 자리(skyport) 또는 나루 틀 자리(port) */
-    sp_gate: { skyport: 'gate' }, sp_port: { skyport: 'port' }, sp_ara: { port: 'ara' }, sp_bandi: { port: 'bandi' }, sp_fight: { port: 'fight' }, sp_altar: { port: 'altar' } };
+    sp_gate: { skyport: 'gate' }, sp_port: { skyport: 'port' }, sp_ara: { port: 'ara' }, sp_bandi: { port: 'bandi' }, sp_fight: { port: 'fight' }, sp_altar: { port: 'altar' },
+    /* ⑲-39 옛 절터·종각(skyport TEMPLE_PARTS) — 쓰러진 종(작은 발견 bell) 곁 무리·이무기·한결·반디 */
+    sp_temple: { skyport: 'temple' }, sp_belfry: { port: 'belfry' }, sp_hangyeol: { port: 'hangyeol' }, sp_tp_bandi: { port: 'tp_bandi' },
+    sp_bell_fight: { port: 'bell_fight' }, sp_bell_duel: { port: 'bell_duel' }, sp_hg_bell: { port: 'hg_bell' }, sp_bell_bandi: { port: 'bell_bandi' } };
   /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
   var DAREUM_SHIP = [-12, 10], WING_SEAM = [-4, 8];
   /* ⑲-28 하람이 서는 자리 — 관측소 곁(늘)·비행선 곁. 산성 안은 남쪽 문 안쪽(담 반 변 13m) */
@@ -121,7 +124,8 @@
         { ch: 10, from: 8, to: 8, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 11, from: 6, to: 8, spot: 'fr_ship', off: HARAM_SHIP }] },
     bandi:    { id: 'story_bandi',    name: '조종 기계 반디', short: '반디', zone: 'snowfort', spot: 'fr_ship', off: [0, 12], color: '#8cd9f2', pet: 'drone',
       idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }, { ch: 12, from: 6, to: 8, spot: 'yard_bandi' },
-        { ch: 13, from: 9, to: 9, spot: 'obs_bandi', sky: true }, { ch: 15, from: 6, to: 8, spot: 'sp_bandi' }] },
+        { ch: 13, from: 9, to: 9, spot: 'obs_bandi', sky: true }, { ch: 15, from: 6, to: 8, spot: 'sp_bandi' },
+        { ch: 16, from: 0, to: 6, spot: 'sp_bandi' }, { ch: 16, from: 7, to: 7, spot: 'sp_bell_bandi' }, { ch: 16, from: 8, to: 9, spot: 'sp_tp_bandi' }] },
     /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
     daon:     { id: 'story_daon',     name: '조선공 다온', short: '다온', zone: 'galdae', spot: 'yard_daon', off: [0, 0], color: '#335ea0',
       idle: '이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.' },
@@ -134,6 +138,9 @@
     /* ⑲-38 나루지기 아라(미래) — 늘 별배 나루 표지 부스 곁 */
     ara:      { id: 'story_ara',      name: '나루지기 아라', short: '아라', zone: 'solar', spot: 'sp_ara', off: [0, 0], color: '#47669e',
       idle: '별배 나루는 오늘도 비어 있어요. …기다리는 게 제 일이니까요.' },
+    /* ⑲-39 종지기 한결(과거) — 늘 옛 절터 종각 남쪽, 17장 4~7째는 쓰러진 종 곁 */
+    hangyeol: { id: 'story_hangyeol', name: '종지기 한결', short: '한결', zone: 'solar', spot: 'sp_hangyeol', off: [0, 0], color: '#756d61',
+      idle: '종지기는 종 곁에 있어야 하는 법이오. 종이 없어도 말이오.', at: [{ ch: 16, from: 4, to: 7, spot: 'sp_hg_bell' }] },
     /* ⑲-36 놀란 역마 — 늘 역참 마구간(길 첫 점), 15장 쫓기 때만 역참 틀 기준 길(runSpot)을 달린다. 말 모델(pet) */
     horse:    { id: 'story_horse',    name: '놀란 역마', short: '역마', zone: 'home', color: '#6b4a2e', pet: 'horse', idle: '푸르르— 히힝.',
       runSpot: 'station', runPath: (global.DG.eraSites ? global.DG.eraSites.HORSE_PATH : [[0, 0]]) },
@@ -143,7 +150,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -743,6 +750,53 @@
             ['?', ['선장님이 절터로?', '종소리?']],
             ['아라', '절터 종은 수백 년 전에 떨어져 나뒹구는데… 가끔 밤마다 울려요. 선장님이 거기서 무언가를 들으셨나 봐요.', 'sorrow'],
             ['아라', '나루는 제가 지킬게요. 별배도 여기 쉬게 두세요. 이제 여기가 여러분 나루이기도 하니까!', 'fun']] }
+      ] },
+    /* ⑲-39 4부 둘째 장 — 은하 나루 서쪽 옛 절터. 아라 → 절터 → 한결 → 쓰러진 종(작은 발견) 곁 무리 → 한결 → 이끼 이무기(2단계 초 방패 —
+       풍으로) → 한결 → 반디(견인 빛줄로 종을 종각에 — 이때부터 걸린다) → 종각 종 울리기(등롱 없이 원소) → 한결 */
+    { id: 'ch17', name: '제17장 · 옛 절터의 종', ar: 40,
+      reward: { knot: 6, gold: 4750, guide: 5, secret: 5, party: 1350 },
+      steps: [
+        { type: 'talk', npc: 'ara', text: '나루지기 아라와 이야기하기',
+          lines: [['아라', '어젯밤에도 울렸어요. 옛 절터 쪽에서 — 뎅, 하고 딱 한 번.', 'surprised'],
+            ['?', ['떨어진 종이 운다고?', '선장님 기록의 그 종소리?']],
+            ['아라', '절터엔 늘 한 분이 계세요. 스스로 종지기라고 하시는데… 종이 떨어진 지 수백 년인데도요.', 'sorrow'],
+            ['아라', '선장님이 무얼 들으셨는지, 그분이라면 알 거예요.']] },
+        { type: 'go', spot: 'sp_temple', text: '은하 나루 서쪽 옛 절터로' },
+        { type: 'talk', npc: 'hangyeol', text: '옛 절터의 종지기 한결과 이야기하기',
+          lines: [['한결', '종을 찾아왔소? …별배를 탄 그 선장도 같은 말을 했지.', 'surprised'],
+            ['?', ['선장님을 만났어요?', '종은 어디 있어요?']],
+            ['한결', '나는 이 절의 종지기요. 종각이 무너지던 밤 종을 붙들다 시간 틈에 휩쓸려 — 눈을 떠 보니 절은 주춧돌만 남았더군.', 'sorrow'],
+            ['한결', '종은 그때 서쪽 비탈로 굴러떨어졌소. 요즘 밤마다 우는 건 종이 아니오 — 종을 감은 무언가가 틈 짐승을 부르는 소리지.', 'angry'],
+            ['한결', '선장도 그 울음을 따라 비탈로 갔소. 먼저 비탈에 몰린 짐승들부터 쫓아 주시오.']] },
+        { type: 'kill', spot: 'sp_bell_fight', kinds: ['vine', 'vine', 'raptor', 'hawk'], text: '쓰러진 종 곁에 몰려든 틈 짐승 물리치기',
+          enter: '⚔️ 이끼 덮인 종 곁에 틈 짐승들이 똬리를 틀었다' },
+        { type: 'talk', npc: 'hangyeol', text: '쓰러진 종 곁의 한결과 이야기하기',
+          lines: [['한결', '이 종이오. 이끼가 두껍게 덮였어도 소리는 그대로요.', 'joy'],
+            ['한결', '…쉿. 종 속에서 무언가 몸을 뒤채는 소리가 들리오?', 'surprised'],
+            ['?', ['뭔가 있어요!', '물러나요!']],
+            ['한결', '이무기요! 틈에서 기어 나와 종에 똬리를 틀고 수백 년 이끼를 먹은 놈 — 덩굴 비늘은 바람이 찢소!', 'angry']] },
+        { type: 'duel', spot: 'sp_bell_duel', kind: 'moss_serpent', shield: 'grass', adds: ['vine', 'hawk'], text: '종을 감은 이끼 이무기와 맞서기',
+          enter: '🐍 종을 감고 있던 이끼 이무기가 머리를 들었다!',
+          p2: '🌿 이끼 이무기가 덩굴 비늘을 곤두세웠다 — 바람으로 찢어라! 덩굴뱀과 회오리매가 뛰어든다',
+          win: '🐍 이무기가 종에서 풀려나 — 틈 속으로 스르르 사라졌다' },
+        { type: 'talk', npc: 'hangyeol', text: '한결과 이야기하기',
+          lines: [['한결', '풀려났소… 종이 다시 숨을 쉬는구려.', 'joy'],
+            ['한결', '허나 이 무게를 어찌 종각까지 올린단 말이오. 옛날엔 스님 서른이 밧줄로 끌어 올렸소.', 'sorrow'],
+            ['?', ['별배라면 들 수 있어요.', '반디를 불러 볼게요.']],
+            ['한결', '하늘 배로 종을 든다고? …허허, 오래 살고 볼 일이오.', 'fun']] },
+        { type: 'talk', npc: 'bandi', text: '별배를 몰고 온 반디와 이야기하기',
+          lines: [['반디', '삐— 별배 견인 빛줄 연결. 무게 십이 톤. 들어 올립니다.', 'surprised'],
+            ['한결', '종이… 하늘을 나는구려!', 'surprised'],
+            ['?', ['종각 들보에 맞춰!', '천천히, 반디.']],
+            ['반디', '삐— 종각 들보에 걸었습니다. 새 종고리는 별배 계류 쇠붙이로 만들었습니다.', 'joy'],
+            ['한결', '앞날의 쇠로 옛 종을 걸다니. 자, 이제 종을 울려 주시오 — 무엇으로든 힘껏!', 'fun']] },
+        { type: 'light', spot: 'sp_belfry', bell: true, text: '종각에 다시 건 종을 원소 스킬로 울리기' },
+        { type: 'talk', npc: 'hangyeol', text: '한결과 이야기하기',
+          lines: [['한결', '…삼백 년 만의 종소리요. 이 소리를 다시 듣다니.', 'sorrow'],
+            ['반디', '삐— 종소리에 응답 신호. 남쪽, 은하역 방향 — 열차 기적 소리입니다.', 'surprised'],
+            ['?', ['저 녹슨 역에서 열차가?', '선장님의 신호일까?']],
+            ['한결', '그 선장이 떠나며 말했소. \'종이 다시 울리면 막차가 한 번 더 온다\'고. 무슨 뜻인지는 나도 모르오.'],
+            ['한결', '나는 이제 종 곁을 지키겠소. 종지기가 종 곁에 있어야지. 가 보시오 — 은하역으로.', 'fun']] }
       ] }
   ];
 
@@ -1232,7 +1286,13 @@
     if (st.type === 'seal') { onSeal(st, e); return; }
     if (st.type !== 'light') { return; }
     var t = targetOf(st);
-    if (t && Math.hypot(e.x - t.x, e.y - t.y) <= (e.r || 3) + LIGHT_R()) { toast('🔥 옛 제단에 불이 붙었다 — 비문이 빛난다'); advance(); }
+    if (!t || Math.hypot(e.x - t.x, e.y - t.y) > (e.r || 3) + LIGHT_R()) { return; }
+    if (st.bell) {                                                  // ⑲-39 종각 종 — 불 대신 울린다
+      var SPb = global.DG.skyport;
+      if (SPb && SPb.ringBell) { SPb.ringBell(); }
+      toast('🔔 뎅— 삼백 년 만에 절터 종이 울린다'); advance(); return;
+    }
+    toast('🔥 옛 제단에 불이 붙었다 — 비문이 빛난다'); advance();
   }
   /* ⑲-14 석등 차례 — 켠 수는 저장 안 함 */
   var seal = { key: '', n: 0 };
@@ -1790,7 +1850,7 @@
     /* ⑲-16 지키는 동안은 기둥이 제단 체력 — 초록 → 빨강 */
     var dd = st.type === 'defend' && def && def.key === keyOf() && def.hpMax && def.wave >= 0 ? def : null;
     fx.pillar.children[0].material.color.setHex(dd ? pillarHex(dd.hp / dd.hpMax) : 0xffd24a);
-    if (st.type === 'light' || st.type === 'defend') {
+    if ((st.type === 'light' && !st.bell) || st.type === 'defend') {   // ⑲-39 종 울리기는 등롱 없이(종각이 skyport 에 있다)
       if (!fx.altar) {
         var A = global.DG.asset3d, m = A && A.build ? A.build('lantern', { id: 'story_altar' }) : null, ag = new T3.Group();
         if (m) { m.scale.set(1.8, 1.8, 1.8); ag.add(m); }
