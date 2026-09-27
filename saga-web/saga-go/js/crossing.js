@@ -11,6 +11,10 @@
  *   섬돌    섬돌 열다섯이 1.1m 씩 나선으로 떠 있고 꼭대기에 틈 수정. ⑲-42 나선 바깥에서 가운데로 밀면 섬돌을 밟고 오른다
  *           (landform 기둥 `cr_steps` — 꼭대기 = 마지막 섬돌 위, 오르기 기력 ×STEPS_DRAIN)
  *   이야기  ⑲-42 19장 자리 표(`spot` — 첫 정거장·시계탑·섬돌 곁) · 19장 여섯째 단계부터 문자판 바늘이 돈다(`clockRunning`)
+ *   갈림길 끝 ⑲-43 20장 — 첫 정거장 동남쪽(RIFT_OFF) 하늘 땅 + RIFT_UP m 에 뜬 섬(반지름 RIFT_R·난간). 세 갈래 선로(옛 나무·쇠·빛)
+ *           끝마다 시대 닻 · 한가운데 위 세로 틈(`tearState` 0 찢어짐 / 1 오므라듦·닻 켜짐 / 2 닫힘 → 별빛) · 쇠 갈래 끝에서 첫 정거장
+ *           쪽으로 내려가는 선로 조각(그림만) · 바람 기둥(섬 남쪽 DRAFT_OFF, 20장이 풀린 뒤부터). skyisle 이 `pads`·`drafts` 를 물어
+ *           층(섬 위·밑)을 가른다(키보드 판만) — 섬 위 단계·인물은 story 의 `sky`
  *   벽      승강장 차막이·성문 기둥·시계탑·문 기둥·(닫힌) 문·경비 기계·신호기는 world3d `houseRects` 로 막는다
  *
  * 자리 잡기는 skyport.js 와 같은 규칙 — 가운데에서 off 만큼 간 곳에서 가장 가까운 그 땅 들·숲 칸(물·마을·길·산·강 아님), 서로 떨어짐.
@@ -63,6 +67,13 @@
   /* ⑲-42 19장 자리 [명소, m, m] — 막차는 승강장 동쪽에 내린다. 갈림목 = 시계탑 북서쪽. 한별은 섬돌 가운데 밑(틈 수정 아래) */
   var PARTS = { arrive: ['platform', 6.5, 0], dodam: ['platform', 6.5, -3], bandi: ['platform', 7, 4], hanbyeol: ['platform', 6.5, 7],
     fork: ['clock', -18, -14], ck_bandi: ['clock', 4, 4], st_foot: ['steps', 0, 0], st_bandi: ['steps', 6, 5], st_duel: ['steps', 10, -8], st_hanbyeol: ['steps', 7, -3] };
+  /* ⑲-43 갈림길 끝 — 섬 가운데 = 첫 정거장 + RIFT_OFF, 윗면 = 그 땅 높이 + RIFT_UP. 선로 갈래는 방위(북 0°, 시계 방향) */
+  var RIFT_OFF = [70, 25], RIFT_UP = 46, RIFT_R = 20, RIFT_SLAB = 4, RIFT_CH = 'ch20', RIFT_NARROW = 6, RIFT_BOOT = [2, 10];
+  var RIFT_DRAFT_OFF = [0, 32], RIFT_DRAFT_R = 3.5, RIFT_DRAFT_OVER = 9, RIFT_DRAFT_RISE = 9;
+  var BRANCHES = [{ id: 'wood', name: '옛 나무 선로', deg: 60 }, { id: 'iron', name: '쇠 선로', deg: 300 }, { id: 'light', name: '빛 선로', deg: 180 }];
+  var BRANCH_LEN = 17;
+  /* 20장 자리 — 섬 가운데에서(m). 막차는 쇠 갈래 차막이 앞에 닿는다 */
+  var RIFT_PARTS = { rift: [0, 0], rift_arrive: [-12.1, -7], rift_hanbyeol: [-4, 5], rift_bandi: [5, 4], rift_dodam: [-9, -2] };
   var GRID = 48;
 
   /* ── 자리(순수 — 지형·해시만) ───────────────────────────── */
@@ -137,7 +148,34 @@
   }
   function siteById(id) { var L = sites(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
   /** ⑲-42 이야기 자리(PARTS) — 그 명소가 없으면 null */
-  function spot(part) { var q = PARTS[part], p = q ? siteById(q[0]) : null; return p ? { x: p.x + q[1], y: p.y + q[2] } : null; }
+  function spot(part) {
+    var rq = RIFT_PARTS[part];
+    if (rq) { var rc = riftCenter(); return rc ? { x: rc.x + rq[0], y: rc.y + rq[1] } : null; }   // ⑲-43 섬 위 자리
+    var q = PARTS[part], p = q ? siteById(q[0]) : null; return p ? { x: p.x + q[1], y: p.y + q[2] } : null;
+  }
+  function reliefH(x, y) { var RL = global.DG.relief3d; return RL && RL.heightAt ? RL.heightAt(x, y) : 0; }
+  /** ⑲-43 갈림길 끝 섬 가운데 {x, y} — 첫 정거장이 없으면 null */
+  function riftCenter() { var p = siteById('platform'); return p ? { x: p.x + RIFT_OFF[0], y: p.y + RIFT_OFF[1] } : null; }
+  function riftTop() { var c = riftCenter(); return c ? reliefH(c.x, c.y) + RIFT_UP : 0; }
+  /** 갈래 끝(가운데에서 len m) — 방위 deg(북 0°, 시계 방향, +y 남쪽) */
+  function branchEnd(b, len) { var c = riftCenter(), a = b.deg * Math.PI / 180; return c ? { x: c.x + Math.sin(a) * len, y: c.y - Math.cos(a) * len } : null; }
+  /** ⑲-43 틈 — 0 찢어짐 · 1 20장 일곱째 단계(석등 뒤)부터 오므라듦 · 2 20장을 마치면 닫힘 */
+  function tearState() { var i = chIndex(RIFT_CH), s = storyAt(); if (i < 0) { return 0; } return s.ch > i ? 2 : (passed(RIFT_CH, RIFT_NARROW) ? 1 : 0); }
+  /** 바람 기둥이 섰나 — 20장이 풀린 뒤(장이 열렸거나 지났으면) */
+  function riftDraftOpen() {
+    var ST = global.DG.story, i = chIndex(RIFT_CH), s = storyAt();
+    return i >= 0 && (s.ch > i || (s.ch === i && !(ST.locked && ST.locked())));
+  }
+  /** skyisle 발판 — 갈림길 끝 섬 */
+  function pads() {
+    var c = on() ? riftCenter() : null, i = chIndex(RIFT_CH);
+    return c ? [{ id: 'rift', name: '갈림길 끝', x: c.x, y: c.y, r: RIFT_R, top: riftTop(), slab: RIFT_SLAB, boot: [i, RIFT_BOOT[0], RIFT_BOOT[1]] }] : [];
+  }
+  /** skyisle 상승 기류 — 섬 남쪽 바람 기둥(섰을 때만) */
+  function drafts() {
+    var c = on() && riftDraftOpen() ? riftCenter() : null;
+    return c ? [{ id: 'rift', x: c.x + RIFT_DRAFT_OFF[0], y: c.y + RIFT_DRAFT_OFF[1], r: RIFT_DRAFT_R, top: riftTop() + RIFT_DRAFT_OVER, rise: RIFT_DRAFT_RISE }] : [];
+  }
   function storyAt() { var s = core() && core().save ? core().save.story : null; return s || { ch: 0, step: 0 }; }
   function chIndex(id) { var ST = global.DG.story; if (!ST || !ST.CHAPTERS) { return -1; } for (var i = 0; i < ST.CHAPTERS.length; i++) { if (ST.CHAPTERS[i].id === id) { return i; } } return -1; }
   function passed(id, step) { var i = chIndex(id), s = storyAt(); return i >= 0 && (s.ch > i || (s.ch === i && (s.step || 0) >= step)); }
@@ -374,7 +412,57 @@
       if (o.door) { o.door.visible = !open; if (!open) { o.door.material.opacity = 0.35 + Math.sin(clock * 2) * 0.1; } }
       if (o.hands && run) { for (k = 0; k < o.hands.length; k++) { o.hands[k].rotation.z -= (dt || 0) * 0.5; } }   // ⑲-42 시계가 다시 간다
     }
+    var rc = riftCenter();                                                          // ⑲-43 갈림길 끝 섬
+    if (rc && Math.hypot(rc.x - p.x, rc.y - p.y) <= 600) { seen.__rift = true; paintRift(w, T3, fx.__rift || (fx.__rift = buildRift(w, T3, rc))); }
     for (var id in fx) { if (fx.hasOwnProperty(id) && !seen[id]) { w.removeFx(fx[id].root); delete fx[id]; } }
+  }
+
+  /* ⑲-43 갈림길 끝 — 섬(풀밭 윗면·돌 단·거꾸로 선 바위 뿔·난간)·세 갈래 선로·닻·틈·별빛·선로 조각·바람 기둥. 좌표는 섬 가운데 기준, 높이는 월드 */
+  function buildRift(w, T3, c) {
+    var m = M(T3), g = new T3.Group(), o = { root: g, anchors: [], stars: [] }, top = riftTop(), i, j;
+    if (!mats.grass) { mats.grass = new T3.MeshLambertMaterial({ color: 0x7fa86a }); mats.rock = new T3.MeshLambertMaterial({ color: 0x5f5a66 }); mats.star = new T3.MeshBasicMaterial({ color: 0xfff6d0 }); }
+    cyl(T3, g, m.grass, RIFT_R, RIFT_R, 0.6, 0, top - 0.3, 0, 40);
+    cyl(T3, g, m.rock, RIFT_R, RIFT_R - 2, RIFT_SLAB, 0, top - 0.6 - RIFT_SLAB / 2, 0, 40);
+    var cone = new T3.Mesh(new T3.ConeGeometry(RIFT_R - 2, 16, 20), m.rock); cone.rotation.x = Math.PI; cone.position.y = top - 0.6 - RIFT_SLAB - 8; g.add(cone);
+    var rail = new T3.Mesh(new T3.TorusGeometry(RIFT_R - 0.4, 0.08, 4, 64), m.stoneD); rail.rotation.x = Math.PI / 2; rail.position.y = top + 1; g.add(rail);
+    for (i = 0; i < 16; i++) { var ra = i * Math.PI / 8; box(T3, g, m.stoneD, 0.2, 1, 0.2, Math.sin(ra) * (RIFT_R - 0.4), top + 0.5, Math.cos(ra) * (RIFT_R - 0.4)); }
+    BRANCHES.forEach(function (b) {                                                  // 세 갈래 선로 — 옛 나무·쇠·빛
+      var a = b.deg * Math.PI / 180, ux = Math.sin(a), uz = -Math.cos(a), rm = b.id === 'wood' ? m.wood : (b.id === 'iron' ? m.dark : m.glow), rg = new T3.Group();
+      rg.position.set(ux * BRANCH_LEN / 2, top + 0.06, uz * BRANCH_LEN / 2); rg.rotation.y = Math.atan2(ux, uz); g.add(rg);
+      for (j = -1; j <= 1; j += 2) { box(T3, rg, rm, 0.15, 0.12, BRANCH_LEN, j * 0.75, 0, 0); }
+      for (j = 0; j < 6; j++) { box(T3, rg, b.id === 'light' ? m.roofGlow : m.wood, 2.2, 0.08, 0.3, 0, -0.03, -BRANCH_LEN / 2 + 1.5 + j * 2.8); }
+      var ex = ux * (BRANCH_LEN + 0.8), ez = uz * (BRANCH_LEN + 0.8), lamp;          // 갈래 끝 시대 닻
+      if (b.id === 'wood') { box(T3, g, m.stone, 0.6, 1.4, 0.6, ex, top + 0.7, ez); lamp = box(T3, g, m.dark, 0.7, 0.55, 0.7, ex, top + 1.7, ez); box(T3, g, m.stone, 1, 0.2, 1, ex, top + 2.1, ez); }
+      else if (b.id === 'iron') { box(T3, g, m.rust, 0.2, 3, 0.2, ex + 1.2, top + 1.5, ez); lamp = ball(T3, g, m.dark, 0.2, ex + 1.2, top + 2.9, ez); box(T3, g, m.red, 2.6, 0.9, 0.5, ex, top + 0.45, ez, Math.atan2(ux, uz)); }
+      else { lamp = cyl(T3, g, m.dark, 0.5, 0.5, 5, ex, top + 2.5, ez, 12); }
+      o.anchors.push(lamp);
+    });
+    o.tear = new T3.Mesh(new T3.PlaneGeometry(3, 10), m.rift); o.tear.position.set(0, top + 8, 0); g.add(o.tear);
+    for (i = 0; i < 12; i++) { var sa = i * 2.4; o.stars.push(ball(T3, g, mats.star, 0.12, Math.cos(sa) * (1 + i * 0.3), top + 5 + (i % 5) * 1.6, Math.sin(sa) * (1 + i * 0.3))); }
+    var ie = { x: Math.sin(300 * Math.PI / 180) * RIFT_R, z: -Math.cos(300 * Math.PI / 180) * RIFT_R }, pf = siteById('platform');
+    if (pf) {                                                                        // 쇠 갈래 끝 → 첫 정거장 쪽으로 내려가는 선로 조각 여섯
+      var dx = pf.x - c.x - ie.x, dz = pf.y - c.y - ie.z, gy0 = reliefH(pf.x, pf.y);
+      for (i = 1; i <= 6; i++) {
+        var t = i / 7, fr = new T3.Group(); fr.position.set(ie.x + dx * t, top - (top - gy0 - 4) * t, ie.z + dz * t); fr.rotation.y = Math.atan2(dx, dz); fr.rotation.x = 0.15 * (i % 2 ? 1 : -1); g.add(fr);
+        for (j = -1; j <= 1; j += 2) { box(T3, fr, m.dark, 0.15, 0.12, 4, j * 0.75, 0, 0); }
+        box(T3, fr, m.wood, 2.2, 0.08, 0.3, 0, -0.05, 0); box(T3, fr, m.wood, 2.2, 0.08, 0.3, 0, -0.05, 1.4);
+      }
+    }
+    var dy0 = reliefH(c.x + RIFT_DRAFT_OFF[0], c.y + RIFT_DRAFT_OFF[1]), dh = top + RIFT_DRAFT_OVER - dy0;   // 바람 기둥
+    o.draft = cyl(T3, g, m.pillar, RIFT_DRAFT_R, RIFT_DRAFT_R, dh, RIFT_DRAFT_OFF[0], dy0 + dh / 2, RIFT_DRAFT_OFF[1], 20);
+    o.draft.material = m.pillar;
+    g.position.set(c.x, 0, c.y);
+    w.addFx(g);
+    return o;
+  }
+  function paintRift(w, T3, o) {
+    var ts = tearState(), m = M(T3);
+    o.tear.visible = ts < 2;
+    o.tear.scale.x = ts === 1 ? 0.35 + Math.sin(clock * 3) * 0.05 : 1;
+    o.tear.material.opacity = 0.35 + Math.sin(clock * 2) * 0.1;
+    for (var i = 0; i < o.anchors.length; i++) { o.anchors[i].material = ts >= 1 ? m.lamp : m.dark; }
+    for (i = 0; i < o.stars.length; i++) { o.stars[i].visible = ts === 2 && Math.sin(clock * 2 + i * 1.7) > -0.3; }
+    o.draft.visible = riftDraftOpen();
   }
 
   var acc = 0;
@@ -391,6 +479,8 @@
     SEP_BIG: SEP_BIG, SEP_SMALL: SEP_SMALL, TOWER_CLEAR: TOWER_CLEAR, GATE_HALF: GATE_HALF, GATE_DIST: GATE_DIST, CLOCK_H: CLOCK_H, CLOCK_HALF: CLOCK_HALF, CLOCK_DRAIN: CLOCK_DRAIN,
     STEP_N: STEP_N, STEP_RISE: STEP_RISE, RAIL_LEN: RAIL_LEN, STEPS_TOP: STEPS_TOP, STEPS_DRAIN: STEPS_DRAIN, CLOCK_FROM: CLOCK_FROM, PARTS: PARTS,
     spot: spot, stepAt: stepAt, clockRunning: clockRunning,
+    RIFT_OFF: RIFT_OFF, RIFT_UP: RIFT_UP, RIFT_R: RIFT_R, RIFT_PARTS: RIFT_PARTS, RIFT_DRAFT_OFF: RIFT_DRAFT_OFF, BRANCHES: BRANCHES, BRANCH_LEN: BRANCH_LEN,
+    riftCenter: riftCenter, riftTop: riftTop, branchEnd: branchEnd, tearState: tearState, riftDraftOpen: riftDraftOpen, pads: pads, drafts: drafts,
     on: on, center: center, sites: sites, siteById: siteById, inRegion: inRegion, gateOpen: gateOpen, rectsOf: rectsOf, rectsIn: rectsIn, poles: poles,
     found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks, tick: tick,
     _resetForTest: function () { memo = null; rectMemo = null; centerMemo = undefined; poleMemo = null; }

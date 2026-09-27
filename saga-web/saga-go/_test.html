@@ -10267,8 +10267,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     t('이야기 ⑲-12 — 표·자리: 장 둘(단계 8·4, 여정 등급 1·5) · 인물 셋 = ⑮ 땅 탑 + 자리(고향 촌장·갈대 나루 사공·옛 성터 학자) · 모든 단계에 목표 · 같은 세계면 같은 자리 · 몸 셋 고정', function () {
       var ST = DG.story, A3 = DG.asset3d, r = {};
-      r.table = ST.CHAPTERS.length === 19 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
-        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30·34~36·38~40·42 가 3~19장을 더했다
+      r.table = ST.CHAPTERS.length === 20 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
+        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30·34~36·38~40·42·43 가 3~20장을 더했다
       var e = ST.npcPos('elder'), f = ST.npcPos('ferryman'), s = ST.npcPos('scholar'), ga = ST.anchorOf('galdae'), go = ST.anchorOf('gojeong');
       r.npc = e.x === -22 && e.y === 16 && f.x === ga.x - 18 && f.y === ga.y - 24 && s.x === go.x - 18 && s.y === go.y - 24 &&
         DG.biome.cellAt.apply(null, ga.key.split('_').map(Number)).zone === 'galdae' && DG.biome.cellAt.apply(null, go.key.split('_').map(Number)).zone === 'gojeong';
@@ -13188,7 +13188,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       try {
         CR._resetForTest(); SP._resetForTest(); LF._resetForTest();
         var c19 = ST.CHAPTERS[18], S19 = c19.steps;
-        r.table = ST.CHAPTERS.length === 19 && c19.id === 'ch19' && c19.ar === 44 && !c19.join && S19.length === 10 && c19.reward.knot === 6 && c19.reward.gold === 5250 &&
+        r.table = ST.CHAPTERS.length >= 19 && c19.id === 'ch19' && c19.ar === 44 && !c19.join && S19.length === 10 && c19.reward.knot === 6 && c19.reward.gold === 5250 &&
           S19.map(function (q) { return q.type; }).join() === 'talk,sail,talk,kill,climb,talk,climb,talk,duel,talk' && S19[4].pole === 'cr_clock' && S19[6].pole === 'cr_steps' &&
           S19[8].kind === 'time_warden' && S19[8].shield === 'wind' && FC.COUNTER.wind === 'rock';
         function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 18 : ch, step: si }; return ST.npcPos(k); }
@@ -13263,6 +13263,117 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { DG.world = W; CR._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '섬돌 16.7m ×0.7 · 바늘 6째부터 · GPS 막차는 걸어서 · 섬돌 곁 12m' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-43 이야기 5부 제20장 · 갈림길 끝 (story ch20·한별 합류·별까마귀 · crossing 하늘 섬·틈·바람 기둥 · skyisle 발판, PLAN §5 ⑲-43) ── */
+    t('이야기 ⑲-43 — 20장 열한 단계(Lv46)·합류 · 한별·반디·도담 2~10째 섬 위(sky) · 흐름: 한별 → 막차(키보드 = 섬 윗면 층으로) → 반디 → 틈 짐승 5(섬 위) → 한별 → 석등 달 → 별 → 해(틀리면 꺼짐) → 한별(틈 오므라듦) → 제단 지키기(섬 위 3·4·5) → 한별 → 별까마귀(❄️방패 — 화 + 매·눈여우) → 한별 합류(틈 닫힘)', function () {
+      var rig = stRig(46), ST = rig.ST, FC = DG.fieldCombat, CR = DG.crossing, SK = DG.skyIsle, LF = DG.landform, TL = DG.talent, r = {}, i;
+      try {
+        CR._resetForTest(); LF._resetForTest();
+        var c20 = ST.CHAPTERS[19], S20 = c20.steps;
+        r.table = ST.CHAPTERS.length === 20 && c20.id === 'ch20' && c20.ar === 46 && c20.join === 'story_hanbyeol' && S20.length === 11 && c20.reward.knot === 6 && c20.reward.gold === 5500 &&
+          S20.map(function (q) { return q.type; }).join() === 'talk,sail,talk,kill,talk,seal,talk,defend,talk,duel,talk' && S20[1].sky && S20[5].order.join() === 'moon,star,sun' &&
+          [3, 5, 7, 9].every(function (k) { return S20[k].sky; }) && S20[9].kind === 'rift_crow' && S20[9].shield === 'ice' && FC.COUNTER.ice === 'fire';
+        function np(k, si) { C.save.story = { ch: 19, step: si }; return ST.npcPos(k); }
+        r.npcs = st10Eq(np('hanbyeol', 0), CR.spot('hanbyeol')) && st10Eq(np('hanbyeol', 2), CR.spot('rift_hanbyeol')) && ST.npcInfo('hanbyeol').sky &&
+          st10Eq(np('bandi', 5), CR.spot('rift_bandi')) && ST.npcInfo('bandi').sky && st10Eq(np('dodam', 1), CR.spot('dodam')) && st10Eq(np('dodam', 10), CR.spot('rift_dodam'));
+        var rc = CR.riftCenter();
+        C.save.story = { ch: 19, step: 0 };
+        stGo(ST.npcPos('hanbyeol')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        stGo(ST.npcPos('dodam')); r.sail = stTalkAll(ST) && C.save.story.step === 2 && st10Eq(C.save.player.pos, CR.spot('rift_arrive')) && LF.onSky() &&
+          SK.padAt(C.save.player.pos.x, C.save.player.pos.y).id === 'rift';
+        stGo(ST.npcPos('bandi')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        stGo({ x: rc.x + 8, y: rc.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.map(function (u) { return S.foes[u].kind; }).join() === 'hawk,snowfox,raptor,imp,vine' && cp.uids.every(function (u) { return S.foes[u].sky; });
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 4;
+        stGo(ST.npcPos('hanbyeol')); r.t4 = stTalkAll(ST) && C.save.story.step === 5;
+        var lamps = ST.sealLamps(ST.step()), byK = {};
+        lamps.forEach(function (l) { byK[l.k] = l; });
+        r.lampsOn = lamps.every(function (l) { return Math.hypot(l.x - rc.x, l.y - rc.y) < CR.RIFT_R - 1; });
+        function hitLamp(k) { C.emit('field:element', { el: 'fire', x: byK[k].x, y: byK[k].y, r: 1, t: 'skill' }); }
+        hitLamp('star'); var wrong = ST.sealLit() === 0 && C.save.story.step === 5;
+        var torn = CR.tearState() === 0;
+        hitLamp('moon'); hitLamp('star'); hitLamp('sun');
+        r.seal = wrong && torn && C.save.story.step === 6 && CR.tearState() === 1;
+        stGo(ST.npcPos('hanbyeol')); r.t6 = stTalkAll(ST) && C.save.story.step === 7;
+        stGo({ x: rc.x, y: rc.y + 6 }); ST.stepDefend(0.1);
+        var w0 = S.camps[ST.waveKey(0)];
+        r.wave0 = !!w0 && w0.uids.every(function (u2) { return S.foes[u2].sky; });
+        var sizes = [];
+        for (i = 0; i < 3; i++) {
+          if (i) { ST.defState().t = ST.DEFEND_WAVE_SEC; ST.stepDefend(0.01); }
+          sizes.push(S.camps[ST.waveKey(i)] ? S.camps[ST.waveKey(i)].uids.length : 0);
+          stKillCamp(S, ST.waveKey(i)); FC.tick(0.05);
+        }
+        ST.stepDefend(0.01);
+        r.defend = sizes.join() === '3,4,5' && C.save.story.step === 8;
+        stGo(ST.npcPos('hanbyeol')); r.t8 = stTalkAll(ST) && C.save.story.step === 9;
+        stGo({ x: rc.x + 8, y: rc.y }); FC.tick(0.05); ST.check();
+        var cb = S.camps[ST.keyOf()], b = cb && S.foes[cb.uids[0]];
+        var lv = b && FC.live().filter(function (x) { return x.uid === b.uid; })[0];
+        r.boss = !!b && b.kind === 'rift_crow' && b.el === 'ice' && b.sky && !!lv && lv.ref.id === 'pt_samjogo' && FC.FOES.rift_crow.rot.indexOf('shadow') < 0;
+        b.hp = Math.round(b.hpMax * 0.4); ST.check();
+        var ad = S.camps[ST.keyOf() + ':add'];
+        r.p2 = b.shEl === 'ice' && !!ad && ad.uids.map(function (u) { return S.foes[u].kind; }).join(',') === 'hawk,snowfox' && FC.shieldMul('ice', 'fire') > 1;
+        b.shield = 0; b.layers = [];
+        for (var k = 0; k < 3 && !b.dead; k++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); }
+        FC.tick(0.05);
+        r.duel = C.save.story.step === 10 && !S.camps[ST.keyOf() + ':add'];
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        r.notYet = !ST.hasMember('story_hanbyeol');
+        stGo(ST.npcPos('hanbyeol'));
+        r.end = stTalkAll(ST) && C.save.story.ch === 20 && C.save.story.step === 0 && ST.hasMember('story_hanbyeol') && m.knot === k0 + 6 && C.save.player.gold === gold0 + 5500 &&
+          CR.tearState() === 2;
+      } finally { LF._resetForTest(); CR._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '열한 단계 · 한별 → 막차(섬 위 층) → 반디 → 무리 5(섬) → 한별 → 석등(틀림 ✕ → 달·별·해) → 한별 → 제단 3·4·5(섬) → 한별 → 별까마귀(❄️ + 매·눈여우) → 한별 합류 · 틈 닫힘 · 🪢+6 🪙+5500' : ('실패 ' + bad.join(','));
+    });
+
+    t('갈림길 끝 ⑲-43 — 섬: 첫 정거장 + (70,25)·땅 + 46m·반지름 20·skyisle 발판(불러오기 20장 2~10째) · 세 갈래 선로 60°·300°·180° · 틈 0 → 1(일곱째) → 2(끝) · 바람 기둥은 섬 남쪽 32m·20장이 풀린 뒤(등급 모자라면 ✕) · 손잡이 끄면 발판·기둥 없음', function () {
+      var rig = stRig(46), ST = rig.ST, CR = DG.crossing, SK = DG.skyIsle, r = {};
+      try {
+        CR._resetForTest();
+        var pf = CR.siteById('platform'), rc = CR.riftCenter(), pd = SK.padById('rift');
+        r.pad = rc.x === pf.x + 70 && rc.y === pf.y + 25 && !!pd && pd.r === 20 && Math.abs(pd.top - (DG.relief3d.heightAt(rc.x, rc.y) + 46)) < 1e-6 && pd.boot[0] === 19 && pd.boot[1] === 2 && pd.boot[2] === 10 &&
+          SK.padAt(rc.x + 19, rc.y).id === 'rift' && !SK.padAt(rc.x + 21, rc.y);
+        var e1 = CR.branchEnd(CR.BRANCHES[1], 10);
+        r.branches = CR.BRANCHES.map(function (b) { return b.deg; }).join() === '60,300,180' && e1.x < rc.x && e1.y < rc.y;
+        C.save.story = { ch: 19, step: 5 }; var t0 = CR.tearState();
+        C.save.story = { ch: 19, step: 6 }; var t1 = CR.tearState();
+        C.save.story = { ch: 20, step: 0 }; r.tear = t0 === 0 && t1 === 1 && CR.tearState() === 2;
+        C.save.story = { ch: 18, step: 9 }; var d0 = SK.drafts().filter(function (q) { return q.id === 'rift'; }).length === 0;
+        C.save.story = { ch: 19, step: 0 }; C.save.player.level = 45; var dLock = SK.drafts().filter(function (q) { return q.id === 'rift'; }).length === 0;
+        C.save.player.level = 46;
+        var dr = SK.drafts().filter(function (q) { return q.id === 'rift'; })[0];
+        r.draft = d0 && dLock && !!dr && dr.x === rc.x && dr.y === rc.y + 32 && dr.top > pd.top && !SK.padAt(dr.x, dr.y) && ST.landAt(dr.x, dr.y);
+        C.setTune('crossing.on', 0);
+        r.off = !SK.padById('rift') && SK.drafts().filter(function (q) { return q.id === 'rift'; }).length === 0;
+      } finally { C.setTune('crossing.on', null); CR._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '섬 46m·r20·boot 2~10 · 갈래 셋 · 틈 0→1→2 · 기둥 남쪽 32m(등급 ✕) · 끄면 없음' : ('실패 ' + bad.join(','));
+    });
+
+    t('이야기 동료 ⑲-43 — 한별: 풍 활 ★5 · 별배 견인줄(updraft 4.5m·끌기 6·솟구침 15m·대기 9) · 틈 닫기(vortex 6m·앞 8m·8초) · 솟구침은 키보드 판 땅 위만(섬 위·GPS ✕)', function () {
+      var ST = DG.story, FC = DG.fieldCombat, WP = DG.weapon, LF = DG.landform, W = DG.world, r = {};
+      var M = ST.MEMBERS.story_hanbyeol, kt = FC.kitFor('story_hanbyeol');
+      r.member = DG.data.find('story_hanbyeol') === M && M.rarity === 5 && FC.elementOf('story_hanbyeol') === 'wind' && WP.typeOf('story_hanbyeol') === 'bow';
+      r.kit = !!kt && kt.skill.name === '별배 견인줄' && kt.skill.type === 'updraft' && kt.skill.r === 4.5 && kt.skill.pull === 6 && kt.skill.lift === 15 && kt.skill.cd === 9 &&
+        kt.burst.name === '틈 닫기' && kt.burst.type === 'vortex' && kt.burst.r === 6 && kt.burst.ahead === 8 && kt.burst.sec === 8;
+      var bak = JSON.stringify(C.save.player.pos);
+      try {
+        LF._resetForTest(); stGo({ x: 0, y: 0 });
+        var p = C.save.player.pos, g0 = LF.groundH(p.x, p.y);
+        r.launch = LF.launch(15) && LF.gliding() && Math.abs(LF.glideAlt() - (g0 + 15)) < 1e-6;
+        LF._resetForTest(); LF.setSky(true);
+        r.sky = !LF.launch(15);
+        LF._resetForTest();
+        DG.world = Object.create(W, { mode: { value: 'geo' } });
+        r.geo = !LF.launch(15);
+      } finally { DG.world = W; LF._resetForTest(); var pb = JSON.parse(bak); C.save.player.pos.x = pb.x; C.save.player.pos.y = pb.y; }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '풍 활 ★5 · 견인줄 updraft 15m · 틈 닫기 vortex · 섬 위·GPS 솟구침 ✕' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

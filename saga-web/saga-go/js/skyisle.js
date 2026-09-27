@@ -11,7 +11,7 @@
  *            그대로 걸어 지나간다(섬은 공중에 떠 있다). 층이 다르면 들판 전투가 서로를 못 본다(`apart`)
  *   키보드 판만 층이 있다(`layerOn`) — GPS 판은 몸이 땅을 걷으므로 섬 무리도 땅에 선다(그림은 떠 있다).
  *   발판 목록 §5 ⑲-35 — 층은 구름섬 하나가 아니라 **떠 있는 발판 여럿**(`pads`: 구름섬 + era-sites 관측대)과 상승 기류 여럿
- *            (`drafts`: 바람 기둥 + 시간 기둥)이다. 몸·무리·인물의 `sky` 는 참/거짓 그대로 — 어느 발판인지는 선 자리(`padAt`)가 정한다
+ *            (`drafts`: 바람 기둥 + 시간 기둥 — ⑲-43 crossing 갈림길 끝 섬·바람 기둥도)이다. 몸·무리·인물의 `sky` 는 참/거짓 그대로 — 어느 발판인지는 선 자리(`padAt`)가 정한다
  *            (발판끼리는 수 km 떨어져 겹치지 않는다)
  * 세이브 없음 — 섬에 선 채 불러오면 9장 섬 단계일 때만 도로 섬 위에 세운다(`boot`). 손잡이 `skyisle.on` 0 이면 다 사라진다.
  */
@@ -48,11 +48,13 @@
 
   /* ── ⑲-35 발판·상승 기류 목록 ─────────────────────────── */
   function ES() { var e = global.DG.eraSites; return e && e.on && e.on() ? e : null; }
+  function CR() { var c = global.DG.crossing; return c && c.on && c.on() && c.pads ? c : null; }   // ⑲-43 갈림길 끝 섬
   /** 떠 있는 발판 — [{ id, name, x, y, r, top, slab, boot? [ch, from, to] }] */
   function pads() {
     var out = [], c = on() ? spot() : null, E = ES();
     if (c) { out.push({ id: 'isle', name: '구름섬', x: c.x, y: c.y, r: ISLE_R, top: top(), slab: SLAB, boot: [SKY_CH, SKY_STEPS[0], SKY_STEPS[1]] }); }
     if (E && E.pads) { out = out.concat(E.pads()); }
+    if (CR()) { out = out.concat(CR().pads()); }
     return out;
   }
   /** (x,y) 위 발판(난간 안) — 없으면 null */
@@ -73,6 +75,7 @@
     var out = [], p = open() ? peak() : null, E = ES();
     if (p) { out.push({ id: 'isle', x: p.x, y: p.y, r: DRAFT_R, top: draftTop(), rise: DRAFT_RISE }); }
     if (E && E.drafts) { out = out.concat(E.drafts()); }
+    if (CR()) { out = out.concat(CR().drafts()); }
     return out;
   }
   function draftAt(x, y) {

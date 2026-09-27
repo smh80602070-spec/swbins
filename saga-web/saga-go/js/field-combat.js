@@ -271,7 +271,11 @@
     /* ⑲-42 19장 틈새 갈림길 — 선장이 멈춰 둔 시간 속에서 깨어난 파수꾼(사람 몸 2배·금빛 가면, 풍). 있는 패턴만.
        2단계 풍 방패(암으로 깬다)·졸개는 story.js 가 두른다 */
     time_warden: { name: '멈춘 시간의 파수꾼', ref: null, body: 'story_blackmask', mask: 'gold', el: 'wind', hp: 18, atk: 2.4, spd: 4.8, reach: 3.4, type: 'melee', wind: 0.7, cd: 1.6, h: 2.0, exp: 0,
-                boss: true, rot: ['halo', 'tide', 'slam', 'shadow', 'melee', 'halo', 'spit'] }
+                boss: true, rot: ['halo', 'tide', 'slam', 'shadow', 'melee', 'halo', 'spit'] },
+    /* ⑲-43 20장 갈림길 끝 — 세 갈래 선로를 삼키려다 틈을 찢고 갇혔던 별까마귀(삼족오 몸 크게, 빙). 그림자 뺀 있는 패턴 —
+       틈새 질주·고리·침·내려찍기·밀물 줄. 2단계 빙 방패(화로 깬다)·졸개는 story.js 가 두른다 */
+    rift_crow:   { name: '틈 삼킨 별까마귀', ref: 'pt_samjogo', el: 'ice', hp: 20, atk: 2.5, spd: 5.2, reach: 3.4, type: 'slam', wind: 1.0, cd: 1.7, h: 3.0, exp: 0, r: 4.4,
+                boss: true, rot: ['rift', 'halo', 'spit', 'slam', 'tide', 'rift'] }
   };
   /* ⑲-14 공격 차례(`rot`)의 한 수씩 — reach 안이면 휘두른다. shadow 는 내 등 뒤 SHADOW_BACK m 로 옮겨 붙어 제 둘레 원 */
   var ROT = {
@@ -1218,6 +1222,17 @@
         knock(hits[i], gl > 0.5 ? (hits[i].x - px) / gl : dx, gl > 0.5 ? (hits[i].y - py) / gl : dy, k.knock);
       }
       ev = { x: px + dx * k.r * 0.5, y: py + dy * k.r * 0.5, r: k.r * 0.5 };
+    } else if (k.type === 'updraft') {
+      /* ⑲-43 별배 견인줄 — 둘레 r 적을 나 쪽으로 끌어 치고, 나는 lift m 위로 솟구쳐 날개를 편다(키보드 판 땅 위만 — landform.launch) */
+      hits = foesWithin(S, px, py, k.r);
+      for (i = 0; i < hits.length; i++) {
+        hitFoe(S, hits[i], m, m.atk * k.mul, m.el, 'skill');
+        var ul = Math.hypot(hits[i].x - px, hits[i].y - py);
+        if (ul > 1.2) { knock(hits[i], (px - hits[i].x) / ul, (py - hits[i].y) / ul, Math.min(k.pull, ul - 1.2)); }
+      }
+      var LFu = global.DG.landform;
+      S.lifted = !!(LFu && LFu.launch && LFu.launch(k.lift));
+      ev = { x: px, y: py, r: k.r };
     } else if (k.type === 'wave') {
       /* ⑲-17 노 물결 — 앞으로 len·폭 w 의 길을 치고 앞으로 밀어낸다(나는 제자리) */
       var wx = px + dx * k.len, wy = py + dy * k.len;

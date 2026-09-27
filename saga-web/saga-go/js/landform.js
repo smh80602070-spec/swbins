@@ -492,6 +492,15 @@
     }
   }
 
+  /** ⑲-43 솟구치기(별배 견인줄) — 땅 위(섬·기둥 아님)에서 h m 위로 날개를 편 채 띄운다. 키보드 판만. 되면 true */
+  function launch(h) {
+    if (!on() || !keyMode() || body.pole || body.sky) { return false; }
+    var pos = core().save.player.pos;
+    body.glide = { alt: groundH(pos.x, pos.y) + Math.max(airH(), h || 0), fall: false };
+    body.jumpT = -1; body.state = 'glide';
+    core().emit('landform:glide', { open: true, launch: true });
+    return true;
+  }
   function tell(msg) {
     if (global.DG.ui && global.DG.ui.toast && !global.DG_NO_DRAW) { global.DG.ui.toast(msg); }
   }
@@ -739,6 +748,7 @@
     POLE_UP: POLE_UP, POLE_DRAIN: POLE_DRAIN, POLE_HANG: POLE_HANG, POLE_SLIDE: POLE_SLIDE, POLE_REACH: POLE_REACH, BEAM_MUL: BEAM_MUL,
     /** ⑲-20 섬 위에 서 있나(날개를 편 채 섬 위도) · 불러오기에서 섬에 올린다(skyisle.boot) */
     onSky: function () { return !!body.sky; }, setSky: function (v) { body.sky = !!v; }, groundH: groundH, glideAlt: function () { return body.glide ? body.glide.alt : null; },
+    launch: launch,
     stamina: function () { return sta(); }, state: function () { return body.state; },
     /** 진단 전용 — 몸 상태와 캐시를 비운다 */
     _resetForTest: function () {
