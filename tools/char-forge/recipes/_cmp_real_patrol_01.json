@@ -41,6 +41,10 @@
   "cap_peaked@161d30,0e1322",
   "tacvest@15171a,0a0b0c"
  ],
+ "under_reach": {
+  "cf_tacvest_15171a_0a0b0c": [0.03, 0.06],
+  "culturalibre_male_boots": [0.03, 0.06]
+ },
  "under": {
   "cf_tacvest_15171a_0a0b0c": [
    "male_casualsuit01"

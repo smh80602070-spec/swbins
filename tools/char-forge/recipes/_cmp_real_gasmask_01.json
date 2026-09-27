@@ -87,6 +87,9 @@
   "elvs_crude_t-shirt_male": "#8a9070",
   "toigo_wool_pants": "#4a4a44"
  },
+ "under_reach": {
+  "rehmanpolanski_viking_boots": [0.03, 0.06]
+ },
  "under": {
   "toigo_wool_pants": [
    "elvs_crude_t-shirt_male"

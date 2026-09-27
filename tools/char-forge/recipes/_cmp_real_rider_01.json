@@ -33,6 +33,9 @@
  "tints": {
   "male_casualsuit05": "#4a4a4e"
  },
+ "under_reach": {
+  "culturalibre_male_boots": [0.03, 0.06]
+ },
  "under": {
   "culturalibre_male_boots": [
    "male_casualsuit05"
