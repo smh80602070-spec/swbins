@@ -142,6 +142,10 @@ func _ready() -> void:
 	var storm_eye := preload("res://games/saga_go/world/storm_eye.gd").new()
 	storm_eye.name = "StormEye"
 	add_child(storm_eye)
+	## PLAN 106장 52-5 — 결말 뒤 밤의 잔불(지역마다 하나, 밤에만).
+	var night_echoes := preload("res://games/saga_go/world/night_echoes.gd").new()
+	night_echoes.name = "NightEchoes"
+	add_child(night_echoes)
 	var story := preload("res://games/saga_go/world/story_quest.gd").new()
 	story.name = "StoryQuest"
 	add_child(story)
@@ -221,6 +225,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_storm_eye.gd").new())
 	if OS.get_environment("SAGA_STORY8_PROBE") != "": # 106장 52 이야기 8부 27장~
 		add_child(load("res://tools/probe_story8.gd").new())
+	if OS.get_environment("SAGA_AFTERMATH_PROBE") != "": # 106장 52-5 결말 뒤 밤의 잔불·재대결
+		add_child(load("res://tools/probe_aftermath.gd").new())
 
 	## PLAN 106장 ㊸ — 업적(다른 노드 신호에 붙으므로 맨 뒤).
 	var achievements := preload("res://games/saga_go/world/achievements.gd").new()

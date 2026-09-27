@@ -46,8 +46,34 @@ const DOMAINS := {
 		"sets": ["emblem", "gladiator"],
 		"reward": [{"mora": 2000, "boss_mat": 1, "talent_2": 2}, {"mora": 3000, "boss_mat": 2, "talent_2": 3}, {"mora": 4000, "boss_mat": 3, "talent_3": 1, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
+	## 106장 52-5 결말 뒤 재대결 — 이야기 보스 넷을 주간 보스 틀로(보스 하나·240초·원기 60, 주간 할인 셋은 모든 주간 보스가 함께 센다).
+	## after_ch = 이 장(0부터 센 수)에 닿은 뒤에만 입구가 보이고 열린다 — 29(8부 29장 = 1차 결말을 마친 뒤). 입구는 그 보스가 나온 지역.
+	"rematch_king": {"name": "매듭 등불의 메아리", "kind": "boss", "boss": true, "after_ch": 29, "gate": ["village", Vector2(6.3, 3.6)], "arena": Vector3(-1400.0, 40.0, 800.0),
+		"waves": [["storm_king_true"]], "modifier": "none", "time": 240.0,
+		"modifier_text": "재대결: 먹구름 임금 — 참몸 · 체력 절반에서 번개 방패(불에 약함)",
+		"sets": ["emblem", "gladiator"],
+		"reward": [{"mora": 3000, "boss_mat": 1, "talent_3": 1}, {"mora": 4500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 6000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
+		"artifacts": [[0, 1], [0, 1], [0, 2]]},
+	"rematch_fox": {"name": "얼음굴의 메아리", "kind": "boss", "boss": true, "after_ch": 29, "gate": ["frost", Vector2(3.7, 2.8)], "arena": Vector3(-1400.0, 40.0, 1000.0),
+		"waves": [["rift_fox"]], "modifier": "none", "time": 240.0,
+		"modifier_text": "재대결: 틈새 서리 구미호 · 틈새 질주를 피하라",
+		"sets": ["crimson", "viridescent"],
+		"reward": [{"mora": 3000, "boss_mat": 1, "talent_3": 1}, {"mora": 4500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 6000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
+		"artifacts": [[0, 1], [0, 1], [0, 2]]},
+	"rematch_crow": {"name": "갈림길의 메아리", "kind": "boss", "boss": true, "after_ch": 29, "gate": ["crossing", Vector2(4.3, 2.9)], "arena": Vector3(-1400.0, 40.0, 1200.0),
+		"waves": [["rift_crow"]], "modifier": "none", "time": 240.0,
+		"modifier_text": "재대결: 틈 삼킨 별까마귀 · 붉은 원을 피하라",
+		"sets": ["viridescent", "emblem"],
+		"reward": [{"mora": 3000, "boss_mat": 1, "talent_3": 1}, {"mora": 4500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 6000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
+		"artifacts": [[0, 1], [0, 1], [0, 2]]},
+	"rematch_colossus": {"name": "빛 돔의 메아리", "kind": "boss", "boss": true, "after_ch": 29, "gate": ["sunken", Vector2(3.7, 2.1)], "arena": Vector3(-1400.0, 40.0, 1400.0),
+		"waves": [["dome_colossus"]], "modifier": "none", "time": 240.0,
+		"modifier_text": "재대결: 돔 파수 거신 · 체력 절반에서 암 방패(초로 깬다)",
+		"sets": ["depth", "gladiator"],
+		"reward": [{"mora": 3000, "boss_mat": 1, "talent_3": 1}, {"mora": 4500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 6000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
+		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 }
-const ORDER := ["tomb", "school", "forge", "weekly"]
+const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus"]
 const KIND_NAMES := {"artifact": "성유물", "talent": "특성 재료", "weapon": "무기 재료", "boss": "주간 보스"}
 const WEEKLY_COST := 60
 const WEEKLY_DISCOUNT_COST := 30
@@ -112,6 +138,10 @@ static func cost_of(id: String) -> int:
 
 static func time_of(id: String) -> float:
 	return float(DOMAINS[id].get("time", TIME_LIMIT))
+
+## 입구가 열렸는가 — after_ch 가 있으면 이야기가 그 장까지 닿은 뒤(52-5 재대결 = 1차 결말 뒤).
+static func domain_open(id: String) -> bool:
+	return int(PartyState.story.get("ch", 0)) >= int(DOMAINS[id].get("after_ch", 0))
 
 static func level_open(lv: int) -> bool:
 	return PartyState.level + 1 >= int(LEVELS[lv].ar)

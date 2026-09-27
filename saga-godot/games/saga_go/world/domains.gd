@@ -1,7 +1,7 @@
 extends Node3D
 
 ## PLAN 106장 ⑳ — 원신식 비경(입구·도전·보상 나무). 규칙·표는 data/domains.gd.
-##   입구 셋(폐허 무덤·마을 서당·포구 쇠부리 터) — 3m 안에서 F(터치는 뜨는 "비경" 단추)로 단계 고르기 창.
+##   입구 셋(폐허 무덤·마을 서당·포구 쇠부리 터) + 주간 보스(먹구름 제단) + 52-5 재대결 넷(1차 결말 뒤에만 입구가 보이고 열린다 — Domains.domain_open) — 3m 안에서 F(터치는 뜨는 "비경" 단추)로 단계 고르기 창.
 ##   "들어가기" → 세상 밖 원판으로 옮겨져 3초 뒤 파도 둘, 120초 안에 다 쓰러뜨리면 가운데 보상 나무 —
 ##   다가가면 원기 20 을 쓰고 보상(모자라면 못 받음), 2.5초 뒤 입구로 돌아간다. 명단이 다 쓰러지거나 시간이
 ##   다 되거나 "나가기"면 실패(원기 안 씀). 안에 있는 동안 그룹 go_domain_active — 지도(순간이동)가 안 열린다.
@@ -33,6 +33,7 @@ var last_result := "" # "clear"·"fail_time"·"fail_wipe"·"quit"
 
 var _player: Node3D = null
 var _gates: Dictionary = {} # id → Vector3
+var _gate_nodes: Dictionary = {} # id → Node3D(잠긴 입구는 숨김 — 52-5 재대결)
 var _enemies: Array = []
 var _start_t := 0.0
 var _water_t := 0.0
@@ -89,7 +90,7 @@ func near_gate() -> String:
 	if _player == null or state != S.OUTSIDE:
 		return ""
 	for id in _gates:
-		if _player.global_position.distance_to(_gates[id]) <= Domains.GATE_M:
+		if Domains.domain_open(id) and _player.global_position.distance_to(_gates[id]) <= Domains.GATE_M:
 			return id
 	return ""
 
@@ -97,7 +98,7 @@ func near_gate() -> String:
 
 ## 들어간다. 못 들어가면(단계 잠김·이미 안) false.
 func enter(id: String, lv: int) -> bool:
-	if state != S.OUTSIDE or not Domains.level_open(lv):
+	if state != S.OUTSIDE or not Domains.level_open(lv) or not Domains.domain_open(id):
 		return false
 	close_menu()
 	current = id
@@ -153,6 +154,9 @@ func _physics_process(delta: float) -> void:
 		return
 	if _gate_btn:
 		_gate_btn.visible = near_gate() != "" and not _menu_open
+	if Engine.get_physics_frames() % 30 == 0:
+		for id in _gate_nodes:
+			(_gate_nodes[id] as Node3D).visible = Domains.domain_open(id)
 	match state:
 		S.STARTING:
 			_start_t -= delta
@@ -464,6 +468,8 @@ func _build_gate(id: String, p: Vector3) -> void:
 	var root := Node3D.new()
 	root.name = "DomainGate_" + id
 	add_child(root)
+	_gate_nodes[id] = root
+	root.visible = Domains.domain_open(id)
 	root.global_position = p
 	var stone := _stone()
 	for x in [-1.4, 1.4]:

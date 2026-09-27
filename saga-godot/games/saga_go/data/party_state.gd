@@ -100,6 +100,9 @@ var achievements: Dictionary = {}
 ## 106장 ㊹ 탐사 파견 — {"out": {탐사지: {"id", "hours", "start"}}, "done": 받은 번수}. 필드만 더해 SAVE_VERSION 그대로.
 ## world/dispatch.gd 가 읽고 쓴다(표는 data/dispatch.gd). 탐사 중인 동료는 들판 명단·편성에 못 넣는다(is_away).
 var dispatch: Dictionary = {}
+## 106장 52-5 결말 뒤 밤의 잔불 — {"day": 날 번호(새벽 4시 넘김), "done": [오늘 끈 지역 id…]}. 필드만 더해 SAVE_VERSION 그대로.
+## world/night_echoes.gd 가 읽고 쓴다(표는 data/night_echoes.gd).
+var night_echo: Dictionary = {}
 signal world_changed()
 
 var _session_start_exp: float = 0.0

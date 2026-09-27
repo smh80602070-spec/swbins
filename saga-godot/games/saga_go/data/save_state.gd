@@ -46,6 +46,7 @@ func save() -> bool:
 		"fishing": PartyState.fishing,
 		"achievements": PartyState.achievements,
 		"dispatch": PartyState.dispatch,
+		"night_echo": PartyState.night_echo,
 		"drops": DropState.drops,
 		"quest_active_id": QuestState.active_id,
 		"quest_active_name": QuestState.active_name,
@@ -135,6 +136,9 @@ func try_load() -> bool:
 	## dispatch(106장 ㊹) — 없으면 빈 사전(아무도 탐사 안 나감).
 	var dp: Variant = data.get("dispatch", {})
 	PartyState.dispatch = (dp as Dictionary).duplicate(true) if typeof(dp) == TYPE_DICTIONARY else {}
+	## night_echo(106장 52-5) — 없으면 빈 사전(오늘 끈 잔불 없음).
+	var ne: Variant = data.get("night_echo", {})
+	PartyState.night_echo = (ne as Dictionary).duplicate(true) if typeof(ne) == TYPE_DICTIONARY else {}
 
 	var pos: Array = data.get("player_pos", [])
 	var player := _find_player()
