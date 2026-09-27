@@ -31,6 +31,9 @@ const DRAFT_VY := 9.0
 ## 바람 기둥이 서는 장(0부터) — 24장(23)을 마치면 등대·사당 기둥, 25장(24)을 마치면 잔해 기둥.
 const CH25 := 24
 const CH26 := 25
+## 하늘 사당 먹구름 — 24장(23) 바람 방울을 다 울리기 전엔 사당 위에 내려앉아 있고 방울이 흐리다(SHRINE_CLEAR_STEP 단계부터 걷힘).
+const CH24 := 23
+const SHRINE_CLEAR_STEP := 6
 
 const STONE := Color(0.56, 0.55, 0.53)
 const STONE_DARK := Color(0.36, 0.36, 0.38)
@@ -51,6 +54,9 @@ const GLOOM := Color(0.2, 0.18, 0.26)
 var _bodies := {} # id → StaticBody3D
 var _drafts: Array = [] # [Node3D, base Vector3, top y, open_ch]
 var _floaters: Array = [] # [node, base_y, phase]
+var _gloom: Node3D = null
+var _bell_mat: StandardMaterial3D = null
+var _clear := false
 var _player: Node3D = null
 var _shown := true
 var _t := 0.0
@@ -107,6 +113,11 @@ static func _edge_toward(a: String, b: String) -> Vector3:
 	var dir := Vector3(cb.x - ca.x, 0.0, cb.z - ca.z).normalized()
 	return ca + dir * (radius(a) - DRAFT_IN)
 
+## 24장 바람 방울을 다 울렸거나 지났는가 — 사당 위 먹구름이 걷혀 있다.
+static func shrine_clear() -> bool:
+	var ch := _ch()
+	return ch > CH24 or (ch == CH24 and int(PartyState.story.get("step", 0)) >= SHRINE_CLEAR_STEP)
+
 static func draft_open(i: int) -> bool:
 	return route_shown() and _ch() >= int(drafts()[i][3])
 
@@ -126,6 +137,9 @@ func _ready() -> void:
 func is_shown() -> bool:
 	return _shown
 
+func gloom_visible() -> bool:
+	return _gloom != null and _gloom.is_visible_in_tree()
+
 func draft_active(i: int) -> bool:
 	return i < _drafts.size() and (_drafts[i][0] as Node3D).visible
 
@@ -139,6 +153,11 @@ func _refresh() -> void:
 			b.collision_layer = 1 if s else 0
 	for i in _drafts.size():
 		(_drafts[i][0] as Node3D).visible = draft_open(i)
+	var c := shrine_clear()
+	if c != _clear or _gloom.visible == c:
+		_clear = c
+		_gloom.visible = not c
+		_bell_mat.emission_energy_multiplier = 1.4 if c else 0.15
 
 func _process(delta: float) -> void:
 	_t += delta
@@ -309,7 +328,8 @@ func _build_shrine() -> void:
 		slab.rotation.x = 0.42 * s
 	_box(hall, Vector3(10.6, 0.35, 0.35), Vector3(0, 4.7, 0), _mat(ROOF.darkened(0.3)))
 	_box(hall, Vector3(1.6, 0.9, 0.12), Vector3(0, 3.1, 2.0), _mat(Color(0.2, 0.28, 0.2))) # 편액
-	## 바람 방울 장대 — 장대 끝 가로대에 방울 셋(흔들리는 빛 알).
+	## 바람 방울 장대 — 장대 끝 가로대에 방울 셋(흔들리는 빛 알 — 먹구름이 걷히기 전엔 흐리다).
+	_bell_mat = _emit(BELL, 0.15)
 	for deg in [45.0, 135.0, 225.0, 315.0]:
 		var p := _group(body, "BellPole", Vector3(sin(deg_to_rad(deg)), 0.0, -cos(deg_to_rad(deg))) * 13.5, deg)
 		_solid(body, p, Vector3(0.3, 5.0, 0.3), Vector3(0, 2.5, 0), _mat(Color(0.4, 0.28, 0.18)))
@@ -318,8 +338,20 @@ func _build_shrine() -> void:
 			var bell := SphereMesh.new()
 			bell.radius = 0.2
 			bell.height = 0.4
-			var bm := _mesh(p, bell, _emit(BELL, 0.8), Vector3(-0.8 + k * 0.8, 4.3, 0), false)
+			var bm := _mesh(p, bell, _bell_mat, Vector3(-0.8 + k * 0.8, 4.3, 0), false)
 			_floaters.append([bm, 4.3, deg + k])
+	## 사당 위 먹구름 — 검보랏빛 구름 덩이 아홉(보기만, 떠 돈다).
+	_gloom = Node3D.new()
+	_gloom.name = "Gloom"
+	body.add_child(_gloom)
+	var gm := _veil(GLOOM, 0.6)
+	for k in 9:
+		var a := TAU * k / 9.0
+		var puff := SphereMesh.new()
+		puff.radius = 3.5 + (k % 3) * 0.8
+		puff.height = puff.radius * 1.2
+		var pm := _mesh(_gloom, puff, gm, Vector3(cos(a) * (6.0 + (k % 2) * 4.0), 8.0 + (k % 3) * 1.2, sin(a) * (6.0 + (k % 2) * 4.0)), false)
+		_floaters.append([pm, pm.position.y, float(k)])
 
 ## 비행선 잔해 — 기울어 처박힌 조종실(충돌) · 찢어진 기낭(보기만, 가장자리 밖으로 늘어짐) · 꼬리 날개 · 프로펠러 · 기상 관측 장비.
 func _build_wreck() -> void:

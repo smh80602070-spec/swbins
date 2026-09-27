@@ -37,7 +37,8 @@ extends RefCounted
 ##   단계·인물 칸에 sky = true 면 그 칸의 높이는 땅이 아니라 구름섬 윗면(kill·duel·appear — 9장).
 ##   lift = m 면 그 칸 땅 높이 + lift(떠 있는 구조물 윗면 — 14장 시간 틈 관측대, world/era_sites.gd OBS_RISE)(kill·duel·appear·stations).
 ##   rift_end = true 면 그 칸의 높이는 갈림길 끝 섬 윗면(world/rift_end.gd top_y — 20장)(kill·duel·light·seal·defend·sail 의 to·appear·stations).
-##     떠 있는 자리(sky·lift·rift_end)면 kill 둘레·seal 석등·defend 물결도 땅이 아니라 그 윗면 높이에 선다.
+##   isle = "<id>" 면 그 칸의 높이는 구름 위 항로 그 섬 윗면(world/sky_route.gd top_y — 7부, shrine·wreck·orbit)(rift_end 와 같은 곳에 다 쓴다).
+##     떠 있는 자리(sky·lift·rift_end·isle)면 kill 둘레·seal 석등·defend 물결도 땅이 아니라 그 윗면 높이에 선다.
 ##   인물 자리: appear(보일 때만 서 있는 인물) · stations(늘 있는 인물이 그 장·단계 동안 옮겨 서는 자리) —
 ##     둘 다 {ch, from, to, region?, cell?} 한 칸 또는 여러 칸. region·cell 이 있으면 그 동안 거기에 선다.
 ##   대화 줄 말하는 이가 바뀌면 카메라가 그쪽으로(player/camera_rig.gd talk_shot — 인물 말은 내 어깨 너머, 내 말은 인물 어깨 너머).
@@ -112,6 +113,9 @@ const NPCS := {
 			{"ch": 19, "from": 0, "to": 999, "region": "crossing", "cell": Vector2(4.8, 2.4)},
 			## ㊿-2 21장 — 은하 나루 별배 곁(0~1) → 별배에서 내린 잠긴 도읍 모래밭(2~, 21장 뒤에도).
 			{"ch": 20, "from": 0, "to": 1, "region": "skyport", "cell": Vector2(5.2, 1.95)},
+			## 51-2 24장 — 별배로 하늘 사당 섬에 내린 뒤(2~, 24장 뒤에도) 섬 남쪽 내린 자리 곁(isle = world/sky_route.gd 섬 윗면).
+			{"ch": 23, "from": 2, "to": 999, "region": "sunken", "cell": Vector2(6.4896, 7.4417), "isle": "shrine"},
+			{"ch": 24, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(6.4896, 7.4417), "isle": "shrine"},
 			{"ch": 20, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(3.3, 1.8)}]},
 	## 106장 ㊿-2 21장 — 잠긴 도읍(world/region7_sunken.gd) 해저 연구 기지의 마지막 대원(현대). 늘 기지 경사로 서쪽 모래밭에 선다.
 	## 잠수 마스크는 기관사 고글과 같은 틀(goggles). 21장 4~6 은 잠수정 선착장 판 위(lift — 바다 밑 −3 + 3.5 = 판 윗면), 7~ 은 궁궐 기단 위.
@@ -130,6 +134,12 @@ const NPCS := {
 	"parang": {"name": "돔 관리 인공지능 파랑", "era": "미래", "body": "drone", "region": "sunken", "cell": Vector2(5.0833, 6.1354), "rarity": 4,
 		"cloth": Color(0.3, 0.55, 1.0), "idle": "빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오.",
 		"appear": [{"ch": 22, "ch_to": 999, "from": 0, "to": 999}]},
+	## 106장 51-2 24장 — 하늘 사당(world/sky_route.gd shrine)의 바람 방울을 지키던 무녀(과거). 사당이 하늘로 들린 날부터 홀로 남았다.
+	## 별배가 섬에 내린 뒤(24장 2~, 뒤에도) 사당 앞 서쪽에 선다(가운데 석등 자리를 비켜).
+	"saebyeok": {"name": "바람 무녀 새벽", "era": "과거", "region": "sunken", "cell": Vector2(6.3438, 7.0771), "rarity": 4, "cloth": Color(0.9, 0.9, 0.96),
+		"idle": "방울이 울면 바람이 길을 안다오.",
+		"appear": [{"ch": 23, "from": 2, "to": 999, "region": "sunken", "cell": Vector2(6.3438, 7.0771), "isle": "shrine"},
+			{"ch": 24, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(6.3438, 7.0771), "isle": "shrine"}]},
 	"bawoo": {"name": "산성지기 바우", "era": "과거", "region": "frost", "cell": Vector2(3.0, 4.11), "rarity": 4, "cloth": Color(0.48, 0.2, 0.16),
 		"helmet": true, "idle": "……불씨가 식지 않게. 그것만이 내 일이다.",
 		"appear": [{"ch": 10, "from": 2, "to": 2},
@@ -182,6 +192,10 @@ const STATIONS := {
 		{"ch": 21, "from": 7, "to": 999, "region": "sunken", "cell": Vector2(5.208, 5.958)},
 		## ㊿-4 23장 — 등대에 불을 켠 뒤(3) 옛 등대 난간 판 위로 날아와 있다(lift = region7_sunken.gd LIGHT_H + 0.3, 등롱 서북서 2m — 판 반지름 2.3 안).
 		{"ch": 22, "from": 3, "to": 3, "region": "sunken", "cell": Vector2(6.9625, 6.9833), "lift": 15.3},
+		## 51-2 24장 — 선장 곁 모래밭(0~1) → 별배로 하늘 사당 섬에(2~, 24장 뒤에도).
+		{"ch": 23, "from": 0, "to": 1, "region": "sunken", "cell": Vector2(3.1, 1.55)},
+		{"ch": 23, "from": 2, "to": 999, "region": "sunken", "cell": Vector2(6.323, 7.4417), "isle": "shrine"},
+		{"ch": 24, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(6.323, 7.4417), "isle": "shrine"},
 		{"ch": 22, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(5.208, 5.958)},
 		## 19장 뒤 — 별배가 매인 은하 나루 착륙판 곁(고원 별배 빈자리에 서지 않게).
 		{"ch": 19, "ch_to": 999, "from": 0, "to": 999, "region": "skyport", "cell": Vector2(5.44, 1.8)}],
@@ -1141,6 +1155,44 @@ const CHAPTERS := [
 					["?", ["먹구름을 부리는 자를 찾자.", "물새 님은 이제 어떡해요?"]],
 					["물새", "물은 두 번 가르쳐 주지 않는다 했지. 이번엔 나도 안 놓치겠소 — 도읍을 잠기게 한 그 먹구름을.", "angry"],
 					["물새", "해녀 물새, 오늘부터 뭍사람들 편이오. 숨 긴 거 하나는 자신 있소.", "joy"]]},
+		]},
+	## ---------------------------------------------------------------- 이야기 7부(106장 51) — 구름 위 항로(world/sky_route.gd, 잠긴 도읍 남쪽 하늘에 뜬 섬 셋)
+	## 51-2 — 하늘 사당 섬(shrine, 가운데 칸 (6.4063,7.2542), 윗면 60m). 별배는 섬 남쪽 10m 에 내린다 · 무녀는 사당 앞 서쪽 ·
+	## 졸개·방울 석등은 섬 가운데(가운데 반지름 8m 는 비워 두었다). 방울을 다 울리면(6단계부터) 사당 위 먹구름이 걷힌다(sky_route.gd shrine_clear).
+	{"id": "ch24", "name": "제24장 · 하늘 사당의 바람 방울", "ar": 54,
+		"reward": {"fate_knot": 6, "mora": 120000, "book_l": 6, "talent_3": 3}, "exp": 540.0,
+		"steps": [
+			{"type": "talk", "npc": "hanbyeol", "text": "모래밭의 선장 한별과 이야기하기",
+				"lines": [["한별", "등대 빛줄기가 도는 걸 봤나? 빛 끝이 늘 같은 하늘을 짚고 멈춰. 저기 — 구름 위에 섬이 떠 있어.", "surprised"],
+					["반디", "삐— 별배 항로표에 새 신호 둘. 하나는 옛 사당의 방울 소리, 하나는… 지금 시대 기상 비행선의 구조 신호입니다.", "surprised"],
+					["한별", "먹구름을 부리는 자의 명령이 구름 위에서 왔다고 했지. 별배가 원래 가려던 항로도 저 위다."],
+					["?", ["별배로 올라가요.", "비행선에 누가 있을지도 몰라요."]],
+					["한별", "이번엔 하늘길이다. 별배가 제일 잘하는 거지 — 타게!", "fun"]]},
+			{"type": "sail", "npc": "hanbyeol", "to": {"region": "sunken", "cell": Vector2(6.4063, 7.4625), "isle": "shrine"},
+				"line": ["한별", "별배, 등대 빛줄기를 따라 위로! 반디, 구름 사이 길을 읽어 다오."], "text": "선장의 별배를 타고 하늘 항로로(선장에게 F)",
+				"arrive": "별배가 구름을 뚫고 올라 — 기와 사당이 선 떠 있는 섬에 우리를 내려 주었다"},
+			{"type": "talk", "npc": "saebyeok", "text": "사당 앞의 무녀와 이야기하기",
+				"lines": [["새벽", "……바람이 손님을 데려왔구려. 사당이 하늘로 들린 뒤로 사람 발소리는 처음이오.", "surprised"],
+					["?", ["누구세요?", "여기가 하늘 사당인가요?"]],
+					["새벽", "나는 바람 무녀 새벽. 이 사당의 바람 방울을 지켰소. 방울이 울면 바람이 길을 알고, 구름이 물러났지.", "sorrow"],
+					["새벽", "그런데 먹구름이 내려앉아 방울을 틀어막았소. 마당엔 먹구름 먹은 것들이 들끓고.", "angry"],
+					["한별", "먹구름이 저 혼자 내려앉았을 리 없지. 마당부터 치우자."]]},
+			{"type": "kill", "region": "sunken", "cell": Vector2(6.4063, 7.2542), "isle": "shrine", "kinds": ["bandit", "bandit", "thunder_cat", "wind_hawk"],
+				"text": "사당 마당의 먹구름 졸개 물리치기"},
+			{"type": "talk", "npc": "saebyeok", "text": "사당 앞의 무녀와 이야기하기",
+				"lines": [["새벽", "고맙소. 이제 방울을 울릴 차례요. 바람 방울은 하루를 따라 울렸지 — 새벽별, 한낮의 해, 밤의 달.", "fun"],
+					["반디", "삐— 마당 석등 셋에서 방울 주파수가 나옵니다. 별, 해, 달 무늬."],
+					["?", ["별, 해, 달.", "틀리면요?"]],
+					["새벽", "바람은 순서를 잊지 않소. 틀리면 방울이 다 멎고 처음부터요."]]},
+			{"type": "seal", "region": "sunken", "cell": Vector2(6.4063, 7.2542), "isle": "shrine", "order": ["star", "sun", "moon"],
+				"text": "사당 마당 바람 방울 석등을 차례(별 → 해 → 달)로 울리기"},
+			{"type": "talk", "npc": "saebyeok", "text": "사당 앞의 무녀와 이야기하기",
+				"lines": [["새벽", "……들리오? 방울이 다시 운다. 먹구름이 걷히는구려.", "joy"],
+					["반디", "삐— 구름 틈으로 더 높은 섬 하나. 비행선 구조 신호가 거기서 나옵니다.", "surprised"],
+					["새벽", "저 먹구름은 땅에서 오른 게 아니오. 위에서 흘러내렸소 — 누가 위에서 구름을 빚어 흘려보내는 게지.", "angry"],
+					["?", ["위로 올라갈 길은요?", "구름을 빚는 자…"]],
+					["새벽", "방울이 울었으니 바람이 길을 낼 거요. 사당 서쪽 끝에 바람 기둥이 설 테니, 타고 올라 날개를 펴시오.", "fun"],
+					["한별", "비행선이라면 지금 시대 사람이 갇혀 있을 거야. 서두르자."]]},
 		]},
 ]
 

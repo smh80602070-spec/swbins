@@ -211,6 +211,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_sunken.gd").new())
 	if OS.get_environment("SAGA_SKYROUTE_PROBE") != "": # 106장 51-1 7부 구름 위 항로
 		add_child(load("res://tools/probe_sky_route.gd").new())
+	if OS.get_environment("SAGA_STORY7_PROBE") != "": # 106장 51 이야기 7부 24장~
+		add_child(load("res://tools/probe_story7.gd").new())
 
 	## PLAN 106장 ㊸ — 업적(다른 노드 신호에 붙으므로 맨 뒤).
 	var achievements := preload("res://games/saga_go/world/achievements.gd").new()
