@@ -41,6 +41,10 @@ const CAMPS := [
 	["sunken", Vector2i(2, 2), ["water_turtle", "water_turtle", "wind_hawk"]],
 	["sunken", Vector2i(5, 1), ["thunder_cat", "thunder_cat"]],
 	["sunken", Vector2i(7, 2), ["water_turtle", "grass_snake", "wind_hawk"]],
+	## PLAN 106장 53 굳은 거리 — 굳은 자리에서 새어 나온 결정 짐승(있는 kind).
+	["amber", Vector2i(1, 6), ["rock_bear", "thunder_cat"]],
+	["amber", Vector2i(6, 7), ["fire_imp", "fire_imp", "wind_hawk"]],
+	["amber", Vector2i(7, 5), ["rock_bear", "ice_fox", "thunder_cat"]],
 ]
 const SPREAD := 5.0
 

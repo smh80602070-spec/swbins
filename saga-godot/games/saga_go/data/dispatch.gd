@@ -56,8 +56,13 @@ const SPOTS := {
 		"desc": "물이 샌 기지 창고에서 쓸 만한 부품과 조개를 건진다"},
 	"u_palace": {"region": "sunken", "name": "잠긴 궁궐 기단", "era": "과거", "element": "rock", "base": {"iron": 2, "clam": 1},
 		"desc": "물 빠진 틈에 기단 둘레에서 옛 쇠붙이를 줍는다"},
+	## 53 굳은 거리 — 과거 호박 속 장터(암)·현대 멈춘 전철(뇌). 거리 신상 a_statue 를 켜야 열린다.
+	"a_market": {"region": "amber", "name": "호박 속 장터 좌판", "era": "과거", "element": "rock", "base": {"iron": 2, "apple": 1},
+		"desc": "결정이 덜 굳은 좌판 가장자리에서 옛 물건을 캐낸다"},
+	"a_rail": {"region": "amber", "name": "멈춘 전철 차고", "era": "현대", "element": "thunder", "base": {"ore_s": 2, "polish": 1},
+		"desc": "고가 선로 밑 차고에서 멈춘 전철 부품을 떼어 온다"},
 }
-const ORDER := ["d_road", "d_wood", "d_mudflat", "d_shipyard", "d_quarry", "d_rift", "f_fortress", "f_wreck", "s_depot", "s_temple", "x_stop", "x_gate", "u_base", "u_palace"]
+const ORDER := ["d_road", "d_wood", "d_mudflat", "d_shipyard", "d_quarry", "d_rift", "f_fortress", "f_wreck", "s_depot", "s_temple", "x_stop", "x_gate", "u_base", "u_palace", "a_market", "a_rail"]
 
 
 static func spot(id: String) -> Dictionary:

@@ -51,7 +51,7 @@ func _physics_process(_delta: float) -> void:
 				if row[3]:
 					statues += 1
 				any_on = any_on or Waypoints.is_active(row[0])
-			_check("points", ids.size() == 20 and statues == 7 and not any_on, "n=%d statues=%d any_on=%s" % [ids.size(), statues, any_on])
+			_check("points", ids.size() == 23 and statues == 8 and not any_on, "n=%d statues=%d any_on=%s" % [ids.size(), statues, any_on])
 			_next()
 		2: # ③ 역참 앞으로 걸어가면(가까이 세우면) 활성화
 			if _frame == 1:

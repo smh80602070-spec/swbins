@@ -92,6 +92,11 @@ const PATCHES := [
 	["u_conch", "conch", "sunken", Vector2(5.6, 2.8), 2],
 	["u_mint", "mint", "sunken", Vector2(6.6, 1.5), 2],
 	["u_clam_isle", "clam", "sunken", Vector2(6.85, 7.15), 2],
+	## 106장 53 굳은 거리 — 있는 채집물만.
+	["a_mint", "mint", "amber", Vector2(5.8, 6.9), 2],
+	["a_apple", "apple", "amber", Vector2(1.3, 1.3), 2],
+	["a_mush", "mushroom", "amber", Vector2(7.2, 6.2), 3],
+	["a_honey", "honey_flower", "amber", Vector2(2.7, 1.8), 2],
 	["r_ash_se", "ash_flower", "ruins", Vector2(4.8, 5.5), 2],
 ]
 const PATCH_RING_M := 1.4

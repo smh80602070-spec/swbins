@@ -44,6 +44,10 @@ const POINTS := [
 	["u_pass", "sunken", Vector2(1.6, 1.25), false, "도읍 어귀"],
 	["u_statue", "sunken", Vector2(4.0, 2.4), true, "도읍 신상"],
 	["u_light", "sunken", Vector2(6.8, 6.82), false, "옛 등대"],
+	## 106장 53 굳은 거리 — 고개 어귀·장터 곁 신상·부양탑 발치.
+	["a_pass", "amber", Vector2(3.0, 6.6), false, "거리 어귀"],
+	["a_statue", "amber", Vector2(2.5, 5.2), true, "거리 신상"],
+	["a_tower", "amber", Vector2(5.2, 1.3), false, "부양탑 발치"],
 ]
 
 const INACTIVE := Color(0.46, 0.5, 0.58)

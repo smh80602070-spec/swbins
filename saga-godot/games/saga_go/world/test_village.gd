@@ -52,6 +52,10 @@ func _ready() -> void:
 	var sunken := preload("res://games/saga_go/world/region7_sunken.gd").new()
 	sunken.name = "Region7Sunken"
 	add_child(sunken)
+	## PLAN 106장 53-1 — 여덟째 지역 굳은 거리(은하 나루 북쪽 고개 너머, 1차 결말 뒤 결정 막이 풀림).
+	var amber := preload("res://games/saga_go/world/region8_amber.gd").new()
+	amber.name = "Region8Amber"
+	add_child(amber)
 	var era := preload("res://games/saga_go/world/era_sites.gd").new()
 	era.name = "EraSites"
 	add_child(era)
@@ -227,6 +231,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_story8.gd").new())
 	if OS.get_environment("SAGA_AFTERMATH_PROBE") != "": # 106장 52-5 결말 뒤 밤의 잔불·재대결
 		add_child(load("res://tools/probe_aftermath.gd").new())
+	if OS.get_environment("SAGA_AMBER_PROBE") != "": # 106장 53-1 여덟째 지역 굳은 거리
+		add_child(load("res://tools/probe_amber.gd").new())
 
 	## PLAN 106장 ㊸ — 업적(다른 노드 신호에 붙으므로 맨 뒤).
 	var achievements := preload("res://games/saga_go/world/achievements.gd").new()
@@ -288,7 +294,7 @@ func _print_density_report() -> void:
 	var test_map := load("res://games/saga_go/data/test_map.gd")
 	var density := load("res://saga_core/world/density_report.gd")
 	var terrain := load("res://games/saga_go/world/terrain_builder.gd")
-	for region_id in ["village", "coast", "ruins", "frost", "skyport", "crossing", "sunken"]:
+	for region_id in ["village", "coast", "ruins", "frost", "skyport", "crossing", "sunken", "amber"]:
 		var origin: Vector3 = test_map.origin_of(region_id)
 		var size: Vector2i = test_map.size(region_id)
 		var tile: float = test_map.tile_size_of(region_id)

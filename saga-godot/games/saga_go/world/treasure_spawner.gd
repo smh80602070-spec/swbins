@@ -59,6 +59,12 @@ const CHESTS := [
 	["u_islet", "sunken", Vector2(7.15, 7.12), "exquisite", "none", []],      # 등대 바위섬 — 헤엄쳐서
 	["u_camp_turtle", "sunken", Vector2(2.05, 2.05), "precious", "camp", []], # 들판 무리 (2,2) 물거북 둘+매
 	["u_dome", "sunken", Vector2(4.75, 5.85), "luxurious", "none", []],       # 빛 돔 안 마른 바닥 — 22장 문 자물쇠를 지켜 내야
+	## 굳은 거리 9×9(106장 53)
+	["a_street", "amber", Vector2(5.4, 6.2), "common", "none", []],
+	["a_road", "amber", Vector2(2.4, 6.3), "common", "none", []],
+	["a_ridge_n", "amber", Vector2(6.0, 0.38), "exquisite", "none", []],    # (6,0) 북쪽 테두리 산 턱 — 벽 타기
+	["a_camp_bear", "amber", Vector2(1.05, 6.05), "precious", "camp", []],  # 들판 무리 (1,6) 바위곰+살쾡이
+	["a_torch_market", "amber", Vector2(2.3, 4.3), "luxurious", "torch", ["fire", "fire", "fire"]], # 장터 좌판 등(주인공 혼자서도)
 ]
 
 
