@@ -247,6 +247,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_vault.gd").new())
 	if OS.get_environment("SAGA_FORK_PROBE") != "": # 106장 55-1 열째 지역 세갈래 고을
 		add_child(load("res://tools/probe_fork.gd").new())
+	if OS.get_environment("SAGA_STORY11_PROBE") != "": # 106장 55 이야기 11부(36장~)
+		add_child(load("res://tools/probe_story11.gd").new())
 	if OS.get_environment("SAGA_STORY10_PROBE") != "": # 106장 54 이야기 10부(33장~)
 		add_child(load("res://tools/probe_story10.gd").new())
 
