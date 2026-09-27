@@ -10261,8 +10261,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     t('이야기 ⑲-12 — 표·자리: 장 둘(단계 8·4, 여정 등급 1·5) · 인물 셋 = ⑮ 땅 탑 + 자리(고향 촌장·갈대 나루 사공·옛 성터 학자) · 모든 단계에 목표 · 같은 세계면 같은 자리 · 몸 셋 고정', function () {
       var ST = DG.story, A3 = DG.asset3d, r = {};
-      r.table = ST.CHAPTERS.length === 9 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
-        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20 이 3~9장을 더했다
+      r.table = ST.CHAPTERS.length === 10 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
+        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28 이 3~10장을 더했다
       var e = ST.npcPos('elder'), f = ST.npcPos('ferryman'), s = ST.npcPos('scholar'), ga = ST.anchorOf('galdae'), go = ST.anchorOf('gojeong');
       r.npc = e.x === -22 && e.y === 16 && f.x === ga.x - 18 && f.y === ga.y - 24 && s.x === go.x - 18 && s.y === go.y - 24 &&
         DG.biome.cellAt.apply(null, ga.key.split('_').map(Number)).zone === 'galdae' && DG.biome.cellAt.apply(null, go.key.split('_').map(Number)).zone === 'gojeong';
@@ -11073,7 +11073,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var rig = stRig(25), ST = rig.ST, SK = DG.skyIsle, r = {}, i;
       try {
         var c9 = ST.CHAPTERS[8], S9 = c9.steps;
-        r.table = ST.CHAPTERS.length === 9 && S9.length === 12 && c9.ar === 25 && c9.join === 'story_haesol' && c9.reward.knot === 5 &&
+        r.table = ST.CHAPTERS.length >= 9 && S9.length === 12 && c9.ar === 25 && c9.join === 'story_haesol' && c9.reward.knot === 5 &&
           c9.reward.gold === 2750 && c9.reward.party === 900 && S9[3].type === 'sky' && S9[4].type === 'kill' && S9[4].sky &&
           S9[5].kind === 'haesol_mask' && S9[7].kind === 'storm_king' && S9[5].sky && S9[7].sky && S9[10].type === 'go';
         var pk = ST.peakSpot(), c = SK.spot();
@@ -11207,7 +11207,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         r.cover0 = !SK.cleared() && SK.open();
         if (C.save.dex && C.save.dex.heroes) { delete C.save.dex.heroes.story_haesol; }
         stGo(ST.npcPos('elder'));
-        r.join = stTalkAll(ST) && C.save.story.ch === 9 && ST.hasMember('story_haesol') && ST.done();
+        r.join = stTalkAll(ST) && C.save.story.ch === 9 && ST.hasMember('story_haesol') && ST.chapter() === ST.CHAPTERS[9];   // ⑲-28 뒤로 10장
         r.after = SK.cleared() && SK.open();
       } finally { rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
@@ -11944,6 +11944,111 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { DG.world = W0; rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '산성 발견 한 번 · 눈사람 14m · 서리 고개 지점 · GPS ✕ · 담·관측소 막힘 · 문 트임' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-28 이야기 10장 · 서리 고개 너머 (story.js 10장·하람·반디·follow path, PLAN §5 ⑲-28) ── */
+    function st10Rig() {
+      var rig = stRig(26);
+      DG.frost._resetForTest();
+      C.save.story = { ch: 9, step: 0 };
+      return rig;
+    }
+    function st10Add(s, o) { return { x: s.x + o[0], y: s.y + o[1] }; }
+    function st10Eq(a, q) { return !!a && !!q && Math.abs(a.x - q.x) < 1e-6 && Math.abs(a.y - q.y) < 1e-6; }
+
+    t('이야기 ⑲-28 — 표·자리: 10장 9단계(Lv26)·보상·합류 없음 · 목표 모두 서리봉 고원 땅(경계비·가운데 탑·관측소 무리·산성 터) · 하람 관측소 곁 → 7째 비행선 → 8~9째 산성 안 → 끝나면 관측소 · 반디 비행선 곁 드론 몸 · 말하는 이·표정 · 고원 끄면 둘 다 없음', function () {
+      var rig = st10Rig(), ST = rig.ST, FR = DG.frost, r = {}, i;
+      try {
+        var c10 = ST.CHAPTERS[9], S = c10.steps;
+        r.table = ST.CHAPTERS.length === 10 && c10.id === 'ch10' && S.length === 9 && c10.ar === 26 && !c10.join && c10.reward.knot === 5 &&
+          c10.reward.gold === 3000 && c10.reward.guide === 3 && c10.reward.secret === 4 && c10.reward.party === 950 &&
+          S.map(function (s) { return s.type; }).join() === 'talk,go,go,kill,talk,follow,talk,go,talk';
+        var stl = FR.siteById('stele'), cen = FR.center(), obs = FR.siteById('obs'), ship = FR.siteById('ship'), fort = FR.siteById('fort'), bad = [];
+        for (i = 1; i < S.length; i++) {
+          C.save.story = { ch: 9, step: i };
+          var tg = ST.targetOf(ST.step());
+          if (!tg || !FR.snowAt(tg.x, tg.y)) { bad.push(i); }
+        }
+        r.snow = bad.length === 0;
+        r.spots = st10Eq(ST.targetOf(S[1]), stl) && st10Eq(ST.targetOf(S[2]), st10Add(cen, [0, 8])) && st10Eq(ST.targetOf(S[3]), st10Add(obs, [0, 20])) &&
+          st10Eq(ST.targetOf(S[7]), fort) && ST.targetOf(S[3]).r === 0;
+        function hp(si, ch) { C.save.story = { ch: ch === undefined ? 9 : ch, step: si }; return ST.npcPos('haram'); }
+        var hf = hp(8);
+        r.haram = st10Eq(hp(0, 0), st10Add(obs, ST.HARAM_OBS)) && st10Eq(hp(4), st10Add(obs, ST.HARAM_OBS)) && st10Eq(hp(5), st10Add(obs, ST.HARAM_OBS)) &&
+          st10Eq(hp(6), st10Add(ship, ST.HARAM_SHIP)) && st10Eq(hp(7), st10Add(fort, ST.HARAM_FORT)) && st10Eq(hf, st10Add(fort, ST.HARAM_FORT)) &&
+          st10Eq(hp(0, 10), st10Add(obs, ST.HARAM_OBS)) &&
+          Math.abs(hf.x - fort.x) < FR.FORT_SIDE / 2 - 1 && Math.abs(hf.y - fort.y) < FR.FORT_SIDE / 2 - 1;
+        C.save.story = { ch: 9, step: 6 };
+        var bp = ST.npcPos('bandi'), lv = ST.live(bp), bd = lv.filter(function (x) { return x.p.story === 'bandi'; })[0], hr = lv.filter(function (x) { return x.p.story === 'haram'; })[0];
+        r.bandi = st10Eq(bp, st10Add(ship, [0, 12])) && !!bd && bd.p.pet === 'drone' && bd.p.name === '조종 기계 반디' && !!hr && hr.p.name === '기상 관측원 하람' &&
+          ST.targetOf(ST.step()).label === '조종 기계 반디';
+        var who = {}, emo = 0;
+        S.forEach(function (st) { (st.lines || []).forEach(function (l) { who[l[0]] = 1; if (l[2]) { emo++; if (!DG.talkface.EMO[l[2]]) { emo = -99; } } }); });
+        r.lines = Object.keys(who).sort().join() === ['?', '누리', '반디', '하람'].sort().join() && emo === 8;
+        C.setTune('frost.on', 0); FR._resetForTest(); ST._resetForTest();
+        C.save.story = { ch: 9, step: 4 };
+        r.off = ST.npcPos('haram') === null && ST.npcPos('bandi') === null && ST.targetOf(ST.step()) === null &&
+          ST.live({ x: obs.x, y: obs.y }).filter(function (x) { return x.p.story === 'haram' || x.p.story === 'bandi'; }).length === 0;
+      } finally { C.setTune('frost.on', null); DG.frost._resetForTest(); rig.undo(); }
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? '10장 9단계 · 목표 여덟 모두 고원 · 하람 관측소 → 비행선 → 산성 안 → 관측소 · 반디 드론 · 끄면 없음' : ('실패 ' + bad2.join(','));
+    });
+
+    t('이야기 ⑲-28 — 흐름: 촌장 → 경계비 → 탑 → 관측소 무리 넷(치우면 넘김) → 하람 → 따라가기(멀면 섬·가까우면 초당 6m·다음 길 점을 봄·비행선에서 넘김) → 반디 → 산성 터 → 하람 → 장 끝 보상(매듭 5·금 3000) · 이야기 끝', function () {
+      var rig = st10Rig(), ST = rig.ST, FC = DG.fieldCombat, TL = DG.talent, FR = DG.frost, r = {}, i;
+      try {
+        stGo(ST.npcPos('elder'));
+        r.elder = stTalkAll(ST) && C.save.story.step === 1;
+        stGo(ST.targetOf(ST.step())); ST.check();
+        stGo(ST.targetOf(ST.step())); ST.check();
+        r.go = C.save.story.step === 3;
+        var kt = ST.targetOf(ST.step());
+        stGo({ x: kt.x + 20, y: kt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.spawn = !!cp && cp.uids.length === 4 && cp.kind === 'story';
+        if (cp) { cp.uids.forEach(function (u) { var f = S.foes[u]; f.shield = 0; f.layers = []; for (var g = 0; g < 3; g++) { FC.hitFoe(S, f, S.party[0], 1e8, null, 'test'); } }); }
+        FC.tick(0.05);
+        r.kill = C.save.story.step === 4;
+        stGo(ST.npcPos('haram'));
+        r.haram = stTalkAll(ST) && C.save.story.step === 5;
+        var st = ST.step(), P = ST.followPts(st), p0 = ST.npcPos('haram');
+        r.path = P.length === 2 && st10Eq(P[0], st10Add(FR.siteById('obs'), ST.HARAM_OBS)) && st10Eq(P[1], st10Add(FR.siteById('ship'), ST.HARAM_SHIP)) && st10Eq(p0, P[0]);
+        stGo({ x: p0.x + ST.FOLLOW_NEAR() + 5, y: p0.y });
+        var f1 = ST.stepFollow(1);
+        r.wait = !!f1 && !f1.walking && st10Eq(ST.npcPos('haram'), p0);
+        stGo({ x: p0.x + 3, y: p0.y });
+        ST.stepFollow(1);
+        var q = ST.npcPos('haram');
+        var lv = ST.live(q).filter(function (x) { return x.p.story === 'haram'; })[0];
+        r.walk = Math.abs(Math.hypot(q.x - p0.x, q.y - p0.y) - 6) < 1e-6 && !!lv && lv.walking &&
+          Math.abs(lv.ang - Math.atan2(P[1].y - q.y, P[1].x - q.x)) < 1e-6;
+        var len = Math.hypot(P[1].x - P[0].x, P[1].y - P[0].y), n = 1;
+        for (i = 0; i < 400 && C.save.story.step === 5; i++) { q = ST.npcPos('haram'); stGo({ x: q.x + 3, y: q.y }); ST.stepFollow(1); n++; }
+        r.arrive = C.save.story.step === 6 && Math.abs(n - Math.ceil(len / 6)) <= 1 && st10Eq(ST.npcPos('haram'), P[1]);
+        stGo(ST.npcPos('bandi'));
+        r.bandi = stTalkAll(ST) && C.save.story.step === 7;
+        stGo(ST.targetOf(ST.step())); ST.check();
+        r.fort = C.save.story.step === 8;
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('haram'));
+        r.end = stTalkAll(ST) && C.save.story.ch === 10 && C.save.story.step === 0 && ST.done() && m.knot === k0 + 5 && C.save.player.gold === gold0 + 3000;
+        r.back = st10Eq(ST.npcPos('haram'), st10Add(FR.siteById('obs'), ST.HARAM_OBS));
+      } finally { DG.frost._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '촌장 → 경계비 → 탑 → 무리 넷 → 하람 → 따라가기 ' + '(초당 6m) → 반디 → 산성 → 하람 · 🪢+5 🪙+3000 · 끝' : ('실패 ' + bad.join(','));
+    });
+
+    t('이야기 ⑲-28 — 4장 따라가기 그대로: 길(path) 없는 나그네는 WANDER_PATH·초당 2.6m · 10장 따라가기 단계에 없는 인물은 제자리', function () {
+      var rig = st10Rig(), ST = rig.ST, r = {};
+      try {
+        C.save.player.level = 10; C.save.story = { ch: 3, step: 2 };
+        var P = ST.followPts(ST.step()), W = ST.WANDER_PATH;
+        r.old = !ST.step().path && P.length === W.length && st10Eq(P[0], ST.anchorOf('home') ? { x: W[0][0], y: W[0][1] } : null) && ST.FOLLOW_SPEED === 2.6;
+        C.save.story = { ch: 9, step: 5 };
+        r.other = st10Eq(ST.npcPos('bandi'), st10Add(DG.frost.siteById('ship'), [0, 12]));
+      } finally { DG.frost._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '나그네 길 그대로 · 반디 제자리' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

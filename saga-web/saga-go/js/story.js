@@ -1,5 +1,5 @@
 /**
- * 이야기 임무 1~9장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳)
+ * 이야기 임무 1~10장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
@@ -52,7 +52,11 @@
   var DUEL_P2_AT = 0.5, DUEL_P2_SHIELD = 0.12, DUEL_ADDS = ['imp', 'imp'];
   /* ⑲-14 이름 붙은 자리 — 옛길·둘째 제단은 솔숲 고개 탑 곁, 봉우리는 ⑰ 정상(peakSpot) */
   var SPOTS = { road: { zone: 'solryeong', off: [-26, -46] }, altar2: { zone: 'solryeong', off: [40, -70] }, peak: { peak: true }, cape: { cape: true },
-    isle: { isle: true }, dock: { zone: 'galdae', off: [-12, -17] }, sky: { sky: true } };
+    isle: { isle: true }, dock: { zone: 'galdae', off: [-12, -17] }, sky: { sky: true },
+    /* ⑲-28 서리봉 고원 — frost.js 가운데(탑)·명소. 고원이 꺼져 있으면 자리 없음 */
+    fr_center: { frost: 'center' }, fr_stele: { frost: 'stele' }, fr_obs: { frost: 'obs' }, fr_ship: { frost: 'ship' }, fr_fort: { frost: 'fort' } };
+  /* ⑲-28 하람이 서는 자리 — 관측소 곁(늘)·비행선 곁. 산성 안은 남쪽 문 안쪽(담 반 변 13m) */
+  var HARAM_OBS = [-6, 10], HARAM_SHIP = [-6, 12], HARAM_FORT = [0, 4];
   /* ⑲-16 제단 지키기 — 물결은 제단 둘레 DEFEND_RING m 열두 자리에서 나온다(물결 n 은 4n 째 자리부터).
      제단 체력 = DEFEND_HITS × 그 자리 등급 공격(멧돼지 기준, 천하 등급 포함) */
   var DEFEND_RING = 15, DEFEND_WAVE_SEC = 28, DEFEND_REST = 4, DEFEND_HITS = 45, DEFEND_SLOTS = 12;
@@ -90,9 +94,15 @@
       mask: 'crack', appear: [{ ch: 7, from: 8, to: 8, spot: 'isle', off: [0, -9] },
         { ch: 8, from: 6, to: 9, spot: 'sky', off: [-5, 5], sky: true, mask: false, name: '해솔', idle: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' }] },
     thief:    { id: 'story_thief',    name: '노 도둑', short: '도둑', zone: 'galdae', off: [-10, -50], color: '#5a4a3a', idle: '헤헤, 못 잡지롱!',
-      appear: [{ ch: 7, from: 2, to: 2 }], runPath: THIEF_PATH }
+      appear: [{ ch: 7, from: 2, to: 2 }], runPath: THIEF_PATH },
+    /* ⑲-28 서리봉 고원 둘 — 자리가 ⑮ 땅 탑이 아니라 이름 붙은 자리(spot, 고원이 꺼지면 안 선다). 반디는 드론 몸(pet) */
+    haram:    { id: 'story_haram',    name: '기상 관측원 하람', short: '하람', zone: 'snowfort', spot: 'fr_obs', off: HARAM_OBS, color: '#db7533',
+      idle: '기압계 바늘이 또 얼었네… 사흘째 눈이 안 멎어요.',
+      at: [{ ch: 9, from: 6, to: 6, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 9, from: 7, to: 8, spot: 'fr_fort', off: HARAM_FORT }] },
+    bandi:    { id: 'story_bandi',    name: '조종 기계 반디', short: '반디', zone: 'snowfort', spot: 'fr_ship', off: [0, 12], color: '#8cd9f2', pet: 'drone',
+      idle: '삐— 동력 3퍼센트. 추위 경고.' }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -415,6 +425,39 @@
             ['누리', '해솔이 돌아왔다고? 그 녀석, 할머니 볼 낯도 없나 봐. 이따 잔칫상 앞에 끌고 오너라.', 'fun'],
             ['누리', '늘 노래를 흥얼거리던 착한 아이였지. 이제부턴 네 곁에 서겠다더구나.', 'sorrow'],
             ['누리', '약속대로 잔치를 열자꾸나. 이건 온 마을이 너를 위해 모은 거다. 고맙다, 정말로.', 'joy']] }
+      ] },
+    /* ⑲-28 이야기 2부 첫 장 — 무대는 서리봉 고원(frost.js ⑲-27). 자리는 그 명소(SPOTS fr_*) */
+    { id: 'ch10', name: '제10장 · 서리 고개 너머', ar: 26,
+      reward: { knot: 5, gold: 3000, guide: 3, secret: 4, party: 950 },
+      steps: [
+        { type: 'talk', npc: 'elder', text: '청하 촌장에게 북쪽 소식 듣기',
+          lines: [['누리', '잔치가 끝나자마자 북쪽 산길이 얼어붙었단다. 고개에서 찬바람이 내려와.', 'sorrow'],
+            ['누리', '고개 너머 서리봉 고원엔 옛 산성 터가 있고, 요즘은 날씨를 재는 관측소도 있다지. 그 불빛이 사흘째 꺼져 있구나.'],
+            ['?', ['가 볼게요.', '관측소요?']],
+            ['누리', '해솔 말로는 그날 밤 불붙은 별 하나가 고원 쪽으로 떨어졌대. 두껍게 입고 가거라.', 'surprised']] },
+        { type: 'go', spot: 'fr_stele', text: '마을 북쪽 산길을 지나 서리 고개 넘기' },
+        { type: 'go', spot: 'fr_center', off: [0, 8], text: '고원 탑에 다가가 순간이동 지점 켜기' },
+        { type: 'kill', spot: 'fr_obs', off: [0, 20], kinds: ['snowfox', 'snowfox', 'hawk', 'snowfox'], text: '기상 관측소를 에워싼 눈여우 무리 물리치기' },
+        { type: 'talk', npc: 'haram', text: '기상 관측소 앞의 관측원과 이야기하기',
+          lines: [['하람', '살았다…! 저 여우들, 사흘째 관측소를 에워싸고 있었어요.', 'surprised'],
+            ['하람', '난 기상 관측원 하람이에요. 사흘 전 밤, 은빛 배가 하늘에서 떨어진 뒤로 눈이 한 번도 안 멎어요. 바늘도 다 얼었고.'],
+            ['?', ['은빛 배요?', '같이 가 봐요.']],
+            ['하람', '떨어진 자리는 알아요. 따라와요 — 여우가 또 올지 모르니까 가까이 붙어서!', 'joy']] },
+        { type: 'follow', npc: 'haram', path: [['fr_obs', HARAM_OBS], ['fr_ship', HARAM_SHIP]], speed: 6, arrive: '👣 하람이 걸음을 멈췄다',
+          text: '관측원 하람을 따라 추락한 비행선으로' },
+        { type: 'talk', npc: 'bandi', text: '추락한 비행선 곁의 기계와 이야기하기',
+          lines: [['반디', '삐— 생체 신호 둘. 구조대입니까?'],
+            ['하람', '구조대는 아니고… 넌 누구니?', 'surprised'],
+            ['반디', '조종 기계 반디. 이 배 「별배」는 먼 앞날에서 시간 틈을 지나다 떨어졌습니다. 심장이 식으면서 추위를 뿜고 있습니다.'],
+            ['?', ['심장을 다시 켤 수 있어?', '앞날에서 왔다고?']],
+            ['반디', '불씨가 필요합니다. 기록에 따르면 이 고원의 옛 산성에 꺼지지 않는 불씨가 지켜졌습니다.'],
+            ['하람', '산성이라면 고원 북쪽 돌담이에요. 요즘 밤마다 거기서 등불이 떠다닌다던데…', 'sorrow']] },
+        { type: 'go', spot: 'fr_fort', text: '옛 산성 터 둘러보기' },
+        { type: 'talk', npc: 'haram', text: '산성 터에서 하람과 이야기하기',
+          lines: [['하람', '봐요, 눈 위에 발자국 하나 없는데 등불 그을음만 남았어요.', 'surprised'],
+            ['하람', '밤이 되면 산성지기가 나와 불씨를 지킨다는 옛이야기가 있어요. 그냥 이야기인 줄 알았는데…'],
+            ['?', ['산성지기를 찾아봐요.', '불씨가 정말 있을까요?']],
+            ['하람', '오늘은 관측소에서 몸 좀 녹여요. 기계가 풀리면 날씨 지도를 보여 줄게요. 다음엔 산성 안쪽으로!', 'joy']] }
       ] }
   ];
 
@@ -522,9 +565,18 @@
   /** 이름 붙은 자리 + off */
   function spotPos(name, off) {
     var SKI = global.DG.skyIsle;
-    var sp = SPOTS[name], b = !sp ? null : (sp.peak ? peakSpot() : (sp.cape ? capeSpot() : (sp.isle ? isleSpot() : (sp.sky ? (SKI ? SKI.spot() : null) : at(sp.zone, sp.off)))));
+    var sp = SPOTS[name], b = !sp ? null : (sp.frost ? frostSpot(sp.frost) : (sp.peak ? peakSpot() : (sp.cape ? capeSpot() : (sp.isle ? isleSpot() :
+      (sp.sky ? (SKI ? SKI.spot() : null) : at(sp.zone, sp.off))))));
     return b ? { x: b.x + (off ? off[0] : 0), y: b.y + (off ? off[1] : 0) } : null;
   }
+  /** ⑲-28 서리봉 고원 자리 — 'center'(가운데 탑) 또는 frost 명소 id. 고원이 꺼져 있으면 null */
+  function frostSpot(id) {
+    var FR = global.DG.frost;
+    if (!FR || !FR.on()) { return null; }
+    return id === 'center' ? FR.center() : FR.siteById(id);
+  }
+  /** 인물의 제자리 — 이름 붙은 자리(spot, ⑲-28) 또는 ⑮ 땅 탑 + off */
+  function homeOf(n) { return n.spot ? spotPos(n.spot, n.off) : at(n.zone, n.off); }
   /** 단계의 자리 — 이름 붙은 자리(spot) 또는 ⑮ 땅 탑 + off */
   function posOf(st) { return st.spot ? spotPos(st.spot, st.off) : at(st.zone, st.off); }
   /** 인물 k 의 (ch, si) 칸 — appear·at 에서 그 장 그 단계를 덮는 것. ⑲-21 wq 칸은 그 세계 임무 단계(wq 를 주면 si, 아니면 지금) */
@@ -570,8 +622,14 @@
     if (typeof ch !== 'number') { ch = sv().ch; si = sv().step; }
     if (k === 'wanderer' && ch === 3) { return wandererAt(si); }
     if (n.runPath) { return thiefAt(k); }                           // ⑲-19·21 달리는 자리
+    var fst = !wq && CHAPTERS[ch] ? CHAPTERS[ch].steps[si] : null;  // ⑲-28 길(path) 따라가기 — 걷는 자리, 아니면 길 첫 점
+    if (fst && fst.type === 'follow' && fst.npc === k && fst.path) {
+      if (fol && fol.key === 'sq:' + ch + '_' + si) { return { x: fol.x, y: fol.y }; }
+      var fp = followPts(fst);
+      return fp ? fp[0] : null;
+    }
     var pl = placeOf(k, ch, si, wq);
-    return pl && pl.spot ? spotPos(pl.spot, pl.off) : at(n.zone, n.off);
+    return pl && pl.spot ? spotPos(pl.spot, pl.off) : homeOf(n);
   }
   function altarPos() {
     var DM = global.DG.domain, L = DM && DM.list ? DM.list() : [];
@@ -1018,29 +1076,36 @@
   /* ── 따라가기 ─────────────────────────────────────────── */
 
   var fol = null;           // { key, i(지난 길 점), x, y, walking } — 저장 안 함
+  /** 따라가는 길 점 — 단계 path([이름 붙은 자리, off]…, ⑲-28)가 있으면 그것, 없으면 4장 나그네 길. 자리를 모르면 null */
+  function followPts(st) {
+    var L = st.path ? st.path.map(function (e) { return spotPos(e[0], e[1]); }) : WANDER_PATH.map(function (o) { return at('home', o); });
+    for (var i = 0; i < L.length; i++) { if (!L[i]) { return null; } }
+    return L;
+  }
   function followState() {
     var st = step();
     if (!st || st.type !== 'follow') { fol = null; return null; }
     if (!fol || fol.key !== keyOf()) {
-      var p0 = at('home', WANDER_PATH[0]);
-      fol = { key: keyOf(), i: 0, x: p0.x, y: p0.y, walking: false };
+      var pts = followPts(st);
+      if (!pts) { fol = null; return null; }
+      fol = { key: keyOf(), i: 0, x: pts[0].x, y: pts[0].y, walking: false };
     }
     return fol;
   }
-  /** 한 박자 — 내가 가까우면 FOLLOW_SPEED 로 다음 길 점까지 걷고, 멀면 선다. 길 끝이면 단계를 끝낸다 */
+  /** 한 박자 — 내가 가까우면 단계 speed(없으면 FOLLOW_SPEED)로 다음 길 점까지 걷고, 멀면 선다. 길 끝이면 단계를 끝낸다 */
   function stepFollow(dt) {
     var fs = followState();
     if (!fs) { return null; }
-    var p = pos();
+    var st = step(), pts = followPts(st), p = pos();
     if (Math.hypot(p.x - fs.x, p.y - fs.y) > FOLLOW_NEAR()) { fs.walking = false; return fs; }
-    var left = FOLLOW_SPEED * (dt || 0);
-    while (left > 0 && fs.i < WANDER_PATH.length - 1) {
-      var nx = at('home', WANDER_PATH[fs.i + 1]), d = Math.hypot(nx.x - fs.x, nx.y - fs.y);
+    var left = ((!gps() && st.speed) || FOLLOW_SPEED) * (dt || 0);   // GPS 판은 실제 걸음이라 늘 FOLLOW_SPEED
+    while (left > 0 && fs.i < pts.length - 1) {
+      var nx = pts[fs.i + 1], d = Math.hypot(nx.x - fs.x, nx.y - fs.y);
       if (d <= left) { fs.x = nx.x; fs.y = nx.y; fs.i += 1; left -= d; }
       else { fs.x += (nx.x - fs.x) / d * left; fs.y += (nx.y - fs.y) / d * left; left = 0; }
     }
     fs.walking = true;
-    if (fs.i >= WANDER_PATH.length - 1) { fol = null; toast('🎭 나그네가 걸음을 멈췄다'); advance(); return null; }
+    if (fs.i >= pts.length - 1) { fol = null; toast(st.arrive || '🎭 나그네가 걸음을 멈췄다'); advance(); return null; }
     return fs;
   }
 
@@ -1484,10 +1549,12 @@
       if (!q) { continue; }
       var d = Math.hypot(q.x - p0.x, q.y - p0.y);
       if (d > 110) { continue; }
-      var a = anchorOf(n.zone), face = talk && talk.st.npc === k, inf = npcInfo(k);
+      var face = talk && talk.st.npc === k, inf = npcInfo(k), fw = !!(fs && fs.walking && step().npc === k);
+      /* 바라보는 곳 — 대화 상대면 나 · 길(path)을 걷는 중이면 다음 길 점(⑲-28) · 아니면 제 땅 탑(spot 인물은 그 자리) */
+      var a = fw && step().path ? followPts(step())[Math.min(fs.i + 1, step().path.length - 1)] : (n.spot ? spotPos(n.spot) : anchorOf(n.zone));
       out.push({ p: { id: n.id, name: inf.name, color: n.color, rarity: 3, trait: 'virtue', story: k, mask: inf.mask, pet: n.pet || null }, sky: inf.sky,
-        x: q.x, y: q.y, walking: !!((k === 'wanderer' && fs && fs.walking) || (n.runPath && chase && chase.npc === k && chase.run && !(chase.pause > 0))), phase: (tms || 0) / 480,
-        ang: face ? Math.atan2(pp.y - q.y, pp.x - q.x) : Math.atan2(a.y - q.y, a.x - q.x), dist: d });
+        x: q.x, y: q.y, walking: !!(fw || (n.runPath && chase && chase.npc === k && chase.run && !(chase.pause > 0))), phase: (tms || 0) / 480,
+        ang: face ? Math.atan2(pp.y - q.y, pp.x - q.x) : (a ? Math.atan2(a.y - q.y, a.x - q.x) : 0), dist: d });
     }
     return out;
   }
@@ -1562,6 +1629,7 @@
     WQ: WQD, wqs: wqs, wqDef: wqDef, wqStepOf: wqStepOf, tracking: tracking, setTrack: setTrack, wqStart: wqStart, wqAvail: wqAvail, wqMarks: wqMarks, mapMarks: mapMarks, revealed: revealed,
     talkables: talkables, storyStep: storyStep, stepAt: stepAt, aimPoints: aimPoints,
     FOLLOW_NEAR: FOLLOW_NEAR, FOLLOW_LOST: FOLLOW_LOST,
+    HARAM_OBS: HARAM_OBS, HARAM_SHIP: HARAM_SHIP, HARAM_FORT: HARAM_FORT, frostSpot: frostSpot, followPts: followPts,
     on: on, anchorOf: anchorOf, npcPos: npcPos, visible: visible, targetOf: targetOf, trackText: trackText, listHtml: listHtml,
     state: sv, chapter: chapter, step: step, locked: locked, done: done, keyOf: keyOf, gathered: gathered,
     advance: advance, check: check, stepFollow: stepFollow, nearTalk: nearTalk, talkStart: talkStart, talking: talking, next: next,
