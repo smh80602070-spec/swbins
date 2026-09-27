@@ -398,6 +398,14 @@ GARMENTS = {
         dict(kind='tube', top=('neck', 0), bottom=('hip', -0.03), ease=0.008, over=0.012, fit=True, slot=0,
              paint=dict(base='C1', pattern='quilt', trims=[('front', 0.02, 'C2'), ('top', 0.012, 'C2'), ('bottom', 0.012, 'C2')])),
     ]),
+    # 어깨 덮개 달린 가죽 조끼 — 맨팔 민소매 위(09-27 불량배: vest 어깨 끝 밑 살을 under 로 지우면 대기에서 팔 따라 움직인
+    # 어깨 살 경계가 톱니로 드러났다 — 윗팔 머리까지 덮는 짧은 소매 판이 그 경계를 팔 뼈를 따르는 옷 밑으로 숨긴다)
+    'vest_cap': dict(desc='어깨 덮개 달린 가죽 조끼(맨팔 민소매 위)', tags=['vest', 'modern'], colors=dict(C1='#6a4a2e', C2='#2a1c14'), parts=[
+        dict(kind='tube', top=('neck', 0), bottom=('hip', -0.03), ease=0.008, over=0.012, fit=True, slot=0,
+             paint=dict(base='C1', pattern='quilt', trims=[('front', 0.02, 'C2'), ('top', 0.012, 'C2'), ('bottom', 0.012, 'C2')])),
+        dict(kind='sleeves', start=-0.04, length=0.16, ease=0.006, over=0.008, flare=0.0, cuff=0.0, folds=0.0, slot=2,
+             paint=dict(base='C1', pattern='quilt', trims=[('top', 0.012, 'C2')])),
+    ]),
     # 방탄 조끼 — 두꺼운 재킷·셔츠 위(넉넉한 볼록 둘레 — 붙는 vest 는 재킷 속으로 들어가 등에 재킷이 얼룩처럼 비쳤다, 09-27)
     'tacvest': dict(desc='방탄 조끼(재킷 위)', tags=['vest', 'modern'], colors=dict(C1='#15171a', C2='#0a0b0c'), parts=[
         dict(kind='tube', top=('neck', 0), bottom=('hip', -0.02), ease=0.022, over=0.016, slot=0,

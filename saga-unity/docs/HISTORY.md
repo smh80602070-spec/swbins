@@ -9849,3 +9849,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 검증(묶음 없는 이 PC): 컴파일 0 오류 · `PlaytestStorySlice` 6번 모두 `bossPattern OK`, 슬라이스 끝은 기준선과 같은 무명 옷·Missing Prefab FAIL(phase=SaveLoad) — 묶음 PC 에서 3연속 재확인 · `UiLayoutCheck` TestField 세 비율·영어 겹침 0(FAIL 6 은 en:TestDungeon 지역 배너·대사 줄 겹침, en:TestCity 한글 — 이번 변경 밖). 글꼴 SDF 셋·Mobile_RPAsset 되돌림.
 - 실기 확인 전: 예고 시간(1.0~1.8초) 체감, 휩쓸기 55% 가 과한지, 안전지대 3.4m 폭, 원판이 옆 시점에서 읽히는지, Lv 높을 때 두목 힘.
 - 다음 = 11-2 5-10 보스 고유 기술·그로기.
+
+## 2026-09-27 char-forge — 불량배 조끼 어깨 덮개 (1벌)
+
+"vroid 자체툴 이어해".
+
+- 옷 틀 `vest_cap`(garments.py) = 누빈 가죽 조끼 + 짧은 어깨 덮개 — 조끼 밑 어깨 살을 지운 경계가 대기에서 팔 따라 톱니로 드러나던 것(스물한째 시험에서 남은 길) 없앰. 불량배(Jody 자리) `vest@141416,2a2a2c` → `vest_cap@…`.
+- 레시피 칸 `under_rows` {겉옷: {속옷: 줄 수}}(build_real hide_under, 기본 1) — 덮개 끝단 안 살 톱니는 살 2, 속 민소매 끈 삐짐은 0. 달리기 엉덩이 골 살 점 → `under` {바지: [살]} 줄 0.
+- 검사: verify fbx 0.53° · glb 0.0° · sha256 두 번 같음 · 순찰 대원(칸 없음) sha 그대로 · CMP_RESULT OK(FBX 로컬 전용, ProjectVersion·Packages 되돌림). 다음 = HOW_TO_PLAYTEST §9 사용자 판정.

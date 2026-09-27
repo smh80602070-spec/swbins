@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_punk_f_01",
- "_note": "단계 3 STORY 비교용 — saga-unity Jody(Mixamo) 자리 후보(STORY 현대 '뒷골목 불량배', 비경 5층~). 게임 인물 아님. 09-26 진짜 옷(CC0 짧은 윗옷(맨팔)·잿빛 바지·높은 장화, 가죽 조끼·비니는 껍데기). 젊은 여자·단발·자홍 비니·검은 가죽 조끼 위 짧은 윗옷(맨팔)·찢긴 잿빛 바지·높은 장화. 09-27 모자 = 공방 beanie(살 껍데기 모자는 가장자리가 톱니·구김). 09-27 조끼 = 공방 vest(옷 면 껍데기 조끼는 구겨진 판). 09-27 긴 장화 → 발목 장화 toigo_ankle_boots_female(무릎 굽힌 대기에서 장화 윗단이 바지를 뚫었다 — under 로 지우면 무릎에 테두리 조각이 남았다). 09-27 조끼 어깨 끝 살 톱니 → under 살.",
+ "_note": "단계 3 STORY 비교용 — saga-unity Jody(Mixamo) 자리 후보(STORY 현대 '뒷골목 불량배', 비경 5층~). 게임 인물 아님. 09-26 진짜 옷(CC0 짧은 윗옷(맨팔)·잿빛 바지·높은 장화, 가죽 조끼·비니는 껍데기). 젊은 여자·단발·자홍 비니·검은 가죽 조끼 위 짧은 윗옷(맨팔)·찢긴 잿빛 바지·높은 장화. 09-27 모자 = 공방 beanie(살 껍데기 모자는 가장자리가 톱니·구김). 09-27 조끼 = 공방 vest(옷 면 껍데기 조끼는 구겨진 판). 09-27 긴 장화 → 발목 장화 toigo_ankle_boots_female(무릎 굽힌 대기에서 장화 윗단이 바지를 뚫었다 — under 로 지우면 무릎에 테두리 조각이 남았다). 09-27 조끼 어깨 끝 살 톱니 → under 살. 09-27 조끼 = 공방 vest_cap(짧은 어깨 덮개 — under 로 지운 어깨 살 경계가 대기에서 팔 따라 톱니로 드러났다).",
  "macro": {
   "gender": 0.0,
   "age": 0.42,
@@ -33,7 +33,7 @@
   "toigo_wool_pants/toigo_wool_pants.mhclo",
   "toigo_ankle_boots_female/toigo_ankle_boots_female.mhclo",
   "cf_beanie/cf_beanie.mhclo",
-  "cf_vest_141416_2a2a2c/cf_vest_141416_2a2a2c.mhclo"
+  "cf_vest_cap_141416_2a2a2c/cf_vest_cap_141416_2a2a2c.mhclo"
  ],
  "tints": {
   "toigo_keyhole_tank_top": "#d8d4c8",
@@ -42,11 +42,23 @@
  },
  "_garments": [
   "beanie",
-  "vest@141416,2a2a2c"
+  "vest_cap@141416,2a2a2c"
  ],
+ "under_rows": {
+  "cf_vest_cap_141416_2a2a2c": {
+   "skin": 2,
+   "toigo_keyhole_tank_top": 0
+  },
+  "toigo_wool_pants": {
+   "skin": 0
+  }
+ },
  "under": {
-  "cf_vest_141416_2a2a2c": [
+  "cf_vest_cap_141416_2a2a2c": [
    "toigo_keyhole_tank_top",
+   "skin"
+  ],
+  "toigo_wool_pants": [
    "skin"
   ]
  }
