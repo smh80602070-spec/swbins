@@ -241,6 +241,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_story9.gd").new())
 	if OS.get_environment("SAGA_VAULT_PROBE") != "": # 106장 54-1 아홉째 지역 갈무리 벌
 		add_child(load("res://tools/probe_vault.gd").new())
+	if OS.get_environment("SAGA_STORY10_PROBE") != "": # 106장 54 이야기 10부(33장~)
+		add_child(load("res://tools/probe_story10.gd").new())
 
 	## PLAN 106장 ㊸ — 업적(다른 노드 신호에 붙으므로 맨 뒤).
 	var achievements := preload("res://games/saga_go/world/achievements.gd").new()
