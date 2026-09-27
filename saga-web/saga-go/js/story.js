@@ -1,11 +1,11 @@
 /**
- * 이야기 임무 1~17장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~39, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2·3)
+ * 이야기 임무 1~18장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~40, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2~4)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
  *              가면 쓴 나그네는 4장 둘째~여섯째 단계에만 고향 남쪽 다리목에 서고, 따라가기를 지나면 길 끝에 선다
  *   단계       talk(곁에서 💬/F → 대화) · go(그 자리 반경 안) · boss(그 탑 ⑪ 수호자 — 이미 쓰러져 꽃을 기다리면 바로 넘김) ·
- *              kill(임무 적 무리 `sq:` — 되살아나지 않고 전리품 없음) · light(옛 제단에 어느 원소든 스킬·해방 — ⑲-39 bell 이면 등롱 없이 종각 종을 울린다) ·
+ *              kill(임무 적 무리 `sq:` — 되살아나지 않고 전리품 없음) · light(옛 제단에 어느 원소든 스킬·해방 — ⑲-39 bell 이면 등롱 없이 종각 종을 울린다 · ⑲-40 bare 면 등롱 없이 장치가 받는다) ·
  *              domain(먹구름 제단 또는 id 로 고른 숨은 터 깨기 — `domain:clear`) · gather(그 채집물 n 번 — `cook:gather`) ·
  *              cook(아무 요리 하나 — `cook:done`) · follow(인물이 길 점을 따라 걷는다 — 가까우면 걷고 멀면 선다) ·
  *              seal(제단 둘레 석등 해·달·별을 비문 차례대로 — 틀리면 다 꺼진다) · climb(⑰ 봉우리 꼭대기) ·
@@ -66,9 +66,14 @@
     station: { era: 'station' }, st_dareum: { era: 'st_dareum' }, st_fight: { era: 'st_fight' }, st_duel: { era: 'st_duel' },
     /* ⑲-38 은하 나루(skyport.js) — 명소 자리(skyport) 또는 나루 틀 자리(port) */
     sp_gate: { skyport: 'gate' }, sp_port: { skyport: 'port' }, sp_ara: { port: 'ara' }, sp_bandi: { port: 'bandi' }, sp_fight: { port: 'fight' }, sp_altar: { port: 'altar' },
-    /* ⑲-39 옛 절터·종각(skyport TEMPLE_PARTS) — 쓰러진 종(작은 발견 bell) 곁 무리·이무기·한결·반디 */
+    /* ⑲-39 옛 절터·종각(skyport SITE_PARTS) — 쓰러진 종(작은 발견 bell) 곁 무리·이무기·한결·반디 */
     sp_temple: { skyport: 'temple' }, sp_belfry: { port: 'belfry' }, sp_hangyeol: { port: 'hangyeol' }, sp_tp_bandi: { port: 'tp_bandi' },
-    sp_bell_fight: { port: 'bell_fight' }, sp_bell_duel: { port: 'bell_duel' }, sp_hg_bell: { port: 'hg_bell' }, sp_bell_bandi: { port: 'bell_bandi' } };
+    sp_bell_fight: { port: 'bell_fight' }, sp_bell_duel: { port: 'bell_duel' }, sp_hg_bell: { port: 'hg_bell' }, sp_bell_bandi: { port: 'bell_bandi' },
+    /* ⑲-40 은하역·태양광 밭 — 도담·반디·선로 끝·막차·밭 무리·변전함 */
+    sp_station: { skyport: 'station' }, sp_dodam: { port: 'dodam' }, sp_st_bandi: { port: 'st_bandi' }, sp_dodam_end: { port: 'dodam_end' },
+    sp_train: { port: 'train' }, sp_farm_fight: { port: 'farm_fight' }, sp_substation: { port: 'substation' } };
+  /* ⑲-40 18장 선장의 잔상 — 은하역 가운데에서 남쪽 선로(z 2~42) 위를 지그재그로, 선로 끝 너머 틈 쪽까지 */
+  var CAPTAIN_PATH = [[0, 6], [1.5, 16], [-1.5, 26], [1.5, 36], [-1, 46], [2, 58], [-2, 68]];
   /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
   var DAREUM_SHIP = [-12, 10], WING_SEAM = [-4, 8];
   /* ⑲-28 하람이 서는 자리 — 관측소 곁(늘)·비행선 곁. 산성 안은 남쪽 문 안쪽(담 반 변 13m) */
@@ -125,7 +130,8 @@
     bandi:    { id: 'story_bandi',    name: '조종 기계 반디', short: '반디', zone: 'snowfort', spot: 'fr_ship', off: [0, 12], color: '#8cd9f2', pet: 'drone',
       idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }, { ch: 12, from: 6, to: 8, spot: 'yard_bandi' },
         { ch: 13, from: 9, to: 9, spot: 'obs_bandi', sky: true }, { ch: 15, from: 6, to: 8, spot: 'sp_bandi' },
-        { ch: 16, from: 0, to: 6, spot: 'sp_bandi' }, { ch: 16, from: 7, to: 7, spot: 'sp_bell_bandi' }, { ch: 16, from: 8, to: 9, spot: 'sp_tp_bandi' }] },
+        { ch: 16, from: 0, to: 6, spot: 'sp_bandi' }, { ch: 16, from: 7, to: 7, spot: 'sp_bell_bandi' }, { ch: 16, from: 8, to: 9, spot: 'sp_tp_bandi' },
+        { ch: 17, from: 0, to: 0, spot: 'sp_tp_bandi' }, { ch: 17, from: 1, to: 9, spot: 'sp_st_bandi' }] },
     /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
     daon:     { id: 'story_daon',     name: '조선공 다온', short: '다온', zone: 'galdae', spot: 'yard_daon', off: [0, 0], color: '#335ea0',
       idle: '이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.' },
@@ -141,6 +147,12 @@
     /* ⑲-39 종지기 한결(과거) — 늘 옛 절터 종각 남쪽, 17장 4~7째는 쓰러진 종 곁 */
     hangyeol: { id: 'story_hangyeol', name: '종지기 한결', short: '한결', zone: 'solar', spot: 'sp_hangyeol', off: [0, 0], color: '#756d61',
       idle: '종지기는 종 곁에 있어야 하는 법이오. 종이 없어도 말이오.', at: [{ ch: 16, from: 4, to: 7, spot: 'sp_hg_bell' }] },
+    /* ⑲-40 기관사 도담(현대) — 늘 은하역 승강장 남쪽 끝 아래, 18장 7째는 선로 끝. 18장 끝에 동료(story_dodam) */
+    dodam:    { id: 'story_dodam',    name: '기관사 도담', short: '도담', zone: 'solar', spot: 'sp_dodam', off: [0, 0], color: '#38475c',
+      idle: '선로가 끊겨도 기관사는 역을 떠나지 않아요. 막차가 아직 여기 있으니까.', at: [{ ch: 17, from: 7, to: 7, spot: 'sp_dodam_end' }] },
+    /* ⑲-40 선장의 잔상 — 18장 쫓기 때만 역 기준 길(CAPTAIN_PATH)을 달린다 */
+    captain:  { id: 'story_captain',  name: '선장의 잔상', short: '잔상', zone: 'solar', color: '#232e57', idle: '……',
+      appear: [{ ch: 17, from: 6, to: 6 }], runSpot: 'sp_station', runPath: CAPTAIN_PATH },
     /* ⑲-36 놀란 역마 — 늘 역참 마구간(길 첫 점), 15장 쫓기 때만 역참 틀 기준 길(runSpot)을 달린다. 말 모델(pet) */
     horse:    { id: 'story_horse',    name: '놀란 역마', short: '역마', zone: 'home', color: '#6b4a2e', pet: 'horse', idle: '푸르르— 히힝.',
       runSpot: 'station', runPath: (global.DG.eraSites ? global.DG.eraSites.HORSE_PATH : [[0, 0]]) },
@@ -150,7 +162,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -175,7 +187,10 @@
       el: 'fire', weapon: 'bow', stats: { might: 62, wisdom: 84, command: 64 }, emoji: '📡', quote: '날씨도 시간도, 재야 아는 거니까.' },
     /* ⑲-36 달음(15장 끝) — 암 창. 이야기 동료에 없던 원소 */
     story_dareum: { id: 'story_dareum', name: '달음', hanja: '達音', era: '이야기', faction: '재야', rarity: 4, trait: 'might', story: true,
-      el: 'rock', weapon: 'polearm', stats: { might: 86, wisdom: 52, command: 74 }, emoji: '🐎', quote: '파발꾼은 길 끝을 봐야 직성이 풀리니까!' }
+      el: 'rock', weapon: 'polearm', stats: { might: 86, wisdom: 52, command: 74 }, emoji: '🐎', quote: '파발꾼은 길 끝을 봐야 직성이 풀리니까!' },
+    /* ⑲-40 도담(18장 끝) — 뇌 대도. 막차 기관사 */
+    story_dodam: { id: 'story_dodam', name: '도담', hanja: '道潭', era: '이야기', faction: '재야', rarity: 4, trait: 'might', story: true,
+      el: 'elec', weapon: 'claymore', stats: { might: 80, wisdom: 66, command: 70 }, emoji: '🚂', quote: '틈 너머 첫 정거장까지 — 제가 몰게요!' }
   };
   function hookFind() {
     var D = global.DG.data;
@@ -797,6 +812,50 @@
             ['?', ['저 녹슨 역에서 열차가?', '선장님의 신호일까?']],
             ['한결', '그 선장이 떠나며 말했소. \'종이 다시 울리면 막차가 한 번 더 온다\'고. 무슨 뜻인지는 나도 모르오.'],
             ['한결', '나는 이제 종 곁을 지키겠소. 종지기가 종 곁에 있어야지. 가 보시오 — 은하역으로.', 'fun']] }
+      ] },
+    /* ⑲-40 4부 끝 — 은하역·태양광 밭. 반디(종각) → 은하역 → 도담 → 밭 무리 → 변전함에 원소(등롱 없이 — 이때부터 막차에 불) →
+       도담 → 선장의 잔상 쫓기(선로 위) → 도담(선로 끝) → 출발을 기다리는 막차 지키기(북쪽 객차 쪽 빼고 다섯) → 도담 · 도담 합류 */
+    { id: 'ch18', name: '제18장 · 은하역 막차', ar: 42, join: 'story_dodam',
+      reward: { knot: 6, gold: 5000, guide: 6, secret: 5, party: 1400 },
+      steps: [
+        { type: 'talk', npc: 'bandi', text: '종각 곁의 반디와 이야기하기',
+          lines: [['반디', '삐— 기적 소리 분석 완료. 발신지 은하역, 신호 종류… 막차 운행 예고.', 'surprised'],
+            ['반디', '역에 생체 신호 하나. 녹슨 역에 사람이 있습니다.'],
+            ['?', ['가 보자, 은하역.', '막차라니…']],
+            ['반디', '먼저 가 주십시오. 저는 선로 위 하늘을 살피며 뒤따르겠습니다.']] },
+        { type: 'go', spot: 'sp_station', text: '은하 나루 남쪽 은하역으로' },
+        { type: 'talk', npc: 'dodam', text: '은하역의 기관사 도담과 이야기하기',
+          lines: [['도담', '종소리 들었어요? 어젯밤 이 녹슨 막차 전조등이 혼자 깜빡였어요. 십 년 만에요!', 'surprised'],
+            ['도담', '나는 이 역 마지막 기관사예요. 선로가 끊긴 뒤로도 막차를 두고 떠날 수가 없어서.', 'sorrow'],
+            ['?', ['별배 선장님을 알아요?', '막차를 움직일 수 있어요?']],
+            ['도담', '선장이요? 그 사람이 막차 표를 끊었어요 — 행선지 칸이 비어 있는 표를. 그러고는 선로 끝 틈으로 걸어 들어갔죠.'],
+            ['도담', '막차를 깨우려면 전기부터예요. 서쪽 태양광 밭 변전함이 틈 짐승들 때문에 꺼져 버렸어요.', 'angry']] },
+        { type: 'kill', spot: 'sp_farm_fight', kinds: ['raptor', 'raptor', 'imp', 'rockbear'], text: '태양광 밭을 헤집는 틈 짐승 물리치기',
+          enter: '⚔️ 부서진 태양광 판 사이로 틈 짐승들이 튀어나왔다' },
+        { type: 'light', spot: 'sp_substation', bare: true, text: '꺼진 변전함에 원소 스킬로 전기 넣기',
+          done: '⚡ 변전함에 전기가 들어왔다 — 은하역 쪽에서 불빛이 번쩍인다' },
+        { type: 'talk', npc: 'dodam', text: '도담과 이야기하기',
+          lines: [['도담', '전조등이 켜졌어요! 막차가… 숨을 쉬어요!', 'joy'],
+            ['도담', '어? 선로 위에 누가 — 저 모자, 선장이에요! 그런데 몸이 비쳐 보여요.', 'surprised'],
+            ['?', ['선장님!', '잔상이야, 쫓아가자!']],
+            ['도담', '운행 기록부를 들고 남쪽 선로로 가요! 붙잡아 줘요, 나는 막차를 데워 둘게요!', 'angry']] },
+        { type: 'chase', npc: 'captain', text: '운행 기록부를 든 선장의 잔상 따라잡기(달리기)',
+          flee: '👤 선장의 잔상이 기록부를 들고 선로 위로 달아난다 — 달려라!', caught: '👤 잔상을 붙잡자 — 흩어지며 운행 기록부만 남았다' },
+        { type: 'talk', npc: 'dodam', text: '선로 끝의 도담과 이야기하기',
+          lines: [['도담', '잔상은 흩어지고… 기록부만 남았네요.', 'sorrow'],
+            ['도담', '마지막 장 — \'막차 행선지: 틈 너머 첫 정거장. 선장은 먼저 내림.\'', 'surprised'],
+            ['?', ['선장님은 틈 너머에 있어!', '다음 줄은?']],
+            ['도담', '끝 줄은 선장 글씨예요. \'종이 울리고, 별배가 돌아오고, 막차가 달리면 — 그 정거장에서 다시 만나자.\''],
+            ['도담', '앗, 전조등 불빛을 보고 짐승들이 역으로 몰려가요! 막차가 데워질 때까지 지켜야 해요!', 'angry']] },
+        { type: 'defend', spot: 'sp_train', name: '출발을 기다리는 막차', who: '시간 틈 짐승들이', dirs: [45, 90, 135, 180, 225],
+          waves: [['raptor', 'imp', 'hawk'], ['rockbear', 'raptor', 'snowfox', 'imp'], ['rockbear', 'rockbear', 'raptor', 'hawk', 'vine']],
+          text: '출발을 기다리는 막차 지키기' },
+        { type: 'talk', npc: 'dodam', text: '도담과 이야기하기',
+          lines: [['도담', '보일러 압력 정상, 전조등 이상 없음… 막차, 출발 준비 끝!', 'joy'],
+            ['반디', '삐— 별배·종·막차, 세 신호 모두 확인. 선장이 남긴 좌표가 열립니다 — 틈 너머 첫 정거장.', 'surprised'],
+            ['?', ['같이 가 줄래요, 도담?', '선장님을 만나러 가자.']],
+            ['도담', '막차 기관사가 막차를 두고 갈 순 없죠. 틈 너머 첫 정거장까지 — 제가 몰게요!', 'fun'],
+            ['반디', '별배는 나루에, 종은 절터에, 막차는 선로에. 이 시대의 길이 다시 이어졌습니다.', 'joy']] }
       ] }
   ];
 
@@ -1292,7 +1351,7 @@
       if (SPb && SPb.ringBell) { SPb.ringBell(); }
       toast('🔔 뎅— 삼백 년 만에 절터 종이 울린다'); advance(); return;
     }
-    toast('🔥 옛 제단에 불이 붙었다 — 비문이 빛난다'); advance();
+    toast(st.done || '🔥 옛 제단에 불이 붙었다 — 비문이 빛난다'); advance();
   }
   /* ⑲-14 석등 차례 — 켠 수는 저장 안 함 */
   var seal = { key: '', n: 0 };
@@ -1850,7 +1909,7 @@
     /* ⑲-16 지키는 동안은 기둥이 제단 체력 — 초록 → 빨강 */
     var dd = st.type === 'defend' && def && def.key === keyOf() && def.hpMax && def.wave >= 0 ? def : null;
     fx.pillar.children[0].material.color.setHex(dd ? pillarHex(dd.hp / dd.hpMax) : 0xffd24a);
-    if ((st.type === 'light' && !st.bell) || st.type === 'defend') {   // ⑲-39 종 울리기는 등롱 없이(종각이 skyport 에 있다)
+    if ((st.type === 'light' && !st.bell && !st.bare) || st.type === 'defend') {   // ⑲-39·40 종·변전함은 등롱 없이(장치가 skyport 에 있다)
       if (!fx.altar) {
         var A = global.DG.asset3d, m = A && A.build ? A.build('lantern', { id: 'story_altar' }) : null, ag = new T3.Group();
         if (m) { m.scale.set(1.8, 1.8, 1.8); ag.add(m); }
@@ -2009,7 +2068,7 @@
     talkables: talkables, storyStep: storyStep, stepAt: stepAt, aimPoints: aimPoints,
     FOLLOW_NEAR: FOLLOW_NEAR, FOLLOW_LOST: FOLLOW_LOST,
     HARAM_OBS: HARAM_OBS, HARAM_SHIP: HARAM_SHIP, HARAM_FORT: HARAM_FORT, frostSpot: frostSpot, followPts: followPts,
-    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, DAREUM_SHIP: DAREUM_SHIP, WING_SEAM: WING_SEAM, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
+    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, DAREUM_SHIP: DAREUM_SHIP, CAPTAIN_PATH: CAPTAIN_PATH, WING_SEAM: WING_SEAM, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
     on: on, anchorOf: anchorOf, npcPos: npcPos, visible: visible, targetOf: targetOf, trackText: trackText, listHtml: listHtml,
     state: sv, chapter: chapter, step: step, locked: locked, done: done, keyOf: keyOf, gathered: gathered,
     advance: advance, check: check, stepFollow: stepFollow, nearTalk: nearTalk, talkStart: talkStart, talking: talking, next: next,

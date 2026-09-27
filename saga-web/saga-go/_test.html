@@ -10266,8 +10266,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     t('이야기 ⑲-12 — 표·자리: 장 둘(단계 8·4, 여정 등급 1·5) · 인물 셋 = ⑮ 땅 탑 + 자리(고향 촌장·갈대 나루 사공·옛 성터 학자) · 모든 단계에 목표 · 같은 세계면 같은 자리 · 몸 셋 고정', function () {
       var ST = DG.story, A3 = DG.asset3d, r = {};
-      r.table = ST.CHAPTERS.length === 17 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
-        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30·34~36·38·39 가 3~17장을 더했다
+      r.table = ST.CHAPTERS.length === 18 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
+        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30·34~36·38~40 가 3~18장을 더했다
       var e = ST.npcPos('elder'), f = ST.npcPos('ferryman'), s = ST.npcPos('scholar'), ga = ST.anchorOf('galdae'), go = ST.anchorOf('gojeong');
       r.npc = e.x === -22 && e.y === 16 && f.x === ga.x - 18 && f.y === ga.y - 24 && s.x === go.x - 18 && s.y === go.y - 24 &&
         DG.biome.cellAt.apply(null, ga.key.split('_').map(Number)).zone === 'galdae' && DG.biome.cellAt.apply(null, go.key.split('_').map(Number)).zone === 'gojeong';
@@ -12928,7 +12928,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       try {
         SP._resetForTest();
         var c17 = ST.CHAPTERS[16], S17 = c17.steps;
-        r.table = ST.CHAPTERS.length === 17 && c17.id === 'ch17' && c17.ar === 40 && !c17.join && S17.length === 10 && c17.reward.knot === 6 && c17.reward.gold === 4750 &&
+        r.table = ST.CHAPTERS.length >= 17 && c17.id === 'ch17' && c17.ar === 40 && !c17.join && S17.length === 10 && c17.reward.knot === 6 && c17.reward.gold === 4750 &&
           S17.map(function (q) { return q.type; }).join() === 'talk,go,talk,kill,talk,duel,talk,talk,light,talk' && S17[5].kind === 'moss_serpent' && S17[5].shield === 'grass' &&
           S17[8].bell === true && FC.COUNTER.grass === 'wind';
         function np(k, si) { C.save.story = { ch: 16, step: si }; return ST.npcPos(k); }
@@ -12986,7 +12986,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         var tp = SP.siteById('temple'), bf = SP.portSpot('belfry'), hg = SP.portSpot('hangyeol');
         var rs = SP.rectsIn(Math.floor(bf.x / 48), Math.floor(bf.y / 48)).filter(function (q) { return Math.abs(q.x - bf.x) < 1e-6 && Math.abs(q.z - bf.y) < 1e-6; });
         r.rect = bf.x === tp.x + SP.BELFRY_OFF[0] && bf.y === tp.y && rs.length === 1 && rs[0].w === SP.BELFRY_HALF * 2;
-        r.outside = Math.abs(hg.y - bf.y) > SP.BELFRY_HALF && SP.TEMPLE_PARTS.hangyeol[0] === 'temple' && SP.TEMPLE_PARTS.bell_fight[0] === 'bell';
+        r.outside = Math.abs(hg.y - bf.y) > SP.BELFRY_HALF && SP.SITE_PARTS.hangyeol[0] === 'temple' && SP.SITE_PARTS.bell_fight[0] === 'bell';
         C.save.story = { ch: 16, step: 7 };
         r.before = !SP.bellHung();
         C.save.story = { ch: 16, step: 8 };
@@ -12998,6 +12998,99 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { SP._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '기단 벽 4m · 한결 기단 밖 · 7째 없음 · 8째부터 걸림 · 끝나도 · 16장엔 없음' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-40 이야기 4부 제18장 · 은하역 막차 (story ch18·도담·선장의 잔상 · skyport 변전함·막차 불빛 · kits story_dodam, PLAN §5 ⑲-40) ── */
+    t('이야기 ⑲-40 — 18장 열 단계(Lv42)·보상·합류 · 도담 승강장 남쪽(7째 선로 끝) · 반디 0 종각/1~9 역 · 흐름: 반디 → 은하역 → 도담 → 밭 무리 4 → 변전함(먼 ✕ · 등롱 없음) → 도담 → 잔상 쫓기(가까이 가면 달아남 → 붙잡음) → 도담 → 막차 지키기(다섯 방향 3·4·5) → 도담 합류', function () {
+      var rig = stRig(42), ST = rig.ST, FC = DG.fieldCombat, SP = DG.skyport, TL = DG.talent, r = {}, i;
+      try {
+        SP._resetForTest();
+        var c18 = ST.CHAPTERS[17], S18 = c18.steps;
+        r.table = ST.CHAPTERS.length === 18 && c18.id === 'ch18' && c18.ar === 42 && c18.join === 'story_dodam' && S18.length === 10 && c18.reward.knot === 6 && c18.reward.gold === 5000 &&
+          S18.map(function (q) { return q.type; }).join() === 'talk,go,talk,kill,light,talk,chase,talk,defend,talk' && S18[4].bare === true && S18[6].npc === 'captain' &&
+          S18[8].dirs.join() === '45,90,135,180,225' && ST.defendSlots(S18[8]).length === 5;
+        function np(k, si) { C.save.story = { ch: 17, step: si }; return ST.npcPos(k); }
+        r.dodam = st10Eq(np('dodam', 0), SP.portSpot('dodam')) && st10Eq(np('dodam', 7), SP.portSpot('dodam_end')) && st10Eq(np('dodam', 8), SP.portSpot('dodam'));
+        r.bandi = st10Eq(np('bandi', 0), SP.portSpot('tp_bandi')) && st10Eq(np('bandi', 1), SP.portSpot('st_bandi')) && st10Eq(np('bandi', 9), SP.portSpot('st_bandi'));
+        C.save.story = { ch: 17, step: 5 }; var capHidden = !ST.visible('captain');
+        C.save.story = { ch: 17, step: 6 }; r.captain = capHidden && ST.visible('captain');
+        var st0 = SP.siteById('station');
+        r.path = ST.CAPTAIN_PATH.every(function (o) { return ST.landAt(st0.x + o[0], st0.y + o[1]); }) &&
+          ['dodam', 'st_bandi', 'dodam_end', 'train', 'farm_fight'].every(function (k) { var q = SP.portSpot(k); return ST.landAt(q.x, q.y); });
+        C.save.story = { ch: 17, step: 0 };
+        stGo(ST.npcPos('bandi')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        r.station = st10Eq(ST.targetOf(ST.step()), st0);
+        stGo(ST.targetOf(ST.step())); ST.check(); r.go = C.save.story.step === 2;
+        stGo(ST.npcPos('dodam')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        var kt = ST.targetOf(ST.step());
+        stGo({ x: kt.x + 20, y: kt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.map(function (u) { return S.foes[u].kind; }).join() === 'raptor,raptor,imp,rockbear';
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 4;
+        var sub = SP.portSpot('substation');
+        r.target = st10Eq(ST.targetOf(ST.step()), sub) && ST.aimPoints().length === 1 && !SP.trainPowered();
+        stGo({ x: sub.x, y: sub.y + 4 });
+        C.emit('field:element', { el: 'elec', x: sub.x + 30, y: sub.y, r: 3, t: 'skill' });
+        var still = C.save.story.step === 4;
+        C.emit('field:element', { el: 'elec', x: sub.x, y: sub.y + 2, r: 2, t: 'skill' });
+        r.light = still && C.save.story.step === 5 && SP.trainPowered();
+        stGo(ST.npcPos('dodam')); r.t5 = stTalkAll(ST) && C.save.story.step === 6;
+        /* 쫓기 — 가까이 가면 달아나고, 붙잡으면 다음 */
+        var c0 = ST.npcPos('captain');
+        stGo({ x: c0.x + 5, y: c0.y }); ST.stepChase(0.1);
+        for (i = 0; i < 10; i++) { ST.stepChase(0.1); }
+        var cs = ST.chaseState();
+        r.flee = !!cs && cs.run && cs.npc === 'captain' && Math.hypot(cs.x - c0.x, cs.y - c0.y) > 3;
+        stGo({ x: cs.x + 1, y: cs.y }); ST.stepChase(0.01);
+        r.chase = C.save.story.step === 7;
+        stGo(ST.npcPos('dodam')); r.t7 = stTalkAll(ST) && C.save.story.step === 8;
+        var c = ST.targetOf(ST.step());
+        r.train = st10Eq(c, SP.portSpot('train'));
+        stGo({ x: c.x, y: c.y + 12 }); ST.stepDefend(0.1);
+        var w0 = S.camps[ST.waveKey(0)];
+        r.wave0 = !!w0 && w0.uids.every(function (u2) { var q = S.foes[u2]; return ST.landAt(q.x, q.y); });
+        var sizes = [];
+        for (i = 0; i < 3; i++) {
+          if (i) { ST.defState().t = ST.DEFEND_WAVE_SEC; ST.stepDefend(0.01); }
+          sizes.push(S.camps[ST.waveKey(i)] ? S.camps[ST.waveKey(i)].uids.length : 0);
+          stKillCamp(S, ST.waveKey(i)); FC.tick(0.05);
+        }
+        ST.stepDefend(0.01);
+        r.defend = sizes.join() === '3,4,5' && C.save.story.step === 9;
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        r.notYet = !ST.hasMember('story_dodam');
+        stGo(ST.npcPos('dodam'));
+        r.end = stTalkAll(ST) && C.save.story.ch === 18 && C.save.story.step === 0 && ST.hasMember('story_dodam') && m.knot === k0 + 6 && C.save.player.gold === gold0 + 5000 && SP.trainPowered();
+      } finally { SP._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '열 단계 · 반디 → 은하역 → 도담 → 무리 4 → 변전함(먼 ✕) → 도담 → 잔상(달아남 → 붙잡음) → 도담 → 막차 3·4·5(다섯 방향) → 도담 합류 · 🪢+6 🪙+5000' : ('실패 ' + bad.join(','));
+    });
+
+    t('막차 불빛 ⑲-40 — 태양광 밭 동쪽 변전함이 벽 · 18장 다섯째 단계 전엔 꺼짐 · 다섯째부터 켜짐 · 장이 끝나도 그대로 · 17장엔 꺼짐', function () {
+      var SP = DG.skyport, rig = stRig(42), r = {};
+      try {
+        SP._resetForTest();
+        var fm = SP.siteById('farm'), sb = SP.portSpot('substation');
+        var rs = SP.rectsIn(Math.floor(sb.x / 48), Math.floor(sb.y / 48)).filter(function (q) { return Math.abs(q.x - sb.x) < 1e-6 && Math.abs(q.z - sb.y) < 1e-6; });
+        r.rect = sb.x === fm.x + SP.SUB_OFF[0] && sb.y === fm.y && rs.length === 1;
+        C.save.story = { ch: 17, step: 4 }; r.before = !SP.trainPowered();
+        C.save.story = { ch: 17, step: 5 }; r.on = SP.trainPowered();
+        C.save.story = { ch: 18, step: 0 }; r.after = SP.trainPowered();
+        C.save.story = { ch: 16, step: 9 }; r.old = !SP.trainPowered();
+      } finally { SP._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '변전함 벽 · 4째 꺼짐 · 5째부터 켜짐 · 끝나도 · 17장엔 꺼짐' : ('실패 ' + bad.join(','));
+    });
+
+    t('이야기 동료 ⑲-40 — 도담: 뇌 대도 ★4 · 선로 전류(wave 10m·폭 2.2·밀기 4·대기 8) · 막차 출발 신호(haste 7m·10초·기력 +7)', function () {
+      var ST = DG.story, FC = DG.fieldCombat, WP = DG.weapon, r = {};
+      var M = ST.MEMBERS.story_dodam, kt = FC.kitFor('story_dodam');
+      r.member = DG.data.find('story_dodam') === M && M.rarity === 4 && FC.elementOf('story_dodam') === 'elec' && WP.typeOf('story_dodam') === 'claymore';
+      r.kit = !!kt && kt.skill.name === '선로 전류' && kt.skill.type === 'wave' && kt.skill.len === 10 && kt.skill.w === 2.2 && kt.skill.knock === 4 && kt.skill.cd === 8 &&
+        kt.burst.name === '막차 출발 신호' && kt.burst.type === 'haste' && kt.burst.r === 7 && kt.burst.sec === 10 && kt.burst.energy === 7;
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '뇌 대도 · 선로 전류 wave 10m · 막차 출발 신호 haste +7' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

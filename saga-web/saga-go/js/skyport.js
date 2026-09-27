@@ -13,6 +13,8 @@
  *           그때부터 고원 별배는 떠났다(frost `away`)
  *   종각    ⑲-39 17장 — 옛 절터 동쪽 BELFRY_OFF m(돌 기단 벽). 17장 여덟째 단계부터 종이 걸리고(`bellHung`) 작은 발견
  *           "떨어진 절 종"의 종 몸은 숨는다(나무 틀은 남음). `ringBell` = 3초 잦아드는 흔들림(그림만)
+ *   막차    ⑲-40 18장 — 태양광 밭 동쪽 변전함(벽). 18장 다섯째 단계(변전함에 전기)부터 `trainPowered` — 표시등 빨강 → 초록,
+ *           은하역 녹슨 객차의 전조등 둘·행선 표시판·창에 불(그림만, 막차는 아직 서 있다)
  *
  * 자리 잡기는 frost.js 와 같은 규칙 — 가운데에서 off 만큼 간 곳에서 가장 가까운 그 땅 들·숲 칸(물·마을·길·산·강 아님), 서로 떨어짐.
  * 판정 층(`center`·`sites`·`rectsIn`·`gateOpen`)은 순수. 세이브 `save.skyport = { found }`(읽는 쪽 기본값).
@@ -59,10 +61,14 @@
   var TOWER_DRAIN = 0.75;   // 18m 를 꽉 찬 기력(100)으로 오를 수 있게 — 오르기 기력 ×0.75 ≈ 86
   var DOCK_CH = 'ch16', BEACON_AFTER = 5, DOCK_FROM = 6, SHIP_UP = 6, TOWER_HALF = 1.2;
   var PORT_PARTS = { ara: [PAD_R + 3, 5.5], bandi: [-5, 9], fight: [0, 6], altar: [0, 6] };
-  /* ⑲-39 17장 — 옛 절터(temple)·떨어진 종(작은 발견 bell) 곁 자리 [명소, m, m]. 종각 = 절터 동쪽, 한결은 그 남쪽 */
+  /* ⑲-39·40 이야기 자리 [명소, m, m] — 17장 옛 절터(temple)·떨어진 종(작은 발견 bell): 종각 = 절터 동쪽, 한결은 그 남쪽 ·
+     18장 은하역(station)·태양광 밭(farm): 도담 = 승강장 남쪽 끝 아래, 선로 끝 = 잔상 길 끝 곁, 막차 = 승강장 가운데(객차 남쪽) */
   var BELFRY_OFF = [10, 0], BELFRY_HALF = 2, BELL_CH = 'ch17', BELL_FROM = 8, RING_SEC = 3;
-  var TEMPLE_PARTS = { belfry: ['temple', 10, 0], hangyeol: ['temple', 10, 3.6], tp_bandi: ['temple', 14.5, -1],
-    bell_fight: ['bell', -4, 7], bell_duel: ['bell', 3, 6], hg_bell: ['bell', -3, 3], bell_bandi: ['bell', 4, -3] };
+  var SUB_OFF = [10.5, 0], TRAIN_CH = 'ch18', TRAIN_FROM = 5;
+  var SITE_PARTS = { belfry: ['temple', 10, 0], hangyeol: ['temple', 10, 3.6], tp_bandi: ['temple', 14.5, -1],
+    bell_fight: ['bell', -4, 7], bell_duel: ['bell', 3, 6], hg_bell: ['bell', -3, 3], bell_bandi: ['bell', 4, -3],
+    dodam: ['station', 9, 3.4], st_bandi: ['station', -6, 4.5], dodam_end: ['station', 4, 70], train: ['station', 0, 0.5],
+    farm_fight: ['farm', 0, 12], substation: ['farm', SUB_OFF[0], SUB_OFF[1]] };
   var GRID = 48;
 
   /* ── 자리(순수 — 지형·해시만) ───────────────────────────── */
@@ -128,9 +134,9 @@
     return out;
   }
   function siteById(id) { var L = sites(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
-  /** ⑲-38 나루 틀 자리 — 'ara'·'bandi'·'fight'·'altar'(계류대) · ⑲-39 절터·종 곁(TEMPLE_PARTS) — 그 명소가 없으면 null */
+  /** ⑲-38 나루 틀 자리 — 'ara'·'bandi'·'fight'·'altar'(계류대) · ⑲-39·40 절터·종·역·밭 곁(SITE_PARTS) — 그 명소가 없으면 null */
   function portSpot(part) {
-    var tp = TEMPLE_PARTS[part], p = siteById(tp ? tp[0] : 'port'), o = tp ? [tp[1], tp[2]] : PORT_PARTS[part];
+    var tp = SITE_PARTS[part], p = siteById(tp ? tp[0] : 'port'), o = tp ? [tp[1], tp[2]] : PORT_PARTS[part];
     return p && o ? { x: p.x + o[0], y: p.y + o[1] } : null;
   }
   function storyAt() { var s = core() && core().save ? core().save.story : null; return s || { ch: 0, step: 0 }; }
@@ -145,6 +151,8 @@
   var ringT = 0;
   /** ⑲-39 종을 울린다(그림만 — RING_SEC 초 잦아드는 흔들림) */
   function ringBell() { ringT = RING_SEC; }
+  /** ⑲-40 막차에 전기가 들었나 — 18장 다섯째 단계(변전함 뒤)부터 늘 */
+  function trainPowered() { return passed(TRAIN_CH, TRAIN_FROM); }
   var poleMemo = null;
   /** landform 기둥 타기 — 계류 탑 하나. 꼭대기는 네모(길 = 가운데 가로 1.8m·폭 2.2m) */
   function poles() {
@@ -179,6 +187,7 @@
       case 'temple': return [{ x: x, z: y - 4, w: 3.6, d: 3.6, rot: 0 },
         { x: x + BELFRY_OFF[0], z: y + BELFRY_OFF[1], w: BELFRY_HALF * 2, d: BELFRY_HALF * 2, rot: 0 }];   // ⑲-39 종각 기단
       case 'station': return [{ x: x, z: y - 3.4, w: 12, d: 2.8, rot: 0 }];
+      case 'farm': return [{ x: x + SUB_OFF[0], z: y + SUB_OFF[1], w: 1.2, d: 1.0, rot: 0 }];   // ⑲-40 변전함
       case 'gate': return [{ x: x - GATE_HALF, z: y, w: 1, d: 1, rot: 0 }, { x: x + GATE_HALF, z: y, w: 1, d: 1, rot: 0 },
         { x: x, z: y, w: GATE_HALF * 2 - 1, d: 0.6, rot: 0, door: true }, { x: x + GATE_HALF + 3, z: y + 2, w: 1.2, d: 0.6, rot: 0 }];
       case 'phone': return [{ x: x, z: y, w: 1.1, d: 1.1, rot: 0 }];
@@ -269,7 +278,8 @@
       dark: new T3.MeshLambertMaterial({ color: 0x2a2f38 }), rust: new T3.MeshLambertMaterial({ color: 0x8a4a2a }),
       panel: new T3.MeshStandardMaterial({ color: 0x1f3a66, metalness: 0.4, roughness: 0.3 }), red: new T3.MeshLambertMaterial({ color: 0xc8402e }),
       green: new T3.MeshLambertMaterial({ color: 0x3f7a4a }), clay: new T3.MeshLambertMaterial({ color: 0x6b3f26 }), bronze: new T3.MeshStandardMaterial({ color: 0x8c6a3a, metalness: 0.7, roughness: 0.4 }),
-      glow: glow(0x66f2ff, 1), ring: glow(0x9fe8ff, 0.55), rift: glow(0xb880ff, 0.45), pillar: glow(0xd6c2ff, 0.35), lamp: glow(0xffe08a, 1)
+      glow: glow(0x66f2ff, 1), ring: glow(0x9fe8ff, 0.55), rift: glow(0xb880ff, 0.45), pillar: glow(0xd6c2ff, 0.35), lamp: glow(0xffe08a, 1),
+      ledR: glow(0xff4a30, 1), ledG: glow(0x5cff7a, 1)
     };
     return mats;
   }
@@ -318,7 +328,10 @@
       case 'station': {
         box(T3, g, m.stone, 20, 0.8, 4, 0, 0.4, 0);                                                     // 승강장
         box(T3, g, m.rust, 12, 3, 2.8, 0, 1.6, -3.4);                                                   // 녹슨 객차
-        for (i = 0; i < 5; i++) { box(T3, g, m.dark, 1.4, 0.9, 0.05, -4.8 + i * 2.4, 2.2, -1.98); }
+        o.lit = [];                                                                                      // ⑲-40 창·전조등·행선판 — 전기가 들면 켜진다
+        for (i = 0; i < 5; i++) { o.lit.push(box(T3, g, m.dark, 1.4, 0.9, 0.05, -4.8 + i * 2.4, 2.2, -1.98)); }
+        for (i = -1; i <= 1; i += 2) { o.lit.push(cyl(T3, g, m.dark, 0.28, 0.28, 0.1, 6.05, 1.2, -3.4 + i * 0.8, 12)); o.lit[o.lit.length - 1].rotation.z = Math.PI / 2; }
+        box(T3, g, m.dark, 0.12, 0.6, 1.8, 6.06, 2.7, -3.4); o.lit.push(box(T3, g, m.dark, 0.05, 0.4, 1.6, 6.13, 2.7, -3.4));
         box(T3, g, m.wood, 0.2, 3, 0.2, 7, 1.5, 1.4); box(T3, g, m.panel, 3, 0.9, 0.12, 7, 3.2, 1.4);   // 간판
         box(T3, g, m.glow, 2.6, 0.12, 0.13, 7, 3.2, 1.47);
         for (i = -1; i <= 1; i += 2) { box(T3, g, m.dark, 0.15, 0.12, 40, i * 0.75 + 0, 0.06, 22); }    // 남쪽 철로
@@ -333,6 +346,9 @@
             var pn = box(T3, g, m.panel, 4, 0.08, 2.4, px, 1.3, pz); pn.rotation.x = -0.45;
           }
         }
+        box(T3, g, m.alloy, 1.2, 1.6, 1.0, SUB_OFF[0], 0.8, SUB_OFF[1]);                                // ⑲-40 변전함·표시등
+        box(T3, g, m.dark, 0.05, 0.9, 0.6, SUB_OFF[0] - 0.62, 0.9, SUB_OFF[1]);
+        o.led = ball(T3, g, m.ledR, 0.14, SUB_OFF[0], 1.75, SUB_OFF[1]);
         break;
       }
       case 'gate': {
@@ -374,7 +390,7 @@
     if (!w) { fx = {}; return; }
     var T3 = w.three();
     if (!T3) { return; }
-    var p = core().save.player.pos, seen = {}, L = sites(), i, open = gateOpen(), hung = bellHung();
+    var p = core().save.player.pos, seen = {}, L = sites(), i, open = gateOpen(), hung = bellHung(), power = trainPowered();
     ringT = Math.max(0, ringT - (dt || 0));
     for (i = 0; i < L.length; i++) {
       var st = L[i];
@@ -388,6 +404,8 @@
       if (st.id === 'port') { paintShip(w, T3, st, o); }
       if (o.hung) { o.hung.visible = hung; o.hung.rotation.x = Math.sin(clock * 7) * 0.3 * (ringT / RING_SEC); }   // ⑲-39 울리면 잦아드는 흔들림
       if (o.bellBody) { o.bellBody.visible = !hung; }
+      if (o.led) { o.led.material = power ? M(T3).ledG : M(T3).ledR; }                                                 // ⑲-40 막차 전기
+      if (o.lit) { for (var q = 0; q < o.lit.length; q++) { o.lit[q].material = power ? M(T3).lamp : M(T3).dark; } }
     }
     for (var id in fx) { if (fx.hasOwnProperty(id) && !seen[id]) { w.removeFx(fx[id].root); delete fx[id]; } }
   }
@@ -422,7 +440,7 @@
     ZONE: ZONE, REGION: REGION, LANDMARKS: LANDMARKS, SMALL: SMALL, LANDMARK_R: LANDMARK_R, SMALL_R: SMALL_R, REWARD_BIG: REWARD_BIG, REWARD_SMALL: REWARD_SMALL,
     SEP_BIG: SEP_BIG, SEP_SMALL: SEP_SMALL, TOWER_CLEAR: TOWER_CLEAR, PAD_R: PAD_R, PAVE_R: PAVE_R, TOWER_H: TOWER_H, GATE_HALF: GATE_HALF,
     on: on, center: center, sites: sites, siteById: siteById, inRegion: inRegion, gateOpen: gateOpen, rectsOf: rectsOf, rectsIn: rectsIn,
-    PORT_PARTS: PORT_PARTS, TEMPLE_PARTS: TEMPLE_PARTS, BELFRY_OFF: BELFRY_OFF, BELFRY_HALF: BELFRY_HALF, BELL_FROM: BELL_FROM,
+    PORT_PARTS: PORT_PARTS, SITE_PARTS: SITE_PARTS, SUB_OFF: SUB_OFF, TRAIN_FROM: TRAIN_FROM, trainPowered: trainPowered, BELFRY_OFF: BELFRY_OFF, BELFRY_HALF: BELFRY_HALF, BELL_FROM: BELL_FROM,
     bellHung: bellHung, ringBell: ringBell, ringing: function () { return ringT; }, TOWER_HALF: TOWER_HALF, TOWER_DRAIN: TOWER_DRAIN, SHIP_UP: SHIP_UP, DOCK_FROM: DOCK_FROM, portSpot: portSpot, beaconLit: beaconLit, docked: docked, poles: poles,
     found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks, tick: tick,
     _resetForTest: function () { memo = null; rectMemo = null; centerMemo = undefined; poleMemo = null; }

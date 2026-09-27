@@ -83,6 +83,12 @@
     story_dareum: {
       skill: { name: '파발 질주', type: 'dash', cd: 7, len: 6, w: 2.2, mul: 2.8, text: '말 달리듯 앞으로 6m 돌진 — 지나간 길의 적을 암 원소로 친다(돌진 중 무적)' },
       burst: { name: '마패 호령', type: 'ward', r: 7, mul: 3.6, sec: 10, taken: 0.75, text: '둘레 7m 에 바위를 내리찍고, 10초 동안 명단이 받는 피해 -25%' }
+    },
+    /* ⑲-40 도담(18장 끝 합류) — saga-godot 106 ㊽-4 를 이 판 척도로(노 물결·천기 뇌우 비율). 있는 틀(wave·haste)만 쓴다 */
+    story_dodam: {
+      skill: { name: '선로 전류', type: 'wave', cd: 8, len: 10, w: 2.2, mul: 2.9, knock: 4,
+        text: '앞으로 10m·폭 2.2m 곧게 선로 전류 — 길 위의 적을 뇌 원소로 치고 앞으로 4m 밀어낸다(나는 제자리)' },
+      burst: { name: '막차 출발 신호', type: 'haste', r: 7, mul: 3.4, sec: 10, energy: 7, text: '둘레 7m 에 기적과 번개, 10초 동안 명단 원소 스킬 대기가 두 배로 돌며 다른 인물 기력 +7' }
     }
   };
 
