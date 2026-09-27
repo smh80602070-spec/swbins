@@ -10,7 +10,7 @@ extends Node3D
 ##   과거 — 잠긴 궁궐(PALACE_CELL): 물 위로 드러난 기단(+0.25)·기운 정전·기와 지붕(올라설 수 있다) + 모래밭에서 이어지는 돌다리
 ##   현대 — 해저 연구 기지·잠수정 선착장(BASE_CELL): 모래밭 끝 갑판·컨테이너·안테나·기지로 내려가는 통로 + 빛 돔까지 잔교 · 잔교 옆 선착장에 노란 잠수정
 ##   미래 — 빛 돔(DOME_CELL): 물을 밀어낸 둥근 받침(안 반지름 22·바깥 34, 윗면 +0.5) 위 유리 반구, 안은 마른 −10 바닥·경사로·기록실.
-##     북쪽 문은 22장을 마치기 전(ch < DOME_OPEN_CH) 잠겨 있다(빛 막 + 충돌).
+##     북쪽 문은 22장 자물쇠를 지켜 내기 전(dome_open) 잠겨 있다(빛 막 + 충돌).
 ##   과거·미래 — 옛 등대(LIGHT_CELL, K 바위섬): 15m 돌탑(벽 타기)·난간 판·빛 등롱 — 23장을 마치면(ch ≥ LIGHT_ON_CH) 불이 켜지고 빛줄기가 돈다
 ##   고개 경계비((1.35,0.65)) · 디딤 지붕 셋(궁궐 곁채·물에 잠긴 대문·석탑 꼭대기)
 
@@ -63,8 +63,9 @@ const STEPS := [
 ## 해무 문 — 이 지역 (1,0) 고개 칸 북쪽 변(y −0.5 = 포구 (1,8) 남쪽 변, 월드 z 192). 5부를 마치면(ch ≥ 20) 걷힌다.
 const GATE_CELL := Vector2(1.0, -0.5)
 const GATE_OPEN_CH := 20
-## 빛 돔 문 — 22장(인덱스 21)을 마치면 열린다. 등대 — 23장(인덱스 22)을 마치면 켜진다.
-const DOME_OPEN_CH := 22
+## 빛 돔 문 — 22장(인덱스 21) 문 자물쇠를 지켜 낸 뒤(DOOR_FROM_STEP 단계부터) 열린다. 등대 — 23장(인덱스 22)을 마치면 켜진다.
+const CH22 := 21
+const DOOR_FROM_STEP := 7
 const LIGHT_ON_CH := 23
 
 ## 물 위 걷는 판(갑판·잔교·돔 받침) 윗면 — 헤엄쳐 넘어오를 수 있는 높이(수면 −0.45 + 0.95).
@@ -159,9 +160,10 @@ static func _story_ch() -> int:
 static func gate_open() -> bool:
 	return _story_ch() >= GATE_OPEN_CH
 
-## 22장을 마쳤는가 — 빛 돔 북쪽 문이 열려 있다.
+## 22장 자물쇠를 지켜 냈거나 지났는가 — 빛 돔 북쪽 문이 열려 있다.
 static func dome_open() -> bool:
-	return _story_ch() >= DOME_OPEN_CH
+	var ch := _story_ch()
+	return ch > CH22 or (ch == CH22 and int(PartyState.story.get("step", 0)) >= DOOR_FROM_STEP)
 
 ## 23장을 마쳤는가 — 옛 등대에 불이 켜져 있다.
 static func light_on() -> bool:

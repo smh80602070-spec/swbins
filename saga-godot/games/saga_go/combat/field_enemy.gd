@@ -132,6 +132,13 @@ const KINDS := {
 		"phase_text": "별까마귀가 틈의 서리를 두르고 여우와 매를 부른다 — 불로 방패를 깨라",
 		"rotation": ["rift", "halo", "storm", "slam", "rift", "tide", "halo"], "summon": ["ice_fox", "wind_hawk"],
 		"shape": "bird", "height": 4.4, "colors": [Color(0.14, 0.13, 0.22), Color(0.62, 0.45, 1.0), Color(1.0, 0.84, 0.35)]},
+	## 106장 ㊿-3 22장 이야기 보스 "심해 등불아귀"(잠긴 도읍 빛 돔 안 마른 바닥) — 돔이 밀어낸 물 대신 돔 불빛을 먹고 살던 심해 물고기.
+	## 코드 몸 serpent 3.6m(검푸른 비늘·청록 배·금빛 등불 뿔). 패턴은 있는 틀: 물기·밀물 줄·내려찍기·고리·회오리. 2단계 수 방패(뇌로 깬다).
+	"abyss_angler": {"name": "심해 등불아귀", "hp": 8800.0, "atk": 46.0, "speed": 4.0, "aggro": 26.0,
+		"reach": 3.4, "tell": 0.8, "cd": 1.5, "exp": 0.0, "element": "water", "shield": 0.0, "phase_shield": 940.0,
+		"phase_text": "등불아귀가 심해의 물을 두르고 물거북과 매를 부른다 — 뇌로 방패를 깨라",
+		"rotation": ["bite", "tide", "slam", "halo", "tide", "storm"], "summon": ["water_turtle", "wind_hawk"],
+		"shape": "serpent", "height": 3.6, "colors": [Color(0.1, 0.16, 0.24), Color(0.35, 0.5, 0.55), Color(1.0, 0.78, 0.35)]},
 }
 
 const GRAVITY := 20.0

@@ -58,7 +58,7 @@ const CHESTS := [
 	["u_sand_e", "sunken", Vector2(7.4, 3.2), "common", "none", []],
 	["u_islet", "sunken", Vector2(7.15, 7.12), "exquisite", "none", []],      # 등대 바위섬 — 헤엄쳐서
 	["u_camp_turtle", "sunken", Vector2(2.05, 2.05), "precious", "camp", []], # 들판 무리 (2,2) 물거북 둘+매
-	["u_dome", "sunken", Vector2(4.75, 5.85), "luxurious", "none", []],       # 빛 돔 안 마른 바닥 — 22장 뒤 문이 열려야
+	["u_dome", "sunken", Vector2(4.75, 5.85), "luxurious", "none", []],       # 빛 돔 안 마른 바닥 — 22장 문 자물쇠를 지켜 내야
 ]
 
 

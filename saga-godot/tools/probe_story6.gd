@@ -8,14 +8,22 @@ extends Node
 ## 무리 칸이 모래 · 자리가 명소에 안 묻힘 · 물속 불빛이 20장 뒤에 켜짐 · 선장은 은하 나루 별배 곁) [2] 선장 → 별배
 ## [3] 별배 타기(잠긴 도읍 모래밭에 내림) [4] 반디(모래밭) → 기지 앞 [5] 물짐승 넷이 모래 위 [6] 잔교 끝 선착장 판에 서면 넘어간다(헤엄 아님)
 ## [7] 여울(판 위) → 잠수정 [8] 잠수정 타기(궁궐 기단 위에 내려 섬) [9] 여울(기단 위) → 21장 끝·보상·✔ 제21장·자리(ch_to).
+## 22장 "잠긴 궁궐의 해녀"(㊿-3): [10] 표·자리(물새 과거·석등·자물쇠 자리가 받침 위 · 물결 방향이 고리 위 · 대결 둘레가 돔 안 마른 바닥 ·
+## 등불아귀 수·뇌가 방패를 깸 · 받침·돔 안 자리가 명소에 안 묻힘 · 문 잠김) [11] 여울 → 곁채 지붕 [12] 물새(지붕 윗면) → 바지락
+## [13] 바지락 셋 [14] 물새(받침 위) → 석등 [15] 물길 석등 — 받침 높이·고리 위·차례(틀리면 꺼짐) [16] 물새 → 지키기
+## [17] 자물쇠 지키기(물결 셋 모두 고리 위) [18] 문이 열림 → 여울 → 대결 [19] 등불아귀(돔 바닥, 고리 예고) [20] 물새(돔 안) → 22장 끝.
 ## 이야기 상태·부대 경험·가방은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const Sunken := preload("res://games/saga_go/world/region7_sunken.gd")
+const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
+const Elements := preload("res://games/saga_go/combat/elements.gd")
+const Gathering := preload("res://games/saga_go/world/gathering.gd")
 
 const CH21 := 20 # 21장(0부터)
+const CH22 := 21
 const R := "sunken"
 
 var _p: CharacterBody3D
@@ -173,7 +181,169 @@ func _physics_process(_delta: float) -> void:
 				and _flat(cap, _cell_any(R, Vector2(3.3, 1.8))) < 1.0 and absf(yp.y - Sunken.TERRACE_Y) < 0.1
 			_check("chapter21", ok, "ch=%d mora +%d cap=%s yeoul=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), cap, yp])
 			_next()
-		10:
+		10: # [10] 22장 표·자리
+			if _frame == 1:
+				PartyState.exp = maxf(PartyState.exp, 51.0 * PartyState.EXP_PER_LEVEL)
+				PartyState.level = maxi(PartyState.level, 51)
+				PartyState.ar_paid = maxi(PartyState.ar_paid, PartyState.level + 1)
+				_sq.call("_enter_step")
+			if _frame < 70:
+				return
+			var c := Story.chapter(CH22)
+			var steps: Array = c.steps
+			var bad: Array = []
+			if String(c.get("id", "")) != "ch22" or int(c.ar) <= int(Story.chapter(CH21).ar) or int(_sq.call("ch")) != CH22 or bool(_sq.call("locked")) or steps.size() != 10:
+				bad.append("chapter ch=%d locked=%s steps=%d" % [_sq.call("ch"), _sq.call("locked"), steps.size()])
+			var info: Dictionary = Story.NPCS.mulsae
+			if String(info.get("era", "")) != "과거" or bool(_sq.call("npc_visible", "mulsae")):
+				bad.append("mulsae info/visible")
+			## 석등·지키기 자리 — 돔 가운데 북쪽 27.5m 받침 위.
+			var dc := Sunken.dome_center()
+			var seal: Dictionary = steps[4]
+			var defend: Dictionary = steps[6]
+			for d in [seal, defend]:
+				var sp := _spot(d)
+				if absf(sp.y - Sunken.DECK_Y) > 0.1 or absf(_flat(sp, dc) - 27.5) > 0.6:
+					bad.append("%s spot %s r=%.1f" % [d.type, sp, _flat(sp, dc)])
+			## 물결 방향 — 받침 고리 위(안 22.5 ~ 바깥 33.5).
+			for dg in defend.dirs:
+				var a := deg_to_rad(float(dg))
+				var wp := _spot(defend) + Vector3(sin(a), 0.0, -cos(a)) * Story.DEFEND_RING
+				if _flat(wp, dc) < Sunken.RING_IN + 0.5 or _flat(wp, dc) > Sunken.RING_OUT - 0.5:
+					bad.append("wave dir %d r=%.1f" % [dg, _flat(wp, dc)])
+			## 대결 — 돔 안 마른 바닥, 둘레 8m 가 평탄하고 유리 안.
+			var duel: Dictionary = steps[8]
+			var du := _cell_any(R, duel.cell)
+			if absf(du.y + 10.0) > 0.05 or _flat(du, dc) + 8.0 > Sunken.RING_IN - 1.0:
+				bad.append("duel spot %s r=%.1f" % [du, _flat(du, dc)])
+			if String(duel.kind) != "abyss_angler" or String(FieldEnemy.KINDS.abyss_angler.element) != "water" or Elements.shield_mul("water", "thunder") <= 1.0:
+				bad.append("duel kind")
+			## 받침 위·돔 안 자리가 명소에 안 묻힘.
+			var spots: Array = []
+			for w in Story.windows(info.appear) + Story.windows(Story.STATIONS.yeoul).filter(func(w: Dictionary) -> bool: return int(w.ch) >= CH22) \
+					+ Story.windows(Story.STATIONS.bandi).filter(func(w: Dictionary) -> bool: return int(w.ch) >= CH22 and String(w.region) == R):
+				spots.append(_spot(w))
+			for sp in spots:
+				if not _hits(sp).is_empty():
+					bad.append("buried %s %s" % [sp, _hits(sp)])
+			var su := get_tree().get_first_node_in_group("go_sunken_region")
+			if bool(su.call("is_dome_open")):
+				bad.append("door open at st0")
+			_check("ch22_table", bad.is_empty(), str(bad))
+			_next()
+		11: # [11] 여울(기단) → 곁채 지붕
+			_talk("yeoul", 1, "ch22_yeoul", Vector2(3.5, 5.45))
+		12: # [12] 물새(곁채 지붕 위) → 바지락
+			if _frame == 1:
+				var mp: Vector3 = _sq.call("npc_pos", "mulsae")
+				_v = bool(_sq.call("npc_visible", "mulsae")) and absf(mp.y - 0.45) < 0.1 and absf(_surface(mp) - 0.45) < 0.1
+			_talk("mulsae", 2, "ch22_mulsae", Vector2.INF, "on_roof=%s" % _v, bool(_v), 1)
+		13: # [13] 바지락 셋
+			if _frame == 3:
+				var ga: Node = get_tree().get_first_node_in_group("go_gathering")
+				var picked := 0
+				for row in Gathering.all_nodes():
+					if row[1] == "clam" and row[2] == R and picked < 3 and ga.call("node_pos", row[0]) != Vector3.INF:
+						ga.call("pick", row[0])
+						picked += 1
+				_v = picked
+			if _frame == 8:
+				_check("ch22_gather", int(_v) == 3 and int(_sq.call("st")) == 3, "picked=%d st=%d" % [_v, _sq.call("st")])
+				_next()
+		14: # [14] 물새(돔 문 앞 받침 위) → 석등
+			if _frame == 1:
+				var mp: Vector3 = _sq.call("npc_pos", "mulsae")
+				_v = absf(mp.y - Sunken.DECK_Y) < 0.1
+			_talk("mulsae", 4, "ch22_mulsae2", Vector2(5.0, 5.427), "on_ring=%s" % _v, bool(_v), 1)
+		15: # [15] 물길 석등 — 받침 높이·고리 위, 달 먼저(틀림) → 해 → 별 → 달
+			var dc := Sunken.dome_center()
+			if _frame == 1:
+				_put(_target() + Vector3(0.0, 0.0, 3.0))
+				_v = {"lit": [], "ys": [], "rs": []}
+			if _frame == 6:
+				for mk in ["sun", "star", "moon"]:
+					var lp: Vector3 = _sq.call("seal_lamp_pos", mk)
+					_v.ys.append(snappedf(lp.y - Sunken.DECK_Y, 0.01))
+					_v.rs.append(snappedf(_flat(lp, dc), 0.1))
+				for mk in ["moon", "sun", "star", "moon"]:
+					_sq.call("receive_element", _sq.call("seal_lamp_pos", mk), 0.5, "water")
+					_v.lit.append(int(_sq.call("seal_lit")))
+			if _frame == 90: # 다 켜진 뒤 잠깐 뒤에 넘어간다
+				var ys_ok := (_v.ys as Array).all(func(y: float) -> bool: return absf(y) < 0.2)
+				var rs_ok := (_v.rs as Array).all(func(r: float) -> bool: return r > Sunken.RING_IN + 0.3 and r < Sunken.RING_OUT - 0.3)
+				var ok: bool = _v.lit == [0, 1, 2, 3] and int(_sq.call("st")) == 5 and ys_ok and rs_ok
+				_check("ch22_seal", ok, "lit=%s st=%d ys=%s rs=%s" % [_v.lit, _sq.call("st"), _v.ys, _v.rs])
+				_next()
+		16: # [16] 물새 → 지키기
+			_talk("mulsae", 6, "ch22_mulsae3", Vector2(5.0, 5.427))
+		17: # [17] 빛 돔 문 자물쇠 지키기 — 물결 셋이 받침 위에서
+			var dc := Sunken.dome_center()
+			if _frame == 1:
+				_put(_target() + Vector3(2.5, 0.0, 2.5))
+				_v = {"off": 0, "n": 0, "waves": 0, "label": ""}
+			if _frame > 4 and _frame % 6 == 0 and int(_sq.call("st")) == 6:
+				var lbl := _sq.get("_defend_label") as Label3D
+				if lbl and String(_v.label) == "":
+					_v.label = lbl.text
+				for e in _sq.call("alive_quest_enemies"):
+					_v.n += 1
+					var ep := (e as Node3D).global_position
+					if _flat(ep, dc) < Sunken.RING_IN or _flat(ep, dc) > Sunken.RING_OUT or ep.y < Sunken.DECK_Y - 1.0:
+						_v.off += 1
+					e.call("_die")
+				_v.waves = maxi(int(_v.waves), int(_sq.call("defend_wave")) + 1)
+			if _frame > 4 and (int(_sq.call("st")) != 6 or _frame > 600):
+				var ok: bool = int(_sq.call("st")) == 7 and int(_v.off) == 0 and int(_v.n) == 12 and int(_v.waves) == 3 and String(_v.label).begins_with("빛 돔 문 자물쇠")
+				_check("ch22_defend", ok, "st=%d off=%d n=%d waves=%d label='%s' frames=%d" % [_sq.call("st"), _v.off, _v.n, _v.waves, _v.label, _frame])
+				_next()
+		18: # [18] 문이 열렸다(지역 파일은 1초마다 본다) → 여울(받침 위) → 대결
+			if _frame == 80:
+				var su := get_tree().get_first_node_in_group("go_sunken_region")
+				var veil := su.find_child("DoorVeil", true, false) as Node3D
+				_v = bool(su.call("is_dome_open")) and not veil.visible
+			if _frame > 80:
+				_talk("yeoul", 8, "ch22_yeoul2", Vector2(4.792, 6.042), "door_open=%s" % _v, bool(_v), 40)
+		19: # [19] 심해 등불아귀 — 돔 안 마른 바닥, 고리 예고
+			if _frame == 1:
+				_put(_target() + Vector3(0, 0, 9))
+			if _frame == 12:
+				var bosses := get_tree().get_nodes_in_group("go_story_boss")
+				var b: Node3D = bosses[0] if not bosses.is_empty() else null
+				_v = {"n": bosses.size(), "marks": 0, "kind": "", "y": 0.0}
+				if b:
+					_v.kind = String(b.get("kind"))
+					_v.y = b.global_position.y
+					b.call("_clear_marks")
+					b.call("_set_tell", false)
+					b.call("begin_skill", "halo", _p)
+					_v.marks = (b.get("_marks") as Array).size()
+					b.call("_clear_marks")
+					b.call("_die")
+			if _frame == 20:
+				var ok: bool = int(_v.n) == 1 and String(_v.kind) == "abyss_angler" and absf(float(_v.y) + 10.0) < 1.5 and int(_v.marks) >= 1 and int(_sq.call("st")) == 9
+				_check("ch22_duel", ok, "n=%d kind=%s y=%.1f marks=%d st=%d" % [_v.n, _v.kind, _v.y, _v.marks, _sq.call("st")])
+				_next()
+		20: # [20] 물새(돔 안) → 22장 끝
+			if _frame == 1:
+				_v = {"mora": PartyState.count("mora")}
+				_near_npc("mulsae")
+			if _frame == 10:
+				_sq.call("interact")
+				_drain()
+			if _frame < 16:
+				return
+			_dismiss_prompts()
+			if _frame < 22:
+				return
+			_sq.call("toggle_journal")
+			var jt: String = _sq.call("journal_text")
+			_sq.call("toggle_journal")
+			var mp: Vector3 = _sq.call("npc_pos", "mulsae")
+			var ok: bool = int(_sq.call("ch")) == CH22 + 1 and jt.contains("✔ 제22장") and PartyState.count("mora") >= int(_v.mora) + 110000 \
+				and bool(_sq.call("npc_visible", "mulsae")) and absf(mp.y + 10.0) < 0.1
+			_check("chapter22", ok, "ch=%d mora +%d mulsae=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), mp])
+			_next()
+		21:
 			PartyState.story = _saved.story
 			PartyState.members.assign(_saved.members)
 			PartyState.exp = _saved.exp
