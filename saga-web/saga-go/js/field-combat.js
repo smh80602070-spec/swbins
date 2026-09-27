@@ -267,7 +267,11 @@
     /* ⑲-39 17장 옛 절터 — 틈에서 기어 나와 떨어진 종에 똬리를 틀고 수백 년 이끼를 먹은 이무기(먹구름 이무기와 같은 청룡 몸, 초 — 덩굴뱀 몸은 새 원소 괴물 몫).
        있는 패턴만 — 이끼 침·밀물 원·내려치기·고리. 2단계 초 방패(풍으로 깬다)·졸개는 story.js 가 두른다 */
     moss_serpent: { name: '이끼 이무기', ref: 'pt_cheongryong', el: 'grass', hp: 17, atk: 2.3, spd: 4.2, reach: 4.0, type: 'slam', wind: 1.0, cd: 1.8, h: 2.6, exp: 0, r: 4.4,
-                boss: true, rot: ['spit', 'tide', 'slam', 'melee', 'halo', 'spit'] }
+                boss: true, rot: ['spit', 'tide', 'slam', 'melee', 'halo', 'spit'] },
+    /* ⑲-42 19장 틈새 갈림길 — 선장이 멈춰 둔 시간 속에서 깨어난 파수꾼(사람 몸 2배·금빛 가면, 풍). 있는 패턴만.
+       2단계 풍 방패(암으로 깬다)·졸개는 story.js 가 두른다 */
+    time_warden: { name: '멈춘 시간의 파수꾼', ref: null, body: 'story_blackmask', mask: 'gold', el: 'wind', hp: 18, atk: 2.4, spd: 4.8, reach: 3.4, type: 'melee', wind: 0.7, cd: 1.6, h: 2.0, exp: 0,
+                boss: true, rot: ['halo', 'tide', 'slam', 'shadow', 'melee', 'halo', 'spit'] }
   };
   /* ⑲-14 공격 차례(`rot`)의 한 수씩 — reach 안이면 휘두른다. shadow 는 내 등 뒤 SHADOW_BACK m 로 옮겨 붙어 제 둘레 원 */
   var ROT = {

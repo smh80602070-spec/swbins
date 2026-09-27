@@ -8,7 +8,9 @@
  *   이동    첫 정거장·시계탑·틈 고개 — 찾으면 지도(M) 순간이동 지점(키보드 판만, 열쇠 `cr:<id>`)
  *   틈 문   틈 고개 경계비(나루 쪽 GATE_DIST m) 곁 보랏빛 막(+ 벽) — 이야기 18장(4부)을 마치면 사라지고 빛 기둥 둘은 남는다
  *   시계탑  16m 옆면을 타고 오른다(landform 기둥 타기, `poles` — 오르기 기력 ×CLOCK_DRAIN). 네 면 빛 문자판
- *   섬돌    섬돌 열다섯이 1.1m 씩 나선으로 떠 있고 꼭대기에 틈 수정 — 그림만(밟고 오르기는 뒤 순서)
+ *   섬돌    섬돌 열다섯이 1.1m 씩 나선으로 떠 있고 꼭대기에 틈 수정. ⑲-42 나선 바깥에서 가운데로 밀면 섬돌을 밟고 오른다
+ *           (landform 기둥 `cr_steps` — 꼭대기 = 마지막 섬돌 위, 오르기 기력 ×STEPS_DRAIN)
+ *   이야기  ⑲-42 19장 자리 표(`spot` — 첫 정거장·시계탑·섬돌 곁) · 19장 여섯째 단계부터 문자판 바늘이 돈다(`clockRunning`)
  *   벽      승강장 차막이·성문 기둥·시계탑·문 기둥·(닫힌) 문·경비 기계·신호기는 world3d `houseRects` 로 막는다
  *
  * 자리 잡기는 skyport.js 와 같은 규칙 — 가운데에서 off 만큼 간 곳에서 가장 가까운 그 땅 들·숲 칸(물·마을·길·산·강 아님), 서로 떨어짐.
@@ -56,6 +58,11 @@
   var CLOCK_H = 16, CLOCK_HALF = 1.5, CLOCK_DRAIN = 0.85;   // 16m 를 꽉 찬 기력으로 — 원래 배율이면 15.7m 에서 모자란다
   var STEP_N = 15, STEP_RISE = 1.1, STEP_R = 3.2;           // 섬돌 — 열다섯 × 1.1m = 16.5m, 틈 수정은 그 위
   var RAIL_LEN = 60, PLAT_OFF = 3.2;                        // 첫 정거장 — 선로 남북 60m, 승강장은 선로 동쪽
+  var STEPS_DRAIN = 0.7, STEPS_TOP = STEP_RISE * STEP_N + 0.2;   // ⑲-42 섬돌 기둥 — 마지막 섬돌 윗면 16.7m
+  var CLOCK_CH = 'ch19', CLOCK_FROM = 5;                    // ⑲-42 시계탑 태엽을 풀면(19장 여섯째 단계부터) 바늘이 돈다
+  /* ⑲-42 19장 자리 [명소, m, m] — 막차는 승강장 동쪽에 내린다. 갈림목 = 시계탑 북서쪽. 한별은 섬돌 가운데 밑(틈 수정 아래) */
+  var PARTS = { arrive: ['platform', 6.5, 0], dodam: ['platform', 6.5, -3], bandi: ['platform', 7, 4], hanbyeol: ['platform', 6.5, 7],
+    fork: ['clock', -18, -14], ck_bandi: ['clock', 4, 4], st_foot: ['steps', 0, 0], st_bandi: ['steps', 6, 5], st_duel: ['steps', 10, -8], st_hanbyeol: ['steps', 7, -3] };
   var GRID = 48;
 
   /* ── 자리(순수 — 지형·해시만) ───────────────────────────── */
@@ -129,6 +136,15 @@
     return out;
   }
   function siteById(id) { var L = sites(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
+  /** ⑲-42 이야기 자리(PARTS) — 그 명소가 없으면 null */
+  function spot(part) { var q = PARTS[part], p = q ? siteById(q[0]) : null; return p ? { x: p.x + q[1], y: p.y + q[2] } : null; }
+  function storyAt() { var s = core() && core().save ? core().save.story : null; return s || { ch: 0, step: 0 }; }
+  function chIndex(id) { var ST = global.DG.story; if (!ST || !ST.CHAPTERS) { return -1; } for (var i = 0; i < ST.CHAPTERS.length; i++) { if (ST.CHAPTERS[i].id === id) { return i; } } return -1; }
+  function passed(id, step) { var i = chIndex(id), s = storyAt(); return i >= 0 && (s.ch > i || (s.ch === i && (s.step || 0) >= step)); }
+  /** ⑲-42 시계가 다시 가나 — 19장 시계탑 단계를 지나면(여섯째부터) 늘 */
+  function clockRunning() { return passed(CLOCK_CH, CLOCK_FROM); }
+  /** ⑲-42 섬돌 i 의 자리(가운데에서 m)·윗면 높이 */
+  function stepAt(i) { var a = i * 0.7; return { x: Math.cos(a) * STEP_R, y: Math.sin(a) * STEP_R, a: a, top: STEP_RISE * (i + 1) + 0.2 }; }
   /** 갈림길 땅 안인가 */
   function inRegion(x, y) { return on() && zoneAt(x, y) === ZONE; }
   /** 틈 문이 열렸나 — 이야기 18장(4부 끝)을 마친 뒤 */
@@ -149,6 +165,14 @@
       beam: { ax: p.x - 1.1, ay: p.y, bx: p.x + 1.1, by: p.y, w: 2.6 },   // 3m 네모 꼭대기 — 가장자리 0.2m 안쪽
       grab: '🧗 시계탑 벽을 붙잡았다 — 계속 밀면 오른다 · 점프 = 도약 · 등지면 손을 놓는다',
       perchText: '🕰️ 멈춘 시계탑 꼭대기 — 뒤엉킨 시대가 한눈에 보인다 · 뛰면 날개를 편다', edgeText: '🕰️ 탑 끝 — 뛰어내리면(점프) 날개를 편다' }];
+    var sp = siteById('steps'), last = stepAt(STEP_N - 1);
+    if (sp) {                                                                   // ⑲-42 섬돌 — 나선 바깥 가장자리에서 가운데로 밀면
+      var lx = sp.x + last.x, ly = sp.y + last.y, tx = -Math.sin(last.a) * 0.6, ty = Math.cos(last.a) * 0.6;
+      poleMemo.push({ id: 'cr_steps', x: sp.x, y: sp.y, r: STEP_R + 0.8, top: STEPS_TOP, drain: STEPS_DRAIN, perch: { x: lx, y: ly },
+        beam: { ax: lx - tx, ay: ly - ty, bx: lx + tx, by: ly + ty, w: 1.4 },   // 마지막 섬돌(1.6m) 위 — 가장자리 0.1m 안쪽
+        grab: '🪨 떠 있는 섬돌을 밟았다 — 계속 밀면 한 칸씩 오른다 · 점프 = 도약 · 등지면 내려선다',
+        perchText: '💎 마지막 섬돌 — 틈 수정이 코앞에서 빛난다 · 뛰면 날개를 편다', edgeText: '💎 섬돌 끝 — 뛰어내리면(점프) 날개를 편다' });
+    }
     return poleMemo;
   }
 
@@ -288,10 +312,13 @@
       case 'clock': {
         box(T3, g, m.stone, CLOCK_HALF * 2, CLOCK_H, CLOCK_HALF * 2, 0, CLOCK_H / 2, 0);                           // 16m 탑
         box(T3, g, m.stoneD, CLOCK_HALF * 2 + 0.4, 0.3, CLOCK_HALF * 2 + 0.4, 0, CLOCK_H, 0);
-        for (i = 0; i < 4; i++) {                                                                                  // 네 면 빛 문자판(바늘은 멈춤)
+        o.hands = [];
+        for (i = 0; i < 4; i++) {                                                                                  // 네 면 빛 문자판(⑲-42 태엽을 풀면 바늘이 돈다)
           var a = i * Math.PI / 2, dx = Math.sin(a) * (CLOCK_HALF + 0.03), dz = Math.cos(a) * (CLOCK_HALF + 0.03);
           var dl = new T3.Mesh(new T3.CircleGeometry(1.05, 24), m.dial); dl.position.set(dx, CLOCK_H - 3, dz); dl.rotation.y = a; g.add(dl);
-          var hd = box(T3, g, m.dark, 0.08, 0.8, 0.04, dx * 1.01, CLOCK_H - 2.7, dz * 1.01, a); hd.rotation.z = 0.9;
+          var hp = new T3.Group(); hp.position.set(dx * 1.01, CLOCK_H - 3, dz * 1.01); hp.rotation.y = a; g.add(hp);
+          var hd = new T3.Group(); hd.rotation.z = 0.9; hp.add(hd); box(T3, hd, m.dark, 0.08, 0.8, 0.04, 0, 0.35, 0);
+          o.hands.push(hd);
         }
         var cap = new T3.Mesh(new T3.ConeGeometry(2.3, 2.4, 4), m.roof); cap.position.set(0, CLOCK_H + 1.5, 0); cap.rotation.y = Math.PI / 4; g.add(cap);
         break;
@@ -335,7 +362,7 @@
     if (!w) { fx = {}; return; }
     var T3 = w.three();
     if (!T3) { return; }
-    var p = core().save.player.pos, seen = {}, L = sites(), i, open = gateOpen();
+    var p = core().save.player.pos, seen = {}, L = sites(), i, open = gateOpen(), run = clockRunning();
     for (i = 0; i < L.length; i++) {
       var st = L[i];
       if (Math.hypot(st.x - p.x, st.y - p.y) > 280) { continue; }
@@ -345,6 +372,7 @@
       for (k = 0; k < o.bob.length; k++) { o.bob[k].o.position.y = o.bob[k].y + Math.sin(clock * 1.1 + o.bob[k].ph) * 0.15; }
       if (o.blink) { o.blink.visible = Math.sin(clock * 3 + i) > 0; }
       if (o.door) { o.door.visible = !open; if (!open) { o.door.material.opacity = 0.35 + Math.sin(clock * 2) * 0.1; } }
+      if (o.hands && run) { for (k = 0; k < o.hands.length; k++) { o.hands[k].rotation.z -= (dt || 0) * 0.5; } }   // ⑲-42 시계가 다시 간다
     }
     for (var id in fx) { if (fx.hasOwnProperty(id) && !seen[id]) { w.removeFx(fx[id].root); delete fx[id]; } }
   }
@@ -361,7 +389,8 @@
   global.DG.crossing = {
     ZONE: ZONE, REGION: REGION, LANDMARKS: LANDMARKS, SMALL: SMALL, LANDMARK_R: LANDMARK_R, SMALL_R: SMALL_R, REWARD_BIG: REWARD_BIG, REWARD_SMALL: REWARD_SMALL,
     SEP_BIG: SEP_BIG, SEP_SMALL: SEP_SMALL, TOWER_CLEAR: TOWER_CLEAR, GATE_HALF: GATE_HALF, GATE_DIST: GATE_DIST, CLOCK_H: CLOCK_H, CLOCK_HALF: CLOCK_HALF, CLOCK_DRAIN: CLOCK_DRAIN,
-    STEP_N: STEP_N, STEP_RISE: STEP_RISE, RAIL_LEN: RAIL_LEN,
+    STEP_N: STEP_N, STEP_RISE: STEP_RISE, RAIL_LEN: RAIL_LEN, STEPS_TOP: STEPS_TOP, STEPS_DRAIN: STEPS_DRAIN, CLOCK_FROM: CLOCK_FROM, PARTS: PARTS,
+    spot: spot, stepAt: stepAt, clockRunning: clockRunning,
     on: on, center: center, sites: sites, siteById: siteById, inRegion: inRegion, gateOpen: gateOpen, rectsOf: rectsOf, rectsIn: rectsIn, poles: poles,
     found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks, tick: tick,
     _resetForTest: function () { memo = null; rectMemo = null; centerMemo = undefined; poleMemo = null; }

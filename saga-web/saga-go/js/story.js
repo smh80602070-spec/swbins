@@ -1,5 +1,5 @@
 /**
- * 이야기 임무 1~18장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~40, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2~4)
+ * 이야기 임무 1~19장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~42, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2~4·㊾-2)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
@@ -71,7 +71,11 @@
     sp_bell_fight: { port: 'bell_fight' }, sp_bell_duel: { port: 'bell_duel' }, sp_hg_bell: { port: 'hg_bell' }, sp_bell_bandi: { port: 'bell_bandi' },
     /* ⑲-40 은하역·태양광 밭 — 도담·반디·선로 끝·막차·밭 무리·변전함 */
     sp_station: { skyport: 'station' }, sp_dodam: { port: 'dodam' }, sp_st_bandi: { port: 'st_bandi' }, sp_dodam_end: { port: 'dodam_end' },
-    sp_train: { port: 'train' }, sp_farm_fight: { port: 'farm_fight' }, sp_substation: { port: 'substation' } };
+    sp_train: { port: 'train' }, sp_farm_fight: { port: 'farm_fight' }, sp_substation: { port: 'substation' },
+    /* ⑲-42 틈새 갈림길(crossing.js) — 명소 자리(crossing) 또는 이야기 자리(cr) */
+    cr_clock: { crossing: 'clock' }, cr_steps: { crossing: 'steps' }, cr_arrive: { cr: 'arrive' }, cr_dodam: { cr: 'dodam' }, cr_bandi: { cr: 'bandi' },
+    cr_hanbyeol: { cr: 'hanbyeol' }, cr_fork: { cr: 'fork' }, cr_ck_bandi: { cr: 'ck_bandi' }, cr_st_foot: { cr: 'st_foot' }, cr_st_bandi: { cr: 'st_bandi' },
+    cr_st_duel: { cr: 'st_duel' }, cr_st_hanbyeol: { cr: 'st_hanbyeol' } };
   /* ⑲-40 18장 선장의 잔상 — 은하역 가운데에서 남쪽 선로(z 2~42) 위를 지그재그로, 선로 끝 너머 틈 쪽까지 */
   var CAPTAIN_PATH = [[0, 6], [1.5, 16], [-1.5, 26], [1.5, 36], [-1, 46], [2, 58], [-2, 68]];
   /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
@@ -103,7 +107,7 @@
   function CHASE_CATCH() { return gps() ? 12 : 2.5; }
 
   /* 인물 — zone 은 ⑮ 땅 key(고향은 'home'), off 는 그 땅 탑에서 떨어진 자리(m).
-     at 칸 [{ch(0부터), from, to, spot, off}] 이면 그 장 그 단계 동안 그 자리에 선다(⑲-14).
+     at 칸 [{ch(0부터), from, to, spot, off}] 이면 그 장 그 단계 동안 그 자리에 선다(⑲-14). ⑲-42 chTo 가 있으면 ch~chTo 장 모두(끝난 뒤 계속 설 자리).
      appear 가 있으면 그 칸에만 선다(나그네 — 4장은 따라가는 길, 칸에 spot 이 없다) */
   var NPCS = {
     elder:    { id: 'story_elder',    name: '청하 촌장 누리', short: '누리', zone: 'home',    off: [-22, 16],  color: '#6b7f61', idle: '먹구름이 걷히면 마을 잔치를 열어야지.' },
@@ -131,7 +135,9 @@
       idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }, { ch: 12, from: 6, to: 8, spot: 'yard_bandi' },
         { ch: 13, from: 9, to: 9, spot: 'obs_bandi', sky: true }, { ch: 15, from: 6, to: 8, spot: 'sp_bandi' },
         { ch: 16, from: 0, to: 6, spot: 'sp_bandi' }, { ch: 16, from: 7, to: 7, spot: 'sp_bell_bandi' }, { ch: 16, from: 8, to: 9, spot: 'sp_tp_bandi' },
-        { ch: 17, from: 0, to: 0, spot: 'sp_tp_bandi' }, { ch: 17, from: 1, to: 9, spot: 'sp_st_bandi' }] },
+        { ch: 17, from: 0, to: 0, spot: 'sp_tp_bandi' }, { ch: 17, from: 1, to: 9, spot: 'sp_st_bandi' },
+        { ch: 18, from: 0, to: 1, spot: 'sp_st_bandi' }, { ch: 18, from: 2, to: 4, spot: 'cr_bandi' }, { ch: 18, from: 5, to: 5, spot: 'cr_ck_bandi' },
+        { ch: 18, from: 6, to: 9, spot: 'cr_st_bandi' }, { ch: 19, chTo: 999, from: 0, to: 999, spot: 'sp_bandi' }] },
     /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
     daon:     { id: 'story_daon',     name: '조선공 다온', short: '다온', zone: 'galdae', spot: 'yard_daon', off: [0, 0], color: '#335ea0',
       idle: '이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.' },
@@ -149,7 +155,11 @@
       idle: '종지기는 종 곁에 있어야 하는 법이오. 종이 없어도 말이오.', at: [{ ch: 16, from: 4, to: 7, spot: 'sp_hg_bell' }] },
     /* ⑲-40 기관사 도담(현대) — 늘 은하역 승강장 남쪽 끝 아래, 18장 7째는 선로 끝. 18장 끝에 동료(story_dodam) */
     dodam:    { id: 'story_dodam',    name: '기관사 도담', short: '도담', zone: 'solar', spot: 'sp_dodam', off: [0, 0], color: '#38475c',
-      idle: '선로가 끊겨도 기관사는 역을 떠나지 않아요. 막차가 아직 여기 있으니까.', at: [{ ch: 17, from: 7, to: 7, spot: 'sp_dodam_end' }] },
+      idle: '선로가 끊겨도 기관사는 역을 떠나지 않아요. 막차가 아직 여기 있으니까.', at: [{ ch: 17, from: 7, to: 7, spot: 'sp_dodam_end' }, { ch: 18, from: 2, to: 9, spot: 'cr_dodam' }] },
+    /* ⑲-42 별배 선장 한별(미래) — 19장 7째 섬돌 가운데 밑(틈 수정 아래) · 8~9 섬돌 곁 · 19장 뒤 첫 정거장 곁 */
+    hanbyeol: { id: 'story_hanbyeol', name: '별배 선장 한별', short: '한별', zone: 'dragon', spot: 'cr_hanbyeol', off: [0, 0], color: '#232e57',
+      idle: '틈은 멈춰 있지 않다. 누군가 끝을 찾아가 닫아야 해.',
+      appear: [{ ch: 18, from: 7, to: 7, spot: 'cr_st_foot' }, { ch: 18, from: 8, to: 9, spot: 'cr_st_hanbyeol' }, { ch: 19, chTo: 999, from: 0, to: 999, spot: 'cr_hanbyeol' }] },
     /* ⑲-40 선장의 잔상 — 18장 쫓기 때만 역 기준 길(CAPTAIN_PATH)을 달린다 */
     captain:  { id: 'story_captain',  name: '선장의 잔상', short: '잔상', zone: 'solar', color: '#232e57', idle: '……',
       appear: [{ ch: 17, from: 6, to: 6 }], runSpot: 'sp_station', runPath: CAPTAIN_PATH },
@@ -162,7 +172,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -856,6 +866,52 @@
             ['?', ['같이 가 줄래요, 도담?', '선장님을 만나러 가자.']],
             ['도담', '막차 기관사가 막차를 두고 갈 순 없죠. 틈 너머 첫 정거장까지 — 제가 몰게요!', 'fun'],
             ['반디', '별배는 나루에, 종은 절터에, 막차는 선로에. 이 시대의 길이 다시 이어졌습니다.', 'joy']] }
+      ] },
+    /* ⑲-42 5부 첫 장 — 무대는 틈새 갈림길(crossing.js). 도담 → 막차 타기(sail — 키보드 판은 첫 정거장으로) → 반디 → 갈림목 무리 →
+       멈춘 시계탑 옆면 타기(이때부터 바늘이 돈다) → 반디 → 떠 있는 섬돌 밟고 오르기 → 한별(섬돌 밑) → 멈춘 시간의 파수꾼(풍, 절반에서
+       풍 방패 — 암으로) → 한별 */
+    { id: 'ch19', name: '제19장 · 틈 너머 첫 정거장', ar: 44,
+      reward: { knot: 6, gold: 5250, guide: 6, secret: 5, party: 1450 },
+      steps: [
+        { type: 'talk', npc: 'dodam', text: '은하역의 도담과 이야기하기',
+          lines: [['도담', '보일러도 전조등도 문제없어요. 선로 끝 고개의 틈도 활짝 열렸고요!', 'joy'],
+            ['반디', '삐— 선장 신호, 틈 너머에서 미약하게 수신. 끊겼다 이어졌다 합니다.', 'surprised'],
+            ['?', ['가자, 틈 너머로.', '선장님이 기다려.']],
+            ['도담', '그럼 올라타요. 오늘은 막차가 첫차예요!', 'fun']] },
+        { type: 'sail', npc: 'dodam', to: 'cr_arrive', text: '도담의 막차를 타고 틈 너머로',
+          lines: [['도담', '막차, 출발합니다! 다음 정거장은 — 틈 너머 첫 정거장!']],
+          arrive: '🚂 막차가 기적을 울리며 틈을 지나 첫 정거장에 닿았다', walk: '🚂 막차가 틈 너머로 떠났다 — 틈 고개를 넘어 첫 정거장까지 걸어가자' },
+        { type: 'talk', npc: 'bandi', text: '첫 정거장의 반디와 이야기하기',
+          lines: [['반디', '삐— 이곳의 시계는 모두 같은 시각에 멈춰 있습니다. 시간이 멈춘 곳에선 신호가 갇힙니다.', 'surprised'],
+            ['도담', '저기 성문 조각이 허공에 떠 있어요… 시간이 뒤엉킨 땅이네요.', 'surprised'],
+            ['?', ['신호를 풀 방법은?', '시계를 다시 돌리면?']],
+            ['반디', '남쪽 멈춘 시계탑 — 꼭대기 태엽을 풀면 신호가 풀릴 겁니다. 다만 갈림목에 틈 짐승이 모여 있습니다.']] },
+        { type: 'kill', spot: 'cr_fork', kinds: ['snowfox', 'raptor', 'imp', 'hawk'], text: '갈림목에 모인 틈 짐승 물리치기',
+          enter: '⚔️ 뒤엉킨 갈림목에서 틈 짐승들이 시대를 가리지 않고 튀어나왔다' },
+        { type: 'climb', spot: 'cr_clock', pole: 'cr_clock', text: '멈춘 시계탑을 타고 올라 태엽 풀기(꼭대기에 서기)',
+          done: '🕰️ 시계탑 꼭대기 — 태엽을 풀자 네 면 바늘이 다시 돈다', gpsDone: '🕰️ 시계탑 밑 — 반디가 날아올라 태엽을 풀었다' },
+        { type: 'talk', npc: 'bandi', text: '시계탑 발치의 반디와 이야기하기',
+          lines: [['반디', '삐— 시계가 다시 갑니다! 선장 신호… 선명합니다!', 'joy'],
+            ['반디', '발신지 서쪽, 떠 있는 섬돌 꼭대기. 섬돌을 밟고 오를 수 있습니다.'],
+            ['?', ['바로 갈게!', '높이는?']],
+            ['반디', '열일곱 미터 남짓. 떨어지면 날개를 펴십시오.']] },
+        { type: 'climb', spot: 'cr_steps', pole: 'cr_steps', text: '떠 있는 섬돌을 밟고 꼭대기에 오르기',
+          done: '💎 마지막 섬돌에 올라섰다 — 섬돌 밑 틈 수정 아래에 누군가 서 있다', gpsDone: '💎 섬돌 밑 — 틈 수정 아래에 누군가 서 있다' },
+        { type: 'talk', npc: 'hanbyeol', text: '섬돌 밑의 선장과 이야기하기',
+          lines: [['한별', '정말 왔구나. 종이 울리고, 별배가 돌아오고, 막차가 달렸다는 뜻이지.', 'joy'],
+            ['?', ['여기서 뭘 하고 계셨어요?', '반디가 기다렸어요.']],
+            ['한별', '나는 별배 선장 한별. 틈이 시대를 삼키던 날, 이 틈 한가운데서 시간을 멈춰 틈이 더 벌어지지 않게 붙들고 있었다.', 'sorrow'],
+            ['한별', '그런데 너희가 시계를 다시 돌렸으니 — 멈춰 있던 파수꾼도 깨어난다. 내려와라, 섬돌 곁이다!', 'angry']] },
+        { type: 'duel', spot: 'cr_st_duel', kind: 'time_warden', shield: 'wind', adds: ['hawk', 'snowfox'], text: '깨어난 멈춘 시간의 파수꾼과 맞서기',
+          enter: '⏳ 멈춘 시간 조각을 두른 거인이 금빛 가면을 들었다 — 멈춘 시간의 파수꾼!',
+          p2: '🌪️ 파수꾼이 멈춘 바람을 둘렀다 — 바위로 깨라! 회오리매와 눈여우가 뛰어든다',
+          win: '⏳ 파수꾼의 금빛 가면이 부서지고 — 멈춘 시간 조각이 흩어졌다' },
+        { type: 'talk', npc: 'hanbyeol', text: '선장 한별과 이야기하기',
+          lines: [['한별', '고맙다. 이제 틈은 멈춰 있지 않는다. 스스로 닫히지도 않고 — 누군가 틈의 끝을 찾아가 닫아야 해.', 'sorrow'],
+            ['반디', '선장님… 별배는 은하 나루에 매여 있습니다.', 'sorrow'],
+            ['한별', '알고 있다, 반디. 잘 지켜 줬구나. 날개가 바뀌었다지?', 'fun'],
+            ['?', ['틈의 끝은 어디예요?', '같이 가요.']],
+            ['한별', '첫 정거장 다음 역은 \'갈림길 끝\'. 틈이 처음 찢어진 곳이지. 준비가 되면 — 함께 가자.', 'joy']] }
       ] }
   ];
 
@@ -965,10 +1021,16 @@
     var SKI = global.DG.skyIsle;
     var ES = global.DG.eraSites;
     var sp = SPOTS[name], b = !sp ? null : sp.era ? (ES ? ES.spot(sp.era) : null) : (sp.frost ? frostSpot(sp.frost) : (sp.peak ? peakSpot() : (sp.cape ? capeSpot() : (sp.isle ? isleSpot() :
-      (sp.sky ? (SKI ? SKI.spot() : null) : (sp.skyport || sp.port ? portPos(sp) : at(sp.zone, sp.off)))))));
+      (sp.sky ? (SKI ? SKI.spot() : null) : (sp.skyport || sp.port ? portPos(sp) : (sp.crossing || sp.cr ? crossPos(sp) : at(sp.zone, sp.off))))))));
     return b ? { x: b.x + (off ? off[0] : 0), y: b.y + (off ? off[1] : 0) } : null;
   }
   /** ⑲-38 은하 나루 자리 — 명소(skyport: id) 또는 나루 틀 자리(port: 'ara' 등). 나루가 꺼져 있으면 null */
+  /** ⑲-42 틈새 갈림길 자리 — 명소(crossing: id) 또는 이야기 자리(cr: 'arrive' 등). 갈림길이 꺼져 있으면 null */
+  function crossPos(sp) {
+    var CRm = global.DG.crossing;
+    if (!CRm || !CRm.on()) { return null; }
+    return sp.cr ? CRm.spot(sp.cr) : CRm.siteById(sp.crossing);
+  }
   function portPos(sp) {
     var SPm = global.DG.skyport;
     if (!SPm || !SPm.on()) { return null; }
@@ -992,7 +1054,7 @@
       if (e.wq) {
         var ws = wq === e.wq ? si : wqStepOf(e.wq);
         if (ws !== null && ws >= e.from && ws <= e.to) { return e; }
-      } else if (e.ch === ch && si >= e.from && si <= e.to) { return e; }
+      } else if ((e.chTo ? ch >= e.ch && ch <= e.chTo : e.ch === ch) && si >= e.from && si <= e.to) { return e; }   // ⑲-42 chTo
     }
     return null;
   }
@@ -1590,10 +1652,10 @@
       p.x = q.x; p.y = q.y;
       if (W.walkTo) { W.walkTo(p.x, p.y); }
       core().emit('region:teleport', { key: 'sail:' + st.to });
-      toast(st.to === 'isle' ? '⛵ 사공의 배가 물살을 가른다 — 바위섬에 닿았다' : '⛵ 배가 갈대 나루에 닿았다');
+      toast(st.arrive || (st.to === 'isle' ? '⛵ 사공의 배가 물살을 가른다 — 바위섬에 닿았다' : '⛵ 배가 갈대 나루에 닿았다'));   // ⑲-42 단계 글
       return true;
     }
-    toast('⛵ 사공이 배를 띄웠다 — 물가를 따라 ' + (st.to === 'isle' ? '바위섬으로' : '나루로') + ' 걸어가자');
+    toast(st.walk || ('⛵ 사공이 배를 띄웠다 — 물가를 따라 ' + (st.to === 'isle' ? '바위섬으로' : '나루로') + ' 걸어가자'));
     return false;
   }
 
