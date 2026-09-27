@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_leatherknight_f_01",
- "_note": "단계 3 GO 인물 비교용 — saga-unity Eve(Mixamo) 자리 후보(GO '가죽 옷 — 성녀 기사·여왕', 109-7). 게임 인물 아님. 키 큰 여자·땋은 머리·밤빛 가죽 갑옷 온몸·은 어깨판·앞뒤 상아빛 겉옷판·가죽 장화. 유격(풀빛·두건)·금빛 외골격과 겹치지 않게. 09-27 진짜 옷(밤빛 염색 가죽 몸 옷(선 무늬가 판 이음처럼 남는다)·긴 장갑·허벅지 장화(CC0) — 공방 가죽 기사 틀(겉옷·은 어깨판)은 자루처럼 부풀어 안 씀, 은 어깨판·상아빛 겉옷판은 빈칸).",
+ "_note": "단계 3 GO 인물 비교용 — saga-unity Eve(Mixamo) 자리 후보(GO '가죽 옷 — 성녀 기사·여왕', 109-7). 게임 인물 아님. 키 큰 여자·땋은 머리·밤빛 가죽 갑옷 온몸·은 어깨판·앞뒤 상아빛 겉옷판·가죽 장화. 유격(풀빛·두건)·금빛 외골격과 겹치지 않게. 09-27 진짜 옷(밤빛 염색 가죽 몸 옷(선 무늬가 판 이음처럼 남는다)·긴 장갑·허벅지 장화(CC0) — 공방 가죽 기사 틀(겉옷·은 어깨판)은 자루처럼 부풀어 안 씀, 은 어깨판은 공방 pauldrons(09-27), 상아빛 겉옷판은 빈칸 — 공방 앞뒤 판(tube arc)은 앞치마처럼 보이고 가슴에 홈이 패여 안 씀).",
  "macro": {
   "gender": 0.0,
   "age": 0.45,
@@ -31,11 +31,15 @@
  "clothes": [
   "culturalibre_heroine_suit_2/culturalibre_heroine_suit_2.mhclo",
   "toigo_gloves_long/toigo_gloves_long.mhclo",
-  "culturalibre_heroine_boots_1/culturalibre_heroine_boots_1.mhclo"
+  "culturalibre_heroine_boots_1/culturalibre_heroine_boots_1.mhclo",
+  "cf_pauldrons/cf_pauldrons.mhclo"
  ],
  "tints": {
   "culturalibre_heroine_suit_2": "=#3a2618",
   "toigo_gloves_long": "=#3a2616",
   "culturalibre_heroine_boots_1": "=#3a2616"
- }
+ },
+ "_garments": [
+  "pauldrons"
+ ]
 }

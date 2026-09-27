@@ -9593,3 +9593,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - `_out` 61벌 → CharactersForge, 배치 `BuildAndVerifyBatch` 두 번 `CMP_RESULT OK`(122 몸 — 짝 키·발·카메라 쪽·동작·ForgeSkin 그림). 배치가 올린 ProjectVersion·Packages 는 unity-batch.sh 가 되돌림.
 - build_real 레시피 칸 `tuck`: 지정한 옷 밖으로 비어져 나온 살을 쉼 자세에서 옷 면 4mm 아래로(살 법선 광선 판정, 얼굴·목·손 빼고). 택배 기사(여)의 뜨개 윗옷 앞가슴 뚫림이 잡힘 — 어깨 뒤 두 점은 동작 휨이라 남음(8mm 는 앞에 새 점이 생겨 되돌림). 안 준 몸은 바이트까지 같다. verify fbx·glb 실패 0 · sha256 두 번 같음.
 - 다음 = HOW_TO_PLAYTEST §9 사용자 판정(짝마다 "바꿔도 된다 / 아직"). 다른 PC 는 README §3 "새 PC" 순서로 먼저 뽑는다.
+
+## 2026-09-27 char-forge — 빈칸 채우기: 등 망토·어깨판 (tube arc)
+
+"vroid 자체툴 이어해".
+
+- garments.py 통 `arc`(앞·뒤 한쪽 판, 살 안 지움 — 기존 옷 찰갑 md5 같음) + 새 틀 `cape`·`pauldrons` → Dreyar 자리 검은 판금 기사 등 망토 · Eve 자리 가죽 기사 은 어깨판. 앞뒤 겉옷판(tabard)은 렌더로 앞치마·가슴 홈이라 틀을 지움.
+- 검사: 두 몸 verify fbx·glb 실패 0 · sha256 두 번 같음 · 비교 장면 배치 CMP_RESULT OK(로컬 FBX 교체).
+- 남은 빈칸: 가죽 기사 겉옷판 · 유격 가죽 조끼 · 사진작가 목폴라 · 별바다 손님 가슴판. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.

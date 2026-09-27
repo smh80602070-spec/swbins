@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_blackknight_01",
- "_note": "단계 3 GO 인물 비교용 — saga-unity Dreyar(Mixamo) 자리 후보(GO 인물 105 몸 '검은 판금 기사', 109-7). 게임 인물 아님. 큰 남자·검게 칠한 판금 온몸(가슴·어깨·팔·다리 판 겹)·얼굴 트인 투구·등에 검붉은 망토 판·검은 가죽 장갑. 강철 인형(얼굴 없는 투구·붉은 눈 띠)·무사(붉은 누비옷·은 판)·성 파수병(사슬·쪽빛 겉옷)과 겹치지 않게. 09-27 진짜 옷(검게 염색한 사슬 윗옷·가죽 치마·바지·가디언 판(팔·정강이)·장화·장갑(CC0), 투구 껍데기 그대로 — 공방 판금 틀은 고무 자루처럼 보여 안 씀, 등 망토 판은 빈칸).",
+ "_note": "단계 3 GO 인물 비교용 — saga-unity Dreyar(Mixamo) 자리 후보(GO 인물 105 몸 '검은 판금 기사', 109-7). 게임 인물 아님. 큰 남자·검게 칠한 판금 온몸(가슴·어깨·팔·다리 판 겹)·얼굴 트인 투구·등에 검붉은 망토 판·검은 가죽 장갑. 강철 인형(얼굴 없는 투구·붉은 눈 띠)·무사(붉은 누비옷·은 판)·성 파수병(사슬·쪽빛 겉옷)과 겹치지 않게. 09-27 진짜 옷(검게 염색한 사슬 윗옷·가죽 치마·바지·가디언 판(팔·정강이)·장화·장갑(CC0), 투구 껍데기 그대로 — 공방 판금 틀은 고무 자루처럼 보여 안 씀, 등 망토는 공방 cape(09-27, tube arc 뒤 170°)).",
  "macro": {
   "gender": 1.0,
   "age": 0.55,
@@ -51,7 +51,8 @@
   "rehmanpolanski_viking_pants/rehmanpolanski_viking_pants.mhclo",
   "matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
   "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo",
-  "culturalibre_hero-heroine_gloves_1/culturalibre_hero-heroine_gloves_1.mhclo"
+  "culturalibre_hero-heroine_gloves_1/culturalibre_hero-heroine_gloves_1.mhclo",
+  "cf_cape/cf_cape.mhclo"
  ],
  "tints": {
   "rehmanpolanski_viking_tunic": "=#2a2c31",
@@ -59,5 +60,8 @@
   "matcreator_mc-scifi-armor_guardian": "=#2a2c31",
   "rehmanpolanski_viking_boots": "=#141416",
   "culturalibre_hero-heroine_gloves_1": "=#141416"
- }
+ },
+ "_garments": [
+  "cape"
+ ]
 }

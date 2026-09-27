@@ -16,6 +16,7 @@
   "makehuman_system_assets: matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
   "makehuman_system_assets: rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo",
   "makehuman_system_assets: culturalibre_hero-heroine_gloves_1/culturalibre_hero-heroine_gloves_1.mhclo",
+  "makehuman_system_assets: cf_cape/cf_cape.mhclo",
   "char-forge build_real.py kitbash(자체 생성): shell"
  ]
 }

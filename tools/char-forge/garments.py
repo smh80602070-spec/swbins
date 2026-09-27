@@ -4,7 +4,7 @@
     "$B" -b --factory-startup -P tools/char-forge/garments.py -- <옷 id> [<옷 id> …]      # GARMENTS 의 열쇠, all = 전부
 
 껍데기(shell)와 다른 점: 살을 복제해 띄우지 않고 **옷의 모양을 따로 짓는다**. 옷 하나 = 부품 여럿(`parts`):
-  tube    몸통 통 — 위(목·가슴·허리)에서 아래(발목·무릎·엉덩이)까지. 가랑이 아래는 치마 도우미(helper-skirt)에 붙어 다리 사이가 안 갈라진다.
+  tube    몸통 통 — 위(목·가슴·허리)에서 아래(발목·무릎·엉덩이)까지. `arc`(가운데 도, 폭 도)면 앞(270)·뒤(90) 한쪽 판(겉옷판·망토, 살 안 지움). 가랑이 아래는 치마 도우미(helper-skirt)에 붙어 다리 사이가 안 갈라진다.
           `over` 만큼 밖에 겹쳐 입는다(저고리 위 치마 끝, 갑옷 위 비늘 치마). `mono` 면 아래로 좁아지지 않는다(가슴에서 시작하는 치마).
   sleeves 소매 — `length` 팔 몫(1 = 손목, 0.35 = 어깨 갑옷), `start` 시작(0.6 = 팔꿈치 아래 팔 가리개, 윗팔 살은 안 지운다), `drop` 처짐, `flare` 끝 넓힘
           `arc`(도) = 팔 바깥쪽만 두르는 판(소데), `bag` = 팔꿈치부터 네모나게 늘어진 자루(기모노)
@@ -387,6 +387,17 @@ GARMENTS = {
         dict(kind='leggings', top=('knee', -0.02), bottom=('ankle', 0.04), ease=0.014, flare=0.1, slot=5,
              paint=dict(base='C1', pattern='plate', trims=[('top', 0.015, 'C2')])),
     ]),
+    # ---- 몸에 붙는 옷 위에 얹는 판(09-27 빈칸 채우기 — tube arc) ----
+    # 쇠 어깨판만 — 몸에 붙는 옷 위
+    'pauldrons': dict(desc='쇠 어깨판', tags=['armor', 'historical'], colors=dict(C1='#9aa0a8', C2='#4a4d52'), parts=[
+        dict(kind='sleeves', length=0.3, ease=0.03, over=0.02, flare=0.45, arc=190, cuff=0.0, slot=4,
+             paint=dict(base='C1', pattern='plate', trims=[('top', 0.015, 'C2')])),
+    ]),
+    # 등 망토 — 어깨에서 종아리까지 뒤로 늘어지며 넓어지는 천
+    'cape': dict(desc='등 망토', tags=['cape', 'historical'], colors=dict(C1='#4a1418', C2='#2a0c0e'), parts=[
+        dict(kind='tube', top=('shoulder', 0.0), bottom=('knee', -0.18), ease=0.03, over=0.02, mono=True, flare=0.35, folds=0.03,
+             arc=(90, 170), slot=0, paint=dict(base='C1', pattern='weave', trims=[('bottom', 0.015, 'C2')])),
+    ]),
     # 상투 — 빗어 올린 머리·망건·상투(갓 없는 선비·무장). 머리카락 메시 대신이다
     'sangtu': dict(desc='빗어 올린 머리·망건·상투', tags=['hair', 'historical', 'east'], colors=dict(C1='#1b1512'), parts=[
         dict(kind='hairdome', front=0.055, side=0.015, back=-0.03, ease=0.0045, slot=0, paint=dict(base='C1', pattern='sleek')),
@@ -557,13 +568,20 @@ class Builder:
         for _ in range(3):
             RR = [RR[0]] + [(RR[k - 1] + 2 * RR[k] + RR[k + 1]) / 4 for k in range(1, NR - 1)] + [RR[-1]]
         rows, refs, ringz = [], [], []
+        arc = p.get('arc')          # (가운데 도, 폭 도) — 앞(270)·뒤(90) 한쪽만 두르는 판(겉옷판·망토), 목 틀 없이 어깨부터
+        assert not (arc and neck_top), 'arc 판은 top 을 neck 말고 shoulder 부터'
+        if arc:
+            n_a = max(3, int(SEG * arc[1] / 360) + 1)
+            angs = [math.radians(arc[0] - arc[1] / 2 + arc[1] * j / (n_a - 1)) for j in range(n_a)]
+        else:
+            angs = [2 * math.pi * s / SEG for s in range(SEG)]
         for k, z in enumerate(zs):
             ring = []
             below = max(0.0, (z_cr - z) / max(z_cr - zb, 1e-3))
-            for s in range(SEG):
-                a = 2 * math.pi * s / SEG
+            for a in angs:
+                rr = RR[k][int(round(a / (2 * math.pi) * SEG)) % SEG]
                 fold = 1 + p.get('folds', 0.0) * below * math.sin(a * p.get('nfolds', 9) + 0.7)
-                ring.append(self.vert((B.cx + RR[k][s] * fold * math.cos(a), B.cy + RR[k][s] * fold * math.sin(a), z),
+                ring.append(self.vert((B.cx + rr * fold * math.cos(a), B.cy + rr * fold * math.sin(a), z),
                                       'helper-skirt' if z < z_cr - 0.02 else 'cf_torso'))
             rows.append(ring)
             refs.append(Vector((B.cx, B.cy, z)))
@@ -586,7 +604,9 @@ class Builder:
                 refs.append(Vector((B.cx, yy, z)))
                 ringz.append(z)
         z0, z1 = ringz[0], ringz[-1]
-        self.grid(rows, p['slot'], refs, uvs=[(z - z0) / (z1 - z0) for z in ringz])
+        self.grid(rows, p['slot'], refs, closed=not arc, uvs=[(z - z0) / (z1 - z0) for z in ringz])
+        if arc:
+            return                  # 판 옆으로 살이 보이니 안 지우고, 띠가 재는 통 목록에도 안 넣는다
         self.tubes.append((zs, RR))
         self.cover.append(('tube', zb, ringz[-1], neck_top))
 
