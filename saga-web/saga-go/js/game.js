@@ -397,6 +397,7 @@
     if (global.DG.landform) { global.DG.landform.tick(dt); }         // 기력·점프·정상 발견(§5⑰)
     if (global.DG.treasure) { global.DG.treasure.tick(dt); }         // 보물 상자·수집 구슬·기척 보기(§5⑲-3)
     if (global.DG.cooking) { global.DG.cooking.tick(dt); }           // 채집·솥·요리 버프(§5⑲-6)
+    if (global.DG.fishing) { global.DG.fishing.tick(dt); }           // 낚시터·줄다리기·낚시 조합(§5⑲-24)
     if (global.DG.domain) { global.DG.domain.tick(dt); }             // 숨은 터·원기·주간 보스(§5⑲-9)
     if (global.DG.fieldBoss) { global.DG.fieldBoss.tick(dt); }       // 들판 보스 보상 꽃(§5⑲-10)
     if (global.DG.story) { global.DG.story.tick(dt); }               // 이야기 임무 — 목표·대화·금빛 기둥(§5⑲-12)

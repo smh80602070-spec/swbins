@@ -54,6 +54,7 @@
     stele:       { c: '#d9d2c0', r: 2.2 },
     drop:        { c: '#ffb36b', r: 3.4 },
     story:       { c: '#ffd24a', r: 4.2 },
+    fish:        { c: '#6ec8ff', r: 3.4 },
     wq:          { c: '#5fb8ff', r: 4.2 },
     'q-idle':    { c: '#ffd24a', r: 4.2 },
     'q-avail':   { c: '#5fb8ff', r: 4.2 }
@@ -265,6 +266,10 @@
       var dl = DRP.markers();
       for (i = 0; i < dl.length; i++) { put('drop', dl[i].x, dl[i].y, '🎒 ' + dl[i].gold, true); }
     }
+
+    /* 낚시터(§5 ⑲-24) — 탑을 찾은 지역만, 둘레 안일 때만 */
+    var FSm = global.DG.fishing, fsl = FSm && FSm.mapSpots ? FSm.mapSpots() : [];
+    for (i = 0; i < fsl.length; i++) { put('fish', fsl[i].x, fsl[i].y, '🎣 ' + fsl[i].name); }
 
     /* 임무 표식(PLAN §5 ⑲-12·⑲-23) — 따라가는 것(이야기 금·세계 임무 푸른 찬 마름모)은 테두리에도 붙어 방향을 알린다.
        맡았지만 안 따라가는 것(빈 마름모)·맡을 수 있는 것(!)은 둘레 안일 때만 */

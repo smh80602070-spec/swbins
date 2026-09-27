@@ -38,7 +38,7 @@
   var STAT_NAMES = { atk_pct: '공격력', crit_rate: '치명타 확률', crit_dmg: '치명타 피해', energy: '기력 획득', hp_pct: '체력' };
   var PASSIVE_NAMES = { n: '기본 공격 피해', s: '원소 스킬 피해', b: '원소 해방 피해', react: '원소 반응 피해' };
 
-  /* §5 ⑳ 이 판 표(낚시 작살은 이 판에 낚시가 없어 뺐다) */
+  /* §5 ⑳ 이 판 표. 갯바람 작살은 낚시 조합(fishing.js, ⑲-24)에서만 — 드롭은 'w_'+종류+'_'+등급 이라 안 섞인다 */
   var WEAPONS = {
     w_sword_0:    { name: '수련용 목검', type: 'sword',    rarity: 1, atk: 20 },
     w_claymore_0: { name: '수련용 목도', type: 'claymore', rarity: 1, atk: 20 },
@@ -54,7 +54,8 @@
     w_claymore_4: { name: '파도 참마도',   type: 'claymore', rarity: 4, atk: 38, sub: 'atk_pct',   subV: 0.08,  pas: 'react', pasV: 0.2 },
     w_polearm_4:  { name: '봉수 월도',     type: 'polearm',  rarity: 4, atk: 40, sub: 'energy',    subV: 0.06,  pas: 'b',     pasV: 0.16 },
     w_catalyst_4: { name: '별자리 두루마리', type: 'catalyst', rarity: 4, atk: 38, sub: 'atk_pct', subV: 0.08,  pas: 's',     pasV: 0.16 },
-    w_bow_4:      { name: '갯바람 각궁',   type: 'bow',      rarity: 4, atk: 40, sub: 'crit_rate', subV: 0.035, pas: 'b',     pasV: 0.16 }
+    w_bow_4:      { name: '갯바람 각궁',   type: 'bow',      rarity: 4, atk: 40, sub: 'crit_rate', subV: 0.035, pas: 'b',     pasV: 0.16 },
+    w_polearm_catch: { name: '갯바람 작살', type: 'polearm', rarity: 4, atk: 41, sub: 'energy',    subV: 0.09,  pas: 'b',     pasV: 0.18 }
   };
 
   var MAX_LV = 30, MAX_ASC = 5, REFINE_MAX = 5, REFINE_OVER_ORE = 10;

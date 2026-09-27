@@ -88,6 +88,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/weapon.js"></script>
 <script src="js/artifact.js"></script>
 <script src="js/cooking.js"></script>
+<script src="js/fishing.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -9393,12 +9394,12 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return null;
     }
 
-    t('무기 ⑲-5 — 종류: 인물 id 해시(늘 같음)·도감에 다섯 종류 모두·주인공 칼 · 표 열다섯(★1 다섯·★3 다섯·★4 다섯)', function () {
+    t('무기 ⑲-5 — 종류: 인물 id 해시(늘 같음)·도감에 다섯 종류 모두·주인공 칼 · 표 열여섯(★1 다섯·★3 다섯·★4 여섯 — 갯바람 작살은 낚시 조합만 ⑲-24)', function () {
       var WP = DG.weapon, H = DG.data.heroes, cnt = {}, same = true, i;
       for (i = 0; i < H.length; i++) { var t1 = WP.typeOf(H[i].id); cnt[t1] = (cnt[t1] || 0) + 1; if (WP.typeOf(H[i].id) !== t1) { same = false; } }
       var r = { 1: 0, 3: 0, 4: 0 };
       Object.keys(WP.WEAPONS).forEach(function (k) { r[WP.WEAPONS[k].rarity]++; });
-      return same && WP.TYPES.every(function (t2) { return cnt[t2] > 0; }) && WP.typeOf('_me') === 'sword' && r[1] === 5 && r[3] === 5 && r[4] === 5 &&
+      return same && WP.TYPES.every(function (t2) { return cnt[t2] > 0; }) && WP.typeOf('_me') === 'sword' && r[1] === 5 && r[3] === 5 && r[4] === 6 && WP.WEAPONS.w_polearm_catch.type === 'polearm' &&
         WP.typeOf('pt_x') === WP.typeOf('pt_x') && WP.equipped('nobody_x') === WP.defaultOf(WP.typeOf('nobody_x')) &&
         ('도감 ' + WP.TYPES.map(function (t3) { return WP.TYPE_NAMES[t3] + ' ' + cnt[t3]; }).join(' · '));
     });
@@ -11522,6 +11523,142 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { DG.world = W0; OW.reset(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '가장자리 0.97 · 따라가는 것 범위 안 · 고르기 → 따라가기 ↔ 이야기 · ! 막힘 · 그 지역 탑 · 순간이동 · GPS ✕' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-24 낚시 (fishing.js, PLAN §5 ⑲-24) ── */
+    function fsRig() {
+      var bak = JSON.stringify(C.save), FS = DG.fishing;
+      FS._resetForTest(true); FS._setNowForTest(null); DG.cooking._resetForTest();
+      delete C.save.fish;
+      C.save.cook = { bag: { honey_flower: 20, apple: 20, meat: 20 }, prof: {}, gather: {} };
+      return { FS: FS, undo: function () {
+        FS._resetForTest(true); FS._setNowForTest(null); DG.cooking._resetForTest();
+        var snap = JSON.parse(bak);
+        Object.keys(C.save).forEach(function (k) { delete C.save[k]; });
+        Object.keys(snap).forEach(function (k) { C.save[k] = snap[k]; });
+      } };
+    }
+    /** 낚시터 sp 의 i 번 물고기를 찌 곁에 세운다(난수 대신) */
+    function fsNear(FS, sp, i) { var st = FS.state(), f = FS.school(sp.id)[i]; f.x = st.fx + 1; f.y = st.fy; f.tx = f.x; f.ty = f.y; f.scared = 0; return f; }
+    function fsRun(FS, sec, until) { for (var g = 0; g < sec * 20; g++) { FS.step(0.05); if (until && until()) { return true; } } return false; }
+
+    t('낚시 ⑲-24 — 표·자리: 물고기 여덟(★ 셋·셋·둘 · 미끼 셋 · 시대 셋) · 낚시터 넷(물고기 다섯씩) · 서는 자리 뭍·앞 4·9·14m 물 · 땅 앵커 24m 밖 · 게시판 뭍 · 다시 불러도 같은 자리 · 물가 찾기 순수(가짜 물) · 작살은 드롭 풀 밖', function () {
+      var FS = DG.fishing, r = {}, bad = [];
+      var st = { 1: 0, 2: 0, 3: 0 }, eras = {};
+      FS.FISH_ORDER.forEach(function (id) { var f = FS.FISH[id]; st[f.star]++; eras[f.era] = 1; if (!FS.BAITS[f.bait] || !DG.cooking.ITEMS[f.bait]) { bad.push(id + '미끼'); } });
+      r.table = FS.FISH_ORDER.length === 8 && st[1] === 2 && st[2] === 3 && st[3] === 3 && Object.keys(eras).length === 3 && FS.EXCHANGE.length === 6 && FS.CATCH_EXP.join() === '0,2,4,8';
+      FS._resetForTest();
+      var L = FS.spots();
+      r.four = L.map(function (s) { return s.id; }).join() === FS.SPOT_ORDER.join() && L.every(function (s) { return s.fish.length === FS.FISH_PER_SPOT && s.fish.every(function (f) { return !!FS.FISH[f]; }); });
+      L.forEach(function (s) {
+        if (FS.wetAt(s.x, s.y)) { bad.push(s.id + '뭍'); }
+        [FS.CAST_MIN, FS.CAST_OFF, FS.CAST_MAX].forEach(function (d) { if (!FS.wetAt(s.x + s.dx * d, s.y + s.dy * d)) { bad.push(s.id + '물' + d); } });
+        var z = FS.SPOTS[s.id].zone, a = z && DG.story.anchorOf(z);
+        if (a && Math.hypot(s.x - a.x, s.y - a.y) < FS.TOWER_CLEAR - 1e-6) { bad.push(s.id + '탑'); }
+        if (s.board && FS.wetAt(s.board.x, s.board.y)) { bad.push(s.id + '게시판'); }
+      });
+      r.place = bad.length === 0;
+      var j1 = JSON.stringify(L); FS._resetForTest();
+      r.same = JSON.stringify(FS.spots()) === j1 && L.filter(function (s) { return s.board; }).map(function (s) { return s.id; }).join() === 'galdae';
+      var sh = FS.findShore(0, 0, 60, function (x) { return x > 20; });
+      r.pure = !!sh && sh.dx === 1 && sh.dy === 0 && sh.x <= 20 && sh.x > 20 - FS.CAST_MIN && FS.findShore(0, 0, 60, function () { return false; }) === null;
+      var drops = {};
+      for (var i = 0; i < 400; i++) { drops[DG.weapon.chestWeapon('c' + i, 'luxurious')] = 1; }
+      r.spear = !drops.w_polearm_catch && Object.keys(drops).length === 5;
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? '여덟 · 넷(' + L.map(function (s) { return s.name; }).join('·') + ') · 뭍·앞 물 · 탑 24m 밖 · 게시판 · 고정 · 드롭 밖' : ('실패 ' + bad2.join(',') + ' ' + bad.join(','));
+    });
+
+    t('낚시 ⑲-24 — 흐름: 둘레 밖·싸우는 중 못 함 · 고리 4~14m 물 위 · 던지면 미끼 하나 · 건드릴 때 당기면 달아남(8초) · 입질 → 줄다리기 칸 안 → 잡음(가방·기록·30분 뒤 다시) · 칸 밖 → 놓침 · 입질 1초 넘기면 놓침 · 15초 안 오면 거둠 · 미끼 없으면 막힘 · 낚시 중 걸음 막힘 · 멀어지면 끝', function () {
+      var rig = fsRig(), FS = rig.FS, W = DG.world, FC0 = DG.fieldCombat, r = {}, T = 1e12;
+      try {
+        FS._setNowForTest(function () { return T; });
+        var sp = FS.spotById('river_n'), P = C.save.player.pos;
+        stGo({ x: sp.x + FS.STAND_R(false) + 1, y: sp.y });
+        r.far = !FS.beginCheck().ok && !FS.begin();
+        stGo({ x: sp.x, y: sp.y });
+        DG.fieldCombat = Object.create(FC0, { state: { value: function () { return {}; } }, inCombat: { value: function () { return true; } } });
+        r.fight = FS.beginCheck().why === '싸우는 중엔 낚시할 수 없다';
+        DG.fieldCombat = FC0;
+        r.begin = FS.begin() && FS.active && FS.state().state === 'aim' && W.inputBlocked() && FS.state().rx === sp.cx;
+        FS.moveReticle(sp.dx, sp.dy, 10);
+        var st = FS.state(), dr = Math.hypot(st.rx - sp.x, st.ry - sp.y);
+        r.clamp = dr <= FS.CAST_MAX + 1e-6 && dr >= FS.CAST_MIN - 1e-6 && FS.wetAt(st.rx, st.ry);
+        FS.moveReticle(-sp.dx, -sp.dy, 10);
+        dr = Math.hypot(FS.state().rx - sp.x, FS.state().ry - sp.y);
+        r.clamp = r.clamp && dr >= FS.CAST_MIN - 1e-6;
+        r.cast = FS.setBait('honey_flower') && FS.press(true) && FS.state().state === 'wait' && DG.cooking.count('honey_flower') === 19;
+        FS.press(false);
+        var f0 = fsNear(FS, sp, 0);
+        r.nibble = fsRun(FS, 3, function () { return FS.state().state === 'nibble'; });
+        FS.press(true); FS.press(false);
+        r.scare = FS.state().state === 'aim' && FS.state().last === 'scared' && f0.scared === FS.SCARE;
+        FS.press(true); FS.press(false);
+        f0.x = FS.state().fx + 1; f0.y = FS.state().fy; f0.tx = f0.x; f0.ty = f0.y;          // 달아난 물고기도 곁에 — 그래도 안 온다
+        var f1 = fsNear(FS, sp, 1);
+        fsRun(FS, 3, function () { return FS.state().state === 'nibble'; });
+        r.skipScared = FS.state().state === 'nibble' && FS.state().hooked === 1;
+        r.bite = fsRun(FS, 5, function () { return FS.state().state === 'bite'; });
+        FS.press(true);
+        r.reel = FS.state().state === 'reel' && Math.abs(FS.state().progress - FS.PROGRESS_START) < 1e-9 && FS.state().zoneW === FS.FISH.crucian.zone;
+        var H0 = DG.hero.awardParty, gotExp = 0;
+        DG.hero.awardParty = function (a) { gotExp += a; return 0; };
+        r.caught = fsRun(FS, 10, function () { var s = FS.state(); if (s.state === 'reel') { s.cursor = s.zoneC; s.cursorV = 0; } return s.state !== 'reel'; }) &&
+          FS.state().last === 'caught:crucian' && FS.count('crucian') === 1 && FS.caughtOf('crucian') === 1 && !FS.present('river_n', 1) && FS.left('river_n') === 4;
+        DG.hero.awardParty = H0;
+        r.exp = gotExp === FS.CATCH_EXP[1];
+        T += FS.RESPAWN * 1000;
+        r.respawn = FS.present('river_n', 1) && FS.left('river_n') === 5;
+        FS.press(true); FS.press(false); fsNear(FS, sp, 1);
+        fsRun(FS, 3, function () { return FS.state().state === 'bite'; }); FS.press(true);
+        r.escape = fsRun(FS, 10, function () { var s = FS.state(); if (s.state === 'reel') { s.cursor = s.zoneC > 0.5 ? 0 : 1; s.cursorV = 0; } return s.state !== 'reel'; }) &&
+          FS.state().last === 'escaped' && FS.count('crucian') === 1;
+        FS.state().hooked = -1;
+        FS.school('river_n').forEach(function (f) { f.scared = 0; });
+        FS.press(true); FS.press(false); fsNear(FS, sp, 0);
+        fsRun(FS, 3, function () { return FS.state().state === 'bite'; });
+        r.late = fsRun(FS, 1.5, function () { return FS.state().state === 'aim'; }) && FS.state().last === 'escaped';
+        FS.school('river_n').forEach(function (f) { f.x = sp.cx + 200; f.y = sp.cy; f.tx = f.x; f.ty = f.y; f.scared = 0; });
+        FS.press(true); FS.press(false);
+        r.noFish = !fsRun(FS, FS.WAIT_MAX - 1, function () { return FS.state().state !== 'wait'; }) && fsRun(FS, 2, function () { return FS.state().state === 'aim'; }) && FS.state().last === 'no_fish';
+        C.save.cook.bag.meat = 0;
+        r.noBait = FS.setBait('meat') && !FS.press(true) && FS.state().state === 'aim' && FS.state().last === 'no_bait';
+        stGo({ x: sp.x + 40, y: sp.y }); FS.step(0.05);
+        r.left = !FS.active && FS.state().last === 'left' && !W.inputBlocked();
+        stGo({ x: sp.x, y: sp.y }); FS.begin();
+        DG.fieldCombat = Object.create(FC0, { state: { value: function () { return {}; } }, inCombat: { value: function () { return true; } } });
+        FS.step(0.05);
+        r.fightEnd = !FS.active && FS.state().last === 'fight';
+      } finally { DG.fieldCombat = FC0; if (H0) { DG.hero.awardParty = H0; } rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '둘레·싸움 막힘 · 4~14m · 미끼 −1 · 달아남 8초 · 입질 → 잡음 → 30분 · 놓침 · 늦음 · 안 옴 · 미끼 없음 · 걸음 막힘 · 멀어지면 끝' : ('실패 ' + bad.join(','));
+    });
+
+    t('낚시 ⑲-24 — 조합·지도: 게시판 곁만 · 물고기 모자라면 막힘 · 금 800·무예 쪽지·강화석·인연 매듭 · 갯바람 작살(처음 얻고 또 내면 울림, 울림 5 면 막힘) · 지도·미니맵 🎣 는 탑 찾은 지역만', function () {
+      var rig = fsRig(), FS = rig.FS, WP = DG.weapon, TL = DG.talent, r = {};
+      try {
+        var sp = FS.spotById('galdae');
+        stGo({ x: sp.board.x, y: sp.board.y });
+        r.near = FS.nearBoard(sp.board.x, sp.board.y) && !FS.nearBoard(sp.board.x + 30, sp.board.y);
+        r.short = !FS.canExchange(1) && FS.exchange(1) === '';
+        C.save.fish = { bag: { crucian: 3, gizzard: 40, lanternpuffer: 20, steelflounder: 20, mandarin: 2, clockcarp: 1, neonhairtail: 1, moonjelly: 1 }, log: {}, gone: {} };
+        var g0 = C.save.player.gold || 0, o0 = WP.ore(), n0 = TL.count('note'), k0 = TL.count('knot');
+        r.gold = FS.exchange(1) !== '' && C.save.player.gold === g0 + 800 && FS.count('crucian') === 0 && !FS.canExchange(1);
+        r.mats = FS.exchange(3) !== '' && TL.count('note') === n0 + 2 && FS.exchange(4) !== '' && WP.ore() === o0 + 3 && FS.exchange(5) !== '' && TL.count('knot') === k0 + 1;
+        delete C.save.weapons;
+        r.spear = FS.exchange(0) !== '' && WP.owned('w_polearm_catch') && WP.rec('w_polearm_catch').ref === 1 && FS.count('gizzard') === 34;
+        for (var i = 0; i < 4; i++) { FS.exchange(0); }
+        r.refine = WP.rec('w_polearm_catch').ref === WP.REFINE_MAX && !FS.canExchange(0) && FS.count('gizzard') === 40 - 6 * 5;
+        C.save.regions = {};
+        var rs = FS.spotById('river_n'), key = DG.biome.regionAt(rs.x, rs.y).cell.key;
+        r.hidden = FS.mapSpots().every(function (s) { return s.id !== 'river_n'; });
+        C.save.regions[key] = 1;
+        stGo({ x: rs.x + 10, y: rs.y });
+        var mb = DG.minimap.blips(C.save.player.pos, 180, MMT).filter(function (b) { return b.t === 'fish'; });
+        r.map = FS.mapSpots().some(function (s) { return s.id === 'river_n'; }) && mb.length >= 1 && mb.some(function (b) { return /여울목/.test(b.name); });
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '게시판 곁 · 모자라면 ✕ · 금·쪽지·강화석·매듭 · 작살 → 울림 5 막힘 · 🎣 찾은 지역만' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

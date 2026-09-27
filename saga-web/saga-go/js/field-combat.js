@@ -1696,6 +1696,7 @@
     return !!((D.encounter && D.encounter.active) || (D.rogue && D.rogue.active) ||
       (D.duel && D.duel.active) || (D.rogueAction && D.rogueAction.active) ||
       (D.story && D.story.talking && D.story.talking()) ||                     // ⑲-12 이야기 대화 창
+      (D.fishing && D.fishing.active) ||                                       // ⑲-24 낚시 중(F·스페이스는 낚시가 쓴다)
       (document.body && document.body.classList.contains('sheet-open')));
   }
 

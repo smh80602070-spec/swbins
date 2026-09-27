@@ -1234,7 +1234,8 @@
   function inputBlocked() {
     var D = global.DG;
     return !!((D.encounter && D.encounter.active) ||
-      (D.rogue && D.rogue.active) || (D.duel && D.duel.active));
+      (D.rogue && D.rogue.active) || (D.duel && D.duel.active) ||
+      (D.fishing && D.fishing.active));                              // §5 ⑲-24 낚시 중엔 선다(이동 키는 고리를 옮긴다)
   }
 
   function onClick(e) {

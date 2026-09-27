@@ -1534,6 +1534,7 @@
     global.addEventListener('keydown', function (e) {
       var tag = e.target && e.target.tagName;
       if (!on() || e.repeat || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') { return; }
+      if (global.DG.fishing && global.DG.fishing.active) { return; }       // ⑲-24 낚시 중 F 는 낚시 것
       var k = (e.key || '').toLowerCase();
       if (talk) {
         if (curLine()[0] === '?') { if (k === '1' || k === '2') { e.preventDefault(); next(+k - 1); } return; }
