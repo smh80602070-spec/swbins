@@ -71,6 +71,7 @@ const CH31 := 30
 const CH32 := 31
 const CRYSTAL_OFF_FROM := [5, 6, 7]
 const MARKET_FREE_STEP := 2
+const CLOCK_WIND_STEP := 5 # 31장 시계방 지키기(defend) 동안 괘종시계 바늘이 빙빙 돈다(되감기)
 const HEART_OFF_STEP := 3
 const FLOW_STEP := 5
 
@@ -94,6 +95,7 @@ var _gate_open := false
 var _crystals: Array = [] # [결정 Node3D(속 사람 포함)]
 var _market_dome: Node3D = null
 var _heart: MeshInstance3D = null
+var _clock_hand: MeshInstance3D = null
 var _lamps: Array = [] # 신호등 빛 재질
 var _floaters: Array = [] # [node, base_y, phase]
 var _state := ""
@@ -156,6 +158,9 @@ static func time_flows() -> bool:
 	return _reached(CH32, FLOW_STEP)
 
 ## 부양탑 윗면 한가운데(월드) · 시간 태엽 심장 자리.
+static func clock_winding() -> bool:
+	return _ch() == CH31 and int(PartyState.story.get("step", 0)) == CLOCK_WIND_STEP
+
 static func tower_top() -> Vector3:
 	return cell_pos(TOWER_CELL) + Vector3(0, TOWER_H, 0)
 
@@ -196,6 +201,8 @@ func _process(delta: float) -> void:
 	_t += delta
 	for f in _floaters:
 		(f[0] as Node3D).position.y = float(f[1]) + sin(_t * 0.35 + float(f[2])) * 0.2
+	if _clock_hand and clock_winding():
+		_clock_hand.rotation.x -= delta * 4.0
 	_check_t -= delta
 	if _check_t <= 0.0:
 		_check_t = 1.0
@@ -285,7 +292,8 @@ func _build_shop() -> void:
 	dial.rotation.z = PI * 0.5
 	dial.position = Vector3(-0.47, 2.1, 0)
 	clock.add_child(dial)
-	_box(clock, Vector3(0.05, 0.5, 0.06), Vector3(-0.52, 2.2, 0.05), Color(0.1, 0.1, 0.12)).rotation.x = 0.6
+	_clock_hand = _box(clock, Vector3(0.05, 0.5, 0.06), Vector3(-0.52, 2.1, 0.0), Color(0.1, 0.1, 0.12))
+	_clock_hand.rotation.x = 0.6
 
 ## 호박 속 장터 — 좌판 셋·천막·굳은 장돌뱅이, 둘레 결정 돔(31장 석등 뒤 걷힘).
 func _build_market() -> void:

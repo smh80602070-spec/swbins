@@ -8,6 +8,11 @@ extends Node
 ##   한별·반디는 은하 나루 착륙판 곁 · 초롱은 시계방 앞) [2] 한별 → 고개 [3] 고개 어귀에 들어섬(반디는 굳은 거리로) [4] 네거리 결정 짐승 넷
 ## [5] 초롱 → 첫 굳은 자리 [6] 신호등 앞 — 먼 원소는 안 됨 → 녹음(나머지 둘은 그대로) [7] 정류장 [8] 우체통 → 셋 다 녹음·신호등은 빨강
 ## [9] 초롱 → 30장 끝·보상.
+## 31장 "호박 속 장터"(53-3): [10] 표·자리(단계 일곱 talk·seal·talk·chase·talk·defend·talk · seal 칸 = 장터·깨지는 단계 = MARKET_FREE_STEP ·
+##   defend = 괘종시계·CLOCK_WIND_STEP · 도둑 길 점이 굳은 거리 안·명소에 안 걸림 · 너울 아직 없음·장터 결정 그대로)
+## [11] 초롱 → 석등(초롱은 장터 앞으로) [12] 석등 — 달 먼저(틀림) → 해 → 달 → 별 · 제단 돌 안 보임 → 장터 결정 깨짐
+## [13] 너울(보임) → 도둑 [14] 조각 도둑 쫓기(드론) [15] 너울 → 괘종시계 [16] 괘종시계 지키기(물결 셋·돌 안 보임·바늘 돎)
+## [17] 초롱 → 31장 끝·보상·바늘 멈춤.
 ## 이야기 상태·부대 경험·가방은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
@@ -16,6 +21,7 @@ const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const Amber := preload("res://games/saga_go/world/region8_amber.gd")
 
 const CH30 := 29 # 30장(0부터)
+const CH31 := 30
 
 var _p: CharacterBody3D
 var _sq: Node
@@ -139,7 +145,110 @@ func _physics_process(_delta: float) -> void:
 				and bool(_sq.call("npc_visible", "chorong"))
 			_check("chapter30", ok, "ch=%d mora +%d" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora)])
 			_next()
-		10:
+		10: # [10] 31장 표·자리
+			if _frame < 80:
+				return
+			var c := Story.chapter(CH31)
+			var steps: Array = c.steps
+			var bad: Array = []
+			if String(c.get("id", "")) != "ch31" or int(c.ar) <= int(Story.chapter(CH30).ar) or int(_sq.call("ch")) != CH31 or bool(_sq.call("locked")):
+				bad.append("chapter ch=%d locked=%s" % [_sq.call("ch"), _sq.call("locked")])
+			var types := steps.map(func(sd: Dictionary) -> String: return String(sd.type))
+			if types != ["talk", "seal", "talk", "chase", "talk", "defend", "talk"]:
+				bad.append("types %s" % [types])
+			var sl: Dictionary = steps[Amber.MARKET_FREE_STEP - 1]
+			if Amber.CH31 != CH31 or String(sl.type) != "seal" or sl.cell != Amber.MARKET_CELL or not bool(sl.get("bare", false)):
+				bad.append("seal/market")
+			var df: Dictionary = steps[Amber.CLOCK_WIND_STEP]
+			if String(df.type) != "defend" or _flat(_cell("amber", df.cell), Amber.cell_pos(Amber.SHOP_CELL) + Vector3(-3.6, 0, 2.0)) > 0.3:
+				bad.append("defend not at clock")
+			for pt in steps[3].path:
+				var wp := _cell("amber", pt)
+				if TestMap.region_at(wp) != "amber" or not _hits(wp).is_empty():
+					bad.append("path %s %s" % [pt, _hits(wp)])
+			if bool(_sq.call("npc_visible", "neoul")) or not bool(_am.call("market_sealed")):
+				bad.append("neoul/market at st0")
+			_check("ch31_table", bad.is_empty(), str(bad))
+			_next()
+		11: # [11] 초롱 → 석등 — 초롱은 장터 앞으로
+			if _frame == 20:
+				_v = _flat(_sq.call("npc_pos", "chorong"), _cell("amber", Vector2(1.9, 3.8))) < 0.5
+			_talk("chorong", 1, "ch31_chorong", "amber", Amber.MARKET_CELL, 4, "chorong_at_market=%s" % _v, _v == true)
+		12: # [12] 석등 — 달 먼저(틀림) → 해 → 달 → 별
+			if _frame == 1:
+				_put(_target() + Vector3(0.0, 0.0, 8.0))
+				_v = {"lit": [], "stone": true}
+				var alt := _sq.get("_altar") as Node3D
+				if alt:
+					_v.stone = alt.get_children().any(func(n: Node) -> bool: return n is MeshInstance3D and (n as Node3D).visible)
+			if _frame == 6:
+				for mk in ["moon", "sun", "moon", "star"]:
+					_sq.call("receive_element", _sq.call("seal_lamp_pos", mk), 0.5, "fire")
+					_v.lit.append(int(_sq.call("seal_lit")))
+			if _frame == 150:
+				var ok: bool = _v.lit == [0, 1, 2, 3] and int(_sq.call("st")) == 2 and not bool(_v.stone) and not bool(_am.call("market_sealed"))
+				_check("ch31_seal", ok, "lit=%s st=%d stone=%s sealed=%s" % [_v.lit, _sq.call("st"), _v.stone, _am.call("market_sealed")])
+				_next()
+		13: # [13] 너울(장터 가운데) → 도둑
+			if _frame == 1:
+				_v = bool(_sq.call("npc_visible", "neoul")) and _flat(_sq.call("npc_pos", "neoul"), Amber.cell_pos(Amber.MARKET_CELL)) < 0.5
+			_talk("neoul", 3, "ch31_neoul", "amber", Vector2(2.1, 3.6), 0, "neoul=%s" % _v, _v == true)
+		14: # [14] 조각 도둑 쫓기 — 드론이 달아나다 따라잡힘
+			if _frame == 1:
+				var th := _sq.get("_thief") as Node3D
+				if th:
+					_put(th.global_position + Vector3(0.0, 0.0, 6.0))
+			if _frame == 40:
+				var cs: Dictionary = _sq.call("chase_state")
+				var th := _sq.get("_thief") as Node3D
+				_v = {"run": bool(cs.run), "amber": th != null and TestMap.region_at(th.global_position) == "amber", "drone": th != null and th.find_child("Mask", true, false) == null}
+				_put(Vector3(cs.pos) + Vector3(0.0, 0.5, 1.0))
+			if _frame == 52:
+				var ok: bool = bool(_v.run) and bool(_v.amber) and bool(_v.drone) and int(_sq.call("st")) == 4 and _sq.get("_thief") == null
+				_check("ch31_chase", ok, "%s st=%d thief=%s" % [_v, _sq.call("st"), _sq.get("_thief") != null])
+				_next()
+		15: # [15] 너울 → 괘종시계
+			_talk("neoul", 5, "ch31_neoul2", "amber", Vector2(6.325, 5.3417))
+		16: # [16] 괘종시계 지키기 — 물결 셋, 돌 안 보임, 되감는 동안 바늘이 돎
+			if _frame == 1:
+				_put(_target() + Vector3(-3.0, 0.0, 0.0))
+				_v = {"n": 0, "waves": 0, "label": "", "stone": true, "wind": bool(Amber.clock_winding())}
+				var alt := _sq.get("_altar") as Node3D
+				if alt:
+					_v.stone = alt.get_children().any(func(n: Node) -> bool: return n is MeshInstance3D and (n as Node3D).visible)
+			if _frame > 4 and _frame % 6 == 0 and int(_sq.call("st")) == 5:
+				var lbl := _sq.get("_defend_label") as Label3D
+				if lbl and String(_v.label) == "":
+					_v.label = lbl.text
+				for e in _sq.call("alive_quest_enemies"):
+					_v.n += 1
+					e.call("_die")
+				_v.waves = maxi(int(_v.waves), int(_sq.call("defend_wave")) + 1)
+			if _frame > 4 and (int(_sq.call("st")) != 5 or _frame > 600):
+				var ok: bool = int(_sq.call("st")) == 6 and int(_v.n) == 12 and int(_v.waves) == 3 and String(_v.label).begins_with("되감는 괘종시계") \
+					and not bool(_v.stone) and bool(_v.wind) and not Amber.clock_winding()
+				_check("ch31_defend", ok, "st=%d n=%d waves=%d label='%s' stone=%s wind=%s frames=%d" % [_sq.call("st"), _v.n, _v.waves, _v.label, _v.stone, _v.wind, _frame])
+				_next()
+		17: # [17] 초롱 → 31장 끝
+			if _frame == 1:
+				_v = {"mora": PartyState.count("mora")}
+				_near_npc("chorong")
+			if _frame == 10:
+				_sq.call("interact")
+				_drain()
+			if _frame < 16:
+				return
+			_dismiss_prompts()
+			if _frame < 60:
+				return
+			_sq.call("toggle_journal")
+			var jt: String = _sq.call("journal_text")
+			_sq.call("toggle_journal")
+			var ok: bool = int(_sq.call("ch")) == CH31 + 1 and jt.contains("✔ 제31장") and PartyState.count("mora") >= int(_v.mora) + 145000 \
+				and bool(_sq.call("npc_visible", "neoul")) and _flat(_sq.call("npc_pos", "chorong"), _cell("amber", Vector2(6.25, 5.3))) < 0.5
+			_check("chapter31", ok, "ch=%d mora +%d" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora)])
+			_next()
+		18:
 			_finish()
 
 ## light bare 한 번 — 굳은 자리 k 에 원소, 다음 단계 want_st 로 넘어가고 아직 굳은 것이 frozen 이면 통과.
@@ -170,16 +279,30 @@ func _finish() -> void:
 	print("STORY9_PROBE_DONE fails=%d" % _fails)
 	get_tree().quit()
 
-func _talk(npc: String, want_st: int, name: String, next_region: String, next_cell: Vector2) -> void:
-	if _frame == 2:
+func _talk(npc: String, want_st: int, name: String, next_region: String, next_cell: Vector2, from := 0, extra := "", extra_ok := true) -> void:
+	if _frame == 2 + from * 2:
 		_near_npc(npc)
-	if _frame == 10:
+	if _frame == 10 + from * 2:
 		_sq.call("interact")
 		_drain()
-	if _frame == 14:
+	if _frame == 14 + from * 2:
 		var tgt_ok := _flat(_target(), TestMap.world_pos(next_cell.x, next_cell.y, next_region)) < 0.5
-		_check(name, int(_sq.call("st")) == want_st and tgt_ok, "st=%d target=%s" % [_sq.call("st"), _target()])
+		_check(name, int(_sq.call("st")) == want_st and tgt_ok and extra_ok, "st=%d target=%s %s" % [_sq.call("st"), _target(), extra])
 		_next()
+
+## 그 자리 1.6m 위 반지름 1.2 에 걸리는 충돌(집·탑·명소) — probe_amber 와 같다.
+func _hits(pos: Vector3) -> Array:
+	var q := PhysicsShapeQueryParameters3D.new()
+	var sph := SphereShape3D.new()
+	sph.radius = 1.2
+	q.shape = sph
+	q.collision_mask = 1
+	q.exclude = [_p.get_rid()]
+	q.transform = Transform3D(Basis(), pos + Vector3(0, 1.6, 0))
+	var out: Array = []
+	for hit in _p.get_world_3d().direct_space_state.intersect_shape(q, 4):
+		out.append(String((hit.collider as Node).name))
+	return out
 
 func _target() -> Vector3:
 	return _sq.call("target_pos")
@@ -231,3 +354,4 @@ func _check(name: String, ok: bool, detail: String) -> void:
 func _next() -> void:
 	_step += 1
 	_frame = 0
+	_v = null

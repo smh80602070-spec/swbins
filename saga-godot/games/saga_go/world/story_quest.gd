@@ -588,6 +588,11 @@ func _enter_step() -> void:
 			_quest_enemies.append(boss)
 		"seal":
 			_build_altar(_spot_pos(s))
+			## bare = 제단 돌 없이 석등 셋이 그 자리 장치를 둘러싼다(31장 장터 결정 돔 — 다 켜면 그 지역 파일이 장·단계를 보고 깬다).
+			if bool(s.get("bare", false)):
+				for mi in _altar.get_children():
+					if mi is MeshInstance3D:
+						(mi as Node3D).visible = false
 			_build_seal(String(s.region), _floating(s))
 		"chase":
 			_build_thief(s)
@@ -764,9 +769,9 @@ func _seal_hit(pos: Vector3, radius: float) -> void:
 		_seal_next += 1
 		CombatFeel.ui()
 		if _seal_next >= order.size():
-			_altar_flame.visible = true
+			_altar_flame.visible = not bool(s.get("bare", false))
 			remove_from_group("element_receiver")
-			Toast.show(self, "봉인이 풀린다 — 제단에 불이 붙었다", 2.5)
+			Toast.show(self, String(s.get("hit_text", "봉인이 풀린다 — 제단에 불이 붙었다")), 2.5)
 			_advance_later(0.8)
 		else:
 			_refresh()
