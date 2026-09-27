@@ -206,6 +206,11 @@
     if (SPo && SPo.on() && SPo.marks && wl) {
       SPo.marks().forEach(function (sm) { if (!sm.found) { return; } var sp2 = wl.worldToLatLng(sm.x, sm.y); pois.push({ lat: sp2.lat, lng: sp2.lng, t: 'frost', name: (sm.big ? '🌌 ' : '✨ ') + sm.name }); });
     }
+    /* 틈새 갈림길 명소(§5 ⑲-41) — 찾은 것만 이름 */
+    var CRo = global.DG.crossing;
+    if (CRo && CRo.on() && CRo.marks && wl) {
+      CRo.marks().forEach(function (cm) { if (!cm.found) { return; } var cp2 = wl.worldToLatLng(cm.x, cm.y); pois.push({ lat: cp2.lat, lng: cp2.lng, t: 'frost', name: (cm.big ? '🌀 ' : '✨ ') + cm.name }); });
+    }
 
     /* 낚시터(§5 ⑲-24) — 탑을 찾은 지역만 */
     var FSo = global.DG.fishing;
@@ -394,6 +399,9 @@
     /* 은하 나루(skyport.js, §5 ⑲-37) — 찾은 나루·은하역·틈 고개 */
     var SPw = global.DG.skyport;
     if (SPw && SPw.on() && SPw.waypoints) { list = list.concat(SPw.waypoints()); }
+    /* 틈새 갈림길(crossing.js, §5 ⑲-41) — 찾은 첫 정거장·시계탑·틈 고개 */
+    var CRw = global.DG.crossing;
+    if (CRw && CRw.on() && CRw.waypoints) { list = list.concat(CRw.waypoints()); }
     return list;
   }
   /** (x, y)에서 가장 가까운 순간이동 지점 — { key, x, y, name, d } 또는 null */
@@ -411,9 +419,9 @@
     var BMo = global.DG.biome, LFw = global.DG.landform;
     if (!wk || !BMo) { return false; }
     var FRj = global.DG.frost;
-    var SPj = global.DG.skyport;
+    var SPj = global.DG.skyport, CRj = global.DG.crossing;
     var ok = wk.indexOf('pk:') === 0 ? !!(LFw && LFw.teleport(wk.slice(3))) : wk.indexOf('fr:') === 0 ? !!(FRj && FRj.teleport(wk.slice(3))) :
-      wk.indexOf('sp:') === 0 ? !!(SPj && SPj.teleport(wk.slice(3))) : BMo.teleport(wk);
+      wk.indexOf('sp:') === 0 ? !!(SPj && SPj.teleport(wk.slice(3))) : wk.indexOf('cr:') === 0 ? !!(CRj && CRj.teleport(wk.slice(3))) : BMo.teleport(wk);
     if (ok) { close(); }
     return ok;
   }

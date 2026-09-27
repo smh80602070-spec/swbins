@@ -278,6 +278,8 @@
     for (i = 0; i < frl.length; i++) { put(frl[i].found ? 'frost-found' : 'frost', frl[i].x, frl[i].y, (frl[i].big ? '🏔️ ' : '❄️ ') + frl[i].name); }
     var SPm = global.DG.skyport, spl = SPm && SPm.on() && SPm.marks ? SPm.marks() : [];   // §5 ⑲-37 은하 나루
     for (i = 0; i < spl.length; i++) { put(spl[i].found ? 'frost-found' : 'frost', spl[i].x, spl[i].y, (spl[i].big ? '🌌 ' : '✨ ') + spl[i].name); }
+    var CRm = global.DG.crossing, crl = CRm && CRm.on() && CRm.marks ? CRm.marks() : [];   // §5 ⑲-41 틈새 갈림길
+    for (i = 0; i < crl.length; i++) { put(crl[i].found ? 'frost-found' : 'frost', crl[i].x, crl[i].y, (crl[i].big ? '🌀 ' : '✨ ') + crl[i].name); }
     var ESm = global.DG.eraSites, erl = ESm && ESm.on() && ESm.marks ? ESm.marks() : [];   // §5 ⑲-34 조선소·⑲-35 관측소
     for (i = 0; i < erl.length; i++) { put(erl[i].found ? 'frost-found' : 'frost', erl[i].x, erl[i].y, (erl[i].emoji || '🏗️') + ' ' + erl[i].name); }
 

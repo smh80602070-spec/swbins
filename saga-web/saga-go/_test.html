@@ -94,6 +94,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/frost.js"></script>
 <script src="js/era-sites.js"></script>
 <script src="js/skyport.js"></script>
+<script src="js/crossing.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -13091,6 +13092,90 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         kt.burst.name === '막차 출발 신호' && kt.burst.type === 'haste' && kt.burst.r === 7 && kt.burst.sec === 10 && kt.burst.energy === 7;
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '뇌 대도 · 선로 전류 wave 10m · 막차 출발 신호 haste +7' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-41 5부 무대 · 여섯째 지역 틈새 갈림길 (crossing.js, PLAN §5 ⑲-41) ── */
+    function crRig() {
+      var rig = stRig(42);
+      DG.crossing._resetForTest(); delete C.save.crossing;
+      return { CR: DG.crossing, undo: function () { DG.crossing._resetForTest(); DG.landform._resetForTest(); rig.undo(); } };
+    }
+    t('틈새 갈림길 ⑲-41 — 자리: 가운데 = 은하 나루 가운데에 가장 가까운 용의 협곡 칸 · 명소 다섯·작은 발견 열이 모두 그 땅 들·숲 칸(억지 없음) · 탑 40m 밖 · 명소끼리 60m·나머지 30m 넘게 · 다시 풀어도 같은 자리 · 순간이동 셋 · 틈 고개는 나루 쪽', function () {
+      var CR = DG.crossing, SP = DG.skyport, B = DG.biome, r = {}, bad = [];
+      CR._resetForTest(); SP._resetForTest();
+      var c = CR.center(), L = CR.sites(), pc = SP.center(), near = Infinity;
+      for (var j = -14; j <= 14; j++) { for (var i = -14; i <= 14; i++) { var cc = B.cellAt(i, j); if (cc.zone === CR.ZONE) { near = Math.min(near, Math.hypot(cc.x - pc.x, cc.y - pc.y)); } } }
+      r.center = !!c && B.regionAt(c.x, c.y).cell.zone === CR.ZONE && Math.abs(Math.hypot(c.x - pc.x, c.y - pc.y) - near) < 1e-6 && CR.inRegion(c.x, c.y) && !CR.inRegion(0, 0) && !CR.inRegion(pc.x, pc.y);
+      r.count = L.length === 15 && L.filter(function (q) { return q.big; }).length === 5 && L.filter(function (q) { return q.way; }).map(function (q) { return q.id; }).join() === 'platform,clock,gate';
+      L.forEach(function (q, k) {
+        var kind = DG.world.terrainAt(Math.floor(q.x / 48), Math.floor(q.y / 48));
+        if (q.forced || B.regionAt(q.x, q.y).cell.zone !== CR.ZONE || ['grass', 'forest', 'farm'].indexOf(kind) < 0) { bad.push(q.id + '땅'); }
+        if (Math.hypot(q.x - c.x, q.y - c.y) < CR.TOWER_CLEAR) { bad.push(q.id + '탑'); }
+        for (var z = 0; z < k; z++) {
+          var o = L[z], sep = o.big ? CR.SEP_BIG : CR.SEP_SMALL;
+          if (Math.hypot(o.x - q.x, o.y - q.y) < sep - 1e-6) { bad.push(q.id + '-' + o.id); }
+        }
+      });
+      r.place = bad.length === 0;
+      var gt = CR.siteById('gate');
+      r.toward = Math.hypot(gt.x - pc.x, gt.y - pc.y) < Math.hypot(c.x - pc.x, c.y - pc.y) - CR.GATE_DIST * 0.6;
+      var j1 = JSON.stringify(L); CR._resetForTest();
+      r.same = JSON.stringify(CR.sites()) === j1;
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? c.name + '(나루에서 ' + Math.round(near) + 'm) · 열다섯 모두 그 땅 들 · 탑 40m 밖 · 떨어짐 · 고정 · 고개는 나루 쪽' : ('실패 ' + bad2.join(',') + ' ' + bad.join(','));
+    });
+
+    t('틈새 갈림길 ⑲-41 — 발견·이동·벽·시계탑: 명소 30m 안 = 발견(금 150·단사 2) 한 번만 · 작은 발견 14m · 첫 정거장 찾으면 순간이동(키보드만, GPS 막힘) · 시계탑·성문 기둥·차막이가 houseRects 로 막고 성문 문길은 트임 · 시계탑 옆면을 밀면 16m 꼭대기(오르기 기력 ×0.85)', function () {
+      var rig = crRig(), CR = rig.CR, LF = DG.landform, W0 = DG.world, r = {};
+      try {
+        var pf = CR.siteById('platform'), tile = CR.siteById('tile'), ck = CR.siteById('clock'), tg = CR.siteById('tgate');
+        var g0 = C.save.player.gold || 0, d0 = C.save.dust || 0;
+        r.marks0 = CR.marks().length === 5 && CR.marks().every(function (m) { return m.big && !m.found; });
+        var f1 = CR.discoverAt(pf.x + CR.LANDMARK_R - 1, pf.y);
+        r.big = f1.length === 1 && f1[0].id === 'platform' && C.save.player.gold === g0 + CR.REWARD_BIG.gold && C.save.dust === d0 + CR.REWARD_BIG.dust && CR.found('platform');
+        r.once = CR.discoverAt(pf.x, pf.y).length === 0;
+        r.small = CR.discoverAt(tile.x + CR.SMALL_R(false) + 1, tile.y).length === 0 && CR.discoverAt(tile.x + CR.SMALL_R(false) - 1, tile.y).map(function (q) { return q.id; }).join() === 'tile' &&
+          CR.marks().length === 6;
+        var wp = CR.waypoints();
+        r.way = wp.length === 1 && wp[0].key === 'cr:platform' && /첫 정거장/.test(wp[0].name) && !CR.teleport('clock');
+        DG.world = Object.create(W0, { mode: { value: 'geo' } });
+        r.geo = !CR.teleport('platform');
+        DG.world = W0;
+        stGo({ x: 0, y: 0 });
+        r.tp = CR.teleport('platform') && C.save.player.pos.x === pf.x && C.save.player.pos.y === pf.y + 8;
+        function hr(x, y) { return DG.world3d.houseRects(Math.floor(x / 48), Math.floor(y / 48)); }
+        r.walls = hr(ck.x, ck.y).some(function (q) { return frInRect(q, ck.x, ck.y); }) && hr(tg.x - 3, tg.y).some(function (q) { return frInRect(q, tg.x - 3, tg.y); }) &&
+          !hr(tg.x, tg.y).some(function (q) { return frInRect(q, tg.x, tg.y); }) &&
+          hr(pf.x, pf.y + CR.RAIL_LEN / 2).some(function (q) { return frInRect(q, pf.x, pf.y + CR.RAIL_LEN / 2); });
+        LF._resetForTest();
+        var L = CR.poles();
+        r.pole = L.length === 1 && L[0].id === 'cr_clock' && L[0].top === 16 && L[0].drain === 0.85;
+        stGo({ x: ck.x, y: ck.y + CR.CLOCK_HALF + 0.8 });
+        for (var i = 0; i < 80 && !LF.perched(); i++) { var pp = C.save.player.pos; LF.moveMul(pp.x, pp.y, 0, -1, 0.25); }
+        r.climb = LF.perched() === 'cr_clock' && LF.airH() === 16;
+      } finally { DG.world = W0; rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '첫 정거장 발견 한 번 · 기와 14m · 지점 · GPS ✕ · 시계탑·기둥·차막이 막힘 · 문길 트임 · 시계탑 꼭대기 16m' : ('실패 ' + bad.join(','));
+    });
+
+    t('틈새 갈림길 ⑲-41 — 틈 문: 18장을 마치기 전엔 틈 고개 문이 막고(기둥 둘도) · 18장을 마치면 문만 사라지고 기둥 둘은 남는다 · 손잡이 끄면 벽·자리·기둥 없음', function () {
+      var rig = crRig(), CR = rig.CR, ST = DG.story, r = {};
+      try {
+        var gt = CR.siteById('gate'), gx = Math.floor(gt.x / 48), gy = Math.floor(gt.y / 48), h = CR.GATE_HALF;
+        function rs() { var o = []; for (var yy = -1; yy <= 1; yy++) { for (var xx = -1; xx <= 1; xx++) { o = o.concat(DG.world3d.houseRects(gx + xx, gy + yy)); } } return o; }
+        function hit(L, x, y) { return L.some(function (q) { return frInRect(q, x, y); }); }
+        var i18 = -1; ST.CHAPTERS.forEach(function (c, i) { if (c.id === 'ch18') { i18 = i; } });
+        C.save.story = { ch: i18, step: 9 };
+        var a = rs();
+        r.closed = i18 >= 0 && !CR.gateOpen() && hit(a, gt.x, gt.y) && hit(a, gt.x - h, gt.y) && hit(a, gt.x + h, gt.y);
+        C.save.story = { ch: i18 + 1, step: 0 };
+        var b = rs();
+        r.open = CR.gateOpen() && !hit(b, gt.x, gt.y) && hit(b, gt.x - h, gt.y) && hit(b, gt.x + h, gt.y);
+        C.setTune('crossing.on', 0);
+        r.off = CR.rectsIn(gx, gy).length === 0 && CR.marks().length === 0 && CR.waypoints().length === 0 && CR.poles().length === 0;
+      } finally { C.setTune('crossing.on', null); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '18장 전 막힘 · 뒤 문만 열림(기둥 남음) · 끄면 없음' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */
