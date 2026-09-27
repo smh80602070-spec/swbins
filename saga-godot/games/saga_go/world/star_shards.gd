@@ -68,6 +68,10 @@ const SHARDS := [
 	["g_peak_ne", "vault", Vector2(8.0, 1.0), "peak"],
 	["g_peak_w", "vault", Vector2(0.0, 6.0), "peak"],
 	["g_air_vault", "vault", Vector2(4.0, 3.0), "air"],
+	## 106장 55 세갈래 고을
+	["h_peak_w", "fork", Vector2(0.0, 5.0), "peak"],
+	["h_peak_ne", "fork", Vector2(8.0, 1.0), "peak"],
+	["h_air_kite", "fork", Vector2(5.5, 6.3), "air"],
 ]
 
 var _nodes: Dictionary = {} # id → MeshInstance3D

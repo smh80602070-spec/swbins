@@ -66,8 +66,13 @@ const SPOTS := {
 		"desc": "곳간 마을 뒷밭 둑에서 잊힌 씨앗 자루와 농기구 쇠붙이를 거둔다"},
 	"g_yard": {"region": "vault", "name": "갈무리 물류 창고", "era": "현대", "element": "thunder", "base": {"ore_s": 2, "polish": 1},
 		"desc": "멈춘 컨테이너를 뒤져 쓸 만한 부품을 챙겨 온다"},
+	## 55 세갈래 고을 — 과거 대장간(화)·현대 선로 공사장(뇌). 고을 신상 h_statue 를 켜야 열린다.
+	"h_forge": {"region": "fork", "name": "고을 대장간 뒤뜰", "era": "과거", "element": "fire", "base": {"iron": 2, "ore_s": 1},
+		"desc": "멈춘 화덕 곁에 쌓인 쇠붙이와 숯을 거둔다"},
+	"h_works": {"region": "fork", "name": "멈춘 선로 공사장", "era": "현대", "element": "thunder", "base": {"polish": 2, "iron": 1},
+		"desc": "깔다 만 레일 더미에서 쓸 만한 부품을 챙겨 온다"},
 }
-const ORDER := ["d_road", "d_wood", "d_mudflat", "d_shipyard", "d_quarry", "d_rift", "f_fortress", "f_wreck", "s_depot", "s_temple", "x_stop", "x_gate", "u_base", "u_palace", "a_market", "a_rail", "g_granary", "g_yard"]
+const ORDER := ["d_road", "d_wood", "d_mudflat", "d_shipyard", "d_quarry", "d_rift", "f_fortress", "f_wreck", "s_depot", "s_temple", "x_stop", "x_gate", "u_base", "u_palace", "a_market", "a_rail", "g_granary", "g_yard", "h_forge", "h_works"]
 
 
 static func spot(id: String) -> Dictionary:

@@ -102,6 +102,11 @@ const PATCHES := [
 	["g_mush", "mushroom", "vault", Vector2(1.1, 7.0), 3],
 	["g_mint", "mint", "vault", Vector2(4.0, 6.9), 2],
 	["g_honey", "honey_flower", "vault", Vector2(2.7, 6.3), 2],
+	## 106장 55 세갈래 고을 — 있는 채집물만.
+	["h_mush", "mushroom", "fork", Vector2(1.3, 6.8), 3],
+	["h_mint", "mint", "fork", Vector2(6.8, 6.6), 2],
+	["h_apple", "apple", "fork", Vector2(6.9, 1.4), 2],
+	["h_honey", "honey_flower", "fork", Vector2(2.1, 1.5), 2],
 	["r_ash_se", "ash_flower", "ruins", Vector2(4.8, 5.5), 2],
 ]
 const PATCH_RING_M := 1.4

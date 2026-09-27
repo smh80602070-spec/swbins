@@ -49,6 +49,10 @@ const CAMPS := [
 	["vault", Vector2i(1, 2), ["wind_hawk", "thunder_cat"]],
 	["vault", Vector2i(7, 2), ["ice_fox", "wind_hawk", "rock_bear"]],
 	["vault", Vector2i(6, 6), ["grass_snake", "fire_imp", "thunder_cat"]],
+	## PLAN 106장 55 세갈래 고을 — 멈춘 순간 틈으로 들어온 짐승(있는 kind).
+	["fork", Vector2i(2, 2), ["fire_imp", "rock_bear"]],
+	["fork", Vector2i(6, 5), ["thunder_cat", "wind_hawk"]],
+	["fork", Vector2i(6, 7), ["ice_fox", "grass_snake", "fire_imp"]],
 ]
 const SPREAD := 5.0
 

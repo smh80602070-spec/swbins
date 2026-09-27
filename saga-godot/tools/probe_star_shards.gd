@@ -42,7 +42,7 @@ func _physics_process(_delta: float) -> void:
 					"peak": placed = placed and p.y > TerrainBuilder.height_at(row[1], p) + 1.0
 					"water": placed = placed and absf(p.y - (TerrainBuilder.WATER_LEVEL + 0.6)) < 0.01
 			var nodes: Dictionary = _ss.get("_nodes")
-			_check("layout", StarShards.total() == 38 and regions.size() == 9 and placed and nodes.size() == 38 and StarShards.collected() == 0,
+			_check("layout", StarShards.total() == 41 and regions.size() == 10 and placed and nodes.size() == 41 and StarShards.collected() == 0,
 				"regions=%s placed=%s nodes=%d" % [regions, placed, nodes.size()])
 			_next()
 		1: # ② 줍기
@@ -83,7 +83,7 @@ func _physics_process(_delta: float) -> void:
 			_p.set("stamina_max", 100.0)
 			get_tree().current_scene.add_child(again)
 			var nodes: Dictionary = again.get("_nodes")
-			var ok := nodes.size() == 36 and is_equal_approx(float(_p.get("stamina_max")), 108.0)
+			var ok := nodes.size() == 39 and is_equal_approx(float(_p.get("stamina_max")), 108.0)
 			_check("rebuild", ok, "nodes=%d max=%.0f" % [nodes.size(), float(_p.get("stamina_max"))])
 			again.queue_free()
 			_next()

@@ -60,6 +60,10 @@ func _ready() -> void:
 	var vault := preload("res://games/saga_go/world/region9_vault.gd").new()
 	vault.name = "Region9Vault"
 	add_child(vault)
+	## PLAN 106장 55-1 — 열째 지역 세갈래 고을(서리봉 고원 북쪽 — 38장 순간이 풀리기 전엔 호박 장막, 그동안은 금고 가장 깊은 진열장으로만).
+	var fork := preload("res://games/saga_go/world/region10_fork.gd").new()
+	fork.name = "Region10Fork"
+	add_child(fork)
 	var era := preload("res://games/saga_go/world/era_sites.gd").new()
 	era.name = "EraSites"
 	add_child(era)
@@ -241,6 +245,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_story9.gd").new())
 	if OS.get_environment("SAGA_VAULT_PROBE") != "": # 106장 54-1 아홉째 지역 갈무리 벌
 		add_child(load("res://tools/probe_vault.gd").new())
+	if OS.get_environment("SAGA_FORK_PROBE") != "": # 106장 55-1 열째 지역 세갈래 고을
+		add_child(load("res://tools/probe_fork.gd").new())
 	if OS.get_environment("SAGA_STORY10_PROBE") != "": # 106장 54 이야기 10부(33장~)
 		add_child(load("res://tools/probe_story10.gd").new())
 
@@ -304,7 +310,7 @@ func _print_density_report() -> void:
 	var test_map := load("res://games/saga_go/data/test_map.gd")
 	var density := load("res://saga_core/world/density_report.gd")
 	var terrain := load("res://games/saga_go/world/terrain_builder.gd")
-	for region_id in ["village", "coast", "ruins", "frost", "skyport", "crossing", "sunken", "amber", "vault"]:
+	for region_id in ["village", "coast", "ruins", "frost", "skyport", "crossing", "sunken", "amber", "vault", "fork"]:
 		var origin: Vector3 = test_map.origin_of(region_id)
 		var size: Vector2i = test_map.size(region_id)
 		var tile: float = test_map.tile_size_of(region_id)

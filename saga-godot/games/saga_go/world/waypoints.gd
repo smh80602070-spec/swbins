@@ -52,6 +52,10 @@ const POINTS := [
 	["g_pass", "vault", Vector2(0.9, 3.0), false, "벌 어귀"],
 	["g_statue", "vault", Vector2(2.6, 4.2), true, "벌 신상"],
 	["g_vault", "vault", Vector2(4.0, 3.2), false, "금고 앞"],
+	## 106장 55 세갈래 고을 — 성문 앞 어귀·대장간 곁 신상·세갈래 길목.
+	["h_gate", "fork", Vector2(4.0, 7.2), false, "고을 어귀"],
+	["h_statue", "fork", Vector2(2.8, 4.2), true, "고을 신상"],
+	["h_junction", "fork", Vector2(4.7, 3.9), false, "세갈래 길목"],
 ]
 
 const INACTIVE := Color(0.46, 0.5, 0.58)

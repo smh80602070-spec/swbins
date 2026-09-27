@@ -42,7 +42,7 @@ func _physics_process(_delta: float) -> void:
 				and Elements.reaction_of("fire", "fire") == "" and Elements.reaction_of("", "fire") == ""
 			_check("reaction_table", ok, "")
 			var n := get_tree().get_nodes_in_group("field_enemy").size()
-			_check("spawn_count", n == 84, "n=%d" % n) # 들판 적 29 + 들판 보스 4(106장 ㉓·고원 곰왕) + 서리봉 고원 무리 넷 11(106장 ㊺-1) + 은하 나루 무리 셋 8(㊽-1) + 틈새 갈림길 무리 셋 8(㊾-1) + 잠긴 도읍 무리 셋 8(㊿-1)
+			_check("spawn_count", n == 91, "n=%d" % n) # 55 세갈래 고을 무리 셋 7 · 들판 적 29 + 들판 보스 4(106장 ㉓·고원 곰왕) + 서리봉 고원 무리 넷 11(106장 ㊺-1) + 은하 나루 무리 셋 8(㊽-1) + 틈새 갈림길 무리 셋 8(㊾-1) + 잠긴 도읍 무리 셋 8(㊿-1)
 			_next()
 		1: # ③ 마을 서쪽 늑대 무리 한 마리 앞에 서서 기본 공격 연타
 			if _frame == 1:

@@ -13,6 +13,7 @@ extends Node3D
 ## 세이브 없음(이야기 진행 PartyState.story 만 읽는다).
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
+const Fork := preload("res://games/saga_go/world/region10_fork.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const VegetationBuilder := preload("res://games/saga_go/world/vegetation_builder.gd")
 
@@ -72,6 +73,10 @@ const CASES := [
 	[210.0, "굳은 네거리", "signal"],
 ]
 const HAEMI_CASE_DEG := 160.0
+## 가장 깊은 진열장(106장 55 이야기 11부) — 북쪽 벽 앞(진열장 고리 CASE_R 보다 벽에 가깝게). 10부를 마친 뒤(ch ≥ DEEP_CASE_CH) 드러나고,
+## 11부 38장에 순간이 풀리면(region10_fork.gd moment_free) 유리가 깨진다. 속엔 하늘 틈이 처음 찢어지던 고을의 작은 모형.
+const DEEP_CASE_R := 9.5
+const DEEP_CASE_CH := 35
 const GRANARY_SIZE := Vector3(5.0, 4.2, 4.0)
 const WAREHOUSE_SIZE := Vector3(12.0, 7.0, 8.0)
 const CONTAINERS := [Vector2(5.2, 4.1), Vector2(7.1, 4.2), Vector2(7.2, 5.9)]
@@ -105,6 +110,8 @@ var _door: Node3D = null
 var _door_body: StaticBody3D = null
 var _pylon_orbs: Array = [] # [MeshInstance3D]
 var _core: MeshInstance3D = null
+var _deep_case: Node3D = null
+var _deep_glass: Node3D = null
 var _haemi_case: Node3D = null
 var _granary_door: Node3D = null
 var _floaters: Array = [] # [node, base_y, phase]
@@ -197,6 +204,16 @@ func core_lit() -> bool:
 func haemi_sealed() -> bool:
 	return _haemi_case != null and _haemi_case.visible
 
+## 가장 깊은 진열장 — "hidden"(10부 전) · "sealed"(유리 그대로) · "broken"(11부 순간이 풀린 뒤).
+func deep_case_state() -> String:
+	if not _deep_case.visible:
+		return "hidden"
+	return "sealed" if _deep_glass.visible else "broken"
+
+## 가장 깊은 진열장 자리(월드) — 금고 가운데에서 북쪽 DEEP_CASE_R.
+static func deep_case_pos() -> Vector3:
+	return cell_pos(VAULT_CELL) + Vector3(0, 0, -DEEP_CASE_R)
+
 func granary_locked() -> bool:
 	return _granary_door != null and _granary_door.visible
 
@@ -214,6 +231,8 @@ func _refresh() -> void:
 	_core.visible = not core_dim()
 	_haemi_case.visible = not haemi_free()
 	_granary_door.visible = not granary_open()
+	_deep_case.visible = _ch() >= DEEP_CASE_CH
+	_deep_glass.visible = not Fork.moment_free()
 
 func _process(delta: float) -> void:
 	_t += delta
@@ -321,6 +340,25 @@ func _build_vault() -> void:
 	glass.material_override = _glass(GLOW, 0.3)
 	_label(_haemi_case, "갈무리된 사람 — 보관사", Vector3(0, 3.4, 0), Color(0.75, 1.0, 0.8))
 	_box(root, Vector3(2.0, 0.15, 2.0), _haemi_case.position + Vector3(0, 0.07, 0), STEEL_DARK)
+	## 가장 깊은 진열장 — 큰 호박 유리 + 받침 + 속 모형(세 갈래 길·하늘 틈 금). 충돌 없음.
+	_deep_case = Node3D.new()
+	_deep_case.name = "DeepCase"
+	_deep_case.position = deep_case_pos() - cell_pos(VAULT_CELL)
+	root.add_child(_deep_case)
+	_box(_deep_case, Vector3(2.6, 0.4, 2.6), Vector3(0, 0.2, 0), STEEL_DARK)
+	_deep_glass = Node3D.new()
+	_deep_glass.name = "Glass"
+	_deep_case.add_child(_deep_glass)
+	var dg := _box(_deep_glass, Vector3(2.4, 3.4, 2.4), Vector3(0, 2.1, 0), AMBER)
+	dg.material_override = _glass(AMBER, 0.3)
+	for k in 3: # 세 갈래 길(서·동·북)
+		var yaw: float = [PI, 0.0, PI * 0.5][k]
+		var road := _box(_deep_case, Vector3(0.9, 0.04, 0.18), Vector3(-cos(yaw) * 0.45, 0.45, sin(yaw) * 0.45), THATCH)
+		road.rotation.y = yaw
+	var crack := _box(_deep_case, Vector3(1.6, 0.1, 0.05), Vector3(0, 3.2, 0), Color(0.75, 0.5, 1.0))
+	crack.material_override = _glow(Color(0.75, 0.5, 1.0), 2.0)
+	crack.rotation.z = 0.25
+	_label(_deep_case, "가장 깊은 진열장 — 처음의 순간", Vector3(0, 4.2, 0), AMBER)
 	## 기록 기둥(충돌 — 벽 타기, 윗면 턱 없음)·갈무리의 핵
 	_solid_box(root, Vector3(PILLAR_W, PILLAR_H, PILLAR_W), Vector3(0, PILLAR_H * 0.5, 0), STEEL)
 	for y in [2.0, 4.5, 7.0]:
