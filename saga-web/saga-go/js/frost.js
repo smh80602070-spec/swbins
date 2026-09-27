@@ -173,6 +173,8 @@
     for (var i = 0; i < ST.CHAPTERS.length; i++) { if (ST.CHAPTERS[i].id === FLY_AFTER) { return s.ch > i; } }
     return false;
   }
+  /** ⑲-38 별배가 은하 나루로 떠났나 — 16장 여섯째 단계부터(선체를 숨긴다, 파편은 남음) */
+  function away() { var SP = global.DG.skyport; return !!(SP && SP.on && SP.on() && SP.docked && SP.docked()); }
   /** 지금 내리는 눈 입자 수 */
   function snowCount() { return calm() ? SNOW_CALM : SNOW_N; }
 
@@ -439,6 +441,7 @@
         o.hull.position.y = o.lift + (k > 0 ? Math.sin(clock * 0.9) * 0.3 * k : 0);
         o.hull.rotation.z = 0.2 * (1 - k);
         o.wings.visible = k > 0;
+        o.hull.visible = !away();
       }
     }
     for (var k in fx) { if (fx.hasOwnProperty(k) && !seen[k]) { w.removeFx(fx[k].root); delete fx[k]; } }
@@ -475,7 +478,7 @@
     /* 판정 층(순수) */
     on: on, center: center, sites: sites, bloomSpots: bloomSpots, treeSnow: treeSnow, siteById: siteById, snowAt: snowAt, snowCell: snowCell, rectsOf: rectsOf, rectsIn: rectsIn,
     /* 세이브·상태 */
-    snowingHere: snowingHere, calm: calm, flown: flown, FLY_H: FLY_H, FLY_T: FLY_T, snowCount: snowCount, SNOW_N: SNOW_N, SNOW_CALM: SNOW_CALM, found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks,
+    snowingHere: snowingHere, calm: calm, flown: flown, away: away, FLY_H: FLY_H, FLY_T: FLY_T, snowCount: snowCount, SNOW_N: SNOW_N, SNOW_CALM: SNOW_CALM, found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks,
     tick: tick,
     _resetForTest: function () { memo = null; bloomMemo = null; rectMemo = null; snowMemo = {}; snowN = 0; hereT = -1; }
   };

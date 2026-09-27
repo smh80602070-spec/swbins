@@ -1,5 +1,5 @@
 /**
- * 이야기 임무 1~15장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~36, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼)
+ * 이야기 임무 1~16장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~38, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
@@ -63,7 +63,9 @@
     /* ⑲-35 옛 성터 언덕 곁 시간 틈 관측소 — 땅 가운데·가온·시간 기둥·관측대 위(반디·가운데) */
     obs: { era: 'obs' }, obs_gaon: { era: 'gaon' }, obs_draft: { era: 'draft' }, obs_deck: { era: 'deck' }, obs_bandi: { era: 'obs_bandi' },
     /* ⑲-36 고향 남쪽 옛 역참 터 — 마당 가운데·달음·여우불 무리·구미호 */
-    station: { era: 'station' }, st_dareum: { era: 'st_dareum' }, st_fight: { era: 'st_fight' }, st_duel: { era: 'st_duel' } };
+    station: { era: 'station' }, st_dareum: { era: 'st_dareum' }, st_fight: { era: 'st_fight' }, st_duel: { era: 'st_duel' },
+    /* ⑲-38 은하 나루(skyport.js) — 명소 자리(skyport) 또는 나루 틀 자리(port) */
+    sp_gate: { skyport: 'gate' }, sp_port: { skyport: 'port' }, sp_ara: { port: 'ara' }, sp_bandi: { port: 'bandi' }, sp_fight: { port: 'fight' }, sp_altar: { port: 'altar' } };
   /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
   var DAREUM_SHIP = [-12, 10], WING_SEAM = [-4, 8];
   /* ⑲-28 하람이 서는 자리 — 관측소 곁(늘)·비행선 곁. 산성 안은 남쪽 문 안쪽(담 반 변 13m) */
@@ -119,7 +121,7 @@
         { ch: 10, from: 8, to: 8, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 11, from: 6, to: 8, spot: 'fr_ship', off: HARAM_SHIP }] },
     bandi:    { id: 'story_bandi',    name: '조종 기계 반디', short: '반디', zone: 'snowfort', spot: 'fr_ship', off: [0, 12], color: '#8cd9f2', pet: 'drone',
       idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }, { ch: 12, from: 6, to: 8, spot: 'yard_bandi' },
-        { ch: 13, from: 9, to: 9, spot: 'obs_bandi', sky: true }] },
+        { ch: 13, from: 9, to: 9, spot: 'obs_bandi', sky: true }, { ch: 15, from: 6, to: 8, spot: 'sp_bandi' }] },
     /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
     daon:     { id: 'story_daon',     name: '조선공 다온', short: '다온', zone: 'galdae', spot: 'yard_daon', off: [0, 0], color: '#335ea0',
       idle: '이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.' },
@@ -129,6 +131,9 @@
     /* ⑲-36 파발꾼 달음(과거) — 늘 역참 앞, 15장 9~11째는 고원 비행선 곁. 15장 끝에 동료(story_dareum) */
     dareum:   { id: 'story_dareum',   name: '파발꾼 달음', short: '달음', zone: 'home', spot: 'st_dareum', off: [0, 0], color: '#80573a',
       idle: '한양 가는 길이 어디였더라… 말은 잘 있나 몰라.', at: [{ ch: 14, from: 8, to: 10, spot: 'fr_ship', off: DAREUM_SHIP }] },
+    /* ⑲-38 나루지기 아라(미래) — 늘 별배 나루 표지 부스 곁 */
+    ara:      { id: 'story_ara',      name: '나루지기 아라', short: '아라', zone: 'solar', spot: 'sp_ara', off: [0, 0], color: '#47669e',
+      idle: '별배 나루는 오늘도 비어 있어요. …기다리는 게 제 일이니까요.' },
     /* ⑲-36 놀란 역마 — 늘 역참 마구간(길 첫 점), 15장 쫓기 때만 역참 틀 기준 길(runSpot)을 달린다. 말 모델(pet) */
     horse:    { id: 'story_horse',    name: '놀란 역마', short: '역마', zone: 'home', color: '#6b4a2e', pet: 'horse', idle: '푸르르— 히힝.',
       runSpot: 'station', runPath: (global.DG.eraSites ? global.DG.eraSites.HORSE_PATH : [[0, 0]]) },
@@ -138,7 +143,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -698,6 +703,46 @@
             ['?', ['드디어 떴다!', '반디, 이제 어디로 가?']],
             ['반디', '틈이 닫히는 방향을 따라가면 이 배가 온 시대에 닿을 겁니다. 그 전까지 — 이 하늘은 여러분 것입니다.', 'fun'],
             ['달음', '그 길, 나도 따라가겠소. 파발꾼은 길 끝을 봐야 직성이 풀리니까!', 'fun']] }
+      ] },
+    /* ⑲-38 4부 첫 장 — 무대는 은하 나루(skyport.js). 반디 → 틈 고개 → 아라 → 착륙판 무리 → 아라 → 계류 탑 옆면 타기(꼭대기에 서야,
+       GPS 판은 탑 곁) → 반디(별배를 몰고 옴 — 이때부터 나루에 매인다) → 계류된 별배 지키기(동쪽 부스 쪽 빼고 일곱 방향) → 아라 */
+    { id: 'ch16', name: '제16장 · 별배가 돌아온 나루', ar: 38,
+      reward: { knot: 6, gold: 4500, guide: 5, secret: 5, party: 1300 },
+      steps: [
+        { type: 'talk', npc: 'bandi', text: '별배 곁의 반디와 이야기하기',
+          lines: [['반디', '삐— 별배가 뜨고 나서 틈이 닫히는 방향을 쫓았습니다. 태양 신도시 남쪽 끝입니다.', 'surprised'],
+            ['반디', '그곳에 틈이 문처럼 열렸습니다. 문 너머 좌표는… 제 기억 속 별배의 집, 은하 나루.', 'sorrow'],
+            ['?', ['별배가 온 곳이구나.', '같이 가 보자.']],
+            ['반디', '먼저 가 주십시오. 나루의 계류 신호가 살아 있으면 별배를 몰고 뒤따르겠습니다.']] },
+        { type: 'go', spot: 'sp_gate', text: '태양 신도시 남쪽 끝, 틈 고개 너머로' },
+        { type: 'talk', npc: 'ara', text: '별배 나루의 나루지기 아라와 이야기하기',
+          lines: [['아라', '…손님? 틈 고개로 사람이 넘어온 건 몇 해 만이에요!', 'surprised'],
+            ['?', ['별배를 알아요?', '여기가 은하 나루예요?']],
+            ['아라', '별배는 이 나루의 배였어요. 어느 밤 선장님을 태우고 틈으로 떠난 뒤로 돌아오지 않았죠. 저는 그날부터 기다렸고요.', 'sorrow'],
+            ['아라', '별배가 살아 있다고요? 그럼 — 앗, 틈 짐승들이 착륙판을 차지했어요!', 'angry']] },
+        { type: 'kill', spot: 'sp_fight', kinds: ['raptor', 'hawk', 'hawk', 'rockbear'], text: '착륙판을 차지한 시간 틈 무리 물리치기',
+          enter: '⚔️ 착륙판 위에 시간 틈 짐승들이 버티고 섰다' },
+        { type: 'talk', npc: 'ara', text: '아라와 이야기하기',
+          lines: [['아라', '고마워요. 이제 계류 탑 신호만 켜면 돼요. 꼭대기 빛 공이 꺼져서 별배가 길을 못 찾을 거예요.', 'joy'],
+            ['아라', '승강기는 녹아내렸고… 탑 옆면을 타고 오를 수 있겠어요? 열여덟 미터예요.'],
+            ['?', ['올라가 볼게요.', '높네요…']],
+            ['아라', '꼭대기에 서면 신호가 저절로 켜져요. 떨어지면 날개를 펴요!']] },
+        { type: 'climb', spot: 'sp_port', pole: 'sp_tower', text: '계류 탑 옆면을 타고 꼭대기로 올라 신호 켜기',
+          done: '💡 계류 탑 꼭대기 — 빛 공에 신호가 켜졌다', gpsDone: '💡 계류 탑 밑 — 아라가 부스에서 신호를 켰다' },
+        { type: 'talk', npc: 'bandi', text: '별배를 몰고 온 반디와 이야기하기',
+          lines: [['반디', '삐— 계류 신호 수신. 별배, 은하 나루에 계류 완료. …돌아왔습니다.', 'joy'],
+            ['아라', '정말 별배예요… 날개가 바뀌었지만 틀림없어요!', 'surprised'],
+            ['?', ['어서 와, 별배.', '반디, 수고했어.']],
+            ['아라', '그런데 계류 불빛에 틈 짐승들이 또 몰려와요. 계류 팔이 풀리면 별배가 또 떠내려가요!', 'angry']] },
+        { type: 'defend', spot: 'sp_altar', name: '계류된 별배', who: '시간 틈 짐승들이', dirs: [0, 45, 135, 180, 225, 270, 315],
+          waves: [['raptor', 'hawk', 'hawk'], ['rockbear', 'raptor', 'imp', 'snowfox'], ['rockbear', 'raptor', 'raptor', 'hawk', 'vine']],
+          text: '별배 계류대 지키기' },
+        { type: 'talk', npc: 'ara', text: '아라와 이야기하기',
+          lines: [['아라', '지켰어요… 별배가 다시 나루에 있어요. 고마워요.', 'joy'],
+            ['반디', '삐— 별배 항해 기록 복구. 마지막 기록: 선장, 옛 절터 종소리를 따라 틈으로.', 'surprised'],
+            ['?', ['선장님이 절터로?', '종소리?']],
+            ['아라', '절터 종은 수백 년 전에 떨어져 나뒹구는데… 가끔 밤마다 울려요. 선장님이 거기서 무언가를 들으셨나 봐요.', 'sorrow'],
+            ['아라', '나루는 제가 지킬게요. 별배도 여기 쉬게 두세요. 이제 여기가 여러분 나루이기도 하니까!', 'fun']] }
       ] }
   ];
 
@@ -807,8 +852,14 @@
     var SKI = global.DG.skyIsle;
     var ES = global.DG.eraSites;
     var sp = SPOTS[name], b = !sp ? null : sp.era ? (ES ? ES.spot(sp.era) : null) : (sp.frost ? frostSpot(sp.frost) : (sp.peak ? peakSpot() : (sp.cape ? capeSpot() : (sp.isle ? isleSpot() :
-      (sp.sky ? (SKI ? SKI.spot() : null) : at(sp.zone, sp.off))))));
+      (sp.sky ? (SKI ? SKI.spot() : null) : (sp.skyport || sp.port ? portPos(sp) : at(sp.zone, sp.off)))))));
     return b ? { x: b.x + (off ? off[0] : 0), y: b.y + (off ? off[1] : 0) } : null;
+  }
+  /** ⑲-38 은하 나루 자리 — 명소(skyport: id) 또는 나루 틀 자리(port: 'ara' 등). 나루가 꺼져 있으면 null */
+  function portPos(sp) {
+    var SPm = global.DG.skyport;
+    if (!SPm || !SPm.on()) { return null; }
+    return sp.port ? SPm.portSpot(sp.port) : SPm.siteById(sp.skyport);
   }
   /** ⑲-28 서리봉 고원 자리 — 'center'(가운데 탑) 또는 frost 명소 id. 고원이 꺼져 있으면 null */
   function frostSpot(id) {
@@ -1443,8 +1494,9 @@
       /* ⑲-34 기중기 — 키보드 판은 들보 위에 서야(landform 기둥 타기), GPS 판은 기중기 곁에 닿으면 */
       var LFp = global.DG.landform;
       t = targetOf(st);
-      if (!gps() && LFp && LFp.perched && LFp.perched()) { toast('✨ 들보 위 — 박혀 있던 날개 조각을 빼냈다'); advance(); return; }
-      if (gps() && t && Math.hypot(p.x - t.x, p.y - t.y) <= POLE_GPS_R) { toast('✨ 기중기 밑 — 다온이 걸어 둔 줄로 날개 조각을 끌어내렸다'); advance(); return; }
+      var pid = LFp && LFp.perched ? LFp.perched() : null, want = typeof st.pole === 'string' ? st.pole : null;   // ⑲-38 pole: 'id' 면 그 기둥 위라야
+      if (!gps() && pid && (!want || pid === want)) { toast(st.done || '✨ 들보 위 — 박혀 있던 날개 조각을 빼냈다'); advance(); return; }
+      if (gps() && t && Math.hypot(p.x - t.x, p.y - t.y) <= POLE_GPS_R) { toast(st.gpsDone || '✨ 기중기 밑 — 다온이 걸어 둔 줄로 날개 조각을 끌어내렸다'); advance(); return; }
     } else if (st && st.type === 'climb') {
       t = targetOf(st);
       if (t && Math.hypot(p.x - t.x, p.y - t.y) <= t.r) { toast('⛰️ 봉우리 꼭대기에 올랐다'); advance(); return; }

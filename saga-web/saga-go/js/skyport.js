@@ -8,6 +8,9 @@
  *   틈 문   틈 고개 경계비 곁 보랏빛 막(+ 벽) — 이야기 15장을 마치면 사라지고 빛 기둥 둘은 남는다(`gateOpen`).
  *           열린 땅이라 땅 전체를 막진 않는다 — 4부로 드는 자리 표지
  *   벽      계류 탑·부스·돌탑·객차·문 기둥·(닫힌) 문·공중전화·안테나는 world3d `houseRects` 로 막는다
+ *   계류 탑 ⑲-38 16장 — 옆면을 타고 오른다(landform 기둥 타기, `poles`) · 꼭대기 빛 공은 16장 탑 단계를 지나면 켜진다(`beaconLit`)
+ *   매인 별배 ⑲-38 — 16장 여섯째 단계부터 착륙판 위 SHIP_UP m 에 수평으로 떠 있다(`docked`, 그림만 — 밑은 비어 지나간다).
+ *           그때부터 고원 별배는 떠났다(frost `away`)
  *
  * 자리 잡기는 frost.js 와 같은 규칙 — 가운데에서 off 만큼 간 곳에서 가장 가까운 그 땅 들·숲 칸(물·마을·길·산·강 아님), 서로 떨어짐.
  * 판정 층(`center`·`sites`·`rectsIn`·`gateOpen`)은 순수. 세이브 `save.skyport = { found }`(읽는 쪽 기본값).
@@ -50,6 +53,10 @@
   var REWARD_BIG = { gold: 150, dust: 2, exp: 40 }, REWARD_SMALL = { gold: 60, exp: 20 };
   var SEARCH_STEP = 8, SEARCH_R = 200, SEP_BIG = 60, SEP_SMALL = 30, TOWER_CLEAR = 40;
   var PAD_R = 9, PAVE_R = 14, TOWER_H = 18, GATE_HALF = 4, GATE_CH = 'ch15';
+  /* ⑲-38 16장 — 나루 틀 안 자리(나루 가운데 = 계류 탑에서 m, +y 남쪽) · 탑 단계를 지나면 빛 공 · 여섯째 단계부터 별배가 매인다 */
+  var TOWER_DRAIN = 0.75;   // 18m 를 꽉 찬 기력(100)으로 오를 수 있게 — 오르기 기력 ×0.75 ≈ 86
+  var DOCK_CH = 'ch16', BEACON_AFTER = 5, DOCK_FROM = 6, SHIP_UP = 6, TOWER_HALF = 1.2;
+  var PORT_PARTS = { ara: [PAD_R + 3, 5.5], bandi: [-5, 9], fight: [0, 6], altar: [0, 6] };
   var GRID = 48;
 
   /* ── 자리(순수 — 지형·해시만) ───────────────────────────── */
@@ -115,6 +122,28 @@
     return out;
   }
   function siteById(id) { var L = sites(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
+  /** ⑲-38 나루 틀 자리 — 'ara'·'bandi'·'fight'·'altar'(계류대) — 나루가 없으면 null */
+  function portSpot(part) { var p = siteById('port'), o = PORT_PARTS[part]; return p && o ? { x: p.x + o[0], y: p.y + o[1] } : null; }
+  function storyAt() { var s = core() && core().save ? core().save.story : null; return s || { ch: 0, step: 0 }; }
+  function chIndex(id) { var ST = global.DG.story; if (!ST || !ST.CHAPTERS) { return -1; } for (var i = 0; i < ST.CHAPTERS.length; i++) { if (ST.CHAPTERS[i].id === id) { return i; } } return -1; }
+  function passed(id, step) { var i = chIndex(id), s = storyAt(); return i >= 0 && (s.ch > i || (s.ch === i && (s.step || 0) >= step)); }
+  /** 계류 탑 꼭대기 빛 공이 켜졌나 — 16장 탑 단계(여섯째)를 지나면 */
+  function beaconLit() { return passed(DOCK_CH, BEACON_AFTER + 1); }
+  /** 별배가 나루에 매였나 — 16장 여섯째 단계부터 늘 */
+  function docked() { return passed(DOCK_CH, DOCK_FROM); }
+  var poleMemo = null;
+  /** landform 기둥 타기 — 계류 탑 하나. 꼭대기는 네모(길 = 가운데 가로 1.8m·폭 2.2m) */
+  function poles() {
+    if (!on()) { return []; }
+    if (poleMemo) { return poleMemo; }
+    var p = siteById('port');
+    if (!p) { return []; }
+    poleMemo = [{ id: 'sp_tower', x: p.x, y: p.y, r: TOWER_HALF, top: TOWER_H, drain: TOWER_DRAIN, perch: { x: p.x, y: p.y },
+      beam: { ax: p.x - 0.9, ay: p.y, bx: p.x + 0.9, by: p.y, w: 2.2 },   // 2.4m 네모 꼭대기 — 가장자리 0.2m 안쪽
+      grab: '🧗 계류 탑 옆면을 붙잡았다 — 계속 밀면 오른다 · 점프 = 도약 · 등지면 손을 놓는다',
+      perchText: '🗼 계류 탑 꼭대기에 올라섰다 — 뛰면 날개를 편다', edgeText: '🗼 탑 끝 — 뛰어내리면(점프) 날개를 편다' }];
+    return poleMemo;
+  }
   /** 나루 땅 안인가 */
   function inRegion(x, y) { return on() && zoneAt(x, y) === ZONE; }
 
@@ -132,7 +161,7 @@
   function rectsOf(st) {
     var x = st.x, y = st.y;
     switch (st.model) {
-      case 'port': return [{ x: x, z: y, w: 2.4, d: 2.4, rot: 0 }, { x: x + PAD_R + 3, z: y + 2, w: 2.2, d: 2.2, rot: 0 }];
+      case 'port': return [{ x: x, z: y, w: TOWER_HALF * 2, d: TOWER_HALF * 2, rot: 0 }, { x: x + PAD_R + 3, z: y + 2, w: 2.2, d: 2.2, rot: 0 }];
       case 'temple': return [{ x: x, z: y - 4, w: 3.6, d: 3.6, rot: 0 }];
       case 'station': return [{ x: x, z: y - 3.4, w: 12, d: 2.8, rot: 0 }];
       case 'gate': return [{ x: x - GATE_HALF, z: y, w: 1, d: 1, rot: 0 }, { x: x + GATE_HALF, z: y, w: 1, d: 1, rot: 0 },
@@ -241,7 +270,7 @@
         cyl(T3, g, m.alloy, PAD_R, PAD_R + 0.3, 0.35, 0, 0.18, 0, 32);                                  // 착륙판
         var edge = new T3.Mesh(new T3.TorusGeometry(PAD_R - 0.6, 0.12, 4, 48), m.glow); edge.rotation.x = Math.PI / 2; edge.position.y = 0.38; g.add(edge);
         box(T3, g, m.alloy, 2.4, TOWER_H, 2.4, 0, TOWER_H / 2, 0);                                      // 계류 탑
-        ball(T3, g, m.glow, 1.1, 0, TOWER_H + 0.9, 0);
+        o.beacon = ball(T3, g, m.dark, 1.1, 0, TOWER_H + 2.4, 0);                                   // 빛 공 — 꼭대기 서는 자리 위(⑲-38)
         for (i = 0; i < 3; i++) {                                                                        // 도는 빛 고리 셋
           var rg = new T3.Mesh(new T3.TorusGeometry(3 + i * 0.6, 0.08, 4, 40), m.ring);
           rg.position.y = 6 + i * 4.5; rg.rotation.x = Math.PI / 2 + 0.25 * (i - 1); g.add(rg); o.spin.push(rg);
@@ -330,8 +359,27 @@
       for (var k = 0; k < o.spin.length; k++) { o.spin[k].rotation.z += (dt || 0) * (0.6 + k * 0.3) * (k % 2 ? -1 : 1); }
       if (o.blink) { o.blink.visible = Math.sin(clock * 3 + i) > 0; }
       if (o.door) { o.door.visible = !open; if (!open) { o.door.material.opacity = 0.35 + Math.sin(clock * 2) * 0.1; } }
+      if (o.beacon) { o.beacon.material = beaconLit() ? M(T3).glow : M(T3).dark; }
+      if (st.id === 'port') { paintShip(w, T3, st, o); }
     }
     for (var id in fx) { if (fx.hasOwnProperty(id) && !seen[id]) { w.removeFx(fx[id].root); delete fx[id]; } }
+  }
+
+  /* ⑲-38 매인 별배 — 착륙판 위 SHIP_UP m, 수평, 빛 날개 셋(frost 별배와 같은 꼴). 계류 팔 사이로 둥실 */
+  function paintShip(w, T3, st, o) {
+    var on2 = docked();
+    if (!on2) { if (o.ship) { o.ship.visible = false; } return; }
+    if (!o.ship) {
+      var m = M(T3), s = new T3.Group();
+      var body = new T3.Mesh(new T3.CylinderGeometry(2.6, 2.2, 18, 20), m.alloy); body.rotation.z = Math.PI / 2; s.add(body);
+      ball(T3, s, m.alloy, 2.6, 9, 0, 0);
+      box(T3, s, m.alloy, 3, 3.4, 0.25, -9.5, 2.1, 0); box(T3, s, m.alloy, 3, 0.25, 6, -9.5, 0.2, 0);
+      for (var i = 0; i < 3; i++) { box(T3, s, m.glow, 2.4, 0.08, 7 - i * 1.5, 3 - i * 3.2, 0.2 + i * 0.3, 0); }
+      box(T3, s, m.glow, 17, 0.18, 0.2, 0, 0, 2.62);
+      s.position.set(0, SHIP_UP + 2.6, PAD_R * 0.55);   // 탑 남쪽 곁(선체 반지름 2.6 — 탑과 안 겹침) o.root.add(s); o.ship = s;
+    }
+    o.ship.visible = true;
+    o.ship.position.y = SHIP_UP + 2.6 + Math.sin(clock * 0.9) * 0.25;
   }
 
   var acc = 0;
@@ -347,7 +395,8 @@
     ZONE: ZONE, REGION: REGION, LANDMARKS: LANDMARKS, SMALL: SMALL, LANDMARK_R: LANDMARK_R, SMALL_R: SMALL_R, REWARD_BIG: REWARD_BIG, REWARD_SMALL: REWARD_SMALL,
     SEP_BIG: SEP_BIG, SEP_SMALL: SEP_SMALL, TOWER_CLEAR: TOWER_CLEAR, PAD_R: PAD_R, PAVE_R: PAVE_R, TOWER_H: TOWER_H, GATE_HALF: GATE_HALF,
     on: on, center: center, sites: sites, siteById: siteById, inRegion: inRegion, gateOpen: gateOpen, rectsOf: rectsOf, rectsIn: rectsIn,
+    PORT_PARTS: PORT_PARTS, TOWER_HALF: TOWER_HALF, TOWER_DRAIN: TOWER_DRAIN, SHIP_UP: SHIP_UP, DOCK_FROM: DOCK_FROM, portSpot: portSpot, beaconLit: beaconLit, docked: docked, poles: poles,
     found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks, tick: tick,
-    _resetForTest: function () { memo = null; rectMemo = null; centerMemo = undefined; }
+    _resetForTest: function () { memo = null; rectMemo = null; centerMemo = undefined; poleMemo = null; }
   };
 })(window);

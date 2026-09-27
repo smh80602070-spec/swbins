@@ -32,7 +32,8 @@
  *   기둥 타기 §5 ⑲-34 — 구조물 다리(era-sites `poles`, 조선소 기중기)를 마주 보고 밀면 붙잡고 초당 POLE_UP m 오른다(기력 초당 POLE_DRAIN).
  *           안 밀면 매달려 초당 POLE_HANG 만 준다 · 기력이 다하면 미끄러져 내려온다 · 오르는 중 점프 = LEAP m 도약(기력 20) ·
  *           등지면 손을 놓고 떨어진다. 꼭대기(top)에 닿으면 들보 위에 선다 — 들보 길 밖으로는 못 걷고, 뛰면 날개를 편다.
- *           자동 순행 중엔 안 붙잡는다
+ *           자동 순행 중엔 안 붙잡는다. §5 ⑲-38 — 은하 나루 계류 탑(skyport `poles`)도 같은 몸으로 탄다(꼭대기 네모 위에 선다).
+ *           기둥이 제 글(grab·perchText·edgeText)을 가지면 그것을 쓴다
  */
 (function (global) {
   'use strict';
@@ -363,7 +364,7 @@
       var pa = poleAhead(x, y, ux, uy);
       if (pa) {
         body.pole = { id: pa.id, h: 0, perch: false, push: 0 };
-        tell('🧗 기중기 다리를 붙잡았다 — 계속 밀면 오른다 · 점프 = 도약 · 등지면 손을 놓는다');
+        tell(pa.grab || '🧗 기중기 다리를 붙잡았다 — 계속 밀면 오른다 · 점프 = 도약 · 등지면 손을 놓는다');
         core().emit('landform:pole', { id: pa.id, grab: true });
         return poleMove(x, y, ux, uy, dt);
       }
@@ -410,12 +411,24 @@
 
   /* ── ⑲-34 기둥 타기 ─────────────────────────────────── */
   function ES() { var e = global.DG.eraSites; return e && e.on && e.on() && e.poles ? e : null; }
+  function SPP() { var s = global.DG.skyport; return s && s.on && s.on() && s.poles ? s : null; }
+  /** ⑲-38 타는 기둥 모두 — 조선소 기중기 다리(era-sites) + 은하 나루 계류 탑(skyport) */
+  function polesAll() { var E = ES(), S = SPP(); return (E ? E.poles() : []).concat(S ? S.poles() : []); }
+  function poleById(id) { var L = polesAll(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
+  /** (x,y) 가 기둥 꼭대기 걷는 길 위인가 — 길 선분에서 폭 절반 안(era-sites.onBeam 과 같은 셈) */
+  function onBeamOf(p, x, y) {
+    var b = p && p.beam;
+    if (!b) { return false; }
+    var vx = b.bx - b.ax, vy = b.by - b.ay, L2 = vx * vx + vy * vy || 1, t = ((x - b.ax) * vx + (y - b.ay) * vy) / L2;
+    if (t < 0 || t > 1) { return false; }
+    return Math.hypot(x - (b.ax + vx * t), y - (b.ay + vy * t)) <= b.w / 2;
+  }
+  function perchOfP(p) { var E = ES(); return p.perch || (E ? E.perchOf(p) : { x: p.x, y: p.y }); }
   function autoOn() { var A = global.DG.auto; return !!(A && A.active && A.active()); }
   /** 마주 보고 미는 다리 — 다리 겉에서 POLE_REACH m 안, 걷는 방향이 다리 쪽. 자동 순행 중엔 없음 */
   function poleAhead(x, y, ux, uy) {
-    var E = ES();
-    if (!E || (!ux && !uy) || autoOn()) { return null; }
-    var L = E.poles();
+    var L = polesAll();
+    if (!L.length || (!ux && !uy) || autoOn()) { return null; }
     for (var i = 0; i < L.length; i++) {
       var p = L[i], dx = p.x - x, dy = p.y - y, d = Math.hypot(dx, dy);
       if (d > p.r + POLE_REACH) { continue; }
@@ -424,7 +437,7 @@
     }
     return null;
   }
-  function poleOf() { var E = ES(); return body.pole && E ? E.poleById(body.pole.id) : null; }
+  function poleOf() { return body.pole ? poleById(body.pole.id) : null; }
   /** 손을 놓는다 — 높이가 있으면 그 높이에서 떨어진다(날개 접은 채) */
   function letGo() {
     var P = body.pole, pos = core().save.player.pos;
@@ -433,20 +446,20 @@
     core().emit('landform:pole', { id: P ? P.id : null, grab: false });
   }
   function perchOn(pl) {
-    var E = ES(), P = body.pole, pos = core().save.player.pos, q = E.perchOf(pl);
+    var P = body.pole, pos = core().save.player.pos, q = perchOfP(pl);
     P.h = pl.top; P.perch = true;
     pos.x = q.x; pos.y = q.y;
     body.tired = false;
-    tell('🏗️ 들보 위에 올라섰다 — 들보를 따라 걸을 수 있다 · 뛰면 날개를 편다');
+    tell(pl.perchText || '🏗️ 들보 위에 올라섰다 — 들보를 따라 걸을 수 있다 · 뛰면 날개를 편다');
     core().emit('landform:perch', { id: pl.id });
   }
   function poleMove(x, y, ux, uy, dt) {
-    var P = body.pole, pl = poleOf(), E = ES();
+    var P = body.pole, pl = poleOf();
     if (!pl) { body.pole = null; return 1; }
     if (P.perch) {
       body.state = 'walk';
-      if (!E.onBeam(pl, x + ux * RAIL_LOOK, y + uy * RAIL_LOOK)) {
-        if (body.railT <= 0) { body.railT = 4; tell('🏗️ 들보 끝 — 뛰어내리면(점프) 날개를 편다'); }
+      if (!onBeamOf(pl, x + ux * RAIL_LOOK, y + uy * RAIL_LOOK)) {
+        if (body.railT <= 0) { body.railT = 4; tell(pl.edgeText || '🏗️ 들보 끝 — 뛰어내리면(점프) 날개를 편다'); }
         return 0;
       }
       return BEAM_MUL;
@@ -461,7 +474,7 @@
     }
     P.push = 0.2;
     P.h = Math.min(pl.top, P.h + POLE_UP * dt);
-    body.sta = Math.max(0, body.sta - POLE_DRAIN * SAVE_MUL() * dt);
+    body.sta = Math.max(0, body.sta - POLE_DRAIN * (pl.drain || 1) * SAVE_MUL() * dt);   // ⑲-38 기둥마다 소모 배율(계류 탑 0.75)
     if (P.h >= pl.top) { perchOn(pl); }
     return 0;
   }
