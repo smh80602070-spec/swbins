@@ -292,8 +292,9 @@ GARMENTS = {
     'shinobi': dict(desc='닌자복 — 붙는 윗옷·좁은 바지·감발·띠', tags=['ninja', 'historical', 'east'],
                     colors=dict(C1='#1e1e24', C2='#3a3a44'), parts=[
         dict(kind='tube', top=('waist', 0.02), bottom=('crotch', 0.0), ease=0.02, slot=0, paint=dict(base='C1', pattern='weave')),
-        dict(kind='leggings', top=('crotch', 0.01), bottom=('knee', -0.02), ease=0.018, slot=5, paint=dict(base='C1', pattern='weave')),
-        dict(kind='leggings', top=('knee', 0.0), bottom=('ankle', 0.02), ease=0.01, slot=4, paint=dict(base='C2', pattern='wrap')),
+        dict(kind='leggings', top=('crotch', 0.01), bottom=('knee', -0.02), ease=0.018, smooth=6, wmin=0.15, tuck=(2, 0.004), slot=5,   # wmin 0.5 면 넓게 선 자세에서 가랑이 살이 보였다(09-27)
+             paint=dict(base='C1', pattern='weave')),
+        dict(kind='leggings', top=('knee', 0.0), bottom=('ankle', -0.005), ease=0.01, slot=4, paint=dict(base='C2', pattern='wrap')),   # 버선 껍데기와 사이에 살 띠가 보여 발목 밑까지
         dict(kind='tube', top=('neck', 0), bottom=('hip', -0.05), ease=0.014, over=0.012, slot=1, paint=dict(base='C1', pattern='weave',
              trims=[('cross', 'C2', 0.9)])),
         dict(kind='sleeves', length=1.0, ease=0.01, cuff=0.0, slot=2, paint=dict(base='C1', pattern='weave')),
@@ -343,7 +344,8 @@ GARMENTS = {
     'qaba': dict(desc='카바 — 무릎 겉옷·비스듬한 여밈·허리 띠·헐렁한 바지', tags=['robe', 'historical', 'world'],
                  colors=dict(C1='#3a5a6a', C2=GOLD), parts=[
         # 바지는 자락 속 — 여유 4cm 면 허벅지에서 자락(2cm)을 뚫고 상아색 얼룩으로 보였다(09-26 렌더). 자락은 바지 위에 over 로 겹친다
-        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.022, flare=-0.1, slot=5, paint=dict(base='#e6dfcc', pattern='weave')),
+        # 09-27 그래도 대기에서 넓적다리가 자락을 뚫어 흰 점 — 허벅지는 좁게(1cm)·발목은 넉넉하게, 윗줄은 tuck
+        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.01, ease_bottom=0.024, tuck=(3, 0.004), flare=-0.1, slot=5, paint=dict(base='#e6dfcc', pattern='weave')),
         dict(kind='tube', top=('neck', 0), bottom=('knee', 0.02), ease=0.02, over=0.02, flare=0.3, folds=0.02, slot=0,
              paint=dict(base='C1', pattern='weave', trims=[('cross', 'C2', 1.0), ('top', 0.012, 'C2'), ('bottom', 0.015, 'C2')])),
         dict(kind='sleeves', length=1.0, ease=0.016, drop=0.03, cuff=0.015, slot=2, paint=dict(base='C1', pattern='weave', trims=[('top', 0.04, 'C2')])),
@@ -874,16 +876,20 @@ class Builder:
         e_bot = p['ease_bottom'] + p.get('over', 0.0) if 'ease_bottom' in p else e_top
         for side in 'lr':
             legv = [i for i in B.body if part_sum(B.W[i], [f'thigh_{side}', f'calf_{side}']) >= p.get('wmin', 0.5)]   # 바지는 낮춰 엉덩이 옆(골반 무게) 살까지 — 윗줄이 좁으면 엉덩이 통 밑단이 턱으로 튀었다
-            ring, prev = [], None
+            found = []
             for k in range(NR):
                 z = zb + (zt - zb) * k / (NR - 1)
                 pts = B.band_pts(legv, z, 0.015)
                 if pts:
                     c = (float(np.mean([q[0] for q in pts])), float(np.mean([q[1] for q in pts])))
-                    r = ring_radii(pts, c[0], c[1], SSEG, e_bot + (e_top - e_bot) * k / (NR - 1))
-                    prev = (c, r)
-                c, r = prev
-                ring.append((z, c, r * (1 + p.get('flare', 0.0) * (1 - k / (NR - 1)) ** 2)))
+                    found.append((c, ring_radii(pts, c[0], c[1], SSEG, e_bot + (e_top - e_bot) * k / (NR - 1))))
+                else:
+                    found.append(None)
+            ks = [k for k, f in enumerate(found) if f]   # 살 점이 없는 줄은 바로 아래 줄(맨 아래 — 발목 밑 발 무게 살 — 면 첫 윗줄)
+            ring = []
+            for k in range(NR):
+                c, r = found[max([j for j in ks if j <= k], default=ks[0])]
+                ring.append((zb + (zt - zb) * k / (NR - 1), c, r * (1 + p.get('flare', 0.0) * (1 - k / (NR - 1)) ** 2)))
             for _ in range(p.get('smooth', 0)):   # 줄마다 뽑히는 살 정점이 달라 반지름·가운데가 번갈아 튀면 톱니 윤곽이 됐다 — 둘 다 평균
                 ring = [ring[0]] + [(z, tuple((ring[k - 1][1][d] + 2 * c[d] + ring[k + 1][1][d]) / 4 for d in (0, 1)),
                                      (ring[k - 1][2] + 2 * r + ring[k + 1][2]) / 4) for k, (z, c, r) in enumerate(ring) if 0 < k < NR - 1] + [ring[-1]]
