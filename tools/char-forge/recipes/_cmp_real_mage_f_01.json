@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_mage_f_01",
- "_note": "단계 3 사람 비교용 — saga-unity PeasantGirl(Mixamo) 자리 후보(DUNGEON 동행 술사 106-6 겸 마을 아낙·포로). 게임 인물 아님(이름 없음). 동양 여자·땋은 머리·흰 저고리(몸통·팔 껍데기)·가슴 위에서 발목까지 쪽빛 치마(옷자락, 무게 = 가장 가까운 살)·가죽 신. 09-26 진짜 옷(쪽빛 치마·흰 저고리(공방 hanbok_f)·천 신 — 옛 robe 통 치마 대신).",
+ "_note": "단계 3 사람 비교용 — saga-unity PeasantGirl(Mixamo) 자리 후보(DUNGEON 동행 술사 106-6 겸 마을 아낙·포로). 게임 인물 아님(이름 없음). 동양 여자·땋은 머리·흰 저고리(몸통·팔 껍데기)·가슴 위에서 발목까지 쪽빛 치마(옷자락, 무게 = 가장 가까운 살)·가죽 신. 09-26 진짜 옷(쪽빛 치마·흰 저고리(공방 hanbok_f)·천 신 — 옛 robe 통 치마 대신). 09-27 soften(치마 뼈 무게 세로 40·둘레 6 — 대기에서 배 불룩·가랑이 꺾임·뒤 혹).",
  "macro": {
   "gender": 0.0,
   "age": 0.42,
@@ -40,5 +40,11 @@
  "clothes": [
   "cf_hanbok_f_2f4a7a_ece5d3/cf_hanbok_f_2f4a7a_ece5d3.mhclo",
   "toigo_mj_cloth_shoes/toigo_mj_cloth_shoes.mhclo"
- ]
+ ],
+ "soften": {
+  "cf_hanbok_f": [
+   40,
+   6
+  ]
+ }
 }

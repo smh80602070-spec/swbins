@@ -219,6 +219,56 @@ def hide_under(arm, spec):
             print('UNDER', outer, '>', inner, 'removed', len(kill))
 
 
+SOFTEN_BONES = ('spine_', 'pelvis', 'thigh_', 'calf_')
+
+
+def soften(arm, spec):
+    """레시피 `soften`: {옷 폴더 이름: [세로 횟수, 둘레 횟수]} — 치마의 뼈 무게를 세로로 고르게 펴고, 둘레로는 조금만 편다(왼·오 다리 나눔은 남긴다).
+    가슴에서 떨어지는 치마(술사 hanbok_f)는 쉼 자세에선 곧은데, 배 높이 정점이 몸에서 11cm 떨어져 spine_01 에 붙고
+    가랑이 밑 한 뼘 사이에 골반 → 허벅지로 바뀌어 대기·걷기에서 배가 불룩하고 가랑이 높이가 꺾였다(09-27).
+    세로만 펴면 앞 가운데 왼·오 허벅지 경계가 대기 자세에서 세로 골로 남아 둘레도 조금 편다.
+    몸통·다리 뼈에만 붙은 정점만 편다 — 소매(팔 뼈)·저고리 윗부분(spine_02 위)은 그대로."""
+    for key, (v_it, h_it) in spec.items():
+        cl = cloth_src(arm, key)
+        if cl is None:
+            sys.exit(f'soften: 옷 {key} 이 레시피 clothes 에 없다')
+        names = [g.name for g in cl.vertex_groups]
+        ok = [n.startswith(SOFTEN_BONES) and n not in ('spine_02', 'spine_03') for n in names]
+        mw = cl.matrix_world
+        co = [mw @ v.co for v in cl.data.vertices]
+        n, G = len(co), len(names)
+        W = np.zeros((n, G))
+        for v in cl.data.vertices:
+            for g in v.groups:
+                W[v.index, g.group] = g.weight
+        free = np.array([W[i].sum() > 0 and all(ok[j] or W[i, j] == 0 for j in range(G)) for i in range(n)])
+        nbs = ([[] for _ in range(n)], [[] for _ in range(n)])   # 세로 · 둘레 이웃
+        for e in cl.data.edges:
+            a, b = e.vertices
+            d = co[a] - co[b]
+            h = int(abs(d.z) <= math.hypot(d.x, d.y))
+            nbs[h][a].append(b)
+            nbs[h][b].append(a)
+        idx = [i for i in range(n) if free[i] and (nbs[0][i] or nbs[1][i])]
+        for nb, iters in zip(nbs, (v_it, h_it)):
+            for _ in range(iters):
+                W2 = W.copy()
+                for i in idx:
+                    if nb[i]:
+                        W2[i] = 0.5 * W[i] + 0.5 * W[nb[i]].mean(axis=0)
+                W = W2
+        for i in idx:   # 네 뼈까지·합 1 (게임 스킨과 같게)
+            w = W[i].copy()
+            w[np.argsort(-w, kind='stable')[4:]] = 0
+            w /= w.sum()
+            for j in range(G):
+                if w[j] > 1e-4:
+                    cl.vertex_groups[j].add([i], float(w[j]), 'REPLACE')
+                elif W[i, j] or any(g.group == j for g in cl.data.vertices[i].groups):
+                    cl.vertex_groups[j].remove([i])
+        print('SOFTEN', key, 'verts', len(idx), 'iters', v_it, h_it)
+
+
 def tint(arm, slot, hexcol, outdir):
     """재질 칸의 바탕 그림에 색을 곱해 새 그림으로 굽는다(괴물 피부 초록·잿빛 등). 노드로 곱하면 FBX 가 그림을 못 옮겨서 픽셀로 굽는다.
     그림 픽셀은 sRGB 값 그대로라 색도 sRGB(헥스 그대로)로 곱한다."""
@@ -778,6 +828,8 @@ def main():
         tuck(arm, r['tuck'])
     if r.get('under'):
         hide_under(arm, r['under'])
+    if r.get('soften'):
+        soften(arm, r['soften'])
     for slot, col in r.get('tints', {}).items():
         tint(arm, slot, col, os.path.join(os.path.dirname(os.path.abspath(out)), r['id'] + '_tex'))
     if r.get('kitbash'):
