@@ -15,6 +15,7 @@
   "makehuman_system_assets: toigo_keyhole_tank_top/toigo_keyhole_tank_top.mhclo",
   "makehuman_system_assets: toigo_wool_pants/toigo_wool_pants.mhclo",
   "makehuman_system_assets: grinsegold_female_pirate_boots/grinsegold_female_pirate_boots.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell"
+  "makehuman_system_assets: cf_beanie/cf_beanie.mhclo",
+  "makehuman_system_assets: cf_vest_141416_2a2a2c/cf_vest_141416_2a2a2c.mhclo"
  ]
 }

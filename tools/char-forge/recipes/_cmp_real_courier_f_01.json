@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_courier_f_01",
- "_note": "단계 3 역참 사람 비교용 — saga-unity Megan(Mixamo) 자리 후보(GO 현대 택배 기사). 게임 인물 아님. 09-26 진짜 옷(CC0 밤빛 스웨터·짙은 바지·운동화·장갑, 챙 모자는 껍데기). 여자·말총머리·챙 모자·밤빛 겉옷·짙은 바지·장갑·운동화. 09-27 tuck(뜨개 윗옷 가슴·어깨뼈로 뚫린 살을 옷 아래로).",
+ "_note": "단계 3 역참 사람 비교용 — saga-unity Megan(Mixamo) 자리 후보(GO 현대 택배 기사). 게임 인물 아님. 09-26 진짜 옷(CC0 밤빛 스웨터·짙은 바지·운동화·장갑, 챙 모자는 껍데기). 여자·말총머리·챙 모자·밤빛 겉옷·짙은 바지·장갑·운동화. 09-27 tuck(뜨개 윗옷 가슴·어깨뼈로 뚫린 살을 옷 아래로). 09-27 모자 = 공방 cap_peaked(살 껍데기 모자는 가장자리가 톱니·구김).",
  "macro": {
   "gender": 0.0,
   "age": 0.38,
@@ -20,24 +20,6 @@
  "eyes": "high-poly/high-poly.mhclo",
  "eyelashes": "eyelashes02/eyelashes02.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
- "kitbash": [
-  {
-   "part": "shell",
-   "slot": "cloth_cap",
-   "color": "#c9a227",
-   "rough": 0.8,
-   "offset": 0.02,
-   "thick": 0.006,
-   "groups": [
-    "head"
-   ],
-   "z_eye": [
-    0.05,
-    0.2
-   ],
-   "minw": 0.5
-  }
- ],
  "anims": {
   "idle": "Idle_Loop",
   "walk": "Walk_Loop",
@@ -50,7 +32,8 @@
   "toigo_fisherman_sweater/toigo_fisherman_sweater.mhclo",
   "toigo_wool_pants/toigo_wool_pants.mhclo",
   "shoes05/shoes05.mhclo",
-  "toigo_gloves_short/toigo_gloves_short.mhclo"
+  "toigo_gloves_short/toigo_gloves_short.mhclo",
+  "cf_cap_peaked_c9a227_8a6c14/cf_cap_peaked_c9a227_8a6c14.mhclo"
  ],
  "tints": {
   "toigo_fisherman_sweater": "#a0785a",
@@ -66,5 +49,8 @@
   "toigo_wool_pants": [
    "shoes05"
   ]
- }
+ },
+ "_garments": [
+  "cap_peaked@c9a227,8a6c14"
+ ]
 }

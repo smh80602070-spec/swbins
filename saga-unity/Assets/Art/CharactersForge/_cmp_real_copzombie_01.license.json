@@ -14,6 +14,6 @@
   "makehuman_system_assets: namuhekam_male_polo_shirt/namuhekam_male_polo_shirt.mhclo",
   "makehuman_system_assets: toigo_wool_pants/toigo_wool_pants.mhclo",
   "makehuman_system_assets: shoes03/shoes03.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell"
+  "makehuman_system_assets: cf_cap_peaked/cf_cap_peaked.mhclo"
  ]
 }

@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_copzombie_01",
- "_note": "단계 3 들판 적 비교용 — saga-unity Copzombie(Mixamo) 자리 후보(GO 현대 '떠도는 망자'). 게임 인물 아님. 09-26 진짜 옷(CC0 남색 반소매 제복·남색 바지·검은 구두, 챙 모자는 껍데기). 꺼진 볼·잿빛 초록 피부·반소매 남색 제복 윗옷·남색 바지·검은 구두·챙 모자.",
+ "_note": "단계 3 들판 적 비교용 — saga-unity Copzombie(Mixamo) 자리 후보(GO 현대 '떠도는 망자'). 게임 인물 아님. 09-26 진짜 옷(CC0 남색 반소매 제복·남색 바지·검은 구두, 챙 모자는 껍데기). 꺼진 볼·잿빛 초록 피부·반소매 남색 제복 윗옷·남색 바지·검은 구두·챙 모자. 09-27 모자 = 공방 cap_peaked(살 껍데기 모자는 가장자리가 톱니·구김).",
  "macro": {
   "gender": 1.0,
   "age": 0.55,
@@ -30,24 +30,6 @@
  "eyes": "high-poly/high-poly.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
- "kitbash": [
-  {
-   "part": "shell",
-   "slot": "cloth_cap",
-   "color": "#1f2638",
-   "rough": 0.8,
-   "offset": 0.014,
-   "thick": 0.006,
-   "groups": [
-    "head"
-   ],
-   "z_eye": [
-    0.045,
-    0.2
-   ],
-   "minw": 0.5
-  }
- ],
  "anims": {
   "idle": "Sword_Idle",
   "walk": "Walk_Loop",
@@ -59,6 +41,10 @@
  "clothes": [
   "namuhekam_male_polo_shirt/namuhekam_male_polo_shirt.mhclo",
   "toigo_wool_pants/toigo_wool_pants.mhclo",
-  "shoes03/shoes03.mhclo"
+  "shoes03/shoes03.mhclo",
+  "cf_cap_peaked/cf_cap_peaked.mhclo"
+ ],
+ "_garments": [
+  "cap_peaked"
  ]
 }

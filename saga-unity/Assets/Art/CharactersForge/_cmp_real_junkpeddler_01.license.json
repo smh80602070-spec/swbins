@@ -14,6 +14,7 @@
   "makehuman_system_assets: male_casualsuit05/male_casualsuit05.mhclo",
   "makehuman_system_assets: rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo",
   "makehuman_system_assets: cf_pack_big/cf_pack_big.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell"
+  "makehuman_system_assets: cf_cap_flat/cf_cap_flat.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell"
  ]
 }

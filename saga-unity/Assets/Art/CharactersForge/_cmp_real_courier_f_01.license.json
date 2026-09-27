@@ -16,6 +16,6 @@
   "makehuman_system_assets: toigo_wool_pants/toigo_wool_pants.mhclo",
   "makehuman_system_assets: shoes05/shoes05.mhclo",
   "makehuman_system_assets: toigo_gloves_short/toigo_gloves_short.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell"
+  "makehuman_system_assets: cf_cap_peaked_c9a227_8a6c14/cf_cap_peaked_c9a227_8a6c14.mhclo"
  ]
 }

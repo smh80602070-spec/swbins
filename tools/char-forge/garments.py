@@ -9,6 +9,7 @@
   sleeves 소매 — `length` 팔 몫(1 = 손목, 0.35 = 어깨 갑옷), `start` 시작(0.6 = 팔꿈치 아래 팔 가리개, 윗팔 살은 안 지운다), `drop` 처짐, `flare` 끝 넓힘
           `arc`(도) = 팔 바깥쪽만 두르는 판(소데), `bag` = 팔꿈치부터 네모나게 늘어진 자루(기모노)
   band    띠 — 그 높이 통 둘레 바깥(`ease` 면 통 대신 몸 볼록 둘레 + ease — 앞뒤 판만 있는 겉옷판 위 허리띠)
+  crown·visor 천 모자 몸통(머리 따라 둥글게, `cuff` 접은 단)·앞챙(`taper` 크면 가운데만 길다) — 챙 모자·비니, beret 은 `tilt_a` 로 쏠림 방향(270 = 앞, 납작 모자)
   backpack 등 짐 — 등판 뒤 둥근 모서리 상자(width·depth, top·bottom 높이) + 어깨끈 둘(strap 폭, 끈 칸 strap_slot·색 paint.strap)
   collar  목 깃(목폴라) — 목 살을 따라 목 밑에서 턱 밑까지, 밑단은 윗줄보다 `taper` 배 넘게 안 퍼진다(셔츠 깃 속으로)
   leggings 다리 통(정강이 가리개·바지) — `ease_bottom` 발목 여유(위로 곧게 ease 까지)·`smooth` 세로 다듬기·`wmin` 허벅지 무게 문턱(바지 0.15 — 엉덩이 옆 살까지) · discs 가슴 둥근 판(호심경) · bow 등 매듭(오비) · sash 비스듬한 띠(토가)
@@ -57,7 +58,7 @@ GARMENTS = {
     # 저고리 + 치마 — 여자(조선·고려·삼국 공통 틀, 색은 레시피 tints 로 바꾸지 않고 틀마다 굽는다)
     'hanbok_f': dict(desc='저고리(교령·고름·끝동)와 가슴에서 떨어지는 긴 치마', tags=['hanbok', 'historical', 'east', 'female'],
                      colors=dict(C1='#a8323a', C2='#efd98c'), parts=[
-        dict(kind='tube', top=('chest', 0.03), bottom=('ankle', 0.005), ease=0.035, flare=1.4, mono=True, folds=0.04, slot=0,
+        dict(kind='tube', top=('chest', 0.03), bottom=('ankle', 0.005), ease=0.035, flare=0.6, mono=True, folds=0.05, nfolds=14, slot=0,
              paint=dict(base='C1', pattern='weave')),
         dict(kind='tube', top=('neck', 0), bottom=('chest', -0.035), ease=0.016, over=0.012, slot=1,
              paint=dict(base='C2', trims=[('cross', WHITE, 0.6), ('top', 0.01, WHITE), ('ribbon', 'C1')])),
@@ -66,13 +67,13 @@ GARMENTS = {
     ]),
     # 찰갑 무장 — 붉은 속옷(무릎) + 비늘 가슴갑옷 + 어깨 비늘 + 비늘 치마 + 띠
     'chalgap': dict(desc='찰갑 — 비늘 가슴갑옷·어깨·치마, 붉은 속옷', tags=['armor', 'historical', 'east'], colors=dict(C1='#7a2a24'), parts=[
-        dict(kind='tube', top=('neck', 0), bottom=('knee', -0.06), ease=0.02, flare=0.3, folds=0.015, slot=0,
+        dict(kind='tube', top=('neck', 0), bottom=('knee', -0.06), ease=0.02, flare=0.15, folds=0.015, slot=0,
              paint=dict(base='C1', trims=[('cross', BLACK), ('top', 0.012, BLACK), ('bottom', 0.03, BLACK)])),
         dict(kind='sleeves', length=1.0, ease=0.02, drop=0.03, cuff=0.01, slot=2,
              paint=dict(base='C1', trims=[('top', 0.06, BLACK)])),
         dict(kind='tube', top=('chest', 0.07), bottom=('hip', -0.03), ease=0.02, over=0.024, slot=1,
              paint=dict(base=STEEL, pattern='lamellar', lace=LACE, trims=[('top', 0.012, LACE), ('bottom', 0.01, LACE)])),
-        dict(kind='tube', top=('waist', 0.0), bottom=('knee', 0.04), ease=0.02, over=0.034, flare=0.35, mono=True, slot=5,
+        dict(kind='tube', top=('waist', 0.0), bottom=('knee', 0.04), ease=0.02, over=0.034, flare=0.16, mono=True, slot=5,
              paint=dict(base=STEEL, pattern='lamellar', lace=LACE, trims=[('bottom', 0.015, LACE), ('split', 0.008, BLACK)])),
         dict(kind='sleeves', length=0.36, ease=0.03, over=0.02, flare=0.55, drop=0.0, cuff=0.0, slot=4,
              paint=dict(base=STEEL, pattern='lamellar', lace=LACE, trims=[('top', 0.03, LACE)])),
@@ -395,6 +396,11 @@ GARMENTS = {
         dict(kind='tube', top=('neck', 0), bottom=('hip', -0.03), ease=0.008, over=0.012, fit=True, slot=0,
              paint=dict(base='C1', pattern='quilt', trims=[('front', 0.02, 'C2'), ('top', 0.012, 'C2'), ('bottom', 0.012, 'C2')])),
     ]),
+    # 방탄 조끼 — 두꺼운 재킷·셔츠 위(넉넉한 볼록 둘레 — 붙는 vest 는 재킷 속으로 들어가 등에 재킷이 얼룩처럼 비쳤다, 09-27)
+    'tacvest': dict(desc='방탄 조끼(재킷 위)', tags=['vest', 'modern'], colors=dict(C1='#15171a', C2='#0a0b0c'), parts=[
+        dict(kind='tube', top=('neck', 0), bottom=('hip', -0.02), ease=0.022, over=0.016, slot=0,
+             paint=dict(base='C1', pattern='quilt', trims=[('front', 0.018, 'C2'), ('top', 0.02, 'C2'), ('bottom', 0.03, 'C2')])),
+    ]),
     # 쇠 가슴판 — 몸에 붙는 옷 위(fit)
     'cuirass': dict(desc='쇠 가슴판(붙는 옷 위)', tags=['armor'], colors=dict(C1='#b08a3a', C2='#3a2e1a'), parts=[
         dict(kind='tube', top=('shoulder', -0.05), bottom=('waist', -0.02), ease=0.01, over=0.012, fit=True, slot=0,
@@ -430,6 +436,21 @@ GARMENTS = {
     'pack_metal': dict(desc='쇠 등 짐 — 판 상자·어깨끈', tags=['bag', 'future'], colors=dict(C1='#5d646b', C2='#2a2c30'), parts=[
         dict(kind='backpack', top=('shoulder', -0.03), bottom=('waist', 0.03), width=0.3, depth=0.12, strap=0.035, slot=0, strap_slot=3,
              paint=dict(base='C1', pattern='plate', strap='C2', trims=[('top', 0.08, 'C2'), ('bottom', 0.06, 'C2')])),
+    ]),
+    # 챙 모자 — 머리 따라 둥근 천 몸통 + 앞챙(제복·야구 모자). 살 껍데기 모자는 톱니·구김이었다(09-27)
+    'cap_peaked': dict(desc='챙 모자 — 둥근 천 몸통·앞챙', tags=['hat', 'modern'], colors=dict(C1='#1f2638', C2='#141820'), parts=[
+        dict(kind='crown', ease=0.022, brow=0.045, dome=0.045, slot=6, paint=dict(base='C1', pattern='weave')),
+        dict(kind='visor', z=0.045, ease=0.024, length=0.075, droop=0.016, half=58, taper=1.6, slot=5, paint=dict(base='C2', pattern='weave')),
+    ]),
+    # 납작 모자(뉴스보이) — 앞으로 쏠려 처진 납작 몸통 + 짧은 챙
+    'cap_flat': dict(desc='납작 모자 — 앞으로 쏠린 납작 몸통·짧은 챙', tags=['hat', 'modern'], colors=dict(C1='#3a3226', C2='#2a241c'), parts=[
+        dict(kind='beret', z=0.05, ease=0.024, puff=0.022, dome=0.028, tilt=0.022, tilt_a=270, droop=0.014, slot=6,
+             paint=dict(base='C1', pattern='weave', trims=[('bottom', 0.1, 'C2')])),
+        dict(kind='visor', z=0.05, ease=0.026, length=0.045, droop=0.01, half=70, slot=5, paint=dict(base='C2', pattern='weave')),
+    ]),
+    # 비니 — 머리에 붙는 뜨개 몸통 + 접어 올린 단
+    'beanie': dict(desc='비니 — 뜨개 몸통·접어 올린 단', tags=['hat', 'modern'], colors=dict(C1='#b0206a'), parts=[
+        dict(kind='crown', ease=0.02, brow=0.055, dome=0.035, cuff=0.032, slot=6, paint=dict(base='C1', pattern='knit')),
     ]),
     # 베레모 — 한쪽으로 쏠려 처진 둥근 납작 모자(현대)
     'beret': dict(desc='베레모 — 한쪽으로 쏠린 둥근 납작 모자', tags=['hat', 'modern'], colors=dict(C1='#6a1f2a'), parts=[
@@ -1091,6 +1112,48 @@ class Builder:
                              for s in arc])
             self.grid(rows, p['slot'], Vector((0, cy, z0 + 0.2)), closed=False)
 
+    def crown(self, p):
+        """천 모자 몸통(챙 모자·비니) — 이마(눈 + brow)부터 머리를 따라 올라가 둥글게 닫는다(`ease` 는 머리카락 두께 넘게).
+        `cuff`(높이 m) 면 밑단에 접어 올린 단(비니). 살 껍데기 모자는 가장자리가 톱니·구김으로 보였다(09-27 61벌 점검)."""
+        B = self.B
+        cy = B.head_cy + p.get('back', 0.0)
+        specs, self.top_z = self._dome(p.get('ease', 0.022), p.get('brow', 0.05), p.get('dome', 0.028), cy)
+        fixed, prev = [], None   # 머리 둘레를 그대로 따르면 중간에 턱이 져 두 층 머핀처럼 보였다 — 위로 갈수록 안 넓어지게, 둘레도 고르게
+        for z, r in specs:
+            r = np.asarray(r, dtype=float) if not np.isscalar(r) else np.full(HSEG, float(r))
+            for _ in range(2):
+                r = (np.roll(r, 1) + 2 * r + np.roll(r, -1)) / 4
+            if prev is not None:
+                r = np.minimum(r, prev)
+            fixed.append((z, r))
+            prev = r
+        specs = fixed
+        if p.get('cuff'):
+            z0, r0 = specs[0]
+            e = p.get('cuff_ease', 0.007)
+            specs = [(z0 - 0.004, r0 + e * 0.6), (z0, r0 + e), (z0 + p['cuff'] * 0.5, self._head_ring(z0 + p['cuff'] * 0.5, p.get('ease', 0.022), cy) + e),
+                     (z0 + p['cuff'], self._head_ring(z0 + p['cuff'], p.get('ease', 0.022), cy) + e * 0.7)] + specs[1:]
+        self._rings(specs, p['slot'], cy)
+
+    def visor(self, p):
+        """모자 앞챙 — 이마(눈 + z) 둘레에서 앞으로 `length`(가운데, 옆으로 갈수록 짧다), 끝이 `droop` 만큼 처진다. 위·아래 두 겹(뒷면 안 그림 엔진)."""
+        B = self.B
+        cy = B.head_cy + p.get('back', 0.0)
+        z0 = B.eye_z + p.get('z', 0.05)
+        r0 = self._head_ring(z0, p.get('ease', 0.024), cy)
+        arc = self._front_arc(p.get('half', 80))
+        for dz, ref_dz in ((0.0, -0.3), (-p.get('thick', 0.004), 0.3)):
+            rows = []
+            for f in (0.0, 0.35, 0.7, 1.0):
+                row = []
+                for s in arc:
+                    a = 2 * math.pi * s / HSEG
+                    w = max(0.0, math.cos(a - math.radians(270)))
+                    rr = r0[s] + p['length'] * (0.2 + 0.8 * w ** p.get('taper', 0.7)) * f   # taper 크면 가운데만 길다(챙 모자 — 옆까지 길면 버킷햇)
+                    row.append(self.vert((rr * math.cos(a), cy + rr * math.sin(a), z0 + dz - p.get('droop', 0.012) * f * f), 'cf_head'))
+                rows.append(row)
+            self.grid(rows, p['slot'], Vector((0, cy, z0 + ref_dz)), closed=False)
+
     def neckguard(self, p):
         """뒤·옆 드림(비늘 목가리개·시코로) — 얼굴 앞 ±`open` 도는 튼다, `flare` 아래로 벌어짐, `drop` 길이."""
         B = self.B
@@ -1265,14 +1328,15 @@ class Builder:
             t = (math.pi / 2) * k / 7
             specs.append((zw + (zt - zw) * math.sin(t), wide * max(math.cos(t), 0.03), 1.0, 1.0 - 0.6 * math.sin(t)))
         rows, refs = [], []
+        ta = math.radians(p.get('tilt_a', 0))   # 쏠림 방향(0 = +X 옆, 270 = 앞 — 납작 모자)
         for z, r, fs, fd in specs:
-            dx = tilt * fs
+            dx, dy = tilt * fs * math.cos(ta), tilt * fs * math.sin(ta)
             ring = []
             for s in range(HSEG):
                 a = 2 * math.pi * s / HSEG
-                ring.append(self.vert((dx + r[s] * math.cos(a), cy + r[s] * math.sin(a), z - p.get('droop', 0.025) * fd * max(0.0, math.cos(a))), 'cf_head'))
+                ring.append(self.vert((dx + r[s] * math.cos(a), cy + dy + r[s] * math.sin(a), z - p.get('droop', 0.025) * fd * max(0.0, math.cos(a - ta))), 'cf_head'))
             rows.append(ring)
-            refs.append(Vector((dx, cy, z - 0.05)))
+            refs.append(Vector((dx, cy + dy, z - 0.05)))
         self.grid(rows, p['slot'], refs)
         self.top_z = zt
 

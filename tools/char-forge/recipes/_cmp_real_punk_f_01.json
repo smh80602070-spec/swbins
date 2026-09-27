@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_punk_f_01",
- "_note": "단계 3 STORY 비교용 — saga-unity Jody(Mixamo) 자리 후보(STORY 현대 '뒷골목 불량배', 비경 5층~). 게임 인물 아님. 09-26 진짜 옷(CC0 짧은 윗옷(맨팔)·잿빛 바지·높은 장화, 가죽 조끼·비니는 껍데기). 젊은 여자·단발·자홍 비니·검은 가죽 조끼 위 짧은 윗옷(맨팔)·찢긴 잿빛 바지·높은 장화.",
+ "_note": "단계 3 STORY 비교용 — saga-unity Jody(Mixamo) 자리 후보(STORY 현대 '뒷골목 불량배', 비경 5층~). 게임 인물 아님. 09-26 진짜 옷(CC0 짧은 윗옷(맨팔)·잿빛 바지·높은 장화, 가죽 조끼·비니는 껍데기). 젊은 여자·단발·자홍 비니·검은 가죽 조끼 위 짧은 윗옷(맨팔)·찢긴 잿빛 바지·높은 장화. 09-27 모자 = 공방 beanie(살 껍데기 모자는 가장자리가 톱니·구김). 09-27 조끼 = 공방 vest(옷 면 껍데기 조끼는 구겨진 판).",
  "macro": {
   "gender": 0.0,
   "age": 0.42,
@@ -20,43 +20,6 @@
  "eyes": "high-poly/high-poly.mhclo",
  "eyelashes": "eyelashes02/eyelashes02.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
- "kitbash": [
-  {
-   "part": "shell",
-   "slot": "leather",
-   "color": "#141416",
-   "rough": 0.55,
-   "offset": 0.01,
-   "thick": 0.005,
-   "groups": [
-    "spine_0*",
-    "clavicle_*",
-    "pelvis"
-   ],
-   "z": [
-    0.56,
-    0.86
-   ],
-   "minw": 0.5,
-   "src": "toigo_keyhole_tank_top"
-  },
-  {
-   "part": "shell",
-   "slot": "cloth_cap",
-   "color": "#b0206a",
-   "rough": 0.85,
-   "offset": 0.034,
-   "thick": 0.006,
-   "groups": [
-    "head"
-   ],
-   "z_eye": [
-    0.035,
-    0.2
-   ],
-   "minw": 0.5
-  }
- ],
  "anims": {
   "idle": "Sword_Idle",
   "walk": "Walk_Loop",
@@ -68,10 +31,21 @@
  "clothes": [
   "toigo_keyhole_tank_top/toigo_keyhole_tank_top.mhclo",
   "toigo_wool_pants/toigo_wool_pants.mhclo",
-  "grinsegold_female_pirate_boots/grinsegold_female_pirate_boots.mhclo"
+  "grinsegold_female_pirate_boots/grinsegold_female_pirate_boots.mhclo",
+  "cf_beanie/cf_beanie.mhclo",
+  "cf_vest_141416_2a2a2c/cf_vest_141416_2a2a2c.mhclo"
  ],
  "tints": {
   "toigo_keyhole_tank_top": "#d8d4c8",
   "toigo_wool_pants": "#6a6c72"
+ },
+ "_garments": [
+  "beanie",
+  "vest@141416,2a2a2c"
+ ],
+ "under": {
+  "cf_vest_141416_2a2a2c": [
+   "toigo_keyhole_tank_top"
+  ]
  }
 }

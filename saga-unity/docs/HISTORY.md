@@ -9666,3 +9666,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 이번엔 `tools/unity-batch.sh` 를 안 씀 — 그 스크립트가 실행 뒤 manifest·lock 을 되돌려 이 변경을 지운다(설치 버전 = 프로젝트 버전이라 올림 부작용도 없음). 부산물(글꼴 셋·URP 설정 셋·RP 에셋 v13·EditorSettings·ProjectSettings)은 git checkout.
 - 결과: 컴파일 오류 0 · `PlaytestSagaCredits` OK — 법적 고지 `SagaLegal.txt` 92 → 59KB(Visual Scripting 제3자 고지 등 빠짐) · `PlaytestRealmSlice` OK · 배치 점검 OK(문제 0) · `PlaytestSagaAab` OK — 크기 그대로(base 36.8·팩 22.0MB, IL2CPP 코드 제거가 이미 뺐다).
 - 남음: 묶음 있는 PC 에서 전체 AAB 실측 · 제출 목록 사람 칸.
+
+## 2026-09-27 char-forge — 모자·조끼 껍데기 → 공방 옷, 치마 둘 (9벌)
+
+"vroid 자체툴 이어해".
+
+- garments 새 머리 부품 `crown`·`visor`, beret `tilt_a` → 틀 `cap_peaked`·`cap_flat`·`beanie`: 톱니·구김 껍데기 모자 일곱 교체(Cop Zombie·Pete·택배 기사·Swat Guy·Steve·Leonard·불량배 자리).
+- 조끼 껍데기 셋 → `vest`·새 틀 `tacvest`(재킷 위 방탄 조끼) + `under`. 치마저고리 삼각 치마 → A자, 찰갑 치마 벌어짐 절반.
+- 검사: 9벌 verify fbx ≤ 0.7° · glb 0.0° · sha256 같음 · CMP_RESULT OK(FBX 로컬 전용). 남은 흠은 char-forge README §8-1 열한째. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
