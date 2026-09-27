@@ -68,6 +68,8 @@ namespace Saga.Forest.Data
             new FurnitureItem("visit_angler", "명인의 어탁",     FurnitureSet.Janchi, 2000, false),
             new FurnitureItem("visit_bug",    "나비 표본 액자",  FurnitureSet.Janchi, 2000, false),
             new FurnitureItem("visit_future", "시간의 탁상시계", FurnitureSet.Janchi, 3000, true),
+            new FurnitureItem("visit_dokkaebi", "도깨비 방망이 탁자", FurnitureSet.Janchi, 2400, false), // 109-12-2
+            new FurnitureItem("visit_alien",  "별 지도 액자",    FurnitureSet.Janchi, 3000, false),
         };
 
         /// <summary>가구전 물건 + 방문객 가구(창고에서 놓을 때).</summary>

@@ -15956,12 +15956,16 @@ MonoBehaviour:
   - Brady
   - Leonard
   - XBot
+  - Demon
+  - Jennifer
   visitorBodyModels:
   - {fileID: 5484003341056005700, guid: 75978c56f793711409fb48a1ddef5223, type: 3}
   - {fileID: 5462503857374905867, guid: 668cf51cf4ad39441b845ef3827f55da, type: 3}
   - {fileID: 2467220281102201925, guid: bbe9292fa75c0784a9e91039382ada79, type: 3}
   - {fileID: 1647040426612610059, guid: 76f322a024251ed47a98cc49adf4920e, type: 3}
   - {fileID: 6628827046597372185, guid: b6917135937f0914ca9f75c374e1329d, type: 3}
+  - {fileID: 7708629873144911992, guid: 7c1c2f683b414884787a1c5064874170, type: 3}
+  - {fileID: 8935535656894772832, guid: 85e0786801ed60d468fd31ea6f595415, type: 3}
 --- !u!4 &636572282
 Transform:
   m_ObjectHideFlags: 0

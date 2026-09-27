@@ -41,7 +41,15 @@ namespace Saga.Forest.Data
 
         public static int MuseumPoints() => MuseumDiscoveredTotal() * MuseumPointsPerItem;
 
-        public static int Total() => ForestHomeState.Score().Total + MuseumPoints();
+        /// <summary>PLAN.md 109-12-2(웹 §5.11) — 눌러앉은 손님 하나에 +6.</summary>
+        public static int Total() => ForestHomeState.Score().Total + MuseumPoints() + ForestVisitors.GuestPoints();
+
+        /// <summary>평가판 셋째 줄 — 눌러앉은 손님이 있을 때만(없으면 null).</summary>
+        public static string GuestLine()
+        {
+            int n = ForestVisitors.SettledList.Count;
+            return n <= 0 ? null : string.Format(ForestLocalization.T("town_score.guest_line", "이웃 손님 {0}명 (+{1}점)"), n, ForestVisitors.GuestPoints());
+        }
 
         /// <summary>1~5 — Grades 경계를 넘은 최고 단계 + 1(웹판 `beauty().stars
         /// = level + 1`과 같은 식).</summary>

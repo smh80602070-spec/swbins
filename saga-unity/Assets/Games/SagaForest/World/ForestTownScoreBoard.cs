@@ -57,6 +57,8 @@ namespace Saga.Forest.World
             string starText = new string('★', stars) + new string('☆', 5 - stars);
             string text = string.Format(ForestLocalization.T("town_score.board", "마을 평가 {0}\n{1}\n{2}"),
                 starText, homeLine, museumLine);
+            string guest = ForestTownScore.GuestLine(); // 109-12-2 이웃 손님
+            if (guest != null) text += "\n" + guest;
             DialogueLabel.Instance?.Show(text, ToastSec);
         }
     }

@@ -21,7 +21,15 @@ namespace Saga.Forest.Data
     /// 바깥 고리가 없어 **존 넷 안**(존마다 적어도 하나, 서로 8m 넘게, 물건·소품에서 2.5m 밖). 날짜는 실제 날짜.
     /// 웹 "두 번 말 걸면"은 이 판에 말 걸기 단추가 없어(가까이 가면 말한다) **물러났다 다시 다가서면**.
     /// 보상 가구 다섯은 가구전에서 안 판다(`FurnitureItem.VisitorGifts`). 세이브 v8 `visit*`.
-    /// 새 손님 둘·단골·몸짓(§5.10)은 다음 조각.
+    ///
+    /// **109-12-2 새 손님 둘·단골·몸짓(웹 §5.10) + 이웃(§5.11)** — 👺 도깨비 대장 두두(존 넷 "흔들리는 덤불" 셋에 숨은 꼬마 —
+    /// 찾으면 광장 대장 곁으로 뛰어와 춤춘다) · 👽 불시착 탐사원 루미(탐사선 부품 넷). 루미는 이 트랙에 이미 마을 사람(109-4
+    /// surveyor)이라 손님 날엔 **그 사람이 광장에 나와** 부탁한다(평소 자리에선 숨음, `FolkId`). 웹 §5.13 현대 손님 둘
+    /// (택배 기사 달음·사진작가 찰나)도 이 트랙엔 마을 사람으로 이미 있어 손님 표엔 안 넣었다.
+    /// **단골**: 부탁을 마칠 때마다(여우는 사기) 정 +1, 셋 이상이면 마친 날 다시 다가서면 "눌러앉아도 되겠소?", 한 번 더
+    /// 다가서면 눌러앉는다(여덟 자리까지). 눌러앉은 손님은 날마다 광장 둘레 제자리(`SettleSpots`)에 서서 하루 한 번 선물(과일
+    /// 2~3, 웹 금 200~300 ÷ 100), 제 손님 날엔 광장 한가운데. **이웃**: 하나에 마을 평가 +6, 광장에 손님이 둘 이상이면 날짜
+    /// 해시로 한 쌍이 마주 보고 수다(선물 뒤 다가서면 들린다). 세이브 v9.
     /// </summary>
     public static class ForestVisitors
     {
@@ -46,6 +54,10 @@ namespace Saga.Forest.Data
             /// <summary>보상 과일(웹 금 ÷ 100).</summary>
             public int Fruit;
             public string Furniture;
+            /// <summary>109-12-2 — 찾은 조각(도깨비 꼬마)이 광장 대장 곁으로 돌아온다.</summary>
+            public bool Back;
+            /// <summary>109-12-2 — 이 손님이 곧 이 트랙 마을 사람(`ForestEras.FolkList` Id)이면 손님으로 나온 동안 그 사람은 숨는다.</summary>
+            public string FolkId;
             public string NameKey => "visitor." + Key + ".name";
             public string LineKey => "visitor." + Key + ".line";
         }
@@ -67,7 +79,124 @@ namespace Saga.Forest.Data
             new Visitor { Key = "traveler", NameKo = "시간 여행자 K-7", Emoji = "🤖", Type = Kind.Bring, Era = "future", Body = "XBot",
                 LineKo = "삐빗. 2387년에서 왔습니다. 화석 둘과 꽃 하나가 있으면 귀환 부품을 만들 수 있습니다", N = 2, Cat = ForestMuseumState.Category.Fossil,
                 N2 = 1, Cat2 = ForestMuseumState.Category.Flower, Fruit = 9, Furniture = "visit_future" },
+            // 109-12-2(웹 §5.10)
+            new Visitor { Key = "dokkaebi", NameKo = "도깨비 대장 두두", Emoji = "👺", Type = Kind.Collect, Era = "myth", Body = "Demon",
+                LineKo = "우리 꼬마 셋이 숨바꼭질하다 안 돌아와 — 숲 흔들리는 덤불 속 어딘가야", PieceKo = "🧒 도깨비 꼬마", N = 3, Fruit = 9,
+                Furniture = "visit_dokkaebi", Back = true },
+            new Visitor { Key = "alien", NameKo = "불시착 탐사원 루미", Emoji = "👽", Type = Kind.Collect, Era = "future", Body = "Jennifer",
+                LineKo = "삐— 탐사선 부품 넷이 숲에 흩어졌어요. 찾아 주면 별 지도를 드릴게요", PieceKo = "🔩 탐사선 부품", N = 4, Fruit = 11,
+                Furniture = "visit_alien", FolkId = "surveyor" },
         };
+
+        // ── 109-12-2 단골·눌러앉기·이웃(웹 §5.10·5.11) ──────────────
+        public const int SettleN = 3;
+        public const int GuestBeauty = 6;
+        public const float KidHeight = 0.95f;
+        /// <summary>눌러앉은 손님 i 번째 자리(world XZ) — 광장 둘레, 물건 3m·사람 길 2.5m 밖(진단).</summary>
+        public static readonly Vector2[] SettleSpots =
+        {
+            new Vector2(8f, -1.5f), new Vector2(-3f, 4.5f), new Vector2(7f, 7f), new Vector2(-3f, -0.5f),
+            new Vector2(3f, 8.5f), new Vector2(8.5f, -4.5f), new Vector2(-0.5f, 8.5f), new Vector2(9.5f, 2f),
+        };
+        /// <summary>하루 선물(과일) — 웹 금 ÷ 100 을 웹 반올림으로.</summary>
+        private static readonly Dictionary<string, int> Gift = new Dictionary<string, int>
+        {
+            ["fox"] = 3, ["sailor"] = 3, ["wisp"] = 2, ["angler"] = 2, ["bugdoc"] = 2, ["traveler"] = 3, ["dokkaebi"] = 2, ["alien"] = 3,
+        };
+        private static readonly Dictionary<string, string> SettleLineKo = new Dictionary<string, string>
+        {
+            ["fox"] = "이 마을 손님들 눈이 밝아 장사할 맛이 나오", ["sailor"] = "바다는 멀어도 여기 바람이 좋구려",
+            ["wisp"] = "히히, 밤마다 마을 등불 옆에서 놀아", ["angler"] = "물은 없어도 기다리는 맛은 여기도 있네",
+            ["bugdoc"] = "이 숲의 곤충 도감을 새로 쓰는 중이에요", ["traveler"] = "삐빗. 귀환 일정을 무기한 미뤘습니다",
+            ["dokkaebi"] = "꼬마들이 마을 아이들이랑 잘 논다", ["alien"] = "이 별, 정착지로 등록했어요",
+        };
+        private static readonly Dictionary<string, string> ChatOpenKo = new Dictionary<string, string>
+        {
+            ["fox"] = "요즘 바다 건너 물건값이 부쩍 올랐다오", ["sailor"] = "어젯밤 바람 냄새가 폭풍 전날 같았소",
+            ["wisp"] = "히히, 어제 등불 셋을 몰래 껐다 켰어", ["angler"] = "버섯 미끼로 못 낚을 고기는 없다네",
+            ["bugdoc"] = "이 숲 나비 날개 무늬가 도감이랑 달라요", ["traveler"] = "삐빗. 이 시대 달력은 계산이 어렵습니다",
+            ["dokkaebi"] = "우리 꼬마들이 마을 아이들 신발을 숨겼대", ["alien"] = "이 별 사람들은 밥을 하루 세 번이나 먹어요",
+        };
+        private static readonly Dictionary<string, string> ChatReplyKo = new Dictionary<string, string>
+        {
+            ["fox"] = "그런 건 내가 싸게 구해 주리다, 수수료만 조금", ["sailor"] = "허허, 뱃사람 앞에서 그런 얘기를",
+            ["wisp"] = "헤에, 그럼 오늘 밤에 같이 보러 가자", ["angler"] = "기다리는 게 반이지, 서두르지 말게",
+            ["bugdoc"] = "어머, 그거 새 종일지도 몰라요!", ["traveler"] = "삐빗. 기록해 두겠습니다",
+            ["dokkaebi"] = "크하하, 그 정도는 장난도 아니지", ["alien"] = "제 별에선 그걸 \"우정\" 이라고 불러요",
+        };
+
+        public static string SettleLine(string key) => SettleLineKo.TryGetValue(key, out var t) ? ForestLocalization.T("visitor." + key + ".settled", t) : "";
+        public static string ChatOpen(string key) => ChatOpenKo.TryGetValue(key, out var t) ? ForestLocalization.T("visitor." + key + ".chat_open", t) : "…";
+        public static string ChatReply(string key) => ChatReplyKo.TryGetValue(key, out var t) ? ForestLocalization.T("visitor." + key + ".chat_reply", t) : "…";
+        public static int GiftOf(string key) => Gift.TryGetValue(key, out var g) ? g : 2;
+
+        private static readonly Dictionary<string, int> Bonds = new Dictionary<string, int>();
+        private static readonly List<string> Settled = new List<string>();
+        private static int _giftDay = int.MinValue;
+        private static readonly HashSet<string> GiftGot = new HashSet<string>();
+
+        public static int BondOf(string key) => Bonds.TryGetValue(key, out var n) ? n : 0;
+        public static IReadOnlyList<string> SettledList => Settled;
+        public static bool IsSettled(string key) => Settled.Contains(key);
+        /// <summary>마을 평가 "이웃 손님" 몫(§5.11).</summary>
+        public static int GuestPoints() => Settled.Count * GuestBeauty;
+
+        private static void BondUp(string key) => Bonds[key] = BondOf(key) + 1;
+
+        /// <summary>오늘 수다 한 쌍 — 광장에 선 손님(키 목록, 오늘 손님 먼저) 둘 이상일 때 날짜 해시로. 없으면 (-1,-1).</summary>
+        public static (int A, int B) ChatPair(IList<string> people, int day)
+        {
+            int n = people.Count;
+            if (n < 2) return (-1, -1);
+            int i = (int)(Hash01(day * 23 + 5, 331) * n) % n;
+            int j = (i + 1 + (int)(Hash01(day * 29 + 9, 557) * (n - 1)) % (n - 1)) % n;
+            return (i, j);
+        }
+
+        public static string ChatText(string a, string b)
+        {
+            var va = List[IndexOf(a)];
+            var vb = List[IndexOf(b)];
+            return $"{va.Emoji} \"{ChatOpen(a)}\" — {vb.Emoji} \"{ChatReply(b)}\"";
+        }
+
+        /// <summary>눌러앉은 손님에게 다가섰다 — 하루 한 번 선물, 그 뒤엔 한마디(수다 중이면 그 대화).</summary>
+        public static string TalkSettled(string key, string chat = null)
+        {
+            int i = IndexOf(key);
+            if (i < 0) return null;
+            var v = List[i];
+            string who = $"{v.Emoji} {Name(v)}";
+            if (_giftDay != Today) { _giftDay = Today; GiftGot.Clear(); }
+            if (GiftGot.Contains(key))
+                return chat != null ? $"{who} — " + string.Format(ForestLocalization.T("visitor.chatting", "(수다 중) {0}"), chat) : $"{who} — {SettleLine(key)}";
+            GiftGot.Add(key);
+            int g = GiftOf(key);
+            ForestState.AddFruit(g);
+            Touch();
+            return who + " — " + string.Format(ForestLocalization.T("visitor.gift", "이웃 좋다는 게 이런 거지 — 과일 {0}개 받아 두시오"), g);
+        }
+
+        public static bool GiftTakenToday(string key) => _giftDay == Today && GiftGot.Contains(key);
+
+        public static string KidLine() => ForestLocalization.T("visitor.kid_line", "🧒 헤헤, 들켰다! 다음엔 더 꼭꼭 숨을 거야");
+        public static string KidName() => ForestLocalization.T("visitor.kid_name", "도깨비 꼬마");
+
+        /// <summary>부탁을 마친 날 단골이면 눌러앉기를 청한다(한 번 더 다가서면 허락). 아니면 null.</summary>
+        private static string SettleAsk(Visitor v, Record r, string who)
+        {
+            if (IsSettled(v.Key) || BondOf(v.Key) < SettleN || Settled.Count >= SettleSpots.Length) return null;
+            if (!r.AskSettle)
+            {
+                r.AskSettle = true;
+                Touch();
+                return who + " — " + string.Format(ForestLocalization.T("visitor.settle_ask",
+                    "벌써 {0}번째로구려… 이 마을에 눌러앉아도 되겠소? (물러났다 다시 오면 허락)"), BondOf(v.Key));
+            }
+            Settled.Add(v.Key);
+            Touch();
+            return who + " — " + ForestLocalization.T("visitor.settled_now", "고맙소! 내일부터는 광장 곁에서 지내겠소 — 들르면 작은 선물을 드리리다");
+        }
 
         public const float FoxMul = 1.5f;
         /// <summary>손님이 서는 광장 자리(world XZ) — 판·창구·나무·사람 길에서 3m 밖(`PlaytestForestVisitors`).</summary>
@@ -171,6 +300,8 @@ namespace Saga.Forest.Data
             /// <summary>주운 조각 비트(조각 i = 1 &lt;&lt; i).</summary>
             public int GotMask;
             public bool Done, Offered, Met;
+            /// <summary>109-12-2 — 눌러앉기를 물었다(다음 다가서면 허락).</summary>
+            public bool AskSettle;
             /// <summary>만난 뒤 채집한 수(가져오기 손님 — 갈래 둘).</summary>
             public int Bring1, Bring2;
             public int GotCount
@@ -239,6 +370,8 @@ namespace Saga.Forest.Data
             r.Met = true;
             if (r.Done)
             {
+                string ask = SettleAsk(v, r, who);
+                if (ask != null) return ask;
                 Touch();
                 return who + " — " + ForestLocalization.T("visitor.thanks", "오늘 고마웠소 — 또 들르리다");
             }
@@ -261,6 +394,7 @@ namespace Saga.Forest.Data
                 }
                 ForestHomeState.AddStock(it.Id, 1);
                 r.Done = true;
+                BondUp(v.Key);
                 Touch();
                 return who + " — " + string.Format(ForestLocalization.T("visitor.fox_sold", "좋은 눈이시오 — 「{0}」은(는) 집 창고에 넣어 두었소"), it.Name);
             }
@@ -296,6 +430,7 @@ namespace Saga.Forest.Data
         private static string Reward(Visitor v, Record r)
         {
             r.Done = true;
+            BondUp(v.Key);
             ForestState.AddFruit(v.Fruit);
             var f = FurnitureItem.Get(v.Furniture);
             if (f != null) ForestHomeState.AddStock(f.Id, 1);
@@ -317,5 +452,28 @@ namespace Saga.Forest.Data
         }
 
         public static void ResetForTest() => _rec = new Record();
+
+        /// <summary>v9 — 정·눌러앉은 손님·오늘 선물·눌러앉기 물음.</summary>
+        public static (string[] BondKeys, int[] BondCounts, string[] Settled, int GiftDay, string[] GiftGot, bool AskSettle) SnapshotBonds()
+        {
+            var keys = new List<string>(Bonds.Keys);
+            var counts = new List<int>();
+            foreach (var k in keys) counts.Add(Bonds[k]);
+            return (keys.ToArray(), counts.ToArray(), Settled.ToArray(), _giftDay, new List<string>(GiftGot).ToArray(), _rec.AskSettle);
+        }
+
+        public static void RestoreBonds(string[] bondKeys, int[] bondCounts, string[] settled, int giftDay, string[] giftGot, bool askSettle)
+        {
+            Bonds.Clear();
+            if (bondKeys != null && bondCounts != null)
+                for (int i = 0; i < bondKeys.Length && i < bondCounts.Length; i++) if (IndexOf(bondKeys[i]) >= 0) Bonds[bondKeys[i]] = bondCounts[i];
+            Settled.Clear();
+            if (settled != null) foreach (var k in settled) if (IndexOf(k) >= 0 && !Settled.Contains(k) && Settled.Count < SettleSpots.Length) Settled.Add(k);
+            _giftDay = giftDay;
+            GiftGot.Clear();
+            if (giftGot != null) foreach (var k in giftGot) GiftGot.Add(k);
+            _rec.AskSettle = askSettle;
+            Touch();
+        }
     }
 }
