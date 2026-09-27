@@ -783,9 +783,9 @@
    */
   function meSky() { var LF = global.DG.landform; return !!(LF && LF.onSky && LF.onSky()); }
   function skyLift(x, z, sky) {
-    var SK = global.DG.skyIsle;
-    if (!sky || !SK || !SK.layerOn || !SK.layerOn() || !SK.inside(x, z)) { return 0; }
-    return Math.max(0, SK.top() - groundY(x, z));
+    var SK = global.DG.skyIsle, pd;
+    if (!sky || !SK || !SK.layerOn || !SK.layerOn() || !(pd = SK.padAt(x, z))) { return 0; }   // ⑲-35 그 자리 발판(섬·관측대)
+    return Math.max(0, pd.top - groundY(x, z));
   }
   function standY(x, z, sky) { return groundY(x, z) + skyLift(x, z, sky === undefined ? meSky() : sky); }
 

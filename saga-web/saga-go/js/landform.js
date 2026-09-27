@@ -25,6 +25,7 @@
  *   순간이동 오른 정상은 전체 지도(M)의 순간이동 지점이 된다 — 정상으로 날아가 활공으로 내려온다
  *   구름섬  §5 ⑲-20 — 바람 기둥(skyisle.js) 안 공중이면 저절로 활공하며 솟는다(접으면 기둥을 나갈 때까지 안 편다).
  *           섬 윗면에 내리면 `body.sky` — 섬 위에선 강·비탈을 안 보고, 난간 밖으로는 뛰어넘어야(점프) 나간다(나가면 날개를 편다)
+ *           §5 ⑲-35 — 섬만이 아니라 skyisle 발판 목록(`padAt`: 구름섬·관측대)과 상승 기류 목록(`draftAt`: 바람 기둥·시간 기둥)을 본다
  *   다리·폭포 여울마다 강을 가로지르는 다리 하나(걸으면 상판 위에 선다), 은하강·붉은내 발원지에 폭포.
  *           그림은 손그림 땅(land.js 'B'·'W')의 다리·폭포 모델을 그대로 빌린다(`markAt`)
  *   기력    100 — 가만히·평지면 초당 25 찬다. 들판 전투 기력(⑨)과는 따로다(싸움 중엔 그쪽)
@@ -340,8 +341,8 @@
   /** §5 ⑲-20 구름섬 — 층이 있을 때만(키보드 판) */
   function SKY() { var s = global.DG.skyIsle; return s && s.layerOn && s.layerOn() ? s : null; }
   var RAIL_LOOK = 0.8;        // 난간 — 이만큼 앞이 섬 밖이면 걸어서는 못 나간다
-  /** 내 발밑 높이 — 섬 위에 서 있으면 섬 윗면, 아니면 화면 기복 */
-  function groundH(x, y) { var S = SKY(); return body.sky && S && S.inside(x, y) ? S.top() : reliefH(x, y); }
+  /** 내 발밑 높이 — 발판(섬·관측대) 위에 서 있으면 그 윗면, 아니면 화면 기복 */
+  function groundH(x, y) { var S = SKY(), pd = body.sky && S ? S.padAt(x, y) : null; return pd ? pd.top : reliefH(x, y); }
 
   /**
    * 걸음 배수 — `world.moveByKeys` 가 한 걸음마다 묻는다(ux·uy = 걷는 방향 단위벡터).
@@ -368,17 +369,18 @@
       }
     }
     if (SK) {
-      var nx = x + ux * RAIL_LOOK, ny = y + uy * RAIL_LOOK;
-      /* ⑲-20 섬 위 — 난간 밖으로는 뛰어올랐거나 날개를 편 채로만 */
-      if (body.sky && !SK.inside(nx, ny) && !air && !body.glide) {
-        if (body.railT <= 0) { body.railT = 4; tell('🧱 구름섬 난간 — 뛰어넘으면(점프) 날개를 펴고 내려간다'); }
+      var nx = x + ux * RAIL_LOOK, ny = y + uy * RAIL_LOOK, pdN = SK.padAt(nx, ny);
+      /* ⑲-20 섬(⑲-35 발판) 위 — 난간 밖으로는 뛰어올랐거나 날개를 편 채로만 */
+      if (body.sky && !pdN && !air && !body.glide) {
+        var pdH = SK.padAt(x, y);
+        if (body.railT <= 0) { body.railT = 4; tell('🧱 ' + (pdH ? pdH.name : '구름섬') + ' 난간 — 뛰어넘으면(점프) 날개를 펴고 내려간다'); }
         return 0;
       }
-      /* 섬 밖에서 윗면보다 낮게 날아 들면 섬 바위에 막힌다 */
-      if (!body.sky && body.glide && !SK.inside(x, y) && SK.inside(nx, ny) && body.glide.alt < SK.top() && body.glide.alt > SK.top() - SK.SLAB) { return 0; }
+      /* 발판 밖에서 윗면보다 낮게 날아 들면 발판 밑면에 막힌다 */
+      if (!body.sky && body.glide && pdN && !SK.padAt(x, y) && body.glide.alt < pdN.top && body.glide.alt > pdN.top - pdN.slab) { return 0; }
     }
     if (body.glide) { body.state = 'glide'; return body.glide.fall ? 1 : GLIDE_MUL; }   // 날개를 편 동안은 강·비탈을 안 본다
-    if (body.sky) { body.state = 'walk'; return air ? 1.15 : 1; }                          // ⑲-20 섬 윗면은 평평한 풀밭
+    if (body.sky) { body.state = 'walk'; return air ? 1.15 : 1; }                          // ⑲-20 섬(⑲-35 관측대) 윗면은 평평하다
     var mul = 1;
     var rv = riverAt(x, y);
     if (rv && !rv.ford && !air) {
@@ -592,8 +594,8 @@
   function stepSky() {
     var SK = SKY(), pos = core().save.player.pos;
     if (!SK) { body.sky = false; return; }
-    if (body.sky && !SK.inside(pos.x, pos.y)) {
-      var c = SK.spot(), near = c && Math.hypot(pos.x - c.x, pos.y - c.y) <= SK.ISLE_R + 6, up = SK.top() + airH();
+    if (body.sky && !SK.padAt(pos.x, pos.y)) {
+      var np = SK.nearPad(pos.x, pos.y), near = !!np && np.d <= 6, up = (np ? np.pad.top : 0) + airH();
       body.sky = false;
       if (near && !body.glide) {
         body.glide = { alt: up, fall: false }; body.jumpT = -1; body.state = 'glide';
@@ -601,7 +603,7 @@
         tell('🪂 난간을 넘어 날개를 폈다');
       }
     }
-    if (!SK.inDraft(pos.x, pos.y)) { body.draftBan = false; if (body.glide) { body.glide.draft = false; } return; }
+    if (!SK.draftAt(pos.x, pos.y)) { body.draftBan = false; if (body.glide) { body.glide.draft = false; } return; }
     if (!body.glide && !body.draftBan && (body.jumpT >= 0 || airH() >= SK.DRAFT_MIN_AIR)) {
       body.glide = { alt: groundH(pos.x, pos.y) + airH(), fall: false }; body.jumpT = -1; body.state = 'glide';
       core().emit('landform:glide', { open: true, draft: true });
@@ -613,8 +615,9 @@
    *  ⑲-20 바람 기둥 안이면 기력을 안 쓰고 솟는다(기둥 끝에서 멎는다) · 위에서 섬 윗면에 닿으면 섬에 선다 */
   function stepGlide(dt) {
     var g = body.glide, pos = core().save.player.pos, SK = SKY();
-    if (g.draft && SK) {
-      g.alt = Math.min(SK.draftTop(), g.alt + SK.DRAFT_RISE * dt);
+    var dr = g.draft && SK ? SK.draftAt(pos.x, pos.y) : null;
+    if (dr) {
+      g.alt = Math.min(dr.top, g.alt + dr.rise * dt);
       body.busy = true; body.state = 'glide';
       return;
     }
@@ -623,8 +626,8 @@
     g.alt -= sink * dt;
     if (!g.fall) { body.sta = Math.max(0, body.sta - GLIDE_DRAIN * SAVE_MUL() * dt); body.busy = true; }
     body.state = 'glide';
-    var onIsle = !!(SK && SK.inside(pos.x, pos.y) && was >= SK.top() - 0.02);
-    var ground = onIsle ? SK.top() : groundH(pos.x, pos.y);
+    var pd = SK ? SK.padAt(pos.x, pos.y) : null, onIsle = !!(pd && was >= pd.top - 0.02);
+    var ground = onIsle ? pd.top : groundH(pos.x, pos.y);
     if (g.alt <= ground + 0.02) {
       body.glide = null;
       body.state = 'walk';

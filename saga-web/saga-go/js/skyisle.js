@@ -10,6 +10,9 @@
  *   층       섬 위에 선 것(내 몸 `landform.onSky()`·임무 적 `f.sky`·인물 칸 `sky`)만 섬 윗면에 선다. 섬 밑 땅은
  *            그대로 걸어 지나간다(섬은 공중에 떠 있다). 층이 다르면 들판 전투가 서로를 못 본다(`apart`)
  *   키보드 판만 층이 있다(`layerOn`) — GPS 판은 몸이 땅을 걷으므로 섬 무리도 땅에 선다(그림은 떠 있다).
+ *   발판 목록 §5 ⑲-35 — 층은 구름섬 하나가 아니라 **떠 있는 발판 여럿**(`pads`: 구름섬 + era-sites 관측대)과 상승 기류 여럿
+ *            (`drafts`: 바람 기둥 + 시간 기둥)이다. 몸·무리·인물의 `sky` 는 참/거짓 그대로 — 어느 발판인지는 선 자리(`padAt`)가 정한다
+ *            (발판끼리는 수 km 떨어져 겹치지 않는다)
  * 세이브 없음 — 섬에 선 채 불러오면 9장 섬 단계일 때만 도로 섬 위에 세운다(`boot`). 손잡이 `skyisle.on` 0 이면 다 사라진다.
  */
 (function (global) {
@@ -26,8 +29,8 @@
   function reliefH(x, y) { var R = global.DG.relief3d; return R ? R.heightAt(x, y) : 0; }
   function on() { return !!(K('on', 1) && ST() && ST().peakSpot && ST().peakSpot()); }
   function keyMode() { var W = global.DG.world; return !!(W && W.mode === 'keyboard'); }
-  /** 층이 있나 — 키보드 판에서만 섬 위·밑이 갈린다 */
-  function layerOn() { return on() && keyMode() && !!LF(); }
+  /** 층이 있나 — 키보드 판에서만 섬 위·밑이 갈린다(⑲-35 발판이 하나라도 있으면) */
+  function layerOn() { return keyMode() && !!LF() && pads().length > 0; }
 
   /** 바람 기둥 자리 = 봉우리 정상 */
   function peak() { var s = ST(); return s ? s.peakSpot() : null; }
@@ -43,27 +46,62 @@
   function cleared() { return progress().ch > SKY_CH; }
   function inDraft(x, y) { var p = peak(); return open() && !!p && Math.hypot(x - p.x, y - p.y) <= DRAFT_R; }
 
+  /* ── ⑲-35 발판·상승 기류 목록 ─────────────────────────── */
+  function ES() { var e = global.DG.eraSites; return e && e.on && e.on() ? e : null; }
+  /** 떠 있는 발판 — [{ id, name, x, y, r, top, slab, boot? [ch, from, to] }] */
+  function pads() {
+    var out = [], c = on() ? spot() : null, E = ES();
+    if (c) { out.push({ id: 'isle', name: '구름섬', x: c.x, y: c.y, r: ISLE_R, top: top(), slab: SLAB, boot: [SKY_CH, SKY_STEPS[0], SKY_STEPS[1]] }); }
+    if (E && E.pads) { out = out.concat(E.pads()); }
+    return out;
+  }
+  /** (x,y) 위 발판(난간 안) — 없으면 null */
+  function padAt(x, y) {
+    var L = pads();
+    for (var i = 0; i < L.length; i++) { if (Math.hypot(x - L[i].x, y - L[i].y) <= L[i].r) { return L[i]; } }
+    return null;
+  }
+  function padById(id) { var L = pads(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
+  /** 가장 가까운 발판과 가장자리까지 거리 — { pad, d }(d 는 난간 밖이면 +) */
+  function nearPad(x, y) {
+    var L = pads(), best = null, bd = Infinity;
+    for (var i = 0; i < L.length; i++) { var d = Math.hypot(x - L[i].x, y - L[i].y) - L[i].r; if (d < bd) { bd = d; best = L[i]; } }
+    return best ? { pad: best, d: bd } : null;
+  }
+  /** 선 상승 기류 — [{ id, x, y, r, top, rise }] */
+  function drafts() {
+    var out = [], p = open() ? peak() : null, E = ES();
+    if (p) { out.push({ id: 'isle', x: p.x, y: p.y, r: DRAFT_R, top: draftTop(), rise: DRAFT_RISE }); }
+    if (E && E.drafts) { out = out.concat(E.drafts()); }
+    return out;
+  }
+  function draftAt(x, y) {
+    var L = drafts();
+    for (var i = 0; i < L.length; i++) { if (Math.hypot(x - L[i].x, y - L[i].y) <= L[i].r) { return L[i]; } }
+    return null;
+  }
+
   /** 내 몸이 섬 위인가 */
   function meOnSky() { var l = LF(); return !!(l && l.onSky && l.onSky()); }
   /** 들판 적 f 가 나와 다른 층인가 — 층이 없으면 늘 false */
   function apart(f) { return layerOn() && !!(f && f.sky) !== meOnSky(); }
-  /** 섬 위 적은 난간을 못 넘는다 — 난간 안쪽 0.8m 로 되돌린다(떨어지지 않는다) */
+  /** 발판 위 적은 난간을 못 넘는다 — 가장 가까운 발판 난간 안쪽 0.8m 로 되돌린다(떨어지지 않는다) */
   function clampIn(o) {
-    var c = spot();
-    if (!c || !o) { return false; }
-    var dx = o.x - c.x, dy = o.y - c.y, d = Math.hypot(dx, dy), lim = ISLE_R - 0.8;
+    var np = o ? nearPad(o.x, o.y) : null, c = np ? np.pad : null;
+    if (!c) { return false; }
+    var dx = o.x - c.x, dy = o.y - c.y, d = Math.hypot(dx, dy), lim = c.r - 0.8;
     if (d <= lim) { return false; }
     o.x = c.x + dx / d * lim; o.y = c.y + dy / d * lim;
     return true;
   }
 
-  /* 불러오기 — 섬 단계인데 섬 위 자리면 몸을 섬에 올린다(몸 층은 저장 안 한다). 한 번만 */
+  /* 불러오기 — 발판 단계(발판의 boot 칸)인데 그 발판 위 자리면 몸을 올린다(몸 층은 저장 안 한다). 한 번만 */
   var booted = false;
   function boot() {
     if (booted || !layerOn()) { return; }
     booted = true;
-    var v = progress(), p = core().save.player.pos, l = LF();
-    if (v.ch === SKY_CH && v.step >= SKY_STEPS[0] && v.step <= SKY_STEPS[1] && inside(p.x, p.y) && l.setSky && !l.gliding()) { l.setSky(true); }
+    var v = progress(), p = core().save.player.pos, l = LF(), pd = padAt(p.x, p.y), b = pd && pd.boot;
+    if (b && v.ch === b[0] && v.step >= b[1] && v.step <= b[2] && l.setSky && !l.gliding()) { l.setSky(true); }
   }
 
   /* ── 화면: 섬·난간·돌 단·먹구름 덮개·바람 기둥 ──────────────── */
@@ -151,7 +189,7 @@
     ISLE_OFF: ISLE_OFF, ISLE_R: ISLE_R, ISLE_UP: ISLE_UP, RAIL_H: RAIL_H, SLAB: SLAB, SKY_CH: SKY_CH, SKY_STEPS: SKY_STEPS,
     DRAFT_R: DRAFT_R, DRAFT_OVER: DRAFT_OVER, DRAFT_RISE: DRAFT_RISE, DRAFT_MIN_AIR: DRAFT_MIN_AIR,
     on: on, layerOn: layerOn, peak: peak, spot: spot, top: top, draftTop: draftTop, inside: inside, open: open, cleared: cleared,
-    inDraft: inDraft, meOnSky: meOnSky, apart: apart, clampIn: clampIn, tick: tick,
+    inDraft: inDraft, meOnSky: meOnSky, pads: pads, padAt: padAt, padById: padById, nearPad: nearPad, drafts: drafts, draftAt: draftAt, apart: apart, clampIn: clampIn, tick: tick,
     _resetForTest: function () { booted = false; }
   };
 })(window);

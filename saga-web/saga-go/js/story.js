@@ -1,5 +1,5 @@
 /**
- * 이야기 임무 1~12장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4)
+ * 이야기 임무 1~14장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~35, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼-1~2)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
@@ -12,7 +12,8 @@
  *              duel(이야기 보스 검은 가면 — 들판 적 `b_mask`·`b_mask2`, 절반에서 원소 방패 + 졸개 둘) ·
  *              defend(제단 지키기 — 물결 셋이 제단으로 곧장, 제단이 무너지거나 전멸하면 4초 쉬고 처음부터) ·
  *              chase(노 도둑 쫓기 — 걸어선 못 잡는다) · sail(사공과 한 줄 → 배로 그 자리에, 키보드 판만 옮긴다) ·
- *              sky(바람 기둥을 타고 구름섬 윗면에 서기 — skyisle.js · landform.onSky. GPS 판은 기둥 곁에 닿으면)
+ *              sky(바람 기둥을 타고 구름섬 윗면에 서기 — skyisle.js · landform.onSky. GPS 판은 기둥 곁에 닿으면.
+ *              ⑲-35 pad: 'obs' 면 시간 기둥을 타고 관측대(era-sites)에 서기)
  *   자리       ⑮ 땅 탑 + off 또는 이름 붙은 자리(SPOTS — 옛길·둘째 제단·봉우리·곶·바위섬·나루·구름섬). 인물은 at·appear 칸으로 장마다 옮겨 선다.
  *              단계·인물 칸에 sky 면 구름섬 층(임무 적 f.sky · 인물은 섬 윗면에 선다 — ⑲-20). 인물 칸의 mask·name·idle 은 그 칸 동안만 덮는다
  *   장         여정 등급(플레이어 Lv) ar 에 열린다. 단계마다 부대 경험 10, 장 끝에 보상
@@ -58,7 +59,9 @@
     fr_center: { frost: 'center' }, fr_stele: { frost: 'stele' }, fr_obs: { frost: 'obs' }, fr_ship: { frost: 'ship' }, fr_fort: { frost: 'fort' },
     fr_lake: { frost: 'lake' }, fr_cave: { frost: 'cave' },
     /* ⑲-34 3부 시대 명소(era-sites.js) — 갈대 나루 물가 녹슨 조선소. 명소가 꺼져 있으면 자리 없음 */
-    yard: { era: 'yard' }, yard_daon: { era: 'daon' }, yard_fight: { era: 'fight' }, yard_weld: { era: 'weld' }, yard_bandi: { era: 'bandi' }, crane: { era: 'crane' } };
+    yard: { era: 'yard' }, yard_daon: { era: 'daon' }, yard_fight: { era: 'fight' }, yard_weld: { era: 'weld' }, yard_bandi: { era: 'bandi' }, crane: { era: 'crane' },
+    /* ⑲-35 옛 성터 언덕 곁 시간 틈 관측소 — 땅 가운데·가온·시간 기둥·관측대 위(반디·가운데) */
+    obs: { era: 'obs' }, obs_gaon: { era: 'gaon' }, obs_draft: { era: 'draft' }, obs_deck: { era: 'deck' }, obs_bandi: { era: 'obs_bandi' } };
   /* ⑲-28 하람이 서는 자리 — 관측소 곁(늘)·비행선 곁. 산성 안은 남쪽 문 안쪽(담 반 변 13m) */
   var HARAM_OBS = [-6, 10], HARAM_SHIP = [-6, 12], HARAM_FORT = [0, 4];
   /* ⑲-29 11장 자리(산성·호수 가운데에서) — 문루 = 남쪽 문(담 13m) · 바우는 문 안쪽 · 봉화 제단은 문 밖 20m ·
@@ -111,17 +114,21 @@
       at: [{ ch: 9, from: 6, to: 6, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 9, from: 7, to: 8, spot: 'fr_fort', off: HARAM_FORT },
         { ch: 10, from: 8, to: 8, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 11, from: 6, to: 8, spot: 'fr_ship', off: HARAM_SHIP }] },
     bandi:    { id: 'story_bandi',    name: '조종 기계 반디', short: '반디', zone: 'snowfort', spot: 'fr_ship', off: [0, 12], color: '#8cd9f2', pet: 'drone',
-      idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }, { ch: 12, from: 6, to: 8, spot: 'yard_bandi' }] },
+      idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }, { ch: 12, from: 6, to: 8, spot: 'yard_bandi' },
+        { ch: 13, from: 9, to: 9, spot: 'obs_bandi', sky: true }] },
     /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
     daon:     { id: 'story_daon',     name: '조선공 다온', short: '다온', zone: 'galdae', spot: 'yard_daon', off: [0, 0], color: '#335ea0',
       idle: '이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.' },
+    /* ⑲-35 시간 틈 관측사 가온(미래) — 늘 관측소 남서쪽 발치 */
+    gaon:     { id: 'story_gaon',     name: '시간 틈 관측사 가온', short: '가온', zone: 'gojeong', spot: 'obs_gaon', off: [0, 0], color: '#dbe0eb',
+      idle: '관측대가 또 한 뼘 기울었어요. 기록만 하고 있을 순 없는데…' },
     /* ⑲-29 산성지기 바우(과거의 넋) — 11장 셋째~여덟째 단계에만. 석등·파수·불씨 동안은 호숫가 */
     bawoo:    { id: 'story_bawoo',    name: '산성지기 바우', short: '바우', zone: 'snowfort', spot: 'fr_fort', off: BAWOO_GATE, color: '#7a3329',
       idle: '……불씨는 제가 갈 곳을 안다.',
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -595,6 +602,45 @@
             ['반디', '삐— 조각 상태 양호. 남은 둘은 더 먼 시대 신호입니다. 하나는 앞, 하나는 뒤.', 'surprised'],
             ['?', ['앞 시대와 뒤 시대…', '다온, 고마워요.']],
             ['다온', '별배가 날면 꼭 보여 줘요. 배 붙이는 사람은 뜨는 걸 봐야 끝이거든요.', 'fun']] }
+      ] },
+    /* ⑲-35 3부 둘째 장 — 무대는 옛 성터 언덕 곁 시간 틈 관측소(era-sites.js). 반디 → 관측소 → 가온 → 시간 틈 무리 → 가온 →
+       틈 석등 별 → 해 → 달 → 가온 → 시간 기둥 타고 관측대로(sky pad, GPS 판은 기둥 곁) → 관측대 파수(섬 층과 같은 발판 층) → 반디(관측대 위) */
+    { id: 'ch14', name: '제14장 · 시간 틈 관측소', ar: 34,
+      reward: { knot: 6, gold: 4000, guide: 4, secret: 5, party: 1200 },
+      steps: [
+        { type: 'talk', npc: 'bandi', text: '추락한 비행선의 반디와 이야기하기',
+          lines: [['반디', '삐— 둘째 조각 신호 수신. 시대 표지가 이상합니다. 지금보다 앞 — 아직 오지 않은 때.', 'surprised'],
+            ['?', ['오지 않은 때라니?', '어디서 오는 신호야?']],
+            ['반디', '좌표는 옛 성터 언덕 곁. 그런데 높이 값이 땅 위 이십사 미터입니다. 하늘에 뭔가 떠 있습니다.'],
+            ['반디', '먼저 가 주십시오. 저는 동력을 모아 뒤따르겠습니다.']] },
+        { type: 'go', spot: 'obs', text: '옛 성터 언덕 곁 시간 틈 관측소로' },
+        { type: 'talk', npc: 'gaon', text: '관측소 발치의 가온과 이야기하기',
+          lines: [['가온', '여기까지 걸어 들어온 사람은 처음이네요. 이 관측소, 원래는 이 시대에 없어야 하는 건물이에요.', 'surprised'],
+            ['?', ['저 위에 뜬 게 관측소예요?', '없어야 한다고요?']],
+            ['가온', '저 틈에서 흘러나왔어요. 저도 같이요. 틈 석등 셋이 받쳐 줄 땐 시간 기둥이 서서 오르내릴 수 있었는데…', 'sorrow'],
+            ['가온', '며칠 전 하늘에서 빛나는 조각이 관측대에 박히더니 석등이 다 꺼졌어요. 그 뒤로 짐승들이 — 또 와요!', 'angry']] },
+        { type: 'kill', spot: 'obs', kinds: ['raptor', 'rockbear', 'hawk', 'raptor'], text: '관측소를 둘러싼 시간 틈 무리 물리치기',
+          enter: '⚔️ 틈에서 시간 틈 짐승들이 쏟아져 나왔다' },
+        { type: 'talk', npc: 'gaon', text: '가온과 이야기하기',
+          lines: [['가온', '고마워요. 석등을 다시 켜면 시간 기둥이 설 거예요. 그런데 차례가 있어요.', 'joy'],
+            ['가온', '우리 시대 아이들이 부르는 노래가 있거든요 — "별이 먼저 깨우고, 해가 밝히고, 달이 닫는다."'],
+            ['?', ['별, 해, 달 차례군요.', '노래가 열쇠예요?']],
+            ['가온', '틀리면 다 꺼져요. 원소 힘을 석등에 대 주세요.']] },
+        { type: 'seal', spot: 'obs', order: ['star', 'sun', 'moon'], text: '틈 석등을 노래 차례(별 → 해 → 달)로 밝히기' },
+        { type: 'talk', npc: 'gaon', text: '가온과 이야기하기',
+          lines: [['가온', '섰어요! 관측소 남쪽에 빛기둥 보이죠? 저게 시간 기둥이에요.', 'joy'],
+            ['가온', '뛰어올라 몸을 맡기면 위로 솟아요. 꼭대기에서 날개를 펴고 관측대로 내려앉으면 돼요.'],
+            ['?', ['다녀올게요.', '위에 뭐가 있어요?']],
+            ['가온', '조각 빛에 이끌린 파수들이 관측대를 차지했어요. 조심해요!']] },
+        { type: 'sky', pad: 'obs', text: '시간 기둥을 타고 떠 있는 관측대 위로' },
+        { type: 'kill', spot: 'obs_deck', sky: true, kinds: ['hawk', 'raptor', 'snowfox'], text: '관측대를 차지한 틈새 파수 물리치기',
+          enter: '⚔️ 관측대의 틈새 파수가 몸을 일으켰다' },
+        { type: 'talk', npc: 'bandi', text: '관측대로 날아온 반디에게 조각 보여 주기',
+          lines: [['반디', '삐— 둘째 날개 조각 확인. 관측경 틀에 끼어 있었군요.', 'joy'],
+            ['가온', '(아래에서) 관측경에 남은 기록이 떴어요! 조각이 박히기 직전 — 꼬리 아홉 흰 짐승이 틈을 지나갔대요.', 'surprised'],
+            ['?', ['그 구미호가…', '어느 쪽으로?']],
+            ['반디', '마지막 조각은 뒤 시대 신호. 옛 역참 길 쪽입니다. 구미호도 같은 곳을 향했을 확률이 높습니다.', 'angry'],
+            ['가온', '(아래에서) 시간 기둥은 켜 둘게요. 언제든 다시 올라와 하늘을 봐요!', 'fun']] }
       ] }
   ];
 
@@ -813,6 +859,10 @@
     if (isTalk(st) || st.type === 'follow' || st.type === 'chase') {
       var sa = stepAt(st), p = npcPos(st.npc, sa.c, sa.i, sa.wq);
       return p ? { x: p.x, y: p.y, r: isTalk(st) ? TALK_R() : 0, label: isTalk(st) ? npcInfo(st.npc, sa.c, sa.i, sa.wq).name : st.text } : null;
+    }
+    if (st.type === 'sky' && st.pad) {                       // ⑲-35 시간 기둥(era-sites)
+      var ESt = global.DG.eraSites, dg = ESt ? ESt.spot('draft') : null;
+      return dg ? { x: dg.x, y: dg.y, r: ESt.DRAFT_R, label: st.text } : null;
     }
     if (st.type === 'sky') {                                 // ⑲-20 바람 기둥 = 봉우리 정상
       var SKt = global.DG.skyIsle, pk = SKt ? SKt.peak() : null;
@@ -1341,6 +1391,16 @@
     } else if (st && st.type === 'climb') {
       t = targetOf(st);
       if (t && Math.hypot(p.x - t.x, p.y - t.y) <= t.r) { toast('⛰️ 봉우리 꼭대기에 올랐다'); advance(); return; }
+    } else if (st && st.type === 'sky' && st.pad) {
+      /* ⑲-35 키보드 판은 그 발판(관측대)에 내려서야, GPS 판은 시간 기둥 곁에 닿으면 */
+      var SKo = global.DG.skyIsle, LFo = global.DG.landform, pdo;
+      if (SKo && SKo.layerOn()) {
+        pdo = LFo.onSky() ? SKo.padAt(p.x, p.y) : null;
+        if (pdo && pdo.id === st.pad) { toast('🔭 떠 있는 관측대에 내려섰다 — 틈새 파수가 지키고 있다'); advance(); return; }
+      } else {
+        t = targetOf(st);
+        if (t && Math.hypot(p.x - t.x, p.y - t.y) <= CLIMB_R()) { toast('⏳ 시간 기둥 곁에 닿았다 — 관측대 이야기는 이 둘레에서 이어진다'); advance(); return; }
+      }
     } else if (st && st.type === 'sky') {
       /* ⑲-20 키보드 판은 섬 윗면에 내려서야, GPS 판은 기둥 곁(봉우리 둘레)에 닿으면 */
       var SKc = global.DG.skyIsle, LFc = global.DG.landform;
@@ -1357,7 +1417,7 @@
         var ks = st.type === 'duel' ? [st.kind] : st.kinds;
         F.spawnCamp(S, { key: key, x: t.x, y: t.y, tier: F.tierAt(t.x, t.y), kind: 'story', sky: !!st.sky,
           foes: ks.map(function (k, i) { var a = i * 1.571, rr = ks.length === 1 ? 0 : 3; return { kind: k, dx: Math.cos(a) * rr, dy: Math.sin(a) * rr }; }) });
-        toast(st.type === 'duel' ? (st.enter || '🎭 검은 가면이 봉우리에 내려섰다') : '⚔️ 먹구름 졸개가 나타났다');
+        toast(st.enter || (st.type === 'duel' ? '🎭 검은 가면이 봉우리에 내려섰다' : '⚔️ 먹구름 졸개가 나타났다'));
       }
       if (st.type === 'duel') { stepDuel(); }
     }
