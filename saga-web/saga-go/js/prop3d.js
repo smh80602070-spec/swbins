@@ -559,6 +559,27 @@
     }, 120);
   }
 
+  /**
+   * 그 자리에 설 모델의 **바닥 크기**(키 1 기준 가로 w·세로 d) — 벽 판정이 보이는 모델과 맞게(2026-09-27 실기 "집을 통과하네 아직도").
+   * 아직 안 왔으면 null(부르는 쪽이 제 어림값을 쓴다). parts() 와 같은 pick 이라 같은 자리엔 같은 모델이다
+   */
+  function footprint(name, gx, gy, sk) {
+    if (!three()) { return null; }
+    var url = pick(name, gx, gy, sk);
+    var c = url ? cache[url] : null;
+    if (!c || c.state !== 'ok' || !c.parts) { return null; }
+    if (!c.foot) {
+      var mnx = Infinity, mxx = -Infinity, mnz = Infinity, mxz = -Infinity;
+      c.parts.forEach(function (p) {
+        if (!p.geometry.boundingBox) { p.geometry.computeBoundingBox(); }
+        var b = p.geometry.boundingBox;
+        mnx = Math.min(mnx, b.min.x); mxx = Math.max(mxx, b.max.x); mnz = Math.min(mnz, b.min.z); mxz = Math.max(mxz, b.max.z);
+      });
+      c.foot = { w: mxx - mnx, d: mxz - mnz };
+    }
+    return c.foot;
+  }
+
   function acquire(url) {
     if (cache[url]) { return cache[url]; }
     var ld = loader();
@@ -660,10 +681,12 @@
     /* 값을 내는 함수 — three 없이도 돈다 (자가진단이 이것만 따로 본다) */
     pick: pick, urls: urls, eagerUrls: eagerUrls, seasonKey: seasonKey, seasonTintHex: seasonTintHex,
     ready: ready, casts: casts, PALETTE: PALETTE, snapPalette: snapPalette,
-    houseOn: houseOn, heightMul: heightMul, FUSION: FUSION,
+    houseOn: houseOn, heightMul: heightMul, FUSION: FUSION, footprint: footprint,
     /* 그림 층 */
     parts: parts, snowOf: snowOf, preload: preload, stats: stats,
     /** 진단이 제 뒤를 치울 때 */
-    reset: function () { cache = {}; matCache = {}; arrived = 0; pending = 0; }
+    reset: function () { cache = {}; matCache = {}; arrived = 0; pending = 0; },
+    /** 모델이 몇 개 도착했나 — 벽 판정 캐시가 이 값이 바뀌면 다시 잰다(world.js solidRectsNear) */
+    arrivedCount: function () { return arrived; }
   };
 })(window);

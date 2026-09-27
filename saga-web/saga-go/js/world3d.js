@@ -1288,6 +1288,7 @@
    * 카메라·발이 박히던 문제**(2026-08-30, 밀집 마을에서 교전 카메라가 우물/
    * 장터에 박힌 것을 실제로 찍어서 발견했다)를 없애는 데는 이 정도로 충분하다.
    */
+  var FOOT_IN = 0.82;       // 모델 바닥 가운데 벽이 서는 몫(처마·지붕 끝 빼고)
   function houseRects(gx, gy) {
     /* 해시로 벽이 되는 소품(집·탑·우물·장터)을 세우는 건 마을 칸뿐이다. 다른 칸은
        손으로 놓은 것(`land.js` deco)만 — 여태는 칸 종류를 안 보고 늘 마을 계획을
@@ -1302,8 +1303,14 @@
     for (i = 0; i < plan.length; i++) {
       var p = plan[i];
       if (p.t === 'house' || p.t === 'tower') {
-        var P3h = global.DG.prop3d, hm = P3h && P3h.heightMul ? P3h.heightMul(p.t) : 1;
-        out.push({ x: ox + p.x, z: oz + p.z, w: p.w, d: p.d, rot: p.rot, h: (p.h || 6) * hm });
+        var P3h = global.DG.prop3d, hm = P3h && P3h.heightMul ? P3h.heightMul(p.t) : 1, hh = (p.h || 6) * hm;
+        /* 2026-09-27 실기 "집을 통과하네 아직도" — 헤드리스로 재 보니 둘이 어긋났다.
+           ① 크기: GLB 는 키(hh)로 고르게 늘여 그려 바닥이 p.w·p.d 보다 1.4~2.2배 넓다 → 그 자리 모델의 바닥(prop3d.footprint)
+              × hh × FOOT_IN(처마·지붕 끝은 밑으로 걸어 다닌다). 모델이 아직 안 왔으면 옛 p.w·p.d
+           ② 돌림: 모델은 rotation.y = rot 로 서는데 벽 사각형 식(lx = dx·cos + dz·sin)은 반대 방향으로 돈다 → -rot */
+        var fp = P3h && P3h.footprint && P3h.houseOn && P3h.houseOn() ? P3h.footprint(p.t, gx + Math.round(p.x), gy + Math.round(p.z)) : null;
+        var fw = fp ? Math.max(p.w, fp.w * hh * FOOT_IN) : p.w, fd = fp ? Math.max(p.d, fp.d * hh * FOOT_IN) : p.d;
+        out.push({ x: ox + p.x, z: oz + p.z, w: fw, d: fd, rot: -(p.rot || 0), h: hh });
       } else if (p.t === 'well') {
         out.push({ x: ox + p.x, z: oz + p.z, w: p.h * 1.6, d: p.h * 1.6, rot: 0 });
       } else if (p.t === 'market') {

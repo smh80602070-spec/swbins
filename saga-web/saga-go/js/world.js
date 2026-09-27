@@ -228,7 +228,10 @@
     var W3 = global.DG.world3d;
     if (!W3 || !W3.houseRects) { return []; }
     var gx0 = Math.floor(x / 48), gy0 = Math.floor(y / 48);
-    var cell = gx0 + ':' + gy0;
+    /* 2026-09-27 실기 "집을 통과" — 칸만 열쇠로 삼으면 집 모델이 늦게 와 벽이 제 크기로 커져도(prop3d.footprint)
+       그 칸을 떠날 때까지 옛 작은 벽을 썼고, 이야기로 열리는 문도 늦게 반영됐다. 모델 도착 수·1초마다 다시 잰다 */
+    var P3c = global.DG.prop3d;
+    var cell = gx0 + ':' + gy0 + ':' + (P3c && P3c.arrivedCount ? P3c.arrivedCount() : 0) + ':' + Math.floor(Date.now() / 1000);
     if (solidCacheCell === cell) { return solidCache; }
     solidCacheCell = cell;
     var out = [], gx, gy, i, rs;
@@ -2049,6 +2052,8 @@
     latLngToWorld: latLngToWorld,
     useKeyboard: useKeyboard, useGeo: useGeo,
     setStick: setStick, walkTo: walkTo, walkingTo: walkingTo, inputBlocked: inputBlocked, camRot: camRot,
+    /** 2026-09-27 Q3 — (x, y) 가 벽(집 몸통 + 몸 반지름) 안인가. 진단·확인용 */
+    wallAt: function (x, y) { return hitsHouse(x, y, solidRectsNear(x, y)); },
     keymap: keymap, beginRemap: beginRemap, remapping: function () { return remapping; },
     get mode() { return mode; },
     get accuracy() { return geoAccuracy; },

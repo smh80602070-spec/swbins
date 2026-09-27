@@ -183,7 +183,7 @@
       case 'lab': return [{ x: x - 3, z: y - 2, w: 2.4, d: 5.6, rot: 0 }, { x: x + 3.2, z: y - 2.5, w: 3.2, d: 3, rot: 0 }];   // 컨테이너·관제실
       case 'dome':
         for (i = 0; i < DOME_SEGS; i++) {                                                                        // 둘레 조각 — 0 번(북쪽)이 문
-          var a = i * Math.PI * 2 / DOME_SEGS, seg = { x: x + Math.sin(a) * DOME_R, z: y - Math.cos(a) * DOME_R, w: 2 * Math.PI * DOME_R / DOME_SEGS + 0.2, d: 0.6, rot: -a };
+          var a = i * Math.PI * 2 / DOME_SEGS, seg = { x: x + Math.sin(a) * DOME_R, z: y - Math.cos(a) * DOME_R, w: 2 * Math.PI * DOME_R / DOME_SEGS + 0.2, d: 0.6, rot: a };   // 사각형 식의 가로축 = (cos rot, sin rot) = 접선
           if (i === 0) { seg.door = 'dome'; }
           out.push(seg);
         }
