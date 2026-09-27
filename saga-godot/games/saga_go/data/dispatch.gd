@@ -61,8 +61,13 @@ const SPOTS := {
 		"desc": "결정이 덜 굳은 좌판 가장자리에서 옛 물건을 캐낸다"},
 	"a_rail": {"region": "amber", "name": "멈춘 전철 차고", "era": "현대", "element": "thunder", "base": {"ore_s": 2, "polish": 1},
 		"desc": "고가 선로 밑 차고에서 멈춘 전철 부품을 떼어 온다"},
+	## 54 갈무리 벌 — 과거 곳간 마을(초)·현대 물류 야적장(뇌). 벌 신상 g_statue 를 켜야 열린다.
+	"g_granary": {"region": "vault", "name": "곳간 마을 뒷밭", "era": "과거", "element": "grass", "base": {"apple": 2, "iron": 1},
+		"desc": "곳간 마을 뒷밭 둑에서 잊힌 씨앗 자루와 농기구 쇠붙이를 거둔다"},
+	"g_yard": {"region": "vault", "name": "갈무리 물류 창고", "era": "현대", "element": "thunder", "base": {"ore_s": 2, "polish": 1},
+		"desc": "멈춘 컨테이너를 뒤져 쓸 만한 부품을 챙겨 온다"},
 }
-const ORDER := ["d_road", "d_wood", "d_mudflat", "d_shipyard", "d_quarry", "d_rift", "f_fortress", "f_wreck", "s_depot", "s_temple", "x_stop", "x_gate", "u_base", "u_palace", "a_market", "a_rail"]
+const ORDER := ["d_road", "d_wood", "d_mudflat", "d_shipyard", "d_quarry", "d_rift", "f_fortress", "f_wreck", "s_depot", "s_temple", "x_stop", "x_gate", "u_base", "u_palace", "a_market", "a_rail", "g_granary", "g_yard"]
 
 
 static func spot(id: String) -> Dictionary:

@@ -97,6 +97,11 @@ const PATCHES := [
 	["a_apple", "apple", "amber", Vector2(1.3, 1.3), 2],
 	["a_mush", "mushroom", "amber", Vector2(7.2, 6.2), 3],
 	["a_honey", "honey_flower", "amber", Vector2(2.7, 1.8), 2],
+	## 106장 54 갈무리 벌 — 있는 채집물만.
+	["g_apple", "apple", "vault", Vector2(7.0, 1.2), 2],
+	["g_mush", "mushroom", "vault", Vector2(1.1, 7.0), 3],
+	["g_mint", "mint", "vault", Vector2(4.0, 6.9), 2],
+	["g_honey", "honey_flower", "vault", Vector2(2.7, 6.3), 2],
 	["r_ash_se", "ash_flower", "ruins", Vector2(4.8, 5.5), 2],
 ]
 const PATCH_RING_M := 1.4

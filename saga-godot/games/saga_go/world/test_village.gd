@@ -56,6 +56,10 @@ func _ready() -> void:
 	var amber := preload("res://games/saga_go/world/region8_amber.gd").new()
 	amber.name = "Region8Amber"
 	add_child(amber)
+	## PLAN 106장 54-1 — 아홉째 지역 갈무리 벌(서리봉 고원 동쪽 고개 너머, 9부를 마치면 빛 울타리가 꺼짐).
+	var vault := preload("res://games/saga_go/world/region9_vault.gd").new()
+	vault.name = "Region9Vault"
+	add_child(vault)
 	var era := preload("res://games/saga_go/world/era_sites.gd").new()
 	era.name = "EraSites"
 	add_child(era)
@@ -235,6 +239,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_amber.gd").new())
 	if OS.get_environment("SAGA_STORY9_PROBE") != "": # 106장 53 이야기 9부(30장~)
 		add_child(load("res://tools/probe_story9.gd").new())
+	if OS.get_environment("SAGA_VAULT_PROBE") != "": # 106장 54-1 아홉째 지역 갈무리 벌
+		add_child(load("res://tools/probe_vault.gd").new())
 
 	## PLAN 106장 ㊸ — 업적(다른 노드 신호에 붙으므로 맨 뒤).
 	var achievements := preload("res://games/saga_go/world/achievements.gd").new()
@@ -296,7 +302,7 @@ func _print_density_report() -> void:
 	var test_map := load("res://games/saga_go/data/test_map.gd")
 	var density := load("res://saga_core/world/density_report.gd")
 	var terrain := load("res://games/saga_go/world/terrain_builder.gd")
-	for region_id in ["village", "coast", "ruins", "frost", "skyport", "crossing", "sunken", "amber"]:
+	for region_id in ["village", "coast", "ruins", "frost", "skyport", "crossing", "sunken", "amber", "vault"]:
 		var origin: Vector3 = test_map.origin_of(region_id)
 		var size: Vector2i = test_map.size(region_id)
 		var tile: float = test_map.tile_size_of(region_id)

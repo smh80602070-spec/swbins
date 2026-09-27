@@ -38,8 +38,8 @@ func _physics_process(_delta: float) -> void:
 				by_grade[c.grade] = by_grade.get(c.grade, 0) + 1
 				if c.sealed:
 					sealed += 1
-			var ok: bool = chests.size() == 43 and by_grade.get("common", 0) == 17 and by_grade.get("exquisite", 0) == 10 \
-				and by_grade.get("precious", 0) == 9 and by_grade.get("luxurious", 0) == 7 and sealed == 16 # 106장 ㊺ 고원 다섯 · ㊽ 은하 나루 다섯 · ㊾ 틈새 갈림길 다섯 · ㊿ 잠긴 도읍 다섯 더함
+			var ok: bool = chests.size() == 48 and by_grade.get("common", 0) == 19 and by_grade.get("exquisite", 0) == 11 \
+				and by_grade.get("precious", 0) == 10 and by_grade.get("luxurious", 0) == 8 and sealed == 18 # 106장 ㊺ 고원 다섯 · ㊽ 은하 나루 다섯 · ㊾ 틈새 갈림길 다섯 · ㊿ 잠긴 도읍 다섯 더함
 			_check("chest_count", ok, "n=%d grades=%s sealed=%d" % [chests.size(), by_grade, sealed])
 			var bad: Array = []
 			for c in chests:
@@ -122,7 +122,7 @@ func _physics_process(_delta: float) -> void:
 			add_child(sp)
 			var n := sp.get_child_count()
 			sp.free()
-			_check("persist_skip", n == 41 and TreasureSpawner.opened_count() == 2, "rebuilt=%d opened=%d" % [n, TreasureSpawner.opened_count()])
+			_check("persist_skip", n == 46 and TreasureSpawner.opened_count() == 2, "rebuilt=%d opened=%d" % [n, TreasureSpawner.opened_count()])
 			_next()
 		6:
 			print("TREASURE_PROBE_DONE fails=%d" % _fails)

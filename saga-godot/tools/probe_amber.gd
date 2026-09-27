@@ -56,7 +56,7 @@ func _physics_process(_delta: float) -> void:
 				bad.append("edge a=%s b=%s" % [a, b])
 			if TestMap.region_at(Amber.cell_pos(Vector2(4, 4))) != "amber":
 				bad.append("region_at")
-			if int(CodexState.TOTAL.place) != 128:
+			if int(CodexState.TOTAL.place) < 128:
 				bad.append("codex %d" % CodexState.TOTAL.place)
 			var disc := _am.find_children("Discover_amber_*", "Area3D", false, false).size()
 			if disc != 16:

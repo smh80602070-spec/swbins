@@ -65,6 +65,12 @@ const CHESTS := [
 	["a_ridge_n", "amber", Vector2(6.0, 0.38), "exquisite", "none", []],    # (6,0) 북쪽 테두리 산 턱 — 벽 타기
 	["a_camp_bear", "amber", Vector2(1.05, 6.05), "precious", "camp", []],  # 들판 무리 (1,6) 바위곰+살쾡이
 	["a_torch_market", "amber", Vector2(2.3, 4.3), "luxurious", "torch", ["fire", "fire", "fire"]], # 장터 좌판 등(주인공 혼자서도)
+	## 갈무리 벌 9×9(106장 54)
+	["g_field", "vault", Vector2(2.3, 2.2), "common", "none", []],
+	["g_yard", "vault", Vector2(7.0, 5.3), "common", "none", []],
+	["g_ridge_n", "vault", Vector2(2.0, 0.38), "exquisite", "none", []],   # (2,0) 북쪽 테두리 산 턱 — 벽 타기
+	["g_camp_hawk", "vault", Vector2(1.05, 2.05), "precious", "camp", []], # 들판 무리 (1,2) 매+살쾡이
+	["g_torch_granary", "vault", Vector2(2.3, 5.3), "luxurious", "torch", ["fire", "fire", "fire"]], # 곳간 마을 등(주인공 혼자서도)
 ]
 
 

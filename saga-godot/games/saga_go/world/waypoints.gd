@@ -48,6 +48,10 @@ const POINTS := [
 	["a_pass", "amber", Vector2(3.0, 6.6), false, "거리 어귀"],
 	["a_statue", "amber", Vector2(2.5, 5.2), true, "거리 신상"],
 	["a_tower", "amber", Vector2(5.2, 1.3), false, "부양탑 발치"],
+	## 106장 54 갈무리 벌 — 고개 어귀·곳간 마을 곁 신상·금고 앞.
+	["g_pass", "vault", Vector2(0.9, 3.0), false, "벌 어귀"],
+	["g_statue", "vault", Vector2(2.6, 4.2), true, "벌 신상"],
+	["g_vault", "vault", Vector2(4.0, 3.2), false, "금고 앞"],
 ]
 
 const INACTIVE := Color(0.46, 0.5, 0.58)

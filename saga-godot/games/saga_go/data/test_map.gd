@@ -114,7 +114,7 @@ const REGIONS := {
 			"^^^^^^^^^",
 			"^^NNNN^^^",
 			"^NNIINNT^",
-			"^TNNNNNN^",
+			"^TNNNNNN=",
 			"^NNR=NNT^",
 			"^NNN=NNN^",
 			"^TNN=NTN^",
@@ -198,6 +198,24 @@ const REGIONS := {
 		],
 		"tile_size": TILE_SIZE,
 		"origin": Vector3(-480.0, 0.0, -432.0),
+	},
+	## "vault" — PLAN 106장 54 이야기 10부 무대, 아홉째 지역 "갈무리 벌"(world/region9_vault.gd). 9×9.
+	## 서리봉 고원 동쪽 변(x=192)에 서쪽 변을 붙였다 — 고원 (8,3) 고개(길)가 이 지역 (0,3) 과 이어진다(9부를 마치기 전엔 빛 울타리).
+	## 지도에서 비어 있던 북동쪽 끝. M 금고·야적장 포장 · H 과거 곳간 마을 · F 밭 · 북쪽 시간 씨앗 금고.
+	"vault": {
+		"rows": [
+			"^^^^^^^^^",
+			"^T.MMM.T^",
+			"^..MMM..^",
+			"=====..T^",
+			"^.T.=MMM^",
+			"^HH.=MMM^",
+			"^HHF=...^",
+			"^TFF...T^",
+			"^^^^^^^^^",
+		],
+		"tile_size": TILE_SIZE,
+		"origin": Vector3(432.0, 0.0, -480.0),
 	},
 }
 

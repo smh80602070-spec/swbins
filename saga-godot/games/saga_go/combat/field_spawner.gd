@@ -45,6 +45,10 @@ const CAMPS := [
 	["amber", Vector2i(1, 6), ["rock_bear", "thunder_cat"]],
 	["amber", Vector2i(6, 7), ["fire_imp", "fire_imp", "wind_hawk"]],
 	["amber", Vector2i(7, 5), ["rock_bear", "ice_fox", "thunder_cat"]],
+	## PLAN 106장 54 갈무리 벌 — 벌판·야적장에 모여든 짐승(있는 kind).
+	["vault", Vector2i(1, 2), ["wind_hawk", "thunder_cat"]],
+	["vault", Vector2i(7, 2), ["ice_fox", "wind_hawk", "rock_bear"]],
+	["vault", Vector2i(6, 6), ["grass_snake", "fire_imp", "thunder_cat"]],
 ]
 const SPREAD := 5.0
 

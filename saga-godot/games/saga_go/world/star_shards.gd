@@ -64,6 +64,10 @@ const SHARDS := [
 	["a_peak_n", "amber", Vector2(2.0, 0.0), "peak"],
 	["a_peak_e", "amber", Vector2(8.0, 5.0), "peak"],
 	["a_air_cross", "amber", Vector2(5.2, 5.0), "air"],
+	## 106장 54 갈무리 벌
+	["g_peak_ne", "vault", Vector2(8.0, 1.0), "peak"],
+	["g_peak_w", "vault", Vector2(0.0, 6.0), "peak"],
+	["g_air_vault", "vault", Vector2(4.0, 3.0), "air"],
 ]
 
 var _nodes: Dictionary = {} # id → MeshInstance3D
