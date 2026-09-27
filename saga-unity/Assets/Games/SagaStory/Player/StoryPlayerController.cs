@@ -30,8 +30,8 @@ namespace Saga.Story.Player
 
         [SerializeField] private Transform visual;
         // 44장 "Player" 교체 — Maria가 배정되면 채워짐(BuildTestStoryScene.
-        // BuildPlayerVisual 참고). 이 판은 플레이어가 피격당하지 않아(Hit/
-        // Death 트리거 대상이 없음) Speed+Attack만 쓴다.
+        // BuildPlayerVisual 참고). Speed+Attack, 109-11-1 부터 두목 패턴에 맞으면
+        // Hit(`StoryPlayerVitals`).
         [SerializeField] private Animator animator;
 
         // PLAN.md 101-3 G "장비 가시화"(2026-09-18, `StoryWeaponVisual.cs`
@@ -83,6 +83,8 @@ namespace Saga.Story.Player
         {
             _controller = GetComponent<CharacterController>();
             if (visual != null) visual.rotation = Quaternion.Euler(0f, 90f, 0f);
+            // PLAN.md 109-11-1 — 플레이어 체력(두목 패턴이 때린다). Play 때 붙어 씬 재빌드가 필요 없다.
+            if (Application.isPlaying && GetComponent<StoryPlayerVitals>() == null) gameObject.AddComponent<StoryPlayerVitals>();
         }
 
         private void Update()

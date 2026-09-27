@@ -384,6 +384,16 @@
     { "key": "labyrinth.blessing.mp_regen.desc", "value": "MP regen +30%" },
     { "key": "labyrinth.blessing.memory_bonus", "value": "Engrave" },
     { "key": "labyrinth.blessing.memory_bonus.desc", "value": "Memory shards +50% this run" },
-    { "key": "discovery.lookout", "value": "Found a lookout atop the ledge — a short rest refills your MP." }
+    { "key": "discovery.lookout", "value": "Found a lookout atop the ledge — a short rest refills your MP." },
+    { "key": "hud.hp", "value": "❤ HP {0}/{1}" },
+    { "key": "bp.jump", "value": "⬆ Jump!" },
+    { "key": "bp.safe", "value": "Safe" },
+    { "key": "bp.sweep", "value": "⚠ {0}'s sweep — get into the green safe zone!" },
+    { "key": "bp.summon", "value": "👥 {0} called in underlings!" },
+    { "key": "bp.phase2", "value": "⚠ {0} phase 2 — the ground will shake (jump to dodge)!" },
+    { "key": "bp.enrage", "value": "🔥 {0} is enraged — a sweep is coming!" },
+    { "key": "hp.fell_field", "value": "💀 You fell — back on your feet at the field entrance" },
+    { "key": "labyrinth.regroup_fell", "value": "💀 You fell — rise again and retry" },
+    { "key": "labyrinth.failed_fell", "value": "💀 You fell — the run ended on floor {0} (memory shards remain, have {1})" }
   ]
 }

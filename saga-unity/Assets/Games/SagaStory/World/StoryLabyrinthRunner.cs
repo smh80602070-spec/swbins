@@ -27,7 +27,8 @@ namespace Saga.Story.World
     /// 40~60s 목표"를 강제 실패 조건으로 승격). 시간 안에 못 끝내면 그
     /// 회차가 끝난다(이미 확정된 기억 조각은 유지, 축복·더 앞선 진행은
     /// 사라진다) — godot의 "패퇴"(hp&lt;=0 관찰)와 결과는 같고 판정 축만
-    /// 다르다.
+    /// 다르다. PLAN.md 109-11-1(2026-09-27) 부터는 플레이어 체력이 생겨(두목 패턴이 때린다)
+    /// 쓰러져도 같은 패퇴다(`OnPlayerFell`).
     /// </summary>
     public class StoryLabyrinthRunner : MonoBehaviour
     {
@@ -70,6 +71,23 @@ namespace Saga.Story.World
         public bool NodeActive => _nodeActive;
         public float NodeTimeLeft => _nodeTimeLeft;
         public IReadOnlyList<StoryEnemy> ActiveArenaEnemies => _arenaEnemies;
+        /// <summary>PLAN.md 109-11-1 — 비경 두목 패턴(낙석·휩쓸기·부르기)이 방 밖에 안 떨어지게.</summary>
+        public const float ArenaMinX = ArenaOriginX;
+        public const float ArenaMaxX = ArenaOriginX + ArenaWidth;
+
+        /// <summary>PLAN.md 109-11-1 — 비경 두목이 부른 부하도 방 적으로 센다(다 쓰러뜨려야 방이 끝난다). 체력은 방 잡졸과 같은 배율.</summary>
+        public void AddArenaEnemy(StoryEnemy enemy)
+        {
+            if (enemy == null || !_nodeActive) return;
+            enemy.ApplyLabyrinthHpMul(StoryLabyrinthState.CurrentWeeklyVariant.EnemyHpMul * PlayerPowerHpMul());
+            _arenaEnemies.Add(enemy);
+        }
+
+        /// <summary>PLAN.md 109-11-1 — 체력이 다해 쓰러지면 시간 초과와 같은 패퇴(재기가 있으면 그 방을 다시).</summary>
+        public void OnPlayerFell()
+        {
+            if (_nodeActive) FailNode(fell: true);
+        }
 
         private void Awake()
         {
@@ -343,7 +361,7 @@ namespace Saga.Story.World
             }
         }
 
-        private void FailNode()
+        private void FailNode(bool fell = false)
         {
             _nodeActive = false;
             foreach (var e in _arenaEnemies) if (e != null) Destroy(e.gameObject);
@@ -351,7 +369,9 @@ namespace Saga.Story.World
 
             if (StoryLabyrinthState.ConsumeExtraLifeIfAvailable())
             {
-                DialogueLabel.Instance?.Show(StoryLocalization.T("labyrinth.regroup", "⏱ 시간 초과 — 재기(再起)로 다시 도전한다"), 3f);
+                DialogueLabel.Instance?.Show(fell
+                    ? StoryLocalization.T("labyrinth.regroup_fell", "💀 쓰러졌다 — 재기(再起)로 다시 도전한다")
+                    : StoryLocalization.T("labyrinth.regroup", "⏱ 시간 초과 — 재기(再起)로 다시 도전한다"), 3f);
                 StartCombatNode(_currentNodeType);
                 return;
             }
@@ -362,7 +382,9 @@ namespace Saga.Story.World
             int floor = StoryLabyrinthState.Floor;
             StoryLabyrinthState.EndRun();
             DialogueLabel.Instance?.Show(
-                string.Format(StoryLocalization.T("labyrinth.failed", "💀 패퇴 — {0}층에서 회차가 끝났다(기억 조각은 남는다, 보유 {1})"), floor, shards), 4f);
+                string.Format(fell
+                    ? StoryLocalization.T("labyrinth.failed_fell", "💀 쓰러졌다 — {0}층에서 회차가 끝났다(기억 조각은 남는다, 보유 {1})")
+                    : StoryLocalization.T("labyrinth.failed", "💀 패퇴 — {0}층에서 회차가 끝났다(기억 조각은 남는다, 보유 {1})"), floor, shards), 4f);
             StoryLabyrinthMapUi.Instance?.Close();
         }
 

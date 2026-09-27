@@ -126,6 +126,7 @@
 1	story	goal.no_enemy	가까운 적 없음	No enemies nearby		
 1	story	goal.session	이동 {0:F0}m · 처치 +{1}	Walked {0:F0}m · Kills +{1}		
 1	story	hud.done	 — 완료!	 — Done!		
+1	story	hud.hp	❤ HP {0}/{1}	❤ HP {0}/{1}		
 1	story	hud.level	Lv.{0}	Lv.{0}		
 1	story	hud.mp	💧 MP {0}/{1}	💧 MP {0}/{1}		
 1	story	hud.sp	📜 무예 점수 {0} (K)	📜 Skill points {0} (K)		
@@ -575,6 +576,9 @@
 2	go	wp.north	산기슭 역참	Foothills Waypoint		
 2	go	wp.south	남쪽 공터 역참	Southern Glade Waypoint		
 2	go	wp.village	마을 역참	Village Waypoint		
+2	dungeon	allysig.combo	⚡ 합격! {0} · {1} {2}	⚡ Combo! {0} · {1} {2}		
+2	dungeon	allysig.guard	철벽 진동	Iron Wall Quake		
+2	dungeon	allysig.mystic	서리꽃 파동	Frostbloom Wave		
 2	dungeon	ambush.attack	매복! 그늘에서 황건적이 튀어나왔다!	Ambush! Yellow Turban Bandits leap from the shadows!		
 2	dungeon	ambush.calm	고요하다 — 아무 일도 없었다.	All quiet — nothing happened.		
 2	dungeon	ambush.gold	 (돈 +{0}냥)	 (+{0} Gold)		
@@ -631,6 +635,8 @@
 2	dungeon	enemy.loot_equipped	⏎{0}을(를) 주웠다 — 바로 갖췄다.	⏎Picked up {0} — equipped it right away.		
 2	dungeon	enemy.loot_plain	⏎{0}을(를) 주웠다.	⏎Picked up {0}.		
 2	dungeon	enemy.miniboss	황건 살수	Yellow Turban Assassin		
+2	dungeon	enemy.region_skeleton	해골 무사	Skeleton Warrior		
+2	dungeon	enemy.region_skeleton_grunt	해골 졸개	Skeleton Grunt		
 2	dungeon	enemy.temple_guardian	능묘지기	Tomb Guardian		
 2	dungeon	enemy.temple_warden	능묘 파수꾼	Tomb Warden		
 2	dungeon	enemy.trial_guardian	시련의 수호자	Trial Guardian		
@@ -643,6 +649,19 @@
 2	dungeon	gem.gem_jade	벽옥	Jade		
 2	dungeon	gem.gem_ruby	홍옥	Ruby		
 2	dungeon	gem.gem_sapphire	남주	Sapphire		
+2	dungeon	gesture.cheer	🎉	🎉		
+2	dungeon	gesture.cheer_level	🎉 경하	🎉 Congrats		
+2	dungeon	gesture.cheer_win	🎉 이겼다	🎉 Victory		
+2	dungeon	gesture.combo	⚡ 합격	⚡ Combo		
+2	dungeon	gesture.greet	👋	👋		
+2	dungeon	gesture.job.chrononaut	⌛ 좌표	⌛ Plotting		
+2	dungeon	gesture.job.courier	📦 배달	📦 Delivering		
+2	dungeon	gesture.job.merchant	💰 흥정	💰 Haggling		
+2	dungeon	gesture.job.salaryman	📱 통화	📱 On a call		
+2	dungeon	gesture.job.surveyor	📡 측정	📡 Surveying		
+2	dungeon	gesture.job.villager	🌾 일손	🌾 Chores		
+2	dungeon	gesture.rally	❗ 호응	❗ Rally		
+2	dungeon	gesture.sig	✨ 서명	✨ Signature		
 2	dungeon	grave.card_lost	유품으로 금 {0} — 돌아가기 전에 되찾을 것	Left {0} Gold as a grave — recover it before you leave		
 2	dungeon	grave.card_lost_none	잃은 것 없음	Lost nothing		
 2	dungeon	grave.card_title	쓰러졌다	You fell		
@@ -723,6 +742,12 @@
 2	dungeon	landmark.tomb.room2	석인 회랑	Stone Statue Hall		
 2	dungeon	landmark.tomb.room3	순장 무덤칸	Retainer Crypts		
 2	dungeon	landmark.tomb.room4	현실(玄室)	Burial Chamber		
+2	dungeon	lordsig.bandit	흑풍 삼연돌	Black Wind Triple Charge		
+2	dungeon	lordsig.cloud	천뢰 십자	Heaven Thunder Cross		
+2	dungeon	lordsig.fort	망루 화살비	Watchtower Arrow Rain		
+2	dungeon	lordsig.hellgate	업화 장판	Hellfire Ground		
+2	dungeon	lordsig.palace	심연 소용돌이	Abyssal Maelstrom		
+2	dungeon	lordsig.tomb	순장 호령	Burial Summons		
 2	dungeon	lore.cell	비전 {0}	Lore {0}		
 2	dungeon	lore.frost	빙혼	Icesoul		
 2	dungeon	lore.hud	 [비전 {0}]	 [lore {0}]		
@@ -759,6 +784,22 @@
 2	dungeon	quest.objective_miniboss	메인 퀘스트 — 황건 살수(미니보스)를 처치하라	Main Quest — Defeat the Yellow Turban Assassin (Mini-Boss)		
 2	dungeon	quest.objective_rescue	메인 퀘스트 — 갇힌 인영을 구출하라	Main Quest — Rescue the captive		
 2	dungeon	quest.reward_msg	퀘스트 보상 경험치 +{0} · 돈 +{1}냥	Quest Reward: +{0} EXP · +{1} Gold		
+2	dungeon	rboss.appear	☠ {0} — {1} · {2}	☠ {0} — {1} · {2}		
+2	dungeon	rboss.heaven	타락한 천장	Fallen Sky General		
+2	dungeon	rboss.hellgate	균열 문지기 겁옥	Geopok, Rift Warden		
+2	dungeon	rboss.jungwon	벌판 흑기 대장	Black Rider Captain		
+2	dungeon	rboss.kill	🏆 {0} 토벌 — 공적 +{1}냥 · 10분 뒤 다시 선다	🏆 {0} defeated — merit +{1} Gold · back in 10 min		
+2	dungeon	rboss.kill_first	🏆 {0} 첫 토벌! — 공적 +{1}냥 · 10분 뒤 다시 선다	🏆 {0} — first defeat! Merit +{1} Gold · back in 10 min		
+2	dungeon	rboss.neon	폐도시 폭주룡	Dead City Drake		
+2	dungeon	rboss.notice	☠ 지역 우두머리 {0}의 자리 — {1} · 표식을 밟으면 나타난다	☠ Regional boss {0} — {1} · step on the marker		
+2	dungeon	rboss.notice_rest	☠ {0} — 쉬는 중 (다시 서기까지 {1}분)	☠ {0} — resting ({1} min)		
+2	dungeon	rboss.saltmarsh	개펄 촉수왕	Mudflat Tentacle King		
+2	dungeon	rboss.scrap	고철 거신	Scrap Colossus		
+2	dungeon	rboss.silkroad	모래바다 폭군	Sand Sea Tyrant		
+2	dungeon	rboss.snowfort	만년설 거한	Eternal Snow Giant		
+2	dungeon	rboss.solar	태양로 폭주 거신	Furnace Colossus		
+2	dungeon	rboss.withdraw	{0}이(가) 제자리로 물러났다	{0} withdrew to its lair		
+2	dungeon	region.danger	위험 {0}	Danger {0}		
 2	dungeon	region.era.future	미래	Future		
 2	dungeon	region.era.modern	현대	Modern		
 2	dungeon	region.era.myth	신화	Myth		
@@ -796,6 +837,84 @@
 2	dungeon	room.stair	지하로 내려간다	Descend		
 2	dungeon	room.trove	보물상자	Treasure Chest		
 2	dungeon	room.well	우물	Well		
+2	dungeon	saga.all	🏳 구주 평정(九州平定)! — 금 +{0} · 경험치 +{1} · 공적 +{2}냥	🏳 All Nine Regions pacified! — +{0} Gold · +{1} EXP · merit +{2} Gold		
+2	dungeon	saga.desc.boss	☠ {0}을(를) 토벌하라	☠ Defeat {0}		
+2	dungeon	saga.desc.clue	🔍 {0}을(를) 찾아라 (M 지도 🔍)	🔍 Find the {0} (M map 🔍)		
+2	dungeon	saga.desc.elite	{0} {1}마리를 쓰러뜨려라 (🚩 사냥터 깃발)	Defeat {1} {0} (🚩 hunting flag)		
+2	dungeon	saga.desc.hunt	{0}에서 적 {1}마리를 처치하라 (🚩 사냥터 깃발을 밟으면 무리가 나온다)	Defeat {1} foes in {0} (step on the 🚩 hunting flag to call them)		
+2	dungeon	saga.found	🔍 {0} — {1}	🔍 {0} — {1}		
+2	dungeon	saga.heaven.clue	빛이 꺼진 홀로그램 비석	Darkened hologram stele		
+2	dungeon	saga.heaven.done	비석에 빛이 돌아왔다 — 도사가 향을 사른다	Light returns to the stele — the sage burns incense		
+2	dungeon	saga.heaven.elite	타락을 따른 정예	elite followers of the fallen		
+2	dungeon	saga.heaven.found	비석에 남은 마지막 빛 — 수호장의 맹세가 거꾸로 새겨져 있다	The last light on the stele shows the guardian's oath written backwards		
+2	dungeon	saga.heaven.giver	사당지기 도사	Shrine-keeper sage		
+2	dungeon	saga.heaven.intro	하늘 사당의 수호장이 사당을 버렸다 — 그 칼끝이 이제 우리를 향한다	The sky shrine's guardian abandoned it — now his blade points at us		
+2	dungeon	saga.heaven.title	칼을 든 수호장	The Guardian Who Drew His Sword		
+2	dungeon	saga.hellgate.clue	금 간 봉인비	Cracked seal stone		
+2	dungeon	saga.hellgate.done	봉인비에 새 글자가 새겨졌다 — 균열이 멈췄다	New glyphs mark the seal stone — the rift has stopped		
+2	dungeon	saga.hellgate.elite	균열에서 나온 정예 원귀	elite vengeful spirits from the rift		
+2	dungeon	saga.hellgate.found	비문의 마지막 글자가 불에 녹았다 — 문지기가 안에서 깼다	The last glyph melted in fire — the warden woke from within		
+2	dungeon	saga.hellgate.giver	떠돌이 퇴마사	Wandering exorcist		
+2	dungeon	saga.hellgate.intro	균열이 해마다 한 뼘씩 넓어진다 — 새어 나오는 것들부터 막아야 한다	The rift widens a hand's span each year — stop what leaks out first		
+2	dungeon	saga.hellgate.title	갈라진 땅의 문지기	Warden of the Split Earth		
+2	dungeon	saga.jungwon.clue	불탄 역참 깃발	Burnt relay banner		
+2	dungeon	saga.jungwon.done	벌판 길에 다시 수레가 다닌다	Carts roll along the plains road again		
+2	dungeon	saga.jungwon.elite	도적 무리의 정예 척후	elite bandit scouts		
+2	dungeon	saga.jungwon.found	깃발 밑에 끼인 약탈 장부 — 두목의 진지가 적혀 있다	A loot ledger stuck under the banner — it marks the leader's camp		
+2	dungeon	saga.jungwon.giver	벌판 역참지기	Plains relay keeper		
+2	dungeon	saga.jungwon.intro	밤마다 검은 깃발 무리가 역참을 턴다 — 벌판부터 조용히 시켜 달라	Every night a black-bannered gang raids the relay — quiet the plains first		
+2	dungeon	saga.jungwon.title	흑기 도적의 밤	Night of the Black Banners		
+2	dungeon	saga.map_count	📜 지역 사연 {0}/{1} 평정	📜 Region tales {0}/{1} pacified		
+2	dungeon	saga.neon.clue	깜빡이는 비상등 상자	Blinking emergency box		
+2	dungeon	saga.neon.done	굴뚝 아래가 조용해졌다 — 아이가 고철을 한 아름 들고 온다	All is quiet under the chimneys — the child brings an armful of scrap		
+2	dungeon	saga.neon.elite	공장을 지키는 강철 정예	elite steel guards of the factory		
+2	dungeon	saga.neon.found	상자 속 기록기가 "둥지" 라는 말과 좌표를 되풀이한다	A recorder inside repeats the word "nest" and a location		
+2	dungeon	saga.neon.giver	고물 줍는 아이	Scrap-picking child		
+2	dungeon	saga.neon.intro	공장 쪽에서 쇠 긁는 소리가 밤새 난다 — 무서워서 못 가겠다	Metal scrapes all night by the factory — I'm too scared to go		
+2	dungeon	saga.neon.title	멈춘 공장의 심장	Heart of the Silent Factory		
+2	dungeon	saga.next	다음: {0}	Next: {0}		
+2	dungeon	saga.open	📜 {0} — {1}: "{2}"⏎다음: {3}	📜 {0} — {1}: "{2}"⏎Next: {3}		
+2	dungeon	saga.pacified	🏳 {0} 평정! — {1} (공적 +{2}냥)	🏳 {0} pacified! — {1} (merit +{2} Gold)		
+2	dungeon	saga.saltmarsh.clue	녹슨 관측탑 일지	Rusted watchtower log		
+2	dungeon	saga.saltmarsh.done	밀물이 제 소리로 돌아왔다 — 뱃사공이 소금 한 섬을 내민다	The tide sounds right again — the boatman offers a sack of salt		
+2	dungeon	saga.saltmarsh.elite	갯벌의 정예 괴물	elite mudflat monsters		
+2	dungeon	saga.saltmarsh.found	마지막 장 — "촉수, 물길 셋째 갈래 아래" 라고 적혀 있다	The last page reads: "Tentacles, under the third channel"		
+2	dungeon	saga.saltmarsh.giver	염전 늙은 뱃사공	Old salt-field boatman		
+2	dungeon	saga.saltmarsh.intro	썰물 때마다 갯벌 밑에서 무언가 운다 — 배가 셋이나 사라졌다	Something wails under the flats at every ebb — three boats are gone		
+2	dungeon	saga.saltmarsh.title	물 빠진 바다의 노래	Song of the Drained Sea		
+2	dungeon	saga.scrap.clue	반쯤 묻힌 조립 설계도	Half-buried blueprint		
+2	dungeon	saga.scrap.done	황무지의 기계들이 잠들었다 — 수리 로봇이 나사 한 줌을 건넨다	The wasteland machines sleep — the robot hands over a fistful of bolts		
+2	dungeon	saga.scrap.elite	고철 거신의 정예 부품	elite parts of the colossus		
+2	dungeon	saga.scrap.found	설계도 가장자리에 거대한 몸의 도면 — 이미 완성됐다고 적혀 있다	A giant body is drawn in the margin — marked as already finished		
+2	dungeon	saga.scrap.giver	떠돌이 수리 로봇	Wandering repair robot		
+2	dungeon	saga.scrap.intro	쓰러진 기계들이 하나씩 사라진다 — 누군가 그것들을 모으고 있다	Fallen machines vanish one by one — someone is gathering them		
+2	dungeon	saga.scrap.title	스스로 일어선 고철	The Scrap That Rose		
+2	dungeon	saga.silkroad.clue	모래에 묻힌 낙타 방울	Buried camel bell		
+2	dungeon	saga.silkroad.done	방울 소리가 다시 들린다 — 대상이 비단 한 필을 남기고 떠난다	Bells ring again — the caravan leaves a bolt of silk behind		
+2	dungeon	saga.silkroad.elite	길목을 지키는 정예 짐승	elite beasts of the pass		
+2	dungeon	saga.silkroad.found	방울 곁에 거대한 뿔 자국 — 발자국이 모래바다 쪽으로 이어진다	Huge horn marks by the bell — tracks lead to the sand sea		
+2	dungeon	saga.silkroad.giver	대상 우두머리	Caravan master		
+2	dungeon	saga.silkroad.intro	서역 길목이 막힌 지 석 달 — 낙타도 짐도 돌아오지 않는다	The western pass has been blocked three months — no camels, no cargo		
+2	dungeon	saga.silkroad.title	끊긴 대상 길	The Severed Caravan Road		
+2	dungeon	saga.snowfort.clue	멈춘 케이블카 칸	Stalled cable car		
+2	dungeon	saga.snowfort.done	케이블카가 다시 움직인다 — 골짜기에 불빛이 켜졌다	The cable car runs again — lights glow in the valley		
+2	dungeon	saga.snowfort.elite	설산의 정예 짐승	elite snow beasts		
+2	dungeon	saga.snowfort.found	칸 안에 얼어붙은 커다란 손자국 — 산성 꼭대기로 이어진다	A huge frozen handprint inside — it leads to the fort's summit		
+2	dungeon	saga.snowfort.giver	케이블카 기사	Cable car operator		
+2	dungeon	saga.snowfort.intro	산성 폐허에 누가 눌러앉아 케이블카가 끊겼다 — 골짜기가 고립됐다	Something squats in the fort ruins and cut the cable car — the valley is cut off		
+2	dungeon	saga.snowfort.title	산성의 거한	Giant of the Mountain Fort		
+2	dungeon	saga.solar.clue	꺼진 제어 단말	Dead control terminal		
+2	dungeon	saga.solar.done	태양판 위로 다시 새가 앉는다 — 개척지에 불이 들어왔다	Birds perch on the panels again — the settlement has power		
+2	dungeon	saga.solar.elite	폭주한 기계 정예	elite rampaging machines		
+2	dungeon	saga.solar.found	마지막 기록 — "냉각 실패. 거신 기동" 이 붉게 떠 있다	The last entry glows red: "Cooling failed. Colossus online"		
+2	dungeon	saga.solar.giver	개척지 정비공	Settlement mechanic		
+2	dungeon	saga.solar.intro	태양로 온도가 계속 오른다 — 주변 기계들이 미쳐 날뛴다	The solar furnace keeps heating up — the machines around it run wild		
+2	dungeon	saga.solar.title	과열된 태양로	The Overheated Furnace		
+2	dungeon	saga.step.boss	우두머리	Boss		
+2	dungeon	saga.step.clue	흔적	Clue		
+2	dungeon	saga.step.elite	정예	Elites		
+2	dungeon	saga.step.hunt	토벌	Hunt		
+2	dungeon	saga.step_done	📜 {0} — {1} 완료 (금 +{2} · 경험치 +{3})	📜 {0} — {1} done (+{2} Gold · +{3} EXP)		
 2	dungeon	secret.cleared	{0} — 비결을 풀었다	{0} — secret removed		
 2	dungeon	secret.frost	한기	Frost		
 2	dungeon	secret.frost_fx	위력 ×0.9 · 맞은 적 2.8초 얼림	Power ×0.9 · freezes targets for 2.8s		
@@ -993,6 +1112,12 @@
 2	forest	zone.enter	— {0} {1} —	— {0} {1} —		
 2	forest	zone.enter_village	— 마을 —	— Village —		
 2	forest	zone.roster	사는 것: {0}	Lives here: {0}		
+2	story	bp.enrage	🔥 {0} 광폭 — 휩쓸기가 온다!	🔥 {0} is enraged — a sweep is coming!		
+2	story	bp.jump	⬆ 점프!	⬆ Jump!		
+2	story	bp.phase2	⚠ {0} 2단계 — 땅이 흔들린다(점프로 피하라)!	⚠ {0} phase 2 — the ground will shake (jump to dodge)!		
+2	story	bp.safe	안전	Safe		
+2	story	bp.summon	👥 {0}이(가) 부하를 불렀다!	👥 {0} called in underlings!		
+2	story	bp.sweep	⚠ {0}의 휩쓸기 — 초록 안전지대로!	⚠ {0}'s sweep — get into the green safe zone!		
 2	story	cut.story_boss_sub	들판 가장 안쪽을 지키는 우두머리	The master guarding the far end of the field		
 2	story	cut.story_boss_title	황건 두목	Yellow Turban Chief		
 2	story	cut.story_champion_sub	관문 대장 — 이번 주 강화판, 180초 안에 쓰러뜨려라	Gate Champion — this week's empowered form, defeat it within 180s		
@@ -1016,6 +1141,7 @@
 2	story	gatechampion.shield_hud	 🛡깨짐	 🛡Broken		
 2	story	gatechampion.start	🚪 관문 대장 — 이번 주 강화판으로 나타났다! 180초 안에 쓰러뜨려라	🚪 Gate Champion — appeared in this week's empowered form! Defeat it within 180s		
 2	story	gatechampion.timer	🚪 관문 대장 — {0:0}초{1}	🚪 Gate Champion — {0:0}s{1}		
+2	story	hp.fell_field	💀 쓰러졌다 — 들판 입구에서 다시 일어선다	💀 You fell — back on your feet at the field entrance		
 2	story	job.archer	궁수(弓手)	Archer		
 2	story	job.ascendant	천존(天尊)	Heavenly Lord		
 2	story	job.assassin	자객(刺客)	Assassin		
@@ -1056,6 +1182,7 @@
 2	story	labyrinth.event_good	📜 사건 노드 — 뜻밖의 도움을 받아 경험을 얻었다	📜 Event node — an unexpected helper gave you experience		
 2	story	labyrinth.event_neutral	📜 사건 노드 — 별일 없이 지나갔다	📜 Event node — nothing happened		
 2	story	labyrinth.failed	💀 패퇴 — {0}층에서 회차가 끝났다(기억 조각은 남는다, 보유 {1})	💀 Defeated — the run ended on floor {0} (memory shards remain, have {1})		
+2	story	labyrinth.failed_fell	💀 쓰러졌다 — {0}층에서 회차가 끝났다(기억 조각은 남는다, 보유 {1})	💀 You fell — the run ended on floor {0} (memory shards remain, have {1})		
 2	story	labyrinth.floor_boss	5층 — 관문의 주인	Floor 5 — Master of the Gate		
 2	story	labyrinth.floor_hud	🌀 비경 {0}층	🌀 Labyrinth F{0}		
 2	story	labyrinth.floor_label	{0}층 — 갈 길을 고르십시오	Floor {0} — choose your path		
@@ -1069,6 +1196,7 @@
 2	story	labyrinth.node_rest	🏕 휴식	🏕 Rest		
 2	story	labyrinth.node_treasure	💰 보물	💰 Treasure		
 2	story	labyrinth.regroup	⏱ 시간 초과 — 재기(再起)로 다시 도전한다	⏱ Time up — rise again and retry		
+2	story	labyrinth.regroup_fell	💀 쓰러졌다 — 재기(再起)로 다시 도전한다	💀 You fell — rise again and retry		
 2	story	labyrinth.rest	🏕 휴식 노드 — 기력을 전부 회복했다	🏕 Rest node — fully recovered your energy		
 2	story	labyrinth.timer_hud	— {0:0}초	— {0:0}s		
 2	story	labyrinth.treasure	💰 보물 노드 — 기억 조각 +{0}	💰 Treasure node — +{0} memory shards		
@@ -1577,7 +1705,17 @@
 3	dungeon	landmark.hellgate.lore	꺼지지 않는 불이 문을 두른다. 옥졸들이 사슬을 끌고 다닌다.	Undying flames ring the gate. Jailers drag their chains about.		
 3	dungeon	landmark.palace.lore	물이 빠진 뒤에도 비늘 병사들이 궁을 떠나지 않았다.	Even after the water drained, the scaled soldiers never left the palace.		
 3	dungeon	landmark.tomb.lore	옛 왕과 함께 묻힌 병사들이 아직 무덤을 지킨다.	Soldiers buried with the old king still guard the tomb.		
+3	dungeon	lordsig.tomb.line	순장된 병사들이 무덤에서 일어난다	The buried soldiers rise from their graves		
 3	dungeon	lore.line	비전 {0} — {1} 을(를) 건 무예 위력 ×1.6	Lore {0} — moves set to {1} deal ×1.6		
+3	dungeon	rboss.heaven.desc	하늘 사당을 버리고 칼을 든 옛 수호장	A former guardian who forsook the sky shrine and took up the sword		
+3	dungeon	rboss.hellgate.desc	갈라진 땅을 지키는 불의 문지기	A gatekeeper of fire guarding the split earth		
+3	dungeon	rboss.jungwon.desc	중원 도적떼를 한데 거느린 검은 기병	A black horseman who gathered the bandit bands of the plains		
+3	dungeon	rboss.neon.desc	멈춘 공장을 둥지 삼은 강철 짐승	A steel beast nesting in a silent factory		
+3	dungeon	rboss.saltmarsh.desc	물 빠진 갯벌 밑에서 올라온 촉수	Tentacles risen from beneath the drained tidal flats		
+3	dungeon	rboss.scrap.desc	쓰러진 기계를 모아 스스로 일어선 것	A thing that gathered fallen machines and raised itself		
+3	dungeon	rboss.silkroad.desc	대상 길목을 끊어 놓은 뿔 달린 폭군	A horned tyrant who cut off the caravan road		
+3	dungeon	rboss.snowfort.desc	산성 폐허를 차지한 눈의 거한	A snow giant that seized the ruined mountain fortress		
+3	dungeon	rboss.solar.desc	과열된 태양로가 깨운 거인	A giant woken by an overheated solar furnace		
 3	dungeon	region.heaven.desc	구름 위 사당과 빛으로 새긴 홀로그램 비석	A shrine above the clouds and steles carved in light		
 3	dungeon	region.hellgate.desc	붉게 갈라진 바위와 동굴 아가리, 잎 없는 나무들	Red-split rocks, gaping caves and leafless trees		
 3	dungeon	region.jungwon.desc	기와와 초가 사이로 논두렁과 숲이 이어진다	Paddy ridges and woods run between tiled and thatched roofs		

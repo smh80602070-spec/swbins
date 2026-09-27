@@ -40,7 +40,7 @@ namespace Saga.Story.Data
 
         // side.js power() 대체값: atk = might*0.9 + wisdom*0.3, hp = 60 + command*6 + level*12(레벨1).
         public const float StartAtk = 21f;  // round(20*0.9 + 10*0.3)
-        public const float StartHp = 162f;  // 60 + 15*6 + 1*12(이 슬라이스는 플레이어가 안 맞아 미사용 — 다음 확장 대비 값만 남김)
+        public const float StartHp = 162f;  // 60 + 15*6 + 1*12 — 109-11-1 부터 `StoryPlayerHp` 의 Lv.1 최대치(두목 패턴만 때린다)
 
         // 잡졸(황건적) — data-enemy.js 첫 항목 + side.js spawnEnemy() lv=1 공식.
         public const float EnemyHp = 18f;  // round(18*1.22^0)
@@ -49,7 +49,11 @@ namespace Saga.Story.Data
         // 두목(황건 두목) — "STORY 콘텐츠 확장"(2026-09-13), q_boss1 사명.
         // data-side.js STAGES.field boss{hpMul:12, dmgMul:2.0} 그대로.
         public const float BossHp = EnemyHp * 12f; // 216
-        public const float BossDmg = EnemyDmg * 2f; // 12(잡졸과 같은 이유로 이 슬라이스는 미사용 — 두목도 반격 안 함)
+        public const float BossDmg = EnemyDmg * 2f; // 12(옛 값 — 109-11-1 패턴전은 아래 BossDmgFor 를 쓴다)
+
+        /// <summary>PLAN.md 109-11-1 두목 패턴 한 대의 힘 — 웹 spawnEnemy dmg = (4 + lv × 1.6) × 두목 dmgMul 2.0.
+        /// 이 판 들판 두목은 레벨이 없어 플레이어 레벨을 lv 로 쓴다(체력이 레벨로 크는 만큼 같이 큰다).</summary>
+        public static float BossDmgFor(int level) => StoryBossPattern.JsRound((4f + Mathf.Max(1, level) * 1.6f) * 2f);
 
         /// <summary>
         /// "STORY 콘텐츠 확장" (2026-09-12) — 무예 나머지 셋(횡소·기탄·기합,

@@ -9837,3 +9837,15 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 레시피 칸 `under_below` {겉옷: 여유} — 장화 윗단 3cm 아래·장화 가까이의 바지는 모두 장화 속으로 지움(발목 옆은 광선이 못 잡아 바지가 네모 점으로 뚫었다). 전장 망자·순찰 대원·방독면 약탈자.
 - 옷 틀 `shinobi` 다리 통 윗단 가랑이 +5cm — 닌자 앞 가랑이 틈(서기·달리기) 없앰. 도감 hero_jp_hanzo 색 변형 옷도 다시 지음(도감 몸은 로컬 보류).
 - 검사: 4벌 verify fbx ≤ 0.7° · glb 0.0° · sha256 같음 · CMP_RESULT OK(FBX 로컬 전용, ProjectVersion·Packages 되돌림). 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
+
+## 2026-09-27 STORY — 109-11-1 보스 패턴전(웹 §5-9)·플레이어 체력 신설
+
+"사가 유니티 이어해" → PLAN 109 표 11번 첫 조각.
+
+- 막힘 → 결정: 이 트랙 STORY 는 플레이어 체력이 없고(StartHp 는 "미사용" 값뿐) 적·두목이 반격하지 않아, 웹 "피하지 못하면 피해"를 옮길 곳이 없었다. 사용자에게 물어 **플레이어 체력 신설**로(다른 안: 체력 없이 경직 · 11번 보류).
+- `StoryPlayerHp`(최대 60+90+레벨×12+전직 Hp, 무적 0.7초, 5초 뒤 초당 4% 회복, 세이브 없음) · `StoryPlayerVitals`(피격 클립·붉은 숫자·흔들림, 쓰러짐: 들판 입구 + 두목 태세 되돌림 / 비경 패퇴) · HUD "❤ HP".
+- `StoryBossPattern`(순수, 웹 boss-pattern.js 수치 그대로·px×0.02) · `StoryBossPatternRunner`(두목마다 Play 때, IApi) · `StoryBossWarnFx`(예고 그림) · `StoryEnemy` MaxHp·SpawnMinion·RegroupAfterPlayerFell · `StoryLabyrinthRunner` 방 경계·AddArenaEnemy·OnPlayerFell. 글 10 키(ko/en), loc-review 오류 0.
+- 발견: Mathf.Round 는 짝수 쪽 반올림이라 웹 Math.round 와 12.5 에서 갈림 → `StoryBossPattern.JsRound`.
+- 검증(묶음 없는 이 PC): 컴파일 0 오류 · `PlaytestStorySlice` 6번 모두 `bossPattern OK`, 슬라이스 끝은 기준선과 같은 무명 옷·Missing Prefab FAIL(phase=SaveLoad) — 묶음 PC 에서 3연속 재확인 · `UiLayoutCheck` TestField 세 비율·영어 겹침 0(FAIL 6 은 en:TestDungeon 지역 배너·대사 줄 겹침, en:TestCity 한글 — 이번 변경 밖). 글꼴 SDF 셋·Mobile_RPAsset 되돌림.
+- 실기 확인 전: 예고 시간(1.0~1.8초) 체감, 휩쓸기 55% 가 과한지, 안전지대 3.4m 폭, 원판이 옆 시점에서 읽히는지, Lv 높을 때 두목 힘.
+- 다음 = 11-2 5-10 보스 고유 기술·그로기.

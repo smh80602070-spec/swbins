@@ -25,6 +25,10 @@ namespace Saga.Story.World
     /// 돈다: HP만 12배(StoryCombat.BossHp)로 커지고 시각도 1.4배 커진다 —
     /// 색은 원작처럼 그대로(잡졸과 같은 황건적 계열, 크기·이름·체력으로만
     /// 구분). 반격은 잡졸과 같은 이유로 여전히 안 넣었다.
+    ///
+    /// **보스 패턴전(PLAN.md 109-11-1, 2026-09-27)** — 두목은 이제 몸으로 치진 않지만 체력 구간마다
+    /// 예고 장판(내려찍기·낙석·지진·휩쓸기)과 부하 부르기를 쓴다(`StoryBossPatternRunner`, 판정은
+    /// `StoryBossPattern`). 잡졸은 그대로 반격 없음.
     /// </summary>
     public class StoryEnemy : MonoBehaviour
     {
@@ -66,6 +70,7 @@ namespace Saga.Story.World
         {
             if (mul == 1f) return;
             _hp *= mul;
+            _maxHp *= mul;
         }
 
         // 2026-09-14 "사운드" — StoryAudio.cs 클래스 주석 참고. 이 컴포넌트
@@ -182,6 +187,7 @@ namespace Saga.Story.World
             if (!isBoss || _dead || _isChampion || !StorySaveState.ChampionAvailable()) return;
             _isChampion = true;
             _hp *= ChampionHpMul;
+            _maxHp *= ChampionHpMul;
             _championMaxHp = _hp;
             _championTimeLeft = ChampionTimeLimitSec;
             ActiveChampion = this;
@@ -202,12 +208,13 @@ namespace Saga.Story.World
         /// <summary>시간 초과 — 재방문 없는 편도 필드라 도망(Destroy) 대신
         /// 체력을 되돌려 그 자리에서 계속 도전할 수 있게 한다(클래스 주석
         /// "재해석" 참고).</summary>
-        private void Regroup()
+        private void Regroup(bool quiet = false)
         {
             _hp = _championMaxHp;
             _championDamageTaken = 0f;
             _shieldBroken = false;
             _championTimeLeft = ChampionTimeLimitSec;
+            if (quiet) return; // 109-11-1 — 플레이어가 쓰러져 되돌릴 땐 쓰러짐 알림 하나만.
             DialogueLabel.Instance?.Show(
                 StoryLocalization.T("gatechampion.regroup", "⏱ 시간 초과 — 관문 대장이 태세를 정비했다, 다시 도전하라"), 4f);
         }
@@ -219,12 +226,48 @@ namespace Saga.Story.World
         public bool IsDead => _dead;
         /// <summary>진단 — 남은 체력(PLAN.md 106-10 동료 타격 확인).</summary>
         public float Hp => _hp;
+        /// <summary>PLAN.md 109-11-1 — 체력 구간(단계) 판정의 기준. 비경 배율·관문 대장 배율을 곱한 뒤 값.</summary>
+        public float MaxHp => _maxHp;
+        public bool IsLabyrinthEnemy => isLabyrinthEnemy;
+        private float _maxHp;
 
         private void Awake()
         {
             AllList.Add(this);
             _hp = isBoss ? StoryCombat.BossHp : StoryCombat.EnemyHp;
+            _maxHp = _hp;
             if (transform.Find("Visual") == null) BuildVisual();
+            // PLAN.md 109-11-1 보스 패턴전 — 두목(들판·비경)마다 실행기 하나. Play 때 붙어 씬 재빌드가 필요 없다.
+            if (isBoss && Application.isPlaying && GetComponent<StoryBossPatternRunner>() == null)
+                gameObject.AddComponent<StoryBossPatternRunner>();
+        }
+
+        /// <summary>PLAN.md 109-11-1 부하 부르기(웹 spawnEnemy) — 이 두목의 잡졸 몸·소리로 과거 잡졸 하나를 x 에 세운다.
+        /// 비경 두목이 부르면 비경 적(노드 경험치 몫)으로 방에 넣어 다 쓰러뜨려야 방이 끝난다. 부하도 이 판 잡졸처럼 반격은 없다.</summary>
+        public StoryEnemy SpawnMinion(float x)
+        {
+            var go = new GameObject("BossMinion");
+            go.SetActive(false);
+            go.transform.SetParent(transform.parent, false);
+            go.transform.position = new Vector3(x, transform.position.y, 0f);
+            var m = go.AddComponent<StoryEnemy>();
+            m.modelPrefab = modelPrefab;
+            m.riggedVisualScale = riggedVisualScale;
+            m.hitClip = hitClip;
+            m.deathClip = deathClip;
+            m.isLabyrinthEnemy = isLabyrinthEnemy;
+            go.SetActive(true);
+            if (isLabyrinthEnemy) StoryLabyrinthRunner.Instance?.AddArenaEnemy(m);
+            return m;
+        }
+
+        /// <summary>PLAN.md 109-11-1 — 플레이어가 들판에서 쓰러지면 두목이 태세를 되돌린다(체력 가득·단계 처음·관문 대장 시계·방패도).</summary>
+        public void RegroupAfterPlayerFell()
+        {
+            if (_dead) return;
+            if (_isChampion) Regroup(quiet: true);
+            else _hp = _maxHp;
+            GetComponent<StoryBossPatternRunner>()?.ResetPattern();
         }
 
         private void OnDestroy()

@@ -36,6 +36,8 @@ namespace Saga.Story.UI
             bool done = StoryQuestState.QuestDone;
             bool bossDone = StoryQuestState.QuestBossDone;
             string mp = string.Format(StoryLocalization.T("hud.mp"), Mathf.RoundToInt(StoryCombat.Mp), Mathf.RoundToInt(StoryCombat.MpMaxCurrent));
+            // PLAN.md 109-11-1 — 플레이어 체력(두목 패턴이 때린다), 기력 앞에 한 줄로.
+            mp = string.Format(StoryLocalization.T("hud.hp", "❤ HP {0}/{1}"), Mathf.CeilToInt(StoryPlayerHp.Hp), Mathf.RoundToInt(StoryPlayerHp.HpMax)) + " · " + mp;
             string jobSuffix = StoryJobState.HasJob
                 ? $" {StoryLocalization.T($"job.{StoryJobState.Job}", StoryJobState.JobDisplayName)}"
                 : "";

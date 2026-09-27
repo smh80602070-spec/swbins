@@ -31,6 +31,15 @@ namespace Saga.Story.World
             go.AddComponent<DamagePopup>();
         }
 
+        /// <summary>PLAN.md 109-11-1 — 플레이어가 맞은 피해(빛깔을 따로).</summary>
+        public static void Spawn(Vector3 worldPos, float amount, Color color)
+        {
+            var go = new GameObject("DamagePopup");
+            go.transform.position = worldPos;
+            Saga.Core.SagaWorldText.Add(go, Mathf.RoundToInt(amount).ToString(), 48f * 0.26f, color);
+            go.AddComponent<DamagePopup>();
+        }
+
         private void Awake()
         {
             _mesh = GetComponent<TMPro.TextMeshPro>();

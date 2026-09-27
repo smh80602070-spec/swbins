@@ -384,6 +384,16 @@
     { "key": "labyrinth.blessing.mp_regen.desc", "value": "기력 재생 +30%" },
     { "key": "labyrinth.blessing.memory_bonus", "value": "각인(刻印)" },
     { "key": "labyrinth.blessing.memory_bonus.desc", "value": "이번 회차 기억 조각 획득 +50%" },
-    { "key": "discovery.lookout", "value": "발판 위 망루를 발견했다 — 잠시 숨을 고르니 내공이 가득 찼다." }
+    { "key": "discovery.lookout", "value": "발판 위 망루를 발견했다 — 잠시 숨을 고르니 내공이 가득 찼다." },
+    { "key": "hud.hp", "value": "❤ HP {0}/{1}" },
+    { "key": "bp.jump", "value": "⬆ 점프!" },
+    { "key": "bp.safe", "value": "안전" },
+    { "key": "bp.sweep", "value": "⚠ {0}의 휩쓸기 — 초록 안전지대로!" },
+    { "key": "bp.summon", "value": "👥 {0}이(가) 부하를 불렀다!" },
+    { "key": "bp.phase2", "value": "⚠ {0} 2단계 — 땅이 흔들린다(점프로 피하라)!" },
+    { "key": "bp.enrage", "value": "🔥 {0} 광폭 — 휩쓸기가 온다!" },
+    { "key": "hp.fell_field", "value": "💀 쓰러졌다 — 들판 입구에서 다시 일어선다" },
+    { "key": "labyrinth.regroup_fell", "value": "💀 쓰러졌다 — 재기(再起)로 다시 도전한다" },
+    { "key": "labyrinth.failed_fell", "value": "💀 쓰러졌다 — {0}층에서 회차가 끝났다(기억 조각은 남는다, 보유 {1})" }
   ]
 }

@@ -188,6 +188,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStorySummon.Run()) { Fail(); return; } // PLAN.md 106-10 둘째 단계 — 소환(게이지·컷·내려찍기).
                     if (!PlaytestNpcModels.Story()) { Fail(); return; } // PLAN.md 106-4 STORY 몫 — 척후병·전직관 사실 모델.
                     if (!PlaytestStoryEras.Run()) { Fail(); return; } // PLAN.md 109-3 세 시대 — 자리·비경 상태를 되돌린다.
+                    if (!PlaytestStoryBossPattern.Run()) { Fail(); return; } // PLAN.md 109-11-1 보스 패턴전 — 두목 등장 진단 뒤(컷을 튼 두목만 문다), 자리·체력·두목을 되돌린다.
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;
                     break;
