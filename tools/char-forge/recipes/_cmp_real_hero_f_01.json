@@ -10,7 +10,7 @@
  "teeth": "teeth_base/teeth_base.mhclo",
  "hair": "ponytail01/ponytail01.mhclo",
  "clothes": ["female_sportsuit01/female_sportsuit01.mhclo", "shoes01/shoes01.mhclo"],
- "under": {"female_sportsuit01": ["shoes01"]},
+ "under": {"female_sportsuit01": ["shoes01", "skin"]},
  "anims": {"idle": "Sword_Idle", "walk": "Walk_Loop", "run": "Jog_Fwd_Loop", "attack": "Sword_Attack",
            "hit": "Hit_Chest", "dodge": "Roll", "death": "Death01", "interaction": "PickUp_Table",
            "climb": "CF_Climb_Loop", "glide": "CF_Glide_Loop", "swim": "Swim_Fwd_Loop", "tread": "Swim_Idle_Loop", "jump": "Jump_Start"}

@@ -90,5 +90,13 @@
  "clothes": [
   "cf_hauberk_e8e2d0_8e1f1c/cf_hauberk_e8e2d0_8e1f1c.mhclo",
   "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
- ]
+ ],
+ "under": {
+  "rehmanpolanski_viking_boots": [
+   "cf_hauberk_e8e2d0_8e1f1c"
+  ]
+ },
+ "under_below": {
+  "rehmanpolanski_viking_boots": 0.03
+ }
 }

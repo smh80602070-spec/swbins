@@ -63,5 +63,13 @@
  },
  "_garments": [
   "cape"
- ]
+ ],
+ "under": {
+  "rehmanpolanski_viking_boots": [
+   "matcreator_mc-scifi-armor_guardian"
+  ]
+ },
+ "under_below": {
+  "rehmanpolanski_viking_boots": 0.03
+ }
 }
