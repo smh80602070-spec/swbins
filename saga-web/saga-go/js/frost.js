@@ -165,6 +165,14 @@
     for (var i = 0; i < ST.CHAPTERS.length; i++) { if (ST.CHAPTERS[i].id === CALM_AFTER) { return s.ch > i; } }
     return false;
   }
+  /** ⑲-36 이야기 15장(날개 조각 셋)을 마쳤으면 별배가 떴다 — 선체가 FLY_H m 위로 수평으로, 선체 벽은 사라진다(파편은 땅에) */
+  var FLY_AFTER = 'ch15', FLY_H = 9, FLY_T = 4;
+  function flown() {
+    var ST = global.DG.story, s = core() && core().save ? core().save.story : null;
+    if (!ST || !ST.CHAPTERS || !s) { return false; }
+    for (var i = 0; i < ST.CHAPTERS.length; i++) { if (ST.CHAPTERS[i].id === FLY_AFTER) { return s.ch > i; } }
+    return false;
+  }
   /** 지금 내리는 눈 입자 수 */
   function snowCount() { return calm() ? SNOW_CALM : SNOW_N; }
 
@@ -186,7 +194,7 @@
         { x: x + g + seg / 2, z: y + h, w: seg, d: WALL_T, rot: 0 }                         // 남(문 오른쪽)
       ];
       case 'obs': return [{ x: x, z: y, w: 6.4, d: 6.4, rot: 0 }];
-      case 'ship': return [rotRect(x, y, 0, 0, 22, 5.2, 0.5)];
+      case 'ship': { var sr = rotRect(x, y, 0, 0, 22, 5.2, 0.5); sr.hull = true; return [sr]; }   // ⑲-36 떠오르면 빠진다
       case 'stele': return [{ x: x, z: y, w: 1.6, d: 0.9, rot: 0 }];
       case 'hut': return [{ x: x, z: y, w: 4.4, d: 4.4, rot: 0.3 }];
       case 'statue': return [{ x: x, z: y, w: 1.6, d: 1.6, rot: 0 }];
@@ -204,7 +212,8 @@
         });
       });
     }
-    return rectMemo[gx + ',' + gy] || [];
+    var L = rectMemo[gx + ',' + gy] || [];
+    return L.some(function (r) { return r.hull; }) && flown() ? L.filter(function (r) { return !r.hull; }) : L;
   }
 
   /* ── 세이브·발견 ─────────────────────────────────────── */
@@ -325,6 +334,12 @@
         var strip2 = strip.clone(); strip2.position.z = -2.62; hull.add(strip2);
         box(T3, hull, m.steel, 3, 3.4, 0.25, -9.5, 4.3, 0);                                               // 꼬리 날개
         box(T3, hull, m.steel, 3, 0.25, 6, -9.5, 2.4, 0);
+        var wings = new T3.Group(); wings.visible = false; hull.add(wings);                              // ⑲-36 빛 날개 셋(뜬 뒤)
+        for (i = 0; i < 3; i++) {
+          var wg = new T3.Mesh(new T3.BoxGeometry(2.4, 0.08, 7 - i * 1.5), m.glow);
+          wg.position.set(3 - i * 3.2, 2.4 + i * 0.3, 0); wg.rotation.x = i === 1 ? 0 : 0.05; wings.add(wg);
+        }
+        o.hull = hull; o.wings = wings; o.lift = flown() ? FLY_H : 0;
         for (i = 0; i < 6; i++) { box(T3, g, i % 2 ? m.steel : m.dark, 0.6 + (i % 3) * 0.5, 0.3, 0.8 + (i % 2) * 0.6, -6 + i * 3.1, 0.15, 5 + (i % 3) * 1.4, i); }   // 파편
         break;
       }
@@ -417,6 +432,14 @@
       var o = fx[st.id] || (fx[st.id] = build(w, T3, st));
       if (o.spin) { o.spin.rotation.y += (dt || 0) * 3.2; }
       if (o.flame) { o.flame.scale.set(1, 0.85 + Math.sin(clock * 9) * 0.15, 1); }
+      if (o.hull) {                                                                                       // ⑲-36 별배 — 지켜보면 FLY_T 초에 걸쳐 떠오른다
+        var goal = flown() ? FLY_H : 0;
+        o.lift = goal > o.lift ? Math.min(goal, o.lift + FLY_H / FLY_T * (dt || 0)) : goal;
+        var k = o.lift / FLY_H;
+        o.hull.position.y = o.lift + (k > 0 ? Math.sin(clock * 0.9) * 0.3 * k : 0);
+        o.hull.rotation.z = 0.2 * (1 - k);
+        o.wings.visible = k > 0;
+      }
     }
     for (var k in fx) { if (fx.hasOwnProperty(k) && !seen[k]) { w.removeFx(fx[k].root); delete fx[k]; } }
     var here = snowingHere();
@@ -452,7 +475,7 @@
     /* 판정 층(순수) */
     on: on, center: center, sites: sites, bloomSpots: bloomSpots, treeSnow: treeSnow, siteById: siteById, snowAt: snowAt, snowCell: snowCell, rectsOf: rectsOf, rectsIn: rectsIn,
     /* 세이브·상태 */
-    snowingHere: snowingHere, calm: calm, snowCount: snowCount, SNOW_N: SNOW_N, SNOW_CALM: SNOW_CALM, found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks,
+    snowingHere: snowingHere, calm: calm, flown: flown, FLY_H: FLY_H, FLY_T: FLY_T, snowCount: snowCount, SNOW_N: SNOW_N, SNOW_CALM: SNOW_CALM, found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks,
     tick: tick,
     _resetForTest: function () { memo = null; bloomMemo = null; rectMemo = null; snowMemo = {}; snowN = 0; hereT = -1; }
   };

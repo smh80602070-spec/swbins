@@ -78,6 +78,11 @@
       skill: { name: '휴대 관측기', type: 'zone', cd: 11, r: 5, sec: 10, every: 1.2, n: 2, mul: 0.8, energy: 1.5,
         text: '발밑에 10초 관측기 — 1.2초마다 5m 안 가까운 적 둘에 신호탄(화 원소, 맞힐 때마다 명단 기력 +1.5). 인물을 바꿔도 남는다' },
       burst: { name: '맑음 예보', type: 'rally', r: 7, mul: 3.2, sec: 12, atk: 1.25, text: '둘레 7m 에 신호탄 비, 12초 동안 명단 공격 +25%' }
+    },
+    /* ⑲-36 달음(15장 끝 합류) — saga-godot 106 ㊼-3 을 이 판 척도로. 있는 틀(dash·ward)만 쓴다 */
+    story_dareum: {
+      skill: { name: '파발 질주', type: 'dash', cd: 7, len: 6, w: 2.2, mul: 2.8, text: '말 달리듯 앞으로 6m 돌진 — 지나간 길의 적을 암 원소로 친다(돌진 중 무적)' },
+      burst: { name: '마패 호령', type: 'ward', r: 7, mul: 3.6, sec: 10, taken: 0.75, text: '둘레 7m 에 바위를 내리찍고, 10초 동안 명단이 받는 피해 -25%' }
     }
   };
 

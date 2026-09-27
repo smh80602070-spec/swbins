@@ -10265,8 +10265,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     t('이야기 ⑲-12 — 표·자리: 장 둘(단계 8·4, 여정 등급 1·5) · 인물 셋 = ⑮ 땅 탑 + 자리(고향 촌장·갈대 나루 사공·옛 성터 학자) · 모든 단계에 목표 · 같은 세계면 같은 자리 · 몸 셋 고정', function () {
       var ST = DG.story, A3 = DG.asset3d, r = {};
-      r.table = ST.CHAPTERS.length === 14 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
-        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30·34·35 가 3~14장을 더했다
+      r.table = ST.CHAPTERS.length === 15 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
+        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30·34~36 가 3~15장을 더했다
       var e = ST.npcPos('elder'), f = ST.npcPos('ferryman'), s = ST.npcPos('scholar'), ga = ST.anchorOf('galdae'), go = ST.anchorOf('gojeong');
       r.npc = e.x === -22 && e.y === 16 && f.x === ga.x - 18 && f.y === ga.y - 24 && s.x === go.x - 18 && s.y === go.y - 24 &&
         DG.biome.cellAt.apply(null, ga.key.split('_').map(Number)).zone === 'galdae' && DG.biome.cellAt.apply(null, go.key.split('_').map(Number)).zone === 'gojeong';
@@ -12546,7 +12546,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         r.far = !ES.discoverAt(o.x + 200, o.y) && !ES.found('observatory');
         r.found = ES.discoverAt(o.x, o.y) && ES.found('observatory') && !ES.found('shipyard') && C.save.player.gold === g0 + ES.REWARD.gold && !ES.discoverAt(o.x, o.y);
         var mk = ES.marks();
-        r.marks = mk.length === 2 && mk[1].id === 'observatory' && mk[1].emoji === '🔭' && mk[1].found && !mk[0].found;
+        r.marks = mk.length >= 2 && mk[1].id === 'observatory' && mk[1].emoji === '🔭' && mk[1].found && !mk[0].found;   // ⑲-36 뒤로 역참 터
       } finally { rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '탑에서 ' + Math.round(Math.hypot(o.x - a.x, o.y - a.y)) + 'm · 기둥 벽 6 · 관측대 r9 +24m · 시간 기둥 6째부터(+8m) · 석등 뭍 · 🔭 금 +150' : ('실패 ' + bad.join(','));
@@ -12595,7 +12595,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       try {
         LF._resetForTest(); SK._resetForTest();
         var c14 = ST.CHAPTERS[13], S14 = c14.steps, o = ES.obs();
-        r.table = ST.CHAPTERS.length === 14 && c14.id === 'ch14' && c14.ar === 34 && !c14.join && S14.length === 10 && c14.reward.knot === 6 && c14.reward.gold === 4000 &&
+        r.table = ST.CHAPTERS.length >= 14 && c14.id === 'ch14' && c14.ar === 34 && !c14.join && S14.length === 10 && c14.reward.knot === 6 && c14.reward.gold === 4000 &&
           S14.map(function (q) { return q.type; }).join() === 'talk,go,talk,kill,talk,seal,talk,sky,kill,talk' && S14[5].order.join() === 'star,sun,moon' &&
           S14[7].pad === 'obs' && S14[8].sky && ES.DRAFT_FROM === 6 && ES.OBS_BOOT.join() === '8,9';
         C.save.story = { ch: 13, step: 0 };
@@ -12633,7 +12633,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         r.kill2 = C.save.story.step === 9;
         var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
         stGo(ST.npcPos('bandi'));
-        r.end = stTalkAll(ST) && C.save.story.ch === 14 && ST.done() && m.knot === k0 + 6 && C.save.player.gold === gold0 + 4000;
+        r.end = stTalkAll(ST) && C.save.story.ch === 14 && C.save.story.step === 0 && m.knot === k0 + 6 && C.save.player.gold === gold0 + 4000;   // ⑲-36 뒤로 15장
         r.after = !ES.obsFragThere() && ES.draftOpen();
         /* GPS 판 — 시간 기둥 곁(CLIMB_R 40m)에 닿으면 */
         LF._resetForTest();
@@ -12644,6 +12644,102 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { DG.world = W; LF._resetForTest(); SK._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '열 단계 · 반디 → 관측소 → 가온 → 무리 4 → 가온 → 석등(틀리면 꺼짐) → 가온 → 관측대(땅 ✕) → 파수 3 → 반디 · 🪢+6 🪙+4000 · 기둥 남음 · GPS 40m' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-36 이야기 3부 제15장 · 옛 역참 길 (era-sites 역참 터 · story ch15·역마 쫓기·여우불 구미호·달음 합류 · frost 별배 뜸, PLAN §5 ⑲-36) ── */
+    t('역참 터 ⑲-36 — 자리: 고향 남쪽(마당 뭍·높이 차 4m · 달음·무리·구미호·역마 길 뭍)·결정적 · 벽 여섯(돌담 셋·마구간·돌장승 둘, 동쪽 트임) · 역마 = 마구간(길 첫 점)·역참 틀 기준 길 · 달음 역참 앞 · 발견 한 번(🐎)', function () {
+      var ES = DG.eraSites, ST = DG.story, rig = stRig(36), r = {};
+      try {
+        ES._resetForTest();
+        var c = ES.station(), a = ST.anchorOf('home'), d = Math.hypot(c.x - a.x, c.y - a.y);
+        r.place = !!c && !c.forced && JSON.stringify(ES.station()) === JSON.stringify(c) && ES.stationFits(c.x, c.y) && d >= 239 && c.y > a.y &&
+          ES.HORSE_PATH.every(function (q) { return ST.landAt(c.x + q[0], c.y + q[1]); });
+        var rects = [];
+        for (var gy = Math.floor(c.y / 48) - 1; gy <= Math.floor(c.y / 48) + 1; gy++) { for (var gx = Math.floor(c.x / 48) - 1; gx <= Math.floor(c.x / 48) + 1; gx++) { rects = rects.concat(ES.rectsIn(gx, gy)); } }
+        var mine = rects.filter(function (q) { return Math.hypot(q.x - c.x, q.z - c.y) < 25; });
+        r.walls = mine.length === 6 && !mine.some(function (q) { return q.x > c.x + ES.YARD_HALF[0] - 1 && Math.abs(q.z - c.y) < ES.YARD_HALF[1]; });   // 동쪽은 트였다
+        C.save.story = { ch: 14, step: 0 };
+        r.horse = st10Eq(ST.npcPos('horse'), { x: c.x + ES.HORSE_PATH[0][0], y: c.y + ES.HORSE_PATH[0][1] }) && ST.visible('horse') && ST.NPCS.horse.pet === 'horse';
+        r.dareum = st10Eq(ST.npcPos('dareum'), ES.spot('st_dareum'));
+        var g0 = C.save.player.gold;
+        delete C.save.era;
+        r.found = !ES.discoverAt(c.x + 200, c.y) && ES.discoverAt(c.x, c.y) && ES.found('old_station') && C.save.player.gold === g0 + ES.REWARD.gold && !ES.discoverAt(c.x, c.y);
+        var mk = ES.marks();
+        r.marks = mk.length === 3 && mk[2].id === 'old_station' && mk[2].emoji === '🐎' && mk[2].found;
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '고향에서 ' + Math.round(d) + 'm 남쪽 · 벽 6(동쪽 트임) · 역마 마구간 · 달음 역참 앞 · 🐎 금 +150' : ('실패 ' + bad.join(','));
+    });
+
+    t('이야기 ⑲-36 — 15장 열한 단계(Lv36)·보상·달음 합류 · 흐름: 반디 → 역참 → 달음 → 역마 쫓기(가까우면 달아남·붙잡으면 다음) → 달음 → 여우불 무리 4 → 여우불 구미호(화·구미호 몸·절반에서 화 방패 + 도깨비·날쌘용) → 달음 → 비행선 → 날개 이음매(선체 밖, 먼 불 ✕) → 반디 → 합류 · 달음 9~11째 비행선 곁 · 별배는 끝나야 뜬다', function () {
+      var rig = stRig(36), ST = rig.ST, FC = DG.fieldCombat, ES = DG.eraSites, FR = DG.frost, TL = DG.talent, r = {}, i;
+      try {
+        FR._resetForTest();
+        var c15 = ST.CHAPTERS[14], S15 = c15.steps, ship = FR.siteById('ship');
+        r.table = ST.CHAPTERS.length === 15 && c15.id === 'ch15' && c15.ar === 36 && c15.join === 'story_dareum' && S15.length === 11 && c15.reward.knot === 6 && c15.reward.gold === 4250 &&
+          S15.map(function (q) { return q.type; }).join() === 'talk,go,talk,chase,talk,kill,duel,talk,go,light,talk' && S15[3].npc === 'horse' &&
+          S15[6].kind === 'rift_fox_ember' && S15[6].shield === 'fire' && FC.COUNTER.fire === 'water';
+        function np(k, si) { C.save.story = { ch: 14, step: si }; return ST.npcPos(k); }
+        r.dareumAt = st10Eq(np('dareum', 2), ES.spot('st_dareum')) && st10Eq(np('dareum', 8), st10Add(ship, ST.DAREUM_SHIP)) && st10Eq(np('dareum', 10), st10Add(ship, ST.DAREUM_SHIP));
+        var seam = st10Add(ship, ST.WING_SEAM);
+        r.seam = st10Eq(ST.targetOf(S15[9]), seam) && ST.landAt(seam.x, seam.y) && !FR.rectsOf(ship).some(function (q) { return frInRect(q, seam.x, seam.y); });
+        C.save.player.level = 36; C.save.story = { ch: 14, step: 0 };
+        stGo(ST.npcPos('bandi')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        stGo(ST.targetOf(ST.step())); ST.check(); r.go = C.save.story.step === 2;
+        stGo(ST.npcPos('dareum')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        /* 쫓기 — 가까이 가면 달아나고, 붙잡으면 다음 */
+        ST.stepChase(0.1);
+        var cs = ST.chaseState(), h0 = cs ? { x: cs.x, y: cs.y } : null;
+        for (i = 0; i < 10; i++) { ST.stepChase(0.1); }
+        cs = ST.chaseState();
+        r.flee = !!cs && cs.run && cs.npc === 'horse' && Math.hypot(cs.x - h0.x, cs.y - h0.y) > 3;
+        stGo({ x: cs.x + 1, y: cs.y }); ST.stepChase(0.01);
+        r.chase = C.save.story.step === 4;
+        stGo(ST.npcPos('dareum')); r.t4 = stTalkAll(ST) && C.save.story.step === 5;
+        var kt = ST.targetOf(ST.step());
+        stGo({ x: kt.x + 20, y: kt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.map(function (u) { return S.foes[u].kind; }).join() === 'imp,imp,snowfox,hawk';
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 6;
+        var dt = ST.targetOf(ST.step());
+        stGo({ x: dt.x + 20, y: dt.y }); FC.tick(0.05); ST.check();
+        var cb = S.camps[ST.keyOf()], b = cb && S.foes[cb.uids[0]];
+        var lv = b && FC.live().filter(function (x) { return x.uid === b.uid; })[0];
+        r.boss = !!b && b.kind === 'rift_fox_ember' && b.el === 'fire' && !!lv && lv.ref.id === 'pt_gumiho' && FC.FOES.rift_fox_ember.rot.indexOf('rift') >= 0;
+        b.hp = Math.round(b.hpMax * 0.4); ST.check();
+        var ad = S.camps[ST.keyOf() + ':add'];
+        r.p2 = b.shEl === 'fire' && !!ad && ad.uids.map(function (u) { return S.foes[u].kind; }).join(',') === 'imp,raptor' && FC.shieldMul('fire', 'water') > 1;
+        b.shield = 0; b.layers = [];
+        for (var k = 0; k < 3 && !b.dead; k++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); }
+        FC.tick(0.05);
+        r.duel = C.save.story.step === 7 && !S.camps[ST.keyOf() + ':add'];
+        stGo(ST.npcPos('dareum')); r.t7 = stTalkAll(ST) && C.save.story.step === 8;
+        stGo(ST.targetOf(ST.step())); ST.check(); r.go2 = C.save.story.step === 9;
+        C.emit('field:element', { el: 'water', x: seam.x + 30, y: seam.y, r: 3, t: 'skill' });
+        var still = C.save.story.step === 9;
+        C.emit('field:element', { el: 'water', x: seam.x + 1, y: seam.y, r: 2, t: 'skill' });
+        r.light = still && C.save.story.step === 10;
+        var shipRects = function () { var q = FR.rectsOf(ship)[0]; return FR.rectsIn(Math.floor(q.x / 48), Math.floor(q.z / 48)).filter(function (x) { return x.hull; }).length; };
+        r.grounded = !FR.flown() && shipRects() === 1;
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        r.notYet = !ST.hasMember('story_dareum');
+        stGo(ST.npcPos('bandi'));
+        r.end = stTalkAll(ST) && C.save.story.ch === 15 && C.save.story.step === 0 && ST.hasMember('story_dareum') && m.knot === k0 + 6 && C.save.player.gold === gold0 + 4250;
+        r.flown = FR.flown() && shipRects() === 0 && FR.FLY_H === 9;
+      } finally { DG.frost._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '열한 단계 · 반디 → 역참 → 달음 → 역마(달아남 → 붙잡음) → 달음 → 무리 4 → 여우불 구미호(🔥방패 + 도깨비·날쌘용) → 달음 → 비행선 → 이음매(먼 ✕) → 반디 → 달음 합류 · 🪢+6 🪙+4250 · 별배 뜸(선체 벽 빠짐)' : ('실패 ' + bad.join(','));
+    });
+
+    t('이야기 동료 ⑲-36 — 달음: 암 창 ★4 · 파발 질주(돌진 6m·폭 2.2·대기 7) · 마패 호령(7m·10초 받는 피해 ×0.75 — 맞으면 줄어든다)', function () {
+      var ST = DG.story, FC = DG.fieldCombat, WP = DG.weapon, r = {};
+      var M = ST.MEMBERS.story_dareum, kt = FC.kitFor('story_dareum');
+      r.member = DG.data.find('story_dareum') === M && M.rarity === 4 && FC.elementOf('story_dareum') === 'rock' && WP.typeOf('story_dareum') === 'polearm';
+      r.kit = !!kt && kt.skill.name === '파발 질주' && kt.skill.type === 'dash' && kt.skill.len === 6 && kt.skill.w === 2.2 && kt.skill.cd === 7 &&
+        kt.burst.name === '마패 호령' && kt.burst.type === 'ward' && kt.burst.taken === 0.75 && kt.burst.sec === 10 && kt.burst.r === 7;
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '암 창 · 파발 질주 dash 6m · 마패 호령 ward ×0.75 10초' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

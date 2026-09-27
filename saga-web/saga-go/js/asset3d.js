@@ -497,6 +497,7 @@
     'pet:fc_wasp': FOE_DIR + 'Wasp.glb',
     'pet:fc_zombie': FOE_DIR + 'Zombie.glb',
     'pet:fc_drone': FOE_DIR + 'Robot_Drone.glb',
+    'pet:fc_horse': 'assets/models/animals/Horse.glb',        // ⑲-36 이야기 인물 놀란 역마(story horse)
     'pet:fc_walker': FOE_DIR + 'Robot_Walker.glb',
     'pet:fc_alien': FOE_DIR + 'Alien.glb',
     'pet:fc_hulk': FOE_DIR + 'Robot_Large.glb'

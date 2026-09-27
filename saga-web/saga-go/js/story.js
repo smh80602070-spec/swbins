@@ -1,5 +1,5 @@
 /**
- * 이야기 임무 1~14장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~35, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼-1~2)
+ * 이야기 임무 1~15장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~36, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
@@ -61,7 +61,11 @@
     /* ⑲-34 3부 시대 명소(era-sites.js) — 갈대 나루 물가 녹슨 조선소. 명소가 꺼져 있으면 자리 없음 */
     yard: { era: 'yard' }, yard_daon: { era: 'daon' }, yard_fight: { era: 'fight' }, yard_weld: { era: 'weld' }, yard_bandi: { era: 'bandi' }, crane: { era: 'crane' },
     /* ⑲-35 옛 성터 언덕 곁 시간 틈 관측소 — 땅 가운데·가온·시간 기둥·관측대 위(반디·가운데) */
-    obs: { era: 'obs' }, obs_gaon: { era: 'gaon' }, obs_draft: { era: 'draft' }, obs_deck: { era: 'deck' }, obs_bandi: { era: 'obs_bandi' } };
+    obs: { era: 'obs' }, obs_gaon: { era: 'gaon' }, obs_draft: { era: 'draft' }, obs_deck: { era: 'deck' }, obs_bandi: { era: 'obs_bandi' },
+    /* ⑲-36 고향 남쪽 옛 역참 터 — 마당 가운데·달음·여우불 무리·구미호 */
+    station: { era: 'station' }, st_dareum: { era: 'st_dareum' }, st_fight: { era: 'st_fight' }, st_duel: { era: 'st_duel' } };
+  /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
+  var DAREUM_SHIP = [-12, 10], WING_SEAM = [-4, 8];
   /* ⑲-28 하람이 서는 자리 — 관측소 곁(늘)·비행선 곁. 산성 안은 남쪽 문 안쪽(담 반 변 13m) */
   var HARAM_OBS = [-6, 10], HARAM_SHIP = [-6, 12], HARAM_FORT = [0, 4];
   /* ⑲-29 11장 자리(산성·호수 가운데에서) — 문루 = 남쪽 문(담 13m) · 바우는 문 안쪽 · 봉화 제단은 문 밖 20m ·
@@ -122,13 +126,19 @@
     /* ⑲-35 시간 틈 관측사 가온(미래) — 늘 관측소 남서쪽 발치 */
     gaon:     { id: 'story_gaon',     name: '시간 틈 관측사 가온', short: '가온', zone: 'gojeong', spot: 'obs_gaon', off: [0, 0], color: '#dbe0eb',
       idle: '관측대가 또 한 뼘 기울었어요. 기록만 하고 있을 순 없는데…' },
+    /* ⑲-36 파발꾼 달음(과거) — 늘 역참 앞, 15장 9~11째는 고원 비행선 곁. 15장 끝에 동료(story_dareum) */
+    dareum:   { id: 'story_dareum',   name: '파발꾼 달음', short: '달음', zone: 'home', spot: 'st_dareum', off: [0, 0], color: '#80573a',
+      idle: '한양 가는 길이 어디였더라… 말은 잘 있나 몰라.', at: [{ ch: 14, from: 8, to: 10, spot: 'fr_ship', off: DAREUM_SHIP }] },
+    /* ⑲-36 놀란 역마 — 늘 역참 마구간(길 첫 점), 15장 쫓기 때만 역참 틀 기준 길(runSpot)을 달린다. 말 모델(pet) */
+    horse:    { id: 'story_horse',    name: '놀란 역마', short: '역마', zone: 'home', color: '#6b4a2e', pet: 'horse', idle: '푸르르— 히힝.',
+      runSpot: 'station', runPath: (global.DG.eraSites ? global.DG.eraSites.HORSE_PATH : [[0, 0]]) },
     /* ⑲-29 산성지기 바우(과거의 넋) — 11장 셋째~여덟째 단계에만. 석등·파수·불씨 동안은 호숫가 */
     bawoo:    { id: 'story_bawoo',    name: '산성지기 바우', short: '바우', zone: 'snowfort', spot: 'fr_fort', off: BAWOO_GATE, color: '#7a3329',
       idle: '……불씨는 제가 갈 곳을 안다.',
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -150,7 +160,10 @@
       el: 'elec', weapon: 'claymore', stats: { might: 91, wisdom: 70, command: 68 }, emoji: '⛈️', quote: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' },
     /* ⑲-30 하람(12장 끝) — 화 활(신호탄). 명단에 없던 원소·무기 */
     story_haram: { id: 'story_haram', name: '하람', hanja: '夏嵐', era: '이야기', faction: '재야', rarity: 4, trait: 'wisdom', story: true,
-      el: 'fire', weapon: 'bow', stats: { might: 62, wisdom: 84, command: 64 }, emoji: '📡', quote: '날씨도 시간도, 재야 아는 거니까.' }
+      el: 'fire', weapon: 'bow', stats: { might: 62, wisdom: 84, command: 64 }, emoji: '📡', quote: '날씨도 시간도, 재야 아는 거니까.' },
+    /* ⑲-36 달음(15장 끝) — 암 창. 이야기 동료에 없던 원소 */
+    story_dareum: { id: 'story_dareum', name: '달음', hanja: '達音', era: '이야기', faction: '재야', rarity: 4, trait: 'might', story: true,
+      el: 'rock', weapon: 'polearm', stats: { might: 86, wisdom: 52, command: 74 }, emoji: '🐎', quote: '파발꾼은 길 끝을 봐야 직성이 풀리니까!' }
   };
   function hookFind() {
     var D = global.DG.data;
@@ -641,6 +654,50 @@
             ['?', ['그 구미호가…', '어느 쪽으로?']],
             ['반디', '마지막 조각은 뒤 시대 신호. 옛 역참 길 쪽입니다. 구미호도 같은 곳을 향했을 확률이 높습니다.', 'angry'],
             ['가온', '(아래에서) 시간 기둥은 켜 둘게요. 언제든 다시 올라와 하늘을 봐요!', 'fun']] }
+      ] },
+    /* ⑲-36 3부 끝 — 무대는 고향 남쪽 옛 역참 터(era-sites.js). 반디 → 역참 → 달음 → 놀란 역마 쫓기 → 달음 → 여우불 무리 →
+       여우불 구미호(화, 절반에서 화 방패 — 물로) → 달음 → 고원 비행선 → 날개 이음매에 원소 → 반디(달음 곁) · 달음 합류.
+       장이 끝나면 별배가 뜬다(frost.js flown) */
+    { id: 'ch15', name: '제15장 · 옛 역참 길', ar: 36, join: 'story_dareum',
+      reward: { knot: 6, gold: 4250, guide: 5, secret: 5, party: 1250 },
+      steps: [
+        { type: 'talk', npc: 'bandi', text: '추락한 비행선의 반디와 이야기하기',
+          lines: [['반디', '삐— 셋째 조각 신호. 시대 표지는 뒤 — 아주 오래전. 좌표는 청하 마을 남쪽 옛 길입니다.', 'surprised'],
+            ['반디', '같은 자리에 차가운 신호가 하나 더. 꼬리 아홉… 구미호입니다. 그런데 이번엔 뜨겁습니다.', 'angry'],
+            ['?', ['뜨겁다고?', '구미호가 먼저 가 있구나.']],
+            ['반디', '옛 시대의 여우불을 먹은 것으로 보입니다. 조심하십시오.']] },
+        { type: 'go', spot: 'station', text: '청하 마을 남쪽 옛 역참 길로' },
+        { type: 'talk', npc: 'dareum', text: '역참 터 앞의 파발꾼 달음과 이야기하기',
+          lines: [['달음', '어이쿠, 길손이구려! 여기가 어딘지 아시오? 나는 분명 한양 가는 파발을 달리던 참인데…', 'surprised'],
+            ['달음', '사흘 전 밤, 하늘에서 떨어진 빛 조각을 주웠소. 파발 주머니에 넣은 순간 눈앞이 번쩍 — 정신 차려 보니 이 길이오.', 'sorrow'],
+            ['?', ['그 조각, 우리가 찾던 거예요.', '지금 조각은 어디 있어요?']],
+            ['달음', '말 안장 주머니에… 아니, 저놈! 흰 여우불에 놀라 말이 달아나오! 저 말부터 잡아 주시오!', 'angry']] },
+        { type: 'chase', npc: 'horse', text: '여우불에 놀라 달아난 역마 따라잡기(달리기)',
+          flee: '🐎 역마가 여우불 냄새에 놀라 내달린다 — 달려라!', caught: '🐎 역마의 고삐를 붙잡았다 — 워, 워' },
+        { type: 'talk', npc: 'dareum', text: '달음에게 역마 데려다주기',
+          lines: [['달음', '워, 워— 착하지. 고맙소, 길손. 그런데 이걸 보시오. 안장 주머니가 불에 그을려 찢겼소.', 'sorrow'],
+            ['달음', '여우불이 말을 쫓은 게 아니었소. 주머니를 노린 게요. 조각을 문 흰 여우가 길 남쪽 끝으로 갔소.', 'angry'],
+            ['?', ['구미호예요. 되찾아 올게요.', '같이 가요.']],
+            ['달음', '파발꾼은 길을 잃은 짐을 끝까지 쫓는 법이오. 앞장서시오!']] },
+        { type: 'kill', spot: 'st_fight', kinds: ['imp', 'imp', 'snowfox', 'hawk'], text: '길을 막은 여우불 무리 물리치기',
+          enter: '⚔️ 길 위에 여우불이 번지며 도깨비들이 튀어나왔다' },
+        { type: 'duel', spot: 'st_duel', kind: 'rift_fox_ember', shield: 'fire', adds: ['imp', 'raptor'], text: '셋째 조각을 문 여우불 구미호와 맞서기',
+          enter: '🦊 여우불을 두른 흰 여우가 길을 막아섰다 — 여우불 구미호!',
+          p2: '🔥 여우불 구미호가 옛 길의 여우불을 둘렀다 — 물로 깨라! 도깨비와 날쌘용이 뛰어든다',
+          win: '🦊 여우불 구미호가 날개 조각을 떨구고 — 닫히는 시간 틈 속으로 흩어졌다' },
+        { type: 'talk', npc: 'dareum', text: '달음과 이야기하기',
+          lines: [['달음', '해냈소! 그 여우, 이제 틈 너머로도 못 돌아오겠구려. 자, 셋째 조각이오.', 'joy'],
+            ['달음', '그런데 길손, 이 조각이 가야 할 곳이 있다고 했지요? 파발은 받는 이 손에 닿아야 끝나는 법이오.', 'fun'],
+            ['?', ['서리봉 고원 별배로 가요.', '같이 가 줄래요?']],
+            ['달음', '말은 여기 두고, 발로 먼저 가 있겠소. 파발꾼 다리를 얕보지 마시오!']] },
+        { type: 'go', spot: 'fr_ship', text: '날개 조각 셋을 들고 서리봉 고원 별배로' },
+        { type: 'light', spot: 'fr_ship', off: WING_SEAM, text: '별배 날개 이음매에 조각 셋을 끼우고 원소 스킬로 불 넣기' },
+        { type: 'talk', npc: 'bandi', text: '반디와 이야기하기',
+          lines: [['반디', '삐— 날개 조각 셋, 연결 완료. 별배 심장 출력 백 퍼센트. 기동합니다!', 'joy'],
+            ['달음', '허어, 쇳덩이 배가 하늘로… 내 평생 이런 파발은 처음이오.', 'surprised'],
+            ['?', ['드디어 떴다!', '반디, 이제 어디로 가?']],
+            ['반디', '틈이 닫히는 방향을 따라가면 이 배가 온 시대에 닿을 겁니다. 그 전까지 — 이 하늘은 여러분 것입니다.', 'fun'],
+            ['달음', '그 길, 나도 따라가겠소. 파발꾼은 길 끝을 봐야 직성이 풀리니까!', 'fun']] }
       ] }
   ];
 
@@ -1307,7 +1364,7 @@
 
   var chase = null;         // { key, npc, i(지난 길 점), x, y, run(달아나는 중), pause } — 저장 안 함
   /** ⑲-21 달리는 인물 k 의 길 점 i — 그 인물 땅(zone) 탑 기준 runPath(도둑은 THIEF_PATH) */
-  function runAt(k, i) { var n = NPCS[k] || NPCS.thief; return at(n.zone, (n.runPath || THIEF_PATH)[i]); }
+  function runAt(k, i) { var n = NPCS[k] || NPCS.thief, o = (n.runPath || THIEF_PATH)[i]; return n.runSpot ? spotPos(n.runSpot, o) : at(n.zone, o); }   // ⑲-36 runSpot = 이름 붙은 자리 기준
   function runLen(k) { var n = NPCS[k] || NPCS.thief; return (n.runPath || THIEF_PATH).length; }
   function chaseState() {
     var st = step();
@@ -1840,7 +1897,7 @@
     talkables: talkables, storyStep: storyStep, stepAt: stepAt, aimPoints: aimPoints,
     FOLLOW_NEAR: FOLLOW_NEAR, FOLLOW_LOST: FOLLOW_LOST,
     HARAM_OBS: HARAM_OBS, HARAM_SHIP: HARAM_SHIP, HARAM_FORT: HARAM_FORT, frostSpot: frostSpot, followPts: followPts,
-    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
+    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, DAREUM_SHIP: DAREUM_SHIP, WING_SEAM: WING_SEAM, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
     on: on, anchorOf: anchorOf, npcPos: npcPos, visible: visible, targetOf: targetOf, trackText: trackText, listHtml: listHtml,
     state: sv, chapter: chapter, step: step, locked: locked, done: done, keyOf: keyOf, gathered: gathered,
     advance: advance, check: check, stepFollow: stepFollow, nearTalk: nearTalk, talkStart: talkStart, talking: talking, next: next,

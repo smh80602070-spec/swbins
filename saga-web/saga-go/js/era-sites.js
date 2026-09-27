@@ -7,6 +7,8 @@
  *   관측소  ⑲-35 14장 — 옛 성터 언덕 곁 시간 틈 관측소(미래). 땅엔 육각 쇠 바닥·부서진 기둥 여섯(벽)·허공의 보랏빛 틈,
  *           OBS_RISE m 위에 **떠 있는 관측대**(반지름 OBS_R·난간·북쪽 관측경 돔), 남쪽 DRAFT_OFF m 에 **시간 기둥**(상승 기류 —
  *           14장 석등을 다 켠 뒤부터 늘). 관측대·기둥은 skyisle 발판 목록(`pads`·`drafts`)으로 내놓는다 — 몸·층 판정은 구름섬과 같은 길
+ *   역참 터 ⑲-36 15장 — 고향 남쪽 옛 역참 터(과거). 동쪽이 트인 돌담 세 변·초가 마구간·구유·깃대·돌장승 둘. 역마는 이야기
+ *           인물(story `horse`, 말 모델)이라 여기선 안 그린다 — 역마 길(HORSE_PATH)은 역참 틀 기준이라 자리 찾기가 뭍을 본다
  *
  * 자리는 갈대 나루 탑에서 둘레를 돌며 "바닥은 뭍 · 선대 끝은 물"인 첫 자리 — 해시·지형만이라 같은 세계면 늘 같다.
  * 조선소는 바다 쪽(sea)을 보고 선다: 모든 부품은 조선소 틀(가로 lx · 바다 쪽 lz) 좌표로 적고 `toWorld` 로 옮긴다.
@@ -56,6 +58,14 @@
   var DRAFT_OFF = [0, 13], DRAFT_R = 3, DRAFT_OVER = 8, DRAFT_RISE = 9;
   var OBS_PARTS = { obs: [0, 0], deck: [0, 0], gaon: [-10, 9], draft: DRAFT_OFF, obs_bandi: [3, -3], obs_frag: [0, -5] };
   var OBS_CH = 'ch14', DRAFT_FROM = 6, OBS_BOOT = [8, 9];      // 석등(5째)을 다 켠 뒤부터 기둥 · 관측대 위 단계(불러오기)
+  /* ⑲-36 옛 역참 터 — 고향(마을 가운데) 남쪽부터 시계 방향. 틀은 북쪽이 위(+x 동·+y 남), 동쪽이 길 쪽으로 트였다 */
+  var ST_ZONE = 'home', ST_NAME = '옛 역참 터', ST_ERA = '과거';
+  var ST_SEARCH_R = [240, 280, 320, 360, 400, 450, 500], ST_SEARCH_N = 24, ST_FLAT = 4, YARD_HALF = [8, 7], WALL_H = 1.4, WALL_T = 0.6;
+  var STABLE = { x: -4.5, y: -3.5, w: 6, d: 4, h: 2.6 };
+  var ST_PARTS = { station: [0, 0], st_dareum: [6, 2], st_horse: [-2.5, -3.5], st_fight: [0, 45], st_duel: [0, 75], st_trough: [-4.5, -0.8],
+    st_flag: [4, -5], st_totemA: [10, -16], st_totemB: [14, -16] };
+  /** 놀란 역마가 달리는 길 — 역참 가운데 기준(m), 첫 점 = 마구간 */
+  var HORSE_PATH = [[-2.5, -3.5], [11, 0], [16, 24], [-6, 48], [16, 80], [-12, 70], [18, 40]];   // 둘째 점 = 동쪽 트인 쪽으로 나간다
 
   /* ── 자리(순수 — 지형·해시만) ───────────────────────────── */
   function landAt(x, y) { var S = ST(); return !!(S && S.landAt && S.landAt(x, y)); }
@@ -102,6 +112,7 @@
   /** 이름 붙은 자리 — 'yard'(바닥 가운데)·'weld'·'daon'·'fight'·'bandi'·'crane'(들보 가운데 밑). 없으면 null */
   function spot(part) {
     if (!on()) { return null; }
+    if (ST_PARTS[part]) { var sc = station(); return sc ? { x: sc.x + ST_PARTS[part][0], y: sc.y + ST_PARTS[part][1] } : null; }
     if (OBS_PARTS[part]) { var o = obs(); return o ? { x: o.x + OBS_PARTS[part][0], y: o.y + OBS_PARTS[part][1] } : null; }
     var f = yard();
     if (!f) { return null; }
@@ -180,6 +191,47 @@
     return d ? [{ id: 'obs', x: d.x, y: d.y, r: DRAFT_R, top: obsTop() + DRAFT_OVER, rise: DRAFT_RISE }] : [];
   }
 
+  /* ── ⑲-36 역참 터 자리(순수) ─────────────────────────── */
+  /** 마당(가운데·둘레 여덟)은 뭍·높이 차 ST_FLAT m 안, 달음·무리·구미호·역마 길은 뭍 */
+  function stationFits(x, y) {
+    var yard = [[0, 0]], i, lo = Infinity, hi = -Infinity;
+    for (i = 0; i < 8; i++) { var a = i * Math.PI / 4; yard.push([Math.sin(a) * YARD_HALF[0], -Math.cos(a) * YARD_HALF[1]]); }
+    for (i = 0; i < yard.length; i++) {
+      var qx = x + yard[i][0], qy = y + yard[i][1], h;
+      if (!landAt(qx, qy)) { return false; }
+      h = reliefH(qx, qy); lo = Math.min(lo, h); hi = Math.max(hi, h);
+    }
+    if (hi - lo > ST_FLAT) { return false; }
+    var more = [ST_PARTS.st_dareum, ST_PARTS.st_fight, ST_PARTS.st_duel].concat(HORSE_PATH);
+    for (i = 0; i < more.length; i++) { if (!landAt(x + more[i][0], y + more[i][1])) { return false; } }
+    return true;
+  }
+  var stMemo = null;
+  /** 역참 터 가운데 { x, y, forced? } — 고향 남쪽부터, 같은 세계면 늘 같다 */
+  function station() {
+    if (stMemo) { return stMemo; }
+    var S = ST(), a = S && S.anchorOf ? S.anchorOf(ST_ZONE) : null;
+    if (!a) { return null; }
+    for (var ri = 0; ri < ST_SEARCH_R.length; ri++) {
+      for (var k = 0; k < ST_SEARCH_N; k++) {
+        var ang = (k + ST_SEARCH_N / 2) * Math.PI * 2 / ST_SEARCH_N, x = a.x + Math.sin(ang) * ST_SEARCH_R[ri], y = a.y - Math.cos(ang) * ST_SEARCH_R[ri];
+        if (stationFits(x, y)) { stMemo = { x: x, y: y }; return stMemo; }
+      }
+    }
+    stMemo = { x: a.x, y: a.y + ST_SEARCH_R[0], forced: true };    // 뭍이 없는 세계 — 고향 남쪽에 억지로
+    return stMemo;
+  }
+  function rectsOfStation(c) {
+    var hx = YARD_HALF[0], hy = YARD_HALF[1], out = [
+      { x: c.x, z: c.y - hy, w: hx * 2, d: WALL_T, rot: 0, h: WALL_H },                           // 북
+      { x: c.x - hx, z: c.y, w: WALL_T, d: hy * 2, rot: 0, h: WALL_H },                           // 서
+      { x: c.x, z: c.y + hy, w: hx * 2, d: WALL_T, rot: 0, h: WALL_H },                           // 남
+      { x: c.x + STABLE.x, z: c.y + STABLE.y - STABLE.d / 2 + 0.3, w: STABLE.w, d: 0.6, rot: 0, h: STABLE.h }   // 마구간 뒷벽(앞은 트임)
+    ];
+    ['st_totemA', 'st_totemB'].forEach(function (k) { out.push({ x: c.x + ST_PARTS[k][0], z: c.y + ST_PARTS[k][1], w: 0.8, d: 0.8, rot: 0, h: 2.4 }); });
+    return out;
+  }
+
   /* ── 기중기 다리(landform 오르기) ─────────────────────── */
   var poleMemo = null;
   /** 기중기 다리 둘 — [{ id, x, y, r, top, beam: { ax, ay, bx, by, w } }]. beam 은 **다리 둘 사이 걷는 길**(다리 위는 뺀다) */
@@ -220,7 +272,8 @@
     if (!on()) { return []; }
     if (!rectMemo) {
       rectMemo = {};
-      var f = yard(), o = obs(), all = f ? rectsOfYard(f) : [];
+      var f = yard(), o = obs(), sc = station(), all = f ? rectsOfYard(f) : [];
+      if (sc) { all = all.concat(rectsOfStation(sc)); }                                // ⑲-36 돌담 세 변·마구간·돌장승
       if (o) {                                                    // ⑲-35 부서진 기둥 여섯
         PILLAR_H.forEach(function (h, i) { var a = i * Math.PI / 3; all.push({ x: o.x + Math.cos(a) * PILLAR_R, z: o.y + Math.sin(a) * PILLAR_R, w: 0.9, d: 0.9, rot: 0, h: h }); });
       }
@@ -245,7 +298,8 @@
   /** 명소 표 — id · 가운데 자리 · 이름 · 시대 · 땅 이름 · 그림 글자 */
   function sites() {
     return [{ id: 'shipyard', part: 'yard', name: YARD_NAME, era: YARD_ERA, zone: '갈대 나루', emoji: '🏗️' },
-            { id: 'observatory', part: 'obs', name: OBS_NAME, era: OBS_ERA, zone: '옛 성터 언덕', emoji: '🔭' }];
+            { id: 'observatory', part: 'obs', name: OBS_NAME, era: OBS_ERA, zone: '옛 성터 언덕', emoji: '🔭' },
+            { id: 'old_station', part: 'station', name: ST_NAME, era: ST_ERA, zone: '고향', emoji: '🐎' }];
   }
   /** (px,py) 에서 FOUND_R 안 명소를 찾는다 — 한 번에 하나 */
   function discoverAt(px, py) {
@@ -341,6 +395,54 @@
   }
 
   /* ⑲-35 관측소 — 땅(쇠 바닥·부서진 기둥·틈·고리)은 땅 높이, 관측대는 obsTop()(발판 판정과 같은 높이)에 */
+  /* ⑲-36 역참 터 — 돌담·초가 마구간·구유·깃대(붉은 깃발이 나부낀다)·돌장승 둘 */
+  var sfx3 = null, SM = null;
+  function SMats(T3) {
+    if (SM) { return SM; }
+    SM = {
+      stone: new T3.MeshLambertMaterial({ color: 0x8c857a }), thatch: new T3.MeshLambertMaterial({ color: 0xa88c52 }),
+      wood: new T3.MeshLambertMaterial({ color: 0x5c4029 }), dirt: new T3.MeshLambertMaterial({ color: 0x9a8566 }),
+      red: new T3.MeshLambertMaterial({ color: 0xb8322a, side: T3.DoubleSide }), totem: new T3.MeshLambertMaterial({ color: 0x9a948a })
+    };
+    return SM;
+  }
+  function buildStation(w, T3, c) {
+    var m = SMats(T3), g = new T3.Group(), r = { root: g }, hx = YARD_HALF[0], hy = YARD_HALF[1], i;
+    var y0 = w.groundY ? w.groundY(c.x, c.y) : 0;
+    box(T3, g, m.dirt, hx * 2, 0.06, hy * 2, 0, 0.03, 0);
+    box(T3, g, m.stone, hx * 2, WALL_H, WALL_T, 0, WALL_H / 2, -hy);
+    box(T3, g, m.stone, WALL_T, WALL_H, hy * 2, -hx, WALL_H / 2, 0);
+    box(T3, g, m.stone, hx * 2, WALL_H, WALL_T, 0, WALL_H / 2, hy);
+    var S0 = STABLE;
+    box(T3, g, m.wood, S0.w, S0.h, 0.3, S0.x, S0.h / 2, S0.y - S0.d / 2 + 0.3);                              // 마구간 뒷벽
+    for (i = 0; i < 3; i++) { box(T3, g, m.wood, 0.25, S0.h, 0.25, S0.x - S0.w / 2 + 0.2 + i * (S0.w - 0.4) / 2, S0.h / 2, S0.y + S0.d / 2 - 0.2); }   // 앞 기둥
+    var roof = new T3.Mesh(new T3.ConeGeometry(Math.hypot(S0.w, S0.d) / 2 + 0.6, 1.5, 4), m.thatch);
+    roof.rotation.y = Math.PI / 4; roof.scale.set(1, 1, S0.d / S0.w); roof.position.set(S0.x, S0.h + 0.7, S0.y); g.add(roof);
+    box(T3, g, m.wood, 2.2, 0.5, 0.7, ST_PARTS.st_trough[0], 0.25, ST_PARTS.st_trough[1]);                    // 구유
+    box(T3, g, m.wood, 0.14, 6, 0.14, ST_PARTS.st_flag[0], 3, ST_PARTS.st_flag[1]);                          // 깃대
+    r.flag = new T3.Mesh(new T3.PlaneGeometry(1.6, 1, 4, 1), m.red);
+    r.flag.position.set(ST_PARTS.st_flag[0] + 0.85, 5.3, ST_PARTS.st_flag[1]); g.add(r.flag);
+    ['st_totemA', 'st_totemB'].forEach(function (k, j) {                                                      // 돌장승 둘
+      var t = ST_PARTS[k];
+      box(T3, g, m.totem, 0.7, 2.2, 0.6, t[0], 1.1, t[1]);
+      var hd = new T3.Mesh(new T3.SphereGeometry(0.5, 10, 8), m.totem); hd.scale.set(1, 1.2, 0.9); hd.position.set(t[0], 2.6, t[1]); g.add(hd);
+      box(T3, g, j ? m.wood : m.red, 0.9, 0.12, 0.1, t[0], 2.95, t[1] - 0.3);                                  // 모자 띠
+    });
+    g.position.set(c.x, y0, c.y);
+    w.addFx(g);
+    return r;
+  }
+  function paintStation() {
+    var w = W3();
+    if (!w) { sfx3 = null; return; }
+    var T3 = w.three(), c = station();
+    if (!T3 || !c) { return; }
+    var p = core().save.player.pos;
+    if (Math.hypot(c.x - p.x, c.y - p.y) > 280) { if (sfx3) { w.removeFx(sfx3.root); sfx3 = null; } return; }
+    if (!sfx3) { sfx3 = buildStation(w, T3, c); }
+    sfx3.flag.rotation.y = Math.sin(clock * 1.7) * 0.25;
+  }
+
   var ofx = null, OM = null;
   function OMats(T3) {
     if (OM) { return OM; }
@@ -430,7 +532,7 @@
     if (!core() || !core().save || !on()) { return; }
     acc += dt || 0;
     if (acc >= 0.25) { acc = 0; var p = core().save.player.pos; discoverAt(p.x, p.y); }
-    if (!global.DG_NO_DRAW) { paint(dt); paintObs(); }
+    if (!global.DG_NO_DRAW) { paint(dt); paintObs(); paintStation(); }
   }
 
   global.DG = global.DG || {};
@@ -445,7 +547,10 @@
     OBS_ZONE: OBS_ZONE, OBS_NAME: OBS_NAME, OBS_RISE: OBS_RISE, OBS_R: OBS_R, OBS_FLAT: OBS_FLAT, OBS_AVOID: OBS_AVOID, OBS_CLEAR: OBS_CLEAR, OBS_CLEAR_TOWER: OBS_CLEAR_TOWER,
     OBS_PARTS: OBS_PARTS, PILLAR_R: PILLAR_R, DRAFT_OFF: DRAFT_OFF, DRAFT_R: DRAFT_R, DRAFT_OVER: DRAFT_OVER, DRAFT_RISE: DRAFT_RISE, DRAFT_FROM: DRAFT_FROM, OBS_BOOT: OBS_BOOT,
     obs: obs, obsFits: obsFits, obsTop: obsTop, draftOpen: draftOpen, obsFragThere: obsFragThere, pads: pads, drafts: drafts,
+    /* ⑲-36 역참 터 */
+    ST_ZONE: ST_ZONE, ST_NAME: ST_NAME, ST_PARTS: ST_PARTS, HORSE_PATH: HORSE_PATH, YARD_HALF: YARD_HALF, ST_FLAT: ST_FLAT, STABLE: STABLE,
+    station: station, stationFits: stationFits,
     tick: tick,
-    _resetForTest: function () { yardMemo = null; poleMemo = null; rectMemo = null; obsMemo = null; }
+    _resetForTest: function () { yardMemo = null; poleMemo = null; rectMemo = null; obsMemo = null; stMemo = null; }
   };
 })(window);

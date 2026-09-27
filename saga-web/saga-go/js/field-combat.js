@@ -260,7 +260,10 @@
     /* ⑲-30 12장 서리봉 고원 얼음굴 앞 — 시간 틈에서 나온 아홉 꼬리 여우(구미호 펫 몸, 빙). 틈새 질주 rift.
        2단계 빙 방패·졸개는 story.js 가 두른다 */
     rift_fox:    { name: '틈새 서리 구미호', ref: 'pt_gumiho', el: 'ice', hp: 15, atk: 2.2, spd: 6.0, reach: 3.0, type: 'melee', wind: 0.6, cd: 1.5, h: 2.2, exp: 0,
-                boss: true, rot: ['rift', 'melee', 'spit', 'rift', 'slam', 'halo'] }
+                boss: true, rot: ['rift', 'melee', 'spit', 'rift', 'slam', 'halo'] },
+    /* ⑲-36 15장 옛 역참 길 — 12장에 달아난 구미호가 옛 시대 여우불을 먹었다(화). 같은 몸·틀, 2단계 화 방패·졸개는 story.js */
+    rift_fox_ember: { name: '여우불 구미호', ref: 'pt_gumiho', el: 'fire', hp: 16, atk: 2.3, spd: 6.0, reach: 3.0, type: 'melee', wind: 0.6, cd: 1.4, h: 2.3, exp: 0,
+                boss: true, rot: ['rift', 'shadow', 'melee', 'rift', 'tide', 'halo'] }
   };
   /* ⑲-14 공격 차례(`rot`)의 한 수씩 — reach 안이면 휘두른다. shadow 는 내 등 뒤 SHADOW_BACK m 로 옮겨 붙어 제 둘레 원 */
   var ROT = {
