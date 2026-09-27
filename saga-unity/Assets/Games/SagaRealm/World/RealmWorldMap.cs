@@ -62,6 +62,14 @@ namespace Saga.Realm.World
                 if (def == null) continue;
                 BuildMarker(def, WorldPos(def, centerX, centerY), cityId == RealmCityState.CurrentCity);
             }
+
+            // PLAN.md 109-13-2 지도 위 인물 — 태수 몸짓·재야. 에디터 씬 빌드(Play 아님)엔 안 세운다(씬에 대역이 저장되지 않게).
+            if (Application.isPlaying)
+            {
+                var actors = GetComponent<RealmMapActors>();
+                if (actors == null) actors = gameObject.AddComponent<RealmMapActors>();
+                actors.Rebuild(transform, centerX, centerY);
+            }
         }
 
         /// <summary>성 id의 지도 좌표를 성 셋(+편입 시 더) 중심 기준 월드

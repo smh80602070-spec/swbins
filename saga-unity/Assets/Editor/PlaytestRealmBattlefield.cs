@@ -105,6 +105,9 @@ namespace Saga.EditorTools
             var fallen = bf.transform.Find("Atk_9");
             if (standing == null || Mathf.Abs(Mathf.DeltaAngle(0f, standing.localEulerAngles.z)) > 1f) Fail("산 아군이 쓰러짐");
             if (fallen == null || Mathf.Abs(Mathf.DeltaAngle(0f, fallen.localEulerAngles.z)) < 80f) Fail("잃은 아군이 서 있음");
+            // 109-13-2 두 장수 — 진 장수는 눕고 이긴 장수는 선다
+            if (bf.AtkGeneral == null || bf.DefGeneral == null) Fail("두 장수 없음");
+            else if (bf.DefGeneral.Tilt < 80f || bf.AtkGeneral.Tilt > 20f) Fail($"장수 끝 자세 공 {bf.AtkGeneral.Tilt:0}° · 수 {bf.DefGeneral.Tilt:0}°");
             string won = $"이김 {bf.AtkAlive}/{bf.AtkCount}·{bf.DefAlive}/{bf.DefCount}";
 
             // 진 싸움 — 강가(복양), 물줄기 · 진 아군은 물러난다
@@ -118,6 +121,7 @@ namespace Saga.EditorTools
             bf.SampleForTest(RealmBattlefield.Duration);
             float x1 = bf.transform.Find("Atk_0").localPosition.x;
             if (x1 > -1.3f - 0.5f) Fail($"진 장수가 안 물러남 x {x0:0.0}→{x1:0.0}");
+            if (bf.AtkGeneral == null || bf.AtkGeneral.Tilt < 80f) Fail("진 싸움인데 공격 장수가 서 있음");
             var winner = bf.transform.Find("Def_0");
             if (winner == null || winner.localPosition.x > 1.3f) Fail("이긴 적이 안 나아감");
 

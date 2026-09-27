@@ -36,6 +36,9 @@ namespace Saga.Realm.World
         public Camera Cam { get; private set; }
         public int PropCount { get; private set; }
 
+        public RealmFigure AtkGeneral { get; private set; }
+        public RealmFigure DefGeneral { get; private set; }
+
         private readonly List<Transform> _atk = new List<Transform>();
         private readonly List<Transform> _def = new List<Transform>();
         private readonly List<Vector3> _atkHome = new List<Vector3>();
@@ -102,6 +105,11 @@ namespace Saga.Realm.World
             Army("Atk", AtkCount, -1f, AtkColor, _atk, _atkHome);
             Army("Def", DefCount, 1f, DefColor, _def, _defHome);
 
+            // PLAN.md 109-13-2 — 양군 앞줄에서 두 장수가 맞붙는다(웹 §5-10 ③). 대역 도형, 부르는 쪽이 시각을 정한다.
+            AtkGeneral = RealmFigure.Create("Gen_Atk", transform, new Vector3(-GeneralStartX, 0f, GeneralZ), 90f, AtkColor, 1.9f, 0f);
+            DefGeneral = RealmFigure.Create("Gen_Def", transform, new Vector3(GeneralStartX, 0f, GeneralZ), -90f, DefColor, 1.9f, 0.5f);
+            AtkGeneral.External = DefGeneral.External = true;
+
             var camGo = new GameObject("BattleCam");
             camGo.transform.SetParent(transform, false);
             camGo.transform.localPosition = new Vector3(0f, 8.5f, -12.5f);
@@ -152,6 +160,34 @@ namespace Saga.Realm.World
             float after = Mathf.Clamp01((_t - ClashEnd) / (Duration - ClashEnd));
             PoseSide(_atk, _atkHome, -1f, AtkAlive, advance, clash, after, Won);
             PoseSide(_def, _defHome, 1f, DefAlive, advance, clash, after, !Won);
+            PoseGeneral(AtkGeneral, -1f, true, advance);
+            PoseGeneral(DefGeneral, 1f, false, advance);
+        }
+
+        public const float GeneralStartX = 4.2f, GeneralMeetX = 1.0f, GeneralZ = -2.6f;
+
+        /// <summary>두 장수 순서표(순수) — 다가감(걷기) → 첫 합: 공격 쪽 베기·지키는 쪽 맞음 → 둘째 합: 이긴 쪽 베기·진 쪽 쓰러짐.
+        /// 돌려주는 값 = (동작, 그 동작 시작부터 초).</summary>
+        public static (string clip, float local) GeneralClip(bool attackerSide, bool attackerWon, float t)
+        {
+            if (t < AdvanceEnd) return ("walk", t);
+            bool winner = attackerSide == attackerWon;
+            if (t < 1.6f)
+            {
+                if (attackerSide) return ("attack", t - AdvanceEnd);
+                return t < 1.25f ? ("idle", t - AdvanceEnd) : ("hit", t - 1.25f);
+            }
+            if (winner) return t < 2.1f ? ("attack", t - 1.6f) : ("idle", t - 2.1f);
+            return t < 1.75f ? ("idle", t - 1.6f) : ("die", t - 1.75f);
+        }
+
+        private void PoseGeneral(RealmFigure g, float side, bool attackerSide, float advance)
+        {
+            if (g == null) return;
+            var (clip, local) = GeneralClip(attackerSide, Won, _t);
+            g.transform.localPosition = new Vector3(side * Mathf.Lerp(GeneralStartX, GeneralMeetX, advance), 0f, GeneralZ);
+            g.Play(clip);
+            g.Pose(local);
         }
 
         private static void PoseSide(List<Transform> list, List<Vector3> homes, float side, int alive, float advance, float clash, float after, bool winner)

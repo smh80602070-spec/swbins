@@ -35,6 +35,8 @@ namespace Saga.Realm.Data
         private static readonly List<string> _roster = new List<string> { RealmOfficerPool.StartingOfficerId };
         private static readonly HashSet<string> _doneThisMonth = new HashSet<string>();
         private static readonly HashSet<string> _foundIds = new HashSet<string>();
+        // PLAN.md 109-13-2 지도 위 태수 몸짓 — 이 달 성마다 마지막 명령(키, 낸 무장). 화면 층이라 세이브 안 함, 달이 바뀌면 비운다.
+        private static readonly Dictionary<string, (string key, string officerId)> _orderThisMonth = new Dictionary<string, (string, string)>();
         private static readonly Dictionary<string, string> _officerCity = new Dictionary<string, string>
         {
             [RealmOfficerPool.StartingOfficerId] = RealmOfficerPool.StartingOfficerCityId,
@@ -77,6 +79,12 @@ namespace Saga.Realm.Data
         /// 소진으로 표시할 때 쓴다 — ExecuteOrder()가 내부에서 쓰는 것과
         /// 같은 자리를 밖에 하나 튼 것뿐이다.</summary>
         public static void MarkOfficerDone(string officerId) => _doneThisMonth.Add(officerId);
+
+        /// <summary>PLAN.md 109-13-2 — 이 달 그 성에서 낸 마지막 명령 키(없으면 null).</summary>
+        public static string OrderThisMonth(string cityId) => _orderThisMonth.TryGetValue(cityId, out var o) ? o.key : null;
+
+        /// <summary>PLAN.md 109-13-2 — 이 달 그 성에서 마지막 명령을 낸 무장(없으면 null).</summary>
+        public static string OrderOfficerThisMonth(string cityId) => _orderThisMonth.TryGetValue(cityId, out var o) ? o.officerId : null;
 
         public static string OfficerCityId(string officerId) => _officerCity.TryGetValue(officerId, out var c) ? c : null;
 
@@ -265,6 +273,7 @@ namespace Saga.Realm.Data
                 "draft" => DoDraft(order, officer, record),
                 _ => DoDevelop(orderKey, order, officer, cityDef, record),
             };
+            if (result.Ok) _orderThisMonth[CurrentCity] = (orderKey, officer.Id);
             Changed?.Invoke();
             return result;
         }
@@ -430,6 +439,7 @@ namespace Saga.Realm.Data
             Month++;
             if (Month > 12) { Month = 1; Year++; }
             _doneThisMonth.Clear();
+            _orderThisMonth.Clear();
 
             Changed?.Invoke();
             string summary = string.Format(RealmLocalization.T("month.summary", "{0}년 {1}월 — 금 +{2}-{3}(봉록){4}"),
@@ -468,6 +478,7 @@ namespace Saga.Realm.Data
 
             _doneThisMonth.Clear();
             if (done != null) foreach (var id in done) _doneThisMonth.Add(id);
+            _orderThisMonth.Clear();
 
             _foundIds.Clear();
             if (found != null) foreach (var id in found) _foundIds.Add(id);

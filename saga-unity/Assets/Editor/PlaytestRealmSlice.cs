@@ -398,7 +398,10 @@ namespace Saga.EditorTools
                         return;
                     }
                     Debug.Log($"[PlaytestRealmSlice] agri OK - {result.Message} (게이트 실패 둘은 명령 소진 안 시킴 확인됨)");
+                    // PLAN.md 109-13-2 — 이 달 명령이 태수 몸짓(괭이질)으로 잡히고, 달이 넘어가면 비는지.
+                    if (!PlaytestRealmActors.CheckOrderGesture("xuchang", "agri", "hoe")) { Fail(); return; }
                     RealmCityState.NextMonth();
+                    if (!PlaytestRealmActors.CheckOrderCleared("xuchang")) { Fail(); return; }
                     // PLAN 101-2 REALM 이식 — 무입력 대신 "다음 달"로 달이
                     // 실제로 넘어간 시점에 RealmSessionTracker 가 SessionCard 를
                     // 띄우는지 여기서 실제 트리거로 확인한다(GO 처럼 합성
@@ -1360,6 +1363,8 @@ namespace Saga.EditorTools
                     if (!PlaytestRealmEras.Run()) { Fail(); return; }
                     // PLAN.md 109-13 ① 싸움터 땅 — 화면 층이라 판 상태를 안 건드린다.
                     if (!PlaytestRealmBattlefield.Run()) { Fail(); return; }
+                    // PLAN.md 109-13-2 지도 위 인물 — 전 성이 우리 것일 때 상한·태수 자리·재야·월드맵 배우 층.
+                    if (!PlaytestRealmActors.Run()) { Fail(); return; }
                     _phase = Phase.QuizCorrect;
                     break;
                 }

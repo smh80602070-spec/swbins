@@ -1,7 +1,7 @@
 # PROJECT_STATE — saga-unity (상태만, ≤15KB, 덮어쓴다)
 
 **규칙**(SAGA-DESIGN §9): 지금 상태만, 세션 끝에 덮어쓴다. 경위·이유는 `docs/HISTORY.md` 에 append.
-마지막 갱신: 2026-09-28 (109-13-1 — REALM 싸움터 땅).
+마지막 갱신: 2026-09-28 (109-13 싸움터·지도 위 인물 코드분).
 
 ## 캐릭터 자산 — 이 PC 기준 (2026-09-19)
 
@@ -15,13 +15,13 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 | DUNGEON | `TestDungeon` | 완료 — 첫 방→무리·엘리트/보스·방 종류·회피·강공격·필드·동행 | 마을 넷·층 진행·매복·구출·수수께끼·은닉 창고·빌드·도감·보석/영웅 상태 · **101-2 전부 완료** · **106-5 탐험** 점프 F·담쟁이 등반·옛 감시탑 뜰 · **106-6** 무사·술사 파티, 명령 1·2, 소환 V · **106-7** 층 두목 등장 컷 · **108 ③** 명소 층 여섯(5~30층 고정 방 다섯·층 주인·첫 토벌 무기, v10) · **109-2a** 잡졸 41% 시대 적 8·행상·손님 4 · **109-2b** 명소 층 여섯·마을 다섯 꾸밈에 현대·미래 조각(69 중 41%) · **109-10** 비결(K)·빛기둥(v11)·비전·시련(v12)·지역 아홉(3×3 칸 배너·땅빛·M 지도)·위험도·우두머리 아홉(표식 밟기·빌린 몸, v13)·지역 사연(v14)·몸짓·동행 서명·주인 수·몰이 사냥 | Player·잡졸·미니보스/두목·Environment·Building · 103-1 방 셸 마모 3단 | 전부 붙음. 목표판/세션카드. 101-3 C·F·G 전부 완료 |
 | FOREST | `TestVillageForest` | 완료(이동 전용) — 마을·집·주민 | 벽지/장판·가구 배치·생물·과일나무·채집·좌판·밀어내기 전투 · **101-2 전부 완료**(번들·채집 손맛·평가·택배 사슬·축제) · **108 ②** 존 한자·사연·짐승 명단·명소 넷·존 자막·존 소품 무더기 8 · **짐승 여덟 사실 모델**(Mixamo 몸 + 빛깔·꾸밈) · **109-4** 존 소품 38% 현대·미래·마을 사람 여섯 · **109-12** 방문객 여덟·단골·몸짓·이웃(v9) | Environment 완료, 과일나무 procgen(102-4) | 전부 붙음. 목표판/세션카드. 101-3 해당 없음 |
 | STORY | `TestField` | 완료 — 2.5D 횡스크롤(Z 고정)·잡졸 10·두목·사명 2·볼트·로프 | 척후병 NPC·사건·관계·선택·전직 · 관문 대장(5-4)·비경(5-3)·동료 교대(5-8) · **106-8 두목 등장 컷** · **106-10 교대 셋이 곁에서 싸움**(Paladin·Archer·Peasant Girl) + 소환 우레뿔 거수(V) · **5-2 전부**: 무예 1~4차(`StorySkillData`·`StorySkillState`·패널 K·칸 4 자동/고정)·전직 1~4차(Lv.10/15/20/25)·유파 세트·옷 빛깔(차수×12%) · **109-3** 시대 적 여덟(들판 4/10·비경 40%)·손님 둘 · **109-11** 체력·보스 패턴전·고유 기술·그로기·주간 관문 대장 | 척후병·전직관·마을 사람·숲지기 Mixamo(106-4) | 전부 붙음. 목표판/세션카드. 101-3 C·F·G 전부 완료 |
-| REALM | `TestCity` | 완료(경영형) — 명령·계략·문답 36·서고·월드맵·전투·함락 편입 | 적국 55·성 58 · 5-1·5-6·5-2·5-8·5-3·5-5 — **101-2 REALM 전부 완료**(5-4 제외 확정) · **109-5** 시간 틈 아홉(적국 성에 재야)·퓨전 사연 셋(관문 운중·오원·일남) · **109-13-1** 싸움터 땅(출진 컷) | 도시 Environment/Building · 103-1 성벽 3단 | 전부 붙음. 목표판/세션카드. 101-3 해당 없음 |
+| REALM | `TestCity` | 완료(경영형) — 명령·계략·문답 36·서고·월드맵·전투·함락 편입 | 적국 55·성 58 · 5-1·5-6·5-2·5-8·5-3·5-5 — **101-2 REALM 전부 완료**(5-4 제외 확정) · **109-5** 시간 틈 아홉(적국 성에 재야)·퓨전 사연 셋(관문 운중·오원·일남) · **109-13** 싸움터·지도 위 인물(대역) | 도시 Environment/Building · 103-1 성벽 3단 | 전부 붙음. 목표판/세션카드. 101-3 해당 없음 |
 
 렌더러: 66-1장 PC(Forward+·MSAA 4)/Mobile(Forward·MSAA 2) + `FF16Volume_*` + 데칼. 아트 방향 **사실적 PBR(FF16 톤)** — 66-2장·102장. Maria 피부 SSS는 `BuildMariaSssShaderGraph.cs`. DUNGEON 카메라는 `CameraRig`→가상 카메라 `PlayerView`→`CinemachineBrain`(106-3), 컷은 `Cinematics/Timelines/Temple_*.playable`.
 
 ## 다음 작업 (우선순위, 상세는 PLAN 해당 장)
 
-0. **다음 = 109-13-2 REALM 5-10 지도 위 실제 인물·모션**(PLAN 109 표 13번 둘째 — 싸움터 기둥 → 장수 몸). 110 은 사람 칸만(`docs/STORE_CHECKLIST.md`·초안 `docs/store/`) + 묶음 PC 에서 `BuildAndroidAab` 실측 — ③b 폰 결과 대기(새 APK). 앱 번들 진단 `PlaytestSagaAab`. 영어 검수 `node tools/loc-review.mjs`(오류 0 이어야, 사람은 `docs/en_review.tsv` 검수 칸). 정체성 `SagaPlayerBuild.AppId` · 아이콘 `make_icon.py`→`SagaAppIcon`. 크레딧 `SagaCredits`·`SagaCreditsCheck`(새 에셋은 표 한 줄부터)·오류 기록 `SagaCrashLog`·버전 = bundleVersion 한 곳. HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`(남은 고레벨 세이브는 옮기고)·`HangulWatch`, 재빌드 `SagaRebuildScenes`.
+0. **다음 = 묶음 PC 에서 ① 사람 NPC 공방 몸 교체(09-27 결정·비교 그림부터) ② 109-13-2b REALM 인물 대역 → 사실 몸**. 묶음 없으면 109 표 14(웹 대기)·D. 110 은 사람 칸만(`docs/STORE_CHECKLIST.md`·초안 `docs/store/`) + 묶음 PC 에서 `BuildAndroidAab` 실측 — ③b 폰 결과 대기(새 APK). 앱 번들 진단 `PlaytestSagaAab`. 영어 검수 `node tools/loc-review.mjs`(오류 0 이어야, 사람은 `docs/en_review.tsv` 검수 칸). 정체성 `SagaPlayerBuild.AppId` · 아이콘 `make_icon.py`→`SagaAppIcon`. 크레딧 `SagaCredits`·`SagaCreditsCheck`(새 에셋은 표 한 줄부터)·오류 기록 `SagaCrashLog`·버전 = bundleVersion 한 곳. HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`(남은 고레벨 세이브는 옮기고)·`HangulWatch`, 재빌드 `SagaRebuildScenes`.
 0-1. **남은 것**: 사람 영어 검수(tsv 순위 1부터). GO 동료 몸 Maria.controller 리타깃·무기는 주인공 손에만.
 1. STORY 판수(15→20 약 11판·20→25 약 28판)가 무거우면 `JobPromoteLevel3/4`만.
 2. **101-2·104-1 잔여(보류)** — GO⑤·Kenney 폴백·헤어카드.
@@ -56,7 +56,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 | `PlaytestDungeonHeadless` | **3연속 OK(2026-09-26, 지역 뒤)** · 09-27 109-10-5~10 은 묶음 없는 PC 기준선 비교(묶음 PC 재확인) · Regions~EnemyTelegraph 전부. 같은 씬 `FloorProgression`·`OverworldMap` OK |
 | GO `PlaytestHeadless` | **3연속 OK(2026-09-25)** — Peaks~FieldCombat 전부 |
 | `PlaytestForestHeadless` | **3연속 OK(2026-09-25, 세 시대 뒤)** — `PlaytestForestEras`(사람 6/6 몸·소품 38%·잔해 돎 6)·`Zones`·`ZoneProps` 포함 · `PlaytestForestCreatures` 3연속 · Finish·Furniture·HouseTransition OK |
-| REALM 헤드리스 | **3연속 OK(2026-09-28, 싸움터 뒤)** — `PlaytestRealmEras`·`PlaytestRealmBattlefield`(전 성 함락 뒤·문답 앞)·`CheckButtonWiring` |
+| REALM 헤드리스 | **3연속 OK(2026-09-28, 싸움터 뒤)** — `PlaytestRealmEras`·`Battlefield`·`Actors`(전 성 함락 뒤·문답 앞)·`CheckButtonWiring` |
 | GUI 실제 Play | GO 라이팅·Maria 동작·Dungeon 카메라(yaw=180)·SSS(Intensity=15) |
 
 ## 실기 확인 대기 (항목명만 — 경위는 HISTORY grep)
@@ -65,5 +65,5 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 - DUNGEON: **109-10-5~10 — 우두머리·사연·몸짓·서명·주인 수·몰이(세부 HISTORY 09-27)** · **109-10 비결·비전·시련 체감, 지역 배너·땅빛·M 지도** · **꾸밈 시대 층(109-2b)** · **세 시대 잡졸 여덟·손님·행상** · 옛 항목(두목 몸~101) HISTORY grep · **폰에서 버튼 전부**
 - FOREST: **방문객·단골(109-12) — 조각 찾기·다시 다가서기·빛 구슬·꼬마 크기·손짓 글자·자리 여덟·보상 값** · **세 시대(109-4) — 잔해 크기·뜬 높이, 덮개 차, 마을 사람 여섯 발·키·대사** · **숲지기 모델** · **짐승 여덟 모델** · **존 소품 — 실측 크기·휨 따라 내림·걸림** · **특색 존(108 ②)**, 옛 101 항목(HISTORY grep), **폰에서 저장·설정·밀어내기 버튼**
 - STORY: **보스 패턴전·고유 기술·관문 대장(109-11) — 예고·휩쓸기·쇠사슬·그로기·8초 간격** · **세 시대(109-3) — 시대 적 키·타격감·알림·손님** · 두목 Morak(훅 박자) · 척후병·전직관 모델 · 곁의 동료·소환(106-10) · 두목 등장 컷(106-8) · 사건·관계·선택·전직 팝업·관문 대장·비경 · 무예 1~4차(패널 K·칸·손맛·판수·유파 세트·옷 빛깔) — 세부는 HISTORY grep · **폰에서 버튼 전부**
-- REALM: **싸움터 컷(109-13-1) — 소품 크기·색·기둥 쓰러짐 박자** · **세 시대(109-5) — 사연 한 토막 줄바꿈·퓨전 카드 뜨는 빈도·이계 무장 셈** · 옛 항목(월드맵~오빗 카메라 — HISTORY grep), **폰에서 버튼 전부**
+- REALM: **109-13 싸움터·두 장수·태수 몸짓 — 크기·박자·읽힘** · **세 시대(109-5) — 사연 한 토막 줄바꿈·퓨전 카드 뜨는 빈도·이계 무장 셈** · 옛 항목(월드맵~오빗 카메라 — HISTORY grep), **폰에서 버튼 전부**
 - 공통: **⑥c 새 이름 — GO 상자·반응·해방, 국지 문답 가명, 목표판 글씨 줄어듦** · **⑥a 크레딧 창 글(□·끊김)·오류 기록 복사** · **⑤c-3 새 자리 — GO 옛 결투 화면(레벨 줄 밑·속공 조이스틱 오른쪽)·DUNGEON/STORY 대사 줄 아래쪽·DUNGEON 지역 배너** · 그림 문자(Noto Emoji 흑백)·영어 대사, Ⅱ 단추·타이틀 설정·새 패널 배치(GO 지도·STORY 무예 2열·REALM 성 스크롤), 폰 발열(30fps·"저" 버튼), 옛 소리·설정·렌더 항목(BGM·DoF·blob·LUT·SSS 등 — HISTORY grep)
