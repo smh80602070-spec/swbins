@@ -507,6 +507,13 @@
     { "key": "allysig.mystic", "value": "Frostbloom Wave" },
     { "key": "allysig.combo", "value": "⚡ Combo! {0} · {1} {2}" },
     { "key": "gesture.sig", "value": "✨ Signature" },
-    { "key": "gesture.combo", "value": "⚡ Combo" }
+    { "key": "gesture.combo", "value": "⚡ Combo" },
+    { "key": "lordsig.tomb", "value": "Burial Summons" },
+    { "key": "lordsig.tomb.line", "value": "The buried soldiers rise from their graves" },
+    { "key": "lordsig.fort", "value": "Watchtower Arrow Rain" },
+    { "key": "lordsig.bandit", "value": "Black Wind Triple Charge" },
+    { "key": "lordsig.palace", "value": "Abyssal Maelstrom" },
+    { "key": "lordsig.hellgate", "value": "Hellfire Ground" },
+    { "key": "lordsig.cloud", "value": "Heaven Thunder Cross" }
   ]
 }

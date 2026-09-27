@@ -507,6 +507,13 @@
     { "key": "allysig.mystic", "value": "서리꽃 파동" },
     { "key": "allysig.combo", "value": "⚡ 합격! {0} · {1} {2}" },
     { "key": "gesture.sig", "value": "✨ 서명" },
-    { "key": "gesture.combo", "value": "⚡ 합격" }
+    { "key": "gesture.combo", "value": "⚡ 합격" },
+    { "key": "lordsig.tomb", "value": "순장 호령" },
+    { "key": "lordsig.tomb.line", "value": "순장된 병사들이 무덤에서 일어난다" },
+    { "key": "lordsig.fort", "value": "망루 화살비" },
+    { "key": "lordsig.bandit", "value": "흑풍 삼연돌" },
+    { "key": "lordsig.palace", "value": "심연 소용돌이" },
+    { "key": "lordsig.hellgate", "value": "업화 장판" },
+    { "key": "lordsig.cloud", "value": "천뢰 십자" }
   ]
 }

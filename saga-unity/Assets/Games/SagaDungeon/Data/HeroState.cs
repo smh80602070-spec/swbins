@@ -78,7 +78,12 @@ namespace Saga.Dungeon.Data
         /// 부른다 — `LeveledUp`과 같은 결).</summary>
         public static event Action<string> EquipmentChanged;
 
-        private static int ExpForLevel(int level) => RoundInt(ExpBase * Pow(ExpGrowth, level - 1));
+        // 높은 레벨(≈80)에서 int 를 넘으면 음수로 뒤집혀 AddExp 의 while 이 끝나지 않았다(2026-09-27 PLAN.md 109-10-9 진단 중 발견) — 넘으면 int 최대에 멈춘다.
+        private static int ExpForLevel(int level)
+        {
+            float v = ExpBase * Pow(ExpGrowth, level - 1);
+            return v >= int.MaxValue ? int.MaxValue : RoundInt(v);
+        }
 
         public static void AddExp(int amount)
         {

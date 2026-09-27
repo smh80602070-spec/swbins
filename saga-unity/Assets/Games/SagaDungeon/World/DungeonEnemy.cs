@@ -300,6 +300,15 @@ namespace Saga.Dungeon.World
         public string RewardItemId => rewardItemId;
         /// <summary>진단 — 세운 이름 원문(표시는 `LocalizedDisplayName`).</summary>
         public string DisplayNameRaw => displayName;
+        /// <summary>화면 이름(번역) · 최대 체력 · 한 대 공격력 — PLAN.md 109-10-9 주인 고유 수가 본다.</summary>
+        public string DisplayName => LocalizedDisplayName;
+        public float MaxHp => hp;
+        public float Damage => dmg;
+
+        // PLAN.md 109-10-9 명소 층 주인 고유 수 — 층 진행기가 주인에게만 건다.
+        private LordSigRunner _lordSig;
+        public LordSigRunner LordSig => _lordSig;
+        public void SetLordSig(LordSigRunner runner) => _lordSig = runner;
 
         private void Awake()
         {
@@ -438,6 +447,14 @@ namespace Saga.Dungeon.World
 
             Transform target = Target;
             float dist = Vector3.Distance(transform.position, target.position);
+
+            // PLAN.md 109-10-9 — 달려든 뒤로 고유 수(늘 나를 노린다). 예고·시전하는 동안은 강타를 쉬고, 강타 예비동작 중엔 새로 안 건다.
+            if (_lordSig != null && _state != State.Idle && _lordSig.Tick(dt, _state != State.Windup, _player))
+            {
+                _animator?.SetFloat("Speed", 0f);
+                Face(_player);
+                return;
+            }
 
             if (_state == State.Windup)
             {
@@ -729,6 +746,7 @@ namespace Saga.Dungeon.World
         private void Flee()
         {
             if (_warnRing != null) _warnRing.enabled = false;
+            _lordSig?.Clear();
             _state = State.Dead;
             _worldBossActive = false;
             if (ActiveWorldBoss == this) ActiveWorldBoss = null;
@@ -766,6 +784,7 @@ namespace Saga.Dungeon.World
         private void Die()
         {
             if (_warnRing != null) _warnRing.enabled = false;
+            _lordSig?.Clear();
             _state = State.Dead;
             _worldBossActive = false;
             if (ActiveWorldBoss == this) ActiveWorldBoss = null;

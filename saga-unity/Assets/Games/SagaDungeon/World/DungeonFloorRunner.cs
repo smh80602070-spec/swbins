@@ -566,7 +566,16 @@ namespace Saga.Dungeon.World
             enemy.SetIntroSubtitle(string.Format(DungeonLocalization.T("cut.lord_sub", "{0}의 주인"), DungeonLandmarkData.Name(_landmark)));
             go.SetActive(true);
             _lord = enemy;
+            // PLAN.md 109-10-9 — 여섯 주인이 저마다 다른 한 수(호령 졸개는 이 방 잡졸로).
+            if (DungeonLordSigs.TryFor(_landmark, out var sig)) enemy.SetLordSig(new LordSigRunner(enemy, sig, SpawnLordAdd));
             foreach (var offset in EscortOffsets) SpawnGrunt(SoloOffset + offset);
+        }
+
+        /// <summary>PLAN.md 109-10-9 순장 호령 — 주인 곁에 이 층 잡졸 하나(같은 방이라 방 치움 셈에 든다).</summary>
+        private DungeonEnemy SpawnLordAdd(Vector3 worldPos)
+        {
+            var go = SpawnGrunt(_contentRoot.InverseTransformPoint(worldPos));
+            return go != null ? go.GetComponent<DungeonEnemy>() : null;
         }
 
         private void SpawnTrove()
