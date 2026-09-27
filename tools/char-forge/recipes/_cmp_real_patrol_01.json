@@ -45,6 +45,9 @@
   "cf_tacvest_coat_15171a_0a0b0c": [0.03, 0.06],
   "culturalibre_male_boots": [0.03, 0.06]
  },
+ "under_below": {
+  "culturalibre_male_boots": 0.03
+ },
  "under": {
   "cf_tacvest_coat_15171a_0a0b0c": [
    "male_casualsuit01"

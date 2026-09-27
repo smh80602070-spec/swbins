@@ -9829,3 +9829,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 검증(묶음 없는 이 PC): 컴파일 오류 0 → 세이브를 비우고 `PlaytestDungeonHeadless` **3연속 OK**(gestures·allysig·lordsigs·hunt 같은 줄), 실패는 환경 셋(컷 카메라·씬 열기·Missing Prefab) · `PlaytestDungeonFloorProgression` 12/12 진행·Missing Prefab 만(기준선 — 졸개가 늘어도 층을 다 내려감). 세이브는 제자리로, 글꼴 SDF 둘·Mobile_RPAsset 되돌림.
 - 실기 확인 전: 방당 12마리가 폰에서 버벅이지 않는지(30fps), 떼로 몰아 쓸어버리는 맛이 나는지, 경직 0.25초가 너무 쉬워지지 않는지, 날림 거리·가라앉음이 벽 밖으로 새지 않는지.
 - 다음 = PLAN 109 표 11번 STORY 5-9 보스 패턴전.
+
+## 2026-09-27 char-forge — 장화 옆 바지 점·닌자 가랑이 틈 (4벌)
+
+"vroid 자체툴 이어해".
+
+- 레시피 칸 `under_below` {겉옷: 여유} — 장화 윗단 3cm 아래·장화 가까이의 바지는 모두 장화 속으로 지움(발목 옆은 광선이 못 잡아 바지가 네모 점으로 뚫었다). 전장 망자·순찰 대원·방독면 약탈자.
+- 옷 틀 `shinobi` 다리 통 윗단 가랑이 +5cm — 닌자 앞 가랑이 틈(서기·달리기) 없앰. 도감 hero_jp_hanzo 색 변형 옷도 다시 지음(도감 몸은 로컬 보류).
+- 검사: 4벌 verify fbx ≤ 0.7° · glb 0.0° · sha256 같음 · CMP_RESULT OK(FBX 로컬 전용, ProjectVersion·Packages 되돌림). 다음 = HOW_TO_PLAYTEST §9 사용자 판정.

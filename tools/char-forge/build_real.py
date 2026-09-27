@@ -185,13 +185,13 @@ def tuck(arm, keys):
         print('TUCK', key, 'moved', moved)
 
 
-def hide_under(arm, spec, reach=None):
+def hide_under(arm, spec, reach=None, below=None):
     """레시피 `under`: {겉옷 폴더 이름: [속옷 폴더 이름… 또는 'skin']} — 겉옷에 덮인 속옷(살) 면을 지운다(살의 가림 지우기와 같은 일).
     공방 옷은 몸통 뼈에만 붙어 동작 중 어깨뼈가 벌어지면 속 몸 옷이 등으로 뚫고 나왔다(09-27 조끼·가슴판).
     속옷 정점의 바깥(+n) 3cm 또는 안쪽(-n) 2cm(쉼 자세부터 속옷이 겉옷 밖 — 등 골) 안에 겉옷이 있으면 덮인 것 — 이웃이 모두 덮인 정점만 지워 가장자리 한 줄은 겉옷 밑에 겹쳐 남긴다.
     `reach` = 레시피 `under_reach` {겉옷: [바깥 m, 안쪽 m]} — 2cm 넘게 깊은 안쪽은 겉옷 면이 속옷과 같은 쪽을 볼 때만 덮인 것."""
     from mathutils.bvhtree import BVHTree
-    reach = reach or {}
+    reach, below = reach or {}, below or {}
     for outer, inners in spec.items():
         far, deep = reach.get(outer, (0.03, 0.02))   # 레시피 `under_reach` {겉옷: [바깥 m, 안쪽 m]} — 판 조끼 등이 재킷 어깨뼈 자리보다 3cm 넘게 안쪽이라 쉼 자세부터 재킷이 뚫었다(09-27 순찰 대원)
         oc = cloth_src(arm, outer)
@@ -201,6 +201,9 @@ def hide_under(arm, spec, reach=None):
         bm.from_mesh(oc.data)
         bm.transform(oc.matrix_world)
         tree = BVHTree.FromBMesh(bm)
+        # 레시피 `under_below` {겉옷: 여유 m} — 겉옷 윗단보다 여유만큼 아래이고 겉옷 8cm 안이면 덮인 것(장화 속 바지 — 발목 옆에서
+        # 바지가 장화를 뚫어 네모 점이 떴다, 09-27 전장 망자). 광선으로는 장화 목이 좁아지는 발목 옆을 못 잡았다
+        cut = (max(v.co.z for v in bm.verts) - below[outer]) if outer in below else None
         bm.free()
         for inner in inners:
             ic = cloth_src(arm, inner) if inner != 'skin' else next(   # 'skin' = 살 — 붙는 뜨개 윗옷을 동작 중 어깨뼈 살이 뚫었다(09-27, tuck 은 쉼 자세만)
@@ -213,6 +216,8 @@ def hide_under(arm, spec, reach=None):
             bm.normal_update()
             def hit(v):
                 p, n = mw @ v.co, (nm @ v.normal).normalized()
+                if cut is not None and p.z < cut and tree.find_nearest(p, 0.08)[0] is not None:
+                    return True
                 if tree.ray_cast(p, n, far)[0] is not None:
                     return True
                 loc, hn, _i, d = tree.ray_cast(p, -n, deep)
@@ -890,7 +895,7 @@ def main():
     if r.get('tuck'):
         tuck(arm, r['tuck'])
     if r.get('under'):
-        hide_under(arm, r['under'], r.get('under_reach'))
+        hide_under(arm, r['under'], r.get('under_reach'), r.get('under_below'))
     if r.get('soften'):
         soften(arm, r['soften'])
     for slot, col in r.get('tints', {}).items():

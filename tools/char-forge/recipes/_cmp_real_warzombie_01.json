@@ -48,6 +48,9 @@
  "under_reach": {
   "culturalibre_male_boots": [0.03, 0.06]
  },
+ "under_below": {
+  "culturalibre_male_boots": 0.03
+ },
  "under": {
   "toigo_wool_pants": [
    "elvs_crude_t-shirt_male"

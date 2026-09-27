@@ -292,7 +292,7 @@ GARMENTS = {
     'shinobi': dict(desc='닌자복 — 붙는 윗옷·좁은 바지·감발·띠', tags=['ninja', 'historical', 'east'],
                     colors=dict(C1='#1e1e24', C2='#3a3a44'), parts=[
         dict(kind='tube', top=('waist', 0.02), bottom=('crotch', 0.0), ease=0.02, slot=0, paint=dict(base='C1', pattern='weave')),
-        dict(kind='leggings', top=('crotch', 0.01), bottom=('knee', -0.02), ease=0.018, smooth=6, wmin=0.15, tuck=(2, 0.004), slot=5,   # wmin 0.5 면 넓게 선 자세에서 가랑이 살이 보였다(09-27)
+        dict(kind='leggings', top=('crotch', 0.05), bottom=('knee', -0.02), ease=0.018, smooth=6, wmin=0.15, tuck=(2, 0.004), slot=5,   # wmin 0.5 면 넓게 선 자세에서 가랑이 살이 보였다(09-27) · 윗단 가랑이 +5cm — +1cm 면 몸통 통과 사이 앞 가랑이가 넓은 대기에서 벌어져 틈이 보였다(09-27)
              paint=dict(base='C1', pattern='weave')),
         dict(kind='leggings', top=('knee', 0.0), bottom=('ankle', -0.005), ease=0.01, slot=4, paint=dict(base='C2', pattern='wrap')),   # 버선 껍데기와 사이에 살 띠가 보여 발목 밑까지
         dict(kind='tube', top=('neck', 0), bottom=('hip', -0.05), ease=0.014, over=0.012, slot=1, paint=dict(base='C1', pattern='weave',
