@@ -1284,6 +1284,8 @@
     }
     var FRh = global.DG.frost;                                   // §5 ⑲-27 서리봉 고원 명소 벽(산성 담·관측소·비행선…)
     if (FRh && FRh.rectsIn) { var frr = FRh.rectsIn(gx, gy); for (i = 0; i < frr.length; i++) { out.push(frr[i]); } }
+    var ESh = global.DG.eraSites;                                // §5 ⑲-34 3부 시대 명소 벽(조선소 창고·기중기 다리)
+    if (ESh && ESh.rectsIn) { var err = ESh.rectsIn(gx, gy); for (i = 0; i < err.length; i++) { out.push(err[i]); } }
     return out;
   }
 
@@ -2974,7 +2976,7 @@
     var lookLift = groundY(aim.look.x, aim.look.z);
     /* 활공(§5 ⑰ 다음) — 몸이 땅 위 수십 m 를 나는 동안은 카메라·시선도 몸 높이를 따라간다 */
     var LFc = global.DG.landform;
-    if (LFc && ((LFc.gliding && LFc.gliding()) || meSky())) {     // ⑲-20 섬 위에서도 몸 높이를 따른다
+    if (LFc && ((LFc.gliding && LFc.gliding()) || meSky() || (LFc.onPole && LFc.onPole()))) {     // ⑲-20 섬 위·⑲-34 기둥 위에서도 몸 높이를 따른다
       var bodyY = standY(pos.x, pos.y) + LFc.airH();
       camLift = Math.max(camLift, bodyY); lookLift = Math.max(lookLift, bodyY);
     }

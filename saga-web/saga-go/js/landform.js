@@ -28,6 +28,10 @@
  *   다리·폭포 여울마다 강을 가로지르는 다리 하나(걸으면 상판 위에 선다), 은하강·붉은내 발원지에 폭포.
  *           그림은 손그림 땅(land.js 'B'·'W')의 다리·폭포 모델을 그대로 빌린다(`markAt`)
  *   기력    100 — 가만히·평지면 초당 25 찬다. 들판 전투 기력(⑨)과는 따로다(싸움 중엔 그쪽)
+ *   기둥 타기 §5 ⑲-34 — 구조물 다리(era-sites `poles`, 조선소 기중기)를 마주 보고 밀면 붙잡고 초당 POLE_UP m 오른다(기력 초당 POLE_DRAIN).
+ *           안 밀면 매달려 초당 POLE_HANG 만 준다 · 기력이 다하면 미끄러져 내려온다 · 오르는 중 점프 = LEAP m 도약(기력 20) ·
+ *           등지면 손을 놓고 떨어진다. 꼭대기(top)에 닿으면 들보 위에 선다 — 들보 길 밖으로는 못 걷고, 뛰면 날개를 편다.
+ *           자동 순행 중엔 안 붙잡는다
  */
 (function (global) {
   'use strict';
@@ -325,7 +329,9 @@
   var PLUNGE_MIN_H = 2.5, PLUNGE_SINK = 30;
   /** ⑲-6 요리 모험 계열(갯소라 구이) — 스태미나 소모 배율 */
   function SAVE_MUL() { var C = global.DG.cooking; return C && C.staminaMul ? C.staminaMul() : 1; }
-  function freshBody() { return { sta: -1, state: 'walk', busy: false, climbT: 0, jumpT: -1, tired: false, ux: 0, uy: 0, glide: null, sky: false, draftBan: false, railT: 0 }; }
+  function freshBody() { return { sta: -1, state: 'walk', busy: false, climbT: 0, jumpT: -1, tired: false, ux: 0, uy: 0, glide: null, sky: false, draftBan: false, railT: 0, pole: null }; }
+  /* ⑲-34 기둥 타기 — 오르기 초당 m · 기력(초당) 오르기·매달리기 · 미끄러짐 초당 m · 붙잡는 거리(다리 겉에서) · 마주 봄(내적) · 들보 위 걸음 */
+  var POLE_UP = 2.2, POLE_DRAIN = 14, POLE_HANG = 3, POLE_SLIDE = 6, POLE_REACH = 1.2, POLE_FACE = 0.5, BEAM_MUL = 0.6;
   var body = freshBody();
 
   function sta() { if (body.sta < 0) { body.sta = STA_MAX(); } return body.sta; }
@@ -350,6 +356,17 @@
     if (FCa && FCa.aiming && FCa.aiming()) { FCa.aimSteerRt(ux, uy, dt); body.state = 'walk'; return 0; }
     body.ux = ux; body.uy = uy;
     var SK = SKY(), air = body.jumpT >= 0;
+    /* ⑲-34 기둥 — 붙잡은 동안은 여기서 끝난다. 땅에서 다리를 마주 보고 밀면 붙잡는다 */
+    if (body.pole) { return poleMove(x, y, ux, uy, dt); }
+    if (!air && !body.glide && !body.sky) {
+      var pa = poleAhead(x, y, ux, uy);
+      if (pa) {
+        body.pole = { id: pa.id, h: 0, perch: false, push: 0 };
+        tell('🧗 기중기 다리를 붙잡았다 — 계속 밀면 오른다 · 점프 = 도약 · 등지면 손을 놓는다');
+        core().emit('landform:pole', { id: pa.id, grab: true });
+        return poleMove(x, y, ux, uy, dt);
+      }
+    }
     if (SK) {
       var nx = x + ux * RAIL_LOOK, ny = y + uy * RAIL_LOOK;
       /* ⑲-20 섬 위 — 난간 밖으로는 뛰어올랐거나 날개를 편 채로만 */
@@ -389,6 +406,76 @@
     return air ? mul * 1.15 : mul;
   }
 
+  /* ── ⑲-34 기둥 타기 ─────────────────────────────────── */
+  function ES() { var e = global.DG.eraSites; return e && e.on && e.on() && e.poles ? e : null; }
+  function autoOn() { var A = global.DG.auto; return !!(A && A.active && A.active()); }
+  /** 마주 보고 미는 다리 — 다리 겉에서 POLE_REACH m 안, 걷는 방향이 다리 쪽. 자동 순행 중엔 없음 */
+  function poleAhead(x, y, ux, uy) {
+    var E = ES();
+    if (!E || (!ux && !uy) || autoOn()) { return null; }
+    var L = E.poles();
+    for (var i = 0; i < L.length; i++) {
+      var p = L[i], dx = p.x - x, dy = p.y - y, d = Math.hypot(dx, dy);
+      if (d > p.r + POLE_REACH) { continue; }
+      if (d > 1e-6 && (dx * ux + dy * uy) / d < POLE_FACE) { continue; }
+      return p;
+    }
+    return null;
+  }
+  function poleOf() { var E = ES(); return body.pole && E ? E.poleById(body.pole.id) : null; }
+  /** 손을 놓는다 — 높이가 있으면 그 높이에서 떨어진다(날개 접은 채) */
+  function letGo() {
+    var P = body.pole, pos = core().save.player.pos;
+    body.pole = null;
+    if (P && P.h > 0.3) { body.glide = { alt: groundH(pos.x, pos.y) + P.h, fall: true }; body.state = 'glide'; }
+    core().emit('landform:pole', { id: P ? P.id : null, grab: false });
+  }
+  function perchOn(pl) {
+    var E = ES(), P = body.pole, pos = core().save.player.pos, q = E.perchOf(pl);
+    P.h = pl.top; P.perch = true;
+    pos.x = q.x; pos.y = q.y;
+    body.tired = false;
+    tell('🏗️ 들보 위에 올라섰다 — 들보를 따라 걸을 수 있다 · 뛰면 날개를 편다');
+    core().emit('landform:perch', { id: pl.id });
+  }
+  function poleMove(x, y, ux, uy, dt) {
+    var P = body.pole, pl = poleOf(), E = ES();
+    if (!pl) { body.pole = null; return 1; }
+    if (P.perch) {
+      body.state = 'walk';
+      if (!E.onBeam(pl, x + ux * RAIL_LOOK, y + uy * RAIL_LOOK)) {
+        if (body.railT <= 0) { body.railT = 4; tell('🏗️ 들보 끝 — 뛰어내리면(점프) 날개를 편다'); }
+        return 0;
+      }
+      return BEAM_MUL;
+    }
+    var dx = pl.x - x, dy = pl.y - y, d = Math.hypot(dx, dy) || 1, face = (dx * ux + dy * uy) / d;
+    if (face < -POLE_FACE) { letGo(); return 0; }              // 등지면 놓는다
+    if (face < POLE_FACE) { return 0; }                         // 옆으로 밀면 그대로 매달려 있다
+    body.state = 'climb'; body.climbT = 0.35; body.busy = true;
+    if (body.sta <= 0 || body.tired) {
+      if (!body.tired) { body.tired = true; tell('😮‍💨 기력이 다했다 — 미끄러진다'); }
+      return 0;
+    }
+    P.push = 0.2;
+    P.h = Math.min(pl.top, P.h + POLE_UP * dt);
+    body.sta = Math.max(0, body.sta - POLE_DRAIN * SAVE_MUL() * dt);
+    if (P.h >= pl.top) { perchOn(pl); }
+    return 0;
+  }
+  /** 매 박자 — 안 밀면 매달려 기력이 조금씩, 다하면 미끄러져 내려온다(땅에 닿으면 놓는다) */
+  function stepPole(dt) {
+    var P = body.pole;
+    if (!P || P.perch) { return; }
+    body.busy = true;
+    if (P.push > 0) { P.push -= dt; } else if (!body.tired) { body.sta = Math.max(0, body.sta - POLE_HANG * SAVE_MUL() * dt); body.state = 'climb'; }
+    if (body.sta <= 0 && !body.tired) { body.tired = true; tell('😮‍💨 기력이 다했다 — 미끄러진다'); }
+    if (body.tired) {
+      P.h = Math.max(0, P.h - POLE_SLIDE * dt);
+      if (P.h <= 0) { body.pole = null; body.state = 'walk'; core().emit('landform:pole', { id: P.id, grab: false }); }
+    }
+  }
+
   function tell(msg) {
     if (global.DG.ui && global.DG.ui.toast && !global.DG_NO_DRAW) { global.DG.ui.toast(msg); }
   }
@@ -405,6 +492,24 @@
     var pos = core().save.player.pos;
     var FCj = global.DG.fieldCombat;
     if (FCj && FCj.aimCancel) { FCj.aimCancel(); }                  // ⑲-22 뛰면 조준이 풀린다
+    /* ⑲-34 기둥 — 들보 위면 뛰어내리며 날개를 편다, 오르는 중이면 도약 */
+    if (body.pole) {
+      var Pj = body.pole, plj = poleOf();
+      if (Pj.perch || !plj) {
+        if (body.sta <= 0) { tell('😮‍💨 날개를 펼 기력이 없다'); return false; }
+        body.pole = null;
+        body.glide = { alt: groundH(pos.x, pos.y) + (plj ? plj.top : 0), fall: false };
+        body.state = 'glide';
+        core().emit('landform:glide', { open: true });
+        return true;
+      }
+      if (body.tired || body.sta < LEAP_COST * SAVE_MUL()) { tell('😮‍💨 도약할 기력이 없다'); return false; }
+      body.sta -= LEAP_COST * SAVE_MUL();
+      Pj.h = Math.min(plj.top, Pj.h + LEAP);
+      core().emit('landform:leap', {});
+      if (Pj.h >= plj.top) { perchOn(plj); }
+      return true;
+    }
     /* 활공 중에 누르면 날개를 접고 떨어진다 */
     if (body.glide) {
       if (body.glide.fall) { return false; }
@@ -445,6 +550,7 @@
 
   /** 지금 뛰어오른 높이(m) — `world3d` 가 내 몸에 얹는다 */
   function airH() {
+    if (body.pole) { return body.pole.h; }                    // ⑲-34 기둥·들보 위
     if (body.glide) {
       var gp = core().save.player.pos;
       return Math.max(0, body.glide.alt - groundH(gp.x, gp.y));
@@ -461,6 +567,7 @@
     if (body.jumpT >= 0) { body.jumpT += dt; if (body.jumpT >= JUMP_T) { body.jumpT = -1; } }
     if (body.climbT > 0) { body.climbT -= dt; }
     if (body.railT > 0) { body.railT -= dt; }
+    stepPole(dt);
     stepSky();
     if (body.glide) { stepGlide(dt); }
     if (!body.busy) {
@@ -609,6 +716,10 @@
     startPlunge: startPlunge, PLUNGE_MIN_H: PLUNGE_MIN_H, PLUNGE_SINK: PLUNGE_SINK,
     GLIDE_MUL: GLIDE_MUL, GLIDE_SINK: GLIDE_SINK, GLIDE_DRAIN: GLIDE_DRAIN, GLIDE_OPEN_T: GLIDE_OPEN_T,
     gliding: function () { return !!body.glide; },
+    /** ⑲-34 기둥을 붙잡았나(들보 위 포함) · 들보 위면 그 다리 id · 기둥 높이 */
+    onPole: function () { return !!body.pole; }, perched: function () { return body.pole && body.pole.perch ? body.pole.id : null; },
+    poleH: function () { return body.pole ? body.pole.h : 0; }, poleAhead: poleAhead,
+    POLE_UP: POLE_UP, POLE_DRAIN: POLE_DRAIN, POLE_HANG: POLE_HANG, POLE_SLIDE: POLE_SLIDE, POLE_REACH: POLE_REACH, BEAM_MUL: BEAM_MUL,
     /** ⑲-20 섬 위에 서 있나(날개를 편 채 섬 위도) · 불러오기에서 섬에 올린다(skyisle.boot) */
     onSky: function () { return !!body.sky; }, setSky: function (v) { body.sky = !!v; }, groundH: groundH, glideAlt: function () { return body.glide ? body.glide.alt : null; },
     stamina: function () { return sta(); }, state: function () { return body.state; },

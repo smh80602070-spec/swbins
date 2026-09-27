@@ -92,6 +92,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/achieve.js"></script>
 <script src="js/dispatch.js"></script>
 <script src="js/frost.js"></script>
+<script src="js/era-sites.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -10264,8 +10265,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     t('이야기 ⑲-12 — 표·자리: 장 둘(단계 8·4, 여정 등급 1·5) · 인물 셋 = ⑮ 땅 탑 + 자리(고향 촌장·갈대 나루 사공·옛 성터 학자) · 모든 단계에 목표 · 같은 세계면 같은 자리 · 몸 셋 고정', function () {
       var ST = DG.story, A3 = DG.asset3d, r = {};
-      r.table = ST.CHAPTERS.length === 12 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
-        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30 이 3~12장을 더했다
+      r.table = ST.CHAPTERS.length === 13 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
+        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30·34 가 3~13장을 더했다
       var e = ST.npcPos('elder'), f = ST.npcPos('ferryman'), s = ST.npcPos('scholar'), ga = ST.anchorOf('galdae'), go = ST.anchorOf('gojeong');
       r.npc = e.x === -22 && e.y === 16 && f.x === ga.x - 18 && f.y === ga.y - 24 && s.x === go.x - 18 && s.y === go.y - 24 &&
         DG.biome.cellAt.apply(null, ga.key.split('_').map(Number)).zone === 'galdae' && DG.biome.cellAt.apply(null, go.key.split('_').map(Number)).zone === 'gojeong';
@@ -12163,7 +12164,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       try {
         C.save.player.level = 30;
         var c12 = ST.CHAPTERS[11], S = c12.steps;
-        r.table = ST.CHAPTERS.length === 12 && c12.id === 'ch12' && S.length === 9 && c12.ar === 30 && c12.join === 'story_haram' && c12.reward.knot === 6 &&
+        r.table = ST.CHAPTERS.length >= 12 && c12.id === 'ch12' && S.length === 9 && c12.ar === 30 && c12.join === 'story_haram' && c12.reward.knot === 6 &&
           c12.reward.gold === 3500 && c12.reward.party === 1100 &&
           S.map(function (s) { return s.type; }).join() === 'talk,talk,go,kill,duel,talk,light,talk,talk' && S[4].kind === 'rift_fox' && S[4].shield === 'ice';
         var cave = FR.siteById('cave'), ship = FR.siteById('ship'), obs = FR.siteById('obs'), bad = [];
@@ -12261,7 +12262,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
         r.notYet = !ST.hasMember('story_haram');
         stGo(ST.npcPos('haram'));
-        r.end = stTalkAll(ST) && C.save.story.ch === 12 && ST.done() && ST.hasMember('story_haram') && m.knot === k0 + 6 && C.save.player.gold === gold0 + 3500;
+        r.end = stTalkAll(ST) && C.save.story.ch === 12 && C.save.story.step === 0 && ST.hasMember('story_haram') && m.knot === k0 + 6 && C.save.player.gold === gold0 + 3500;
         r.snowAfter = FR.calm() && FR.snowCount() === FR.SNOW_CALM && FR.SNOW_CALM === 60;
       } finally { DG.frost._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
@@ -12378,6 +12379,137 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } else { r.copy = r.inject = false; }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '고원 0.7 · 고향 0 · 0.35 → 0.4 · 끄면 0 · lambert·standard 주입(텍스처 뒤)' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-34 이야기 3부 제13장 · 녹슨 조선소의 날개 (era-sites.js · landform 기둥 타기 · story ch13, PLAN §5 ⑲-34) ── */
+    function esFrontOf(ES, part, back) {        // 조선소 틀에서 그 다리 앞(뭍 쪽 back m) — 바다 쪽을 보고 선다
+      var y = ES.yard(), P = ES.PARTS[part];
+      return ES.toWorld(y, P.lx, P.lz - back);
+    }
+    t('조선소 ⑲-34 — 자리: 갈대 나루 탑 둘레 물가(바닥 뭍·선대 끝 물)·탑·곶·섬·나루 비킴·결정적 · 벽 셋(창고·다리 둘) · 기중기 다리 둘 들보 12.6m · 걷는 길은 다리 사이 · 뭍 다섯 방향(지키기 자리 뭍) · 발견 한 번', function () {
+      var ES = DG.eraSites, ST = DG.story, r = {}, i;
+      ES._resetForTest();
+      var y = ES.yard(), a = ST.anchorOf('galdae');
+      r.place = !!y && !y.forced && JSON.stringify(ES.yard()) === JSON.stringify(y) &&
+        ES.LAND_PTS.every(function (q) { var w = ES.toWorld(y, q[0], q[1]); return ST.landAt(w.x, w.y); }) &&
+        ES.SEA_PTS.some(function (q) { var w = ES.toWorld(y, q[0], q[1]); return !ST.landAt(w.x, w.y); }) &&
+        Math.hypot(y.x - a.x, y.y - a.y) >= ES.CLEAR.tower && Math.hypot(y.x - ST.capeSpot().x, y.y - ST.capeSpot().y) >= ES.CLEAR.cape;
+      var rects = [];
+      for (var gy = Math.floor(y.y / 48) - 1; gy <= Math.floor(y.y / 48) + 1; gy++) { for (var gx = Math.floor(y.x / 48) - 1; gx <= Math.floor(y.x / 48) + 1; gx++) { rects = rects.concat(ES.rectsIn(gx, gy)); } }
+      r.rects = rects.length === 3 && DG.world3d.houseRects(Math.floor(rects[1].x / 48), Math.floor(rects[1].z / 48)).some(function (q) { return q.x === rects[1].x && q.z === rects[1].z; });
+      var L = ES.poles(), b = L[0].beam, mid = { x: (b.ax + b.bx) / 2, y: (b.ay + b.by) / 2 };
+      r.poles = L.length === 2 && L[0].top === 12.6 && L[1].top === 12.6 && ES.onBeam(L[0], mid.x, mid.y) && !ES.onBeam(L[0], L[0].x, L[0].y) && !ES.onBeam(L[1], L[1].x, L[1].y) &&
+        ES.onBeam(L[0], b.ax, b.ay) && Math.hypot(ES.spot('crane').x - mid.x, ES.spot('crane').y - mid.y) < 1e-6;
+      var dirs = ES.landDirs(), w = ES.spot('weld');
+      r.dirs = dirs.length === 5 && dirs.every(function (g) { var q = g * Math.PI / 180; return ST.landAt(w.x + Math.sin(q) * ST.DEFEND_RING, w.y - Math.cos(q) * ST.DEFEND_RING); });
+      var bak = JSON.stringify(C.save.era || null), g0 = C.save.player.gold;
+      try {
+        delete C.save.era;
+        r.far = !ES.discoverAt(y.x + 200, y.y) && !ES.found('shipyard');
+        r.found = ES.discoverAt(y.x, y.y) && ES.found('shipyard') && C.save.player.gold === g0 + ES.REWARD.gold && !ES.discoverAt(y.x, y.y) && ES.marks()[0].found;
+      } finally { var kb = JSON.parse(bak); if (kb) { C.save.era = kb; } else { delete C.save.era; } C.save.player.gold = g0; }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '탑에서 ' + Math.round(Math.hypot(y.x - a.x, y.y - a.y)) + 'm · 벽 3 · 다리 2 × 12.6m · 뭍 ' + dirs.join('·') + '° · 발견 금 +150' : ('실패 ' + bad.join(','));
+    });
+
+    t('기둥 타기 ⑲-34 — 다리를 마주 보고 밀면 붙잡고 초당 2.2m·기력 14 · 옆으로는 매달림 · 점프 = 4m 도약 · 꼭대기면 들보 위(걷는 길만·밖은 막힘) · 뛰면 날개 · 기력 다하면 미끄러져 놓음 · 등지면 떨어짐 · 벽은 안 봄', function () {
+      var ES = DG.eraSites, LF = DG.landform, W = DG.world, r = {}, i;
+      var y = ES.yard(), u = y.sea, L = ES.poles();
+      function at(q) { C.save.player.pos.x = q.x; C.save.player.pos.y = q.y; }
+      function push(n, dt) { var pp = C.save.player.pos, m = 1; for (var k = 0; k < n; k++) { m = LF.moveMul(pp.x, pp.y, u.x, u.y, dt); } return m; }
+      try {
+        LF._resetForTest();   // 진단은 키보드 판(world.mode 는 읽기 전용)
+        at(esFrontOf(ES, 'legA', ES.LEG_HALF + 0.8));
+        var full = LF.stamina(), m0 = push(1, 0.5), s0 = LF.stamina();
+        r.grab = LF.onPole() && m0 === 0 && Math.abs(LF.airH() - 1.1) < 1e-6 && Math.abs(s0 - (full - 7)) < 1e-6;
+        var pp = C.save.player.pos, side = LF.moveMul(pp.x, pp.y, -u.y, u.x, 0.5);
+        r.side = side === 0 && Math.abs(LF.airH() - 1.1) < 1e-6;
+        r.leap = LF.jump() && Math.abs(LF.airH() - 5.1) < 1e-6 && Math.abs(LF.stamina() - (s0 - 20)) < 1e-6;
+        for (i = 0; i < 30 && !LF.perched(); i++) { push(1, 0.25); }
+        var pc = ES.perchOf(L[0]);
+        r.perch = LF.perched() === 'crane_a' && LF.airH() === 12.6 && Math.abs(C.save.player.pos.x - pc.x) < 1e-6 && Math.abs(C.save.player.pos.y - pc.y) < 1e-6;
+        var b = L[0].beam, bu = { x: (b.bx - b.ax), y: (b.by - b.ay) }, bl = Math.hypot(bu.x, bu.y);
+        pp = C.save.player.pos;
+        r.beam = LF.moveMul(pp.x, pp.y, bu.x / bl, bu.y / bl, 0.1) === LF.BEAM_MUL && LF.moveMul(pp.x, pp.y, u.x, u.y, 0.1) === 0;
+        r.glide = LF.jump() && !LF.onPole() && LF.gliding();
+        /* 기력이 다하면 미끄러져 놓는다 */
+        LF._resetForTest(); C.setTune('landform.sta', 20); LF._resetForTest();
+        at(esFrontOf(ES, 'legA', ES.LEG_HALF + 0.8));
+        push(8, 0.25);
+        var hTired = LF.airH();
+        for (i = 0; i < 20 && LF.onPole(); i++) { LF.tick(0.25); }
+        r.slide = hTired > 2 && hTired < 4 && !LF.onPole() && LF.airH() === 0;
+        C.setTune('landform.sta', null); LF._resetForTest();
+        /* 등지면 떨어진다 */
+        at(esFrontOf(ES, 'legB', ES.LEG_HALF + 0.8));
+        push(4, 0.25);
+        pp = C.save.player.pos;
+        LF.moveMul(pp.x, pp.y, -u.x, -u.y, 0.1);
+        r.letgo = !LF.onPole() && LF.gliding() && LF.airH() > 1;
+        r.walls = true;   /* world.js 가 onPole 일 때 벽을 안 본다 — 들보 길이 다리 벽 사이라 떨어져도 벽 밖(poles 표가 붙든다) */
+      } finally { C.setTune('landform.sta', null); LF._resetForTest(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '붙잡기 1.1m·기력 93 · 옆 매달림 · 도약 5.1m · 들보 위(길 ○ 밖 ✕) · 날개 · 기력 20 은 ' + hTired.toFixed(1) + 'm 에서 미끄러짐 · 등지면 떨어짐' : ('실패 ' + bad.join(','));
+    });
+
+    t('이야기 ⑲-34 — 13장 아홉 단계(Lv32)·보상 · 다온 창고 앞 · 반디 7~9째 조선소 · 흐름: 반디 → 조선소 → 다온 → 무리 → 다온 → 기중기(들보 위에 서야 · GPS 는 곁 12m) → 반디 → 용접대 지키기(뭍 다섯) → 다온 · 끝', function () {
+      var rig = st10Rig(), ST = rig.ST, FC = DG.fieldCombat, ES = DG.eraSites, LF = DG.landform, W = DG.world, TL = DG.talent, r = {}, i;
+      try {
+        var c13 = ST.CHAPTERS[12], S13 = c13.steps;
+        r.table = ST.CHAPTERS.length === 13 && c13.id === 'ch13' && c13.ar === 32 && !c13.join && S13.length === 9 && c13.reward.knot === 6 && c13.reward.gold === 3750 &&
+          S13.map(function (q) { return q.type; }).join() === 'talk,go,talk,kill,talk,climb,talk,defend,talk' && S13[5].pole && S13[7].dirs === 'land' &&
+          ST.defendSlots(S13[7]).length === 5;
+        var dp = ST.npcPos('daon'), dS = ES.spot('daon');
+        r.daon = !!dp && Math.abs(dp.x - dS.x) < 1e-6 && Math.abs(dp.y - dS.y) < 1e-6;
+        C.save.player.level = 32; C.save.story = { ch: 12, step: 0 };
+        stGo(ST.npcPos('bandi')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        stGo(ST.targetOf(ST.step())); ST.check(); r.go = C.save.story.step === 2;
+        stGo(ST.npcPos('daon')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        var kt = ST.targetOf(ST.step());
+        stGo({ x: kt.x + 20, y: kt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.length === 4;
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 4;
+        stGo(ST.npcPos('daon')); r.t4 = stTalkAll(ST) && C.save.story.step === 5;
+        /* 기중기 — 곁에 서기만 해서는 안 되고(키보드) 들보 위에 서야 */
+        stGo(ST.targetOf(ST.step())); ST.check();
+        var notYet = C.save.story.step === 5;
+        LF._resetForTest();
+        var y = ES.yard(), u = y.sea, fr = esFrontOf(ES, 'legA', ES.LEG_HALF + 0.8);
+        stGo(fr);
+        for (i = 0; i < 40 && !LF.perched(); i++) { var pp = C.save.player.pos; LF.moveMul(pp.x, pp.y, u.x, u.y, 0.25); }
+        ST.check();
+        r.climb = notYet && LF.perched() && C.save.story.step === 6;
+        LF._resetForTest();
+        var bp = ST.npcPos('bandi'), bS = ES.spot('bandi');
+        r.bandi = Math.abs(bp.x - bS.x) < 1e-6 && Math.abs(bp.y - bS.y) < 1e-6;
+        stGo(bp); r.t6 = stTalkAll(ST) && C.save.story.step === 7;
+        var c = ST.targetOf(ST.step());
+        stGo({ x: c.x, y: c.y + 12 }); ST.stepDefend(0.1);
+        var w0 = S.camps[ST.waveKey(0)];
+        r.wave0 = !!w0 && w0.uids.every(function (u2) { var q = S.foes[u2]; return ST.landAt(q.x, q.y); });
+        var sizes = [];
+        for (i = 0; i < 3; i++) {
+          if (i) { ST.defState().t = ST.DEFEND_WAVE_SEC; ST.stepDefend(0.01); }
+          sizes.push(S.camps[ST.waveKey(i)] ? S.camps[ST.waveKey(i)].uids.length : 0);
+          stKillCamp(S, ST.waveKey(i)); FC.tick(0.05);
+        }
+        ST.stepDefend(0.01);
+        r.defend = sizes.join() === '3,4,5' && C.save.story.step === 8;
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('daon'));
+        r.end = stTalkAll(ST) && C.save.story.ch === 13 && ST.done() && m.knot === k0 + 6 && C.save.player.gold === gold0 + 3750;
+        r.frag = !ES.fragmentThere();
+        /* GPS 판 — 기중기 곁 12m 에 닿으면 */
+        C.save.story = { ch: 12, step: 5 }; DG.world = Object.create(W, { mode: { value: 'geo' } });
+        var ct = ES.spot('crane');
+        stGo({ x: ct.x + 20, y: ct.y }); ST.check(); var gFar = C.save.story.step === 5;
+        stGo({ x: ct.x + 8, y: ct.y }); ST.check();
+        r.gps = gFar && C.save.story.step === 6;
+      } finally { DG.world = W; LF._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '아홉 단계 · 반디 → 조선소 → 다온 → 무리 4 → 다온 → 들보 위(곁 ✕) → 반디 → 용접대 3·4·5 → 다온 · 🪢+6 🪙+3750 · GPS 12m' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

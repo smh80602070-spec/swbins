@@ -43,7 +43,8 @@
   function FOLLOW_NEAR() { return gps() ? 25 : 12; } // 이 안이면 따라가는 인물이 걷는다
   function FOLLOW_LOST() { return gps() ? 60 : 30; } // 이보다 멀면 추적 글 "너무 멀다"
   function REVEAL_CPS() { return K('reveal', 30); }  // 초당 글자 — 0 이면 한 번에
-  function CLIMB_R() { return gps() ? 40 : 20; }     // ⑲-14 봉우리 오르기 — 정상 둘레(이 판은 땅 좌표가 둘이라 정상 곁 = 꼭대기)
+  function CLIMB_R() { return gps() ? 40 : 20; }
+  var POLE_GPS_R = 12;                               // ⑲-34 GPS 판 기중기 단계 — 들보 밑 이만큼 안     // ⑲-14 봉우리 오르기 — 정상 둘레(이 판은 땅 좌표가 둘이라 정상 곁 = 꼭대기)
   var STEP_EXP = 10, KILL_NEAR = 150, IDLE_R = 12, IDLE_GAP = 45000, FOLLOW_SPEED = 2.6, GATHER_R = 900, POT_R = 6000;
   /* ⑲-14 석등 차례 — 제단 둘레 SEAL_R m 에 셋, 놓인 자리는 북쪽부터 시계 방향 SEAL_LAYOUT(비문 차례와 다르다) */
   var SEAL_R = 6, SEAL_LAYOUT = ['moon', 'star', 'sun'], SEAL_ORDER = ['sun', 'moon', 'star'];
@@ -55,7 +56,9 @@
     isle: { isle: true }, dock: { zone: 'galdae', off: [-12, -17] }, sky: { sky: true },
     /* ⑲-28 서리봉 고원 — frost.js 가운데(탑)·명소. 고원이 꺼져 있으면 자리 없음 */
     fr_center: { frost: 'center' }, fr_stele: { frost: 'stele' }, fr_obs: { frost: 'obs' }, fr_ship: { frost: 'ship' }, fr_fort: { frost: 'fort' },
-    fr_lake: { frost: 'lake' }, fr_cave: { frost: 'cave' } };
+    fr_lake: { frost: 'lake' }, fr_cave: { frost: 'cave' },
+    /* ⑲-34 3부 시대 명소(era-sites.js) — 갈대 나루 물가 녹슨 조선소. 명소가 꺼져 있으면 자리 없음 */
+    yard: { era: 'yard' }, yard_daon: { era: 'daon' }, yard_fight: { era: 'fight' }, yard_weld: { era: 'weld' }, yard_bandi: { era: 'bandi' }, crane: { era: 'crane' } };
   /* ⑲-28 하람이 서는 자리 — 관측소 곁(늘)·비행선 곁. 산성 안은 남쪽 문 안쪽(담 반 변 13m) */
   var HARAM_OBS = [-6, 10], HARAM_SHIP = [-6, 12], HARAM_FORT = [0, 4];
   /* ⑲-29 11장 자리(산성·호수 가운데에서) — 문루 = 남쪽 문(담 13m) · 바우는 문 안쪽 · 봉화 제단은 문 밖 20m ·
@@ -108,14 +111,17 @@
       at: [{ ch: 9, from: 6, to: 6, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 9, from: 7, to: 8, spot: 'fr_fort', off: HARAM_FORT },
         { ch: 10, from: 8, to: 8, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 11, from: 6, to: 8, spot: 'fr_ship', off: HARAM_SHIP }] },
     bandi:    { id: 'story_bandi',    name: '조종 기계 반디', short: '반디', zone: 'snowfort', spot: 'fr_ship', off: [0, 12], color: '#8cd9f2', pet: 'drone',
-      idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }] },
+      idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }, { ch: 12, from: 6, to: 8, spot: 'yard_bandi' }] },
+    /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
+    daon:     { id: 'story_daon',     name: '조선공 다온', short: '다온', zone: 'galdae', spot: 'yard_daon', off: [0, 0], color: '#335ea0',
+      idle: '이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.' },
     /* ⑲-29 산성지기 바우(과거의 넋) — 11장 셋째~여덟째 단계에만. 석등·파수·불씨 동안은 호숫가 */
     bawoo:    { id: 'story_bawoo',    name: '산성지기 바우', short: '바우', zone: 'snowfort', spot: 'fr_fort', off: BAWOO_GATE, color: '#7a3329',
       idle: '……불씨는 제가 갈 곳을 안다.',
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -551,6 +557,44 @@
             ['하람', '결정했어요. 관측소 기록은 기계한테 맡기고, 나도 같이 갈래요. 날씨도 시간도, 재야 아는 거니까.', 'joy'],
             ['?', ['같이 가요!', '위험할 텐데요?']],
             ['하람', '신호탄 활이면 여우쯤은 문제없어요. 잘 부탁해요!', 'fun']] }
+      ] },
+    /* ⑲-34 이야기 3부 첫 장 — 무대는 갈대 나루 물가 녹슨 조선소(era-sites.js). 비행선 반디 → 조선소 → 다온 → 시간 틈 무리 →
+       다온 → 기중기 다리 타고 들보 위로(landform 기둥 타기, GPS 판은 기중기 곁) → 반디 → 용접대 지키기(바다 쪽 빼고 뭍 다섯 방향) → 다온 */
+    { id: 'ch13', name: '제13장 · 녹슨 조선소의 날개', ar: 32,
+      reward: { knot: 6, gold: 3750, guide: 4, secret: 5, party: 1150 },
+      steps: [
+        { type: 'talk', npc: 'bandi', text: '추락한 비행선의 반디와 이야기하기',
+          lines: [['반디', '삐— 날개 조각 신호 하나 수신. 방향 남쪽, 바다 냄새. 시대 표지는… 지금과 가깝습니다.', 'surprised'],
+            ['?', ['바다라면 갈대 나루?', '지금과 가깝다니?']],
+            ['반디', '갈대 나루 물가, 문 닫은 조선소 좌표입니다. 조각이 쇠붙이 사이에 끼어 있을 확률 칠십 퍼센트.'],
+            ['반디', '시간 틈 짐승들도 신호를 맡았을 겁니다. 서둘러 주십시오.']] },
+        { type: 'go', spot: 'yard', text: '갈대 나루 물가의 녹슨 조선소로' },
+        { type: 'talk', npc: 'daon', text: '조선소 창고 앞의 다온과 이야기하기',
+          lines: [['다온', '누구세요? 여긴 문 닫은 지 오래인데… 설마 밤마다 쇳소리 내는 게 당신들이에요?', 'surprised'],
+            ['?', ['하늘에서 떨어진 조각을 찾고 있어요.', '쇳소리요?']],
+            ['다온', '사흘 전 밤에 번쩍하더니 기중기 꼭대기에 뭔가 박혔어요. 그 뒤로 이상한 짐승들이 조선소를 뒤져요.', 'sorrow'],
+            ['다온', '저기 — 또 왔네요!', 'angry']] },
+        { type: 'kill', spot: 'yard_fight', kinds: ['toad', 'raptor', 'hawk', 'toad'], text: '조선소를 뒤지는 시간 틈 무리 물리치기' },
+        { type: 'talk', npc: 'daon', text: '다온과 이야기하기',
+          lines: [['다온', '와… 고마워요. 저 짐승들, 기중기 꼭대기만 올려다보더라고요.', 'joy'],
+            ['다온', '사다리는 녹슬어 다 떨어졌어요. 다리를 타고 오를 수 있으면 모를까…'],
+            ['?', ['타고 올라가 볼게요.', '높네요…']],
+            ['다온', '노란 다리 바깥쪽에 디딤이 남아 있어요. 기력 아껴서, 조심해요!']] },
+        { type: 'climb', spot: 'crane', pole: true, text: '녹슨 기중기 다리를 타고 들보 위로 올라 날개 조각 꺼내기' },
+        { type: 'talk', npc: 'bandi', text: '날아온 반디에게 조각 보여 주기',
+          lines: [['반디', '삐— 날개 조각 하나 확인. 셋 가운데 하나입니다.', 'joy'],
+            ['다온', '잠깐, 그 조각 끝이 휘었어요. 그대로 끼우면 별배 날개에서 떨어져 나갈걸요.', 'surprised'],
+            ['다온', '이 조선소 용접대, 아직 살아 있어요. 제가 이음매를 펴 붙일게요. 그동안만 막아 줘요.'],
+            ['?', ['맡겨 줘요.', '용접 할 줄 알아요?']],
+            ['다온', '여기서 배만 이십 년 붙였거든요. 불꽃 튀면 짐승들이 또 몰려올 거예요!', 'fun']] },
+        { type: 'defend', spot: 'yard_weld', name: '용접대', who: '시간 틈 짐승들이', dirs: 'land',
+          waves: [['toad', 'raptor', 'hawk'], ['toad', 'toad', 'imp', 'raptor'], ['rockbear', 'toad', 'raptor', 'hawk', 'imp']],
+          text: '다온이 조각을 붙이는 동안 용접대 지키기' },
+        { type: 'talk', npc: 'daon', text: '다온과 이야기하기',
+          lines: [['다온', '다 됐어요! 이음매 반듯하게 폈어요. 십 년 만에 제대로 된 일 한 기분이네요.', 'joy'],
+            ['반디', '삐— 조각 상태 양호. 남은 둘은 더 먼 시대 신호입니다. 하나는 앞, 하나는 뒤.', 'surprised'],
+            ['?', ['앞 시대와 뒤 시대…', '다온, 고마워요.']],
+            ['다온', '별배가 날면 꼭 보여 줘요. 배 붙이는 사람은 뜨는 걸 봐야 끝이거든요.', 'fun']] }
       ] }
   ];
 
@@ -658,7 +702,8 @@
   /** 이름 붙은 자리 + off */
   function spotPos(name, off) {
     var SKI = global.DG.skyIsle;
-    var sp = SPOTS[name], b = !sp ? null : (sp.frost ? frostSpot(sp.frost) : (sp.peak ? peakSpot() : (sp.cape ? capeSpot() : (sp.isle ? isleSpot() :
+    var ES = global.DG.eraSites;
+    var sp = SPOTS[name], b = !sp ? null : sp.era ? (ES ? ES.spot(sp.era) : null) : (sp.frost ? frostSpot(sp.frost) : (sp.peak ? peakSpot() : (sp.cape ? capeSpot() : (sp.isle ? isleSpot() :
       (sp.sky ? (SKI ? SKI.spot() : null) : at(sp.zone, sp.off))))));
     return b ? { x: b.x + (off ? off[0] : 0), y: b.y + (off ? off[1] : 0) } : null;
   }
@@ -1097,7 +1142,8 @@
   /** 무리가 나오는 제단 기준 자리(dx, dy) — 단계 dirs(도, 북 0 시계 방향, ⑲-29)가 있으면 그 방향들만, 없으면 둘레 열두 자리 */
   function defendSlots(st) {
     if (!st.dirs) { return ringAt(0, 0, DEFEND_RING, DEFEND_SLOTS); }
-    return st.dirs.map(function (g) { var a = g * Math.PI / 180; return { x: Math.sin(a) * DEFEND_RING, y: -Math.cos(a) * DEFEND_RING }; });
+    var ESd = global.DG.eraSites, dirs = st.dirs === 'land' ? (ESd ? ESd.landDirs() : [90, 135, 180, 225, 270]) : st.dirs;   // ⑲-34 바다 쪽 빼고
+    return dirs.map(function (g) { var a = g * Math.PI / 180; return { x: Math.sin(a) * DEFEND_RING, y: -Math.cos(a) * DEFEND_RING }; });
   }
   function altarHpMax(c) { var F = FC(); return Math.round(DEFEND_HITS * (F && F.foeAtk ? F.foeAtk('boar', F.tierAt(c.x, c.y)) : 80)); }
   /** 물결 n — 둘레 열두 자리 중 4n 째부터, 처음부터 제단으로 곧장(siege) */
@@ -1286,6 +1332,12 @@
       t = targetOf(st);
       var FB = global.DG.fieldBoss;
       if (t && FB && FB.bloomAt && FB.bloomAt(t.rk) !== null) { advance(); return; }   // 이미 쓰러져 꽃을 기다린다
+    } else if (st && st.type === 'climb' && st.pole) {
+      /* ⑲-34 기중기 — 키보드 판은 들보 위에 서야(landform 기둥 타기), GPS 판은 기중기 곁에 닿으면 */
+      var LFp = global.DG.landform;
+      t = targetOf(st);
+      if (!gps() && LFp && LFp.perched && LFp.perched()) { toast('✨ 들보 위 — 박혀 있던 날개 조각을 빼냈다'); advance(); return; }
+      if (gps() && t && Math.hypot(p.x - t.x, p.y - t.y) <= POLE_GPS_R) { toast('✨ 기중기 밑 — 다온이 걸어 둔 줄로 날개 조각을 끌어내렸다'); advance(); return; }
     } else if (st && st.type === 'climb') {
       t = targetOf(st);
       if (t && Math.hypot(p.x - t.x, p.y - t.y) <= t.r) { toast('⛰️ 봉우리 꼭대기에 올랐다'); advance(); return; }
@@ -1716,7 +1768,7 @@
   global.DG = global.DG || {};
   global.DG.story = {
     NPCS: NPCS, CHAPTERS: CHAPTERS, MEMBERS: MEMBERS, join: join, catchUp: catchUp, hasMember: hasMember, STEP_EXP: STEP_EXP, WANDER_PATH: WANDER_PATH, FOLLOW_SPEED: FOLLOW_SPEED,
-    SEAL_R: SEAL_R, SEAL_LAYOUT: SEAL_LAYOUT, SEAL_ORDER: SEAL_ORDER, SEAL_MARKS: SEAL_MARKS, SPOTS: SPOTS, CLIMB_R: CLIMB_R,
+    POLE_GPS_R: POLE_GPS_R, SEAL_R: SEAL_R, SEAL_LAYOUT: SEAL_LAYOUT, SEAL_ORDER: SEAL_ORDER, SEAL_MARKS: SEAL_MARKS, SPOTS: SPOTS, CLIMB_R: CLIMB_R,
     DUEL_P2_AT: DUEL_P2_AT, DUEL_P2_SHIELD: DUEL_P2_SHIELD, peakSpot: peakSpot, spotPos: spotPos, placeOf: placeOf,
     DEFEND_RING: DEFEND_RING, DEFEND_WAVE_SEC: DEFEND_WAVE_SEC, DEFEND_REST: DEFEND_REST, DEFEND_HITS: DEFEND_HITS, DEFEND_WAVES: DEFEND_WAVES, DEFEND_START: DEFEND_START,
     CAPE_CLEAR: CAPE_CLEAR, capeSpot: capeSpot, landAt: landAt, ringAt: ringAt, stepDefend: stepDefend, defState: function () { return def && def.key === keyOf() ? def : null; },

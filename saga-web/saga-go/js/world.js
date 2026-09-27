@@ -309,7 +309,7 @@
     var LFm = global.DG.landform;
     if (LFm) { step *= LFm.moveMul(pos.x, pos.y, ux, uy, dt); }
     var nx = pos.x + ux * step, ny = pos.y + uy * step;
-    var rects = solidRectsNear(pos.x, pos.y);
+    var rects = LFm && LFm.onPole && LFm.onPole() ? [] : solidRectsNear(pos.x, pos.y);   // ⑲-34 들보 위는 벽 위다
     var moved = 0;
     if (!hitsHouse(nx, ny, rects)) {
       pos.x = nx; pos.y = ny; moved = step;
