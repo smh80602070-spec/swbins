@@ -164,6 +164,21 @@ const KINDS := {
 		"phase_text": "호박 등딱지 거북이 멈춘 시간을 등딱지에 두르고 바위곰과 도깨비를 부른다 — 초로 방패를 깨라",
 		"rotation": ["slam", "tide", "bite", "halo", "slam", "tide"], "summon": ["rock_bear", "fire_imp"],
 		"shape": "turtle", "height": 5.0, "colors": [Color(0.95, 0.62, 0.2), Color(0.42, 0.38, 0.34), Color(1.0, 0.85, 0.35)]},
+	## 106장 55-4 38장 이야기 보스 둘(세갈래 고을 길목) — 11부 끝·2차 결말.
+	## "처음의 별까마귀": 틈을 처음 찢은 그 순간에서 깨어난 그날의 별까마귀(20장 틈 삼킨 별까마귀의 처음 모습). 코드 몸 bird 4.4m(밤빛 깃·보랏빛 날개 끝·번개빛 눈).
+	## 패턴은 있는 틀: 틈새 질주·고리·회오리·내려찍기·밀물 줄. 2단계 뇌 방패(불로 깬다 — 동료 벼리 몫).
+	"first_crow": {"name": "처음의 별까마귀", "hp": 12000.0, "atk": 57.0, "speed": 4.6, "aggro": 28.0,
+		"reach": 3.4, "tell": 0.8, "cd": 1.5, "exp": 0.0, "element": "thunder", "shield": 0.0, "phase_shield": 1180.0,
+		"phase_text": "처음의 별까마귀가 찢긴 하늘의 번개를 두르고 살쾡이와 매를 부른다 — 불로 방패를 깨라",
+		"rotation": ["rift", "halo", "storm", "slam", "rift", "tide", "halo"], "summon": ["thunder_cat", "wind_hawk"],
+		"shape": "bird", "height": 4.4, "colors": [Color(0.14, 0.13, 0.22), Color(0.62, 0.45, 1.0), Color(1.0, 0.92, 0.4)]},
+	## "갈무리 — 참몸": 금고 관리 인공지능 갈무리가 격자 말뚝을 몸에 모아 두른 보관 거신. 코드 몸 goblin 5.2m(합금·호박빛·빛 눈).
+	## 패턴은 있는 틀: 내려찍기·바위 줄(tide)·고리·회오리. 2단계 암 방패(초로 깬다 — 동료 해미 몫).
+	"garmuri_true": {"name": "갈무리 — 참몸", "hp": 12400.0, "atk": 58.0, "speed": 3.6, "aggro": 28.0,
+		"reach": 3.8, "tell": 0.9, "cd": 1.6, "exp": 0.0, "element": "rock", "shield": 0.0, "phase_shield": 1200.0,
+		"phase_text": "갈무리가 격자 말뚝을 몸에 두르고 바위곰과 매를 부른다 — 초로 방패를 깨라",
+		"rotation": ["slam", "tide", "halo", "storm", "slam", "tide", "halo"], "summon": ["rock_bear", "wind_hawk"],
+		"shape": "goblin", "height": 5.2, "colors": [Color(0.84, 0.88, 0.93), Color(1.0, 0.68, 0.22), Color(0.45, 0.85, 1.0)]},
 	## 106장 54-4 35장 이야기 보스 "금고 파수 드론 여왕"(갈무리 벌 금고 앞 광장) — 갈무리가 핵을 버리며 남긴 금고 파수.
 	## 코드 몸 bird 4.6m(합금 몸·푸른 빛 날개 끝·씨앗빛 눈). 패턴은 있는 틀: 틈새 질주·회오리·고리·내려찍기·밀물 줄. 2단계 풍 방패(암으로 깬다).
 	"vault_queen": {"name": "금고 파수 드론 여왕", "hp": 11800.0, "atk": 56.0, "speed": 4.6, "aggro": 28.0,

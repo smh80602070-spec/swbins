@@ -332,13 +332,24 @@ func _physics_process(_delta: float) -> void:
 				_check("ch35_climb", ok, "base_st=%d st=%d y=%.2f/%.2f garmuri=%s" % [_v, _sq.call("st"), _p.global_position.y, Vault.pillar_top().y, _sq.call("npc_visible", "garmuri")])
 				_next()
 		21: # [21] 갈무리(기둥 윗면에서 말이 닿음) → 핵이 꺼지고 갈무리는 사라짐
+			if _frame == 2: # 등급·업적 알림 창(ui_modal)이 떠 있으면 interact 가 안 먹는다 — 먼저 닫는다
+				_dismiss_prompts()
 			if _frame == 4:
+				_v = 1
+				_sq.call("interact")
+				_drain()
+			if _frame == 30 and int(_sq.call("st")) == 4: # 그래도 안 먹었으면 — 창을 한 번 더 닫고 기둥 윗면 갈무리 곁에서 다시
+				_v = 2
+				_pressed.clear()
+				_dismiss_prompts()
+				_put(Vault.pillar_top() + Vector3(0.6, 0.3, 0.6))
+			if _frame == 36 and int(_v) == 2:
 				_sq.call("interact")
 				_drain()
 			if _frame == 90:
 				var ok: bool = int(_sq.call("st")) == 5 and not bool(_vr.call("core_lit")) and not bool(_sq.call("npc_visible", "garmuri")) \
 					and _flat(_target(), _cell("vault", Vector2(4.0, 2.45))) < 12.0 # 목표 = 서 있는 보스 자리(돌아다님)
-				_check("ch35_garmuri", ok, "st=%d core=%s garmuri=%s target=%s want=%s" % [_sq.call("st"), _vr.call("core_lit"), _sq.call("npc_visible", "garmuri"), _target(), _cell("vault", Vector2(4.0, 2.45))])
+				_check("ch35_garmuri", ok, "tries=%d st=%d core=%s garmuri=%s target=%s want=%s" % [_v, _sq.call("st"), _vr.call("core_lit"), _sq.call("npc_visible", "garmuri"), _target(), _cell("vault", Vector2(4.0, 2.45))])
 				_next()
 		22: # [22] 금고 파수 드론 여왕 — 광장, 밀물 줄 예고 → 쓰러뜨리면 해미 진열장이 깨짐
 			if _frame == 1:

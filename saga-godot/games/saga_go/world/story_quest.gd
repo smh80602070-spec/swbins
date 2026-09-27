@@ -429,6 +429,8 @@ func _place_npcs() -> void:
 		for w in [_window_now(info.get("appear")), _window_now(Story.STATIONS.get(id))]:
 			if (w as Dictionary).has("cell"):
 				p = _spot_pos(w)
+			elif (w as Dictionary).has("lift"): # 칸 없이 높이만 — 제자리(집 칸) 위로 띄운다(35장 갈무리 = 기록 기둥 윗면 위)
+				p = _cell_pos(String(info.region), info.cell, false, float(w.lift))
 		root.global_position = p
 		_npc_pos[id] = p
 

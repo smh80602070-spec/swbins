@@ -14,6 +14,10 @@ extends Node
 ## [9] 벼리 → 말뚝(벼리는 길목으로) [10] 역참길 말뚝 — 먼 원소는 안 됨 → 꺼짐·나래 보임 [11] 나래 → 기관차(나래는 기관차 곁)
 ## [12] 기관차 지키기(물결 셋) [13] 선로 말뚝 [14] 종루 — 발치에선 안 넘어가고 윗면에서 넘어감 [15] 종루 말뚝 → 셋 다 꺼짐·별까마귀는 그대로
 ## [16] 벼리(길목) → 37장 끝·보상.
+## 38장 "처음의 순간"(55-4, 11부 끝·2차 결말): [17] 표·자리(단계 일곱 talk·duel·talk·duel·talk·go·talk · 보스 = CROW_WAKE_STEP·MOMENT_FREE_STEP 앞 ·
+##   까마귀 뇌·불이 방패를 깸 · 참몸 암·초가 방패를 깸 · 동료 벼리 화·양손검·고유 · 모형·알갱이 그대로·장막 닫힘) [18] 벼리 → 모형이 사라지고 보스가 섬
+## [19] 처음의 별까마귀 [20] 갈무리(길목 위) → 참몸 [21] 갈무리 참몸 [22] 해미(길목) — 순간이 풀림(알갱이·틈 사라짐·장막 걷힘·진열장 깨짐) → 고원 고개
+## [23] 고개 → 촌장 [24] 촌장 → 38장 끝·동료 벼리.
 ## 이야기 상태·부대 경험·가방·순간이동 지점은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
@@ -25,6 +29,10 @@ const Waypoints := preload("res://games/saga_go/world/waypoints.gd")
 
 const CH36 := 35 # 36장(0부터)
 const CH37 := 36
+const CH38 := 37
+const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
+const Elements := preload("res://games/saga_go/combat/elements.gd")
+const Kits := preload("res://games/saga_go/data/kits.gd")
 const ARRIVE := Vector2(4.0, 7.15)
 const FORGE_SPOT := Vector2(2.45, 5.45)
 
@@ -263,8 +271,111 @@ func _physics_process(_delta: float) -> void:
 				and _flat(_sq.call("npc_pos", "byeori"), _cell("fork", Vector2(4.35, 3.8))) < 0.5 and bool(_sq.call("npc_visible", "narae"))
 			_check("chapter37", ok, "ch=%d mora +%d byeori=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), _sq.call("npc_pos", "byeori")])
 			_next()
-		17:
+		17: # [17] 38장 표·자리
+			if _frame < 80:
+				return
+			var c := Story.chapter(CH38)
+			var steps: Array = c.steps
+			var bad: Array = []
+			if String(c.get("id", "")) != "ch38" or int(c.ar) <= int(Story.chapter(CH37).ar) or int(_sq.call("ch")) != CH38 or bool(_sq.call("locked")) \
+					or String(c.get("join", "")) != "story_byeori":
+				bad.append("chapter ch=%d locked=%s" % [_sq.call("ch"), _sq.call("locked")])
+			var types := steps.map(func(sd: Dictionary) -> String: return String(sd.type))
+			if types != ["talk", "duel", "talk", "duel", "talk", "go", "talk"]:
+				bad.append("types %s" % [types])
+			var d1: Dictionary = steps[Fork.CROW_WAKE_STEP]
+			var d2: Dictionary = steps[Fork.MOMENT_FREE_STEP - 1]
+			if Fork.CH38 != CH38 or String(d1.get("kind", "")) != "first_crow" or String(d2.get("kind", "")) != "garmuri_true":
+				bad.append("duels %s %s" % [d1.get("kind"), d2.get("kind")])
+			if String(FieldEnemy.KINDS.first_crow.element) != "thunder" or Elements.shield_mul("thunder", "fire") <= 1.0 \
+					or String(FieldEnemy.KINDS.garmuri_true.element) != "rock" or Elements.shield_mul("rock", "grass") <= 1.0:
+				bad.append("boss elements")
+			for dd in [d1, d2]:
+				if not _hits(_cell("fork", dd.cell)).is_empty():
+					bad.append("duel spot %s" % [_hits(_cell("fork", dd.cell))])
+			var m: Dictionary = Story.MEMBERS.get("story_byeori", {})
+			if String(m.get("era", "")) != "과거" or Elements.element_of("story_byeori") != "fire" or String(m.get("weapon", "")) != "claymore" or not Kits.KITS.has("story_byeori"):
+				bad.append("member %s" % m)
+			if not _hits(_cell("fork", Vector2(3.7, 3.75))).is_empty():
+				bad.append("haemi spot")
+			if not bool(_fr.call("crow_visible")) or not bool(_fr.call("specks_visible")) or bool(_fr.call("is_gate_open")) or bool(_sq.call("npc_visible", "garmuri")):
+				bad.append("world at st0")
+			_check("ch38_table", bad.is_empty(), str(bad))
+			_next()
+		18: # [18] 벼리 → 처음의 별까마귀 — 멈춘 모형은 사라지고 보스가 선다
+			if _frame == 2:
+				_near_npc("byeori")
+			if _frame == 10:
+				_sq.call("interact")
+				_drain()
+			if _frame == 90:
+				var bosses := get_tree().get_nodes_in_group("go_story_boss")
+				var ok: bool = int(_sq.call("st")) == 1 and not bool(_fr.call("crow_visible")) and bosses.size() == 1 and String(bosses[0].get("kind")) == "first_crow"
+				_check("ch38_byeori", ok, "st=%d crow_model=%s bosses=%d" % [_sq.call("st"), _fr.call("crow_visible"), bosses.size()])
+				_next()
+		19: # [19] 처음의 별까마귀 → 갈무리가 길목 위에
+			_duel("first_crow", 2, "ch38_crow")
+		20: # [20] 갈무리 → 참몸
+			if _frame == 1:
+				_v = bool(_sq.call("npc_visible", "garmuri"))
+			_talk("garmuri", 3, "ch38_garmuri", "fork", Vector2(4.0, 3.5), 2, "garmuri_seen=%s" % _v, _v == true, 12.0)
+		21: # [21] 갈무리 참몸 → 순간이 풀림(알갱이·하늘 틈 사라짐·장막 걷힘·가장 깊은 진열장 깨짐)
+			_duel("garmuri_true", 4, "ch38_garmuri_true")
+		22: # [22] 해미(길목) → 고원 고개
+			if _frame == 1:
+				_v = _flat(_sq.call("npc_pos", "haemi"), _cell("fork", Vector2(3.7, 3.75))) < 0.5 and not bool(_fr.call("specks_visible")) \
+					and not bool(_fr.call("rift_visible")) and bool(_fr.call("is_gate_open")) and String(_vr.call("deep_case_state")) == "broken"
+			_talk("haemi", 5, "ch38_haemi", "frost", Vector2(4.0, 0.5), 0, "free=%s" % _v, _v == true)
+		23: # [23] 고원 고개 → 촌장
+			if _frame == 1:
+				_put(_target() + Vector3(0, 0, 2))
+			if _frame == 20:
+				var ok: bool = int(_sq.call("st")) == 6 and _flat(_target(), _sq.call("npc_pos", "elder")) < 0.5
+				_check("ch38_pass", ok, "st=%d target=%s" % [_sq.call("st"), _target()])
+				_next()
+		24: # [24] 촌장 → 38장 끝·동료 벼리 = 11부 끝
+			if _frame == 1:
+				_v = {"mora": PartyState.count("mora")}
+				_near_npc("elder")
+			if _frame == 10:
+				_sq.call("interact")
+				_drain()
+			if _frame < 16:
+				return
+			_dismiss_prompts()
+			if _frame < 60:
+				return
+			_sq.call("toggle_journal")
+			var jt: String = _sq.call("journal_text")
+			_sq.call("toggle_journal")
+			var ok: bool = int(_sq.call("ch")) == CH38 + 1 and jt.contains("✔ 제38장") and PartyState.count("mora") >= int(_v.mora) + 300000 \
+				and PartyState.members.has("story_byeori") and bool(_fr.call("is_gate_open"))
+			_check("chapter38", ok, "ch=%d mora +%d joined=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), PartyState.members.has("story_byeori")])
+			_next()
+		25:
 			_finish()
+
+## duel 한 번 — 보스 kind 가 세갈래 고을에 하나, 밀물 줄 예고가 나오고, 쓰러뜨리면 다음 단계 want_st.
+func _duel(kind: String, want_st: int, name: String) -> void:
+	if _frame == 1:
+		_put(_cell("fork", Vector2(4.0, 3.5)) + Vector3(0, 0, 8))
+	if _frame == 12:
+		var bosses := get_tree().get_nodes_in_group("go_story_boss")
+		var bo: Node3D = bosses[0] if not bosses.is_empty() else null
+		_v = {"n": bosses.size(), "marks": 0, "kind": "", "fork": false}
+		if bo:
+			_v.kind = String(bo.get("kind"))
+			_v.fork = TestMap.region_at(bo.global_position) == "fork"
+			bo.call("_clear_marks")
+			bo.call("_set_tell", false)
+			bo.call("begin_skill", "tide", _p)
+			_v.marks = (bo.get("_marks") as Array).size()
+			bo.call("_clear_marks")
+			bo.call("_die")
+	if _frame == 150:
+		var ok: bool = int(_v.n) == 1 and String(_v.kind) == kind and bool(_v.fork) and int(_v.marks) >= 1 and int(_sq.call("st")) == want_st
+		_check(name, ok, "n=%d kind=%s marks=%d st=%d" % [_v.n, _v.kind, _v.marks, _sq.call("st")])
+		_next()
 
 ## light bare 한 번 — 격자 말뚝 k 에 원소, 다음 단계 want_st 로 넘어가고 아직 켜진 말뚝이 lit 이면 통과.
 func _off(k: int, want_st: int, lit: Array, name: String, extra_ok := true) -> void:
@@ -294,14 +405,14 @@ func _finish() -> void:
 	print("STORY11_PROBE_DONE fails=%d" % _fails)
 	get_tree().quit()
 
-func _talk(npc: String, want_st: int, name: String, next_region: String, next_cell: Vector2, from := 0, extra := "", extra_ok := true) -> void:
+func _talk(npc: String, want_st: int, name: String, next_region: String, next_cell: Vector2, from := 0, extra := "", extra_ok := true, tol := 0.5) -> void:
 	if _frame == 2 + from * 2:
 		_near_npc(npc)
 	if _frame == 10 + from * 2:
 		_sq.call("interact")
 		_drain()
 	if _frame == 14 + from * 2:
-		var tgt_ok := _flat(_target(), TestMap.world_pos(next_cell.x, next_cell.y, next_region)) < 0.5
+		var tgt_ok := _flat(_target(), TestMap.world_pos(next_cell.x, next_cell.y, next_region)) < tol # duel 목표는 서 있는 보스 자리(돌아다님)
 		_check(name, int(_sq.call("st")) == want_st and tgt_ok and extra_ok, "st=%d target=%s %s" % [_sq.call("st"), _target(), extra])
 		_next()
 
