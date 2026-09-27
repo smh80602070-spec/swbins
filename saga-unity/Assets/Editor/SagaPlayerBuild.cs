@@ -78,18 +78,45 @@ namespace Saga.EditorTools
         public static void BuildWindowsPerf() =>
             Run(BuildTarget.StandaloneWindows64, BuildTargetGroup.Standalone, "Build/WindowsPerf/SAGA.exe", PerfDefines);
 
+        /// <summary>PLAN.md 110 ⑥d — Google Play 에 올릴 앱 번들. APK 470MB 는 기본 모듈 한도(200MB)를 넘으므로
+        /// "분할"(splitApplicationBinary)로 첫 씬 밖 데이터를 **설치 시점 에셋 팩**(Play Asset Delivery install-time)에 넣는다 —
+        /// 설치할 때 같이 받아져 런타임 코드가 필요 없다. 서명은 <see cref="SigningEnv"/> 환경 변수(없으면 디버그 서명 = 업로드 불가).
+        /// 끝나면 모듈별 크기를 재어 Play 한도를 넘으면 FAIL(<see cref="InspectAab"/>).</summary>
+        [MenuItem("Saga/Build/Android App Bundle (Google Play)")]
+        public static void BuildAndroidAab() =>
+            Run(BuildTarget.Android, BuildTargetGroup.Android, "Build/Android/SAGA.aab");
+
         private static readonly string[] PerfDefines = { "SAGA_PERF" };
 
         private static void Run(BuildTarget target, BuildTargetGroup group, string output, string[] defines = null)
         {
-            foreach (var s in Scenes)
-                if (!File.Exists(s)) { Finish(false, $"씬 없음 {s}", null, output); return; }
+            var r = Build(target, group, output, defines);
+            Finish(r.Ok, r.Why, r.Report, output, r.Extra);
+        }
+
+        public struct BuildResultInfo
+        {
+            public bool Ok;
+            public string Why;
+            public BuildReport Report;
+            public string Extra;   // 보고서에 덧붙일 줄(서명·앱 번들 모듈)
+            public AabInfo Aab;
+        }
+
+        /// <summary>빌드 본체 — 끝내지 않고 결과만 돌려준다(진단 `PlaytestSagaAab` 가 검사한다). `scenes`·`gate` 는 진단용:
+        /// 판 씬 없이 작게 지어 볼 때만 바꾼다(스토어 빌드는 늘 전체 씬 + 자산 검사).</summary>
+        public static BuildResultInfo Build(BuildTarget target, BuildTargetGroup group, string output, string[] defines = null,
+            string[] scenes = null, bool gate = true)
+        {
+            scenes ??= Scenes;
+            foreach (var s in scenes)
+                if (!File.Exists(s)) return new BuildResultInfo { Why = $"씬 없음 {s}" };
             SyncEditorBuildScenes();
             // 110 ④ — git 밖 사실 몸이 목록과 다르거나 씬이 폴백으로 지어졌으면 빌드하지 않는다.
-            if (!SagaAssetGate.Check(out var gate)) { Finish(false, "자산 검사 실패\n" + gate, null, output); return; }
+            if (gate && !SagaAssetGate.Check(out var gateSummary)) return new BuildResultInfo { Why = "자산 검사 실패\n" + gateSummary };
             // 110 ⑥ — 버전은 bundleVersion 한 곳, 안드로이드 버전 코드는 거기서 셈(스토어는 올릴 때마다 코드가 커야 한다).
             int code = VersionCode(PlayerSettings.bundleVersion);
-            if (code <= 0) { Finish(false, $"버전 형식이 a.b.c 가 아님: {PlayerSettings.bundleVersion}", null, output); return; }
+            if (code <= 0) return new BuildResultInfo { Why = $"버전 형식이 a.b.c 가 아님: {PlayerSettings.bundleVersion}" };
             if (PlayerSettings.Android.bundleVersionCode != code) PlayerSettings.Android.bundleVersionCode = code;
             ApplyIdentity();
             SagaAppIcon.Apply();
@@ -97,20 +124,142 @@ namespace Saga.EditorTools
             if (EditorUserBuildSettings.activeBuildTarget != target)
                 EditorUserBuildSettings.SwitchActiveBuildTarget(group, target);
 
-            Directory.CreateDirectory(Path.GetDirectoryName(output));
-            var opts = new BuildPlayerOptions
+            // 110 ⑥d — 앱 번들이면 분할·서명을 이 빌드 동안만 건다(끝나면 되돌려 ProjectSettings 에 키 경로가 남지 않게).
+            bool aab = target == BuildTarget.Android && output.EndsWith(".aab");
+            var extra = new StringBuilder();
+            bool oldSplit = PlayerSettings.Android.splitApplicationBinary;
+            if (target == BuildTarget.Android)
             {
-                scenes = Scenes,
-                locationPathName = output,
-                target = target,
-                targetGroup = group,
-                options = BuildOptions.DetailedBuildReport,
-                extraScriptingDefines = defines,
-            };
-            var report = BuildPipeline.BuildPlayer(opts);
+                EditorUserBuildSettings.buildAppBundle = aab;
+                if (oldSplit != aab) PlayerSettings.Android.splitApplicationBinary = aab;
+            }
+            bool signed = aab && ApplySigning(extra);
+            if (aab && !signed) extra.AppendLine("signing: 디버그 서명 — Google Play 에 올릴 수 없다(업로드 키는 환경 변수 " + string.Join("·", SigningEnv) + ")");
+
+            BuildReport report;
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(output));
+                var opts = new BuildPlayerOptions
+                {
+                    scenes = scenes,
+                    locationPathName = output,
+                    target = target,
+                    targetGroup = group,
+                    options = BuildOptions.DetailedBuildReport,
+                    extraScriptingDefines = defines,
+                };
+                report = BuildPipeline.BuildPlayer(opts);
+            }
+            finally
+            {
+                if (target == BuildTarget.Android)
+                {
+                    if (PlayerSettings.Android.splitApplicationBinary != oldSplit) PlayerSettings.Android.splitApplicationBinary = oldSplit;
+                    EditorUserBuildSettings.buildAppBundle = false;
+                }
+                if (signed) ClearSigning();
+            }
             bool ok = report.summary.result == BuildResult.Succeeded;
             CleanPerformanceTestArtifacts();
-            Finish(ok, report.summary.result.ToString(), report, output);
+            AabInfo info = null;
+            if (ok && aab)
+            {
+                info = InspectAab(output);
+                extra.Append(info.Text);
+                if (info.Problems.Count > 0) ok = false;
+            }
+            return new BuildResultInfo { Ok = ok, Why = report.summary.result.ToString(), Report = report, Extra = extra.ToString(), Aab = info };
+        }
+
+        // ── 110 ⑥d 서명 ──────────────────────────────────────────────────
+        // 업로드 키(keystore)는 저장소 밖에만 두고(.gitignore *.keystore·*.jks) 경로·암호는 환경 변수로만 넘긴다.
+        // PlayerSettings 의 키 경로는 ProjectSettings.asset 에 저장되므로 빌드가 끝나면 비운다(암호는 원래 저장 안 됨).
+        public static readonly string[] SigningEnv = { "SAGA_KEYSTORE", "SAGA_KEYSTORE_PASS", "SAGA_KEY_ALIAS", "SAGA_KEY_PASS" };
+
+        private static bool ApplySigning(StringBuilder extra)
+        {
+            string ks = System.Environment.GetEnvironmentVariable("SAGA_KEYSTORE");
+            string ksPass = System.Environment.GetEnvironmentVariable("SAGA_KEYSTORE_PASS");
+            string alias = System.Environment.GetEnvironmentVariable("SAGA_KEY_ALIAS");
+            string keyPass = System.Environment.GetEnvironmentVariable("SAGA_KEY_PASS");
+            if (string.IsNullOrEmpty(ks)) return false;
+            if (!File.Exists(ks) || string.IsNullOrEmpty(ksPass) || string.IsNullOrEmpty(alias))
+            {
+                extra.AppendLine("signing: SAGA_KEYSTORE 는 있는데 파일이 없거나 SAGA_KEYSTORE_PASS·SAGA_KEY_ALIAS 가 비었다");
+                return false;
+            }
+            PlayerSettings.Android.useCustomKeystore = true;
+            PlayerSettings.Android.keystoreName = Path.GetFullPath(ks);
+            PlayerSettings.Android.keystorePass = ksPass;
+            PlayerSettings.Android.keyaliasName = alias;
+            PlayerSettings.Android.keyaliasPass = string.IsNullOrEmpty(keyPass) ? ksPass : keyPass;
+            extra.AppendLine($"signing: 업로드 키 {Path.GetFileName(ks)} · alias {alias}");
+            return true;
+        }
+
+        private static void ClearSigning()
+        {
+            PlayerSettings.Android.useCustomKeystore = false;
+            PlayerSettings.Android.keystoreName = "";
+            PlayerSettings.Android.keystorePass = "";
+            PlayerSettings.Android.keyaliasName = "";
+            PlayerSettings.Android.keyaliasPass = "";
+        }
+
+        // ── 110 ⑥d 앱 번들 검사 ───────────────────────────────────────────
+        // Play 한도(압축 크기): 기본 모듈 200MB · 에셋 팩 하나 1.5GB · 설치 시점 전체 4GB.
+        public const long BaseLimit = 200L << 20, PackLimit = 1536L << 20, InstallTimeLimit = 4096L << 20;
+
+        public class AabInfo
+        {
+            public readonly System.Collections.Generic.Dictionary<string, long> Modules = new System.Collections.Generic.Dictionary<string, long>();
+            public readonly System.Collections.Generic.List<string> Problems = new System.Collections.Generic.List<string>();
+            public string SignerFile = "";   // META-INF/<ALIAS>.RSA 류
+            public string Text = "";
+        }
+
+        /// <summary>앱 번들(zip)을 열어 모듈(맨 앞 폴더)별 압축 크기를 더하고 Play 한도와 견준다. 에셋 팩은 manifest 로 가린다
+        /// (bundletool 이 쓰는 폴더 = 모듈 이름). 서명 파일 이름도 적는다.</summary>
+        public static AabInfo InspectAab(string path)
+        {
+            var info = new AabInfo();
+            var sb = new StringBuilder();
+            try
+            {
+                using var zip = new System.IO.Compression.ZipArchive(File.OpenRead(path), System.IO.Compression.ZipArchiveMode.Read);
+                foreach (var e in zip.Entries)
+                {
+                    int slash = e.FullName.IndexOf('/');
+                    if (slash <= 0) continue;
+                    string top = e.FullName.Substring(0, slash);
+                    if (top == "META-INF")
+                    {
+                        if (e.Name.EndsWith(".RSA") || e.Name.EndsWith(".EC") || e.Name.EndsWith(".DSA")) info.SignerFile = e.Name;
+                        continue;
+                    }
+                    if (top == "BUNDLE-METADATA") continue;
+                    info.Modules[top] = (info.Modules.TryGetValue(top, out long b) ? b : 0) + e.CompressedLength;
+                }
+            }
+            catch (System.Exception ex) { info.Problems.Add("앱 번들을 못 읽음: " + ex.Message); }
+
+            long install = 0;
+            sb.AppendLine($"app bundle: {new FileInfo(path).Length / (1024f * 1024f):F1} MB · 서명 {(info.SignerFile == "" ? "없음" : info.SignerFile)}");
+            foreach (var kv in info.Modules.OrderBy(k => k.Key == "base" ? 0 : 1).ThenBy(k => k.Key))
+            {
+                bool isBase = kv.Key == "base";
+                long limit = isBase ? BaseLimit : PackLimit;
+                install += kv.Value;
+                sb.AppendLine($"  module {kv.Key,-28} {kv.Value / (1024f * 1024f),8:F1} MB (한도 {limit >> 20} MB)");
+                if (kv.Value > limit) info.Problems.Add($"{kv.Key} {kv.Value >> 20}MB > {limit >> 20}MB");
+            }
+            if (!info.Modules.ContainsKey("base")) info.Problems.Add("base 모듈 없음");
+            if (info.Modules.Count < 2) info.Problems.Add("에셋 팩 없음 — 분할이 안 걸렸다");
+            if (install > InstallTimeLimit) info.Problems.Add($"설치 시점 전체 {install >> 20}MB > {InstallTimeLimit >> 20}MB");
+            foreach (var p in info.Problems) sb.AppendLine("  PROBLEM " + p);
+            info.Text = sb.ToString();
+            return info;
         }
 
         /// <summary>"a.b.c" → a·10000 + b·100 + c (0.1.0 → 100, 1.2.3 → 10203). b·c 는 99 까지, 형식이 틀리면 0.</summary>
@@ -132,10 +281,11 @@ namespace Saga.EditorTools
                 AssetDatabase.DeleteAsset("Assets/Resources");
         }
 
-        private static void Finish(bool ok, string why, BuildReport report, string output)
+        private static void Finish(bool ok, string why, BuildReport report, string output, string extra = null)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"result: {why}");
+            if (!string.IsNullOrEmpty(extra)) sb.Append(extra);
             if (report != null)
             {
                 var s = report.summary;

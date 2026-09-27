@@ -1,7 +1,7 @@
 # PROJECT_STATE — saga-unity (상태만, ≤15KB, 덮어쓴다)
 
 **규칙**(SAGA-DESIGN §9): 지금 상태만, 세션 끝에 덮어쓴다. 경위·이유는 `docs/HISTORY.md` 에 append.
-마지막 갱신: 2026-09-27 (110 ⑥c 영어 검수 목록 — ③ 폰 결과 대기).
+마지막 갱신: 2026-09-27 (110 ⑥d 앱 번들·제출 목록 — ③ 폰 결과 대기).
 
 ## 캐릭터 자산 — 이 PC 기준 (2026-09-19)
 
@@ -21,7 +21,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 
 ## 다음 작업 (우선순위, 상세는 PLAN 해당 장)
 
-0. **다음 = PLAN 110 ⑥d AAB+PAD** — ③b 폰 결과 대기(새 앱 id 라 새 APK 로). 영어 검수 `node tools/loc-review.mjs`(오류 0 이어야, 사람은 `docs/en_review.tsv` 검수 칸). 정체성 `SagaPlayerBuild.AppId`(io.github.smh8627jpg.saga)·Company(SAGA Games) · 아이콘 `tools/app-icon/make_icon.py`→`SagaAppIcon`. 크레딧 `SagaCredits`(출처 표)·`SagaCreditsCheck`(문지기 ⑤, 새 에셋은 표 한 줄부터)·오류 기록 `SagaCrashLog`·버전 = bundleVersion 한 곳. 글자 TMP(`SagaWorldText`·`TmpEffect`), HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`(첫 화면·패널·상태 38, `-uiHidden`)·`HangulWatch`, 재빌드 `SagaRebuildScenes`. 109 멈춤.
+0. **다음 = 110 사람 칸**(`docs/STORE_CHECKLIST.md` — 업로드 키·스크린숏·방침·IARC) + 묶음 PC 에서 `BuildAndroidAab` 실측 — ③b 폰 결과 대기(새 앱 id 라 새 APK 로). 앱 번들 진단 `PlaytestSagaAab`. 영어 검수 `node tools/loc-review.mjs`(오류 0 이어야, 사람은 `docs/en_review.tsv` 검수 칸). 정체성 `SagaPlayerBuild.AppId`(io.github.smh8627jpg.saga)·Company(SAGA Games) · 아이콘 `tools/app-icon/make_icon.py`→`SagaAppIcon`. 크레딧 `SagaCredits`·`SagaCreditsCheck`(새 에셋은 표 한 줄부터)·오류 기록 `SagaCrashLog`·버전 = bundleVersion 한 곳. HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`·`HangulWatch`, 재빌드 `SagaRebuildScenes`. 109 멈춤.
 0-1. **남은 것**: 사람 영어 검수(tsv 순위 1부터). GO 동료 몸 Maria.controller 리타깃·무기는 주인공 손에만.
 1. STORY 판수(15→20 약 11판·20→25 약 28판)가 무거우면 `JobPromoteLevel3/4`만.
 2. **101-2·104-1 잔여(보류)** — GO⑤·Kenney 폴백·헤어카드.
@@ -51,7 +51,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 
 | 검증 | 결과 |
 |---|---|
-| 재빌드·전체 | `PlaytestSagaCredits`·`PlaytestRealmSlice`·배치 점검 OK(⑥c, 묶음 없는 PC) · 흐름·판별 다섯 3연속 OK(⑤c-2c-2) · 영어(`-hangulWatch`)로도 OK — DUNGEON·STORY 는 남은 고레벨 세이브면 실패, 빼고 돈다 |
+| 재빌드·전체 | `PlaytestSagaAab`(⑥d)·`PlaytestSagaCredits`·`PlaytestRealmSlice`·배치 점검 OK(묶음 없는 PC) · 흐름·판별 다섯 3연속 OK(⑤c-2c-2) · 영어(`-hangulWatch`)로도 OK — DUNGEON·STORY 는 남은 고레벨 세이브면 실패, 빼고 돈다 |
 | `PlaytestStorySlice` | **3연속 OK(2026-09-25)** — Eras·Companions·Summon·BossIntro·옷 빛깔·상위 차수·전직·ButtonWiring·JobSkills·무예 세이브 왕복·옛 형식 |
 | `PlaytestDungeonHeadless` | **3연속 OK(2026-09-26, 지역 뒤)** — Regions·Trial·Secrets·EraDecor·Eras·Landmarks·BossIntro·Party·Explore·NpcModels·Temple(+컷)·LockOn·EnemyTelegraph. 같은 씬 `FloorProgression`·`OverworldMap` OK |
 | GO `PlaytestHeadless` | **3연속 OK(2026-09-25)** — Peaks·SkillShapes·HeroLooks·HeroDex·Heroes·Eras·Region*·Guardian·SlopesBiome·PartyBodies·ElementalFoe·Treasure·WorldMap·Traversal·FieldCombat |

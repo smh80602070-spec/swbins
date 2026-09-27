@@ -9639,3 +9639,14 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 새 머리 부품 `beret` → 틀 `beret`(한쪽 쏠림·처짐 돔) — 톱니 껍데기 베레모 대신.
 - 틀 `tabard`(닫힌 어깨 요크 + 가슴 아래 앞뒤 arc 판, mono 없이 허리에서 조여짐 + 허리띠) = Eve 자리 가죽 기사 상아빛 겉옷판. band 새 칸 `ease`(몸 볼록 둘레 기준). 땋은 머리가 요크를 뚫어 검게 염색한 `ponytail01`, 대기 `CF_Guard_Idle_Loop`.
 - 검사: 찰갑·도포 md5 같음 · verify fbx ≤ 0.67° · glb 0.0° · sha256 같음 · 키 1.722·1.695m(짝 1.70) · 비교 장면 CMP_RESULT OK(FBX 로컬 전용). 빈칸 0. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
+
+## 2026-09-27 상용화 — PLAN 110 ⑥d 앱 번들 + Play Asset Delivery · 제출 목록 ("사가유니티 이어해")
+
+- `SagaPlayerBuild`: 빌드 본체를 `Build()`(끝내지 않고 결과만 — 진단이 검사)로 떼고 `Run` 은 `Build`+`Finish`. 새 `BuildAndroidAab`(메뉴 Saga/Build/Android App Bundle) → `Build/Android/SAGA.aab`. 앱 번들일 때만 이 빌드 동안 `buildAppBundle`·`splitApplicationBinary` 를 켜고 finally 에서 되돌림 → 첫 씬+코드 = base, 나머지 = 설치 시점 팩 `UnityDataAssetPack`.
+- 서명: 환경 변수 `SAGA_KEYSTORE`·`SAGA_KEYSTORE_PASS`·`SAGA_KEY_ALIAS`·`SAGA_KEY_PASS`(비우면 저장소 암호) 가 있으면 그 빌드 동안만 custom keystore, 끝나면 경로·alias·암호를 비움. 없으면 보고서에 "디버그 서명 — Play 업로드 불가". `.gitignore` 에 `*.jks`·`*.apks`(`*.keystore` 는 루트가 이미 막음).
+- `InspectAab`: 앱 번들 zip 의 맨 앞 폴더 = 모듈별 압축 크기 합, META-INF 의 서명 파일 이름. base 200MB·팩 1.5GB·설치 시점 4GB 초과·팩 없음·base 없음이면 FAIL. 보고서 `SAGA_report.txt` 에 모듈 표.
+- 진단 `PlaytestSagaAab`(새): 타이틀+국지 두 씬·자산 검사 끔으로 작게(묶음 없는 이 PC 에서도). JDK keytool 로 Temp 에 임시 키를 만들어 환경 변수 길로 서명 → 검사(빌드 성공·base+팩·팩이 비지 않음·서명 SAGATEST.RSA·서명/분할/buildAppBundle 원복) → bundletool 1.17.2(Unity 안드로이드 모듈 동봉) validate·targetSdk·팩 매니페스트 install-time. 결과 OK: 앱 번들 59.0MB · base 36.8MB · UnityDataAssetPack 22.0MB · targetSdk 36 · minSdk 25. 첫 실행은 `GetValueOrDefault`(이 C# 판에 없음) 컴파일 오류로 한 번 고침. IL2CPP 빌드 약 12분.
+- 매니페스트 권한: VIBRATE · INTERNET(Unity 라이브러리) · FOREGROUND_SERVICE·FOREGROUND_SERVICE_DATA_SYNC(`com.google.android.play:asset-delivery:2.1.0` 이 추출 서비스용으로 붙임, 병합 보고서로 확인). 설치 시점 팩만 쓰니 실제론 안 돌지만, 빼는 건 폰 시험 없이 위험해 제출 목록에 "콘솔이 물으면 신고 / 막히면 제거(실기)"로.
+- 빌드 부산물(①때와 같음): ProjectSettings `preloadedAssets`·Android 배칭, URP 설정 셋 → git checkout. 서명을 비우면 `AndroidKeystoreName: '{inproject}: '` 로 직렬화된다(getter 는 "") — 이것도 같이 되돌림. 에디터 활성 대상은 Android 로 남음.
+- `docs/STORE_CHECKLIST.md`(새, 상태만 덮어씀): 빌드(앱 번들·업로드 키·Play 앱 서명·앱 id·버전·64비트·대상 API·권한·예상 크기) · 등록 정보(설명·아이콘 512·기능 그래픽·스크린숏 — 없음) · 정책 양식(개인정보처리방침 URL·데이터 보안·IARC·연령·비공개 테스트) · 업로드 키 만드는 keytool 한 줄. 게임 코드엔 네트워크·광고·분석 없음, Unity 서비스 설정도 전부 꺼짐 — 단 `submitAnalytics: 1`(Unity 하드웨어 통계)이 켜져 있어 "결정 필요"로.
+- 남음: 묶음 있는 PC 에서 전체 `BuildAndroidAab` 실측(base 는 코드+타이틀이라 ~40MB 예상) · 제출 목록 사람 칸 · 템플릿 잔재 패키지 빼기 후보.
