@@ -1771,7 +1771,7 @@
         c.emit('field:element', { el: e.el, x: e.x, y: e.y, r: e.r || 3, t: e.t });
       }
       if (e.t === 'move') { pos.x += e.dx; pos.y += e.dy; }
-      else if (e.t === 'weak') { floatNum(e.x, e.y, '급소!', null, 1.35, true); }
+      else if (e.t === 'weak') { floatNum(e.x, e.y, '급소!', null, 1.35, true); c.emit('field:weak', {}); }   // ⑲-25 업적이 센다
       else if (e.t === 'shoot') { sfx('hit'); }
       else if (e.t === 'arrow') { ring(e.x, e.y, e.el ? 1.2 : 0.6, e.el && EL[e.el] ? EL[e.el].color : '#e8e2d0', 0.3); }
       else if (e.t === 'hit') {
@@ -1787,6 +1787,7 @@
         floatNum(e.x, e.y, e.name + '!', RI.el, 1.5, true);
         ring(e.x, e.y, RI.r || 1.8, e.kind === 'overload' ? '#ffb347' : EL[RI.el].color, 0.45);
         if (global.DG.daily) { global.DG.daily.progress('react'); }   // ⑲-8 일일 의뢰(깨뜨림·번개싹 포함)
+        c.emit('field:react', { kind: e.kind });                       // ⑲-25 업적(반응·가짓수)
         if (e.kind === 'crystallize') { toast('🪨 굳힘 보호막 — 명단이 ' + (S.guard ? S.guard.hp : 0) + ' 만큼 막는다(15초)'); }
       } else if (e.t === 'dot') { floatNum(e.x, e.y, String(e.dmg), e.el || 'elec', 0.8); }
       else if (e.t === 'break') {
@@ -1880,6 +1881,7 @@
         if (global.DG.cooking) { var mt6 = global.DG.cooking.onKill(e.kind); if (mt6) { floatNum(e.x, e.y + 2.2, mt6, null, 0.85, false); } }   // ⑲-6 짐승 고기
         fieldSave().kills = (fieldSave().kills || 0) + 1;
         if (global.DG.daily) { global.DG.daily.progress('hunt'); }    // ⑲-8 일일 의뢰
+        c.emit('field:kill', e);                                       // ⑲-25 업적(원소 괴물·큰 적) — 숨은 터 onKill 은 제 캠프만 본다
         floatNum(e.x, e.y, '+' + gold + '금', null, 0.9, false);
       } else if (e.t === 'clear' && (e.kind === 'domain' || e.kind === 'story')) {
         c.emit('field:clear', e);                                      // ⑲-9 숨은 터 파도 — 보상은 보상 나무에서

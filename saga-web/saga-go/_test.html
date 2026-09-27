@@ -89,6 +89,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/artifact.js"></script>
 <script src="js/cooking.js"></script>
 <script src="js/fishing.js"></script>
+<script src="js/achieve.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -11659,6 +11660,114 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '게시판 곁 · 모자라면 ✕ · 금·쪽지·강화석·매듭 · 작살 → 울림 5 막힘 · 🎣 찾은 지역만' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-25 업적 (achieve.js, PLAN §5 ⑲-25) ── */
+    function acRig() {
+      var bak = JSON.stringify(C.save), A = DG.achieve;
+      A._resetForTest(); A.hook();
+      delete C.save.ach;
+      C.save.chests = {}; C.save.orbs = { got: {}, given: 0 }; C.save.regions = {}; C.save.missions = {};
+      C.save.fish = { bag: {}, log: {}, gone: {} }; C.save.story = { ch: 0, step: 0 }; C.save.wq = { steps: {}, done: [], track: null };
+      C.save.field = { camps: {}, kills: 0, clears: 0, guards: {}, guardPaid: {} }; C.save.player.level = 1;
+      return { A: A, undo: function () {
+        A._resetForTest();
+        var snap = JSON.parse(bak);
+        Object.keys(C.save).forEach(function (k) { delete C.save[k]; });
+        Object.keys(snap).forEach(function (k) { C.save[k] = snap[k]; });
+      } };
+    }
+    function acOf(A, id) { return A.status().filter(function (x) { return x.a.id === id; })[0]; }
+
+    t('업적 ⑲-25 — 표: 스물둘·단계 예순셋 · 갈래 다섯(갈래마다 셋 이상) · 단계가 오른다 · 어려운 셋(사명 셋째 지역·반응 열넷·아홉 장)에 인연 매듭 · 보상 세 단 · 단계 판정 순수', function () {
+      var A = DG.achieve, r = {}, n = 0, bad = [];
+      A.LIST.forEach(function (a) {
+        n += a.tiers.length;
+        for (var i = 1; i < a.tiers.length; i++) { if (a.tiers[i] <= a.tiers[i - 1]) { bad.push(a.id); } }
+        if (!A.CATS.some(function (c) { return c.key === a.cat; })) { bad.push(a.id + '갈래'); }
+      });
+      r.count = A.LIST.length === 22 && n === 63 && A.CATS.length === 5 && bad.length === 0 &&
+        A.CATS.every(function (c) { return A.LIST.filter(function (a) { return a.cat === c.key; }).length >= 3; });
+      var hard = A.LIST.filter(function (a) { return typeof a.hard === 'number'; });
+      r.hard = hard.map(function (a) { return a.id + a.tiers[a.hard]; }).sort().join() === 'chapter9,kinds14,mission3' &&
+        hard.every(function (a) { return A.rewardOf(a, a.hard).mats.knot === A.HARD_KNOT && !(A.rewardOf(a, 0).mats || {}).knot; });
+      var c = A.LIST[0];
+      r.reward = A.rewardOf(c, 0).gold === 300 && A.rewardOf(c, 1).gold === 600 && A.rewardOf(c, 1).mats.note === 2 && A.rewardOf(c, 2).mats.guide === 2 && A.rewardOf(c, 2).ore === 3;
+      r.tier = A.tierOf(c, 0) === 0 && A.tierOf(c, 5) === 1 && A.tierOf(c, 17) === 2 && A.tierOf(c, 999) === 3;
+      var s0 = { chests: { a: 1, b: 1 } };
+      r.pure = A.valueOf(c, s0, {}) === 2 && JSON.stringify(s0) === '{"chests":{"a":1,"b":1}}';
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? '22 · 63 · 다섯 갈래 · 매듭 셋 · 보상 세 단' : ('실패 ' + bad2.join(',') + ' ' + bad.join(','));
+    });
+
+    t('업적 ⑲-25 — 상태 셈: 상자·구슬·찾은 탑·탑 등급·사명 끝난 지역·들판 처치·물고기·가짓수·장·세계 임무·여정 등급을 세이브에서 읽는다', function () {
+      var rig = acRig(), A = rig.A, r = {};
+      try {
+        r.zero = A.status().every(function (x) { return x.tier === 0 || x.a.id === 'offer'; });
+        for (var i = 0; i < 10; i++) { C.save.chests['c' + i] = 1; }
+        for (i = 0; i < 5; i++) { C.save.orbs.got['o' + i] = 1; }
+        ['1_0', '0_1', '1_1'].forEach(function (k) { C.save.regions[k] = 1; });
+        C.save.missions['1_0'] = { clears: 2, paid: 3 }; C.save.field.guards['1_0'] = 1;
+        C.save.missions['0_1'] = { clears: 2, paid: 2 };
+        C.save.field.kills = 100;
+        C.save.fish.log = { crucian: 6, gizzard: 4, mandarin: 1 };
+        C.save.story.ch = 9; C.save.wq.done = ['wq_letters', 'wq_rift']; C.save.player.level = 10;
+        r.world = acOf(A, 'chest').tier === 2 && acOf(A, 'orb').tier === 1 && acOf(A, 'tower').tier === 1 && acOf(A, 'mission').v === 1 && acOf(A, 'mission').tier === 1;
+        r.fight = acOf(A, 'kill').tier === 2 && acOf(A, 'kill').v === 100;
+        r.life = acOf(A, 'fish').v === 11 && acOf(A, 'fish').tier === 2 && acOf(A, 'fishkinds').tier === 1;
+        r.story = acOf(A, 'chapter').tier === 3 && acOf(A, 'wq').tier === 2 && acOf(A, 'rank').tier === 2;
+        r.offer = acOf(A, 'offer').v === DG.treasure.level();
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '상자 2단 · 구슬 · 탑 · 사명 1 · 처치 100 · 물고기 11·셋 · 아홉 장 · 임무 둘 · 등급 10' : ('실패 ' + bad.join(','));
+    });
+
+    t('업적 ⑲-25 — 신호 셈: field:kill 원소 괴물·큰 적 · field:react 반응·가짓수·깨뜨림·회오리 · field:weak · domain:clear · cook:gather · cook:done(맛있는 = 품질 2) · 들판 처치·반응·급소가 신호를 낸다', function () {
+      var rig = acRig(), A = rig.A, r = {};
+      try {
+        C.emit('field:kill', { elite: true }); C.emit('field:kill', { boss: true, elite: false }); C.emit('field:kill', {});
+        ['vaporize', 'melt', 'overload', 'shatter'].forEach(function (k) { C.emit('field:react', { kind: k }); });
+        C.emit('field:react', { kind: 'swirl' }); C.emit('field:react', { kind: 'swirl' });
+        C.emit('field:weak', {}); C.emit('domain:clear', { id: 'x' });
+        C.emit('cook:gather', { item: 'mint' }); C.emit('cook:done', { recipe: 'honey_cake', q: 2 }); C.emit('cook:done', { recipe: 'honey_cake', q: 1 });
+        var st = C.save.ach.stats;
+        r.fight = st.elite === 1 && st.boss === 1 && acOf(A, 'elite').v === 1 && acOf(A, 'boss').tier === 1 && acOf(A, 'weak').tier === 1 && acOf(A, 'domain').tier === 1;
+        r.el = st.react === 6 && acOf(A, 'kinds').v === 5 && acOf(A, 'kinds').tier === 1 && acOf(A, 'shatter').tier === 1 && acOf(A, 'swirl').v === 2 && acOf(A, 'swirl').tier === 1;
+        r.life = acOf(A, 'gather').v === 1 && acOf(A, 'cook').v === 2 && acOf(A, 'tasty').v === 1 && acOf(A, 'cook').tier === 1 && acOf(A, 'tasty').tier === 1;
+        A.hook();
+        C.emit('field:weak', {});
+        r.once = C.save.ach.stats.weak === 2;
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '괴물·큰 적 · 반응 여섯·가짓수 다섯 · 급소 · 숨은 터 · 채집·요리·맛있는 · 두 번 걸어도 한 번' : ('실패 ' + bad.join(','));
+    });
+
+    t('업적 ⑲-25 — 알림·받기: 불러온 직후 첫 확인은 알림 없음 · 다음부터 새 단계만 · 받기는 단계마다 한 번(금·쪽지·교본·강화석) · 아홉 장 셋째 단계에 인연 매듭 · 모두 받기 · 받을 수 = 닿은 단계 − 받은 단계', function () {
+      var rig = acRig(), A = rig.A, TL = DG.talent, WP = DG.weapon, r = {};
+      try {
+        for (var i = 0; i < 5; i++) { C.save.chests['c' + i] = 1; }
+        A._resetForTest();
+        r.silent = A.check().length === 0;
+        C.save.chests.c5 = 1;
+        r.quiet = A.check().length === 0;
+        for (i = 6; i < 10; i++) { C.save.chests['c' + i] = 1; }
+        var nw = A.check();
+        r.notify = nw.length === 1 && nw[0].a.id === 'chest' && nw[0].tier === 2 && A.check().length === 0;
+        var g0 = C.save.player.gold || 0, n0 = TL.count('note');
+        r.claim = A.claimable() === 2 && A.claim('chest') !== '' && C.save.player.gold === g0 + 300 && A.claim('chest') !== '' &&
+          C.save.player.gold === g0 + 900 && TL.count('note') === n0 + 2 && A.claim('chest') === '' && A.claimable() === 0 && C.save.ach.got.chest === 2;
+        C.save.story.ch = 9;
+        var k0 = TL.count('knot'), gd0 = TL.count('guide'), o0 = WP.ore();
+        A.claim('chapter'); A.claim('chapter');
+        r.hardNo = TL.count('knot') === k0;
+        A.claim('chapter');
+        r.hard = TL.count('knot') === k0 + 1 && TL.count('guide') === gd0 + 2 && WP.ore() === o0 + 3 && acOf(A, 'chapter').claim === 0;
+        C.save.player.level = 20; C.save.wq.done = ['a', 'b', 'c'];
+        r.all = A.claimable() === 6 && A.claimAll() === 6 && A.claimable() === 0;
+        r.card = /업적 보기/.test(A.cardHtml()) && /data-ac-open/.test(A.cardHtml());
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '첫 확인 조용 · 새 단계만 · 받기 두 번 · 셋째 장에 매듭 · 모두 받기 6' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

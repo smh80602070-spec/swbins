@@ -1879,6 +1879,24 @@ body.fs-on #dock, body.fs-on #near { display: none !important; }
 #fs-board .ck-row { display: flex; gap: 8px; align-items: center; padding: 6px 0; border-top: 1px solid var(--glass-br); }
 #fs-board .ck-name { flex: 1; min-width: 0; }
 #fs-board .ck-name small { display: block; font-size: 11px; }
+/* ⑲-25 업적(achieve.js) — 요리 창 꼴 */
+#ac-sheet { display: none; position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, .45); align-items: flex-end; justify-content: center; }
+#ac-sheet.show { display: flex; }
+#ac-sheet .ck-card { width: min(560px, 100%); max-height: min(86vh, 720px); overflow-y: auto; box-sizing: border-box;
+  padding: 12px 14px calc(14px + var(--safe-b)); border-radius: 16px 16px 0 0; background: var(--glass); border: 1px solid var(--glass-br);
+  color: var(--ink); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+#ac-sheet .ck-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+#ac-sheet .ck-head span { flex: 1; font-size: 12px; opacity: .75; }
+#ac-sheet .ck-head .btn { width: auto; }
+#ac-sheet .ck-x { background: none; border: 0; color: inherit; font-size: 18px; cursor: pointer; padding: 4px 8px; }
+#ac-sheet .ac-tabs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+#ac-sheet .ac-tabs .btn { width: auto; padding: 5px 9px; font-size: 12px; }
+#ac-sheet .ck-row { display: flex; gap: 8px; align-items: center; padding: 6px 0; border-top: 1px solid var(--glass-br); }
+#ac-sheet .ck-name { flex: 1; min-width: 0; }
+#ac-sheet .ck-name small { display: block; font-size: 11px; }
+#ac-sheet .ac-stars { color: #ffd24a; font-size: 12px; letter-spacing: 1px; }
+#ac-sheet .ac-bar { height: 5px; border-radius: 3px; background: rgba(255,255,255,.12); margin: 3px 0; overflow: hidden; }
+#ac-sheet .ac-bar i { display: block; height: 100%; background: #ffd24a; }
 #ck-sheet { display: none; position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, .45); align-items: flex-end; justify-content: center; }
 #ck-sheet.show { display: flex; }
 #ck-sheet .ck-card { width: min(560px, 100%); max-height: min(86vh, 720px); overflow-y: auto; box-sizing: border-box;

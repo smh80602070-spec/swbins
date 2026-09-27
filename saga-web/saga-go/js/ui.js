@@ -723,6 +723,7 @@
     var st = Q.state();
     var list = Q.list();
     var html = (global.DG.adventure ? global.DG.adventure.cardHtml() : '') + dailySection();   // ⑲-7 여정 등급 카드
+    if (global.DG.achieve) { html += global.DG.achieve.cardHtml(); }                       // ⑲-25 업적 카드
     html += '<div class="sec"><h4>인장(印章) <small class="muted">' +
       st.stamps + ' / ' + Q.STAMPS_FOR_BREAK + '</small></h4><div class="card">' +
       '<div class="bar blue"><i style="width:' +
