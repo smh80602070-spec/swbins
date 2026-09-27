@@ -1,5 +1,5 @@
 /**
- * 이야기 임무 1~20장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~43, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2~4·㊾-2~3)
+ * 이야기 임무 1~21장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~45, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2~4·㊾-2~3·㊿-2)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
@@ -77,7 +77,10 @@
     cr_hanbyeol: { cr: 'hanbyeol' }, cr_fork: { cr: 'fork' }, cr_ck_bandi: { cr: 'ck_bandi' }, cr_st_foot: { cr: 'st_foot' }, cr_st_bandi: { cr: 'st_bandi' },
     cr_st_duel: { cr: 'st_duel' }, cr_st_hanbyeol: { cr: 'st_hanbyeol' },
     /* ⑲-43 갈림길 끝 섬 위(crossing RIFT_PARTS) — 단계·인물 칸에 sky 를 함께 준다 */
-    cr_rift: { cr: 'rift' }, cr_rift_arrive: { cr: 'rift_arrive' }, cr_rift_hanbyeol: { cr: 'rift_hanbyeol' }, cr_rift_bandi: { cr: 'rift_bandi' }, cr_rift_dodam: { cr: 'rift_dodam' } };
+    cr_rift: { cr: 'rift' }, cr_rift_arrive: { cr: 'rift_arrive' }, cr_rift_hanbyeol: { cr: 'rift_hanbyeol' }, cr_rift_bandi: { cr: 'rift_bandi' }, cr_rift_dodam: { cr: 'rift_dodam' },
+    /* ⑲-45 은하 나루 별배 곁 · 잠긴 도읍(sunken.js) — 명소 자리(sunken) 또는 이야기 자리(sk) */
+    sp_hb_port: { port: 'hb_port' }, sk_sand: { sk: 'sand' }, sk_sand_hanbyeol: { sk: 'sand_hanbyeol' }, sk_sand_bandi: { sk: 'sand_bandi' }, sk_lab_front: { sk: 'lab_front' },
+    sk_dock: { sk: 'dock' }, sk_yeoul: { sk: 'yeoul' }, sk_plinth: { sk: 'plinth' }, sk_plinth_yeoul: { sk: 'plinth_yeoul' }, sk_plinth_bandi: { sk: 'plinth_bandi' } };
   /* ⑲-40 18장 선장의 잔상 — 은하역 가운데에서 남쪽 선로(z 2~42) 위를 지그재그로, 선로 끝 너머 틈 쪽까지 */
   var CAPTAIN_PATH = [[0, 6], [1.5, 16], [-1.5, 26], [1.5, 36], [-1, 46], [2, 58], [-2, 68]];
   /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
@@ -140,6 +143,7 @@
         { ch: 17, from: 0, to: 0, spot: 'sp_tp_bandi' }, { ch: 17, from: 1, to: 9, spot: 'sp_st_bandi' },
         { ch: 18, from: 0, to: 1, spot: 'sp_st_bandi' }, { ch: 18, from: 2, to: 4, spot: 'cr_bandi' }, { ch: 18, from: 5, to: 5, spot: 'cr_ck_bandi' },
         { ch: 18, from: 6, to: 9, spot: 'cr_st_bandi' }, { ch: 19, from: 2, to: 10, spot: 'cr_rift_bandi', sky: true },
+        { ch: 20, from: 2, to: 6, spot: 'sk_sand_bandi' }, { ch: 20, from: 7, to: 999, spot: 'sk_plinth_bandi' },
         { ch: 19, chTo: 999, from: 0, to: 999, spot: 'sp_bandi' }] },
     /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
     daon:     { id: 'story_daon',     name: '조선공 다온', short: '다온', zone: 'galdae', spot: 'yard_daon', off: [0, 0], color: '#335ea0',
@@ -164,7 +168,12 @@
     hanbyeol: { id: 'story_hanbyeol', name: '별배 선장 한별', short: '한별', zone: 'dragon', spot: 'cr_hanbyeol', off: [0, 0], color: '#232e57',
       idle: '틈은 멈춰 있지 않다. 누군가 끝을 찾아가 닫아야 해.',
       appear: [{ ch: 18, from: 7, to: 7, spot: 'cr_st_foot' }, { ch: 18, from: 8, to: 9, spot: 'cr_st_hanbyeol' }, { ch: 19, from: 2, to: 10, spot: 'cr_rift_hanbyeol', sky: true },
+        { ch: 20, from: 0, to: 1, spot: 'sp_hb_port' }, { ch: 20, chTo: 999, from: 0, to: 999, spot: 'sk_sand_hanbyeol' },   // ⑲-45 21장 — 별배 곁 → 도읍 모래밭(뒤에도)
         { ch: 19, chTo: 999, from: 0, to: 999, spot: 'cr_hanbyeol' }] },
+    /* ⑲-45 잠수 기사 여울(현대) — 늘 연구 기지 서쪽 모래밭, 21장 4~6 선착장 · 7~ 궁궐 기단 */
+    yeoul:    { id: 'story_yeoul',    name: '잠수 기사 여울', short: '여울', zone: 'saltflat', spot: 'sk_yeoul', off: [0, 0], color: '#1f4d5c',
+      idle: '기지 불이 나간 지 한참이에요. 그래도 잠수정은 제가 지켜요.',
+      at: [{ ch: 20, from: 4, to: 6, spot: 'sk_dock' }, { ch: 20, from: 7, to: 999, spot: 'sk_plinth_yeoul' }] },
     /* ⑲-40 선장의 잔상 — 18장 쫓기 때만 역 기준 길(CAPTAIN_PATH)을 달린다 */
     captain:  { id: 'story_captain',  name: '선장의 잔상', short: '잔상', zone: 'solar', color: '#232e57', idle: '……',
       appear: [{ ch: 17, from: 6, to: 6 }], runSpot: 'sp_station', runPath: CAPTAIN_PATH },
@@ -177,7 +186,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -973,6 +982,45 @@
             ['?', ['선장님은 이제 어떡하실 거예요?', '별배로 돌아가세요?']],
             ['한별', '별배는 나루에 매여 있고 틈은 닫혔다. 선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께.', 'fun'],
             ['한별', '별배 선장 한별, 오늘부터 너희 편에 선다. 잘 부탁하네.', 'joy']] }
+      ] },
+    /* ⑲-45 6부 첫 장 — 무대는 잠긴 도읍(sunken.js). 한별(은하 나루 별배 곁) → 별배 타기(도읍 모래밭) → 반디 → 기지 앞 물짐승 →
+       잔교 따라 선착장 → 여울 → 잠수정 타기(물속 불빛 따라 궁궐 기단) → 여울(테왁 불빛·반디의 지워진 칸 "등대") */
+    { id: 'ch21', name: '제21장 · 바다 밑 등불', ar: 48,
+      reward: { knot: 6, gold: 5750, guide: 6, secret: 5, party: 1550 },
+      steps: [
+        { type: 'talk', npc: 'hanbyeol', text: '은하 나루 별배 곁의 선장 한별과 이야기하기',
+          lines: [['한별', '틈이 닫힌 날부터 별배 항로표에 없던 불빛 하나가 떠 있다. 소금 갯벌 너머 바다 밑이야.', 'surprised'],
+            ['반디', '삐— 그 좌표… 별배가 떨어지기 전에 가려던 항로 끝과 같습니다. 그런데 제 기록엔 그 까닭이 없습니다.', 'sorrow'],
+            ['한별', '선장이 제 항로를 모르면 안 되지. 원래 가려던 곳을 확인하러 가자.'],
+            ['?', ['별배로 가요.', '바다 밑이라니…']],
+            ['한별', '별배는 물에 못 들어가지만 바다 위까진 간다. 타게!', 'fun']] },
+        { type: 'sail', npc: 'hanbyeol', to: 'sk_sand', text: '선장의 별배를 타고 옛 항로 끝으로',
+          lines: [['한별', '별배, 남쪽 바다로! 반디, 항로를 잡아 다오.']],
+          arrive: '🛸 별배가 바다 위에서 멈칫하더니 — 잠긴 도읍 모래밭에 우리를 내려 주었다', walk: '🛸 별배가 옛 항로 끝으로 떠났다 — 해무 어귀 너머 잠긴 도읍 모래밭까지 걸어가자' },
+        { type: 'talk', npc: 'bandi', text: '모래밭의 반디와 이야기하기',
+          lines: [['반디', '삐— 항로 신호가 여기서 물속으로 꺾입니다. 별배 기관이 저절로 멈췄습니다.', 'surprised'],
+            ['한별', '저 물속을 보게. 기와 지붕이… 도읍 하나가 통째로 잠겨 있어.', 'surprised'],
+            ['반디', '궁궐 둘레에 불빛이 흔들립니다. 옛 해녀가 물질할 때 들던 등불과 같은 빛깔입니다.'],
+            ['?', ['어떻게 내려가지?', '저 쇠 갑판은 뭐야?']],
+            ['반디', '모래밭 끝에 지금 시대의 해저 연구 기지가 있습니다. 잠수정 신호가 하나 살아 있습니다. 다만 기지 앞에 물짐승이 올라와 있습니다.']] },
+        { type: 'kill', spot: 'sk_lab_front', kinds: ['toad', 'toad', 'raptor', 'hawk'], text: '해저 연구 기지 앞 모래밭에 올라온 물짐승 물리치기',
+          enter: '⚔️ 기지 갑판 앞 모래밭에 물짐승들이 기어올라 왔다' },
+        { type: 'go', spot: 'sk_dock', text: '기지 잔교를 따라 잠수정 선착장으로' },
+        { type: 'talk', npc: 'yeoul', text: '잠수정 선착장의 여울과 이야기하기',
+          lines: [['여울', '누, 누구세요? 이 기지엔 이제 저 혼자뿐인데요.', 'surprised'],
+            ['?', ['물속 불빛을 따라왔어요.', '별배 선장과 함께 왔어요.']],
+            ['여울', '저는 잠수 기사 여울. 해저 연구 기지 마지막 대원이에요. 틈이 닫히던 밤, 기지 불이 다 나갔어요.', 'sorrow'],
+            ['여울', '그날부터 바다 밑에 옛 궁궐이 보이고, 그 둘레에 등불이 켜졌어요. 누군가 아직 물질을 하는 것처럼요.'],
+            ['여울', '잠수정은 살아 있어요. 불빛까지 모셔다 드릴게요 — 대신 저도 그 불빛이 뭔지 알고 싶어요.', 'fun']] },
+        { type: 'sail', npc: 'yeoul', to: 'sk_plinth', text: '여울의 잠수정을 타고 물속 불빛을 따라가기',
+          lines: [['여울', '해치 닫습니다. 잠수정, 물속 불빛을 따라 — 잠항!']],
+          arrive: '🌊 잠수정이 물속 불빛 사이로 내려갔다가 — 잠긴 궁궐 기단 곁에 떠올랐다', walk: '🌊 잠수정이 물속 불빛을 따라 잠항했다 — 물가를 따라 잠긴 궁궐 기단까지 걸어가자' },
+        { type: 'talk', npc: 'yeoul', text: '궁궐 기단 위의 여울과 이야기하기',
+          lines: [['여울', '가까이서 보니 등불이 아니었어요. 테왁 — 해녀들이 물에 띄우던 뒤웅박에 불이 들어 있어요.', 'surprised'],
+            ['반디', '삐— 이 궁궐 좌표, 제 기록에… 있었습니다. 지워진 칸이 하나 있습니다. 읽을 수 없습니다.', 'sorrow'],
+            ['?', ['누가 지웠을까?', '괜찮아, 반디?']],
+            ['반디', '모르겠습니다. 다만 지워진 칸 끝에 적힌 말은 하나 — \'등대\'.', 'sorrow'],
+            ['여울', '테왁이 궁궐 기와 사이로 이어져요. 물질하는 사람이 정말 있다면… 저 안쪽에 있을 거예요.', 'joy']] }
       ] }
   ];
 
@@ -1082,11 +1130,17 @@
     var SKI = global.DG.skyIsle;
     var ES = global.DG.eraSites;
     var sp = SPOTS[name], b = !sp ? null : sp.era ? (ES ? ES.spot(sp.era) : null) : (sp.frost ? frostSpot(sp.frost) : (sp.peak ? peakSpot() : (sp.cape ? capeSpot() : (sp.isle ? isleSpot() :
-      (sp.sky ? (SKI ? SKI.spot() : null) : (sp.skyport || sp.port ? portPos(sp) : (sp.crossing || sp.cr ? crossPos(sp) : at(sp.zone, sp.off))))))));
+      (sp.sky ? (SKI ? SKI.spot() : null) : (sp.skyport || sp.port ? portPos(sp) : (sp.crossing || sp.cr ? crossPos(sp) : (sp.sunken || sp.sk ? sunkPos(sp) : at(sp.zone, sp.off)))))))));
     return b ? { x: b.x + (off ? off[0] : 0), y: b.y + (off ? off[1] : 0) } : null;
   }
   /** ⑲-38 은하 나루 자리 — 명소(skyport: id) 또는 나루 틀 자리(port: 'ara' 등). 나루가 꺼져 있으면 null */
   /** ⑲-42 틈새 갈림길 자리 — 명소(crossing: id) 또는 이야기 자리(cr: 'arrive' 등). 갈림길이 꺼져 있으면 null */
+  /** ⑲-45 잠긴 도읍 자리 — 명소(sunken: id) 또는 이야기 자리(sk: 'sand' 등). 도읍이 꺼져 있으면 null */
+  function sunkPos(sp) {
+    var SKm = global.DG.sunken;
+    if (!SKm || !SKm.on()) { return null; }
+    return sp.sk ? SKm.spot(sp.sk) : SKm.siteById(sp.sunken);
+  }
   function crossPos(sp) {
     var CRm = global.DG.crossing;
     if (!CRm || !CRm.on()) { return null; }

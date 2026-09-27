@@ -68,7 +68,8 @@
   var SITE_PARTS = { belfry: ['temple', 10, 0], hangyeol: ['temple', 10, 3.6], tp_bandi: ['temple', 14.5, -1],
     bell_fight: ['bell', -4, 7], bell_duel: ['bell', 3, 6], hg_bell: ['bell', -3, 3], bell_bandi: ['bell', 4, -3],
     dodam: ['station', 9, 3.4], st_bandi: ['station', -6, 4.5], dodam_end: ['station', 4, 70], train: ['station', 0, 0.5],
-    farm_fight: ['farm', 0, 12], substation: ['farm', SUB_OFF[0], SUB_OFF[1]] };
+    farm_fight: ['farm', 0, 12], substation: ['farm', SUB_OFF[0], SUB_OFF[1]],
+    hb_port: ['port', -9, 5] };                                        // ⑲-45 21장 별배 곁의 한별
   var GRID = 48;
 
   /* ── 자리(순수 — 지형·해시만) ───────────────────────────── */
