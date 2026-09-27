@@ -22,6 +22,7 @@ const TalkFace := preload("res://games/saga_go/world/talk_face.gd")
 const SkyIsle := preload("res://games/saga_go/world/sky_isle.gd")
 const RiftEnd := preload("res://games/saga_go/world/rift_end.gd")
 const SkyRoute := preload("res://games/saga_go/world/sky_route.gd")
+const StormEye := preload("res://games/saga_go/world/storm_eye.gd")
 const WorldQuests := preload("res://games/saga_go/data/world_quests.gd")
 const WQ_BLUE := Color(0.45, 0.8, 1.0)
 const Toast := preload("res://saga_core/ui/toast.gd")
@@ -488,6 +489,11 @@ static func _spot_pos(d: Dictionary) -> Vector3:
 		var q := TestMap.world_pos(d.cell.x, d.cell.y, String(d.region))
 		q.y = SkyRoute.top_y(String(d.isle))
 		return q
+	## eye = true 면 먹구름 눈 윗면(106장 52 8부, world/storm_eye.gd).
+	if bool(d.get("eye", false)):
+		var e := TestMap.world_pos(d.cell.x, d.cell.y, String(d.region))
+		e.y = StormEye.top_y()
+		return e
 	if bool(d.get("rift_end", false)):
 		var p := TestMap.world_pos(d.cell.x, d.cell.y, String(d.region))
 		p.y = RiftEnd.top_y()
@@ -502,7 +508,7 @@ static func _path_pos(s: Dictionary, cell: Vector2) -> Vector3:
 
 ## 떠 있는 자리인가(구름섬·떠 있는 구조물·갈림길 끝) — 둘레·물결·석등도 그 윗면 높이로.
 static func _floating(d: Dictionary) -> bool:
-	return bool(d.get("sky", false)) or float(d.get("lift", 0.0)) > 0.0 or bool(d.get("rift_end", false)) or d.has("isle")
+	return bool(d.get("sky", false)) or float(d.get("lift", 0.0)) > 0.0 or bool(d.get("rift_end", false)) or d.has("isle") or bool(d.get("eye", false))
 
 # ---------------------------------------------------------------- 단계
 
@@ -826,6 +832,10 @@ func _physics_process(delta: float) -> void:
 			## isle = 구름 위 항로 그 섬 윗면에 서면(51 7부 — 바람 기둥을 타고 올라 활공으로 건너와서)
 			if s.has("isle"):
 				if SkyRoute.on_isle(String(s.isle), pp) and _player.is_on_floor():
+					advance()
+					return
+			elif bool(s.get("eye", false)): # 먹구름 눈 윗면에 서면(52 8부 — 구름섬 서쪽 바람 기둥으로)
+				if StormEye.on_eye(pp) and _player.is_on_floor():
 					advance()
 					return
 			elif Vector2(pp.x - t.x, pp.z - t.z).length() <= float(s.radius) and pp.y >= t.y + float(s.get("above", 0.0)) - Story.CLIMB_SLACK:

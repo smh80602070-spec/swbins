@@ -138,6 +138,10 @@ func _ready() -> void:
 	var sky_route := preload("res://games/saga_go/world/sky_route.gd").new()
 	sky_route.name = "SkyRoute"
 	add_child(sky_route)
+	## PLAN 106장 52-1 — 이야기 8부 무대: 1부 여섯 제단 자리의 여섯 매듭 + 구름섬 서쪽 하늘 먹구름 눈(27장부터).
+	var storm_eye := preload("res://games/saga_go/world/storm_eye.gd").new()
+	storm_eye.name = "StormEye"
+	add_child(storm_eye)
 	var story := preload("res://games/saga_go/world/story_quest.gd").new()
 	story.name = "StoryQuest"
 	add_child(story)
@@ -213,6 +217,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_sky_route.gd").new())
 	if OS.get_environment("SAGA_STORY7_PROBE") != "": # 106장 51 이야기 7부 24장~
 		add_child(load("res://tools/probe_story7.gd").new())
+	if OS.get_environment("SAGA_STORMEYE_PROBE") != "": # 106장 52-1 8부 여섯 매듭·먹구름 눈
+		add_child(load("res://tools/probe_storm_eye.gd").new())
 
 	## PLAN 106장 ㊸ — 업적(다른 노드 신호에 붙으므로 맨 뒤).
 	var achievements := preload("res://games/saga_go/world/achievements.gd").new()
