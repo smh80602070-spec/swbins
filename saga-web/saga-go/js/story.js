@@ -1,5 +1,5 @@
 /**
- * 이야기 임무 1~10장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2)
+ * 이야기 임무 1~11장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28·29, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2·3)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
@@ -54,9 +54,14 @@
   var SPOTS = { road: { zone: 'solryeong', off: [-26, -46] }, altar2: { zone: 'solryeong', off: [40, -70] }, peak: { peak: true }, cape: { cape: true },
     isle: { isle: true }, dock: { zone: 'galdae', off: [-12, -17] }, sky: { sky: true },
     /* ⑲-28 서리봉 고원 — frost.js 가운데(탑)·명소. 고원이 꺼져 있으면 자리 없음 */
-    fr_center: { frost: 'center' }, fr_stele: { frost: 'stele' }, fr_obs: { frost: 'obs' }, fr_ship: { frost: 'ship' }, fr_fort: { frost: 'fort' } };
+    fr_center: { frost: 'center' }, fr_stele: { frost: 'stele' }, fr_obs: { frost: 'obs' }, fr_ship: { frost: 'ship' }, fr_fort: { frost: 'fort' },
+    fr_lake: { frost: 'lake' } };
   /* ⑲-28 하람이 서는 자리 — 관측소 곁(늘)·비행선 곁. 산성 안은 남쪽 문 안쪽(담 반 변 13m) */
   var HARAM_OBS = [-6, 10], HARAM_SHIP = [-6, 12], HARAM_FORT = [0, 4];
+  /* ⑲-29 11장 자리(산성·호수 가운데에서) — 문루 = 남쪽 문(담 13m) · 바우는 문 안쪽 · 봉화 제단은 문 밖 20m ·
+     석등은 호수(얼음 반지름 28m) 북쪽 물가 · 바우는 그 곁. 제단 무리는 담이 막는 북쪽 빼고 동~서 다섯 방향(도, 북 0 시계 방향) */
+  var FORT_GATE = [0, 13], BAWOO_GATE = [3, 9], BEACON = [0, 20], LAKE_SEAL = [0, -36], BAWOO_LAKE = [-9, -40];
+  var BEACON_DIRS = [90, 135, 180, 225, 270];
   /* ⑲-16 제단 지키기 — 물결은 제단 둘레 DEFEND_RING m 열두 자리에서 나온다(물결 n 은 4n 째 자리부터).
      제단 체력 = DEFEND_HITS × 그 자리 등급 공격(멧돼지 기준, 천하 등급 포함) */
   var DEFEND_RING = 15, DEFEND_WAVE_SEC = 28, DEFEND_REST = 4, DEFEND_HITS = 45, DEFEND_SLOTS = 12;
@@ -98,11 +103,17 @@
     /* ⑲-28 서리봉 고원 둘 — 자리가 ⑮ 땅 탑이 아니라 이름 붙은 자리(spot, 고원이 꺼지면 안 선다). 반디는 드론 몸(pet) */
     haram:    { id: 'story_haram',    name: '기상 관측원 하람', short: '하람', zone: 'snowfort', spot: 'fr_obs', off: HARAM_OBS, color: '#db7533',
       idle: '기압계 바늘이 또 얼었네… 사흘째 눈이 안 멎어요.',
-      at: [{ ch: 9, from: 6, to: 6, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 9, from: 7, to: 8, spot: 'fr_fort', off: HARAM_FORT }] },
+      at: [{ ch: 9, from: 6, to: 6, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 9, from: 7, to: 8, spot: 'fr_fort', off: HARAM_FORT },
+        { ch: 10, from: 8, to: 8, spot: 'fr_ship', off: HARAM_SHIP }] },
     bandi:    { id: 'story_bandi',    name: '조종 기계 반디', short: '반디', zone: 'snowfort', spot: 'fr_ship', off: [0, 12], color: '#8cd9f2', pet: 'drone',
-      idle: '삐— 동력 3퍼센트. 추위 경고.' }
+      idle: '삐— 동력 3퍼센트. 추위 경고.' },
+    /* ⑲-29 산성지기 바우(과거의 넋) — 11장 셋째~여덟째 단계에만. 석등·파수·불씨 동안은 호숫가 */
+    bawoo:    { id: 'story_bawoo',    name: '산성지기 바우', short: '바우', zone: 'snowfort', spot: 'fr_fort', off: BAWOO_GATE, color: '#7a3329',
+      idle: '……불씨는 제가 갈 곳을 안다.',
+      appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
+        { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -458,6 +469,46 @@
             ['하람', '밤이 되면 산성지기가 나와 불씨를 지킨다는 옛이야기가 있어요. 그냥 이야기인 줄 알았는데…'],
             ['?', ['산성지기를 찾아봐요.', '불씨가 정말 있을까요?']],
             ['하람', '오늘은 관측소에서 몸 좀 녹여요. 기계가 풀리면 날씨 지도를 보여 줄게요. 다음엔 산성 안쪽으로!', 'joy']] }
+      ] },
+    /* ⑲-29 관측소 → 산성 문루(바우) → 호숫가 석등 → 얼음 밑 파수 → 불씨 → 문 밖 봉화 제단 지키기 → 비행선 */
+    { id: 'ch11', name: '제11장 · 얼음 아래 산성', ar: 28,
+      reward: { knot: 5, gold: 3250, guide: 3, secret: 4, party: 1000 },
+      steps: [
+        { type: 'talk', npc: 'haram', text: '기상 관측소의 하람에게 날씨 지도 보기',
+          lines: [['하람', '기계가 풀렸어요! 이것 봐요 — 찬 기운이 두 군데서 뿜어 나와요. 하나는 비행선, 하나는… 호수 한가운데.', 'surprised'],
+            ['하람', '호수 밑엔 아무것도 없을 텐데. 그리고 어젯밤, 산성 문루에 등불 하나가 또 떠 있었어요.'],
+            ['?', ['산성으로 가 볼게요.', '등불이요?']],
+            ['하람', '옛이야기의 산성지기라면, 호수 얘기도 알겠죠. 난 여기서 바늘을 지켜볼게요. 조심해요!']] },
+        { type: 'go', spot: 'fr_fort', off: FORT_GATE, text: '옛 산성 문루로' },
+        { type: 'talk', npc: 'bawoo', text: '문루에 나타난 산성지기와 이야기하기',
+          lines: [['바우', '……또 누가 불씨를 찾아왔구나. 먹구름 졸개냐, 하늘에서 떨어진 쇳덩이의 심부름꾼이냐.', 'angry'],
+            ['?', ['불씨를 빌리러 왔어요.', '당신이 산성지기?']],
+            ['바우', '나는 바우. 이 산성이 무너지던 날까지 봉화 불씨를 지켰고, 그 뒤로도 떠나지 못했다.'],
+            ['바우', '적이 산성을 넘던 밤, 불씨를 호수 얼음 밑 석빙고에 감췄지. 얼음 문은 호숫가 석등 셋으로만 열린다.'],
+            ['바우', '옛 노랫말이다 — \'달이 얼음에 먼저 비치고, 해가 얼음을 녹이고, 별이 길을 연다\'. 차례를 어기면 문은 다시 얼어붙는다.', 'sorrow'],
+            ['바우', '호숫가에서 기다리마. 네 불이 노랫말을 따르는지 보겠다.']] },
+        { type: 'seal', spot: 'fr_lake', off: LAKE_SEAL, order: ['moon', 'sun', 'star'], text: '얼어붙은 호수 석등을 노랫말 차례대로 밝히기' },
+        { type: 'kill', spot: 'fr_lake', kinds: ['rockbear', 'snowfox', 'snowfox', 'raptor'], text: '얼음 문이 열리며 깨어난 파수 짐승 물리치기' },
+        { type: 'talk', npc: 'bawoo', text: '호숫가의 바우에게 불씨 받기',
+          lines: [['바우', '석빙고 파수들이 백 년 만에 깼구나. 저놈들도 제 일을 했을 뿐이다.', 'sorrow'],
+            ['바우', '보아라 — 꺼지지 않았다. 산성 봉화의 불씨다.', 'joy'],
+            ['?', ['하늘 배의 심장을 켜야 해요.', '받아도 될까요?']],
+            ['바우', '쇳덩이의 심장이라… 불씨는 제가 갈 곳을 안다. 헌데 불씨가 얼음 밖에 나오면 그 냄새를 맡고 서리 짐승들이 몰려온다.'],
+            ['바우', '산성 문루 앞 봉화 제단에 불씨를 올려라. 불이 제 힘을 되찾을 때까지 지켜 내야 한다. 담이 뒤를 막아 줄 게다.', 'angry']] },
+        { type: 'defend', spot: 'fr_fort', off: BEACON, name: '봉화 제단', who: '서리 짐승이', dirs: BEACON_DIRS,
+          waves: [['snowfox', 'snowfox', 'hawk'], ['rockbear', 'snowfox', 'raptor', 'hawk'], ['rockbear', 'rockbear', 'snowfox', 'raptor', 'hawk']],
+          text: '산성 문루 앞 봉화 제단을 서리 짐승에게서 지키기' },
+        { type: 'talk', npc: 'bawoo', text: '문루의 바우와 이야기하기',
+          lines: [['바우', '……버텼구나. 불씨가 제 빛을 찾았다. 이제 얼음 밖에서도 꺼지지 않을 게다.', 'joy'],
+            ['바우', '백 년을 지켰으니, 이제 넘겨도 되겠지. 산성의 불씨를 네게 맡긴다.'],
+            ['?', ['꼭 지킬게요.', '당신은요?']],
+            ['바우', '나는 이 돌담에 남는다. 하늘 배가 다시 떠오르면, 봉화가 오른 것으로 알겠다.', 'sorrow']] },
+        { type: 'talk', npc: 'bandi', text: '추락한 비행선의 반디에게 불씨 가져가기',
+          lines: [['반디', '삐— 열원 감지. 온도… 상승. 이것이 기록 속의 불씨입니까?', 'surprised'],
+            ['하람', '관측소 바늘이 움직였어요! 호수 쪽 찬 기운이 뚝 끊겼고요.', 'joy'],
+            ['?', ['이제 심장을 켤 수 있어?', '바우가 맡긴 거야.']],
+            ['반디', '불씨만으로는 부족합니다. 심장실 문이 안쪽에서 얼어붙었고, 시간 틈에서 무언가가 심장을 붙잡고 있습니다.'],
+            ['하람', '무언가라니… 오늘은 여기까지. 내일 날이 개면, 셋이서 배 안으로 들어가요.', 'sorrow']] }
       ] }
   ];
 
@@ -1001,17 +1052,22 @@
   }
   function waveKey(n) { return keyOf() + ':w' + n; }
   function wavesOf(st) { return st.waves || DEFEND_WAVES; }
+  /** 무리가 나오는 제단 기준 자리(dx, dy) — 단계 dirs(도, 북 0 시계 방향, ⑲-29)가 있으면 그 방향들만, 없으면 둘레 열두 자리 */
+  function defendSlots(st) {
+    if (!st.dirs) { return ringAt(0, 0, DEFEND_RING, DEFEND_SLOTS); }
+    return st.dirs.map(function (g) { var a = g * Math.PI / 180; return { x: Math.sin(a) * DEFEND_RING, y: -Math.cos(a) * DEFEND_RING }; });
+  }
   function altarHpMax(c) { var F = FC(); return Math.round(DEFEND_HITS * (F && F.foeAtk ? F.foeAtk('boar', F.tierAt(c.x, c.y)) : 80)); }
   /** 물결 n — 둘레 열두 자리 중 4n 째부터, 처음부터 제단으로 곧장(siege) */
   function spawnWave(st, n) {
     var F = FC(), S = F && F.state ? F.state() : null, c = posOf(st), d = defState(), ks = wavesOf(st)[n];
     if (!S || !c || !ks) { return false; }
-    var slots = ringAt(0, 0, DEFEND_RING, DEFEND_SLOTS);
+    var slots = defendSlots(st);
     F.spawnCamp(S, { key: waveKey(n), x: c.x, y: c.y, tier: F.tierAt(c.x, c.y), kind: 'story',
-      foes: ks.map(function (k, i) { var q = slots[(n * 4 + i) % DEFEND_SLOTS]; return { kind: k, dx: q.x, dy: q.y }; }) });
+      foes: ks.map(function (k, i) { var q = slots[(n * 4 + i) % slots.length]; return { kind: k, dx: q.x, dy: q.y }; }) });
     S.camps[waveKey(n)].uids.forEach(function (u) { S.foes[u].siege = { x: c.x, y: c.y }; S.foes[u].st = 'chase'; });
     d.wave = n; d.t = 0;
-    toast('🌊 물결 ' + (n + 1) + '/' + wavesOf(st).length + ' — 가면 무리가 ' + (st.name || '제단') + '으로 몰려온다');
+    toast('🌊 물결 ' + (n + 1) + '/' + wavesOf(st).length + ' — ' + (st.who || '가면 무리가') + ' ' + (st.name || '제단') + '으로 몰려온다');
     return true;
   }
   /** 무너짐·전멸 — 무리가 흩어지고 DEFEND_REST 초 쉰 뒤 그 단계 처음부터 */
@@ -1630,6 +1686,7 @@
     talkables: talkables, storyStep: storyStep, stepAt: stepAt, aimPoints: aimPoints,
     FOLLOW_NEAR: FOLLOW_NEAR, FOLLOW_LOST: FOLLOW_LOST,
     HARAM_OBS: HARAM_OBS, HARAM_SHIP: HARAM_SHIP, HARAM_FORT: HARAM_FORT, frostSpot: frostSpot, followPts: followPts,
+    FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
     on: on, anchorOf: anchorOf, npcPos: npcPos, visible: visible, targetOf: targetOf, trackText: trackText, listHtml: listHtml,
     state: sv, chapter: chapter, step: step, locked: locked, done: done, keyOf: keyOf, gathered: gathered,
     advance: advance, check: check, stepFollow: stepFollow, nearTalk: nearTalk, talkStart: talkStart, talking: talking, next: next,
