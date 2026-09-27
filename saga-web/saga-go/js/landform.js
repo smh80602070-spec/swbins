@@ -413,8 +413,12 @@
   function ES() { var e = global.DG.eraSites; return e && e.on && e.on() && e.poles ? e : null; }
   function SPP() { var s = global.DG.skyport; return s && s.on && s.on() && s.poles ? s : null; }
   function CRP() { var c = global.DG.crossing; return c && c.on && c.on() && c.poles ? c : null; }
-  /** ⑲-38 타는 기둥 모두 — 조선소 기중기 다리(era-sites) + 은하 나루 계류 탑(skyport) + ⑲-41 틈새 갈림길 시계탑(crossing) */
-  function polesAll() { var E = ES(), S = SPP(), X = CRP(); return (E ? E.poles() : []).concat(S ? S.poles() : []).concat(X ? X.poles() : []); }
+  function SKP() { var k = global.DG.sunken; return k && k.on && k.on() && k.poles ? k : null; }
+  /** ⑲-38 타는 기둥 모두 — 조선소 기중기 다리(era-sites) + 은하 나루 계류 탑(skyport) + ⑲-41 틈새 갈림길 시계탑·섬돌(crossing) + ⑲-44 옛 등대(sunken) */
+  function polesAll() {
+    var E = ES(), S = SPP(), X = CRP(), U = SKP();
+    return (E ? E.poles() : []).concat(S ? S.poles() : []).concat(X ? X.poles() : []).concat(U ? U.poles() : []);
+  }
   function poleById(id) { var L = polesAll(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
   /** (x,y) 가 기둥 꼭대기 걷는 길 위인가 — 길 선분에서 폭 절반 안(era-sites.onBeam 과 같은 셈) */
   function onBeamOf(p, x, y) {

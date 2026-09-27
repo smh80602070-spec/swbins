@@ -95,6 +95,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/era-sites.js"></script>
 <script src="js/skyport.js"></script>
 <script src="js/crossing.js"></script>
+<script src="js/sunken.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -13374,6 +13375,86 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { DG.world = W; LF._resetForTest(); var pb = JSON.parse(bak); C.save.player.pos.x = pb.x; C.save.player.pos.y = pb.y; }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '풍 활 ★5 · 견인줄 updraft 15m · 틈 닫기 vortex · 섬 위·GPS 솟구침 ✕' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-44 6부 무대 · 일곱째 지역 잠긴 도읍 (sunken.js, PLAN §5 ⑲-44) ── */
+    function skRig() {
+      var rig = stRig(46);
+      DG.sunken._resetForTest(); delete C.save.sunken;
+      return { SK: DG.sunken, undo: function () { DG.sunken._resetForTest(); DG.landform._resetForTest(); rig.undo(); } };
+    }
+    t('잠긴 도읍 ⑲-44 — 자리: 가운데 = 고향에 가장 가까운 소금 갯벌 칸 · 명소 다섯·작은 발견 열이 모두 그 땅 들·숲 칸(억지 없음) · 탑 40m 밖 · 떨어짐 · 고정 · 순간이동 셋 · 궁궐·기지·등대는 물가(둘레 30m 에 물) · 어귀는 고향 쪽', function () {
+      var U = DG.sunken, B = DG.biome, r = {}, bad = [];
+      U._resetForTest();
+      var c = U.center(), L = U.sites(), near = Infinity;
+      for (var j = -14; j <= 14; j++) { for (var i = -14; i <= 14; i++) { var cc = B.cellAt(i, j); if (cc.zone === U.ZONE) { near = Math.min(near, Math.hypot(cc.x, cc.y)); } } }
+      r.center = !!c && B.regionAt(c.x, c.y).cell.zone === U.ZONE && Math.abs(Math.hypot(c.x, c.y) - near) < 1e-6 && U.inRegion(c.x, c.y) && !U.inRegion(0, 0);
+      r.count = L.length === 15 && L.filter(function (q) { return q.big; }).length === 5 && L.filter(function (q) { return q.way; }).map(function (q) { return q.id; }).join() === 'lab,lighthouse,gate';
+      L.forEach(function (q, k) {
+        var kind = DG.world.terrainAt(Math.floor(q.x / 48), Math.floor(q.y / 48));
+        if (q.forced || B.regionAt(q.x, q.y).cell.zone !== U.ZONE || ['grass', 'forest', 'farm'].indexOf(kind) < 0) { bad.push(q.id + '땅'); }
+        if (Math.hypot(q.x - c.x, q.y - c.y) < U.TOWER_CLEAR) { bad.push(q.id + '탑'); }
+        for (var z = 0; z < k; z++) {
+          var o = L[z], sep = o.big ? U.SEP_BIG : U.SEP_SMALL;
+          if (Math.hypot(o.x - q.x, o.y - q.y) < sep - 1e-6) { bad.push(q.id + '-' + o.id); }
+        }
+      });
+      r.place = bad.length === 0;
+      r.shore = ['palace', 'lab', 'lighthouse'].every(function (id) { var q = U.siteById(id); return q.shore && U.nearWater(q.x, q.y); });
+      var gt = U.siteById('gate');
+      r.toward = Math.hypot(gt.x, gt.y) < Math.hypot(c.x, c.y) - U.GATE_DIST * 0.6;
+      var j1 = JSON.stringify(L); U._resetForTest();
+      r.same = JSON.stringify(U.sites()) === j1;
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? c.name + '(' + Math.round(near) + 'm) · 열다섯 모두 그 땅 들 · 물가 셋 · 떨어짐 · 고정 · 어귀는 고향 쪽' : ('실패 ' + bad2.join(',') + ' ' + bad.join(','));
+    });
+
+    t('잠긴 도읍 ⑲-44 — 발견·이동·벽: 명소 30m = 발견 한 번 · 작은 발견 14m · 연구 기지 순간이동(키보드만) · 정전·등대가 막음 · 빛 돔 둘레 열두 조각이 막고 북쪽은 문(22장 전엔 닫힘) · 돔 안은 트임 · 등대 옆면을 밀면 15m 난간 판(기력 ×0.8)', function () {
+      var rig = skRig(), U = rig.SK, LF = DG.landform, W0 = DG.world, r = {};
+      try {
+        var lab = U.siteById('lab'), pl = U.siteById('palace'), dm = U.siteById('dome'), lh = U.siteById('lighthouse'), tw = U.siteById('tewak');
+        var g0 = C.save.player.gold || 0;
+        var f1 = U.discoverAt(lab.x + U.LANDMARK_R - 1, lab.y);
+        r.big = f1.length === 1 && f1[0].id === 'lab' && C.save.player.gold === g0 + U.REWARD_BIG.gold && U.discoverAt(lab.x, lab.y).length === 0;
+        r.small = U.discoverAt(tw.x + U.SMALL_R(false) + 1, tw.y).length === 0 && U.discoverAt(tw.x + U.SMALL_R(false) - 1, tw.y).map(function (q) { return q.id; }).join() === 'tewak';
+        var wp = U.waypoints();
+        r.way = wp.length === 1 && wp[0].key === 'sk:lab' && !U.teleport('lighthouse');
+        DG.world = Object.create(W0, { mode: { value: 'geo' } }); r.geo = !U.teleport('lab'); DG.world = W0;
+        stGo({ x: 0, y: 0 }); r.tp = U.teleport('lab') && C.save.player.pos.x === lab.x && C.save.player.pos.y === lab.y + 8;
+        function hr(x, y) { return DG.world3d.houseRects(Math.floor(x / 48), Math.floor(y / 48)); }
+        function hit(x, y) { return hr(x, y).some(function (q) { return frInRect(q, x, y); }); }
+        r.walls = hit(pl.x, pl.y - 1) && hit(lh.x, lh.y) && !hit(dm.x, dm.y) && hit(dm.x + U.DOME_R, dm.y) && hit(dm.x, dm.y + U.DOME_R) && hit(dm.x - U.DOME_R, dm.y);
+        var north = hr(dm.x, dm.y - U.DOME_R).filter(function (q) { return frInRect(q, dm.x, dm.y - U.DOME_R); });
+        r.door = !U.domeOpen() && north.length === 1 && north[0].door === 'dome';
+        LF._resetForTest();
+        var P = U.poles();
+        r.pole = P.length === 1 && P[0].id === 'sk_light' && P[0].top === 15 && P[0].drain === 0.8;
+        stGo({ x: lh.x, y: lh.y + U.LIGHT_HALF + 0.8 });
+        for (var i = 0; i < 80 && !LF.perched(); i++) { var pp = C.save.player.pos; LF.moveMul(pp.x, pp.y, 0, -1, 0.25); }
+        r.climb = LF.perched() === 'sk_light' && LF.airH() === 15 && !U.lighthouseLit();
+      } finally { DG.world = W0; rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '기지 발견 한 번 · 테왁 14m · 지점 · GPS ✕ · 정전·등대 막힘 · 돔 둘레 막힘·안 트임·북쪽 문 닫힘 · 등대 15m' : ('실패 ' + bad.join(','));
+    });
+
+    t('잠긴 도읍 ⑲-44 — 해무 문: 20장을 마치기 전엔 해무 어귀 문이 막고(기둥 둘도) · 20장을 마치면 문만 걷히고 기둥은 남는다 · 손잡이 끄면 벽·자리·기둥 없음', function () {
+      var rig = skRig(), U = rig.SK, ST = DG.story, r = {};
+      try {
+        var gt = U.siteById('gate'), gx = Math.floor(gt.x / 48), gy = Math.floor(gt.y / 48), h = U.GATE_HALF;
+        function rs() { var o = []; for (var yy = -1; yy <= 1; yy++) { for (var xx = -1; xx <= 1; xx++) { o = o.concat(DG.world3d.houseRects(gx + xx, gy + yy)); } } return o; }
+        function hit(L, x, y) { return L.some(function (q) { return frInRect(q, x, y); }); }
+        var i20 = -1; ST.CHAPTERS.forEach(function (c, i) { if (c.id === 'ch20') { i20 = i; } });
+        C.save.story = { ch: i20, step: 10 };
+        var a = rs();
+        r.closed = i20 >= 0 && !U.gateOpen() && hit(a, gt.x, gt.y) && hit(a, gt.x - h, gt.y) && hit(a, gt.x + h, gt.y);
+        C.save.story = { ch: i20 + 1, step: 0 };
+        var b = rs();
+        r.open = U.gateOpen() && !hit(b, gt.x, gt.y) && hit(b, gt.x - h, gt.y) && hit(b, gt.x + h, gt.y) && !U.domeOpen();
+        C.setTune('sunken.on', 0);
+        r.off = U.rectsIn(gx, gy).length === 0 && U.marks().length === 0 && U.waypoints().length === 0 && U.poles().length === 0;
+      } finally { C.setTune('sunken.on', null); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '20장 전 막힘 · 뒤 문만 걷힘(기둥 남음) · 돔은 그대로 · 끄면 없음' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */
