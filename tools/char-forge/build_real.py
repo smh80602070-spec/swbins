@@ -185,6 +185,39 @@ def tuck(arm, keys):
         print('TUCK', key, 'moved', moved)
 
 
+def hide_under(arm, spec):
+    """레시피 `under`: {겉옷 폴더 이름: [속옷 폴더 이름…]} — 겉옷에 덮인 속옷 면을 지운다(살의 가림 지우기와 같은 일).
+    공방 옷은 몸통 뼈에만 붙어 동작 중 어깨뼈가 벌어지면 속 몸 옷이 등으로 뚫고 나왔다(09-27 조끼·가슴판).
+    속옷 정점의 바깥(+n) 3cm 또는 안쪽(-n) 2cm(쉼 자세부터 속옷이 겉옷 밖 — 등 골) 안에 겉옷이 있으면 덮인 것 — 이웃이 모두 덮인 정점만 지워 가장자리 한 줄은 겉옷 밑에 겹쳐 남긴다."""
+    from mathutils.bvhtree import BVHTree
+    for outer, inners in spec.items():
+        oc = cloth_src(arm, outer)
+        if oc is None:
+            sys.exit(f'under: 겉옷 {outer} 이 레시피 clothes 에 없다')
+        bm = bmesh.new()
+        bm.from_mesh(oc.data)
+        bm.transform(oc.matrix_world)
+        tree = BVHTree.FromBMesh(bm)
+        bm.free()
+        for inner in inners:
+            ic = cloth_src(arm, inner)
+            if ic is None:
+                sys.exit(f'under: 속옷 {inner} 이 레시피 clothes 에 없다')
+            mw, nm = ic.matrix_world, ic.matrix_world.to_3x3()
+            bm = bmesh.new()
+            bm.from_mesh(ic.data)
+            bm.normal_update()
+            def hit(v):
+                p, n = mw @ v.co, (nm @ v.normal).normalized()
+                return tree.ray_cast(p, n, 0.03)[0] is not None or tree.ray_cast(p, -n, 0.02)[0] is not None
+            covered = {v for v in bm.verts if hit(v)}
+            kill = [v for v in covered if all(e.other_vert(v) in covered for e in v.link_edges)]
+            bmesh.ops.delete(bm, geom=kill, context='VERTS')
+            bm.to_mesh(ic.data)
+            bm.free()
+            print('UNDER', outer, '>', inner, 'removed', len(kill))
+
+
 def tint(arm, slot, hexcol, outdir):
     """재질 칸의 바탕 그림에 색을 곱해 새 그림으로 굽는다(괴물 피부 초록·잿빛 등). 노드로 곱하면 FBX 가 그림을 못 옮겨서 픽셀로 굽는다.
     그림 픽셀은 sRGB 값 그대로라 색도 sRGB(헥스 그대로)로 곱한다."""
@@ -742,6 +775,8 @@ def main():
     name_materials(svc, arm)
     if r.get('tuck'):
         tuck(arm, r['tuck'])
+    if r.get('under'):
+        hide_under(arm, r['under'])
     for slot, col in r.get('tints', {}).items():
         tint(arm, slot, col, os.path.join(os.path.dirname(os.path.abspath(out)), r['id'] + '_tex'))
     if r.get('kitbash'):

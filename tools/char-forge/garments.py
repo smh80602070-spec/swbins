@@ -388,6 +388,16 @@ GARMENTS = {
              paint=dict(base='C1', pattern='plate', trims=[('top', 0.015, 'C2')])),
     ]),
     # ---- 몸에 붙는 옷 위에 얹는 판(09-27 빈칸 채우기 — tube arc) ----
+    # 누빈 가죽 조끼 — 몸에 붙는 옷 위(fit: 오목한 곳을 안 메워 통으로 안 부푼다)
+    'vest': dict(desc='누빈 가죽 조끼(붙는 옷 위)', tags=['vest', 'historical'], colors=dict(C1='#6a4a2e', C2='#2a1c14'), parts=[
+        dict(kind='tube', top=('neck', 0), bottom=('hip', -0.03), ease=0.008, over=0.012, fit=True, slot=0,
+             paint=dict(base='C1', pattern='quilt', trims=[('front', 0.02, 'C2'), ('top', 0.012, 'C2'), ('bottom', 0.012, 'C2')])),
+    ]),
+    # 쇠 가슴판 — 몸에 붙는 옷 위(fit)
+    'cuirass': dict(desc='쇠 가슴판(붙는 옷 위)', tags=['armor'], colors=dict(C1='#b08a3a', C2='#3a2e1a'), parts=[
+        dict(kind='tube', top=('shoulder', -0.05), bottom=('waist', -0.02), ease=0.01, over=0.012, fit=True, slot=0,
+             paint=dict(base='C1', pattern='plate', trims=[('top', 0.012, 'C2'), ('bottom', 0.012, 'C2')])),
+    ]),
     # 쇠 어깨판만 — 몸에 붙는 옷 위
     'pauldrons': dict(desc='쇠 어깨판', tags=['armor', 'historical'], colors=dict(C1='#9aa0a8', C2='#4a4d52'), parts=[
         dict(kind='sleeves', length=0.3, ease=0.03, over=0.02, flare=0.45, arc=190, cuff=0.0, slot=4,
@@ -435,7 +445,7 @@ def part_sum(w, pats):
     return sum(x for n, x in w.items() if any(n == p or (p.endswith('*') and n.startswith(p[:-1])) for p in pats))
 
 
-def ring_radii(pts, cx, cy, seg, ease):
+def ring_radii(pts, cx, cy, seg, ease, convex=True):
     """점들의 둘레 반지름(칸마다 가장 먼 점) → 빈 칸은 이웃으로 메우고, 오목한 곳을 볼록하게, 계단을 둥글게."""
     r = np.zeros(seg)
     for x, y in pts:
@@ -449,7 +459,7 @@ def ring_radii(pts, cx, cy, seg, ease):
             break
         for k in z:
             r[k] = max(r[(k - 1) % seg], r[(k + 1) % seg])
-    for _ in range(6):
+    for _ in range(6 if convex else 2):   # convex=False(통 fit) — 몸에 붙는 옷 위 조끼·가슴판은 오목한 곳을 조금만 메운다(0 이면 등 골을 따라 들어가 속 몸 옷이 뚫는다)
         r = np.maximum(r, (np.roll(r, 1) + np.roll(r, -1)) / 2)
     ker = np.array([1, 2, 3, 2, 1], np.float64) / 9
     for _ in range(3):
@@ -549,7 +559,7 @@ class Builder:
             z = zs[k]
             src = B.torso if z > z_cr + 0.04 else B.torso + B.legs
             pts = B.band_pts(src, z)
-            r = ring_radii(pts, B.cx, B.cy, SEG, ease) if pts else None
+            r = ring_radii(pts, B.cx, B.cy, SEG, ease, convex=not p.get('fit')) if pts else None
             if r is None:
                 r = prev
             if prev is not None and (p.get('mono') or z < z_cr):

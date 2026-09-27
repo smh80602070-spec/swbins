@@ -20,4 +20,5 @@ A=saga-unity/Assets/Art/CharactersRealistic
 - `render_common.py` — 가져오기(glTF 뼈 모양 Icosphere 지움)·대기 동작 한 프레임·빛·Eevee·`fix_materials`
 - **함정**: Blender glTF 가져오기는 피부를 BLEND 로 둬서 이·눈이 얼굴 위에 그려진다 → `fix_materials` 가 피부·옷 알파를 끊고
   머리카락·눈썹·속눈썹·눈만 알파를 남긴다(게임 셰이더처럼). 눈까지 끊으면 흰 눈알이 된다.
+- 동작: 기본은 대기 한 프레임, `CF_CLIP=run`(동작 이름 일부) 이면 그 동작 — 옷 뚫림은 달리기에서 잘 드러난다.
 - 렌더는 한 장에 20초 안팎. Unity 를 안 건드려서 다른 세션이 Unity 를 써도 된다.

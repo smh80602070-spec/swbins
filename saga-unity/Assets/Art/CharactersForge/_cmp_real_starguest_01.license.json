@@ -13,6 +13,8 @@
   "makehuman_system_assets: matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
   "makehuman_system_assets: matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
   "makehuman_system_assets: culturalibre_hero_boots_2/culturalibre_hero_boots_2.mhclo",
+  "makehuman_system_assets: cf_cuirass/cf_cuirass.mhclo",
+  "makehuman_system_assets: cf_pauldrons_b08a3a_3a2e1a/cf_pauldrons_b08a3a_3a2e1a.mhclo",
   "char-forge build_real.py kitbash(자체 생성): horns"
  ]
 }

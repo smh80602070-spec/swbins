@@ -53,7 +53,7 @@ def load_any(p):
     if arm.animation_data:
         for t in arm.animation_data.nla_tracks:
             for s in t.strips:
-                if s.action and 'idle' in t.name.lower() and act is None:
+                if s.action and os.environ.get('CF_CLIP', 'idle') in t.name.lower() and act is None:   # CF_CLIP=run 등으로 다른 동작 한 프레임
                     act = s.action
     if act is None and not p.endswith('.glb'):
         d, name = os.path.dirname(p), os.path.splitext(os.path.basename(p))[0]

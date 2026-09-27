@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_starguest_01",
- "_note": "단계 3 STORY 비교용 — saga-unity Mremireh(Mixamo) 자리 후보(STORY 미래 '별바다 손님', 비경 3~4층, 키 1.05배). 게임 인물 아님. 크고 가는 외계 무인 — 짙은 쪽빛 피부·민머리·길고 뾰족한 귀·뒤로 누운 짧은 뿔 둘·먹보라 몸 옷·금빛 가슴판·어깨판·팔 가리개. 별 너머 방문자(큰 머리·더듬이·은빛)와 겹치지 않게. 09-27 진짜 옷(먹보라 염색 몸 옷·금빛 염색 가디언 판·민 장화(CC0), 뿔 그대로 — 공방 가슴판은 상자처럼 보여 안 씀).",
+ "_note": "단계 3 STORY 비교용 — saga-unity Mremireh(Mixamo) 자리 후보(STORY 미래 '별바다 손님', 비경 3~4층, 키 1.05배). 게임 인물 아님. 크고 가는 외계 무인 — 짙은 쪽빛 피부·민머리·길고 뾰족한 귀·뒤로 누운 짧은 뿔 둘·먹보라 몸 옷·금빛 가슴판·어깨판·팔 가리개. 별 너머 방문자(큰 머리·더듬이·은빛)와 겹치지 않게. 09-27 진짜 옷(먹보라 염색 몸 옷·금빛 염색 가디언 판·민 장화(CC0), 뿔 그대로 — 금빛 가슴판·어깨판은 공방 cuirass(통 fit)·pauldrons 색 변형(09-27) + under 로 가슴판 밑 몸 옷을 지움 — 예전 공방 가슴판(plate_harness)은 상자처럼 보여 안 씀).",
  "macro": {
   "gender": 1.0,
   "age": 0.4,
@@ -51,6 +51,17 @@
  "clothes": [
   "matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
   "matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
-  "culturalibre_hero_boots_2/culturalibre_hero_boots_2.mhclo"
- ]
+  "culturalibre_hero_boots_2/culturalibre_hero_boots_2.mhclo",
+  "cf_cuirass/cf_cuirass.mhclo",
+  "cf_pauldrons_b08a3a_3a2e1a/cf_pauldrons_b08a3a_3a2e1a.mhclo"
+ ],
+ "_garments": [
+  "cuirass",
+  "pauldrons@b08a3a,3a2e1a"
+ ],
+ "under": {
+  "cf_cuirass": [
+   "matcreator_mc-skinsuit_2022"
+  ]
+ }
 }
