@@ -1,5 +1,5 @@
 /**
- * 이야기 임무 1~21장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~45, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2~4·㊾-2~3·㊿-2)
+ * 이야기 임무 1~22장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30·34~46, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4·㊼·㊽-2~4·㊾-2~3·㊿-2~3)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
@@ -80,7 +80,10 @@
     cr_rift: { cr: 'rift' }, cr_rift_arrive: { cr: 'rift_arrive' }, cr_rift_hanbyeol: { cr: 'rift_hanbyeol' }, cr_rift_bandi: { cr: 'rift_bandi' }, cr_rift_dodam: { cr: 'rift_dodam' },
     /* ⑲-45 은하 나루 별배 곁 · 잠긴 도읍(sunken.js) — 명소 자리(sunken) 또는 이야기 자리(sk) */
     sp_hb_port: { port: 'hb_port' }, sk_sand: { sk: 'sand' }, sk_sand_hanbyeol: { sk: 'sand_hanbyeol' }, sk_sand_bandi: { sk: 'sand_bandi' }, sk_lab_front: { sk: 'lab_front' },
-    sk_dock: { sk: 'dock' }, sk_yeoul: { sk: 'yeoul' }, sk_plinth: { sk: 'plinth' }, sk_plinth_yeoul: { sk: 'plinth_yeoul' }, sk_plinth_bandi: { sk: 'plinth_bandi' } };
+    sk_dock: { sk: 'dock' }, sk_yeoul: { sk: 'yeoul' }, sk_plinth: { sk: 'plinth' }, sk_plinth_yeoul: { sk: 'plinth_yeoul' }, sk_plinth_bandi: { sk: 'plinth_bandi' },
+    /* ⑲-46 곁채 앞·빛 돔 문 앞·돔 안 */
+    sk_annex_mulsae: { sk: 'annex_mulsae' }, sk_dome_front: { sk: 'dome_front' }, sk_front_mulsae: { sk: 'front_mulsae' }, sk_front_yeoul: { sk: 'front_yeoul' },
+    sk_front_bandi: { sk: 'front_bandi' }, sk_dome_duel: { sk: 'dome_duel' }, sk_in_mulsae: { sk: 'in_mulsae' }, sk_in_yeoul: { sk: 'in_yeoul' }, sk_in_bandi: { sk: 'in_bandi' } };
   /* ⑲-40 18장 선장의 잔상 — 은하역 가운데에서 남쪽 선로(z 2~42) 위를 지그재그로, 선로 끝 너머 틈 쪽까지 */
   var CAPTAIN_PATH = [[0, 6], [1.5, 16], [-1.5, 26], [1.5, 36], [-1, 46], [2, 58], [-2, 68]];
   /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
@@ -144,6 +147,8 @@
         { ch: 18, from: 0, to: 1, spot: 'sp_st_bandi' }, { ch: 18, from: 2, to: 4, spot: 'cr_bandi' }, { ch: 18, from: 5, to: 5, spot: 'cr_ck_bandi' },
         { ch: 18, from: 6, to: 9, spot: 'cr_st_bandi' }, { ch: 19, from: 2, to: 10, spot: 'cr_rift_bandi', sky: true },
         { ch: 20, from: 2, to: 6, spot: 'sk_sand_bandi' }, { ch: 20, from: 7, to: 999, spot: 'sk_plinth_bandi' },
+        { ch: 21, from: 0, to: 2, spot: 'sk_plinth_bandi' }, { ch: 21, from: 3, to: 6, spot: 'sk_front_bandi' }, { ch: 21, from: 7, to: 999, spot: 'sk_in_bandi' },
+        { ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_in_bandi' },
         { ch: 19, chTo: 999, from: 0, to: 999, spot: 'sp_bandi' }] },
     /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
     daon:     { id: 'story_daon',     name: '조선공 다온', short: '다온', zone: 'galdae', spot: 'yard_daon', off: [0, 0], color: '#335ea0',
@@ -173,7 +178,14 @@
     /* ⑲-45 잠수 기사 여울(현대) — 늘 연구 기지 서쪽 모래밭, 21장 4~6 선착장 · 7~ 궁궐 기단 */
     yeoul:    { id: 'story_yeoul',    name: '잠수 기사 여울', short: '여울', zone: 'saltflat', spot: 'sk_yeoul', off: [0, 0], color: '#1f4d5c',
       idle: '기지 불이 나간 지 한참이에요. 그래도 잠수정은 제가 지켜요.',
-      at: [{ ch: 20, from: 4, to: 6, spot: 'sk_dock' }, { ch: 20, from: 7, to: 999, spot: 'sk_plinth_yeoul' }] },
+      at: [{ ch: 20, from: 4, to: 6, spot: 'sk_dock' }, { ch: 20, from: 7, to: 999, spot: 'sk_plinth_yeoul' },
+        { ch: 21, from: 0, to: 2, spot: 'sk_plinth_yeoul' }, { ch: 21, from: 3, to: 6, spot: 'sk_front_yeoul' }, { ch: 21, from: 7, to: 999, spot: 'sk_in_yeoul' },
+        { ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_in_yeoul' }] },
+    /* ⑲-46 해녀 물새(과거) — 도읍이 잠기던 날 물질 나갔다 갇혔다. 22장 1~2 곁채 앞 · 3~6 돔 문 앞 · 7~ 돔 안(뒤에도) */
+    mulsae:   { id: 'story_mulsae',   name: '해녀 물새', short: '물새', zone: 'saltflat', spot: 'sk_in_mulsae', off: [0, 0], color: '#e6e6d9',
+      idle: '숨 한 번에 한 길. 물은 서두르는 사람을 싫어한다오.',
+      appear: [{ ch: 21, from: 1, to: 2, spot: 'sk_annex_mulsae' }, { ch: 21, from: 3, to: 6, spot: 'sk_front_mulsae' }, { ch: 21, from: 7, to: 999, spot: 'sk_in_mulsae' },
+        { ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_in_mulsae' }] },
     /* ⑲-40 선장의 잔상 — 18장 쫓기 때만 역 기준 길(CAPTAIN_PATH)을 달린다 */
     captain:  { id: 'story_captain',  name: '선장의 잔상', short: '잔상', zone: 'solar', color: '#232e57', idle: '……',
       appear: [{ ch: 17, from: 6, to: 6 }], runSpot: 'sp_station', runPath: CAPTAIN_PATH },
@@ -186,7 +198,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -1021,6 +1033,54 @@
             ['?', ['누가 지웠을까?', '괜찮아, 반디?']],
             ['반디', '모르겠습니다. 다만 지워진 칸 끝에 적힌 말은 하나 — \'등대\'.', 'sorrow'],
             ['여울', '테왁이 궁궐 기와 사이로 이어져요. 물질하는 사람이 정말 있다면… 저 안쪽에 있을 거예요.', 'joy']] }
+      ] },
+    /* ⑲-46 6부 둘째 장 — 잠긴 궁궐·빛 돔(sunken.js). 여울 → 물새(곁채 앞) → 바지락 셋 → 물새(돔 문 앞) → 물길 석등 해 → 별 → 달 →
+       물새 → 돔 문 자물쇠 지키기(동·서) → 여울(여덟째부터 문이 열린다) → 심해 등불아귀(돔 안, 수 — 절반에서 수 방패, 뇌로) → 물새 */
+    { id: 'ch22', name: '제22장 · 잠긴 궁궐의 해녀', ar: 50,
+      reward: { knot: 6, gold: 6000, guide: 6, secret: 5, party: 1600 },
+      steps: [
+        { type: 'talk', npc: 'yeoul', text: '궁궐 기단 위의 여울과 이야기하기',
+          lines: [['여울', '테왁 불빛이 동쪽 곁채 쪽에서 가장 밝아요. 누가 거기서 숨을 고르는 것 같아요.', 'surprised'],
+            ['반디', '삐— 사람 한 명의 체온 신호. 곁채 앞에 있습니다.'],
+            ['?', ['가 볼게.', '조심해서 다가가자.']],
+            ['여울', '물이 얕아도 기와가 미끄러워요. 천천히 가세요.', 'fun']] },
+        { type: 'talk', npc: 'mulsae', text: '곁채 앞의 해녀와 이야기하기',
+          lines: [['물새', '……뭍사람이 여기까지 오다니. 숨이 길구려.', 'surprised'],
+            ['?', ['누구세요?', '테왁 불빛을 따라왔어요.']],
+            ['물새', '나는 해녀 물새. 도읍이 물에 잠기던 날 아침, 물질 나갔다가 그대로 이 물에 갇혔지.', 'sorrow'],
+            ['물새', '그날부터 해가 몇 번 떴는지 모르겠소. 다만 저 둥근 빛 집 문이 닫혀 있는 건 알지.', 'sorrow'],
+            ['물새', '문 앞 물길 석등 셋에 불을 넣으면 문이 풀린다오. 옛날엔 조개 기름으로 불을 살렸는데… 바지락 좀 캐다 주겠소?']] },
+        { type: 'gather', item: 'clam', count: 3, text: '석등 기름으로 쓸 바지락 셋 캐기(갯벌 물가)' },
+        { type: 'talk', npc: 'mulsae', text: '빛 돔 문 앞의 물새와 이야기하기',
+          lines: [['물새', '기름은 됐소. 이제 차례가 문제지 — 물길 석등은 해 뜨는 쪽, 별 뜨는 쪽, 달 뜨는 쪽 차례로 켰다오.', 'fun'],
+            ['여울', '기지 수중 조명 배치도에도 석등 자리가 적혀 있어요. 해, 별, 달 — 맞아요!', 'surprised'],
+            ['?', ['해, 별, 달.', '틀리면 어떻게 돼요?']],
+            ['물새', '다 꺼지지. 물은 두 번 가르쳐 주지 않는다오.']] },
+        { type: 'seal', spot: 'sk_dome_front', order: ['sun', 'star', 'moon'], text: '빛 돔 문 앞 물길 석등을 차례(해 → 별 → 달)로 밝히기' },
+        { type: 'talk', npc: 'mulsae', text: '빛 돔 문 앞의 물새와 이야기하기',
+          lines: [['반디', '삐— 돔 문 빛 자물쇠가 돌기 시작했습니다. 다 풀리려면 시간이 걸립니다.', 'surprised'],
+            ['물새', '물이 술렁이는구려. 불을 보고 바다 것들이 몰려오고 있소.', 'angry'],
+            ['?', ['자물쇠를 지킬게요.', '어느 쪽에서 와요?']],
+            ['여울', '동쪽과 서쪽이에요! 문 앞을 지켜 주세요!']] },
+        { type: 'defend', spot: 'sk_dome_front', name: '빛 돔 문 자물쇠', who: '바다 것들이', dirs: [84, 96, 264, 276],
+          waves: [['toad', 'toad', 'hawk'], ['toad', 'raptor', 'snowfox', 'hawk'], ['rockbear', 'toad', 'raptor', 'snowfox', 'hawk']],
+          text: '빛 돔 문 자물쇠가 풀리는 동안 지키기' },
+        { type: 'talk', npc: 'yeoul', text: '빛 돔 문 앞의 여울과 이야기하기',
+          lines: [['반디', '삐— 자물쇠 해제. 빛 돔 문이 열립니다.', 'joy'],
+            ['여울', '안이… 말라 있어요. 바다 밑인데 물이 한 방울도 없어요!', 'surprised'],
+            ['물새', '저 안에 무언가 빛나는구려. 내가 본 테왁 불빛보다 훨씬 큰 것이.', 'sorrow'],
+            ['?', ['들어가 보자.', '조심해, 다들.']],
+            ['물새', '등불을 단 물고기라… 옛 어른들이 말하던 심해 등불아귀인가. 빛을 먹고 산다더니.', 'angry']] },
+        { type: 'duel', spot: 'sk_dome_duel', kind: 'abyss_angler', shield: 'water', adds: ['toad', 'raptor'], text: '돔 안에 숨어 빛을 먹던 심해 등불아귀와 맞서기',
+          enter: '🐟 돔 안 어둠 속에서 등불 하나가 떠올랐다 — 심해 등불아귀!',
+          p2: '💧 등불아귀가 물 비늘을 세운다 — 번개로 깨라! 물두꺼비와 날쌘용이 뛰어든다',
+          win: '🐟 등불아귀의 등불이 꺼지고 — 어둠 속으로 비늘 조각만 흩어졌다' },
+        { type: 'talk', npc: 'mulsae', text: '돔 안의 물새와 이야기하기',
+          lines: [['물새', '……이 빛 집이 바다를 밀어내고 있었구려. 도읍이 잠기던 날에도 이 안만은 마른 땅이었을 테지.', 'sorrow'],
+            ['여울', '저 안쪽 기록실 — 옛 기단 위에 앞 시대 단말이 서 있어요. 기지 자료에도 없는 건물이에요.', 'surprised'],
+            ['반디', '삐— 기록실에서 제 신호와 같은 주파수가 나옵니다. 지워진 칸이… 저 안에 있습니다.', 'surprised'],
+            ['?', ['기록실로 가자.', '물새 님도 같이 가요.']],
+            ['물새', '갇힌 줄로만 알았는데, 기다린 거였나 보오. 좋소 — 끝까지 같이 가 보지.', 'joy']] }
       ] }
   ];
 

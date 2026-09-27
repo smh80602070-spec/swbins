@@ -7,7 +7,7 @@
  *   발견    작은 발견 열(테왁·잠수 투구·보급 상자·진주조개·신호 부표·돌거북 비석·편액·해태상·빛 해파리·수중 드론) — 14m(GPS 30m) 안
  *   이동    연구 기지·등대 섬·해무 어귀 — 찾으면 지도(M) 순간이동 지점(키보드 판만, 열쇠 `sk:<id>`)
  *   해무 문 해무 어귀(고향 쪽 GATE_DIST m) 곁 흰 막(+ 벽) — 이야기 20장(5부)을 마치면 걷히고 기둥 둘은 남는다
- *   빛 돔   받침 고리·유리 반구(반지름 DOME_R). 벽은 둘레 DOME_SEGS 조각 — 북쪽 한 조각이 문이고 22장을 마치면 열린다(`domeOpen`)
+ *   빛 돔   받침 고리·유리 반구(반지름 DOME_R). 벽은 둘레 DOME_SEGS 조각 — 북쪽 한 조각이 문이고 22장 여덟째 단계(자물쇠를 지킨 뒤)부터 열린다(`domeOpen`)
  *   등대    15m 돌탑 옆면을 타고 오른다(landform 기둥 `sk_light` — 기력 ×LIGHT_DRAIN). 23장을 마치면 불이 켜지고 빛줄기가 돈다(`lighthouseLit`)
  *   잠수    없다(Godot 결정) — 21장 물속 이동은 잠수정(sail 틀)으로 옮긴다
  *   이야기  ⑲-45 자리 표(`spot` — 모래밭·기지 앞·선착장·궁궐 기단) · 20장을 마치면 궁궐 둘레에 불 켜진 테왁 여덟(`seaLightsOn`)
@@ -53,12 +53,16 @@
   var LANDMARK_R = 30, SMALL_R = function (g) { return g ? 30 : 14; };
   var REWARD_BIG = { gold: 150, dust: 2, exp: 40 }, REWARD_SMALL = { gold: 60, exp: 20 };
   var SEARCH_STEP = 8, SEARCH_R = 200, SEP_BIG = 60, SEP_SMALL = 30, TOWER_CLEAR = 40, SHORE_R = 30;
-  var GATE_HALF = 4, GATE_CH = 'ch20', DOME_CH = 'ch22', LIGHT_CH = 'ch23';
+  var GATE_HALF = 4, GATE_CH = 'ch20', DOME_CH = 'ch22', DOME_FROM = 7, LIGHT_CH = 'ch23';
   var DOME_R = 11, DOME_SEGS = 12;
   var LIGHT_H = 15, LIGHT_HALF = 1.4, LIGHT_DRAIN = 0.8;
   /* ⑲-45 이야기 자리 [명소, m, m] — 별배는 해무 어귀 안쪽 모래밭에 내린다. 선착장 = 기지 잔교 머리. 기단 = 궁궐 앞마당(정전 밖) */
+  var ANNEX_OFF = [9.5, 0];                                 // ⑲-46 궁궐 동쪽 곁채(기단 밖)
   var PARTS = { sand: ['gate', 6, 30], sand_hanbyeol: ['gate', 2, 36], sand_bandi: ['gate', 10, 34], lab_front: ['lab', 0, -14], dock: ['lab', 1, 6],
-    yeoul: ['lab', -8, 4], plinth: ['palace', 0, 3.5], plinth_yeoul: ['palace', 2.5, 3.2], plinth_bandi: ['palace', -3, 3.2] };
+    yeoul: ['lab', -8, 4], plinth: ['palace', 0, 3.5], plinth_yeoul: ['palace', 2.5, 3.2], plinth_bandi: ['palace', -3, 3.2],
+    /* ⑲-46 22장 — 곁채 앞(궁궐 동쪽) · 돔 문 앞(북쪽 19m — 석등 셋이 그 둘레 6m) · 돔 안 마른 바닥 */
+    annex_mulsae: ['palace', ANNEX_OFF[0], ANNEX_OFF[1] + 3.2], dome_front: ['dome', 0, -19], front_mulsae: ['dome', -8, -20], front_yeoul: ['dome', 8, -20],
+    front_bandi: ['dome', 0, -28], dome_duel: ['dome', -5, 0], in_mulsae: ['dome', 3, 3], in_yeoul: ['dome', 4, -2], in_bandi: ['dome', 0, 5] };
   var SEA_CH = 'ch20', SEA_LIGHTS = 8, SEA_R = 9;
   var GRID = 48;
 
@@ -150,7 +154,7 @@
   /** 해무 문이 걷혔나 — 이야기 20장(5부 끝)을 마친 뒤 */
   function gateOpen() { return done(GATE_CH); }
   /** 빛 돔 문이 열렸나 — 22장을 마친 뒤 */
-  function domeOpen() { return done(DOME_CH); }
+  function domeOpen() { var i = chIndex(DOME_CH), s = storyAt(); return i >= 0 && (s.ch > i || (s.ch === i && (s.step || 0) >= DOME_FROM)); }   // ⑲-46
   /** 옛 등대에 불이 켜졌나 — 23장을 마친 뒤 */
   function lighthouseLit() { return done(LIGHT_CH); }
   /** ⑲-45 궁궐 둘레 테왁 불 — 20장(틈이 닫힘)을 마친 뒤 */
@@ -175,7 +179,7 @@
   function rectsOf(st) {
     var x = st.x, y = st.y, out = [], i;
     switch (st.model) {
-      case 'palace': return [{ x: x, z: y - 1, w: 8, d: 5, rot: 0 }];                                             // 정전(기단 앞마당은 트임)
+      case 'palace': return [{ x: x, z: y - 1, w: 8, d: 5, rot: 0 }, { x: x + ANNEX_OFF[0], z: y + ANNEX_OFF[1], w: 4, d: 3, rot: 0 }];   // 정전(기단 앞마당은 트임)·⑲-46 곁채
       case 'lab': return [{ x: x - 3, z: y - 2, w: 2.4, d: 5.6, rot: 0 }, { x: x + 3.2, z: y - 2.5, w: 3.2, d: 3, rot: 0 }];   // 컨테이너·관제실
       case 'dome':
         for (i = 0; i < DOME_SEGS; i++) {                                                                        // 둘레 조각 — 0 번(북쪽)이 문
@@ -293,6 +297,10 @@
         box(T3, hall, m.wood, 8, 3, 4.4, 0, 1.5, -0.3);
         var rf = box(T3, hall, m.roof, 9.6, 0.3, 3.4, 0, 3.6, -1.1); rf.rotation.x = 0.5;                             // 맞배 지붕 두 쪽
         var rb = box(T3, hall, m.roof, 9.6, 0.3, 3.4, 0, 3.6, 0.5); rb.rotation.x = -0.5;
+        box(T3, g, m.stone, 5, 0.25, 4, ANNEX_OFF[0], 0.12, ANNEX_OFF[1]);                                         // ⑲-46 곁채 — 작은 기단·전각·지붕
+        box(T3, g, m.wood, 4, 2.2, 3, ANNEX_OFF[0], 1.35, ANNEX_OFF[1]);
+        var ar = box(T3, g, m.roof, 4.8, 0.25, 2.1, ANNEX_OFF[0], 2.75, ANNEX_OFF[1] - 0.8); ar.rotation.x = 0.5;
+        var ar2 = box(T3, g, m.roof, 4.8, 0.25, 2.1, ANNEX_OFF[0], 2.75, ANNEX_OFF[1] + 0.8); ar2.rotation.x = -0.5;
         o.sea = [];                                                                                                // ⑲-45 불 켜진 테왁 여덟(20장 뒤)
         for (i = 0; i < SEA_LIGHTS; i++) {
           var sa = i * Math.PI * 2 / SEA_LIGHTS, tg = new T3.Group(); tg.position.set(Math.sin(sa) * SEA_R, 0.2, -Math.cos(sa) * SEA_R); g.add(tg);
@@ -397,7 +405,7 @@
     SEP_BIG: SEP_BIG, SEP_SMALL: SEP_SMALL, TOWER_CLEAR: TOWER_CLEAR, SHORE_R: SHORE_R, GATE_HALF: GATE_HALF, GATE_DIST: GATE_DIST,
     DOME_R: DOME_R, DOME_SEGS: DOME_SEGS, LIGHT_H: LIGHT_H, LIGHT_HALF: LIGHT_HALF, LIGHT_DRAIN: LIGHT_DRAIN,
     on: on, center: center, sites: sites, siteById: siteById, inRegion: inRegion, nearWater: nearWater, gateOpen: gateOpen, domeOpen: domeOpen, lighthouseLit: lighthouseLit,
-    PARTS: PARTS, SEA_LIGHTS: SEA_LIGHTS, spot: spot, seaLightsOn: seaLightsOn,
+    PARTS: PARTS, SEA_LIGHTS: SEA_LIGHTS, ANNEX_OFF: ANNEX_OFF, DOME_FROM: DOME_FROM, spot: spot, seaLightsOn: seaLightsOn,
     rectsOf: rectsOf, rectsIn: rectsIn, poles: poles, found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks, tick: tick,
     _resetForTest: function () { memo = null; rectMemo = null; centerMemo = undefined; poleMemo = null; }
   };

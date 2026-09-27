@@ -275,7 +275,11 @@
     /* ⑲-43 20장 갈림길 끝 — 세 갈래 선로를 삼키려다 틈을 찢고 갇혔던 별까마귀(삼족오 몸 크게, 빙). 그림자 뺀 있는 패턴 —
        틈새 질주·고리·침·내려찍기·밀물 줄. 2단계 빙 방패(화로 깬다)·졸개는 story.js 가 두른다 */
     rift_crow:   { name: '틈 삼킨 별까마귀', ref: 'pt_samjogo', el: 'ice', hp: 20, atk: 2.5, spd: 5.2, reach: 3.4, type: 'slam', wind: 1.0, cd: 1.7, h: 3.0, exp: 0, r: 4.4,
-                boss: true, rot: ['rift', 'halo', 'spit', 'slam', 'tide', 'rift'] }
+                boss: true, rot: ['rift', 'halo', 'spit', 'slam', 'tide', 'rift'] },
+    /* ⑲-46 22장 빛 돔 안 — 돔에 숨어 빛을 먹던 심해 등불아귀(아귀 몸 크게, 수). 있는 패턴만 — 침·밀물 줄·고리·내려찍기·그림자.
+       2단계 수 방패(뇌로 깬다)·졸개는 story.js 가 두른다 */
+    abyss_angler: { name: '심해 등불아귀', ref: 'pt_anglerfish', el: 'water', hp: 21, atk: 2.5, spd: 4.6, reach: 3.6, type: 'spit', wind: 0.9, cd: 1.7, h: 3.2, exp: 0, r: 3.0,
+                boss: true, rot: ['spit', 'tide', 'halo', 'slam', 'shadow', 'spit'] }
   };
   /* ⑲-14 공격 차례(`rot`)의 한 수씩 — reach 안이면 휘두른다. shadow 는 내 등 뒤 SHADOW_BACK m 로 옮겨 붙어 제 둘레 원 */
   var ROT = {
