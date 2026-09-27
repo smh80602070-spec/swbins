@@ -69,6 +69,8 @@
     var s = core().save, D = global.DG.data;
     return !!(s.dex && s.dex.heroes && s.dex.heroes[id] && (!D || !D.find || D.find(id)));
   }
+  /** ⑲-26 탐사 나간 동료(dispatch.js) — 편성에 못 넣는다 */
+  function away(id) { var DP = global.DG.dispatch; return !!(DP && DP.away && DP.away(id)); }
   /** 칸 넷과 지금 칸 — 읽을 때마다 지금 칸을 지금 명단으로 적는다. 옛 세이브는 지금 명단이 1번 */
   function sync() {
     var s = core().save, P = party();
@@ -93,7 +95,7 @@
     var q = sync();
     if (i === q.at) { return { ok: false, why: '이미 편성 ' + (i + 1), same: true }; }
     if (busy()) { return { ok: false, why: '싸우는 중에는 편성을 바꿀 수 없다' }; }
-    var s = core().save, next = pick(q.list[i], owned);
+    var s = core().save, next = pick(q.list[i], function (id) { return owned(id) && !away(id); });
     s.party = next; s.partyPreset = i; s.partyPresets[i] = next.slice();
     var F = global.DG.fieldCombat, S = F && F.state ? F.state() : null;
     if (S && F.reparty) { F.reparty(S, next); S.active = 0; }
@@ -104,6 +106,7 @@
   /** 세이브에 한다 — 막히면 { ok:false, why } */
   function apply(op, id) {
     if (busy()) { return { ok: false, why: '싸우는 중에는 명단을 바꿀 수 없다' }; }
+    if (op === 'put' && away(id)) { return { ok: false, why: '탐사 나간 동료다 — 역참 게시판에서 부르거나 받기' }; }
     var r = plan(party(), op, id);
     if (!r.ok) { return r; }
     core().save.party = r.list;

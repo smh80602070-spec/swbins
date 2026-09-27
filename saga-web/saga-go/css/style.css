@@ -1897,6 +1897,29 @@ body.fs-on #dock, body.fs-on #near { display: none !important; }
 #ac-sheet .ac-stars { color: #ffd24a; font-size: 12px; letter-spacing: 1px; }
 #ac-sheet .ac-bar { height: 5px; border-radius: 3px; background: rgba(255,255,255,.12); margin: 3px 0; overflow: hidden; }
 #ac-sheet .ac-bar i { display: block; height: 100%; background: #ffd24a; }
+/* ⑲-26 탐사 파견(dispatch.js) — 단추는 요리 단추 오른쪽, 창은 요리 창 꼴 */
+#dp-btn { display: none; position: fixed; z-index: 20; left: 105px; bottom: calc(404px + var(--safe-b)); width: 48px; height: 48px; border-radius: 50%;
+  background: var(--glass); border: 1px solid #8fd6a8; color: var(--ink); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  touch-action: none; -webkit-user-select: none; user-select: none; cursor: pointer; place-items: center; font-weight: 700; }
+#dp-btn.show { display: grid; }
+#dp-btn span { font-size: 18px; line-height: 1; }
+#dp-btn em { font-size: 10px; font-style: normal; opacity: .75; }
+@media (max-height: 500px) { #dp-btn { left: 322px; bottom: calc(155px + var(--safe-b)); } }
+#dp-sheet { display: none; position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, .45); align-items: flex-end; justify-content: center; }
+#dp-sheet.show { display: flex; }
+#dp-sheet .ck-card { width: min(560px, 100%); max-height: min(86vh, 720px); overflow-y: auto; box-sizing: border-box;
+  padding: 12px 14px calc(14px + var(--safe-b)); border-radius: 16px 16px 0 0; background: var(--glass); border: 1px solid var(--glass-br);
+  color: var(--ink); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+#dp-sheet .ck-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+#dp-sheet .ck-head span { flex: 1; font-size: 12px; opacity: .75; }
+#dp-sheet .ck-head .btn { width: auto; }
+#dp-sheet .ck-x { background: none; border: 0; color: inherit; font-size: 18px; cursor: pointer; padding: 4px 8px; }
+#dp-sheet .ck-row { display: flex; gap: 8px; align-items: center; padding: 6px 0; border-top: 1px solid var(--glass-br); }
+#dp-sheet .ck-name { flex: 1; min-width: 0; }
+#dp-sheet .ck-name small { display: block; font-size: 11px; }
+#dp-sheet .dp-pick { display: flex; gap: 4px; margin: 4px 0 2px; }
+#dp-sheet .dp-pick select { flex: 1; min-width: 0; font-size: 12px; padding: 4px; border-radius: 8px; background: rgba(255,255,255,.08); color: inherit; border: 1px solid var(--glass-br); }
+#dp-sheet .dp-pick select + select { flex: 0 0 auto; }
 #ck-sheet { display: none; position: fixed; inset: 0; z-index: 60; background: rgba(0, 0, 0, .45); align-items: flex-end; justify-content: center; }
 #ck-sheet.show { display: flex; }
 #ck-sheet .ck-card { width: min(560px, 100%); max-height: min(86vh, 720px); overflow-y: auto; box-sizing: border-box;

@@ -90,6 +90,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/cooking.js"></script>
 <script src="js/fishing.js"></script>
 <script src="js/achieve.js"></script>
+<script src="js/dispatch.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -11768,6 +11769,93 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '첫 확인 조용 · 새 단계만 · 받기 두 번 · 셋째 장에 매듭 · 모두 받기 6' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-26 탐사 파견 (dispatch.js, PLAN §5 ⑲-26) ── */
+    function dpRig() {
+      var bak = JSON.stringify(C.save), DP = DG.dispatch;
+      DP._resetForTest(); DP._setNowForTest(null);
+      delete C.save.dispatch;
+      var ids = DG.data.heroes.map(function (h) { return h.id; }).filter(function (id) { return id !== '_me'; }).slice(0, 12);
+      C.save.dex.heroes = {}; ids.forEach(function (id) { C.save.dex.heroes[id] = { count: 1 }; });
+      C.save.party = [ids[0]]; C.save.player.level = 1; C.save.regions = {};
+      C.save.cook = { bag: {}, prof: {}, gather: {} };
+      return { DP: DP, ids: ids, undo: function () {
+        DP._resetForTest(); DP._setNowForTest(null);
+        var snap = JSON.parse(bak);
+        Object.keys(C.save).forEach(function (k) { delete C.save[k]; });
+        Object.keys(snap).forEach(function (k) { C.save[k] = snap[k]; });
+      } };
+    }
+
+    t('탐사 파견 ⑲-26 — 표·식: 탐사지 여섯(원소 여섯·땅 셋 × 둘·시대 셋) · 시간 4·8·12·20 × 1·1.8·2.5·3.8 · 자리 2~5(여정 등급 1·5·10·15) · 보상 반올림·최소 1·원소 맞으면 +25% 올림 · 잘 맞는 원소는 fieldCombat.elementOf', function () {
+      var DP = DG.dispatch, r = {}, els = {}, zones = {}, eras = {};
+      DP.ORDER.forEach(function (id) { var s = DP.SITES[id]; els[s.el] = 1; zones[s.zone] = (zones[s.zone] || 0) + 1; eras[s.era] = 1; });
+      r.table = DP.ORDER.length === 6 && Object.keys(els).length === 6 && Object.keys(zones).length === 3 && Object.keys(zones).every(function (z) { return zones[z] === 2; }) &&
+        Object.keys(eras).length === 3 && DP.HOURS.join() === '4,8,12,20' && DP.MUL.join() === '1,1.8,2.5,3.8';
+      r.slots = [1, 4, 5, 9, 10, 15, 40].map(DP.slotsFor).join() === '2,2,3,3,4,5,5';
+      r.reward = DP.rewardOf('old_road', 4, false).gold === 400 && DP.rewardOf('old_road', 8, false).gold === 720 && DP.rewardOf('old_road', 8, true).gold === 900 &&
+        DP.rewardOf('forest_edge', 4, false).items.mushroom === 1 && DP.rewardOf('forest_edge', 12, false).items.mushroom === 3 && DP.rewardOf('forest_edge', 4, true).items.mint === 3 &&
+        DP.rewardOf('observatory', 20, false).dust === 11 && DP.rewardOf('shipyard', 4, true).ore === 3 && DP.rewardOf('old_road', 5, false).gold === undefined;
+      var wind = DG.data.heroes.filter(function (h) { return DG.fieldCombat.elementOf(h.id) === 'wind'; })[0];
+      r.fit = !!wind && DP.fits('old_road', wind.id) && !DP.fits('forest_edge', wind.id);
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '여섯 · 넷 × 배율 · 자리 2~5 · 400/720/900 · 원소 ★' : ('실패 ' + bad.join(','));
+    });
+
+    t('탐사 파견 ⑲-26 — 보내기·받기: 게시판 밖 막힘 · 잠긴 땅 막힘(탑 찾으면 열림) · 자리 꽉(등급 오르면 늚) · 명단 안·나·이미 나감·차 있는 곳 막힘 · 시간 전 받기 막힘 · 지나면 받기(금·재료) · 부르기 보상 없음 · 탐사 중 동료는 편성 넣기 막힘', function () {
+      var rig = dpRig(), DP = rig.DP, ids = rig.ids, r = {}, T = 1e12;
+      try {
+        DP._setNowForTest(function () { return T; });
+        var bd = DP.boardsNear(0, 0, 4000)[0];
+        r.board = !!bd && DG.cooking.potsNear(bd.x - 2 * DP.BOARD_OFF, bd.y, 0.01).length === 1;   // 솥 반대편(역참 ±3.5m)
+        stGo({ x: bd.x + DP.BOARD_R(false) + 2, y: bd.y });
+        r.far = !DP.atBoard() && DP.sendCheck('old_road', ids[1], 4).why === '역참 곁 게시판에서만';
+        stGo({ x: bd.x, y: bd.y });
+        r.send = DP.atBoard() && DP.send('old_road', ids[1], 4).ok && DP.send('forest_edge', ids[2], 8).ok && DP.used() === 2 && DP.away(ids[1]) === 'old_road';
+        r.locked = !DP.open('mudflat') && /탑을 찾아야/.test(DP.sendCheck('mudflat', ids[3], 4).why);
+        C.save.regions[DG.story.anchorOf('galdae').key] = 1;
+        r.full = DP.open('mudflat') && /자리가 꽉/.test(DP.sendCheck('mudflat', ids[3], 4).why);
+        C.save.player.level = 5;
+        r.more = DP.slots() === 3 && DP.send('mudflat', ids[3], 12).ok;
+        C.save.player.level = 10;
+        r.why = /동행 명단/.test(DP.sendCheck('shipyard', ids[0], 4).why) && DP.sendCheck('shipyard', '_me', 4).why === '동료를 고르자' &&
+          DP.sendCheck('shipyard', ids[1], 4).why === '이미 탐사 중' && DP.sendCheck('old_road', ids[4], 4).why === '이미 누가 가 있다' &&
+          DP.candidates().indexOf(ids[0]) < 0 && DP.candidates().indexOf(ids[1]) < 0 && DP.candidates().indexOf(ids[4]) >= 0;
+        var pr = DG.formation.apply('put', ids[1]);
+        r.formation = !pr.ok && /탐사/.test(pr.why) && C.save.party.indexOf(ids[1]) < 0;
+        r.early = DP.claim('old_road').why === '아직 탐사 중' && DP.left('old_road') === 4 * 3600000;
+        T += 4 * 3600000;
+        var g0 = C.save.player.gold || 0, cl = DP.claim('old_road');
+        r.claim = cl.ok && C.save.player.gold === g0 + DP.rewardOf('old_road', 4, DP.fits('old_road', ids[1])).gold && C.save.dispatch.done === 1 && DP.left('old_road') === null && !DP.away(ids[1]);
+        var m0 = DG.cooking.count('mint');
+        r.recall = DP.recall('forest_edge').ok && DG.cooking.count('mint') === m0 && !DP.away(ids[2]) && DG.formation.apply('put', ids[2]).ok;
+        T += 8 * 3600000;
+        var c0 = DG.cooking.count('clam');
+        r.all = DP.claimAll() === 1 && DG.cooking.count('clam') === c0 + DP.rewardOf('mudflat', 12, DP.fits('mudflat', ids[3])).items.clam && DP.used() === 0;
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '게시판 · 잠김 → 탑 · 자리 꽉 → 등급 · 막힘 넷 · 편성 막힘 · 시간 전 ✕ → 받기 · 부르기 빈손 · 모두 받기' : ('실패 ' + bad.join(','));
+    });
+
+    t('탐사 파견 ⑲-26 — 알림: 불러온 직후 다 된 탐사는 모아 한 줄 · 그 뒤 새로 다 된 탐사는 하나씩 한 번 · 사명 화면 한 줄', function () {
+      var rig = dpRig(), DP = rig.DP, ids = rig.ids, r = {}, T = 1e12;
+      try {
+        DP._setNowForTest(function () { return T; });
+        DP.send('old_road', ids[1], 4, true); DP.send('forest_edge', ids[2], 8, true);
+        T += 9 * 3600000;
+        DP._resetForTest();
+        var a = DP.check();
+        r.first = a.length === 1 && /탐사 2곳이 끝났다/.test(a[0]) && DP.check().length === 0;
+        DP.claimAll(true);
+        DP.send('old_road', ids[3], 4, true);
+        T += 4 * 3600000;
+        var b2 = DP.check();
+        r.each = b2.length === 1 && /옛 역참 길 탐사 끝/.test(b2[0]) && DP.check().length === 0;
+        r.line = /다 됨 1/.test(DP.lineHtml()) && /역참 게시판에서 받기/.test(DP.lineHtml());
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '모아 한 줄 · 하나씩 한 번 · 사명 한 줄' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */
