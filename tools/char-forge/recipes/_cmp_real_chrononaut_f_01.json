@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_chrononaut_f_01",
- "_note": "단계 3 역참 사람 비교용 — saga-unity Crypto(Mixamo) 자리 후보(GO 미래 시간 여행자). 게임 인물 아님. 여자·긴 머리·먹빛 몸 옷·무릎 아래까지 쪽빛 긴 겉옷자락·놋쇠 팔 가리개·장화·이마의 놋쇠 눈 띠. 09-26 진짜 옷(쪽빛 긴 겉옷·놋쇠 단(공방 kaftan)·검은 장화(CC0), 놋쇠 눈 띠 껍데기 그대로 — 옛 robe 통 대신).",
+ "_note": "단계 3 역참 사람 비교용 — saga-unity Crypto(Mixamo) 자리 후보(GO 미래 시간 여행자). 게임 인물 아님. 여자·긴 머리·먹빛 몸 옷·무릎 아래까지 쪽빛 긴 겉옷자락·놋쇠 팔 가리개·장화·이마의 놋쇠 눈 띠. 09-26 진짜 옷(쪽빛 긴 겉옷·놋쇠 단(공방 kaftan)·검은 장화(CC0), 놋쇠 눈 띠 껍데기 그대로 — 옛 robe 통 대신). 09-27 soften(치마 뼈 무게 세로 40·둘레 6 — 대기에서 배·엉덩이 혹).",
  "macro": {
   "gender": 0.0,
   "age": 0.45,
@@ -52,5 +52,11 @@
  "clothes": [
   "cf_kaftan_2c4468_a8823e/cf_kaftan_2c4468_a8823e.mhclo",
   "culturalibre_heroine_boots_1/culturalibre_heroine_boots_1.mhclo"
- ]
+ ],
+ "soften": {
+  "cf_kaftan": [
+   40,
+   6
+  ]
+ }
 }

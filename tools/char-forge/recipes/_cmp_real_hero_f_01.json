@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_hero_f_01",
- "_note": "단계 3 비교용 — saga-unity 주역(지금 Mixamo 여자 몸) 자리 후보. 게임 인물 아님(이름 없음). 옷은 system assets 의 현대 운동복(전체 퓨전 §13 의 현대).",
+ "_note": "단계 3 비교용 — saga-unity 주역(지금 Mixamo 여자 몸) 자리 후보. 게임 인물 아님(이름 없음). 옷은 system assets 의 현대 운동복(전체 퓨전 §13 의 현대). 09-27 under 바지 속 신발 양말(무릎 굽힌 대기에서 흰 양말이 발목 바짓단을 뚫었다).",
  "macro": {"gender": 0.0, "age": 0.5, "muscle": 0.62, "weight": 0.45, "height": 0.636, "proportions": 0.75,
            "race": {"asian": 0.8, "caucasian": 0.2, "african": 0.0}},
  "skin": "young_asian_female/young_asian_female.mhmat",
@@ -10,6 +10,7 @@
  "teeth": "teeth_base/teeth_base.mhclo",
  "hair": "ponytail01/ponytail01.mhclo",
  "clothes": ["female_sportsuit01/female_sportsuit01.mhclo", "shoes01/shoes01.mhclo"],
+ "under": {"female_sportsuit01": ["shoes01"]},
  "anims": {"idle": "Sword_Idle", "walk": "Walk_Loop", "run": "Jog_Fwd_Loop", "attack": "Sword_Attack",
            "hit": "Hit_Chest", "dodge": "Roll", "death": "Death01", "interaction": "PickUp_Table",
            "climb": "CF_Climb_Loop", "glide": "CF_Glide_Loop", "swim": "Swim_Fwd_Loop", "tread": "Swim_Idle_Loop", "jump": "Jump_Start"}

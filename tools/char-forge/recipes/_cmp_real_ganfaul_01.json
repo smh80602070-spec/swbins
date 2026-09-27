@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_ganfaul_01",
- "_note": "단계 3 두목 비교용 — saga-unity Ganfaul(Mixamo) 자리 후보(DUNGEON 능묘지기 106-4). 게임 인물 아님(이름 없음). 크고 마른 늙은 남자·잿빛 푸른 피부·짙은 두건·발목까지 보랏빛 도포(다리가 남는 옷자락)·검은 쇠 어깨판·팔 가리개·가죽 장갑. 09-27 진짜 옷(보랏빛 도포·먹빛 단(공방 dopo 색 변형)·검은 장갑·천 신(CC0), 두건 껍데기 그대로 — 쇠 어깨판·팔 가리개는 넓은 소매 위라 지웠다).",
+ "_note": "단계 3 두목 비교용 — saga-unity Ganfaul(Mixamo) 자리 후보(DUNGEON 능묘지기 106-4). 게임 인물 아님(이름 없음). 크고 마른 늙은 남자·잿빛 푸른 피부·짙은 두건·발목까지 보랏빛 도포(다리가 남는 옷자락)·검은 쇠 어깨판·팔 가리개·가죽 장갑. 09-27 진짜 옷(보랏빛 도포·먹빛 단(공방 dopo 색 변형)·검은 장갑·천 신(CC0), 두건 껍데기 그대로 — 쇠 어깨판·팔 가리개는 넓은 소매 위라 지웠다). 09-27 soften(치마 뼈 무게 세로 40·둘레 6 — 대기에서 배·엉덩이 혹).",
  "macro": {
   "gender": 1.0,
   "age": 0.95,
@@ -62,5 +62,11 @@
   "cf_dopo_3a2f3e_221c26/cf_dopo_3a2f3e_221c26.mhclo",
   "toigo_gloves_short/toigo_gloves_short.mhclo",
   "toigo_mj_cloth_shoes/toigo_mj_cloth_shoes.mhclo"
- ]
+ ],
+ "soften": {
+  "cf_dopo": [
+   40,
+   6
+  ]
+ }
 }
