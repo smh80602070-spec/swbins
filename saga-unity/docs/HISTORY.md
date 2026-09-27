@@ -9754,3 +9754,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 검증(묶음 없는 이 PC, 6000.3.23f1): 컴파일 오류 0 → `PlaytestDungeonHeadless` gestures **3연속 OK(같은 줄)**. 4·5회차에 party(소환) 실패가 끼었는데 party 는 몸짓보다 앞에서 돌고, 쌓인 자동 세이브(Lv.53)를 잠시 치우고 돌리니 party OK·칼날 실패도 사라짐 → 세이브 탓(세이브는 제자리로). 남은 실패는 환경 셋(컷 카메라·씬 열기·Missing Prefab). 글꼴 SDF 둘·Mobile_RPAsset 되돌림, EditorSettings 는 줄 끝만(커밋 안 함).
 - 실기 확인 전: 손짓·망치질 팔 각도가 몸마다 자연스러운지(특히 시대 손님·행상), 머리 위 글자와 이름표·풍선 겹침, 틈틈이 빈도가 산만하지 않은지, 동행 호응이 회전베기와 박자가 맞는지.
 - 다음 = 109-10-8 웹 5.17 동행 서명·합격.
+
+## 2026-09-27 char-forge — CF_Guard 대기 어깨 뒤 혹 풀림 (7벌)
+
+"vroid 자체툴 이어해".
+
+- 원인: CF_Guard 가 오른손을 허리 앞 ik 로 끌어 위팔이 쉼 대비 94° 꺾였다(Sword_Idle 36°) → 어깨 뒤 살이 조끼·전포 등을 뚫음. 팔을 기본 동작에 맡기면 등뼈를 세울 때 팔이 부모 따라 돌아 앞으로 들렸다.
+- keyframes 자세 칸 `keep_world`(기본 동작의 월드 방향 지키기) — CF_Guard 두 팔 = Sword_Idle 월드 방향. 맨몸 잡졸·성 경비·가죽 기사·황건 두목·찰갑 무장·성 파수병·칼 든 아가씨 어깨 혹 0.
+- 검사: 7벌 verify fbx ≤ 0.7° · glb 0.0° · sha256 같음(둘) · CMP_RESULT OK(FBX 로컬 전용, ProjectVersion·Packages 되돌림). 다음 = HOW_TO_PLAYTEST §9 사용자 판정.

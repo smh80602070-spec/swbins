@@ -8,6 +8,7 @@
 - `pelvis` : 골반 이동 (왼, 앞, 위) · `yaw` : 골반을 위 축으로 도는 각(도, + = 왼쪽으로 돈다)
 - `dirs`   : 뼈 → 가리킬 방향(기준 자식 쪽, rigmaps.REF_CHILD). 등뼈·목·쇄골·손·발
 - `ik`     : `hand_l`·`foot_r` 등 → 손목·발목 자리. 두 마디(위팔·아래팔 / 허벅지·종아리)를 풀고 팔꿈치·무릎은 `pole` 쪽으로 굽는다
+- `keep_world` : 뼈 이름들 — 골반·등뼈를 고친 뒤에도 `base` 동작의 **월드 방향**을 지킨다(안 적은 뼈는 부모 기준 회전을 지켜 등뼈를 세우면 같이 돈다)
 좌우 대칭 자세는 `mirror(pose)` 로 뒤집는다. 난수 없음 — 같은 코드면 같은 곡선.
 """
 import bpy
@@ -25,6 +26,7 @@ POLE = {'hand_l': (1.0, -0.6, -0.5), 'hand_r': (-1.0, -0.6, -0.5),  # 팔꿈치:
 
 
 def P(**kw):
+    kw.setdefault('keep_world', ())
     kw.setdefault('dirs', {})
     kw.setdefault('ik', {})
     kw.setdefault('pole', {})
@@ -44,6 +46,7 @@ def mirror(p):
     q['dirs'] = {_swap(k): _flip(v) for k, v in p['dirs'].items()}
     q['ik'] = {_swap(k): _flip(v) for k, v in p['ik'].items()}
     q['pole'] = {_swap(k): _flip(v) for k, v in p['pole'].items()}
+    q['keep_world'] = tuple(_swap(n) for n in p['keep_world'])
     if 'pelvis' in p:
         q['pelvis'] = _flip(p['pelvis'])
     if 'yaw' in p:
@@ -175,13 +178,14 @@ def _heal():
 
 
 def _guard_pose(b=0.0):
+    # 두 팔은 Sword_Idle 의 월드 방향 그대로(09-27) — 오른손을 허리 앞 ik 로 끌면 위팔이 쉼 대비 94° 꺾여(Sword_Idle 36°)
+    # 어깨 뒤 살이 지느러미처럼 조끼·전포 등을 뚫었다(황건 두목·성 경비·성 파수병·맨몸 잡졸). 팔을 부모 기준으로만 두면 등뼈를 세울 때 앞으로 들렸다
     return P(base=('Sword_Idle', 0), pelvis=(0, 0, -0.02 - b),
              dirs={'pelvis': (0, 0.04, 1), 'spine_01': (0, 0.06, 1), 'spine_02': (0, 0.05, 1), 'spine_03': (0, 0.03, 1),
-                   'neck_01': (0, 0.04, 1), 'hand_l': (0.05, 0.2, -1), 'hand_r': (0, 1, 0.15),
+                   'neck_01': (0, 0.04, 1),
                    'foot_l': (0.08, 1, -0.55), 'foot_r': (-0.08, 1, -0.55)},
-             pole={'hand_r': (-1, -0.8, -0.3)},
-             ik={'hand_l': (0.27, 0.03, 0.9 - b), 'hand_r': (-0.27, 0.3, 0.97 - b),   # 갑옷·호심경을 뚫지 않게 몸에서 띄운다
-                 'foot_l': (0.12, 0.05, 0.104), 'foot_r': (-0.12, -0.04, 0.104)})
+             keep_world=('upperarm_l', 'lowerarm_l', 'hand_l', 'upperarm_r', 'lowerarm_r', 'hand_r'),
+             ik={'foot_l': (0.12, 0.05, 0.104), 'foot_r': (-0.12, -0.04, 0.104)})
 
 
 def _guard_idle():
@@ -296,6 +300,7 @@ def add(arm, names):
                 pb.location, pb.rotation_quaternion = base[pb.name]
             bpy.context.view_layer.update()
             mw = arm.matrix_world
+            kept = {n: (mw @ arm.pose.bones[n].matrix).to_3x3() for n in p['keep_world']}
             pel = arm.pose.bones['pelvis']
             M = mw @ pel.matrix
             t = rest_pelvis + _world(p.get('pelvis', (0, 0, 0)), axes)
@@ -305,6 +310,11 @@ def add(arm, names):
             for bone in ('pelvis', 'spine_01', 'spine_02', 'spine_03', 'neck_01', 'clavicle_l', 'clavicle_r'):
                 if bone in p['dirs']:
                     _aim(arm, arm.pose.bones[bone], _world(p['dirs'][bone], axes))
+            for n in p['keep_world']:   # 부모 먼저 적는다 — 자식은 부모를 되돌린 뒤의 머리 자리에서 방향만
+                pb = arm.pose.bones[n]
+                M = mw @ pb.matrix
+                pb.matrix = mw.inverted() @ (Matrix.Translation(M.translation) @ kept[n].to_4x4())
+                bpy.context.view_layer.update()
             for s in ('l', 'r'):
                 for end, up_, lo_, dflt in ((f'hand_{s}', f'upperarm_{s}', f'lowerarm_{s}', POLE[f'hand_{s}']),
                                             (f'foot_{s}', f'thigh_{s}', f'calf_{s}', POLE[f'foot_{s}'])):
