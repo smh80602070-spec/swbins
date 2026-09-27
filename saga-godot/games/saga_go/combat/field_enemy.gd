@@ -164,6 +164,13 @@ const KINDS := {
 		"phase_text": "호박 등딱지 거북이 멈춘 시간을 등딱지에 두르고 바위곰과 도깨비를 부른다 — 초로 방패를 깨라",
 		"rotation": ["slam", "tide", "bite", "halo", "slam", "tide"], "summon": ["rock_bear", "fire_imp"],
 		"shape": "turtle", "height": 5.0, "colors": [Color(0.95, 0.62, 0.2), Color(0.42, 0.38, 0.34), Color(1.0, 0.85, 0.35)]},
+	## 106장 54-4 35장 이야기 보스 "금고 파수 드론 여왕"(갈무리 벌 금고 앞 광장) — 갈무리가 핵을 버리며 남긴 금고 파수.
+	## 코드 몸 bird 4.6m(합금 몸·푸른 빛 날개 끝·씨앗빛 눈). 패턴은 있는 틀: 틈새 질주·회오리·고리·내려찍기·밀물 줄. 2단계 풍 방패(암으로 깬다).
+	"vault_queen": {"name": "금고 파수 드론 여왕", "hp": 11800.0, "atk": 56.0, "speed": 4.6, "aggro": 28.0,
+		"reach": 3.4, "tell": 0.85, "cd": 1.5, "exp": 0.0, "element": "wind", "shield": 0.0, "phase_shield": 1150.0,
+		"phase_text": "파수 드론 여왕이 바람 막을 두르고 매와 살쾡이 드론을 부른다 — 암으로 방패를 깨라",
+		"rotation": ["rift", "storm", "halo", "slam", "tide", "storm", "halo"], "summon": ["wind_hawk", "thunder_cat"],
+		"shape": "bird", "height": 4.6, "colors": [Color(0.84, 0.88, 0.93), Color(0.45, 0.85, 1.0), Color(0.55, 1.0, 0.6)]},
 	## 106장 52-4 29장 이야기 보스 "먹구름 임금 — 참몸"(먹구름 눈) — 가면 그림자가 먹구름을 한데 모아 드러낸 참몸. 8부 1차 결말 보스.
 	## 사람 몸 2.4배(먹구름 임금 틀) · 먹빛 옷·먹빛 왕관·흰 처음 가면(4장 비문 무늬). 패턴은 있는 틀: 내려찍기·고리·회오리·그림자·밀물·물기.
 	## 2단계 뇌 방패(불로 깬다). 눈 밖으로 떨어지면 제자리로(story_quest DUEL_FALL).

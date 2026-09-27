@@ -13,15 +13,24 @@ extends Node
 ##   소담 아직 없음·곳간 잠김·기둥 켜짐·금고 문 닫힘) [9] 마루 → 석등(마루는 곳간 앞으로) [10] 석등 — 해 먼저(틀림) → 별 → 해 → 달 → 곳간 문 열림
 ## [11] 소담(보임) → 곳간 지키기 [12] 곳간 지키기(물결 셋) [13] 서쪽 기둥 — 먼 원소는 안 됨 → 꺼짐·소담은 금고 문 앞
 ## [14] 동쪽 기둥 → 금고 문 열림 [15] 소담 → 34장 끝·보상.
+## 35장 "갈무리"(54-4, 10부 끝): [16] 표·자리(단계 일곱 talk·go·talk·climb·talk·duel·talk · 기둥 = 금고 칸·PILLAR_H ·
+##   핵 꺼짐 = CORE_DIM_STEP(갈무리 대화 뒤) · 진열장 깨짐 = HAEMI_FREE_STEP(대결 뒤) · 여왕 풍·암이 방패를 깸 · 동료 해미 초·한손검·고유 ·
+##   해미 자리 = 해미 진열장 · 핵 켜짐·진열장 그대로·문 열림) [17] 소담 → 금고 안 [18] 문 밖에선 안 넘어감 → 안(해미 보임·소담 문 안쪽)
+## [19] 해미 → 기둥 [20] 기둥 — 발치에선 안 넘어가고 윗면에서 넘어감(갈무리 보임) [21] 갈무리 → 핵 꺼짐
+## [22] 파수 드론 여왕(광장, 밀물 줄 예고) → 진열장 깨짐 [23] 해미 → 35장 끝·동료 해미.
 ## 이야기 상태·부대 경험·가방은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const Vault := preload("res://games/saga_go/world/region9_vault.gd")
+const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
+const Elements := preload("res://games/saga_go/combat/elements.gd")
+const Kits := preload("res://games/saga_go/data/kits.gd")
 
 const CH33 := 32 # 33장(0부터)
 const CH34 := 33
+const CH35 := 34
 
 var _p: CharacterBody3D
 var _sq: Node
@@ -263,7 +272,115 @@ func _physics_process(_delta: float) -> void:
 				and bool(_vr.call("is_door_open")) and bool(_sq.call("npc_visible", "sodam")) and _flat(_sq.call("npc_pos", "sodam"), _cell("vault", Vector2(4.0, 2.3))) < 0.5
 			_check("chapter34", ok, "ch=%d mora +%d door=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), _vr.call("is_door_open")])
 			_next()
-		16:
+		16: # [16] 35장 표·자리
+			if _frame < 80:
+				return
+			var c := Story.chapter(CH35)
+			var steps: Array = c.steps
+			var bad: Array = []
+			if String(c.get("id", "")) != "ch35" or int(c.ar) <= int(Story.chapter(CH34).ar) or int(_sq.call("ch")) != CH35 or bool(_sq.call("locked")) \
+					or String(c.get("join", "")) != "story_haemi":
+				bad.append("chapter ch=%d locked=%s" % [_sq.call("ch"), _sq.call("locked")])
+			var types := steps.map(func(sd: Dictionary) -> String: return String(sd.type))
+			if types != ["talk", "go", "talk", "climb", "talk", "duel", "talk"]:
+				bad.append("types %s" % [types])
+			var cl: Dictionary = steps[3]
+			if Vault.CH35 != CH35 or cl.cell != Vault.VAULT_CELL or not is_equal_approx(float(cl.above), Vault.PILLAR_H):
+				bad.append("climb")
+			if String(steps[Vault.CORE_DIM_STEP - 1].get("npc", "")) != "garmuri":
+				bad.append("core step")
+			var du: Dictionary = steps[Vault.HAEMI_FREE_STEP - 1]
+			if String(du.type) != "duel" or String(du.kind) != "vault_queen" or String(FieldEnemy.KINDS.vault_queen.element) != "wind" \
+					or Elements.shield_mul("wind", "rock") <= 1.0 or not _hits(_cell("vault", du.cell)).is_empty():
+				bad.append("duel %s" % [_hits(_cell("vault", du.cell))])
+			var m: Dictionary = Story.MEMBERS.get("story_haemi", {})
+			if String(m.get("era", "")) != "미래" or Elements.element_of("story_haemi") != "grass" or String(m.get("weapon", "")) != "sword" or not Kits.KITS.has("story_haemi"):
+				bad.append("member %s" % m)
+			var hp := Vault.case_pos(Vault.HAEMI_CASE_DEG)
+			if _flat(_cell("vault", Story.NPCS.haemi.cell), hp) > 0.3 or bool(_sq.call("npc_visible", "haemi")) or bool(_sq.call("npc_visible", "garmuri")):
+				bad.append("haemi cell/visible")
+			for pt in [Vector2(4.0, 1.6667), steps[1].cell]:
+				if not _hits(_cell("vault", pt)).is_empty():
+					bad.append("spot %s %s" % [pt, _hits(_cell("vault", pt))])
+			if not bool(_vr.call("core_lit")) or not bool(_vr.call("haemi_sealed")) or not bool(_vr.call("is_door_open")):
+				bad.append("world at st0")
+			_check("ch35_table", bad.is_empty(), str(bad))
+			_next()
+		17: # [17] 소담(금고 문 앞) → 금고 안
+			_talk("sodam", 1, "ch35_sodam", "vault", Vector2(4.0, 1.6))
+		18: # [18] 금고 안 — 문 밖에선 안 넘어가고, 안에 들어서면 넘어감(해미 보임·소담은 문 안쪽)
+			if _frame == 1:
+				_put(Vault.cell_pos(Vault.VAULT_CELL) + Vector3(0, 0, Vault.VAULT_R + 3.0))
+			if _frame == 20:
+				_v = int(_sq.call("st"))
+				_put(_target())
+			if _frame == 110:
+				var ok: bool = int(_v) == 1 and int(_sq.call("st")) == 2 and bool(_sq.call("npc_visible", "haemi")) \
+					and _flat(_sq.call("npc_pos", "sodam"), _cell("vault", Vector2(4.0, 1.6667))) < 0.5
+				_check("ch35_enter", ok, "out_st=%d st=%d haemi=%s sodam=%s" % [_v, _sq.call("st"), _sq.call("npc_visible", "haemi"), _sq.call("npc_pos", "sodam")])
+				_next()
+		19: # [19] 해미(진열장 속) → 기록 기둥
+			_talk("haemi", 3, "ch35_haemi", "vault", Vault.VAULT_CELL, 0, "sealed=%s" % _vr.call("haemi_sealed"), bool(_vr.call("haemi_sealed")))
+		20: # [20] 기록 기둥 — 발치에선 안 넘어가고 윗면에 서면 넘어감 · 갈무리가 핵 곁에
+			if _frame == 1:
+				_put(_cell("vault", Vault.VAULT_CELL + Vector2(0.0, 2.5 / TestMap.TILE_SIZE)))
+			if _frame == 20:
+				_v = int(_sq.call("st"))
+				_put(Vault.pillar_top() + Vector3(0.6, 0.3, 0.6))
+			if _frame == 60:
+				var ok: bool = int(_v) == 3 and int(_sq.call("st")) == 4 and absf(_p.global_position.y - Vault.pillar_top().y) < 0.6 and bool(_sq.call("npc_visible", "garmuri"))
+				_check("ch35_climb", ok, "base_st=%d st=%d y=%.2f/%.2f garmuri=%s" % [_v, _sq.call("st"), _p.global_position.y, Vault.pillar_top().y, _sq.call("npc_visible", "garmuri")])
+				_next()
+		21: # [21] 갈무리(기둥 윗면에서 말이 닿음) → 핵이 꺼지고 갈무리는 사라짐
+			if _frame == 4:
+				_sq.call("interact")
+				_drain()
+			if _frame == 90:
+				var ok: bool = int(_sq.call("st")) == 5 and not bool(_vr.call("core_lit")) and not bool(_sq.call("npc_visible", "garmuri")) \
+					and _flat(_target(), _cell("vault", Vector2(4.0, 2.45))) < 12.0 # 목표 = 서 있는 보스 자리(돌아다님)
+				_check("ch35_garmuri", ok, "st=%d core=%s garmuri=%s target=%s want=%s" % [_sq.call("st"), _vr.call("core_lit"), _sq.call("npc_visible", "garmuri"), _target(), _cell("vault", Vector2(4.0, 2.45))])
+				_next()
+		22: # [22] 금고 파수 드론 여왕 — 광장, 밀물 줄 예고 → 쓰러뜨리면 해미 진열장이 깨짐
+			if _frame == 1:
+				_put(_target() + Vector3(0, 0, 8))
+			if _frame == 12:
+				var bosses := get_tree().get_nodes_in_group("go_story_boss")
+				var bo: Node3D = bosses[0] if not bosses.is_empty() else null
+				_v = {"n": bosses.size(), "marks": 0, "kind": "", "vault": false}
+				if bo:
+					_v.kind = String(bo.get("kind"))
+					_v.vault = TestMap.region_at(bo.global_position) == "vault"
+					bo.call("_clear_marks")
+					bo.call("_set_tell", false)
+					bo.call("begin_skill", "tide", _p)
+					_v.marks = (bo.get("_marks") as Array).size()
+					bo.call("_clear_marks")
+					bo.call("_die")
+			if _frame == 150:
+				var ok: bool = int(_v.n) == 1 and String(_v.kind) == "vault_queen" and bool(_v.vault) and int(_v.marks) >= 1 and int(_sq.call("st")) == 6 \
+					and not bool(_vr.call("haemi_sealed"))
+				_check("ch35_duel", ok, "n=%d kind=%s marks=%d st=%d sealed=%s" % [_v.n, _v.kind, _v.marks, _sq.call("st"), _vr.call("haemi_sealed")])
+				_next()
+		23: # [23] 해미(깨진 진열장 앞) → 35장 끝·동료 해미 = 10부 끝
+			if _frame == 1:
+				_v = {"mora": PartyState.count("mora")}
+				_near_npc("haemi")
+			if _frame == 10:
+				_sq.call("interact")
+				_drain()
+			if _frame < 16:
+				return
+			_dismiss_prompts()
+			if _frame < 60:
+				return
+			_sq.call("toggle_journal")
+			var jt: String = _sq.call("journal_text")
+			_sq.call("toggle_journal")
+			var ok: bool = int(_sq.call("ch")) == CH35 + 1 and jt.contains("✔ 제35장") and PartyState.count("mora") >= int(_v.mora) + 175000 \
+				and PartyState.members.has("story_haemi") and bool(_sq.call("npc_visible", "haemi"))
+			_check("chapter35", ok, "ch=%d mora +%d joined=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), PartyState.members.has("story_haemi")])
+			_next()
+		24:
 			_finish()
 
 func _finish() -> void:

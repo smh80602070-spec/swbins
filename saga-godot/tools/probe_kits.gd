@@ -63,7 +63,7 @@ func _physics_process(_delta: float) -> void:
 				_next()
 		1: # ① 표
 			var sage := _hero("wisdom", "fire")
-			var ok: bool = Kits.KITS.size() == 17 and is_equal_approx(float(_fc.call("skill_cd_of", "self")), 6.0) \
+			var ok: bool = Kits.KITS.size() == 18 and is_equal_approx(float(_fc.call("skill_cd_of", "self")), 6.0) \
 				and is_equal_approx(float(_fc.call("skill_cd_of", "sg_zhugeliang")), 12.0) \
 				and Kits.name_of(sage, "skill", "fire") == "불꽃 부채" and Kits.name_of("self", "burst", "fire") == "불새 깃"
 			for id in Kits.KITS:
@@ -325,7 +325,7 @@ func _physics_process(_delta: float) -> void:
 			for c in Story.CHAPTERS:
 				if Story.MEMBERS.has(String(c.get("join", ""))):
 					joins += 1
-			_check("story_members", ok and joins == 12, "members=%d joins=%d wanderer=%s/%s" % [Story.MEMBERS.size(), joins, Elements.element_of("story_wanderer"), Weapons.type_of("story_wanderer")])
+			_check("story_members", ok and joins == 13, "members=%d joins=%d wanderer=%s/%s" % [Story.MEMBERS.size(), joins, Elements.element_of("story_wanderer"), Weapons.type_of("story_wanderer")])
 			_next()
 		20: # ⑳ 나그네 E 그림자 걸음 — 가까운 적(허수아비 a) 뒤로, 표식
 			if _frame == 1:
