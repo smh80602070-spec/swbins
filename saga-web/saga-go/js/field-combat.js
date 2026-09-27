@@ -68,6 +68,10 @@
   function PARTY_MAX() { return 4; }
   function REACH() { return K('reach', 3.2); }           // 기본 공격 사거리(m)
   function LUNGE_R() { return K('lungeR', 6); }          // 이 안이면 한 걸음 파고들며 친다
+  /* 2026-09-28 실기 Q6 "캐릭터가 너무 가까움·모션이 안 보임" — 거리를 몸 한가운데끼리 재서 적이 코앞 1.6m 까지
+     파고들었는데, 화면의 적 몸은 키 3.4m×h 로 서 길이가 5~8m(멧돼지 5.7·곰 7.8)라 캐릭터가 적 몸속에 묻혔다.
+     적마다 몸 반지름을 두고 멈춤·사거리·맞힘을 **몸 가장자리**에서 잰다. 0 이면 옛 한가운데 거리 */
+  function BODY(f) { var F = f && FOES[f.kind]; return F ? (F.h || 1) * K('bodyMul', 1.6) : 0; }
   function SKILL_R() { return K('skillR', 4.5); }
   function SKILL_AIM() { return K('skillAim', 8); }      // 스킬이 적을 겨누는 거리
   function SKILL_CD() { return K('skillCd', 7); }
@@ -724,14 +728,14 @@
     var best = null, bd = r;
     var L = living(S);
     for (var i = 0; i < L.length; i++) {
-      var d = Math.hypot(L[i].x - px, L[i].y - py);
+      var d = Math.max(0, Math.hypot(L[i].x - px, L[i].y - py) - BODY(L[i]));
       if (d <= bd) { bd = d; best = L[i]; }
     }
     return best;
   }
   function foesWithin(S, x, y, r) {
     var out = [], L = living(S);
-    for (var i = 0; i < L.length; i++) { if (Math.hypot(L[i].x - x, L[i].y - y) <= r) { out.push(L[i]); } }
+    for (var i = 0; i < L.length; i++) { if (Math.hypot(L[i].x - x, L[i].y - y) - BODY(L[i]) <= r) { out.push(L[i]); } }
     return out;
   }
   function wake(f) { if (f.st === 'idle' || f.st === 'return') { f.st = 'chase'; f.stT = 0; } }
@@ -936,7 +940,7 @@
       if (!tgt) {
         var n = nearestFoe(S, px, py, LUNGE_R());
         if (n) {
-          var d = Math.hypot(n.x - px, n.y - py) || 1, go = Math.max(0, d - reach * 0.7);
+          var d = Math.hypot(n.x - px, n.y - py) || 1, go = Math.max(0, d - BODY(n) - reach * 0.7);
           S.dash = { vx: (n.x - px) / d * go / 0.14, vy: (n.y - py) / d * go / 0.14, t: 0.14 };
           tgt = n;
         }
@@ -1063,7 +1067,7 @@
     dx /= dl; dy /= dl;
     var hits = living(S).filter(function (f) {
       var fx = f.x - px, fy = f.y - py, d = Math.hypot(fx, fy);
-      return d <= CHARGE_REACH() && (d < 0.5 || (fx * dx + fy * dy) / d >= CHARGE_ARC());
+      return d - BODY(f) <= CHARGE_REACH() && (d < 0.5 || (fx * dx + fy * dy) / d >= CHARGE_ARC());
     });
     for (var i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * CHARGE_MUL() * infM(m), infEl(m), 'heavy'); }
     if (hits.length) { rainFollow(S, px, py); }                     // ⑲-17 뱃노래
@@ -1181,8 +1185,8 @@
     if (dl < 1e-6) { dx = S.lastDx || 0; dy = S.lastDy || 1; dl = Math.hypot(dx, dy) || 1; }
     dx /= dl; dy /= dl;
     if (k.type === 'dash') {
-      var go = aim ? Math.min(k.len, Math.max(0, far - 1.2)) : k.len, bx = px + dx * go, by = py + dy * go;
-      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, bx + dx * 1.2, by + dy * 1.2) <= k.w; });
+      var go = aim ? Math.min(k.len, Math.max(0, far - BODY(aim) - 1.2)) : k.len, bx = px + dx * go, by = py + dy * go;
+      hits = living(S).filter(function (f) { return segDist(f.x, f.y, px, py, bx + dx * 1.2, by + dy * 1.2) <= k.w + BODY(f); });
       for (i = 0; i < hits.length; i++) { hitFoe(S, hits[i], m, m.atk * k.mul, m.el, 'skill'); }
       S.dash = { vx: dx * go / DASH_T(), vy: dy * go / DASH_T(), t: DASH_T() };
       S.iframe = Math.max(S.iframe, 0.3);
@@ -1603,7 +1607,7 @@
         var want = AT === 'shadow' ? 0 : (AT === 'spit' ? RT.reach * 0.85 : RT.reach * 0.8);
         /* ⑲-16 지킬 것 — 내가 SIEGE_PULL 밖이면 제단이 과녁(제단 몸 둘레만큼 덜 다가간다) */
         var sg = f.siege && d > SIEGE_PULL ? f.siege : null;
-        var gx = sg ? sg.x : px, gy = sg ? sg.y : py, gd = sg ? Math.max(0, Math.hypot(f.x - gx, f.y - gy) - SIEGE_BODY) : d;
+        var gx = sg ? sg.x : px, gy = sg ? sg.y : py, gd = (sg ? Math.max(0, Math.hypot(f.x - gx, f.y - gy) - SIEGE_BODY) : d) - (AT === 'shadow' ? 0 : BODY(f));
         if (gd > want && AT !== 'shadow') { moveToward(f, gx, gy, F.spd * dt); }
         f.cd -= dt;
         if (gd <= RT.reach && f.cd <= 0 && !allDown(S)) {
@@ -1630,7 +1634,7 @@
         if (f.stT <= 0) {
           var WT = f.atkT || F.type, WR = F.rot ? ROT[WT] : F;
           /* ⑲-16 제단을 노린 코앞 한 대는 나를 안 친다(원 예고는 누구든 맞는다) */
-          var inHit = f.mark ? markHit(f.mark, px, py, 0) : (!f.atkSiege && d <= WR.reach + 0.6);
+          var inHit = f.mark ? markHit(f.mark, px, py, 0) : (!f.atkSiege && d - BODY(f) <= WR.reach + 0.6);
           if (inHit && S.iframe <= 0) { hurt(S, f, WR.mul); }
           else if (inHit) { push(S, { t: 'evade', uid: f.uid }); }
           if (f.atkSiege && f.siege) {
@@ -2409,7 +2413,7 @@
   global.DG = global.DG || {};
   global.DG.fieldCombat = {
     EL: EL, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, RIFT_STEP: RIFT_STEP, RIFT_SLOPE: RIFT_SLOPE, riftOk: riftOk, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
-    SKILL_CD: SKILL_CD, SWAP_CD: SWAP_CD, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
+    SKILL_CD: SKILL_CD, SWAP_CD: SWAP_CD, BODY: BODY, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */
     elementOf: elementOf, EL_KEYS: EL_KEYS, heavy: heavy, plunge: plunge, plungeMul: plungeMul, plungeLand: plungeLand, PLUNGE_R: PLUNGE_R(), CHARGE_COST: CHARGE_COST(), REACT: REACT, attaches: attaches, shapeOf: shapeOf, SHAPES: SHAPES, kitFor: kitFor, segDist: segDist, react: react, shieldMul: shieldMul, campAt: campAt, tierAt: tierAt, guardianAt: guardianAt, COUNTER: COUNTER,
     create: create, reparty: reparty, populate: populate, spawnCamp: spawnCamp, step: step, drain: drain,

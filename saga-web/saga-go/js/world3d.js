@@ -3388,6 +3388,23 @@
         ' children=' + scene.children.length;
       return read;
     },
+    /** §6.1-B ① 재기 — 배우마다 삼각형 수(큰 것부터 n 개). 어느 몸이 GPU 를 잡아먹는지 본다 */
+    heavyActors: function (n) {
+      var out = [], a;
+      for (a in actors) {
+        if (!Object.prototype.hasOwnProperty.call(actors, a) || !actors[a].node) { continue; }
+        var tris = 0, meshes = 0;
+        actors[a].node.traverse(function (o) {
+          if (!o.isMesh || !o.geometry) { return; }
+          var g = o.geometry, c = g.index ? g.index.count : (g.attributes.position ? g.attributes.position.count : 0);
+          tris += Math.round(c / 3) * (o.isInstancedMesh ? o.count : 1); meshes++;
+        });
+        var bb = new T.Box3().setFromObject(actors[a].node), sz = bb.getSize(new T.Vector3());
+        out.push({ key: a, kind: actors[a].kind, tris: tris, meshes: meshes, vis: actors[a].node.visible, size: [sz.x, sz.y, sz.z].map(function (v) { return +v.toFixed(1); }) });
+      }
+      out.sort(function (x, y) { return y.tris - x.tris; });
+      return out.slice(0, n || 10);
+    },
     stats: function () {
       var meshes = 0, a;
       for (a in actors) {
@@ -3415,6 +3432,10 @@
         size: canvas ? (canvas.width + 'x' + canvas.height) : '-',
         cam: camera ? ([camera.position.x, camera.position.y, camera.position.z]
           .map(function (v) { return Math.round(v); }).join(',')) : '-',
+        /* §6.1-B ① 재기 — 그리기 호출·삼각형(마지막 render 한 번)·GPU 에 올린 도형·텍스처·셰이더 수 */
+        gl: renderer ? { calls: renderer.info.render.calls, tris: renderer.info.render.triangles,
+          geos: renderer.info.memory.geometries, texs: renderer.info.memory.textures,
+          progs: renderer.info.programs ? renderer.info.programs.length : 0 } : null,
         failed: failed, ready: ready, wanted: wanted(),
         ibl: scene ? ((scene.environment ? 'on×' + (scene.environmentIntensity || 0).toFixed(2) : 'off')) : '-'
       };

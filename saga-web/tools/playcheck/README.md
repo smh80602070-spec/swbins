@@ -8,6 +8,7 @@ node go-move-click.mjs                         # 사가고: 새 계정 → 이�
 node go-house-walls.mjs                        # 사가고: 가까운 집 넷에 네 방향으로 걸어 들어가 멈춘 거리 / 벽 끝 거리
 node go-house-perf.mjs                         # 사가고: 성능 등급을 내려도 보이는 집의 벽이 그대로인가(멀리 갔다 오면 새 밀도)
 node go-story-walls.mjs                        # 사가고: 이야기 인물 자리가 집 벽 안에 들어 말을 못 거는 곳이 없나
+node go-combat.mjs auto [short] [prof]         # 사가고: 가까운 무리와 싸워 적 거리·몸 반지름·체력·GL 수·프레임 + shots/go_combat_* (prof = CPU 자기 시간 상위)
 ```
 
 - 헤드리스 크롬은 이 폴더 `chrome-prof/` 전용 프로필·포트 9351. 끝나면 스크립트가 닫는다 — 남으면 그 프로필이 든 PID 만 끈다.
