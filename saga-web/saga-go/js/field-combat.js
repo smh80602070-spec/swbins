@@ -237,6 +237,11 @@
     g_canyon: { name: '협곡 수호 주작',   ref: 'pt_jujak',       el: 'fire',  hp: 6.0, atk: 1.8, spd: 4.8, reach: 8.0, type: 'spit',  wind: 1.0, cd: 2.3, h: 2.2, exp: 12, r: 2.8, boss: true, guard: true, shields: ['fire', 'elec'], sh: 1.3 },
     g_marsh:  { name: '늪 수호 청룡',     ref: 'pt_cheongryong', el: 'water', hp: 6.5, atk: 1.8, spd: 4.5, reach: 7.5, type: 'spit',  wind: 1.0, cd: 2.4, h: 2.4, exp: 12, r: 3.0, boss: true, guard: true, shields: ['water', 'elec'], sh: 1.3 },
     g_ruins:  { name: '성터 수호 불가사리', ref: 'pt_bulgasari', el: 'elec',  hp: 7.5, atk: 1.9, spd: 3.8, reach: 4.4, type: 'slam',  wind: 1.2, cd: 2.7, h: 2.3, exp: 12, r: 4.8, boss: true, guard: true, shields: ['elec', 'fire'], sh: 1.3 },
+    /* ⑲-31 서리봉 고원(frost.js) 가운데 칸만 — 바이옴 수호자 대신 선다(saga-godot 106 ㊻-1). 반달곰 몸을 크게, 암.
+       겉은 만년설 딱지(빙 → 화로 깬다), 속은 바위(암 → 초로 깬다, 물리로도 제대로 깎인다). 공격은 차례(rot):
+       내려찍기·물기·눈사태(tide 줄 넷)·고리(halo) — 가장 센 수호자라 체력·공격을 한 칸 올렸다 */
+    g_frost:  { name: '만년설 바위곰왕', ref: 'pt_bear', el: 'rock', hp: 8.5, atk: 2.0, spd: 4.0, reach: 4.4, type: 'slam', wind: 1.2, cd: 2.6, h: 2.6, exp: 14, r: 5.0, boss: true, guard: true,
+                shields: ['ice', 'rock'], sh: 1.4, rot: ['slam', 'melee', 'tide', 'slam', 'halo', 'melee'] },
     /* §5 ⑲-9 주간 보스(domain.js 먹구름 제단) — 청룡 몸을 빌린 뇌 이무기. 2단계 뇌 방패는 domain.js 가 두른다 */
     w_imugi:  { name: '먹구름 이무기',   ref: 'pt_cheongryong', el: 'elec',  hp: 20,  atk: 2.2, spd: 4.5, reach: 4.4, type: 'slam',  wind: 1.2, cd: 3.5, h: 2.6, exp: 0,  r: 5.0, boss: true, weekly: true },
     /* §5 ⑲-14 이야기 보스(story.js 6장) — 사람 몸(body = asset3d 고정 몸 id)·검은 가면. 공격이 `rot` 차례로 바뀐다(ROT).
@@ -324,7 +329,18 @@
     if (!cell || !cell.biome || cell.biome === 'home' || !FOES['g_' + cell.biome]) { return null; }
     var x = cell.x + GUARD_OFF.x, y = cell.y + GUARD_OFF.y;
     return { key: 'g:' + cell.key, region: cell.key, x: x, y: y, tier: Math.min(6, tierAt(x, y) + 1), kind: 'guard',
-             foes: [{ kind: 'g_' + cell.biome, dx: 0, dy: 0 }] };
+             foes: [{ kind: guardKind(cell), dx: 0, dy: 0 }] };
+  }
+  /** ⑲-31 이 칸 수호자 종류 — 서리봉 고원 가운데 칸이면 만년설 바위곰왕, 아니면 바이옴 수호자.
+      고원 가운데는 해시·지형만으로 정해져 늘 같다(frost.center) — 한 번 찾으면 기억한다 */
+  var frostKey = null;
+  function guardKind(cell) {
+    var FR = global.DG.frost;
+    if (FR && FR.on && FR.on() && FR.center) {
+      if (frostKey === null) { var fc = FR.center(); frostKey = fc ? fc.key : ''; }
+      if (frostKey && cell.key === frostKey) { return 'g_frost'; }
+    }
+    return 'g_' + cell.biome;
   }
   /** 무리 꼴 — 격자 해시로 고른다(앞의 다섯은 보통, 정예·우두머리는 따로 굴린다) */
   var THEMES = [

@@ -643,7 +643,7 @@
   var DOMAIN_NEAR = 300;     // m
   /** ⑲-10 보상 꽃 — 쓰러진 수호자 자리 */
   function nearBloomCard(nb) {
-    var FB = global.DG.fieldBoss, b = nb.b, M = FB.MATS[b.biome], DM = global.DG.domain;
+    var FB = global.DG.fieldBoss, b = nb.b, M = FB.MATS[b.mat || b.biome], DM = global.DG.domain;
     return '<div class="near-card">' +
         '<div class="near-ico" style="border-color:#ffb6e1">🌸</div>' +
         '<div class="near-meta"><b>' + esc(b.name) + ' 보상 꽃</b>' +

@@ -6,6 +6,8 @@
  *            모자라면 꽃이 남는다. 받으면 150초 뒤 수호자가 다시 선다(field-combat `guardBack`).
  *            다시 쓰러뜨리면 토벌 금·단사·경험 없이 꽃만 다시 핀다.
  *   재료     바이옴마다 보스 재료 하나. 인물은 id 해시로 하나를 쓴다 — 승급 ★2~★5 에 2·4·8·12.
+ *            ⑲-31 서리봉 고원 가운데의 만년설 바위곰왕(field-combat `g_frost`)은 여섯째 재료 만년설 바위 심장 —
+ *            **해시 풀(MAT_KEYS 다섯)에는 안 넣는다**(늘리면 있던 인물 재료가 바뀐다). 고원 인물만 BOSS_OF 로 이것을 쓴다.
  *
  * 꽃이 피는 조건은 세이브만 읽는다: `save.field.guards[지역]`(쓰러뜨림) 이 있고 `guardPaid[지역]`(받음) 이 없다.
  * 보상·재료 계산(`bossOf`·`rankNeed` 표·`rewardOf`)은 순수 함수다. 세이브는 `save.bossMat` 과
@@ -26,9 +28,13 @@
     bamboo: { key: 'bamboo', name: '백호 발톱',      icon: '🐯', boss: 'g_bamboo' },
     canyon: { key: 'canyon', name: '주작 깃',        icon: '🪶', boss: 'g_canyon' },
     marsh:  { key: 'marsh',  name: '청룡 진주',      icon: '🫧', boss: 'g_marsh' },
-    ruins:  { key: 'ruins',  name: '불가사리 쇳조각', icon: '⚙️', boss: 'g_ruins' }
+    ruins:  { key: 'ruins',  name: '불가사리 쇳조각', icon: '⚙️', boss: 'g_ruins' },
+    frost:  { key: 'frost',  name: '만년설 바위 심장', icon: '🧊', boss: 'g_frost' }
   };
-  var MAT_KEYS = ['plain', 'bamboo', 'canyon', 'marsh', 'ruins'];
+  var MAT_KEYS = ['plain', 'bamboo', 'canyon', 'marsh', 'ruins'];   // 해시 풀 — 다섯 그대로
+  var ALL_KEYS = MAT_KEYS.concat(['frost']);
+  /* 해시 밖 — 그 지역 인물은 그 지역 보스 재료(saga-godot 106 ㊻-1 BOSS_OF) */
+  var BOSS_OF = { story_haram: 'frost' };
   var RANK_BOSS = [0, 2, 4, 8, 12];                    // 승급 ★1~★5 (★1 은 없음)
   var COST = 30;
   var BASE_MAT = 2, ART_RARITY = 4, GOLD_PER_TIER = 100, PARTY_EXP = 60;
@@ -42,12 +48,12 @@
     return h >>> 0;
   }
   /** 이 인물이 승급에 쓰는 보스 재료 — id 해시로 다섯 중 하나. **순수 함수** */
-  function bossOf(id) { return MAT_KEYS[strHash('boss:' + id) % MAT_KEYS.length]; }
+  function bossOf(id) { return BOSS_OF[id] || MAT_KEYS[strHash('boss:' + id) % MAT_KEYS.length]; }
 
   function bag() {
     var s = core().save;
     if (!s.bossMat || typeof s.bossMat !== 'object') { s.bossMat = {}; }
-    for (var i = 0; i < MAT_KEYS.length; i++) { if (typeof s.bossMat[MAT_KEYS[i]] !== 'number') { s.bossMat[MAT_KEYS[i]] = 0; } }
+    for (var i = 0; i < ALL_KEYS.length; i++) { if (typeof s.bossMat[ALL_KEYS[i]] !== 'number') { s.bossMat[ALL_KEYS[i]] = 0; } }
     return s.bossMat;
   }
   function count(k) { var b = core().save.bossMat; return (b && b[k]) || 0; }
@@ -67,9 +73,9 @@
     return true;
   }
 
-  /** 꽃 보상 — 바이옴·등급·천하 등급 → 묶음. **순수 함수** */
-  function rewardOf(biome, tier, wl, lootMul) {
-    return { mat: biome, n: BASE_MAT + Math.floor(Math.max(0, wl | 0) / 3), art: ART_RARITY,
+  /** 꽃 보상 — 재료 키(바이옴 또는 'frost')·등급·천하 등급 → 묶음. **순수 함수** */
+  function rewardOf(mat, tier, wl, lootMul) {
+    return { mat: mat, n: BASE_MAT + Math.floor(Math.max(0, wl | 0) / 3), art: ART_RARITY,
              gold: Math.round(GOLD_PER_TIER * Math.max(1, tier | 0) * (lootMul || 1)), party: PARTY_EXP };
   }
   function rewardText(r) {
@@ -82,14 +88,15 @@
   function gps() { var W = global.DG.world; return !!(W && W.mode === 'geo'); }
   function fs() { return (core().save && core().save.field) || null; }
 
-  /** 이 지역의 꽃 — 쓰러뜨렸고 아직 안 받았으면 { rk, x, y, biome, name, el, tier }, 아니면 null */
+  /** 이 지역의 꽃 — 쓰러뜨렸고 아직 안 받았으면 { rk, x, y, biome, mat, name, el, tier }, 아니면 null.
+      mat 은 쓰러진 수호자의 재료(고원 가운데면 'frost', 아니면 바이옴) */
   function bloomAt(rk) {
     var f = fs(), B = BM(), F = FC();
     if (!on() || !f || !f.guards || !f.guards[rk] || (f.guardPaid && f.guardPaid[rk]) || !B || !F) { return null; }
     var p = rk.split('_'), cell = B.cellAt(+p[0], +p[1]), g = F.guardianAt(cell);
     if (!g) { return null; }
-    var foe = F.FOES['g_' + cell.biome];
-    return { rk: rk, x: g.x, y: g.y, biome: cell.biome, region: cell.name, name: foe ? foe.name : '수호자', el: foe ? foe.el : null, tier: g.tier };
+    var kind = g.foes[0].kind, foe = F.FOES[kind], mat = kind === 'g_frost' ? 'frost' : cell.biome;
+    return { rk: rk, x: g.x, y: g.y, biome: cell.biome, mat: mat, region: cell.name, name: foe ? foe.name : '수호자', el: foe ? foe.el : null, tier: g.tier };
   }
   /** 피어 있는 꽃 전부 */
   function blooms() {
@@ -118,7 +125,7 @@
     if (!D) { return { ok: false, why: '원기가 없다' }; }
     if (D.resin() < COST) { return { ok: false, why: '원기가 모자라다(' + D.resin() + '/' + COST + ')', cost: COST }; }
     D.spendResin(COST);
-    var r = rewardOf(b.biome, b.tier, wl(), lootMul()), c = core(), H = global.DG.hero, AR = global.DG.artifact;
+    var r = rewardOf(b.mat, b.tier, wl(), lootMul()), c = core(), H = global.DG.hero, AR = global.DG.artifact;
     add(r.mat, r.n);
     var art = AR && AR.add ? AR.label(AR.add(r.art)) : '';
     c.save.player.gold = (c.save.player.gold || 0) + r.gold;
@@ -127,7 +134,7 @@
     var txt = rewardText(r);
     c.log('🌸 ' + b.region + ' ' + b.name + ' 보상 꽃 — 원기 ' + COST + ' · ' + txt + (art ? ' · ' + art : ''), 'good');
     c.emit('toast', '🌸 ' + txt);
-    c.emit('fieldboss:claim', { rk: rk, biome: b.biome });
+    c.emit('fieldboss:claim', { rk: rk, biome: b.biome, mat: b.mat });
     c.emit('changed');
     c.persist();
     return { ok: true, cost: COST, reward: r, text: txt, art: art };
@@ -143,7 +150,7 @@
   function openCard(b) {
     var el = host(), D = DM();
     if (!el || !b || (global.DG.encounter && global.DG.encounter.active)) { return; }
-    var r = rewardOf(b.biome, b.tier, wl(), lootMul()), have = D ? D.resin() : 0;
+    var r = rewardOf(b.mat, b.tier, wl(), lootMul()), have = D ? D.resin() : 0;
     el.innerHTML =
       '<div class="enc-card">' +
         '<div class="enc-big"><span style="font-size:56px">🌸</span></div>' +
@@ -215,7 +222,7 @@
 
   global.DG = global.DG || {};
   global.DG.fieldBoss = {
-    MATS: MATS, MAT_KEYS: MAT_KEYS, RANK_BOSS: RANK_BOSS, COST: COST, CLAIM_R: CLAIM_R,
+    MATS: MATS, MAT_KEYS: MAT_KEYS, ALL_KEYS: ALL_KEYS, BOSS_OF: BOSS_OF, RANK_BOSS: RANK_BOSS, COST: COST, CLAIM_R: CLAIM_R,
     /* 판정(순수) */
     bossOf: bossOf, rewardOf: rewardOf, rewardText: rewardText,
     /* 세이브 */

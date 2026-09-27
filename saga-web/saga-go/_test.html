@@ -12265,6 +12265,51 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '하람 → 반디 → 굴 → 무리 → 구미호 → 반디 → 받침(먼 ✕ 곁 ○) → 반디 → 하람 합류 · 🪢+6 🪙+3500 · 끝 · 눈 260 → 60' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-31 고원 들판 보스 · 만년설 바위곰왕 (field-combat g_frost · fieldboss frost, PLAN §5 ⑲-31) ── */
+    t('들판 보스 ⑲-31 — 고원 가운데 칸만 만년설 바위곰왕(암·방패 빙→암·차례에 눈사태·고리·가장 셈) · 다른 칸은 바이옴 수호자 · 고원 끄면 바이옴', function () {
+      var FC = DG.fieldCombat, FR = DG.frost, B = DG.biome, FB = DG.fieldBoss, r = {};
+      var fc = FR.center();
+      if (!fc) { return false; }
+      var cell = B.cellAt.apply(null, fc.key.split('_').map(Number)), g = FC.guardianAt(cell), F = g && FC.FOES[g.foes[0].kind];
+      var others = ['g_plain', 'g_bamboo', 'g_canyon', 'g_marsh', 'g_ruins'];
+      r.king = g && g.foes[0].kind === 'g_frost' && F.guard && F.boss && F.el === 'rock' && F.shields.join() === 'ice,rock' &&
+        FC.COUNTER[F.shields[0]] !== FC.COUNTER[F.shields[1]] && F.rot.indexOf('tide') >= 0 && F.rot.indexOf('halo') >= 0 &&
+        others.every(function (k) { return FC.FOES[k].hp < F.hp && FC.FOES[k].exp < F.exp; }) && g.key === 'g:' + cell.key;
+      var nb = fbCell();
+      r.other = nb && nb.g.foes[0].kind === 'g_' + nb.cell.biome;
+      try {
+        C.setTune('frost.on', 0);
+        r.off = FC.guardianAt(cell).foes[0].kind === 'g_' + cell.biome;
+      } finally { C.setTune('frost.on', null); }
+      r.back = FC.guardianAt(cell).foes[0].kind === 'g_frost';
+      r.mat = FB.MATS.frost && FB.MATS.frost.boss === 'g_frost';
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? fc.name + ' — 🐻 ' + F.name + ' 체력 ×' + F.hp + ' · 방패 빙→암 · 끄면 ' + cell.biome : ('실패 ' + bad.join(','));
+    });
+
+    t('들판 보스 ⑲-31 — 만년설 바위 심장: 해시 풀은 다섯 그대로(있던 인물 재료 안 바뀜) · 하람만 해시 밖으로 심장 · 꽃에서 심장이 나온다', function () {
+      var FB = DG.fieldBoss, FR = DG.frost, B = DG.biome, rig = dmRig(), DM = rig.DM, r = {}, i;
+      try {
+        var pool = true;
+        for (i = 0; i < 100; i++) { if (FB.bossOf(D.heroes[i].id) === 'frost') { pool = false; } }
+        r.pool = pool && FB.MAT_KEYS.length === 5 && FB.MAT_KEYS.indexOf('frost') < 0 && FB.ALL_KEYS.length === 6;
+        var hn = FB.rankNeed('story_haram', 1);
+        r.haram = FB.bossOf('story_haram') === 'frost' && hn && hn.item === 'frost' && hn.name === '만년설 바위 심장' && hn.n === 2;
+        var rk = FR.center().key;
+        C.save.field = C.save.field || {};
+        C.save.field.guards = {}; C.save.field.guardPaid = {};
+        C.save.field.guards[rk] = Date.now() - 86400000;
+        var b = FB.bloomAt(rk);
+        r.bloom = b && b.mat === 'frost' && b.name === '만년설 바위곰왕' && b.el === 'rock';
+        C.save.bossMat = {};
+        var c1 = FB.claim(rk);
+        r.claim = c1.ok && c1.reward.mat === 'frost' && FB.count('frost') === c1.reward.n && FB.count(b.biome) === 0 &&
+          /만년설 바위 심장/.test(c1.text) && typeof FB.bag().frost === 'number';
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '100명 중 심장 0 · 하람 🧊2(★1→★2) · 꽃 → 🧊 ' + '받음' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */
     t('원작 겹침 ⑳ — 화면 글자(보패·무기·무예·반응·상자·숨은 터 표 · 인물 상세 · 등급 카드)에 옛 원작 용어가 없다', function () {
       var OLD = ['성유물', '비경', '지맥', '운명의 자리', '원소 시야', '모험 등급', '세계 등급', '원소 폭발', '신상', '재련', '돌파',
