@@ -251,7 +251,11 @@
     haesol_mask: { name: '먹구름 가면 해솔', ref: null, body: 'story_haesol', mask: 'crack', el: 'elec', hp: 13, atk: 2.1, spd: 5.8, reach: 2.4, type: 'melee', wind: 0.6, cd: 1.5, h: 1.0, exp: 0,
                 boss: true, rot: ['shadow', 'spit', 'tide', 'melee', 'slam', 'shadow'] },
     storm_king:  { name: '먹구름 임금', ref: null, body: 'story_blackmask', mask: 'storm', el: 'elec', hp: 17, atk: 2.3, spd: 4.8, reach: 3.4, type: 'melee', wind: 0.7, cd: 1.7, h: 1.9, exp: 0,
-                boss: true, rot: ['slam', 'halo', 'spit', 'melee', 'shadow', 'tide', 'halo'] }
+                boss: true, rot: ['slam', 'halo', 'spit', 'melee', 'shadow', 'tide', 'halo'] },
+    /* ⑲-30 12장 서리봉 고원 얼음굴 앞 — 시간 틈에서 나온 아홉 꼬리 여우(구미호 펫 몸, 빙). 틈새 질주 rift.
+       2단계 빙 방패·졸개는 story.js 가 두른다 */
+    rift_fox:    { name: '틈새 서리 구미호', ref: 'pt_gumiho', el: 'ice', hp: 15, atk: 2.2, spd: 6.0, reach: 3.0, type: 'melee', wind: 0.6, cd: 1.5, h: 2.2, exp: 0,
+                boss: true, rot: ['rift', 'melee', 'spit', 'rift', 'slam', 'halo'] }
   };
   /* ⑲-14 공격 차례(`rot`)의 한 수씩 — reach 안이면 휘두른다. shadow 는 내 등 뒤 SHADOW_BACK m 로 옮겨 붙어 제 둘레 원 */
   var ROT = {
@@ -260,14 +264,21 @@
     melee:  { reach: 2.4, wind: 0.55, r: 0,   mul: 1.0 },
     slam:   { reach: 3.8, wind: 1.1,  r: 4.2, mul: 1.2 },
     tide:   { reach: 11,  wind: 1.1,  r: 2.0, mul: 1.3, n: 4, from: 2.5, gap: 3 },   // ⑲-16 밀물 — 나를 향해 원 넷 줄지어
-    halo:   { reach: 8,   wind: 1.3,  r: 9,   mul: 1.5, inner: 3 }                     // ⑲-20 고리 — 제 둘레 3~9m. 곁(3m 안)으로 파고들거나 9m 밖으로
+    halo:   { reach: 8,   wind: 1.3,  r: 9,   mul: 1.5, inner: 3 },                    // ⑲-20 고리 — 제 둘레 3~9m. 곁(3m 안)으로 파고들거나 9m 밖으로
+    rift:   { reach: 12,  wind: 1.0,  r: 2.0, mul: 1.5, n: 5, from: 2, gap: 2.4 }      // ⑲-30 틈새 질주 — 원 다섯 줄 예고, 칠 때 줄 끝으로 옮긴다
   };
-  var SHADOW_BACK = 2.2;
-  /** ⑲-16 밀물 원 넷 — 가면(fx,fy)에서 나(px,py) 쪽으로 from m 부터 gap 간격 */
-  function tideMarks(fx, fy, px, py) {
-    var T = ROT.tide, dx = px - fx, dy = py - fy, dl = Math.hypot(dx, dy) || 1, out = [];
+  var SHADOW_BACK = 2.2, RIFT_STEP = 1.5, RIFT_SLOPE = 0.3;   // ⑲-30 줄 끝 땅 높이 차가 RIFT_STEP + 거리 × RIFT_SLOPE 를 넘으면(벼랑) 제자리에서 친다
+  /** ⑲-16 밀물 원 넷(⑲-30 틈새 질주는 kind 'rift' — 다섯) — 가면(fx,fy)에서 나(px,py) 쪽으로 from m 부터 gap 간격 */
+  function tideMarks(fx, fy, px, py, kind) {
+    var T = ROT[kind || 'tide'], dx = px - fx, dy = py - fy, dl = Math.hypot(dx, dy) || 1, out = [];
     for (var i = 0; i < T.n; i++) { var s = T.from + T.gap * i; out.push({ x: fx + dx / dl * s, y: fy + dy / dl * s }); }
     return out;
+  }
+  /** ⑲-30 틈새 질주 끝 — 줄 끝(x,y)으로 옮겨도 되나(비탈은 되고 벼랑은 안 된다). 높이를 모르면 된다 */
+  function riftOk(fx, fy, x, y) {
+    var RL = global.DG.relief3d;
+    if (!RL || !RL.heightAt) { return true; }
+    return Math.abs(RL.heightAt(x, y) - RL.heightAt(fx, fy)) <= RIFT_STEP + Math.hypot(x - fx, y - fy) * RIFT_SLOPE;
   }
   /** 예고 표식에 (x,y) 가 드나 — 원 여럿(list)이면 하나라도. pad 는 맞는 쪽 몸 둘레 */
   function markHit(m, x, y, pad) {
@@ -1557,15 +1568,15 @@
             f.x = px + sdx / sdl * SHADOW_BACK; f.y = py + sdy / sdl * SHADOW_BACK;
             push(S, { t: 'blink', uid: f.uid, x: f.x, y: f.y });
           }
-          if (AT === 'tide') {
-            var tl = tideMarks(f.x, f.y, gx, gy);
+          if (AT === 'tide' || AT === 'rift') {
+            var tl = tideMarks(f.x, f.y, gx, gy, AT);
             f.mark = { x: tl[0].x, y: tl[0].y, r: RT.r, t: RT.wind, list: tl };
           } else {
             f.mark = AT === 'spit' ? { x: gx, y: gy, r: RT.r, t: RT.wind }
               : (AT === 'halo' ? { x: f.x, y: f.y, r: RT.r, inner: RT.inner, t: RT.wind }
                 : (AT === 'slam' || AT === 'shadow' ? { x: f.x, y: f.y, r: RT.r, t: RT.wind } : null));
           }
-          push(S, { t: 'tell', uid: f.uid, type: AT === 'shadow' || AT === 'tide' || AT === 'halo' ? 'slam' : AT, x: f.x, y: f.y });
+          push(S, { t: 'tell', uid: f.uid, type: AT === 'shadow' || AT === 'tide' || AT === 'halo' || AT === 'rift' ? 'slam' : AT, x: f.x, y: f.y });
         }
       } else if (f.st === 'wind') {
         S.calmT = Math.min(S.calmT, 0);
@@ -1585,7 +1596,12 @@
           f.atkSiege = false;
           var SL = f.mark && f.mark.list ? f.mark.list : [f.mark || f];
           for (var si = 0; si < SL.length; si++) {
-            push(S, { t: 'strike', uid: f.uid, type: WT === 'shadow' || WT === 'tide' || WT === 'halo' ? 'slam' : WT, x: SL[si].x, y: SL[si].y, r: f.mark ? f.mark.r : 0 });
+            push(S, { t: 'strike', uid: f.uid, type: WT === 'shadow' || WT === 'tide' || WT === 'halo' || WT === 'rift' ? 'slam' : WT, x: SL[si].x, y: SL[si].y, r: f.mark ? f.mark.r : 0 });
+          }
+          /* ⑲-30 틈새 질주 — 틈으로 사라져 줄 끝에 나타난다(땅 높이가 크게 다르면 제자리) */
+          if (WT === 'rift' && f.mark && f.mark.list) {
+            var rEnd = f.mark.list[f.mark.list.length - 1];
+            if (riftOk(f.x, f.y, rEnd.x, rEnd.y)) { f.x = rEnd.x; f.y = rEnd.y; push(S, { t: 'blink', uid: f.uid, x: f.x, y: f.y }); }
           }
           if (F.rot) { f.rotI = ((f.rotI || 0) + 1) % F.rot.length; }
           f.mark = null; f.cd = F.cd * (f.cdMul || 1);          // ⑲-9 주간 보스 2단계는 cdMul 로 빨라진다
@@ -2346,7 +2362,7 @@
 
   global.DG = global.DG || {};
   global.DG.fieldCombat = {
-    EL: EL, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
+    EL: EL, FOES: FOES, ROT: ROT, SHADOW_BACK: SHADOW_BACK, RIFT_STEP: RIFT_STEP, RIFT_SLOPE: RIFT_SLOPE, riftOk: riftOk, SIEGE_PULL: SIEGE_PULL, tideMarks: tideMarks, markHit: markHit, foeAtk: foeAtk, KB_T: KB_T, knock: knock, rainFollow: rainFollow, THEMES: THEMES, ELITES: ELITES, ERA_THEMES: ERA_THEMES, ERA_ELITES: ERA_ELITES, eraOfCamp: eraOfCamp, CELL: CELL, ENERGY_MAX: ENERGY_MAX,
     SKILL_CD: SKILL_CD, SWAP_CD: SWAP_CD, DODGE_COST: DODGE_COST, VAPOR_MUL: VAPOR_MUL,
     /* 판정 층 — 화면 없이 굴린다(자가진단이 쓰는 문) */
     elementOf: elementOf, EL_KEYS: EL_KEYS, heavy: heavy, plunge: plunge, plungeMul: plungeMul, plungeLand: plungeLand, PLUNGE_R: PLUNGE_R(), CHARGE_COST: CHARGE_COST(), REACT: REACT, attaches: attaches, shapeOf: shapeOf, SHAPES: SHAPES, kitFor: kitFor, segDist: segDist, react: react, shieldMul: shieldMul, campAt: campAt, tierAt: tierAt, guardianAt: guardianAt, COUNTER: COUNTER,

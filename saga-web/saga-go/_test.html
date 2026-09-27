@@ -10261,8 +10261,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     t('이야기 ⑲-12 — 표·자리: 장 둘(단계 8·4, 여정 등급 1·5) · 인물 셋 = ⑮ 땅 탑 + 자리(고향 촌장·갈대 나루 사공·옛 성터 학자) · 모든 단계에 목표 · 같은 세계면 같은 자리 · 몸 셋 고정', function () {
       var ST = DG.story, A3 = DG.asset3d, r = {};
-      r.table = ST.CHAPTERS.length === 11 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
-        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29 가 3~11장을 더했다
+      r.table = ST.CHAPTERS.length === 12 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
+        ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30 이 3~12장을 더했다
       var e = ST.npcPos('elder'), f = ST.npcPos('ferryman'), s = ST.npcPos('scholar'), ga = ST.anchorOf('galdae'), go = ST.anchorOf('gojeong');
       r.npc = e.x === -22 && e.y === 16 && f.x === ga.x - 18 && f.y === ga.y - 24 && s.x === go.x - 18 && s.y === go.y - 24 &&
         DG.biome.cellAt.apply(null, ga.key.split('_').map(Number)).zone === 'galdae' && DG.biome.cellAt.apply(null, go.key.split('_').map(Number)).zone === 'gojeong';
@@ -12058,7 +12058,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       try {
         C.save.player.level = 28;
         var c11 = ST.CHAPTERS[10], S = c11.steps;
-        r.table = ST.CHAPTERS.length === 11 && c11.id === 'ch11' && S.length === 9 && c11.ar === 28 && !c11.join && c11.reward.knot === 5 &&
+        r.table = ST.CHAPTERS.length >= 11 && c11.id === 'ch11' && S.length === 9 && c11.ar === 28 && !c11.join && c11.reward.knot === 5 &&
           c11.reward.gold === 3250 && c11.reward.party === 1000 &&
           S.map(function (s) { return s.type; }).join() === 'talk,go,talk,seal,kill,talk,defend,talk,talk' && S[3].order.join() === 'moon,sun,star';
         var fort = FR.siteById('fort'), lake = FR.siteById('lake'), ship = FR.siteById('ship'), obs = FR.siteById('obs'), bad = [];
@@ -12136,7 +12136,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         r.bye = stTalkAll(ST) && C.save.story.step === 8;
         var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
         stGo(ST.npcPos('bandi'));
-        r.end = stTalkAll(ST) && C.save.story.ch === 11 && ST.done() && m.knot === k0 + 5 && C.save.player.gold === gold0 + 3250 && !ST.visible('bawoo');
+        r.end = stTalkAll(ST) && C.save.story.ch === 11 && ST.chapter() === ST.CHAPTERS[11] &&   // ⑲-30 뒤로 12장
+          m.knot === k0 + 5 && C.save.player.gold === gold0 + 3250 && !ST.visible('bawoo');
       } finally { DG.frost._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '하람 → 문루 → 바우 → 달·해·별(별 먼저 ✕) → 파수 넷 → 바우 → 물결 3·4·5(담 밖) → 바우 → 반디 · 🪢+5 🪙+3250 · 끝' : ('실패 ' + bad.join(','));
@@ -12151,6 +12152,117 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '곶 열두 자리 그대로' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-30 이야기 12장 · 떨어진 별배 (story.js 12장·하람 합류·field-combat rift_fox·rift·kits·frost calm, PLAN §5 ⑲-30) ── */
+    t('이야기 ⑲-30 — 표·자리: 12장 9단계(Lv30)·보상·하람 합류 · 목표 모두 고원(얼음굴·심장 받침) · 무리·구미호 = 굴 앞 · 받침은 비행선 선체 밖 · 반디 6째 굴 앞(그 밖 비행선) · 하람 1째 관측소·7~9째 비행선 · 하람 화 활·스킬 둘 · 말하는 이·표정', function () {
+      var rig = st10Rig(), ST = rig.ST, FR = DG.frost, FC = DG.fieldCombat, WP = DG.weapon, r = {}, i;
+      try {
+        C.save.player.level = 30;
+        var c12 = ST.CHAPTERS[11], S = c12.steps;
+        r.table = ST.CHAPTERS.length === 12 && c12.id === 'ch12' && S.length === 9 && c12.ar === 30 && c12.join === 'story_haram' && c12.reward.knot === 6 &&
+          c12.reward.gold === 3500 && c12.reward.party === 1100 &&
+          S.map(function (s) { return s.type; }).join() === 'talk,talk,go,kill,duel,talk,light,talk,talk' && S[4].kind === 'rift_fox' && S[4].shield === 'ice';
+        var cave = FR.siteById('cave'), ship = FR.siteById('ship'), obs = FR.siteById('obs'), bad = [];
+        for (i = 0; i < S.length; i++) {
+          C.save.story = { ch: 11, step: i };
+          var tg = ST.targetOf(ST.step());
+          if (!tg || !FR.snowAt(tg.x, tg.y)) { bad.push(i); }
+        }
+        r.snow = bad.length === 0;
+        var ht = ST.targetOf(S[6]);
+        r.spots = st10Eq(ST.targetOf(S[2]), cave) && st10Eq(ST.targetOf(S[3]), st10Add(cave, ST.CAVE_FIGHT)) && st10Eq(ST.targetOf(S[4]), st10Add(cave, ST.CAVE_FIGHT)) &&
+          st10Eq(ht, st10Add(ship, ST.HEART)) && ST.landAt(ht.x, ht.y) && !FR.rectsOf(ship).some(function (q) { return frInRect(q, ht.x, ht.y); });
+        function np(k, si) { C.save.story = { ch: 11, step: si }; return ST.npcPos(k); }
+        r.bandi = st10Eq(np('bandi', 1), st10Add(ship, [0, 12])) && st10Eq(np('bandi', 5), st10Add(cave, ST.BANDI_CAVE)) && st10Eq(np('bandi', 7), st10Add(ship, [0, 12]));
+        r.haram = st10Eq(np('haram', 0), st10Add(obs, ST.HARAM_OBS)) && st10Eq(np('haram', 4), st10Add(obs, ST.HARAM_OBS)) &&
+          st10Eq(np('haram', 6), st10Add(ship, ST.HARAM_SHIP)) && st10Eq(np('haram', 8), st10Add(ship, ST.HARAM_SHIP));
+        var M = ST.MEMBERS.story_haram, kt = FC.kitFor('story_haram');
+        r.member = D.find('story_haram') === M && M.rarity === 4 && FC.elementOf('story_haram') === 'fire' && WP.typeOf('story_haram') === 'bow' &&
+          !!kt && kt.skill.name === '휴대 관측기' && kt.skill.type === 'zone' && kt.burst.name === '맑음 예보' && kt.burst.type === 'rally';
+        var who = {}, emo = 0;
+        S.forEach(function (st) { (st.lines || []).forEach(function (l) { who[l[0]] = 1; if (l[2]) { emo++; if (!DG.talkface.EMO[l[2]]) { emo = -99; } } }); });
+        r.lines = Object.keys(who).sort().join() === ['?', '반디', '하람'].sort().join() && emo === 9;
+      } finally { DG.frost._resetForTest(); rig.undo(); }
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? '12장 9단계·하람 합류 · 목표 모두 고원 · 굴 앞 무리·구미호 · 받침 선체 밖 · 반디·하람 자리 · 화 활 관측기·맑음 예보' : ('실패 ' + bad2.join(','));
+    });
+
+    t('이야기 ⑲-30 — 틈새 서리 구미호: 구미호 몸·빙 · 틈새 질주 = 나를 향해 원 다섯(2m 부터 2.4m 간격) → 치면 줄 끝으로 옮김(blink) · 땅 높이 차가 1.5m + 거리 30% 넘으면(벼랑) 제자리 · 굴 앞 비탈에선 옮김 · 밀물은 넷 그대로 · 절반에서 빙 방패 + 눈여우·회오리매 · 쓰러뜨리면 다음 단계', function () {
+      var rig = st10Rig(), ST = rig.ST, FC = DG.fieldCombat, RL = DG.relief3d, r = {}, g;
+      var h0 = RL && RL.heightAt;
+      try {
+        C.save.player.level = 30; C.save.story = { ch: 11, step: 4 };
+        var dt = ST.targetOf(ST.step());
+        stGo({ x: dt.x + 20, y: dt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()], b = cp && S.foes[cp.uids[0]];
+        var lv = b && FC.live().filter(function (x) { return x.uid === b.uid; })[0];
+        r.spawn = !!b && b.kind === 'rift_fox' && b.el === 'ice' && !!lv && lv.ref.id === 'pt_gumiho' && FC.FOES.rift_fox.rot.indexOf('rift') >= 0;
+        var T = FC.ROT.rift, tl = FC.tideMarks(0, 0, 10, 0, 'rift'), td = FC.tideMarks(0, 0, 10, 0);
+        r.marks = tl.length === 5 && Math.abs(tl[0].x - 2) < 1e-9 && Math.abs(tl[4].x - (T.from + T.gap * 4)) < 1e-9 && td.length === 4;
+        stGo({ x: b.x + 8, y: b.y });
+        b.st = 'chase'; b.cd = 0; b.rotI = 0;
+        FC.tick(0.02);
+        var L = b.mark && b.mark.list, end = L ? L[L.length - 1] : null;
+        r.tell = b.st === 'wind' && b.atkT === 'rift' && !!L && L.length === 5 && L[4].x > L[0].x;
+        var ev = [];
+        for (g = 0; g < 50 && b.st === 'wind'; g++) { FC.tick(0.05); ev = ev.concat(S.ev || []); }
+        r.move = !!end && Math.abs(b.x - end.x) < 1e-6 && Math.abs(b.y - end.y) < 1e-6 && b.rotI === 1;
+        /* 높이가 크게 다르면 제자리 */
+        if (RL) { RL.heightAt = function (x, y) { return x > b.x + 3 ? 50 : 0; }; }
+        stGo({ x: b.x + 8, y: b.y });
+        b.st = 'chase'; b.cd = 0; b.rotI = 0;
+        var bx = b.x, by = b.y;
+        FC.tick(0.02);
+        for (g = 0; g < 50 && b.st === 'wind'; g++) { FC.tick(0.05); }
+        r.stay = !RL || (b.x === bx && b.y === by && !FC.riftOk(bx, by, bx + 10, by));
+        if (RL) { RL.heightAt = h0; }
+        b.hp = Math.round(b.hpMax * 0.4); ST.check();
+        var ad = S.camps[ST.keyOf() + ':add'];
+        r.p2 = b.shEl === 'ice' && !!ad && ad.uids.map(function (u) { return S.foes[u].kind; }).join(',') === 'snowfox,hawk';
+        b.shield = 0; b.layers = [];
+        for (var k = 0; k < 3 && !b.dead; k++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); }
+        FC.tick(0.05);
+        r.win = C.save.story.step === 5 && !S.camps[ST.keyOf() + ':add'];
+      } finally { if (RL) { RL.heightAt = h0; } DG.frost._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '구미호 몸·빙 · 원 다섯 2~11.6m · 줄 끝으로 옮김 · 높이 막히면 제자리 · 밀물 넷 · 40% → ❄️방패 + 눈여우·회오리매 · 다음 단계' : ('실패 ' + bad.join(','));
+    });
+
+    t('이야기 ⑲-30 — 흐름·눈: 하람 → 반디 → 굴 → 무리 → 구미호 → 반디 → 받침에 원소(먼 불 ✕·곁 ○) → 반디 → 하람 합류·보상(매듭 6·금 3500) · 이야기 끝 · 12장 끝나기 전 눈 260 · 뒤 60', function () {
+      var rig = st10Rig(), ST = rig.ST, FC = DG.fieldCombat, TL = DG.talent, FR = DG.frost, r = {};
+      try {
+        C.save.player.level = 30; C.save.story = { ch: 11, step: 0 };
+        r.snowBefore = !FR.calm() && FR.snowCount() === FR.SNOW_N && FR.SNOW_N === 260;
+        stGo(ST.npcPos('haram')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        stGo(ST.npcPos('bandi')); r.t1 = stTalkAll(ST) && C.save.story.step === 2;
+        stGo(ST.targetOf(ST.step())); ST.check();
+        r.go = C.save.story.step === 3;
+        var kt = ST.targetOf(ST.step());
+        stGo({ x: kt.x + 20, y: kt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state();
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 4;
+        FC.tick(0.05); ST.check();
+        var cp = S.camps[ST.keyOf()], b = cp && S.foes[cp.uids[0]];
+        if (b) { b.shield = 0; b.layers = []; for (var k = 0; k < 3 && !b.dead; k++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); } }
+        FC.tick(0.05);
+        r.duel = C.save.story.step === 5;
+        stGo(ST.npcPos('bandi')); r.t5 = stTalkAll(ST) && C.save.story.step === 6;
+        var lt = ST.targetOf(ST.step());
+        C.emit('field:element', { el: 'fire', x: lt.x + 30, y: lt.y, r: 3, t: 'skill' });
+        var still = C.save.story.step === 6;
+        C.emit('field:element', { el: 'fire', x: lt.x + 2, y: lt.y, r: 2, t: 'skill' });
+        r.light = still && C.save.story.step === 7;
+        stGo(ST.npcPos('bandi')); r.t7 = stTalkAll(ST) && C.save.story.step === 8;
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        r.notYet = !ST.hasMember('story_haram');
+        stGo(ST.npcPos('haram'));
+        r.end = stTalkAll(ST) && C.save.story.ch === 12 && ST.done() && ST.hasMember('story_haram') && m.knot === k0 + 6 && C.save.player.gold === gold0 + 3500;
+        r.snowAfter = FR.calm() && FR.snowCount() === FR.SNOW_CALM && FR.SNOW_CALM === 60;
+      } finally { DG.frost._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '하람 → 반디 → 굴 → 무리 → 구미호 → 반디 → 받침(먼 ✕ 곁 ○) → 반디 → 하람 합류 · 🪢+6 🪙+3500 · 끝 · 눈 260 → 60' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

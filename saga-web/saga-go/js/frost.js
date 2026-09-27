@@ -3,7 +3,7 @@
  * ---------------------------------------------------------------
  *   땅      ⑮ 북방 설산(바깥 고리 북쪽) — 고향에 가장 가까운 그 땅 칸(북풍 고개, 약 6km 북)이 고원 가운데
  *   눈      그 땅 전체가 눈밭(world3d `terrainTexture` 가 `snowCell` 을 묻는다 — 물·길 빼고) · 그 땅 안에서만 눈이 내린다
- *           (입자 SNOW_N) · 그 땅 안이면 조명 천후가 `snow`(world3d `weatherKey` 가 `snowingHere` 를 묻는다)
+ *           (입자 SNOW_N — 이야기 12장을 마치면 SNOW_CALM, ⑲-30) · 그 땅 안이면 조명 천후가 `snow`(world3d `weatherKey` 가 `snowingHere` 를 묻는다)
  *   명소    다섯 — 옛 산성 터(과거)·기상 관측소(현대)·추락한 비행선(미래)·얼어붙은 호수·고개 경계비. 30m 안 = 발견
  *   발견    작은 발견 일곱(위성 조각·장수 석상·사냥꾼 오두막·눈사람·케이블카·얼음굴·봉화) — 14m(GPS 30m) 안
  *   이동    서리 고개(경계비)·기상 관측소 — 찾으면 지도(M) 순간이동 지점(키보드 판만)
@@ -132,6 +132,16 @@
     if (t - hereT > 500 || hereT < 0) { var p = core().save.player.pos; hereV = snowAt(p.x, p.y); hereT = t; }
     return hereV;
   }
+  /** ⑲-30 이야기 12장(별배 심장)을 마쳤으면 눈이 잦아든다 — 12장이 끝난 뒤(save.story.ch 가 그 장 다음) */
+  var CALM_AFTER = 'ch12', SNOW_CALM = 60;
+  function calm() {
+    var ST = global.DG.story, s = core() && core().save ? core().save.story : null;
+    if (!ST || !ST.CHAPTERS || !s) { return false; }
+    for (var i = 0; i < ST.CHAPTERS.length; i++) { if (ST.CHAPTERS[i].id === CALM_AFTER) { return s.ch > i; } }
+    return false;
+  }
+  /** 지금 내리는 눈 입자 수 */
+  function snowCount() { return calm() ? SNOW_CALM : SNOW_N; }
 
   /* ── 벽(월드 좌표 사각형 — world3d houseRects 가 격자 칸마다 가져간다) ─ */
   var rectMemo = null;
@@ -389,8 +399,9 @@
     if (snow) {
       snow.visible = here;
       if (here) {
-        var a = snow.geometry.attributes.position.array;
-        for (i = 0; i < SNOW_N; i++) {
+        var a = snow.geometry.attributes.position.array, sn = snowCount();
+        if (snow.geometry.setDrawRange) { snow.geometry.setDrawRange(0, sn); }
+        for (i = 0; i < sn; i++) {
           a[i * 3 + 1] -= SNOW_FALL * (dt || 0) * (0.7 + (i % 5) * 0.12);
           a[i * 3] += Math.sin(clock * 0.8 + i) * 0.3 * (dt || 0);
           if (a[i * 3 + 1] < 0) { a[i * 3 + 1] += SNOW_H; }
@@ -416,7 +427,7 @@
     /* 판정 층(순수) */
     on: on, center: center, sites: sites, siteById: siteById, snowAt: snowAt, snowCell: snowCell, rectsOf: rectsOf, rectsIn: rectsIn,
     /* 세이브·상태 */
-    snowingHere: snowingHere, found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks,
+    snowingHere: snowingHere, calm: calm, snowCount: snowCount, SNOW_N: SNOW_N, SNOW_CALM: SNOW_CALM, found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks,
     tick: tick,
     _resetForTest: function () { memo = null; rectMemo = null; snowMemo = {}; snowN = 0; hereT = -1; }
   };

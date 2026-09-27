@@ -1,5 +1,5 @@
 /**
- * 이야기 임무 1~11장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28·29, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2·3)
+ * 이야기 임무 1~12장 — 대화 창·금빛 기둥·목록(O)·단계 열여섯 가지 (PLAN §5 ⑲-12~20·28~30, saga-godot PLAN 106 ㉕㉗㉘㉙㉚㉜㉞㊲㊳㊺-2~4)
  * ---------------------------------------------------------------
  *   인물 넷    청하 촌장 누리(고향 마을) · 늙은 사공 버들(갈대 나루 탑) · 떠돌이 학자 은비(옛 성터 언덕 탑) —
  *              ⑮ 땅의 "고향에서 가장 가까운 탑" 곁에 늘 서 있다. 지금 단계가 아니면 혼잣말 한 줄.
@@ -55,13 +55,15 @@
     isle: { isle: true }, dock: { zone: 'galdae', off: [-12, -17] }, sky: { sky: true },
     /* ⑲-28 서리봉 고원 — frost.js 가운데(탑)·명소. 고원이 꺼져 있으면 자리 없음 */
     fr_center: { frost: 'center' }, fr_stele: { frost: 'stele' }, fr_obs: { frost: 'obs' }, fr_ship: { frost: 'ship' }, fr_fort: { frost: 'fort' },
-    fr_lake: { frost: 'lake' } };
+    fr_lake: { frost: 'lake' }, fr_cave: { frost: 'cave' } };
   /* ⑲-28 하람이 서는 자리 — 관측소 곁(늘)·비행선 곁. 산성 안은 남쪽 문 안쪽(담 반 변 13m) */
   var HARAM_OBS = [-6, 10], HARAM_SHIP = [-6, 12], HARAM_FORT = [0, 4];
   /* ⑲-29 11장 자리(산성·호수 가운데에서) — 문루 = 남쪽 문(담 13m) · 바우는 문 안쪽 · 봉화 제단은 문 밖 20m ·
      석등은 호수(얼음 반지름 28m) 북쪽 물가 · 바우는 그 곁. 제단 무리는 담이 막는 북쪽 빼고 동~서 다섯 방향(도, 북 0 시계 방향) */
   var FORT_GATE = [0, 13], BAWOO_GATE = [3, 9], BEACON = [0, 20], LAKE_SEAL = [0, -36], BAWOO_LAKE = [-9, -40];
   var BEACON_DIRS = [90, 135, 180, 225, 270];
+  /* ⑲-30 12장 자리 — 서리 무리·구미호는 얼음굴 어귀 남쪽 14m · 반디는 구미호 뒤 굴 앞 · 심장 받침은 비행선 곁(선체 밖) */
+  var CAVE_FIGHT = [0, 14], BANDI_CAVE = [8, 6], HEART = [4, 7];
   /* ⑲-16 제단 지키기 — 물결은 제단 둘레 DEFEND_RING m 열두 자리에서 나온다(물결 n 은 4n 째 자리부터).
      제단 체력 = DEFEND_HITS × 그 자리 등급 공격(멧돼지 기준, 천하 등급 포함) */
   var DEFEND_RING = 15, DEFEND_WAVE_SEC = 28, DEFEND_REST = 4, DEFEND_HITS = 45, DEFEND_SLOTS = 12;
@@ -104,9 +106,9 @@
     haram:    { id: 'story_haram',    name: '기상 관측원 하람', short: '하람', zone: 'snowfort', spot: 'fr_obs', off: HARAM_OBS, color: '#db7533',
       idle: '기압계 바늘이 또 얼었네… 사흘째 눈이 안 멎어요.',
       at: [{ ch: 9, from: 6, to: 6, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 9, from: 7, to: 8, spot: 'fr_fort', off: HARAM_FORT },
-        { ch: 10, from: 8, to: 8, spot: 'fr_ship', off: HARAM_SHIP }] },
+        { ch: 10, from: 8, to: 8, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 11, from: 6, to: 8, spot: 'fr_ship', off: HARAM_SHIP }] },
     bandi:    { id: 'story_bandi',    name: '조종 기계 반디', short: '반디', zone: 'snowfort', spot: 'fr_ship', off: [0, 12], color: '#8cd9f2', pet: 'drone',
-      idle: '삐— 동력 3퍼센트. 추위 경고.' },
+      idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }] },
     /* ⑲-29 산성지기 바우(과거의 넋) — 11장 셋째~여덟째 단계에만. 석등·파수·불씨 동안은 호숫가 */
     bawoo:    { id: 'story_bawoo',    name: '산성지기 바우', short: '바우', zone: 'snowfort', spot: 'fr_fort', off: BAWOO_GATE, color: '#7a3329',
       idle: '……불씨는 제가 갈 곳을 안다.',
@@ -132,7 +134,10 @@
       el: 'water', weapon: 'polearm', stats: { might: 82, wisdom: 60, command: 66 }, emoji: '🛶', quote: '물 냄새가 요즘 영 비릿해.' },
     /* ⑲-20 해솔(9장 끝) — 뇌 대도 */
     story_haesol: { id: 'story_haesol', name: '해솔', hanja: '日松', era: '이야기', faction: '재야', rarity: 5, trait: 'might', story: true,
-      el: 'elec', weapon: 'claymore', stats: { might: 91, wisdom: 70, command: 68 }, emoji: '⛈️', quote: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' }
+      el: 'elec', weapon: 'claymore', stats: { might: 91, wisdom: 70, command: 68 }, emoji: '⛈️', quote: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' },
+    /* ⑲-30 하람(12장 끝) — 화 활(신호탄). 명단에 없던 원소·무기 */
+    story_haram: { id: 'story_haram', name: '하람', hanja: '夏嵐', era: '이야기', faction: '재야', rarity: 4, trait: 'wisdom', story: true,
+      el: 'fire', weapon: 'bow', stats: { might: 62, wisdom: 84, command: 64 }, emoji: '📡', quote: '날씨도 시간도, 재야 아는 거니까.' }
   };
   function hookFind() {
     var D = global.DG.data;
@@ -509,6 +514,43 @@
             ['?', ['이제 심장을 켤 수 있어?', '바우가 맡긴 거야.']],
             ['반디', '불씨만으로는 부족합니다. 심장실 문이 안쪽에서 얼어붙었고, 시간 틈에서 무언가가 심장을 붙잡고 있습니다.'],
             ['하람', '무언가라니… 오늘은 여기까지. 내일 날이 개면, 셋이서 배 안으로 들어가요.', 'sorrow']] }
+      ] },
+    /* ⑲-30 관측소 → 비행선(심장이 없다) → 얼음굴 → 시간 틈 무리 → 틈새 서리 구미호 → 심장 → 심장 받침 → 하람 합류.
+       장이 끝나면 고원 눈이 잦아든다(frost.js calm) */
+    { id: 'ch12', name: '제12장 · 떨어진 별배', ar: 30, join: 'story_haram',
+      reward: { knot: 6, gold: 3500, guide: 4, secret: 5, party: 1100 },
+      steps: [
+        { type: 'talk', npc: 'haram', text: '기상 관측소의 하람과 이야기하기',
+          lines: [['하람', '왔어요? 바늘이 또 이상해요 — 비행선 쪽 온도가 뚝뚝 떨어지는데, 반디 신호는 끊겼다 이어졌다 해요.', 'surprised'],
+            ['?', ['바로 가 볼게요.', '반디가 위험해요?']],
+            ['하람', '불씨는 잘 갖고 있죠? 먼저 가요. 나도 기계만 챙겨서 곧 따라갈게요!']] },
+        { type: 'talk', npc: 'bandi', text: '추락한 비행선의 반디에게 가기',
+          lines: [['반디', '삐— 경고. 심장실 문을 열었습니다. 심장이… 없습니다.', 'surprised'],
+            ['반디', '시간 틈에서 흰 짐승이 나와 심장을 물고 갔습니다. 꼬리가 아홉. 발자국은 얼음굴로.'],
+            ['?', ['쫓아갈게.', '꼬리가 아홉?']],
+            ['반디', '그 짐승은 이 시대 것이 아닙니다. 심장의 추위를 먹고 자랍니다. 서둘러 주십시오.']] },
+        { type: 'go', spot: 'fr_cave', text: '흰 발자국을 따라 얼음굴 어귀로' },
+        { type: 'kill', spot: 'fr_cave', off: CAVE_FIGHT, kinds: ['snowfox', 'snowfox', 'hawk', 'snowfox'], text: '시간 틈에서 새어 나온 서리 무리 물리치기' },
+        { type: 'duel', spot: 'fr_cave', off: CAVE_FIGHT, kind: 'rift_fox', shield: 'ice', adds: ['snowfox', 'hawk'], text: '별배 심장을 문 틈새 서리 구미호와 맞서기',
+          enter: '🦊 시간 틈이 찢어지며 꼬리 아홉 달린 흰 여우가 뛰어나왔다 — 틈새 서리 구미호!',
+          p2: '❄️ 틈새 서리 구미호가 시간 틈의 서리를 둘렀다 — 불로 깨라! 여우와 매가 뛰어든다',
+          win: '🦊 틈새 서리 구미호 — 별배 심장을 떨구고 시간 틈 속으로 사라졌다' },
+        { type: 'talk', npc: 'bandi', text: '얼음굴 앞에 날아온 반디와 심장 살피기',
+          lines: [['반디', '삐— 심장 회수. 금은 갔지만 멈추지 않았습니다.', 'joy'],
+            ['반디', '그 짐승은 틈 너머로 달아났습니다. 틈은 아직 닫히지 않았습니다 — 기록해 두겠습니다.'],
+            ['?', ['이제 불씨로 켜자.', '틈이 또 열릴까?']],
+            ['반디', '비행선 곁 심장 받침으로. 불씨를 원소로 불어 넣어 주십시오.']] },
+        { type: 'light', spot: 'fr_ship', off: HEART, text: '비행선 곁 심장 받침에 원소 스킬로 불씨 불어 넣기' },
+        { type: 'talk', npc: 'bandi', text: '심장이 뛰는 비행선의 반디와 이야기하기',
+          lines: [['반디', '심장 박동 확인. 선체 온도 상승. 추위 방출… 정지.', 'joy'],
+            ['하람', '보여요? 눈이 잦아들어요! 사흘 만에 하늘이 보여요.', 'joy'],
+            ['?', ['별배는 날 수 있어?', '이제 끝난 거야?']],
+            ['반디', '아직입니다. 날개 조각 셋이 시간 틈 너머 여러 시대에 흩어졌습니다. 그리고 그 흰 짐승도.', 'sorrow']] },
+        { type: 'talk', npc: 'haram', text: '하람과 이야기하기',
+          lines: [['하람', '여러 시대라니… 관측원 인생에 이런 날이 올 줄이야.', 'surprised'],
+            ['하람', '결정했어요. 관측소 기록은 기계한테 맡기고, 나도 같이 갈래요. 날씨도 시간도, 재야 아는 거니까.', 'joy'],
+            ['?', ['같이 가요!', '위험할 텐데요?']],
+            ['하람', '신호탄 활이면 여우쯤은 문제없어요. 잘 부탁해요!', 'fun']] }
       ] }
   ];
 
@@ -1686,7 +1728,7 @@
     talkables: talkables, storyStep: storyStep, stepAt: stepAt, aimPoints: aimPoints,
     FOLLOW_NEAR: FOLLOW_NEAR, FOLLOW_LOST: FOLLOW_LOST,
     HARAM_OBS: HARAM_OBS, HARAM_SHIP: HARAM_SHIP, HARAM_FORT: HARAM_FORT, frostSpot: frostSpot, followPts: followPts,
-    FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
+    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
     on: on, anchorOf: anchorOf, npcPos: npcPos, visible: visible, targetOf: targetOf, trackText: trackText, listHtml: listHtml,
     state: sv, chapter: chapter, step: step, locked: locked, done: done, keyOf: keyOf, gathered: gathered,
     advance: advance, check: check, stepFollow: stepFollow, nearTalk: nearTalk, talkStart: talkStart, talking: talking, next: next,
