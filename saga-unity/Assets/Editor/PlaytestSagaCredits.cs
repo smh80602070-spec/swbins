@@ -59,6 +59,22 @@ namespace Saga.EditorTools
             if (PlayerSettings.Android.bundleVersionCode != code) fails.Add($"안드로이드 버전 코드 {PlayerSettings.Android.bundleVersionCode} ≠ {code}");
             notes.Add($"v{PlayerSettings.bundleVersion}({code})");
 
+            // ⑥b 앱 정체성·아이콘 — 빌드가 맞추지만, 커밋된 설정이 이미 같아야 빌드가 설정을 안 흔든다.
+            if (!SagaPlayerBuild.IdentityApplied())
+                fails.Add($"앱 정체성 {PlayerSettings.companyName} / {PlayerSettings.GetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.Android)} — Saga/Build/Apply App Identity");
+            var icons = PlayerSettings.GetIcons(UnityEditor.Build.NamedBuildTarget.Unknown, IconKind.Any);
+            if (icons.Length == 0 || icons[0] == null || AssetDatabase.GetAssetPath(icons[0]) != SagaAppIcon.Full) fails.Add("기본 아이콘이 icon_full 이 아님");
+            int emptyAndroid = 0, adaptive = 0;
+            foreach (var kind in PlayerSettings.GetSupportedIconKinds(UnityEditor.Build.NamedBuildTarget.Android))
+                foreach (var icon in PlayerSettings.GetPlatformIcons(UnityEditor.Build.NamedBuildTarget.Android, kind))
+                {
+                    var tex = icon.GetTextures();
+                    if (tex == null || tex.Length == 0 || tex[0] == null) emptyAndroid++;
+                    else if (tex.Length == 2 && tex[1] != null) adaptive++;
+                }
+            if (emptyAndroid > 0 || adaptive == 0) fails.Add($"안드로이드 아이콘 빈 칸 {emptyAndroid} · 적응형 {adaptive}");
+            notes.Add($"{SagaPlayerBuild.AppId} · 적응형 아이콘 {adaptive}");
+
             // ⑤ — 진단이 일부러 내는 오류라 로그에 "[의도]" 를 붙인다.
             string path = Path.Combine(Path.GetTempPath(), "saga_error_log_test.txt");
             SagaCrashLog.StartForTest(path);

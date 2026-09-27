@@ -35,7 +35,7 @@ namespace Saga.Core
         {
             new Entry { Id = "own", Own = true, Paths = new[] {
                 "Assets/Games/", "Assets/SagaCore/", "Assets/Scenes/", "Assets/Settings/", "Assets/Cinematics/", "Assets/Animators/",
-                "Assets/InputSystem_Actions.inputactions",
+                "Assets/InputSystem_Actions.inputactions", "Assets/Art/Icon/",
                 "Assets/Art/Generated/", "Assets/Art/Props/Generated/", "Assets/Art/Shaders/", "Assets/Art/Rocks/Generated/" } },
 
             new Entry { Id = "mixamo", Paths = new[] { "Assets/Art/CharactersRealistic/" },

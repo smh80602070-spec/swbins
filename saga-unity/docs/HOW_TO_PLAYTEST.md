@@ -287,7 +287,7 @@ Lv.10부터 전직 선택 팝업이 뜬다**(2026-09-15 추가, 무사/궁수/�
 ## 7. 세이브 파일 위치
 
 다섯 판 모두 `Application.persistentDataPath`(이 PC·이 프로젝트 설정
-기준 `%USERPROFILE%\AppData\LocalLow\DefaultCompany\SAGA\`)에 판마다
+기준 `%USERPROFILE%\AppData\LocalLow\SAGA Games\SAGA\` — 2026-09-27 회사명을 바꾸기 전엔 `DefaultCompany\SAGA`, 그때 있던 저장·에디터 설정은 새 자리로 복사해 둠)에 판마다
 다른 JSON 파일로 저장한다 — 이름이 겹치지 않으니 한 폴더에 다 있어도
 안전하다:
 
@@ -353,4 +353,5 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 ## 11. 크레딧·오류 기록 (PLAN 110 ⑥, 2026-09-27)
 
 - **크레딧** — 타이틀 아래 줄 가운데 **크레딧**. 위는 빌드에 실제로 들어간 출처(두 언어), 아래로 굴리면 라이선스 전문(OFL·Apache·패키지 제3자 고지, 영어 원문). 글이 끊기거나 □ 로 나오는 곳이 있으면 알려 준다.
-- **오류 기록** — 타이틀 **설정** 맨 아래 줄. 게임 중 오류·예외가 나면 "N건 · 복사"가 되고, 누르면 클립보드로 복사된다("복사했습니다") → 메신저에 붙여 보내 주면 된다. 같은 오류는 한 건으로 합쳐 횟수(×n)만 오른다, 최근 40건. 파일은 PC `%USERPROFILE%\AppData\LocalLow\DefaultCompany\SAGA\error_log.txt` · 폰 `Android/data/<앱 id>/files/error_log.txt`. 에디터 Play 에선 안 쌓인다(빌드에서만). 앱이 통째로 꺼지는 충돌은 여기 안 남는다 — 그땐 몇 판·무엇을 하다 꺼졌는지만 알려 준다.
+- **오류 기록** — 타이틀 **설정** 맨 아래 줄. 게임 중 오류·예외가 나면 "N건 · 복사"가 되고, 누르면 클립보드로 복사된다("복사했습니다") → 메신저에 붙여 보내 주면 된다. 같은 오류는 한 건으로 합쳐 횟수(×n)만 오른다, 최근 40건. 파일은 PC `%USERPROFILE%\AppData\LocalLow\SAGA Games\SAGA\error_log.txt` · 폰 `Android/data/io.github.smh8627jpg.saga/files/error_log.txt`. 에디터 Play 에선 안 쌓인다(빌드에서만). 앱이 통째로 꺼지는 충돌은 여기 안 남는다 — 그땐 몇 판·무엇을 하다 꺼졌는지만 알려 준다.
+- **앱 id 바뀜(2026-09-27)** — `io.github.smh8627jpg.saga`, 회사명 SAGA Games, 아이콘 금빛 "史"(임시). 이 뒤로 만든 APK 는 전에 깐 시험 APK(템플릿 id)와 **다른 앱으로 따로 깔린다** — 옛 것은 지워도 된다(폰 저장은 이어지지 않는다). 성능 측정(§10)은 새 APK 로 다시 해도 된다.

@@ -9601,3 +9601,12 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - garments.py 통 `arc`(앞·뒤 한쪽 판, 살 안 지움 — 기존 옷 찰갑 md5 같음) + 새 틀 `cape`·`pauldrons` → Dreyar 자리 검은 판금 기사 등 망토 · Eve 자리 가죽 기사 은 어깨판. 앞뒤 겉옷판(tabard)은 렌더로 앞치마·가슴 홈이라 틀을 지움.
 - 검사: 두 몸 verify fbx·glb 실패 0 · sha256 두 번 같음 · 비교 장면 배치 CMP_RESULT OK(로컬 FBX 교체).
 - 남은 빈칸: 가죽 기사 겉옷판 · 유격 가죽 조끼 · 사진작가 목폴라 · 별바다 손님 가슴판. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
+
+## 2026-09-27 상용화 — PLAN 110 ⑥b 앱 id·회사명·임시 아이콘 ("사가유니티 이어해줘")
+
+- 사용자 결정(물어서): 앱 id `io.github.smh8627jpg.saga`(GitHub Pages 주소 뒤집기 — 하이픈은 앱 id 에 못 써서 뺌) · 회사명 `SAGA Games` · 아이콘은 코드로 임시.
+- 정체성 상수 `SagaPlayerBuild.AppId/Company/Product` + `ApplyIdentity()`(빌드마다, 같으면 안 바꿈) — 안드로이드·PC·iOS 앱 id, 회사명. 배치로 한 번 적용해 ProjectSettings 커밋.
+- 회사명이 PC 의 저장 폴더(`LocalLow/<회사>/SAGA`)와 PlayerPrefs 레지스트리(에디터 `HKCU\Software\Unity\UnityEditor\<회사>\SAGA`)를 정한다 → 이 PC 의 옛 DefaultCompany 저장 다섯·에디터 설정 33 을 새 자리로 복사(옛 것은 둠). 실제 사용자가 아직 없어 옮기는 코드는 안 넣었다. 폰은 앱 id 가 바뀌어 새 APK 가 다른 앱으로 깔린다(③b 성능 측정은 새 APK 로).
+- 아이콘: `tools/app-icon/make_icon.py`(Blender 5.2 Cycles CPU 96샘플, 47초) — 먹빛 둥근 그러데이션 바탕 + 금빛 테 + 금빛 "史"(Noto Sans KR Bold, 돌출·베벨, 금속 0.85). 첫 렌더는 글자가 테의 1/4 로 작아 작은 아이콘에서 안 보임 → 글자 2.2배·테 굵게. `Assets/Art/Icon/` 세 장: 전체(PC·옛·둥근) · 적응형 뒤판 · 앞판(투명, 테 지름 = 화면 59% < 안전 영역 61%). `Editor/SagaAppIcon.Apply()`(빌드마다): 기본 아이콘 + 안드로이드 칸 18(적응형 6 은 뒤+앞) — 안드로이드 모듈 없는 PC 에서도 컴파일되게 아이콘 종류를 이름으로 찾음. 그림을 받으면 같은 이름 세 장만 바꾸면 된다. 크레딧 표 `own` 에 `Assets/Art/Icon/`.
+- 검증: `PlaytestSagaCredits` OK(정체성·기본 아이콘·안드로이드 빈 칸 0·적응형 6 추가) · 배치 점검 OK(새 저장 경로에서 백업·복원). 셸이 경로의 백슬래시를 또 먹음(sed·node -e) — 문서의 경로 줄은 Edit 툴로.
+- 남음: 6c 영어 검수 목록 · 6d AAB+PAD.

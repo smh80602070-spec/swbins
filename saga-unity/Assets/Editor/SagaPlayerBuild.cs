@@ -11,7 +11,7 @@ namespace Saga.EditorTools
     /// PLAN.md 110 상용화 ① "실제 빌드 한 번" — 다섯 판 씬을 실행 파일로 묶는다(배치 모드 `-executeMethod`).
     /// 결과물은 `Build/`(gitignore). 끝나면 `Build/<대상>/<파일>_report.txt` 에 결과·크기·시간·경고/오류 수와
     /// 가장 큰 에셋 스물을 적고, 콘솔에 "[SagaPlayerBuild] OK/FAIL" 한 줄. 실패면 종료 코드 1.
-    /// 프로젝트 설정(PlayerSettings)은 건드리지 않는다 — 빌드 옵션만 이 호출 안에서 준다.
+    /// 프로젝트 설정은 정해진 값에 맞출 때만 쓴다(110 ⑥: 안드로이드 버전 코드·앱 정체성·아이콘 — 이미 같으면 그대로).
     /// </summary>
     public static class SagaPlayerBuild
     {
@@ -25,6 +25,28 @@ namespace Saga.EditorTools
             "Assets/Scenes/TestField.unity",         // STORY
             "Assets/Scenes/TestCity.unity",          // REALM
         };
+
+        // PLAN.md 110 ⑥b — 앱 정체성(2026-09-27 사용자 결정). 앱 id 는 스토어에 올리면 못 바꾼다(하이픈 불가라 GitHub 이름에서 뺐다).
+        // 회사명을 바꾸면 PC 저장·PlayerPrefs 위치(LocalLow·레지스트리의 회사명 칸)가 바뀐다 — 옛 DefaultCompany 것은 이 PC 에서 복사해 옮겼다.
+        public const string AppId = "io.github.smh8627jpg.saga";
+        public const string Company = "SAGA Games";
+        public const string Product = "SAGA";
+
+        /// <summary>정체성을 PlayerSettings 에 맞춘다 — 빌드마다 먼저(이미 같으면 아무것도 안 바꾼다).</summary>
+        [MenuItem("Saga/Build/Apply App Identity")]
+        public static void ApplyIdentity()
+        {
+            if (PlayerSettings.companyName != Company) PlayerSettings.companyName = Company;
+            if (PlayerSettings.productName != Product) PlayerSettings.productName = Product;
+            foreach (var t in new[] { UnityEditor.Build.NamedBuildTarget.Android, UnityEditor.Build.NamedBuildTarget.Standalone, UnityEditor.Build.NamedBuildTarget.iOS })
+                if (PlayerSettings.GetApplicationIdentifier(t) != AppId) PlayerSettings.SetApplicationIdentifier(t, AppId);
+            if (Application.isBatchMode && !BuildPipeline.isBuildingPlayer) { AssetDatabase.SaveAssets(); }
+        }
+
+        public static bool IdentityApplied() =>
+            PlayerSettings.companyName == Company && PlayerSettings.productName == Product &&
+            PlayerSettings.GetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.Android) == AppId &&
+            PlayerSettings.GetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.Standalone) == AppId;
 
         [MenuItem("Saga/Build/Sync Editor Build Scenes")]
         public static void SyncEditorBuildScenes()
@@ -69,6 +91,8 @@ namespace Saga.EditorTools
             int code = VersionCode(PlayerSettings.bundleVersion);
             if (code <= 0) { Finish(false, $"버전 형식이 a.b.c 가 아님: {PlayerSettings.bundleVersion}", null, output); return; }
             if (PlayerSettings.Android.bundleVersionCode != code) PlayerSettings.Android.bundleVersionCode = code;
+            ApplyIdentity();
+            SagaAppIcon.Apply();
 
             if (EditorUserBuildSettings.activeBuildTarget != target)
                 EditorUserBuildSettings.SwitchActiveBuildTarget(group, target);
