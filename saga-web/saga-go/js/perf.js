@@ -97,7 +97,14 @@
   var fps = 60, acc = 0, frames = 0, worst = 0;
   var changedAt = 0, changes = 0;
 
-  function tier() { return TIERS[auto() ? idx : 0]; }
+  /* 2026-09-28 — 자동을 끄면 늘 HIGH 로 봐서, 설정(⚙️)에서 "낮음"을 골라도(pin: auto=0 + startTier) 높음으로 돌았다
+     (폰 발열 §6.1-B). 못박은 등급이 있으면 그것, 없으면 옛대로 HIGH */
+  function tier() {
+    if (auto()) { return TIERS[idx]; }
+    var forced = core.tuned('perf.startTier', '');
+    for (var i = 0; i < TIERS.length; i++) { if (TIERS[i].key === forced) { return TIERS[i]; } }
+    return TIERS[0];
+  }
 
   /**
    * 이 갈래의 배수 — 각 모듈이 제 손잡이에 **곱한다**.

@@ -31,6 +31,7 @@
   var groundGroup = null, propGroup = null, actorGroup = null, fxGroup = null;
   var tileMeshes = {};          // 지면 타일 { key: Mesh }
   var propMeshes = {};          // 건물·나무 { key: Object3D }
+  var townDens = {};            // 'gx:gy' → 그 마을 칸을 지을 때 쓴 밀도(houseRects 가 보이는 집과 같은 계획을 뽑게)
   var actors = {};              // 배우 { key: {node, shadow, seen, …} }
   var texCache = {};            // 캔버스/이미지 텍스처
   var ready = false, failed = false;
@@ -986,10 +987,10 @@
    *   house  기와집 (w·d·h, roof 있음)   tower 높은 집
    *   tree   나무    rock 바위   grass 풀덤불   lamp 등롱   water 수면   reed 갈대
    */
-  function propPlan(kind, gx, gy, mapped) {
+  function propPlan(kind, gx, gy, mapped, densAt) {
     var out = [], i, n;
     var u = urbanity(gx, gy);
-    var dens = DENSITY();
+    var dens = densAt != null ? densAt : DENSITY();
     var half = GRID * 0.42;
     /* 이 격자를 손으로 그린 땅이 맡고 있나 (`land.js`) — 맡은 자리는
        지도에 없는 땅이라 지도가 깔려 있어도 제 지형을 세워야 한다 */
@@ -1296,7 +1297,9 @@
        `world.js` 는 마을 칸만 재서 들판에 놓은 deco 집은 뚫고 지나갔다(2026-09-23) */
     var Wd = global.DG.world, RG = global.DG.land;
     var kind = Wd && Wd.terrainAt ? Wd.terrainAt(gx, gy) : 'town';
-    var plan = kind === 'town' ? propPlan('town', gx, gy, false)
+    /* 2026-09-28 실기 Q3 "몇 집이 벽에서 사라진다" — 기기가 버거우면 perf 가 밀도(PF prop)를 내리는데, 이미 지은 칸은
+       다시 안 지어(칸 열쇠에 밀도가 없다) 옛 집이 그대로 보이고 벽만 새 밀도로 집 수·대지가 바뀌었다 → 지은 밀도로 뽑는다 */
+    var plan = kind === 'town' ? propPlan('town', gx, gy, false, townDens[gx + ':' + gy])
       : (RG && RG.decoAt ? RG.decoAt(gx, gy) : []);
     var ox = gx * GRID + GRID / 2, oz = gy * GRID + GRID / 2;
     var out = [], i;
@@ -1752,7 +1755,9 @@
 
   function buildProp(kind, gx, gy, mapped, key) {
     var g = new T.Group();
-    var plan = propPlan(kind, gx, gy, mapped);
+    var dens = DENSITY();
+    if (kind === 'town') { townDens[gx + ':' + gy] = dens; }
+    var plan = propPlan(kind, gx, gy, mapped, dens);
     var ox = gx * GRID + GRID / 2, oz = gy * GRID + GRID / 2;
     var i;
     for (i = 0; i < plan.length; i++) {
@@ -2015,6 +2020,7 @@
          하나를 버리면 남아 있는 다른 건물의 도형까지 같이 사라진다 */
       propGroup.remove(propMeshes[k]);
       delete propMeshes[k];
+      if (kp[0] === 'town') { delete townDens[kp[1] + ':' + kp[2]]; }
       delete smokeByKey[k];           // 이 격자의 연기도 창고에서 함께 뺀다
       instDrop(k);                    // 빌려 준 인스턴스 자리도 돌려받는다
     }
@@ -3191,6 +3197,7 @@
       n++;
     }
     propMeshes = {};
+    townDens = {};
     smokeByKey = {};          // 통째로 다시 지으니 연기 창고도 같이 비운다
     propScan = null;          // 다음 프레임에 다시 훑는다
     return n;

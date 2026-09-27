@@ -324,6 +324,9 @@
     if (LFm) { step *= LFm.moveMul(pos.x, pos.y, ux, uy, dt); }
     var nx = pos.x + ux * step, ny = pos.y + uy * step;
     var rects = LFm && LFm.onPole && LFm.onPole() ? [] : solidRectsNear(pos.x, pos.y);   // ⑲-34 들보 위는 벽 위다
+    /* 2026-09-28 — 이미 벽 안이면(모델이 와서 벽이 커졌거나·품질이 올라 집이 새로 섰거나·순간이동) 사방이 막혀
+       영영 갇혔다 → 안에서는 막지 않는다(걸어 나가게) */
+    if (rects.length && hitsHouse(pos.x, pos.y, rects)) { rects = []; }
     var moved = 0;
     if (!hitsHouse(nx, ny, rects)) {
       pos.x = nx; pos.y = ny; moved = step;

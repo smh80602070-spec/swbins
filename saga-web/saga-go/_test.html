@@ -3321,6 +3321,39 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         ('들판 칸 ' + cell.gx + ',' + cell.gy + ' 벽 ' + r0 + '→' + rs + ' · 동쪽으로 걷다 집 앞 ' + stopX.toFixed(1) + 'm 에서 멈춤');
     });
 
+    t('땅 — 이미 벽 안에 서 있으면 갇히지 않고 걸어 나간다(모델이 와 벽이 커지거나 집이 새로 선 때)', function () {
+      /* 2026-09-28 실기 Q3 — 벽 안에서는 사방이 막혀 영영 못 움직였다 */
+      var r = LD.region(), keep = r.deco, b = LD.bounds(), gx, gy, cell = null, dx, dy, ok;
+      for (gy = b.y0 + 1; gy < b.y1 && !cell; gy++) {
+        for (gx = b.x0 + 1; gx < b.x1 && !cell; gx++) {
+          if (W.terrainAt(gx, gy) !== 'grass' || LD.markAt(gx, gy)) { continue; }
+          ok = true;
+          for (dy = -1; dy <= 1; dy++) { for (dx = -1; dx <= 1; dx++) { if (W.terrainAt(gx + dx, gy + dy) === 'town') { ok = false; } } }
+          if (ok) { cell = { gx: gx, gy: gy }; }
+        }
+      }
+      if (!cell) { return false; }
+      var cx = cell.gx * 48 + 24, cz = cell.gy * 48 + 24;
+      var p = C.save.player.pos, kx = p.x, ky = p.y, kd = C.save.player.distance;
+      function farStep() { p.x = cx + 48 * 30; p.y = cz; W.setStick(1, 0, false); W.update(0.01); }   // 벽 캐시(칸 단위)를 비운다
+      r.deco = [{ t: 'house', x: cx, z: cz, h: 5, w: 8, d: 8, rot: 0 }];
+      farStep();
+      p.x = cx + 1; p.y = cz;
+      var inside0 = W.wallAt(p.x, p.y);
+      W.setStick(1, 0, false);
+      for (var i = 0; i < 80; i++) { W.update(0.05); }
+      var outX = p.x - cx, inside1 = W.wallAt(p.x, p.y);
+      W.setStick(-1, 0, false);                                    // 나온 뒤엔 다시 벽이다
+      for (i = 0; i < 160; i++) { W.update(0.05); }
+      var backX = p.x - cx;
+      r.deco = keep;
+      farStep();
+      W.setStick(0, 0, false);
+      p.x = kx; p.y = ky; C.save.player.distance = kd;
+      return inside0 && !inside1 && outX > 4.4 && backX > 4.4 &&
+        ('벽 안 +1m 에서 동쪽으로 → ' + outX.toFixed(1) + 'm(밖) · 되돌아 걸으면 ' + backX.toFixed(1) + 'm 에서 멈춤');
+    });
+
     t('땅 — 지도가 깔려 있어도 강물은 깐다', function () {
       /* 이 땅의 강은 **지도에 없는 물**이다. 지도가 있다고 빼면 강이 아예 안 보인다 */
       var br = LD.place('bridge');
@@ -4631,6 +4664,19 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       C.setTune('perf.auto', null);
       PF.reset();
       return onLow === 'LOW' && forced === 'HIGH' && 'perf.auto=0 이면 사람이 잡은 대로만';
+    });
+
+    t('성능 — 설정에서 고른 등급(pin)이 그대로 걸린다(낮음을 골라도 높음으로 돌던 것)', function () {
+      /* 2026-09-28 — 자동을 끄면 tier() 가 늘 HIGH 라 ⚙️ "낮음·보통"이 아무 일도 안 했다(폰 발열 §6.1-B) */
+      var got = {}, keys = ['LOW', 'MEDIUM', 'HIGH'], i;
+      for (i = 0; i < keys.length; i++) { PF.pin(keys[i]); got[keys[i]] = PF.tier().key + '×' + PF.mul('prop'); }
+      var pinnedLow = (PF.pin('LOW'), PF.pinned());
+      PF.unpin();
+      var back = PF.pinned();
+      C.setTune('perf.auto', null);                 // unpin 이 남긴 손잡이를 지운다(뒤 진단이 손잡이 수를 센다)
+      PF.reset();
+      return got.LOW === 'LOW×0.25' && got.MEDIUM === 'MEDIUM×0.5' && got.HIGH === 'HIGH×1' && pinnedLow && !back &&
+        ('낮음 ' + got.LOW + ' · 보통 ' + got.MEDIUM + ' · 높음 ' + got.HIGH + ' · 자동으로 되돌림');
     });
 
     t('성능 — 화면이 없으면 재지 않는다', function () {

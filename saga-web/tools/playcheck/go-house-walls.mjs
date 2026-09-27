@@ -7,6 +7,8 @@ try {
   await c.send('Network.enable');
   await c.send('Network.setBypassServiceWorker', { bypass: true });
   await c.send('Network.setCacheDisabled', { cacheDisabled: true });
+  await c.go(B + 'index.html', 6000);
+  await c.ev(`(function(){ if (!document.getElementById('title-continue') && DG.account && DG.account.create) { DG.account.create('테스트'); } })()`);   // 프로필이 비었으면 새 계정
   await c.go(B + 'index.html', 8000);
   await c.ev(`(function(){ var b=document.getElementById('title-continue'); if(b){ b.click(); } })()`);
   await sleep(6000);
