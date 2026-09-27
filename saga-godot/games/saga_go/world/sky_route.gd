@@ -5,7 +5,7 @@ extends Node3D
 ## 섬은 서쪽으로 갈수록 높다. 섬과 섬은 바람 기둥(구름섬 world/sky_isle.gd·갈림길 끝 world/rift_end.gd 와 같은 틀)으로 오르고 활공으로 건넌다:
 ##   과거 — 하늘 사당(shrine, 윗면 60m): 기와 사당·바람 방울 장대. 첫 섬엔 별배로만 간다(24장), 24장 뒤엔 등대 섬에서 바람 기둥.
 ##   현대 — 기상 비행선 잔해(wreck, 82m): 찢어진 기낭·조종실·프로펠러. 사당 서쪽 가장자리 바람 기둥(24장 뒤)으로.
-##   미래 — 궤도 정거장 조각(orbit, 104m): 육각 합금 판·태양 날개·안테나·구름 씨앗 장치 셋. 잔해 서쪽 가장자리 바람 기둥(25장 뒤)으로.
+##   미래 — 궤도 정거장 조각(orbit, 104m): 합금 원판(육각 빛 줄)·태양 날개·안테나·구름 씨앗 장치 셋(26장에 하나씩 끈다). 잔해 서쪽 가장자리 바람 기둥(25장 뒤)으로.
 ## 바람 기둥은 섬 가장자리에서 3.5m 안 — 다음 섬 윗면 + DRAFT_OVER 까지 올려 주고, 다음 섬 가장자리까지는 활공 약 12m.
 ## 떨어지면 아래는 바다(헤엄)나 산. 섬 둘레엔 낮은 난간(1m, 충돌 — 나는 넘고 적은 못 넘는다).
 ## 이야기 단계·인물 칸의 isle = "<id>" 는 그 섬 윗면 높이(world/story_quest.gd _spot_pos). 세이브 없음(이야기 진행 PartyState.story 만 읽는다).
@@ -34,6 +34,9 @@ const CH26 := 25
 ## 하늘 사당 먹구름 — 24장(23) 바람 방울을 다 울리기 전엔 사당 위에 내려앉아 있고 방울이 흐리다(SHRINE_CLEAR_STEP 단계부터 걷힘).
 const CH24 := 23
 const SHRINE_CLEAR_STEP := 6
+## 구름 씨앗 장치 셋(방위 0·120·240 차례) — 26장(25) 원소로 끈 뒤 단계부터 꺼진다(북 5 · 남동 4 · 남서 6 — 남동 → 북 → 남서 차례로 끈다).
+const SEEDER_DEGS := [0.0, 120.0, 240.0]
+const SEEDER_OFF_FROM := [5, 4, 6]
 
 const STONE := Color(0.56, 0.55, 0.53)
 const STONE_DARK := Color(0.36, 0.36, 0.38)
@@ -57,6 +60,7 @@ var _floaters: Array = [] # [node, base_y, phase]
 var _gloom: Node3D = null
 var _bell_mat: StandardMaterial3D = null
 var _clear := false
+var _seeders: Array = [] # [먹구름 알 MeshInstance3D, 위 먹구름 Node3D]
 var _player: Node3D = null
 var _shown := true
 var _t := 0.0
@@ -118,6 +122,15 @@ static func shrine_clear() -> bool:
 	var ch := _ch()
 	return ch > CH24 or (ch == CH24 and int(PartyState.story.get("step", 0)) >= SHRINE_CLEAR_STEP)
 
+## 구름 씨앗 장치 k(SEEDER_DEGS 차례)가 꺼졌는가 — 26장에 원소로 끈 뒤·26장 뒤.
+static func seeder_off(k: int) -> bool:
+	var ch := _ch()
+	return ch > CH26 or (ch == CH26 and int(PartyState.story.get("step", 0)) >= int(SEEDER_OFF_FROM[k]))
+
+## 구름 씨앗 장치 k 자리(월드, 섬 윗면).
+static func seeder_pos(k: int) -> Vector3:
+	return at("orbit", float(SEEDER_DEGS[k]), 9.0)
+
 static func draft_open(i: int) -> bool:
 	return route_shown() and _ch() >= int(drafts()[i][3])
 
@@ -136,6 +149,9 @@ func _ready() -> void:
 
 func is_shown() -> bool:
 	return _shown
+
+func seeder_lit(k: int) -> bool:
+	return k < _seeders.size() and (_seeders[k][1] as Node3D).visible
 
 func gloom_visible() -> bool:
 	return _gloom != null and _gloom.is_visible_in_tree()
@@ -158,6 +174,10 @@ func _refresh() -> void:
 		_clear = c
 		_gloom.visible = not c
 		_bell_mat.emission_energy_multiplier = 1.4 if c else 0.15
+	for k in _seeders.size():
+		var on := not seeder_off(k)
+		(_seeders[k][1] as Node3D).visible = on
+		((_seeders[k][0] as MeshInstance3D).material_override as StandardMaterial3D).emission_energy_multiplier = 0.6 if on else 0.0
 
 func _process(delta: float) -> void:
 	_t += delta
@@ -249,7 +269,7 @@ func _label(parent: Node3D, text: String, pos: Vector3, col: Color) -> void:
 	l.position = pos
 	parent.add_child(l)
 
-## 섬 바탕 — 윗면 원판(두께 1.4m, 정거장은 육각) · 밑은 거꾸로 선 바위 뿔(충돌 볼록) · 구름 띠 · 난간(충돌 상자 스무 조각).
+## 섬 바탕 — 윗면 원판(두께 1.4m — 충돌·난간이 둥글어 정거장도 둥글게, 육각은 빛 줄로만) · 밑은 거꾸로 선 바위 뿔(충돌 볼록) · 구름 띠 · 난간(충돌 상자 스무 조각).
 func _build_isle(id: String, r: float, title: String) -> void:
 	var body := StaticBody3D.new()
 	body.name = "SkyIsle_" + id
@@ -257,14 +277,14 @@ func _build_isle(id: String, r: float, title: String) -> void:
 	add_child(body)
 	body.global_position = center(id)
 	_bodies[id] = body
-	var hexa := id == "orbit"
+	var metal := id == "orbit"
 	var top_col: Color = {"shrine": STONE, "wreck": Color(0.5, 0.48, 0.44), "orbit": ALLOY}[id]
 	var top := CylinderMesh.new()
 	top.top_radius = r
 	top.bottom_radius = r - 1.2
 	top.height = 1.4
-	top.radial_segments = 6 if hexa else 32
-	_mesh(body, top, _mat(top_col, 0.4 if hexa else 0.9), Vector3(0.0, -0.7, 0.0))
+	top.radial_segments = 32
+	_mesh(body, top, _mat(top_col, 0.4 if metal else 0.9), Vector3(0.0, -0.7, 0.0))
 	var ts := CylinderShape3D.new()
 	ts.radius = r
 	ts.height = 1.4
@@ -276,9 +296,9 @@ func _build_isle(id: String, r: float, title: String) -> void:
 	cone.top_radius = r - 1.2
 	cone.bottom_radius = 1.5
 	cone.height = 14.0
-	cone.radial_segments = 6 if hexa else 14
+	cone.radial_segments = 14
 	cone.rings = 1
-	_mesh(body, cone, _mat(STEEL_DARK if hexa else Color(0.42, 0.4, 0.42)), Vector3(0.0, -8.4, 0.0))
+	_mesh(body, cone, _mat(STEEL_DARK if metal else Color(0.42, 0.4, 0.42)), Vector3(0.0, -8.4, 0.0))
 	var ccs := CollisionShape3D.new()
 	ccs.shape = cone.create_convex_shape()
 	ccs.position = Vector3(0.0, -8.4, 0.0)
@@ -295,7 +315,7 @@ func _build_isle(id: String, r: float, title: String) -> void:
 	var rail := _mat(STONE_DARK if id == "shrine" else STEEL_DARK)
 	var post := BoxMesh.new()
 	post.size = Vector3(0.4, RIM_H + 0.4, 0.4)
-	var posts := 6 if hexa else 12
+	var posts := 12
 	for i in posts:
 		var a := TAU * i / posts
 		_mesh(body, post, rail, Vector3(cos(a), 0.0, sin(a)) * (r - 0.45) + Vector3.UP * (RIM_H + 0.4) * 0.5)
@@ -391,7 +411,7 @@ func _build_wreck() -> void:
 	for x in [-0.8, 0.8]:
 		_mesh(mast, cup, _mat(HAZARD), Vector3(x, 5.6, 0), false)
 
-## 궤도 정거장 조각 — 육각 합금 판 · 양쪽 태양 날개(보기만, 가장자리 밖) · 안테나 · 구름 씨앗 장치 셋(반지름 9m, 26장 원소로 끈다 — 먹구름 알).
+## 궤도 정거장 조각 — 합금 원판(육각 빛 줄) · 양쪽 태양 날개(보기만, 가장자리 밖) · 안테나 · 구름 씨앗 장치 셋(반지름 9m, 26장 원소로 끈다 — 먹구름 알).
 func _build_orbit() -> void:
 	var body: StaticBody3D = _bodies.orbit
 	for i in 6: # 윗면 빛 줄
@@ -417,7 +437,7 @@ func _build_orbit() -> void:
 	ring.outer_radius = 1.35
 	var rm := _mesh(ant, ring, _emit(GLOW, 2.0), Vector3(0, 11.0, 0), false)
 	_floaters.append([rm, 11.0, 0.0])
-	for deg in [0.0, 120.0, 240.0]:
+	for deg in SEEDER_DEGS:
 		var sd := _group(body, "Seeder", Vector3(sin(deg_to_rad(deg)), 0.0, -cos(deg_to_rad(deg))) * 9.0, deg)
 		_solid(body, sd, Vector3(1.4, 0.4, 1.4), Vector3(0, 0.2, 0), _mat(STEEL_DARK, 0.4))
 		_solid(body, sd, Vector3(0.7, 2.6, 0.7), Vector3(0, 1.7, 0), _mat(ALLOY, 0.3))
@@ -426,6 +446,17 @@ func _build_orbit() -> void:
 		orb.height = 1.8
 		var om := _mesh(sd, orb, _emit(GLOOM, 0.6), Vector3(0, 3.8, 0), false)
 		_floaters.append([om, 3.8, deg])
+		## 알 위로 피어오르는 먹구름 셋(켜져 있을 때만)
+		var puff := Node3D.new()
+		puff.name = "SeedCloud"
+		sd.add_child(puff)
+		for k in 3:
+			var pm := SphereMesh.new()
+			pm.radius = 1.0 + k * 0.4
+			pm.height = pm.radius * 1.3
+			var pmi := _mesh(puff, pm, _veil(GLOOM, 0.55), Vector3((k - 1) * 0.8, 5.4 + k * 1.1, 0.0), false)
+			_floaters.append([pmi, pmi.position.y, deg + k])
+		_seeders.append([om, puff])
 
 func _build_draft(i: int) -> void:
 	var d: Array = drafts()[i]

@@ -145,7 +145,14 @@ const NPCS := {
 	"haneul": {"name": "비행사 하늬", "era": "현대", "region": "sunken", "cell": Vector2(5.5105, 7.4417), "rarity": 4, "cloth": Color(0.85, 0.45, 0.18),
 		"goggles": true, "idle": "기낭만 기우면 다시 뜰 수 있어요. …기울 수만 있으면요.",
 		"appear": [{"ch": 24, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(5.5105, 7.4417), "isle": "wreck"},
+			## 51-4 26장 — 잔해 기둥으로 함께 올라(1~, 26장 뒤에도) 정거장 조각 동쪽.
+			{"ch": 25, "from": 1, "to": 999, "region": "sunken", "cell": Vector2(4.7813, 7.1084), "isle": "orbit"},
+			{"ch": 26, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(4.7813, 7.1084), "isle": "orbit"},
 			{"ch": 25, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(5.5105, 7.4417), "isle": "wreck"}]},
+	## 106장 51-4 26장 — 먹구름을 부리는 가면 그림자(정체는 8부까지). 23장 반디 기록 속 그 그림자. 26장 장치 셋을 끈 뒤(6) 한 번만 정거장 서쪽에 선다.
+	"gamyeon": {"name": "가면 그림자", "region": "sunken", "cell": Vector2(4.4063, 7.0876), "rarity": 5, "cloth": Color(0.08, 0.07, 0.11),
+		"idle": "……", "mask": true, "mask_color": Color(0.55, 0.35, 0.85), "mask_face": Color(0.06, 0.05, 0.09),
+		"appear": [{"ch": 25, "from": 6, "to": 6, "region": "sunken", "cell": Vector2(4.4063, 7.0876), "isle": "orbit"}]},
 	"bawoo": {"name": "산성지기 바우", "era": "과거", "region": "frost", "cell": Vector2(3.0, 4.11), "rarity": 4, "cloth": Color(0.48, 0.2, 0.16),
 		"helmet": true, "idle": "……불씨가 식지 않게. 그것만이 내 일이다.",
 		"appear": [{"ch": 10, "from": 2, "to": 2},
@@ -203,6 +210,9 @@ const STATIONS := {
 		{"ch": 23, "from": 2, "to": 999, "region": "sunken", "cell": Vector2(6.323, 7.4417), "isle": "shrine"},
 		## 51-3 25장 — 잔해 섬으로 먼저 날아가(1~, 25장 뒤에도) 조종실 동쪽 꼬리 날개 앞.
 		{"ch": 24, "from": 1, "to": 999, "region": "sunken", "cell": Vector2(5.573, 7.3584), "isle": "wreck"},
+		## 51-4 26장 — 정거장 조각으로 먼저 날아가(1~, 26장 뒤에도) 동쪽 남동 장치 곁.
+		{"ch": 25, "from": 1, "to": 999, "region": "sunken", "cell": Vector2(4.7813, 7.2126), "isle": "orbit"},
+		{"ch": 26, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(4.7813, 7.2126), "isle": "orbit"},
 		{"ch": 25, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(5.573, 7.3584), "isle": "wreck"},
 		{"ch": 24, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(6.323, 7.4417), "isle": "shrine"},
 		{"ch": 22, "ch_to": 999, "from": 0, "to": 999, "region": "sunken", "cell": Vector2(5.208, 5.958)},
@@ -271,6 +281,8 @@ const MEMBERS := {
 	"story_hanbyeol": {"name": "별배 선장 한별", "rarity": 5, "element": "wind", "weapon": "bow", "npc": "hanbyeol"},
 	## 106장 ㊿-4 23장 보상 — 해녀 물새(과거, 수·한손검 — 빗창). 시나리오의 수·장병기는 사공 버들(★4 수·장병기)과 똑같이 겹쳐 한손검으로.
 	"story_mulsae": {"name": "해녀 물새", "rarity": 4, "element": "water", "weapon": "sword", "npc": "mulsae"},
+	## 106장 51-4 26장 보상 — 비행사 하늬(현대, 빙·장병기 — 비행선 닻 갈고리). 이야기 동료에 없던 짝.
+	"story_haneul": {"name": "비행사 하늬", "rarity": 4, "element": "ice", "weapon": "polearm", "npc": "haneul"},
 }
 
 ## 이야기 동료 한 명(도감 인물처럼 name·rarity 를 읽는다) — 아니면 null.
@@ -1241,6 +1253,47 @@ const CHAPTERS := [
 					["반디", "삐— 앞 시대 궤도 정거장 조각입니다. 구름 씨앗 장치 신호 셋. 먹구름을 부리는 자가 거기서 구름을 빚어 흘려보내고 있습니다.", "angry"],
 					["?", ["거기로 가자.", "하늬 씨는요?"]],
 					["하늬", "저도 가요. 제 비행선을 떨어뜨린 놈 얼굴은 봐야죠. 잔해 서쪽 끝에 바람이 모이는 게 보여요 — 거기서 올라가요!", "angry"]]},
+		]},
+	## 51-4 — 7부 끝. 궤도 정거장 조각(orbit, 가운데 칸 (4.573,7.1709), 윗면 104m). 잔해 서쪽 바람 기둥(25장 뒤)으로 올라 활공(climb isle) ·
+	## 구름 씨앗 장치 셋(가운데에서 9m, 방위 120 남동 → 0 북 → 240 남서 차례로 끈다 — light bare, sky_route.gd SEEDER_OFF_FROM) ·
+	## 가면 그림자는 장치를 다 끈 뒤(6) 서쪽에 한 번 · 이야기 보스는 섬 남쪽(가운데 안테나·장치를 비켜).
+	{"id": "ch26", "name": "제26장 · 궤도 조각의 그림자", "ar": 58, "join": "story_haneul",
+		"reward": {"fate_knot": 6, "mora": 130000, "book_l": 6, "talent_3": 3}, "exp": 580.0,
+		"steps": [
+			{"type": "talk", "npc": "haneul", "text": "잔해 섬의 하늬와 이야기하기",
+				"lines": [["하늬", "바람 기둥이 섰어요. 저 위 — 궤도 정거장 조각이에요. 앞 시대 물건이 저기 떠 있다니.", "surprised"],
+					["반디", "삐— 구름 씨앗 장치 신호 셋, 여전히 켜져 있습니다. 먹구름이 계속 빚어지고 있습니다."],
+					["?", ["먼저 올라갈게요.", "같이 가요."]],
+					["하늬", "비행사가 날개 없이 올라가는 건 처음이네요. 먼저 가요, 뒤따를게요!", "fun"]]},
+			{"type": "climb", "region": "sunken", "cell": Vector2(4.573, 7.1709), "isle": "orbit", "radius": 16.0,
+				"text": "잔해 바람 기둥을 타고 올라 궤도 정거장 조각으로 건너가기(활공)"},
+			{"type": "talk", "npc": "haneul", "text": "정거장 조각의 하늬와 이야기하기",
+				"lines": [["하늬", "저 셋이에요. 검보랏빛 알에서 먹구름이 피어올라요 — 구름 씨앗 장치.", "angry"],
+					["반디", "삐— 장치마다 원소를 대면 멈춥니다. 남동쪽, 북쪽, 남서쪽 차례로 신호가 약합니다."],
+					["?", ["하나씩 끌게요.", "알겠어, 남동쪽부터."]],
+					["하늬", "먹구름 공장이라니… 다 끄면 하늘이 맑아질 거예요.", "fun"]]},
+			{"type": "light", "region": "sunken", "cell": Vector2(4.7353, 7.2647), "isle": "orbit", "bare": true,
+				"hit_text": "남동쪽 장치의 먹구름 알이 식어 꺼졌다", "text": "남동쪽 구름 씨앗 장치를 원소 스킬로 끄기"},
+			{"type": "light", "region": "sunken", "cell": Vector2(4.573, 6.9834), "isle": "orbit", "bare": true,
+				"hit_text": "북쪽 장치의 먹구름 알이 식어 꺼졌다", "text": "북쪽 구름 씨앗 장치를 원소 스킬로 끄기"},
+			{"type": "light", "region": "sunken", "cell": Vector2(4.4107, 7.2647), "isle": "orbit", "bare": true,
+				"hit_text": "남서쪽 장치까지 꺼졌다 — 서쪽 끝에서 누군가 박수를 친다", "text": "남서쪽 구름 씨앗 장치를 원소 스킬로 끄기"},
+			{"type": "talk", "npc": "gamyeon", "text": "서쪽 끝의 가면 그림자와 이야기하기",
+				"lines": [["가면 그림자", "……구름 공장을 셋 다 끄다니. 별배를 떨어뜨릴 때도 이렇게 성가신 녀석들은 없었는데."],
+					["반디", "삐— 그 목소리. 그날 기록 속의 그림자입니다! 제 기록을 지운 자!", "angry"],
+					["?", ["네가 먹구름을 부렸구나.", "왜 별배를 떨어뜨렸지?"]],
+					["가면 그림자", "별배가 가려던 곳에 가 닿으면 곤란하거든. 매듭이 다시 묶이면 먹구름이 설 자리가 없지."],
+					["하늬", "제 비행선도 당신이 떨어뜨렸죠!", "angry"],
+					["가면 그림자", "구름 씨앗은 또 뿌리면 그만이다. 그 사이 놀 상대를 붙여 주지 — 네놈들이 한 번 쓰러뜨렸던 먹구름 임금의 그림자로."]]},
+			{"type": "duel", "kind": "storm_shadow", "region": "sunken", "cell": Vector2(4.573, 7.3167), "isle": "orbit",
+				"text": "가면 그림자가 불러낸 먹구름 임금의 그림자와 맞서기",
+				"flee": "그림자 임금이 흩어지고 — 가면 그림자는 \"청하의 여섯 매듭이 풀리는 날 다시 보자\" 한마디를 남기고 먹구름 속으로 사라졌다"},
+			{"type": "talk", "npc": "haneul", "text": "정거장 조각의 하늬와 이야기하기",
+				"lines": [["하늬", "……갔어요. 먹구름도 같이 걷혔고요. 하늘이 이렇게 파란 건 처음 봐요.", "joy"],
+					["반디", "삐— 여섯 매듭. 1부의 여섯 제단과 수가 같습니다. 청하 마을의 제단이 무언가를 묶고 있었을지도 모릅니다.", "surprised"],
+					["?", ["청하 마을로 돌아가 보자.", "하늬 씨는 이제 어떡해요?"]],
+					["하늬", "비행선은 못 뜨지만 닻 갈고리는 멀쩡해요. 먹구름 쫓는 일이라면 기상 비행사가 빠질 수 없죠.", "angry"],
+					["하늬", "비행사 하늬, 오늘부터 같이 날아요 — 날개는 빌려 쓰고요!", "joy"]]},
 		]},
 ]
 

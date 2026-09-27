@@ -147,6 +147,15 @@ const KINDS := {
 		"phase_text": "파수 거신이 궁궐 돌을 두르고 바위곰과 물거북을 부른다 — 초로 방패를 깨라",
 		"rotation": ["slam", "tide", "halo", "slam", "storm", "tide"], "summon": ["rock_bear", "water_turtle"],
 		"shape": "goblin", "height": 4.8, "colors": [Color(0.5, 0.52, 0.5), Color(0.84, 0.9, 0.94), Color(0.45, 0.9, 1.0)]},
+	## 106장 51-4 26장 이야기 보스 "먹구름 임금의 그림자"(궤도 정거장 조각) — 가면 그림자가 구름 씨앗으로 빚어 불러낸 1부 먹구름 임금의 그림자.
+	## 사람 몸 2배(먹구름 임금 틀) · 검보랏빛 옷·먹빛 왕관·보랏빛 가면. 패턴은 있는 틀: 내려찍기·고리·회오리·물기·그림자·밀물. 2단계 뇌 방패(불로 깬다).
+	## 섬 밖으로 떨어지면 제자리로(story_quest DUEL_FALL).
+	"storm_shadow": {"name": "먹구름 임금의 그림자", "hp": 9600.0, "atk": 50.0, "speed": 3.8, "aggro": 28.0,
+		"reach": 3.4, "tell": 0.85, "cd": 1.6, "exp": 0.0, "element": "thunder", "shield": 0.0, "phase_shield": 1000.0,
+		"phase_text": "그림자가 구름 씨앗의 먹구름을 두르고 매와 살쾡이를 부른다 — 불로 방패를 깨라",
+		"rotation": ["slam", "halo", "storm", "bite", "shadow", "halo", "tide", "storm"], "summon": ["wind_hawk", "thunder_cat"],
+		"vroid": true, "size": 2.0, "body_r": 0.9, "cloth": Color(0.1, 0.08, 0.14),
+		"mask": Color(0.55, 0.35, 0.85), "mask_face": Color(0.08, 0.06, 0.12), "crown": Color(0.28, 0.22, 0.36)},
 }
 
 const GRAVITY := 20.0

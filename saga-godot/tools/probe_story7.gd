@@ -11,6 +11,10 @@ extends Node
 ## 25장 "멈춘 기상 비행선"(51-3, wreck): [9] 표·자리(하늬 현대·고글 · 하늬·반디·드론 길·기관이 잔해 섬 윗면·명소에 안 묻힘 · 물결 방향이 섬 안)
 ## [10] 새벽 → 잔해 섬 [11] 사당 바람 기둥을 실제로 타고 활공해 잔해 섬에 내려서면 넘어감(사당 위에선 안 넘어감) [12] 하늬 → 드론
 ## [13] 드론이 섬 위 길로 달아나다 따라잡힘 [14] 하늬 → 지키기 [15] 비행선 기관 지키기(물결 셋 섬 위) [16] 하늬 → 25장 끝·바람 기둥 셋.
+## 26장 "궤도 조각의 그림자"(51-4, orbit, 7부 끝): [17] 표·자리(동료 하늬 ★4 빙·장병기·겹침 없음 · 가면 그림자 가면·처음엔 없음 · 하늬·반디·그림자·대결이
+## 정거장 윗면·안 묻힘 · light 셋 = 남동·북·남서 장치 자리 · 대결 자리가 장치·안테나에서 떨어짐 · 그림자 임금 뇌·불이 방패를 깸 · 장치 켜짐)
+## [18] 하늬 → 정거장 [19] 잔해 바람 기둥을 실제로 타고 활공해 정거장에 내려섬 [20] 하늬 → 장치 [21] 장치 셋(먼 원소 안 됨·끌 때마다 먹구름 꺼짐) → 가면 그림자
+## [22] 가면 그림자 → 대결 [23] 먹구름 임금의 그림자(정거장 위) [24] 하늬 → 26장 끝·동료 하늬·그림자 사라짐.
 ## 이야기 상태·부대 경험·가방은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
@@ -20,6 +24,10 @@ const SkyRoute := preload("res://games/saga_go/world/sky_route.gd")
 
 const CH24 := 23 # 24장(0부터)
 const CH25 := 24
+const CH26 := 25
+const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
+const Elements := preload("res://games/saga_go/combat/elements.gd")
+const Kits := preload("res://games/saga_go/data/kits.gd")
 const R := "sunken"
 
 var _p: CharacterBody3D
@@ -173,7 +181,7 @@ func _physics_process(_delta: float) -> void:
 			var wc := SkyRoute.center("wreck")
 			var wr := SkyRoute.radius("wreck")
 			## 잔해 섬 윗면 자리 — 하늬·반디·오르기 칸·드론 길·기관(지키기).
-			var spots: Array = Story.windows(info.appear) + Story.windows(Story.STATIONS.bandi).filter(func(w: Dictionary) -> bool: return String(w.get("isle", "")) == "wreck")
+			var spots: Array = Story.windows(info.appear).filter(func(w: Dictionary) -> bool: return String(w.get("isle", "")) == "wreck") + Story.windows(Story.STATIONS.bandi).filter(func(w: Dictionary) -> bool: return String(w.get("isle", "")) == "wreck")
 			spots.append(steps[5])
 			for pt in steps[3].path:
 				spots.append({"region": R, "cell": pt, "isle": "wreck"})
@@ -281,7 +289,152 @@ func _physics_process(_delta: float) -> void:
 				and drafts == [0, 1, 2] and bool(_sq.call("npc_visible", "haneul"))
 			_check("chapter25", ok, "ch=%d mora +%d drafts=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), drafts])
 			_next()
-		17:
+		17: # [17] 26장 표·자리 — 모험 등급 59
+			if _frame == 1:
+				PartyState.exp = maxf(PartyState.exp, 59.0 * PartyState.EXP_PER_LEVEL)
+				PartyState.level = maxi(PartyState.level, 59)
+				PartyState.ar_paid = maxi(PartyState.ar_paid, PartyState.level + 1)
+				_sq.call("_enter_step")
+			if _frame < 70:
+				return
+			var c := Story.chapter(CH26)
+			var steps: Array = c.steps
+			var bad: Array = []
+			if String(c.get("id", "")) != "ch26" or int(c.ar) <= int(Story.chapter(CH25).ar) or int(_sq.call("ch")) != CH26 or bool(_sq.call("locked")) \
+					or steps.size() != 9 or String(c.get("join", "")) != "story_haneul":
+				bad.append("chapter ch=%d locked=%s steps=%d" % [_sq.call("ch"), _sq.call("locked"), steps.size()])
+			## 동료 하늬 — ★4 빙·장병기, 이야기 동료 가운데 겹치는 짝 없음.
+			var m: Dictionary = Story.MEMBERS.get("story_haneul", {})
+			if int(m.get("rarity", 0)) != 4 or Elements.element_of("story_haneul") != "ice" or String(m.get("weapon", "")) != "polearm" or not Kits.KITS.has("story_haneul"):
+				bad.append("member %s" % m)
+			for id in Story.MEMBERS:
+				var o: Dictionary = Story.MEMBERS[id]
+				if id != "story_haneul" and String(o.element) == "ice" and String(o.weapon) == "polearm":
+					bad.append("overlap %s" % id)
+			if bool(_sq.call("npc_visible", "gamyeon")) or not bool(Story.NPCS.gamyeon.get("mask", false)):
+				bad.append("gamyeon at st0")
+			var oc := SkyRoute.center("orbit")
+			var orr := SkyRoute.radius("orbit")
+			## 정거장 윗면 자리 — 하늬·반디·가면 그림자·대결.
+			var spots: Array = Story.windows(Story.NPCS.haneul.appear).filter(func(w: Dictionary) -> bool: return String(w.get("isle", "")) == "orbit") \
+				+ Story.windows(Story.STATIONS.bandi).filter(func(w: Dictionary) -> bool: return String(w.get("isle", "")) == "orbit") + Story.windows(Story.NPCS.gamyeon.appear)
+			spots.append(steps[7])
+			for d in spots:
+				var sp := _spot(d)
+				if String(d.get("isle", "")) != "orbit" or absf(sp.y - SkyRoute.top_y("orbit")) > 0.01 or _flat(sp, oc) > orr - 2.0:
+					bad.append("spot %s" % [d.cell])
+				elif not _hits(sp).is_empty():
+					bad.append("buried %s %s" % [d.cell, _hits(sp)])
+			## 장치 셋 — light 칸이 남동 → 북 → 남서 장치 자리.
+			for i in 3:
+				var lt: Dictionary = steps[3 + i]
+				var k: int = [1, 0, 2][i]
+				if String(lt.type) != "light" or not bool(lt.get("bare", false)) or _flat(_spot(lt), SkyRoute.seeder_pos(k)) > 0.5 or absf(_spot(lt).y - SkyRoute.top_y("orbit")) > 0.01:
+					bad.append("light %d" % i)
+			## 대결 — 먹구름 임금의 그림자(뇌, 불이 방패를 깸), 섬 남쪽 — 장치·안테나에서 5m 넘게, 가장자리에서 4m 안쪽.
+			var du := _spot(steps[7])
+			var near: float = range(3).map(func(k: int) -> float: return _flat(du, SkyRoute.seeder_pos(k))).min()
+			if String(steps[7].kind) != "storm_shadow" or String(FieldEnemy.KINDS.storm_shadow.element) != "thunder" or Elements.shield_mul("thunder", "fire") <= 1.0 \
+					or near < 5.0 or _flat(du, oc) < 5.0 or _flat(du, oc) > orr - 4.0:
+				bad.append("duel %s near=%.1f" % [du, near])
+			if not range(3).all(func(k: int) -> bool: return bool(_sr.call("seeder_lit", k))):
+				bad.append("seeders off at st0")
+			_check("ch26_table", bad.is_empty(), str(bad))
+			_next()
+		18: # [18] 하늬(잔해) → 정거장
+			_talk("haneul", 1, "ch26_haneul", Vector2(4.573, 7.1709))
+		19: # [19] 잔해 바람 기둥을 실제로 타고 활공해 정거장에 내려서면 넘어간다
+			var b: Vector3 = SkyRoute.drafts()[2][1]
+			if _frame == 1:
+				_v = {"wreck_st": int(_sq.call("st")), "go_at": 0, "landed": false}
+				Input.action_release("move_forward")
+				_put(b + Vector3(0.0, 3.0, 0.0))
+				_p.call("_set_mode", _p.Mode.AIR)
+			if _frame > 1:
+				_p.set("stamina", float(_p.get("stamina_max")))
+				var c0 := SkyRoute.center("orbit")
+				var aim := c0 + Vector3(b.x - c0.x, 0.0, b.z - c0.z).normalized() * SkyRoute.radius("orbit") * 0.5
+				var dir := Vector3(aim.x - _p.global_position.x, 0.0, aim.z - _p.global_position.z).normalized()
+				var rig := get_tree().get_first_node_in_group("camera_rig") as Node3D
+				if rig:
+					rig.global_rotation = Vector3(rig.global_rotation.x, atan2(-dir.x, -dir.z), 0.0)
+				if int(_v.go_at) == 0 and _p.global_position.y >= SkyRoute.top_y("orbit") + SkyRoute.DRAFT_OVER - 1.5:
+					_v.go_at = _frame
+					Input.action_press("move_forward")
+				if int(_sq.call("st")) == 2:
+					_v.landed = true
+			if bool(_v.landed) or _frame > 1500:
+				Input.action_release("move_forward")
+				var ok: bool = int(_v.wreck_st) == 1 and int(_sq.call("st")) == 2 and SkyRoute.on_isle("orbit", _p.global_position)
+				_check("ch26_climb", ok, "wreck_st=%d st=%d go_at=%d frames=%d pos=%s" % [_v.wreck_st, _sq.call("st"), _v.go_at, _frame, _p.global_position])
+				_next()
+		20: # [20] 하늬(정거장) → 장치
+			_talk("haneul", 3, "ch26_haneul2", Vector2(4.7353, 7.2647))
+		21: # [21] 장치 셋 — 먼 원소는 안 되고, 차례로 끌 때마다 그 장치 먹구름이 꺼진다 → 가면 그림자가 선다
+			if _frame == 1:
+				_put(SkyRoute.seeder_pos(1) + Vector3(-2.5, 0.0, 0.0))
+				_v = {"far": -1, "st": [], "off": []}
+			if _frame == 4:
+				_sq.call("receive_element", SkyRoute.seeder_pos(1) + Vector3(20.0, 0.0, 0.0), 3.0, "fire")
+			if _frame == 6:
+				_v.far = int(_sq.call("st"))
+			for i in 3:
+				var k: int = [1, 0, 2][i]
+				if _frame == 8 + i * 90:
+					_put(SkyRoute.seeder_pos(k) + (SkyRoute.center("orbit") - SkyRoute.seeder_pos(k)).normalized() * 2.5)
+					_sq.call("receive_element", SkyRoute.seeder_pos(k) + Vector3(0.5, 0.0, 0.5), 3.0, "fire")
+				if _frame == 95 + i * 90:
+					_v.st.append(int(_sq.call("st")))
+					_v.off.append(not bool(_sr.call("seeder_lit", k)))
+			if _frame == 280:
+				var ok: bool = int(_v.far) == 3 and _v.st == [4, 5, 6] and _v.off == [true, true, true] and bool(_sq.call("npc_visible", "gamyeon"))
+				_check("ch26_seeders", ok, "far=%d st=%s off=%s gamyeon=%s" % [_v.far, _v.st, _v.off, _sq.call("npc_visible", "gamyeon")])
+				_next()
+		22: # [22] 가면 그림자 → 대결
+			if _frame == 1:
+				var g := _sq.find_child("StoryNpc_gamyeon", true, false)
+				_v = g != null and g.find_child("Mask", true, false) != null
+			_talk("gamyeon", 7, "ch26_gamyeon", Vector2(4.573, 7.3167), "mask=%s" % _v, bool(_v), 1)
+		23: # [23] 먹구름 임금의 그림자 — 정거장 위, 고리 예고
+			if _frame == 1:
+				_put(_target() + Vector3(0, 0, -5))
+			if _frame == 12:
+				var bosses := get_tree().get_nodes_in_group("go_story_boss")
+				var bo: Node3D = bosses[0] if not bosses.is_empty() else null
+				_v = {"n": bosses.size(), "marks": 0, "kind": "", "y": 0.0}
+				if bo:
+					_v.kind = String(bo.get("kind"))
+					_v.y = bo.global_position.y
+					bo.call("_clear_marks")
+					bo.call("_set_tell", false)
+					bo.call("begin_skill", "halo", _p)
+					_v.marks = (bo.get("_marks") as Array).size()
+					bo.call("_clear_marks")
+					bo.call("_die")
+			if _frame == 20:
+				var ok: bool = int(_v.n) == 1 and String(_v.kind) == "storm_shadow" and absf(float(_v.y) - SkyRoute.top_y("orbit")) < 1.5 and int(_v.marks) >= 1 and int(_sq.call("st")) == 8
+				_check("ch26_duel", ok, "n=%d kind=%s y=%.1f marks=%d st=%d" % [_v.n, _v.kind, _v.y, _v.marks, _sq.call("st")])
+				_next()
+		24: # [24] 하늬 → 26장 끝·동료 하늬·가면 그림자는 사라짐
+			if _frame == 1:
+				_v = {"mora": PartyState.count("mora")}
+				_near_npc("haneul")
+			if _frame == 10:
+				_sq.call("interact")
+				_drain()
+			if _frame < 16:
+				return
+			_dismiss_prompts()
+			if _frame < 60:
+				return
+			_sq.call("toggle_journal")
+			var jt: String = _sq.call("journal_text")
+			_sq.call("toggle_journal")
+			var ok: bool = int(_sq.call("ch")) == CH26 + 1 and jt.contains("✔ 제26장") and PartyState.count("mora") >= int(_v.mora) + 130000 \
+				and PartyState.members.has("story_haneul") and not bool(_sq.call("npc_visible", "gamyeon")) and not range(3).any(func(k: int) -> bool: return bool(_sr.call("seeder_lit", k)))
+			_check("chapter26", ok, "ch=%d mora +%d joined=%s" % [_sq.call("ch"), PartyState.count("mora") - int(_v.mora), PartyState.members.has("story_haneul")])
+			_next()
+		25:
 			PartyState.story = _saved.story
 			PartyState.members.assign(_saved.members)
 			PartyState.exp = _saved.exp
