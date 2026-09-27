@@ -48,6 +48,11 @@
  "under_below": {
   "culturalibre_male_boots": 0.03
  },
+ "under_keep": {
+  "cf_tacvest_coat_15171a_0a0b0c": {
+   "male_casualsuit01": 0.8
+  }
+ },
  "under": {
   "cf_tacvest_coat_15171a_0a0b0c": [
    "male_casualsuit01"

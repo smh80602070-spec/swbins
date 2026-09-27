@@ -257,7 +257,7 @@ GARMENTS = {
     'baji_jeogori': dict(desc='바지저고리 — 저고리·통 넓은 바지·대님', tags=['hanbok', 'historical', 'east'],
                          colors=dict(C1='#e6dfcc', C2='#6b5a48'), parts=[
         dict(kind='tube', top=('waist', 0.03), bottom=('crotch', 0.0), ease=0.02, slot=0, paint=dict(base='C2', pattern='weave')),
-        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.022, ease_bottom=0.008, smooth=6, wmin=0.15, tuck=(2, 0.004), round_bottom=0.6, slot=5, paint=dict(base='C2', pattern='weave',
+        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.045), ease=0.022, ease_bottom=0.008, smooth=6, wmin=0.15, tuck=(2, 0.004), round_bottom=0.6, slot=5, paint=dict(base='C2', pattern='weave',
              trims=[('bottom', 0.012, '#2a2a2a')])),
         dict(kind='tube', top=('neck', 0), bottom=('hip', -0.04), ease=0.012, over=0.01, slot=1,
              paint=dict(base='C1', trims=[('cross', WHITE, 0.7), ('ribbon', 'C2')])),
@@ -353,10 +353,11 @@ GARMENTS = {
     ]),
     # ---- 맨몸 위 아랫도리(단계 3 비교 짝 09-27) ----
     # 바지만 — 맨상체 잡졸·장사. 바지저고리 아랫도리 + 넓은 허리 천
+    # 대님 바지 끝단 = 발목 +4.5cm(09-27 — +3cm 는 발 뼈 무게가 섞인 발목 살에 맞춰져 대기에서 발 따라 끝단 바깥이 처지며 기울었다)
     'baji': dict(desc='통 넓은 바지·대님·허리 천(맨상체)', tags=['pants', 'historical', 'east'],
                  colors=dict(C1=NAVY, C2='#9a1f1a'), parts=[
         dict(kind='tube', top=('waist', 0.03), bottom=('crotch', 0.0), ease=0.02, slot=0, paint=dict(base='C1', pattern='weave')),
-        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.022, ease_bottom=0.008, smooth=6, wmin=0.15, tuck=(2, 0.004), round_bottom=0.6, slot=5, paint=dict(base='C1', pattern='weave',
+        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.045), ease=0.022, ease_bottom=0.008, smooth=6, wmin=0.15, tuck=(2, 0.004), round_bottom=0.6, slot=5, paint=dict(base='C1', pattern='weave',
              trims=[('bottom', 0.012, '#2a2a2a')])),
         dict(kind='band', at=('waist', 0.03), width=0.065, over=0.012, slot=3, paint=dict(base='C2', pattern='weave')),   # 바지 윗단을 덮는다(맨살 위라 단이 턱으로 보였다)
     ]),
@@ -364,7 +365,7 @@ GARMENTS = {
     'baji_vest': dict(desc='통 넓은 바지·맨팔 위 누빈 가죽 조끼·허리 천', tags=['pants', 'armor', 'historical', 'east'],
                       colors=dict(C1='#5a4a36', C2='#4a3322', C3='#c9a227'), parts=[
         dict(kind='tube', top=('waist', 0.03), bottom=('crotch', 0.0), ease=0.02, slot=0, paint=dict(base='C1', pattern='weave')),
-        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.03), ease=0.022, ease_bottom=0.008, smooth=6, wmin=0.15, tuck=(2, 0.004), round_bottom=0.6, slot=5, paint=dict(base='C1', pattern='weave',
+        dict(kind='leggings', top=('crotch', 0.01), bottom=('ankle', 0.045), ease=0.022, ease_bottom=0.008, smooth=6, wmin=0.15, tuck=(2, 0.004), round_bottom=0.6, slot=5, paint=dict(base='C1', pattern='weave',
              trims=[('bottom', 0.012, '#2a2a2a')])),
         dict(kind='tube', top=('neck', 0), bottom=('hip', -0.06), ease=0.016, over=0.012, slot=1,
              paint=dict(base='C2', pattern='quilt', trims=[('front', 0.03, '#2a1c14'), ('top', 0.012, '#2a1c14'), ('bottom', 0.012, '#2a1c14')])),

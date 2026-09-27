@@ -135,6 +135,11 @@
  "clothes": [
   "cf_shinobi_23252e_3b3128/cf_shinobi_23252e_3b3128.mhclo"
  ],
+ "under_rows": {
+  "cf_shinobi_23252e_3b3128": {
+   "skin": 0
+  }
+ },
  "under": {
   "cf_shinobi_23252e_3b3128": [
    "skin"
