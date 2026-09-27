@@ -214,7 +214,7 @@ namespace Saga.EditorTools
         {
             var saveType = typeof(SaveState);
             var ver = saveType.GetField("SaveVersion", BindingFlags.NonPublic | BindingFlags.Static);
-            if (ver == null || (int)ver.GetValue(null) != 12) Fail($"세이브 버전 {(ver != null ? ver.GetValue(null) : "?")} ≠ 12");
+            if (ver == null || (int)ver.GetValue(null) < 12) Fail($"세이브 버전 {(ver != null ? ver.GetValue(null) : "?")} < 12");
             var data = saveType.GetNestedType("SaveData", BindingFlags.NonPublic);
             foreach (var f in new[] { "trialBest", "trialOpen", "trialRuns", "trialBoard" })
                 if (data == null || data.GetField(f) == null) Fail($"SaveData.{f} 없음");

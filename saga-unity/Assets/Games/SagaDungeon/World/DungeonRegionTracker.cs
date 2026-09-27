@@ -101,7 +101,8 @@ namespace Saga.Dungeon.World
             Announced = idx;
             if (_banner != null)
             {
-                _banner.text = DungeonWorldMap.BannerTitle(idx) + "\n<size=22>" + DungeonWorldMap.BannerLine(idx) + "</size>";
+                _banner.text = DungeonWorldMap.BannerTitle(idx) + "\n<size=22>" + DungeonWorldMap.BannerLine(idx) + "</size>"
+                    + "\n<size=20>" + DungeonRegionFoes.BannerLine(idx) + "</size>"; // PLAN.md 109-10-5 위험도·우두머리
                 _banner.color = BannerColor(idx);
                 _banner.gameObject.SetActive(true);
             }
@@ -157,7 +158,7 @@ namespace Saga.Dungeon.World
             rt.anchorMin = rt.anchorMax = new Vector2(0f, 1f);
             rt.pivot = new Vector2(0.5f, 1f);
             rt.anchoredPosition = new Vector2(FreeCenterX, -330f);
-            rt.sizeDelta = new Vector2(760f, 110f);
+            rt.sizeDelta = new Vector2(760f, 140f);
             _bannerGroup = go.AddComponent<CanvasGroup>();
             _bannerGroup.blocksRaycasts = false;
             _bannerGroup.interactable = false;

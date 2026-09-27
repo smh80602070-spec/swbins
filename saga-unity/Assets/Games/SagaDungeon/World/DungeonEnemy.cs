@@ -77,7 +77,21 @@ namespace Saga.Dungeon.World
             ["암흑가 해결사"] = "enemy.era_enforcer",
             ["별 너머 방문자"] = "enemy.era_visitor",
             ["시련의 수호자"] = "enemy.trial_guardian", // PLAN.md 109-10-3 시련 끝 수호자.
+            // PLAN.md 109-10-5 지역 우두머리 아홉(DungeonRegionFoes.Bosses 와 같은 이름)·신화 호위
+            ["벌판 흑기 대장"] = "rboss.jungwon",
+            ["폐도시 폭주룡"] = "rboss.neon",
+            ["개펄 촉수왕"] = "rboss.saltmarsh",
+            ["균열 문지기 겁옥"] = "rboss.hellgate",
+            ["태양로 폭주 거신"] = "rboss.solar",
+            ["모래바다 폭군"] = "rboss.silkroad",
+            ["타락한 천장"] = "rboss.heaven",
+            ["만년설 거한"] = "rboss.snowfort",
+            ["고철 거신"] = "rboss.scrap",
+            ["해골 무사"] = "enemy.region_skeleton",
         };
+
+        /// <summary>진단 — 표시 이름 → 번역 키 표에 있나.</summary>
+        public static bool HasDisplayNameKey(string name) => DisplayNameKeys.ContainsKey(name);
 
         // PLAN.md 106-2 "잊힌 능묘" 보스 — 갑주를 입은 동안 칼은 15%만 들어가고,
         // 벽력탄에 맞으면 갑주가 벗겨져 4초 기절(그동안 150%). 젤다 보스의 "던전 도구로

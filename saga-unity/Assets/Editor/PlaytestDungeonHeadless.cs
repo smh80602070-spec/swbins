@@ -140,6 +140,7 @@ namespace Saga.EditorTools
                 if (!PlaytestDungeonSecrets.Run()) _hadError = true; // PLAN.md 109-10 비결·빛기둥 — 영웅·비결·다른 적을 되돌린다.
                 if (!PlaytestDungeonTrial.Run()) _hadError = true; // PLAN.md 109-10-3 시련 — 시련 기록·영웅·자리를 되돌린다.
                 if (!PlaytestDungeonRegions.Run()) _hadError = true; // PLAN.md 109-10-4 지역 아홉 — 자리·배너 상태를 되돌린다.
+                if (!PlaytestDungeonRegionFoes.Run()) _hadError = true; // PLAN.md 109-10-5 지역 우두머리 — 영웅·기록·자리를 되돌린다.
                 CheckTemple(); // PLAN.md 106-2 — 플레이어를 순간이동시키므로 맨 끝(finally 에서 되돌린다).
                 StartCutCameraProbe(); // PLAN.md 106-3 — 6·8프레임째에 이어서 본다.
             }

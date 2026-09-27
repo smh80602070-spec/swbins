@@ -50,6 +50,10 @@ namespace Saga.Dungeon.UI
             string gold = string.Format(DungeonLocalization.T("hud.gold"), HeroState.Gold);
             string atk = string.Format(DungeonLocalization.T("hud.atk"), HeroState.Atk);
             string floorLine = string.Format(DungeonLocalization.T("hud.floor"), floor);
+            // PLAN.md 109-10-5 — 바깥 칸에선 층 대신 "위험 N"(웹 HUD 결). 웹의 "들판 HUD 머리 = 지역 이름"은 이 줄이 무기 이름과
+            // 한 줄이라 영어에서 넘쳐(목표판과 겹침) 뺐다 — 지역 이름은 들어섬 배너·M 지도가 보여 준다.
+            int region = DungeonRegionTracker.Instance != null ? DungeonRegionTracker.Instance.Current : -1;
+            if (region >= 0) floorLine = DungeonRegionFoes.DangerLabel(region);
             string landmark = DungeonFloorRunner.Instance?.LandmarkHud ?? ""; // PLAN.md 108 ③ 명소 층
             if (landmark.Length > 0) floorLine += "  " + landmark;
             label.text = $"Lv.{HeroState.Level}  {hp}  ({exp})  {gold}\n" +

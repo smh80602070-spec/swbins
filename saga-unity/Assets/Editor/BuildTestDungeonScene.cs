@@ -1047,6 +1047,16 @@ namespace Saga.EditorTools
             SetPrivateField(runner, "eraFoeScaleMuls", eraMuls);
             SetPrivateField(runner, "modernPeddlerModel", AssetDatabase.LoadAssetAtPath<GameObject>(SetupNpcCharacterImports.PrefabPath(Saga.Dungeon.Data.DungeonEras.ModernPeddlerBody)));
             SetPrivateField(runner, "futurePeddlerModel", AssetDatabase.LoadAssetAtPath<GameObject>(SetupNpcCharacterImports.PrefabPath(Saga.Dungeon.Data.DungeonEras.FuturePeddlerBody)));
+            // PLAN.md 109-10-5 지역 우두머리 아홉·신화 호위 — 다른 판 몸을 빌린다(키는 `RegionBossRunner` 가 Play 때 재서 맞춘다). 없는 PC 는 null → 옛 몸.
+            var regionNames = Saga.Dungeon.Data.DungeonRegionFoes.BorrowedBodies();
+            var regionModels = new GameObject[regionNames.Length];
+            for (int i = 0; i < regionNames.Length; i++)
+            {
+                regionModels[i] = AssetDatabase.LoadAssetAtPath<GameObject>(SetupNpcCharacterImports.PrefabPath(regionNames[i]));
+                if (regionModels[i] == null) Debug.LogWarning($"[BuildTestDungeonScene] 지역 우두머리 몸 {regionNames[i]} 없음 — 옛 몸으로 폴백");
+            }
+            SetPrivateField(runner, "regionBodyNames", regionNames);
+            SetPrivateField(runner, "regionBodyModels", regionModels);
 
             // PLAN.md 109-2b — 명소 층 꾸밈 여섯 벌(시대 층). 꺼 둔 채 굽고, 층 진행기가 그 층일 때만 켠다.
             var landmarkDecorGo = new GameObject("LandmarkEraDecor");

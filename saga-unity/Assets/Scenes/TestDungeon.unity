@@ -53536,6 +53536,28 @@ MonoBehaviour:
   - 1.0233967
   modernPeddlerModel: {fileID: 1647040426612610059, guid: 76f322a024251ed47a98cc49adf4920e, type: 3}
   futurePeddlerModel: {fileID: 334410627569350230, guid: ade279533b6a51040803fea4827b94d1, type: 3}
+  regionBodyNames:
+  - Morak
+  - Warzombie
+  - Copzombie
+  - Yaku
+  - Racer
+  - Maw
+  - Mremireh
+  - Dummy
+  - Mannequin
+  - Skeleton
+  regionBodyModels:
+  - {fileID: 2877907682271809741, guid: 6dfdd6c5b03975e44b1c609e91f1ca84, type: 3}
+  - {fileID: 3700864738892445353, guid: a1084a364ed572846b97dbff4b3058ec, type: 3}
+  - {fileID: 8196045515447164980, guid: ce22385692c63fb4f8914645ec3e14c5, type: 3}
+  - {fileID: 1190885040237087986, guid: 3274792bcfd0e3f4d9c09329d8912b4b, type: 3}
+  - {fileID: 5112646888139968648, guid: ac6973835f547744689c11b81f91cae0, type: 3}
+  - {fileID: 8486061734732956589, guid: b1ded788d4f983b4ba9e6cac5051bc89, type: 3}
+  - {fileID: 5661388501621300319, guid: d0c234055b6ba65499af57c332833480, type: 3}
+  - {fileID: 8216684922549733583, guid: c042b2aedcb6c62408c255b29d2f5628, type: 3}
+  - {fileID: 9059840094607755094, guid: f2f1c14640ff2e14fbf9b566016861c8, type: 3}
+  - {fileID: 7372887235395909551, guid: cfb920940cf96b04789e4ae4b4d0789b, type: 3}
 --- !u!114 &800102209
 MonoBehaviour:
   m_ObjectHideFlags: 0

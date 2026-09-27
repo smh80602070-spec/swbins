@@ -57,6 +57,9 @@ namespace Saga.Dungeon.World
         [SerializeField] private float[] eraFoeScaleMuls = new float[0];
         [SerializeField] private GameObject modernPeddlerModel;
         [SerializeField] private GameObject futurePeddlerModel;
+        // PLAN.md 109-10-5 지역 우두머리·신화 호위가 빌려 쓰는 다른 판 몸(`DungeonRegionFoes.BorrowedBodies` 이름 순). 키는 부르는 쪽이 재서 맞춘다.
+        [SerializeField] private string[] regionBodyNames = new string[0];
+        [SerializeField] private GameObject[] regionBodyModels = new GameObject[0];
 
         /// <summary>층 주인 전용 몸에 명소 빛을 입히는 비율 — 여섯 주인이 한 몸이라 빛으로 가른다.</summary>
         public const float LordTintMix = 0.35f;
@@ -417,6 +420,17 @@ namespace Saga.Dungeon.World
             var model = k >= 0 && k < eraFoeModels.Length ? eraFoeModels[k] : null;
             return (model, model != null && k < eraFoeScaleMuls.Length ? eraFoeScaleMuls[k] : 1f);
         }
+
+        /// <summary>PLAN.md 109-10-5 — 빌린 몸(없는 PC 는 null → 부르는 쪽이 옛 몸으로).</summary>
+        public GameObject RegionBody(string body)
+        {
+            for (int i = 0; i < regionBodyNames.Length && i < regionBodyModels.Length; i++)
+                if (regionBodyNames[i] == body) return regionBodyModels[i];
+            return null;
+        }
+
+        /// <summary>진단 — 실린 빌린 몸 이름.</summary>
+        public string[] RegionBodyNames => (string[])regionBodyNames.Clone();
 
         private int EraFoeIndex(string body)
         {

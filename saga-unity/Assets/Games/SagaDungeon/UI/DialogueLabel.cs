@@ -44,6 +44,9 @@ namespace Saga.Dungeon.UI
             text.alignment = TextAlignmentOptions.Bottom;
         }
 
+        /// <summary>지금 떠 있는 글(없으면 빈 글) — 뒤따르는 알림이 덧붙일 때(PLAN.md 109-10-5 우두머리 토벌).</summary>
+        public string CurrentText => label != null && label.gameObject.activeSelf ? label.text : "";
+
         public void Show(string text, float seconds)
         {
             if (label == null) return;

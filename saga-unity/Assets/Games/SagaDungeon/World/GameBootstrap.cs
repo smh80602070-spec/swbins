@@ -51,6 +51,7 @@ namespace Saga.Dungeon.World
             if (Object.FindFirstObjectByType<SecretPanelUi>() == null) new GameObject("SecretPanelUI").AddComponent<SecretPanelUi>();
             TrialRunner.Install(); // PLAN.md 109-10-3 시련 — 난입 방에 러너, 난입 표식 곁에 표식, 단계 카드(Play 때, 씬 재빌드 없이).
             DungeonRegionTracker.Install(); // PLAN.md 109-10-4 지역 아홉 — 들어섬 배너·바닥 땅빛(Play 때, 씬 재빌드 없이).
+            RegionBossRunner.Install(); // PLAN.md 109-10-5 지역 우두머리 아홉 — 칸마다 표식(Play 때, 몸만 층 진행기에).
             if (DungeonFloorRunner.Instance != null) DungeonFloorRunner.Instance.FloorDescended += OnFloorDescended;
         }
 

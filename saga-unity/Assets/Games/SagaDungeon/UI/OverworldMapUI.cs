@@ -56,7 +56,7 @@ namespace Saga.Dungeon.UI
             _visible = on;
             if (panel != null) panel.SetActive(on);
             _shown = -2;
-            if (on) Refresh();
+            if (on) { RefreshCellTexts(); Refresh(); }
         }
 
         /// <summary>지금 선 칸을 금빛으로(바뀐 때만 다시 칠한다).</summary>
@@ -110,8 +110,24 @@ namespace Saga.Dungeon.UI
                 img.color = IdleColor(i);
                 _cells[i] = img;
                 var t = NewText(cellGo.transform, "", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(CellSize - 8f, CellSize - 8f), 20);
-                t.text = $"{DungeonWorldMap.Name(i)}\n<size=17>{r.Hanja}</size>\n<size=15>{DungeonWorldMap.Place(i)}</size>";
+                t.text = CellLabel(i);
             }
+        }
+
+        /// <summary>칸 글 — 이름·한자·자리 + PLAN.md 109-10-5 우두머리 줄(☠ 이름, 토벌했으면 ✔, 쉬는 중이면 흐리게 — 웹 큰 지도 결).</summary>
+        public static string CellLabel(int i)
+        {
+            var r = DungeonWorldMap.All[i];
+            string boss = "☠ " + DungeonRegionFoes.BossName(i) + (RegionBossState.Kills(i) > 0 ? " ✔" : "");
+            if (RegionBossState.IsResting(i)) boss = $"<color=#8c8c8c>{boss}</color>";
+            return $"{DungeonWorldMap.Name(i)}\n<size=17>{r.Hanja}</size>\n<size=15>{DungeonWorldMap.Place(i)}</size>\n<size=14>{boss}</size>";
+        }
+
+        /// <summary>펼칠 때 칸 글을 다시 — 우두머리 토벌·쉼이 바뀌었을 수 있다.</summary>
+        public void RefreshCellTexts()
+        {
+            if (_cells == null) return;
+            for (int i = 0; i < _cells.Length; i++) _cells[i].GetComponentInChildren<TextMeshProUGUI>().text = CellLabel(i);
         }
 
         private static TextMeshProUGUI NewText(Transform parent, string content, Vector2 anchor, Vector2 pos, Vector2 size, int fontSize)
