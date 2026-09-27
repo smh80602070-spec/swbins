@@ -65,6 +65,7 @@
     0.6,
     0.66
    ],
+   "z_snap": "axis",
    "minw": 0.3,
    "src": "matcreator_mc-skinsuit_2022"
   },
@@ -107,6 +108,11 @@
    "src": "matcreator_mc-skinsuit_2022"
   }
  ],
+ "under": {
+  "culturalibre_hero_boots_2": [
+   "matcreator_mc-skinsuit_2022"
+  ]
+ },
  "anims": {
   "idle": "Idle_Loop",
   "walk": "Walk_Loop",

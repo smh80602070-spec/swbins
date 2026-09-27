@@ -43,6 +43,11 @@
    "color": "#8aa08a"
   }
  ],
+ "under": {
+  "culturalibre_hero_boots_2": [
+   "matcreator_mc-skinsuit_2022"
+  ]
+ },
  "anims": {
   "idle": "Sword_Idle",
   "walk": "Walk_Loop",

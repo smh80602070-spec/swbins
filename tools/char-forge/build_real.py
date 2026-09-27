@@ -456,6 +456,12 @@ def _shell_faces(skin, p, height, eyes):
     return [f.index for f in skin.data.polygons if all(ok[i] for i in f.vertices)]
 
 
+def _bone_axes(arm):
+    """뼈 이름 → (머리 월드 위치, 머리→꼬리 단위 방향) — 쉼 자세."""
+    mw = arm.matrix_world
+    return {b.name: (mw @ b.head_local, ((mw @ b.tail_local) - (mw @ b.head_local)).normalized()) for b in arm.data.bones}
+
+
 def _shell_add(acc, skin, faces, offset, thick, rings=3, snap=None):
     """살 면 → 두께 있는 닫힌 껍데기(바깥·안 두 겹 + 가장자리 벽). 정점마다 그 살 정점의 뼈 무게.
     땅(z=0) 아래로는 안 내려간다(장화 밑창이 법선 쪽으로 1.7cm 땅에 박혔다). 돌려주는 값 = {살 면: (바깥 면, 안 면)}.
@@ -486,7 +492,36 @@ def _shell_add(acc, skin, faces, offset, thick, rings=3, snap=None):
         for a, b in zip(pv, pv[1:] + pv[:1]):
             edges[(a, b)] += 1
     rim = [(a, b) for (a, b) in edges if (b, a) not in edges]  # 가장자리(한 면만 가진 모서리)
-    if snap:
+    if snap and len(snap) > 2:
+        # `z_snap: "axis"` — 비스듬한 팔 띠: 수평 높이 대신 주 뼈 축 위치로 맞춘다. 끝(위·아래)·좌우마다 가장자리 정점의
+        # 축 위치 가운데값으로, 살 면을 따라 축 쪽으로 옮긴다(6cm 까지 — 수평으로 자른 50° 팔 띠 끝은 축 방향으로 ±4.5cm 퍼져 있다, 곧장 위로 옮기면 벌어졌다)
+        axes = snap[2]
+        groups = {}
+        for vi in {v for e in rim for v in e}:
+            ws = _skin_weights(skin, me.vertices[vi])
+            b = max(ws, key=ws.get)
+            if b not in axes:
+                continue
+            q = outer[vi].co
+            side = 0 if abs(q.z - snap[0]) < abs(q.z - snap[1]) else 1
+            groups.setdefault((side, b[-2:]), []).append((vi, b))
+        for key, vs in groups.items():
+            a = axes[max({b for _, b in vs}, key=lambda b: sum(1 for _, x in vs if x == b))][1]
+            target = sorted(outer[vi].co.dot(a) for vi, _ in vs)[len(vs) // 2]
+            for vi, _ in vs:
+                nn = (rot @ me.vertices[vi].normal).normalized()
+                t = a - nn * nn.dot(a)
+                if t.length < 1e-6:
+                    continue
+                t.normalize()
+                if abs(t.dot(a)) < 0.5:
+                    continue
+                for tab in (outer, inner):
+                    q = tab[vi].co
+                    d = (target - q.dot(a)) / t.dot(a)
+                    d = max(-0.06, min(0.06, d))
+                    tab[vi].co = q + t * d
+    elif snap:
         up = Vector((0, 0, 1))
         for vi in {v for e in rim for v in e}:
             nn = (rot @ me.vertices[vi].normal).normalized()
@@ -545,7 +580,8 @@ def kitbash(arm, parts):
             if slot not in shells:
                 shells[slot] = (bmesh.new(), [], p.get('color', '#6b5a48'), p.get('rough', 0.8))
             fmap = _shell_add(shells[slot][:2], src, faces, p.get('offset', 0.005), p.get('thick', 0.004),
-                              snap=_shell_zrange(p, height, eyes) if p.get('z_snap') else None)
+                              snap=(_shell_zrange(p, height, eyes) + ((_bone_axes(arm),) if p.get('z_snap') == 'axis' else ()))
+                              if p.get('z_snap') else None)
             if src is skin:
                 shell_log.append((slot, p.get('offset', 0.005), p.get('thick', 0.004), set(faces), fmap))
             if p.get('hide_under', True) and src is skin:
