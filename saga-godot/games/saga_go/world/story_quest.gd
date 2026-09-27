@@ -21,6 +21,7 @@ const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd"
 const TalkFace := preload("res://games/saga_go/world/talk_face.gd")
 const SkyIsle := preload("res://games/saga_go/world/sky_isle.gd")
 const RiftEnd := preload("res://games/saga_go/world/rift_end.gd")
+const SkyRoute := preload("res://games/saga_go/world/sky_route.gd")
 const WorldQuests := preload("res://games/saga_go/data/world_quests.gd")
 const WQ_BLUE := Color(0.45, 0.8, 1.0)
 const Toast := preload("res://saga_core/ui/toast.gd")
@@ -482,6 +483,11 @@ static func _cell_pos(region: String, cell: Vector2, sky := false, lift := 0.0) 
 
 ## 단계·인물 칸(region·cell + sky·lift·rift_end) 자리. rift_end = 갈림길 끝 섬 윗면 높이(106장 ㊾-3 20장, world/rift_end.gd).
 static func _spot_pos(d: Dictionary) -> Vector3:
+	## isle = "<id>" 면 그 칸의 높이는 구름 위 항로 그 섬 윗면(106장 51 7부, world/sky_route.gd).
+	if d.has("isle"):
+		var q := TestMap.world_pos(d.cell.x, d.cell.y, String(d.region))
+		q.y = SkyRoute.top_y(String(d.isle))
+		return q
 	if bool(d.get("rift_end", false)):
 		var p := TestMap.world_pos(d.cell.x, d.cell.y, String(d.region))
 		p.y = RiftEnd.top_y()
@@ -490,7 +496,7 @@ static func _spot_pos(d: Dictionary) -> Vector3:
 
 ## 떠 있는 자리인가(구름섬·떠 있는 구조물·갈림길 끝) — 둘레·물결·석등도 그 윗면 높이로.
 static func _floating(d: Dictionary) -> bool:
-	return bool(d.get("sky", false)) or float(d.get("lift", 0.0)) > 0.0 or bool(d.get("rift_end", false))
+	return bool(d.get("sky", false)) or float(d.get("lift", 0.0)) > 0.0 or bool(d.get("rift_end", false)) or d.has("isle")
 
 # ---------------------------------------------------------------- 단계
 

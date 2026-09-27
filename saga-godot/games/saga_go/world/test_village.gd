@@ -134,6 +134,10 @@ func _ready() -> void:
 	var rift_end := preload("res://games/saga_go/world/rift_end.gd").new()
 	rift_end.name = "RiftEnd"
 	add_child(rift_end)
+	## PLAN 106장 51-1 — 이야기 7부 구름 위 항로(잠긴 도읍 남쪽 하늘에 뜬 섬 셋·바람 기둥 셋, 23장 등대 불 뒤에 보인다).
+	var sky_route := preload("res://games/saga_go/world/sky_route.gd").new()
+	sky_route.name = "SkyRoute"
+	add_child(sky_route)
 	var story := preload("res://games/saga_go/world/story_quest.gd").new()
 	story.name = "StoryQuest"
 	add_child(story)
@@ -205,6 +209,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_story6.gd").new())
 	if OS.get_environment("SAGA_SUNKEN_PROBE") != "": # 106장 ㊿ 일곱째 지역 잠긴 도읍
 		add_child(load("res://tools/probe_sunken.gd").new())
+	if OS.get_environment("SAGA_SKYROUTE_PROBE") != "": # 106장 51-1 7부 구름 위 항로
+		add_child(load("res://tools/probe_sky_route.gd").new())
 
 	## PLAN 106장 ㊸ — 업적(다른 노드 신호에 붙으므로 맨 뒤).
 	var achievements := preload("res://games/saga_go/world/achievements.gd").new()
