@@ -79,13 +79,18 @@ namespace Saga.Core
             rect.anchorMax = new Vector2(0.5f, 1f);
             rect.pivot = new Vector2(0.5f, 1f);
             rect.anchoredPosition = new Vector2(0f, -10f);
-            rect.sizeDelta = new Vector2(900f, 90f);
+            // PLAN.md 110 ⑥c — 폭 540 을 넘는 줄(그날 뽑힌 일과·영어)은 줄바꿈 대신 글씨를 줄인다(22→15).
+            // 900 폭에 줄바꿈이면 긴 줄만큼 글이 넓어져 DUNGEON 왼쪽 위 상태 글과 닿았다(여유 27px).
+            rect.sizeDelta = new Vector2(540f, 90f);
 
             _label = textGo.AddComponent<TextMeshProUGUI>();
             _label.fontSize = 22;
+            _label.enableAutoSizing = true;
+            _label.fontSizeMin = 15;
+            _label.fontSizeMax = 22;
             _label.alignment = TextAlignmentOptions.Top;
             _label.color = Color.white;
-            _label.textWrappingMode = TextWrappingModes.Normal;
+            _label.textWrappingMode = TextWrappingModes.NoWrap;
             _label.text = "";
         }
 

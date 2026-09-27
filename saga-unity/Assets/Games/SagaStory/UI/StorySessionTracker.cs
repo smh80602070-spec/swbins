@@ -89,7 +89,7 @@ namespace Saga.Story.UI
         {
             if (_sessionCard == null) return;
             int killsGained = StoryQuestState.Kills - _sessionStartKills;
-            _sessionCard.Show(Saga.Core.SagaUi.L("이번 세션 정리", "Session summary"),
+            _sessionCard.Show(Saga.Core.SagaUi.L("이번 세션 정리", "Session Summary"),
                 string.Format(Saga.Core.SagaUi.L("이동 {0:F0}m", "Walked {0:F0}m"), _walkedMeters),
                 string.Format(Saga.Core.SagaUi.L("처치 +{0}", "Kills +{0}"), killsGained),
                 string.Format(Saga.Core.SagaUi.L("다음: {0}", "Next: {0}"), GoalLineNow()));

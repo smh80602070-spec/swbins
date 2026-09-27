@@ -9618,3 +9618,15 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - garments.py 통 `fit`(오목 메우기 6 → 2번) + 새 틀 `vest`·`cuirass` → Archer 자리 유격 가죽 조끼 · Mremireh 자리 별바다 손님 금빛 가슴판·어깨판(pauldrons 색 변형). 기존 옷은 그대로(찰갑 md5 같음).
 - build_real 레시피 칸 `under`: 겉옷에 덮인 속옷 면을 지운다 — 몸통 뼈에만 붙은 공방 겉옷 밑에서 몸 옷이 어깨뼈로 뚫던 것(대기·달리기 렌더로 확인). render_common `CF_CLIP` 로 동작 고르기.
 - 검사: 두 몸 verify fbx·glb 실패 0 · sha256 같음 · 비교 장면 CMP_RESULT OK. 남은 빈칸: 가죽 기사 겉옷판 · 사진작가 목폴라. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
+
+## 2026-09-27 상용화 — PLAN 110 ⑥c 영어 검수 목록 ("사가유니티 이어해")
+
+- 도구 `tools/loc-review.mjs`(node — 이 PC 엔 py 가 없어 파이썬 대신): 번역 표 다섯(2036) + 코드 `SagaUi.L` 짝(55, Editor 밖) = 2091. 오류(exit 1) = 키 짝·빈 영어·영어에 한글(문답 사자성어·유행어 인용은 뺌)·자리표 `{n}`·서식 태그·앞뒤 공백(한국어 쪽이 비고 영어가 한 칸 = 조사 붙임이라 봐줌)·실명(사가고 도감 id 이름 조각 5자 이상 + 손 목록, 한·영)·원작 게임 용어(웹 사가고 §5 ⑳). 경고 = 첫 기호·줄 수·두 칸(한국어도 두 칸이면 의도)·판 안 용어 표. 흔들림 = 12자 이하 같은 한국어의 다른 영어(동음이의어 허용 목록 `DRIFT_OK`). 넘침 주의 = 순위 1·2 에서 대략 폭 1.6배.
+- 산출: `docs/EN_REVIEW.md`(요약, 생성물) · `docs/en_review.tsv`(순위·판·키·한국어·영어·깃발·검수 — 검수 칸은 사람이 채우고, 다시 돌려도 영어가 같으면 남고 바뀌면 비움). 순위 1 UI 257 · 2 놀면서 1144 · 3 대사·문답 690.
+- 먼저 영어 2091 을 직접 한 번 훑음(자동 검사가 못 잡는 오타·용어). 첫 자동 결과 오류 99·경고 9·흔들림 8 → 0·0·0:
+  - **국지 문답 실명 12문항**(h01~05·h08·i01·i12·w06·w07·w09·w11, 한·영 + `RealmQuizData` 코드 폴백) — 이 트랙 주석이 "교양 퀴즈라 정책 밖"이라 두었는데, 웹은 09-26 사용자 결정("모든 실명을 가명으로", d9120233)으로 바꿨다 → 같은 가명(도감 인물은 도감 로마자: Hunmin·Haejang·Hyeonmyo·Gangu·Tonghapgong·Yodongpae·Inhyeong·Hyeonchaek·Cassiander, 나머지는 새로). 헤이케(가문)·황건적(무리)·지명·웹툰 이름은 사람 이름이 아니라 웹처럼 둠.
+  - **GO 원작 용어**(⑳ 표, 표시 글자만 — enum `Exquisite`·`Vaporize` 등·키·세이브 그대로): 상자 평범·정교·진귀·화려 → 나무·무늬·옻칠·금박(Wooden·Patterned·Lacquered·Gilded) · 반응 증발·과부하·감전 → 물안개·터짐·물벼락(Steam·Blast·Surge) · 원소 폭발 → 원소 해방(Release) · 영어 원소 Pyro·Hydro·Electro → Fire·Water·Thunder(한국어 화·수·뇌는 오행식이라 둠) · DUNGEON Electro Lance → Lightning Lance. 장면에 구운 글엔 없음(런타임만) 확인. HOW_TO_PLAYTEST 이름도.
+  - 영어: 봉래 한마디 "Bongnae" 오타 · DUNGEON 난입 horde → Onslaught·Miniboss → Mini-Boss·퀘스트 두목 = 적 이름(Yellow Turban Bandit Chief) · STORY job → class(Class Trainer 등)·"+10%p" → "+10%"·황건적·떠도는 망자·별바다 손님을 GO 와 같게 · FOREST 사진가 대사 fog wraith → mist ghost · 공통 단추 Title Case(Quit Game·New Game·Master Volume·Sound Effects·Error Log·Delete & Start·Title Screen·Session Summary).
+- 도중 발견: 배치 점검이 문제 6(영어 DUNGEON 목표판 ↔ 왼쪽 위 상태 글, 16:9·4:3). 세이브 탓인가 해서 치워도 같음 → 제 파일만 HEAD 로 돌려 기준선 = 0 → 원인은 "Survive a horde" → "Survive an Onslaught". 목표판이 폭 900·줄바꿈이라 **그날 뽑힌 일과 줄 길이만큼 넓어지고** 여유가 27px 뿐이었다(다른 날 "Clear a sigil floor" 가 뽑혀도 닿을 수 있었음) → `GoalBoard` 폭 540·줄바꿈 없음·자동 크기 22→15. 목표판 최대 잉크 폭 619 → 583px.
+- 검증(묶음 없는 이 PC, 6000.3.23f1): 컴파일 오류 0 · `PlaytestRealmSlice` OK ×2 · `PlaytestSagaCredits` OK · 배치 점검 OK ×2(두 언어 × 패널 42·속 7·상태 38, 영어에 한글은 문답이 무작위라 1~6 — 문제 수엔 안 셈) · loc-review 오류 0. 판별 헤드리스(GO·DUNGEON·FOREST·STORY·흐름)는 이 PC 에서 Missing Prefab 로 기준선부터 FAIL 이라 안 돌림 — **묶음 있는 PC 에서 한 번**(문자열·목표판만 바뀌어 로직 영향은 없을 것). 실행 부산물: 글꼴 동적 아틀라스 셋 되돌림.
+- 남음: 사람 영어 검수(tsv 순위 1부터) · ⑥d AAB + Play Asset Delivery.

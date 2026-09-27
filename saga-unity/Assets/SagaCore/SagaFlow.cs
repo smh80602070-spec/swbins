@@ -214,8 +214,8 @@ namespace Saga.Core
             var size = new Vector2(480f, 86f);
             ResumeButton = SagaUi.NewButton(panel.transform, "Resume", SagaUi.L("계속하기", "Resume"), new Vector2(0.5f, 1f), new Vector2(0f, -170f), size, SagaUi.ButtonAccent);
             SaveButton = SagaUi.NewButton(panel.transform, "Save", SagaUi.L("저장", "Save"), new Vector2(0.5f, 1f), new Vector2(0f, -272f), size, SagaUi.ButtonIdle);
-            TitleButton = SagaUi.NewButton(panel.transform, "Title", SagaUi.L("타이틀로", "Title screen"), new Vector2(0.5f, 1f), new Vector2(0f, -374f), size, SagaUi.ButtonIdle);
-            QuitButton = SagaUi.NewButton(panel.transform, "Quit", SagaUi.L("게임 종료", "Quit game"), new Vector2(0.5f, 1f), new Vector2(0f, -476f), size, SagaUi.ButtonIdle);
+            TitleButton = SagaUi.NewButton(panel.transform, "Title", SagaUi.L("타이틀로", "Title Screen"), new Vector2(0.5f, 1f), new Vector2(0f, -374f), size, SagaUi.ButtonIdle);
+            QuitButton = SagaUi.NewButton(panel.transform, "Quit", SagaUi.L("게임 종료", "Quit Game"), new Vector2(0.5f, 1f), new Vector2(0f, -476f), size, SagaUi.ButtonIdle);
             _status = SagaUi.NewText(panel.transform, "", 28f, SagaUi.InkDim, new Vector2(0.5f, 0f), new Vector2(0f, 50f), new Vector2(560f, 50f));
             ResumeButton.onClick.AddListener(Close);
             SaveButton.onClick.AddListener(OnSave);

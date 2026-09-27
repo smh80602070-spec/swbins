@@ -97,7 +97,7 @@ namespace Saga.Dungeon.UI
             if (_sessionCard == null) return;
             int goldGained = HeroState.Gold - _sessionStartGold;
             string goldStr = goldGained >= 0 ? $"+{goldGained}" : goldGained.ToString();
-            _sessionCard.Show(Saga.Core.SagaUi.L("이번 세션 정리", "Session summary"),
+            _sessionCard.Show(Saga.Core.SagaUi.L("이번 세션 정리", "Session Summary"),
                 string.Format(Saga.Core.SagaUi.L("이동 {0:F0}m", "Walked {0:F0}m"), _walkedMeters),
                 string.Format(Saga.Core.SagaUi.L("금 {0}", "Gold {0}"), goldStr),
                 string.Format(Saga.Core.SagaUi.L("다음: {0}", "Next: {0}"), GoalLineNow()));

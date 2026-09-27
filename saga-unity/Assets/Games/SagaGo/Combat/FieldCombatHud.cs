@@ -153,8 +153,8 @@ namespace Saga.Go.Combat
                 : $"{skillName}\n(E)";
             _skillImage.color = new Color(ec.r, ec.g, ec.b, m.SkillCd > 0f ? 0.15f : 0.45f);
             _burstLabel.text = m.BurstReady
-                ? $"{GoLocalization.T("field.btn.burst", "폭발")}\n★ (Q)"
-                : $"{GoLocalization.T("field.btn.burst", "폭발")}\n{Mathf.FloorToInt(m.Energy)}%";
+                ? $"{GoLocalization.T("field.btn.burst", "해방")}\n★ (Q)"
+                : $"{GoLocalization.T("field.btn.burst", "해방")}\n{Mathf.FloorToInt(m.Energy)}%";
             _burstImage.color = new Color(ec.r, ec.g, ec.b, m.BurstReady ? 0.6f : 0.15f);
 
             var party = _combat.Party;

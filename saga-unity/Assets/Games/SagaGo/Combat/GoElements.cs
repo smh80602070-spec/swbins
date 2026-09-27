@@ -101,9 +101,9 @@ namespace Saga.Go.Combat
         {
             switch (r)
             {
-                case GoReaction.Vaporize: return Saga.Go.Data.GoLocalization.T("field.re.vaporize", "증발");
-                case GoReaction.Overload: return Saga.Go.Data.GoLocalization.T("field.re.overload", "과부하");
-                case GoReaction.ElectroCharged: return Saga.Go.Data.GoLocalization.T("field.re.charged", "감전");
+                case GoReaction.Vaporize: return Saga.Go.Data.GoLocalization.T("field.re.vaporize", "물안개");
+                case GoReaction.Overload: return Saga.Go.Data.GoLocalization.T("field.re.overload", "터짐");
+                case GoReaction.ElectroCharged: return Saga.Go.Data.GoLocalization.T("field.re.charged", "물벼락");
                 default: return "";
             }
         }

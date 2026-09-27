@@ -423,7 +423,7 @@ namespace Saga.Go.Combat
             FieldRingFx.Spawn(transform.position, BurstRadius, GoElements.ColorOf(m.Element), 0.7f);
             FieldRingFx.Spawn(transform.position, BurstRadius * 0.6f, Color.white, 0.5f);
             ElementPulse?.Invoke(transform.position, BurstRadius, m.Element);
-            ToastLine(string.Format(GoLocalization.T("field.burst", "{0} — 원소 폭발!"), m.Name), 1.5f);
+            ToastLine(string.Format(GoLocalization.T("field.burst", "{0} — 원소 해방!"), m.Name), 1.5f);
             if (player != null && player.Animator != null) player.Animator.SetTrigger("Attack");
             return hits;
         }

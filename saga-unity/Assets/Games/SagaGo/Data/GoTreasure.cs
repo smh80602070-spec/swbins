@@ -100,10 +100,10 @@ namespace Saga.Go.Data
         {
             switch (g)
             {
-                case Grade.Exquisite: return GoLocalization.T("chest.grade1", "정교한 상자");
-                case Grade.Precious: return GoLocalization.T("chest.grade2", "진귀한 상자");
-                case Grade.Luxurious: return GoLocalization.T("chest.grade3", "화려한 상자");
-                default: return GoLocalization.T("chest.grade0", "평범한 상자");
+                case Grade.Exquisite: return GoLocalization.T("chest.grade1", "무늬 상자");
+                case Grade.Precious: return GoLocalization.T("chest.grade2", "옻칠 상자");
+                case Grade.Luxurious: return GoLocalization.T("chest.grade3", "금박 상자");
+                default: return GoLocalization.T("chest.grade0", "나무 상자");
             }
         }
 

@@ -1,0 +1,2092 @@
+순위	판	키	한국어	영어	깃발	검수
+1	go	action.save	저장	Save		
+1	go	command.save_fail_player	저장 실패 — 플레이어를 못 찾았다.	Save failed — player not found.		
+1	go	command.save_ok	저장했다.	Saved.		
+1	go	cut.skip	건너뛰기 ▶ 아무 키 · 탭	Skip ▶ any key · tap		
+1	go	dex.button	도감	Codex		
+1	go	dex.close	닫는다	Close		
+1	go	goal.all_found	발견할 곳을 전부 찾음	Every place has been found		
+1	go	goal.beacon	봉수대	Beacon Tower		
+1	go	goal.distance	{0}까지 {1:F0}m	{1:F0}m to {0}		
+1	go	goal.relic	동쪽 숲 유적	East Grove Ruins		
+1	go	goal.shrine	산신당	Mountain Shrine		
+1	go	goal.treasure	숨은 보물	Hidden Treasure		
+1	go	hud.exp	경험치 {0}/{1}	EXP {0}/{1}		
+1	go	hud.gold	돈 {0}냥	{0} Gold		
+1	go	map.button	지도	Map		
+1	go	map.close	닫기 (M)	Close (M)		
+1	go	map.title	지도	Map		
+1	go	quality.high	기본	Standard		
+1	go	quality.low	절약	Battery Saver		
+1	go	scale.large	크게	Large		
+1	go	scale.normal	보통	Normal		
+1	go	scale.small	작게	Small		
+1	go	settings.bgm	배경음악	Music		
+1	go	settings.close	닫는다	Close		
+1	go	settings.graphics_quality	그래픽 품질	Graphics Quality		
+1	go	settings.language	언어	Language		
+1	go	settings.sfx	효과음	Sound Effects		
+1	go	settings.title	설정	Settings		
+1	go	settings.ui_scale	UI 크기	UI Size		
+1	go	settings.vibration	진동	Vibration		
+1	go	state.off	꺼짐	Off		
+1	go	state.on	켜짐	On		
+1	go	task.all_done	오늘의 일과 완료 (도장 {0})	Today's tasks done (stamps {0})		
+1	go	task.bandit_win	도적 조우 승리 {0}/{1}	Win bandit encounters {0}/{1}		
+1	go	task.cairn_wish	성황당 기원 {0}/{1}	Pray at the shrine cairn {0}/{1}		
+1	go	task.walk	걷기 {0}/{1}m	Walk {0}/{1}m		
+1	go	task.week	일과 도장 {0}/{1}(다음 보상까지 {2})	Task stamps {0}/{1} ({2} to the next reward)		
+1	go	task.wolf_win	희귀 늑대 토벌 {0}/{1}	Hunt the rare wolf {0}/{1}		
+1	dungeon	action.attack	공격	Attack		
+1	dungeon	action.bomb	벽력탄	Bomb		
+1	dungeon	action.dodge	회피	Dodge		
+1	dungeon	action.heal	치유	Heal		
+1	dungeon	action.heavy_attack	강공격	Heavy Attack		
+1	dungeon	action.jump	점프	Jump		
+1	dungeon	action.lockon	주목	Lock On		
+1	dungeon	action.save	저장	Save		
+1	dungeon	action.secret	비결	Secrets		
+1	dungeon	action.summon	소환	Summon		
+1	dungeon	action.taunt	도발	Taunt		
+1	dungeon	action.whirl	회전베기	Whirl		
+1	dungeon	command.save_fail_player	저장 실패 — 플레이어를 못 찾았다.	Save failed — player not found.		
+1	dungeon	command.save_ok	저장했다.	Saved.		
+1	dungeon	cut.skip	건너뛰기 ▶ 아무 키 · 탭	Skip ▶ any key · tap		
+1	dungeon	goal.nearest_enemy	가장 가까운 적까지 {0:F0}m	{0:F0}m to the nearest enemy		
+1	dungeon	goal.no_enemy	가까운 적 없음	No enemies nearby		
+1	dungeon	hud.atk	공격력 {0:0}	ATK {0:0}		
+1	dungeon	hud.exp	경험치 {0}/{1}	EXP {0}/{1}		
+1	dungeon	hud.floor	🕳️ 지하 {0}층	🕳️ B{0}F		
+1	dungeon	hud.gold	돈 {0}냥	{0} Gold		
+1	dungeon	hud.horde	⚔ 난입 — 파도 {0} · 남은 {1:0}초 · 처치 {2}	⚔ Onslaught — Wave {0} · {1:0}s left · Kills {2}		
+1	dungeon	hud.hp	체력 {0}/{1}	HP {0}/{1}		
+1	dungeon	hud.temple_bombs	 · 벽력탄(R)	 · Bombs (R)		
+1	dungeon	hud.temple_bosskey	 · 보스 열쇠	 · Boss key		
+1	dungeon	hud.temple_cleared	 · 능묘 정복	 · Tomb cleared		
+1	dungeon	hud.temple_keys	🗝 열쇠 {0}	🗝 Keys {0}		
+1	dungeon	hud.worldboss_timer	⏱ 두목전 — {0:0}초	⏱ Boss fight — {0:0}s		
+1	dungeon	quality.high	기본	Standard		
+1	dungeon	quality.low	절약	Battery Saver		
+1	dungeon	scale.large	크게	Large		
+1	dungeon	scale.normal	보통	Normal		
+1	dungeon	scale.small	작게	Small		
+1	dungeon	secret.close	닫기	Close		
+1	dungeon	settings.bgm	배경음악	Music		
+1	dungeon	settings.close	닫는다	Close		
+1	dungeon	settings.graphics_quality	그래픽 품질	Graphics Quality		
+1	dungeon	settings.language	언어	Language		
+1	dungeon	settings.sfx	효과음	Sound Effects		
+1	dungeon	settings.title	설정	Settings		
+1	dungeon	settings.ui_scale	UI 크기	UI Size		
+1	dungeon	settings.vibration	진동	Vibration		
+1	dungeon	state.off	꺼짐	Off		
+1	dungeon	state.on	켜짐	On		
+1	dungeon	task.all_done	오늘의 일과 완료 (도장 {0})	Today's tasks done (stamps {0})		
+1	dungeon	task.enemy_kill	적 처치 {0}/{1}	Defeat enemies {0}/{1}		
+1	dungeon	task.horde_survive	난입 완주 {0}/{1}	Survive an Onslaught {0}/{1}		
+1	dungeon	task.sigil_clear	부적 층 클리어 {0}/{1}	Clear a sigil floor {0}/{1}		
+1	dungeon	task.walk	걷기 {0}/{1}m	Walk {0}/{1}m		
+1	dungeon	task.week	일과 도장 {0}/{1}(다음 보상까지 {2})	Task stamps {0}/{1} ({2} to the next reward)		
+1	forest	action.save	저장	Save		
+1	forest	command.save_fail_player	저장 실패 — 플레이어를 못 찾았다.	Save failed — player not found.		
+1	forest	command.save_ok	저장했다.	Saved.		
+1	forest	goal.delivery	택배 → {0}까지 {1:F0}m	Delivery → {1:F0}m to {0}		
+1	forest	goal.nearest_tree	가장 가까운 나무까지 {0:F0}m	{0:F0}m to the nearest tree		
+1	forest	goal.session	이동 {0:F0}m · 과일 +{1} · 택배 {2}건	Walked {0:F0}m · Fruit +{1} · Deliveries {2}		
+1	forest	quality.high	기본	Standard		
+1	forest	quality.low	절약	Battery Saver		
+1	forest	scale.large	크게	Large		
+1	forest	scale.normal	보통	Normal		
+1	forest	scale.small	작게	Small		
+1	forest	settings.bgm	배경음악	Music		
+1	forest	settings.close	닫는다	Close		
+1	forest	settings.graphics_quality	그래픽 품질	Graphics Quality		
+1	forest	settings.language	언어	Language		
+1	forest	settings.sfx	효과음	Sound Effects		
+1	forest	settings.title	설정	Settings		
+1	forest	settings.ui_scale	UI 크기	UI Size		
+1	forest	settings.vibration	진동	Vibration		
+1	forest	state.off	꺼짐	Off		
+1	forest	state.on	켜짐	On		
+1	story	action.attack	공격	Attack		
+1	story	action.bolt	기탄	Bolt		
+1	story	action.brace	기합	Brace		
+1	story	action.jump	점프	Jump		
+1	story	action.party_guardian	호법	Guardian		
+1	story	action.party_skirmisher	유격	Skirmisher		
+1	story	action.party_vanguard	선봉	Vanguard		
+1	story	action.save	저장	Save		
+1	story	action.skill_panel	무예	Skills		
+1	story	action.summon	소환	Summon		
+1	story	action.sweep	횡소	Sweep		
+1	story	cut.skip	건너뛰기 ▶ 아무 키 · 탭	Skip ▶ any key · tap		
+1	story	goal.job_max	마지막 차수 — 무예를 끝까지	Final tier — master your arts		
+1	story	goal.nearest_enemy	가장 가까운 적까지 {0:F0}m	{0:F0}m to the nearest enemy		
+1	story	goal.next_job	다음 전직 Lv.{0} (지금 Lv.{1})	Next class change at Lv.{0} (now Lv.{1})		
+1	story	goal.no_enemy	가까운 적 없음	No enemies nearby		
+1	story	goal.session	이동 {0:F0}m · 처치 +{1}	Walked {0:F0}m · Kills +{1}		
+1	story	hud.done	 — 완료!	 — Done!		
+1	story	hud.level	Lv.{0}	Lv.{0}		
+1	story	hud.mp	💧 MP {0}/{1}	💧 MP {0}/{1}		
+1	story	hud.sp	📜 무예 점수 {0} (K)	📜 Skill points {0} (K)		
+1	story	quality.high	기본	Standard		
+1	story	quality.low	절약	Battery Saver		
+1	story	scale.large	크게	Large		
+1	story	scale.normal	보통	Normal		
+1	story	scale.small	작게	Small		
+1	story	settings.bgm	배경음악	Music		
+1	story	settings.close	닫는다	Close		
+1	story	settings.graphics_quality	그래픽 품질	Graphics Quality		
+1	story	settings.language	언어	Language		
+1	story	settings.sfx	효과음	Sound Effects		
+1	story	settings.title	설정	Settings		
+1	story	settings.ui_scale	UI 크기	UI Size		
+1	story	settings.vibration	진동	Vibration		
+1	story	skill.pin	칸	Slot		
+1	story	skill.tab	{0}차	Tier {0}		
+1	story	state.off	꺼짐	Off		
+1	story	state.on	켜짐	On		
+1	realm	command.archive	서고	Archive		
+1	realm	command.attack	공격	Attack		
+1	realm	command.city	성	City		
+1	realm	command.duel	일기토	Duel		
+1	realm	command.game_over	이미 판이 끝났다.	The game has already ended.		
+1	realm	command.map	지도	Map		
+1	realm	command.next_month	다음 달	Next Month		
+1	realm	command.orders	명령	Orders		
+1	realm	command.plot	계략	Schemes		
+1	realm	command.quiz	문답	Quiz		
+1	realm	command.save	저장	Save		
+1	realm	command.save_fail	저장 실패.	Save failed.		
+1	realm	command.save_ok	저장했다.	Saved.		
+1	realm	command.tactic	전술	Tactics		
+1	realm	goal.session	함락 +{0}성 · 금 {1}	Captured +{0} · Gold {1}		
+1	realm	goal.viewing	{0} 조망 중 · 금 {1}	Viewing {0} · Gold {1}		
+1	realm	hud.agri	개간	Farming		
+1	realm	hud.ambition	야망:{0} {1}/{2}	Ambition: {0} {1}/{2}		
+1	realm	hud.ambition_done	야망:{0} 달성✓	Ambition: {0} ✓		
+1	realm	hud.captured	함락됨(성 목록에 편입)	Captured (added to city list)		
+1	realm	hud.comm	상업	Commerce		
+1	realm	hud.enemy_status	병력 {0} · 성벽 {1} · 훈련 {2}	Troops {0} · Walls {1} · Training {2}		
+1	realm	hud.food	군량	Food		
+1	realm	hud.pop	인구	Population		
+1	realm	hud.roster	로스터: 	Roster: 		
+1	realm	hud.sec	치안	Security		
+1	realm	hud.ships	조선	Ships		
+1	realm	hud.tech	기술	Tech		
+1	realm	hud.train	훈련	Training		
+1	realm	hud.troops	병력	Troops		
+1	realm	hud.wall	축성	Walls		
+1	realm	hud.year_month	{0}년 {1}월 · 금 {2}	Year {0}, Month {1} · Gold {2}		
+1	realm	panel.archive_title	서고 — 익힌 문제(최근 순)	Archive — Learned Questions (Most Recent)		
+1	realm	panel.attack_title	칠 곳을 고르세요	Choose a target		
+1	realm	panel.city_title	성 — 조망·명령 대상	City — View & Command Target		
+1	realm	panel.plot_title	계략 — 적국과 맞닿은 성에서만	Schemes — Only from cities bordering an enemy		
+1	realm	quality.high	기본	Standard		
+1	realm	quality.low	절약	Battery Saver		
+1	realm	scale.large	크게	Large		
+1	realm	scale.normal	보통	Normal		
+1	realm	scale.small	작게	Small		
+1	realm	settings.bgm	배경음악	Music		
+1	realm	settings.close	닫는다	Close		
+1	realm	settings.graphics_quality	그래픽 품질	Graphics Quality		
+1	realm	settings.language	언어	Language		
+1	realm	settings.sfx	효과음	Sound Effects		
+1	realm	settings.succession	계승(위험)	Succession (risky)		
+1	realm	settings.title	설정	Settings		
+1	realm	settings.ui_scale	UI 크기	UI Size		
+1	realm	settings.vibration	진동	Vibration		
+1	realm	state.off	꺼짐	Off		
+1	realm	state.on	켜짐	On		
+1	realm	ui.order_label	{0} ({1}냥)	{0} ({1} Gold)		
+1	realm	ui.plot_label	{0} {1} ({2}냥, 성공률 {3})	{0} {1} ({2} Gold, {3} success)		
+1	realm	ui.plot_label_target	{0} {1} → {2} ({3}냥, 성공률 {4})	{0} {1} → {2} ({3} Gold, {4} success)		
+1	common	DungeonSessionTracker.cs	이번 세션 정리	Session Summary		
+1	common	DungeonSessionTracker.cs	이동 {0:F0}m	Walked {0:F0}m		
+1	common	DungeonSessionTracker.cs	금 {0}	Gold {0}		
+1	common	DungeonSessionTracker.cs	다음: {0}	Next: {0}		
+1	common	ForestSessionTracker.cs	이번 세션 정리	Session Summary		
+1	common	ForestSessionTracker.cs	이동 {0:F0}m	Walked {0:F0}m		
+1	common	ForestSessionTracker.cs	과일 +{0} · 택배 {1}건	Fruit +{0} · Deliveries {1}		
+1	common	ForestSessionTracker.cs	다음: {0}	Next: {0}		
+1	common	GoSessionTracker.cs	이번 세션 정리	Session Summary		
+1	common	GoSessionTracker.cs	이동 {0:F0}m	Walked {0:F0}m		
+1	common	GoSessionTracker.cs	금 {0}	Gold {0}		
+1	common	GoSessionTracker.cs	다음: {0}	Next: {0}		
+1	common	GoalBoard.cs	지금	Now		
+1	common	GoalBoard.cs	이번 세션	This session		
+1	common	GoalBoard.cs	이번 주	This week		
+1	common	SagaFlow.cs	일시 정지	Paused		
+1	common	SagaFlow.cs	계속하기	Resume		
+1	common	SagaFlow.cs	저장	Save		
+1	common	SagaFlow.cs	타이틀로	Title Screen		
+1	common	SagaFlow.cs	게임 종료	Quit Game		
+1	common	SagaFlow.cs	저장했다	Saved		
+1	common	SagaFlow.cs	지금은 저장할 수 없다	Can't save right now		
+1	common	StorySessionTracker.cs	이번 세션 정리	Session Summary		
+1	common	StorySessionTracker.cs	이동 {0:F0}m	Walked {0:F0}m		
+1	common	StorySessionTracker.cs	처치 +{0}	Kills +{0}		
+1	common	StorySessionTracker.cs	다음: {0}	Next: {0}		
+1	common	TitleScreen.cs	역사 인물로 노는 다섯 판	Five games with figures from history		
+1	common	TitleScreen.cs	설정	Settings		
+1	common	TitleScreen.cs	크레딧	Credits		
+1	common	TitleScreen.cs	게임 종료	Quit Game		
+1	common	TitleScreen.cs	없음	None		
+1	common	TitleScreen.cs	복사했습니다	Copied		
+1	common	TitleScreen.cs	크레딧	Credits		
+1	common	TitleScreen.cs	닫기	Close		
+1	common	TitleScreen.cs	SAGA — 역사 인물로 노는 다섯 판⏎⏎	SAGA — Five games with figures from history⏎⏎		
+1	common	TitleScreen.cs	언어	Language		
+1	common	TitleScreen.cs	전체 음량	Master Volume		
+1	common	TitleScreen.cs	배경음	Music		
+1	common	TitleScreen.cs	효과음	Sound Effects		
+1	common	TitleScreen.cs	진동	Vibration		
+1	common	TitleScreen.cs	오류 기록	Error Log		
+1	common	TitleScreen.cs	설정	Settings		
+1	common	TitleScreen.cs	다섯 판에 함께 적용됩니다	Applies to all five games		
+1	common	TitleScreen.cs	닫기	Close		
+1	common	TitleScreen.cs	저장 있음	Saved		
+1	common	TitleScreen.cs	처음	New		
+1	common	TitleScreen.cs	저장 있음	Saved		
+1	common	TitleScreen.cs	처음	New		
+1	common	TitleScreen.cs	이어하기	Continue		
+1	common	TitleScreen.cs	새로 시작	New Game		
+1	common	TitleScreen.cs	지우고 시작	Delete & Start		
+1	common	TitleScreen.cs	취소	Cancel		
+1	common	TitleSettings.cs	판마다 다름	Varies by game		
+1	common	TitleSettings.cs	켜짐	On		
+1	common	TitleSettings.cs	꺼짐	Off		
+2	go	chest.grade0	나무 상자	Wooden Chest		
+2	go	chest.grade1	무늬 상자	Patterned Chest		
+2	go	chest.grade2	옻칠 상자	Lacquered Chest		
+2	go	chest.grade3	금박 상자	Gilded Chest		
+2	go	chest.hint_group	{0} — 둘레 무리를 모두 쓰러뜨리면 열린다 (남은 적 {1})	{0} — defeat every band around it to open (foes left {1})		
+2	go	chest.hint_torch	{0} — 석등 {1}개({2})를 제 원소 스킬(E)·해방(Q)로 {3}초 안에 모두 밝혀라	{0} — light all {1} lanterns ({2}) with matching Skill (E) / Release (Q) within {3}s		
+2	go	chest.item	 · {0}	 · {0}		
+2	go	chest.opened	{0}를 열었다 — 경험치 +{1} · 돈 +{2}냥{3}  (보물 상자 {4}/{5})	Opened the {0} — +{1} EXP · +{2} Gold{3}  (Chests {4}/{5})		
+2	go	chest.torch_out	석등이 꺼졌다 — 다시 처음부터 밝혀라	The lanterns went out — light them again from the start		
+2	go	chest.torch_progress	석등 {0}/{1} — {2}초 안에 나머지를	Lanterns {0}/{1} — light the rest within {2}s		
+2	go	chest.torch_wrong	이 석등은 {0} 원소로만 밝혀진다	This lantern lights only with {0}		
+2	go	chest.unlock_group	무리를 물리쳤다 — {0}의 사슬이 풀렸다	The band is defeated — the chains on the {0} fell away		
+2	go	chest.unlock_torch	석등이 모두 밝혀졌다 — {0}의 사슬이 풀렸다	All lanterns are lit — the chains on the {0} fell away		
+2	go	combat.dodge	회피	Dodge		
+2	go	combat.just_dodge	간발!	Just!		
+2	go	combat.ki	기(氣)	Ki		
+2	go	combat.momentum	기세	Momentum		
+2	go	combat.morale	사기	Morale		
+2	go	combat.parts	부위 	Parts 		
+2	go	combat.quick	속공	Quick Attack		
+2	go	combat.retreat	물러난다	Retreat		
+2	go	combat.timer	{0}초	{0}s		
+2	go	combat.ult	필살	Ultimate		
+2	go	cut.guardian_sub	옛 망루를 지키는 돌장수 — 방패 두 겹({0} → {1})	Stone warden of the old watchtower — two shield layers ({0} → {1})		
+2	go	dex.detail.got	{0} · {1} 원소 · 기질 {2}⏎무력 {3} · 지력 {4} · 통솔 {5} — "{6}"	{0} · {1} element · trait {2}⏎Might {3} · Wisdom {4} · Command {5} — "{6}"		
+2	go	dex.detail.seen	{0} · {1} 원소 — 만났지만 아직 동행이 아니다⏎{2}에 선다 · 이겨서 굴복시키면 동행	{0} · {1} element — met, but not yet a companion⏎Stands in {2} · defeat them to make them yield and join		
+2	go	dex.detail.unseen	아직 만나지 않은 사람 — {0} {1}⏎{2} 어딘가에 선다	Not yet met — {0} {1}⏎Stands somewhere in {2}		
+2	go	dex.hint	칸을 누르면 자세히 · 들판에서 겨뤄 본 사람은 그림자에서 벗어나고, 이겨서 굴복시키면 동행이 된다	Tap a card for details · anyone you have challenged in the field steps out of the shadow; defeat them to make them yield and join you		
+2	go	dex.seen	만남	Met		
+2	go	dex.title	도감 — 등용 {0}/{1} · 만남 {2}	Codex — recruited {0}/{1} · met {2}		
+2	go	encounter.avoid	피한다	Avoid		
+2	go	encounter.bandit_intro	🗡 도적의 습격⏎"길세를 내고 가라. 아니면 두고 가든지."	🗡 Bandit Ambush⏎"Pay the toll, or leave your goods behind."		
+2	go	encounter.bandit_tell	강타가 온다 — 피하라!	A heavy blow is coming — dodge!		
+2	go	encounter.drop_lost	⏎짐 {0}냥을 떨어뜨렸다 — 10분 안에 이 자리로 돌아오면 되찾을 수 있다.	⏎You dropped {0} Gold — come back here within 10 minutes to recover it.		
+2	go	encounter.fight	맞선다	Fight		
+2	go	encounter.flee	달아난다	Flee		
+2	go	encounter.flee_msg	어둠 속으로 달아났다.	Fled into the darkness.		
+2	go	encounter.full_break_bonus	⏎부위 전파! 완파 보너스 +{0}냥	⏎All parts destroyed! Bonus +{0} Gold		
+2	go	encounter.levelup_suffix	 — 레벨업! ({0} → {1})	 — Level Up! ({0} → {1})		
+2	go	encounter.loot_certain	⏎{0}을(를) 확실히 얻었다.	⏎Obtained {0} for certain.		
+2	go	encounter.loot_equipped	⏎{0}을(를) 주웠다 — 바로 갖췄다.	⏎Found {0} — equipped it immediately.		
+2	go	encounter.loot_plain	⏎{0}을(를) 주웠다.	⏎Found {0}.		
+2	go	encounter.part_broken	부위 파괴! (재료 +{0}냥)	Part destroyed! (+{0} Gold in materials)		
+2	go	encounter.pay	값을 치른다	Pay the Toll		
+2	go	encounter.pay_fail	길세로 낼 {1}냥이 없다 — {0}이 앞을 막아선다.	Not enough gold for the {1}-gold toll — the {0} blocks the way.		
+2	go	encounter.pay_success	{0} — 길세 {1}냥을 치르고 지나갔다. (남은 돈 {2}냥)	{0} — Paid the {1} gold toll and passed. (Remaining gold: {2})		
+2	go	encounter.quest_done_suffix	⏎퀘스트 완료 — 촌장이 사례하다 (경험치 +{0})	⏎Quest Complete — the Village Elder rewards you (+{0} EXP)		
+2	go	encounter.retreat_clean	물러났다.	Retreated.		
+2	go	encounter.retreat_pushed	밀렸다. 물러났다.	Pushed back. Retreated.		
+2	go	encounter.shrine_avoid_msg	서늘한 기운을 뒤로하고 발길을 돌렸다.	You turned away from the chill.		
+2	go	encounter.shrine_clear	사당 시련을 돌파했다 — 인장 조각을 얻었다!⏎경험치 +{0} · 돈 +{1}냥	You broke through the shrine trial — got a seal fragment!⏎+{0} EXP · +{1} Gold		
+2	go	encounter.shrine_daily_full	오늘은 이미 사당 시련에 세 번 도전했다 — 내일 다시 오라.	You already took the shrine trial three times today — come back tomorrow.		
+2	go	encounter.shrine_fail	시련에 밀렸다 — 문이 다시 닫힌다.	The trial pushed you back — the gate closes again.		
+2	go	encounter.shrine_fail_cost	⏎노잣돈 {0}냥을 잃었다.	⏎You lost {0} Gold of travel money.		
+2	go	encounter.shrine_intro	⛩ 옛 사당의 시련⏎문 너머로 서늘한 기운이 새어 나온다 — 파도 셋을 버텨야 한다.	⛩ Trial of the Old Shrine⏎A chill seeps from beyond the gate — survive three waves.		
+2	go	encounter.shrine_lock	⏎{0}분 동안 다시 들어갈 수 없다.	⏎You cannot enter again for {0} minutes.		
+2	go	encounter.shrine_locked	사당 문이 아직 굳게 닫혀 있다 — 잠시 뒤 다시 오라.	The shrine gate is still sealed — come back a little later.		
+2	go	encounter.shrine_stamp	⏎인장 완성! (통산 {0}개) — 이정표 보상 경험치 +{1} · 돈 +{2}냥	⏎Seal complete! ({0} total) — milestone reward +{1} EXP · +{2} Gold		
+2	go	encounter.shrine_tell	강타가 온다 — 피하라!	A heavy blow is coming — dodge!		
+2	go	encounter.shrine_wave_clear	{0} 격파! 다음 파도가 밀려온다.	{0} defeated! The next wave surges in.		
+2	go	encounter.victory_base	{0}을 물리쳤다 — 부대에 합류했다! (전투력 {1})⏎경험치 +{2} · 돈 +{3}냥	Defeated the {0} — it's joined your party! (Power {1})⏎+{2} EXP · +{3} Gold		
+2	go	encounter.wolf_avoid_msg	숨을 죽이고 조용히 발길을 돌렸다.	Held its breath and quietly turned away.		
+2	go	encounter.wolf_intro	🐺 흰 늑대⏎숲 그늘에서 눈빛 하나가 이쪽을 노려본다.	🐺 White Wolf⏎A pair of eyes glares from the forest shadows.		
+2	go	encounter.wolf_tell	늑대가 몸을 낮춘다 — 덮치기 전에 피하라!	The wolf crouches low — dodge before it pounces!		
+2	go	encounter.wolf_victory	{0}을 물리쳤다 — 희귀 몬스터 토벌!⏎경험치 +{1} · 돈 +{2}냥	Defeated the {0} — rare monster subdued!⏎+{1} EXP · +{2} Gold		
+2	go	era.foe.alien	별바다 손님	Starsea Visitor		
+2	go	era.foe.copzombie	떠도는 망자	Wandering Dead		
+2	go	era.foe.exored	강철 경비병	Steel Sentry		
+2	go	era.foe.gasmask	방독면 약탈자	Gas-Mask Raider		
+2	go	era.foe.pre_electro	벼락	Thunder		
+2	go	era.foe.pre_hydro	물결	Tidal		
+2	go	era.foe.pre_pyro	불꽃	Blazing		
+2	go	era.future	미래	Future		
+2	go	era.modern	현대	Modern		
+2	go	era.past	과거	Past		
+2	go	field.btn.attack	공격	Attack		
+2	go	field.btn.burst	해방	Release		
+2	go	field.btn.dodge	회피	Dodge		
+2	go	field.btn.jump	점프	Jump		
+2	go	field.btn.skill	스킬	Skill		
+2	go	field.burst	{0} — 원소 해방!	{0} — Elemental Release!		
+2	go	field.counter	상성!	Counter!		
+2	go	field.down	{0} 쓰러짐	{0} is down		
+2	go	field.el.electro	뇌	Thunder		
+2	go	field.el.hydro	수	Water		
+2	go	field.el.physical	물리	Physical		
+2	go	field.el.pyro	화	Fire		
+2	go	field.evade	회피!	Evade!		
+2	go	field.foe.bandit	산적	Bandit		
+2	go	field.foe.ghost	물귀신	Drowned Ghost		
+2	go	field.foe.guardian	망루 수호장	Watchtower Warden		
+2	go	field.foe.hero	들판 인물	Wandering Hero		
+2	go	field.foe.imp	불도깨비	Ember Imp		
+2	go	field.foe.skeleton	해골 병사	Skeleton Soldier		
+2	go	field.foe.wraith	번개귀	Storm Wraith		
+2	go	field.guard_down	속 방패 깨짐! — 드러누웠다	Inner shield broken! — it collapsed		
+2	go	field.guard_inner	속 방패 {0} — {1} 원소 동료로 바꿔라	Inner shield {0} — switch to a {1} ally		
+2	go	field.guard_layers	방패 {0}겹	Shield ×{0}		
+2	go	field.guard_outer_break	겉 방패 깨짐!	Outer shield broken!		
+2	go	field.guard_slain	망루 수호장 토벌! 금 {0}냥 · 경험치 {1}	Watchtower Warden defeated! {0} Gold · {1} EXP		
+2	go	field.hero	주인공	Hero		
+2	go	field.immune	면역	Immune		
+2	go	field.re.charged	물벼락	Surge		
+2	go	field.re.overload	터짐	Blast		
+2	go	field.re.vaporize	물안개	Steam		
+2	go	field.shape.dash	돌진	Dash		
+2	go	field.shape.field	장판	Zone		
+2	go	field.shape.summon	소환	Summon		
+2	go	field.shape.thrust	찌르기	Thrust		
+2	go	field.shield_break	방패 깨짐!	Shield broken!		
+2	go	field.st.burn	화상	Burn		
+2	go	field.st.shock	감전 — 기력 -25	Shock — Energy -25		
+2	go	field.st.wet	젖음 — 스태미나 -25	Wet — Stamina -25		
+2	go	field.wipe	모두 쓰러졌다 — 마을에서 기운을 차렸다(잃은 것 없음)	Everyone fell — you came to in the village (nothing lost)		
+2	go	foe.bandit	산적	Bandit		
+2	go	foe.rare_wolf	흰 늑대	White Wolf		
+2	go	foe.shrine_pack	사당을 지키는 들개떼	Wild Dogs Guarding the Shrine		
+2	go	foe.shrine_raiders	사당을 노리는 도적 무리	Raiders Eyeing the Shrine		
+2	go	foe.shrine_scout	사당의 척후병	Shrine Scouts		
+2	go	hero.challenge	⚔ {0} — "{1}"⏎겨루기! 이겨서 굴복시키면 동행이 된다	⚔ {0} — "{1}"⏎A duel! Make them yield and they will join you		
+2	go	hero.era.japan	일본사	Japan		
+2	go	hero.era.korea	한국사	Korea		
+2	go	hero.era.three_kingdoms	삼국지	Three Kingdoms		
+2	go	hero.era.world	세계사	World		
+2	go	hero.eu_alexander	카시안더	Cassiander		
+2	go	hero.eu_augustus	세레누스	Serenus		
+2	go	hero.eu_aurelius	베렌델	Berendel		
+2	go	hero.eu_caesar	발레리안	Valerian		
+2	go	hero.eu_charlemagne	로타리안	Lotharian		
+2	go	hero.eu_davinci	마라노	Marano		
+2	go	hero.eu_eleanor	바엘린	Baelin		
+2	go	hero.eu_elizabeth	코리넬레	Corinelle		
+2	go	hero.eu_frederick	바실로른	Vasilorn		
+2	go	hero.eu_hannibal	마그나로	Magnaro		
+2	go	hero.eu_harald	오스트바르드	Ostvard		
+2	go	hero.eu_joan	셀렌느	Selene		
+2	go	hero.eu_leonidas	테살로르	Thessalor		
+2	go	hero.eu_machiavelli	반토렐리	Vantorelli		
+2	go	hero.eu_michelangelo	첼로리니	Chellorini		
+2	go	hero.eu_napoleon	발데나르	Valdenar		
+2	go	hero.eu_nelson	애쉬그레이브	Ashgrave		
+2	go	hero.eu_newton	할베린	Halverin		
+2	go	hero.eu_peter	볼카노프	Volkanov		
+2	go	hero.eu_richard	코드윈	Codwin		
+2	go	hero.eu_scipio	코르비날	Corvinal		
+2	go	hero.eu_william	펜드릭	Pendrick		
+2	go	hero.joined	{0} — 동행이 되었다! ({1} 원소 · 1~4 로 바꿔 싸운다)	{0} — joined your party! ({1} element · switch with 1–4)		
+2	go	hero.jp_hanzo	암영조	Amyeongjo		
+2	go	hero.jp_hideyoshi	태합원	Taehapwon		
+2	go	hero.jp_himiko	여왕영	Yeowangyeong		
+2	go	hero.jp_ieyasu	인내옹	Innaeong		
+2	go	hero.jp_kenshin	군신아	Gunsina		
+2	go	hero.jp_masamune	독안룡	Dokanryong		
+2	go	hero.jp_mitsukuni	천하부	Cheonhabu		
+2	go	hero.jp_murasaki	원씨필	Wonssipil		
+2	go	hero.jp_musashi	이도인	Idoin		
+2	go	hero.jp_naosuke	개항로	Gaehangro		
+2	go	hero.jp_nobunaga	화천마	Hwacheonma		
+2	go	hero.jp_ryoma	해원랑	Haewonrang		
+2	go	hero.jp_saigo	최후향	Choehuhyang		
+2	go	hero.jp_seishonagon	침초필	Chimchopil		
+2	go	hero.jp_shingen	풍림화	Pungrimhwa		
+2	go	hero.jp_taira	평가주	Pyeonggaju		
+2	go	hero.jp_tomoegozen	여무연	Yeomuyeon		
+2	go	hero.jp_yoritomo	막부조	Makbujo		
+2	go	hero.jp_yoshitsune	비장군	Bijanggun		
+2	go	hero.jp_yukimura	일번창	Ilbeonchang		
+2	go	hero.kr_ahnjunggeun	동양평	Dongyangpyeong		
+2	go	hero.kr_choemuseon	화포공	Hwapogong		
+2	go	hero.kr_daejoyeong	요동패	Yodongpae		
+2	go	hero.kr_euljimundeok	현묘	Hyeonmyo		
+2	go	hero.kr_ganggamchan	강우	Gangu		
+2	go	hero.kr_gwakjaeu	초모의	Chomoui		
+2	go	hero.kr_gwanggaeto	정복왕	Jeongbokwang		
+2	go	hero.kr_gyebaek	결사	Gyeolsa		
+2	go	hero.kr_heojun	활인	Hwalin		
+2	go	hero.kr_hwanghui	균형공	Gyunhyeonggong		
+2	go	hero.kr_jangyeongsil	성시	Seongsi		
+2	go	hero.kr_jeongmongju	청죽	Cheongjuk		
+2	go	hero.kr_jeongyakyong	만기	Mangi		
+2	go	hero.kr_kimgu	자강	Jagang		
+2	go	hero.kr_kimjeongho	방각	Banggak		
+2	go	hero.kr_kimyusin	화랑준	Hwarangjun		
+2	go	hero.kr_nongae	화영	Hwayeong		
+2	go	hero.kr_sejong	훈민	Hunmin		
+2	go	hero.kr_sinsaimdang	초충당	Chochungdang		
+2	go	hero.kr_wanggeon	통합공	Tonghapgong		
+2	go	hero.kr_wonhyo	각원	Gakwon		
+2	go	hero.kr_yeongaesomun	철령	Cheolryeong		
+2	go	hero.kr_yihwang	경헌	Gyeongheon		
+2	go	hero.kr_yii	문형	Munhyeong		
+2	go	hero.kr_yisunsin	해장	Haejang		
+2	go	hero.kr_yugwansun	소녀화	Sonyeohwa		
+2	go	hero.left	{0}은(는) 등을 돌려 떠났다.	{0} turned away and left.		
+2	go	hero.sg_caocao	패헌	Paeheon		
+2	go	hero.sg_diaochan	월영	Wolyeong		
+2	go	hero.sg_ganning	영진	Yeongjin		
+2	go	hero.sg_guanyu	명운	Myeongun		
+2	go	hero.sg_huangzhong	노궁	Nogung		
+2	go	hero.sg_huatuo	신침	Sinchim		
+2	go	hero.sg_liubei	인형	Inhyeong		
+2	go	hero.sg_lubu	패창	Paechang		
+2	go	hero.sg_luxun	담연	Damyeon		
+2	go	hero.sg_machao	서풍	Seopung		
+2	go	hero.sg_menghuo	만왕	Manwang		
+2	go	hero.sg_pangtong	봉래	Bongrae		
+2	go	hero.sg_simayi	은인	Eunin		
+2	go	hero.sg_sunquan	벽해	Byeokhae		
+2	go	hero.sg_taishici	궁성	Gungseong		
+2	go	hero.sg_xiahoudun	언무	Eonmu		
+2	go	hero.sg_xunyu	청안	Cheongan		
+2	go	hero.sg_zhangfei	뇌호	Noeho		
+2	go	hero.sg_zhangliao	철벽	Cheolbyeok		
+2	go	hero.sg_zhaoyun	은창	Eunchang		
+2	go	hero.sg_zhouyu	화풍	Hwapung		
+2	go	hero.sg_zhugeliang	현책	Hyeonchaek		
+2	go	hero.trait.command	통	Command		
+2	go	hero.trait.might	무	Might		
+2	go	hero.trait.virtue	덕	Virtue		
+2	go	hero.trait.wisdom	지	Wisdom		
+2	go	hero.wd_akbar	관용제	Gwanyongje		
+2	go	hero.wd_ashoka	법륜왕	Beopryunwang		
+2	go	hero.wd_attila	재앙편	Jaeangpyeon		
+2	go	hero.wd_cleopatra	나일화	Nailhwa		
+2	go	hero.wd_genghis	초원패	Chowonpae		
+2	go	hero.wd_hammurabi	율법석	Yulbeopseok		
+2	go	hero.wd_ibnbattuta	천리객	Cheonrigaek		
+2	go	hero.wd_ibnsina	의철인	Uicheolin		
+2	go	hero.wd_khubilai	대원조	Daewonjo		
+2	go	hero.wd_mansamusa	황금왕	Hwanggeumwang		
+2	go	hero.wd_moctezuma	독수리주	Doksuriju		
+2	go	hero.wd_pachacuti	태양개	Taeyanggae		
+2	go	hero.wd_saladin	의검주	Uigeomju		
+2	go	hero.wd_shaka	창군왕	Changgunwang		
+2	go	hero.wd_suleiman	장려제	Jangryeoje		
+2	go	hero.yield	{0}이(가) 무릎을 꿇었다…	{0} kneels…		
+2	go	item.ar_cloth	베옷 갑주	Hemp Armor		
+2	go	item.ar_leather	가죽 갑주	Leather Armor		
+2	go	item.ar_wolf	늑대 가죽 갑주	Wolf-Hide Armor		
+2	go	item.bare_hands	맨손	Bare Hands		
+2	go	item.plain_clothes	베옷	Plain Clothes		
+2	go	item.wp_iron	쇠칼	Iron Sword		
+2	go	item.wp_relic	유물 검	Relic Sword		
+2	go	item.wp_wood	목검	Wooden Sword		
+2	go	map.chests	 · 보물 상자 {0}/{1}	 · Chests {0}/{1}		
+2	go	map.fall_east	은빛 폭포	Silver Falls		
+2	go	map.fall_west	안개 폭포	Mist Falls		
+2	go	map.hint	 · 옛 망루 꼭대기에 오르면 온 땅이 밝혀진다	 · Climb the old watchtower to reveal the whole land		
+2	go	map.info	푸른 ◆ 역참을 누르면 순간이동 · 켠 역참 {0}/{1}{2}	Tap a blue ◆ waypoint to teleport · Waypoints {0}/{1}{2}		
+2	go	map.mission	사명 {0}/{1}	Mission {0}/{1}		
+2	go	map.mission_clear	평정	Pacified		
+2	go	map.pass	고개	Pass		
+2	go	map.peak_found	▲ {0} 정상 — 금 +{1} · 경험 +{2} · 지도에서 이곳으로 순간이동할 수 있다	▲ {0} summit — Gold +{1} · EXP +{2} · you can now teleport here from the map		
+2	go	map.peak_locked	아직 오르지 않은 정상 — 기어올라 윗면에 서야 한다	A summit you have not climbed — climb up and stand on top first		
+2	go	map.peak_name	{0} 봉우리 {1}	{0} Peak {1}		
+2	go	map.peaks	 · 오른 정상 ▲ {0}/{1}	 · Summits ▲ {0}/{1}		
+2	go	map.region_now	지금 · {0} {1} · {2}	Here · {0} {1} · {2}		
+2	go	map.revealed	옛 망루에 올랐다 — 온 땅이 지도에 밝혀졌다(M)	You climbed the old watchtower — the whole land is on your map (M)		
+2	go	map.slope	비탈	Slope		
+2	go	map.teleported	{0}(으)로 순간이동	Teleported to {0}		
+2	go	map.tower	옛 망루	Old Watchtower		
+2	go	map.wp_locked	아직 켜지 않은 역참 — 가까이 가서 켜야 한다	Waypoint not yet active — go near it to activate		
+2	go	mission.clear	◆ {0} 평정! — 금 {1}냥 · 경험치 {2}	◆ {0} pacified! — {1} Gold · {2} EXP		
+2	go	mission.next.chests	이 지역 보물 상자 {0}/{1}	Chests in this region {0}/{1}		
+2	go	mission.next.clears	이 지역 무리 토벌 {0}/{1}	Clear bands in this region {0}/{1}		
+2	go	mission.next.guardian	망루 수호장을 쓰러뜨려라	Defeat the Watchtower Warden		
+2	go	mission.next.tower	옛 망루 꼭대기에 올라라	Climb to the top of the old watchtower		
+2	go	mission.next.waypoint	{0}을 켜라	Activate {0}		
+2	go	mission.stage_paid	◆ {0} 사명 {1}/{2} — 금 {3}냥 · 경험치 {4}	◆ {0} mission {1}/{2} — {3} Gold · {4} EXP		
+2	go	move.drown	기력이 다해 물가로 돌아왔다	Out of stamina — you washed back to shore		
+2	go	npc.elder_active	아직인가? 도적 놈들 때문에 다들 걱정이 크네.	Still not done? Everyone's worried sick about those bandits.		
+2	go	npc.elder_done	고맙네, 자네 덕에 길이 편해졌어.	Thank you. The roads are safer thanks to you.		
+2	go	npc.elder_name	마을 촌장	Village Elder		
+2	go	npc.elder_start	이 근처에 도적 떼가 나온다더군. 처치해 주면 사례하지.	I hear bandits have been showing up nearby. Deal with them and I'll reward you.		
+2	go	npc.merchant_name	떠돌이 상인	Wandering Merchant		
+2	go	npc.merchant_offer	북쪽 산길은 요즘 값이 오르오. {0}을 {1}냥에 넘기고 싶은데, 자네 주머니 사정이 넉넉지 않아 보이는군.	Prices on the northern trail are climbing. I'd like to sell you the {0} for {1} gold, but your purse doesn't look deep enough.		
+2	go	npc.merchant_sell	짐이 무거워 골치였는데 — {0}을 {1}냥에 내주지. 가져가시게.	My load's been a headache — I'll let the {0} go for {1} gold. Take it.		
+2	go	npc.merchant_thanks	덕분에 짐이 줄어 고맙네. 좋은 길 되시게.	Thanks to you, my load's lighter. Safe travels.		
+2	go	npc.traveler_again	또 만났군. 좋은 길 되시게.	We meet again. Safe travels.		
+2	go	npc.traveler_first	이 근처 지리를 좀 아네. 도움이 될 만한 걸 나눠 주지 — 경험치 +{0} · 돈 +{1}냥	I know this area well. Let me share something useful — +{0} EXP · +{1} Gold		
+2	go	npc.traveler_name	나그네	Traveler		
+2	go	part.core	급소	Core		
+2	go	part.leg	다리	Leg		
+2	go	part.torso	몸통	Torso		
+2	go	perk.atk_edge	매서운 손속	Keen Hands		
+2	go	perk.atk_killer	필살의 감각	Killer Instinct		
+2	go	perk.atk_reckless	필사의 기세	Desperate Fury		
+2	go	perk.atk_swift	쾌속 검로	Swift Blade		
+2	go	perk.axis.atk	공(攻)	ATK		
+2	go	perk.axis.def	수(守)	DEF		
+2	go	perk.axis.sup	보(補)	SUP		
+2	go	perk.def_brace	버팀의 요령	Bracing Knack		
+2	go	perk.def_grit	불굴의 기백	Indomitable Grit		
+2	go	perk.def_hide	질긴 맷집	Tough Hide		
+2	go	perk.def_stance	굳건한 자세	Firm Stance		
+2	go	perk.reject	거절 — 돈 +10	Decline — +10 Gold		
+2	go	perk.sup_breath	숨 고르기	Steady Breath		
+2	go	perk.sup_core	필살의 근원	Deadly Core		
+2	go	perk.sup_flow	기의 순환	Flowing Ki		
+2	go	perk.sup_focus	예기의 자각	Sharpened Focus		
+2	go	perk.title	승급! 특성을 하나 고르세요	Level Up! Pick a trait		
+2	go	region.danger	위험 {0} · {1}	Danger {0} · {1}		
+2	go	region.east_grove	동쪽 숲	Eastern Grove		
+2	go	region.enter	— {0} —	— {0} —		
+2	go	region.enter_new	— {0} —⏎새 지역	— {0} —⏎New Region		
+2	go	region.era_foes	시간 틈 {0}	Time rift: {0}		
+2	go	region.farmland	끝 논밭	Far Paddies		
+2	go	region.no_foes	적 없음	No foes		
+2	go	region.north_foot	북쪽 산기슭	Northern Foothills		
+2	go	region.river	너른 강	Broad River		
+2	go	region.south_glade	남쪽 공터	Southern Glade		
+2	go	region.village	마을 들판	Village Fields		
+2	go	region.west_wood	서쪽 숲길	Western Woodpath		
+2	go	wp.activated	{0} 활성화 — 지도(M)에서 순간이동할 수 있다	{0} activated — teleport to it from the map (M)		
+2	go	wp.east	동쪽 숲 역참	Eastern Grove Waypoint		
+2	go	wp.farm	논밭 역참	Paddies Waypoint		
+2	go	wp.north	산기슭 역참	Foothills Waypoint		
+2	go	wp.south	남쪽 공터 역참	Southern Glade Waypoint		
+2	go	wp.village	마을 역참	Village Waypoint		
+2	dungeon	ambush.attack	매복! 그늘에서 황건적이 튀어나왔다!	Ambush! Yellow Turban Bandits leap from the shadows!		
+2	dungeon	ambush.calm	고요하다 — 아무 일도 없었다.	All quiet — nothing happened.		
+2	dungeon	ambush.gold	 (돈 +{0}냥)	 (+{0} Gold)		
+2	dungeon	ambush.purse	숨겨 둔 주머니를 찾아냈다.	You found a hidden pouch.		
+2	dungeon	ambush.toast	필드 사건 — {0}{1}	Field event — {0}{1}		
+2	dungeon	blessing.atk_edge	예리한 날	Keen Edge		
+2	dungeon	blessing.atk_might	억센 완력	Brute Strength		
+2	dungeon	blessing.atk_precise	정확한 급소	Precise Strike		
+2	dungeon	blessing.atk_wrath	분노의 일격	Wrathful Blow		
+2	dungeon	blessing.axis.atk	공(攻)	ATK		
+2	dungeon	blessing.axis.def	수(守)	DEF		
+2	dungeon	blessing.axis.sweep	선(旋)	SPIN		
+2	dungeon	blessing.def_scale	질긴 비늘	Tough Scales		
+2	dungeon	blessing.def_shell	단단한 갑주	Solid Armor		
+2	dungeon	blessing.def_stance	버티는 자세	Steadfast Stance		
+2	dungeon	blessing.def_ward	굳센 살갗	Hardened Skin		
+2	dungeon	blessing.reject	거절 — 층수만큼 금 획득	Decline — Gold by floor		
+2	dungeon	blessing.sweep_flow	이어진 몸놀림	Flowing Moves		
+2	dungeon	blessing.sweep_gale	돌개바람	Whirlwind		
+2	dungeon	blessing.sweep_light	가벼운 발놀림	Light Footwork		
+2	dungeon	blessing.sweep_wide	넓은 휘두름	Wide Swing		
+2	dungeon	blessing.title	축복! 하나를 고르세요	Blessing! Pick one		
+2	dungeon	captive.rescued_reward	구출 · 은혜를 갚는다 — 경험치 +{0} · 돈 +{1}냥	Rescued — repaid with gratitude. +{0} EXP · +{1} Gold		
+2	dungeon	combat.levelup_suffix	 — 레벨업! ({0} → {1})	 — Level up! ({0} → {1})		
+2	dungeon	combat.perfect_dodge	완벽 회피! — 지금 반격	Perfect dodge! — counter now		
+2	dungeon	cut.floorboss_fallback_sub	층 끝의 우두머리	The master at the end of the floor		
+2	dungeon	cut.floorboss_sub	층 끝의 우두머리 — {0:0}초 안에 쓰러뜨려라	The master at the end of the floor — defeat it within {0:0}s		
+2	dungeon	cut.floorboss_title	두목	Chief		
+2	dungeon	cut.guardian_sub	잊힌 능묘의 갑주 파수 — 칼날을 튕긴다	Armored warden of the tomb — blades glance off		
+2	dungeon	cut.guardian_title	능묘지기	Tomb Guardian		
+2	dungeon	cut.lord_sub	{0}의 주인	Lord of {0}		
+2	dungeon	cut.miniboss_sub	층을 지키는 살수 — 홀로 서서 기다린다	An assassin guarding the floor — waiting alone		
+2	dungeon	cut.summon_sub	소환 — 잠든 산이 깨어난다	Summon — the sleeping mountain awakens		
+2	dungeon	cut.summon_title	바위 거신	Stone Colossus		
+2	dungeon	cut.temple_sub	이름 잃은 왕이 잠든 곳	Where a nameless king sleeps		
+2	dungeon	cut.temple_title	잊힌 능묘	The Forgotten Tomb		
+2	dungeon	enemy.bestiary_new	⏎📖 도감에 처음 기록됨 — {0}	⏎📖 Newly recorded in the bestiary — {0}		
+2	dungeon	enemy.boss	황건적 두목	Yellow Turban Bandit Chief		
+2	dungeon	enemy.defeat_msg	{0}{1} — 경험치 +{2} · 돈 +{3}냥	{0}{1} — +{2} EXP · +{3} Gold		
+2	dungeon	enemy.defeated_boss	을(를) 쓰러뜨렸다	 has been vanquished!		
+2	dungeon	enemy.defeated_normal	을(를) 물리쳤다	 has been defeated.		
+2	dungeon	enemy.elite	사나운 황건적	Fierce Yellow Turban Bandit		
+2	dungeon	enemy.elite_fusion	기계화 정찰병	Mechanized Scout		
+2	dungeon	enemy.era_enforcer	암흑가 해결사	Underworld Enforcer		
+2	dungeon	enemy.era_hazmat	방역복 추적자	Hazmat Tracker		
+2	dungeon	enemy.era_rioter	폭주 청년	Rampaging Youth		
+2	dungeon	enemy.era_sentry	경비 보행병	Sentry Walker		
+2	dungeon	enemy.era_steelbot	강철 인형 병정	Steel Doll Soldier		
+2	dungeon	enemy.era_swat	진압 특공대	Riot Squad		
+2	dungeon	enemy.era_testbot	시험 기동 인형	Test-Run Mannequin		
+2	dungeon	enemy.era_visitor	별 너머 방문자	Visitor from Beyond		
+2	dungeon	enemy.gem_socketed	⏎{0}을(를) 주웠다 — 바로 세공했다.	⏎Picked up {0} — socketed it right away.		
+2	dungeon	enemy.grunt	황건적	Yellow Turban Bandit		
+2	dungeon	enemy.loot_equipped	⏎{0}을(를) 주웠다 — 바로 갖췄다.	⏎Picked up {0} — equipped it right away.		
+2	dungeon	enemy.loot_plain	⏎{0}을(를) 주웠다.	⏎Picked up {0}.		
+2	dungeon	enemy.miniboss	황건 살수	Yellow Turban Assassin		
+2	dungeon	enemy.temple_guardian	능묘지기	Tomb Guardian		
+2	dungeon	enemy.temple_warden	능묘 파수꾼	Tomb Warden		
+2	dungeon	enemy.trial_guardian	시련의 수호자	Trial Guardian		
+2	dungeon	explore.court_hint	— 옛 감시탑 뜰 — 담쟁이 벽은 기어오를 수 있다 · F(「점프」)로 뛴다	— Old Watchtower Court — ivy walls can be climbed · F ("Jump") to leap		
+2	dungeon	floor.descend	🪜 제{0}층으로 내려간다	🪜 Descending to floor {0}		
+2	dungeon	floor.sigil_bonus	📜 부적 층 클리어 — 금 {0} 추가 획득	📜 Sigil floor cleared — +{0} bonus Gold		
+2	dungeon	floor.sigil_warn	⚠ 부적 층 — {0}	⚠ Sigil floor — {0}		
+2	dungeon	forage.herb	산나물을 캤다 — 체력 +{0}	Picked wild greens — HP +{0}		
+2	dungeon	forage.pond	손맛 · 무언가 걸렸다 — 경험치 +{0} · 돈 +{1}냥	A bite! Something's on the line — +{0} EXP · +{1} Gold		
+2	dungeon	gem.gem_jade	벽옥	Jade		
+2	dungeon	gem.gem_ruby	홍옥	Ruby		
+2	dungeon	gem.gem_sapphire	남주	Sapphire		
+2	dungeon	grave.card_lost	유품으로 금 {0} — 돌아가기 전에 되찾을 것	Left {0} Gold as a grave — recover it before you leave		
+2	dungeon	grave.card_lost_none	잃은 것 없음	Lost nothing		
+2	dungeon	grave.card_title	쓰러졌다	You fell		
+2	dungeon	grave.dropped	쓰러졌다가 정신을 차렸다. 이 자리에 금 {0}을 유품으로 남겼다.	You fell, then came to. Left {0} Gold behind as a grave.		
+2	dungeon	grave.dropped_none	쓰러졌다가 정신을 차렸다.	You fell, then came to.		
+2	dungeon	grave.recovered	유품을 되찾았다 — 금 {0}	Recovered your grave — +{0} Gold		
+2	dungeon	horde.busy	이미 난입 중이다.	An Onslaught is already underway.		
+2	dungeon	horde.card_reward	생존 {0}초 — 금 {1} 획득	Survived {0}s — earned {1} Gold		
+2	dungeon	horde.card_title_died	난입 — 쓰러졌다	Onslaught — you fell		
+2	dungeon	horde.card_title_survived	난입 완주!	Onslaught survived!		
+2	dungeon	horde.card_wave	파도 {0} · 처치 {1}	Wave {0} · Kills {1}		
+2	dungeon	horde.start	⚔ 난입 시작 — 15분 생존, 30초마다 파도가 몰려온다	⚔ Onslaught begins — survive 15 minutes, a wave every 30s		
+2	dungeon	horde.wave_clear	파도 클리어! — 체력 {0} 회복	Wave cleared! — recovered {0} HP		
+2	dungeon	horde.wave_start	🌊 파도 {0} — 적 {1}(티어 {2})	🌊 Wave {0} — {1} foes (tier {2})		
+2	dungeon	item.bare_hands	맨손	Bare Hands		
+2	dungeon	item.wp_axe	쇠도끼	Iron Axe		
+2	dungeon	item.wp_gauntlet	동력장갑	Power Gauntlet		
+2	dungeon	item.wp_glaive	귀두도	Ghosthead Blade		
+2	dungeon	item.wp_greatblade	흑철중검	Black Iron Greatsword		
+2	dungeon	item.wp_lance_e	전자창	Lightning Lance		
+2	dungeon	item.wp_lm_bandit	흑풍 쌍부	Black Wind Twin Axe		
+2	dungeon	item.wp_lm_cloud	천장 금검	Cloud General's Gold Sword		
+2	dungeon	item.wp_lm_fort	잿빛 성주도	Ashen Castellan Blade		
+2	dungeon	item.wp_lm_hellgate	업화 철퇴	Hellfire Mace		
+2	dungeon	item.wp_lm_palace	비늘 삼지창	Scaled Trident		
+2	dungeon	item.wp_lm_tomb	청동 순장검	Bronze Burial Sword		
+2	dungeon	item.wp_saber	환도	Hwando Saber		
+2	dungeon	item.wp_start	목검	Wooden Sword		
+2	dungeon	landmark.bandit	흑풍 산채	Black Wind Stronghold		
+2	dungeon	landmark.bandit.grunt	흑풍 도적	Black Wind Bandit		
+2	dungeon	landmark.bandit.lord	흑풍 채주	Black Wind Chief		
+2	dungeon	landmark.bandit.room0	목책 길	Palisade Path		
+2	dungeon	landmark.bandit.room1	갇힌 나그네	Captive Traveler		
+2	dungeon	landmark.bandit.room2	약초 바위	Herb Rocks		
+2	dungeon	landmark.bandit.room3	정예 막사	Elite Barracks		
+2	dungeon	landmark.bandit.room4	채주 천막	Chief's Tent		
+2	dungeon	landmark.clear_again	⚱ {0} — 층 주인을 다시 눌렀다	⚱ {0} — defeated its lord again		
+2	dungeon	landmark.cloud	구름 위 금궐	Golden Palace Above the Clouds		
+2	dungeon	landmark.cloud.grunt	금궐 호위	Palace Guard		
+2	dungeon	landmark.cloud.lord	구름 천장	Cloud General		
+2	dungeon	landmark.cloud.room0	구름 계단	Cloud Stairs		
+2	dungeon	landmark.cloud.room1	선녀 좌판	Fairy Stall		
+2	dungeon	landmark.cloud.room2	금빛 보고	Golden Vault		
+2	dungeon	landmark.cloud.room3	천병 진영	Heavenly Camp		
+2	dungeon	landmark.cloud.room4	금궐 옥좌	Golden Throne		
+2	dungeon	landmark.enter	⚱ 명소 층 — {0} {1}	⚱ Landmark floor — {0} {1}		
+2	dungeon	landmark.first_clear	⚱ {0} 답파! — 층 주인이 {1} 을(를) 떨궜다 · 금 +{2}	⚱ {0} conquered! — the lord dropped {1} · Gold +{2}		
+2	dungeon	landmark.fort	무너진 망루성	Fallen Watchtower Fort		
+2	dungeon	landmark.fort.grunt	망루 잔병	Tower Straggler		
+2	dungeon	landmark.fort.lord	잿빛 성주	Ashen Castellan		
+2	dungeon	landmark.fort.room0	무너진 성문	Broken Gate		
+2	dungeon	landmark.fort.room1	우물 뜰	Well Court		
+2	dungeon	landmark.fort.room2	병기고	Armory		
+2	dungeon	landmark.fort.room3	망루 계단	Tower Stairs		
+2	dungeon	landmark.fort.room4	성주 대청	Castellan's Hall		
+2	dungeon	landmark.hellgate	업화 대문	Gate of Karmic Fire		
+2	dungeon	landmark.hellgate.grunt	업화 옥졸	Hellfire Jailer		
+2	dungeon	landmark.hellgate.lord	업화 문지기	Hellfire Gatekeeper		
+2	dungeon	landmark.hellgate.room0	불길 다리	Flame Bridge		
+2	dungeon	landmark.hellgate.room1	재 사당	Ash Shrine		
+2	dungeon	landmark.hellgate.room2	쇠사슬 문	Chain Door		
+2	dungeon	landmark.hellgate.room3	옥졸 소굴	Jailers' Den		
+2	dungeon	landmark.hellgate.room4	대문 앞	Before the Gate		
+2	dungeon	landmark.hud	⚱ {0} · {1}	⚱ {0} · {1}		
+2	dungeon	landmark.palace	가라앉은 용궁	Sunken Dragon Palace		
+2	dungeon	landmark.palace.grunt	물빛 수졸	Tide Soldier		
+2	dungeon	landmark.palace.lord	비늘 수문장	Scaled Gatekeeper		
+2	dungeon	landmark.palace.room0	산호 문	Coral Gate		
+2	dungeon	landmark.palace.room1	진주 샘	Pearl Spring		
+2	dungeon	landmark.palace.room2	거북 사당	Turtle Shrine		
+2	dungeon	landmark.palace.room3	조개 광맥	Shell Vein		
+2	dungeon	landmark.palace.room4	수정 궁전	Crystal Palace		
+2	dungeon	landmark.tomb	순장 왕릉	Royal Burial Tomb		
+2	dungeon	landmark.tomb.grunt	순장 병사	Buried Soldier		
+2	dungeon	landmark.tomb.lord	옥관 수릉장	Jade-Coffin Warden		
+2	dungeon	landmark.tomb.room0	참배길	Pilgrim Path		
+2	dungeon	landmark.tomb.room1	부장품 방	Grave-Goods Chamber		
+2	dungeon	landmark.tomb.room2	석인 회랑	Stone Statue Hall		
+2	dungeon	landmark.tomb.room3	순장 무덤칸	Retainer Crypts		
+2	dungeon	landmark.tomb.room4	현실(玄室)	Burial Chamber		
+2	dungeon	lore.cell	비전 {0}	Lore {0}		
+2	dungeon	lore.frost	빙혼	Icesoul		
+2	dungeon	lore.hud	 [비전 {0}]	 [lore {0}]		
+2	dungeon	lore.leech	혈해	Bloodsea		
+2	dungeon	lore.rage	노화	Wrathfire		
+2	dungeon	lore.row	 · 비전 {0} ×1.6	 · lore {0} ×1.6		
+2	dungeon	lore.spread	만상	Myriad		
+2	dungeon	lore.swift	섬광	Flash		
+2	dungeon	merchant.bought_equipped	행상 — {0}을(를) {1}냥에 샀다 — 바로 갖췄다.	Merchant — bought {0} for {1} gold — equipped it right away.		
+2	dungeon	merchant.bought_plain	행상 — {0}을(를) {1}냥에 샀다.	Merchant — bought {0} for {1} gold.		
+2	dungeon	merchant.bought_socketed	행상 — {0}을(를) {1}냥에 샀다 — 바로 세공했다.	Merchant — bought {0} for {1} gold — socketed it right away.		
+2	dungeon	merchant.cant_afford	행상 — {0}({1}냥)를 살 돈이 모자라다.	Merchant — not enough gold for {0} ({1} gold).		
+2	dungeon	party.guard_down	동행 무사가 쓰러졌다 — 술사의 치유로 일으킬 수 있다	Your warrior fell — the mystic's heal can revive them		
+2	dungeon	party.guard_is_down	무사가 쓰러져 있다 — 술사의 치유로 일으키자	The warrior is down — revive them with the mystic's heal		
+2	dungeon	party.heal	동행 술사: 「치유의 빛!」 — 체력이 차오른다	Mystic: "Light of healing!" — your health recovers		
+2	dungeon	party.hud_down	쓰러짐	Down		
+2	dungeon	party.hud_guard	무사	Warrior		
+2	dungeon	party.hud_mystic	술사	Mystic		
+2	dungeon	party.hud_ready	준비	Ready		
+2	dungeon	party.hud_summon	소환	Summon		
+2	dungeon	party.not_ready	명령 게이지가 아직 덜 찼다 — 싸워서 채우자	The command gauge is not full yet — fight to fill it		
+2	dungeon	party.summon_no_foe	부를 까닭이 없다 — 곁에 적이 없다	No reason to call it — no foes nearby		
+2	dungeon	party.summon_not_ready	소환 게이지가 아직 덜 찼다	The summon gauge is not full yet		
+2	dungeon	party.taunt	동행 무사: 「이쪽이다!」 — 적이 무사를 노린다	Warrior: "Over here!" — foes target the warrior		
+2	dungeon	puzzle.equipped	 — 바로 갖췄다.	 — equipped it right away.		
+2	dungeon	puzzle.next	✓ 다음 제단 ({0}/{1})	✓ Next altar ({0}/{1})		
+2	dungeon	puzzle.solved	퍼즐을 풀었다! — 돈 +{0}냥, {1}을(를) 얻었다{2}	Puzzle solved! — +{0} Gold, got {1}{2}		
+2	dungeon	puzzle.wrong	× 순서가 틀렸다 — 처음부터.	× Wrong order — start over.		
+2	dungeon	quest.boss_defeated	황건적 두목을 처치했다	Defeated the Yellow Turban Bandit Chief		
+2	dungeon	quest.captive_rescued	갇힌 인영을 구출했다	Rescued the captive		
+2	dungeon	quest.miniboss_defeated	황건 살수를 처치했다	Defeated the Yellow Turban Assassin		
+2	dungeon	quest.objective_boss	메인 퀘스트 — 황건적 두목을 처치하라	Main Quest — Defeat the Yellow Turban Bandit Chief		
+2	dungeon	quest.objective_done	메인 퀘스트 — 완료(던전을 정리했다)	Main Quest — Complete (the dungeon has been cleared)		
+2	dungeon	quest.objective_miniboss	메인 퀘스트 — 황건 살수(미니보스)를 처치하라	Main Quest — Defeat the Yellow Turban Assassin (Mini-Boss)		
+2	dungeon	quest.objective_rescue	메인 퀘스트 — 갇힌 인영을 구출하라	Main Quest — Rescue the captive		
+2	dungeon	quest.reward_msg	퀘스트 보상 경험치 +{0} · 돈 +{1}냥	Quest Reward: +{0} EXP · +{1} Gold		
+2	dungeon	region.era.future	미래	Future		
+2	dungeon	region.era.modern	현대	Modern		
+2	dungeon	region.era.myth	신화	Myth		
+2	dungeon	region.era.past	과거	Past		
+2	dungeon	region.heaven	천계 사당	Celestial Shrine		
+2	dungeon	region.heaven.place	잊힌 능묘 어귀	Forgotten Tomb Gate		
+2	dungeon	region.hellgate	지옥 균열	Hell Rift		
+2	dungeon	region.hellgate.place	잿불 마을	Embertown		
+2	dungeon	region.jungwon	중원 벌판	Central Plains		
+2	dungeon	region.jungwon.place	모루골	Morugol		
+2	dungeon	region.map_here	지금 — {0} {1}	Now — {0} {1}		
+2	dungeon	region.map_outside	지금 — 지역 밖(던전 속)	Now — outside the regions (in the dungeon)		
+2	dungeon	region.neon	잿빛 폐도시	Ashen Ruined City		
+2	dungeon	region.neon.place	굴뚝 마을	Chimney Town		
+2	dungeon	region.saltmarsh	소금 개펄	Salt Flats		
+2	dungeon	region.saltmarsh.place	갯벌 갈림길	Mudflat Crossing		
+2	dungeon	region.scrap	기계 황무지	Machine Wasteland		
+2	dungeon	region.scrap.place	옛 감시탑 뜰	Old Watchtower Court		
+2	dungeon	region.silkroad	서역 모랫길	Western Sand Road		
+2	dungeon	region.silkroad.place	낙타 마을	Camel Town		
+2	dungeon	region.snowfort	북방 설산	Northern Snow Peaks		
+2	dungeon	region.snowfort.place	굴혈 가는 길	Road to the Lair		
+2	dungeon	region.solar	태양 신도시	Solar New City		
+2	dungeon	region.solar.place	볕판 갈림길	Sunpanel Crossing		
+2	dungeon	room.boss	두목	Boss		
+2	dungeon	room.cave	채광방	Mine		
+2	dungeon	room.elite	정예 소굴	Elite Den		
+2	dungeon	room.event	구출	Rescue		
+2	dungeon	room.fight	잡졸 무리	Grunt Pack		
+2	dungeon	room.forage	채집	Foraging		
+2	dungeon	room.merchant	행상	Peddler		
+2	dungeon	room.miniboss	미니보스	Mini-Boss		
+2	dungeon	room.puzzle	퍼즐방	Puzzle Room		
+2	dungeon	room.shrine	사당	Shrine		
+2	dungeon	room.stair	지하로 내려간다	Descend		
+2	dungeon	room.trove	보물상자	Treasure Chest		
+2	dungeon	room.well	우물	Well		
+2	dungeon	secret.cleared	{0} — 비결을 풀었다	{0} — secret removed		
+2	dungeon	secret.frost	한기	Frost		
+2	dungeon	secret.frost_fx	위력 ×0.9 · 맞은 적 2.8초 얼림	Power ×0.9 · freezes targets for 2.8s		
+2	dungeon	secret.frost_glyph	한	I		
+2	dungeon	secret.leech	흡혈	Leech		
+2	dungeon	secret.leech_fx	위력 ×0.9 · 3초 동안 피해의 12% 흡수	Power ×0.9 · drain 12% of damage for 3s		
+2	dungeon	secret.leech_glyph	흡	L		
+2	dungeon	secret.locked	{0} — Lv.{1} 에 열린다	{0} — unlocks at Lv.{1}		
+2	dungeon	secret.none	없음	None		
+2	dungeon	secret.rage	분노	Fury		
+2	dungeon	secret.rage_fx	위력 ×1.45 · 재냉각 ×1.4	Power ×1.45 · cooldown ×1.4		
+2	dungeon	secret.rage_glyph	분	F		
+2	dungeon	secret.row	{0} — {1}: {2}	{0} — {1}: {2}		
+2	dungeon	secret.row_none	{0} — 비결 없음	{0} — no secret		
+2	dungeon	secret.row_sleep	 (고른 {0} 은 Lv.{1} 에 다시 산다)	 (chosen {0} returns at Lv.{1})		
+2	dungeon	secret.set	{0} · {1} — {2}	{0} · {1} — {2}		
+2	dungeon	secret.spread	확산	Spread		
+2	dungeon	secret.spread_fx	위력 ×0.8 · 사거리 ×1.35 · 곁의 둘 더	Power ×0.8 · reach ×1.35 · hits two more nearby		
+2	dungeon	secret.spread_fx_whirl	위력 ×0.8 · 반경 ×1.35	Power ×0.8 · radius ×1.35		
+2	dungeon	secret.spread_glyph	확	S		
+2	dungeon	secret.swift	신속	Swift		
+2	dungeon	secret.swift_fx	위력 ×0.7 · 재냉각 ×0.5	Power ×0.7 · cooldown ×0.5		
+2	dungeon	secret.swift_glyph	신	Q		
+2	dungeon	secret.title	비결 — 무예 하나에 하나 · 단 {0}/{1} (Lv.{2})	Secrets — one per move · rank {0}/{1} (Lv.{2})		
+2	dungeon	secret_stash.found_reward	🔍 숨겨진 지역 — 잊혀진 주머니를 찾아냈다! 경험치 +{0} · 돈 +{1}냥	🔍 Hidden Area — found a forgotten pouch! +{0} EXP · +{1} Gold		
+2	dungeon	shrine.blessed_reward	성소 · 가호를 받았다 — 경험치 +{0} · 돈 +{1}냥	Shrine — received a blessing. +{0} EXP · +{1} Gold		
+2	dungeon	sigil.elite_surge	정예 폭증(적 HP ×2)	Elite Surge (enemy HP ×2)		
+2	dungeon	sigil.glass_cannon	유리대포(주고받는 피해 ×1.5)	Glass Cannon (damage dealt and taken ×1.5)		
+2	dungeon	temple.armor_back	능묘지기가 갑주를 다시 여몄다	The Tomb Guardian re-fastened its armor		
+2	dungeon	temple.armor_broken	💥 갑주가 벗겨졌다! — 지금이다	💥 The armor cracked! — strike now		
+2	dungeon	temple.armor_hint	칼날이 튕겨 나간다 — 갑주를 먼저 벗겨야 한다	Your blade glances off — break the armor first		
+2	dungeon	temple.boss_door_opened	철컥 — 무거운 문이 열렸다. 능묘지기가 기다린다	Clack — the heavy door opened. The Tomb Guardian awaits		
+2	dungeon	temple.chest_appeared	✨ 어디선가 상자가 나타났다	✨ A chest appeared somewhere		
+2	dungeon	temple.cleared	⏎🏆 잊힌 능묘를 정복했다!	⏎🏆 You conquered the Forgotten Tomb!		
+2	dungeon	temple.door_need_boss_key	🔒 금빛 자물쇠 — 보스 열쇠가 필요하다	🔒 A golden lock — you need the boss key		
+2	dungeon	temple.door_need_key	🔒 잠겨 있다 — 작은 열쇠가 필요하다	🔒 Locked — you need a small key		
+2	dungeon	temple.door_opened	철컥 — 문이 열렸다	Clack — the door opened		
+2	dungeon	temple.enter	작은 열쇠로 길을 열고, 보스 열쇠로 능묘지기에게 닿아라	Open the way with small keys, and reach the Tomb Guardian with the boss key		
+2	dungeon	temple.got_bombs	💣 벽력탄을 얻었다! — R·「벽력탄」 버튼으로 놓는다. 금 간 벽을 부술 수 있다	💣 Got bombs! — place with R or the Bomb button. They break cracked walls		
+2	dungeon	temple.got_boss_key	🔑 보스 열쇠를 얻었다! — 능묘지기의 문을 연다	🔑 Got the boss key! — opens the Tomb Guardian's door		
+2	dungeon	temple.got_small_key	🗝 작은 열쇠를 얻었다! — 잠긴 문 하나를 연다	🗝 Got a small key! — opens one locked door		
+2	dungeon	temple.got_treasure	💰 높은 곳의 보물 — 금 +{0} · 경험치 +{1}	💰 Treasure up high — +{0} Gold · +{1} EXP		
+2	dungeon	temple.no_bombs	아직 놓을 것이 없다 — 능묘 어딘가에 벽력탄이 있다	Nothing to place yet — bombs lie somewhere in the tomb		
+2	dungeon	temple.plate_pressed	딸깍 — 발판이 눌렸다. 어딘가에서 소리가 났다	Click — the plate is pressed. Something sounded nearby		
+2	dungeon	temple.wall_broken	💥 벽이 무너졌다!	💥 The wall crumbled!		
+2	dungeon	temple.wall_hint	금이 간 벽이다 — 무언가로 부술 수 있을 것 같다	A cracked wall — something could break it		
+2	dungeon	temple.wall_hint_bomb	금이 간 벽이다 — 벽력탄(R)을 놓아 보자	A cracked wall — try placing a bomb (R)		
+2	dungeon	trial.board_empty	아직 완주 없음	No clears yet		
+2	dungeon	trial.board_line	{0}. {1}단계 · {2}:{3:00} · 쓰러짐 {4} · Lv.{5} · {6}	{0}. rank {1} · {2}:{3:00} · falls {4} · Lv.{5} · {6}		
+2	dungeon	trial.board_title	순위표	Leaderboard		
+2	dungeon	trial.card_clear	시련 {0}단계 완주!	Trial rank {0} cleared!		
+2	dungeon	trial.card_loot	{0} · 금 {1}	{0} · gold {1}		
+2	dungeon	trial.card_loot_equipped	{0} — 바로 갖췄다 · 금 {1}	{0} — equipped at once · gold {1}		
+2	dungeon	trial.card_norank	순위표 밖 · 열린 단계 {0} → {1}	Off the leaderboard · open rank {0} → {1}		
+2	dungeon	trial.card_progress	{0}단계 · 진척 {1}/100 · 쓰러짐 {2}	Rank {0} · progress {1}/100 · falls {2}		
+2	dungeon	trial.card_rank	순위표 {0}위 · 열린 단계 {1} → {2}	Leaderboard #{0} · open rank {1} → {2}		
+2	dungeon	trial.card_time	{0}:{1:00} · 쓰러짐 {2}	{0}:{1:00} · falls {2}		
+2	dungeon	trial.card_timeout	시련 — 시간이 다 됐다	Trial — time is up		
+2	dungeon	trial.card_timeout_note	기록 없음 — 주운 것만 남는다	No record — you keep only what you picked up		
+2	dungeon	trial.card_title	시련 — 15분 안에 진척 100 → 수호자 · 최고 {0}단계 · {1}번	Trial — progress 100 in 15 minutes → Guardian · best rank {0} · {1} runs		
+2	dungeon	trial.death	쓰러졌다 — 시계 −30초, 그 자리에서 다시 일어선다	You fell — clock −30s, you rise where you stood		
+2	dungeon	trial.guardian	진척 100 — 시련의 수호자가 나타났다!	Progress 100 — the Trial Guardian appears!		
+2	dungeon	trial.guardian_sub	시련의 끝 — 쓰러뜨리면 완주	End of the Trial — defeat it to finish		
+2	dungeon	trial.hud	시련 {0}단계 {1} · {2}	Trial rank {0} {1} · {2}		
+2	dungeon	trial.hud_guardian	수호자!	Guardian!		
+2	dungeon	trial.hud_progress	진척 {0}/100	progress {0}/100		
+2	dungeon	trial.locked	시련의 모래시계 — 지하 {0}층에 닿으면 열린다(지금 {1}층)	Hourglass of Trials — opens once you reach floor B{0} (now B{1})		
+2	dungeon	trial.stage_button	{0}단계⏎적 ×{1:0.00}	Rank {0}⏎foes ×{1:0.00}		
+2	dungeon	trial.start	시련 {0}단계 — 15분 안에 진척 100 을 채우고 수호자를 쓰러뜨려라 (적 ×{1:0.00})	Trial rank {0} — fill progress to 100 and defeat the Guardian within 15 minutes (foes ×{1:0.00})		
+2	dungeon	trove.gold	보물상자 — 돈 +{0}냥	Treasure chest — +{0} Gold		
+2	dungeon	vein.mined	광맥 · 캐냈다 — 경험치 +{0}, {1}을(를) 얻었다{2}	Ore vein mined — +{0} EXP, got {1}{2}		
+2	dungeon	vein.socketed	 — 바로 세공했다.	 — socketed it right away.		
+2	dungeon	well.heal	우물 — 체력 {0} 회복.	Well — recovered {0} HP.		
+2	dungeon	worldboss.fled	{0}이(가) 시간이 다 되어 달아났다 — 경험치 +{1} · 돈 +{2}냥(줄어든 보상)	{0} fled as time ran out — +{1} EXP · +{2} Gold (reduced reward)		
+2	dungeon	worldboss.full_break	⏎💥 완파! — 돈 +{0}냥 추가	⏎💥 Full break! — +{0} Gold bonus		
+2	dungeon	worldboss.part.armor	갑주	Armor		
+2	dungeon	worldboss.part.helm	투구	Helm		
+2	dungeon	worldboss.part.weapon	무기	Weapon		
+2	dungeon	worldboss.part_broken	🛡 {0} 파괴! — 돈 +{1}냥	🛡 {0} broken! — +{1} Gold		
+2	dungeon	worldboss.start	⏱ 두목전 시작 — {0:0}초 안에 쓰러뜨려라	⏱ Boss fight! — defeat it within {0:0}s		
+2	forest	biome.dark_forest	어둑숲	Gloomwood		
+2	forest	biome.flower_field	꽃밭	Flower Field		
+2	forest	biome.mushroom_forest	버섯숲	Mushroom Grove		
+2	forest	biome.rocky	바위 지대	Rocky Outcrop		
+2	forest	creature.angaeyuryeong	안개유령	Mist Ghost		
+2	forest	creature.bawi	바위도깨비	Rock Goblin		
+2	forest	creature.beoseot	버섯정령	Mushroom Spirit		
+2	forest	creature.dokkaebi	숲도깨비	Forest Goblin		
+2	forest	creature.kkot	꽃정령	Flower Spirit		
+2	forest	creature.musoetokkebi	무쇠도깨비	Iron Goblin		
+2	forest	creature.nabijeongryeong	나비정령	Butterfly Spirit		
+2	forest	creature.pojagoemul	포자괴물	Spore Beast		
+2	forest	delivery.already_carrying	택배 — 지금 {0}(으)로 갈 소포를 들고 있다.	Delivery — you are already carrying a parcel for {0}.		
+2	forest	delivery.broke_toast	택배 — 뛰다가 소포가 깨졌다! 보상 없음(사슬 끊김)	Delivery — the parcel broke while running! No reward (chain broken)		
+2	forest	delivery.chain_tag	 (사슬 보너스!)	 (chain bonus!)		
+2	forest	delivery.done_toast	택배 완료 — 과일 +{0}{1}	Delivery done — +{0} fruit{1}		
+2	forest	delivery.kind_fragile	깨지기 쉬움(달리면 파손!)	Fragile (running breaks it!)		
+2	forest	delivery.kind_normal	보통	Normal		
+2	forest	delivery.kind_timed	시간제한(45초 안에!)	Timed (within 45s!)		
+2	forest	delivery.late_tag	 (시간 초과, 보상 절반)	 (late, half reward)		
+2	forest	delivery.pickup_toast	택배 접수 — 목적지: {0} · 소포: {1}	Delivery accepted — to: {0} · parcel: {1}		
+2	forest	encounter.gauge	경계	Alert		
+2	forest	encounter.lost	포자괴물이 슬그머니 물러갔다.	The spore monster slipped away.		
+2	forest	encounter.push_back	밀어내기!	Push Back!		
+2	forest	encounter.title	포자괴물이 다가온다!	A spore monster approaches!		
+2	forest	encounter.won	포자괴물을 몰아냈다!	Drove off the spore monster!		
+2	forest	era.future	미래	Future		
+2	forest	era.modern	현대	Modern		
+2	forest	era.past	과거	Past		
+2	forest	festival.flowerhunt_done	🌸 꽃놀이 성사! — 네 갈래를 1분 안에 모두 찾았다 (과일 +{0})	🌸 Flower outing success! — found all four lines within 1 minute (+{0} fruit)		
+2	forest	festival.how.flowerhunt	1분 안에 채집 자리 넷을 모두 찾아보자	Find all four gathering spots within a minute		
+2	forest	festival.how.sebae	숲지기에게 말을 걸어 세배를 하자	Talk to the forest keeper and offer a New Year's bow		
+2	forest	festival.how.wish	소원돌에 소원을 빌어보자	Make a wish at the wishing stone		
+2	forest	festival.name.flowerhunt	꽃놀이	Flower Outing		
+2	forest	festival.name.sebae	세배	New Year's Bow		
+2	forest	festival.name.wish	소원	Wishing Day		
+2	forest	festival.next_line	다음 축제: {0}(D-{1})	Next festival: {0} (D-{1})		
+2	forest	festival.sebae	{0} — "새해 복 많이 받으시게 — 세배값이네." (과일 +{1})	{0} — "A blessed new year to you — here's a little New Year's gift." (+{1} fruit)		
+2	forest	festival.today_line	오늘은 {0}! {1}	Today is {0}! {1}		
+2	forest	festival.wish_already	오늘 소원은 이미 빌었다.	You already made today's wish.		
+2	forest	festival.wish_done	✨ 별똥별에 소원을 빌었다 — 24시간 동안 채집이 잘 될 것 같다(과일 획득 ×1.5).	✨ You wished on a shooting star — gathering should go well for 24 hours (fruit ×1.5).		
+2	forest	festival.wish_idle	소원돌 — 소원날에만 별똥별이 뜬다고 한다.	Wishing stone — they say shooting stars appear only on wishing day.		
+2	forest	finish.dan	단청벽	Dancheong Wall		
+2	forest	finish.earth	흙벽	Mud Wall		
+2	forest	finish.hanji	한지벽	Hanji Paper Wall		
+2	forest	finish.jangpan	장판	Oiled Paper Floor		
+2	forest	finish.mat	돗자리	Straw Mat		
+2	forest	finish.muk	먹빛벽	Ink-Toned Wall		
+2	forest	finish.ondol	구들장	Ondol Heated Floor		
+2	forest	finish.sol	솔빛벽	Pine-Toned Wall		
+2	forest	finish.stall.bought	도배전 — {0}을(를) 사서 발랐다(과일 -{1}).	Wallpaper Shop — Bought and applied {0} (-{1} fruit).		
+2	forest	finish.stall.cant_afford	도배전 — 눈에 든 건 {0}(과일 {1}개)인데, 과일이 모자라 못 샀다(보유 {2}개).	Wallpaper Shop — Today's pick is {0} ({1} fruit), but you don't have enough fruit (have {2}).		
+2	forest	finish.stall.swap	도배전 — 이미 다 가졌다. 오늘은 {0}로 갈아입어 본다.	Wallpaper Shop — Already own everything. Switching to {0} today.		
+2	forest	finish.stone	박석	Flagstone Floor		
+2	forest	finish.wood	마루	Wood Floor		
+2	forest	fruit.gather_toast	나무를 흔들었다 — {0}을(를) 주웠다 (보유 {1}개)	Shook the tree — picked up {0} (have {1})		
+2	forest	fruit.name	산딸기	wild berries		
+2	forest	furniture.badukpan	바둑판	Go Board		
+2	forest	furniture.bandaji	반닫이	Bandaji Chest		
+2	forest	furniture.bangseok	방석	Cushion		
+2	forest	furniture.byeongpung	병풍	Folding Screen		
+2	forest	furniture.deungjan	등잔	Oil Lamp		
+2	forest	furniture.dokja	도자기	Porcelain Jar		
+2	forest	furniture.geomungo	거문고	Geomungo (Zither)		
+2	forest	furniture.hwabun	화분	Flowerpot		
+2	forest	furniture.hwaro	화로	Brazier		
+2	forest	furniture.jokja	족자	Hanging Scroll		
+2	forest	furniture.mulhang	물항아리	Water Jar		
+2	forest	furniture.mungab	문갑	Document Chest		
+2	forest	furniture.placer.empty_storage	놓을 가구가 창고에 없다 — 가구전에서 먼저 사야 한다.	No furniture in storage to place — buy some at the furniture shop first.		
+2	forest	furniture.placer.pickup	{0}을(를) 창고로 거두었다.	Picked up {0} into storage.		
+2	forest	furniture.placer.placed	{0}을(를) 놓았다 — 집 평가: {1}({2}점, 가구 {3}개)	Placed {0} — Home rating: {1} ({2} points, {3} furniture)		
+2	forest	furniture.seoan	서안	Writing Desk		
+2	forest	furniture.set.anbang	안방	Master Bedroom		
+2	forest	furniture.set.buok	부엌	Kitchen		
+2	forest	furniture.set.ddeul	뜰	Courtyard		
+2	forest	furniture.set.sarang	사랑방	Study		
+2	forest	furniture.soban	소반	Small Table		
+2	forest	furniture.stall.bought	가구전 — {0}을(를) 샀다(과일 -{1}) — 빈 자리에 다가가면 창고에서 놓인다.	Furniture Shop — Bought {0} (-{1} fruit) — approach an empty spot to place it from storage.		
+2	forest	furniture.stall.cant_afford	가구전 — 오늘 눈에 든 건 {0}(과일 {1}개)인데, 과일이 모자라 못 샀다(보유 {2}개).	Furniture Shop — Today's pick is {0} ({1} fruit), but you don't have enough fruit (have {2}).		
+2	forest	home.grade0	휑한 방	Bare Room		
+2	forest	home.grade1	살림이 든 방	Furnished Room		
+2	forest	home.grade2	정갈한 집	Tidy House		
+2	forest	home.grade3	아취 있는 집	Elegant House		
+2	forest	home.grade4	이름난 집	Renowned House		
+2	forest	home.grade5	명가(名家)	Distinguished House		
+2	forest	house.enter	집 안으로 들어왔다 — 화면이 더는 휘지 않는다.	You step inside — the view no longer curves.		
+2	forest	house.exit	밖으로 나왔다 — 다시 마을이 휘어 보인다.	You step outside — the village curves again.		
+2	forest	landmark.again	◆ {0}	◆ {0}		
+2	forest	landmark.dark_forest	이끼 돌제단	Mossy Altar		
+2	forest	landmark.flower_field	옛 돌기둥터	Old Pillar Grounds		
+2	forest	landmark.found	명소 발견! ◆ {0}	Landmark found! ◆ {0}		
+2	forest	landmark.mushroom_forest	요정 돌고리	Fairy Stone Ring		
+2	forest	landmark.rocky	거인 선돌	Giant's Standing Stone		
+2	forest	museum.all_done_toast	🚩 네 갈래를 모두 채웠다 — 마을 어귀에 깃발이 섰다!	🚩 All four lines complete — a flag now stands at the town entrance!		
+2	forest	museum.bundle_done_toast	🎉 도감 한 갈래를 다 채웠다 — 마을에 새 시설이 생겼다!	🎉 You completed a collection line — a new facility opened in town!		
+2	forest	museum.gather_new_toast	{0}을(를) 처음으로 발견했다! (도감에 기록됨)	Found {0} for the first time! (recorded in the collection)		
+2	forest	museum.gather_toast	{0}을(를) 발견했다(이미 도감에 있음)	Found {0} (already in the collection)		
+2	forest	museum.item.bell_cap	방울버섯	Bell Cap		
+2	forest	museum.item.footprint_fossil	발자국화석	Footprint Fossil		
+2	forest	museum.item.glowbug	반짝벌레	Glowbug		
+2	forest	museum.item.goblin_cap	도깨비갓버섯	Goblin Cap		
+2	forest	museum.item.night_beetle	야행풍뎅이	Night Beetle		
+2	forest	museum.item.purple_cap	자주버섯	Purple Cap		
+2	forest	museum.item.shadow_moth	그림자나비	Shadow Moth		
+2	forest	museum.item.silver_bell	은방울꽃	Lily of the Valley		
+2	forest	museum.item.spiral_fossil	나선화석	Spiral Fossil		
+2	forest	museum.item.star_flower	별꽃	Starflower		
+2	forest	museum.item.sunset_flower	노을꽃	Sunset Bloom		
+2	forest	museum.item.tooth_fossil	이빨화석	Tooth Fossil		
+2	forest	town_score.board	마을 평가 {0}⏎{1}⏎{2}	Town rating {0}⏎{1}⏎{2}		
+2	forest	town_score.home_line	집 꾸미기 {0}개 (+{1}점)	Home decor {0} (+{1} pts)		
+2	forest	town_score.museum_line	박물관 기증 {0}/12 (+{1}점)	Museum donations {0}/12 (+{1} pts)		
+2	forest	villager.keeper.name	숲지기	Forest Keeper		
+2	forest	zone.enter	— {0} {1} —	— {0} {1} —		
+2	forest	zone.enter_village	— 마을 —	— Village —		
+2	forest	zone.roster	사는 것: {0}	Lives here: {0}		
+2	story	cut.story_boss_sub	들판 가장 안쪽을 지키는 우두머리	The master guarding the far end of the field		
+2	story	cut.story_boss_title	황건 두목	Yellow Turban Chief		
+2	story	cut.story_champion_sub	관문 대장 — 이번 주 강화판, 180초 안에 쓰러뜨려라	Gate Champion — this week's empowered form, defeat it within 180s		
+2	story	cut.summon_sub	소환 — 먹구름이 뿔에 내려앉는다	Summon — storm clouds settle on its horns		
+2	story	cut.summon_title	우레뿔 거수	Thunderhorn Colossus		
+2	story	discovery.lookout	발판 위 망루를 발견했다 — 잠시 숨을 고르니 내공이 가득 찼다.	Found a lookout atop the ledge — a short rest refills your MP.		
+2	story	enemy.era_colossus	강철 거신	Steel Colossus		
+2	story	enemy.era_dummy	시험 인형	Test Dummy		
+2	story	enemy.era_merc	용병 돌격대	Mercenary Raider		
+2	story	enemy.era_plasma	플라즈마 변이체	Plasma Mutant		
+2	story	enemy.era_punk	뒷골목 불량배	Back-Alley Punk		
+2	story	enemy.era_revenant	떠도는 망자	Wandering Dead		
+2	story	enemy.era_rider	폭주 라이더	Street Racer		
+2	story	enemy.era_stranger	별바다 손님	Starsea Visitor		
+2	story	enemy.hwanggeon	황건적	Yellow Turban Bandit		
+2	story	era.announce_future	⏳ 시간 틈 너머에서 — {0}	⏳ From beyond the time rift — {0}		
+2	story	era.announce_modern	⏳ 다른 시대에서 흘러든 — {0}	⏳ Drifted in from another era — {0}		
+2	story	gatechampion.claimed	🚪 관문 대장 처치! 경험치 ×{0:0} — 다음 주에 다시 나타난다	🚪 Gate Champion defeated! EXP ×{0:0} — it returns next week		
+2	story	gatechampion.regroup	⏱ 시간 초과 — 관문 대장이 태세를 정비했다, 다시 도전하라	⏱ Time up — the Gate Champion regrouped, try again		
+2	story	gatechampion.shield_broken	🛡 방패 파괴! 10초간 받는 피해 증가	🛡 Shield destroyed! It takes more damage for 10s		
+2	story	gatechampion.shield_hud	 🛡깨짐	 🛡Broken		
+2	story	gatechampion.start	🚪 관문 대장 — 이번 주 강화판으로 나타났다! 180초 안에 쓰러뜨려라	🚪 Gate Champion — appeared in this week's empowered form! Defeat it within 180s		
+2	story	gatechampion.timer	🚪 관문 대장 — {0:0}초{1}	🚪 Gate Champion — {0:0}s{1}		
+2	story	job.archer	궁수(弓手)	Archer		
+2	story	job.ascendant	천존(天尊)	Heavenly Lord		
+2	story	job.assassin	자객(刺客)	Assassin		
+2	story	job.falcon	궁성(弓聖)	Bow Saint		
+2	story	job.flier	비장(飛將)	Flying General		
+2	story	job.general	장군(將軍)	General		
+2	story	job.immortal	진인(眞人)	Immortal		
+2	story	job.mage	방사(方士)	Mage		
+2	story	job.marshal	원수(元帥)	Marshal		
+2	story	job.reaper	명왕(冥王)	Underworld King		
+2	story	job.rogue	협객(俠客)	Rogue		
+2	story	job.sage	도사(道士)	Sage		
+2	story	job.sniper	신궁(神弓)	Sharpshooter		
+2	story	job.warlord	전신(戰神)	War God		
+2	story	job.warrior	무사(武士)	Warrior		
+2	story	job.why_level	윗자리는 Lv.{0}부터	Next rank from Lv.{0}		
+2	story	job.why_no_next	더 오를 자리가 없습니다	No higher rank to reach		
+2	story	job.why_skill	윗자리는 무예 하나를 {0} 이상 익혀야 한다	Next rank needs one skill at {0}+		
+2	story	job.wraith	귀영(鬼影)	Wraith		
+2	story	labyrinth.abandon	🚪 비경에서 물러났다	🚪 You withdrew from the labyrinth		
+2	story	labyrinth.abandon_button	포기하고 나간다	Give up and leave		
+2	story	labyrinth.axis_attack	공격	Attack		
+2	story	labyrinth.axis_defense	방어	Defense		
+2	story	labyrinth.axis_utility	유틸	Utility		
+2	story	labyrinth.blessing.atk_crit	회심(會心)	Insight		
+2	story	labyrinth.blessing.atk_haste	쾌속(快速)	Haste		
+2	story	labyrinth.blessing.atk_power	예기(銳氣)	Vigor		
+2	story	labyrinth.blessing.extra_life	재기(再起)	Second Wind		
+2	story	labyrinth.blessing.memory_bonus	각인(刻印)	Engrave		
+2	story	labyrinth.blessing.move_speed	경신(輕身)	Featherstep		
+2	story	labyrinth.blessing.mp_regen	운기(運氣)	Breathwork		
+2	story	labyrinth.blessing.mp_shield	충전(充電)	Recharge		
+2	story	labyrinth.blessing.time_margin	여유(餘裕)	Leeway		
+2	story	labyrinth.cleared	🏆 비경 클리어! 관문의 주인을 넘어섰다	🏆 Labyrinth cleared! You overcame the Master of the Gate		
+2	story	labyrinth.elite_blessing	정예 처치 — 은사를 하나 더 고르십시오	Elite defeated — choose one more blessing		
+2	story	labyrinth.enter_boss	도전한다	Challenge		
+2	story	labyrinth.entry_blessing	비경 진입 — 은사 하나를 고르십시오	Labyrinth entered — choose a blessing		
+2	story	labyrinth.event_good	📜 사건 노드 — 뜻밖의 도움을 받아 경험을 얻었다	📜 Event node — an unexpected helper gave you experience		
+2	story	labyrinth.event_neutral	📜 사건 노드 — 별일 없이 지나갔다	📜 Event node — nothing happened		
+2	story	labyrinth.failed	💀 패퇴 — {0}층에서 회차가 끝났다(기억 조각은 남는다, 보유 {1})	💀 Defeated — the run ended on floor {0} (memory shards remain, have {1})		
+2	story	labyrinth.floor_boss	5층 — 관문의 주인	Floor 5 — Master of the Gate		
+2	story	labyrinth.floor_hud	🌀 비경 {0}층	🌀 Labyrinth F{0}		
+2	story	labyrinth.floor_label	{0}층 — 갈 길을 고르십시오	Floor {0} — choose your path		
+2	story	labyrinth.gate_enter	입장한다	Enter		
+2	story	labyrinth.gate_prompt	비경(祕境) 문이다 — 무엇을 하시겠습니까?	The labyrinth gate — what will you do?		
+2	story	labyrinth.gate_upgrade	기억을 새긴다(보유 {0})	Engrave a memory (have {0})		
+2	story	labyrinth.node_clear	⚔️ 노드 클리어 — 기억 조각 +{0}	⚔️ Node cleared — +{0} memory shards		
+2	story	labyrinth.node_combat	⚔️ 전투	⚔️ Battle		
+2	story	labyrinth.node_elite	👹 정예	👹 Elite		
+2	story	labyrinth.node_event	📜 사건	📜 Event		
+2	story	labyrinth.node_rest	🏕 휴식	🏕 Rest		
+2	story	labyrinth.node_treasure	💰 보물	💰 Treasure		
+2	story	labyrinth.regroup	⏱ 시간 초과 — 재기(再起)로 다시 도전한다	⏱ Time up — rise again and retry		
+2	story	labyrinth.rest	🏕 휴식 노드 — 기력을 전부 회복했다	🏕 Rest node — fully recovered your energy		
+2	story	labyrinth.timer_hud	— {0:0}초	— {0:0}s		
+2	story	labyrinth.treasure	💰 보물 노드 — 기억 조각 +{0}	💰 Treasure node — +{0} memory shards		
+2	story	labyrinth.upgrade_fail	기억 조각이 부족하거나 이미 최대 단계다	Not enough memory shards, or already at max rank		
+2	story	labyrinth.upgrade_ok	기억을 새겼다 — 영구 강화 {0}단(공격력 소폭 상승)	Memory engraved — permanent upgrade rank {0} (slightly more attack)		
+2	story	npc.scout_choice_a	함께 축배를 든다	Share a toast together		
+2	story	npc.scout_choice_b	간단히 치하만 받는다	Just accept simple thanks		
+2	story	npc.scout_choice_line_a	좋습니다, 오늘은 마음 놓고 한 잔 합시다!	Wonderful, let's drink freely tonight!		
+2	story	npc.scout_choice_line_b	예, 알겠습니다 — 다음에 또 뵙지요.	Very well — until we meet again.		
+2	story	npc.scout_choice_prompt	두목까지 처치하셨군요! 노고를 어떻게 치하해 드릴까요?	You've even defeated the chief! How shall I thank you for your effort?		
+2	story	npc.scout_greeting_1	형씨! 	Friend! 		
+2	story	npc.scout_greeting_2	어서 오십시오. 	Welcome back. 		
+2	story	npc.scout_greeting_default_2	또 뵙는군요. 	We meet again. 		
+2	story	npc.scout_greeting_default_3	이제 낯이 익어 마음이 놓입니다. 	Your face is familiar now — it's a comfort. 		
+2	story	npc.scout_line_boss_pending	잡졸들은 거의 정리되셨군요. 안쪽에 두목이 아직 버티고 있습니다.	You've cleared out most of the grunts. The chief still holds out further in.		
+2	story	npc.scout_line_done_a	지난번 잔치, 아직도 훈훈합니다. 이 들판은 이제 안전합니다.	That celebration still warms my heart. This field is safe now.		
+2	story	npc.scout_line_done_b	이 들판은 이제 안전합니다. 감사합니다.	This field is safe now. Thank you.		
+2	story	npc.scout_line_initial	이 들판에 황건적 떼가 진을 쳤습니다. 조심하십시오.	A band of Yellow Turbans has camped on this field. Be careful.		
+2	story	npc.scout_line_kills_remaining	황건적이 아직 {0}명은 더 남았을 겁니다.	There are still about {0} Yellow Turbans left.		
+2	story	npc.scout_name	들판의 척후병	Field Scout		
+2	story	npc.trainer_choice_prompt	전직할 수 있습니다 — 원하는 길을 고르세요	You may change your class now — choose your path		
+2	story	npc.trainer_chosen	{0} — {1}로 전직! 공격+{2}{3}	{0} — Changed class to {1}! ATK+{2}{3}		
+2	story	npc.trainer_chosen_mp_suffix	 기력+{0}	 MP+{0}		
+2	story	npc.trainer_name	전직관	Class Trainer		
+2	story	npc.trainer_promote_no	나중에	Later		
+2	story	npc.trainer_promote_prompt	{0}(으)로 오를 수 있습니다 — 오르겠습니까?	You can rise to {0} — will you?		
+2	story	npc.trainer_promote_yes	오른다	Rise		
+2	story	npc.trainer_status_done	🎖️ {0} Lv.{1}	🎖️ {0} Lv.{1}		
+2	story	npc.trainer_status_locked	전직은 Lv.{0}부터(현재 Lv.{1})	Class change available from Lv.{0} (currently Lv.{1})		
+2	story	npc.trainer_status_ready	전직할 수 있습니다	You may change your class now		
+2	story	party.beside_hud	곁: {0}	beside: {0}		
+2	story	party.cooldown_hud	(교대까지 {0:0.0}초)	(swap in {0:0.0}s)		
+2	story	party.name.guardian	호법(護法)	Guardian		
+2	story	party.name.skirmisher	유격(遊擊)	Skirmisher		
+2	story	party.name.vanguard	선봉(先鋒)	Vanguard		
+2	story	party.ready_hud	(교대 가능)	(swap ready)		
+2	story	party.swapped_toast	{0}(으)로 교대! 서명을 발동했다.	Swapped to {0}! Signature triggered.		
+2	story	quest.boss_head	두목의 목	The Chief's Head		
+2	story	quest.first_hunt	첫 사냥	First Hunt		
+2	story	skill.a_burst	환시(環矢)	Arrow Ring		
+2	story	skill.a_double	연사(連射)	Rapid Fire		
+2	story	skill.a_eye	응안(鷹眼)	Hawk Eye		
+2	story	skill.a_pierce	관통시(貫通矢)	Piercing Arrow		
+2	story	skill.a_retreat	퇴보사(退步射)	Retreat Shot		
+2	story	skill.a_shot	사격(射擊)	Shot		
+2	story	skill.d_bloom	구화만개(九花滿開)	Ninefold Bloom		
+2	story	skill.d_carve	팔도(八刀)	Eight Blades		
+2	story	skill.d_curse	명왕부(冥王符)	Underworld King's Seal		
+2	story	skill.d_dart	명표(冥鏢)	Underworld Dart		
+2	story	skill.d_veil	명계보(冥界步)	Underworld Step		
+2	story	skill.d_whirl	절명풍(絶命風)	Deathwind		
+2	story	skill.f_burst	천환시(天環矢)	Heaven Ring		
+2	story	skill.f_focus	정심(定心)	Still Mind		
+2	story	skill.f_pierce	파천시(破天矢)	Sky Piercer		
+2	story	skill.f_retreat	답공사(踏空射)	Skystep Shot		
+2	story	skill.f_storm	시우(矢雨)	Arrow Storm		
+2	story	skill.f_volley	만시(萬矢)	Myriad Arrows		
+2	story	skill.g_edge	벽공검(劈空劍)	Sky Splitter		
+2	story	skill.g_roar	함성(喊聲)	War Cry		
+2	story	skill.g_smash	패왕격(霸王擊)	Overlord Strike		
+2	story	skill.g_wall	철벽(鐵壁)	Iron Wall		
+2	story	skill.h_burst	극환시(極環矢)	Ultimate Ring		
+2	story	skill.h_ray	광시(光矢)	Light Arrow		
+2	story	skill.h_retreat	익보사(翼步射)	Winged Retreat Shot		
+2	story	skill.h_swarm	십이시(十二矢)	Twelve Arrows		
+2	story	skill.h_tempest	천사우(天射雨)	Heavenly Arrow Rain		
+2	story	skill.h_zenith	궁천합(弓天合)	Bow and Sky as One		
+2	story	skill.i_abyss	천붕지열(天崩地裂)	World Sunder		
+2	story	skill.i_meteor	유성(流星)	Meteor		
+2	story	skill.i_orb	유성탄(流星彈)	Meteor Orbs		
+2	story	skill.i_step	이형보(移形步)	Form Shift		
+2	story	skill.i_tao	태극(太極)	Taiji		
+2	story	skill.m_bolt	뇌전(雷電)	Thunder		
+2	story	skill.m_fire	화구(火球)	Fireball		
+2	story	skill.m_orb	마탄(魔彈)	Magic Orbs		
+2	story	skill.m_step	축지(縮地)	Fold Earth		
+2	story	skill.m_talis	부적(符籍)	Talisman		
+2	story	skill.n_banner	대장기(大將旗)	General's Banner		
+2	story	skill.n_charge	철기돌격(鐵騎突擊)	Iron Cavalry Charge		
+2	story	skill.n_edge	천단검(天斷劍)	Heaven Cleaver		
+2	story	skill.n_heaven	천붕격(天崩擊)	Heaven Crash		
+2	story	skill.n_quake	진각(震脚)	Quake Stomp		
+2	story	skill.need_suffix	 ({0} {1} 먼저)	 (needs {0} {1})		
+2	story	skill.o_conquer	패천기(覇天旗)	Sky Conqueror's Banner		
+2	story	skill.o_edge	파천검(破天劍)	Heaven Breaker		
+2	story	skill.o_ruin	파멸격(破滅擊)	Ruin Strike		
+2	story	skill.o_smite	벽력돌(霹靂突)	Thunderbolt Rush		
+2	story	skill.o_tremor	지열(地裂)	Earth Rift		
+2	story	skill.p_beam	천뢰(天雷)	Heaven's Thunder		
+2	story	skill.p_orb	연환탄(連環彈)	Chain Orbs		
+2	story	skill.p_quake	지진(地震)	Earthquake		
+2	story	skill.p_step	축지술(縮地術)	Greater Fold Earth		
+2	story	skill.p_ward	호신부(護身符)	Guardian Charm		
+2	story	skill.panel_nojob	전직(Lv.{0}) 뒤에 직업 무예를 익힌다	Learn class skills after your class change (Lv.{0})		
+2	story	skill.panel_title	{0} 무예 — 남은 점수 {1}	{0} Skills — {1} points left		
+2	story	skill.panel_title_nojob	무예	Skills		
+2	story	skill.pin_on	칸{0}	Slot{0}		
+2	story	skill.r_dart	관통표(貫通鏢)	Piercing Dart		
+2	story	skill.r_knife	비도(飛刀)	Flying Knives		
+2	story	skill.r_step	은신보(隱身步)	Shadow Step		
+2	story	skill.r_twin	쌍참(雙斬)	Twin Slash		
+2	story	skill.r_vital	급소(急所)	Vital Point		
+2	story	skill.r_whirl	선풍각(旋風脚)	Whirl Kick		
+2	story	skill.s_burst	광환시(廣環矢)	Wide Arrow Ring		
+2	story	skill.s_rain	전우(箭雨)	Arrow Rain		
+2	story	skill.s_retreat	활보사(闊步射)	Long Retreat Shot		
+2	story	skill.s_snipe	일점사(一點射)	Focused Shot		
+2	story	skill.s_split	분시(分矢)	Split Arrows		
+2	story	skill.school.a_an	안(眼)	Eye		
+2	story	skill.school.a_gwan	관(貫)	Pierce		
+2	story	skill.school.a_hwan	환(環)	Ring		
+2	story	skill.school.a_toe	퇴(退)	Retreat		
+2	story	skill.school.a_u	우(雨)	Rain		
+2	story	skill.school.a_yeon	연(連)	Chain		
+2	story	skill.school.m_bu	부(符)	Talisman		
+2	story	skill.school.m_chuk	축(縮)	Blink		
+2	story	skill.school.m_jin	진(震)	Quake		
+2	story	skill.school.m_saeng	생(生)	Life		
+2	story	skill.school.m_seong	성(星)	Star		
+2	story	skill.school.m_tan	탄(彈)	Burst		
+2	story	skill.school.r_bo	보(步)	Step		
+2	story	skill.school.r_cham	참(斬)	Slash		
+2	story	skill.school.r_hon	혼(魂)	Soul		
+2	story	skill.school.r_hwa	화(花)	Blossom		
+2	story	skill.school.r_pung	풍(風)	Wind		
+2	story	skill.school.r_pyo	표(鏢)	Dart		
+2	story	skill.school.w_jil	질(疾)	Swift		
+2	story	skill.school.w_jung	정(正)	Orthodox		
+2	story	skill.school.w_pa	파(破)	Break		
+2	story	skill.school.w_pae	패(覇)	Dominion		
+2	story	skill.school.w_saeng	생(生)	Life		
+2	story	skill.school.w_su	수(守)	Guard		
+2	story	skill.school_set	[{0}·{1}세트] 	[{0}·{1}-set] 		
+2	story	skill.slots_line	칸: {0}	Slots: {0}		
+2	story	skill.v_blur	잔영(殘影)	Afterimage		
+2	story	skill.v_dart	귀표(鬼鏢)	Ghost Dart		
+2	story	skill.v_mark	사혼(死魂)	Death Soul		
+2	story	skill.v_petal	낙화(落花)	Falling Petals		
+2	story	skill.v_void	허공답보(虛空踏步)	Void Walk		
+2	story	skill.v_whirl	광풍각(狂風脚)	Mad Gale Kick		
+2	story	skill.w_cut	참격(斬擊)	Deep Cut		
+2	story	skill.w_edge	파공검(破空劍)	Sky Rend		
+2	story	skill.w_iron	철갑(鐵甲)	Iron Guard		
+2	story	skill.w_rush	돌진(突進)	Charge		
+2	story	skill.w_whirl	선풍(旋風)	Whirlwind		
+2	story	skill.why_maxed	이미 다 익혔습니다	Already mastered		
+2	story	skill.why_need	먼저 익혀야 할 무예가 있습니다	Learn the prerequisite skill first		
+2	story	skill.why_no_sp	무예 점수가 없습니다	No skill points left		
+2	story	skill.why_other_job	이 직업의 무예가 아닙니다	Not a skill of your class		
+2	story	skill.why_pin_full	칸 넷이 다 찼다 — 고정 하나를 먼저 푼다	All four slots are pinned — unpin one first		
+2	story	skill.why_pin_unlearned	익힌 무예만 칸에 고정할 수 있다	Only learned skills can be pinned to a slot		
+2	story	skill.why_unknown	없는 무예입니다	Unknown skill		
+2	story	skill.x_dart	암습표(暗襲鏢)	Ambush Dart		
+2	story	skill.x_fan	만천화우(滿天花雨)	Blossom Storm		
+2	story	skill.x_shadow	그림자밟기	Shade Walk		
+2	story	skill.x_storm	난무(亂舞)	Wild Dance		
+2	story	skill.x_whirl	질풍각(疾風脚)	Gale Kick		
+2	story	skill.z_collapse	건곤붕(乾坤崩)	Cosmos Collapse		
+2	story	skill.z_eternity	무극(無極)	Boundless		
+2	story	skill.z_orb	성라탄(星羅彈)	Constellation Orbs		
+2	story	skill.z_starfall	낙성우(落星雨)	Starfall		
+2	story	skill.z_step	신행보(神行步)	Divine Stride		
+2	story	summon.gauge_hud	⚡ 소환 {0:0}%	⚡ Summon {0:0}%		
+2	story	summon.no_foe	부를 까닭이 없다 — 곁에 적이 없다	No reason to call it — no foes nearby		
+2	story	summon.not_ready	소환 게이지가 아직 덜 찼다	The summon gauge isn't full yet		
+2	story	summon.on_rope	줄에 매달린 채로는 부를 수 없다	Can't summon while hanging on a rope		
+2	story	summon.ready_hud	⚡ 소환 준비 — [V]	⚡ Summon ready — [V]		
+2	realm	ambition.rival	숙적	Rival		
+2	realm	ambition.scholar	학문	Scholar		
+2	realm	ambition.wealth	부귀	Wealth		
+2	realm	archive.detail	[{0} · Lv{1}]⏎{2}⏎정답: {3}⏎{4}	[{0} · Lv{1}]⏎{2}⏎Answer: {3}⏎{4}		
+2	realm	archive.empty	아직 익힌 문제가 없다.	No questions learned yet.		
+2	realm	archive.entry_label	[{0}] {1}	[{0}] {1}		
+2	realm	city.beidi	북지	Beidi		
+2	realm	city.bijing	비경	Bijing		
+2	realm	city.cangwu	창오	Cangwu		
+2	realm	city.chaisang	시상	Chaisang		
+2	realm	city.changan	장안	Chang'an		
+2	realm	city.changsha	장사	Changsha		
+2	realm	city.chengdu	성도	Chengdu		
+2	realm	city.chenliu	진류	Chenliu		
+2	realm	city.daxia	대하	Daxia		
+2	realm	city.dianchong	전충	Dianchong		
+2	realm	city.dingtao	정도	Dingtao		
+2	realm	city.dingxiang	정양	Dingxiang		
+2	realm	city.hanzhong	한중	Hanzhong		
+2	realm	city.hepu	합포	Hepu		
+2	realm	city.jiangling	강릉	Jiangling		
+2	realm	city.jiangxia	강하	Jiangxia		
+2	realm	city.jiangzhou	강주	Jiangzhou		
+2	realm	city.jianning	건녕	Jianning		
+2	realm	city.jiantuoluo	건타라	Jiantuoluo		
+2	realm	city.jianye	건업	Jianye		
+2	realm	city.jiaozhi	교지	Jiaozhi		
+2	realm	city.jibin	계빈	Jibin		
+2	realm	city.jinyang	진양	Jinyang		
+2	realm	city.jiuzhen	구진	Jiuzhen		
+2	realm	city.kuaiji	회계	Kuaiji		
+2	realm	city.luorong	노용	Luorong		
+2	realm	city.luoyang	낙양	Luoyang		
+2	realm	city.moqietuo	마게타	Moqietuo		
+2	realm	city.nanhai	남해	Nanhai		
+2	realm	city.puyang	복양	Puyang		
+2	realm	city.quzu	구속	Quzu		
+2	realm	city.rinan	일남	Rinan		
+2	realm	city.runan	여남	Runan		
+2	realm	city.shangjun	상군	Shangjun		
+2	realm	city.shendu	신독	Shendu		
+2	realm	city.sheyi	사위	Sheyi		
+2	realm	city.shouchun	수춘	Shouchun		
+2	realm	city.shuofang	삭방	Shuofang		
+2	realm	city.tianshui	천수	Tianshui		
+2	realm	city.wuyishanli	오익산리	Wuyishanli		
+2	realm	city.wuyuan	오원	Wuyuan		
+2	realm	city.xianglin	상림	Xianglin		
+2	realm	city.xiangyang	양양	Xiangyang		
+2	realm	city.xiaopei	소패	Xiaopei		
+2	realm	city.xiapi	하비	Xiapi		
+2	realm	city.xiquan	서권	Xiquan		
+2	realm	city.xuchang	허창	Xuchang		
+2	realm	city.yanmen	안문	Yanmen		
+2	realm	city.ye	업	Ye		
+2	realm	city.yongan	영안	Yong'an		
+2	realm	city.yongchang	영창	Yongchang		
+2	realm	city.yuexi	월수	Yuexi		
+2	realm	city.yulin	울림	Yulin		
+2	realm	city.yunnan	운남	Yunnan		
+2	realm	city.yunzhong	운중	Yunzhong		
+2	realm	city.zangke	장가	Zangke		
+2	realm	city.zhuti	주제	Zhuti		
+2	realm	city.zhuwu	주오	Zhuwu		
+2	realm	debate.progress	설전 {0}/{1}	Debate {0}/{1}		
+2	realm	debate.result_prefix	🗣️ 설전 {0}/3 정답 — 	🗣️ Debate {0}/3 correct — 		
+2	realm	debate.title	🗣️ 설전	🗣️ Debate		
+2	realm	duel.move_guard	막기	Guard		
+2	realm	duel.move_slash	베기	Slash		
+2	realm	duel.move_stab	찌르기	Thrust		
+2	realm	duel.result_prefix	🤺 일기토 {0}승 — 	🤺 Duel {0} wins — 		
+2	realm	duel.round	일기토 {0}/{1} — 무엇을 낼까?	Duel {0}/{1} — what will you play?		
+2	realm	duel.title	🤺 일기토	🤺 Duel		
+2	realm	era.found_story	⏳ 시간 틈 너머 {0}에서 온 {1} — "{2}"	⏳ A {1} from the {0} era, through the time rift: "{2}"		
+2	realm	era.future	미래	Future		
+2	realm	era.modern	현대	Modern		
+2	realm	era.otherworld	이계	Otherworld		
+2	realm	era.past	과거	Past		
+2	realm	era.region.rift	균열	Rift		
+2	realm	era.region.ruin	폐허	Ruins		
+2	realm	era.region.tomb	묘역	Tombs		
+2	realm	month.harvest_suffix	, 수확	, harvest		
+2	realm	month.starved_suffix	 — {0} 굶주려 병사 흩어짐	 — {0} starved, troops scattered		
+2	realm	month.summary	{0}년 {1}월 — 금 +{2}-{3}(봉록){4}	Year {0}, Month {1} — Gold +{2}-{3}(upkeep){4}		
+2	realm	officer.fu_seonghon	성혼	Seonghon		
+2	realm	officer.jp_musashi	이도인	Idoin		
+2	realm	officer.kr_yisunsin	해장	Haejang		
+2	realm	officer.ru_busaeng	부생	Busaeng		
+2	realm	officer.sg_zhugeliang	현책	Hyeonchaek		
+2	realm	officer.tb_ganghae	강해	Ganghae		
+2	realm	officer.tm_doha	도하	Doha		
+2	realm	officer.tm_doha.title	해커	Hacker		
+2	realm	officer.tm_eunha	은하	Eunha		
+2	realm	officer.tm_eunha.title	우주 창병	Space Lancer		
+2	realm	officer.tm_gangseo	강서	Gangseo		
+2	realm	officer.tm_gangseo.title	특공대장	Special Ops Captain		
+2	realm	officer.tm_geumdam	금담	Geumdam		
+2	realm	officer.tm_geumdam.title	기업가	Entrepreneur		
+2	realm	officer.tm_gongseok	공석	Gongseok		
+2	realm	officer.tm_gongseok.title	현장 반장	Site Foreman		
+2	realm	officer.tm_gwedo	궤도	Gwedo		
+2	realm	officer.tm_gwedo.title	탐사 대장	Expedition Leader		
+2	realm	officer.tm_myeongbyeon	명변	Myeongbyeon		
+2	realm	officer.tm_myeongbyeon.title	논객	Debater		
+2	realm	officer.tm_seongyeon	성연	Seongyeon		
+2	realm	officer.tm_seongyeon.title	항법사	Navigator		
+2	realm	officer.tm_yeongjeom	영점	Yeongjeom		
+2	realm	officer.tm_yeongjeom.title	의체 무사	Cyborg Warrior		
+2	realm	order.crit_suffix	 (대성공!)	 (Critical!)		
+2	realm	order.draft	징병	Conscription		
+2	realm	order.err_already_done	이 달에 이미 명령을 썼습니다	Already issued an order this month.		
+2	realm	order.err_no_gold	금이 모자랍니다	Not enough gold.		
+2	realm	order.err_no_officer_here	이 성에서 명령을 쓸 수 있는 무장이 없습니다	No officer here who can issue orders.		
+2	realm	order.err_no_river	물길이 없는 성입니다	This city has no waterway.		
+2	realm	order.err_unknown	없는 명령	Unknown order		
+2	realm	order.hire	등용	Recruit		
+2	realm	order.hire_declined	{0}이(가) 설득에 응하지 않았다.	{0} declined to be persuaded.		
+2	realm	order.hire_joined	{0}이(가) 세력에 합류했다({1} 배치)!	{0} has joined the cause! (assigned to {1})		
+2	realm	order.hire_none_found	부를 사람이 없다 (먼저 수색하시오)	No one to recruit (search first)		
+2	realm	order.no_recruits	더 뽑을 사람이 없다	No more people to conscript		
+2	realm	order.no_room	더 올릴 곳이 없다	No more room to raise		
+2	realm	order.search	수색	Search		
+2	realm	order.search_found	{0} — {1}을(를) 찾아냈다!	{0} — found {1}!		
+2	realm	order.search_none	더 찾을 사람이 없다	No one left to find		
+2	realm	plot.err_no_officer_here	이 성에서 계략을 쓸 수 있는 무장이 없습니다	No officer here who can carry out schemes.		
+2	realm	plot.err_no_target	이 성에서는 계략을 걸 적국이 없습니다	No enemy nation to scheme against from this city.		
+2	realm	plot.err_unknown	없는 계략	Unknown scheme		
+2	realm	plot.failed	{0} {1} — 들통났다 (성공률 {2}%였다)	{0} {1} — discovered (success rate was {2}%)		
+2	realm	plot.fire_desc	적국의 병참에 불을 놓는다(병력 손실).	Set fire to the enemy's supply lines (troop losses).		
+2	realm	plot.fire_effect	{0} 병력 {1} → {2} ({3} 소실)	{0} troops {1} → {2} ({3} lost)		
+2	realm	plot.fire_name	화계	Fire Attack		
+2	realm	plot.no_officer	무장 없음	No officer		
+2	realm	plot.rumor_desc	적국에 뜬소문을 놓아 군율을 흐트러뜨린다(훈련도 하락).	Spread rumors in the enemy city to undermine discipline (lowers training).		
+2	realm	plot.rumor_effect	{0} 훈련도 {1} → {2}	{0} training {1} → {2}		
+2	realm	plot.rumor_name	유언비어	Rumor Campaign		
+2	realm	plot.succeeded	{0} {1} 성공 — {2}	{0} {1} succeeded — {2}		
+2	realm	succession.occurred	{0}이(가) 연로하여 허창을 {1}에게 물려주었다. 정권 이양으로 치안이 흔들렸다.	{0} has grown old and handed Xuchang over to {1}. The transition of power has shaken security.		
+2	realm	summary.gold	금 {0}({1})	Gold {0} ({1})		
+2	realm	summary.next	다음: {0}	Next: {0}		
+2	realm	summary.title	{0}년 {1}월 정리	Year {0}, Month {1} — Summary		
+2	realm	trait.brave	용맹	Brave		
+2	realm	trait.cunning	교활	Cunning		
+2	realm	trait.wise	현명	Wise		
+2	realm	victory.card_captured	함락 {0}/{1}성	Captured {0}/{1} cities		
+2	realm	victory.card_date	{0}년 {1}월	Year {0}, Month {1}		
+2	realm	victory.card_roster	로스터 {0}명	Roster {0}		
+2	realm	victory.conquest	정복	Conquest		
+2	realm	victory.culture	문화	Culture		
+2	realm	victory.done_conquest	정복 승리 — 판 끝	Conquest victory — game over		
+2	realm	victory.done_culture	문화 승리 — 판 끝	Culture victory — game over		
+2	realm	victory.title_conquest	🏆 정복 승리	🏆 Conquest Victory		
+2	realm	victory.title_culture	🏆 문화 승리	🏆 Culture Victory		
+2	realm	war.captured	{0}을(를) 함락했다! (아군 손실 {1}, 적 손실 {2}) — 이제 우리 성입니다	Captured {0}! (Our losses {1}, enemy losses {2}) — now our city		
+2	realm	war.err_already_captured	이미 함락한 성입니다	This city has already been captured.		
+2	realm	war.err_no_food	군량이 모자랍니다 ({0} 필요)	Not enough provisions ({0} needed)		
+2	realm	war.err_no_target	이 성에서는 칠 적국이 없습니다	No enemy nation to attack from this city.		
+2	realm	war.err_too_few_troops	오백은 넘겨야 군대라 하지요	You need more than five hundred to call it an army.		
+2	realm	war.retreated	물러났다 — 생존 {0}, 적 손실 {1}, 치중 {2} 귀환	Retreated — {0} survived, enemy losses {1}, {2} supplies recovered		
+2	realm	war.tactic_charge_fail	⚔️ 기병 돌격 실패(무력 80 필요) —	⚔️ Cavalry charge failed (needs Might 80) —		
+2	realm	war.tactic_charge_ok	⚔️ 기병 돌격 성공 —	⚔️ Cavalry charge succeeded —		
+2	realm	war.tactic_fire_fail	🔥 화공 실패(지력 60 필요) —	🔥 Fire attack failed (needs Wisdom 60) —		
+2	realm	war.tactic_fire_ok	🔥 화공 성공 —	🔥 Fire attack succeeded —		
+2	realm	war.tactic_hint_plain	평야: 기병 돌격(무력 80+)	Plain: cavalry charge (Might 80+)		
+2	realm	war.tactic_hint_river	강: 화공(지력 60+)	River: fire attack (Wisdom 60+)		
+3	go	event.animal_flee	동물이 놀라 달아난다.	The animal got startled and ran off.		
+3	go	event.beacon_hint	 아직 못 찾은 명소가 {0}곳 남았다.	 {0} landmark(s) still undiscovered.		
+3	go	event.beacon_hint_done	 둘러볼 명소를 전부 찾았다.	 You have found every landmark.		
+3	go	event.beacon_lit	봉수대에 불을 올렸다 — 경험치 +{0} · 돈 +{1}냥.{2}	You lit the beacon — +{0} EXP · +{1} Gold.{2}		
+3	go	event.bond_levelup	{0}과(와) 인연이 깊어졌다 — 인연 Lv.{1}. 전투력 +{2}%.	Your bond with {0} deepened — Bond Lv.{1}. Power +{2}%.		
+3	go	event.cairn_broke	성황당 돌무더기 — 노잣돈이 모자라 기원하지 못했다.	Village shrine cairn — not enough travel money to make a wish.		
+3	go	event.cairn_outcome_big	큰 행운! 몸도 마음도 가벼워졌다.	Great luck! Body and mind both feel lighter.		
+3	go	event.cairn_outcome_medium	제법 큰 행운 — 돈이 두둑이 돌아왔다.	A fair bit of luck — a good deal of gold came back.		
+3	go	event.cairn_outcome_none	아무 일도 일어나지 않았다.	Nothing happened.		
+3	go	event.cairn_outcome_small	작은 행운 — 돈이 조금 돌아왔다.	A small stroke of luck — a bit of gold came back.		
+3	go	event.cairn_reward_exp_suffix	 · 경험치 +{0})	 · +{0} EXP)		
+3	go	event.cairn_reward_suffix	 (돈 +{0}냥	 (+{0} Gold		
+3	go	event.cairn_wish	돌 하나를 얹고 기원했다 — {0}{1}	Placed a stone and made a wish — {0}{1}		
+3	go	event.drop_recovered	떨어뜨렸던 짐을 되찾았다 — 돈 +{0}냥.	You recovered your dropped pack — +{0} Gold.		
+3	go	event.gather	산나물을 캤다 — 약값으로 돈 +{0}냥	Picked wild greens — sold for medicine, +{0} Gold		
+3	go	event.grove_relic	낡은 돌기둥을 발견했다 — 오래전 누군가의 흔적. 경험치 +{0} · 돈 +{1}냥	Found an old stone pillar — a trace of someone long ago. +{0} EXP · +{1} Gold		
+3	go	event.hidden_treasure	숨겨진 보물을 발견했다! {0}을(를) 얻었다. 경험치 +{1} · 돈 +{2}냥	Found a hidden treasure! Got {0}. +{1} EXP · +{2} Gold		
+3	go	event.mountain_shrine	산신령의 가호를 받았다 — 경험치 +{0} · 돈 +{1}냥	Received the mountain spirit's blessing — +{0} EXP · +{1} Gold		
+3	go	folk.chrononaut	시간 여행자	Time Traveler		
+3	go	folk.chrononaut.line	{0}… 기록으로만 보던 곳이군요. 제가 여기 있었다는 건 비밀로 해 주세요.	{0}... I've only seen this place in records. Please keep it secret that I was here.		
+3	go	folk.courier	택배 기사	Courier		
+3	go	folk.courier.line	{1} 앞으로 온 소포가 있는데, 받는 분이 삼백 년 전 사람이래요. 서명은 어떻게 받죠?	I have a parcel for {1}, but the recipient lived three hundred years ago. How do I get a signature?		
+3	go	folk.hunter	사냥꾼	Hunter		
+3	go	folk.hunter.line	{0} 짐승 발자국 사이로 쇠바퀴 자국이 났어. 태어나 처음 보는 흔적이야.	Iron wheel tracks among the beast prints of {0}. Never seen marks like that in my life.		
+3	go	folk.mechanic	수리 기사	Mechanic		
+3	go	folk.mechanic.line	{1} 돌기둥 말이에요, 겉은 돌인데 속은 우리 시대 중계기처럼 떨려요.	That stone pillar at {1} — stone outside, but inside it hums like a relay from my era.		
+3	go	folk.patrol	순찰 대원	Patrol Officer		
+3	go	folk.patrol.line	{0} 쪽에 방독면 쓴 무리가 돌아다닙니다. 혼자 다니지 마세요.	A gang in gas masks is roaming around {0}. Don't travel alone.		
+3	go	folk.shrine_maiden	무녀	Shrine Maiden		
+3	go	folk.shrine_maiden.line	{0} 바람에 낯선 기운이 섞였어요. 하늘에 틈이 벌어져 다른 때 사람들이 넘어온다지요.	A strange air mixes into the wind of {0}. They say a rift opened in the sky and people from other times are crossing over.		
+3	go	folk.surveyor	탐사 대원	Surveyor		
+3	go	folk.surveyor.line	{0} 대기 표본 채취 중. 시간 틈이 이 근처에서 가장 넓게 열려 있다.	Sampling the air of {0}. The time rift is open widest around here.		
+3	go	folk.tourist	여행자	Tourist		
+3	go	folk.tourist.line	지도 앱엔 {0} 같은 곳이 안 나오던데… 그래도 경치 하나는 끝내주네요.	My map app doesn't show anywhere like {0}... but the view is amazing.		
+3	go	folk.watchman	파수꾼	Watchman		
+3	go	folk.watchman.line	{1} 지키는 게 내 일이오. 요즘은 이상한 차림 손님이 하도 많아 누가 도적인지 모르겠군.	Guarding {1} is my job. So many oddly dressed visitors these days, I can't tell who the bandits are.		
+3	go	folk.woodcutter	나무꾼	Woodcutter		
+3	go	folk.woodcutter.line	{0} 나무는 결이 곱지. {1} 둘레 장작은 내가 다 팬다오. 요새는 쇠옷 입은 손님이 자꾸 구경을 오네.	The wood of {0} has a fine grain. I chop every log around {1}. Lately folk in iron clothes keep coming to watch.		
+3	go	hero.eu_alexander.quote	세상의 끝까지 가 보고 싶지 않은가.	Don't you want to see the end of the world?		
+3	go	hero.eu_augustus.quote	벽돌의 도시를 대리석으로 바꾸겠소.	I will turn a city of brick into one of marble.		
+3	go	hero.eu_aurelius.quote	오늘 할 수 있는 선(善)을 미루지 마시오.	Do not put off the good you can do today.		
+3	go	hero.eu_caesar.quote	왔노라, 보았노라, 그리고 함께 가겠노라.	I came, I saw, and now I will go with you.		
+3	go	hero.eu_charlemagne.quote	검과 글을 함께 쥔 나라를 세우려 하오.	I mean to build a realm that holds both sword and letters.		
+3	go	hero.eu_davinci.quote	아직 그리지 못한 것이 너무 많소.	There is so much I have yet to paint.		
+3	go	hero.eu_eleanor.quote	두 왕국의 왕비였으니, 셈은 제가 하겠소.	I was queen of two kingdoms — let me do the counting.		
+3	go	hero.eu_elizabeth.quote	나는 이 나라와 혼인했소.	I am married to this country.		
+3	go	hero.eu_frederick.quote	왕은 나라의 첫째 종복이오.	A king is the first servant of the state.		
+3	go	hero.eu_hannibal.quote	길이 없다면 알프스를 넘어 만들면 된다.	If there is no road, cross the Alps and make one.		
+3	go	hero.eu_harald.quote	북쪽에서 왔다. 노를 저을 줄 아는가.	I came from the north. Can you row?		
+3	go	hero.eu_joan.quote	두려움은 제 것이 아닙니다. 깃발을 드십시오.	Fear is not mine to keep. Raise the banner.		
+3	go	hero.eu_leonidas.quote	와서 가져가라.	Come and take it.		
+3	go	hero.eu_machiavelli.quote	사랑받기 어렵다면, 적어도 얕보이지는 마시오.	If you cannot be loved, at least do not be scorned.		
+3	go	hero.eu_michelangelo.quote	돌 안에 이미 있는 것을 꺼낼 뿐이오.	I only free what is already inside the stone.		
+3	go	hero.eu_napoleon.quote	불가능이라는 말은 겁쟁이의 변명이오.	'Impossible' is a coward's excuse.		
+3	go	hero.eu_nelson.quote	나라가 각자의 본분을 기대하고 있다.	The nation expects each to do their duty.		
+3	go	hero.eu_newton.quote	거인의 어깨에 올라섰을 뿐이오.	I merely stood on the shoulders of giants.		
+3	go	hero.eu_peter.quote	바다로 나가는 창을 열어야 하오.	We must open a window to the sea.		
+3	go	hero.eu_richard.quote	사자의 심장은 물러서는 법을 모른다.	A lion's heart knows no retreat.		
+3	go	hero.eu_scipio.quote	마그나로를 이기는 법은 마그나로에게 배웠소.	I learned how to beat Magnaro from Magnaro himself.		
+3	go	hero.eu_william.quote	바다를 건넜으면 배는 태워야 하오.	Once you cross the sea, you burn the ships.		
+3	go	hero.jp_hanzo.quote	그림자는 소리를 남기지 않는다.	A shadow leaves no sound behind.		
+3	go	hero.jp_hideyoshi.quote	천하는 재주로도 쥘 수 있소.	Heaven can be seized with talent, too.		
+3	go	hero.jp_himiko.quote	귀도(鬼道)로 백성의 마음을 다스리오.	I rule the people's hearts with the way of spirits.		
+3	go	hero.jp_ieyasu.quote	두견새는 울 때까지 기다리면 되오.	Just wait until the cuckoo sings.		
+3	go	hero.jp_kenshin.quote	적에게 소금을 보내지 않을 이유가 없소.	I see no reason not to send salt to my enemy.		
+3	go	hero.jp_masamune.quote	한쪽 눈으로도 천하는 다 보인다.	Even with one eye, I can see all under heaven.		
+3	go	hero.jp_mitsukuni.quote	이 나라의 역사를 편찬하겠소.	I will compile the history of this land.		
+3	go	hero.jp_murasaki.quote	덧없는 세상, 이야기로 남기겠소.	A fleeting world — I will leave it as a tale.		
+3	go	hero.jp_musashi.quote	천 일의 연습, 만 일의 단련.	A thousand days of practice, ten thousand days of training.		
+3	go	hero.jp_naosuke.quote	문을 여는 것도 나라를 지키는 길이오.	Opening the gates is also a way to defend the country.		
+3	go	hero.jp_nobunaga.quote	울지 않는 새는 베어버린다.	A bird that will not sing gets cut down.		
+3	go	hero.jp_ryoma.quote	세상을 다시 씻어내야 하오.	The world must be washed clean again.		
+3	go	hero.jp_saigo.quote	경천애인(敬天愛人), 하늘을 공경하고 사람을 사랑하라.	Revere heaven and love people.		
+3	go	hero.jp_seishonagon.quote	봄은 새벽이 가장 좋습니다.	In spring, dawn is the loveliest.		
+3	go	hero.jp_shingen.quote	바람처럼 빠르고 숲처럼 고요하게.	Swift as the wind, quiet as the forest.		
+3	go	hero.jp_taira.quote	헤이케(平家) 아니면 사람이 아니다.	If you are not of the Heike, you are not a person.		
+3	go	hero.jp_tomoegozen.quote	여인이라 활을 못 당길 이유가 없소.	Being a woman is no reason I cannot draw a bow.		
+3	go	hero.jp_yoritomo.quote	무사의 세상을 열겠다.	I will open an age of warriors.		
+3	go	hero.jp_yoshitsune.quote	형의 그늘 아래서도 활은 빗나가지 않았다.	Even in my brother's shadow, my arrows never missed.		
+3	go	hero.jp_yukimura.quote	오사카의 마지막 창은 내가 쥐겠소.	The last spear of Osaka will be mine to hold.		
+3	go	hero.kr_ahnjunggeun.quote	하루라도 글을 읽지 않으면 입에 가시가 돋는다.	A day without reading makes thorns grow in my mouth.		
+3	go	hero.kr_choemuseon.quote	화약이라면 제게 맡기시지요.	Leave the gunpowder to me.		
+3	go	hero.kr_daejoyeong.quote	고구려의 뒤를 잇겠소.	I will carry on after Goguryeo.		
+3	go	hero.kr_euljimundeok.quote	만족함을 알고 그만두기를 권하노라.	Know contentment, and I advise you to stop here.		
+3	go	hero.kr_ganggamchan.quote	강물을 터뜨릴 준비는 끝났소.	Everything is ready to break the river dam.		
+3	go	hero.kr_gwakjaeu.quote	홍의(紅衣)를 보면 왜적이 달아난다 하더이다.	They say the invaders flee when they see the red robe.		
+3	go	hero.kr_gwanggaeto.quote	북으로, 더 북으로 나아가자.	North — ever further north!		
+3	go	hero.kr_gyebaek.quote	오천으로 오만을 맞겠다.	With five thousand I will face fifty thousand.		
+3	go	hero.kr_heojun.quote	병 앞에 귀천이 어디 있겠습니까.	Before illness, what does rank matter?		
+3	go	hero.kr_hwanghui.quote	네 말도 옳고, 네 말도 옳다.	You are right, and you are right too.		
+3	go	hero.kr_jangyeongsil.quote	해 그림자로 시간을 재어 보이겠습니다.	I will show you how to measure time by the sun's shadow.		
+3	go	hero.kr_jeongmongju.quote	일백 번 고쳐 죽어도 마음은 하나입니다.	Though I die a hundred times over, my heart stays the same.		
+3	go	hero.kr_jeongyakyong.quote	거중기로 백성의 짐을 덜겠습니다.	I will lighten the people's burdens with a crane.		
+3	go	hero.kr_kimgu.quote	나의 소원은 오직 완전한 자주독립이오.	My only wish is complete independence.		
+3	go	hero.kr_kimjeongho.quote	이 땅을 한 장에 담아보겠습니다.	I will fit this whole land onto a single sheet.		
+3	go	hero.kr_kimyusin.quote	삼한을 하나로 잇겠소.	I will join the three kingdoms into one.		
+3	go	hero.kr_nongae.quote	남강의 물결을 기억해 주십시오.	Please remember the waves of the South River.		
+3	go	hero.kr_sejong.quote	백성이 쉽게 익혀 날로 쓰게 하고자 함이라.	So that the people may learn it easily and use it every day.		
+3	go	hero.kr_sinsaimdang.quote	붓끝에 마음을 담을 뿐입니다.	I only put my heart into the tip of the brush.		
+3	go	hero.kr_wanggeon.quote	흩어진 것을 다시 모으는 일이오.	My work is gathering again what was scattered.		
+3	go	hero.kr_wonhyo.quote	모든 것은 마음이 짓는 것이오.	All things are made by the mind.		
+3	go	hero.kr_yeongaesomun.quote	요동의 성벽은 무너지지 않는다.	The walls of Liaodong will not fall.		
+3	go	hero.kr_yihwang.quote	경(敬)으로써 마음을 바로 합니다.	I set my mind right through reverence.		
+3	go	hero.kr_yii.quote	십만 양병이 늦지 않았기를 바랍니다.	I hope the call for a hundred thousand soldiers was not too late.		
+3	go	hero.kr_yisunsin.quote	아직 신에게는 열두 척의 배가 남아 있사옵니다.	Your servant still has twelve ships left.		
+3	go	hero.kr_yugwansun.quote	나라에 바칠 목숨이 하나뿐인 것이 슬플 따름입니다.	My only sorrow is having but one life to give to my country.		
+3	go	hero.sg_caocao.quote	내가 천하를 저버릴지언정, 천하가 나를 저버리게 두지 않는다.	I would rather betray the world than let the world betray me.		
+3	go	hero.sg_diaochan.quote	이 몸이 도움이 된다면요.	If I can be of help, then so be it.		
+3	go	hero.sg_ganning.quote	방울 소리가 들리면 이미 늦은 것이다.	When you hear the bells, it is already too late.		
+3	go	hero.sg_guanyu.quote	의(義)를 아는 이와 함께라면 어디든 가겠소.	With one who knows righteousness, I will go anywhere.		
+3	go	hero.sg_huangzhong.quote	늙었다 얕보지 마라!	Don't look down on me for being old!		
+3	go	hero.sg_huatuo.quote	사람을 살리는 일이라면 함께하지요.	If it saves lives, I will join you.		
+3	go	hero.sg_liubei.quote	백성을 생각하는 마음이 같구려.	We share the same heart for the people.		
+3	go	hero.sg_lubu.quote	천하무쌍! 나를 막을 자가 있나?	Unrivaled under heaven! Who dares to stop me?		
+3	go	hero.sg_luxun.quote	서두르지 않는 것이 제 병법입니다.	Not hurrying is my art of war.		
+3	go	hero.sg_machao.quote	서량의 창끝을 빌려주겠다.	I will lend you the spear of the western frontier.		
+3	go	hero.sg_menghuo.quote	일곱 번 져도 여덟 번 일어난다!	Beaten seven times, I rise an eighth!		
+3	go	hero.sg_pangtong.quote	봉래가 여기 있습니다.	Bongrae is here.		
+3	go	hero.sg_simayi.quote	때를 기다릴 줄 아는 자가 이깁니다.	The one who knows how to wait is the one who wins.		
+3	go	hero.sg_sunquan.quote	강동은 손을 잡을 줄 아는 자를 반깁니다.	The east of the river welcomes those who know how to join hands.		
+3	go	hero.sg_taishici.quote	활 솜씨를 보여드리지요.	Let me show you my archery.		
+3	go	hero.sg_xiahoudun.quote	이 한쪽 눈으로도 적은 충분히 보인다.	Even with one eye, I see the enemy well enough.		
+3	go	hero.sg_xunyu.quote	왕좌지재(王佐之才)라 불러주시니 부끄럽습니다.	You call me a king's right hand — I am honored and ashamed.		
+3	go	hero.sg_zhangfei.quote	술이나 한잔 하며 이야기하세!	Let's talk it over with a drink!		
+3	go	hero.sg_zhangliao.quote	팔백으로 십만을 막아 보이겠소.	I will hold off a hundred thousand with eight hundred.		
+3	go	hero.sg_zhaoyun.quote	한 몸 바쳐 주공을 지키겠습니다.	I will guard my lord with my life.		
+3	go	hero.sg_zhouyu.quote	동남풍이 불면, 그때가 우리의 때입니다.	When the southeast wind blows, our time has come.		
+3	go	hero.sg_zhugeliang.quote	삼고초려의 뜻, 잊지 않겠습니다.	I will not forget the meaning of those three visits.		
+3	go	hero.wd_akbar.quote	믿음은 강요로 얻어지지 않는다.	Faith is not won by force.		
+3	go	hero.wd_ashoka.quote	칼로 얻은 땅을 이제 법으로 다스리겠다.	Land won by the sword I will now rule by the law.		
+3	go	hero.wd_attila.quote	신의 채찍이 여기 있다.	The scourge of heaven is here.		
+3	go	hero.wd_cleopatra.quote	나일강은 아직 나의 편이오.	The Nile is still on my side.		
+3	go	hero.wd_genghis.quote	세상의 끝까지 말을 달리겠다.	I will ride to the end of the world.		
+3	go	hero.wd_hammurabi.quote	눈에는 눈, 이에는 이, 돌에 새겨 두겠다.	An eye for an eye, a tooth for a tooth — carved in stone.		
+3	go	hero.wd_ibnbattuta.quote	길이 있는 한 걸음을 멈추지 않겠소.	As long as there is a road, I will not stop walking.		
+3	go	hero.wd_ibnsina.quote	몸의 이치를 책 한 권에 담겠소.	I will put the workings of the body into a single book.		
+3	go	hero.wd_khubilai.quote	초원과 중원을 하나로 잇겠다.	I will join the steppe and the heartland into one.		
+3	go	hero.wd_mansamusa.quote	금은 나눌수록 내 것이 된다.	The more gold is shared, the more it is mine.		
+3	go	hero.wd_moctezuma.quote	별들이 낯선 자들의 도착을 알렸다.	The stars foretold the arrival of strangers.		
+3	go	hero.wd_pachacuti.quote	세상을 뒤바꾸는 자, 그것이 나의 이름이다.	The one who overturns the world — that is my name.		
+3	go	hero.wd_saladin.quote	예루살렘의 문은 자비로도 열린다.	The gates of Jerusalem open to mercy as well.		
+3	go	hero.wd_shaka.quote	짧은 창이 긴 창을 이긴다.	The short spear beats the long spear.		
+3	go	hero.wd_suleiman.quote	법과 영광을 함께 세우겠다.	I will build law and glory together.		
+3	go	mission.line	◆ {0} 사명 {1}/{2} · {3}	◆ {0} mission {1}/{2} · {3}		
+3	go	region.east_grove.lore	호박빛 단풍 숲에 산적 소굴이 숨어 있다. 옛 싸움터 해골과 숲 못의 물귀신도 깨어난다.	A bandit den hides in the amber autumn grove. Old battlefield skeletons and pond ghosts stir as well.		
+3	go	region.farmland.lore	마른 논둑에 도깨비불이 인다. 산적이 가을걷이를 노린다.	Will-o'-wisps flare on the dry paddy banks. Bandits eye the harvest.		
+3	go	region.north_foot.lore	무너진 성터 무덤이 흩어진 서늘한 비탈. 해골 병사가 줄지어 지킨다.	A cold slope strewn with graves of a fallen fort. Skeleton soldiers stand guard in rows.		
+3	go	region.river.lore	마을과 남쪽 땅을 가르는 물줄기. 헤엄칠 땐 기운이 다하지 않게.	The stream that divides the village from the south. Mind your stamina when you swim.		
+3	go	region.south_glade.lore	옛 망루 발치의 금빛 풀밭. 망루를 지키던 수호장이 아직 서 있다.	A golden meadow at the foot of the old watchtower. Its guardian still stands.		
+3	go	region.village.lore	역참과 장터가 모인 첫 들판. 마을 울타리 안에선 칼 뽑을 일이 없다.	The first fields, where the waypoint and market gather. No blade is drawn inside the village fence.		
+3	go	region.west_wood.lore	벼락 맞은 고목이 늘어선 짙은 숲길. 번개귀가 나무 사이를 건너뛴다.	A dark trail lined with lightning-struck trees. Storm wraiths leap between the trunks.		
+3	dungeon	era_folk.chrononaut	시간 여행자	Time Traveler		
+3	dungeon	era_folk.chrononaut.0	기록엔 이 마을이 이번 난리에 사라진다고 돼 있어요. 제가 틀렸으면 좋겠네요.	The records say this village vanishes in these riots. I hope I'm wrong.		
+3	dungeon	era_folk.chrononaut.1	깊은 층일수록 시간 틈이 넓어요. 제 시대 기계가 거기서 길을 잃었죠.	The deeper the floor, the wider the rift. Machines from my era got lost down there.		
+3	dungeon	era_folk.chrononaut.2	그 칼, 제 시대 박물관에 걸려 있던 것과 똑같이 생겼어요.	That blade looks exactly like one hanging in a museum in my time.		
+3	dungeon	era_folk.chrononaut.3	돌아갈 문이 닫혔어요. 당분간 이 시대 밥을 먹어야겠네요.	My way back has closed. I'll be eating this era's food for a while.		
+3	dungeon	era_folk.courier	택배 기사	Courier		
+3	dungeon	era_folk.courier.0	주소가 '황건 난리 통 셋째 마을'이라고만 적혀 있네요. 여기 맞죠?	The address just says 'third village, during the Yellow Turban riots'. This is it, right?		
+3	dungeon	era_folk.courier.1	짐이 자꾸 무거워져요. 상자 속에서 뭔가 칼 가는 소리가 나요.	The parcel keeps getting heavier. Something inside sounds like a blade being sharpened.		
+3	dungeon	era_folk.courier.2	아래층엔 배달 안 갑니다. 지난번에 강철 인형이 서명 대신 주먹을 줬거든요.	No deliveries to the lower floors. Last time a steel doll signed with its fist.		
+3	dungeon	era_folk.courier.3	시간 틈 요금이 따로 붙는다던데, 누가 내 주실 분?	They say there's a time-rift surcharge. Anyone want to pay it?		
+3	dungeon	era_folk.salaryman	출장 온 회사원	Office Worker on a Business Trip		
+3	dungeon	era_folk.salaryman.0	지하철에서 졸았을 뿐인데 눈 떠 보니 갈림길이더군요.	I only dozed off on the subway, and I woke up at this crossroads.		
+3	dungeon	era_folk.salaryman.1	보고서 마감이 내일인데… 여기 전기 들어오는 데 없나요?	My report is due tomorrow... is there anywhere with electricity here?		
+3	dungeon	era_folk.salaryman.2	방독면 쓴 사람들, 우리 회사 방역팀 같던데 말이 안 통해요.	Those people in gas masks look like our company's disinfection team, but they won't talk to me.		
+3	dungeon	era_folk.salaryman.3	명함이라도 드릴까요? 아, 이 시대엔 종이가 귀하다고요.	Shall I give you my card? Ah, paper is precious in this era, you say.		
+3	dungeon	era_folk.surveyor	탐사 대원	Surveyor		
+3	dungeon	era_folk.surveyor.0	지하 공명 측정 중. 층을 내려갈수록 수치가 요동친다.	Measuring underground resonance. The readings swing wildly the deeper you go.		
+3	dungeon	era_folk.surveyor.1	경비 보행병을 만나면 다리 관절을 노려라. 우리 시대 교범 그대로다.	If you meet a sentry walker, aim for the knee joints. Straight from our field manual.		
+3	dungeon	era_folk.surveyor.2	이 시대 사람들 튼튼하군. 보호복 없이 폐허를 오르다니.	People of this era are tough. Climbing ruins without protective suits.		
+3	dungeon	era_folk.surveyor.3	표본 하나만 부탁한다. 층 주인 비늘이면 더 좋고.	Bring me one sample. A floor lord's scale would be even better.		
+3	dungeon	landmark.bandit.lore	검은 바람을 부른다는 도적 떼의 소굴. 붙잡힌 나그네가 있다.	Den of bandits said to call a black wind. A traveler is held captive.		
+3	dungeon	landmark.cloud.lore	구름을 딛고 선 금빛 궁궐. 천병이 옥좌를 에워싼다.	A golden palace standing on clouds. Heavenly soldiers ring the throne.		
+3	dungeon	landmark.fort.lore	불탄 뒤 버려진 산성. 잔병들이 아직 성문을 닫아 건다.	A mountain fort abandoned after the fire. Stragglers still bar the gate.		
+3	dungeon	landmark.hellgate.lore	꺼지지 않는 불이 문을 두른다. 옥졸들이 사슬을 끌고 다닌다.	Undying flames ring the gate. Jailers drag their chains about.		
+3	dungeon	landmark.palace.lore	물이 빠진 뒤에도 비늘 병사들이 궁을 떠나지 않았다.	Even after the water drained, the scaled soldiers never left the palace.		
+3	dungeon	landmark.tomb.lore	옛 왕과 함께 묻힌 병사들이 아직 무덤을 지킨다.	Soldiers buried with the old king still guard the tomb.		
+3	dungeon	lore.line	비전 {0} — {1} 을(를) 건 무예 위력 ×1.6	Lore {0} — moves set to {1} deal ×1.6		
+3	dungeon	region.heaven.desc	구름 위 사당과 빛으로 새긴 홀로그램 비석	A shrine above the clouds and steles carved in light		
+3	dungeon	region.hellgate.desc	붉게 갈라진 바위와 동굴 아가리, 잎 없는 나무들	Red-split rocks, gaping caves and leafless trees		
+3	dungeon	region.jungwon.desc	기와와 초가 사이로 논두렁과 숲이 이어진다	Paddy ridges and woods run between tiled and thatched roofs		
+3	dungeon	region.neon.desc	무너진 공장 굴뚝과 콘크리트 잔해, 멈춘 급수탑	Collapsed factory chimneys, concrete rubble and a dead water tower		
+3	dungeon	region.saltmarsh.desc	물 빠진 갯벌과 갈대, 바다를 보던 녹슨 관측탑	Drained mudflats and reeds, a rusted tower that once watched the sea		
+3	dungeon	region.scrap.desc	쓰러진 기계 더미 사이로 홀로그램 표지가 깜빡인다	Holographic signs flicker among fallen machine heaps		
+3	dungeon	region.silkroad.desc	대상(隊商)의 야영지와 모래에 반쯤 묻힌 옛 유적	Caravan camps and old ruins half-buried in sand		
+3	dungeon	region.snowfort.desc	눈 덮인 산성 폐허, 골짜기를 가로지르는 케이블카 기둥	Snow-buried fortress ruins and cable-car pylons across the valley		
+3	dungeon	region.solar.desc	태양광 판이 늘어선 개척지, 반듯한 길과 야영 천막	A frontier lined with solar panels, straight roads and camp tents		
+3	forest	biome.dark_forest.lore	해가 들지 않는 숲. 숲도깨비와 안개유령이 이끼 낀 돌제단 둘레를 맴돈다.	A forest the sun never reaches. Forest goblins and mist ghosts circle the mossy altar.		
+3	forest	biome.flower_field.lore	따뜻한 연둣빛 들. 꽃정령과 나비정령이 옛 돌기둥 사이를 난다.	A warm spring-green meadow. Flower spirits and butterfly spirits flit between old stone pillars.		
+3	forest	biome.mushroom_forest.lore	축축한 보랏빛 숲. 버섯정령이 살고, 포자괴물이 길을 막아선다.	A damp violet wood. Mushroom spirits live here, and spore beasts block the path.		
+3	forest	biome.rocky.lore	마른 황토에 큰 바위가 솟은 땅. 바위도깨비와 무쇠도깨비가 돌을 굴리며 논다.	Dry ochre ground where great boulders rise. Rock goblins and iron goblins roll stones for fun.		
+3	forest	era_folk.chrononaut	금빛 외골격 시간 여행자	Golden Exosuit Time Traveler		
+3	forest	era_folk.chrononaut.0	이 외골격은 걷기 전용입니다. 뛰어다니는 짐승은 못 쫓아가요.	This exosuit is built for walking only. I can't keep up with the running beasts.		
+3	forest	era_folk.chrononaut.1	기록 보관소엔 이 숲이 '사라진 숲'으로 남아 있어요. 이렇게 살아 있었군요.	In the archives this forest is listed as 'the lost forest.' So this is what it was like alive.		
+3	forest	era_folk.chrononaut.2	숲 곳곳에 떠 있는 잔해는 제 시대 물건이에요. 시간 틈에 휩쓸려 온 거죠.	The debris floating around the forest is from my time. It got swept here through the rift.		
+3	forest	era_folk.chrononaut.3	소원석에 빌면 이뤄진다고요? 제 시대엔 그런 돌이 박물관에만 있어요.	Wishes on the wish stone come true? In my era, stones like that are only in museums.		
+3	forest	era_folk.courier	택배 기사 달음	Courier Dal-eum		
+3	forest	era_folk.courier.0	배송지가 '숲 마을 우편함'으로만 적혀 있어요. 여긴 주소가 없네요.	The address just says 'forest village mailbox.' There are no street addresses out here.		
+3	forest	era_folk.courier.1	택배 창구 옆에 차를 대려 했는데 길이 없어서 다 걸어 다녀요.	I wanted to park by the delivery counter, but there are no roads, so I walk everywhere.		
+3	forest	era_folk.courier.2	꽃밭에 덮개 씌운 차 한 대 봤어요? 동료 차 같은데 사람은 없더라고요.	Did you see a covered car in the flower field? Looks like a coworker's, but nobody was around.		
+3	forest	era_folk.courier.3	서명 대신 도장 받는 마을은 처음이에요. 아니, 발바닥 도장이었나…	First village where I get stamps instead of signatures. Wait — were those paw prints…?		
+3	forest	era_folk.photographer	사진작가 찰나	Photographer Chalna		
+3	forest	era_folk.photographer.0	요정 돌고리 한가운데 기계가 떠 있어요! 이건 잡지 표지감이에요.	There's a machine floating right in the middle of the fairy ring! That's a magazine cover.		
+3	forest	era_folk.photographer.1	안개유령은 사진에 안 찍혀요. 대신 사진 구석에 푸른 빛이 번져요.	The mist ghosts don't show up in photos. Just a blue glow smudged in the corner.		
+3	forest	era_folk.photographer.2	휴대폰 배터리가 떨어져 가요. 이 마을엔 콘센트가 없죠?	My phone battery is dying. I suppose this village has no outlets?		
+3	forest	era_folk.photographer.3	숲도깨비가 렌즈 뚜껑을 가져갔어요. 돌려받을 수 있을까요?	A forest goblin ran off with my lens cap. Think I can get it back?		
+3	forest	era_folk.pilgrim	붉은 두건 순례 기사	Red-Hooded Pilgrim Knight		
+3	forest	era_folk.pilgrim.0	옛 돌기둥터를 찾아 순례 중이오. 기둥 위에 쇠 눈알이 떠 있다니, 불길하군.	I'm on pilgrimage to the old pillar ruins. An iron eye floating over the pillars — an ill omen.		
+3	forest	era_folk.pilgrim.1	이끼 돌제단 등불이 꺼지지 않는 까닭을 알았소 — 제단 위에 뜬 쇠함이 빛을 뿜더이다.	I learned why the mossy altar's lanterns never go out — an iron box hovering over it pours out light.		
+3	forest	era_folk.pilgrim.2	칼은 칼집에 넣어 두었소. 이 숲 짐승은 겁만 많지 사람을 해치진 않으니.	My sword stays sheathed. The beasts of this forest are timid; they harm no one.		
+3	forest	era_folk.pilgrim.3	다른 때 사람들이 자꾸 넘어오오. 하늘에 틈이 벌어진 게 틀림없소.	People from other times keep crossing over. There must be a rift torn in the sky.		
+3	forest	era_folk.sentry	길 잃은 성 파수병	Lost Castle Sentry		
+3	forest	era_folk.sentry.0	성문을 지키다 눈을 떠 보니 이 숲이었소. 내 성은 어디로 갔단 말이오?	I was guarding the castle gate, and when I opened my eyes I was in this forest. Where has my castle gone?		
+3	forest	era_folk.sentry.1	바위 지대에 쇠로 된 통이 굴러다니더군. 기름 냄새가 나는 게 우리 성 창고 것은 아니오.	There are iron drums rolling about in the rocky fields. They reek of oil, and they're not from our castle stores.		
+3	forest	era_folk.sentry.2	밤에 숲 위로 푸른 빛덩이가 떠서 도는 걸 봤소. 파수병 눈은 못 속이오.	At night I saw blue lights floating and turning above the woods. You can't fool a sentry's eyes.		
+3	forest	era_folk.sentry.3	과일나무 열매 하나면 하루는 버티오. 이 마을 인심이 좋구려.	One fruit from that tree keeps me going a whole day. Kind folk in this village.		
+3	forest	era_folk.surveyor	불시착 탐사원 루미	Crash-Landed Surveyor Rumi		
+3	forest	era_folk.surveyor.0	착륙선이 시간 틈에 걸려 부서졌어요. 부품이 숲 여기저기 떠 있을 거예요.	My lander got caught in the time rift and broke apart. Its parts must be floating all over the forest.		
+3	forest	era_folk.surveyor.1	바위 지대 선돌 곁에 제 탐조등이 떠 있더라고요. 아직 불이 들어와요.	My searchlight is hovering by the standing stone in the rocky fields. It still lights up.		
+3	forest	era_folk.surveyor.2	이 시대 공기는 달아요. 필터를 끄고 숨 쉬어도 되겠어요.	The air in this era is sweet. I think I can switch off my filter and breathe.		
+3	forest	era_folk.surveyor.3	구조 신호는 보냈어요. 도착은… 삼백 년 뒤래요.	I sent a rescue signal. Estimated arrival… three hundred years from now.		
+3	forest	landmark.dark_forest.lore	누가 쌓았는지 모르는 돌제단. 등불은 한 번도 꺼진 적이 없다고 한다.	No one knows who stacked this altar. They say its lanterns have never gone out.		
+3	forest	landmark.flower_field.lore	무너진 정자의 기둥 넷. 기둥마다 꽃덩굴이 감겼다.	Four pillars of a fallen pavilion, each wrapped in flowering vines.		
+3	forest	landmark.mushroom_forest.lore	달 밝은 밤이면 버섯정령이 이 돌고리 안에서 춤춘다.	On bright moonlit nights the mushroom spirits dance inside this ring.		
+3	forest	landmark.rocky.lore	거인이 땅에 꽂고 간 지팡이라는 선돌. 두드리면 낮게 운다.	Said to be a staff a giant left stuck in the earth. Knock on it and it hums low.		
+3	forest	villager.keeper.line	이 숲은 내가 돌본다 — 짐승을 함부로 놀라게 하지 마시게.	I look after this forest — don't go frightening the animals.		
+3	story	era_folk.photographer	사진 찍는 여행자	Traveling Photographer		
+3	story	era_folk.photographer.0	황건 난리 한복판이라니, 이건 꼭 찍어 가야 해요. 저 두목 쪽으로 좀 비켜 주실래요?	Right in the middle of the Yellow Turban uprising? I have to get a shot. Could you step toward that chief a bit?		
+3	story	era_folk.photographer.1	휴대폰 배터리가 12% 남았어요. 이 시대엔 충전할 데가 없겠죠?	My phone's at 12%. I guess there's nowhere to charge it in this era.		
+3	story	era_folk.photographer.2	방금 지나간 헬멧 쓴 사람, 제 시대 폭주족이랑 똑같이 생겼어요.	That guy in the helmet who just passed looks exactly like a biker from my time.		
+3	story	era_folk.photographer.3	사진 속 하늘에 금이 가 있어요. 시간 틈이라는 게 저건가 봐요.	There's a crack in the sky in my photos. That must be the time rift.		
+3	story	era_folk.story_chrononaut	시간 여행자	Time Traveler		
+3	story	era_folk.story_chrononaut.0	제 기록엔 이 들판이 '첫 사냥터'로만 남아 있어요. 이렇게 시끄러운 줄은 몰랐네요.	My records only call this field 'the first hunting ground'. I didn't know it was this noisy.		
+3	story	era_folk.story_chrononaut.1	비경 깊은 층일수록 틈이 넓어요. 강철 거신을 보면 무리하지 마세요.	The deeper the Labyrinth floor, the wider the rift. Don't push it if you meet the Steel Colossus.		
+3	story	era_folk.story_chrononaut.2	그 무예, 제 시대 교본에 그림으로만 남아 있던 거예요.	That martial art only survives as drawings in my era's manuals.		
+3	story	era_folk.story_chrononaut.3	돌아갈 좌표가 자꾸 흔들려요. 당분간은 여기서 구경이나 할게요.	My return coordinates keep drifting. I'll just watch from here for a while.		
+3	story	labyrinth.blessing.atk_crit.desc	치명타 확률 +10%p	Crit chance +10%		
+3	story	labyrinth.blessing.atk_haste.desc	무예 재사용 대기 -20%	Skill cooldown -20%		
+3	story	labyrinth.blessing.atk_power.desc	공격력 +25%	ATK +25%		
+3	story	labyrinth.blessing.extra_life.desc	이번 회차 첫 실패 1회 무효(태세 정비)	Ignore your first failure this run (regroup)		
+3	story	labyrinth.blessing.memory_bonus.desc	이번 회차 기억 조각 획득 +50%	Memory shards +50% this run		
+3	story	labyrinth.blessing.move_speed.desc	이동속도 +20%	Move speed +20%		
+3	story	labyrinth.blessing.mp_regen.desc	기력 재생 +30%	MP regen +30%		
+3	story	labyrinth.blessing.mp_shield.desc	전투 노드 진입 시 기력 전부 회복	Full MP on entering a combat node		
+3	story	labyrinth.blessing.time_margin.desc	노드 제한시간 +25%	Node time limit +25%		
+3	story	skill.a_burst.desc	사방으로 화살을 흩놓는다	Scatters arrows all around		
+3	story	skill.a_double.desc	화살 셋을 잇달아 쏜다	Fires three arrows in a row		
+3	story	skill.a_eye.desc	9초간 공격 +40%	Attack +40% for 9s		
+3	story	skill.a_pierce.desc	줄지어 선 것을 꿰뚫는다	Pierces everything in a line		
+3	story	skill.a_retreat.desc	뒤로 물러나며 화살을 놓는다	Leaps back while shooting		
+3	story	skill.a_shot.desc	화살 하나를 날린다	Fires a single arrow		
+3	story	skill.d_bloom.desc	표창 아홉이 지지 않고 흩날린다 — 낙화 5	Nine darts drift without falling — Falling Petals 5		
+3	story	skill.d_carve.desc	여덟 번 긋고 나서야 멈춘다 — 잔영 5	Stops only after eight slashes — Afterimage 5		
+3	story	skill.d_curse.desc	12초간 죽음의 기운을 두른다(공격 +130%) — 사혼 5	Wears the aura of death for 12s (Attack +130%) — Death Soul 5		
+3	story	skill.d_dart.desc	저승의 기운이 표창 끝에 실린다 — 귀표 5	The underworld rides the dart's tip — Ghost Dart 5		
+3	story	skill.d_veil.desc	저승 문턱을 밟고 되돌아온다 — 허공답보 5	Steps on death's threshold and returns — Void Walk 5		
+3	story	skill.d_whirl.desc	휘도는 바람이 목숨을 끊는다 — 광풍각 5	A spinning wind cuts life short — Mad Gale Kick 5		
+3	story	skill.f_burst.desc	하늘 전체가 고리로 뒤덮인다 — 광환시 5	Rings cover the whole sky — Wide Arrow Ring 5		
+3	story	skill.f_focus.desc	12초간 공격 +75% — 응안 5	Attack +75% for 12s — Hawk Eye 5		
+3	story	skill.f_pierce.desc	한 발이 줄지어 선 것을 다 꿴다 — 일점사 5	One arrow skewers the whole line — Focused Shot 5		
+3	story	skill.f_retreat.desc	허공을 딛듯 물러나며 꿰뚫는다 — 활보사 5	Steps back as if on air and pierces — Long Retreat Shot 5		
+3	story	skill.f_storm.desc	앞쪽 하늘을 화살로 덮는다 — 전우 5	Covers the sky ahead with arrows — Arrow Rain 5		
+3	story	skill.f_volley.desc	화살 여덟을 한 손으로 놓는다 — 분시 5	Looses eight arrows at once — Split Arrows 5		
+3	story	skill.g_edge.desc	기운이 더 멀리, 더 세게 뻗는다 — 파공검 5	The wave reaches farther and harder — Sky Rend 5		
+3	story	skill.g_roar.desc	고함으로 사방을 친다 — 선풍 5	A roar strikes all around — Whirlwind 5		
+3	story	skill.g_smash.desc	앞을 두 번 내리친다 — 참격 5	Smashes the front twice — Deep Cut 5		
+3	story	skill.g_wall.desc	11초간 공격 +15% — 철갑 5	Attack +15% for 11s — Iron Guard 5		
+3	story	skill.h_burst.desc	고리 끝에 하늘이 걸린다 — 천환시 5	The sky hangs on the ring's edge — Heaven Ring 5		
+3	story	skill.h_ray.desc	빛살 하나가 모든 것을 꿰뚫는다 — 파천시 5	A single ray pierces everything — Sky Piercer 5		
+3	story	skill.h_retreat.desc	날개 돋친 듯 물러나며 하늘을 꿴다 — 답공사 5	Leaps back as if winged and pierces the sky — Skystep Shot 5		
+3	story	skill.h_swarm.desc	화살 열둘이 한 손에서 갈라진다 — 만시 5	Twelve arrows split from one hand — Myriad Arrows 5		
+3	story	skill.h_tempest.desc	하늘 전체가 화살비로 뒤덮인다 — 시우 5	The whole sky becomes a rain of arrows — Arrow Storm 5		
+3	story	skill.h_zenith.desc	14초간 활이 하늘과 하나가 된다(공격 +100%) — 정심 5	The bow becomes one with the sky for 14s (Attack +100%) — Still Mind 5		
+3	story	skill.i_abyss.desc	하늘이 무너지고 땅이 갈라진다 — 지진 5	Heaven falls and earth splits — Earthquake 5		
+3	story	skill.i_meteor.desc	앞쪽에 별을 떨군다 — 천뢰 5	Drops stars ahead — Heaven's Thunder 5		
+3	story	skill.i_orb.desc	별 여섯이 한 손에서 쏟아진다 — 연환탄 5	Six stars pour from one hand — Chain Orbs 5		
+3	story	skill.i_step.desc	형체를 옮기듯 건너간다 — 축지술 5	Crosses as if moving its very form — Greater Fold Earth 5		
+3	story	skill.i_tao.desc	14초간 음양이 돈다(공격 +50% · 기력이 샘솟는다) — 호신부 5	Yin and yang turn for 14s (Attack +50%, MP surges) — Guardian Charm 5		
+3	story	skill.m_bolt.desc	벼락이 주위에 떨어진다	Lightning strikes all around		
+3	story	skill.m_fire.desc	불덩이를 굴린다 · 관통	Rolls a fireball · pierces		
+3	story	skill.m_orb.desc	기운 구슬 셋을 잇달아 놓는다	Launches three orbs in a row		
+3	story	skill.m_step.desc	땅을 접어 순식간에 나아간다	Folds the ground to dash ahead		
+3	story	skill.m_talis.desc	10초간 공격 +25% · 기력이 빨리 찬다	Attack +25% and faster MP for 10s		
+3	story	skill.n_banner.desc	13초간 삼군이 따른다(공격 +55% · 기력이 빨리 찬다) — 철벽 5	The army follows for 13s (Attack +55%, faster MP) — Iron Wall 5		
+3	story	skill.n_charge.desc	한달음에 가르며 벤다 — 돌진 5	Cuts through in a single rush — Charge 5		
+3	story	skill.n_edge.desc	장수의 기백이 검 끝에 실린다 — 벽공검 5	A general's spirit rides the blade — Sky Splitter 5		
+3	story	skill.n_heaven.desc	앞을 세 번 내리찍는다 — 패왕격 5	Smashes the front three times — Overlord Strike 5		
+3	story	skill.n_quake.desc	땅을 밟아 사방을 흔든다 — 함성 5	Stamps the ground to shake all around — War Cry 5		
+3	story	skill.o_conquer.desc	15초간 온 전장을 호령한다(공격 +80% · 기력이 빨리 찬다) — 대장기 5	Commands the whole field for 15s (Attack +80%, faster MP) — General's Banner 5		
+3	story	skill.o_edge.desc	전신의 검기가 하늘까지 닿는다 — 천단검 5	The war god's blade reaches the sky — Heaven Cleaver 5		
+3	story	skill.o_ruin.desc	앞을 네 번 내리찍어 부순다 — 천붕격 5	Smashes the front four times to pieces — Heaven Crash 5		
+3	story	skill.o_smite.desc	번개처럼 꿰뚫고 지나간다 — 철기돌격 5	Pierces through like lightning — Iron Cavalry Charge 5		
+3	story	skill.o_tremor.desc	땅이 갈라지도록 흔든다 — 진각 5	Shakes until the ground splits — Quake Stomp 5		
+3	story	skill.p_beam.desc	앞쪽에 벼락을 쏟는다 — 화구 5	Pours lightning ahead — Fireball 5		
+3	story	skill.p_orb.desc	구슬 넷이 고리처럼 잇는다 — 마탄 5	Four orbs link like a ring — Magic Orbs 5		
+3	story	skill.p_quake.desc	땅을 흔든다 — 뇌전 5	Shakes the ground — Thunder 5		
+3	story	skill.p_step.desc	땅을 더 크게 접는다 — 축지 5	Folds the earth farther — Fold Earth 5		
+3	story	skill.p_ward.desc	12초간 공격 +10% · 기력이 샘솟는다 — 부적 5	Attack +10% and MP surges for 12s — Talisman 5		
+3	story	skill.r_dart.desc	표창을 꿰뚫듯 던진다 · 관통	Throws a piercing dart · pierces		
+3	story	skill.r_knife.desc	표창 둘을 던진다	Throws two knives		
+3	story	skill.r_step.desc	한 걸음에 빠져나가며 벤다	Slips through in one step, cutting		
+3	story	skill.r_twin.desc	앞을 두 번 긋는다	Slashes twice in front		
+3	story	skill.r_vital.desc	8초간 공격 +55%	Attack +55% for 8s		
+3	story	skill.r_whirl.desc	몸을 낮춰 주위를 걷어찬다	Low spinning kick all around		
+3	story	skill.s_burst.desc	고리가 더 넓게 퍼진다 — 환시 5	The ring spreads wider — Arrow Ring 5		
+3	story	skill.s_rain.desc	앞쪽에 화살을 쏟는다 — 사격 5	Pours arrows ahead — Shot 5		
+3	story	skill.s_retreat.desc	더 크게 물러나며 쏜다 — 퇴보사 5	Leaps farther back while shooting — Retreat Shot 5		
+3	story	skill.s_snipe.desc	한 발에 힘을 모은다 — 관통시 5	All power in one arrow — Piercing Arrow 5		
+3	story	skill.s_split.desc	화살 넷이 갈라져 난다 — 연사 5	Four arrows fan out — Rapid Fire 5		
+3	story	skill.v_blur.desc	몸이 남기 전에 여섯 번 긋는다 — 난무 5	Six slashes before the body is seen — Wild Dance 5		
+3	story	skill.v_dart.desc	귀신 들린 듯 파고든다 — 암습표 5	Bores in as if possessed — Ambush Dart 5		
+3	story	skill.v_mark.desc	10초간 공격 +95% — 급소 5	Attack +95% for 10s — Vital Point 5		
+3	story	skill.v_petal.desc	표창 일곱이 꽃잎처럼 진다 — 만천화우 5	Seven darts fall like petals — Blossom Storm 5		
+3	story	skill.v_void.desc	허공을 밟고 건너간다 — 그림자밟기 5	Crosses on empty air — Shade Walk 5		
+3	story	skill.v_whirl.desc	미친 듯이 휘돌아 찬다 — 질풍각 5	Spins and kicks like a madman — Gale Kick 5		
+3	story	skill.w_cut.desc	앞을 깊게 벤다	Cuts deep in front		
+3	story	skill.w_edge.desc	벤 기운을 앞으로 쏘아 보낸다 · 관통	Sends a slash wave forward · pierces		
+3	story	skill.w_iron.desc	9초간 공격 +20%	Attack +20% for 9s		
+3	story	skill.w_rush.desc	앞으로 밀고 나가며 벤다	Charges forward, cutting through		
+3	story	skill.w_whirl.desc	몸을 돌려 주위를 쓸어 벤다	Spins and cuts all around		
+3	story	skill.x_dart.desc	어둠 속에서 꿰뚫는다 — 관통표 5	Pierces from the dark — Piercing Dart 5		
+3	story	skill.x_fan.desc	표창 다섯을 흩뿌린다 — 비도 5	Scatters five darts — Flying Knives 5		
+3	story	skill.x_shadow.desc	그림자를 밟고 지나간다 — 은신보 5	Passes through on shadows — Shadow Step 5		
+3	story	skill.x_storm.desc	앞을 네 번 긋는다 — 쌍참 5	Slashes the front four times — Twin Slash 5		
+3	story	skill.x_whirl.desc	더 빠르게, 더 넓게 휩쓴다 — 선풍각 5	Sweeps faster and wider — Whirl Kick 5		
+3	story	skill.z_collapse.desc	하늘과 땅이 함께 무너진다 — 천붕지열 5	Heaven and earth fall together — World Sunder 5		
+3	story	skill.z_eternity.desc	16초간 하늘과 땅을 몸에 두른다(공격 +65% · 기력이 샘솟는다) — 태극 5	Wraps heaven and earth around the body for 16s (Attack +65%, MP surges) — Taiji 5		
+3	story	skill.z_orb.desc	별자리 여덟이 한꺼번에 쏟아진다 — 유성탄 5	Eight constellations pour down at once — Meteor Orbs 5		
+3	story	skill.z_starfall.desc	별들이 통째로 떨어진다 — 유성 5	Whole stars come crashing down — Meteor 5		
+3	story	skill.z_step.desc	신선의 걸음으로 세상을 건넌다 — 이형보 5	Crosses the world with an immortal's stride — Form Shift 5		
+3	realm	event.brave_challenge.a	응한다	Accept		
+3	realm	event.brave_challenge.b	거절한다	Decline		
+3	realm	event.brave_challenge.body	{0}에게 이름 없는 무사가 결투를 신청했다.	A nameless warrior has challenged {0} to a duel.		
+3	realm	event.brave_challenge.bribe	돈으로 무마했다(-{0}냥).	Paid them off (-{0} gold).		
+3	realm	event.brave_challenge.bribe_fail	돈이 모자라 그냥 넘어갔다.	Not enough gold — it passed without incident.		
+3	realm	event.brave_challenge.c	돈으로 무마한다(-{0}냥)	Pay them off (-{0} gold)		
+3	realm	event.brave_challenge.lose	{0}이(가) 결투에서 져 체면을 잃었다(-{1}냥).	{0} lost the duel and lost face (-{1} gold).		
+3	realm	event.brave_challenge.refuse	거절했다 — 별다른 일은 없었다.	Declined — nothing came of it.		
+3	realm	event.brave_challenge.title	결투 신청	Duel Challenge		
+3	realm	event.brave_challenge.win	{0}이(가) 결투에서 이겨 명성을 얻었다(+{1}냥).	{0} won the duel and gained renown (+{1} gold).		
+3	realm	event.brave_reward.a	사례를 받는다	Accept the reward		
+3	realm	event.brave_reward.accept	{0}이(가) 사례를 받았다(+{1}냥).	{0} accepted the reward (+{1} gold).		
+3	realm	event.brave_reward.b	사양한다	Decline		
+3	realm	event.brave_reward.body	지난 결투 소문이 퍼져 {0}을 따르려는 자들이 늘었다.	Word of the past duel spread, and more people want to follow {0}.		
+3	realm	event.brave_reward.c	군량으로 돌린다	Redirect it to provisions		
+3	realm	event.brave_reward.decline	사양했다 — 별다른 일은 없었다.	Declined — nothing came of it.		
+3	realm	event.brave_reward.divert	군량으로 돌렸다(+{0}냥).	Redirected it to provisions (+{0} gold).		
+3	realm	event.brave_reward.title	논공행상	Rewarding Merit		
+3	realm	event.cunning_intel.a	정보를 산다(-{0}냥)	Buy the information (-{0} gold)		
+3	realm	event.cunning_intel.b	무시한다	Ignore it		
+3	realm	event.cunning_intel.body	{0}에게 적정 밀서가 은밀히 들어왔다.	A secret letter on enemy movements has quietly reached {0}.		
+3	realm	event.cunning_intel.c	역이용을 노린다	Try to turn it against them		
+3	realm	event.cunning_intel.counter_lose	들켜 손해를 봤다(-{0}냥).	Caught in the act — took a loss (-{0} gold).		
+3	realm	event.cunning_intel.counter_win	역이용에 성공했다(+{0}냥).	The counter-ploy succeeded (+{0} gold).		
+3	realm	event.cunning_intel.fail	밀서는 헛소문이었다.	The letter turned out to be a false rumor.		
+3	realm	event.cunning_intel.ignore	무시했다 — 별다른 일은 없었다.	Ignored it — nothing came of it.		
+3	realm	event.cunning_intel.no_gold	돈이 모자라 밀서를 못 샀다.	Not enough gold to buy the letter.		
+3	realm	event.cunning_intel.success	밀서가 진짜였다(+{0}냥).	The letter was genuine (+{0} gold).		
+3	realm	event.cunning_intel.title	밀서	Secret Letter		
+3	realm	event.fusion.no_gold	돈이 모자라 아무것도 못 했다.	Not enough gold — nothing could be done.		
+3	realm	event.plague_cure.a	토벌대를 보낸다(병 -{0})	Send a punitive force (troops -{0})		
+3	realm	event.plague_cure.b	안개가 걷히길 기다린다	Wait for the mist to clear		
+3	realm	event.plague_cure.body	역병의 근원이 폐허 깊은 곳의 썩은 샘이라는 말이 돈다. {0} 사람들이 답을 기다린다.	Word spreads that the plague comes from a rotten spring deep in the ruins. The people of {0} await your answer.		
+3	realm	event.plague_cure.c	치료법을 널리 알린다(치안 +6)	Spread the cure far and wide (security +6)		
+3	realm	event.plague_cure.empty	샘을 메우고 폐허의 보화를 거둬 왔다(+{0}냥).	The spring was filled in and treasures of the ruins brought back (+{0} gold).		
+3	realm	event.plague_cure.join	샘을 메우자 {0}이(가) 정신이 들어 우리 편에 섰다.	Once the spring was filled in, {0} came to their senses and joined our side.		
+3	realm	event.plague_cure.teach	치료법을 새긴 비석이 성문 앞에 섰다(치안 +6).	A stone engraved with the cure now stands at the gate (security +6).		
+3	realm	event.plague_cure.title	🧪 역병의 근원	🧪 Source of the Plague		
+3	realm	event.plague_cure.wait	역병이 한 철을 휩쓸고 지나갔다(인구 -5%).	The plague swept through for a season (population -5%).		
+3	realm	event.plague_mist.a	안개를 불살라 걷는다(-{0}냥)	Burn the mist away (-{0} gold)		
+3	realm	event.plague_mist.b	성문을 닫는다(상업 -8)	Close the gates (commerce -8)		
+3	realm	event.plague_mist.body	폐허 쪽에서 잿빛 안개가 {0}(으)로 흘러든다. 사람들이 기침을 하고 우물이 탁해졌다.	Ash-gray mist drifts from the ruins into {0}. People are coughing and the wells have turned murky.		
+3	realm	event.plague_mist.burn	성 밖에 불을 놓아 안개를 태웠다(치안 +5).	Fires were set outside the walls to burn off the mist (security +5).		
+3	realm	event.plague_mist.c	{0}에게 약초꾼을 모으게 한다	Have {0} gather herbalists		
+3	realm	event.plague_mist.close	성문을 닫고 안개가 걷히길 기다린다(상업 -8).	The gates are shut; we wait for the mist to lift (commerce -8).		
+3	realm	event.plague_mist.herb	{0}이(가) 약초꾼을 모아 탕약을 끓였다(치안 +3).	{0} gathered herbalists and brewed medicine (security +3).		
+3	realm	event.plague_mist.title	🌫️ 폐허의 역병	🌫️ Plague of the Ruins		
+3	realm	event.rift_echo.a	정찰대를 보낸다(-{0}냥)	Send scouts (-{0} gold)		
+3	realm	event.rift_echo.b	성벽을 돋운다(치안 +6)	Raise the walls (security +6)		
+3	realm	event.rift_echo.body	{0} 하늘에 가는 금이 갔다. 밤마다 쇳소리가 울리고, 별이 거꾸로 흐른다.	A thin crack has opened in the sky over {0}. Iron rings out every night, and the stars flow backward.		
+3	realm	event.rift_echo.c	{0}에게 살피게 한다(기술 +10)	Have {0} study it (tech +10)		
+3	realm	event.rift_echo.scout_lose	정찰대 몇이 금 너머로 사라졌다(병 -{0}).	Some of the scouts vanished beyond the crack (troops -{0}).		
+3	realm	event.rift_echo.scout_win	정찰대가 이계의 쇠붙이를 한 짐 지고 돌아왔다(+{0}냥).	The scouts came back loaded with otherworldly iron (+{0} gold).		
+3	realm	event.rift_echo.study	{0}이(가) 균열의 결을 받아 적었다(기술 +10).	{0} recorded the grain of the rift (tech +10).		
+3	realm	event.rift_echo.title	🌌 균열의 울림	🌌 Echo of the Rift		
+3	realm	event.rift_echo.wall	성벽에 부적을 붙이고 망루를 늘렸다(치안 +6).	Talismans went up on the walls and more watchtowers were built (security +6).		
+3	realm	event.rift_gate.a	문 너머의 장수를 부른다	Call the warrior beyond the gate		
+3	realm	event.rift_gate.b	문을 봉한다(치안 +10)	Seal the gate (security +10)		
+3	realm	event.rift_gate.body	{0} 곁의 금이 문만큼 벌어졌다. 그 너머에서 누군가 이쪽을 본다.	The crack beside {0} has widened into a gate. Someone on the other side is looking this way.		
+3	realm	event.rift_gate.c	이계와 셈을 튼다(+{0}냥, 치안 -5)	Open trade with the otherworld (+{0} gold, security -5)		
+3	realm	event.rift_gate.empty	문 너머엔 빈 갑옷뿐이었다 — 녹여 팔았다(+{0}냥).	Beyond the gate was only an empty suit of armor — melted down and sold (+{0} gold).		
+3	realm	event.rift_gate.join	{0}이(가) 문을 넘어와 무릎을 꿇었다.	{0} stepped through the gate and knelt.		
+3	realm	event.rift_gate.seal	금을 흙과 부적으로 메웠다(치안 +10).	The crack was filled with earth and talismans (security +10).		
+3	realm	event.rift_gate.title	🌀 균열의 문	🌀 Gate of the Rift		
+3	realm	event.rift_gate.trade	문 너머 상인과 기묘한 흥정이 오갔다(+{0}냥).	Strange bargains were struck with merchants beyond the gate (+{0} gold).		
+3	realm	event.rival_tip.a	첩자에게 사례한다(-{0}냥)	Pay the spy (-{0} gold)		
+3	realm	event.rival_tip.b	무시한다	Ignore it		
+3	realm	event.rival_tip.body	{0}이 벼르던 숙적({1})의 허점을 첩자가 알려왔다.	A spy has found a weakness in {1}, the rival that has long tormented {0}.		
+3	realm	event.rival_tip.bribe	{0} 첩보 대가로 노획물을 나눠 받았다(+{1}냥).	Received a share of the spoils for the tip on {0} (+{1} gold).		
+3	realm	event.rival_tip.c	직접 확인한다	Check it in person		
+3	realm	event.rival_tip.ignore	무시했다 — 별다른 일은 없었다.	Ignored it — nothing came of it.		
+3	realm	event.rival_tip.no_gold	돈이 모자라 첩자에게 사례하지 못했다.	Not enough gold to pay the spy.		
+3	realm	event.rival_tip.scout_lose	정찰 중 들켜 손해를 봤다(-{0}냥).	Spotted while scouting — took a loss (-{0} gold).		
+3	realm	event.rival_tip.scout_win	직접 확인해 허점을 찾았다(+{0}냥).	Checked in person and found the weakness (+{0} gold).		
+3	realm	event.rival_tip.title	숙적 첩보	Intel on a Rival		
+3	realm	event.rival_tip.unknown	숙적	an old rival		
+3	realm	event.scholar_lecture.a	무료로 가르친다	Teach for free		
+3	realm	event.scholar_lecture.b	돌려보낸다	Turn them away		
+3	realm	event.scholar_lecture.body	{0}을 찾아온 학사가 가르침을 청했다.	A scholar visiting {0} asked to be taught.		
+3	realm	event.scholar_lecture.c	예물을 받고 가르친다(+{0}냥)	Teach for a fee (+{0} gold)		
+3	realm	event.scholar_lecture.decline	돌려보냈다 — 별다른 일은 없었다.	Turned them away — nothing came of it.		
+3	realm	event.scholar_lecture.gift	예물을 받고 가르쳤다(+{0}냥).	Taught for a fee (+{0} gold).		
+3	realm	event.scholar_lecture.teach	{0}이(가) 무료로 가르쳐 명성이 올랐다.	{0} taught for free, and their reputation grew.		
+3	realm	event.scholar_lecture.title	학사 방문	A Scholar's Visit		
+3	realm	event.tomb_bell.a	진혼제를 올린다(-{0}냥)	Hold a requiem (-{0} gold)		
+3	realm	event.tomb_bell.b	성문을 걸어 잠근다(훈련 +5, 치안 -3)	Bar the gates (training +5, security -3)		
+3	realm	event.tomb_bell.body	밤마다 {0} 땅 밑에서 종이 울린다. 백골 병사가 성 밖을 서성인다는 소문이다.	Every night a bell rings beneath the ground of {0}. Rumor says skeleton soldiers roam outside the walls.		
+3	realm	event.tomb_bell.c	무당에게 묻는다	Ask a shaman		
+3	realm	event.tomb_bell.lock	병사들이 밤새 창을 쥐고 성벽을 지켰다(훈련 +5).	Soldiers held their spears on the walls all night (training +5).		
+3	realm	event.tomb_bell.rite	향이 사흘 밤낮으로 타올랐다(치안 +8).	Incense burned for three days and nights (security +8).		
+3	realm	event.tomb_bell.shaman_none	무당은 '아직 때가 아니다'라고만 했다.	The shaman only said, 'The time has not yet come.'		
+3	realm	event.tomb_bell.shaman_win	무당이 가리킨 곳에서 옛 무덤의 재물이 나왔다(+{0}냥).	Where the shaman pointed, an old tomb yielded its riches (+{0} gold).		
+3	realm	event.tomb_bell.title	🔔 묘역의 종소리	🔔 Bell of the Tombs		
+3	realm	event.tomb_oath.a	망자 장수를 거둔다	Take in the dead general		
+3	realm	event.tomb_oath.b	편히 잠들게 한다(치안 +10)	Let him rest in peace (security +10)		
+3	realm	event.tomb_oath.body	진혼제 뒤, {0} 성문 앞에 백골 장수 하나가 서서 맹세를 청한다.	After the requiem, a skeletal general stands before the gate of {0} and asks to swear an oath.		
+3	realm	event.tomb_oath.c	무덤의 보물을 청한다(+{0}냥, 치안 -6)	Ask for the tomb treasure (+{0} gold, security -6)		
+3	realm	event.tomb_oath.empty	장수는 사라지고 그 기세만 병사들에게 남았다(훈련 +10).	The general vanished, leaving only his spirit in the soldiers (training +10).		
+3	realm	event.tomb_oath.join	{0}이(가) 뼈마디를 울리며 맹세했다.	{0} swore the oath with a rattle of bones.		
+3	realm	event.tomb_oath.rest	장수가 고개를 숙이고 땅으로 돌아갔다(치안 +10).	The general bowed his head and returned to the earth (security +10).		
+3	realm	event.tomb_oath.title	💀 망자의 맹세	💀 The Dead Man's Oath		
+3	realm	event.tomb_oath.treasure	장수가 옛 왕의 보물을 내주고 어둠으로 걸어갔다(+{0}냥).	The general handed over an old king's treasure and walked into the dark (+{0} gold).		
+3	realm	event.wealth_chance.a	크게 투자한다(-{0}냥)	Invest heavily (-{0} gold)		
+3	realm	event.wealth_chance.b	무시한다	Ignore it		
+3	realm	event.wealth_chance.body	{0}에게 상단이 투자를 제안했다.	A merchant guild offered {0} an investment.		
+3	realm	event.wealth_chance.c	조금만 투자한다(-{0}냥)	Invest a little (-{0} gold)		
+3	realm	event.wealth_chance.ignore	무시했다 — 별다른 일은 없었다.	Ignored it — nothing came of it.		
+3	realm	event.wealth_chance.lose	투자가 실패해 밑돈만 날렸다.	The investment failed — the stake was lost.		
+3	realm	event.wealth_chance.no_gold	돈이 모자라 투자를 못 했다.	Not enough gold to invest.		
+3	realm	event.wealth_chance.no_gold_small	돈이 모자라 조금도 못 넣었다.	Not enough gold to put in even a little.		
+3	realm	event.wealth_chance.small_win	조금 넣어 안전하게 불렸다(+{0}냥).	A small, safe return (+{0} gold).		
+3	realm	event.wealth_chance.title	재물 기회	A Chance at Wealth		
+3	realm	event.wealth_chance.win	투자가 크게 맞아떨어졌다(+{0}냥).	The investment paid off big (+{0} gold).		
+3	realm	event.wise_invite.a	응한다	Accept		
+3	realm	event.wise_invite.accept	{0}이(가) 강론 사례를 받았다(+{1}냥).	{0} was paid for the lecture (+{1} gold).		
+3	realm	event.wise_invite.b	거절한다	Decline		
+3	realm	event.wise_invite.body	먼 고을의 학사가 {0}을 강론에 초빙했다.	A scholar from a distant town invited {0} to a lecture.		
+3	realm	event.wise_invite.c	예물을 보낸다(-{0}냥)	Send a gift instead (-{0} gold)		
+3	realm	event.wise_invite.decline	거절했다 — 별다른 일은 없었다.	Declined — nothing came of it.		
+3	realm	event.wise_invite.gift	예물을 보내 덕을 쌓았다(-{0}냥).	Sent a gift and built goodwill (-{0} gold).		
+3	realm	event.wise_invite.gift_fail	돈이 모자라 예물을 못 보냈다.	Not enough gold to send a gift.		
+3	realm	event.wise_invite.title	강론 초빙	Lecture Invitation		
+3	realm	officer.tm_doha.quote	봉화보다 빠른 소식길을 알고 있어요.	I know a road for news faster than any beacon fire.		
+3	realm	officer.tm_eunha.quote	여기 중력은 가볍네요. 창도 가볍게 들립니다.	Gravity is light here. The spear feels light too.		
+3	realm	officer.tm_gangseo.quote	방패 뒤로 서십시오. 이 성문은 제가 막습니다.	Stand behind the shield. I will hold this gate.		
+3	realm	officer.tm_geumdam.quote	군자금은 모으는 게 아니라 굴리는 겁니다.	War funds are not hoarded. They are put to work.		
+3	realm	officer.tm_gongseok.quote	성벽이요? 사흘이면 두 겹으로 올립니다.	The walls? Give me three days and I will make them double.		
+3	realm	officer.tm_gwedo.quote	대원들은 제가 데려갑니다. 한 명도 두고 가지 않아요.	I bring my crew home. Not one gets left behind.		
+3	realm	officer.tm_myeongbyeon.quote	설전이라면 제 쪽이 이깁니다. 근거가 있으니까요.	In a debate I win. I have the evidence.		
+3	realm	officer.tm_seongyeon.quote	별자리가 이 시대 것과 조금 달라요. 그래도 길은 찾습니다.	The stars here are a little different from mine. I will still find the way.		
+3	realm	officer.tm_yeongjeom.quote	의체 출력 백 퍼센트. 일기토, 받아 드리죠.	Prosthetics at one hundred percent. A duel? Gladly.		
+3	realm	quiz.cat.hist	역사	History		
+3	realm	quiz.cat.idiom	사자성어	Idioms		
+3	realm	quiz.cat.mz	유행어	Slang		
+3	realm	quiz.cat.proverb	속담	Proverbs		
+3	realm	quiz.cat.sense	상식	General Knowledge		
+3	realm	quiz.cat.world	세계사	World History		
+3	realm	quiz.correct	⭕ 정답! {0}	⭕ Correct! {0}		
+3	realm	quiz.correct_gold_suffix	 (+{0}냥)	 (+{0} Gold)		
+3	realm	quiz.h01.c0	철왕	Cheolwang		
+3	realm	quiz.h01.c1	훈민	Hunmin		
+3	realm	quiz.h01.c2	전헌왕	Jeonheonwang		
+3	realm	quiz.h01.c3	규장왕	Gyujangwang		
+3	realm	quiz.h01.q	훈민정음을 창제한 조선의 왕은?	Which Joseon king created Hunminjeongeum (the Korean alphabet)?		
+3	realm	quiz.h01.why	훈민대왕이 1443년 훈민정음을 창제하고 1446년에 반포했다.	King Hunmin created Hunminjeongeum in 1443 and promulgated it in 1446.		
+3	realm	quiz.h02.c0	행주장	Haengjujang		
+3	realm	quiz.h02.c1	진주장	Jinjujang		
+3	realm	quiz.h02.c2	해장	Haejang		
+3	realm	quiz.h02.c3	초모의	Chomoui		
+3	realm	quiz.h02.q	한산도 대첩에서 학익진으로 왜군을 무찌른 장군은?	Which general defeated the Japanese fleet at the Battle of Hansan Island using the crane wing formation?		
+3	realm	quiz.h02.why	해장 장군이 1592년 한산도 앞바다에서 학익진으로 대승했다.	General Haejang won a decisive victory off Hansan Island in 1592 using the crane wing formation.		
+3	realm	quiz.h03.c0	현묘	Hyeonmyo		
+3	realm	quiz.h03.c1	철령	Cheolryeong		
+3	realm	quiz.h03.c2	안시장	Ansijang		
+3	realm	quiz.h03.c3	평강서	Pyeonggangseo		
+3	realm	quiz.h03.q	살수대첩(612년)에서 수나라 대군을 무찌른 고구려 장수는?	Which Goguryeo general defeated the massive Sui army at the Battle of Salsu (612 CE)?		
+3	realm	quiz.h03.why	현묘가 살수(청천강)에서 수나라 30만 별동대를 궤멸시켰다.	Hyeonmyo annihilated a 300,000-strong Sui detachment at the Salsu (Cheongcheon) River.		
+3	realm	quiz.h04.c0	담판공	Dampangong		
+3	realm	quiz.h04.c1	별무장	Byeolmujang		
+3	realm	quiz.h04.c2	강우	Gangu		
+3	realm	quiz.h04.c3	견금공	Gyeongeumgong		
+3	realm	quiz.h04.q	귀주대첩(1019년)에서 거란군을 물리친 고려 장수는?	Which Goryeo general repelled the Khitan army at the Battle of Gwiju (1019)?		
+3	realm	quiz.h04.why	강우가 귀주에서 거란 3차 침입군을 크게 무찔렀다.	Gangu crushed the third Khitan invasion force at Gwiju.		
+3	realm	quiz.h05.c0	미륵주	Mireukju		
+3	realm	quiz.h05.c1	후백패	Hubaekpae		
+3	realm	quiz.h05.c2	통합공	Tonghapgong		
+3	realm	quiz.h05.c3	위화공	Wihwagong		
+3	realm	quiz.h05.q	고려를 세운 사람은?	Who founded Goryeo?		
+3	realm	quiz.h05.why	통합공이 918년 고려를 세웠다.	Tonghapgong founded Goryeo in 918.		
+3	realm	quiz.h08.c0	요동패	Yodongpae		
+3	realm	quiz.h08.c1	활왕	Hwarwang		
+3	realm	quiz.h08.c2	위례공	Wiryegong		
+3	realm	quiz.h08.c3	알왕	Arwang		
+3	realm	quiz.h08.q	발해를 세운 사람은?	Who founded Balhae?		
+3	realm	quiz.h08.why	고구려 유민 요동패가 698년 발해를 세웠다.	Yodongpae, a Goguryeo refugee, founded Balhae in 698.		
+3	realm	quiz.header	[{0} · Lv{1}{2}]⏎{3}	[{0} · Lv{1}{2}]⏎{3}		
+3	realm	quiz.i01.c0	사면초가	사면초가 (samyeon-choga)		
+3	realm	quiz.i01.c1	고립무원	고립무원 (goripmuwon)		
+3	realm	quiz.i01.c2	진퇴양난	진퇴양난 (jintoe-yangnan)		
+3	realm	quiz.i01.c3	풍전등화	풍전등화 (pungjeon-deunghwa)		
+3	realm	quiz.i01.q	사방이 적으로 둘러싸여 고립된 처지를 뜻하는 말은?	Which idiom describes being surrounded by enemies on all sides with no help in sight?		
+3	realm	quiz.i01.why	사면초가(四面楚歌) — 패초왕이 사방에서 들리는 초나라 노래에 대세가 기운 것을 알았다는 고사.	Samyeon-choga (四面楚歌, "Chu songs on all sides") — from the story of Paechowang realizing his defeat when he heard Chu songs coming from every direction.		
+3	realm	quiz.i02.c0	일취월장	일취월장 (ilchwi-woljang)		
+3	realm	quiz.i02.c1	온고지신	온고지신 (ongo-jisin)		
+3	realm	quiz.i02.c2	교학상장	교학상장 (gyohak-sangjang)		
+3	realm	quiz.i02.c3	박학다식	박학다식 (bakhak-dasik)		
+3	realm	quiz.i02.q	옛것을 익혀 새것을 안다는 뜻은?	Which idiom means learning from the old to understand the new?		
+3	realm	quiz.i02.why	온고지신(溫故知新) — 논어에 나오는 말로, 옛것을 잘 익히면 새것이 보인다는 뜻.	Ongo-jisin (溫故知新) — from the Analects of Confucius: mastering the old reveals the new.		
+3	realm	quiz.i05.c0	어부지리	어부지리 (eobu-jiri)		
+3	realm	quiz.i05.c1	견토지쟁	견토지쟁 (gyeontoji-jaeng)		
+3	realm	quiz.i05.c2	일석이조	일석이조 (ilseok-ijo)		
+3	realm	quiz.i05.c3	수주대토	수주대토 (suju-daeto)		
+3	realm	quiz.i05.q	둘이 다투는 사이 엉뚱한 제3자가 이득을 보는 것은?	Which idiom describes a third party profiting while two others fight?		
+3	realm	quiz.i05.why	어부지리(漁夫之利) — 조개와 도요새가 다투는 사이 어부가 둘 다 잡았다.	Eobu-jiri (漁夫之利, "the fisherman's gain") — while a clam and a sandpiper fought, a fisherman caught them both.		
+3	realm	quiz.i08.c0	대기만성	대기만성 (daegi-manseong)		
+3	realm	quiz.i08.c1	소년등과	소년등과 (sonyeon-deunggwa)		
+3	realm	quiz.i08.c2	입신양명	입신양명 (ipsin-yangmyeong)		
+3	realm	quiz.i08.c3	금의환향	금의환향 (geumui-hwanhyang)		
+3	realm	quiz.i08.q	큰 인물은 늦게 이루어진다는 뜻은?	Which idiom means a great talent takes a long time to mature?		
+3	realm	quiz.i08.why	대기만성(大器晚成) — 큰 그릇은 늦게 완성된다.	Daegi-manseong (大器晚成) — "a great vessel takes long to complete."		
+3	realm	quiz.i09.c0	토사구팽	토사구팽 (tosa-gupaeng)		
+3	realm	quiz.i09.c1	감탄고토	감탄고토 (gamtan-goto)		
+3	realm	quiz.i09.c2	배은망덕	배은망덕 (baeeun-mangdeok)		
+3	realm	quiz.i09.c3	조령모개	조령모개 (joryeong-mogae)		
+3	realm	quiz.i09.q	쓸모가 다하면 버려진다는 뜻은?	Which idiom means being discarded once no longer useful?		
+3	realm	quiz.i09.why	토사구팽(兎死狗烹) — 토끼를 잡으면 사냥개를 삶는다.	Tosa-gupaeng (兎死狗烹) — "once the rabbit is caught, the hunting dog is boiled."		
+3	realm	quiz.i12.c0	문전성시	문전성시 (munjeon-seongsi)		
+3	realm	quiz.i12.c1	삼고초려	삼고초려 (samgo-choryeo)		
+3	realm	quiz.i12.c2	문전박대	문전박대 (munjeon-bakdae)		
+3	realm	quiz.i12.c3	초지일관	초지일관 (choji-ilgwan)		
+3	realm	quiz.i12.q	인재를 얻으려 참을성 있게 여러 번 찾아가는 것은?	Which idiom means patiently visiting someone repeatedly to recruit a talented person?		
+3	realm	quiz.i12.why	삼고초려(三顧草廬) — 인형이 현책의 초가집을 세 번 찾아갔다.	Samgo-choryeo (三顧草廬) — Inhyeong visited Hyeonchaek's thatched cottage three times.		
+3	realm	quiz.m01.c0	신을 믿는 삶	A life of religious faith		
+3	realm	quiz.m01.c1	부지런하고 알찬 삶	A diligent, fulfilling life		
+3	realm	quiz.m01.c2	게으른 삶	A lazy life		
+3	realm	quiz.m01.c3	갓 태어난 삶	A newborn life		
+3	realm	quiz.m01.q	"갓생"의 뜻은?	What does "gatsaeng" (갓생) mean?		
+3	realm	quiz.m01.why	God(갓)+인생 — 계획대로 부지런히 사는 모범적인 삶.	"God" (갓) + "life" (인생) — an exemplary life lived diligently according to plan.		
+3	realm	quiz.m02.c0	중간에 꺾이는 마음	A will that breaks midway		
+3	realm	quiz.m02.c1	중요한 것은 꺾이지 않는 마음	What matters is a will that never breaks		
+3	realm	quiz.m02.c2	중간고사 꺾고 마무리	Beating the midterm and finishing		
+3	realm	quiz.m02.c3	중심을 꺾는 마법	Magic that breaks one's core		
+3	realm	quiz.m02.q	"중꺾마"는 무엇의 줄임말인가?	What is "jungkkeokma" (중꺾마) short for?		
+3	realm	quiz.m02.why	져도 포기하지 않는 마음가짐을 뜻한다.	It refers to the mindset of never giving up even after losing.		
+3	realm	quiz.m03.c0	알아서 잘 딱 깔끔하고 센스 있게	Handling things smartly, neatly, and with sense		
+3	realm	quiz.m03.c1	알고 보니 잘생긴 센 사람	Turns out to be a handsome, tough person		
+3	realm	quiz.m03.c2	알바를 잘하는 센스	A knack for doing part-time work well		
+3	realm	quiz.m03.c3	알쏭달쏭한 센스	A puzzling sense		
+3	realm	quiz.m03.q	"알잘딱깔센"의 뜻은?	What does "aljjaldakkkalsen" (알잘딱깔센) mean?		
+3	realm	quiz.m03.why	"알아서 잘, 딱, 깔끔하고 센스 있게"의 줄임말.	Short for "handling it smartly, precisely, neatly, and with sense."		
+3	realm	quiz.m07.c0	왕이 되다	To become king		
+3	realm	quiz.m07.c1	몹시 화가 나다	To get very angry		
+3	realm	quiz.m07.c2	왕대접을 받다	To be treated like royalty		
+3	realm	quiz.m07.c3	크게 감동받다	To be deeply moved		
+3	realm	quiz.m07.q	"킹받다"의 뜻은?	What does "king-batda" (킹받다) mean?		
+3	realm	quiz.m07.why	King+열받다 — "매우 열받는다"를 재밌게 강조한 말.	"King" + "get angry" (열받다) — a playful way to emphasize "extremely angry."		
+3	realm	quiz.m09.c0	너무 많은 정보	Too Much Information		
+3	realm	quiz.m09.c1	너무 멋진 아이디어	Too Marvelous Idea		
+3	realm	quiz.m09.c2	아주 중요한 정보	Very Important Information		
+3	realm	quiz.m09.c3	너무 미운 사람	Too Mean an Individual		
+3	realm	quiz.m09.q	"TMI"의 뜻은?	What does "TMI" mean?		
+3	realm	quiz.m09.why	Too Much Information — 굳이 몰라도 될 시시콜콜한 정보.	Too Much Information — trivial details nobody needed to know.		
+3	realm	quiz.m10.c0	남의 물건을 훔치다	To steal someone else's belongings		
+3	realm	quiz.m10.c1	남의 스타일을 따라 사다	To buy the exact same items as someone else's style		
+3	realm	quiz.m10.c2	손으로 민수를 그리다	To draw "Minsu" by hand		
+3	realm	quiz.m10.c3	민수에게 손을 흔들다	To wave at Minsu		
+3	realm	quiz.m10.q	"손민수하다"의 뜻은?	What does "Son Min-su hada" (손민수하다) mean?		
+3	realm	quiz.m10.why	웹툰 "치즈인더트랩"의 캐릭터에서 유래 — 남의 아이템을 그대로 따라 사는 것.	From a character in the webtoon "Cheese in the Trap" — buying the exact same items as someone else to copy their style.		
+3	realm	quiz.none_left	낼 문제가 없다.	No questions to give.		
+3	realm	quiz.p01.c0	소문이 빠르게 퍼짐	Rumors spread quickly		
+3	realm	quiz.p01.c1	말(馬)이 잘 달림	A horse that runs well		
+3	realm	quiz.p01.c2	걸음이 빠른 사람	A person who walks fast		
+3	realm	quiz.p01.c3	편지가 멀리 감	A letter that travels far		
+3	realm	quiz.p01.q	"발 없는 말이 천 리 간다"는 무엇을 두고 하는 말인가?	What does the proverb "a word without feet travels a thousand ri" refer to?		
+3	realm	quiz.p01.why	여기서 "말"은 언어다 — 말조심하라는 뜻이다.	Here "mal" means "word/speech" (not "horse") — a warning to watch what you say.		
+3	realm	quiz.p02.c0	가까운 것을 오히려 모른다	You often overlook what's right in front of you		
+3	realm	quiz.p02.c1	불이 약하다	The flame is weak		
+3	realm	quiz.p02.c2	밤에는 위험하다	Nights are dangerous		
+3	realm	quiz.p02.c3	아랫사람이 힘들다	Subordinates have it hard		
+3	realm	quiz.p02.q	"등잔 밑이 어둡다"의 뜻은?	What does the proverb "it's dark under the lamp" mean?		
+3	realm	quiz.p02.why	남의 일은 잘 알아도 제 주변 일은 모른다는 말이다.	It means you may know others' affairs well but miss what's happening right around you.		
+3	realm	quiz.p04.c0	좁은 세상만 알고 큰 세상을 모르는 사람	Someone who knows only their small world and not the wider one		
+3	realm	quiz.p04.c1	물을 좋아하는 사람	Someone who loves water		
+3	realm	quiz.p04.c2	겁이 많은 사람	A timid person		
+3	realm	quiz.p04.c3	헤엄을 잘 치는 사람	A good swimmer		
+3	realm	quiz.p04.q	"우물 안 개구리"가 가리키는 사람은?	Who does the proverb "a frog in a well" refer to?		
+3	realm	quiz.p04.why	자기가 아는 것이 전부라 여기는 좁은 시야를 꾸짖는 말이다.	It criticizes a narrow view that mistakes one's limited knowledge for the whole world.		
+3	realm	quiz.p05.c0	일이 터진 뒤에야 대비한다	Preparing only after disaster has already struck		
+3	realm	quiz.p05.c1	소가 중요하다	Oxen are important		
+3	realm	quiz.p05.c2	집을 자주 고쳐야 한다	Houses need frequent repair		
+3	realm	quiz.p05.c3	손해는 되찾을 수 있다	Losses can always be recovered		
+3	realm	quiz.p05.q	"소 잃고 외양간 고친다"의 뜻은?	What does the proverb "mending the barn after losing the ox" mean?		
+3	realm	quiz.p05.why	미리 챙기지 않고 늦게 후회한다는 말이다.	It means failing to prepare in advance and regretting it too late.		
+3	realm	quiz.p06.c0	쉬운 일도 함께 하면 수월하다	Even easy tasks go more smoothly with help		
+3	realm	quiz.p06.c1	종이는 가볍다	Paper is light		
+3	realm	quiz.p06.c2	혼자 하는 게 빠르다	Working alone is faster		
+3	realm	quiz.p06.c3	작은 일은 미뤄도 된다	Small tasks can be postponed		
+3	realm	quiz.p06.q	"백지장도 맞들면 낫다"의 뜻은?	What does the proverb "even a sheet of paper is lighter when lifted together" mean?		
+3	realm	quiz.p06.why	아무리 가벼운 일도 힘을 합치면 낫다 — 협력의 가치를 말한다.	Even the lightest task is easier with combined effort — it praises the value of cooperation.		
+3	realm	quiz.p11.c0	순서를 건너뛰면 안 된다	You can't skip the proper steps		
+3	realm	quiz.p11.c1	바늘은 위험하다	Needles are dangerous		
+3	realm	quiz.p11.c2	실이 굵어야 한다	Thread must be thick		
+3	realm	quiz.p11.c3	바느질은 어렵다	Sewing is difficult		
+3	realm	quiz.p11.q	"바늘허리에 실 매어 쓸까"의 뜻은?	What does the proverb "can you tie thread to the middle of a needle and use it?" mean?		
+3	realm	quiz.p11.why	급해도 절차를 지켜야 한다는 말 — 실은 바늘귀에 꿰어야 한다.	It means you must follow proper procedure even when in a hurry — thread must go through the needle's eye.		
+3	realm	quiz.progress	학습 {0}/{1} · 정답 {2}/{3} · 연속 {4}(최고 {5})	Learned {0}/{1} · Correct {2}/{3} · Streak {4} (Best {5})		
+3	realm	quiz.review_suffix	 · 복습	 · Review		
+3	realm	quiz.s01.c0	90℃	90°C		
+3	realm	quiz.s01.c1	100℃	100°C		
+3	realm	quiz.s01.c2	120℃	120°C		
+3	realm	quiz.s01.c3	80℃	80°C		
+3	realm	quiz.s01.q	물이 끓는 온도는? (1기압 기준)	At what temperature does water boil (at 1 atmosphere)?		
+3	realm	quiz.s01.why	1기압에서 물은 100℃에 끓는다.	At 1 atmosphere, water boils at 100°C.		
+3	realm	quiz.s02.c0	7개	7		
+3	realm	quiz.s02.c1	8개	8		
+3	realm	quiz.s02.c2	9개	9		
+3	realm	quiz.s02.c3	10개	10		
+3	realm	quiz.s02.q	태양계의 행성은 몇 개인가?	How many planets are in the solar system?		
+3	realm	quiz.s02.why	수금지화목토천해 8개. 명왕성은 2006년 왜소행성으로 분류가 바뀌었다.	Eight: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune. Pluto was reclassified as a dwarf planet in 2006.		
+3	realm	quiz.s07.c0	5가지	5		
+3	realm	quiz.s07.c1	6가지	6		
+3	realm	quiz.s07.c2	7가지	7		
+3	realm	quiz.s07.c3	8가지	8		
+3	realm	quiz.s07.q	무지개 색은 보통 몇 가지로 나누나?	How many colors is a rainbow usually divided into?		
+3	realm	quiz.s07.why	빨주노초파남보 7가지.	Seven: red, orange, yellow, green, blue, indigo, violet.		
+3	realm	quiz.s08.c0	CO2	CO2		
+3	realm	quiz.s08.c1	H2O	H2O		
+3	realm	quiz.s08.c2	O2	O2		
+3	realm	quiz.s08.c3	NaCl	NaCl		
+3	realm	quiz.s08.q	물의 화학식은?	What is the chemical formula of water?		
+3	realm	quiz.s08.why	물은 수소 2개와 산소 1개가 결합한 H2O 다.	Water is H2O — two hydrogen atoms bonded to one oxygen atom.		
+3	realm	quiz.s11.c0	2개	2		
+3	realm	quiz.s11.c1	3개	3		
+3	realm	quiz.s11.c2	4개	4		
+3	realm	quiz.s11.c3	5개	5		
+3	realm	quiz.s11.q	사람의 심장은 몇 개의 방으로 이루어져 있나?	How many chambers does the human heart have?		
+3	realm	quiz.s11.why	2심방 2심실, 모두 4개의 방이다.	Two atria and two ventricles — four chambers in total.		
+3	realm	quiz.s12.c0	나무	Tree		
+3	realm	quiz.s12.c1	풀	Grass		
+3	realm	quiz.s12.c2	이끼	Moss		
+3	realm	quiz.s12.c3	버섯	Mushroom		
+3	realm	quiz.s12.q	대나무는 식물 분류상 무엇에 속하나?	What is bamboo classified as, botanically?		
+3	realm	quiz.s12.why	대나무는 볏과의 풀이다. 나이테가 없고 속이 비어 있다.	Bamboo is a grass in the Poaceae family — it has no growth rings and is hollow inside.		
+3	realm	quiz.w01.c0	1689년	1689		
+3	realm	quiz.w01.c1	1776년	1776		
+3	realm	quiz.w01.c2	1789년	1789		
+3	realm	quiz.w01.c3	1848년	1848		
+3	realm	quiz.w01.q	프랑스 혁명이 시작된 해는?	In what year did the French Revolution begin?		
+3	realm	quiz.w01.why	1789년 바스티유 감옥 습격으로 시작됐다.	It began in 1789 with the storming of the Bastille.		
+3	realm	quiz.w03.c0	1905년	1905		
+3	realm	quiz.w03.c1	1914년	1914		
+3	realm	quiz.w03.c2	1929년	1929		
+3	realm	quiz.w03.c3	1939년	1939		
+3	realm	quiz.w03.q	제1차 세계대전이 일어난 해는?	In what year did World War I break out?		
+3	realm	quiz.w03.why	1914년 사라예보에서 오스트리아 황태자가 저격된 일이 방아쇠였다.	It was triggered by the 1914 assassination of the Austrian archduke in Sarajevo.		
+3	realm	quiz.w06.c0	아고라스	Agoras		
+3	realm	quiz.w06.c1	이데온	Ideon		
+3	realm	quiz.w06.c2	로고벨	Logobel		
+3	realm	quiz.w06.c3	테트락토	Tetrakto		
+3	realm	quiz.w06.q	카시안더 대왕을 가르친 철학자는?	Which philosopher tutored Cassiander the Great?		
+3	realm	quiz.w06.why	로고벨이 소년 카시안더의 스승이었다.	Logobel was the young Cassiander's teacher.		
+3	realm	quiz.w07.c0	분서제	Bunseoje		
+3	realm	quiz.w07.c1	흉노제	Hyungnoje		
+3	realm	quiz.w07.c2	현무제	Hyeonmuje		
+3	realm	quiz.w07.c3	홍건제	Honggeonje		
+3	realm	quiz.w07.q	중국을 처음 통일하고 만리장성을 이은 황제는?	Which emperor first unified China and connected the Great Wall?		
+3	realm	quiz.w07.why	분서제가 기원전 221년 통일하고 북방 성벽을 하나로 이었다.	Bunseoje unified China in 221 BCE and linked the northern walls into one.		
+3	realm	quiz.w09.c0	1453년	1453		
+3	realm	quiz.w09.c1	1492년	1492		
+3	realm	quiz.w09.c2	1519년	1519		
+3	realm	quiz.w09.c3	1588년	1588		
+3	realm	quiz.w09.q	산타마로가 대서양을 건너 아메리카에 닿은 해는?	In what year did Santamaro cross the Atlantic and reach the Americas?		
+3	realm	quiz.w09.why	1492년이다.	It was 1492.		
+3	realm	quiz.w11.c0	비텐하르트	Wittenhart		
+3	realm	quiz.w11.c1	제네브랑	Genevrand		
+3	realm	quiz.w11.c2	취리헨	Zurichen		
+3	realm	quiz.w11.c3	스콜라노	Scolano		
+3	realm	quiz.w11.q	종교개혁의 불을 붙인 「95개조 반박문」을 쓴 사람은?	Who wrote the "Ninety-Five Theses" that sparked the Reformation?		
+3	realm	quiz.w11.why	1517년 비텐하르트가 면벌부 판매를 비판하는 95개조를 붙였다.	In 1517, Wittenhart posted the Ninety-Five Theses criticizing the sale of indulgences.		
+3	realm	quiz.wrong	❌ 오답 — 정답은 "{0}". {1}	❌ Wrong — the answer was "{0}". {1}		

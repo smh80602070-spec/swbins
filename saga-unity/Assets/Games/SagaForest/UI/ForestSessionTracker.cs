@@ -92,7 +92,7 @@ namespace Saga.Forest.UI
             if (_sessionCard == null) return;
             int fruitGained = ForestState.FruitCount - _sessionStartFruit;
             int delivered = ForestDeliveryState.DeliveredCount - _sessionStartDeliveries;
-            _sessionCard.Show(Saga.Core.SagaUi.L("이번 세션 정리", "Session summary"),
+            _sessionCard.Show(Saga.Core.SagaUi.L("이번 세션 정리", "Session Summary"),
                 string.Format(Saga.Core.SagaUi.L("이동 {0:F0}m", "Walked {0:F0}m"), _walkedMeters),
                 string.Format(Saga.Core.SagaUi.L("과일 +{0} · 택배 {1}건", "Fruit +{0} · Deliveries {1}"), fruitGained, delivered),
                 string.Format(Saga.Core.SagaUi.L("다음: {0}", "Next: {0}"), GoalLineNow()));

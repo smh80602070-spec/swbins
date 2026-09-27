@@ -252,7 +252,7 @@ namespace Saga.Title
             SettingsButton.onClick.AddListener(() => ShowSettings(true));
             CreditsButton = SagaUi.NewButton(root, "Credits", SagaUi.L("크레딧", "Credits"), bottom, new Vector2(X(1), 70f), new Vector2(300f, 80f), SagaUi.ButtonIdle, 30f);
             CreditsButton.onClick.AddListener(() => ShowCredits(true));
-            QuitButton = SagaUi.NewButton(root, "Quit", SagaUi.L("게임 종료", "Quit game"), bottom, new Vector2(X(2), 70f), new Vector2(300f, 80f), SagaUi.ButtonIdle, 30f);
+            QuitButton = SagaUi.NewButton(root, "Quit", SagaUi.L("게임 종료", "Quit Game"), bottom, new Vector2(X(2), 70f), new Vector2(300f, 80f), SagaUi.ButtonIdle, 30f);
             QuitButton.onClick.AddListener(Application.Quit);
             QuitButton.gameObject.SetActive(canQuit);
             SagaUi.NewText(root, "v" + Version, 24f, SagaUi.InkDim, new Vector2(1f, 0f), new Vector2(-90f, 30f), new Vector2(160f, 40f));
@@ -410,13 +410,13 @@ namespace Saga.Title
             var rows = new List<(string label, Action onClick, Action<Button> keep)>
             {
                 (SagaUi.L("언어", "Language"), OnLanguage, b => LanguageButton = b),
-                (SagaUi.L("전체 음량", "Master volume"), OnVolume, b => VolumeButton = b),
+                (SagaUi.L("전체 음량", "Master Volume"), OnVolume, b => VolumeButton = b),
                 (SagaUi.L("배경음", "Music"), OnBgm, b => BgmButton = b),
-                (SagaUi.L("효과음", "Sound effects"), OnSfx, b => SfxButton = b),
+                (SagaUi.L("효과음", "Sound Effects"), OnSfx, b => SfxButton = b),
             };
             VibrationButton = null;
             if (TitleSettings.ShowVibration) rows.Add((SagaUi.L("진동", "Vibration"), OnVibration, b => VibrationButton = b));
-            rows.Add((SagaUi.L("오류 기록", "Error log"), OnErrorLog, b => ErrorLogButton = b));
+            rows.Add((SagaUi.L("오류 기록", "Error Log"), OnErrorLog, b => ErrorLogButton = b));
             const float rowH = 104f;
             float h = 180f + rows.Count * rowH + 130f; // 제목 180 · 줄 · 닫기 칸 130 (NewRect 는 앵커 = 기준점이라 위 기준 자리는 칸의 윗변)
             var panel = SagaUi.NewPanel(_settings.transform, "Panel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(900f, h), SagaUi.Panel);
@@ -467,7 +467,7 @@ namespace Saga.Title
                 cont = SagaUi.NewButton(card, "Continue", SagaUi.L("이어하기", "Continue"), anchor, firstPos, size, SagaUi.ButtonAccent, 32f);
                 cont.onClick.AddListener(() => Continue(idx));
             }
-            var fresh = SagaUi.NewButton(card, "New", SagaUi.L("새로 시작", "New game"), anchor, saved ? secondPos : firstPos, size,
+            var fresh = SagaUi.NewButton(card, "New", SagaUi.L("새로 시작", "New Game"), anchor, saved ? secondPos : firstPos, size,
                 saved ? SagaUi.ButtonIdle : SagaUi.ButtonAccent, 32f);
             fresh.onClick.AddListener(() => RequestNew(idx));
             ContinueButtons.Add(cont);
@@ -480,7 +480,7 @@ namespace Saga.Title
             _confirm.AddComponent<Image>().color = new Color(0f, 0f, 0f, 0.7f);
             var panel = SagaUi.NewPanel(_confirm.transform, "Panel", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(820f, 380f), SagaUi.Panel);
             _confirmText = SagaUi.NewText(panel.transform, "", 36f, SagaUi.Ink, new Vector2(0.5f, 1f), new Vector2(0f, -110f), new Vector2(740f, 160f));
-            ConfirmYes = SagaUi.NewButton(panel.transform, "Yes", SagaUi.L("지우고 시작", "Delete & start"), new Vector2(0.5f, 0f), new Vector2(-170f, 70f), new Vector2(300f, 84f), SagaUi.ButtonAccent, 32f);
+            ConfirmYes = SagaUi.NewButton(panel.transform, "Yes", SagaUi.L("지우고 시작", "Delete & Start"), new Vector2(0.5f, 0f), new Vector2(-170f, 70f), new Vector2(300f, 84f), SagaUi.ButtonAccent, 32f);
             ConfirmNo = SagaUi.NewButton(panel.transform, "No", SagaUi.L("취소", "Cancel"), new Vector2(0.5f, 0f), new Vector2(170f, 70f), new Vector2(300f, 84f), SagaUi.ButtonIdle, 32f);
             ConfirmYes.onClick.AddListener(OnConfirmYes);
             ConfirmNo.onClick.AddListener(OnConfirmNo);
