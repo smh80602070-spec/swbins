@@ -2,7 +2,7 @@
  * 탐사 파견 — 오픈월드 RPG의 탐사(명단 밖 동료를 몇 시간 보내 재료를 받는다) (PLAN §5 ⑲-26, saga-godot PLAN 106 ㊹)
  * ---------------------------------------------------------------
  *   게시판    역참마다 솥(cooking.js) 반대편 서쪽 3.5m — 4m(GPS 46m) 안 F · 🧭 단추
- *   탐사지    여섯 = ⑮ 땅 셋(고향·갈대 나루·옛 성터 언덕) × 둘, 세 시대 — 그 땅 탑을 찾아야 열린다
+ *   탐사지    여덟 = ⑮ 땅 넷(고향·갈대 나루·옛 성터 언덕·서리봉 고원 ⑲-32) × 둘, 세 시대 — 그 땅 탑을 찾아야 열린다
  *   시간      4·8·12·20시간(이 기기 실제 시각 — 꺼 둔 동안도 흐른다) × 배율 1·1.8·2.5·3.8(반올림·최소 1)
  *   자리      여정 등급 1·1·5·10·15 이상인 칸 수(2~5), 탐사지 하나에 한 명
  *   동료      가진 인물 중 동행 명단(save.party)에 없고 탐사 안 나간 이(나는 못 간다) — 잘 맞는 원소면 보상 +25%(올림)
@@ -30,10 +30,13 @@
     mudflat:     { name: '갯벌 선창',        zone: 'galdae',  era: '현대', el: 'water', base: { items: { clam: 3 } },       desc: '물 빠진 선창에서 조개를 줍는다' },
     shipyard:    { name: '녹슨 조선소',      zone: 'galdae',  era: '현대', el: 'fire',  base: { ore: 2 },                   desc: '버려진 조선소에서 쓸 만한 쇠를 고른다' },
     quarry:      { name: '잿빛 채석장',      zone: 'gojeong', era: '과거', el: 'rock',  base: { ore: 1, items: { meat: 1 } }, desc: '옛 채석장 돌무더기를 뒤진다' },
-    observatory: { name: '시간 틈 관측소',   zone: 'gojeong', era: '미래', el: 'elec',  base: { dust: 3, ore: 1 },          desc: '틈 곁 관측소의 기록을 거둔다' }
+    observatory: { name: '시간 틈 관측소',   zone: 'gojeong', era: '미래', el: 'elec',  base: { dust: 3, ore: 1 },          desc: '틈 곁 관측소의 기록을 거둔다' },
+    /* ⑲-32 서리봉 고원(saga-godot 106 ㊻-2) — 고원 특산물 눈꽃을 하나씩 얹는다(㊻-3) */
+    snow_fort:   { name: '얼음 아래 산성 터', zone: 'snowfort', era: '과거', el: 'ice',  base: { ore: 1, items: { mushroom: 2, snow_bloom: 1 } }, desc: '얼어붙은 산성 터 밑 곳간을 더듬는다' },
+    ship_wreck:  { name: '추락한 비행선 잔해', zone: 'snowfort', era: '미래', el: 'wind', base: { ore: 2, dust: 1, items: { snow_bloom: 1 } }, desc: '눈에 묻힌 비행선 잔해에서 쓸 만한 것을 건진다' }
   };
-  var ORDER = ['old_road', 'forest_edge', 'mudflat', 'shipyard', 'quarry', 'observatory'];
-  var ZONE_NAMES = { home: '고향', galdae: '갈대 나루', gojeong: '옛 성터 언덕' };
+  var ORDER = ['old_road', 'forest_edge', 'mudflat', 'shipyard', 'quarry', 'observatory', 'snow_fort', 'ship_wreck'];
+  var ZONE_NAMES = { home: '고향', galdae: '갈대 나루', gojeong: '옛 성터 언덕', snowfort: '서리봉 고원' };
   var HOURS = [4, 8, 12, 20], MUL = [1, 1.8, 2.5, 3.8];
   var SLOT_AR = [1, 1, 5, 10, 15];
   var FIT_BONUS = 0.25;
@@ -85,7 +88,9 @@
     var s = SITES[id];
     if (!s) { return false; }
     if (s.zone === 'home') { return true; }
-    var ST = global.DG.story, B = global.DG.biome, a = ST && ST.anchorOf ? ST.anchorOf(s.zone) : null;
+    /* ⑲-32 서리봉 고원은 바깥 고리(약 6km 북)라 story.anchorOf(±4칸) 밖이다 — 고원 가운데 칸(frost.center) 탑을 본다 */
+    var ST = global.DG.story, B = global.DG.biome, FR = global.DG.frost;
+    var a = s.zone === 'snowfort' ? (FR && FR.on && FR.on() && FR.center ? FR.center() : null) : (ST && ST.anchorOf ? ST.anchorOf(s.zone) : null);
     return !!(a && B && B.found && B.found(a.key));
   }
   /** 남은 ms(0 이면 다 됨), 안 나간 곳은 null */
@@ -362,7 +367,7 @@
 
   global.DG = global.DG || {};
   global.DG.dispatch = {
-    SITES: SITES, ORDER: ORDER, HOURS: HOURS, MUL: MUL, SLOT_AR: SLOT_AR, FIT_BONUS: FIT_BONUS, BOARD_OFF: BOARD_OFF, BOARD_R: BOARD_R,
+    SITES: SITES, ORDER: ORDER, ZONE_NAMES: ZONE_NAMES, HOURS: HOURS, MUL: MUL, SLOT_AR: SLOT_AR, FIT_BONUS: FIT_BONUS, BOARD_OFF: BOARD_OFF, BOARD_R: BOARD_R,
     /* 판정 층(순수) */
     slotsFor: slotsFor, rewardOf: rewardOf, fits: fits, rewardText: rewardText,
     /* 세이브·상태 */

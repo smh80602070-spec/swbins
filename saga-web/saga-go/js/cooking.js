@@ -8,6 +8,8 @@
  *   요리   여덟 × 품질 셋 — 바늘이 1.6초에 한 번 오가고 요리마다 맛있는 칸이 다르다. 5 번 하면 자동 조리(보통).
  *          회복 셋(한 사람·명단·되살리기, 포만감) · 버프 다섯(공격·방어·모험 계열, 명단 전체 300초, 계열마다 하나)
  *   승급   ★1~5 에 지역 특산물 3·10·20·30·45 — 인물마다 id 해시로 셋 중 하나(`hero.js` rankUpCheck 가 묻는다)
+ *   눈꽃   ⑲-32 서리봉 고원 특산물 — 고원 가운데 칸에만 자리 셋(frost `bloomSpots`) × 둘. **해시 풀 SPECIALTIES 셋은 그대로**
+ *          (늘리면 있던 인물 특산물이 바뀐다) — 고원 인물만 SPECIALTY_OF 로 눈꽃을 쓴다. 눈꽃 요리는 아직 없다
  *
  * 표·수치는 saga-godot `data/cooking.gd` 그대로(이름도 그쪽 창작). 자리·품질·바늘 판정(`cellPatches`·`qualityAt`·
  * `needleAt`·`specialtyOf`)은 순수 함수. 세이브 `save.cook = { bag, prof, gather }`(읽는 쪽 기본값).
@@ -35,9 +37,13 @@
     orchid:       { name: '청하란',   icon: '💠', kind: 'special', color: '#b8dbff', model: 'flower',   h: 0.6 },
     conch:        { name: '갯소라',   icon: '🐌', kind: 'special', color: '#ff9e85', model: 'rock',     h: 0.35 },
     ash_flower:   { name: '재꽃',     icon: '🥀', kind: 'special', color: '#ccbde6', model: 'flower',   h: 0.6 },
+    snow_bloom:   { name: '눈꽃',     icon: '❄️', kind: 'special', color: '#bfeee6', model: 'flower',   h: 0.55 },
     meat:         { name: '짐승 고기', icon: '🍖', kind: 'drop' }
   };
-  var SPECIALTIES = ['orchid', 'conch', 'ash_flower'];
+  var SPECIALTIES = ['orchid', 'conch', 'ash_flower'];          // 해시 풀 — 셋 그대로
+  /* 해시 밖 — 그 지역 인물은 그 지역 특산물(saga-godot 106 ㊻-3 SPECIALTY_OF) */
+  var SPECIALTY_OF = { story_haram: 'snow_bloom' };
+  var SNOW_ITEM = 'snow_bloom';
   /* 바이옴 → 특산물 · 일반 무리 여섯 */
   var SPECIAL_OF = { home: 'orchid', plain: 'orchid', bamboo: 'orchid', marsh: 'conch', canyon: 'ash_flower', ruins: 'ash_flower' };
   var COMMON_OF = {
@@ -109,6 +115,18 @@
       }
       patches.push({ id: pid, item: item, x: p.x, y: p.y, nodes: nodes });
     }
+    /* ⑲-32 서리봉 고원 가운데 칸 — 눈꽃 자리 셋 × 둘(바이옴 무리 뒤에 붙는다, id 는 'g<칸>_s<n>') */
+    var FR = global.DG.frost, fc = FR && FR.on && FR.on() && FR.center ? FR.center() : null;
+    if (fc && fc.key === c.key) {
+      FR.bloomSpots().forEach(function (q, s) {
+        var sid = 'g' + c.key + '_s' + s, sn = [];
+        for (k = 0; k < 2; k++) {
+          var a2 = Math.PI * k + 0.6;
+          sn.push({ id: sid + '_' + k, item: SNOW_ITEM, x: q.x + Math.cos(a2) * RING, y: q.y + Math.sin(a2) * RING, special: true });
+        }
+        patches.push({ id: sid, item: SNOW_ITEM, x: q.x, y: q.y, nodes: sn });
+      });
+    }
     return { cell: c, patches: patches };
   }
   /** 바늘 자리(0~1, 0→1→0 왕복) */
@@ -129,6 +147,7 @@
   /** 인물 → 승급 특산물(주인공 청하란, 나머지 id 해시 — Godot 식) */
   function specialtyOf(id) {
     if (!id || id === '_me') { return 'orchid'; }
+    if (SPECIALTY_OF[id]) { return SPECIALTY_OF[id]; }
     var h = 7;
     for (var i = 0; i < id.length; i++) { h = (h * 31 + id.charCodeAt(i)) & 0x7fffffff; }
     return SPECIALTIES[h % SPECIALTIES.length];
@@ -573,7 +592,7 @@
     NEEDLE_SEC: NEEDLE_SEC, PERFECT_HALF: PERFECT_HALF, NORMAL_HALF: NORMAL_HALF, RANK_SP: RANK_SP, POT_OFF: POT_OFF,
     /* 판정 층(순수) */
     cellPatches: cellPatches, needleAt: needleAt, qualityAt: qualityAt, dishId: dishId, dishName: dishName, parseDish: parseDish,
-    specialtyOf: specialtyOf, effectText: effectText,
+    specialtyOf: specialtyOf, SPECIALTY_OF: SPECIALTY_OF, effectText: effectText,
     /* 세이브·가방 */
     count: count, add: add, spend: spend, prof: prof, available: available, near: near, pick: pick, prune: prune,
     potsNear: potsNear, atPot: atPot, cookCheck: cookCheck, cook: cook, canAuto: canAuto, autoCook: autoCook,

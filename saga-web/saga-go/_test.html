@@ -9593,6 +9593,9 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var same = JSON.stringify(CK.cellPatches(2, -3)) === JSON.stringify(CK.cellPatches(2, -3));
       for (j = -5; j <= 5; j++) { for (i = -5; i <= 5; i++) {
         var cp = CK.cellPatches(i, j, terr), bio = cp.cell.biome, P = cp.patches, home = bio === 'home';
+        var snow = P.filter(function (p) { return p.item === 'snow_bloom'; });   // ⑲-32 고원 가운데 칸만 셋
+        if (snow.length !== (DG.frost.center() && DG.frost.center().key === cp.cell.key ? 3 : 0)) { ok = false; }
+        P = P.filter(function (p) { return p.item !== 'snow_bloom'; });
         var sp = P.filter(function (p) { return CK.ITEMS[p.item].kind === 'special'; });
         if (P.length !== (home ? 7 : 8) || sp.length !== (home ? 1 : 2) || sp.some(function (p) { return p.item !== CK.SPECIAL_OF[bio]; })) { ok = false; }
         for (n = 0; n < P.length; n++) {
@@ -11789,10 +11792,10 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } };
     }
 
-    t('탐사 파견 ⑲-26 — 표·식: 탐사지 여섯(원소 여섯·땅 셋 × 둘·시대 셋) · 시간 4·8·12·20 × 1·1.8·2.5·3.8 · 자리 2~5(여정 등급 1·5·10·15) · 보상 반올림·최소 1·원소 맞으면 +25% 올림 · 잘 맞는 원소는 fieldCombat.elementOf', function () {
+    t('탐사 파견 ⑲-26 — 표·식: 탐사지 여덟(원소 일곱·땅 넷 × 둘·시대 셋, ⑲-32 고원 둘) · 시간 4·8·12·20 × 1·1.8·2.5·3.8 · 자리 2~5(여정 등급 1·5·10·15) · 보상 반올림·최소 1·원소 맞으면 +25% 올림 · 잘 맞는 원소는 fieldCombat.elementOf', function () {
       var DP = DG.dispatch, r = {}, els = {}, zones = {}, eras = {};
       DP.ORDER.forEach(function (id) { var s = DP.SITES[id]; els[s.el] = 1; zones[s.zone] = (zones[s.zone] || 0) + 1; eras[s.era] = 1; });
-      r.table = DP.ORDER.length === 6 && Object.keys(els).length === 6 && Object.keys(zones).length === 3 && Object.keys(zones).every(function (z) { return zones[z] === 2; }) &&
+      r.table = DP.ORDER.length === 8 && Object.keys(els).length === 7 && Object.keys(zones).length === 4 && Object.keys(zones).every(function (z) { return zones[z] === 2; }) &&
         Object.keys(eras).length === 3 && DP.HOURS.join() === '4,8,12,20' && DP.MUL.join() === '1,1.8,2.5,3.8';
       r.slots = [1, 4, 5, 9, 10, 15, 40].map(DP.slotsFor).join() === '2,2,3,3,4,5,5';
       r.reward = DP.rewardOf('old_road', 4, false).gold === 400 && DP.rewardOf('old_road', 8, false).gold === 720 && DP.rewardOf('old_road', 8, true).gold === 900 &&
@@ -11801,7 +11804,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var wind = DG.data.heroes.filter(function (h) { return DG.fieldCombat.elementOf(h.id) === 'wind'; })[0];
       r.fit = !!wind && DP.fits('old_road', wind.id) && !DP.fits('forest_edge', wind.id);
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
-      return bad.length === 0 ? '여섯 · 넷 × 배율 · 자리 2~5 · 400/720/900 · 원소 ★' : ('실패 ' + bad.join(','));
+      return bad.length === 0 ? '여덟 · 넷 × 배율 · 자리 2~5 · 400/720/900 · 원소 ★' : ('실패 ' + bad.join(','));
     });
 
     t('탐사 파견 ⑲-26 — 보내기·받기: 게시판 밖 막힘 · 잠긴 땅 막힘(탑 찾으면 열림) · 자리 꽉(등급 오르면 늚) · 명단 안·나·이미 나감·차 있는 곳 막힘 · 시간 전 받기 막힘 · 지나면 받기(금·재료) · 부르기 보상 없음 · 탐사 중 동료는 편성 넣기 막힘', function () {
@@ -12308,6 +12311,48 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '100명 중 심장 0 · 하람 🧊2(★1→★2) · 꽃 → 🧊 ' + '받음' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-32 고원 탐사지 둘 · 특산물 눈꽃 (dispatch snow_fort·ship_wreck · cooking snow_bloom · frost bloomSpots, PLAN §5 ⑲-32) ── */
+    t('고원 ⑲-32 — 탐사지 둘: 얼음 아래 산성 터(과거·빙)·추락한 비행선 잔해(미래·풍) · 고원 탑을 찾아야 열림 · 눈꽃 하나씩(시간 배율 따라)', function () {
+      var rig = dpRig(), DP = rig.DP, r = {};
+      try {
+        var a = DP.SITES.snow_fort, b = DP.SITES.ship_wreck;
+        r.table = a && b && a.zone === 'snowfort' && b.zone === 'snowfort' && a.el === 'ice' && b.el === 'wind' && a.era === '과거' && b.era === '미래' &&
+          DP.ORDER.slice(-2).join() === 'snow_fort,ship_wreck' && DP.ZONE_NAMES.snowfort === '서리봉 고원';
+        r.locked = !DP.open('snow_fort') && !DP.open('ship_wreck');
+        C.save.regions[DG.frost.center().key] = 1;
+        r.open = DP.open('snow_fort') && DP.open('ship_wreck');
+        var r4 = DP.rewardOf('snow_fort', 4, false), r20 = DP.rewardOf('ship_wreck', 20, false);
+        r.reward = r4.items.snow_bloom === 1 && r4.items.mushroom === 2 && r4.ore === 1 && r20.items.snow_bloom === 4 && r20.ore === 8 && r20.dust === 4 &&
+          /❄️ 눈꽃 1/.test(DP.rewardText(r4));
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '둘 · 잠김 → 탑 찾으면 열림 · 4시간 ❄️1 · 20시간 ❄️4' : ('실패 ' + bad.join(','));
+    });
+
+    t('고원 ⑲-32 — 눈꽃: 고원 가운데 칸에만 자리 셋 × 둘(명소·발견·탑 비킴·눈 땅·결정적) · 해시 풀 셋 그대로 · 하람만 눈꽃 · 줍기 · 고원 끄면 없음', function () {
+      var CK = DG.cooking, FR = DG.frost, B = DG.biome, undo = ckRig(), r = {};
+      try {
+        var fc = FR.center(), sp = FR.bloomSpots(), st = FR.sites(), p = fc.key.split('_').map(Number);
+        r.spots = sp.length === 3 && JSON.stringify(sp) === JSON.stringify(FR.bloomSpots()) && sp.every(function (q) {
+          return FR.snowAt(q.x, q.y) && Math.hypot(q.x - fc.x, q.y - fc.y) >= 40 && st.every(function (x) { return Math.hypot(x.x - q.x, x.y - q.y) >= 30; });
+        }) && Math.hypot(sp[0].x - sp[1].x, sp[0].y - sp[1].y) >= 30;
+        var P = CK.cellPatches(p[0], p[1]).patches.filter(function (q) { return q.item === 'snow_bloom'; });
+        var P2 = CK.cellPatches(p[0] + 1, p[1]).patches.filter(function (q) { return q.item === 'snow_bloom'; });
+        r.patches = P.length === 3 && P.every(function (q) { return q.nodes.length === 2 && q.nodes.every(function (n) { return n.special && n.item === 'snow_bloom'; }); }) && P2.length === 0;
+        var pool = true;
+        DG.data.heroes.forEach(function (h) { if (CK.specialtyOf(h.id) === 'snow_bloom') { pool = false; } });
+        var hn = CK.rankNeed('story_haram', 0);
+        r.haram = pool && CK.SPECIALTIES.length === 3 && CK.specialtyOf('story_haram') === 'snow_bloom' && hn.item === 'snow_bloom' && hn.name === '눈꽃' && hn.n === 3;
+        r.pick = CK.pick(P[0].nodes[0]) && CK.count('snow_bloom') === 1 && !CK.pick(P[0].nodes[0]);
+        try {
+          C.setTune('frost.on', 0);
+          r.off = CK.cellPatches(p[0], p[1]).patches.every(function (q) { return q.item !== 'snow_bloom'; });
+        } finally { C.setTune('frost.on', null); }
+      } finally { undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '자리 3 × 2 · 옆 칸 0 · 해시 풀 3 · 하람 ❄️3(★1) · 한 번 줍기 · 끄면 0' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

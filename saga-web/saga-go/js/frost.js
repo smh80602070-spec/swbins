@@ -7,6 +7,7 @@
  *   명소    다섯 — 옛 산성 터(과거)·기상 관측소(현대)·추락한 비행선(미래)·얼어붙은 호수·고개 경계비. 30m 안 = 발견
  *   발견    작은 발견 일곱(위성 조각·장수 석상·사냥꾼 오두막·눈사람·케이블카·얼음굴·봉화) — 14m(GPS 30m) 안
  *   이동    서리 고개(경계비)·기상 관측소 — 찾으면 지도(M) 순간이동 지점(키보드 판만)
+ *   눈꽃    고원 특산물 채집 자리 셋(북서·가운데·동쪽, ⑲-32) — 자리만 여기서 잡고 채집은 cooking.js 가 한다
  *   벽      산성 담·관측소·비행선·오두막·석상·경계비는 world3d `houseRects` 로 막는다(산성은 남쪽 문으로 든다)
  *
  * 자리는 가운데에서 어긋난 곳(off)에서 가장 가까운 들·숲 칸(물·마을·길·산·강 아님, 같은 땅, 서로 떨어짐) — 해시·지형만, 늘 같다.
@@ -43,6 +44,8 @@
     { id: 'cave',    name: '얼음굴 어귀',      era: '과거', off: [-280, -80],  model: 'cave' },
     { id: 'beacon',  name: '고원 봉화',        era: '과거', off: [250, 60],    model: 'beacon' }
   ];
+  /* ⑲-32 눈꽃 자리 셋(saga-godot 106 ㊻-3 PATCHES — 북서·가운데·동쪽). 명소·발견과 SEP_SMALL 넘게 */
+  var BLOOM_OFF = [[-340, -300], [120, 140], [460, 60]];
   var LANDMARK_R = 30, SMALL_R = function (g) { return g ? 30 : 14; };
   var REWARD_BIG = { gold: 150, dust: 2, exp: 40 }, REWARD_SMALL = { gold: 60, exp: 20 };
   var SEARCH_STEP = 8, SEARCH_R = 200, SEP_BIG = 60, SEP_SMALL = 30, TOWER_CLEAR = 40;
@@ -109,6 +112,20 @@
       out.push({ id: d.id, name: d.name, era: d.era, model: d.model, big: false, x: p.x, y: p.y, forced: !!p.forced });
     });
     memo = out;
+    return out;
+  }
+  /** ⑲-32 눈꽃 자리 셋 — [{ x, y }]. 명소·발견·탑을 비켜 가장 가까운 좋은 자리, 세계가 같으면 늘 같다 */
+  var bloomMemo = null;
+  function bloomSpots() {
+    if (bloomMemo) { return bloomMemo; }
+    var c = center();
+    if (!c) { return []; }
+    var taken = sites().slice(), out = [];
+    BLOOM_OFF.forEach(function (off) {
+      var p = placeNear(c, off, taken, SEP_SMALL, 0), q = { x: p.x, y: p.y, big: false };
+      taken.push(q); out.push({ x: p.x, y: p.y });
+    });
+    bloomMemo = out;
     return out;
   }
   function siteById(id) { var L = sites(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
@@ -425,10 +442,10 @@
     ZONE: ZONE, LANDMARKS: LANDMARKS, SMALL: SMALL, LANDMARK_R: LANDMARK_R, SMALL_R: SMALL_R, REWARD_BIG: REWARD_BIG, REWARD_SMALL: REWARD_SMALL,
     SEP_BIG: SEP_BIG, SEP_SMALL: SEP_SMALL, TOWER_CLEAR: TOWER_CLEAR, LAKE_R: LAKE_R, FORT_SIDE: FORT_SIDE, FORT_GATE: FORT_GATE,
     /* 판정 층(순수) */
-    on: on, center: center, sites: sites, siteById: siteById, snowAt: snowAt, snowCell: snowCell, rectsOf: rectsOf, rectsIn: rectsIn,
+    on: on, center: center, sites: sites, bloomSpots: bloomSpots, siteById: siteById, snowAt: snowAt, snowCell: snowCell, rectsOf: rectsOf, rectsIn: rectsIn,
     /* 세이브·상태 */
     snowingHere: snowingHere, calm: calm, snowCount: snowCount, SNOW_N: SNOW_N, SNOW_CALM: SNOW_CALM, found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks,
     tick: tick,
-    _resetForTest: function () { memo = null; rectMemo = null; snowMemo = {}; snowN = 0; hereT = -1; }
+    _resetForTest: function () { memo = null; bloomMemo = null; rectMemo = null; snowMemo = {}; snowN = 0; hereT = -1; }
   };
 })(window);
