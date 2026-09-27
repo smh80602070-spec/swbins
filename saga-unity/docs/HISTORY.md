@@ -9691,3 +9691,12 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - garments 통 `teeth`(톱니 끝단)·무늬 `leaf` → 틀 `leafdress`(Jolleen 자리 요정)·`wraith`(Nightshade 자리 안개유령) — 옛 kitbash robe(종이 통·풍선) 대신.
 - 띠 껍데기 → `belt`·`belt_low`·`kneepads`·`neckring`(무도 수행자·수리 기사·용병·시간 여행자(남)). 황건 두목 조끼 등 점은 대기 자세 팔 근육이라 못 풀어 그대로.
 - 검사: 6벌 verify fbx ≤ 0.36° · glb 0.0° · sha256 같음 · CMP_RESULT OK(FBX 로컬 전용). 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
+
+## 2026-09-27 char-forge — 치마 뼈 무게 soften, 61벌 다시 훑어 11벌 손질
+
+"vroid 자체툴 이어해".
+
+- 술사 치마 가슴 아래 불룩 = 옷 모양이 아니라 뼈 무게(몸에서 11cm 뜬 배 높이 정점이 spine_01, 가랑이 밑에서 골반 → 허벅지 급전환). `build_real` 레시피 칸 `soften` {옷: [세로 40, 둘레 6]} — 술사 + 긴 겉옷 넷(시간 여행자(여)·능묘지기·안개유령·시간 행상).
+- render_grid 로 61벌 재점검: 장화 윗단이 바지 뚫음 → 고물 행상·폭주 청년 `under` {장화: [바지]}, 수리 기사·불량배 발목 장화로 · 주역 여자 흰 양말 `under` · 칼 든 아가씨 치마 속 바지 `under`.
+- CF_Guard 대기 오른 어깨 뒤 혹은 팔꿈치 pole 을 바꿔도 그대로라 되돌림(남은 흠).
+- 검사: 11벌 verify fbx ≤ 0.7° · glb 0.0° · sha256 같음(넷) · CMP_RESULT OK(FBX 로컬 전용, 배치가 올린 ProjectVersion·Packages 되돌림). 남은 흠은 char-forge README §8-1 열셋째. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
