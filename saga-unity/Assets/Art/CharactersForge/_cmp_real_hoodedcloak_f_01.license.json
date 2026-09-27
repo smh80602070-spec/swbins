@@ -11,6 +11,9 @@
   "makehuman_system_assets: eyebrow012/eyebrow012.mhclo",
   "makehuman_system_assets: eyelashes02/eyelashes02.mhclo",
   "makehuman_system_assets: teeth_base/teeth_base.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell, shell, shell, robe"
+  "makehuman_system_assets: donitz_monk_robe/donitz_monk_robe.mhclo",
+  "makehuman_system_assets: donitz_monk_robe_hood/donitz_monk_robe_hood.mhclo",
+  "makehuman_system_assets: toigo_gloves_short/toigo_gloves_short.mhclo",
+  "makehuman_system_assets: toigo_flats/toigo_flats.mhclo"
  ]
 }

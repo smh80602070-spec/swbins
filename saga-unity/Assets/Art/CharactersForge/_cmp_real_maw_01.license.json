@@ -10,6 +10,7 @@
   "makehuman_system_assets: high-poly/high-poly.mhclo",
   "makehuman_system_assets: eyelashes01/eyelashes01.mhclo",
   "makehuman_system_assets: teeth_base/teeth_base.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): tusks, shell, shell, loincloth"
+  "makehuman_system_assets: cf_breastplate/cf_breastplate.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): tusks, loincloth"
  ]
 }

@@ -11,6 +11,7 @@
   "makehuman_system_assets: eyebrow009/eyebrow009.mhclo",
   "makehuman_system_assets: eyelashes01/eyelashes01.mhclo",
   "makehuman_system_assets: teeth_base/teeth_base.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell, shell, shell, shell, shell, shell"
+  "makehuman_system_assets: cf_shinobi_23252e_3b3128/cf_shinobi_23252e_3b3128.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell, shell, shell, shell"
  ]
 }

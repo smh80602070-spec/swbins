@@ -8,6 +8,9 @@
   "ual1_standard: Unreal Engine/AL_Standard.fbx",
   "makehuman_system_assets: young_asian_male/young_asian_male.mhmat",
   "makehuman_system_assets: low-poly/low-poly.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell, shell, shell, shell"
+  "makehuman_system_assets: male_casualsuit05/male_casualsuit05.mhclo",
+  "makehuman_system_assets: culturalibre_male_boots/culturalibre_male_boots.mhclo",
+  "makehuman_system_assets: toigo_gloves_short/toigo_gloves_short.mhclo",
+  "makehuman_system_assets: culturalibre_motorcycle_helmet/culturalibre_motorcycle_helmet.mhclo"
  ]
 }

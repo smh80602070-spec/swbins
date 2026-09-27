@@ -145,6 +145,46 @@ def cloth_src(arm, key):
     return next((o for o in arm.children if o.type == 'MESH' and any(k in o.get('cf_src', '') for k in keys)), None)
 
 
+TUCK_UNDER = 0.004   # 눌러 넣은 살이 옷 면 아래 이만큼
+
+
+def tuck(arm, keys):
+    """레시피 `tuck`: [옷 폴더 이름] — 그 옷 밖으로 비어져 나온 살을 옷 면 바로 아래로 눌러 넣는다(쉼 자세, 얼굴·목 빼고).
+    toigo_fisherman_sweater 는 여자 몸에서 체형을 바꿔도 가슴·어깨뼈 살이 뚫었다(09-27). 옷 면 법선은 믿지 않고
+    살 법선으로 판정한다: 바깥(+n) 3cm 안에 옷이 없고 안쪽(-n) 1.2cm 안에 있으면 뚫린 살, 바깥 옷이 TUCK_UNDER 보다 가까우면 얕은 살."""
+    from mathutils.bvhtree import BVHTree
+    body = next(o for o in arm.children if o.type == 'MESH' and any(s.material and s.material.name.startswith('skin') for s in o.material_slots))
+    skip = {g.index for g in body.vertex_groups if g.name in ('head', 'neck_01') or g.name.split('_')[0] in
+            ('hand', 'thumb', 'index', 'middle', 'ring', 'pinky')}   # 손은 소매 안쪽을 맞혀 눌릴 수 있다
+    mw, mwi, nm = body.matrix_world, body.matrix_world.inverted(), body.matrix_world.to_3x3()
+    for key in keys:
+        cl = cloth_src(arm, key)
+        if cl is None:
+            sys.exit(f'tuck: 옷 {key} 이 레시피 clothes 에 없다')
+        bm = bmesh.new()
+        bm.from_mesh(cl.data)
+        bm.transform(cl.matrix_world)
+        tree = BVHTree.FromBMesh(bm)
+        bm.free()
+        moved = 0
+        for v in body.data.vertices:
+            if v.groups and max(v.groups, key=lambda g: g.weight).group in skip:
+                continue
+            p, n = mw @ v.co, (nm @ v.normal).normalized()
+            fwd = tree.ray_cast(p, n, 0.03)[0]
+            if fwd is not None:
+                if (fwd - p).length < TUCK_UNDER:
+                    v.co = mwi @ (fwd - n * TUCK_UNDER)
+                    moved += 1
+                continue
+            back = tree.ray_cast(p, -n, 0.012)[0]   # 뚫림은 얕다(깊으면 옷 안쪽 다른 면)
+            if back is not None:
+                v.co = mwi @ (back - n * TUCK_UNDER)
+                moved += 1
+        body.data.update()
+        print('TUCK', key, 'moved', moved)
+
+
 def tint(arm, slot, hexcol, outdir):
     """재질 칸의 바탕 그림에 색을 곱해 새 그림으로 굽는다(괴물 피부 초록·잿빛 등). 노드로 곱하면 FBX 가 그림을 못 옮겨서 픽셀로 굽는다.
     그림 픽셀은 sRGB 값 그대로라 색도 sRGB(헥스 그대로)로 곱한다."""
@@ -700,6 +740,8 @@ def main():
     arm = bake_for_export(svc, basemesh)
     arm.name = arm.data.name = r['id']
     name_materials(svc, arm)
+    if r.get('tuck'):
+        tuck(arm, r['tuck'])
     for slot, col in r.get('tints', {}).items():
         tint(arm, slot, col, os.path.join(os.path.dirname(os.path.abspath(out)), r['id'] + '_tex'))
     if r.get('kitbash'):

@@ -8,6 +8,10 @@
   "ual1_standard: Unreal Engine/AL_Standard.fbx",
   "makehuman_system_assets: young_african_male/young_african_male.mhmat",
   "makehuman_system_assets: low-poly/low-poly.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell, shell, shell, shell, shell"
+  "makehuman_system_assets: matcreator_mc-skinsuit_2022/matcreator_mc-skinsuit_2022.mhclo",
+  "makehuman_system_assets: matcreator_mc-scifi-armor_jupiter7/matcreator_mc-scifi-armor_jupiter7.mhclo",
+  "makehuman_system_assets: culturalibre_hero-heroine_gloves_1/culturalibre_hero-heroine_gloves_1.mhclo",
+  "makehuman_system_assets: culturalibre_hero_boots_2/culturalibre_hero_boots_2.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell, shell"
  ]
 }

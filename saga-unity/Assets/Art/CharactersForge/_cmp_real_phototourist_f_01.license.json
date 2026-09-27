@@ -12,6 +12,9 @@
   "makehuman_system_assets: eyelashes02/eyelashes02.mhclo",
   "makehuman_system_assets: teeth_base/teeth_base.mhclo",
   "makehuman_system_assets: bob01/bob01.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell, shell"
+  "makehuman_system_assets: joepal_crude_t-shirt_female/joepal_crude_t-shirt_female.mhclo",
+  "makehuman_system_assets: cortu_jeans_shorts/cortu_jeans_shorts.mhclo",
+  "makehuman_system_assets: shoes05/shoes05.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell"
  ]
 }

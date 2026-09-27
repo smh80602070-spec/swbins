@@ -12,6 +12,8 @@
   "makehuman_system_assets: eyelashes02/eyelashes02.mhclo",
   "makehuman_system_assets: teeth_base/teeth_base.mhclo",
   "makehuman_system_assets: ponytail01/ponytail01.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell, shell, shell, shell"
+  "makehuman_system_assets: matcreator_mc-bodysuit-2021/matcreator_mc-bodysuit-2021.mhclo",
+  "makehuman_system_assets: matcreator_mc-scifi-armor_guardian/matcreator_mc-scifi-armor_guardian.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell"
  ]
 }

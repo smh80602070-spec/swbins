@@ -12,6 +12,11 @@
   "makehuman_system_assets: eyelashes02/eyelashes02.mhclo",
   "makehuman_system_assets: teeth_base/teeth_base.mhclo",
   "makehuman_system_assets: long01/long01.mhclo",
-  "char-forge build_real.py kitbash(자체 생성): shell, shell, shell, shell, shell, robe"
+  "makehuman_system_assets: toigo_turtleneck_halter_top/toigo_turtleneck_halter_top.mhclo",
+  "makehuman_system_assets: toigo_wool_pants/toigo_wool_pants.mhclo",
+  "makehuman_system_assets: toigo_tiered_mini_skirt/toigo_tiered_mini_skirt.mhclo",
+  "makehuman_system_assets: toigo_gloves_long/toigo_gloves_long.mhclo",
+  "makehuman_system_assets: toigo_flats/toigo_flats.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell"
  ]
 }

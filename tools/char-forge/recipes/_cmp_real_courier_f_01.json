@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_courier_f_01",
- "_note": "단계 3 역참 사람 비교용 — saga-unity Megan(Mixamo) 자리 후보(GO 현대 택배 기사). 게임 인물 아님. 09-26 진짜 옷(CC0 밤빛 스웨터·짙은 바지·운동화·장갑, 챙 모자는 껍데기). 여자·말총머리·챙 모자·밤빛 겉옷·짙은 바지·장갑·운동화.",
+ "_note": "단계 3 역참 사람 비교용 — saga-unity Megan(Mixamo) 자리 후보(GO 현대 택배 기사). 게임 인물 아님. 09-26 진짜 옷(CC0 밤빛 스웨터·짙은 바지·운동화·장갑, 챙 모자는 껍데기). 여자·말총머리·챙 모자·밤빛 겉옷·짙은 바지·장갑·운동화. 09-27 tuck(뜨개 윗옷 가슴·어깨뼈로 뚫린 살을 옷 아래로).",
  "macro": {
   "gender": 0.0,
   "age": 0.38,
@@ -55,5 +55,8 @@
  "tints": {
   "toigo_fisherman_sweater": "#a0785a",
   "toigo_wool_pants": "#50525c"
- }
+ },
+ "tuck": [
+  "toigo_fisherman_sweater"
+ ]
 }

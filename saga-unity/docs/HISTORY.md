@@ -9584,3 +9584,12 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 버전: 표시는 `Application.version`, 빌드가 bundleVersion "a.b.c" 로 안드로이드 버전 코드 셈(0.1.0 → 100 — ProjectSettings 도 100 으로 맞춰 빌드가 설정을 안 흔듦).
 - 검증: `PlaytestSagaCredits` OK · 배치 점검 OK(타이틀 패널 2 — 설정·크레딧, 두 언어 × 세 화면비 0건, 전체 문제 0) · 흐름 진단은 이 PC 의 Missing Prefab 로 FAIL 이 전과 같음(타이틀 글 25→26 = 크레딧 단추, 새 실패 없음). 셸 heredoc 이 `\n` 을 먹는 함정 한 번 더 — 백슬래시 든 치환은 Edit 툴로.
 - 남음: 6b 앱 id(사용자)·아이콘 · 6c · 6d. 실기: 크레딧 창 글(□·끊김)·오류 기록 복사.
+
+## 2026-09-27 char-forge — 비교 몸 FBX 새 판(로컬 전용) · tuck
+
+"vroid 자체툴 개발 진행".
+
+- 새 FBX(진짜 옷 그림 포함) 61벌이 1.4GB(옛 껍데기 판 655MB) → 사용자 결정 "로컬 전용": `saga-unity/.gitignore` 가 CharactersForge FBX·Textures·Materials·Animators/CharForge·CharCompareReal 장면을 막고 추적 해제(3d972934 까지). 파일은 이 PC 에 남고 `.license.json`·ForgeSkin 그래프만 커밋. 게임 프리팹·장면은 이 FBX 를 안 쓴다(GUID grep).
+- `_out` 61벌 → CharactersForge, 배치 `BuildAndVerifyBatch` 두 번 `CMP_RESULT OK`(122 몸 — 짝 키·발·카메라 쪽·동작·ForgeSkin 그림). 배치가 올린 ProjectVersion·Packages 는 unity-batch.sh 가 되돌림.
+- build_real 레시피 칸 `tuck`: 지정한 옷 밖으로 비어져 나온 살을 쉼 자세에서 옷 면 4mm 아래로(살 법선 광선 판정, 얼굴·목·손 빼고). 택배 기사(여)의 뜨개 윗옷 앞가슴 뚫림이 잡힘 — 어깨 뒤 두 점은 동작 휨이라 남음(8mm 는 앞에 새 점이 생겨 되돌림). 안 준 몸은 바이트까지 같다. verify fbx·glb 실패 0 · sha256 두 번 같음.
+- 다음 = HOW_TO_PLAYTEST §9 사용자 판정(짝마다 "바꿔도 된다 / 아직"). 다른 PC 는 README §3 "새 PC" 순서로 먼저 뽑는다.
