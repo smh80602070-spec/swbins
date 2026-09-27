@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_leatherknight_f_01",
- "_note": "단계 3 GO 인물 비교용 — saga-unity Eve(Mixamo) 자리 후보(GO '가죽 옷 — 성녀 기사·여왕', 109-7). 게임 인물 아님. 키 큰 여자·땋은 머리·밤빛 가죽 갑옷 온몸·은 어깨판·앞뒤 상아빛 겉옷판·가죽 장화. 유격(풀빛·두건)·금빛 외골격과 겹치지 않게. 09-27 진짜 옷(밤빛 염색 가죽 몸 옷(선 무늬가 판 이음처럼 남는다)·긴 장갑·허벅지 장화(CC0) — 공방 가죽 기사 틀(겉옷·은 어깨판)은 자루처럼 부풀어 안 씀, 은 어깨판은 공방 pauldrons(09-27), 상아빛 겉옷판은 빈칸 — 공방 앞뒤 판(tube arc)은 앞치마처럼 보이고 가슴에 홈이 패여 안 씀).",
+ "_note": "단계 3 GO 인물 비교용 — saga-unity Eve(Mixamo) 자리 후보(GO '가죽 옷 — 성녀 기사·여왕', 109-7). 게임 인물 아님. 키 큰 여자·땋은 머리·밤빛 가죽 갑옷 온몸·은 어깨판·앞뒤 상아빛 겉옷판·가죽 장화. 유격(풀빛·두건)·금빛 외골격과 겹치지 않게. 09-27 진짜 옷(밤빛 염색 가죽 몸 옷(선 무늬가 판 이음처럼 남는다)·긴 장갑·허벅지 장화(CC0) — 공방 가죽 기사 틀(겉옷·은 어깨판)은 자루처럼 부풀어 안 씀, 은 어깨판은 공방 pauldrons(09-27), 상아빛 겉옷판은 빈칸 — 공방 앞뒤 판(tube arc)은 앞치마처럼 보이고 가슴에 홈이 패여 안 씀). 09-27 빈칸 채움: 상아빛 겉옷판 = 공방 tabard(목부터 닫힌 어깨 요크 + 가슴 아래 앞뒤 판 + 허리띠 — 어깨에서 시작하는 판만이면 앞치마), 땋은 머리는 요크를 뚫어 검게 염색한 말총머리(ponytail01), 대기는 판이 벌어지지 않게 CF_Guard_Idle_Loop.",
  "macro": {
   "gender": 0.0,
   "age": 0.45,
@@ -16,12 +16,12 @@
  },
  "skin": "young_caucasian_female/young_caucasian_female.mhmat",
  "eyebrows": "eyebrow001/eyebrow001.mhclo",
- "hair": "braid01/braid01.mhclo",
+ "hair": "ponytail01/ponytail01.mhclo",
  "eyes": "high-poly/high-poly.mhclo",
  "eyelashes": "eyelashes02/eyelashes02.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "anims": {
-  "idle": "Sword_Idle",
+  "idle": "CF_Guard_Idle_Loop",
   "walk": "Walk_Loop",
   "run": "Jog_Fwd_Loop",
   "attack": "Sword_Attack",
@@ -32,14 +32,17 @@
   "culturalibre_heroine_suit_2/culturalibre_heroine_suit_2.mhclo",
   "toigo_gloves_long/toigo_gloves_long.mhclo",
   "culturalibre_heroine_boots_1/culturalibre_heroine_boots_1.mhclo",
+  "cf_tabard/cf_tabard.mhclo",
   "cf_pauldrons/cf_pauldrons.mhclo"
  ],
  "tints": {
   "culturalibre_heroine_suit_2": "=#3a2618",
   "toigo_gloves_long": "=#3a2616",
-  "culturalibre_heroine_boots_1": "=#3a2616"
+  "culturalibre_heroine_boots_1": "=#3a2616",
+  "ponytail01": "#3a3a3a"
  },
  "_garments": [
+  "tabard",
   "pauldrons"
  ]
 }

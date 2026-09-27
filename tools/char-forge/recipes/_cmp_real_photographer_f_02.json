@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_photographer_f_02",
- "_note": "단계 3 FOREST 비교용 — saga-unity Sophie(Mixamo) 자리 후보(FOREST 현대 '사진작가 찰나'). 게임 인물 아님. 여자·짧은 머리·검은 목폴라·무릎 아래까지 내려오는 모래빛 긴 겉옷자락·짙은 바지·밤빛 구두·검붉은 베레모. STORY 사진 찍는 여행자(단발·민트 바람막이·반바지)와 겹치지 않게. 09-27 진짜 옷(모래빛 염색 더블 정장(겉옷·바지 한 벌)·밤빛 구두(CC0), 베레모 껍데기 그대로 — 공방 외투 틀(무릎 외투)은 상자에 흰 띠·견장이 얼룩으로 보여 안 씀, 목폴라·짙은 바지는 빈칸).",
+ "_note": "단계 3 FOREST 비교용 — saga-unity Sophie(Mixamo) 자리 후보(FOREST 현대 '사진작가 찰나'). 게임 인물 아님. 여자·짧은 머리·검은 목폴라·무릎 아래까지 내려오는 모래빛 긴 겉옷자락·짙은 바지·밤빛 구두·검붉은 베레모. STORY 사진 찍는 여행자(단발·민트 바람막이·반바지)와 겹치지 않게. 09-27 진짜 옷(모래빛 염색 더블 정장(겉옷·바지 한 벌)·밤빛 구두(CC0), 베레모 껍데기 그대로 — 공방 외투 틀(무릎 외투)은 상자에 흰 띠·견장이 얼룩으로 보여 안 씀, 목폴라·짙은 바지는 빈칸). 09-27 빈칸 채움: 검은 목폴라 = 공방 turtleneck(목 깃 collar — 몸통 통까지 지으면 어깨 → 목 원뿔이 정장 깃 밖으로 톱니처럼 나와 목만), 톱니처럼 잘린 껍데기 베레모 → 공방 beret(한쪽으로 쏠려 처진 돔). 짙은 바지는 정장 한 벌이라 그대로.",
  "macro": {
   "gender": 0.0,
   "age": 0.45,
@@ -20,24 +20,6 @@
  "eyes": "high-poly/high-poly.mhclo",
  "eyelashes": "eyelashes02/eyelashes02.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
- "kitbash": [
-  {
-   "part": "shell",
-   "slot": "cloth_cap",
-   "color": "#6a1f2a",
-   "rough": 0.85,
-   "offset": 0.045,
-   "thick": 0.006,
-   "groups": [
-    "head"
-   ],
-   "z_eye": [
-    0.065,
-    0.22
-   ],
-   "minw": 0.5
-  }
- ],
  "anims": {
   "idle": "Idle_Loop",
   "walk": "Walk_Loop",
@@ -47,11 +29,17 @@
   "death": "Death01"
  },
  "clothes": [
+  "cf_turtleneck/cf_turtleneck.mhclo",
   "toigo_female_double-breasted_suit/toigo_female_double-breasted_suit.mhclo",
-  "toigo_ankle_boots_female/toigo_ankle_boots_female.mhclo"
+  "toigo_ankle_boots_female/toigo_ankle_boots_female.mhclo",
+  "cf_beret/cf_beret.mhclo"
  ],
  "tints": {
   "toigo_female_double-breasted_suit": "=#bba27c",
   "toigo_ankle_boots_female": "=#4a2e1c"
- }
+ },
+ "_garments": [
+  "turtleneck",
+  "beret"
+ ]
 }

@@ -8,9 +8,10 @@
           `over` 만큼 밖에 겹쳐 입는다(저고리 위 치마 끝, 갑옷 위 비늘 치마). `mono` 면 아래로 좁아지지 않는다(가슴에서 시작하는 치마).
   sleeves 소매 — `length` 팔 몫(1 = 손목, 0.35 = 어깨 갑옷), `start` 시작(0.6 = 팔꿈치 아래 팔 가리개, 윗팔 살은 안 지운다), `drop` 처짐, `flare` 끝 넓힘
           `arc`(도) = 팔 바깥쪽만 두르는 판(소데), `bag` = 팔꿈치부터 네모나게 늘어진 자루(기모노)
-  band    띠 — 그 높이 통 둘레 바깥
+  band    띠 — 그 높이 통 둘레 바깥(`ease` 면 통 대신 몸 볼록 둘레 + ease — 앞뒤 판만 있는 겉옷판 위 허리띠)
+  collar  목 깃(목폴라) — 목 살을 따라 목 밑에서 턱 밑까지, 밑단은 윗줄보다 `taper` 배 넘게 안 퍼진다(셔츠 깃 속으로)
   leggings 다리 통(정강이 가리개·바지) · discs 가슴 둥근 판(호심경) · bow 등 매듭(오비) · sash 비스듬한 띠(토가)
-  mangeon·topknot·gat·helmet·neckguard·kuwagata·tassel·samo·boktu·myeollyu·beads·eboshi·turban·hairdome·mage  머리 부품 — 머리 살에 붙는다
+  mangeon·topknot·gat·helmet·neckguard·kuwagata·tassel·samo·boktu·myeollyu·beads·eboshi·turban·beret·hairdome·mage  머리 부품 — 머리 살에 붙는다
 색 변형: `<id>@<헥스>[,<헥스>]` — 틀의 `colors`(C1·C2)를 바꾼 cf_<id>_<헥스>… (메시·맞춤은 기본 옷을 베끼고 그림만 새로)
 그다음 MPFB MakeClothes 와 같은 순서(`mesh_is_valid_as_clothes` → `create_mhclo_from_clothes_matching` → `write_mhclo`)로 기본 몸에 맞춘
 .mhclo 를 쓰므로 어느 체형에나 MakeHuman 이 맞춰 입힌다. 레시피에서는 받은 CC0 옷과 똑같이 `"clothes": ["cf_dopo/cf_dopo.mhclo"]`.
@@ -398,6 +399,26 @@ GARMENTS = {
         dict(kind='tube', top=('shoulder', -0.05), bottom=('waist', -0.02), ease=0.01, over=0.012, fit=True, slot=0,
              paint=dict(base='C1', pattern='plate', trims=[('top', 0.012, 'C2'), ('bottom', 0.012, 'C2')])),
     ]),
+    # 목폴라 — 겉옷 깃 위로 턱 밑까지 올라오는 골진 목 깃(collar). 몸통은 겉옷이 덮는다
+    'turtleneck': dict(desc='목폴라 — 턱 밑까지 올라오는 골진 목 깃(겉옷 밑)', tags=['sweater', 'modern'], colors=dict(C1='#18181b'), parts=[
+        dict(kind='collar', bottom=-0.03, height=0.075, ease=0.01, slot=0, paint=dict(base='C1', pattern='knit')),
+    ]),
+    # 겉옷판(서코트) — 목부터 가슴까지 닫힌 요크 + 가슴 아래 앞·뒤로 갈라져 무릎까지 늘어진 판 + 허리띠.
+    # 어깨에서 시작하는 앞판(tube arc 만)은 앞치마로 보였다(09-27) — 어깨를 덮는 요크가 겉옷판으로 읽히게 한다
+    'tabard': dict(desc='겉옷판 — 어깨 요크·앞뒤로 갈라진 판·허리띠(붙는 옷 위)', tags=['tabard', 'historical'],
+                   colors=dict(C1='#e6dcc4', C2='#8a6a2a'), parts=[
+        dict(kind='tube', top=('neck', 0), bottom=('chest', -0.06), ease=0.01, over=0.018, slot=1,
+             paint=dict(base='C1', pattern='weave', trims=[('top', 0.03, 'C2'), ('bottom', 0.02, 'C2')])),
+        dict(kind='tube', top=('chest', -0.03), bottom=('knee', 0.02), ease=0.008, over=0.012, flare=0.08, folds=0.015,
+             arc=(270, 120), slot=0, paint=dict(base='C1', pattern='weave', trims=[('bottom', 0.02, 'C2'), ('front', 0.012, 'C2')])),
+        dict(kind='tube', top=('chest', -0.03), bottom=('knee', 0.02), ease=0.008, over=0.012, flare=0.08, folds=0.015,
+             arc=(90, 120), slot=5, paint=dict(base='C1', pattern='weave', trims=[('bottom', 0.02, 'C2')])),
+        dict(kind='band', at=('waist', -0.02), width=0.035, ease=0.027, slot=3, paint=dict(base='#3a2616', pattern='weave')),
+    ]),
+    # 베레모 — 한쪽으로 쏠려 처진 둥근 납작 모자(현대)
+    'beret': dict(desc='베레모 — 한쪽으로 쏠린 둥근 납작 모자', tags=['hat', 'modern'], colors=dict(C1='#6a1f2a'), parts=[
+        dict(kind='beret', slot=6, paint=dict(base='C1', pattern='weave', trims=[('bottom', 0.1, '#4a141c')])),
+    ]),
     # 쇠 어깨판만 — 몸에 붙는 옷 위
     'pauldrons': dict(desc='쇠 어깨판', tags=['armor', 'historical'], colors=dict(C1='#9aa0a8', C2='#4a4d52'), parts=[
         dict(kind='sleeves', length=0.3, ease=0.03, over=0.02, flare=0.45, arc=190, cuff=0.0, slot=4,
@@ -620,6 +641,33 @@ class Builder:
         self.tubes.append((zs, RR))
         self.cover.append(('tube', zb, ringz[-1], neck_top))
 
+    def collar(self, p):
+        """목 깃(목폴라) — 목 살을 따라 목 밑(`bottom`)에서 턱 밑(`height`)까지 목만 두른다. 맨 위 줄은 접힌 단처럼 조금 두껍게.
+        몸통 통의 어깨 → 목 원뿔은 붙는 겉옷 깃 밖으로 나와 톱니처럼 보여서(09-27) 목만 짓고 밑단은 겉옷 깃 속으로 넣는다."""
+        B = self.B
+        zb = B.lv['neck'] + p.get('bottom', -0.01)
+        zt = min(B.lv['neck'] + p.get('height', 0.075), B.bone('head').z - 0.012)
+        NR = max(4, int((zt - zb) / 0.015) + 1)
+        rings = []
+        for k in range(NR):
+            z = zb + (zt - zb) * k / (NR - 1)
+            cp = [(B.co[i].x, B.co[i].y) for i in B.body if abs(B.co[i].z - z) < 0.012 and B.W[i].get('neck_01', 0) > 0.25]
+            if len(cp) >= 8:
+                ccy = float(np.mean([q[1] for q in cp]))
+                rings.append((z, ccy, ring_radii(cp, B.cx, ccy, SEG, p.get('ease', 0.01) + (p.get('roll', 0.005) if k == NR - 1 else 0.0))))
+        for k in reversed(range(len(rings) - 1)):   # 목 밑은 승모근·쇄골로 퍼진다 — 윗줄보다 조금만 크게(밑단이 셔츠 깃 속에 든다)
+            z, ccy, rc = rings[k]
+            rings[k] = (z, ccy, np.minimum(rc, rings[k + 1][2] * p.get('taper', 1.04)))
+        rows, refs, ringz = [], [], []
+        for z, ccy, rc in rings:
+            rows.append([self.vert((B.cx + rc[s] * math.cos(2 * math.pi * s / SEG), ccy + rc[s] * math.sin(2 * math.pi * s / SEG), z), 'cf_torso')
+                         for s in range(SEG)])
+            refs.append(Vector((B.cx, ccy, z)))
+            ringz.append(z)
+        assert len(rows) >= 3, 'collar: 목 살 둘레가 모자라다'
+        self.grid(rows, p['slot'], refs, uvs=[(z - ringz[0]) / (ringz[-1] - ringz[0]) for z in ringz])
+        self.cover.append(('collar', ringz[0], ringz[-1]))
+
     def sleeves(self, p):
         """소매 — `arc`(도) 면 팔 바깥쪽만 두르는 판(소데·어깨판), `bag` 이면 팔꿈치부터 네모나게 늘어지는 자루(기모노)."""
         B = self.B
@@ -679,17 +727,21 @@ class Builder:
             self.cover.append(('sleeves', p.get('length', 1.0)))
 
     def band(self, p):
+        """띠 — 그 높이 통 둘레 바깥 `over`. `ease` 가 있으면 통 대신 몸 둘레 + ease(겉옷판처럼 앞뒤 판만 있는 옷 위 허리띠)."""
         B = self.B
         z = B.level(p['at'])
-        zs, RR = next(((zs, RR) for zs, RR in reversed(self.tubes) if zs[0] <= z <= zs[-1]), self.tubes[-1])
-        k = min(range(len(zs)), key=lambda i: abs(zs[i] - z))
-        z = zs[k]
+        if 'ease' in p:
+            rk = ring_radii(B.band_pts(B.torso, z), B.cx, B.cy, SEG, p['ease'])   # 볼록 둘레 — 앞뒤 판(tube arc)도 볼록하게 메워져 오목 둘레면 판 속에 묻혔다
+        else:
+            zs, RR = next(((zs, RR) for zs, RR in reversed(self.tubes) if zs[0] <= z <= zs[-1]), self.tubes[-1])
+            k = min(range(len(zs)), key=lambda i: abs(zs[i] - z))
+            z, rk = zs[k], RR[k] + p.get('over', 0.012)
         rows = []
         for dz in (-p['width'] / 2, p['width'] / 2):
             ring = []
             for s in range(SEG):
                 a = 2 * math.pi * s / SEG
-                r = RR[k][s] + p.get('over', 0.012)
+                r = rk[s]
                 ring.append(self.vert((B.cx + r * math.cos(a), B.cy + r * math.sin(a), z + dz), 'cf_torso'))
             rows.append(ring)
         self.grid(rows, p['slot'], Vector((B.cx, B.cy, z)))
@@ -1129,6 +1181,33 @@ class Builder:
             rows.append(ring)
         self.grid(rows, p['slot'], Vector((B.cx, B.cy, zm)))
 
+    def beret(self, p):
+        """베레모 — 이마 위 좁은 띠에서 머리 밖으로 둥글게 부풀어 납작하게 닫힌다. `tilt`(m) 만큼 부푼 몸이 +X 쪽으로 쏠리고 그쪽이 처진다.
+        살 껍데기(shell) 모자는 가장자리가 톱니처럼 잘렸다(09-27 렌더)."""
+        B = self.B
+        cy, ease, tilt = B.head_cy + 0.005, p.get('ease', 0.028), p.get('tilt', 0.03)
+        z0 = B.eye_z + p.get('z', 0.05)
+        zt = B.head_top + p.get('dome', 0.035)
+        band = self._head_ring(z0, ease)
+        wide = self._head_ring(min(z0 + 0.03, B.head_top - 0.012), ease) + p.get('puff', 0.045)
+        # (높이, 반지름, 쏠림 몫, 처짐 몫) — 띠 두 줄, 부푼 둘레(zw)부터 타원으로 닫는다(곧은 벽이면 원통 모자로 보였다)
+        zw = z0 + 0.03
+        specs = [(z0, band, 0.0, 0.0), (z0 + 0.012, self._head_ring(z0 + 0.012, ease + 0.001), 0.1, 0.1), (zw - 0.006, wide * 0.9 + band * 0.1, 0.6, 0.7)]
+        for k in range(8):
+            t = (math.pi / 2) * k / 7
+            specs.append((zw + (zt - zw) * math.sin(t), wide * max(math.cos(t), 0.03), 1.0, 1.0 - 0.6 * math.sin(t)))
+        rows, refs = [], []
+        for z, r, fs, fd in specs:
+            dx = tilt * fs
+            ring = []
+            for s in range(HSEG):
+                a = 2 * math.pi * s / HSEG
+                ring.append(self.vert((dx + r[s] * math.cos(a), cy + r[s] * math.sin(a), z - p.get('droop', 0.025) * fd * max(0.0, math.cos(a))), 'cf_head'))
+            rows.append(ring)
+            refs.append(Vector((dx, cy, z - 0.05)))
+        self.grid(rows, p['slot'], refs)
+        self.top_z = zt
+
     def turban(self, p):
         """터번 — 이마부터 머리를 감싸며 부풀었다가 위에서 닫힌다."""
         B = self.B
@@ -1198,9 +1277,12 @@ class Builder:
         legs = [c for c in self.cover if c[0] == 'leggings']
         full = any(c[0] == 'sleeves' and c[1] >= 0.95 for c in self.cover)
         wz = {s: B.bone(f'hand_{s}') for s in 'lr'}
+        collars = [c for c in self.cover if c[0] == 'collar']
         for i in B.body:
             w, z = B.W[i], B.co[i].z
-            if part_sum(w, ['pelvis', 'spine_0*', 'clavicle_*', 'thigh_*', 'calf_*']) >= 0.5:
+            if w.get('neck_01', 0) >= 0.25 and any(c[1] - 0.005 <= z <= c[2] - 0.012 for c in collars):   # 목폴라 깃 밑 목 살
+                idx.append(i)
+            elif part_sum(w, ['pelvis', 'spine_0*', 'clavicle_*', 'thigh_*', 'calf_*']) >= 0.5:
                 top_ok = lambda c: z <= (B.lv['neck'] - 0.04 if c[3] else c[2] - 0.02)  # noqa: E731
                 if any(c[1] + 0.03 <= z and top_ok(c) for c in tubes):
                     idx.append(i)
@@ -1271,6 +1353,10 @@ def paint(g, dpath, npath):
             ln = (xx % 22) < 3
             shade = 1 - 0.22 * ln + 0.03 * noise + 0.03 * np.sin(yy * 0.9)
             h = -0.4 * ln
+        elif pat == 'knit':                          # 골진 뜨개(목폴라) — 가는 세로 골, 결 부드럽게
+            cr = np.sin(xx * 0.6)
+            shade = 1 + 0.07 * cr + 0.03 * noise
+            h = 0.5 * cr
         elif pat == 'ribs':                          # 세로 골(투구 사발·정강이 판)
             n_ = P.get('ribs', 24)
             cr = np.cos(s * 2 * math.pi * n_)

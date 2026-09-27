@@ -9630,3 +9630,12 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 도중 발견: 배치 점검이 문제 6(영어 DUNGEON 목표판 ↔ 왼쪽 위 상태 글, 16:9·4:3). 세이브 탓인가 해서 치워도 같음 → 제 파일만 HEAD 로 돌려 기준선 = 0 → 원인은 "Survive a horde" → "Survive an Onslaught". 목표판이 폭 900·줄바꿈이라 **그날 뽑힌 일과 줄 길이만큼 넓어지고** 여유가 27px 뿐이었다(다른 날 "Clear a sigil floor" 가 뽑혀도 닿을 수 있었음) → `GoalBoard` 폭 540·줄바꿈 없음·자동 크기 22→15. 목표판 최대 잉크 폭 619 → 583px.
 - 검증(묶음 없는 이 PC, 6000.3.23f1): 컴파일 오류 0 · `PlaytestRealmSlice` OK ×2 · `PlaytestSagaCredits` OK · 배치 점검 OK ×2(두 언어 × 패널 42·속 7·상태 38, 영어에 한글은 문답이 무작위라 1~6 — 문제 수엔 안 셈) · loc-review 오류 0. 판별 헤드리스(GO·DUNGEON·FOREST·STORY·흐름)는 이 PC 에서 Missing Prefab 로 기준선부터 FAIL 이라 안 돌림 — **묶음 있는 PC 에서 한 번**(문자열·목표판만 바뀌어 로직 영향은 없을 것). 실행 부산물: 글꼴 동적 아틀라스 셋 되돌림.
 - 남음: 사람 영어 검수(tsv 순위 1부터) · ⑥d AAB + Play Asset Delivery.
+
+## 2026-09-27 char-forge — 마지막 빈칸 둘: 목폴라·겉옷판 (+ 베레모)
+
+"vroid 자체툴 이어해".
+
+- garments.py 새 부품 `collar`(목 깃, 밑줄 `taper` 로 셔츠 깃 속) → 틀 `turtleneck` = Sophie 자리 사진작가 검은 목폴라. 몸통 통 + 목 깃 첫판은 어깨 → 목 원뿔이 정장 깃 밖으로 나와 톱니, 목 밑을 몸 둘레대로 두면 셔츠 위 턱받이였다.
+- 새 머리 부품 `beret` → 틀 `beret`(한쪽 쏠림·처짐 돔) — 톱니 껍데기 베레모 대신.
+- 틀 `tabard`(닫힌 어깨 요크 + 가슴 아래 앞뒤 arc 판, mono 없이 허리에서 조여짐 + 허리띠) = Eve 자리 가죽 기사 상아빛 겉옷판. band 새 칸 `ease`(몸 볼록 둘레 기준). 땋은 머리가 요크를 뚫어 검게 염색한 `ponytail01`, 대기 `CF_Guard_Idle_Loop`.
+- 검사: 찰갑·도포 md5 같음 · verify fbx ≤ 0.67° · glb 0.0° · sha256 같음 · 키 1.722·1.695m(짝 1.70) · 비교 장면 CMP_RESULT OK(FBX 로컬 전용). 빈칸 0. 다음 = HOW_TO_PLAYTEST §9 사용자 판정.
