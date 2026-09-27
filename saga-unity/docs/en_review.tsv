@@ -1473,6 +1473,18 @@
 2	realm	archive.detail	[{0} · Lv{1}]⏎{2}⏎정답: {3}⏎{4}	[{0} · Lv{1}]⏎{2}⏎Answer: {3}⏎{4}		
 2	realm	archive.empty	아직 익힌 문제가 없다.	No questions learned yet.		
 2	realm	archive.entry_label	[{0}] {1}	[{0}] {1}		
+2	realm	battle.look.coast	해안	Coast		
+2	realm	battle.look.desert	사막	Desert		
+2	realm	battle.look.grave	묘역	Tombs		
+2	realm	battle.look.hill	구릉	Hills		
+2	realm	battle.look.jungle	밀림	Jungle		
+2	realm	battle.look.mount	산성	Mountain Fort		
+2	realm	battle.look.plain	평야	Plains		
+2	realm	battle.look.rift	균열	Rift		
+2	realm	battle.look.river	강가	Riverside		
+2	realm	battle.look.ruin	폐허	Ruins		
+2	realm	battle.look.steppe	초원	Steppe		
+2	realm	battle.title	{0} {1}	{1} of {0}		
 2	realm	city.beidi	북지	Beidi		
 2	realm	city.bijing	비경	Bijing		
 2	realm	city.cangwu	창오	Cangwu		

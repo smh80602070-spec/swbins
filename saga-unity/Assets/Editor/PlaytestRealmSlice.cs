@@ -1358,6 +1358,8 @@ namespace Saga.EditorTools
                 {
                     // PLAN.md 109-5 세 시대 — 전 적국 함락 뒤(관문 셋·시간 틈 성 아홉이 다 우리 것). 합류한 무장은 뒤 세이브 왕복이 본다.
                     if (!PlaytestRealmEras.Run()) { Fail(); return; }
+                    // PLAN.md 109-13 ① 싸움터 땅 — 화면 층이라 판 상태를 안 건드린다.
+                    if (!PlaytestRealmBattlefield.Run()) { Fail(); return; }
                     _phase = Phase.QuizCorrect;
                     break;
                 }

@@ -1003,6 +1003,9 @@ namespace Saga.Realm.UI
                 ? RealmWarState.Attack(RealmCityState.CurrentCity, _pendingAttackEnemyId, _tacticEnabled, duelMul)
                 : RealmWarState.Attack(RealmCityState.CurrentCity, useTactic: _tacticEnabled, duelPowerMul: duelMul);
             string msg = duelPrefix != null ? duelPrefix + result.Message : result.Message;
+            // PLAN.md 109-13 싸움터 땅 — 그 성의 고정 싸움터로 잠깐 컷하고, 알림 첫 줄에 싸움터 이름.
+            if (Saga.Realm.World.RealmBattlefield.Show(result) != null)
+                msg = "⚔ " + RealmBattleLook.Title(result.EnemyId) + "\n" + msg;
             RealmToast.Instance?.Show(msg, 6f);
             // 출진 자체가 무효면 error, 유효하면 전투 결과(승/패)로 고른다
             // (Won은 Ok=true일 때만 뜻이 있다 — RealmWarState.AttackResult 참고).

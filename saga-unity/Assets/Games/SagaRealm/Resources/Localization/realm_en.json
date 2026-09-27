@@ -578,6 +578,18 @@
     { "key": "ambition.rival", "value": "Rival" },
     { "key": "ambition.scholar", "value": "Scholar" },
     { "key": "hud.ambition_done", "value": "Ambition: {0} ✓" },
-    { "key": "hud.ambition", "value": "Ambition: {0} {1}/{2}" }
+    { "key": "hud.ambition", "value": "Ambition: {0} {1}/{2}" },
+    { "key": "battle.title", "value": "{1} of {0}" },
+    { "key": "battle.look.plain", "value": "Plains" },
+    { "key": "battle.look.hill", "value": "Hills" },
+    { "key": "battle.look.river", "value": "Riverside" },
+    { "key": "battle.look.mount", "value": "Mountain Fort" },
+    { "key": "battle.look.desert", "value": "Desert" },
+    { "key": "battle.look.steppe", "value": "Steppe" },
+    { "key": "battle.look.jungle", "value": "Jungle" },
+    { "key": "battle.look.coast", "value": "Coast" },
+    { "key": "battle.look.rift", "value": "Rift" },
+    { "key": "battle.look.ruin", "value": "Ruins" },
+    { "key": "battle.look.grave", "value": "Tombs" }
   ]
 }

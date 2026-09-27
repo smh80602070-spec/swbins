@@ -578,6 +578,18 @@
     { "key": "ambition.rival", "value": "숙적" },
     { "key": "ambition.scholar", "value": "학문" },
     { "key": "hud.ambition_done", "value": "야망:{0} 달성✓" },
-    { "key": "hud.ambition", "value": "야망:{0} {1}/{2}" }
+    { "key": "hud.ambition", "value": "야망:{0} {1}/{2}" },
+    { "key": "battle.title", "value": "{0} {1}" },
+    { "key": "battle.look.plain", "value": "평야" },
+    { "key": "battle.look.hill", "value": "구릉" },
+    { "key": "battle.look.river", "value": "강가" },
+    { "key": "battle.look.mount", "value": "산성" },
+    { "key": "battle.look.desert", "value": "사막" },
+    { "key": "battle.look.steppe", "value": "초원" },
+    { "key": "battle.look.jungle", "value": "밀림" },
+    { "key": "battle.look.coast", "value": "해안" },
+    { "key": "battle.look.rift", "value": "균열" },
+    { "key": "battle.look.ruin", "value": "폐허" },
+    { "key": "battle.look.grave", "value": "묘역" }
   ]
 }

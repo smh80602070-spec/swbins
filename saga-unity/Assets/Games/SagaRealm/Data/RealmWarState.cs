@@ -47,7 +47,15 @@ namespace Saga.Realm.Data
             // UI가 사운드를 고를 수 있게 알려준다 — Ok=false(출진 자체가
             // 무효)일 땐 의미 없어 기본값 false로 둔다.
             public readonly bool Won;
-            public AttackResult(bool ok, string message, bool won = false) { Ok = ok; Message = message; Won = won; }
+            // PLAN.md 109-13 싸움터 땅 — 싸움터 장면(`RealmBattlefield`)이 양군 머릿수를 그리는 값. Ok=false 면 비어 있다.
+            public readonly string EnemyId;
+            public readonly int AtkStart, AtkLeft, DefStart, DefLeft;
+            public AttackResult(bool ok, string message, bool won = false) : this(ok, message, won, null, 0, 0, 0, 0) { }
+            public AttackResult(bool ok, string message, bool won, string enemyId, int atkStart, int atkLeft, int defStart, int defLeft)
+            {
+                Ok = ok; Message = message; Won = won;
+                EnemyId = enemyId; AtkStart = atkStart; AtkLeft = atkLeft; DefStart = defStart; DefLeft = defLeft;
+            }
         }
 
         /// <summary>출진할 수 있는가 — war.js canMarch()를 이 슬라이스
@@ -132,7 +140,7 @@ namespace Saga.Realm.Data
             if (tacticNote != null) message = tacticNote + " " + message;
 
             Changed?.Invoke();
-            return new AttackResult(true, message, result.Won);
+            return new AttackResult(true, message, result.Won, enemyId, troops, atk.Troops, defArmy.Start, defArmy.Troops);
         }
 
         /// <summary>PLAN.md 101-2 5-6 "지형·진형 전술 개입" — 웹판(`saga-web/saga-realm/PLAN.md`
