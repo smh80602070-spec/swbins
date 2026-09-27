@@ -42,6 +42,11 @@
    "minw": 0.3
   }
  ],
+ "under": {
+  "cf_warrior_robe_4f5a3a_5a3a22": [
+   "skin"
+  ]
+ },
  "anims": {
   "idle": "CF_Guard_Idle_Loop",
   "walk": "Walk_Loop",

@@ -411,6 +411,17 @@ def _skin_weights(skin, v, top=4):
 BONE_NAMES = set()  # kitbash() 가 뼈대에서 채운다(살 정점 무리 중 뼈 이름인 것만 무게로 옮긴다)
 
 
+def _shell_zrange(p, height, eyes):
+    """껍데기 높이 범위(m) — `z`(키 몫) 또는 `z_eye`(눈 높이에서 m)."""
+    zlo, zhi = [f * height for f in p.get('z', (0.0, 1.01))]
+    if 'z_eye' in p:
+        if eyes is None:
+            sys.exit('kitbash shell z_eye: 눈이 없다')
+        ez = sum((eyes.matrix_world @ v.co).z for v in eyes.data.vertices) / len(eyes.data.vertices)
+        zlo, zhi = ez + p['z_eye'][0], ez + p['z_eye'][1]
+    return zlo, zhi
+
+
 def _shell_faces(skin, p, height, eyes):
     """껍데기가 덮을 살 면 번호 — 모든 정점이 `groups`(fnmatch 무늬, 무게 합 ≥ minw)이고 `z`(키 몫 [아래, 위]) 안.
     `z_eye` [아래, 위] 는 눈 높이에서 m 로 잰 띠(복면·머리띠·바이저 — 키 몫은 머리 크기 모프마다 어긋난다).
@@ -422,12 +433,7 @@ def _shell_faces(skin, p, height, eyes):
         sys.exit(f"kitbash shell: 무리가 없다 {p['groups']}")
     mw = skin.matrix_world
     rot = mw.to_3x3()
-    zlo, zhi = [f * height for f in p.get('z', (0.0, 1.01))]
-    if 'z_eye' in p:
-        if eyes is None:
-            sys.exit('kitbash shell z_eye: 눈이 없다')
-        ez = sum((eyes.matrix_world @ v.co).z for v in eyes.data.vertices) / len(eyes.data.vertices)
-        zlo, zhi = ez + p['z_eye'][0], ez + p['z_eye'][1]
+    zlo, zhi = _shell_zrange(p, height, eyes)
     face_min = p.get('facing')
     back_min = p.get('facing_back')  # 등(+Y) 쪽 면만 — 배낭·등판
     minw = p.get('minw', 0.5)
@@ -450,9 +456,10 @@ def _shell_faces(skin, p, height, eyes):
     return [f.index for f in skin.data.polygons if all(ok[i] for i in f.vertices)]
 
 
-def _shell_add(acc, skin, faces, offset, thick, rings=3):
+def _shell_add(acc, skin, faces, offset, thick, rings=3, snap=None):
     """살 면 → 두께 있는 닫힌 껍데기(바깥·안 두 겹 + 가장자리 벽). 정점마다 그 살 정점의 뼈 무게.
-    땅(z=0) 아래로는 안 내려간다(장화 밑창이 법선 쪽으로 1.7cm 땅에 박혔다). 돌려주는 값 = {살 면: (바깥 면, 안 면)}."""
+    땅(z=0) 아래로는 안 내려간다(장화 밑창이 법선 쪽으로 1.7cm 땅에 박혔다). 돌려주는 값 = {살 면: (바깥 면, 안 면)}.
+    `snap` (아래, 위) m 면 가장자리 정점을 가까운 쪽 높이로 옮겨 띠 끝을 곧게 — 면 단위로 골라 계단 톱니가 났다(09-27 충돌 인형 마디 띠)."""
     from collections import Counter
     bm, weights = acc
     wl = bm.verts.layers.int.get('w') or bm.verts.layers.int.new('w')
@@ -479,6 +486,18 @@ def _shell_add(acc, skin, faces, offset, thick, rings=3):
         for a, b in zip(pv, pv[1:] + pv[:1]):
             edges[(a, b)] += 1
     rim = [(a, b) for (a, b) in edges if (b, a) not in edges]  # 가장자리(한 면만 가진 모서리)
+    if snap:
+        up = Vector((0, 0, 1))
+        for vi in {v for e in rim for v in e}:
+            nn = (rot @ me.vertices[vi].normal).normalized()
+            t = up - nn * nn.dot(up)  # 살 면을 따라 위쪽 — 비스듬한 팔에서 곧장 위로 옮기면 띠가 팔 밖으로 벌어졌다
+            if t.length < 1e-6 or t.normalized().z < 0.3:
+                continue
+            t.normalize()
+            for tab in (outer, inner):
+                q = tab[vi].co
+                z = snap[0] if abs(q.z - snap[0]) < abs(q.z - snap[1]) else snap[1]
+                tab[vi].co = q + t * ((z - q.z) / t.z)
     # 안쪽 겹은 가장자리 틈(띄운 만큼의 좁은 틈)으로만 보인다 — 가장자리에서 rings 줄까지만 둔다. 그 너머는 닫힌 바깥 겹에
     # 가려 안 보이는 면이라 안 만든다(장갑·장화·쇠판 삼각형 반쯤)
     near = {v for e in rim for v in e}
@@ -525,7 +544,8 @@ def kitbash(arm, parts):
             slot = p.get('slot', 'cloth')
             if slot not in shells:
                 shells[slot] = (bmesh.new(), [], p.get('color', '#6b5a48'), p.get('rough', 0.8))
-            fmap = _shell_add(shells[slot][:2], src, faces, p.get('offset', 0.005), p.get('thick', 0.004))
+            fmap = _shell_add(shells[slot][:2], src, faces, p.get('offset', 0.005), p.get('thick', 0.004),
+                              snap=_shell_zrange(p, height, eyes) if p.get('z_snap') else None)
             if src is skin:
                 shell_log.append((slot, p.get('offset', 0.005), p.get('thick', 0.004), set(faces), fmap))
             if p.get('hide_under', True) and src is skin:

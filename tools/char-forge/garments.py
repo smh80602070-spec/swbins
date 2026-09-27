@@ -403,6 +403,11 @@ GARMENTS = {
         dict(kind='tube', top=('neck', 0), bottom=('hip', -0.02), ease=0.022, over=0.016, slot=0,
              paint=dict(base='C1', pattern='quilt', trims=[('front', 0.018, 'C2'), ('top', 0.02, 'C2'), ('bottom', 0.03, 'C2')])),
     ]),
+    # 방탄 조끼 — 두꺼운 제복 재킷 위(09-27 순찰 대원: 재킷 어깨뼈·진동 뒤가 tacvest 여유보다 4~6cm 떠 쉼 자세부터 조끼 등을 뚫었다)
+    'tacvest_coat': dict(desc='방탄 조끼(두꺼운 재킷 위)', tags=['vest', 'modern'], colors=dict(C1='#15171a', C2='#0a0b0c'), parts=[
+        dict(kind='tube', top=('neck', 0), bottom=('hip', -0.02), ease=0.045, over=0.016, slot=0,
+             paint=dict(base='C1', pattern='quilt', trims=[('front', 0.018, 'C2'), ('top', 0.02, 'C2'), ('bottom', 0.03, 'C2')])),
+    ]),
     # 쇠 가슴판 — 몸에 붙는 옷 위(fit)
     'cuirass': dict(desc='쇠 가슴판(붙는 옷 위)', tags=['armor'], colors=dict(C1='#b08a3a', C2='#3a2e1a'), parts=[
         dict(kind='tube', top=('shoulder', -0.05), bottom=('waist', -0.02), ease=0.01, over=0.012, fit=True, slot=0,

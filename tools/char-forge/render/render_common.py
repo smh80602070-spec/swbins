@@ -97,6 +97,12 @@ def fix_materials():
         if not m.use_nodes:
             continue
         cut = any(k in m.name.lower() for k in ('hair', 'brow', 'lash', 'eye'))
+        # 공방 옷 칸(cloth_*)은 게임과 같은 거칠기 0.8 — saga-unity BuildCharCompareRealScene 이 FBX 값을 버리고 칸 이름으로 매끈함 0.2 를 준다.
+        # toigo .mhmat 광택(거칠기 0.082)이 렌더에만 비닐처럼 번들거렸다(09-27 사진작가 정장·천 신발)
+        if m.name.startswith('cloth_'):
+            for n in m.node_tree.nodes:
+                if n.type == 'BSDF_PRINCIPLED' and not n.inputs['Roughness'].is_linked:
+                    n.inputs['Roughness'].default_value = 0.8
         for n in m.node_tree.nodes:
             if n.type == 'BSDF_PRINCIPLED' and n.inputs['Alpha'].is_linked and not cut:
                 for l in list(n.inputs['Alpha'].links):

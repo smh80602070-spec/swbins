@@ -40,6 +40,11 @@
    "minw": 0.5
   }
  ],
+ "under": {
+  "rehmanpolanski_viking_tunic": [
+   "skin"
+  ]
+ },
  "anims": {
   "idle": "Sword_Idle",
   "walk": "Walk_Loop",

@@ -1,6 +1,6 @@
 {
  "id": "_cmp_real_patrol_01",
- "_note": "단계 3 역참 사람 비교용 — saga-unity Swat Guy(Mixamo) 자리 후보(GO 현대 순찰 대원). 게임 인물 아님. 09-26 진짜 옷(CC0 남색 셔츠·바지·장화·장갑, 조끼는 셔츠를 본뜬 껍데기). 다부진 남자·짙은 남색 제복(긴소매)·검은 조끼·장갑·목 긴 장화·챙 모자. 09-27 모자 = 공방 cap_peaked(살 껍데기 모자는 가장자리가 톱니·구김). 09-27 조끼 = 공방 tacvest(옷 면 껍데기 조끼는 구겨진 판).",
+ "_note": "단계 3 역참 사람 비교용 — saga-unity Swat Guy(Mixamo) 자리 후보(GO 현대 순찰 대원). 게임 인물 아님. 09-26 진짜 옷(CC0 남색 셔츠·바지·장화·장갑, 조끼는 셔츠를 본뜬 껍데기). 다부진 남자·짙은 남색 제복(긴소매)·검은 조끼·장갑·목 긴 장화·챙 모자. 09-27 모자 = 공방 cap_peaked(살 껍데기 모자는 가장자리가 톱니·구김). 09-27 조끼 = 공방 tacvest(옷 면 껍데기 조끼는 구겨진 판). 09-27 조끼 = tacvest_coat(두꺼운 재킷이 tacvest 여유보다 떠 등을 뚫었다).",
  "macro": {
   "gender": 1.0,
   "age": 0.45,
@@ -32,21 +32,21 @@
   "culturalibre_male_boots/culturalibre_male_boots.mhclo",
   "toigo_gloves_short/toigo_gloves_short.mhclo",
   "cf_cap_peaked_161d30_0e1322/cf_cap_peaked_161d30_0e1322.mhclo",
-  "cf_tacvest_15171a_0a0b0c/cf_tacvest_15171a_0a0b0c.mhclo"
+  "cf_tacvest_coat_15171a_0a0b0c/cf_tacvest_coat_15171a_0a0b0c.mhclo"
  ],
  "tints": {
   "male_casualsuit01": "#7282a8"
  },
  "_garments": [
   "cap_peaked@161d30,0e1322",
-  "tacvest@15171a,0a0b0c"
+  "tacvest_coat@15171a,0a0b0c"
  ],
  "under_reach": {
-  "cf_tacvest_15171a_0a0b0c": [0.03, 0.06],
+  "cf_tacvest_coat_15171a_0a0b0c": [0.03, 0.06],
   "culturalibre_male_boots": [0.03, 0.06]
  },
  "under": {
-  "cf_tacvest_15171a_0a0b0c": [
+  "cf_tacvest_coat_15171a_0a0b0c": [
    "male_casualsuit01"
   ],
   "culturalibre_male_boots": [
