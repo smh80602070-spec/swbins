@@ -276,6 +276,14 @@
     return !!(ra && ra.active);
   }
 
+  /** 화면 기준 (u, v)(오른쪽 +u, 아래 +v)를 세계 (x, y) 로 — 3D 로 돌려 본(yaw) 만큼 돌린다. 2D·2.5D 는 그대로 */
+  function camRot(u, v) {
+    var W3 = global.DG.world3d;
+    var yw = (W3 && W3.yaw && W3.active && W3.active()) ? W3.yaw() : 0;   // 카메라는 시점 모드와 상관없이 yaw 를 쓴다(camAim)
+    var cs = Math.cos(yw), sn = Math.sin(yw);
+    return { x: u * cs - v * sn, y: u * sn + v * cs };
+  }
+
   function moveByKeys(dt) {
     if (mode !== 'keyboard') { return; }
     var live = liveDuel();
@@ -290,6 +298,9 @@
     if (!dx && !dy && (stick.dx || stick.dy)) {   // 화면 스틱
       dx = stick.dx; dy = stick.dy; run = stick.run;
     }
+    /* 3인칭 — 키·스틱은 **카메라 기준**이다(2026-09-27 실기 "화면 움직이면 키보드 방향으로 움직여야 함 · 역방향으로 움직임").
+       마우스로 돌린 yaw 만큼 돌려야 W 가 늘 화면 앞(카메라가 보는 쪽)으로 간다 — 클릭 이동(onClick)과 같은 회전 */
+    if (dx || dy) { var kr = camRot(dx, dy); dx = kr.x; dy = kr.y; }
 
     var pos = core.save.player.pos;
     if (!dx && !dy && walkTarget && !live) {      // 탭한 지점으로 걸어간다 (전투 중엔 안 됨)
@@ -946,7 +957,7 @@
   /* 기본 배율 — 원작만 한 배율(×1, 아바타가 화면의 1/8)로 열면 **한 마리도 안 보인다.**
      야생 대상이 70m 밖부터 생기기 때문이다. 켜자마자 보이는 자리에서 시작하고,
      가까이 보고 싶으면 휠로 당긴다. 옛 세이브에는 이 칸이 없으니 여기서 채운다 */
-  var ZOOM3_DEFAULT = 4;
+  var ZOOM3_DEFAULT = 1.4;   // 2026-09-27 실기 "3인칭처럼" — ×4(높이 멀리)에서 캐릭터 뒤 가까이로. 옛 세이브는 아래 cam3p 로 한 번 옮긴다
 
   function zoom3d() {
     var raw = core.save.settings ? core.save.settings.zoom3d : undefined;
@@ -1036,6 +1047,12 @@
        켜 두면 켜진 것으로 판정되고, 조우 무대 같은 화면 층이 그 값을 보고 갈린다 */
     if (global.DG.world3d && !global.DG_NO_DRAW) {
       global.DG.world3d.init(document.getElementById('map3d'));
+      /* 2026-09-27 실기 "이동할 때 3인칭처럼" — 3D 가 켜졌으면 한 번만 3D 시점·가까운 줌(캐릭터 뒤)으로 옮긴다.
+         그 뒤 사용자가 바꾼 시점·줌은 그대로 둔다(cam3p 표시) */
+      var S3 = core.save.settings;
+      if (S3 && !S3.cam3p && global.DG.world3d.active && global.DG.world3d.active()) {
+        S3.tilt = 2; S3.zoom3d = ZOOM3_DEFAULT; S3.cam3p = 1; core.persist();
+      }
     }
     syncRenderMode();
   }
@@ -1256,6 +1273,10 @@
     var yw = (W3 && W3.yaw && tiltMode() === 2) ? W3.yaw() : 0;
     var cs = Math.cos(yw), sn = Math.sin(yw);
     var wx = pos.x + (ru * cs - rv * sn), wy = pos.y + (ru * sn + rv * cs);
+    /* 3D 가 켜져 있으면 카메라 광선으로 누른 땅을 찾는다(2026-09-27 실기 "클릭한 곳으로 이동도 안 함") —
+       원근 3인칭 카메라에선 위 2D 역산이 누른 자리와 어긋난다. 하늘을 누르면(땅에 안 닿으면) 2D 값으로 둔다 */
+    var pk = W3 && W3.active && W3.active() && W3.pickGround ? W3.pickGround(e.clientX, e.clientY) : null;
+    if (pk) { wx = pk.x; wy = pk.y; }
     clickMarks.push({ x: wx, y: wy, at: Date.now() });
     if (clickMarks.length > 6) { clickMarks.shift(); }
     /* 2D 표시(`clickMarks`)는 3D가 켜지면 숨는 캔버스에만 그려져 안 보인다 —
@@ -2027,7 +2048,7 @@
        function"으로 조용히 실패하고 있었다(HTTP는 200이었는데도) */
     latLngToWorld: latLngToWorld,
     useKeyboard: useKeyboard, useGeo: useGeo,
-    setStick: setStick, walkTo: walkTo, walkingTo: walkingTo, inputBlocked: inputBlocked,
+    setStick: setStick, walkTo: walkTo, walkingTo: walkingTo, inputBlocked: inputBlocked, camRot: camRot,
     keymap: keymap, beginRemap: beginRemap, remapping: function () { return remapping; },
     get mode() { return mode; },
     get accuracy() { return geoAccuracy; },

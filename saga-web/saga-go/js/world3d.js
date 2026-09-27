@@ -148,9 +148,12 @@
      깊은 밤 추가 감쇠(0.82/0.85/0.42/0.30→0.90/0.90/0.36/0.18)도 같이 올렸다.
      `_test.html` 대비 문턱(한낮/깊은밤 하늘 2배, 밤 지도물감 0.7배)은 여전히
      넉넉히 통과한다(2.36배 · 0.61배) — 남은 차이는 색조(푸른 달빛 톤)뿐이다 */
-  var C_NIGHT = { sun: 0xd0dcf5, sky: 0x5a719f, hemiSky: 0x6e8ab5, hemiGnd: 0x565f70, tint: 0x939cb6 };
-  var C_GOLD = { sun: 0xffab63, sky: 0xe8946a, hemiSky: 0xf0b48a, hemiGnd: 0x4a4038, tint: 0xffd2b0 };
-  var C_DAY = { sun: 0xfff0d0, sky: 0x8fb6d8, hemiSky: 0xdce9ff, hemiGnd: 0x53604a, tint: 0xffffff };
+  /* 여섯 번째 손질(2026-09-27, 헤드리스로 직접 찍어 확인) — 실기 "전체적으로 너무 어두워". 세기는 이미 올라 있어
+     어둠의 정체는 **색**이었다: 밤 반구광 땅쪽(0x565f70)·지도 물감(0x939cb6)·짙은 남색 안개가 화면을 덮고,
+     낮도 땅쪽 반사(0x53604a)가 어두운 녹갈색이라 벽이 칙칙했다. 밤은 푸른 톤만 남기고 밝히고, 낮 반사도 올린다 */
+  var C_NIGHT = { sun: 0xdde6ff, sky: 0x6f86b3, hemiSky: 0x9fb4dc, hemiGnd: 0x7c8496, tint: 0xb4bdd4 };
+  var C_GOLD = { sun: 0xffab63, sky: 0xe8946a, hemiSky: 0xf0b48a, hemiGnd: 0x6a5a4c, tint: 0xffd2b0 };
+  var C_DAY = { sun: 0xfff0d0, sky: 0x8fb6d8, hemiSky: 0xdce9ff, hemiGnd: 0x7d8466, tint: 0xffffff };
 
   /**
    * @param ms    시각(생략하면 지금)
@@ -198,10 +201,10 @@
         z: -70 - Math.max(0, alt) * 40
       },
       /* 밤 최저치 — 위 sun 과 같은 이유·같은 다섯 번의 손질(0.52→0.85→1.2→1.4) */
-      hemi: { sky: pick('hemiSky'), ground: pick('hemiGnd'), intensity: 1.4 + k * 0.27 },
+      hemi: { sky: pick('hemiSky'), ground: pick('hemiGnd'), intensity: 1.95 + k * 0.3 },   // 2026-09-27 그늘진 벽이 거의 검게 — 1.4 → 1.95(헤드리스로 전후 확인)
       bg: pick('sky'),
       tint: pick('tint'),
-      fog: { near: 90 + k * 170, far: 320 + k * 440 },
+      fog: { near: 150 + k * 110, far: 520 + k * 240 },       // 2026-09-27 밤 안개를 멀리(짙은 남색 벽이 화면을 덮었다)
       /* 밤에는 배우 발밑에 등불이 켜진다 (원작의 밤 화면에서 아바타가 안 묻히게) */
       lamp: alt < 0.06 ? Math.min(1, (0.06 - alt) * 4) : 0
     };
@@ -214,8 +217,8 @@
     if (phase === 'deepnight') {
       out.sun.intensity *= 0.90;
       out.hemi.intensity *= 0.90;
-      out.bg = mixHex(out.bg, 0x05070c, 0.36);
-      out.tint = mixHex(out.tint, 0x2a3040, 0.18);
+      out.bg = mixHex(out.bg, 0x05070c, 0.2);
+      out.tint = mixHex(out.tint, 0x2a3040, 0.1);
       out.lamp = 1;
     }
 
@@ -233,8 +236,8 @@
       out.bg = mixHex(out.bg, 0xb8bcc0, 0.6); out.tint = mixHex(out.tint, 0xc2c6ca, 0.35);
       out.fog.far *= 0.26; out.fog.near *= 0.35;
     } else if (w === 'cloud') {
-      out.sun.intensity *= 0.70; out.hemi.intensity *= 0.94;
-      out.bg = mixHex(out.bg, 0x8a929c, 0.42); out.tint = mixHex(out.tint, 0xb8bec6, 0.28);
+      out.sun.intensity *= 0.85; out.hemi.intensity *= 0.97;          // 2026-09-27 흐림이 화면을 칙칙하게 — 0.70 → 0.85
+      out.bg = mixHex(out.bg, 0x8a929c, 0.3); out.tint = mixHex(out.tint, 0xb8bec6, 0.16);
       out.fog.far *= 0.78;
     } else if (w === 'wind') {
       out.fog.far *= 1.15;
@@ -788,6 +791,31 @@
     return Math.max(0, pd.top - groundY(x, z));
   }
   function standY(x, z, sky) { return groundY(x, z) + skyLift(x, z, sky === undefined ? meSky() : sky); }
+  /**
+   * 화면 점(clientX, clientY) → 땅 위 세계 자리 {x, y} (2026-09-27 실기 "마우스로 클릭한 곳으로 이동도 안 함").
+   * 3인칭 원근 카메라라 2D 캔버스 역산(world.unproject)으로는 누른 자리와 어긋난다 — 카메라 광선을 쏴서
+   * 땅(높낮이·내 층 발판 포함)에 처음 닿는 자리를 찾는다. 2m 씩 나아가다 넘으면 반으로 좁힌다. 땅에 안 닿으면 null
+   */
+  function pickGround(cx, cy) {
+    if (!camera || !canvas || !T) { return null; }
+    var r = canvas.getBoundingClientRect();
+    if (!r.width || !r.height) { return null; }
+    var nx = (cx - r.left) / r.width * 2 - 1, ny = -((cy - r.top) / r.height) * 2 + 1;
+    camera.updateMatrixWorld();
+    var o = camera.position.clone(), d = new T.Vector3(nx, ny, 0.5).unproject(camera).sub(o).normalize();
+    var sky = meSky(), prev = 0, t, i;
+    function above(s) { var x = o.x + d.x * s, z = o.z + d.z * s; return o.y + d.y * s - standY(x, z, sky); }
+    if (above(0) < 0) { return null; }
+    for (t = 2; t <= 900; t += 2) {
+      if (above(t) <= 0) {
+        var lo = prev, hi = t;
+        for (i = 0; i < 12; i++) { var mid = (lo + hi) / 2; if (above(mid) > 0) { lo = mid; } else { hi = mid; } }
+        return { x: o.x + d.x * hi, y: o.z + d.z * hi };
+      }
+      prev = t;
+    }
+    return null;
+  }
 
   /**
    * 타일 한 장의 정점을 실제 높이로 민다.
@@ -3267,7 +3295,7 @@
     removeFx: function (n) { if (fxGroup && n) { fxGroup.remove(n); } },
     /** 클릭(탭)한 자리를 3D 바닥에도 표시 — `world.js`의 `onClick()`이 부른다 */
     clickMark: clickMark,
-    camNode: function () { return camera; },
+    camNode: function () { return camera; }, pickGround: pickGround,
     /** 돌려 보기 — 드래그가 두드린다(`world.js`). 라디안을 더한다 */
     turn: function (d) {
       if (talkShot()) { return yaw; }            // ⑲-13 대화 중엔 끌어 돌리기를 안 받는다

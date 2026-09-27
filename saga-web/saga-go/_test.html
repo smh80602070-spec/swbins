@@ -2828,7 +2828,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     t('조명 — 손잡이를 올리면 밤에 지도가 어두워지고 등롱이 켜진다', function () {
       C.setTune('world3d.dayNight', 1);
       var n = R3.lightingAt(atH(23), 'clear'), d = R3.lightingAt(atH(13), 'clear');
-      var ok = R3.lum(n.tint) < R3.lum(d.tint) * 0.7 && n.lamp > 0.5 && d.lamp === 0;
+      var ok = R3.lum(n.tint) < R3.lum(d.tint) * 0.85 && n.lamp > 0.5 && d.lamp === 0;   // 2026-09-27 "너무 어두워" — 문턱 0.7 → 0.85(밤은 푸른 톤으로 읽히면 된다)
       C.setTune('world3d.dayNight', null);
       return ok &&
         ('지도 물감 ' + R3.lum(n.tint).toFixed(2) + ' vs ' + R3.lum(d.tint).toFixed(2) +
@@ -13596,6 +13596,36 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { U._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '문 여덟째부터(둘레 그대로) · 곁채 벽 · 자리 뭍 · 안은 안·문 앞은 밖' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */
+    t('3인칭 이동 Q1 — 3D 로 시점을 돌리면 키·스틱 방향도 같이 돈다(W = 카메라가 보는 쪽) · 3D 가 꺼져 있으면 그대로', function () {
+      var W = DG.world, W3 = DG.world3d, r = {};
+      try {
+        DG.world3d = Object.create(W3, { active: { value: function () { return true; } }, yaw: { value: function () { return Math.PI / 2; } } });
+        var f = W.camRot(0, -1), rt = W.camRot(1, 0);
+        r.turned = Math.abs(f.x - 1) < 1e-9 && Math.abs(f.y) < 1e-9 && Math.abs(rt.x) < 1e-9 && Math.abs(rt.y - 1) < 1e-9;   // 앞 = 동, 오른쪽 = 남
+        DG.world3d = Object.create(W3, { active: { value: function () { return false; } }, yaw: { value: function () { return Math.PI / 2; } } });
+        var g = W.camRot(0, -1);
+        r.flat = g.x === 0 && g.y === -1;
+      } finally { DG.world3d = W3; }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? 'yaw 90° 에서 W → 동 · D → 남 · 3D 꺼지면 그대로' : ('실패 ' + bad.join(','));
+    });
+
+    t('밝기 Q4 — 밤도 읽히게: 밤 반구광 세기 ≥ 1.9 · 밤 지도 물감 밝기 ≥ 0.7 · 밤 안개는 500m 넘어 · 흐림 해는 맑음의 0.8배 넘게', function () {
+      var R3 = DG.world3d, r = {};
+      function atH(h) { var d = new Date(2026, 8, 27, h, 0, 0); return d.getTime(); }
+      C.setTune('world3d.dayNight', 1);
+      try {
+        var n = R3.lightingAt(atH(23), 'clear'), c = R3.lightingAt(atH(13), 'clear'), cl = R3.lightingAt(atH(13), 'cloud');
+        r.hemi = n.hemi.intensity >= 1.9;
+        r.tint = R3.lum(n.tint) >= 0.7;
+        r.fog = n.fog.far > 500;
+        r.cloud = cl.sun.intensity > c.sun.intensity * 0.8;
+      } finally { C.setTune('world3d.dayNight', null); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '밤 반구광·물감·안개 · 흐림 해' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑳ 원작 겹침 정리 (PLAN §5 ⑳) ── */

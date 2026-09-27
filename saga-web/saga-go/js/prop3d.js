@@ -434,12 +434,32 @@
       g.applyMatrix4(m4);
       g.computeBoundingSphere();
       var srcMat = Array.isArray(raw[i].material) ? raw[i].material[0] : raw[i].material;
-      out.push({ geometry: g, material: real ? srcMat : lambertOf(srcMat) });
+      out.push({ geometry: g, material: real ? liftOf(srcMat) : lambertOf(srcMat) });
     }
     return out;
   }
 
   var matCache = {};
+
+  /** 실사 재질 밑색 들기 배율 — 0 이면 끔 */
+  function LIFT() { return core().tuned('prop3d.lift', 0.3); }
+  var liftCache = typeof WeakMap === 'function' ? new WeakMap() : null;
+  /**
+   * 실사(PBR) 재질의 **그늘을 받친다**(2026-09-27, 헤드리스로 직접 찍어 확인 — 실기 "전체적으로 너무 어두워").
+   * 사진측량 집·나무는 무늬가 짙어 해를 등진 면이 거의 검게 나왔다. 무늬를 벗기지 않고, 같은 무늬를 약하게
+   * 스스로 빛나게(emissiveMap = map) 해 밑색을 들고 주변광 반사(envMapIntensity)도 조금 올린다. 원본은 안 건드린다(복제)
+   */
+  function liftOf(src) {
+    var k = LIFT();
+    if (!src || !k || !src.isMeshStandardMaterial) { return src; }
+    if (liftCache && liftCache.has(src)) { return liftCache.get(src); }
+    var t = three(), m = src.clone();
+    if (m.map) { m.emissive = new t.Color(0xffffff); m.emissiveMap = m.map; m.emissiveIntensity = k; }
+    else { m.emissive = m.color.clone(); m.emissiveIntensity = k * 0.6; }
+    m.envMapIntensity = (src.envMapIntensity || 1) * (1 + k);
+    if (liftCache) { liftCache.set(src, m); }
+    return m;
+  }
 
   /**
    * GLB 재질 → **이 판이 쓰는 Lambert 로 갈아 끼운다.** 빛깔만 가져온다.
