@@ -154,6 +154,7 @@
    */
   function tick(dt) {
     if (global.DG_NO_DRAW || !dt) { return idx; }
+    if (hudOn()) { try { hudTick(dt); } catch (e) { /* 재기 표시는 없어도 된다 */ } }
     if (!started) { start(); }
     frames++; acc += dt;
     if (dt * 1000 > worst) { worst = dt * 1000; }
@@ -208,6 +209,40 @@
   /** 지금 등급이 사람이 못박은 것인가(true) 자동인가(false) — 설정 화면 표시용 */
   function pinned() { return !auto(); }
 
+  /* ── §6.1-B ① 재기 표시(`?perf`) — 폰에서 콘솔 없이 "끊김"을 숫자로 읽는다. 켜야만 만들어진다 ── */
+  /** 프레임 간격(ms) 묶음 → 평균 fps · 99분위 ms · 긴 프레임(>50ms) 수. 순수 함수(진단이 쓴다) */
+  function summarize(gaps) {
+    var n = gaps.length;
+    if (!n) { return { fps: 0, p99: 0, long: 0, n: 0 }; }
+    var a = gaps.slice().sort(function (x, y) { return x - y; }), sum = 0, lng = 0, i;
+    for (i = 0; i < n; i++) { sum += a[i]; if (a[i] > 50) { lng++; } }
+    return { fps: Math.round(1000 * n / sum), p99: Math.round(a[Math.min(n - 1, Math.floor(n * 0.99))]), long: lng, n: n };
+  }
+  var hudBox = null, hudGaps = [], hudLast = 0, hudAcc = 0;
+  function hudOn() { return /[?&]perf\b/.test((global.location && global.location.search) || '') && !global.DG_NO_DRAW; }
+  function hudTick(dt) {
+    var now = global.performance ? global.performance.now() : Date.now();
+    if (hudLast) { hudGaps.push(now - hudLast); if (hudGaps.length > 600) { hudGaps.shift(); } }   // 60fps 로 10초
+    hudLast = now;
+    hudAcc += dt;
+    if (hudAcc < 0.5) { return; }
+    hudAcc = 0;
+    if (!hudBox) {
+      hudBox = global.document.createElement('div');
+      hudBox.id = 'perf-hud';
+      hudBox.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);top:env(safe-area-inset-top,0);z-index:99999;' +
+        'font:11px/1.35 monospace;color:#9f9;background:rgba(0,0,0,.66);padding:3px 8px;border-radius:0 0 6px 6px;' +
+        'white-space:pre;pointer-events:none;';
+      global.document.body.appendChild(hudBox);
+    }
+    var s10 = summarize(hudGaps), s2 = summarize(hudGaps.slice(-120));
+    var W = global.DG.world3d, g = W && W.glInfo ? W.glInfo() : null, mem = global.performance && global.performance.memory;
+    hudBox.textContent = s2.fps + 'fps · 99% ' + s2.p99 + 'ms · 긴 프레임 ' + s10.long + '/10초 · ' + tier().key + (auto() ? '(자동)' : '') +
+      (g ? '\n호출 ' + g.calls + ' · 삼각형 ' + Math.round(g.tris / 1000) + 'k · 텍스처 ' + g.texs + ' · 도형 ' + g.geos + ' · 셰이더 ' + g.progs +
+        ' · ' + g.w + '×' + g.h + '@' + g.dpr : '') +
+      (mem ? ' · 힙 ' + Math.round(mem.usedJSHeapSize / 1048576) + 'MB' : '');
+  }
+
   function stats() {
     return {
       auto: auto(), tier: tier().key, fps: Math.round(fps),
@@ -224,7 +259,7 @@
     auto: auto, tier: tier, mul: mul, meshOk: meshOk, shadowOk: shadowOk, postOk: postOk,
     /* 기기 보기 — `score`·`tierOfScore` 는 순수 함수다 */
     score: score, tierOfScore: tierOfScore, probe: probe, start: start,
-    decide: decide, tick: tick, set: set, pin: pin, unpin: unpin, pinned: pinned, stats: stats,
+    decide: decide, tick: tick, set: set, summarize: summarize, pin: pin, unpin: unpin, pinned: pinned, stats: stats,
     fps: function () { return fps; },
     reset: function () { idx = 0; lowFor = 0; highFor = 0; fps = 60; changes = 0; started = false; }
   };

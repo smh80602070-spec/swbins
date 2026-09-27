@@ -573,6 +573,8 @@ dependency 를 설치하지 않는다"와 같은 결로, 저장소에 도구를 
 | `rock` | `Rock_07.glb` · `Stone_01.glb` · `MossRock_a·b·c.glb`(다섯 벌 섞어 쓴다) |
 | `grass`(수풀만, 풀잎은 그대로) | `Shrub_04.glb` |
 
+2026-09-28 — `Shrub_04.glb` 를 이 판에서 한 번 더 줄였다(meshoptimizer simplify 0.1: 삼각형 27,327 → 2,601, 942KB → 337KB, 텍스처 그대로). `?perf` 로 재 보니 높음 등급 한 화면에 이 수풀 118그루가 **삼각형 322만 개**(그 프레임 전체의 96%)였다(SAGA-DESIGN §6.1-B). 원본은 `saga-forest` 의 같은 파일.
+
 **가을·눈은 그대로 저다각형이다** — Poly Haven 전체를 뒤져도 가을 단풍·눈 덮인
 나무 CC0 모델이 없다는 것은 사가의숲이 이미 확인한 자리라 다시 찾지 않는다.
 사가의숲엔 있는 `log`(통나무)·`tree:dead`(고목)는 이 판의 소품 표(`prop3d.js`

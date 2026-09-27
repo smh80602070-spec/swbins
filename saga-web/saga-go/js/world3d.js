@@ -1481,6 +1481,7 @@
     if (instKinds[name]) { return instKinds[name]; }
     cap = cap || INST_CAP();
     var m = new T.InstancedMesh(geo, mtl, cap);
+    m.name = 'inst:' + name;                // §6.1-B ① 재기(triBreakdown)가 이름으로 가려 본다
     m.instanceMatrix.setUsage(T.DynamicDrawUsage);
     m.castShadow = !!cast;
     m.receiveShadow = false;
@@ -3120,7 +3121,15 @@
    * 그리는 자리가 두 군데(여기와 hit-stop)라 함수로 묶었다 — 한쪽만 고치면
    * 멎는 동안 후처리가 벗겨져 화면이 껌뻑인다.
    */
+  /* §6.1-B ① 재기(`?perf`) — 한 프레임에 그린 호출·삼각형을 **후처리 여러 번을 합쳐** 센다(평소엔 마지막 한 번만 남는다) */
+  var PERF_ON = /[?&]perf\b/.test((global.location && global.location.search) || '');
+  var glFrame = { calls: 0, tris: 0 };
   function present() {
+    if (PERF_ON) { renderer.info.autoReset = false; renderer.info.reset(); }
+    presentDraw();
+    if (PERF_ON) { glFrame.calls = renderer.info.render.calls; glFrame.tris = renderer.info.render.triangles; }
+  }
+  function presentDraw() {
     var P3 = global.DG.post3d;
     if (P3) {
       if (P3.draw(renderer, scene, camera, lightNow)) { return; }
@@ -3387,6 +3396,41 @@
         ' look=' + (camLook ? [camLook.x, camLook.y, camLook.z].map(Math.round).join(',') : '-') +
         ' children=' + scene.children.length;
       return read;
+    },
+    /** §6.1-B ① 재기(`?perf` 표시가 0.5초마다 읽는다) — 한 프레임 호출·삼각형(`?perf` 일 때만 합산)·GPU 도형·텍스처·셰이더·캔버스 */
+    glInfo: function () {
+      if (!renderer) { return null; }
+      var I = renderer.info;
+      return { calls: PERF_ON ? glFrame.calls : I.render.calls, tris: PERF_ON ? glFrame.tris : I.render.triangles,
+        geos: I.memory.geometries, texs: I.memory.textures, progs: I.programs ? I.programs.length : 0,
+        w: canvas ? canvas.width : 0, h: canvas ? canvas.height : 0, dpr: renderer.getPixelRatio() };
+    },
+    /** §6.1-B ① 재기 — 씬 최상위 묶음마다 보이는 삼각형·메시 수(그림자 드리우는 몫 따로). 화면 밖 걸러내기 전 값 */
+    triBreakdown: function (topN) {
+      if (!scene) { return null; }
+      var out = {}, byGeo = {};
+      if (topN) {
+        propGroup.traverseVisible(function (o) {
+          if (!o.isMesh || !o.geometry) { return; }
+          var g = o.geometry, c = g.index ? g.index.count : (g.attributes.position ? g.attributes.position.count : 0), per = Math.round(c / 3);
+          var k = g.uuid, e = byGeo[k] || (byGeo[k] = { name: (o.name || (o.parent && o.parent.name) || g.type).slice(0, 60), per: per, n: 0, inst: !!o.isInstancedMesh, cast: !!o.castShadow });
+          e.n += o.isInstancedMesh ? o.count : 1;
+        });
+        out.top = Object.keys(byGeo).map(function (k) { var e = byGeo[k]; e.total = e.per * e.n; return e; })
+          .sort(function (a, b) { return b.total - a.total; }).slice(0, topN);
+      }
+      scene.children.forEach(function (ch, i) {
+        var key = ch === groundGroup ? 'ground' : ch === propGroup ? 'prop' : ch === actorGroup ? 'actor' : ch === fxGroup ? 'fx' : (ch.type + i);
+        var tris = 0, cast = 0, meshes = 0;
+        ch.traverseVisible(function (o) {
+          if (!o.isMesh || !o.geometry) { return; }
+          var g = o.geometry, c = g.index ? g.index.count : (g.attributes.position ? g.attributes.position.count : 0);
+          var t = Math.round(c / 3) * (o.isInstancedMesh ? o.count : 1);
+          tris += t; meshes++; if (o.castShadow) { cast += t; }
+        });
+        if (tris) { out[key] = { tris: tris, cast: cast, meshes: meshes }; }
+      });
+      return out;
     },
     /** §6.1-B ① 재기 — 배우마다 삼각형 수(큰 것부터 n 개). 어느 몸이 GPU 를 잡아먹는지 본다 */
     heavyActors: function (n) {

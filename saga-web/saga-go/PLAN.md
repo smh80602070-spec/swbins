@@ -418,6 +418,8 @@ SAGA-DESIGN §8 적용 — **코드로 끝나는 항목은 완료(2026-09-17)**:
 진단     chrome --headless=new --disable-gpu --virtual-time-budget=45000 --dump-dom http://127.0.0.1:8791/_test.html | grep -o "RESULT [0-9/]*"
 어드민   _admin.html#selftest  (해시 트리거 — 이 판만 쿼리가 아니다)  → RESULT n/n
 자동관찰 _autoprobe.html?sim=600&party=3  · ?rogue=1 (적도 빈도)
+재기     index.html?perf  (§6.1-B ① — 화면 위에 fps·99분위·긴 프레임·호출·삼각형·텍스처·셰이더·해상도. world3d.triBreakdown(n)·heavyActors(n) 로 쪼갬)
+         2026-09-28 폰 크기·높음: 삼각형 336만/프레임 중 322만이 수풀 Shrub_04(개당 2.7만×118) → 줄여 44만. 다음 후보: 도감 인물 몸 개당 5.5만
 ```
 - 씨앗 mulberry32(20260824) 고정 · `weather.force('clear')` · `rogue.force(false)` · **3회 돌려 한 줄도 안 달라야** 한다. 로그 시각과 상단 지갑 HUD 한 줄은 렌더 타이밍으로 흔들린다.
 - `--dump-dom` 에서는 rAF 가 거의 안 돈다 → 메인 루프가 굴러야 보이는 것은 `_test.html` 처럼 `update(dt)` 를 직접 돌리거나 `_autoprobe.html` 로 본다.

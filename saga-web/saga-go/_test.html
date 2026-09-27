@@ -4706,6 +4706,13 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return onLow === 'LOW' && forced === 'HIGH' && 'perf.auto=0 이면 사람이 잡은 대로만';
     });
 
+    t('성능 — ?perf 재기 요약: 평균 fps · 99분위 ms · 긴 프레임(>50ms) 수 (§6.1-B ①)', function () {
+      var gaps = [], i; for (i = 0; i < 98; i++) { gaps.push(16); } gaps.push(80); gaps.push(120);
+      var s = PF.summarize(gaps), z = PF.summarize([]);
+      return s.n === 100 && s.long === 2 && s.p99 === 120 && s.fps === Math.round(1000 * 100 / (98 * 16 + 200)) && z.fps === 0 &&
+        ('16ms×98 + 80·120 → ' + s.fps + 'fps · 99% ' + s.p99 + 'ms · 긴 프레임 ' + s.long);
+    });
+
     t('성능 — 설정에서 고른 등급(pin)이 그대로 걸린다(낮음을 골라도 높음으로 돌던 것)', function () {
       /* 2026-09-28 — 자동을 끄면 tier() 가 늘 HIGH 라 ⚙️ "낮음·보통"이 아무 일도 안 했다(폰 발열 §6.1-B) */
       var got = {}, keys = ['LOW', 'MEDIUM', 'HIGH'], i;
