@@ -4221,3 +4221,4 @@ SAGA-HANDOFF 열린 항목 "tower_ruin.glb(역참) 아이콘 굽기 — 여섯 �
 - MEMBERS `story_dodam`(★4 뇌 대도) · kits 선로 전류(wave 10m·×2.9·밀기 4·대기 8)·막차 출발 신호(haste 7m·×3.4·10초·기력 +7) — Godot 수치를 노 물결·천기 뇌우 비율로 옮김.
 - 진단(jsdom) 새 3 · 옛 2 고침 → 753/761 세 번 같음(실패 8 = 기준선). sw go-v6.17.0 · **실기 확인 대기**(변전함·막차 불빛, 잔상 쫓기 길이 68m 가 짧지 않은지).
 - 다음 = ⑲ 순서 41(㊾-1 5부 무대 · 여섯째 지역 틈새 갈림길 — 지형·명소 넷·선로).
+- ⑲ 접은 순서 +40 `83d27a94` skyport 변전함·`trainPowered`(막차 불빛)·`SITE_PARTS` · story light `bare`·ch18·도담·선장의 잔상 `CAPTAIN_PATH` · MEMBERS·kits `story_dodam`(도담 고글 몸·선장 모자 몸·막차 달리기·3D 실제 게임 확인).
