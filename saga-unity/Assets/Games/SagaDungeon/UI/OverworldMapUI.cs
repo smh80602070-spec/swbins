@@ -28,6 +28,8 @@ namespace Saga.Dungeon.UI
         private bool _visible;
         private Image[] _cells;
         private TextMeshProUGUI _where;
+        private TextMeshProUGUI _sagaCount;
+        public string SagaCountText => _sagaCount != null ? _sagaCount.text : "";
         private int _shown = -2;
 
         public bool Visible => _visible;
@@ -71,6 +73,9 @@ namespace Saga.Dungeon.UI
                 _where.text = cur >= 0
                     ? string.Format(DungeonLocalization.T("region.map_here", "지금 — {0} {1}"), DungeonWorldMap.Name(cur), DungeonWorldMap.All[cur].Hanja)
                     : DungeonLocalization.T("region.map_outside", "지금 — 지역 밖(던전 속)");
+            // PLAN.md 109-10-6 — 사연 평정 수(웹 퀘스트 탭 "📜 지역 사연 n/9 평정").
+            if (_sagaCount != null) _sagaCount.text = string.Format(DungeonLocalization.T("saga.map_count", "📜 지역 사연 {0}/{1} 평정"),
+                RegionSagaState.DoneCount(), DungeonWorldMap.All.Length);
         }
 
         /// <summary>칸 바탕 = 그 지역 땅빛(웹 ground 그대로, 반투명).</summary>
@@ -94,6 +99,9 @@ namespace Saga.Dungeon.UI
             var title = panel.transform.Find("Title");
             _where = NewText(panel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -72f), new Vector2(440f, 36f), 22);
             _where.gameObject.name = "Where";
+            // 판 맨 아래(칸 밑 35px 틈) — 사연 평정 수.
+            _sagaCount = NewText(panel.transform, "", new Vector2(0.5f, 0f), new Vector2(0f, 8f), new Vector2(440f, 26f), 18);
+            _sagaCount.gameObject.name = "SagaCount";
             if (title != null) title.SetAsLastSibling();
 
             _cells = new Image[DungeonWorldMap.All.Length];
@@ -120,7 +128,7 @@ namespace Saga.Dungeon.UI
             var r = DungeonWorldMap.All[i];
             string boss = "☠ " + DungeonRegionFoes.BossName(i) + (RegionBossState.Kills(i) > 0 ? " ✔" : "");
             if (RegionBossState.IsResting(i)) boss = $"<color=#8c8c8c>{boss}</color>";
-            return $"{DungeonWorldMap.Name(i)}\n<size=17>{r.Hanja}</size>\n<size=15>{DungeonWorldMap.Place(i)}</size>\n<size=14>{boss}</size>";
+            return $"{Saga.Dungeon.World.RegionSagaRunner.MapMark(i)} {DungeonWorldMap.Name(i)}\n<size=17>{r.Hanja}</size>\n<size=15>{DungeonWorldMap.Place(i)}</size>\n<size=14>{boss}</size>";
         }
 
         /// <summary>펼칠 때 칸 글을 다시 — 우두머리 토벌·쉼이 바뀌었을 수 있다.</summary>

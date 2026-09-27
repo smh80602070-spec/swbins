@@ -120,6 +120,14 @@ namespace Saga.Dungeon.World
             return false;
         }
         public DungeonEnemy BossOf(int r) => _groups[r]?.Boss;
+
+        /// <summary>이 적이 어느 지역 우두머리인가(-1 = 아님) — PLAN.md 109-10-6 사연 ④ 걸음이 본다(쓰러진 뒤에도 다음 Tick 까지는 붙들고 있다).</summary>
+        public int RegionOf(DungeonEnemy e)
+        {
+            if (e == null) return -1;
+            for (int r = 0; r < _groups.Length; r++) if (_groups[r] != null && _groups[r].Boss == e) return r;
+            return -1;
+        }
         public List<DungeonEnemy> GuardsOf(int r) => _groups[r] != null ? new List<DungeonEnemy>(_groups[r].Guards) : new List<DungeonEnemy>();
         public Transform Marker(int r) => transform.Find("RegionBossMark_" + DungeonWorldMap.All[r].Key);
         public bool GemDim(int r) => _gemDim[r];
@@ -162,10 +170,12 @@ namespace Saga.Dungeon.World
                 float yaw = (i - (DungeonRegionFoes.Guards - 1) * 0.5f) * DungeonRegionFoes.GuardFanDeg;
                 Vector3 pos = b.Spot + Quaternion.Euler(0f, yaw, 0f) * inward * DungeonRegionFoes.GuardRing;
                 GuardLook(DungeonRegionFoes.GuardEra(r, i), lv, floorRunner, out var gm, out var gName, out var gColor, out var gScale);
-                g.Guards.Add(Spawn($"RegionGuard_{key}_{i}", pos, key, gm,
+                var guard = Spawn($"RegionGuard_{key}_{i}", pos, key, gm,
                     DungeonFormulas.EliteHp(lv), DungeonFormulas.EliteDmg(lv),
                     DungeonFormulas.EliteRewardExp(lv), DungeonFormulas.EliteRewardGold(lv), null, null, false,
-                    gName, gColor, gScale, null));
+                    gName, gColor, gScale, null);
+                guard.MarkElite(); // PLAN.md 109-10-6 사연 ③ 정예 걸음이 센다.
+                g.Guards.Add(guard);
             }
             DialogueLabel.Instance?.Show(string.Format(DungeonLocalization.T("rboss.appear", "☠ {0} — {1} · {2}"),
                 DungeonRegionFoes.BossName(r), DungeonRegionFoes.BossDesc(r), DungeonRegionFoes.DangerLabel(r)), 4f);

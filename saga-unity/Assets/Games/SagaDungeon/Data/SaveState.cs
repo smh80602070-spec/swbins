@@ -36,7 +36,8 @@ namespace Saga.Dungeon.Data
         // v11 — PLAN.md 109-10 비결(SecretState, 웹 §5.9 `save.secrets`). 무예 셋 순서 정수, v10 이하는 null → 전부 없음.
         // v12 — PLAN.md 109-10-3 시련(TrialState, 웹 §5.11 `trial = {best, open, runs, board}`). v11 이하는 0/0/0/null → 열린 단계 1.
         // v13 — PLAN.md 109-10-5 지역 우두머리(RegionBossState, 웹 §5.13 `regionBoss = {지역: {kills, firstAt, lastAt}}`). v12 이하는 null → 전부 0.
-        private const int SaveVersion = 13;
+        // v14 — PLAN.md 109-10-6 지역 사연(RegionSagaState, 웹 §5.14 `quest.chain`·`chainAll`). v13 이하는 null/false → 전부 닫힘.
+        private const int SaveVersion = 14;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save_dungeon.json";
@@ -85,6 +86,8 @@ namespace Saga.Dungeon.Data
             public int trialRuns;
             public TrialState.Entry[] trialBoard;
             public RegionBossState.Entry[] regionBoss; // v13
+            public RegionSagaState.Entry[] regionSaga; // v14
+            public bool regionSagaAll;
         }
 
         public static bool Save()
@@ -140,6 +143,8 @@ namespace Saga.Dungeon.Data
                 trialRuns = TrialState.Runs,
                 trialBoard = TrialState.SnapshotBoard(),
                 regionBoss = RegionBossState.Snapshot(),
+                regionSaga = RegionSagaState.Snapshot(),
+                regionSagaAll = RegionSagaState.AllDone,
             };
             return JsonUtility.ToJson(data);
         }
@@ -186,6 +191,7 @@ namespace Saga.Dungeon.Data
             if (data.version >= 12) TrialState.Restore(data.trialBest, data.trialOpen, data.trialRuns, data.trialBoard);
             else TrialState.Restore(0, 1, 0, null);
             RegionBossState.Restore(data.version >= 13 ? data.regionBoss : null);
+            RegionSagaState.Restore(data.version >= 14 ? data.regionSaga : null, data.version >= 14 && data.regionSagaAll);
             BestiaryState.Restore(data.discovered);
             if (data.version >= 4)
             {

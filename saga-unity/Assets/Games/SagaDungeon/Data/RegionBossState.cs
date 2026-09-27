@@ -59,6 +59,14 @@ namespace Saga.Dungeon.Data
             return first;
         }
 
+        /// <summary>쉼을 지운다 — 곧바로 다시 선다(PLAN.md 109-10-6 사연 ④ 걸음에 닿을 때, 웹 lastAt 지움). 토벌 수·첫 시각은 그대로.</summary>
+        public static void ClearRest(int region)
+        {
+            if (Rows[region].lastAt == 0) return;
+            Rows[region].lastAt = 0;
+            Changed?.Invoke();
+        }
+
         public static Entry[] Snapshot() => (Entry[])Rows.Clone();
 
         /// <summary>v12 이하 = null → 전부 0. 키로 맞추고(표 순서가 바뀌어도) 모르는 키는 버린다.</summary>

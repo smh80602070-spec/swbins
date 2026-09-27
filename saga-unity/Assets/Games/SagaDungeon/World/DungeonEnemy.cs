@@ -88,6 +88,7 @@ namespace Saga.Dungeon.World
             ["만년설 거한"] = "rboss.snowfort",
             ["고철 거신"] = "rboss.scrap",
             ["해골 무사"] = "enemy.region_skeleton",
+            ["해골 졸개"] = "enemy.region_skeleton_grunt", // PLAN.md 109-10-6 사냥터 신화 잡졸
         };
 
         /// <summary>진단 — 표시 이름 → 번역 키 표에 있나.</summary>
@@ -287,6 +288,10 @@ namespace Saga.Dungeon.World
         }
 
         private string _introSubtitle;
+
+        /// <summary>PLAN.md 109-10-6 지역 사연 ③ 정예 걸음이 세는 적 — 우두머리 호위·사냥터 정예(`MarkElite`). 옛 VS 정예는 안 센다.</summary>
+        public bool IsElite { get; private set; }
+        public void MarkElite() => IsElite = true;
 
         /// <summary>PLAN.md 108 ③ — 명소 층 주인처럼 등장 컷 부제를 따로 줄 때("순장 왕릉의 주인").</summary>
         public void SetIntroSubtitle(string subtitle) => _introSubtitle = subtitle;

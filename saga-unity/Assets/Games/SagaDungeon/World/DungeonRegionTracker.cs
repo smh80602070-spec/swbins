@@ -82,8 +82,24 @@ namespace Saga.Dungeon.World
                 float shown = BannerSeconds - _bannerLeft;
                 float a = Mathf.Min(1f, shown / FadeSeconds, Mathf.Max(0f, _bannerLeft) / FadeSeconds);
                 if (_bannerGroup != null) _bannerGroup.alpha = a;
-                if (_bannerLeft <= 0f && _banner != null) _banner.gameObject.SetActive(false);
+                // PLAN.md 109-10-6 — 축복 3택·시련 카드가 열려 있으면 배너는 숨는다(가운데 판과 겹친다, 110 ⑤ 배치 점검). 시간은 그대로 흐른다.
+                if (_banner != null) _banner.gameObject.SetActive(_bannerLeft > 0f && !ChoiceOpen());
             }
+        }
+
+        private Saga.Dungeon.UI.BlessingChoiceUi _blessing;
+        private bool _blessingSought;
+
+        private bool ChoiceOpen()
+        {
+            if (!_blessingSought)
+            {
+                _blessingSought = true;
+                _blessing = FindFirstObjectByType<Saga.Dungeon.UI.BlessingChoiceUi>(FindObjectsInactive.Include);
+            }
+            if (_blessing != null && _blessing.IsShowing) return true;
+            var trial = Saga.Dungeon.UI.TrialCardUi.Instance;
+            return trial != null && trial.IsOpen;
         }
 
         /// <summary>진단이 앞뒤로 부른다 — 머묾·배너를 비우고 "마지막으로 알린 지역"을 그 값으로.</summary>

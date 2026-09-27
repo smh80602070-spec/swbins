@@ -60,6 +60,10 @@ namespace Saga.Dungeon.UI
                          $"{weapon} ({atk})  {floorLine}\n" +
                          $"{QuestState.ObjectiveText}"; // "퀘스트 시스템" 슬라이스
 
+            // PLAN.md 109-10-6 지역 사연 — 지금 칸 사슬이 걸음 중이면 한 줄.
+            string saga = RegionSagaRunner.HudLine(region);
+            if (saga.Length > 0) label.text += $"\n{saga}";
+
             // PLAN.md 106-2 "잊힌 능묘" — 한 번 들어간 뒤부터 열쇠·도구 줄.
             string temple = TempleState.HudLine();
             if (temple.Length > 0) label.text += $"\n{temple}";
