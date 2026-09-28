@@ -328,5 +328,85 @@
    "install": "mpfb_user_data",
    "checked": "2026-09-26"
   }
+ },
+ "polyhaven": {
+  "_note": "09-28 옷 결 — garments.py paint() 가 절차 무늬 위에 사진 결(밝기·높이)을 곱한다. Poly Haven 은 전부 CC0(https://polyhaven.com/license). 1k 만 받는다(_src/polyhaven, gitignore). fetch_sources.py 가 api.polyhaven.com/files 로 받아 sha256 을 맞춘다.",
+  "license": "CC0-1.0",
+  "page": "https://polyhaven.com/textures",
+  "checked": "2026-09-28",
+  "items": {
+   "rough_linen": {
+    "size_mm": [
+     271,
+     271
+    ],
+    "diff_1k_jpg": "04897d7611d7390ddf5b2c6f7273f448dfc48341fdbd1f4f207fa30b331d7f57",
+    "disp_1k_png": "78b56241190055fce94238d587bc71504b155c5785ace241b455b256166c24a2",
+    "use": "무명·삼베 느낌 평상 옷(weave 기본)"
+   },
+   "stretch_poplin": {
+    "size_mm": [
+     291,
+     281
+    ],
+    "diff_1k_jpg": "43d1fa852fea75ef9ccb0832f70df3d717190263f3048c4d26a8ec764af49640",
+    "disp_1k_png": "b8744de24b65c53b4dfb22280cad1137554f7ed8c8c5cf7997394cbd73afb6a0",
+    "use": "고운 무명(관복·셔츠)"
+   },
+   "crepe_satin": {
+    "size_mm": [
+     263,
+     268
+    ],
+    "diff_1k_jpg": "403b5af633cb194117bcd63b3158497507290ee3fd7b7092fb5638d05426bb86",
+    "disp_1k_png": "eacdfc8edb7883925390c195849ba0eb4e566a00e34cb845707e3f07d2d92903",
+    "use": "비단(임금·귀인 옷)"
+   },
+   "floral_jacquard": {
+    "size_mm": [
+     253,
+     384
+    ],
+    "diff_1k_jpg": "4534bf28534ebd8f24544c389a76f42630bca7621ae55feabbb8da32f98e6bf4",
+    "disp_1k_png": "b1059a65ad0fffda985aba2cea6784badb21c8fc1ea1482b4d8a234082f876e5",
+    "use": "금란·자카드(brocade)"
+   },
+   "knitted_fleece": {
+    "size_mm": [
+     266,
+     270
+    ],
+    "diff_1k_jpg": "57d7e416b698d02171a260da1a47109fc0f85b232f565d2a42d6d1be416c32e0",
+    "disp_1k_png": "da0c153564b076598318180f1d738ccbac11fe2545f4d50eff9ae42dd820871b",
+    "use": "뜨개(knit)"
+   },
+   "hessian_230": {
+    "size_mm": [
+     269,
+     267
+    ],
+    "diff_1k_jpg": "ef9ac1a0129b6d0f44b6d5beb68db7be7a0adf11e09fe52fd2cdc9370b27d4ba",
+    "disp_1k_png": "fe615da3e6619b121e7758fb86a0f3d8994363922b9da7b87edabbf45e5ecc1e",
+    "use": "거친 삼베(승려·농부)"
+   },
+   "brown_leather": {
+    "size_mm": [
+     400,
+     400
+    ],
+    "diff_1k_jpg": "7e9e1d6566d1fd91d4ceb4966c4820361e85d53a7a828b6bab3b2a093a876cd1",
+    "disp_1k_png": "3da0d0926efdc124a09961b966b83f42607c1e8a834e9ed5981456d663696c59",
+    "use": "가죽"
+   },
+   "metal_plate": {
+    "size_mm": [
+     500,
+     500
+    ],
+    "diff_1k_jpg": "c6b6739eac2c75ccc898e753d7833df24eafbdb9aa92fb6eabfb92abd1a680a5",
+    "disp_1k_png": "abc05dc9fb007d0aac92f8b785b7d24082ceda117e193a80570e134befaedd1e",
+    "use": "쇠 판(찰갑·비늘·판금)"
+   }
+  }
  }
 }

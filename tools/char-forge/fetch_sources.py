@@ -109,5 +109,27 @@ def main():
         print('ok', key, p['license'])
 
 
+
+def fetch_polyhaven(force=False):
+    """옷 결 사진(09-28) — sources.json "polyhaven" 칸, api.polyhaven.com/files/<id> 의 1k Diffuse(jpg)·Displacement(png). 전부 CC0."""
+    ph = json.load(open(os.path.join(HERE, 'sources.json'), encoding='utf-8')).get('polyhaven')
+    if not ph:
+        return
+    out = os.path.join(SRC, 'polyhaven')
+    os.makedirs(out, exist_ok=True)
+    for tid, it in ph['items'].items():
+        files = None
+        for kind, ext, key in (('Diffuse', 'jpg', 'diff_1k_jpg'), ('Displacement', 'png', 'disp_1k_png')):
+            fp = os.path.join(out, f'{tid}_{kind[:4].lower()}_1k.{ext}')
+            if force or not os.path.exists(fp) or sha256(fp) != it[key]:
+                files = files or json.loads(get(opener(), f'https://api.polyhaven.com/files/{tid}'))
+                print('받기', tid, kind)
+                open(fp, 'wb').write(get(opener(), files[kind]['1k'][ext]['url']))
+            if sha256(fp) != it[key]:
+                sys.exit(f'polyhaven {tid} {kind}: sha256 불일치 — 사진이 바뀌었다. 확인하고 sources.json 을 고친다')
+    print('ok polyhaven', len(ph['items']), ph['license'])
+
+
 if __name__ == '__main__':
     main()
+    fetch_polyhaven('--force' in sys.argv)

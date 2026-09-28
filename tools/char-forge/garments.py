@@ -23,7 +23,7 @@
 만든 옷은 MPFB 사용자 데이터 `clothes/cf_<id>/`(gitignore 된 _blender 안) — 생성기가 정본이라 다른 PC 는 이 스크립트를 다시 돌린다.
 좌표: 미터, Z 위, 앞 = -Y(둘레 각 270° = UV s 0.75).
 """
-import bpy, bmesh, math, os, sys, uuid, random
+import bpy, bmesh, json, math, os, sys, uuid, random
 import numpy as np
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
@@ -743,7 +743,7 @@ class Builder:
                 ringz.append(z)
         z0, z1 = ringz[0], ringz[-1]
         if DRAPE and p.get('drape', not (p.get('over') or p.get('fit') or arc)) and zb < B.lv['knee']:
-            z_pin = B.lv['hip'] - 0.02   # 엉덩이 위는 고정, 그 아래 18cm 에 걸쳐 풀린다
+            z_pin = B.lv['waist'] - 0.02   # 허리 위는 고정, 그 아래 18cm 에 걸쳐 풀린다(엉덩이 위에서 고정하면 엉덩이 혹이 남았다 09-28)
             for ring, z in zip(rows, ringz):
                 w = min(1.0, max(0.0, 1 - (z_pin - z) / 0.18))
                 for v in ring:
@@ -1598,6 +1598,49 @@ class Builder:
 
 
 # ---- 천 그림 ----
+# 무늬 → 사진 결(sources.json "polyhaven"). 틀 paint 에 fabric='<id>' 를 주면 그것. 없으면 무늬로 고른다
+PHOTO_OF = {'weave': 'rough_linen', 'stripes': 'stretch_poplin', 'quilt': 'stretch_poplin', 'brocade': 'crepe_satin',
+            'knit': 'knitted_fleece', 'lamellar': 'metal_plate', 'scale': 'metal_plate', 'plate': 'metal_plate',
+            'ribs': 'metal_plate', 'mail': 'metal_plate'}
+PHOTO_GAIN = {'metal_plate': (0.5, 0.6)}   # (밝기, 높이) — 천 기본 (0.8, 1.0)
+PX_PER_M = 1600   # 옷 그림 1m 가 몇 픽셀로 쓰이나(가늠 — 몸통 둘레 ≈ 칸 폭 0.36 × 2048 / 0.75m). 사진 한 장 = 그 사진 실측 크기
+_photo_cache = {}
+
+
+def photo_for(P, pat):
+    tid = P.get('fabric', PHOTO_OF.get(pat))
+    if not tid:
+        return None
+    if tid not in _photo_cache:
+        base = os.path.join(os.path.dirname(os.path.abspath(__file__)), '_src', 'polyhaven')
+        info = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sources.json'), encoding='utf-8'))['polyhaven']['items'][tid]
+
+        def load(fn):
+            im = bpy.data.images.load(os.path.join(base, fn), check_existing=False)
+            w, hh = im.size
+            a = np.array(im.pixels[:], np.float32).reshape(hh, w, 4)[..., :3]
+            bpy.data.images.remove(im)
+            return a.mean(axis=2)
+        _photo_cache[tid] = (tid, load(tid + '_diff_1k.jpg'), load(tid + '_disp_1k.png'), info['size_mm'])
+    return _photo_cache[tid]
+
+
+def photo_tile(ph, H, W):
+    """사진을 그 실측 크기로 옷 그림 전체에 깐다 → (밝기 비 평균 1, 높이 -1~1, 밝기 몫, 높이 몫)."""
+    tid, diff, disp, (mx, my) = ph
+    px = max(96, int(mx / 1000 * PX_PER_M))
+    py_ = max(96, int(my / 1000 * PX_PER_M))
+    hh, ww = diff.shape
+    yi = (np.arange(H) % py_) * hh // py_
+    xi = (np.arange(W) % px) * ww // px
+    d = diff[yi][:, xi]
+    d = np.clip(d / max(float(d.mean()), 1e-4), 0.55, 1.45)
+    z = disp[yi][:, xi]
+    z = (z - float(z.mean())) / max(float(np.abs(z - z.mean()).max()), 1e-4)
+    kc, kh = PHOTO_GAIN.get(tid, (0.8, 1.0))
+    return d.astype(np.float32), z.astype(np.float32), kc, kh
+
+
 def paint(g, dpath, npath):
     rng = np.random.default_rng(20260926)
     H = W = TEX
@@ -1724,6 +1767,11 @@ def paint(g, dpath, npath):
                 plate = np.clip(edge / 0.12, 0, 1)
                 shade = 0.55 + 0.45 * plate + 0.18 * (1 - fv) * plate + 0.03 * noise   # 판 위쪽이 밝다(겹친 비늘)
                 h = plate * (1 - 0.6 * fv)
+        ph = photo_for(P, pat)
+        if ph is not None:   # 사진 결(Poly Haven CC0) — 밝기는 곱하고 높이는 더한다(09-28 "한 색 칠처럼 멋없다")
+            det, dis, k_c, k_h = photo_tile(ph, H, W)
+            shade = shade * (1 + k_c * (det - 1))
+            h = h + k_h * dis
         col = base[None, None, :] * shade[..., None]
         img[m] = col[m]
         hgt[m] = h[m]
