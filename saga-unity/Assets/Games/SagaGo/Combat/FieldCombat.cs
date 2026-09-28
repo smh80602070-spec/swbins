@@ -64,6 +64,8 @@ namespace Saga.Go.Combat
             public float MaxHp;
             public float SkillCd;
             public float Energy;
+            /// <summary>109-14-4 깨달음 ⑤ — 해방 뒤 남은 공격 +20% 초.</summary>
+            public float BuffLeft;
             public bool Down => Hp <= 0f;
             public bool BurstReady => Energy >= BurstCost;
         }
@@ -86,6 +88,7 @@ namespace Saga.Go.Combat
             public string Owner;
             public Vector3 Center;
             public float Radius, Left, Next, Atk;
+            public float Mul = 1f, React = 1f; // 109-14-4 놓은 사람의 스킬 무예 배율·깨달음 ② 반응 배율
             public GoElement Element;
             public Color Color;
             public int Ticks, Hits;
@@ -135,7 +138,12 @@ namespace Saga.Go.Combat
         private readonly List<(Vector3 pos, float dmg, float left)> _seeds = new List<(Vector3, float, float)>();
         public int SeedCount => _seeds.Count;
 
-        public float Atk => (PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus) * PerkState.AtkMultiplier * BondState.AtkMultiplier;
+        public float Atk => (PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus) * PerkState.AtkMultiplier * BondState.AtkMultiplier
+            * (Active != null && Active.BuffLeft > 0f ? GoTalent.C5Atk : 1f); // 109-14-4 깨달음 ⑤
+
+        /// <summary>109-14-4 나선 사람의 무예 배율·반응 배율(주인공·도감 밖은 1).</summary>
+        private float TalentMul(GoTalent.Kind k) => Active != null ? TalentState.Mul(Active.Id, k) : 1f;
+        private float ReactMul => Active != null ? TalentState.ReactMul(Active.Id) : 1f;
         public float Def => (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier;
 
         private void Awake()
@@ -198,6 +206,7 @@ namespace Saga.Go.Combat
 
         private void AddMember(Dictionary<string, Member> old, string id, string name, GoElement el, float maxHp)
         {
+            maxHp *= TalentState.HpMul(id); // 109-14-4 깨달음 ④
             if (old.TryGetValue(id, out var m))
             {
                 float ratio = m.MaxHp > 0f ? m.Hp / m.MaxHp : 1f;
@@ -238,7 +247,11 @@ namespace Saga.Go.Combat
             if (_comboWindow > 0f) { _comboWindow -= dt; if (_comboWindow <= 0f) ComboStep = 0; }
             if (InvulnLeft > 0f) InvulnLeft -= dt;
             if (SwapCooldown > 0f) SwapCooldown -= dt;
-            foreach (var m in _party) if (m.SkillCd > 0f) m.SkillCd = Mathf.Max(0f, m.SkillCd - dt);
+            foreach (var m in _party)
+            {
+                if (m.SkillCd > 0f) m.SkillCd = Mathf.Max(0f, m.SkillCd - dt);
+                if (m.BuffLeft > 0f) m.BuffLeft = Mathf.Max(0f, m.BuffLeft - dt);
+            }
             TickZones(dt);
             TickBurn(dt);
             TickGuardAndSeeds(dt);
@@ -275,7 +288,7 @@ namespace Saga.Go.Combat
                 Vector3 d = Flat(e.transform.position - transform.position);
                 if (d.magnitude > AttackReach) continue;
                 if (d.sqrMagnitude > 0.25f && Vector3.Dot(d.normalized, fwd) < 0.5f) continue; // 앞 120°
-                e.TakeHit(atk * ComboMul[step], GoElement.Physical, atk, out _); // 깨뜨림은 강공격·낙하 공격만(109-14-2, 웹·Godot 와 같게)
+                e.TakeHit(atk * ComboMul[step] * TalentMul(GoTalent.Kind.Normal), GoElement.Physical, atk * ReactMul, out _); // 109-14-4 기본 무예 · 깨뜨림은 강공격·낙하 공격만(109-14-2, 웹·Godot 와 같게)
                 hits++;
             }
             if (hits > 0)
@@ -327,7 +340,7 @@ namespace Saga.Go.Combat
                 Vector3 d = Flat(e.transform.position - transform.position);
                 if (d.magnitude > ChargeReach) continue;
                 if (d.sqrMagnitude > 0.25f && Vector3.Dot(d.normalized, fwd) < ChargeFrontDot) continue;
-                e.TakeHit(atk * ChargeMul, GoElement.Physical, atk, out _, heavy: true);
+                e.TakeHit(atk * ChargeMul * TalentMul(GoTalent.Kind.Normal), GoElement.Physical, atk * ReactMul, out _, heavy: true);
                 hits++;
             }
             if (hits > 0) Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * hits);
@@ -346,7 +359,7 @@ namespace Saga.Go.Combat
         /// <summary>땅에 닿은 순간 — 둘레 6.5m 에 ×(1.2 + 떨어진 높이) 물리, 얼어붙은 적을 깨뜨린다. 진단이 직접 부른다.</summary>
         public int PlungeHit(float fallMeters)
         {
-            float atk = Atk, mul = PlungeMul(fallMeters);
+            float atk = Atk, mul = PlungeMul(fallMeters) * TalentMul(GoTalent.Kind.Normal);
             int hits = 0;
             foreach (var e in Snapshot())
             {
@@ -374,7 +387,7 @@ namespace Saga.Go.Combat
         {
             var m = Active;
             if (!CanAct() || m.SkillCd > 0f) return -1;
-            m.SkillCd = SkillCooldownSec;
+            m.SkillCd = SkillCooldownSec * TalentState.SkillCdMul(m.Id); // 109-14-4 깨달음 ①
             var shape = GoSkillShapes.ShapeOf(m.Id);
             LastShape = shape;
             float aimRange = shape == SkillShape.Circle ? AutoFaceRadius * 1.5f : Mathf.Max(AutoFaceRadius * 1.5f, GoSkillShapes.ThrustLen);
@@ -397,7 +410,7 @@ namespace Saga.Go.Combat
                 case SkillShape.Thrust:
                 {
                     Vector3 end = pos + dir * GoSkillShapes.ThrustLen;
-                    hits = LineHit(pos, end, GoSkillShapes.ThrustWidth, atk * GoSkillShapes.ThrustMul, m.Element);
+                    hits = LineHit(pos, end, GoSkillShapes.ThrustWidth, atk * GoSkillShapes.ThrustMul * TalentMul(GoTalent.Kind.Skill), m.Element);
                     FieldLineFx.Spawn(pos, end, GoSkillShapes.ThrustWidth * 2f, fx);
                     ElementPulse?.Invoke((pos + end) * 0.5f, GoSkillShapes.ThrustLen * 0.5f, m.Element);
                     break;
@@ -406,7 +419,7 @@ namespace Saga.Go.Combat
                 {
                     float go = target != null ? Mathf.Min(GoSkillShapes.DashLen, Mathf.Max(0f, aimDist - GoSkillShapes.DashStop)) : GoSkillShapes.DashLen;
                     Vector3 end = pos + dir * go;
-                    hits = LineHit(pos, end + dir * GoSkillShapes.DashStop, GoSkillShapes.DashWidth, atk * GoSkillShapes.DashMul, m.Element);
+                    hits = LineHit(pos, end + dir * GoSkillShapes.DashStop, GoSkillShapes.DashWidth, atk * GoSkillShapes.DashMul * TalentMul(GoTalent.Kind.Skill), m.Element);
                     InvulnLeft = Mathf.Max(InvulnLeft, GoSkillShapes.DashInvulnSec);
                     if (player != null && go > 0.05f) player.Dash(dir, go, GoSkillShapes.DashSec);
                     FieldLineFx.Spawn(pos, end + dir * GoSkillShapes.DashStop, GoSkillShapes.DashWidth * 2f, fx, 0.45f);
@@ -417,7 +430,7 @@ namespace Saga.Go.Combat
                 {
                     Vector3 c = target != null ? Flat(target.transform.position) + Vector3.up * pos.y : pos + dir * SkillOffset;
                     var z = new SkillZone { Kind = shape, Owner = m.Id, Center = c, Radius = GoSkillShapes.FieldRadius, Left = GoSkillShapes.FieldSec,
-                        Atk = atk, Element = m.Element, Color = fx };
+                        Atk = atk, Element = m.Element, Color = fx, Mul = TalentMul(GoTalent.Kind.Skill), React = ReactMul };
                     _zones.Add(z);
                     TickZone(z, 0f); // 놓자마자 첫 틱
                     hits = z.Hits;
@@ -427,7 +440,7 @@ namespace Saga.Go.Combat
                 {
                     Vector3 c = pos + dir * GoSkillShapes.SummonOffset;
                     var z = new SkillZone { Kind = shape, Owner = m.Id, Center = c, Radius = GoSkillShapes.SummonRadius, Left = GoSkillShapes.SummonSec,
-                        Atk = atk, Element = m.Element, Color = fx };
+                        Atk = atk, Element = m.Element, Color = fx, Mul = TalentMul(GoTalent.Kind.Skill), React = ReactMul };
                     z.Spirit = SkillSpirit.Spawn(c, spiritModel, fx);
                     _zones.Add(z);
                     ElementPulse?.Invoke(c, 3f, m.Element);
@@ -438,7 +451,7 @@ namespace Saga.Go.Combat
                 default:
                 {
                     Vector3 center = pos + Forward() * SkillOffset;
-                    hits = AreaHit(center, SkillRadius, atk * SkillMul, m.Element);
+                    hits = AreaHit(center, SkillRadius, atk * SkillMul * TalentMul(GoTalent.Kind.Skill), m.Element);
                     FieldRingFx.Spawn(center, SkillRadius, GoElements.ColorOf(m.Element));
                     ElementPulse?.Invoke(center, SkillRadius, m.Element);
                     break;
@@ -455,7 +468,7 @@ namespace Saga.Go.Combat
         private int LineHit(Vector3 a, Vector3 b, float width, float amount, GoElement el)
         {
             int hits = 0;
-            float atk = Atk;
+            float atk = Atk * ReactMul;
             foreach (var e in Snapshot())
             {
                 if (GoSkillShapes.SegDist(e.transform.position, a, b) > width) continue;
@@ -488,7 +501,7 @@ namespace Saga.Go.Combat
                     foreach (var e in Snapshot())
                     {
                         if (Flat(e.transform.position - z.Center).magnitude > z.Radius) continue;
-                        e.TakeHit(z.Atk * GoSkillShapes.FieldMul, z.Element, z.Atk, out _);
+                        e.TakeHit(z.Atk * GoSkillShapes.FieldMul * z.Mul, z.Element, z.Atk * z.React, out _);
                         n++;
                     }
                     z.Hits += n;
@@ -507,7 +520,7 @@ namespace Saga.Go.Combat
                     }
                     if (best != null)
                     {
-                        best.TakeHit(z.Atk * GoSkillShapes.SummonMul, z.Element, z.Atk, out _);
+                        best.TakeHit(z.Atk * GoSkillShapes.SummonMul * z.Mul, z.Element, z.Atk * z.React, out _);
                         z.Hits++;
                         Vector3 from = z.Spirit != null ? z.Spirit.Tip : z.Center + Vector3.up * SkillSpirit.Hover;
                         FieldLineFx.Spawn(from, best.transform.position + Vector3.up * 1.6f, 0.5f, z.Color, 0.3f, 0f);
@@ -540,7 +553,8 @@ namespace Saga.Go.Combat
             var m = Active;
             if (!CanAct() || !m.BurstReady) return -1;
             m.Energy = 0f;
-            int hits = AreaHit(transform.position, BurstRadius, Atk * BurstMul, m.Element);
+            int hits = AreaHit(transform.position, BurstRadius, Atk * BurstMul * TalentMul(GoTalent.Kind.Burst), m.Element);
+            if (TalentState.BurstBuff(m.Id)) m.BuffLeft = GoTalent.C5Sec; // 109-14-4 깨달음 ⑤
             FieldRingFx.Spawn(transform.position, BurstRadius, GoElements.ColorOf(m.Element), 0.7f);
             FieldRingFx.Spawn(transform.position, BurstRadius * 0.6f, Color.white, 0.5f);
             ElementPulse?.Invoke(transform.position, BurstRadius, m.Element);
@@ -552,7 +566,7 @@ namespace Saga.Go.Combat
         private int AreaHit(Vector3 center, float radius, float amount, GoElement el)
         {
             int hits = 0;
-            float atk = Atk;
+            float atk = Atk * ReactMul;
             foreach (var e in Snapshot())
             {
                 if (Flat(e.transform.position - center).magnitude > radius) continue;

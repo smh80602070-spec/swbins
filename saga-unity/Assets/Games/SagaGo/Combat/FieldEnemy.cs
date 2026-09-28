@@ -1040,6 +1040,12 @@ namespace Saga.Go.Combat
                 Saga.Go.UI.DialogueLabel.Instance?.Show(string.Format(
                     GoLocalization.T("field.guard_slain", "망루 수호장 토벌! 금 {0}냥 · 경험치 {1}"), GuardianGold, ExpReward), 4f);
             }
+            if (IsElemental && ShieldMax > 0f && !IsGuardian && !IsHero)
+            {
+                // 109-14-4 방패 두른 원소 괴물 — 무예 쪽지 하나(웹 ⑲-4 얻는 곳)
+                string mats = TalentState.Add(GoTalent.EliteMats);
+                if (mats.Length > 0) FieldDamageText.Spawn(transform.position + Vector3.up * (BodyHeight + 2.6f), mats, new Color(0.95f, 0.85f, 0.55f), 0.9f);
+            }
             Killed?.Invoke(this);
             Invoke(nameof(HideBody), 2.5f);
         }

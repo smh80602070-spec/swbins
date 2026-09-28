@@ -607,6 +607,35 @@
 2	go	region.south_glade	남쪽 공터	Southern Glade		
 2	go	region.village	마을 들판	Village Fields		
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
+2	go	talent.btn_con	깨달음 열기 — 인연 매듭 1	Unlock Insight — 1 Bond Knot		
+2	go	talent.btn_up	올리기 — 금 {0} · {1} {2}{3}	Level up — Gold {0} · {1} {2}{3}		
+2	go	talent.con1	원소 스킬 재사용 대기 -15%	Elemental Skill cooldown -15%		
+2	go	talent.con2	원소 반응 피해 +20%	Reaction damage +20%		
+2	go	talent.con3	원소 스킬·해방 무예 +2	Skill & Release level +2		
+2	go	talent.con4	최대 체력 +15%	Max HP +15%		
+2	go	talent.con5	원소 해방 뒤 8초 공격 +20%	ATK +20% for 8s after Release		
+2	go	talent.con_all	모두 열림	All unlocked		
+2	go	talent.con_line	깨달음 {0}⏎{1}	Insight {0}⏎{1}		
+2	go	talent.con_next	다음: {0}	Next: {0}		
+2	go	talent.con_up	{0} 깨달음 {1} — {2}	{0} Insight {1} — {2}		
+2	go	talent.kind.burst	원소 해방	Elemental Release		
+2	go	talent.kind.normal	기본 공격	Normal Attack		
+2	go	talent.kind.skill	원소 스킬	Elemental Skill		
+2	go	talent.mat.guide	무예 교본	Martial Manual		
+2	go	talent.mat.knot	인연 매듭	Bond Knot		
+2	go	talent.mat.note	무예 쪽지	Martial Note		
+2	go	talent.mat.scale	뇌룡 비늘	Thunder Drake Scale		
+2	go	talent.mat.secret	무예 비전	Martial Secret		
+2	go	talent.mats	쪽지 {0} · 교본 {1} · 비전 {2}⏎매듭 {3} · 비늘 {4} · 금 {5}	Notes {0} · Manuals {1} · Secrets {2}⏎Knots {3} · Scales {4} · Gold {5}		
+2	go	talent.row	{0} {1}/{2}단 ×{3:0.00}	{0} {1}/{2} ×{3:0.00}		
+2	go	talent.title	무예 · 깨달음	Arts · Insight		
+2	go	talent.up	{0} {1} {2}단 — 피해 ×{3:0.00}	{0} {1} Lv {2} — damage ×{3:0.00}		
+2	go	talent.why.cap	부대 Lv {0} 에 열림	Opens at party Lv {0}		
+2	go	talent.why.con_full	모두 열림	All unlocked		
+2	go	talent.why.gold	금 부족	Not enough gold		
+2	go	talent.why.max	최대 단계	Max level		
+2	go	talent.why.not_member	동행이 아님	Not a companion		
+2	go	talent.why.short	부족	short		
 2	go	wp.activated	{0} 활성화 — 지도(M)에서 순간이동할 수 있다	{0} activated — teleport to it from the map (M)		
 2	go	wp.east	동쪽 숲 역참	Eastern Grove Waypoint		
 2	go	wp.farm	논밭 역참	Paddies Waypoint		

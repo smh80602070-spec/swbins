@@ -14,7 +14,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 19;
+        private const int SaveVersion = 20;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -100,6 +100,9 @@ namespace Saga.Go.Data
             // v19 — PLAN.md 109-14-3a 수집 구슬(주운 id)·바친 수.
             public List<string> orbsGot;
             public int orbsGiven;
+            // v20 — PLAN.md 109-14-4 무예 단계·깨달음(동행마다)·재료 주머니(쪽지·교본·비전·매듭·비늘).
+            public List<TalentState.Entry> talents;
+            public int[] talentMats;
         }
 
         public static bool Save()
@@ -162,6 +165,8 @@ namespace Saga.Go.Data
                 el7Noticed = Combat.GoElements.SevenNoticed,
                 orbsGot = OrbState.Snapshot(),
                 orbsGiven = OrbState.Given,
+                talents = TalentState.Snapshot(),
+                talentMats = TalentState.SnapshotMats(),
             };
             return JsonUtility.ToJson(data);
         }
@@ -224,6 +229,7 @@ namespace Saga.Go.Data
             WorldMapState.RestorePeaks(data.peaksFound);
             Combat.GoElements.SevenNoticed = data.el7Noticed;
             OrbState.Restore(data.orbsGot, data.orbsGiven);
+            TalentState.Restore(data.talents, data.talentMats);
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();
@@ -417,6 +423,14 @@ namespace Saga.Go.Data
                 data.version = 19;
                 data.orbsGot = new List<string>();
                 data.orbsGiven = 0;
+                return data;
+            }
+            if (fromVersion == 19)
+            {
+                // v19엔 무예가 없었다 — 모두 1단·깨달음 0·재료 0.
+                data.version = 20;
+                data.talents = new List<TalentState.Entry>();
+                data.talentMats = new int[5];
                 return data;
             }
             return null;

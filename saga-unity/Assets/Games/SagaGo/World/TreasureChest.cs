@@ -228,6 +228,7 @@ namespace Saga.Go.World
             int exp = GoTreasure.ExpByGrade[g], gold = GoTreasure.GoldByGrade[g];
             PlayerStats.AddExp(exp);
             GoldState.Add(gold);
+            string mats = TalentState.Add(GoTalent.ChestMats[g]); // 109-14-4 무예 재료
             string itemPart = "";
             if (!string.IsNullOrEmpty(Data.ItemId))
             {
@@ -237,7 +238,7 @@ namespace Saga.Go.World
             }
             FieldRingFx.Spawn(transform.position, 5f + g * 1.5f, GoTreasure.GradeColor(Data.Grade), 0.8f);
             Toast(string.Format(GoLocalization.T("chest.opened", "{0}를 열었다 — 경험치 +{1} · 돈 +{2}냥{3}  (보물 상자 {4}/{5})"),
-                GoTreasure.GradeName(Data.Grade), exp, gold, itemPart, GoTreasure.OpenedCount, GoTreasure.Chests.Length), 4f);
+                GoTreasure.GradeName(Data.Grade), exp, gold, itemPart, GoTreasure.OpenedCount, GoTreasure.Chests.Length) + (mats.Length > 0 ? "\n" + mats : ""), 4f);
             RefreshLook();
             return true;
         }

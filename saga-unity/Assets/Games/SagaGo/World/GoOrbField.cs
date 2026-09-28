@@ -123,16 +123,18 @@ namespace Saga.Go.World
             if (d.magnitude > GoOrbs.OfferRadius) return 0;
             int levels = OrbState.OfferAll();
             LastOfferLevels = levels;
+            string knots = "";
             if (levels > 0)
             {
+                knots = TalentState.Add(new[] { 0, 0, 0, GoTalent.KnotPerShrineLevel, 0 }, levels); // 109-14-4 신상 등급마다 인연 매듭
                 GoldState.Add(GoOrbs.GoldPerLevel * levels);
                 PlayerStats.AddExp(GoOrbs.ExpPerLevel * levels);
                 GoStamina.ResetFull();
                 FieldRingFx.Spawn(BeaconTower.Position, GoOrbs.OfferRadius, OrbColor, 0.9f);
             }
-            Toast(levels > 0
+            Toast((levels > 0
                 ? string.Format(GoLocalization.T("orb.offered", "◆ 봉헌 — 신상 {0}단 · 스태미나 상한 {1} · 금 +{2}"), OrbState.Level, Mathf.RoundToInt(GoStamina.Max), GoOrbs.GoldPerLevel * levels)
-                : string.Format(GoLocalization.T("orb.offered_half", "◆ 봉헌 — 구슬 하나를 더 바치면 신상 {0}단"), OrbState.Level + 1), 3.5f);
+                : string.Format(GoLocalization.T("orb.offered_half", "◆ 봉헌 — 구슬 하나를 더 바치면 신상 {0}단"), OrbState.Level + 1)) + (knots.Length > 0 ? " · " + knots : ""), 3.5f);
             return levels;
         }
 

@@ -11,7 +11,7 @@ namespace Saga.EditorTools
     /// PLAN.md 109-14-3a "수집 구슬·봉헌"(웹 사가고 ⑲-3 진단 항목) — `PlaytestHeadless` 가 정상 진단 뒤에 부른다.
     /// 표(지역 일곱 × 셋·id 겹침 없음·자리 규칙 — 강 구슬은 강 칸 수면 위·산마루는 정상 윗면 둘레·나무는 숲 칸) · 손 닿는 높이(들판은 서서 · 나무는 점프 꼭대기라야 ·
     /// 산마루는 윗면에 서서 · 강은 헤엄치는 발) · 월드(구슬 물체 수 = 안 주운 수) · 줍기(한 번만) · 봉헌(불 안 올린 봉수대 거절 · 14m 밖 거절 · 둘마다 등급 +1·스태미나 상한 +8·금) ·
-    /// 세이브 v19 왕복·v18 로드(빈 기록). 끝나면 구슬·봉수대·돈·경험·세이브 파일을 되돌린다.
+    /// 세이브 v20 왕복·v18 로드(빈 기록). 끝나면 구슬·봉수대·돈·경험·세이브 파일을 되돌린다.
     /// </summary>
     public static class PlaytestGoOrbs
     {
@@ -51,7 +51,7 @@ namespace Saga.EditorTools
                 GoStamina.ResetFull();
                 field.Rebuild();
             }
-            if (_ok) Debug.Log($"[{_tag}] orbs OK - {table} · 손 닿는 높이 넷 · {pick} · {offer} · 세이브 v19 왕복·v18 로드");
+            if (_ok) Debug.Log($"[{_tag}] orbs OK - {table} · 손 닿는 높이 넷 · {pick} · {offer} · 세이브 v20 왕복·v18 로드");
             return _ok;
         }
 
@@ -183,10 +183,10 @@ namespace Saga.EditorTools
             OrbState.Restore(new List<string> { GoOrbs.All[0].Id, GoOrbs.All[1].Id, GoOrbs.All[2].Id }, 2);
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":19") || !json.Contains("\"orbsGiven\":2") || !json.Contains(GoOrbs.All[2].Id)) Fail("세이브 v19 에 구슬이 없다");
+            if (!json.Contains("\"version\":20") || !json.Contains("\"orbsGiven\":2") || !json.Contains(GoOrbs.All[2].Id)) Fail("세이브 v19 에 구슬이 없다");
             OrbState.ResetForTest();
             if (!SaveState.TryLoad() || OrbState.GotCount != 3 || OrbState.Given != 2 || OrbState.Level != 1) Fail($"v19 왕복 뒤 구슬 {OrbState.GotCount}·바침 {OrbState.Given}");
-            string v18 = Regex.Replace(json.Replace("\"version\":19", "\"version\":18"), ",\"orbsGot\":\\[[^\\]]*\\],\"orbsGiven\":\\d+", "");
+            string v18 = Regex.Replace(json.Replace("\"version\":20", "\"version\":18"), ",\"orbsGot\":\\[[^\\]]*\\],\"orbsGiven\":\\d+", "");
             if (v18.Contains("orbsGot")) { Fail("v18 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v18);
             if (!SaveState.TryLoad()) { Fail("v18 파일 TryLoad 실패"); return; }

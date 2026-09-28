@@ -48,6 +48,19 @@ namespace Saga.Go.UI
         public HeroEra Era => _era;
         public string TitleText => _title.text;
         public string DetailText => _detail.text;
+        // 109-14-4 무예 칸(오른쪽) — 진단이 진짜 단추를 누른다
+        public bool TalentPanelShown => _talentRoot != null && _talentRoot.activeSelf;
+        public Button TalentButton(int k) => _talentButtons[k];
+        public Button ConButton => _conButton;
+        public string TalentRowText(int k) => _talentRows[k].text;
+        public string ConText => _conText.text;
+        public string SelectedId => _selected;
+        private GameObject _talentRoot;
+        private TextMeshProUGUI _talentMats;
+        private readonly TextMeshProUGUI[] _talentRows = new TextMeshProUGUI[3];
+        private readonly Button[] _talentButtons = new Button[3];
+        private TextMeshProUGUI _conText;
+        private Button _conButton;
         public int TabCount => _tabs.Count;
         public Button TabButton(int i) => _tabs[i];
         public string TabText(int i) => _tabs[i].GetComponentInChildren<TextMeshProUGUI>().text;
@@ -149,12 +162,99 @@ namespace Saga.Go.UI
             _detail = EncounterUiKit.NewText(_panel.transform, "", mid, new Vector2(0f, -196f), new Vector2(1020f, 96f), 19);
             Center(_detail.rectTransform);
 
+            BuildTalentPanel(mid);
+
             CloseButton = EncounterUiKit.NewButton(_panel.transform, GoLocalization.T("dex.close", "닫는다"), mid, new Vector2(0f, -272f), new Vector2(200f, 48f), null);
             Center((RectTransform)CloseButton.transform);
             CloseButton.onClick.AddListener(Close);
         }
 
         private static void Center(RectTransform r) => r.pivot = new Vector2(0.5f, 0.5f);
+
+        /// <summary>109-14-4 — 격자 오른쪽(x 655) 무예 칸: 재료 한 줄 · 무예 셋(글 + 올리기 단추) · 깨달음(글 + 열기 단추).</summary>
+        private void BuildTalentPanel(Vector2 mid)
+        {
+            const float X = 655f, W = 270f;
+            _talentRoot = new GameObject("TalentPanel", typeof(RectTransform));
+            _talentRoot.transform.SetParent(_panel.transform, false);
+            var head = EncounterUiKit.NewText(_talentRoot.transform, GoLocalization.T("talent.title", "무예 · 깨달음"), mid, new Vector2(X, 180f), new Vector2(W, 34f), 22);
+            head.fontStyle = FontStyles.Bold;
+            Center(head.rectTransform);
+            _talentMats = EncounterUiKit.NewText(_talentRoot.transform, "", mid, new Vector2(X, 140f), new Vector2(W, 48f), 15);
+            Center(_talentMats.rectTransform);
+            for (int k = 0; k < 3; k++)
+            {
+                float y = 88f - k * 92f;
+                _talentRows[k] = EncounterUiKit.NewText(_talentRoot.transform, "", mid, new Vector2(X, y), new Vector2(W, 30f), 17);
+                Center(_talentRows[k].rectTransform);
+                var b = EncounterUiKit.NewButton(_talentRoot.transform, "", mid, new Vector2(X, y - 38f), new Vector2(W, 44f), null);
+                Center((RectTransform)b.transform);
+                b.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
+                int kk = k;
+                b.onClick.AddListener(() => UpTalent(kk));
+                _talentButtons[k] = b;
+            }
+            _conText = EncounterUiKit.NewText(_talentRoot.transform, "", mid, new Vector2(X, -190f), new Vector2(W, 52f), 15);
+            Center(_conText.rectTransform);
+            _conButton = EncounterUiKit.NewButton(_talentRoot.transform, "", mid, new Vector2(X, -236f), new Vector2(W, 40f), null);
+            Center((RectTransform)_conButton.transform);
+            _conButton.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
+            _conButton.onClick.AddListener(UnlockCon);
+            _talentRoot.SetActive(false);
+        }
+
+        private void UpTalent(int k)
+        {
+            if (_selected == null) return;
+            var kind = (GoTalent.Kind)k;
+            if (TalentState.Up(_selected, kind) && GoHeroes.TryGet(_selected, out var h))
+                DialogueLabel.Instance?.Show(string.Format(GoLocalization.T("talent.up", "{0} {1} {2}단 — 피해 ×{3:0.00}"),
+                    GoHeroes.Name(h), GoTalent.KindName(kind), TalentState.Level(_selected, kind), TalentState.Mul(_selected, kind)), 3f);
+            Refresh();
+        }
+
+        private void UnlockCon()
+        {
+            if (_selected == null) return;
+            if (TalentState.UnlockCon(_selected) && GoHeroes.TryGet(_selected, out var h))
+            {
+                int c = TalentState.Con(_selected);
+                DialogueLabel.Instance?.Show(string.Format(GoLocalization.T("talent.con_up", "{0} 깨달음 {1} — {2}"), GoHeroes.Name(h), c, GoTalent.ConText(c)), 3.5f);
+                Saga.Go.Combat.FieldCombat.Instance?.RebuildParty(); // ④ 최대 체력
+            }
+            Refresh();
+        }
+
+        private void RefreshTalent()
+        {
+            bool show = _selected != null && TalentState.Trainable(_selected);
+            _talentRoot.SetActive(show);
+            if (!show) return;
+            _talentMats.text = string.Format(GoLocalization.T("talent.mats", "쪽지 {0} · 교본 {1} · 비전 {2}\n매듭 {3} · 비늘 {4} · 금 {5}"),
+                TalentState.Count(GoTalent.Mat.Note), TalentState.Count(GoTalent.Mat.Guide), TalentState.Count(GoTalent.Mat.Secret),
+                TalentState.Count(GoTalent.Mat.Knot), TalentState.Count(GoTalent.Mat.Scale), GoldState.Gold);
+            int cap = GoTalent.CapOf(PlayerStats.Level);
+            for (int k = 0; k < 3; k++)
+            {
+                var kind = (GoTalent.Kind)k;
+                int lv = TalentState.Level(_selected, kind);
+                _talentRows[k].text = string.Format(GoLocalization.T("talent.row", "{0} {1}/{2}단 ×{3:0.00}"), GoTalent.KindName(kind), lv, cap, TalentState.Mul(_selected, kind));
+                bool ok = TalentState.CanUp(_selected, kind, out string why, out var c);
+                var label = _talentButtons[k].GetComponentInChildren<TextMeshProUGUI>();
+                label.text = ok || why == GoLocalization.T("talent.why.gold", "금 부족") || (c.Books > 0 && why != null && why.StartsWith(GoTalent.MatName(c.Book)))
+                    ? string.Format(GoLocalization.T("talent.btn_up", "올리기 — 금 {0} · {1} {2}{3}"), c.Gold, GoTalent.MatName(c.Book), c.Books,
+                        c.Scale > 0 ? " · " + GoTalent.MatName(GoTalent.Mat.Scale) + " " + c.Scale : "") + (ok ? "" : "\n" + why)
+                    : why;
+                _talentButtons[k].interactable = ok;
+            }
+            int con = TalentState.Con(_selected);
+            string dots = new string('◆', con) + new string('◇', GoTalent.ConMax - con);
+            _conText.text = string.Format(GoLocalization.T("talent.con_line", "깨달음 {0}\n{1}"), dots,
+                con < GoTalent.ConMax ? string.Format(GoLocalization.T("talent.con_next", "다음: {0}"), GoTalent.ConText(con + 1)) : GoLocalization.T("talent.con_all", "모두 열림"));
+            bool cok = TalentState.CanUnlockCon(_selected, out string cwhy);
+            _conButton.GetComponentInChildren<TextMeshProUGUI>().text = cok ? GoLocalization.T("talent.btn_con", "깨달음 열기 — 인연 매듭 1") : cwhy;
+            _conButton.interactable = cok;
+        }
 
         private static List<GoHeroes.Hero> EraHeroes(HeroEra era)
         {
@@ -245,6 +345,7 @@ namespace Saga.Go.UI
                 if (h.Id == _selected) img.color = Color.Lerp(img.color, new Color(1f, 0.85f, 0.45f, 1f), 0.35f);
             }
             _detail.text = Detail(_selected);
+            RefreshTalent();
         }
 
         public static string Detail(string id)
