@@ -14,11 +14,11 @@ const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 ## 플레이어 몸(cmp_*)은 여기 안 쓴다 — 조각 몸이라 여럿 세우면 draw call 이 크다. 레시피 키(1.60~1.78m) 그대로 — 사람마다 키가 다르게.
 ## boost = 옷빛 곱(어두운 가죽 순찰자 옷은 크게, 밝은 농부 옷은 조금).
 const BODIES := [
-	{"glb": "res://assets/characters_cf/npc_m_peasant_01.glb", "scale": 1.0, "lib": "", "boost": 1.3},
-	{"glb": "res://assets/characters_cf/npc_m_peasant_02.glb", "scale": 1.0, "lib": "", "boost": 1.3},
-	{"glb": "res://assets/characters_cf/npc_m_elder_01.glb", "scale": 1.0, "lib": "", "boost": 1.3},
+	{"glb": "res://assets/characters_cf/npc_m_peasant_01.glb", "scale": 1.0, "lib": "", "boost": 2.2},
+	{"glb": "res://assets/characters_cf/npc_m_peasant_02.glb", "scale": 1.0, "lib": "", "boost": 2.2},
+	{"glb": "res://assets/characters_cf/npc_m_elder_01.glb", "scale": 1.0, "lib": "", "boost": 2.2},
 	{"glb": "res://assets/characters_cf/npc_m_hood_01.glb", "scale": 1.0, "lib": "", "boost": 2.1},
-	{"glb": "res://assets/characters_cf/npc_f_peasant_01.glb", "scale": 1.0, "lib": "", "boost": 1.3},
+	{"glb": "res://assets/characters_cf/npc_f_peasant_01.glb", "scale": 1.0, "lib": "", "boost": 2.2},
 	{"glb": "res://assets/characters_cf/npc_f_ranger_01.glb", "scale": 1.0, "lib": "", "boost": 2.1},
 ]
 const HEAD_BONES := ["J_Bip_C_Head", "Head"]

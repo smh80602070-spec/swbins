@@ -9468,3 +9468,7 @@ PROJECT_STATE.md` 참고. 요약:
 
 - cel_toon — uniform hair_gloss: 뷰 공간 법선 y 0.18~0.47 의 좁은 밝은 띠("천사의 고리"), 머리 재질(cel_shader_apply)만 1.0. face_view 주역 머리 위쪽에 옅은 갈색 띠가 앉는다(머리색이 짙어 은은함). 점검 COMBAT fails=0, REGRESS OK.
 - 살펴보고 접은 것: 이야기 지역 들판의 평평함은 지형 기복이 답이나 소품·건물이 LEGEND 평탄 높이를 직접 써서(landmarks·npc·region 파일 다수) 손이 크다 — 하려면 height_at 으로 일괄 전환부터. 입 표정은 몸에 블렌드셰이프가 없어 텍스처로는 어렵다.
+
+## GO 그래픽 먼저 ㉘ 마을 사람 옷빛 (2026-09-30, 같은 세션)
+
+- v_people_lineup 마을 남녀 농부·노인이 거의 검은 무리 — vroid_body BODIES boost 1.3 → 2.2(두건·순찰자는 이미 2.1). 전후: 검은 옷 → 남색·흰·연보라·회색 등 옷빛이 산다. REGRESS OK.
