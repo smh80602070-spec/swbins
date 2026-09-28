@@ -81,6 +81,11 @@ var _done: Array = []
 func _ready() -> void:
 	Weather.force("clear")
 	TimeOfDay.force(false)
+	## 09-28 — 날씨 화면(season_weather_visual)은 60초마다 다시 칠해 첫 컷들이 실제 시각 날씨(안개)로 찍혔다. 고정 직후 한 번 칠한다.
+	(func() -> void:
+		var sw := get_tree().current_scene.get_node_or_null("SeasonWeatherVisual")
+		if sw:
+			sw.call("apply")).call_deferred()
 	_dir = OS.get_environment("SAGA_SHOT_DIR")
 	var o := OS.get_environment("SAGA_SHOT_ONLY")
 	if o != "":

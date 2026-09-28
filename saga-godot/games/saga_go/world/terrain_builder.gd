@@ -141,7 +141,8 @@ const WATER_LAYER := 4
 const SUB := 8
 const EDGE_BLEND_MARGIN := 0.34
 
-const CLIFF_COLOR := Color(0.5, 0.48, 0.45)
+## 09-28 0.5,0.48,0.45 → 따뜻한 황갈색 — 회색 돌 텍스처와 곱해져 절벽이 잿빛 벽으로 보였다(창 모드 촬영).
+const CLIFF_COLOR := Color(0.62, 0.53, 0.42)
 const CLIFF_SEG_M := 12.0
 const CLIFF_JAG_M := 4.5
 

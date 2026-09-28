@@ -104,6 +104,10 @@ void fragment() {
 	float streak = _value_noise(vec2((world_pos.x - world_pos.z) * 0.6, world_pos.y * 0.04));
 	rock_tint *= band * mix(0.85, 1.05, streak);
 	ALBEDO *= mix(vec3(1.0), rock_tint, cliff);
+	// 이끼 — 절벽의 각진 면 중 조금이라도 위를 보는 턱(법선 y 0.08~0.3)과 큰 얼룩이 겹치는 곳에 풀빛이 앉는다(원신 절벽의 이끼 턱).
+	float ny = normalize(world_normal).y;
+	float moss = cliff * smoothstep(0.04, 0.2, ny) * smoothstep(0.25, 0.5, _value_noise(world_pos.xz * 0.08 + world_pos.y * 0.05));
+	ALBEDO = mix(ALBEDO, vec3(0.2, 0.36, 0.13) * (0.85 + 0.3 * n1), moss * 0.85);
 	NORMAL_MAP = detail_normal * 0.5 + 0.5;
 	ROUGHNESS = detail_rough;
 	// 모래 표시 — 풀 텍스처 대신 모래색에 흙결만 옅게(평평한 모래밭).
