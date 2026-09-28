@@ -348,7 +348,7 @@
       gq += '</div><div class="hint">낮음일수록 사물이 성글고 그림자가 꺼져 가벼워집니다. ' +
         '자동은 기기를 보고 시작해 프레임에 맞춰 스스로 오갑니다.</div>';
     }
-    return '<div class="hint">이동 키는 ⌨️ 키설정에 있습니다.</div>' +
+    return '<div class="hint keyhint">이동 키는 ⌨️ 키설정에 있습니다.</div>' +
       '<div class="key-row"><b>효과음</b>' +
         '<button data-act="snd-toggle">' + (on ? '켜짐' : '꺼짐') + '</button></div>' +
       '<div class="key-row"><b>음량</b>' +

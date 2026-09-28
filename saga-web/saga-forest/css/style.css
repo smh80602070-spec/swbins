@@ -227,7 +227,7 @@ a.icon-btn { display: flex; align-items: center; justify-content: center; text-d
   padding: 10px 12px; margin-top: 6px;
   background: rgba(255,255,255,.04); border-radius: var(--r-sm);
 }
-.key-row b { flex: 0 0 48px; }
+.key-row b { flex: 0 0 auto; min-width: 48px; white-space: nowrap; }
 .key-cur { flex: 1; font-weight: 700; color: var(--gold); letter-spacing: .5px; }
 .key-row button {
   padding: 6px 12px; border-radius: var(--r-sm);
@@ -1379,3 +1379,8 @@ body.tilted3 #vignette {
 /* 따로 크기를 안 준 <small> 은 브라우저 기본(부모의 0.8배)이라 10px 대로 떨어진다 — 바닥 11px.
    :where 로 특이도 0 이라 크기를 준 규칙은 그대로 이긴다 */
 :where(#sheet-body, #encounter) small { font-size: max(11px, .8em); }
+
+/* 폰(손가락만)에선 설정 시트의 "이동 키는 ⌨️ 키설정에" 안내를 감춘다(2026-09-28, 실기 보고 Q13) */
+@media (hover: none) and (pointer: coarse) {
+  .keyhint { display: none; }
+}

@@ -626,7 +626,7 @@
     var s = core.save.settings;
     var shakeV = typeof s.shake === 'number' ? s.shake : 1;
     var hitstopOn = s.hitstop !== false;
-    return '<div class="hint">이동 키는 ⌨️ 키설정에 있습니다.</div>' +
+    return '<div class="hint keyhint">이동 키는 ⌨️ 키설정에 있습니다.</div>' +
       '<div class="key-row"><b>효과음</b>' +
         '<button data-act="snd-toggle">' + (on ? '켜짐' : '꺼짐') + '</button></div>' +
       '<div class="key-row"><b>음량</b>' +

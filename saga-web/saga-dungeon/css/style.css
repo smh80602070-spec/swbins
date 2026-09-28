@@ -303,7 +303,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
   padding: 10px 12px; margin-top: 6px;
   background: rgba(255,255,255,.04); border-radius: var(--r-sm);
 }
-.key-row b { flex: 0 0 48px; }
+.key-row b { flex: 0 0 auto; min-width: 48px; white-space: nowrap; }
 .key-cur {
   flex: 1; font-weight: 700; color: var(--gold); letter-spacing: .5px;
 }
@@ -929,7 +929,8 @@ body.dg3d #dg-canvas { background: transparent !important; border-color: transpa
 .sp-left { color: var(--gold); }
 
 /* ── 가방 · 장비 ───────────────────────────────────────────── */
-.bagtools { display: flex; gap: 6px; margin-bottom: 8px; }
+.bagtools { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.bagtools .btn { white-space: nowrap; }   /* 좁으면 다음 줄로(Q13) — 한 글자씩 깨지지 않게 */
 .gearlist { display: flex; flex-direction: column; gap: 6px; }
 .grow {
   background: rgba(255,255,255,.045); border: 1px solid var(--glass-br);
@@ -1401,3 +1402,8 @@ body.town-open .dg-tip {
 /* 따로 크기를 안 준 <small> 은 브라우저 기본(부모의 0.8배)이라 10px 대로 떨어진다 — 바닥 11px.
    :where 로 특이도 0 이라 크기를 준 규칙은 그대로 이긴다 */
 :where(#sheet-body, #encounter) small { font-size: max(11px, .8em); }
+
+/* 폰(손가락만)에선 설정 시트의 "이동 키는 ⌨️ 키설정에" 안내를 감춘다(2026-09-28, 실기 보고 Q13) */
+@media (hover: none) and (pointer: coarse) {
+  .keyhint { display: none; }
+}

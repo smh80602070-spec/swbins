@@ -239,7 +239,7 @@ body.mapfocus #top, body.mapfocus #autobar, body.mapfocus #near, body.mapfocus #
   padding: 10px 12px; margin-top: 6px;
   background: rgba(255,255,255,.04); border-radius: var(--r-sm);
 }
-.key-row b { flex: 0 0 48px; }
+.key-row b { flex: 0 0 auto; min-width: 48px; white-space: nowrap; }
 .key-cur { flex: 1; font-weight: 700; color: var(--gold); letter-spacing: .5px; }
 .key-row button {
   padding: 6px 12px; border-radius: var(--r-sm);
@@ -1974,4 +1974,5 @@ body.fs-on #dock, body.fs-on #near { display: none !important; }
    글자도 두 줄로 깨졌다. 시트 자체는 그대로 있다(⚙️ 설정·진단이 연다) */
 @media (hover: none) and (pointer: coarse) {
   #dock [data-sheet="keys"] { display: none; }
+  .keyhint { display: none; }
 }
