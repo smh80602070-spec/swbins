@@ -101,6 +101,8 @@ namespace Saga.Go.World
                     }
                     foreach (var t in c.Torches)
                         if (t != null && !t.Lit) Add(GoSight.Mark.Torch, t.transform.position, GoSight.ColorOf(GoSight.Mark.Torch, t.Element), player);
+                    if (!c.Opened && !c.Unlocked) // 109-14-22 안 맞힌 과녁 — 흰 점
+                        for (int i = 0; i < c.Targets.Count; i++) if (!c.TargetLit(i)) Add(GoSight.Mark.Torch, c.TargetEye(i), Color.white, player);
                 }
                 foreach (var s in builder.Stones)
                     if (s != null && !WorldMapState.IsActive(s.Data.Id)) Add(GoSight.Mark.Landmark, s.transform.position, GoSight.LandmarkColor, player);

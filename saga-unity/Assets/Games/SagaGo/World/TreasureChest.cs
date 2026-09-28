@@ -22,6 +22,14 @@ namespace Saga.Go.World
         public bool Opened { get; private set; }
         public bool Unlocked { get; private set; }
         public readonly List<ElementTorch> Torches = new List<ElementTorch>();
+        /// <summary>109-14-22 과녁 셋(기둥 + 붉은 눈 판) · 과녁마다 남은 빛 초(0 = 꺼짐).</summary>
+        public readonly List<Transform> Targets = new List<Transform>();
+        private float[] _targetLit = new float[0];
+        private Material _eyeRed, _eyeGold;
+        public bool TargetLit(int i) => i >= 0 && i < _targetLit.Length && _targetLit[i] > 0f;
+        public int TargetLitCount { get { int n = 0; for (int i = 0; i < _targetLit.Length; i++) if (_targetLit[i] > 0f) n++; return n; } }
+        /// <summary>과녁 i 의 눈 가운데(겨누는 점).</summary>
+        public Vector3 TargetEye(int i) => Targets[i].position + Vector3.up * GoTreasure.TargetHeight;
         /// <summary>석등 창이 열려 있으면 남은 초(0 = 안 열림).</summary>
         public float TorchTimeLeft { get; private set; }
         public float LidAngle => _lidPivot != null ? _lidAngle : 0f;
@@ -99,6 +107,7 @@ namespace Saga.Go.World
             _glow.range = 7f + (int)Data.Grade * 2f;
             _glow.intensity = 1.2f + (int)Data.Grade * 0.4f;
 
+            if (Data.Lock == GoTreasure.Lock.Targets) BuildTargets(stone);
             if (Data.Lock == GoTreasure.Lock.Torches && Data.Torches != null)
             {
                 for (int i = 0; i < Data.Torches.Length; i++)
@@ -150,6 +159,9 @@ namespace Saga.Go.World
                 TorchTimeLeft -= dt;
                 if (TorchTimeLeft <= 0f) ExtinguishAll(true);
             }
+            if (!Unlocked) // 109-14-22 과녁 빛이 꺼져 간다
+                for (int i = 0; i < _targetLit.Length; i++)
+                    if (_targetLit[i] > 0f && (_targetLit[i] -= dt) <= 0f) { _targetLit[i] = 0f; PaintTarget(i); }
             _check -= dt;
             if (_check > 0f) return;
             _check = 0.2f;
@@ -181,6 +193,7 @@ namespace Saga.Go.World
             if (_glow != null) _glow.enabled = !Opened;
             if (Opened || Unlocked)
                 foreach (var t in Torches) t.SetLit(true);
+            for (int i = 0; i < Targets.Count; i++) PaintTarget(i);
         }
 
         /// <summary>다가갔으면 연다(열리면 true). 잠겼으면 한 번 푸는 법을 알려 준다. 진단도 부른다.</summary>
@@ -217,6 +230,8 @@ namespace Saga.Go.World
                 return string.Format(GoLocalization.T("chest.hint_torch", "{0} — 석등 {1}개({2})를 제 원소 스킬(E)·폭발(Q)로 {3}초 안에 모두 밝혀라"),
                     grade, Data.Torches.Length, sb, Mathf.RoundToInt(GoTreasure.TorchWindowSec));
             }
+            if (Data.Lock == GoTreasure.Lock.Targets) // 109-14-22
+                return string.Format(GoLocalization.T("chest.hint_target", "{0} — 둘레 과녁 셋을 활(R 조준)·서책으로 {1}초 안에 모두 맞혀라"), grade, Mathf.RoundToInt(GoTreasure.TargetLitSec));
             return grade;
         }
 
@@ -255,8 +270,8 @@ namespace Saga.Go.World
             RefreshLook();
             if (!announce) return;
             FieldRingFx.Spawn(transform.position, 6f, GoTreasure.GradeColor(Data.Grade), 0.8f);
-            string key = Data.Lock == GoTreasure.Lock.Group ? "chest.unlock_group" : "chest.unlock_torch";
-            string ko = Data.Lock == GoTreasure.Lock.Group ? "무리를 물리쳤다 — {0}의 사슬이 풀렸다" : "석등이 모두 밝혀졌다 — {0}의 사슬이 풀렸다";
+            string key = Data.Lock == GoTreasure.Lock.Group ? "chest.unlock_group" : Data.Lock == GoTreasure.Lock.Targets ? "chest.unlock_target" : "chest.unlock_torch";
+            string ko = Data.Lock == GoTreasure.Lock.Group ? "무리를 물리쳤다 — {0}의 사슬이 풀렸다" : Data.Lock == GoTreasure.Lock.Targets ? "과녁 셋이 함께 빛났다 — {0}의 사슬이 풀렸다" : "석등이 모두 밝혀졌다 — {0}의 사슬이 풀렸다";
             Toast(string.Format(GoLocalization.T(key, ko), GoTreasure.GradeName(Data.Grade)), 3.5f);
         }
 
@@ -334,6 +349,78 @@ namespace Saga.Go.World
             TorchTimeLeft = 0f;
             foreach (var t in Torches) t.SetLit(false);
             if (announce && any) Toast(GoLocalization.T("chest.torch_out", "석등이 꺼졌다 — 다시 처음부터 밝혀라"), 2.5f);
+        }
+
+        // ---- 109-14-22 과녁 잠금 ---------------------------------------------------------------
+
+        private void BuildTargets(Material stone)
+        {
+            _eyeRed = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "TargetEye (generated)", color = new Color(0.75f, 0.12f, 0.1f) };
+            _eyeRed.EnableKeyword("_EMISSION");
+            _eyeRed.SetColor("_EmissionColor", new Color(0.8f, 0.1f, 0.05f) * 1.2f);
+            _eyeGold = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "TargetEyeLit (generated)", color = new Color(1f, 0.82f, 0.3f) };
+            _eyeGold.EnableKeyword("_EMISSION");
+            _eyeGold.SetColor("_EmissionColor", new Color(1f, 0.75f, 0.2f) * 3f);
+            int n = GoTreasure.TargetDist.Length;
+            _targetLit = new float[n];
+            for (int i = 0; i < n; i++)
+            {
+                var root = new GameObject($"Target_{i}").transform;
+                root.SetParent(transform, false);
+                root.position = GoTreasure.TargetPosition(Data, i);
+                Vector3 look = transform.position - root.position; look.y = 0f; // 눈 판이 상자 쪽을 본다(바깥에서 쏘면 뒷면)
+                if (look.sqrMagnitude > 0.01f) root.rotation = Quaternion.LookRotation(-look);
+                var post = Part(root, PrimitiveType.Cylinder, "Post", new Vector3(0f, GoTreasure.TargetHeight * 0.5f, 0f), new Vector3(0.25f, GoTreasure.TargetHeight * 0.5f, 0.25f), stone, false);
+                var board = Part(root, PrimitiveType.Cylinder, "Board", new Vector3(0f, GoTreasure.TargetHeight, 0f), new Vector3(1.6f, 0.08f, 1.6f), stone, false);
+                board.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                var eye = Part(root, PrimitiveType.Cylinder, "Eye", new Vector3(0f, GoTreasure.TargetHeight, 0.1f), new Vector3(0.7f, 0.1f, 0.7f), _eyeRed, false);
+                eye.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                Targets.Add(root);
+            }
+        }
+
+        private void PaintTarget(int i)
+        {
+            if (i >= Targets.Count) return;
+            var eye = Targets[i].Find("Eye");
+            if (eye != null) eye.GetComponent<MeshRenderer>().sharedMaterial = Unlocked || Opened || TargetLit(i) ? _eyeGold : _eyeRed;
+        }
+
+        /// <summary>과녁 i 를 맞혔다 — 10초 금빛, 셋이 함께 빛나면 풀린다. 새로 맞혔으면 true.</summary>
+        public bool HitTarget(int i)
+        {
+            if (Opened || Unlocked || i < 0 || i >= _targetLit.Length) return false;
+            bool fresh = _targetLit[i] <= 0f;
+            _targetLit[i] = GoTreasure.TargetLitSec;
+            PaintTarget(i);
+            FieldRingFx.Spawn(TargetEye(i), 1.2f, new Color(1f, 0.8f, 0.3f), 0.4f);
+            int on = TargetLitCount;
+            if (on >= _targetLit.Length) { Unlock(true); return fresh; }
+            if (fresh) Toast(string.Format(GoLocalization.T("chest.target_progress", "과녁 {0}/{1} — {2}초 안에 나머지를"), on, _targetLit.Length, Mathf.RoundToInt(GoTreasure.TargetLitSec)), 2f);
+            return fresh;
+        }
+
+        /// <summary>진단용 — 판 안에서 푼 잠금·과녁 빛을 처음으로.</summary>
+        public void ResetLockForTest()
+        {
+            Unlocked = Data.Lock == GoTreasure.Lock.None;
+            TorchTimeLeft = 0f;
+            for (int i = 0; i < _targetLit.Length; i++) _targetLit[i] = 0f;
+            foreach (var t in Torches) t.SetLit(false);
+            RefreshLook();
+        }
+
+        /// <summary>그 점에 가장 가까운 과녁(반지름 안, 없으면 −1).</summary>
+        public int TargetAt(Vector3 p, float radius)
+        {
+            int best = -1;
+            float bd = radius;
+            for (int i = 0; i < Targets.Count; i++)
+            {
+                float d = Vector3.Distance(p, TargetEye(i));
+                if (d <= bd) { bd = d; best = i; }
+            }
+            return best;
         }
 
         private static void Toast(string text, float sec)

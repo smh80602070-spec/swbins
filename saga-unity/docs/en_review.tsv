@@ -333,13 +333,16 @@
 2	go	chest.grade2	옻칠 상자	Lacquered Chest		
 2	go	chest.grade3	금박 상자	Gilded Chest		
 2	go	chest.hint_group	{0} — 둘레 무리를 모두 쓰러뜨리면 열린다 (남은 적 {1})	{0} — defeat every band around it to open (foes left {1})		
+2	go	chest.hint_target	{0} — 둘레 과녁 셋을 활(R 조준)·서책으로 {1}초 안에 모두 맞혀라	{0} — hit all three targets around it with a bow (R to aim) or a tome within {1} seconds		
 2	go	chest.hint_torch	{0} — 석등 {1}개({2})를 제 원소 스킬(E)·해방(Q)로 {3}초 안에 모두 밝혀라	{0} — light all {1} lanterns ({2}) with matching Skill (E) / Release (Q) within {3}s		
 2	go	chest.item	 · {0}	 · {0}		
 2	go	chest.opened	{0}를 열었다 — 경험치 +{1} · 돈 +{2}냥{3}  (보물 상자 {4}/{5})	Opened the {0} — +{1} EXP · +{2} Gold{3}  (Chests {4}/{5})		
+2	go	chest.target_progress	과녁 {0}/{1} — {2}초 안에 나머지를	Target {0}/{1} — hit the rest within {2} seconds		
 2	go	chest.torch_out	석등이 꺼졌다 — 다시 처음부터 밝혀라	The lanterns went out — light them again from the start		
 2	go	chest.torch_progress	석등 {0}/{1} — {2}초 안에 나머지를	Lanterns {0}/{1} — light the rest within {2}s		
 2	go	chest.torch_wrong	이 석등은 {0} 원소로만 밝혀진다	This lantern lights only with {0}		
 2	go	chest.unlock_group	무리를 물리쳤다 — {0}의 사슬이 풀렸다	The band is defeated — the chains on the {0} fell away		
+2	go	chest.unlock_target	과녁 셋이 함께 빛났다 — {0}의 사슬이 풀렸다	All three targets lit together — the chains on the {0} fell away		
 2	go	chest.unlock_torch	석등이 모두 밝혀졌다 — {0}의 사슬이 풀렸다	All lanterns are lit — the chains on the {0} fell away		
 2	go	combat.dodge	회피	Dodge		
 2	go	combat.just_dodge	간발!	Just!		
@@ -528,6 +531,8 @@
 2	go	era.future	미래	Future		
 2	go	era.modern	현대	Modern		
 2	go	era.past	과거	Past		
+2	go	field.aim_charge	충전 {0}%	Charge {0}%		
+2	go	field.btn.aim	🎯 조준⏎(R)	🎯 Aim⏎(R)		
 2	go	field.btn.attack	공격	Attack		
 2	go	field.btn.burst	해방	Release		
 2	go	field.btn.dodge	회피	Dodge		
@@ -590,6 +595,7 @@
 2	go	field.shape.summon	소환	Summon		
 2	go	field.shape.thrust	찌르기	Thrust		
 2	go	field.shield_break	방패 깨짐!	Shield broken!		
+2	go	field.sneak	급소!	Weak spot!		
 2	go	field.st.burn	화상	Burn		
 2	go	field.st.chill	한기 — 스태미나 3초 멈춤	Chill — Stamina paused 3s		
 2	go	field.st.crush	짓눌림 −{0}	Crushed −{0}		

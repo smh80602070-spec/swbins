@@ -85,6 +85,8 @@ namespace Saga.EditorTools
             return null;
         }
 
+        private static Vector3 Flat(Vector3 v) { v.y = 0f; return v; }
+
         private static bool Walkable(Vector3 p)
         {
             var (gx, gy) = TestMapData.WorldToGrid(p);
@@ -95,10 +97,10 @@ namespace Saga.EditorTools
         private static void CheckData()
         {
             var chests = GoTreasure.Chests;
-            if (chests.Length != 16) Fail($"상자 {chests.Length} ≠ 16");
+            if (chests.Length != 17) Fail($"상자 {chests.Length} ≠ 17"); // 109-14-22 과녁 상자 하나
             if (GoTreasure.CountOf(GoTreasure.Grade.Common) != 7 || GoTreasure.CountOf(GoTreasure.Grade.Exquisite) != 4
-                || GoTreasure.CountOf(GoTreasure.Grade.Precious) != 3 || GoTreasure.CountOf(GoTreasure.Grade.Luxurious) != 2)
-                Fail("등급 수가 평범 7·정교 4·진귀 3·화려 2 가 아님");
+                || GoTreasure.CountOf(GoTreasure.Grade.Precious) != 4 || GoTreasure.CountOf(GoTreasure.Grade.Luxurious) != 2)
+                Fail("등급 수가 평범 7·정교 4·진귀 4·화려 2 가 아님");
             var ids = new HashSet<string>();
             var solvable = new HashSet<GoElement> { GoElements.HeroElement, GoElements.ForMember("산적") };
             foreach (var c in chests)
@@ -124,6 +126,14 @@ namespace Saga.EditorTools
                     foreach (var e in FieldEnemy.All) if (e.GroupId == c.GroupId) n++;
                     if (n == 0) Fail($"{c.Id} 의 무리 {c.GroupId} 적이 없음");
                 }
+                if (c.Lock == GoTreasure.Lock.Targets) // 109-14-22 과녁 셋 — 고원 상자면 그 고원 안(땅 상자면 걷는 칸)·들판 무리와 떨어짐
+                    for (int i = 0; i < GoTreasure.TargetDist.Length; i++)
+                    {
+                        var tp = GoTreasure.TargetPosition(c, i);
+                        bool inside = c.Spot == GoTreasure.Spot.Plateau ? TestMapData.WorldToGrid(tp) == (gx, gy) && Mathf.Abs(tp.y - GoTreasure.Position(c).y) < 0.1f : Walkable(tp);
+                        if (!inside) Fail($"{c.Id} 과녁 {i} 가 제 자리 밖");
+                        foreach (var g in FieldSpawner.GroupCenters()) if (Vector3.Distance(Flat(GoTreasure.TargetPosition(c, i)), Flat(g)) < 30f) Fail($"{c.Id} 과녁 {i} 가 들판 무리 곁");
+                    }
                 if (c.Lock == GoTreasure.Lock.Torches)
                 {
                     if (c.Torches == null || c.Torches.Length < 2) { Fail($"{c.Id} 석등이 둘 미만"); continue; }

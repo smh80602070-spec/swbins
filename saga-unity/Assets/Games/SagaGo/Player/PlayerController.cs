@@ -55,6 +55,11 @@ namespace Saga.Go.Player
 
         // ---- PLAN.md 109-14-20 바람 기둥(웹 사가고 ⑲-20 landform) — 켜져 있으면 기둥 안 공중(점프)에서 저절로 활공하고 초당 Rise m 로
         // 솟다가 Top 에서 멎는다(기력 안 씀). 땅에 선 채로는 안 뜬다. 기둥 안에서 접으면(점프) 기둥을 나갈 때까지 안 편다. `StoryField` 가 켠다.
+        // ---- PLAN.md 109-14-22 활 조준 — 켜져 있으면 걷지 않고(방향 입력은 `AimInput` 으로 넘겨 겨눈 쪽을 돌린다), 점프하면 풀린다(`AimCancelled`).
+        public bool MoveLocked { get; set; }
+        public Vector2 AimInput { get; private set; }
+        public bool AimCancelled { get; set; }
+
         public static bool DraftOn;
         public static Vector3 DraftBase;
         public static float DraftR, DraftTop, DraftRise = 9f;
@@ -292,6 +297,13 @@ namespace Saga.Go.Player
             bool jumpPressed = _jumpQueued || (!_testInput && _jumpAction != null && _jumpAction.WasPressedThisFrame());
             _jumpQueued = false;
             Vector2 raw = RawInput();
+            if (MoveLocked) // 109-14-22 조준 중 — 걸음 대신 겨누기, 점프면 풀고 뛴다
+            {
+                AimInput = raw;
+                if (jumpPressed) { MoveLocked = false; AimCancelled = true; }
+                else raw = Vector2.zero;
+            }
+            else AimInput = Vector2.zero;
             Vector3 moveDir = WorldDirection(raw);
             bool sprintHeld = _testInput ? _testSprint : (_sprintAction != null && _sprintAction.IsPressed());
 

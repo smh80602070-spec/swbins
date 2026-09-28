@@ -1343,6 +1343,12 @@
     { "key": "wq.track_btn", "value": "Track: {0}" },
     { "key": "wq.track_story", "value": "Track Story Quest" },
     { "key": "story.chase_track2", "value": "{0} {1}m — run!" },
-    { "key": "story.chapters_done", "value": "✓ Chapters done: {0}" }
+    { "key": "story.chapters_done", "value": "✓ Chapters done: {0}" },
+    { "key": "field.btn.aim", "value": "🎯 Aim\n(R)" },
+    { "key": "field.aim_charge", "value": "Charge {0}%" },
+    { "key": "field.sneak", "value": "Weak spot!" },
+    { "key": "chest.hint_target", "value": "{0} — hit all three targets around it with a bow (R to aim) or a tome within {1} seconds" },
+    { "key": "chest.unlock_target", "value": "All three targets lit together — the chains on the {0} fell away" },
+    { "key": "chest.target_progress", "value": "Target {0}/{1} — hit the rest within {2} seconds" }
   ]
 }

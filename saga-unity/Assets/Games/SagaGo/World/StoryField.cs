@@ -53,6 +53,19 @@ namespace Saga.Go.World
             foreach (var kv in _sealSets) if (kv.Key.StartsWith(ch + "_")) return kv.Value[i];
             return null;
         }
+        /// <summary>109-14-22 활 조준이 잠길 점 — 지금 단계가 light 면 그 제단, seal 이면 안 켠 석등(웹 story aimPoints).</summary>
+        public List<Vector3> AimPoints()
+        {
+            var list = new List<Vector3>();
+            var st = StoryState.Current;
+            if (st == null) return list;
+            if (st.Type == GoStory.StepType.Light && _altars.TryGetValue(StoryState.LineKey, out var a) && a != null && a.gameObject.activeInHierarchy && !a.Lit)
+                list.Add(a.transform.position + Vector3.up * 1.5f);
+            if (st.Type == GoStory.StepType.Seal && _sealSets.TryGetValue(StoryState.LineKey, out var lamps))
+                foreach (var l in lamps) if (l != null && l.gameObject.activeInHierarchy && !l.Lit) list.Add(l.transform.position + Vector3.up * 1.5f);
+            return list;
+        }
+
         /// <summary>109-14-21 줄 열쇠("wq1_4")로 — 세계 임무 제단 불·석등.</summary>
         public ElementTorch AltarOfKey(string key) => _altars.TryGetValue(key, out var a) ? a : null;
         public ElementTorch SealLampOfKey(string key, int i) => _sealSets.TryGetValue(key, out var l) ? l[i] : null;

@@ -75,13 +75,41 @@ namespace Saga.Go.Player
 
         private void Update()
         {
-            if (!_talkShot) HandlePointer();
+            if (!_talkShot && !_aim) HandlePointer();
             ApplyZoom();
         }
 
         // PLAN.md 109-14-13 대화 카메라(웹 사가고 ⑲-13 `talkface.js` 카메라 결) — 말하는 이를 내 어깨 너머로 가깝게.
         // 끄는 동안 드래그는 멎고, 끝나면 원래 각도·거리로 돌아간다.
         public const float TalkZoom = 5.5f, TalkPitch = 15f, TalkYawOffset = 25f;
+
+        // PLAN.md 109-14-22 활 조준 — 오른 어깨 너머(웹 aimCam 뒤 2.6·옆 0.7 × 1.85), 겨눈 쪽을 본다. 끄면 원래 각도·거리로.
+        public const float AimZoom = 4.8f, AimPitch = 8f, AimShoulder = 1.3f;
+        private bool _aim;
+        private float _aimSavedYaw, _aimSavedPitch, _aimSavedZoom;
+        public bool AimShot => _aim;
+
+        /// <summary>조준 카메라 — 켜면 겨눈 쪽(월드 yaw)을 등 뒤에서, 켠 동안 다시 부르면 yaw 만 맞춘다.</summary>
+        public void SetAim(bool on, float yawWorld = 0f)
+        {
+            if (on)
+            {
+                if (!_aim) { _aimSavedYaw = _yawDeg; _aimSavedPitch = _pitchDeg; _aimSavedZoom = _zoom; }
+                _aim = true;
+                float parentYaw = transform.parent != null ? transform.parent.eulerAngles.y : 0f;
+                _yawDeg = yawWorld - parentYaw;
+                _pitchDeg = AimPitch;
+                _zoom = AimZoom;
+                transform.localRotation = Quaternion.Euler(_pitchDeg, _yawDeg, 0f);
+                return;
+            }
+            if (!_aim) return;
+            _aim = false;
+            _yawDeg = _aimSavedYaw;
+            _pitchDeg = _aimSavedPitch;
+            _zoom = _aimSavedZoom;
+            transform.localRotation = Quaternion.Euler(_pitchDeg, _yawDeg, 0f);
+        }
         private bool _talkShot;
         private float _savedYaw, _savedPitch, _savedZoom;
         public bool TalkShot => _talkShot;
@@ -239,7 +267,7 @@ namespace Saga.Go.Player
             Transform target = view != null ? view : cam != null ? cam.transform : null;
             if (target == null) return;
             float clippedZoom = ResolveCollisionZoom(_zoom);
-            target.localPosition = new Vector3(0f, 0f, -clippedZoom);
+            target.localPosition = new Vector3(_aim ? AimShoulder : 0f, _aim ? 0.6f : 0f, -clippedZoom); // 109-14-22 어깨 너머
         }
 
         /// <summary>벽에 카메라가 파고들지 않도록 원하는 줌 거리 안에서

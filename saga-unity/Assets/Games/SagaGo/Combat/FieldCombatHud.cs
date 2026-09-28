@@ -102,7 +102,21 @@ namespace Saga.Go.Combat
             // 109-14-7 때 배치 점검 — 조우 창 가운데 단추(560 폭)와 안 겹치게 오른쪽으로(회피 단추와 5 띄움)
             SightButton = EncounterUiKit.NewButton(t, GoLocalization.T("field.btn.sight", "시야"), new Vector2(1f, 0f), new Vector2(-405f, 225f), new Vector2(110f, 90f), null);
             SightButton.onClick.AddListener(OnSight);
+            // 109-14-22 활 조준 — 회피 위(활 인물일 때만), 화면 가운데 조준점·충전
+            AimButton = EncounterUiKit.NewButton(t, GoLocalization.T("field.btn.aim", "🎯 조준\n(R)"), new Vector2(1f, 0f), new Vector2(-260f, 370f), new Vector2(140f, 100f), null);
+            AimButton.onClick.AddListener(OnAim);
+            AimButton.GetComponentInChildren<TextMeshProUGUI>().fontSize = 22;
+            _aimText = EncounterUiKit.NewText(t, "", new Vector2(0.5f, 0.5f), new Vector2(0f, 0f), new Vector2(360f, 110f), 30);
+            _aimText.rectTransform.pivot = new Vector2(0.5f, 0.5f);
+            _aimText.alignment = TextAlignmentOptions.Center;
+            _aimText.raycastTarget = false;
+            _aimText.gameObject.SetActive(false);
         }
+
+        public Button AimButton { get; private set; }
+        private TextMeshProUGUI _aimText;
+        public string AimText => _aimText != null && _aimText.gameObject.activeSelf ? _aimText.text : "";
+        private void OnAim() => _combat.ToggleAim();
 
         private void OnSight()
         {
@@ -153,6 +167,7 @@ namespace Saga.Go.Combat
             if (_root.activeSelf != show) _root.SetActive(show);
             var m = _combat.Active;
             if (m == null) return;
+            if (_combat.AimOn) _refresh = 0.05f; // 109-14-22 충전 글이 부드럽게
 
             _nameText.text = $"{m.Name}  <color=#{ColorUtility.ToHtmlStringRGB(GoElements.ColorOf(m.Element))}>● {GoElements.NameOf(m.Element)}</color>  {Mathf.CeilToInt(m.Hp)}/{Mathf.CeilToInt(m.MaxHp)}";
             if (_combat.GuardHp > 0f) // 109-14-1a 굳힘 보호막 — 남은 양·초
@@ -174,6 +189,22 @@ namespace Saga.Go.Combat
                 ? $"{GoLocalization.T("field.btn.burst", "해방")}\n★ (Q)"
                 : $"{GoLocalization.T("field.btn.burst", "해방")}\n{Mathf.FloorToInt(m.Energy)}%";
             _burstImage.color = new Color(ec.r, ec.g, ec.b, m.BurstReady ? 0.6f : 0.15f);
+            // 109-14-22 활 인물이면 조준 단추, 조준 중이면 가운데 조준점(잠기면 금빛)·충전
+            if (AimButton != null)
+            {
+                bool bow = FieldCombat.IsBow(m);
+                AimButton.gameObject.SetActive(bow);
+                if (bow) AimButton.GetComponent<Image>().color = _combat.AimOn ? new Color(1f, 0.82f, 0.3f, 0.55f) : new Color(1f, 1f, 1f, 0.18f);
+                _aimText.gameObject.SetActive(_combat.AimOn);
+                if (_combat.AimOn)
+                {
+                    bool locked = _combat.AimLock.Kind != FieldCombat.AimKind.None;
+                    string mark = locked ? "<color=#ffd24d>◎</color>" : "◎";
+                    _aimText.text = _combat.Charging
+                        ? mark + "\n<size=60%>" + string.Format(GoLocalization.T("field.aim_charge", "충전 {0}%"), Mathf.RoundToInt(_combat.AimCharge / FieldCombat.AimChargeSec * 100f)) + "</size>"
+                        : mark;
+                }
+            }
 
             var party = _combat.Party;
             for (int i = 0; i < FieldCombat.MaxParty; i++)

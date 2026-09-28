@@ -13,8 +13,8 @@ namespace Saga.Go.Data
     {
         public enum Grade { Common = 0, Exquisite = 1, Precious = 2, Luxurious = 3 }
 
-        /// <summary>잠금 — 없음 · 무리 전멸(`FieldSpawner` 무리 id 의 적이 한꺼번에 모두 쓰러짐) · 원소 석등.</summary>
-        public enum Lock { None, Group, Torches }
+        /// <summary>잠금 — 없음 · 무리 전멸(`FieldSpawner` 무리 id 의 적이 한꺼번에 모두 쓰러짐) · 원소 석등 · 109-14-22 과녁 셋(활·서책으로 맞혀 10초 안에 모두 빛나게).</summary>
+        public enum Lock { None, Group, Torches, Targets }
 
         /// <summary>놓이는 자리 — 땅 · 산 칸 고원 윗면 · 봉우리 꼭대기 · 옛 망루 꼭대기.</summary>
         public enum Spot { Ground, Plateau, Peak, Tower }
@@ -29,6 +29,22 @@ namespace Saga.Go.Data
             public string GroupId;          // Lock.Group
             public GoElement[] Torches;     // Lock.Torches — 석등마다 정한 원소
             public string ItemId;           // 화려만 — 없으면 null
+            public float TargetDeg;         // Lock.Targets — 첫 과녁 방향(도, 북 0 시계 방향)
+        }
+
+        // ---- PLAN.md 109-14-22 과녁 잠금(웹 사가고 ⑲-22 treasure 과녁) — 상자에서 12·16·20m(웹 9·12·15m × 1.35), 2.1 라디안씩.
+        // 화살(충전 무관)·서책·활 기본 공격(둘레에 적이 없으면 사거리 안 가장 가까운 과녁)이 맞히면 10초 금빛, 셋이 함께 빛나면 풀린다.
+        public static readonly float[] TargetDist = { 12f, 16f, 20f };
+        public const float TargetStepRad = 2.1f, TargetLitSec = 10f, TargetHeight = 2.4f;
+
+        /// <summary>과녁 i 의 자리(땅 높이, 기둥 밑).</summary>
+        public static Vector3 TargetPosition(Chest c, int i)
+        {
+            float a = c.TargetDeg * Mathf.Deg2Rad + i * TargetStepRad;
+            Vector3 p = Position(c) + new Vector3(Mathf.Sin(a), 0f, -Mathf.Cos(a)) * TargetDist[i];
+            var (gx, gy) = TestMapData.WorldToGrid(p);
+            p.y = TestMapData.GroundHeight(gx, gy);
+            return p;
         }
 
         public static readonly int[] ExpByGrade = { 5, 15, 30, 60 };
@@ -73,6 +89,9 @@ namespace Saga.Go.Data
             // 화려 2 — 원소 석등. 첫째는 주인공(화) 혼자 풀고, 둘째는 수 원소 동료(등용한 산적)가 있어야 풀린다
             new Chest { Id = "lantern_west", Grade = Grade.Luxurious, Lock = Lock.Torches, Spot = Spot.Ground, Gx = 1.4f, Gy = 2.4f, Torches = new[] { P, P, P }, ItemId = "wp_iron" },
             new Chest { Id = "lantern_ford", Grade = Grade.Luxurious, Lock = Lock.Torches, Spot = Spot.Ground, Gx = 4.6f, Gy = 4.3f, Torches = new[] { P, H, P }, ItemId = "ar_leather" },
+            // 109-14-22 과녁 셋 — 웹은 고향 밖 무늬 상자 절반이지만 이 판 무늬 상자는 높은 곳 자리라 잠금 퍼즐 등급(옻칠) 하나를, 들이 다 차 있어
+            // 남쪽 공터와 논밭 사이 봉우리 없는 산 (1,8) 고원 위에(멀리서 쏘기 좋은 자리). 첫 방향 59.4° 면 과녁 셋이 모두 그 고원 안이다.
+            new Chest { Id = "target_ledge", Grade = Grade.Precious, Lock = Lock.Targets, Spot = Spot.Plateau, Gx = 1, Gy = 8, TargetDeg = 59.4f },
         };
 
         public static string EventKey(Chest c) => "chest_" + c.Id;

@@ -1343,6 +1343,12 @@
     { "key": "wq.track_btn", "value": "{0} 따라가기" },
     { "key": "wq.track_story", "value": "이야기 임무 따라가기" },
     { "key": "story.chase_track2", "value": "{0} {1}m — 달려라!" },
-    { "key": "story.chapters_done", "value": "✓ 끝난 장 {0}" }
+    { "key": "story.chapters_done", "value": "✓ 끝난 장 {0}" },
+    { "key": "field.btn.aim", "value": "🎯 조준\n(R)" },
+    { "key": "field.aim_charge", "value": "충전 {0}%" },
+    { "key": "field.sneak", "value": "급소!" },
+    { "key": "chest.hint_target", "value": "{0} — 둘레 과녁 셋을 활(R 조준)·서책으로 {1}초 안에 모두 맞혀라" },
+    { "key": "chest.unlock_target", "value": "과녁 셋이 함께 빛났다 — {0}의 사슬이 풀렸다" },
+    { "key": "chest.target_progress", "value": "과녁 {0}/{1} — {2}초 안에 나머지를" }
   ]
 }
