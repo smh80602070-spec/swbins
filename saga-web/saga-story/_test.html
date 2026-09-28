@@ -636,6 +636,7 @@ window.DG_NO_TUNE = true;
 
     t('화살이 맞으면 체력이 깎이고, 무적 동안에는 스친다', function () {
       var run = S.raw(), p = run.player;
+      calm(run);                        // 곁의 적이 몸으로 부딪쳐 체력이 더 깎이면 흔들렸다(HEAD 에서도 3번 중 2번 실패, 09-28)
       p.invuln = 0; run.hp = run.hpMax;
       var hp0 = run.hp;
       run.eshots = [{ x: p.x + 6, y: p.y + 14, dir: 1, spd: 0, dmg: 7, kind: 'bow', life: 2 }];
@@ -646,6 +647,7 @@ window.DG_NO_TUNE = true;
       S.update(0.03);
       var grazed = run.hp === hp1 && run.eshots.length === 0;
       run.eshots = []; p.invuln = 0;
+      if (!(hit && grazed)) { throw new Error('체력 ' + hp0 + ' → ' + hp1 + ' → ' + run.hp + ' · 맞음 ' + hit + ' · 스침 ' + grazed + ' · 남은 탄 ' + run.eshots.length); }
       return hit && grazed && ('체력 ' + hp0 + ' → ' + hp1 + ' · 무적 중에는 안 깎임');
     });
 
@@ -1613,6 +1615,7 @@ window.DG_NO_TUNE = true;
       J.join('archer');
       J.raise('a_shot');
       var run = S.raw(), p = run.player;
+      run.enemies.forEach(function (e) { e.x = p.x + 3000; e.cd = 9; });   // 초반 적 체력 바닥(09-28)으로 앞 진단의 적이 살아남아 발길·탄을 가로막았다
       restInput(); p.climb = null; run.hitstopT = 0;
       p.holding = false; p.holdT = 0; p.holdArmed = false; p.sigCd = 0; p.dodgeCd = 0;
       p.archerCharging = false; p.archerBuff = null; p.cds[0] = 0; p.facing = 1;
@@ -1642,6 +1645,7 @@ window.DG_NO_TUNE = true;
       J.join('rogue');
       J.raise('r_twin');
       var run = S.raw(), p = run.player;
+      run.enemies.forEach(function (e) { e.x = p.x + 3000; e.cd = 9; });   // 초반 적 체력 바닥(09-28)으로 앞 진단의 적이 살아남아 발길·탄을 가로막았다
       restInput(); p.climb = null; run.hitstopT = 0;
       p.holding = false; p.holdT = 0; p.holdArmed = false; p.sigCd = 0; p.dodgeCd = 0;
       p.shadowT = 0; p.shadowHitT = 0; p.invuln = 0; p.cds[0] = 0; p.facing = 1;
@@ -1668,6 +1672,7 @@ window.DG_NO_TUNE = true;
       J.join('mage');
       J.raise('m_fire');
       var run = S.raw(), p = run.player;
+      run.enemies.forEach(function (e) { e.x = p.x + 3000; e.cd = 9; });   // 초반 적 체력 바닥(09-28)으로 앞 진단의 적이 살아남아 발길·탄을 가로막았다
       restInput(); p.climb = null; run.hitstopT = 0;
       p.holding = false; p.holdT = 0; p.holdArmed = false; p.sigCd = 0; p.dodgeCd = 0;
       p.elemLeft = 0; p.elemIdx = 0; p.cds[0] = 0; p.facing = 1;

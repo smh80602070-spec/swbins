@@ -253,14 +253,15 @@
     var hpMul = C.tuned('enemy.hpMul', 1), dmgMul = C.tuned('enemy.dmgMul', 1);
     SD.STAGES.forEach(function (stg) {
       var lv = stg.enemyLv;
-      var hp = Math.max(1, Math.round(18 * Math.pow(1.22, lv - 1) * hpMul));
+      var bh = DG.side && DG.side.baseHpOf ? DG.side.baseHpOf(lv) : 18 * Math.pow(1.22, lv - 1);
+      var hp = Math.max(1, Math.round(bh * hpMul));
       var dmg = Math.round((4 + lv * 1.6) * dmgMul);
       var f = el('div', 'fld');
       f.innerHTML = '<label>' + esc(stg.name) + '</label>' +
         '<span class="def" style="min-width:0">체 ' + C.fmt(hp) + ' · 공 ' + dmg + '</span>';
       host.appendChild(f);
       if (!stg.boss) { return; }
-      var bhp = Math.max(1, Math.round(18 * Math.pow(1.22, lv - 1) * stg.boss.hpMul * hpMul));
+      var bhp = Math.max(1, Math.round(bh * stg.boss.hpMul * hpMul));
       var bdmg = Math.round((4 + lv * 1.6) * stg.boss.dmgMul * dmgMul);
       var g = el('div', 'fld');
       g.innerHTML = '<label>└ 👺 ' + esc(stg.boss.name) + '</label>' +

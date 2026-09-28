@@ -1000,6 +1000,8 @@
     /** 진단 전용 — 순수 함수들이라 실제 프레임·기기 없이 바로 잰다 */
     _autoLevelFor: autoLevelFor, _deviceScore: deviceScore, _startLevelFor: startLevelFor,
     _feedPerf: updatePerf, _perfEma: function () { return perfEma; },
-    _moodLight: moodLight
+    _moodLight: moodLight,
+    /** 진단 전용 — 씬(재질·빛 살펴보기, 2026-09-28 새까만 사람 적 추적) */
+    _scene: function () { return scene; }
   };
 })(window);

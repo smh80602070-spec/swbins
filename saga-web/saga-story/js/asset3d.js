@@ -512,6 +512,17 @@
       if (!tintCache[key]) {
         var m = TNc && TNc.cloneMat ? TNc.cloneMat(src) : src.clone();
         m.color = new t.Color(src.color ? src.color.getHex() : 0xffffff).multiply(tc);
+        /* 2026-09-28 실기 Q10 — VRoid 가 아닌 저폴리 사람은 무늬 없는 단색 부품(피부·옷)이라 짙은 적 빛깔(#6b5030 등)을
+           곱하면 피부까지 흑갈색이 되고 툰 음영까지 겹쳐 **새까만 실루엣**으로 섰다(헤드리스 사진 — 곁의 적 절반).
+           흰색과 섞은 색만 곱하고(asset3d.tintMix 0.45), 원래 밝기의 절반 밑으로는 안 내린다. VRoid 옷은 옛 그대로 */
+        if (!vroid) {
+          var Cm = global.DG.core, mix = Cm && Cm.tuned ? Cm.tuned('asset3d.tintMix', 0.45) : 0.45;
+          var base = new t.Color(src.color ? src.color.getHex() : 0xffffff);
+          m.color = base.clone().multiply(new t.Color(1, 1, 1).lerp(tc, mix));
+          var lum = function (c) { return 0.3 * c.r + 0.59 * c.g + 0.11 * c.b; };
+          var l0 = lum(base), l1 = lum(m.color);
+          if (l0 > 0 && l1 < l0 * 0.5) { m.color.multiplyScalar(Math.min(4, l0 * 0.5 / Math.max(l1, 1e-3))); }
+        }
         tintCache[key] = m;
       }
       o.material = tintCache[key];

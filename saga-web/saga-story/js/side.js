@@ -37,6 +37,15 @@
   var DROP_THRU = 0.26;         // ↓+점프로 발판을 빠져나가는 동안
 
   var E_HP = core.tuned('enemy.hpMul', 1);      // 적 체력 배수 (보스도 같이 탄다)
+  /* 2026-09-28 실기 Q10 "사가스토리 전투 손보기" — 적 체력은 Lv 마다 ×1.22 인데 내 공격력은 레벨로 안 오른다(인물 능력치 ~100 + 장비·직업).
+     그래서 첫 세 사냥터(Lv 1~14)는 공격력 100 한 방에 체력 18~240 이 녹아 "스치면 사라지는" 전투였다(헤드리스 90초 33마리·Lv 7).
+     초반에만 바닥 200 + 20×(Lv-1) 을 깐다 — 공격력 100 기본 공격 2~3대. Lv 18 쯤부터는 옛 곡선이 더 커서 그대로다.
+     잡졸·보스·관문·비경 보스가 모두 이 한 곳을 탄다. 손잡이 enemy.hpFloor 0 이면 옛 곡선 */
+  function baseHpOf(lv) {
+    var curve = 18 * Math.pow(1.22, lv - 1);
+    var floor = core.tuned('enemy.hpFloor', 1) ? 200 + 20 * Math.max(0, lv - 1) : 0;
+    return Math.max(curve, floor);
+  }
   var E_DMG = core.tuned('enemy.dmgMul', 1);    // 적 공격 배수
   var GAIN_EXP = core.tuned('gain.expMul', 1);  // 경험치 배수
   var GAIN_GOLD = core.tuned('gain.goldMul', 1);// 금 배수
@@ -620,7 +629,7 @@
     var ed = global.DG.enemyData;
     var ref = ed ? ed.bossByName(stg.boss.name) : { name: stg.boss.name, kind: 'human', color: '#7a3a3a' };
     var lv = stg.enemyLv;
-    var baseHp = Math.round(18 * Math.pow(1.22, lv - 1));
+    var baseHp = Math.round(baseHpOf(lv));
     var hp = Math.max(1, Math.round(baseHp * stg.boss.hpMul * E_HP));
     var e = {
       ref: ref, boss: true,
@@ -699,7 +708,7 @@
     var ed = global.DG.enemyData;
     var ref = ed ? ed.bossByName(stg.gateBoss.name) : { name: stg.gateBoss.name, kind: 'human', color: '#7a3a3a' };
     var lv = stg.enemyLv;
-    var baseHp = Math.round(18 * Math.pow(1.22, lv - 1));
+    var baseHp = Math.round(baseHpOf(lv));
     var hp = Math.max(1, Math.round(baseHp * stg.gateBoss.hpMul * E_HP));
     var e = {
       ref: ref, boss: true, gate: true, gateKey: key,
@@ -812,7 +821,7 @@
       x = pl[0] + Math.random() * pl[2];
       y = pl[1];
     }
-    var hp = Math.max(1, Math.round(18 * Math.pow(1.22, lv - 1) * E_HP));
+    var hp = Math.max(1, Math.round(baseHpOf(lv) * E_HP));
     var rw = SD.rangedOf(ref);              // 활·조총을 들었으면 멀리서 쏜다
     var role = enemyRole(ref);
     /* 마법형 굴림 — 근접형만 대상(원거리·돌진·탱커는 이미 제 역이 있다).
@@ -2206,6 +2215,7 @@
     status: status, state: st, meRef: meRef,
     /** 화면 전용 — 상태를 직접 읽는다 (쓰지는 말 것) */
     raw: function () { return run; },
+    baseHpOf: baseHpOf,
     fx: function () { return fx; }
   };
 })(window);

@@ -359,7 +359,8 @@
     var rn = run(), ed = global.DG.enemyData;
     var ref = ed ? ed.bossByName('관문 수호장') : { name: '관문 수호장', kind: 'human', color: '#5a5a6a' };
     var lv = stg.enemyLv;
-    var hp = Math.max(1, Math.round(18 * Math.pow(1.22, lv - 1) * RD.BOSS_HP_MUL * core.tuned('enemy.hpMul', 1)));
+    var bh = global.DG.side && global.DG.side.baseHpOf ? global.DG.side.baseHpOf(lv) : 18 * Math.pow(1.22, lv - 1);   // 초반 바닥(side.baseHpOf)
+    var hp = Math.max(1, Math.round(bh * RD.BOSS_HP_MUL * core.tuned('enemy.hpMul', 1)));
     var e = {
       ref: ref, boss: true, riftBoss: true,
       x: stg.width - 220, y: stg.floor - 52, w: 52, h: 52,
