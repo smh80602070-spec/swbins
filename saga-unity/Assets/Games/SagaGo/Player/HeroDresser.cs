@@ -30,13 +30,31 @@ namespace Saga.Go.Player
             var s = t.localScale;
             t.localScale = new Vector3(s.x * look.WidthScale, s.y, s.z * look.WidthScale);
 
-            if (look.Back == Gear.None && look.Hip == Gear.None && look.Head == Gear.None) return;
+            AttachGear(inst, look, target, gearModel, head: true);
+        }
+
+        /// <summary>
+        /// char-forge 제 몸(<see cref="PartyBodies.ForgeHero"/>) — 키·체격·머리·옷이 이미 그 인물 것(레시피 키 m)이라 칸 배율은 안 쓰고
+        /// 사람 키 1.75m 에 대한 비로만 맞춘다. 머리 꾸밈은 안 씌운다(투구·관·상투가 몸에 있다). 등·허리 꾸밈은 표 그대로.
+        /// </summary>
+        public static void DressOwn(GameObject inst, GoHeroLooks.Look look, float baseHeight, System.Func<Gear, GameObject> gearModel)
+        {
+            var t = inst.transform;
+            float h = MeasureHeight(inst);
+            float target = baseHeight * (h > 0.01f ? h / t.lossyScale.y : RealHuman) / RealHuman;
+            if (h > 0.01f) t.localScale = t.localScale * (target / h);
+            AttachGear(inst, look, target, gearModel, head: false);
+        }
+
+        private static void AttachGear(GameObject inst, GoHeroLooks.Look look, float target, System.Func<Gear, GameObject> gearModel, bool head)
+        {
+            if (look.Back == Gear.None && look.Hip == Gear.None && (!head || look.Head == Gear.None)) return;
             var anim = inst.GetComponentInChildren<Animator>();
             if (anim == null || !anim.isHuman) return;
             var pts = SampleSkin(inst);
             if (look.Back != Gear.None) AttachBack(inst, anim, pts, look.Back, target, gearModel);
             if (look.Hip != Gear.None) AttachHip(inst, anim, pts, look.Hip, target, gearModel);
-            if (look.Head != Gear.None) AttachHead(inst, anim, pts, look.Head, target, gearModel);
+            if (head && look.Head != Gear.None) AttachHead(inst, anim, pts, look.Head, target, gearModel);
         }
 
         public static float MeasureHeight(GameObject go)

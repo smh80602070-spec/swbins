@@ -102,12 +102,35 @@ namespace Saga.EditorTools
         {
             var root = new GameObject("HeroLooksProbe").transform;
             root.position = new Vector3(0f, -500f, 0f);
-            int made = 0, missing = 0, gearCount = 0;
+            int made = 0, missing = 0, gearCount = 0, ownBodies = 0;
             float worstH = 0f;
             try
             {
                 foreach (var l in GoHeroLooks.All)
                 {
+                    // char-forge 제 몸 — 레시피 키(1.75m 에 대한 비) 그대로·체격 배율 없음·머리 꾸밈 없음
+                    var forge = PartyBodies.ForgeHero(l.HeroId);
+                    if (forge != null)
+                    {
+                        if (bodies.PrefabFor(l.HeroId) != forge) Fail($"{l.HeroId} PrefabFor 가 제 몸이 아님");
+                        var fi = Object.Instantiate(forge, root);
+                        fi.transform.localPosition = Vector3.zero;
+                        fi.transform.localRotation = Quaternion.identity;
+                        float own = HeroDresser.MeasureHeight(fi);
+                        bodies.Dress(fi, l.HeroId, CharacterVisual.HumanHeight);
+                        float fwant = CharacterVisual.HumanHeight * own / HeroDresser.RealHuman;
+                        float fh = HeroDresser.MeasureHeight(BodyOnly(fi));
+                        worstH = Mathf.Max(worstH, Mathf.Abs(fh / fwant - 1f));
+                        if (Mathf.Abs(fh / fwant - 1f) > 0.04f) Fail($"{l.HeroId}(제 몸) 키 {fh:F2} ≠ {fwant:F2}");
+                        if (own < 1.3f || own > 2.3f) Fail($"{l.HeroId}(제 몸) 프리팹 키 {own:F2}m 가 사람 키가 아님");
+                        var lf = l;
+                        lf.Head = Gear.None;
+                        gearCount += CheckGear(fi, lf, fwant);
+                        Object.DestroyImmediate(fi);
+                        made++;
+                        ownBodies++;
+                        continue;
+                    }
                     var prefab = bodies.LookBody(l.Body);
                     if (prefab == null) { missing++; continue; }
                     if (bodies.PrefabFor(l.HeroId) != prefab) Fail($"{l.HeroId} PrefabFor 가 표의 몸 {l.Body} 이 아님");
@@ -135,7 +158,7 @@ namespace Saga.EditorTools
             }
             if (missing > 0) Debug.LogWarning($"[{_tag}] hero looks: 이 PC 에 몸 프리팹이 없는 인물 {missing}명(로컬 전용 — Saga/Setup NPC Character Imports)");
             if (made == 0) return "몸 없음(표만 확인)";
-            return $"입혀 봄 {made}(없음 {missing}) 꾸밈 {gearCount} 키 오차 ≤{worstH * 100f:F1}%";
+            return $"입혀 봄 {made}(제 몸 {ownBodies} · 없음 {missing}) 꾸밈 {gearCount} 키 오차 ≤{worstH * 100f:F1}%";
         }
 
         /// <summary>꾸밈을 뺀 몸만 — 키는 살만 잰다(모자가 키를 늘리지 않게).</summary>

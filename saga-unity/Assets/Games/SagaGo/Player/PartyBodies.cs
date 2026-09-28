@@ -90,6 +90,8 @@ namespace Saga.Go.Player
             if (memberId == BanditId) return banditBody;
             if (GoHeroLooks.TryGet(memberId, out var look))
             {
+                var forge = ForgeHero(memberId);
+                if (forge != null) return forge;
                 var own = LookBody(look.Body);
                 if (own != null) return own;
             }
@@ -97,6 +99,21 @@ namespace Saga.Go.Player
             uint h = 2166136261;
             foreach (char c in memberId) { h ^= c; h *= 16777619; }
             return extraBodies[(int)(h % (uint)extraBodies.Length)];
+        }
+
+        /// <summary>char-forge 인물 제 몸 — `Resources/ForgeHero/hero_&lt;id&gt;`(`SetupForgeHeroes` 가 굽는다, 로컬 전용).</summary>
+        public const string ForgeHeroPath = "ForgeHero/hero_";
+        private static readonly Dictionary<string, GameObject> ForgeCache = new Dictionary<string, GameObject>();
+
+        /// <summary>
+        /// 인물 105 제 몸(char-forge 레시피 한 벌 = 인물 한 명). 쓸 때 한 벌씩 읽는다 — 씬에 105 벌을 걸면 폰 메모리에 다 올라간다.
+        /// 이 PC 에 없으면 null(표의 몸 열일곱 + 모양 다섯 축으로 대신).
+        /// </summary>
+        public static GameObject ForgeHero(string heroId)
+        {
+            if (string.IsNullOrEmpty(heroId)) return null;
+            if (!ForgeCache.TryGetValue(heroId, out var go)) ForgeCache[heroId] = go = Resources.Load<GameObject>(ForgeHeroPath + heroId);
+            return go;
         }
 
         /// <summary>표의 몸 이름 → 프리팹(이 PC 에 없으면 null).</summary>
@@ -122,7 +139,8 @@ namespace Saga.Go.Player
         {
             if (GoHeroLooks.TryGet(memberId, out var look))
             {
-                HeroDresser.Dress(inst, look, baseHeight, GearModel);
+                if (ForgeHero(memberId) != null) HeroDresser.DressOwn(inst, look, baseHeight, GearModel);
+                else HeroDresser.Dress(inst, look, baseHeight, GearModel);
                 return;
             }
             float h = HeroDresser.MeasureHeight(inst);
