@@ -20,7 +20,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class GoStory
     {
-        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow, Seal, Climb, Duel, Defend }
+        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow, Seal, Climb, Duel, Defend, Chase, Sail }
 
         // ---- 109-14-16 7장(웹 ⑲-16) — 곶 → 강 북쪽 물가 마을 동쪽 끝(이 판 강은 곧은 띠라 곶이 없다, 강 쪽을 뺀 다섯 방향에서 무리가 온다) ----
         public const float CapeGx = 5.35f, CapeGy = 4.45f;
@@ -30,6 +30,30 @@ namespace Saga.Go.Data
         public const float DefendHits = 45f, DefendRefAtk = 26f;
         /// <summary>물결이 나오는 방향(도, 북 0 시계 방향) — 남쪽(강) 빼고 다섯.</summary>
         public static readonly float[] CapeDirs = { 270f, 315f, 0f, 45f, 90f };
+
+        // ---- 109-14-19 8장(웹 ⑲-19) — 바위섬: 웹은 곶 둘레에서 이웃 물이 가장 많은 뭍 칸이지만 이 판 강은 곧은 띠 하나라 그런 칸이 없다 →
+        // 곶 동남쪽 강 칸 한가운데 둥근 바위섬(반지름 12m)을 Play 때 짓는다(`StoryField`). 섬 위 자리는 섬 가운데에서 m(북 = −z).
+        public const float IsleGx = 6.4f, IsleGy = 5.0f, IsleR = 12f, IsleTop = 0.1f;
+        public static readonly Vector2 IsleLand = new Vector2(1f, -6f), IsleFerry = new Vector2(-4f, -9f), IsleWanderer = new Vector2(7f, -3f),
+            IsleHaesol = new Vector2(0f, 4f), IsleSquad = new Vector2(0f, 2f);
+        public static Vector3 IslePos(Vector2 off) => TestMapData.WorldPos(IsleGx, IsleGy) + new Vector3(off.x, IsleTop, off.y);
+        /// <summary>섬 위인가(가장자리 1m 안쪽) — 섬 위 이야기 적은 이 안에서만 걷는다.</summary>
+        public static bool OnIsle(Vector3 p) => Flat(p, IslePos(Vector2.zero)) <= IsleR - 1f;
+        /// <summary>배가 닿는 곳 — 섬(북쪽 물가) 또는 강가 나루(사공 곁).</summary>
+        public static Vector3 SailDest(Step s) => s.ToIsle ? IslePos(IsleLand) : GridPos(DockGx, DockGy);
+        public const float DockGx = 2.35f + 3f / 48f, DockGy = 4.4f - 3f / 48f;
+
+        /// <summary>chase — 노 도둑(웹 13m/초·점마다 0.5초 = 걷기 8·달리기 17.6 사이) → 이 판 걷기 6·달리기 10 사이로 9m/초·0.5초.
+        /// 이만큼 안에 오면 달아나고(웹 14m), 이만큼 안이면 잡는다(웹 2.5m). 길 끝이면 놓친 것 — 처음 자리로.</summary>
+        public const float ChaseSpeed = 9f, ChasePause = 0.5f, ChaseStart = 12f, ChaseCatch = 2.5f;
+        /// <summary>도둑이 달리는 길(칸 좌표) — 강가 나루 동쪽 물가를 따라가다 마을 동쪽 들로 꺾어 북쪽으로(되돌아오지 않는다 — 걸어서 지름길로 가로채지 못하게, 첫 점 = 서 있는 곳).</summary>
+        public const float ThiefGx = 2.75f, ThiefGy = 4.3f;
+        public static readonly Vector2[] ThiefPath =
+        {
+            new Vector2(ThiefGx, ThiefGy), new Vector2(3.45f, 4.25f), new Vector2(4.15f, 4.3f), new Vector2(4.6f, 3.95f),
+            new Vector2(4.3f, 3.35f), new Vector2(4.35f, 2.7f), new Vector2(4.6f, 2.1f), new Vector2(4.25f, 1.6f),
+        };
+        public static Vector3 ThiefPoint(int i) => GridPos(ThiefPath[i].x, ThiefPath[i].y);
 
         public static float DefendHpMax(Vector3 altar) => Mathf.Round(DefendHits * DefendRefAtk * GoWorldMap.DangerMul(GoWorldMap.DangerOf(GoWorldMap.RegionAt(altar))));
 
@@ -111,6 +135,9 @@ namespace Saga.Go.Data
             public string BodyFrom;
             /// <summary>얼굴에 가면(나그네).</summary>
             public bool Mask;
+            /// <summary>109-14-19 금 간 가면(해솔) · 역참 사람 몸 이름(`FolkBuilder` — 도둑 = 나무꾼, 해솔 = 파수꾼).</summary>
+            public bool Crack;
+            public string FolkBody;
             /// <summary>있으면 이 칸들 동안에만 선다(나그네). 칸마다 자리가 다를 수 있다.</summary>
             public Spot[] Appear;
             /// <summary>늘 서되 이 칸들 동안엔 그 자리로 옮겨 선다(은비 — 5장 옛길·둘째 제단, 6장 봉우리).</summary>
@@ -129,10 +156,12 @@ namespace Saga.Go.Data
             /// <summary>6장 봉우리 고원 위 — Gx·Gy 대신 `Arena`(칸 가운데에서 m).</summary>
             public bool Peak;
             public Vector2 Arena;
+            /// <summary>109-14-19 바위섬 위 — Gx·Gy 대신 `Arena`(섬 가운데에서 m).</summary>
+            public bool Isle;
         }
 
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
-            a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
 
         public static readonly Npc[] Npcs =
         {
@@ -141,7 +170,8 @@ namespace Saga.Go.Data
                 IdleKey = "story.idle.elder", IdleKo = "먹구름이 걷히면 마을 잔치를 열어야지." },
             new Npc { Id = "ferryman", NameKey = "story.npc.ferryman", NameKo = "늙은 사공 버들", ShortKey = "story.short.ferryman", ShortKo = "버들",
                 Gx = 2.35f, Gy = 4.4f, BodyFrom = "npc_elder",
-                At = new[] { new Spot { Ch = 6, From = 8, To = 8, Gx = CapeGx - 6f / 48f, Gy = CapeGy - 6f / 48f } }, // 7장 — 곶에 노 저어 온다
+                At = new[] { new Spot { Ch = 6, From = 8, To = 8, Gx = CapeGx - 6f / 48f, Gy = CapeGy - 6f / 48f }, // 7장 — 곶에 노 저어 온다
+                    new Spot { Ch = 7, From = 5, To = 10, Isle = true, Arena = IsleFerry } }, // 8장 — 섬 북쪽에 배를 대고 기다린다
                 IdleKey = "story.idle.ferryman", IdleKo = "물 냄새가 요즘 영 비릿해." },
             new Npc { Id = "scholar", NameKey = "story.npc.scholar", NameKo = "떠돌이 학자 은비", ShortKey = "story.short.scholar", ShortKo = "은비",
                 Gx = 3.35f, Gy = 1.4f, BodyFrom = "npc_merchant",
@@ -161,9 +191,19 @@ namespace Saga.Go.Data
                     new Spot { Ch = 4, From = 6, To = 6, Gx = Altar2Gx + 7f / 48f, Gy = Altar2Gy + 5f / 48f },
                     new Spot { Ch = 5, From = 2, To = 4, Peak = true, Arena = ArenaWanderer },
                     new Spot { Ch = 6, From = 3, To = 6, Gx = CapeGx + 6f / 48f, Gy = CapeGy - 6f / 48f },
+                    new Spot { Ch = 7, From = 6, To = 9, Isle = true, Arena = IsleWanderer },
                 },
                 Path = new[] { new Vector2(WanderGx, WanderGy), new Vector2(3.0f, 5.0f), new Vector2(3.0f, 5.55f), new Vector2(3.0f, 6.2f), new Vector2(2.95f, 6.85f), new Vector2(2.55f, 7.2f) },
                 IdleKey = "story.idle.wanderer", IdleKo = "……" },
+            // 109-14-19 해솔(검은 가면의 참이름, 금 간 가면 — 섬에서 한 단계) · 노 도둑(쫓기 단계에만 — 자리는 달리는 곳)
+            new Npc { Id = "haesol", NameKey = "story.npc.haesol", NameKo = "검은 가면 해솔", ShortKey = "story.short.haesol", ShortKo = "해솔",
+                Gx = IsleGx, Gy = IsleGy, FolkBody = "Paladin", Mask = true, Crack = true,
+                Appear = new[] { new Spot { Ch = 7, From = 8, To = 8, Isle = true, Arena = IsleHaesol } },
+                IdleKey = "story.idle.haesol", IdleKo = "……" },
+            new Npc { Id = "thief", NameKey = "story.npc.thief", NameKo = "노 도둑", ShortKey = "story.short.thief", ShortKo = "도둑",
+                Gx = ThiefGx, Gy = ThiefGy, FolkBody = "PeasantMan",
+                Appear = new[] { new Spot { Ch = 7, From = 2, To = 2, Gx = ThiefGx, Gy = ThiefGy } },
+                IdleKey = "story.idle.thief", IdleKo = "헤헤, 못 잡지롱!" },
         };
 
         /// <summary>남쪽 다리 북쪽 머리(마을 남쪽 길 끝) — 4장 나그네가 강물을 보고 선 자리.</summary>
@@ -212,9 +252,19 @@ namespace Saga.Go.Data
             public float[] Dirs;
             /// <summary>Light — 이 단계부터 제단 몸이 선다(지키기·결투 동안에도 보이게, 없으면 그 단계부터).</summary>
             public int AltarFrom = -1;
+            /// <summary>109-14-19 — 바위섬 위(Kill·Seal, 자리 = 섬 가운데 + Arena) · Seal 차례(없으면 `SealOrder`) · Sail 이 섬으로 가나(아니면 나루로).</summary>
+            public bool Isle;
+            public string[] Order;
+            public bool ToIsle;
         }
 
-        public static Vector3 StepPos(Step s) => s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+        public static Vector3 StepPos(Step s) => s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+
+        /// <summary>석등 차례(해·달·별이 기본, 8장은 별·달·해).</summary>
+        public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
+
+        /// <summary>석등 가운데 — 5장 둘째 제단 또는 섬(8장).</summary>
+        public static Vector3 SealPos(Step s) => s.Isle ? IslePos(Vector2.zero) : GridPos(Altar2Gx, Altar2Gy);
 
         public const float BossHp = 6f, BossAtk = 1.5f, BossScale = 1.8f;
 
@@ -597,6 +647,79 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            new Chapter
+            {
+                Id = "ch8", NameKey = "story.ch8", NameKo = "제8장 · 바위섬의 다섯째 제단", Ar = 20,
+                Gold = 2500, Mats = new[] { 0, 3, 3, 4, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch8.s1", TextKo = "촌장에게 바위섬 이야기 듣기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch8.s1.l1", "사공이 본 바위섬 불빛 말이다, 오늘 새벽엔 더 밝아졌다는구나."),
+                            L("elder", "story.ch8.s1.l2", "바위섬엔 뱃길 말고는 갈 길이 없단다. 사공 버들에게 배를 부탁해 보렴."),
+                            Pick("story.ch8.s1.p", "나루로 갈게요.", "섬엔 뭐가 있죠?"),
+                            L("elder", "story.ch8.s1.l3", "옛사람들은 거기를 \"별이 쉬는 바위\"라 불렀지. 다섯째 제단이 있다면 거기일 게다."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "ferryman", TextKey = "story.ch8.s2", TextKo = "강가 나루의 사공에게 배를 부탁하기",
+                        Lines = new[]
+                        {
+                            L("ferryman", "story.ch8.s2.l1", "배? 태워 주고말고… 그런데 노가 없어졌다!"),
+                            L("ferryman", "story.ch8.s2.l2", "방금 웬 날랜 녀석이 노를 둘러메고 물가를 따라 내뺐어. 가면 무리 끄나풀인 게야."),
+                            Pick("story.ch8.s2.p", "제가 잡아 올게요.", "어느 쪽으로요?"),
+                            L("ferryman", "story.ch8.s2.l3", "걸어서는 어림없다, 그놈 발이 여간 빠른 게 아니야. 힘껏 달려야 잡는다!"),
+                        } },
+                    new Step { Type = StepType.Chase, Npc = "thief", TextKey = "story.ch8.s3", TextKo = "노 도둑을 쫓아가 붙잡기(달리기)" },
+                    new Step { Type = StepType.Talk, Npc = "ferryman", TextKey = "story.ch8.s4", TextKo = "사공에게 노 돌려주기",
+                        Lines = new[]
+                        {
+                            L("ferryman", "story.ch8.s4.l1", "허허, 그 날랜 놈을 잡았다고? 네 발도 보통이 아니구나."),
+                            L("ferryman", "story.ch8.s4.l2", "노만 있으면 바위섬쯤이야. 배에 오르거든 꽉 잡거라."),
+                        } },
+                    new Step { Type = StepType.Sail, Npc = "ferryman", ToIsle = true, TextKey = "story.ch8.s5", TextKo = "사공의 배를 타고 바위섬으로",
+                        Lines = new[]
+                        {
+                            L("ferryman", "story.ch8.s5.l1", "자, 간다! 물살이 세니 고개 숙이고 있거라."),
+                        } },
+                    new Step { Type = StepType.Kill, Isle = true, Arena = IsleSquad, Foes = new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost), F(FieldEnemy.Kind.StormWraith) }, TextKey = "story.ch8.s6", TextKo = "바위섬 꼭대기의 가면 무리 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch8.s7", TextKo = "섬의 나그네와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch8.s7.l1", "……먼저 와 있었다. 그자가 이 섬에 올 줄 알았지."),
+                            L("wanderer", "story.ch8.s7.l2", "이제 말해야겠군. 검은 가면의 참이름은 해솔 — 나와 같은 마을에서 자란 옛 동무다."),
+                            Pick("story.ch8.s7.p", "옛 동무라고요?", "왜 이런 짓을?"),
+                            L("wanderer", "story.ch8.s7.l3", "석등을 켜 보게. 별, 달, 해 — 해솔이 어릴 때 부르던 노래 차례다. 그 녀석이라면 이 차례로 잠갔을 게다."),
+                        } },
+                    new Step { Type = StepType.Seal, Isle = true, Order = new[] { "star", "moon", "sun" }, TextKey = "story.ch8.s8", TextKo = "다섯째 제단 석등을 해솔의 노래 차례대로 밝히기" },
+                    new Step { Type = StepType.Talk, Npc = "haesol", TextKey = "story.ch8.s9", TextKo = "석등 곁에 나타난 해솔과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haesol", "story.ch8.s9.l1", "……별, 달, 해. 그 노래를 아직 기억하는 사람이 있었나."),
+                            L("haesol", "story.ch8.s9.l2", "다섯 제단은 임금을 가둔 자물쇠다. 나는 그 자물쇠를 여는 열쇠고."),
+                            Pick("story.ch8.s9.p", "왜 임금을 깨우려는 거죠?", "나그네가 당신을 찾고 있어요."),
+                            L("haesol", "story.ch8.s9.l3", "알 것 없다. 먹구름 위 여섯째 자리에서 기다리마 — 거기서 끝을 보자."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch8.s10", TextKo = "나그네와 해솔이 남긴 말 되새기기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch8.s10.l1", "……여전히 제멋대로군. 가면 반쪽이 깨진 채로 가다니."),
+                            L("wanderer", "story.ch8.s10.l2", "먹구름 위 여섯째 자리라… 하늘에 뜬 섬 이야기를 들어 본 적이 있다. 학자가 알 게다."),
+                            L("wanderer", "story.ch8.s10.l3", "일단 뭍으로 돌아가세. 사공이 배를 대고 기다리고 있다."),
+                        } },
+                    new Step { Type = StepType.Sail, Npc = "ferryman", ToIsle = false, TextKey = "story.ch8.s11", TextKo = "사공의 배를 타고 강가 나루로 돌아가기",
+                        Lines = new[]
+                        {
+                            L("ferryman", "story.ch8.s11.l1", "다 끝났느냐? 해 지기 전에 돌아가자꾸나."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch8.s12", TextKo = "청하 촌장에게 알리기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch8.s12.l1", "해솔이라… 그 이름을 다시 듣게 될 줄이야. 어릴 적 나그네와 늘 붙어 다니던 아이였지."),
+                            L("elder", "story.ch8.s12.l2", "먹구름 위 여섯째 자리라니, 은비에게 물어보자꾸나. 오늘은 푹 쉬렴."),
+                            L("elder", "story.ch8.s12.l3", "바위섬까지 다녀온 수고비다. 마을 사람들이 조금씩 모았단다."),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -709,13 +832,15 @@ namespace Saga.Go.Data
             radius = 0f;
             switch (s.Type)
             {
-                case StepType.Talk: radius = TalkR; return NpcPos(s.Npc);
+                case StepType.Talk:
+                case StepType.Sail: radius = TalkR; return NpcPos(s.Npc);
+                case StepType.Chase: return StoryState.ChasePos ?? NpcPos(s.Npc); // 109-14-19 달리는 도둑
                 case StepType.Follow: return NpcPos(s.Npc);
                 case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : GridPos(s.Gx, s.Gy);
                 case StepType.Boss: return TestMapData.WorldPos(FieldSpawner.GuardianGx, FieldSpawner.GuardianGy);
                 case StepType.Domain: return SitePos(s.Site);
                 case StepType.Light: radius = LightR; return StepPos(s);
-                case StepType.Seal: return GridPos(Altar2Gx, Altar2Gy);
+                case StepType.Seal: return SealPos(s);
                 case StepType.Climb: return DuelPeak.Top;
                 case StepType.Gather:
                 {

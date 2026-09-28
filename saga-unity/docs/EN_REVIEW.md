@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **2964** (표 2909 · 코드 55) — go 1120 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **215**
-- 사람 검수 **0/2964** — 순위1 0/265 · 순위2 0/1986 · 순위3 0/713
+- 짝 **3021** (표 2966 · 코드 55) — go 1177 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **222**
+- 사람 검수 **0/3021** — 순위1 0/265 · 순위2 0/2043 · 순위3 0/713
 
 ## 검수 순서
 
@@ -26,7 +26,7 @@
 
 없음.
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 215)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 222)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -49,6 +49,7 @@
 | 5→13 | story | `bp.sig.hwanggeon_chief` | Netherworld Talisman Array |
 | 5→13 | dungeon | `enemy.boss` | Yellow Turban Bandit Chief |
 | 12→24 | go | `story.ch7` | Chapter 7 · The Fourth Altar on the Riverside Cape |
+| 30→53 | go | `story.ch8.s9.l3` | That's none of your concern. I'll be waiting at the sixth seat above the storm clouds — we'll finish this there. |
 | 4→11 | dungeon | `enemy.miniboss` | Yellow Turban Assassin |
 | 5→13 | dungeon | `saga.snowfort.title` | Giant of the Mountain Fort |
 | 3→9 | forest | `finish.ondol` | Ondol Heated Floor |
@@ -61,4 +62,3 @@
 | 6→13 | go | `domain.site.d_school` | Riverside Old Schoolhouse |
 | 27→48 | go | `story.ch4.s7.l1` | A mask fragment? Let me see… this pattern is exactly the one carved at the bottom of the inscription! |
 | 4→11 | dungeon | `landmark.bandit` | Black Wind Stronghold |
-| 4→11 | story | `bp.boss.bandit_chief` | Mountain Bandit Chief |

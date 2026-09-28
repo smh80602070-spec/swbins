@@ -16,11 +16,14 @@ namespace Saga.EditorTools
     /// 3장(청하란 셋 — 다른 채집물 안 셈·요리·불도깨비 우두머리(몸 ×1.8·체력 ×6)·잠든 무덤만·잔치 마당) · 4장(나그네가 둘째 단계부터 섬·따라가기 멀면 섬·
     /// 가까우면 걷고 길 끝에서 넘김·가면 졸개 빙·암) · 글 흘러나옴(한 번 = 줄 전체)·고른 대답 한 줄·대화 카메라 ·
     /// boss 이미 쓰러짐이면 넘김 · 혼잣말 · 대화 중 `Talking` · 세이브 v28 왕복·v27 로드(1장 처음).
+    /// 109-14-19 8장: 섬(강 칸 가운데·석등·무리·인물 자리가 섬 위)·도둑 길(걷는 칸·평균 빠르기가 걷기와 달리기 사이) · 멀면 안 달아남 ·
+    /// 걸어서 쫓으면 놓치고 처음 자리 · 달리면 잡음 · 배(대화 뒤 섬 북쪽·돌아오는 배는 나루) · 섬 무리는 섬 안에서만 · 별·달·해 석등 · 해솔 금 간 가면.
     /// 옛 진단은 `StoryState.OffForTest` 로 돌고 여기서만 켠다. 끝나면 진행·수호장·돈·레벨·재료·요리·세이브 파일·자리를 되돌린다.
     /// </summary>
     public static class PlaytestGoStory
     {
         private static string _tag;
+        private static string _ch8 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -64,6 +67,7 @@ namespace Saga.EditorTools
                 CheckChapter5(pc, field, ui);
                 CheckChapter6(fc, pc, field, ui);
                 CheckChapter7(pc, field, ui);
+                CheckChapter8(pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -93,7 +97,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - 인물 넷·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -103,17 +107,18 @@ namespace Saga.EditorTools
         {
             GoStory.StepType.Talk => 'T', GoStory.StepType.Go => 'G', GoStory.StepType.Boss => 'B', GoStory.StepType.Kill => 'K',
             GoStory.StepType.Light => 'L', GoStory.StepType.Domain => 'D', GoStory.StepType.Gather => 'H', GoStory.StepType.Cook => 'C',
-            GoStory.StepType.Seal => 'S', GoStory.StepType.Climb => 'M', GoStory.StepType.Duel => 'X', GoStory.StepType.Defend => 'E', _ => 'F',
+            GoStory.StepType.Seal => 'S', GoStory.StepType.Climb => 'M', GoStory.StepType.Duel => 'X', GoStory.StepType.Defend => 'E',
+            GoStory.StepType.Chase => 'R', GoStory.StepType.Sail => 'V', _ => 'F',
         };
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 4 || GoStory.Chapters.Length != 7) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 6 || GoStory.Chapters.Length != 8) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 } };
-            for (int c = 0; c < 7; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 } };
+            for (int c = 0; c < 8; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -123,9 +128,10 @@ namespace Saga.EditorTools
             foreach (var c in GoStory.Chapters)
                 foreach (var st in c.Steps)
                 {
-                    if ((st.Type == GoStory.StepType.Talk || st.Type == GoStory.StepType.Follow) && GoStory.NpcIndex(st.Npc) < 0) Fail("인물 없는 단계 " + st.TextKo);
-                    if (st.Type == GoStory.StepType.Talk && (st.Lines == null || st.Lines.Length == 0)) Fail("대화 줄 없음 " + st.TextKo);
-                    if (st.Type == GoStory.StepType.Talk)
+                    bool talky = st.Type == GoStory.StepType.Talk || st.Type == GoStory.StepType.Sail;
+                    if ((talky || st.Type == GoStory.StepType.Follow || st.Type == GoStory.StepType.Chase) && GoStory.NpcIndex(st.Npc) < 0) Fail("인물 없는 단계 " + st.TextKo);
+                    if (talky && (st.Lines == null || st.Lines.Length == 0)) Fail("대화 줄 없음 " + st.TextKo);
+                    if (talky)
                         foreach (var l in st.Lines)
                             if (l.IsPick ? l.PickKo.Length != 2 : GoStory.NpcIndex(l.Who) < 0) Fail("대화 줄 " + st.TextKo);
                     if (st.Type == GoStory.StepType.Kill && (st.Foes == null || st.Foes.Length == 0)) Fail("임무 적 없음 " + st.TextKo);
@@ -183,6 +189,23 @@ namespace Saga.EditorTools
                 if (GoWorldMap.RegionAt(s.pos) != s.region) Fail($"{s.name} 지역 {GoWorldMap.RegionAt(s.pos)} ≠ {s.region}");
             }
             for (float d = 0f; d < GoStory.PathLength(wander); d += 4f) if (!Walkable(GoStory.PathPos(wander, d))) Fail($"나그네 길 {d:0}m 가 못 걷는 칸");
+            // 109-14-19 섬 — 강 칸 한가운데(둘레 3m 까지 물), 석등·무리·인물·배 닿는 곳이 섬 위 · 나루는 뭍 · 도둑 길은 걷는 칸
+            Vector3 isle = GoStory.IslePos(Vector2.zero);
+            for (int k = 0; k < 8; k++)
+            {
+                float a = k * Mathf.PI / 4f;
+                if (!TestMapData.IsWater(TestMapData.TileAt(TestMapData.WorldToGrid(isle + new Vector3(Mathf.Sin(a), 0f, Mathf.Cos(a)) * (GoStory.IsleR + 3f)).gx,
+                    TestMapData.WorldToGrid(isle + new Vector3(Mathf.Sin(a), 0f, Mathf.Cos(a)) * (GoStory.IsleR + 3f)).gy))) Fail("섬 둘레가 물이 아니다");
+            }
+            for (int i = 0; i < 3; i++) if (!GoStory.OnIsle(GoStory.SealLampPos(isle, i))) Fail("섬 석등이 섬 밖");
+            foreach (var off in new[] { GoStory.IsleLand, GoStory.IsleFerry, GoStory.IsleWanderer, GoStory.IsleHaesol, GoStory.IsleSquad })
+                if (!GoStory.OnIsle(GoStory.IslePos(off))) Fail($"섬 자리 {off} 가 섬 밖");
+            if (!GoStory.OnIsle(GoStory.IslePos(GoStory.IsleSquad) + new Vector3(GoStory.KillSpread, 0f, 0f))) Fail("섬 무리 둘레가 섬 밖");
+            if (!Walkable(GoStory.GridPos(GoStory.DockGx, GoStory.DockGy))) Fail("나루가 뭍이 아니다");
+            for (int i = 0; i < GoStory.ThiefPath.Length; i++) if (!Walkable(GoStory.ThiefPoint(i))) Fail($"도둑 길 {i} 가 못 걷는 칸");
+            var isleBody = field.Isle;
+            if (isleBody == null || isleBody.GetComponentInChildren<MeshCollider>() == null) Fail("바위섬 몸·충돌체가 없다");
+            else if (Mathf.Abs(FolkWalker.Grounded(isle + Vector3.up * 2f).y - isle.y) > 0.3f) Fail($"섬 윗면 {FolkWalker.Grounded(isle + Vector3.up * 2f).y:0.00} ≠ {isle.y:0.00}");
             // 임무 적·제단은 들판 무리(끈 45m 안에 섞이면 싸움이 뒤엉킨다)·숨은 터 입구 카드(11m)에서 떨어져
             var squads = new[] { (GoStory.SquadGx, GoStory.SquadGy), (GoStory.ChiefGx, GoStory.ChiefGy), (GoStory.FeastGx, GoStory.FeastGy), (GoStory.MaskSquadGx, GoStory.MaskSquadGy),
                 (GoStory.RoadSquadGx, GoStory.RoadSquadGy), (GoStory.Altar2SquadGx, GoStory.Altar2SquadGy), (GoStory.CapeGx, GoStory.CapeGy) };
@@ -718,10 +741,116 @@ namespace Saga.EditorTools
             Talk(pc, ui, "ferryman", "7장 곶 버들");
             int gold = GoldState.Gold;
             Talk(pc, ui, "elder", "7장 끝 누리");
-            if (!StoryState.Done || GoldState.Gold != gold + 2250) Fail("7장 끝·보상");
+            if (StoryState.Ch != 7 || !StoryState.Locked || GoldState.Gold != gold + 2250) Fail("7장 끝·보상·8장 잠김(여정 20)");
+            ui.Refresh();
+            field.Refresh();
+            if (!ui.TrackShown || field.Pillar.activeSelf) Fail("7장 끝 — 8장 잠김 줄·기둥");
+        }
+
+        // ---- 8장(109-14-19) ------------------------------------------------------------------------------------
+
+        /// <summary>쫓는 이를 speed 로 도둑 쪽에 곧장 달리게 한다(모퉁이를 가로질러도) — 잡았으면 true, 놓쳤으면(처음 자리로) false.</summary>
+        private static bool RunAfter(StoryField field, ref Vector3 me, float speed)
+        {
+            const float dt = 0.05f;
+            bool ran = false;
+            for (float t = 0f; t < 60f; t += dt)
+            {
+                Vector3 to = field.ChasePos - me;
+                to.y = 0f;
+                if (to.magnitude > 0.01f) me += to.normalized * Mathf.Min(speed * dt, to.magnitude);
+                field.ChaseTick(me, dt);
+                if (StoryState.Current == null || StoryState.Current.Type != GoStory.StepType.Chase) return true;
+                if (field.ChaseRunning) ran = true;
+                else if (ran) return false;
+            }
+            Fail($"{speed}m/초 쫓기가 60초에 안 끝남");
+            return false;
+        }
+
+        private static void CheckChapter8(PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch8 = "8장 중단";
+            PlayerStats.Restore(20, 0);
+            field.Refresh();
+            Talk(pc, ui, "elder", "8장 누리");
+            Talk(pc, ui, "ferryman", "8장 버들");
+            Expect(7, 2, "8장 버들 뒤");                                                        // → 2 chase
+            field.Refresh();
+            if (!field.NpcShown("thief")) Fail("도둑이 안 섰다");
+            // 평균 빠르기 — 걷기 6 과 달리기 10 사이
+            float len = 0f;
+            for (int i = 1; i < GoStory.ThiefPath.Length; i++) len += GoStory.Flat(GoStory.ThiefPoint(i - 1), GoStory.ThiefPoint(i));
+            float avg = len / (len / GoStory.ChaseSpeed + GoStory.ChasePause * (GoStory.ThiefPath.Length - 2));
+            if (avg <= 6f || avg >= 10f) Fail($"도둑 평균 {avg:0.0}m/초");
+            Vector3 t0 = GoStory.ThiefPoint(0);
+            field.ChaseTick(t0 + new Vector3(0f, 0f, 30f), 0.1f);
+            if (field.ChaseRunning || GoStory.Flat(field.ChasePos, t0) > 0.01f) Fail("멀리서 도둑이 달아남");
+            ui.Refresh();
+            if (!ui.TrackText.Contains(GoLocalization.T("story.chase_idle", " (가까이 가면 달아난다)").Trim())) Fail("쫓기 전 추적 줄 " + ui.TrackText);
+            Vector3 me = t0 + new Vector3(-10f, 0f, 0f);
+            bool caught = RunAfter(field, ref me, 6f);                                         // 걷기
+            if (caught || StoryState.StepIndex != 2 || field.ChaseRunning || GoStory.Flat(field.ChasePos, t0) > 0.01f) Fail($"걸어서 쫓았는데 {(caught ? "잡음" : "처음 자리가 아님")}");
+            me = t0 + new Vector3(-10f, 0f, 0f);
+            field.ChaseTick(me, 0.05f);
+            ui.Refresh();
+            if (!field.ChaseRunning || !ui.TrackText.Contains(GoLocalization.T("story.chase_track", "노 도둑 {0}m — 달려라!").Split('{')[0])) Fail("달아나는 추적 줄 " + ui.TrackText);
+            if (!RunAfter(field, ref me, 10f)) Fail("달렸는데 못 잡음");                        // 달리기
+            Expect(7, 3, "도둑 잡음");
+            if (StoryState.ChasePos != null) Fail("잡은 뒤 도둑 자리가 남음");
+            Talk(pc, ui, "ferryman", "8장 노 돌려주기");
+            Talk(pc, ui, "ferryman", "8장 배 타기");                                            // sail → 섬
+            Expect(7, 5, "배 뒤");
+            Vector3 isle = GoStory.IslePos(Vector2.zero);
+            if (!GoStory.OnIsle(pc.transform.position)) Fail($"배가 섬에 안 닿음 {GoStory.Flat(pc.transform.position, isle):0}m");
+            field.Refresh();
+            if (!GoStory.OnIsle(field.NpcBody("ferryman").transform.position)) Fail("섬에 버들이 안 옴");
+            // 섬 무리 — 섬 위에 서고 섬 안에서만 걷는다
+            pc.Teleport(isle + new Vector3(0f, 0.4f, -8f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 4) { Fail($"섬 무리 {field.Squad.Count} ≠ 4"); return; }
+            foreach (var e in field.Squad)
+            {
+                if (!GoStory.OnIsle(e.transform.position) || Mathf.Abs(e.transform.position.y - isle.y) > 1f) Fail($"섬 무리가 섬 위에 없다 {e.transform.position}");
+                if (e.CanStep(isle + new Vector3(0f, 0f, GoStory.IsleR + 3f)) || !e.CanStep(isle + new Vector3(2f, 0f, 2f))) Fail("섬 무리가 물로 걷거나 섬에서 못 걷는다");
+            }
+            foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) Kill(e);
+            Expect(7, 6, "섬 무리");
+            field.Refresh();
+            if (!field.NpcShown("wanderer") || !GoStory.OnIsle(field.NpcBody("wanderer").transform.position)) Fail("섬에 나그네가 안 섰다");
+            Talk(pc, ui, "wanderer", "8장 섬 나그네");
+            Expect(7, 7, "섬 나그네 뒤");                                                        // → 7 seal 별·달·해
+            field.Refresh();
+            if (field.SealCenterOf(7) == null || !field.SealCenterOf(7).gameObject.activeSelf || field.SealLampOf(7, 0).Lit) Fail("섬 석등이 꺼진 채 안 섰다");
+            if (!field.SealCenter.Lit) Fail("5장 석등이 꺼짐");
+            int Lamp(string id) => System.Array.IndexOf(GoStory.SealLayout, id);
+            Vector3 L(string id) => field.SealLampOf(7, Lamp(id)).transform.position;
+            Pulse(L("sun"), 1f);                                                                // 틀림(첫째는 별)
+            if (StoryState.Progress != 0) Fail("섬 — 해가 먼저 켜짐");
+            Pulse(L("star"), 1f);
+            Pulse(L("moon"), 1f);
+            if (StoryState.Progress != 2 || !field.SealLampOf(7, Lamp("moon")).Lit) Fail("섬 — 별·달");
+            Pulse(L("sun"), 1f);
+            Expect(7, 8, "별·달·해");                                                           // → 8 talk 해솔
+            field.Refresh();
+            var hs = field.NpcBody("haesol");
+            if (!field.NpcShown("haesol") || hs == null || FindDeep(hs.transform, "Crack") == null || !GoStory.OnIsle(hs.transform.position)) Fail("해솔 — 섬·금 간 가면");
+            Talk(pc, ui, "haesol", "8장 해솔");
+            field.Refresh();
+            if (field.NpcShown("haesol")) Fail("해솔이 대화 뒤에도 섰다");
+            Talk(pc, ui, "wanderer", "8장 해솔 뒤 나그네");
+            Talk(pc, ui, "ferryman", "8장 돌아오는 배");                                        // sail → 나루
+            Expect(7, 11, "돌아오는 배 뒤");
+            if (GoStory.Flat(pc.transform.position, GoStory.GridPos(GoStory.DockGx, GoStory.DockGy)) > 3f) Fail("돌아오는 배가 나루에 안 닿음");
+            field.Refresh();
+            if (GoStory.OnIsle(field.NpcBody("ferryman").transform.position)) Fail("버들이 섬에 남음");
+            int gold = GoldState.Gold;
+            Talk(pc, ui, "elder", "8장 끝 누리");
+            if (!StoryState.Done || GoldState.Gold != gold + 2500) Fail("8장 끝·보상");
             ui.Refresh();
             field.Refresh();
             if (ui.TrackShown || field.Pillar.activeSelf) Fail("다 끝났는데 추적 줄·기둥");
+            _ch8 = $"8장 도둑 평균 {avg:0.0}m/초·걸어선 놓침·달려서 잡음·배 섬/나루·섬 무리 넷(섬 안만)·별·달·해·해솔 금 간 가면·보상";
         }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------

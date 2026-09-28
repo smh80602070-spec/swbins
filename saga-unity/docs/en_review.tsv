@@ -1054,7 +1054,55 @@
 2	go	story.ch7.s9.p.a	다섯째 제단?	The fifth altar?		
 2	go	story.ch7.s9.p.b	누가 켰을까요?	Who lit it?		
 2	go	story.ch7.win	가면 반쪽이 떨어졌다 — 금 간 검은 가면이 물속으로 몸을 던졌다. 졸개도 흩어진다	Half the mask fell away — the Cracked Black Mask threw itself into the water. The minions scatter too		
+2	go	story.ch8	제8장 · 바위섬의 다섯째 제단	Chapter 8 · The Fifth Altar on the Rock Isle		
+2	go	story.ch8.s1	촌장에게 바위섬 이야기 듣기	Hear about the Rock Isle from the elder		
+2	go	story.ch8.s1.l1	사공이 본 바위섬 불빛 말이다, 오늘 새벽엔 더 밝아졌다는구나.	The light the ferryman saw on the Rock Isle — they say it burned even brighter at dawn today.		
+2	go	story.ch8.s1.l2	바위섬엔 뱃길 말고는 갈 길이 없단다. 사공 버들에게 배를 부탁해 보렴.	There is no way to the Rock Isle but by boat. Ask Ferryman Beodeul for a ride.		
+2	go	story.ch8.s1.l3	옛사람들은 거기를 "별이 쉬는 바위"라 불렀지. 다섯째 제단이 있다면 거기일 게다.	The old folk called it "the rock where the stars rest." If there is a fifth altar, it will be there.		
+2	go	story.ch8.s1.p.a	나루로 갈게요.	I'll head to the landing.		
+2	go	story.ch8.s1.p.b	섬엔 뭐가 있죠?	What's on the isle?		
+2	go	story.ch8.s10	나그네와 해솔이 남긴 말 되새기기	Mull over Haesol's words with the traveler		
+2	go	story.ch8.s10.l1	……여전히 제멋대로군. 가면 반쪽이 깨진 채로 가다니.	…As headstrong as ever. Walking off with half his mask broken.		
+2	go	story.ch8.s10.l2	먹구름 위 여섯째 자리라… 하늘에 뜬 섬 이야기를 들어 본 적이 있다. 학자가 알 게다.	The sixth seat above the storm clouds… I have heard tales of an island floating in the sky. The scholar will know.		
+2	go	story.ch8.s10.l3	일단 뭍으로 돌아가세. 사공이 배를 대고 기다리고 있다.	Let us head back to shore for now. The ferryman is waiting with the boat.		
+2	go	story.ch8.s11	사공의 배를 타고 강가 나루로 돌아가기	Take the ferryman's boat back to the river landing		
+2	go	story.ch8.s11.l1	다 끝났느냐? 해 지기 전에 돌아가자꾸나.	All done? Let us get back before the sun sets.		
+2	go	story.ch8.s12	청하 촌장에게 알리기	Report to the elder of Cheongha		
+2	go	story.ch8.s12.l1	해솔이라… 그 이름을 다시 듣게 될 줄이야. 어릴 적 나그네와 늘 붙어 다니던 아이였지.	Haesol… I never thought I would hear that name again. He and the traveler were inseparable as children.		
+2	go	story.ch8.s12.l2	먹구름 위 여섯째 자리라니, 은비에게 물어보자꾸나. 오늘은 푹 쉬렴.	The sixth seat above the storm clouds… let's ask Eunbi. Rest well tonight.		
+2	go	story.ch8.s12.l3	바위섬까지 다녀온 수고비다. 마을 사람들이 조금씩 모았단다.	This is for your trip to the Rock Isle. The villagers each chipped in a little.		
+2	go	story.ch8.s2	강가 나루의 사공에게 배를 부탁하기	Ask the ferryman at the river landing for a boat		
+2	go	story.ch8.s2.l1	배? 태워 주고말고… 그런데 노가 없어졌다!	A boat? Of course I'll take you… but my oar is gone!		
+2	go	story.ch8.s2.l2	방금 웬 날랜 녀석이 노를 둘러메고 물가를 따라 내뺐어. 가면 무리 끄나풀인 게야.	Some quick-footed rascal just ran off along the bank with it on his shoulder. One of the masked gang's errand boys, no doubt.		
+2	go	story.ch8.s2.l3	걸어서는 어림없다, 그놈 발이 여간 빠른 게 아니야. 힘껏 달려야 잡는다!	You won't catch him walking — he's fast on his feet. You'll have to run for all you're worth!		
+2	go	story.ch8.s2.p.a	제가 잡아 올게요.	I'll catch him.		
+2	go	story.ch8.s2.p.b	어느 쪽으로요?	Which way did he go?		
+2	go	story.ch8.s3	노 도둑을 쫓아가 붙잡기(달리기)	Chase down the oar thief (run)		
+2	go	story.ch8.s4	사공에게 노 돌려주기	Return the oar to the ferryman		
+2	go	story.ch8.s4.l1	허허, 그 날랜 놈을 잡았다고? 네 발도 보통이 아니구나.	Ha, you caught that quick little rascal? Your feet are something else too.		
+2	go	story.ch8.s4.l2	노만 있으면 바위섬쯤이야. 배에 오르거든 꽉 잡거라.	With my oar back, the Rock Isle is nothing. Hold on tight once you're aboard.		
+2	go	story.ch8.s5	사공의 배를 타고 바위섬으로	Take the ferryman's boat to the Rock Isle		
+2	go	story.ch8.s5.l1	자, 간다! 물살이 세니 고개 숙이고 있거라.	Off we go! The current is strong, so keep your head down.		
+2	go	story.ch8.s6	바위섬 꼭대기의 가면 무리 물리치기	Drive off the masked gang atop the Rock Isle		
+2	go	story.ch8.s7	섬의 나그네와 이야기하기	Talk to the traveler on the isle		
+2	go	story.ch8.s7.l1	……먼저 와 있었다. 그자가 이 섬에 올 줄 알았지.	…I got here first. I knew he would come to this isle.		
+2	go	story.ch8.s7.l2	이제 말해야겠군. 검은 가면의 참이름은 해솔 — 나와 같은 마을에서 자란 옛 동무다.	I suppose I must tell you now. The Black Mask's true name is Haesol — an old friend who grew up in my village.		
+2	go	story.ch8.s7.l3	석등을 켜 보게. 별, 달, 해 — 해솔이 어릴 때 부르던 노래 차례다. 그 녀석이라면 이 차례로 잠갔을 게다.	Light the stone lanterns. Star, moon, sun — the order of the song Haesol sang as a child. That is how he would have locked it.		
+2	go	story.ch8.s7.p.a	옛 동무라고요?	An old friend?		
+2	go	story.ch8.s7.p.b	왜 이런 짓을?	Why is he doing this?		
+2	go	story.ch8.s8	다섯째 제단 석등을 해솔의 노래 차례대로 밝히기	Light the fifth altar's lanterns in the order of Haesol's song		
+2	go	story.ch8.s9	석등 곁에 나타난 해솔과 이야기하기	Talk to Haesol, who appeared by the lanterns		
+2	go	story.ch8.s9.l1	……별, 달, 해. 그 노래를 아직 기억하는 사람이 있었나.	…Star, moon, sun. So someone still remembers that song.		
+2	go	story.ch8.s9.l2	다섯 제단은 임금을 가둔 자물쇠다. 나는 그 자물쇠를 여는 열쇠고.	The five altars are the locks that hold the King. And I am the key that opens them.		
+2	go	story.ch8.s9.l3	알 것 없다. 먹구름 위 여섯째 자리에서 기다리마 — 거기서 끝을 보자.	That's none of your concern. I'll be waiting at the sixth seat above the storm clouds — we'll finish this there.		
+2	go	story.ch8.s9.p.a	왜 임금을 깨우려는 거죠?	Why wake the King?		
+2	go	story.ch8.s9.p.b	나그네가 당신을 찾고 있어요.	The traveler is looking for you.		
 2	go	story.chapter_done	{0} 끝 — {1}	{0} complete — {1}		
+2	go	story.chase_caught	🏃 노 도둑을 붙잡았다 — 노를 되찾았다	🏃 You caught the oar thief — the oar is back		
+2	go	story.chase_idle	 (가까이 가면 달아난다)	 (he runs when you get close)		
+2	go	story.chase_lost	💨 놓쳤다 — 도둑이 처음 자리로 숨어들었다. 다시 가까이 가면 달아난다	💨 Lost him — the thief slipped back to where he started. Get close and he will run again		
+2	go	story.chase_run	🏃 도둑이 노를 메고 달아난다 — 달려라!	🏃 The thief bolts with the oar — run!		
+2	go	story.chase_track	노 도둑 {0}m — 달려라!	Oar thief {0}m — run!		
 2	go	story.climbed	봉우리 꼭대기 — 고원 아래 나그네가 보인다	The peak's summit — the traveler is visible on the plateau below		
 2	go	story.defend_broken	{0}이 무너졌다 — 무리가 흩어진다. {1}초 뒤 처음부터	{0} crumbled — the horde scatters. Starting over in {1}s		
 2	go	story.defend_half	{0}이 흔들린다 — 절반이 깎였다!	{0} is shaking — half of it is gone!		
@@ -1071,7 +1119,9 @@
 2	go	story.gold	금 +{0}	Gold +{0}		
 2	go	story.idle.elder	먹구름이 걷히면 마을 잔치를 열어야지.	Once the stormclouds clear, we'll hold a village feast.		
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
+2	go	story.idle.haesol	……	……		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
+2	go	story.idle.thief	헤헤, 못 잡지롱!	Heh heh, can't catch me!		
 2	go	story.idle.wanderer	……	……		
 2	go	story.joined	{0} 합류	{0} joined		
 2	go	story.list_close	닫는다 (O)	Close (O)		
@@ -1081,18 +1131,25 @@
 2	go	story.next	다음 ▶ (F)	Next ▶ (F)		
 2	go	story.npc.elder	청하 촌장 누리	Elder Nuri of Cheongha		
 2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
+2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
+2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	story.reward	장 끝 보상 {0}	Chapter reward {0}		
+2	go	story.sail_dock	⛵ 배가 강가 나루에 닿았다	⛵ The boat reaches the river landing		
+2	go	story.sail_isle	⛵ 사공의 배가 물살을 가른다 — 바위섬에 닿았다	⛵ The ferryman's boat cuts through the current — you reach the Rock Isle		
 2	go	story.seal.moon	달	Moon		
 2	go	story.seal.star	별	Star		
 2	go	story.seal.sun	해	Sun		
 2	go	story.seal_done	해·달·별 — 봉인이 풀렸다	Sun, moon, star — the seal is broken		
+2	go	story.seal_done_order	{0} — 봉인이 풀렸다	{0} — the seal is broken		
 2	go	story.seal_lit	{0} 석등에 불이 붙었다 ({1}/3)	The {0} lantern caught fire ({1}/3)		
 2	go	story.seal_wrong	차례가 틀렸다 — 석등이 모두 꺼졌다	Wrong order — all the lanterns went out		
 2	go	story.short.elder	누리	Nuri		
 2	go	story.short.ferryman	버들	Beodeul		
+2	go	story.short.haesol	해솔	Haesol		
 2	go	story.short.scholar	은비	Eunbi		
+2	go	story.short.thief	도둑	Thief		
 2	go	story.short.wanderer	나그네	Traveler		
 2	go	story.squad	먹구름 졸개가 나타났다	Stormcloud minions appeared		
 2	go	story.state_done	끝	Complete		

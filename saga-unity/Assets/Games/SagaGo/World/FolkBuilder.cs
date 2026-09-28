@@ -33,7 +33,8 @@ namespace Saga.Go.World
                 for (int k = 0; k < PerWaypoint; k++) Spawn(w, k);
         }
 
-        private GameObject BodyModel(string body)
+        /// <summary>몸 이름 → 모델(109-14-19 이야기 인물 노 도둑·해솔도 빌린다).</summary>
+        public GameObject BodyModel(string body)
         {
             for (int i = 0; i < bodyNames.Length && i < bodyModels.Length; i++)
                 if (bodyNames[i] == body) return bodyModels[i];

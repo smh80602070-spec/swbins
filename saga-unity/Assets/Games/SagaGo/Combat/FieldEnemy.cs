@@ -269,6 +269,7 @@ namespace Saga.Go.Combat
             bool arena = StoryFoe && !CanStandOn(Home); // 고원 위에 선 이야기 적(6장 검은 가면·졸개)
             if (!arena) return CanStandOn(p);
             if (!SameCell(p, Home)) return false;
+            if (GoStory.OnIsle(Home)) return GoStory.OnIsle(p); // 109-14-19 바위섬 위 이야기 적은 섬 안에서만
             var (gx, gy) = TestMapData.WorldToGrid(p);
             return !TestMapData.HasPeak(gx, gy) || Flat(p - TestMapData.PeakBase(gx, gy)).magnitude > TestMapData.PeakBaseRadius + 1.5f;
         }

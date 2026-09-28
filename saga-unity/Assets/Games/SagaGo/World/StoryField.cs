@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using Saga.Go.Combat;
 using Saga.Go.Data;
+using Saga.Go.Player;
 using Saga.Go.UI;
 
 namespace Saga.Go.World
@@ -30,8 +31,9 @@ namespace Saga.Go.World
         private float _wait, _clock;
         // light 단계마다 옛 제단 하나("장_단계") · 5장 둘째 제단(가운데 + 둘레 석등 셋, 이름표) · 6장 결투 2단계
         private readonly Dictionary<string, ElementTorch> _altars = new Dictionary<string, ElementTorch>();
-        private ElementTorch _sealCenter;
-        private readonly ElementTorch[] _sealLamps = new ElementTorch[3];
+        // 석등 틀 한 벌 = seal 단계 하나("장_단계" — 5장 둘째 제단·8장 바위섬)
+        private readonly Dictionary<string, ElementTorch> _sealCenters = new Dictionary<string, ElementTorch>();
+        private readonly Dictionary<string, ElementTorch[]> _sealSets = new Dictionary<string, ElementTorch[]>();
         private readonly List<Transform> _labels = new List<Transform>();
         private bool _duelP2;
 
@@ -43,8 +45,21 @@ namespace Saga.Go.World
             foreach (var kv in _altars) if (kv.Key.StartsWith(ch + "_")) return kv.Value;
             return null;
         }
-        public ElementTorch SealLamp(int i) => _sealLamps[i];
-        public ElementTorch SealCenter => _sealCenter;
+        /// <summary>5장 둘째 제단 석등(옛 진단) · 장마다(109-14-19 8장 바위섬).</summary>
+        public ElementTorch SealLamp(int i) => SealLampOf(4, i);
+        public ElementTorch SealCenter => SealCenterOf(4);
+        public ElementTorch SealLampOf(int ch, int i)
+        {
+            foreach (var kv in _sealSets) if (kv.Key.StartsWith(ch + "_")) return kv.Value[i];
+            return null;
+        }
+        public ElementTorch SealCenterOf(int ch)
+        {
+            foreach (var kv in _sealCenters) if (kv.Key.StartsWith(ch + "_")) return kv.Value;
+            return null;
+        }
+        /// <summary>109-14-19 바위섬(강 한가운데, Play 때 짓는다).</summary>
+        public GameObject Isle { get; private set; }
         public bool DuelPhase2 => _duelP2;
         public IReadOnlyList<FieldEnemy> Squad => _squad;
         public GameObject NpcBody(string id) => _npcs.TryGetValue(id, out var g) ? g : null;
@@ -70,27 +85,18 @@ namespace Saga.Go.World
 
         private void Start()
         {
+            var stone = WorldMapBuilder.Instance != null ? WorldMapBuilder.Instance.StoneMaterial : null;
+            BuildIsle(stone); // 109-14-19 — 섬 위 인물·석등이 섬 윗면에 앉도록 먼저
             SpawnNpcs();
             BuildPillar();
-            var stone = WorldMapBuilder.Instance != null ? WorldMapBuilder.Instance.StoneMaterial : null;
             for (int c = 0; c < GoStory.Chapters.Length; c++)
                 for (int i = 0; i < GoStory.Chapters[c].Steps.Length; i++)
                     if (GoStory.Chapters[c].Steps[i].Type == GoStory.StepType.Light)
                         _altars[$"{c}_{i}"] = ElementTorch.Spawn(FolkWalker.Grounded(GoStory.StepPos(GoStory.Chapters[c].Steps[i]) + Vector3.up * 0.5f), GoElement.Pyro, transform, stone, $"StoryAltar_{c}_{i}");
-            // 5장 둘째 제단 — 해 = 화 빛(주황) · 달 = 빙 빛(옅은 푸름) · 별 = 암 빛(금빛)
-            Vector3 a2 = FolkWalker.Grounded(GoStory.GridPos(GoStory.Altar2Gx, GoStory.Altar2Gy) + Vector3.up * 0.5f);
-            _sealCenter = ElementTorch.Spawn(a2, GoElement.Pyro, transform, stone, "StorySeal");
-            for (int i = 0; i < 3; i++)
-            {
-                string id = GoStory.SealLayout[i];
-                var el = id == "sun" ? GoElement.Pyro : id == "moon" ? GoElement.Cryo : GoElement.Geo;
-                _sealLamps[i] = ElementTorch.Spawn(FolkWalker.Grounded(GoStory.SealLampPos(a2, i) + Vector3.up * 0.5f), el, transform, stone, "StorySeal_" + id);
-                var label = new GameObject("Label");
-                label.transform.SetParent(_sealLamps[i].transform, false);
-                label.transform.localPosition = new Vector3(0f, 5.2f, 0f);
-                Saga.Core.SagaWorldText.Add(label, GoStory.SealName(id), 4.5f, GoElements.ColorOf(el));
-                _labels.Add(label.transform);
-            }
+            // 석등 틀 — 5장 둘째 제단·8장 바위섬. 해 = 화 빛(주황) · 달 = 빙 빛(옅은 푸름) · 별 = 암 빛(금빛)
+            for (int c = 0; c < GoStory.Chapters.Length; c++)
+                for (int i = 0; i < GoStory.Chapters[c].Steps.Length; i++)
+                    if (GoStory.Chapters[c].Steps[i].Type == GoStory.StepType.Seal) BuildSeal(c, i, GoStory.Chapters[c].Steps[i], stone);
             FieldEnemy.Killed += OnKilled;
             FieldCombat.ElementPulse += OnPulse;
             DomainField.Cleared += OnDomainCleared;
@@ -116,7 +122,9 @@ namespace Saga.Go.World
                 root.transform.position = FolkWalker.Grounded(GoStory.NpcPos(n.Id) + Vector3.up * 0.5f);
                 Transform src = villagers != null ? villagers.transform.Find("Villager_" + n.BodyFrom) : null;
                 bool any = false;
-                if (src != null)
+                if (n.FolkBody != null && FolkBuilder.Instance != null) // 109-14-19 노 도둑 = 나무꾼 몸 · 해솔 = 파수꾼 몸
+                    any = NpcIdle.SpawnRigged(FolkBuilder.Instance.BodyModel(n.FolkBody), root.transform, CharacterVisual.HumanHeight) != null;
+                else if (src != null)
                 {
                     for (int i = 0; i < src.childCount; i++)
                     {
@@ -128,8 +136,9 @@ namespace Saga.Go.World
                         any = true;
                     }
                 }
-                if (!any) CharacterVisual.SpawnFallbackCapsule(root.transform, n.Id == "ferryman" ? new Color(0.3f, 0.4f, 0.53f) : n.Id == "wanderer" ? new Color(0.22f, 0.22f, 0.29f) : new Color(0.55f, 0.42f, 0.6f));
-                if (n.Mask) AddMask(root.transform);
+                if (!any) CharacterVisual.SpawnFallbackCapsule(root.transform, n.Id == "ferryman" ? new Color(0.3f, 0.4f, 0.53f) : n.Id == "wanderer" ? new Color(0.22f, 0.22f, 0.29f)
+                    : n.Id == "haesol" ? new Color(0.15f, 0.13f, 0.18f) : n.Id == "thief" ? new Color(0.35f, 0.29f, 0.23f) : new Color(0.55f, 0.42f, 0.6f));
+                if (n.Mask) AddMask(root.transform, n.Crack);
                 // 마을 쪽(마을 역참)을 본다
                 Vector3 look = GoWorldMap.WaypointPos(GoWorldMap.Waypoints[0]) - root.transform.position;
                 look.y = 0f;
@@ -238,6 +247,8 @@ namespace Saga.Go.World
             var fc = FieldCombat.Instance;
             if (fc == null) return;
             Follow(fc.transform.position, Time.deltaTime);
+            ChaseTick(fc.transform.position, Time.deltaTime); // 109-14-19
+            IsleAssist(fc);
             DuelTick();
             DefendTick(fc.transform.position, Time.deltaTime);
             _wait -= Time.deltaTime;
@@ -311,7 +322,7 @@ namespace Saga.Go.World
             foreach (var n in GoStory.Npcs)
             {
                 if (n.Existing || !NpcShown(n.Id)) continue; // 누리는 옛 촌장이 제 말을 한다
-                if (st != null && (st.Type == GoStory.StepType.Talk || st.Type == GoStory.StepType.Follow) && st.Npc == n.Id) continue;
+                if (st != null && (st.Type == GoStory.StepType.Talk || st.Type == GoStory.StepType.Follow || st.Type == GoStory.StepType.Sail || st.Type == GoStory.StepType.Chase) && st.Npc == n.Id) continue;
                 if (GoStory.Flat(p, GoStory.NpcPos(n.Id)) > GoStory.IdleR) continue;
                 if (_lastIdle.TryGetValue(n.Id, out float last) && Time.time - last < GoStory.IdleGap) continue;
                 _lastIdle[n.Id] = Time.time;
@@ -397,18 +408,21 @@ namespace Saga.Go.World
         /// 켠 수는 `StoryState.Progress`(저장 안 함). 셋이면 넘긴다.</summary>
         private void SealPulse(Vector3 center, float radius)
         {
+            var st = StoryState.Current;
+            if (!_sealSets.TryGetValue($"{StoryState.Ch}_{StoryState.StepIndex}", out var lamps)) return;
+            string[] order = GoStory.OrderOf(st);
             int best = -1;
             float bd = float.MaxValue;
             for (int i = 0; i < 3; i++)
             {
-                var lamp = _sealLamps[i];
+                var lamp = lamps[i];
                 if (lamp == null || lamp.Lit) continue;
                 float d = GoStory.Flat(center, lamp.transform.position);
                 if (d <= radius + GoStory.LightR && d < bd) { bd = d; best = i; }
             }
             if (best < 0) return;
             string id = GoStory.SealLayout[best];
-            if (id != GoStory.SealOrder[StoryState.Progress])
+            if (id != order[StoryState.Progress])
             {
                 StoryState.Progress = 0;
                 RefreshSeal();
@@ -417,36 +431,55 @@ namespace Saga.Go.World
             }
             StoryState.Progress++;
             RefreshSeal();
-            if (StoryState.Progress >= GoStory.SealOrder.Length)
+            if (StoryState.Progress >= order.Length)
             {
-                Toast(GoLocalization.T("story.seal_done", "해·달·별 — 봉인이 풀렸다"), 3.5f);
+                Toast(order == GoStory.SealOrder ? GoLocalization.T("story.seal_done", "해·달·별 — 봉인이 풀렸다")
+                    : string.Format(GoLocalization.T("story.seal_done_order", "{0} — 봉인이 풀렸다"), string.Join("·", System.Array.ConvertAll(order, GoStory.SealName))), 3.5f);
                 StoryState.Advance();
             }
             else Toast(string.Format(GoLocalization.T("story.seal_lit", "{0} 석등에 불이 붙었다 ({1}/3)"), GoStory.SealName(id), StoryState.Progress), 2.5f);
         }
 
-        /// <summary>석등 불 — 차례에서 앞선 것만 켜진다(seal 단계를 넘겼으면 모두).</summary>
-        private void RefreshSeal()
+        /// <summary>석등 틀 한 벌 — 가운데 + 둘레 셋(이름표).</summary>
+        private void BuildSeal(int c, int i, GoStory.Step st, Material stone)
         {
-            bool shown = !StoryState.OffForTest && StepReached(4, SealStepIndex);
-            bool past = StepReached(4, SealStepIndex + 1);
-            if (_sealCenter != null) { _sealCenter.gameObject.SetActive(shown); _sealCenter.SetLit(past); }
-            for (int i = 0; i < 3; i++)
+            string key = $"{c}_{i}";
+            Vector3 a2 = FolkWalker.Grounded(GoStory.SealPos(st) + Vector3.up * 0.5f);
+            string nm = c == 4 ? "StorySeal" : "StorySeal" + key; // 5장은 옛 이름 그대로
+            _sealCenters[key] = ElementTorch.Spawn(a2, GoElement.Pyro, transform, stone, nm);
+            var lamps = new ElementTorch[3];
+            for (int k = 0; k < 3; k++)
             {
-                if (_sealLamps[i] == null) continue;
-                _sealLamps[i].gameObject.SetActive(shown);
-                int order = System.Array.IndexOf(GoStory.SealOrder, GoStory.SealLayout[i]);
-                _sealLamps[i].SetLit(past || (StoryState.Ch == 4 && StoryState.StepIndex == SealStepIndex && order < StoryState.Progress));
+                string id = GoStory.SealLayout[k];
+                var el = id == "sun" ? GoElement.Pyro : id == "moon" ? GoElement.Cryo : GoElement.Geo;
+                lamps[k] = ElementTorch.Spawn(FolkWalker.Grounded(GoStory.SealLampPos(a2, k) + Vector3.up * 0.5f), el, transform, stone, nm + "_" + id);
+                var label = new GameObject("Label");
+                label.transform.SetParent(lamps[k].transform, false);
+                label.transform.localPosition = new Vector3(0f, 5.2f, 0f);
+                Saga.Core.SagaWorldText.Add(label, GoStory.SealName(id), 4.5f, GoElements.ColorOf(el));
+                _labels.Add(label.transform);
             }
+            _sealSets[key] = lamps;
         }
 
-        private static int SealStepIndex
+        /// <summary>석등 불 — 차례에서 앞선 것만 켜진다(seal 단계를 넘겼으면 모두). 그 단계에 닿기 전엔 안 선다.</summary>
+        private void RefreshSeal()
         {
-            get
+            foreach (var kv in _sealSets)
             {
-                var steps = GoStory.Chapters[4].Steps;
-                for (int i = 0; i < steps.Length; i++) if (steps[i].Type == GoStory.StepType.Seal) return i;
-                return steps.Length;
+                var parts = kv.Key.Split('_');
+                int c = int.Parse(parts[0]), i = int.Parse(parts[1]);
+                bool shown = !StoryState.OffForTest && StepReached(c, i);
+                bool past = StepReached(c, i + 1);
+                if (_sealCenters.TryGetValue(kv.Key, out var center) && center != null) { center.gameObject.SetActive(shown); center.SetLit(past); }
+                var order = GoStory.OrderOf(GoStory.Chapters[c].Steps[i]);
+                for (int k = 0; k < 3; k++)
+                {
+                    if (kv.Value[k] == null) continue;
+                    kv.Value[k].gameObject.SetActive(shown);
+                    int o = System.Array.IndexOf(order, GoStory.SealLayout[k]);
+                    kv.Value[k].SetLit(past || (StoryState.Ch == c && StoryState.StepIndex == i && o < StoryState.Progress));
+                }
             }
         }
 
@@ -638,7 +671,7 @@ namespace Saga.Go.World
                 bool shown = !StoryState.OffForTest && GoStory.Shown(kv.Key, StoryState.Ch, StoryState.StepIndex);
                 kv.Value.SetActive(shown);
                 // 장·단계마다 옮겨 선다(따라가기 동안은 Follow 가 옮긴다)
-                bool walking = st != null && st.Type == GoStory.StepType.Follow && st.Npc == kv.Key;
+                bool walking = st != null && (st.Type == GoStory.StepType.Follow || (st.Type == GoStory.StepType.Chase && _chaseKey == SquadKey)) && st.Npc == kv.Key;
                 if (shown && !walking)
                 {
                     Vector3 want = GoStory.NpcPos(kv.Key);
@@ -663,13 +696,140 @@ namespace Saga.Go.World
             if (DialogueLabel.Instance != null && !string.IsNullOrEmpty(text)) DialogueLabel.Instance.Show(text, sec);
         }
 
-        /// <summary>진단용 — 혼잣말 쿨다운·임무 적을 비운다.</summary>
+        /// <summary>진단용 — 혼잣말 쿨다운·임무 적·쫓기를 비운다.</summary>
         public void ResetForTest()
         {
             _lastIdle.Clear();
             LastIdleNpc = null;
             ClearSquad();
+            _chaseKey = null;
+            StoryState.ChasePos = null;
             Refresh();
+        }
+
+        // ---- 109-14-19 바위섬 — 강 칸 한가운데 둥근 바위(돌 몸 + 풀 윗면 + 가장자리 바위 셋). 헤엄쳐 가장자리에 오면 섬 위로 올린다 ----
+
+        private void BuildIsle(Material stone)
+        {
+            Isle = new GameObject("StoryIsle");
+            Isle.transform.SetParent(transform, false);
+            Vector3 c = GoStory.IslePos(Vector2.zero);
+            float bottom = TestMapData.RiverBedHeight - 0.5f, h = c.y - bottom, r = GoStory.IsleR;
+            var rock = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            rock.name = "IsleRock";
+            DestroyImmediate(rock.GetComponent<Collider>()); // 원통 기본 충돌체는 캡슐이라 윗면이 둥글다
+            rock.transform.SetParent(Isle.transform, false);
+            rock.transform.position = new Vector3(c.x, bottom + h * 0.5f, c.z);
+            rock.transform.localScale = new Vector3(r * 2f, h * 0.5f, r * 2f);
+            rock.AddComponent<MeshCollider>().sharedMesh = rock.GetComponent<MeshFilter>().sharedMesh;
+            if (stone != null) rock.GetComponent<MeshRenderer>().sharedMaterial = stone;
+            var grass = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryIsleGrass (generated)", color = new Color(0.3f, 0.4f, 0.19f) };
+            grass.SetFloat("_Smoothness", 0.08f);
+            var top = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            top.name = "IsleGrass";
+            DestroyImmediate(top.GetComponent<Collider>());
+            top.transform.SetParent(Isle.transform, false);
+            top.transform.position = c + Vector3.up * 0.02f;
+            top.transform.localScale = new Vector3((r - 1.4f) * 2f, 0.04f, (r - 1.4f) * 2f);
+            top.GetComponent<MeshRenderer>().sharedMaterial = grass;
+            foreach (float deg in new[] { 60f, 180f, 300f }) // 석등(0·120·240°) 사이 가장자리
+            {
+                var b = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                b.name = "IsleBoulder";
+                DestroyImmediate(b.GetComponent<Collider>());
+                b.transform.SetParent(Isle.transform, false);
+                float a = deg * Mathf.Deg2Rad;
+                b.transform.position = c + new Vector3(Mathf.Sin(a), 0.4f, -Mathf.Cos(a)) * (r - 1.6f);
+                b.transform.rotation = Quaternion.Euler(12f, deg, 7f);
+                b.transform.localScale = new Vector3(3.4f, 2.3f, 2.9f);
+                if (stone != null) b.GetComponent<MeshRenderer>().sharedMaterial = stone;
+            }
+            Physics.SyncTransforms();
+        }
+
+        private PlayerController _pc;
+
+        /// <summary>헤엄쳐 섬 가장자리(2.5m 안)에 오면 섬 위로 — 물속 돌 벽은 오를 턱이 없다(배를 놓쳤거나 쓰러져 마을로 돌아간 뒤에도 닿게).</summary>
+        private void IsleAssist(FieldCombat fc)
+        {
+            if (_pc == null) _pc = fc.GetComponent<PlayerController>();
+            if (_pc == null || _pc.Mode != PlayerController.MoveMode.Swim) return;
+            Vector3 c = GoStory.IslePos(Vector2.zero), d = _pc.transform.position - c;
+            d.y = 0f;
+            if (d.magnitude > GoStory.IsleR + 2.5f || d.magnitude < 0.1f) return;
+            _pc.Teleport(c + d.normalized * (GoStory.IsleR - 2.5f) + Vector3.up * 0.4f);
+        }
+
+        // ---- 109-14-19 쫓기 — 노 도둑(웹 chase). 가까이 오면 달아나고, 길 점마다 숨 고르기, 길 끝이면 놓친 것(처음 자리로). 저장 안 함 ----
+        private string _chaseKey;
+        private int _chaseI;
+        private Vector3 _chasePos;
+        private bool _chaseRun;
+        private float _chasePause;
+        public bool ChaseRunning => _chaseKey != null && _chaseKey == SquadKey && _chaseRun;
+        public int ChaseIndex => _chaseI;
+        public Vector3 ChasePos => _chasePos;
+
+        /// <summary>한 박자(프레임마다 · 진단도 부른다) — 잡혔나 먼저 본다.</summary>
+        public void ChaseTick(Vector3 p, float dt)
+        {
+            var st = StoryState.Current;
+            if (st == null || st.Type != GoStory.StepType.Chase)
+            {
+                if (_chaseKey != null) { _chaseKey = null; StoryState.ChasePos = null; }
+                return;
+            }
+            if (StoryState.Talking) return;
+            if (_chaseKey != SquadKey) { _chaseKey = SquadKey; _chaseI = 0; _chasePos = GoStory.ThiefPoint(0); _chaseRun = false; _chasePause = 0f; }
+            StoryState.ChasePos = _chasePos;
+            float d = GoStory.Flat(p, _chasePos);
+            if (d <= GoStory.ChaseCatch)
+            {
+                _chaseKey = null;
+                StoryState.ChasePos = null;
+                PlaceThief(Vector3.zero, false);
+                Toast(GoLocalization.T("story.chase_caught", "🏃 노 도둑을 붙잡았다 — 노를 되찾았다"), 3f);
+                StoryState.Advance();
+                return;
+            }
+            if (!_chaseRun)
+            {
+                if (d <= GoStory.ChaseStart) { _chaseRun = true; _chasePause = 0f; Toast(GoLocalization.T("story.chase_run", "🏃 도둑이 노를 메고 달아난다 — 달려라!"), 2.5f); }
+                PlaceThief(p - _chasePos, false);
+                return;
+            }
+            if (_chasePause > 0f) { _chasePause = Mathf.Max(0f, _chasePause - dt); PlaceThief(_chasePos - p, false); return; }
+            Vector3 next = GoStory.ThiefPoint(_chaseI + 1), to = next - _chasePos;
+            to.y = 0f;
+            float nd = to.magnitude, step = GoStory.ChaseSpeed * dt;
+            if (nd <= step) { _chasePos = next; _chaseI++; _chasePause = GoStory.ChasePause; }
+            else _chasePos += to / nd * step;
+            if (_chaseI >= GoStory.ThiefPath.Length - 1)
+            {
+                _chaseI = 0; _chasePos = GoStory.ThiefPoint(0); _chaseRun = false; _chasePause = 0f;
+                Toast(GoLocalization.T("story.chase_lost", "💨 놓쳤다 — 도둑이 처음 자리로 숨어들었다. 다시 가까이 가면 달아난다"), 3.5f);
+            }
+            StoryState.ChasePos = _chasePos;
+            PlaceThief(to, _chaseRun && _chasePause <= 0f);
+        }
+
+        private void PlaceThief(Vector3 face, bool running)
+        {
+            if (!_npcs.TryGetValue("thief", out var body)) return;
+            body.transform.position = FolkWalker.Grounded(_chasePos + Vector3.up * 0.5f);
+            face.y = 0f;
+            if (face.sqrMagnitude > 0.0001f) body.transform.rotation = Quaternion.LookRotation(face);
+            var anim = body.GetComponentInChildren<Animator>();
+            if (anim != null && anim.runtimeAnimatorController != null && HasParam(anim, "Speed")) anim.SetFloat("Speed", running ? 1f : 0f);
+        }
+
+        // ---- 109-14-19 배 — sail 대화가 끝나면 그 자리로(웹 키보드 판 순간이동 길, 화면 전환 없이 알림) ----
+        public static void Sail(GoStory.Step st)
+        {
+            var fc = FieldCombat.Instance;
+            var pc = fc != null ? fc.GetComponent<PlayerController>() : null;
+            if (pc != null) pc.Teleport(FolkWalker.Grounded(GoStory.SailDest(st) + Vector3.up * 1.5f) + Vector3.up * 0.1f);
+            Toast(st.ToIsle ? GoLocalization.T("story.sail_isle", "⛵ 사공의 배가 물살을 가른다 — 바위섬에 닿았다") : GoLocalization.T("story.sail_dock", "⛵ 배가 강가 나루에 닿았다"), 3.5f);
         }
     }
 }

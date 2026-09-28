@@ -14,6 +14,8 @@ namespace Saga.Go.Data
         /// <summary>109-14-13 — follow 단계에서 인물이 걸은 거리(m) · gather 단계에서 모은 수. 저장 안 함(불러오면 그 단계 처음), 단계가 바뀌면 0.</summary>
         public static float FollowDist { get; set; }
         public static int Progress { get; set; }
+        /// <summary>109-14-19 chase — 달아나는 도둑 자리(쫓는 동안만, 저장 안 함 — 불러오면 처음 자리).</summary>
+        public static UnityEngine.Vector3? ChasePos { get; set; }
 
         /// <summary>대화 창이 열려 있나 — `FieldCombat`·`FieldEnemy` 가 본다.</summary>
         public static bool Talking { get; set; }
@@ -40,6 +42,7 @@ namespace Saga.Go.Data
             StepIndex++;
             FollowDist = 0f;
             Progress = 0;
+            ChasePos = null;
             string reward = null;
             if (StepIndex >= ch.Steps.Length)
             {
@@ -80,6 +83,7 @@ namespace Saga.Go.Data
             Talking = false;
             FollowDist = 0f;
             Progress = 0;
+            ChasePos = null;
             Changed?.Invoke();
         }
     }

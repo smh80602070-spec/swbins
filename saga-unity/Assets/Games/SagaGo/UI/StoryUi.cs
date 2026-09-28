@@ -158,7 +158,7 @@ namespace Saga.Go.UI
         public static GoStory.Step NearTalk(Vector3 p)
         {
             var st = StoryState.Current;
-            if (st == null || st.Type != GoStory.StepType.Talk) return null;
+            if (st == null || (st.Type != GoStory.StepType.Talk && st.Type != GoStory.StepType.Sail)) return null; // 109-14-19 sail = 대화 뒤 배
             return GoStory.Flat(p, GoStory.NpcPos(st.Npc)) <= GoStory.TalkR ? st : null;
         }
 
@@ -204,7 +204,9 @@ namespace Saga.Go.UI
             _talkLine++;
             if (_talkLine >= _talkStep.Lines.Length)
             {
+                var done = _talkStep;
                 CloseTalk();
+                if (done.Type == GoStory.StepType.Sail) StoryField.Sail(done); // 109-14-19 배로 그 자리에
                 StoryState.Advance();
                 return true;
             }
@@ -287,6 +289,10 @@ namespace Saga.Go.UI
             StoryField.Target(out Vector3 t, out _);
             string text = GoStory.StepText(st);
             if (st.Type == GoStory.StepType.Gather) text += $" {StoryState.Progress}/{st.Count}";
+            if (st.Type == GoStory.StepType.Chase) // 109-14-19
+                text = StoryField.Instance != null && StoryField.Instance.ChaseRunning
+                    ? string.Format(GoLocalization.T("story.chase_track", "노 도둑 {0}m — 달려라!"), Mathf.RoundToInt(GoStory.Flat(p, StoryField.Instance.ChasePos)))
+                    : text + GoLocalization.T("story.chase_idle", " (가까이 가면 달아난다)");
             float dist = GoStory.Flat(p, t);
             string line = string.Format(GoLocalization.T("story.track", "◆ {0} — {1} · {2}m"), GoStory.ChapterName(ch), text, Mathf.RoundToInt(dist));
             if (st.Type == GoStory.StepType.Follow && dist > GoStory.FollowLost) line += GoLocalization.T("story.follow_lost", " · 너무 멀어졌다");
