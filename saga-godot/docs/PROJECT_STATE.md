@@ -15,11 +15,11 @@
 
 **공통(saga_core)**: `data/characters.gd`(인물 105, id 불변)·`data/pets.gd`(신수 11) · `ui/toast.gd`·`ui/virtual_joystick.gd`·`ui/goal_board.gd`+`ui/session_card.gd`(101-4, 목표판 3줄·마무리 카드, 다섯 판 전부 붙음)·`ui/duel_hud.gd` · `combat_feel.gd`(101-3, 다섯 판 끝, 09-20㉒ 타격음 배선, 09-21 UI 사운드(`ui()`) 신설+`session_card.gd` "닫기" 배선) · `world/world_curve_material.gd`+`shaders/curved_*`(FOREST 구면) · `world/density_report.gd`(104-5, 발견 밀도, FOREST는 반경 10m) · `shaders/cel_toon.gdshader`+`cel_shader_apply.gd`(66-2/102-3, hit_flash+아웃라인 next_pass 자동) · `world/glb_utils.gd::fit_height()`(102-1, 여전히 미호출). 렌더러 Forward+/Mobile 이중(66-1, `env_pc.tres`·`env_mobile.tres`, 102-2 값).
 
-## 현재 작업 — 중단 지점(09-28, 다음 세션 이어서)
+## 현재 작업 — 중단 지점(09-28 끝, 다음 세션 이어서)
 
-- **그래픽 먼저**(09-28 사용자 — 09-27 "0원 값" 원인 넷 다). 끝: 풀잎 밭·빛깔(ACES)·절벽(안쪽으로 파인 각진 면)·산 봉우리(턱 뒤)·신상 조각상·코드 오두막·마을 채우기·숲 세 배(+합친 메시 LOD)·밤 화면(달빛·별·창/등롱 불)·가로 UI 1.5배·표식 축소·눈 결(HISTORY 09-28 ①~⑥). 고칠 때마다 `probe_shots.gd` 전후 촬영.
-  - 다음 후보: 인물 몸(char-forge) · 원소 스킬·전투 이펙트 · 물(바다·강) 셰이더. 이야기 장(106 표)은 멈춤(11부 끝).
-  - 원래 있던 점검 실패: QMAP 3·WQ 1(HEAD 에서도 같음, 원인 미조사).
+- **그래픽 먼저**(09-28 사용자 — 09-27 "0원 값" 원인 넷 다). 끝(HISTORY 09-28 ①~⑩, 커밋 5f52525·801afc89·937e1789·91f82e20): 풀잎 밭·ACES 빛깔·절벽/봉우리·신상·오두막 마을·숲 세 배(LOD)·밤 화면·가로 UI·물/모래·절벽 색·베기 궤적/타격 불꽃·원소 스킬/폭발 이펙트. 고칠 때마다 `probe_shots.gd` 창 모드 전후 촬영(할 일 night·swing·fxring).
+  - **다음 = 적 몬스터 모습**(번개살쾡이 등이 보라 캡슐 이어 붙인 모양, world/creature_builder.gd). 그다음 후보: 인물 몸(char-forge) · 먼 절벽 돌 텍스처.
+  - 원래 있던 점검 실패: QMAP 3·WQ 1(HEAD 에서도 같음). 흔들림: COMBAT 증발·과부하, STORY talk_face(단독 재실행은 통과).
 
 ## 다음 작업 (우선순위)
 
