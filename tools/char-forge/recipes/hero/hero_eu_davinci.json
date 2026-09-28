@@ -39,6 +39,9 @@
   "head-diamond": 0.303
  },
  "hair": "short04/short04.mhclo",
+ "tints": {
+  "hair": "=#b89868"
+ },
  "clothes": [
   "wdg_mycenaean_tunic/wdg_mycenaean_tunic.mhclo",
   "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"

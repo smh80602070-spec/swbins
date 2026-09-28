@@ -39,6 +39,9 @@
   "head-diamond": 0.297
  },
  "hair": "short01/short01.mhclo",
+ "tints": {
+  "hair": "#6a4428"
+ },
  "_garments": [
   "hauberk@e8e2d0,a19423"
  ],

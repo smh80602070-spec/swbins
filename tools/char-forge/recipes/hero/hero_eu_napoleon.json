@@ -40,6 +40,9 @@
   "chin-width-incr": 0.25
  },
  "hair": "short02/short02.mhclo",
+ "tints": {
+  "hair": "=#8a6a48"
+ },
  "_garments": [
   "officer_coat@30498c"
  ],

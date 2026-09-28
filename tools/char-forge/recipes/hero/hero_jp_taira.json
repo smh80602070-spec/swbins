@@ -40,6 +40,9 @@
   "chin-width-incr": 0.25
  },
  "hair": "ponytail01/ponytail01.mhclo",
+ "tints": {
+  "hair": "#2a1f18"
+ },
  "_garments": [
   "samguk_armor@822c28"
  ],

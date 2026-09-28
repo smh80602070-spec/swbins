@@ -39,6 +39,9 @@
   "head-rectangular": 0.278
  },
  "hair": "short03/short03.mhclo",
+ "tints": {
+  "hair": "#4a3322"
+ },
  "_garments": [
   "kaftan@384b76,d8d0bc"
  ],

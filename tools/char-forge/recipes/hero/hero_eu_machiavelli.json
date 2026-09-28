@@ -39,6 +39,9 @@
   "head-square": 0.423
  },
  "hair": "short01/short01.mhclo",
+ "tints": {
+  "hair": "#4a3322"
+ },
  "_garments": [
   "kaftan@643127,d8d0bc"
  ],

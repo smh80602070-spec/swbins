@@ -343,6 +343,19 @@ def face_targets(hid, role, female):
     return t
 
 
+# 긴 머리 열한 명이 한 모양(long01)이었다(09-28) — CC0 커뮤니티 머리(mh_hair01, 항목마다 CC0 확인)로 흩는다
+LONG_ALT = ['long01', 'o4saken_long01', 'elvs_french_braid_variation', 'elvs_reverse_french_braid_bun', 'rehmanpolanski_hair_bun_brown']
+HAIR_EAST = ['#1a1512', '#211812', '#2a1f18']
+HAIR_WEST = ['#2a1f18', '#4a3322', '#6a4428', '#7a3a22', '=#b89868', '=#8a6a48']
+
+
+def hair_tint(reg, age, hs):
+    """머리 색 — 동쪽 세 나라 검정~짙은 밤색, 서쪽·세계 밤색·적갈·금발, 나이 들면 희끗(염색 = 무늬는 두고 색만)."""
+    if age >= 0.72:
+        return '=#9a968e' if (hs >> 13) & 1 else '=#b8b4ac'
+    return pick(HAIR_EAST if reg in EAST_REG else HAIR_WEST, hs, 6)
+
+
 def vary(c, h):
     """같은 세력 사람이 같은 한 색으로 서지 않게(09-28 인물 105 렌더 — 토가 셋·관복 넷이 머리만 달랐다) — 해시로 밝기 ±18%·색상 ±10°."""
     import colorsys
@@ -568,7 +581,10 @@ def make(h):
         'targets': face_targets(h['id'], role, female),
     }
     if hair:
+        if hair == 'long01':
+            hair = LONG_ALT[__import__('hashlib').sha256(('hair:' + h['id']).encode()).digest()[0] % len(LONG_ALT)]   # fnv 비트는 다섯 칸에 몰렸다
         r['hair'] = f'{hair}/{hair}.mhclo'
+        r.setdefault('tints', {})['hair'] = hair_tint(reg, age, hs)
     if specs:
         r['_garments'] = specs   # garments.py 로 먼저 지을 공방 옷(--garments 가 모아 준다)
     if mh:

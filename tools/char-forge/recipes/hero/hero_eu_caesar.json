@@ -39,6 +39,9 @@
   "head-round": 0.252
  },
  "hair": "short03/short03.mhclo",
+ "tints": {
+  "hair": "=#b89868"
+ },
  "_garments": [
   "toga@f6f4ee,8a2a24"
  ],

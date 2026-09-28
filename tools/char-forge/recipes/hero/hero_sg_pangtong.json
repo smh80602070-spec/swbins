@@ -38,7 +38,10 @@
   "eyebrows-trans-down": 0.25,
   "head-oval": 0.496
  },
- "hair": "long01/long01.mhclo",
+ "hair": "o4saken_long01/o4saken_long01.mhclo",
+ "tints": {
+  "hair": "#211812"
+ },
  "_garments": [
   "dallyeong@457d44,302a24"
  ],

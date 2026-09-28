@@ -39,6 +39,9 @@
   "head-oval": 0.388
  },
  "hair": "short02/short02.mhclo",
+ "tints": {
+  "hair": "#1a1512"
+ },
  "_garments": [
   "officer_coat@2f3035"
  ],

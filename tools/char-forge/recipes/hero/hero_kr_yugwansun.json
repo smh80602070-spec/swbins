@@ -40,6 +40,9 @@
   "chin-width-decr": 0.2
  },
  "hair": "braid01/braid01.mhclo",
+ "tints": {
+  "hair": "#2a1f18"
+ },
  "_garments": [
   "hanbok_f@1a1a1c,f4f1e8"
  ],

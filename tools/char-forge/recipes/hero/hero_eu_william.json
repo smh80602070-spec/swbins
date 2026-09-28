@@ -39,6 +39,9 @@
   "head-invertedtriangular": 0.531
  },
  "hair": "short04/short04.mhclo",
+ "tints": {
+  "hair": "=#8a6a48"
+ },
  "_garments": [
   "hauberk@e8e2d0,6a5444"
  ],

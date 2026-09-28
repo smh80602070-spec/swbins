@@ -41,6 +41,9 @@
   "cheek-bones-incr": 0.2
  },
  "hair": "short04/short04.mhclo",
+ "tints": {
+  "hair": "#2a1f18"
+ },
  "_garments": [
   "gusoku@ad4328,1f2226"
  ],

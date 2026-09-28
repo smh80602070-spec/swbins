@@ -39,6 +39,9 @@
   "head-oval": 0.532
  },
  "hair": "short01/short01.mhclo",
+ "tints": {
+  "hair": "=#b89868"
+ },
  "_garments": [
   "kaftan@823424,d8d0bc"
  ],

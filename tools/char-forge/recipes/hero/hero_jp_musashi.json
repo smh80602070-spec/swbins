@@ -39,6 +39,9 @@
   "head-round": 0.53
  },
  "hair": "ponytail01/ponytail01.mhclo",
+ "tints": {
+  "hair": "#1a1512"
+ },
  "_garments": [
   "hakama@e6dfcc,4d453a"
  ],

@@ -40,7 +40,10 @@
   "chin-width-decr": 0.2,
   "chin-prominent-decr": 0.15
  },
- "hair": "long01/long01.mhclo",
+ "hair": "elvs_reverse_french_braid_bun/elvs_reverse_french_braid_bun.mhclo",
+ "tints": {
+  "hair": "#4a3322"
+ },
  "_garments": [
   "gown@9f303d,e2c070"
  ],

@@ -41,6 +41,9 @@
   "cheek-bones-incr": 0.2
  },
  "hair": "short03/short03.mhclo",
+ "tints": {
+  "hair": "#2a1f18"
+ },
  "_garments": [
   "officer_coat@2e3257"
  ],

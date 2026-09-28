@@ -40,6 +40,9 @@
   "chin-prominent-decr": 0.15
  },
  "hair": "bob01/bob01.mhclo",
+ "tints": {
+  "hair": "#211812"
+ },
  "_garments": [
   "hanbok_f@a8323a,efd98c"
  ],

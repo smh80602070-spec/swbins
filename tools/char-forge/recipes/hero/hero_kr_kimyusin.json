@@ -40,6 +40,9 @@
   "chin-width-incr": 0.25
  },
  "hair": "ponytail01/ponytail01.mhclo",
+ "tints": {
+  "hair": "#1a1512"
+ },
  "_garments": [
   "chalgap@a5892d"
  ],

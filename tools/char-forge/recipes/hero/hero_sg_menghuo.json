@@ -40,6 +40,9 @@
   "cheek-bones-incr": 0.2
  },
  "hair": "short04/short04.mhclo",
+ "tints": {
+  "hair": "#1a1512"
+ },
  "kitbash": [
   {
    "part": "loincloth",

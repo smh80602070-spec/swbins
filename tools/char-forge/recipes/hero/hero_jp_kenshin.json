@@ -41,6 +41,9 @@
   "cheek-bones-incr": 0.2
  },
  "hair": "ponytail01/ponytail01.mhclo",
+ "tints": {
+  "hair": "#211812"
+ },
  "_garments": [
   "gusoku@29425d,302a24"
  ],

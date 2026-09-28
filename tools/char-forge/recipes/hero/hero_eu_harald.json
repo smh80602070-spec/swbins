@@ -41,6 +41,9 @@
   "cheek-bones-incr": 0.2
  },
  "hair": "short04/short04.mhclo",
+ "tints": {
+  "hair": "#7a3a22"
+ },
  "clothes": [
   "rehmanpolanski_viking_tunic/rehmanpolanski_viking_tunic.mhclo",
   "rehmanpolanski_viking_pants/rehmanpolanski_viking_pants.mhclo",

@@ -39,6 +39,9 @@
   "head-diamond": 0.526
  },
  "hair": "short03/short03.mhclo",
+ "tints": {
+  "hair": "#2a1f18"
+ },
  "_garments": [
   "toga@f1efe4,2f5a3a"
  ],

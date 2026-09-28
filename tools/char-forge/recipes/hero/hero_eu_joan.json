@@ -41,6 +41,9 @@
   "chin-prominent-decr": 0.15
  },
  "hair": "ponytail01/ponytail01.mhclo",
+ "tints": {
+  "hair": "=#b89868"
+ },
  "_garments": [
   "hauberk@e8e2d0,30418c"
  ],

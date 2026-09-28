@@ -39,6 +39,9 @@
   "head-square": 0.286
  },
  "hair": "short01/short01.mhclo",
+ "tints": {
+  "hair": "#2a1f18"
+ },
  "clothes": [
   "male_elegantsuit01/male_elegantsuit01.mhclo",
   "shoes02/shoes02.mhclo"

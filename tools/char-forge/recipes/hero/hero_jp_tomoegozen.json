@@ -40,6 +40,9 @@
   "chin-prominent-decr": 0.15
  },
  "hair": "ponytail01/ponytail01.mhclo",
+ "tints": {
+  "hair": "#211812"
+ },
  "_garments": [
   "gusoku@dad8c3,1f2226"
  ],
