@@ -289,6 +289,7 @@ func _ready() -> void:
 	_scatter_coast_pebbles()
 	_scatter_understory()
 	_scatter_wildflowers()
+	_scatter_meadow()
 	_scatter_shrubs()
 	_scatter_ruins_debris()
 	_scatter_ruins_rubble()
@@ -703,6 +704,89 @@ func _scatter_wildflowers() -> void:
 		if mesh == null:
 			continue
 		add_child(_build_rock_multimesh(mesh, xforms, "Wildflowers%d" % k))
+
+
+## 2026-09-30 "빈 들판" — 48m 칸 하나에 들꽃 4송이(village 한정)라 이야기 지역 들판이 풀밭 한 장으로 비었다(창 모드 x_first_stop·u_palace).
+## 칸마다 꽃무리 몇 곳(MEADOW_PATCHES)을 잡고 무리 하나는 한 빛으로 반경 안에 촘촘히 — 멀리서도 색 얼룩으로 읽힌다.
+## 꽃 에셋(Flower_*_Single 은 너무 작고, Petal 은 크고 살구빛 버섯 같았다)을 쓰지 않고 코드 꽃: 가는 줄기 + 납작한 꽃송이, 송이 색은 인스턴스 색(MultiMesh 둘).
+## 눈밭(frost)은 뺀다.
+const MEADOW_PATCHES := 4
+const MEADOW_PER_PATCH := 14
+const MEADOW_RADIUS := 4.5
+const MEADOW_SKIP_REGIONS := ["frost", "village"]  # village 는 삼각형 예산(PLAN 104-7)이 빠듯하고 자기 들꽃이 있다
+const MEADOW_COLORS := [
+	Color(1.0, 0.95, 0.75), Color(1.0, 0.8, 0.15), Color(0.98, 0.5, 0.66),
+	Color(0.72, 0.62, 0.98), Color(0.55, 0.78, 1.0), Color(1.0, 0.6, 0.3),
+]
+
+func _scatter_meadow() -> void:
+	if region_id in MEADOW_SKIP_REGIONS:
+		return
+	var ground: float = TerrainBuilder.LEGEND["."].height
+	var stems: Array[Transform3D] = []
+	var heads: Array[Transform3D] = []
+	var colors: Array[Color] = []
+	var rows := TestMap.rows_of(region_id)
+	for y in rows.size():
+		var row: String = rows[y]
+		for x in row.length():
+			if row[x] != ".":
+				continue
+			for p in MEADOW_PATCHES:
+				var ps := 1100 + p * 60
+				var col: Color = MEADOW_COLORS[int(_hash(x, y, ps) * MEADOW_COLORS.size()) % MEADOW_COLORS.size()]
+				var cx := (_hash(x, y, ps + 1) - 0.5) * TestMap.TILE_SIZE * 0.8
+				var cz := (_hash(x, y, ps + 2) - 0.5) * TestMap.TILE_SIZE * 0.8
+				for i in MEADOW_PER_PATCH:
+					var a := _hash(x, y, ps + 3 + i * 3) * TAU
+					var r := sqrt(_hash(x, y, ps + 4 + i * 3)) * MEADOW_RADIUS
+					var pos := TestMap.world_pos(x, y, region_id) + Vector3(cx + cos(a) * r, ground, cz + sin(a) * r)
+					var s := 0.8 + 0.5 * _hash(x, y, ps + 5 + i * 3)
+					stems.append(Transform3D(Basis.IDENTITY.scaled(Vector3(1, s, 1)), pos + Vector3(0, 0.45 * s, 0)))
+					heads.append(Transform3D(Basis(Vector3.UP, a).scaled(Vector3.ONE * s), pos + Vector3(0, 0.9 * s, 0)))
+					colors.append(col.lerp(Color.WHITE, 0.12 * _hash(x, y, ps + 6 + i * 3)))
+	if stems.is_empty():
+		return
+	var stem_mesh := CylinderMesh.new()
+	stem_mesh.top_radius = 0.015
+	stem_mesh.bottom_radius = 0.022
+	stem_mesh.height = 0.9
+	stem_mesh.radial_segments = 4
+	stem_mesh.rings = 1
+	var stem_mat := StandardMaterial3D.new()
+	stem_mat.albedo_color = Color(0.25, 0.5, 0.2)
+	stem_mat.roughness = 0.9
+	stem_mesh.material = stem_mat
+	var head_mesh := SphereMesh.new()
+	head_mesh.radius = 0.2
+	head_mesh.height = 0.2
+	head_mesh.radial_segments = 6
+	head_mesh.rings = 2
+	var head_mat := StandardMaterial3D.new()
+	head_mat.vertex_color_use_as_albedo = true
+	head_mat.roughness = 0.75
+	head_mat.emission_enabled = true
+	head_mat.emission = Color(0.08, 0.08, 0.08)
+	head_mesh.material = head_mat
+	var stem_mm := MultiMesh.new()
+	stem_mm.transform_format = MultiMesh.TRANSFORM_3D
+	stem_mm.mesh = stem_mesh
+	stem_mm.instance_count = stems.size()
+	var head_mm := MultiMesh.new()
+	head_mm.transform_format = MultiMesh.TRANSFORM_3D
+	head_mm.use_colors = true
+	head_mm.mesh = head_mesh
+	head_mm.instance_count = heads.size()
+	for i in stems.size():
+		stem_mm.set_instance_transform(i, stems[i])
+		head_mm.set_instance_transform(i, heads[i])
+		head_mm.set_instance_color(i, colors[i])
+	for pair in [[stem_mm, "MeadowStems"], [head_mm, "MeadowHeads"]]:
+		var mmi := MultiMeshInstance3D.new()
+		mmi.multimesh = pair[0]
+		mmi.name = pair[1]
+		mmi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(mmi)
 
 
 ## "." 칸당 1개 상한(SHRUB_CHANCE 확률로 뽑힐지 먼저 정하고, 뽑히면 종을

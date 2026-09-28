@@ -9447,3 +9447,10 @@ PROJECT_STATE.md` 참고. 요약:
 - tools/godot_regress.sh — 압축 텍스처 푸는 "bcdec … took N ms" 줄(0/1ms 로 흔들림)을 md5 에서 뺐다. (원본 png 직접 읽기는 "내보내면 안 된다" 경고라 접음.)
 - 한계: 눈 크기는 메시(눈알 3cm)가 정해서 텍스처만으론 더 못 키운다. 입·깜빡임 변형은 여전히 없음.
 - 점검 STORY(talk_face 포함) fails=0, REGRESS OK·재질 감사 OK. 촬영: face_view 주역·마을 남자.
+
+## GO 그래픽 먼저 ㉔ 이야기 지역 꽃무리 (2026-09-30, 같은 세션, "묻지 말고 계속 이어해")
+
+- 이야기 지역 들판(틈새 갈림길·잠긴 도읍 등)이 풀밭 한 장 — 들꽃은 village 한정 칸당 4송이. vegetation_builder._scatter_meadow: "." 칸마다 꽃무리 4곳(무리당 14송이·반경 4.5m, 한 무리 한 빛 — 흰·노랑·분홍·연보라·하늘·주황), 줄기+납작 송이 코드 꽃(MultiMesh 둘·송이 색은 인스턴스 색·그림자 없음). 풀이 1m 남짓이라 줄기 0.9m.
+- 꽃 에셋은 안 씀: Flower_*_Single 은 너무 작고 Petal 은 크고 살구빛이라 버섯처럼 보였다(창 모드 x_first_stop 두 번 확인). frost(눈밭)·village(삼각형 예산 빠듯 — 무리 6곳×22송이일 때 마을 평균 33.4→41.3만, 4×14 + village 제외로 33.4만 유지)는 뺐다.
+- 점검 CROSSING·SKYPORT·SUNKEN·AMBER·VAULT·FORK·TRAVERSAL fails=0, REGRESS OK. PERF 마을 33.4·포구 25.7·폐허 28.2만 그대로.
+- 메모: bash 에서 `SAGA_${P}_PROBE=1 cmd` 는 변수 대입으로 안 읽혀 조용히 아무것도 안 돈다 — `env SAGA_${P}_PROBE=1 cmd`.
