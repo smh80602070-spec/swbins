@@ -183,10 +183,10 @@ namespace Saga.EditorTools
             OrbState.Restore(new List<string> { GoOrbs.All[0].Id, GoOrbs.All[1].Id, GoOrbs.All[2].Id }, 2);
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":27") || !json.Contains("\"orbsGiven\":2") || !json.Contains(GoOrbs.All[2].Id)) Fail("세이브 v19 에 구슬이 없다");
+            if (!json.Contains("\"version\":28") || !json.Contains("\"orbsGiven\":2") || !json.Contains(GoOrbs.All[2].Id)) Fail("세이브 v19 에 구슬이 없다");
             OrbState.ResetForTest();
             if (!SaveState.TryLoad() || OrbState.GotCount != 3 || OrbState.Given != 2 || OrbState.Level != 1) Fail($"v19 왕복 뒤 구슬 {OrbState.GotCount}·바침 {OrbState.Given}");
-            string v18 = Regex.Replace(json.Replace("\"version\":27", "\"version\":18"), ",\"orbsGot\":\\[[^\\]]*\\],\"orbsGiven\":\\d+", "");
+            string v18 = Regex.Replace(json.Replace("\"version\":28", "\"version\":18"), ",\"orbsGot\":\\[[^\\]]*\\],\"orbsGiven\":\\d+", "");
             if (v18.Contains("orbsGot")) { Fail("v18 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v18);
             if (!SaveState.TryLoad()) { Fail("v18 파일 TryLoad 실패"); return; }

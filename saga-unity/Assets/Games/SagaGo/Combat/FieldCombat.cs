@@ -329,7 +329,7 @@ namespace Saga.Go.Combat
         {
             float dt = Time.deltaTime;
             TickTimers(dt);
-            if (DuelGate.Active || Active == null || Saga.Go.Cinematics.GoCutscenes.Playing) return; // 106-9 등장 컷 동안 입력 안 받음
+            if (DuelGate.Active || Active == null || Saga.Go.Cinematics.GoCutscenes.Playing || StoryState.Talking) return; // 106-9 등장 컷 동안 입력 안 받음 · 109-14-12 이야기 대화 중도
 
             var kb = Keyboard.current;
             if (kb == null) return;

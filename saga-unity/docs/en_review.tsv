@@ -820,6 +820,65 @@
 2	go	region.south_glade	남쪽 공터	Southern Glade		
 2	go	region.village	마을 들판	Village Fields		
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
+2	go	story.ch1	제1장 · 먹구름이 오는 마을	Chapter 1 · Stormclouds Over the Village		
+2	go	story.ch1.s1	청하 촌장을 찾아가기	Visit the Elder of Cheongha		
+2	go	story.ch1.s1.l1	왔구나. 요 며칠 남쪽 망루 쪽에서 바람이 울고, 하늘에 먹구름이 걷히질 않는단다.	You came. These past few days the wind has been howling near the southern watchtower, and the stormclouds won't lift.		
+2	go	story.ch1.s1.l2	옛날부터 먹구름은 나쁜 기운이 깨어날 때 온다고 했지.	Since the old days, they say stormclouds come when something wicked awakens.		
+2	go	story.ch1.s1.l3	남쪽 공터 옛 망루에 가 보렴. 거기 사나운 것이 둥지를 틀었다는 소문이 있어.	Go to the old watchtower in the Southern Glade. Rumor has it something fierce has made its nest there.		
+2	go	story.ch1.s1.p.a	제가 알아볼게요.	I'll look into it.		
+2	go	story.ch1.s1.p.b	바람이 운다고요?	The wind is howling?		
+2	go	story.ch1.s2	남쪽 공터 옛 망루, 바람이 우는 곳으로	To the old watchtower in the Southern Glade, where the wind howls		
+2	go	story.ch1.s3	망루 수호장을 쓰러뜨리기	Defeat the Watchtower Warden		
+2	go	story.ch1.s4	강가 나루의 늙은 사공에게 먹구름을 묻기	Ask the old ferryman at the river crossing about the stormclouds		
+2	go	story.ch1.s4.l1	수호장을 쓰러뜨렸다고? 허, 그놈도 먹구름에 홀렸던 게야.	You beat the Warden? Hah, that brute was bewitched by the stormclouds too.		
+2	go	story.ch1.s4.l2	먹구름은 이 물가 서쪽 제단에서 피어오르지. 거기 오래 잠든 이무기가 있다더군.	The stormclouds rise from the altar west along this bank. They say a serpent has slept there a long, long time.		
+2	go	story.ch1.s4.l3	북쪽 산기슭 성터의 학자가 비문을 읽고 있다던데, 그 아이한테 가 봐. 요즘 성터 어귀에 졸개들이 들끓는다니 조심하고.	There's a scholar reading the inscriptions at the ruins in the Northern Foothills. Go see her. Mind you, minions have been swarming the ruins' entrance lately.		
+2	go	story.ch1.s4.p.a	이무기요?	A serpent?		
+2	go	story.ch1.s4.p.b	어떻게 막죠?	How do we stop it?		
+2	go	story.ch1.s5	산기슭 성터 어귀의 먹구름 졸개 물리치기	Drive off the stormcloud minions at the foothill ruins		
+2	go	story.ch1.s6	떠돌이 학자와 이야기하기	Talk to the wandering scholar		
+2	go	story.ch1.s6.l1	살았다! 졸개들 때문에 비문 곁엔 가지도 못했어.	I'm saved! Those minions wouldn't let me anywhere near the inscription.		
+2	go	story.ch1.s6.l2	여길 봐. '제단에 원소의 불을 밝히면 잠든 것의 이름이 드러난다' — 네 힘이면 될지도 몰라.	Look here. 'Light the altar with elemental fire, and the name of the sleeper shall be revealed' — your power might just do it.		
+2	go	story.ch1.s7	옛 제단에 원소 스킬로 불 밝히기	Light the old altar with an elemental skill		
+2	go	story.ch1.s8	청하 촌장에게 알리기	Report to the Elder of Cheongha		
+2	go	story.ch1.s8.l1	먹구름 이무기라… 옛이야기인 줄로만 알았는데.	A stormcloud serpent… I thought that was only an old tale.		
+2	go	story.ch1.s8.l2	고맙다. 네 덕에 마을이 한시름 놓았구나. 이건 마을이 모은 작은 성의란다.	Thank you. Thanks to you, the village can breathe easier. Here's a small token the village gathered.		
+2	go	story.ch1.s8.l3	이무기를 상대하려면 더 강해져야 할 게다. 모험을 더 쌓고 오렴.	To face the serpent you'll need to grow stronger. Go gain more experience, then come back.		
+2	go	story.ch2	제2장 · 먹구름 제단	Chapter 2 · The Stormcloud Altar		
+2	go	story.ch2.s1	학자에게 제단 가는 길을 묻기	Ask the scholar the way to the altar		
+2	go	story.ch2.s1.l1	비문을 다 읽었어. 이무기는 너른 강 물가 서쪽, 먹구름 제단 안에 잠들어 있어.	I've finished reading the inscription. The serpent sleeps inside the Stormcloud Altar, west along the Broad River.		
+2	go	story.ch2.s1.l2	이무기는 번개를 두르면 불에 약해. 준비 단단히 해!	When it wraps itself in lightning, it's weak to fire. Be well prepared!		
+2	go	story.ch2.s2	강가 먹구름 제단으로	To the Stormcloud Altar by the river		
+2	go	story.ch2.s3	먹구름 제단에서 먹구름 이무기를 쓰러뜨리기	Defeat the Stormcloud Serpent at the Stormcloud Altar		
+2	go	story.ch2.s4	청하 촌장에게 알리기	Report to the Elder of Cheongha		
+2	go	story.ch2.s4.l1	하늘이… 개었구나! 몇 해 만에 보는 맑은 하늘이냐.	The sky… it's cleared! First clear sky in years.		
+2	go	story.ch2.s4.l2	이무기는 또 깨어날지 모르지만, 네가 있으니 든든하다. 잔치 준비를 해야겠구나!	The serpent may wake again, but with you here I feel safe. I'd better prepare the feast!		
+2	go	story.ch2.s4.l3	참, 은비가 너와 함께 다니고 싶다더구나. 비문 읽는 솜씨가 싸움에도 쓸모 있을 게다.	Oh, Eunbi says she'd like to travel with you. Her knack for inscriptions should come in handy in a fight.		
+2	go	story.chapter_done	{0} 끝 — {1}	{0} complete — {1}		
+2	go	story.end	끝 (F)	End (F)		
+2	go	story.gold	금 +{0}	Gold +{0}		
+2	go	story.idle.elder	먹구름이 걷히면 마을 잔치를 열어야지.	Once the stormclouds clear, we'll hold a village feast.		
+2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
+2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
+2	go	story.list_close	닫는다 (O)	Close (O)		
+2	go	story.list_title	이야기 임무	Story Quests		
+2	go	story.lit	옛 제단에 불이 붙었다 — 비문이 빛난다	The old altar caught fire — the inscription glows		
+2	go	story.me	나	Me		
+2	go	story.next	다음 ▶ (F)	Next ▶ (F)		
+2	go	story.npc.elder	청하 촌장 누리	Elder Nuri of Cheongha		
+2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
+2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
+2	go	story.reward	장 끝 보상 {0}	Chapter reward {0}		
+2	go	story.short.elder	누리	Nuri		
+2	go	story.short.ferryman	버들	Beodeul		
+2	go	story.short.scholar	은비	Eunbi		
+2	go	story.squad	먹구름 졸개가 나타났다	Stormcloud minions appeared		
+2	go	story.state_done	끝	Complete		
+2	go	story.state_locked	여정 등급 {0} 에 열린다	Unlocks at Journey Rank {0}		
+2	go	story.state_now	진행 중	In progress		
+2	go	story.talk_btn	{0}와 이야기 (F)	Talk to {0} (F)		
+2	go	story.track	◆ {0} — {1} · {2}m	◆ {0} — {1} · {2}m		
+2	go	story.track_locked	◆ {0} — 여정 등급 {1} 에 열린다	◆ {0} — unlocks at Journey Rank {1}		
 2	go	talent.btn_con	깨달음 열기 — 인연 매듭 1	Unlock Insight — 1 Bond Knot		
 2	go	talent.btn_up	올리기 — 금 {0} · {1} {2}{3}	Level up — Gold {0} · {1} {2}{3}		
 2	go	talent.con1	원소 스킬 재사용 대기 -15%	Elemental Skill cooldown -15%		

@@ -238,10 +238,10 @@ namespace Saga.EditorTools
             DomainState.SetResinForTest(77);
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":27") || !json.Contains("\"resin\":77")) Fail("세이브 v26 에 원기가 없다");
+            if (!json.Contains("\"version\":28") || !json.Contains("\"resin\":77")) Fail("세이브 v26 에 원기가 없다");
             DomainState.ResetForTest();
             if (!SaveState.TryLoad() || DomainState.Resin != 77 || DomainState.Claims != 2) Fail($"v26 왕복 뒤 원기 {DomainState.Resin}·받은 수 {DomainState.Claims}");
-            string v25 = Regex.Replace(json.Replace("\"version\":27", "\"version\":27"), ",\"resin\":\\d+,\"resinT\":\\d+,\"domainClaims\":\\d+,\"weeklyWeek\":\"[^\"]*\",\"weeklyN\":\\d+", "");
+            string v25 = Regex.Replace(json.Replace("\"version\":28", "\"version\":28"), ",\"resin\":\\d+,\"resinT\":\\d+,\"domainClaims\":\\d+,\"weeklyWeek\":\"[^\"]*\",\"weeklyN\":\\d+", "");
             if (v25.Contains("resinT")) { Fail("v25 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v25);
             if (!SaveState.TryLoad() || DomainState.Resin != GoDomain.ResinMax || DomainState.Claims != 0) Fail("v25 파일 — 원기가 가득이 아님");

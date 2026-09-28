@@ -104,6 +104,16 @@ namespace Saga.Go.Combat
             return e;
         }
 
+        /// <summary>109-14-12 이야기 임무 적 하나 — 옛 몸(산적 = 산적 몸, 나머지 = 해골 몸), 선 지역 위험도, 경험·전리품 없이 다시 안 선다.</summary>
+        public FieldEnemy SpawnStoryFoe(FieldEnemy.Kind kind, Vector3 home, string groupId)
+        {
+            GameObject model = kind == FieldEnemy.Kind.Bandit ? banditModel : skeletonModel;
+            var e = FieldEnemy.Spawn(kind, home, model, groupId, transform);
+            e.ApplyDanger(GoWorldMap.DangerOf(GoWorldMap.RegionAt(home)));
+            e.MarkStory();
+            return e;
+        }
+
         /// <summary>세우는 들판 적 수 — 이미 쓰러뜨린 수호장은 안 센다.</summary>
         public static int PlannedCount
         {

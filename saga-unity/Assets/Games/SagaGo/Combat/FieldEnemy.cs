@@ -143,6 +143,9 @@ namespace Saga.Go.Combat
 
         // ---- 109-14-9 숨은 터 적·주간 보스 — 천하 등급·경험·전리품·일과가 없고 다시 서지 않으며, 원판 안에선 끝까지 쫓는다 ----
         public bool DomainFoe { get; private set; }
+        /// <summary>109-14-12 이야기 임무 적(`sq:` 무리) — 경험·전리품·일과 없고 다시 안 선다(쫓기는 건 여느 들판 적처럼).</summary>
+        public bool StoryFoe { get; private set; }
+        public void MarkStory() => StoryFoe = true;
         public bool IsWeeklyBoss { get; private set; }
         /// <summary>공격 간격 배율(주간 보스 2단계 ×0.69).</summary>
         public float CdMul { get; set; } = 1f;
@@ -651,7 +654,7 @@ namespace Saga.Go.Combat
                 if (_timer <= 0f) Revive();
                 return;
             }
-            if (DuelGate.Active || Saga.Go.Cinematics.GoCutscenes.Playing) { SetMoveAnim(0f); return; } // 106-9 — 등장 컷 동안도 선다.
+            if (DuelGate.Active || Saga.Go.Cinematics.GoCutscenes.Playing || StoryState.Talking) { SetMoveAnim(0f); return; } // 106-9 — 등장 컷 동안도 선다. 109-14-12 이야기 대화 중도
             if (Frozen) { SetMoveAnim(0f); return; } // 109-14-1a 얼어붙음 — 제자리에 멎는다(시간은 TickStatus 가 줄인다)
 
             var fc = FieldCombat.Instance;
@@ -1122,7 +1125,7 @@ namespace Saga.Go.Combat
             if (IsHero) { Yield(); return; }
             Hp = 0f;
             CurrentState = State.Dead;
-            _timer = DomainFoe ? float.MaxValue : RespawnSec; // 109-14-9 숨은 터 적은 다시 안 선다
+            _timer = DomainFoe || StoryFoe ? float.MaxValue : RespawnSec; // 109-14-9 숨은 터 적·109-14-12 임무 적은 다시 안 선다
             _chargedLeft = 0f;
             ClearReactionStates();
             Aura = GoElement.Physical;
@@ -1133,7 +1136,7 @@ namespace Saga.Go.Combat
             if (_animator != null) _animator.SetTrigger("Death");
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
-            if (DomainFoe) { Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음
+            if (DomainFoe || StoryFoe) { Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음(109-14-12 임무 적도)
             if (!(IsGuardian && GuardianState.Defeated)) PlayerStats.AddExp(ExpReward); // 109-14-10 다시 선 수호장은 경험 없이 꽃만
             DailyTaskState.ReportProgress(DailyTaskState.Kind.FieldKill, 1); // 109-14-8 일일 의뢰 — 들판 적
             if (EnemyKind == Kind.Bandit && !IsHero)

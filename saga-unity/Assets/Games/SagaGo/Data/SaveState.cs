@@ -14,7 +14,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 27;
+        private const int SaveVersion = 28;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -129,6 +129,9 @@ namespace Saga.Go.Data
             // v27 — PLAN.md 109-14-10 망루 수호장 보상 꽃(쓰러뜨리고 안 받음)·받은 유닉스 초(150초 뒤 다시 선다).
             public bool guardianBloom;
             public long guardianPaidAt;
+            // v28 — PLAN.md 109-14-12 이야기 임무 장·단계(임무 적·제단 불은 저장 안 함 — 불러오면 그 단계 처음).
+            public int storyCh;
+            public int storyStep;
         }
 
         public static bool Save()
@@ -213,6 +216,8 @@ namespace Saga.Go.Data
                 domainClaims = dom.claims,
                 weeklyWeek = dom.week,
                 weeklyN = dom.weekN,
+                storyCh = StoryState.Ch,
+                storyStep = StoryState.StepIndex,
             };
             return JsonUtility.ToJson(data);
         }
@@ -281,6 +286,7 @@ namespace Saga.Go.Data
             CookState.Restore(data.cookBag, data.cookProf, data.cookGather);
             DomainState.Restore(data.resin, data.resinT, data.domainClaims, data.weeklyWeek, data.weeklyN);
             AdventureState.RestoreSave(data.advLowered, data.advPaid); // 레벨 뒤 — 천하 등급이 바뀌면 들판 적이 다시 잰다
+            StoryState.Restore(data.storyCh, data.storyStep);
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();
@@ -543,6 +549,14 @@ namespace Saga.Go.Data
                 data.version = 27;
                 data.guardianBloom = data.guardianDown;
                 data.guardianPaidAt = 0;
+                return data;
+            }
+            if (fromVersion == 27)
+            {
+                // v27엔 이야기 임무가 없었다 — 1장 첫 단계부터.
+                data.version = 28;
+                data.storyCh = 0;
+                data.storyStep = 0;
                 return data;
             }
             return null;
