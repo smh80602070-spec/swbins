@@ -32,6 +32,7 @@ const Weapons := preload("res://games/saga_go/data/weapons.gd")
 const Kits := preload("res://games/saga_go/data/kits.gd")
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const AimedShot := preload("res://games/saga_go/combat/aimed_shot.gd")
+const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")
 
 const COMBO_MUL := [0.35, 0.4, 0.6]
 const COMBO_SEC := [0.32, 0.32, 0.45]
@@ -554,7 +555,10 @@ func attack() -> bool:
 				t.call("strike", tel)
 	else:
 		_heavy = kit.get("heavy", false)
-		hits = _hit_front(float(kit.reach), float(kit.arc), amount, _normal_el())
+		## 09-28 베기 궤적(combat_fx.gd) — 원소가 붙은 공격이면 그 원소 색.
+		var nel := _normal_el()
+		CombatFx.slash(_player, _player.call("facing"), float(kit.reach), Elements.color_of(nel) if nel != "" else CombatFx.PHYSICAL, step, _heavy)
+		hits = _hit_front(float(kit.reach), float(kit.arc), amount, nel)
 		_heavy = false
 	_crit_id = ""
 	if hits > 0:
@@ -574,7 +578,9 @@ func charged_attack() -> bool:
 	_ring_fx(_player.global_position + _player.call("facing") * 1.2, 1.8, Color(0.95, 0.95, 0.85), 0.3)
 	_heavy = true
 	_crit_id = active_id()
-	var hits := _hit_front(CHARGE_REACH, -0.2, _normal_atk() * CHARGE_MUL, _normal_el())
+	var cel := _normal_el()
+	CombatFx.slash(_player, _player.call("facing"), CHARGE_REACH, Elements.color_of(cel) if cel != "" else CombatFx.PHYSICAL, 3, true)
+	var hits := _hit_front(CHARGE_REACH, -0.2, _normal_atk() * CHARGE_MUL, cel)
 	_crit_id = ""
 	_heavy = false
 	if hits > 0:
@@ -1226,6 +1232,8 @@ func _deal(enemy: Node, base: float, element: String, dir: Vector3) -> float:
 	elif Elements.attaches(element):
 		enemy.call("set_aura", element)
 	var crit := _crit_roll()
+	## 09-28 맞은 자리 불꽃(combat_fx.gd) — 원소 색, 치명타·반응이면 크게.
+	CombatFx.spark(self, (enemy as Node3D).global_position + Vector3.UP * 0.9, Elements.color_of(element) if element != "" else CombatFx.PHYSICAL, crit > 1.0 or reaction != "")
 	return enemy.call("apply_damage", amount * crit * _dmg_bonus(element), reaction != "" or bonus != "" or crit > 1.0, dir)
 
 ## 원소(물리) 피해 보너스 — 치는 인물(_crit_id)이 있을 때만.

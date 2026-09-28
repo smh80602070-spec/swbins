@@ -9324,3 +9324,13 @@ PROJECT_STATE.md` 참고. 요약:
 
 - 절벽 정점색 0.5,0.48,0.45 → 0.62,0.53,0.42(따뜻한 황갈) · 위를 보는 각진 면(법선 y 0.04~0.2)과 큰 얼룩이 겹치는 곳에 이끼. 먼 절벽은 돌 텍스처 회색이 커서 차이가 작다(눈에 띄는 개선은 작음).
 - probe_shots: Weather.force("clear") 뒤 날씨 화면을 곧바로 칠함 — 첫 컷들이 실제 시각 날씨(안개)로 찍혔다(HUD 날씨 글자는 여전히 실제 시각 것이 남는다, 촬영 전용 현상).
+
+## GO 그래픽 먼저 ⑨ 베기 궤적·타격 불꽃 (2026-09-28, 같은 세션)
+
+- 근접 기본 공격엔 궤적이 없었고, 맞아도 멈칫·흔들림·번쩍·숫자·소리뿐이었다. 새 games/saga_go/combat/combat_fx.gd + saga_core/shaders/slash_trail.gdshader:
+  - slash(): 몸 앞 초승달(160° 호, 끝이 가늚)이 0.09초에 휘둘러지고 0.16초에 사라짐. 연타마다 기울기·좌우가 바뀜, 무거운 무기·강공격은 크게, 원소 공격이면 원소 색. 앞쪽을 55° 세움(수평이면 뒤 카메라엔 점선으로만 보였다).
+  - spark(): 맞은 자리 불똥(CPUParticles3D 9~14개, 날아가는 쪽으로 선 가는 조각) + 네 갈래 별빛 번쩍임. 치명타·반응이면 크게.
+  - 둘 다 멈칫(히트스톱, Engine.time_scale 0.05) 중에도 트윈이 돈다(set_ignore_time_scale) — 멈추면 궤적이 안 보였다.
+- field_combat.gd: attack() 근접 갈래·charged_attack() 에 slash, _deal() 에 spark.
+- probe_shots "swing"/"swing3"/"swing8" 할 일(가까운 들판 적 곁에서 휘두르고 n 프레임 뒤 찍기, 편성이 법구뿐이면 궤적·불꽃을 직접 한 번) · x_swing·x_swing_late 자리.
+- 점검 COMBAT·KIT·ELEMENT·WEAPON·ARCHERY·FIELD_BOSS·DOMAIN·WEEKLY fails=0, REGRESS OK. 실기 확인 전: 연타 리듬과 궤적 기울기, 불똥 크기.

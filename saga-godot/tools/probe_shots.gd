@@ -14,6 +14,7 @@ const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const VroidBody := preload("res://games/saga_go/world/vroid_body.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const DispatchNode := preload("res://games/saga_go/world/dispatch.gd")
+const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")
 
 const SETTLE := 90
 
@@ -28,6 +29,8 @@ const SHOTS := [
 	["n_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, "night"],
 	["c_sea", "coast", Vector2(3.0, 3.75), Vector3.ZERO, Vector2(3.0, 2.2), -22.0, 12.0, ""],
 	["v_river", "village", Vector2(3.5, 6.6), Vector3.ZERO, Vector2(3.5, 7.0), -25.0, 10.0, ""],
+	["x_swing", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing3"],
+	["x_swing_late", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing8"],
 	["v_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, ""],
 	["v_station_boards", "village", "v_station", Vector3(0, 0, 9), "v_station", -22.0, 10.0, ""],
 	["v_people_lineup", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 7.0, "lineup"],
@@ -77,6 +80,7 @@ var _dir := ""
 var _only: PackedStringArray = []
 var _lineup: Array[Node3D] = []
 var _done: Array = []
+var _swing_enemy: Node3D = null   # "swing" 할 일 — 가장 가까운 들판 적 곁에 서서 찍기 직전에 한 번 휘두른다(09-28 전투 이펙트)
 
 func _ready() -> void:
 	Weather.force("clear")
@@ -116,6 +120,14 @@ func _process(_delta: float) -> void:
 		return
 	if _frame == 20:
 		_act(String(SHOTS[_i][7]))
+	if String(SHOTS[_i][7]).begins_with("swing") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(5) if String(SHOTS[_i][7]).length() > 5 else "5"):
+		var fc := get_tree().get_first_node_in_group("go_field_combat")
+		if fc:
+			fc.call("attack")
+			## 편성이 법구 한 명이면 근접 궤적이 안 나온다 — 이펙트 모양을 보려고 궤적·불꽃도 직접 한 번(연결은 field_combat.gd).
+			if is_instance_valid(_swing_enemy):
+				CombatFx.slash(_p, _swing_enemy.global_position - _p.global_position, 2.6, CombatFx.PHYSICAL, 1)
+				CombatFx.spark(_p, _swing_enemy.global_position + Vector3.UP * 0.9, Color(0.75, 0.45, 1.0), true)
 	if _frame < SETTLE:
 		_aim(SHOTS[_i])
 	if _frame == SETTLE:
@@ -148,6 +160,8 @@ func _place(s: Array) -> void:
 
 func _aim(s: Array) -> void:
 	var t := _pos_of(String(s[1]), s[4])
+	if String(s[7]).begins_with("swing") and is_instance_valid(_swing_enemy):
+		t = _swing_enemy.global_position
 	var d := t - _p.global_position
 	d.y = 0.0
 	if d.length() > 0.1 and _rig:
@@ -159,6 +173,17 @@ func _aim(s: Array) -> void:
 
 func _act(a: String) -> void:
 	match a:
+		"swing", "swing3", "swing8":
+			var best := 1e9
+			for e in get_tree().get_nodes_in_group("field_enemy"):
+				var d := (e as Node3D).global_position.distance_to(_p.global_position)
+				if d < best:
+					best = d
+					_swing_enemy = e
+			if _swing_enemy:
+				_swing_enemy.set_physics_process(false)
+				_swing_enemy.set_process(false)
+				_p.global_position = _swing_enemy.global_position + Vector3(1.4, 0.4, 0.9)
 		"night":
 			TimeOfDay.force(true)
 			var nv := get_tree().get_first_node_in_group("go_night_visual")
