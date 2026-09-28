@@ -10350,3 +10350,8 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 검증(묶음 PC): 컴파일 0 · `PlaytestHeadless` fishing OK·FAIL 0 · `UiLayoutCheck` 낚시 상태·게시판 겹침 0(남은 문제는 REALM 알림·지도 "지금·너른 강" 글 ↔ 범례 등 기존 몫).
 - 실기 확인 전: 서는 자리·고리가 둑에서 물 위로 자연스러운지 · 찌·물고기 그림자 높이(수면 −0.45m) · 낚시 칸이 폰 조이스틱·단추와 안 겹치는지 · 줄다리기 손맛(길게 누르기) · 게시판 모양 · 물고기 도는 물이 다리 칸에 안 닿는지.
 - 안 한 것: 부대 경험(이 트랙에 없음)·소리·물고기 도감 화면·일과 의뢰 칸. 다음 = 14-25 (웹 ⑲-25 업적).
+## 2026-09-29 — 인물 105 제 몸 켬 (char-forge)
+- 옷 짓기 → 105벌 빌드(8분, 실패 0) → 격자 렌더 14장 전·후 판정(사용자 "응") → `tools/char-forge/_out/hero/hero_*.fbx`·`.license.json` 을 `Assets/Art/CharactersForge/` 에 덮음.
+- `SetupForgeHeroes.SetupBatch`: `FORGE_HERO n=105 human=105 h=1.58~2.08 missing=0`, `RESULT OK`. FBX·프리팹은 로컬 전용(.gitignore), 커밋은 license.json 105.
+- 검증: `PlaytestHeadless` 두 판 OK(둘째 시도는 Package Manager IPC 연결 실패로 시작 못 함 → 재실행 OK) · `SagaAssetGate` OK(사실 몸 1520·빌드가 쓰는 것 470). 배치가 건드린 NotoEmoji·NotoSansKR SDF 에셋은 원복.
+- 실기 확인 전: 도감 인물이 게임에서 서로 다르게 보이는지·얼굴 인상. 다음 = 얼굴(사용자 "너무 못생겼다", 파판 방향 — 무작위 얼굴 축을 예쁜 쪽으로·눈·화장) → 동작(④).
