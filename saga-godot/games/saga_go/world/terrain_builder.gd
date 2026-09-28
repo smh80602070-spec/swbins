@@ -145,6 +145,7 @@ const EDGE_BLEND_MARGIN := 0.34
 const CLIFF_COLOR := Color(0.62, 0.53, 0.42)
 const CLIFF_SEG_M := 12.0
 const CLIFF_JAG_M := 4.5
+const LOW_STEP_M := 0.6 # 이보다 낮은 턱 옆면은 땅처럼 칠한다(_add_cliffs)
 
 static var _noise: FastNoiseLite = null
 
@@ -350,6 +351,7 @@ func _add_cliffs(st: SurfaceTool, x: int, y: int) -> void:
 	var center := TestMap.world_pos(x, y, region_id)
 	var half := TestMap.tile_size_of(region_id) * 0.5
 	var top := tile_base_height(region_id, x, y)
+	var own_ch := TestMap.tile_at(x, y, region_id)
 	# (이웃 dx, dy, 변 시작 로컬, 변 끝 로컬, 바깥 법선)
 	var edges := [
 		[1, 0, Vector3(half, 0, -half), Vector3(half, 0, half), Vector3.RIGHT],
@@ -374,6 +376,19 @@ func _add_cliffs(st: SurfaceTool, x: int, y: int) -> void:
 		var a: Vector3 = center + e[2]
 		var b: Vector3 = center + e[3]
 		var n: Vector3 = e[4]
+		## 2026-09-29 — 칸 사이 낮은 턱(길 0.1m 등)이 절벽 빛깔·돌로 칠해져 눈밭·풀밭에 검은 줄로 보였다(09-26 창 모드 촬영 ⑤).
+		## 낮은 턱 옆면은 땅처럼 — 위를 보는 법선·그 칸 빛깔·그 칸 눈 표시. 모양(=충돌)은 그대로.
+		if top - bottom < LOW_STEP_M:
+			st.set_custom(0, surface_of(region_id, own_ch))
+			var col := color_of(region_id, own_ch)
+			var a0 := a + Vector3(0, bottom, 0)
+			var b0 := b + Vector3(0, bottom, 0)
+			var a1 := a + Vector3(0, top, 0)
+			var b1 := b + Vector3(0, top, 0)
+			for p in [a0, b0, b1, a0, b1, a1]:
+				st.set_normal(Vector3.UP); st.set_color(col); st.add_vertex(p)
+			st.set_custom(0, Color(0, 0, 0, 0))
+			continue
 		## 울퉁불퉁함은 산(^) 절벽에만 — 모래밭·길의 낮은 물가 둑은 평평하게.
 		_add_cliff_face(st, a, b, bottom, top, n, CLIFF_JAG_M if TestMap.tile_at(x, y, region_id) == "^" else 0.0)
 

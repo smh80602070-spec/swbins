@@ -171,6 +171,11 @@ func _update_hud() -> void:
 
 
 func _place_camera() -> void:
+	## 09-29 — 판정 사진용: SAGA_CMP_FOCUS=<짝 번호> 면 그 짝을 가까이(--write-movie 로 프레임을 떠 사용자에게 보인다).
+	var fo := OS.get_environment("SAGA_CMP_FOCUS")
+	if fo != "":
+		_focus = clampi(int(fo), 0, PAIRS.size() - 1)
+		_dist = 3.3
 	var x := (_focus - (PAIRS.size() - 1) / 2.0) * PAIR_STEP
 	var target := Vector3(x, 0.95, 0)
 	_cam.position = target + Vector3(sin(_yaw) * _dist * 0.25, 0.35, _dist)

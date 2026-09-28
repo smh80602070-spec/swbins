@@ -9366,3 +9366,9 @@ PROJECT_STATE.md` 참고. 요약:
 - PERF(모바일 540×960): 마을 삼각형 평균 33.9만 → 35.1만(예산 35만과 같은 수준 — 바위 380개 1.1만 삼각형), draw 평균 207 → 208.
 - 점검 TRAVERSAL·STORY3·STORY9·FROST·SKYPORT·VILLAGE·CROSSING·SUNKEN·AMBER·VAULT·FORK·MAP fails=0, REGRESS OK.
 - FOREST 도 terrain_triplanar 를 쓰나 가파른 면이 거의 없어 영향 작음(창 모드로는 안 봄). 실기 확인 전: 폰에서 절벽 틈 굵기·윗바위 줄 늘어선 모양.
+
+## GO 그래픽 먼저 ⑬ 칸 턱 검은 줄 · 인물 비교 사진 (2026-09-29, 같은 세션, "이어해")
+
+- 09-26 남긴 ⑤: 칸 사이 낮은 턱(길 0.1m 등) 옆면이 절벽 빛깔·돌·눈 없음으로 칠해져 눈밭·풀밭에 검은 줄. terrain_builder _add_cliffs — 0.6m(LOW_STEP_M) 미만 턱은 위 법선·그 칸 빛깔·그 칸 눈 표시로(모양·충돌 그대로). 창 모드 f_fort·f_n_close 에서 줄 사라짐.
+- char-forge 2단계 판정용: tools/compare/char_compare.gd 에 SAGA_CMP_FOCUS=<짝> (그 짝 가까이) — --write-movie 로 프레임을 떠 사용자에게 보임. 이 PC 는 cmp_*.glb 가 임포트 안 돼 있어 --editor 임포트 한 번(바뀐 .import 1039개·새 .uid 66개는 되돌림/지움, project.godot 그대로).
+- 점검 TRAVERSAL·FROST·STORY3·CROSSING·VILLAGE·SKYPORT fails=0, REGRESS OK.
