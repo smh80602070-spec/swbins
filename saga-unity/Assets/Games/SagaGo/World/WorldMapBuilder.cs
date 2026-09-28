@@ -47,6 +47,8 @@ namespace Saga.Go.World
             if (GetComponent<Saga.Go.UI.StoryUi>() == null) gameObject.AddComponent<Saga.Go.UI.StoryUi>(); // 추적 줄·대화 창·목록(F·O)
             if (GetComponent<FishingField>() == null) gameObject.AddComponent<FishingField>(); // 109-14-24 낚시터·물고기·찌·게시판
             if (GetComponent<Saga.Go.UI.FishingUi>() == null) gameObject.AddComponent<Saga.Go.UI.FishingUi>(); // 낚시 칸·게시판 창(F·T)
+            if (GetComponent<DispatchField>() == null) gameObject.AddComponent<DispatchField>(); // 109-14-26 탐사 게시판
+            if (GetComponent<Saga.Go.UI.DispatchUi>() == null) gameObject.AddComponent<Saga.Go.UI.DispatchUi>(); // 탐사 창(F)
             if (GetComponent<Saga.Go.UI.AchieveUi>() == null) gameObject.AddComponent<Saga.Go.UI.AchieveUi>(); // 109-14-25 업적 창(Y)·알림
         }
     }

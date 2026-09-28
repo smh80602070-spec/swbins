@@ -81,7 +81,7 @@ namespace Saga.Go.Data
         }
 
         /// <summary>들판에 넣기 — 둘째 자리로(가장 오래 선 셋째가 빠진다).</summary>
-        public static bool ToField(string id) => FieldSlotOf(id) != 0 && Move(id, Members.Count);
+        public static bool ToField(string id) => DispatchState.Away(id) == null && FieldSlotOf(id) != 0 && Move(id, Members.Count); // 109-14-26 탐사 중인 동료는 못 넣는다
 
         /// <summary>들판에서 빼기 — 맨 앞으로(동행이 넷 이상일 때만 뺄 수 있다).</summary>
         public static bool Bench(string id) => Members.Count > FieldSlots && FieldSlotOf(id) >= 0 && Move(id, 0);
@@ -128,7 +128,7 @@ namespace Saga.Go.Data
             var o = new List<string>();
             if (list != null)
                 foreach (var id in list)
-                    if (!string.IsNullOrEmpty(id) && Has(id) && !o.Contains(id) && o.Count < FieldSlots) o.Add(id);
+                    if (!string.IsNullOrEmpty(id) && Has(id) && DispatchState.Away(id) == null && !o.Contains(id) && o.Count < FieldSlots) o.Add(id); // 109-14-26 탐사 중 뺌
             return o;
         }
 

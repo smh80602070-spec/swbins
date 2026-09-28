@@ -485,6 +485,55 @@
 2	go	dex.seen	만남	Met		
 2	go	dex.slot	들판 {0}째 자리	Field slot {0}		
 2	go	dex.title	도감 — 등용 {0}/{1} · 만남 {2}	Codex — recruited {0}/{1} · met {2}		
+2	go	dispatch.away_hint	· 게시판 곁에서만 보내고 받는다	· send and claim only beside a board		
+2	go	dispatch.button	탐사	Expedition		
+2	go	dispatch.claim	받기	Claim		
+2	go	dispatch.claim_all	모두 받기	Claim All		
+2	go	dispatch.desc.forest_edge	숲 가장자리에서 들풀을 캔다	Dig up wild herbs at the forest edge		
+2	go	dispatch.desc.mudflat	물 빠진 선창에서 조개를 줍는다	Gather clams at the drained pier		
+2	go	dispatch.desc.observatory	틈 곁 관측소의 기록을 거둔다	Collect the records at the observatory by the rift		
+2	go	dispatch.desc.old_road	옛 파발꾼이 달리던 길을 살핀다	Scout the road the old couriers once ran		
+2	go	dispatch.desc.quarry	옛 채석장 돌무더기를 뒤진다	Search the old quarry's rubble		
+2	go	dispatch.desc.ship_wreck	눈에 묻힌 비행선 잔해에서 쓸 만한 것을 건진다	Salvage what you can from the snow-buried wreck		
+2	go	dispatch.desc.shipyard	버려진 조선소에서 쓸 만한 쇠를 고른다	Sort usable scrap at the abandoned shipyard		
+2	go	dispatch.desc.snow_fort	얼어붙은 산성 터 밑 곳간을 더듬는다	Feel through the storehouse beneath the frozen fortress		
+2	go	dispatch.got	탐사를 마쳤다 — {0}	Expedition complete — {0}		
+2	go	dispatch.got_all	탐사 {0}곳을 받았다	Claimed {0} expeditions		
+2	go	dispatch.hm	{0}시간 {1}분	{0}h {1}m		
+2	go	dispatch.hours	{0}시간 (×{1})	{0}h (×{1})		
+2	go	dispatch.m	{0}분	{0}m		
+2	go	dispatch.no_hero	보낼 동료가 없다 (들판 명단 밖 동료만)	No companion to send (benched companions only)		
+2	go	dispatch.notice	{0} — {1} 탐사 끝 (역참 게시판에서 받기)	{0} — {1} expedition finished (claim at a waystation board)		
+2	go	dispatch.notice_all	탐사 {0}곳이 끝났다 — 역참 게시판에서 받기	{0} expeditions finished — claim at a waystation board		
+2	go	dispatch.r_dust	연마석 {0}	Polishing Stone {0}		
+2	go	dispatch.r_gold	금 {0}	Gold {0}		
+2	go	dispatch.r_ore	강화석 {0}	Enhancement Ore {0}		
+2	go	dispatch.recall	부르기	Recall		
+2	go	dispatch.row_done	{0} 돌아옴 — 받으세요: {1}	{0} is back — claim: {1}		
+2	go	dispatch.row_locked	잠김 — {0} 을(를) 밟으면 열린다	Locked — visit {0} to unlock		
+2	go	dispatch.row_out	{0} 탐사 중 — 남은 {1} ({2}시간): {3}	{0} is out — {1} left ({2}h): {3}		
+2	go	dispatch.send	보내기	Send		
+2	go	dispatch.site.forest_edge	북쪽 숲 가장자리	North Forest Edge		
+2	go	dispatch.site.mudflat	갯벌 선창	Mudflat Pier		
+2	go	dispatch.site.observatory	시간 틈 관측소	Time Rift Observatory		
+2	go	dispatch.site.old_road	옛 역참 길	Old Relay Road		
+2	go	dispatch.site.quarry	잿빛 채석장	Ashen Quarry		
+2	go	dispatch.site.ship_wreck	추락한 비행선 잔해	Crashed Airship Wreck		
+2	go	dispatch.site.shipyard	녹슨 조선소	Rusted Shipyard		
+2	go	dispatch.site.snow_fort	얼음 아래 산성 터	Fortress Ruin Under Ice		
+2	go	dispatch.title	탐사 파견 — 자리 {0}/{1} · 다녀온 탐사 {2}	Expeditions — slots {0}/{1} · completed {2}		
+2	go	dispatch.why.away	이미 탐사 중	Already on an expedition		
+2	go	dispatch.why.board	역참 곁 게시판에서만	Only at a waystation board		
+2	go	dispatch.why.field	들판 명단에 있는 동료는 못 보낸다	Companions on the field roster can't be sent		
+2	go	dispatch.why.full	자리가 꽉 찼다(여정 등급을 올리면 는다)	All slots are full (raise your journey rank for more)		
+2	go	dispatch.why.hero	동료를 고르자	Pick a companion		
+2	go	dispatch.why.hours	시간을 고르자	Pick a duration		
+2	go	dispatch.why.locked	{0} 을(를) 밟아야 열린다	Visit {0} to unlock		
+2	go	dispatch.why.nohero	없는 동료	No such companion		
+2	go	dispatch.why.none_out	나간 이가 없다	Nobody is out there		
+2	go	dispatch.why.nosite	없는 탐사지	No such site		
+2	go	dispatch.why.still	아직 탐사 중	Still on the expedition		
+2	go	dispatch.why.taken	이미 누가 가 있다	Someone is already there		
 2	go	domain.boss	먹구름 이무기	Stormcloud Serpent		
 2	go	domain.boss_p2	먹구름 이무기가 뇌 방패를 둘렀다 — 불·물로 깨라	The Stormcloud Serpent raised a thunder shield — break it with fire or water		
 2	go	domain.boss_up	먹구름 이무기가 깨어났다	The Stormcloud Serpent has awoken		

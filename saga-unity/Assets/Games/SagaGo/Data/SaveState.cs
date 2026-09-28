@@ -144,6 +144,9 @@ namespace Saga.Go.Data
             public List<CookState.Entry> achStats;
             public List<CookState.Entry> achKinds;
             public List<CookState.Entry> achGot;
+            // 109-14-26 탐사 파견 — 나간 이(탐사지·동료·시간·시작 유닉스 초)·끝낸 수(버전 그대로 — 옛 세이브는 빈 채)
+            public List<DispatchState.Entry> dispOut;
+            public int dispDone;
             public List<int> wqSteps;
             public List<bool> wqDone;
             public string wqTrack;
@@ -183,6 +186,8 @@ namespace Saga.Go.Data
                 achStats = AchieveState.SnapshotStats(), // 109-14-25
                 achKinds = AchieveState.SnapshotKinds(),
                 achGot = AchieveState.SnapshotGot(),
+                dispOut = DispatchState.Snapshot(), // 109-14-26
+                dispDone = DispatchState.Done,
                 wqSteps = WorldQuestState.SnapshotSteps(), // 109-14-21
                 wqDone = WorldQuestState.SnapshotDone(),
                 wqTrack = StoryState.TrackId,
@@ -319,6 +324,7 @@ namespace Saga.Go.Data
             StoryState.RestoreTrack(data.wqTrack);
             FishState.Restore(data.fishBag, data.fishLog, data.fishGone); // 109-14-24 — 요리 가방(CookState) 뒤
             AchieveState.Restore(data.achStats, data.achKinds, data.achGot); // 109-14-25
+            DispatchState.Restore(data.dispOut, data.dispDone); // 109-14-26
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();

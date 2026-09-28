@@ -527,6 +527,21 @@ namespace Saga.EditorTools
                 everyFrame = () => ((GameObject)Get(Saga.Go.UI.FishingUi.Instance, "_bar")).SetActive(true),
                 exit = fishExit,
             });
+            // ⑤-2 탐사 창(109-14-26) — 게시판 곁인 것으로(보내기·받기 단추가 다 켜진 모양)
+            list.Add(new UiState
+            {
+                name = "탐사 창",
+                panel = true,
+                enter = () =>
+                {
+                    var ui = Saga.Go.UI.DispatchUi.Instance;
+                    if (ui == null) return false;
+                    Saga.Go.UI.DispatchUi.AtBoardForTest = 1;
+                    ui.Open();
+                    return ui.IsOpen;
+                },
+                exit = () => { Saga.Go.UI.DispatchUi.Instance?.Close(); Saga.Go.UI.DispatchUi.AtBoardForTest = -1; },
+            });
             // ⑥ 업적 창(109-14-25) — 받을 게 있는 상태로(단추 ●N·탭 ●N·받기 단추가 다 켜진 모양)
             list.Add(new UiState
             {
