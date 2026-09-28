@@ -1620,8 +1620,17 @@
     if (keys.s || keys.arrowdown || keys[km.down]) { dy += 1; }
     if (keys.a || keys.arrowleft || keys[km.left]) { dx -= 1; }
     if (keys.d || keys.arrowright || keys[km.right]) { dx += 1; }
-    if (dx || dy) { target = null; }
-    else if (joy.x || joy.y) { dx = joy.x; dy = joy.y; target = null; }
+    if (!(dx || dy) && (joy.x || joy.y)) { dx = joy.x; dy = joy.y; }
+    if (dx || dy) {
+      target = null;
+      /* 3D 가 켜져 있으면 키·조이스틱을 카메라 방위만큼 돌린다(2026-09-28, 실기 보고 Q12 — 사가고 Q1 과 같은 처방).
+         오른쪽 끌기로 시점을 돌린 뒤에도 W 는 화면 안쪽, D 는 화면 오른쪽이다. az 0 이면 예전 그대로 */
+      var VV3 = global.DG.villageView3d;
+      if (VV3 && VV3.camAz && VV3.active && VV3.active()) {
+        var az = VV3.camAz(), ca = Math.cos(az), sa = Math.sin(az), rx = ca * dx + sa * dy;
+        dy = -sa * dx + ca * dy; dx = rx;
+      }
+    }
     else if (target) {
       var tx = target.x - player.x, ty = target.y - player.y;
       var td = Math.sqrt(tx * tx + ty * ty);

@@ -1560,6 +1560,29 @@ window.DG_NO_TUNE = true;
         ('x ' + Math.round(x0) + ' → ' + Math.round(raw.player.x));
     });
 
+    t('Q12 — 3D 가 켜져 있으면 조이스틱·키가 카메라 방위만큼 돈다(시점 90° 에서 위 = 서쪽 −x), 꺼져 있으면 예전 그대로(위 = −y)', function () {
+      var raw = V.raw(), keep = DG.villageView3d, keepR = Math.random, i, r = {};   // 공유 씨앗을 밀지 않게 난수는 이 안에서만 고정
+      function go(dx, dy) {
+        var x0 = raw.player.x, y0 = raw.player.y;
+        V.setJoy(dx, dy);
+        for (i = 0; i < 5; i++) { V.update(0.05); }
+        V.setJoy(0, 0);
+        var mx = raw.player.x - x0, my = raw.player.y - y0;
+        raw.player.x = x0; raw.player.y = y0;
+        return { x: Math.round(mx), y: Math.round(my) };
+      }
+      try {
+        Math.random = function () { return 0.5; };
+        DG.villageView3d = { active: function () { return true; }, camAz: function () { return Math.PI / 2; } };
+        r.on = go(0, -1);
+        DG.villageView3d = { active: function () { return false; }, camAz: function () { return Math.PI / 2; } };
+        r.off = go(0, -1);
+      } finally { DG.villageView3d = keep; Math.random = keepR; }
+      var real = keep && keep.camAz && keep.groundAt;
+      return real && r.on.x < -5 && Math.abs(r.on.y) <= 1 && r.off.y < -5 && Math.abs(r.off.x) <= 1 &&
+        ('3D 켜짐 90° → (' + r.on.x + ', ' + r.on.y + ') · 꺼짐 → (' + r.off.x + ', ' + r.off.y + ') · camAz·groundAt 있음');
+    });
+
     /* ── 채집 ─────────────────────────────────────────── */
 
     t('채집 — 손이 닿으면 얻고, 그 사물은 오늘 몫을 다한다', function () {

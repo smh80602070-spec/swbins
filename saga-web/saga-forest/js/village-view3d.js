@@ -247,8 +247,64 @@
   /** 확대·시점회전은 걷기 입력(#map3d 는 3D 켜져 있을 때 키보드로만 걷는다)과 안
    *  겹친다 — 휠(데스크톱)·두 손가락 핀치(폰)로 확대, 오른쪽 버튼 드래그(마우스)나
    *  한 손가락 드래그(폰)로 시점을 돌린다 */
+  /* ── 3D 클릭 이동(2026-09-28, 실기 보고 Q12 "PC 에서 키보드 + 마우스 클릭(표시와 이동)") ──
+   * 3D 가 켜지면 걷기는 키보드·조이스틱 몫이라 마우스 왼쪽이 비어 있었다(2D 는 누르면 그 자리로 걷는다).
+   * 이제 왼쪽을 누르면 카메라 광선이 땅(y=0)에 닿는 곳으로 걷고, 누른 채 끌면 따라온다(2D 와 같은 결).
+   * 터치는 한 손가락 끌기가 시점 회전이라 **짧은 탭**(0.3초·10px 안)만 걷기로 본다. 목표는 땅에 금빛 고리.
+   * 3D 는 평평하다 — 마을 (x,y) → 3D ((x-px)·s, 0, (y-py)·s) 를 거꾸로 푼다(s = WORLD_SCALE) */
+  function groundAt(clientX, clientY) {
+    var t = three(), V = global.DG.village;
+    if (!t || !camera || !canvas || !V) { return null; }
+    var r = canvas.getBoundingClientRect();
+    if (!r.width || !r.height) { return null; }
+    var nx = ((clientX - r.left) / r.width) * 2 - 1, ny = -((clientY - r.top) / r.height) * 2 + 1;
+    camera.updateMatrixWorld();
+    var o = camera.position.clone();
+    var d = new t.Vector3(nx, ny, 0.5).unproject(camera).sub(o).normalize();
+    if (d.y > -1e-4) { return null; }                    // 하늘을 짚었다
+    var k = -o.y / d.y, s = WORLD_SCALE(), raw = V.raw();
+    if (k > 600) { return null; }
+    var X = o.x + d.x * k, Z = o.z + d.z * k;
+    return { x: raw.player.x + X / s, y: raw.player.y + Z / s };
+  }
+  var walkPtr = null, tapPtr = null;
+  function walkPick(e) {
+    var g = groundAt(e.clientX, e.clientY), V = global.DG.village;
+    if (g && V && V.walkTo) { V.walkTo(g.x, g.y); }
+    return !!g;
+  }
+  /** 이 순간 카메라가 인물을 보는 방위(라디안) — camPose 의 az 그대로. 키·조이스틱을 이만큼 돌려
+   *  "화면 위 = W" 가 되게 한다(village.js update). 오른쪽 끌기로 시점을 돌려도 W 는 화면 안쪽이다 */
+  function camAz() { return mouseYaw + (1 - camTiltMix) * (facingYaw + Math.PI); }
+
   function bindCamControl(cv) {
     cv.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    cv.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse') {
+        if (e.button !== 0) { return; }
+        walkPtr = e.pointerId;
+        try { cv.setPointerCapture(e.pointerId); } catch (err) { /* 안 되면 그대로 */ }
+        walkPick(e);
+        return;
+      }
+      tapPtr = { id: e.pointerId, x: e.clientX, y: e.clientY, t: Date.now() };
+    });
+    cv.addEventListener('pointermove', function (e) {
+      if (e.pointerId === walkPtr && (e.buttons & 1)) { walkPick(e); }
+      if (tapPtr && e.pointerId === tapPtr.id && Math.hypot(e.clientX - tapPtr.x, e.clientY - tapPtr.y) > 10) { tapPtr = null; }
+    });
+    function endWalk(e) {
+      if (e.pointerId === walkPtr) {
+        walkPtr = null;
+        try { cv.releasePointerCapture(e.pointerId); } catch (err) { /* 이문 없다 */ }
+      }
+      if (tapPtr && e.pointerId === tapPtr.id) {
+        if (e.type === 'pointerup' && Date.now() - tapPtr.t < 300 && zoomPointerCount() <= 1) { walkPick(e); }
+        tapPtr = null;
+      }
+    }
+    cv.addEventListener('pointerup', endWalk);
+    cv.addEventListener('pointercancel', endWalk);
     cv.addEventListener('wheel', function (e) {
       setUserZoom(userZoom * (e.deltaY < 0 ? 1.08 : 1 / 1.08));
       e.preventDefault();
@@ -1425,6 +1481,27 @@
     return { x: Math.sin(az) * radius, y: height, z: Math.cos(az) * radius };
   }
 
+  /** 걸어갈 목표 고리 — village.js moveTarget() 이 있으면 그 땅에 금빛 고리(2D 의 타원과 같은 뜻),
+   *  도착·키 입력으로 목표가 지워지면 숨긴다 */
+  var walkMark = null;
+  function syncWalkMark() {
+    var t = three(), V = global.DG.village;
+    if (!t || !scene || !V || !V.moveTarget) { return; }
+    var mt = V.moveTarget();
+    if (!mt) { if (walkMark) { walkMark.visible = false; } return; }
+    if (!walkMark) {
+      walkMark = new t.Mesh(new t.RingGeometry(0.42, 0.6, 32),
+        new t.MeshBasicMaterial({ color: 0xffe296, transparent: true, opacity: 0.9, depthWrite: false, side: t.DoubleSide }));
+      walkMark.rotation.x = -Math.PI / 2;
+      walkMark.renderOrder = 5;
+      scene.add(walkMark);
+    }
+    var raw = V.raw(), s = WORLD_SCALE(), k = 1 + Math.sin(Date.now() / 140) * 0.14;
+    walkMark.position.set((mt.x - raw.player.x) * s, 0.06, (mt.y - raw.player.y) * s);
+    walkMark.scale.set(k, k, k);
+    walkMark.visible = true;
+  }
+
   /** 화각도 t 로 섞는다 — 순수 함수. 좁아질수록(정사영에 가까워질수록) 원근 왜곡이 준다 */
   function camFov(t, fov0, fov1) { return fov0 + (fov1 - fov0) * t; }
 
@@ -1914,6 +1991,7 @@
     if (sunLight) { sunLight.castShadow = q.shadow; }
     if (player.mixer) { player.mixer.update(dt); }
     syncCamera(dt);
+    syncWalkMark();
     syncTerrain();
     syncWaterRipple(dt);
     syncScatter(dt);
@@ -2002,6 +2080,8 @@
     /** 진단·QA 전용 — 사람이 드래그로 돌린 시점 덧각(라디안) */
     mouseYaw: function () { return mouseYaw; },
     setMouseYaw: function (y) { mouseYaw = y; },
+    /** Q12 — 카메라 방위(키·조이스틱을 돌리는 각)와 화면 한 점이 짚는 땅(마을 좌표). 진단·확인용으로도 쓴다 */
+    camAz: camAz, groundAt: groundAt,
     /** 진단 전용 — PLAN 12절 물 표현: 파동 순수 함수와 반짝임 점 상태 */
     waterWaveY: waterWaveY,
     waterWaveAmp: WATER_WAVE_AMP, waterWaveSpeed: WATER_WAVE_SPEED,
