@@ -229,6 +229,8 @@ namespace Saga.Go.World
             PlayerStats.AddExp(exp);
             GoldState.Add(gold);
             string mats = TalentState.Add(GoTalent.ChestMats[g]); // 109-14-4 무예 재료
+            string gear = WeaponState.OnChest(Data.Id, Data.Grade); // 109-14-5a 강화석·무기
+            if (gear.Length > 0) mats += (mats.Length > 0 ? " · " : "") + gear;
             string itemPart = "";
             if (!string.IsNullOrEmpty(Data.ItemId))
             {

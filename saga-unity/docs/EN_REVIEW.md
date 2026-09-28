@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **2418** (표 2363 · 코드 55) — go 574 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **137**
-- 사람 검수 **0/2418** — 순위1 0/258 · 순위2 0/1452 · 순위3 0/708
+- 짝 **2465** (표 2410 · 코드 55) — go 621 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **147**
+- 사람 검수 **0/2465** — 순위1 0/258 · 순위2 0/1499 · 순위3 0/708
 
 ## 검수 순서
 
@@ -26,7 +26,7 @@
 
 없음.
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 137)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 147)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -61,4 +61,4 @@
 | 3→8 | forest | `finish.hanji` | Hanji Paper Wall |
 | 4→10 | realm | `officer.tm_gangseo.title` | Special Ops Captain |
 | 6→12 | dungeon | `saga.silkroad.title` | The Severed Caravan Road |
-| 14→25 | story | `npc.trainer_status_locked` | Class change available from Lv.{0} (currently Lv.{1}) |
+| 9→17 | go | `weapon.why.shared` | Training weapons cannot be upgraded |

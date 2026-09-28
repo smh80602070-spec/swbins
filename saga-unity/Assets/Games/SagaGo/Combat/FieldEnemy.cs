@@ -707,7 +707,7 @@ namespace Saga.Go.Combat
 
         /// <summary>플레이어 공격 한 번. 반응을 풀고 실제로 들어간 피해를 돌려준다.
         /// <paramref name="atk"/> 는 반응 피해를 셀 공격력. <paramref name="heavy"/> = 기본 공격 3타째(얼어붙은 적을 깨뜨린다, 109-14-1a).</summary>
-        public float TakeHit(float amount, GoElement element, float atk, out GoReaction reaction, bool heavy = false)
+        public float TakeHit(float amount, GoElement element, float atk, out GoReaction reaction, bool heavy = false, bool crit = false)
         {
             reaction = GoReaction.None;
             if (!Alive) return 0f;
@@ -757,7 +757,8 @@ namespace Saga.Go.Combat
                     GoElements.NameOf(reaction), GoElements.ColorOf(reaction), 1.3f);
             }
 
-            float dealt = ApplyDamage(amount, element == GoElement.Physical ? Color.white : GoElements.ColorOf(element), 1f);
+            // 109-14-5a 치명타는 굵고 크게(금빛)
+            float dealt = ApplyDamage(amount, crit ? new Color(1f, 0.82f, 0.3f) : element == GoElement.Physical ? Color.white : GoElements.ColorOf(element), crit ? 1.45f : 1f);
 
             if (reaction == GoReaction.Overload)
             {
@@ -1044,6 +1045,8 @@ namespace Saga.Go.Combat
             {
                 // 109-14-4 방패 두른 원소 괴물 — 무예 쪽지 하나(웹 ⑲-4 얻는 곳)
                 string mats = TalentState.Add(GoTalent.EliteMats);
+                WeaponState.AddOre(GoWeapons.EliteOre); // 109-14-5a 강화석 하나
+                mats += (mats.Length > 0 ? " · " : "") + string.Format(GoLocalization.T("weapon.ore_plus", "강화석 +{0}"), GoWeapons.EliteOre);
                 if (mats.Length > 0) FieldDamageText.Spawn(transform.position + Vector3.up * (BodyHeight + 2.6f), mats, new Color(0.95f, 0.85f, 0.55f), 0.9f);
             }
             Killed?.Invoke(this);

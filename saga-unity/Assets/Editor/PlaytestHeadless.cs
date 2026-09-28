@@ -141,6 +141,7 @@ namespace Saga.EditorTools
                 CheckShrineTrial();
                 // PLAN.md 107-1 들판 전투 — 일일 과제(세이브 되돌림) 앞, 다른 진단 뒤(처치 경험치가 첫 레벨업이 되지 않게).
                 if (!PlaytestGoGuardian.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107-7 수호장 + 106-9 등장 컷(여기서 한 번 틀어 둔다)
+                Saga.Go.Combat.FieldCombat.CritOffForTest = true; // 109-14-5a — 피해값을 딱 맞춰 보는 진단들은 치명타 없이(무기 진단만 켜 본다)
                 if (!PlaytestGoFieldCombat.Run("PlaytestHeadless")) _hadError = true;
                 if (!PlaytestGoElementalFoe.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107-5 원소 쓰는 적
                 if (!PlaytestGoTraversal.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107 ② 이동
@@ -161,7 +162,8 @@ namespace Saga.EditorTools
                 if (!PlaytestGoSkillShapes.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-8 스킬 모양 넷·교체 연출(동행·적·자리 되돌림)
                 if (!PlaytestGoOrbs.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-3a 수집 구슬·봉헌(구슬·봉수대·돈·세이브 되돌림)
                 if (!PlaytestGoSight.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-3b 원소 시야
-                if (!PlaytestGoTalent.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-4 무예 단계·깨달음(동행·재료·돈·세이브 되돌림)
+                if (!PlaytestGoTalent.Run("PlaytestHeadless")) _hadError = true;
+                if (!PlaytestGoWeapons.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-5a 무기·치명타(무기·강화석·돈·세이브 되돌림) // PLAN.md 109-14-4 무예 단계·깨달음(동행·재료·돈·세이브 되돌림)
                 if (!PlaytestGoPeaks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-9 정상 발견·순간이동·건물 가림 카메라(기록·돈·세이브 되돌림)
                 // 반드시 마지막 — DailyTaskState 진단이 SaveState.TryLoad()로
                 // 세이브 파일을 v9 모양으로 잠깐 바꿔치기해 로드하는데, 이건

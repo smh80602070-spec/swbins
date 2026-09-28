@@ -13,7 +13,7 @@ namespace Saga.EditorTools
     /// PLAN.md 109-14-4 "무예 단계·깨달음"(웹 사가고 ⑲-4 진단 항목) — `PlaytestHeadless` 가 시야 진단 뒤에 부른다.
     /// 상한 표(부대 레벨)·배율 표 · 올리기 값·재료 모자라면 거절·상한이면 거절·비늘 없으면 7단이 끝·쓰면 빠짐 · 깨달음 열기(매듭 1)·5 에서 멈춤·③ 스킬·해방 +2 ·
     /// 들판 피해가 출처별로 단계를 탄다(기본) · ① 대기 ×0.85 · ④ 체력 ×1.15 · ⑤ 해방 뒤 8초 공격 ×1.2 · 얻는 곳(상자 화려·정예 쓰러뜨림) · 도감 무예 칸(진짜 단추) ·
-    /// 세이브 v20 왕복·v19 로드. 끝나면 동행·무예·재료·돈·레벨·세이브 파일을 되돌린다.
+    /// 세이브 v21 왕복·v19 로드. 끝나면 동행·무예·재료·돈·레벨·세이브 파일을 되돌린다.
     /// </summary>
     public static class PlaytestGoTalent
     {
@@ -64,7 +64,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log($"[{_tag}] talent OK - 상한(부대 Lv 1·5·10·15·20·25 → 3·4·5·7·9·10)·배율·값·거절(상한·금·비늘) · 깨달음 5·③ +2 · {combat} · 얻는 곳(상자·정예) · 도감 무예 칸 · 세이브 v20 왕복·v19 로드");
+            if (_ok) Debug.Log($"[{_tag}] talent OK - 상한(부대 Lv 1·5·10·15·20·25 → 3·4·5·7·9·10)·배율·값·거절(상한·금·비늘) · 깨달음 5·③ +2 · {combat} · 얻는 곳(상자·정예) · 도감 무예 칸 · 세이브 v21 왕복·v19 로드");
             return _ok;
         }
 
@@ -126,7 +126,7 @@ namespace Saga.EditorTools
             e.WarpForTest(fc.transform.position + fwd * 2.5f);
             float atk = fc.Atk, hp0 = e.Hp;
             fc.Attack();
-            float want = atk * FieldCombat.ComboMul[0] * GoTalent.MulAt(7);
+            float want = atk * GoWeapons.Kits[(int)GoWeapons.TypeOf(id)].Mul[0] * GoTalent.MulAt(7); // 109-14-5a 그 인물 무기 모양 1타
             if (Mathf.Abs(hp0 - e.Hp - want) > 0.5f) Fail($"기본 무예 7단 피해 {hp0 - e.Hp} ≠ {want}");
             e.ReviveNow();
             e.WarpForTest(fc.transform.position + new Vector3(60f, 0f, 60f));
@@ -191,10 +191,10 @@ namespace Saga.EditorTools
             TalentState.Restore(new List<TalentState.Entry> { new TalentState.Entry { id = id, n = 5, s = 3, b = 2, con = 2 } }, new[] { 1, 2, 3, 4, 0 });
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":20") || !json.Contains("\"talents\":[") || !json.Contains("\"talentMats\":[1,2,3,4,0]")) Fail("세이브 v20 에 무예가 없다");
+            if (!json.Contains("\"version\":21") || !json.Contains("\"talents\":[") || !json.Contains("\"talentMats\":[1,2,3,4,0]")) Fail("세이브 v20 에 무예가 없다");
             TalentState.ResetForTest();
             if (!SaveState.TryLoad() || TalentState.BaseLevel(id, GoTalent.Kind.Normal) != 5 || TalentState.Con(id) != 2 || TalentState.Count(GoTalent.Mat.Knot) != 4) Fail("v20 왕복 뒤 무예가 달라짐");
-            string v19 = Regex.Replace(json.Replace("\"version\":20", "\"version\":19"), ",\"talents\":\\[[^\\]]*\\],\"talentMats\":\\[[^\\]]*\\]", "");
+            string v19 = Regex.Replace(json.Replace("\"version\":21", "\"version\":19"), ",\"talents\":\\[[^\\]]*\\],\"talentMats\":\\[[^\\]]*\\]", "");
             if (v19.Contains("talents")) { Fail("v19 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v19);
             if (!SaveState.TryLoad()) { Fail("v19 파일 TryLoad 실패"); return; }

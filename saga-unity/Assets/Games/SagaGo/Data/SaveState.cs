@@ -14,7 +14,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 20;
+        private const int SaveVersion = 21;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -103,6 +103,10 @@ namespace Saga.Go.Data
             // v20 — PLAN.md 109-14-4 무예 단계·깨달음(동행마다)·재료 주머니(쪽지·교본·비전·매듭·비늘).
             public List<TalentState.Entry> talents;
             public int[] talentMats;
+            // v21 — PLAN.md 109-14-5a 가진 무기(Lv·벼림·울림)·든 무기·강화석.
+            public List<WeaponState.InvEntry> weapons;
+            public List<WeaponState.EquipEntry> weaponEquip;
+            public int weaponOre;
         }
 
         public static bool Save()
@@ -167,6 +171,9 @@ namespace Saga.Go.Data
                 orbsGiven = OrbState.Given,
                 talents = TalentState.Snapshot(),
                 talentMats = TalentState.SnapshotMats(),
+                weapons = WeaponState.SnapshotInv(),
+                weaponEquip = WeaponState.SnapshotEquip(),
+                weaponOre = WeaponState.Ore,
             };
             return JsonUtility.ToJson(data);
         }
@@ -230,6 +237,7 @@ namespace Saga.Go.Data
             Combat.GoElements.SevenNoticed = data.el7Noticed;
             OrbState.Restore(data.orbsGot, data.orbsGiven);
             TalentState.Restore(data.talents, data.talentMats);
+            WeaponState.Restore(data.weapons, data.weaponEquip, data.weaponOre);
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();
@@ -431,6 +439,15 @@ namespace Saga.Go.Data
                 data.version = 20;
                 data.talents = new List<TalentState.Entry>();
                 data.talentMats = new int[5];
+                return data;
+            }
+            if (fromVersion == 20)
+            {
+                // v20엔 무기가 없었다 — 모두 수련용·강화석 0.
+                data.version = 21;
+                data.weapons = new List<WeaponState.InvEntry>();
+                data.weaponEquip = new List<WeaponState.EquipEntry>();
+                data.weaponOre = 0;
                 return data;
             }
             return null;

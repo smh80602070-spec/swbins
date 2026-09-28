@@ -636,6 +636,53 @@
 2	go	talent.why.max	최대 단계	Max level		
 2	go	talent.why.not_member	동행이 아님	Not a companion		
 2	go	talent.why.short	부족	short		
+2	go	weapon.btn_asc	벼림	Forge		
+2	go	weapon.btn_asc_cost	벼림 — 금 {0}	Forge — Gold {0}		
+2	go	weapon.btn_swap	바꾸기	Switch		
+2	go	weapon.btn_up	강화	Upgrade		
+2	go	weapon.btn_up_cost	강화 — 강화석 {0} · 금 {1}	Upgrade — Ore {0} · Gold {1}		
+2	go	weapon.ore_plus	강화석 +{0}	Ore +{0}		
+2	go	weapon.panel	{0} · ★{1} {2}⏎Lv {3}/{4} · 벼림 {5} · 울림 {6}⏎공격 {7:0}{8}{9}⏎강화석 {10} · 가진 {0} {11}자루	{0} · ★{1} {2}⏎Lv {3}/{4} · Forge {5} · Resonance {6}⏎ATK {7:0}{8}{9}⏎Ore {10} · {0} owned {11}		
+2	go	weapon.pas.b	원소 해방 피해	Release DMG		
+2	go	weapon.pas.n	기본 공격 피해	Normal Attack DMG		
+2	go	weapon.pas.react	원소 반응 피해	Reaction DMG		
+2	go	weapon.pas.s	원소 스킬 피해	Skill DMG		
+2	go	weapon.refine	{0} 울림 {1}	{0} Resonance {1}		
+2	go	weapon.refine_over	강화석 +{0}({1} 울림 끝)	Ore +{0} ({1} resonance maxed)		
+2	go	weapon.stat.atk_pct	공격력	ATK		
+2	go	weapon.stat.crit_dmg	치명타 피해	Crit Damage		
+2	go	weapon.stat.crit_rate	치명타 확률	Crit Rate		
+2	go	weapon.stat.energy	기력 획득	Energy Gain		
+2	go	weapon.stat.hp_pct	체력	HP		
+2	go	weapon.title	무기	Weapon		
+2	go	weapon.type.bow	활	Bow		
+2	go	weapon.type.catalyst	서책	Tome		
+2	go	weapon.type.claymore	대도	Great Blade		
+2	go	weapon.type.polearm	창	Spear		
+2	go	weapon.type.sword	칼	Sword		
+2	go	weapon.w_bow_0	수련용 단궁	Training Short Bow		
+2	go	weapon.w_bow_3	사냥꾼 활	Hunter Bow		
+2	go	weapon.w_bow_4	갯바람 각궁	Sea Wind Horn Bow		
+2	go	weapon.w_catalyst_0	수련용 서첩	Training Primer		
+2	go	weapon.w_catalyst_3	해진 서책	Worn Tome		
+2	go	weapon.w_catalyst_4	별자리 두루마리	Star Chart Scroll		
+2	go	weapon.w_claymore_0	수련용 목도	Training Wooden Blade		
+2	go	weapon.w_claymore_3	나무꾼 큰도끼	Woodcutter Great Axe		
+2	go	weapon.w_claymore_4	파도 참마도	Wave Horse-Cleaver		
+2	go	weapon.w_polearm_0	수련용 장대	Training Staff		
+2	go	weapon.w_polearm_3	대나무 창	Bamboo Spear		
+2	go	weapon.w_polearm_4	봉수 월도	Beacon Moon Glaive		
+2	go	weapon.w_sword_0	수련용 목검	Training Wooden Sword		
+2	go	weapon.w_sword_3	청동 환도	Bronze Ring Sword		
+2	go	weapon.w_sword_4	청하 보검	Blue River Sword		
+2	go	weapon.why.asc_lv	Lv.{0} 에서 벼림	Forge at Lv.{0}		
+2	go	weapon.why.asc_max	최대 벼림	Max forging		
+2	go	weapon.why.cap	무기 벼림 필요	Needs forging		
+2	go	weapon.why.max	최대 레벨	Max level		
+2	go	weapon.why.no_asc	벼림 안 함	Cannot forge		
+2	go	weapon.why.none	없는 무기	Not owned		
+2	go	weapon.why.ore	강화석 부족	Not enough ore		
+2	go	weapon.why.shared	수련용은 강화 안 함	Training weapons cannot be upgraded		
 2	go	wp.activated	{0} 활성화 — 지도(M)에서 순간이동할 수 있다	{0} activated — teleport to it from the map (M)		
 2	go	wp.east	동쪽 숲 역참	Eastern Grove Waypoint		
 2	go	wp.farm	논밭 역참	Paddies Waypoint		

@@ -61,6 +61,11 @@ namespace Saga.Go.UI
         private readonly Button[] _talentButtons = new Button[3];
         private TextMeshProUGUI _conText;
         private Button _conButton;
+        // 109-14-5a 무기 칸(왼쪽) — 강화·벼림·바꾸기
+        public Button WeaponButton(int i) => _weaponButtons[i];
+        public string WeaponText => _weaponText.text;
+        private TextMeshProUGUI _weaponText;
+        private readonly Button[] _weaponButtons = new Button[3];
         public int TabCount => _tabs.Count;
         public Button TabButton(int i) => _tabs[i];
         public string TabText(int i) => _tabs[i].GetComponentInChildren<TextMeshProUGUI>().text;
@@ -163,6 +168,7 @@ namespace Saga.Go.UI
             Center(_detail.rectTransform);
 
             BuildTalentPanel(mid);
+            BuildWeaponPanel(mid);
 
             CloseButton = EncounterUiKit.NewButton(_panel.transform, GoLocalization.T("dex.close", "닫는다"), mid, new Vector2(0f, -272f), new Vector2(200f, 48f), null);
             Center((RectTransform)CloseButton.transform);
@@ -203,6 +209,64 @@ namespace Saga.Go.UI
             _talentRoot.SetActive(false);
         }
 
+        /// <summary>109-14-5a — 격자 왼쪽(x −655) 무기 칸: 종류·이름·Lv·공격·부옵션·효과·강화석 글 + 강화·벼림·바꾸기 단추. 무예 칸과 같이 뜨고 진다.</summary>
+        private void BuildWeaponPanel(Vector2 mid)
+        {
+            const float X = -655f, W = 270f;
+            var head = EncounterUiKit.NewText(_talentRoot.transform, GoLocalization.T("weapon.title", "무기"), mid, new Vector2(X, 180f), new Vector2(W, 34f), 22);
+            head.fontStyle = FontStyles.Bold;
+            Center(head.rectTransform);
+            _weaponText = EncounterUiKit.NewText(_talentRoot.transform, "", mid, new Vector2(X, 70f), new Vector2(W, 170f), 16);
+            Center(_weaponText.rectTransform);
+            string[] names = { GoLocalization.T("weapon.btn_up", "강화"), GoLocalization.T("weapon.btn_asc", "벼림"), GoLocalization.T("weapon.btn_swap", "바꾸기") };
+            for (int i = 0; i < 3; i++)
+            {
+                var b = EncounterUiKit.NewButton(_talentRoot.transform, names[i], mid, new Vector2(X, -50f - i * 52f), new Vector2(W, 44f), null);
+                Center((RectTransform)b.transform);
+                b.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
+                int k = i;
+                b.onClick.AddListener(() => WeaponAction(k));
+                _weaponButtons[i] = b;
+            }
+        }
+
+        private void WeaponAction(int k)
+        {
+            if (_selected == null) return;
+            string wid = WeaponState.Equipped(_selected);
+            if (k == 0) WeaponState.Up(wid);
+            else if (k == 1) WeaponState.Ascend(wid);
+            else
+            {
+                var list = WeaponState.ChoicesFor(_selected);
+                int i = list.IndexOf(wid);
+                WeaponState.Equip(_selected, list[(i + 1) % list.Count]);
+            }
+            Saga.Go.Combat.FieldCombat.Instance?.RebuildParty(); // 체력% 부옵션
+            Refresh();
+        }
+
+        private void RefreshWeapon()
+        {
+            string wid = WeaponState.Equipped(_selected);
+            var md = WeaponState.ModsOf(_selected);
+            var w = md.Weapon;
+            string sub = w.Sub != null ? $"{GoWeapons.StatName(w.Sub)} +{GoWeapons.SubAt(w, md.Lv) * 100f:0.#}%" : "";
+            string pas = w.Pas != null ? $"{GoWeapons.PassiveName(w.Pas)} +{md.PasV * 100f:0.#}%" : "";
+            _weaponText.text = string.Format(GoLocalization.T("weapon.panel", "{0} · ★{1} {2}\nLv {3}/{4} · 벼림 {5} · 울림 {6}\n공격 {7:0}{8}{9}\n강화석 {10} · 가진 {0} {11}자루"),
+                GoWeapons.TypeName(w.Type), w.Rarity, w.Name, md.Lv, GoWeapons.Cap(md.Asc), md.Asc, md.Ref, md.Atk,
+                sub.Length > 0 ? "\n" + sub : "", pas.Length > 0 ? "\n" + pas : "", WeaponState.Ore, WeaponState.ChoicesFor(_selected).Count);
+            bool up = WeaponState.CanUp(wid, out string uwhy, out var uc);
+            _weaponButtons[0].GetComponentInChildren<TextMeshProUGUI>().text = up
+                ? string.Format(GoLocalization.T("weapon.btn_up_cost", "강화 — 강화석 {0} · 금 {1}"), uc.ore, uc.gold) : uwhy;
+            _weaponButtons[0].interactable = up;
+            bool asc = WeaponState.CanAscend(wid, out string awhy, out int ag);
+            _weaponButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = asc
+                ? string.Format(GoLocalization.T("weapon.btn_asc_cost", "벼림 — 금 {0}"), ag) : awhy;
+            _weaponButtons[1].interactable = asc;
+            _weaponButtons[2].interactable = WeaponState.ChoicesFor(_selected).Count > 1;
+        }
+
         private void UpTalent(int k)
         {
             if (_selected == null) return;
@@ -230,6 +294,7 @@ namespace Saga.Go.UI
             bool show = _selected != null && TalentState.Trainable(_selected);
             _talentRoot.SetActive(show);
             if (!show) return;
+            RefreshWeapon();
             _talentMats.text = string.Format(GoLocalization.T("talent.mats", "쪽지 {0} · 교본 {1} · 비전 {2}\n매듭 {3} · 비늘 {4} · 금 {5}"),
                 TalentState.Count(GoTalent.Mat.Note), TalentState.Count(GoTalent.Mat.Guide), TalentState.Count(GoTalent.Mat.Secret),
                 TalentState.Count(GoTalent.Mat.Knot), TalentState.Count(GoTalent.Mat.Scale), GoldState.Gold);
