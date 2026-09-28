@@ -135,11 +135,78 @@ namespace Saga.Go.Combat
         private Vector3 _strikePoint;
         private bool Ranged => IsHero && _hero.Trait == HeroTrait.Wisdom;
         private bool Quick => IsHero && _hero.Trait == HeroTrait.Virtue;
-        private float TelegraphTime => _telegraphOverride > 0f ? _telegraphOverride : !IsHero ? TelegraphSec : Ranged ? HeroWisdomTelegraph : Quick ? HeroVirtueTelegraph : HeroMightTelegraph;
+        private float TelegraphTime => _moveWind > 0f ? _moveWind : _telegraphOverride > 0f ? _telegraphOverride : !IsHero ? TelegraphSec : Ranged ? HeroWisdomTelegraph : Quick ? HeroVirtueTelegraph : HeroMightTelegraph;
         /// <summary>진단용 — 지금 인물의 예고 반경.</summary>
-        public float StrikeReach => _reachOverride > 0f ? _reachOverride : !IsHero ? StrikeRadius : Ranged ? HeroWisdomRadius : Quick ? StrikeRadius : HeroMightRadius;
+        public float StrikeReach => _moveR > 0f ? _moveR : _reachOverride > 0f ? _reachOverride : !IsHero ? StrikeRadius : Ranged ? HeroWisdomRadius : Quick ? StrikeRadius : HeroMightRadius;
         private float RecoverTime => (_recoverOverride > 0f ? _recoverOverride : Quick ? HeroVirtueRecover : RecoverSec) * CdMul;
-        private float EngageReach => _reachOverride > 0f ? _reachOverride * 0.8f : Ranged ? HeroWisdomRange : EngageRange;
+        private float EngageReach => _rot != null ? RotEngage : _reachOverride > 0f ? _reachOverride * 0.8f : Ranged ? HeroWisdomRange : EngageRange;
+
+        // ---- 109-14-14 이야기 보스 공격 차례(웹 사가고 ⑲-14 `rot`) — 수마다 다가서는 거리·예고·원·배율이 다르다 ----
+        public enum BossMove { Melee, Shadow, Spit, Slam }
+        /// <summary>웹 ROT 표 × 1.85(이 판 거리) — 다가서기 · 예고 초 · 원 반지름 · 피해 배율.</summary>
+        public static (float reach, float wind, float r, float mul) MoveSpec(BossMove m) => m switch
+        {
+            BossMove.Shadow => (25.9f, 0.8f, 5.9f, 1.4f),   // 나를 지나 등 뒤로 붙어 제 둘레를 친다
+            BossMove.Spit => (16.7f, 1.0f, 4.4f, 1.0f),     // 내 발밑에 원
+            BossMove.Slam => (7.0f, 1.1f, 7.8f, 1.2f),      // 제 둘레 큰 원
+            _ => (0f, 0.55f, 0f, 1.0f),                     // 여느 한 대
+        };
+        public const float ShadowBack = 4.1f;               // 웹 2.2m × 1.85
+        private BossMove[] _rot;
+        private int _rotI;
+        private float _moveR = -1f, _moveWind = -1f, _moveMul = 1f;
+        private bool _moveAtPoint;
+        public BossMove? CurrentMove => _rot != null ? _rot[_rotI % _rot.Length] : (BossMove?)null;
+        public int MoveIndex => _rotI;
+        public void SetRotation(BossMove[] rot) { _rot = rot; _rotI = 0; }
+        private float RotEngage
+        {
+            get
+            {
+                var m = _rot[_rotI % _rot.Length];
+                var s = MoveSpec(m);
+                return m == BossMove.Melee ? (_reachOverride > 0f ? _reachOverride * 0.8f : EngageRange) : m == BossMove.Spit ? s.reach * 0.85f : m == BossMove.Slam ? s.reach * 0.8f : s.reach;
+            }
+        }
+
+        /// <summary>이번 수를 예고에 입힌다 — 그림자 걸음이면 내 등 뒤로 건너뛴다(설 수 없는 자리면 제자리).</summary>
+        private void ApplyMove(Vector3 player)
+        {
+            var m = _rot[_rotI % _rot.Length];
+            var s = MoveSpec(m);
+            _moveWind = s.wind;
+            _moveMul = s.mul;
+            _moveR = m == BossMove.Melee ? -1f : s.r;
+            _moveAtPoint = m == BossMove.Spit;
+            if (m == BossMove.Shadow)
+            {
+                Vector3 d = Flat(player - transform.position);
+                if (d.sqrMagnitude > 0.01f)
+                {
+                    Vector3 dest = player + d.normalized * ShadowBack;
+                    if (CanStep(dest)) transform.position = Grounded(dest);
+                }
+            }
+        }
+
+        private void ClearMove()
+        {
+            _moveR = _moveWind = -1f;
+            _moveMul = 1f;
+            _moveAtPoint = false;
+        }
+
+        /// <summary>설 수 있나 — 여느 들판 적은 산·강 칸이 아닌 곳, 이야기 보스는 제 고원 칸 안(봉우리 밑동 밖)도.</summary>
+        public bool CanStep(Vector3 p)
+        {
+            bool arena = StoryFoe && !CanStandOn(Home); // 고원 위에 선 이야기 적(6장 검은 가면·졸개)
+            if (!arena) return CanStandOn(p);
+            if (!SameCell(p, Home)) return false;
+            var (gx, gy) = TestMapData.WorldToGrid(p);
+            return !TestMapData.HasPeak(gx, gy) || Flat(p - TestMapData.PeakBase(gx, gy)).magnitude > TestMapData.PeakBaseRadius + 1.5f;
+        }
+
+        private static bool SameCell(Vector3 a, Vector3 b) => TestMapData.WorldToGrid(a) == TestMapData.WorldToGrid(b);
 
         // ---- 109-14-9 숨은 터 적·주간 보스 — 천하 등급·경험·전리품·일과가 없고 다시 서지 않으며, 원판 안에선 끝까지 쫓는다 ----
         public bool DomainFoe { get; private set; }
@@ -228,7 +295,7 @@ namespace Saga.Go.Combat
         private bool TwoLayered => IsGuardian || (IsHero && HeroRarity >= 5);
         private GoElement OuterElement => IsGuardian ? GuardianOuter : _outerElement;
         private GoElement InnerElement => IsGuardian ? GuardianInner : _innerElement;
-        public Vector3 StrikePoint => Ranged ? _strikePoint : transform.position;
+        public Vector3 StrikePoint => Ranged || _moveAtPoint ? _strikePoint : transform.position;
         /// <summary>남은 방패 겹(수호장 2→1→0, 원소 적 1→0, 보통 적 0).</summary>
         public int ShieldLayers { get; private set; }
         public bool Engaged { get; private set; }
@@ -763,7 +830,8 @@ namespace Saga.Go.Combat
             // 109-6 지(智) 인물 — 떨어지는 원거리: 예고 원이 시작 순간 플레이어 발밑에 선다.
             var fc = FieldCombat.Instance;
             _strikePoint = fc != null ? fc.transform.position : transform.position;
-            if (Ranged) _warnRing.transform.position = new Vector3(_strikePoint.x, Grounded(_strikePoint).y + 0.15f, _strikePoint.z);
+            if (_rot != null) ApplyMove(_strikePoint); // 109-14-14 이번 수
+            if (Ranged || _moveAtPoint) _warnRing.transform.position = new Vector3(_strikePoint.x, Grounded(_strikePoint).y + 0.15f, _strikePoint.z);
             else _warnRing.transform.localPosition = new Vector3(0f, 0.15f, 0f);
         }
 
@@ -777,8 +845,9 @@ namespace Saga.Go.Combat
             var fc = FieldCombat.Instance;
             if (fc != null && fc.CanBeTargeted && Flat(fc.transform.position - StrikePoint).magnitude <= StrikeReach)
             {
-                fc.ReceiveStrike(Atk, this);
+                fc.ReceiveStrike(Atk * _moveMul, this);
             }
+            if (_rot != null) { _rotI++; ClearMove(); } // 109-14-14 다음 수
             CurrentState = State.Recover;
             _timer = RecoverTime;
             _warnRing.transform.localPosition = new Vector3(0f, 0.15f, 0f);
@@ -1314,7 +1383,7 @@ namespace Saga.Go.Combat
         private void MoveBy(Vector3 delta)
         {
             Vector3 next = transform.position + delta;
-            if (!CanStandOn(next)) return; // 107 ② — 산 고원·강으로는 안 따라 들어온다
+            if (!CanStep(next)) return; // 107 ② — 산 고원·강으로는 안 따라 들어온다(109-14-14 고원 위 이야기 보스는 제 칸 안만)
             transform.position = Grounded(next);
         }
 

@@ -821,6 +821,7 @@
 2	go	region.village	마을 들판	Village Fields		
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
+2	go	story.boss.mask	검은 가면	Black Mask		
 2	go	story.boss_up	{0}가 나타났다	{0} has appeared		
 2	go	story.ch1	제1장 · 먹구름이 오는 마을	Chapter 1 · Stormclouds Over the Village		
 2	go	story.ch1.s1	청하 촌장을 찾아가기	Visit the Elder of Cheongha		
@@ -918,7 +919,74 @@
 2	go	story.ch4.s8	청하 촌장에게 알리기	Report to the Elder of Cheongha		
 2	go	story.ch4.s8.l1	나그네가 쫓는 가면 쓴 자라… 먹구름이 다섯 번이나 더 올 수 있다는 말이냐.	A masked one the traveler is chasing… you mean the stormclouds could come five more times?		
 2	go	story.ch4.s8.l2	네가 있어 다행이구나. 마을 사람들 몫으로 모은 것이니 받아 두렴.	I'm glad you're here. The villagers put this together for you — take it.		
+2	go	story.ch5	제5장 · 서쪽 고개 옛길	Chapter 5 · The Old Road over the Western Pass		
+2	go	story.ch5.s1	촌장에게 학자 소식 듣기	Hear news of the scholar from the Elder		
+2	go	story.ch5.s1.l1	은비가 서쪽 숲 옛길로 떠난 지 사흘째란다. 그 뒤로 소식이 뚝 끊겼어.	It's been three days since Eunbi left for the old road in the western woods. We haven't heard a word since.		
+2	go	story.ch5.s1.l2	그 길은 사당보다도 오래된 길이야. 숲에 묻혀서 이제 아는 사람도 드물지.	That road is older even than the shrine. It's buried in the forest now, and few remember it.		
+2	go	story.ch5.s1.l3	마을 서쪽 숲길로 들어가면 옛길 어귀가 나온단다. 서두르렴.	Head into the western wood path from the village and you'll reach the mouth of the old road. Hurry.		
+2	go	story.ch5.s1.p.a	제가 찾아볼게요.	I'll find her.		
+2	go	story.ch5.s1.p.b	혼자 간 거예요?	She went alone?		
+2	go	story.ch5.s2	서쪽 숲길 옛길 어귀로	To the mouth of the old road on the western wood path		
+2	go	story.ch5.s3	옛길에서 학자를 에워싼 가면 졸개 물리치기	Drive off the masked minions surrounding the scholar on the old road		
+2	go	story.ch5.s4	옛길에서 학자와 이야기하기	Talk with the scholar on the old road		
+2	go	story.ch5.s4.l1	휴, 살았다! 비문을 베끼다가 졸개들한테 딱 걸렸지 뭐야.	Phew, saved! The minions caught me red-handed while I was copying the inscription.		
+2	go	story.ch5.s4.l2	둘째 제단은 이 숲길 북쪽 끝에 있어. 석등 셋이 제단을 둘러싸고 있지.	The second altar is at the north end of this wood path. Three lanterns surround it.		
+2	go	story.ch5.s4.l3	비문엔 이렇게 적혀 있었어 — '해가 뜨고, 달이 지고, 별이 남는다'. 그 차례대로 불을 밝혀야 봉인이 풀려.	The inscription reads — 'The sun rises, the moon sets, the stars remain'. Light them in that order and the seal will break.		
+2	go	story.ch5.s4.l4	전부 꺼져 버리겠지. 해, 달, 별 — 잊으면 안 돼!	They'll all go out, I bet. Sun, moon, star — don't forget!		
+2	go	story.ch5.s4.p.a	차례가 틀리면요?	And if the order is wrong?		
+2	go	story.ch5.s4.p.b	먼저 가 볼게요.	I'll go on ahead.		
+2	go	story.ch5.s5	둘째 제단 석등을 비문 차례대로 밝히기	Light the second altar's lanterns in the inscription's order		
+2	go	story.ch5.s6	제단에 몰려든 가면 무리 물리치기	Drive off the masked horde swarming the altar		
+2	go	story.ch5.s7	제단 곁의 가면 쓴 나그네와 이야기하기	Talk with the masked traveler by the altar		
+2	go	story.ch5.s7.l1	……한발 늦을 뻔했군. 그자가 이 제단을 두드리러 오던 참이었다.	……That was nearly too late. He was on his way to strike this altar.		
+2	go	story.ch5.s7.l2	네가 먼저 봉인을 밝혀 두었으니 깨우지는 못하고, 졸개만 풀어 놓고 달아났지.	You lit the seal first, so he couldn't wake it — he just let his minions loose and fled.		
+2	go	story.ch5.s7.l3	봉우리 너머로. 그자가 떨군 비문 조각이다 — 학자에게 건네게.	Over the peaks. This is an inscription fragment he dropped — give it to the scholar.		
+2	go	story.ch5.s7.l4	……그자를 쫓는 길, 이제부턴 혼자보다 둘이 낫겠군. 촌장에게 인사를 마치면 네 곁에 서지.	……On the road chasing him, two will be better than one from now on. Once you've paid your respects to the Elder, I'll stand at your side.		
+2	go	story.ch5.s7.p.a	그자를 봤어요?	Did you see him?		
+2	go	story.ch5.s7.p.b	어디로 갔죠?	Where did he go?		
+2	go	story.ch5.s8	학자에게 셋째 비문 조각 건네기	Give the scholar the third inscription fragment		
+2	go	story.ch5.s8.l1	셋째 조각…! '다섯 제단이 모두 깨면 먹구름의 주인이 돌아온다'.	The third piece…! 'When all five altars wake, the master of the stormclouds returns'.		
+2	go	story.ch5.s8.l2	가면 쓴 자가 노리는 건 이무기가 아니었어. 그 '주인'이야.	The masked one isn't after the serpent. He's after that 'master'.		
+2	go	story.ch5.s8.l3	둘은 우리가 지켰어. 남은 셋은… 조각을 더 읽어 보고 알려 줄게.	We've guarded two. The other three… I'll read more of the fragments and let you know.		
+2	go	story.ch5.s8.p.a	먹구름의 주인?	The master of the stormclouds?		
+2	go	story.ch5.s8.p.b	남은 제단은 셋이네요.	So three altars are left.		
+2	go	story.ch5.s9	청하 촌장에게 알리기	Report to the Elder of Cheongha		
+2	go	story.ch5.s9.l1	은비가 무사하다니 다행이구나. 먹구름의 주인이라… 이름만 들어도 오싹하다.	I'm glad Eunbi is safe. The master of the stormclouds… just the name gives me chills.		
+2	go	story.ch5.s9.l2	잊혔던 옛길까지 되살려 준 셈이니 마을이 네게 진 빚이 크구나. 받아 두렴.	You've even brought a forgotten road back to life. The village owes you a great deal. Take this.		
+2	go	story.ch6	제6장 · 봉우리의 검은 가면	Chapter 6 · The Black Mask on the Peak		
+2	go	story.ch6.s1	학자에게 셋째 제단 자리 듣기	Hear from the scholar where the third altar is		
+2	go	story.ch6.s1.l1	조각들을 맞춰 봤어. 셋째 제단은 남쪽 공터 동쪽 봉우리야 — 길이 없어서 벽을 타고 올라가야 해.	I pieced the fragments together. The third altar is on the peak east of the Southern Glade — there's no path, so you'll have to climb the cliffs.		
+2	go	story.ch6.s1.l2	나그네는 벌써 올라갔대. 검은 가면이 그리로 가는 걸 봤다나.	They say the traveler already went up. He saw the Black Mask heading there.		
+2	go	story.ch6.s1.l3	진짜 범인 말이야. 이번엔 도망치기 전에 붙잡아야 해! 기력 잘 보면서 올라가.	The real culprit, I mean. This time we have to catch him before he runs! Watch your stamina on the way up.		
+2	go	story.ch6.s1.p.a	바로 갈게요.	I'll go right away.		
+2	go	story.ch6.s1.p.b	검은 가면?	The Black Mask?		
+2	go	story.ch6.s2	봉우리 꼭대기로 올라가기(벽 타기·활공)	Climb to the top of the peak (wall climbing · gliding)		
+2	go	story.ch6.s3	봉우리 고원의 나그네와 이야기하기	Talk with the traveler on the peak's plateau		
+2	go	story.ch6.s3.l1	제법 빨리 왔군. 그자가 곧 제단을 두드리러 올 게다.	You came quickly. He'll be here to strike the altar any moment.		
+2	go	story.ch6.s3.l2	그자는 그림자처럼 등 뒤로 붙는다. 붉은 원이 발밑에 생기면 곧장 몸을 빼게.	He clings to your back like a shadow. When a red circle appears under your feet, get out at once.		
+2	go	story.ch6.s3.l3	……왔군. 먹구름을 두르면 불로 깨라!	……He's come. When he wraps himself in stormclouds, break it with fire!		
+2	go	story.ch6.s3.p.a	같이 싸워요.	Let's fight together.		
+2	go	story.ch6.s3.p.b	왔다!	He's here!		
+2	go	story.ch6.s4	검은 가면과 맞서기	Face the Black Mask		
+2	go	story.ch6.s5	나그네와 검은 가면이 남긴 것 살피기	Examine what the Black Mask left behind with the traveler		
+2	go	story.ch6.s5.l1	……먹구름 속으로 달아났군. 하지만 가면에 금이 갔다. 다음엔 못 숨는다.	……He fled into the stormclouds. But his mask is cracked. Next time he can't hide.		
+2	go	story.ch6.s5.l2	그자가 떨군 비문 조각이다. 그리고 제단 — 두드린 자국이 있지만 아직 살아 있어.	This is an inscription fragment he dropped. And the altar — it bears the marks of his strikes, but it's still alive.		
+2	go	story.ch6.s5.l3	원소의 불을 다시 밝히게. 학자도 곧 올라올 게다.	Light the elemental fire again. The scholar will be up soon.		
+2	go	story.ch6.s6	셋째 제단에 원소 불 다시 밝히기	Relight the elemental fire on the third altar		
+2	go	story.ch6.s7	봉우리 고원에 올라온 학자에게 넷째 조각 보이기	Show the fourth fragment to the scholar who climbed the plateau		
+2	go	story.ch6.s7.l1	헉, 헉… 이 벽 누가 만든 거야. 조각 좀 보여 줘!	Huff, huff… who built this cliff? Let me see the fragment!		
+2	go	story.ch6.s7.l2	'먹구름 임금은 다섯 제단에 나뉘어 잠들었다. 가면은 임금의 신하의 표식이다'…	'The Stormcloud King sleeps divided among five altars. The mask is the mark of the King's servants'…		
+2	go	story.ch6.s7.l3	응. 남은 제단은 둘. 그자도 급해졌을 거야 — 마을에 먼저 알리자.	Yes. Two altars remain. He must be in a hurry too — let's warn the village first.		
+2	go	story.ch6.s7.p.a	신하라고요?	Servants?		
+2	go	story.ch6.s7.p.b	검은 가면이 그 신하?	The Black Mask is one of them?		
+2	go	story.ch6.s8	청하 촌장에게 알리기	Report to the Elder of Cheongha		
+2	go	story.ch6.s8.l1	먹구름 임금의 신하라… 옛날 할머니가 들려주던 자장가에 그런 말이 있었지.	A servant of the Stormcloud King… there was something like that in a lullaby my grandmother used to sing.		
+2	go	story.ch6.s8.l2	봉우리까지 오르다니 장하구나. 다친 데는 없느냐? 이건 마을 사람들이 모은 거란다.	You climbed all the way up the peak — well done. Are you hurt anywhere? The villagers put this together for you.		
+2	go	story.ch6.s8.l3	……이 늙은이도 더는 앉아만 있을 수 없구나. 다음 길엔 나도 함께 가마. 부채 바람쯤은 아직 일으킬 줄 안단다.	……This old one can't just sit around any longer. I'll come with you on the next journey. I can still stir up a breeze with my fan.		
 2	go	story.chapter_done	{0} 끝 — {1}	{0} complete — {1}		
+2	go	story.climbed	봉우리 꼭대기 — 고원 아래 나그네가 보인다	The peak's summit — the traveler is visible on the plateau below		
+2	go	story.duel_fled	검은 가면이 먹구름 속으로 달아났다	The Black Mask fled into the stormclouds		
+2	go	story.duel_p2	검은 가면이 먹구름을 둘렀다 — 불로 깨라!	The Black Mask wrapped itself in stormclouds — break it with fire!		
 2	go	story.end	끝 (F)	End (F)		
 2	go	story.follow_arrive	나그네가 걸음을 멈췄다	The traveler stopped walking		
 2	go	story.follow_lost	 · 너무 멀어졌다	 · you fell too far behind		
@@ -938,6 +1006,12 @@
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	story.reward	장 끝 보상 {0}	Chapter reward {0}		
+2	go	story.seal.moon	달	Moon		
+2	go	story.seal.star	별	Star		
+2	go	story.seal.sun	해	Sun		
+2	go	story.seal_done	해·달·별 — 봉인이 풀렸다	Sun, moon, star — the seal is broken		
+2	go	story.seal_lit	{0} 석등에 불이 붙었다 ({1}/3)	The {0} lantern caught fire ({1}/3)		
+2	go	story.seal_wrong	차례가 틀렸다 — 석등이 모두 꺼졌다	Wrong order — all the lanterns went out		
 2	go	story.short.elder	누리	Nuri		
 2	go	story.short.ferryman	버들	Beodeul		
 2	go	story.short.scholar	은비	Eunbi		

@@ -27,11 +27,25 @@ namespace Saga.Go.World
         private string _squadKey;
         private GameObject _pillar;
         private Material _pillarMat;
-        private ElementTorch _altar;
         private float _wait, _clock;
+        // light 단계마다 옛 제단 하나("장_단계") · 5장 둘째 제단(가운데 + 둘레 석등 셋, 이름표) · 6장 결투 2단계
+        private readonly Dictionary<string, ElementTorch> _altars = new Dictionary<string, ElementTorch>();
+        private ElementTorch _sealCenter;
+        private readonly ElementTorch[] _sealLamps = new ElementTorch[3];
+        private readonly List<Transform> _labels = new List<Transform>();
+        private bool _duelP2;
 
         public GameObject Pillar => _pillar;
-        public ElementTorch Altar => _altar;
+        /// <summary>1장 옛 제단(동굴 어귀).</summary>
+        public ElementTorch Altar => AltarOf(0);
+        public ElementTorch AltarOf(int ch)
+        {
+            foreach (var kv in _altars) if (kv.Key.StartsWith(ch + "_")) return kv.Value;
+            return null;
+        }
+        public ElementTorch SealLamp(int i) => _sealLamps[i];
+        public ElementTorch SealCenter => _sealCenter;
+        public bool DuelPhase2 => _duelP2;
         public IReadOnlyList<FieldEnemy> Squad => _squad;
         public GameObject NpcBody(string id) => _npcs.TryGetValue(id, out var g) ? g : null;
         /// <summary>진단용 — 마지막 혼잣말(인물 id).</summary>
@@ -57,7 +71,24 @@ namespace Saga.Go.World
             SpawnNpcs();
             BuildPillar();
             var stone = WorldMapBuilder.Instance != null ? WorldMapBuilder.Instance.StoneMaterial : null;
-            _altar = ElementTorch.Spawn(GoStory.GridPos(GoStory.AltarGx, GoStory.AltarGy), GoElement.Pyro, transform, stone, "StoryAltar");
+            for (int c = 0; c < GoStory.Chapters.Length; c++)
+                for (int i = 0; i < GoStory.Chapters[c].Steps.Length; i++)
+                    if (GoStory.Chapters[c].Steps[i].Type == GoStory.StepType.Light)
+                        _altars[$"{c}_{i}"] = ElementTorch.Spawn(FolkWalker.Grounded(GoStory.StepPos(GoStory.Chapters[c].Steps[i]) + Vector3.up * 0.5f), GoElement.Pyro, transform, stone, $"StoryAltar_{c}_{i}");
+            // 5장 둘째 제단 — 해 = 화 빛(주황) · 달 = 빙 빛(옅은 푸름) · 별 = 암 빛(금빛)
+            Vector3 a2 = FolkWalker.Grounded(GoStory.GridPos(GoStory.Altar2Gx, GoStory.Altar2Gy) + Vector3.up * 0.5f);
+            _sealCenter = ElementTorch.Spawn(a2, GoElement.Pyro, transform, stone, "StorySeal");
+            for (int i = 0; i < 3; i++)
+            {
+                string id = GoStory.SealLayout[i];
+                var el = id == "sun" ? GoElement.Pyro : id == "moon" ? GoElement.Cryo : GoElement.Geo;
+                _sealLamps[i] = ElementTorch.Spawn(FolkWalker.Grounded(GoStory.SealLampPos(a2, i) + Vector3.up * 0.5f), el, transform, stone, "StorySeal_" + id);
+                var label = new GameObject("Label");
+                label.transform.SetParent(_sealLamps[i].transform, false);
+                label.transform.localPosition = new Vector3(0f, 5.2f, 0f);
+                Saga.Core.SagaWorldText.Add(label, GoStory.SealName(id), 4.5f, GoElements.ColorOf(el));
+                _labels.Add(label.transform);
+            }
             FieldEnemy.Killed += OnKilled;
             FieldCombat.ElementPulse += OnPulse;
             DomainField.Cleared += OnDomainCleared;
@@ -187,9 +218,13 @@ namespace Saga.Go.World
             _clock += Time.deltaTime;
             if (_pillar != null && _pillar.activeSelf)
                 _pillarMat.SetColor("_EmissionColor", new Color(1f, 0.82f, 0.29f) * (2.4f + Mathf.Sin(_clock * 2.2f) * 0.8f));
+            var cam = Camera.main;
+            if (cam != null)
+                foreach (var l in _labels) if (l != null && l.gameObject.activeInHierarchy) l.rotation = Quaternion.LookRotation(l.position - cam.transform.position);
             var fc = FieldCombat.Instance;
             if (fc == null) return;
             Follow(fc.transform.position, Time.deltaTime);
+            DuelTick();
             _wait -= Time.deltaTime;
             if (_wait > 0f) return;
             _wait = CheckSec;
@@ -245,7 +280,16 @@ namespace Saga.Go.World
                         if (!GuardianState.Standing) { StoryState.Advance(); return; } // 이미 쓰러져 꽃을 기다린다
                         break;
                     case GoStory.StepType.Kill:
+                    case GoStory.StepType.Duel:
                         if (_squad.Count == 0 && GoStory.Flat(p, t) < GoStory.KillNear) SpawnSquad(st, t);
+                        break;
+                    case GoStory.StepType.Climb:
+                        if (GoWorldMap.StandsOn(GoStory.DuelPeak, p))
+                        {
+                            Toast(GoLocalization.T("story.climbed", "봉우리 꼭대기 — 고원 아래 나그네가 보인다"), 3f);
+                            StoryState.Advance();
+                            return;
+                        }
                         break;
                 }
             }
@@ -275,9 +319,16 @@ namespace Saga.Go.World
                 float a = i * Mathf.PI * 2f / st.Foes.Length;
                 Vector3 off = boss ? Vector3.up * 0.5f : new Vector3(Mathf.Cos(a), 0.5f, Mathf.Sin(a)) * GoStory.KillSpread;
                 var e = spawner.SpawnStoryFoe(st.Foes[i].Kind, FolkWalker.Grounded(center + off), _squadKey, st.Foes[i].Over);
-                if (boss) e.MakeStoryBoss(GoLocalization.T(st.BossKey, st.BossKo), GoStory.BossHp, GoStory.BossAtk, GoStory.BossScale);
+                if (boss)
+                {
+                    e.MakeStoryBoss(GoLocalization.T(st.BossKey, st.BossKo), st.HpMul > 0f ? st.HpMul : GoStory.BossHp,
+                        st.AtkMul > 0f ? st.AtkMul : GoStory.BossAtk, st.ScaleMul > 0f ? st.ScaleMul : GoStory.BossScale);
+                    if (st.Rot != null) e.SetRotation(st.Rot);
+                    if (st.Mask) AddMask(e.transform);
+                }
                 _squad.Add(e);
             }
+            _duelP2 = false;
             Toast(st.BossKo != null
                 ? string.Format(GoLocalization.T("story.boss_up", "{0}가 나타났다"), GoLocalization.T(st.BossKey, st.BossKo))
                 : GoLocalization.T("story.squad", "먹구름 졸개가 나타났다"), 3f);
@@ -297,6 +348,12 @@ namespace Saga.Go.World
             var st = StoryState.Current;
             if (e == null || st == null) return;
             if (st.Type == GoStory.StepType.Boss && e.IsGuardian) { StoryState.Advance(); return; }
+            if (st.Type == GoStory.StepType.Duel && e.IsStoryBoss && e.GroupId == _squadKey)
+            {
+                Toast(GoLocalization.T("story.duel_fled", "검은 가면이 먹구름 속으로 달아났다"), 3.5f);
+                StoryState.Advance();
+                return;
+            }
             if (st.Type == GoStory.StepType.Kill && e.StoryFoe && e.GroupId == _squadKey)
             {
                 foreach (var m in _squad) if (m != null && m.Alive) return;
@@ -307,6 +364,7 @@ namespace Saga.Go.World
         private void OnPulse(Vector3 center, float radius, GoElement el)
         {
             var st = StoryState.Current;
+            if (st != null && st.Type == GoStory.StepType.Seal) { SealPulse(center, radius); return; }
             if (st == null || st.Type != GoStory.StepType.Light) return;
             if (GoStory.Flat(center, GoStory.TargetOf(st, out _)) > radius + GoStory.LightR) return;
             Toast(GoLocalization.T("story.lit", "옛 제단에 불이 붙었다 — 비문이 빛난다"), 3.5f);
@@ -318,6 +376,88 @@ namespace Saga.Go.World
             var st = StoryState.Current;
             if (st != null && st.Type == GoStory.StepType.Domain && k == GoStory.SiteKind(st.Site)) StoryState.Advance();
         }
+
+        /// <summary>109-14-14 seal — 원소 신호 원에 걸린 가장 가까운 꺼진 석등 하나. 비문 차례(해·달·별)면 켜지고, 틀리면 모두 꺼진다.
+        /// 켠 수는 `StoryState.Progress`(저장 안 함). 셋이면 넘긴다.</summary>
+        private void SealPulse(Vector3 center, float radius)
+        {
+            int best = -1;
+            float bd = float.MaxValue;
+            for (int i = 0; i < 3; i++)
+            {
+                var lamp = _sealLamps[i];
+                if (lamp == null || lamp.Lit) continue;
+                float d = GoStory.Flat(center, lamp.transform.position);
+                if (d <= radius + GoStory.LightR && d < bd) { bd = d; best = i; }
+            }
+            if (best < 0) return;
+            string id = GoStory.SealLayout[best];
+            if (id != GoStory.SealOrder[StoryState.Progress])
+            {
+                StoryState.Progress = 0;
+                RefreshSeal();
+                Toast(GoLocalization.T("story.seal_wrong", "차례가 틀렸다 — 석등이 모두 꺼졌다"), 3f);
+                return;
+            }
+            StoryState.Progress++;
+            RefreshSeal();
+            if (StoryState.Progress >= GoStory.SealOrder.Length)
+            {
+                Toast(GoLocalization.T("story.seal_done", "해·달·별 — 봉인이 풀렸다"), 3.5f);
+                StoryState.Advance();
+            }
+            else Toast(string.Format(GoLocalization.T("story.seal_lit", "{0} 석등에 불이 붙었다 ({1}/3)"), GoStory.SealName(id), StoryState.Progress), 2.5f);
+        }
+
+        /// <summary>석등 불 — 차례에서 앞선 것만 켜진다(seal 단계를 넘겼으면 모두).</summary>
+        private void RefreshSeal()
+        {
+            bool shown = !StoryState.OffForTest && StepReached(4, SealStepIndex);
+            bool past = StepReached(4, SealStepIndex + 1);
+            if (_sealCenter != null) { _sealCenter.gameObject.SetActive(shown); _sealCenter.SetLit(past); }
+            for (int i = 0; i < 3; i++)
+            {
+                if (_sealLamps[i] == null) continue;
+                _sealLamps[i].gameObject.SetActive(shown);
+                int order = System.Array.IndexOf(GoStory.SealOrder, GoStory.SealLayout[i]);
+                _sealLamps[i].SetLit(past || (StoryState.Ch == 4 && StoryState.StepIndex == SealStepIndex && order < StoryState.Progress));
+            }
+        }
+
+        private static int SealStepIndex
+        {
+            get
+            {
+                var steps = GoStory.Chapters[4].Steps;
+                for (int i = 0; i < steps.Length; i++) if (steps[i].Type == GoStory.StepType.Seal) return i;
+                return steps.Length;
+            }
+        }
+
+        /// <summary>진행이 그 장·단계에 닿았나(같거나 지났나).</summary>
+        private static bool StepReached(int ch, int step) => StoryState.Ch > ch || (StoryState.Ch == ch && StoryState.StepIndex >= step);
+
+        /// <summary>109-14-14 duel 2단계 — 체력 절반에서 뇌 방패(최대 체력 12%) + 불도깨비 졸개 둘.</summary>
+        private void DuelTick()
+        {
+            var st = StoryState.Current;
+            if (st == null || st.Type != GoStory.StepType.Duel || _duelP2 || _squad.Count == 0) return;
+            var boss = _squad[0];
+            if (boss == null || !boss.Alive || boss.Hp > boss.MaxHp * GoStory.DuelP2At) return;
+            _duelP2 = true;
+            boss.RaiseBossShield(GoElement.Electro, boss.MaxHp * GoStory.DuelP2Shield);
+            var spawner = Object.FindFirstObjectByType<FieldSpawner>();
+            if (spawner != null)
+                for (int i = 0; i < 2; i++)
+                {
+                    Vector3 off = new Vector3(i == 0 ? -3.5f : 3.5f, 0.5f, 2.5f);
+                    _squad.Add(spawner.SpawnStoryFoe(FieldEnemy.Kind.EmberImp, FolkWalker.Grounded(boss.transform.position + off), _squadKey));
+                }
+            Toast(GoLocalization.T("story.duel_p2", "검은 가면이 먹구름을 둘렀다 — 불로 깨라!"), 3f);
+        }
+
+        /// <summary>진단용 — 2단계를 지금 본다(프레임을 안 기다리게).</summary>
+        public void DuelTickForTest() => DuelTick();
 
         /// <summary>109-14-13 gather — 그 채집물을 주울 때마다 하나(단계 동안만 센다).</summary>
         private void OnPicked(string item)
@@ -359,12 +499,15 @@ namespace Saga.Go.World
                 _pillar.SetActive(has);
                 if (has) _pillar.transform.position = FolkWalker.Grounded(t + Vector3.up * 0.5f) + Vector3.up * PillarHeight * 0.5f;
             }
-            if (_altar != null)
+            foreach (var kv in _altars)
             {
-                bool past = StoryState.Ch > 0 || StoryState.StepIndex > LightStepIndex; // 불을 붙였다 — 켠 채 남는다
-                _altar.gameObject.SetActive(!StoryState.OffForTest && (past || (st != null && st.Type == GoStory.StepType.Light)));
-                _altar.SetLit(past);
+                var parts = kv.Key.Split('_');
+                int c = int.Parse(parts[0]), i = int.Parse(parts[1]);
+                bool past = StepReached(c, i + 1); // 불을 붙였다 — 켠 채 남는다
+                kv.Value.gameObject.SetActive(!StoryState.OffForTest && StepReached(c, i));
+                kv.Value.SetLit(past);
             }
+            RefreshSeal();
             foreach (var kv in _npcs)
             {
                 bool shown = !StoryState.OffForTest && GoStory.Shown(kv.Key, StoryState.Ch, StoryState.StepIndex);

@@ -20,7 +20,47 @@ namespace Saga.Go.Data
     /// </summary>
     public static class GoStory
     {
-        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow }
+        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow, Seal, Climb, Duel }
+
+        // ---- 109-14-14 5·6장(웹 ⑲-14) — 솔숲 고개 → 서쪽 숲길(옛길 어귀·둘째 제단), 봉우리 → 안쪽 산 칸 (6,7) 봉우리와 그 고원 ----
+        /// <summary>seal — 둘째 제단 둘레 석등 셋(북쪽부터 시계 방향 달·별·해), 비문 차례는 해·달·별. 웹 6m × 1.35.</summary>
+        public const float SealR = 8f;
+        public static readonly string[] SealLayout = { "moon", "star", "sun" };
+        public static readonly string[] SealOrder = { "sun", "moon", "star" };
+        /// <summary>duel — 체력 절반에서 뇌 방패(최대 체력 12%) + 불도깨비 졸개 둘(웹 그대로).</summary>
+        public const float DuelP2At = 0.5f, DuelP2Shield = 0.12f;
+        /// <summary>6장 봉우리 — 안쪽 산 칸 가운데 오르기 가장 쉬운 곳(고원 14m + 봉우리 13.5m). 고원 위 자리는 칸 가운데에서 m.</summary>
+        public const int DuelPeakGx = 6, DuelPeakGy = 7;
+        public static readonly Vector2 ArenaDuel = new Vector2(-12f, -10f), ArenaWanderer = new Vector2(-6f, -16f),
+            ArenaScholar = new Vector2(-16f, -4f), ArenaAltar = new Vector2(-17f, -15f);
+
+        /// <summary>6장 봉우리 고원 위 자리(칸 가운데 + 오프셋, 고원 높이).</summary>
+        public static Vector3 ArenaPos(Vector2 off) =>
+            TestMapData.WorldPos(DuelPeakGx, DuelPeakGy) + new Vector3(off.x, TestMapData.MountainHeight(DuelPeakGx, DuelPeakGy), off.y);
+
+        public static GoWorldMap.Peak DuelPeak
+        {
+            get
+            {
+                int i = GoWorldMap.PeakIndex($"peak_{DuelPeakGx}_{DuelPeakGy}");
+                return i >= 0 ? GoWorldMap.Peaks[i] : default;
+            }
+        }
+
+        /// <summary>석등 하나의 자리 — 둘째 제단 둘레(북 = −z 부터 시계 방향).</summary>
+        public static Vector3 SealLampPos(Vector3 altar, int i)
+        {
+            float a = i * Mathf.PI * 2f / 3f;
+            return altar + new Vector3(Mathf.Sin(a), 0f, -Mathf.Cos(a)) * SealR;
+        }
+
+        /// <summary>석등 표시 이름(해·달·별).</summary>
+        public static string SealName(string id) => id switch
+        {
+            "sun" => GoLocalization.T("story.seal.sun", "해"),
+            "moon" => GoLocalization.T("story.seal.moon", "달"),
+            _ => GoLocalization.T("story.seal.star", "별"),
+        };
 
         /// <summary>follow — 이 안이면 인물이 걷고(웹 12m), 이보다 멀면 추적 줄에 "너무 멀어졌다"(웹 30m). 걷는 빠르기 2.6m/초(웹 그대로).</summary>
         public const float FollowNear = 12f, FollowLost = 30f, FollowSpeed = 2.6f;
@@ -55,16 +95,26 @@ namespace Saga.Go.Data
             public bool Mask;
             /// <summary>있으면 이 칸들 동안에만 선다(나그네). 칸마다 자리가 다를 수 있다.</summary>
             public Spot[] Appear;
+            /// <summary>늘 서되 이 칸들 동안엔 그 자리로 옮겨 선다(은비 — 5장 옛길·둘째 제단, 6장 봉우리).</summary>
+            public Spot[] At;
             /// <summary>follow 단계에서 걷는 길(칸 좌표, 첫 점 = 걷기 전 자리).</summary>
             public Vector2[] Path;
         }
 
-        /// <summary>인물이 서는 칸 — 장(0부터)·단계 From~To. Gx·Gy 가 음수면 길(Path) 위(따라가기 동안·뒤는 길 끝).</summary>
+        /// <summary>인물이 서는 칸 — 장(0부터)·단계 From~To 동안 Gx·Gy(또는 길 위·고원 위).</summary>
         public struct Spot
         {
             public int Ch, From, To;
             public float Gx, Gy;
+            /// <summary>길(Path) 위 — 따라가기 동안은 걸은 거리, 뒤는 길 끝.</summary>
+            public bool Path;
+            /// <summary>6장 봉우리 고원 위 — Gx·Gy 대신 `Arena`(칸 가운데에서 m).</summary>
+            public bool Peak;
+            public Vector2 Arena;
         }
+
+        private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
+            a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
 
         public static readonly Npc[] Npcs =
         {
@@ -76,17 +126,31 @@ namespace Saga.Go.Data
                 IdleKey = "story.idle.ferryman", IdleKo = "물 냄새가 요즘 영 비릿해." },
             new Npc { Id = "scholar", NameKey = "story.npc.scholar", NameKo = "떠돌이 학자 은비", ShortKey = "story.short.scholar", ShortKo = "은비",
                 Gx = 3.35f, Gy = 1.4f, BodyFrom = "npc_merchant",
+                At = new[]
+                {
+                    new Spot { Ch = 4, From = 0, To = 3, Gx = RoadGx, Gy = RoadGy },
+                    new Spot { Ch = 4, From = 4, To = 7, Gx = Altar2Gx - 5f / 48f, Gy = Altar2Gy + 7f / 48f },
+                    new Spot { Ch = 5, From = 6, To = 6, Peak = true, Arena = ArenaScholar },
+                },
                 IdleKey = "story.idle.scholar", IdleKo = "이 비문, 읽을수록 이상하다니까." },
             // 4장 둘째 단계 = 다리 북쪽 머리, 셋째(따라가기) = 길 위, 넷째~여섯째 = 길 끝(남쪽 공터 서쪽)
             new Npc { Id = "wanderer", NameKey = "story.npc.wanderer", NameKo = "가면 쓴 나그네", ShortKey = "story.short.wanderer", ShortKo = "나그네",
                 Gx = WanderGx, Gy = WanderGy, BodyFrom = "npc_traveler", Mask = true,
-                Appear = new[] { new Spot { Ch = 3, From = 1, To = 1, Gx = WanderGx, Gy = WanderGy }, new Spot { Ch = 3, From = 2, To = 5, Gx = -1f, Gy = -1f } },
+                Appear = new[]
+                {
+                    new Spot { Ch = 3, From = 1, To = 1, Gx = WanderGx, Gy = WanderGy }, new Spot { Ch = 3, From = 2, To = 5, Path = true },
+                    new Spot { Ch = 4, From = 6, To = 6, Gx = Altar2Gx + 7f / 48f, Gy = Altar2Gy + 5f / 48f },
+                    new Spot { Ch = 5, From = 2, To = 4, Peak = true, Arena = ArenaWanderer },
+                },
                 Path = new[] { new Vector2(WanderGx, WanderGy), new Vector2(3.0f, 5.0f), new Vector2(3.0f, 5.55f), new Vector2(3.0f, 6.2f), new Vector2(2.95f, 6.85f), new Vector2(2.55f, 7.2f) },
                 IdleKey = "story.idle.wanderer", IdleKo = "……" },
         };
 
         /// <summary>남쪽 다리 북쪽 머리(마을 남쪽 길 끝) — 4장 나그네가 강물을 보고 선 자리.</summary>
         public const float WanderGx = 3.0f, WanderGy = 4.45f;
+        /// <summary>5장 서쪽 숲길 — 옛길(은비가 졸개에 에워싸인 곳) · 어귀(go, 마을 쪽 숲 가장자리) · 옛길 졸개 · 둘째 제단(숲길 북쪽 끝) · 제단 졸개(제단 남쪽 10m).</summary>
+        public const float RoadGx = -0.1f, RoadGy = 2.85f, RoadGoGx = 0.35f, RoadGoGy = 3.0f, RoadSquadGx = 0.1f, RoadSquadGy = 3.15f;
+        public const float Altar2Gx = 0.0f, Altar2Gy = 2.05f, Altar2SquadGx = 0.0f, Altar2SquadGy = 2.25f;
 
         /// <summary>대화 한 줄 — Who 가 null 이면 "나"의 고르는 줄(대답만 다르고 흐름은 같다).</summary>
         public struct Line
@@ -111,7 +175,15 @@ namespace Saga.Go.Data
             public string Item;             // Gather
             public int Count;               // Gather
             public Line[] Lines;            // Talk
+            /// <summary>Kill·Duel·Light — 6장 봉우리 고원 위 자리(있으면 Gx·Gy 대신).</summary>
+            public Vector2? Arena;
+            /// <summary>Kill·Duel 이야기 보스 배율(0 이면 `BossHp`·`BossAtk`·`BossScale`) · 공격 차례 · 가면.</summary>
+            public float HpMul, AtkMul, ScaleMul;
+            public FieldEnemy.BossMove[] Rot;
+            public bool Mask;
         }
+
+        public static Vector3 StepPos(Step s) => s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
 
         public const float BossHp = 6f, BossAtk = 1.5f, BossScale = 1.8f;
 
@@ -316,6 +388,114 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            new Chapter
+            {
+                Id = "ch5", NameKey = "story.ch5", NameKo = "제5장 · 서쪽 고개 옛길", Ar = 12,
+                Gold = 1750, Mats = new[] { 0, 3, 2, 3, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch5.s1", TextKo = "촌장에게 학자 소식 듣기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch5.s1.l1", "은비가 서쪽 숲 옛길로 떠난 지 사흘째란다. 그 뒤로 소식이 뚝 끊겼어."),
+                            L("elder", "story.ch5.s1.l2", "그 길은 사당보다도 오래된 길이야. 숲에 묻혀서 이제 아는 사람도 드물지."),
+                            Pick("story.ch5.s1.p", "제가 찾아볼게요.", "혼자 간 거예요?"),
+                            L("elder", "story.ch5.s1.l3", "마을 서쪽 숲길로 들어가면 옛길 어귀가 나온단다. 서두르렴."),
+                        } },
+                    new Step { Type = StepType.Go, Gx = RoadGoGx, Gy = RoadGoGy, TextKey = "story.ch5.s2", TextKo = "서쪽 숲길 옛길 어귀로" },
+                    new Step { Type = StepType.Kill, Gx = RoadSquadGx, Gy = RoadSquadGy,
+                        Foes = new[] { KF, KF, F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        TextKey = "story.ch5.s3", TextKo = "옛길에서 학자를 에워싼 가면 졸개 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "scholar", TextKey = "story.ch5.s4", TextKo = "옛길에서 학자와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("scholar", "story.ch5.s4.l1", "휴, 살았다! 비문을 베끼다가 졸개들한테 딱 걸렸지 뭐야."),
+                            L("scholar", "story.ch5.s4.l2", "둘째 제단은 이 숲길 북쪽 끝에 있어. 석등 셋이 제단을 둘러싸고 있지."),
+                            L("scholar", "story.ch5.s4.l3", "비문엔 이렇게 적혀 있었어 — '해가 뜨고, 달이 지고, 별이 남는다'. 그 차례대로 불을 밝혀야 봉인이 풀려."),
+                            Pick("story.ch5.s4.p", "차례가 틀리면요?", "먼저 가 볼게요."),
+                            L("scholar", "story.ch5.s4.l4", "전부 꺼져 버리겠지. 해, 달, 별 — 잊으면 안 돼!"),
+                        } },
+                    new Step { Type = StepType.Seal, TextKey = "story.ch5.s5", TextKo = "둘째 제단 석등을 비문 차례대로 밝히기" },
+                    new Step { Type = StepType.Kill, Gx = Altar2SquadGx, Gy = Altar2SquadGy,
+                        Foes = new[] { KF, KF, KT, F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo) },
+                        TextKey = "story.ch5.s6", TextKo = "제단에 몰려든 가면 무리 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch5.s7", TextKo = "제단 곁의 가면 쓴 나그네와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch5.s7.l1", "……한발 늦을 뻔했군. 그자가 이 제단을 두드리러 오던 참이었다."),
+                            L("wanderer", "story.ch5.s7.l2", "네가 먼저 봉인을 밝혀 두었으니 깨우지는 못하고, 졸개만 풀어 놓고 달아났지."),
+                            Pick("story.ch5.s7.p", "그자를 봤어요?", "어디로 갔죠?"),
+                            L("wanderer", "story.ch5.s7.l3", "봉우리 너머로. 그자가 떨군 비문 조각이다 — 학자에게 건네게."),
+                            L("wanderer", "story.ch5.s7.l4", "……그자를 쫓는 길, 이제부턴 혼자보다 둘이 낫겠군. 촌장에게 인사를 마치면 네 곁에 서지."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "scholar", TextKey = "story.ch5.s8", TextKo = "학자에게 셋째 비문 조각 건네기",
+                        Lines = new[]
+                        {
+                            L("scholar", "story.ch5.s8.l1", "셋째 조각…! '다섯 제단이 모두 깨면 먹구름의 주인이 돌아온다'."),
+                            L("scholar", "story.ch5.s8.l2", "가면 쓴 자가 노리는 건 이무기가 아니었어. 그 '주인'이야."),
+                            Pick("story.ch5.s8.p", "먹구름의 주인?", "남은 제단은 셋이네요."),
+                            L("scholar", "story.ch5.s8.l3", "둘은 우리가 지켰어. 남은 셋은… 조각을 더 읽어 보고 알려 줄게."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch5.s9", TextKo = "청하 촌장에게 알리기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch5.s9.l1", "은비가 무사하다니 다행이구나. 먹구름의 주인이라… 이름만 들어도 오싹하다."),
+                            L("elder", "story.ch5.s9.l2", "잊혔던 옛길까지 되살려 준 셈이니 마을이 네게 진 빚이 크구나. 받아 두렴."),
+                        } },
+                }
+            },
+            new Chapter
+            {
+                Id = "ch6", NameKey = "story.ch6", NameKo = "제6장 · 봉우리의 검은 가면", Ar = 15,
+                Gold = 2000, Mats = new[] { 0, 3, 2, 4, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "scholar", TextKey = "story.ch6.s1", TextKo = "학자에게 셋째 제단 자리 듣기",
+                        Lines = new[]
+                        {
+                            L("scholar", "story.ch6.s1.l1", "조각들을 맞춰 봤어. 셋째 제단은 남쪽 공터 동쪽 봉우리야 — 길이 없어서 벽을 타고 올라가야 해."),
+                            L("scholar", "story.ch6.s1.l2", "나그네는 벌써 올라갔대. 검은 가면이 그리로 가는 걸 봤다나."),
+                            Pick("story.ch6.s1.p", "바로 갈게요.", "검은 가면?"),
+                            L("scholar", "story.ch6.s1.l3", "진짜 범인 말이야. 이번엔 도망치기 전에 붙잡아야 해! 기력 잘 보면서 올라가."),
+                        } },
+                    new Step { Type = StepType.Climb, TextKey = "story.ch6.s2", TextKo = "봉우리 꼭대기로 올라가기(벽 타기·활공)" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch6.s3", TextKo = "봉우리 고원의 나그네와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch6.s3.l1", "제법 빨리 왔군. 그자가 곧 제단을 두드리러 올 게다."),
+                            L("wanderer", "story.ch6.s3.l2", "그자는 그림자처럼 등 뒤로 붙는다. 붉은 원이 발밑에 생기면 곧장 몸을 빼게."),
+                            Pick("story.ch6.s3.p", "같이 싸워요.", "왔다!"),
+                            L("wanderer", "story.ch6.s3.l3", "……왔군. 먹구름을 두르면 불로 깨라!"),
+                        } },
+                    new Step { Type = StepType.Duel, Arena = ArenaDuel, Foes = new[] { F(FieldEnemy.Kind.Bandit) }, Mask = true,
+                        BossKey = "story.boss.mask", BossKo = "검은 가면", HpMul = 8f, AtkMul = 1.9f, ScaleMul = 1.05f,
+                        Rot = new[] { FieldEnemy.BossMove.Shadow, FieldEnemy.BossMove.Spit, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Shadow, FieldEnemy.BossMove.Melee },
+                        TextKey = "story.ch6.s4", TextKo = "검은 가면과 맞서기" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch6.s5", TextKo = "나그네와 검은 가면이 남긴 것 살피기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch6.s5.l1", "……먹구름 속으로 달아났군. 하지만 가면에 금이 갔다. 다음엔 못 숨는다."),
+                            L("wanderer", "story.ch6.s5.l2", "그자가 떨군 비문 조각이다. 그리고 제단 — 두드린 자국이 있지만 아직 살아 있어."),
+                            L("wanderer", "story.ch6.s5.l3", "원소의 불을 다시 밝히게. 학자도 곧 올라올 게다."),
+                        } },
+                    new Step { Type = StepType.Light, Arena = ArenaAltar, TextKey = "story.ch6.s6", TextKo = "셋째 제단에 원소 불 다시 밝히기" },
+                    new Step { Type = StepType.Talk, Npc = "scholar", TextKey = "story.ch6.s7", TextKo = "봉우리 고원에 올라온 학자에게 넷째 조각 보이기",
+                        Lines = new[]
+                        {
+                            L("scholar", "story.ch6.s7.l1", "헉, 헉… 이 벽 누가 만든 거야. 조각 좀 보여 줘!"),
+                            L("scholar", "story.ch6.s7.l2", "'먹구름 임금은 다섯 제단에 나뉘어 잠들었다. 가면은 임금의 신하의 표식이다'…"),
+                            Pick("story.ch6.s7.p", "신하라고요?", "검은 가면이 그 신하?"),
+                            L("scholar", "story.ch6.s7.l3", "응. 남은 제단은 둘. 그자도 급해졌을 거야 — 마을에 먼저 알리자."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch6.s8", TextKo = "청하 촌장에게 알리기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch6.s8.l1", "먹구름 임금의 신하라… 옛날 할머니가 들려주던 자장가에 그런 말이 있었지."),
+                            L("elder", "story.ch6.s8.l2", "봉우리까지 오르다니 장하구나. 다친 데는 없느냐? 이건 마을 사람들이 모은 거란다."),
+                            L("elder", "story.ch6.s8.l3", "……이 늙은이도 더는 앉아만 있을 수 없구나. 다음 길엔 나도 함께 가마. 부채 바람쯤은 아직 일으킬 줄 안단다."),
+                        } },
+                }
+            },
         };
 
         public static int NpcIndex(string id)
@@ -347,10 +527,10 @@ namespace Saga.Go.Data
         public static Vector3 NpcPosAt(string id, int ch, int step, float followDist)
         {
             var n = NpcOf(id);
-            if (n.Appear != null)
-                foreach (var a in n.Appear)
-                    if (a.Ch == ch && step >= a.From && step <= a.To)
-                        return a.Gx < 0f ? PathPos(n, step == FollowStepOf(id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            foreach (var list in new[] { n.Appear, n.At })
+                if (list != null)
+                    foreach (var a in list)
+                        if (a.Ch == ch && step >= a.From && step <= a.To) return SpotPos(n, a, ch, step, followDist);
             return GridPos(n.Gx, n.Gy);
         }
 
@@ -425,7 +605,9 @@ namespace Saga.Go.Data
                 case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : GridPos(s.Gx, s.Gy);
                 case StepType.Boss: return TestMapData.WorldPos(FieldSpawner.GuardianGx, FieldSpawner.GuardianGy);
                 case StepType.Domain: return SitePos(s.Site);
-                case StepType.Light: radius = LightR; return GridPos(s.Gx, s.Gy);
+                case StepType.Light: radius = LightR; return StepPos(s);
+                case StepType.Seal: return GridPos(Altar2Gx, Altar2Gy);
+                case StepType.Climb: return DuelPeak.Top;
                 case StepType.Gather:
                 {
                     Vector3 best = from; float bd = float.MaxValue;
@@ -447,7 +629,7 @@ namespace Saga.Go.Data
                     }
                     return best;
                 }
-                default: return GridPos(s.Gx, s.Gy);
+                default: return StepPos(s);
             }
         }
 
