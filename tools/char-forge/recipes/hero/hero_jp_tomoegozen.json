@@ -26,6 +26,19 @@
  "eyebrows": "eyebrow012/eyebrow012.mhclo",
  "eyelashes": "eyelashes04/eyelashes04.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "mouth-lowerlip-volume-decr": 0.409,
+  "eye-corner1-up": 0.555,
+  "nose-hump-incr": 0.274,
+  "mouth-scale-horiz-incr": 0.523,
+  "nose-point-down": 0.423,
+  "eye-height2-decr": 0.432,
+  "eyebrows-trans-up": 0.319,
+  "eye-bag-incr": 0.578,
+  "chin-width-decr": 0.443,
+  "head-square": 0.498,
+  "chin-prominent-decr": 0.15
+ },
  "hair": "ponytail01/ponytail01.mhclo",
  "_garments": [
   "gusoku@dad8c3,1f2226"

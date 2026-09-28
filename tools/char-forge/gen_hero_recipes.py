@@ -305,6 +305,44 @@ def mix(a, b, f):
 TRIM = ['#5a2a6a', '#8a2a24', '#2a3a7a', '#2f5a3a', '#9a7a2a', '#3a2a1e']
 
 
+# 얼굴 모프 축(MakeHuman 얼굴 부위, 짝 = (줄이기, 늘리기)) — 같은 나이·성별·인종이면 같은 얼굴이었다(09-28 여자 인물 둘이 한 얼굴)
+FACE_AXES = [
+    ('nose-scale-horiz-decr', 'nose-scale-horiz-incr'), ('nose-scale-vert-decr', 'nose-scale-vert-incr'),
+    ('nose-hump-decr', 'nose-hump-incr'), ('nose-point-down', 'nose-point-up'), ('nose-flaring-decr', 'nose-flaring-incr'),
+    ('nose-volume-decr', 'nose-volume-incr'), ('eye-scale-decr', 'eye-scale-incr'), ('eye-trans-down', 'eye-trans-up'),
+    ('eye-height2-decr', 'eye-height2-incr'), ('eye-corner1-down', 'eye-corner1-up'), ('eye-bag-decr', 'eye-bag-incr'),
+    ('mouth-scale-horiz-decr', 'mouth-scale-horiz-incr'), ('mouth-lowerlip-volume-decr', 'mouth-lowerlip-volume-incr'),
+    ('mouth-upperlip-height-decr', 'mouth-upperlip-height-incr'), ('mouth-angles-down', 'mouth-angles-up'),
+    ('chin-width-decr', 'chin-width-incr'), ('chin-height-decr', 'chin-height-incr'), ('chin-prominent-decr', 'chin-prominent-incr'),
+    ('cheek-bones-decr', 'cheek-bones-incr'), ('cheek-volume-decr', 'cheek-volume-incr'), ('forehead-scale-vert-decr', 'forehead-scale-vert-incr'),
+    ('eyebrows-trans-down', 'eyebrows-trans-up'), ('eyebrows-angle-down', 'eyebrows-angle-up'), ('ear-scale-decr', 'ear-scale-incr'),
+    ('head-scale-horiz-decr', 'head-scale-horiz-incr'),
+]
+HEAD_SHAPES = ['head-oval', 'head-round', 'head-square', 'head-rectangular', 'head-diamond', 'head-triangular', 'head-invertedtriangular']
+STRONG_ROLES = ('warrior', 'general', 'samurai', 'ronin', 'hoplite', 'tribal', 'nomad', 'khan', 'warrior_f', 'officer')
+
+
+def face_targets(hid, role, female):
+    """인물마다 얼굴 — 축 스물다섯 중 아홉을 해시로 골라 ±0.2~0.6, 머리형 하나 0.25~0.55. 무장은 턱·광대를 굵게, 여자는 턱을 곱게."""
+    import hashlib
+    b = hashlib.sha256(('face:' + hid).encode()).digest()
+    t, used = {}, set()
+    for i in range(9):
+        k = b[i] % len(FACE_AXES)
+        while k in used:
+            k = (k + 1) % len(FACE_AXES)
+        used.add(k)
+        v = 0.2 + 0.4 * b[9 + i] / 255
+        t[FACE_AXES[k][b[18 + i] & 1]] = round(v, 3)
+    t[HEAD_SHAPES[b[27] % len(HEAD_SHAPES)]] = round(0.25 + 0.3 * b[28] / 255, 3)
+    lean = [('chin-width-incr', 0.25), ('cheek-bones-incr', 0.2)] if role in STRONG_ROLES and not female else         [('chin-width-decr', 0.2), ('chin-prominent-decr', 0.15)] if female else []
+    for n, v in lean:
+        opp = n.replace('incr', 'decr') if n.endswith('incr') else n.replace('decr', 'incr')
+        if opp not in t:
+            t[n] = round(max(t.get(n, 0.0), v), 3)
+    return t
+
+
 def vary(c, h):
     """같은 세력 사람이 같은 한 색으로 서지 않게(09-28 인물 105 렌더 — 토가 셋·관복 넷이 머리만 달랐다) — 해시로 밝기 ±18%·색상 ±10°."""
     import colorsys
@@ -527,6 +565,7 @@ def make(h):
         'eyelashes': ('eyelashes02/eyelashes02.mhclo' if (hs >> 9) & 1 else 'eyelashes04/eyelashes04.mhclo') if female
         else ('eyelashes01/eyelashes01.mhclo' if (hs >> 9) & 1 else 'eyelashes03/eyelashes03.mhclo'),
         'teeth': 'teeth_base/teeth_base.mhclo',
+        'targets': face_targets(h['id'], role, female),
     }
     if hair:
         r['hair'] = f'{hair}/{hair}.mhclo'

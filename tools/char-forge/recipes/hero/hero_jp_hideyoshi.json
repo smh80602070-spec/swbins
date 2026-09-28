@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow002/eyebrow002.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "cheek-bones-incr": 0.525,
+  "eyebrows-trans-up": 0.556,
+  "mouth-lowerlip-volume-decr": 0.269,
+  "eye-trans-up": 0.509,
+  "eyebrows-angle-up": 0.253,
+  "eye-height2-decr": 0.304,
+  "mouth-upperlip-height-decr": 0.365,
+  "ear-scale-incr": 0.489,
+  "eye-corner1-down": 0.413,
+  "head-oval": 0.394
+ },
  "_garments": [
   "dallyeong@8b5f26,8b5f26",
   "chonmage"

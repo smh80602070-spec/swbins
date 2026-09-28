@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow009/eyebrow009.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "nose-point-up": 0.475,
+  "mouth-scale-horiz-decr": 0.264,
+  "eyebrows-trans-up": 0.489,
+  "eye-scale-decr": 0.401,
+  "eyebrows-angle-up": 0.586,
+  "ear-scale-decr": 0.6,
+  "eye-bag-incr": 0.239,
+  "eye-trans-up": 0.338,
+  "chin-width-decr": 0.531,
+  "head-oval": 0.262
+ },
  "_garments": [
   "gonryongpo@a8282a",
   "ikseongwan"

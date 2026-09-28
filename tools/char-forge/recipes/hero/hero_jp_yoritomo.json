@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow008/eyebrow008.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "nose-hump-incr": 0.453,
+  "mouth-angles-up": 0.544,
+  "chin-prominent-incr": 0.393,
+  "nose-point-down": 0.423,
+  "eye-corner1-up": 0.44,
+  "eyebrows-trans-up": 0.404,
+  "eye-scale-decr": 0.58,
+  "nose-flaring-incr": 0.482,
+  "eye-trans-up": 0.28,
+  "head-oval": 0.326
+ },
  "_garments": [
   "dopo@d8d0bc,394737",
   "eboshi"

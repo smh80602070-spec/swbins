@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow012/eyebrow012.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "forehead-scale-vert-incr": 0.515,
+  "mouth-angles-down": 0.202,
+  "cheek-bones-incr": 0.384,
+  "chin-prominent-decr": 0.427,
+  "eyebrows-trans-up": 0.404,
+  "cheek-volume-incr": 0.595,
+  "mouth-upperlip-height-incr": 0.449,
+  "eyebrows-angle-down": 0.289,
+  "mouth-lowerlip-volume-incr": 0.6,
+  "head-square": 0.395
+ },
  "_garments": [
   "dallyeong@8a2a2a,2a3a6a",
   "gat"

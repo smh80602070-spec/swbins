@@ -26,6 +26,19 @@
  "eyebrows": "eyebrow003/eyebrow003.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eyebrows-angle-up": 0.294,
+  "chin-prominent-decr": 0.211,
+  "eye-height2-decr": 0.384,
+  "nose-volume-decr": 0.385,
+  "cheek-bones-decr": 0.545,
+  "nose-hump-decr": 0.305,
+  "cheek-volume-decr": 0.548,
+  "chin-height-decr": 0.451,
+  "forehead-scale-vert-decr": 0.412,
+  "head-rectangular": 0.286,
+  "chin-width-incr": 0.25
+ },
  "_garments": [
   "samguk_armor@546078",
   "helmet_east"

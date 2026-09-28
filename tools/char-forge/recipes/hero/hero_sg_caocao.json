@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow006/eyebrow006.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "chin-width-incr": 0.561,
+  "chin-height-incr": 0.304,
+  "eye-height2-decr": 0.242,
+  "nose-scale-vert-decr": 0.427,
+  "mouth-lowerlip-volume-incr": 0.33,
+  "head-scale-horiz-incr": 0.399,
+  "eye-corner1-up": 0.28,
+  "nose-scale-horiz-decr": 0.462,
+  "chin-prominent-decr": 0.322,
+  "head-triangular": 0.306
+ },
  "_garments": [
   "gonryongpo@315480",
   "myeollyugwan"

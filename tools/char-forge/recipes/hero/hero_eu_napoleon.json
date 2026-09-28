@@ -26,6 +26,19 @@
  "eyebrows": "eyebrow004/eyebrow004.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "chin-prominent-decr": 0.329,
+  "mouth-upperlip-height-incr": 0.58,
+  "cheek-bones-decr": 0.346,
+  "mouth-angles-down": 0.514,
+  "mouth-scale-horiz-decr": 0.274,
+  "ear-scale-decr": 0.42,
+  "eyebrows-angle-down": 0.293,
+  "head-scale-horiz-decr": 0.592,
+  "eye-trans-down": 0.457,
+  "head-round": 0.344,
+  "chin-width-incr": 0.25
+ },
  "hair": "short02/short02.mhclo",
  "_garments": [
   "officer_coat@30498c"

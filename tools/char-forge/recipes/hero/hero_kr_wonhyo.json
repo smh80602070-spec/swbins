@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow010/eyebrow010.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "nose-flaring-incr": 0.416,
+  "mouth-scale-horiz-decr": 0.291,
+  "nose-scale-horiz-incr": 0.47,
+  "nose-scale-vert-incr": 0.473,
+  "chin-width-decr": 0.329,
+  "chin-prominent-decr": 0.569,
+  "eye-corner1-up": 0.256,
+  "mouth-angles-down": 0.351,
+  "forehead-scale-vert-incr": 0.33,
+  "head-invertedtriangular": 0.31
+ },
  "clothes": [
   "donitz_monk_robe/donitz_monk_robe.mhclo",
   "toigo_mj_cloth_shoes/toigo_mj_cloth_shoes.mhclo"

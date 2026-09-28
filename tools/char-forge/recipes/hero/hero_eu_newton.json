@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow004/eyebrow004.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-height2-incr": 0.511,
+  "nose-volume-decr": 0.329,
+  "eyebrows-angle-down": 0.431,
+  "cheek-bones-incr": 0.418,
+  "eye-scale-decr": 0.219,
+  "chin-prominent-decr": 0.377,
+  "mouth-angles-up": 0.448,
+  "eye-bag-decr": 0.482,
+  "nose-flaring-decr": 0.377,
+  "head-round": 0.361
+ },
  "_garments": [
   "kaftan@7d2627,d8d0bc"
  ],

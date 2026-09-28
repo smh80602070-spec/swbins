@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow002/eyebrow002.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-trans-up": 0.402,
+  "head-scale-horiz-incr": 0.393,
+  "eye-scale-decr": 0.247,
+  "eye-height2-incr": 0.459,
+  "cheek-volume-incr": 0.523,
+  "eye-corner1-up": 0.506,
+  "nose-volume-decr": 0.362,
+  "mouth-upperlip-height-decr": 0.534,
+  "forehead-scale-vert-incr": 0.271,
+  "head-diamond": 0.439
+ },
  "_garments": [
   "dopo@ece5d3,304367",
   "eboshi"

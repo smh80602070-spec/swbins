@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow007/eyebrow007.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "head-scale-horiz-incr": 0.285,
+  "nose-point-down": 0.462,
+  "mouth-scale-horiz-incr": 0.377,
+  "nose-scale-vert-decr": 0.308,
+  "eye-height2-incr": 0.539,
+  "mouth-angles-up": 0.578,
+  "eye-scale-decr": 0.289,
+  "eye-trans-down": 0.319,
+  "nose-flaring-decr": 0.305,
+  "head-invertedtriangular": 0.43
+ },
  "_garments": [
   "dopo@ece5d3,8c292e",
   "ikseongwan"

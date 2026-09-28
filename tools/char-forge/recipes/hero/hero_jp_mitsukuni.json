@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow008/eyebrow008.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "head-scale-horiz-incr": 0.445,
+  "chin-height-decr": 0.351,
+  "nose-flaring-incr": 0.423,
+  "forehead-scale-vert-incr": 0.362,
+  "eye-scale-incr": 0.594,
+  "chin-prominent-incr": 0.481,
+  "eyebrows-trans-up": 0.506,
+  "ear-scale-decr": 0.575,
+  "eye-trans-down": 0.522,
+  "head-diamond": 0.492
+ },
  "_garments": [
   "kamishimo@2f4165",
   "eboshi"

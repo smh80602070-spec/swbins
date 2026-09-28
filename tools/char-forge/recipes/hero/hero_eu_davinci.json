@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow010/eyebrow010.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "chin-prominent-decr": 0.28,
+  "eyebrows-angle-down": 0.507,
+  "chin-width-decr": 0.41,
+  "mouth-scale-horiz-decr": 0.5,
+  "ear-scale-incr": 0.241,
+  "eye-corner1-down": 0.22,
+  "eye-height2-decr": 0.36,
+  "mouth-lowerlip-volume-incr": 0.299,
+  "chin-height-decr": 0.225,
+  "head-diamond": 0.303
+ },
  "hair": "short04/short04.mhclo",
  "clothes": [
   "wdg_mycenaean_tunic/wdg_mycenaean_tunic.mhclo",

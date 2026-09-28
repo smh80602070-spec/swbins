@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow002/eyebrow002.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eyebrows-trans-down": 0.529,
+  "nose-point-down": 0.362,
+  "eye-corner1-up": 0.431,
+  "chin-width-incr": 0.238,
+  "nose-flaring-incr": 0.275,
+  "nose-volume-decr": 0.522,
+  "mouth-upperlip-height-incr": 0.333,
+  "eye-scale-incr": 0.401,
+  "chin-prominent-decr": 0.522,
+  "head-triangular": 0.443
+ },
  "_garments": [
   "qaba@333678"
  ],

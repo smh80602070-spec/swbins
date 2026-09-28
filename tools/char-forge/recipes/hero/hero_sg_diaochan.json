@@ -26,6 +26,20 @@
  "eyebrows": "eyebrow003/eyebrow003.mhclo",
  "eyelashes": "eyelashes04/eyelashes04.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "cheek-bones-incr": 0.352,
+  "nose-point-up": 0.209,
+  "mouth-angles-down": 0.482,
+  "eye-height2-decr": 0.41,
+  "forehead-scale-vert-incr": 0.351,
+  "eye-bag-decr": 0.256,
+  "eyebrows-angle-down": 0.564,
+  "ear-scale-decr": 0.529,
+  "eyebrows-trans-down": 0.304,
+  "head-round": 0.27,
+  "chin-width-decr": 0.2,
+  "chin-prominent-decr": 0.15
+ },
  "hair": "bob01/bob01.mhclo",
  "_garments": [
   "hanbok_f@583857,efd98c"

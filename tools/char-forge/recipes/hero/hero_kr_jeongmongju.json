@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow005/eyebrow005.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eyebrows-angle-up": 0.451,
+  "cheek-volume-incr": 0.498,
+  "ear-scale-decr": 0.426,
+  "chin-width-decr": 0.496,
+  "eye-trans-up": 0.555,
+  "chin-height-incr": 0.576,
+  "forehead-scale-vert-incr": 0.584,
+  "eye-height2-decr": 0.453,
+  "nose-scale-horiz-incr": 0.297,
+  "head-invertedtriangular": 0.37
+ },
  "_garments": [
   "baeja@36707a",
   "gat"

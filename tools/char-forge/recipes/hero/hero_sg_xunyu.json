@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow012/eyebrow012.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "nose-volume-incr": 0.376,
+  "cheek-bones-incr": 0.432,
+  "nose-scale-vert-incr": 0.205,
+  "eye-corner1-down": 0.485,
+  "nose-hump-incr": 0.245,
+  "nose-scale-horiz-incr": 0.544,
+  "nose-point-down": 0.211,
+  "eyebrows-angle-down": 0.358,
+  "eye-bag-decr": 0.271,
+  "head-diamond": 0.483
+ },
  "_garments": [
   "dallyeong@2d4574,1f2226",
   "boktu"

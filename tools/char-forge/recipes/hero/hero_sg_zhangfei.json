@@ -26,6 +26,19 @@
  "eyebrows": "eyebrow009/eyebrow009.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "mouth-angles-up": 0.465,
+  "chin-height-incr": 0.38,
+  "ear-scale-decr": 0.529,
+  "mouth-lowerlip-volume-incr": 0.376,
+  "head-scale-horiz-incr": 0.321,
+  "mouth-scale-horiz-incr": 0.435,
+  "mouth-upperlip-height-incr": 0.275,
+  "chin-width-incr": 0.25,
+  "eyebrows-trans-up": 0.421,
+  "head-diamond": 0.459,
+  "cheek-bones-incr": 0.2
+ },
  "_garments": [
   "chalgap@3f6939",
   "helmet_general"

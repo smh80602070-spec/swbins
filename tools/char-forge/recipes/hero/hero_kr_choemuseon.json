@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow007/eyebrow007.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-bag-incr": 0.399,
+  "eye-trans-up": 0.423,
+  "cheek-volume-incr": 0.476,
+  "nose-volume-incr": 0.324,
+  "nose-scale-vert-incr": 0.456,
+  "mouth-scale-horiz-decr": 0.385,
+  "eye-scale-decr": 0.275,
+  "eye-height2-incr": 0.335,
+  "nose-flaring-decr": 0.261,
+  "head-invertedtriangular": 0.285
+ },
  "_garments": [
   "dopo@e9e4d6,2e6761",
   "sangtu"

@@ -26,6 +26,20 @@
  "eyebrows": "eyebrow002/eyebrow002.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "mouth-angles-down": 0.227,
+  "chin-height-incr": 0.341,
+  "eyebrows-trans-down": 0.453,
+  "nose-hump-incr": 0.282,
+  "nose-flaring-incr": 0.479,
+  "head-scale-horiz-decr": 0.219,
+  "nose-volume-decr": 0.528,
+  "eye-bag-incr": 0.369,
+  "chin-prominent-decr": 0.299,
+  "head-rectangular": 0.411,
+  "chin-width-incr": 0.25,
+  "cheek-bones-incr": 0.2
+ },
  "hair": "short04/short04.mhclo",
  "_garments": [
   "chiton_armor@793046"

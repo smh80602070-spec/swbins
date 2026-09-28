@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow004/eyebrow004.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "chin-height-decr": 0.564,
+  "eye-scale-decr": 0.581,
+  "eye-trans-up": 0.211,
+  "nose-point-down": 0.286,
+  "mouth-upperlip-height-decr": 0.388,
+  "nose-hump-incr": 0.379,
+  "nose-volume-decr": 0.416,
+  "forehead-scale-vert-incr": 0.592,
+  "mouth-lowerlip-volume-decr": 0.283,
+  "head-round": 0.503
+ },
  "_garments": [
   "dopo@f7f5ee,1f2226",
   "gat"

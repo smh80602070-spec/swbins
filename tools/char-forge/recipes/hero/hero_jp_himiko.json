@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow007/eyebrow007.mhclo",
  "eyelashes": "eyelashes02/eyelashes02.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "nose-scale-horiz-incr": 0.591,
+  "nose-flaring-incr": 0.371,
+  "mouth-upperlip-height-decr": 0.332,
+  "nose-point-up": 0.311,
+  "mouth-scale-horiz-decr": 0.445,
+  "chin-prominent-decr": 0.594,
+  "eye-bag-decr": 0.28,
+  "chin-width-incr": 0.293,
+  "nose-volume-decr": 0.465,
+  "head-round": 0.475
+ },
  "hair": "long01/long01.mhclo",
  "_garments": [
   "kimono@7a2a4a,e2b85a"

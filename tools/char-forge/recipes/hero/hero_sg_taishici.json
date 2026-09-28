@@ -26,6 +26,19 @@
  "eyebrows": "eyebrow007/eyebrow007.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "nose-volume-incr": 0.395,
+  "cheek-bones-decr": 0.209,
+  "nose-hump-incr": 0.329,
+  "eye-height2-decr": 0.387,
+  "head-scale-horiz-decr": 0.379,
+  "ear-scale-decr": 0.528,
+  "chin-height-decr": 0.47,
+  "chin-prominent-incr": 0.409,
+  "cheek-volume-decr": 0.511,
+  "head-diamond": 0.517,
+  "chin-width-incr": 0.25
+ },
  "_garments": [
   "warrior_robe@78252a",
   "helmet_general"

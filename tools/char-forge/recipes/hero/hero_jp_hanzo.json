@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow012/eyebrow012.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eyebrows-trans-down": 0.385,
+  "chin-prominent-incr": 0.235,
+  "nose-flaring-incr": 0.379,
+  "mouth-lowerlip-volume-decr": 0.368,
+  "mouth-angles-up": 0.586,
+  "nose-scale-vert-decr": 0.338,
+  "head-scale-horiz-decr": 0.489,
+  "nose-volume-decr": 0.362,
+  "cheek-bones-decr": 0.52,
+  "head-triangular": 0.355
+ },
  "_garments": [
   "shinobi@202126"
  ],

@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow002/eyebrow002.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-decr": 0.296,
+  "nose-hump-decr": 0.44,
+  "cheek-volume-decr": 0.584,
+  "nose-scale-vert-incr": 0.327,
+  "forehead-scale-vert-decr": 0.503,
+  "eyebrows-trans-up": 0.57,
+  "eye-bag-decr": 0.329,
+  "eye-height2-incr": 0.39,
+  "eyebrows-angle-down": 0.363,
+  "head-triangular": 0.37
+ },
  "hair": "short01/short01.mhclo",
  "_garments": [
   "hauberk@e8e2d0,364b71"

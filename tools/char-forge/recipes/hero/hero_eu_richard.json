@@ -26,6 +26,20 @@
  "eyebrows": "eyebrow008/eyebrow008.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-corner1-down": 0.556,
+  "head-scale-horiz-incr": 0.391,
+  "mouth-lowerlip-volume-decr": 0.448,
+  "nose-point-up": 0.558,
+  "mouth-upperlip-height-incr": 0.511,
+  "eye-height2-incr": 0.315,
+  "nose-hump-incr": 0.373,
+  "eyebrows-angle-down": 0.556,
+  "mouth-angles-up": 0.525,
+  "head-square": 0.459,
+  "chin-width-incr": 0.25,
+  "cheek-bones-incr": 0.2
+ },
  "hair": "short02/short02.mhclo",
  "clothes": [
   "rehmanpolanski_viking_tunic/rehmanpolanski_viking_tunic.mhclo",

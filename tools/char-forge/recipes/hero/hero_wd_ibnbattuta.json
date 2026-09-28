@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow011/eyebrow011.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "cheek-volume-decr": 0.324,
+  "nose-volume-incr": 0.495,
+  "nose-flaring-decr": 0.33,
+  "mouth-scale-horiz-incr": 0.393,
+  "mouth-upperlip-height-decr": 0.544,
+  "eyebrows-angle-down": 0.57,
+  "nose-scale-horiz-decr": 0.506,
+  "chin-width-decr": 0.275,
+  "nose-point-down": 0.305,
+  "head-square": 0.325
+ },
  "_garments": [
   "deel@a29356,c9a64a,b0282a",
   "turban"

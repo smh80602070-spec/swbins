@@ -26,6 +26,19 @@
  "eyebrows": "eyebrow008/eyebrow008.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eyebrows-angle-down": 0.258,
+  "chin-prominent-incr": 0.412,
+  "eye-height2-decr": 0.313,
+  "chin-width-decr": 0.415,
+  "forehead-scale-vert-decr": 0.272,
+  "eye-corner1-up": 0.5,
+  "nose-flaring-incr": 0.404,
+  "nose-volume-decr": 0.33,
+  "nose-scale-vert-incr": 0.503,
+  "head-triangular": 0.543,
+  "cheek-bones-incr": 0.2
+ },
  "_garments": [
   "chalgap@7a2a24",
   "samo"

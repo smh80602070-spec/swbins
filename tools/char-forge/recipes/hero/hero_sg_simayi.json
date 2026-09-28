@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow005/eyebrow005.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.523,
+  "mouth-scale-horiz-decr": 0.202,
+  "nose-volume-incr": 0.346,
+  "mouth-angles-up": 0.423,
+  "chin-width-incr": 0.489,
+  "eyebrows-angle-up": 0.553,
+  "eye-height2-decr": 0.3,
+  "chin-prominent-decr": 0.28,
+  "eye-trans-up": 0.44,
+  "head-rectangular": 0.394
+ },
  "_garments": [
   "dopo@e9e4d6,335985",
   "boktu"

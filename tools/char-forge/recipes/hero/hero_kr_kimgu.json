@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow005/eyebrow005.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "mouth-lowerlip-volume-decr": 0.373,
+  "chin-width-incr": 0.255,
+  "nose-volume-incr": 0.236,
+  "chin-prominent-incr": 0.501,
+  "eye-scale-incr": 0.47,
+  "cheek-volume-decr": 0.233,
+  "chin-height-decr": 0.584,
+  "eyebrows-angle-up": 0.242,
+  "eye-bag-incr": 0.479,
+  "head-square": 0.286
+ },
  "hair": "short01/short01.mhclo",
  "clothes": [
   "male_elegantsuit01/male_elegantsuit01.mhclo",

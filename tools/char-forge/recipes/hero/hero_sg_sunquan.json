@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow012/eyebrow012.mhclo",
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-height2-incr": 0.266,
+  "ear-scale-incr": 0.297,
+  "eye-scale-incr": 0.228,
+  "nose-scale-vert-incr": 0.36,
+  "mouth-scale-horiz-decr": 0.453,
+  "eye-trans-down": 0.313,
+  "eye-corner1-up": 0.578,
+  "eye-bag-decr": 0.34,
+  "eyebrows-trans-down": 0.307,
+  "head-diamond": 0.309
+ },
  "_garments": [
   "gonryongpo@932d35",
   "boktu"

@@ -26,6 +26,18 @@
  "eyebrows": "eyebrow005/eyebrow005.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "cheek-bones-decr": 0.432,
+  "eye-scale-incr": 0.581,
+  "mouth-scale-horiz-incr": 0.58,
+  "ear-scale-incr": 0.3,
+  "cheek-volume-incr": 0.391,
+  "forehead-scale-vert-incr": 0.434,
+  "nose-scale-horiz-decr": 0.597,
+  "nose-volume-decr": 0.493,
+  "eye-bag-incr": 0.291,
+  "head-square": 0.424
+ },
  "_garments": [
   "kaftan@2a6a4a,d8d0bc",
   "turban"
