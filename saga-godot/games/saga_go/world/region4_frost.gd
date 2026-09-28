@@ -465,7 +465,19 @@ func _build_snow() -> void:
 	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	m.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
 	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	m.albedo_color = Color(1, 1, 1, 0.85)
+	m.albedo_color = Color(1, 1, 1, 0.9)
+	## 09-30 — 무늬 없는 정사각 빌보드라 가까운 눈송이가 각진 흰 네모로 보였다(창 모드 f_pass_view). 가운데가 밝고 가장자리가 녹는 동그란 점으로.
+	var g := Gradient.new()
+	g.colors = PackedColorArray([Color(1, 1, 1, 1), Color(1, 1, 1, 0)])
+	g.offsets = PackedFloat32Array([0.25, 1.0])
+	var gt := GradientTexture2D.new()
+	gt.gradient = g
+	gt.fill = GradientTexture2D.FILL_RADIAL
+	gt.fill_from = Vector2(0.5, 0.5)
+	gt.fill_to = Vector2(1.0, 0.5)
+	gt.width = 32
+	gt.height = 32
+	m.albedo_texture = gt
 	q.material = m
 	_snow.mesh = q
 	_snow.emitting = false

@@ -9431,3 +9431,9 @@ PROJECT_STATE.md` 참고. 요약:
 - ⑳ terrain_triplanar — 봉우리 굴곡(칸 윗면)의 가파른 비탈이 절벽 무늬는 받는데 빛깔은 풀빛 정점색 그대로라 절벽 사이 연두 반투명 조각으로 보였다. 가파를수록(slope 0.45~0.8) 절벽 빛깔(uniform cliff_color = terrain_builder CLIFF_COLOR)로. 이끼는 면 법선(삼각형마다 한 값)으로 거르지 않고 세로로 흐르는 값 노이즈로 모양을 내고 옅게(0.85→0.6, 더 어두운 풀빛). s_port 전후: 연두 쐐기 사라짐.
 - ㉑ 먼 경치 — 안개 농도만 바꾸는 게 아니었다. 안개 0 이면 먼 절벽이 검푸른 판이 되고, 하늘빛(0.76,0.88,0.96) 안개는 회색으로 씻었다. environment_profile 의 GO_FOG_DENSITY 0.0022 → 0.0013, 안개색 GO_FOG_COLOR (0.66,0.8,0.95)(하늘빛보다 푸르게, 공기 원근). v_statue_far·s_port: 먼 절벽이 청회색으로 물러나 깊이가 살고 풀·나무는 또렷. 밤 n_village_plaza·포구 c_sea 이상 없음(날씨 배율은 그 위에 그대로 곱해진다).
 - REGRESS OK(다섯 판 issues=0). 남은 후보: 이야기 지역 빈 들판(건물이 멀고 작다) · 공방 몸 입·눈 표정 없음.
+
+## GO 그래픽 먼저 ㉒ 눈송이 · 눈밭 (2026-09-30, 같은 세션, "이어해")
+
+- 서리봉 촬영(f_pass_view·f_fort): 눈송이가 무늬 없는 정사각 빌보드라 가까운 것이 각진 흰 네모, 눈밭은 한 빛 흰 판이었다.
+- region4_frost _build_snow — 방사형 GradientTexture2D(가운데 밝고 가장자리 투명)로 동그란 점. terrain_triplanar 눈 — 바람이 쓸어 만든 눈 물결 두 겹(그늘진 골 푸른 기)·반짝이는 점(EMISSION 0.7).
+- 창 모드 전후: 네모 → 둥근 눈송이, 흰 판 → 굽이치는 눈 물결. 점검 FROST fails=0, REGRESS OK.
