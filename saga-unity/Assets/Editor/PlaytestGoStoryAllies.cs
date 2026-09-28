@@ -13,12 +13,16 @@ namespace Saga.EditorTools
     /// 동료 표(도감 밖·도감 수 105 그대로·원소·무기·한 벌) · 합류(2장 끝 은비·알림 글·두 번 안 들임·옛 세이브 조용히 둘·끝내지 않은 장은 안 들임) ·
     /// 편성 다섯(들판 셋 = 순서 뒤 셋·넣기·빼기·앞 자리로·셋 이하면 못 뺌 → 들판 명단이 따라 바뀜) · 도감 다섯째 탭·편성 단추 ·
     /// 스킬 넷(탁본 기력·풀이 반응 12초 ×1.4·그림자 걸음 등 뒤·표식 ×1.25·메아리 셋이 따라감).
+    /// 109-14-17(웹 ⑲-17): 촌장·사공 표·6장 끝 촌장·7장 끝 사공·옛 세이브 넷 · 부채 바람(부채꼴 밖·뒤 적은 안 맞음·밀림 방향·명단 +6%·수호장 안 밀림) ·
+    /// 순풍(첫 틱 전엔 회복 없음·2초에 두 번·자리 밖이면 없음) · 노 물결(길 위만·앞으로 밀림·나는 제자리) · 뱃노래(맞힌 뒤 둘·1초 안엔 한 번·끝나면 없음).
     /// 끝나면 동행·이야기 진행·돈·재료·들판·자리를 되돌린다.
     /// </summary>
     public static class PlaytestGoStoryAllies
     {
         private static string _tag;
         private static bool _ok;
+        /// <summary>109-14-17 한 방에 안 쓰러지게 늘린 적의 원래 최대 체력(끝나면 되돌린다).</summary>
+        private static readonly List<(FieldEnemy e, float maxHp)> _tough = new List<(FieldEnemy, float)>();
 
         public static bool Run(string tag)
         {
@@ -55,6 +59,8 @@ namespace Saga.EditorTools
                 fc.ResetForTest();
                 fc.RebuildParty();
                 pc.Teleport(fc.SafePoint);
+                foreach (var (e, hp) in _tough) if (e != null) e.SetMaxHpForTest(hp);
+                _tough.Clear();
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
             if (_ok) Debug.Log($"[{_tag}] story allies OK - 표·도감 105 그대로 · 합류·옛 세이브·안 끝낸 장 · 편성 다섯 · 도감 탭·단추 · {parts}");
@@ -77,6 +83,17 @@ namespace Saga.EditorTools
             if (kw == null || !kw.Sig || kw.Skill.Type != KitSkillType.Blink || kw.Burst.Type != KitBurstType.Echo) Fail("나그네 한 벌");
             GoKits.OffForTest = true;
             if (GoStory.Chapters[1].Join != "story_scholar" || GoStory.Chapters[4].Join != "story_wanderer") Fail("합류 장");
+            // 109-14-17 촌장·사공
+            if (!GoHeroes.TryGet("story_elder", out var el) || el.Era != HeroEra.Story || el.Rarity != 4 || GoHeroes.ElementOf(el) != GoElement.Anemo || el.Trait != HeroTrait.Virtue) Fail("촌장 표");
+            if (!GoHeroes.TryGet("story_ferryman", out var fm) || fm.Rarity != 4 || GoHeroes.ElementOf(fm) != GoElement.Hydro || fm.Trait != HeroTrait.Might) Fail("사공 표");
+            if (GoWeapons.TypeOf("story_elder") != GoWeapons.Type.Catalyst || GoWeapons.TypeOf("story_ferryman") != GoWeapons.Type.Polearm) Fail("촌장·사공 무기 종류");
+            GoKits.OffForTest = false;
+            var ke = GoKits.KitOf("story_elder", GoElement.Anemo);
+            var kf = GoKits.KitOf("story_ferryman", GoElement.Hydro);
+            if (ke == null || !ke.Sig || ke.Skill.Type != KitSkillType.Gust || ke.Burst.Type != KitBurstType.Feast || !Near(ke.Skill.Heal, 0.06f)) Fail("촌장 한 벌");
+            if (kf == null || !kf.Sig || kf.Skill.Type != KitSkillType.Wave || kf.Burst.Type != KitBurstType.Rain) Fail("사공 한 벌");
+            GoKits.OffForTest = true;
+            if (GoStory.Chapters[5].Join != "story_elder" || GoStory.Chapters[6].Join != "story_ferryman") Fail("촌장·사공 합류 장");
         }
 
         private static void CheckJoin()
@@ -92,6 +109,17 @@ namespace Saga.EditorTools
             StoryState.Restore(5, 0);
             if (StoryState.CatchUpJoins() != 2 || !PartyState.Has("story_scholar") || !PartyState.Has("story_wanderer")) Fail("옛 세이브 조용히 둘");
             if (StoryState.CatchUpJoins() != 0 || PartyState.MemberIds.Count != 2) Fail("두 번 불러 두 명씩");
+            // 109-14-17 6장 끝 촌장 · 7장 끝 사공 · 옛 세이브 넷
+            foreach (var (ci, id, ko) in new[] { (5, "story_elder", "누리"), (6, "story_ferryman", "버들") })
+            {
+                PartyState.Restore(new List<string>());
+                StoryState.Restore(ci, GoStory.Chapters[ci].Steps.Length - 1);
+                string rr = StoryState.Advance();
+                if (!PartyState.Has(id) || rr == null || !rr.Contains(GoLocalization.T("hero." + id, ko))) Fail($"{ci + 1}장 끝 합류 '{rr}'");
+            }
+            PartyState.Restore(new List<string>());
+            StoryState.Restore(7, 0);
+            if (StoryState.CatchUpJoins() != 4 || !PartyState.Has("story_elder") || !PartyState.Has("story_ferryman")) Fail("옛 세이브 조용히 넷");
         }
 
         private static void CheckFormation(FieldCombat fc)
@@ -122,8 +150,10 @@ namespace Saga.EditorTools
             PartyState.Restore(ids);                                   // 은비 = 둘째 자리
             dex.Open();
             dex.SelectEra(HeroEra.Story);
-            if (dex.TabCount != 5 || !dex.TabText(4).Contains("1/2") || !dex.TitleText.Contains("/" + GoHeroes.All.Length)) Fail($"도감 탭 '{dex.TabText(4)}'·'{dex.TitleText}'");
-            if (dex.CardCount != 2) Fail("이야기 동료 칸 둘이 아니다");
+            if (dex.TabCount != 5 || !dex.TabText(4).Contains("1/" + GoHeroes.Story.Length) || !dex.TitleText.Contains("/" + GoHeroes.All.Length)) Fail($"도감 탭 '{dex.TabText(4)}'·'{dex.TitleText}'");
+            if (dex.CardCount != 4) Fail("이야기 동료 칸 넷이 아니다");
+            dex.Select(3);
+            if (!dex.DetailText.Contains(GoStory.ChapterName(GoStory.Chapters[6]))) Fail("사공 합류 장 안내 " + dex.DetailText);
             dex.Select(1);
             if (!dex.DetailText.Contains(GoStory.ChapterName(GoStory.Chapters[4]))) Fail("나그네 합류 장 안내 " + dex.DetailText);
             dex.Select(0);
@@ -207,7 +237,136 @@ namespace Saga.EditorTools
                 if (fc.EchoCount != 0) Fail("메아리가 남음");
                 else parts.Add("그림자 걸음 등 뒤·표식 ×1.25·메아리 셋이 따라감");
             }
+            pc.Teleport(fc.SafePoint);
+            CheckElder(fc, pc, parts);
+            pc.Teleport(fc.SafePoint);
+            CheckFerryman(fc, pc, parts);
             return string.Join(" · ", parts);
+        }
+
+        private static Vector3 Fwd(PlayerController pc)
+        {
+            Vector3 f = pc.Visual != null ? pc.Visual.forward : pc.transform.forward;
+            f.y = 0f;
+            return f.normalized;
+        }
+
+        /// <summary>그 자리에 적 하나(ex 에 든 적은 빼고) — 방패 없이 가득 찬 채.</summary>
+        private static FieldEnemy FoeAt(Vector3 pos, List<FieldEnemy> ex)
+        {
+            var e = FieldEnemy.All.First(x => !x.IsGuardian && !x.IsHero && !x.DomainFoe && !x.StoryFoe && x.Alive && !ex.Contains(x));
+            e.ReviveNow();
+            e.WarpForTest(pos);
+            if (e.Shielded) e.SetShieldForTest(0f);
+            ex.Add(e);
+            return e;
+        }
+
+        /// <summary>밀림을 볼 적 — 스킬 한 방에 안 쓰러지게 최대 체력 ×20.</summary>
+        private static FieldEnemy Tough(FieldEnemy e)
+        {
+            _tough.Add((e, e.MaxHp));
+            e.SetMaxHpForTest(e.MaxHp * 20f);
+            return e;
+        }
+
+        /// <summary>적만 dt 초 굴린다(밀려남 확인 — 다른 적·시계는 안 건드린다).</summary>
+        private static void Slide(FieldEnemy e, float sec)
+        {
+            for (float t = 0f; t < sec; t += 0.05f) e.Tick(0.05f);
+        }
+
+        private static float Along(FieldEnemy e, Vector3 from, Vector3 dir)
+        {
+            Vector3 d = e.transform.position - from;
+            d.y = 0f;
+            return Vector3.Dot(d, dir);
+        }
+
+        // 109-14-17 촌장 — 부채 바람(앞 부채꼴·밀어냄·명단 +6%) · 잔칫날 순풍(바람 자리 — 첫 틱은 1초 뒤, 자리 밖이면 회복 없음)
+        private static void CheckElder(FieldCombat fc, PlayerController pc, List<string> parts)
+        {
+            if (!Lead(fc, "story_elder")) return;
+            Vector3 p0 = fc.transform.position, f = Fwd(pc);
+            var used = new List<FieldEnemy>();
+            var front = Tough(FoeAt(p0 + f * 2.5f, used));
+            var back = FoeAt(p0 - f * 4f, used);
+            float h0 = front.Hp, hb = back.Hp, a0 = Along(front, p0, f);
+            foreach (var m in fc.Party) m.Hp = m.MaxHp * 0.5f;
+            fc.Skill();
+            bool ok = true;
+            if (fc.LastKit?.Skill.Type != KitSkillType.Gust || !(front.Hp < h0) || !front.Sliding) { ok = false; Fail($"부채 바람 앞 적 {h0}→{front.Hp}·밀림 {front.Sliding}"); }
+            if (back.Hp < hb || back.Sliding) { ok = false; Fail("부채 바람이 뒤 적을 침"); }
+            if (fc.Party.Any(m => !Near(m.Hp, m.MaxHp * 0.56f, 0.5f))) { ok = false; Fail("명단 +6% " + string.Join(",", fc.Party.Select(m => $"{m.Hp / m.MaxHp:0.000}"))); }
+            if (!Near(fc.Active.SkillCd, 8f, 0.05f)) { ok = false; Fail($"부채 바람 대기 {fc.Active.SkillCd}"); }
+            Slide(front, 0.3f);
+            float moved = Along(front, p0, f) - a0;
+            if (front.Sliding || moved < 3f) { ok = false; Fail($"밀려난 거리 {moved:0.0}m(길 막힘이 아니면 7m×1.85)"); }
+            var g = FieldEnemy.All.FirstOrDefault(x => x.IsGuardian && x.Alive);
+            if (g != null) { g.KnockBack(f, 10f); if (g.Sliding) { ok = false; Fail("수호장이 밀림"); } }
+            if (ok) parts.Add($"부채 바람 부채꼴·밀림 {moved:0.0}m·명단 +6%·수호장 그대로");
+
+            if (!Lead(fc, "story_elder")) return;
+            front.WarpForTest(fc.transform.position + f * 3f);
+            if (front.Shielded) front.SetShieldForTest(0f);
+            fc.Active.Energy = FieldCombat.BurstCost;
+            fc.Burst();
+            var z = fc.Zones.FirstOrDefault(x => x.Kind == SkillShape.Feast);
+            if (z == null) { Fail("잔칫날 순풍 바람 자리 없음"); return; }
+            fc.TickTimers(0.9f);
+            if (z.Heals != 0 || z.Ticks != 0) { Fail($"첫 틱 전에 회복 {z.Heals}"); return; }
+            fc.TickTimers(1.15f);
+            if (z.Heals != 2 || z.Hits < 2) { Fail($"2초에 회복 두 번 {z.Heals}·친 {z.Hits}"); return; }
+            pc.Teleport(z.Center + f * (z.Radius + 4f));
+            fc.TickTimers(1f);
+            if (z.Heals != 2 || z.Ticks != 3) { Fail($"자리 밖인데 회복 {z.Heals}·틱 {z.Ticks}"); return; }
+            fc.TickTimers(8f);
+            if (fc.Zones.Contains(z)) { Fail("바람 자리가 10초 뒤에도 남음"); return; }
+            parts.Add("순풍 첫 틱 1초 뒤·2초에 두 번·자리 밖 없음");
+        }
+
+        // 109-14-17 사공 — 노 물결(앞 길만·앞으로 밀림·나는 제자리) · 뱃노래(맞힌 뒤 가까운 둘·1초 쉼·15초)
+        private static void CheckFerryman(FieldCombat fc, PlayerController pc, List<string> parts)
+        {
+            if (!Lead(fc, "story_ferryman")) return;
+            Vector3 p0 = fc.transform.position, f = Fwd(pc), side = Vector3.Cross(Vector3.up, f);
+            var used = new List<FieldEnemy>();
+            var onLine = Tough(FoeAt(p0 + f * 8f, used));
+            var off = FoeAt(p0 + side * 10f, used);
+            float h0 = onLine.Hp, ho = off.Hp, a0 = Along(onLine, p0, f);
+            fc.Skill();
+            bool ok = true;
+            Vector3 dp = fc.transform.position - p0; dp.y = 0f;
+            if (fc.LastKit?.Skill.Type != KitSkillType.Wave || !(onLine.Hp < h0) || !onLine.Sliding) { ok = false; Fail($"노 물결 길 위 적 {h0}→{onLine.Hp}·밀림 {onLine.Sliding}"); }
+            if (off.Hp < ho || off.Sliding) { ok = false; Fail("노 물결이 길 밖 적을 침"); }
+            if (dp.magnitude > 0.1f) { ok = false; Fail($"노 물결에 내가 움직임 {dp.magnitude:0.00}m"); }
+            Slide(onLine, 0.3f);
+            float moved = Along(onLine, p0, f) - a0;
+            if (moved < 3f) { ok = false; Fail($"앞으로 밀린 거리 {moved:0.0}m"); }
+            if (ok) parts.Add($"노 물결 길 위만·앞으로 {moved:0.0}m·나는 제자리");
+
+            if (!Lead(fc, "story_ferryman")) return;
+            used.Clear();
+            p0 = fc.transform.position;
+            Tough(FoeAt(p0 + f * 2f, used));
+            Tough(FoeAt(p0 + f * 5f, used));
+            fc.Active.Energy = FieldCombat.BurstCost;
+            fc.Burst();
+            if (!Near(fc.RainLeft, 15f) || fc.RainHits != 0) { Fail($"뱃노래 {fc.RainLeft}초·{fc.RainHits}"); return; }
+            foreach (var e in used) e.WarpForTest(e.transform.position); // 해방에 깎인 체력을 채운다
+            fc.Attack();
+            if (fc.RainHits != 2) { Fail($"기본 공격 뒤 물 노 {fc.RainHits} ≠ 2"); return; }
+            fc.TickTimers(0.4f);
+            int second = fc.Attack();
+            if (second < 1 || fc.RainHits != 2) { Fail($"1초 안에 또 따라 침 {fc.RainHits}(맞힌 {second})"); return; }
+            fc.TickTimers(0.7f);
+            fc.Attack();
+            if (fc.RainHits != 4) { Fail($"1초 뒤 따라 치기 {fc.RainHits} ≠ 4"); return; }
+            fc.TickTimers(15f);
+            foreach (var e in used) if (!e.Alive) e.ReviveNow();
+            fc.Attack();
+            if (fc.RainLeft > 0f || fc.RainHits != 4) { Fail($"뱃노래가 15초 뒤에도 {fc.RainLeft}·{fc.RainHits}"); return; }
+            parts.Add("뱃노래 맞힌 뒤 둘·1초 쉼·15초 끝");
         }
 
         private static void Fail(string msg)

@@ -3,7 +3,7 @@ using Saga.Go.Data;
 
 namespace Saga.Go.Combat
 {
-    public enum SkillShape { Circle, Thrust, Dash, Field, Summon, KitZone, Vortex } // 뒤 둘 = 109-14-11 진·소용돌이(모양 해시는 1~4 만 쓴다)
+    public enum SkillShape { Circle, Thrust, Dash, Field, Summon, KitZone, Vortex, Feast } // 뒤 = 109-14-11 진·소용돌이 · 109-14-17 바람 자리(모양 해시는 1~4 만 쓴다)
 
     /// <summary>
     /// PLAN.md 109-8 "인물마다 다른 원소 스킬 모양"(웹 사가고 ⑫) — 원소 스킬(E)이 동행마다 넷 중 하나:

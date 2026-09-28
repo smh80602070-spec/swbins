@@ -479,7 +479,7 @@ namespace Saga.Go.Data
             },
             new Chapter
             {
-                Id = "ch6", NameKey = "story.ch6", NameKo = "제6장 · 봉우리의 검은 가면", Ar = 15,
+                Id = "ch6", NameKey = "story.ch6", NameKo = "제6장 · 봉우리의 검은 가면", Ar = 15, Join = "story_elder",
                 Gold = 2000, Mats = new[] { 0, 3, 2, 4, 0 },
                 Steps = new[]
                 {
@@ -531,7 +531,7 @@ namespace Saga.Go.Data
             },
             new Chapter
             {
-                Id = "ch7", NameKey = "story.ch7", NameKo = "제7장 · 물가 곶의 넷째 제단", Ar = 18,
+                Id = "ch7", NameKey = "story.ch7", NameKo = "제7장 · 물가 곶의 넷째 제단", Ar = 18, Join = "story_ferryman",
                 Gold = 2250, Mats = new[] { 0, 3, 2, 4, 0 },
                 Steps = new[]
                 {

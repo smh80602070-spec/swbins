@@ -1106,6 +1106,14 @@
     { "key": "story.ch7.s7.p.a", "value": "아는 얼굴이에요?" },
     { "key": "story.ch7.s7.p.b", "value": "괜찮아요?" },
     { "key": "story.ch7.s9.p.a", "value": "다섯째 제단?" },
-    { "key": "story.ch7.s9.p.b", "value": "누가 켰을까요?" }
+    { "key": "story.ch7.s9.p.b", "value": "누가 켰을까요?" },
+    { "key": "hero.story_elder", "value": "누리" },
+    { "key": "hero.story_elder.quote", "value": "먹구름이 걷히면 마을 잔치를 열어야지." },
+    { "key": "hero.story_ferryman", "value": "버들" },
+    { "key": "hero.story_ferryman.quote", "value": "물 냄새가 요즘 영 비릿해." },
+    { "key": "kit.sig.elder.skill", "value": "부채 바람" },
+    { "key": "kit.sig.elder.burst", "value": "잔칫날 순풍" },
+    { "key": "kit.sig.ferryman.skill", "value": "노 물결" },
+    { "key": "kit.sig.ferryman.burst", "value": "뱃노래" }
   ]
 }

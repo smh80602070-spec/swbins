@@ -98,6 +98,9 @@ namespace Saga.Go.Combat
             // 109-14-11 진(가까운 적 N · 맞힐 때마다 명단 기력)·소용돌이(빨아들임)
             public float Every, EnergyPerHit, Pull;
             public int N;
+            /// <summary>109-14-17 바람 자리 — 틱마다 안에 선 지금 인물 최대 체력의 이만큼 회복(Heals = 회복한 틱 수, 진단).</summary>
+            public float Heal;
+            public int Heals;
         }
 
         // ---- 109-14-11 고유·갈래 해방이 거는 명단 효과 · 늦게 떨어지는 탄 ----
@@ -112,6 +115,15 @@ namespace Saga.Go.Combat
         /// <summary>109-14-15 가면 벗기 메아리 — 그 적을 따라가 남은 초 뒤에 친다(진단이 센다).</summary>
         private readonly List<(FieldEnemy target, float left, float amount, GoElement el, Color c)> _echoes = new List<(FieldEnemy, float, float, GoElement, Color)>();
         public int EchoCount => _echoes.Count;
+        /// <summary>109-14-17 뱃노래 — 남은 초 동안 기본·강·낙하 공격이 맞으면 쉼이 끝났을 때 물 노가 따라 친다(놓은 사람의 값으로).</summary>
+        public float RainLeft { get; private set; }
+        public float RainCd { get; private set; }
+        public int RainHits { get; private set; }
+        private KitBurst _rainKit;
+        private string _rainOwner;
+        private float _rainAmount;
+        private GoElement _rainEl;
+        private Color _rainColor;
         /// <summary>마지막으로 쓴 스킬·해방 한 벌(진단).</summary>
         public HeroKit LastKit { get; private set; }
         private readonly List<(Vector3 pos, float left, float r, float amount, GoElement el, Color c)> _shells = new List<(Vector3, float, float, float, GoElement, Color)>();
@@ -416,6 +428,7 @@ namespace Saga.Go.Combat
             {
                 Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * EnergyMul);
                 GroundDecal.Spawn(transform.position + fwd * 2f, GroundDecal.Kind.HitMark);
+                RainFollow(); // 109-14-17 뱃노래
             }
             return hits;
         }
@@ -466,7 +479,7 @@ namespace Saga.Go.Combat
                 e.TakeHit(atk * ChargeMul * TalentMul(GoTalent.Kind.Normal) * DmgMul(Active.Id, "n", cel) * (Active.InfuseLeft > 0f ? Active.InfuseMul : 1f) * cm, cel, atk * ReactMul, out _, heavy: true, crit: crit);
                 hits++;
             }
-            if (hits > 0) Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * hits);
+            if (hits > 0) { Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * hits); RainFollow(); } // 109-14-17 뱃노래
             FieldRingFx.Spawn(transform.position + fwd * 1.5f, ChargeReach, Color.white, 0.35f);
             FieldDamageText.Spawn(transform.position + Vector3.up * 4.6f, GoLocalization.T("field.charge", "강공격"), Color.white, 1f);
             return hits;
@@ -493,6 +506,7 @@ namespace Saga.Go.Combat
                 hits++;
             }
             if (hits > 0 && Active != null) Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * hits);
+            if (hits > 0) RainFollow(); // 109-14-17 뱃노래
             FieldRingFx.Spawn(transform.position, PlungeRadius, Color.white, 0.45f);
             FieldRingFx.Spawn(transform.position, PlungeRadius * 0.55f, Color.white, 0.3f);
             GroundDecal.Spawn(transform.position, GroundDecal.Kind.HitMark);
@@ -626,6 +640,12 @@ namespace Saga.Go.Combat
                 if (z.Kind == SkillShape.KitZone || z.Kind == SkillShape.Vortex)
                 {
                     TickKitZone(z); // 109-14-11 진·소용돌이
+                    z.Next += z.Every;
+                    continue;
+                }
+                if (z.Kind == SkillShape.Feast)
+                {
+                    TickFeast(z); // 109-14-17 바람 자리
                     z.Next += z.Every;
                     continue;
                 }
@@ -1035,6 +1055,7 @@ namespace Saga.Go.Combat
             RallyLeft = WardLeft = HasteLeft = 0f; // 109-14-11
             LoreLeft = 0f; // 109-14-15
             _echoes.Clear();
+            RainLeft = RainCd = 0f; RainHits = 0; _rainKit = null; // 109-14-17
             _shells.Clear();
             foreach (var m in _party) m.InfuseLeft = 0f;
             ApplyLook();
@@ -1143,6 +1164,46 @@ namespace Saga.Go.Combat
                     ElementPulse?.Invoke(dest, s.R * D, m.Element);
                     break;
                 }
+                case KitSkillType.Gust:
+                {
+                    // 109-14-17 부채 바람 — 앞 R 부채꼴(내적 Arc 이상)을 치고 나에게서 먼 쪽으로 밀어낸다. 명단 회복은 아래 s.Heal
+                    float r = s.R * D, ra = Atk * ReactMul;
+                    foreach (var e in Snapshot())
+                    {
+                        Vector3 d = Flat(e.transform.position - pos);
+                        float dl = d.magnitude;
+                        if (dl > r || (dl >= 0.5f && Vector3.Dot(d / dl, dir) < s.Arc)) continue;
+                        float cm = CritMul(m.Id, out bool crit);
+                        e.TakeHit(amount * cm, m.Element, ra, out _, crit: crit);
+                        e.KnockBack(dl >= 0.5f ? d : dir, s.Knock * D);
+                        hits++;
+                    }
+                    float half = Mathf.Acos(s.Arc) * Mathf.Rad2Deg;
+                    Vector3 up = Vector3.up * 0.4f;
+                    foreach (float a in new[] { -half, -half * 0.5f, 0f, half * 0.5f, half })
+                        FieldLineFx.Spawn(pos + up, pos + up + Quaternion.Euler(0f, a, 0f) * dir * r, 0.6f, fx, 0.4f);
+                    FieldRingFx.Spawn(pos + dir * r * 0.5f, r * 0.5f, fx, 0.5f);
+                    ElementPulse?.Invoke(pos + dir * r * 0.5f, r * 0.5f, m.Element);
+                    break;
+                }
+                case KitSkillType.Wave:
+                {
+                    // 109-14-17 노 물결 — 앞으로 Len·폭 W 의 길을 치고 앞으로 밀어낸다(나는 제자리)
+                    Vector3 end = pos + dir * s.Len * D;
+                    float w = s.W * D, ra = Atk * ReactMul;
+                    foreach (var e in Snapshot())
+                    {
+                        if (GoSkillShapes.SegDist(e.transform.position, pos, end) > w) continue;
+                        float cm = CritMul(m.Id, out bool crit);
+                        e.TakeHit(amount * cm, m.Element, ra, out _, crit: crit);
+                        e.KnockBack(dir, s.Knock * D);
+                        hits++;
+                    }
+                    FieldLineFx.Spawn(pos + Vector3.up * 0.3f, end + Vector3.up * 0.3f, w * 2f, fx, 0.5f);
+                    FieldRingFx.Spawn(end, w, fx, 0.4f);
+                    ElementPulse?.Invoke(end, w * 2f, m.Element);
+                    break;
+                }
             }
             if (s.Heal > 0f) HealParty(s.Heal);
             if (s.Team > 0f) EnergyOthers(m, s.Team);
@@ -1181,6 +1242,16 @@ namespace Saga.Go.Combat
                         for (int k = 1; k <= b.N; k++) _echoes.Add((e, b.Every * k, amount, m.Element, fx));
                     break;
                 }
+                case KitBurstType.Feast:
+                    // 109-14-17 잔칫날 순풍 — 발밑 바람 자리, 첫 틱은 Every 초 뒤
+                    _zones.Add(new SkillZone { Kind = SkillShape.Feast, Owner = m.Id, Center = pos, Radius = b.R * D, Left = b.Sec, Next = b.Every, Every = b.Every, Atk = Atk, Element = m.Element, Color = fx,
+                        Mul = b.EMul * GoKits.BurstScale * TalentMul(GoTalent.Kind.Burst) * DmgMul(m.Id, "b", m.Element), React = ReactMul, Heal = b.FHeal });
+                    break;
+                case KitBurstType.Rain:
+                    // 109-14-17 뱃노래 — 값은 놓은 사람 것으로 굳힌다(교체해도 그 사람 공격력·원소)
+                    RainLeft = b.Sec; RainCd = 0f; _rainKit = b; _rainOwner = m.Id; _rainEl = m.Element; _rainColor = fx;
+                    _rainAmount = Atk * b.RMul * GoKits.BurstScale * TalentMul(GoTalent.Kind.Burst) * DmgMul(m.Id, "b", m.Element);
+                    break;
                 case KitBurstType.Vortex:
                 {
                     Vector3 c = pos + Forward() * b.Ahead * D;
@@ -1233,8 +1304,57 @@ namespace Saga.Go.Combat
             ElementPulse?.Invoke(z.Center, z.Radius, z.Element);
         }
 
+        /// <summary>109-14-17 바람 자리 한 틱 — 안에 선 지금 인물 회복, 안의 적을 친다.</summary>
+        private void TickFeast(SkillZone z)
+        {
+            var a = Active;
+            if (a != null && !a.Down && Flat(transform.position - z.Center).magnitude <= z.Radius)
+            {
+                a.Hp = Mathf.Min(a.MaxHp, a.Hp + a.MaxHp * z.Heal);
+                z.Heals++;
+            }
+            int n = 0;
+            foreach (var e in Snapshot())
+            {
+                if (Flat(e.transform.position - z.Center).magnitude > z.Radius) continue;
+                float cm = CritMul(z.Owner, out bool crit);
+                e.TakeHit(z.Atk * z.Mul * cm, z.Element, z.Atk * z.React, out _, crit: crit);
+                n++;
+            }
+            z.Hits += n;
+            FieldRingFx.Spawn(z.Center, z.Radius, z.Color, 0.5f);
+            FieldRingFx.Spawn(z.Center, z.Radius * 0.45f, Color.Lerp(z.Color, Color.white, 0.5f), 0.4f);
+            ElementPulse?.Invoke(z.Center, z.Radius, z.Element);
+        }
+
+        /// <summary>109-14-17 뱃노래 따라 치기 — 기본·강·낙하 공격이 맞은 뒤 부른다. 쉼이 끝났으면 Reach 안 가까운 N 에 물 노 한 대씩. 친 수.</summary>
+        private int RainFollow()
+        {
+            var k = _rainKit;
+            if (RainLeft <= 0f || RainCd > 0f || k == null) return 0;
+            Vector3 pos = transform.position;
+            var tg = new List<FieldEnemy>(Snapshot());
+            tg.RemoveAll(e => Flat(e.transform.position - pos).magnitude > k.Reach * GoKits.Dist);
+            if (tg.Count == 0) return 0;
+            tg.Sort((a, c) => Flat(a.transform.position - pos).sqrMagnitude.CompareTo(Flat(c.transform.position - pos).sqrMagnitude));
+            RainCd = k.Gap;
+            int n = Mathf.Min(k.N, tg.Count);
+            for (int i = 0; i < n; i++)
+            {
+                var e = tg[i];
+                float cm = CritMul(_rainOwner, out bool crit);
+                e.TakeHit(_rainAmount * cm, _rainEl, Atk * ReactMul, out _, crit: crit);
+                FieldLineFx.Spawn(pos + Vector3.up * 2.2f, e.transform.position + Vector3.up * 1.2f, 0.45f, _rainColor, 0.3f);
+                FieldRingFx.Spawn(e.transform.position, 1.2f * GoKits.Dist, _rainColor, 0.3f);
+            }
+            RainHits += n;
+            return n;
+        }
+
         private void TickKitEffects(float dt)
         {
+            if (RainLeft > 0f) RainLeft = Mathf.Max(0f, RainLeft - dt); // 109-14-17 뱃노래
+            if (RainCd > 0f) RainCd = Mathf.Max(0f, RainCd - dt);
             if (RallyLeft > 0f) RallyLeft = Mathf.Max(0f, RallyLeft - dt);
             if (WardLeft > 0f) WardLeft = Mathf.Max(0f, WardLeft - dt);
             if (HasteLeft > 0f) HasteLeft = Mathf.Max(0f, HasteLeft - dt);

@@ -3,8 +3,8 @@ using Saga.Go.Data;
 
 namespace Saga.Go.Combat
 {
-    public enum KitSkillType { Dash, Shells, Guard, Zone, Blink }
-    public enum KitBurstType { Infuse, Rally, Ward, Haste, Vortex, Lore, Echo }
+    public enum KitSkillType { Dash, Shells, Guard, Zone, Blink, Gust, Wave }
+    public enum KitBurstType { Infuse, Rally, Ward, Haste, Vortex, Lore, Echo, Feast, Rain }
 
     /// <summary>원소 스킬 한 가지 — 값은 웹 척도(거리 m · 배율 · 기력 60), 쓸 때 이 트랙 크기로(<see cref="GoKits"/>).</summary>
     public class KitSkill
@@ -15,6 +15,8 @@ namespace Saga.Go.Combat
         public int N;
         /// <summary>109-14-15 그림자 걸음 — 적 뒤로 넘어서는 거리 · 표식 초 · 표식 난 적이 받는 피해 배율.</summary>
         public float Back, Mark, MarkMul;
+        /// <summary>109-14-17 부채 바람(앞 부채꼴 — 내적 Arc 이상)·노 물결 — 맞은 적을 Knock m 밀어낸다.</summary>
+        public float Arc, Knock;
     }
 
     public class KitBurst
@@ -25,6 +27,8 @@ namespace Saga.Go.Combat
         /// <summary>109-14-15 옛 글자 풀이(반응 피해 배율 RMul) · 가면 벗기(메아리 — Reach 안 표식 난 적마다 N 번, EMul).</summary>
         public float RMul, Reach, EMul;
         public int N;
+        /// <summary>109-14-17 잔칫날 순풍(바람 자리 — Every 초마다 안에 선 지금 인물 FHeal 회복·안의 적 EMul)·뱃노래(Sec 초 동안 기본·강·낙하 공격 뒤 Gap 초에 한 번 Reach 안 가까운 N 에 RMul).</summary>
+        public float FHeal, Gap;
     }
 
     public class HeroKit
@@ -41,7 +45,7 @@ namespace Saga.Go.Combat
     /// 고유 다섯(주인공 · 팔괘진 인물 · 일제 포격 인물 · 결사 방진 인물 · 화살비 인물 — id 는 웹과 같다) — 그 갈래 "대표"라 갈래보다 한 단 위.
     /// 갈래 = 도감 기질: 무용 돌격(돌진)/검기(원소 부여) · 통솔 호령(늦게 떨어지는 탄)/군기(명단 공격) · 인덕 방패(명단 보호막)/맹세(받는 피해).
     /// 원소 덧붙임 하나(불꽃 해방 ×1.15 · 물결 회복 · 번개 다른 인물 기력 · 바람 대기 −1.5초 · 서리 스킬 ×1.15 · 바위 보호막 +12% · 덩굴 해방 +3초).
-    /// 지략·도감 밖(산적)은 null → 109-8 모양(장판·소환)·해방 기본 그대로(웹과 같다). 이야기 동료 둘(은비·나그네)은 109-14-15 에 고유로 붙였다.
+    /// 지략·도감 밖(산적)은 null → 109-8 모양(장판·소환)·해방 기본 그대로(웹과 같다). 이야기 동료 넷(은비·나그네 109-14-15, 촌장·사공 109-14-17)은 고유로 붙였다.
     /// 척도: 거리 × 1.85(GO 사람 키) · 스킬 배율 × 1.8/2.2 · 해방 배율 × 4/4.5 · 기력 × 100/60. 옛 진단은 `OffForTest` 로 옛 모양 그대로 돈다.
     /// </summary>
     public static class GoKits
@@ -89,6 +93,15 @@ namespace Saga.Go.Combat
                 case "story_wanderer":
                     s = S(KitSkillType.Blink, "kit.sig.wanderer.skill", "그림자 걸음", 8f, 3.2f); s.Reach = 10f; s.Back = 1.5f; s.R = 2.5f; s.Mark = 8f; s.MarkMul = 1.25f; s.Len = 4f;
                     b = B(KitBurstType.Echo, "kit.sig.wanderer.burst", "가면 벗기", 6f, 3.4f); b.Reach = 15f; b.N = 3; b.Every = 0.3f; b.EMul = 1.5f;
+                    break;
+                // 109-14-17 치유·협동 공격(웹 kits.js story_elder·story_ferryman)
+                case "story_elder":
+                    s = S(KitSkillType.Gust, "kit.sig.elder.skill", "부채 바람", 8f, 2.3f); s.R = 6f; s.Arc = 0.2f; s.Knock = 7f; s.Heal = 0.06f;
+                    b = B(KitBurstType.Feast, "kit.sig.elder.burst", "잔칫날 순풍", 6f, 2.5f); b.Sec = 10f; b.Every = 1f; b.FHeal = 0.05f; b.EMul = 0.5f;
+                    break;
+                case "story_ferryman":
+                    s = S(KitSkillType.Wave, "kit.sig.ferryman.skill", "노 물결", 9f, 2.9f); s.Len = 9f; s.W = 2f; s.Knock = 6f;
+                    b = B(KitBurstType.Rain, "kit.sig.ferryman.burst", "뱃노래", 5f, 2.3f); b.Sec = 15f; b.Reach = 8f; b.N = 2; b.Gap = 1f; b.RMul = 0.85f;
                     break;
                 default:
                     return null;

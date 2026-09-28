@@ -1106,6 +1106,14 @@
     { "key": "story.ch7.s7.p.a", "value": "A face you know?" },
     { "key": "story.ch7.s7.p.b", "value": "Are you all right?" },
     { "key": "story.ch7.s9.p.a", "value": "The fifth altar?" },
-    { "key": "story.ch7.s9.p.b", "value": "Who lit it?" }
+    { "key": "story.ch7.s9.p.b", "value": "Who lit it?" },
+    { "key": "hero.story_elder", "value": "Nuri" },
+    { "key": "hero.story_elder.quote", "value": "Once the storm clouds lift, the village must throw a feast." },
+    { "key": "hero.story_ferryman", "value": "Beodeul" },
+    { "key": "hero.story_ferryman.quote", "value": "The water has smelled off lately." },
+    { "key": "kit.sig.elder.skill", "value": "Fan Gust" },
+    { "key": "kit.sig.elder.burst", "value": "Feast-Day Tailwind" },
+    { "key": "kit.sig.ferryman.skill", "value": "Oar Wave" },
+    { "key": "kit.sig.ferryman.burst", "value": "Boat Song" }
   ]
 }

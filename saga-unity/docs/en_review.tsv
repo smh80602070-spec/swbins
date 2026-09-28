@@ -701,6 +701,8 @@
 2	go	hero.sg_zhaoyun	은창	Eunchang		
 2	go	hero.sg_zhouyu	화풍	Hwapung		
 2	go	hero.sg_zhugeliang	현책	Hyeonchaek		
+2	go	hero.story_elder	누리	Nuri		
+2	go	hero.story_ferryman	버들	Beodeul		
 2	go	hero.story_scholar	은비	Eunbi		
 2	go	hero.story_wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	hero.trait.command	통	Command		
@@ -742,6 +744,10 @@
 2	go	kit.noun.oath	맹세	Oath		
 2	go	kit.noun.order	호령	Volley Order		
 2	go	kit.noun.shield	방패	Shield Wall		
+2	go	kit.sig.elder.burst	잔칫날 순풍	Feast-Day Tailwind		
+2	go	kit.sig.elder.skill	부채 바람	Fan Gust		
+2	go	kit.sig.ferryman.burst	뱃노래	Boat Song		
+2	go	kit.sig.ferryman.skill	노 물결	Oar Wave		
 2	go	kit.sig.gyebaek.burst	오천의 맹세	Oath of Five Thousand		
 2	go	kit.sig.gyebaek.skill	결사 방진	Last Stand Square		
 2	go	kit.sig.hero.burst	불새 깃	Firebird Plume		
@@ -2368,6 +2374,8 @@
 3	go	hero.sg_zhaoyun.quote	한 몸 바쳐 주공을 지키겠습니다.	I will guard my lord with my life.		
 3	go	hero.sg_zhouyu.quote	동남풍이 불면, 그때가 우리의 때입니다.	When the southeast wind blows, our time has come.		
 3	go	hero.sg_zhugeliang.quote	삼고초려의 뜻, 잊지 않겠습니다.	I will not forget the meaning of those three visits.		
+3	go	hero.story_elder.quote	먹구름이 걷히면 마을 잔치를 열어야지.	Once the storm clouds lift, the village must throw a feast.		
+3	go	hero.story_ferryman.quote	물 냄새가 요즘 영 비릿해.	The water has smelled off lately.		
 3	go	hero.story_scholar.quote	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 3	go	hero.story_wanderer.quote	너무 떨어지면 기다려 주지 않을 테니.	Fall too far behind and I won't wait.		
 3	go	hero.wd_akbar.quote	믿음은 강요로 얻어지지 않는다.	Faith is not won by force.		

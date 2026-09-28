@@ -354,6 +354,30 @@ namespace Saga.Go.Combat
             transform.position = Grounded(transform.position + d / m * Mathf.Min(step, m - 0.5f));
         }
 
+        /// <summary>109-14-17 밀려남(웹 ⑲-17 `kb`) — dir 쪽으로 dist 를 KnockSec 초에 고르게 미끄러진다(멎어 있거나 얼어 있어도).
+        /// 수호장·주간 보스·이야기 보스·굴복한 인물은 안 밀린다. 산·물 칸 앞에서 멎는다(`MoveBy`).</summary>
+        public const float KnockSec = 0.25f;
+        private Vector3 _slideVel;
+        private float _slideLeft;
+        public bool Sliding => _slideLeft > 0f;
+        public bool CanBeKnocked => Alive && !Yielded && !IsGuardian && !IsWeeklyBoss && !IsStoryBoss;
+        public void KnockBack(Vector3 dir, float dist)
+        {
+            dir.y = 0f;
+            if (!CanBeKnocked || dist <= 0f || dir.sqrMagnitude < 1e-6f) return;
+            _slideVel = dir.normalized * (dist / KnockSec);
+            _slideLeft = KnockSec;
+        }
+
+        private void TickSlide(float dt)
+        {
+            if (_slideLeft <= 0f) return;
+            float t = Mathf.Min(dt, _slideLeft);
+            MoveBy(_slideVel * t);
+            _slideLeft -= dt;
+            if (_slideLeft <= 1e-6f) _slideLeft = 0f;
+        }
+
         /// <summary>원소를 띠게 한다(무덤 터 기운) — 얼어 있으면 안 건드린다.</summary>
         public void SoakAura(GoElement el, float sec)
         {
@@ -808,6 +832,7 @@ namespace Saga.Go.Combat
                 if (_timer <= 0f) Revive();
                 return;
             }
+            TickSlide(dt); // 109-14-17 밀려남 — 멎어 있거나 얼어 있어도 미끄러진다
             if (DuelGate.Active || Saga.Go.Cinematics.GoCutscenes.Playing || StoryState.Talking) { SetMoveAnim(0f); return; } // 106-9 — 등장 컷 동안도 선다. 109-14-12 이야기 대화 중도
             if (Frozen) { SetMoveAnim(0f); return; } // 109-14-1a 얼어붙음 — 제자리에 멎는다(시간은 TickStatus 가 줄인다)
 
@@ -1385,6 +1410,7 @@ namespace Saga.Go.Combat
             CancelInvoke(nameof(HideBody));
             Hp = MaxHp;
             ResetShields();
+            _slideLeft = 0f; // 109-14-17
             transform.position = Grounded(Home);
             CurrentState = State.Wander;
             _timer = 1f;
@@ -1435,6 +1461,9 @@ namespace Saga.Go.Combat
 
         /// <summary>진단용 — 체력을 곧장 맞춘다(109-14-7 다시 재도 비율이 남는지).</summary>
         public void SetHpForTest(float value) => Hp = Mathf.Clamp(value, 1f, MaxHp);
+
+        /// <summary>진단용 — 최대 체력을 바꿔 가득 채운다(한 방에 안 쓰러지게 · 끝나면 진단이 원래 값으로 되돌린다).</summary>
+        public void SetMaxHpForTest(float value) { MaxHp = Mathf.Max(1f, value); Hp = MaxHp; }
 
         /// <summary>진단용 — 수호장 "처음 만남" 여부를 정한다(false 면 다음 발견에 등장 컷).</summary>
         public void SetEngagedForTest(bool engaged) => Engaged = engaged;

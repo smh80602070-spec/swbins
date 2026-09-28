@@ -127,6 +127,11 @@ namespace Saga.Go.Data
                 WebElement = WebElement.Grass, QuoteKo = "이 비문, 읽을수록 이상하다니까." },
             new Hero { Id = "story_wanderer", NameKo = "가면 쓴 나그네", Era = HeroEra.Story, Faction = "재야", Rarity = 5, Trait = HeroTrait.Might, Might = 90, Wisdom = 75, Command = 72,
                 WebElement = WebElement.Ice, QuoteKo = "너무 떨어지면 기다려 주지 않을 테니." },
+            // 109-14-17 치유(촌장, 6장 끝)·협동 공격(사공, 7장 끝) — 웹 ⑲-17
+            new Hero { Id = "story_elder", NameKo = "누리", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Virtue, Might = 48, Wisdom = 80, Command = 86,
+                WebElement = WebElement.Wind, QuoteKo = "먹구름이 걷히면 마을 잔치를 열어야지." },
+            new Hero { Id = "story_ferryman", NameKo = "버들", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Might, Might = 82, Wisdom = 60, Command = 66,
+                WebElement = WebElement.Water, QuoteKo = "물 냄새가 요즘 영 비릿해." },
         };
 
         public static bool IsStory(string id) => id != null && id.StartsWith("story_");
