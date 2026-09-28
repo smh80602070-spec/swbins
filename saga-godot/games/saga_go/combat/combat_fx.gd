@@ -173,3 +173,160 @@ static func _star_tex() -> ImageTexture:
 			img.set_pixel(x, y, Color(1, 1, 1, a))
 	_star = ImageTexture.create_from_image(img)
 	return _star
+
+# ---------------------------------------------------------------- 원소 스킬·폭발(09-28)
+
+const RING_SHADER := preload("res://saga_core/shaders/shock_ring.gdshader")
+const PILLAR_SHADER := preload("res://saga_core/shaders/light_pillar.gdshader")
+
+## 원소별 입자 — [개수, 속도 최소, 최대, 퍼짐(도), 중력 y, 수명, 조각 크기(가로,세로), 날아가는 쪽으로 세우기, 돌기, 감아 돌기]
+const PARTICLES := {
+	"fire": [26, 2.5, 6.0, 30.0, 3.0, 0.9, Vector2(0.14, 0.14), false, 0.0, 0.0],      # 솟아오르는 불씨
+	"water": [28, 4.0, 8.5, 55.0, -14.0, 0.7, Vector2(0.11, 0.11), false, 0.0, 0.0],   # 튀는 물방울
+	"thunder": [32, 6.0, 12.0, 180.0, 0.0, 0.3, Vector2(0.04, 0.45), true, 0.0, 0.0],  # 지지직 불똥
+	"ice": [22, 4.0, 8.0, 50.0, -12.0, 0.6, Vector2(0.07, 0.34), true, 0.0, 0.0],      # 얼음 파편
+	"wind": [30, 1.5, 3.5, 20.0, 1.5, 0.8, Vector2(0.05, 0.5), true, 0.0, 9.0],        # 감아 도는 바람 줄기
+	"rock": [18, 5.0, 9.0, 40.0, -20.0, 0.8, Vector2(0.24, 0.24), false, 360.0, 0.0],  # 튀는 돌 조각
+	"grass": [24, 2.5, 5.0, 70.0, -2.5, 1.0, Vector2(0.2, 0.11), false, 300.0, 0.0],   # 흩날리는 잎
+	"": [20, 3.0, 6.0, 90.0, -4.0, 0.5, Vector2(0.1, 0.1), false, 0.0, 0.0],
+}
+
+
+## 원소 스킬·폭발·반응의 자리 — 바닥 충격파 + 원소별 입자, big(폭발)이면 빛기둥까지. 색이 원소 색표와 같으면 그 원소로 본다.
+static func element_burst(host: Node, center: Vector3, radius: float, color: Color, sec: float, element: String, big: bool) -> void:
+	if host == null or not host.is_inside_tree():
+		return
+	var scene := host.get_tree().current_scene
+	## ① 바닥 충격파.
+	var ring := MeshInstance3D.new()
+	var plane := PlaneMesh.new()
+	plane.size = Vector2(radius * 2.0, radius * 2.0)
+	ring.mesh = plane
+	var rm := ShaderMaterial.new()
+	rm.shader = RING_SHADER
+	rm.set_shader_parameter("color", color)
+	ring.material_override = rm
+	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	scene.add_child(ring)
+	ring.global_position = center + Vector3.UP * 0.15
+	var tw := ring.create_tween()
+	tw.set_ignore_time_scale(true)
+	tw.set_parallel(true)
+	tw.tween_method(func(v: float) -> void: rm.set_shader_parameter("progress", v), 0.15, 1.0, sec).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw.tween_method(func(v: float) -> void: rm.set_shader_parameter("fade", v), 1.0, 0.0, sec).set_ease(Tween.EASE_IN)
+	tw.chain().tween_callback(ring.queue_free)
+	## ② 원소별 입자.
+	var spec: Array = PARTICLES.get(element, PARTICLES[""])
+	var p := CPUParticles3D.new()
+	p.one_shot = true
+	p.emitting = false
+	p.amount = int(float(spec[0]) * (1.8 if big else 1.0))
+	p.lifetime = float(spec[5])
+	p.explosiveness = 0.85
+	p.randomness = 0.4
+	p.emission_shape = CPUParticles3D.EMISSION_SHAPE_RING
+	p.emission_ring_axis = Vector3.UP
+	p.emission_ring_height = 0.3
+	p.emission_ring_radius = maxf(radius * 0.55, 0.6)
+	p.emission_ring_inner_radius = maxf(radius * 0.15, 0.2)
+	p.direction = Vector3.UP
+	p.spread = float(spec[3])
+	p.initial_velocity_min = float(spec[1])
+	p.initial_velocity_max = float(spec[2])
+	p.gravity = Vector3(0, float(spec[4]), 0)
+	p.damping_min = 1.0
+	p.damping_max = 3.0
+	p.angular_velocity_min = -float(spec[8])
+	p.angular_velocity_max = float(spec[8])
+	p.tangential_accel_min = float(spec[9])
+	p.tangential_accel_max = float(spec[9])
+	p.particle_flag_align_y = bool(spec[7])
+	var q := QuadMesh.new()
+	q.size = spec[6]
+	if element == "rock":
+		var bx := BoxMesh.new()
+		bx.size = Vector3.ONE * (spec[6] as Vector2).x
+		p.mesh = bx
+	else:
+		p.mesh = q
+	var curve := Curve.new()
+	curve.add_point(Vector2(0, 1))
+	curve.add_point(Vector2(0.7, 0.8))
+	curve.add_point(Vector2(1, 0))
+	p.scale_amount_curve = curve
+	p.scale_amount_min = 0.7
+	p.scale_amount_max = 1.4
+	var grad := Gradient.new()
+	grad.set_color(0, color.lerp(Color.WHITE, 0.15))
+	grad.set_color(1, Color(color.r, color.g, color.b, 0.0))
+	p.color_ramp = grad
+	var pm := StandardMaterial3D.new()
+	pm.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	pm.vertex_color_use_as_albedo = true
+	pm.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	if element != "rock":
+		## 네모난 판은 색종이처럼 보였다(09-28 촬영) — 가운데가 밝고 가장자리가 스러지는 둥근 빛 알갱이.
+		pm.albedo_texture = _dot_tex()
+		pm.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+		pm.billboard_mode = BaseMaterial3D.BILLBOARD_PARTICLES
+		pm.billboard_keep_scale = true
+	p.material_override = pm
+	p.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	scene.add_child(p)
+	p.global_position = center + Vector3.UP * 0.2
+	p.emitting = true
+	var pt := p.create_tween()
+	pt.tween_interval(p.lifetime + 0.2)
+	pt.tween_callback(p.queue_free)
+	## ③ 폭발 — 하늘로 솟는 빛기둥 + 가운데 큰 번쩍임.
+	if big:
+		var pillar := MeshInstance3D.new()
+		var cyl := CylinderMesh.new()
+		cyl.top_radius = radius * 0.3
+		cyl.bottom_radius = radius * 0.45
+		cyl.height = 14.0
+		cyl.radial_segments = 20
+		cyl.rings = 1
+		cyl.cap_top = false
+		cyl.cap_bottom = false
+		pillar.mesh = cyl
+		var lm := ShaderMaterial.new()
+		lm.shader = PILLAR_SHADER
+		lm.set_shader_parameter("color", color)
+		pillar.material_override = lm
+		pillar.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		scene.add_child(pillar)
+		pillar.global_position = center + Vector3.UP * 7.0
+		pillar.scale = Vector3(0.4, 1.0, 0.4)
+		var pw := pillar.create_tween()
+		pw.set_ignore_time_scale(true)
+		pw.set_parallel(true)
+		pw.tween_property(pillar, "scale", Vector3(1.1, 1.0, 1.1), sec * 0.9).set_ease(Tween.EASE_OUT)
+		pw.tween_method(func(v: float) -> void: lm.set_shader_parameter("fade", v), 1.0, 0.0, sec * 1.1).set_ease(Tween.EASE_IN)
+		pw.chain().tween_callback(pillar.queue_free)
+		spark(host, center + Vector3.UP * 1.2, color, true)
+
+
+static var _dot: ImageTexture = null
+## 둥근 빛 알갱이(가운데 밝고 가장자리로 스러짐) — 코드로 굽는다.
+static func _dot_tex() -> ImageTexture:
+	if _dot != null:
+		return _dot
+	var n := 32
+	var img := Image.create(n, n, false, Image.FORMAT_RGBA8)
+	for y in n:
+		for x in n:
+			var u := (float(x) + 0.5) / float(n) * 2.0 - 1.0
+			var v := (float(y) + 0.5) / float(n) * 2.0 - 1.0
+			var a := clampf(1.0 - sqrt(u * u + v * v), 0.0, 1.0)
+			img.set_pixel(x, y, Color(1, 1, 1, a * a * 1.6))
+	_dot = ImageTexture.create_from_image(img)
+	return _dot
+
+
+## 원소 색표(elements.gd INFO)와 같은 색이면 그 원소 이름, 아니면 ""(반응 색 등).
+static func element_of_color(c: Color, info: Dictionary) -> String:
+	for k in info:
+		if (info[k].color as Color).is_equal_approx(c):
+			return k
+	return ""

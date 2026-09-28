@@ -9334,3 +9334,12 @@ PROJECT_STATE.md` 참고. 요약:
 - field_combat.gd: attack() 근접 갈래·charged_attack() 에 slash, _deal() 에 spark.
 - probe_shots "swing"/"swing3"/"swing8" 할 일(가까운 들판 적 곁에서 휘두르고 n 프레임 뒤 찍기, 편성이 법구뿐이면 궤적·불꽃을 직접 한 번) · x_swing·x_swing_late 자리.
 - 점검 COMBAT·KIT·ELEMENT·WEAPON·ARCHERY·FIELD_BOSS·DOMAIN·WEEKLY fails=0, REGRESS OK. 실기 확인 전: 연타 리듬과 궤적 기울기, 불똥 크기.
+
+## GO 그래픽 먼저 ⑩ 원소 스킬·폭발 이펙트 (2026-09-28, 같은 세션)
+
+- 스킬·폭발·반응이 전부 field_combat._ring_fx(얇게 퍼지는 TorusMesh 하나)였다 → CombatFx.element_burst:
+  ① 바닥 충격파(새 shock_ring.gdshader — 물결치는 빛 고리 + 안쪽 은은한 빛) ② 원소별 CPUParticles3D(불 솟는 불씨·물 튀는 물방울·번개 불똥·얼음 파편·바람 감아 도는 줄기·바위 돌 조각·풀 잎, 둥근 빛 알갱이 텍스처) ③ 0.6초 넘는 큰 고리(= 원소 폭발)는 빛기둥(새 light_pillar.gdshader)·큰 번쩍임 추가.
+  - 원소는 색이 elements.gd INFO 색과 같으면 그 원소로 알아본다(호출부 안 고침). 반응 색은 일반 불빛.
+- probe_shots "fxring"(일곱 원소 스킬 둘레 + 가운데 번개 폭발) · x_fxring 자리. 네모 판 입자는 색종이처럼 보여 둥근 알갱이로.
+- 점검 KIT·ELEMENT·WEAPON·FIELD_BOSS·DOMAIN·WEEKLY·TALENT·SIGHT fails=0, REGRESS OK. COMBAT(증발·과부하)·STORY(talk_face)가 한 판 FAIL → 단독 재실행 둘 다 fails=0(흔들림, 원인 미조사).
+- 실기 확인 전: 실제 편성으로 스킬·폭발 누른 모습, 폰 입자 부담.

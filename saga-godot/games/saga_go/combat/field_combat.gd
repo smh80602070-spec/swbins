@@ -1344,28 +1344,10 @@ func _down() -> void:
 
 # ---------------------------------------------------------------- 연출
 
+## 09-28 — 얇게 퍼지는 원환 하나이던 것을 바닥 충격파 + 원소별 입자(+폭발은 빛기둥)로(combat_fx.gd element_burst).
+## 색이 원소 색표와 같으면 그 원소로 알아본다(반응 색은 일반 불빛). 0.6초 넘게 도는 큰 고리 = 원소 폭발.
 func _ring_fx(center: Vector3, radius: float, color: Color, sec: float) -> void:
-	var mi := MeshInstance3D.new()
-	var torus := TorusMesh.new()
-	torus.inner_radius = radius * 0.86
-	torus.outer_radius = radius
-	torus.rings = 32
-	torus.ring_segments = 6
-	mi.mesh = torus
-	var mat := StandardMaterial3D.new()
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	mat.albedo_color = Color(color.r, color.g, color.b, 0.85)
-	mi.material_override = mat
-	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	get_tree().current_scene.add_child(mi)
-	mi.global_position = center + Vector3.UP * 0.3
-	mi.scale = Vector3(0.3, 1.0, 0.3)
-	var tw := mi.create_tween()
-	tw.set_parallel(true)
-	tw.tween_property(mi, "scale", Vector3.ONE, sec)
-	tw.tween_property(mat, "albedo_color:a", 0.0, sec)
-	tw.chain().tween_callback(mi.queue_free)
+	CombatFx.element_burst(self, center, radius, color, sec, CombatFx.element_of_color(color, Elements.INFO), sec >= 0.6)
 
 ## 법구·활 기본 공격 — 인물 가슴에서 적까지 가는 빛줄기(0.15초).
 func _shot_fx(to: Vector3, color: Color) -> void:

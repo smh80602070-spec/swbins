@@ -15,6 +15,7 @@ const VroidBody := preload("res://games/saga_go/world/vroid_body.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const DispatchNode := preload("res://games/saga_go/world/dispatch.gd")
 const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")
+const Elements := preload("res://games/saga_go/combat/elements.gd")
 
 const SETTLE := 90
 
@@ -31,6 +32,7 @@ const SHOTS := [
 	["v_river", "village", Vector2(3.5, 6.6), Vector3.ZERO, Vector2(3.5, 7.0), -25.0, 10.0, ""],
 	["x_swing", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing3"],
 	["x_swing_late", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing8"],
+	["x_fxring", "ruins", "r_statue", Vector3(14, 0, -4), "r_statue", -32.0, 14.0, "fxring"],
 	["v_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, ""],
 	["v_station_boards", "village", "v_station", Vector3(0, 0, 9), "v_station", -22.0, 10.0, ""],
 	["v_people_lineup", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 7.0, "lineup"],
@@ -120,6 +122,15 @@ func _process(_delta: float) -> void:
 		return
 	if _frame == 20:
 		_act(String(SHOTS[_i][7]))
+	## "fxring" — 원소 일곱의 스킬 자리(둘레 6m)와 가운데 폭발 하나를 찍기 12 프레임 전에 띄운다(09-28 원소 이펙트).
+	if String(SHOTS[_i][7]) == "fxring" and _frame == SETTLE - 12:
+		var els := ["fire", "water", "thunder", "wind", "ice", "rock", "grass"]
+		for k in els.size():
+			var a := TAU * float(k) / float(els.size())
+			var at := _p.global_position + Vector3(cos(a), 0.0, sin(a)) * 6.0
+			at.y = TerrainBuilder.height_at(String(SHOTS[_i][1]), at)
+			CombatFx.element_burst(_p, at, 2.2, Elements.color_of(els[k]), 0.5, els[k], false)
+		CombatFx.element_burst(_p, _p.global_position, 3.0, Elements.color_of("thunder"), 0.8, "thunder", true)
 	if String(SHOTS[_i][7]).begins_with("swing") and _frame == SETTLE - int(String(SHOTS[_i][7]).substr(5) if String(SHOTS[_i][7]).length() > 5 else "5"):
 		var fc := get_tree().get_first_node_in_group("go_field_combat")
 		if fc:
