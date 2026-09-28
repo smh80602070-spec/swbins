@@ -9454,3 +9454,7 @@ PROJECT_STATE.md` 참고. 요약:
 - 꽃 에셋은 안 씀: Flower_*_Single 은 너무 작고 Petal 은 크고 살구빛이라 버섯처럼 보였다(창 모드 x_first_stop 두 번 확인). frost(눈밭)·village(삼각형 예산 빠듯 — 무리 6곳×22송이일 때 마을 평균 33.4→41.3만, 4×14 + village 제외로 33.4만 유지)는 뺐다.
 - 점검 CROSSING·SKYPORT·SUNKEN·AMBER·VAULT·FORK·TRAVERSAL fails=0, REGRESS OK. PERF 마을 33.4·포구 25.7·폐허 28.2만 그대로.
 - 메모: bash 에서 `SAGA_${P}_PROBE=1 cmd` 는 변수 대입으로 안 읽혀 조용히 아무것도 안 돈다 — `env SAGA_${P}_PROBE=1 cmd`.
+
+## GO 그래픽 먼저 ㉕ 잠긴 도읍 바닥 (2026-09-30, 같은 세션)
+
+- 잠긴 도읍 마른 바닥이 (0.72,0.7,0.62) 옅은 회색이라 햇빛에 허옇게 날아갔다(창 모드 u_palace). terrain_builder 지역 색 sunken D → (0.5,0.52,0.46) 젖은 바닥 빛. 전후: 흰 판 → 어두운 청록 회색 바닥. SUNKEN 점검 fails=0.
