@@ -10163,3 +10163,16 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 검증(묶음 없는 PC): 컴파일 0 · `PlaytestHeadless` 3연속 같은 결과 — story OK(표 6장·자리(옛길·석등·고원 넷 — 칸 가장자리 3m 안쪽·밑동 18m 밖)·5장 석등 틀림/같은 것 두 번/틀려서 꺼짐/해·달·별·제단 무리 다섯·나그네·6장 고원만으론 안 넘어감·꼭대기·검은 가면 가면·고원 위·칸 밖/봉우리엔 못 섬·그림자 걸음 등 뒤 4.1m·원 5.9·둘째 수 침·2단계 뇌 방패 12%·졸개 둘·쓰러뜨리면 졸개도 치움·셋째 제단·끝 보상), 나머지 OK 45 줄 그대로, 남은 FAIL 기준선 등불. `UiLayoutCheck` 문제 6 = 작업 전과 같은 영어 DUNGEON.
 - 실기 확인 전: 석등 이름표 크기·읽힘 · 봉우리 (6,7) 오르기 스태미나 · 고원 위 결투 넓이·검은 가면이 벼랑 끝에서 막히는 모양 · 그림자 걸음 예고 0.8초 체감 · 방패·졸개 나오는 박자.
 - 다음 = 14-15 (웹 ⑲-15 이야기 동료 둘 — 은비·나그네 합류·편성).
+
+## 2026-09-28 char-forge — 사람 NPC 15벌 게임 몸 교체(첫 교체)
+
+"vroid 자체툴 이어해" → char-forge 09-27 밤 순서 ① "게임 몸 교체부터". 사람 짝 38 을 짝마다 크게 렌더(`render_pairs.py`, 스크래치패드)해 추천 15·보류 23 판정 페이지를 만들고 사용자 "다 해줘"(추천대로).
+
+- `SetupNpcCharacterImports.ForgeSwap`(Mixamo 이름 → 공방 id) + 메뉴 `Saga/Char Forge/Apply Forge Swaps`(배치 `SetupForgeSwaps`, 로그 `FORGE_SWAP`). 같은 프리팹 자리·GUID 에 공방 FBX 로 굽는다 — 클립은 공방 FBX 안 상태 이름(idle·walk·attack… 소문자), 하나라도 없으면 Mixamo 로.
+- 교체 15: 역참 Remy·Megan·ExoGray·Vanguard · DUNGEON Brian·Boss·Leonard · STORY Racer·Olivia · FOREST CastleGuard·Pelegrini·Pete·Sophie·Jennifer · GO 근대 Joe. 보류 = 갑옷 GO 인물 몸 일곱·긴 옷·부푼 옷(Jody·Steve)·주역·동행·망자·방독면, 괴물·두목·로봇 23짝은 판정 밖.
+- **씬에 풀어 박힌 몸**: 씬 빌더가 편집 중 `SpawnRigged` 로 심은 "Visual" 은 프리팹 연결이 없어 프리팹을 다시 구워도 옛 몸이 남는다(TestDungeon 3 · TestVillageForest 5 · TestField 1). 새 `ForgeSwapScenes`(메뉴 `Saga/Char Forge/Refresh Swapped Bodies In Build Scenes`, 배치 `RefreshBatch`) 가 바꾼 몸의 Mixamo FBX 메시를 쓰는 Visual 만 같은 부모·방향·키·발 높이로 갈아 끼운다(씬 재빌드 없음). 첫 판 "dangling" 은 부모 Transform 자식 목록 오탐 → Transform 은 건너뜀, 다시 돌려 replaced 0 · `FORGE_SCENE_RESULT OK`.
+- 빌드 관문: `realistic-pack.sh manifest`(프리팹 15 해시) → `WriteBuildDeps` 578 → 470(빠진 108 = 바꾼 몸의 Mixamo FBX·클립·텍스처만) → `SagaAssetGate` **OK**. 고지 파일(`SagaLegal.txt`)에 charforge·quaternius·피부 셰이더 MIT 가 올라옴.
+- **다른 PC**: 공방 FBX·재질은 저장소 밖 — char-forge README §3 "새 PC" 로 뽑고 `Apply Forge Swaps` → `Refresh Swapped Bodies` 순서. 컨트롤러 15(커밋)는 공방 FBX 클립 GUID 를 가리키니 공방 몸 없는 PC 는 관문 ④ 가 막는다. 사실 몸 묶음(`realistic-pack.sh pack`)도 새 목록으로 다시 쌀 것.
+- 배치가 고친 폰트 SDF·Mobile_RPAsset·버전 파일 되돌림.
+- 실기 확인 전: 15벌이 서고 걷는 모양·키·발 · Brian·Boss·Racer 베기·맞기·쓰러짐 · 역참 사람 판(GO 폴백 PC 는 원래 캡슐).
+- 다음 = 인물 105 제 몸(사용자 지시 "인물 105 이어해").

@@ -193,6 +193,16 @@ namespace Saga.EditorTools
         /// </summary>
         public static readonly Dictionary<string, string> ForgeSwap = new Dictionary<string, string>
         {
+            // 2026-09-28 사용자 판정 "추천대로" — 사람 짝 38 중 15(갑옷·긴 옷·주역·동행·괴물은 Mixamo 유지)
+            { "Remy", "_cmp_real_tourist_01" }, { "Megan", "_cmp_real_courier_f_01" },           // GO 역참 사람
+            { "ExoGray", "_cmp_real_surveyor_01" }, { "Vanguard", "_cmp_real_mechanic_01" },
+            { "Brian", "_cmp_real_rioter_01" }, { "Boss", "_cmp_real_enforcer_01" },             // DUNGEON 잡졸·행상
+            { "Leonard", "_cmp_real_junkpeddler_01" },
+            { "Racer", "_cmp_real_rider_01" }, { "Olivia", "_cmp_real_phototourist_f_01" },      // STORY
+            { "CastleGuard", "_cmp_real_sentry_01" }, { "Pelegrini", "_cmp_real_pilgrim_01" },   // FOREST(둘은 GO 인물 몸 겸)
+            { "Pete", "_cmp_real_courier_02" }, { "Sophie", "_cmp_real_photographer_f_02" },
+            { "Jennifer", "_cmp_real_castaway_f_01" },
+            { "Joe", "_cmp_real_suit_01" },                                                     // GO 근대 인물
         };
 
         public static bool IsForgeSwapped(string name) => ForgeSwap.ContainsKey(name);
