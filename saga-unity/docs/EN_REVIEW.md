@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **3021** (표 2966 · 코드 55) — go 1177 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **222**
-- 사람 검수 **0/3021** — 순위1 0/265 · 순위2 0/2043 · 순위3 0/713
+- 짝 **3077** (표 3022 · 코드 55) — go 1233 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **230**
+- 사람 검수 **0/3077** — 순위1 0/265 · 순위2 0/2098 · 순위3 0/714
 
 ## 검수 순서
 
@@ -26,7 +26,7 @@
 
 없음.
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 222)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 230)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -36,6 +36,7 @@
 | 10→25 | go | `story.ch5.s2` | To the mouth of the old road on the western wood path |
 | 16→33 | go | `story.ch6.s3.l3` | ……He's come. When he wraps himself in stormclouds, break it with fire! |
 | 9→22 | forest | `visitor.dirs` | somewhere in the woods to the {0} of the village |
+| 30→56 | go | `story.ch9.s9.l4` | Let's head down to the village. Granny Nuri will give me an earful — but let's spread our wings and go straight there. |
 | 3→12 | go | `cook.recipe.honey_cake` | Honey Blossom Rice Cake |
 | 10→22 | go | `story.ch5` | Chapter 5 · The Old Road over the Western Pass |
 | 4→13 | dungeon | `item.wp_lm_cloud` | Cloud General's Gold Sword |
@@ -61,4 +62,3 @@
 | 7→15 | go | `story.ch5.s8.p.a` | The master of the stormclouds? |
 | 6→13 | go | `domain.site.d_school` | Riverside Old Schoolhouse |
 | 27→48 | go | `story.ch4.s7.l1` | A mask fragment? Let me see… this pattern is exactly the one carved at the bottom of the inscription! |
-| 4→11 | dungeon | `landmark.bandit` | Black Wind Stronghold |

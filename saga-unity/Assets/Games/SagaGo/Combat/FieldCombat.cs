@@ -994,7 +994,8 @@ namespace Saga.Go.Combat
         private static List<FieldEnemy> Snapshot()
         {
             var list = new List<FieldEnemy>();
-            foreach (var e in FieldEnemy.All) if (e.Alive) list.Add(e);
+            Vector3 me = Instance != null ? Instance.transform.position : Vector3.zero;
+            foreach (var e in FieldEnemy.All) if (e.Alive && GoStory.SameLayer(e.transform.position, me)) list.Add(e); // 109-14-20 층이 다른 적은 못 친다
             return list;
         }
 

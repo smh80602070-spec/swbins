@@ -703,6 +703,7 @@
 2	go	hero.sg_zhugeliang	현책	Hyeonchaek		
 2	go	hero.story_elder	누리	Nuri		
 2	go	hero.story_ferryman	버들	Beodeul		
+2	go	hero.story_haesol	해솔	Haesol		
 2	go	hero.story_scholar	은비	Eunbi		
 2	go	hero.story_wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	hero.trait.command	통	Command		
@@ -750,6 +751,8 @@
 2	go	kit.sig.ferryman.skill	노 물결	Oar Wave		
 2	go	kit.sig.gyebaek.burst	오천의 맹세	Oath of Five Thousand		
 2	go	kit.sig.gyebaek.skill	결사 방진	Last Stand Square		
+2	go	kit.sig.haesol.burst	가면 없는 노래	Unmasked Song		
+2	go	kit.sig.haesol.skill	먹구름 벼락	Storm-Cloud Bolt		
 2	go	kit.sig.hero.burst	불새 깃	Firebird Plume		
 2	go	kit.sig.hero.skill	불꽃 돌진	Flame Rush		
 2	go	kit.sig.huang.burst	돌개 화살	Whirlwind Arrows		
@@ -848,6 +851,8 @@
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
 2	go	story.altar4	넷째 제단	the Fourth Altar		
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
+2	go	story.boss.haesol	먹구름 가면 해솔	Haesol of the Storm Mask		
+2	go	story.boss.king	먹구름 임금	Storm King		
 2	go	story.boss.mask	검은 가면	Black Mask		
 2	go	story.boss.mask2	금 간 검은 가면	Cracked Black Mask		
 2	go	story.boss_up	{0}가 나타났다	{0} has appeared		
@@ -1097,6 +1102,52 @@
 2	go	story.ch8.s9.l3	알 것 없다. 먹구름 위 여섯째 자리에서 기다리마 — 거기서 끝을 보자.	That's none of your concern. I'll be waiting at the sixth seat above the storm clouds — we'll finish this there.		
 2	go	story.ch8.s9.p.a	왜 임금을 깨우려는 거죠?	Why wake the King?		
 2	go	story.ch8.s9.p.b	나그네가 당신을 찾고 있어요.	The traveler is looking for you.		
+2	go	story.ch9	제9장 · 먹구름 위 여섯째 자리	Chapter 9 · The Sixth Seat Above the Storm Clouds		
+2	go	story.ch9.climbed	봉우리 꼭대기 — 하늘로 솟는 바람 기둥 곁에 나그네가 서 있다	The summit — the traveler stands beside a pillar of wind rising into the sky		
+2	go	story.ch9.enter1	먹구름을 두른 해솔이 여섯째 자리에서 내려섰다	Haesol, cloaked in storm clouds, descends from the sixth seat		
+2	go	story.ch9.enter2	먹구름이 뭉쳐 왕관 쓴 거인이 되었다 — 먹구름 임금!	The storm clouds gather into a crowned giant — the Storm King!		
+2	go	story.ch9.p21	해솔이 먹구름 방패를 둘렀다 — 불로 깨라! 회오리매와 번개귀가 뛰어든다	Haesol raises a storm-cloud shield — break it with fire! A whirlwind hawk and a storm wraith leap in		
+2	go	story.ch9.p22	먹구름 임금이 번개 방패를 둘렀다 — 불로 깨라! 졸개 둘이 뛰어든다	The Storm King raises a lightning shield — break it with fire! Two minions leap in		
+2	go	story.ch9.s1	떠돌이 학자에게 여섯째 자리 묻기	Ask the wandering scholar about the sixth seat		
+2	go	story.ch9.s1.l1	다섯 조각을 다 맞췄어! 끝 구절은 이래 — '다섯 불이 모이는 곳, 봉우리 위 하늘에 여섯째 자리'.	I've pieced all five fragments together! The last line reads — 'Where the five fires meet, the sixth seat lies in the sky above the peak.'		
+2	go	story.ch9.s1.l2	그리고 어젯밤, 셋째 제단이 있던 봉우리 꼭대기에서 하늘로 바람 기둥이 솟는 걸 봤어. 다섯 제단 불빛이 거기로 모이더라.	And last night I saw a pillar of wind rising into the sky from the peak where the third altar stood. The lights of all five altars were gathering there.		
+2	go	story.ch9.s1.l3	바람을 타면 구름 위까지 오를 수 있을 거야. 나그네가 먼저 봉우리로 갔어 — 서둘러!	Ride the wind and you should be able to climb above the clouds. The traveler already went to the peak — hurry!		
+2	go	story.ch9.s1.p.a	봉우리로 갈게요.	I'll head to the peak.		
+2	go	story.ch9.s1.p.b	하늘로 가는 길이라고요?	A road to the sky?		
+2	go	story.ch9.s10	해솔과 함께 내려갈 채비하기	Get ready to go down with Haesol		
+2	go	story.ch9.s10.l1	난간을 뛰어넘으면 바람이 날개를 펴 줘. 마을 쪽으로 한달음이야. 먼저 가 있어, 곧 따라갈게.	Jump over the railing and the wind will spread your wings. The village is just a short flight away. Go ahead — I'll follow soon.		
+2	go	story.ch9.s11	구름섬에서 뛰어내려 청하 마을로	Leap from the cloud isle and head to Cheongha village		
+2	go	story.ch9.s12	청하 촌장에게 알리기	Report to the elder of Cheongha		
+2	go	story.ch9.s12.l1	하늘이 이렇게 파란 건 몇 해 만인지…! 먹구름이 걷혔어.	I can't remember the last time the sky was this blue…! The storm clouds are gone.		
+2	go	story.ch9.s12.l2	해솔이 돌아왔다고? 그 녀석, 할머니 볼 낯도 없나 봐. 이따 잔칫상 앞에 끌고 오너라.	Haesol is back? That boy must be too ashamed to face me. Drag him to the feast table later.		
+2	go	story.ch9.s12.l3	늘 노래를 흥얼거리던 착한 아이였지. 이제부턴 네 곁에 서겠다더구나.	He was a good boy who was always humming a song. He says he will stand by your side from now on.		
+2	go	story.ch9.s12.l4	약속대로 잔치를 열자꾸나. 이건 온 마을이 너를 위해 모은 거다. 고맙다, 정말로.	Let us hold the feast as promised. The whole village gathered this for you. Thank you, truly.		
+2	go	story.ch9.s2	봉우리 꼭대기로 오르기	Climb to the top of the peak		
+2	go	story.ch9.s3	바람 기둥 곁의 나그네와 이야기하기	Talk to the traveler beside the wind pillar		
+2	go	story.ch9.s3.l1	왔군. 보이나 — 저 바람 기둥. 다섯 제단의 불이 하늘에 길을 냈다.	You came. Do you see it — that pillar of wind? The fires of the five altars have opened a road to the sky.		
+2	go	story.ch9.s3.l2	기둥 안에서 뛰어오르게. 바람이 날개를 펴 주고, 구름섬 위까지 밀어 올려 줄 거다.	Jump inside the pillar. The wind will spread your wings and carry you up onto the cloud isle.		
+2	go	story.ch9.s3.l3	…있을 거다. 이번엔 가면이 아니라 해솔을 데려온다. 먼저 올라가 있겠네.	…He will. This time I bring back Haesol, not the mask. I will go up first.		
+2	go	story.ch9.s3.p.a	같이 가요.	Let's go together.		
+2	go	story.ch9.s3.p.b	해솔은 거기 있을까요?	Will Haesol be up there?		
+2	go	story.ch9.s4	바람 기둥을 타고 구름섬에 오르기(기둥 안에서 점프)	Ride the wind pillar up to the cloud isle (jump inside it)		
+2	go	story.ch9.s5	구름섬을 지키는 먹구름 무리 물리치기	Defeat the storm-cloud gang guarding the cloud isle		
+2	go	story.ch9.s6	먹구름 가면을 쓴 해솔과 맞서기	Face Haesol in the storm-cloud mask		
+2	go	story.ch9.s7	가면을 벗은 해솔과 이야기하기	Talk to the unmasked Haesol		
+2	go	story.ch9.s7.l1	……여기가, 어디지. 오래 꿈을 꾼 것 같아. 먹구름 속에서 누가 계속 노래를 부르라고…	…Where… am I? It feels like I was dreaming for a long time. Someone in the storm clouds kept telling me to sing…		
+2	go	story.ch9.s7.l2	아니 — 늦었다! 내가 자물쇠를 두드려 낸 틈으로 임금의 꿈이 새어 나왔어. 그 꿈이 이 섬에서 몸을 얻는다!	No — it's too late! The King's dream leaked out through the cracks I knocked into the locks. That dream is taking form on this isle!		
+2	go	story.ch9.s7.l3	몸이 아직 말을 안 들어. 네가 먹구름 임금을 막아 줘. 난 곁에서 노래로 바람을 붙들고 있을게.	My body won't obey me yet. You stop the Storm King. I'll hold the wind in place with my song.		
+2	go	story.ch9.s7.p.a	같이 막아요!	Let's stop it together!		
+2	go	story.ch9.s7.p.b	해솔, 괜찮아요?	Haesol, are you all right?		
+2	go	story.ch9.s8	먹구름 임금 물리치기	Defeat the Storm King		
+2	go	story.ch9.s9	나그네와 해솔 곁으로 가기	Go to the traveler and Haesol		
+2	go	story.ch9.s9.l1	……해솔.	…Haesol.		
+2	go	story.ch9.s9.l2	여전하구나, 그 흰 가면. 날 찾겠다는 맹세였다고? 바보 같긴.	Still wearing that mask, I see. A vow to find me, was it? You fool.		
+2	go	story.ch9.s9.l3	이제 벗어도 되겠지.	I suppose I can take it off now.		
+2	go	story.ch9.s9.l4	마을로 내려가자. 누리 할머니한테 혼나야겠지만 — 날개를 펴고 곧장.	Let's head down to the village. Granny Nuri will give me an earful — but let's spread our wings and go straight there.		
+2	go	story.ch9.s9.p.a	다행이에요.	I'm relieved.		
+2	go	story.ch9.s9.p.b	두 분 다 돌아와서 기뻐요.	I'm glad you're both back.		
+2	go	story.ch9.win1	해솔의 가면이 마침내 두 쪽으로 갈라져 떨어졌다 — 해솔이 무릎을 꿇는다	Haesol's mask finally splits in two and falls away — Haesol drops to his knees		
+2	go	story.ch9.win2	먹구름 임금 — 꿈이 흩어지며 하늘의 먹구름이 걷혀 간다	The Storm King — the dream scatters and the storm clouds clear from the sky		
 2	go	story.chapter_done	{0} 끝 — {1}	{0} complete — {1}		
 2	go	story.chase_caught	🏃 노 도둑을 붙잡았다 — 노를 되찾았다	🏃 You caught the oar thief — the oar is back		
 2	go	story.chase_idle	 (가까이 가면 달아난다)	 (he runs when you get close)		
@@ -1120,6 +1171,7 @@
 2	go	story.idle.elder	먹구름이 걷히면 마을 잔치를 열어야지.	Once the stormclouds clear, we'll hold a village feast.		
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
 2	go	story.idle.haesol	……	……		
+2	go	story.idle.haesol2	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 2	go	story.idle.thief	헤헤, 못 잡지롱!	Heh heh, can't catch me!		
 2	go	story.idle.wanderer	……	……		
@@ -1132,6 +1184,7 @@
 2	go	story.npc.elder	청하 촌장 누리	Elder Nuri of Cheongha		
 2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
 2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
+2	go	story.npc.haesol2	해솔	Haesol		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
 2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
@@ -1151,6 +1204,8 @@
 2	go	story.short.scholar	은비	Eunbi		
 2	go	story.short.thief	도둑	Thief		
 2	go	story.short.wanderer	나그네	Traveler		
+2	go	story.sky_landed	☁️ 구름섬에 올라섰다 — 먹구름 무리가 지키고 있다	☁️ You set foot on the cloud isle — a storm-cloud gang stands guard		
+2	go	story.sky_open	🌬️ 봉우리 꼭대기에서 하늘로 바람 기둥이 솟았다 — 먹구름 덮개가 걷힌다	🌬️ A pillar of wind rises from the summit into the sky — the storm-cloud cover lifts		
 2	go	story.squad	먹구름 졸개가 나타났다	Stormcloud minions appeared		
 2	go	story.state_done	끝	Complete		
 2	go	story.state_locked	여정 등급 {0} 에 열린다	Unlocks at Journey Rank {0}		
@@ -2438,6 +2493,7 @@
 3	go	hero.sg_zhugeliang.quote	삼고초려의 뜻, 잊지 않겠습니다.	I will not forget the meaning of those three visits.		
 3	go	hero.story_elder.quote	먹구름이 걷히면 마을 잔치를 열어야지.	Once the storm clouds lift, the village must throw a feast.		
 3	go	hero.story_ferryman.quote	물 냄새가 요즘 영 비릿해.	The water has smelled off lately.		
+3	go	hero.story_haesol.quote	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
 3	go	hero.story_scholar.quote	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 3	go	hero.story_wanderer.quote	너무 떨어지면 기다려 주지 않을 테니.	Fall too far behind and I won't wait.		
 3	go	hero.wd_akbar.quote	믿음은 강요로 얻어지지 않는다.	Faith is not won by force.		

@@ -66,7 +66,14 @@ namespace Saga.Go.World
         /// <summary>진단용 — 마지막 혼잣말(인물 id).</summary>
         public string LastIdleNpc { get; private set; }
 
-        private void Awake() => Instance = this;
+        private void Awake()
+        {
+            Instance = this;
+            // 109-14-19·20 섬 둘은 Awake 에 — 불러온 자리(섬 위)에서 첫 프레임에 떨어지지 않게(`GameBootstrap.Start` 가 세이브 자리를 앉힌다)
+            var stone = WorldMapBuilder.Instance != null ? WorldMapBuilder.Instance.StoneMaterial : null;
+            BuildIsle(stone);
+            BuildSky(stone);
+        }
 
         private void OnDestroy()
         {
@@ -86,7 +93,6 @@ namespace Saga.Go.World
         private void Start()
         {
             var stone = WorldMapBuilder.Instance != null ? WorldMapBuilder.Instance.StoneMaterial : null;
-            BuildIsle(stone); // 109-14-19 — 섬 위 인물·석등이 섬 윗면에 앉도록 먼저
             SpawnNpcs();
             BuildPillar();
             for (int c = 0; c < GoStory.Chapters.Length; c++)
@@ -138,7 +144,7 @@ namespace Saga.Go.World
                 }
                 if (!any) CharacterVisual.SpawnFallbackCapsule(root.transform, n.Id == "ferryman" ? new Color(0.3f, 0.4f, 0.53f) : n.Id == "wanderer" ? new Color(0.22f, 0.22f, 0.29f)
                     : n.Id == "haesol" ? new Color(0.15f, 0.13f, 0.18f) : n.Id == "thief" ? new Color(0.35f, 0.29f, 0.23f) : new Color(0.55f, 0.42f, 0.6f));
-                if (n.Mask) AddMask(root.transform, n.Crack);
+                if (n.Mask) _masks[n.Id] = AddMask(root.transform, n.Crack);
                 // 마을 쪽(마을 역참)을 본다
                 Vector3 look = GoWorldMap.WaypointPos(GoWorldMap.Waypoints[0]) - root.transform.position;
                 look.y = 0f;
@@ -150,7 +156,9 @@ namespace Saga.Go.World
         /// <summary>109-14-13 가면 — 머리뼈(휴머노이드면)에 검은 탈 하나(흰 눈구멍 둘). 뼈가 없으면 키 1.6m 앞.</summary>
         private static bool SquadStep(GoStory.StepType t) => t == GoStory.StepType.Kill || t == GoStory.StepType.Duel || t == GoStory.StepType.Defend;
 
-        private static void AddMask(Transform root, bool crack = false)
+        private readonly Dictionary<string, GameObject> _masks = new Dictionary<string, GameObject>();
+
+        private static GameObject AddMask(Transform root, bool crack = false, bool storm = false)
         {
             Transform head = null;
             var anim = root.GetComponentInChildren<Animator>();
@@ -165,7 +173,8 @@ namespace Saga.Go.World
             }
             var black = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryMask (generated)", color = new Color(0.08f, 0.08f, 0.1f) };
             black.SetFloat("_Smoothness", 0.7f);
-            var white = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryMaskEye (generated)", color = new Color(0.9f, 0.9f, 0.85f) };
+            var white = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryMaskEye (generated)", color = storm ? new Color(0.85f, 0.62f, 0.2f) : new Color(0.9f, 0.9f, 0.85f) };
+            if (storm) { white.EnableKeyword("_EMISSION"); white.SetColor("_EmissionColor", new Color(1f, 0.7f, 0.2f) * 2f); } // 109-14-20 먹구름 임금 — 어두운 금빛 눈
             MaskPart(mask.transform, PrimitiveType.Sphere, Vector3.zero, new Vector3(0.2f, 0.26f, 0.09f), black, root);
             MaskPart(mask.transform, PrimitiveType.Sphere, new Vector3(-0.045f, 0.035f, 0.035f), new Vector3(0.045f, 0.02f, 0.02f), white, root);
             MaskPart(mask.transform, PrimitiveType.Sphere, new Vector3(0.045f, 0.035f, 0.035f), new Vector3(0.045f, 0.02f, 0.02f), white, root);
@@ -176,6 +185,36 @@ namespace Saga.Go.World
                 c.transform.rotation = root.rotation * Quaternion.Euler(0f, 0f, 24f);
                 c.name = "Crack";
             }
+            return mask;
+        }
+
+        /// <summary>109-14-20 먹구름 임금 왕관 — 가면 위(머리뼈 곁)에 금빛 테 + 뿔 다섯.</summary>
+        private static void AddCrown(Transform root)
+        {
+            var mask = FindDeep(root, "Mask");
+            if (mask == null) return;
+            var gold = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryCrown (generated)", color = new Color(0.85f, 0.66f, 0.2f) };
+            gold.SetFloat("_Metallic", 0.9f);
+            gold.SetFloat("_Smoothness", 0.75f);
+            var crown = new GameObject("Crown");
+            crown.transform.SetParent(mask.parent, false);
+            crown.transform.position = mask.position + Vector3.up * 0.22f * root.lossyScale.y - root.forward * 0.1f * root.lossyScale.y;
+            var band = MaskPart(crown.transform, PrimitiveType.Cylinder, Vector3.zero, new Vector3(0.3f, 0.035f, 0.3f) * root.lossyScale.y, gold, root);
+            band.name = "CrownBand";
+            for (int i = 0; i < 5; i++)
+            {
+                float a = i * Mathf.PI * 2f / 5f;
+                var tip = MaskPart(crown.transform, PrimitiveType.Cube, new Vector3(Mathf.Sin(a) * 0.13f, 0.07f, Mathf.Cos(a) * 0.13f), // 부모(몸) 크기를 따른다
+                    new Vector3(0.05f, 0.12f, 0.05f) * root.lossyScale.y, gold, root);
+                tip.transform.rotation = root.rotation * Quaternion.Euler(0f, a * Mathf.Rad2Deg + 45f, 45f);
+            }
+        }
+
+        private static Transform FindDeep(Transform t, string name)
+        {
+            if (t.name == name) return t;
+            for (int i = 0; i < t.childCount; i++) { var r = FindDeep(t.GetChild(i), name); if (r != null) return r; }
+            return null;
         }
 
         private static GameObject MaskPart(Transform parent, PrimitiveType t, Vector3 local, Vector3 size, Material m, Transform root)
@@ -248,6 +287,7 @@ namespace Saga.Go.World
             if (fc == null) return;
             Follow(fc.transform.position, Time.deltaTime);
             ChaseTick(fc.transform.position, Time.deltaTime); // 109-14-19
+            TickDraftRings(Time.deltaTime); // 109-14-20
             IsleAssist(fc);
             DuelTick();
             DefendTick(fc.transform.position, Time.deltaTime);
@@ -309,10 +349,18 @@ namespace Saga.Go.World
                     case GoStory.StepType.Duel:
                         if (_squad.Count == 0 && GoStory.Flat(p, t) < GoStory.KillNear) SpawnSquad(st, t);
                         break;
+                    case GoStory.StepType.Sky:
+                        if (GoStory.OnSkyTop(p)) // 109-14-20 섬 윗면에 내려섰다
+                        {
+                            Toast(GoLocalization.T("story.sky_landed", "☁️ 구름섬에 올라섰다 — 먹구름 무리가 지키고 있다"), 3f);
+                            StoryState.Advance();
+                            return;
+                        }
+                        break;
                     case GoStory.StepType.Climb:
                         if (GoWorldMap.StandsOn(GoStory.DuelPeak, p))
                         {
-                            Toast(GoLocalization.T("story.climbed", "봉우리 꼭대기 — 고원 아래 나그네가 보인다"), 3f);
+                            Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : GoLocalization.T("story.climbed", "봉우리 꼭대기 — 고원 아래 나그네가 보인다"), 3f);
                             StoryState.Advance();
                             return;
                         }
@@ -350,7 +398,8 @@ namespace Saga.Go.World
                     e.MakeStoryBoss(GoLocalization.T(st.BossKey, st.BossKo), st.HpMul > 0f ? st.HpMul : GoStory.BossHp,
                         st.AtkMul > 0f ? st.AtkMul : GoStory.BossAtk, st.ScaleMul > 0f ? st.ScaleMul : GoStory.BossScale);
                     if (st.Rot != null) e.SetRotation(st.Rot);
-                    if (st.Mask) AddMask(e.transform, st.Crack);
+                    if (st.Mask) AddMask(e.transform, st.Crack, st.Crown);
+                    if (st.Crown) AddCrown(e.transform); // 109-14-20 먹구름 임금
                 }
                 _squad.Add(e);
             }
@@ -666,6 +715,12 @@ namespace Saga.Go.World
                 kv.Value.SetLit(past);
             }
             RefreshSeal();
+            RefreshSky();
+            foreach (var kv in _masks)
+            {
+                var sp = GoStory.SpotNow(kv.Key);
+                if (kv.Value != null) kv.Value.SetActive(!(sp.HasValue && sp.Value.Unmask)); // 109-14-20 가면 벗은 해솔
+            }
             foreach (var kv in _npcs)
             {
                 bool shown = !StoryState.OffForTest && GoStory.Shown(kv.Key, StoryState.Ch, StoryState.StepIndex);
@@ -705,6 +760,139 @@ namespace Saga.Go.World
             _chaseKey = null;
             StoryState.ChasePos = null;
             Refresh();
+        }
+
+        // ---- 109-14-20 구름섬 — 봉우리 북쪽 하늘에 뜬 섬(돌 몸 + 거꾸로 선 바위 뿔 + 풀 윗면 + 돌 난간 1.6m + 북쪽 돌 단).
+        // 9장이 열리기 전엔 먹구름 덮개(검은 구름 덩이)에 싸여 있고, 열린 뒤엔 봉우리 정상에서 바람 기둥(흰 고리가 솟는다)이 선다 ----
+        public GameObject Sky { get; private set; }
+        public GameObject SkyCover { get; private set; }
+        public GameObject DraftRings { get; private set; }
+        private readonly List<LineRenderer> _draftRings = new List<LineRenderer>();
+        private float _draftT;
+        private bool _skyWasOpen;
+
+        private void BuildSky(Material stone)
+        {
+            Sky = new GameObject("StorySky");
+            Sky.transform.SetParent(transform, false);
+            Vector3 c = GoStory.SkyCenter;
+            float r = GoStory.SkyR, th = 6f;
+            var rock = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            rock.name = "SkyRock";
+            DestroyImmediate(rock.GetComponent<Collider>());
+            rock.transform.SetParent(Sky.transform, false);
+            rock.transform.position = c - Vector3.up * th * 0.5f;
+            rock.transform.localScale = new Vector3(r * 2f, th * 0.5f, r * 2f);
+            rock.AddComponent<MeshCollider>().sharedMesh = rock.GetComponent<MeshFilter>().sharedMesh;
+            rock.AddComponent<NoClimb>();
+            if (stone != null) rock.GetComponent<MeshRenderer>().sharedMaterial = stone;
+            var horn = GameObject.CreatePrimitive(PrimitiveType.Sphere); // 거꾸로 선 바위 뿔(밑면)
+            horn.name = "SkyHorn";
+            DestroyImmediate(horn.GetComponent<Collider>());
+            horn.transform.SetParent(Sky.transform, false);
+            horn.transform.position = c - Vector3.up * (th + 7f);
+            horn.transform.localScale = new Vector3(r * 1.5f, 18f, r * 1.5f);
+            if (stone != null) horn.GetComponent<MeshRenderer>().sharedMaterial = stone;
+            var grass = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StorySkyGrass (generated)", color = new Color(0.36f, 0.5f, 0.24f) };
+            grass.SetFloat("_Smoothness", 0.08f);
+            var top = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            top.name = "SkyGrass";
+            DestroyImmediate(top.GetComponent<Collider>());
+            top.transform.SetParent(Sky.transform, false);
+            top.transform.position = c + Vector3.up * 0.02f;
+            top.transform.localScale = new Vector3((r - 1f) * 2f, 0.04f, (r - 1f) * 2f);
+            top.GetComponent<MeshRenderer>().sharedMaterial = grass;
+            // 돌 난간 — 가장자리 0.8m 안쪽에 토막 스물넷(걸어서는 못 넘고 뛰어넘는다)
+            const int seg = 24;
+            float rr = r - 0.8f, len = 2f * Mathf.PI * rr / seg + 0.2f;
+            for (int i = 0; i < seg; i++)
+            {
+                float a = (i + 0.5f) * Mathf.PI * 2f / seg;
+                var w = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                w.name = "SkyRail";
+                w.transform.SetParent(Sky.transform, false);
+                w.transform.position = c + new Vector3(Mathf.Sin(a) * rr, GoStory.SkyRail * 0.5f, Mathf.Cos(a) * rr);
+                w.transform.rotation = Quaternion.Euler(0f, a * Mathf.Rad2Deg + 90f, 0f);
+                w.transform.localScale = new Vector3(len, GoStory.SkyRail, 0.5f);
+                w.AddComponent<NoClimb>();
+                if (stone != null) w.GetComponent<MeshRenderer>().sharedMaterial = stone;
+            }
+            var dais = GameObject.CreatePrimitive(PrimitiveType.Cube); // 북쪽 돌 단(여섯째 자리)
+            dais.name = "SkyDais";
+            DestroyImmediate(dais.GetComponent<Collider>());
+            dais.transform.SetParent(Sky.transform, false);
+            dais.transform.position = c + new Vector3(0f, 0.3f, -r + 4f);
+            dais.transform.localScale = new Vector3(7f, 0.6f, 3.5f);
+            if (stone != null) dais.GetComponent<MeshRenderer>().sharedMaterial = stone;
+            // 먹구름 덮개 — 검은 구름 덩이 다섯(충돌 없음)
+            SkyCover = new GameObject("SkyCover");
+            SkyCover.transform.SetParent(Sky.transform, false);
+            var cloud = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StorySkyCloud (generated)", color = new Color(0.2f, 0.2f, 0.25f) };
+            cloud.SetFloat("_Smoothness", 0f);
+            for (int i = 0; i < 5; i++)
+            {
+                var b = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                b.name = "Cloud";
+                DestroyImmediate(b.GetComponent<Collider>());
+                b.transform.SetParent(SkyCover.transform, false);
+                float a = i * Mathf.PI * 2f / 5f;
+                b.transform.position = c + (i == 0 ? Vector3.up * 2f : new Vector3(Mathf.Sin(a) * r * 0.75f, -1f, Mathf.Cos(a) * r * 0.75f));
+                b.transform.localScale = i == 0 ? new Vector3(r * 2.3f, 16f, r * 2.3f) : new Vector3(r * 1.3f, 12f, r * 1.3f);
+                b.GetComponent<MeshRenderer>().sharedMaterial = cloud;
+            }
+            // 바람 기둥 — 정상에서 섬 윗면 + 12m 까지, 흰 고리 여덟이 솟는다
+            DraftRings = new GameObject("DraftRings");
+            DraftRings.transform.SetParent(Sky.transform, false);
+            var lineMat = new Material(Shader.Find("Sprites/Default")) { name = "StoryDraft (generated)" };
+            for (int i = 0; i < 8; i++)
+            {
+                var go = new GameObject("DraftRing");
+                go.transform.SetParent(DraftRings.transform, false);
+                var lr = go.AddComponent<LineRenderer>();
+                lr.useWorldSpace = false;
+                lr.loop = true;
+                lr.positionCount = 32;
+                lr.widthMultiplier = 0.25f;
+                lr.material = lineMat;
+                lr.startColor = lr.endColor = new Color(1f, 1f, 1f, 0.55f);
+                lr.shadowCastingMode = ShadowCastingMode.Off;
+                for (int k = 0; k < 32; k++)
+                {
+                    float a = k * Mathf.PI * 2f / 32f;
+                    lr.SetPosition(k, new Vector3(Mathf.Cos(a) * GoStory.DraftR, 0f, Mathf.Sin(a) * GoStory.DraftR));
+                }
+                _draftRings.Add(lr);
+            }
+            Physics.SyncTransforms();
+        }
+
+        /// <summary>9장이 열렸나에 맞춰 덮개·기둥·몸 기둥 판정을 켠다(열리는 순간 알림).</summary>
+        private void RefreshSky()
+        {
+            bool open = !StoryState.OffForTest && GoStory.SkyOpen;
+            if (SkyCover != null) SkyCover.SetActive(!open);
+            if (DraftRings != null) DraftRings.SetActive(open);
+            PlayerController.DraftOn = open;
+            PlayerController.DraftBase = GoStory.DuelPeak.Top;
+            PlayerController.DraftR = GoStory.DraftR;
+            PlayerController.DraftTop = GoStory.DraftTop;
+            PlayerController.DraftRise = GoStory.DraftRise;
+            if (open && !_skyWasOpen && StoryState.Ch == 8 && StoryState.StepIndex == 0 && Application.isPlaying)
+                Toast(GoLocalization.T("story.sky_open", "🌬️ 봉우리 꼭대기에서 하늘로 바람 기둥이 솟았다 — 먹구름 덮개가 걷힌다"), 4f);
+            _skyWasOpen = open;
+        }
+
+        private void TickDraftRings(float dt)
+        {
+            if (DraftRings == null || !DraftRings.activeSelf) return;
+            _draftT += dt;
+            Vector3 b = GoStory.DuelPeak.Top;
+            float h = GoStory.DraftTop - b.y;
+            for (int i = 0; i < _draftRings.Count; i++)
+            {
+                float f = Mathf.Repeat(_draftT * GoStory.DraftRise / h + i / (float)_draftRings.Count, 1f);
+                _draftRings[i].transform.position = b + Vector3.up * (f * h);
+            }
         }
 
         // ---- 109-14-19 바위섬 — 강 칸 한가운데 둥근 바위(돌 몸 + 풀 윗면 + 가장자리 바위 셋). 헤엄쳐 가장자리에 오면 섬 위로 올린다 ----

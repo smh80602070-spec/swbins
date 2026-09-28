@@ -20,7 +20,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class GoStory
     {
-        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow, Seal, Climb, Duel, Defend, Chase, Sail }
+        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow, Seal, Climb, Duel, Defend, Chase, Sail, Sky }
 
         // ---- 109-14-16 7장(웹 ⑲-16) — 곶 → 강 북쪽 물가 마을 동쪽 끝(이 판 강은 곧은 띠라 곶이 없다, 강 쪽을 뺀 다섯 방향에서 무리가 온다) ----
         public const float CapeGx = 5.35f, CapeGy = 4.45f;
@@ -54,6 +54,24 @@ namespace Saga.Go.Data
             new Vector2(4.3f, 3.35f), new Vector2(4.35f, 2.7f), new Vector2(4.6f, 2.1f), new Vector2(4.25f, 1.6f),
         };
         public static Vector3 ThiefPoint(int i) => GridPos(ThiefPath[i].x, ThiefPath[i].y);
+
+        // ---- 109-14-20 9장(웹 ⑲-20) — 구름섬: 6장 봉우리 정상에서 서쪽 36m·위로 54m(웹 북쪽 27m·40m × 1.35 — 이 판 북쪽 하늘엔 옆 봉우리 (6,6) 이 솟아 서쪽 숲 칸 위로), 반지름 19m(웹 14), 난간 1.6m
+        // (걸어 오르는 턱 1.1m 보다 높고 점프 2.4m 보다 낮다). 바람 기둥 = 정상 반지름 4.7m(웹 3.5) · 섬 윗면 + 12m 까지 초당 9m(웹 그대로).
+        public const float SkyWest = 36f, SkyRise = 54f, SkyR = 19f, SkyRail = 1.6f, DraftR = 4.7f, DraftOver = 12f, DraftRise = 9f;
+        public static readonly Vector2 SkySquad = new Vector2(0f, 2.7f), SkyDuel = new Vector2(0f, -4f), SkyWanderer = new Vector2(6.75f, 8.1f),
+            SkyHaesol = new Vector2(-6.75f, 6.75f), SummitWanderer = new Vector2(3f, 2f);
+        private static Vector3? _skyCenter;
+        /// <summary>구름섬 윗면 가운데(월드).</summary>
+        public static Vector3 SkyCenter => _skyCenter ??= DuelPeak.Top + new Vector3(-SkyWest, SkyRise, 0f);
+        public static Vector3 SkyPos(Vector2 off) => SkyCenter + new Vector3(off.x, 0f, off.y);
+        /// <summary>섬 윗면에 섰나(난간 안쪽).</summary>
+        public static bool OnSkyTop(Vector3 p) => Flat(p, SkyCenter) <= SkyR - 1.5f && Mathf.Abs(p.y - SkyCenter.y) < 3f;
+        /// <summary>섬 층인가(윗면 8m 아래까지·난간 3m 밖까지) — 층이 다르면 들판 전투가 서로 못 본다(웹 `apart`).</summary>
+        public static bool OnSkyLayer(Vector3 p) => Flat(p, SkyCenter) <= SkyR + 3f && p.y > SkyCenter.y - 8f;
+        public static bool SameLayer(Vector3 a, Vector3 b) => OnSkyLayer(a) == OnSkyLayer(b);
+        public static float DraftTop => SkyCenter.y + DraftOver;
+        /// <summary>구름섬·기둥이 열렸나 — 9장이 열린 뒤 늘(그 전엔 먹구름 덮개).</summary>
+        public static bool SkyOpen => StoryState.Ch > 8 || (StoryState.Ch == 8 && !StoryState.Locked);
 
         public static float DefendHpMax(Vector3 altar) => Mathf.Round(DefendHits * DefendRefAtk * GoWorldMap.DangerMul(GoWorldMap.DangerOf(GoWorldMap.RegionAt(altar))));
 
@@ -158,10 +176,13 @@ namespace Saga.Go.Data
             public Vector2 Arena;
             /// <summary>109-14-19 바위섬 위 — Gx·Gy 대신 `Arena`(섬 가운데에서 m).</summary>
             public bool Isle;
+            /// <summary>109-14-20 구름섬 위 · 봉우리 정상 위(Arena 는 거기서 m) · 그 칸 동안 가면을 벗는다 · 이름·혼잣말을 덮는다.</summary>
+            public bool Sky, Summit, Unmask;
+            public string NameKey, NameKo, IdleKey, IdleKo;
         }
 
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
-            a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
 
         public static readonly Npc[] Npcs =
         {
@@ -192,13 +213,18 @@ namespace Saga.Go.Data
                     new Spot { Ch = 5, From = 2, To = 4, Peak = true, Arena = ArenaWanderer },
                     new Spot { Ch = 6, From = 3, To = 6, Gx = CapeGx + 6f / 48f, Gy = CapeGy - 6f / 48f },
                     new Spot { Ch = 7, From = 6, To = 9, Isle = true, Arena = IsleWanderer },
+                    new Spot { Ch = 8, From = 2, To = 2, Summit = true, Arena = SummitWanderer }, // 9장 — 바람 기둥 곁, 먼저 섬으로
+                    new Spot { Ch = 8, From = 3, To = 9, Sky = true, Arena = SkyWanderer },
                 },
                 Path = new[] { new Vector2(WanderGx, WanderGy), new Vector2(3.0f, 5.0f), new Vector2(3.0f, 5.55f), new Vector2(3.0f, 6.2f), new Vector2(2.95f, 6.85f), new Vector2(2.55f, 7.2f) },
                 IdleKey = "story.idle.wanderer", IdleKo = "……" },
             // 109-14-19 해솔(검은 가면의 참이름, 금 간 가면 — 섬에서 한 단계) · 노 도둑(쫓기 단계에만 — 자리는 달리는 곳)
             new Npc { Id = "haesol", NameKey = "story.npc.haesol", NameKo = "검은 가면 해솔", ShortKey = "story.short.haesol", ShortKo = "해솔",
                 Gx = IsleGx, Gy = IsleGy, FolkBody = "Paladin", Mask = true, Crack = true,
-                Appear = new[] { new Spot { Ch = 7, From = 8, To = 8, Isle = true, Arena = IsleHaesol } },
+                Appear = new[] { new Spot { Ch = 7, From = 8, To = 8, Isle = true, Arena = IsleHaesol },
+                    // 109-14-20 9장 — 가면을 벗은 해솔이 구름섬에 선다(이름·혼잣말도 그 칸 동안)
+                    new Spot { Ch = 8, From = 6, To = 9, Sky = true, Arena = SkyHaesol, Unmask = true, NameKey = "story.npc.haesol2", NameKo = "해솔",
+                        IdleKey = "story.idle.haesol2", IdleKo = "……고맙다. 노래를 다시 부를 수 있을 것 같아." } },
                 IdleKey = "story.idle.haesol", IdleKo = "……" },
             new Npc { Id = "thief", NameKey = "story.npc.thief", NameKo = "노 도둑", ShortKey = "story.short.thief", ShortKo = "도둑",
                 Gx = ThiefGx, Gy = ThiefGy, FolkBody = "PeasantMan",
@@ -256,9 +282,11 @@ namespace Saga.Go.Data
             public bool Isle;
             public string[] Order;
             public bool ToIsle;
+            /// <summary>109-14-20 — 구름섬 위(Kill·Duel, 자리 = 섬 가운데 + Arena) · 이야기 보스 왕관·먹구름 가면(먹구름 임금).</summary>
+            public bool Sky, Crown;
         }
 
-        public static Vector3 StepPos(Step s) => s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+        public static Vector3 StepPos(Step s) => s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
 
         /// <summary>석등 차례(해·달·별이 기본, 8장은 별·달·해).</summary>
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
@@ -720,6 +748,78 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            new Chapter
+            {
+                Id = "ch9", NameKey = "story.ch9", NameKo = "제9장 · 먹구름 위 여섯째 자리", Ar = 25, Join = "story_haesol",
+                Gold = 2750, Mats = new[] { 0, 3, 4, 5, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "scholar", TextKey = "story.ch9.s1", TextKo = "떠돌이 학자에게 여섯째 자리 묻기",
+                        Lines = new[]
+                        {
+                            L("scholar", "story.ch9.s1.l1", "다섯 조각을 다 맞췄어! 끝 구절은 이래 — '다섯 불이 모이는 곳, 봉우리 위 하늘에 여섯째 자리'."),
+                            L("scholar", "story.ch9.s1.l2", "그리고 어젯밤, 셋째 제단이 있던 봉우리 꼭대기에서 하늘로 바람 기둥이 솟는 걸 봤어. 다섯 제단 불빛이 거기로 모이더라."),
+                            Pick("story.ch9.s1.p", "봉우리로 갈게요.", "하늘로 가는 길이라고요?"),
+                            L("scholar", "story.ch9.s1.l3", "바람을 타면 구름 위까지 오를 수 있을 거야. 나그네가 먼저 봉우리로 갔어 — 서둘러!"),
+                        } },
+                    new Step { Type = StepType.Climb, EnterKey = "story.ch9.climbed", EnterKo = "봉우리 꼭대기 — 하늘로 솟는 바람 기둥 곁에 나그네가 서 있다", TextKey = "story.ch9.s2", TextKo = "봉우리 꼭대기로 오르기" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch9.s3", TextKo = "바람 기둥 곁의 나그네와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch9.s3.l1", "왔군. 보이나 — 저 바람 기둥. 다섯 제단의 불이 하늘에 길을 냈다."),
+                            L("wanderer", "story.ch9.s3.l2", "기둥 안에서 뛰어오르게. 바람이 날개를 펴 주고, 구름섬 위까지 밀어 올려 줄 거다."),
+                            Pick("story.ch9.s3.p", "같이 가요.", "해솔은 거기 있을까요?"),
+                            L("wanderer", "story.ch9.s3.l3", "…있을 거다. 이번엔 가면이 아니라 해솔을 데려온다. 먼저 올라가 있겠네."),
+                        } },
+                    new Step { Type = StepType.Sky, TextKey = "story.ch9.s4", TextKo = "바람 기둥을 타고 구름섬에 오르기(기둥 안에서 점프)" },
+                    new Step { Type = StepType.Kill, Sky = true, Arena = SkySquad, Foes = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), KT, KT, KF }, TextKey = "story.ch9.s5", TextKo = "구름섬을 지키는 먹구름 무리 물리치기" },
+                    new Step { Type = StepType.Duel, Sky = true, Arena = SkyDuel, Foes = new[] { F(FieldEnemy.Kind.Bandit) }, Mask = true, Crack = true,
+                        BossKey = "story.boss.haesol", BossKo = "먹구름 가면 해솔", HpMul = 10.4f, AtkMul = 2.1f, ScaleMul = 1.05f,
+                        Rot = new[] { FieldEnemy.BossMove.Shadow, FieldEnemy.BossMove.Spit, FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Shadow },
+                        Adds = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), KT },
+                        EnterKey = "story.ch9.enter1", EnterKo = "먹구름을 두른 해솔이 여섯째 자리에서 내려섰다",
+                        P2Key = "story.ch9.p21", P2Ko = "해솔이 먹구름 방패를 둘렀다 — 불로 깨라! 회오리매와 번개귀가 뛰어든다",
+                        WinKey = "story.ch9.win1", WinKo = "해솔의 가면이 마침내 두 쪽으로 갈라져 떨어졌다 — 해솔이 무릎을 꿇는다", TextKey = "story.ch9.s6", TextKo = "먹구름 가면을 쓴 해솔과 맞서기" },
+                    new Step { Type = StepType.Talk, Npc = "haesol", TextKey = "story.ch9.s7", TextKo = "가면을 벗은 해솔과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haesol", "story.ch9.s7.l1", "……여기가, 어디지. 오래 꿈을 꾼 것 같아. 먹구름 속에서 누가 계속 노래를 부르라고…"),
+                            L("haesol", "story.ch9.s7.l2", "아니 — 늦었다! 내가 자물쇠를 두드려 낸 틈으로 임금의 꿈이 새어 나왔어. 그 꿈이 이 섬에서 몸을 얻는다!"),
+                            Pick("story.ch9.s7.p", "같이 막아요!", "해솔, 괜찮아요?"),
+                            L("haesol", "story.ch9.s7.l3", "몸이 아직 말을 안 들어. 네가 먹구름 임금을 막아 줘. 난 곁에서 노래로 바람을 붙들고 있을게."),
+                        } },
+                    new Step { Type = StepType.Duel, Sky = true, Arena = SkyDuel, Foes = new[] { F(FieldEnemy.Kind.Bandit) }, Mask = true, Crown = true,
+                        BossKey = "story.boss.king", BossKo = "먹구름 임금", HpMul = 13.6f, AtkMul = 2.3f, ScaleMul = 2.0f,
+                        Rot = new[] { FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Spit, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Shadow, FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Halo },
+                        Adds = new[] { KF, KT },
+                        EnterKey = "story.ch9.enter2", EnterKo = "먹구름이 뭉쳐 왕관 쓴 거인이 되었다 — 먹구름 임금!",
+                        P2Key = "story.ch9.p22", P2Ko = "먹구름 임금이 번개 방패를 둘렀다 — 불로 깨라! 졸개 둘이 뛰어든다",
+                        WinKey = "story.ch9.win2", WinKo = "먹구름 임금 — 꿈이 흩어지며 하늘의 먹구름이 걷혀 간다", TextKey = "story.ch9.s8", TextKo = "먹구름 임금 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch9.s9", TextKo = "나그네와 해솔 곁으로 가기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch9.s9.l1", "……해솔."),
+                            L("haesol", "story.ch9.s9.l2", "여전하구나, 그 흰 가면. 날 찾겠다는 맹세였다고? 바보 같긴."),
+                            L("wanderer", "story.ch9.s9.l3", "이제 벗어도 되겠지."),
+                            Pick("story.ch9.s9.p", "다행이에요.", "두 분 다 돌아와서 기뻐요."),
+                            L("haesol", "story.ch9.s9.l4", "마을로 내려가자. 누리 할머니한테 혼나야겠지만 — 날개를 펴고 곧장."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "haesol", TextKey = "story.ch9.s10", TextKo = "해솔과 함께 내려갈 채비하기",
+                        Lines = new[]
+                        {
+                            L("haesol", "story.ch9.s10.l1", "난간을 뛰어넘으면 바람이 날개를 펴 줘. 마을 쪽으로 한달음이야. 먼저 가 있어, 곧 따라갈게."),
+                        } },
+                    new Step { Type = StepType.Go, Gx = 1.2f, Gy = 3.2f, TextKey = "story.ch9.s11", TextKo = "구름섬에서 뛰어내려 청하 마을로" },
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch9.s12", TextKo = "청하 촌장에게 알리기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch9.s12.l1", "하늘이 이렇게 파란 건 몇 해 만인지…! 먹구름이 걷혔어."),
+                            L("elder", "story.ch9.s12.l2", "해솔이 돌아왔다고? 그 녀석, 할머니 볼 낯도 없나 봐. 이따 잔칫상 앞에 끌고 오너라."),
+                            L("elder", "story.ch9.s12.l3", "늘 노래를 흥얼거리던 착한 아이였지. 이제부턴 네 곁에 서겠다더구나."),
+                            L("elder", "story.ch9.s12.l4", "약속대로 잔치를 열자꾸나. 이건 온 마을이 너를 위해 모은 거다. 고맙다, 정말로."),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -737,9 +837,33 @@ namespace Saga.Go.Data
         }
 
         public static Npc NpcOf(string id) => Npcs[Mathf.Max(0, NpcIndex(id))];
-        public static string NpcName(string id) { var n = NpcOf(id); return GoLocalization.T(n.NameKey, n.NameKo); }
+        public static string NpcName(string id)
+        {
+            var sp = SpotNow(id);
+            if (sp.HasValue && sp.Value.NameKo != null) return GoLocalization.T(sp.Value.NameKey, sp.Value.NameKo);
+            var n = NpcOf(id);
+            return GoLocalization.T(n.NameKey, n.NameKo);
+        }
         public static string NpcShort(string id) { var n = NpcOf(id); return GoLocalization.T(n.ShortKey, n.ShortKo); }
-        public static string NpcIdle(string id) { var n = NpcOf(id); return GoLocalization.T(n.IdleKey, n.IdleKo); }
+        public static string NpcIdle(string id)
+        {
+            var sp = SpotNow(id);
+            if (sp.HasValue && sp.Value.IdleKo != null) return GoLocalization.T(sp.Value.IdleKey, sp.Value.IdleKo);
+            var n = NpcOf(id);
+            return GoLocalization.T(n.IdleKey, n.IdleKo);
+        }
+
+        /// <summary>109-14-20 지금 진행에서 그 인물이 선 칸(없으면 null) — 이름·혼잣말·가면을 덮는다.</summary>
+        public static Spot? SpotNow(string id) => SpotAt(id, StoryState.Ch, StoryState.StepIndex);
+        public static Spot? SpotAt(string id, int ch, int step)
+        {
+            var n = NpcOf(id);
+            foreach (var list in new[] { n.Appear, n.At })
+                if (list != null)
+                    foreach (var a in list)
+                        if (a.Ch == ch && step >= a.From && step <= a.To) return a;
+            return null;
+        }
         public static string ChapterName(Chapter c) => GoLocalization.T(c.NameKey, c.NameKo);
         public static string StepText(Step s) => GoLocalization.T(s.TextKey, s.TextKo);
         public static string LineText(Line l) => GoLocalization.T(l.Key, l.Ko);
@@ -842,6 +966,7 @@ namespace Saga.Go.Data
                 case StepType.Light: radius = LightR; return StepPos(s);
                 case StepType.Seal: return SealPos(s);
                 case StepType.Climb: return DuelPeak.Top;
+                case StepType.Sky: radius = DraftR; return DuelPeak.Top; // 109-14-20 바람 기둥 = 봉우리 정상
                 case StepType.Gather:
                 {
                     Vector3 best = from; float bd = float.MaxValue;

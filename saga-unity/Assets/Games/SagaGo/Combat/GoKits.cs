@@ -45,7 +45,7 @@ namespace Saga.Go.Combat
     /// 고유 다섯(주인공 · 팔괘진 인물 · 일제 포격 인물 · 결사 방진 인물 · 화살비 인물 — id 는 웹과 같다) — 그 갈래 "대표"라 갈래보다 한 단 위.
     /// 갈래 = 도감 기질: 무용 돌격(돌진)/검기(원소 부여) · 통솔 호령(늦게 떨어지는 탄)/군기(명단 공격) · 인덕 방패(명단 보호막)/맹세(받는 피해).
     /// 원소 덧붙임 하나(불꽃 해방 ×1.15 · 물결 회복 · 번개 다른 인물 기력 · 바람 대기 −1.5초 · 서리 스킬 ×1.15 · 바위 보호막 +12% · 덩굴 해방 +3초).
-    /// 지략·도감 밖(산적)은 null → 109-8 모양(장판·소환)·해방 기본 그대로(웹과 같다). 이야기 동료 넷(은비·나그네 109-14-15, 촌장·사공 109-14-17)은 고유로 붙였다.
+    /// 지략·도감 밖(산적)은 null → 109-8 모양(장판·소환)·해방 기본 그대로(웹과 같다). 이야기 동료 다섯(은비·나그네 109-14-15, 촌장·사공 109-14-17, 해솔 109-14-20)은 고유로 붙였다.
     /// 척도: 거리 × 1.85(GO 사람 키) · 스킬 배율 × 1.8/2.2 · 해방 배율 × 4/4.5 · 기력 × 100/60. 옛 진단은 `OffForTest` 로 옛 모양 그대로 돈다.
     /// </summary>
     public static class GoKits
@@ -102,6 +102,11 @@ namespace Saga.Go.Combat
                 case "story_ferryman":
                     s = S(KitSkillType.Wave, "kit.sig.ferryman.skill", "노 물결", 9f, 2.9f); s.Len = 9f; s.W = 2f; s.Knock = 6f;
                     b = B(KitBurstType.Rain, "kit.sig.ferryman.burst", "뱃노래", 5f, 2.3f); b.Sec = 15f; b.Reach = 8f; b.N = 2; b.Gap = 1f; b.RMul = 0.85f;
+                    break;
+                // 109-14-20 해솔(웹 kits.js story_haesol) — 있는 틀(탄·원소 부여)만
+                case "story_haesol":
+                    s = S(KitSkillType.Shells, "kit.sig.haesol.skill", "먹구름 벼락", 8f, 2.3f); s.Reach = 12f; s.N = 3; s.Delay = 0.5f; s.R = 2.4f;
+                    b = B(KitBurstType.Infuse, "kit.sig.haesol.burst", "가면 없는 노래", 6.5f, 3.6f); b.Sec = 10f; b.NMul = 1.2f;
                     break;
                 default:
                     return null;

@@ -52,6 +52,19 @@ namespace Saga.Go.Player
         public const float GlideSpeed = 10f;
         public const float GlideFallSpeed = 3f;
         public const float GlideStaminaPerSec = 5f;
+
+        // ---- PLAN.md 109-14-20 바람 기둥(웹 사가고 ⑲-20 landform) — 켜져 있으면 기둥 안 공중(점프)에서 저절로 활공하고 초당 Rise m 로
+        // 솟다가 Top 에서 멎는다(기력 안 씀). 땅에 선 채로는 안 뜬다. 기둥 안에서 접으면(점프) 기둥을 나갈 때까지 안 편다. `StoryField` 가 켠다.
+        public static bool DraftOn;
+        public static Vector3 DraftBase;
+        public static float DraftR, DraftTop, DraftRise = 9f;
+        private bool _draftFolded;
+        public static bool InDraft(Vector3 p)
+        {
+            if (!DraftOn) return false;
+            float dx = p.x - DraftBase.x, dz = p.z - DraftBase.z;
+            return dx * dx + dz * dz <= DraftR * DraftR && p.y > DraftBase.y - 1f && p.y < DraftTop + 3f;
+        }
         public const float SwimDepth = 2.6f;             // 수면에서 발까지 — 머리가 다리 널판 밑을 지난다
         public const float SwimSpeed = 4f;
         public const float SwimFastSpeed = 7f;
@@ -325,6 +338,14 @@ namespace Saga.Go.Player
             }
             bool grounded = _controller.isGrounded;
             if (grounded && _verticalVelocity < 0f) _verticalVelocity = -2f; // 경사·턱에서 떨어지지 않게 살짝 누른다
+            bool inDraft = InDraft(transform.position);
+            if (!inDraft) _draftFolded = false;
+            else if (!grounded && !_draftFolded && traversal)
+            {
+                Mode = MoveMode.Glide; // 109-14-20 바람 기둥 — 공중이면 저절로 날개
+                _verticalVelocity = 0f;
+                return;
+            }
 
             if (jumpPressed)
             {
@@ -526,13 +547,16 @@ namespace Saga.Go.Player
 
         private void StepGlide(float dt, Vector3 moveDir, bool jumpPressed)
         {
-            if (jumpPressed || !GoStamina.Use(GlideStaminaPerSec * dt))
+            bool draft = InDraft(transform.position) && !_draftFolded; // 109-14-20 바람 기둥 — 기력 안 쓰고 솟는다
+            if (!InDraft(transform.position)) _draftFolded = false;
+            if (jumpPressed || (!draft && !GoStamina.Use(GlideStaminaPerSec * dt)))
             {
+                if (jumpPressed && draft) _draftFolded = true;
                 Mode = MoveMode.Air;
                 _verticalVelocity = 0f;
                 return;
             }
-            _verticalVelocity = -GlideFallSpeed;
+            _verticalVelocity = draft ? Mathf.Clamp((DraftTop - transform.position.y) / Mathf.Max(dt, 1e-4f), 0f, DraftRise) : -GlideFallSpeed;
             Vector3 horizontal = moveDir * GlideSpeed;
             _controller.Move(new Vector3(horizontal.x, _verticalVelocity, horizontal.z) * dt);
             if (moveDir.sqrMagnitude > 0.0025f && visual != null)
@@ -542,7 +566,7 @@ namespace Saga.Go.Player
             }
             if (animator != null) animator.SetFloat("Speed", 0f);
 
-            if (_controller.isGrounded) { Mode = MoveMode.Ground; _verticalVelocity = -2f; return; }
+            if (_controller.isGrounded && !draft) { Mode = MoveMode.Ground; _verticalVelocity = -2f; return; }
             if (moveDir.sqrMagnitude > 0.0025f && TryStartClimb(moveDir)) return;
             TryStartSwim();
         }

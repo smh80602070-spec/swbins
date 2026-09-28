@@ -142,7 +142,7 @@ namespace Saga.Go.Combat
         private float EngageReach => _rot != null ? RotEngage : _reachOverride > 0f ? _reachOverride * 0.8f : Ranged ? HeroWisdomRange : EngageRange;
 
         // ---- 109-14-14 이야기 보스 공격 차례(웹 사가고 ⑲-14 `rot`) — 수마다 다가서는 거리·예고·원·배율이 다르다 ----
-        public enum BossMove { Melee, Shadow, Spit, Slam, Tide }
+        public enum BossMove { Melee, Shadow, Spit, Slam, Tide, Halo }
         /// <summary>웹 ROT 표 × 1.85(이 판 거리) — 다가서기 · 예고 초 · 원 반지름 · 피해 배율.</summary>
         public static (float reach, float wind, float r, float mul) MoveSpec(BossMove m) => m switch
         {
@@ -150,11 +150,17 @@ namespace Saga.Go.Combat
             BossMove.Spit => (16.7f, 1.0f, 4.4f, 1.0f),     // 내 발밑에 원
             BossMove.Slam => (7.0f, 1.1f, 7.8f, 1.2f),      // 제 둘레 큰 원
             BossMove.Tide => (20.4f, 1.1f, 3.7f, 1.3f),     // 109-14-16 밀물 — 나를 향해 줄지은 원 넷(TideFrom 부터 TideGap 간격)
+            BossMove.Halo => (14.8f, 1.3f, 16.65f, 1.5f),   // 109-14-20 고리 — 제 둘레 HaloInner~16.65m(웹 3~9m). 곁으로 파고들거나 밖으로
             _ => (0f, 0.55f, 0f, 1.0f),                     // 여느 한 대
         };
         public const float ShadowBack = 4.1f;               // 웹 2.2m × 1.85
         public const int TideN = 4;
         public const float TideFrom = 4.6f, TideGap = 5.55f; // 웹 2.5m·3m × 1.85
+        public const float HaloInner = 5.55f;               // 109-14-20 고리 안쪽 빈 원(웹 3m × 1.85)
+        private float _haloInner;
+        private LineRenderer _haloRing;
+        /// <summary>이번 수가 고리면 안쪽 빈 원 반지름(아니면 0).</summary>
+        public float HaloInnerNow => _haloInner;
         private readonly List<Vector3> _tidePts = new List<Vector3>();
         private LineRenderer[] _tideRings;
         public IReadOnlyList<Vector3> TidePoints => _tidePts;
@@ -180,7 +186,7 @@ namespace Saga.Go.Combat
             {
                 var m = _rot[_rotI % _rot.Length];
                 var s = MoveSpec(m);
-                return m == BossMove.Melee ? (_reachOverride > 0f ? _reachOverride * 0.8f : EngageRange) : m == BossMove.Spit ? s.reach * 0.85f : m == BossMove.Slam || m == BossMove.Tide ? s.reach * 0.8f : s.reach;
+                return m == BossMove.Melee ? (_reachOverride > 0f ? _reachOverride * 0.8f : EngageRange) : m == BossMove.Spit ? s.reach * 0.85f : m == BossMove.Slam || m == BossMove.Tide || m == BossMove.Halo ? s.reach * 0.8f : s.reach;
             }
         }
 
@@ -193,6 +199,7 @@ namespace Saga.Go.Combat
             _moveMul = s.mul;
             _moveR = m == BossMove.Melee ? -1f : s.r;
             _moveAtPoint = m == BossMove.Spit || m == BossMove.Tide;
+            if (m == BossMove.Halo) { _haloInner = HaloInner; ShowHaloRing(); } // 109-14-20 안쪽 테
             if (m == BossMove.Tide)
             {
                 // 가면에서 나 쪽으로 원 넷 — 첫 원이 큰 예고 원(StrikePoint), 나머지 셋은 곁 원
@@ -252,11 +259,39 @@ namespace Saga.Go.Combat
         private void HideTideRings()
         {
             if (_tideRings != null) foreach (var lr in _tideRings) lr.enabled = false;
+            if (_haloRing != null) _haloRing.enabled = false;
+        }
+
+        /// <summary>109-14-20 고리 안쪽 테 — 빈 곳이 피할 자리다(바깥은 여느 예고 원).</summary>
+        private void ShowHaloRing()
+        {
+            if (_haloRing == null)
+            {
+                var go = new GameObject("HaloRing");
+                go.transform.SetParent(transform, false);
+                _haloRing = go.AddComponent<LineRenderer>();
+                _haloRing.useWorldSpace = false;
+                _haloRing.loop = true;
+                _haloRing.positionCount = 40;
+                _haloRing.widthMultiplier = 0.3f;
+                _haloRing.material = _warnRing.material;
+                _haloRing.startColor = _haloRing.endColor = _warnRing.startColor;
+                _haloRing.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            }
+            float s = 1f / Mathf.Max(0.01f, transform.lossyScale.x);
+            for (int k = 0; k < _haloRing.positionCount; k++)
+            {
+                float a = k * Mathf.PI * 2f / _haloRing.positionCount;
+                _haloRing.SetPosition(k, new Vector3(Mathf.Cos(a) * HaloInner * s, 0f, Mathf.Sin(a) * HaloInner * s));
+            }
+            _haloRing.transform.localPosition = new Vector3(0f, 0.15f * s, 0f);
+            _haloRing.enabled = true;
         }
 
         private void ClearMove()
         {
             _tidePts.Clear();
+            _haloInner = 0f;
             HideTideRings();
             _moveR = _moveWind = -1f;
             _moveMul = 1f;
@@ -267,6 +302,7 @@ namespace Saga.Go.Combat
         public bool CanStep(Vector3 p)
         {
             bool arena = StoryFoe && !CanStandOn(Home); // 고원 위에 선 이야기 적(6장 검은 가면·졸개)
+            if (StoryFoe && GoStory.OnSkyLayer(Home)) return GoStory.OnSkyTop(p); // 109-14-20 구름섬 무리는 난간 안에서만(칸을 넘나든다)
             if (!arena) return CanStandOn(p);
             if (!SameCell(p, Home)) return false;
             if (GoStory.OnIsle(Home)) return GoStory.OnIsle(p); // 109-14-19 바위섬 위 이야기 적은 섬 안에서만
@@ -840,7 +876,9 @@ namespace Saga.Go.Combat
             if (Frozen) { SetMoveAnim(0f); return; } // 109-14-1a 얼어붙음 — 제자리에 멎는다(시간은 TickStatus 가 줄인다)
 
             var fc = FieldCombat.Instance;
-            bool playerOk = fc != null && fc.CanBeTargeted;
+            bool playerOk = fc != null && fc.CanBeTargeted && GoStory.SameLayer(fc.transform.position, transform.position); // 109-14-20 층이 다르면 못 본다
+            if (!playerOk && fc != null && fc.CanBeTargeted && (CurrentState == State.Chase || CurrentState == State.Telegraph || CurrentState == State.Recover) && Siege == null)
+                ForceReturn(); // 내가 섬에서 뛰어내렸다 — 쫓던 적은 제자리로(예고 원도 거둔다)
             Vector3 toPlayer = playerOk ? Flat(fc.transform.position - transform.position) : Vector3.zero;
             float distPlayer = playerOk ? toPlayer.magnitude : float.MaxValue;
 
@@ -951,7 +989,8 @@ namespace Saga.Go.Combat
                 foreach (var t in _tidePts) if (Flat(p - t).magnitude <= StrikeReach) return true;
                 return false;
             }
-            return Flat(p - StrikePoint).magnitude <= StrikeReach;
+            float d = Flat(p - StrikePoint).magnitude;
+            return d <= StrikeReach && d >= _haloInner; // 109-14-20 고리는 안쪽이 빈다
         }
 
         /// <summary>예고 끝 판정 — 그 순간 반경 안이면 맞는다(회피 무적이면 `FieldCombat` 이 흘린다).</summary>

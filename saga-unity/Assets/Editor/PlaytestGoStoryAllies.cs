@@ -151,7 +151,7 @@ namespace Saga.EditorTools
             dex.Open();
             dex.SelectEra(HeroEra.Story);
             if (dex.TabCount != 5 || !dex.TabText(4).Contains("1/" + GoHeroes.Story.Length) || !dex.TitleText.Contains("/" + GoHeroes.All.Length)) Fail($"도감 탭 '{dex.TabText(4)}'·'{dex.TitleText}'");
-            if (dex.CardCount != 4) Fail("이야기 동료 칸 넷이 아니다");
+            if (dex.CardCount != GoHeroes.Story.Length) Fail("이야기 동료 칸 수");
             dex.Select(3);
             if (!dex.DetailText.Contains(GoStory.ChapterName(GoStory.Chapters[6]))) Fail("사공 합류 장 안내 " + dex.DetailText);
             dex.Select(1);

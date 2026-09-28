@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -18,12 +19,14 @@ namespace Saga.EditorTools
     /// boss 이미 쓰러짐이면 넘김 · 혼잣말 · 대화 중 `Talking` · 세이브 v28 왕복·v27 로드(1장 처음).
     /// 109-14-19 8장: 섬(강 칸 가운데·석등·무리·인물 자리가 섬 위)·도둑 길(걷는 칸·평균 빠르기가 걷기와 달리기 사이) · 멀면 안 달아남 ·
     /// 걸어서 쫓으면 놓치고 처음 자리 · 달리면 잡음 · 배(대화 뒤 섬 북쪽·돌아오는 배는 나루) · 섬 무리는 섬 안에서만 · 별·달·해 석등 · 해솔 금 간 가면.
+    /// 109-14-20 9장: 덮개·기둥(9장이 열려야) · 몸(땅에선 안 뜸·점프하면 저절로 활공·기력 안 쓰고 기둥 끝까지·접으면 안 폄·섬에 내림) · 난간 높이 ·
+    /// 층(섬 위에선 땅 적이 못 쫓음) · 섬 무리 난간 안 · 먹구름 가면 해솔 · 가면 벗은 해솔 이름 · 먹구름 임금(×2·왕관·고리 안쪽 빔) · 해솔 합류.
     /// 옛 진단은 `StoryState.OffForTest` 로 돌고 여기서만 켠다. 끝나면 진행·수호장·돈·레벨·재료·요리·세이브 파일·자리를 되돌린다.
     /// </summary>
     public static class PlaytestGoStory
     {
         private static string _tag;
-        private static string _ch8 = "";
+        private static string _ch8 = "", _ch9 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -68,6 +71,7 @@ namespace Saga.EditorTools
                 CheckChapter6(fc, pc, field, ui);
                 CheckChapter7(pc, field, ui);
                 CheckChapter8(pc, field, ui);
+                CheckChapter9(fc, pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -97,7 +101,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -108,17 +112,17 @@ namespace Saga.EditorTools
             GoStory.StepType.Talk => 'T', GoStory.StepType.Go => 'G', GoStory.StepType.Boss => 'B', GoStory.StepType.Kill => 'K',
             GoStory.StepType.Light => 'L', GoStory.StepType.Domain => 'D', GoStory.StepType.Gather => 'H', GoStory.StepType.Cook => 'C',
             GoStory.StepType.Seal => 'S', GoStory.StepType.Climb => 'M', GoStory.StepType.Duel => 'X', GoStory.StepType.Defend => 'E',
-            GoStory.StepType.Chase => 'R', GoStory.StepType.Sail => 'V', _ => 'F',
+            GoStory.StepType.Chase => 'R', GoStory.StepType.Sail => 'V', GoStory.StepType.Sky => 'Y', _ => 'F',
         };
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 6 || GoStory.Chapters.Length != 8) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 6 || GoStory.Chapters.Length != 9) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 } };
-            for (int c = 0; c < 8; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 } };
+            for (int c = 0; c < 9; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -846,11 +850,132 @@ namespace Saga.EditorTools
             if (GoStory.OnIsle(field.NpcBody("ferryman").transform.position)) Fail("버들이 섬에 남음");
             int gold = GoldState.Gold;
             Talk(pc, ui, "elder", "8장 끝 누리");
-            if (!StoryState.Done || GoldState.Gold != gold + 2500) Fail("8장 끝·보상");
+            if (StoryState.Ch != 8 || !StoryState.Locked || GoldState.Gold != gold + 2500) Fail("8장 끝·보상·9장 잠김(여정 25)");
+            ui.Refresh();
+            field.Refresh();
+            if (!ui.TrackShown || field.Pillar.activeSelf) Fail("8장 끝 — 9장 잠김 줄·기둥");
+            if (!field.SkyCover.activeSelf || field.DraftRings.activeSelf || PlayerController.DraftOn) Fail("9장이 잠겼는데 덮개가 걷히거나 기둥이 섰다");
+            _ch8 = $"8장 도둑 평균 {avg:0.0}m/초·걸어선 놓침·달려서 잡음·배 섬/나루·섬 무리 넷(섬 안만)·별·달·해·해솔 금 간 가면·보상";
+        }
+
+        // ---- 9장(109-14-20) ------------------------------------------------------------------------------------
+
+        private static void Steps(PlayerController pc, float sec) { for (float t = 0f; t < sec; t += 0.05f) pc.Step(0.05f); }
+
+        private static void CheckChapter9(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch9 = "9장 중단";
+            PlayerStats.Restore(25, 0);
+            field.Refresh();
+            if (field.SkyCover.activeSelf || !field.DraftRings.activeSelf || !PlayerController.DraftOn) Fail("9장이 열렸는데 덮개·기둥");
+            foreach (var pk in GoWorldMap.Peaks) // 섬이 다른 봉우리 위에 뜨면 위에서 내리쏘는 광선(정상 윗면·등반)이 섬에 걸린다
+                if (GoStory.Flat(pk.Top, GoStory.SkyCenter) < GoStory.SkyR + TestMapData.PeakTopRadius + 3f) Fail($"구름섬이 봉우리 {pk.Id} 위");
+            if (GoStory.Flat(TestMapData.WorldPos(GoWorldMap.TowerGx, GoWorldMap.TowerGy), GoStory.SkyCenter) < GoStory.SkyR + 10f) Fail("구름섬이 망루 위");
+            Talk(pc, ui, "scholar", "9장 은비");
+            var peak = GoStory.DuelPeak;
+            pc.Teleport(GoWorldMap.PeakArrival(peak));
+            field.Check(pc.transform.position);
+            Expect(8, 2, "9장 봉우리 꼭대기");
+            field.Refresh();
+            if (!field.NpcShown("wanderer") || GoStory.Flat(field.NpcBody("wanderer").transform.position, peak.Top) > 5f) Fail("기둥 곁에 나그네가 없다");
+            Talk(pc, ui, "wanderer", "9장 기둥 나그네");
+            Expect(8, 3, "9장 나그네 뒤");                                                      // → 3 sky
+            // 몸 — 땅에선 안 뜸 · 점프하면 저절로 활공 · 기력 안 쓰고 기둥 끝까지 · 접으면 안 폄 · 섬에 내림
+            string body = "";
+            pc.Teleport(peak.Top + Vector3.up * 0.3f);
+            Steps(pc, 0.5f);
+            float y0 = pc.transform.position.y;
+            if (pc.Mode != PlayerController.MoveMode.Ground || Mathf.Abs(y0 - peak.Top.y) > 1f) Fail($"기둥 안 땅에서 {pc.Mode}·{y0 - peak.Top.y:0.0}m");
+            GoStamina.SetForTest(50f);
+            pc.RequestJump();
+            Steps(pc, 0.4f);
+            if (pc.Mode != PlayerController.MoveMode.Glide) Fail($"기둥 안 점프가 저절로 활공이 아니다({pc.Mode})");
+            Steps(pc, 12f);
+            float st0 = GoStamina.Value;
+            if (Mathf.Abs(pc.transform.position.y - GoStory.DraftTop) > 0.6f || pc.Mode != PlayerController.MoveMode.Glide) Fail($"기둥 끝 {pc.transform.position.y - GoStory.DraftTop:0.0}m·{pc.Mode}");
+            Steps(pc, 2f);
+            if (GoStamina.Value < st0 - 0.01f) Fail("기둥 안 활공이 기력을 씀");
+            else body += "땅에선 안 뜸·저절로 활공·기둥 끝·기력 그대로";
+            pc.RequestJump();
+            Steps(pc, 0.6f);
+            if (pc.Mode == PlayerController.MoveMode.Glide || pc.transform.position.y > GoStory.DraftTop - 0.5f) Fail($"기둥 안에서 접었는데 다시 폄({pc.Mode})");
+            else body += "·접으면 안 폄";
+            pc.Teleport(GoStory.SkyPos(new Vector2(0f, 8f)) + Vector3.up * 5f);
+            Steps(pc, 2f);
+            if (pc.Mode != PlayerController.MoveMode.Ground || !GoStory.OnSkyTop(pc.transform.position)) Fail($"섬에 못 내림 {pc.Mode}·{pc.transform.position.y - GoStory.SkyCenter.y:0.0}m");
+            else body += "·섬에 내림";
+            field.Check(pc.transform.position);
+            Expect(8, 4, "구름섬에 오름");                                                      // → 4 kill
+            // 난간 — 걸어 오르는 턱보다 높고 점프보다 낮다
+            var cc = pc.GetComponent<CharacterController>();
+            if (cc != null && (GoStory.SkyRail <= cc.stepOffset || GoStory.SkyRail >= PlayerController.JumpVelocity * PlayerController.JumpVelocity / 40f)) Fail($"난간 {GoStory.SkyRail}m — 턱 {cc.stepOffset}");
+            int rails = 0;
+            foreach (Transform t in field.Sky.transform) if (t.name == "SkyRail" && t.GetComponent<Collider>() != null && t.GetComponent<NoClimb>() != null) rails++;
+            if (rails != 24) Fail($"난간 토막 {rails}");
+            // 층 — 섬 위에선 땅 적이 못 쫓는다
+            var ground = FieldEnemy.All.First(x => !x.IsGuardian && !x.IsHero && !x.DomainFoe && !x.StoryFoe && x.Alive);
+            ground.WarpForTest(new Vector3(pc.transform.position.x, peak.Top.y - 30f, pc.transform.position.z));
+            ground.ForceChase();
+            ground.Tick(0.05f);
+            if (ground.CurrentState == FieldEnemy.State.Chase || GoStory.SameLayer(ground.transform.position, pc.transform.position)) Fail($"섬 밑 땅 적이 나를 쫓음({ground.CurrentState})");
+            ground.RestoreHomeForTest();
+            // 섬 무리 — 난간 안
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 4) { Fail($"구름섬 무리 {field.Squad.Count} ≠ 4"); return; }
+            Vector3 sc = GoStory.SkyCenter;
+            foreach (var e in field.Squad)
+            {
+                if (!GoStory.OnSkyTop(e.transform.position)) Fail($"구름섬 무리가 섬 위에 없다 {e.transform.position - sc}");
+                if (e.CanStep(sc + new Vector3(0f, 0f, GoStory.SkyR + 2f)) || !e.CanStep(sc + new Vector3(3f, 0f, 3f))) Fail("구름섬 무리가 난간을 넘거나 섬에서 못 걷는다");
+            }
+            foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) Kill(e);
+            Expect(8, 5, "구름섬 무리");                                                        // → 5 duel 해솔
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 1) { Fail($"먹구름 가면 해솔 {field.Squad.Count}"); return; }
+            var hs = field.Squad[0];
+            if (!hs.IsStoryBoss || hs.DisplayName != GoLocalization.T("story.boss.haesol", "먹구름 가면 해솔") || FindDeep(hs.transform, "Crack") == null || !GoStory.OnSkyTop(hs.transform.position)) Fail("먹구름 가면 해솔 — 이름·금 간 가면·섬 위");
+            Kill(hs);
+            Expect(8, 6, "먹구름 가면 해솔");
+            field.Refresh();
+            var hb = field.NpcBody("haesol");
+            if (!field.NpcShown("haesol") || hb == null || !GoStory.OnSkyTop(hb.transform.position)) Fail("가면 벗은 해솔이 섬에 없다");
+            else if (FindDeep(hb.transform, "Mask") != null && FindDeep(hb.transform, "Mask").gameObject.activeSelf) Fail("해솔이 가면을 안 벗음");
+            if (GoStory.NpcName("haesol") != GoLocalization.T("story.npc.haesol2", "해솔")) Fail("가면 벗은 해솔 이름 " + GoStory.NpcName("haesol"));
+            Talk(pc, ui, "haesol", "9장 해솔");
+            Expect(8, 7, "해솔 뒤");                                                             // → 7 duel 임금
+            pc.Teleport(GoStory.SkyPos(new Vector2(0f, 10f)) + Vector3.up * 0.4f);
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 1) { Fail($"먹구름 임금 {field.Squad.Count}"); return; }
+            var king = field.Squad[0];
+            if (FindDeep(king.transform, "Crown") == null || Mathf.Abs(king.transform.localScale.x / hs.transform.localScale.x - 2f / 1.05f) > 0.05f) Fail($"임금 왕관·크기 {king.transform.localScale.x}");
+            if (king.CurrentMove != FieldEnemy.BossMove.Slam) Fail("임금 첫 수가 내려찍기가 아니다");
+            pc.Teleport(sc + new Vector3(12f, 0.4f, 12f));                                    // 원 밖에서 한 수를 넘긴다
+            typeof(FieldEnemy).GetMethod("BeginTelegraph", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(king, null);
+            king.ResolveStrike();
+            typeof(FieldEnemy).GetMethod("BeginTelegraph", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(king, null); // 고리는 예고가 시작될 때 입는다
+            if (king.CurrentMove != FieldEnemy.BossMove.Halo || Mathf.Abs(king.HaloInnerNow - FieldEnemy.HaloInner) > 0.01f) Fail($"둘째 수가 고리가 아니다 {king.CurrentMove}·{king.HaloInnerNow}");
+            else
+            {
+                Vector3 kp = king.transform.position;
+                if (!king.InStrike(kp + new Vector3(10f, 0f, 0f)) || king.InStrike(kp + new Vector3(2f, 0f, 0f)) || king.InStrike(kp + new Vector3(20f, 0f, 0f))) Fail("고리 판정(10m 맞음·2m·20m 안 맞음)");
+            }
+            Kill(king);
+            Expect(8, 8, "먹구름 임금");
+            Talk(pc, ui, "wanderer", "9장 나그네와 해솔");
+            Talk(pc, ui, "haesol", "9장 내려갈 채비");
+            Expect(8, 10, "내려갈 채비 뒤");                                                     // → 10 go 마을
+            pc.Teleport(GoStory.GridPos(1.2f, 3.2f) + new Vector3(2f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(8, 11, "마을 도착");
+            int gold = GoldState.Gold;
+            Talk(pc, ui, "elder", "9장 끝 누리");
+            if (!StoryState.Done || GoldState.Gold != gold + 2750) Fail("9장 끝·보상");
+            if (!PartyState.Has("story_haesol")) Fail("해솔이 합류 안 함");
             ui.Refresh();
             field.Refresh();
             if (ui.TrackShown || field.Pillar.activeSelf) Fail("다 끝났는데 추적 줄·기둥");
-            _ch8 = $"8장 도둑 평균 {avg:0.0}m/초·걸어선 놓침·달려서 잡음·배 섬/나루·섬 무리 넷(섬 안만)·별·달·해·해솔 금 간 가면·보상";
+            if (field.SkyCover.activeSelf || !PlayerController.DraftOn) Fail("다 끝났는데 덮개가 돌아오거나 기둥이 꺼짐");
+            _ch9 = "9장 " + body + "·난간·층·구름섬 무리 난간 안·해솔·가면 벗음·임금 ×2 왕관·고리 안쪽 빔·해솔 합류";
         }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------
