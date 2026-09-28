@@ -49,7 +49,8 @@ namespace Saga.EditorTools
             string state = CheckState();
             string map = CheckMap();
             CheckGeneralSchedule();
-            if (_ok) Debug.Log($"[PlaytestRealmSlice] actors OK - 표 {RealmOrderData.AllKeys.Length} 명령 · 상한 {RealmActorPlan.Cap} · 끄면 빈 목록 · {state} · {map} · 두 장수 순서표");
+            string bodies = CheckBodies();
+            if (_ok) Debug.Log($"[PlaytestRealmSlice] actors OK - 표 {RealmOrderData.AllKeys.Length} 명령 · 상한 {RealmActorPlan.Cap} · 끄면 빈 목록 · {state} · {map} · 두 장수 순서표 · {bodies}");
             return _ok;
         }
 
@@ -131,6 +132,61 @@ namespace Saga.EditorTools
             RealmActorPlan.Enabled = true;
             map.Rebuild();
             return $"월드맵 배우 {want}";
+        }
+
+        /// <summary>109-13-2b 사실 몸 — 표가 있으면 월드맵 배우·싸움터 장수가 사실 몸으로 서고(키·같은 몸 안 겹침·눕고 섬), 손잡이로 끄면 대역 도형. 표가 없으면(묶음 없는 PC) 전부 대역.</summary>
+        private static string CheckBodies()
+        {
+            var table = RealmBodies.Current;
+            bool have = table != null && table.Controller != null && (table.OfficerCount > 0 || table.WandererCount > 0);
+            if (RealmBodies.Index(0, "x") != -1) Fail("빈 표 번호가 -1 아님");
+            if (RealmBodies.Index(5, "xuchang") != RealmBodies.Index(5, "xuchang")) Fail("몸 번호가 늘 같지 않음");
+            if (RealmBodies.Index(3, "a", RealmBodies.Index(3, "a")) == RealmBodies.Index(3, "a")) Fail("건너뛴 몸을 또 고름");
+
+            var parent = new GameObject("BodyTest").transform;
+            int rigged = 0, fallback = 0;
+            try
+            {
+                var f = RealmFigure.Create("T_off", parent, Vector3.zero, 0f, Color.white, 1.9f, 0f, RealmBodies.Role.Officer, "cao");
+                var w = RealmFigure.Create("T_wan", parent, Vector3.zero, 0f, Color.white, 1.8f, 0f, RealmBodies.Role.Wanderer, "id1");
+                foreach (var x in new[] { f, w }) if (x.Rigged) rigged++; else fallback++;
+                if (have)
+                {
+                    if (table.OfficerCount > 0 && !f.Rigged) Fail("무장 몸이 있는데 대역으로 섬");
+                    if (table.WandererCount > 0 && !w.Rigged) Fail("재야 몸이 있는데 대역으로 섬");
+                    foreach (var x in new[] { f, w })
+                    {
+                        if (!x.Rigged) continue;
+                        x.External = true;
+                        x.Play("idle"); x.Pose(0f);
+                        float h = HeightOf(x);
+                        if (Mathf.Abs(h - x.Height) > x.Height * 0.15f) Fail($"{x.BodyName} 키 {h:0.00} ≠ {x.Height:0.00}");
+                        if (x.Tilt > 40f) Fail($"{x.BodyName} 서 있는데 기움 {x.Tilt:0}°");
+                        x.Play("die"); x.Pose(1.7f);
+                        if (x.Tilt < 70f) Fail($"{x.BodyName} 쓰러졌는데 기움 {x.Tilt:0}°");
+                        x.Play("attack"); x.Pose(0.3f);
+                        if (x.GetComponentInChildren<SkinnedMeshRenderer>() == null) Fail($"{x.BodyName} 몸 그림 없음");
+                    }
+                    RealmBodies.ForceFallback = true;
+                    var g = RealmFigure.Create("T_fb", parent, Vector3.zero, 0f, Color.white, 1.9f, 0f, RealmBodies.Role.Officer, "cao");
+                    RealmBodies.ForceFallback = false;
+                    if (g.Rigged) Fail("손잡이 끔인데 사실 몸");
+                }
+                else if (rigged > 0) Fail("몸 표가 없는데 사실 몸");
+            }
+            finally
+            {
+                RealmBodies.ForceFallback = false;
+                Object.DestroyImmediate(parent.gameObject);
+            }
+            return have ? $"사실 몸 무장 {table.OfficerCount}·재야 {table.WandererCount}" : "몸 표 없음(대역 도형)";
+        }
+
+        private static float HeightOf(RealmFigure f)
+        {
+            float top = 0f, bottom = float.MaxValue;
+            foreach (var r in f.GetComponentsInChildren<Renderer>()) { top = Mathf.Max(top, r.bounds.max.y); bottom = Mathf.Min(bottom, r.bounds.min.y); }
+            return top - bottom;
         }
 
         private static void CheckGeneralSchedule()

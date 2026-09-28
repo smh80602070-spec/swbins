@@ -10309,3 +10309,16 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 시험: `push` = 전송 0·4파일 일치, 로컬 `md5sum` 과 `rclone md5sum` 네 줄 같음. `pull` = 전송 0·4파일 일치 → fetch "이미 목록과 같다"(실제로 받아 푸는 건 새 PC 에서 첫 확인).
 - 남은 위험: rclone 공용 client_id 가 2026 중 끊긴다는 경고 — 끊기면 구글 클라우드 콘솔에서 자기 client_id(사람 몫) → `rclone config update gdrive client_id=… client_secret=…`.
 - 이어서(같은 날): 사용자가 OneDrive 보관함의 19ad3d530b70 네 파일을 지움(드라이브 사본 `rclone check` 4파일 일치 확인 뒤). 옛 cb71a2102fd9 은 그 전에 이미 없었다. 보관함 기본값을 `~/OneDrive/saga-assets` → `~/saga-assets`(동기화 안 되는 로컬)로 — 그대로 두면 `pull`·`pack` 이 4GB 를 OneDrive 에 다시 올린다. 원본 보관 = 구글 드라이브. 문서 셋(HOW_TO_PLAYTEST·ASSET_GUIDE·PLAN 110 ④) 같이.
+
+## 2026-09-29 REALM — 109-13-2b 지도·싸움터 인물 사실 몸(웹 사가국지 §5-10)
+
+"사가유니티 이어해" — 지난 세션이 남긴 미커밋 코드(`RealmBodies`·`RealmFigure` 사실 몸 가지)를 이어 검증·마감. 묶음 PC(`realistic-pack.sh verify` OK 1520).
+
+- `World/RealmBodies`(새) — 몸 표(무장·재야 프리팹 + Maria.controller)·`Pick(역할, 열쇠, skip)`·FNV-1a 해시 번호(`Index`, 실행마다 같음)·손잡이 `ForceFallback`. 씬 빌더 `BuildActorBodies` 가 채움(프리팹 없는 몸은 경고 뒤 뺌).
+- `RealmFigure`: `Create(..., role, bodyKey, skipBody)` — 표가 있고 몸이 Humanoid 면 사실 몸(키는 BakeMesh 로 잰 프리팹 키에 맞춰 배율), 아니면 도형 대역. 애니메이터 속도 0 + `Play(상태, 정규화 시각)` 로 시각을 넘김(싸움터 3.6초 컷에 맞춰 베기·맞기·쓰러짐은 가운데 구간만·정해진 초로). 컨트롤러에 없는 일 몸짓(hoe·haggle·bow·hammer)은 `LateUpdate` 에서 허리·오른팔(·왼팔) 뼈를 몸 축으로 더 돌림 — 애니메이터가 뼈를 안 다시 썼으면 지난 바탕에서 다시 얹어 쌓이지 않음. 손에 든 것은 오른손 뼈에 단 도형(괭이·칼·망치·엽전). `Tilt` 는 엉덩이→머리 선.
+- 싸움터 두 장수는 `CityId:atk`/`:def` 열쇠, 수비 쪽은 공격 쪽 몸을 건너뜀. 월드맵 태수 = 무장 몸 열쇠 `OfficerId`, 재야 = 재야 몸.
+- 몸 표(씬 저장분): 무장 4·재야 5. CastleGuard·Pelegrini 는 공방 교체 몸이라 이 경로 프리팹이 없어 표에서 뺐고, 두목 Morak 은 무장 몸으로 안 맞아 뺌. 옛 씬은 표가 5칸으로 굳어 있어 `Build TestCity Scene` 만 다시 지음(REALM 은 컷 타임라인 없음).
+- 진단: `PlaytestRealmActors.CheckBodies`(사실 몸이면 키 ±15%·서 있는데 기움 ≤40°·쓰러지면 ≥70°·몸 그림 있음·손잡이 끄면 대역·표 없으면 전부 대역) + 싸움터 끝 자세 기준 서 있음 ≤40°/쓰러짐 ≥70°(Paladin idle 이 28° 기움, 렌더러 bounds 는 키가 9~12% 넉넉).
+- 검증: 컴파일 0 · `PlaytestRealmSlice` 3연속 같은 결과 OK(actors 사실 몸 무장 4·재야 5, battlefield OK). 배치가 고친 폰트 SDF·Mobile_RPAsset 되돌림.
+- 실기 확인 전: 4m 말이 표지와 어울리는지·몸짓이 멀리서 읽히는지 · 싸움터 두 장수 베기·쓰러짐 박자 · 손에 든 것 위치(오른손 뼈 축) · 갑옷 몸 키 배율.
+- 다음 = 사람 NPC 몸 교체 보류 분·109 표 14-23(임무 표식)·14-1b 괴물 넷(묶음 PC).

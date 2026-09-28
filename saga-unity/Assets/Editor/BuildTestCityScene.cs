@@ -66,6 +66,7 @@ namespace Saga.EditorTools
             BuildGoalBoardUi();
             BuildDebugOverlay();
             BuildBootstrap();
+            BuildActorBodies();
             BuildMapViewSwitcher(cityGo, dioramaRig, worldMapGo, mapCameraRig);
 
             AssetDatabase.SaveAssets();
@@ -357,6 +358,32 @@ namespace Saga.EditorTools
             var boardGo = new GameObject("GoalBoard");
             var board = boardGo.AddComponent<GoalBoard>();
             board.Init(tracker);
+        }
+
+        private const string MariaControllerPath = "Assets/Animators/Maria.controller";
+        // PLAN.md 109-13-2b — 지도·싸움터 인물이 입는 사실 몸(무장 = 갑옷·두건 사내, 재야 = 베옷·무도복·여인). 몸은 전부 Humanoid 라
+        // 주인공 Maria.controller 로 리타깃(GO `PartyBodies` 와 같은 방식). 프리팹이 없는 PC 는 그 몸만 빠지고, 다 없으면 대역 도형.
+        private static readonly string[] OfficerBodyNames = { "Dreyar", "CastleGuard02", "Heraklios", "Paladin" };
+        private static readonly string[] WandererBodyNames = { "PeasantMan", "Brady", "PeasantGirl", "Kachujin", "Eve" };
+
+        private static void BuildActorBodies()
+        {
+            var go = new GameObject("RealmBodies");
+            var bodies = go.AddComponent<RealmBodies>();
+            bodies.Init(LoadBodies(OfficerBodyNames), LoadBodies(WandererBodyNames),
+                AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(MariaControllerPath));
+        }
+
+        private static GameObject[] LoadBodies(string[] names)
+        {
+            var list = new System.Collections.Generic.List<GameObject>();
+            foreach (var n in names)
+            {
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(SetupNpcCharacterImports.PrefabPath(n));
+                if (prefab != null) list.Add(prefab);
+                else Debug.LogWarning($"[BuildTestCityScene] {n} 몸 프리팹 없음(로컬 전용 — Saga/Setup NPC Character Imports) — 그 몸은 뺀다");
+            }
+            return list.ToArray();
         }
 
         private static void SetPrivateField(object target, string fieldName, object value)

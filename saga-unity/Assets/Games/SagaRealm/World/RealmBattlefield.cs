@@ -105,9 +105,10 @@ namespace Saga.Realm.World
             Army("Atk", AtkCount, -1f, AtkColor, _atk, _atkHome);
             Army("Def", DefCount, 1f, DefColor, _def, _defHome);
 
-            // PLAN.md 109-13-2 — 양군 앞줄에서 두 장수가 맞붙는다(웹 §5-10 ③). 대역 도형, 부르는 쪽이 시각을 정한다.
-            AtkGeneral = RealmFigure.Create("Gen_Atk", transform, new Vector3(-GeneralStartX, 0f, GeneralZ), 90f, AtkColor, 1.9f, 0f);
-            DefGeneral = RealmFigure.Create("Gen_Def", transform, new Vector3(GeneralStartX, 0f, GeneralZ), -90f, DefColor, 1.9f, 0.5f);
+            // PLAN.md 109-13-2 — 양군 앞줄에서 두 장수가 맞붙는다(웹 §5-10 ③). 사실 몸(없으면 대역 도형), 부르는 쪽이 시각을 정한다.
+            AtkGeneral = RealmFigure.Create("Gen_Atk", transform, new Vector3(-GeneralStartX, 0f, GeneralZ), 90f, AtkColor, 1.9f, 0f, RealmBodies.Role.Officer, CityId + ":atk");
+            DefGeneral = RealmFigure.Create("Gen_Def", transform, new Vector3(GeneralStartX, 0f, GeneralZ), -90f, DefColor, 1.9f, 0.5f, RealmBodies.Role.Officer, CityId + ":def",
+                AtkGeneral.BodyName != null ? RealmBodies.Index(RealmBodies.Current.OfficerCount, CityId + ":atk") : -1);
             AtkGeneral.External = DefGeneral.External = true;
 
             var camGo = new GameObject("BattleCam");
