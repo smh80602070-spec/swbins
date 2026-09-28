@@ -571,6 +571,9 @@
 2	go	npc.traveler_again	또 만났군. 좋은 길 되시게.	We meet again. Safe travels.		
 2	go	npc.traveler_first	이 근처 지리를 좀 아네. 도움이 될 만한 걸 나눠 주지 — 경험치 +{0} · 돈 +{1}냥	I know this area well. Let me share something useful — +{0} EXP · +{1} Gold		
 2	go	npc.traveler_name	나그네	Traveler		
+2	go	orb.offered	◆ 봉헌 — 신상 {0}단 · 스태미나 상한 {1} · 금 +{2}	◆ Offering — Statue rank {0} · Max stamina {1} · Gold +{2}		
+2	go	orb.offered_half	◆ 봉헌 — 구슬 하나를 더 바치면 신상 {0}단	◆ Offering — one more orb for statue rank {0}		
+2	go	orb.picked	◆ 구슬 {0}/{1} — 불 올린 봉수대에 바치면 스태미나 상한이 오른다	◆ Orb {0}/{1} — offer them at a lit beacon to raise max stamina		
 2	go	part.core	급소	Core		
 2	go	part.leg	다리	Leg		
 2	go	part.torso	몸통	Torso		

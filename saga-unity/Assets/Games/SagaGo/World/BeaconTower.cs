@@ -26,6 +26,8 @@ namespace Saga.Go.World
     {
         private const int Gx = 4;
         private const int Gy = 4;
+        /// <summary>봉수대 자리(월드) — 109-14-3a 봉헌이 쓴다.</summary>
+        public static Vector3 Position => TestMapData.WorldPos(Gx, Gy) + new Vector3(0f, TestMapData.Legend[TestMapData.TileAt(Gx, Gy)].Height, 0f);
         private const float LightRadius = 8f;
         private const int RewardExp = 40;
         private const int RewardGold = 30;

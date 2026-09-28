@@ -170,7 +170,7 @@ namespace Saga.EditorTools
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string path = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
             string json = System.IO.File.ReadAllText(path);
-            if (!json.Contains("\"version\":18") || !json.Contains("\"missions\":[")) Fail("세이브 v18 에 사명이 없다");
+            if (!json.Contains("\"version\":19") || !json.Contains("\"missions\":[")) Fail("세이브 v18 에 사명이 없다");
             RegionMissionState.Restore(null);
             int g = GoldState.Gold;
             if (!SaveState.TryLoad()) { Fail("v18 TryLoad 실패"); return; }
@@ -246,7 +246,7 @@ namespace Saga.EditorTools
         {
             if (!SaveState.Save()) { Fail("SaveState.Save 실패(v15 준비)"); return; }
             string json = System.IO.File.ReadAllText(path);
-            string v15 = Regex.Replace(json.Replace("\"version\":18", "\"version\":15"), ",\"missions\":\\[[^\\]]*\\]", "");
+            string v15 = Regex.Replace(json.Replace("\"version\":19", "\"version\":15"), ",\"missions\":\\[[^\\]]*\\]", "");
             if (v15.Contains("missions")) { Fail("v15 모양 만들기 실패"); return; }
             System.IO.File.WriteAllText(path, v15);
             if (!SaveState.TryLoad()) { Fail("v15 파일 TryLoad 실패"); return; }

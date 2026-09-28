@@ -35,6 +35,7 @@ namespace Saga.Go.World
             if (GetComponent<RegionAtmosphere>() == null) gameObject.AddComponent<RegionAtmosphere>(); // 107-3 지역 바이옴
             if (GetComponent<RegionMissionHud>() == null) gameObject.AddComponent<RegionMissionHud>(); // 107-8 지역 사명 사슬
             if (GetComponent<PeakSummits>() == null) gameObject.AddComponent<PeakSummits>(); // 109-9 정상 발견
+            if (GetComponent<GoOrbField>() == null) gameObject.AddComponent<GoOrbField>(); // 109-14-3a 수집 구슬·봉헌
         }
     }
 }

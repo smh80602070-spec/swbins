@@ -14,7 +14,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 18;
+        private const int SaveVersion = 19;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -97,6 +97,9 @@ namespace Saga.Go.Data
             public List<string> peaksFound;
             // PLAN.md 109-14-1a 원소 일곱 안내를 했는가 — 버전 그대로(옛 세이브엔 없어 false → 한 번 안내, 웹 save.field.el7 와 같은 결).
             public bool el7Noticed;
+            // v19 — PLAN.md 109-14-3a 수집 구슬(주운 id)·바친 수.
+            public List<string> orbsGot;
+            public int orbsGiven;
         }
 
         public static bool Save()
@@ -157,6 +160,8 @@ namespace Saga.Go.Data
                 heroesSeen = HeroDexState.Snapshot(),
                 peaksFound = WorldMapState.SnapshotPeaks(),
                 el7Noticed = Combat.GoElements.SevenNoticed,
+                orbsGot = OrbState.Snapshot(),
+                orbsGiven = OrbState.Given,
             };
             return JsonUtility.ToJson(data);
         }
@@ -218,6 +223,8 @@ namespace Saga.Go.Data
             HeroDexState.Restore(data.heroesSeen);
             WorldMapState.RestorePeaks(data.peaksFound);
             Combat.GoElements.SevenNoticed = data.el7Noticed;
+            OrbState.Restore(data.orbsGot, data.orbsGiven);
+            World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();
             if (player != null && data.playerPos != null && data.playerPos.Length == 3)
@@ -402,6 +409,14 @@ namespace Saga.Go.Data
                 // v17엔 정상 기록이 없었다 — 아직 아무 정상에도 안 오른 것과 같다.
                 data.version = 18;
                 data.peaksFound = new List<string>();
+                return data;
+            }
+            if (fromVersion == 18)
+            {
+                // v18엔 수집 구슬이 없었다 — 하나도 안 주운 것과 같다.
+                data.version = 19;
+                data.orbsGot = new List<string>();
+                data.orbsGiven = 0;
                 return data;
             }
             return null;

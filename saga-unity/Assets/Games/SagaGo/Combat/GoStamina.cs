@@ -8,13 +8,15 @@ namespace Saga.Go.Combat
     /// </summary>
     public static class GoStamina
     {
-        public const float Max = 100f;
+        public const float BaseMax = 100f;
+        /// <summary>상한 — 109-14-3a 봉헌 신상 등급마다 +8(100 → 180).</summary>
+        public static float Max => BaseMax + Saga.Go.Data.OrbState.Level * Saga.Go.Data.GoOrbs.StaminaPerLevel;
         public const float RegenPerSec = 25f;
         public const float RegenDelaySec = 0.8f;
         public const float SprintPerSec = 8f;
         public const float SprintUnlockAt = 30f;
 
-        public static float Value { get; private set; } = Max;
+        public static float Value { get; private set; } = BaseMax;
         public static bool SprintLocked { get; private set; }
 
         private static float _sinceUse = 999f;
