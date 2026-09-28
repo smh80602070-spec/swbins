@@ -1,7 +1,7 @@
 # PROJECT_STATE — saga-unity (상태만, ≤15KB, 덮어쓴다)
 
 **규칙**(SAGA-DESIGN §9): 지금 상태만, 세션 끝에 덮어쓴다. 경위·이유는 `docs/HISTORY.md` 에 append.
-마지막 갱신: 2026-09-28 (109-14 ⑲-1~12 — 원소 일곱~이야기 1~2장).
+마지막 갱신: 2026-09-28 (109-14-12 이야기 1~2장).
 
 ## 캐릭터 자산 — 이 PC 기준 (2026-09-19)
 
@@ -54,7 +54,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 | 재빌드·전체 | `PlaytestSagaAab`·`PlaytestSagaCredits`·`PlaytestRealmSlice`·배치 점검 OK(⑥e, 묶음 없는 PC) · 흐름·판별 다섯 3연속 OK(⑤c-2c-2) · 영어(`-hangulWatch`)로도 OK — DUNGEON·STORY 는 남은 고레벨 세이브면 실패, 빼고 돈다 |
 | `PlaytestStorySlice` | **3연속 OK(2026-09-25)** · 09-27 BossPattern 3연속(묶음 없는 PC, 뒤는 기준선 FAIL — 묶음 PC 재확인) — Eras·Companions·Summon·BossIntro·옷 빛깔·상위 차수·전직·ButtonWiring·JobSkills·무예 세이브 왕복·옛 형식 |
 | `PlaytestDungeonHeadless` | **3연속 OK(2026-09-26, 지역 뒤)** · 09-27 109-10-5~10 은 묶음 없는 PC 기준선 비교(묶음 PC 재확인) · Regions~EnemyTelegraph 전부. 같은 씬 `FloorProgression`·`OverworldMap` OK |
-| GO `PlaytestHeadless` | **3연속 OK(2026-09-25)** — Peaks~FieldCombat 전부 · 09-28 Story 까지 3연속(묶음 없는 PC, 기준선 등불) |
+| GO `PlaytestHeadless` | **3연속 OK(2026-09-25)** — Peaks~FieldCombat 전부 · 09-28 Story 뒤 3연속(기준선 등불) |
 | `PlaytestForestHeadless` | **3연속 OK(2026-09-25, 세 시대 뒤)** — `PlaytestForestEras`(사람 6/6 몸·소품 38%·잔해 돎 6)·`Zones`·`ZoneProps` 포함 · `PlaytestForestCreatures` 3연속 · Finish·Furniture·HouseTransition OK |
 | REALM 헤드리스 | **3연속 OK(2026-09-28, 싸움터 뒤)** — `PlaytestRealmEras`·`Battlefield`·`Actors`(전 성 함락 뒤·문답 앞)·`CheckButtonWiring` |
 | GUI 실제 Play | GO 라이팅·Maria 동작·Dungeon 카메라(yaw=180)·SSS(Intensity=15) |
