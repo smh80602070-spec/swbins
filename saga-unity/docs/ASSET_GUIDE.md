@@ -618,4 +618,12 @@ GO와 같은 procgen 나무로 바꿨다 — 단, GO의 12종 변종 풀과 달�
 - 빌드 문지기 `Editor/SagaAssetGate.cs`(빌드마다 먼저): ① 폴더 = 목록 ② 빌드 씬이 쓰는 그 폴더 파일 ⊂ 목록 ③ `tools/realistic/build_deps.txt`(빌드가 쓰던 몸 576) ⊂ 지금 쓰는 몸 — 줄면 씬이 몸 없는 PC 에서 지어져 폴백 ④ 빌드 씬·텍스트 의존의 끊긴 GUID 0.
 - 몸을 더하거나 고치면: 받기·`Saga/Setup …` → `realistic-pack.sh manifest` → `pack <보관함>` → `push` → `Saga/Build/Write Asset Gate Deps` → 목록 둘 커밋.
 - 구글 드라이브 사본(2026-09-28): `push [원격] [보관함]`·`pull [원격] [보관함]` — rclone, 원격 기본 `gdrive:saga-assets`(`SAGA_ASSET_REMOTE`). 이 목록 묶음만 옮기고 `rclone check` 로 크기·md5 대조(드라이브가 md5 를 준다), `pull` 은 이어서 `fetch`. PC 마다 `winget install Rclone.Rclone` → `rclone config create gdrive drive scope=drive`(승인은 사람). rclone 공용 client_id 는 2026 중 끊긴다고 경고한다 — 끊기면 자기 client_id 를 만들어 `rclone config update gdrive client_id=… client_secret=…`(https://rclone.org/drive/#making-your-own-client-id, 구글 클라우드 콘솔 작업은 사람 몫).
+  - **자기 client_id 만들기**(무료·10분, 사람 몫 — 만든 값은 비밀번호 관리자에만, 공개 저장소·대화에 넣지 않는다):
+    1. <https://console.cloud.google.com/> (드라이브와 같은 계정) → 새 프로젝트 `saga-rclone` → 그 프로젝트 선택.
+    2. API 및 서비스 → 라이브러리 → Google Drive API → 사용.
+    3. OAuth 동의 화면(Google Auth Platform) → 시작하기: 앱 이름 `saga-rclone`·지원 이메일·**대상 = 외부**·연락처 이메일 → 만들기. 데이터 액세스 → 범위 `https://www.googleapis.com/auth/drive` 추가. 대상 → **앱 게시**(프로덕션) — "테스트" 로 두면 승인이 7일마다 풀려 push/pull 이 실패한다. 심사는 필요 없다(확인되지 않은 앱으로 본인만 쓴다).
+    4. 클라이언트 → 클라이언트 만들기 → 유형 **데스크톱 앱** → ID·보안 비밀번호 복사(JSON 도 받아 둔다 — 비밀번호는 만들 때만 보일 수 있다).
+    5. 새 터미널: `rclone config update gdrive client_id=<ID> client_secret=<비밀번호>` → `rclone config reconnect gdrive:` (브라우저 승인, "확인되지 않은 앱" → 고급 → 이동 → 허용).
+    6. 확인: `realistic-pack.sh push` 가 `4 matching files`·`OK 올림` 이고 `shared Google Drive client_id … being retired` 경고가 사라진다.
+    7. 다른 PC 는 같은 값으로 처음부터: `rclone config create gdrive drive scope=drive client_id=<ID> client_secret=<비밀번호>`.
 - Mixamo 에서 처음부터 다시 받아야 할 때(보관함을 잃었을 때)는 `tools/mixamo_automation/README.md` 레시피 표 — 그 뒤 씬·컨트롤러를 다시 지어야 하고 빌드는 달라진다.
