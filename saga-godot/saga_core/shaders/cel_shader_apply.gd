@@ -172,6 +172,8 @@ static func _apply_one(mesh_instance: MeshInstance3D) -> int:
 		var outline_mat := ShaderMaterial.new()
 		outline_mat.shader = OUTLINE_SHADER
 		_tune_outline(outline_mat, String(mesh_instance.name), original.resource_name)
+		if original.resource_name.to_lower().contains("hair") and not String(mesh_instance.name).begins_with("Eye"):
+			shader_mat.set_shader_parameter("hair_gloss", 1.0)
 		shader_mat.next_pass = outline_mat
 		mesh_instance.set_surface_override_material(surface_index, shader_mat)
 		count += 1

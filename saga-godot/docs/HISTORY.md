@@ -9463,3 +9463,8 @@ PROJECT_STATE.md` 참고. 요약:
 
 - 공방 몸엔 깜박임 블렌드셰이프가 없어 talk_face 가 눈을 못 감았다. anime_eye.closed_texture_for(base, skin) — 눈 윤곽 안을 그 몸 살색으로 채워 감은 눈 텍스처를 만들고(살색은 몸의 skin 재질 텍스처를 12×12 로 성기게 훑어 평균), cel_shader_apply 가 눈 재질에 메타 eye_open·eye_closed 로 실어 둔다. talk_face 가 깜박임(0.14초) 동안 albedo_texture 를 갈아 끼운다(`_shut_eyes`). 처음엔 눈 텍스처의 붉은 눈가 색으로 채워 분홍 눈이 됐다 → 살갗 평균색으로 고침. face_view FACE_SHUT=1 로 감은 눈 촬영.
 - 점검 STORY(talk_face)·STORY8·COMBAT fails=0, REGRESS OK.
+
+## GO 그래픽 먼저 ㉗ 머리카락 윤기 띠 (2026-09-30, 같은 세션, "이어해")
+
+- cel_toon — uniform hair_gloss: 뷰 공간 법선 y 0.18~0.47 의 좁은 밝은 띠("천사의 고리"), 머리 재질(cel_shader_apply)만 1.0. face_view 주역 머리 위쪽에 옅은 갈색 띠가 앉는다(머리색이 짙어 은은함). 점검 COMBAT fails=0, REGRESS OK.
+- 살펴보고 접은 것: 이야기 지역 들판의 평평함은 지형 기복이 답이나 소품·건물이 LEGEND 평탄 높이를 직접 써서(landmarks·npc·region 파일 다수) 손이 크다 — 하려면 height_at 으로 일괄 전환부터. 입 표정은 몸에 블렌드셰이프가 없어 텍스처로는 어렵다.

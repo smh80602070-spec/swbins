@@ -20,6 +20,9 @@ uniform float rim_strength : hint_range(0.0, 2.0) = 0.3;
 // PLAN 102-3 — combat_feel.gd ③ 피격 플래시가 이 uniform으로 흰색을 섞는다
 // (0=평소, 1=완전 흰색). saga_core/combat_feel.gd::_do_flash/_tick_flash 참고.
 uniform float hit_flash : hint_range(0.0, 1.0) = 0.0;
+// 2026-09-30 머리카락 윤기 띠(원신의 "천사의 고리") — 머리 재질만 세기를 올린다(cel_shader_apply._tune_outline).
+// 화면 기준 위쪽을 보는 면(뷰 공간 법선 y)에 좁은 밝은 띠 하나. 머리 색을 밝게 한 톤으로 얹는다.
+uniform float hair_gloss : hint_range(0.0, 1.0) = 0.0;
 
 void fragment() {
 	vec4 tex = texture(albedo_texture, UV);
@@ -46,5 +49,7 @@ void light() {
 
 	vec3 direct = ALBEDO * LIGHT_COLOR * ATTENUATION * lit;
 	vec3 rim_light = rim_color * rim * LIGHT_COLOR * ATTENUATION;
-	DIFFUSE_LIGHT += clamp(direct + rim_light, vec3(0.0), vec3(1.0));
+	float ring = smoothstep(0.18, 0.23, NORMAL.y) * (1.0 - smoothstep(0.42, 0.47, NORMAL.y)) * hair_gloss;
+	vec3 gloss = mix(ALBEDO, vec3(1.0), 0.55) * ring * 1.2 * LIGHT_COLOR * ATTENUATION * smoothstep(-0.2, 0.15, ndotl);
+	DIFFUSE_LIGHT += clamp(direct + rim_light + gloss, vec3(0.0), vec3(1.0));
 }
