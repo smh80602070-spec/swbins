@@ -1149,11 +1149,12 @@
 2	go	story.ch9.win1	해솔의 가면이 마침내 두 쪽으로 갈라져 떨어졌다 — 해솔이 무릎을 꿇는다	Haesol's mask finally splits in two and falls away — Haesol drops to his knees		
 2	go	story.ch9.win2	먹구름 임금 — 꿈이 흩어지며 하늘의 먹구름이 걷혀 간다	The Storm King — the dream scatters and the storm clouds clear from the sky		
 2	go	story.chapter_done	{0} 끝 — {1}	{0} complete — {1}		
+2	go	story.chapters_done	✓ 끝난 장 {0}	✓ Chapters done: {0}		
 2	go	story.chase_caught	🏃 노 도둑을 붙잡았다 — 노를 되찾았다	🏃 You caught the oar thief — the oar is back		
 2	go	story.chase_idle	 (가까이 가면 달아난다)	 (he runs when you get close)		
 2	go	story.chase_lost	💨 놓쳤다 — 도둑이 처음 자리로 숨어들었다. 다시 가까이 가면 달아난다	💨 Lost him — the thief slipped back to where he started. Get close and he will run again		
 2	go	story.chase_run	🏃 도둑이 노를 메고 달아난다 — 달려라!	🏃 The thief bolts with the oar — run!		
-2	go	story.chase_track	노 도둑 {0}m — 달려라!	Oar thief {0}m — run!		
+2	go	story.chase_track2	{0} {1}m — 달려라!	{0} {1}m — run!		
 2	go	story.climbed	봉우리 꼭대기 — 고원 아래 나그네가 보인다	The peak's summit — the traveler is visible on the plateau below		
 2	go	story.defend_broken	{0}이 무너졌다 — 무리가 흩어진다. {1}초 뒤 처음부터	{0} crumbled — the horde scatters. Starting over in {1}s		
 2	go	story.defend_half	{0}이 흔들린다 — 절반이 깎였다!	{0} is shaking — half of it is gone!		
@@ -1295,6 +1296,116 @@
 2	go	wp.north	산기슭 역참	Foothills Waypoint		
 2	go	wp.south	남쪽 공터 역참	Southern Glade Waypoint		
 2	go	wp.village	마을 역참	Village Waypoint		
+2	go	wq.done	🔷 {0} 끝 — {1}	🔷 {0} complete — {1}		
+2	go	wq.idle.byeori	여기 연도 표시가 셋이나 겹쳐 보여. 시간 틈이 맞아.	Three different years overlap here. It is definitely a time rift.		
+2	go	wq.idle.dolsoe	돌은 거짓말을 안 하지. 사람이 할 뿐.	Stone does not lie. Only people do.		
+2	go	wq.idle.dungsil	삐빅 — 배달 경로 다시 짜는 중.	Beep — recalculating delivery route.		
+2	go	wq.idle.hanbit	신호 세기 백 분의 사. 불씨가 필요합니다.	Signal strength four percent. A flame is required.		
+2	go	wq.idle.postmaster	파발 말은 늙었어도 편지는 늘 제때 가야지.	The courier horses may be old, but letters must always arrive on time.		
+2	go	wq.idle.researcher	밤바다에 옛 등대 불빛 같은 게 깜박여. 기록해 둬야지.	Something like an old lighthouse beam flickers on the night water. I should write it down.		
+2	go	wq.idle.rider	오늘도 마을 한 바퀴! 짐칸 자물쇠만 말썽이야.	Another lap around the village! Only the cargo lock gives me trouble.		
+2	go	wq.letters	바람에 흩어진 편지	Letters on the Wind		
+2	go	wq.letters.caught	🏃 둥실이를 붙잡았다 — 편지를 물고 있다	🏃 You caught Dungsili — it still has the letter		
+2	go	wq.letters.flee	🏃 둥실이가 편지를 물고 날아간다 — 달려라!	🏃 Dungsili flies off with the letter — run!		
+2	go	wq.letters.lost	💨 놓쳤다 — 둥실이가 처음 자리로 돌아갔다. 다시 가까이 가면 달아난다	💨 Lost it — Dungsili went back to where it started. Get close and it will flee again		
+2	go	wq.letters.place	청하 마을	Cheongha Village		
+2	go	wq.letters.s1	역참지기 묵호의 부탁 듣기	Hear out Mukho the waystation keeper's request		
+2	go	wq.letters.s1.l1	어이, 거기 젊은이! 돌개바람이 역참 편지 자루를 뒤집어 놨지 뭔가.	Hey there, youngster! A whirlwind turned the waystation's mailbag upside down.		
+2	go	wq.letters.s1.l2	세 통이 날아갔어. 한 통은 배달꾼 다래가 주웠다더군. 그 애는 늘 마을 들판을 누비지.	Three letters blew away. I hear Darae the courier picked one up. That girl is always zipping around the village fields.		
+2	go	wq.letters.s1.l3	먼 데서 온 편지는 사람을 살리기도 하지. 부탁하네.	A letter from afar can save a life. I am counting on you.		
+2	go	wq.letters.s1.p.a	찾아 드릴게요.	I'll find them for you.		
+2	go	wq.letters.s1.p.b	편지가 그렇게 중요해요?	Are the letters that important?		
+2	go	wq.letters.s2	배달꾼 다래에게 편지 묻기	Ask Darae the courier about the letters		
+2	go	wq.letters.s2.l1	아, 역참 편지? 한 통은 내 짐칸에 있어. 근데 둘째는…	Oh, the waystation letters? One is in my cargo box. But the second…		
+2	go	wq.letters.s2.l2	배달 기계 둥실이가 물고 달아났어! 요즘 경로가 꼬였는지 아무거나 배달하려 들더라.	Dungsili the delivery machine grabbed it and took off! Its routes are all tangled lately — it tries to deliver anything.		
+2	go	wq.letters.s2.l3	저기 날아간다! 걸어선 못 잡아 — 달려!	There it goes! You won't catch it walking — run!		
+2	go	wq.letters.s2.p.a	잡아 올게요!	I'll catch it!		
+2	go	wq.letters.s2.p.b	기계가 편지를요?	A machine took a letter?		
+2	go	wq.letters.s3	편지를 물고 달아나는 둥실이 따라잡기(달리기)	Catch Dungsili as it flees with the letter (run)		
+2	go	wq.letters.s4	붙잡힌 둥실이 달래기	Calm down the captured Dungsili		
+2	go	wq.letters.s4.l1	삐빅 — 수신인 확인 불가. 편지 한 통 반환합니다.	Beep — recipient unconfirmed. Returning one letter.		
+2	go	wq.letters.s4.l2	셋째 편지 위치 기록: 북서쪽 숲 언덕. 돌개바람 괴물이 둥지로 가져감. 경고 — 위험.	Third letter location logged: northwest forest hill. A whirlwind monster took it to its nest. Warning — danger.		
+2	go	wq.letters.s4.l3	둥실이 경로는 내가 고쳐 둘게. 셋째 편지는 부탁해!	I'll fix Dungsili's routes. Please get the third letter!		
+2	go	wq.letters.s4.p.a	고마워, 둥실아.	Thanks, Dungsili.		
+2	go	wq.letters.s4.p.b	괴물이라고?	A monster?		
+2	go	wq.letters.s5	북서쪽 숲 언덕의 돌개바람 둥지에서 편지 되찾기	Recover the letter from the whirlwind nest on the northwest forest hill		
+2	go	wq.letters.s6	묵호에게 편지 세 통 돌려주기	Return the three letters to Mukho		
+2	go	wq.letters.s6.l1	세 통 다! 이 늙은이 체면이 섰네.	All three! You have saved this old man's face.		
+2	go	wq.letters.s6.l2	허허, 봉투를 보게 — 하나는 옛 파발 도장, 하나는 요즘 우편 도장, 하나는 빛으로 찍힌 도장이야. 시절이 뒤섞였구먼.	Ha, look at the envelopes — one has an old courier seal, one a modern postmark, and one a stamp made of light. The ages are all mixed up.		
+2	go	wq.letters.s6.l3	어느 시절에서 왔든 편지는 편지지. 고맙네. 약소하지만 받게.	Whatever age it came from, a letter is a letter. Thank you. It is not much, but please take this.		
+2	go	wq.lighthouse	세 시절의 등대	The Lighthouse of Three Ages		
+2	go	wq.lighthouse.place	강가 나루	River Landing		
+2	go	wq.lighthouse.s1	바다 연구원 물결의 이야기 듣기	Listen to Mulgyeol the sea researcher		
+2	go	wq.lighthouse.s1.l1	밤마다 동쪽 물가 끝에서 빛 신호가 와. 옛 봉수 무늬인데… 파형은 아주 새것이야.	Every night a light signal comes from the far end of the east bank. The pattern is an old beacon code… but the waveform is brand new.		
+2	go	wq.lighthouse.s1.l2	거긴 옛 등대 터밖에 없거든. 같이 가서 봐 줄래?	There's nothing out there but the old lighthouse site. Will you come and take a look with me?		
+2	go	wq.lighthouse.s1.l3	불 하나면 평안, 둘이면 적, 셋이면 싸움. 그런데 신호는 '불을 달라'야.	One fire means peace, two means enemies, three means battle. But this signal says 'give us fire.'		
+2	go	wq.lighthouse.s1.p.a	가 볼게요.	I'll go.		
+2	go	wq.lighthouse.s1.p.b	옛 봉수 무늬요?	An old beacon code?		
+2	go	wq.lighthouse.s2	동쪽 물가 끝 옛 등대 터로	Go to the old lighthouse site at the far end of the east bank		
+2	go	wq.lighthouse.s3	등대 터에 나타난 빛 사람과 이야기하기	Talk to the figure of light at the lighthouse site		
+2	go	wq.lighthouse.s3.l1	신원 확인. 등대 지기 한빛, 먼 뒷날의 이 등대를 지키는 기계입니다.	Identity confirmed. Hanbit, lighthouse keeper — a machine that guards this lighthouse in the distant future.		
+2	go	wq.lighthouse.s3.l2	시간 틈으로 신호만 겨우 닿고 있습니다. 옛 봉수 불씨가 켜지면 길이 이어집니다.	Only the signal barely reaches through the time rift. If the old beacon fire is lit, the path will connect.		
+2	go	wq.lighthouse.s3.l3	경고 — 불씨 둘레에 무리가 모여 있습니다. 불빛을 싫어하는 것들입니다.	Warning — a pack has gathered around the fire. Creatures that hate the light.		
+2	go	wq.lighthouse.s3.p.a	불씨를 켤게요.	I'll light the fire.		
+2	go	wq.lighthouse.s3.p.b	먼 뒷날이라고요?	The distant future?		
+2	go	wq.lighthouse.s4	등대 터를 차지한 무리 물리치기	Defeat the pack that has taken the lighthouse site		
+2	go	wq.lighthouse.s5	옛 봉수대에 원소 불 켜기	Light the old beacon with elemental fire		
+2	go	wq.lighthouse.s6	물결에게 알리기	Report to Mulgyeol		
+2	go	wq.lighthouse.s6.l1	봤어? 불이 켜지자마자 등대 터에 빛 기둥이 섰다가 사라졌어!	Did you see? The moment the fire lit, a pillar of light rose over the lighthouse site and vanished!		
+2	go	wq.lighthouse.s6.l2	먼 뒷날의 등대 지기라니… 기록장이 모자라겠어. 이건 연구소에서 나온 사례금이야.	A lighthouse keeper from the distant future… I'll run out of notebook pages. This is a reward from the institute.		
+2	go	wq.list_title	세계 임무	World Quests		
+2	go	wq.npc.byeori	시간 탐사대원 별이	Byeori the Time Explorer		
+2	go	wq.npc.dolsoe	옛 석공 돌쇠	Dolsoe the Old Stonemason		
+2	go	wq.npc.dungsil	배달 기계 둥실이	Dungsili the Delivery Machine		
+2	go	wq.npc.hanbit	등대 지기 한빛	Hanbit the Lighthouse Keeper		
+2	go	wq.npc.postmaster	역참지기 묵호	Mukho the Waystation Keeper		
+2	go	wq.npc.researcher	바다 연구원 물결	Mulgyeol the Sea Researcher		
+2	go	wq.npc.rider	배달꾼 다래	Darae the Courier		
+2	go	wq.rift	성터의 시간 틈	The Time Rift at the Ruins		
+2	go	wq.rift.altar	틈 제단	the rift altar		
+2	go	wq.rift.place	북쪽 산기슭	Northern Foothills		
+2	go	wq.rift.s1	시간 탐사대원 별이 돕기	Help Byeori the time explorer		
+2	go	wq.rift.s1.l1	안녕! 난 먼 뒷날에서 온 탐사대원이야. 시간 틈을 재다가… 여기로 떨어졌어.	Hi! I am an explorer from the distant future. I was measuring a time rift and… fell here.		
+2	go	wq.rift.s1.l2	돌아가려면 틈을 한 번 더 열어야 해. 틈 괴물들이 틈 조각을 삼켜 버렸지 뭐야.	To get back I have to open the rift once more. But rift monsters swallowed the rift shards.		
+2	go	wq.rift.s1.l3	동쪽 무너진 기둥 사이에 모여 있어. 조심해!	They're gathered among the fallen pillars to the east. Be careful!		
+2	go	wq.rift.s1.p.a	되찾아 줄게요.	I'll get them back.		
+2	go	wq.rift.s1.p.b	틈 괴물?	Rift monsters?		
+2	go	wq.rift.s2	틈 괴물을 물리쳐 틈 조각 되찾기	Defeat the rift monsters and recover the rift shards		
+2	go	wq.rift.s3	별이에게 틈 조각 건네기	Hand the rift shards to Byeori		
+2	go	wq.rift.s3.l1	조각 셋 다! 이제 틈을 열 자리가 필요한데… 이 성터 돌에 새긴 글이 내 기록이랑 맞아.	All three shards! Now I need a place to open the rift… the carvings on these ruin stones match my records.		
+2	go	wq.rift.s3.l2	서쪽 끝에 옛 석공이 서성이던데, 돌을 잘 아는 사람 같더라.	There was an old stonemason wandering at the west end. He seems to know stone well.		
+2	go	wq.rift.s4	옛 석공 돌쇠에게 묻기	Ask Dolsoe the old stonemason		
+2	go	wq.rift.s4.l1	이 돌 제단 말인가? 내가 쌓았지. 아니, 쌓을 참이지… 헷갈리는군. 날짜가 엉켰어.	This stone altar? I built it. No, I am about to build it… how confusing. My dates are tangled.		
+2	go	wq.rift.s4.l2	석등 셋을 달 → 해 → 별 차례로 밝히면 돌이 문이 된다네. 내 스승이 그리 일렀어.	Light the three lanterns in the order moon → sun → star and the stone becomes a gate. So my master told me.		
+2	go	wq.rift.s4.l3	문이 열리는 동안 틈에서 뭔가 몰려나올 게야. 제단을 지키게.	While the gate opens, something will pour out of the rift. Guard the altar.		
+2	go	wq.rift.s4.p.a	해 볼게요.	I'll try it.		
+2	go	wq.rift.s4.p.b	문이 되면요?	And once it becomes a gate?		
+2	go	wq.rift.s5	틈 제단 석등을 차례대로 밝히기	Light the rift altar lanterns in order		
+2	go	wq.rift.s6	틈이 열리는 동안 제단 지키기	Guard the altar while the rift opens		
+2	go	wq.rift.s7	돌쇠와 이야기하기	Talk with Dolsoe		
+2	go	wq.rift.s7.l1	허허, 문이 섰구먼. 이제 내 날짜도 제자리로 돌아가겠지.	Ha, the gate stands. Now my dates should go back where they belong.		
+2	go	wq.rift.s7.l2	그 아이한테 전하게 — 돌은 오래 기다려 준다고.	Tell that child — stone waits a long time.		
+2	go	wq.rift.s8	별이 배웅하기	See Byeori off		
+2	go	wq.rift.s8.l1	틈이 열렸어! 이제 돌아갈 수 있어.	The rift is open! Now I can go home.		
+2	go	wq.rift.s8.l2	먼 뒷날 이 성터는 공원이 돼. 네 이름도 안내판에 있을지 몰라 — 농담이야! 이건 탐사대 비상금.	In the distant future these ruins become a park. Your name might even be on a sign — just kidding! This is the expedition emergency fund.		
+2	go	wq.rift.s8.l3	시간 틈이 또 열리면, 그땐 내가 널 도우러 올게.	If a time rift opens again, I will come to help you.		
+2	go	wq.rift.s8.p.a	잘 가요!	Take care!		
+2	go	wq.rift.s8.p.b	또 만나요.	See you again.		
+2	go	wq.short.byeori	별이	Byeori		
+2	go	wq.short.dolsoe	돌쇠	Dolsoe		
+2	go	wq.short.dungsil	둥실이	Dungsili		
+2	go	wq.short.hanbit	한빛	Hanbit		
+2	go	wq.short.postmaster	묵호	Mukho		
+2	go	wq.short.researcher	물결	Mulgyeol		
+2	go	wq.short.rider	다래	Darae		
+2	go	wq.state_done	끝	Complete		
+2	go	wq.state_giver	❗ {0}에게	❗ See {0}		
+2	go	wq.state_locked	여정 등급 {0} 에 열린다	Opens at Adventure Rank {0}		
+2	go	wq.state_taken	맡음	Accepted		
+2	go	wq.state_track	따라가는 중	Tracking		
+2	go	wq.track	🔷 {0} — {1} · {2}m	🔷 {0} — {1} · {2}m		
+2	go	wq.track_btn	{0} 따라가기	Track: {0}		
+2	go	wq.track_story	이야기 임무 따라가기	Track Story Quest		
 2	dungeon	allysig.combo	⚡ 합격! {0} · {1} {2}	⚡ Combo! {0} · {1} {2}		
 2	dungeon	allysig.guard	철벽 진동	Iron Wall Quake		
 2	dungeon	allysig.mystic	서리꽃 파동	Frostbloom Wave		

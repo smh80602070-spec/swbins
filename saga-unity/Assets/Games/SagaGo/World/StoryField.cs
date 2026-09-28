@@ -53,6 +53,9 @@ namespace Saga.Go.World
             foreach (var kv in _sealSets) if (kv.Key.StartsWith(ch + "_")) return kv.Value[i];
             return null;
         }
+        /// <summary>109-14-21 줄 열쇠("wq1_4")로 — 세계 임무 제단 불·석등.</summary>
+        public ElementTorch AltarOfKey(string key) => _altars.TryGetValue(key, out var a) ? a : null;
+        public ElementTorch SealLampOfKey(string key, int i) => _sealSets.TryGetValue(key, out var l) ? l[i] : null;
         public ElementTorch SealCenterOf(int ch)
         {
             foreach (var kv in _sealCenters) if (kv.Key.StartsWith(ch + "_")) return kv.Value;
@@ -95,14 +98,14 @@ namespace Saga.Go.World
             var stone = WorldMapBuilder.Instance != null ? WorldMapBuilder.Instance.StoneMaterial : null;
             SpawnNpcs();
             BuildPillar();
-            for (int c = 0; c < GoStory.Chapters.Length; c++)
-                for (int i = 0; i < GoStory.Chapters[c].Steps.Length; i++)
-                    if (GoStory.Chapters[c].Steps[i].Type == GoStory.StepType.Light)
-                        _altars[$"{c}_{i}"] = ElementTorch.Spawn(FolkWalker.Grounded(GoStory.StepPos(GoStory.Chapters[c].Steps[i]) + Vector3.up * 0.5f), GoElement.Pyro, transform, stone, $"StoryAltar_{c}_{i}");
-            // 석등 틀 — 5장 둘째 제단·8장 바위섬. 해 = 화 빛(주황) · 달 = 빙 빛(옅은 푸름) · 별 = 암 빛(금빛)
-            for (int c = 0; c < GoStory.Chapters.Length; c++)
-                for (int i = 0; i < GoStory.Chapters[c].Steps.Length; i++)
-                    if (GoStory.Chapters[c].Steps[i].Type == GoStory.StepType.Seal) BuildSeal(c, i, GoStory.Chapters[c].Steps[i], stone);
+            // 제단 불·석등 틀 — 줄(이야기 장 "c" · 109-14-21 세계 임무 "wqN")마다. 석등: 해 = 화 빛(주황) · 달 = 빙 빛(옅은 푸름) · 별 = 암 빛(금빛)
+            foreach (var (line, steps) in Lines())
+                for (int i = 0; i < steps.Length; i++)
+                {
+                    if (steps[i].Type == GoStory.StepType.Light)
+                        _altars[$"{line}_{i}"] = ElementTorch.Spawn(FolkWalker.Grounded(GoStory.StepPos(steps[i]) + Vector3.up * 0.5f), GoElement.Pyro, transform, stone, $"StoryAltar_{line}_{i}");
+                    if (steps[i].Type == GoStory.StepType.Seal) BuildSeal(line, i, steps[i], stone);
+                }
             FieldEnemy.Killed += OnKilled;
             FieldCombat.ElementPulse += OnPulse;
             DomainField.Cleared += OnDomainCleared;
@@ -113,6 +116,20 @@ namespace Saga.Go.World
             FieldEnemy.SiegeHit += OnSiegeHit;
             FieldCombat.Wiped += OnWiped;
             Refresh();
+        }
+
+        /// <summary>줄 전부 — 이야기 장("0"~) · 세계 임무("wq0"~).</summary>
+        private static IEnumerable<(string, GoStory.Step[])> Lines()
+        {
+            for (int c = 0; c < GoStory.Chapters.Length; c++) yield return (c.ToString(), GoStory.Chapters[c].Steps);
+            for (int q = 0; q < GoWorldQuests.Quests.Length; q++) yield return ("wq" + q, GoWorldQuests.Quests[q].Steps);
+        }
+
+        /// <summary>"줄_단계" 열쇠 → (줄, 단계).</summary>
+        private static (string line, int step) SplitKey(string key)
+        {
+            int k = key.LastIndexOf('_');
+            return (key.Substring(0, k), int.Parse(key.Substring(k + 1)));
         }
 
         // ---- 인물 ---------------------------------------------------------------------------------------------
@@ -128,7 +145,8 @@ namespace Saga.Go.World
                 root.transform.position = FolkWalker.Grounded(GoStory.NpcPos(n.Id) + Vector3.up * 0.5f);
                 Transform src = villagers != null ? villagers.transform.Find("Villager_" + n.BodyFrom) : null;
                 bool any = false;
-                if (n.FolkBody != null && FolkBuilder.Instance != null) // 109-14-19 노 도둑 = 나무꾼 몸 · 해솔 = 파수꾼 몸
+                if (n.Pet) any = BuildDrone(root.transform); // 109-14-21 둥실이 — 떠 있는 배달 기계
+                else if (n.FolkBody != null && FolkBuilder.Instance != null) // 109-14-19 노 도둑 = 나무꾼 몸 · 해솔 = 파수꾼 몸
                     any = NpcIdle.SpawnRigged(FolkBuilder.Instance.BodyModel(n.FolkBody), root.transform, CharacterVisual.HumanHeight) != null;
                 else if (src != null)
                 {
@@ -145,12 +163,78 @@ namespace Saga.Go.World
                 if (!any) CharacterVisual.SpawnFallbackCapsule(root.transform, n.Id == "ferryman" ? new Color(0.3f, 0.4f, 0.53f) : n.Id == "wanderer" ? new Color(0.22f, 0.22f, 0.29f)
                     : n.Id == "haesol" ? new Color(0.15f, 0.13f, 0.18f) : n.Id == "thief" ? new Color(0.35f, 0.29f, 0.23f) : new Color(0.55f, 0.42f, 0.6f));
                 if (n.Mask) _masks[n.Id] = AddMask(root.transform, n.Crack);
+                if (n.EraKo != null) AddBangs(n.Id, root.transform); // 109-14-21 세계 임무 인물 머리 위 푸른 !
                 // 마을 쪽(마을 역참)을 본다
                 Vector3 look = GoWorldMap.WaypointPos(GoWorldMap.Waypoints[0]) - root.transform.position;
                 look.y = 0f;
                 if (look.sqrMagnitude > 0.01f) root.transform.rotation = Quaternion.LookRotation(look);
                 _npcs[n.Id] = root;
             }
+        }
+
+        // ---- 109-14-21 세계 임무 — 머리 위 푸른 !(맡을 것 밝게 · 따라가지 않는 임무를 이어 갈 사람 흐리게) · 둥실이 기계 몸 ----
+        private readonly Dictionary<string, (GameObject bright, GameObject dim)> _bangs = new Dictionary<string, (GameObject, GameObject)>();
+
+        private void AddBangs(string id, Transform root)
+        {
+            GameObject Make(string name, Color c)
+            {
+                var g = new GameObject(name);
+                g.transform.SetParent(root, false);
+                g.transform.localPosition = new Vector3(0f, 4.4f, 0f);
+                Saga.Core.SagaWorldText.Add(g, "!", 7f, c);
+                _labels.Add(g.transform);
+                return g;
+            }
+            _bangs[id] = (Make("QuestBang", new Color(0.35f, 0.7f, 1f)), Make("QuestBangDim", new Color(0.35f, 0.55f, 0.8f, 0.45f)));
+        }
+
+        /// <summary>그 인물 머리 위 ! — 2 = 맡을 임무의 맡길 사람(밝게) · 1 = 따라가지 않는 맡은 임무의 다음 대화 상대(흐리게) · 0 = 없음.</summary>
+        public static int BangOf(string id)
+        {
+            for (int q = 0; q < GoWorldQuests.Quests.Length; q++)
+                if (GoWorldQuests.Quests[q].Giver == id && WorldQuestState.Available(q)) return 2;
+            for (int q = 0; q < GoWorldQuests.Quests.Length; q++)
+            {
+                if (!WorldQuestState.Taken(q) || (StoryState.TrackingQuest && StoryState.Track == q)) continue;
+                var st = WorldQuestState.Current(q);
+                if ((st.Type == GoStory.StepType.Talk || st.Type == GoStory.StepType.Sail) && st.Npc == id) return 1;
+            }
+            return 0;
+        }
+
+        public bool BangShown(string id, bool bright) => _bangs.TryGetValue(id, out var b) && (bright ? b.bright : b.dim).activeInHierarchy;
+
+        private static bool BuildDrone(Transform root)
+        {
+            var body = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryDrone (generated)", color = new Color(0.82f, 0.88f, 0.92f) };
+            body.SetFloat("_Metallic", 0.6f);
+            body.SetFloat("_Smoothness", 0.7f);
+            var glow = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryDroneEye (generated)", color = new Color(0.55f, 0.85f, 0.95f) };
+            glow.EnableKeyword("_EMISSION");
+            glow.SetColor("_EmissionColor", new Color(0.35f, 0.85f, 1f) * 3f);
+            var d = new GameObject("Drone");
+            d.transform.SetParent(root, false);
+            d.transform.localPosition = new Vector3(0f, 1.8f, 0f);
+            GameObject Part(PrimitiveType t, Vector3 pos, Vector3 scale, Material m)
+            {
+                var g = GameObject.CreatePrimitive(t);
+                DestroyImmediate(g.GetComponent<Collider>());
+                g.transform.SetParent(d.transform, false);
+                g.transform.localPosition = pos;
+                g.transform.localScale = scale;
+                g.GetComponent<MeshRenderer>().sharedMaterial = m;
+                return g;
+            }
+            Part(PrimitiveType.Sphere, Vector3.zero, new Vector3(1.1f, 0.8f, 1.1f), body);
+            Part(PrimitiveType.Cylinder, Vector3.zero, new Vector3(1.9f, 0.04f, 1.9f), body);
+            Part(PrimitiveType.Sphere, new Vector3(0f, 0.05f, 0.5f), new Vector3(0.35f, 0.25f, 0.2f), glow);
+            for (int i = 0; i < 4; i++)
+            {
+                float a = (i + 0.5f) * Mathf.PI * 0.5f;
+                Part(PrimitiveType.Cylinder, new Vector3(Mathf.Sin(a) * 0.95f, 0.12f, Mathf.Cos(a) * 0.95f), new Vector3(0.55f, 0.02f, 0.55f), glow);
+            }
+            return true;
         }
 
         /// <summary>109-14-13 가면 — 머리뼈(휴머노이드면)에 검은 탈 하나(흰 눈구멍 둘). 뼈가 없으면 키 1.6m 앞.</summary>
@@ -379,7 +463,7 @@ namespace Saga.Go.World
             }
         }
 
-        public static string SquadKey => $"sq:{StoryState.Ch}_{StoryState.StepIndex}";
+        public static string SquadKey => "sq:" + StoryState.LineKey; // 109-14-21 따라가는 줄의 단계
 
         private void SpawnSquad(GoStory.Step st, Vector3 center)
         {
@@ -458,7 +542,7 @@ namespace Saga.Go.World
         private void SealPulse(Vector3 center, float radius)
         {
             var st = StoryState.Current;
-            if (!_sealSets.TryGetValue($"{StoryState.Ch}_{StoryState.StepIndex}", out var lamps)) return;
+            if (!_sealSets.TryGetValue(StoryState.LineKey, out var lamps)) return;
             string[] order = GoStory.OrderOf(st);
             int best = -1;
             float bd = float.MaxValue;
@@ -490,11 +574,11 @@ namespace Saga.Go.World
         }
 
         /// <summary>석등 틀 한 벌 — 가운데 + 둘레 셋(이름표).</summary>
-        private void BuildSeal(int c, int i, GoStory.Step st, Material stone)
+        private void BuildSeal(string line, int i, GoStory.Step st, Material stone)
         {
-            string key = $"{c}_{i}";
+            string key = $"{line}_{i}";
             Vector3 a2 = FolkWalker.Grounded(GoStory.SealPos(st) + Vector3.up * 0.5f);
-            string nm = c == 4 ? "StorySeal" : "StorySeal" + key; // 5장은 옛 이름 그대로
+            string nm = line == "4" ? "StorySeal" : "StorySeal" + key; // 5장은 옛 이름 그대로
             _sealCenters[key] = ElementTorch.Spawn(a2, GoElement.Pyro, transform, stone, nm);
             var lamps = new ElementTorch[3];
             for (int k = 0; k < 3; k++)
@@ -516,24 +600,21 @@ namespace Saga.Go.World
         {
             foreach (var kv in _sealSets)
             {
-                var parts = kv.Key.Split('_');
-                int c = int.Parse(parts[0]), i = int.Parse(parts[1]);
-                bool shown = !StoryState.OffForTest && StepReached(c, i);
-                bool past = StepReached(c, i + 1);
+                var (line, i) = SplitKey(kv.Key);
+                bool shown = !StoryState.OffForTest && StoryState.Reached(line, i);
+                bool past = StoryState.Reached(line, i + 1);
                 if (_sealCenters.TryGetValue(kv.Key, out var center) && center != null) { center.gameObject.SetActive(shown); center.SetLit(past); }
-                var order = GoStory.OrderOf(GoStory.Chapters[c].Steps[i]);
+                var order = GoStory.OrderOf(StoryState.StepOf(line, i));
                 for (int k = 0; k < 3; k++)
                 {
                     if (kv.Value[k] == null) continue;
                     kv.Value[k].gameObject.SetActive(shown);
                     int o = System.Array.IndexOf(order, GoStory.SealLayout[k]);
-                    kv.Value[k].SetLit(past || (StoryState.Ch == c && StoryState.StepIndex == i && o < StoryState.Progress));
+                    kv.Value[k].SetLit(past || (StoryState.LineKey == kv.Key && o < StoryState.Progress));
                 }
             }
         }
 
-        /// <summary>진행이 그 장·단계에 닿았나(같거나 지났나).</summary>
-        private static bool StepReached(int ch, int step) => StoryState.Ch > ch || (StoryState.Ch == ch && StoryState.StepIndex >= step);
 
         /// <summary>109-14-14 duel 2단계 — 체력 절반에서 뇌 방패(최대 체력 12%) + 불도깨비 졸개 둘.</summary>
         private void DuelTick()
@@ -685,10 +766,8 @@ namespace Saga.Go.World
         private void OnAdvanced(string reward)
         {
             if (reward != null)
-            {
-                var done = GoStory.Chapters[StoryState.Ch - 1];
-                Toast(string.Format(GoLocalization.T("story.chapter_done", "{0} 끝 — {1}"), GoStory.ChapterName(done), reward), 5f);
-            }
+                Toast(StoryState.LastDoneQuest ? string.Format(GoLocalization.T("wq.done", "🔷 {0} 끝 — {1}"), StoryState.LastDoneName, reward)
+                    : string.Format(GoLocalization.T("story.chapter_done", "{0} 끝 — {1}"), StoryState.LastDoneName, reward), 5f);
             else if (StoryState.Current != null) Toast("◆ " + GoStory.StepText(StoryState.Current), 3f);
         }
 
@@ -707,15 +786,20 @@ namespace Saga.Go.World
             }
             foreach (var kv in _altars)
             {
-                var parts = kv.Key.Split('_');
-                int c = int.Parse(parts[0]), i = int.Parse(parts[1]);
-                bool past = StepReached(c, i + 1); // 불을 붙였다 — 켠 채 남는다
-                int from = GoStory.Chapters[c].Steps[i].AltarFrom; // 109-14-16 지키기·결투 동안에도 제단 몸이 선다
-                kv.Value.gameObject.SetActive(!StoryState.OffForTest && StepReached(c, from >= 0 ? from : i));
+                var (line, i) = SplitKey(kv.Key);
+                bool past = StoryState.Reached(line, i + 1); // 불을 붙였다 — 켠 채 남는다
+                int from = StoryState.StepOf(line, i).AltarFrom; // 109-14-16 지키기·결투 동안에도 제단 몸이 선다
+                kv.Value.gameObject.SetActive(!StoryState.OffForTest && StoryState.Reached(line, from >= 0 ? from : i));
                 kv.Value.SetLit(past);
             }
             RefreshSeal();
             RefreshSky();
+            foreach (var kv in _bangs) // 109-14-21 푸른 !
+            {
+                int b = !StoryState.OffForTest && GoStory.Shown(kv.Key, StoryState.Ch, StoryState.StepIndex) ? BangOf(kv.Key) : 0;
+                kv.Value.bright.SetActive(b == 2);
+                kv.Value.dim.SetActive(b == 1);
+            }
             foreach (var kv in _masks)
             {
                 var sp = GoStory.SpotNow(kv.Key);
@@ -968,42 +1052,48 @@ namespace Saga.Go.World
                 return;
             }
             if (StoryState.Talking) return;
-            if (_chaseKey != SquadKey) { _chaseKey = SquadKey; _chaseI = 0; _chasePos = GoStory.ThiefPoint(0); _chaseRun = false; _chasePause = 0f; }
+            string who = st.Npc; // 109-14-21 노 도둑·둥실이 — 그 인물의 길(RunPath)
+            if (_chaseKey != SquadKey) { _chaseKey = SquadKey; _chaseI = 0; _chasePos = GoStory.RunPoint(who, 0); _chaseRun = false; _chasePause = 0f; }
             StoryState.ChasePos = _chasePos;
             float d = GoStory.Flat(p, _chasePos);
             if (d <= GoStory.ChaseCatch)
             {
                 _chaseKey = null;
                 StoryState.ChasePos = null;
-                PlaceThief(Vector3.zero, false);
-                Toast(GoLocalization.T("story.chase_caught", "🏃 노 도둑을 붙잡았다 — 노를 되찾았다"), 3f);
+                PlaceThief(who, Vector3.zero, false);
+                Toast(st.WinKo != null ? GoLocalization.T(st.WinKey, st.WinKo) : GoLocalization.T("story.chase_caught", "🏃 노 도둑을 붙잡았다 — 노를 되찾았다"), 3f);
                 StoryState.Advance();
                 return;
             }
             if (!_chaseRun)
             {
-                if (d <= GoStory.ChaseStart) { _chaseRun = true; _chasePause = 0f; Toast(GoLocalization.T("story.chase_run", "🏃 도둑이 노를 메고 달아난다 — 달려라!"), 2.5f); }
-                PlaceThief(p - _chasePos, false);
+                if (d <= GoStory.ChaseStart)
+                {
+                    _chaseRun = true;
+                    _chasePause = 0f;
+                    Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : GoLocalization.T("story.chase_run", "🏃 도둑이 노를 메고 달아난다 — 달려라!"), 2.5f);
+                }
+                PlaceThief(who, p - _chasePos, false);
                 return;
             }
-            if (_chasePause > 0f) { _chasePause = Mathf.Max(0f, _chasePause - dt); PlaceThief(_chasePos - p, false); return; }
-            Vector3 next = GoStory.ThiefPoint(_chaseI + 1), to = next - _chasePos;
+            if (_chasePause > 0f) { _chasePause = Mathf.Max(0f, _chasePause - dt); PlaceThief(who, _chasePos - p, false); return; }
+            Vector3 next = GoStory.RunPoint(who, _chaseI + 1), to = next - _chasePos;
             to.y = 0f;
             float nd = to.magnitude, step = GoStory.ChaseSpeed * dt;
             if (nd <= step) { _chasePos = next; _chaseI++; _chasePause = GoStory.ChasePause; }
             else _chasePos += to / nd * step;
-            if (_chaseI >= GoStory.ThiefPath.Length - 1)
+            if (_chaseI >= GoStory.RunCount(who) - 1)
             {
-                _chaseI = 0; _chasePos = GoStory.ThiefPoint(0); _chaseRun = false; _chasePause = 0f;
-                Toast(GoLocalization.T("story.chase_lost", "💨 놓쳤다 — 도둑이 처음 자리로 숨어들었다. 다시 가까이 가면 달아난다"), 3.5f);
+                _chaseI = 0; _chasePos = GoStory.RunPoint(who, 0); _chaseRun = false; _chasePause = 0f;
+                Toast(st.LostKo != null ? GoLocalization.T(st.LostKey, st.LostKo) : GoLocalization.T("story.chase_lost", "💨 놓쳤다 — 도둑이 처음 자리로 숨어들었다. 다시 가까이 가면 달아난다"), 3.5f);
             }
             StoryState.ChasePos = _chasePos;
-            PlaceThief(to, _chaseRun && _chasePause <= 0f);
+            PlaceThief(who, to, _chaseRun && _chasePause <= 0f);
         }
 
-        private void PlaceThief(Vector3 face, bool running)
+        private void PlaceThief(string who, Vector3 face, bool running)
         {
-            if (!_npcs.TryGetValue("thief", out var body)) return;
+            if (!_npcs.TryGetValue(who, out var body)) return;
             body.transform.position = FolkWalker.Grounded(_chasePos + Vector3.up * 0.5f);
             face.y = 0f;
             if (face.sqrMagnitude > 0.0001f) body.transform.rotation = Quaternion.LookRotation(face);

@@ -117,7 +117,7 @@ namespace Saga.EditorTools
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 6 || GoStory.Chapters.Length != 9) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 13 || GoStory.Chapters.Length != 9) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
             string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT" };
             int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750 };
@@ -798,7 +798,7 @@ namespace Saga.EditorTools
             me = t0 + new Vector3(-10f, 0f, 0f);
             field.ChaseTick(me, 0.05f);
             ui.Refresh();
-            if (!field.ChaseRunning || !ui.TrackText.Contains(GoLocalization.T("story.chase_track", "노 도둑 {0}m — 달려라!").Split('{')[0])) Fail("달아나는 추적 줄 " + ui.TrackText);
+            if (!field.ChaseRunning || !ui.TrackText.Contains(GoStory.NpcShort("thief")) || ui.TrackText.Contains(GoLocalization.T("story.chase_idle", " (가까이 가면 달아난다)").Trim())) Fail("달아나는 추적 줄 " + ui.TrackText);
             if (!RunAfter(field, ref me, 10f)) Fail("달렸는데 못 잡음");                        // 달리기
             Expect(7, 3, "도둑 잡음");
             if (StoryState.ChasePos != null) Fail("잡은 뒤 도둑 자리가 남음");

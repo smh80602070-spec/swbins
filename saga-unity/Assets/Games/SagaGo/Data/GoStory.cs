@@ -55,6 +55,18 @@ namespace Saga.Go.Data
         };
         public static Vector3 ThiefPoint(int i) => GridPos(ThiefPath[i].x, ThiefPath[i].y);
 
+        // ---- 109-14-21 세계 임무 자리(칸 좌표) — 옛 등대 터 = 강가 나루 동쪽 물가 끝(곶과 바위섬 사이, 동쪽 숲 무리와 45m) · 틈 제단 = 산기슭 역참 서쪽 ·
+        // 둥실이 길 = 마을 북쪽 들을 동쪽으로 곧게(되돌아오지 않는다 — 걸어서 가로채지 못하게, 쫓기 수치는 노 도둑 그대로)
+        public const float LightGx = 5.95f, LightGy = 4.3f, RiftGx = 2.05f, RiftGy = 1.7f;
+        public static readonly Vector2 DungsilPath0 = new Vector2(1.7f, 2.0f);
+        public static readonly Vector2[] DungsilPath =
+        {
+            DungsilPath0, new Vector2(2.25f, 1.95f), new Vector2(2.8f, 1.95f), new Vector2(3.35f, 1.95f), new Vector2(3.9f, 2.0f), new Vector2(4.45f, 2.0f), new Vector2(4.9f, 2.05f),
+        };
+        /// <summary>달리는 인물의 길 i 째 점(도둑·둥실이).</summary>
+        public static Vector3 RunPoint(string id, int i) { var p = NpcOf(id).RunPath; return GridPos(p[i].x, p[i].y); }
+        public static int RunCount(string id) => NpcOf(id).RunPath?.Length ?? 0;
+
         // ---- 109-14-20 9장(웹 ⑲-20) — 구름섬: 6장 봉우리 정상에서 서쪽 36m·위로 54m(웹 북쪽 27m·40m × 1.35 — 이 판 북쪽 하늘엔 옆 봉우리 (6,6) 이 솟아 서쪽 숲 칸 위로), 반지름 19m(웹 14), 난간 1.6m
         // (걸어 오르는 턱 1.1m 보다 높고 점프 2.4m 보다 낮다). 바람 기둥 = 정상 반지름 4.7m(웹 3.5) · 섬 윗면 + 12m 까지 초당 9m(웹 그대로).
         public const float SkyWest = 36f, SkyRise = 54f, SkyR = 19f, SkyRail = 1.6f, DraftR = 4.7f, DraftOver = 12f, DraftRise = 9f;
@@ -156,6 +168,10 @@ namespace Saga.Go.Data
             /// <summary>109-14-19 금 간 가면(해솔) · 역참 사람 몸 이름(`FolkBuilder` — 도둑 = 나무꾼, 해솔 = 파수꾼).</summary>
             public bool Crack;
             public string FolkBody;
+            /// <summary>109-14-21 세계 임무 인물 — 시대 글자(대화 단추·이름 옆) · 사람 대신 떠 있는 기계 몸(둥실이) · 쫓기 단계에서 달리는 길(칸 좌표, 첫 점 = 서 있는 곳).</summary>
+            public string EraKey, EraKo;
+            public bool Pet;
+            public Vector2[] RunPath;
             /// <summary>있으면 이 칸들 동안에만 선다(나그네). 칸마다 자리가 다를 수 있다.</summary>
             public Spot[] Appear;
             /// <summary>늘 서되 이 칸들 동안엔 그 자리로 옮겨 선다(은비 — 5장 옛길·둘째 제단, 6장 봉우리).</summary>
@@ -179,6 +195,19 @@ namespace Saga.Go.Data
             /// <summary>109-14-20 구름섬 위 · 봉우리 정상 위(Arena 는 거기서 m) · 그 칸 동안 가면을 벗는다 · 이름·혼잣말을 덮는다.</summary>
             public bool Sky, Summit, Unmask;
             public string NameKey, NameKo, IdleKey, IdleKo;
+            /// <summary>109-14-21 세계 임무 칸 — 그 임무(id)를 맡은 동안 단계 From~To 에만(Ch 는 안 본다).</summary>
+            public string Wq;
+        }
+
+        /// <summary>그 칸이 지금 서 있는 칸인가 — 세계 임무 칸이면 그 임무 단계, 아니면 이야기 장·단계.</summary>
+        private static bool SpotOn(Spot a, int ch, int step)
+        {
+            if (a.Wq != null)
+            {
+                int q = GoWorldQuests.IndexOf(a.Wq);
+                return q >= 0 && WorldQuestState.Taken(q) && WorldQuestState.Step(q) >= a.From && WorldQuestState.Step(q) <= a.To;
+            }
+            return a.Ch == ch && step >= a.From && step <= a.To;
         }
 
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
@@ -227,9 +256,35 @@ namespace Saga.Go.Data
                         IdleKey = "story.idle.haesol2", IdleKo = "……고맙다. 노래를 다시 부를 수 있을 것 같아." } },
                 IdleKey = "story.idle.haesol", IdleKo = "……" },
             new Npc { Id = "thief", NameKey = "story.npc.thief", NameKo = "노 도둑", ShortKey = "story.short.thief", ShortKo = "도둑",
-                Gx = ThiefGx, Gy = ThiefGy, FolkBody = "PeasantMan",
+                Gx = ThiefGx, Gy = ThiefGy, FolkBody = "PeasantMan", RunPath = ThiefPath,
                 Appear = new[] { new Spot { Ch = 7, From = 2, To = 2, Gx = ThiefGx, Gy = ThiefGy } },
                 IdleKey = "story.idle.thief", IdleKo = "헤헤, 못 잡지롱!" },
+            // ---- 109-14-21 세계 임무 인물 일곱(웹 worldquest.js NPCS — 과거·현대·미래가 한 사건에). 맡길 사람(묵호·물결·별이)은 늘 선다 ----
+            new Npc { Id = "wq_postmaster", NameKey = "wq.npc.postmaster", NameKo = "역참지기 묵호", ShortKey = "wq.short.postmaster", ShortKo = "묵호",
+                EraKey = "era.past", EraKo = "과거", Gx = 4.3f, Gy = 2.65f, FolkBody = "Archer",
+                IdleKey = "wq.idle.postmaster", IdleKo = "파발 말은 늙었어도 편지는 늘 제때 가야지." },
+            new Npc { Id = "wq_rider", NameKey = "wq.npc.rider", NameKo = "배달꾼 다래", ShortKey = "wq.short.rider", ShortKo = "다래",
+                EraKey = "era.modern", EraKo = "현대", Gx = 1.75f, Gy = 2.4f, FolkBody = "Megan",
+                Appear = new[] { new Spot { Wq = "wq_letters", From = 1, To = 3, Gx = 1.75f, Gy = 2.4f } },
+                IdleKey = "wq.idle.rider", IdleKo = "오늘도 마을 한 바퀴! 짐칸 자물쇠만 말썽이야." },
+            new Npc { Id = "wq_dungsil", NameKey = "wq.npc.dungsil", NameKo = "배달 기계 둥실이", ShortKey = "wq.short.dungsil", ShortKo = "둥실이",
+                EraKey = "era.future", EraKo = "미래", Gx = DungsilPath0.x, Gy = DungsilPath0.y, Pet = true, RunPath = DungsilPath,
+                Appear = new[] { new Spot { Wq = "wq_letters", From = 2, To = 3, Gx = DungsilPath0.x, Gy = DungsilPath0.y } },
+                IdleKey = "wq.idle.dungsil", IdleKo = "삐빅 — 배달 경로 다시 짜는 중." },
+            new Npc { Id = "wq_researcher", NameKey = "wq.npc.researcher", NameKo = "바다 연구원 물결", ShortKey = "wq.short.researcher", ShortKo = "물결",
+                EraKey = "era.modern", EraKo = "현대", Gx = 2.0f, Gy = 4.2f, FolkBody = "Remy",
+                IdleKey = "wq.idle.researcher", IdleKo = "밤바다에 옛 등대 불빛 같은 게 깜박여. 기록해 둬야지." },
+            new Npc { Id = "wq_hanbit", NameKey = "wq.npc.hanbit", NameKo = "등대 지기 한빛", ShortKey = "wq.short.hanbit", ShortKo = "한빛",
+                EraKey = "era.future", EraKo = "미래", Gx = LightGx + 0.12f, Gy = LightGy - 0.1f, FolkBody = "ExoGray",
+                Appear = new[] { new Spot { Wq = "wq_lighthouse", From = 2, To = 4, Gx = LightGx + 0.12f, Gy = LightGy - 0.1f } },
+                IdleKey = "wq.idle.hanbit", IdleKo = "신호 세기 백 분의 사. 불씨가 필요합니다." },
+            new Npc { Id = "wq_byeori", NameKey = "wq.npc.byeori", NameKo = "시간 탐사대원 별이", ShortKey = "wq.short.byeori", ShortKo = "별이",
+                EraKey = "era.future", EraKo = "미래", Gx = 3.1f, Gy = 1.75f, FolkBody = "Crypto",
+                IdleKey = "wq.idle.byeori", IdleKo = "여기 연도 표시가 셋이나 겹쳐 보여. 시간 틈이 맞아." },
+            new Npc { Id = "wq_dolsoe", NameKey = "wq.npc.dolsoe", NameKo = "옛 석공 돌쇠", ShortKey = "wq.short.dolsoe", ShortKo = "돌쇠",
+                EraKey = "era.past", EraKo = "과거", Gx = RiftGx - 0.25f, Gy = RiftGy + 0.05f, FolkBody = "PeasantMan",
+                Appear = new[] { new Spot { Wq = "wq_rift", From = 2, To = 6, Gx = RiftGx - 0.25f, Gy = RiftGy + 0.05f } },
+                IdleKey = "wq.idle.dolsoe", IdleKo = "돌은 거짓말을 안 하지. 사람이 할 뿐." },
         };
 
         /// <summary>남쪽 다리 북쪽 머리(마을 남쪽 길 끝) — 4장 나그네가 강물을 보고 선 자리.</summary>
@@ -284,6 +339,8 @@ namespace Saga.Go.Data
             public bool ToIsle;
             /// <summary>109-14-20 — 구름섬 위(Kill·Duel, 자리 = 섬 가운데 + Arena) · 이야기 보스 왕관·먹구름 가면(먹구름 임금).</summary>
             public bool Sky, Crown;
+            /// <summary>109-14-21 chase 알림 — 달아날 때(Enter)·잡았을 때(Win)는 위 칸을 쓰고, 놓쳤을 때만 여기(없으면 노 도둑 글).</summary>
+            public string LostKey, LostKo;
         }
 
         public static Vector3 StepPos(Step s) => s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
@@ -292,7 +349,7 @@ namespace Saga.Go.Data
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
 
         /// <summary>석등 가운데 — 5장 둘째 제단 또는 섬(8장).</summary>
-        public static Vector3 SealPos(Step s) => s.Isle ? IslePos(Vector2.zero) : GridPos(Altar2Gx, Altar2Gy);
+        public static Vector3 SealPos(Step s) => s.Isle ? IslePos(Vector2.zero) : s.Gx != 0f || s.Gy != 0f ? GridPos(s.Gx, s.Gy) : GridPos(Altar2Gx, Altar2Gy);
 
         public const float BossHp = 6f, BossAtk = 1.5f, BossScale = 1.8f;
 
@@ -310,10 +367,10 @@ namespace Saga.Go.Data
             public string Join;
         }
 
-        private static Line L(string who, string key, string ko) => new Line { Who = who, Key = key, Ko = ko };
-        private static Line Pick(string key, string a, string b) => new Line { PickKeys = new[] { key + ".a", key + ".b" }, PickKo = new[] { a, b } };
+        internal static Line L(string who, string key, string ko) => new Line { Who = who, Key = key, Ko = ko };
+        internal static Line Pick(string key, string a, string b) => new Line { PickKeys = new[] { key + ".a", key + ".b" }, PickKo = new[] { a, b } };
 
-        private static GoDomain.Foe F(FieldEnemy.Kind k, GoElement over = GoElement.Physical) => new GoDomain.Foe(k, over);
+        internal static GoDomain.Foe F(FieldEnemy.Kind k, GoElement over = GoElement.Physical) => new GoDomain.Foe(k, over);
         private static readonly GoDomain.Foe KT = F(FieldEnemy.Kind.StormWraith);
         private static readonly GoDomain.Foe KF = F(FieldEnemy.Kind.EmberImp);
 
@@ -845,6 +902,8 @@ namespace Saga.Go.Data
             return GoLocalization.T(n.NameKey, n.NameKo);
         }
         public static string NpcShort(string id) { var n = NpcOf(id); return GoLocalization.T(n.ShortKey, n.ShortKo); }
+        /// <summary>109-14-21 시대 글자(세계 임무 인물만, 없으면 null).</summary>
+        public static string NpcEra(string id) { var n = NpcOf(id); return n.EraKo != null ? GoLocalization.T(n.EraKey, n.EraKo) : null; }
         public static string NpcIdle(string id)
         {
             var sp = SpotNow(id);
@@ -861,7 +920,7 @@ namespace Saga.Go.Data
             foreach (var list in new[] { n.Appear, n.At })
                 if (list != null)
                     foreach (var a in list)
-                        if (a.Ch == ch && step >= a.From && step <= a.To) return a;
+                        if (SpotOn(a, ch, step)) return a;
             return null;
         }
         public static string ChapterName(Chapter c) => GoLocalization.T(c.NameKey, c.NameKo);
@@ -886,7 +945,7 @@ namespace Saga.Go.Data
             foreach (var list in new[] { n.Appear, n.At })
                 if (list != null)
                     foreach (var a in list)
-                        if (a.Ch == ch && step >= a.From && step <= a.To) return SpotPos(n, a, ch, step, followDist);
+                        if (SpotOn(a, ch, step)) return SpotPos(n, a, ch, step, followDist);
             return GridPos(n.Gx, n.Gy);
         }
 
@@ -895,7 +954,7 @@ namespace Saga.Go.Data
         {
             var n = NpcOf(id);
             if (n.Appear == null) return true;
-            foreach (var a in n.Appear) if (a.Ch == ch && step >= a.From && step <= a.To) return true;
+            foreach (var a in n.Appear) if (SpotOn(a, ch, step)) return true;
             return false;
         }
 

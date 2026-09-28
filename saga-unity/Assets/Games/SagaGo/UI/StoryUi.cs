@@ -105,15 +105,26 @@ namespace Saga.Go.UI
             _list.transform.SetParent(t, false);
             var lr = (RectTransform)_list.transform;
             lr.anchorMin = lr.anchorMax = lr.pivot = mid;
-            lr.sizeDelta = new Vector2(900f, 560f);
+            lr.sizeDelta = new Vector2(900f, 640f); // 109-14-21 세계 임무 칸·따라가기 단추로 높임
             _list.AddComponent<Image>().color = new Color(0.04f, 0.03f, 0.02f, 0.94f);
-            var title = EncounterUiKit.NewText(_list.transform, GoLocalization.T("story.list_title", "이야기 임무"), mid, new Vector2(0f, 240f), new Vector2(860f, 44f), 26);
+            var title = EncounterUiKit.NewText(_list.transform, GoLocalization.T("story.list_title", "이야기 임무"), mid, new Vector2(0f, 285f), new Vector2(860f, 44f), 26);
             title.rectTransform.pivot = mid;
             title.fontStyle = FontStyles.Bold;
-            _listText = EncounterUiKit.NewText(_list.transform, "", mid, new Vector2(0f, 10f), new Vector2(820f, 400f), 19);
+            _listText = EncounterUiKit.NewText(_list.transform, "", mid, new Vector2(0f, 60f), new Vector2(820f, 420f), 17);
             _listText.rectTransform.pivot = mid;
             _listText.alignment = TextAlignmentOptions.TopLeft;
-            ListClose = EncounterUiKit.NewButton(_list.transform, GoLocalization.T("story.list_close", "닫는다 (O)"), mid, new Vector2(0f, -235f), new Vector2(240f, 52f), () => ToggleList(false));
+            // 109-14-21 따라가기 단추 — 이야기 · 세계 임무 셋
+            for (int i = 0; i < _trackButtons.Length; i++)
+            {
+                int k = i;
+                var b = EncounterUiKit.NewButton(_list.transform, "", mid, new Vector2(-315f + i * 210f, -196f), new Vector2(200f, 50f), () => TrackPress(k));
+                ((RectTransform)b.transform).pivot = mid;
+                var bt = b.GetComponentInChildren<TextMeshProUGUI>();
+                bt.fontSize = 15;
+                bt.lineSpacing = -10f;
+                _trackButtons[i] = b;
+            }
+            ListClose = EncounterUiKit.NewButton(_list.transform, GoLocalization.T("story.list_close", "닫는다 (O)"), mid, new Vector2(0f, -268f), new Vector2(240f, 52f), () => ToggleList(false));
             ((RectTransform)ListClose.transform).pivot = mid;
             _list.SetActive(false);
 
@@ -154,13 +165,43 @@ namespace Saga.Go.UI
         private static bool Busy => DuelGate.Active || Saga.Go.Cinematics.GoCutscenes.Playing ||
                                     (DomainField.Instance != null && DomainField.Instance.Current != null);
 
-        /// <summary>곁에 선 talk 단계 인물 — 없으면 null.</summary>
-        public static GoStory.Step NearTalk(Vector3 p)
+        /// <summary>109-14-21 말 걸 수 있는 것 하나 — 그 단계 · 줄(−1 이야기, 0~ 세계 임무) · 맡기(푸른 !) · 거리.</summary>
+        public struct Talkable
         {
-            var st = StoryState.Current;
-            if (st == null || (st.Type != GoStory.StepType.Talk && st.Type != GoStory.StepType.Sail)) return null; // 109-14-19 sail = 대화 뒤 배
-            return GoStory.Flat(p, GoStory.NpcPos(st.Npc)) <= GoStory.TalkR ? st : null;
+            public GoStory.Step Step;
+            public int Line;
+            public bool Take;
+            public float Dist;
         }
+
+        /// <summary>곁(5m)에서 말 걸 수 있는 가장 가까운 것 — 이야기의 지금 대화 · 맡을 임무의 맡길 사람 · 맡은 임무의 다음 대화 상대(따라가지 않아도).
+        /// 같은 거리면 따라가는 줄(웹 ⑲-21 talkables). 말을 걸면 그 줄을 따라간다.</summary>
+        public static bool NearestTalk(Vector3 p, out Talkable best)
+        {
+            best = default;
+            if (StoryState.OffForTest) return false;
+            bool any = false;
+            var b = best;
+            void Consider(GoStory.Step st, int line, bool take)
+            {
+                if (st == null || (st.Type != GoStory.StepType.Talk && st.Type != GoStory.StepType.Sail) || !GoStory.Shown(st.Npc, StoryState.Ch, StoryState.StepIndex)) return;
+                float d = GoStory.Flat(p, GoStory.NpcPos(st.Npc));
+                if (d > GoStory.TalkR) return;
+                bool tracked = line == (StoryState.TrackingQuest ? StoryState.Track : -1);
+                if (!any || d < b.Dist - 0.01f || (Mathf.Abs(d - b.Dist) <= 0.01f && tracked)) { b = new Talkable { Step = st, Line = line, Take = take, Dist = d }; any = true; }
+            }
+            Consider(StoryState.StoryCurrent, -1, false);
+            for (int q = 0; q < GoWorldQuests.Quests.Length; q++)
+            {
+                if (WorldQuestState.Available(q)) Consider(GoWorldQuests.Quests[q].Steps[0], q, true);
+                else if (WorldQuestState.Taken(q)) Consider(WorldQuestState.Current(q), q, false);
+            }
+            best = b;
+            return any;
+        }
+
+        /// <summary>곁에 선 대화 단계 — 없으면 null.</summary>
+        public static GoStory.Step NearTalk(Vector3 p) => NearestTalk(p, out var t) ? t.Step : null;
 
         private bool IsPickLine => _talkStep != null && _talkLine < _talkStep.Lines.Length && _talkStep.Lines[_talkLine].IsPick;
 
@@ -168,8 +209,11 @@ namespace Saga.Go.UI
         public bool StartTalk()
         {
             var fc = FieldCombat.Instance;
-            var st = fc != null ? NearTalk(fc.transform.position) : null;
-            if (st == null || TalkOpen || Busy) return false;
+            if (fc == null || TalkOpen || Busy || !NearestTalk(fc.transform.position, out var near)) return false;
+            // 109-14-21 — 맡을 임무면 맡고, 그 줄을 따라간다(바꾸면 그 단계 처음부터)
+            if (near.Take && !WorldQuestState.Take(near.Line)) return false;
+            StoryState.SetTrack(near.Line);
+            var st = near.Step;
             _talkStep = st;
             _talkLine = 0;
             _mine = null;
@@ -251,13 +295,42 @@ namespace Saga.Go.UI
             if (_list == null) return;
             if (open && (StoryState.OffForTest || TalkOpen)) return;
             _list.SetActive(open);
-            if (open) _listText.text = ListBody();
+            if (open) RefreshList();
+        }
+
+        // ---- 109-14-21 따라가기 단추(0 = 이야기, 1~ = 세계 임무) ----
+        private readonly Button[] _trackButtons = new Button[4];
+        public Button TrackQuestButton(int i) => _trackButtons[i];
+
+        private void TrackPress(int i)
+        {
+            if (StoryState.SetTrack(i - 1)) RefreshList();
+        }
+
+        private void RefreshList()
+        {
+            _listText.text = ListBody();
+            for (int i = 0; i < _trackButtons.Length; i++)
+            {
+                var b = _trackButtons[i];
+                if (b == null) continue;
+                bool quest = i > 0 && i - 1 < GoWorldQuests.Quests.Length;
+                b.gameObject.SetActive(i == 0 || quest);
+                if (i > 0 && !quest) continue;
+                b.GetComponentInChildren<TextMeshProUGUI>().text = i == 0 ? GoLocalization.T("wq.track_story", "이야기 임무 따라가기")
+                    : string.Format(GoLocalization.T("wq.track_btn", "{0} 따라가기"), GoWorldQuests.Name(GoWorldQuests.Quests[i - 1]));
+                b.interactable = i == 0 ? StoryState.TrackingQuest && StoryState.StoryCurrent != null
+                    : WorldQuestState.Taken(i - 1) && !(StoryState.TrackingQuest && StoryState.Track == i - 1);
+            }
         }
 
         public static string ListBody()
         {
             var sb = new System.Text.StringBuilder();
-            for (int c = 0; c < GoStory.Chapters.Length; c++)
+            // 109-14-21 — 끝난 장은 한 줄로, 지금 장과 다음 장만(아래에 세계 임무)
+            int doneN = Mathf.Min(StoryState.Ch, GoStory.Chapters.Length);
+            if (doneN > 0) sb.Append("<size=80%><color=#9a9a9a>").Append(string.Format(GoLocalization.T("story.chapters_done", "✓ 끝난 장 {0}"), doneN)).Append("</color></size>\n");
+            for (int c = StoryState.Ch; c < GoStory.Chapters.Length && c <= StoryState.Ch + 1; c++)
             {
                 var ch = GoStory.Chapters[c];
                 string state = c < StoryState.Ch ? GoLocalization.T("story.state_done", "끝")
@@ -275,26 +348,42 @@ namespace Saga.Go.UI
                     sb.Append("<size=80%><color=#c9b27a>   ").Append(string.Format(GoLocalization.T("story.reward", "장 끝 보상 {0}"), GoStory.RewardText(ch))).Append("</color></size>\n");
                 }
             }
+            // 109-14-21 세계 임무 — 끝 · 따라가는 중 · 맡음(지금 단계) · ❗ 누구에게 · 잠김
+            sb.Append("\n<b>").Append(GoLocalization.T("wq.list_title", "세계 임무")).Append("</b>\n");
+            for (int q = 0; q < GoWorldQuests.Quests.Length; q++)
+            {
+                var w = GoWorldQuests.Quests[q];
+                string state = WorldQuestState.Done(q) ? GoLocalization.T("wq.state_done", "끝")
+                    : WorldQuestState.Taken(q) ? (StoryState.TrackingQuest && StoryState.Track == q ? GoLocalization.T("wq.state_track", "따라가는 중") : GoLocalization.T("wq.state_taken", "맡음"))
+                        + " · " + GoStory.StepText(WorldQuestState.Current(q))
+                    : WorldQuestState.Available(q) ? string.Format(GoLocalization.T("wq.state_giver", "❗ {0}에게"), GoStory.NpcName(w.Giver))
+                    : string.Format(GoLocalization.T("wq.state_locked", "여정 등급 {0} 에 열린다"), w.Ar);
+                string color = WorldQuestState.Done(q) ? "#9a9a9a" : WorldQuestState.Taken(q) ? "#8fd0ff" : "#e8e2d4";
+                sb.Append("<size=85%><color=").Append(color).Append(">🔷 ").Append(GoWorldQuests.Name(w)).Append(" <size=80%>(").Append(GoWorldQuests.Place(w)).Append(")</size>  ")
+                    .Append(state).Append("</color></size>\n");
+            }
             return sb.ToString();
         }
 
         /// <summary>추적 줄 글 — 순수(진행·자리만 본다). 이야기가 다 끝났거나 꺼졌으면 빈 글.</summary>
         public static string TrackLine(Vector3 p)
         {
-            if (StoryState.OffForTest || StoryState.Done) return "";
+            if (StoryState.OffForTest || (StoryState.Done && !StoryState.TrackingQuest)) return "";
             var ch = StoryState.Chapter;
-            if (StoryState.Locked)
+            if (!StoryState.TrackingQuest && StoryState.Locked)
                 return string.Format(GoLocalization.T("story.track_locked", "◆ {0} — 여정 등급 {1} 에 열린다"), GoStory.ChapterName(ch), ch.Ar);
             var st = StoryState.Current;
             StoryField.Target(out Vector3 t, out _);
             string text = GoStory.StepText(st);
             if (st.Type == GoStory.StepType.Gather) text += $" {StoryState.Progress}/{st.Count}";
-            if (st.Type == GoStory.StepType.Chase) // 109-14-19
+            if (st.Type == GoStory.StepType.Chase) // 109-14-19 · 109-14-21 둥실이
                 text = StoryField.Instance != null && StoryField.Instance.ChaseRunning
-                    ? string.Format(GoLocalization.T("story.chase_track", "노 도둑 {0}m — 달려라!"), Mathf.RoundToInt(GoStory.Flat(p, StoryField.Instance.ChasePos)))
+                    ? string.Format(GoLocalization.T("story.chase_track2", "{0} {1}m — 달려라!"), GoStory.NpcShort(st.Npc), Mathf.RoundToInt(GoStory.Flat(p, StoryField.Instance.ChasePos)))
                     : text + GoLocalization.T("story.chase_idle", " (가까이 가면 달아난다)");
             float dist = GoStory.Flat(p, t);
-            string line = string.Format(GoLocalization.T("story.track", "◆ {0} — {1} · {2}m"), GoStory.ChapterName(ch), text, Mathf.RoundToInt(dist));
+            string line = StoryState.TrackingQuest // 109-14-21 🔷 세계 임무
+                ? string.Format(GoLocalization.T("wq.track", "🔷 {0} — {1} · {2}m"), GoWorldQuests.Name(GoWorldQuests.Quests[StoryState.Track]), text, Mathf.RoundToInt(dist))
+                : string.Format(GoLocalization.T("story.track", "◆ {0} — {1} · {2}m"), GoStory.ChapterName(ch), text, Mathf.RoundToInt(dist));
             if (st.Type == GoStory.StepType.Follow && dist > GoStory.FollowLost) line += GoLocalization.T("story.follow_lost", " · 너무 멀어졌다");
             var sf = StoryField.Instance;
             if (st.Type == GoStory.StepType.Defend && sf != null && sf.DefendHpMax > 0f && (sf.DefendWave >= 0 || sf.DefendRest > 0f)) // 109-14-16
@@ -319,7 +408,11 @@ namespace Saga.Go.UI
             var near = !TalkOpen && !Busy && fc != null ? NearTalk(p) : null;
             TalkButton.gameObject.SetActive(near != null);
             if (near != null)
-                TalkButton.GetComponentInChildren<TextMeshProUGUI>().text = string.Format(GoLocalization.T("story.talk_btn", "{0}와 이야기 (F)"), GoStory.NpcShort(near.Npc));
+            {
+                string era = GoStory.NpcEra(near.Npc); // 109-14-21 세계 임무 인물은 시대 글자
+                TalkButton.GetComponentInChildren<TextMeshProUGUI>().text = string.Format(GoLocalization.T("story.talk_btn", "{0}와 이야기 (F)"),
+                    GoStory.NpcShort(near.Npc) + (era != null ? $" <size=70%>({era})</size>" : ""));
+            }
             if (TalkOpen && StoryState.Current == null) CloseTalk();
         }
 

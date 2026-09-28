@@ -135,6 +135,10 @@ namespace Saga.Go.Data
             // PLAN.md 109-14-18 편성 1~4(칸마다 들판 셋 id 를 쉼표로)·지금 칸 — 버전 그대로(옛 세이브엔 없어 빈 칸 넷·1번 = 지금 들판, 웹 partyPresets 와 같은 결).
             public List<string> partyPresets;
             public int partyPreset;
+            // PLAN.md 109-14-21 세계 임무 — 임무마다 단계(−1 안 맡음)·끝남·따라가는 임무 id(없으면 이야기). 버전 그대로(옛 세이브 = 아무것도 안 맡음).
+            public List<int> wqSteps;
+            public List<bool> wqDone;
+            public string wqTrack;
         }
 
         public static bool Save()
@@ -165,6 +169,9 @@ namespace Saga.Go.Data
                 playerPos = player != null ? new[] { player.position.x, player.position.y, player.position.z } : null,
                 partyMembers = new List<string>(PartyState.MemberIds),
                 partyPresets = PartyState.SnapshotPresets(), // 109-14-18
+                wqSteps = WorldQuestState.SnapshotSteps(), // 109-14-21
+                wqDone = WorldQuestState.SnapshotDone(),
+                wqTrack = StoryState.TrackId,
                 partyPreset = PartyState.PresetAt(),
                 level = PlayerStats.Level,
                 exp = PlayerStats.Exp,
@@ -294,6 +301,8 @@ namespace Saga.Go.Data
             StoryState.Restore(data.storyCh, data.storyStep);
             StoryState.CatchUpJoins(); // 109-14-15 — 합류가 생기기 전에 끝낸 장의 이야기 동료
             PartyState.RestorePresets(data.partyPresets, data.partyPreset); // 109-14-18 — 합류 뒤(지금 칸 = 지금 들판)
+            WorldQuestState.Restore(data.wqSteps, data.wqDone); // 109-14-21 — 이야기 자리(StoryState.Restore) 뒤
+            StoryState.RestoreTrack(data.wqTrack);
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();
