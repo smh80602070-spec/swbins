@@ -11,6 +11,7 @@ node go-story-walls.mjs                        # 사가고: 이야기 인물 자
 node go-combat.mjs auto [short] [prof]         # 사가고: 가까운 무리와 싸워 적 거리·몸 반지름·체력·GL 수·프레임 + shots/go_combat_* (prof = CPU 자기 시간 상위)
 node go-combat-time.mjs [plain elite boss] [tune=field.x:v]  # 사가고: 판정만 1/30초씩 — 무리별 처치 시간(게임 초)·피해/초·휘두름·체력
 node fs-move-click.mjs                         # 사가의숲: 3D 켜고 W(시점 0°·90°)·왼쪽 클릭 이동·목표 고리 + shots/fs_*
+node go-ch23.mjs [초] [field]                  # 사가고 ⑲-47: 🤖📖 가 등대를 타고 올라 난간 판에서 등롱을 켜나 + shots/go_ch23_* (PC_PROF=tmp/… 새 프로필로)
 node rk-battle.mjs [초] [press] [phone] [nosim]  # 사가국지: 새 판 → 이웃 적 성 출진 → 실시간 전장이 저절로 흐르나·병사 붙음/쓰러짐(armyView) + shots/rk_live_*
 ```
 

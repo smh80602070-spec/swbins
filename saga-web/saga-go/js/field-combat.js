@@ -283,7 +283,11 @@
     /* ⑲-46 22장 빛 돔 안 — 돔에 숨어 빛을 먹던 심해 등불아귀(아귀 몸 크게, 수). 있는 패턴만 — 침·밀물 줄·고리·내려찍기·그림자.
        2단계 수 방패(뇌로 깬다)·졸개는 story.js 가 두른다 */
     abyss_angler: { name: '심해 등불아귀', ref: 'pt_anglerfish', el: 'water', hp: 21, atk: 2.5, spd: 4.6, reach: 3.6, type: 'spit', wind: 0.9, cd: 1.7, h: 3.2, exp: 0, r: 3.0,
-                boss: true, rot: ['spit', 'tide', 'halo', 'slam', 'shadow', 'spit'] }
+                boss: true, rot: ['spit', 'tide', 'halo', 'slam', 'shadow', 'spit'] },
+    /* ⑲-47 23장 빛 돔 안 — 기록을 지운 자의 명령으로 깨어난 바위 거인(도깨비 몸 크게, 암). 있는 패턴만 — 내려찍기·고리·휘두름·밀물 줄·침.
+       2단계 암 방패(초로 깬다)·졸개는 story.js 가 두른다 */
+    dome_colossus: { name: '돔 파수 거신', ref: 'pt_dokkaebi', el: 'rock', hp: 22, atk: 2.6, spd: 4.4, reach: 3.6, type: 'slam', wind: 1.0, cd: 1.8, h: 3.6, exp: 0, r: 4.2,
+                boss: true, rot: ['slam', 'halo', 'melee', 'tide', 'slam', 'spit'] }
   };
   /* ⑲-14 공격 차례(`rot`)의 한 수씩 — reach 안이면 휘두른다. shadow 는 내 등 뒤 SHADOW_BACK m 로 옮겨 붙어 제 둘레 원 */
   var ROT = {

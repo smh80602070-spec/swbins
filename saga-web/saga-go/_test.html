@@ -10409,7 +10409,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     t('이야기 ⑲-12 — 표·자리: 장 둘(단계 8·4, 여정 등급 1·5) · 인물 셋 = ⑮ 땅 탑 + 자리(고향 촌장·갈대 나루 사공·옛 성터 학자) · 모든 단계에 목표 · 같은 세계면 같은 자리 · 몸 셋 고정', function () {
       var ST = DG.story, A3 = DG.asset3d, r = {};
-      r.table = ST.CHAPTERS.length === 22 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
+      r.table = ST.CHAPTERS.length >= 22 && ST.CHAPTERS[0].steps.length === 8 && ST.CHAPTERS[1].steps.length === 4 &&
         ST.CHAPTERS[0].ar === 1 && ST.CHAPTERS[1].ar === 5;     // ⑲-13·14·16·19·20·28·29·30·34~36·38~40·42·43·45·46 가 3~22장을 더했다
       var e = ST.npcPos('elder'), f = ST.npcPos('ferryman'), s = ST.npcPos('scholar'), ga = ST.anchorOf('galdae'), go = ST.anchorOf('gojeong');
       r.npc = e.x === -22 && e.y === 16 && f.x === ga.x - 18 && f.y === ga.y - 24 && s.x === go.x - 18 && s.y === go.y - 24 &&
@@ -12596,6 +12596,33 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '붙잡기 1.1m·기력 93 · 옆 매달림 · 도약 5.1m · 들보 위(길 ○ 밖 ✕) · 날개 · 기력 20 은 ' + hTired.toFixed(1) + 'm 에서 미끄러짐 · 등지면 떨어짐' : ('실패 ' + bad.join(','));
     });
 
+    t('기둥 타기 ⑲-47 — 🤖 자동 중엔 이야기가 원하는 기둥(climb pole·light perch)만 붙잡는다(다른 단계 ✕) · 붙잡은 채 멀리 옮겨지면(순간이동) 손을 놓고 걷는다', function () {
+      var ES = DG.eraSites, LF = DG.landform, A = DG.auto, ST = DG.story, r = {};
+      var y = ES.yard(), u = y.sea, keepA = A.active, keepS = ST.step, want = null;
+      function at(q) { C.save.player.pos.x = q.x; C.save.player.pos.y = q.y; }
+      try {
+        LF._resetForTest();
+        A.active = function () { return true; };
+        ST.step = function () { return want; };
+        var q = esFrontOf(ES, 'legA', ES.LEG_HALF + 0.8), pp = C.save.player.pos;
+        at(q); want = { type: 'talk' };
+        r.skip = !LF.poleAhead(pp.x, pp.y, u.x, u.y);
+        want = { type: 'climb', pole: true };
+        r.climb = !!LF.poleAhead(pp.x, pp.y, u.x, u.y);
+        want = { type: 'light', perch: 'sk_light' };
+        r.other = !LF.poleAhead(pp.x, pp.y, u.x, u.y);                   // 다른 기둥(등대)을 원하면 기중기는 안 붙잡는다
+        A.active = keepA; ST.step = keepS;
+        LF._resetForTest(); at(q);
+        LF.moveMul(pp.x, pp.y, u.x, u.y, 0.25);
+        var held = LF.onPole();
+        at({ x: q.x + 300, y: q.y + 300 });
+        var m = LF.moveMul(pp.x, pp.y, 1, 0, 0.1);
+        r.far = held && !LF.onPole() && m > 0;
+      } finally { A.active = keepA; ST.step = keepS; LF._resetForTest(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '자동 — 대화 단계 ✕ · climb ○ · 다른 기둥 ✕ · 멀리 옮겨지면 놓고 걷는다' : ('실패 ' + bad.join(','));
+    });
+
     t('이야기 ⑲-34 — 13장 아홉 단계(Lv32)·보상 · 다온 창고 앞 · 반디 7~9째 조선소 · 흐름: 반디 → 조선소 → 다온 → 무리 → 다온 → 기중기(들보 위에 서야 · GPS 는 곁 12m) → 반디 → 용접대 지키기(뭍 다섯) → 다온 · 끝', function () {
       var rig = st10Rig(), ST = rig.ST, FC = DG.fieldCombat, ES = DG.eraSites, LF = DG.landform, W = DG.world, TL = DG.talent, r = {}, i;
       try {
@@ -13659,7 +13686,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       try {
         U._resetForTest();
         var c22 = ST.CHAPTERS[21], S22 = c22.steps;
-        r.table = ST.CHAPTERS.length === 22 && c22.id === 'ch22' && c22.ar === 50 && !c22.join && S22.length === 10 && c22.reward.knot === 6 && c22.reward.gold === 6000 &&
+        r.table = ST.CHAPTERS.length >= 22 && c22.id === 'ch22' && c22.ar === 50 && !c22.join && S22.length === 10 && c22.reward.knot === 6 && c22.reward.gold === 6000 &&
           S22.map(function (q) { return q.type; }).join() === 'talk,talk,gather,talk,seal,talk,defend,talk,duel,talk' && S22[2].item === 'clam' && S22[2].count === 3 &&
           S22[4].order.join() === 'sun,star,moon' && S22[6].dirs.join() === '84,96,264,276' && S22[8].kind === 'abyss_angler' && S22[8].shield === 'water' && FC.COUNTER.water === 'elec';
         function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 21 : ch, step: si }; return ST.npcPos(k); }
@@ -13737,6 +13764,73 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { U._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '문 여덟째부터(둘레 그대로) · 곁채 벽 · 자리 뭍 · 안은 안·문 앞은 밖' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-47 이야기 6부 제23장 · 빛 돔의 기록 (story ch23·파랑·돔 파수 거신·물새 합류 · sunken 등대 넷째부터·기록실 단말, PLAN §5 ⑲-47) ── */
+    t('이야기 ⑲-47 — 23장 일곱 단계(Lv52)·물새 합류 · 파랑 23장부터 돔 안 기록실 앞 · 반디 1~3 등대 발치 · 흐름: 파랑 → 등대 난간 판(기둥 sk_light) → 등롱(땅에선 ✕·난간 판 위 ○ → 등대 켜짐) → 반디 → 파랑 → 돔 파수 거신(🪨방패 — 초 + 바위곰·불도깨비) → 물새 · 끝', function () {
+      var rig = stRig(52), ST = rig.ST, FC = DG.fieldCombat, U = DG.sunken, TL = DG.talent, LF = DG.landform, keepP = LF.perched, perch = null, r = {};
+      try {
+        U._resetForTest();
+        LF.perched = function () { return perch; };
+        var c = ST.CHAPTERS[22], S23 = c.steps;
+        r.table = c.id === 'ch23' && c.ar === 52 && c.join === 'story_mulsae' && S23.length === 7 && c.reward.knot === 6 && c.reward.gold === 6250 &&
+          S23.map(function (q) { return q.type; }).join() === 'talk,climb,light,talk,talk,duel,talk' && S23[1].pole === 'sk_light' && S23[2].perch === 'sk_light' &&
+          S23[5].kind === 'dome_colossus' && S23[5].shield === 'rock' && FC.COUNTER.rock === 'grass' && !!DG.kits.kitOf('story_mulsae').skill;
+        function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 22 : ch, step: si }; return ST.npcPos(k); }
+        r.parang = st10Eq(np('parang', 0), U.spot('parang')) && ST.visible('parang') && st10Eq(np('parang', 0, 23), U.spot('parang'));
+        C.save.story = { ch: 21, step: 9 }; r.parang = r.parang && !ST.visible('parang');
+        r.bandi = st10Eq(np('bandi', 0), U.spot('in_bandi')) && st10Eq(np('bandi', 2), U.spot('light_bandi')) && st10Eq(np('bandi', 4), U.spot('in_bandi'));
+        C.save.story = { ch: 22, step: 0 };
+        var dark0 = !U.lighthouseLit();
+        stGo(ST.npcPos('parang')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        var lh = U.siteById('lighthouse'); stGo({ x: lh.x, y: lh.y + 3 });
+        ST.check(); var notYet = C.save.story.step === 1;
+        perch = 'sk_light'; ST.check();
+        r.climb = notYet && C.save.story.step === 2;
+        var tg = ST.targetOf(ST.step());
+        perch = null; C.emit('field:element', { el: 'fire', x: tg.x, y: tg.y, r: 1, t: 'skill' });
+        var ground = C.save.story.step === 2 && !U.lighthouseLit();
+        perch = 'sk_light'; C.emit('field:element', { el: 'fire', x: tg.x, y: tg.y, r: 1, t: 'skill' });
+        r.light = dark0 && ground && C.save.story.step === 3 && U.lighthouseLit();
+        perch = null;
+        stGo(ST.npcPos('bandi')); r.t3 = stTalkAll(ST) && C.save.story.step === 4;
+        stGo(ST.npcPos('parang')); r.t4 = stTalkAll(ST) && C.save.story.step === 5;
+        var dt = ST.targetOf(ST.step());
+        stGo({ x: dt.x + 3, y: dt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cb = S.camps[ST.keyOf()], b = cb && S.foes[cb.uids[0]];
+        var lv = b && FC.live().filter(function (x) { return x.uid === b.uid; })[0];
+        r.boss = !!b && b.kind === 'dome_colossus' && b.el === 'rock' && !!lv && lv.ref.id === 'pt_dokkaebi';
+        b.hp = Math.round(b.hpMax * 0.4); ST.check();
+        var ad = S.camps[ST.keyOf() + ':add'];
+        r.p2 = b.shEl === 'rock' && !!ad && ad.uids.map(function (u) { return S.foes[u].kind; }).join(',') === 'rockbear,imp' && FC.shieldMul('rock', 'grass') > 1;
+        b.shield = 0; b.layers = [];
+        for (var k = 0; k < 3 && !b.dead; k++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); }
+        FC.tick(0.05);
+        r.duel = C.save.story.step === 6 && !S.camps[ST.keyOf() + ':add'];
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('mulsae'));
+        r.end = stTalkAll(ST) && C.save.story.ch === 23 && C.save.story.step === 0 && m.knot === k0 + 6 && C.save.player.gold === gold0 + 6250 &&
+          ST.hasMember('story_mulsae') && U.lighthouseLit();
+      } finally { LF.perched = keepP; U._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '일곱 단계 · 파랑 → 난간 판 → 등롱(땅 ✕ → 위 ○, 등대 켜짐) → 반디 → 파랑 → 파수 거신(🪨 + 바위곰·불도깨비) → 물새 합류 · 🪢+6 🪙+6250' : ('실패 ' + bad.join(','));
+    });
+
+    t('옛 등대·기록실 ⑲-47 — 등대는 23장 넷째 단계부터 켜짐(셋째 ✕·끝나도 ○) · 등대 발치·기록실 앞 자리는 뭍이고 벽 밖 · 기록실 앞은 돔 안 · 단말 자리가 돔 안', function () {
+      var rig = stRig(52), ST = rig.ST, U = DG.sunken, r = {};
+      try {
+        U._resetForTest();
+        var dm = U.siteById('dome');
+        function hit(x, y) { return DG.world3d.houseRects(Math.floor(x / 48), Math.floor(y / 48)).some(function (q) { return frInRect(q, x, y); }); }
+        C.save.story = { ch: 22, step: 2 }; var off = !U.lighthouseLit();
+        C.save.story = { ch: 22, step: 3 }; var lit = U.lighthouseLit();
+        C.save.story = { ch: 23, step: 0 }; r.lamp = off && lit && U.lighthouseLit() && U.LIGHT_FROM === 3;
+        C.save.story = { ch: 21, step: 9 }; r.lamp = r.lamp && !U.lighthouseLit();
+        r.spots = ['light_bandi', 'parang'].every(function (k) { var q = U.spot(k); return ST.landAt(q.x, q.y) && !hit(q.x, q.y); }) &&
+          Math.hypot(U.spot('parang').x - dm.x, U.spot('parang').y - dm.y) < U.DOME_R - 2 && Math.hypot(U.TERM[0], U.TERM[1]) < U.DOME_R - 2;
+      } finally { U._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '등대 넷째부터(셋째 ✕·뒤 ○) · 자리 뭍·벽 밖 · 기록실 앞·단말 돔 안' : ('실패 ' + bad.join(','));
     });
 
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */

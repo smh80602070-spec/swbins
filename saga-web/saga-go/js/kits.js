@@ -96,6 +96,13 @@
         text: '둘레 4.5m 적을 견인줄로 끌어당겨 풍 원소로 치고, 나는 15m 위로 솟구쳐 날개를 편다 — 그대로 활공하거나 낙하 공격' },
       burst: { name: '틈 닫기', type: 'vortex', r: 6, mul: 3.6, ahead: 8, sec: 8, every: 0.5, tick: 0.7, pull: 7,
         text: '둘레 6m 를 치고, 앞 8m 에 8초 틈 닫기 소용돌이 — 적을 빨아들이며 0.5초마다 풍 원소로 친다' }
+    },
+    /* ⑲-47 물새(23장 끝 합류) — saga-godot 106 ㊿-4 를 이 판 척도로. 있는 틀(blink·feast)만 쓴다 */
+    story_mulsae: {
+      skill: { name: '자맥질', type: 'blink', cd: 7, reach: 9, back: 1.4, r: 2.5, mul: 2.8, mark: 8, markMul: 1.2, len: 4,
+        text: '9m 안 가까운 적 뒤 1.4m 로 물질하듯 파고들어(무적) 둘레 2.5m 를 빗창으로 벤다 — 그 적에 8초 표식(누구에게든 받는 피해 ×1.2)' },
+      burst: { name: '숨비소리', type: 'feast', r: 6, mul: 2.4, sec: 10, every: 1, fheal: 0.05, emul: 0.3,
+        text: '둘레 6m 를 치고, 10초 숨비소리 자리 — 1초마다 안에 선 지금 인물 체력 5% 회복·안의 적을 수 원소로 친다' }
     }
   };
 

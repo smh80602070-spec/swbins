@@ -428,14 +428,32 @@
     if (t < 0 || t > 1) { return false; }
     return Math.hypot(x - (b.ax + vx * t), y - (b.ay + vy * t)) <= b.w / 2;
   }
+  /** 붙잡은 기둥에서 떨어진 거리가 말이 안 되나 — 들보 위면 들보 선에서 3m, 오르는 중이면 기둥 겉에서 POLE_REACH + 2m 넘게 */
+  function poleFar(pl, P, x, y) {
+    var b = pl.beam;
+    if (P.perch && b) {
+      var vx = b.bx - b.ax, vy = b.by - b.ay, L2 = vx * vx + vy * vy || 1, t = Math.max(0, Math.min(1, ((x - b.ax) * vx + (y - b.ay) * vy) / L2));
+      return Math.hypot(x - (b.ax + vx * t), y - (b.ay + vy * t)) > b.w / 2 + 3;
+    }
+    return Math.hypot(pl.x - x, pl.y - y) > pl.r + POLE_REACH + 2;
+  }
   function perchOfP(p) { var E = ES(); return p.perch || (E ? E.perchOf(p) : { x: p.x, y: p.y }); }
   function autoOn() { var A = global.DG.auto; return !!(A && A.active && A.active()); }
-  /** 마주 보고 미는 다리 — 다리 겉에서 POLE_REACH m 안, 걷는 방향이 다리 쪽. 자동 순행 중엔 없음 */
+  /** 🤖 자동 이야기가 지금 그 기둥을 오르려는가 — climb(pole: true·id)·light(perch: id) 단계(2026-09-28, ⑲-47 — 자동 중엔 기둥을 아예 안 붙잡아
+   *  기중기·계류 탑·시계탑·등대 오르기가 자동으로 안 풀렸다) */
+  function autoWants(id) {
+    var ST = global.DG.story, st = ST && ST.step ? ST.step() : null;
+    if (!st) { return false; }
+    if (st.type === 'climb' && st.pole) { return st.pole === true || st.pole === id; }
+    return st.type === 'light' && st.perch === id;
+  }
+  /** 마주 보고 미는 다리 — 다리 겉에서 POLE_REACH m 안, 걷는 방향이 다리 쪽. 자동 순행 중엔 이야기가 그 기둥을 원할 때만 */
   function poleAhead(x, y, ux, uy) {
-    var L = polesAll();
-    if (!L.length || (!ux && !uy) || autoOn()) { return null; }
+    var L = polesAll(), auto = autoOn();
+    if (!L.length || (!ux && !uy)) { return null; }
     for (var i = 0; i < L.length; i++) {
       var p = L[i], dx = p.x - x, dy = p.y - y, d = Math.hypot(dx, dy);
+      if (auto && !autoWants(p.id)) { continue; }
       if (d > p.r + POLE_REACH) { continue; }
       if (d > 1e-6 && (dx * ux + dy * uy) / d < POLE_FACE) { continue; }
       return p;
@@ -461,6 +479,8 @@
   function poleMove(x, y, ux, uy, dt) {
     var P = body.pole, pl = poleOf();
     if (!pl) { body.pole = null; return 1; }
+    /* 기둥에서 멀리 떨어졌다(지도 순간이동·이야기 이동) — 손을 놓는다. 전엔 기둥 상태가 남아 새 자리에서 한 걸음도 못 걸었다(2026-09-28) */
+    if (poleFar(pl, P, x, y)) { body.pole = null; body.state = 'walk'; core().emit('landform:pole', { id: pl.id, grab: false }); return 1; }
     if (P.perch) {
       body.state = 'walk';
       if (!onBeamOf(pl, x + ux * RAIL_LOOK, y + uy * RAIL_LOOK)) {

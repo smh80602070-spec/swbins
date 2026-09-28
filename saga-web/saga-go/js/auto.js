@@ -331,6 +331,16 @@
       doing = '📖 🌬️ ' + (st.text || '') + ' — 기둥 안에서 점프';
       return true;
     }
+    /* ⑲-47 기둥 오르기(기중기·계류 탑·시계탑·등대)와 기둥 위에서만 켜지는 등롱 — 키보드 판은 곁에 닿아도 멈추지 않고 기둥 너머로 걸어
+       벽을 계속 민다(밀어야 붙잡고 오른다 · 곁에서 멈추면 영영 못 올랐다). 올라서면 climb 은 story 가 넘기고, 등롱은 아래 불 밝히기로 간다 */
+    var LFp = global.DG.landform, poleWant = st.type === 'climb' && st.pole ? st.pole : (st.type === 'light' && st.perch ? st.perch : null);
+    if (poleWant && w.mode !== 'geo' && LFp && LFp.perched && (poleWant === true ? !LFp.perched() : LFp.perched() !== poleWant)) {
+      var pdx = t.x - p.x, pdy = t.y - p.y, pdl = Math.hypot(pdx, pdy) || 1;
+      if (pdl > 12) { acc.story += dt; if (acc.story >= RETARGET) { acc.story = 0; walkToward(w, t.x, t.y, RETARGET); } }
+      else { w.walkTo(t.x + pdx / pdl * 6, t.y + pdy / pdl * 6); }
+      doing = '📖 🧗 ' + (st.text || '') + (pdl > 12 ? ' 으로 ' + Math.round(pdl) + 'm' : ' — 기둥을 밀고 오르는 중');
+      return true;
+    }
     /* 불 밝히기·석등 — 제단(석등은 다음 차례 것) 곁에 서서 원소 스킬(E). 스킬 고리가 닿으면 story.onElement 가 켠다 */
     if (st.type === 'light' || st.type === 'seal') {
       var goal = t;

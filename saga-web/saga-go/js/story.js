@@ -83,7 +83,9 @@
     sk_dock: { sk: 'dock' }, sk_yeoul: { sk: 'yeoul' }, sk_plinth: { sk: 'plinth' }, sk_plinth_yeoul: { sk: 'plinth_yeoul' }, sk_plinth_bandi: { sk: 'plinth_bandi' },
     /* ⑲-46 곁채 앞·빛 돔 문 앞·돔 안 */
     sk_annex_mulsae: { sk: 'annex_mulsae' }, sk_dome_front: { sk: 'dome_front' }, sk_front_mulsae: { sk: 'front_mulsae' }, sk_front_yeoul: { sk: 'front_yeoul' },
-    sk_front_bandi: { sk: 'front_bandi' }, sk_dome_duel: { sk: 'dome_duel' }, sk_in_mulsae: { sk: 'in_mulsae' }, sk_in_yeoul: { sk: 'in_yeoul' }, sk_in_bandi: { sk: 'in_bandi' } };
+    sk_front_bandi: { sk: 'front_bandi' }, sk_dome_duel: { sk: 'dome_duel' }, sk_in_mulsae: { sk: 'in_mulsae' }, sk_in_yeoul: { sk: 'in_yeoul' }, sk_in_bandi: { sk: 'in_bandi' },
+    /* ⑲-47 옛 등대(명소)·등대 발치·기록실 앞 */
+    sk_light: { sunken: 'lighthouse' }, sk_light_bandi: { sk: 'light_bandi' }, sk_parang: { sk: 'parang' } };
   /* ⑲-40 18장 선장의 잔상 — 은하역 가운데에서 남쪽 선로(z 2~42) 위를 지그재그로, 선로 끝 너머 틈 쪽까지 */
   var CAPTAIN_PATH = [[0, 6], [1.5, 16], [-1.5, 26], [1.5, 36], [-1, 46], [2, 58], [-2, 68]];
   /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
@@ -148,6 +150,7 @@
         { ch: 18, from: 6, to: 9, spot: 'cr_st_bandi' }, { ch: 19, from: 2, to: 10, spot: 'cr_rift_bandi', sky: true },
         { ch: 20, from: 2, to: 6, spot: 'sk_sand_bandi' }, { ch: 20, from: 7, to: 999, spot: 'sk_plinth_bandi' },
         { ch: 21, from: 0, to: 2, spot: 'sk_plinth_bandi' }, { ch: 21, from: 3, to: 6, spot: 'sk_front_bandi' }, { ch: 21, from: 7, to: 999, spot: 'sk_in_bandi' },
+        { ch: 22, from: 1, to: 3, spot: 'sk_light_bandi' },                                                          // ⑲-47 23장 등대 발치
         { ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_in_bandi' },
         { ch: 19, chTo: 999, from: 0, to: 999, spot: 'sp_bandi' }] },
     /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
@@ -186,6 +189,10 @@
       idle: '숨 한 번에 한 길. 물은 서두르는 사람을 싫어한다오.',
       appear: [{ ch: 21, from: 1, to: 2, spot: 'sk_annex_mulsae' }, { ch: 21, from: 3, to: 6, spot: 'sk_front_mulsae' }, { ch: 21, from: 7, to: 999, spot: 'sk_in_mulsae' },
         { ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_in_mulsae' }] },
+    /* ⑲-47 돔 관리 인공지능 파랑(미래) — 반디와 같은 드론 몸에 파란 빛깔. 23장부터 돔 안 기록실 앞(뒤에도) */
+    parang:   { id: 'story_parang',   name: '돔 관리 인공지능 파랑', short: '파랑', zone: 'saltflat', spot: 'sk_parang', off: [0, 0], color: '#4d8cff', pet: 'drone',
+      idle: '빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오.',
+      appear: [{ ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_parang' }] },
     /* ⑲-40 선장의 잔상 — 18장 쫓기 때만 역 기준 길(CAPTAIN_PATH)을 달린다 */
     captain:  { id: 'story_captain',  name: '선장의 잔상', short: '잔상', zone: 'solar', color: '#232e57', idle: '……',
       appear: [{ ch: 17, from: 6, to: 6 }], runSpot: 'sp_station', runPath: CAPTAIN_PATH },
@@ -198,7 +205,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -229,7 +236,10 @@
       el: 'elec', weapon: 'claymore', stats: { might: 80, wisdom: 66, command: 70 }, emoji: '🚂', quote: '틈 너머 첫 정거장까지 — 제가 몰게요!' },
     /* ⑲-43 한별(20장 끝) — 풍 활 ★5. 별배 선장 */
     story_hanbyeol: { id: 'story_hanbyeol', name: '한별', hanja: '閑星', era: '이야기', faction: '재야', rarity: 5, trait: 'command', story: true,
-      el: 'wind', weapon: 'bow', stats: { might: 76, wisdom: 84, command: 90 }, emoji: '🧭', quote: '선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께.' }
+      el: 'wind', weapon: 'bow', stats: { might: 76, wisdom: 84, command: 90 }, emoji: '🧭', quote: '선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께.' },
+    /* ⑲-47 물새(23장 끝) — 수 한손검(빗창). 수·장병기는 사공 버들과 겹쳐 무기를 바꿨다(saga-godot 와 같게) */
+    story_mulsae: { id: 'story_mulsae', name: '물새', hanja: '水鳥', era: '이야기', faction: '재야', rarity: 4, trait: 'might', story: true,
+      el: 'water', weapon: 'sword', stats: { might: 78, wisdom: 64, command: 60 }, emoji: '🐚', quote: '숨 긴 거 하나는 자신 있소.' }
   };
   function hookFind() {
     var D = global.DG.data;
@@ -1081,6 +1091,50 @@
             ['반디', '삐— 기록실에서 제 신호와 같은 주파수가 나옵니다. 지워진 칸이… 저 안에 있습니다.', 'surprised'],
             ['?', ['기록실로 가자.', '물새 님도 같이 가요.']],
             ['물새', '갇힌 줄로만 알았는데, 기다린 거였나 보오. 좋소 — 끝까지 같이 가 보지.', 'joy']] }
+      ] },
+    /* ⑲-47 6부 끝 — 빛 돔 기록실(sunken.js). 파랑(기록실 앞) → 옛 등대 돌탑 타고 난간 판에 서기(landform 기둥 sk_light) →
+       난간 판 위에서 꺼진 등롱에 원소(perch — GPS 판은 곁) → 반디(등대 발치) → 파랑(기록 재생) → 돔 파수 거신(암, 절반에서 암 방패 — 초로) →
+       물새 · 물새 합류. 등대는 넷째 단계부터 켜진다(sunken LIGHT_FROM) */
+    { id: 'ch23', name: '제23장 · 빛 돔의 기록', ar: 52, join: 'story_mulsae',
+      reward: { knot: 6, gold: 6250, guide: 6, secret: 5, party: 1650 },
+      steps: [
+        { type: 'talk', npc: 'parang', text: '기록실 앞의 파랑과 이야기하기',
+          lines: [['파랑', '방문자 확인. 빛 돔 관리 인공지능 파랑입니다. 문이 열린 것은 도읍이 잠긴 뒤 처음입니다.', 'surprised'],
+            ['반디', '삐— 파랑. 그 이름… 제 기록에 있습니다. 지워진 칸 바로 앞에.', 'surprised'],
+            ['파랑', '조종 기계 반디, 별배 소속. 당신의 기록 사본이 이 기록실에 맡겨져 있습니다. 다만 열람할 전력이 모자랍니다.'],
+            ['파랑', '돔은 옛 등대에서 전력을 받았습니다. 도읍이 잠기던 날 등대 불이 꺼진 뒤로, 기록실은 옥새 봉인만 남은 채 잠들어 있습니다.', 'sorrow'],
+            ['?', ['등대에 불을 켜면 돼요?', '지워진 칸 끝 말, \'등대\'…']],
+            ['물새', '북쪽 바위섬 등대 말이오? 물질 나갈 때 늘 보던 불이오. 돌탑을 타고 오르면 등롱까지 닿을 거요.'],
+            ['여울', '제 잠수복 불빛으로 물길을 비춰 드릴게요. 꼭대기 난간 판에 서야 등롱에 손이 닿아요.', 'fun']] },
+        { type: 'climb', spot: 'sk_light', pole: 'sk_light', text: '옛 등대 돌탑을 타고 난간 판까지 오르기',
+          done: '🗼 등대 난간 판에 올라섰다 — 꺼진 등롱이 눈앞에 있다', gpsDone: '🗼 등대 발치에 닿았다 — 여울이 잠수복 불빛으로 등롱을 비춘다' },
+        { type: 'light', spot: 'sk_light', bare: true, perch: 'sk_light', text: '꺼진 등롱에 원소 스킬로 불 넣기(난간 판 위에서)',
+          done: '🗼 등롱에 불이 들어왔다 — 빛줄기가 돌며 빛 돔 꼭대기를 비춘다', away: '🗼 등롱은 탑 꼭대기에 있다 — 난간 판에 올라서야 불이 닿는다' },
+        { type: 'talk', npc: 'bandi', text: '등대 발치의 반디와 이야기하기',
+          lines: [['반디', '삐— 등대 빛 수신. 빛 돔 전력 회복. 기록실이 깨어납니다.', 'joy'],
+            ['반디', '……이상합니다. 이 자리에 서니 무언가 떠오릅니다. 그날 별배는 이 등대 불빛을 보고 항로를 잡았습니다.', 'surprised'],
+            ['반디', '그런데 불빛이 한순간 꺼졌습니다. 누군가 먹구름으로 등롱을 덮었습니다. 거기서 기억이 끊깁니다.', 'sorrow'],
+            ['?', ['먹구름이라고?', '기록실로 돌아가자.']],
+            ['반디', '나머지는 기록실 사본에 있을 겁니다. 파랑에게 돌아가 주십시오.']] },
+        { type: 'talk', npc: 'parang', text: '기록실 앞의 파랑과 이야기하기',
+          lines: [['파랑', '전력 회복 확인. 옥새 봉인 해제. 조종 기계 반디의 기록 사본을 재생합니다.'],
+            ['반디', '(기록 재생) 별배 항로 끝, 잠긴 도읍 등대. 등롱 꺼짐. 항로 밖에서 먹구름 접근 — 먹구름 속에 사람 그림자, 가면.', 'surprised'],
+            ['반디', '(기록 재생) 그림자가 손을 들자 먹구름이 별배를 덮쳤습니다. 기관 정지, 추락. …그리고 그림자가 제 기록을 지웠습니다.', 'sorrow'],
+            ['물새', '도읍이 잠기던 날에도 하늘이 그렇게 검었소. 파도보다 먹구름이 먼저 왔었지.', 'sorrow'],
+            ['?', ['별배를 떨어뜨린 건 틈이 아니었어…', '먹구름을 부리는 누군가가 있어.']],
+            ['파랑', '경고. 기록 복원이 \'기록을 지운 자\'가 남긴 명령에 걸렸습니다. 돔 파수 거신이 침입자 제거를 시작합니다.', 'angry'],
+            ['여울', '돔 바닥이 울려요! 바위 거인이 — 서쪽에서 일어나요!', 'surprised']] },
+        { type: 'duel', spot: 'sk_dome_duel', kind: 'dome_colossus', shield: 'rock', adds: ['rockbear', 'imp'], text: '기록을 지운 자의 명령으로 깨어난 돔 파수 거신과 맞서기',
+          enter: '🗿 돔 서쪽 바닥이 갈라지며 — 돔 파수 거신이 일어섰다!',
+          p2: '🪨 거신이 바위 껍질을 두른다 — 풀(초)로 깨라! 바위곰과 불도깨비가 뛰어든다',
+          win: '🗿 파수 거신이 무너지고 — 가슴에 박혀 있던 먹구름 조각이 흩어졌다' },
+        { type: 'talk', npc: 'mulsae', text: '돔 안의 물새와 이야기하기',
+          lines: [['물새', '……바위 속에 먹구름이 박혀 있었구려. 누가 이 빛 집까지 손을 뻗은 게요.', 'angry'],
+            ['파랑', '파수 거신 정지. 명령 기록 추적 — 발신지는 하늘 항로 위, 구름 위입니다.'],
+            ['반디', '삐— 기억이 돌아왔습니다. 별배가 가려던 곳은 등대가 아니라, 등대가 비추던 하늘 항로였습니다.', 'joy'],
+            ['?', ['먹구름을 부리는 자를 찾자.', '물새 님은 이제 어떡해요?']],
+            ['물새', '물은 두 번 가르쳐 주지 않는다 했지. 이번엔 나도 안 놓치겠소 — 도읍을 잠기게 한 그 먹구름을.', 'angry'],
+            ['물새', '해녀 물새, 오늘부터 뭍사람들 편이오. 숨 긴 거 하나는 자신 있소.', 'joy']] }
       ] }
   ];
 
@@ -1590,6 +1644,10 @@
     if (st.type !== 'light') { return; }
     var t = targetOf(st);
     if (!t || elemDist(e, t.x, t.y) > (e.r || 3) + LIGHT_R()) { return; }
+    if (st.perch && !gps()) {                                        // ⑲-47 등대 등롱 — 키보드 판은 그 기둥 위(난간 판)에 서야 닿는다
+      var LFe = global.DG.landform, pe = LFe && LFe.perched ? LFe.perched() : null;
+      if (pe !== st.perch) { toast(st.away || '🔥 불이 닿지 않는다 — 더 높이 올라서야 한다'); return; }
+    }
     if (st.bell) {                                                  // ⑲-39 종각 종 — 불 대신 울린다
       var SPb = global.DG.skyport;
       if (SPb && SPb.ringBell) { SPb.ringBell(); }

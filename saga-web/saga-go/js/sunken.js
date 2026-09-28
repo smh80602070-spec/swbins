@@ -53,7 +53,7 @@
   var LANDMARK_R = 30, SMALL_R = function (g) { return g ? 30 : 14; };
   var REWARD_BIG = { gold: 150, dust: 2, exp: 40 }, REWARD_SMALL = { gold: 60, exp: 20 };
   var SEARCH_STEP = 8, SEARCH_R = 200, SEP_BIG = 60, SEP_SMALL = 30, TOWER_CLEAR = 40, SHORE_R = 30;
-  var GATE_HALF = 4, GATE_CH = 'ch20', DOME_CH = 'ch22', DOME_FROM = 7, LIGHT_CH = 'ch23';
+  var GATE_HALF = 4, GATE_CH = 'ch20', DOME_CH = 'ch22', DOME_FROM = 7, LIGHT_CH = 'ch23', LIGHT_FROM = 3;   // ⑲-47 등롱에 불을 넣은 뒤(넷째 단계)부터
   var DOME_R = 11, DOME_SEGS = 12;
   var LIGHT_H = 15, LIGHT_HALF = 1.4, LIGHT_DRAIN = 0.8;
   /* ⑲-45 이야기 자리 [명소, m, m] — 별배는 해무 어귀 안쪽 모래밭에 내린다. 선착장 = 기지 잔교 머리. 기단 = 궁궐 앞마당(정전 밖) */
@@ -62,7 +62,10 @@
     yeoul: ['lab', -8, 4], plinth: ['palace', 0, 3.5], plinth_yeoul: ['palace', 2.5, 3.2], plinth_bandi: ['palace', -3, 3.2],
     /* ⑲-46 22장 — 곁채 앞(궁궐 동쪽) · 돔 문 앞(북쪽 19m — 석등 셋이 그 둘레 6m) · 돔 안 마른 바닥 */
     annex_mulsae: ['palace', ANNEX_OFF[0], ANNEX_OFF[1] + 3.2], dome_front: ['dome', 0, -19], front_mulsae: ['dome', -8, -20], front_yeoul: ['dome', 8, -20],
-    front_bandi: ['dome', 0, -28], dome_duel: ['dome', -5, 0], in_mulsae: ['dome', 3, 3], in_yeoul: ['dome', 4, -2], in_bandi: ['dome', 0, 5] };
+    front_bandi: ['dome', 0, -28], dome_duel: ['dome', -5, 0], in_mulsae: ['dome', 3, 3], in_yeoul: ['dome', 4, -2], in_bandi: ['dome', 0, 5],
+    /* ⑲-47 23장 — 등대 발치(남쪽, 바위 받침 밖) · 기록실 앞(단말 TERM 남쪽) */
+    light_bandi: ['lighthouse', 0, 5.5], parang: ['dome', 4, 6.5] };
+  var TERM = [4, 4];                                        // ⑲-47 기록실 단말(돔 가운데에서 m, +y 남쪽)
   var SEA_CH = 'ch20', SEA_LIGHTS = 8, SEA_R = 9;
   var GRID = 48;
 
@@ -155,8 +158,8 @@
   function gateOpen() { return done(GATE_CH); }
   /** 빛 돔 문이 열렸나 — 22장을 마친 뒤 */
   function domeOpen() { var i = chIndex(DOME_CH), s = storyAt(); return i >= 0 && (s.ch > i || (s.ch === i && (s.step || 0) >= DOME_FROM)); }   // ⑲-46
-  /** 옛 등대에 불이 켜졌나 — 23장을 마친 뒤 */
-  function lighthouseLit() { return done(LIGHT_CH); }
+  /** 옛 등대에 불이 켜졌나 — 23장 넷째 단계(등롱에 불을 넣은 뒤)부터. 켜지면 기록실 단말도 밝아진다 */
+  function lighthouseLit() { var i = chIndex(LIGHT_CH), s = storyAt(); return i >= 0 && (s.ch > i || (s.ch === i && (s.step || 0) >= LIGHT_FROM)); }   // ⑲-47
   /** ⑲-45 궁궐 둘레 테왁 불 — 20장(틈이 닫힘)을 마친 뒤 */
   function seaLightsOn() { return done(SEA_CH); }
   var poleMemo = null;
@@ -328,6 +331,8 @@
         box(T3, g, m.alloy, 0.4, 3.4, 0.4, -1.8, 1.7, -DOME_R); box(T3, g, m.alloy, 0.4, 3.4, 0.4, 1.8, 1.7, -DOME_R);   // 북쪽 문틀
         o.door = box(T3, g, m.glow, 3.2, 3, 0.1, 0, 1.5, -DOME_R); o.door.material = m.glow;                        // 닫힌 빛 문
         o.domeDoor = true;
+        box(T3, g, m.alloy, 1.6, 1.3, 0.6, TERM[0], 0.65, TERM[1]);                                               // ⑲-47 기록실 단말 — 등대가 켜지면 화면이 밝아진다
+        o.term = box(T3, g, m.dark, 1.3, 0.8, 0.06, TERM[0], 1.35, TERM[1] + 0.32);
         break;
       }
       case 'lighthouse': {
@@ -386,6 +391,7 @@
         if (shut && !o.domeDoor) { o.door.material.opacity = 0.45 + Math.sin(clock * 1.5) * 0.1; }
       }
       if (o.sea) { for (k = 0; k < o.sea.length; k++) { o.sea[k].visible = sea; } }
+      if (o.term) { o.term.material = lit ? M(T3).glow : M(T3).dark; }
       if (o.lamp) { o.lamp.material = lit ? M(T3).lamp : M(T3).dark; o.beam.visible = lit; if (lit) { o.beam.rotation.y += (dt || 0) * 0.6; } }
     }
     for (var id in fx) { if (fx.hasOwnProperty(id) && !seen[id]) { w.removeFx(fx[id].root); delete fx[id]; } }
@@ -405,7 +411,7 @@
     SEP_BIG: SEP_BIG, SEP_SMALL: SEP_SMALL, TOWER_CLEAR: TOWER_CLEAR, SHORE_R: SHORE_R, GATE_HALF: GATE_HALF, GATE_DIST: GATE_DIST,
     DOME_R: DOME_R, DOME_SEGS: DOME_SEGS, LIGHT_H: LIGHT_H, LIGHT_HALF: LIGHT_HALF, LIGHT_DRAIN: LIGHT_DRAIN,
     on: on, center: center, sites: sites, siteById: siteById, inRegion: inRegion, nearWater: nearWater, gateOpen: gateOpen, domeOpen: domeOpen, lighthouseLit: lighthouseLit,
-    PARTS: PARTS, SEA_LIGHTS: SEA_LIGHTS, ANNEX_OFF: ANNEX_OFF, DOME_FROM: DOME_FROM, spot: spot, seaLightsOn: seaLightsOn,
+    PARTS: PARTS, SEA_LIGHTS: SEA_LIGHTS, ANNEX_OFF: ANNEX_OFF, DOME_FROM: DOME_FROM, LIGHT_FROM: LIGHT_FROM, TERM: TERM, spot: spot, seaLightsOn: seaLightsOn,
     rectsOf: rectsOf, rectsIn: rectsIn, poles: poles, found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks, tick: tick,
     _resetForTest: function () { memo = null; rectMemo = null; centerMemo = undefined; poleMemo = null; }
   };
