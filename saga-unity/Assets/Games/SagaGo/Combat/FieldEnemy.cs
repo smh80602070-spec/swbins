@@ -135,11 +135,66 @@ namespace Saga.Go.Combat
         private Vector3 _strikePoint;
         private bool Ranged => IsHero && _hero.Trait == HeroTrait.Wisdom;
         private bool Quick => IsHero && _hero.Trait == HeroTrait.Virtue;
-        private float TelegraphTime => !IsHero ? TelegraphSec : Ranged ? HeroWisdomTelegraph : Quick ? HeroVirtueTelegraph : HeroMightTelegraph;
+        private float TelegraphTime => _telegraphOverride > 0f ? _telegraphOverride : !IsHero ? TelegraphSec : Ranged ? HeroWisdomTelegraph : Quick ? HeroVirtueTelegraph : HeroMightTelegraph;
         /// <summary>진단용 — 지금 인물의 예고 반경.</summary>
-        public float StrikeReach => !IsHero ? StrikeRadius : Ranged ? HeroWisdomRadius : Quick ? StrikeRadius : HeroMightRadius;
-        private float RecoverTime => Quick ? HeroVirtueRecover : RecoverSec;
-        private float EngageReach => Ranged ? HeroWisdomRange : EngageRange;
+        public float StrikeReach => _reachOverride > 0f ? _reachOverride : !IsHero ? StrikeRadius : Ranged ? HeroWisdomRadius : Quick ? StrikeRadius : HeroMightRadius;
+        private float RecoverTime => (_recoverOverride > 0f ? _recoverOverride : Quick ? HeroVirtueRecover : RecoverSec) * CdMul;
+        private float EngageReach => _reachOverride > 0f ? _reachOverride * 0.8f : Ranged ? HeroWisdomRange : EngageRange;
+
+        // ---- 109-14-9 숨은 터 적·주간 보스 — 천하 등급·경험·전리품·일과가 없고 다시 서지 않으며, 원판 안에선 끝까지 쫓는다 ----
+        public bool DomainFoe { get; private set; }
+        public bool IsWeeklyBoss { get; private set; }
+        /// <summary>공격 간격 배율(주간 보스 2단계 ×0.69).</summary>
+        public float CdMul { get; set; } = 1f;
+        private float _reachOverride = -1f, _telegraphOverride = -1f, _recoverOverride = -1f;
+
+        /// <summary>숨은 터 적으로 — 천하 0 · 단계 배율(체력·방패 × hpMul, 공격 × atkMul).</summary>
+        public void ApplyDomain(float hpMul, float atkMul)
+        {
+            DomainFoe = true;
+            ApplyWorld(0);
+            MaxHp *= hpMul; Hp = MaxHp;
+            ShieldMax *= hpMul; ShieldHp = ShieldMax;
+            Atk *= atkMul;
+        }
+
+        /// <summary>먹구름 이무기 — 해골 몸을 크게, 체력·공격·내리치기·예고·간격을 보스 값으로(방패 없이 시작).</summary>
+        public void MakeWeeklyBoss()
+        {
+            IsWeeklyBoss = true;
+            DisplayName = GoLocalization.T("domain.boss", "먹구름 이무기");
+            if (_nameText != null) _nameText.text = DisplayName;
+            WorldLevel = 0; // 값을 새로 박으니 천하 배율은 없던 것으로
+            MaxHp = GoDomain.BossHp; Hp = MaxHp;
+            Atk = GoDomain.BossAtk;
+            ShieldMax = 0f; ShieldHp = 0f; ShieldLayers = 0;
+            _reachOverride = GoDomain.BossReach;
+            _telegraphOverride = GoDomain.BossTelegraph;
+            _recoverOverride = GoDomain.BossRecover;
+            transform.localScale = Vector3.one * GoDomain.BossScale;
+            RefreshElementFx();
+        }
+
+        /// <summary>주간 보스 2단계 — 그 원소 방패를 두른다.</summary>
+        public void RaiseBossShield(GoElement el, float amount)
+        {
+            Element = el;
+            ShieldMax = ShieldHp = amount;
+            ShieldLayers = 1;
+            RefreshElementFx();
+            RefreshHeadUi();
+        }
+
+        /// <summary>곧장 쫓는다(숨은 터 파도).</summary>
+        public void ForceChase() { if (Alive) EnterChase(); }
+
+        /// <summary>원소를 띠게 한다(무덤 터 기운) — 얼어 있으면 안 건드린다.</summary>
+        public void SoakAura(GoElement el, float sec)
+        {
+            if (!Alive || Frozen) return;
+            Aura = el;
+            AuraLeft = sec;
+        }
         /// <summary>두 겹 방패 — 수호장과 ★5 인물.</summary>
         private bool TwoLayered => IsGuardian || (IsHero && HeroRarity >= 5);
         private GoElement OuterElement => IsGuardian ? GuardianOuter : _outerElement;
@@ -329,7 +384,7 @@ namespace Saga.Go.Combat
         public static void RescaleAll()
         {
             int w = AdventureState.WorldLevel;
-            foreach (var e in _all.ToArray()) if (e != null) e.ApplyWorld(w);
+            foreach (var e in _all.ToArray()) if (e != null && !e.DomainFoe) e.ApplyWorld(w); // 109-14-9 숨은 터 적은 천하 등급을 안 받는다
         }
 
         /// <summary>수호장 금 — 천하 등급 전리품 배율.</summary>
@@ -600,7 +655,7 @@ namespace Saga.Go.Combat
             {
                 case State.Wander:
                     if (IsHero) { SetMoveAnim(0f); if (playerOk) Face(toPlayer); break; } // 109-6 — 인물은 겨루기가 열려야 움직인다
-                    if (distPlayer < (IsGuardian ? GuardianDetectRadius : DetectRadius)) { EnterChase(); break; }
+                    if (DomainFoe || distPlayer < (IsGuardian ? GuardianDetectRadius : DetectRadius)) { EnterChase(); break; }
                     _timer -= dt;
                     if (_timer <= 0f)
                     {
@@ -612,7 +667,7 @@ namespace Saga.Go.Combat
                     break;
 
                 case State.Chase:
-                    if (!playerOk || distPlayer > GiveUpRadius || Flat(transform.position - Home).magnitude > LeashRadius)
+                    if (!DomainFoe && (!playerOk || distPlayer > GiveUpRadius || Flat(transform.position - Home).magnitude > LeashRadius))
                     {
                         CurrentState = State.Return;
                         break;
@@ -638,13 +693,13 @@ namespace Saga.Go.Combat
                 case State.Recover:
                     SetMoveAnim(0f);
                     _timer -= dt;
-                    if (_timer <= 0f) CurrentState = playerOk && distPlayer < GiveUpRadius ? State.Chase : State.Return;
+                    if (_timer <= 0f) CurrentState = DomainFoe || (playerOk && distPlayer < GiveUpRadius) ? State.Chase : State.Return;
                     break;
 
                 case State.Stagger:
                     SetMoveAnim(0f);
                     _timer -= dt;
-                    if (_timer <= 0f) CurrentState = playerOk && distPlayer < GiveUpRadius ? State.Chase : State.Return;
+                    if (_timer <= 0f) CurrentState = DomainFoe || (playerOk && distPlayer < GiveUpRadius) ? State.Chase : State.Return;
                     break;
 
                 case State.Return:
@@ -1053,7 +1108,7 @@ namespace Saga.Go.Combat
             if (IsHero) { Yield(); return; }
             Hp = 0f;
             CurrentState = State.Dead;
-            _timer = RespawnSec;
+            _timer = DomainFoe ? float.MaxValue : RespawnSec; // 109-14-9 숨은 터 적은 다시 안 선다
             _chargedLeft = 0f;
             ClearReactionStates();
             Aura = GoElement.Physical;
@@ -1064,6 +1119,7 @@ namespace Saga.Go.Combat
             if (_animator != null) _animator.SetTrigger("Death");
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
+            if (DomainFoe) { Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음
             PlayerStats.AddExp(ExpReward);
             DailyTaskState.ReportProgress(DailyTaskState.Kind.FieldKill, 1); // 109-14-8 일일 의뢰 — 들판 적
             if (EnemyKind == Kind.Bandit && !IsHero)

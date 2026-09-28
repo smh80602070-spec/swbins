@@ -271,12 +271,12 @@ namespace Saga.EditorTools
             CookState.Pick(node);
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":25") || !json.Contains("\"cookBag\":[") || !json.Contains(node.Id)) Fail("세이브 v23 에 요리가 없다");
+            if (!json.Contains("\"version\":26") || !json.Contains("\"cookBag\":[") || !json.Contains(node.Id)) Fail("세이브 v23 에 요리가 없다");
             CookState.ResetForTest();
             if (!SaveState.TryLoad()) { Fail("v23 TryLoad 실패"); return; }
             if (CookState.Count("orchid") != 3 || CookState.Count(GoCooking.DishId("clam_soup", 2)) != 2 || CookState.Count(GoCooking.DishId("clam_soup", 1)) != 1
                 || CookState.Prof("clam_soup") != 1 || CookState.Available(node)) Fail("v23 왕복 뒤 요리가 달라짐");
-            string v22 = Regex.Replace(json.Replace("\"version\":25", "\"version\":22"), ",\"cookBag\":\\[[^\\]]*\\],\"cookProf\":\\[[^\\]]*\\],\"cookGather\":\\[[^\\]]*\\]", "");
+            string v22 = Regex.Replace(json.Replace("\"version\":26", "\"version\":22"), ",\"cookBag\":\\[[^\\]]*\\],\"cookProf\":\\[[^\\]]*\\],\"cookGather\":\\[[^\\]]*\\]", "");
             if (v22.Contains("cookBag")) { Fail("v22 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v22);
             if (!SaveState.TryLoad()) { Fail("v22 파일 TryLoad 실패"); return; }

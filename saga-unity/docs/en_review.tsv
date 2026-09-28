@@ -403,6 +403,63 @@
 2	go	dex.hint	칸을 누르면 자세히 · 들판에서 겨뤄 본 사람은 그림자에서 벗어나고, 이겨서 굴복시키면 동행이 된다	Tap a card for details · anyone you have challenged in the field steps out of the shadow; defeat them to make them yield and join you		
 2	go	dex.seen	만남	Met		
 2	go	dex.title	도감 — 등용 {0}/{1} · 만남 {2}	Codex — recruited {0}/{1} · met {2}		
+2	go	domain.boss	먹구름 이무기	Stormcloud Serpent		
+2	go	domain.boss_p2	먹구름 이무기가 뇌 방패를 둘렀다 — 불·물로 깨라	The Stormcloud Serpent raised a thunder shield — break it with fire or water		
+2	go	domain.boss_up	먹구름 이무기가 깨어났다	The Stormcloud Serpent has awoken		
+2	go	domain.btn_claim	받기 (원기 {0})	Claim (Vigor {0})		
+2	go	domain.btn_leave	물러나기	Withdraw		
+2	go	domain.btn_stage	단계 {0} 도전	Challenge Stage {0}		
+2	go	domain.btn_stage_locked	단계 {0} — 여정 {1}	Stage {0} — Journey {1}		
+2	go	domain.btn_tree_leave	두고 나가기	Leave it		
+2	go	domain.card	보상 {0} · 터 기운: {1}\n{2} · 제한 {3}초 · 원판을 벗어나면 실패(원기는 안 쓴다)\n{4} · {5}	Reward {0} · Ley: {1}\n{2} · {3}s limit · leaving the arena fails (no Vigor spent)\n{4} · {5}		
+2	go	domain.claimed	{0} {1} 보상 — 원기 {2} · {3}	{0} {1} reward — Vigor {2} · {3}		
+2	go	domain.cost	받을 때 원기 {0}	Costs {0} Vigor to claim		
+2	go	domain.cost_weekly	받을 때 원기 {0}(이번 주 {1}번 — 처음 {2}번은 {3})	Costs {0} Vigor to claim ({1} this week — first {2} cost {3})		
+2	go	domain.enter	{0} {1} — 곧 적이 나타난다	{0} {1} — foes approach		
+2	go	domain.fail	도전 실패 — {0}	Challenge failed — {0}		
+2	go	domain.gold	금 +{0}	Gold +{0}		
+2	go	domain.hud_boss	먹구름 이무기 {0}%{1}	Stormcloud Serpent {0}%{1}		
+2	go	domain.hud_left	{0}초	{0}s		
+2	go	domain.hud_shield	뇌 방패	Thunder shield		
+2	go	domain.hud_tree	보상 나무	Reward tree		
+2	go	domain.hud_wait	곧 시작	Starting soon		
+2	go	domain.kind.forge	쇠부리 터	Bloomery		
+2	go	domain.kind.school	옛 서당	Old Schoolhouse		
+2	go	domain.kind.tomb	잠든 무덤	Sleeping Tomb		
+2	go	domain.kind.weekly	먹구름 제단	Stormcloud Altar		
+2	go	domain.left_tree	보상을 두고 숨은 터를 나왔다	Left the hidden ground without the reward		
+2	go	domain.ley.forge	적 공격 ×1.3	Foe ATK ×1.3		
+2	go	domain.ley.school	적을 쓰러뜨리면 명단 기력 +13	Each foe defeated gives the party +13 Energy		
+2	go	domain.ley.tomb	적이 4초마다 물을 띤다	Foes take on Water every 4s		
+2	go	domain.ley.weekly	체력 절반에서 뇌 방패를 두르고 빨라진다	At half HP it raises a thunder shield and speeds up		
+2	go	domain.loot.forge	강화석	Ore		
+2	go	domain.loot.school	무예 책	Martial Manuals		
+2	go	domain.loot.tomb	보패	Relics		
+2	go	domain.loot.weekly	뇌룡 비늘·★5 보패	Thunder Drake Scale · ★5 Relics		
+2	go	domain.mmss	{0}분 {1}초	{0}m {1}s		
+2	go	domain.one_boss	보스 하나	One boss		
+2	go	domain.polish	연마석 +{0}	Polish +{0}		
+2	go	domain.resin	원기 {0}/{1}	Vigor {0}/{1}		
+2	go	domain.resin_next	(다음 1 까지 {0})	(next in {0})		
+2	go	domain.site.d_forge	논밭 쇠부리 터	Paddy Bloomery		
+2	go	domain.site.d_school	강가 옛 서당	Riverside Old Schoolhouse		
+2	go	domain.site.d_tomb	산기슭 잠든 무덤	Foothill Sleeping Tomb		
+2	go	domain.site.w_altar	먹구름 제단	Stormcloud Altar		
+2	go	domain.tree	보상 나무가 자랐다 — 가운데로 가서 원기 {0} 쓰면 받는다	A reward tree has grown — go to the center and spend {0} Vigor to claim		
+2	go	domain.tree_card	보상 나무 — {0} · 원기 {1} 로 받는다\n{2}	Reward tree — {0} · claim for {1} Vigor\n{2}		
+2	go	domain.two_waves	파도 둘	Two waves		
+2	go	domain.wave	파도 {0}/{1}	Wave {0}/{1}		
+2	go	domain.why.fight	싸우는 중엔 못 들어간다	Cannot enter during a fight		
+2	go	domain.why.left	물러났다	Withdrew		
+2	go	domain.why.no_field	들판 전투가 없다	No field combat		
+2	go	domain.why.no_tree	보상 나무가 없다	No reward tree		
+2	go	domain.why.out	원판을 벗어났다	Left the arena		
+2	go	domain.why.rank	여정 등급 {0} 에 열림	Opens at Journey Rank {0}		
+2	go	domain.why.resin	원기가 모자라다({0}/{1})	Not enough Vigor ({0}/{1})		
+2	go	domain.why.running	이미 도전 중	Already in a challenge		
+2	go	domain.why.stage	없는 단계	No such stage		
+2	go	domain.why.time	시간이 다 됐다	Time is up		
+2	go	domain.why.wiped	모두 쓰러졌다	Everyone fell		
 2	go	encounter.avoid	피한다	Avoid		
 2	go	encounter.bandit_intro	🗡 도적의 습격⏎"길세를 내고 가라. 아니면 두고 가든지."	🗡 Bandit Ambush⏎"Pay the toll, or leave your goods behind."		
 2	go	encounter.bandit_tell	강타가 온다 — 피하라!	A heavy blow is coming — dodge!		

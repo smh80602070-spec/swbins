@@ -14,7 +14,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 25;
+        private const int SaveVersion = 26;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -120,6 +120,12 @@ namespace Saga.Go.Data
             public int advPaid;
             // v25 — PLAN.md 109-14-8 오늘 일과 마무리 보상을 받았나(날짜는 dailyDate).
             public bool dailyBonus;
+            // v26 — PLAN.md 109-14-9 원기(값·기준 유닉스 초 — 0 이면 가득)·숨은 터 받은 수·이 주 주간 보스.
+            public int resin;
+            public long resinT;
+            public int domainClaims;
+            public string weeklyWeek;
+            public int weeklyN;
         }
 
         public static bool Save()
@@ -142,6 +148,7 @@ namespace Saga.Go.Data
         public static string ToJson()
         {
             Transform player = FindPlayer();
+            var dom = DomainState.Snapshot(); // 109-14-9
 
             var data = new SaveData
             {
@@ -196,6 +203,11 @@ namespace Saga.Go.Data
                 advLowered = AdventureState.Lowered,
                 advPaid = AdventureState.Paid,
                 dailyBonus = DailyTaskState.BonusClaimed,
+                resin = dom.resin,
+                resinT = dom.t,
+                domainClaims = dom.claims,
+                weeklyWeek = dom.week,
+                weeklyN = dom.weekN,
             };
             return JsonUtility.ToJson(data);
         }
@@ -262,6 +274,7 @@ namespace Saga.Go.Data
             WeaponState.Restore(data.weapons, data.weaponEquip, data.weaponOre);
             ArtifactState.Restore(data.artifacts, data.artifactSeq, data.artifactPolish);
             CookState.Restore(data.cookBag, data.cookProf, data.cookGather);
+            DomainState.Restore(data.resin, data.resinT, data.domainClaims, data.weeklyWeek, data.weeklyN);
             AdventureState.RestoreSave(data.advLowered, data.advPaid); // 레벨 뒤 — 천하 등급이 바뀌면 들판 적이 다시 잰다
             World.GoOrbField.Instance?.Rebuild();
 
@@ -506,6 +519,17 @@ namespace Saga.Go.Data
                 // v24엔 마무리 보상이 없었다 — 안 받은 것으로. 하루 셋이던 진행은 길이가 달라 Restore 가 그날만 비운다.
                 data.version = 25;
                 data.dailyBonus = false;
+                return data;
+            }
+            if (fromVersion == 25)
+            {
+                // v25엔 원기가 없었다 — 가득(기준 시각 0)·받은 수 0.
+                data.version = 26;
+                data.resin = GoDomain.ResinMax;
+                data.resinT = 0;
+                data.domainClaims = 0;
+                data.weeklyWeek = "";
+                data.weeklyN = 0;
                 return data;
             }
             return null;

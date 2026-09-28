@@ -39,6 +39,8 @@ namespace Saga.Go.World
             if (GetComponent<ElementalSight>() == null) gameObject.AddComponent<ElementalSight>(); // 109-14-3b 원소 시야
             if (GetComponent<CookField>() == null) gameObject.AddComponent<CookField>(); // 109-14-6 채집·솥
             if (GetComponent<Saga.Go.UI.CookingUi>() == null) gameObject.AddComponent<Saga.Go.UI.CookingUi>(); // 109-14-6 요리 창(G)
+            if (GetComponent<DomainField>() == null) gameObject.AddComponent<DomainField>(); // 109-14-9 숨은 터·주간 보스
+            if (GetComponent<Saga.Go.UI.DomainUi>() == null) gameObject.AddComponent<Saga.Go.UI.DomainUi>();
         }
     }
 }

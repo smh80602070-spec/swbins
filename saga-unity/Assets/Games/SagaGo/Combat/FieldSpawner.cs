@@ -95,6 +95,15 @@ namespace Saga.Go.Combat
             return FieldEnemy.Spawn(kind, home, model, groupId, transform, era, body, over);
         }
 
+        /// <summary>109-14-9 숨은 터 적 하나 — 옛 몸(산적 = 산적 몸, 나머지 = 해골 몸)에 덧씌울 원소, 지역 위험 2 고정(단계 배율은 부르는 쪽).</summary>
+        public FieldEnemy SpawnDomainFoe(FieldEnemy.Kind kind, GoElement over, Vector3 home, string groupId)
+        {
+            GameObject model = kind == FieldEnemy.Kind.Bandit ? banditModel : skeletonModel;
+            var e = FieldEnemy.Spawn(kind, home, model, groupId, transform, GoEra.Past, null, over);
+            e.ApplyDanger(GoDomain.DomainDanger);
+            return e;
+        }
+
         /// <summary>세우는 들판 적 수 — 이미 쓰러뜨린 수호장은 안 센다.</summary>
         public static int PlannedCount
         {

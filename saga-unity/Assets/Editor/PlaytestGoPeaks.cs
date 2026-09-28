@@ -150,10 +150,10 @@ namespace Saga.EditorTools
             var p = GoWorldMap.Peaks[0];
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":25") || !json.Contains($"\"peaksFound\":[\"{p.Id}\"]")) Fail("세이브 v18 에 오른 정상이 없다");
+            if (!json.Contains("\"version\":26") || !json.Contains($"\"peaksFound\":[\"{p.Id}\"]")) Fail("세이브 v18 에 오른 정상이 없다");
             WorldMapState.RestorePeaks(null);
             if (!SaveState.TryLoad() || !WorldMapState.IsPeakFound(p.Id)) Fail("v18 왕복 뒤 오른 정상이 사라졌다");
-            string v17 = Regex.Replace(json.Replace("\"version\":25", "\"version\":17"), ",\"peaksFound\":\\[[^\\]]*\\]", "");
+            string v17 = Regex.Replace(json.Replace("\"version\":26", "\"version\":17"), ",\"peaksFound\":\\[[^\\]]*\\]", "");
             if (v17.Contains("peaksFound")) { Fail("v17 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v17);
             if (!SaveState.TryLoad()) { Fail("v17 파일 TryLoad 실패"); return; }

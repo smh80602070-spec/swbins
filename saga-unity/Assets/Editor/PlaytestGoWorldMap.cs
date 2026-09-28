@@ -185,14 +185,14 @@ namespace Saga.EditorTools
             var rg = WorldMapState.SnapshotRegions();
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":25")) Fail("세이브 버전이 18 이 아님"); // 109-9 정상으로 v18
+            if (!json.Contains("\"version\":26")) Fail("세이브 버전이 18 이 아님"); // 109-9 정상으로 v18
             WorldMapState.Restore(null, null, false);
             if (!SaveState.TryLoad()) { Fail("v14 TryLoad 실패"); return; }
             if (WorldMapState.ActiveCount != wp.Count || !WorldMapState.Revealed || WorldMapState.SnapshotRegions().Count != rg.Count)
                 Fail("v14 왕복 뒤 지도 상태가 다름");
 
             // v13 옛 파일 — 지도 필드 없이 → 빈 기본값
-            string v13 = json.Replace("\"version\":25", "\"version\":13");
+            string v13 = json.Replace("\"version\":26", "\"version\":13");
             v13 = Regex.Replace(v13, ",\"guardianDown\":(true|false)", "");
             v13 = Regex.Replace(v13, ",\"waypoints\":\\[[^\\]]*\\]", "");
             v13 = Regex.Replace(v13, ",\"regionsVisited\":\\[[^\\]]*\\]", "");
