@@ -1,0 +1,18 @@
+{
+ "id": "hero_wd_ibnsina",
+ "generator": "tools/char-forge/build_real.py",
+ "blender": "5.2.1 LTS",
+ "license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+ "inputs": [
+  "mpfb 2.0.17: base.obj · targets · rig.game_engine",
+  "ual1_standard: Unreal Engine/AL_Standard.fbx",
+  "makehuman_system_assets: middleage_caucasian_male/middleage_caucasian_male.mhmat",
+  "makehuman_system_assets: high-poly/high-poly.mhclo",
+  "makehuman_system_assets: eyebrow002/eyebrow002.mhclo",
+  "makehuman_system_assets: eyelashes03/eyelashes03.mhclo",
+  "makehuman_system_assets: teeth_base/teeth_base.mhclo",
+  "makehuman_system_assets: cf_qaba_3a4a8a/cf_qaba_3a4a8a.mhclo",
+  "makehuman_system_assets: shoes02/shoes02.mhclo",
+  "char-forge build_real.py kitbash(자체 생성): shell"
+ ]
+}

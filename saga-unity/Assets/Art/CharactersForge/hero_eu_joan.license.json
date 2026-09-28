@@ -1,0 +1,18 @@
+{
+ "id": "hero_eu_joan",
+ "generator": "tools/char-forge/build_real.py",
+ "blender": "5.2.1 LTS",
+ "license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+ "inputs": [
+  "mpfb 2.0.17: base.obj · targets · rig.game_engine",
+  "ual1_standard: Unreal Engine/AL_Standard.fbx",
+  "makehuman_system_assets: young_caucasian_female/young_caucasian_female.mhmat",
+  "makehuman_system_assets: high-poly/high-poly.mhclo",
+  "makehuman_system_assets: eyebrow003/eyebrow003.mhclo",
+  "makehuman_system_assets: eyelashes04/eyelashes04.mhclo",
+  "makehuman_system_assets: teeth_base/teeth_base.mhclo",
+  "makehuman_system_assets: ponytail01/ponytail01.mhclo",
+  "makehuman_system_assets: cf_hauberk_e8e2d0_2a3a7a/cf_hauberk_e8e2d0_2a3a7a.mhclo",
+  "makehuman_system_assets: rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
+ ]
+}

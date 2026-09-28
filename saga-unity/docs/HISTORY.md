@@ -10218,3 +10218,12 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 검증(묶음 없는 PC): 컴파일 0 · `PlaytestHeadless` 3연속 같은 결과(다른 줄은 옛 레벨업 컷 확대값 — 시간 의존) — story allies OK(… · 부채 바람 부채꼴·밀림 10.8m·명단 +6%·수호장 그대로 · 순풍 첫 틱 1초 뒤·2초에 두 번·자리 밖 없음 · 노 물결 길 위만·앞으로 9.0m·나는 제자리 · 뱃노래 맞힌 뒤 둘·1초 쉼·15초 끝), OK 51 줄, 남은 FAIL 기준선 등불. 밀린 거리가 13m·11.1m 보다 짧은 건 진단이 적을 0.3초 굴리는 동안 적이 다시 나에게 다가오기 때문.
 - 실기 확인 전: 부채꼴 빛줄 다섯·물길 굵기가 읽히는지 · 13m 밀어냄이 너무 먼지(무리를 흩어 오히려 불편한지) · 바람 자리 두 겹 고리 · 물 노 빛줄 · 뱃노래가 켜져 있는지 알 길이 없다(웹도 상태 줄 없음).
 - 다음 = 14-18 (웹 ⑲-18 편성 칸 넷·싸우는 중 막기·단추 줄).
+
+## 2026-09-28 char-forge — GO 인물 105 제 몸(장치·가져오기 끝, 게임 반영은 사용자 판정 대기)
+
+"인물 105 이어해". 0c782cde 장치(`PartyBodies.ForgeHero` — `Resources/ForgeHero/hero_<id>` 를 쓸 때 한 벌씩, `HeroDresser.DressOwn` 레시피 키 그대로·체격 배율 없음·머리 꾸밈 없음, `SetupForgeHeroes`).
+
+- 옷 틀 92 다시 짓기(garments.py) → 105벌 `build_real.py --check` 실패 0 → `CharactersForge/hero_*.fbx`(로컬 전용)·`.license.json`(커밋) → `SetupForgeHeroes` `FORGE_HERO n=105 human=105 h=1.58~2.08 missing=0` OK.
+- `PlaytestGoHeroLooks`: 제 몸은 따로 잼(키 = 1.75m 비) · 동행·들판·겨루기 꾸밈 수에서 머리 꾸밈 뺌(`WantGear`) — 고치기 전 판은 "꾸밈 2 ≠ 3" 셋. 고친 뒤 `PlaytestHeadless` exit 0 · 입혀 봄 105(제 몸 105) 꾸밈 112 키 오차 0.0%. 옛 두 벌로 먼저 넣은 첫 판은 field combat 11 줄이 흔들렸고 다음 판 0(가져오기 직후 판은 기준선으로 치지 말 것).
+- 관문 `SagaAssetGate` OK(Resources 프리팹은 CharactersForge 라 사실 몸 목록 그대로 470).
+- **눈으로 본 결과(render_grid 14장, 판정 페이지)**: 긴 옷이 자루처럼 부풂 · 찰갑 어깨판·허리 판이 몸에서 뜸 · 옷 틀·색이 같아 머리만 다른 사람 여럿. 추천 = 보류하고 옷 틀 생성기부터(사람마다 말고 틀에서 고치면 105벌이 같이 낫는다). 이 PC 게임엔 지금 들어가 있다(`CharactersForge/Resources/ForgeHero/` 를 지우면 표의 몸 열일곱으로 돌아감).

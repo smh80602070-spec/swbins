@@ -243,6 +243,10 @@ namespace Saga.EditorTools
             return false;
         }
 
+        /// <summary>붙어야 할 꾸밈 수 — char-forge 제 몸은 머리 꾸밈을 안 씌운다(<see cref="HeroDresser.DressOwn"/>).</summary>
+        private static int WantGear(GoHeroLooks.Look l) =>
+            (l.Back != Gear.None ? 1 : 0) + (l.Hip != Gear.None ? 1 : 0) + (l.Head != Gear.None && PartyBodies.ForgeHero(l.HeroId) == null ? 1 : 0);
+
         // ---- 동행 교체 ----------------------------------------------------------
 
         private static string CheckSwap(FieldCombat fc, PartyBodies bodies)
@@ -259,7 +263,7 @@ namespace Saga.EditorTools
                 var body = pc.Visual;
                 if (body == hero) { Fail("교체했는데 주인공 몸"); return ""; }
                 int n = body.GetComponentsInChildren<Transform>(true).Count(t => t.name.StartsWith(HeroDresser.GearPrefix));
-                if (n != 2 + (l.Hip != Gear.None ? 1 : 0)) Fail($"동행 몸 꾸밈 {n}");
+                if (n != WantGear(l)) Fail($"동행 몸 꾸밈 {n} ≠ {WantGear(l)}");
                 var anim = pc.Animator;
                 var backGear = body.GetComponentsInChildren<Transform>(true).First(t => t.name == HeroDresser.GearPrefix + l.Back);
                 var chest = anim.GetBoneTransform(HumanBodyBones.UpperChest) ?? anim.GetBoneTransform(HumanBodyBones.Chest);
@@ -291,7 +295,7 @@ namespace Saga.EditorTools
             foreach (var s in heroes.Slots)
             {
                 if (s.Idle == null || !GoHeroLooks.TryGet(s.HeroId, out var l) || bodies.LookBody(l.Body) == null) continue;
-                int want = (l.Back != Gear.None ? 1 : 0) + (l.Hip != Gear.None ? 1 : 0) + (l.Head != Gear.None ? 1 : 0);
+                int want = WantGear(l);
                 int n = s.Idle.GetComponentsInChildren<Transform>(true).Count(t => t.name.StartsWith(HeroDresser.GearPrefix));
                 if (n != want) Fail($"들판에 선 {s.HeroId} 꾸밈 {n} ≠ {want}");
                 else idleDressed++;
@@ -303,7 +307,7 @@ namespace Saga.EditorTools
             try
             {
                 int n = e.GetComponentsInChildren<Transform>(true).Count(t => t.name.StartsWith(HeroDresser.GearPrefix));
-                int want = (la.Back != Gear.None ? 1 : 0) + (la.Hip != Gear.None ? 1 : 0) + (la.Head != Gear.None ? 1 : 0);
+                int want = WantGear(la);
                 if (n != want) Fail($"겨루기 상대 {hero.Id} 꾸밈 {n} ≠ {want}");
                 return $"선 인물 {idleDressed} · 겨루기 상대 꾸밈 {n}";
             }
