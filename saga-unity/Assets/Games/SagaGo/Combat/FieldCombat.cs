@@ -66,6 +66,8 @@ namespace Saga.Go.Combat
             public float Energy;
             /// <summary>109-14-4 깨달음 ⑤ — 해방 뒤 남은 공격 +20% 초.</summary>
             public float BuffLeft;
+            /// <summary>109-14-11 원소 부여(검기·불새 깃) — 남은 초·기본/강/낙하 피해 배율.</summary>
+            public float InfuseLeft, InfuseMul = 1f;
             public bool Down => Hp <= 0f;
             public bool BurstReady => Energy >= BurstCost;
         }
@@ -93,7 +95,21 @@ namespace Saga.Go.Combat
             public Color Color;
             public int Ticks, Hits;
             public SkillSpirit Spirit;
+            // 109-14-11 진(가까운 적 N · 맞힐 때마다 명단 기력)·소용돌이(빨아들임)
+            public float Every, EnergyPerHit, Pull;
+            public int N;
         }
+
+        // ---- 109-14-11 고유·갈래 해방이 거는 명단 효과 · 늦게 떨어지는 탄 ----
+        public float RallyLeft { get; private set; }
+        public float RallyMul { get; private set; } = 1f;
+        public float WardLeft { get; private set; }
+        public float WardMul { get; private set; } = 1f;
+        public float HasteLeft { get; private set; }
+        /// <summary>마지막으로 쓴 스킬·해방 한 벌(진단).</summary>
+        public HeroKit LastKit { get; private set; }
+        private readonly List<(Vector3 pos, float left, float r, float amount, GoElement el, Color c)> _shells = new List<(Vector3, float, float, float, GoElement, Color)>();
+        public int ShellCount => _shells.Count;
 
         private readonly List<SkillZone> _zones = new List<SkillZone>();
         public IReadOnlyList<SkillZone> Zones => _zones;
@@ -145,7 +161,8 @@ namespace Saga.Go.Combat
                 var md = WeaponState.ModsOf(Active?.Id); // 109-14-5a 든 무기 공격 · 공격%
                 var ab = ArtifactState.BonusOf(Active?.Id); // 109-14-5b 보패 공격% · 고정 공격(웹 식: (기본 + 무기) × (1 + %) + 고정)
                 return ((PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus + md.Atk) * (1f + md.AtkPct + ab.AtkPct) + ab.Atk + CookState.Buff("atk")) * PerkState.AtkMultiplier * BondState.AtkMultiplier // 109-14-6 요리 공격(고정)
-                    * (Active != null && Active.BuffLeft > 0f ? GoTalent.C5Atk : 1f); // 109-14-4 깨달음 ⑤
+                    * (Active != null && Active.BuffLeft > 0f ? GoTalent.C5Atk : 1f) // 109-14-4 깨달음 ⑤
+                    * (RallyLeft > 0f ? RallyMul : 1f); // 109-14-11 군기·학날개 진
             }
         }
 
@@ -336,10 +353,12 @@ namespace Saga.Go.Combat
             if (SwapCooldown > 0f) SwapCooldown -= dt;
             foreach (var m in _party)
             {
-                if (m.SkillCd > 0f) m.SkillCd = Mathf.Max(0f, m.SkillCd - dt);
+                if (m.SkillCd > 0f) m.SkillCd = Mathf.Max(0f, m.SkillCd - dt * (HasteLeft > 0f ? 2f : 1f)); // 109-14-11 천기 뇌우 — 두 배로 돈다
                 if (m.BuffLeft > 0f) m.BuffLeft = Mathf.Max(0f, m.BuffLeft - dt);
+                if (m.InfuseLeft > 0f) m.InfuseLeft = Mathf.Max(0f, m.InfuseLeft - dt);
             }
             TickZones(dt);
+            TickKitEffects(dt);
             TickBurn(dt);
             TickGuardAndSeeds(dt);
             _sinceHit += dt;
@@ -373,8 +392,8 @@ namespace Saga.Go.Combat
             Vector3 fwd = Forward();
             int hits = 0;
             float atk = Atk;
-            GoElement el = kit.Element ? Active.Element : GoElement.Physical;
-            float amount = atk * kit.Mul[step] * TalentMul(GoTalent.Kind.Normal) * DmgMul(Active.Id, "n", el); // 109-14-4 기본 무예 · 무기 효과 · 109-14-5b 보패
+            GoElement el = kit.Element || Active.InfuseLeft > 0f ? Active.Element : GoElement.Physical; // 109-14-11 원소 부여
+            float amount = atk * kit.Mul[step] * TalentMul(GoTalent.Kind.Normal) * DmgMul(Active.Id, "n", el) * (Active.InfuseLeft > 0f ? Active.InfuseMul : 1f); // 109-14-4 기본 무예 · 무기 효과 · 109-14-5b 보패
             if (kit.Reach > 0f)
             {
                 foreach (var e in Snapshot())
@@ -444,7 +463,8 @@ namespace Saga.Go.Combat
                 if (d.magnitude > ChargeReach) continue;
                 if (d.sqrMagnitude > 0.25f && Vector3.Dot(d.normalized, fwd) < ChargeFrontDot) continue;
                 float cm = CritMul(Active.Id, out bool crit);
-                e.TakeHit(atk * ChargeMul * TalentMul(GoTalent.Kind.Normal) * DmgMul(Active.Id, "n", GoElement.Physical) * cm, GoElement.Physical, atk * ReactMul, out _, heavy: true, crit: crit);
+                GoElement cel = Active.InfuseLeft > 0f ? Active.Element : GoElement.Physical; // 109-14-11 원소 부여
+                e.TakeHit(atk * ChargeMul * TalentMul(GoTalent.Kind.Normal) * DmgMul(Active.Id, "n", cel) * (Active.InfuseLeft > 0f ? Active.InfuseMul : 1f) * cm, cel, atk * ReactMul, out _, heavy: true, crit: crit);
                 hits++;
             }
             if (hits > 0) Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * hits);
@@ -469,7 +489,8 @@ namespace Saga.Go.Combat
             {
                 if (Flat(e.transform.position - transform.position).magnitude > PlungeRadius) continue;
                 float cm = Active != null ? CritMul(Active.Id, out bool crit) : 1f;
-                e.TakeHit(atk * mul * cm, GoElement.Physical, atk, out _, heavy: true, crit: LastCrit);
+                bool inf = Active != null && Active.InfuseLeft > 0f; // 109-14-11 원소 부여
+                e.TakeHit(atk * mul * cm * (inf ? Active.InfuseMul : 1f), inf ? Active.Element : GoElement.Physical, atk, out _, heavy: true, crit: LastCrit);
                 hits++;
             }
             if (hits > 0 && Active != null) Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * hits);
@@ -492,6 +513,8 @@ namespace Saga.Go.Combat
         {
             var m = Active;
             if (!CanAct() || m.SkillCd > 0f) return -1;
+            var hk = GoKits.KitOf(m.Id, m.Element); // 109-14-11 고유·갈래 — 지략·도감 밖은 null(109-8 모양)
+            if (hk != null) return KitSkillCast(m, hk);
             m.SkillCd = SkillCooldownSec * TalentState.SkillCdMul(m.Id); // 109-14-4 깨달음 ①
             var shape = GoSkillShapes.ShapeOf(m.Id);
             LastShape = shape;
@@ -601,6 +624,12 @@ namespace Saga.Go.Combat
             while (z.Next <= 1e-6f && z.Left > 1e-6f)
             {
                 z.Ticks++;
+                if (z.Kind == SkillShape.KitZone || z.Kind == SkillShape.Vortex)
+                {
+                    TickKitZone(z); // 109-14-11 진·소용돌이
+                    z.Next += z.Every;
+                    continue;
+                }
                 if (z.Kind == SkillShape.Field)
                 {
                     int n = 0;
@@ -660,6 +689,8 @@ namespace Saga.Go.Combat
         {
             var m = Active;
             if (!CanAct() || !m.BurstReady) return -1;
+            var hk = GoKits.KitOf(m.Id, m.Element); // 109-14-11
+            if (hk != null) return KitBurstCast(m, hk);
             m.Energy = 0f;
             int hits = AreaHit(transform.position, BurstRadius, Atk * BurstMul * TalentMul(GoTalent.Kind.Burst) * DmgMul(m.Id, "b", m.Element), m.Element);
             if (TalentState.BurstBuff(m.Id)) m.BuffLeft = GoTalent.C5Sec; // 109-14-4 깨달음 ⑤
@@ -723,7 +754,7 @@ namespace Saga.Go.Combat
                 FieldDamageText.Spawn(transform.position + Vector3.up * 4f, GoLocalization.T("field.evade", "회피!"), new Color(0.7f, 0.95f, 1f), 1.1f);
                 return false;
             }
-            float dmg = enemyAtk * 200f / (200f + Mathf.Max(0f, ActiveDef));
+            float dmg = enemyAtk * 200f / (200f + Mathf.Max(0f, ActiveDef)) * (WardLeft > 0f ? WardMul : 1f); // 109-14-11 맹세
             if (GuardHp > 0f)
             {
                 // 109-14-1a 굳힘 — 받는 피해를 먼저 막고, 다 막으면 원소 효과도 막는다
@@ -1002,7 +1033,180 @@ namespace Saga.Go.Combat
             GuardHp = GuardMax = GuardLeft = 0f;
             _seeds.Clear();
             ClearZones();
+            RallyLeft = WardLeft = HasteLeft = 0f; // 109-14-11
+            _shells.Clear();
+            foreach (var m in _party) m.InfuseLeft = 0f;
             ApplyLook();
+        }
+
+        // ---- 109-14-11 고유·갈래 스킬·해방(웹 사가고 ⑲-11 `kitSkill`·`kitBurst`) ----
+
+        private void HealParty(float frac)
+        {
+            foreach (var o in _party) if (!o.Down) o.Hp = Mathf.Min(o.MaxHp, o.Hp + o.MaxHp * frac);
+        }
+
+        private void EnergyOthers(Member m, float web)
+        {
+            foreach (var o in _party) if (o != m && !o.Down) o.Energy = Mathf.Min(BurstCost, o.Energy + web * GoKits.EnergyScale);
+        }
+
+        private int KitSkillCast(Member m, HeroKit hk)
+        {
+            var s = hk.Skill;
+            LastKit = hk;
+            m.SkillCd = Mathf.Max(1f, s.Cd) * TalentState.SkillCdMul(m.Id);
+            const float D = GoKits.Dist;
+            float reach = s.Type == KitSkillType.Shells ? s.Reach * D : Mathf.Max(AutoFaceRadius * 1.5f, s.Len * D);
+            var target = Nearest(reach);
+            if (target != null && player != null) player.FaceToward(target.transform.position);
+            Vector3 pos = transform.position, dir = Forward();
+            float aimDist = 0f;
+            if (target != null)
+            {
+                Vector3 d = Flat(target.transform.position - pos);
+                aimDist = d.magnitude;
+                if (aimDist > 0.01f) dir = d / aimDist;
+            }
+            Color fx = GoSkillShapes.FxColor(m.Id, m.Element);
+            float atk = Atk;
+            float amount = atk * s.Mul * GoKits.SkillScale * TalentMul(GoTalent.Kind.Skill) * DmgMul(m.Id, "s", m.Element);
+            int hits = 0;
+            switch (s.Type)
+            {
+                case KitSkillType.Dash:
+                {
+                    float len = s.Len * D, w = s.W * D, stop = 1.2f * D;
+                    float go = target != null ? Mathf.Min(len, Mathf.Max(0f, aimDist - stop)) : len;
+                    Vector3 end = pos + dir * go;
+                    hits = LineHit(pos, end + dir * stop, w, amount, m.Element);
+                    InvulnLeft = Mathf.Max(InvulnLeft, GoSkillShapes.DashInvulnSec);
+                    if (player != null && go > 0.05f) player.Dash(dir, go, GoSkillShapes.DashSec);
+                    FieldLineFx.Spawn(pos, end + dir * stop, w * 2f, fx, 0.45f);
+                    ElementPulse?.Invoke(end, w * 2f, m.Element);
+                    break;
+                }
+                case KitSkillType.Shells:
+                {
+                    var foes = new List<FieldEnemy>(Snapshot());
+                    foes.RemoveAll(e => Flat(e.transform.position - pos).magnitude > s.Reach * D);
+                    foes.Sort((a, b) => Flat(a.transform.position - pos).sqrMagnitude.CompareTo(Flat(b.transform.position - pos).sqrMagnitude));
+                    var spots = new List<Vector3>();
+                    for (int i = 0; i < foes.Count && i < s.N; i++) spots.Add(foes[i].transform.position);
+                    if (spots.Count == 0) spots.Add(pos + dir * 8f * D);
+                    foreach (var p in spots)
+                    {
+                        _shells.Add((p, s.Delay, s.R * D, amount, m.Element, fx));
+                        FieldRingFx.Spawn(p, s.R * D, fx, s.Delay);
+                    }
+                    hits = foes.Count > 0 ? Mathf.Min(foes.Count, s.N) : 0;
+                    break;
+                }
+                case KitSkillType.Guard:
+                {
+                    hits = AreaHit(pos, s.R * D, amount, m.Element);
+                    float shield = m.MaxHp * (s.Shield + s.ShieldAdd);
+                    GuardMax = Mathf.Max(shield, GuardHp);
+                    GuardHp = Mathf.Max(shield, GuardHp);
+                    GuardLeft = Mathf.Max(GuardLeft, s.Sec);
+                    FieldRingFx.Spawn(pos, s.R * D, fx, 0.6f);
+                    FieldRingFx.Spawn(pos, 2.2f, GoElements.ColorOf(GoElement.Geo), 0.5f);
+                    ElementPulse?.Invoke(pos, s.R * D, m.Element);
+                    break;
+                }
+                case KitSkillType.Zone:
+                {
+                    var z = new SkillZone { Kind = SkillShape.KitZone, Owner = m.Id, Center = pos, Radius = s.R * D, Left = s.Sec, Atk = atk, Element = m.Element, Color = fx,
+                        Mul = s.Mul * GoKits.SkillScale * TalentMul(GoTalent.Kind.Skill) * DmgMul(m.Id, "s", m.Element), React = ReactMul,
+                        Every = s.Every, N = s.N, EnergyPerHit = s.Energy * GoKits.EnergyScale };
+                    _zones.Add(z);
+                    TickZone(z, 0f);
+                    hits = z.Hits;
+                    break;
+                }
+            }
+            if (s.Heal > 0f) HealParty(s.Heal);
+            if (s.Team > 0f) EnergyOthers(m, s.Team);
+            if (hits > 0) m.Energy = Mathf.Min(BurstCost, m.Energy + EnergyPerSkillHit * EnergyMul);
+            FieldDamageText.Spawn(pos + Vector3.up * 5.2f, s.Name, fx, 1.1f);
+            if (player != null && player.Animator != null) player.Animator.SetTrigger("Attack");
+            return hits;
+        }
+
+        private int KitBurstCast(Member m, HeroKit hk)
+        {
+            var b = hk.Burst;
+            LastKit = hk;
+            m.Energy = 0f;
+            const float D = GoKits.Dist;
+            Vector3 pos = transform.position;
+            Color fx = GoSkillShapes.FxColor(m.Id, m.Element);
+            int hits = AreaHit(pos, b.R * D, Atk * b.Mul * GoKits.BurstScale * TalentMul(GoTalent.Kind.Burst) * DmgMul(m.Id, "b", m.Element), m.Element);
+            switch (b.Type)
+            {
+                case KitBurstType.Infuse: m.InfuseLeft = b.Sec; m.InfuseMul = b.NMul; break;
+                case KitBurstType.Rally: RallyLeft = b.Sec; RallyMul = b.Atk; break;
+                case KitBurstType.Ward: WardLeft = b.Sec; WardMul = b.Taken; break;
+                case KitBurstType.Haste: HasteLeft = b.Sec; EnergyOthers(m, b.Energy); break;
+                case KitBurstType.Vortex:
+                {
+                    Vector3 c = pos + Forward() * b.Ahead * D;
+                    var z = new SkillZone { Kind = SkillShape.Vortex, Owner = m.Id, Center = c, Radius = b.Pull * D, Left = b.Sec, Atk = Atk, Element = m.Element, Color = fx,
+                        Mul = b.Tick * GoKits.BurstScale * TalentMul(GoTalent.Kind.Burst) * DmgMul(m.Id, "b", m.Element), React = ReactMul,
+                        Every = b.Every, Pull = b.Pull * D };
+                    _zones.Add(z);
+                    FieldRingFx.Spawn(c, z.Radius, fx, 0.8f);
+                    break;
+                }
+            }
+            if (b.Heal > 0f) HealParty(b.Heal);
+            if (b.Team > 0f) EnergyOthers(m, b.Team);
+            if (TalentState.BurstBuff(m.Id)) m.BuffLeft = GoTalent.C5Sec; // 109-14-4 깨달음 ⑤
+            FieldRingFx.Spawn(pos, b.R * D, fx, 0.7f);
+            FieldRingFx.Spawn(pos, b.R * D * 0.6f, Color.white, 0.5f);
+            ElementPulse?.Invoke(pos, b.R * D, m.Element);
+            ToastLine(string.Format(GoLocalization.T("field.burst_named", "{0} — {1}!"), m.Name, b.Name), 1.5f);
+            if (player != null && player.Animator != null) player.Animator.SetTrigger("Attack");
+            return hits;
+        }
+
+        /// <summary>진 — 가까운 적 N 을 치고 맞힐 때마다 명단 기력 · 소용돌이 — 반경 안 적을 가운데로 끌며 친다.</summary>
+        private void TickKitZone(SkillZone z)
+        {
+            var foes = new List<FieldEnemy>();
+            foreach (var e in Snapshot()) if (Flat(e.transform.position - z.Center).magnitude <= z.Radius) foes.Add(e);
+            foes.Sort((a, b) => Flat(a.transform.position - z.Center).sqrMagnitude.CompareTo(Flat(b.transform.position - z.Center).sqrMagnitude));
+            int n = 0;
+            foreach (var e in foes)
+            {
+                if (z.Kind == SkillShape.KitZone && n >= z.N) break;
+                if (z.Kind == SkillShape.Vortex) e.PullToward(z.Center, z.Pull * 0.35f);
+                float cm = CritMul(z.Owner, out bool crit);
+                e.TakeHit(z.Atk * z.Mul * cm, z.Element, z.Atk * z.React, out _, crit: crit);
+                n++;
+            }
+            z.Hits += n;
+            if (z.Kind == SkillShape.KitZone && n > 0)
+                foreach (var o in _party) if (!o.Down) o.Energy = Mathf.Min(BurstCost, o.Energy + z.EnergyPerHit * n);
+            FieldRingFx.Spawn(z.Center, z.Radius, z.Color, 0.5f);
+            ElementPulse?.Invoke(z.Center, z.Radius, z.Element);
+        }
+
+        private void TickKitEffects(float dt)
+        {
+            if (RallyLeft > 0f) RallyLeft = Mathf.Max(0f, RallyLeft - dt);
+            if (WardLeft > 0f) WardLeft = Mathf.Max(0f, WardLeft - dt);
+            if (HasteLeft > 0f) HasteLeft = Mathf.Max(0f, HasteLeft - dt);
+            for (int i = _shells.Count - 1; i >= 0; i--)
+            {
+                var sh = _shells[i];
+                sh.left -= dt;
+                if (sh.left > 0f) { _shells[i] = sh; continue; }
+                _shells.RemoveAt(i);
+                AreaHit(sh.pos, sh.r, sh.amount, sh.el);
+                FieldRingFx.Spawn(sh.pos, sh.r, sh.c, 0.4f);
+                ElementPulse?.Invoke(sh.pos, sh.r, sh.el);
+            }
         }
     }
 }

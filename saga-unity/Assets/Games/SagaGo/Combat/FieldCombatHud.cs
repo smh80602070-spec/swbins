@@ -164,7 +164,8 @@ namespace Saga.Go.Combat
             _staminaFill.color = GoStamina.SprintLocked ? new Color(1f, 0.45f, 0.3f, 0.9f) : new Color(0.9f, 1f, 0.6f, 0.9f);
 
             Color ec = GoElements.ColorOf(m.Element);
-            string skillName = GoSkillShapes.Name(GoSkillShapes.ShapeOf(m.Id)); // 109-8 — 동행마다 모양 이름(주인공 = 스킬)
+            var hk = GoKits.KitOf(m.Id, m.Element); // 109-14-11 고유·갈래면 그 스킬 이름
+            string skillName = hk != null ? hk.Skill.Name : GoSkillShapes.Name(GoSkillShapes.ShapeOf(m.Id)); // 109-8 — 동행마다 모양 이름(주인공 = 스킬)
             _skillLabel.text = m.SkillCd > 0f
                 ? $"{skillName}\n{Mathf.CeilToInt(m.SkillCd)}"
                 : $"{skillName}\n(E)";

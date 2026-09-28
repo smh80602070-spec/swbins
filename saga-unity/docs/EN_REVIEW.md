@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **2649** (표 2594 · 코드 55) — go 805 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **164**
-- 사람 검수 **0/2649** — 순위1 0/265 · 순위2 0/1675 · 순위3 0/709
+- 짝 **2679** (표 2624 · 코드 55) — go 835 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **170**
+- 사람 검수 **0/2679** — 순위1 0/265 · 순위2 0/1705 · 순위3 0/709
 
 ## 검수 순서
 
@@ -26,7 +26,7 @@
 
 없음.
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 164)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 170)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -37,6 +37,7 @@
 | 4→13 | dungeon | `item.wp_lm_cloud` | Cloud General's Gold Sword |
 | 6→15 | dungeon | `landmark.cloud` | Golden Palace Above the Clouds |
 | 2→9 | forest | `finish.jangpan` | Oiled Paper Floor |
+| 3→10 | go | `kit.sig.zhuge.skill` | Eight Trigrams Array |
 | 3→10 | dungeon | `enemy.grunt` | Yellow Turban Bandit |
 | 3→10 | story | `enemy.hwanggeon` | Yellow Turban Bandit |
 | 5→14 | go | `cook.recipe.ash_pancake` | Ash Flower Mushroom Pancake |
@@ -52,6 +53,7 @@
 | 6→13 | go | `domain.site.d_school` | Riverside Old Schoolhouse |
 | 4→11 | dungeon | `landmark.bandit` | Black Wind Stronghold |
 | 4→11 | story | `bp.boss.bandit_chief` | Mountain Bandit Chief |
+| 4→11 | go | `kit.sig.zhuge.burst` | Heaven's Thunderstorm |
 | 3→9 | go | `cook.item.orchid` | Blue River Orchid |
 | 5→12 | dungeon | `lordsig.bandit` | Black Wind Triple Charge |
 | 6→14 | dungeon | `enemy.elite` | Fierce Yellow Turban Bandit |
@@ -60,5 +62,3 @@
 | 13→24 | realm | `war.err_too_few_troops` | You need more than five hundred to call it an army. |
 | 10→20 | dungeon | `region.map_outside` | Now — outside the regions (in the dungeon) |
 | 16→29 | forest | `visitor.wisp.chat_open` | Hehe, yesterday I secretly flicked three lanterns off and on |
-| 5→12 | go | `artifact.why.polish` | Not enough polish stones |
-| 4→10 | dungeon | `lordsig.cloud` | Heaven Thunder Cross |

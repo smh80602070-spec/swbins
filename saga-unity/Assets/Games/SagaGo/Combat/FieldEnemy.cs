@@ -188,6 +188,16 @@ namespace Saga.Go.Combat
         /// <summary>곧장 쫓는다(숨은 터 파도).</summary>
         public void ForceChase() { if (Alive) EnterChase(); }
 
+        /// <summary>109-14-11 소용돌이 — 가운데 쪽으로 step 만큼 끈다(수호장은 안 끌린다).</summary>
+        public void PullToward(Vector3 center, float step)
+        {
+            if (!Alive || IsGuardian || IsWeeklyBoss) return;
+            Vector3 d = Flat(center - transform.position);
+            float m = d.magnitude;
+            if (m < 0.5f) return;
+            transform.position = Grounded(transform.position + d / m * Mathf.Min(step, m - 0.5f));
+        }
+
         /// <summary>원소를 띠게 한다(무덤 터 기운) — 얼어 있으면 안 건드린다.</summary>
         public void SoakAura(GoElement el, float sec)
         {

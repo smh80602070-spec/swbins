@@ -411,6 +411,7 @@
 2	go	dex.detail.seen	{0} · {1} 원소 — 만났지만 아직 동행이 아니다⏎{2}에 선다 · 이겨서 굴복시키면 동행	{0} · {1} element — met, but not yet a companion⏎Stands in {2} · defeat them to make them yield and join		
 2	go	dex.detail.unseen	아직 만나지 않은 사람 — {0} {1}⏎{2} 어딘가에 선다	Not yet met — {0} {1}⏎Stands somewhere in {2}		
 2	go	dex.hint	칸을 누르면 자세히 · 들판에서 겨뤄 본 사람은 그림자에서 벗어나고, 이겨서 굴복시키면 동행이 된다	Tap a card for details · anyone you have challenged in the field steps out of the shadow; defeat them to make them yield and join you		
+2	go	dex.kit	{0} · 스킬 {1} · 해방 {2}	{0} · Skill {1} · Release {2}		
 2	go	dex.seen	만남	Met		
 2	go	dex.title	도감 — 등용 {0}/{1} · 만남 {2}	Codex — recruited {0}/{1} · met {2}		
 2	go	domain.boss	먹구름 이무기	Stormcloud Serpent		
@@ -526,6 +527,7 @@
 2	go	field.btn.sight	시야	Sight		
 2	go	field.btn.skill	스킬	Skill		
 2	go	field.burst	{0} — 원소 해방!	{0} — Elemental Release!		
+2	go	field.burst_named	{0} — {1}!	{0} — {1}!		
 2	go	field.charge	강공격	Heavy Attack		
 2	go	field.charge_low	스태미나 부족	Not enough stamina		
 2	go	field.counter	상성!	Counter!		
@@ -718,6 +720,34 @@
 2	go	item.wp_iron	쇠칼	Iron Sword		
 2	go	item.wp_relic	유물 검	Relic Sword		
 2	go	item.wp_wood	목검	Wooden Sword		
+2	go	kit.label.command	통솔	Command		
+2	go	kit.label.might	무용	Might		
+2	go	kit.label.sig	고유	Signature		
+2	go	kit.label.virtue	인덕	Virtue		
+2	go	kit.label.wisdom	지략	Wisdom		
+2	go	kit.noun.banner	군기	Banner		
+2	go	kit.noun.charge	돌격	Charge		
+2	go	kit.noun.edge	검기	Blade Aura		
+2	go	kit.noun.oath	맹세	Oath		
+2	go	kit.noun.order	호령	Volley Order		
+2	go	kit.noun.shield	방패	Shield Wall		
+2	go	kit.sig.gyebaek.burst	오천의 맹세	Oath of Five Thousand		
+2	go	kit.sig.gyebaek.skill	결사 방진	Last Stand Square		
+2	go	kit.sig.hero.burst	불새 깃	Firebird Plume		
+2	go	kit.sig.hero.skill	불꽃 돌진	Flame Rush		
+2	go	kit.sig.huang.burst	돌개 화살	Whirlwind Arrows		
+2	go	kit.sig.huang.skill	화살비	Arrow Rain		
+2	go	kit.sig.yisun.burst	학날개 진	Crane Wing Formation		
+2	go	kit.sig.yisun.skill	일제 포격	Full Broadside		
+2	go	kit.sig.zhuge.burst	천기 뇌우	Heaven's Thunderstorm		
+2	go	kit.sig.zhuge.skill	팔괘진	Eight Trigrams Array		
+2	go	kit.word.anemo	바람	Gale		
+2	go	kit.word.cryo	서리	Frost		
+2	go	kit.word.dendro	덩굴	Vine		
+2	go	kit.word.electro	번개	Lightning		
+2	go	kit.word.geo	바위	Stone		
+2	go	kit.word.hydro	물결	Tidal		
+2	go	kit.word.pyro	불꽃	Blazing		
 2	go	map.chests	 · 보물 상자 {0}/{1}	 · Chests {0}/{1}		
 2	go	map.fall_east	은빛 폭포	Silver Falls		
 2	go	map.fall_west	안개 폭포	Mist Falls		

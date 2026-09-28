@@ -523,6 +523,13 @@ namespace Saga.Go.UI
             RefreshTalent();
         }
 
+        /// <summary>109-14-11 — "고유 · 팔괘진 / 천기 뇌우" 한 줄(지략·스킬표가 꺼져 있으면 빈 글).</summary>
+        public static string KitLine(string id, GoElement el)
+        {
+            var k = Saga.Go.Combat.GoKits.KitOf(id, el);
+            return k == null ? "" : "\n" + string.Format(GoLocalization.T("dex.kit", "{0} · 스킬 {1} · 해방 {2}"), k.Label, k.Skill.Name, k.Burst.Name);
+        }
+
         public static string Detail(string id)
         {
             if (id == null || !GoHeroes.TryGet(id, out var h))
@@ -533,7 +540,8 @@ namespace Saga.Go.UI
             {
                 case CardState.Got:
                     return string.Format(GoLocalization.T("dex.detail.got", "{0} · {1} 원소 · 기질 {2}\n무력 {3} · 지력 {4} · 통솔 {5} — \"{6}\""),
-                        GoHeroes.Label(h), GoElements.NameOf(el), GoHeroes.TraitName(h.Trait), h.Might, h.Wisdom, h.Command, GoHeroes.Quote(h));
+                        GoHeroes.Label(h), GoElements.NameOf(el), GoHeroes.TraitName(h.Trait), h.Might, h.Wisdom, h.Command, GoHeroes.Quote(h))
+                        + KitLine(id, el); // 109-14-11
                 case CardState.Seen:
                     return string.Format(GoLocalization.T("dex.detail.seen", "{0} · {1} 원소 — 만났지만 아직 동행이 아니다\n{2}에 선다 · 이겨서 굴복시키면 동행"),
                         GoHeroes.Label(h), GoElements.NameOf(el), region);

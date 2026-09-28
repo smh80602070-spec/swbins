@@ -115,6 +115,7 @@ namespace Saga.EditorTools
                 Saga.Go.Data.AdventureState.OffForTest = true;
                 Saga.Go.Data.AdventureState.Rescale();
                 Saga.Go.Data.DailyTaskState.OffForTest = true; // 109-14-8 — 날짜마다 다른 일과 보상이 옛 진단 값에 끼지 않게(일과 진단만 켠다)
+                Saga.Go.Combat.GoKits.OffForTest = true; // 109-14-11 — 옛 진단은 109-8 모양 그대로(스킬표 진단만 켠다)
                 var clip = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Art/Audio/Kenney_RPGSounds/chop.ogg");
                 GoAudio.PlaySfx(clip);
                 CheckDebugHud();
@@ -174,6 +175,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoDaily.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-8 일일 의뢰(일과·돈·세이브 되돌림)
                 if (!PlaytestGoDomain.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-9 숨은 터·원기·주간 보스(원기·돈·보패·재료·세이브 되돌림)
                 if (!PlaytestGoFieldBoss.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-10 들판 보스 보상 꽃(수호장·원기·돈·세이브 되돌림)
+                if (!PlaytestGoKits.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-11 고유·갈래 스킬(동행·들판·스위치 되돌림)
                 if (!PlaytestGoPeaks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-9 정상 발견·순간이동·건물 가림 카메라(기록·돈·세이브 되돌림)
                 // 반드시 마지막 — DailyTaskState 진단이 SaveState.TryLoad()로
                 // 세이브 파일을 v9 모양으로 잠깐 바꿔치기해 로드하는데, 이건
