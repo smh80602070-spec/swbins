@@ -50,7 +50,7 @@
   function ES() { var e = global.DG.eraSites; return e && e.on && e.on() ? e : null; }
   function CR() { var c = global.DG.crossing; return c && c.on && c.on() && c.pads ? c : null; }   // ⑲-43 갈림길 끝 섬
   function SR() { var r = global.DG.skyRoute; return r && r.on && r.on() ? r : null; }                // ⑲-48 구름 위 항로 섬 셋
-  /** 떠 있는 발판 — [{ id, name, x, y, r, top, slab, boot? [ch, from, to] }] */
+  /** 떠 있는 발판 — [{ id, name, x, y, r, top, slab, boot? [ch, from, to] 또는 그 목록(⑲-50) }] */
   function pads() {
     var out = [], c = on() ? spot() : null, E = ES();
     if (c) { out.push({ id: 'isle', name: '구름섬', x: c.x, y: c.y, r: ISLE_R, top: top(), slab: SLAB, boot: [SKY_CH, SKY_STEPS[0], SKY_STEPS[1]] }); }
@@ -106,8 +106,9 @@
   function boot() {
     if (booted || !layerOn()) { return; }
     booted = true;
-    var v = progress(), p = core().save.player.pos, l = LF(), pd = padAt(p.x, p.y), b = pd && pd.boot;
-    if (b && v.ch === b[0] && v.step >= b[1] && v.step <= b[2] && l.setSky && !l.gliding()) { l.setSky(true); }
+    var v = progress(), p = core().save.player.pos, l = LF(), pd = padAt(p.x, p.y), B = pd && pd.boot ? (Array.isArray(pd.boot[0]) ? pd.boot : [pd.boot]) : [];
+    var hit = B.some(function (b) { return v.ch === b[0] && v.step >= b[1] && v.step <= b[2]; });
+    if (hit && l.setSky && !l.gliding()) { l.setSky(true); }
   }
 
   /* ── 화면: 섬·난간·돌 단·먹구름 덮개·바람 기둥 ──────────────── */

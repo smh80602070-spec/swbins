@@ -13925,6 +13925,70 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '일곱 단계 · 한별 → 별배(사당 섬 위) → 새벽 → 졸개 넷(섬 위) → 새벽 → 방울(틀림 ✕ → 별·해·달, 먹구름 걷힘) → 새벽 · 🪢+6 🪙+6500 · 기둥 등대·사당 열림' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-50 이야기 7부 제25장 · 멈춘 기상 비행선 (story ch25·하늬·드론 · skyroute 잔해 섬 자리·기관·불러오기, PLAN §5 ⑲-50) ── */
+    t('이야기 ⑲-50 — 25장 일곱 단계(Lv56) · 하늬 잔해 섬 조종실 앞(섬 위) · 반디 둘째 단계부터 잔해 섬 · 흐름: 새벽(사당) → 사당 기둥을 **실제로 타고** 활공해 잔해 섬(목표 = 그 기둥) → 하늬 → 드론 쫓기(섬 위 길만) → 하늬 → 비행선 기관 지키기(섬 위 물결 3·4·5, 나오는 자리 섬 안) → 하늬 · 기관이 살면 프로펠러 · 끝나면 잔해 기둥 열림 · 불러오기 범위', function () {
+      var rig = stRig(56), ST = rig.ST, FC = DG.fieldCombat, SK = DG.skyIsle, LF = DG.landform, R = DG.skyRoute, U = DG.sunken, TL = DG.talent, r = {}, i;
+      try {
+        U._resetForTest(); R._resetForTest(); SK._resetForTest(); LF._resetForTest();
+        var c = ST.CHAPTERS[24], S25 = c.steps;
+        r.table = c.id === 'ch25' && c.ar === 56 && !c.join && S25.length === 7 && c.reward.knot === 6 && c.reward.gold === 6750 &&
+          S25.map(function (q) { return q.type; }).join() === 'talk,sky,talk,chase,talk,defend,talk' && S25[1].pad === 'sr_wreck' && S25[1].draft === 'sr_shrine' &&
+          S25[3].sky && S25[3].npc === 'seeddrone' && S25[5].sky && S25[5].waves.length === 3;
+        var wr = R.isleById('wreck');
+        function inWreck(q, m) { return !!q && Math.hypot(q.x - wr.x, q.y - wr.y) <= wr.r - (m || 0); }
+        function np(k, si) { C.save.story = { ch: 24, step: si }; return ST.npcPos(k); }
+        r.npcs = st10Eq(np('haneul', 0), R.spot('haneul')) && ST.npcInfo('haneul').sky && ST.visible('haneul') &&
+          st10Eq(np('bandi', 0), R.spot('bandi')) && st10Eq(np('bandi', 2), R.spot('wreck_bandi')) && ST.npcInfo('bandi').sky &&
+          st10Eq(np('saebyeok', 0), R.spot('saebyeok')) && !ST.visible('seeddrone');
+        C.save.story = { ch: 24, step: 3 }; r.npcs = r.npcs && ST.visible('seeddrone') && ST.npcInfo('seeddrone').sky;
+        r.spots = ['haneul', 'wreck_bandi', 'wreck_engine'].every(function (k) { return inWreck(R.spot(k), 3); }) &&
+          ST.SEED_DRONE_PATH.every(function (o) { var d = Math.hypot(o[0], o[1]); return d >= 10 && d <= 18; });
+        var pads = R.pads(), bs = pads.filter(function (p) { return p.id === 'sr_shrine'; })[0], bw = pads.filter(function (p) { return p.id === 'sr_wreck'; })[0];
+        r.boot = JSON.stringify(bs.boot) === '[[23,2,6],[24,0,1]]' && JSON.stringify(bw.boot) === '[[24,2,6]]';
+        C.save.story = { ch: 24, step: 0 };
+        var live0 = !R.wreckLive(), D0 = R.drafts().map(function (d) { return d.id; }).join();
+        stGo(ST.npcPos('saebyeok')); LF.setSky(true); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        var dr = R.drafts().filter(function (d) { return d.id === 'sr_shrine'; })[0], tg = ST.targetOf(ST.step()), pos = C.save.player.pos;
+        r.aim = !!dr && st10Eq(tg, dr) && tg.r === dr.r;
+        /* 실제로 탄다 — 기둥 안에서 뛰면 잔해 +9 까지 솟고, 서쪽 활공으로 잔해 섬에 내려서면 다음 단계 */
+        pos.x = dr.x; pos.y = dr.y; LF.jump();
+        for (i = 0; i < 80 && !(LF.gliding() && LF.glideAlt() >= dr.top - 0.01); i++) { LF.tick(0.1); }
+        ST.check(); var still = C.save.story.step === 1;
+        for (i = 0; i < 120 && LF.gliding(); i++) { pos.x -= 0.8; LF.tick(0.1); }
+        ST.check();
+        r.climb = still && LF.onSky() && SK.padAt(pos.x, pos.y).id === 'sr_wreck' && C.save.story.step === 2;
+        stGo(ST.npcPos('haneul')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        /* 쫓기 — 곁이면 섬 둘레로 달아나고(늘 섬 위), 붙잡으면 다음 */
+        ST.stepChase(0.1);
+        var cs = ST.chaseState(), h0 = cs ? { x: cs.x, y: cs.y } : null, onIsle = true;
+        for (i = 0; i < 90; i++) { ST.stepChase(0.1); cs = ST.chaseState(); if (!inWreck(cs, 1)) { onIsle = false; } }
+        r.flee = !!cs && cs.npc === 'seeddrone' && onIsle && Math.hypot(cs.x - h0.x, cs.y - h0.y) > 3;
+        stGo({ x: cs.x + 1, y: cs.y }); ST.stepChase(0.01);
+        r.chase = C.save.story.step === 4;
+        stGo(ST.npcPos('haneul')); r.t4 = stTalkAll(ST) && C.save.story.step === 5;
+        FC.tick(0.05); var en = R.spot('wreck_engine'), S = FC.state();
+        stGo({ x: en.x, y: en.y + 2 }); ST.stepDefend(0.1);
+        var w0 = S.camps[ST.waveKey(0)];
+        r.wave0 = !!w0 && w0.uids.every(function (u) { return S.foes[u].sky && inWreck(S.foes[u], 0.5); });
+        var sizes = [];
+        for (i = 0; i < 3; i++) {
+          if (i) { ST.defState().t = ST.DEFEND_WAVE_SEC; ST.stepDefend(0.01); }
+          var cw = S.camps[ST.waveKey(i)];
+          sizes.push(cw ? cw.uids.length : 0);
+          if (cw && !cw.uids.every(function (u) { return inWreck(S.foes[u], 0.5); })) { sizes.push('off'); }
+          stKillCamp(S, ST.waveKey(i)); FC.tick(0.05);
+        }
+        ST.stepDefend(0.01);
+        r.defend = live0 && sizes.join() === '3,4,5' && C.save.story.step === 6 && R.wreckLive();
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('haneul'));
+        r.end = stTalkAll(ST) && C.save.story.ch === 25 && C.save.story.step === 0 && m.knot === k0 + 6 && C.save.player.gold === gold0 + 6750;
+        r.drafts = D0 === 'sr_light,sr_shrine' && R.drafts().map(function (d) { return d.id; }).join() === 'sr_light,sr_shrine,sr_wreck';
+      } finally { LF._resetForTest(); SK._resetForTest(); R._resetForTest(); U._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '일곱 단계 · 새벽 → 사당 기둥 타고 활공(잔해 섬) → 하늬 → 드론 쫓기(섬 위) → 하늬 → 기관 지키기 3·4·5(섬 안) → 하늬 · 🪢+6 🪙+6750 · 프로펠러 · 잔해 기둥 열림' : ('실패 ' + bad.join(','));
+    });
+
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */
     t('3인칭 이동 Q1 — 3D 로 시점을 돌리면 키·스틱 방향도 같이 돈다(W = 카메라가 보는 쪽) · 3D 가 꺼져 있으면 그대로', function () {
       var W = DG.world, W3 = DG.world3d, r = {};

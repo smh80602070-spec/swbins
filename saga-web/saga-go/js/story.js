@@ -87,8 +87,12 @@
     /* ⑲-47 옛 등대(명소)·등대 발치·기록실 앞 */
     sk_light: { sunken: 'lighthouse' }, sk_light_bandi: { sk: 'light_bandi' }, sk_parang: { sk: 'parang' },
     /* ⑲-49 구름 위 항로(skyroute.js) — 섬 가운데(sr: 섬 id) 또는 이야기 자리. 단계·인물 칸에 sky 를 함께 준다 */
-    sr_shrine: { sr: 'shrine' }, sr_shrine_land: { sr: 'shrine_land' }, sr_saebyeok: { sr: 'saebyeok' }, sr_hanbyeol: { sr: 'hanbyeol' }, sr_bandi: { sr: 'bandi' } };
+    sr_shrine: { sr: 'shrine' }, sr_shrine_land: { sr: 'shrine_land' }, sr_saebyeok: { sr: 'saebyeok' }, sr_hanbyeol: { sr: 'hanbyeol' }, sr_bandi: { sr: 'bandi' },
+    /* ⑲-50 비행선 잔해 섬 — 섬 가운데·하늬·반디·비행선 기관 */
+    sr_wreck: { sr: 'wreck' }, sr_haneul: { sr: 'haneul' }, sr_wreck_bandi: { sr: 'wreck_bandi' }, sr_wreck_engine: { sr: 'wreck_engine' } };
   /* ⑲-40 18장 선장의 잔상 — 은하역 가운데에서 남쪽 선로(z 2~42) 위를 지그재그로, 선로 끝 너머 틈 쪽까지 */
+  /* ⑲-50 25장 구름 씨앗 드론 — 잔해 섬 가운데에서 섬 둘레 반지름 11~18m(조종실·프로펠러·꼬리 날개를 비켜) */
+  var SEED_DRONE_PATH = [[8, -9], [-2, -14], [-13, -5], [-14, 10], [0, 16], [13, 9]];
   var CAPTAIN_PATH = [[0, 6], [1.5, 16], [-1.5, 26], [1.5, 36], [-1, 46], [2, 58], [-2, 68]];
   /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
   var DAREUM_SHIP = [-12, 10], WING_SEAM = [-4, 8];
@@ -154,7 +158,8 @@
         { ch: 21, from: 0, to: 2, spot: 'sk_plinth_bandi' }, { ch: 21, from: 3, to: 6, spot: 'sk_front_bandi' }, { ch: 21, from: 7, to: 999, spot: 'sk_in_bandi' },
         { ch: 22, from: 1, to: 3, spot: 'sk_light_bandi' },                                                          // ⑲-47 23장 등대 발치
         { ch: 23, from: 0, to: 1, spot: 'sk_sand_bandi' }, { ch: 23, from: 2, to: 999, spot: 'sr_bandi', sky: true },    // ⑲-49 24장 모래밭 → 사당 섬
-        { ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_bandi', sky: true },
+        { ch: 24, from: 0, to: 0, spot: 'sr_bandi', sky: true }, { ch: 24, from: 1, to: 999, spot: 'sr_wreck_bandi', sky: true },   // ⑲-50 25장 잔해 섬(뒤에도)
+        { ch: 25, chTo: 999, from: 0, to: 999, spot: 'sr_wreck_bandi', sky: true },
         { ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_in_bandi' },
         { ch: 19, chTo: 999, from: 0, to: 999, spot: 'sp_bandi' }] },
     /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
@@ -203,6 +208,13 @@
     saebyeok: { id: 'story_saebyeok', name: '바람 무녀 새벽', short: '새벽', zone: 'saltflat', spot: 'sr_saebyeok', off: [0, 0], color: '#e6e6f5',
       idle: '방울이 울면 바람이 길을 안다오.',
       appear: [{ ch: 23, from: 2, to: 999, spot: 'sr_saebyeok', sky: true }, { ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_saebyeok', sky: true }] },
+    /* ⑲-50 비행사 하늬(현대) — 먹구름에 휘말려 잔해 섬에 처박힌 기상 비행선 조종사. 25장부터 조종실 동쪽 앞(뒤에도) */
+    haneul:   { id: 'story_haneul',   name: '비행사 하늬', short: '하늬', zone: 'saltflat', spot: 'sr_haneul', off: [0, 0], color: '#d9722e',
+      idle: '기록계 바늘이 또 튀어요. 구름이 저절로 생기는 게 아니라니까요.',
+      appear: [{ ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_haneul', sky: true }] },
+    /* ⑲-50 구름 씨앗 드론 — 25장 쫓기 때만 잔해 섬 둘레 길(SEED_DRONE_PATH)을 난다. 드론 모델(pet) */
+    seeddrone: { id: 'story_seeddrone', name: '구름 씨앗 드론', short: '드론', zone: 'saltflat', spot: 'sr_wreck', color: '#4d4266', pet: 'drone', idle: '삐비— 치익.',
+      appear: [{ ch: 24, from: 3, to: 3, sky: true }], runSpot: 'sr_wreck', runPath: SEED_DRONE_PATH },
     /* ⑲-40 선장의 잔상 — 18장 쫓기 때만 역 기준 길(CAPTAIN_PATH)을 달린다 */
     captain:  { id: 'story_captain',  name: '선장의 잔상', short: '잔상', zone: 'solar', color: '#232e57', idle: '……',
       appear: [{ ch: 17, from: 6, to: 6 }], runSpot: 'sp_station', runPath: CAPTAIN_PATH },
@@ -215,7 +227,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -1182,6 +1194,43 @@
             ['?', ['위로 올라갈 길은요?', '구름을 빚는 자…']],
             ['새벽', '방울이 울었으니 바람이 길을 낼 거요. 사당 서쪽 끝에 바람 기둥이 설 테니, 타고 올라 날개를 펴시오.', 'fun'],
             ['한별', '비행선이라면 지금 시대 사람이 갇혀 있을 거야. 서두르자.']] }
+      ] },
+    /* ⑲-50 7부 둘째 장 — 비행선 잔해 섬(skyroute.js). 새벽(사당) → 사당 서쪽 바람 기둥 타고 올라 잔해 섬으로 활공(sky pad) → 하늬 →
+       구름 씨앗 드론 쫓기(섬 둘레) → 하늬 → 비행선 기관 지키기(조종실 앞) → 하늬(발신지 = 궤도 정거장 조각). 기관을 살리면 프로펠러가 다시 돈다 */
+    { id: 'ch25', name: '제25장 · 멈춘 기상 비행선', ar: 56,
+      reward: { knot: 6, gold: 6750, guide: 6, secret: 5, party: 1750 },
+      steps: [
+        { type: 'talk', npc: 'saebyeok', text: '사당 앞의 무녀와 이야기하기',
+          lines: [['새벽', '바람 기둥이 섰소. 사당 서쪽 끝이오 — 기둥에 들어서면 바람이 몸을 들어 올릴 거요.', 'fun'],
+            ['반디', '삐— 위 섬에서 구조 신호가 계속됩니다. 사람 한 명, 기상 비행선 조종실.'],
+            ['?', ['올라가 볼게요.', '날개를 펴면 되죠?']],
+            ['새벽', '기둥 꼭대기에서 날개를 펴고 저 섬으로 미끄러지시오. 바람은 한 번 연 길은 닫지 않소.']] },
+        { type: 'sky', pad: 'sr_wreck', draft: 'sr_shrine', spot: 'sr_wreck', sky: true, text: '사당 바람 기둥을 타고 올라 비행선 잔해 섬으로 건너가기(활공)',
+          done: '🪂 비행선 잔해 섬에 내려섰다 — 찢어진 기낭 곁에서 누가 손을 흔든다', gpsDone: '🌬️ 잔해 섬 밑에 닿았다 — 비행선 이야기는 이 둘레에서 이어진다' },
+        { type: 'talk', npc: 'haneul', text: '조종실 앞의 비행사와 이야기하기',
+          lines: [['하늬', '사, 사람이다! 구조대…는 아니죠? 날개 달고 날아온 사람은 처음 봐요.', 'surprised'],
+            ['?', ['구조 신호를 따라왔어요.', '괜찮아요?']],
+            ['하늬', '저는 비행사 하늬. 기상 비행선을 몰다가 먹구름에 휘말려 이 섬에 처박혔어요. 벌써 며칠째인지…', 'sorrow'],
+            ['하늬', '그런데 이상해요. 기록계를 보면 먹구름이 저절로 생긴 게 아니에요. 누가 구름을 “만들고” 있어요.', 'surprised'],
+            ['하늬', '저기 — 또 왔다! 저 드론이 구름 씨앗을 뿌리고 다녀요. 잡아 주세요!', 'angry']] },
+        { type: 'chase', npc: 'seeddrone', sky: true, text: '구름 씨앗을 뿌리며 달아나는 드론 쫓기',
+          flee: '🛸 드론이 검보랏빛 씨앗을 흩뿌리며 섬 둘레로 달아난다 — 쫓아라!',
+          caught: '🛸 구름 씨앗 드론을 붙잡았다 — 배 속에서 검보랏빛 씨앗 알갱이가 쏟아진다',
+          lost: '💨 놓쳤다 — 드론이 프로펠러 곁으로 돌아가 숨었다. 다시 가까이 가면 달아난다' },
+        { type: 'talk', npc: 'haneul', text: '조종실 앞의 비행사와 이야기하기',
+          lines: [['하늬', '이 씨앗… 우리 시대 물건이 아니에요. 물기를 빨아들여 먹구름으로 부풀어요.', 'surprised'],
+            ['반디', '삐— 앞 시대 기상 조작 장치의 씨앗과 같은 구조입니다. 누군가 앞 시대 기술을 쓰고 있습니다.'],
+            ['하늬', '비행선 기관만 살리면 기록계로 드론 신호가 어디서 오는지 짚을 수 있어요. 그런데 기관 소리를 들으면 먹구름 것들이 몰려올 거예요.', 'angry'],
+            ['?', ['기관을 지킬게요.', '어서 시동을 걸어요.']],
+            ['하늬', '좋아요, 시동 겁니다! 조종실 앞 기관을 지켜 주세요!', 'fun']] },
+        { type: 'defend', spot: 'sr_wreck_engine', sky: true, name: '비행선 기관', who: '먹구름 것들이', dirs: [330, 0, 200, 240, 300],
+          waves: [['imp', 'hawk', 'raptor'], ['imp', 'imp', 'hawk', 'snowfox'], ['rockbear', 'imp', 'raptor', 'hawk', 'hawk']],
+          text: '비행선 기관이 데워지는 동안 지키기' },
+        { type: 'talk', npc: 'haneul', text: '조종실 앞의 비행사와 이야기하기',
+          lines: [['하늬', '기관 살았다! 기록계 켜졌어요 — 드론 신호 발신지… 여기보다 위예요. 서쪽 하늘 제일 높은 섬.', 'joy'],
+            ['반디', '삐— 앞 시대 궤도 정거장 조각입니다. 구름 씨앗 장치 신호 셋. 먹구름을 부리는 자가 거기서 구름을 빚어 흘려보내고 있습니다.', 'angry'],
+            ['?', ['거기로 가자.', '하늬 씨는요?']],
+            ['하늬', '저도 가요. 제 비행선을 떨어뜨린 놈 얼굴은 봐야죠. 잔해 서쪽 끝에 바람이 모이는 게 보여요 — 거기서 올라가요!', 'angry']] }
       ] }
   ];
 
@@ -1423,6 +1472,12 @@
     if (isTalk(st) || st.type === 'follow' || st.type === 'chase') {
       var sa = stepAt(st), p = npcPos(st.npc, sa.c, sa.i, sa.wq);
       return p ? { x: p.x, y: p.y, r: isTalk(st) ? TALK_R() : 0, label: isTalk(st) ? npcInfo(st.npc, sa.c, sa.i, sa.wq).name : st.text } : null;
+    }
+    if (st.type === 'sky' && st.draft) {                     // ⑲-50 구름 위 항로 — 키보드 판은 열린 바람 기둥(draft id), GPS 판·닫혔으면 건널 섬(spot)
+      var SKd = global.DG.skyIsle, dq = SKd && SKd.layerOn() ? SKd.drafts().filter(function (x) { return x.id === st.draft; })[0] : null;
+      if (dq) { return { x: dq.x, y: dq.y, r: dq.r, label: st.text }; }
+      var sq = posOf(st);
+      return sq ? { x: sq.x, y: sq.y, r: CLIMB_R(), label: st.text } : null;
     }
     if (st.type === 'sky' && st.pad) {                       // ⑲-35 시간 기둥(era-sites)
       var ESt = global.DG.eraSites, dg = ESt ? ESt.spot('draft') : null;
@@ -1982,10 +2037,10 @@
       var SKo = global.DG.skyIsle, LFo = global.DG.landform, pdo;
       if (SKo && SKo.layerOn()) {
         pdo = LFo.onSky() ? SKo.padAt(p.x, p.y) : null;
-        if (pdo && pdo.id === st.pad) { toast('🔭 떠 있는 관측대에 내려섰다 — 틈새 파수가 지키고 있다'); advance(); return; }
+        if (pdo && pdo.id === st.pad) { toast(st.done || '🔭 떠 있는 관측대에 내려섰다 — 틈새 파수가 지키고 있다'); advance(); return; }
       } else {
         t = targetOf(st);
-        if (t && Math.hypot(p.x - t.x, p.y - t.y) <= CLIMB_R()) { toast('⏳ 시간 기둥 곁에 닿았다 — 관측대 이야기는 이 둘레에서 이어진다'); advance(); return; }
+        if (t && Math.hypot(p.x - t.x, p.y - t.y) <= CLIMB_R()) { toast(st.gpsDone || '⏳ 시간 기둥 곁에 닿았다 — 관측대 이야기는 이 둘레에서 이어진다'); advance(); return; }
       }
     } else if (st && st.type === 'sky') {
       /* ⑲-20 키보드 판은 섬 윗면에 내려서야, GPS 판은 기둥 곁(봉우리 둘레)에 닿으면 */
@@ -2426,7 +2481,7 @@
     talkables: talkables, storyStep: storyStep, stepAt: stepAt, aimPoints: aimPoints,
     FOLLOW_NEAR: FOLLOW_NEAR, FOLLOW_LOST: FOLLOW_LOST,
     HARAM_OBS: HARAM_OBS, HARAM_SHIP: HARAM_SHIP, HARAM_FORT: HARAM_FORT, frostSpot: frostSpot, followPts: followPts,
-    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, DAREUM_SHIP: DAREUM_SHIP, CAPTAIN_PATH: CAPTAIN_PATH, WING_SEAM: WING_SEAM, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
+    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, DAREUM_SHIP: DAREUM_SHIP, CAPTAIN_PATH: CAPTAIN_PATH, SEED_DRONE_PATH: SEED_DRONE_PATH, WING_SEAM: WING_SEAM, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
     on: on, anchorOf: anchorOf, npcPos: npcPos, visible: visible, targetOf: targetOf, trackText: trackText, listHtml: listHtml,
     state: sv, chapter: chapter, step: step, locked: locked, done: done, keyOf: keyOf, gathered: gathered,
     advance: advance, check: check, stepFollow: stepFollow, nearTalk: nearTalk, talkStart: talkStart, talking: talking, next: next,
