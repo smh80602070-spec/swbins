@@ -12,6 +12,7 @@ extends Node3D
 ##   현대 — 물류 야적장(WAREHOUSE_CELL): 창고(충돌)·컨테이너 더미(충돌)·갠트리 크레인(보기만)
 ## 세이브 없음(이야기 진행 PartyState.story 만 읽는다).
 
+const PropMaterial := preload("res://games/saga_go/world/prop_material.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const Fork := preload("res://games/saga_go/world/region10_fork.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
@@ -662,7 +663,7 @@ func _box(parent: Node3D, size: Vector3, pos: Vector3, color: Color) -> MeshInst
 	var bm := BoxMesh.new()
 	bm.size = size
 	mi.mesh = bm
-	mi.material_override = _mat(color)
+	PropMaterial.apply_box(mi, size, color) # 09-29 돌 결·모서리 선 셀 재질(prop_material.gd)
 	mi.position = pos
 	parent.add_child(mi)
 	return mi

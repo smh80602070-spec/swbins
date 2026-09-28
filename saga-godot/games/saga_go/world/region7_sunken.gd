@@ -14,6 +14,7 @@ extends Node3D
 ##   과거·미래 — 옛 등대(LIGHT_CELL, K 바위섬): 15m 돌탑(벽 타기)·난간 판·빛 등롱 — 23장 등롱에 불을 넣으면(light_on) 불이 켜지고 빛줄기가 돈다
 ##   고개 경계비((1.35,0.65)) · 디딤 지붕 셋(궁궐 곁채·물에 잠긴 대문·석탑 꼭대기)
 
+const PropMaterial := preload("res://games/saga_go/world/prop_material.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const VegetationBuilder := preload("res://games/saga_go/world/vegetation_builder.gd")
@@ -931,7 +932,7 @@ func _box(parent: Node3D, size: Vector3, pos: Vector3, color: Color) -> MeshInst
 	var bm := BoxMesh.new()
 	bm.size = size
 	mi.mesh = bm
-	mi.material_override = _mat(color)
+	PropMaterial.apply_box(mi, size, color) # 09-29 돌 결·모서리 선 셀 재질(prop_material.gd)
 	mi.position = pos
 	parent.add_child(mi)
 	return mi

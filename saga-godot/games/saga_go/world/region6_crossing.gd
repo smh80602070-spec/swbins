@@ -14,6 +14,7 @@ extends Node3D
 ##   미래·틈 — 떠 있는 섬돌(M (2..3,7)): 틈 수정 바닥 위로 나선으로 솟는 섬돌 열다섯 → 17.6m 꼭대기 판·틈 수정
 ##   틈 고개 경계비((5.35,0.65)) · 길가 틈 등롱
 
+const PropMaterial := preload("res://games/saga_go/world/prop_material.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const VegetationBuilder := preload("res://games/saga_go/world/vegetation_builder.gd")
@@ -516,7 +517,7 @@ func _box(parent: Node3D, size: Vector3, pos: Vector3, color: Color) -> MeshInst
 	var bm := BoxMesh.new()
 	bm.size = size
 	mi.mesh = bm
-	mi.material_override = _mat(color)
+	PropMaterial.apply_box(mi, size, color) # 09-29 돌 결·모서리 선 셀 재질(prop_material.gd)
 	mi.position = pos
 	parent.add_child(mi)
 	return mi

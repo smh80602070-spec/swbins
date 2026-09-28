@@ -10,6 +10,7 @@ extends Node3D
 ## 모양은 코드로 그린 상자·원기둥(고원 명소 region4_frost.gd 와 같은 결). 기중기 다리 바깥면은 들보 끝면과 같은 면이라
 ## 다리를 타고 오르면 그대로 들보 위로 넘어선다(벽 타기 — 정적 몸체 옆면).
 
+const PropMaterial := preload("res://games/saga_go/world/prop_material.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
@@ -446,7 +447,7 @@ func _box(parent: Node3D, size: Vector3, pos: Vector3, color: Color) -> MeshInst
 	var bm := BoxMesh.new()
 	bm.size = size
 	mi.mesh = bm
-	mi.material_override = _mat(color)
+	PropMaterial.apply_box(mi, size, color) # 09-29 돌 결·모서리 선 셀 재질(prop_material.gd)
 	mi.position = pos
 	parent.add_child(mi)
 	return mi

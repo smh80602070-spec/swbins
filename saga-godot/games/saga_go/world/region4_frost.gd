@@ -10,6 +10,7 @@ extends Node3D
 ##   미래 — 추락한 비행선((6.45,5.25)): 눈에 반쯤 묻힌 은빛 선체·꼬리 날개·푸른 빛줄
 ##   얼어붙은 호수((3.5,2.0) — I 두 칸, 걸을 수 있음)·고개 경계비((4.0,7.55))
 
+const PropMaterial := preload("res://games/saga_go/world/prop_material.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const VegetationBuilder := preload("res://games/saga_go/world/vegetation_builder.gd")
@@ -237,7 +238,8 @@ func _build_airship() -> void:
 	## 빛줄 — 선체 옆 두 줄(푸르게 빛남).
 	for k in [-1, 1]:
 		var strip := _box(hull_node, Vector3(11.0, 0.18, 0.1), Vector3(0.5, 0.6, k * 2.36), GLOW)
-		var gm := strip.material_override as StandardMaterial3D
+		var gm := _mat(GLOW) # 09-29 _box 는 공용 셀 재질이라 발광 재질은 따로
+		strip.material_override = gm
 		gm.emission_enabled = true
 		gm.emission = GLOW
 		gm.emission_energy_multiplier = 1.6
@@ -260,12 +262,14 @@ func _build_airship() -> void:
 	for k in [-1, 1]:
 		var wing := _box(_wings, Vector3(5.0, 0.16, 4.2), Vector3(-0.5, 0.2, k * 4.3), GLOW)
 		wing.rotation = Vector3(k * -0.12, 0.0, 0.0)
-		var wm := wing.material_override as StandardMaterial3D
+		var wm := _mat(GLOW)
+		wing.material_override = wm
 		wm.emission_enabled = true
 		wm.emission = GLOW
 		wm.emission_energy_multiplier = 1.2
 	var fin := _box(_wings, Vector3(3.2, 1.8, 0.14), Vector3(0.8, 3.1, 0), GLOW.lightened(0.3))
-	var fnm := fin.material_override as StandardMaterial3D
+	var fnm := _mat(GLOW.lightened(0.3))
+	fin.material_override = fnm
 	fnm.emission_enabled = true
 	fnm.emission = GLOW
 	fnm.emission_energy_multiplier = 1.0
@@ -518,7 +522,7 @@ func _box(parent: Node3D, size: Vector3, pos: Vector3, color: Color) -> MeshInst
 	var bm := BoxMesh.new()
 	bm.size = size
 	mi.mesh = bm
-	mi.material_override = _mat(color)
+	PropMaterial.apply_box(mi, size, color) # 09-29 돌 결·모서리 선 셀 재질(prop_material.gd)
 	mi.position = pos
 	parent.add_child(mi)
 	return mi

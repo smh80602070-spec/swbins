@@ -9408,3 +9408,11 @@ PROJECT_STATE.md` 참고. 요약:
 - probe_shots 캡처 줄에 카메라 자리·끈 길이·끈이 걸린 물체를 찍어 보니 끈 시작점이 플레이어 **발밑**(y≈0.2): 흔들림(combat_feel shake)이 끝날 때 리그 position 을 Vector3.ZERO 로 돌려, 씬에 적힌 허리 높이(+0.85m)를 잃었다. 첫 피격 뒤로 끈이 발밑에서 출발 → 울퉁불퉁한 땅에 걸리면 카메라가 발끝까지. 대화 카메라 복귀(end_talk)도 원점으로 돌아갔다.
 - camera_rig·dungeon_camera_rig(DUNGEON·FOREST) — _rest_pos 를 기억해 흔들림·대화 복귀가 그리로. probe_story talk_camera 는 원점(버그 값)을 기대하고 있어 쉼 자리로 고침.
 - 고친 뒤 x_swing·x_swing_late 네 번 8컷 모두 끈 7.5m. 점검 COMBAT·ARCHERY·STORY·TRAVERSAL·FIELD_BOSS fails=0, REGRESS OK.
+
+## 이야기 지역 건물 재질 · PERF 기준이 바뀐 까닭 (2026-09-29, 같은 세션, "이어해")
+
+- 지역 훑어 찍기(survey 12컷) — 산성·선착장·역사 같은 이야기 지역 건물이 무늬 없는 회색 상자였다(각 지역 _box 가 한 빛 StandardMaterial3D).
+- 새 saga_core/shaders/prop_toon.gdshader(돌 결 삼축 투영·큰 얼룩·상자 모서리 어두운 선·아래 그늘·띠 명암·림) + games/saga_go/world/prop_material.gd(색마다 재질 하나 캐시, 상자 크기는 instance uniform box_half).
+  era_sites·region4~10 의 _box 만 바꿨다(_mat 은 발광·금속·투명으로 뒤에서 고쳐 쓰는 곳이 있어 그대로 — 서리봉 별배 빛줄·날개 셋은 _box 재질을 캐스팅해 고쳐 쓰던 것을 _mat 으로).
+- 창 모드 f_fort 전후: 회색 판 → 돌 결·모서리 선 석조. 점검 FROST·SKYPORT·CROSSING·SUNKEN·AMBER·VAULT·FORK·STORY3 fails=0, REGRESS OK.
+- **PERF 기준 변화**: 재질 뒤 포구 18.5 → 25.7만·폐허 28.2 → 37.0만·draw 188 → 216 — 재질을 한 빛으로 돌려도 같고, camera_rig 를 고치기 전(53cf2acf)으로 돌리면 예전 수치. 예전 측정은 카메라가(버그로) 낮게 서서 덜 보던 값이었다. 폐허 37.0만은 예산(35만) 초과 — 다음 할 일.
