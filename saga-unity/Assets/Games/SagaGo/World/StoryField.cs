@@ -63,6 +63,8 @@ namespace Saga.Go.World
             StoryState.Advanced -= OnAdvanced;
             CookState.Picked -= OnPicked;
             CookState.Cooked -= OnCooked;
+            FieldEnemy.SiegeHit -= OnSiegeHit;
+            FieldCombat.Wiped -= OnWiped;
             StoryState.Talking = false;
         }
 
@@ -96,6 +98,8 @@ namespace Saga.Go.World
             StoryState.Advanced += OnAdvanced;
             CookState.Picked += OnPicked;
             CookState.Cooked += OnCooked;
+            FieldEnemy.SiegeHit += OnSiegeHit;
+            FieldCombat.Wiped += OnWiped;
             Refresh();
         }
 
@@ -135,7 +139,9 @@ namespace Saga.Go.World
         }
 
         /// <summary>109-14-13 가면 — 머리뼈(휴머노이드면)에 검은 탈 하나(흰 눈구멍 둘). 뼈가 없으면 키 1.6m 앞.</summary>
-        private static void AddMask(Transform root)
+        private static bool SquadStep(GoStory.StepType t) => t == GoStory.StepType.Kill || t == GoStory.StepType.Duel || t == GoStory.StepType.Defend;
+
+        private static void AddMask(Transform root, bool crack = false)
         {
             Transform head = null;
             var anim = root.GetComponentInChildren<Animator>();
@@ -154,9 +160,16 @@ namespace Saga.Go.World
             MaskPart(mask.transform, PrimitiveType.Sphere, Vector3.zero, new Vector3(0.2f, 0.26f, 0.09f), black, root);
             MaskPart(mask.transform, PrimitiveType.Sphere, new Vector3(-0.045f, 0.035f, 0.035f), new Vector3(0.045f, 0.02f, 0.02f), white, root);
             MaskPart(mask.transform, PrimitiveType.Sphere, new Vector3(0.045f, 0.035f, 0.035f), new Vector3(0.045f, 0.02f, 0.02f), white, root);
+            if (crack)
+            {
+                // 109-14-16 금 간 가면 — 눈 사이로 비스듬히 흰 금 하나
+                var c = MaskPart(mask.transform, PrimitiveType.Cube, new Vector3(0.01f, -0.02f, 0.046f), new Vector3(0.012f, 0.22f, 0.01f), white, root);
+                c.transform.rotation = root.rotation * Quaternion.Euler(0f, 0f, 24f);
+                c.name = "Crack";
+            }
         }
 
-        private static void MaskPart(Transform parent, PrimitiveType t, Vector3 local, Vector3 size, Material m, Transform root)
+        private static GameObject MaskPart(Transform parent, PrimitiveType t, Vector3 local, Vector3 size, Material m, Transform root)
         {
             var go = GameObject.CreatePrimitive(t);
             Object.Destroy(go.GetComponent<Collider>());
@@ -167,6 +180,7 @@ namespace Saga.Go.World
             Vector3 ls = parent.lossyScale;
             go.transform.localScale = new Vector3(size.x / Mathf.Max(0.0001f, ls.x), size.y / Mathf.Max(0.0001f, ls.y), size.z / Mathf.Max(0.0001f, ls.z));
             go.GetComponent<MeshRenderer>().sharedMaterial = m;
+            return go;
         }
 
         /// <summary>인물 몸이 서 있나(나그네는 4장 둘째~여섯째 단계만).</summary>
@@ -225,6 +239,7 @@ namespace Saga.Go.World
             if (fc == null) return;
             Follow(fc.transform.position, Time.deltaTime);
             DuelTick();
+            DefendTick(fc.transform.position, Time.deltaTime);
             _wait -= Time.deltaTime;
             if (_wait > 0f) return;
             _wait = CheckSec;
@@ -324,11 +339,12 @@ namespace Saga.Go.World
                     e.MakeStoryBoss(GoLocalization.T(st.BossKey, st.BossKo), st.HpMul > 0f ? st.HpMul : GoStory.BossHp,
                         st.AtkMul > 0f ? st.AtkMul : GoStory.BossAtk, st.ScaleMul > 0f ? st.ScaleMul : GoStory.BossScale);
                     if (st.Rot != null) e.SetRotation(st.Rot);
-                    if (st.Mask) AddMask(e.transform);
+                    if (st.Mask) AddMask(e.transform, st.Crack);
                 }
                 _squad.Add(e);
             }
             _duelP2 = false;
+            if (st.EnterKo != null) Toast(GoLocalization.T(st.EnterKey, st.EnterKo), 3f);
             Toast(st.BossKo != null
                 ? string.Format(GoLocalization.T("story.boss_up", "{0}가 나타났다"), GoLocalization.T(st.BossKey, st.BossKo))
                 : GoLocalization.T("story.squad", "먹구름 졸개가 나타났다"), 3f);
@@ -350,7 +366,7 @@ namespace Saga.Go.World
             if (st.Type == GoStory.StepType.Boss && e.IsGuardian) { StoryState.Advance(); return; }
             if (st.Type == GoStory.StepType.Duel && e.IsStoryBoss && e.GroupId == _squadKey)
             {
-                Toast(GoLocalization.T("story.duel_fled", "검은 가면이 먹구름 속으로 달아났다"), 3.5f);
+                Toast(st.WinKo != null ? GoLocalization.T(st.WinKey, st.WinKo) : GoLocalization.T("story.duel_fled", "검은 가면이 먹구름 속으로 달아났다"), 3.5f);
                 StoryState.Advance();
                 return;
             }
@@ -445,16 +461,124 @@ namespace Saga.Go.World
             var boss = _squad[0];
             if (boss == null || !boss.Alive || boss.Hp > boss.MaxHp * GoStory.DuelP2At) return;
             _duelP2 = true;
-            boss.RaiseBossShield(GoElement.Electro, boss.MaxHp * GoStory.DuelP2Shield);
+            boss.RaiseBossShield(st.P2El, boss.MaxHp * GoStory.DuelP2Shield);
             var spawner = Object.FindFirstObjectByType<FieldSpawner>();
+            var adds = st.Adds ?? new[] { new GoDomain.Foe(FieldEnemy.Kind.EmberImp), new GoDomain.Foe(FieldEnemy.Kind.EmberImp) };
             if (spawner != null)
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < adds.Length; i++)
                 {
                     Vector3 off = new Vector3(i == 0 ? -3.5f : 3.5f, 0.5f, 2.5f);
-                    _squad.Add(spawner.SpawnStoryFoe(FieldEnemy.Kind.EmberImp, FolkWalker.Grounded(boss.transform.position + off), _squadKey));
+                    _squad.Add(spawner.SpawnStoryFoe(adds[i].Kind, FolkWalker.Grounded(boss.transform.position + off), _squadKey, adds[i].Over));
                 }
-            Toast(GoLocalization.T("story.duel_p2", "검은 가면이 먹구름을 둘렀다 — 불로 깨라!"), 3f);
+            Toast(st.P2Ko != null ? GoLocalization.T(st.P2Key, st.P2Ko) : GoLocalization.T("story.duel_p2", "검은 가면이 먹구름을 둘렀다 — 불로 깨라!"), 3f);
         }
+
+        // ---- 109-14-16 제단 지키기(웹 ⑲-16 defend) — 가까이 오면 첫 물결, 다 잡았거나 28초면 다음, 마지막까지 다 잡으면 넘김.
+        // 무리는 제단으로 곧장(`FieldEnemy.SetSiege`), 제단이 무너지거나 전멸하면 무리가 흩어지고 4초 쉰 뒤 처음부터. 저장 안 함.
+        private string _defKey;
+        private int _defWave = -1;
+        private float _defT, _defRest, _defHp, _defHpMax;
+        private bool _defWarned;
+        private readonly List<List<FieldEnemy>> _defWaves = new List<List<FieldEnemy>>();
+        public int DefendWave => _defWave;
+        public float DefendHp => _defHp;
+        public float DefendHpMax => _defHpMax;
+        public float DefendRest => _defRest;
+        public float DefendT => _defT;
+
+        /// <summary>한 박자(프레임마다 · 진단도 부른다).</summary>
+        public void DefendTick(Vector3 p, float dt)
+        {
+            var st = StoryState.Current;
+            if (st == null || st.Type != GoStory.StepType.Defend || StoryState.OffForTest) { _defKey = null; return; }
+            Vector3 c = GoStory.StepPos(st);
+            if (_defKey != SquadKey)
+            {
+                _defKey = SquadKey;
+                _defWave = -1; _defT = 0f; _defRest = 0f; _defWarned = false; _defWaves.Clear();
+                _defHpMax = _defHp = GoStory.DefendHpMax(c);
+            }
+            if (_defRest > 0f) { _defRest = Mathf.Max(0f, _defRest - dt); return; }
+            var W = st.Waves ?? GoStory.DefendWaves;
+            if (_defWave < 0)
+            {
+                if (GoStory.Flat(p, c) <= GoStory.DefendStart) SpawnWave(st, 0);
+                return;
+            }
+            _defT += dt;
+            if (_defWave + 1 < W.Length)
+            {
+                if (WaveCleared(_defWave) || _defT >= GoStory.DefendWaveSec) SpawnWave(st, _defWave + 1);
+                return;
+            }
+            for (int n = 0; n < W.Length; n++) if (!WaveCleared(n)) return;
+            Toast(string.Format(GoLocalization.T("story.defend_held", "{0}을 지켜 냈다 — 무리가 물러간다"), GoLocalization.T(st.NameKey, st.NameKo)), 3.5f);
+            StoryState.Advance();
+        }
+
+        public bool WaveCleared(int n)
+        {
+            if (n < 0 || n >= _defWaves.Count) return false;
+            foreach (var e in _defWaves[n]) if (e != null && e.Alive) return false;
+            return true;
+        }
+
+        private void SpawnWave(GoStory.Step st, int n)
+        {
+            var spawner = Object.FindFirstObjectByType<FieldSpawner>();
+            var W = st.Waves ?? GoStory.DefendWaves;
+            if (spawner == null || n >= W.Length) return;
+            Vector3 c = GoStory.StepPos(st);
+            _squadKey = SquadKey;
+            var wave = new List<FieldEnemy>();
+            for (int i = 0; i < W[n].Length; i++)
+            {
+                Vector3 home = FolkWalker.Grounded(GoStory.DefendSlot(c, st.Dirs ?? GoStory.CapeDirs, n, i) + Vector3.up * 0.5f);
+                var e = spawner.SpawnStoryFoe(W[n][i].Kind, home, $"{_squadKey}:w{n}", W[n][i].Over);
+                e.SetSiege(c);
+                wave.Add(e);
+                _squad.Add(e);
+            }
+            while (_defWaves.Count <= n) _defWaves.Add(new List<FieldEnemy>());
+            _defWaves[n] = wave;
+            _defWave = n;
+            _defT = 0f;
+            Toast(string.Format(GoLocalization.T("story.defend_wave", "물결 {0}/{1} — 가면 무리가 {2}으로 몰려온다"), n + 1, W.Length, GoLocalization.T(st.NameKey, st.NameKo)), 3f);
+        }
+
+        private void OnSiegeHit(FieldEnemy e, float dmg)
+        {
+            var st = StoryState.Current;
+            if (st == null || st.Type != GoStory.StepType.Defend || _defKey == null || _defRest > 0f || !_squad.Contains(e)) return;
+            _defHp = Mathf.Max(0f, _defHp - dmg);
+            string nm = GoLocalization.T(st.NameKey, st.NameKo);
+            if (_defHp <= 0f) { ResetDefend(string.Format(GoLocalization.T("story.defend_broken", "{0}이 무너졌다 — 무리가 흩어진다. {1}초 뒤 처음부터"), nm, GoStory.DefendRest)); return; }
+            if (!_defWarned && _defHp <= _defHpMax * 0.5f) { _defWarned = true; Toast(string.Format(GoLocalization.T("story.defend_half", "{0}이 흔들린다 — 절반이 깎였다!"), nm), 2.5f); }
+        }
+
+        private void OnWiped()
+        {
+            var st = StoryState.Current;
+            if (st != null && st.Type == GoStory.StepType.Defend && _defKey == SquadKey && _defWave >= 0)
+                ResetDefend(string.Format(GoLocalization.T("story.defend_wiped", "물러난 사이 무리가 흩어졌다 — {0}초 뒤 처음부터"), GoStory.DefendRest));
+        }
+
+        private void ResetDefend(string msg)
+        {
+            ClearSquad();
+            _defWaves.Clear();
+            _defWave = -1;
+            _defT = 0f;
+            _defRest = GoStory.DefendRest;
+            _defHp = _defHpMax;
+            _defWarned = false;
+            _defKey = SquadKey;
+            Toast(msg, 3.5f);
+        }
+
+        /// <summary>진단용 — 제단을 친 한 대 · 전멸을 곧장 넣는다.</summary>
+        public void SiegeHitForTest(FieldEnemy e, float dmg) => OnSiegeHit(e, dmg);
+        public void WipedForTest() => OnWiped();
 
         /// <summary>진단용 — 2단계를 지금 본다(프레임을 안 기다리게).</summary>
         public void DuelTickForTest() => DuelTick();
@@ -492,7 +616,7 @@ namespace Saga.Go.World
         public void Refresh()
         {
             var st = StoryState.Current;
-            if (_squad.Count > 0 && (st == null || st.Type != GoStory.StepType.Kill || _squadKey != SquadKey)) ClearSquad();
+            if (_squad.Count > 0 && (st == null || !SquadStep(st.Type) || _squadKey != SquadKey)) ClearSquad(); // 109-14-16 결투·지키기 무리도 그 단계 동안은 남긴다(14-14 땐 결투를 0.5초마다 치웠다)
             bool has = Target(out Vector3 t, out _);
             if (_pillar != null)
             {
@@ -504,7 +628,8 @@ namespace Saga.Go.World
                 var parts = kv.Key.Split('_');
                 int c = int.Parse(parts[0]), i = int.Parse(parts[1]);
                 bool past = StepReached(c, i + 1); // 불을 붙였다 — 켠 채 남는다
-                kv.Value.gameObject.SetActive(!StoryState.OffForTest && StepReached(c, i));
+                int from = GoStory.Chapters[c].Steps[i].AltarFrom; // 109-14-16 지키기·결투 동안에도 제단 몸이 선다
+                kv.Value.gameObject.SetActive(!StoryState.OffForTest && StepReached(c, from >= 0 ? from : i));
                 kv.Value.SetLit(past);
             }
             RefreshSeal();

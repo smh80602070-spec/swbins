@@ -20,7 +20,25 @@ namespace Saga.Go.Data
     /// </summary>
     public static class GoStory
     {
-        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow, Seal, Climb, Duel }
+        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow, Seal, Climb, Duel, Defend }
+
+        // ---- 109-14-16 7장(웹 ⑲-16) — 곶 → 강 북쪽 물가 마을 동쪽 끝(이 판 강은 곧은 띠라 곶이 없다, 강 쪽을 뺀 다섯 방향에서 무리가 온다) ----
+        public const float CapeGx = 5.35f, CapeGy = 4.45f;
+        /// <summary>defend — 물결이 나오는 제단 둘레(웹 15m × 1.35) · 다음 물결(웹 28초) · 무너지면 쉬는 초 · 이만큼 안에 오면 첫 물결.</summary>
+        public const float DefendRing = 20f, DefendWaveSec = 28f, DefendRest = 4f, DefendStart = 30f;
+        /// <summary>제단 체력 = 45 × 산적 공격(26) × 그 지역 위험 배율(웹: 45 × 멧돼지 공격).</summary>
+        public const float DefendHits = 45f, DefendRefAtk = 26f;
+        /// <summary>물결이 나오는 방향(도, 북 0 시계 방향) — 남쪽(강) 빼고 다섯.</summary>
+        public static readonly float[] CapeDirs = { 270f, 315f, 0f, 45f, 90f };
+
+        public static float DefendHpMax(Vector3 altar) => Mathf.Round(DefendHits * DefendRefAtk * GoWorldMap.DangerMul(GoWorldMap.DangerOf(GoWorldMap.RegionAt(altar))));
+
+        /// <summary>물결 n 의 i 째 적이 나오는 자리(웹: 둘레 자리 중 4n 째부터).</summary>
+        public static Vector3 DefendSlot(Vector3 altar, float[] dirs, int wave, int i)
+        {
+            float a = dirs[(wave * 4 + i) % dirs.Length] * Mathf.Deg2Rad;
+            return altar + new Vector3(Mathf.Sin(a), 0f, -Mathf.Cos(a)) * DefendRing;
+        }
 
         // ---- 109-14-14 5·6장(웹 ⑲-14) — 솔숲 고개 → 서쪽 숲길(옛길 어귀·둘째 제단), 봉우리 → 안쪽 산 칸 (6,7) 봉우리와 그 고원 ----
         /// <summary>seal — 둘째 제단 둘레 석등 셋(북쪽부터 시계 방향 달·별·해), 비문 차례는 해·달·별. 웹 6m × 1.35.</summary>
@@ -123,6 +141,7 @@ namespace Saga.Go.Data
                 IdleKey = "story.idle.elder", IdleKo = "먹구름이 걷히면 마을 잔치를 열어야지." },
             new Npc { Id = "ferryman", NameKey = "story.npc.ferryman", NameKo = "늙은 사공 버들", ShortKey = "story.short.ferryman", ShortKo = "버들",
                 Gx = 2.35f, Gy = 4.4f, BodyFrom = "npc_elder",
+                At = new[] { new Spot { Ch = 6, From = 8, To = 8, Gx = CapeGx - 6f / 48f, Gy = CapeGy - 6f / 48f } }, // 7장 — 곶에 노 저어 온다
                 IdleKey = "story.idle.ferryman", IdleKo = "물 냄새가 요즘 영 비릿해." },
             new Npc { Id = "scholar", NameKey = "story.npc.scholar", NameKo = "떠돌이 학자 은비", ShortKey = "story.short.scholar", ShortKo = "은비",
                 Gx = 3.35f, Gy = 1.4f, BodyFrom = "npc_merchant",
@@ -141,6 +160,7 @@ namespace Saga.Go.Data
                     new Spot { Ch = 3, From = 1, To = 1, Gx = WanderGx, Gy = WanderGy }, new Spot { Ch = 3, From = 2, To = 5, Path = true },
                     new Spot { Ch = 4, From = 6, To = 6, Gx = Altar2Gx + 7f / 48f, Gy = Altar2Gy + 5f / 48f },
                     new Spot { Ch = 5, From = 2, To = 4, Peak = true, Arena = ArenaWanderer },
+                    new Spot { Ch = 6, From = 3, To = 6, Gx = CapeGx + 6f / 48f, Gy = CapeGy - 6f / 48f },
                 },
                 Path = new[] { new Vector2(WanderGx, WanderGy), new Vector2(3.0f, 5.0f), new Vector2(3.0f, 5.55f), new Vector2(3.0f, 6.2f), new Vector2(2.95f, 6.85f), new Vector2(2.55f, 7.2f) },
                 IdleKey = "story.idle.wanderer", IdleKo = "……" },
@@ -181,6 +201,17 @@ namespace Saga.Go.Data
             public float HpMul, AtkMul, ScaleMul;
             public FieldEnemy.BossMove[] Rot;
             public bool Mask;
+            /// <summary>109-14-16 duel — 금 간 가면 · 2단계 방패 원소(기본 뇌) · 2단계 졸개(기본 불도깨비 둘) · 나올 때·2단계·쓰러질 때 글.</summary>
+            public bool Crack;
+            public GoElement P2El = GoElement.Electro;
+            public GoDomain.Foe[] Adds;
+            public string EnterKey, EnterKo, P2Key, P2Ko, WinKey, WinKo;
+            /// <summary>109-14-16 defend — 지킬 것 이름 · 물결(없으면 `DefendWaves`) · 나오는 방향.</summary>
+            public string NameKey, NameKo;
+            public GoDomain.Foe[][] Waves;
+            public float[] Dirs;
+            /// <summary>Light — 이 단계부터 제단 몸이 선다(지키기·결투 동안에도 보이게, 없으면 그 단계부터).</summary>
+            public int AltarFrom = -1;
         }
 
         public static Vector3 StepPos(Step s) => s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
@@ -498,6 +529,82 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            new Chapter
+            {
+                Id = "ch7", NameKey = "story.ch7", NameKo = "제7장 · 물가 곶의 넷째 제단", Ar = 18,
+                Gold = 2250, Mats = new[] { 0, 3, 2, 4, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "scholar", TextKey = "story.ch7.s1", TextKo = "학자에게 넷째 제단 자리 듣기",
+                        Lines = new[]
+                        {
+                            L("scholar", "story.ch7.s1.l1", "넷째 조각 뒷면에 지도가 새겨져 있었어. 넷째 제단은 강가 나루 동쪽, 물이 휘감아 도는 곶이야."),
+                            L("scholar", "story.ch7.s1.l2", "근데 이상해. 곶 쪽에서 밤마다 불빛이 오락가락한대. 사공 할아버지가 제일 잘 알 거야."),
+                            Pick("story.ch7.s1.p", "사공에게 가 볼게요.", "불빛이요?"),
+                            L("scholar", "story.ch7.s1.l3", "검은 가면이 이번엔 혼자 오지 않을지도 몰라. 조심해!"),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "ferryman", TextKey = "story.ch7.s2", TextKo = "강가 나루의 사공에게 곶 소식 묻기",
+                        Lines = new[]
+                        {
+                            L("ferryman", "story.ch7.s2.l1", "곶 말이냐? 요 며칠 밤마다 가면 쓴 무리가 떼로 몰려가더구나."),
+                            L("ferryman", "story.ch7.s2.l2", "제단 돌을 두드리는 소리가 여기까지 들려. 이 늙은이 배로는 어림도 없고."),
+                            Pick("story.ch7.s2.p", "제가 지킬게요.", "몇이나 되던가요?"),
+                            L("ferryman", "story.ch7.s2.l3", "셀 수가 없었다. 한 떼를 쫓으면 또 한 떼가 오더구나. 제단이 무너지기 전에 서두르거라."),
+                        } },
+                    new Step { Type = StepType.Go, Gx = CapeGx, Gy = CapeGy - 22f / 48f, TextKey = "story.ch7.s3", TextKo = "강가 동쪽 곶, 넷째 제단으로" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch7.s4", TextKo = "곶의 나그네와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch7.s4.l1", "왔군. 그자가 이번엔 제 손을 더럽히지 않을 셈이다 — 무리부터 보냈어."),
+                            L("wanderer", "story.ch7.s4.l2", "제단이 무너지면 먹구름 임금의 넷째 조각이 풀려난다. 무리를 제단에 붙이지 마라."),
+                            Pick("story.ch7.s4.p", "제단 곁을 지킬게요.", "그자는 어디 있죠?"),
+                            L("wanderer", "story.ch7.s4.l3", "물결 뒤에 숨어 보고 있겠지. 무리가 다 쓰러지면 제 발로 나올 게다."),
+                        } },
+                    new Step { Type = StepType.Defend, Gx = CapeGx, Gy = CapeGy, NameKey = "story.altar4", NameKo = "넷째 제단", Dirs = CapeDirs,
+                        TextKey = "story.ch7.s5", TextKo = "넷째 제단을 가면 무리에게서 지키기" },
+                    new Step { Type = StepType.Duel, Gx = CapeGx, Gy = CapeGy - 12f / 48f, Foes = new[] { F(FieldEnemy.Kind.Bandit) }, Mask = true, Crack = true,
+                        BossKey = "story.boss.mask2", BossKo = "금 간 검은 가면", HpMul = 9.2f, AtkMul = 2.0f, ScaleMul = 1.05f,
+                        Rot = new[] { FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Shadow, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Shadow },
+                        P2El = GoElement.Hydro, Adds = new[] { KF, F(FieldEnemy.Kind.DrownedGhost) },
+                        EnterKey = "story.ch7.enter", EnterKo = "금 간 검은 가면이 물결을 가르고 곶에 올라섰다",
+                        P2Key = "story.ch7.p2", P2Ko = "금 간 검은 가면이 물 방패를 둘렀다 — 번개로 깨라! 졸개가 뛰어든다",
+                        WinKey = "story.ch7.win", WinKo = "가면 반쪽이 떨어졌다 — 금 간 검은 가면이 물속으로 몸을 던졌다. 졸개도 흩어진다",
+                        TextKey = "story.ch7.s6", TextKo = "금 간 검은 가면과 맞서기" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch7.s7", TextKo = "나그네와 깨진 가면 반쪽 살피기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch7.s7.l1", "……물속으로 달아났군. 하지만 가면 반쪽을 두고 갔다."),
+                            L("wanderer", "story.ch7.s7.l2", "방금 그 얼굴… 아니, 그럴 리가 없지."),
+                            Pick("story.ch7.s7.p", "아는 얼굴이에요?", "괜찮아요?"),
+                            L("wanderer", "story.ch7.s7.l3", "아직은 말할 수 없다. 제단부터 다시 밝히게 — 그자가 두드린 자국이 깊다."),
+                        } },
+                    new Step { Type = StepType.Light, Gx = CapeGx, Gy = CapeGy, AltarFrom = 4, TextKey = "story.ch7.s8", TextKo = "넷째 제단에 원소 불 다시 밝히기" },
+                    new Step { Type = StepType.Talk, Npc = "ferryman", TextKey = "story.ch7.s9", TextKo = "곶에 온 사공과 물 건너 불빛 보기",
+                        Lines = new[]
+                        {
+                            L("ferryman", "story.ch7.s9.l1", "불이 켜졌구나! 멀리서 보고 노를 저어 왔지."),
+                            L("ferryman", "story.ch7.s9.l2", "그런데 저기 보이느냐? 물 건너 바위섬에도 불빛 하나가 깜박이는구나."),
+                            Pick("story.ch7.s9.p", "다섯째 제단?", "누가 켰을까요?"),
+                            L("ferryman", "story.ch7.s9.l3", "바위섬은 뱃길이 험해 아무도 안 가는 곳이다. 촌장께 먼저 알리거라."),
+                            L("ferryman", "story.ch7.s9.l4", "……그리고 그 뱃길은 내가 안내하마. 이 늙은 노도 아직 쓸 만하단다. 촌장께 인사를 마치면 네 곁에 서지."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch7.s10", TextKo = "청하 촌장에게 알리기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch7.s10.l1", "제단을 지켜 냈다니… 이제 남은 건 바위섬 하나로구나."),
+                            L("elder", "story.ch7.s10.l2", "가면 반쪽이라. 나그네가 그렇게 놀라더란 말이지."),
+                            L("elder", "story.ch7.s10.l3", "고생 많았다. 마을 사람들이 곶의 불빛을 보고 모은 거란다."),
+                        } },
+                }
+            },
+        };
+
+        /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
+        public static readonly GoDomain.Foe[][] DefendWaves =
+        {
+            new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost) },
+            new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost), F(FieldEnemy.Kind.StormWraith) },
+            new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
         };
 
         public static int NpcIndex(string id)

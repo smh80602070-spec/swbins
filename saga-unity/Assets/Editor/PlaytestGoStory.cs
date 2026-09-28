@@ -63,6 +63,7 @@ namespace Saga.EditorTools
                 CheckChapter4(pc, field, ui);
                 CheckChapter5(pc, field, ui);
                 CheckChapter6(fc, pc, field, ui);
+                CheckChapter7(pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -102,17 +103,17 @@ namespace Saga.EditorTools
         {
             GoStory.StepType.Talk => 'T', GoStory.StepType.Go => 'G', GoStory.StepType.Boss => 'B', GoStory.StepType.Kill => 'K',
             GoStory.StepType.Light => 'L', GoStory.StepType.Domain => 'D', GoStory.StepType.Gather => 'H', GoStory.StepType.Cook => 'C',
-            GoStory.StepType.Seal => 'S', GoStory.StepType.Climb => 'M', GoStory.StepType.Duel => 'X', _ => 'F',
+            GoStory.StepType.Seal => 'S', GoStory.StepType.Climb => 'M', GoStory.StepType.Duel => 'X', GoStory.StepType.Defend => 'E', _ => 'F',
         };
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 4 || GoStory.Chapters.Length != 6) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 4 || GoStory.Chapters.Length != 7) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT" };
-            int[] ar = { 1, 5, 7, 10, 12, 15 }, gold = { 500, 1000, 1250, 1500, 1750, 2000 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 } };
-            for (int c = 0; c < 6; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 } };
+            for (int c = 0; c < 7; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -184,7 +185,12 @@ namespace Saga.EditorTools
             for (float d = 0f; d < GoStory.PathLength(wander); d += 4f) if (!Walkable(GoStory.PathPos(wander, d))) Fail($"나그네 길 {d:0}m 가 못 걷는 칸");
             // 임무 적·제단은 들판 무리(끈 45m 안에 섞이면 싸움이 뒤엉킨다)·숨은 터 입구 카드(11m)에서 떨어져
             var squads = new[] { (GoStory.SquadGx, GoStory.SquadGy), (GoStory.ChiefGx, GoStory.ChiefGy), (GoStory.FeastGx, GoStory.FeastGy), (GoStory.MaskSquadGx, GoStory.MaskSquadGy),
-                (GoStory.RoadSquadGx, GoStory.RoadSquadGy), (GoStory.Altar2SquadGx, GoStory.Altar2SquadGy) };
+                (GoStory.RoadSquadGx, GoStory.RoadSquadGy), (GoStory.Altar2SquadGx, GoStory.Altar2SquadGy), (GoStory.CapeGx, GoStory.CapeGy) };
+            // 7장 곶 — 제단·물결 다섯 방향이 걷는 뭍(강 칸이 아니다)
+            Vector3 cape = GoStory.GridPos(GoStory.CapeGx, GoStory.CapeGy);
+            if (!Walkable(cape) || !Walkable(GoStory.GridPos(GoStory.CapeGx, GoStory.CapeGy - 12f / 48f))) Fail("곶 제단·결투 자리가 뭍이 아니다");
+            for (int i = 0; i < GoStory.CapeDirs.Length; i++)
+                if (!Walkable(GoStory.DefendSlot(cape, GoStory.CapeDirs, 0, i))) Fail($"물결 자리 {GoStory.CapeDirs[i]}° 가 뭍이 아니다");
             foreach (var (x, y) in squads)
             {
                 Vector3 sq = GoStory.GridPos(x, y);
@@ -576,6 +582,8 @@ namespace Saga.EditorTools
             field.Check(pc.transform.position);
             if (field.Squad.Count != 1) { Fail($"검은 가면 {field.Squad.Count} ≠ 1"); return; }
             var boss = field.Squad[0];
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 1 || field.Squad[0] != boss) Fail("한 박자 뒤 검은 가면이 치워지거나 다시 섰다"); // 14-14 회귀
             if (!boss.IsStoryBoss || boss.DisplayName != GoLocalization.T("story.boss.mask", "검은 가면") || FindDeep(boss.transform, "Mask") == null) Fail("검은 가면 표시·가면");
             if (Mathf.Abs(boss.transform.position.y - arena.y) > 2f) Fail($"검은 가면이 고원 위에 없다({boss.transform.position.y:0.0} ≠ {arena.y:0.0})");
             Vector3 cell = TestMapData.WorldPos(GoStory.DuelPeakGx, GoStory.DuelPeakGy);
@@ -605,7 +613,112 @@ namespace Saga.EditorTools
             Talk(pc, ui, "scholar", "6장 고원 은비");
             int gold = GoldState.Gold;
             Talk(pc, ui, "elder", "6장 끝 누리");
-            if (!StoryState.Done || GoldState.Gold != gold + 2000) Fail("6장 끝·보상");
+            Expect(6, 0, "6장 끝");
+            if (GoldState.Gold != gold + 2000) Fail("6장 보상");
+            if (!StoryState.Locked) Fail("여정 15 인데 7장이 열림");
+        }
+
+        // ---- 7장 ----------------------------------------------------------------------------------------------
+
+        private static void CheckChapter7(PlayerController pc, StoryField field, StoryUi ui)
+        {
+            PlayerStats.Restore(18, 0);
+            field.Refresh();
+            Talk(pc, ui, "scholar", "7장 은비");
+            Talk(pc, ui, "ferryman", "7장 버들");
+            Expect(6, 2, "7장 버들 뒤");                                                        // → 2 go 곶
+            pc.Teleport(GoStory.GridPos(GoStory.CapeGx, GoStory.CapeGy - 22f / 48f) + new Vector3(3f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(6, 3, "곶 도착");
+            field.Refresh();
+            if (!field.NpcShown("wanderer")) Fail("곶에 나그네가 안 섰다");
+            Talk(pc, ui, "wanderer", "7장 나그네");
+            Expect(6, 4, "7장 나그네 뒤");                                                      // → 4 defend
+            field.Refresh();
+            var altar = field.AltarOf(6);
+            if (altar == null || !altar.gameObject.activeSelf || altar.Lit) Fail("지키기 동안 넷째 제단 몸이 없다");
+            Vector3 cape = GoStory.GridPos(GoStory.CapeGx, GoStory.CapeGy);
+            Vector3 near = cape + new Vector3(0f, 0.4f, -4f);
+
+            pc.Teleport(cape + new Vector3(0f, 0.4f, -GoStory.DefendStart - 10f));
+            field.DefendTick(pc.transform.position, 0.1f);
+            if (field.DefendWave != -1 || field.Squad.Count != 0) Fail("멀리서 물결이 옴");
+            pc.Teleport(near);
+            field.DefendTick(pc.transform.position, 0.1f);
+            if (field.DefendWave != 0 || field.Squad.Count != 3) { Fail($"첫 물결 {field.DefendWave}·{field.Squad.Count}"); return; }
+            foreach (var e in field.Squad)
+                if (!e.StoryFoe || !e.Siege.HasValue || GoStory.Flat(e.Siege.Value, cape) > 0.5f) Fail("물결 적이 제단을 안 노린다");
+            if (Mathf.Abs(field.DefendHpMax - GoStory.DefendHpMax(cape)) > 0.5f || field.DefendHp != field.DefendHpMax) Fail($"제단 체력 {field.DefendHp}/{field.DefendHpMax}");
+            ui.Refresh();
+            if (!ui.TrackText.Contains("100%") || !ui.TrackText.Contains("1/3")) Fail($"지키기 추적 줄 '{ui.TrackText}'");
+
+            // 제단으로 곧장 — 내가 멀면 제단 쪽으로 걷고, 곁에 닿으면 제단을 친다
+            var foe = field.Squad[0];
+            pc.Teleport(cape + new Vector3(0f, 0.4f, -GoStory.DefendStart + 2f));
+            float d0 = GoStory.Flat(foe.transform.position, cape);
+            foe.Tick(1f);
+            if (GoStory.Flat(foe.transform.position, cape) >= d0 - 0.5f) Fail($"물결 적이 제단 쪽으로 안 감 {d0:0.0} → {GoStory.Flat(foe.transform.position, cape):0.0}");
+            foe.transform.position = FolkWalker.Grounded(cape + new Vector3(2.5f, 1f, 0f));
+            foe.Tick(0.01f);
+            if (foe.CurrentState != FieldEnemy.State.Telegraph) Fail("제단 곁에서 예고를 안 함 " + foe.CurrentState);
+            float hp0 = field.DefendHp;
+            foe.ResolveStrike();
+            if (Mathf.Abs(hp0 - field.DefendHp - foe.Atk) > 0.5f) Fail($"제단을 친 한 대 {hp0 - field.DefendHp} ≠ {foe.Atk}");
+
+            field.SiegeHitForTest(field.Squad[1], field.DefendHpMax * 0.2f);
+            field.SiegeHitForTest(field.Squad[1], field.DefendHpMax);
+            if (field.DefendWave != -1 || field.Squad.Count != 0 || Mathf.Abs(field.DefendRest - GoStory.DefendRest) > 0.01f || field.DefendHp != field.DefendHpMax) Fail("무너졌는데 처음부터가 아니다");
+            pc.Teleport(near);
+            field.DefendTick(pc.transform.position, GoStory.DefendRest - 0.5f);
+            field.DefendTick(pc.transform.position, 0.1f);
+            if (field.DefendWave != -1) Fail("쉬는 4초 안에 물결이 옴");
+            field.DefendTick(pc.transform.position, 0.5f);
+            field.DefendTick(pc.transform.position, 0.1f);
+            if (field.DefendWave != 0) Fail("쉰 뒤 첫 물결이 안 옴");
+            field.DefendTick(pc.transform.position, GoStory.DefendWaveSec + 0.1f);
+            if (field.DefendWave != 1 || field.Squad.Count != 7) Fail($"28초 뒤 둘째 물결 {field.DefendWave}·{field.Squad.Count}");
+            field.WipedForTest();
+            if (field.DefendWave != -1 || field.Squad.Count != 0) Fail("전멸했는데 처음부터가 아니다");
+            field.DefendTick(pc.transform.position, GoStory.DefendRest + 0.1f);
+            for (int guard = 0; guard < 20 && StoryState.StepIndex == 4; guard++)
+            {
+                field.DefendTick(pc.transform.position, 0.1f);
+                foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) if (e.Alive) Kill(e);
+            }
+            Expect(6, 5, "물결 셋을 다 막음");                                                  // → 5 duel
+            if (field.Squad.Count != 0) Fail("지키기 뒤 무리가 남음");
+
+            Vector3 dp = GoStory.GridPos(GoStory.CapeGx, GoStory.CapeGy - 12f / 48f);
+            pc.Teleport(dp + new Vector3(0f, 0.4f, -6f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 1) { Fail($"금 간 검은 가면 {field.Squad.Count} ≠ 1"); return; }
+            var boss = field.Squad[0];
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 1 || field.Squad[0] != boss) Fail("한 박자 뒤 금 간 검은 가면이 치워지거나 다시 섰다");
+            if (!boss.IsStoryBoss || FindDeep(boss.transform, "Crack") == null || boss.CurrentMove != FieldEnemy.BossMove.Tide) Fail("금 간 가면·첫 수 밀물");
+            typeof(FieldEnemy).GetMethod("BeginTelegraph", BindingFlags.Instance | BindingFlags.NonPublic)?.Invoke(boss, null);
+            var tp = boss.TidePoints;
+            if (tp.Count != FieldEnemy.TideN || GoStory.Flat(tp[0], tp[1]) < FieldEnemy.TideGap - 0.3f || GoStory.Flat(tp[0], tp[1]) > FieldEnemy.TideGap + 0.3f)
+                Fail($"밀물 원 {tp.Count}");
+            else if (!boss.InStrike(tp[3]) || boss.InStrike(tp[3] + (tp[3] - tp[0]).normalized * 8f)) Fail("밀물 원 판정");
+            pc.Teleport(dp + new Vector3(15f, 0.4f, -15f));
+            boss.ResolveStrike();
+            if (boss.TidePoints.Count != 0 || boss.CurrentMove != FieldEnemy.BossMove.Shadow) Fail("밀물 뒤 원이 남거나 다음 수가 아니다");
+            boss.TakeRaw(boss.Hp - boss.MaxHp * 0.45f, Color.white);
+            field.DuelTickForTest();
+            if (!boss.Shielded || boss.Element != GoElement.Hydro || field.Squad.Count != 3 || field.Squad[2].EnemyKind != FieldEnemy.Kind.DrownedGhost) Fail($"2단계 물 방패·졸개 {boss.Element}·{field.Squad.Count}");
+            Kill(boss);
+            Expect(6, 6, "금 간 검은 가면");
+            Talk(pc, ui, "wanderer", "7장 가면 반쪽 나그네");
+            Pulse(cape + new Vector3(2f, 0f, 0f), 2f);
+            Expect(6, 8, "넷째 제단 불");
+            if (!altar.Lit) Fail("넷째 제단 불이 안 켜짐");
+            field.Refresh();
+            if (GoStory.Flat(field.NpcBody("ferryman").transform.position, cape) > 12f) Fail("버들이 곶에 안 옴");
+            Talk(pc, ui, "ferryman", "7장 곶 버들");
+            int gold = GoldState.Gold;
+            Talk(pc, ui, "elder", "7장 끝 누리");
+            if (!StoryState.Done || GoldState.Gold != gold + 2250) Fail("7장 끝·보상");
             ui.Refresh();
             field.Refresh();
             if (ui.TrackShown || field.Pillar.activeSelf) Fail("다 끝났는데 추적 줄·기둥");

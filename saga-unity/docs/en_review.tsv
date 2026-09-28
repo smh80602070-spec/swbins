@@ -835,8 +835,10 @@
 2	go	region.south_glade	남쪽 공터	Southern Glade		
 2	go	region.village	마을 들판	Village Fields		
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
+2	go	story.altar4	넷째 제단	the Fourth Altar		
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
 2	go	story.boss.mask	검은 가면	Black Mask		
+2	go	story.boss.mask2	금 간 검은 가면	Cracked Black Mask		
 2	go	story.boss_up	{0}가 나타났다	{0} has appeared		
 2	go	story.ch1	제1장 · 먹구름이 오는 마을	Chapter 1 · Stormclouds Over the Village		
 2	go	story.ch1.s1	청하 촌장을 찾아가기	Visit the Elder of Cheongha		
@@ -998,8 +1000,57 @@
 2	go	story.ch6.s8.l1	먹구름 임금의 신하라… 옛날 할머니가 들려주던 자장가에 그런 말이 있었지.	A servant of the Stormcloud King… there was something like that in a lullaby my grandmother used to sing.		
 2	go	story.ch6.s8.l2	봉우리까지 오르다니 장하구나. 다친 데는 없느냐? 이건 마을 사람들이 모은 거란다.	You climbed all the way up the peak — well done. Are you hurt anywhere? The villagers put this together for you.		
 2	go	story.ch6.s8.l3	……이 늙은이도 더는 앉아만 있을 수 없구나. 다음 길엔 나도 함께 가마. 부채 바람쯤은 아직 일으킬 줄 안단다.	……This old one can't just sit around any longer. I'll come with you on the next journey. I can still stir up a breeze with my fan.		
+2	go	story.ch7	제7장 · 물가 곶의 넷째 제단	Chapter 7 · The Fourth Altar on the Riverside Cape		
+2	go	story.ch7.enter	금 간 검은 가면이 물결을 가르고 곶에 올라섰다	The Cracked Black Mask split the waves and climbed onto the cape		
+2	go	story.ch7.p2	금 간 검은 가면이 물 방패를 둘렀다 — 번개로 깨라! 졸개가 뛰어든다	The Cracked Black Mask wrapped itself in a water shield — break it with lightning! Minions leap in		
+2	go	story.ch7.s1	학자에게 넷째 제단 자리 듣기	Hear from the scholar where the fourth altar is		
+2	go	story.ch7.s1.l1	넷째 조각 뒷면에 지도가 새겨져 있었어. 넷째 제단은 강가 나루 동쪽, 물이 휘감아 도는 곶이야.	There was a map carved on the back of the fourth fragment. The fourth altar is on the cape east of the river crossing, where the water curls around.		
+2	go	story.ch7.s1.l2	근데 이상해. 곶 쪽에서 밤마다 불빛이 오락가락한대. 사공 할아버지가 제일 잘 알 거야.	But it's strange. They say lights flicker back and forth on the cape every night. The old ferryman would know best.		
+2	go	story.ch7.s1.l3	검은 가면이 이번엔 혼자 오지 않을지도 몰라. 조심해!	The Black Mask might not come alone this time. Be careful!		
+2	go	story.ch7.s1.p.a	사공에게 가 볼게요.	I'll go ask the ferryman.		
+2	go	story.ch7.s1.p.b	불빛이요?	Lights?		
+2	go	story.ch7.s10	청하 촌장에게 알리기	Report to the Elder of Cheongha		
+2	go	story.ch7.s10.l1	제단을 지켜 냈다니… 이제 남은 건 바위섬 하나로구나.	You held the altar… now only the rocky isle remains.		
+2	go	story.ch7.s10.l2	가면 반쪽이라. 나그네가 그렇게 놀라더란 말이지.	Half a mask, you say. And the traveler was that startled?		
+2	go	story.ch7.s10.l3	고생 많았다. 마을 사람들이 곶의 불빛을 보고 모은 거란다.	You've worked hard. The villagers gathered this when they saw the light on the cape.		
+2	go	story.ch7.s2	강가 나루의 사공에게 곶 소식 묻기	Ask the ferryman at the river crossing about the cape		
+2	go	story.ch7.s2.l1	곶 말이냐? 요 며칠 밤마다 가면 쓴 무리가 떼로 몰려가더구나.	The cape, you say? These past nights, masked hordes have been swarming toward it.		
+2	go	story.ch7.s2.l2	제단 돌을 두드리는 소리가 여기까지 들려. 이 늙은이 배로는 어림도 없고.	I can hear them pounding the altar stones from here. This old man's boat is no match for them.		
+2	go	story.ch7.s2.l3	셀 수가 없었다. 한 떼를 쫓으면 또 한 떼가 오더구나. 제단이 무너지기 전에 서두르거라.	Too many to count. Drive off one pack and another comes. Hurry, before the altar crumbles.		
+2	go	story.ch7.s2.p.a	제가 지킬게요.	I'll guard it.		
+2	go	story.ch7.s2.p.b	몇이나 되던가요?	How many were there?		
+2	go	story.ch7.s3	강가 동쪽 곶, 넷째 제단으로	To the fourth altar on the cape east of the river		
+2	go	story.ch7.s4	곶의 나그네와 이야기하기	Talk with the traveler on the cape		
+2	go	story.ch7.s4.l1	왔군. 그자가 이번엔 제 손을 더럽히지 않을 셈이다 — 무리부터 보냈어.	You came. He won't dirty his own hands this time — he sent the horde first.		
+2	go	story.ch7.s4.l2	제단이 무너지면 먹구름 임금의 넷째 조각이 풀려난다. 무리를 제단에 붙이지 마라.	If the altar crumbles, the fourth piece of the Stormcloud King will be set free. Don't let the horde reach the altar.		
+2	go	story.ch7.s4.l3	물결 뒤에 숨어 보고 있겠지. 무리가 다 쓰러지면 제 발로 나올 게다.	Watching from behind the waves, no doubt. Once the horde falls, he'll come out on his own.		
+2	go	story.ch7.s4.p.a	제단 곁을 지킬게요.	I'll guard the altar.		
+2	go	story.ch7.s4.p.b	그자는 어디 있죠?	Where is he?		
+2	go	story.ch7.s5	넷째 제단을 가면 무리에게서 지키기	Guard the fourth altar from the masked horde		
+2	go	story.ch7.s6	금 간 검은 가면과 맞서기	Face the Cracked Black Mask		
+2	go	story.ch7.s7	나그네와 깨진 가면 반쪽 살피기	Examine the broken half-mask with the traveler		
+2	go	story.ch7.s7.l1	……물속으로 달아났군. 하지만 가면 반쪽을 두고 갔다.	……He fled into the water. But he left half his mask behind.		
+2	go	story.ch7.s7.l2	방금 그 얼굴… 아니, 그럴 리가 없지.	That face just now… no, it can't be.		
+2	go	story.ch7.s7.l3	아직은 말할 수 없다. 제단부터 다시 밝히게 — 그자가 두드린 자국이 깊다.	I can't say yet. Relight the altar first — his strikes left deep marks.		
+2	go	story.ch7.s7.p.a	아는 얼굴이에요?	A face you know?		
+2	go	story.ch7.s7.p.b	괜찮아요?	Are you all right?		
+2	go	story.ch7.s8	넷째 제단에 원소 불 다시 밝히기	Relight the elemental fire on the fourth altar		
+2	go	story.ch7.s9	곶에 온 사공과 물 건너 불빛 보기	Watch the light across the water with the ferryman who came to the cape		
+2	go	story.ch7.s9.l1	불이 켜졌구나! 멀리서 보고 노를 저어 왔지.	The fire's lit! I saw it from afar and rowed over.		
+2	go	story.ch7.s9.l2	그런데 저기 보이느냐? 물 건너 바위섬에도 불빛 하나가 깜박이는구나.	But do you see that? A light is blinking on the rocky isle across the water too.		
+2	go	story.ch7.s9.l3	바위섬은 뱃길이 험해 아무도 안 가는 곳이다. 촌장께 먼저 알리거라.	The sea lane to the rocky isle is rough — no one goes there. Tell the Elder first.		
+2	go	story.ch7.s9.l4	……그리고 그 뱃길은 내가 안내하마. 이 늙은 노도 아직 쓸 만하단다. 촌장께 인사를 마치면 네 곁에 서지.	……And I'll guide you along that sea lane. This old oar still has some use. Once you've paid your respects to the Elder, I'll stand at your side.		
+2	go	story.ch7.s9.p.a	다섯째 제단?	The fifth altar?		
+2	go	story.ch7.s9.p.b	누가 켰을까요?	Who lit it?		
+2	go	story.ch7.win	가면 반쪽이 떨어졌다 — 금 간 검은 가면이 물속으로 몸을 던졌다. 졸개도 흩어진다	Half the mask fell away — the Cracked Black Mask threw itself into the water. The minions scatter too		
 2	go	story.chapter_done	{0} 끝 — {1}	{0} complete — {1}		
 2	go	story.climbed	봉우리 꼭대기 — 고원 아래 나그네가 보인다	The peak's summit — the traveler is visible on the plateau below		
+2	go	story.defend_broken	{0}이 무너졌다 — 무리가 흩어진다. {1}초 뒤 처음부터	{0} crumbled — the horde scatters. Starting over in {1}s		
+2	go	story.defend_half	{0}이 흔들린다 — 절반이 깎였다!	{0} is shaking — half of it is gone!		
+2	go	story.defend_held	{0}을 지켜 냈다 — 무리가 물러간다	You held {0} — the horde retreats		
+2	go	story.defend_line	 · {0} {1}% · 물결 {2}/{3}	 · {0} {1}% · wave {2}/{3}		
+2	go	story.defend_wave	물결 {0}/{1} — 가면 무리가 {2}으로 몰려온다	Wave {0}/{1} — the masked horde rushes toward {2}		
+2	go	story.defend_wiped	물러난 사이 무리가 흩어졌다 — {0}초 뒤 처음부터	The horde scattered while you were down — starting over in {0}s		
 2	go	story.duel_fled	검은 가면이 먹구름 속으로 달아났다	The Black Mask fled into the stormclouds		
 2	go	story.duel_p2	검은 가면이 먹구름을 둘렀다 — 불로 깨라!	The Black Mask wrapped itself in stormclouds — break it with fire!		
 2	go	story.end	끝 (F)	End (F)		

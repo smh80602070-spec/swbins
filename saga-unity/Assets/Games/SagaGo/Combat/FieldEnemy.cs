@@ -142,16 +142,29 @@ namespace Saga.Go.Combat
         private float EngageReach => _rot != null ? RotEngage : _reachOverride > 0f ? _reachOverride * 0.8f : Ranged ? HeroWisdomRange : EngageRange;
 
         // ---- 109-14-14 이야기 보스 공격 차례(웹 사가고 ⑲-14 `rot`) — 수마다 다가서는 거리·예고·원·배율이 다르다 ----
-        public enum BossMove { Melee, Shadow, Spit, Slam }
+        public enum BossMove { Melee, Shadow, Spit, Slam, Tide }
         /// <summary>웹 ROT 표 × 1.85(이 판 거리) — 다가서기 · 예고 초 · 원 반지름 · 피해 배율.</summary>
         public static (float reach, float wind, float r, float mul) MoveSpec(BossMove m) => m switch
         {
             BossMove.Shadow => (25.9f, 0.8f, 5.9f, 1.4f),   // 나를 지나 등 뒤로 붙어 제 둘레를 친다
             BossMove.Spit => (16.7f, 1.0f, 4.4f, 1.0f),     // 내 발밑에 원
             BossMove.Slam => (7.0f, 1.1f, 7.8f, 1.2f),      // 제 둘레 큰 원
+            BossMove.Tide => (20.4f, 1.1f, 3.7f, 1.3f),     // 109-14-16 밀물 — 나를 향해 줄지은 원 넷(TideFrom 부터 TideGap 간격)
             _ => (0f, 0.55f, 0f, 1.0f),                     // 여느 한 대
         };
         public const float ShadowBack = 4.1f;               // 웹 2.2m × 1.85
+        public const int TideN = 4;
+        public const float TideFrom = 4.6f, TideGap = 5.55f; // 웹 2.5m·3m × 1.85
+        private readonly List<Vector3> _tidePts = new List<Vector3>();
+        private LineRenderer[] _tideRings;
+        public IReadOnlyList<Vector3> TidePoints => _tidePts;
+
+        // ---- 109-14-16 제단 지키기(웹 ⑲-16 siege) — 내가 곁(SiegePull)에 없으면 제단으로 곧장 가서 친다(제단을 노린 한 대는 나를 안 친다) ----
+        public const float SiegePull = 9.25f, SiegeBody = 2.8f; // 웹 5m·1.5m × 1.85
+        public Vector3? Siege { get; private set; }
+        private bool _siegeStrike;
+        public static event Action<FieldEnemy, float> SiegeHit;
+        public void SetSiege(Vector3 altar) { Siege = altar; CurrentState = State.Chase; }
         private BossMove[] _rot;
         private int _rotI;
         private float _moveR = -1f, _moveWind = -1f, _moveMul = 1f;
@@ -165,7 +178,7 @@ namespace Saga.Go.Combat
             {
                 var m = _rot[_rotI % _rot.Length];
                 var s = MoveSpec(m);
-                return m == BossMove.Melee ? (_reachOverride > 0f ? _reachOverride * 0.8f : EngageRange) : m == BossMove.Spit ? s.reach * 0.85f : m == BossMove.Slam ? s.reach * 0.8f : s.reach;
+                return m == BossMove.Melee ? (_reachOverride > 0f ? _reachOverride * 0.8f : EngageRange) : m == BossMove.Spit ? s.reach * 0.85f : m == BossMove.Slam || m == BossMove.Tide ? s.reach * 0.8f : s.reach;
             }
         }
 
@@ -177,7 +190,17 @@ namespace Saga.Go.Combat
             _moveWind = s.wind;
             _moveMul = s.mul;
             _moveR = m == BossMove.Melee ? -1f : s.r;
-            _moveAtPoint = m == BossMove.Spit;
+            _moveAtPoint = m == BossMove.Spit || m == BossMove.Tide;
+            if (m == BossMove.Tide)
+            {
+                // 가면에서 나 쪽으로 원 넷 — 첫 원이 큰 예고 원(StrikePoint), 나머지 셋은 곁 원
+                Vector3 d = Flat(player - transform.position);
+                Vector3 dir = d.sqrMagnitude > 0.01f ? d.normalized : transform.forward;
+                _tidePts.Clear();
+                for (int i = 0; i < TideN; i++) _tidePts.Add(Grounded(transform.position + dir * (TideFrom + TideGap * i)));
+                _strikePoint = _tidePts[0];
+                ShowTideRings(s.r);
+            }
             if (m == BossMove.Shadow)
             {
                 Vector3 d = Flat(player - transform.position);
@@ -189,8 +212,50 @@ namespace Saga.Go.Combat
             }
         }
 
+        private void ShowTideRings(float r)
+        {
+            if (_tideRings == null)
+            {
+                _tideRings = new LineRenderer[TideN - 1];
+                for (int i = 0; i < _tideRings.Length; i++)
+                {
+                    var go = new GameObject("TideRing");
+                    go.transform.SetParent(transform, false);
+                    var lr = go.AddComponent<LineRenderer>();
+                    lr.useWorldSpace = false;
+                    lr.loop = true;
+                    lr.positionCount = 32;
+                    lr.widthMultiplier = 0.18f;
+                    lr.material = _warnRing.material;
+                    lr.startColor = lr.endColor = _warnRing.startColor;
+                    lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    _tideRings[i] = lr;
+                }
+            }
+            for (int i = 0; i < _tideRings.Length; i++)
+            {
+                var lr = _tideRings[i];
+                float s = 1f / Mathf.Max(0.01f, transform.lossyScale.x);
+                for (int k = 0; k < lr.positionCount; k++)
+                {
+                    float a = k * Mathf.PI * 2f / lr.positionCount;
+                    lr.SetPosition(k, new Vector3(Mathf.Cos(a) * r * s, 0f, Mathf.Sin(a) * r * s));
+                }
+                Vector3 p = _tidePts[i + 1];
+                lr.transform.position = new Vector3(p.x, p.y + 0.15f, p.z);
+                lr.enabled = true;
+            }
+        }
+
+        private void HideTideRings()
+        {
+            if (_tideRings != null) foreach (var lr in _tideRings) lr.enabled = false;
+        }
+
         private void ClearMove()
         {
+            _tidePts.Clear();
+            HideTideRings();
             _moveR = _moveWind = -1f;
             _moveMul = 1f;
             _moveAtPoint = false;
@@ -731,6 +796,7 @@ namespace Saga.Go.Combat
         public void Tick(float dt)
         {
             TickStatus(dt);
+            if (CurrentState != State.Telegraph && _tidePts.Count > 0) ClearMove(); // 예고가 끊겼으면(비틀·얼음·쓰러짐) 밀물 원을 거둔다
             if (IsGuardian && !GuardianState.Standing && Alive)
             {
                 gameObject.SetActive(false); // 세이브에서 이미 쓰러뜨린 수호장 — 꽃을 받고 150초가 지나기 전엔 안 선다(109-14-10 `GuardianBloom` 이 다시 세운다).
@@ -772,7 +838,16 @@ namespace Saga.Go.Combat
                     break;
 
                 case State.Chase:
-                    if (!DomainFoe && (!playerOk || distPlayer > GiveUpRadius || Flat(transform.position - Home).magnitude > LeashRadius))
+                    if (Siege.HasValue && (!playerOk || distPlayer > SiegePull))
+                    {
+                        // 109-14-16 제단으로 곧장 — 제단 몸 둘레만큼 덜 다가간다
+                        Vector3 al = Siege.Value;
+                        float da = Mathf.Max(0f, Flat(al - transform.position).magnitude - SiegeBody);
+                        if (da <= EngageReach) { _siegeStrike = true; BeginTelegraph(); break; }
+                        MoveToward(al, ChaseSpeed, dt, EngageReach * 0.9f + SiegeBody);
+                        break;
+                    }
+                    if (!DomainFoe && !Siege.HasValue && (!playerOk || distPlayer > GiveUpRadius || Flat(transform.position - Home).magnitude > LeashRadius))
                     {
                         CurrentState = State.Return;
                         break;
@@ -798,13 +873,13 @@ namespace Saga.Go.Combat
                 case State.Recover:
                     SetMoveAnim(0f);
                     _timer -= dt;
-                    if (_timer <= 0f) CurrentState = DomainFoe || (playerOk && distPlayer < GiveUpRadius) ? State.Chase : State.Return;
+                    if (_timer <= 0f) CurrentState = DomainFoe || Siege.HasValue || (playerOk && distPlayer < GiveUpRadius) ? State.Chase : State.Return;
                     break;
 
                 case State.Stagger:
                     SetMoveAnim(0f);
                     _timer -= dt;
-                    if (_timer <= 0f) CurrentState = DomainFoe || (playerOk && distPlayer < GiveUpRadius) ? State.Chase : State.Return;
+                    if (_timer <= 0f) CurrentState = DomainFoe || Siege.HasValue || (playerOk && distPlayer < GiveUpRadius) ? State.Chase : State.Return;
                     break;
 
                 case State.Return:
@@ -835,9 +910,20 @@ namespace Saga.Go.Combat
             // 109-6 지(智) 인물 — 떨어지는 원거리: 예고 원이 시작 순간 플레이어 발밑에 선다.
             var fc = FieldCombat.Instance;
             _strikePoint = fc != null ? fc.transform.position : transform.position;
-            if (_rot != null) ApplyMove(_strikePoint); // 109-14-14 이번 수
+            if (_rot != null && !_siegeStrike) ApplyMove(_strikePoint); // 109-14-14 이번 수
             if (Ranged || _moveAtPoint) _warnRing.transform.position = new Vector3(_strikePoint.x, Grounded(_strikePoint).y + 0.15f, _strikePoint.z);
             else _warnRing.transform.localPosition = new Vector3(0f, 0.15f, 0f);
+        }
+
+        /// <summary>그 자리가 이번 수의 원 안인가 — 밀물이면 원 넷 중 하나라도(109-14-16).</summary>
+        public bool InStrike(Vector3 p)
+        {
+            if (_tidePts.Count > 0)
+            {
+                foreach (var t in _tidePts) if (Flat(p - t).magnitude <= StrikeReach) return true;
+                return false;
+            }
+            return Flat(p - StrikePoint).magnitude <= StrikeReach;
         }
 
         /// <summary>예고 끝 판정 — 그 순간 반경 안이면 맞는다(회피 무적이면 `FieldCombat` 이 흘린다).</summary>
@@ -848,7 +934,13 @@ namespace Saga.Go.Combat
             TintVisual(Color.white, false);
             if (_animator != null) _animator.SetTrigger("Attack");
             var fc = FieldCombat.Instance;
-            if (fc != null && fc.CanBeTargeted && Flat(fc.transform.position - StrikePoint).magnitude <= StrikeReach)
+            if (_siegeStrike)
+            {
+                // 109-14-16 제단을 노린 한 대 — 제단만 친다
+                _siegeStrike = false;
+                if (Siege.HasValue && Flat(Siege.Value - StrikePoint).magnitude <= StrikeReach + SiegeBody) SiegeHit?.Invoke(this, Atk * _moveMul);
+            }
+            else if (fc != null && fc.CanBeTargeted && InStrike(fc.transform.position))
             {
                 fc.ReceiveStrike(Atk * _moveMul, this);
             }

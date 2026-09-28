@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **2900** (표 2845 · 코드 55) — go 1056 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **206**
-- 사람 검수 **0/2900** — 순위1 0/265 · 순위2 0/1924 · 순위3 0/711
+- 짝 **2951** (표 2896 · 코드 55) — go 1107 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **214**
+- 사람 검수 **0/2951** — 순위1 0/265 · 순위2 0/1975 · 순위3 0/711
 
 ## 검수 순서
 
@@ -26,12 +26,13 @@
 
 없음.
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 206)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 214)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
 | 폭 한→영 | 판 | 키 | 영어 |
 |---|---|---|---|
+| 15→34 | go | `story.ch7.s9` | Watch the light across the water with the ferryman who came to the cape |
 | 10→25 | go | `story.ch5.s2` | To the mouth of the old road on the western wood path |
 | 16→33 | go | `story.ch6.s3.l3` | ……He's come. When he wraps himself in stormclouds, break it with fire! |
 | 9→22 | forest | `visitor.dirs` | somewhere in the woods to the {0} of the village |
@@ -47,6 +48,7 @@
 | 7→16 | dungeon | `saga.heaven.title` | The Guardian Who Drew His Sword |
 | 5→13 | story | `bp.sig.hwanggeon_chief` | Netherworld Talisman Array |
 | 5→13 | dungeon | `enemy.boss` | Yellow Turban Bandit Chief |
+| 12→24 | go | `story.ch7` | Chapter 7 · The Fourth Altar on the Riverside Cape |
 | 4→11 | dungeon | `enemy.miniboss` | Yellow Turban Assassin |
 | 5→13 | dungeon | `saga.snowfort.title` | Giant of the Mountain Fort |
 | 3→9 | forest | `finish.ondol` | Ondol Heated Floor |
@@ -60,5 +62,3 @@
 | 27→48 | go | `story.ch4.s7.l1` | A mask fragment? Let me see… this pattern is exactly the one carved at the bottom of the inscription! |
 | 4→11 | dungeon | `landmark.bandit` | Black Wind Stronghold |
 | 4→11 | story | `bp.boss.bandit_chief` | Mountain Bandit Chief |
-| 4→11 | go | `kit.sig.zhuge.burst` | Heaven's Thunderstorm |
-| 3→9 | go | `cook.item.orchid` | Blue River Orchid |

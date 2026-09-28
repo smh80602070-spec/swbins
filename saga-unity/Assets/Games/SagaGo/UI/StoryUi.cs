@@ -290,6 +290,10 @@ namespace Saga.Go.UI
             float dist = GoStory.Flat(p, t);
             string line = string.Format(GoLocalization.T("story.track", "◆ {0} — {1} · {2}m"), GoStory.ChapterName(ch), text, Mathf.RoundToInt(dist));
             if (st.Type == GoStory.StepType.Follow && dist > GoStory.FollowLost) line += GoLocalization.T("story.follow_lost", " · 너무 멀어졌다");
+            var sf = StoryField.Instance;
+            if (st.Type == GoStory.StepType.Defend && sf != null && sf.DefendHpMax > 0f && (sf.DefendWave >= 0 || sf.DefendRest > 0f)) // 109-14-16
+                line += string.Format(GoLocalization.T("story.defend_line", " · {0} {1}% · 물결 {2}/{3}"), GoLocalization.T(st.NameKey, st.NameKo),
+                    Mathf.CeilToInt(sf.DefendHp / sf.DefendHpMax * 100f), Mathf.Max(0, sf.DefendWave + 1), (st.Waves ?? GoStory.DefendWaves).Length);
             return line;
         }
 
