@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://games/saga_story/player/story_player.gd" id="1"]
-[ext_resource type="PackedScene" path="res://assets/characters_vroid/AvatarSample_A.glb" id="2"]
+[ext_resource type="PackedScene" path="res://assets/characters_cf/cmp_go_01.glb" id="2"]
 [ext_resource type="Script" path="res://games/saga_go/player/anim_library_loader.gd" id="3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape1"]
@@ -24,8 +24,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 ## (row-major)" 삽질 기록대로 씬 파일에 손으로 회전 행렬을 적지 않는다.
 ## story_player.gd `_ready()`가 코드로 `rotation.y`를 돌린다(옆에서 보는
 ## 판이라 오른쪽(+X)을 보게).
-transform = Transform3D(1.091, 0, 0, 0, 1.091, 0, 0, 0, 1.091, 0, 0, 0)
+## 2026-09-29 사용자 결정 "다섯 판 모두 공방 몸으로"(char-forge 2단계) — 동작 여덟은 몸 glb 안 AnimationPlayer(아래는 스크립트만 얹어 반복 동작을 켠다).
+transform = Transform3D(1.083, 0, 0, 0, 1.083, 0, 0, 0, 1.083, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Visual"]
+[node name="AnimationPlayer" parent="Visual" index="1"]
 script = ExtResource("3")
-library_path = "res://assets/characters_vroid/anim_cc0/AvatarSample_A_lib.res"
+library_path = ""

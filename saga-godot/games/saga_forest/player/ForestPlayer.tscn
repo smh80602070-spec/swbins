@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/saga_go/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://games/saga_dungeon/player/dungeon_camera_rig.gd" id="2"]
-[ext_resource type="PackedScene" path="res://assets/characters_vroid/saga_forest_avatar_01.glb" id="3"]
+[ext_resource type="PackedScene" path="res://assets/characters_cf/cmp_forest_01.glb" id="3"]
 [ext_resource type="Script" path="res://games/saga_go/player/anim_library_loader.gd" id="4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape1"]
@@ -26,11 +26,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 ## 베이크가 필요해 `tools/asset-forge/vroid_face_bake_project.py`로
 ## `generated/saga_forest_avatar_01_Face_Baked.png`를 새로 구웠다
 ## (cel_shader_apply.gd가 GLB 경로로 캐릭터별 베이크를 찾아 쓴다).
-transform = Transform3D(1.0344, 0, 0, 0, 1.0344, 0, 0, 0, 1.0344, 0, 0, 0)
+## 2026-09-29 사용자 결정 "다섯 판 모두 공방 몸으로"(char-forge 2단계) — 동작 여덟은 몸 glb 안 AnimationPlayer(아래는 스크립트만 얹어 반복 동작을 켠다).
+transform = Transform3D(1.083, 0, 0, 0, 1.083, 0, 0, 0, 1.083, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Visual"]
+[node name="AnimationPlayer" parent="Visual" index="1"]
 script = ExtResource("4")
-library_path = "res://assets/characters_vroid/anim_cc0/saga_forest_avatar_01_lib.res"
+library_path = ""
 
 [node name="CameraRig" type="Node3D" parent="."]
 script = ExtResource("2")

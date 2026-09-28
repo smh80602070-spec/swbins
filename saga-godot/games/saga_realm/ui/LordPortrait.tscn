@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://games/saga_realm/ui/lord_portrait.gd" id="1"]
-[ext_resource type="PackedScene" path="res://assets/characters_vroid/AvatarSample_A.glb" id="2"]
+[ext_resource type="PackedScene" path="res://assets/characters_cf/cmp_go_01.glb" id="2"]
 [ext_resource type="Script" path="res://games/saga_go/player/anim_library_loader.gd" id="3"]
 
 [node name="LordPortrait" type="Control" groups=["lord_portrait"]]
@@ -39,11 +39,12 @@ light_energy = 1.1
 [node name="Visual" parent="Viewport/SubViewport" instance=ExtResource("2")]
 ## games/saga_go/player/Player.tscn과 같은 자리표시자(AvatarSample_A, 103-4).
 ## 인물별 실제 얼굴 구분은 나중에(위 lord_portrait.gd 머리말 참고).
-transform = Transform3D(1.091, 0, 0, 0, 1.091, 0, 0, 0, 1.091, 0, 0, 0)
+## 2026-09-29 사용자 결정 "다섯 판 모두 공방 몸으로"(char-forge 2단계) — 동작 여덟은 몸 glb 안 AnimationPlayer(아래는 스크립트만 얹어 반복 동작을 켠다).
+transform = Transform3D(1.083, 0, 0, 0, 1.083, 0, 0, 0, 1.083, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Viewport/SubViewport/Visual"]
+[node name="AnimationPlayer" parent="Viewport/SubViewport/Visual" index="1"]
 script = ExtResource("3")
-library_path = "res://assets/characters_vroid/anim_cc0/AvatarSample_A_lib.res"
+library_path = ""
 
 [node name="NameLabel" type="Label" parent="."]
 anchor_top = 1.0

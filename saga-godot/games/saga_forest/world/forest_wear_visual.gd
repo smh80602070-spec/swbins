@@ -20,7 +20,7 @@ extends Node3D
 ## cel_shader_apply.gd가 표면마다 박아 둔 cel_toon의 albedo_tint에 곱색만
 ## 얹는다 — VRoid는 옷이 재질 단위로 나뉘어 있어(이름 끝 "_CLOTH": Tops·
 ## Bottoms·Shoes) 피부·머리·얼굴은 안 물들이고 옷만 물들인다.
-const CLOTH_KEY := "_CLOTH"
+const CLOTH_KEY := "CLOTH" # 대문자로 견준다 — VRoid "…_CLOTH…" · 공방 몸(09-29) "cloth_a"
 const BASE_TINT_META := &"dye_base_tint"
 
 var _player: Node3D = null
@@ -59,7 +59,7 @@ func _apply_dye(dye: String) -> void:
 			continue
 		for i in mi.mesh.get_surface_count():
 			var orig := mi.mesh.surface_get_material(i)
-			if orig == null or not (CLOTH_KEY in orig.resource_name):
+			if orig == null or not (CLOTH_KEY in orig.resource_name.to_upper()):
 				continue
 			var mat := mi.get_surface_override_material(i) as ShaderMaterial
 			if mat == null:

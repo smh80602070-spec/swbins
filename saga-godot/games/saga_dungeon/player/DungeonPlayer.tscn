@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/saga_go/player/player.gd" id="1"]
 [ext_resource type="Script" path="res://games/saga_dungeon/player/dungeon_camera_rig.gd" id="2"]
-[ext_resource type="PackedScene" path="res://assets/characters_vroid/dungeon_hero_01.glb" id="3"]
+[ext_resource type="PackedScene" path="res://assets/characters_cf/cmp_dungeon_01.glb" id="3"]
 [ext_resource type="Script" path="res://games/saga_go/player/anim_library_loader.gd" id="84"]
 [ext_resource type="Script" path="res://games/saga_dungeon/player/player_health.gd" id="4"]
 [ext_resource type="Script" path="res://games/saga_dungeon/player/melee_attack.gd" id="5"]
@@ -102,11 +102,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 ## 105 Q-h 1.7m 표준에 맞춰 ×0.9335. 직업 5종은 이제 데이터+장비로
 ## 구분되지만(DungeonItems.WEAPON_CLASS, JobLabel UI), 손에 쥔 무기 3D
 ## 모델·직업별 외형은 여전히 없다(이번 교체 범위 밖).
-transform = Transform3D(0.933514, 0, 0, 0, 0.933514, 0, 0, 0, 0.933514, 0, 0, 0)
+## 2026-09-29 사용자 결정 "다섯 판 모두 공방 몸으로"(char-forge 2단계) — 동작 여덟은 몸 glb 안 AnimationPlayer(아래는 스크립트만 얹어 반복 동작을 켠다).
+transform = Transform3D(0.955, 0, 0, 0, 0.955, 0, 0, 0, 0.955, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Visual"]
+[node name="AnimationPlayer" parent="Visual" index="1"]
 script = ExtResource("84")
-library_path = "res://assets/characters_vroid/anim_cc0/dungeon_hero_01_lib.res"
+library_path = ""
 
 [node name="CameraRig" type="Node3D" parent="."]
 script = ExtResource("2")

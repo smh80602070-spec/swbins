@@ -9,6 +9,12 @@ extends AnimationPlayer
 
 @export var library_path: String = ""
 
+## 2026-09-29 — 공방 몸(char-forge)은 동작이 glb 안에 있어 library_path 가 비고, 임포트된 동작은 반복이 꺼져 있다.
+const LOOP_CLIPS := ["idle", "walk", "sprint"]
+
 func _ready() -> void:
 	if library_path != "":
 		add_animation_library("", load(library_path))
+	for c in LOOP_CLIPS:
+		if has_animation(c):
+			get_animation(c).loop_mode = Animation.LOOP_LINEAR

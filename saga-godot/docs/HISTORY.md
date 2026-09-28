@@ -9372,3 +9372,15 @@ PROJECT_STATE.md` 참고. 요약:
 - 09-26 남긴 ⑤: 칸 사이 낮은 턱(길 0.1m 등) 옆면이 절벽 빛깔·돌·눈 없음으로 칠해져 눈밭·풀밭에 검은 줄. terrain_builder _add_cliffs — 0.6m(LOW_STEP_M) 미만 턱은 위 법선·그 칸 빛깔·그 칸 눈 표시로(모양·충돌 그대로). 창 모드 f_fort·f_n_close 에서 줄 사라짐.
 - char-forge 2단계 판정용: tools/compare/char_compare.gd 에 SAGA_CMP_FOCUS=<짝> (그 짝 가까이) — --write-movie 로 프레임을 떠 사용자에게 보임. 이 PC 는 cmp_*.glb 가 임포트 안 돼 있어 --editor 임포트 한 번(바뀐 .import 1039개·새 .uid 66개는 되돌림/지움, project.godot 그대로).
 - 점검 TRAVERSAL·FROST·STORY3·CROSSING·VILLAGE·SKYPORT fails=0, REGRESS OK.
+
+## 사람 몸 공방(CC0) 교체 — char-forge 2단계 (2026-09-29, 같은 세션, "이어해")
+
+- 사용자 판정: 비교 장면(CharCompare, SAGA_CMP_FOCUS 로 짝마다 찍어 보임) → "새 공방 몸으로 교체", 시험(GO 만, 게임 화면 촬영) 뒤 "다섯 판 모두".
+  솔직히 알림: 그래픽이 나아지진 않는다(실사 쪽 판타지 얼굴, 몸 셋, 입·눈 변형 없음) — 얻는 것은 판타지 옷·CC0.
+- 바꾼 곳: GO Player·STORY StoryPlayer·REALM LordPortrait → cmp_go_01(×1.083) · FOREST → cmp_forest_01(×1.083) · DUNGEON → cmp_dungeon_01(×0.955) · GO 인물·주민·도적(vroid_body BODIES) → cmp_dungeon_01·cmp_forest_01.
+  동작 여덟은 glb 안 AnimationPlayer — 씬은 그 노드에 anim_library_loader 만 얹고(library_path ""), 로더가 idle·walk·sprint 반복을 켠다.
+- 뼈 이름(UE 식 Head·neck_01·hand_r·foot_r·ball_r): vroid_body find_bone_of·_bone_anchor(뼈에 붙이되 쉬는 자세 회전을 되돌려 자식 좌표 = 몸 축 — 가면·왕관·투구·바이저·모자·빛 고리·염주·고글 여덟 곳), front_sign·talk_face 뼈 후보.
+- 재질 이름: 머리·옷 색 바꾸기를 대문자 비교(hair_2·cloth_a), 숲 옷 갈아입기 CLOTH 도. 공방 옷 그림이 어두운 가죽이라 곱하기만 하면 마을 사람이 모두 검은 무리 → 옷빛 ×2.1·머리 ×1.3(창 모드 v_people_lineup 전후).
+- probe_story talk_face: 입·눈 변형 있는 몸만 입·기쁨·깜빡임 확인, 손 뼈 hand_r 후보.
+- 이 PC 는 cmp_*.glb 임포트가 없어 --editor 임포트 한 번(.import 1039·.uid 66 되돌림/지움, project.godot 그대로).
+- 점검 STORY(대화 몸짓)·STORY8(가면 보스)·COMBAT·KIT·TRAVERSAL fails=0, REGRESS OK. 창 모드: GO 인물 줄·플레이어·전투, FOREST·DUNGEON·STORY 첫 화면(--write-movie) — 새 몸으로 서고 걸음, 스크립트 오류 0. REALM 초상은 회귀만.

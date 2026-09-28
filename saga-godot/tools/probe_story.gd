@@ -1375,10 +1375,12 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 420:
 				var hp: Vector3 = (_v.hand as Node3D).global_position - body.global_position
 				var back := absf(hp.y - float(_v.base_y) / float(_v.n)) < 0.05
-				var ok: bool = _v.map == [0, 1, 2, 3, 4, -1, -1] and bool(_v.opened) and bool(_v.revealing) and float(_v.mouth) > 0.2 \
+				## 09-29 공방 몸(char-forge)엔 입·눈 변형(blend shape)이 없다 — 있는 몸만 입·기쁨·깜빡임을 본다. 손짓·끄덕임은 늘.
+				var faced := bool(face.call("has_mouth"))
+				var ok: bool = _v.map == [0, 1, 2, 3, 4, -1, -1] and bool(_v.opened) and bool(_v.revealing) \
 					and float(_v.lift) > 0.12 and float(_v.fwd) > 0.08 and float(_v.infl) > 0.9 and bool(_v.done_reveal) and bool(_v.open_mid) \
-					and float(_v.joy) > 0.5 and bool(_v.closed) and float(face.get("influence")) < 0.05 and back and float(_v.blink) > 0.99 \
-					and bool(face.call("has_mouth"))
+					and bool(_v.closed) and float(face.get("influence")) < 0.05 and back \
+					and (not faced or (float(_v.mouth) > 0.2 and float(_v.joy) > 0.5 and float(_v.blink) > 0.99))
 				_check("talk_face", ok, "map=%s reveal=%s mouth=%.2f lift=%.2f fwd=%.2f infl=%.2f joy=%.2f closed=%s back=%s blink=%.1f front=%+.0f" % [
 					_v.map, _v.revealing, _v.mouth, _v.lift, _v.fwd, _v.infl, _v.joy, _v.closed, back, _v.blink, face.call("front_sign")])
 				(_v.hand as Node).queue_free()
@@ -1442,7 +1444,7 @@ func _line_next() -> void:
 func _hand_probe(body: Node3D) -> Node3D:
 	var skel: Skeleton3D = body.find_children("*", "Skeleton3D", true, false)[0]
 	var att := BoneAttachment3D.new()
-	att.bone_idx = skel.find_bone("J_Bip_R_Hand")
+	att.bone_idx = skel.find_bone("J_Bip_R_Hand") if skel.find_bone("J_Bip_R_Hand") >= 0 else skel.find_bone("hand_r")
 	skel.add_child(att)
 	return att
 

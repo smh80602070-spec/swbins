@@ -74,15 +74,23 @@ func _collect(body: Node) -> void:
 					_shapes[n] = []
 				(_shapes[n] as Array).append([m, idx])
 	var skel := get_parent() as Skeleton3D
-	_b_head = skel.find_bone("J_Bip_C_Head")
-	_b_uarm = skel.find_bone("J_Bip_R_UpperArm")
-	_b_larm = skel.find_bone("J_Bip_R_LowerArm")
-	var foot := skel.find_bone("J_Bip_R_Foot")
-	var toe := skel.find_bone("J_Bip_R_ToeBase")
+	## 2026-09-29 — 공방 몸(char-forge, UE 식 뼈 이름)도. 몸짓은 뼈대 공간 축으로 돌려(_rotate_global) 뼈 축이 달라도 같은 방향이다.
+	_b_head = _bone(skel, ["J_Bip_C_Head", "Head"])
+	_b_uarm = _bone(skel, ["J_Bip_R_UpperArm", "upperarm_r"])
+	_b_larm = _bone(skel, ["J_Bip_R_LowerArm", "lowerarm_r"])
+	var foot := _bone(skel, ["J_Bip_R_Foot", "foot_r"])
+	var toe := _bone(skel, ["J_Bip_R_ToeBase", "ball_r"])
 	if foot >= 0 and toe >= 0:
 		var dz := skel.get_bone_global_rest(toe).origin.z - skel.get_bone_global_rest(foot).origin.z
 		_front = -1.0 if dz < 0.0 else 1.0
 	influence = 0.0
+
+static func _bone(skel: Skeleton3D, names: Array) -> int:
+	for n in names:
+		var i := skel.find_bone(String(n))
+		if i >= 0:
+			return i
+	return -1
 
 func has_mouth() -> bool:
 	return _shapes.has("Fcl_MTH_A")

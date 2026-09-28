@@ -8,12 +8,15 @@ extends RefCounted
 
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 
+## 2026-09-29 사용자 결정 "새 공방 몸으로 교체"(char-forge 2단계) — VRoid 둘 → 공방 몸(CC0, 동작 여덟이 몸에 들어 있어 lib 없음).
+## 키는 옛 몸과 같게(여 1.57m·남 1.78m 원본 → 약 1.70m).
 const BODIES := [
-	{"glb": "res://assets/characters_vroid/dungeon_hero_01.glb", "scale": 0.933514,
-		"lib": "res://assets/characters_vroid/anim_cc0/dungeon_hero_01_lib.res"},
-	{"glb": "res://assets/characters_vroid/saga_forest_avatar_01.glb", "scale": 1.0344,
-		"lib": "res://assets/characters_vroid/anim_cc0/saga_forest_avatar_01_lib.res"},
+	{"glb": "res://assets/characters_cf/cmp_dungeon_01.glb", "scale": 0.955, "lib": ""},
+	{"glb": "res://assets/characters_cf/cmp_forest_01.glb", "scale": 1.083, "lib": ""},
 ]
+const HEAD_BONES := ["J_Bip_C_Head", "Head"]
+const NECK_BONES := ["J_Bip_C_Neck", "neck_01"]
+const LOOP_CLIPS := ["idle", "walk", "sprint"]
 
 const HAIR_TINTS := [
 	Color(1, 1, 1), Color(0.55, 0.45, 0.4), Color(0.4, 0.42, 0.55), Color(1.0, 0.85, 0.7),
@@ -45,11 +48,20 @@ static func build(id: String, rarity: int = 3, cloth_override: Variant = null) -
 	v.set_meta("cel_applied", true)
 	var hair: Color = HAIR_TINTS[(h >> 3) % HAIR_TINTS.size()]
 	var cloth: Color = cloth_override if cloth_override != null else CLOTH_TINTS[(h >> 7) % CLOTH_TINTS.size()]
+	## 공방 몸 옷 그림은 어두운 가죽이라 곱하기만 하면 모두 검은 무리가 된다 — 옷빛을 밝혀(1 넘게) 색이 보이게.
+	if String(body.glb).contains("characters_cf"):
+		cloth = Color(cloth.r * 2.1, cloth.g * 2.1, cloth.b * 2.1)
+		hair = Color(hair.r * 1.3, hair.g * 1.3, hair.b * 1.3)
 	_tint(v, hair, cloth, rarity >= 5)
-	var ap := AnimationPlayer.new()
-	ap.name = "AnimationPlayer"
-	v.add_child(ap)
-	ap.add_animation_library("", load(body.lib))
+	var ap: AnimationPlayer = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
+	if String(body.lib) != "" or ap == null:
+		ap = AnimationPlayer.new()
+		ap.name = "AnimationPlayer"
+		v.add_child(ap)
+		ap.add_animation_library("", load(body.lib))
+	for c in LOOP_CLIPS:
+		if ap.has_animation(c):
+			ap.get_animation(c).loop_mode = Animation.LOOP_LINEAR
 	if ap.has_animation("idle"):
 		ap.play("idle")
 		## 무리가 박자 맞춰 숨쉬지 않게 시작점을 어긋낸다.
@@ -58,11 +70,31 @@ static func build(id: String, rarity: int = 3, cloth_override: Variant = null) -
 
 ## 뼈대 공간에서 몸 앞이 +Z 면 1, -Z 면 -1 — 오른발목 → 발끝 쉬는 자세 방향(뼈가 없으면 1).
 static func front_sign(skel: Skeleton3D) -> float:
-	var foot := skel.find_bone("J_Bip_R_Foot")
-	var toe := skel.find_bone("J_Bip_R_ToeBase")
+	var foot := find_bone_of(skel, ["J_Bip_R_Foot", "foot_r"])
+	var toe := find_bone_of(skel, ["J_Bip_R_ToeBase", "ball_r"])
 	if foot < 0 or toe < 0:
 		return 1.0
 	return -1.0 if skel.get_bone_global_rest(toe).origin.z < skel.get_bone_global_rest(foot).origin.z else 1.0
+
+## 뼈 이름 후보 중 먼저 있는 것(VRoid J_Bip_* · 공방 몸 UE 식).
+static func find_bone_of(skel: Skeleton3D, names: Array) -> int:
+	for n in names:
+		var i := skel.find_bone(String(n))
+		if i >= 0:
+			return i
+	return -1
+
+## 뼈에 붙이되 자식의 좌표축은 몸(뼈대 공간) 축 — 쉬는 자세 뼈 회전을 되돌린다.
+## VRoid 뼈는 쉬는 자세 회전이 없어 예전과 같고, 공방 몸(뼈마다 축이 기운 UE 식)도 같은 오프셋이 같은 자리에 온다.
+static func _bone_anchor(skel: Skeleton3D, bone: int) -> Node3D:
+	var att := BoneAttachment3D.new()
+	att.bone_idx = bone
+	skel.add_child(att)
+	var anchor := Node3D.new()
+	anchor.name = "Anchor"
+	anchor.transform = Transform3D(skel.get_bone_global_rest(bone).basis.orthonormalized().inverse(), Vector3.ZERO)
+	att.add_child(anchor)
+	return anchor
 
 static func _tint(root: Node, hair: Color, cloth: Color, gold: bool) -> void:
 	for mi in root.find_children("*", "MeshInstance3D", true, false):
@@ -74,7 +106,7 @@ static func _tint(root: Node, hair: Color, cloth: Color, gold: bool) -> void:
 			var over := (mi as MeshInstance3D).get_surface_override_material(i) as ShaderMaterial
 			if src == null or over == null:
 				continue
-			var n := src.resource_name
+			var n := src.resource_name.to_upper() # VRoid "…HAIR…" · 공방 "hair_2"·"cloth_a"
 			var base: Color = over.get_shader_parameter("albedo_tint")
 			if n.contains("HAIR"):
 				over.set_shader_parameter("albedo_tint", base * hair)
@@ -99,12 +131,9 @@ static func add_mask(body: Node3D, stripe: Color = Color(0.72, 0.12, 0.12), face
 	var skel := body.find_children("*", "Skeleton3D", true, false)
 	var head := -1
 	if not skel.is_empty():
-		head = (skel[0] as Skeleton3D).find_bone("J_Bip_C_Head")
+		head = find_bone_of(skel[0], HEAD_BONES)
 	if head >= 0:
-		var att := BoneAttachment3D.new()
-		att.bone_idx = head
-		skel[0].add_child(att)
-		att.add_child(mask)
+		_bone_anchor(skel[0], head).add_child(mask)
 		## 뼈대 공간 앞이 -Z 인 몸(saga_forest_avatar_01)이면 가면도 뒤집어 얼굴 쪽에.
 		var front := front_sign(skel[0])
 		mask.position = Vector3(0.0, 0.07, 0.085 * front)
@@ -157,12 +186,9 @@ static func add_crown(body: Node3D, gold: Color = Color(0.9, 0.74, 0.3)) -> void
 	var skel := body.find_children("*", "Skeleton3D", true, false)
 	var head := -1
 	if not skel.is_empty():
-		head = (skel[0] as Skeleton3D).find_bone("J_Bip_C_Head")
+		head = find_bone_of(skel[0], HEAD_BONES)
 	if head >= 0:
-		var att := BoneAttachment3D.new()
-		att.bone_idx = head
-		skel[0].add_child(att)
-		att.add_child(crown)
+		_bone_anchor(skel[0], head).add_child(crown)
 		crown.position = Vector3(0.0, 0.17, 0.0)
 	else:
 		body.add_child(crown)
@@ -198,12 +224,9 @@ static func add_helmet(body: Node3D, iron: Color = Color(0.36, 0.35, 0.36), tass
 	var skel := body.find_children("*", "Skeleton3D", true, false)
 	var head := -1
 	if not skel.is_empty():
-		head = (skel[0] as Skeleton3D).find_bone("J_Bip_C_Head")
+		head = find_bone_of(skel[0], HEAD_BONES)
 	if head >= 0:
-		var att := BoneAttachment3D.new()
-		att.bone_idx = head
-		skel[0].add_child(att)
-		att.add_child(helm)
+		_bone_anchor(skel[0], head).add_child(helm)
 		helm.position = Vector3(0.0, 0.1, 0.0)
 	else:
 		body.add_child(helm)
@@ -257,12 +280,9 @@ static func add_visor(body: Node3D, metal: Color = Color(0.78, 0.8, 0.84), glow:
 	var skel := body.find_children("*", "Skeleton3D", true, false)
 	var head := -1
 	if not skel.is_empty():
-		head = (skel[0] as Skeleton3D).find_bone("J_Bip_C_Head")
+		head = find_bone_of(skel[0], HEAD_BONES)
 	if head >= 0:
-		var att := BoneAttachment3D.new()
-		att.bone_idx = head
-		skel[0].add_child(att)
-		att.add_child(visor)
+		_bone_anchor(skel[0], head).add_child(visor)
 		var front := front_sign(skel[0])
 		visor.position = Vector3(0.0, 0.07, 0.0)
 		visor.rotation.y = 0.0 if front > 0.0 else PI
@@ -321,12 +341,9 @@ static func add_hat(body: Node3D, felt: Color = Color(0.12, 0.11, 0.12), band: C
 	var skel := body.find_children("*", "Skeleton3D", true, false)
 	var head := -1
 	if not skel.is_empty():
-		head = (skel[0] as Skeleton3D).find_bone("J_Bip_C_Head")
+		head = find_bone_of(skel[0], HEAD_BONES)
 	if head >= 0:
-		var att := BoneAttachment3D.new()
-		att.bone_idx = head
-		skel[0].add_child(att)
-		att.add_child(hat)
+		_bone_anchor(skel[0], head).add_child(hat)
 		var front := front_sign(skel[0])
 		hat.position = Vector3(0.0, 0.13, 0.0)
 		hat.rotation.y = 0.0 if front > 0.0 else PI
@@ -382,12 +399,9 @@ static func add_halo(body: Node3D, glow: Color = Color(0.6, 0.85, 1.0)) -> void:
 	var skel := body.find_children("*", "Skeleton3D", true, false)
 	var head := -1
 	if not skel.is_empty():
-		head = (skel[0] as Skeleton3D).find_bone("J_Bip_C_Head")
+		head = find_bone_of(skel[0], HEAD_BONES)
 	if head >= 0:
-		var att := BoneAttachment3D.new()
-		att.bone_idx = head
-		skel[0].add_child(att)
-		att.add_child(halo)
+		_bone_anchor(skel[0], head).add_child(halo)
 		halo.position = Vector3(0.0, 0.0, 0.0)
 	else:
 		body.add_child(halo)
@@ -422,12 +436,9 @@ static func add_beads(body: Node3D, wood: Color = Color(0.36, 0.22, 0.12), sash:
 	var skel := body.find_children("*", "Skeleton3D", true, false)
 	var neck := -1
 	if not skel.is_empty():
-		neck = (skel[0] as Skeleton3D).find_bone("J_Bip_C_Neck")
+		neck = find_bone_of(skel[0], NECK_BONES)
 	if neck >= 0:
-		var att := BoneAttachment3D.new()
-		att.bone_idx = neck
-		skel[0].add_child(att)
-		att.add_child(beads)
+		_bone_anchor(skel[0], neck).add_child(beads)
 		beads.rotation.y = 0.0 if front_sign(skel[0]) > 0.0 else PI
 	else:
 		body.add_child(beads)
@@ -470,12 +481,9 @@ static func add_goggles(body: Node3D, rim: Color = Color(0.72, 0.45, 0.22), glas
 	var skel := body.find_children("*", "Skeleton3D", true, false)
 	var head := -1
 	if not skel.is_empty():
-		head = (skel[0] as Skeleton3D).find_bone("J_Bip_C_Head")
+		head = find_bone_of(skel[0], HEAD_BONES)
 	if head >= 0:
-		var att := BoneAttachment3D.new()
-		att.bone_idx = head
-		skel[0].add_child(att)
-		att.add_child(gog)
+		_bone_anchor(skel[0], head).add_child(gog)
 		gog.position = Vector3(0.0, 0.12, 0.0)
 		gog.rotation.y = 0.0 if front_sign(skel[0]) > 0.0 else PI
 	else:

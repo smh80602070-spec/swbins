@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/saga_go/player/go_player.gd" id="1"]
 [ext_resource type="Script" path="res://games/saga_go/player/camera_rig.gd" id="2"]
-[ext_resource type="PackedScene" path="res://assets/characters_vroid/AvatarSample_A.glb" id="3"]
+[ext_resource type="PackedScene" path="res://assets/characters_cf/cmp_go_01.glb" id="3"]
 [ext_resource type="Script" path="res://games/saga_go/player/anim_library_loader.gd" id="4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape1"]
@@ -22,11 +22,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
 ## 모델 실측 키(1.558m)를 새 캡슐(총높이 1.7m)에 맞춰 역산(옛 2.182배의
 ## 정확히 절반). 이 GLB 자체엔 애니메이션이 없다 — idle/walk/sprint는
 ## 103-4(2026-09-19⑯)에서 Mixamo 리타겟한 걸 아래 AnimationPlayer로 재생한다.
-transform = Transform3D(1.091, 0, 0, 0, 1.091, 0, 0, 0, 1.091, 0, 0, 0)
+## 2026-09-29 사용자 결정 "새 공방 몸으로 교체"(char-forge 2단계) — 공방 몸 cmp_go_01(CC0 순찰자 여, 원본 키 1.57m → 1.70m).
+## 동작 여덟은 몸 glb 안 AnimationPlayer 에 있다(아래는 그 노드에 스크립트만 얹어 반복 동작을 켠다).
+transform = Transform3D(1.083, 0, 0, 0, 1.083, 0, 0, 0, 1.083, 0, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Visual"]
+[node name="AnimationPlayer" parent="Visual" index="1"]
 script = ExtResource("4")
-library_path = "res://assets/characters_vroid/anim_cc0/AvatarSample_A_lib.res"
+library_path = ""
 
 [node name="CameraRig" type="Node3D" parent="."]
 script = ExtResource("2")
