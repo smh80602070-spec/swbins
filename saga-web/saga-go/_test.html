@@ -14008,7 +14008,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
           !ST.visible('gamyeon') && (np('gamyeon', 2), !ST.visible('gamyeon'));
         C.save.story = { ch: 25, step: 6 }; r.npcs = r.npcs && ST.visible('gamyeon') && ST.npcInfo('gamyeon').sky && st10Eq(ST.npcPos('gamyeon'), R.spot('gamyeon')) && ST.npcInfo('gamyeon').mask === true;
         C.save.story = { ch: 25, step: 8 }; r.npcs = r.npcs && !ST.visible('gamyeon') && st10Eq(ST.npcPos('haneul'), R.spot('orbit_haneul'));
-        C.save.story = { ch: 26, step: 0 }; r.npcs = r.npcs && st10Eq(ST.npcPos('haneul'), R.spot('orbit_haneul')) && st10Eq(ST.npcPos('bandi'), R.spot('orbit_bandi'));
+        C.save.story = { ch: 26, step: 0 }; r.npcs = r.npcs && st10Eq(ST.npcPos('haneul'), R.spot('orbit_haneul')) && st10Eq(ST.npcPos('bandi'), ST.spotPos('home_bandi'));   // 8부(27장~) 반디는 촌장 동쪽(⑲-53)
         /* 자리 — 모두 섬 안·장치는 가운데에서 9m · 보스 자리는 장치·안테나를 비킨다 */
         var sd = ['seed_se', 'seed_n', 'seed_sw'].map(function (k) { return R.spot(k); }), du = R.spot('orbit_duel');
         r.spots = ['gamyeon', 'orbit_haneul', 'orbit_bandi', 'orbit_duel'].every(function (k) { return inOrbit(R.spot(k), 3); }) &&
@@ -14115,6 +14115,71 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { C.setTune('stormeye.on', null); LF._resetForTest(); SK._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '매듭 여섯(27장부터·표대로 묶임·줄 곧게→등불→거둠) · 눈 서쪽 36.5m·+24m(28장 9단계부터) · 기둥 29장부터(타고 활공해 내려섬) · 등불·걷힘' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-53 이야기 8부 제27장 · 풀리는 매듭 (story ch27 · 매듭 여섯 stormeye 와 단계 번호 맞물림 · 반디 8부 자리, PLAN §5 ⑲-53) ── */
+    t('이야기 ⑲-53 — 27장 아홉 단계(Lv60) · 매듭 묶임 단계 번호(4·5·8)가 불·석등·불 단계 다음과 맞물림 · 흐름: 촌장 → 은비 → 폐허 제단 졸개(땅) → 첫째 매듭 불 → 둘째 석등 달·별·해(틀리면 안 됨) → 나그네(둘째 제단 곁) → 봉우리 오르기 → 셋째 매듭 불 → 해솔(봉우리, 가면 벗음) · 반디는 촌장 동쪽', function () {
+      var rig = stRig(60), ST = rig.ST, FC = DG.fieldCombat, SE = DG.stormEye, TL = DG.talent, r = {}, i;
+      try {
+        var c = ST.CHAPTERS[26], S27 = c.steps;
+        var types = S27.map(function (q) { return q.type; }).join();
+        r.table = c.id === 'ch27' && c.ar === 60 && !c.join && S27.length === 9 && c.reward.knot === 7 && c.reward.gold === 7250 && types === 'talk,talk,kill,light,seal,talk,climb,light,talk' &&
+          S27[4].order.join() === 'moon,star,sun' && S27[7].spot === 'peak' && S27[2].kinds.join() === 'imp,imp,raptor,hawk';
+        /* 매듭 표 ↔ 이 장 — 첫째 = 불(3) 다음(4) · 둘째 = 석등(4) 다음(5) · 셋째 = 불(7) 다음(8) */
+        r.link = SE.KNOTS[0].ch === 26 && SE.KNOTS[0].step === 3 + 1 && SE.KNOTS[1].step === 4 + 1 && SE.KNOTS[2].step === 7 + 1 &&
+          SE.KNOTS[1].spot === S27[4].spot && SE.KNOTS[2].spot === S27[7].spot && SE.KNOTS[2].off.join() === S27[7].off.join() && SE.KNOTS[0].zone === S27[3].zone && SE.KNOTS[0].off.join() === S27[3].off.join();
+        function np(k, si) { C.save.story = { ch: 26, step: si }; return ST.npcPos(k); }
+        /* 인물 — 나그네는 다섯째(5)에만 둘째 제단 곁 · 해솔은 아홉째(8)에만 봉우리(가면 벗음) · 반디는 촌장 동쪽 */
+        var A2 = ST.spotPos('altar2', [7, 5]), PK = ST.spotPos('peak', [5, 5]);
+        r.npcs = st10Eq(np('wanderer', 5), A2) && ST.visible('wanderer') && (np('wanderer', 4), !ST.visible('wanderer')) && (np('wanderer', 6), !ST.visible('wanderer')) &&
+          st10Eq(np('haesol', 8), PK) && ST.visible('haesol') && ST.npcInfo('haesol').mask === false && ST.npcInfo('haesol').name === '해솔' && (np('haesol', 7), !ST.visible('haesol')) &&
+          st10Eq(np('bandi', 0), ST.spotPos('home_bandi')) && st10Eq(np('bandi', 8), ST.spotPos('home_bandi')) &&
+          Math.hypot(np('bandi', 0).x - np('elder', 0).x, np('bandi', 0).y - np('elder', 0).y) < 12;
+        C.save.story = { ch: 26, step: 0 };
+        var tied = function (s) { C.save.story = { ch: 26, step: s }; return [0, 1, 2].filter(SE.knotTied).join(''); };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        C.save.story = { ch: 26, step: 0 };
+        stGo(ST.npcPos('elder')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        stGo(ST.npcPos('scholar')); r.t1 = stTalkAll(ST) && C.save.story.step === 2;
+        /* 졸개 — 폐허 제단 곁(땅), 다 치우면 다음 */
+        var kt = ST.targetOf(ST.step());
+        stGo({ x: kt.x + 6, y: kt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.map(function (u) { return S.foes[u].kind; }).join() === 'imp,imp,raptor,hawk' && cp.uids.every(function (u) { return !S.foes[u].sky; });
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 3 && tied(3) === '';
+        C.save.story = { ch: 26, step: 3 };
+        /* 첫째 매듭 불 — 먼 곳은 안 붙고 제단에 닿으면 붙는다 → 첫째 매듭 묶임 */
+        var lt = ST.targetOf(ST.step());
+        C.emit('field:element', { el: 'fire', x: lt.x + 60, y: lt.y, r: 1, t: 'skill' }); var far = C.save.story.step === 3;
+        C.emit('field:element', { el: 'fire', x: lt.x, y: lt.y, r: 1, t: 'skill' });
+        r.light1 = far && C.save.story.step === 4 && tied(4) === '0';
+        C.save.story = { ch: 26, step: 4 };
+        /* 둘째 매듭 석등 — 달 → 별 → 해, 차례가 틀리면 안 켜진다 */
+        var lamps = ST.sealLamps(ST.step()), byK = {};
+        lamps.forEach(function (l) { byK[l.k] = l; });
+        function hitLamp(k) { C.emit('field:element', { el: 'wind', x: byK[k].x, y: byK[k].y, r: 1, t: 'skill' }); }
+        hitLamp('sun'); var wrong = ST.sealLit() === 0 && C.save.story.step === 4;
+        hitLamp('moon'); hitLamp('star'); var mid = C.save.story.step === 4 && ST.sealLit() === 2;
+        hitLamp('sun');
+        r.seal = wrong && mid && C.save.story.step === 5 && tied(5) === '01';
+        C.save.story = { ch: 26, step: 5 };
+        stGo(ST.npcPos('wanderer')); r.t5 = stTalkAll(ST) && C.save.story.step === 6;
+        /* 봉우리 오르기 — 멀면 안 되고 정상 곁이면 */
+        var pk = ST.peakSpot();
+        stGo({ x: pk.x + 60, y: pk.y }); ST.check(); var still = C.save.story.step === 6;
+        stGo({ x: pk.x + 5, y: pk.y }); ST.check();
+        r.climb = still && C.save.story.step === 7;
+        var pt = ST.targetOf(ST.step());
+        C.emit('field:element', { el: 'fire', x: pt.x, y: pt.y, r: 1, t: 'skill' });
+        r.light3 = C.save.story.step === 8 && tied(8) === '012' && !SE.allTied();
+        C.save.story = { ch: 26, step: 8 };
+        stGo(ST.npcPos('haesol')); r.end = stTalkAll(ST) && C.save.story.ch === 27 && C.save.story.step === 0 && m.knot === k0 + 7 && C.save.player.gold === gold0 + 7250;
+        /* 끝난 뒤에도 셋은 묶인 채 · 나머지 셋은 28장 */
+        r.after = [0, 1, 2].every(SE.knotTied) && ![3, 4, 5].some(SE.knotTied);
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '아홉 단계 · 폐허 졸개 → 첫째 매듭 → 둘째 석등 달·별·해 → 봉우리 → 셋째 매듭 · 매듭 묶임 4·5·8 · 🪢+7 🪙+7250 · 반디 촌장 동쪽' : ('실패 ' + bad.join(','));
     });
 
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */

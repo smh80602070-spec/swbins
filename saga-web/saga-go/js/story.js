@@ -58,6 +58,8 @@
     /* ⑲-28 서리봉 고원 — frost.js 가운데(탑)·명소. 고원이 꺼져 있으면 자리 없음 */
     fr_center: { frost: 'center' }, fr_stele: { frost: 'stele' }, fr_obs: { frost: 'obs' }, fr_ship: { frost: 'ship' }, fr_fort: { frost: 'fort' },
     fr_lake: { frost: 'lake' }, fr_cave: { frost: 'cave' },
+    /* ⑲-53 8부 반디 자리 = 고향 촌장 동쪽(촌장 zone home off [-22,16] 에서 10m) */
+    home_bandi: { zone: 'home', off: [-12, 16] },
     /* ⑲-34 3부 시대 명소(era-sites.js) — 갈대 나루 물가 녹슨 조선소. 명소가 꺼져 있으면 자리 없음 */
     yard: { era: 'yard' }, yard_daon: { era: 'daon' }, yard_fight: { era: 'fight' }, yard_weld: { era: 'weld' }, yard_bandi: { era: 'bandi' }, crane: { era: 'crane' },
     /* ⑲-35 옛 성터 언덕 곁 시간 틈 관측소 — 땅 가운데·가온·시간 기둥·관측대 위(반디·가운데) */
@@ -137,12 +139,14 @@
     wanderer: { id: 'story_wanderer', name: '가면 쓴 나그네', short: '나그네', zone: 'home',  off: [8, 70],    color: '#38384a', idle: '……',
       mask: true, appear: [{ ch: 3, from: 1, to: 5 }, { ch: 4, from: 6, to: 6, spot: 'altar2', off: [7, 5] }, { ch: 5, from: 2, to: 4, spot: 'peak', off: [5, 5] },
         { ch: 6, from: 3, to: 6, spot: 'cape', off: [6, 6] }, { ch: 7, from: 6, to: 9, spot: 'isle', off: [7, 8] },
-        { ch: 8, from: 2, to: 2, spot: 'peak', off: [5, 5] }, { ch: 8, from: 3, to: 9, spot: 'sky', off: [5, 6], sky: true }] },
+        { ch: 8, from: 2, to: 2, spot: 'peak', off: [5, 5] }, { ch: 8, from: 3, to: 9, spot: 'sky', off: [5, 6], sky: true },
+        { ch: 26, from: 5, to: 5, spot: 'altar2', off: [7, 5] }] },                                             // ⑲-53 27장 둘째 매듭 곁
     /* ⑲-19 해솔(검은 가면의 참이름, 금 간 가면) · 노 도둑(쫓기 단계에만 — 자리는 달리는 곳).
        ⑲-20 9장엔 가면을 벗은 해솔이 구름섬에 선다(칸이 mask·name·idle 을 덮는다) */
     haesol:   { id: 'story_haesol',   name: '검은 가면 해솔', short: '해솔', zone: 'galdae', off: [0, 0], color: '#26222e', idle: '……',
       mask: 'crack', appear: [{ ch: 7, from: 8, to: 8, spot: 'isle', off: [0, -9] },
-        { ch: 8, from: 6, to: 9, spot: 'sky', off: [-5, 5], sky: true, mask: false, name: '해솔', idle: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' }] },
+        { ch: 8, from: 6, to: 9, spot: 'sky', off: [-5, 5], sky: true, mask: false, name: '해솔', idle: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' },
+        { ch: 26, from: 8, to: 8, spot: 'peak', off: [5, 5], mask: false, name: '해솔', idle: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' }] },   // ⑲-53 27장 봉우리 꼭대기
     thief:    { id: 'story_thief',    name: '노 도둑', short: '도둑', zone: 'galdae', off: [-10, -50], color: '#5a4a3a', idle: '헤헤, 못 잡지롱!',
       appear: [{ ch: 7, from: 2, to: 2 }], runPath: THIEF_PATH },
     /* ⑲-28 서리봉 고원 둘 — 자리가 ⑮ 땅 탑이 아니라 이름 붙은 자리(spot, 고원이 꺼지면 안 선다). 반디는 드론 몸(pet) */
@@ -162,7 +166,7 @@
         { ch: 22, from: 1, to: 3, spot: 'sk_light_bandi' },                                                          // ⑲-47 23장 등대 발치
         { ch: 23, from: 0, to: 1, spot: 'sk_sand_bandi' }, { ch: 23, from: 2, to: 999, spot: 'sr_bandi', sky: true },    // ⑲-49 24장 모래밭 → 사당 섬
         { ch: 24, from: 0, to: 0, spot: 'sr_bandi', sky: true }, { ch: 24, from: 1, to: 999, spot: 'sr_wreck_bandi', sky: true },   // ⑲-50 25장 잔해 섬(뒤에도)
-        { ch: 25, from: 1, to: 999, spot: 'sr_orbit_bandi', sky: true }, { ch: 26, chTo: 999, from: 0, to: 999, spot: 'sr_orbit_bandi', sky: true },   // ⑲-51 26장 정거장 섬(뒤에도)
+        { ch: 25, from: 1, to: 999, spot: 'sr_orbit_bandi', sky: true }, { ch: 26, chTo: 999, from: 0, to: 999, spot: 'home_bandi' },   // ⑲-51 26장 정거장 섬 → ⑲-53 8부(27장~)는 청하 촌장 동쪽
         { ch: 25, chTo: 999, from: 0, to: 999, spot: 'sr_wreck_bandi', sky: true },
         { ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_in_bandi' },
         { ch: 19, chTo: 999, from: 0, to: 999, spot: 'sp_bandi' }] },
@@ -1283,6 +1287,42 @@
             ['?', ['청하 마을로 돌아가 보자.', '하늬 씨는 이제 어떡해요?']],
             ['하늬', '비행선은 못 뜨지만 닻 갈고리는 멀쩡해요. 먹구름 쫓는 일이라면 기상 비행사가 빠질 수 없죠.', 'angry'],
             ['하늬', '비행사 하늬, 오늘부터 같이 날아요 — 날개는 빌려 쓰고요!', 'joy']] }
+      ] },
+    /* ⑲-53 이야기 8부 첫 장 — 풀리는 매듭. 1부 여섯 제단 자리가 실은 여섯 매듭이었다(stormeye.js 매듭 여섯). 촌장 → 은비(폐허) → 첫째 매듭 졸개 → 첫째 매듭 불 →
+       둘째 매듭 석등(달 → 별 → 해) → 나그네 → 봉우리 → 셋째 매듭 불 → 해솔. 매듭은 그 단계 다음부터 묶인다(stormeye KNOTS: 4·5·8 — 단계 번호를 바꾸면 그쪽도) */
+    { id: 'ch27', name: '제27장 · 풀리는 매듭', ar: 60,
+      reward: { knot: 7, gold: 7250, guide: 6, secret: 5, party: 1850 },
+      steps: [
+        { type: 'talk', npc: 'elder', text: '청하 촌장에게 돌아가기',
+          lines: [['누리', '돌아왔구나! 하늘에 뜬 사당이며 정거장이며… 은비한테 다 들었다. 먼 데까지 잘도 다녀왔어.', 'joy'],
+            ['누리', '그런데 네가 떠난 그날 밤부터 이상한 일이 생겼단다. 네가 밝혀 둔 옛 제단 불이 하나씩 꺼지고 있어.', 'sorrow'],
+            ['반디', '삐— 제단 자리마다 먹구름 신호. 가면 그림자가 말한 \'여섯 매듭\'과 수가 맞습니다.'],
+            ['?', ['매듭이 풀리고 있다는 거네요.', '자장가 끝 소절이 뭐였죠?']],
+            ['누리', '할머니 자장가 끝 소절이 이제야 떠오르는구나 — \'여섯 매듭 풀리면 임금이 눈을 뜬다\'. 폐허의 은비에게 가 보렴. 비문은 그 아이가 제일 잘 안다.']] },
+        { type: 'talk', npc: 'scholar', text: '폐허의 학자 은비와 이야기하기',
+          lines: [['은비', '왔구나! 비문 탁본을 다시 떠 봤어. 다들 앞면만 읽었지 뒷면은 아무도 안 봤더라고.', 'surprised'],
+            ['은비', '\'매듭 여섯이 틈을 묶고, 틈이 임금을 묶는다\' — 제단은 자물쇠이기 전에 매듭이었어. 시간 틈을 꽁꽁 묶어 두는.'],
+            ['?', ['그래서 가면 그림자가 풀러 왔구나.', '다시 묶을 수 있어?']],
+            ['은비', '원소의 불로 다시 묶으면 돼. 둘째 매듭 석등은 자장가 차례래 — \'달이 뜨고, 별이 돌고, 해가 묶는다\'.'],
+            ['은비', '그런데 첫째 매듭 곁에 먹구름 졸개들이 진을 쳤어. 저것부터!', 'angry']] },
+        { type: 'kill', zone: 'gojeong', off: [-30, 26], kinds: ['imp', 'imp', 'raptor', 'hawk'], text: '첫째 매듭을 둘러싼 먹구름 졸개 물리치기' },
+        { type: 'light', zone: 'gojeong', off: [-30, 26], text: '첫째 매듭의 제단에 원소 불 다시 밝히기',
+          done: '🔥 매듭 돌의 금줄에 불이 옮겨 붙고 — 금빛 줄이 하늘로 솟았다' },
+        { type: 'seal', spot: 'altar2', order: ['moon', 'star', 'sun'], text: '서쪽 옛길 둘째 매듭 석등을 자장가 차례(달 → 별 → 해)대로 밝히기' },
+        { type: 'talk', npc: 'wanderer', text: '둘째 매듭 곁의 나그네와 이야기하기',
+          lines: [['나그네', '……늦지 않았군. 매듭이 풀린 자리마다 이게 떨어져 있었다.', 'sorrow'],
+            ['나그네', '가면 조각이다. 무늬를 보게 — 은비가 비문 맨 아래에서 찾았던 그 무늬. 신하들 가면이 아니라, 처음 가면이야.'],
+            ['?', ['처음 가면이라니요?', '가면 그림자의 것인가요?']],
+            ['나그네', '해솔을 삼킨 가면도, 검은 가면들도 전부 이걸 본떴다. 임금의 신하라는 표식이 아니라 — 임금 자신의 얼굴이었던 게지.', 'angry'],
+            ['나그네', '셋째 매듭은 북쪽 봉우리다. 해솔이 먼저 올라가 있다.']] },
+        { type: 'climb', spot: 'peak', text: '북쪽 봉우리 꼭대기로 올라가기(벽 타기)' },
+        { type: 'light', spot: 'peak', off: [-7, -4], text: '봉우리의 셋째 매듭에 원소 불 다시 밝히기',
+          done: '🔥 셋째 매듭이 다시 묶였다 — 봉우리에서 금빛 줄이 솟는다' },
+        { type: 'talk', npc: 'haesol', text: '봉우리의 해솔과 이야기하기',
+          lines: [['해솔', '셋째 매듭까지… 고마워. 매듭에 불이 붙을 때마다 귓가에 맴돌던 노랫소리가 작아져.', 'joy'],
+            ['해솔', '가면에 먹혀 있을 때 먹구름 속에서 누가 계속 노래를 부르라고 했다고 했지. 그 목소리 — 정거장에서 들은 가면 그림자랑 똑같아.', 'sorrow'],
+            ['?', ['그자가 널 부렸던 거구나.', '나머지 매듭은?']],
+            ['해솔', '넷째는 물마루 곶, 다섯째는 바위섬, 여섯째는 저 위 구름섬. 그자가 먼저 닿기 전에 — 포구의 버들 할아버지한테 가 보자.', 'angry']] }
       ] }
   ];
 
