@@ -1547,6 +1547,7 @@
     var shape = makeShape ? makeShape() : null;
     if (shape) { shell.add(shape); }
     shell.userData.assetState = 'shape';
+    shell.userData.body = rec ? rec.body : null;          // 재기(어느 몸 파일인가 — 사가블로 Q8 마을·던전 몸 비교)
     if (!GLB_ON() || !rec) { return shell; }
 
     var parts = {}, pending = 4;

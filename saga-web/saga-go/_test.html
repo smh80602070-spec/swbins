@@ -6466,6 +6466,18 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         ('x 0 → ' + Math.round(p.x) + 'm 이동');
     });
 
+    t('탭 이동 — walkTo(x, y, true) 는 달린다(자동 이야기의 추격·먼 길, 2026-09-28)', function () {
+      var p = C.save.player.pos, i;
+      p.x = 0; p.y = 0; W.walkTo(200, 0);
+      for (i = 0; i < 20; i++) { W.update(0.05); }
+      var walk = p.x;
+      p.x = 0; p.y = 0; W.walkTo(200, 0, true);
+      for (i = 0; i < 20; i++) { W.update(0.05); }
+      var run = p.x;
+      W.walkTo(p.x, p.y); W.update(0.05); p.x = 0; p.y = 0;
+      return run > walk * 1.8 && ('1초에 걷기 ' + walk.toFixed(1) + 'm · 달리기 ' + run.toFixed(1) + 'm');
+    });
+
     t('스틱 입력이 키보드와 같은 통로로 들어간다', function () {
       C.save.player.pos.x = 0; C.save.player.pos.y = 0;
       W.setStick(0, -1, false);

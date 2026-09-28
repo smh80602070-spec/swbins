@@ -4,11 +4,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const SCR = path.dirname(new URL(import.meta.url).pathname).replace(/^\/([A-Z]:)/, '$1');
-const PROFILE = path.join(SCR, 'chrome-prof');
+const PROFILE = path.join(SCR, process.env.PC_PROF || 'chrome-prof');   // 둘을 같이 띄우려면 PC_PROF·PC_PORT 를 달리
 const OUT = path.join(SCR, 'shots');
 fs.mkdirSync(OUT, { recursive: true });
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
-const PORT = 9351;
+const PORT = +(process.env.PC_PORT || 9351);
 
 export async function launch(w = 1280, h = 720) {
   const proc = spawn(CHROME, ['--headless=new', '--disable-gpu', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-gpu-sandbox',

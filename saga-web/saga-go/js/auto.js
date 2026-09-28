@@ -180,10 +180,10 @@
   var stuck = { x: 0, y: 0, t: 0, side: null };
 
   /** 막힘 풀기 — 목표 쪽이 막혀 제자리면 옆으로 12m 비켰다가 다시 간다(길 찾기가 없다) */
-  function walkToward(w, tx, ty, dt) {
+  function walkToward(w, tx, ty, dt, run) {
     var p = core.save.player.pos;
     if (stuck.side) {
-      if (Math.hypot(stuck.side.x - p.x, stuck.side.y - p.y) > 2 && stuck.t < 4) { stuck.t += dt; w.walkTo(stuck.side.x, stuck.side.y); return; }
+      if (Math.hypot(stuck.side.x - p.x, stuck.side.y - p.y) > 2 && stuck.t < 4) { stuck.t += dt; w.walkTo(stuck.side.x, stuck.side.y, run); return; }
       stuck.side = null; stuck.t = 0;
     }
     if (Math.hypot(p.x - stuck.x, p.y - stuck.y) > 1) { stuck.x = p.x; stuck.y = p.y; stuck.t = 0; }
@@ -192,10 +192,11 @@
       var dx = tx - p.x, dy = ty - p.y, dl = Math.hypot(dx, dy) || 1, sg = Math.random() < 0.5 ? 1 : -1;
       stuck.side = { x: p.x - dy / dl * 12 * sg - dx / dl * 3, y: p.y + dx / dl * 12 * sg - dy / dl * 3 };
       stuck.t = 0;
-      w.walkTo(stuck.side.x, stuck.side.y);
+      w.walkTo(stuck.side.x, stuck.side.y, run);
       return;
     }
-    w.walkTo(tx, ty);
+    /* 멀면(40m+) 달린다 — 가까이선 걸어야 대화·채집 자리를 지나치지 않는다 */
+    w.walkTo(tx, ty, run || Math.hypot(tx - p.x, ty - p.y) > 40);
   }
 
   /** 그 풀의 채집점 — 지금 자리 900m 안, 없으면 1.2·2.4·3.6·4.8km 둘레 열두 방향을 훑어 가장 가까운 것 { x, y, item } */
@@ -255,7 +256,7 @@
     if (!t) { doing = '📖 ' + (st.text || st.type) + ' — 목표 자리를 아직 못 찾음'; return false; }
     var p = core.save.player.pos, d = Math.hypot(t.x - p.x, t.y - p.y);
     var FC = global.DG.fieldCombat, FS = FC && FC.state ? FC.state() : null;
-    if (FS && FC.engaged(FS)) {
+    if (FS && FC.inCombat && FC.inCombat(FS, p.x, p.y)) {   // engaged 는 멀리서 쫓거나 제단만 치는 적까지 잡아 멈춰 섰다
       /* 붙어 있게 — 가장 가까운 적의 몸 가장자리가 5m 넘게 벌어지면 다가간다(회피로 밀려나 적이 추격을 그만두던 것) */
       var near = null, nd0 = Infinity;
       FC.living(FS).forEach(function (f) { if (f.st === 'idle' || f.st === 'return') { return; } var dd = Math.hypot(f.x - p.x, f.y - p.y) - FC.BODY(f); if (dd < nd0) { nd0 = dd; near = f; } });
@@ -313,6 +314,23 @@
         return true;
       }
     }
+    /* 바람·시간 기둥(sky) — 기둥 안(DRAFT_R)에 서서 점프하면 솟아 섬·관측대에 내려선다(landform) */
+    var LFs = global.DG.landform, SKs = global.DG.skyIsle;
+    if (st.type === 'sky' && LFs && LFs.glideAlt && LFs.glideAlt() !== null && SKs && SKs.padById) {
+      /* 솟는 중 — 섬(발판) 윗면보다 높아지면 섬 쪽으로 활공해 내려선다(섬 가운데는 기둥에서 27m 북쪽) */
+      var pad = SKs.padById(st.pad || 'isle');
+      if (pad && LFs.glideAlt() > pad.top + 1) { w.walkTo(pad.x, pad.y); doing = '📖 🪂 ' + pad.name + ' 쪽으로 활공'; return true; }
+      w.walkTo(p.x, p.y);
+      doing = '📖 🌬️ 기둥을 타고 솟는 중';
+      return true;
+    }
+    if (st.type === 'sky' && t.r && d <= t.r * 0.7) {
+      w.walkTo(p.x, p.y);
+      acc.talk += dt;
+      if (LFs && LFs.jump && acc.talk >= 1.2) { acc.talk = 0; LFs.jump(); }
+      doing = '📖 🌬️ ' + (st.text || '') + ' — 기둥 안에서 점프';
+      return true;
+    }
     /* 불 밝히기·석등 — 제단(석등은 다음 차례 것) 곁에 서서 원소 스킬(E). 스킬 고리가 닿으면 story.onElement 가 켠다 */
     if (st.type === 'light' || st.type === 'seal') {
       var goal = t;
@@ -345,11 +363,14 @@
       if (nw && nw.d + 150 < d && OW.jump(nw.key)) { doing = '📖 🌀 ' + nw.name + ' 으로 순간이동 — ' + (t.label || st.text || ''); return true; }
     }
     acc.story += dt;
-    if (acc.story >= RETARGET) {
+    /* 쫓기(도둑이 초속 13m)·따라가기는 매 프레임 목표를 고친다 — 쫓기는 달려야 따라잡는다 */
+    var chasing = st.type === 'chase' || st.type === 'follow';
+    if (acc.story >= RETARGET || chasing) {
+      var gap = acc.story;
       acc.story = 0;
       patrol = null; aimUid = null;
       /* 반지름이 있는 목표(대화·가기·오르기)는 그 안까지, 없는 것(무찌르기·결투)은 그 자리로 */
-      walkToward(w, t.x, t.y, RETARGET);
+      walkToward(w, t.x, t.y, gap, st.type === 'chase');
     }
     doing = '📖 ' + (t.label || st.text || st.type) + ' 으로 ' + Math.round(d) + 'm';
     return true;

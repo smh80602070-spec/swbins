@@ -4303,3 +4303,8 @@ VRoid 인물이 unlit(`MeshBasicMaterial`) 그대로라 명암 없이 평면이�
 - 마을 3D 이름표: 세로에선 가로 시야가 좁아 한 장이 화면 폭 절반을 덮었다 → `labelK()` 화면비만큼(최소 0.62배) 줄임, `townMark` 가 매 프레임 맞춘다.
 - 확인: `tools/mobile-layout/probe.js --shot=<폴더>`(새 옵션, 사용자가 "직접 확인" 요청해 찍음) 로 390×844 전후 비교. 배치 점검 다섯 판 가로·세로 0건.
 - 진단 420/420. sw dungeon-v0.169.5 · 실기 확인 대기.
+
+## 2026-09-28 — 실기 보고 Q7·Q8 (정본 목록은 saga-go HANDOFF "실기 보고 대기열")
+- ◐ Q8 "던전에 들어가면 캐릭터가 바뀜": 헤드리스(`tools/playcheck/dg-body-swap.mjs`, 새 계정·출사표 첫 셋)로 본영·1층을 재 보니 내 몸이 둘 다 `people/anime/avatar_sample_c.glb`(seed me:0) — 기본 세이브로는 재현 안 됨. 재기용 `asset3d` buildHero `userData.body` · `dungeon3d.meBody()` 를 넣었다. 사용자에게 어떤 모습→어떤 모습인지(외모 스타일을 바꿨는지·동행 중 누가 보이는지) 물을 것.
+- ☐ Q7 자동 퀘스트: 지금 `auto.js` 는 던전만(다시 들어가기 층 = 최고 층 절반). 퀘스트(`quest.js` — floor·kill·discover)·목표판(`goals.js` — 유적·길 표식·상인)을 따라가는 칸은 없다 → 사가고 Q5(📖 이야기)처럼 목표를 보고 걷거나 층을 고르는 칸을 둘 것.
+- sw.js dungeon-v0.169.6 · 진단 420/420.

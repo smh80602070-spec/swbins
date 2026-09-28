@@ -310,7 +310,7 @@
       var tx = walkTarget.x - pos.x, ty = walkTarget.y - pos.y;
       var td = Math.hypot(tx, ty);
       if (td < 2) { walkTarget = null; }
-      else { dx = tx / td; dy = ty / td; }
+      else { dx = tx / td; dy = ty / td; run = !!walkTarget.run; }
     } else if (dx || dy) {
       walkTarget = null;                          // 직접 조작하면 목표를 버린다
     }
@@ -352,8 +352,9 @@
   }
 
   /** 그 지점까지 걸어간다 (탭 이동) */
-  function walkTo(wx, wy) {
-    walkTarget = { x: wx, y: wy };
+  /** 그 자리로 걸어간다 — run 이면 달린다(×2.2, 자동 이야기의 추격·먼 길) */
+  function walkTo(wx, wy, run) {
+    walkTarget = { x: wx, y: wy, run: !!run };
   }
 
   function walkingTo() { return walkTarget; }
