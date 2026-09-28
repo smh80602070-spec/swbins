@@ -829,6 +829,11 @@
 2	go	perk.sup_flow	기의 순환	Flowing Ki		
 2	go	perk.sup_focus	예기의 자각	Sharpened Focus		
 2	go	perk.title	승급! 특성을 하나 고르세요	Level Up! Pick a trait		
+2	go	preset.button	편성 {0}⏎{1}	Team {0}⏎{1}		
+2	go	preset.count	{0}명	{0}/3		
+2	go	preset.empty	빈 칸	Empty		
+2	go	preset.none	없는 편성	No such team		
+2	go	preset.used	⚔ 편성 {0} — 들판 {1}명	⚔ Team {0} — {1} in the field		
 2	go	region.danger	위험 {0} · {1}	Danger {0} · {1}		
 2	go	region.east_grove	동쪽 숲	Eastern Grove		
 2	go	region.enter	— {0} —	— {0} —		

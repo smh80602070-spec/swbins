@@ -10227,3 +10227,17 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - `PlaytestGoHeroLooks`: 제 몸은 따로 잼(키 = 1.75m 비) · 동행·들판·겨루기 꾸밈 수에서 머리 꾸밈 뺌(`WantGear`) — 고치기 전 판은 "꾸밈 2 ≠ 3" 셋. 고친 뒤 `PlaytestHeadless` exit 0 · 입혀 봄 105(제 몸 105) 꾸밈 112 키 오차 0.0%. 옛 두 벌로 먼저 넣은 첫 판은 field combat 11 줄이 흔들렸고 다음 판 0(가져오기 직후 판은 기준선으로 치지 말 것).
 - 관문 `SagaAssetGate` OK(Resources 프리팹은 CharactersForge 라 사실 몸 목록 그대로 470).
 - **눈으로 본 결과(render_grid 14장, 판정 페이지)**: 긴 옷이 자루처럼 부풂 · 찰갑 어깨판·허리 판이 몸에서 뜸 · 옷 틀·색이 같아 머리만 다른 사람 여럿. 추천 = 보류하고 옷 틀 생성기부터(사람마다 말고 틀에서 고치면 105벌이 같이 낫는다). 이 PC 게임엔 지금 들어가 있다(`CharactersForge/Resources/ForgeHero/` 를 지우면 표의 몸 열일곱으로 돌아감).
+
+## 2026-09-28 GO — 109-14-18 편성 1~4·싸우는 중 막기(웹 사가고 ⑲-18)
+
+"사가 유니티 이어해" — 14-17 다음(여전히 묶음 없는 PC). 웹 f84a7240(formation.js presets·field-combat `inCombat`·ui 단추 줄) 대조.
+
+- 칸 모양: 웹은 칸 = 동행 다섯 목록(= 지금 명단 통째)이지만 이 트랙 동행 명단은 등용 전부이고 들판은 순서의 뒤 셋(14-15) — 칸에는 들판 셋만 적고, 칸을 고르면 그 셋을 `Move` 로 순서 맨 뒤로(첫 자리가 맨 뒤 = 둘째 자리). 움직일 때마다 `PowerChanged` → 들판 명단이 따라 짜이고, UI 가 한 번 더 `RebuildParty(true)` 로 주인공을 앞에.
+- 빈 칸: 웹 "나 혼자"는 이 트랙에 비운 들판이 없어 못 옮김 → 빈 칸을 처음 고르면 지금 들판을 베껴 시작(그 뒤 넣기·빼기가 그 칸에 적힘).
+- `InCombat`: `FieldEnemy.TakeHit` 첫머리에서 `FieldCombat.MarkFought`(맞힌 쪽이 누구든 — 장판·메아리도), 내가 맞으면 `ReceiveStrike` 첫머리. 적 상태 Chase·Telegraph·Recover(웹 chase·wind·recover), 꺼진 적(수호장 숨김) 뺌. 옛 `WorldMapUi.Fighting`(거리 없음)은 천하 등급·숨은 터가 그대로 쓴다.
+- 세이브: `partyPresets`(JsonUtility 가 겹 목록을 못 적어 칸마다 쉼표 글) · `partyPreset`, 버전 28 그대로 — 불러오기는 `CatchUpJoins` 뒤.
+- 진단용 `FieldEnemy.ClearSiegeForTest`(들판 적에 제단 노림을 걸어 봤다 푼다 — 원래 `Siege` 는 풀 길이 없었다, 물결 적은 치워지니까).
+- 글 5 짝(loc-review 오류 0). 영어 단추 "Team n / k/3".
+- 검증(묶음 없는 PC): 컴파일 0 · `PlaytestHeadless` 3연속 같은 결과(다른 줄은 옛 승급 카드·보패 공격값 — 무작위) — presets OK(옛 세이브 1번·빈 칸 베낌·넣기 적힘·돌아오면 옛 들판(순서)·같은 칸 무시 · 없는 인물·겹침 뺌·세이브 왕복 · 바꾸면 주인공이 앞·들판 명단 따라감 · 쫓는 적 20m 막힘·55.5m 밖·쉼·제단만 치면 안 막힘·방금 3초 · 도감 단추 줄 넷), OK 52 줄, 남은 FAIL 기준선 등불. `UiLayoutCheck` — GO 도감 패널 세 화면비 겹침 0(FAIL 6 은 DUNGEON 영어판 남은 Lv.53 세이브의 목표판 ↔ HUD, 옛 것).
+- 실기 확인 전: 단추 넷 글(두 줄 94px) · 닫기 단추와 가까움 · 싸우는 중 막힘이 너무 잦은지(55m 안 쫓는 적 하나로도 막힘).
+- 다음 = 14-19 (웹 ⑲-19 이야기 8장·바위섬·쫓기·뱃길·해솔·노 도둑).

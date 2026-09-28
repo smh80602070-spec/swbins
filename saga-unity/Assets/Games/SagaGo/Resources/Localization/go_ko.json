@@ -1114,6 +1114,11 @@
     { "key": "kit.sig.elder.skill", "value": "부채 바람" },
     { "key": "kit.sig.elder.burst", "value": "잔칫날 순풍" },
     { "key": "kit.sig.ferryman.skill", "value": "노 물결" },
-    { "key": "kit.sig.ferryman.burst", "value": "뱃노래" }
+    { "key": "kit.sig.ferryman.burst", "value": "뱃노래" },
+    { "key": "preset.button", "value": "편성 {0}\n{1}" },
+    { "key": "preset.count", "value": "{0}명" },
+    { "key": "preset.empty", "value": "빈 칸" },
+    { "key": "preset.used", "value": "⚔ 편성 {0} — 들판 {1}명" },
+    { "key": "preset.none", "value": "없는 편성" }
   ]
 }

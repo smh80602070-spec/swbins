@@ -165,6 +165,8 @@ namespace Saga.Go.Combat
         private bool _siegeStrike;
         public static event Action<FieldEnemy, float> SiegeHit;
         public void SetSiege(Vector3 altar) { Siege = altar; CurrentState = State.Chase; }
+        /// <summary>진단용(109-14-18) — 제단 노림을 푼다(들판 적에 잠깐 걸어 본 뒤).</summary>
+        public void ClearSiegeForTest() => Siege = null;
         private BossMove[] _rot;
         private int _rotI;
         private float _moveR = -1f, _moveWind = -1f, _moveMul = 1f;
@@ -1020,6 +1022,7 @@ namespace Saga.Go.Combat
         {
             reaction = GoReaction.None;
             if (!Alive) return 0f;
+            FieldCombat.Instance?.MarkFought(); // 109-14-18 방금 싸움(편성 막기)
             if (MarkLeft > 0f) amount *= MarkMul; // 109-14-15 그림자 걸음 표식 — 누구에게든 받는 피해
             if (Shielded) return HitShield(amount, element);
 

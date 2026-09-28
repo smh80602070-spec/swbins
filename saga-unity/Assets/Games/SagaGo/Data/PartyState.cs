@@ -100,6 +100,71 @@ namespace Saga.Go.Data
 
         public static bool Has(string id) => Members.Contains(id);
 
+        // ---- PLAN.md 109-14-18 편성 여러 벌(웹 사가고 ⑲-18 `formation.js` presets) — 칸 넷, 칸마다 들판 셋 순서.
+        // 지금 들판(FieldIds)이 늘 정본 — 지금 칸은 읽을 때마다 지금 들판으로 적힌다(넣기·빼기·앞 자리로·합류 어디서 바뀌든).
+        // 이 트랙은 동행 전부가 명단이라 "비운 들판"이 없다 — 빈 칸을 고르면 지금 들판을 그대로 베껴 시작한다(웹은 나 혼자).
+        public const int Presets = 4;
+        private static readonly string[][] _presets = new string[Presets][];
+        private static int _presetAt;
+
+        private static void Sync()
+        {
+            if (_presetAt < 0 || _presetAt >= Presets) _presetAt = 0;
+            _presets[_presetAt] = FieldIds().ToArray();
+        }
+
+        public static int PresetAt() { Sync(); return _presetAt; }
+
+        /// <summary>칸 i 의 들판 셋(지금 칸이면 지금 들판, 빈 칸이면 빈 목록).</summary>
+        public static IReadOnlyList<string> PresetOf(int i)
+        {
+            Sync();
+            return i >= 0 && i < Presets && _presets[i] != null ? _presets[i] : Array.Empty<string>();
+        }
+
+        /// <summary>칸 목록을 들판으로 쓸 수 있게 — 가진 동행만·겹침 뺌·셋까지.</summary>
+        public static List<string> Pick(IEnumerable<string> list)
+        {
+            var o = new List<string>();
+            if (list != null)
+                foreach (var id in list)
+                    if (!string.IsNullOrEmpty(id) && Has(id) && !o.Contains(id) && o.Count < FieldSlots) o.Add(id);
+            return o;
+        }
+
+        /// <summary>칸 i 로 바꾼다 — 지금 들판은 지금 칸에 남고 칸 i 가 들판이 된다(그 사람들을 순서 맨 뒤로). 같은 칸·싸우는 중이면 안 한다.</summary>
+        public static bool UsePreset(int i, bool fighting, out string why)
+        {
+            why = null;
+            if (i < 0 || i >= Presets) { why = GoLocalization.T("preset.none", "없는 편성"); return false; }
+            Sync();
+            if (i == _presetAt) return false;
+            if (fighting) { why = GoLocalization.T("dex.form_fighting", "싸우는 중엔 편성을 바꿀 수 없다"); return false; }
+            var next = Pick(_presets[i]);
+            for (int k = next.Count - 1; k >= 0; k--) Move(next[k], Members.Count); // 첫 자리가 맨 뒤 = 둘째 자리
+            _presetAt = i;
+            Sync();
+            return true;
+        }
+
+        /// <summary>세이브 — 칸마다 id 를 쉼표로(JsonUtility 가 겹 목록을 못 적는다).</summary>
+        public static List<string> SnapshotPresets()
+        {
+            Sync();
+            var o = new List<string>();
+            foreach (var p in _presets) o.Add(p != null ? string.Join(",", p) : "");
+            return o;
+        }
+
+        /// <summary>불러오기·새 게임 — 없으면(옛 세이브) 빈 칸 넷, 지금 칸 1번(= 지금 들판).</summary>
+        public static void RestorePresets(List<string> saved, int at)
+        {
+            for (int i = 0; i < Presets; i++)
+                _presets[i] = saved != null && i < saved.Count && !string.IsNullOrEmpty(saved[i]) ? saved[i].Split(',') : null;
+            _presetAt = at >= 0 && at < Presets ? at : 0;
+            Sync();
+        }
+
         private static void Recompute()
         {
             Atk = BaseAtk + Members.Count * AtkPerMember;

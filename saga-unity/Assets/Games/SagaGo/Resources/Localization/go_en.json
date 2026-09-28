@@ -1114,6 +1114,11 @@
     { "key": "kit.sig.elder.skill", "value": "Fan Gust" },
     { "key": "kit.sig.elder.burst", "value": "Feast-Day Tailwind" },
     { "key": "kit.sig.ferryman.skill", "value": "Oar Wave" },
-    { "key": "kit.sig.ferryman.burst", "value": "Boat Song" }
+    { "key": "kit.sig.ferryman.burst", "value": "Boat Song" },
+    { "key": "preset.button", "value": "Team {0}\n{1}" },
+    { "key": "preset.count", "value": "{0}/3" },
+    { "key": "preset.empty", "value": "Empty" },
+    { "key": "preset.used", "value": "⚔ Team {0} — {1} in the field" },
+    { "key": "preset.none", "value": "No such team" }
   ]
 }

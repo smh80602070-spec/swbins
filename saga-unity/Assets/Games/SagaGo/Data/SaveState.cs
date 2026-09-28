@@ -132,6 +132,9 @@ namespace Saga.Go.Data
             // v28 — PLAN.md 109-14-12 이야기 임무 장·단계(임무 적·제단 불은 저장 안 함 — 불러오면 그 단계 처음).
             public int storyCh;
             public int storyStep;
+            // PLAN.md 109-14-18 편성 1~4(칸마다 들판 셋 id 를 쉼표로)·지금 칸 — 버전 그대로(옛 세이브엔 없어 빈 칸 넷·1번 = 지금 들판, 웹 partyPresets 와 같은 결).
+            public List<string> partyPresets;
+            public int partyPreset;
         }
 
         public static bool Save()
@@ -161,6 +164,8 @@ namespace Saga.Go.Data
                 version = SaveVersion,
                 playerPos = player != null ? new[] { player.position.x, player.position.y, player.position.z } : null,
                 partyMembers = new List<string>(PartyState.MemberIds),
+                partyPresets = PartyState.SnapshotPresets(), // 109-14-18
+                partyPreset = PartyState.PresetAt(),
                 level = PlayerStats.Level,
                 exp = PlayerStats.Exp,
                 ownedItems = new List<string>(Inventory.OwnedIds),
@@ -288,6 +293,7 @@ namespace Saga.Go.Data
             AdventureState.RestoreSave(data.advLowered, data.advPaid); // 레벨 뒤 — 천하 등급이 바뀌면 들판 적이 다시 잰다
             StoryState.Restore(data.storyCh, data.storyStep);
             StoryState.CatchUpJoins(); // 109-14-15 — 합류가 생기기 전에 끝낸 장의 이야기 동료
+            PartyState.RestorePresets(data.partyPresets, data.partyPreset); // 109-14-18 — 합류 뒤(지금 칸 = 지금 들판)
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();

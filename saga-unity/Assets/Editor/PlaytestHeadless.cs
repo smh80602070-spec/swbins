@@ -179,6 +179,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoKits.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-11 고유·갈래 스킬(동행·들판·스위치 되돌림)
                 if (!PlaytestGoStory.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-12 이야기 임무 1~2장(진행·수호장·원기·돈·재료·세이브·자리 되돌림)
                 if (!PlaytestGoStoryAllies.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-15 이야기 동료·고유 스킬 둘·편성(동행·진행·돈·들판 되돌림)
+                if (!PlaytestGoPresets.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-18 편성 1~4·싸우는 중 막기(동행·편성·들판·적 되돌림)
                 if (!PlaytestGoPeaks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-9 정상 발견·순간이동·건물 가림 카메라(기록·돈·세이브 되돌림)
                 // 반드시 마지막 — DailyTaskState 진단이 SaveState.TryLoad()로
                 // 세이브 파일을 v9 모양으로 잠깐 바꿔치기해 로드하는데, 이건

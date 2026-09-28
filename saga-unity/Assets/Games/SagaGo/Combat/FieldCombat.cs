@@ -152,6 +152,8 @@ namespace Saga.Go.Combat
         private float _comboWindow;
         private float _attackCd;
         private float _sinceHit = 999f;
+        // 109-14-18 방금 싸움(내가 맞히거나 맞은 뒤 흐른 초 — 편성 막기)
+        private float _calmT = 999f;
         // 109-14-2 공격을 누르고 있는 시간 — 0.4초 넘으면 강공격 한 번
         private float _holdT;
         public bool AttackHeldByUi { get; set; }
@@ -292,7 +294,8 @@ namespace Saga.Go.Combat
         private void OnPowerChanged(float atk, float def) => RebuildParty();
 
         /// <summary>명단을 다시 짠다 — 이미 있던 인물은 체력 비율·쿨·기력을 지킨다.</summary>
-        public void RebuildParty()
+        /// <param name="lead">109-14-18 편성을 바꿨을 때 — 첫 자리(주인공)를 앞에 세운다.</param>
+        public void RebuildParty(bool lead = false)
         {
             var old = new Dictionary<string, Member>();
             foreach (var m in _party) old[m.Id] = m;
@@ -305,7 +308,7 @@ namespace Saga.Go.Combat
             foreach (var id in PartyState.FieldIds())
                 if (_party.Count < MaxParty && id != HeroId) AddMember(old, id, MemberName(id), GoElements.ForMember(id), maxHp);
             ActiveIndex = 0;
-            for (int i = 0; i < _party.Count; i++) if (_party[i].Id == activeId) ActiveIndex = i;
+            if (!lead) for (int i = 0; i < _party.Count; i++) if (_party[i].Id == activeId) ActiveIndex = i;
             ApplyLook();
             // 109-14-1a — 원소가 일곱이 되어 옛 동행 원소가 바뀌었다(세이브엔 원소가 없다) — 동료가 있을 때 한 번만 알린다
             if (!GoElements.SevenNoticed && _party.Count > 1 && Application.isPlaying)
@@ -373,6 +376,7 @@ namespace Saga.Go.Combat
             TickBurn(dt);
             TickGuardAndSeeds(dt);
             _sinceHit += dt;
+            _calmT += dt;
             if (_sinceHit >= RegenDelaySec)
             {
                 foreach (var m in _party)
@@ -764,8 +768,35 @@ namespace Saga.Go.Combat
         // ---- 피격 --------------------------------------------------------------
 
         /// <summary>적 판정이 닿았을 때. 회피 무적이면 흘리고 false.</summary>
+        // ---- 109-14-18 편성을 막는 "싸우는 중"(웹 ⑲-18 `inCombat`) — 방금(3초 안) 맞히거나 맞았거나, 55.5m(웹 30m × 1.85) 안에
+        // 나를 쫓거나 예고·숨 고르는 적. 쉬는 적·제단만 치는 적(곁 SiegePull 밖)은 뺀다. 옛 `WorldMapUi.Fighting`(천하 등급·숨은 터)은 그대로.
+        public const float CombatCalmSec = 3f, CombatRadius = 30f * 1.85f;
+
+        /// <summary>적이 맞았을 때(`FieldEnemy.TakeHit`)·내가 맞았을 때 — 방금 싸움.</summary>
+        public void MarkFought() => _calmT = 0f;
+
+        public bool InCombat()
+        {
+            if (_calmT < CombatCalmSec) return true;
+            Vector3 p = transform.position;
+            foreach (var e in FieldEnemy.All)
+            {
+                if (e == null || !e.Alive || !e.isActiveAndEnabled) continue;
+                var st = e.CurrentState;
+                if (st != FieldEnemy.State.Chase && st != FieldEnemy.State.Telegraph && st != FieldEnemy.State.Recover) continue;
+                float d = Flat(e.transform.position - p).magnitude;
+                if (d > CombatRadius || (e.Siege.HasValue && d > FieldEnemy.SiegePull)) continue;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>편성 막기 — 들판 전투가 없으면(다른 씬) 옛 판정.</summary>
+        public static bool FormationBusy() => Instance != null ? Instance.InCombat() : Saga.Go.UI.WorldMapUi.Fighting();
+
         public bool ReceiveStrike(float enemyAtk, FieldEnemy from)
         {
+            _calmT = 0f; // 109-14-18
             var m = Active;
             if (m == null || m.Down) return false;
             if (Invulnerable)
@@ -1048,6 +1079,7 @@ namespace Saga.Go.Combat
             InvulnLeft = 0f;
             SwapCooldown = 0f;
             _sinceHit = 999f;
+            _calmT = 999f; // 109-14-18
             BurnTicksLeft = 0;
             GuardHp = GuardMax = GuardLeft = 0f;
             _seeds.Clear();

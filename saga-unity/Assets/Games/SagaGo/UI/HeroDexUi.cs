@@ -180,6 +180,7 @@ namespace Saga.Go.UI
             BuildWeaponPanel(mid);
             BuildArtifactPanel(mid);
             BuildFormation(mid); // 109-14-15
+            BuildPresets(mid); // 109-14-18
 
             CloseButton = EncounterUiKit.NewButton(_panel.transform, GoLocalization.T("dex.close", "닫는다"), mid, new Vector2(0f, -272f), new Vector2(200f, 48f), null);
             Center((RectTransform)CloseButton.transform);
@@ -524,6 +525,57 @@ namespace Saga.Go.UI
             }
             _detail.text = Detail(_selected);
             RefreshTalent();
+            RefreshPresets();
+        }
+
+        // ---- 109-14-18 편성 1~4(웹 ⑲-18 단추 줄) — 닫기 단추 왼쪽, 지금 칸 강조, 누르면 그 칸 들판으로(싸우는 중엔 막힘) ----
+        private readonly Button[] _presetButtons = new Button[PartyState.Presets];
+        public Button PresetButton(int i) => _presetButtons[i];
+        public string PresetText(int i) => _presetButtons[i].GetComponentInChildren<TextMeshProUGUI>().text;
+
+        private void BuildPresets(Vector2 mid)
+        {
+            for (int i = 0; i < PartyState.Presets; i++)
+            {
+                int k = i;
+                var b = EncounterUiKit.NewButton(_panel.transform, "", mid, new Vector2(-470f + i * 102f, -272f), new Vector2(94f, 48f), null);
+                Center((RectTransform)b.transform);
+                var t = b.GetComponentInChildren<TextMeshProUGUI>();
+                t.fontSize = 15;
+                t.lineSpacing = -8f;
+                b.onClick.AddListener(() => PresetAction(k));
+                _presetButtons[i] = b;
+            }
+        }
+
+        private void PresetAction(int i)
+        {
+            if (!PartyState.UsePreset(i, Saga.Go.Combat.FieldCombat.FormationBusy(), out string why))
+            {
+                if (why != null) DialogueLabel.Instance?.Show(why, 2.5f);
+                return;
+            }
+            Saga.Go.Combat.FieldCombat.Instance?.RebuildParty(true); // 첫 자리(주인공)가 앞으로
+            int n = PartyState.FieldIds().Count;
+            DialogueLabel.Instance?.Show(string.Format(GoLocalization.T("preset.used", "⚔ 편성 {0} — 들판 {1}명"), i + 1, n), 2f);
+            Refresh();
+        }
+
+        private void RefreshPresets()
+        {
+            int at = PartyState.PresetAt();
+            for (int i = 0; i < _presetButtons.Length; i++)
+            {
+                var b = _presetButtons[i];
+                if (b == null) continue;
+                bool on = i == at;
+                var t = b.GetComponentInChildren<TextMeshProUGUI>();
+                int n = PartyState.PresetOf(i).Count;
+                t.text = string.Format(GoLocalization.T("preset.button", "편성 {0}\n{1}"), i + 1,
+                    n > 0 ? string.Format(GoLocalization.T("preset.count", "{0}명"), n) : GoLocalization.T("preset.empty", "빈 칸"));
+                t.color = on ? new Color(1f, 0.88f, 0.5f) : new Color(0.8f, 0.8f, 0.85f);
+                b.GetComponent<Image>().color = on ? new Color(1f, 0.8f, 0.4f, 0.3f) : new Color(1f, 1f, 1f, 0.08f);
+            }
         }
 
         /// <summary>109-14-15 — "들판 2째 자리" / "대기".</summary>
@@ -560,7 +612,7 @@ namespace Saga.Go.UI
         private void FormationAction(int k)
         {
             if (_selected == null || !HeroDexState.IsRecruited(_selected)) return;
-            if (WorldMapUi.Fighting()) { Saga.Go.UI.DialogueLabel.Instance?.Show(GoLocalization.T("dex.form_fighting", "싸우는 중엔 편성을 바꿀 수 없다"), 2.5f); return; }
+            if (Saga.Go.Combat.FieldCombat.FormationBusy()) { Saga.Go.UI.DialogueLabel.Instance?.Show(GoLocalization.T("dex.form_fighting", "싸우는 중엔 편성을 바꿀 수 없다"), 2.5f); return; }
             if (k == 0) { if (PartyState.FieldSlotOf(_selected) >= 0) PartyState.Bench(_selected); else PartyState.ToField(_selected); }
             else PartyState.MoveUp(_selected);
             Refresh();
@@ -569,7 +621,7 @@ namespace Saga.Go.UI
         private void RefreshFormation()
         {
             int s = _selected != null ? PartyState.FieldSlotOf(_selected) : -1;
-            bool fighting = WorldMapUi.Fighting();
+            bool fighting = Saga.Go.Combat.FieldCombat.FormationBusy();
             var b0 = _formButtons[0];
             b0.GetComponentInChildren<TextMeshProUGUI>().text = s >= 0
                 ? (PartyState.MemberIds.Count > PartyState.FieldSlots ? GoLocalization.T("dex.form_bench", "들판에서 빼기") : GoLocalization.T("dex.form_all", "동행이 셋 이하 — 모두 들판"))
