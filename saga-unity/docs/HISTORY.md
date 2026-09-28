@@ -10300,3 +10300,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 검증(묶음 없는 PC): 컴파일 0 · `PlaytestHeadless` 3연속 같은 결과(aim 줄의 피해 숫자만 59~60·244~249 로 흔들림 — 통과 항목은 같다) — aim OK(칼 못 함·걸음 막힘·카메라·잠김/풀림·덜 참 물리·다 참 급소·쫓는 적 급소 아님·빈 곳 83m 신호·점프/칼 인물 풀림·길게 눌러 쏘고 나옴 · 과녁 셋·거리·화살·10초 꺼짐·서책 기본 공격·셋 → 풀림 · 옛 제단 잠김·충전 화살 불), treasure OK(17), OK 54 줄, 남은 FAIL 기준선 등불. `UiLayoutCheck` GO 겹침 0 — 단, 🎯 단추는 활 인물이 앞일 때만 떠서 이 점검(기본 명단)엔 안 잡혔다.
 - 실기 확인 전: 🎯 단추 자리(회피 위 370)·해방 단추와 겹침 · 어깨 너머 카메라 거리 · 겨누기 돌리는 빠르기(초당 2.4 라디안) · 잠김 고리 크기 · 화살 모양(얇은 원통) · 급소 체감 · (1,8) 고원 오르는 길·과녁 셋이 한눈에 보이는지.
 - 다음 = 14-23 (웹 ⑲-23 지도·미니맵 임무 표식).
+
+## 2026-09-28 — 사실 몸 묶음 구글 드라이브 사본 · realistic-pack.sh push/pull (PLAN 110 ④ 보강)
+
+- 목록이 바뀌어 묶음 id 가 19ad3d530b70(1520파일)이 됨 — `verify` OK → `pack` 으로 OneDrive 보관함에 새로 묶음(3조각 1900·1900·445MB + 목록). 옛 cb71a2102fd9 조각은 로컬 OneDrive 에만 남김(지우지 않음).
+- 구글 드라이브 `내 드라이브/saga-assets`(비공개, 공유 링크 없음)에 네 파일 — 크롬 확장 올리기는 10MB 한계라 첫 올림은 사용자가 끌어다 놓음.
+- rclone 1.75.1(winget) + 원격 `gdrive`(scope=drive, 사용자 승인). `realistic-pack.sh push [원격] [보관함]`·`pull [원격] [보관함]` 추가 — 이 목록 묶음만 `rclone copy`, `rclone check --one-way` 로 크기·md5 대조, `pull` 은 이어서 `fetch`. 원격 기본 `gdrive:saga-assets`(`SAGA_ASSET_REMOTE`). winget 직후 PATH 가 옛 셸이면 winget 설치 자리에서 rclone.exe 를 찾는다.
+- 시험: `push` = 전송 0·4파일 일치, 로컬 `md5sum` 과 `rclone md5sum` 네 줄 같음. `pull` = 전송 0·4파일 일치 → fetch "이미 목록과 같다"(실제로 받아 푸는 건 새 PC 에서 첫 확인).
+- 남은 위험: rclone 공용 client_id 가 2026 중 끊긴다는 경고 — 끊기면 구글 클라우드 콘솔에서 자기 client_id(사람 몫) → `rclone config update gdrive client_id=… client_secret=…`.

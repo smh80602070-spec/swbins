@@ -6,6 +6,12 @@
 #   bash tools/realistic-pack.sh fetch [보관함]  # 새 PC: 보관함의 묶음을 풀어 넣고 verify (한 방)
 #   bash tools/realistic-pack.sh manifest        # 몸을 더하거나 고친 뒤: 목록 다시 쓰기(커밋 대상)
 #   bash tools/realistic-pack.sh pack [보관함]   # 그 다음: 목록에 맞는 묶음을 보관함에 쓰기
+#   bash tools/realistic-pack.sh push [원격] [보관함]  # 보관함의 이 목록 묶음을 구글 드라이브로 + md5 대조
+#   bash tools/realistic-pack.sh pull [원격] [보관함]  # 새 PC: 드라이브에서 보관함으로 받고 md5 대조 → fetch
+#
+# 원격 기본값 = $SAGA_ASSET_REMOTE, 없으면 gdrive:saga-assets (rclone, 2026-09-28 사용자 결정).
+# PC 마다 한 번: winget install Rclone.Rclone → rclone config create gdrive drive scope=drive
+# (브라우저 승인은 사람 몫). 드라이브 폴더도 **비공개** — 공유 링크 만들지 않는다.
 #
 # 목록 tools/realistic/manifest.sha256 = `sha256sum` 형식(해시 두 칸 경로), .meta 까지 전부.
 # .meta 가 빠지면 GUID 가 새로 나 커밋된 씬의 참조가 끊기므로 Mixamo 에서 다시 받는 것으로는
@@ -21,8 +27,21 @@ SRC="Assets/Art/CharactersRealistic"
 MAN="$ROOT/tools/realistic/manifest.sha256"
 STAGE="$ROOT/.utmp/realistic-incoming"
 DEFAULT_STORE="${SAGA_ASSET_STORE:-$HOME/OneDrive/saga-assets}"   # .utmp/ 는 gitignore, Assets 밖이라 Unity 가 안 읽는다
+DEFAULT_REMOTE="${SAGA_ASSET_REMOTE:-gdrive:saga-assets}"
+SELF="$ROOT/tools/$(basename "$0")"
 
 die() { echo "[realistic-pack] $*" >&2; exit 1; }
+# winget 은 PATH 를 새 셸부터 고치므로, 없으면 winget 설치 자리를 직접 찾는다
+find_rclone() {
+  RCLONE=$(command -v rclone 2>/dev/null) \
+    || RCLONE=$(ls "$HOME"/AppData/Local/Microsoft/WinGet/Packages/Rclone.Rclone_*/*/rclone.exe 2>/dev/null | head -1)
+  [ -n "$RCLONE" ] || die "rclone 없음 — winget install Rclone.Rclone 뒤 rclone config create gdrive drive scope=drive"
+}
+# $1 → $2 를 이 목록 묶음만 크기·md5 로 대조(드라이브는 md5 를 준다)
+check_pack() {
+  "$RCLONE" check "$1" "$2" --one-way --include "saga-unity-realistic-$(pack_id).*" \
+    || die "대조 실패: $1 → $2 (다시 돌리면 다른 것만 다시 옮긴다)"
+}
 # 목록은 .gitattributes 로 바이트 그대로 받지만, 그래도 CR 이 끼면 떼고 읽는다(id·대조가 PC 마다 같게)
 man_lf() { tr -d '\r' < "$MAN"; }
 pack_id() { man_lf | sha256sum | cut -c1-12; }
@@ -96,8 +115,30 @@ case "$cmd" in
     mv "$STAGE" "$SRC" || die "제자리로 옮기기 실패"
     echo "[realistic-pack] OK 받음 — Unity 를 열면 가져오기(첫 회 오래 걸린다) 뒤 빌드 가능"
     ;;
+  push)
+    remote="${1:-$DEFAULT_REMOTE}"; store="${2:-$DEFAULT_STORE}"
+    find_rclone; id=$(pack_id)
+    ls "$store/saga-unity-realistic-$id".tar.[0-9][0-9] >/dev/null 2>&1 \
+      || die "보관함에 이 목록의 묶음(id $id)이 없다 — 먼저 pack"
+    echo "[realistic-pack] 올리는 중: $store → $remote (id $id, 이미 같은 건 건너뜀)"
+    "$RCLONE" copy "$store" "$remote" --include "saga-unity-realistic-$id.*" --stats 1m --stats-one-line -v \
+      || die "올리기 실패 — 다시 돌리면 이어서 올린다"
+    check_pack "$store" "$remote"
+    echo "[realistic-pack] OK 올림 (id $id):"
+    "$RCLONE" ls "$remote" --include "saga-unity-realistic-$id.*" | sed 's/^/  /'
+    ;;
+  pull)
+    remote="${1:-$DEFAULT_REMOTE}"; store="${2:-$DEFAULT_STORE}"
+    find_rclone; id=$(pack_id)
+    mkdir -p "$store" || die "보관함을 못 만듦: $store"
+    echo "[realistic-pack] 받는 중: $remote → $store (id $id)"
+    "$RCLONE" copy "$remote" "$store" --include "saga-unity-realistic-$id.*" --stats 1m --stats-one-line -v \
+      || die "받기 실패 — 드라이브에 id $id 묶음이 있는지: rclone ls $remote"
+    check_pack "$remote" "$store"
+    bash "$SELF" fetch "$store"
+    ;;
   *)
-    sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'
+    sed -n '2,20p' "$SELF" | sed 's/^# \{0,1\}//'
     exit 1
     ;;
 esac

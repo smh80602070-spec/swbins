@@ -33,11 +33,14 @@ find "/c/Program Files/Unity/Hub/Editor" -maxdepth 1
 사람·괴물이 전부 캡슐로 서고, 빌드는 자산 검사(`SagaAssetGate`)가 막는다.
 
 ```bash
-bash tools/realistic-pack.sh fetch            # 보관함 기본 ~/OneDrive/saga-assets (동기화 끝난 뒤) · 다른 자리면 fetch <폴더>
+bash tools/realistic-pack.sh pull             # 구글 드라이브 gdrive:saga-assets 에서 받아 md5 대조 → fetch (rclone, 아래)
+bash tools/realistic-pack.sh fetch            # 드라이브 없이: 보관함 기본 ~/OneDrive/saga-assets (동기화 끝난 뒤) · 다른 자리면 fetch <폴더>
 bash tools/realistic-pack.sh verify           # 언제든: 목록과 같은지 (OK 면 이 PC 빌드 = 다른 PC 빌드)
 ```
 
-몸을 새로 받거나 고친 PC 는 `manifest` → `pack` → 목록(`tools/realistic/`) 커밋을 같이 한다.
+`pull` 은 PC 마다 한 번 준비가 필요하다: `winget install Rclone.Rclone` → 새 셸에서 `rclone config create gdrive drive scope=drive`(브라우저에서 구글 승인).
+
+몸을 새로 받거나 고친 PC 는 `manifest` → `pack` → `push`(드라이브) → 목록(`tools/realistic/`) 커밋을 같이 한다.
 이미 열어 둔 Unity 가 있으면 닫고 받는다(폴더를 통째로 바꾼다).
 
 1. Unity Hub를 실행한다
