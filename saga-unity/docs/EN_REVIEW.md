@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **2507** (표 2452 · 코드 55) — go 663 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **151**
-- 사람 검수 **0/2507** — 순위1 0/258 · 순위2 0/1541 · 순위3 0/708
+- 짝 **2562** (표 2507 · 코드 55) — go 718 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **0** · 용어 흔들림 **0** · 넘침 주의 **157**
+- 사람 검수 **0/2562** — 순위1 0/258 · 순위2 0/1596 · 순위3 0/708
 
 ## 검수 순서
 
@@ -26,18 +26,20 @@
 
 없음.
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 151)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 157)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
 | 폭 한→영 | 판 | 키 | 영어 |
 |---|---|---|---|
 | 9→22 | forest | `visitor.dirs` | somewhere in the woods to the {0} of the village |
+| 3→12 | go | `cook.recipe.honey_cake` | Honey Blossom Rice Cake |
 | 4→13 | dungeon | `item.wp_lm_cloud` | Cloud General's Gold Sword |
 | 6→15 | dungeon | `landmark.cloud` | Golden Palace Above the Clouds |
 | 2→9 | forest | `finish.jangpan` | Oiled Paper Floor |
 | 3→10 | dungeon | `enemy.grunt` | Yellow Turban Bandit |
 | 3→10 | story | `enemy.hwanggeon` | Yellow Turban Bandit |
+| 5→14 | go | `cook.recipe.ash_pancake` | Ash Flower Mushroom Pancake |
 | 7→16 | dungeon | `saga.heaven.title` | The Guardian Who Drew His Sword |
 | 5→13 | story | `bp.sig.hwanggeon_chief` | Netherworld Talisman Array |
 | 5→13 | dungeon | `enemy.boss` | Yellow Turban Bandit Chief |
@@ -49,6 +51,7 @@
 | 8→16 | dungeon | `cut.floorboss_fallback_sub` | The master at the end of the floor |
 | 4→11 | dungeon | `landmark.bandit` | Black Wind Stronghold |
 | 4→11 | story | `bp.boss.bandit_chief` | Mountain Bandit Chief |
+| 3→9 | go | `cook.item.orchid` | Blue River Orchid |
 | 5→12 | dungeon | `lordsig.bandit` | Black Wind Triple Charge |
 | 6→14 | dungeon | `enemy.elite` | Fierce Yellow Turban Bandit |
 | 3→8 | forest | `furniture.geomungo` | Geomungo (Zither) |
@@ -59,6 +62,3 @@
 | 5→12 | go | `artifact.why.polish` | Not enough polish stones |
 | 4→10 | dungeon | `lordsig.cloud` | Heaven Thunder Cross |
 | 4→10 | story | `bp.boss.ruin_brute` | Ruined Capital Brute |
-| 3→8 | forest | `finish.hanji` | Hanji Paper Wall |
-| 4→10 | realm | `officer.tm_gangseo.title` | Special Ops Captain |
-| 6→12 | dungeon | `saga.silkroad.title` | The Severed Caravan Road |

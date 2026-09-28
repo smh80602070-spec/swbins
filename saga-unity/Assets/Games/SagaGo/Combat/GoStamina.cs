@@ -24,6 +24,7 @@ namespace Saga.Go.Combat
         /// <summary>한 번에 치르는 값(회피 등). 모자라면 안 쓰고 false.</summary>
         public static bool TrySpend(float amount)
         {
+            amount *= Saga.Go.Data.CookState.StaminaMul; // 109-14-6 요리 모험 계열(스태미나 소모 감소)
             if (Value < amount) return false;
             Value -= amount;
             _sinceUse = 0f;
@@ -34,6 +35,7 @@ namespace Saga.Go.Combat
         /// <summary>계속 닳는 값(달리기). 잠겼거나 바닥나면 false.</summary>
         public static bool Drain(float amount)
         {
+            amount *= Saga.Go.Data.CookState.StaminaMul;
             if (SprintLocked || Value <= 0f) return false;
             Value = Mathf.Max(0f, Value - amount);
             _sinceUse = 0f;
@@ -44,6 +46,7 @@ namespace Saga.Go.Combat
         /// <summary>등반·활공·수영처럼 달리기 잠금과 무관하게 계속 쓰는 값. 바닥이면 false(남은 만큼은 깎는다).</summary>
         public static bool Use(float amount)
         {
+            amount *= Saga.Go.Data.CookState.StaminaMul;
             if (Value <= 0f) return false;
             Value = Mathf.Max(0f, Value - amount);
             _sinceUse = 0f;

@@ -14,7 +14,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 22;
+        private const int SaveVersion = 23;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -111,6 +111,10 @@ namespace Saga.Go.Data
             public List<GoArtifacts.Artifact> artifacts;
             public int artifactSeq;
             public int artifactPolish;
+            // v23 — PLAN.md 109-14-6 재료·요리 가방·숙련·채집 시각(유닉스 초). 버프·포만감은 세이브 안 함.
+            public List<CookState.Entry> cookBag;
+            public List<CookState.Entry> cookProf;
+            public List<CookState.TimeEntry> cookGather;
         }
 
         public static bool Save()
@@ -181,6 +185,9 @@ namespace Saga.Go.Data
                 artifacts = ArtifactState.Snapshot(),
                 artifactSeq = ArtifactState.Seq,
                 artifactPolish = ArtifactState.Polish,
+                cookBag = CookState.SnapshotBag(),
+                cookProf = CookState.SnapshotProf(),
+                cookGather = CookState.SnapshotGather(),
             };
             return JsonUtility.ToJson(data);
         }
@@ -246,6 +253,7 @@ namespace Saga.Go.Data
             TalentState.Restore(data.talents, data.talentMats);
             WeaponState.Restore(data.weapons, data.weaponEquip, data.weaponOre);
             ArtifactState.Restore(data.artifacts, data.artifactSeq, data.artifactPolish);
+            CookState.Restore(data.cookBag, data.cookProf, data.cookGather);
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();
@@ -465,6 +473,15 @@ namespace Saga.Go.Data
                 data.artifacts = new List<GoArtifacts.Artifact>();
                 data.artifactSeq = 0;
                 data.artifactPolish = 0;
+                return data;
+            }
+            if (fromVersion == 22)
+            {
+                // v22엔 요리가 없었다 — 빈 가방·숙련 0·모든 포기가 자라 있다.
+                data.version = 23;
+                data.cookBag = new List<CookState.Entry>();
+                data.cookProf = new List<CookState.Entry>();
+                data.cookGather = new List<CookState.TimeEntry>();
                 return data;
             }
             return null;

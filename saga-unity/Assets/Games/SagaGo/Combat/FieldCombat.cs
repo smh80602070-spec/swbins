@@ -144,7 +144,7 @@ namespace Saga.Go.Combat
             {
                 var md = WeaponState.ModsOf(Active?.Id); // 109-14-5a 든 무기 공격 · 공격%
                 var ab = ArtifactState.BonusOf(Active?.Id); // 109-14-5b 보패 공격% · 고정 공격(웹 식: (기본 + 무기) × (1 + %) + 고정)
-                return ((PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus + md.Atk) * (1f + md.AtkPct + ab.AtkPct) + ab.Atk) * PerkState.AtkMultiplier * BondState.AtkMultiplier
+                return ((PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus + md.Atk) * (1f + md.AtkPct + ab.AtkPct) + ab.Atk + CookState.Buff("atk")) * PerkState.AtkMultiplier * BondState.AtkMultiplier // 109-14-6 요리 공격(고정)
                     * (Active != null && Active.BuffLeft > 0f ? GoTalent.C5Atk : 1f); // 109-14-4 깨달음 ⑤
             }
         }
@@ -177,9 +177,9 @@ namespace Saga.Go.Combat
             if (CritOffForTest) return 1f;
             var md = WeaponState.ModsOf(id);
             var ab = ArtifactState.BonusOf(id); // 109-14-5b 보패 치명
-            float rate = CritRateForTest >= 0f ? CritRateForTest : md.CritRate + ab.CritRate;
+            float rate = CritRateForTest >= 0f ? CritRateForTest : md.CritRate + ab.CritRate + CookState.Buff("crit_rate"); // 109-14-6 요리 치명
             crit = LastCrit = NextRand() < rate;
-            return crit ? 1f + md.CritDmg + ab.CritDmg : 1f;
+            return crit ? 1f + md.CritDmg + ab.CritDmg + CookState.Buff("crit_dmg") : 1f;
         }
 
         /// <summary>무기 효과 — 그 갈래(n·s·b·react)면 1 + 값.</summary>
@@ -228,7 +228,7 @@ namespace Saga.Go.Combat
             get
             {
                 var ab = ArtifactState.BonusOf(Active?.Id);
-                return Def * (1f + ab.DefPct) + ab.Def;
+                return Def * (1f + ab.DefPct) + ab.Def + CookState.Buff("def"); // 109-14-6 요리 방어(고정)
             }
         }
 
@@ -926,6 +926,61 @@ namespace Saga.Go.Combat
         }
 
         private static Vector3 Flat(Vector3 v) { v.y = 0f; return v; }
+
+        /// <summary>109-14-6 요리를 먹는다(가장 좋은 품질부터) — 회복은 들판 명단에(한 사람 = 체력 비율 가장 낮은 사람, 되살리기 = 쓰러진 첫 사람), 버프는 계열마다 하나.
+        /// 성공하면 알림 글, 못 먹으면 null 과 까닭.</summary>
+        public string Eat(int ri, out string why)
+        {
+            why = null;
+            int q = ri >= 0 && ri < GoCooking.Recipes.Length ? CookState.BestDish(ri) : -1;
+            if (q < 0) { why = GoLocalization.T("cook.why.no_dish", "요리가 없다"); return null; }
+            var r = GoCooking.Recipes[ri];
+            string text;
+            if (r.Effect == GoCooking.Effect.Buff)
+            {
+                CookState.SetBuff(ri, q);
+                text = GoCooking.EffectText(r, q);
+            }
+            else if (r.Effect == GoCooking.Effect.HealAll)
+            {
+                bool any = false;
+                foreach (var m in _party)
+                {
+                    if (m.Down) continue;
+                    m.Hp = Mathf.Min(m.MaxHp, m.Hp + m.MaxHp * r.Ratio[q]);
+                    any = true;
+                }
+                if (!any) { why = GoLocalization.T("cook.why.nobody", "먹일 사람이 없다"); return null; }
+                text = GoLocalization.T("cook.healed_all", "명단 모두 체력 회복");
+            }
+            else
+            {
+                Member m = null;
+                foreach (var o in _party)
+                {
+                    if (r.Effect == GoCooking.Effect.Revive) { if (o.Down) { m = o; break; } }
+                    else if (!o.Down && (m == null || o.Hp / o.MaxHp < m.Hp / m.MaxHp)) m = o;
+                }
+                if (m == null)
+                {
+                    why = r.Effect == GoCooking.Effect.Revive ? GoLocalization.T("cook.why.no_down", "쓰러진 사람이 없다") : GoLocalization.T("cook.why.nobody", "먹일 사람이 없다");
+                    return null;
+                }
+                if (!CookState.TryFeed(m.Id)) { why = string.Format(GoLocalization.T("cook.why.full", "{0} 배가 부르다"), m.Name); return null; }
+                if (r.Effect == GoCooking.Effect.Revive)
+                {
+                    m.Hp = Mathf.Max(1f, m.MaxHp * r.Ratio[q]);
+                    text = string.Format(GoLocalization.T("cook.revived", "{0} 일어났다"), m.Name);
+                }
+                else
+                {
+                    m.Hp = Mathf.Min(m.MaxHp, m.Hp + m.MaxHp * r.Ratio[q] + GoCooking.HealFlat(r, q));
+                    text = string.Format(GoLocalization.T("cook.healed", "{0} 체력 회복"), m.Name);
+                }
+            }
+            CookState.UseDish(ri, q);
+            return GoCooking.DishName(r.Id, q) + " — " + text;
+        }
 
         private static void ToastLine(string text, float sec)
         {

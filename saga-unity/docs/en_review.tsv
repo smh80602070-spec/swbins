@@ -322,6 +322,61 @@
 2	go	combat.retreat	물러난다	Retreat		
 2	go	combat.timer	{0}초	{0}s		
 2	go	combat.ult	필살	Ultimate		
+2	go	cook.at_pot	솥 곁 — 조리할 수 있다	At the pot — you can cook		
+2	go	cook.auto_done	자동 조리 — {0}	Auto-cooked — {0}		
+2	go	cook.away	역참 곁 솥에서 조리 · 먹기는 어디서나	Cook at a waypoint pot · eat anywhere		
+2	go	cook.btn_auto	자동	Auto		
+2	go	cook.btn_cook	조리	Cook		
+2	go	cook.btn_eat	먹기 ×{0} ({1})	Eat ×{0} ({1})		
+2	go	cook.btn_eat_none	요리 없음	No dish		
+2	go	cook.btn_stop	불 끄기	Take off heat		
+2	go	cook.buff_end	{0} 효과가 끝났다	{0} effect has worn off		
+2	go	cook.buff_left	{0} {1} {2}초	{0} {1} {2}s		
+2	go	cook.buffs	켜진 효과	Active effects		
+2	go	cook.button	요리	Cooking		
+2	go	cook.cat.adventure	모험	Adventure		
+2	go	cook.cat.attack	공격	Attack		
+2	go	cook.cat.defense	방어	Defense		
+2	go	cook.done	{0} 완성	{0} is ready		
+2	go	cook.eff.buff	{0} · 명단 {1} +{2} · {3}초	{0} · party {1} +{2} · {3}s		
+2	go	cook.eff.heal	한 사람 체력 {0}%+{1} 회복	Heals one member {0}%+{1} HP		
+2	go	cook.eff.heal_all	명단 모두 체력 {0}% 회복	Heals the whole party {0}% HP		
+2	go	cook.eff.revive	쓰러진 사람을 체력 {0}% 로	Revives a fallen member at {0}% HP		
+2	go	cook.healed	{0} 체력 회복	{0} recovered HP		
+2	go	cook.healed_all	명단 모두 체력 회복	Whole party recovered HP		
+2	go	cook.item.apple	산사과	Wild Apple		
+2	go	cook.item.ash_flower	재꽃	Ash Flower		
+2	go	cook.item.clam	바지락	Clam		
+2	go	cook.item.conch	갯소라	Tide Conch		
+2	go	cook.item.honey_flower	꿀꽃	Honey Blossom		
+2	go	cook.item.meat	짐승 고기	Game Meat		
+2	go	cook.item.mint	박하	Mint		
+2	go	cook.item.mushroom	송이버섯	Pine Mushroom		
+2	go	cook.item.orchid	청하란	Blue River Orchid		
+2	go	cook.meat_plus	{0} +{1}	{0} +{1}		
+2	go	cook.needle	{0} — 바늘이 맛있는 칸에 올 때 불을 끈다	{0} — take it off the heat when the needle is in the tasty zone		
+2	go	cook.prof	숙련 {0}/{1}	Skill {0}/{1}		
+2	go	cook.q0	이상한	Odd		
+2	go	cook.q1	보통	Normal		
+2	go	cook.q2	맛있는	Tasty		
+2	go	cook.recipe.ash_pancake	재꽃 버섯전	Ash Flower Mushroom Pancake		
+2	go	cook.recipe.clam_soup	바지락탕	Clam Soup		
+2	go	cook.recipe.conch_grill	갯소라 구이	Grilled Conch		
+2	go	cook.recipe.honey_cake	꿀꽃 떡	Honey Blossom Rice Cake		
+2	go	cook.recipe.meat_stew	고기 찜	Braised Meat		
+2	go	cook.recipe.mint_stirfry	박하 고기볶음	Mint Meat Stir-fry		
+2	go	cook.recipe.mush_skewer	버섯 꼬치	Mushroom Skewer		
+2	go	cook.recipe.orchid_tea	청하란 차	Orchid Tea		
+2	go	cook.revived	{0} 일어났다	{0} is back on their feet		
+2	go	cook.stat.stamina_save	스태미나 소모 감소	Stamina Cost Down		
+2	go	cook.title	요리	Cooking		
+2	go	cook.why.full	{0} 배가 부르다	{0} is full		
+2	go	cook.why.lack	{0} 부족	Not enough {0}		
+2	go	cook.why.no_dish	요리가 없다	No dish		
+2	go	cook.why.no_down	쓰러진 사람이 없다	No one has fallen		
+2	go	cook.why.nobody	먹일 사람이 없다	No one to feed		
+2	go	cook.why.none	없는 요리	No such dish		
+2	go	cook.why.pot	역참 곁 솥에서만	Only at a waypoint cooking pot		
 2	go	cut.guardian_sub	옛 망루를 지키는 돌장수 — 방패 두 겹({0} → {1})	Stone warden of the old watchtower — two shield layers ({0} → {1})		
 2	go	dex.detail.got	{0} · {1} 원소 · 기질 {2}⏎무력 {3} · 지력 {4} · 통솔 {5} — "{6}"	{0} · {1} element · trait {2}⏎Might {3} · Wisdom {4} · Command {5} — "{6}"		
 2	go	dex.detail.seen	{0} · {1} 원소 — 만났지만 아직 동행이 아니다⏎{2}에 선다 · 이겨서 굴복시키면 동행	{0} · {1} element — met, but not yet a companion⏎Stands in {2} · defeat them to make them yield and join		

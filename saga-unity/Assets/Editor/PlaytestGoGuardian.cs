@@ -203,10 +203,10 @@ namespace Saga.EditorTools
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string path = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
             string json = System.IO.File.ReadAllText(path);
-            if (!json.Contains("\"version\":22") || !json.Contains("\"guardianDown\":true")) Fail("세이브 v18 에 토벌이 안 남았다");
+            if (!json.Contains("\"version\":23") || !json.Contains("\"guardianDown\":true")) Fail("세이브 v18 에 토벌이 안 남았다");
             GuardianState.Restore(false);
             if (!SaveState.TryLoad() || !GuardianState.Defeated) Fail("v18 왕복 뒤 토벌이 사라졌다");
-            string v14 = json.Replace("\"version\":22", "\"version\":14").Replace(",\"guardianDown\":true", "");
+            string v14 = json.Replace("\"version\":23", "\"version\":14").Replace(",\"guardianDown\":true", "");
             System.IO.File.WriteAllText(path, v14);
             if (!SaveState.TryLoad()) { Fail("v14 파일 TryLoad 실패"); return; }
             if (GuardianState.Defeated) Fail("v14 파일을 읽었는데 수호장이 쓰러진 걸로 나온다");

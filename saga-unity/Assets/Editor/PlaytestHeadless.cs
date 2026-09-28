@@ -165,6 +165,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoTalent.Run("PlaytestHeadless")) _hadError = true;
                 if (!PlaytestGoWeapons.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-5a 무기·치명타(무기·강화석·돈·세이브 되돌림) // PLAN.md 109-14-4 무예 단계·깨달음(동행·재료·돈·세이브 되돌림)
                 if (!PlaytestGoArtifacts.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-5b 보패(보패·연마석·동행·돈·세이브 되돌림)
+                if (!PlaytestGoCooking.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-6 채집·요리(요리·동행·세이브·자리 되돌림)
                 if (!PlaytestGoPeaks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-9 정상 발견·순간이동·건물 가림 카메라(기록·돈·세이브 되돌림)
                 // 반드시 마지막 — DailyTaskState 진단이 SaveState.TryLoad()로
                 // 세이브 파일을 v9 모양으로 잠깐 바꿔치기해 로드하는데, 이건

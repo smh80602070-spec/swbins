@@ -37,6 +37,8 @@ namespace Saga.Go.World
             if (GetComponent<PeakSummits>() == null) gameObject.AddComponent<PeakSummits>(); // 109-9 정상 발견
             if (GetComponent<GoOrbField>() == null) gameObject.AddComponent<GoOrbField>(); // 109-14-3a 수집 구슬·봉헌
             if (GetComponent<ElementalSight>() == null) gameObject.AddComponent<ElementalSight>(); // 109-14-3b 원소 시야
+            if (GetComponent<CookField>() == null) gameObject.AddComponent<CookField>(); // 109-14-6 채집·솥
+            if (GetComponent<Saga.Go.UI.CookingUi>() == null) gameObject.AddComponent<Saga.Go.UI.CookingUi>(); // 109-14-6 요리 창(G)
         }
     }
 }

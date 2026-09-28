@@ -23,6 +23,7 @@ namespace Saga.Go.Combat
         public enum State { Wander, Chase, Telegraph, Recover, Return, Dead, Stagger }
 
         public const float DetectRadius = 24f;
+        public const int MeatPerBandit = 1; // 109-14-6
         public const float GiveUpRadius = 32f;
         public const float LeashRadius = 45f;
         public const float WanderRadius = 10f;
@@ -1035,6 +1036,12 @@ namespace Saga.Go.Combat
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
             PlayerStats.AddExp(ExpReward);
+            if (EnemyKind == Kind.Bandit && !IsHero)
+            {
+                // 109-14-6 짐승 고기 — 14-1b 짐승(바위곰)이 오기 전까지 산적 봇짐에서
+                CookState.Add("meat", MeatPerBandit);
+                FieldDamageText.Spawn(transform.position + Vector3.up * (BodyHeight + 3.4f), string.Format(GoLocalization.T("cook.meat_plus", "{0} +{1}"), GoCooking.ItemName("meat"), MeatPerBandit), new Color(0.95f, 0.7f, 0.55f), 0.85f);
+            }
             if (IsGuardian)
             {
                 _timer = float.MaxValue; // 다시 안 선다(107-7).

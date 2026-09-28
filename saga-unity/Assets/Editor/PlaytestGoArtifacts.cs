@@ -323,13 +323,13 @@ namespace Saga.EditorTools
             int polish = ArtifactState.Polish;
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":22") || !json.Contains($"\"artifactPolish\":{polish}") || !json.Contains("\"viridescent\"")) Fail("세이브 v22 에 보패가 없다");
+            if (!json.Contains("\"version\":23") || !json.Contains($"\"artifactPolish\":{polish}") || !json.Contains("\"viridescent\"")) Fail("세이브 v22 에 보패가 없다");
             ArtifactState.ResetForTest();
             if (!SaveState.TryLoad()) { Fail("v22 TryLoad 실패"); return; }
             var b = ArtifactState.Get(uid);
             if (b == null || b.lv != 6 || b.owner != x || b.subs.Count != subs || !Near(GoArtifacts.MainValue(b), main) || ArtifactState.Seq != 1 || ArtifactState.Polish != polish)
                 Fail("v22 왕복 뒤 보패가 달라짐");
-            string v21 = Regex.Replace(json.Replace("\"version\":22", "\"version\":21"), ",\"artifacts\":\\[.*\\],\"artifactSeq\":\\d+,\"artifactPolish\":\\d+", "");
+            string v21 = Regex.Replace(json.Replace("\"version\":23", "\"version\":21"), ",\"artifacts\":\\[.*\\],\"artifactSeq\":\\d+,\"artifactPolish\":\\d+", "");
             if (v21.Contains("artifactPolish")) { Fail("v21 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v21);
             if (!SaveState.TryLoad()) { Fail("v21 파일 TryLoad 실패"); return; }

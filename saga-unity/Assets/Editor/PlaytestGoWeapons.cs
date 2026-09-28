@@ -256,10 +256,10 @@ namespace Saga.EditorTools
                 new List<WeaponState.EquipEntry> { new WeaponState.EquipEntry { hero = "sg_guanyu", wid = "w_bow_4" } }, 7);
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":22") || !json.Contains("\"weaponOre\":7") || !json.Contains("w_bow_4")) Fail("세이브 v21 에 무기가 없다");
+            if (!json.Contains("\"version\":23") || !json.Contains("\"weaponOre\":7") || !json.Contains("w_bow_4")) Fail("세이브 v21 에 무기가 없다");
             WeaponState.ResetForTest();
             if (!SaveState.TryLoad() || WeaponState.RecOf("w_bow_4").lv != 12 || WeaponState.RecOf("w_bow_4").refine != 3 || WeaponState.Ore != 7) Fail("v21 왕복 뒤 무기가 달라짐");
-            string v20 = Regex.Replace(json.Replace("\"version\":22", "\"version\":20"), ",\"weapons\":\\[[^\\]]*\\],\"weaponEquip\":\\[[^\\]]*\\],\"weaponOre\":\\d+", "");
+            string v20 = Regex.Replace(json.Replace("\"version\":23", "\"version\":20"), ",\"weapons\":\\[[^\\]]*\\],\"weaponEquip\":\\[[^\\]]*\\],\"weaponOre\":\\d+", "");
             if (v20.Contains("weaponOre")) { Fail("v20 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v20);
             if (!SaveState.TryLoad()) { Fail("v20 파일 TryLoad 실패"); return; }
