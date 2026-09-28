@@ -20,6 +20,7 @@ const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
 ## 2026-09-28 "그래픽 먼저" — 3 → 10. 숲 칸(48m)에 세 그루면 원신 숲이 아니라 들판에 나무 몇 그루였다(창 모드 촬영).
 ## 크기도 0.7~1.3 → 0.8~1.8배(약 4~10m, TREE_SCALE_MIN·SPAN). 상자·별조각·채집·이야기 칸 TREE_KEEP_M 안엔 안 심는다(keep_spots.gd).
 const TREES_PER_FOREST_TILE := 10
+const TREE_CHUNK_M := 48.0 # 09-29 나무 MultiMesh 를 이 크기 칸으로 쪼갠다(LOD·잘라내기가 칸마다)
 const TREE_SCALE_MIN := 0.8
 const TREE_SCALE_SPAN := 1.0
 const TREE_KEEP_M := 4.0
@@ -374,28 +375,35 @@ func _scatter_trees() -> void:
 	## 시각은 종별로 나눠 그린다 — MultiMesh 하나엔 Mesh 하나만 얹을 수
 	## 있어(_scatter_wildflowers와 같은 패턴), 종 수만큼 MultiMeshInstance3D
 	## 를 만들고 해당 종 자리만 그 안에 담는다.
-	var xf_by_species: Array[Array] = []
-	for k in variants.size():
-		var arr: Array[Transform3D] = []
-		xf_by_species.append(arr)
+	## 2026-09-29 — 종마다 지역 전체를 MultiMesh 하나로 그렸더니 Godot 가 LOD 를 그 덩어리(지역 전체 크기) 거리로 골라
+	## 늘 가장 자세한 나무가 그려졌다(PERF 폐허 37.0만 중 나무 14.5만, SAGA_PERF_HIDE=Trees). 종 × 칸(TREE_CHUNK_M) 으로 쪼개
+	## 칸마다 LOD·화면 밖 잘라내기가 걸리게 한다. 이름 Trees<종>_<칸x>_<칸z>.
+	var xf_by_key := {}
 	for i in positions.size():
 		var region_tree_scale: float = variants[species[i]].scale
 		var s: float = scales[i] * region_tree_scale
 		var basis := Basis(Vector3.UP, yaws[i]).scaled(Vector3(s, s, s))
-		(xf_by_species[species[i]] as Array[Transform3D]).append(Transform3D(basis, positions[i]))
+		var key := Vector3i(species[i], floori(positions[i].x / TREE_CHUNK_M), floori(positions[i].z / TREE_CHUNK_M))
+		if not xf_by_key.has(key):
+			var fresh: Array[Transform3D] = []
+			xf_by_key[key] = fresh
+		(xf_by_key[key] as Array[Transform3D]).append(Transform3D(basis, positions[i]))
 
-	for k in variants.size():
-		var xforms: Array[Transform3D] = xf_by_species[k]
-		if xforms.is_empty():
-			continue
-		var tree_mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(variants[k].glb))
+	var meshes := {}
+	for key in xf_by_key:
+		var k: int = (key as Vector3i).x
+		if not meshes.has(k):
+			var m := GLBUtils.with_lods(GLBUtils.extract_mesh(variants[k].glb))
+			if m != null:
+				## 표면 전부(스냅 CommonTree는 줄기·잎 둘, DeadTree는 하나) — 예전엔
+				## "스냅본은 한 표면"으로 잘못 알고 0번(줄기)만 걸었다(glb_utils 09-23 주석).
+				for si in m.get_surface_count():
+					_apply_wind_shader(m, si)
+			meshes[k] = m
+		var tree_mesh: Mesh = meshes[k]
 		if tree_mesh == null:
 			continue
-		## 표면 전부(스냅 CommonTree는 줄기·잎 둘, DeadTree는 하나) — 예전엔
-		## "스냅본은 한 표면"으로 잘못 알고 0번(줄기)만 걸었다(glb_utils 09-23 주석).
-		for si in tree_mesh.get_surface_count():
-			_apply_wind_shader(tree_mesh, si)
-
+		var xforms: Array[Transform3D] = xf_by_key[key]
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D
 		mm.mesh = tree_mesh
@@ -405,7 +413,7 @@ func _scatter_trees() -> void:
 
 		var mmi := MultiMeshInstance3D.new()
 		mmi.multimesh = mm
-		mmi.name = "Trees%d" % k
+		mmi.name = "Trees%d_%d_%d" % [k, (key as Vector3i).y, (key as Vector3i).z]
 		add_child(mmi)
 
 

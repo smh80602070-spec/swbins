@@ -9416,3 +9416,11 @@ PROJECT_STATE.md` 참고. 요약:
   era_sites·region4~10 의 _box 만 바꿨다(_mat 은 발광·금속·투명으로 뒤에서 고쳐 쓰는 곳이 있어 그대로 — 서리봉 별배 빛줄·날개 셋은 _box 재질을 캐스팅해 고쳐 쓰던 것을 _mat 으로).
 - 창 모드 f_fort 전후: 회색 판 → 돌 결·모서리 선 석조. 점검 FROST·SKYPORT·CROSSING·SUNKEN·AMBER·VAULT·FORK·STORY3 fails=0, REGRESS OK.
 - **PERF 기준 변화**: 재질 뒤 포구 18.5 → 25.7만·폐허 28.2 → 37.0만·draw 188 → 216 — 재질을 한 빛으로 돌려도 같고, camera_rig 를 고치기 전(53cf2acf)으로 돌리면 예전 수치. 예전 측정은 카메라가(버그로) 낮게 서서 덜 보던 값이었다. 폐허 37.0만은 예산(35만) 초과 — 다음 할 일.
+
+## 나무 칸 쪼개기 — 폐허 예산 안으로 (2026-09-29, 같은 세션, 끝)
+
+- SAGA_PERF_HIDE 로 폐허 37.0만을 나눔: 폐허 초목 15만(그중 나무 14.5만)·플레이어 5.1만·들판 적 1.8만·풀·절벽 바위 각 1만 미만.
+- vegetation_builder._scatter_trees 가 종마다 지역 전체를 MultiMesh 하나로 그려, LOD 를 그 덩어리 거리로 골라 늘 가장 자세한 나무였다 → 종 × 48m 칸(TREE_CHUNK_M)으로 쪼갬(Trees<종>_<x>_<z>).
+- PERF(모바일, 카메라 고친 뒤 기준): 폐허 37.0 → **28.2만**·draw 216 → 212 · 마을 34.4 → 33.4만 · 포구 25.7만. 창 모드 r_statue·v_village_west·f_pines·v_statue_far 먼 나무 거칠지 않음.
+- 점검 TRAVERSAL·SKYPORT·VILLAGE·STORY3·FROST·TREASURE fails=0, REGRESS OK.
+- 사용자 "현재 작업 다 완료하고 새로운 세션에서 이어하자" — 여기서 세션 끝. 다음 후보는 PROJECT_STATE 현재 작업.
