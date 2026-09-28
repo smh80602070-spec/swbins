@@ -33,7 +33,10 @@
   var DRAFT_CH = ['ch24', 'ch24', 'ch25'];                  // 기둥마다 여는 장(그 장을 마친 뒤) — 등대→사당·사당→잔해·잔해→정거장
   var REWARD = { gold: 200, dust: 3, exp: 60 };
   /* 이야기 자리 [섬, m, m](+y 남쪽) — 별배는 사당 남쪽 10m 에 내린다(51-2) */
-  var PARTS = { shrine_land: ['shrine', 0, 10], shrine_front: ['shrine', -4, -6], wreck_cockpit: ['wreck', 5, -4], orbit_seed: ['orbit', 0, 0] };
+  var PARTS = { shrine_land: ['shrine', 0, 10], shrine_front: ['shrine', -4, -6], wreck_cockpit: ['wreck', 5, -4], orbit_seed: ['orbit', 0, 0],
+    /* ⑲-49 24장 — 무녀는 사당 앞 서쪽(가운데 8m 석등 자리를 비켜) · 한별·반디는 별배 내린 자리 곁 */
+    saebyeok: ['shrine', -4.5, -7.5], hanbyeol: ['shrine', 3.5, 11], bandi: ['shrine', -3, 11.5] };
+  var SHRINE_CH = 'ch24', SHRINE_CLEAR = 6, SHRINE_BOOT = [2, 6];   // ⑲-49 방울을 다 울리면(일곱째 단계부터) 사당 위 먹구름이 걷힌다 · 불러오면 섬 위로(셋째~일곱째)
 
   /* ── 자리(순수) ─────────────────────────────────────── */
   function storyAt() { var s = core() && core().save ? core().save.story : null; return s || { ch: 0, step: 0 }; }
@@ -59,7 +62,12 @@
   /** skyisle 발판 목록에 붙는다 — 섬이 섰을 때만 */
   function pads() {
     if (!on()) { return []; }
-    return isles().map(function (s) { return { id: 'sr_' + s.id, name: s.name, x: s.x, y: s.y, r: s.r, top: s.top, slab: s.slab }; });
+    var bi = chIndex(SHRINE_CH);
+    return isles().map(function (s) {
+      var pd = { id: 'sr_' + s.id, name: s.name, x: s.x, y: s.y, r: s.r, top: s.top, slab: s.slab };
+      if (s.id === 'shrine' && bi >= 0) { pd.boot = [bi, SHRINE_BOOT[0], SHRINE_BOOT[1]]; }   // ⑲-49 24장 섬 단계에 불러오면 섬 위로
+      return pd;
+    });
   }
   /** 바람 기둥 셋의 자리(열림과 무관) — [{ id, x, y, r, top, rise, ch }] */
   function draftSpots() {
@@ -72,6 +80,8 @@
     ];
   }
   function draftOpen(d) { return K('drafts', 0) ? true : done(d.ch); }
+  /** 사당 위 먹구름이 걷혔나 — 24장 일곱째 단계(방울을 다 울린 뒤)부터 늘 */
+  function shrineClear() { var i = chIndex(SHRINE_CH), s = storyAt(); return i >= 0 && (s.ch > i || (s.ch === i && (s.step || 0) >= SHRINE_CLEAR)); }
   /** skyisle 상승 기류 목록에 붙는다 — 섬이 섰고 그 기둥의 장을 마친 뒤 */
   function drafts() { return on() ? draftSpots().filter(draftOpen) : []; }
   function spot(part) {
@@ -179,6 +189,16 @@
     live[s.id] = o;                                                                                              // 움직이는 조각(spin·sway·blink) — anim 이 돌린다
     return o;
   }
+  /** ⑲-49 사당 위 먹구름 덩이 아홉 — 24장 방울을 다 울리기 전까지 */
+  function buildCover(T3) {
+    var g = new T3.Group(), mat = new T3.MeshBasicMaterial({ color: 0x2b2a38, transparent: true, opacity: 0.6, depthWrite: false });
+    for (var i = 0; i < 9; i++) {
+      var a = i * 2.39996, r = i ? 5 + (i % 3) * 3.5 : 0, s = 5 + (i % 4) * 1.3;
+      var puff = new T3.Mesh(new T3.SphereGeometry(s, 12, 8), mat); puff.scale.y = 0.55;
+      puff.position.set(Math.cos(a) * r, 8 + (i % 3) * 1.8, Math.sin(a) * r); g.add(puff);
+    }
+    return g;
+  }
   function buildDraft(T3, h) {
     var m = M(T3), g = new T3.Group();
     var col = new T3.Mesh(new T3.CylinderGeometry(DRAFT_R, DRAFT_R, h, 20, 1, true), m.draft); col.position.y = h / 2; g.add(col);
@@ -198,6 +218,11 @@
       var o = fx[s.id] || (fx[s.id] = { root: w.addFx(build(T3, s).root) });
       o.root.position.set(s.x, s.top, s.y);
     });
+    var sh = isleById('shrine');
+    if (sh && !shrineClear()) {
+      if (!fx.cover) { fx.cover = { root: w.addFx(buildCover(T3)) }; }
+      fx.cover.root.position.set(sh.x, sh.top, sh.y); fx.cover.root.rotation.y = clock * 0.05;
+    } else if (fx.cover) { w.removeFx(fx.cover.root); delete fx.cover; }
     var open = drafts(), seen = {};
     open.forEach(function (d) {
       var gy = reliefH(d.x, d.y), S = global.DG.skyIsle, pd = S && S.padAt ? S.padAt(d.x, d.y) : null;
@@ -242,6 +267,7 @@
   global.DG.skyRoute = {
     ISLES: ISLES, GAP: GAP, LIGHT_DRAFT: LIGHT_DRAFT, DRAFT_R: DRAFT_R, DRAFT_IN: DRAFT_IN, DRAFT_OVER: DRAFT_OVER, DRAFT_RISE: DRAFT_RISE, DRAFT_CH: DRAFT_CH,
     REWARD: REWARD, PARTS: PARTS,
+    SHRINE_CH: SHRINE_CH, SHRINE_CLEAR: SHRINE_CLEAR, shrineClear: shrineClear,
     on: on, isles: isles, isleById: isleById, pads: pads, draftSpots: draftSpots, drafts: drafts, spot: spot, found: found, discoverOn: discoverOn, marks: marks, tick: tick,
     _resetForTest: function () { fx = {}; live = {}; acc = 0; }
   };

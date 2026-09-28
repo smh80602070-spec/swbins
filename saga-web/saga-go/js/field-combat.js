@@ -1902,7 +1902,12 @@
         /* 돌진·찌르기는 지나간 선(x0,y0 → x,y) 전체가 닿는다 — 끝점만 알리면 제단을 가로질러도 안 켜졌다(2026-09-28) */
         c.emit('field:element', { el: e.el, x: e.x, y: e.y, r: e.r || 3, t: e.t, x0: e.x0, y0: e.y0 });
       }
-      if (e.t === 'move') { pos.x += e.dx; pos.y += e.dy; }
+      if (e.t === 'move') {
+        pos.x += e.dx; pos.y += e.dy;
+        /* 떠 있는 섬 위면 회피·돌진도 난간 안에서 멈춘다 — 전엔 밀려 떨어져 섬 위 무리와 층이 갈려 싸움이 안 끝났다(2026-09-28, ⑲-49) */
+        var LFm = global.DG.landform, SKm = global.DG.skyIsle;
+        if (LFm && LFm.onSky && LFm.onSky() && SKm && SKm.clampIn) { SKm.clampIn(pos); }
+      }
       else if (e.t === 'weak') { floatNum(e.x, e.y, '급소!', null, 1.35, true); c.emit('field:weak', {}); }   // ⑲-25 업적이 센다
       else if (e.t === 'shoot') { sfx('hit'); }
       else if (e.t === 'arrow') { ring(e.x, e.y, e.el ? 1.2 : 0.6, e.el && EL[e.el] ? EL[e.el].color : '#e8e2d0', 0.3); }

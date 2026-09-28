@@ -13882,6 +13882,49 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '사당 기둥 → 잔해 +9 까지 솟음 → 서쪽 활공 → 잔해 섬에 내려섬' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-49 이야기 7부 제24장 · 하늘 사당의 바람 방울 (story ch24·새벽 · skyroute 사당 먹구름·기둥 열림, PLAN §5 ⑲-49) ── */
+    t('이야기 ⑲-49 — 24장 일곱 단계(Lv54) · 새벽 셋째 단계부터 사당 앞(섬 위) · 한별·반디 0~1 모래밭 → 섬 · 흐름: 한별 → 별배로 사당 섬(섬 위 층) → 새벽 → 마당 졸개 넷(섬 위) → 새벽 → 방울 석등 별 → 해 → 달(틀리면 꺼짐) → 새벽(먹구름 걷힘) · 끝나면 등대·사당 기둥이 열리고 잔해 기둥은 닫힘', function () {
+      var rig = stRig(54), ST = rig.ST, FC = DG.fieldCombat, SK = DG.skyIsle, LF = DG.landform, R = DG.skyRoute, U = DG.sunken, TL = DG.talent, r = {};
+      try {
+        U._resetForTest(); R._resetForTest(); SK._resetForTest(); LF._resetForTest();
+        var c = ST.CHAPTERS[23], S24 = c.steps;
+        r.table = c.id === 'ch24' && c.ar === 54 && !c.join && S24.length === 7 && c.reward.knot === 6 && c.reward.gold === 6500 &&
+          S24.map(function (q) { return q.type; }).join() === 'talk,sail,talk,kill,talk,seal,talk' && S24[1].sky && S24[3].sky && S24[5].sky && S24[5].order.join() === 'star,sun,moon';
+        function np(k, si) { C.save.story = { ch: 23, step: si }; return ST.npcPos(k); }
+        r.npcs = st10Eq(np('saebyeok', 2), R.spot('saebyeok')) && ST.npcInfo('saebyeok').sky && ST.visible('saebyeok') &&
+          st10Eq(np('hanbyeol', 0), U.spot('sand_hanbyeol')) && st10Eq(np('hanbyeol', 3), R.spot('hanbyeol')) && ST.npcInfo('hanbyeol').sky &&
+          st10Eq(np('bandi', 1), U.spot('sand_bandi')) && st10Eq(np('bandi', 5), R.spot('bandi'));
+        C.save.story = { ch: 23, step: 1 }; r.npcs = r.npcs && !ST.visible('saebyeok');
+        var sh = R.isleById('shrine');
+        C.save.story = { ch: 23, step: 0 };
+        var cover0 = !R.shrineClear() && R.drafts().length === 0;
+        stGo(ST.npcPos('hanbyeol')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        stGo(ST.npcPos('hanbyeol')); r.sail = stTalkAll(ST) && C.save.story.step === 2 && st10Eq(C.save.player.pos, R.spot('shrine_land')) && LF.onSky() &&
+          SK.padAt(C.save.player.pos.x, C.save.player.pos.y).id === 'sr_shrine';
+        stGo(ST.npcPos('saebyeok')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        stGo({ x: sh.x + 6, y: sh.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.map(function (u) { return S.foes[u].kind; }).join() === 'imp,imp,raptor,hawk' && cp.uids.every(function (u) { return S.foes[u].sky; });
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 4;
+        stGo(ST.npcPos('saebyeok')); r.t4 = stTalkAll(ST) && C.save.story.step === 5;
+        var lamps = ST.sealLamps(ST.step()), byK = {};
+        lamps.forEach(function (l) { byK[l.k] = l; });
+        r.lampsOn = lamps.every(function (l) { return Math.hypot(l.x - sh.x, l.y - sh.y) < sh.r - 1; });
+        function hitLamp(k) { C.emit('field:element', { el: 'wind', x: byK[k].x, y: byK[k].y, r: 1, t: 'skill' }); }
+        hitLamp('sun'); var wrong = ST.sealLit() === 0 && C.save.story.step === 5 && !R.shrineClear();
+        hitLamp('star'); hitLamp('sun'); hitLamp('moon');
+        r.seal = wrong && C.save.story.step === 6 && R.shrineClear();
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('saebyeok'));
+        r.end = stTalkAll(ST) && C.save.story.ch === 24 && C.save.story.step === 0 && m.knot === k0 + 6 && C.save.player.gold === gold0 + 6500 && R.shrineClear();
+        var D = R.drafts();
+        r.drafts = cover0 && D.length === 2 && D.map(function (d) { return d.id; }).join() === 'sr_light,sr_shrine';
+      } finally { LF._resetForTest(); SK._resetForTest(); R._resetForTest(); U._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '일곱 단계 · 한별 → 별배(사당 섬 위) → 새벽 → 졸개 넷(섬 위) → 새벽 → 방울(틀림 ✕ → 별·해·달, 먹구름 걷힘) → 새벽 · 🪢+6 🪙+6500 · 기둥 등대·사당 열림' : ('실패 ' + bad.join(','));
+    });
+
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */
     t('3인칭 이동 Q1 — 3D 로 시점을 돌리면 키·스틱 방향도 같이 돈다(W = 카메라가 보는 쪽) · 3D 가 꺼져 있으면 그대로', function () {
       var W = DG.world, W3 = DG.world3d, r = {};

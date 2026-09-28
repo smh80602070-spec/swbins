@@ -85,7 +85,9 @@
     sk_annex_mulsae: { sk: 'annex_mulsae' }, sk_dome_front: { sk: 'dome_front' }, sk_front_mulsae: { sk: 'front_mulsae' }, sk_front_yeoul: { sk: 'front_yeoul' },
     sk_front_bandi: { sk: 'front_bandi' }, sk_dome_duel: { sk: 'dome_duel' }, sk_in_mulsae: { sk: 'in_mulsae' }, sk_in_yeoul: { sk: 'in_yeoul' }, sk_in_bandi: { sk: 'in_bandi' },
     /* ⑲-47 옛 등대(명소)·등대 발치·기록실 앞 */
-    sk_light: { sunken: 'lighthouse' }, sk_light_bandi: { sk: 'light_bandi' }, sk_parang: { sk: 'parang' } };
+    sk_light: { sunken: 'lighthouse' }, sk_light_bandi: { sk: 'light_bandi' }, sk_parang: { sk: 'parang' },
+    /* ⑲-49 구름 위 항로(skyroute.js) — 섬 가운데(sr: 섬 id) 또는 이야기 자리. 단계·인물 칸에 sky 를 함께 준다 */
+    sr_shrine: { sr: 'shrine' }, sr_shrine_land: { sr: 'shrine_land' }, sr_saebyeok: { sr: 'saebyeok' }, sr_hanbyeol: { sr: 'hanbyeol' }, sr_bandi: { sr: 'bandi' } };
   /* ⑲-40 18장 선장의 잔상 — 은하역 가운데에서 남쪽 선로(z 2~42) 위를 지그재그로, 선로 끝 너머 틈 쪽까지 */
   var CAPTAIN_PATH = [[0, 6], [1.5, 16], [-1.5, 26], [1.5, 36], [-1, 46], [2, 58], [-2, 68]];
   /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
@@ -151,6 +153,8 @@
         { ch: 20, from: 2, to: 6, spot: 'sk_sand_bandi' }, { ch: 20, from: 7, to: 999, spot: 'sk_plinth_bandi' },
         { ch: 21, from: 0, to: 2, spot: 'sk_plinth_bandi' }, { ch: 21, from: 3, to: 6, spot: 'sk_front_bandi' }, { ch: 21, from: 7, to: 999, spot: 'sk_in_bandi' },
         { ch: 22, from: 1, to: 3, spot: 'sk_light_bandi' },                                                          // ⑲-47 23장 등대 발치
+        { ch: 23, from: 0, to: 1, spot: 'sk_sand_bandi' }, { ch: 23, from: 2, to: 999, spot: 'sr_bandi', sky: true },    // ⑲-49 24장 모래밭 → 사당 섬
+        { ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_bandi', sky: true },
         { ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_in_bandi' },
         { ch: 19, chTo: 999, from: 0, to: 999, spot: 'sp_bandi' }] },
     /* ⑲-34 조선공 다온(현대) — 늘 조선소 창고 앞 */
@@ -176,7 +180,9 @@
     hanbyeol: { id: 'story_hanbyeol', name: '별배 선장 한별', short: '한별', zone: 'dragon', spot: 'cr_hanbyeol', off: [0, 0], color: '#232e57',
       idle: '틈은 멈춰 있지 않다. 누군가 끝을 찾아가 닫아야 해.',
       appear: [{ ch: 18, from: 7, to: 7, spot: 'cr_st_foot' }, { ch: 18, from: 8, to: 9, spot: 'cr_st_hanbyeol' }, { ch: 19, from: 2, to: 10, spot: 'cr_rift_hanbyeol', sky: true },
-        { ch: 20, from: 0, to: 1, spot: 'sp_hb_port' }, { ch: 20, chTo: 999, from: 0, to: 999, spot: 'sk_sand_hanbyeol' },   // ⑲-45 21장 — 별배 곁 → 도읍 모래밭(뒤에도)
+        { ch: 20, from: 0, to: 1, spot: 'sp_hb_port' },
+        { ch: 23, from: 2, to: 999, spot: 'sr_hanbyeol', sky: true }, { ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_hanbyeol', sky: true },   // ⑲-49 24장 별배로 사당 섬(뒤에도)
+        { ch: 20, chTo: 999, from: 0, to: 999, spot: 'sk_sand_hanbyeol' },   // ⑲-45 21장 — 별배 곁 → 도읍 모래밭(뒤에도)
         { ch: 19, chTo: 999, from: 0, to: 999, spot: 'cr_hanbyeol' }] },
     /* ⑲-45 잠수 기사 여울(현대) — 늘 연구 기지 서쪽 모래밭, 21장 4~6 선착장 · 7~ 궁궐 기단 */
     yeoul:    { id: 'story_yeoul',    name: '잠수 기사 여울', short: '여울', zone: 'saltflat', spot: 'sk_yeoul', off: [0, 0], color: '#1f4d5c',
@@ -193,6 +199,10 @@
     parang:   { id: 'story_parang',   name: '돔 관리 인공지능 파랑', short: '파랑', zone: 'saltflat', spot: 'sk_parang', off: [0, 0], color: '#4d8cff', pet: 'drone',
       idle: '빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오.',
       appear: [{ ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_parang' }] },
+    /* ⑲-49 바람 무녀 새벽(과거) — 사당이 하늘로 들린 날부터 홀로. 24장 셋째 단계(별배가 섬에 내린 뒤)부터 사당 앞 서쪽(뒤에도) */
+    saebyeok: { id: 'story_saebyeok', name: '바람 무녀 새벽', short: '새벽', zone: 'saltflat', spot: 'sr_saebyeok', off: [0, 0], color: '#e6e6f5',
+      idle: '방울이 울면 바람이 길을 안다오.',
+      appear: [{ ch: 23, from: 2, to: 999, spot: 'sr_saebyeok', sky: true }, { ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_saebyeok', sky: true }] },
     /* ⑲-40 선장의 잔상 — 18장 쫓기 때만 역 기준 길(CAPTAIN_PATH)을 달린다 */
     captain:  { id: 'story_captain',  name: '선장의 잔상', short: '잔상', zone: 'solar', color: '#232e57', idle: '……',
       appear: [{ ch: 17, from: 6, to: 6 }], runSpot: 'sp_station', runPath: CAPTAIN_PATH },
@@ -205,7 +215,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -1135,6 +1145,43 @@
             ['?', ['먹구름을 부리는 자를 찾자.', '물새 님은 이제 어떡해요?']],
             ['물새', '물은 두 번 가르쳐 주지 않는다 했지. 이번엔 나도 안 놓치겠소 — 도읍을 잠기게 한 그 먹구름을.', 'angry'],
             ['물새', '해녀 물새, 오늘부터 뭍사람들 편이오. 숨 긴 거 하나는 자신 있소.', 'joy']] }
+      ] },
+    /* ⑲-49 7부 첫 장 — 구름 위 항로 하늘 사당 섬(skyroute.js). 한별(도읍 모래밭) → 별배로 사당 섬(sail sky) → 새벽 → 마당 먹구름 졸개 넷 →
+       새벽 → 바람 방울 석등 별 → 해 → 달 → 새벽(먹구름은 위에서 흘러내린다 · 사당 서쪽 바람 기둥). 방울을 다 울리면(일곱째 단계부터) 사당 위 먹구름이 걷힌다.
+       섬 위 단계는 sky — 키보드 판은 섬 윗면 층, GPS 판은 그 밑 땅 */
+    { id: 'ch24', name: '제24장 · 하늘 사당의 바람 방울', ar: 54,
+      reward: { knot: 6, gold: 6500, guide: 6, secret: 5, party: 1700 },
+      steps: [
+        { type: 'talk', npc: 'hanbyeol', text: '모래밭의 선장 한별과 이야기하기',
+          lines: [['한별', '등대 빛줄기가 도는 걸 봤나? 빛 끝이 늘 같은 하늘을 짚고 멈춰. 저기 — 구름 위에 섬이 떠 있어.', 'surprised'],
+            ['반디', '삐— 별배 항로표에 새 신호 둘. 하나는 옛 사당의 방울 소리, 하나는… 지금 시대 기상 비행선의 구조 신호입니다.', 'surprised'],
+            ['한별', '먹구름을 부리는 자의 명령이 구름 위에서 왔다고 했지. 별배가 원래 가려던 항로도 저 위다.'],
+            ['?', ['별배로 올라가요.', '비행선에 누가 있을지도 몰라요.']],
+            ['한별', '이번엔 하늘길이다. 별배가 제일 잘하는 거지 — 타게!', 'fun']] },
+        { type: 'sail', npc: 'hanbyeol', to: 'sr_shrine_land', sky: true, text: '선장의 별배를 타고 하늘 항로로',
+          lines: [['한별', '별배, 등대 빛줄기를 따라 위로! 반디, 구름 사이 길을 읽어 다오.']],
+          arrive: '🛸 별배가 구름을 뚫고 올라 — 기와 사당이 선 떠 있는 섬에 우리를 내려 주었다', walk: '🛸 별배가 등대 빛줄기를 따라 하늘로 올랐다 — 섬 밑(등대 서쪽)까지 걸어가자' },
+        { type: 'talk', npc: 'saebyeok', text: '사당 앞의 무녀와 이야기하기',
+          lines: [['새벽', '……바람이 손님을 데려왔구려. 사당이 하늘로 들린 뒤로 사람 발소리는 처음이오.', 'surprised'],
+            ['?', ['누구세요?', '여기가 하늘 사당인가요?']],
+            ['새벽', '나는 바람 무녀 새벽. 이 사당의 바람 방울을 지켰소. 방울이 울면 바람이 길을 알고, 구름이 물러났지.', 'sorrow'],
+            ['새벽', '그런데 먹구름이 내려앉아 방울을 틀어막았소. 마당엔 먹구름 먹은 것들이 들끓고.', 'angry'],
+            ['한별', '먹구름이 저 혼자 내려앉았을 리 없지. 마당부터 치우자.']] },
+        { type: 'kill', spot: 'sr_shrine', sky: true, kinds: ['imp', 'imp', 'raptor', 'hawk'], text: '사당 마당의 먹구름 졸개 물리치기',
+          enter: '⚔️ 사당 마당의 먹구름 속에서 졸개들이 뛰쳐나왔다' },
+        { type: 'talk', npc: 'saebyeok', text: '사당 앞의 무녀와 이야기하기',
+          lines: [['새벽', '고맙소. 이제 방울을 울릴 차례요. 바람 방울은 하루를 따라 울렸지 — 새벽별, 한낮의 해, 밤의 달.', 'fun'],
+            ['반디', '삐— 마당 석등 셋에서 방울 주파수가 나옵니다. 별, 해, 달 무늬.'],
+            ['?', ['별, 해, 달.', '틀리면요?']],
+            ['새벽', '바람은 순서를 잊지 않소. 틀리면 방울이 다 멎고 처음부터요.']] },
+        { type: 'seal', spot: 'sr_shrine', sky: true, order: ['star', 'sun', 'moon'], text: '사당 마당 바람 방울 석등을 차례(별 → 해 → 달)로 울리기' },
+        { type: 'talk', npc: 'saebyeok', text: '사당 앞의 무녀와 이야기하기',
+          lines: [['새벽', '……들리오? 방울이 다시 운다. 먹구름이 걷히는구려.', 'joy'],
+            ['반디', '삐— 구름 틈으로 더 높은 섬 하나. 비행선 구조 신호가 거기서 나옵니다.', 'surprised'],
+            ['새벽', '저 먹구름은 땅에서 오른 게 아니오. 위에서 흘러내렸소 — 누가 위에서 구름을 빚어 흘려보내는 게지.', 'angry'],
+            ['?', ['위로 올라갈 길은요?', '구름을 빚는 자…']],
+            ['새벽', '방울이 울었으니 바람이 길을 낼 거요. 사당 서쪽 끝에 바람 기둥이 설 테니, 타고 올라 날개를 펴시오.', 'fun'],
+            ['한별', '비행선이라면 지금 시대 사람이 갇혀 있을 거야. 서두르자.']] }
       ] }
   ];
 
@@ -1244,12 +1291,17 @@
     var SKI = global.DG.skyIsle;
     var ES = global.DG.eraSites;
     var sp = SPOTS[name], b = !sp ? null : sp.era ? (ES ? ES.spot(sp.era) : null) : (sp.frost ? frostSpot(sp.frost) : (sp.peak ? peakSpot() : (sp.cape ? capeSpot() : (sp.isle ? isleSpot() :
-      (sp.sky ? (SKI ? SKI.spot() : null) : (sp.skyport || sp.port ? portPos(sp) : (sp.crossing || sp.cr ? crossPos(sp) : (sp.sunken || sp.sk ? sunkPos(sp) : at(sp.zone, sp.off)))))))));
+      (sp.sky ? (SKI ? SKI.spot() : null) : (sp.skyport || sp.port ? portPos(sp) : (sp.crossing || sp.cr ? crossPos(sp) : (sp.sunken || sp.sk ? sunkPos(sp) : (sp.sr ? srPos(sp) : at(sp.zone, sp.off))))))))));
     return b ? { x: b.x + (off ? off[0] : 0), y: b.y + (off ? off[1] : 0) } : null;
   }
   /** ⑲-38 은하 나루 자리 — 명소(skyport: id) 또는 나루 틀 자리(port: 'ara' 등). 나루가 꺼져 있으면 null */
   /** ⑲-42 틈새 갈림길 자리 — 명소(crossing: id) 또는 이야기 자리(cr: 'arrive' 등). 갈림길이 꺼져 있으면 null */
   /** ⑲-45 잠긴 도읍 자리 — 명소(sunken: id) 또는 이야기 자리(sk: 'sand' 등). 도읍이 꺼져 있으면 null */
+  /** ⑲-49 구름 위 항로 자리 — 섬 자리는 순수(등대만 있으면 늘). 보이고 밟히는 것만 23장 등롱 뒤(skyRoute.on) */
+  function srPos(sp) {
+    var SRm = global.DG.skyRoute;
+    return SRm && SRm.spot ? SRm.spot(sp.sr) : null;
+  }
   function sunkPos(sp) {
     var SKm = global.DG.sunken;
     if (!SKm || !SKm.on()) { return null; }
