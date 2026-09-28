@@ -12,6 +12,7 @@ node go-combat.mjs auto [short] [prof]         # 사가고: 가까운 무리와 
 node go-combat-time.mjs [plain elite boss] [tune=field.x:v]  # 사가고: 판정만 1/30초씩 — 무리별 처치 시간(게임 초)·피해/초·휘두름·체력
 node fs-move-click.mjs                         # 사가의숲: 3D 켜고 W(시점 0°·90°)·왼쪽 클릭 이동·목표 고리 + shots/fs_*
 node go-ch-auto.mjs <장> [초] [nofield] [trace] [defend]  # 사가고: 그 장 첫 단계(defend 면 첫 지키기 단계)부터 🤖📖 자동 — 단계마다 걸린 초·doing·사진(shots/go_ch<N>_s<i>), trace 면 곁 적 체력·층
+node go-stormeye.mjs [shot]                     # 사가고 ⑲-52: 8부 매듭 여섯·먹구름 눈이 3D 로 예외 없이 서나 + 눈 곁 발판·기둥 목록(shot 을 줄 때만 shots/go_eye_*, 새 프로필로)
 node go-skyroute.mjs                           # 사가고 ⑲-48: 구름 위 항로 섬 셋 — 땅에서·사당 섬 위에서 + shots/go_sky_* (새 프로필로)
 node go-ch23.mjs [초] [field]                  # 사가고 ⑲-47: 🤖📖 가 등대를 타고 올라 난간 판에서 등롱을 켜나 + shots/go_ch23_* (PC_PROF=tmp/… 새 프로필로)
 node rk-battle.mjs [초] [press] [phone] [nosim]  # 사가국지: 새 판 → 이웃 적 성 출진 → 실시간 전장이 저절로 흐르나·병사 붙음/쓰러짐(armyView) + shots/rk_live_*

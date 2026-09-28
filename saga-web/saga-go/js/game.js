@@ -404,6 +404,7 @@
     if (global.DG.skyport) { global.DG.skyport.tick(dt); }           // 은하 나루 — 발견·명소·틈 문(§5⑲-37)
     if (global.DG.crossing) { global.DG.crossing.tick(dt); }         // 틈새 갈림길 — 발견·명소·틈 문(§5⑲-41)
     if (global.DG.sunken) { global.DG.sunken.tick(dt); }             // 잠긴 도읍 — 발견·명소·해무 문(§5⑲-44)
+    if (global.DG.stormEye) { global.DG.stormEye.tick(dt); }                                     // 8부 먹구름 눈·여섯 매듭(§5⑲-52)
     if (global.DG.skyRoute) { global.DG.skyRoute.tick(dt); }         // 구름 위 항로 — 섬 셋·바람 기둥·발견(§5⑲-48)
     if (global.DG.eraSites) { global.DG.eraSites.tick(dt); }         // 3부 시대 명소 — 조선소 발견·그림(§5⑲-34)
     if (global.DG.domain) { global.DG.domain.tick(dt); }             // 숨은 터·원기·주간 보스(§5⑲-9)

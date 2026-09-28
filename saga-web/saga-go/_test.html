@@ -97,6 +97,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/crossing.js"></script>
 <script src="js/sunken.js"></script>
 <script src="js/skyroute.js"></script>
+<script src="js/stormeye.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -14064,6 +14065,56 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { LF._resetForTest(); SK._resetForTest(); R._resetForTest(); U._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '아홉 단계 · 잔해 기둥 타고 활공(정거장) → 장치 셋(남동·북·남서, 끈 뒤 꺼짐) → 가면 그림자 → 그림자 임금(뇌 방패·불) → 하늬 합류(빙 장병기 ★4) · 🪢+6 🪙+7000' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-52 이야기 8부 무대 · 여섯 매듭·먹구름 눈 (stormeye.js — 27장부터 보이는 매듭 여섯 · 28장 아홉째부터 서는 눈 · 29장 기둥, PLAN §5 ⑲-52) ── */
+    t('8부 무대 ⑲-52 — 여섯 매듭(1부 제단 자리 북쪽 2.4m, 27장부터 · 장·단계 표대로 묶임 · 줄: 곧게 → 다 묶이면 등불로 → 29장 보스 뒤 거둠) · 먹구름 눈(구름섬 서쪽 36.5m·윗면 +24m 발판, 28장 아홉째부터 · 기둥 29장부터, **실제로 타고** 활공해 내려섬) · 맑은 하늘 뜰', function () {
+      var rig = stRig(60), ST = rig.ST, SE = DG.stormEye, SK = DG.skyIsle, LF = DG.landform, r = {}, i;
+      function at(ch, step) { C.save.story = { ch: ch, step: step }; }
+      try {
+        LF._resetForTest(); SK._resetForTest();
+        /* 매듭 — 27장(26) 전엔 안 보이고, 여섯 자리는 다 있고 서로 다르다 */
+        at(25, 0); var hidden = !SE.knotsShown() && SE.knots().length === 6 && SE.knots().every(function (q) { return !q.tied; });
+        at(26, 0); r.shown = hidden && SE.knotsShown();
+        var ks = SE.knots();
+        r.spots = ks.length === 6 && ks.every(function (q, k) { return isFinite(q.x) && isFinite(q.y); }) &&
+          ks.every(function (q, k) { return ks.every(function (o, j) { return j <= k || Math.hypot(q.x - o.x, q.y - o.y) > 5; }); }) && ks[5].sky && !ks[0].sky;
+        var A2 = ST.spotPos('altar2'), PK = ST.spotPos('peak', [-7, -4]), G1 = ST.anchorOf('gojeong');
+        r.place = st10Eq(ks[1], { x: A2.x + SE.KNOT_OFF[0], y: A2.y + SE.KNOT_OFF[1] }) && st10Eq(ks[2], { x: PK.x + SE.KNOT_OFF[0], y: PK.y + SE.KNOT_OFF[1] }) &&
+          st10Eq(ks[0], { x: G1.x - 30 + SE.KNOT_OFF[0], y: G1.y + 26 + SE.KNOT_OFF[1] }) && SE.KNOT_OFF[1] === -2.4;
+        /* 묶임 — 표(장·단계)대로. 27장 4·5·8 · 28장 3·5·8 */
+        var tie = function (ch, s) { at(ch, s); return [0, 1, 2, 3, 4, 5].filter(SE.knotTied).join(''); };
+        r.tied = [tie(26, 0), tie(26, 4), tie(26, 5), tie(26, 8), tie(27, 3), tie(27, 5), tie(27, 8), tie(28, 0)].join('|') === '|0|01|012|0123|01234|012345|012345' && (at(27, 7), !SE.allTied()) && (at(27, 8), SE.allTied());
+        /* 줄 — 일부만 묶이면 곧게 위로, 다 묶이면 등불로, 29장 보스 뒤엔 없음 */
+        at(26, 5); var b1 = SE.beamMode(0) === 'up' && SE.beamMode(1) === 'up' && SE.beamMode(2) === '';
+        at(27, 9); var b2 = [0, 1, 2, 3, 4, 5].every(function (k) { return SE.beamMode(k) === 'eye'; });
+        at(28, 5); var b3 = [0, 1, 2, 3, 4, 5].every(function (k) { return SE.beamMode(k) === 'eye'; }) && !SE.eyeClear();
+        at(28, 6); r.beams = b1 && b2 && b3 && SE.eyeClear() && [0, 1, 2, 3, 4, 5].every(function (k) { return SE.beamMode(k) === ''; });
+        /* 눈 — 28장 아홉째부터 서고, 구름섬 서쪽 36.5m·윗면 +24m */
+        at(27, 8); var e0 = SE.pads().length === 0 && !SE.eyeShown();
+        at(27, 9); var c = SK.spot(), pd = SE.pads()[0];
+        r.eye = e0 && SE.eyeShown() && !!pd && pd.id === 'se_eye' && Math.abs(pd.x - (c.x - 36.5)) < 1e-6 && pd.y === c.y && pd.r === 18 && Math.abs(pd.top - (SK.top() + 24)) < 1e-6 &&
+          SK.pads().some(function (p) { return p.id === 'se_eye'; }) && !!SK.padAt(pd.x, pd.y) && SK.padAt(pd.x, pd.y).id === 'se_eye' && SE.eyeSpot().r === 18;
+        /* 기둥 — 29장(28)부터. 구름섬 서쪽 가장자리 안 3.5m, 끝은 눈 윗면 +9 */
+        r.draftShut = SE.drafts().length === 0 && !SK.drafts().some(function (d) { return d.id === 'se_eye'; });
+        at(28, 0); var dr = SE.drafts()[0];
+        r.draft = !!dr && dr.id === 'se_eye' && Math.abs(dr.x - (c.x - SK.ISLE_R + 3.5)) < 1e-6 && Math.abs(dr.top - (pd.top + 9)) < 1e-6 && SK.drafts().some(function (d) { return d.id === 'se_eye'; }) &&
+          Math.hypot(dr.x - c.x, dr.y - c.y) < SK.ISLE_R;
+        /* 실제로 탄다 — 구름섬 위 기둥에서 뛰면 눈 +9 까지 솟고, 서쪽 활공으로 눈에 내려서면 발판이 눈 */
+        var pos = C.save.player.pos; pos.x = c.x; pos.y = c.y; LF.setSky(true);
+        pos.x = dr.x; pos.y = dr.y; LF.jump();
+        for (i = 0; i < 80 && !(LF.gliding() && LF.glideAlt() >= dr.top - 0.01); i++) { LF.tick(0.1); }
+        var rose = LF.gliding() && LF.glideAlt() >= dr.top - 0.01;
+        for (i = 0; i < 120 && LF.gliding(); i++) { pos.x -= 0.8; LF.tick(0.1); }
+        r.climb = rose && LF.onSky() && !!SK.padAt(pos.x, pos.y) && SK.padAt(pos.x, pos.y).id === 'se_eye';
+        /* 등불·걷힘 */
+        var lp = SE.lanternPos();
+        r.lantern = !!lp && lp.x === pd.x && lp.y === pd.y && Math.abs(lp.h - (pd.top + SE.LANTERN_H)) < 1e-6 && (at(28, 5), !SE.eyeClear()) && (at(28, 6), SE.eyeClear()) && (at(29, 0), SE.eyeClear() && SE.eyeShown());
+        /* 섬(구름섬 층)이 없으면 눈도 없다 */
+        r.off = (C.setTune('stormeye.on', 0), at(28, 0), !SE.on() && SE.pads().length === 0 && SE.drafts().length === 0 && !SE.knotsShown()) && (C.setTune('stormeye.on', null), SE.on());
+      } finally { C.setTune('stormeye.on', null); LF._resetForTest(); SK._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '매듭 여섯(27장부터·표대로 묶임·줄 곧게→등불→거둠) · 눈 서쪽 36.5m·+24m(28장 9단계부터) · 기둥 29장부터(타고 활공해 내려섬) · 등불·걷힘' : ('실패 ' + bad.join(','));
     });
 
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */

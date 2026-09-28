@@ -50,6 +50,7 @@
   function ES() { var e = global.DG.eraSites; return e && e.on && e.on() ? e : null; }
   function CR() { var c = global.DG.crossing; return c && c.on && c.on() && c.pads ? c : null; }   // ⑲-43 갈림길 끝 섬
   function SR() { var r = global.DG.skyRoute; return r && r.on && r.on() ? r : null; }                // ⑲-48 구름 위 항로 섬 셋
+  function SE() { var e = global.DG.stormEye; return e && e.on && e.on() ? e : null; }                // ⑲-52 8부 먹구름 눈
   /** 떠 있는 발판 — [{ id, name, x, y, r, top, slab, boot? [ch, from, to] 또는 그 목록(⑲-50) }] */
   function pads() {
     var out = [], c = on() ? spot() : null, E = ES();
@@ -57,6 +58,7 @@
     if (E && E.pads) { out = out.concat(E.pads()); }
     if (CR()) { out = out.concat(CR().pads()); }
     if (SR()) { out = out.concat(SR().pads()); }
+    if (SE()) { out = out.concat(SE().pads()); }
     return out;
   }
   /** (x,y) 위 발판(난간 안) — 없으면 null */
@@ -79,6 +81,7 @@
     if (E && E.drafts) { out = out.concat(E.drafts()); }
     if (CR()) { out = out.concat(CR().drafts()); }
     if (SR()) { out = out.concat(SR().drafts()); }
+    if (SE()) { out = out.concat(SE().drafts()); }
     return out;
   }
   function draftAt(x, y) {
