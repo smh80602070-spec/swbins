@@ -14,7 +14,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 21;
+        private const int SaveVersion = 22;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -107,6 +107,10 @@ namespace Saga.Go.Data
             public List<WeaponState.InvEntry> weapons;
             public List<WeaponState.EquipEntry> weaponEquip;
             public int weaponOre;
+            // v22 — PLAN.md 109-14-5b 보패(부위·세트·주/부옵션·강화·누가 낌)·번호·연마석.
+            public List<GoArtifacts.Artifact> artifacts;
+            public int artifactSeq;
+            public int artifactPolish;
         }
 
         public static bool Save()
@@ -174,6 +178,9 @@ namespace Saga.Go.Data
                 weapons = WeaponState.SnapshotInv(),
                 weaponEquip = WeaponState.SnapshotEquip(),
                 weaponOre = WeaponState.Ore,
+                artifacts = ArtifactState.Snapshot(),
+                artifactSeq = ArtifactState.Seq,
+                artifactPolish = ArtifactState.Polish,
             };
             return JsonUtility.ToJson(data);
         }
@@ -238,6 +245,7 @@ namespace Saga.Go.Data
             OrbState.Restore(data.orbsGot, data.orbsGiven);
             TalentState.Restore(data.talents, data.talentMats);
             WeaponState.Restore(data.weapons, data.weaponEquip, data.weaponOre);
+            ArtifactState.Restore(data.artifacts, data.artifactSeq, data.artifactPolish);
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();
@@ -448,6 +456,15 @@ namespace Saga.Go.Data
                 data.weapons = new List<WeaponState.InvEntry>();
                 data.weaponEquip = new List<WeaponState.EquipEntry>();
                 data.weaponOre = 0;
+                return data;
+            }
+            if (fromVersion == 21)
+            {
+                // v21엔 보패가 없었다 — 빈 주머니·연마석 0.
+                data.version = 22;
+                data.artifacts = new List<GoArtifacts.Artifact>();
+                data.artifactSeq = 0;
+                data.artifactPolish = 0;
                 return data;
             }
             return null;

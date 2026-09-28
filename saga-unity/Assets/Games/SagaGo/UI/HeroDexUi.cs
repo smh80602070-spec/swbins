@@ -66,6 +66,15 @@ namespace Saga.Go.UI
         public string WeaponText => _weaponText.text;
         private TextMeshProUGUI _weaponText;
         private readonly Button[] _weaponButtons = new Button[3];
+        // 109-14-5b 보패 칸(아래) — 부위 다섯 + 바꾸기·강화·빼기·★4 분해
+        public Button ArtifactSlotButton(int i) => _artSlots[i];
+        public Button ArtifactButton(int i) => _artButtons[i];
+        public string ArtifactText => _artText.text;
+        public int ArtifactSlot => _artSlot;
+        private TextMeshProUGUI _artText;
+        private readonly Button[] _artSlots = new Button[5];
+        private readonly Button[] _artButtons = new Button[4];
+        private int _artSlot;
         public int TabCount => _tabs.Count;
         public Button TabButton(int i) => _tabs[i];
         public string TabText(int i) => _tabs[i].GetComponentInChildren<TextMeshProUGUI>().text;
@@ -169,6 +178,7 @@ namespace Saga.Go.UI
 
             BuildTalentPanel(mid);
             BuildWeaponPanel(mid);
+            BuildArtifactPanel(mid);
 
             CloseButton = EncounterUiKit.NewButton(_panel.transform, GoLocalization.T("dex.close", "닫는다"), mid, new Vector2(0f, -272f), new Vector2(200f, 48f), null);
             Center((RectTransform)CloseButton.transform);
@@ -267,6 +277,105 @@ namespace Saga.Go.UI
             _weaponButtons[2].interactable = WeaponState.ChoicesFor(_selected).Count > 1;
         }
 
+        /// <summary>109-14-5b — 닫기 단추 아래(y −318 ~ −442) 보패 칸: 글 두 줄(가진 수·연마석·세트 / 고른 부위 옵션) · 부위 다섯 · 바꾸기·강화·빼기·★4 분해. 무예 칸과 같이 뜨고 진다.</summary>
+        private void BuildArtifactPanel(Vector2 mid)
+        {
+            _artText = EncounterUiKit.NewText(_talentRoot.transform, "", mid, new Vector2(0f, -320f), new Vector2(1320f, 44f), 15);
+            Center(_artText.rectTransform);
+            for (int i = 0; i < 5; i++)
+            {
+                var b = EncounterUiKit.NewButton(_talentRoot.transform, "", mid, new Vector2((i - 2) * 262f, -374f), new Vector2(250f, 54f), null);
+                Center((RectTransform)b.transform);
+                var l = b.GetComponentInChildren<TextMeshProUGUI>();
+                l.fontSize = 14;
+                l.lineSpacing = -8f;
+                int k = i;
+                b.onClick.AddListener(() => SelectArtifactSlot(k));
+                _artSlots[i] = b;
+            }
+            string[] names = { GoLocalization.T("artifact.btn_swap", "바꾸기"), GoLocalization.T("artifact.btn_up", "강화"),
+                GoLocalization.T("artifact.btn_off", "빼기"), GoLocalization.T("artifact.btn_salvage", "안 낀 ★4 분해") };
+            for (int i = 0; i < 4; i++)
+            {
+                var b = EncounterUiKit.NewButton(_talentRoot.transform, names[i], mid, new Vector2((i - 1.5f) * 262f, -424f), new Vector2(250f, 36f), null);
+                Center((RectTransform)b.transform);
+                b.GetComponentInChildren<TextMeshProUGUI>().fontSize = 14;
+                int k = i;
+                b.onClick.AddListener(() => ArtifactAction(k));
+                _artButtons[i] = b;
+            }
+        }
+
+        private void SelectArtifactSlot(int k)
+        {
+            _artSlot = k;
+            Refresh();
+        }
+
+        private void ArtifactAction(int k)
+        {
+            if (_selected == null) return;
+            string slot = GoArtifacts.Slots[_artSlot];
+            ArtifactState.EquippedOf(_selected).TryGetValue(slot, out var cur);
+            if (k == 0)
+            {
+                // 좋은 순으로 하나씩 — 끝을 넘으면 빈 칸
+                var list = ArtifactState.ChoicesFor(slot);
+                int i = cur != null ? list.IndexOf(cur) : -1;
+                if (i + 1 < list.Count) ArtifactState.Equip(_selected, list[i + 1].uid);
+                else if (cur != null) ArtifactState.Unequip(cur.uid);
+            }
+            else if (k == 1 && cur != null) ArtifactState.Up(cur.uid);
+            else if (k == 2 && cur != null) ArtifactState.Unequip(cur.uid);
+            else if (k == 3)
+            {
+                int got = ArtifactState.SalvageLoose4();
+                DialogueLabel.Instance?.Show(got > 0 ? string.Format(GoLocalization.T("artifact.salvaged", "★4 분해 — 연마석 +{0}"), got)
+                    : GoLocalization.T("artifact.no_loose4", "안 낀 ★4 가 없다"), 2.5f);
+            }
+            Saga.Go.Combat.FieldCombat.Instance?.RebuildParty(); // 체력·체력%
+            Refresh();
+        }
+
+        private void RefreshArtifact()
+        {
+            var eq = ArtifactState.EquippedOf(_selected);
+            var bonus = ArtifactState.BonusOf(_selected);
+            var sets = new List<string>();
+            foreach (var (set, n) in bonus.Sets)
+            {
+                var d = GoArtifacts.SetOf(set);
+                sets.Add($"{d.Name} {n}" + (n >= 4 ? $" ({GoArtifacts.FourText(d.Four)})" : $" ({GoArtifacts.StatText(d.Two, d.TwoV)})"));
+            }
+            string slot = GoArtifacts.Slots[_artSlot];
+            eq.TryGetValue(slot, out var cur);
+            string line2;
+            if (cur == null) line2 = string.Format(GoLocalization.T("artifact.empty_line", "{0} — 비었다 · 이 부위 가진 것 {1}"), GoArtifacts.SlotName(slot), ArtifactState.ChoicesFor(slot).Count);
+            else
+            {
+                var subs = new List<string>();
+                foreach (var s in cur.subs) subs.Add(GoArtifacts.StatText(s.key, s.value));
+                line2 = $"{GoArtifacts.Label(cur)} +{cur.lv} — {GoArtifacts.StatText(cur.main, GoArtifacts.MainValue(cur))} | {string.Join(" · ", subs)}";
+            }
+            _artText.text = string.Format(GoLocalization.T("artifact.head", "보패 {0}/{1} · 연마석 {2} · 세트 {3}"), ArtifactState.Count, GoArtifacts.Cap, ArtifactState.Polish,
+                sets.Count > 0 ? string.Join(" · ", sets) : GoLocalization.T("artifact.no_set", "없음")) + "\n" + line2;
+            for (int i = 0; i < 5; i++)
+            {
+                string s = GoArtifacts.Slots[i];
+                eq.TryGetValue(s, out var a);
+                _artSlots[i].GetComponentInChildren<TextMeshProUGUI>().text = (i == _artSlot ? "▶ " : "") + GoArtifacts.SlotName(s)
+                    + (a != null ? $" ★{a.rarity} +{a.lv}\n{GoArtifacts.SetOf(a.set).Name}" : "\n—");
+            }
+            _artButtons[0].interactable = ArtifactState.ChoicesFor(slot).Count > 0;
+            string why = null;
+            (int polish, int gold) c = default;
+            bool up = cur != null && ArtifactState.CanUp(cur.uid, out why, out c);
+            _artButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = cur == null ? GoLocalization.T("artifact.btn_up", "강화")
+                : up ? string.Format(GoLocalization.T("artifact.btn_up_cost", "강화 — 연마석 {0} · 금 {1}"), c.polish, c.gold) : why;
+            _artButtons[1].interactable = up;
+            _artButtons[2].interactable = cur != null;
+        }
+
         private void UpTalent(int k)
         {
             if (_selected == null) return;
@@ -295,6 +404,7 @@ namespace Saga.Go.UI
             _talentRoot.SetActive(show);
             if (!show) return;
             RefreshWeapon();
+            RefreshArtifact();
             _talentMats.text = string.Format(GoLocalization.T("talent.mats", "쪽지 {0} · 교본 {1} · 비전 {2}\n매듭 {3} · 비늘 {4} · 금 {5}"),
                 TalentState.Count(GoTalent.Mat.Note), TalentState.Count(GoTalent.Mat.Guide), TalentState.Count(GoTalent.Mat.Secret),
                 TalentState.Count(GoTalent.Mat.Knot), TalentState.Count(GoTalent.Mat.Scale), GoldState.Gold);

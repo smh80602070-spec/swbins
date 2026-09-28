@@ -257,6 +257,48 @@
 1	common	TitleSettings.cs	판마다 다름	Varies by game		
 1	common	TitleSettings.cs	켜짐	On		
 1	common	TitleSettings.cs	꺼짐	Off		
+2	go	artifact.btn_off	빼기	Remove		
+2	go	artifact.btn_salvage	안 낀 ★4 분해	Salvage unworn ★4		
+2	go	artifact.btn_swap	바꾸기	Switch		
+2	go	artifact.btn_up	강화	Upgrade		
+2	go	artifact.btn_up_cost	강화 — 연마석 {0} · 금 {1}	Upgrade — Polish {0} · Gold {1}		
+2	go	artifact.empty_line	{0} — 비었다 · 이 부위 가진 것 {1}	{0} — empty · owned for this slot {1}		
+2	go	artifact.four.burst_dmg	원소 해방 피해 +20%	Elemental Release DMG +20%		
+2	go	artifact.four.normal_melee	칼·대도·창 기본 공격 피해 +30%	Sword/Great Blade/Spear Normal Attack DMG +30%		
+2	go	artifact.four.react_fire	물안개·녹임·터짐·들불 피해 +35%	Steam/Thaw/Blast/Wildfire DMG +35%		
+2	go	artifact.four.react_swirl	회오리 피해 +50%	Whirl DMG +50%		
+2	go	artifact.four.skill_dmg	원소 스킬 피해 +25%	Elemental Skill DMG +25%		
+2	go	artifact.head	보패 {0}/{1} · 연마석 {2} · 세트 {3}	Relics {0}/{1} · Polish {2} · Sets {3}		
+2	go	artifact.no_loose4	안 낀 ★4 가 없다	No unworn ★4 relics		
+2	go	artifact.no_set	없음	None		
+2	go	artifact.salvaged	★4 분해 — 연마석 +{0}	★4 salvaged — Polish +{0}		
+2	go	artifact.set.crimson	대장간 불씨	Forge Ember		
+2	go	artifact.set.depth	나루 안개	Ferry Mist		
+2	go	artifact.set.emblem	봉화 깃발	Beacon Banner		
+2	go	artifact.set.gladiator	떠돌이 무사	Wandering Warrior		
+2	go	artifact.set.viridescent	솔바람 피리	Pine Breeze Flute		
+2	go	artifact.slot.circlet	관모	Official Hat		
+2	go	artifact.slot.flower	패옥	Jade Pendant		
+2	go	artifact.slot.goblet	향낭	Scent Pouch		
+2	go	artifact.slot.plume	비녀	Hairpin		
+2	go	artifact.slot.sands	가락지	Twin Ring		
+2	go	artifact.stat.atk	공격력	ATK		
+2	go	artifact.stat.atk_pct	공격력%	ATK%		
+2	go	artifact.stat.def	방어력	DEF		
+2	go	artifact.stat.def_pct	방어력%	DEF%		
+2	go	artifact.stat.elem_elec	뇌 피해	Thunder DMG		
+2	go	artifact.stat.elem_fire	화 피해	Fire DMG		
+2	go	artifact.stat.elem_grass	초 피해	Grass DMG		
+2	go	artifact.stat.elem_ice	빙 피해	Ice DMG		
+2	go	artifact.stat.elem_phys	물리 피해	Physical DMG		
+2	go	artifact.stat.elem_rock	암 피해	Stone DMG		
+2	go	artifact.stat.elem_water	수 피해	Water DMG		
+2	go	artifact.stat.elem_wind	풍 피해	Wind DMG		
+2	go	artifact.stat.hp	체력	HP		
+2	go	artifact.stat.hp_pct	체력%	HP%		
+2	go	artifact.why.max	최대 강화	Max upgrade		
+2	go	artifact.why.none	없는 보패	Not owned		
+2	go	artifact.why.polish	연마석 부족	Not enough polish stones		
 2	go	chest.grade0	나무 상자	Wooden Chest		
 2	go	chest.grade1	무늬 상자	Patterned Chest		
 2	go	chest.grade2	옻칠 상자	Lacquered Chest		

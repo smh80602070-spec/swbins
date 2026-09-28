@@ -143,7 +143,8 @@ namespace Saga.Go.Combat
             get
             {
                 var md = WeaponState.ModsOf(Active?.Id); // 109-14-5a 든 무기 공격 · 공격%
-                return (PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus + md.Atk) * (1f + md.AtkPct) * PerkState.AtkMultiplier * BondState.AtkMultiplier
+                var ab = ArtifactState.BonusOf(Active?.Id); // 109-14-5b 보패 공격% · 고정 공격(웹 식: (기본 + 무기) × (1 + %) + 고정)
+                return ((PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus + md.Atk) * (1f + md.AtkPct + ab.AtkPct) + ab.Atk) * PerkState.AtkMultiplier * BondState.AtkMultiplier
                     * (Active != null && Active.BuffLeft > 0f ? GoTalent.C5Atk : 1f); // 109-14-4 깨달음 ⑤
             }
         }
@@ -175,9 +176,10 @@ namespace Saga.Go.Combat
             LastCrit = false;
             if (CritOffForTest) return 1f;
             var md = WeaponState.ModsOf(id);
-            float rate = CritRateForTest >= 0f ? CritRateForTest : md.CritRate;
+            var ab = ArtifactState.BonusOf(id); // 109-14-5b 보패 치명
+            float rate = CritRateForTest >= 0f ? CritRateForTest : md.CritRate + ab.CritRate;
             crit = LastCrit = NextRand() < rate;
-            return crit ? 1f + md.CritDmg : 1f;
+            return crit ? 1f + md.CritDmg + ab.CritDmg : 1f;
         }
 
         /// <summary>무기 효과 — 그 갈래(n·s·b·react)면 1 + 값.</summary>
@@ -187,12 +189,48 @@ namespace Saga.Go.Combat
             return md.Pas == kind ? 1f + md.PasV : 1f;
         }
 
-        private float EnergyMul => Active != null ? 1f + WeaponState.ModsOf(Active.Id).Energy : 1f;
+        /// <summary>한 타의 피해 보너스(웹 식 더하기: 1 + 무기 효과 + 보패 4 세트 + 원소 피해) — kind 는 n·s·b.
+        /// 떠돌이 무사 4 는 칼·대도·창의 기본 공격(강공격·낙하 포함)만.</summary>
+        public static float DmgMul(string id, string kind, GoElement el)
+        {
+            var md = WeaponState.ModsOf(id);
+            var ab = ArtifactState.BonusOf(id);
+            float b = md.Pas == kind ? md.PasV : 0f;
+            if (kind == "n" && md.Weapon.Type != GoWeapons.Type.Catalyst && md.Weapon.Type != GoWeapons.Type.Bow) b += ab.NormalMelee;
+            else if (kind == "s") b += ab.SkillDmg;
+            else if (kind == "b") b += ab.BurstDmg;
+            return 1f + b + ab.Elem[(int)el];
+        }
+
+        /// <summary>109-14-5b 보패 4 세트 반응 — 대장간 불씨(물안개·녹임·터짐·들불 +35%)·솔바람 피리(회오리 +50%). 나선 사람 몫.</summary>
+        public float SetReactMul(GoReaction r)
+        {
+            if (Active == null) return 1f;
+            var ab = ArtifactState.BonusOf(Active.Id);
+            switch (r)
+            {
+                case GoReaction.Vaporize: case GoReaction.Melt: case GoReaction.Overload: case GoReaction.Burning: return 1f + ab.ReactFire;
+                case GoReaction.Swirl: return 1f + ab.ReactSwirl;
+                default: return 1f;
+            }
+        }
+
+        private float EnergyMul => Active != null ? 1f + WeaponState.ModsOf(Active.Id).Energy + ArtifactState.BonusOf(Active.Id).Energy : 1f;
 
         /// <summary>109-14-4 나선 사람의 무예 배율·반응 배율(주인공·도감 밖은 1).</summary>
         private float TalentMul(GoTalent.Kind k) => Active != null ? TalentState.Mul(Active.Id, k) : 1f;
         private float ReactMul => Active != null ? TalentState.ReactMul(Active.Id) * PasMul(Active.Id, "react") : 1f;
         public float Def => (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier;
+
+        /// <summary>109-14-5b 나선 사람이 받는 피해에 쓰는 방어(보패 방어% · 고정 방어). 체력 상한은 보패 없는 <see cref="Def"/> 로 센다.</summary>
+        public float ActiveDef
+        {
+            get
+            {
+                var ab = ArtifactState.BonusOf(Active?.Id);
+                return Def * (1f + ab.DefPct) + ab.Def;
+            }
+        }
 
         private void Awake()
         {
@@ -254,7 +292,8 @@ namespace Saga.Go.Combat
 
         private void AddMember(Dictionary<string, Member> old, string id, string name, GoElement el, float maxHp)
         {
-            maxHp *= TalentState.HpMul(id) * (1f + WeaponState.ModsOf(id).HpPct); // 109-14-4 깨달음 ④ · 109-14-5a 무기 체력%
+            var ab = ArtifactState.BonusOf(id); // 109-14-5b 보패 체력% · 고정 체력(웹 식: (기본 × (1 + %) + 고정) × 깨달음)
+            maxHp = (maxHp * (1f + WeaponState.ModsOf(id).HpPct + ab.HpPct) + ab.Hp) * TalentState.HpMul(id); // 109-14-4 깨달음 ④ · 109-14-5a 무기 체력%
             if (old.TryGetValue(id, out var m))
             {
                 float ratio = m.MaxHp > 0f ? m.Hp / m.MaxHp : 1f;
@@ -334,8 +373,8 @@ namespace Saga.Go.Combat
             Vector3 fwd = Forward();
             int hits = 0;
             float atk = Atk;
-            float amount = atk * kit.Mul[step] * TalentMul(GoTalent.Kind.Normal) * PasMul(Active.Id, "n"); // 109-14-4 기본 무예 · 무기 효과
             GoElement el = kit.Element ? Active.Element : GoElement.Physical;
+            float amount = atk * kit.Mul[step] * TalentMul(GoTalent.Kind.Normal) * DmgMul(Active.Id, "n", el); // 109-14-4 기본 무예 · 무기 효과 · 109-14-5b 보패
             if (kit.Reach > 0f)
             {
                 foreach (var e in Snapshot())
@@ -405,7 +444,7 @@ namespace Saga.Go.Combat
                 if (d.magnitude > ChargeReach) continue;
                 if (d.sqrMagnitude > 0.25f && Vector3.Dot(d.normalized, fwd) < ChargeFrontDot) continue;
                 float cm = CritMul(Active.Id, out bool crit);
-                e.TakeHit(atk * ChargeMul * TalentMul(GoTalent.Kind.Normal) * PasMul(Active.Id, "n") * cm, GoElement.Physical, atk * ReactMul, out _, heavy: true, crit: crit);
+                e.TakeHit(atk * ChargeMul * TalentMul(GoTalent.Kind.Normal) * DmgMul(Active.Id, "n", GoElement.Physical) * cm, GoElement.Physical, atk * ReactMul, out _, heavy: true, crit: crit);
                 hits++;
             }
             if (hits > 0) Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * hits);
@@ -424,7 +463,7 @@ namespace Saga.Go.Combat
         /// <summary>땅에 닿은 순간 — 둘레 6.5m 에 ×(1.2 + 떨어진 높이) 물리, 얼어붙은 적을 깨뜨린다. 진단이 직접 부른다.</summary>
         public int PlungeHit(float fallMeters)
         {
-            float atk = Atk, mul = PlungeMul(fallMeters) * TalentMul(GoTalent.Kind.Normal) * (Active != null ? PasMul(Active.Id, "n") : 1f);
+            float atk = Atk, mul = PlungeMul(fallMeters) * TalentMul(GoTalent.Kind.Normal) * (Active != null ? DmgMul(Active.Id, "n", GoElement.Physical) : 1f);
             int hits = 0;
             foreach (var e in Snapshot())
             {
@@ -476,7 +515,7 @@ namespace Saga.Go.Combat
                 case SkillShape.Thrust:
                 {
                     Vector3 end = pos + dir * GoSkillShapes.ThrustLen;
-                    hits = LineHit(pos, end, GoSkillShapes.ThrustWidth, atk * GoSkillShapes.ThrustMul * TalentMul(GoTalent.Kind.Skill) * PasMul(m.Id, "s"), m.Element);
+                    hits = LineHit(pos, end, GoSkillShapes.ThrustWidth, atk * GoSkillShapes.ThrustMul * TalentMul(GoTalent.Kind.Skill) * DmgMul(m.Id, "s", m.Element), m.Element);
                     FieldLineFx.Spawn(pos, end, GoSkillShapes.ThrustWidth * 2f, fx);
                     ElementPulse?.Invoke((pos + end) * 0.5f, GoSkillShapes.ThrustLen * 0.5f, m.Element);
                     break;
@@ -485,7 +524,7 @@ namespace Saga.Go.Combat
                 {
                     float go = target != null ? Mathf.Min(GoSkillShapes.DashLen, Mathf.Max(0f, aimDist - GoSkillShapes.DashStop)) : GoSkillShapes.DashLen;
                     Vector3 end = pos + dir * go;
-                    hits = LineHit(pos, end + dir * GoSkillShapes.DashStop, GoSkillShapes.DashWidth, atk * GoSkillShapes.DashMul * TalentMul(GoTalent.Kind.Skill) * PasMul(m.Id, "s"), m.Element);
+                    hits = LineHit(pos, end + dir * GoSkillShapes.DashStop, GoSkillShapes.DashWidth, atk * GoSkillShapes.DashMul * TalentMul(GoTalent.Kind.Skill) * DmgMul(m.Id, "s", m.Element), m.Element);
                     InvulnLeft = Mathf.Max(InvulnLeft, GoSkillShapes.DashInvulnSec);
                     if (player != null && go > 0.05f) player.Dash(dir, go, GoSkillShapes.DashSec);
                     FieldLineFx.Spawn(pos, end + dir * GoSkillShapes.DashStop, GoSkillShapes.DashWidth * 2f, fx, 0.45f);
@@ -496,7 +535,7 @@ namespace Saga.Go.Combat
                 {
                     Vector3 c = target != null ? Flat(target.transform.position) + Vector3.up * pos.y : pos + dir * SkillOffset;
                     var z = new SkillZone { Kind = shape, Owner = m.Id, Center = c, Radius = GoSkillShapes.FieldRadius, Left = GoSkillShapes.FieldSec,
-                        Atk = atk, Element = m.Element, Color = fx, Mul = TalentMul(GoTalent.Kind.Skill) * PasMul(m.Id, "s"), React = ReactMul };
+                        Atk = atk, Element = m.Element, Color = fx, Mul = TalentMul(GoTalent.Kind.Skill) * DmgMul(m.Id, "s", m.Element), React = ReactMul };
                     _zones.Add(z);
                     TickZone(z, 0f); // 놓자마자 첫 틱
                     hits = z.Hits;
@@ -506,7 +545,7 @@ namespace Saga.Go.Combat
                 {
                     Vector3 c = pos + dir * GoSkillShapes.SummonOffset;
                     var z = new SkillZone { Kind = shape, Owner = m.Id, Center = c, Radius = GoSkillShapes.SummonRadius, Left = GoSkillShapes.SummonSec,
-                        Atk = atk, Element = m.Element, Color = fx, Mul = TalentMul(GoTalent.Kind.Skill) * PasMul(m.Id, "s"), React = ReactMul };
+                        Atk = atk, Element = m.Element, Color = fx, Mul = TalentMul(GoTalent.Kind.Skill) * DmgMul(m.Id, "s", m.Element), React = ReactMul };
                     z.Spirit = SkillSpirit.Spawn(c, spiritModel, fx);
                     _zones.Add(z);
                     ElementPulse?.Invoke(c, 3f, m.Element);
@@ -517,7 +556,7 @@ namespace Saga.Go.Combat
                 default:
                 {
                     Vector3 center = pos + Forward() * SkillOffset;
-                    hits = AreaHit(center, SkillRadius, atk * SkillMul * TalentMul(GoTalent.Kind.Skill) * PasMul(m.Id, "s"), m.Element);
+                    hits = AreaHit(center, SkillRadius, atk * SkillMul * TalentMul(GoTalent.Kind.Skill) * DmgMul(m.Id, "s", m.Element), m.Element);
                     FieldRingFx.Spawn(center, SkillRadius, GoElements.ColorOf(m.Element));
                     ElementPulse?.Invoke(center, SkillRadius, m.Element);
                     break;
@@ -622,7 +661,7 @@ namespace Saga.Go.Combat
             var m = Active;
             if (!CanAct() || !m.BurstReady) return -1;
             m.Energy = 0f;
-            int hits = AreaHit(transform.position, BurstRadius, Atk * BurstMul * TalentMul(GoTalent.Kind.Burst) * PasMul(m.Id, "b"), m.Element);
+            int hits = AreaHit(transform.position, BurstRadius, Atk * BurstMul * TalentMul(GoTalent.Kind.Burst) * DmgMul(m.Id, "b", m.Element), m.Element);
             if (TalentState.BurstBuff(m.Id)) m.BuffLeft = GoTalent.C5Sec; // 109-14-4 깨달음 ⑤
             FieldRingFx.Spawn(transform.position, BurstRadius, GoElements.ColorOf(m.Element), 0.7f);
             FieldRingFx.Spawn(transform.position, BurstRadius * 0.6f, Color.white, 0.5f);
@@ -684,7 +723,7 @@ namespace Saga.Go.Combat
                 FieldDamageText.Spawn(transform.position + Vector3.up * 4f, GoLocalization.T("field.evade", "회피!"), new Color(0.7f, 0.95f, 1f), 1.1f);
                 return false;
             }
-            float dmg = enemyAtk * 200f / (200f + Mathf.Max(0f, Def));
+            float dmg = enemyAtk * 200f / (200f + Mathf.Max(0f, ActiveDef));
             if (GuardHp > 0f)
             {
                 // 109-14-1a 굳힘 — 받는 피해를 먼저 막고, 다 막으면 원소 효과도 막는다

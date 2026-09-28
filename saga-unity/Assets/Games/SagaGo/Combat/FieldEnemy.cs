@@ -748,8 +748,10 @@ namespace Saga.Go.Combat
                 }
             }
 
-            if (reaction == GoReaction.Vaporize) amount *= GoElements.VaporizeMul;
-            if (reaction == GoReaction.Melt) amount *= GoElements.MeltMul;
+            // 109-14-5b 보패 4 세트 — 대장간 불씨(물안개·녹임·터짐·들불)·솔바람 피리(회오리)
+            float setRx = reaction != GoReaction.None && FieldCombat.Instance != null ? FieldCombat.Instance.SetReactMul(reaction) : 1f;
+            if (reaction == GoReaction.Vaporize) amount *= GoElements.VaporizeMul * setRx;
+            if (reaction == GoReaction.Melt) amount *= GoElements.MeltMul * setRx;
 
             if (reaction != GoReaction.None)
             {
@@ -763,7 +765,7 @@ namespace Saga.Go.Combat
             if (reaction == GoReaction.Overload)
             {
                 // 과부하 — 둘레 적 전부(자기 포함 이미 맞은 몫과 별도로 광역 몫)·밀침.
-                float blast = atk * GoElements.OverloadAtkMul;
+                float blast = atk * GoElements.OverloadAtkMul * setRx;
                 foreach (var other in _all.ToArray())
                 {
                     if (!other.Alive) continue;
@@ -813,7 +815,7 @@ namespace Saga.Go.Combat
                         other.Aura = from;
                         other.AuraLeft = GoElements.AuraSec;
                     }
-                    other.ApplyDamage(atk * GoElements.SwirlAtkMul, GoElements.ColorOf(from), 1f);
+                    other.ApplyDamage(atk * GoElements.SwirlAtkMul * setRx, GoElements.ColorOf(from), 1f);
                     other.Aggro();
                 }
             }
@@ -829,7 +831,7 @@ namespace Saga.Go.Combat
             {
                 BurningLeft = GoElements.BurningTicks;
                 _burningTick = GoElements.BurningTickSec;
-                _burningDmg = atk * GoElements.BurningAtkMul;
+                _burningDmg = atk * GoElements.BurningAtkMul * setRx;
             }
             else if (reaction == GoReaction.Quicken)
             {
@@ -1047,6 +1049,7 @@ namespace Saga.Go.Combat
                 string mats = TalentState.Add(GoTalent.EliteMats);
                 WeaponState.AddOre(GoWeapons.EliteOre); // 109-14-5a 강화석 하나
                 mats += (mats.Length > 0 ? " · " : "") + string.Format(GoLocalization.T("weapon.ore_plus", "강화석 +{0}"), GoWeapons.EliteOre);
+                mats += " · " + ArtifactState.OnElite(); // 109-14-5b 보패 ★4 하나
                 if (mats.Length > 0) FieldDamageText.Spawn(transform.position + Vector3.up * (BodyHeight + 2.6f), mats, new Color(0.95f, 0.85f, 0.55f), 0.9f);
             }
             Killed?.Invoke(this);
