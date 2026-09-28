@@ -15,16 +15,16 @@ try {
   await c.ev(`(function(){ var b=document.getElementById('title-continue'); if(b){ b.click(); } })()`);
   await sleep(5000);
   await c.ev(`DG.perf.pin('LOW'); DG.core.save.settings.autoBattle = true; DG.auto.setOn(true);`);
-  const t0 = Date.now(); let last = '';
+  const t0 = Date.now(); let last = '', lastT = 0;
   while (Date.now() - t0 < SECS * 1000) {
     await sleep(4000);
     const r = await c.ev(`(function(){
       var S = DG.story, sv = S.state(), st = S.step(), p = DG.core.save.player.pos;
-      return (sv.ch + 1) + '장 ' + (sv.step + 1) + '단계 ' + (st ? st.type : '-') + ' · ' + DG.auto.status().doing + ' · (' + Math.round(p.x) + ',' + Math.round(p.y) + ')' +
-        (document.body.classList.contains('sheet-open') ? ' · [창 열림]' : '') + (DG.encounter.active ? ' · [조우]' : '');
+      return (sv.ch + 1) + '장 ' + (sv.step + 1) + '단계 ' + (st ? st.type : '-') + (st && st.type === 'gather' ? ' ' + S.gathered() + '/' + st.count : '') + ' · ' + DG.auto.status().doing + ' · (' + Math.round(p.x) + ',' + Math.round(p.y) + ')' +
+        (document.body.classList.contains('sheet-open') ? ' · [창 열림]' : '') + (DG.encounter.active ? ' · [조우]' : '') + (function(){ var FS = DG.fieldCombat.state(); if (!FS) return ''; var me = FS.party.map(function(m){ return Math.round(m.hp) + (m.down ? '↓' : ''); }).join('/'), g = ''; for (var u in FS.foes) { var f = FS.foes[u]; if (!f.dead && Math.hypot(f.x - p.x, f.y - p.y) < 40) g += ' ' + f.name + ' ' + Math.round(f.hp) + '/' + f.hpMax + (f.shield > 0 ? '+방패' + Math.round(f.shield) : '') + ' ' + f.st; } return ' · 나 ' + me + g; })();
     })()`);
     const key = r.replace(/\d+m|\(-?\d+,-?\d+\)/g, '');
-    if (key !== last) { console.log(Math.round((Date.now() - t0) / 1000) + 's', r); last = key; }
+    if (key !== last || Date.now() - lastT > 30000) { console.log(Math.round((Date.now() - t0) / 1000) + 's', r); last = key; lastT = Date.now(); }
   }
   await c.shot('go_auto_story_end');
   await c.ev(`DG.auto.setOn(false); DG.core.save.settings.autoBattle = false; DG.perf.unpin(); DG.core.setTune('perf.auto', null);`);

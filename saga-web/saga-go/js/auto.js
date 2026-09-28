@@ -198,6 +198,40 @@
     w.walkTo(tx, ty);
   }
 
+  /** 그 풀의 채집점 — 지금 자리 900m 안, 없으면 1.2·2.4·3.6·4.8km 둘레 열두 방향을 훑어 가장 가까운 것 { x, y, item } */
+  function findNode(CK, item, p) {
+    var best = null, bd = Infinity, rings = [0, 1200, 2400, 3600, 4800], ri, k;
+    for (ri = 0; ri < rings.length && !best; ri++) {
+      for (k = 0; k < (rings[ri] ? 12 : 1); k++) {
+        var a = k / 12 * Math.PI * 2, cx = p.x + Math.cos(a) * rings[ri], cy = p.y + Math.sin(a) * rings[ri];
+        CK.near(cx, cy, 900).forEach(function (nd) {
+          if (nd.item !== item || !CK.available(nd)) { return; }
+          var dd = Math.hypot(nd.x - p.x, nd.y - p.y);
+          if (dd < bd) { bd = dd; best = nd; }
+        });
+      }
+    }
+    return best;
+  }
+
+  /** 요리 계획 — 모자란 재료 수가 가장 적고 그 재료가 모두 나는(findNode) 요리 · 가장 가까운 모자란 채집점 { rk, n, node } */
+  function cookPlan(CK, p) {
+    var best = null, memo = {};
+    CK.ORDER.forEach(function (rk) {
+      var r = CK.RECIPES[rk], n = 0, ok = true, node = null, nd = Infinity, k;
+      for (k in r.ing) {
+        if (!r.ing.hasOwnProperty(k) || CK.count(k) >= r.ing[k]) { continue; }
+        n += r.ing[k] - CK.count(k);
+        var f = memo[k] !== undefined ? memo[k] : (memo[k] = findNode(CK, k, p));
+        if (!f) { ok = false; continue; }
+        var dd = Math.hypot(f.x - p.x, f.y - p.y);
+        if (dd < nd) { nd = dd; node = f; }
+      }
+      if (ok && node && (!best || n < best.n || (n === best.n && nd < best.d))) { best = { rk: rk, n: n, node: node, d: nd }; }
+    });
+    return best;
+  }
+
   /** 이야기 한 박자 — 맡았으면 true(다른 자동은 이번엔 쉰다). 장이 잠겼거나 목표가 없으면 false */
   function tickStory(dt) {
     var S = global.DG.story, w = global.DG.world;
@@ -221,7 +255,64 @@
     if (!t) { doing = '📖 ' + (st.text || st.type) + ' — 목표 자리를 아직 못 찾음'; return false; }
     var p = core.save.player.pos, d = Math.hypot(t.x - p.x, t.y - p.y);
     var FC = global.DG.fieldCombat, FS = FC && FC.state ? FC.state() : null;
-    if (FS && FC.engaged(FS)) { w.walkTo(p.x, p.y); doing = '📖 ⚔️ ' + (t.label || st.text || '') + ' — 싸우는 중'; return true; }
+    if (FS && FC.engaged(FS)) {
+      /* 붙어 있게 — 가장 가까운 적의 몸 가장자리가 5m 넘게 벌어지면 다가간다(회피로 밀려나 적이 추격을 그만두던 것) */
+      var near = null, nd0 = Infinity;
+      FC.living(FS).forEach(function (f) { if (f.st === 'idle' || f.st === 'return') { return; } var dd = Math.hypot(f.x - p.x, f.y - p.y) - FC.BODY(f); if (dd < nd0) { nd0 = dd; near = f; } });
+      if (near && nd0 > 5) { w.walkTo(near.x, near.y); } else { w.walkTo(p.x, p.y); }
+      doing = '📖 ⚔️ ' + (t.label || st.text || '') + ' — 싸우는 중';
+      return true;
+    }
+    /* 숨은 터(비경) — 입구 곁이면 들어가고(domain.enter), 파도는 🤖 자동 전투가, 끝나면 보상 나무(원기 모자라면 두고 나온다).
+       이야기는 domain:clear 로 넘어간다 */
+    var DM = global.DG.domain;
+    if (DM && DM.active && DM.active()) {
+      var rn = DM.run();
+      if (rn.phase === 'tree') { var cl = DM.claim(); if (!cl.ok) { DM.leave(); } doing = '📖 🌳 숨은 터 보상 ' + (cl.ok ? cl.text : '— ' + cl.why + ' · 두고 나옴'); return true; }
+      if (Math.hypot(rn.x - p.x, rn.y - p.y) > DM.ARENA_R(false) * 0.5) { w.walkTo(rn.x, rn.y); }
+      doing = '📖 🌀 ' + rn.d.name + ' — ' + (rn.phase === 'wait' ? '곧 적이 나타난다' : '싸우는 중');
+      return true;
+    }
+    if (st.type === 'domain' && DM && d <= DM.ENTER_R(false)) {
+      var dObj = st.did ? DM.byId(st.did) : null;
+      if (!dObj) { DM.list().forEach(function (x) { if (x.kind === 'weekly' && (!dObj || Math.hypot(x.x - t.x, x.y - t.y) < Math.hypot(dObj.x - t.x, dObj.y - t.y))) { dObj = x; } }); }
+      var en = dObj ? DM.enter(dObj, 0) : { ok: false, why: '숨은 터를 못 찾음' };
+      w.walkTo(p.x, p.y);
+      doing = '📖 🌀 ' + (en.ok ? (dObj.name + ' 들어감') : (t.label + ' — ' + en.why));
+      return true;
+    }
+    /* 채집 — 900m 안에 그 풀이 없으면(다 꺾어 다시 자라는 중·그 풀이 안 나는 지역) story 는 고향을 가리킨다 →
+       채집점 자리는 순수 함수라 동심원으로 멀리까지 찾아 가장 가까운 것으로 간다(멀면 순간이동) */
+    var CKg = global.DG.cooking;
+    if (st.type === 'gather' && CKg) {
+      var any = CKg.near(p.x, p.y, 900).some(function (nd) { return nd.item === st.item && CKg.available(nd); });
+      if (!any) {
+        var far = findNode(CKg, st.item, p);
+        if (!far) { doing = '📖 🌿 ' + (st.text || '') + ' — 5km 안에 안 난다'; return false; }
+        t = { x: far.x, y: far.y, r: 0, label: st.text + '(먼 군락)' }; d = Math.hypot(t.x - p.x, t.y - p.y);
+      }
+    }
+    /* 솥 요리 — 만들 수 있는 요리가 없으면 모자란 재료가 가까이(700m) 나는 요리를 골라 그 채집점으로(곁 1.5m 면 저절로 줍는다),
+       있으면 솥으로 가서 보통 품질로 만든다 */
+    var CK = global.DG.cooking;
+    if (st.type === 'cook' && CK) {
+      var ready = null, ri;
+      for (ri = 0; ri < CK.ORDER.length && !ready; ri++) { if (CK.cookCheck(CK.ORDER[ri], true).ok) { ready = CK.ORDER[ri]; } }
+      if (!ready) {
+        var plan = cookPlan(CK, p);
+        if (!plan) { doing = '📖 🍲 요리 재료가 가까이 안 난다 — 순행'; return false; }
+        acc.story += dt;
+        if (acc.story >= RETARGET) { acc.story = 0; walkToward(w, plan.node.x, plan.node.y, RETARGET); }
+        doing = '📖 🌿 ' + CK.RECIPES[plan.rk].name + ' 재료 — ' + CK.ITEMS[plan.node.item].name + ' 으로 ' + Math.round(Math.hypot(plan.node.x - p.x, plan.node.y - p.y)) + 'm';
+        return true;
+      }
+      if (CK.atPot()) {
+        var made = CK.cook(ready, 1);
+        w.walkTo(p.x, p.y);
+        doing = '📖 🍲 ' + CK.RECIPES[ready].name + (made ? ' 만듦' : ' 못 만듦');
+        return true;
+      }
+    }
     /* 불 밝히기·석등 — 제단(석등은 다음 차례 것) 곁에 서서 원소 스킬(E). 스킬 고리가 닿으면 story.onElement 가 켠다 */
     if (st.type === 'light' || st.type === 'seal') {
       var goal = t;
@@ -267,7 +358,10 @@
   function tickMap(dt) {
     var w = global.DG.world;
     if (global.DG.encounter.active) { doing = '조우 화면이 열려 있습니다'; return; }
-    if (on('story') && tickStory(dt)) { return; }
+    if (on('story')) {
+      /* 자동이 새면 game.js 루프(다음 프레임 예약)까지 멎는다 — 이야기 한 박자는 통째로 감싼다 */
+      try { if (tickStory(dt)) { return; } } catch (e) { doing = '📖 자동 이야기 오류 — ' + e.message; if (global.console) { console.warn('[auto] tickStory', e); } }
+    }
 
     acc.aim += dt;
     if (acc.aim >= RETARGET) {

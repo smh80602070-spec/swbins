@@ -1822,6 +1822,12 @@
     var c = f.mark ? (f.mark.list ? f.mark.list[0] : f.mark) : f;
     var dx = pos.x - c.x, dy = pos.y - c.y;
     if (Math.hypot(dx, dy) < 0.3) { dx = pos.x - f.x; dy = pos.y - f.y; }        // 내 발밑에 떨어지는 침 — 쏜 적 반대쪽으로
+    /* 곧장 뒤로만 비키면 한 번에 3.6m 씩 밀려나 적의 추격 한계를 벗어나고, 적이 제자리로 돌아가 방패를 다시 채웠다(09-28 수호자 무한 반복).
+       옆으로 돌며 비킨다(좌우는 번갈아) — 원 예고도 대시 3.6m 면 벗어난다 */
+    var dl0 = Math.hypot(dx, dy) || 1, side = (S.dodgeSide = -(S.dodgeSide || 1));
+    dx /= dl0; dy /= dl0;
+    var sx = -dy * side, sy = dx * side;
+    dx = sx * 0.85 + dx * 0.5; dy = sy * 0.85 + dy * 0.5;
     var r = dodge(S, dx, dy, pos.x, pos.y);
     if (r.ok) { handle(drain(S), pos); }
     return r.ok;
