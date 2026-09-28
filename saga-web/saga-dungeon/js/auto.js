@@ -14,19 +14,22 @@
   var core = global.DG.core;
 
   var FLAGS = [
+    /* 2026-09-28 실기 Q7 "사가블로 자동 퀘스트"(전체 테스트용) — 사가고 📖 이야기와 같은 결: 목표만 고르고 원래 조작(town.moveTo·dungeon.enter/goRoom)으로 */
+    { key: 'quest', name: '퀘스트', emoji: '📜',
+      desc: '지역 사연(토벌·흔적·정예·우두머리)을 따라 들판을 걷고, 없으면 메인 퀘스트에 맞춰 던전 층·방을 고른다' },
     { key: 'grow', name: '승급 · 장비', emoji: '✨',
       desc: '승급 조건을 채운 인물을 올리고, 노획 장비를 갈아입힌다' },
     { key: 'retry', name: '다시 들어가기', emoji: '🔁',
       desc: '나오거나 쓰러지면 잠시 뒤 다시 내려간다' }
   ];
 
-  var acc = { grow: 0, dg: 0, retry: 0 };
+  var acc = { grow: 0, dg: 0, retry: 0, quest: 0 };
   var doing = '';
   var lastLog = 0;
 
   /* 세이브의 자동 설정. **빠진 칸은 채워 넣는다** — 옛 세이브나 다른 게임에서 넘어온
      모양이면 칸이 없어서 기능이 조용히 꺼진 것처럼 보인다(실제로 그렇게 헤맸다). */
-  var DEFAULTS = { on: false, grow: true, retry: true };
+  var DEFAULTS = { on: false, quest: true, grow: true, retry: true };
 
   function st() {
     var s = core.save, k;
@@ -113,6 +116,9 @@
 
   /** 다음 방 우선순위 — 체력이 깎였으면 우물부터 */
   function doorScore(kind, hpRatio) {
+    var want = on('quest') ? mainReq() : null;
+    if (want && want.t === 'discover' && kind === want.room) { return 150; }   // 📜 찾을 방이면 그 문
+    if (want && want.t === 'floor' && kind === 'stair') { return 120; }        // 📜 층 내려가기면 계단
     if (kind === 'stair') { return 55; }
     if (kind === 'well') { return hpRatio < 0.7 ? 200 : 30; }
     if (kind === 'trove') { return 90; }
@@ -153,6 +159,7 @@
     return n;
   }
 
+  var dropAim = { o: null, t: 0 };
   function tickDungeon(dt) {
     var D = global.DG.dungeon;
     var run = D.raw();                              // 읽기만 한다 (화면과 같은 방식)
@@ -203,8 +210,12 @@
       return;
     }
 
-    var drop = nearestOf(room.drops, p);
+    /* 벽·기둥 너머라 못 줍는 노획물에 1분 넘게 붙어 있었다(09-28 헤드리스) — 같은 것을 4초 넘게 못 주우면 건너뛴다 */
+    var drop = nearestOf(room.drops.filter(function (o) { return !o._autoSkip; }), p);
     if (drop) {
+      if (dropAim.o !== drop.o) { dropAim.o = drop.o; dropAim.t = 0; }
+      dropAim.t += dt;
+      if (dropAim.t > 4) { drop.o._autoSkip = true; dropAim.o = null; return; }
       D.moveTo(drop.o.x, drop.o.y);
       doing = '💰 노획물 수습';
       return;
@@ -235,6 +246,79 @@
     }
   }
 
+  /** 📜 지금 메인 퀘스트의 요구 { t: floor|kill|discover, n, room?, tag? } — 다 끝났으면 null */
+  function mainReq() {
+    var QD = global.DG.questData, q = core.save.quest;
+    var m = QD && QD.MAIN && q ? QD.MAIN[q.mainIdx || 0] : null;
+    return m ? m.req : null;
+  }
+
+  /** 📜 들판 목표 — 열린 지역 사연 중 가장 가까운 걸음의 자리 { x, y, label } · 없으면 null */
+  function questFieldGoal(tr) {
+    var Q = global.DG.quest, WM = global.DG.worldMap;
+    if (!Q || !WM || !tr || !tr.player) { return null; }
+    var p = tr.player, st = Q.status(), best = null, bd = Infinity;
+    questWait = '';
+    (st.chains || []).forEach(function (ch) {
+      if (ch.locked || ch.done) { return; }
+      var spot = null;
+      if (ch.step === 1) { spot = WM.clueSpot(ch.key); }
+      else if (ch.step === 3) {
+        /* 우두머리는 위험 = 그 자리 위험 + 4(dungeon.js RB_LV_ADD) — 던전에서 그 층까지 닿기 전엔 미룬다.
+           새 계정 부대가 곧장 덤벼 쓰러지고 마을로 돌아가길 되풀이했다(09-28 헤드리스). 그동안은 메인 퀘스트(던전)로 큰다 */
+        spot = WM.bossSpot(ch.key);
+        var rbLv = spot ? WM.levelAt(spot.x, spot.y) + 4 : 0, bestF = global.DG.dungeon.status().best || 0;
+        if (spot && bestF < rbLv) { questWait = ch.title + ' 우두머리는 던전 ' + rbLv + '층에 닿은 뒤로'; return; }
+      }
+      else {
+        /* 토벌(0)·정예(2) — 그 지역에 선 들판 몬스터(정예면 정예만) 가장 가까운 것, 없으면 지역 안쪽(흔적 자리)으로 들어가 찾는다 */
+        var en = (tr.room && tr.room.enemies) || [], ed = Infinity;
+        en.forEach(function (e) {
+          if (e.hp <= 0 || !e.field || (ch.step === 2 && !e.elite && !e.boss)) { return; }
+          if (WM.regionAt(e.x, e.y).key !== ch.key) { return; }
+          var dd = Math.hypot(e.x - p.x, e.y - p.y);
+          if (dd < ed) { ed = dd; spot = { x: e.x, y: e.y }; }
+        });
+        if (!spot) { spot = WM.clueSpot(ch.key); }
+      }
+      if (!spot) { return; }
+      var d = Math.hypot(spot.x - p.x, spot.y - p.y);
+      if (d < bd) { bd = d; best = { x: spot.x, y: spot.y, d: d, label: (ch.emoji || '📜') + ' ' + ch.title + ' · ' + ch.stepName + (ch.need ? ' ' + ch.have + '/' + ch.need : '') }; }
+    });
+    return best;
+  }
+
+  /** 📜 마을·들판 한 박자 — 맡았으면 true(던전에 안 내려간다) */
+  function tickQuestField(dt) {
+    var T = global.DG.town, tr = T && T.raw ? T.raw() : null;
+    if (!tr) { return false; }
+    acc.quest += dt;
+    if (acc.quest < 0.5) { return !!questDoing; }
+    acc.quest = 0;
+    var g = questFieldGoal(tr);
+    if (!g) { questDoing = ''; return false; }
+    /* 막힘 풀기 — 길 찾기가 없어 나무·바위·담에 붙으면 제자리. 2초 동안 30보도 못 가면 옆으로 400보 비켰다가 다시 */
+    var p = tr.player;
+    if (qStuck.side) {
+      qStuck.t += 0.5;
+      if (qStuck.t < 2.5 && Math.hypot(qStuck.side.x - p.x, qStuck.side.y - p.y) > 20) { T.moveTo(qStuck.side.x, qStuck.side.y); doing = '📜 막혀서 옆으로 돌아가는 중'; return true; }
+      qStuck.side = null; qStuck.t = 0;
+    }
+    if (Math.hypot(p.x - qStuck.x, p.y - qStuck.y) > 30) { qStuck.x = p.x; qStuck.y = p.y; qStuck.t = 0; } else { qStuck.t += 0.5; }
+    if (qStuck.t >= 2 && g.d > 60) {
+      var ux = (g.x - p.x) / g.d, uy = (g.y - p.y) / g.d, sg = (qStuck.n = (qStuck.n || 0) + 1) % 2 ? 1 : -1;
+      qStuck.side = { x: p.x - uy * 400 * sg - ux * 80, y: p.y + ux * 400 * sg - uy * 80 }; qStuck.t = 0;
+      T.moveTo(qStuck.side.x, qStuck.side.y);
+      doing = '📜 막혀서 옆으로 돌아가는 중';
+      return true;
+    }
+    T.moveTo(g.x, g.y);
+    questDoing = '📜 ' + g.label + ' — ' + Math.round(g.d) + '보';
+    doing = questDoing;
+    return true;
+  }
+  var questWait = '', questDoing = '', qStuck = { x: 0, y: 0, t: 0, side: null, n: 0 };
+
   /** 본영에 있을 때 — 다시 내려간다 */
   function tickEntry(dt) {
     if (!on('retry')) { doing = '🏯 본영에서 대기 (다시 들어가기 꺼짐)'; return; }
@@ -247,18 +331,22 @@
     }
     var s = global.DG.dungeon.status();
     var floor = s.best >= 2 ? Math.max(1, Math.floor(s.best / 2)) : 1;
+    /* 📜 층 내려가기 퀘스트면 닿은 곳부터 — 절반에서 시작하면 새 층까지 한참 걸린다 */
+    var mq = on('quest') ? mainReq() : null;
+    if (mq && mq.t === 'floor' && s.best >= 1) { floor = Math.max(1, Math.min(s.best, mq.n)); }
     global.DG.dungeon.enter({ floor: floor });
+    if (mq) { doing = '📜 메인 퀘스트 — 제' + floor + '층부터 (' + mq.t + (mq.n ? ' ' + mq.n : '') + ')' + (questWait ? ' · ' + questWait : ''); }
   }
 
   function update(dt) {
     if (!active()) { return; }
     if (global.DG.dungeon.active()) { tickDungeon(dt); }
-    else { tickEntry(dt); }
+    else if (!(on('quest') && tickQuestField(dt))) { tickEntry(dt); }
     if (on('grow')) { tickGrow(dt); }
   }
 
   function status() {
-    return { on: active(), doing: doing, flags: st() };
+    return { on: active(), doing: doing, flags: st(), mainReq: mainReq() };
   }
 
   global.DG = global.DG || {};
@@ -269,6 +357,6 @@
     update: update, status: status,
     /** 자가진단용 */
     _tickDungeon: tickDungeon, _tickEntry: tickEntry,
-    _autoRankUp: autoRankUp
+    _autoRankUp: autoRankUp, _doorScore: doorScore, _mainReq: mainReq, _questFieldGoal: questFieldGoal
   };
 })(window);

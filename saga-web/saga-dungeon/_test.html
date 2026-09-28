@@ -7180,6 +7180,38 @@ window.requestAnimationFrame = function () { return 0; };
       });
     });
 
+    t('자동 📜 퀘스트 — 메인 퀘스트 쪽 문을 먼저(찾을 방 150 · 층 내려가기면 계단 120) · 끄면 옛 점수', function () {
+      /* 2026-09-28 실기 Q7 "사가블로 자동 퀘스트" */
+      var A = DG.auto, q = C.save.quest || (C.save.quest = {}), keep = q.mainIdx, QD = DG.questData, i, di = -1, fi = -1;
+      for (i = 0; i < QD.MAIN.length; i++) { if (di < 0 && QD.MAIN[i].req.t === 'discover') { di = i; } if (fi < 0 && QD.MAIN[i].req.t === 'floor') { fi = i; } }
+      if (di < 0 || fi < 0) { return false; }
+      var room = QD.MAIN[di].req.room;
+      q.mainIdx = di; var disc = A._doorScore(room, 1), stairD = A._doorScore('stair', 1);
+      q.mainIdx = fi; var stairF = A._doorScore('stair', 1), roomF = A._doorScore(room, 1);
+      A.state().quest = false; var off = A._doorScore('stair', 1);
+      A.state().quest = true; q.mainIdx = keep;
+      return disc === 150 && stairD === 55 && stairF === 120 && roomF < 150 && off === 55 &&
+        ('찾기(' + room + ') 문 ' + disc + ' · 층 퀘스트면 계단 ' + stairF + ' · 끄면 계단 ' + off);
+    });
+
+    t('자동 📜 퀘스트 — 지역 사연 흔적 걸음이면 그 흔적 자리로, 우두머리 걸음이면 우두머리 자리로', function () {
+      var A = DG.auto, WM = DG.worldMap, q = C.save.quest || (C.save.quest = {}), keepCh = q.chain;
+      var key = WM.REGIONS[0].key, tr = { player: { x: 0, y: 0 }, room: { enemies: [] } };
+      q.chain = {}; q.chain[key] = { step: 1, have: 0, done: false, at: 0 };
+      var g1 = A._questFieldGoal(tr), c1 = WM.clueSpot(key);
+      q.chain[key].step = 3;
+      var dg = C.save.dungeon || (C.save.dungeon = { best: 0 }), keepBest = dg.best;
+      dg.best = 0; var gLow = A._questFieldGoal(tr);                 // 던전 층이 모자라면 우두머리는 미룬다
+      dg.best = 99;
+      var g3 = A._questFieldGoal(tr), b3 = WM.bossSpot(key);
+      dg.best = keepBest;
+      q.chain[key].done = true;
+      var gd = A._questFieldGoal(tr);
+      q.chain = keepCh;
+      return !!g1 && g1.x === c1.x && g1.y === c1.y && gLow === null && !!g3 && g3.x === b3.x && g3.y === b3.y && gd === null &&
+        ('흔적 (' + Math.round(c1.x) + ',' + Math.round(c1.y) + ') · 층 모자라면 우두머리 미룸 · 닿으면 (' + Math.round(b3.x) + ',' + Math.round(b3.y) + ') · 끝나면 없음');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
