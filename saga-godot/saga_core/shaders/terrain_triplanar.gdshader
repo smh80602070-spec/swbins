@@ -23,6 +23,7 @@ uniform sampler2D stone_rough;
 
 uniform float tile_scale : hint_range(0.05, 2.0) = 0.4; // 텍스처 반복 밀도(1/m)
 uniform float patch_scale : hint_range(0.02, 1.0) = 0.12; // 얼룩 크기
+uniform vec3 cliff_color = vec3(0.62, 0.53, 0.42); // 가파른 비탈 빛깔(terrain_builder.gd CLIFF_COLOR)
 
 varying vec3 world_pos;
 varying vec3 world_normal;
@@ -117,7 +118,10 @@ void fragment() {
 	vec3 detail_normal = normalize(grass_n * grass_w + dirt_n * dirt_w + stone_n * stone_w);
 	float detail_rough = (grass_r * grass_w + dirt_r * dirt_w + stone_r * stone_w) / wsum;
 
-	ALBEDO = COLOR.rgb * detail_albedo;
+	// 2026-09-30 — 봉우리 굴곡(칸 윗면)의 가파른 비탈은 아래 절벽 무늬(판·틈)는 받는데 빛깔은 산 윗면 풀빛 정점색 그대로라,
+	// 절벽 사이사이 연두빛 반투명 조각으로 보였다(창 모드 s_port). 가파를수록 절벽 빛깔(terrain_builder CLIFF_COLOR 와 같은 값)로.
+	float steep = smoothstep(0.45, 0.8, slope);
+	ALBEDO = mix(COLOR.rgb, cliff_color, steep) * detail_albedo;
 	// 2026-09-28 "그래픽 먼저" — 절벽(가파른 면)은 돌 텍스처 한 장만 반복돼 멀리서 한 빛 회색 판이었다.
 	// 지층 띠(높이 따라 굽이치는 가로 줄)·큰 얼룩(따뜻한 황토 ↔ 서늘한 잿빛)·세로 물때 줄을 얹는다. 평지는 cliff 0 이라 그대로.
 	float cliff = smoothstep(0.45, 0.8, slope);
@@ -149,9 +153,13 @@ void fragment() {
 		NORMAL = normalize(NORMAL + (VIEW_MATRIX * vec4(tilt, 0.0)).xyz * cliff);
 	}
 	// 이끼 — 절벽의 각진 면 중 조금이라도 위를 보는 턱(법선 y 0.08~0.3)과 큰 얼룩이 겹치는 곳에 풀빛이 앉는다(원신 절벽의 이끼 턱).
+	// 2026-09-30 — 면 법선(각진 절벽은 삼각형마다 한 값)으로 거르니 위를 보는 큰 삼각형이 통째로 연두가 돼, 돌 틈이 비치는 반투명 쐐기로 보였다(창 모드 s_port).
+	// 법선은 옅게만 기울이고(면 경계에서 끊기지 않게) 세로로 흘러내린 얼룩 노이즈로 모양을 낸다.
 	float ny = normalize(world_normal).y;
-	float moss = cliff * smoothstep(0.04, 0.2, ny) * smoothstep(0.25, 0.5, _value_noise(world_pos.xz * 0.08 + world_pos.y * 0.05));
-	ALBEDO = mix(ALBEDO, vec3(0.2, 0.36, 0.13) * (0.85 + 0.3 * n1), moss * 0.85);
+	vec2 mp = vec2(world_pos.x + world_pos.z, world_pos.y * 0.35);
+	float mpatch = _value_noise(mp * 0.11) * 0.65 + _value_noise(mp * 0.37 + vec2(3.7, 1.9)) * 0.35;
+	float moss = cliff * smoothstep(0.55, 0.72, mpatch + ny * 0.12);
+	ALBEDO = mix(ALBEDO, vec3(0.16, 0.27, 0.1) * (0.85 + 0.3 * n1), moss * 0.6);
 	NORMAL_MAP = detail_normal * 0.5 + 0.5;
 	ROUGHNESS = detail_rough;
 	// 모래 표시 — 풀 텍스처 대신 모래색에 흙결만 옅게(평평한 모래밭).

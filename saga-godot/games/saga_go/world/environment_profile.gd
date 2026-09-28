@@ -19,7 +19,10 @@ const TOON_SKY_SCENE_PREFIX := "res://games/saga_go/"
 ## 맑은 날(날씨 배율 0.6)에도 100m 앞이 절반 가려져 화면이 뿌옜다(2026-09-26 창 모드 촬영). 원신처럼 멀리 산이 비치게.
 ## 안개는 그리기 부담과 무관하다(가리기만 하고 덜 그리지 않는다).
 ## 09-28 0.0035 → 0.0022 — 300m 앞 산이 65% 가려 잿빛 판으로 보였다(이제 약 48%).
-const GO_FOG_DENSITY := 0.0022
+## 09-30 0.0022 → 0.0013 + 안개색을 하늘빛보다 한 단 푸르게(공기 원근) — 안개를 아예 끄면 먼 절벽이 검푸른 판이 되고, 하늘빛 안개는 회색으로 씻어 냈다.
+## 푸른 옅은 안개는 먼 절벽이 청회색으로 물러나 깊이가 살고 풀·나무는 또렷하다(창 모드 v_statue_far·s_port 비교).
+const GO_FOG_DENSITY := 0.0013
+const GO_FOG_COLOR := Color(0.66, 0.8, 0.95)
 const GO_EXPOSURE := 0.88
 
 
@@ -36,7 +39,7 @@ func _ready() -> void:
 	var sky := Sky.new()
 	sky.sky_material = mat
 	env.sky = sky
-	env.fog_light_color = SKY_HORIZON
+	env.fog_light_color = GO_FOG_COLOR
 	env.fog_density = GO_FOG_DENSITY
 	## 2026-09-28 "그래픽 먼저" — AgX 는 색을 크게 빼서(다섯 판 공용 값) GO 들판이 잿빛으로 바랬다(창 모드 촬영).
 	## 원신처럼 맑고 짙게: ACES + 채도·대비 한 단, 하늘빛 주변광 조금 더. 밤·날씨는 이 위에 그대로 곱해진다.

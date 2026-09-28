@@ -139,6 +139,7 @@ func _process(_delta: float) -> void:
 		return
 	if _frame == 20:
 		_act(String(SHOTS[_i][7]))
+		_env_override()
 	## "fxring" — 원소 일곱의 스킬 자리(둘레 6m)와 가운데 폭발 하나를 찍기 12 프레임 전에 띄운다(09-28 원소 이펙트).
 	if String(SHOTS[_i][7]) == "fxring" and _frame == SETTLE - 12:
 		var els := ["fire", "water", "thunder", "wind", "ice", "rock", "grass"]
@@ -160,6 +161,25 @@ func _process(_delta: float) -> void:
 		_aim(SHOTS[_i])
 	if _frame == SETTLE:
 		_capture(String(SHOTS[_i][0]))
+
+## SAGA_SHOT_ENV="fog_density=0.001;fog_light_color=Color(0.6,0.7,0.9,1)" — 찍기 전 Environment 속성을 바꿔 값 고르기(09-30 먼 경치).
+## 날씨 화면이 60초마다 안개 농도·색을 다시 쓰므로 컷마다 덮어쓴다.
+func _env_override() -> void:
+	## SAGA_SHOT_HIDE="GrassField,CliffRocks*" — 이름(와일드카드)이 맞는 노드를 숨겨 무엇이 그리는지 가린다.
+	for pat in OS.get_environment("SAGA_SHOT_HIDE").split(",", false):
+		for n in get_tree().current_scene.find_children(pat, "Node3D", true, false):
+			(n as Node3D).visible = false
+	var spec := OS.get_environment("SAGA_SHOT_ENV")
+	if spec == "":
+		return
+	var we := get_tree().current_scene.find_children("*", "WorldEnvironment", true, false)
+	if we.is_empty():
+		return
+	var en := (we[0] as WorldEnvironment).environment
+	for kv in spec.split(";", false):
+		var i := kv.find("=")
+		if i > 0:
+			en.set(kv.substr(0, i).strip_edges(), str_to_var(kv.substr(i + 1)))
 
 func _pos_of(region: String, v: Variant) -> Vector3:
 	var p := Vector3.ZERO
