@@ -16,6 +16,8 @@ const Characters := preload("res://saga_core/data/characters.gd")
 const DispatchNode := preload("res://games/saga_go/world/dispatch.gd")
 const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")
 const Elements := preload("res://games/saga_go/combat/elements.gd")
+const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 
 const SETTLE := 90
 
@@ -36,6 +38,18 @@ const SHOTS := [
 	["v_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, ""],
 	["v_station_boards", "village", "v_station", Vector3(0, 0, 9), "v_station", -22.0, 10.0, ""],
 	["v_people_lineup", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 7.0, "lineup"],
+	["m_beasts", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -10.0, 9.0, "beasts"],
+	["m_beasts_a", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 4.5, "beasts_a"],
+	["m_beasts_b", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 4.5, "beasts_b"],
+	["m_pets", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -10.0, 8.0, "pets"],
+	["m_1_wolf", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -6.0, 2.2, "beast:wolf"],
+	["m_1_thunder_cat", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -6.0, 2.2, "beast:thunder_cat"],
+	["m_1_ice_fox", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -6.0, 2.2, "beast:ice_fox"],
+	["m_1_rock_bear", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -6.0, 2.2, "beast:rock_bear"],
+	["m_1_fire_imp", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -6.0, 2.2, "beast:fire_imp"],
+	["m_1_water_turtle", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -6.0, 2.2, "beast:water_turtle"],
+	["m_1_wind_hawk", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -6.0, 2.2, "beast:wind_hawk"],
+	["m_1_grass_snake", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -6.0, 2.2, "beast:grass_snake"],
 	["c_dock", "coast", "c_dock", Vector3(10, 0, 8), "c_dock", -16.0, 10.0, ""],
 	["r_statue", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -16.0, 10.0, ""],
 	["f_pass_view", "frost", "f_pass", Vector3(0, 0, 0), Vector2(3.0, 4.0), -10.0, 11.0, ""],
@@ -164,6 +178,8 @@ func _pos_of(region: String, v: Variant) -> Vector3:
 func _place(s: Array) -> void:
 	if String(s[7]) == "lineup":
 		_build_lineup(_pos_of(String(s[1]), s[2]) + (s[3] as Vector3))
+	elif String(s[7]).begins_with("beast") or String(s[7]) == "pets":
+		_build_beasts(_pos_of(String(s[1]), s[2]) + (s[3] as Vector3), String(s[7]))
 	var e := _pos_of(String(s[1]), s[2]) + (s[3] as Vector3)
 	e.y = TerrainBuilder.height_at(String(s[1]), e) + 0.6
 	_p.global_position = e
@@ -195,6 +211,13 @@ func _act(a: String) -> void:
 				_swing_enemy.set_physics_process(false)
 				_swing_enemy.set_process(false)
 				_p.global_position = _swing_enemy.global_position + Vector3(1.4, 0.4, 0.9)
+		"beasts", "beasts_a", "beasts_b", "pets":
+			_p.visible = false # 줄 한가운데를 가린다
+		_ when a.begins_with("beast:"):
+			_p.visible = false
+			var gf := get_tree().current_scene.get_node_or_null("GrassField") as Node3D
+			if gf:
+				gf.visible = false # 가까이 한 마리 — 발까지 보려고 풀을 잠깐 끈다
 		"night":
 			TimeOfDay.force(true)
 			var nv := get_tree().get_first_node_in_group("go_night_visual")
@@ -237,6 +260,11 @@ func _act(a: String) -> void:
 				dn.call("open_screen")
 
 func _undo() -> void:
+	if _p:
+		_p.visible = true
+	var gf := get_tree().current_scene.get_node_or_null("GrassField") as Node3D
+	if gf:
+		gf.visible = true
 	if TimeOfDay.is_night():
 		TimeOfDay.force(false)
 		var nv := get_tree().get_first_node_in_group("go_night_visual")
@@ -264,6 +292,45 @@ func _build_lineup(eye: Vector3) -> void:
 		var p := eye + Vector3((k - (n - 1) / 2.0) * 1.1, 0, -6.0)
 		p.y = TerrainBuilder.height_at("village", p)
 		body.global_position = p
+		_lineup.append(body)
+
+## 09-29 적 몬스터 모습 — 들판 적(코드 몸)을 한 줄로. "beasts" 전부 · "beasts_a"/"beasts_b" 앞·뒤 절반을 가까이 · "pets" 신수 열하나.
+## 몸마다 비스듬히(±30°) 돌려 옆모습·앞모습이 같이 보이게.
+const BEAST_KINDS := ["wolf", "thunder_cat", "ice_fox", "rock_bear", "fire_imp", "water_turtle", "wind_hawk", "grass_snake"]
+func _build_beasts(eye: Vector3, which: String) -> void:
+	var root := get_tree().current_scene
+	var looks: Array = []
+	if which == "pets":
+		for id in CreatureBuilder.PET_LOOKS:
+			var l: Array = CreatureBuilder.PET_LOOKS[id]
+			looks.append([l[0], [l[1], l[2], l[3]], 1.4, l[4] if l.size() > 4 else {}])
+	else:
+		var kinds: Array = BEAST_KINDS
+		if which == "beasts_a":
+			kinds = BEAST_KINDS.slice(0, 4)
+		elif which == "beasts_b":
+			kinds = BEAST_KINDS.slice(4)
+		elif which.begins_with("beast:"):
+			kinds = [which.substr(6)]
+		for k in kinds:
+			var d: Dictionary = FieldEnemy.KINDS[k]
+			looks.append([d.get("shape", "wolf"), d.get("colors", []), float(d.get("height", 1.0)), {"element": String(d.get("element", "")), "enemy": true}])
+	var gap := 2.4 if which != "pets" else 1.9
+	var n := looks.size()
+	for k in n:
+		var l: Array = looks[k]
+		var body: Node3D
+		if (l[1] as Array).is_empty():
+			body = CreatureBuilder.build("wolf", [Color(0.42, 0.4, 0.38), Color(0.62, 0.6, 0.56), Color(0.95, 0.8, 0.25)], l[3])
+			CreatureBuilder._fit(body, "wolf", 1.05)
+		else:
+			body = CreatureBuilder.build(l[0], l[1], l[3])
+			CreatureBuilder._fit(body, l[0], l[2])
+		root.add_child(body)
+		var p := eye + Vector3((k - (n - 1) / 2.0) * gap, 0, -6.0 if n > 1 else -2.8)
+		p.y = TerrainBuilder.height_at("village", p)
+		body.global_position = p
+		body.rotation.y = deg_to_rad(30.0 if k % 2 == 0 else -30.0) if n > 1 else deg_to_rad(40.0)
 		_lineup.append(body)
 
 func _lineup_center() -> Vector3:

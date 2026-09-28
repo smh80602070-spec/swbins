@@ -274,6 +274,7 @@ func _build_junction() -> void:
 	## 멈춘 별까마귀 — 코드 몸 bird(틈 삼킨 별까마귀와 같은 빛깔), 부리를 하늘 틈 쪽으로
 	_crow = CreatureBuilder.build("bird", [Color(0.14, 0.13, 0.22), Color(0.62, 0.45, 1.0), Color(1.0, 0.84, 0.35)])
 	CreatureBuilder._fit(_crow, "bird", 4.4)
+	CreatureBuilder.freeze(_crow) # 멈춘 순간 — 날갯짓·들썩임 없이
 	_crow.name = "FrozenCrow"
 	_crow.position = Vector3(0, CROW_Y, 0)
 	_crow.rotation = Vector3(-0.5, 0.6, 0.0)

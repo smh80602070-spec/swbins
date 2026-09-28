@@ -166,7 +166,7 @@ func _spawn_visual() -> void:
 	var look: String = LOOK_BY_NODE.get(String(name), "bandit" if visual_glb_path == BANDIT_GLB else "")
 	var scene: PackedScene = load(visual_glb_path) if visual_glb_path != "" and look == "" else null
 	if look == "wolf":
-		_visual = CreatureBuilder.build("beast", [Color(0.42, 0.4, 0.38), Color(0.62, 0.6, 0.56), Color(0.95, 0.8, 0.25)])
+		_visual = CreatureBuilder.build("wolf", [Color(0.42, 0.4, 0.38), Color(0.62, 0.6, 0.56), Color(0.95, 0.8, 0.25)], {"enemy": true})
 		_visual.scale = Vector3.ONE * 0.9
 		bandit_scale = 0.9
 		_using_glb = true

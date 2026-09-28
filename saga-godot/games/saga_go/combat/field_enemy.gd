@@ -30,7 +30,7 @@ const KINDS := {
 		"shape": "turtle", "height": 1.0, "colors": [Color(0.2, 0.42, 0.62), Color(0.35, 0.62, 0.72), Color(0.85, 0.95, 1.0)]},
 	"thunder_cat": {"name": "번개살쾡이", "hp": 230.0, "atk": 17.0, "speed": 6.0, "aggro": 15.0,
 		"reach": 1.8, "tell": 0.65, "cd": 1.5, "exp": 20.0, "element": "thunder", "shield": 130.0,
-		"shape": "beast", "height": 1.05, "colors": [Color(0.42, 0.3, 0.6), Color(0.78, 0.65, 1.0), Color(1.0, 0.95, 0.45)]},
+		"shape": "cat", "height": 1.05, "colors": [Color(0.42, 0.3, 0.6), Color(0.78, 0.65, 1.0), Color(1.0, 0.95, 0.45)]},
 	## PLAN 106장 ⑮ — 새 원소 넷의 괴물(퓨전, 코드로 그림). 방패 상성은 elements.gd SHIELD_COUNTER.
 	"wind_hawk": {"name": "회오리매", "hp": 200.0, "atk": 15.0, "speed": 6.5, "aggro": 16.0,
 		"reach": 2.0, "tell": 0.6, "cd": 1.5, "exp": 20.0, "element": "wind", "shield": 140.0,
@@ -638,6 +638,7 @@ func _set_tell(on: bool) -> void:
 
 ## PLAN 106장 ④ — 도적은 VRoid 몸(검붉은 옷, 개체마다 머리색만 다름), 늑대는
 ## 코드로 그린 네발짐승(creature_builder.gd). 사건 늑대 무리(bandit_encounter)와 같은 모양.
+## 09-29 — 코드 짐승도 AnimationPlayer(idle/walk)를 가져 _play 가 걸음을 바꾸고, 원소 적은 눈·장식이 그 원소 빛으로 빛난다.
 func _build_visual() -> Node3D:
 	var v: Node3D
 	if kind == "bandit":
@@ -653,11 +654,13 @@ func _build_visual() -> Node3D:
 			VroidBody.add_crown(v, def.crown)
 		v.scale *= float(def.get("size", 1.0))
 	elif def.has("shape"):
-		v = CreatureBuilder.build(def.shape, def.colors)
+		v = CreatureBuilder.build(def.shape, def.colors, {"element": String(def.get("element", "")), "enemy": true})
 		CreatureBuilder._fit(v, def.shape, def.height)
+		_anim = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
 	else:
-		v = CreatureBuilder.build("beast", [Color(0.42, 0.4, 0.38), Color(0.62, 0.6, 0.56), Color(0.95, 0.8, 0.25)])
-		v.scale = Vector3.ONE * 0.9
+		v = CreatureBuilder.build("wolf", [Color(0.42, 0.4, 0.38), Color(0.62, 0.6, 0.56), Color(0.95, 0.8, 0.25)], {"enemy": true})
+		CreatureBuilder._fit(v, "wolf", 1.05)
+		_anim = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
 	_visual_scale = v.scale.x
 	return v
 

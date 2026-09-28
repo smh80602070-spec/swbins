@@ -64,6 +64,8 @@ const POPUP_RISE_M := 0.8
 const POPUP_CRIT_SCALE := 1.4
 const SOUND_CUE_COUNT := 3
 const CEL_SHADER := preload("res://saga_core/shaders/cel_toon.gdshader")
+## 2026-09-29 — GO 코드 짐승(creature_builder.gd)은 정점색 셀 셰이더에 같은 hit_flash 를 둔다.
+const CEL_VC_SHADER := preload("res://saga_core/shaders/cel_vertex_color.gdshader")
 const HIT_SOUNDS: Array[AudioStream] = [
 	preload("res://assets/generated/sfx/hit_01.wav"),
 	preload("res://assets/generated/sfx/hit_02.wav"),
@@ -171,7 +173,7 @@ func _cel_shader_materials(mesh: MeshInstance3D) -> Array:
 		return result
 	for i in mesh.mesh.get_surface_count():
 		var mat := mesh.get_surface_override_material(i)
-		if mat is ShaderMaterial and (mat as ShaderMaterial).shader == CEL_SHADER:
+		if mat is ShaderMaterial and ((mat as ShaderMaterial).shader == CEL_SHADER or (mat as ShaderMaterial).shader == CEL_VC_SHADER):
 			result.append(mat)
 	return result
 

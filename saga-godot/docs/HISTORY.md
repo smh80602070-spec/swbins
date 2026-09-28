@@ -9343,3 +9343,16 @@ PROJECT_STATE.md` 참고. 요약:
 - probe_shots "fxring"(일곱 원소 스킬 둘레 + 가운데 번개 폭발) · x_fxring 자리. 네모 판 입자는 색종이처럼 보여 둥근 알갱이로.
 - 점검 KIT·ELEMENT·WEAPON·FIELD_BOSS·DOMAIN·WEEKLY·TALENT·SIGHT fails=0, REGRESS OK. COMBAT(증발·과부하)·STORY(talk_face)가 한 판 FAIL → 단독 재실행 둘 다 fails=0(흔들림, 원인 미조사).
 - 실기 확인 전: 실제 편성으로 스킬·폭발 누른 모습, 폰 입자 부담.
+
+## GO 그래픽 먼저 ⑪ 적 몬스터 모습 (2026-09-29, "사가고돗 이어해")
+
+- 짐승·신수·들판 적이 캡슐·공 서른 개를 이어 붙인 모양(보라 캡슐 살쾡이)이었다 → world/creature_builder.gd 를 다시 지음:
+  - 몸통·목·머리·주둥이를 척추 곡선(Catmull-Rom)+마디 굵기의 **한 줄기 관**으로. 귀·볼털·갈기·송곳니·발톱·눈썹·꼬리(가는/덥수룩/아홉)·말 갈기·새 날개 깃·거북 각진 등딱지 판·도깨비 엄니/방망이.
+  - 정점색(배 밝게·주둥이·양말·줄무늬·꼬리 끝), 알파 0 = 발광(cel_vertex_color 에 EMISSION·hit_flash 추가 — 건물은 알파 1 이라 그대로). 원소 적은 눈이 원소 빛, 등줄기 장식(빙 결정·암 판·화 불꽃·초 잎·풍 깃·수 물마루·뇌 줄무늬/번개).
+  - 다리·꼬리·날개·팔은 관절 축에 달고 AnimationPlayer idle/walk 를 코드로 — field_enemy._play 가 걸음을 바꾼다(전엔 코드 짐승은 미끄러지기만). 멈춘 별까마귀는 freeze.
+  - 한 짐승 부품이 재질 하나를 나눠 써 피격 번쩍임이 온몸에(전엔 material_override 라 combat_feel 이 못 잡아 번쩍임이 아예 없었다). 키는 지은 몸 실제 높이(meta natural_h)로 맞춤.
+  - 새 모양 cat(번개살쾡이)·wolf(들늑대·늑대 무리). 신수 opts: 해태 갈기+뿔, 백호 줄무늬, 현무 뱀, 청룡 갈기털, 불가사리 쇠판.
+- probe_shots 에 m_beasts·m_beasts_a/b·m_pets·m_1_<적> 여덟(한 마리 가까이, 풀 끔). 전후 촬영으로 송곳니 길이·늑대 목털·거북 판·뱀 잎을 한 번 더 고침.
+- PERF(모바일 540×960): 마을 삼각형 평균 34.0만 → 33.9만, draw 평균 213 → 207·최댓값 249 → 243.
+- 점검 COMBAT·ELEMENT·KIT·FIELD_BOSS·WEAPON·DOMAIN·WEEKLY·TREASURE·ARCHERY·FROST·FORK·STORY·STORY2~11 fails=0, REGRESS OK.
+- 실기 확인 전: 걷기 다리 흔들림 속도, 원소 발광 세기(폰), 큰 보스(3~5m) 외곽선 두께.
