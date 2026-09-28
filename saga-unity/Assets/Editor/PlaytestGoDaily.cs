@@ -201,10 +201,10 @@ namespace Saga.EditorTools
             if (!DailyTaskState.BonusClaimed) SetToday(0, 1, 4, 6);
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":26") || !json.Contains("\"dailyBonus\":true")) Fail("세이브 v25 에 마무리 보상이 없다");
+            if (!json.Contains("\"version\":27") || !json.Contains("\"dailyBonus\":true")) Fail("세이브 v25 에 마무리 보상이 없다");
             T.GetField("_bonusClaimed", S).SetValue(null, false);
             if (!SaveState.TryLoad() || !DailyTaskState.BonusClaimed) Fail("v25 왕복 뒤 마무리 보상이 달라짐");
-            string v24 = Regex.Replace(json.Replace("\"version\":26", "\"version\":26"), ",\"dailyBonus\":(true|false)", "");
+            string v24 = Regex.Replace(json.Replace("\"version\":27", "\"version\":27"), ",\"dailyBonus\":(true|false)", "");
             if (v24.Contains("dailyBonus")) { Fail("v24 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v24);
             if (!SaveState.TryLoad() || DailyTaskState.BonusClaimed) Fail("v24 파일 — 마무리 보상을 받은 걸로 읽음");

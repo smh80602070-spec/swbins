@@ -794,6 +794,16 @@
     { "key": "domain.why.running", "value": "Already in a challenge" },
     { "key": "domain.why.stage", "value": "No such stage" },
     { "key": "domain.why.time", "value": "Time is up" },
-    { "key": "domain.why.wiped", "value": "Everyone fell" }
+    { "key": "domain.why.wiped", "value": "Everyone fell" },
+    { "key": "boss.bloomed", "value": "a reward flower bloomed" },
+    { "key": "boss.again", "value": "Defeated the Watchtower Warden again — a reward flower bloomed" },
+    { "key": "boss.title", "value": "Reward Flower" },
+    { "key": "boss.btn_keep", "value": "Leave it" },
+    { "key": "boss.why.none", "value": "No flower" },
+    { "key": "boss.claimed", "value": "Reward flower — Vigor {0} · Gold +{1} · {2} — the Watchtower Warden returns in 150s" },
+    { "key": "boss.back", "value": "The Watchtower Warden stands again" },
+    { "key": "boss.card", "value": "A flower bloomed where the Watchtower Warden fell.\\n★{0} Relic 1 · Gold {1}\\nVigor {2}/{3} · once claimed, the Warden returns in 150s" },
+    { "key": "boss.btn_claim", "value": "Spend {0} Vigor to claim" },
+    { "key": "boss.btn_short", "value": "Not enough Vigor — the flower stays" }
   ]
 }

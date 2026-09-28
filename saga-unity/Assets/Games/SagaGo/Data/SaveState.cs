@@ -14,7 +14,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 26;
+        private const int SaveVersion = 27;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -126,6 +126,9 @@ namespace Saga.Go.Data
             public int domainClaims;
             public string weeklyWeek;
             public int weeklyN;
+            // v27 — PLAN.md 109-14-10 망루 수호장 보상 꽃(쓰러뜨리고 안 받음)·받은 유닉스 초(150초 뒤 다시 선다).
+            public bool guardianBloom;
+            public long guardianPaidAt;
         }
 
         public static bool Save()
@@ -183,6 +186,8 @@ namespace Saga.Go.Data
                 regionsVisited = WorldMapState.SnapshotRegions(),
                 mapRevealed = WorldMapState.Revealed,
                 guardianDown = GuardianState.Defeated,
+                guardianBloom = GuardianState.Bloom,
+                guardianPaidAt = GuardianState.PaidAt,
                 missions = RegionMissionState.Snapshot(),
                 heroesSeen = HeroDexState.Snapshot(),
                 peaksFound = WorldMapState.SnapshotPeaks(),
@@ -264,7 +269,7 @@ namespace Saga.Go.Data
             DropState.Restore(data.drops);
             ShrineTrialState.Restore(data.shrineDate, data.shrineDailyCount, data.shrineShards, data.shrineStamps, data.shrineLockUntilTicks);
             WorldMapState.Restore(data.waypoints, data.regionsVisited, data.mapRevealed);
-            GuardianState.Restore(data.guardianDown);
+            GuardianState.Restore(data.guardianDown, data.guardianBloom, data.guardianPaidAt);
             RegionMissionState.Restore(data.missions);
             HeroDexState.Restore(data.heroesSeen);
             WorldMapState.RestorePeaks(data.peaksFound);
@@ -530,6 +535,14 @@ namespace Saga.Go.Data
                 data.domainClaims = 0;
                 data.weeklyWeek = "";
                 data.weeklyN = 0;
+                return data;
+            }
+            if (fromVersion == 26)
+            {
+                // v26엔 꽃이 없었다 — 이미 쓰러뜨린 수호장 자리엔 꽃이 핀 것으로(받으면 150초 뒤 다시 선다).
+                data.version = 27;
+                data.guardianBloom = data.guardianDown;
+                data.guardianPaidAt = 0;
                 return data;
             }
             return null;

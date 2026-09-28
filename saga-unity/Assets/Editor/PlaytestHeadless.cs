@@ -173,6 +173,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoAdventure.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-7 여정·천하 등급(레벨·돈·세이브 되돌림)
                 if (!PlaytestGoDaily.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-8 일일 의뢰(일과·돈·세이브 되돌림)
                 if (!PlaytestGoDomain.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-9 숨은 터·원기·주간 보스(원기·돈·보패·재료·세이브 되돌림)
+                if (!PlaytestGoFieldBoss.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-10 들판 보스 보상 꽃(수호장·원기·돈·세이브 되돌림)
                 if (!PlaytestGoPeaks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-9 정상 발견·순간이동·건물 가림 카메라(기록·돈·세이브 되돌림)
                 // 반드시 마지막 — DailyTaskState 진단이 SaveState.TryLoad()로
                 // 세이브 파일을 v9 모양으로 잠깐 바꿔치기해 로드하는데, 이건

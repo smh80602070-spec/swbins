@@ -179,10 +179,10 @@ namespace Saga.EditorTools
             AdventureState.RestoreSave(true, 9);
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":26") || !json.Contains("\"advLowered\":true") || !json.Contains("\"advPaid\":9")) Fail("세이브 v24 에 여정이 없다");
+            if (!json.Contains("\"version\":27") || !json.Contains("\"advLowered\":true") || !json.Contains("\"advPaid\":9")) Fail("세이브 v24 에 여정이 없다");
             AdventureState.RestoreSave(false, 1);
             if (!SaveState.TryLoad() || !AdventureState.Lowered || AdventureState.Paid != 9 || AdventureState.WorldLevel != 2) Fail("v24 왕복 뒤 여정이 달라짐");
-            string v23 = Regex.Replace(json.Replace("\"version\":26", "\"version\":23"), ",\"advLowered\":(true|false),\"advPaid\":\\d+", "");
+            string v23 = Regex.Replace(json.Replace("\"version\":27", "\"version\":23"), ",\"advLowered\":(true|false),\"advPaid\":\\d+", "");
             if (v23.Contains("advPaid")) { Fail("v23 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v23);
             if (!SaveState.TryLoad()) { Fail("v23 파일 TryLoad 실패"); return; }

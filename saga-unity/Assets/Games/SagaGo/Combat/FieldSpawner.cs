@@ -109,7 +109,7 @@ namespace Saga.Go.Combat
         {
             get
             {
-                int n = GuardianState.Defeated ? 0 : 1;
+                int n = GuardianState.Standing ? 1 : 0;
                 foreach (var g in Groups) n += g.Members.Length;
                 return n;
             }
@@ -176,7 +176,7 @@ namespace Saga.Go.Combat
                     FieldEnemy.Spawn(kind, home, model, g.Id, transform, era, body).ApplyDanger(danger);
                 }
             }
-            if (!GuardianState.Defeated)
+            // 109-14-10 늘 세운다 — 서 있을 때가 아니면 첫 틱에 스스로 꺼지고, 꽃을 받고 150초 뒤 `GuardianBloom` 이 다시 켠다
             {
                 FieldEnemy.Spawn(FieldEnemy.Kind.Guardian, TestMapData.WorldPos(GuardianGx, GuardianGy),
                     guardianModel != null ? guardianModel : banditModel, GuardianGroupId, transform);

@@ -251,8 +251,12 @@ namespace Saga.Go.Combat
             e.Home = home;
             e._spawnHome = home;
             e.Setup();
+            if (kind == Kind.Guardian) GuardianInstance = e; // 109-14-10 꺼져 있어도 다시 세울 수 있게
             return e;
         }
+
+        /// <summary>109-14-10 망루 수호장(꺼져 있어도 — `All` 은 켜진 적만).</summary>
+        public static FieldEnemy GuardianInstance { get; private set; }
 
         /// <summary>109-6 — 들판 인물 하나를 겨루기 상대로 세운다(몸은 동행이 됐을 때와 같은 몸, 컨트롤러는 Maria 것 리타깃).</summary>
         public static FieldEnemy SpawnHero(GoHeroes.Hero hero, Vector3 home, GameObject model, RuntimeAnimatorController controller, Transform parent,
@@ -626,9 +630,9 @@ namespace Saga.Go.Combat
         public void Tick(float dt)
         {
             TickStatus(dt);
-            if (IsGuardian && GuardianState.Defeated && Alive)
+            if (IsGuardian && !GuardianState.Standing && Alive)
             {
-                gameObject.SetActive(false); // 세이브에서 이미 쓰러뜨린 수호장 — 다시 안 선다.
+                gameObject.SetActive(false); // 세이브에서 이미 쓰러뜨린 수호장 — 꽃을 받고 150초가 지나기 전엔 안 선다(109-14-10 `GuardianBloom` 이 다시 세운다).
                 return;
             }
             if (CurrentState == State.Dead)
@@ -1120,7 +1124,7 @@ namespace Saga.Go.Combat
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
             if (DomainFoe) { Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음
-            PlayerStats.AddExp(ExpReward);
+            if (!(IsGuardian && GuardianState.Defeated)) PlayerStats.AddExp(ExpReward); // 109-14-10 다시 선 수호장은 경험 없이 꽃만
             DailyTaskState.ReportProgress(DailyTaskState.Kind.FieldKill, 1); // 109-14-8 일일 의뢰 — 들판 적
             if (EnemyKind == Kind.Bandit && !IsHero)
             {
@@ -1130,11 +1134,14 @@ namespace Saga.Go.Combat
             }
             if (IsGuardian)
             {
-                _timer = float.MaxValue; // 다시 안 선다(107-7).
-                GoldState.Add(GuardianGoldNow); // 109-14-7 천하 등급 전리품 배율
-                GuardianState.MarkDefeated();
-                Saga.Go.UI.DialogueLabel.Instance?.Show(string.Format(
-                    GoLocalization.T("field.guard_slain", "망루 수호장 토벌! 금 {0}냥 · 경험치 {1}"), GuardianGoldNow, ExpReward), 4f);
+                _timer = float.MaxValue; // 저절로 다시 안 선다 — 꽃을 받고 150초 뒤 `GuardianBloom` 이 세운다(109-14-10)
+                if (GuardianState.MarkDefeated())
+                {
+                    GoldState.Add(GuardianGoldNow); // 109-14-7 천하 등급 전리품 배율 — 첫 토벌만
+                    Saga.Go.UI.DialogueLabel.Instance?.Show(string.Format(
+                        GoLocalization.T("field.guard_slain", "망루 수호장 토벌! 금 {0}냥 · 경험치 {1}"), GuardianGoldNow, ExpReward) + " — " + GoLocalization.T("boss.bloomed", "보상 꽃이 피었다"), 4f);
+                }
+                else Saga.Go.UI.DialogueLabel.Instance?.Show(GoLocalization.T("boss.again", "망루 수호장을 다시 쓰러뜨렸다 — 보상 꽃이 피었다"), 3.5f);
             }
             if (IsElemental && ShieldMax > 0f && !IsGuardian && !IsHero)
             {

@@ -794,6 +794,16 @@
     { "key": "domain.why.running", "value": "이미 도전 중" },
     { "key": "domain.why.stage", "value": "없는 단계" },
     { "key": "domain.why.time", "value": "시간이 다 됐다" },
-    { "key": "domain.why.wiped", "value": "모두 쓰러졌다" }
+    { "key": "domain.why.wiped", "value": "모두 쓰러졌다" },
+    { "key": "boss.bloomed", "value": "보상 꽃이 피었다" },
+    { "key": "boss.again", "value": "망루 수호장을 다시 쓰러뜨렸다 — 보상 꽃이 피었다" },
+    { "key": "boss.title", "value": "보상 꽃" },
+    { "key": "boss.btn_keep", "value": "둔다" },
+    { "key": "boss.why.none", "value": "꽃이 없다" },
+    { "key": "boss.claimed", "value": "보상 꽃 — 원기 {0} · 금 +{1} · {2} — 150초 뒤 망루 수호장이 다시 선다" },
+    { "key": "boss.back", "value": "망루 수호장이 다시 섰다" },
+    { "key": "boss.card", "value": "쓰러진 망루 수호장 자리에 꽃이 피었다.\\n★{0} 보패 1 · 금 {1}\\n원기 {2}/{3} · 받으면 150초 뒤 수호장이 다시 선다" },
+    { "key": "boss.btn_claim", "value": "원기 {0} 쓰고 받는다" },
+    { "key": "boss.btn_short", "value": "원기가 모자라다 — 꽃은 남는다" }
   ]
 }
