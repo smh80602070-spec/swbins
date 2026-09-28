@@ -1969,3 +1969,9 @@ body.fs-on #dock, body.fs-on #near { display: none !important; }
 /* ⑲-15 들판 명단 한 줄(ui.js rosterStrip) */
 #sheet-body .roster { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0 6px; }
 #sheet-body .roster .btn { width: auto; padding: 6px 10px; font-size: 13px; }
+
+/* 폰(손가락만·마우스 없음)에선 ⌨️ 키설정 칸을 독에서 뺀다(2026-09-28, 실기 보고 Q13) — 키보드가 없는데 한 칸을 먹고
+   글자도 두 줄로 깨졌다. 시트 자체는 그대로 있다(⚙️ 설정·진단이 연다) */
+@media (hover: none) and (pointer: coarse) {
+  #dock [data-sheet="keys"] { display: none; }
+}

@@ -4314,3 +4314,6 @@ VRoid 인물이 unlit(`MeshBasicMaterial`) 그대로라 명암 없이 평면이�
 - 덤: 못 줍는 노획물에 1분 넘게 붙어 있던 것 → 같은 것 4초 넘게 못 주우면 건너뜀.
 - 확인(`tools/playcheck/dg-auto-quest.mjs [초] [fresh]`, 새 계정·출사표 첫 셋): 사연 "흑기 도적의 밤" 토벌 10 → 흔적(막힘 돌며 1.7천 보) → 정예 2 → 우두머리는 미룸 → 던전 1·2·3층 → 메인 0→2. 헤드리스는 창 닫기 저장(beforeunload)을 건너뛰어 도구가 4초마다 `core.persist`.
 - 진단 새 2 → 422/422 세 번 같음 · sw dungeon-v0.169.7.
+
+## 2026-09-28 (실기 보고 Q13 첫 조각) — 폰에서 보이는 불편
+- 폰이면 발밑 안내에서 키 설명(WASD·1 2 3 4·Z X C V)을 뺀다(`dungeon-view.js setTip`). 진단 422/422. 상세는 saga-go HANDOFF "Q13 첫 조각".

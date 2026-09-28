@@ -391,11 +391,14 @@
     tipTown = town;
     var el = host && host.querySelector('.dg-tip');
     if (!el) { return; }
+    /* 폰(손가락만)이면 키 설명은 뺀다(2026-09-28, 실기 보고 Q13 — 키보드 없는 폰에 "WASD" 가 떴다) */
+    var touchOnly = !!(global.matchMedia && global.matchMedia('(hover: none) and (pointer: coarse)').matches);
     el.innerHTML = town
-      ? '이동 <b>WASD</b> · <b>화면을 누른 채 끌면</b> 그쪽으로 걷습니다 · ' +
+      ? (touchOnly ? '' : '이동 <b>WASD</b> · ') + '<b>화면을 누른 채 끌면</b> 그쪽으로 걷습니다 · ' +
         '사람과 표식은 <b>다가서면</b> 말이 걸립니다'
-      : '이동 <b>WASD</b> · 물약 <b>1 2 3 4</b> · 스킬 <b>Z X C V</b> · ' +
-        '<b>화면을 누른 채 끌면</b> 그쪽으로 걷습니다';
+      : (touchOnly ? '<b>화면을 누른 채 끌면</b> 그쪽으로 걷습니다 · 스킬은 오른쪽 단추'
+        : '이동 <b>WASD</b> · 물약 <b>1 2 3 4</b> · 스킬 <b>Z X C V</b> · ' +
+        '<b>화면을 누른 채 끌면</b> 그쪽으로 걷습니다');
   }
 
   /**

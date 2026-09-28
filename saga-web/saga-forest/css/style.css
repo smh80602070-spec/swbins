@@ -281,7 +281,7 @@ a.icon-btn { display: flex; align-items: center; justify-content: center; text-d
   transition: transform .12s, background .12s, border-color .12s;
 }
 #dock button span { font-size: 21px; line-height: 1; }
-#dock button small { font-size: 11px; color: var(--ink-dim); }
+#dock button small { font-size: 11px; color: var(--ink-dim); white-space: nowrap; }   /* 좁은 단추에서 "더보/기" 로 깨지지 않게(Q13) */
 #dock button:hover { transform: translateY(-2px); }
 #dock button.on { background: var(--gold); border-color: var(--gold); }
 #dock button.on span, #dock button.on small { color: #22190a; }
