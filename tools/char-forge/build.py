@@ -614,9 +614,14 @@ def deterministic_fbx():
 def decimate(arm, ratio):
     """레시피 decimate(0~1) — 조각마다 삼각형을 그 비율로 줄인다(09-29 마을 사람 — 여럿 서 있는 몸은 가까이서 안 본다).
     눈·눈썹은 작아 그대로 둔다. 뼈 가중치(정점 그룹)는 Collapse 가 보간해 남긴다."""
+    for m in [c for c in arm.children if c.type == 'MESH' and not c.name.startswith(('Eye', 'Eyebrows', 'ZZ_'))]:
+        decimate_obj(m, ratio)
+
+
+def decimate_obj(m, ratio):
     # 연산자(modifier_apply)는 배경 실행 문맥에서 몸마다 조용히 건너뛰었다 — bake_pose_as_rest 처럼 평가 결과로 메시를 바꾼다.
     # 다른 모디파이어(아마추어)는 잠깐 꺼서 쉼 자세 메시만 줄인다.
-    for m in [c for c in arm.children if c.type == 'MESH' and not c.name.startswith(('Eye', 'Eyebrows'))]:
+    if True:
         states = [(md, md.show_viewport) for md in m.modifiers]
         for md, _ in states:
             md.show_viewport = False
@@ -630,6 +635,27 @@ def decimate(arm, ratio):
         for md, s in states:
             md.show_viewport = s
         m.data = new
+
+
+def shadow_proxy(arm, ratio):
+    """레시피 shadow_proxy(0~1) — 몸 조각(눈·눈썹 빼고)을 복사해 한 물체로 합치고 그 비율로 줄인 그림자 대역 ZZ_ShadowProxy.
+    엔진이 이 물체만 그림자를 드리우게 하고(saga-godot vroid_body.setup_shadow_proxy) 보이는 조각은 그림자를 끈다 —
+    09-29 PERF: 플레이어 몸 몫 11만 삼각형 중 그림자 패스(캐스케이드마다 다시 그림)가 6.8만. 이름 ZZ_ 는 엔진 노드 차례에서 뒤로(첫 메시 = 보이는 몸)."""
+    src = [c for c in arm.children if c.type == 'MESH' and not c.name.startswith(('Eye', 'Eyebrows'))]
+    dups = []
+    for m in src:
+        d = m.copy()
+        d.data = m.data.copy()
+        m.users_collection[0].objects.link(d)
+        dups.append(d)
+    bpy.ops.object.select_all(action='DESELECT')
+    for d in dups:
+        d.select_set(True)
+    bpy.context.view_layer.objects.active = dups[0]
+    bpy.ops.object.join()
+    proxy = dups[0]
+    proxy.name = 'ZZ_ShadowProxy'
+    decimate_obj(proxy, ratio)
 
 
 def join_meshes(arm):
@@ -692,6 +718,8 @@ def main():
     materials(arm, body, recipe)
     if recipe.get('decimate'):
         decimate(arm, float(recipe['decimate']))
+    if recipe.get('shadow_proxy'):
+        shadow_proxy(arm, float(recipe['shadow_proxy']))
     if recipe.get('join', True):
         join_meshes(arm)
     rep = retarget(arm, recipe.get('anims', 'all'), bool(arg('--check')))

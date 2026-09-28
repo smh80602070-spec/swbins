@@ -8,6 +8,12 @@ extends Control
 @onready var name_label: Label = $NameLabel
 
 
+## 2026-09-29 — 공방 몸 그림자 대역(ZZ_ShadowProxy)이 보이는 몸과 겹쳐 그려지지 않게(셀 셰이더는 안 입힌다).
+func _ready() -> void:
+	var v := get_node_or_null("Viewport/SubViewport/Visual")
+	if v:
+		preload("res://saga_core/shaders/cel_shader_apply.gd").setup_shadow_proxy(v)
+
 static func show_lord(node: Node, lord_name: String, show_sec: float) -> void:
 	var portraits := node.get_tree().get_nodes_in_group("lord_portrait")
 	if portraits.is_empty():

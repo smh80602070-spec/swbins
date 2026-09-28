@@ -23,5 +23,6 @@
   "pickup": "PickUp_Table"
  },
  "join": false,
- "decimate": 0.7
+ "decimate": 0.7,
+ "shadow_proxy": 0.3
 }

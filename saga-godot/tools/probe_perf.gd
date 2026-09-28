@@ -63,6 +63,8 @@ func _process(_delta: float) -> void:
 		get_tree().quit()
 		return
 	if _frame == 1:
+		if _spot == 0:
+			_hide_for_share()
 		var pos: Vector3 = _wps.call("world_pos_of", SPOTS[_spot][1])
 		_p.global_position = pos + Vector3(4.0, 1.0, 4.0)
 		_p.set("velocity", Vector3.ZERO)
@@ -173,6 +175,46 @@ func _key_of(n: Node, root: Node) -> String:
 		var rx := RegEx.create_from_string("[_@0-9]+$")
 		key += "/" + rx.sub(sub, "")
 	return key
+
+## 09-29 SAGA_PERF_HIDE=종류,… — 재기 전에 그 종류를 숨겨 삼각형·draw call 몫을 잰다(숨긴 판 − 안 숨긴 판).
+## people(사람 몸 — 플레이어 빼고) · player(플레이어 몸) · 그 밖은 노드 이름(모든 깊이, 이름이 그걸로 시작하면).
+func _hide_for_share() -> void:
+	var what := OS.get_environment("SAGA_PERF_HIDE")
+	if what == "":
+		return
+	var root := get_tree().current_scene
+	var n := 0
+	for k in what.split(","):
+		for c in root.find_children("*", "Node3D", true, false):
+			var node := c as Node3D
+			var hit := false
+			match k:
+				"people":
+					var p := String(node.scene_file_path)
+					hit = (p.contains("characters_cf") or p.contains("characters_vroid")) and not _p.is_ancestor_of(node)
+				"player":
+					hit = node.get_parent() == _p and node.name == "Visual"
+				"playershadow", "playeroutline":
+					## 플레이어 몸 메시의 그림자만 끄기 / 외곽선(next_pass)만 떼기 — 숨기지 않고 그 몫만 잰다.
+					if node is MeshInstance3D and _p.is_ancestor_of(node):
+						var mi := node as MeshInstance3D
+						if k == "playershadow":
+							mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+						else:
+							for si in mi.mesh.get_surface_count():
+								var m := mi.get_active_material(si)
+								if m and m.next_pass:
+									var c2 := m.duplicate() as Material
+									c2.next_pass = null
+									mi.set_surface_override_material(si, c2)
+						n += 1
+					continue
+				_:
+					hit = String(node.name).begins_with(k)
+			if hit and node.visible:
+				node.visible = false
+				n += 1
+	print("PERF hide %s nodes=%d" % [what, n])
 
 ## SAGA_PERF_BISECT=1 — 마지막 자리에서 씬 바로 밑 노드를 하나씩 멈추고(process_mode 끔) 물리·처리 시간이 얼마나 주는지 잰다.
 var _b_nodes: Array = []

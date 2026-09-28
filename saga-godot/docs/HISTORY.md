@@ -9393,3 +9393,11 @@ PROJECT_STATE.md` 참고. 요약:
   - 마을 사람: 합친 몸 + decimate 0.55 + lod_bias 0.1 · 플레이어: 조각 그대로(합치면 포구·폐허 +9만) + decimate 0.7.
   - 결과(모바일 540×960): 마을 draw 평균 217·최댓값 258(예산 260 안), 삼각형 39.1만(예산 35만 넘음 — 마을 사람만 VRoid 로 돌려도 38.2만이라 사람 몸만으론 설명이 안 된다, 미해결) · 포구 21.1만·폐허 30.8만(교체 전보다 낮음).
 - 창 모드 v_people_lineup(수염·두건·옷 구별), v_house, x_swing 정상. 점검 STORY·STORY8·COMBAT·KIT·DISPATCH fails=0, REGRESS OK.
+
+## 플레이어 그림자 대역 — 마을 삼각형 예산 안으로 (2026-09-29, 같은 세션, "이어해")
+
+- probe_perf 에 SAGA_PERF_HIDE(people·player·playershadow·playeroutline·노드 이름) — 숨긴 판과의 차로 몫을 잰다. 마을 39.1만 중 플레이어 몸 하나가 11만(그림자 6.8만·외곽선 5.4만), 사람 몸 48개는 2만. 옛 VRoid 플레이어 몫은 7.5만.
+- char-forge build.py shadow_proxy: 몸 조각을 복사·합쳐 30%로 줄인 ZZ_ShadowProxy. cel_shader_apply.setup_shadow_proxy(apply_to 가 부름, REALM 초상은 직접)가 대역만 SHADOWS_ONLY·보이는 조각은 그림자 끔. 플레이어 레시피 셋에 0.3.
+- PERF(모바일 540×960): 마을 삼각형 39.1 → **33.4만**(예산 35만 안)·draw 평균 216·최댓값 247 · 포구 21.1 → 18.5만 · 폐허 30.8 → 28.2만.
+- 창 모드 v_house·x_swing·v_people_lineup — 대역이 겹쳐 보이지 않음. 그림자 모양은 풀 때문에 촬영으로 잘 안 보여 실기 확인 몫.
+- 점검 STORY·COMBAT·KIT·TRAVERSAL fails=0, REGRESS OK.

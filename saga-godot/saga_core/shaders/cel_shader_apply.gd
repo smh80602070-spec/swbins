@@ -52,13 +52,32 @@ const FACE_BAKE_BY_GLB := {
 
 static func apply_to(root: Node) -> int:
 	var baked_face: Texture2D = FACE_BAKE_BY_GLB.get(root.scene_file_path)
+	setup_shadow_proxy(root)
 	var applied := 0
 	for mesh_instance in _find_mesh_instances(root):
+		if String(mesh_instance.name).contains("ShadowProxy"):
+			continue # 그림자 대역은 색 패스에 안 나온다 — 셀 재질·외곽선 불필요
 		if mesh_instance.name in LAYERED_FACE_MESH_NAMES and baked_face != null:
 			_apply_baked_face(mesh_instance, baked_face)
 			continue
 		applied += _apply_one(mesh_instance)
 	return applied
+
+## 2026-09-29 — 공방(char-forge) 플레이어 몸엔 그림자 대역 ZZ_ShadowProxy(몸을 30%로 줄인 사본)가 있다.
+## 대역만 그림자를 드리우고(SHADOWS_ONLY — 색 패스·외곽선엔 안 나온다) 보이는 조각은 그림자를 끈다. 대역 없는 몸은 그대로.
+## 그림자 패스(캐스케이드마다 다시 그림)가 몸 삼각형을 여러 번 세서 GO PERF 마을 플레이어 몫 11만 중 6.8만이었다.
+## 셀 셰이더를 안 거치는 자리(REALM 초상)는 이것만 부른다 — 안 부르면 대역이 보이는 몸과 겹쳐 그려진다.
+static func setup_shadow_proxy(root: Node) -> void:
+	var meshes := _find_mesh_instances(root)
+	var proxy: MeshInstance3D = null
+	for mi in meshes:
+		if String(mi.name).contains("ShadowProxy"):
+			proxy = mi
+	if proxy == null:
+		return
+	for mi in meshes:
+		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY if mi == proxy \
+			else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 static func _apply_baked_face(mesh_instance: MeshInstance3D, baked_face: Texture2D) -> void:
 	var mesh := mesh_instance.mesh
