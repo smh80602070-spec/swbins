@@ -1,0 +1,30 @@
+{
+ "id": "npc_f_peasant_01",
+ "_note": "saga-godot 마을 사람 몸(09-29, vroid_body BODIES) — 여 농부 — 긴 머리. 이름 없는 몸, 인물 색은 게임이 id 해시로 곱한다.",
+ "base": "superhero_female",
+ "face": "toon",
+ "outfit": "Female_Peasant",
+ "outfit_color": 1,
+ "outfit_drop": [
+  "Head_Hood"
+ ],
+ "max_tex": 1024,
+ "hair": "Hair_Long",
+ "brows": "Eyebrows_Female",
+ "height": 1.6,
+ "head_scale": 1.12,
+ "colors": {
+  "hair": "#1e1a18"
+ },
+ "anims": {
+  "idle": "Idle_Loop",
+  "walk": "Walk_Loop",
+  "sprint": "Sprint_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "dodge": "Roll",
+  "death": "Death01",
+  "pickup": "PickUp_Table"
+ },
+ "decimate": 0.55
+}

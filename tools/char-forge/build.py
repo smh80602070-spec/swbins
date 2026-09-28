@@ -299,11 +299,11 @@ def albedo_only():
                 nt.nodes.remove(n)
 
 
-def cap_textures():
+def cap_textures(limit=MAX_TEX):
     for im in bpy.data.images:
         w, h = im.size[:]
-        if max(w, h) > MAX_TEX:
-            k = MAX_TEX / max(w, h)
+        if max(w, h) > limit:
+            k = limit / max(w, h)
             im.scale(int(w * k), int(h * k))
 
 
@@ -611,6 +611,41 @@ def deterministic_fbx():
     fu._charforge_patched = True
 
 
+def decimate(arm, ratio):
+    """레시피 decimate(0~1) — 조각마다 삼각형을 그 비율로 줄인다(09-29 마을 사람 — 여럿 서 있는 몸은 가까이서 안 본다).
+    눈·눈썹은 작아 그대로 둔다. 뼈 가중치(정점 그룹)는 Collapse 가 보간해 남긴다."""
+    # 연산자(modifier_apply)는 배경 실행 문맥에서 몸마다 조용히 건너뛰었다 — bake_pose_as_rest 처럼 평가 결과로 메시를 바꾼다.
+    # 다른 모디파이어(아마추어)는 잠깐 꺼서 쉼 자세 메시만 줄인다.
+    for m in [c for c in arm.children if c.type == 'MESH' and not c.name.startswith(('Eye', 'Eyebrows'))]:
+        states = [(md, md.show_viewport) for md in m.modifiers]
+        for md, _ in states:
+            md.show_viewport = False
+        dec = m.modifiers.new('Decimate', 'DECIMATE')
+        dec.ratio = ratio
+        dec.use_collapse_triangulate = True
+        dg = bpy.context.evaluated_depsgraph_get()
+        dg.update()
+        new = bpy.data.meshes.new_from_object(m.evaluated_get(dg), preserve_all_data_layers=True, depsgraph=dg)
+        m.modifiers.remove(dec)
+        for md, s in states:
+            md.show_viewport = s
+        m.data = new
+
+
+def join_meshes(arm):
+    """조각 메시(옷 부위·머리·눈·눈썹)를 한 물체로 — 같은 재질 칸은 한 면 묶음이 돼 엔진 draw call 이 준다(09-29 saga-godot
+    마을 draw call 평균 208 → 228·최댓값 244 → 302, 몸 하나가 조각 12 × 외곽선 2). 뼈 가중치·아마추어 모디파이어는 그대로 합쳐진다."""
+    meshes = [c for c in arm.children if c.type == 'MESH']
+    if len(meshes) < 2:
+        return
+    bpy.ops.object.select_all(action='DESELECT')
+    for m in meshes:
+        m.select_set(True)
+    bpy.context.view_layer.objects.active = meshes[0]
+    bpy.ops.object.join()
+    meshes[0].name = arm.name + '_Body'
+
+
 def export(arm, out_glb, out_fbx):
     os.makedirs(os.path.dirname(os.path.abspath(out_glb)), exist_ok=True)
     tgt_objs = [arm] + list(arm.children)
@@ -644,7 +679,7 @@ def main():
     for m in [c for c in arm.children if c.type == 'MESH' and c.name.startswith('Eyebrows')]:
         if recipe.get('brows'):
             delete([m])
-    for part in ('hair', 'brows'):
+    for part in ('hair', 'beard', 'brows'):  # beard(09-29): 머리 모양과 따로 수염(Hair_Beard)
         if recipe.get(part):
             if recipe[part] not in HAIRS:
                 sys.exit(f'{part}: 모르는 머리 {recipe[part]}')
@@ -652,16 +687,20 @@ def main():
     seam = seam_gap(arm, body) if recipe.get('outfit') else None
     if recipe.get('face') == 'toon':
         albedo_only()
-    cap_textures()
+    cap_textures(int(recipe.get('max_tex', MAX_TEX)))  # 멀리서만 보는 마을 사람은 1024(09-29)
     shape(arm, body, recipe)
     materials(arm, body, recipe)
+    if recipe.get('decimate'):
+        decimate(arm, float(recipe['decimate']))
+    if recipe.get('join', True):
+        join_meshes(arm)
     rep = retarget(arm, recipe.get('anims', 'all'), bool(arg('--check')))
     export(arm, out, arg('--fbx'))
     lic = {
         'id': recipe['id'], 'generator': 'tools/char-forge/build.py', 'blender': bpy.app.version_string,
         'license': 'CC0-1.0 (입력 전부 CC0)',
         'inputs': ['ubc_standard: ' + BASES[recipe['base']][0], 'ual1_standard: Unreal Engine/AL_Standard.fbx']
-        + [f'ubc_standard: Hairstyles/Origin at 0/glTF (Godot)/{recipe[p]}.gltf' for p in ('hair', 'brows') if recipe.get(p)]
+        + [f'ubc_standard: Hairstyles/Origin at 0/glTF (Godot)/{recipe[p]}.gltf' for p in ('hair', 'beard', 'brows') if recipe.get(p)]
         + ([f"mcof_standard: Outfits/{recipe['outfit']}.gltf"] if recipe.get('outfit') else []),
     }
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

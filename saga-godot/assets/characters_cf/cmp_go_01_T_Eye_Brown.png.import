@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bs0bv38ki36jg"
+uid="uid://cuhnuer0m8nsj"
 path.s3tc="res://.godot/imported/cmp_go_01_T_Eye_Brown.png-88322a33405a0fffa3d271f32a738324.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "830da396e71092b8bf809e8c522e8638"
 }
 
 [deps]

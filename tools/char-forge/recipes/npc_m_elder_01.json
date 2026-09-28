@@ -1,0 +1,31 @@
+{
+ "id": "npc_m_elder_01",
+ "_note": "saga-godot 마을 사람 몸(09-29, vroid_body BODIES) — 남 노인 — 센 수염·짧은 머리, 작은 키. 이름 없는 몸, 인물 색은 게임이 id 해시로 곱한다.",
+ "base": "superhero_male",
+ "face": "toon",
+ "outfit": "Male_Peasant",
+ "outfit_color": 1,
+ "outfit_drop": [
+  "Head_Hood"
+ ],
+ "max_tex": 1024,
+ "hair": "Hair_Buzzed",
+ "beard": "Hair_Beard",
+ "brows": "Eyebrows_Regular",
+ "height": 1.62,
+ "head_scale": 1.1,
+ "colors": {
+  "hair": "#b4b0a8"
+ },
+ "anims": {
+  "idle": "Idle_Loop",
+  "walk": "Walk_Loop",
+  "sprint": "Sprint_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "dodge": "Roll",
+  "death": "Death01",
+  "pickup": "PickUp_Table"
+ },
+ "decimate": 0.55
+}

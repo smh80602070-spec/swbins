@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b22eekn4oem2"
+uid="uid://bdk1rk0jnjog7"
 path.s3tc="res://.godot/imported/cmp_forest_01_T_Hair_2_BaseColor.png-ac40e3ba5561f9e817b089ae1c424b7d.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "d39ab8e118284e55f2ab48cebaf981ff"
 }
 
 [deps]

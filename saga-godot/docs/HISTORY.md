@@ -9384,3 +9384,12 @@ PROJECT_STATE.md` 참고. 요약:
 - probe_story talk_face: 입·눈 변형 있는 몸만 입·기쁨·깜빡임 확인, 손 뼈 hand_r 후보.
 - 이 PC 는 cmp_*.glb 임포트가 없어 --editor 임포트 한 번(.import 1039·.uid 66 되돌림/지움, project.godot 그대로).
 - 점검 STORY(대화 몸짓)·STORY8(가면 보스)·COMBAT·KIT·TRAVERSAL fails=0, REGRESS OK. 창 모드: GO 인물 줄·플레이어·전투, FOREST·DUNGEON·STORY 첫 화면(--write-movie) — 새 몸으로 서고 걸음, 스크립트 오류 0. REALM 초상은 회귀만.
+
+## 마을 사람 몸 여섯 · 공방 몸 가볍게 (2026-09-29, 같은 세션, "이어해")
+
+- 마을 사람이 몸 두 벌 + 색이라 다 같아 보였다. char-forge 레시피 npc_* 여섯(남 농부 둘 — 수염·가르마, 센머리 노인, 두건 나그네, 여 농부, 짧은 머리 여 순찰자)을 짓고 verify(0.0°·0cm) 통과 → vroid_body BODIES 를 이 여섯으로(플레이어 cmp_* 는 뺌). 키는 레시피 그대로 1.60~1.78m, 옷빛 boost 는 몸마다(순찰자 2.1·농부 1.3).
+- tools/char-forge/build.py: beard(머리와 따로 수염) · max_tex(마을 사람 1024) · join(조각을 한 물체로, 기본 켬) · decimate(평가 결과로 메시 교체 — modifier_apply 연산자는 배경 실행에서 몸마다 조용히 건너뛰었다).
+- PERF 를 몸 교체(6bd6e6bf) 때 안 쟀던 것을 이번에 쟀다: 마을 draw 평균 208 → 228·최댓값 244 → 302(몸 하나 조각 12 × 외곽선), 삼각형 35.0 → 39.6만.
+  - 마을 사람: 합친 몸 + decimate 0.55 + lod_bias 0.1 · 플레이어: 조각 그대로(합치면 포구·폐허 +9만) + decimate 0.7.
+  - 결과(모바일 540×960): 마을 draw 평균 217·최댓값 258(예산 260 안), 삼각형 39.1만(예산 35만 넘음 — 마을 사람만 VRoid 로 돌려도 38.2만이라 사람 몸만으론 설명이 안 된다, 미해결) · 포구 21.1만·폐허 30.8만(교체 전보다 낮음).
+- 창 모드 v_people_lineup(수염·두건·옷 구별), v_house, x_swing 정상. 점검 STORY·STORY8·COMBAT·KIT·DISPATCH fails=0, REGRESS OK.

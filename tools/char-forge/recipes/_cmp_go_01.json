@@ -1,6 +1,6 @@
 {
  "id": "_cmp_go_01",
- "_note": "단계 2 나란히 비교용 — saga-godot GO 플레이어(AvatarSample_A) 자리. 게임 인물 아님.",
+ "_note": "단계 2 나란히 비교용 — saga-godot GO 플레이어(AvatarSample_A) 자리. 09-29 부터 다섯 판 플레이어 몸. 조각 그대로(join false) — 합치면 늘 화면에 있는 몸의 자동 LOD 가 덜 걸려 PERF 삼각형 +9만.",
  "base": "superhero_female",
  "face": "toon",
  "outfit": "Female_Ranger",
@@ -24,5 +24,7 @@
   "dodge": "Roll",
   "death": "Death01",
   "pickup": "PickUp_Table"
- }
+ },
+ "join": false,
+ "decimate": 0.7
 }

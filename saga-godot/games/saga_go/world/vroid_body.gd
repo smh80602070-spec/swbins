@@ -10,9 +10,16 @@ const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 
 ## 2026-09-29 사용자 결정 "새 공방 몸으로 교체"(char-forge 2단계) — VRoid 둘 → 공방 몸(CC0, 동작 여덟이 몸에 들어 있어 lib 없음).
 ## 키는 옛 몸과 같게(여 1.57m·남 1.78m 원본 → 약 1.70m).
+## 09-29 마을 사람 몸 여섯(tools/char-forge/recipes/npc_*.json — 농부 남 둘·노인·두건 나그네·농부 여·짧은 머리 순찰자 여, 조각을 한 메시로 합침).
+## 플레이어 몸(cmp_*)은 여기 안 쓴다 — 조각 몸이라 여럿 세우면 draw call 이 크다. 레시피 키(1.60~1.78m) 그대로 — 사람마다 키가 다르게.
+## boost = 옷빛 곱(어두운 가죽 순찰자 옷은 크게, 밝은 농부 옷은 조금).
 const BODIES := [
-	{"glb": "res://assets/characters_cf/cmp_dungeon_01.glb", "scale": 0.955, "lib": ""},
-	{"glb": "res://assets/characters_cf/cmp_forest_01.glb", "scale": 1.083, "lib": ""},
+	{"glb": "res://assets/characters_cf/npc_m_peasant_01.glb", "scale": 1.0, "lib": "", "boost": 1.3},
+	{"glb": "res://assets/characters_cf/npc_m_peasant_02.glb", "scale": 1.0, "lib": "", "boost": 1.3},
+	{"glb": "res://assets/characters_cf/npc_m_elder_01.glb", "scale": 1.0, "lib": "", "boost": 1.3},
+	{"glb": "res://assets/characters_cf/npc_m_hood_01.glb", "scale": 1.0, "lib": "", "boost": 2.1},
+	{"glb": "res://assets/characters_cf/npc_f_peasant_01.glb", "scale": 1.0, "lib": "", "boost": 1.3},
+	{"glb": "res://assets/characters_cf/npc_f_ranger_01.glb", "scale": 1.0, "lib": "", "boost": 2.1},
 ]
 const HEAD_BONES := ["J_Bip_C_Head", "Head"]
 const NECK_BONES := ["J_Bip_C_Neck", "neck_01"]
@@ -44,13 +51,15 @@ static func build(id: String, rarity: int = 3, cloth_override: Variant = null) -
 			if c is Node3D:
 				(c as Node3D).transform = Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO) * (c as Node3D).transform
 	CelShaderApply.apply_to(v)
+	tune_lod(v)
 	## 부르는 쪽이 또 apply_to 하면 얼굴 베이크가 두 번 덮여 단색이 된다(재질 감사 flat-tint).
 	v.set_meta("cel_applied", true)
 	var hair: Color = HAIR_TINTS[(h >> 3) % HAIR_TINTS.size()]
 	var cloth: Color = cloth_override if cloth_override != null else CLOTH_TINTS[(h >> 7) % CLOTH_TINTS.size()]
 	## 공방 몸 옷 그림은 어두운 가죽이라 곱하기만 하면 모두 검은 무리가 된다 — 옷빛을 밝혀(1 넘게) 색이 보이게.
-	if String(body.glb).contains("characters_cf"):
-		cloth = Color(cloth.r * 2.1, cloth.g * 2.1, cloth.b * 2.1)
+	var boost := float(body.get("boost", 1.0))
+	if boost != 1.0:
+		cloth = Color(cloth.r * boost, cloth.g * boost, cloth.b * boost)
 		hair = Color(hair.r * 1.3, hair.g * 1.3, hair.b * 1.3)
 	_tint(v, hair, cloth, rarity >= 5)
 	var ap: AnimationPlayer = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
@@ -75,6 +84,13 @@ static func front_sign(skel: Skeleton3D) -> float:
 	if foot < 0 or toe < 0:
 		return 1.0
 	return -1.0 if skel.get_bone_global_rest(toe).origin.z < skel.get_bone_global_rest(foot).origin.z else 1.0
+
+## 09-29 — 마을 사람 몸(조각을 한 메시로 합친 npc_*)은 한 덩어리라 자동 LOD 가 덜 걸린다 — LOD 를 당겨 쓴다.
+## (플레이어 몸은 조각 그대로라 안 건다 — 합친 플레이어 몸은 PERF 포구·폐허 삼각형 +9만이었다.)
+const BODY_LOD_BIAS := 0.1
+static func tune_lod(root: Node) -> void:
+	for mi in root.find_children("*", "MeshInstance3D", true, false):
+		(mi as MeshInstance3D).lod_bias = BODY_LOD_BIAS
 
 ## 뼈 이름 후보 중 먼저 있는 것(VRoid J_Bip_* · 공방 몸 UE 식).
 static func find_bone_of(skel: Skeleton3D, names: Array) -> int:
