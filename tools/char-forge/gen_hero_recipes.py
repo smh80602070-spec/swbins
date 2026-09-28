@@ -305,46 +305,68 @@ def mix(a, b, f):
 TRIM = ['#5a2a6a', '#8a2a24', '#2a3a7a', '#2f5a3a', '#9a7a2a', '#3a2a1e']
 
 
-# 얼굴 모프 축(MakeHuman 얼굴 부위, 짝 = (줄이기, 늘리기)) — 같은 나이·성별·인종이면 같은 얼굴이었다(09-28 여자 인물 둘이 한 얼굴)
-FACE_AXES = [
-    ('nose-scale-horiz-decr', 'nose-scale-horiz-incr'), ('nose-scale-vert-decr', 'nose-scale-vert-incr'),
-    ('nose-hump-decr', 'nose-hump-incr'), ('nose-point-down', 'nose-point-up'), ('nose-flaring-decr', 'nose-flaring-incr'),
-    ('nose-volume-decr', 'nose-volume-incr'), ('eye-scale-decr', 'eye-scale-incr'), ('eye-trans-down', 'eye-trans-up'),
-    ('eye-height2-decr', 'eye-height2-incr'), ('eye-corner1-down', 'eye-corner1-up'), ('eye-bag-decr', 'eye-bag-incr'),
-    ('mouth-scale-horiz-decr', 'mouth-scale-horiz-incr'), ('mouth-lowerlip-volume-decr', 'mouth-lowerlip-volume-incr'),
-    ('mouth-upperlip-height-decr', 'mouth-upperlip-height-incr'), ('mouth-angles-down', 'mouth-angles-up'),
-    ('chin-width-decr', 'chin-width-incr'), ('chin-height-decr', 'chin-height-incr'), ('chin-prominent-decr', 'chin-prominent-incr'),
-    ('cheek-bones-decr', 'cheek-bones-incr'), ('cheek-volume-decr', 'cheek-volume-incr'), ('forehead-scale-vert-decr', 'forehead-scale-vert-incr'),
-    ('eyebrows-trans-down', 'eyebrows-trans-up'), ('eyebrows-angle-down', 'eyebrows-angle-up'), ('ear-scale-decr', 'ear-scale-incr'),
-    ('head-scale-horiz-decr', 'head-scale-horiz-incr'),
-]
-HEAD_SHAPES = ['head-oval', 'head-round', 'head-square', 'head-rectangular', 'head-diamond', 'head-triangular', 'head-invertedtriangular']
 STRONG_ROLES = ('warrior', 'general', 'samurai', 'ronin', 'hoplite', 'tribal', 'nomad', 'khan', 'warrior_f', 'officer')
 
 
+# 예쁜 쪽으로 기운 기본 얼굴(MakeHuman 얼굴 모프) — 사람마다 다른 건 아래 안전한 축의 작은 변주가 만든다.
+FACE_BASE = {'eye-scale-incr': 0.3, 'eye-height2-incr': 0.12, 'eye-bag-decr': 0.4,
+             'nose-hump-decr': 0.35, 'nose-scale-horiz-decr': 0.25, 'nose-flaring-decr': 0.2, 'nose-volume-decr': 0.15,
+             'cheek-bones-incr': 0.15, 'cheek-volume-decr': 0.15, 'ear-scale-decr': 0.2, 'mouth-angles-up': 0.15,
+             'eyebrows-angle-up': 0.12}
+FACE_BASE_F = {'mouth-lowerlip-volume-incr': 0.3, 'chin-width-decr': 0.25, 'chin-prominent-decr': 0.15, 'eye-corner1-up': 0.2}
+FACE_BASE_M = {'chin-width-incr': 0.1, 'eye-corner1-up': 0.1}
+FACE_BASE_STRONG = {'chin-width-incr': 0.25, 'cheek-bones-incr': 0.2}
+# 변주 축 — 어느 쪽으로 밀어도 흉하지 않은 것만(코 혹·콧방울·눈 밑 주머니·귀·턱 내밀기·볼살은 뺐다, 눈썹 각·눈꼬리는 내려가면 화나 보여 뺐다)
+FACE_VARY = [('nose-scale-vert-decr', 'nose-scale-vert-incr'), ('nose-point-down', 'nose-point-up'),
+             ('mouth-scale-horiz-decr', 'mouth-scale-horiz-incr'), ('mouth-upperlip-height-decr', 'mouth-upperlip-height-incr'),
+             ('chin-height-decr', 'chin-height-incr'), ('eye-trans-down', 'eye-trans-up'),
+             ('eyebrows-trans-down', 'eyebrows-trans-up'),
+             ('forehead-scale-vert-decr', 'forehead-scale-vert-incr')]
+HEAD_SHAPES_FINE = ['head-oval', 'head-oval', 'head-round', 'head-diamond', 'head-invertedtriangular']
+
+
+def _fadd(t, n, v):
+    """반대 방향이 이미 있으면 상쇄해 한쪽만 남긴다(같은 축 incr·decr 를 함께 걸지 않는다)."""
+    opp = n.replace('incr', 'decr') if 'incr' in n else n.replace('decr', 'incr')
+    cur = t.pop(opp, 0.0) * -1 if opp in t else 0.0
+    net = t.get(n, 0.0) + v + cur
+    if net >= 0:
+        t[n] = round(min(net, 0.7), 3)
+    else:
+        t[opp] = round(min(-net, 0.7), 3)
+
+
 def face_targets(hid, role, female):
-    """인물마다 얼굴 — 축 스물다섯 중 아홉을 해시로 골라 ±0.2~0.6, 머리형 하나 0.25~0.55. 무장은 턱·광대를 굵게, 여자는 턱을 곱게."""
+    """인물마다 얼굴 — 예쁜 쪽 기본값(눈 크게·코 곱게·턱 갸름·눈 밑 주머니 없음)에 안전한 변주 축 다섯을 해시로 ±0.12~0.35.
+    무장은 턱·광대를 굵게. 머리형은 계란·둥근·다이아·역삼각(무장 남자는 네모도)."""
     import hashlib
     b = hashlib.sha256(('face:' + hid).encode()).digest()
-    t, used = {}, set()
-    for i in range(9):
-        k = b[i] % len(FACE_AXES)
+    t = {}
+    for n, v in FACE_BASE.items():
+        _fadd(t, n, v)
+    for n, v in (FACE_BASE_F if female else FACE_BASE_M).items():
+        _fadd(t, n, v)
+    strong = role in STRONG_ROLES and not female
+    if strong:
+        for n, v in FACE_BASE_STRONG.items():
+            _fadd(t, n, v)
+    used = set()
+    for i in range(5):
+        k = b[i] % len(FACE_VARY)
         while k in used:
-            k = (k + 1) % len(FACE_AXES)
+            k = (k + 1) % len(FACE_VARY)
         used.add(k)
-        v = 0.2 + 0.4 * b[9 + i] / 255
-        t[FACE_AXES[k][b[18 + i] & 1]] = round(v, 3)
-    t[HEAD_SHAPES[b[27] % len(HEAD_SHAPES)]] = round(0.25 + 0.3 * b[28] / 255, 3)
-    lean = [('chin-width-incr', 0.25), ('cheek-bones-incr', 0.2)] if role in STRONG_ROLES and not female else         [('chin-width-decr', 0.2), ('chin-prominent-decr', 0.15)] if female else []
-    for n, v in lean:
-        opp = n.replace('incr', 'decr') if n.endswith('incr') else n.replace('decr', 'incr')
-        if opp not in t:
-            t[n] = round(max(t.get(n, 0.0), v), 3)
+        v = 0.12 + 0.23 * b[9 + i] / 255
+        _fadd(t, FACE_VARY[k][b[18 + i] & 1], v)
+    shapes = HEAD_SHAPES_FINE + (['head-square'] if strong else [])
+    t[shapes[b[27] % len(shapes)]] = round(0.25 + 0.3 * b[28] / 255, 3)
     return t
 
 
 # 긴 머리 열한 명이 한 모양(long01)이었다(09-28) — CC0 커뮤니티 머리(mh_hair01, 항목마다 CC0 확인)로 흩는다
 LONG_ALT = ['long01', 'o4saken_long01', 'elvs_french_braid_variation', 'elvs_reverse_french_braid_bun', 'rehmanpolanski_hair_bun_brown']
+EYE_EAST = ['brown', 'brownlight', 'brown']
+EYE_WEST = ['brownlight', 'brown', 'green', 'bluegreen', 'blue', 'grey', 'brownlight']
 HAIR_EAST = ['#1a1512', '#211812', '#2a1f18']
 HAIR_WEST = ['#2a1f18', '#4a3322', '#6a4428', '#7a3a22', '=#b89868', '=#8a6a48']
 
@@ -483,7 +505,7 @@ def real_head(reg, role, key, c1, outfit=None, female=False, age=0.5):
 
 def skin_of(race, age, female):
     eth = max(race, key=race.get)
-    band = 'young' if age < 0.55 else 'middleage' if age < 0.75 else 'old'
+    band = 'young' if age < 0.62 else 'middleage' if age < 0.76 else 'old'   # 젊은 피부는 주름이 없다(09-29 입가 주름이 "못생겼다"의 한몫)
     name = f"{band}_{eth}_{'female' if female else 'male'}"
     return f'{name}/{name}.mhmat'
 
@@ -532,6 +554,8 @@ def make(h):
     _o, _hd, _k, _b, (a0, a1), arms = ROLES[role]
     hs = fnv(h['id'])
     age = round(a0 + (a1 - a0) * ((hs % 1000) / 999), 3)
+    if 0.5 < age < 0.66:  # 사실 얼굴은 서른 넘으면 금세 늙어 보인다(09-29 "못생겼다") — 중년 언저리는 25~32세 쪽으로 당긴다, 노인 역할은 그대로
+        age = round(0.5 + (age - 0.5) * 0.55, 3)
     if h['id'] == 'sg_huangzhong':  # 늙은 명궁 — 무장이지만 노인
         age = 0.78
     female = h['female']
@@ -574,6 +598,8 @@ def make(h):
                   'proportions': 0.8 if female else 0.7, 'race': race},
         'skin': skin_of(race, age, female),
         'eyes': 'high-poly/high-poly.mhclo',
+        'eye_color': pick(EYE_EAST if reg in EAST_REG else EYE_WEST, hs, 4),
+        'makeup': ({'lip': 0.75, 'blush': 0.7, 'lid': 0.4} if female else {'lip': 0.3, 'blush': 0.15, 'lid': 0.15}),
         'eyebrows': f"eyebrow{(hs >> 5) % 12 + 1:03d}/eyebrow{(hs >> 5) % 12 + 1:03d}.mhclo",
         'eyelashes': ('eyelashes02/eyelashes02.mhclo' if (hs >> 9) & 1 else 'eyelashes04/eyelashes04.mhclo') if female
         else ('eyelashes01/eyelashes01.mhclo' if (hs >> 9) & 1 else 'eyelashes03/eyelashes03.mhclo'),

@@ -10,10 +10,10 @@
  "height_target_m": 1.84,
  "macro": {
   "gender": 1.0,
-  "age": 0.577,
+  "age": 0.542,
   "muscle": 0.5,
   "weight": 0.5,
-  "height": 0.6465,
+  "height": 0.6387,
   "proportions": 0.7,
   "race": {
    "asian": 0.85,
@@ -21,22 +21,38 @@
    "african": 0.05
   }
  },
- "skin": "middleage_asian_male/middleage_asian_male.mhmat",
+ "skin": "young_asian_male/young_asian_male.mhmat",
  "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brown",
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
  "eyebrows": "eyebrow002/eyebrow002.mhclo",
  "eyelashes": "eyelashes03/eyelashes03.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "targets": {
-  "mouth-scale-horiz-decr": 0.231,
-  "mouth-upperlip-height-incr": 0.299,
-  "chin-width-incr": 0.211,
-  "ear-scale-incr": 0.264,
-  "chin-height-incr": 0.245,
-  "mouth-angles-down": 0.542,
-  "mouth-lowerlip-volume-incr": 0.539,
-  "head-scale-horiz-decr": 0.371,
-  "nose-scale-vert-incr": 0.536,
-  "head-square": 0.397
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.1,
+  "eye-corner1-up": 0.1,
+  "nose-scale-vert-decr": 0.138,
+  "forehead-scale-vert-incr": 0.177,
+  "nose-point-up": 0.126,
+  "chin-height-incr": 0.157,
+  "mouth-scale-horiz-incr": 0.146,
+  "head-oval": 0.397
  },
  "hair": "short01/short01.mhclo",
  "tints": {

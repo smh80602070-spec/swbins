@@ -9,7 +9,7 @@
 뼈는 MPFB 내장 "game_engine"(UE 마네킹 이름 — 표준 뼈와 root·Head 대소문자만 다르다, rigmaps.MPFB).
 동작 굽기·내보내기는 build.py 의 것을 그대로 쓴다(쉼 방향 맞춤·다리 길이 비·땅 붙이기).
 """
-import bpy, bmesh, addon_utils, json, math, os, sys
+import bpy, bmesh, addon_utils, glob, json, math, os, sys
 import numpy as np
 from mathutils import Vector
 
@@ -332,6 +332,143 @@ def tint(arm, slot, hexcol, outdir):
     img.filepath_raw, img.file_format = path, 'PNG'
     img.save()
     # MPFB GAMEENGINE 재질은 같은 그림을 두 노드(바탕색·알파)가 읽는다 — 한쪽만 바꾸면 원본도 FBX 에 딸려 간다(09-25 겪음)
+    for n in mat.node_tree.nodes:
+        if n.type == 'TEX_IMAGE' and n.image == src:
+            n.image = img
+
+
+def eye_color(arm, name, outdir):
+    """눈 색 — MPFB 눈 그림(data/eyes/materials/<이름>_eye.png)으로 눈 재질의 그림을 바꾼다. 기본은 전원 붉은 갈색(brown)이라 사람마다 같은 눈이었다.
+    FBX 가 그림을 옮기게 결과 폴더로 복사해 그 그림을 읽는다(tint 와 같은 사정)."""
+    import shutil
+    mat = next((m for o in arm.children if o.type == 'MESH' for m in o.data.materials if m and m.name == 'eye'), None)
+    if mat is None:
+        sys.exit('eye_color: 눈 재질(eye)이 없다')
+    hits = glob.glob(os.path.join(os.environ['BLENDER_USER_RESOURCES'], 'extensions', '.user', 'user_default', 'mpfb', 'data', 'eyes', 'materials', f'{name}_eye.png'))
+    if not hits:
+        sys.exit(f'eye_color: {name}_eye.png 가 없다')
+    os.makedirs(outdir, exist_ok=True)
+    dst = os.path.join(outdir, f'{arm.name}_eye.png')
+    shutil.copyfile(hits[0], dst)
+    img = bpy.data.images.load(dst)
+    img.name = f'{arm.name}_eye'
+    for n in mat.node_tree.nodes:
+        if n.type == 'TEX_IMAGE':
+            n.image = img
+
+
+def makeup_masks(basemesh):
+    """화장 자리 마스크 — 도우미 정점(이빨·눈)으로 입·눈 위치를 재서(모프를 따라간다) UV 그림 크기의 마스크 셋(입술·볼·눈두덩)을 만든다.
+    도우미는 bake_for_export 가 지우므로 그 전에 부른다. 좌표는 세계 좌표, 앞 = -y·위 = +z·좌우 = x."""
+    mw = basemesh.matrix_world
+    gi = {g.name: g.index for g in basemesh.vertex_groups}
+    # 모프는 셰이프키라 v.co 는 바탕 모양이다 — 키를 값만큼 섞은 자리를 직접 잰다(bake_for_export 가 굳히는 것과 같은 결과)
+    n = len(basemesh.data.vertices)
+    sk = basemesh.data.shape_keys
+    loc = np.empty(n * 3, np.float32)
+    basemesh.data.vertices.foreach_get('co', loc)
+    loc = loc.reshape(n, 3).astype(np.float64)
+    if sk:
+        base = np.empty(n * 3, np.float32)
+        sk.reference_key.data.foreach_get('co', base)
+        loc = base.reshape(n, 3).astype(np.float64)
+        for kb in sk.key_blocks:
+            if kb == sk.reference_key or kb.mute or kb.value == 0:
+                continue
+            k = np.empty(n * 3, np.float32)
+            r0 = np.empty(n * 3, np.float32)
+            kb.data.foreach_get('co', k)
+            kb.relative_key.data.foreach_get('co', r0)
+            loc += kb.value * (k - r0).reshape(n, 3)
+    M = np.array(mw)
+    co = loc @ M[:3, :3].T + M[:3, 3]
+
+    def pts(name):
+        i = gi.get(name)
+        idx = [v.index for v in basemesh.data.vertices if any(g.group == i and g.weight > 0.5 for g in v.groups)] if i is not None else []
+        return co[idx] if idx else np.zeros((0, 3))
+
+    teeth = np.vstack([pts('helper-upper-teeth'), pts('helper-lower-teeth')])
+    le, re = pts('helper-l-eye'), pts('helper-r-eye')
+    if not len(teeth) or not len(le) or not len(re):
+        sys.exit('makeup: 이빨·눈 도우미 정점이 없다')
+    mouth = teeth.mean(0)
+    half_w = (teeth[:, 0].max() - teeth[:, 0].min()) / 2
+    eyes = [le.mean(0), re.mean(0)]
+    ey = sum(e[2] for e in eyes) / 2
+    mat = basemesh.data.materials[0]
+    node = next(n for n in mat.node_tree.nodes if n.type == 'TEX_IMAGE')
+    W, H = node.image.size
+    nv = len(basemesh.data.vertices)
+    front = co[:, 1] < mouth[1] - 0.002      # 입 안쪽(이빨·혀 뒤)·뒤통수 제외
+    lip = np.clip(1.0 - (((co[:, 0] - mouth[0]) / (half_w * 1.05)) ** 2 + ((co[:, 2] - mouth[2]) / 0.0125) ** 2), 0.0, 1.0)
+    lip = np.where(front, lip, 0.0) ** 0.8
+    sig = 0.35 * (ey - mouth[2])
+    blush = np.zeros(nv)
+    for e in eyes:
+        cx, cz = e[0] * 1.05, (ey + mouth[2]) / 2 + 0.004
+        blush = np.maximum(blush, np.exp(-(((co[:, 0] - cx) ** 2 + (co[:, 2] - cz) ** 2) / (2 * sig * sig))))
+    blush = np.where(co[:, 1] < eyes[0][1] + 0.012, blush, 0.0)
+    lid = np.zeros(nv)
+    for e in eyes:
+        lid = np.maximum(lid, np.exp(-(((co[:, 0] - e[0]) ** 2 / (2 * 0.016 ** 2)) + ((co[:, 2] - (e[2] + 0.007)) ** 2 / (2 * 0.0075 ** 2)))))
+    lid = np.where(co[:, 1] < eyes[0][1] + 0.004, lid, 0.0)
+    uv = basemesh.data.uv_layers.active.data
+    masks = [np.zeros((H, W), np.float32) for _ in range(3)]
+    for poly in basemesh.data.polygons:
+        vs = list(poly.vertices)
+        if max(lip[v] for v in vs) + max(blush[v] for v in vs) + max(lid[v] for v in vs) < 1e-3:
+            continue
+        uvs = [(uv[l].uv[0] * W, uv[l].uv[1] * H) for l in poly.loop_indices]
+        for t in range(1, len(vs) - 1):
+            ids = (0, t, t + 1)
+            P = np.array([uvs[i] for i in ids])
+            x0, x1 = int(max(P[:, 0].min() - 1, 0)), int(min(P[:, 0].max() + 1, W - 1))
+            y0, y1 = int(max(P[:, 1].min() - 1, 0)), int(min(P[:, 1].max() + 1, H - 1))
+            if x1 < x0 or y1 < y0:
+                continue
+            xs, ys = np.meshgrid(np.arange(x0, x1 + 1) + 0.5, np.arange(y0, y1 + 1) + 0.5)
+            d = (P[1, 1] - P[2, 1]) * (P[0, 0] - P[2, 0]) + (P[2, 0] - P[1, 0]) * (P[0, 1] - P[2, 1])
+            if abs(d) < 1e-9:
+                continue
+            a = ((P[1, 1] - P[2, 1]) * (xs - P[2, 0]) + (P[2, 0] - P[1, 0]) * (ys - P[2, 1])) / d
+            b = ((P[2, 1] - P[0, 1]) * (xs - P[2, 0]) + (P[0, 0] - P[2, 0]) * (ys - P[2, 1])) / d
+            c = 1.0 - a - b
+            inside = (a >= -0.02) & (b >= -0.02) & (c >= -0.02)
+            for m, arr in zip(masks, (lip, blush, lid)):
+                val = a * arr[vs[ids[0]]] + b * arr[vs[ids[1]]] + c * arr[vs[ids[2]]]
+                sub = m[y0:y1 + 1, x0:x1 + 1]
+                np.maximum(sub, np.where(inside, val, 0.0).astype(np.float32), out=sub)
+    return masks
+
+
+MAKEUP_MUL = {'lip': (1.0, 0.60, 0.64), 'blush': (1.04, 0.80, 0.84), 'lid': (0.88, 0.84, 0.86)}
+
+
+def makeup_apply(arm, masks, spec, outdir):
+    """피부 그림에 화장을 곱해 새 그림으로 굽는다(피부 색 그대로 곱하니 어느 피부에도 맞는다). spec = {'lip':세기,'blush':세기,'lid':세기}."""
+    mat = next((m for o in arm.children if o.type == 'MESH' for m in o.data.materials if m and m.name == 'skin'), None)
+    if mat is None:
+        sys.exit('makeup: skin 재질이 없다')
+    bsdf = next(n for n in mat.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+    node = bsdf.inputs['Base Color'].links[0].from_node
+    src = node.image
+    w, h = src.size
+    px = np.empty(w * h * 4, np.float32)
+    src.pixels.foreach_get(px)
+    px = px.reshape(h, w, 4)
+    for key, m in zip(('lip', 'blush', 'lid'), masks):
+        k = float(spec.get(key, 0.0))
+        if k <= 0 or m.shape != (h, w):
+            continue
+        a = (m * k)[:, :, None]
+        px[:, :, :3] = px[:, :, :3] * (1.0 - a) + np.clip(px[:, :, :3] * np.array(MAKEUP_MUL[key], np.float32), 0, 1) * a
+    os.makedirs(outdir, exist_ok=True)
+    path = os.path.join(outdir, f'{arm.name}_skin.png')
+    img = bpy.data.images.new(f'{arm.name}_skin', w, h, alpha=True)
+    img.pixels.foreach_set(px.ravel())
+    img.filepath_raw, img.file_format = path, 'PNG'
+    img.save()
     for n in mat.node_tree.nodes:
         if n.type == 'TEX_IMAGE' and n.image == src:
             n.image = img
@@ -901,6 +1038,7 @@ def main():
     bpy.ops.wm.read_factory_settings(use_empty=True)
     svc = mpfb()
     basemesh = make_human(svc, r)
+    mk_masks = makeup_masks(basemesh) if r.get('makeup') else None
     arm = bake_for_export(svc, basemesh)
     arm.name = arm.data.name = r['id']
     name_materials(svc, arm)
@@ -910,6 +1048,10 @@ def main():
         hide_under(arm, r['under'], r.get('under_reach'), r.get('under_below'), r.get('under_rows'), r.get('under_keep'))
     if r.get('soften'):
         soften(arm, r['soften'])
+    if mk_masks is not None:
+        makeup_apply(arm, mk_masks, r['makeup'], os.path.join(os.path.dirname(os.path.abspath(out)), r['id'] + '_tex'))
+    if r.get('eye_color'):
+        eye_color(arm, r['eye_color'], os.path.join(os.path.dirname(os.path.abspath(out)), r['id'] + '_tex'))
     for slot, col in r.get('tints', {}).items():
         tint(arm, slot, col, os.path.join(os.path.dirname(os.path.abspath(out)), r['id'] + '_tex'))
     if r.get('kitbash'):
