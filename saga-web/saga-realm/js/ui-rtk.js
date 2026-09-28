@@ -36,6 +36,79 @@
   var LAND_ICON = { plain: '🌾', hill: '⛰️', river: '🌊', mount: '🏔️' };
   var liveRepStub = null;
   var liveBase = null;
+  /* 실시간 전장(2026-09-28, 실기 보고 Q9) — 합을 누를 때마다가 아니라 **시계로** 저절로 넘긴다.
+     명령 단추는 "다음 합부터 이렇게" 를 바꿀 뿐(돌격·수비·정공법은 바꿀 때까지 이어진다, 전술은 한 번).
+     ⏸ 멈춤 · ⏩ 두 배 · ⏭ 바로 다음 합. 판정은 그대로 war.js stepRound — 부르는 박자만 바뀌었다.
+     손잡이: battle.roundMs(한 합 2600ms, 첫 합은 두 군이 다가오는 동안 ×1.7) */
+  var liveClock = null, liveStance = null, liveQueued = null, livePaused = false, liveSpeed = 1, liveOn = false, liveRound = 0;
+  function liveRoundMs() { return Math.max(300, core.tuned('battle.roundMs', 2600)) * (liveRound === 0 ? 1.7 : 1) / liveSpeed; }
+  function stopLiveClock() { if (liveClock) { global.clearTimeout(liveClock); liveClock = null; } }
+  function armLiveClock() {
+    stopLiveClock();
+    var ck = $('bclock');
+    if (!liveStep || livePaused) { if (ck) { ck.innerHTML = ''; } return; }
+    var ms = liveRoundMs();
+    if (ck) { ck.innerHTML = '<i style="animation-duration:' + Math.round(ms) + 'ms"></i>'; }
+    liveClock = global.setTimeout(function () { liveClock = null; fireLiveRound(); }, ms);
+  }
+  /** 지금 명령으로 한 합을 친다 — 시계·⏭·키 모두 여기로 */
+  function fireLiveRound() {
+    var step = liveStep;
+    if (!step) { return; }
+    liveStep = null;
+    stopLiveClock();
+    var cmd = liveStance;
+    if (liveQueued) { cmd = { cmd: liveStance, tactic: liveQueued }; liveQueued = null; }
+    step(cmd);
+  }
+  /** 싸움 도중 화면을 닫으면 남은 합을 지금 명령대로 끝까지 굴린다(예전엔 멈춘 채 남았다) */
+  function finishLiveNow() {
+    liveOn = false;
+    for (var guard = 0; liveStep && guard < 40; guard++) { fireLiveRound(); }
+    stopLiveClock();
+  }
+  /** 싸움이 끝났다 — 전장은 그대로 두고 그 위에 결과 판을 띄운다(예전엔 요약 카드로 갈아 끼우고 처음부터 다시 재생했다) */
+  function showLiveResult(rep) {
+    var el = $('liveresult');
+    if (!el) { showBattle(rep); return; }
+    stopLiveClock();
+    var kind = rep.won ? 'won' : (rep.routed ? 'routed' : 'dusk');
+    if (global.DG.battle3d && global.DG.battle3d.armyEnd) { global.DG.battle3d.armyEnd(kind); }
+    var head = rep.won ? '🏆 승리' : (rep.routed ? '↩️ 물러났다' : '🌒 날이 저물었다');
+    var tail = rep.log.slice(-4).map(function (l) { return '<div>' + esc(l) + '</div>'; }).join('');
+    el.innerHTML = '<div class="bres ' + (rep.won ? 'good' : 'bad') + '"><h3>' + head + '</h3>' +
+      '<div class="bres-sub">잃은 병력 — 아군 ' + core.fmt(rep.lossA || 0) + ' · 적 ' + core.fmt(rep.lossD || 0) + '</div>' +
+      '<div class="bres-log">' + tail + '</div>' +
+      '<button class="btn primary wide" data-act="close-enc">확인</button></div>';
+    var cmdEl = $('livecmd');
+    if (cmdEl) { cmdEl.innerHTML = ''; }
+    liveOn = false;
+  }
+  function popLoss(row, d) {
+    if (!row || !(d >= 1)) { return; }
+    var sp = document.createElement('span');
+    sp.className = 'bloss';
+    sp.textContent = '−' + core.fmt(Math.round(d));
+    row.appendChild(sp);
+    global.setTimeout(function () { if (sp.parentNode) { sp.parentNode.removeChild(sp); } }, 1300);
+  }
+  /** 전장 단축키 — 1 돌격 · 2 수비 · 3 정공법 · 4 전술 · 스페이스 멈춤 · F 빠르게 · Enter 다음 합 · R 퇴각 */
+  function liveKey(k) {
+    if (!liveOn || !liveStep) { return false; }
+    var map = { '1': 'press', '2': 'hold', '3': 'none', '4': 'tactic', r: 'retreat' };
+    var fake = function (o) { return { getAttribute: function (a) { return o[a] || null; } }; };
+    if (map[k]) {
+      if (map[k] === 'tactic') {
+        if (!(liveTactic && liveTactic.ok && liveTactic.tactic)) { return true; }
+        act('bat-cmd', fake({ 'data-cmd': 'tactic', 'data-tactic': liveTactic.tactic.key }));
+      } else { act('bat-cmd', fake({ 'data-cmd': map[k] })); }
+      return true;
+    }
+    if (k === ' ') { act('bat-pause', fake({})); return true; }
+    if (k === 'f') { act('bat-speed', fake({})); return true; }
+    if (k === 'enter') { act('bat-now', fake({})); return true; }
+    return false;
+  }
   /* 일기토 손 싸움(PLAN §5-3) — 한 수를 기다리는 중이면 step 이 담긴다 / 설전 카드 진행(사절·등용 앞의 세 문답) */
   var duelStep = null;
   var debCur = null;
@@ -395,6 +468,10 @@
     els['sheet-map'].addEventListener('click', closeSheet);
     els.scrim.addEventListener('click', closeSheet);
     global.addEventListener('keydown', function (e) {
+      if (els.encounter.classList.contains('battle') && !e.ctrlKey && !e.metaKey && !e.altKey && liveKey(e.key.toLowerCase())) {
+        e.preventDefault(); e.stopImmediatePropagation();
+        return;
+      }
       if (e.key === 'Escape') {
         if (els.encounter.classList.contains('show')) { return; }
         if (openTab) { closeSheet(); }
@@ -440,7 +517,10 @@
     core.on('changed', function () { renderTop(); renderMap(); renderSheet(); syncDock(); });
     core.on('rtk:battle', function (rep) {
       /* 내 세력이 친 싸움만 띄운다. 진영에서 벌어진 것(달을 넘긴 원정)도 여기로 온다 */
-      if (rep.force === R().me()) { lastBattle = rep; showBattle(rep); }
+      if (rep.force === R().me()) {
+        lastBattle = rep;
+        if (liveOn && $('liveresult')) { showLiveResult(rep); } else { showBattle(rep); }
+      }
     });
     core.on('rtk:camp', function () { syncDock(); });
     core.on('rtk:end', function (kind) { showEnd(kind); });
@@ -643,12 +723,34 @@
       }
       return;
     } else if (a === 'bat-cmd') {
+      /* 실시간 전장 — 퇴각만 바로, 나머지는 "다음 합부터" (돌격·수비·정공법은 이어지고 전술은 한 번) */
       var cmd = g('data-cmd');
-      if (!cmd || cmd === 'none') { cmd = null; }
-      else if (cmd === 'tactic') { cmd = { cmd: null, tactic: g('data-tactic') }; }
-      var step = liveStep; liveStep = null;
-      renderLiveCmd(false);
-      if (step) { step(cmd); }
+      if (cmd === 'retreat') {
+        var stepR = liveStep; liveStep = null;
+        stopLiveClock();
+        renderLiveCmd(false);
+        if (stepR) { stepR('retreat'); }
+        return;
+      }
+      if (cmd === 'tactic') { liveQueued = liveQueued ? null : g('data-tactic'); }
+      else {
+        liveStance = (!cmd || cmd === 'none') ? null : cmd;
+        if (global.DG.battle3d && global.DG.battle3d.setStance) { global.DG.battle3d.setStance(liveStance); }
+      }
+      renderLiveCmd(!!liveStep);
+      return;
+    } else if (a === 'bat-pause') {
+      livePaused = !livePaused;
+      renderLiveCmd(!!liveStep);
+      armLiveClock();
+      return;
+    } else if (a === 'bat-speed') {
+      liveSpeed = liveSpeed === 1 ? 2 : 1;
+      renderLiveCmd(!!liveStep);
+      armLiveClock();
+      return;
+    } else if (a === 'bat-now') {
+      fireLiveRound();
       return;
     } else if (a === 'camp-food' || a === 'camp-men') {
       doSupply(g('data-id'), a === 'camp-men');
@@ -836,20 +938,27 @@
   function tacticButton() {
     var tt = liveTactic && liveTactic.tactic;
     if (!tt) { return ''; }
-    return '<button class="btn tiny' + (liveTactic.ok ? ' primary' : ' ghost') + '" data-act="bat-cmd" data-cmd="tactic" data-tactic="' + tt.key + '"' +
-      (liveTactic.ok ? '' : ' disabled') + ' title="' + esc(liveTactic.ok ? tt.desc : liveTactic.why) + '">🎯 ' + tt.emoji + ' ' + esc(tt.name) + '</button>';
+    var queued = liveQueued === tt.key;
+    return '<button class="btn tiny' + (queued ? ' primary' : ' ghost') + '" data-act="bat-cmd" data-cmd="tactic" data-tactic="' + tt.key + '"' +
+      (liveTactic.ok ? '' : ' disabled') + ' title="' + esc(liveTactic.ok ? tt.desc : liveTactic.why) + '">🎯 ' + tt.emoji + ' ' + esc(tt.name) +
+      (queued ? ' ✓' : '') + '</button>';
   }
 
   function renderLiveCmd(show) {
     var el = $('livecmd');
     if (!el) { return; }
+    var on = function (k) { return liveStance === k ? ' primary' : ' ghost'; };
     el.innerHTML = !show ? '' :
-      '<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">' +
-      '<button class="btn tiny" data-act="bat-cmd" data-cmd="press">⚔️ 돌격</button>' +
-      '<button class="btn tiny" data-act="bat-cmd" data-cmd="hold">🛡️ 수비</button>' +
+      '<div class="brow">' +
+      '<button class="btn tiny' + on('press') + '" data-act="bat-cmd" data-cmd="press" title="1 — 더 베고 더 맞는다">⚔️ 돌격</button>' +
+      '<button class="btn tiny' + on('hold') + '" data-act="bat-cmd" data-cmd="hold" title="2 — 덜 베고 덜 맞는다">🛡️ 수비</button>' +
+      '<button class="btn tiny' + on(null) + '" data-act="bat-cmd" data-cmd="none" title="3">➡️ 정공법</button>' +
       tacticButton() +
-      '<button class="btn tiny ghost" data-act="bat-cmd" data-cmd="none">➡️ 정공법</button>' +
-      '<button class="btn tiny ghost" data-act="bat-cmd" data-cmd="retreat">↩️ 퇴각</button>' +
+      '<button class="btn tiny ghost" data-act="bat-cmd" data-cmd="retreat" title="R — 바로 물린다">↩️ 퇴각</button>' +
+      '</div><div class="brow">' +
+      '<button class="btn tiny ghost" data-act="bat-pause" title="스페이스">' + (livePaused ? '▶ 이어서' : '⏸ 멈춤') + '</button>' +
+      '<button class="btn tiny ghost" data-act="bat-speed" title="F">' + (liveSpeed === 1 ? '⏩ ×2' : '⏩ ×1') + '</button>' +
+      '<button class="btn tiny ghost" data-act="bat-now" title="Enter — 이번 합을 바로 친다">⏭ 다음 합</button>' +
       '</div>';
   }
 
@@ -997,17 +1106,21 @@
   function showBattleLive(fromId, toId, lead, t) {
     liveStep = null; liveRepStub = null; liveBase = null;
     liveTactic = null;
+    stopLiveClock();
+    liveStance = null; liveQueued = null; livePaused = false; liveRound = 0; liveOn = false;
     var res = global.DG.war.marchInteractive(fromId, toId, lead, t, {
       formation: marchForm || undefined,
       onDuel: showDuelCard,
       onIntro: function (lines, repStub) {
         var html = (global.DG.battle3d ? '<canvas id="battle3d"></canvas>' : '') +
-          '<h3 style="margin:0 0 6px;font-size:18px">⚔️ 전황 (진행 중)' +
+          '<div class="btop"><h3>⚔️ 전황 (진행 중)' +
             (repStub.land ? ' <small class="muted">' + (LAND_ICON[repStub.land] || '') + ' ' + esc(CD.LANDS[repStub.land].name) + '</small>' : '') + '</h3>' +
-          battleHudHtml(repStub) +
-          '<div class="warlog" id="livelog"></div><div id="livecmd"></div>';
-        showEnc(html);
+          battleHudHtml(repStub) + '<div class="bclock" id="bclock"></div></div>' +
+          '<div class="bdock"><div class="warlog blog" id="livelog"></div><div class="bcmd" id="livecmd"></div></div><div id="liveresult"></div>';
+        showEnc(html, 'battle');
+        liveOn = true;
         liveRepStub = repStub;
+        repStub._last = { atk: repStub.atkStart, def: repStub.defStart, wall: repStub.wallFrom };
         for (var i = 0; i < lines.length; i++) { liveAppendLog(lines[i]); }
         if (global.DG.battle3d) {
           liveBase = global.DG.battle3d.beginLive(repStub);
@@ -1017,19 +1130,31 @@
       },
       onLog: liveAppendLog,
       onRound: function (frame, r) {
+        /* 이 합에 잃은 수를 막대 곁에 띄운다(−523) — war.js 가 낸 값의 차이일 뿐 */
+        var rows = document.querySelectorAll('#bhud .rstat'), prev = liveRepStub && liveRepStub._last;
+        if (prev) {
+          popLoss(rows[0], prev.atk - frame.atk);
+          popLoss(rows[1], prev.def - frame.def);
+          if (!liveRepStub.water) { popLoss(rows[2], prev.wall - frame.wall); }
+        }
+        if (liveRepStub) { liveRepStub._last = { atk: frame.atk, def: frame.def, wall: frame.wall }; }
         liveShowState({ atk: frame.atk, def: frame.def, wall: frame.wall,
           duelPhase: liveRepStub && liveRepStub.duel ? 'done' : null, roundTick: true });
         updateBattleHud(liveRepStub, { atk: frame.atk, def: frame.def, wall: frame.wall, r: r });
+        liveRound = r;
         var SFX = global.DG.sfx;
         if (SFX) { SFX.play('round_clash'); }
       },
       onPrompt: function (state, step) {
         liveStep = step;
         liveTactic = state.tactic || null;
+        if (liveQueued && !(liveTactic && liveTactic.ok)) { liveQueued = null; }
         renderLiveCmd(true);
+        armLiveClock();
       },
       onDone: function () {
         liveStep = null;
+        stopLiveClock();
         renderLiveCmd(false);
       }
     });
@@ -2026,8 +2151,9 @@
     if (rg && n) { n.textContent = core.fmt(parseInt(rg.value, 10)); }
   }
 
-  function showEnc(html) {
-    els.encounter.innerHTML = '<div class="enc-card">' + html + '</div>';
+  function showEnc(html, cls) {
+    els.encounter.innerHTML = '<div class="enc-card' + (cls ? ' ' + cls : '') + '">' + html + '</div>';
+    els.encounter.classList.toggle('battle', cls === 'battle');
     els.encounter.classList.add('show');
   }
 
@@ -2038,7 +2164,10 @@
   }
 
   function closeEnc() {
-    els.encounter.classList.remove('show');
+    if (liveStep && liveOn) { finishLiveNow(); return; }   // 결과가 새 카드로 뜬다
+    stopLiveClock();
+    liveOn = false; liveStep = null;
+    els.encounter.classList.remove('show', 'battle');
     els.encounter.innerHTML = '';
     if (encQueue.length) { showEnc(encQueue.shift()); }
   }

@@ -58,7 +58,7 @@
 | 외교 — 동맹·화친·조공(`envoy`), 맹약 소모, AI `tryEnvoy` 3종 상황별 | `diplo.js` `rtk-ai.js` | ○ | 3 |
 | 계략 — 이간·유언비어·매수·화계, 이탈 판정 `checkDefection` | `diplo.js` | ○ | 3 |
 | 출진 — 인접 성만, 일기토(`DUEL_GAP` 25·35% 발생)→야전/공성, 구원군 40%, 함락 `capture` | `war.js` | ○ | 9 |
-| 개입형 전투 — `marchInteractive` 합마다 ⚔️돌격·🛡️수비·➡️정공·↩️퇴각(플레이어 출진만) | `war.js` `ui-rtk.js` | ○ | (동치 검증) |
+| 개입형 전투 — `marchInteractive` ⚔️돌격·🛡️수비·➡️정공·↩️퇴각(플레이어 출진만). **실시간 전장**(2026-09-28, 실기 보고 Q9): 합은 시계(`battle.roundMs` 2600)로 저절로, 명령은 다음 합부터(퇴각만 바로)·⏸⏩⏭, 전체 화면 · 판정은 그대로 stepRound | `war.js` `ui-rtk.js` | △ | (동치 검증) + 1 |
 | 진형 3(추행·학익·방원, 문턱 75, 자동) `armyPower` 한 곳 | `war.js` | ○ | 4 |
 | 진영(camp) — 못 떨어뜨리면 성 밖 진, 치중 2달, 사기 ×0.94/달·0.60 이탈, 포위 효과 | `war.js` | ○ | 10 |
 | 원정(journey) — 내 땅·빈 땅 육로 여러 달, 국경에서 `march()`. 플레이어 전용·회군 없음 | `war.js` | ○ | 6 |
@@ -74,7 +74,7 @@
 | 2D 지도 SVG — `MAP_VB`(-60 -30 300 180), 드래그·핀치·관성·조이스틱·키보드, 🏠 내 땅으로 | `ui-rtk.js` | △ | 4 |
 | 지도 위 배우 ① 원정군 — 🚩 대신 앞장 장수 3D(통솔 최고, 세력색)+병사 3~5(보·기 — 2026-09-25 부터 CC0 기사·짐말 기병 몸, 손잡이 `realm3d.troopModel`), 다음 달에 1.5초 길 따라 걷기(walk↔idle) · ② 태수 — 성문 앞, 이 달 명령 몸짓(`ORDER_GESTURES`)+그림문자, 기록은 세이브 밖 `rtk.monthOrders` · ③ 싸움 자리 — 이 달 싸움 난 성 진입로에서 두 지휘관 합 셋(`battleBeat`) → 진 쪽 쓰러짐·결과 깃발, 기록 `rtk.monthBattles`(세이브 밖) · ④ 재야 — 드러난 재야가 이웃 성 쪽 길을 흙빛으로 오가고, 이 달 세작이 물어 온 사람은 밤빛+🌙(`rtk.monthScouts`) · ⑤ 성을 누르면 그 태수 앞으로 줌(`zoomFor`, 손잡이 `realm3d.cityZoom`) · 원정 → 싸움(두 칸, 최대 6) → 카메라 가까운 태수 → 떠돌이(4칸 먼저 떼어 둠), 상한 24(사람 수)·LOD `realm3d.actorLod` 480·손잡이 `realm3d.actors` | `realm3d.js` `actorPlan`·`actorPos`·`battleBeat`·`wanderPos`·`zoomFor` `rtk.js` `ui-rtk.js`(⚙️ 두 줄) | △ | 5 |
 | 3D 국토 지도 — 기본 ON, 궤도 카메라, heightmap `elevAt()`, 바다 `STRAITS` 5, 소품 ~1070, 성 3등급 탑(1등급 동양풍) | `realm3d.js` `asset3d.js` | △ | 3(순수 함수만 — `elevAt`·`straitFactor`·`isSea`·`mapClips`, 렌더 자체는 실기) |
-| 전투 3D — `frames` 재생, 일기토 실캐릭터(QRPG)·지휘관 `leadA/D`, HUD `.bhud`, `roundPulse`·`wallShake`·피격 플래시·카메라 컷 | `battle3d.js` | △ | 0 |
+| 전투 3D — `frames` 재생, 일기토 실캐릭터(QRPG)·지휘관 `leadA/D`, HUD `.bhud`, `roundPulse`·`wallShake`·피격 플래시·카메라 컷 · 실시간 전장 `buildArmy`/`stepArmy`(병사마다 제 줄의 적에게 달려가 붙어 싸우고, war.js 병력 비율만큼 앞줄부터 쓰러짐, 병력 450에 하나 4~22 `battle3d.liveCap`) | `battle3d.js` | △ | 0 |
 | 성 안 3D(`city3d.js`)·초상 3D(`portrait3d.js`, QRPG 6 + MPFB 20) | | △ | 0 |
 | 절차 사운드 24종(`sfx.js`, 이벤트 구독만·판정 파일 무접촉)·⚙️ 설정(음량·흔들림) | `sfx.js` `ui-rtk.js` | ○ | 12 |
 | 계정(`account.js`)·세이브 `saga-realm/save/<프로필>`·`save.rtk` 별도 칸·`migrateNewCities` | `core.js` `rtk.js` | ○ | 6 |

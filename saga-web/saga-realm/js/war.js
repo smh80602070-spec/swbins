@@ -644,7 +644,7 @@
         to: toId2, water: water, force: atk.force, defForce: def.force,
         atkStart: atk.start, defStart: def.start, duel: du, wallFrom: startWall,
         leadA: leadA, leadD: leadD, formA: formA, formD: formD,
-        mixA: mixA, mixD: mixD, land: land.key
+        mixA: mixA, mixD: mixD, land: land.key, sortie: sortie
       });
     }
 

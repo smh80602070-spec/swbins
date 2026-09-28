@@ -477,6 +477,258 @@
     return g;
   }
 
+  /* ── 실시간 전장(2026-09-28, 실기 보고 Q9 "실시간 전투가 아님") ─────────────────
+   * 개입형 전투(`beginLive`)에서만 쓴다. 예전엔 합마다 무리를 통째로 다시 지어 병사가 제자리에 서 있다
+   * 합이 올 때만 한 번 휘둘렀다. 이제 병사 하나하나가 **매 프레임** 가장 가까운 적에게 달려가 붙어
+   * 싸우고, 합이 끝나 병력이 줄면(war.js `frames` 값) 앞줄부터 쓰러진다. **판정은 여전히 한 줄도 없다** —
+   * 누가 몇 명 남는지는 war.js 가 낸 병력 비율로만 정하고, 여기선 그 수에 맞춰 쓰러뜨릴 뿐이다.
+   * 명령(돌격·수비)은 `setStance()` 로 받아 달리는 빠르기·버티는 자리만 바꾼다(그림뿐).
+   * 손잡이: `battle3d.liveCap`(한쪽 최대 병사 수, 22) */
+  function LIVE_CAP() { return core() ? Math.max(4, core().tuned('battle3d.liveCap', 22)) : 22; }
+  var army = null;   // { g, a:[], d:[], sortie, water, stance, t, corpses, meet }
+  var ARMY_REACH = 0.8, ARMY_SEP = 0.62;
+  var vrS = 20260928;
+  function vr() { vrS = (vrS * 1664525 + 1013904223) >>> 0; return vrS / 4294967296; }
+  function armyCount(start) { return clamp(Math.round((start || 0) / 450), 4, LIVE_CAP()); }
+  function soldierHolder(color, kind, flagBearer) {
+    var t = three(), h = new t.Group();
+    var ph = banner(color, false, kind);
+    h.add(ph);
+    h.userData.ph = ph;
+    if (flagBearer) { h.userData.flagBearer = true; }
+    return h;
+  }
+  function buildArmy(rep, h) {
+    var t = three();
+    /* wallZ — 성벽 고리(renderLive 의 ring(6, h×0.7))의 앞쪽 두 조각이 서는 줄. 공성이면 두 군이 이 줄을 사이에 두고 붙는다 */
+    army = { g: new t.Group(), a: [], d: [], sortie: !!rep.sortie, water: !!rep.water, stance: null, t: 0,
+      endT: 0, end: null, wallZ: -6.5 + Math.sin(Math.PI / 3) * h * 0.7, wallUp: !rep.water };
+    dyn.add(army.g);
+    [['a', rep.atkStart, rep.force, rep.formA, rep.mixA], ['d', rep.defStart, rep.defForce, rep.formD, rep.mixD]].forEach(function (S) {
+      var side = S[0], n = armyCount(S[1]), color = forceColor(S[2]);
+      var pts = clusterLayout(n, S[3]), types = S[4] ? troopTypes(n, S[4]) : null, i, needInf = 0, needCav = 0;
+      for (i = 0; i < n; i++) { if (types && types[i] === 'cav') { needCav++; } else { needInf++; } }
+      wantTroops(side, 'inf', needInf, color);
+      wantTroops(side, 'cav', needCav, color);
+      var used = { inf: 0, cav: 0 };
+      /* 출발 자리 — 공격군은 싸움터 앞쪽 끝(+z)에서 걸어 들어오고, 수비군은 성문 앞(공성) 또는 조금 나와(야전) 선다 */
+      var cz = side === 'a' ? 8.6 : (army.sortie || army.water ? -1.2 : army.wallZ - 0.45);
+      for (i = 0; i < n; i++) {
+        var kind = types && types[i], pk = kind === 'cav' ? 'cav' : 'inf';
+        var s = { side: side, kind: pk, navy: kind === 'navy', slot: troopPool[side][pk][used[pk]++],
+          hx: pts[i].x * 2.4 + (jit(i, side === 'a' ? 11 : 13) - 0.5) * 0.4,
+          hz: (side === 'a' ? 1 : -1) * Math.abs(pts[i].z) * 1.7 + (jit(i, 17) - 0.5) * 0.3,
+          alive: true, die: -1, swing: jit(i, 23) * 1.2, want: 'idle', speedK: 0.85 + jit(i, 29) * 0.3 };
+        s.x = s.hx; s.z = cz + s.hz;
+        s.obj = soldierHolder(color, kind, i % 4 === 0);
+        s.obj.position.set(s.x, 0, s.z);
+        s.obj.rotation.y = side === 'a' ? Math.PI : 0;
+        army.g.add(s.obj);
+        army[side].push(s);
+      }
+    });
+    return army;
+  }
+  /** 병사 몸이 도착했으면 깃발 자리를 몸으로 바꾼다(깃발잡이는 등에 깃발을 남긴다) */
+  function dressSoldier(s) {
+    if (s.dressed || !s.slot || !s.slot.model) { return; }
+    var m = s.slot.model, h = s.obj;
+    if (h.userData.ph) {
+      if (h.userData.flagBearer) { h.userData.ph.position.set(0.16, 0, -0.18); }
+      else { h.remove(h.userData.ph); }
+    }
+    m.scale.setScalar(s.kind === 'cav' ? TROOP_H_CAV : TROOP_H);
+    m.position.set(0, 0, 0);
+    m.rotation.set(0, 0, 0);
+    h.add(m);
+    var cm = m.userData.clipMap;
+    s.realDeath = !!(cm && cm.death && !(cm.alias && cm.alias.death));
+    s.dressed = true;
+  }
+  /** war.js 가 낸 병력에 맞춰 산 병사 수를 맞춘다 — 줄면 적과 가장 가까운(맞붙은) 병사부터 쓰러진다 */
+  function armySetAlive(side, troops, start) {
+    if (!army) { return; }
+    var list = army[side], n0 = list.length;
+    var want = troops <= 0 ? 0 : Math.max(1, Math.round(n0 * clamp(troops / Math.max(1, start), 0, 1)));
+    var alive = list.filter(function (s) { return s.alive; });
+    if (alive.length <= want) { return; }
+    var foes = army[side === 'a' ? 'd' : 'a'].filter(function (s) { return s.alive; });
+    alive.forEach(function (s) { s.front = foes.length ? nearestDist(s, foes) : 0; });
+    alive.sort(function (p, q) { return p.front - q.front; });
+    for (var i = 0; i < alive.length - want; i++) {
+      var s = alive[i];
+      s.alive = false; s.die = 0;
+      s.fall = (jit(i, army.t * 7 + 3) < 0.5 ? -1 : 1);
+    }
+  }
+  function nearestDist(s, list) {
+    var best = 1e9;
+    for (var i = 0; i < list.length; i++) {
+      var dx = list[i].x - s.x, dz = list[i].z - s.z, d = dx * dx + dz * dz;
+      if (d < best) { best = d; }
+    }
+    return Math.sqrt(best);
+  }
+  /** 노릴 적 — 가까운 적이되 **제 줄(가로 자리 hx)** 에 있는 적을 먼저 본다. 가장 가까운 적만 쫓으면
+   *  두 군이 한가운데 한 점으로 몰려 한 덩이가 됐다(헤드리스 사진) — 줄로 맞서야 전선이 보인다 */
+  function nearestFoe(s, list) {
+    var best = null, bc = 1e9, bd = 0;
+    for (var i = 0; i < list.length; i++) {
+      if (!list[i].alive) { continue; }
+      var dx = list[i].x - s.x, dz = list[i].z - s.z, d = Math.sqrt(dx * dx + dz * dz);
+      var cost = d + Math.abs(list[i].x - s.hx) * 0.7;
+      if (cost < bc) { bc = cost; best = list[i]; bd = d; }
+    }
+    return best ? { s: best, d: bd } : null;
+  }
+  /** 합이 부딪힌 순간 — 맞붙은 병사가 한꺼번에 휘두른다(합의 박자가 보이게) */
+  function armyClash() {
+    if (!army) { return; }
+    ['a', 'd'].forEach(function (side) {
+      army[side].forEach(function (s) { if (s.alive && s.engaged) { s.swing = Math.min(s.swing, 0.05 + vr() * 0.15); } });
+    });
+  }
+  /** 명령(그림뿐) — 'press' 돌격 · 'hold' 수비 · null 정공법 · 끝났을 때 'won'|'lost'|'routed'|'dusk' */
+  function setStance(st) { if (army) { army.stance = st || null; } }
+  function armyEnd(kind) { if (army) { army.end = kind; army.endT = 0; } }
+  var army_sfxT = 0;
+  function stepArmy(dt, tT) {
+    if (!army) { return; }
+    army.t += dt;
+    var A3x = asset3d(), sides = ['a', 'd'], si, i;
+    for (si = 0; si < 2; si++) {
+      var side = sides[si], mine = army[side], foes = army[side === 'a' ? 'd' : 'a'];
+      /* 이 쪽의 버티는 자리 — 공격군은 명령이 수비면 제 진영(z 3.4)에서, 수비군은 공성이면 성벽 뒤에서 버틴다 */
+      var siege = !army.sortie && !army.water;
+      var holdZ = side === 'a' ? (army.stance === 'hold' ? 3.4 : null) : (siege && army.wallUp ? army.wallZ - 0.45 : null);
+      var run = side === 'a' ? (army.stance === 'press' ? 1.45 : (army.stance === 'hold' ? 0.8 : 1)) : 1;
+      var end = army.end, flee = false, cheer = false;
+      if (end) {
+        var aWon = end === 'won';
+        if (side === 'a') { flee = end === 'routed' || end === 'lost'; cheer = aWon; }
+        else { flee = aWon; cheer = end === 'routed' || end === 'lost'; }
+      }
+      for (i = 0; i < mine.length; i++) {
+        var s = mine[i];
+        dressSoldier(s);
+        var model = s.dressed ? s.slot.model : null;
+        if (!s.alive) {
+          /* 쓰러짐 — 죽음 몸짓이 있으면 그것, 없으면 몸째 옆으로 넘어진다. 4초 뒤 땅으로 가라앉아 사라진다 */
+          if (s.die < 0) { continue; }
+          s.die += dt;
+          if (model && s.realDeath) { if (s.want !== 'death') { s.want = 'death'; A3x.play(model, 'death', true); } }
+          else { s.obj.rotation.z = s.fall * Math.min(1, s.die / 0.45) * 1.45; }
+          if (s.die > 4) { s.obj.position.y = -Math.min(1.2, (s.die - 4) * 0.8); }
+          if (s.die > 5.6) { s.obj.visible = false; s.die = -1; }
+          if (model) { A3x.step(model, { t: tT + i * 0.37, anim: s.want }); }
+          continue;
+        }
+        var near = foes.length ? nearestFoe(s, foes) : null, tx = s.x, tz = s.z, want = 'idle', face = null;
+        s.engaged = false;
+        if (flee) {
+          tx = s.x; tz = side === 'a' ? 14 : -9; want = 'run';
+        } else if (cheer || !near) {
+          want = 'idle';
+          if (near) { face = near.s; }
+        } else if (near.d <= ARMY_REACH + (s.kind === 'cav' ? 0.35 : 0)) {
+          s.engaged = true; face = near.s;
+          s.swing -= dt;
+          if (s.swing <= 0) { s.swing = 0.9 + vr() * 0.8; want = 'attack'; }
+          else { want = s.want === 'attack' && s.swing > 0.6 ? 'attack' : 'idle'; }
+        } else {
+          tx = near.s.x; tz = near.s.z; face = near.s;
+          /* 버티는 쪽은 자리에서 기다리다 적이 3m 안에 들어오면 나선다 */
+          if (holdZ != null && near.d > 3) {
+            tx = s.hx; tz = holdZ + s.hz * 0.6; face = near.s;
+          }
+          want = 'run';
+        }
+        var dx = tx - s.x, dz = tz - s.z, dd = Math.sqrt(dx * dx + dz * dz);
+        if (want === 'run' && dd > 0.15) {
+          var sp = (s.kind === 'cav' ? 3.4 : 2.3) * run * s.speedK * (flee ? 1.2 : 1);
+          if (dd < 1.2 && !flee) { sp *= 0.6; want = 'walk'; }
+          var stepD = Math.min(dd, sp * dt);
+          s.x += dx / dd * stepD; s.z += dz / dd * stepD;
+          if (!face || flee) { s.obj.rotation.y = Math.atan2(dx, dz); }
+        } else if (want === 'run') { want = 'idle'; }
+        if (face) { s.obj.rotation.y = Math.atan2(face.x - s.x, face.z - s.z); }
+        /* 제 편끼리 겹치지 않게 살짝 민다(한 점에 몰려 한 덩이가 되지 않게 — 사가고 Q6 ③ 과 같은 요령) */
+        for (var j = 0; j < mine.length; j++) {
+          var o = mine[j];
+          if (o === s || !o.alive) { continue; }
+          var ex = s.x - o.x, ez = s.z - o.z, e2 = ex * ex + ez * ez;
+          if (e2 < ARMY_SEP * ARMY_SEP && e2 > 1e-6) {
+            var e = Math.sqrt(e2), push = (ARMY_SEP - e) * 0.5;
+            s.x += ex / e * push; s.z += ez / e * push;
+          }
+        }
+        /* 싸움터 원판(반지름 11) 밖·성벽 안(공성 때 수비군 뒤)으로 새지 않게 */
+        var rr = Math.sqrt(s.x * s.x + s.z * s.z);
+        if (rr > 10.3 && !flee) { s.x *= 10.3 / rr; s.z *= 10.3 / rr; }
+        /* 성벽이 서 있는 동안 공격군은 벽 앞에서, 수비군은 벽 뒤에서 — 벽이 다 무너지면 넘어 들어간다 */
+        if (siege && army.wallUp && !flee) {
+          if (side === 'a' && s.z < army.wallZ + 0.35) { s.z = army.wallZ + 0.35; }
+          if (side === 'd' && s.z > army.wallZ - 0.4) { s.z = army.wallZ - 0.4; }
+        }
+        s.obj.position.set(s.x, 0, s.z);
+        if (model) {
+          var force = false;
+          if (want === 'attack' && s.want !== 'attack') { force = true; }
+          s.want = want;
+          A3x.step(model, { t: tT + i * 0.37, anim: want, force: force });
+        } else {
+          s.want = want;
+          /* 몸이 아직 안 온 깃발 — 뛰는 동안 깃대가 앞으로 기운다 */
+          s.obj.rotation.x = want === 'run' ? 0.18 * Math.sin(tT * 9 + i) : 0;
+        }
+      }
+    }
+    if (army.end) { army.endT += dt; }
+    /* 칼 부딪는 소리는 맞붙은 병사가 있을 때만, 1.1초에 한 번 */
+    army_sfxT -= dt;
+    if (army_sfxT <= 0) {
+      army_sfxT = 1.1;
+      var clashing = army.a.some(function (s) { return s.alive && s.engaged; });
+      var SFX = global.DG.sfx;
+      if (clashing && SFX && !army.end) { SFX.play('duel'); }
+    }
+  }
+  /** 실시간 전장의 두 지휘관(일기토 장수 자리) — 제 군 가운데에서 1.8m 뒤를 걸어 따라간다. 일기토에서 쓰러졌으면 그 자리 */
+  function leadFollow(dt) {
+    ['a', 'd'].forEach(function (side) {
+      var m = duelActors[side];
+      if (!m || duelWant[side] === 'death') { return; }
+      var c = sideCenter(side);
+      if (!c) { return; }
+      var tx = c.x * 0.5, tz = c.z + (side === 'a' ? 1.8 : -1.8);
+      if (side === 'd' && army.wallUp && !army.sortie && !army.water) { tz = Math.min(tz, army.wallZ - 1.4); }
+      if (!m.userData.liveSet) { m.userData.liveSet = true; m.position.set(tx, 0, tz); }
+      var dx = tx - m.position.x, dz = tz - m.position.z, dd = Math.sqrt(dx * dx + dz * dz);
+      if (dd > 0.3) {
+        var st = Math.min(dd, 2.0 * dt);
+        m.position.x += dx / dd * st; m.position.z += dz / dd * st;
+      }
+      var foe = sideCenter(side === 'a' ? 'd' : 'a');
+      if (foe) { m.rotation.y = Math.atan2(foe.x - m.position.x, foe.z - m.position.z); }
+      if (duelWant[side] === 'idle' && dd > 0.6) { duelWant[side] = 'walk'; duelGen++; }
+      else if (duelWant[side] === 'walk' && dd <= 0.3) { duelWant[side] = 'idle'; duelGen++; }
+    });
+  }
+
+  /** 두 군의 가운데(카메라가 본다) — 산 병사 평균, 없으면 0 */
+  function armyCenter() {
+    var sx = 0, sz = 0, n = 0;
+    if (army) {
+      army.a.concat(army.d).forEach(function (s) { if (s.alive) { sx += s.x; sz += s.z; n++; } });
+    }
+    return n ? { x: sx / n, z: sz / n } : { x: 0, z: 1 };
+  }
+  function sideCenter(side) {
+    var sx = 0, sz = 0, n = 0;
+    army[side].forEach(function (s) { if (s.alive) { sx += s.x; sz += s.z; n++; } });
+    return n ? { x: sx / n, z: sz / n } : null;
+  }
+
   /** 한 번만 짓는 것 — 땅·성. 성벽·무리·일기토 깃발은 `renderLive()` 몫이다
    *  (합마다 다시 그려야 하므로).
    *  @returns {seq,h,maxWall} — renderLive() 에 그대로 넘긴다. 성이 없으면 null */
@@ -516,6 +768,7 @@
     atkGroupRef = null; defGroupRef = null; roundPulse = 0;
     lastWallN = null; wallShake = 0;
     resetTroopPool();
+    army = null;
     if (fx) { fx.clear(); }
     debris = [];
     var c = R().city(rep.to);
@@ -662,6 +915,7 @@
         }
       }
       lastWallN = wallN;
+      if (army) { army.wallUp = wallN > 0; }
       ring(6, h * 0.7, 0).slice(0, wallN).forEach(function (p, i) {
         addProp('wall', rep.to + ':bwall:' + i, p[0], p[1] - 6.5, h * 0.5,
           Math.atan2(p[0], p[1]) + Math.PI / 2, seq, myLiveSeq);
@@ -674,9 +928,15 @@
     var atkN = clamp(Math.round((atkStart / 1200) * atkSurvive), 1, 14);
     var defN = clamp(Math.round((defStart / 1200) * defSurvive), 1, 14);
 
-    atkGroupRef = cluster(atkN, 0, 4.2, forceColor(rep.force), rep.formA, rep.mixA, 'a');
-    defGroupRef = cluster(defN, 0, -3.0, forceColor(rep.defForce), rep.formD, rep.mixD, 'd');
-    if (state.roundTick) { roundPulse = 1; troopGen++; }
+    if (army) {
+      armySetAlive('a', state.atk != null ? state.atk : atkStart, atkStart);
+      armySetAlive('d', state.def != null ? state.def : defStart, defStart);
+      if (state.roundTick) { roundPulse = 0.5; armyClash(); }
+    } else {
+      atkGroupRef = cluster(atkN, 0, 4.2, forceColor(rep.force), rep.formA, rep.mixA, 'a');
+      defGroupRef = cluster(defN, 0, -3.0, forceColor(rep.defForce), rep.formD, rep.mixD, 'd');
+      if (state.roundTick) { roundPulse = 1; troopGen++; }
+    }
 
     /* 일기토 — 2026-09-10 부터는 깃발이 아니라 `duelActors`(setupDuel() 이
        세운 실제 장수 둘)를 실제로 움직인다. 여기선 "무슨 동작을 원하는지"
@@ -810,6 +1070,8 @@
     duelCamActive = false;   // 이 경로는 근접 연출을 안 쓴다(위 duelCamActive 주석 참고)
     clearTimers();
     var base = buildBase(repStub);
+    if (base) { buildArmy(repStub, base.h); }
+    lastTickT = -1;
     resize();
     startLoop();
     return base;
@@ -831,7 +1093,7 @@
    *  일기토 장수(`duelActors`)가 서 있으면 매 프레임 실제로 움직인다
    *  (`duelWant`가 바뀔 때만 동작을 바꿔 타지만, mixer 는 계속 갱신해야
    *  끊기지 않고 부드럽게 이어진다 — 그래서 여기, 매 프레임에 있다) */
-  var lastBattleT = 0;
+  var lastBattleT = 0, lastTickT = -1, camC = { x: 0, z: 1 };
   function tick(now) {
     if (!active()) { loopRunning = false; clearTimers(); return; }
     /* 화면에 보이는 채로 다른 창을 쓰는 중이면 렌더를 쉰다 — 안 그러면
@@ -845,6 +1107,9 @@
     if (bfps > 0 && bNow - lastBattleT < 1000 / bfps - 2) { requestAnimationFrame(tick); return; }
     lastBattleT = bNow;
     spin += 0.004;
+    var tNow = (now || 0) / 1000, dtA = lastTickT < 0 ? 0 : Math.min(0.1, Math.max(0, tNow - lastTickT));
+    lastTickT = tNow;
+    if (army) { stepArmy(dtA, tNow); }
     /* 라운드 충격 — 부딪힐 때마다 살짝 훅 당겼다가(dist 를 살짝 줄인다) 풀린다.
        tick() 는 렌더 직전에 한 번만 도니 여기서 감쇠도 같이 한다 */
     roundPulse *= 0.85;
@@ -867,6 +1132,18 @@
 
     var dist = 13 - roundPulse * 1.2;
     var wideX = Math.sin(spin) * dist, wideY = 8.5, wideZ = Math.cos(spin) * dist - 1;
+    var lookX = 0, lookY = 3, lookZ = -2;
+    if (army) {
+      /* 실시간 전장 — 맞붙은 자리를 따라가며 공격군 오른쪽 뒤에서 낮게 본다(천천히 좌우로 흔들린다).
+         세로 화면(폰)이면 한 발 물러난다 — 양쪽 군이 다 들어오게 */
+      var ac = armyCenter();
+      camC.x += (ac.x - camC.x) * Math.min(1, dtA * 1.5);
+      camC.z += (ac.z - camC.z) * Math.min(1, dtA * 1.5);
+      var ang = 0.75 + Math.sin(tNow * 0.08) * 0.35, far = (camera.aspect < 1 ? 15 : 10.5) - roundPulse * 0.6;
+      wideX = camC.x + Math.sin(ang) * far; wideY = camera.aspect < 1 ? 8 : 5.6; wideZ = camC.z + Math.cos(ang) * far;
+      lookX = camC.x; lookY = 0.9; lookZ = camC.z - 0.8;
+      if (duelActors) { leadFollow(dtA); }
+    }
 
     /* 일기토 근접 샷 — 진짜 판정과 무관한 연출뿐이다. camBlend 를 목표값
        (0=넓은 그림·1=근접) 쪽으로 매 프레임 살살 당겨 뚝 끊기지 않게 한다 */
@@ -874,7 +1151,7 @@
     camBlend += (camTarget - camBlend) * 0.12;
     if (camBlend > 0.01) {
       var closeX = 0.9, closeY = 1.35, closeZ = 1.9;
-      var lookWx = 0, lookWy = 3, lookWz = -2;
+      var lookWx = lookX, lookWy = lookY, lookWz = lookZ;
       var lookCx = 0, lookCy = 0.85, lookCz = 0.2;
       camera.position.set(
         wideX + (closeX - wideX) * camBlend,
@@ -888,7 +1165,7 @@
       );
     } else {
       camera.position.set(wideX, wideY, wideZ);
-      camera.lookAt(0, 3, -2);
+      camera.lookAt(lookX, lookY, lookZ);
     }
 
     /* 성벽 붕괴 흔들림 — 카메라를 한 번 더 흔든다(위 wide/근접 블렌드가 이미
@@ -922,5 +1199,15 @@
   global.DG = global.DG || {};
   global.DG.battle3d = {
     /** 싸움터 땅(§12) — 순수 함수, 진단이 값으로 본다 */
-    battleLook: battleLook, available: available, render: render, beginLive: beginLive, showState: showState };
+    battleLook: battleLook, available: available, render: render, beginLive: beginLive, showState: showState,
+    /** 실시간 전장(Q9) — 명령·끝 자세(그림뿐)와 진단용 들여다보기 */
+    setStance: setStance, armyEnd: armyEnd, armyCount: armyCount,
+    armyView: function () {
+      if (!army) { return null; }
+      var v = function (l) { return { n: l.length, alive: l.filter(function (s) { return s.alive; }).length,
+        engaged: l.filter(function (s) { return s.alive && s.engaged; }).length, bodies: l.filter(function (s) { return s.dressed; }).length }; };
+      return { a: v(army.a), d: v(army.d), stance: army.stance, end: army.end, wallUp: army.wallUp, sortie: army.sortie, center: armyCenter() };
+    },
+    /** 확인용 — 그림 시뮬만 sec 초 앞당긴다(1/30초씩, 판정 없음). 헤드리스는 초당 한두 프레임이라 병사가 거의 안 걷는다 */
+    simArmy: function (sec) { for (var k = 0; army && k < sec * 30; k++) { stepArmy(1 / 30, (lastTickT < 0 ? 0 : lastTickT) + k / 30); } } };
 })(window);

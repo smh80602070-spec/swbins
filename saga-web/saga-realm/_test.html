@@ -1142,6 +1142,34 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return cardUp && doneCard && live && ('수 ' + picks + '번 만에 승부 → 전황 카드(일기토 줄·명령 단추)');
     });
 
+    t('실시간 전장(Q9) — 전체 화면·시계, 명령 단추는 합을 넘기지 않고(다음 합부터·불 켜짐), ⏭ 은 한 합, 도중에 닫으면 남은 합을 끝까지 굴려 결과가 뜬다', function () {
+      fresh('cao');
+      var fm = findDuelMarch(true);
+      if (!fm) { return '(이 씨앗에는 일기토가 설 국경이 없다 — 생략)'; }
+      R.city(fm.from).troops = 20000; R.city(fm.from).food = 999999;
+      var o = {};
+      withRand(0, function () {
+        DG.ui._act('march', uiBtn({ 'data-from': fm.from, 'data-to': fm.to }));
+        DG.ui._act('ask-ok', uiBtn({}));
+        for (var g = 0; document.querySelector('#encounter [data-act="duel-pick"]') && g < 8; g++) { DG.ui._act('duel-pick', uiBtn({ 'data-pick': 'auto' })); }
+        if (document.querySelector('#encounter [data-act="duel-go"]')) { DG.ui._act('duel-go', uiBtn({})); }
+        o.full = !!document.querySelector('#encounter.battle .enc-card.battle') && !!document.getElementById('bclock');
+        o.r0 = document.getElementById('bhud-round').textContent;
+        DG.ui._act('bat-cmd', uiBtn({ 'data-cmd': 'press' }));
+        o.same = document.getElementById('bhud-round').textContent === o.r0;
+        o.lit = /primary/.test(document.querySelector('#livecmd [data-cmd="press"]').className);
+        DG.ui._act('bat-now', uiBtn({}));
+        o.r1 = document.getElementById('bhud-round').textContent;
+        o.pressLog = /돌격/.test(document.getElementById('livelog').textContent);
+        DG.ui.closeEnc();                 // 싸움 도중 닫는다 → 남은 합을 지금 명령(돌격)으로 끝까지
+        o.after = encHtml();
+      });
+      var ended = /잃은 병력/.test(o.after) && !document.querySelector('#encounter.battle');
+      DG.ui.closeEnc();
+      return o.full && o.same && o.lit && o.r1 === '1합째' && ended &&
+        ('전체 화면 · ' + o.r0 + ' → 돌격 눌러도 그대로 → ⏭ ' + o.r1 + ' · 닫으니 끝까지 굴려 결과 카드' + (o.pressLog ? ' · 돌격 줄 있음' : ''));
+    });
+
     /* ── 나이 (2026-09-10, README "다음에 채울 것" 마지막 항목) ────── */
 
     t('birthYear·age — id마다 결정적, 시나리오를 바꾸면 나이만 그만큼 변한다', function () {

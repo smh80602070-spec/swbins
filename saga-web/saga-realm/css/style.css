@@ -1314,6 +1314,61 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
   font-size: 11px; color: var(--ink-dim, #93a0b4); text-align: right; margin-top: -2px;
 }
 
+/* ── 실시간 전장(2026-09-28, 실기 보고 Q9) — 개입형 전투는 화면 전체가 싸움터다 ──
+ * 캔버스가 뒤를 다 채우고 현황판(위)·기록(왼쪽 아래)·명령(아래)·결과(가운데)가 그 위에 뜬다 */
+#encounter.battle { padding: 0; }
+.enc-card.battle {
+  position: relative; max-width: none; width: 100%; height: 100%; max-height: none;
+  padding: 0; border: 0; border-radius: 0; overflow: hidden; background: #0e1116; animation: none;
+}
+.enc-card.battle #battle3d { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; border-radius: 0; }
+.enc-card.battle .btop {
+  position: absolute; left: 50%; transform: translateX(-50%); top: calc(10px + env(safe-area-inset-top));
+  width: min(440px, calc(100% - 24px)); padding: 10px 12px 8px; border-radius: 14px;
+  background: rgba(14,17,22,.72); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.enc-card.battle .btop h3 { margin: 0 0 4px; font-size: 15px; }
+.enc-card.battle .bhud { margin: 0; }
+.enc-card.battle .bdock {
+  position: absolute; left: 0; right: 0; bottom: calc(10px + env(safe-area-inset-bottom));
+  display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0 10px;
+}
+.enc-card.battle .blog {
+  align-self: flex-start; width: min(360px, 100%); max-height: 62px; margin: 0; padding: 5px 8px;
+  font-size: 11px; line-height: 1.55; background: rgba(14,17,22,.6);
+}
+.enc-card.battle .bcmd { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; }
+.rstat { position: relative; }
+.bloss {
+  position: absolute; right: 0; top: -2px; font-size: 12px; font-weight: 700; color: #ff8a7a;
+  pointer-events: none; animation: bloss 1.2s ease-out forwards; text-shadow: 0 1px 2px #000;
+}
+@keyframes bloss { from { transform: translate(-44px, 0); opacity: 1; } to { transform: translate(-44px, -14px); opacity: 0; } }
+@media (max-width: 480px) {
+  .bcmd .brow { width: 100%; flex-wrap: nowrap; }
+  .bcmd .btn.tiny { flex: 1 1 0; min-width: 0; padding: 8px 4px; font-size: 11.5px; white-space: nowrap; overflow: hidden; }
+  .enc-card.battle .blog { max-height: 40px; }
+}
+.bcmd .brow {
+  display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
+  padding: 6px; border-radius: 14px; background: rgba(14,17,22,.72);
+}
+.bcmd .btn.tiny { min-height: 44px; min-width: 64px; font-size: 12.5px; padding: 8px 12px; }
+.bcmd .brow + .brow .btn.tiny { min-height: 36px; font-size: 11.5px; }
+.bclock { height: 4px; margin-top: 6px; border-radius: 2px; overflow: hidden; background: rgba(255,255,255,.12); }
+.bclock i { display: block; height: 100%; width: 0; background: var(--gold, #f7bd55); animation: bclock linear forwards; }
+@keyframes bclock { from { width: 0; } to { width: 100%; } }
+.enc-card.battle .bres {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(380px, calc(100% - 32px)); padding: 18px; border-radius: 16px; text-align: center;
+  background: rgba(24,27,34,.94); border: 1px solid var(--glass-br); box-shadow: 0 24px 70px rgba(0,0,0,.6);
+  animation: pop .22s cubic-bezier(.22,1,.36,1);
+}
+.bres h3 { margin: 0 0 6px; font-size: 20px; }
+.bres.good h3 { color: var(--gold); }
+.bres-sub { font-size: 12.5px; color: var(--ink-dim); }
+.bres-log { font-size: 11.5px; line-height: 1.6; color: var(--ink-dim); margin: 8px 0 2px; text-align: left; }
+
 /* 성 살림 한 줄 — 이름 · 막대 · 값 */
 .rstat {
   display: grid; grid-template-columns: 66px 1fr 62px; align-items: center;
