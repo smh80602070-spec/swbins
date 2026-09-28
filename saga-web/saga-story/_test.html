@@ -1615,6 +1615,7 @@ window.DG_NO_TUNE = true;
       J.join('archer');
       J.raise('a_shot');
       var run = S.raw(), p = run.player;
+      p.x = 300;   // 앞 진단들이 오른쪽 끝(2174/2200)까지 밀어 두면 오른쪽으로 걷는 진단이 벽에 막힌다(09-28)
       run.enemies.forEach(function (e) { e.x = p.x + 3000; e.cd = 9; });   // 초반 적 체력 바닥(09-28)으로 앞 진단의 적이 살아남아 발길·탄을 가로막았다
       restInput(); p.climb = null; run.hitstopT = 0;
       p.holding = false; p.holdT = 0; p.holdArmed = false; p.sigCd = 0; p.dodgeCd = 0;
@@ -1635,8 +1636,10 @@ window.DG_NO_TUNE = true;
       var sh = run.shots[run.shots.length - 1];
       var shotOk = !!sh && sh.pierceLeft === 1;
       run.shots.length = 0; p.sigCd = 0; p.archerBuff = null; restInput();
-      return slowed && buffOk && casted && shotOk &&
-        '당기는 동안 느려짐 O(' + Math.round(chargeDist) + 'px) · 관통 +1 실림 O';
+      if (!(slowed && buffOk && casted && shotOk)) {   // 실패 글 — 어느 고리가 끊겼는지(09-28)
+        throw new Error('실패 armed ' + armedNow + ' · 당긴 거리 ' + Math.round(chargeDist) + 'px · buff ' + buffOk + ' · 쏨 ' + casted + ' · 관통 ' + shotOk + ' · 적 ' + run.enemies.length + ' · x ' + Math.round(p.x) + '/' + run.stage.width + ' · rm ' + JSON.stringify(run.rm || null) + ' · 무대 ' + run.stage.key);
+      }
+      return '당기는 동안 느려짐 O(' + Math.round(chargeDist) + 'px) · 관통 +1 실림 O';
     });
 
     t('고유 조작(§5-1) — 협객 그림자 걷기: 무적 이동 + 그 뒤 첫 타 ×1.8', function () {
@@ -1645,6 +1648,7 @@ window.DG_NO_TUNE = true;
       J.join('rogue');
       J.raise('r_twin');
       var run = S.raw(), p = run.player;
+      p.x = 300;   // 앞 진단들이 오른쪽 끝(2174/2200)까지 밀어 두면 오른쪽으로 걷는 진단이 벽에 막힌다(09-28)
       run.enemies.forEach(function (e) { e.x = p.x + 3000; e.cd = 9; });   // 초반 적 체력 바닥(09-28)으로 앞 진단의 적이 살아남아 발길·탄을 가로막았다
       restInput(); p.climb = null; run.hitstopT = 0;
       p.holding = false; p.holdT = 0; p.holdArmed = false; p.sigCd = 0; p.dodgeCd = 0;
@@ -1662,8 +1666,10 @@ window.DG_NO_TUNE = true;
       var casted = S.castSkill(0);      // 그 뒤 첫 타 — ×1.8
       var used = casted && p.shadowHitT === 0 && e.hp < eHp0;
       p.sigCd = 0; e.cd = 1; restInput();
-      return moved && armedNow && used &&
-        '무적 이동 O · 첫 타 보너스 적용·소진 O';
+      if (!(moved && armedNow && used)) {   // 실패 글(09-28)
+        throw new Error('실패 이동 ' + (p.x - x0).toFixed(1) + ' · 무적 ' + p.invuln + ' · 표식 ' + armedNow + ' · 씀 ' + casted + ' · 남은 표식 ' + p.shadowHitT + ' · 적 체력 ' + eHp0 + '→' + e.hp + ' · x ' + Math.round(p.x) + '/' + run.stage.width + ' · 무대 ' + run.stage.key);
+      }
+      return '무적 이동 O · 첫 타 보너스 적용·소진 O';
     });
 
     t('고유 조작(§5-1) — 방사 원소 전환: 화(지속)·빙(둔화)이 발마다 실린다', function () {
@@ -1672,6 +1678,7 @@ window.DG_NO_TUNE = true;
       J.join('mage');
       J.raise('m_fire');
       var run = S.raw(), p = run.player;
+      p.x = 300;   // 앞 진단들이 오른쪽 끝(2174/2200)까지 밀어 두면 오른쪽으로 걷는 진단이 벽에 막힌다(09-28)
       run.enemies.forEach(function (e) { e.x = p.x + 3000; e.cd = 9; });   // 초반 적 체력 바닥(09-28)으로 앞 진단의 적이 살아남아 발길·탄을 가로막았다
       restInput(); p.climb = null; run.hitstopT = 0;
       p.holding = false; p.holdT = 0; p.holdArmed = false; p.sigCd = 0; p.dodgeCd = 0;

@@ -6803,12 +6803,14 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       /* 2026-09-28 실기 Q5 "전체 테스트용 자동 퀘스트" */
       var S = DG.story, sv = S.state(), keep = { ch: sv.ch, step: sv.step }, p = C.save.player.pos, kx = p.x, ky = p.y;
       sv.ch = 0; sv.step = 0;
+      if (S.talking()) { S._resetForTest(); }   // 앞 진단이 대화창을 열어 둔 채 끝나면 첫 박자가 걷기 대신 대화를 넘겼다(09-28)
       var st = S.step(), t = S.targetOf(st);
       if (!st || !S.isTalk(st) || !t) { sv.ch = keep.ch; sv.step = keep.step; return false; }
       DG.auto.state().on = true; DG.auto.state().story = true;
       p.x = t.x + 40; p.y = t.y;
       DG.auto._tickStory(0.5);
       var wt = W.walkingTo(), towards = !!wt && Math.hypot(wt.x - t.x, wt.y - t.y) < 1;
+      var why0 = DG.auto.status().doing, wt0 = wt ? Math.round(wt.x - t.x) + ',' + Math.round(wt.y - t.y) : '없음';
       p.x = t.x + 1; p.y = t.y;
       var i, opened = false;
       for (i = 0; i < 400 && sv.step === 0; i++) { DG.auto._tickStory(0.5); if (S.talking()) { opened = true; } }
@@ -6817,7 +6819,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       DG.auto.state().on = false;
       sv.ch = keep.ch; sv.step = keep.step; p.x = kx; p.y = ky;
       W.walkTo(kx, ky); W.update(0.05);
-      if (!(towards && opened && stepped)) { return '실패 걸음 ' + towards + ' · 대화 ' + opened + ' · 단계 ' + stepped + ' · ' + why; }
+      if (!(towards && opened && stepped)) { return '실패 걸음 ' + towards + '(목표에서 ' + wt0 + ' · ' + why0 + ') · 대화 ' + opened + ' · 단계 ' + stepped + ' · ' + why; }
       return towards && opened && stepped && ('40m 밖 → 인물 쪽으로 걸음 · 곁에서 대화 열고 ' + n + '박자에 다음 단계');
     });
 
