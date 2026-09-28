@@ -37,8 +37,12 @@
     /* ⑲-49 24장 — 무녀는 사당 앞 서쪽(가운데 8m 석등 자리를 비켜) · 한별·반디는 별배 내린 자리 곁 */
     saebyeok: ['shrine', -4.5, -7.5], hanbyeol: ['shrine', 3.5, 11], bandi: ['shrine', -3, 11.5],
     /* ⑲-50 25장 — 하늬는 조종실 동쪽 앞(프로펠러 남쪽) · 기관은 조종실 앞 남동(찢어진 기낭 밖) · 반디는 하늬 곁 */
-    haneul: ['wreck', 11, -1], wreck_engine: ['wreck', 8, 3], wreck_bandi: ['wreck', 12, 2.5] };
+    haneul: ['wreck', 11, -1], wreck_engine: ['wreck', 8, 3], wreck_bandi: ['wreck', 12, 2.5],
+    /* ⑲-51 26장 — 장치 셋은 가운데에서 9m(남동·북·남서 차례) · 가면 그림자는 서쪽 끝 · 보스 자리는 남쪽(안테나·장치를 비켜) · 하늬·반디는 동쪽(태양 날개 안) */
+    seed_se: ['orbit', 7.8, 4.5], seed_n: ['orbit', 0, -9], seed_sw: ['orbit', -7.8, 4.5], gamyeon: ['orbit', -12, 0], orbit_duel: ['orbit', 0, 7],
+    orbit_haneul: ['orbit', 10, -3], orbit_bandi: ['orbit', 11, 1] };
   var SHRINE_CH = 'ch24', SHRINE_CLEAR = 6, SHRINE_BOOT = [2, 6];   // ⑲-49 방울을 다 울리면(일곱째 단계부터) 사당 위 먹구름이 걷힌다 · 불러오면 섬 위로(셋째~일곱째)
+  var ORBIT_CH = 'ch26', ORBIT_BOOT = [2, 8], WRECK_BOOT26 = [0, 1], SEED_OFF_FROM = [4, 5, 6];   // ⑲-51 정거장 섬에 내린 뒤(셋째 단계부터)·불러오면 섬 위로 · 25장 잔해 기둥 타기 전엔 잔해 섬 · 장치는 끈 다음 단계부터 꺼진다(남동·북·남서)
   var WRECK_CH = 'ch25', WRECK_LIVE = 6, WRECK_BOOT = [2, 6], SHRINE_BOOT25 = [0, 1];   // ⑲-50 기관을 지켜 낸 뒤(일곱째 단계부터) 프로펠러가 돈다 · 불러오면 잔해 섬 위로(셋째~일곱째) · 25장 첫 둘은 사당 섬
 
   /* ── 자리(순수) ─────────────────────────────────────── */
@@ -65,12 +69,14 @@
   /** skyisle 발판 목록에 붙는다 — 섬이 섰을 때만 */
   function pads() {
     if (!on()) { return []; }
-    var bi = chIndex(SHRINE_CH), wi = chIndex(WRECK_CH);
+    var bi = chIndex(SHRINE_CH), wi = chIndex(WRECK_CH), oi = chIndex(ORBIT_CH);
     return isles().map(function (s) {
       var pd = { id: 'sr_' + s.id, name: s.name, x: s.x, y: s.y, r: s.r, top: s.top, slab: s.slab }, bt = [];
       if (s.id === 'shrine' && bi >= 0) { bt.push([bi, SHRINE_BOOT[0], SHRINE_BOOT[1]]); }   // ⑲-49 24장 섬 단계에 불러오면 섬 위로
       if (s.id === 'shrine' && wi >= 0) { bt.push([wi, SHRINE_BOOT25[0], SHRINE_BOOT25[1]]); }   // ⑲-50 25장 기둥 타기 전
       if (s.id === 'wreck' && wi >= 0) { bt.push([wi, WRECK_BOOT[0], WRECK_BOOT[1]]); }
+      if (s.id === 'wreck' && oi >= 0) { bt.push([oi, WRECK_BOOT26[0], WRECK_BOOT26[1]]); }   // ⑲-51 26장 기둥 타기 전
+      if (s.id === 'orbit' && oi >= 0) { bt.push([oi, ORBIT_BOOT[0], ORBIT_BOOT[1]]); }
       if (bt.length) { pd.boot = bt; }
       return pd;
     });
@@ -90,6 +96,8 @@
   function shrineClear() { var i = chIndex(SHRINE_CH), s = storyAt(); return i >= 0 && (s.ch > i || (s.ch === i && (s.step || 0) >= SHRINE_CLEAR)); }
   /** ⑲-50 비행선 기관이 살았나 — 25장 일곱째 단계(기관을 지켜 낸 뒤)부터 늘. 그 전엔 프로펠러가 멎어 있다 */
   function wreckLive() { var i = chIndex(WRECK_CH), s = storyAt(); return i >= 0 && (s.ch > i || (s.ch === i && (s.step || 0) >= WRECK_LIVE)); }
+  /** ⑲-51 구름 씨앗 장치 i(0 남동·1 북·2 남서)가 꺼졌나 — 26장에서 그 장치를 끈 다음 단계부터(장을 마친 뒤에도) */
+  function seederOff(i) { var k = chIndex(ORBIT_CH), s = storyAt(); return k >= 0 && (s.ch > k || (s.ch === k && (s.step || 0) >= SEED_OFF_FROM[i])); }
   /** skyisle 상승 기류 목록에 붙는다 — 섬이 섰고 그 기둥의 장을 마친 뒤 */
   function drafts() { return on() ? draftSpots().filter(draftOpen) : []; }
   function spot(part) {
@@ -147,12 +155,12 @@
   function cyl(T3, g, m, rt, rb, h, x, y, z, seg) { var o = new T3.Mesh(new T3.CylinderGeometry(rt, rb, h, seg || 12), m); o.position.set(x, y, z); g.add(o); return o; }
   /** 섬 몸 — 풀밭·바위 판·거꾸로 선 뿔·난간(윗면이 y 0) */
   function body(T3, g, s) {
-    var m = M(T3), seg = s.hex ? 6 : 40;
+    var m = M(T3), seg = 40;                                                  // ⑲-51 윗면은 늘 둥글게(충돌·난간이 둥글다) — 육각은 아래 뿔·재질로만
     cyl(T3, g, s.hex ? m.alloy : m.grass, s.r, s.r, 0.6, 0, -0.3, 0, seg);
     cyl(T3, g, s.hex ? m.steel : m.rock, s.r, s.r - 2, s.slab, 0, -0.6 - s.slab / 2, 0, seg);
     var cone = new T3.Mesh(new T3.ConeGeometry(s.r - 2, s.hex ? 8 : 18, s.hex ? 6 : 20), s.hex ? m.steel : m.rock);
     cone.rotation.x = Math.PI; cone.position.y = -0.6 - s.slab - (s.hex ? 4 : 9); g.add(cone);
-    var rail = new T3.Mesh(new T3.TorusGeometry(s.r - 0.4, 0.08, 4, s.hex ? 6 : 64), m.stone); rail.rotation.x = Math.PI / 2; rail.position.y = 1; g.add(rail);
+    var rail = new T3.Mesh(new T3.TorusGeometry(s.r - 0.4, 0.08, 4, 64), m.stone); rail.rotation.x = Math.PI / 2; rail.position.y = 1; g.add(rail);
     for (var i = 0; i < 16; i++) { var a = i * Math.PI / 8; box(T3, g, m.stone, 0.2, 1, 0.2, Math.sin(a) * (s.r - 0.4), 0.5, Math.cos(a) * (s.r - 0.4)); }
   }
   function build(T3, s) {
@@ -194,7 +202,7 @@
       for (i = 0; i < 3; i++) {                                                                                  // 구름 씨앗 장치 셋(반지름 9m)
         var sa = i * Math.PI * 2 / 3, sx = Math.sin(sa) * 9, sz = -Math.cos(sa) * 9;
         cyl(T3, g, m.alloy, 0.9, 1.2, 1.6, sx, 0.8, sz, 10);
-        var core3 = cyl(T3, g, m.glow, 0.4, 0.4, 1.2, sx, 2.2, sz, 8); o.sway.push(core3);
+        var core3 = cyl(T3, g, m.glow, 0.4, 0.4, 1.2, sx, 2.2, sz, 8); o.sway.push(core3); (o.seeds = o.seeds || []).push(core3);
       }
     }
     live[s.id] = o;                                                                                              // 움직이는 조각(spin·sway·blink) — anim 이 돌린다
@@ -258,6 +266,7 @@
       if (o.prop) { var liveP = wreckLive(); o.prop.rotation.x += (dt || 0) * (liveP ? 6 : 0); o.lamp.visible = liveP || Math.sin(clock * 4) > 0.6; }
       o.sway.forEach(function (n, i) { n.rotation.z = Math.sin(clock * 1.6 + i) * 0.25; });
       if (o.blink) { o.blink.visible = Math.sin(clock * 3) > 0; }
+      if (o.seeds) { o.seeds.forEach(function (n, i) { n.visible = !seederOff(i); }); }   // ⑲-51 끈 장치는 먹구름 알(코어)이 식는다
     });
   }
   var acc = 0;
@@ -279,7 +288,7 @@
   global.DG.skyRoute = {
     ISLES: ISLES, GAP: GAP, LIGHT_DRAFT: LIGHT_DRAFT, DRAFT_R: DRAFT_R, DRAFT_IN: DRAFT_IN, DRAFT_OVER: DRAFT_OVER, DRAFT_RISE: DRAFT_RISE, DRAFT_CH: DRAFT_CH,
     REWARD: REWARD, PARTS: PARTS,
-    SHRINE_CH: SHRINE_CH, SHRINE_CLEAR: SHRINE_CLEAR, shrineClear: shrineClear, WRECK_CH: WRECK_CH, WRECK_LIVE: WRECK_LIVE, wreckLive: wreckLive,
+    SHRINE_CH: SHRINE_CH, SHRINE_CLEAR: SHRINE_CLEAR, shrineClear: shrineClear, WRECK_CH: WRECK_CH, WRECK_LIVE: WRECK_LIVE, wreckLive: wreckLive, ORBIT_CH: ORBIT_CH, SEED_OFF_FROM: SEED_OFF_FROM, seederOff: seederOff,
     on: on, isles: isles, isleById: isleById, pads: pads, draftSpots: draftSpots, drafts: drafts, spot: spot, found: found, discoverOn: discoverOn, marks: marks, tick: tick,
     _resetForTest: function () { fx = {}; live = {}; acc = 0; }
   };

@@ -261,6 +261,9 @@
                 boss: true, rot: ['shadow', 'spit', 'tide', 'melee', 'slam', 'shadow'] },
     storm_king:  { name: '먹구름 임금', ref: null, body: 'story_blackmask', mask: 'storm', el: 'elec', hp: 17, atk: 2.3, spd: 4.8, reach: 3.4, type: 'melee', wind: 0.7, cd: 1.7, h: 1.9, exp: 0,
                 boss: true, rot: ['slam', 'halo', 'spit', 'melee', 'shadow', 'tide', 'halo'] },
+    /* ⑲-51 26장 궤도 정거장 조각 — 가면 그림자가 불러낸 먹구름 임금의 그림자(같은 몸·먹빛 왕관, 뇌, 더 단단하다). 2단계 뇌 방패(불로 깬다)·졸개는 story.js */
+    storm_shadow: { name: '먹구름 임금의 그림자', ref: null, body: 'story_blackmask', mask: 'storm', el: 'elec', hp: 21, atk: 2.5, spd: 4.4, reach: 3.4, type: 'melee', wind: 0.8, cd: 1.6, h: 2.0, exp: 0,
+                boss: true, rot: ['slam', 'halo', 'spit', 'shadow', 'melee', 'tide', 'halo', 'spit'] },
     /* ⑲-30 12장 서리봉 고원 얼음굴 앞 — 시간 틈에서 나온 아홉 꼬리 여우(구미호 펫 몸, 빙). 틈새 질주 rift.
        2단계 빙 방패·졸개는 story.js 가 두른다 */
     rift_fox:    { name: '틈새 서리 구미호', ref: 'pt_gumiho', el: 'ice', hp: 15, atk: 2.2, spd: 6.0, reach: 3.0, type: 'melee', wind: 0.6, cd: 1.5, h: 2.2, exp: 0,

@@ -89,7 +89,10 @@
     /* ⑲-49 구름 위 항로(skyroute.js) — 섬 가운데(sr: 섬 id) 또는 이야기 자리. 단계·인물 칸에 sky 를 함께 준다 */
     sr_shrine: { sr: 'shrine' }, sr_shrine_land: { sr: 'shrine_land' }, sr_saebyeok: { sr: 'saebyeok' }, sr_hanbyeol: { sr: 'hanbyeol' }, sr_bandi: { sr: 'bandi' },
     /* ⑲-50 비행선 잔해 섬 — 섬 가운데·하늬·반디·비행선 기관 */
-    sr_wreck: { sr: 'wreck' }, sr_haneul: { sr: 'haneul' }, sr_wreck_bandi: { sr: 'wreck_bandi' }, sr_wreck_engine: { sr: 'wreck_engine' } };
+    sr_wreck: { sr: 'wreck' }, sr_haneul: { sr: 'haneul' }, sr_wreck_bandi: { sr: 'wreck_bandi' }, sr_wreck_engine: { sr: 'wreck_engine' },
+    /* ⑲-51 궤도 정거장 조각 — 섬 가운데·장치 셋·가면 그림자·보스 자리·하늬·반디 */
+    sr_orbit: { sr: 'orbit' }, sr_seed_se: { sr: 'seed_se' }, sr_seed_n: { sr: 'seed_n' }, sr_seed_sw: { sr: 'seed_sw' }, sr_gamyeon: { sr: 'gamyeon' },
+    sr_orbit_duel: { sr: 'orbit_duel' }, sr_orbit_haneul: { sr: 'orbit_haneul' }, sr_orbit_bandi: { sr: 'orbit_bandi' } };
   /* ⑲-40 18장 선장의 잔상 — 은하역 가운데에서 남쪽 선로(z 2~42) 위를 지그재그로, 선로 끝 너머 틈 쪽까지 */
   /* ⑲-50 25장 구름 씨앗 드론 — 잔해 섬 가운데에서 섬 둘레 반지름 11~18m(조종실·프로펠러·꼬리 날개를 비켜) */
   var SEED_DRONE_PATH = [[8, -9], [-2, -14], [-13, -5], [-14, 10], [0, 16], [13, 9]];
@@ -159,6 +162,7 @@
         { ch: 22, from: 1, to: 3, spot: 'sk_light_bandi' },                                                          // ⑲-47 23장 등대 발치
         { ch: 23, from: 0, to: 1, spot: 'sk_sand_bandi' }, { ch: 23, from: 2, to: 999, spot: 'sr_bandi', sky: true },    // ⑲-49 24장 모래밭 → 사당 섬
         { ch: 24, from: 0, to: 0, spot: 'sr_bandi', sky: true }, { ch: 24, from: 1, to: 999, spot: 'sr_wreck_bandi', sky: true },   // ⑲-50 25장 잔해 섬(뒤에도)
+        { ch: 25, from: 1, to: 999, spot: 'sr_orbit_bandi', sky: true }, { ch: 26, chTo: 999, from: 0, to: 999, spot: 'sr_orbit_bandi', sky: true },   // ⑲-51 26장 정거장 섬(뒤에도)
         { ch: 25, chTo: 999, from: 0, to: 999, spot: 'sr_wreck_bandi', sky: true },
         { ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_in_bandi' },
         { ch: 19, chTo: 999, from: 0, to: 999, spot: 'sp_bandi' }] },
@@ -211,7 +215,11 @@
     /* ⑲-50 비행사 하늬(현대) — 먹구름에 휘말려 잔해 섬에 처박힌 기상 비행선 조종사. 25장부터 조종실 동쪽 앞(뒤에도) */
     haneul:   { id: 'story_haneul',   name: '비행사 하늬', short: '하늬', zone: 'saltflat', spot: 'sr_haneul', off: [0, 0], color: '#d9722e',
       idle: '기록계 바늘이 또 튀어요. 구름이 저절로 생기는 게 아니라니까요.',
-      appear: [{ ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_haneul', sky: true }] },
+      appear: [{ ch: 25, from: 1, to: 999, spot: 'sr_orbit_haneul', sky: true }, { ch: 26, chTo: 999, from: 0, to: 999, spot: 'sr_orbit_haneul', sky: true },   // ⑲-51 26장 잔해 기둥 뒤엔 정거장 섬
+        { ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_haneul', sky: true }] },
+    /* ⑲-51 가면 그림자 — 23장 반디 기록 속 그자. 26장 장치 셋을 끈 뒤(일곱째 단계) 한 번만 정거장 서쪽 끝에 선다. 정체는 8부까지 */
+    gamyeon:  { id: 'story_gamyeon',  name: '가면 그림자', short: '그림자', zone: 'saltflat', spot: 'sr_gamyeon', off: [0, 0], color: '#14121c', mask: true, idle: '……',
+      appear: [{ ch: 25, from: 6, to: 6, spot: 'sr_gamyeon', sky: true }] },
     /* ⑲-50 구름 씨앗 드론 — 25장 쫓기 때만 잔해 섬 둘레 길(SEED_DRONE_PATH)을 난다. 드론 모델(pet) */
     seeddrone: { id: 'story_seeddrone', name: '구름 씨앗 드론', short: '드론', zone: 'saltflat', spot: 'sr_wreck', color: '#4d4266', pet: 'drone', idle: '삐비— 치익.',
       appear: [{ ch: 24, from: 3, to: 3, sky: true }], runSpot: 'sr_wreck', runPath: SEED_DRONE_PATH },
@@ -227,7 +235,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -261,7 +269,10 @@
       el: 'wind', weapon: 'bow', stats: { might: 76, wisdom: 84, command: 90 }, emoji: '🧭', quote: '선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께.' },
     /* ⑲-47 물새(23장 끝) — 수 한손검(빗창). 수·장병기는 사공 버들과 겹쳐 무기를 바꿨다(saga-godot 와 같게) */
     story_mulsae: { id: 'story_mulsae', name: '물새', hanja: '水鳥', era: '이야기', faction: '재야', rarity: 4, trait: 'might', story: true,
-      el: 'water', weapon: 'sword', stats: { might: 78, wisdom: 64, command: 60 }, emoji: '🐚', quote: '숨 긴 거 하나는 자신 있소.' }
+      el: 'water', weapon: 'sword', stats: { might: 78, wisdom: 64, command: 60 }, emoji: '🐚', quote: '숨 긴 거 하나는 자신 있소.' },
+    /* ⑲-51 하늬(26장 끝) — 빙 장병기 ★4(비행선 닻 갈고리). 이야기 동료에 없던 짝 */
+    story_haneul: { id: 'story_haneul', name: '하늬', hanja: '河嬔', era: '이야기', faction: '재야', rarity: 4, trait: 'command', story: true,
+      el: 'ice', weapon: 'polearm', stats: { might: 74, wisdom: 72, command: 76 }, emoji: '🎈', quote: '날개는 빌려 쓰고요!' }
   };
   function hookFind() {
     var D = global.DG.data;
@@ -1231,6 +1242,47 @@
             ['반디', '삐— 앞 시대 궤도 정거장 조각입니다. 구름 씨앗 장치 신호 셋. 먹구름을 부리는 자가 거기서 구름을 빚어 흘려보내고 있습니다.', 'angry'],
             ['?', ['거기로 가자.', '하늬 씨는요?']],
             ['하늬', '저도 가요. 제 비행선을 떨어뜨린 놈 얼굴은 봐야죠. 잔해 서쪽 끝에 바람이 모이는 게 보여요 — 거기서 올라가요!', 'angry']] }
+      ] },
+    /* ⑲-51 7부 끝 — 궤도 정거장 조각(skyroute.js 섬 orbit, 윗면 104m). 하늬(잔해) → 잔해 서쪽 바람 기둥 타고 정거장으로 활공(sky pad) → 하늬 →
+       구름 씨앗 장치 셋을 원소로 끈다(남동 → 북 → 남서, light bare — 끈 다음 단계부터 먹구름 알이 식는다) → 가면 그림자 → 먹구름 임금의 그림자(뇌 방패는 불로) → 하늬 합류 */
+    { id: 'ch26', name: '제26장 · 궤도 조각의 그림자', ar: 58, join: 'story_haneul',
+      reward: { knot: 6, gold: 7000, guide: 6, secret: 5, party: 1800 },
+      steps: [
+        { type: 'talk', npc: 'haneul', text: '잔해 섬의 하늬와 이야기하기',
+          lines: [['하늬', '바람 기둥이 섰어요. 저 위 — 궤도 정거장 조각이에요. 앞 시대 물건이 저기 떠 있다니.', 'surprised'],
+            ['반디', '삐— 구름 씨앗 장치 신호 셋, 여전히 켜져 있습니다. 먹구름이 계속 빚어지고 있습니다.'],
+            ['?', ['먼저 올라갈게요.', '같이 가요.']],
+            ['하늬', '비행사가 날개 없이 올라가는 건 처음이네요. 먼저 가요, 뒤따를게요!', 'fun']] },
+        { type: 'sky', pad: 'sr_orbit', draft: 'sr_wreck', spot: 'sr_orbit', sky: true, text: '잔해 바람 기둥을 타고 올라 궤도 정거장 조각으로 건너가기(활공)',
+          done: '🪂 궤도 정거장 조각에 내려섰다 — 합금 판 위에 구름 씨앗 장치 셋이 검보랏빛으로 타오른다', gpsDone: '🌬️ 정거장 밑에 닿았다 — 궤도 조각 이야기는 이 둘레에서 이어진다' },
+        { type: 'talk', npc: 'haneul', text: '정거장 조각의 하늬와 이야기하기',
+          lines: [['하늬', '저 셋이에요. 검보랏빛 알에서 먹구름이 피어올라요 — 구름 씨앗 장치.', 'angry'],
+            ['반디', '삐— 장치마다 원소를 대면 멈춥니다. 남동쪽, 북쪽, 남서쪽 차례로 신호가 약합니다.'],
+            ['?', ['하나씩 끌게요.', '알겠어, 남동쪽부터.']],
+            ['하늬', '먹구름 공장이라니… 다 끄면 하늘이 맑아질 거예요.', 'fun']] },
+        { type: 'light', spot: 'sr_seed_se', bare: true, sky: true, text: '남동쪽 구름 씨앗 장치를 원소 스킬로 끄기',
+          done: '☁️ 남동쪽 장치의 먹구름 알이 식어 꺼졌다' },
+        { type: 'light', spot: 'sr_seed_n', bare: true, sky: true, text: '북쪽 구름 씨앗 장치를 원소 스킬로 끄기',
+          done: '☁️ 북쪽 장치의 먹구름 알이 식어 꺼졌다' },
+        { type: 'light', spot: 'sr_seed_sw', bare: true, sky: true, text: '남서쪽 구름 씨앗 장치를 원소 스킬로 끄기',
+          done: '☁️ 남서쪽 장치까지 꺼졌다 — 서쪽 끝에서 누군가 박수를 친다' },
+        { type: 'talk', npc: 'gamyeon', text: '서쪽 끝의 가면 그림자와 이야기하기',
+          lines: [['가면 그림자', '……구름 공장을 셋 다 끄다니. 별배를 떨어뜨릴 때도 이렇게 성가신 녀석들은 없었는데.'],
+            ['반디', '삐— 그 목소리. 그날 기록 속의 그림자입니다! 제 기록을 지운 자!', 'angry'],
+            ['?', ['네가 먹구름을 부렸구나.', '왜 별배를 떨어뜨렸지?']],
+            ['가면 그림자', '별배가 가려던 곳에 가 닿으면 곤란하거든. 매듭이 다시 묶이면 먹구름이 설 자리가 없지.'],
+            ['하늬', '제 비행선도 당신이 떨어뜨렸죠!', 'angry'],
+            ['가면 그림자', '구름 씨앗은 또 뿌리면 그만이다. 그 사이 놀 상대를 붙여 주지 — 네놈들이 한 번 쓰러뜨렸던 먹구름 임금의 그림자로.']] },
+        { type: 'duel', spot: 'sr_orbit_duel', sky: true, kind: 'storm_shadow', shield: 'elec', adds: ['hawk', 'raptor'], text: '가면 그림자가 불러낸 먹구름 임금의 그림자와 맞서기',
+          enter: '🌩️ 먹빛 왕관의 그림자가 합금 판 위에 일어섰다 — 먹구름 임금의 그림자!',
+          p2: '⚡ 그림자가 구름 씨앗의 먹구름을 두른다 — 불로 방패를 깨라! 매와 살쾡이가 뛰어든다',
+          win: '🌩️ 그림자 임금이 흩어지고 — 가면 그림자는 "청하의 여섯 매듭이 풀리는 날 다시 보자" 한마디를 남기고 먹구름 속으로 사라졌다' },
+        { type: 'talk', npc: 'haneul', text: '정거장 조각의 하늬와 이야기하기',
+          lines: [['하늬', '……갔어요. 먹구름도 같이 걷혔고요. 하늘이 이렇게 파란 건 처음 봐요.', 'joy'],
+            ['반디', '삐— 여섯 매듭. 1부의 여섯 제단과 수가 같습니다. 청하 마을의 제단이 무언가를 묶고 있었을지도 모릅니다.', 'surprised'],
+            ['?', ['청하 마을로 돌아가 보자.', '하늬 씨는 이제 어떡해요?']],
+            ['하늬', '비행선은 못 뜨지만 닻 갈고리는 멀쩡해요. 먹구름 쫓는 일이라면 기상 비행사가 빠질 수 없죠.', 'angry'],
+            ['하늬', '비행사 하늬, 오늘부터 같이 날아요 — 날개는 빌려 쓰고요!', 'joy']] }
       ] }
   ];
 
