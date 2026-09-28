@@ -78,7 +78,8 @@ void fragment() {
 	float n1 = _value_noise(world_pos.xz * patch_scale);
 	float n2 = _value_noise(world_pos.xz * patch_scale * 3.7 + vec2(11.0, 5.0));
 	float dirt_w = smoothstep(0.55, 0.75, n1) * 0.6;
-	float stone_w = smoothstep(0.6, 0.8, n2) * 0.5;
+	// 2026-09-28 — 평지의 돌 얼룩은 0.5 → 0.15: 풀밭 위 잿빛 얼룩이 멀리서 안개 덩어리처럼 보였다(창 모드 촬영). 경사 돌은 아래서 그대로.
+	float stone_w = smoothstep(0.6, 0.8, n2) * 0.15;
 	// 2026-09-23 GO 절벽·봉우리(terrain_builder.gd) — 경사가 급할수록 돌.
 	// 평지(법선 y=1)는 slope 0 이라 예전 화면 그대로다.
 	float slope = 1.0 - clamp(normalize(world_normal).y, 0.0, 1.0);
@@ -92,12 +93,29 @@ void fragment() {
 	float detail_rough = (grass_r * grass_w + dirt_r * dirt_w + stone_r * stone_w) / wsum;
 
 	ALBEDO = COLOR.rgb * detail_albedo;
+	// 2026-09-28 "그래픽 먼저" — 절벽(가파른 면)은 돌 텍스처 한 장만 반복돼 멀리서 한 빛 회색 판이었다.
+	// 지층 띠(높이 따라 굽이치는 가로 줄)·큰 얼룩(따뜻한 황토 ↔ 서늘한 잿빛)·세로 물때 줄을 얹는다. 평지는 cliff 0 이라 그대로.
+	float cliff = smoothstep(0.45, 0.8, slope);
+	float wob = _value_noise(world_pos.xz * 0.05 + world_pos.y * 0.01) * 5.0;
+	float strata = sin(world_pos.y * 0.75 + wob) * 0.5 + 0.5;
+	float band = mix(0.62, 1.18, smoothstep(0.2, 0.8, strata));
+	float macro = _value_noise(vec2(world_pos.x + world_pos.z, world_pos.y * 2.0) * 0.02);
+	vec3 rock_tint = mix(vec3(1.12, 0.98, 0.82), vec3(0.86, 0.92, 1.02), macro);
+	float streak = _value_noise(vec2((world_pos.x - world_pos.z) * 0.6, world_pos.y * 0.04));
+	rock_tint *= band * mix(0.85, 1.05, streak);
+	ALBEDO *= mix(vec3(1.0), rock_tint, cliff);
 	NORMAL_MAP = detail_normal * 0.5 + 0.5;
 	ROUGHNESS = detail_rough;
 	// 모래 표시 — 풀 텍스처 대신 모래색에 흙결만 옅게(평평한 모래밭).
 	// 정점색은 sRGB 로 적은 값이라(풀·흙은 어두운 텍스처와 곱해져 맞았다) 그대로 칠하는 모래는 선형으로 — 안 그러면 한 단 허옇게 뜬다.
 	float sand_w = smoothstep(0.25, 0.75, v_surf.z) * (1.0 - smoothstep(0.35, 0.7, slope));
 	vec3 sand = pow(COLOR.rgb, vec3(2.2)) * mix(vec3(1.0), dirt_a * 2.5, 0.25) * (0.93 + 0.07 * n2);
+	// 2026-09-28 — 모래밭이 한 빛 판이었다. 바람 물결무늬(굽이치는 가는 줄) + 드문드문 흰 조개 점.
+	float ripple = sin(dot(world_pos.xz, vec2(0.82, 0.57)) * 2.6 + _value_noise(world_pos.xz * 0.15) * 6.0) * 0.5 + 0.5;
+	sand *= mix(0.93, 1.04, smoothstep(0.35, 0.65, ripple));
+	vec2 sc = world_pos.xz * 2.5;
+	float shell = step(0.985, _hash(floor(sc))) * (1.0 - smoothstep(0.18, 0.24, length(fract(sc) - 0.5)));
+	sand = mix(sand, vec3(0.95, 0.9, 0.86), shell * 0.8);
 	ALBEDO = mix(ALBEDO, sand, sand_w);
 	ROUGHNESS = mix(ROUGHNESS, 0.9, sand_w);
 	// saga-godot PLAN 106장 ㊺ 서리봉 고원 — 눈 표시(눈밭·눈 덮인 산)는 풀 텍스처 대신 눈으로,
@@ -105,11 +123,18 @@ void fragment() {
 	// 다른 지역·판은 표시가 0 이라 화면이 그대로다. 가파른 비탈은 돌을 남긴다.
 	float snow_w = smoothstep(0.25, 0.75, v_surf.x) * (1.0 - smoothstep(0.35, 0.7, slope));
 	// 눈은 정점색보다 한 단 희게(길·숲 바닥 색이 비치되 눈빛이 이기게) — AgX 톤매핑에서 0.86 은 회색으로 가라앉았다.
-	vec3 snow = mix(COLOR.rgb, vec3(0.95, 0.97, 1.0), 0.6) * (0.92 + 0.08 * n2) * mix(vec3(1.0), stone_a * 1.6, 0.1);
+	// 09-28 GO 가 ACES·밝은 해로 바뀐 뒤 0.95 눈은 하얗게 포화돼 결이 사라졌다(창 모드 촬영) — 한 단 낮추고 얼룩을 키운다.
+	vec3 snow = mix(COLOR.rgb * 0.62, vec3(0.52, 0.57, 0.64), 0.5) * (0.84 + 0.16 * n2) * mix(vec3(1.0), stone_a * 1.6, 0.12);
 	ALBEDO = mix(ALBEDO, snow, snow_w);
 	ROUGHNESS = mix(ROUGHNESS, 0.75, snow_w);
 	float ice_w = smoothstep(0.25, 0.75, v_surf.y) * (1.0 - snow_w);
-	ALBEDO = mix(ALBEDO, COLOR.rgb * (0.94 + 0.06 * n1), ice_w);
+	// 2026-09-28 — 얼음이 정점색 한 빛(파스텔 하늘색 판)이라 물감 칠한 바닥 같았다. 희게 한 단 + 가는 금(두 겹)·깊은 곳 짙은 청록 얼룩.
+	float crack1 = 1.0 - smoothstep(0.0, 0.018, abs(_value_noise(world_pos.xz * 0.11) - 0.5));
+	float crack2 = 1.0 - smoothstep(0.0, 0.012, abs(_value_noise(world_pos.xz * 0.37 + vec2(3.0, 7.0)) - 0.5));
+	vec3 ice = mix(COLOR.rgb * 0.7, vec3(0.5, 0.6, 0.7), 0.25) * (0.88 + 0.12 * n1);
+	ice = mix(ice, COLOR.rgb * vec3(0.55, 0.8, 0.85), smoothstep(0.55, 0.85, n2) * 0.45);
+	ice = mix(ice, vec3(0.72, 0.78, 0.85), max(crack1, crack2 * 0.6) * 0.75);
+	ALBEDO = mix(ALBEDO, ice, ice_w);
 	ROUGHNESS = mix(ROUGHNESS, 0.12, ice_w);
-	NORMAL_MAP = mix(NORMAL_MAP, vec3(0.5, 0.5, 1.0), max(ice_w, snow_w * 0.6));
+	NORMAL_MAP = mix(NORMAL_MAP, vec3(0.5, 0.5, 1.0), max(ice_w, snow_w * 0.3));
 }

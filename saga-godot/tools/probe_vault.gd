@@ -139,7 +139,6 @@ func _walk_pass(open: bool) -> void:
 	var start := _cell("frost", Vector2(7.65, 3.0))
 	if _frame == 40:
 		_put(start)
-		_v = {"gate": bool(_vr.call("is_gate_open"))}
 	if _frame > 40 and _frame < 700:
 		_p.set("stamina", float(_p.get("stamina_max")))
 		var rig := get_tree().get_first_node_in_group("camera_rig") as Node3D
@@ -148,6 +147,9 @@ func _walk_pass(open: bool) -> void:
 		Input.action_press("move_forward")
 	if _frame == 700:
 		Input.action_release("move_forward")
+		## 09-28 문 상태는 걷기가 끝난 뒤에 읽는다 — 지역 스크립트는 1초마다 갱신(_refresh)하는데 이야기 단계를 바꾼 지 40프레임 만에 읽으면
+		## 헤드리스 프레임이 빠를 때 아직 옛 값이었다(문은 열려 지역 안까지 걸어 들어갔는데 gate=false 로 FAIL).
+		_v = {"gate": bool(_vr.call("is_gate_open"))}
 		var reg := TestMap.region_at(_p.global_position)
 		var ok: bool = bool(_v.gate) == open and (reg == "vault") == open
 		_check("pass_open" if open else "pass_closed", ok, "gate=%s region=%s pos=%s" % [_v.gate, reg, _p.global_position])

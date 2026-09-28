@@ -10,6 +10,7 @@ extends Node3D
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const HouseBuilder := preload("res://games/saga_go/world/house_builder.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 signal activated(id: String)
@@ -62,6 +63,8 @@ const INACTIVE := Color(0.46, 0.5, 0.58)
 const ACTIVE := Color(0.45, 0.95, 1.0)
 const STATUE_STONE := Color(0.62, 0.6, 0.55)
 const STATUE_GOLD := Color(0.95, 0.8, 0.4)
+const STATUE_BASE_R := 2.5
+const STATUE_TOP := 2.47 + 5.0
 
 var _nodes: Dictionary = {} # id → {root, gem, pos, statue, region, name}
 var _heal_t := 0.0
@@ -104,18 +107,7 @@ func _build(row: Array) -> void:
 	root.global_position = pos
 	var gem: MeshInstance3D
 	if statue:
-		_cyl(root, 1.6, 1.9, 0.5, Vector3(0, 0.25, 0), STATUE_STONE)
-		_cyl(root, 1.1, 1.3, 0.4, Vector3(0, 0.7, 0), STATUE_STONE.darkened(0.1))
-		CreatureBuilder._capsule(root, 0.45, 2.6, Vector3(0, 2.2, 0), Vector3.ZERO, STATUE_STONE.lightened(0.1))
-		CreatureBuilder._sphere(root, 0.38, Vector3(0, 3.75, 0), STATUE_STONE.lightened(0.15))
-		## 두 팔을 앞으로 모아 구슬을 받든 모양.
-		CreatureBuilder._capsule(root, 0.14, 1.1, Vector3(-0.35, 2.6, 0.4), Vector3(70, 0, 20), STATUE_STONE.lightened(0.1))
-		CreatureBuilder._capsule(root, 0.14, 1.1, Vector3(0.35, 2.6, 0.4), Vector3(70, 0, -20), STATUE_STONE.lightened(0.1))
-		gem = CreatureBuilder._sphere(root, 0.3, Vector3(0, 2.75, 0.85), INACTIVE, false)
-		var halo := TorusMesh.new()
-		halo.inner_radius = 0.55
-		halo.outer_radius = 0.65
-		CreatureBuilder._add(root, halo, Vector3(0, 3.8, -0.15), Vector3(90, 0, 0), STATUE_GOLD, false)
+		gem = _build_statue(root)
 	else:
 		_cyl(root, 0.9, 1.1, 0.35, Vector3(0, 0.17, 0), STATUE_STONE)
 		var pillar := BoxMesh.new()
@@ -137,19 +129,124 @@ func _build(row: Array) -> void:
 	label.font_size = 48
 	label.outline_size = 8
 	label.pixel_size = 0.006
-	label.position = Vector3(0, 4.6 if statue else 3.7, 0)
+	label.position = Vector3(0, STATUE_TOP + 1.0 if statue else 3.7, 0)
 	label.visible = false
 	root.add_child(label)
 	_nodes[id] = {"root": root, "gem": gem, "pos": pos, "statue": statue, "region": region, "name": row[4], "label": label}
 	_paint(id)
 
-func _cyl(p: Node3D, top: float, bottom: float, h: float, pos: Vector3, color: Color) -> void:
+## 2026-09-28 "그래픽 먼저" — 신상. 예전엔 캡슐 셋·공 둘(높이 4m)이라 멀리서 눈사람으로 보였다(창 모드 촬영).
+## 원신 신상의 문법만 따른다: 금테 두른 팔각 계단 받침 위에 두건 쓴 망토 인물이 가슴 앞에 빛 구슬을 받쳐 들고,
+## 등 뒤로 깃 날개가 펴지고, 머리 뒤에 금빛 고리. 몸·망토·두건은 옆모습 선을 돌려 만든 매끈한 몸(_lathe)이다. 높이 약 8.5m.
+## 부품은 house_builder.gd 로 모아 메시 하나(정점색)로 합친다 — 따로 그리면 신상 하나에 draw call 60 가까이 늘었다(PERF 최댓값 276).
+## 빛 구슬만 따로(활성화 때 색이 바뀐다 — _paint).
+## 받침 반지름은 STATUE_BASE_R — 곁의 솥(kitchen.gd POT_OFFSET 3.8m)과 순간이동 착지(teleport)가 이 값 밖이다.
+func _build_statue(root: Node3D) -> MeshInstance3D:
+	var mb = HouseBuilder.new()
+	var stone := STATUE_STONE.lightened(0.12)
+	## 받침 — 팔각 세 단 + 금테.
+	_cyl(mb, STATUE_BASE_R - 0.15, STATUE_BASE_R, 0.55, Vector3(0, 0.275, 0), STATUE_STONE, 8)
+	_cyl(mb, STATUE_BASE_R - 0.1, STATUE_BASE_R - 0.1, 0.08, Vector3(0, 0.58, 0), STATUE_GOLD, 8)
+	_cyl(mb, 1.85, 2.0, 0.5, Vector3(0, 0.87, 0), STATUE_STONE.darkened(0.06), 8)
+	_cyl(mb, 1.25, 1.45, 1.1, Vector3(0, 1.67, 0), STATUE_STONE, 8)
+	_cyl(mb, 1.5, 1.35, 0.25, Vector3(0, 2.345, 0), STATUE_STONE.lightened(0.05), 8)
+	_cyl(mb, 1.46, 1.46, 0.07, Vector3(0, 2.2, 0), STATUE_GOLD, 8)
+	var up := Vector3(0, 2.47, 0)
+	## 망토(밑단이 퍼진 종 모양) → 허리 → 가슴 → 어깨 → 목. [반지름, 높이]
+	mb.add_mesh(_lathe([[1.2, 0.0], [1.15, 0.25], [0.95, 1.1], [0.72, 2.0], [0.6, 2.55], [0.66, 3.05], [0.74, 3.45], [0.66, 3.7], [0.3, 3.85], [0.24, 4.0]], 14),
+		Transform3D(Basis(), up), stone)
+	## 허리띠.
+	_cyl(mb, 0.63, 0.61, 0.12, up + Vector3(0, 2.5, 0), STATUE_GOLD, 14)
+	## 머리 + 두건(뒤로 늘어진 고깔).
+	mb.add_mesh(_ball(0.34), Transform3D(Basis(), up + Vector3(0, 4.3, 0.1)), stone.lightened(0.08))
+	mb.add_mesh(_lathe([[0.0, 4.95], [0.2, 4.8], [0.42, 4.45], [0.46, 4.15], [0.42, 3.9], [0.3, 3.82]], 12),
+		Transform3D(Basis(), up + Vector3(0, 0, -0.24)), stone.darkened(0.04))
+	## 팔 — 어깨에서 가슴 앞으로 모아 구슬을 받든다(윗팔·아래팔·손).
+	for side: float in [-1.0, 1.0]:
+		var sh := up + Vector3(0.62 * side, 3.5, 0.0)
+		var el := up + Vector3(0.62 * side, 2.8, 0.42)
+		var hand := up + Vector3(0.26 * side, 2.95, 0.78)
+		_limb(mb, sh, el, 0.19, stone)
+		_limb(mb, el, hand, 0.16, stone)
+		mb.add_mesh(_ball(0.15), Transform3D(Basis().scaled(Vector3(1.0, 0.7, 1.2)), hand), stone)
+		## 날개 — 어깨 뒤에서 위·옆으로 펴진 깃 다섯.
+		for k in 5:
+			var t := float(k) / 4.0
+			var ang := lerpf(18.0, 72.0, t) * side
+			var flen := lerpf(2.9, 1.7, t)
+			var feather := CapsuleMesh.new()
+			feather.radius = 0.22
+			feather.height = flen
+			feather.radial_segments = 8
+			feather.rings = 2
+			var base := up + Vector3(0.35 * side, 3.55 - 0.18 * float(k), -0.45 - 0.05 * float(k))
+			var dir := Vector3(sin(deg_to_rad(ang)), cos(deg_to_rad(ang)), -0.25).normalized()
+			mb.add_mesh(feather, Transform3D(Basis(Quaternion(Vector3.UP, dir)).scaled(Vector3(1.0, 1.0, 0.28)), base + dir * flen * 0.5),
+				stone.lightened(0.04 * float(k)))
+	## 머리 뒤 금빛 고리.
+	var halo := TorusMesh.new()
+	halo.inner_radius = 0.68
+	halo.outer_radius = 0.8
+	halo.rings = 24          # 기본값(64×32 = 4천 삼각형)은 외곽선까지 두 번 그려 마을 평균이 3만 늘었다
+	halo.ring_segments = 8
+	mb.add_mesh(halo, Transform3D(Basis(Vector3.RIGHT, PI * 0.5), up + Vector3(0, 4.4, -0.42)), STATUE_GOLD)
+	root.add_child(mb.to_instance("Statue", 0.03))
+	## 받쳐 든 빛 구슬(활성화되면 빛색 — _paint).
+	return CreatureBuilder._sphere(root, 0.36, up + Vector3(0, 3.1, 0.92), INACTIVE, false)
+
+func _ball(r: float) -> SphereMesh:
+	var m := SphereMesh.new()
+	m.radius = r
+	m.height = r * 2.0
+	m.radial_segments = 12
+	m.rings = 6
+	return m
+
+## 두 점 사이 캡슐 — 팔.
+func _limb(mb, a: Vector3, b: Vector3, r: float, color: Color) -> void:
+	var m := CapsuleMesh.new()
+	m.radius = r
+	m.height = a.distance_to(b) + r * 2.0
+	m.radial_segments = 10
+	m.rings = 3
+	mb.add_mesh(m, Transform3D(Basis(Quaternion(Vector3.UP, (b - a).normalized())), (a + b) * 0.5), color)
+
+## 옆모습 선 [[반지름, 높이], …] 을 Y 축으로 돌린 매끈한 몸.
+func _lathe(profile: Array, seg: int) -> ArrayMesh:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for i in profile.size() - 1:
+		var r0: float = profile[i][0]
+		var y0: float = profile[i][1]
+		var r1: float = profile[i + 1][0]
+		var y1: float = profile[i + 1][1]
+		for j in seg:
+			var a0 := TAU * float(j) / float(seg)
+			var a1 := TAU * float(j + 1) / float(seg)
+			var q := [Vector3(cos(a0) * r0, y0, sin(a0) * r0), Vector3(cos(a1) * r0, y0, sin(a1) * r0),
+				Vector3(cos(a1) * r1, y1, sin(a1) * r1), Vector3(cos(a0) * r1, y1, sin(a0) * r1)]
+			for k in [0, 1, 2, 0, 2, 3]:
+				st.add_vertex(q[k])
+	st.index()
+	st.generate_normals()
+	return st.commit()
+
+## 받침 팔각·띠 — 신상은 모은 메시(mb)로, 순간이동 지점은 따로 그린다(p 가 Node3D).
+func _cyl_mesh(top: float, bottom: float, h: float, seg: int) -> CylinderMesh:
 	var m := CylinderMesh.new()
 	m.top_radius = top
 	m.bottom_radius = bottom
 	m.height = h
-	m.radial_segments = 10
-	CreatureBuilder._add(p, m, pos, Vector3.ZERO, color, true)
+	m.radial_segments = seg
+	m.rings = 0   # 곧은 옆면 — 기본 4단 가로 분할은 삼각형만 늘린다
+	return m
+
+func _cyl(p, top: float, bottom: float, h: float, pos: Vector3, color: Color, seg := 10) -> void:
+	var m := _cyl_mesh(top, bottom, h, seg)
+	if p is Node3D:
+		CreatureBuilder._add(p, m, pos, Vector3.ZERO, color, true)
+	else:
+		p.add_mesh(m, Transform3D(Basis(), pos), color)
 
 func _paint(id: String) -> void:
 	var n: Dictionary = _nodes[id]
@@ -206,7 +303,8 @@ func teleport(id: String) -> bool:
 	if not _nodes.has(id) or not is_active(id) or _player == null:
 		return false
 	var n: Dictionary = _nodes[id]
-	var target: Vector3 = n.pos + Vector3(0.0, 0.4, 2.2)
+	## 신상은 받침(반지름 STATUE_BASE_R) 앞에 내린다 — 받침 안에 서지 않게.
+	var target: Vector3 = n.pos + Vector3(0.0, 0.4, STATUE_BASE_R + 0.9 if n.statue else 2.2)
 	_player.global_position = target
 	_player.set("velocity", Vector3.ZERO)
 	if _player.has_method("respawn_safe"):

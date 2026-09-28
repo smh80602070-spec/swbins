@@ -86,6 +86,18 @@ static func _merge_mesh_instances(root: Node, mis: Array[MeshInstance3D]) -> Arr
 			out.surface_set_material(out.get_surface_count() - 1, src.surface_get_material(s))
 	return out
 
+## 2026-09-28 — 합친 메시(_merge_mesh_instances)는 임포트 때 만든 LOD 가 없다(add_surface_from_arrays 는 LOD 를 안 받는다).
+## 숲을 짙게 하자(vegetation_builder 숲 칸 10그루) 먼 나무까지 가장 자세한 모양으로 그려 마을 삼각형 평균이 36만 → 63만이 됐다.
+## ImporterMesh 로 다시 담아 LOD 를 만들어 돌려준다(재질·표면 순서 그대로). 뼈대 메시엔 쓰지 않는다.
+static func with_lods(mesh: Mesh) -> Mesh:
+	if mesh == null or not (mesh is ArrayMesh):
+		return mesh
+	var im := ImporterMesh.new()
+	for s in mesh.get_surface_count():
+		im.add_surface((mesh as ArrayMesh).surface_get_primitive_type(s), mesh.surface_get_arrays(s), [], {}, mesh.surface_get_material(s))
+	im.generate_lods(25.0, 60.0, [])
+	return im.get_mesh()
+
 ## 뼈대 있는 캐릭터(assets/characters/*)는 몸통·팔·다리·머리가 각각
 ## 별도 MeshInstance3D다 — 산적 강타 예고처럼 "몸 전체를 한 색으로
 ## 물들인다" 같은 연출은 이걸로 전부 찾아 material_override를 같이

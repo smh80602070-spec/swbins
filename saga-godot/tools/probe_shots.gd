@@ -20,6 +20,15 @@ const SETTLE := 90
 ## [이름, 지역, eye(칸 Vector2 또는 지점 id), eye 에 더할 m, look(칸 Vector2·지점 id·"boss:<id>"·"lineup"), 피치°, 거리 m, 할 일]
 const SHOTS := [
 	["v_statue", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -18.0, 9.0, ""],
+	["v_house", "village", Vector2(4.0, 5.0), Vector3(-4, 0, 18), Vector2(4.0, 5.0), -6.0, 9.0, ""],
+	["v_village_plaza", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 16.0, ""],
+	["v_village_west", "village", Vector2(4.6, 5.9), Vector3.ZERO, Vector2(3.9, 5.5), -10.0, 12.0, ""],
+	["n_village_plaza", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 16.0, "night"],
+	["n_house", "village", Vector2(4.0, 5.0), Vector3(-4, 0, 18), Vector2(4.0, 5.0), -6.0, 9.0, "night"],
+	["n_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, "night"],
+	["c_sea", "coast", Vector2(3.0, 3.75), Vector3.ZERO, Vector2(3.0, 2.2), -22.0, 12.0, ""],
+	["v_river", "village", Vector2(3.5, 6.6), Vector3.ZERO, Vector2(3.5, 7.0), -25.0, 10.0, ""],
+	["v_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, ""],
 	["v_station_boards", "village", "v_station", Vector3(0, 0, 9), "v_station", -22.0, 10.0, ""],
 	["v_people_lineup", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 7.0, "lineup"],
 	["c_dock", "coast", "c_dock", Vector3(10, 0, 8), "c_dock", -16.0, 10.0, ""],
@@ -145,6 +154,11 @@ func _aim(s: Array) -> void:
 
 func _act(a: String) -> void:
 	match a:
+		"night":
+			TimeOfDay.force(true)
+			var nv := get_tree().get_first_node_in_group("go_night_visual")
+			if nv:
+				nv.call("refresh_now")
 		"nofog":
 			var we := get_tree().current_scene.find_children("*", "WorldEnvironment", true, false)
 			if not we.is_empty():
@@ -182,6 +196,11 @@ func _act(a: String) -> void:
 				dn.call("open_screen")
 
 func _undo() -> void:
+	if TimeOfDay.is_night():
+		TimeOfDay.force(false)
+		var nv := get_tree().get_first_node_in_group("go_night_visual")
+		if nv:
+			nv.call("refresh_now")
 	var es := get_tree().get_first_node_in_group("go_elemental_sight")
 	if es and bool(es.get("active")):
 		es.call("set_active", false)

@@ -229,6 +229,9 @@ func _cast_at(p0: Vector3, p1: Vector3, foot: float) -> float:
 	for e in get_tree().get_nodes_in_group("field_enemy"):
 		if e is CollisionObject3D:
 			excl.append((e as CollisionObject3D).get_rid())
+	## 09-28 숲을 짙게 한 뒤(칸당 나무 10) 마을 숲 칸에서 출발하는 줄이 문보다 앞 나무 줄기에 걸렸다 — 이 쓸기는 문 자리를 보는 것이라 줄기는 뺀다(사람은 돌아 지나간다).
+	for t in get_tree().current_scene.find_children("TreeTrunkCollisions", "StaticBody3D", true, false):
+		excl.append((t as CollisionObject3D).get_rid())
 	var q := PhysicsShapeQueryParameters3D.new()
 	var cap := CapsuleShape3D.new()
 	cap.radius = 0.35

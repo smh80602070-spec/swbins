@@ -75,7 +75,8 @@ func _physics_process(_delta: float) -> void:
 			if _frame > 60 and _p.mode == _p.Mode.GROUND and _p.is_on_floor():
 				Input.action_release("move_forward")
 				var y := _p.global_position.y
-				_check("climb_top", absf(y - _cliff_top) < 1.0, "y=%.2f top=%.1f st=%.1f" % [y, _cliff_top, _p.stamina])
+				## 09-28 산이 절벽 턱(terrain_builder PEAK_RIM) 뒤로 솟는 봉우리가 됐다 — 턱에 서거나 비탈을 이어 오르면 "꼭대기 이상·봉우리 높이 이하"면 통과.
+				_check("climb_top", y > _cliff_top - 1.0 and y < _cliff_top + TerrainBuilder.MOUNTAIN_PEAK_AMP + 1.0, "y=%.2f top=%.1f st=%.1f" % [y, _cliff_top, _p.stamina])
 				_next()
 			elif _frame == 900:
 				Input.action_release("move_forward")

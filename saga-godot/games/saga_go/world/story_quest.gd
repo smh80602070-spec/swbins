@@ -1492,9 +1492,10 @@ func _build_marker() -> void:
 	_marker_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	_marker_label.no_depth_test = true
 	_marker_label.fixed_size = true
-	_marker_label.pixel_size = 0.0022
-	_marker_label.font_size = 30
-	_marker_label.outline_size = 8
+	## 2026-09-28 — 원신 표식처럼 작게(예전 0.0022·30 은 가로 화면 한가운데를 가렸다, 창 모드 촬영).
+	_marker_label.pixel_size = 0.0012
+	_marker_label.font_size = 28
+	_marker_label.outline_size = 10
 	_marker_label.modulate = GOLD
 	_marker_label.position = Vector3(0.0, 3.2, 0.0)
 	_marker.add_child(_marker_label)

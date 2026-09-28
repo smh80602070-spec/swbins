@@ -7,12 +7,13 @@ extends Node3D
 ## 빠졌었다 — 같은 날 뒤이어 CC0 Kenney Modular Cave Kit의 gate-rock.glb로
 ## 마저 바꿨다(아래 _add_cave 참고). 마을집도 처음엔 wall-block.glb 한 장을
 ## 비균등 스케일로 늘려 대체했었는데, 그 뒤 이어서 실제로 여러 장을 격자로
-## 이어 붙이는 모듈형 조립(_build_wall_perimeter)으로 바꿨다 —
-## docs/ASSET_GUIDE.md 참고.
+## 이어 붙이는 모듈형 조립으로 바꿨다 — docs/ASSET_GUIDE.md 참고.
+## 2026-09-28 마을집·역참은 다시 코드 오두막(house_builder.gd)으로 — 블록 격자가 유리 상자로 보였다.
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
+const HouseBuilder := preload("res://games/saga_go/world/house_builder.gd")
 const ShrineTrial := preload("res://games/saga_go/world/shrine_trial.gd")
 const BeaconTower := preload("res://games/saga_go/world/beacon_tower.gd")
 
@@ -21,21 +22,13 @@ const BeaconTower := preload("res://games/saga_go/world/beacon_tower.gd")
 ## 다리 널판(PLANK_GLB)은 마을·폐허 어느 쪽도 아니라(강 위 마을 시설)
 ## 원본 그대로 남겨뒀다. "시대 퓨전" 갈래는 아직 이 판에 실제 소품이
 ## 없어(전장 잔해 4종은 방패·투구·화살통·깃발) 보류.
-const WALL_GLB := "res://assets/generated/variants/wall-block__go_village.glb"
-const ROOF_GLB := "res://assets/generated/variants/roof-gable__go_village.glb"
 const PILLAR_GLB := "res://assets/generated/variants/pillar-stone__go_ruins.glb"
 const PLANK_GLB := "res://assets/buildings/planks.glb"
 const CAVE_GATE_GLB := "res://assets/dungeon/gate-rock.glb"
 const SHRINE_GLB := "res://assets/shrine/altar-stone.glb"
 
-## wall-block.glb는 1x1x1 정육면체(바닥이 원점) — 실제 모듈형 킷답게
-## 늘리지 않고 원래 크기 그대로 여러 장을 격자로 이어 붙인다(_build_wall_perimeter).
-## 값은 발자국 x칸·z칸·y층수(전부 1m 단위) — 기존 primitive 몸통(10x4x10)과
-## 같은 바깥 치수가 나오게 잡았다.
+## 마을집 발자국(가로·벽 높이·세로, m) — 충돌 상자·코드 오두막 크기.
 const WALL_FOOTPRINT := Vector3(10, 4, 10)
-## roof-gable.glb(1.1 x 0.57 x 1.07)는 원래 비율이 이미 지붕다워서 세 축을
-## 거의 같은 배수로만 키웠다 — 폭 기준 10배.
-const ROOF_SCALE := Vector3(10, 10, 10)
 ## pillar-stone.glb(높이 1m 원기둥)의 지름 스케일 — 얇을수록 폐허답다.
 const RUIN_PILLAR_RADIUS_SCALE := 4.0
 ## gate-rock.glb(4.0 x 4.05 x 2.454, 바닥 피벗)은 이미 아치 비율이 잡혀
@@ -56,13 +49,12 @@ const SHRINE_SCALE := 2.5
 
 ## VERTICAL_SLICE.md 26절 "제외" 목록의 "역참/성채 같은 건물 POI" 착수
 ## (2026-09-14). 성채(요새 하나만한 규모)는 범위가 커서 이번엔 역참
-## (길손이 쉬어 가는 작은 정자)만 — 마을집과 같은 wall-block/roof-gable
-## GLB를 재사용하되 발자국을 마을집(10x4x10)보다 작게 잡아(6x3x6) "쉼터"
+## (길손이 쉬어 가는 작은 정자)만 — 마을집과 같은 코드 오두막(house_builder.gd)을
+## 쓰되 발자국을 마을집(10x4x10)보다 작게 잡아(6x3x6) "쉼터"
 ## 규모로 구별한다(44장 "에셋은 무작정 많이 넣지 않는다" — 새 킷 없이
 ## 기존 조각으로 충분). 길(=) 위, 굴 입구(y=2)와 마을(y=5) 사이 (5,3)에
 ## 세워 "여행길의 쉼터"라는 자리 의미를 살렸다.
 const WAYSTATION_FOOTPRINT := Vector3(6, 3, 6)
-const WAYSTATION_ROOF_SCALE := Vector3(6, 6, 6)
 
 ## 2026-09-12⑩ — 산속 폭포(waterfall_falls, land.js 다섯 표식 중 마지막).
 ## 새 킷을 받지 않고 **이미 받아 둔** vegetation_builder.gd의 산 바위
@@ -402,84 +394,35 @@ func _add_waterfall() -> void:
 
 func _add_village() -> void:
 	var ground: float = TerrainBuilder.LEGEND["H"].height
-	var wall_mesh := GLBUtils.extract_mesh(WALL_GLB)
-	var roof_mesh := GLBUtils.extract_mesh(ROOF_GLB)
-
 	## 2026-09-11㉒ 지도 확장(+2,+2) — test_map.gd 참고.
 	for gx in [4, 5]:
 		var pos := TestMap.world_pos(gx, 5) + Vector3(0, ground, 0)
-		var house := _build_house("House_%d" % gx, pos, WALL_FOOTPRINT, ROOF_SCALE, wall_mesh, roof_mesh)
+		var house := _build_house("House_%d" % gx, pos, WALL_FOOTPRINT, gx)
 		add_child(house)
 		_add_discovery_area("village", house.position, self)
 
 
-## wall-block.glb 벽 둘레 + roof-gable.glb 지붕 + 충돌 하나짜리 건물 한 채.
+## 코드 오두막(house_builder.gd, 메시 하나) + 충돌 하나짜리 건물 한 채.
+## 2026-09-28 "그래픽 먼저" — 예전엔 wall-block.glb 벽 둘레 + roof-gable.glb 지붕이라 푸른 유리 상자로 보였다(창 모드 촬영).
 ## `_add_village()`(마을집, WALL_FOOTPRINT)와 `_add_waystation()`(역참,
 ## WAYSTATION_FOOTPRINT — 더 작은 발자국)이 같은 조립을 쓴다(35장 "동일한
 ## 코드를 복사하지 않는다").
-func _build_house(node_name: String, pos: Vector3, footprint: Vector3, roof_scale: Vector3,
-		wall_mesh: Mesh, roof_mesh: Mesh) -> Node3D:
+func _build_house(node_name: String, pos: Vector3, footprint: Vector3, variant: int) -> Node3D:
 	var house := Node3D.new()
 	house.name = node_name
 	house.position = pos
-
-	if wall_mesh != null:
-		house.add_child(_build_wall_perimeter(wall_mesh, footprint))
-	## 충돌은 시각 메시의 피벗과 무관하게 중심 기준이라 그대로 둔다.
+	house.add_child(HouseBuilder.build(footprint, variant))
+	## 충돌은 벽 상자 그대로(지붕·처마·굴뚝은 머리 위라 막지 않는다).
 	_solid(footprint, Vector3(0, footprint.y * 0.5, 0), house)
-
-	if roof_mesh != null:
-		var roof := MeshInstance3D.new()
-		roof.name = "Roof"
-		roof.mesh = roof_mesh
-		roof.transform = Transform3D(Basis().scaled(roof_scale), Vector3(0, footprint.y, 0))
-		house.add_child(roof)
-
 	return house
 
 
 func _add_waystation() -> void:
 	var ground: float = TerrainBuilder.LEGEND["="].height
-	var wall_mesh := GLBUtils.extract_mesh(WALL_GLB)
-	var roof_mesh := GLBUtils.extract_mesh(ROOF_GLB)
 	var pos := TestMap.world_pos(5, 3) + Vector3(0, ground, 0)
-	var house := _build_house("Waystation", pos, WAYSTATION_FOOTPRINT, WAYSTATION_ROOF_SCALE, wall_mesh, roof_mesh)
+	var house := _build_house("Waystation", pos, WAYSTATION_FOOTPRINT, 2)
 	add_child(house)
 	_add_discovery_area("waystation", house.position, self)
-
-
-## wall-block.glb(1x1x1, 바닥 피벗) 여러 장을 footprint(x칸·y층·z칸, 전부
-## 1m 단위) **둘레**에만 실제로 이어 붙인다 — 안쪽 칸은 비운다. 안쪽을
-## 채우지 않아도 밖에서 보면 꽉 찬 벽과 구별이 안 되고(들어갈 수 없는
-## 장식용 외형이라 내부가 안 보임), 400칸을 다 채우는 것보다 훨씬 가볍다.
-## MultiMesh 하나로 몇 백 개를 놓아도 draw call은 house마다 1회(다리
-## planks.glb와 같은 방식, master.md 35장).
-func _build_wall_perimeter(wall_mesh: Mesh, footprint: Vector3) -> MultiMeshInstance3D:
-	var cols_x := int(footprint.x)
-	var layers := int(footprint.y)
-	var cols_z := int(footprint.z)
-
-	var cells: Array[Vector3] = []
-	for ix in cols_x:
-		for iz in cols_z:
-			if ix == 0 or ix == cols_x - 1 or iz == 0 or iz == cols_z - 1:
-				cells.append(Vector3(ix - cols_x * 0.5 + 0.5, 0, iz - cols_z * 0.5 + 0.5))
-
-	var mm := MultiMesh.new()
-	mm.transform_format = MultiMesh.TRANSFORM_3D
-	mm.mesh = wall_mesh
-	mm.instance_count = cells.size() * layers
-
-	var idx := 0
-	for layer in layers:
-		for cell in cells:
-			mm.set_instance_transform(idx, Transform3D(Basis(), cell + Vector3(0, layer, 0)))
-			idx += 1
-
-	var mmi := MultiMeshInstance3D.new()
-	mmi.multimesh = mm
-	mmi.name = "Wall"
-	return mmi
 
 
 func _add_ruins() -> void:

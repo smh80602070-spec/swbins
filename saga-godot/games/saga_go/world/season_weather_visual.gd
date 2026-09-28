@@ -21,6 +21,8 @@ var _env: Environment
 var _base_fog_density: float
 var _base_fog_color: Color
 var _base_volumetric_density: float
+## 2026-09-28 밤 안개 색 배수 — night_visual.gd 가 넣고 apply() 를 부른다(날씨가 60초마다 안개 색을 다시 써도 밤빛이 남게).
+var night_mul := Color(1, 1, 1)
 
 
 func _ready() -> void:
@@ -39,6 +41,10 @@ func _ready() -> void:
 	t.start()
 
 
+func apply() -> void:
+	_apply()
+
+
 func _apply() -> void:
 	if _env == null:
 		return
@@ -51,9 +57,9 @@ func _apply() -> void:
 	var tint: Color = w.get("tint", Color.WHITE)
 	var ambient_mul: Color = s.get("ambient_mul", Color.WHITE)
 	_env.fog_light_color = Color(
-		_base_fog_color.r * tint.r * ambient_mul.r,
-		_base_fog_color.g * tint.g * ambient_mul.g,
-		_base_fog_color.b * tint.b * ambient_mul.b,
+		_base_fog_color.r * tint.r * ambient_mul.r * night_mul.r,
+		_base_fog_color.g * tint.g * ambient_mul.g * night_mul.g,
+		_base_fog_color.b * tint.b * ambient_mul.b * night_mul.b,
 	)
 
 

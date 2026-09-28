@@ -33,6 +33,8 @@ static func _any_probe() -> bool:
 
 func _ready() -> void:
 	SaveState.try_load()
+	## 2026-09-28 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게(orientation_scale.gd).
+	add_child(preload("res://games/saga_go/ui/orientation_scale.gd").new())
 	if _any_probe():
 		PartyState.party_size = PartyState.PARTY_MAX
 	## PLAN 106장 ㊺ — 넷째 지역 서리봉 고원(마을 북쪽 고개 너머). 지형이 다른 것보다 먼저 서게 맨 앞에.
@@ -67,6 +69,14 @@ func _ready() -> void:
 	var era := preload("res://games/saga_go/world/era_sites.gd").new()
 	era.name = "EraSites"
 	add_child(era)
+	## 2026-09-28 원신식 풀잎 밭 — 카메라 둘레만 깔고 걷는다(grass_field.gd).
+	var grass := preload("res://games/saga_go/world/grass_field.gd").new()
+	grass.name = "GrassField"
+	add_child(grass)
+	## 2026-09-28 마을 채우기 — 오두막·좌판·등롱·텃밭(village_dressing.gd, 비워 둘 자리는 건너뜀).
+	add_child(preload("res://games/saga_go/world/village_dressing.gd").new())
+	## 2026-09-28 밤 화면 — 달빛·별·창과 등롱 불(night_visual.gd).
+	add_child(preload("res://games/saga_go/world/night_visual.gd").new())
 	_remove_resolved_events()
 	if OS.get_environment("SAGA_DENSITY_REPORT") != "":
 		_print_density_report()
@@ -245,6 +255,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_story9.gd").new())
 	if OS.get_environment("SAGA_VAULT_PROBE") != "": # 106장 54-1 아홉째 지역 갈무리 벌
 		add_child(load("res://tools/probe_vault.gd").new())
+	if OS.get_environment("SAGA_VILLAGE_PROBE") != "": # 09-28 마을 꾸미기(village_dressing.gd) 자리 점검
+		add_child(load("res://tools/probe_village.gd").new())
 	if OS.get_environment("SAGA_FORK_PROBE") != "": # 106장 55-1 열째 지역 세갈래 고을
 		add_child(load("res://tools/probe_fork.gd").new())
 	if OS.get_environment("SAGA_STORY11_PROBE") != "": # 106장 55 이야기 11부(36장~)

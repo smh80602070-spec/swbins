@@ -27,7 +27,8 @@ for idx in "${!names[@]}"; do
   for i in 1 2 3; do
     log="$LOGDIR/${name}_${i}.log"
     "$GODOT" --headless --path "$PROJECT" "res://$scene" --quit-after 5 --verbose >"$log" 2>&1
-    n=$(grep -icE "error|warn|missing|invalid|cannot" "$log")
+    # 09-28 — ImporterMesh.generate_lods(glb_utils.with_lods)가 --verbose 로 찍는 "LOD n: … error x (step error y)" 진행 줄은 오류가 아니다(오차 수치).
+    n=$(grep -iE "error|warn|missing|invalid|cannot" "$log" | grep -vcE "^[[:space:]]*LOD (stop|[0-9]+):")
     issues=$((issues + n))
     s=$(md5sum "$log" | cut -c1-8)
     sums="${sums}${sums:+ }$s"

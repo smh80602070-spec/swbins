@@ -9,8 +9,10 @@ render_mode blend_mix, cull_disabled, depth_draw_never, diffuse_toon, specular_t
 
 uniform sampler2D depth_tex : hint_depth_texture, filter_linear_mipmap;
 
-uniform vec3 shallow_color : source_color = vec3(0.36, 0.80, 0.80);
-uniform vec3 deep_color : source_color = vec3(0.08, 0.33, 0.60);
+// 2026-09-28 GO 가 ACES·밝은 해로 바뀐 뒤 옛 색(0.36,0.80,0.80 / 0.08,0.33,0.60)은 바다가 연한 하늘색 띠로 바랬다(창 모드 촬영).
+// 한 단 짙은 청록 → 남색, 비스듬히 볼 때 하늘빛 섞기 0.45 → 0.22(강을 낮게 보면 하얗게 날아갔다), 해 반짝임 추가.
+uniform vec3 shallow_color : source_color = vec3(0.18, 0.66, 0.70);
+uniform vec3 deep_color : source_color = vec3(0.03, 0.2, 0.46);
 uniform vec3 foam_color : source_color = vec3(0.96, 0.99, 1.0);
 uniform vec3 sky_tint : source_color = vec3(0.70, 0.86, 0.98);
 uniform float depth_scale = 2.2;     // 이 두께(m)면 완전히 깊은 색
@@ -67,15 +69,20 @@ void fragment() {
 		float foam = 1.0 - smoothstep(foam_width * (0.55 + 0.9 * n) - 0.05, foam_width * (0.55 + 0.9 * n), thick);
 
 		float s = vnoise(wpos.xz * vec2(0.18, 0.7) + TIME * flow * 0.6);
-		float streak = smoothstep(0.74, 0.77, s) * (1.0 - band * 0.5);
+		float streak = smoothstep(0.765, 0.78, s) * (1.0 - band * 0.5);
 
 		float fr = pow(1.0 - clamp(dot(NORMAL, VIEW), 0.0, 1.0), 4.0);
-		col = mix(col, sky_tint, fr * 0.45);
-		col = mix(col, foam_color, max(foam, streak * 0.55));
+		col = mix(col, sky_tint, fr * 0.22);
+		// 해 반짝임 — 잔물결 두 겹이 겹치는 곳만 작게 빛난다(원신 물의 반짝이).
+		float g1 = vnoise(wpos.xz * 5.5 + TIME * flow * 3.0);
+		float g2 = vnoise(wpos.xz * 7.3 - TIME * flow.yx * 3.4 + 5.0);
+		float glint = smoothstep(0.92, 0.95, g1 * g2 * 1.6) * (1.0 - fr) * (1.0 - smoothstep(25.0, 60.0, length(VERTEX)));
+		col += vec3(1.0, 0.97, 0.9) * glint * 0.9;
+		col = mix(col, foam_color, max(foam, streak * 0.32));
 
 		ALBEDO = col;
-		ALPHA = max(mix(0.62, 0.92, t), foam);
-		ROUGHNESS = 0.12;
-		SPECULAR = 0.6;
+		ALPHA = max(mix(0.7, 0.96, t), max(foam, glint));
+		ROUGHNESS = 0.22;   // 0.12·0.6 은 낮게 본 강에서 해 반사가 넓게 번져 하얗게 떴다
+		SPECULAR = 0.35;
 	}
 }

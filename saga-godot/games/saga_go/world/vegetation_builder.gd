@@ -14,9 +14,15 @@ extends Node3D
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
+const KeepSpots := preload("res://games/saga_go/world/keep_spots.gd")
 const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
 
-const TREES_PER_FOREST_TILE := 3
+## 2026-09-28 "그래픽 먼저" — 3 → 10. 숲 칸(48m)에 세 그루면 원신 숲이 아니라 들판에 나무 몇 그루였다(창 모드 촬영).
+## 크기도 0.7~1.3 → 0.8~1.8배(약 4~10m, TREE_SCALE_MIN·SPAN). 상자·별조각·채집·이야기 칸 TREE_KEEP_M 안엔 안 심는다(keep_spots.gd).
+const TREES_PER_FOREST_TILE := 10
+const TREE_SCALE_MIN := 0.8
+const TREE_SCALE_SPAN := 1.0
+const TREE_KEEP_M := 4.0
 const ROCKS_PER_MOUNTAIN_TILE := 1
 ## 2026-09-12 — 논밭(F) 타일 산포. 마을 사방 채집 밀도(§60)와는 무관하게
 ## 그냥 시각 채움이라, 숲보다 조금 더 촘촘하게 둬도 된다(밀 이랑 느낌).
@@ -331,10 +337,13 @@ func _scatter_trees() -> void:
 			if row[x] != "T":
 				continue
 			for i in TREES_PER_FOREST_TILE:
-				var jx := (_hash(x, y, i * 2) - 0.5) * TestMap.TILE_SIZE * 0.8
-				var jz := (_hash(x, y, i * 2 + 1) - 0.5) * TestMap.TILE_SIZE * 0.8
-				var s := 0.7 + _hash(x, y, i * 2 + 100) * 0.6
-				positions.append(TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz))
+				var jx := (_hash(x, y, i * 2) - 0.5) * TestMap.TILE_SIZE * 0.9
+				var jz := (_hash(x, y, i * 2 + 1) - 0.5) * TestMap.TILE_SIZE * 0.9
+				var s := TREE_SCALE_MIN + _hash(x, y, i * 2 + 100) * TREE_SCALE_SPAN
+				var tp := TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz)
+				if KeepSpots.near(region_id, tp, TREE_KEEP_M):
+					continue
+				positions.append(tp)
 				scales.append(s)
 				yaws.append(_hash(x, y, i * 2 + 200) * TAU)
 				## 종 선택(salt 300대, 기존 0·1·100·200 대역과 안 겹침).
@@ -379,7 +388,7 @@ func _scatter_trees() -> void:
 		var xforms: Array[Transform3D] = xf_by_species[k]
 		if xforms.is_empty():
 			continue
-		var tree_mesh := GLBUtils.extract_mesh(variants[k].glb)
+		var tree_mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(variants[k].glb))
 		if tree_mesh == null:
 			continue
 		## 표면 전부(스냅 CommonTree는 줄기·잎 둘, DeadTree는 하나) — 예전엔
@@ -425,7 +434,7 @@ func _scatter_crops() -> void:
 	if positions.is_empty():
 		return
 
-	var crop_mesh := GLBUtils.extract_mesh(CROP_GLB)
+	var crop_mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(CROP_GLB))
 	if crop_mesh == null:
 		return
 
@@ -471,8 +480,8 @@ func _scatter_rocks() -> void:
 	## 큰 바위·작은 바위 두 GLB를 섞어 산 능선이 다 똑같아 보이지 않게 한다
 	## — MultiMesh는 메시 하나당 하나라 종류별로 둘을 만든다(draw call 2회,
 	## 여전히 칸마다 노드를 만드는 것보단 훨씬 싸다).
-	var large_mesh := GLBUtils.extract_mesh(REGION_ROCK_LARGE_GLB.get(region_id, REGION_ROCK_LARGE_GLB["village"]))
-	var small_mesh := GLBUtils.extract_mesh(REGION_ROCK_SMALL_GLB.get(region_id, REGION_ROCK_SMALL_GLB["village"]))
+	var large_mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(REGION_ROCK_LARGE_GLB.get(region_id, REGION_ROCK_LARGE_GLB["village"])))
+	var small_mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(REGION_ROCK_SMALL_GLB.get(region_id, REGION_ROCK_SMALL_GLB["village"])))
 
 	var large_positions: Array[Transform3D] = []
 	var small_positions: Array[Transform3D] = []
@@ -529,7 +538,7 @@ func _scatter_clutter() -> void:
 		return
 
 	var glb: String = REGION_CLUTTER_GLB.get(region_id, REGION_CLUTTER_GLB["village"])
-	var clutter_mesh := GLBUtils.extract_mesh(glb)
+	var clutter_mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(glb))
 	if clutter_mesh == null:
 		return
 	var s: float = REGION_CLUTTER_SCALE.get(region_id, REGION_CLUTTER_SCALE["village"])
@@ -580,7 +589,7 @@ func _scatter_village_path() -> void:
 		var xforms: Array[Transform3D] = xf_by_variant[i]
 		if xforms.is_empty():
 			continue
-		var mesh := GLBUtils.extract_mesh(VILLAGE_PATH_GLB[i])
+		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(VILLAGE_PATH_GLB[i]))
 		if mesh == null:
 			continue
 		add_child(_build_rock_multimesh(mesh, xforms, "VillagePath%d" % i))
@@ -615,7 +624,7 @@ func _scatter_coast_pebbles() -> void:
 		var xforms: Array[Transform3D] = xf_by_variant[i]
 		if xforms.is_empty():
 			continue
-		var mesh := GLBUtils.extract_mesh(COAST_PEBBLE_GLB[i])
+		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(COAST_PEBBLE_GLB[i]))
 		if mesh == null:
 			continue
 		add_child(_build_rock_multimesh(mesh, xforms, "CoastPebble%d" % i))
@@ -646,7 +655,7 @@ func _scatter_understory() -> void:
 				xforms.append(Transform3D(basis, pos))
 		if xforms.is_empty():
 			continue
-		var mesh := GLBUtils.extract_mesh(spec.glb)
+		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(spec.glb))
 		if mesh == null:
 			continue
 		add_child(_build_rock_multimesh(mesh, xforms, "Understory%d" % k))
@@ -682,7 +691,7 @@ func _scatter_wildflowers() -> void:
 		var xforms: Array[Transform3D] = xf_by_kind[k]
 		if xforms.is_empty():
 			continue
-		var mesh := GLBUtils.extract_mesh(WILDFLOWERS[k].glb)
+		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(WILDFLOWERS[k].glb))
 		if mesh == null:
 			continue
 		add_child(_build_rock_multimesh(mesh, xforms, "Wildflowers%d" % k))
@@ -719,7 +728,7 @@ func _scatter_shrubs() -> void:
 		var xforms: Array[Transform3D] = xf_by_kind[k]
 		if xforms.is_empty():
 			continue
-		var mesh := GLBUtils.extract_mesh(SHRUBS[k].glb)
+		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(SHRUBS[k].glb))
 		if mesh == null:
 			continue
 		add_child(_build_rock_multimesh(mesh, xforms, "Shrub%d" % k))
@@ -752,8 +761,8 @@ func _scatter_ruins_debris() -> void:
 	if positions.is_empty():
 		return
 
-	var mesh_a := GLBUtils.extract_mesh(STELE_GLB_A)
-	var mesh_b := GLBUtils.extract_mesh(STELE_GLB_B)
+	var mesh_a := GLBUtils.with_lods(GLBUtils.extract_mesh(STELE_GLB_A))
+	var mesh_b := GLBUtils.with_lods(GLBUtils.extract_mesh(STELE_GLB_B))
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = STELE_COLOR
 
@@ -809,7 +818,7 @@ func _scatter_ruins_rubble() -> void:
 		var xforms: Array[Transform3D] = xf_by_variant[i]
 		if xforms.is_empty():
 			continue
-		var mesh := GLBUtils.extract_mesh(RUBBLE_ROCK_GLB[i])
+		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(RUBBLE_ROCK_GLB[i]))
 		if mesh == null:
 			continue
 		add_child(_build_rock_multimesh(mesh, xforms, "RuinsRubble%d" % i))
@@ -849,7 +858,7 @@ func _scatter_ruins_wall_fence() -> void:
 		var xforms: Array[Transform3D] = xf_by_variant[i]
 		if xforms.is_empty():
 			continue
-		var mesh := GLBUtils.extract_mesh(WALL_FENCE_GLB[i])
+		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(WALL_FENCE_GLB[i]))
 		if mesh == null:
 			continue
 		var mmi := _build_rock_multimesh(mesh, xforms, "RuinsWallFence%d" % i)

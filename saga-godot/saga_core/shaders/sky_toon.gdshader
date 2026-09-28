@@ -15,6 +15,8 @@ uniform float cloud_coverage : hint_range(0.0, 1.0) = 0.52;
 uniform float cloud_scale = 1.4;
 uniform float sun_size = 0.045;       // 라디안
 uniform float sun_strength = 3.0;
+// saga-godot 2026-09-28 — 밤 별(0 = 낮, 1 = 밤). games/saga_go/world/night_visual.gd 가 넣는다(uniform 이라 바뀔 때만 반사 맵을 다시 굽는다).
+uniform float stars : hint_range(0.0, 1.0) = 0.0;
 
 float hash21(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -71,6 +73,11 @@ void sky() {
 			cc *= mix(vec3(1.0), LIGHT0_COLOR, 0.25);
 		}
 		float fade = smoothstep(0.0, 0.18, h);
+		if (stars > 0.0) {
+			vec2 sp = floor(d.xz / (h + 0.35) * 170.0);
+			float star = step(0.9965, hash21(sp)) * (0.55 + 0.45 * hash21(sp + 7.0));
+			col += vec3(0.9, 0.93, 1.0) * star * stars * smoothstep(0.04, 0.3, h) * (1.0 - mask);
+		}
 		col = mix(col, cc, mask * fade);
 	}
 	COLOR = col;

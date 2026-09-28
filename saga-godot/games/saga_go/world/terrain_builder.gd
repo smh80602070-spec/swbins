@@ -118,8 +118,13 @@ const MOUNTAIN_EDGE_MIN := 22.0
 const MOUNTAIN_EDGE_MAX := 30.0
 const MOUNTAIN_STEP := 2.0
 ## 고원 가운데 봉우리 높이 — 칸 가장자리로 갈수록 0(절벽 테두리는 평평).
-const MOUNTAIN_PEAK_AMP := 9.0
-const PEAK_FALLOFF := 0.38
+## 2026-09-28 "그래픽 먼저" — 9m·0.38 이면 산이 평평한 탁자(절벽 위 풀밭)로 보였다(창 모드 촬영). 가장자리 높이는 그대로 두고
+## (절벽·폭포·등반 꼭대기 판정이 tile_base_height 를 쓴다) 평평한 턱(PEAK_RIM) 뒤 10m 안에서 솟는 봉우리로.
+const MOUNTAIN_PEAK_AMP := 18.0
+## 절벽 위 평평한 턱(칸 비율, 약 6m) — 오른 뒤 넘어설 자리(등반 mantle)·바람 기둥(sky_isle DRAFT_CELL 가장자리 5m 안쪽)이 기울지 않게.
+## 턱 없이 바로 솟게 하면(09-28 시도) 가파를 땐 비탈을 이어 타고, 덜 가파를 땐 벽도 턱도 아닌 비탈에서 손을 놓고 떨어졌다(probe_traversal climb_top).
+const PEAK_RIM := 0.12
+const PEAK_FALLOFF := 0.2
 
 ## 지도 테두리 밖 절벽이 떠 보이지 않게 내려 긋는 깊이.
 const OUTER_SKIRT_Y := -8.0
@@ -137,6 +142,8 @@ const SUB := 8
 const EDGE_BLEND_MARGIN := 0.34
 
 const CLIFF_COLOR := Color(0.5, 0.48, 0.45)
+const CLIFF_SEG_M := 12.0
+const CLIFF_JAG_M := 4.5
 
 static var _noise: FastNoiseLite = null
 
@@ -174,10 +181,10 @@ static func vertex_height(region: String, x: int, y: int, u: float, v: float) ->
 	if tch != "^":
 		return base
 	var d: float = min(min(u, 1.0 - u), min(v, 1.0 - v))
-	var f := smoothstep(0.0, PEAK_FALLOFF, d)
+	var f := smoothstep(PEAK_RIM, PEAK_RIM + PEAK_FALLOFF, d)
 	var ts := TestMap.tile_size_of(region)
 	var n := _peak_noise().get_noise_2d((x + u) * ts, (y + v) * ts) * 0.5 + 0.5
-	return base + MOUNTAIN_PEAK_AMP * n * f
+	return base + MOUNTAIN_PEAK_AMP * pow(n, 1.4) * f
 
 ## 월드 좌표의 지면 높이(바위·소품을 산 위에 앉힐 때).
 static func height_at(region: String, world: Vector3) -> float:
@@ -365,16 +372,46 @@ func _add_cliffs(st: SurfaceTool, x: int, y: int) -> void:
 		var a: Vector3 = center + e[2]
 		var b: Vector3 = center + e[3]
 		var n: Vector3 = e[4]
-		var a_top := a + Vector3(0, top, 0)
-		var b_top := b + Vector3(0, top, 0)
-		var a_bot := a + Vector3(0, bottom, 0)
-		var b_bot := b + Vector3(0, bottom, 0)
-		st.set_normal(n); st.set_color(CLIFF_COLOR); st.add_vertex(a_top)
-		st.set_normal(n); st.set_color(CLIFF_COLOR); st.add_vertex(b_bot)
-		st.set_normal(n); st.set_color(CLIFF_COLOR); st.add_vertex(b_top)
-		st.set_normal(n); st.set_color(CLIFF_COLOR); st.add_vertex(a_top)
-		st.set_normal(n); st.set_color(CLIFF_COLOR); st.add_vertex(a_bot)
-		st.set_normal(n); st.set_color(CLIFF_COLOR); st.add_vertex(b_bot)
+		## 울퉁불퉁함은 산(^) 절벽에만 — 모래밭·길의 낮은 물가 둑은 평평하게.
+		_add_cliff_face(st, a, b, bottom, top, n, CLIFF_JAG_M if TestMap.tile_at(x, y, region_id) == "^" else 0.0)
+
+## 2026-09-28 "그래픽 먼저" — 절벽 한 변이 48m × 최대 30m 평판 하나라 멀리서 회색 상자 벽으로 보였다(창 모드 촬영).
+## CLIFF_SEG_M 격자로 쪼개 **산 안쪽으로** 노이즈만큼 파고, 삼각형마다 제 법선(각진 바위 면)을 준다.
+## 바깥으로 내밀면 절벽 곁에 붙여 둔 장치를 막았다 — 포구 조선소 기중기 다리와 절벽 사이 2.6m 틈이 닫혀 13장 오르기가 끼었다(probe_story3 ch13_climb).
+## 안쪽으로만 파니 절벽 면은 원래 칸 경계보다 앞으로 나오지 않는다.
+## 네 가장자리는 0 이라 윗면·이웃 변·땅과의 이음새는 그대로다. 기울기는 수직에서 ~25° 안 — 등반 판정(법선 y < 0.75)이 그대로 벽으로 본다.
+## 충돌도 이 메시(trimesh)라 보이는 대로 붙는다.
+func _add_cliff_face(st: SurfaceTool, a: Vector3, b: Vector3, bottom: float, top: float, n: Vector3, jag: float) -> void:
+	var hs := maxi(2, ceili(a.distance_to(b) / CLIFF_SEG_M))
+	var vs := maxi(1, ceili((top - bottom) / CLIFF_SEG_M))
+	var pts: Array[Vector3] = []
+	for j in vs + 1:
+		var t := float(j) / float(vs)
+		for i in hs + 1:
+			var u := float(i) / float(hs)
+			var p := a.lerp(b, u) + Vector3(0, lerpf(bottom, top, t), 0)
+			var env := sqrt(sin(PI * u) * sin(PI * t))
+			var nz := _peak_noise().get_noise_3d(p.x * 2.2, p.y * 2.8, p.z * 2.2) * 0.5 + 0.5
+			pts.append(p - n * jag * env * nz)
+	var w := hs + 1
+	for j in vs:
+		for i in hs:
+			var p00 := pts[j * w + i]
+			var p10 := pts[j * w + i + 1]
+			var p01 := pts[(j + 1) * w + i]
+			var p11 := pts[(j + 1) * w + i + 1]
+			_cliff_tri(st, p01, p10, p11, n)
+			_cliff_tri(st, p01, p00, p10, n)
+
+func _cliff_tri(st: SurfaceTool, p0: Vector3, p1: Vector3, p2: Vector3, out: Vector3) -> void:
+	var fn := (p1 - p0).cross(p2 - p0).normalized()
+	if fn.dot(out) < 0.0:
+		var tmp := p1
+		p1 = p2
+		p2 = tmp
+		fn = -fn
+	for p in [p0, p1, p2]:
+		st.set_normal(fn); st.set_color(CLIFF_COLOR); st.add_vertex(p)
 
 ## (u,v) 자리의 실제 정점 색. 네 모서리 사이를 이중선형보간한 "이웃과 섞은
 ## 색"과 "제 색"을 가장자리까지 남은 거리(d)로 섞는다.

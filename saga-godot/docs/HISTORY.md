@@ -9254,3 +9254,68 @@ PROJECT_STATE.md` 참고. 요약:
 - 곁가지 두 건: ① 35장 갈무리가 기둥 속 땅에 묻혀 있었다 — appear 창에 cell 없이 lift 만 있으면 story_quest._place_npcs 가 높이를 무시(칸 있는 창만 _spot_pos). lift 만 있으면 집 칸 위로 띄우게 고침(쓰는 곳은 갈무리뿐).
   ② STORY10 35장 갈무리 대화가 가끔(3판에 1~2번) FAIL — 기둥 윗면으로 옮긴 직후 등급·업적 알림 창(ui_modal)이 떠 있으면 interact 가 막힌다. 그 단계만 창 닫기 없이 말을 걸고 있었다 → 먼저 _dismiss_prompts, 안 되면 한 번 더(tries 기록). 고친 뒤 3판 연속 tries=1.
 - 다음 = 2차 결말 뒤 흐름은 사용자 결정(PROJECT_STATE 다음 작업 2).
+
+## GO 그래픽 먼저 ① 풀잎 밭·빛깔·절벽 (2026-09-28, "사가고돗 이어해")
+
+- 첫머리에 09-27 "0원 값" 원인을 물음 — 사용자: 눈으로 본 것 없음·같은 틀 반복·그래픽 원신급과 멂·보고 부풀림 넷 다, 다음은 "그래픽 먼저". 이번부터 고칠 때마다 창 모드로 찍어 전후를 본다(tools/probe_shots.gd).
+- 풀잎 밭 `world/grass_field.gd`+`saga_core/shaders/grass_blades.gdshader`: 플레이어 둘레(PC 40m·모바일 26m)만 16m 조각 MultiMesh, 결정적 해시·자리 캐시, 먼 조각 잎 절반, 바람 물결, 법선 위(뒷면 검은 것 고침), 풀빛 = 지역 들판 색. 광선으로 땅(TerrainCollision) 아닌 곳은 안 심음.
+- 빛깔(GO 만, environment_profile.gd): AgX → ACES·노출 0.88·채도 1.22·대비 1.08·fog_sky_affect 0.35·안개 0.0035 → 0.0022, 해 1.1 → 1.3 따뜻한 빛. 하늘이 파래지고 들판이 잿빛에서 초록으로.
+- 절벽(terrain_builder.gd _add_cliff_face): 48m 평판 → 8m 격자로 쪼개 바깥으로 최대 4.5m 불룩·삼각형마다 제 법선. 셰이더에 지층 띠·얼룩·물때, 평지 돌 얼룩 0.5 → 0.15(잿빛 안개 덩어리처럼 보였다).
+- 퀘스트 표식 "◆ Nm" pixel_size 0.0022 → 0.0012(가로 화면 한가운데를 가렸다).
+- 부담(PERF, 모바일 540×960): 마을 삼각형 평균 32.7만 → 35.8만(예산 35만 조금 넘음)·draw 204 → 208·process 14.7 → 14.6ms. 처음 판(카메라 기준·절벽 4m)은 42.6만·22ms 라 플레이어 기준·캐시·먼 조각 절반·절벽 8m 로 줄였다.
+- 점검: TRAVERSAL fails=0(등반·꼭대기·활공 그대로). godot_regress 3번 중 첫 번 FAIL(출력이 잘려 어느 판인지 못 봄), 뒤 두 번 OK.
+- 아직: 석상(캡슐 도형)·인물 몸·서리봉 얼음 파스텔빛·먼 절벽 윗면이 평평한 탁자 모양. 실기(폰) 발열·풀 흔들림 확인 전.
+
+## GO 그래픽 먼저 ② 신상·산 봉우리·오두막·얼음 (2026-09-28, 같은 세션, "이어해")
+
+- 신상(waypoints.gd _build_statue): 캡슐 셋·공 둘(4m) → 금테 팔각 세 단 받침 + 옆모습 선을 돌린(_lathe) 망토 인물·두건·깃 날개 다섯 쌍·금빛 고리, 가슴 앞 빛 구슬(= 활성화 보석), 약 8.5m. 받침 반지름 2.5m — 순간이동 착지를 받침 앞(3.4m)으로.
+- 산(terrain_builder.gd): 봉우리 9m·솟는 폭 0.38 → 18m·0.18, pow(n,1.4). 가장자리 높이는 그대로(절벽·폭포·등반 꼭대기 판정이 tile_base_height) — 절벽 위가 평평한 탁자에서 바로 솟는 봉우리로.
+- 오두막(새 house_builder.gd + saga_core/shaders/cel_vertex_color.gdshader): 돌 받침·회벽·나무 뼈대·창·꽃 상자·문·차양·박공지붕·용마루·굴뚝을 메시 하나(정점색)로 — draw call 1+외곽선 1. 마을집 둘·역참이 씀, wall-block/roof-gable GLB 조립(_build_wall_perimeter) 지움. 충돌 상자 그대로.
+- 얼음(terrain_triplanar): 희게 한 단 + 가는 금 두 겹 + 깊은 청록 얼룩.
+- 풀 바람 물결 1.6 → 1.0(앞 풀이 땅에 눕던 것).
+- probe_traversal climb_top: 꼭대기 ±1m → "꼭대기 이상·봉우리 높이 이하"(가장자리 넘어 비탈을 이어 타고 오른다, y=21.2 에서 섬).
+- probe_shots 에 v_statue_far·v_house 자리 둘.
+- 신상 부품은 house_builder 로 모아 메시 하나(구슬만 따로) — 따로 그리면 PERF draw call 최댓값 276(예산 260). 합친 뒤 238(기준선 249), 금빛 고리 TorusMesh 분할 64×32 → 24×8.
+- 눈·얼음: ACES·밝은 해로 바꾼 뒤 서리봉 눈이 하얗게 포화(결 없음, 창 모드 촬영) — 눈·얼음 반사율 낮추고(정점색이 선형으로 들어가 0.86 은 빛을 받으면 넘친다) 눈 노멀 살림(0.6 → 0.3).
+- 부담(PERF 모바일 540×960): 마을 삼각형 평균 32.7만(기준선) → 37.4만(예산 35만 넘음) · draw 평균 204 → 206, 최댓값 249 → 238 · process 14.7 → 14.5~16.9ms.
+- 점검 18종(TRAVERSAL·FROST·SKYPORT·SKYROUTE·CROSSING·SUNKEN·AMBER·VAULT·FORK·STORMEYE·TREASURE·FIELD_BOSS·MAP·QMAP·DOMAIN·COMBAT·ARCHERY·WQ): 고친 뒤 QMAP(3)·WQ(1) 빼고 fails=0. QMAP·WQ 는 **변경 전 코드(HEAD)로 돌려도 같은 실패** — 이번 변경 탓 아님, 원인 미조사.
+  - AMBER·FORK pass_open 이 gate=false 로 FAIL(문은 열려 지역 안까지 걸어 들어감) — 지역 스크립트는 문 상태를 1초마다 갱신하는데 점검이 40프레임 뒤에 읽었다. amber·fork·vault 셋 다 걷기 끝(700프레임)에 읽게 고침.
+- godot_regress REGRESS OK(마지막 두 번). 실기 확인 전: 풀 흔들림·신상·오두막 가까이·산 봉우리 등반·폰 발열.
+
+## GO 그래픽 먼저 ③ 마을 채우기·산 턱·부담 다듬기 (2026-09-28, 같은 세션, "이어해")
+
+- 마을(새 world/village_dressing.gd): 집 칸(H)에 오두막 여섯 채 더(house_builder, 충돌 상자) · 장터 좌판 셋(판대만 충돌) · 텃밭 울타리·고랑 · 남북 길 양쪽 등롱 · 문 앞 상자·통. 소품은 메시 하나(충돌 없음).
+  - 짓기 직전 둘레 KEEP_M 7m 안에 Area3D·인물 몸·신상/솥/게시판/상자 이름 노드·이야기/세계 임무/채집/비경 입구/상자 칸이 있으면 그 자리는 건너뜀(첫 배치에서 플레이어 첫 자리·칸 모서리 Area3D 옆 셋 → 옮김, 지금 하나(-48,-38) 건너뜀).
+  - 새 tools/probe_village.gd(SAGA_VILLAGE_PROBE): built · spots_clear(자리 둘레 3.5m 안 새 충돌 없음) · roads_open(남북 길 곧게, 동서로 빠질 틈) fails=0.
+- 산: 봉우리를 턱 없이 바로 솟게 하니 ① 이야기 9장 바람 기둥 둘레가 3.4m 기울고(probe_story ch9_unlock) ② 솟는 폭을 늘리면 벽도 턱도 아닌 비탈에서 손을 놓고 떨어졌다(climb_top). → 절벽 위 평평한 턱 PEAK_RIM 0.12(≈6m) 뒤에서 0.2 폭으로 솟게. 등반·9장·지역 점검 14종 fails=0.
+- 부담: 절벽 조각 8m → 12m, 신상 원기둥 가로 분할 0·공 12×6, 폰 풀 덤불당 잎 8 → 6. 간이 그림자 메시(shadow_mesh)는 측정값이 한 자리까지 같아 효과를 확인 못 해 되돌림.
+  - PERF 모바일: 마을 삼각형 평균 36.1만(기준선 32.7만, 예산 35만 — 3% 넘음) · draw 평균 208·최댓값 238(기준선 249).
+- 주황 지붕 톤 낮춤. probe_shots 에 v_village_plaza·v_village_west.
+- 점검: STORY·STORY8·COOK·DISPATCH·COMMISSION·GROWTH·ADVENTURE·ACHIEVE·VILLAGE + 산 관련 14종 fails=0, REGRESS OK. 실기 확인 전: 마을 걷기(집 사이 길·좌판 앞 막힘), 등롱 밤빛(지금은 빛 없는 색 상자).
+
+## GO 그래픽 먼저 ④ 숲 세 배·합친 메시 LOD (2026-09-28, 같은 세션, "이어해")
+
+- 숲(vegetation_builder): 숲 칸당 나무 3 → 10, 크기 0.7~1.3 → 0.8~1.8배(약 4~10m). 새 world/keep_spots.gd(이야기·세계 임무·상자·별조각·채집·비경 입구·순간이동 칸, 지역별) 4m 안엔 안 심음 — village_dressing 도 이 목록을 씀.
+- 나무를 늘리자 PERF 마을 삼각형 평균 36만 → 63만. 원인: glb_utils._merge_mesh_instances 가 여러 조각을 ArrayMesh 로 합치며 임포트 LOD 를 잃었다(먼 나무도 가장 자세하게).
+  → glb_utils.with_lods(ImporterMesh.generate_lods)로 다시 만들어 vegetation_builder 의 GLB 메시 열넷에 씀. 마을 평균 **34.0만(예산 35만 안)**, 포구 23.1만·폐허 32.2만, draw 평균 213·최댓값 249.
+- 서리봉 눈 덮인 숲 바닥에 초록 풀잎이 솟던 것 — grass_field 가 눈 표시(surface_of .r) 칸은 건너뜀.
+
+## GO 그래픽 먼저 ⑤ 밤 화면·절벽 안쪽으로 (2026-09-28, 같은 세션, "이어해")
+
+- 밤(새 world/night_visual.gd): 밤낮(실제 시계 21~4시)이 NPC 대사·동물·산적만 바꾸고 하늘·해는 늘 낮이었다. 밤이면 해 → 약한 푸른 달빛(×0.28), 하늘 → 남색 + 별(sky_toon stars), 구름·안개 어둡게(season_weather_visual night_mul), 주변광 ×0.8·채도 0.85, 3초에 걸쳐 섞음.
+  - 집 창·길가 등롱 유리를 따로 모아 공유 재질(새 saga_core/shaders/night_glow.gdshader) 하나로 — 밤이면 따뜻하게 빛남(조명은 안 늘림). probe_shots 에 "night" 할 일·n_* 자리 셋.
+- 13장 기중기 오르기 FAIL(probe_story3 ch13_climb, HEAD 는 통과) — 나무·봉우리·둑을 차례로 되돌려 가려 보니 **산 절벽 울퉁불퉁함**: 기중기 동쪽 다리와 절벽 면 사이 2.6m 틈으로 오르는데 절벽을 바깥으로 4.5m 내밀어 틈이 닫혔다(y 7m 에서 끼임).
+  → 울퉁불퉁함을 산 안쪽으로만 파게(절벽 면이 칸 경계 앞으로 안 나온다) + 산(^) 절벽에만. STORY3·TRAVERSAL fails=0.
+- LAYOUT 은 LayoutWalk 씬 점검이라 TestVillage 로 돌리면 시간 초과(내 실수, 결과 아님).
+
+## GO 그래픽 먼저 ⑥ 가로 화면 UI·전체 점검 (2026-09-28, 같은 세션, "이어해")
+
+- 가로 UI(새 games/saga_go/ui/orientation_scale.gd, test_village 가 단다): 기준 1080×1920(canvas_items·expand)이라 가로 1280×720 이면 배율 0.375 로 글자가 깨알(알려진 오류 "UI 56%"). 가로일 때만 content_scale_size 1920×1280 → 배율 0.5625(1.5배). HUD·지도·인물·파견 화면 창 모드 촬영 — 잘림 없음. 세로(폰 기본)는 그대로.
+- 전체 점검 45종(PERF·LAYOUT·SHOT 빼고): QMAP 3·WQ 1(HEAD 에서도 같음) 빼고 fails=0. SKYPORT gate_closed 는 마을 숲 칸에서 출발한 캡슐 쓸기가 늘어난 나무 줄기에 먼저 걸림 → 그 쓸기만 TreeTrunkCollisions 빼고 통과.
+- godot_regress: with_lods 의 --verbose "LOD n: … error x" 진행 줄을 오류로 셌다(GO issues=1227) → 그 줄만 빼고 셈. REGRESS OK.
+
+## GO 그래픽 먼저 ⑦ 물·모래밭 (2026-09-28, 같은 세션, "이어해")
+
+- 물(water_toon, GO 만 씀): ACES 전환 뒤 바다가 연한 하늘색 띠로 바래고 강을 낮게 보면 하얗게 떴다. 얕은 색 0.36,0.80,0.80 → 0.18,0.66,0.70 · 깊은 색 → 0.03,0.2,0.46 · 비스듬한 하늘빛 0.45 → 0.22 · 흰 물결 줄 가늘고 옅게 · 반사 roughness 0.12 → 0.22·specular 0.6 → 0.35 · 해 반짝임(잘게, 60m 넘으면 사라짐).
+- 모래밭(terrain_triplanar 모래 갈래): 바람 물결무늬(굽이치는 줄) + 드문드문 둥근 흰 조개 점.
+- probe_shots 에 c_sea·v_river.
