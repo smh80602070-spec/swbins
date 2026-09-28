@@ -4446,4 +4446,4 @@ SAGA-HANDOFF 열린 항목 "tower_ruin.glb(역참) 아이콘 굽기 — 여섯 �
 - 도구: go-ch-auto 에 `defend` 인자(그 장 첫 지키기 단계부터) 추가. `nofield` 를 주면 들판 전투가 꺼져 **지키기 물결이 아예 안 나온다**(지키기 단계엔 쓰지 말 것).
 - sw go-v6.31.0 · **실기 확인 대기**(기둥 타고 잔해 섬 착지·기관 프로펠러·드론 쫓기 길).
 - **다음 세션**: 순서 51(51-4 이야기 26장 · 궤도 조각의 그림자, 7부 끝 — 잔해 서쪽 바람 기둥으로 정거장 섬, 가면 그림자(정체는 8부)). 원본 `grep -n "^| 51-4 " saga-godot/PLAN.md` · `data/story.gd` ch26. 잔해 섬 서쪽 기둥은 25장 뒤 열림(`DRAFT_CH` 'ch25').
-- ⑲ 접은 순서 +50 (해시는 커밋 뒤 채움) story ch25·하늬·드론 · skyroute 잔해 섬 자리·기관·boot 목록 · story sky 단계 `draft`.
+- ⑲ 접은 순서 +50 `2e471cd0` story ch25·하늬·드론 · skyroute 잔해 섬 자리·기관·boot 목록 · story sky 단계 `draft`.
