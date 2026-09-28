@@ -717,6 +717,19 @@
     { "key": "cook.btn_eat_none", "value": "요리 없음" },
     { "key": "cook.done", "value": "{0} 완성" },
     { "key": "cook.auto_done", "value": "자동 조리 — {0}" },
-    { "key": "cook.needle", "value": "{0} — 바늘이 맛있는 칸에 올 때 불을 끈다" }
+    { "key": "cook.needle", "value": "{0} — 바늘이 맛있는 칸에 올 때 불을 끈다" },
+    { "key": "adv.reward", "value": "여정 등급 {0} — 금 {1} · 강화석 {2}{3}" },
+    { "key": "adv.knot", "value": "인연 매듭 {0}" },
+    { "key": "adv.world_up", "value": "천하 등급 {0} — 들판 적이 세지고 수호장 금이 늘어난다" },
+    { "key": "adv.why.lowered", "value": "이미 한 단계 낮췄다" },
+    { "key": "adv.why.zero", "value": "천하 등급 0 은 더 낮출 수 없다" },
+    { "key": "adv.why.fight", "value": "싸우는 중엔 바꿀 수 없다" },
+    { "key": "adv.why.not_lowered", "value": "낮춘 적이 없다" },
+    { "key": "adv.line", "value": "여정 등급 {0} · 천하 등급 {1}{2} — 적 체력 ×{3:0.00} · 공격 ×{4:0.00} · 수호장 금 ×{5:0.00}" },
+    { "key": "adv.lowered", "value": "(낮춤)" },
+    { "key": "adv.next", "value": "여정 등급 {0} 에 천하 등급 {1}" },
+    { "key": "adv.max", "value": "천하 등급 끝까지 올랐다" },
+    { "key": "adv.btn_restore", "value": "천하 등급 되돌리기 ({0} → {1})" },
+    { "key": "adv.btn_lower", "value": "천하 등급 한 단계 낮추기 ({0} → {1})" }
   ]
 }

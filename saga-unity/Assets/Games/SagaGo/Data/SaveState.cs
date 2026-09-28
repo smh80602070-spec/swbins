@@ -14,7 +14,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 23;
+        private const int SaveVersion = 24;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -115,6 +115,9 @@ namespace Saga.Go.Data
             public List<CookState.Entry> cookBag;
             public List<CookState.Entry> cookProf;
             public List<CookState.TimeEntry> cookGather;
+            // v24 — PLAN.md 109-14-7 천하 등급 한 단계 낮춤·보상을 받은 여정 등급.
+            public bool advLowered;
+            public int advPaid;
         }
 
         public static bool Save()
@@ -188,6 +191,8 @@ namespace Saga.Go.Data
                 cookBag = CookState.SnapshotBag(),
                 cookProf = CookState.SnapshotProf(),
                 cookGather = CookState.SnapshotGather(),
+                advLowered = AdventureState.Lowered,
+                advPaid = AdventureState.Paid,
             };
             return JsonUtility.ToJson(data);
         }
@@ -254,6 +259,7 @@ namespace Saga.Go.Data
             WeaponState.Restore(data.weapons, data.weaponEquip, data.weaponOre);
             ArtifactState.Restore(data.artifacts, data.artifactSeq, data.artifactPolish);
             CookState.Restore(data.cookBag, data.cookProf, data.cookGather);
+            AdventureState.RestoreSave(data.advLowered, data.advPaid); // 레벨 뒤 — 천하 등급이 바뀌면 들판 적이 다시 잰다
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();
@@ -482,6 +488,14 @@ namespace Saga.Go.Data
                 data.cookBag = new List<CookState.Entry>();
                 data.cookProf = new List<CookState.Entry>();
                 data.cookGather = new List<CookState.TimeEntry>();
+                return data;
+            }
+            if (fromVersion == 23)
+            {
+                // v23엔 여정 등급 보상이 없었다 — 지금 레벨까지 받은 걸로(지난 보상이 쏟아지지 않게), 낮춤 없음.
+                data.version = 24;
+                data.advLowered = false;
+                data.advPaid = data.level;
                 return data;
             }
             return null;

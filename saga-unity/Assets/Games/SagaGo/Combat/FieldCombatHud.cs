@@ -99,7 +99,8 @@ namespace Saga.Go.Combat
             // PLAN.md 107 ② — 점프(공중에서 한 번 더 = 활공, 등반 중 = 도약).
             JumpButton = EncounterUiKit.NewButton(t, GoLocalization.T("field.btn.jump", "점프"), new Vector2(1f, 0f), new Vector2(-450f, 60f), new Vector2(140f, 140f), null);
             JumpButton.onClick.AddListener(OnJump);
-            SightButton = EncounterUiKit.NewButton(t, GoLocalization.T("field.btn.sight", "시야"), new Vector2(1f, 0f), new Vector2(-450f, 225f), new Vector2(120f, 90f), null);
+            // 109-14-7 때 배치 점검 — 조우 창 가운데 단추(560 폭)와 안 겹치게 오른쪽으로(회피 단추와 5 띄움)
+            SightButton = EncounterUiKit.NewButton(t, GoLocalization.T("field.btn.sight", "시야"), new Vector2(1f, 0f), new Vector2(-405f, 225f), new Vector2(110f, 90f), null);
             SightButton.onClick.AddListener(OnSight);
         }
 

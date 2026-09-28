@@ -257,6 +257,18 @@
 1	common	TitleSettings.cs	판마다 다름	Varies by game		
 1	common	TitleSettings.cs	켜짐	On		
 1	common	TitleSettings.cs	꺼짐	Off		
+2	go	adv.btn_lower	천하 등급 한 단계 낮추기 ({0} → {1})	Lower World Rank ({0} → {1})		
+2	go	adv.btn_restore	천하 등급 되돌리기 ({0} → {1})	Restore World Rank ({0} → {1})		
+2	go	adv.knot	인연 매듭 {0}	Bond Knot {0}		
+2	go	adv.lowered	(낮춤)	(lowered)		
+2	go	adv.max	천하 등급 끝까지 올랐다	World Rank is at its peak		
+2	go	adv.next	여정 등급 {0} 에 천하 등급 {1}	World Rank {1} at Journey Rank {0}		
+2	go	adv.reward	여정 등급 {0} — 금 {1} · 강화석 {2}{3}	Journey Rank {0} — Gold {1} · Ore {2}{3}		
+2	go	adv.why.fight	싸우는 중엔 바꿀 수 없다	Cannot change during a fight		
+2	go	adv.why.lowered	이미 한 단계 낮췄다	Already lowered one step		
+2	go	adv.why.not_lowered	낮춘 적이 없다	Not lowered		
+2	go	adv.why.zero	천하 등급 0 은 더 낮출 수 없다	World Rank 0 cannot go lower		
+2	go	adv.world_up	천하 등급 {0} — 들판 적이 세지고 수호장 금이 늘어난다	World Rank {0} — field foes grow stronger and guardian gold rises		
 2	go	artifact.btn_off	빼기	Remove		
 2	go	artifact.btn_salvage	안 낀 ★4 분해	Salvage unworn ★4		
 2	go	artifact.btn_swap	바꾸기	Switch		
@@ -1853,6 +1865,7 @@
 2	realm	war.tactic_fire_ok	🔥 화공 성공 —	🔥 Fire attack succeeded —		
 2	realm	war.tactic_hint_plain	평야: 기병 돌격(무력 80+)	Plain: cavalry charge (Might 80+)		
 2	realm	war.tactic_hint_river	강: 화공(지력 60+)	River: fire attack (Wisdom 60+)		
+3	go	adv.line	여정 등급 {0} · 천하 등급 {1}{2} — 적 체력 ×{3:0.00} · 공격 ×{4:0.00} · 수호장 금 ×{5:0.00}	Journey Rank {0} · World Rank {1}{2} — foe HP ×{3:0.00} · ATK ×{4:0.00} · guardian gold ×{5:0.00}		
 3	go	event.animal_flee	동물이 놀라 달아난다.	The animal got startled and ran off.		
 3	go	event.beacon_hint	 아직 못 찾은 명소가 {0}곳 남았다.	 {0} landmark(s) still undiscovered.		
 3	go	event.beacon_hint_done	 둘러볼 명소를 전부 찾았다.	 You have found every landmark.		

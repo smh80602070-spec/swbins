@@ -296,6 +296,8 @@ namespace Saga.Go.Combat
             Hp = MaxHp;
             ShieldHp = ShieldMax;
             ShieldLayers = TwoLayered ? 2 : ShieldMax > 0f ? 1 : 0;
+            WorldLevel = 0;
+            ApplyWorld(AdventureState.WorldLevel); // 109-14-7 천하 등급
             transform.position = Grounded(Home);
             _wanderTarget = Home;
             _timer = UnityEngine.Random.Range(0.5f, 3f);
@@ -306,6 +308,32 @@ namespace Saga.Go.Combat
         }
 
         private void OnEnable() { if (!_all.Contains(this)) _all.Add(this); }
+
+        // ---- 109-14-7 천하 등급 — 체력·방패 ×(1 + 0.35w) · 공격 ×(1 + 0.22w), 지역 위험 배율에 곱한다 ----
+        public int WorldLevel { get; private set; }
+
+        static FieldEnemy() { AdventureState.WorldChanged += (from, to) => RescaleAll(); }
+
+        /// <summary>천하 등급 w 로 다시 잰다(지금 몫에서 비율로 — 남은 체력 비율은 그대로).</summary>
+        public void ApplyWorld(int w)
+        {
+            w = GoAdventure.Clamp(w);
+            if (w == WorldLevel) return;
+            float kh = GoAdventure.HpMul(w) / GoAdventure.HpMul(WorldLevel), ka = GoAdventure.AtkMul(w) / GoAdventure.AtkMul(WorldLevel);
+            MaxHp *= kh; Hp *= kh;
+            ShieldMax *= kh; ShieldHp *= kh;
+            Atk *= ka;
+            WorldLevel = w;
+        }
+
+        public static void RescaleAll()
+        {
+            int w = AdventureState.WorldLevel;
+            foreach (var e in _all.ToArray()) if (e != null) e.ApplyWorld(w);
+        }
+
+        /// <summary>수호장 금 — 천하 등급 전리품 배율.</summary>
+        public int GuardianGoldNow => Mathf.RoundToInt(GuardianGold * GoAdventure.LootMul(WorldLevel));
         private void OnDisable() => _all.Remove(this);
 
         // ---- 모양 -------------------------------------------------------------
@@ -1045,10 +1073,10 @@ namespace Saga.Go.Combat
             if (IsGuardian)
             {
                 _timer = float.MaxValue; // 다시 안 선다(107-7).
-                GoldState.Add(GuardianGold);
+                GoldState.Add(GuardianGoldNow); // 109-14-7 천하 등급 전리품 배율
                 GuardianState.MarkDefeated();
                 Saga.Go.UI.DialogueLabel.Instance?.Show(string.Format(
-                    GoLocalization.T("field.guard_slain", "망루 수호장 토벌! 금 {0}냥 · 경험치 {1}"), GuardianGold, ExpReward), 4f);
+                    GoLocalization.T("field.guard_slain", "망루 수호장 토벌! 금 {0}냥 · 경험치 {1}"), GuardianGoldNow, ExpReward), 4f);
             }
             if (IsElemental && ShieldMax > 0f && !IsGuardian && !IsHero)
             {
@@ -1141,6 +1169,9 @@ namespace Saga.Go.Combat
             RefreshElementFx();
             RefreshHeadUi();
         }
+
+        /// <summary>진단용 — 체력을 곧장 맞춘다(109-14-7 다시 재도 비율이 남는지).</summary>
+        public void SetHpForTest(float value) => Hp = Mathf.Clamp(value, 1f, MaxHp);
 
         /// <summary>진단용 — 수호장 "처음 만남" 여부를 정한다(false 면 다음 발견에 등장 컷).</summary>
         public void SetEngagedForTest(bool engaged) => Engaged = engaged;

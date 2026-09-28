@@ -59,6 +59,11 @@ namespace Saga.Go.UI
         public string InfoText => _info.text;
         /// <summary>108 — 지도 위쪽 "지금 선 지역" 두 줄.</summary>
         public string RegionInfoText => _regionInfo.text;
+        // 109-14-7 여정·천하 등급 줄 + 낮추기/되돌리기 단추
+        public string AdventureText => _advText.text;
+        public Button WorldLevelButton => _advButton;
+        private TextMeshProUGUI _advText;
+        private Button _advButton;
         /// <summary>진단용 — 지도 텍스처에서 칸 가운데 색.</summary>
         public Color TileColorOnMap(int gx, int gy) => _tex.GetPixel(gx * TilePx + TilePx / 2, (TestMapData.RowCount - 1 - gy) * TilePx + TilePx / 2);
 
@@ -75,6 +80,7 @@ namespace Saga.Go.UI
         private void OnDestroy()
         {
             WorldMapState.Changed -= OnChanged;
+            AdventureState.Changed -= OnChanged;
             if (Instance == this) Instance = null;
         }
 
@@ -110,8 +116,14 @@ namespace Saga.Go.UI
             var title = EncounterUiKit.NewText(_panel.transform, GoLocalization.T("map.title", "지도"), new Vector2(0.5f, 1f), new Vector2(ColX, -60f), new Vector2(620f, 60f), 36);
             title.fontStyle = FontStyles.Bold;
             _info = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX, 150f), new Vector2(620f, 120f), 22);
-            _regionInfo = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(ColX, -150f), new Vector2(620f, 380f), 22);
+            _regionInfo = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(ColX, -150f), new Vector2(620f, 330f), 22);
             _regionInfo.raycastTarget = false;
+            _advText = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX, 345f), new Vector2(620f, 64f), 19);
+            _advText.raycastTarget = false;
+            _advButton = EncounterUiKit.NewButton(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX, 285f), new Vector2(460f, 52f), null);
+            _advButton.GetComponentInChildren<TextMeshProUGUI>().fontSize = 18;
+            _advButton.onClick.AddListener(ToggleWorldLevel);
+            AdventureState.Changed += OnChanged;
 
             foreach (var r in GoWorldMap.Regions)
             {
@@ -227,6 +239,7 @@ namespace Saga.Go.UI
                 _peakButtons[i].GetComponent<Image>().color = found ? new Color(0.8f, 0.6f, 0.2f, 0.35f) : new Color(1f, 1f, 1f, 0.05f);
                 _peakButtons[i].gameObject.SetActive(found || WorldMapState.IsVisited(p.RegionId));
             }
+            RefreshAdventure();
             var player = FieldCombat.Instance;
             _regionInfo.text = RegionInfo(player != null ? GoWorldMap.RegionAt(player.transform.position) : _lastRegion ?? "village");
             _info.text = string.Format(GoLocalization.T("map.info", "푸른 ◆ 역참을 누르면 순간이동 · 켠 역참 {0}/{1}{2}"),
@@ -234,6 +247,39 @@ namespace Saga.Go.UI
                 WorldMapState.Revealed ? "" : GoLocalization.T("map.hint", " · 옛 망루 꼭대기에 오르면 온 땅이 밝혀진다"))
                 + string.Format(GoLocalization.T("map.chests", " · 보물 상자 {0}/{1}"), GoTreasure.OpenedCount, GoTreasure.Chests.Length)
                 + string.Format(GoLocalization.T("map.peaks", " · 오른 정상 ▲ {0}/{1}"), WorldMapState.PeakCount, GoWorldMap.Peaks.Length);
+        }
+
+        /// <summary>109-14-7 — 들판 적이 쫓거나 예고하는 중이면 싸우는 중.</summary>
+        public static bool Fighting()
+        {
+            foreach (var e in FieldEnemy.All)
+                if (e.Alive && (e.CurrentState == FieldEnemy.State.Chase || e.CurrentState == FieldEnemy.State.Telegraph)) return true;
+            return false;
+        }
+
+        private void ToggleWorldLevel()
+        {
+            bool ok = AdventureState.Lowered ? AdventureState.Restore(Fighting()) : AdventureState.Lower(Fighting());
+            if (!ok)
+            {
+                string why;
+                if (AdventureState.Lowered) AdventureState.CanRestore(Fighting(), out why); else AdventureState.CanLower(Fighting(), out why);
+                Saga.Go.UI.DialogueLabel.Instance?.Show(why, 2.5f);
+            }
+            OnChanged();
+        }
+
+        private void RefreshAdventure()
+        {
+            if (_advText == null) return;
+            int ar = AdventureState.Rank, n = AdventureState.Natural, w = AdventureState.WorldLevel, nx = GoAdventure.NextAt(ar);
+            _advText.text = string.Format(GoLocalization.T("adv.line", "여정 등급 {0} · 천하 등급 {1}{2} — 적 체력 ×{3:0.00} · 공격 ×{4:0.00} · 수호장 금 ×{5:0.00}"),
+                    ar, w, AdventureState.Lowered ? GoLocalization.T("adv.lowered", "(낮춤)") : "", GoAdventure.HpMul(w), GoAdventure.AtkMul(w), GoAdventure.LootMul(w))
+                + "\n" + (nx > 0 ? string.Format(GoLocalization.T("adv.next", "여정 등급 {0} 에 천하 등급 {1}"), nx, n + 1) : GoLocalization.T("adv.max", "천하 등급 끝까지 올랐다"));
+            _advButton.gameObject.SetActive(AdventureState.Lowered || n > 0);
+            _advButton.GetComponentInChildren<TextMeshProUGUI>().text = AdventureState.Lowered
+                ? string.Format(GoLocalization.T("adv.btn_restore", "천하 등급 되돌리기 ({0} → {1})"), w, n)
+                : string.Format(GoLocalization.T("adv.btn_lower", "천하 등급 한 단계 낮추기 ({0} → {1})"), w, Mathf.Max(0, w - 1));
         }
 
         /// <summary>107-8 — 사명이 있는 지역 이름 밑에 "사명 n/3" 또는 "평정".</summary>

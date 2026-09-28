@@ -717,6 +717,19 @@
     { "key": "cook.btn_eat_none", "value": "No dish" },
     { "key": "cook.done", "value": "{0} is ready" },
     { "key": "cook.auto_done", "value": "Auto-cooked — {0}" },
-    { "key": "cook.needle", "value": "{0} — take it off the heat when the needle is in the tasty zone" }
+    { "key": "cook.needle", "value": "{0} — take it off the heat when the needle is in the tasty zone" },
+    { "key": "adv.reward", "value": "Journey Rank {0} — Gold {1} · Ore {2}{3}" },
+    { "key": "adv.knot", "value": "Bond Knot {0}" },
+    { "key": "adv.world_up", "value": "World Rank {0} — field foes grow stronger and guardian gold rises" },
+    { "key": "adv.why.lowered", "value": "Already lowered one step" },
+    { "key": "adv.why.zero", "value": "World Rank 0 cannot go lower" },
+    { "key": "adv.why.fight", "value": "Cannot change during a fight" },
+    { "key": "adv.why.not_lowered", "value": "Not lowered" },
+    { "key": "adv.line", "value": "Journey Rank {0} · World Rank {1}{2} — foe HP ×{3:0.00} · ATK ×{4:0.00} · guardian gold ×{5:0.00}" },
+    { "key": "adv.lowered", "value": "(lowered)" },
+    { "key": "adv.next", "value": "World Rank {1} at Journey Rank {0}" },
+    { "key": "adv.max", "value": "World Rank is at its peak" },
+    { "key": "adv.btn_restore", "value": "Restore World Rank ({0} → {1})" },
+    { "key": "adv.btn_lower", "value": "Lower World Rank ({0} → {1})" }
   ]
 }

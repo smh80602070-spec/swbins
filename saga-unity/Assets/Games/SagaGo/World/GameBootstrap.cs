@@ -60,6 +60,9 @@ namespace Saga.Go.World
         private void OnLeveledUp(int newLevel)
         {
             _cameraRig?.PlayLevelUpCut();
+            // 109-14-7 여정 등급 보상·천하 등급
+            var adv = AdventureState.OnLevelUp(newLevel);
+            if (adv.Count > 0) Saga.Go.UI.DialogueLabel.Instance?.Show(string.Join("\n", adv), 4f);
 
             // 이미 카드가 떠 있으면(짧은 시간에 여러 번 레벨업) 새로 안 띄운다 —
             // 먼저 뜬 카드의 선택이 끝난 뒤 다음 레벨업이 와야 다시 뜬다.
