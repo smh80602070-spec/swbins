@@ -730,6 +730,13 @@
     { "key": "adv.next", "value": "World Rank {1} at Journey Rank {0}" },
     { "key": "adv.max", "value": "World Rank is at its peak" },
     { "key": "adv.btn_restore", "value": "Restore World Rank ({0} → {1})" },
-    { "key": "adv.btn_lower", "value": "Lower World Rank ({0} → {1})" }
+    { "key": "adv.btn_lower", "value": "Lower World Rank ({0} → {1})" },
+    { "key": "task.field_kill", "value": "Defeat field foes {0}/{1}" },
+    { "key": "task.reaction", "value": "Trigger elemental reactions {0}/{1}" },
+    { "key": "task.gather", "value": "Gather forage {0}/{1}" },
+    { "key": "task.cook", "value": "Cook dishes {0}/{1}" },
+    { "key": "task.done", "value": "Task done — {0} · Gold +{1} · EXP +{2}{3}" },
+    { "key": "task.bonus", "value": "Today's tasks {0}/{0} wrapped up — Gold +{1} · Ore +{2}{3}" },
+    { "key": "task.bonus_ready", "value": "Today's tasks done — visit a waypoint for the wrap-up reward" }
   ]
 }

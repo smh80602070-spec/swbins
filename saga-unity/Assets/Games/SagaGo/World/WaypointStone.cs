@@ -81,6 +81,20 @@ namespace Saga.Go.World
             var fc = FieldCombat.Instance;
             if (fc == null) return;
             TryActivateFrom(fc.transform.position);
+            TryDailyBonus(fc.transform.position);
+        }
+
+        /// <summary>109-14-8 — 넷을 다 한 날 역참 7m 안에 들르면 일과 마무리 보상(하루 한 번). 받았으면 true. 진단도 부른다.</summary>
+        public bool TryDailyBonus(Vector3 playerPos)
+        {
+            Vector3 d = playerPos - transform.position;
+            d.y = 0f;
+            if (d.magnitude > GoWorldMap.WaypointActivateRadius) return false;
+            string got = DailyTaskState.TryClaimBonus();
+            if (got == null) return false;
+            FieldRingFx.Spawn(transform.position, 8f, new Color(1f, 0.85f, 0.4f), 0.9f);
+            if (DialogueLabel.Instance != null) DialogueLabel.Instance.Show(got, 4f);
+            return true;
         }
 
         /// <summary>그 자리가 반경 안이면 활성화(처음이면 true). 진단도 부른다.</summary>

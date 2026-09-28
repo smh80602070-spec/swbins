@@ -51,12 +51,16 @@ namespace Saga.Go.UI
 
             // PLAN.md 101-2 ⑥ "인연" — 인연 등급이 오를 때마다 짧은 토스트.
             BondState.LeveledUp += OnBondLeveledUp;
+            DailyTaskState.TaskCompleted += OnTaskCompleted; // 109-14-8 일과 하나 보상
         }
 
         private void OnDestroy()
         {
             BondState.LeveledUp -= OnBondLeveledUp;
+            DailyTaskState.TaskCompleted -= OnTaskCompleted;
         }
+
+        private void OnTaskCompleted(string text) => DialogueLabel.Instance?.Show(text, 3.5f);
 
         private void OnBondLeveledUp(string heroId, int level)
         {

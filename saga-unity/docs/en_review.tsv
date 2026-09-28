@@ -33,7 +33,14 @@
 1	go	state.on	켜짐	On		
 1	go	task.all_done	오늘의 일과 완료 (도장 {0})	Today's tasks done (stamps {0})		
 1	go	task.bandit_win	도적 조우 승리 {0}/{1}	Win bandit encounters {0}/{1}		
+1	go	task.bonus	오늘 일과 {0}/{0} 마무리 — 금 +{1} · 강화석 +{2}{3}	Today's tasks {0}/{0} wrapped up — Gold +{1} · Ore +{2}{3}		
+1	go	task.bonus_ready	오늘 일과 끝 — 역참에 들르면 마무리 보상	Today's tasks done — visit a waypoint for the wrap-up reward		
 1	go	task.cairn_wish	성황당 기원 {0}/{1}	Pray at the shrine cairn {0}/{1}		
+1	go	task.cook	요리하기 {0}/{1}	Cook dishes {0}/{1}		
+1	go	task.done	일과 완료 — {0} · 금 +{1} · 경험 +{2}{3}	Task done — {0} · Gold +{1} · EXP +{2}{3}		
+1	go	task.field_kill	들판의 적 쓰러뜨리기 {0}/{1}	Defeat field foes {0}/{1}		
+1	go	task.gather	채집물 줍기 {0}/{1}	Gather forage {0}/{1}		
+1	go	task.reaction	원소 반응 일으키기 {0}/{1}	Trigger elemental reactions {0}/{1}		
 1	go	task.walk	걷기 {0}/{1}m	Walk {0}/{1}m		
 1	go	task.week	일과 도장 {0}/{1}(다음 보상까지 {2})	Task stamps {0}/{1} ({2} to the next reward)		
 1	go	task.wolf_win	희귀 늑대 토벌 {0}/{1}	Hunt the rare wolf {0}/{1}		

@@ -784,6 +784,7 @@ namespace Saga.Go.Combat
 
             if (reaction != GoReaction.None)
             {
+                DailyTaskState.ReportProgress(DailyTaskState.Kind.Reaction, 1); // 109-14-8 일일 의뢰 — 원소 반응
                 FieldDamageText.Spawn(transform.position + Vector3.up * (BodyHeight + 1.8f),
                     GoElements.NameOf(reaction), GoElements.ColorOf(reaction), 1.3f);
             }
@@ -1064,6 +1065,7 @@ namespace Saga.Go.Combat
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
             PlayerStats.AddExp(ExpReward);
+            DailyTaskState.ReportProgress(DailyTaskState.Kind.FieldKill, 1); // 109-14-8 일일 의뢰 — 들판 적
             if (EnemyKind == Kind.Bandit && !IsHero)
             {
                 // 109-14-6 짐승 고기 — 14-1b 짐승(바위곰)이 오기 전까지 산적 봇짐에서

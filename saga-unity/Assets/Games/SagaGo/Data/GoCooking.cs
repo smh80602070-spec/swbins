@@ -337,6 +337,7 @@ namespace Saga.Go.Data
             if (!Available(n)) return false;
             _gather[n.Id] = Now;
             Add(n.Item, 1);
+            DailyTaskState.ReportProgress(DailyTaskState.Kind.Gather, 1); // 109-14-8
             return true;
         }
 
@@ -375,6 +376,7 @@ namespace Saga.Go.Data
             _bag[id] = Count(id) + 1;
             _prof[r.Id] = Mathf.Min(99, Prof(r.Id) + 1);
             Touch();
+            DailyTaskState.ReportProgress(DailyTaskState.Kind.Cook, 1); // 109-14-8
             return id;
         }
 

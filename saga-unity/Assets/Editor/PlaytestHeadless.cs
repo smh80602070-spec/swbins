@@ -114,6 +114,7 @@ namespace Saga.EditorTools
                 // 109-14-7 — 옛 진단들은 적 체력·금 값을 잰다: 천하 0·여정 보상 없이(여정 진단만 켜 본다)
                 Saga.Go.Data.AdventureState.OffForTest = true;
                 Saga.Go.Data.AdventureState.Rescale();
+                Saga.Go.Data.DailyTaskState.OffForTest = true; // 109-14-8 — 날짜마다 다른 일과 보상이 옛 진단 값에 끼지 않게(일과 진단만 켠다)
                 var clip = AssetDatabase.LoadAssetAtPath<AudioClip>("Assets/Art/Audio/Kenney_RPGSounds/chop.ogg");
                 GoAudio.PlaySfx(clip);
                 CheckDebugHud();
@@ -170,6 +171,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoArtifacts.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-5b 보패(보패·연마석·동행·돈·세이브 되돌림)
                 if (!PlaytestGoCooking.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-6 채집·요리(요리·동행·세이브·자리 되돌림)
                 if (!PlaytestGoAdventure.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-7 여정·천하 등급(레벨·돈·세이브 되돌림)
+                if (!PlaytestGoDaily.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-8 일일 의뢰(일과·돈·세이브 되돌림)
                 if (!PlaytestGoPeaks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-9 정상 발견·순간이동·건물 가림 카메라(기록·돈·세이브 되돌림)
                 // 반드시 마지막 — DailyTaskState 진단이 SaveState.TryLoad()로
                 // 세이브 파일을 v9 모양으로 잠깐 바꿔치기해 로드하는데, 이건
@@ -1311,9 +1313,9 @@ namespace Saga.EditorTools
                     if (firstSelected[i] != secondSelected[i]) { sameSelection = false; break; }
                 }
             }
-            if (!sameSelection || firstSelected.Length != 3)
+            if (!sameSelection || firstSelected.Length != 4) // 109-14-8 갈래 넷에서 하나씩
             {
-                Debug.LogError($"[PlaytestHeadless] 일과 — 날짜 해시가 비결정적이거나 하루 3개가 아님(count={firstSelected.Length}, 결정적={sameSelection})");
+                Debug.LogError($"[PlaytestHeadless] 일과 — 날짜 해시가 비결정적이거나 하루 4개가 아님(count={firstSelected.Length}, 결정적={sameSelection})");
                 _hadError = true;
                 return;
             }

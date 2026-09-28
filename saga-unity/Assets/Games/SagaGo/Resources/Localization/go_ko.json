@@ -730,6 +730,13 @@
     { "key": "adv.next", "value": "여정 등급 {0} 에 천하 등급 {1}" },
     { "key": "adv.max", "value": "천하 등급 끝까지 올랐다" },
     { "key": "adv.btn_restore", "value": "천하 등급 되돌리기 ({0} → {1})" },
-    { "key": "adv.btn_lower", "value": "천하 등급 한 단계 낮추기 ({0} → {1})" }
+    { "key": "adv.btn_lower", "value": "천하 등급 한 단계 낮추기 ({0} → {1})" },
+    { "key": "task.field_kill", "value": "들판의 적 쓰러뜨리기 {0}/{1}" },
+    { "key": "task.reaction", "value": "원소 반응 일으키기 {0}/{1}" },
+    { "key": "task.gather", "value": "채집물 줍기 {0}/{1}" },
+    { "key": "task.cook", "value": "요리하기 {0}/{1}" },
+    { "key": "task.done", "value": "일과 완료 — {0} · 금 +{1} · 경험 +{2}{3}" },
+    { "key": "task.bonus", "value": "오늘 일과 {0}/{0} 마무리 — 금 +{1} · 강화석 +{2}{3}" },
+    { "key": "task.bonus_ready", "value": "오늘 일과 끝 — 역참에 들르면 마무리 보상" }
   ]
 }

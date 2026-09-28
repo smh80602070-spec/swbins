@@ -191,10 +191,10 @@ namespace Saga.EditorTools
             TalentState.Restore(new List<TalentState.Entry> { new TalentState.Entry { id = id, n = 5, s = 3, b = 2, con = 2 } }, new[] { 1, 2, 3, 4, 0 });
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":24") || !json.Contains("\"talents\":[") || !json.Contains("\"talentMats\":[1,2,3,4,0]")) Fail("세이브 v20 에 무예가 없다");
+            if (!json.Contains("\"version\":25") || !json.Contains("\"talents\":[") || !json.Contains("\"talentMats\":[1,2,3,4,0]")) Fail("세이브 v20 에 무예가 없다");
             TalentState.ResetForTest();
             if (!SaveState.TryLoad() || TalentState.BaseLevel(id, GoTalent.Kind.Normal) != 5 || TalentState.Con(id) != 2 || TalentState.Count(GoTalent.Mat.Knot) != 4) Fail("v20 왕복 뒤 무예가 달라짐");
-            string v19 = Regex.Replace(json.Replace("\"version\":24", "\"version\":19"), ",\"talents\":\\[[^\\]]*\\],\"talentMats\":\\[[^\\]]*\\]", "");
+            string v19 = Regex.Replace(json.Replace("\"version\":25", "\"version\":19"), ",\"talents\":\\[[^\\]]*\\],\"talentMats\":\\[[^\\]]*\\]", "");
             if (v19.Contains("talents")) { Fail("v19 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v19);
             if (!SaveState.TryLoad()) { Fail("v19 파일 TryLoad 실패"); return; }

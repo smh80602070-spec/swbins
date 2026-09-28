@@ -14,7 +14,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 24;
+        private const int SaveVersion = 25;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -118,6 +118,8 @@ namespace Saga.Go.Data
             // v24 — PLAN.md 109-14-7 천하 등급 한 단계 낮춤·보상을 받은 여정 등급.
             public bool advLowered;
             public int advPaid;
+            // v25 — PLAN.md 109-14-8 오늘 일과 마무리 보상을 받았나(날짜는 dailyDate).
+            public bool dailyBonus;
         }
 
         public static bool Save()
@@ -193,6 +195,7 @@ namespace Saga.Go.Data
                 cookGather = CookState.SnapshotGather(),
                 advLowered = AdventureState.Lowered,
                 advPaid = AdventureState.Paid,
+                dailyBonus = DailyTaskState.BonusClaimed,
             };
             return JsonUtility.ToJson(data);
         }
@@ -243,7 +246,7 @@ namespace Saga.Go.Data
             ShopState.Restore(data.merchantSold);
             GatherState.Restore(data.gatheredSpots);
             WorldEventState.Restore(data.worldFlags);
-            DailyTaskState.Restore(data.dailyDate, data.dailyProgress, data.dailyDone, data.dailyStampGranted, data.dailyStamps);
+            DailyTaskState.Restore(data.dailyDate, data.dailyProgress, data.dailyDone, data.dailyStampGranted, data.dailyStamps, data.dailyBonus);
             PerkState.Restore(data.perkIds ?? new List<string>());
             BondState.Restore(PartyState.MemberIds, data.bondWalkedM, data.bondWins);
             DropState.Restore(data.drops);
@@ -496,6 +499,13 @@ namespace Saga.Go.Data
                 data.version = 24;
                 data.advLowered = false;
                 data.advPaid = data.level;
+                return data;
+            }
+            if (fromVersion == 24)
+            {
+                // v24엔 마무리 보상이 없었다 — 안 받은 것으로. 하루 셋이던 진행은 길이가 달라 Restore 가 그날만 비운다.
+                data.version = 25;
+                data.dailyBonus = false;
                 return data;
             }
             return null;
