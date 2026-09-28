@@ -38,6 +38,7 @@ const SHOTS := [
 	["v_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, ""],
 	["v_station_boards", "village", "v_station", Vector3(0, 0, 9), "v_station", -22.0, 10.0, ""],
 	["v_people_lineup", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 7.0, "lineup"],
+	["p_faces", "village", "v_statue", Vector3(-14, 0, 12), "lineup", 12.0, 2.0, "lineup_faces"],
 	["v_cliff_n", "village", Vector2(3.5, 4.4), Vector3.ZERO, Vector2(3.5, 2.6), -4.0, 8.0, ""],
 	["v_cliff_s", "village", Vector2(3.0, 6.4), Vector3.ZERO, Vector2(3.0, 8.3), -4.0, 8.0, ""],
 	["v_cliff_close", "village", Vector2(3.5, 3.45), Vector3.ZERO, Vector2(3.5, 2.6), -2.0, 5.0, ""],
@@ -199,7 +200,7 @@ func _pos_of(region: String, v: Variant) -> Vector3:
 	return p
 
 func _place(s: Array) -> void:
-	if String(s[7]) == "lineup":
+	if String(s[7]).begins_with("lineup"):
 		_build_lineup(_pos_of(String(s[1]), s[2]) + (s[3] as Vector3))
 	elif String(s[7]).begins_with("beast") or String(s[7]) == "pets":
 		_build_beasts(_pos_of(String(s[1]), s[2]) + (s[3] as Vector3), String(s[7]))
@@ -234,6 +235,8 @@ func _act(a: String) -> void:
 				_swing_enemy.set_physics_process(false)
 				_swing_enemy.set_process(false)
 				_p.global_position = _swing_enemy.global_position + Vector3(1.4, 0.4, 0.9)
+		"lineup_faces":
+			_p.visible = false # 얼굴 가까이 — 플레이어가 앞을 가리지 않게
 		"beasts", "beasts_a", "beasts_b", "pets":
 			_p.visible = false # 줄 한가운데를 가린다
 		_ when a.begins_with("beast:"):

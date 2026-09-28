@@ -9,6 +9,11 @@ extends RefCounted
 
 const CEL_SHADER := preload("res://saga_core/shaders/cel_toon.gdshader")
 const OUTLINE_SHADER := preload("res://saga_core/shaders/cel_outline.gdshader")
+const ANIME_EYE := preload("res://saga_core/anime_eye.gd")
+
+## 공방 몸의 눈 재질 이름("eye") — 실사 눈 텍스처 위에 셀 화풍 눈을 다시 그려 얹는다(anime_eye.gd, 홍채색은 몸 파일마다 하나).
+const EYE_MATERIAL := "eye"
+static var _iris_seed := ""
 
 ## root 아래 모든 MeshInstance3D의 서피스 재질을 cel_toon 셰이더로 덮는다.
 ## 반환값은 적용된 서피스 개수.
@@ -52,6 +57,7 @@ const FACE_BAKE_BY_GLB := {
 
 static func apply_to(root: Node) -> int:
 	var baked_face: Texture2D = FACE_BAKE_BY_GLB.get(root.scene_file_path)
+	_iris_seed = root.scene_file_path
 	setup_shadow_proxy(root)
 	var applied := 0
 	for mesh_instance in _find_mesh_instances(root):
@@ -119,6 +125,19 @@ static func _find_mesh_instances(node: Node) -> Array[MeshInstance3D]:
 		result.append_array(_find_mesh_instances(child))
 	return result
 
+## 2026-09-30 — 옷 기준 1.5cm 두께 외곽선이 얼굴에선 코·턱·앞머리 위로 검은 파편으로 솟았다(face_view 촬영). 얼굴·머리·눈은 훨씬 얇게, 눈·눈썹은 없이.
+## 살갗은 짙은 살색으로(검정이 아니라 원신처럼 따뜻한 그림자 선).
+static func _tune_outline(outline_mat: ShaderMaterial, mesh_name: String, mat_name: String) -> void:
+	var m := mat_name.to_lower()
+	if mesh_name.begins_with("Eye"):
+		outline_mat.set_shader_parameter("thickness", 0.0)
+	elif m.contains("skin"):
+		outline_mat.set_shader_parameter("thickness", 0.0028)
+		outline_mat.set_shader_parameter("outline_color", Color(0.2, 0.09, 0.07))
+	elif m.contains("hair"):
+		## 수염·짧은 머리는 메시가 잘게 갈라져 두꺼운 선이 파편으로 튄다(마을 남자 촬영).
+		outline_mat.set_shader_parameter("thickness", 0.0025 if mesh_name.to_lower().contains("beard") else 0.005)
+
 static func _apply_one(mesh_instance: MeshInstance3D) -> int:
 	var mesh := mesh_instance.mesh
 	if mesh == null:
@@ -130,12 +149,16 @@ static func _apply_one(mesh_instance: MeshInstance3D) -> int:
 			continue
 		var shader_mat := ShaderMaterial.new()
 		shader_mat.shader = CEL_SHADER
-		shader_mat.set_shader_parameter("albedo_texture", (original as BaseMaterial3D).albedo_texture)
+		var albedo_tex: Texture2D = (original as BaseMaterial3D).albedo_texture
+		if original.resource_name == EYE_MATERIAL:
+			albedo_tex = ANIME_EYE.texture_for(albedo_tex, ANIME_EYE.iris_for(_iris_seed))
+		shader_mat.set_shader_parameter("albedo_texture", albedo_tex)
 		shader_mat.set_shader_parameter("albedo_tint", (original as BaseMaterial3D).albedo_color)
 		## PLAN 102-3 아웃라인 — 뒤집힌 헐 셰이더를 next_pass로 얹는다.
 		## Player·NPC(이 함수를 부르는 곳)에만 자연히 걸린다.
 		var outline_mat := ShaderMaterial.new()
 		outline_mat.shader = OUTLINE_SHADER
+		_tune_outline(outline_mat, String(mesh_instance.name), original.resource_name)
 		shader_mat.next_pass = outline_mat
 		mesh_instance.set_surface_override_material(surface_index, shader_mat)
 		count += 1

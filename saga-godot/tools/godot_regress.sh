@@ -30,7 +30,8 @@ for idx in "${!names[@]}"; do
     # 09-28 — ImporterMesh.generate_lods(glb_utils.with_lods)가 --verbose 로 찍는 "LOD n: … error x (step error y)" 진행 줄은 오류가 아니다(오차 수치).
     n=$(grep -iE "error|warn|missing|invalid|cannot" "$log" | grep -vcE "^[[:space:]]*LOD (stop|[0-9]+):")
     issues=$((issues + n))
-    s=$(md5sum "$log" | cut -c1-8)
+    # 09-30 — 압축 텍스처를 푸는 "bcdec: … took N ms" 줄은 걸린 시간(0/1ms)이 매번 달라 해시에서 뺀다(anime_eye 눈 텍스처).
+    s=$(grep -v "^bcdec:" "$log" | md5sum | cut -c1-8)
     sums="${sums}${sums:+ }$s"
   done
   distinct=$(echo "$sums" | tr ' ' '\n' | sed '/^$/d' | sort -u | wc -l)
