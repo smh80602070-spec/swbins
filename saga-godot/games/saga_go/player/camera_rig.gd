@@ -31,6 +31,10 @@ var _drag_confirmed := false
 ## 저절로 카메라까지 전해진다.
 var _shake_amp_m := 0.0
 var _shake_until_msec := 0
+## 2026-09-29 — 흔들림이 끝나면 position 을 Vector3.ZERO 로 돌려 리그가 플레이어 허리(씬에 적힌 +0.85m)에서 발밑으로 떨어졌다.
+## 첫 피격 뒤로 카메라 끈이 발밑에서 출발해 울퉁불퉁한 땅에 걸리면 카메라가 발끝까지 당겨졌다(GO 창 모드 x_swing, 끈 길이 0.02m).
+## 쉼 자리를 기억해 그 둘레로 흔들고 그리로 돌아간다.
+var _rest_pos := Vector3.ZERO
 
 ## PLAN 106장 ⑧ — 원신 PC 시점. 마우스를 창에 가둬 두고 움직이기만 하면 돈다(끌 필요
 ## 없음). Alt 를 누르는 동안·Esc 로 푼 뒤·선택지 창(그룹 "ui_modal")·옛 결투
@@ -109,6 +113,7 @@ func _aim_settled() -> bool:
 	return not aiming and spring_arm.position == Vector3.ZERO
 
 func _ready() -> void:
+	_rest_pos = position
 	spring_arm.spring_length = DEFAULT_ZOOM
 	rotation_degrees.x = -35.0
 	add_to_group("camera_rig")
@@ -117,7 +122,27 @@ func _ready() -> void:
 		_visual_meshes = CameraNearFade.collect_meshes(visual)
 
 
+## 2026-09-29 — 카메라 끈(SpringArm3D, collision_mask 1)이 적 몸(CharacterBody3D, 같은 층)에도 걸려, 적이 플레이어와 카메라
+## 사이에 서면 카메라가 플레이어 발밑까지 당겨졌다(창 모드 x_swing_late). 원신처럼 적 몸은 카메라가 지나간다 —
+## 들판 적(보스 포함, "field_enemy" 무리)을 0.5초마다 훑어 끈 판정에서 뺀다. 땅·벽·건물엔 그대로 걸린다.
+const EXCLUDE_SCAN_SEC := 0.5
+var _excl_left := 0.0
+var _excluded := {}
+
+func _exclude_enemies(delta: float) -> void:
+	_excl_left -= delta
+	if _excl_left > 0.0:
+		return
+	_excl_left = EXCLUDE_SCAN_SEC
+	for e in get_tree().get_nodes_in_group("field_enemy"):
+		if e is CollisionObject3D:
+			var rid := (e as CollisionObject3D).get_rid()
+			if not _excluded.has(rid):
+				_excluded[rid] = true
+				spring_arm.add_excluded_object(rid)
+
 func _process(delta: float) -> void:
+	_exclude_enemies(delta)
 	if mouse_look:
 		_update_capture()
 	if not _aim_settled():
@@ -125,12 +150,12 @@ func _process(delta: float) -> void:
 	if _talk_on or _return_left > 0.0:
 		_process_talk(delta)
 	elif Time.get_ticks_msec() < _shake_until_msec:
-		position = Vector3(
+		position = _rest_pos + Vector3(
 			randf_range(-_shake_amp_m, _shake_amp_m),
 			randf_range(-_shake_amp_m, _shake_amp_m),
 			0.0)
-	elif position != Vector3.ZERO:
-		position = Vector3.ZERO
+	elif position != _rest_pos:
+		position = _rest_pos
 		_shake_amp_m = 0.0
 	if not _visual_meshes.is_empty():
 		var cam: Camera3D = spring_arm.get_node("Camera3D")
@@ -186,10 +211,10 @@ func _process_talk(delta: float) -> void:
 	_return_left = maxf(_return_left - delta, 0.0)
 	var t := 1.0 - _return_left / TALK_RETURN_SEC
 	t = t * t * (3.0 - 2.0 * t)
-	transform = _return_from.interpolate_with(Transform3D(_saved_basis, Vector3.ZERO), t)
+	transform = _return_from.interpolate_with(Transform3D(_saved_basis, _rest_pos), t) # 09-29 원점(발밑) 아닌 쉼 자리로
 	spring_arm.spring_length = lerpf(_return_from_len, _saved_len, t)
 	if _return_left <= 0.0:
-		transform = Transform3D(_saved_basis, Vector3.ZERO)
+		transform = Transform3D(_saved_basis, _rest_pos)
 		spring_arm.spring_length = _saved_len
 		var body := get_parent() as CollisionObject3D
 		if body:

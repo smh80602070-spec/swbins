@@ -263,7 +263,7 @@ func _physics_process(_delta: float) -> void:
 				_drain()
 			if _frame == 130:
 				var back: bool = not bool(rig.call("in_talk")) and rig.transform.basis.is_equal_approx(_v.basis) \
-					and absf(float(rig.get("spring_arm").spring_length) - float(_v.len)) < 0.01 and rig.position.is_zero_approx()
+					and absf(float(rig.get("spring_arm").spring_length) - float(_v.len)) < 0.01 and rig.position.is_equal_approx(rig.get("_rest_pos"))
 				var ok: bool = bool(_v.opened) and bool(_v.in_talk) and float(_v.npc_look) > 0.97 and _v.npc_side == "npc" and float(_v.me_look) > 0.97 \
 					and _v.me_side == "me" and back and int(_sq.call("ch")) == 2 and int(_sq.call("st")) == 1 and not bool(_p.get("frozen"))
 				_check("talk_camera", ok, "npc_look=%.3f me_look=%.3f sides=%s/%s back=%s st=%d" % [_v.npc_look, _v.me_look, _v.npc_side, _v.me_side, back, _sq.call("st")])

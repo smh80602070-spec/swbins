@@ -9401,3 +9401,10 @@ PROJECT_STATE.md` 참고. 요약:
 - PERF(모바일 540×960): 마을 삼각형 39.1 → **33.4만**(예산 35만 안)·draw 평균 216·최댓값 247 · 포구 21.1 → 18.5만 · 폐허 30.8 → 28.2만.
 - 창 모드 v_house·x_swing·v_people_lineup — 대역이 겹쳐 보이지 않음. 그림자 모양은 풀 때문에 촬영으로 잘 안 보여 실기 확인 몫.
 - 점검 STORY·COMBAT·KIT·TRAVERSAL fails=0, REGRESS OK.
+
+## 카메라가 발밑으로 무너지던 버그 (2026-09-29, 같은 세션, "이어해")
+
+- 촬영 x_swing 이 가끔(8컷 중 3) 카메라가 발끝까지 당겨진 채 찍혔다. 처음엔 적 몸이 끈에 걸리는 줄 알고 camera_rig 에 들판 적 제외(field_enemy 0.5초마다 add_excluded_object — 원신처럼 적 몸은 카메라가 지나간다)를 넣었으나 그대로.
+- probe_shots 캡처 줄에 카메라 자리·끈 길이·끈이 걸린 물체를 찍어 보니 끈 시작점이 플레이어 **발밑**(y≈0.2): 흔들림(combat_feel shake)이 끝날 때 리그 position 을 Vector3.ZERO 로 돌려, 씬에 적힌 허리 높이(+0.85m)를 잃었다. 첫 피격 뒤로 끈이 발밑에서 출발 → 울퉁불퉁한 땅에 걸리면 카메라가 발끝까지. 대화 카메라 복귀(end_talk)도 원점으로 돌아갔다.
+- camera_rig·dungeon_camera_rig(DUNGEON·FOREST) — _rest_pos 를 기억해 흔들림·대화 복귀가 그리로. probe_story talk_camera 는 원점(버그 값)을 기대하고 있어 쉼 자리로 고침.
+- 고친 뒤 x_swing·x_swing_late 네 번 8컷 모두 끈 7.5m. 점검 COMBAT·ARCHERY·STORY·TRAVERSAL·FIELD_BOSS fails=0, REGRESS OK.

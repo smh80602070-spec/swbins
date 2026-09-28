@@ -348,4 +348,22 @@ func _capture(name: String) -> void:
 	var path := _dir.path_join("%s_%dx%d.png" % [name, img.get_width(), img.get_height()])
 	var err := img.save_png(path)
 	_done.append(name)
-	print("SHOT %s %s err=%d modal=%d pos=%s" % [name, path, err, get_tree().get_nodes_in_group("ui_modal").size(), _p.global_position])
+	var cam := get_viewport().get_camera_3d()
+	var arm := _rig.get("spring_arm") as SpringArm3D if _rig else null
+	if arm and arm.get_hit_length() < 0.5:
+		## 끈이 시작점에서 걸렸을 때 — 끈 방향 광선·끈 모양 겹침으로 무엇인지(09-29 조사)
+		var ss := _p.get_world_3d().direct_space_state
+		var from := arm.global_position
+		var q := PhysicsRayQueryParameters3D.create(from, from + arm.global_basis.z * arm.spring_length, arm.collision_mask)
+		q.hit_from_inside = true
+		var hit := ss.intersect_ray(q)
+		print("SHOT_ARM from=%s ray_hit=%s shape=%s" % [from, (hit.collider as Node).get_path() if hit else "none", arm.shape])
+		if arm.shape:
+			var sq := PhysicsShapeQueryParameters3D.new()
+			sq.shape = arm.shape
+			sq.transform = Transform3D(Basis(), from)
+			sq.collision_mask = arm.collision_mask
+			for r in ss.intersect_shape(sq, 8):
+				print("SHOT_ARM overlap=%s" % (r.collider as Node).get_path())
+	print("SHOT %s %s err=%d modal=%d pos=%s cam=%s arm_hit=%.2f time_scale=%.2f" % [name, path, err, get_tree().get_nodes_in_group("ui_modal").size(), _p.global_position,
+		cam.global_position if cam else Vector3.ZERO, arm.get_hit_length() if arm else -1.0, Engine.time_scale])

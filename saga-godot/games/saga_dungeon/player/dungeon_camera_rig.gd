@@ -23,8 +23,13 @@ var _visual_meshes: Array[GeometryInstance3D] = []
 ## "카메라 SpringArm3D 부모에 노이즈" 그대로.
 var _shake_amp_m := 0.0
 var _shake_until_msec := 0
+## 2026-09-29 — 흔들림이 끝나면 position 을 Vector3.ZERO 로 돌려 리그가 플레이어 허리(씬에 적힌 +0.85m)에서 발밑으로 떨어졌다.
+## 첫 피격 뒤로 카메라 끈이 발밑에서 출발해 울퉁불퉁한 땅에 걸리면 카메라가 발끝까지 당겨졌다(GO 창 모드 x_swing, 끈 길이 0.02m).
+## 쉼 자리를 기억해 그 둘레로 흔들고 그리로 돌아간다.
+var _rest_pos := Vector3.ZERO
 
 func _ready() -> void:
+	_rest_pos = position
 	rotation_degrees.x = -pitch_deg
 	_arm.spring_length = spring_length
 	add_to_group("camera_rig")
@@ -35,12 +40,12 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if Time.get_ticks_msec() < _shake_until_msec:
-		position = Vector3(
+		position = _rest_pos + Vector3(
 			randf_range(-_shake_amp_m, _shake_amp_m),
 			randf_range(-_shake_amp_m, _shake_amp_m),
 			0.0)
-	elif position != Vector3.ZERO:
-		position = Vector3.ZERO
+	elif position != _rest_pos:
+		position = _rest_pos
 		_shake_amp_m = 0.0
 	if not _visual_meshes.is_empty():
 		var cam: Camera3D = _arm.get_node("Camera3D")
