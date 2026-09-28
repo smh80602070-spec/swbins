@@ -742,15 +742,15 @@ func _scatter_meadow() -> void:
 					var r := sqrt(_hash(x, y, ps + 4 + i * 3)) * MEADOW_RADIUS
 					var pos := TestMap.world_pos(x, y, region_id) + Vector3(cx + cos(a) * r, ground, cz + sin(a) * r)
 					var s := 0.8 + 0.5 * _hash(x, y, ps + 5 + i * 3)
-					stems.append(Transform3D(Basis.IDENTITY.scaled(Vector3(1, s, 1)), pos + Vector3(0, 0.45 * s, 0)))
-					heads.append(Transform3D(Basis(Vector3.UP, a).scaled(Vector3.ONE * s), pos + Vector3(0, 0.9 * s, 0)))
+					stems.append(Transform3D(Basis.IDENTITY.scaled(Vector3(1, s, 1)), pos + Vector3(0, 0.3 * s, 0)))
+					heads.append(Transform3D(Basis(Vector3.UP, a).scaled(Vector3.ONE * s), pos + Vector3(0, 0.6 * s, 0)))
 					colors.append(col.lerp(Color.WHITE, 0.12 * _hash(x, y, ps + 6 + i * 3)))
 	if stems.is_empty():
 		return
 	var stem_mesh := CylinderMesh.new()
 	stem_mesh.top_radius = 0.015
 	stem_mesh.bottom_radius = 0.022
-	stem_mesh.height = 0.9
+	stem_mesh.height = 0.6
 	stem_mesh.radial_segments = 4
 	stem_mesh.rings = 1
 	var stem_mat := StandardMaterial3D.new()
@@ -758,8 +758,8 @@ func _scatter_meadow() -> void:
 	stem_mat.roughness = 0.9
 	stem_mesh.material = stem_mat
 	var head_mesh := SphereMesh.new()
-	head_mesh.radius = 0.2
-	head_mesh.height = 0.2
+	head_mesh.radius = 0.15
+	head_mesh.height = 0.16
 	head_mesh.radial_segments = 6
 	head_mesh.rings = 2
 	var head_mat := StandardMaterial3D.new()

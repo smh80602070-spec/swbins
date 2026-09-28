@@ -197,7 +197,7 @@ static func _clump_mesh(n: int) -> ArrayMesh:
 		var face := _hash(i, 0, 13) * TAU
 		var side := Vector3(cos(face), 0.0, sin(face))
 		var lean := Vector3(-side.z, 0.0, side.x) * (_hash(i, 0, 14) - 0.5) * 0.5
-		var h := 0.34 + _hash(i, 0, 15) * 0.34
+		var h := (0.34 + _hash(i, 0, 15) * 0.34) * 0.72
 		var w := 0.03 + _hash(i, 0, 16) * 0.02
 		var shade := 0.8 + _hash(i, 0, 17) * 0.2
 		var col := Color(shade, shade, shade * (0.92 + _hash(i, 0, 18) * 0.08))
