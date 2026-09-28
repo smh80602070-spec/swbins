@@ -3,8 +3,8 @@ using Saga.Go.Data;
 
 namespace Saga.Go.Combat
 {
-    public enum KitSkillType { Dash, Shells, Guard, Zone }
-    public enum KitBurstType { Infuse, Rally, Ward, Haste, Vortex }
+    public enum KitSkillType { Dash, Shells, Guard, Zone, Blink }
+    public enum KitBurstType { Infuse, Rally, Ward, Haste, Vortex, Lore, Echo }
 
     /// <summary>원소 스킬 한 가지 — 값은 웹 척도(거리 m · 배율 · 기력 60), 쓸 때 이 트랙 크기로(<see cref="GoKits"/>).</summary>
     public class KitSkill
@@ -13,6 +13,8 @@ namespace Saga.Go.Combat
         public string Name;
         public float Cd, Len, W, Mul, Reach, Delay, R, Shield, Sec, Every, Energy, Heal, Team, ShieldAdd;
         public int N;
+        /// <summary>109-14-15 그림자 걸음 — 적 뒤로 넘어서는 거리 · 표식 초 · 표식 난 적이 받는 피해 배율.</summary>
+        public float Back, Mark, MarkMul;
     }
 
     public class KitBurst
@@ -20,6 +22,9 @@ namespace Saga.Go.Combat
         public KitBurstType Type;
         public string Name;
         public float R, Mul, Sec, NMul, Atk, Taken, Energy, Ahead, Every, Tick, Pull, Heal, Team;
+        /// <summary>109-14-15 옛 글자 풀이(반응 피해 배율 RMul) · 가면 벗기(메아리 — Reach 안 표식 난 적마다 N 번, EMul).</summary>
+        public float RMul, Reach, EMul;
+        public int N;
     }
 
     public class HeroKit
@@ -36,7 +41,7 @@ namespace Saga.Go.Combat
     /// 고유 다섯(주인공 · 팔괘진 인물 · 일제 포격 인물 · 결사 방진 인물 · 화살비 인물 — id 는 웹과 같다) — 그 갈래 "대표"라 갈래보다 한 단 위.
     /// 갈래 = 도감 기질: 무용 돌격(돌진)/검기(원소 부여) · 통솔 호령(늦게 떨어지는 탄)/군기(명단 공격) · 인덕 방패(명단 보호막)/맹세(받는 피해).
     /// 원소 덧붙임 하나(불꽃 해방 ×1.15 · 물결 회복 · 번개 다른 인물 기력 · 바람 대기 −1.5초 · 서리 스킬 ×1.15 · 바위 보호막 +12% · 덩굴 해방 +3초).
-    /// 지략·도감 밖(산적)은 null → 109-8 모양(장판·소환)·해방 기본 그대로(웹과 같다). 웹 이야기 동료(story_*)는 이 트랙에 없어 뺐다.
+    /// 지략·도감 밖(산적)은 null → 109-8 모양(장판·소환)·해방 기본 그대로(웹과 같다). 이야기 동료 둘(은비·나그네)은 109-14-15 에 고유로 붙였다.
     /// 척도: 거리 × 1.85(GO 사람 키) · 스킬 배율 × 1.8/2.2 · 해방 배율 × 4/4.5 · 기력 × 100/60. 옛 진단은 `OffForTest` 로 옛 모양 그대로 돈다.
     /// </summary>
     public static class GoKits
@@ -75,6 +80,15 @@ namespace Saga.Go.Combat
                 case "sg_huangzhong":
                     s = S(KitSkillType.Shells, "kit.sig.huang.skill", "화살비", 8f, 1.9f); s.Reach = 14f; s.N = 4; s.Delay = 0.5f; s.R = 1.8f;
                     b = B(KitBurstType.Vortex, "kit.sig.huang.burst", "돌개 화살", 5f, 2.4f); b.Ahead = 7f; b.Sec = 8f; b.Every = 0.5f; b.Tick = 0.5f; b.Pull = 5f;
+                    break;
+                // 109-14-15 이야기 동료(웹 kits.js story_*)
+                case "story_scholar":
+                    s = S(KitSkillType.Zone, "kit.sig.scholar.skill", "비문 탁본", 10f, 0.7f); s.R = 4.5f; s.Sec = 9f; s.Every = 1.5f; s.N = 4; s.Energy = 1.5f;
+                    b = B(KitBurstType.Lore, "kit.sig.scholar.burst", "옛 글자 풀이", 7.5f, 2.8f); b.Sec = 12f; b.RMul = 1.4f;
+                    break;
+                case "story_wanderer":
+                    s = S(KitSkillType.Blink, "kit.sig.wanderer.skill", "그림자 걸음", 8f, 3.2f); s.Reach = 10f; s.Back = 1.5f; s.R = 2.5f; s.Mark = 8f; s.MarkMul = 1.25f; s.Len = 4f;
+                    b = B(KitBurstType.Echo, "kit.sig.wanderer.burst", "가면 벗기", 6f, 3.4f); b.Reach = 15f; b.N = 3; b.Every = 0.3f; b.EMul = 1.5f;
                     break;
                 default:
                     return null;

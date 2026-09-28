@@ -1037,6 +1037,24 @@
     { "key": "story.ch6.s3.p.a", "value": "Let's fight together." },
     { "key": "story.ch6.s3.p.b", "value": "He's here!" },
     { "key": "story.ch6.s7.p.a", "value": "Servants?" },
-    { "key": "story.ch6.s7.p.b", "value": "The Black Mask is one of them?" }
+    { "key": "story.ch6.s7.p.b", "value": "The Black Mask is one of them?" },
+    { "key": "hero.story_scholar", "value": "Eunbi" },
+    { "key": "hero.story_scholar.quote", "value": "The more I read this inscription, the stranger it gets." },
+    { "key": "hero.story_wanderer", "value": "Masked Traveler" },
+    { "key": "hero.story_wanderer.quote", "value": "Fall too far behind and I won't wait." },
+    { "key": "hero.era.story", "value": "Story Allies" },
+    { "key": "kit.sig.scholar.skill", "value": "Inscription Rubbing" },
+    { "key": "kit.sig.scholar.burst", "value": "Ancient Script Reading" },
+    { "key": "kit.sig.wanderer.skill", "value": "Shadow Step" },
+    { "key": "kit.sig.wanderer.burst", "value": "Unmasking" },
+    { "key": "story.joined", "value": "{0} joined" },
+    { "key": "dex.slot", "value": "Field slot {0}" },
+    { "key": "dex.bench", "value": "Standby" },
+    { "key": "dex.detail.story", "value": "Story ally — joins at the end of {0}" },
+    { "key": "dex.form_fighting", "value": "You can't change the formation mid-fight" },
+    { "key": "dex.form_bench", "value": "Remove from Field" },
+    { "key": "dex.form_all", "value": "3 or fewer allies — all in the field" },
+    { "key": "dex.form_field", "value": "Put in Field (2nd slot)" },
+    { "key": "dex.form_up", "value": "◀ Move Up" }
   ]
 }

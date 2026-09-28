@@ -407,12 +407,20 @@
 2	go	cook.why.none	없는 요리	No such dish		
 2	go	cook.why.pot	역참 곁 솥에서만	Only at a waypoint cooking pot		
 2	go	cut.guardian_sub	옛 망루를 지키는 돌장수 — 방패 두 겹({0} → {1})	Stone warden of the old watchtower — two shield layers ({0} → {1})		
+2	go	dex.bench	대기	Standby		
 2	go	dex.detail.got	{0} · {1} 원소 · 기질 {2}⏎무력 {3} · 지력 {4} · 통솔 {5} — "{6}"	{0} · {1} element · trait {2}⏎Might {3} · Wisdom {4} · Command {5} — "{6}"		
 2	go	dex.detail.seen	{0} · {1} 원소 — 만났지만 아직 동행이 아니다⏎{2}에 선다 · 이겨서 굴복시키면 동행	{0} · {1} element — met, but not yet a companion⏎Stands in {2} · defeat them to make them yield and join		
+2	go	dex.detail.story	이야기 동료 — {0} 끝에 합류한다	Story ally — joins at the end of {0}		
 2	go	dex.detail.unseen	아직 만나지 않은 사람 — {0} {1}⏎{2} 어딘가에 선다	Not yet met — {0} {1}⏎Stands somewhere in {2}		
+2	go	dex.form_all	동행이 셋 이하 — 모두 들판	3 or fewer allies — all in the field		
+2	go	dex.form_bench	들판에서 빼기	Remove from Field		
+2	go	dex.form_field	들판에 넣기(둘째 자리)	Put in Field (2nd slot)		
+2	go	dex.form_fighting	싸우는 중엔 편성을 바꿀 수 없다	You can't change the formation mid-fight		
+2	go	dex.form_up	◀ 앞 자리로	◀ Move Up		
 2	go	dex.hint	칸을 누르면 자세히 · 들판에서 겨뤄 본 사람은 그림자에서 벗어나고, 이겨서 굴복시키면 동행이 된다	Tap a card for details · anyone you have challenged in the field steps out of the shadow; defeat them to make them yield and join you		
 2	go	dex.kit	{0} · 스킬 {1} · 해방 {2}	{0} · Skill {1} · Release {2}		
 2	go	dex.seen	만남	Met		
+2	go	dex.slot	들판 {0}째 자리	Field slot {0}		
 2	go	dex.title	도감 — 등용 {0}/{1} · 만남 {2}	Codex — recruited {0}/{1} · met {2}		
 2	go	domain.boss	먹구름 이무기	Stormcloud Serpent		
 2	go	domain.boss_p2	먹구름 이무기가 뇌 방패를 둘렀다 — 불·물로 깨라	The Stormcloud Serpent raised a thunder shield — break it with fire or water		
@@ -598,6 +606,7 @@
 2	go	hero.challenge	⚔ {0} — "{1}"⏎겨루기! 이겨서 굴복시키면 동행이 된다	⚔ {0} — "{1}"⏎A duel! Make them yield and they will join you		
 2	go	hero.era.japan	일본사	Japan		
 2	go	hero.era.korea	한국사	Korea		
+2	go	hero.era.story	이야기 동료	Story Allies		
 2	go	hero.era.three_kingdoms	삼국지	Three Kingdoms		
 2	go	hero.era.world	세계사	World		
 2	go	hero.eu_alexander	카시안더	Cassiander		
@@ -692,6 +701,8 @@
 2	go	hero.sg_zhaoyun	은창	Eunchang		
 2	go	hero.sg_zhouyu	화풍	Hwapung		
 2	go	hero.sg_zhugeliang	현책	Hyeonchaek		
+2	go	hero.story_scholar	은비	Eunbi		
+2	go	hero.story_wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	hero.trait.command	통	Command		
 2	go	hero.trait.might	무	Might		
 2	go	hero.trait.virtue	덕	Virtue		
@@ -737,6 +748,10 @@
 2	go	kit.sig.hero.skill	불꽃 돌진	Flame Rush		
 2	go	kit.sig.huang.burst	돌개 화살	Whirlwind Arrows		
 2	go	kit.sig.huang.skill	화살비	Arrow Rain		
+2	go	kit.sig.scholar.burst	옛 글자 풀이	Ancient Script Reading		
+2	go	kit.sig.scholar.skill	비문 탁본	Inscription Rubbing		
+2	go	kit.sig.wanderer.burst	가면 벗기	Unmasking		
+2	go	kit.sig.wanderer.skill	그림자 걸음	Shadow Step		
 2	go	kit.sig.yisun.burst	학날개 진	Crane Wing Formation		
 2	go	kit.sig.yisun.skill	일제 포격	Full Broadside		
 2	go	kit.sig.zhuge.burst	천기 뇌우	Heaven's Thunderstorm		
@@ -996,6 +1011,7 @@
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 2	go	story.idle.wanderer	……	……		
+2	go	story.joined	{0} 합류	{0} joined		
 2	go	story.list_close	닫는다 (O)	Close (O)		
 2	go	story.list_title	이야기 임무	Story Quests		
 2	go	story.lit	옛 제단에 불이 붙었다 — 비문이 빛난다	The old altar caught fire — the inscription glows		
@@ -2301,6 +2317,8 @@
 3	go	hero.sg_zhaoyun.quote	한 몸 바쳐 주공을 지키겠습니다.	I will guard my lord with my life.		
 3	go	hero.sg_zhouyu.quote	동남풍이 불면, 그때가 우리의 때입니다.	When the southeast wind blows, our time has come.		
 3	go	hero.sg_zhugeliang.quote	삼고초려의 뜻, 잊지 않겠습니다.	I will not forget the meaning of those three visits.		
+3	go	hero.story_scholar.quote	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
+3	go	hero.story_wanderer.quote	너무 떨어지면 기다려 주지 않을 테니.	Fall too far behind and I won't wait.		
 3	go	hero.wd_akbar.quote	믿음은 강요로 얻어지지 않는다.	Faith is not won by force.		
 3	go	hero.wd_ashoka.quote	칼로 얻은 땅을 이제 법으로 다스리겠다.	Land won by the sword I will now rule by the law.		
 3	go	hero.wd_attila.quote	신의 채찍이 여기 있다.	The scourge of heaven is here.		

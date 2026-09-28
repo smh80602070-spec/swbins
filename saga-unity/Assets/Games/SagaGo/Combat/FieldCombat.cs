@@ -106,6 +106,12 @@ namespace Saga.Go.Combat
         public float WardLeft { get; private set; }
         public float WardMul { get; private set; } = 1f;
         public float HasteLeft { get; private set; }
+        /// <summary>109-14-15 옛 글자 풀이 — 남은 초 동안 명단 원소 반응 피해 × LoreMul.</summary>
+        public float LoreLeft { get; private set; }
+        public float LoreMul { get; private set; } = 1f;
+        /// <summary>109-14-15 가면 벗기 메아리 — 그 적을 따라가 남은 초 뒤에 친다(진단이 센다).</summary>
+        private readonly List<(FieldEnemy target, float left, float amount, GoElement el, Color c)> _echoes = new List<(FieldEnemy, float, float, GoElement, Color)>();
+        public int EchoCount => _echoes.Count;
         /// <summary>마지막으로 쓴 스킬·해방 한 벌(진단).</summary>
         public HeroKit LastKit { get; private set; }
         private readonly List<(Vector3 pos, float left, float r, float amount, GoElement el, Color c)> _shells = new List<(Vector3, float, float, float, GoElement, Color)>();
@@ -236,7 +242,7 @@ namespace Saga.Go.Combat
 
         /// <summary>109-14-4 나선 사람의 무예 배율·반응 배율(주인공·도감 밖은 1).</summary>
         private float TalentMul(GoTalent.Kind k) => Active != null ? TalentState.Mul(Active.Id, k) : 1f;
-        private float ReactMul => Active != null ? TalentState.ReactMul(Active.Id) * PasMul(Active.Id, "react") : 1f;
+        private float ReactMul => (Active != null ? TalentState.ReactMul(Active.Id) * PasMul(Active.Id, "react") : 1f) * (LoreLeft > 0f ? LoreMul : 1f); // 109-14-15 옛 글자 풀이
         public float Def => (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier;
 
         /// <summary>109-14-5b 나선 사람이 받는 피해에 쓰는 방어(보패 방어% · 고정 방어). 체력 상한은 보패 없는 <see cref="Def"/> 로 센다.</summary>
@@ -283,16 +289,9 @@ namespace Saga.Go.Combat
 
             float maxHp = 200f + Def * 2f;
             AddMember(old, HeroId, GoLocalization.T("field.hero", "주인공"), GoElements.HeroElement, maxHp);
-            // PLAN.md 109-6 — 곁에 서는 셋 = 가장 최근에 등용한 셋(편성 화면이 생기기 전까지). 이름·원소는 도감(`GoHeroes`)에서.
-            var members = PartyState.MemberIds;
-            for (int k = members.Count - 1; k >= 0 && _party.Count < MaxParty; k--)
-            {
-                string id = members[k];
-                bool dup = false;
-                foreach (var m in _party) if (m.Id == id) { dup = true; break; }
-                if (dup) continue;
-                AddMember(old, id, MemberName(id), GoElements.ForMember(id), maxHp);
-            }
+            // PLAN.md 109-6 — 곁에 서는 셋 = 동행 순서의 뒤 셋(109-14-15 편성이 순서를 바꾼다). 이름·원소는 도감(`GoHeroes`)에서.
+            foreach (var id in PartyState.FieldIds())
+                if (_party.Count < MaxParty && id != HeroId) AddMember(old, id, MemberName(id), GoElements.ForMember(id), maxHp);
             ActiveIndex = 0;
             for (int i = 0; i < _party.Count; i++) if (_party[i].Id == activeId) ActiveIndex = i;
             ApplyLook();
@@ -1034,6 +1033,8 @@ namespace Saga.Go.Combat
             _seeds.Clear();
             ClearZones();
             RallyLeft = WardLeft = HasteLeft = 0f; // 109-14-11
+            LoreLeft = 0f; // 109-14-15
+            _echoes.Clear();
             _shells.Clear();
             foreach (var m in _party) m.InfuseLeft = 0f;
             ApplyLook();
@@ -1057,7 +1058,7 @@ namespace Saga.Go.Combat
             LastKit = hk;
             m.SkillCd = Mathf.Max(1f, s.Cd) * TalentState.SkillCdMul(m.Id);
             const float D = GoKits.Dist;
-            float reach = s.Type == KitSkillType.Shells ? s.Reach * D : Mathf.Max(AutoFaceRadius * 1.5f, s.Len * D);
+            float reach = s.Type == KitSkillType.Shells || s.Type == KitSkillType.Blink ? s.Reach * D : Mathf.Max(AutoFaceRadius * 1.5f, s.Len * D);
             var target = Nearest(reach);
             if (target != null && player != null) player.FaceToward(target.transform.position);
             Vector3 pos = transform.position, dir = Forward();
@@ -1124,6 +1125,24 @@ namespace Saga.Go.Combat
                     hits = z.Hits;
                     break;
                 }
+                case KitSkillType.Blink:
+                {
+                    // 109-14-15 그림자 걸음 — 가까운 적을 지나 그 뒤로 건너뛰어(무적) 도착 둘레를 베고, 그 적에 표식. 적이 없으면 앞으로.
+                    Vector3 dest = target != null ? target.transform.position + dir * s.Back * D : pos + dir * s.Len * D;
+                    if (!BlinkOk(pos, ref dest) && target != null)
+                    {
+                        dest = target.transform.position - dir * 1.2f * D; // 뒤가 벼랑·물이면 앞에 선다
+                        if (!BlinkOk(pos, ref dest)) dest = pos;
+                    }
+                    InvulnLeft = Mathf.Max(InvulnLeft, GoSkillShapes.DashInvulnSec);
+                    if (player != null && Flat(dest - pos).sqrMagnitude > 0.01f) player.Teleport(dest + Vector3.up * 0.1f);
+                    hits = AreaHit(dest, s.R * D, amount, m.Element);
+                    if (target != null && target.Alive) target.Mark(s.Mark, s.MarkMul);
+                    FieldLineFx.Spawn(pos, dest, 1.2f, fx, 0.35f);
+                    FieldRingFx.Spawn(dest, s.R * D, fx, 0.5f);
+                    ElementPulse?.Invoke(dest, s.R * D, m.Element);
+                    break;
+                }
             }
             if (s.Heal > 0f) HealParty(s.Heal);
             if (s.Team > 0f) EnergyOthers(m, s.Team);
@@ -1148,6 +1167,20 @@ namespace Saga.Go.Combat
                 case KitBurstType.Rally: RallyLeft = b.Sec; RallyMul = b.Atk; break;
                 case KitBurstType.Ward: WardLeft = b.Sec; WardMul = b.Taken; break;
                 case KitBurstType.Haste: HasteLeft = b.Sec; EnergyOthers(m, b.Energy); break;
+                case KitBurstType.Lore: LoreLeft = b.Sec; LoreMul = b.RMul; break; // 109-14-15 옛 글자 풀이
+                case KitBurstType.Echo:
+                {
+                    // 109-14-15 가면 벗기 — reach 안 표식 난 적마다 every 초 간격 메아리 N(적을 따라감), 표식 난 적이 없으면 가까운 둘
+                    var near = new List<FieldEnemy>(Snapshot());
+                    near.RemoveAll(e => Flat(e.transform.position - pos).magnitude > b.Reach * D);
+                    near.Sort((a, c) => Flat(a.transform.position - pos).sqrMagnitude.CompareTo(Flat(c.transform.position - pos).sqrMagnitude));
+                    var marked = near.FindAll(e => e.MarkLeft > 0f);
+                    var tgs = marked.Count > 0 ? marked : near.GetRange(0, Mathf.Min(2, near.Count));
+                    float amount = Atk * b.EMul * GoKits.BurstScale * TalentMul(GoTalent.Kind.Burst) * DmgMul(m.Id, "b", m.Element);
+                    foreach (var e in tgs)
+                        for (int k = 1; k <= b.N; k++) _echoes.Add((e, b.Every * k, amount, m.Element, fx));
+                    break;
+                }
                 case KitBurstType.Vortex:
                 {
                     Vector3 c = pos + Forward() * b.Ahead * D;
@@ -1168,6 +1201,14 @@ namespace Saga.Go.Combat
             ToastLine(string.Format(GoLocalization.T("field.burst_named", "{0} — {1}!"), m.Name, b.Name), 1.5f);
             if (player != null && player.Animator != null) player.Animator.SetTrigger("Attack");
             return hits;
+        }
+
+        /// <summary>109-14-15 그림자 걸음 도착 자리 — 땅에 앉히고, 물·높이 차 3m 넘는 곳(벼랑 아래·고원 위)이면 안 된다.</summary>
+        private static bool BlinkOk(Vector3 from, ref Vector3 dest)
+        {
+            dest = FolkWalker.Grounded(dest + Vector3.up * 1.5f);
+            var (gx, gy) = TestMapData.WorldToGrid(dest);
+            return !TestMapData.IsWater(TestMapData.TileAt(gx, gy)) && Mathf.Abs(dest.y - from.y) < 3f;
         }
 
         /// <summary>진 — 가까운 적 N 을 치고 맞힐 때마다 명단 기력 · 소용돌이 — 반경 안 적을 가운데로 끌며 친다.</summary>
@@ -1197,6 +1238,18 @@ namespace Saga.Go.Combat
             if (RallyLeft > 0f) RallyLeft = Mathf.Max(0f, RallyLeft - dt);
             if (WardLeft > 0f) WardLeft = Mathf.Max(0f, WardLeft - dt);
             if (HasteLeft > 0f) HasteLeft = Mathf.Max(0f, HasteLeft - dt);
+            if (LoreLeft > 0f) LoreLeft = Mathf.Max(0f, LoreLeft - dt);
+            for (int i = _echoes.Count - 1; i >= 0; i--)
+            {
+                var ec = _echoes[i];
+                ec.left -= dt;
+                if (ec.left > 0f) { _echoes[i] = ec; continue; }
+                _echoes.RemoveAt(i);
+                if (ec.target == null || !ec.target.Alive) continue; // 이미 쓰러졌으면 헛친다
+                float cm = CritMul(Active != null ? Active.Id : HeroId, out bool crit);
+                ec.target.TakeHit(ec.amount * cm, ec.el, Atk * ReactMul, out _, crit: crit);
+                FieldRingFx.Spawn(ec.target.transform.position, 1.2f * GoKits.Dist, ec.c, 0.3f);
+            }
             for (int i = _shells.Count - 1; i >= 0; i--)
             {
                 var sh = _shells[i];

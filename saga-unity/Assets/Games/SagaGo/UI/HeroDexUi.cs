@@ -25,7 +25,7 @@ namespace Saga.Go.UI
         public const float Gap = 4f;
         private const float GridTop = 185f;
 
-        private static readonly HeroEra[] Eras = { HeroEra.ThreeKingdoms, HeroEra.Korea, HeroEra.Japan, HeroEra.World };
+        private static readonly HeroEra[] Eras = { HeroEra.ThreeKingdoms, HeroEra.Korea, HeroEra.Japan, HeroEra.World, HeroEra.Story }; // 109-14-15 다섯째 = 이야기 동료
         private static readonly Color UnseenBg = new Color(0.03f, 0.03f, 0.04f, 0.96f);
         private static readonly Color UnseenFg = new Color(0.36f, 0.36f, 0.4f);
         private static readonly Color SeenBg = new Color(0.2f, 0.2f, 0.23f, 0.92f);
@@ -145,10 +145,10 @@ namespace Saga.Go.UI
             _title.fontStyle = FontStyles.Bold;
             Center(_title.rectTransform);
 
-            float tabW = 250f;
+            float tabW = 200f;
             for (int i = 0; i < Eras.Length; i++)
             {
-                var tab = EncounterUiKit.NewButton(_panel.transform, "", mid, new Vector2((i - 1.5f) * (tabW + 6f), 222f), new Vector2(tabW, 44f), null);
+                var tab = EncounterUiKit.NewButton(_panel.transform, "", mid, new Vector2((i - (Eras.Length - 1) * 0.5f) * (tabW + 6f), 222f), new Vector2(tabW, 44f), null);
                 Center((RectTransform)tab.transform);
                 tab.GetComponentInChildren<TextMeshProUGUI>().fontSize = 22;
                 var era = Eras[i];
@@ -179,6 +179,7 @@ namespace Saga.Go.UI
             BuildTalentPanel(mid);
             BuildWeaponPanel(mid);
             BuildArtifactPanel(mid);
+            BuildFormation(mid); // 109-14-15
 
             CloseButton = EncounterUiKit.NewButton(_panel.transform, GoLocalization.T("dex.close", "닫는다"), mid, new Vector2(0f, -272f), new Vector2(200f, 48f), null);
             Center((RectTransform)CloseButton.transform);
@@ -405,6 +406,7 @@ namespace Saga.Go.UI
             if (!show) return;
             RefreshWeapon();
             RefreshArtifact();
+            RefreshFormation();
             _talentMats.text = string.Format(GoLocalization.T("talent.mats", "쪽지 {0} · 교본 {1} · 비전 {2}\n매듭 {3} · 비늘 {4} · 금 {5}"),
                 TalentState.Count(GoTalent.Mat.Note), TalentState.Count(GoTalent.Mat.Guide), TalentState.Count(GoTalent.Mat.Secret),
                 TalentState.Count(GoTalent.Mat.Knot), TalentState.Count(GoTalent.Mat.Scale), GoldState.Gold);
@@ -434,7 +436,7 @@ namespace Saga.Go.UI
         private static List<GoHeroes.Hero> EraHeroes(HeroEra era)
         {
             var list = new List<GoHeroes.Hero>();
-            foreach (var h in GoHeroes.All) if (h.Era == era) list.Add(h);
+            foreach (var h in era == HeroEra.Story ? GoHeroes.Story : GoHeroes.All) if (h.Era == era) list.Add(h);
             return list;
         }
 
@@ -480,6 +482,7 @@ namespace Saga.Go.UI
             for (int i = 0; i < Eras.Length; i++)
             {
                 var c = HeroDexState.CountOf(Eras[i]);
+                if (Eras[i] == HeroEra.Story) { c.Total = GoHeroes.Story.Length; c.Got = 0; foreach (var s in GoHeroes.Story) if (HeroDexState.IsRecruited(s.Id)) c.Got++; }
                 var txt = _tabs[i].GetComponentInChildren<TextMeshProUGUI>();
                 txt.text = $"{GoHeroes.EraName(Eras[i])} {c.Got}/{c.Total}";
                 bool on = Eras[i] == _era;
@@ -523,6 +526,60 @@ namespace Saga.Go.UI
             RefreshTalent();
         }
 
+        /// <summary>109-14-15 — "들판 2째 자리" / "대기".</summary>
+        public static string SlotLine(string id)
+        {
+            int s = PartyState.FieldSlotOf(id);
+            return s >= 0 ? string.Format(GoLocalization.T("dex.slot", "들판 {0}째 자리"), s + 2) : GoLocalization.T("dex.bench", "대기");
+        }
+
+        private static string JoinChapterName(string id)
+        {
+            foreach (var c in GoStory.Chapters) if (c.Join == id) return GoStory.ChapterName(c);
+            return "";
+        }
+
+        // ---- 109-14-15 편성(웹 ⑲-15 formation.js) — 무기 칸 아래 왼쪽 열: 들판에 넣기/빼기 · ◀ 앞 자리로. 싸우는 중엔 막는다 ----
+        private readonly Button[] _formButtons = new Button[2];
+        public Button FormationButton(int i) => _formButtons[i];
+
+        private void BuildFormation(Vector2 mid)
+        {
+            const float X = -655f, W = 270f;
+            for (int i = 0; i < 2; i++)
+            {
+                int k = i;
+                var b = EncounterUiKit.NewButton(_talentRoot.transform, "", mid, new Vector2(X, -206f - i * 52f), new Vector2(W, 44f), null);
+                Center((RectTransform)b.transform);
+                b.GetComponentInChildren<TextMeshProUGUI>().fontSize = 19;
+                b.onClick.AddListener(() => FormationAction(k));
+                _formButtons[i] = b;
+            }
+        }
+
+        private void FormationAction(int k)
+        {
+            if (_selected == null || !HeroDexState.IsRecruited(_selected)) return;
+            if (WorldMapUi.Fighting()) { Saga.Go.UI.DialogueLabel.Instance?.Show(GoLocalization.T("dex.form_fighting", "싸우는 중엔 편성을 바꿀 수 없다"), 2.5f); return; }
+            if (k == 0) { if (PartyState.FieldSlotOf(_selected) >= 0) PartyState.Bench(_selected); else PartyState.ToField(_selected); }
+            else PartyState.MoveUp(_selected);
+            Refresh();
+        }
+
+        private void RefreshFormation()
+        {
+            int s = _selected != null ? PartyState.FieldSlotOf(_selected) : -1;
+            bool fighting = WorldMapUi.Fighting();
+            var b0 = _formButtons[0];
+            b0.GetComponentInChildren<TextMeshProUGUI>().text = s >= 0
+                ? (PartyState.MemberIds.Count > PartyState.FieldSlots ? GoLocalization.T("dex.form_bench", "들판에서 빼기") : GoLocalization.T("dex.form_all", "동행이 셋 이하 — 모두 들판"))
+                : GoLocalization.T("dex.form_field", "들판에 넣기(둘째 자리)");
+            b0.interactable = !fighting && (s < 0 || PartyState.MemberIds.Count > PartyState.FieldSlots);
+            var b1 = _formButtons[1];
+            b1.GetComponentInChildren<TextMeshProUGUI>().text = GoLocalization.T("dex.form_up", "◀ 앞 자리로");
+            b1.interactable = !fighting && s > 0;
+        }
+
         /// <summary>109-14-11 — "고유 · 팔괘진 / 천기 뇌우" 한 줄(지략·스킬표가 꺼져 있으면 빈 글).</summary>
         public static string KitLine(string id, GoElement el)
         {
@@ -541,7 +598,10 @@ namespace Saga.Go.UI
                 case CardState.Got:
                     return string.Format(GoLocalization.T("dex.detail.got", "{0} · {1} 원소 · 기질 {2}\n무력 {3} · 지력 {4} · 통솔 {5} — \"{6}\""),
                         GoHeroes.Label(h), GoElements.NameOf(el), GoHeroes.TraitName(h.Trait), h.Might, h.Wisdom, h.Command, GoHeroes.Quote(h))
-                        + KitLine(id, el); // 109-14-11
+                        + KitLine(id, el) // 109-14-11
+                        + " · " + SlotLine(id); // 109-14-15
+                case CardState.Unseen when h.Era == HeroEra.Story:
+                    return string.Format(GoLocalization.T("dex.detail.story", "이야기 동료 — {0} 끝에 합류한다"), JoinChapterName(id));
                 case CardState.Seen:
                     return string.Format(GoLocalization.T("dex.detail.seen", "{0} · {1} 원소 — 만났지만 아직 동행이 아니다\n{2}에 선다 · 이겨서 굴복시키면 동행"),
                         GoHeroes.Label(h), GoElements.NameOf(el), region);

@@ -197,6 +197,8 @@ namespace Saga.Go.Data
             /// <summary>`GoTalent.Mat` 순서(쪽지·교본·비전·매듭·비늘).</summary>
             public int[] Mats;
             public Step[] Steps;
+            /// <summary>109-14-15 장 끝에 동행으로 들어오는 이야기 동료(`GoHeroes.Story`, 없으면 null).</summary>
+            public string Join;
         }
 
         private static Line L(string who, string key, string ko) => new Line { Who = who, Key = key, Ko = ko };
@@ -265,7 +267,7 @@ namespace Saga.Go.Data
             },
             new Chapter
             {
-                Id = "ch2", NameKey = "story.ch2", NameKo = "제2장 · 먹구름 제단", Ar = 5,
+                Id = "ch2", NameKey = "story.ch2", NameKo = "제2장 · 먹구름 제단", Ar = 5, Join = "story_scholar",
                 Gold = 1000, Mats = new[] { 0, 0, 1, 3, 0 },
                 Steps = new[]
                 {
@@ -390,7 +392,7 @@ namespace Saga.Go.Data
             },
             new Chapter
             {
-                Id = "ch5", NameKey = "story.ch5", NameKo = "제5장 · 서쪽 고개 옛길", Ar = 12,
+                Id = "ch5", NameKey = "story.ch5", NameKo = "제5장 · 서쪽 고개 옛길", Ar = 12, Join = "story_wanderer",
                 Gold = 1750, Mats = new[] { 0, 3, 2, 3, 0 },
                 Steps = new[]
                 {

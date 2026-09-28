@@ -4,7 +4,8 @@ using Saga.Go.Combat;
 
 namespace Saga.Go.Data
 {
-    public enum HeroEra { ThreeKingdoms, Korea, Japan, World }
+    /// <summary>Story = 109-14-15 이야기 동료(도감 밖 — 도감 수에 안 센다).</summary>
+    public enum HeroEra { ThreeKingdoms, Korea, Japan, World, Story }
     public enum HeroTrait { Might, Wisdom, Virtue, Command }
     /// <summary>웹 원소 일곱(`field-combat.js` EL_KEYS) — 109-14-1a 부터 이 트랙 전투도 일곱(<see cref="GoElement"/>, <see cref="GoHeroes.ElementOf"/>).
     /// 원래 값은 PLAN 109 줄 8(인물마다 다른 원소 스킬 모양)이 쓰려고 남긴다.</summary>
@@ -83,6 +84,7 @@ namespace Saga.Go.Data
                 case HeroEra.ThreeKingdoms: return GoLocalization.T("hero.era.three_kingdoms", "삼국지");
                 case HeroEra.Korea: return GoLocalization.T("hero.era.korea", "한국사");
                 case HeroEra.Japan: return GoLocalization.T("hero.era.japan", "일본사");
+                case HeroEra.Story: return GoLocalization.T("hero.era.story", "이야기 동료");
                 default: return GoLocalization.T("hero.era.world", "세계사");
             }
         }
@@ -100,8 +102,9 @@ namespace Saga.Go.Data
             {
                 _index = new Dictionary<string, int>();
                 for (int i = 0; i < All.Length; i++) _index[All[i].Id] = i;
+                for (int i = 0; i < Story.Length; i++) _index[Story[i].Id] = -1 - i; // 109-14-15 이야기 동료
             }
-            if (id != null && _index.TryGetValue(id, out int k)) { h = All[k]; return true; }
+            if (id != null && _index.TryGetValue(id, out int k)) { h = k >= 0 ? All[k] : Story[-1 - k]; return true; }
             h = default;
             return false;
         }
@@ -113,6 +116,20 @@ namespace Saga.Go.Data
             public string RegionId;
             public float Gx, Gy;
         }
+
+        /// <summary>
+        /// PLAN.md 109-14-15 이야기 동료(웹 사가고 ⑲-15 `story.js` MEMBERS) — 도감 밖 id(도감 105 는 그대로). 이야기 장 끝에 동행으로 들어온다
+        /// (`GoStory.Chapter.Join`), 들판 인물로는 안 선다. 원소·기질·자질은 웹 표 그대로, 무기 종류는 해시 대신 `GoWeapons.TypeOf` 표.
+        /// </summary>
+        public static readonly Hero[] Story =
+        {
+            new Hero { Id = "story_scholar", NameKo = "은비", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Wisdom, Might = 55, Wisdom = 92, Command = 70,
+                WebElement = WebElement.Grass, QuoteKo = "이 비문, 읽을수록 이상하다니까." },
+            new Hero { Id = "story_wanderer", NameKo = "가면 쓴 나그네", Era = HeroEra.Story, Faction = "재야", Rarity = 5, Trait = HeroTrait.Might, Might = 90, Wisdom = 75, Command = 72,
+                WebElement = WebElement.Ice, QuoteKo = "너무 떨어지면 기다려 주지 않을 테니." },
+        };
+
+        public static bool IsStory(string id) => id != null && id.StartsWith("story_");
 
         /// <summary>지역마다 서는 자리 한 곳 — 무리·역참·상자·사건 칸을 비킨 걸을 수 있는 땅(`PlaytestGoHeroes` 가 잰다).</summary>
         public static readonly Stand[] Stands =

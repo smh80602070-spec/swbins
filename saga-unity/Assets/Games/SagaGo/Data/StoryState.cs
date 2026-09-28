@@ -46,12 +46,31 @@ namespace Saga.Go.Data
                 GoldState.Add(ch.Gold);
                 TalentState.Add(ch.Mats);
                 reward = GoStory.RewardText(ch);
+                if (Join(ch)) reward += " · " + string.Format(GoLocalization.T("story.joined", "{0} 합류"), FieldJoinName(ch.Join));
                 Ch++;
                 StepIndex = 0;
             }
             Advanced?.Invoke(reward);
             Changed?.Invoke();
             return reward;
+        }
+
+        /// <summary>109-14-15 장 끝 합류 — 아직 동행이 아니면 들인다(등용과 같게 맨 뒤 = 들판 둘째 자리). 들였으면 true.</summary>
+        private static bool Join(GoStory.Chapter ch)
+        {
+            if (string.IsNullOrEmpty(ch.Join) || PartyState.Has(ch.Join)) return false;
+            PartyState.Recruit(ch.Join);
+            return true;
+        }
+
+        private static string FieldJoinName(string id) => GoHeroes.TryGet(id, out var h) ? GoHeroes.Name(h) : id;
+
+        /// <summary>109-14-15 — 합류가 생기기 전에 그 장을 끝낸 세이브는 불러올 때 조용히 들어온다(두 번 불러도 한 명). `SaveState` 가 부른다.</summary>
+        public static int CatchUpJoins()
+        {
+            int n = 0;
+            for (int c = 0; c < Ch && c < GoStory.Chapters.Length; c++) if (Join(GoStory.Chapters[c])) n++;
+            return n;
         }
 
         public static void Restore(int ch, int step)

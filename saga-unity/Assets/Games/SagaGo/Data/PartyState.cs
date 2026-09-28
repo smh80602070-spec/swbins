@@ -55,6 +55,51 @@ namespace Saga.Go.Data
             PowerChanged?.Invoke(Atk, Def);
         }
 
+        // ---- PLAN.md 109-14-15 편성(웹 사가고 ⑲-15 `formation.js`) — 들판 명단 = 주인공 + 동행 순서의 뒤 셋(가장 뒤 = 둘째 자리).
+        // 순서가 곧 편성이라 세이브 칸이 새로 없다(`partyMembers` 순서 그대로). 등용하면 맨 뒤 = 들판에 바로 선다(예전과 같다).
+        public const int FieldSlots = 3;
+
+        /// <summary>들판에 서는 동행 — 둘째·셋째·넷째 자리 순서.</summary>
+        public static List<string> FieldIds()
+        {
+            var list = new List<string>();
+            for (int k = Members.Count - 1; k >= 0 && list.Count < FieldSlots; k--)
+                if (!list.Contains(Members[k])) list.Add(Members[k]);
+            return list;
+        }
+
+        public static int FieldSlotOf(string id) => FieldIds().IndexOf(id);
+
+        private static bool Move(string id, int to)
+        {
+            int i = Members.IndexOf(id);
+            if (i < 0) return false;
+            Members.RemoveAt(i);
+            Members.Insert(UnityEngine.Mathf.Clamp(to, 0, Members.Count), id);
+            PowerChanged?.Invoke(Atk, Def);
+            return true;
+        }
+
+        /// <summary>들판에 넣기 — 둘째 자리로(가장 오래 선 셋째가 빠진다).</summary>
+        public static bool ToField(string id) => FieldSlotOf(id) != 0 && Move(id, Members.Count);
+
+        /// <summary>들판에서 빼기 — 맨 앞으로(동행이 넷 이상일 때만 뺄 수 있다).</summary>
+        public static bool Bench(string id) => Members.Count > FieldSlots && FieldSlotOf(id) >= 0 && Move(id, 0);
+
+        /// <summary>◀ 앞 자리로 — 들판 명단 안에서 한 자리 앞(둘째 쪽)으로.</summary>
+        public static bool MoveUp(string id)
+        {
+            int s = FieldSlotOf(id);
+            if (s <= 0) return false;
+            int i = Members.IndexOf(id), j = Members.IndexOf(FieldIds()[s - 1]);
+            Members[i] = Members[j];
+            Members[j] = id;
+            PowerChanged?.Invoke(Atk, Def);
+            return true;
+        }
+
+        public static bool Has(string id) => Members.Contains(id);
+
         private static void Recompute()
         {
             Atk = BaseAtk + Members.Count * AtkPerMember;

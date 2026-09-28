@@ -287,6 +287,7 @@ namespace Saga.Go.Data
             DomainState.Restore(data.resin, data.resinT, data.domainClaims, data.weeklyWeek, data.weeklyN);
             AdventureState.RestoreSave(data.advLowered, data.advPaid); // 레벨 뒤 — 천하 등급이 바뀌면 들판 적이 다시 잰다
             StoryState.Restore(data.storyCh, data.storyStep);
+            StoryState.CatchUpJoins(); // 109-14-15 — 합류가 생기기 전에 끝낸 장의 이야기 동료
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();

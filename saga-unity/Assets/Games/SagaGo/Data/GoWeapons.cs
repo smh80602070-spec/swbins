@@ -106,6 +106,8 @@ namespace Saga.Go.Data
         public static Type TypeOf(string id)
         {
             if (string.IsNullOrEmpty(id) || id == "hero") return Type.Sword;
+            if (id == "story_scholar") return Type.Catalyst; // 109-14-15 이야기 동료는 표(웹 weapon 칸)
+            if (id == "story_wanderer") return Type.Sword;
             long h = 7;
             foreach (char c in id) h = (h * 37 + c) & 0x7fffffff;
             return (Type)(h % 5);

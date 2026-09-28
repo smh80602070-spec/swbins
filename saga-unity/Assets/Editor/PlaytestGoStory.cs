@@ -35,6 +35,7 @@ namespace Saga.EditorTools
             if (fc == null || pc == null || field == null || ui == null || g == null) { Fail("FieldCombat/PlayerController/StoryField/StoryUi/수호장 없음"); return false; }
 
             bool off0 = StoryState.OffForTest;
+            var members0 = new System.Collections.Generic.List<string>(PartyState.MemberIds); // 109-14-15 장 끝 합류가 동행을 바꾼다
             float cps0 = StoryUi.RevealCps;
             int ch0 = StoryState.Ch, st0 = StoryState.StepIndex;
             bool d0 = GuardianState.Defeated, b0 = GuardianState.Bloom;
@@ -83,6 +84,8 @@ namespace Saga.EditorTools
                 GoldState.Restore(gold0);
                 PlayerStats.Restore(lv0, exp0);
                 TalentState.Restore(tal0, mats0);
+                PartyState.Restore(members0);
+                fc.RebuildParty();
                 if (!GuardianState.Standing && g.gameObject.activeSelf && g.Alive) g.gameObject.SetActive(false);
                 GuardianBloom.Instance?.Refresh();
                 fc.ResetForTest();

@@ -261,6 +261,11 @@ namespace Saga.Go.Combat
 
         public bool IsStoryBoss { get; private set; }
 
+        /// <summary>109-14-15 그림자 걸음 표식 — 남은 초·받는 피해 배율(가면 벗기 메아리가 표식 난 적을 따라간다).</summary>
+        public float MarkLeft { get; private set; }
+        public float MarkMul { get; private set; } = 1f;
+        public void Mark(float sec, float mul) { MarkLeft = Mathf.Max(MarkLeft, sec); MarkMul = mul; }
+
         /// <summary>주간 보스 2단계 — 그 원소 방패를 두른다.</summary>
         public void RaiseBossShield(GoElement el, float amount)
         {
@@ -866,6 +871,7 @@ namespace Saga.Go.Combat
                 if (FrozenLeft <= 0f) { FrozenLeft = 0f; TintVisual(Color.white, false); }
             }
             if (SuperLeft > 0f) SuperLeft = Mathf.Max(0f, SuperLeft - dt);
+            if (MarkLeft > 0f) MarkLeft = Mathf.Max(0f, MarkLeft - dt);
             if (QuickenLeft > 0f) QuickenLeft = Mathf.Max(0f, QuickenLeft - dt);
             if (BurningLeft > 0 && Alive)
             {
@@ -897,6 +903,7 @@ namespace Saga.Go.Combat
         {
             reaction = GoReaction.None;
             if (!Alive) return 0f;
+            if (MarkLeft > 0f) amount *= MarkMul; // 109-14-15 그림자 걸음 표식 — 누구에게든 받는 피해
             if (Shielded) return HitShield(amount, element);
 
             GoElement from = GoElement.Physical; // 반응 전에 붙어 있던 원소(회오리가 옮겨 붙인다)
@@ -1210,6 +1217,7 @@ namespace Saga.Go.Combat
             if (IsHero) { Yield(); return; }
             Hp = 0f;
             CurrentState = State.Dead;
+            MarkLeft = 0f; // 109-14-15 쓰러지면 표식도 사라진다
             _timer = DomainFoe || StoryFoe ? float.MaxValue : RespawnSec; // 109-14-9 숨은 터 적·109-14-12 임무 적은 다시 안 선다
             _chargedLeft = 0f;
             ClearReactionStates();

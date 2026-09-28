@@ -1037,6 +1037,24 @@
     { "key": "story.ch6.s3.p.a", "value": "같이 싸워요." },
     { "key": "story.ch6.s3.p.b", "value": "왔다!" },
     { "key": "story.ch6.s7.p.a", "value": "신하라고요?" },
-    { "key": "story.ch6.s7.p.b", "value": "검은 가면이 그 신하?" }
+    { "key": "story.ch6.s7.p.b", "value": "검은 가면이 그 신하?" },
+    { "key": "hero.story_scholar", "value": "은비" },
+    { "key": "hero.story_scholar.quote", "value": "이 비문, 읽을수록 이상하다니까." },
+    { "key": "hero.story_wanderer", "value": "가면 쓴 나그네" },
+    { "key": "hero.story_wanderer.quote", "value": "너무 떨어지면 기다려 주지 않을 테니." },
+    { "key": "hero.era.story", "value": "이야기 동료" },
+    { "key": "kit.sig.scholar.skill", "value": "비문 탁본" },
+    { "key": "kit.sig.scholar.burst", "value": "옛 글자 풀이" },
+    { "key": "kit.sig.wanderer.skill", "value": "그림자 걸음" },
+    { "key": "kit.sig.wanderer.burst", "value": "가면 벗기" },
+    { "key": "story.joined", "value": "{0} 합류" },
+    { "key": "dex.slot", "value": "들판 {0}째 자리" },
+    { "key": "dex.bench", "value": "대기" },
+    { "key": "dex.detail.story", "value": "이야기 동료 — {0} 끝에 합류한다" },
+    { "key": "dex.form_fighting", "value": "싸우는 중엔 편성을 바꿀 수 없다" },
+    { "key": "dex.form_bench", "value": "들판에서 빼기" },
+    { "key": "dex.form_all", "value": "동행이 셋 이하 — 모두 들판" },
+    { "key": "dex.form_field", "value": "들판에 넣기(둘째 자리)" },
+    { "key": "dex.form_up", "value": "◀ 앞 자리로" }
   ]
 }
