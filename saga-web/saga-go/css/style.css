@@ -1976,3 +1976,11 @@ body.fs-on #dock, body.fs-on #near { display: none !important; }
   #dock [data-sheet="keys"] { display: none; }
   .keyhint { display: none; }
 }
+
+/* 폰 가로(키 390) — 왼쪽 세로줄에 윗 카드·조이스틱·미니맵이 다 안 들어가 조이스틱(아래 150px)이 지갑 줄을 덮었다
+   (2026-09-28, 실기 보고 Q13). 조이스틱은 미니맵(폭 140) 오른쪽 바닥으로,
+   근처 카드는 조이스틱 자리까지 안 내려오게 폭을 줄인다. 점프·시야 줄(아래 150px)은 그 위라 그대로 */
+@media (max-height: 500px) and (min-width: 781px) {
+  #gjoy, #gpad { left: 162px; bottom: calc(14px + var(--safe-b)); }
+  #near, #near.show { max-width: calc(100vw - 300px); }
+}

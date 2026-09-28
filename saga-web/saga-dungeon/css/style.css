@@ -1407,3 +1407,10 @@ body.town-open .dg-tip {
 @media (hover: none) and (pointer: coarse) {
   .keyhint { display: none; }
 }
+
+/* 폰 가로(키 390) 마을 — 조이스틱(아래 150px)이 목표 줄(#goals)을 덮었다(2026-09-28, 실기 보고 Q13).
+   마을일 때만 미니맵(폭 136) 오른쪽 바닥으로 옮기고, 발밑 안내는 그 오른쪽에서 시작한다. 던전 안(구슬·스킬 줄)은 그대로 */
+@media (max-height: 500px) and (min-width: 781px) {
+  body.town-open #dg-joy, body.town-open #dg-pad { left: calc(156px + var(--safe-l)); bottom: calc(14px + var(--safe-b)); }
+  body.town-open .dg-tip { padding-left: 290px; }
+}

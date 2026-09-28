@@ -708,14 +708,18 @@
     }
     return miniBotV;
   }
+  /* 폰 가로(키 500 아래·폭 780 넘음) — 왼쪽 아래는 ◀▶ 조작판과 가로로 누운 독 자리라 원이 그 밑에 깔렸다(2026-09-28,
+     실기 보고 Q13). 오른쪽 위, 도구줄(아이콘 한 줄) 밑으로 옮기고 조금 줄인다. CSS 의 가로 규칙과 같은 문턱 */
+  function miniLand() { return !!(global.innerHeight && global.innerHeight <= 500 && global.innerWidth > 780 && global.innerWidth > global.innerHeight); }
   function miniBox(stg) {
-    var s = Math.min(W <= 560 ? 104 : 128, H - 40);
+    var land = miniLand();
+    var s = Math.min(land ? 104 : (W <= 560 ? 104 : 128), H - 40);
     var top = 240, bot = stg.floor + 30;          // 세로로 담을 구간
     var hw = Math.max(1, stg.width / 2), hh = Math.max(1, (bot - top) / 2);
     var rad = s / 2 - 3;
     /* 원에 내접하는 사각형 축척 — 네 귀퉁이(hw,hh)가 딱 반지름에 닿는 배수 */
     var scale = rad / Math.sqrt(hw * hw + hh * hh);
-    return { cx: 12 + s / 2, cy: miniBottom() - s / 2, s: s, rad: rad,
+    return { cx: land ? W - 12 - s / 2 : 12 + s / 2, cy: land ? 64 + s / 2 : miniBottom() - s / 2, s: s, rad: rad,
              hw: hw, hh: hh, top: top, scale: scale };
   }
 
