@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -181,6 +183,36 @@ namespace Saga.EditorTools
 
         public static string PrefabPath(string name) => $"{Root}{name}/{name}Animated.prefab";
 
+        private const string ForgeDir = "Assets/Art/CharactersForge/";
+
+        /// <summary>
+        /// char-forge 교체 표(09-27 밤 결정 "게임 몸 교체부터") — 사용자가 Mixamo ↔ 공방 비교(HOW_TO_PLAYTEST §9)에서
+        /// "바꿔도 된다" 한 몸만 여기 올린다. 올린 몸은 같은 자리(`PrefabPath`, GUID 그대로라 씬은 다시 안 지어도 된다)에
+        /// 공방 FBX(`CharactersForge/<id>.fbx`)로 프리팹을 굽는다 — Mixamo 원본이 없는 PC 에서도 선다.
+        /// 공방 FBX 에 이 몸의 상태 클립(idle·walk·run·attack·hit·death·덧붙임 소문자)이 하나라도 없으면 Mixamo 로 굽는다.
+        /// </summary>
+        public static readonly Dictionary<string, string> ForgeSwap = new Dictionary<string, string>
+        {
+        };
+
+        public static bool IsForgeSwapped(string name) => ForgeSwap.ContainsKey(name);
+
+        /// <summary>교체 표의 몸만 다시 굽는다(배치 `-executeMethod` 용). 로그 `FORGE_SWAP <이름>=forge|mixamo|fail`.</summary>
+        [MenuItem("Saga/Char Forge/Apply Forge Swaps")]
+        public static void SetupForgeSwaps()
+        {
+            var built = new List<string>();
+            foreach (var name in ForgeSwap.Keys)
+            {
+                var spec = Specs.FirstOrDefault(x => x.Name == name);
+                if (spec == null) { built.Add($"{name}=fail(표에 없음)"); continue; }
+                bool forge = SetupForge(spec, ForgeSwap[name]);
+                built.Add($"{name}={(forge ? "forge" : Setup(spec) ? "mixamo" : "fail")}");
+            }
+            AssetDatabase.SaveAssets();
+            Debug.Log($"FORGE_SWAP {string.Join(" ", built)}");
+        }
+
         /// <summary>표에서 한 캐릭터만 굽는다(`SetupForestCreatureModels` 가 제 몸 여섯만 부른다).</summary>
         public static bool SetupOne(string name)
         {
@@ -215,6 +247,11 @@ namespace Saga.EditorTools
 
         private static bool Setup(Spec spec)
         {
+            if (ForgeSwap.TryGetValue(spec.Name, out var forgeId))
+            {
+                if (SetupForge(spec, forgeId)) return true;
+                Debug.LogWarning($"[SetupNpcCharacterImports] {spec.Name} 공방 몸 {forgeId} 로 못 구움 — Mixamo 로 굽는다");
+            }
             string dir = $"{Root}{spec.Name}/";
             string body = $"{spec.Name}.fbx";
             if (!File.Exists(dir + body))
@@ -240,14 +277,60 @@ namespace Saga.EditorTools
             string tag = $"SetupNpcCharacterImports:{spec.Name}";
             if (MixamoRigUtil.RigCharacter(dir, body, map.ToArray(), tag) == null) return false;
 
-            var controller = BuildController(spec, dir);
+            var controller = BuildController(spec, state => LoadClip($"{dir}{spec.Name}@{state.suffix}.fbx", Clip(state.suffix)));
             if (controller == null) return false;
-            return BuildPrefab(spec, dir, body, controller);
+            return BuildPrefab(spec, AssetDatabase.LoadAssetAtPath<GameObject>(dir + body), controller);
+        }
+
+        /// <summary>공방 몸으로 굽기 — 클립은 공방 FBX 안의 상태 이름(소문자)으로 찾는다(Mixamo 접미사 Cast·Walking 과 무관).</summary>
+        private static bool SetupForge(Spec spec, string forgeId)
+        {
+            string fbx = $"{ForgeDir}{forgeId}.fbx";
+            if (!File.Exists(fbx))
+            {
+                Debug.LogWarning($"[SetupNpcCharacterImports] {fbx} 없음 — tools/char-forge README §3 새 PC 순서로 뽑는다");
+                return false;
+            }
+            var avatar = AssetDatabase.LoadAllAssetsAtPath(fbx).OfType<Avatar>().FirstOrDefault();
+            if (avatar == null || !avatar.isHuman) BuildCharCompareRealScene.SetupForgeImport(fbx);
+            var clips = AssetDatabase.LoadAllAssetsAtPath(fbx).OfType<AnimationClip>()
+                .Where(c => !c.name.StartsWith("__preview")).GroupBy(c => c.name).ToDictionary(g => g.Key, g => g.First());
+
+            var missing = StateSlots(spec).Select(x => x.state.ToLowerInvariant()).Where(n => !clips.ContainsKey(n)).ToList();
+            if (missing.Count > 0)
+            {
+                Debug.LogWarning($"[SetupNpcCharacterImports] {forgeId} 에 클립 없음: {string.Join(",", missing)}");
+                return false;
+            }
+
+            string dir = $"{Root}{spec.Name}";
+            if (!AssetDatabase.IsValidFolder(dir))
+            {
+                if (!AssetDatabase.IsValidFolder(Root.TrimEnd('/'))) AssetDatabase.CreateFolder("Assets/Art", "CharactersRealistic");
+                AssetDatabase.CreateFolder(Root.TrimEnd('/'), spec.Name);
+            }
+            var controller = BuildController(spec, state => clips.TryGetValue(state.name.ToLowerInvariant(), out var c) ? c : null);
+            if (controller == null) return false;
+            bool ok = BuildPrefab(spec, AssetDatabase.LoadAssetAtPath<GameObject>(fbx), controller);
+            if (ok) Debug.Log($"[SetupNpcCharacterImports] {spec.Name} = 공방 몸 {forgeId}");
+            return ok;
+        }
+
+        /// <summary>이 몸이 가진 상태(이름, Mixamo 접미사) — 빈 칸은 뺀다.</summary>
+        private static IEnumerable<(string state, string suffix)> StateSlots(Spec spec)
+        {
+            var slots = new List<(string, string)>
+            {
+                ("Idle", spec.Idle), ("Walk", spec.Walk), ("Run", spec.Run), ("Attack", spec.Attack), ("Hit", spec.Hit), ("Death", spec.Death),
+            };
+            foreach (var extra in spec.ExtraIdles) slots.Add((extra, extra));
+            foreach (var extra in spec.ExtraTriggers) slots.Add((extra, extra));
+            return slots.Where(x => !string.IsNullOrEmpty(x.Item2));
         }
 
         private static string Clip(string suffix) => suffix.ToLowerInvariant();
 
-        private static AnimatorController BuildController(Spec spec, string dir)
+        private static AnimatorController BuildController(Spec spec, Func<(string name, string suffix), AnimationClip> clipFor)
         {
             if (!AssetDatabase.IsValidFolder("Assets/Animators")) AssetDatabase.CreateFolder("Assets", "Animators");
             string path = $"Assets/Animators/{spec.Name}.controller";
@@ -257,7 +340,7 @@ namespace Saga.EditorTools
             controller.AddParameter("Speed", AnimatorControllerParameterType.Float);
             var sm = controller.layers[0].stateMachine;
 
-            var idle = State(sm, "Idle", dir, spec.Name, spec.Idle);
+            var idle = State(sm, "Idle", spec.Idle, spec.Name, clipFor);
             if (idle == null)
             {
                 Debug.LogError($"[SetupNpcCharacterImports] {spec.Name} 대기 클립이 없다");
@@ -265,8 +348,8 @@ namespace Saga.EditorTools
             }
             sm.defaultState = idle;
 
-            var walk = State(sm, "Walk", dir, spec.Name, spec.Walk);
-            var run = State(sm, "Run", dir, spec.Name, spec.Run);
+            var walk = State(sm, "Walk", spec.Walk, spec.Name, clipFor);
+            var run = State(sm, "Run", spec.Run, spec.Name, clipFor);
             if (walk != null)
             {
                 Speed(idle, walk, AnimatorConditionMode.Greater, 0.1f);
@@ -279,25 +362,26 @@ namespace Saga.EditorTools
                 Speed(run, from, AnimatorConditionMode.Less, 0.6f);
             }
 
-            Trigger(controller, sm, idle, "Attack", State(sm, "Attack", dir, spec.Name, spec.Attack), back: true);
-            Trigger(controller, sm, idle, "Hit", State(sm, "Hit", dir, spec.Name, spec.Hit), back: true);
+            Trigger(controller, sm, idle, "Attack", State(sm, "Attack", spec.Attack, spec.Name, clipFor), back: true);
+            Trigger(controller, sm, idle, "Hit", State(sm, "Hit", spec.Hit, spec.Name, clipFor), back: true);
             // Death 는 마지막 프레임에 머문다(Abe·Maria 관례).
-            Trigger(controller, sm, idle, "Death", State(sm, "Death", dir, spec.Name, spec.Death), back: false);
+            Trigger(controller, sm, idle, "Death", State(sm, "Death", spec.Death, spec.Name, clipFor), back: false);
 
-            foreach (var extra in spec.ExtraIdles) State(sm, extra, dir, spec.Name, extra);
-            foreach (var extra in spec.ExtraTriggers) Trigger(controller, sm, idle, extra, State(sm, extra, dir, spec.Name, extra), back: true);
+            foreach (var extra in spec.ExtraIdles) State(sm, extra, extra, spec.Name, clipFor);
+            foreach (var extra in spec.ExtraTriggers) Trigger(controller, sm, idle, extra, State(sm, extra, extra, spec.Name, clipFor), back: true);
 
             EditorUtility.SetDirty(controller);
             return controller;
         }
 
-        private static AnimatorState State(AnimatorStateMachine sm, string stateName, string dir, string charName, string suffix)
+        private static AnimatorState State(AnimatorStateMachine sm, string stateName, string suffix, string charName,
+            Func<(string name, string suffix), AnimationClip> clipFor)
         {
             if (string.IsNullOrEmpty(suffix)) return null;
-            var clip = LoadClip($"{dir}{charName}@{suffix}.fbx", Clip(suffix));
+            var clip = clipFor((stateName, suffix));
             if (clip == null)
             {
-                Debug.LogWarning($"[SetupNpcCharacterImports] {charName}@{suffix}.fbx 클립 없음 — '{stateName}' 상태를 뺀다");
+                Debug.LogWarning($"[SetupNpcCharacterImports] {charName} {stateName}({suffix}) 클립 없음 — 상태를 뺀다");
                 return null;
             }
             var s = sm.AddState(stateName);
@@ -330,9 +414,8 @@ namespace Saga.EditorTools
             r.duration = 0.15f;
         }
 
-        private static bool BuildPrefab(Spec spec, string dir, string body, AnimatorController controller)
+        private static bool BuildPrefab(Spec spec, GameObject bodyAsset, AnimatorController controller)
         {
-            var bodyAsset = AssetDatabase.LoadAssetAtPath<GameObject>(dir + body);
             if (bodyAsset == null) return false;
             var instance = (GameObject)PrefabUtility.InstantiatePrefab(bodyAsset);
             instance.name = spec.Name;
@@ -342,7 +425,7 @@ namespace Saga.EditorTools
             animator.applyRootMotion = false; // 위치는 스크립트가 옮긴다(걷기·달리기는 In Place 클립).
             animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
             PrefabUtility.SaveAsPrefabAsset(instance, PrefabPath(spec.Name));
-            Object.DestroyImmediate(instance);
+            UnityEngine.Object.DestroyImmediate(instance);
             Debug.Log($"[SetupNpcCharacterImports] saved {PrefabPath(spec.Name)}");
             return true;
         }
