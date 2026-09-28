@@ -64,6 +64,25 @@ namespace Saga.Go.UI
         public Button WorldLevelButton => _advButton;
         private TextMeshProUGUI _advText;
         private Button _advButton;
+
+        // ---- 109-14-23 임무 표식(웹 ⑲-23) — 이야기·세계 임무 목표를 지도에 찍고, 누르면 고른다(이름·할 일·거리·가까운 순간이동 지점).
+        private const int MarkSlots = 4; // 이야기 하나 + 세계 임무 셋
+        private static readonly Color StoryTone = new Color(1f, 0.85f, 0.4f);
+        private static readonly Color QuestTone = new Color(0.55f, 0.8f, 1f);
+        private readonly List<Button> _markButtons = new List<Button>();
+        private List<GoMapMarks.Mark> _marks = new List<GoMapMarks.Mark>();
+        private bool _hasPick, _pickWq;
+        private int _pickQuest;
+        private TextMeshProUGUI _pickText;
+        private Button _pickTrack, _pickJump;
+        public int MarkCount => _marks.Count;
+        public GoMapMarks.Mark MarkAt(int i) => _marks[i];
+        public Button MarkButton(int i) => _markButtons[i];
+        public bool MarkShown(int i) => _markButtons[i].gameObject.activeSelf;
+        public bool HasPick => _hasPick;
+        public string PickText => _pickText.text;
+        public Button PickTrackButton => _pickTrack;
+        public Button PickJumpButton => _pickJump;
         /// <summary>진단용 — 지도 텍스처에서 칸 가운데 색.</summary>
         public Color TileColorOnMap(int gx, int gy) => _tex.GetPixel(gx * TilePx + TilePx / 2, (TestMapData.RowCount - 1 - gy) * TilePx + TilePx / 2);
 
@@ -73,6 +92,7 @@ namespace Saga.Go.UI
         {
             Build();
             WorldMapState.Changed += OnChanged;
+            StoryState.Changed += OnChanged;
             OnChanged();
             _panel.SetActive(false);
         }
@@ -80,6 +100,7 @@ namespace Saga.Go.UI
         private void OnDestroy()
         {
             WorldMapState.Changed -= OnChanged;
+            StoryState.Changed -= OnChanged;
             AdventureState.Changed -= OnChanged;
             if (Instance == this) Instance = null;
         }
@@ -190,6 +211,27 @@ namespace Saga.Go.UI
                 _peakButtons.Add(b);
             }
 
+            // 109-14-23 임무 표식 — 넷 자리를 미리 만들어 두고 켜고 끈다(화살표 아래). 누르면 그 표식을 고른다.
+            for (int i = 0; i < MarkSlots; i++)
+            {
+                var mb = EncounterUiKit.NewButton(_mapRect, "◆", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(44f, 44f), null);
+                mb.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+                mb.gameObject.AddComponent<Saga.Core.LayoutFree>(); // 목표 자리마다 움직이는 표지 — 배치 점검이 겹침에서 뺀다
+                int idx = i;
+                mb.onClick.AddListener(() => PickMark(idx));
+                _markButtons.Add(mb);
+            }
+
+            // 고른 표식 카드 — 오른쪽 열, 지역 글(위)과 여정 줄(아래) 사이. 아무것도 안 골랐으면 범례 한 줄.
+            _pickText = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX, 495f), new Vector2(620f, 150f), 19);
+            _pickText.raycastTarget = false;
+            _pickTrack = EncounterUiKit.NewButton(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX - 155f, 405f), new Vector2(300f, 52f), null);
+            _pickTrack.GetComponentInChildren<TextMeshProUGUI>().fontSize = 17;
+            _pickTrack.onClick.AddListener(() => TrackPicked());
+            _pickJump = EncounterUiKit.NewButton(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX + 155f, 405f), new Vector2(300f, 52f), null);
+            _pickJump.GetComponentInChildren<TextMeshProUGUI>().fontSize = 17;
+            _pickJump.onClick.AddListener(() => JumpPicked());
+
             var arrowText = EncounterUiKit.NewText(_mapRect, "▲", new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(48f, 48f), 36);
             arrowText.color = new Color(1f, 0.95f, 0.35f);
             arrowText.raycastTarget = false;
@@ -240,6 +282,7 @@ namespace Saga.Go.UI
                 _peakButtons[i].gameObject.SetActive(found || WorldMapState.IsVisited(p.RegionId));
             }
             RefreshAdventure();
+            RefreshMarks();
             var player = FieldCombat.Instance;
             _regionInfo.text = RegionInfo(player != null ? GoWorldMap.RegionAt(player.transform.position) : _lastRegion ?? "village");
             _info.text = string.Format(GoLocalization.T("map.info", "푸른 ◆ 역참을 누르면 순간이동 · 켠 역참 {0}/{1}{2}"),
@@ -385,6 +428,100 @@ namespace Saga.Go.UI
         }
 
         public void Close() => _panel.SetActive(false);
+
+        // ---- 109-14-23 임무 표식
+
+        private static Color ToneOf(GoMapMarks.Mark m) => m.Wq ? QuestTone : StoryTone;
+        private static string Hex(Color c) => ColorUtility.ToHtmlStringRGB(c);
+
+        private void RefreshMarks()
+        {
+            var fc = FieldCombat.Instance;
+            _marks = GoMapMarks.Build(fc != null ? fc.transform.position : Vector3.zero);
+            if (_hasPick && IndexOfPick() < 0) _hasPick = false; // 끝났거나 꺼진 표식은 고르기를 푼다
+            for (int i = 0; i < _markButtons.Count; i++)
+            {
+                var b = _markButtons[i];
+                b.gameObject.SetActive(i < _marks.Count);
+                if (i >= _marks.Count) continue;
+                var m = _marks[i];
+                Vector2 g = GoWorldMap.WorldToGridF(m.Pos);
+                b.GetComponent<RectTransform>().anchoredPosition = MapPos(g.x, g.y);
+                var txt = b.GetComponentInChildren<TextMeshProUGUI>();
+                txt.text = GoMapMarks.Icon(m.Kind);
+                txt.fontSize = m.Kind == GoMapMarks.Kind.Track ? 34 : 28;
+                txt.fontStyle = FontStyles.Bold;
+                txt.color = ToneOf(m);
+                bool sel = _hasPick && m.Is(_pickWq, _pickQuest);
+                b.GetComponent<Image>().color = sel ? new Color(1f, 1f, 1f, 0.35f) : new Color(0f, 0f, 0f, 0.35f);
+            }
+            RefreshPick();
+        }
+
+        private int IndexOfPick()
+        {
+            for (int i = 0; i < _marks.Count; i++) if (_marks[i].Is(_pickWq, _pickQuest)) return i;
+            return -1;
+        }
+
+        private void RefreshPick()
+        {
+            int pi = _hasPick ? IndexOfPick() : -1;
+            _pickTrack.gameObject.SetActive(pi >= 0);
+            _pickJump.gameObject.SetActive(pi >= 0);
+            if (pi < 0)
+            {
+                _pickText.text = _marks.Count == 0 ? "" : GoLocalization.T("map.mark_legend",
+                    "◆ 따라가는 임무 · ◇ 맡은 임무 · ! 맡을 수 있는 임무 — 금빛 이야기 · 푸른빛 세계 임무. 표식을 누르면 고른다");
+                _pickText.color = new Color(0.8f, 0.8f, 0.85f);
+                return;
+            }
+            var m = _marks[pi];
+            var fc = FieldCombat.Instance;
+            float d = fc != null ? GoStory.Flat(fc.transform.position, m.Pos) : 0f;
+            bool way = GoMapMarks.NearestWay(m.Pos, out var w);
+            _pickText.color = Color.white;
+            _pickText.text = $"<color=#{Hex(ToneOf(m))}><b>{GoMapMarks.Icon(m.Kind)}</b> <b>{m.Name}</b></color> <size=85%>{GoMapMarks.Dist(d)}</size>\n{m.Text}\n<size=85%>"
+                + (way ? string.Format(GoLocalization.T("map.mark_near", "가까운 지점 — {0} (표식에서 {1})"), w.Name, GoMapMarks.Dist(w.Dist))
+                       : GoLocalization.T("map.mark_near_none", "가까운 지점 — 없음")) + "</size>";
+            _pickTrack.GetComponentInChildren<TextMeshProUGUI>().text = m.Kind == GoMapMarks.Kind.Track ? GoLocalization.T("map.mark_tracking", "따라가는 중")
+                : m.Kind == GoMapMarks.Kind.Avail ? GoLocalization.T("map.mark_take", "맡길 사람에게 말을 걸어 맡는다")
+                : GoLocalization.T("map.mark_follow", "따라가기");
+            _pickTrack.interactable = CanTrack(m);
+            _pickJump.GetComponentInChildren<TextMeshProUGUI>().text = way ? GoLocalization.T("map.mark_jump", "가까운 지점으로 순간이동") : GoLocalization.T("map.mark_jump_none", "순간이동 지점 없음");
+            _pickJump.interactable = way && !DuelGate.Active;
+        }
+
+        private static bool CanTrack(GoMapMarks.Mark m) => m.Kind == GoMapMarks.Kind.Idle;
+
+        /// <summary>표식을 고른다(같은 것을 또 누르면 풀린다). 진단도 부른다. 고른 채면 true.</summary>
+        public bool PickMark(int i)
+        {
+            if (i < 0 || i >= _marks.Count) return false;
+            var m = _marks[i];
+            _hasPick = !(_hasPick && m.Is(_pickWq, _pickQuest));
+            _pickWq = m.Wq; _pickQuest = m.Quest;
+            RefreshMarks();
+            return _hasPick;
+        }
+
+        /// <summary>고른 표식을 따라간다 — 맡았지만 안 따라가는 임무·이야기만(맡기 전 ! 는 막힘).</summary>
+        public bool TrackPicked()
+        {
+            int pi = _hasPick ? IndexOfPick() : -1;
+            if (pi < 0 || !CanTrack(_marks[pi])) return false;
+            bool ok = StoryState.SetTrack(_marks[pi].Wq ? _marks[pi].Quest : -1); // Changed 가 지도를 다시 그린다
+            RefreshMarks();
+            return ok;
+        }
+
+        /// <summary>고른 표식에서 가장 가까운 지점으로 순간이동(되면 지도가 닫힌다).</summary>
+        public bool JumpPicked()
+        {
+            int pi = _hasPick ? IndexOfPick() : -1;
+            if (pi < 0 || !GoMapMarks.NearestWay(_marks[pi].Pos, out var w)) return false;
+            return w.Peak ? TeleportToPeak(w.Index) : TeleportTo(w.Index);
+        }
 
         /// <summary>109-9 — 오른 정상이면 그 윗면으로 순간이동(true). 결투 중·안 오른 정상은 거절.</summary>
         public bool TeleportToPeak(int index)

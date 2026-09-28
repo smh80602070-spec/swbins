@@ -1349,6 +1349,14 @@
     { "key": "field.sneak", "value": "Weak spot!" },
     { "key": "chest.hint_target", "value": "{0} — hit all three targets around it with a bow (R to aim) or a tome within {1} seconds" },
     { "key": "chest.unlock_target", "value": "All three targets lit together — the chains on the {0} fell away" },
-    { "key": "chest.target_progress", "value": "Target {0}/{1} — hit the rest within {2} seconds" }
+    { "key": "chest.target_progress", "value": "Target {0}/{1} — hit the rest within {2} seconds" },
+    { "key": "map.mark_legend", "value": "◆ Tracked quest · ◇ Accepted quest · ! Available quest — gold is story, blue is world quests. Tap a marker to select it" },
+    { "key": "map.mark_near", "value": "Nearest waypoint — {0} ({1} from the marker)" },
+    { "key": "map.mark_near_none", "value": "Nearest waypoint — none" },
+    { "key": "map.mark_tracking", "value": "Tracking" },
+    { "key": "map.mark_take", "value": "Talk to the giver to accept" },
+    { "key": "map.mark_follow", "value": "Track this" },
+    { "key": "map.mark_jump", "value": "Teleport to nearest waypoint" },
+    { "key": "map.mark_jump_none", "value": "No waypoint to teleport to" }
   ]
 }

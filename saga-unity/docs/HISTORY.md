@@ -10322,3 +10322,16 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 검증: 컴파일 0 · `PlaytestRealmSlice` 3연속 같은 결과 OK(actors 사실 몸 무장 4·재야 5, battlefield OK). 배치가 고친 폰트 SDF·Mobile_RPAsset 되돌림.
 - 실기 확인 전: 4m 말이 표지와 어울리는지·몸짓이 멀리서 읽히는지 · 싸움터 두 장수 베기·쓰러짐 박자 · 손에 든 것 위치(오른손 뼈 축) · 갑옷 몸 키 배율.
 - 다음 = 사람 NPC 몸 교체 보류 분·109 표 14-23(임무 표식)·14-1b 괴물 넷(묶음 PC).
+
+## 2026-09-29 GO — 109-14-23 지도 임무 표식(웹 사가고 ⑲-23)
+
+"이어해" — 14-22 다음. 웹 story `mapMarks`·overworld `questLayout`/`pickInfo`/`trackPicked`/`jumpPicked` 대조. 이 트랙엔 미니맵이 없어 월드맵(M)만.
+
+- `Data/GoMapMarks`(새, 순수): 이야기 하나(끝났거나 잠겼으면 없음) + 세계 임무 셋 → `Mark`(Track ◆ 따라가는 중 · Idle ◇ 맡았지만 안 따라감, 그 단계 목표 · Avail ! 등급 닿은 맡을 수 있는 것, 맡길 사람 자리). 이야기 금빛·세계 임무 푸른빛. 따라가는 것 말고는 `WorldMapState.IsVisited`(못 가 본 땅 숨김, 망루로 밝히면 전부). 목표는 `GoStory.TargetOf`. `NearestWay` = 켠 역참·오른 정상 중 가장 가까운 지점(`ArrivalPos`/`PeakArrival` 기준 평면 거리).
+- `WorldMapUi`: 표식 단추 4자리(화살표 아래·`LayoutFree`)·누르면 고름(같은 것 또 누르면 풀림) · 오른쪽 열 카드(이름·거리·그 단계 글·가까운 지점) + 따라가기 단추(◇ 만 열림 — 따라가는 중·맡기 전 ! 는 막힘, `StoryState.SetTrack`) + 가까운 지점 순간이동 단추(`TeleportTo`/`TeleportToPeak`, 결투 중 막힘, 지도 닫힘) · 아무것도 안 골랐으면 범례 한 줄. `StoryState.Changed` 도 받아 다시 그린다. 세이브 없음.
+- 글 8 짝(`map.mark_*`, loc-review 오류 0).
+- 진단 `PlaytestGoMapMarks`(`PlaytestHeadless` 가 세계 임무 진단 뒤에 부름): 표식 판(◆·! 등급·못 가 본 땅 숨김·◇·◆ 옮김·끝남·꺼짐) · 가까운 지점(독립 셈 대조) · 지도 화면(단추 4·범례·고르기·따라가기 ◇ 만·순간이동 자리). 끝나면 이야기·임무·줄·지도 기록·정상·레벨·자리 되돌림.
+- 함정: 진단 배선 줄을 node 로 latin1 왕복해 넣었더니 한글 주석이 깨져 파일 전체가 컴파일 오류(CS1010) — 한글은 Write/Edit 로, 셸 삽입은 ASCII 로.
+- 검증(묶음 PC): 컴파일 0 · `PlaytestHeadless` 3연속 같은 결과 — map marks OK, 남은 FAIL 은 기준선 등불(regionProps bandit_camp wooden_lantern_01) 하나. 첫 배치는 Package Manager IPC 연결 실패로 시작 못 함 → 재실행.
+- 실기 확인 전: 표식 크기(44px 단추, ◆34·◇/!28)가 지도 위 다른 글·▲·◆ 역참에 묻히지 않는지 · 카드·단추 두 개가 오른쪽 열(지역 글 밑·여정 줄 위)에 안 겹치는지 · 순간이동 뒤 도착 자리.
+- 다음 = 14-24 (웹 ⑲-24 낚시).

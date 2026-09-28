@@ -180,6 +180,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoStory.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-12 이야기 임무 1~2장(진행·수호장·원기·돈·재료·세이브·자리 되돌림)
                 if (!PlaytestGoAim.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-22 활 조준·과녁 잠금(동행·상자·이야기 되돌림)
                 if (!PlaytestGoWorldQuests.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-21 세계 임무 셋·따라가는 줄(이야기·임무·줄·돈·재료 되돌림)
+                if (!PlaytestGoMapMarks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-23 map marks
                 if (!PlaytestGoStoryAllies.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-15 이야기 동료·고유 스킬 둘·편성(동행·진행·돈·들판 되돌림)
                 if (!PlaytestGoPresets.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-18 편성 1~4·싸우는 중 막기(동행·편성·들판·적 되돌림)
                 if (!PlaytestGoPeaks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-9 정상 발견·순간이동·건물 가림 카메라(기록·돈·세이브 되돌림)

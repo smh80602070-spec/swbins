@@ -1349,6 +1349,14 @@
     { "key": "field.sneak", "value": "급소!" },
     { "key": "chest.hint_target", "value": "{0} — 둘레 과녁 셋을 활(R 조준)·서책으로 {1}초 안에 모두 맞혀라" },
     { "key": "chest.unlock_target", "value": "과녁 셋이 함께 빛났다 — {0}의 사슬이 풀렸다" },
-    { "key": "chest.target_progress", "value": "과녁 {0}/{1} — {2}초 안에 나머지를" }
+    { "key": "chest.target_progress", "value": "과녁 {0}/{1} — {2}초 안에 나머지를" },
+    { "key": "map.mark_legend", "value": "◆ 따라가는 임무 · ◇ 맡은 임무 · ! 맡을 수 있는 임무 — 금빛 이야기 · 푸른빛 세계 임무. 표식을 누르면 고른다" },
+    { "key": "map.mark_near", "value": "가까운 지점 — {0} (표식에서 {1})" },
+    { "key": "map.mark_near_none", "value": "가까운 지점 — 없음" },
+    { "key": "map.mark_tracking", "value": "따라가는 중" },
+    { "key": "map.mark_take", "value": "맡길 사람에게 말을 걸어 맡는다" },
+    { "key": "map.mark_follow", "value": "따라가기" },
+    { "key": "map.mark_jump", "value": "가까운 지점으로 순간이동" },
+    { "key": "map.mark_jump_none", "value": "순간이동 지점 없음" }
   ]
 }
