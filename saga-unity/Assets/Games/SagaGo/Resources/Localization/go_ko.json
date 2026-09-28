@@ -537,6 +537,9 @@
     { "key": "field.minion.anemo", "value": "풍 졸개" },
     { "key": "field.minion.cryo", "value": "빙 졸개" },
     { "key": "field.minion.geo", "value": "암 졸개" },
-    { "key": "field.minion.dendro", "value": "초 졸개" }
+    { "key": "field.minion.dendro", "value": "초 졸개" },
+    { "key": "field.charge", "value": "강공격" },
+    { "key": "field.charge_low", "value": "스태미나 부족" },
+    { "key": "field.plunge", "value": "낙하 공격" }
   ]
 }

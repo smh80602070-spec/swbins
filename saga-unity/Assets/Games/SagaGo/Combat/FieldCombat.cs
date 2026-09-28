@@ -39,6 +39,21 @@ namespace Saga.Go.Combat
         public const float SwapCooldownSec = 1f;
         public const float RegenDelaySec = 8f;
         public const float RegenPerSec = 0.04f; // 최대 체력 비율
+        // PLAN.md 109-14-2 강공격·낙하 공격(웹 사가고 ⑲-2 · Godot 106 ⑧ 칸, 거리 × 1.85)
+        public const float ChargeHoldSec = 0.4f;
+        public const float ChargeStamina = 20f;
+        public const float ChargeReach = 5.9f;       // 3.2m
+        public const float ChargeFrontDot = -0.2f;   // 앞 넓게(옆까지)
+        public const float ChargeMul = 1.3f;
+        public const float PlungeMinHeight = 4.6f;   // 2.5m
+        public const float PlungeSpeed = 55f;        // 초당 30m
+        public const float PlungeRadius = 6.5f;      // 3.5m
+        public const float PlungeBaseMul = 1.2f;
+        public const float PlungePerMeter = 0.1f / 1.85f; // 떨어진 Godot 1m 당 +0.1
+        public const float PlungeMaxFall = 27.75f;   // 15m 까지
+
+        /// <summary>낙하 공격 배수 — 1.2 + 떨어진 높이(15m 까지).</summary>
+        public static float PlungeMul(float fallMeters) => PlungeBaseMul + PlungePerMeter * Mathf.Clamp(fallMeters, 0f, PlungeMaxFall);
 
         public class Member
         {
@@ -100,6 +115,10 @@ namespace Saga.Go.Combat
         private float _comboWindow;
         private float _attackCd;
         private float _sinceHit = 999f;
+        // 109-14-2 공격을 누르고 있는 시간 — 0.4초 넘으면 강공격 한 번
+        private float _holdT;
+        public bool AttackHeldByUi { get; set; }
+        public bool ChargeFiredThisHold { get; private set; }
 
         // 107 ⑤ — 불도깨비에게 맞은 화상(맞은 인물에게 남은 틱). 109-14-1a 초 적의 중독도 이 자리(틱 수·간격·빛깔만 다르다)
         public int BurnTicksLeft { get; private set; }
@@ -123,6 +142,7 @@ namespace Saga.Go.Combat
         {
             Instance = this;
             if (player == null) player = GetComponent<PlayerController>();
+            if (player != null) player.PlungeLanded += OnPlungeLanded;
             SafePoint = transform.position;
             RebuildParty();
             PartyState.PowerChanged += OnPowerChanged;
@@ -131,6 +151,7 @@ namespace Saga.Go.Combat
         private void OnDestroy()
         {
             PartyState.PowerChanged -= OnPowerChanged;
+            if (player != null) player.PlungeLanded -= OnPlungeLanded;
             if (Instance == this) Instance = null;
         }
 
@@ -199,7 +220,8 @@ namespace Saga.Go.Combat
 
             var kb = Keyboard.current;
             if (kb == null) return;
-            if (kb.jKey.wasPressedThisFrame) Attack();
+            if (kb.jKey.wasPressedThisFrame) AttackPress();
+            TickHold(kb.jKey.isPressed || AttackHeldByUi, dt);
             if (kb.eKey.wasPressedThisFrame) Skill();
             if (kb.qKey.wasPressedThisFrame) Burst();
             if (kb.lKey.wasPressedThisFrame || kb.leftCtrlKey.wasPressedThisFrame) Dodge();
@@ -253,7 +275,7 @@ namespace Saga.Go.Combat
                 Vector3 d = Flat(e.transform.position - transform.position);
                 if (d.magnitude > AttackReach) continue;
                 if (d.sqrMagnitude > 0.25f && Vector3.Dot(d.normalized, fwd) < 0.5f) continue; // 앞 120°
-                e.TakeHit(atk * ComboMul[step], GoElement.Physical, atk, out _, heavy: step == ComboMul.Length - 1); // 3타째는 얼어붙은 적을 깨뜨린다
+                e.TakeHit(atk * ComboMul[step], GoElement.Physical, atk, out _); // 깨뜨림은 강공격·낙하 공격만(109-14-2, 웹·Godot 와 같게)
                 hits++;
             }
             if (hits > 0)
@@ -263,6 +285,88 @@ namespace Saga.Go.Combat
             }
             return hits;
         }
+
+        /// <summary>109-14-2 공격 누름 — 활공 중이면 낙하 공격, 아니면 기본 한 타.</summary>
+        public int AttackPress()
+        {
+            if (player != null && player.Mode == PlayerController.MoveMode.Glide) return TryPlunge() ? 0 : -1;
+            return Attack();
+        }
+
+        /// <summary>누르고 있는 동안 — 0.4초가 넘으면 강공격 한 번(뗄 때까지 다시 안 나간다). 진단이 직접 부른다.</summary>
+        public void TickHold(bool held, float dt)
+        {
+            if (!held) { _holdT = 0f; ChargeFiredThisHold = false; return; }
+            _holdT += dt;
+            if (ChargeFiredThisHold || _holdT < ChargeHoldSec) return;
+            ChargeFiredThisHold = true;
+            ChargedAttack();
+        }
+
+        /// <summary>강공격 — 스태미나 20, 가까운 적 쪽 앞 넓게(5.9m·옆까지) ×1.3 물리, 얼어붙은 적을 깨뜨린다, 콤보는 처음부터.
+        /// 들어간 적 수(-1 = 못 침 — 스태미나 부족 등).</summary>
+        public int ChargedAttack()
+        {
+            if (!CanAct()) return -1;
+            if (!GoStamina.TrySpend(ChargeStamina))
+            {
+                FieldDamageText.Spawn(transform.position + Vector3.up * 4.6f, GoLocalization.T("field.charge_low", "스태미나 부족"), new Color(0.8f, 0.85f, 0.6f), 0.9f);
+                return -1;
+            }
+            ComboStep = 0;
+            _comboWindow = 0f;
+            _attackCd = AttackIntervalSec;
+            var target = Nearest(AutoFaceRadius);
+            if (target != null && player != null) player.FaceToward(target.transform.position);
+            if (player != null && player.Animator != null) player.Animator.SetTrigger("Attack");
+            Vector3 fwd = Forward();
+            float atk = Atk;
+            int hits = 0;
+            foreach (var e in Snapshot())
+            {
+                Vector3 d = Flat(e.transform.position - transform.position);
+                if (d.magnitude > ChargeReach) continue;
+                if (d.sqrMagnitude > 0.25f && Vector3.Dot(d.normalized, fwd) < ChargeFrontDot) continue;
+                e.TakeHit(atk * ChargeMul, GoElement.Physical, atk, out _, heavy: true);
+                hits++;
+            }
+            if (hits > 0) Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * hits);
+            FieldRingFx.Spawn(transform.position + fwd * 1.5f, ChargeReach, Color.white, 0.35f);
+            FieldDamageText.Spawn(transform.position + Vector3.up * 4.6f, GoLocalization.T("field.charge", "강공격"), Color.white, 1f);
+            return hits;
+        }
+
+        /// <summary>활공 중 내리꽂기 시작 — 발밑이 4.6m 넘어야.</summary>
+        public bool TryPlunge()
+        {
+            if (Active == null || Active.Down || DuelGate.Active || player == null) return false;
+            return player.TryPlunge(PlungeMinHeight, PlungeSpeed);
+        }
+
+        /// <summary>땅에 닿은 순간 — 둘레 6.5m 에 ×(1.2 + 떨어진 높이) 물리, 얼어붙은 적을 깨뜨린다. 진단이 직접 부른다.</summary>
+        public int PlungeHit(float fallMeters)
+        {
+            float atk = Atk, mul = PlungeMul(fallMeters);
+            int hits = 0;
+            foreach (var e in Snapshot())
+            {
+                if (Flat(e.transform.position - transform.position).magnitude > PlungeRadius) continue;
+                e.TakeHit(atk * mul, GoElement.Physical, atk, out _, heavy: true);
+                hits++;
+            }
+            if (hits > 0 && Active != null) Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * hits);
+            FieldRingFx.Spawn(transform.position, PlungeRadius, Color.white, 0.45f);
+            FieldRingFx.Spawn(transform.position, PlungeRadius * 0.55f, Color.white, 0.3f);
+            GroundDecal.Spawn(transform.position, GroundDecal.Kind.HitMark);
+            FieldDamageText.Spawn(transform.position + Vector3.up * 4.6f, GoLocalization.T("field.plunge", "낙하 공격"), Color.white, 1.1f);
+            LastPlungeHits = hits;
+            return hits;
+        }
+
+        /// <summary>마지막 낙하 공격이 맞힌 적 수(진단).</summary>
+        public int LastPlungeHits { get; private set; } = -1;
+
+        private void OnPlungeLanded(float fallMeters) => PlungeHit(fallMeters);
 
         /// <summary>원소 스킬(E) — 나선 사람의 모양(`GoSkillShapes`, 109-8)대로. 주인공 = 앞 2m 중심 반경 7m 원형.
         /// 들어간 적 수(장판·소환은 첫 틱에 든 수) · -1 = 쿨·못 씀.</summary>

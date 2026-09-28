@@ -81,6 +81,9 @@ namespace Saga.Go.Combat
             // 오른쪽 아래 — 행동 버튼
             AttackButton = EncounterUiKit.NewButton(t, GoLocalization.T("field.btn.attack", "공격"), new Vector2(1f, 0f), new Vector2(-50f, 60f), new Vector2(190f, 190f), null);
             AttackButton.onClick.AddListener(OnAttack);
+            // 109-14-2 누르고 있으면 강공격
+            _attackHold = AttackButton.gameObject.AddComponent<AttackHoldButton>();
+            _attackHold.Combat = _combat;
             SkillButton = EncounterUiKit.NewButton(t, "", new Vector2(1f, 0f), new Vector2(-270f, 70f), new Vector2(150f, 150f), null);
             SkillButton.onClick.AddListener(OnSkill);
             _skillLabel = SkillButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -176,7 +179,13 @@ namespace Saga.Go.Combat
             }
         }
 
-        private void OnAttack() => _combat.Attack();
+        private AttackHoldButton _attackHold;
+
+        private void OnAttack()
+        {
+            if (_attackHold != null && _attackHold.ConsumeClick()) return; // 강공격이 나간 뒤 뗀 클릭
+            _combat.AttackPress();
+        }
         private void OnSkill() => _combat.Skill();
         private void OnBurst() => _combat.Burst();
         private void OnDodge() => _combat.Dodge();

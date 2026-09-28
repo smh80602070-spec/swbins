@@ -96,6 +96,12 @@ namespace Saga.Go.Player
 
         // PLAN.md 107 ② 이동 상태
         public MoveMode Mode { get; private set; } = MoveMode.Ground;
+        // PLAN.md 109-14-2 낙하 공격 — 활공 중 공격을 누르면 날개를 접고 곧게 내리꽂는다, 땅에 닿으면 떨어진 높이(m)를 알린다
+        public bool Plunging => _plunging;
+        public event System.Action<float> PlungeLanded;
+        private bool _plunging;
+        private float _plungeTop;
+        private float _plungeSpeed;
         public Vector3 LastLand { get; private set; }
         public bool Traversal => traversal;
         private bool _jumpQueued;
@@ -152,8 +158,22 @@ namespace Saga.Go.Player
             _verticalVelocity = 0f;
             _dashTimeLeft = 0f;
             _leapLeft = 0f;
+            _plunging = false;
             Mode = HeightAboveGround() < 0.3f ? MoveMode.Ground : MoveMode.Air;
             SetWings(false);
+        }
+
+        /// <summary>109-14-2 — 활공 중이고 발밑이 minHeight 넘으면 내리꽂기 시작(초당 speed m). 아니면 false.</summary>
+        public bool TryPlunge(float minHeight, float speed)
+        {
+            if (Mode != MoveMode.Glide || HeightAboveGround() < minHeight) return false;
+            _plunging = true;
+            _plungeTop = transform.position.y;
+            _plungeSpeed = speed;
+            _verticalVelocity = -speed;
+            Mode = MoveMode.Air;
+            SetWings(false);
+            return true;
         }
 
         /// <summary>모바일 "점프" 버튼·진단이 부른다(다음 Step 에서 Space 와 같게 처리).</summary>
@@ -286,6 +306,23 @@ namespace Saga.Go.Player
 
         private void StepWalk(float dt, Vector3 moveDir, bool sprintHeld, bool jumpPressed)
         {
+            if (_plunging)
+            {
+                // 109-14-2 내리꽂기 — 곧게 아래로, 땅에 닿는 순간 떨어진 높이를 알린다(물이면 헤엄으로 끝, 공격 없음)
+                _verticalVelocity = -_plungeSpeed;
+                _controller.Move(Vector3.down * _plungeSpeed * dt);
+                if (_controller.isGrounded)
+                {
+                    _plunging = false;
+                    Mode = MoveMode.Ground;
+                    _verticalVelocity = -2f;
+                    PlungeLanded?.Invoke(_plungeTop - transform.position.y);
+                    return;
+                }
+                if (TryStartSwim()) { _plunging = false; return; }
+                Mode = MoveMode.Air;
+                return;
+            }
             bool grounded = _controller.isGrounded;
             if (grounded && _verticalVelocity < 0f) _verticalVelocity = -2f; // 경사·턱에서 떨어지지 않게 살짝 누른다
 

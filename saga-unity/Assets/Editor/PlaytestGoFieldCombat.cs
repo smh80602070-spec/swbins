@@ -42,6 +42,7 @@ namespace Saga.EditorTools
                 CheckBasicAttackAndKill(fc, pc, e1, e2, e3, origin);
                 CheckReactions(fc, e1, e2, origin);
                 CheckReactions7(fc, e1, e2, origin);
+                CheckChargeAndPlunge(fc, pc, e1, e2, origin);
                 CheckSkillAndBurst(fc, pc, e1, e2, e3, origin);
                 CheckEnemyStrikeAndDodge(fc, pc, e1, origin);
                 CheckSwapAndWipe(fc, e1, origin);
@@ -57,7 +58,7 @@ namespace Saga.EditorTools
                 GoStamina.ResetFull();
             }
 
-            if (_ok) Debug.Log($"[{_tag}] field combat OK - enemies {FieldEnemy.All.Count}, party {fc.Party.Count}, reactions·원소 일곱 반응 열셋·3타·스킬·폭발·피격·회피·교체·전멸 복귀·결투 경계·버튼");
+            if (_ok) Debug.Log($"[{_tag}] field combat OK - enemies {FieldEnemy.All.Count}, party {fc.Party.Count}, reactions·원소 일곱 반응 열셋·강공격·낙하 공격·3타·스킬·폭발·피격·회피·교체·전멸 복귀·결투 경계·버튼");
             return _ok;
         }
 
@@ -214,7 +215,7 @@ namespace Saga.EditorTools
             e1.Tick(1f);
             if (!e1.Frozen) Fail("얼어붙음이 1초에 풀림");
             hp = e1.Hp; e1.TakeHit(100f, Ph, Atk, out var rs, heavy: true);
-            if (rs != GoReaction.Shatter || e1.Frozen || Mathf.Abs(hp - e1.Hp - 150f) > 0.5f) Fail($"3타째 깨뜨림 {rs} 피해 {hp - e1.Hp}");
+            if (rs != GoReaction.Shatter || e1.Frozen || Mathf.Abs(hp - e1.Hp - 150f) > 0.5f) Fail($"강공격(heavy) 깨뜨림 {rs} 피해 {hp - e1.Hp}");
             Fresh(e1, at);
             e1.TakeHit(1f, H, Atk, out _); e1.TakeHit(1f, C, Atk, out _);
             e1.TakeHit(1f, Ph, Atk, out var rn);
@@ -300,6 +301,83 @@ namespace Saga.EditorTools
             hp = m.Hp; fc.TickTimers(GoElements.PoisonTickSec + 0.01f);
             if (Mathf.Abs(hp - m.Hp - 100f * GoElements.PoisonMul) > 0.5f) Fail($"중독 틱 피해 {hp - m.Hp}");
 
+            fc.ResetForTest();
+            GoStamina.ResetFull();
+            e1.ReviveNow(); e2.ReviveNow();
+            Park(e2, origin, 0f);
+        }
+
+        /// <summary>PLAN.md 109-14-2 강공격·낙하 공격(웹 사가고 ⑲-2 진단 항목) — 강공격 스태미나·배수·앞쪽만·모자라면 안 됨·0.4초 누르기 한 번 ·
+        /// 3타째는 얼음을 못 깨고 강공격은 깬다 · 낙하 배수(18.5m ×2.2 · 100m 는 27.75m 로 막힘) · 활공 중 공격 → 내리꽂아 착지 둘레 · 낮으면 안 됨.</summary>
+        private static void CheckChargeAndPlunge(FieldCombat fc, PlayerController pc, FieldEnemy e1, FieldEnemy e2, Vector3 origin)
+        {
+            fc.ResetForTest();
+            GoStamina.ResetFull();
+            e1.ReviveNow(); e2.ReviveNow();
+            Vector3 fwd = Fwd(pc);
+            Place(e1, origin + fwd * 3f);
+            Place(e2, origin - fwd * 3.5f); // 뒤 — 안 맞는다
+            float atk = fc.Atk, hp1 = e1.Hp, hp2 = e2.Hp;
+            int hits = fc.ChargedAttack();
+            if (hits != 1 || Mathf.Abs(hp1 - e1.Hp - atk * FieldCombat.ChargeMul) > 0.5f || e2.Hp != hp2)
+                Fail($"강공격 적중 {hits}·앞 피해 {hp1 - e1.Hp} ≠ {atk * FieldCombat.ChargeMul}·뒤 피해 {hp2 - e2.Hp}");
+            if (Mathf.Abs(GoStamina.Value - (GoStamina.Max - FieldCombat.ChargeStamina)) > 0.01f) Fail($"강공격 스태미나 {GoStamina.Value}");
+            if (fc.ComboStep != 0) Fail("강공격 뒤 콤보가 처음부터가 아님");
+            GoStamina.SetForTest(10f);
+            if (fc.ChargedAttack() != -1) Fail("스태미나 10 인데 강공격이 나감");
+
+            GoStamina.ResetFull();
+            fc.TickHold(false, 0f);
+            fc.TickHold(true, 0.3f);
+            if (GoStamina.Value < GoStamina.Max - 0.01f) Fail("0.3초 누름에 강공격이 나감");
+            fc.TickHold(true, 0.15f);
+            if (GoStamina.Value > GoStamina.Max - FieldCombat.ChargeStamina + 0.01f) Fail("0.45초 누름에 강공격이 안 나감");
+            float st = GoStamina.Value;
+            fc.TickHold(true, 1f);
+            if (GoStamina.Value != st) Fail("누른 채로 강공격이 또 나감");
+            fc.TickHold(false, 0f);
+
+            // 깨뜨림 — 기본 3타는 못 깨고 강공격은 깬다
+            fc.ResetForTest();
+            GoStamina.ResetFull();
+            // 1·2타는 빈 곳에 휘둘러 콤보만 올린다(세 번 다 맞히면 앞 진단으로 오른 공격력에 적이 쓰러져 얼음이 지워진다)
+            e1.ReviveNow(); Park(e1, origin, 5f); Park(e2, origin, 0f);
+            fc.Attack(); fc.TickTimers(0.4f); fc.Attack(); fc.TickTimers(0.4f);
+            if (fc.ComboStep != 2) Fail($"빈 휘두름으로 콤보가 안 오름({fc.ComboStep})");
+            Place(e1, origin + fwd * 3f);
+            e1.TakeHit(1f, GoElement.Hydro, 100f, out _); e1.TakeHit(1f, GoElement.Cryo, 100f, out _);
+            if (fc.Attack() != 1 || !e1.Alive) Fail("3타째가 얼은 적을 못 맞힘");
+            if (!e1.Frozen) Fail("기본 3타째가 얼음을 깸(깨뜨림은 강공격·낙하만)");
+            fc.ChargedAttack();
+            if (e1.Frozen) Fail("강공격이 얼음을 못 깸");
+
+            if (Mathf.Abs(FieldCombat.PlungeMul(18.5f) - 2.2f) > 0.01f || Mathf.Abs(FieldCombat.PlungeMul(100f) - 2.7f) > 0.01f)
+                Fail($"낙하 배수 18.5m {FieldCombat.PlungeMul(18.5f)} · 100m {FieldCombat.PlungeMul(100f)}");
+
+            // 활공 → 공격 → 내리꽂아 착지 둘레(6.5m 안만)
+            fc.ResetForTest();
+            GoStamina.ResetFull();
+            e1.ReviveNow(); e2.ReviveNow();
+            Place(e1, origin + new Vector3(2f, 0f, 0f));
+            Place(e2, origin + new Vector3(12f, 0f, 0f));
+            hp1 = e1.Hp; hp2 = e2.Hp;
+            pc.Teleport(origin + Vector3.up * 20f);
+            pc.RequestJump();
+            pc.Step(0.02f);
+            if (pc.Mode != PlayerController.MoveMode.Glide) { Fail($"20m 에서 활공이 안 열림({pc.Mode})"); return; }
+            if (fc.AttackPress() != 0 || !pc.Plunging) { Fail("활공 중 공격이 내리꽂기가 아님"); return; }
+            for (int i = 0; i < 300 && pc.Plunging; i++) pc.Step(0.02f);
+            if (pc.Plunging || pc.Mode != PlayerController.MoveMode.Ground) Fail($"내리꽂기가 땅에 안 닿음({pc.Mode})");
+            float dealt = hp1 - e1.Hp;
+            if (fc.LastPlungeHits < 1 || dealt < atk * 2f || dealt > atk * 2.75f) Fail($"낙하 공격 적중 {fc.LastPlungeHits}·피해 {dealt} (공 {atk})");
+            if (e2.Hp != hp2) Fail("낙하 공격이 12m 밖 적을 침");
+
+            // 낮으면 안 됨
+            pc.Teleport(origin + Vector3.up * 4.3f);
+            pc.RequestJump();
+            pc.Step(0.02f);
+            if (pc.Mode == PlayerController.MoveMode.Glide && (fc.AttackPress() != -1 || pc.Plunging)) Fail("4.6m 아래에서 내리꽂힘");
+            pc.Teleport(origin);
             fc.ResetForTest();
             GoStamina.ResetFull();
             e1.ReviveNow(); e2.ReviveNow();

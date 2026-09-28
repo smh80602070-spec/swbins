@@ -342,6 +342,8 @@
 2	go	field.btn.jump	점프	Jump		
 2	go	field.btn.skill	스킬	Skill		
 2	go	field.burst	{0} — 원소 해방!	{0} — Elemental Release!		
+2	go	field.charge	강공격	Heavy Attack		
+2	go	field.charge_low	스태미나 부족	Not enough stamina		
 2	go	field.counter	상성!	Counter!		
 2	go	field.down	{0} 쓰러짐	{0} is down		
 2	go	field.el.anemo	풍	Wind		
@@ -374,6 +376,7 @@
 2	go	field.minion.cryo	빙 졸개	Ice minion		
 2	go	field.minion.dendro	초 졸개	Grass minion		
 2	go	field.minion.geo	암 졸개	Stone minion		
+2	go	field.plunge	낙하 공격	Plunge		
 2	go	field.re.aggravate	번개싹	Spark Sprout		
 2	go	field.re.bloom	꽃피움	Blossom		
 2	go	field.re.burning	들불	Wildfire		

@@ -537,6 +537,9 @@
     { "key": "field.minion.anemo", "value": "Wind minion" },
     { "key": "field.minion.cryo", "value": "Ice minion" },
     { "key": "field.minion.geo", "value": "Stone minion" },
-    { "key": "field.minion.dendro", "value": "Grass minion" }
+    { "key": "field.minion.dendro", "value": "Grass minion" },
+    { "key": "field.charge", "value": "Heavy Attack" },
+    { "key": "field.charge_low", "value": "Not enough stamina" },
+    { "key": "field.plunge", "value": "Plunge" }
   ]
 }
