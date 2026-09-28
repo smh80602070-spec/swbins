@@ -335,9 +335,13 @@
        벽을 계속 민다(밀어야 붙잡고 오른다 · 곁에서 멈추면 영영 못 올랐다). 올라서면 climb 은 story 가 넘기고, 등롱은 아래 불 밝히기로 간다 */
     var LFp = global.DG.landform, poleWant = st.type === 'climb' && st.pole ? st.pole : (st.type === 'light' && st.perch ? st.perch : null);
     if (poleWant && w.mode !== 'geo' && LFp && LFp.perched && (poleWant === true ? !LFp.perched() : LFp.perched() !== poleWant)) {
-      var pdx = t.x - p.x, pdy = t.y - p.y, pdl = Math.hypot(pdx, pdy) || 1;
-      if (pdl > 12) { acc.story += dt; if (acc.story >= RETARGET) { acc.story = 0; walkToward(w, t.x, t.y, RETARGET); } }
-      else { w.walkTo(t.x + pdx / pdl * 6, t.y + pdy / pdl * 6); }
+      /* 밀 기둥 — id 면 그 기둥, pole: true(기중기 다리 둘 중 아무거나)면 가장 가까운 것. 목표 자리(두 다리 사이)로 밀면 어느 다리도 못 붙잡았다 */
+      var pg = null;
+      if (LFp.polesAll) { LFp.polesAll().forEach(function (q) { if ((poleWant === true || q.id === poleWant) && Math.hypot(q.x - t.x, q.y - t.y) < 60 && (!pg || Math.hypot(q.x - p.x, q.y - p.y) < Math.hypot(pg.x - p.x, pg.y - p.y))) { pg = q; } }); }
+      var gx = pg ? pg.x : t.x, gy = pg ? pg.y : t.y;
+      var pdx = gx - p.x, pdy = gy - p.y, pdl = Math.hypot(pdx, pdy) || 1;
+      if (pdl > 12) { acc.story += dt; if (acc.story >= RETARGET) { acc.story = 0; walkToward(w, gx, gy, RETARGET); } }
+      else { w.walkTo(gx + pdx / pdl * 6, gy + pdy / pdl * 6); }
       doing = '📖 🧗 ' + (st.text || '') + (pdl > 12 ? ' 으로 ' + Math.round(pdl) + 'm' : ' — 기둥을 밀고 오르는 중');
       return true;
     }

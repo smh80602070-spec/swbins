@@ -422,7 +422,8 @@
       box(T3, s, m.alloy, 3, 3.4, 0.25, -9.5, 2.1, 0); box(T3, s, m.alloy, 3, 0.25, 6, -9.5, 0.2, 0);
       for (var i = 0; i < 3; i++) { box(T3, s, m.glow, 2.4, 0.08, 7 - i * 1.5, 3 - i * 3.2, 0.2 + i * 0.3, 0); }
       box(T3, s, m.glow, 17, 0.18, 0.2, 0, 0, 2.62);
-      s.position.set(0, SHIP_UP + 2.6, PAD_R * 0.55);   // 탑 남쪽 곁(선체 반지름 2.6 — 탑과 안 겹침) o.root.add(s); o.ship = s;
+      s.position.set(0, SHIP_UP + 2.6, PAD_R * 0.55);   // 탑 남쪽 곁(선체 반지름 2.6 — 탑과 안 겹침)
+      o.root.add(s); o.ship = s;                          // 2026-09-28 — 이 줄이 위 주석 끝에 붙어 먹혀 o.ship 이 비어 게임 루프가 예외로 멈췄다
     }
     o.ship.visible = true;
     o.ship.position.y = SHIP_UP + 2.6 + Math.sin(clock * 0.9) * 0.25;

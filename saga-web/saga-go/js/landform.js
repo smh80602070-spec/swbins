@@ -768,7 +768,7 @@
     gliding: function () { return !!body.glide; },
     /** ⑲-34 기둥을 붙잡았나(들보 위 포함) · 들보 위면 그 다리 id · 기둥 높이 */
     onPole: function () { return !!body.pole; }, perched: function () { return body.pole && body.pole.perch ? body.pole.id : null; },
-    poleH: function () { return body.pole ? body.pole.h : 0; }, poleAhead: poleAhead,
+    poleH: function () { return body.pole ? body.pole.h : 0; }, poleAhead: poleAhead, polesAll: polesAll, poleById: poleById,
     POLE_UP: POLE_UP, POLE_DRAIN: POLE_DRAIN, POLE_HANG: POLE_HANG, POLE_SLIDE: POLE_SLIDE, POLE_REACH: POLE_REACH, BEAM_MUL: BEAM_MUL,
     /** ⑲-20 섬 위에 서 있나(날개를 편 채 섬 위도) · 불러오기에서 섬에 올린다(skyisle.boot) */
     onSky: function () { return !!body.sky; }, setSky: function (v) { body.sky = !!v; }, groundH: groundH, glideAlt: function () { return body.glide ? body.glide.alt : null; },
