@@ -84,7 +84,7 @@ namespace Saga.EditorTools
             if (Mathf.Abs(sword.Reach - FieldCombat.AttackReach) > 0.01f || Mathf.Abs(sword.Sec[0] - FieldCombat.AttackIntervalSec) > 0.01f) Fail("칼 사거리·빠르기가 옛 값이 아님");
             if (!GoWeapons.Kits[1].Heavy || GoWeapons.Kits[1].Mul[2] < 2f) Fail("대도 무거운 타격");
             if (!GoWeapons.Kits[3].Element || GoWeapons.Kits[3].Reach > 0f || GoWeapons.Kits[4].Range < 18f) Fail("서책 원소·활 사거리");
-            if (GoWeapons.All.Length != 15) Fail($"무기 {GoWeapons.All.Length} ≠ 15");
+            if (GoWeapons.All.Length != 16) Fail($"무기 {GoWeapons.All.Length} ≠ 16"); // 15 + 낚시 조합 갯바람 작살(109-14-24)
             GoWeapons.TryGet("w_sword_3", out var w3);
             if (Mathf.Abs(GoWeapons.AtkAt(w3, 1, 0) - 34f * 0.75f) > 0.01f || Mathf.Abs(GoWeapons.AtkAt(w3, 10, 1) - 34f * 0.75f * (1f + 0.54f + 0.1f)) > 0.01f) Fail("무기 공격 식");
             if (GoWeapons.Cap(0) != 10 || GoWeapons.Cap(5) != 30) Fail("무기 상한");

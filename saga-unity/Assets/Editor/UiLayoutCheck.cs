@@ -489,6 +489,56 @@ namespace Saga.EditorTools
                 },
                 exit = () => { var ui = Object.FindFirstObjectByType<Saga.Go.UI.PerkChoiceUi>(); if (ui != null) Call(ui, "Reject"); },
             });
+
+            // ⑤ 낚시(109-14-24) — 낚시 칸(고리 겨누기) · 줄다리기 막대(낚시 칸 위에 함께) · 게시판 창. 서는 자리로 옮겨 켜고 끝나면 되돌린다.
+            Vector3 fishFrom = default;
+            System.Func<System.Func<Saga.Go.World.FishingField, Vector3>, bool> fishEnter = where =>
+            {
+                var fc = Saga.Go.Combat.FieldCombat.Instance;
+                var field = Saga.Go.World.FishingField.Instance;
+                var ui = Saga.Go.UI.FishingUi.Instance;
+                if (fc == null || field == null || ui == null) return false;
+                fishFrom = fc.transform.position;
+                field.Paused = true;
+                var dest = where(field);
+                if (Saga.Go.UI.WorldMapUi.Instance != null) Set(Saga.Go.UI.WorldMapUi.Instance, "_lastRegion", Saga.Go.Data.GoWorldMap.RegionAt(dest)); // 자리를 옮겨도 지역 자막이 안 뜨게
+                fc.GetComponent<Saga.Go.Player.PlayerController>()?.Teleport(dest);
+                return true;
+            };
+            System.Action fishExit = () =>
+            {
+                var fc = Saga.Go.Combat.FieldCombat.Instance;
+                Saga.Go.UI.FishingUi.Instance?.CloseBoard();
+                Saga.Go.UI.FishingUi.Instance?.Quit();
+                if (Saga.Go.World.FishingField.Instance != null) Saga.Go.World.FishingField.Instance.Paused = false;
+                if (Saga.Go.UI.WorldMapUi.Instance != null) Set(Saga.Go.UI.WorldMapUi.Instance, "_lastRegion", Saga.Go.Data.GoWorldMap.RegionAt(fishFrom));
+                fc?.GetComponent<Saga.Go.Player.PlayerController>()?.Teleport(fishFrom);
+            };
+            list.Add(new UiState
+            {
+                name = "낚시 칸",
+                enter = () => fishEnter(f => f.StandPos("river_w")) && Saga.Go.UI.FishingUi.Instance.TryBegin(),
+                exit = fishExit,
+            });
+            list.Add(new UiState
+            {
+                name = "낚시 줄다리기",
+                enter = () => fishEnter(f => f.StandPos("river_w")) && Saga.Go.UI.FishingUi.Instance.TryBegin(),
+                everyFrame = () => ((GameObject)Get(Saga.Go.UI.FishingUi.Instance, "_bar")).SetActive(true),
+                exit = fishExit,
+            });
+            list.Add(new UiState
+            {
+                name = "낚시 게시판",
+                panel = true,
+                enter = () =>
+                {
+                    if (!fishEnter(f => f.BoardPos(Saga.Go.Data.GoFishing.BoardSpot()))) return false;
+                    Saga.Go.UI.FishingUi.Instance.OpenBoard();
+                    return Saga.Go.UI.FishingUi.Instance.BoardOpen;
+                },
+                exit = fishExit,
+            });
         }
 
         private static void DungeonStates(List<UiState> list)

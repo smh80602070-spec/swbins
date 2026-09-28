@@ -181,6 +181,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoAim.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-22 활 조준·과녁 잠금(동행·상자·이야기 되돌림)
                 if (!PlaytestGoWorldQuests.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-21 세계 임무 셋·따라가는 줄(이야기·임무·줄·돈·재료 되돌림)
                 if (!PlaytestGoMapMarks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-23 map marks
+                if (!PlaytestGoFishing.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-24 낚시(낚시터·흐름·조합·세이브·화면 — 가방·무기·돈·시각·세이브 되돌림)
                 if (!PlaytestGoStoryAllies.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-15 이야기 동료·고유 스킬 둘·편성(동행·진행·돈·들판 되돌림)
                 if (!PlaytestGoPresets.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-18 편성 1~4·싸우는 중 막기(동행·편성·들판·적 되돌림)
                 if (!PlaytestGoPeaks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-9 정상 발견·순간이동·건물 가림 카메라(기록·돈·세이브 되돌림)

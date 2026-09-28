@@ -782,7 +782,7 @@ namespace Saga.Go.Combat
             return true;
         }
 
-        private bool CanAct() => Active != null && !Active.Down && !DuelGate.Active && (player == null || player.OnFoot); // 107 ② 등반·활공·수영 중엔 못 싸운다
+        private bool CanAct() => Active != null && !Active.Down && !DuelGate.Active && (player == null || player.OnFoot) && !Saga.Go.World.FishingField.Busy; // 107 ② 등반·활공·수영 중엔 못 싸운다 · 109-14-24 낚시 중엔 낚싯대만
 
         // ---- 피격 --------------------------------------------------------------
 

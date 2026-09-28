@@ -54,6 +54,11 @@ namespace Saga.Go.UI
         private readonly List<string> _fallRegions = new List<string>();
         public int FallLabelCount => _fallLabels.Count;
         public bool FallLabelShown(int i) => _fallLabels[i].gameObject.activeSelf;
+        // 109-14-24 낚시터 — 서는 자리 위에 "~ 이름"(그 지역이나 너른 강에 발 디디면 보임)
+        private readonly List<TextMeshProUGUI> _fishLabels = new List<TextMeshProUGUI>();
+        private readonly List<string> _fishRegions = new List<string>();
+        public int FishLabelCount => _fishLabels.Count;
+        public bool FishLabelShown(int i) => _fishLabels[i].gameObject.activeSelf;
         public string RegionLabel(int i) => _regionLabels[i].text;
         public string LastRegion => _lastRegion;
         public string InfoText => _info.text;
@@ -198,6 +203,20 @@ namespace Saga.Go.UI
                 _fallRegions.Add(GoWorldMap.RegionAt(w.Gx, w.Gy));
             }
 
+            // 109-14-24 낚시터 — 서는 자리 위쪽에 "~ 이름"
+            int fishRow = 0;
+            foreach (var sp in GoFishing.Spots)
+            {
+                var stand = new Vector3(sp.Stand.x, 0f, sp.Stand.y);
+                Vector2 g = GoWorldMap.WorldToGridF(stand);
+                var fish = EncounterUiKit.NewText(_mapRect, "~ " + sp.Name, new Vector2(0.5f, 0.5f), MapPos(g.x, g.y) + new Vector2(0f, 14f + 20f * (fishRow++ % 2)), new Vector2(190f, 30f), 15); // 이웃끼리 겹치지 않게 지그재그
+                fish.color = new Color(0.55f, 0.85f, 1f);
+                fish.raycastTarget = false;
+                fish.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+                _fishLabels.Add(fish);
+                _fishRegions.Add(GoWorldMap.RegionAt(stand));
+            }
+
             // 109-9 정상 — 봉우리마다 작은 ▲(그 지역에 발 디디면 보임, 오른 정상은 금빛·누르면 순간이동)
             for (int i = 0; i < GoWorldMap.Peaks.Length; i++)
             {
@@ -273,6 +292,8 @@ namespace Saga.Go.UI
             for (int i = 0; i < _rampLabels.Count; i++) _rampLabels[i].gameObject.SetActive(WorldMapState.IsVisited(_rampRegions[i]));
             for (int i = 0; i < _fallLabels.Count; i++)
                 _fallLabels[i].gameObject.SetActive(WorldMapState.IsVisited(_fallRegions[i]) || WorldMapState.IsVisited("river"));
+            for (int i = 0; i < _fishLabels.Count; i++)
+                _fishLabels[i].gameObject.SetActive(WorldMapState.IsVisited(_fishRegions[i]) || WorldMapState.IsVisited("river"));
             for (int i = 0; i < _peakButtons.Count; i++)
             {
                 var p = GoWorldMap.Peaks[i];

@@ -316,11 +316,13 @@ namespace Saga.Go.Data
             Touch();
         }
 
-        private static bool Spend(string id, int n)
+        /// <summary>재료를 쓴다(109-14-24 낚시 미끼도 여기서 하나 쓴다) — 모자라면 아무것도 안 하고 false.</summary>
+        public static bool Spend(string id, int n)
         {
             if (Count(id) < n) return false;
             _bag[id] -= n;
             if (_bag[id] <= 0) _bag.Remove(id);
+            Touch();
             return true;
         }
 

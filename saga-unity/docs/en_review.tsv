@@ -604,6 +604,64 @@
 2	go	field.st.swept	휘말림 — 스킬 +2초	Swept — Skill +2s		
 2	go	field.st.wet	젖음 — 스태미나 -25	Wet — Stamina -25		
 2	go	field.wipe	모두 쓰러졌다 — 마을에서 기운을 차렸다(잃은 것 없음)	Everyone fell — you came to in the village (nothing lost)		
+2	go	fish.act.aim	던지기 (F)	Cast (F)		
+2	go	fish.act.bite	당겨! (F)	Reel! (F)		
+2	go	fish.act.nibble	기다려…	Wait…		
+2	go	fish.act.reel	당기기 — 길게 (F)	Reel — hold (F)		
+2	go	fish.act.wait	거두기 (F)	Pull back (F)		
+2	go	fish.bait	{0} 미끼	{0} Bait		
+2	go	fish.bait_pick	미끼	Bait		
+2	go	fish.bar	찌를 초록 칸 안에 붙잡는다	Keep the float inside the green zone		
+2	go	fish.bite	입질! — 지금 당겨라	A bite! — reel in now		
+2	go	fish.board_button	게시판	Board		
+2	go	fish.board_sub	잡은 물고기를 바꾼다	trade your catch		
+2	go	fish.board_title	낚시 조합	Fishing Trades		
+2	go	fish.button	낚시	Fish		
+2	go	fish.caught	잡았다! {0} {1} · {2}	Caught! {0} {1} · {2}		
+2	go	fish.closer	가까이	Nearer		
+2	go	fish.escaped	놓쳤다…	It got away…		
+2	go	fish.farther	멀리	Farther		
+2	go	fish.fight_stop	적이 다가온다 — 낚시를 멈춘다	An enemy approaches — you stop fishing		
+2	go	fish.first	 — 처음 잡은 물고기	 — first catch of this fish		
+2	go	fish.got_gold	금 +{0}	Gold +{0}		
+2	go	fish.got_ore	강화석 +{0}	Enhancement Ore +{0}		
+2	go	fish.left	물고기 {0}/{1}	Fish {0}/{1}		
+2	go	fish.name.clockcarp	태엽 잉어	Clockwork Carp		
+2	go	fish.name.crucian	은비늘 붕어	Silverscale Crucian		
+2	go	fish.name.gizzard	갯바람 전어	Sea Wind Shad		
+2	go	fish.name.lanternpuffer	등불 복어	Lantern Puffer		
+2	go	fish.name.mandarin	청하 쏘가리	Azure Mandarin Fish		
+2	go	fish.name.moonjelly	옛 달 해파리	Old Moon Jelly		
+2	go	fish.name.neonhairtail	네온 갈치	Neon Cutlassfish		
+2	go	fish.name.steelflounder	강철 넙치	Steel Flounder		
+2	go	fish.need_water	물 위에 던져야 한다	You have to cast onto the water		
+2	go	fish.no_bait	{0}가 없다 — 재료를 모아 오자	Out of {0} — go gather some ingredients		
+2	go	fish.no_fish	물고기가 오지 않는다 — 다른 미끼나 자리로	No fish are coming — try another bait or spot		
+2	go	fish.quit	그만	Stop		
+2	go	fish.row.catch_spear	갯바람 작살(★4 창)	Sea Wind Harpoon (★4 spear)		
+2	go	fish.row.gold	금 800	800 Gold		
+2	go	fish.row.gold_sea	금 800	800 Gold		
+2	go	fish.row.knot	인연 매듭 1	1 Bond Knot		
+2	go	fish.row.note	무예 쪽지 2	2 Martial Notes		
+2	go	fish.row.ore	강화석 3	3 Enhancement Ore		
+2	go	fish.scared	너무 일찍 당겼다 — 물고기가 달아났다	Pulled too early — the fish swam away		
+2	go	fish.spot.dock	다리목 낚시터	Bridgehead Spot		
+2	go	fish.spot.rift	시간 틈 물목 낚시터	Rift Shallows Spot		
+2	go	fish.spot.river_e	동쪽 둑 낚시터	East Bank Spot		
+2	go	fish.spot.river_w	서쪽 둑 낚시터	West Bank Spot		
+2	go	fish.state.aim	고리를 물 위로 옮기고(이동 키) 미끼를 골라 던진다	Move the ring over the water (move keys), pick a bait and cast		
+2	go	fish.state.bite	입질! — 지금 당겨라	A bite! — reel in now		
+2	go	fish.state.nibble	톡톡… 건드린다 — 아직 당기지 말 것	Nibbling… don't reel in yet		
+2	go	fish.state.reel	길게 눌러 찌를 올려 물고기 칸 안에 붙잡는다	Hold to raise the float and keep it inside the fish's zone		
+2	go	fish.state.wait	찌를 지켜본다 — 물고기가 다가온다	Watch the float — a fish is coming		
+2	go	fish.swap	바꾸기	Trade		
+2	go	fish.swapped	바꿨다 — {0}	Traded — {0}		
+2	go	fish.why.busy	이미 낚시 중이다	Already fishing		
+2	go	fish.why.fight	싸우는 중엔 낚시할 수 없다	You can't fish while fighting		
+2	go	fish.why.lack	{0} 부족	Not enough {0}		
+2	go	fish.why.maxed	이 작살은 울림이 끝났다	This harpoon is fully resonated		
+2	go	fish.why.none	없는 조합	No such trade		
+2	go	fish.why.spot	낚시터 곁에서만 낚시할 수 있다	You can only fish beside a fishing spot		
 2	go	foe.bandit	산적	Bandit		
 2	go	foe.rare_wolf	흰 늑대	White Wolf		
 2	go	foe.shrine_pack	사당을 지키는 들개떼	Wild Dogs Guarding the Shrine		
@@ -783,6 +841,14 @@
 2	go	map.fall_west	안개 폭포	Mist Falls		
 2	go	map.hint	 · 옛 망루 꼭대기에 오르면 온 땅이 밝혀진다	 · Climb the old watchtower to reveal the whole land		
 2	go	map.info	푸른 ◆ 역참을 누르면 순간이동 · 켠 역참 {0}/{1}{2}	Tap a blue ◆ waypoint to teleport · Waypoints {0}/{1}{2}		
+2	go	map.mark_follow	따라가기	Track this		
+2	go	map.mark_jump	가까운 지점으로 순간이동	Teleport to nearest waypoint		
+2	go	map.mark_jump_none	순간이동 지점 없음	No waypoint to teleport to		
+2	go	map.mark_legend	◆ 따라가는 임무 · ◇ 맡은 임무 · ! 맡을 수 있는 임무 — 금빛 이야기 · 푸른빛 세계 임무. 표식을 누르면 고른다	◆ Tracked quest · ◇ Accepted quest · ! Available quest — gold is story, blue is world quests. Tap a marker to select it	문장부호 앞 띄움	
+2	go	map.mark_near	가까운 지점 — {0} (표식에서 {1})	Nearest waypoint — {0} ({1} from the marker)		
+2	go	map.mark_near_none	가까운 지점 — 없음	Nearest waypoint — none		
+2	go	map.mark_take	맡길 사람에게 말을 걸어 맡는다	Talk to the giver to accept		
+2	go	map.mark_tracking	따라가는 중	Tracking		
 2	go	map.mission	사명 {0}/{1}	Mission {0}/{1}		
 2	go	map.mission_clear	평정	Pacified		
 2	go	map.pass	고개	Pass		
@@ -1285,6 +1351,7 @@
 2	go	weapon.w_polearm_0	수련용 장대	Training Staff		
 2	go	weapon.w_polearm_3	대나무 창	Bamboo Spear		
 2	go	weapon.w_polearm_4	봉수 월도	Beacon Moon Glaive		
+2	go	weapon.w_polearm_catch	갯바람 작살	Sea Wind Harpoon		
 2	go	weapon.w_sword_0	수련용 목검	Training Wooden Sword		
 2	go	weapon.w_sword_3	청동 환도	Bronze Ring Sword		
 2	go	weapon.w_sword_4	청하 보검	Blue River Sword		

@@ -82,6 +82,8 @@ namespace Saga.Go.Data
             W("w_polearm_4", "봉수 월도", Type.Polearm, 4, 40, "energy", 0.06f, "b", 0.16f),
             W("w_catalyst_4", "별자리 두루마리", Type.Catalyst, 4, 38, "atk_pct", 0.08f, "s", 0.16f),
             W("w_bow_4", "갯바람 각궁", Type.Bow, 4, 40, "crit_rate", 0.035f, "b", 0.16f),
+            // 109-14-24 낚시 조합 전용(웹 `w_polearm_catch`) — 상자 드롭(`ChestWeapon` = "w_종류_등급")과 이름이 안 겹친다
+            W("w_polearm_catch", "갯바람 작살", Type.Polearm, 4, 41, "energy", 0.09f, "b", 0.18f),
         };
 
         public const int MaxLv = 30, MaxAsc = 5, RefineMax = 5, RefineOverOre = 10;

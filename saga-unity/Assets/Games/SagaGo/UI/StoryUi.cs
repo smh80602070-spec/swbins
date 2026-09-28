@@ -140,7 +140,7 @@ namespace Saga.Go.UI
                 {
                     if (kb.fKey.wasPressedThisFrame) Next(IsPickLine && !Revealing && _mine == null ? 0 : -1);
                 }
-                else if (kb.fKey.wasPressedThisFrame && TalkShown) StartTalk();
+                else if (kb.fKey.wasPressedThisFrame && TalkShown && !Saga.Go.World.FishingField.Busy) StartTalk(); // 109-14-24 낚시 중 F 는 낚싯대(웹 story F 양보)
                 else if (kb.oKey.wasPressedThisFrame) ToggleList();
                 else if (kb.escapeKey.wasPressedThisFrame && ListOpen) ToggleList(false);
             }

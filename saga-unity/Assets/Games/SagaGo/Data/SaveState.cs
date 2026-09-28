@@ -136,6 +136,10 @@ namespace Saga.Go.Data
             public List<string> partyPresets;
             public int partyPreset;
             // PLAN.md 109-14-21 세계 임무 — 임무마다 단계(−1 안 맡음)·끝남·따라가는 임무 id(없으면 이야기). 버전 그대로(옛 세이브 = 아무것도 안 맡음).
+            // 109-14-24 낚시 — 가방·누적 잡은 수·잡은 자리 시각(버전 그대로 — 옛 세이브는 빈 채)
+            public List<CookState.Entry> fishBag;
+            public List<CookState.Entry> fishLog;
+            public List<CookState.TimeEntry> fishGone;
             public List<int> wqSteps;
             public List<bool> wqDone;
             public string wqTrack;
@@ -169,6 +173,9 @@ namespace Saga.Go.Data
                 playerPos = player != null ? new[] { player.position.x, player.position.y, player.position.z } : null,
                 partyMembers = new List<string>(PartyState.MemberIds),
                 partyPresets = PartyState.SnapshotPresets(), // 109-14-18
+                fishBag = FishState.SnapshotBag(), // 109-14-24
+                fishLog = FishState.SnapshotLog(),
+                fishGone = FishState.SnapshotGone(),
                 wqSteps = WorldQuestState.SnapshotSteps(), // 109-14-21
                 wqDone = WorldQuestState.SnapshotDone(),
                 wqTrack = StoryState.TrackId,
@@ -303,6 +310,7 @@ namespace Saga.Go.Data
             PartyState.RestorePresets(data.partyPresets, data.partyPreset); // 109-14-18 — 합류 뒤(지금 칸 = 지금 들판)
             WorldQuestState.Restore(data.wqSteps, data.wqDone); // 109-14-21 — 이야기 자리(StoryState.Restore) 뒤
             StoryState.RestoreTrack(data.wqTrack);
+            FishState.Restore(data.fishBag, data.fishLog, data.fishGone); // 109-14-24 — 요리 가방(CookState) 뒤
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();
