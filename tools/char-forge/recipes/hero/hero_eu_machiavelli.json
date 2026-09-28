@@ -28,10 +28,10 @@
  "teeth": "teeth_base/teeth_base.mhclo",
  "hair": "short01/short01.mhclo",
  "_garments": [
-  "kaftan@6a3a2a,d8d0bc"
+  "kaftan@643127,d8d0bc"
  ],
  "clothes": [
-  "cf_kaftan_6a3a2a_d8d0bc/cf_kaftan_6a3a2a_d8d0bc.mhclo",
+  "cf_kaftan_643127_d8d0bc/cf_kaftan_643127_d8d0bc.mhclo",
   "shoes02/shoes02.mhclo"
  ],
  "anims": {

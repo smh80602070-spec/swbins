@@ -27,11 +27,11 @@
  "eyelashes": "eyelashes01/eyelashes01.mhclo",
  "teeth": "teeth_base/teeth_base.mhclo",
  "_garments": [
-  "kaftan@2a6a4a,c9a64a",
+  "kaftan@307a52,c9a64a",
   "turban"
  ],
  "clothes": [
-  "cf_kaftan_2a6a4a_c9a64a/cf_kaftan_2a6a4a_c9a64a.mhclo",
+  "cf_kaftan_307a52_c9a64a/cf_kaftan_307a52_c9a64a.mhclo",
   "shoes02/shoes02.mhclo",
   "cf_turban/cf_turban.mhclo"
  ],

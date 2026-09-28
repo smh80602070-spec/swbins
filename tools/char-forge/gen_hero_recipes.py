@@ -40,7 +40,8 @@ def load_heroes():
     female = set(re.findall(r'"([^"]+)"', block))
     for h in heroes:
         h['female'] = h['id'] in female
-    return heroes
+    # 이야기 인물(Era Story — 09-28 도감에 넷)은 GoHeroLooks 표 밖, 이야기 장면 몸(StoryField)을 쓴다
+    return [h for h in heroes if h['era'] != 'Story']
 
 
 # ---- 역할(손으로 박음 — id 로만) ----
@@ -301,6 +302,20 @@ def mix(a, b, f):
     return '#' + ''.join(f'{round(x * (1 - f) + y * f):02x}' for x, y in zip(pa, pb))
 
 
+TRIM = ['#5a2a6a', '#8a2a24', '#2a3a7a', '#2f5a3a', '#9a7a2a', '#3a2a1e']
+
+
+def vary(c, h):
+    """같은 세력 사람이 같은 한 색으로 서지 않게(09-28 인물 105 렌더 — 토가 셋·관복 넷이 머리만 달랐다) — 해시로 밝기 ±18%·색상 ±10°."""
+    import colorsys
+    r, g, b = (int(c.lstrip('#')[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    hh, ll, ss = colorsys.rgb_to_hls(r, g, b)
+    hh = (hh + ((h >> 5) % 21 - 10) / 360) % 1.0
+    ll = min(0.95, max(0.05, ll * (0.82 + 0.36 * ((h >> 11) % 100) / 99)))
+    r, g, b = colorsys.hls_to_rgb(hh, ll, ss)
+    return '#' + ''.join(f'{round(x * 255):02x}' for x in (r, g, b))
+
+
 def vivid(c):
     """끈·술처럼 옻칠·검은 바탕 위에 보여야 하는 색 — 너무 어두우면 밝힌다."""
     return c if lum(c) > 0.2 else mix(c, '#b8a47a', 0.55)
@@ -312,7 +327,7 @@ def cf(gid, *cols):
     return 'cf_' + gid + ''.join('_' + c for c in cs), gid + ('@' + ','.join(cs) if cs else '')
 
 
-def real_outfit(reg, role, key, female, c1, c2, c3):
+def real_outfit(reg, role, key, female, c1, c2, c3, hs=0):
     """옷 틀 → (옷 이름들, garments.py 인자들) 또는 None."""
     east = reg in EAST_REG
     light = lum(c1) > 0.6
@@ -359,7 +374,7 @@ def real_outfit(reg, role, key, female, c1, c2, c3):
         return names + [BOOTS if armored else CLOTH_SHOES], specs
     o, shoes = None, CLOTH_SHOES
     if key == 'toga':
-        o, shoes = cf('toga', c1 if light else '#e6e0d0', '#5a2a6a' if light else c1), 'shoes01'
+        o, shoes = cf('toga', c1 if light else pick(LIGHT, hs, 2), pick(TRIM, hs, 3) if light else c1), 'shoes01'
     elif key == 'hoplite':
         o, shoes = cf('chiton_armor', c1 if not light else '#8a2a24'), 'shoes01'
     elif key == 'nomad':
@@ -473,7 +488,7 @@ def make(h):
     muscle, weight = BUILD[h['axes']['build']]
     if female:
         muscle = round(muscle * 0.75, 3)
-    c1 = FACTION_COLOR.get(h['faction'], pick(DARK, hs))
+    c1 = vary(FACTION_COLOR.get(h['faction'], pick(DARK, hs)), hs)
     c2 = pick(LIGHT, hs, 1) if role in ('king', 'sultan', 'khan', 'queen', 'lady', 'court', 'dancer', 'student', 'roman') else pick(DARK, hs, 1)
     if c1 in LIGHT or c1.lower() in ('#e8e2d0', '#e6e0d0', '#e0dccc'):
         c2 = pick(DARK, hs, 1)
@@ -489,7 +504,7 @@ def make(h):
         mh = []
     hair, hparts = head_parts(h['axes']['head'], c3, mt, gold, fur)
     reg, specs = h['id'][:2], []
-    ro = real_outfit(reg, role, h['axes']['outfit'], female, c1, c2, c3)
+    ro = real_outfit(reg, role, h['axes']['outfit'], female, c1, c2, c3, hs)
     if ro:                     # 진짜 옷이 있는 틀 — 껍데기 옷을 빼고 옷 메시로
         parts, mh = [], list(ro[0])
         specs += ro[1]

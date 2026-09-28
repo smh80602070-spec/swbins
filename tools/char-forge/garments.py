@@ -42,6 +42,10 @@ SLOTS = [(0.00, 0.00, 0.36, 1.00), (0.36, 0.00, 0.60, 1.00), (0.60, 0.00, 0.78, 
 NAVY, IVORY, BROWN, BLACK = '#1f2a44', '#e9e4d6', '#3a2e28', '#141416'
 STEEL, LACE = '#8d949b', '#4a2a1a'
 LACQUER, GOLD, BRONZE, WHITE = '#1c1714', '#c9a64a', '#a87a43', '#f4f1e8'
+DRAPE = True       # 긴 옷자락 천 시뮬레이션(09-28) — 공식으로 모양을 잡은 통이 자루·혹으로 보여서 중력으로 몸에 떨어뜨린다
+DRAPE_FRAMES = 40
+DRAPE_MIN = 0.9    # 안쪽으로는 지은 둘레의 90% 까지만 — 더 들어가면 옷(장화·바지)이 속에서 뚫었다(몸만 충돌하니까)
+FOLD_GAIN = 1.8   # 옷자락 주름 깊이 배율(09-28 — 틀의 folds 값은 그대로 두고 한곳에서 키운다)
 METAL_PATTERNS = ('lamellar', 'plate', 'scale', 'ribs', 'mail')
 
 # ---- 옷 틀 ----
@@ -567,6 +571,18 @@ def ring_radii(pts, cx, cy, seg, ease, convex=True):
     return r + ease
 
 
+def ellipse_of(r):
+    """둘레 반지름 배열을 감싸는 타원(좌우 반축 하나, 앞·뒤 반축 따로) — 같은 칸 수의 반지름 배열.
+    예전엔 가장 큰 반지름의 원(× 0.92)으로 모아 옆구리가 엉덩이 뒤만큼 밀려 나가 긴 옷이 자루가 됐다(09-28 인물 105 렌더)."""
+    seg = len(r)
+    a = 2 * np.pi * np.arange(seg) / seg
+    x, y = r * np.cos(a), r * np.sin(a)
+    ax = max(float(np.max(np.abs(x))), 1e-3)
+    ab, af = max(float(np.max(y)), 1e-3), max(float(-np.min(y)), 1e-3)   # 뒤(+Y)·앞(-Y)
+    ay = np.where(np.sin(a) >= 0, ab, af)
+    return 1.0 / np.sqrt((np.cos(a) / ax) ** 2 + (np.sin(a) / ay) ** 2)
+
+
 class Body:
     """기본 몸 측정 — 살 좌표·뼈 무게·높이 기준."""
 
@@ -623,6 +639,7 @@ class Builder:
         self.ref = {}       # 면 → 바깥 판정 기준점(이 점에서 멀어지는 쪽이 바깥)
         self.tubes = []     # (z 목록, 반지름 목록) — 띠가 그 높이 통 둘레를 찾는다
         self.cover = []     # 지울 살 판정용 (종류, 범위)
+        self.pin = {}       # 정점 → 천 시뮬레이션 고정 무게(없으면 1 = 고정). 긴 옷자락 아래만 풀린다
 
     def vert(self, p, g):
         v = self.bm.verts.new(p)
@@ -671,12 +688,16 @@ class Builder:
             elif p.get('mono') and p.get('flare') and z >= z_cr and prev is not None and zb >= z_cr - 0.02:
                 r = r * (1 + p['flare']) ** (1 / NR)  # 가랑이 위에서 끝나는 치마(비늘 치마)도 아래로 넓힌다
             RR[k] = prev = r
-        for k, z in enumerate(zs):   # 가랑이 아래는 둘레를 평균 쪽으로 모은다 — 엉덩이 불룩이 끝단까지 번져 뒤가 혹처럼 튀지 않게
-            if z < z_cr:
-                al = p.get('round', 0.6) * min(1.0, (z_cr - z) / 0.25)
-                RR[k] = np.maximum(RR[k], RR[k] * (1 - al) + al * float(np.max(RR[k])) * 0.92)   # 줄이지 않고 모자란 쪽만 늘린다
+        for k, z in enumerate(zs):   # 가랑이 아래는 단면을 타원으로 모은다 — 엉덩이 불룩이 끝단까지 번져 뒤가 혹처럼 튀지 않게
+            z_hp = B.lv['hip']   # 엉덩이 높이부터 서서히(가랑이부터면 엉덩이 아래 혹이 남았다 09-28)
+            if z < z_hp and zt > z_hp + 0.1:
+                al = p.get('round', 0.6) * min(1.0, (z_hp - z) / 0.35)
+                RR[k] = np.maximum(RR[k], RR[k] * (1 - al) + al * ellipse_of(RR[k]))   # 줄이지 않고 모자란 쪽만 늘린다
         for _ in range(3):
             RR = [RR[0]] + [(RR[k - 1] + 2 * RR[k] + RR[k + 1]) / 4 for k in range(1, NR - 1)] + [RR[-1]]
+        if p.get('over') and not neck_top and NR >= 4:   # 겹친 판 윗단을 속 옷 쪽으로 여민다(뜬 윗단 틈 09-28)
+            RR[-1] = RR[-1] - p['over'] * 0.85
+            RR[-2] = RR[-2] - p['over'] * 0.4
         rows, refs, ringz = [], [], []
         arc = p.get('arc')          # (가운데 도, 폭 도) — 앞(270)·뒤(90) 한쪽만 두르는 판(겉옷판·망토), 목 틀 없이 어깨부터
         assert not (arc and neck_top), 'arc 판은 top 을 neck 말고 shoulder 부터'
@@ -690,7 +711,9 @@ class Builder:
             below = max(0.0, (z_cr - z) / max(z_cr - zb, 1e-3))
             for a in angs:
                 rr = RR[k][int(round(a / (2 * math.pi) * SEG)) % SEG]
-                fold = 1 + p.get('folds', 0.0) * below * math.sin(a * p.get('nfolds', 9) + 0.7)
+                nf = p.get('nfolds', 9)
+                wave = 0.65 * math.sin(a * nf + 0.7) + 0.35 * math.sin(a * (nf * 1.7 + 1) + 2.1)
+                fold = 1 + FOLD_GAIN * p.get('folds', 0.0) * below ** 0.8 * wave
                 ring.append(self.vert((B.cx + rr * fold * math.cos(a), B.cy + rr * fold * math.sin(a), z),
                                       'helper-skirt' if z < z_cr - 0.02 else 'cf_torso'))
             rows.append(ring)
@@ -719,6 +742,12 @@ class Builder:
                 refs.append(Vector((B.cx, yy, z)))
                 ringz.append(z)
         z0, z1 = ringz[0], ringz[-1]
+        if DRAPE and p.get('drape', not (p.get('over') or p.get('fit') or arc)) and zb < B.lv['knee']:
+            z_pin = B.lv['hip'] - 0.02   # 엉덩이 위는 고정, 그 아래 18cm 에 걸쳐 풀린다
+            for ring, z in zip(rows, ringz):
+                w = min(1.0, max(0.0, 1 - (z_pin - z) / 0.18))
+                for v in ring:
+                    self.pin[v] = w
         self.grid(rows, p['slot'], refs, closed=not arc, uvs=[(z - z0) / (z1 - z0) for z in ringz])
         if arc:
             return                  # 판 옆으로 살이 보이니 안 지우고, 띠가 재는 통 목록에도 안 넣는다
@@ -799,6 +828,7 @@ class Builder:
         """소매 — `arc`(도) 면 팔 바깥쪽만 두르는 판(소데·어깨판), `bag` 이면 팔꿈치부터 네모나게 늘어지는 자루(기모노)."""
         B = self.B
         arc = p.get('arc')
+        pad = p.get('over', 0.0) > 0 and p.get('length', 1.0) < 0.6   # 어깨판(겹 짧은 소매)
         for side in 'lr':
             outv = Vector((1.0 if side == 'l' else -1.0, 0, 0))   # 왼쪽 = +X
             S, E, Wr = B.bone(f'upperarm_{side}'), B.bone(f'lowerarm_{side}'), B.bone(f'hand_{side}')
@@ -823,13 +853,17 @@ class Builder:
                 near = [q for q in armv if abs((q - P).dot(dirv)) < 0.025]
                 r = max(((q - P) - dirv * (q - P).dot(dirv)).length for q in near) if near else 0.045
                 r = min(r, 0.045 + 0.01 * min(1.0, t * 2)) + p.get('ease', 0.02) * min(1.0, 0.35 + t) + p.get('over', 0.0)
-                r *= 1 + p.get('flare', 0.0) * (k / NT)
+                r *= 1 + (min(p.get('flare', 0.0), 0.22) if pad else p.get('flare', 0.0)) * (k / NT) ** (1.6 if pad else 1.0)
+                if pad and k == 0:
+                    r -= p.get('over', 0.0) * 0.8 + p.get('ease', 0.02) * 0.3   # 어깨판 윗단은 팔에 붙는다
                 if p.get('bag'):
                     tt = max(0.0, min(1.0, (t - 0.36) / 0.16))
                     drop, dpow = p.get('drop', 0.0) * (3 * tt * tt - 2 * tt * tt * tt), 1.0
                 else:
                     tt = max(0.0, min(1.0, (t - 0.3) / 0.55))
                     drop, dpow = p.get('drop', 0.0) * (3 * tt * tt - 2 * tt * tt * tt), 2.0
+                    if pad:
+                        drop, dpow = 0.05 * (k / NT) ** 1.5, 2.0   # 어깨판 끝은 아래로 걸친다
                     if t > 0.85:
                         drop *= 1 - 0.5 * min(1.0, (t - 0.85) / 0.2)
                 if arc:
@@ -848,6 +882,13 @@ class Builder:
                     ring.append(self.vert(P + off, f'cf_arm_{side}'))
                 rows.append(ring)
                 refs.append(P)
+            if pad and not arc:   # 어깨 위 모자 — 윗단 고리를 어깨 꼭대기 쪽으로 모아 판이 어깨를 덮게(뜬 통 09-28)
+                top = S + Vector((0, 0, 1)) * 0.035 + outv * 0.012
+                cap = []
+                for f in (0.45, 0.8):
+                    cap.append([self.vert(v.co.lerp(top, f) + Vector((0, 0, 0.012 * (1 - f))), f'cf_arm_{side}') for v in rows[0]])
+                rows = cap[::-1] + rows
+                refs = [S, S] + refs
             # 소매 격자는 둘레 방향이 반대(안쪽을 보게 지어진다) — 기준점으로 뒤집는다
             self.grid(rows, p['slot'], refs, closed=not arc)
         if t0 <= 0.05:                          # 팔 가리개 밑 윗팔 살은 드러나니 지우지 않는다
@@ -1451,12 +1492,71 @@ class Builder:
         vg = {n: ob.vertex_groups.new(name=n) for n in sorted(set(self.grp.values()))}
         for v, g in self.grp.items():
             vg[g].add([v.index], 1.0, 'REPLACE')
+        free = [v.index for v, w in self.pin.items() if w < 1.0]
+        if free:
+            pg = ob.vertex_groups.new(name='cf_pin')
+            pg.add(list(range(len(ob.data.vertices))), 1.0, 'REPLACE')
+            for v, w in self.pin.items():
+                pg.add([v.index], w, 'REPLACE')
         self.bm.free()
+        if free:
+            self.drape(ob)
         md = ob.modifiers.new('solid', 'SOLIDIFY')  # 두께(안쪽 면) — 소매 속·단 속이 비어 보이지 않게. 사각형만 남는다
         md.thickness, md.offset, md.use_rim = 0.004, -1.0, True
         with build_real.build.ctx(ob, [ob]):
             bpy.ops.object.modifier_apply(modifier=md.name)
         return ob
+
+    def drape(self, ob):
+        """긴 옷자락을 중력으로 떨어뜨린다 — 기본 몸 살(도우미 뺀 body 무리) 복제에 부딪히게, `cf_pin` 무게 1 은 그대로.
+        공식 통은 엉덩이 불룩을 끝단까지 끌고 가 혹·자루가 됐다(09-28 인물 105 렌더). 난수 없음(같은 입력이면 같은 모양)."""
+        B = self.B
+        col = B.bm.copy()
+        col.data = B.bm.data.copy()
+        col.parent = None
+        col.matrix_world = B.bm.matrix_world.copy()
+        bpy.context.scene.collection.objects.link(col)
+        for m in list(col.modifiers):
+            col.modifiers.remove(m)
+        bmc = bmesh.new()
+        bmc.from_mesh(col.data)
+        keep = set(B.body)
+        bmesh.ops.delete(bmc, geom=[v for v in bmc.verts if v.index not in keep], context='VERTS')
+        bmc.to_mesh(col.data)
+        bmc.free()
+        col.modifiers.new('col', 'COLLISION')
+        col.collision.thickness_outer = 0.006
+        col.collision.cloth_friction = 5.0
+        cl = ob.modifiers.new('cloth', 'CLOTH')
+        st = cl.settings
+        st.vertex_group_mass = 'cf_pin'
+        st.quality = 8
+        st.mass = 0.25
+        st.tension_stiffness = st.compression_stiffness = 12.0
+        st.shear_stiffness = 6.0
+        st.bending_stiffness = 0.4
+        st.air_damping = 2.0
+        cs = cl.collision_settings
+        cs.distance_min = 0.006
+        cs.use_self_collision = False
+        sc = bpy.context.scene
+        sc.frame_start, sc.frame_end = 1, DRAPE_FRAMES
+        cl.point_cache.frame_start, cl.point_cache.frame_end = 1, DRAPE_FRAMES
+        before = [v.co.copy() for v in ob.data.vertices]
+        for f in range(1, DRAPE_FRAMES + 1):
+            sc.frame_set(f)
+        with build_real.build.ctx(ob, [ob]):
+            bpy.ops.object.modifier_apply(modifier=cl.name)
+        for v, c0 in zip(ob.data.vertices, before):   # 안으로 너무 들어간 곳은 되돌린다(둘레 방향만, 높이는 시뮬레이션대로)
+            r0 = math.hypot(c0.x - B.cx, c0.y - B.cy)
+            dx, dy = v.co.x - B.cx, v.co.y - B.cy
+            r1 = math.hypot(dx, dy)
+            if r1 < DRAPE_MIN * r0 and r1 > 1e-6:
+                k = DRAPE_MIN * r0 / r1
+                v.co.x, v.co.y = B.cx + dx * k, B.cy + dy * k
+        bpy.data.objects.remove(col, do_unlink=True)
+        sc.frame_set(1)
+        ob.vertex_groups.remove(ob.vertex_groups['cf_pin'])   # 옷 검사: 정점마다 무리 하나(기본 몸에 없는 무리 금지)
 
     def delete_group(self):
         """옷에 덮이는 살 — 빌드가 지워 뚫림을 막는다(목·손·발은 남기고, 머리는 hairdome 이 덮은 두피만)."""
@@ -1506,6 +1606,12 @@ def paint(g, dpath, npath):
     yy, xx = np.mgrid[0:H, 0:W]
     U, V = xx / W, 1 - yy / H
     noise = rng.normal(0, 1, (H, W)).astype(np.float32)
+    # 넓은 얼룩(천 결 한 색이 평평한 칠처럼 보였다 09-28) — 16×16 난수를 부드럽게 늘린 ±1
+    g_ = rng.normal(0, 1, (17, 17))
+    ax_ = np.linspace(0, 16, W)
+    low = np.array([np.interp(ax_, np.arange(17), row) for row in g_])            # 17 × W
+    low = np.array([np.interp(ax_, np.arange(17), col) for col in low.T]).T.astype(np.float32)   # H × W
+    low /= max(float(np.abs(low).max()), 1e-6)
     extra = [dict(slot=p['strap_slot'], paint=dict(base=p['paint'].get('strap', p['paint']['base']), pattern='weave'))   # 배낭 끈 칸
              for p in g['parts'] if p.get('strap_slot') is not None]
     for p in list(g['parts']) + extra:
@@ -1523,6 +1629,10 @@ def paint(g, dpath, npath):
             wv = np.sin(xx * f) * np.sin(yy * f)
             shade = 1 + 0.05 * wv + 0.035 * noise
             h = 0.3 * wv
+            if pat == 'weave':   # 천: 넓은 얼룩 ±7% · 끝단 쪽 조금 어둡게(때·그늘) · 결 요철 조금 깊게
+                hem = np.clip(1 - t / 0.18, 0, 1)
+                shade = shade + 0.07 * low - 0.1 * hem ** 2
+                h = 0.42 * wv
             if pat == 'hair':
                 shade = 1 + 0.12 * np.sin(xx * 0.35 + noise * 0.8)
                 h = np.sin(xx * 0.35)

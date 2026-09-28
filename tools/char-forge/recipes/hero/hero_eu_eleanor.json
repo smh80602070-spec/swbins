@@ -28,10 +28,10 @@
  "teeth": "teeth_base/teeth_base.mhclo",
  "hair": "long01/long01.mhclo",
  "_garments": [
-  "gown@2a3a7a,e2c070"
+  "gown@30418b,e2c070"
  ],
  "clothes": [
-  "cf_gown_2a3a7a_e2c070/cf_gown_2a3a7a_e2c070.mhclo",
+  "cf_gown_30418b_e2c070/cf_gown_30418b_e2c070.mhclo",
   "toigo_ballet_flats/toigo_ballet_flats.mhclo"
  ],
  "anims": {

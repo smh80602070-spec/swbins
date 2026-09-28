@@ -28,10 +28,10 @@
  "teeth": "teeth_base/teeth_base.mhclo",
  "hair": "short02/short02.mhclo",
  "_garments": [
-  "officer_coat@2a2a30"
+  "officer_coat@2f3035"
  ],
  "clothes": [
-  "cf_officer_coat_2a2a30/cf_officer_coat_2a2a30.mhclo",
+  "cf_officer_coat_2f3035/cf_officer_coat_2f3035.mhclo",
   "toigo_mj_cloth_shoes/toigo_mj_cloth_shoes.mhclo"
  ],
  "anims": {

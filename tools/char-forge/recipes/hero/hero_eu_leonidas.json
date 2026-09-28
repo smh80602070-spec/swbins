@@ -28,10 +28,10 @@
  "teeth": "teeth_base/teeth_base.mhclo",
  "hair": "short02/short02.mhclo",
  "_garments": [
-  "chiton_armor@8a2a24"
+  "chiton_armor@982c28"
  ],
  "clothes": [
-  "cf_chiton_armor_8a2a24/cf_chiton_armor_8a2a24.mhclo",
+  "cf_chiton_armor_982c28/cf_chiton_armor_982c28.mhclo",
   "shoes01/shoes01.mhclo"
  ],
  "anims": {
