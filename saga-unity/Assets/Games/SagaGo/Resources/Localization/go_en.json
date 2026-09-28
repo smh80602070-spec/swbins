@@ -543,6 +543,7 @@
     { "key": "field.plunge", "value": "Plunge" },
     { "key": "orb.picked", "value": "◆ Orb {0}/{1} — offer them at a lit beacon to raise max stamina" },
     { "key": "orb.offered", "value": "◆ Offering — Statue rank {0} · Max stamina {1} · Gold +{2}" },
-    { "key": "orb.offered_half", "value": "◆ Offering — one more orb for statue rank {0}" }
+    { "key": "orb.offered_half", "value": "◆ Offering — one more orb for statue rank {0}" },
+    { "key": "field.btn.sight", "value": "Sight" }
   ]
 }

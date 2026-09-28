@@ -340,6 +340,7 @@
 2	go	field.btn.burst	해방	Release		
 2	go	field.btn.dodge	회피	Dodge		
 2	go	field.btn.jump	점프	Jump		
+2	go	field.btn.sight	시야	Sight		
 2	go	field.btn.skill	스킬	Skill		
 2	go	field.burst	{0} — 원소 해방!	{0} — Elemental Release!		
 2	go	field.charge	강공격	Heavy Attack		

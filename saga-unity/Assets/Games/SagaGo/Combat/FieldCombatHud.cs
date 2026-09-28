@@ -37,6 +37,8 @@ namespace Saga.Go.Combat
         public Button BurstButton { get; private set; }
         public Button DodgeButton { get; private set; }
         public Button JumpButton { get; private set; }
+        /// <summary>109-14-3b 원소 시야 켜고 끄기(폰 — PC 는 V 를 누르는 동안).</summary>
+        public Button SightButton { get; private set; }
         public Button RosterButton(int i) => _rosterButtons[i];
         public string RosterText(int i) => _rosterTexts[i].text;
 
@@ -97,6 +99,14 @@ namespace Saga.Go.Combat
             // PLAN.md 107 ② — 점프(공중에서 한 번 더 = 활공, 등반 중 = 도약).
             JumpButton = EncounterUiKit.NewButton(t, GoLocalization.T("field.btn.jump", "점프"), new Vector2(1f, 0f), new Vector2(-450f, 60f), new Vector2(140f, 140f), null);
             JumpButton.onClick.AddListener(OnJump);
+            SightButton = EncounterUiKit.NewButton(t, GoLocalization.T("field.btn.sight", "시야"), new Vector2(1f, 0f), new Vector2(-450f, 225f), new Vector2(120f, 90f), null);
+            SightButton.onClick.AddListener(OnSight);
+        }
+
+        private void OnSight()
+        {
+            var s = Saga.Go.World.ElementalSight.Instance;
+            if (s != null) s.Toggled = !s.Toggled;
         }
 
         private static Image Bar(Transform parent, Vector2 pos, Vector2 size, Color color, Vector2? anchor = null)
