@@ -208,9 +208,11 @@
   }
 
   /** 들판 전투가 원소 스킬·폭발·장판을 쓸 때마다(`field:element`) — 범위에 든 석등을 켠다 */
+  /** 돌진·찌르기(x0,y0)는 지나간 선까지 — story.elemDist 와 같은 셈(2026-09-28) */
+  function elemDist(e, x, y) { var ST = global.DG.story; return ST && ST.elemDist ? ST.elemDist(e, x, y) : Math.hypot(e.x - x, e.y - y); }
   function onElement(e) {
     if (!on() || !e || !e.el) { return; }
-    var L = near(e.x, e.y, (e.r || 3) + LANTERN_R + 3).chests, i, q, now = nowSec();
+    var L = near(e.x, e.y, (e.r || 3) + LANTERN_R + 3 + (typeof e.x0 === 'number' ? Math.hypot(e.x - e.x0, e.y - e.y0) : 0)).chests, i, q, now = nowSec();
     for (i = 0; i < L.length; i++) {
       var ch = L[i];
       if (ch.lock !== 'lantern' || unlocked[ch.id] || opened(ch.id)) { continue; }
@@ -218,7 +220,7 @@
       var any = false;
       for (q = 0; q < ch.lanterns.length; q++) {
         var ln = ch.lanterns[q];
-        if (!st.on[q] && ln.el === e.el && Math.hypot(ln.x - e.x, ln.y - e.y) <= (e.r || 3) + 1.5) { st.on[q] = true; any = true; }
+        if (!st.on[q] && ln.el === e.el && elemDist(e, ln.x, ln.y) <= (e.r || 3) + 1.5) { st.on[q] = true; any = true; }
       }
       if (!any) { continue; }
       lit[ch.id] = st;

@@ -27,6 +27,10 @@
 
   /* 무엇을 자동으로 할지 — 화면에서 켜고 끈다 */
   var FLAGS = [
+    /* 2026-09-28 실기 Q5 "전체 테스트용 자동 퀘스트" — 이야기 목표까지 걸어가 말을 걸고 대화를 넘긴다.
+       싸움(무찌르기·결투·지키기)은 🤖 자동 전투(field-combat autoFight)가 맡고, 여기서는 붙은 동안 안 걷는다 */
+    { key: 'story', name: '이야기', emoji: '📖',
+      desc: '지금 이야기 목표로 걸어가 말을 걸고 대화를 넘긴다 (다른 자동보다 먼저)' },
     { key: 'meet', name: '등용 · 포획', emoji: '🤝',
       desc: '사거리 안의 대상을 미니게임 확률대로 상대한다' },
     { key: 'grow', name: '승급 · 장비', emoji: '✨',
@@ -43,13 +47,13 @@
   var RETARGET = 0.45;
   var PATROL_MIN = 90, PATROL_MAX = 260;   // 순행 목표 거리 (m)
 
-  var acc = { aim: 0, meet: 0, grow: 0, omen: 0, stop: 0, fort: 0 };
+  var acc = { aim: 0, meet: 0, grow: 0, omen: 0, stop: 0, fort: 0, talk: 0, story: 0 };
   var patrol = null;                       // 순행 목표 {x, y}
   var aimUid = null;                       // 지금 쫓는 대상
   var doing = '';                          // 화면에 보여 줄 한 줄
   var lastLog = 0;
 
-  var DEFAULTS = { on: false, meet: true, grow: true, omen: false, stop: true, fort: true };
+  var DEFAULTS = { on: false, story: true, meet: true, grow: true, omen: false, stop: true, fort: true };
 
   function st() {
     var s = core.save;
@@ -168,9 +172,102 @@
     patrol = { x: pos.x + Math.cos(ang) * d, y: pos.y + Math.sin(ang) * d };
   }
 
+  /* ── 이야기 ──────────────────────────────────────────── */
+
+  var TALK_GAP = 0.45;           // 대화 한 줄 넘기는 간격(초) — 글이 흘러나오는 것을 한 번은 보이게
+  var WARP_MIN = 600;            // 이보다 먼 목표는 더 가까운 순간이동 지점이 있으면 뛴다
+  var STUCK_T = 2.5;             // 이만큼 걸으려 했는데 1m 도 못 갔으면 막힌 것(집·강)
+  var stuck = { x: 0, y: 0, t: 0, side: null };
+
+  /** 막힘 풀기 — 목표 쪽이 막혀 제자리면 옆으로 12m 비켰다가 다시 간다(길 찾기가 없다) */
+  function walkToward(w, tx, ty, dt) {
+    var p = core.save.player.pos;
+    if (stuck.side) {
+      if (Math.hypot(stuck.side.x - p.x, stuck.side.y - p.y) > 2 && stuck.t < 4) { stuck.t += dt; w.walkTo(stuck.side.x, stuck.side.y); return; }
+      stuck.side = null; stuck.t = 0;
+    }
+    if (Math.hypot(p.x - stuck.x, p.y - stuck.y) > 1) { stuck.x = p.x; stuck.y = p.y; stuck.t = 0; }
+    else { stuck.t += dt; }
+    if (stuck.t > STUCK_T) {
+      var dx = tx - p.x, dy = ty - p.y, dl = Math.hypot(dx, dy) || 1, sg = Math.random() < 0.5 ? 1 : -1;
+      stuck.side = { x: p.x - dy / dl * 12 * sg - dx / dl * 3, y: p.y + dx / dl * 12 * sg - dy / dl * 3 };
+      stuck.t = 0;
+      w.walkTo(stuck.side.x, stuck.side.y);
+      return;
+    }
+    w.walkTo(tx, ty);
+  }
+
+  /** 이야기 한 박자 — 맡았으면 true(다른 자동은 이번엔 쉰다). 장이 잠겼거나 목표가 없으면 false */
+  function tickStory(dt) {
+    var S = global.DG.story, w = global.DG.world;
+    if (!S || !S.on || !S.on()) { return false; }
+    if (S.talking()) {
+      acc.talk += dt;
+      if (acc.talk >= TALK_GAP) {
+        acc.talk = 0;
+        var line = S.curLine();
+        S.next(line && line[0] === '?' ? 0 : undefined);        // 고르는 줄은 첫째 대답
+      }
+      doing = '📖 대화 중';
+      return true;
+    }
+    var st = S.step();
+    if (!st) {
+      if (!S.done() && S.locked()) { doing = '📖 다음 장은 모험 레벨 ' + S.chapter().ar + ' 부터 — 그동안 순행'; }
+      return false;
+    }
+    var t = S.targetOf(st);
+    if (!t) { doing = '📖 ' + (st.text || st.type) + ' — 목표 자리를 아직 못 찾음'; return false; }
+    var p = core.save.player.pos, d = Math.hypot(t.x - p.x, t.y - p.y);
+    var FC = global.DG.fieldCombat, FS = FC && FC.state ? FC.state() : null;
+    if (FS && FC.engaged(FS)) { w.walkTo(p.x, p.y); doing = '📖 ⚔️ ' + (t.label || st.text || '') + ' — 싸우는 중'; return true; }
+    /* 불 밝히기·석등 — 제단(석등은 다음 차례 것) 곁에 서서 원소 스킬(E). 스킬 고리가 닿으면 story.onElement 가 켠다 */
+    if (st.type === 'light' || st.type === 'seal') {
+      var goal = t;
+      if (st.type === 'seal') {
+        var lamps = S.sealLamps(st), want = (st.order || S.SEAL_ORDER)[S.sealLit()];
+        for (var li = 0; li < lamps.length; li++) { if (lamps[li].k === want) { goal = lamps[li]; } }
+      }
+      var dg = Math.hypot(goal.x - p.x, goal.y - p.y);
+      if (dg <= 1.8) {
+        w.walkTo(p.x, p.y);
+        var mm = FS && FS.party ? FS.party[FS.active] : null;
+        if (mm && mm.skillCd <= 0 && FC.act) { FC.act('skill'); }
+        doing = '📖 ✨ ' + (st.text || '') + ' — 원소 스킬' + (mm && mm.skillCd > 0 ? ' (' + mm.skillCd.toFixed(1) + '초)' : '');
+        return true;
+      }
+      acc.story += dt;
+      if (acc.story >= RETARGET) { acc.story = 0; walkToward(w, goal.x, goal.y, RETARGET); }
+      doing = '📖 ' + (st.text || st.type) + ' 으로 ' + Math.round(dg) + 'm';
+      return true;
+    }
+    if (S.isTalk(st) && d <= t.r) {
+      w.walkTo(p.x, p.y);
+      if (!S.talkStart()) { doing = '📖 ' + t.label + ' 곁 — 말을 걸 수 없는 때(다른 창)'; }
+      return true;
+    }
+    /* 멀면(600m+) 목표에 더 가까운 순간이동 지점으로 뛴다 — 사람이 지도(M)에서 누르는 것과 같은 길(overworld.jump, 키보드 판만) */
+    var OW = global.DG.overworld;
+    if (d > WARP_MIN && w.mode === 'keyboard' && OW && OW.nearestWay && OW.jump) {
+      var nw = OW.nearestWay(t.x, t.y);
+      if (nw && nw.d + 150 < d && OW.jump(nw.key)) { doing = '📖 🌀 ' + nw.name + ' 으로 순간이동 — ' + (t.label || st.text || ''); return true; }
+    }
+    acc.story += dt;
+    if (acc.story >= RETARGET) {
+      acc.story = 0;
+      patrol = null; aimUid = null;
+      /* 반지름이 있는 목표(대화·가기·오르기)는 그 안까지, 없는 것(무찌르기·결투)은 그 자리로 */
+      walkToward(w, t.x, t.y, RETARGET);
+    }
+    doing = '📖 ' + (t.label || st.text || st.type) + ' 으로 ' + Math.round(d) + 'm';
+    return true;
+  }
+
   function tickMap(dt) {
     var w = global.DG.world;
     if (global.DG.encounter.active) { doing = '조우 화면이 열려 있습니다'; return; }
+    if (on('story') && tickStory(dt)) { return; }
 
     acc.aim += dt;
     if (acc.aim >= RETARGET) {
@@ -331,6 +428,6 @@
     setOn: setOn, toggle: toggle, toggleFlag: toggleFlag,
     update: update, status: status,
     /** 자가진단용 — 한 판단만 굴려 본다 */
-    _tickMap: tickMap, _autoRankUp: autoRankUp
+    _tickMap: tickMap, _autoRankUp: autoRankUp, _tickStory: tickStory
   };
 })(window);

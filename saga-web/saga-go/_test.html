@@ -396,14 +396,14 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     t('자동 순행이 채워진 역참으로 걸어가 들른다', function () {
       C.save.stations = {};
-      DG.auto.state().on = true; DG.auto.state().stop = true;
+      DG.auto.state().on = true; DG.auto.state().stop = true; DG.auto.state().story = false;   // 📖 이야기가 먼저 잡으면 역참을 안 본다
       /* 밑천을 비워 대상을 못 고르게 하면 역참이 목표가 된다 */
       C.save.items.scroll = 0; C.save.items.feed = 0;
       var st = DG.world.stationsNear()[0];
       C.save.player.pos.x = st.x; C.save.player.pos.y = st.y;   // 사거리 안에 세운다
       var s0 = C.save.items.scroll;
       for (var i = 0; i < 12; i++) { DG.auto._tickMap(0.5); }
-      DG.auto.state().on = false;
+      DG.auto.state().on = false; DG.auto.state().story = true;
       /* 뒤처리 — 자동이 걸어 둔 목표를 지운다.
          남겨 두면 뒤에 오는 걷기 항목이 "멈춰 있는데 계속 걷는" 상태로 깨진다. */
       DG.world.walkTo(C.save.player.pos.x, C.save.player.pos.y);
@@ -6778,11 +6778,43 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var pos = C.save.player.pos;
       W.spawns[0].x = pos.x + 3; W.spawns[0].y = pos.y + 3;
       var uid = W.spawns[0].uid;
+      DG.auto.state().story = false;                               // 📖 이야기가 먼저 잡으면 조우를 안 본다
       for (var i = 0; i < 40; i++) { DG.auto.update(0.1); }
+      DG.auto.state().story = true;
       var gone = true;
       for (var j = 0; j < W.spawns.length; j++) { if (W.spawns[j].uid === uid) { gone = false; } }
       DG.auto.setOn(false);
       return gone && '앞에 세운 대상을 처리';
+    });
+
+    t('자동 📖 — 이야기: 인물 곁이면 말을 걸고 대화를 끝까지 넘겨 다음 단계로 · 멀면 그쪽으로 걷는다', function () {
+      /* 2026-09-28 실기 Q5 "전체 테스트용 자동 퀘스트" */
+      var S = DG.story, sv = S.state(), keep = { ch: sv.ch, step: sv.step }, p = C.save.player.pos, kx = p.x, ky = p.y;
+      sv.ch = 0; sv.step = 0;
+      var st = S.step(), t = S.targetOf(st);
+      if (!st || !S.isTalk(st) || !t) { sv.ch = keep.ch; sv.step = keep.step; return false; }
+      DG.auto.state().on = true; DG.auto.state().story = true;
+      p.x = t.x + 40; p.y = t.y;
+      DG.auto._tickStory(0.5);
+      var wt = W.walkingTo(), towards = !!wt && Math.hypot(wt.x - t.x, wt.y - t.y) < 1;
+      p.x = t.x + 1; p.y = t.y;
+      var i, opened = false;
+      for (i = 0; i < 400 && sv.step === 0; i++) { DG.auto._tickStory(0.5); if (S.talking()) { opened = true; } }
+      var why = DG.auto.status().doing;
+      var stepped = sv.step === 1, n = i;
+      DG.auto.state().on = false;
+      sv.ch = keep.ch; sv.step = keep.step; p.x = kx; p.y = ky;
+      W.walkTo(kx, ky); W.update(0.05);
+      if (!(towards && opened && stepped)) { return '실패 걸음 ' + towards + ' · 대화 ' + opened + ' · 단계 ' + stepped + ' · ' + why; }
+      return towards && opened && stepped && ('40m 밖 → 인물 쪽으로 걸음 · 곁에서 대화 열고 ' + n + '박자에 다음 단계');
+    });
+
+    t('자동 📖 — 원소 신호는 돌진·찌르기의 지나간 선으로 닿는다(끝점만 보면 제단을 가로질러도 안 켜졌다)', function () {
+      var S = DG.story;
+      var line = { x: 0, y: 5.5, x0: 0, y0: 0, r: 2 }, dot = { x: 0, y: 5.5, r: 2 };
+      var onLine = S.elemDist(line, 1, 2.5), offLine = S.elemDist(dot, 1, 2.5), past = S.elemDist(line, 0, 9);
+      return Math.abs(onLine - 1) < 1e-9 && offLine > 3 && Math.abs(past - 3.5) < 1e-9 &&
+        ('선 곁 1m · 끝점만이면 ' + offLine.toFixed(1) + 'm · 끝 너머 3.5m');
     });
 
     t('자동 — 승급 조건을 채운 인물을 올린다', function () {

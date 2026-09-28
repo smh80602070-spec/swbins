@@ -1576,13 +1576,20 @@
     if (st.type === 'duel') { dropAdds(); toast(st.win || '🎭 검은 가면이 먹구름 속으로 달아났다 — 졸개도 흩어진다'); }
     advance();
   }
+  /** 원소 신호(e)와 한 점 사이 — 돌진·찌르기(x0,y0 가 있으면)는 지나간 선까지의 거리 */
+  function elemDist(e, x, y) {
+    if (typeof e.x0 !== 'number' || typeof e.y0 !== 'number') { return Math.hypot(e.x - x, e.y - y); }
+    var vx = e.x - e.x0, vy = e.y - e.y0, L2 = vx * vx + vy * vy;
+    var u = L2 > 0 ? Math.max(0, Math.min(1, ((x - e.x0) * vx + (y - e.y0) * vy) / L2)) : 0;
+    return Math.hypot(x - (e.x0 + vx * u), y - (e.y0 + vy * u));
+  }
   function onElement(e) {
     var st = step();
     if (!st || !e) { return; }
     if (st.type === 'seal') { onSeal(st, e); return; }
     if (st.type !== 'light') { return; }
     var t = targetOf(st);
-    if (!t || Math.hypot(e.x - t.x, e.y - t.y) > (e.r || 3) + LIGHT_R()) { return; }
+    if (!t || elemDist(e, t.x, t.y) > (e.r || 3) + LIGHT_R()) { return; }
     if (st.bell) {                                                  // ⑲-39 종각 종 — 불 대신 울린다
       var SPb = global.DG.skyport;
       if (SPb && SPb.ringBell) { SPb.ringBell(); }
@@ -1595,7 +1602,7 @@
   function sealLit() { return seal.key === keyOf() ? seal.n : 0; }
   function orderText(st) { return (st.order || SEAL_ORDER).map(function (k) { return SEAL_MARKS[k].name; }).join(' → '); }
   function onSeal(st, e) {
-    var hits = sealLamps(st).filter(function (l) { return Math.hypot(e.x - l.x, e.y - l.y) <= (e.r || 3) + LIGHT_R(); }).map(function (l) { return l.k; });
+    var hits = sealLamps(st).filter(function (l) { return elemDist(e, l.x, l.y) <= (e.r || 3) + LIGHT_R(); }).map(function (l) { return l.k; });
     if (!hits.length) { return; }
     var order = st.order || SEAL_ORDER, was = sealLit(), n = sealHit(was, hits, order);
     seal = { key: keyOf(), n: n };
@@ -2303,7 +2310,7 @@
     CAPE_CLEAR: CAPE_CLEAR, capeSpot: capeSpot, landAt: landAt, ringAt: ringAt, stepDefend: stepDefend, defState: function () { return def && def.key === keyOf() ? def : null; },
     waveKey: waveKey, pillarHex: pillarHex,
     THIEF_PATH: THIEF_PATH, CHASE_SPEED: CHASE_SPEED, CHASE_PAUSE: CHASE_PAUSE, CHASE_START: CHASE_START, CHASE_CATCH: CHASE_CATCH, ISLE_R: ISLE_R,
-    isleSpot: isleSpot, wetNeighbors: wetNeighbors, stepChase: stepChase, thiefAt: thiefAt, chaseState: function () { return chase && chase.key === keyOf() ? chase : null; }, isTalk: isTalk,
+    isleSpot: isleSpot, elemDist: elemDist, wetNeighbors: wetNeighbors, stepChase: stepChase, thiefAt: thiefAt, chaseState: function () { return chase && chase.key === keyOf() ? chase : null; }, isTalk: isTalk,
     sealLamps: sealLamps, sealHit: sealHit, sealLit: sealLit, duelBoss: duelBoss, stepDuel: stepDuel, npcInfo: npcInfo, skyOf: skyOf,
     WQ: WQD, wqs: wqs, wqDef: wqDef, wqStepOf: wqStepOf, tracking: tracking, setTrack: setTrack, wqStart: wqStart, wqAvail: wqAvail, wqMarks: wqMarks, mapMarks: mapMarks, revealed: revealed,
     talkables: talkables, storyStep: storyStep, stepAt: stepAt, aimPoints: aimPoints,

@@ -552,7 +552,7 @@
   global.DG = global.DG || {};
   global.DG.overworld = {
     /* 값을 내는 함수 — 순수하다 (자가진단이 이것만 따로 본다) */
-    project: project, questLayout: questLayout, nearestWay: nearestWay, pickInfo: pickInfo,
+    project: project, questLayout: questLayout, nearestWay: nearestWay, jump: jump, pickInfo: pickInfo,
     select: select, trackPicked: trackPicked, jumpPicked: jumpPicked,
     get picked() { return picked; },
     /* 화면 */

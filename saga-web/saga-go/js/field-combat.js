@@ -1855,6 +1855,9 @@
     }
     if (refAcc > 2) { refAcc = 0; refreshStats(); }
     var bl = blocked();
+    /* 걷는 쪽을 바라본다 — 적이 없을 때 스킬·돌진이 나가는 쪽. 전엔 마지막으로 회피한 쪽(없으면 남쪽)으로만 나갔다(2026-09-28) */
+    var Wm = global.DG.world, mv = Wm && Wm.motion;
+    if (mv && mv.speed > 1.5 && (mv.vx || mv.vy)) { S.lastDx = mv.vx; S.lastDy = mv.vy; }
     step(S, dt, { px: pos.x, py: pos.y, blocked: bl });
     if (!bl && autoOn() && engaged(S)) {
       lastAuto += dt;
@@ -1886,7 +1889,8 @@
       var e = ev[i];
       /* ⑲-3 원소 신호 — 스킬·폭발·장판 자리를 알린다(treasure.js 가 석등을 켠다) */
       if ((e.t === 'skill' || e.t === 'burst' || e.t === 'arrow' || (e.t === 'zone' && (e.kind === 'field' || e.kind === 'shell' || e.kind === 'kitzone' || e.kind === 'vortex' || e.kind === 'feast'))) && e.el) {
-        c.emit('field:element', { el: e.el, x: e.x, y: e.y, r: e.r || 3, t: e.t });
+        /* 돌진·찌르기는 지나간 선(x0,y0 → x,y) 전체가 닿는다 — 끝점만 알리면 제단을 가로질러도 안 켜졌다(2026-09-28) */
+        c.emit('field:element', { el: e.el, x: e.x, y: e.y, r: e.r || 3, t: e.t, x0: e.x0, y0: e.y0 });
       }
       if (e.t === 'move') { pos.x += e.dx; pos.y += e.dy; }
       else if (e.t === 'weak') { floatNum(e.x, e.y, '급소!', null, 1.35, true); c.emit('field:weak', {}); }   // ⑲-25 업적이 센다
