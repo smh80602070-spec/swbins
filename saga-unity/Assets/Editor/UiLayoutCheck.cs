@@ -527,6 +527,21 @@ namespace Saga.EditorTools
                 everyFrame = () => ((GameObject)Get(Saga.Go.UI.FishingUi.Instance, "_bar")).SetActive(true),
                 exit = fishExit,
             });
+            // ⑥ 업적 창(109-14-25) — 받을 게 있는 상태로(단추 ●N·탭 ●N·받기 단추가 다 켜진 모양)
+            list.Add(new UiState
+            {
+                name = "업적 창",
+                panel = true,
+                enter = () =>
+                {
+                    var ui = Saga.Go.UI.AchieveUi.Instance;
+                    if (ui == null) return false;
+                    ui.Open();
+                    ui.SelectTab(Saga.Go.Data.GoAchieve.Cat.World);
+                    return ui.IsOpen;
+                },
+                exit = () => Saga.Go.UI.AchieveUi.Instance?.Close(),
+            });
             list.Add(new UiState
             {
                 name = "낚시 게시판",

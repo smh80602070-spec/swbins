@@ -140,6 +140,10 @@ namespace Saga.Go.Data
             public List<CookState.Entry> fishBag;
             public List<CookState.Entry> fishLog;
             public List<CookState.TimeEntry> fishGone;
+            // 109-14-25 업적 — 신호 셈·반응 가짓수별 횟수·받은 단계 수(버전 그대로 — 옛 세이브는 0 에서)
+            public List<CookState.Entry> achStats;
+            public List<CookState.Entry> achKinds;
+            public List<CookState.Entry> achGot;
             public List<int> wqSteps;
             public List<bool> wqDone;
             public string wqTrack;
@@ -176,6 +180,9 @@ namespace Saga.Go.Data
                 fishBag = FishState.SnapshotBag(), // 109-14-24
                 fishLog = FishState.SnapshotLog(),
                 fishGone = FishState.SnapshotGone(),
+                achStats = AchieveState.SnapshotStats(), // 109-14-25
+                achKinds = AchieveState.SnapshotKinds(),
+                achGot = AchieveState.SnapshotGot(),
                 wqSteps = WorldQuestState.SnapshotSteps(), // 109-14-21
                 wqDone = WorldQuestState.SnapshotDone(),
                 wqTrack = StoryState.TrackId,
@@ -311,6 +318,7 @@ namespace Saga.Go.Data
             WorldQuestState.Restore(data.wqSteps, data.wqDone); // 109-14-21 — 이야기 자리(StoryState.Restore) 뒤
             StoryState.RestoreTrack(data.wqTrack);
             FishState.Restore(data.fishBag, data.fishLog, data.fishGone); // 109-14-24 — 요리 가방(CookState) 뒤
+            AchieveState.Restore(data.achStats, data.achKinds, data.achGot); // 109-14-25
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();

@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **3261** (표 3206 · 코드 55) — go 1417 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **3** · 넘침 주의 **265**
-- 사람 검수 **0/3261** — 순위1 0/265 · 순위2 0/2282 · 순위3 0/714
+- 짝 **3321** (표 3266 · 코드 55) — go 1477 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **8** · 넘침 주의 **276**
+- 사람 검수 **0/3321** — 순위1 0/265 · 순위2 0/2342 · 순위3 0/714
 
 ## 검수 순서
 
@@ -22,13 +22,18 @@
 
 - `go` `map.mark_legend` — 문장부호 앞 띄움
 
-## 용어 흔들림 — 같은 한국어, 다른 영어 (3)
+## 용어 흔들림 — 같은 한국어, 다른 영어 (8)
 
 - 「물결」 → **Tidal** (go:era.foe.pre_hydro, go:kit.word.hydro) · **Mulgyeol** (go:wq.short.researcher)
+- 「회오리」 → **Whirl** (go:field.re.swirl) · **swirls** (go:ach.unit.swirl)
+- 「깨뜨림」 → **Shatter** (go:field.re.shatter) · **shatters** (go:ach.unit.shatter)
 - 「강화석 +{0}」 → **Ore +{0}** (go:weapon.ore_plus) · **Enhancement Ore +{0}** (go:fish.got_ore)
 - 「바꾸기」 → **Switch** (go:weapon.btn_swap, go:artifact.btn_swap) · **Trade** (go:fish.swap)
+- 「요리」 → **Cooking** (go:cook.button, go:cook.title) · **dishes cooked** (go:ach.unit.cook)
+- 「끝」 → **Complete** (go:story.state_done, go:wq.state_done) · **Done** (go:ach.end)
+- 「채집」 → **gathered** (go:ach.unit.gather) · **Foraging** (dungeon:room.forage)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 265)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 276)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 

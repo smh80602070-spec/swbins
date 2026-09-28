@@ -1109,6 +1109,7 @@ namespace Saga.Go.Combat
             if (reaction != GoReaction.None)
             {
                 DailyTaskState.ReportProgress(DailyTaskState.Kind.Reaction, 1); // 109-14-8 일일 의뢰 — 원소 반응
+                AchieveState.Reaction(reaction); // 109-14-25 업적 — 반응 수·가짓수
                 FieldDamageText.Spawn(transform.position + Vector3.up * (BodyHeight + 1.8f),
                     GoElements.NameOf(reaction), GoElements.ColorOf(reaction), 1.3f);
             }
@@ -1389,9 +1390,12 @@ namespace Saga.Go.Combat
             if (_animator != null) _animator.SetTrigger("Death");
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
-            if (DomainFoe || StoryFoe) { Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음(109-14-12 임무 적도)
+            if (DomainFoe || StoryFoe) { if (IsWeeklyBoss || IsStoryBoss) AchieveState.Bump("boss"); Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음(109-14-12 임무 적도)
             if (!(IsGuardian && GuardianState.Defeated)) PlayerStats.AddExp(ExpReward); // 109-14-10 다시 선 수호장은 경험 없이 꽃만
             DailyTaskState.ReportProgress(DailyTaskState.Kind.FieldKill, 1); // 109-14-8 일일 의뢰 — 들판 적
+            AchieveState.Bump("kills"); // 109-14-25 업적 — 들판 처치
+            if (IsGuardian) AchieveState.Bump("boss");
+            if (IsElemental && ShieldMax > 0f && !IsGuardian && !IsHero) AchieveState.Bump("elite");
             if (EnemyKind == Kind.Bandit && !IsHero)
             {
                 // 109-14-6 짐승 고기 — 14-1b 짐승(바위곰)이 오기 전까지 산적 봇짐에서

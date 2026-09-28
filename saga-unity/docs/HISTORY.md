@@ -10355,3 +10355,15 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - `SetupForgeHeroes.SetupBatch`: `FORGE_HERO n=105 human=105 h=1.58~2.08 missing=0`, `RESULT OK`. FBX·프리팹은 로컬 전용(.gitignore), 커밋은 license.json 105.
 - 검증: `PlaytestHeadless` 두 판 OK(둘째 시도는 Package Manager IPC 연결 실패로 시작 못 함 → 재실행 OK) · `SagaAssetGate` OK(사실 몸 1520·빌드가 쓰는 것 470). 배치가 건드린 NotoEmoji·NotoSansKR SDF 에셋은 원복.
 - 실기 확인 전: 도감 인물이 게임에서 서로 다르게 보이는지·얼굴 인상. 다음 = 얼굴(사용자 "너무 못생겼다", 파판 방향 — 무작위 얼굴 축을 예쁜 쪽으로·눈·화장) → 동작(④).
+
+## 2026-09-29 GO — 109-14-25 업적(웹 사가고 ⑲-25)
+
+"이어해" — 14-24 다음. 웹 `achieve.js`(= saga-godot 106 ㊸) 대조.
+
+- `Data/GoAchieve`(표·보상·단계 셈)·`AchieveState`(신호 셈·받기·알림·세이브) — 웹 표 22·63 그대로(이름·순서·보상). 신호는 코드 곳곳에 한 줄씩: `FieldEnemy`(처치·수호자·원소 괴물·주간·이야기 보스·반응), `FieldCombat`(급소), `DomainField`(숨은 터), `CookState`(채집·요리·맛있는 요리 = 품질 2).
+- 웹 탑·탐험도 → 오른 정상 28·봉헌 등급 10·사명 끝낸 지역으로 바꿈, 단계 값은 이 트랙 최대치 안(상자 17 → 5/10/17, 정상 5/14/28). 진단이 "끝 단계 ≤ 최대치"를 표마다 검사.
+- `UI/AchieveUi`: Y·위 오른쪽 "업적 ●N"(색), 탭 다섯(●N)·줄 다섯 자리(갈래별 3~5줄)·막대·받기·모두 받기, 0.5초마다 알림. 세이브 `achStats`·`achKinds`·`achGot`(버전 28 그대로). 글 60 짝(loc-review 오류 0).
+- 진단 `PlaytestGoAchieve`(표·보상·신호(실제 처치·채집·요리·반응)·상태값·받기·알림·세이브 왕복·옛 세이브 0·화면) + `UiLayoutCheck` GO 상태 "업적 창".
+- 검증(묶음 PC): 컴파일 0 · `PlaytestHeadless` achieve OK·FAIL 0.
+- 실기 확인 전: "업적" 단추가 위 오른쪽 세로줄(도감 밑)에서 폰 화면에 안 겹치는지 · 알림 글 길이 · 창 줄·탭이 폰 폭에 읽히는지.
+- 안 한 것: 업적 숨김 단계·위쪽 상시 단추(Y·단추로 대신). 다음 = 14-26 (웹 ⑲-26 탐사 파견).

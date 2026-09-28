@@ -221,6 +221,7 @@ namespace Saga.Go.World
             Prim(PrimitiveType.Cylinder, root.transform, new Vector3(0f, 1.6f, 0f), new Vector3(0.6f, 1.6f, 0.6f), Mat("bark", new Color(0.35f, 0.24f, 0.15f), 0f));
             Prim(PrimitiveType.Sphere, root.transform, new Vector3(0f, 4f, 0f), Vector3.one * 3.4f, Mat("tree", new Color(0.55f, 0.95f, 0.6f), 1.6f));
             r.Tree = root;
+            AchieveState.Bump("domain"); // 109-14-25 업적 — 숨은 터 돌파
             Cleared?.Invoke(r.Site.Kind);
             Toast(string.Format(GoLocalization.T("domain.tree", "보상 나무가 자랐다 — 가운데로 가서 원기 {0} 쓰면 받는다"), DomainState.CostOf(r.Site.Kind)));
             Changed?.Invoke();

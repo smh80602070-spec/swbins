@@ -264,6 +264,66 @@
 1	common	TitleSettings.cs	판마다 다름	Varies by game		
 1	common	TitleSettings.cs	켜짐	On		
 1	common	TitleSettings.cs	꺼짐	Off		
+2	go	ach.button	업적	Feats		
+2	go	ach.cat.element	원소의 이치	Elemental Arts		
+2	go	ach.cat.fight	싸움의 길	Path of Battle		
+2	go	ach.cat.life	살림살이	Livelihood		
+2	go	ach.cat.story	이야기	Story		
+2	go	ach.cat.world	세상 곳곳	World		
+2	go	ach.claim	받기	Claim		
+2	go	ach.claim_all	모두 받기	Claim All		
+2	go	ach.done	{0} {1} — 모두 이룸	{0} {1} — all done		
+2	go	ach.end	끝	Done		
+2	go	ach.got	업적을 받았다 — {0}	Feat reward claimed — {0}		
+2	go	ach.got_all	업적 {0} 단계를 받았다	Claimed {0} feat tiers		
+2	go	ach.name.boss	큰 적 쓰러뜨림	Great Foe Felled		
+2	go	ach.name.chapter	이야기 따라	Following the Story		
+2	go	ach.name.chest	보물 사냥꾼	Treasure Hunter		
+2	go	ach.name.cook	솥 앞에서	At the Cauldron		
+2	go	ach.name.domain	숨은 터 돌파	Hidden Grounds Cleared		
+2	go	ach.name.elite	원소 괴물 사냥	Elemental Beast Hunt		
+2	go	ach.name.fish	낚싯대 드리우기	Casting the Line		
+2	go	ach.name.fishkinds	물고기 도감	Fish Codex		
+2	go	ach.name.gather	들풀 모으기	Herb Gathering		
+2	go	ach.name.kill	들판의 칼	Blade of the Fields		
+2	go	ach.name.kinds	반응 도감	Reaction Codex		
+2	go	ach.name.mission	지역 평정	Region Pacified		
+2	go	ach.name.offer	봉헌의 벗	Friend of Offerings		
+2	go	ach.name.orb	구슬 줍는 이	Orb Gatherer		
+2	go	ach.name.peak	정상 찾는 길	Road to the Peaks		
+2	go	ach.name.rank	여정의 걸음	Steps of the Journey		
+2	go	ach.name.react	원소 부림	Elemental Command		
+2	go	ach.name.shatter	얼음 깨기	Ice Breaker		
+2	go	ach.name.swirl	회오리 부름	Whirlwind Caller		
+2	go	ach.name.tasty	맛있는 한 상	A Tasty Table		
+2	go	ach.name.weak	급소 한 발	Vital Shot		
+2	go	ach.name.wq	세계의 부탁	World's Requests		
+2	go	ach.notice	업적 — {0} {1}/{2} (Y 에서 받기)	Feat — {0} {1}/{2} (claim with Y)		
+2	go	ach.r_gold	금 {0}	Gold {0}		
+2	go	ach.r_ore	강화석 {0}	Enhancement Ore {0}		
+2	go	ach.title	업적 — {0}/{1} 단계	Feats — {0}/{1} tiers		
+2	go	ach.unit.boss	보스·수호자	bosses and guardians		
+2	go	ach.unit.chapter	이야기 장을 마쳤다	chapters finished		
+2	go	ach.unit.chest	상자를 열었다	chests opened		
+2	go	ach.unit.cook	요리	dishes cooked		
+2	go	ach.unit.domain	숨은 터를 끝냈다	hidden grounds cleared		
+2	go	ach.unit.elite	방패 두른 원소 괴물	shielded elemental beasts		
+2	go	ach.unit.fish	물고기를 낚았다	fish caught		
+2	go	ach.unit.fishkinds	물고기 가짓수	fish kinds		
+2	go	ach.unit.gather	채집	gathered		
+2	go	ach.unit.kill	들판 적을 물리쳤다	field foes defeated		
+2	go	ach.unit.kinds	반응 가짓수	reaction kinds		
+2	go	ach.unit.mission	사명을 끝낸 지역	regions with mission done		
+2	go	ach.unit.offer	봉헌 등급	offering level		
+2	go	ach.unit.orb	수집 구슬을 주웠다	orbs collected		
+2	go	ach.unit.peak	정상을 올랐다	peaks climbed		
+2	go	ach.unit.rank	여정 등급	journey rank		
+2	go	ach.unit.react	원소 반응	elemental reactions		
+2	go	ach.unit.shatter	깨뜨림	shatters		
+2	go	ach.unit.swirl	회오리	swirls		
+2	go	ach.unit.tasty	맛있는 요리	delicious dishes		
+2	go	ach.unit.weak	급소 화살	vital-point arrows		
+2	go	ach.unit.wq	세계 임무를 마쳤다	world quests finished		
 2	go	adv.btn_lower	천하 등급 한 단계 낮추기 ({0} → {1})	Lower World Rank ({0} → {1})		
 2	go	adv.btn_restore	천하 등급 되돌리기 ({0} → {1})	Restore World Rank ({0} → {1})		
 2	go	adv.knot	인연 매듭 {0}	Bond Knot {0}		

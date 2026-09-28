@@ -342,6 +342,7 @@ namespace Saga.Go.Data
             _gather[n.Id] = Now;
             Add(n.Item, 1);
             DailyTaskState.ReportProgress(DailyTaskState.Kind.Gather, 1); // 109-14-8
+            AchieveState.Bump("gather"); // 109-14-25 업적
             Picked?.Invoke(n.Item);
             return true;
         }
@@ -382,6 +383,8 @@ namespace Saga.Go.Data
             _prof[r.Id] = Mathf.Min(99, Prof(r.Id) + 1);
             Touch();
             DailyTaskState.ReportProgress(DailyTaskState.Kind.Cook, 1); // 109-14-8
+            AchieveState.Bump("cook"); // 109-14-25 업적 — 맛있는(품질 2) 한 상은 따로
+            if (q >= 2) AchieveState.Bump("tasty");
             Cooked?.Invoke(id);
             return id;
         }
