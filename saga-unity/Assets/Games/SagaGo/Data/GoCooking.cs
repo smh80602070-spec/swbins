@@ -298,6 +298,8 @@ namespace Saga.Go.Data
         private static readonly Dictionary<GoCooking.Cat, (int recipe, int q, float left)> _buffs = new Dictionary<GoCooking.Cat, (int, int, float)>();
         private static readonly Dictionary<string, float> _full = new Dictionary<string, float>();
         public static event System.Action Changed;
+        /// <summary>109-14-13 이야기 임무 — 주웠다(재료 id) · 조리했다(요리 id).</summary>
+        public static event System.Action<string> Picked, Cooked;
 
         /// <summary>진단 — 실제 시각 대신(유닉스 초).</summary>
         public static long NowForTest = -1;
@@ -338,6 +340,7 @@ namespace Saga.Go.Data
             _gather[n.Id] = Now;
             Add(n.Item, 1);
             DailyTaskState.ReportProgress(DailyTaskState.Kind.Gather, 1); // 109-14-8
+            Picked?.Invoke(n.Item);
             return true;
         }
 
@@ -377,6 +380,7 @@ namespace Saga.Go.Data
             _prof[r.Id] = Mathf.Min(99, Prof(r.Id) + 1);
             Touch();
             DailyTaskState.ReportProgress(DailyTaskState.Kind.Cook, 1); // 109-14-8
+            Cooked?.Invoke(id);
             return id;
         }
 

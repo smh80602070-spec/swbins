@@ -127,16 +127,29 @@ namespace Saga.Go.UI
             {
                 if (TalkOpen)
                 {
-                    if (kb.fKey.wasPressedThisFrame) Next(IsPickLine ? 0 : -1);
+                    if (kb.fKey.wasPressedThisFrame) Next(IsPickLine && !Revealing && _mine == null ? 0 : -1);
                 }
                 else if (kb.fKey.wasPressedThisFrame && TalkShown) StartTalk();
                 else if (kb.oKey.wasPressedThisFrame) ToggleList();
                 else if (kb.escapeKey.wasPressedThisFrame && ListOpen) ToggleList(false);
             }
+            if (TalkOpen && Revealing)
+            {
+                _shown += Time.deltaTime * RevealCps;
+                _line.maxVisibleCharacters = Mathf.Min(_line.text.Length, Mathf.FloorToInt(_shown));
+            }
             Refresh();
         }
 
         // ---- 대화 ---------------------------------------------------------------------------------------------
+
+        /// <summary>109-14-13 글이 흘러나오는 빠르기(초당 글자, 0 이면 한 번에 — 진단이 끈다).</summary>
+        public static float RevealCps = GoStory.RevealCps;
+        private float _shown;
+        private string _mine;
+
+        /// <summary>줄이 아직 흘러나오는 중인가.</summary>
+        public bool Revealing => TalkOpen && _line.maxVisibleCharacters < _line.text.Length;
 
         private static bool Busy => DuelGate.Active || Saga.Go.Cinematics.GoCutscenes.Playing ||
                                     (DomainField.Instance != null && DomainField.Instance.Current != null);
@@ -159,18 +172,35 @@ namespace Saga.Go.UI
             if (st == null || TalkOpen || Busy) return false;
             _talkStep = st;
             _talkLine = 0;
+            _mine = null;
             StoryState.Talking = true;
             ToggleList(false);
             _talk.SetActive(true);
+            // 카메라는 말하는 이를 내 어깨 너머로, 인물은 나를 본다
+            Vector3 npc = GoStory.NpcPos(st.Npc);
+            StoryField.Instance?.Face(st.Npc, fc.transform.position);
+            Rig?.BeginTalkShot(npc + Vector3.up * 1.4f);
             PaintTalk();
             return true;
         }
 
-        /// <summary>다음 줄 — 고르는 줄이면 pick(0·1)이 있어야 넘긴다. 마지막 줄 뒤면 단계를 끝낸다.</summary>
+        private static Saga.Go.Player.CameraRig _rig;
+        private static Saga.Go.Player.CameraRig Rig => _rig != null ? _rig : (_rig = Object.FindFirstObjectByType<Saga.Go.Player.CameraRig>());
+
+        /// <summary>다음 — 글이 흘러나오는 중이면 줄 전체를 보이고 멈춘다. 고르는 줄은 pick(0·1)이 있어야 넘기고, 고른 대답이 "나"의 줄로 한 번 나온다.
+        /// 마지막 줄 뒤면 단계를 끝낸다.</summary>
         public bool Next(int pick)
         {
             if (!TalkOpen || _talkStep == null) return false;
-            if (IsPickLine && pick < 0) return false;
+            if (Revealing) { _line.maxVisibleCharacters = _line.text.Length; return true; }
+            if (_mine == null && IsPickLine)
+            {
+                if (pick < 0) return false;
+                _mine = GoStory.PickText(_talkStep.Lines[_talkLine], Mathf.Clamp(pick, 0, 1));
+                PaintTalk();
+                return true;
+            }
+            _mine = null;
             _talkLine++;
             if (_talkLine >= _talkStep.Lines.Length)
             {
@@ -186,15 +216,19 @@ namespace Saga.Go.UI
         {
             _talk.SetActive(false);
             _talkStep = null;
+            _mine = null;
             StoryState.Talking = false;
+            Rig?.EndTalkShot();
         }
 
         private void PaintTalk()
         {
             var line = _talkStep.Lines[_talkLine];
-            bool pick = line.IsPick;
-            _who.text = pick ? GoLocalization.T("story.me", "나") : GoStory.NpcShort(line.Who);
-            _line.text = pick ? "……" : GoStory.LineText(line);
+            bool pick = line.IsPick && _mine == null;
+            _who.text = line.IsPick ? GoLocalization.T("story.me", "나") : GoStory.NpcShort(line.Who);
+            _line.text = pick ? "……" : _mine ?? GoStory.LineText(line);
+            _shown = 0f;
+            _line.maxVisibleCharacters = pick || RevealCps <= 0f ? _line.text.Length : 0;
             _count.text = $"{_talkLine + 1}/{_talkStep.Lines.Length}";
             _next.gameObject.SetActive(!pick);
             _next.GetComponentInChildren<TextMeshProUGUI>().text = _talkLine + 1 < _talkStep.Lines.Length
@@ -251,7 +285,12 @@ namespace Saga.Go.UI
                 return string.Format(GoLocalization.T("story.track_locked", "◆ {0} — 여정 등급 {1} 에 열린다"), GoStory.ChapterName(ch), ch.Ar);
             var st = StoryState.Current;
             StoryField.Target(out Vector3 t, out _);
-            return string.Format(GoLocalization.T("story.track", "◆ {0} — {1} · {2}m"), GoStory.ChapterName(ch), GoStory.StepText(st), Mathf.RoundToInt(GoStory.Flat(p, t)));
+            string text = GoStory.StepText(st);
+            if (st.Type == GoStory.StepType.Gather) text += $" {StoryState.Progress}/{st.Count}";
+            float dist = GoStory.Flat(p, t);
+            string line = string.Format(GoLocalization.T("story.track", "◆ {0} — {1} · {2}m"), GoStory.ChapterName(ch), text, Mathf.RoundToInt(dist));
+            if (st.Type == GoStory.StepType.Follow && dist > GoStory.FollowLost) line += GoLocalization.T("story.follow_lost", " · 너무 멀어졌다");
+            return line;
         }
 
         /// <summary>추적 줄·대화 단추를 지금 상태로 — 진단도 부른다.</summary>

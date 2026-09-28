@@ -75,8 +75,40 @@ namespace Saga.Go.Player
 
         private void Update()
         {
-            HandlePointer();
+            if (!_talkShot) HandlePointer();
             ApplyZoom();
+        }
+
+        // PLAN.md 109-14-13 대화 카메라(웹 사가고 ⑲-13 `talkface.js` 카메라 결) — 말하는 이를 내 어깨 너머로 가깝게.
+        // 끄는 동안 드래그는 멎고, 끝나면 원래 각도·거리로 돌아간다.
+        public const float TalkZoom = 5.5f, TalkPitch = 15f, TalkYawOffset = 25f;
+        private bool _talkShot;
+        private float _savedYaw, _savedPitch, _savedZoom;
+        public bool TalkShot => _talkShot;
+        public float CurrentZoom => _zoom;
+
+        public void BeginTalkShot(Vector3 speaker)
+        {
+            if (!_talkShot) { _savedYaw = _yawDeg; _savedPitch = _pitchDeg; _savedZoom = _zoom; }
+            _talkShot = true;
+            Vector3 d = speaker - transform.position;
+            d.y = 0f;
+            if (d.sqrMagnitude < 0.01f) return;
+            float parentYaw = transform.parent != null ? transform.parent.eulerAngles.y : 0f;
+            _yawDeg = Quaternion.LookRotation(d).eulerAngles.y + TalkYawOffset - parentYaw;
+            _pitchDeg = TalkPitch;
+            _zoom = TalkZoom;
+            transform.localRotation = Quaternion.Euler(_pitchDeg, _yawDeg, 0f);
+        }
+
+        public void EndTalkShot()
+        {
+            if (!_talkShot) return;
+            _talkShot = false;
+            _yawDeg = _savedYaw;
+            _pitchDeg = _savedPitch;
+            _zoom = _savedZoom;
+            transform.localRotation = Quaternion.Euler(_pitchDeg, _yawDeg, 0f);
         }
 
         private void HandlePointer()

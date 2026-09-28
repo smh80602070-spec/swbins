@@ -12,10 +12,20 @@ namespace Saga.Go.Data
     /// 대숲 고을 탑 + 수호자(jugeup) → 남쪽 공터 옛 망루 + **망루 수호장**(이 판 들판 보스는 하나뿐, 107-7·109-14-10).
     /// 갈대 나루(galdae) → 너른 강 북쪽 물가(먹구름 제단 1.5,4.35 곁) · 옛 성터 언덕(gojeong) → 북쪽 산기슭 동굴 어귀(무너진 성터 무덤 땅).
     /// 대사는 원문 그대로, 땅 이름만 이 판 이름으로 바꿨다. 웹 부대 경험(단계 10·장 끝 300/500)은 이 트랙에 인물 경험이 없어 뺐다(14-7·14-8·14-10 과 같은 결정).
+    ///
+    /// PLAN.md 109-14-13 3·4장(웹 ⑲-13) — 단계 셋 더: gather(그 채집물 n 번 — `CookState.Picked`) · cook(아무 요리 하나 — `CookState.Cooked`) ·
+    /// follow(인물이 길을 따라 걷는다 — 12m 안이면 걷고 멀면 선다). 인물 넷째 가면 쓴 나그네는 4장 둘째~여섯째 단계에만 선다(옛 나그네 몸 + 가면).
+    /// 자리 대응: 가마골(불도깨비 우두머리·수호자) → 끝 논밭 — 이 판 수호자는 망루 하나라 **이야기 보스를 새로 세운다**(불도깨비 몸을 키움, kill 단계의 `Boss`) ·
+    /// 가마골 잠든 무덤 → 산기슭 잠든 무덤(숨은 터 `d_tomb`) · 잔치 마당 → 마을 역참 서쪽 들 · 남쪽 다리목 → 마을 남쪽 다리 북쪽 머리 · 남쪽 들녘 → 남쪽 공터 서쪽.
     /// </summary>
     public static class GoStory
     {
-        public enum StepType { Talk, Go, Boss, Kill, Light, Domain }
+        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow }
+
+        /// <summary>follow — 이 안이면 인물이 걷고(웹 12m), 이보다 멀면 추적 줄에 "너무 멀어졌다"(웹 30m). 걷는 빠르기 2.6m/초(웹 그대로).</summary>
+        public const float FollowNear = 12f, FollowLost = 30f, FollowSpeed = 2.6f;
+        /// <summary>대화 글이 흘러나오는 빠르기(초당 글자, 웹 30).</summary>
+        public const float RevealCps = 30f;
 
         /// <summary>대화 거리 — 웹 6m(맨땅 판). 이 판 사람 키·카메라에 맞춰 5m.</summary>
         public const float TalkR = 5f;
@@ -39,8 +49,21 @@ namespace Saga.Go.Data
             public string IdleKey, IdleKo;
             /// <summary>새로 세우지 않고 옛 마을 사람을 그대로 쓴다(누리 = 마을 촌장).</summary>
             public bool Existing;
-            /// <summary>몸을 빌려 올 옛 마을 사람 id(`NpcBuilder`) — 촌장 = 사내 몸, 상인 = 여인 몸.</summary>
+            /// <summary>몸을 빌려 올 옛 마을 사람 id(`NpcBuilder`) — 촌장 = 사내 몸, 상인 = 여인 몸, 나그네 = 궁수 몸.</summary>
             public string BodyFrom;
+            /// <summary>얼굴에 가면(나그네).</summary>
+            public bool Mask;
+            /// <summary>있으면 이 칸들 동안에만 선다(나그네). 칸마다 자리가 다를 수 있다.</summary>
+            public Spot[] Appear;
+            /// <summary>follow 단계에서 걷는 길(칸 좌표, 첫 점 = 걷기 전 자리).</summary>
+            public Vector2[] Path;
+        }
+
+        /// <summary>인물이 서는 칸 — 장(0부터)·단계 From~To. Gx·Gy 가 음수면 길(Path) 위(따라가기 동안·뒤는 길 끝).</summary>
+        public struct Spot
+        {
+            public int Ch, From, To;
+            public float Gx, Gy;
         }
 
         public static readonly Npc[] Npcs =
@@ -54,7 +77,16 @@ namespace Saga.Go.Data
             new Npc { Id = "scholar", NameKey = "story.npc.scholar", NameKo = "떠돌이 학자 은비", ShortKey = "story.short.scholar", ShortKo = "은비",
                 Gx = 3.35f, Gy = 1.4f, BodyFrom = "npc_merchant",
                 IdleKey = "story.idle.scholar", IdleKo = "이 비문, 읽을수록 이상하다니까." },
+            // 4장 둘째 단계 = 다리 북쪽 머리, 셋째(따라가기) = 길 위, 넷째~여섯째 = 길 끝(남쪽 공터 서쪽)
+            new Npc { Id = "wanderer", NameKey = "story.npc.wanderer", NameKo = "가면 쓴 나그네", ShortKey = "story.short.wanderer", ShortKo = "나그네",
+                Gx = WanderGx, Gy = WanderGy, BodyFrom = "npc_traveler", Mask = true,
+                Appear = new[] { new Spot { Ch = 3, From = 1, To = 1, Gx = WanderGx, Gy = WanderGy }, new Spot { Ch = 3, From = 2, To = 5, Gx = -1f, Gy = -1f } },
+                Path = new[] { new Vector2(WanderGx, WanderGy), new Vector2(3.0f, 5.0f), new Vector2(3.0f, 5.55f), new Vector2(3.0f, 6.2f), new Vector2(2.95f, 6.85f), new Vector2(2.55f, 7.2f) },
+                IdleKey = "story.idle.wanderer", IdleKo = "……" },
         };
+
+        /// <summary>남쪽 다리 북쪽 머리(마을 남쪽 길 끝) — 4장 나그네가 강물을 보고 선 자리.</summary>
+        public const float WanderGx = 3.0f, WanderGy = 4.45f;
 
         /// <summary>대화 한 줄 — Who 가 null 이면 "나"의 고르는 줄(대답만 다르고 흐름은 같다).</summary>
         public struct Line
@@ -72,9 +104,16 @@ namespace Saga.Go.Data
             public string TextKey, TextKo;
             public float Gx, Gy;            // Go·Kill·Light
             public bool Altar;              // Go — 먹구름 제단으로
-            public FieldEnemy.Kind[] Kinds; // Kill
+            public GoDomain.Foe[] Foes;     // Kill — 종류 + 덧씌울 원소(없는 괴물은 옛 몸에 그 원소, 14-1b 전까지)
+            /// <summary>Kill — 첫 적을 이야기 보스로(이름·체력 ×`BossHp`·공격 ×`BossAtk`·몸 ×`BossScale`).</summary>
+            public string BossKey, BossKo;
+            public string Site;             // Domain — 숨은 터 id(없으면 먹구름 제단)
+            public string Item;             // Gather
+            public int Count;               // Gather
             public Line[] Lines;            // Talk
         }
+
+        public const float BossHp = 6f, BossAtk = 1.5f, BossScale = 1.8f;
 
         public class Chapter
         {
@@ -91,8 +130,16 @@ namespace Saga.Go.Data
         private static Line L(string who, string key, string ko) => new Line { Who = who, Key = key, Ko = ko };
         private static Line Pick(string key, string a, string b) => new Line { PickKeys = new[] { key + ".a", key + ".b" }, PickKo = new[] { a, b } };
 
-        private static readonly FieldEnemy.Kind KT = FieldEnemy.Kind.StormWraith;
-        private static readonly FieldEnemy.Kind KF = FieldEnemy.Kind.EmberImp;
+        private static GoDomain.Foe F(FieldEnemy.Kind k, GoElement over = GoElement.Physical) => new GoDomain.Foe(k, over);
+        private static readonly GoDomain.Foe KT = F(FieldEnemy.Kind.StormWraith);
+        private static readonly GoDomain.Foe KF = F(FieldEnemy.Kind.EmberImp);
+
+        /// <summary>끝 논밭 가운데 둑(역참·쇠부리 터 사이) — 3장 불도깨비 우두머리.</summary>
+        public const float ChiefGx = 3.0f, ChiefGy = 9.35f;
+        /// <summary>마을 역참 서쪽 들 — 3장 잔치 마당 습격.</summary>
+        public const float FeastGx = 2.3f, FeastGy = 2.3f;
+        /// <summary>남쪽 공터 서쪽 풀숲(나그네 길 끝 남쪽) — 4장 가면 졸개.</summary>
+        public const float MaskSquadGx = 2.3f, MaskSquadGy = 7.45f;
 
         /// <summary>옛 망루 발치(남쪽 공터 줄, 수호장 자리 서남쪽 27m) — 1장 go 단계.</summary>
         public const float TowerFootGx = 3.1f, TowerFootGy = 7.05f;
@@ -127,7 +174,7 @@ namespace Saga.Go.Data
                             Pick("story.ch1.s4.p", "이무기요?", "어떻게 막죠?"),
                             L("ferryman", "story.ch1.s4.l3", "북쪽 산기슭 성터의 학자가 비문을 읽고 있다던데, 그 아이한테 가 봐. 요즘 성터 어귀에 졸개들이 들끓는다니 조심하고."),
                         } },
-                    new Step { Type = StepType.Kill, Gx = SquadGx, Gy = SquadGy, Kinds = new[] { KT, KT, KF, KF }, TextKey = "story.ch1.s5", TextKo = "산기슭 성터 어귀의 먹구름 졸개 물리치기" },
+                    new Step { Type = StepType.Kill, Gx = SquadGx, Gy = SquadGy, Foes = new[] { KT, KT, KF, KF }, TextKey = "story.ch1.s5", TextKo = "산기슭 성터 어귀의 먹구름 졸개 물리치기" },
                     new Step { Type = StepType.Talk, Npc = "scholar", TextKey = "story.ch1.s6", TextKo = "떠돌이 학자와 이야기하기",
                         Lines = new[]
                         {
@@ -167,6 +214,108 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            new Chapter
+            {
+                Id = "ch3", NameKey = "story.ch3", NameKo = "제3장 · 잔칫날의 불청객", Ar = 7,
+                Gold = 1250, Mats = new[] { 0, 2, 1, 3, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch3.s1", TextKo = "촌장에게 잔치 일손을 돕겠다고 하기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch3.s1.l1", "하늘이 갠 기념으로 잔치를 열기로 했단다. 그런데 일손이 모자라구나."),
+                            L("elder", "story.ch3.s1.l2", "들에 피는 청하란을 셋만 꺾어다 주렴. 잔칫상에 꽂을 꽃이란다."),
+                            Pick("story.ch3.s1.p", "맡겨 주세요.", "음식은요?"),
+                            L("elder", "story.ch3.s1.l3", "꽃을 꺾거든 역참 솥에서 요리도 하나 해 오렴. 사공 버들이 요즘 통 입맛이 없다더구나."),
+                        } },
+                    new Step { Type = StepType.Gather, Item = "orchid", Count = 3, TextKey = "story.ch3.s2", TextKo = "청하란 꺾기" },
+                    new Step { Type = StepType.Cook, TextKey = "story.ch3.s3", TextKo = "역참 곁 솥에서 요리 하나 만들기" },
+                    new Step { Type = StepType.Talk, Npc = "ferryman", TextKey = "story.ch3.s4", TextKo = "강가 나루의 사공에게 요리 가져다주기",
+                        Lines = new[]
+                        {
+                            L("ferryman", "story.ch3.s4.l1", "오, 냄새 좋구나! 이 늙은이를 다 챙겨 주고."),
+                            L("ferryman", "story.ch3.s4.l2", "그런데 말이다, 어젯밤 끝 논밭 쪽 하늘이 벌겋더구나. 불도깨비 우두머리가 또 날뛰는 게야."),
+                            Pick("story.ch3.s4.p", "제가 가 볼게요.", "잔치에 불똥이 튀면 큰일이네요."),
+                            L("ferryman", "story.ch3.s4.l3", "그놈 불씨가 바람을 타고 마을로 날아들면 잔치고 뭐고 다 타 버릴 게다. 조심하거라."),
+                        } },
+                    new Step { Type = StepType.Kill, Gx = ChiefGx, Gy = ChiefGy, Foes = new[] { KF, KF, KF },
+                        BossKey = "story.boss.chief", BossKo = "불도깨비 우두머리", TextKey = "story.ch3.s5", TextKo = "끝 논밭의 불도깨비 우두머리 쓰러뜨리기" },
+                    new Step { Type = StepType.Talk, Npc = "scholar", TextKey = "story.ch3.s6", TextKo = "떠돌이 학자에게 논밭 소식 전하기",
+                        Lines = new[]
+                        {
+                            L("scholar", "story.ch3.s6.l1", "불도깨비 우두머리를 잡았다고? 마침 잘 왔어. 비문 둘째 조각을 찾았거든."),
+                            L("scholar", "story.ch3.s6.l2", "'가면 쓴 나그네가 제단을 두드려 잠든 것을 깨웠다' — 이무기는 스스로 깨어난 게 아니었어."),
+                            Pick("story.ch3.s6.p", "가면 쓴 나그네?", "누가 그런 짓을?"),
+                            L("scholar", "story.ch3.s6.l3", "이 산기슭 잠든 무덤 안쪽에 그 나그네가 남긴 흔적이 있을지도 몰라. 가 보자."),
+                        } },
+                    new Step { Type = StepType.Domain, Site = "d_tomb", TextKey = "story.ch3.s7", TextKo = "산기슭 잠든 무덤에서 나그네의 흔적 찾기" },
+                    new Step { Type = StepType.Kill, Gx = FeastGx, Gy = FeastGy, Foes = new[] { KF, KF, KF, KT }, TextKey = "story.ch3.s8", TextKo = "잔치 마당에 쳐들어온 불도깨비 졸개 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch3.s9", TextKo = "청하 촌장에게 알리기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch3.s9.l1", "휴, 네가 없었으면 잔치 마당이 잿더미가 될 뻔했구나."),
+                            L("elder", "story.ch3.s9.l2", "가면 쓴 나그네라… 옛이야기에 그런 자가 있었지. 먹구름이 올 때마다 어딘가에 서 있었다던."),
+                            L("elder", "story.ch3.s9.l3", "오늘은 걱정 말고 실컷 먹고 즐기렴. 이건 잔치 손님께 드리는 선물이란다."),
+                        } },
+                }
+            },
+            new Chapter
+            {
+                Id = "ch4", NameKey = "story.ch4", NameKo = "제4장 · 가면 쓴 나그네", Ar = 10,
+                Gold = 1500, Mats = new[] { 0, 2, 2, 3, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch4.s1", TextKo = "촌장에게 새벽 소식 듣기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch4.s1.l1", "잔치 이튿날 새벽이었단다. 남쪽 다리목에 웬 가면 쓴 나그네가 서 있더래."),
+                            L("elder", "story.ch4.s1.l2", "말을 걸어도 대꾸도 않고 강물만 보더라는구나. 옛이야기 속 그자일까…"),
+                            Pick("story.ch4.s1.p", "제가 만나 볼게요.", "위험한 사람일까요?"),
+                            L("elder", "story.ch4.s1.l3", "조심하거라. 먹구름이 올 때마다 서 있었다던 자라면, 좋은 뜻인지 나쁜 뜻인지 아무도 모른단다."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch4.s2", TextKo = "남쪽 다리목의 가면 쓴 나그네에게 말 걸기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch4.s2.l1", "……먹구름을 걷어 낸 게 너로군."),
+                            L("wanderer", "story.ch4.s2.l2", "여기선 귀가 많다. 할 말이 있으면 따라오게."),
+                            Pick("story.ch4.s2.p", "따라가죠.", "당신은 누구죠?"),
+                            L("wanderer", "story.ch4.s2.l3", "걸으면서 생각해 보게. 너무 떨어지면 기다려 주지 않을 테니."),
+                        } },
+                    new Step { Type = StepType.Follow, Npc = "wanderer", TextKey = "story.ch4.s3", TextKo = "가면 쓴 나그네를 놓치지 않고 따라가기" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch4.s4", TextKo = "남쪽 공터에서 나그네의 말 듣기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch4.s4.l1", "여기라면 듣는 이가 없겠지. 이무기를 깨운 건 내가 아니다."),
+                            L("wanderer", "story.ch4.s4.l2", "나는 제단을 두드리고 다니는 자를 쫓고 있을 뿐이다. 그자도 가면을 쓰지 — 그래서 다들 나로 착각하더군."),
+                            Pick("story.ch4.s4.p", "그럼 진짜는 따로 있다는 거예요?", "증거라도 있나요?"),
+                            L("wanderer", "story.ch4.s4.l3", "증거라… 마침 저기 풀숲이 수상하군. 너도 쫓기고 있었던 모양이다."),
+                        } },
+                    new Step { Type = StepType.Kill, Gx = MaskSquadGx, Gy = MaskSquadGy,
+                        Foes = new[] { KF, KF, F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo) },
+                        TextKey = "story.ch4.s5", TextKo = "풀숲에 숨어 있던 가면 졸개 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch4.s6", TextKo = "나그네에게 돌아가기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch4.s6.l1", "제법이군. 이 졸개들이 쓴 가면을 보게 — 내 것과 무늬가 다르지."),
+                            L("wanderer", "story.ch4.s6.l2", "이 조각을 산기슭의 학자에게 보이게. 비문을 읽는 아이라면 알아볼 게다."),
+                            L("wanderer", "story.ch4.s6.l3", "우린 또 만나겠지. 다음 먹구름이 오기 전에."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "scholar", TextKey = "story.ch4.s7", TextKo = "떠돌이 학자에게 가면 조각 보이기",
+                        Lines = new[]
+                        {
+                            L("scholar", "story.ch4.s7.l1", "가면 조각? 어디 봐… 이 무늬, 비문 맨 아래 새겨진 거랑 똑같아!"),
+                            L("scholar", "story.ch4.s7.l2", "비문엔 제단이 다섯이라고 적혀 있어. 먹구름 제단은 그중 하나일 뿐이고."),
+                            Pick("story.ch4.s7.p", "나머지 넷은 어디에?", "가면 쓴 자는 누구죠?"),
+                            L("scholar", "story.ch4.s7.l3", "아직은 몰라. 하지만 조각이 모이면 알 수 있을 거야. 서쪽 고개 너머 옛길을 먼저 뒤져 볼게."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch4.s8", TextKo = "청하 촌장에게 알리기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch4.s8.l1", "나그네가 쫓는 가면 쓴 자라… 먹구름이 다섯 번이나 더 올 수 있다는 말이냐."),
+                            L("elder", "story.ch4.s8.l2", "네가 있어 다행이구나. 마을 사람들 몫으로 모은 것이니 받아 두렴."),
+                        } },
+                }
+            },
         };
 
         public static int NpcIndex(string id)
@@ -191,25 +340,113 @@ namespace Saga.Go.Data
             return TestMapData.WorldPos(gx, gy) + Vector3.up * TestMapData.GroundHeight(tx, ty);
         }
 
-        public static Vector3 NpcPos(string id) { var n = NpcOf(id); return GridPos(n.Gx, n.Gy); }
+        /// <summary>지금 진행(장·단계·따라간 거리)에서 인물이 서는 자리.</summary>
+        public static Vector3 NpcPos(string id) => NpcPosAt(id, StoryState.Ch, StoryState.StepIndex, StoryState.FollowDist);
 
-        public static Vector3 WeeklyAltarPos()
+        /// <summary>그 칸에 서는 자리 — `Appear` 가 있으면 그 칸 자리(길 위면 따라간 거리만큼), 없으면 늘 제 자리.</summary>
+        public static Vector3 NpcPosAt(string id, int ch, int step, float followDist)
         {
-            foreach (var s in GoDomain.Sites) if (s.Kind == GoDomain.Kind.Weekly) return s.Pos;
+            var n = NpcOf(id);
+            if (n.Appear != null)
+                foreach (var a in n.Appear)
+                    if (a.Ch == ch && step >= a.From && step <= a.To)
+                        return a.Gx < 0f ? PathPos(n, step == FollowStepOf(id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            return GridPos(n.Gx, n.Gy);
+        }
+
+        /// <summary>그 칸에 서 있나(`Appear` 가 없으면 늘).</summary>
+        public static bool Shown(string id, int ch, int step)
+        {
+            var n = NpcOf(id);
+            if (n.Appear == null) return true;
+            foreach (var a in n.Appear) if (a.Ch == ch && step >= a.From && step <= a.To) return true;
+            return false;
+        }
+
+        /// <summary>그 장에서 이 인물을 따라가는 단계 번호(없으면 −1).</summary>
+        public static int FollowStepOf(string id, int ch)
+        {
+            if (ch < 0 || ch >= Chapters.Length) return -1;
+            var steps = Chapters[ch].Steps;
+            for (int i = 0; i < steps.Length; i++) if (steps[i].Type == StepType.Follow && steps[i].Npc == id) return i;
+            return -1;
+        }
+
+        public static float PathLength(Npc n)
+        {
+            float len = 0f;
+            for (int i = 1; i < n.Path.Length; i++) len += Vector2.Distance(n.Path[i - 1], n.Path[i]) * TestMapData.TileSize;
+            return len;
+        }
+
+        /// <summary>길 위 거리 d(m) 의 자리 — 길 끝을 넘으면 끝.</summary>
+        public static Vector3 PathPos(Npc n, float d)
+        {
+            for (int i = 1; i < n.Path.Length; i++)
+            {
+                float seg = Vector2.Distance(n.Path[i - 1], n.Path[i]) * TestMapData.TileSize;
+                if (d <= seg)
+                {
+                    Vector2 g = Vector2.Lerp(n.Path[i - 1], n.Path[i], seg > 0f ? d / seg : 1f);
+                    return GridPos(g.x, g.y);
+                }
+                d -= seg;
+            }
+            var e = n.Path[n.Path.Length - 1];
+            return GridPos(e.x, e.y);
+        }
+
+        public static Vector3 WeeklyAltarPos() => SitePos(null);
+
+        /// <summary>숨은 터 입구 자리 — id 가 없으면 먹구름 제단.</summary>
+        public static Vector3 SitePos(string id)
+        {
+            foreach (var s in GoDomain.Sites) if (id == null ? s.Kind == GoDomain.Kind.Weekly : s.Id == id) return s.Pos;
             return Vector3.zero;
         }
 
-        /// <summary>단계의 목표 자리 — 순수(표만 본다). 반지름 0 = 닿는 것으로 끝나지 않는 단계(boss·kill·domain).</summary>
-        public static Vector3 TargetOf(Step s, out float radius)
+        public static GoDomain.Kind SiteKind(string id)
+        {
+            foreach (var s in GoDomain.Sites) if (id == null ? s.Kind == GoDomain.Kind.Weekly : s.Id == id) return s.Kind;
+            return GoDomain.Kind.Weekly;
+        }
+
+        /// <summary>단계의 목표 자리 — 반지름 0 = 닿는 것으로 끝나지 않는 단계(boss·kill·domain·gather·cook·follow).
+        /// gather 는 `from` 에서 가장 가까운 자란 그 채집물, cook 은 가장 가까운 역참 솥.</summary>
+        public static Vector3 TargetOf(Step s, out float radius) => TargetOf(s, Vector3.zero, out radius);
+
+        public static Vector3 TargetOf(Step s, Vector3 from, out float radius)
         {
             radius = 0f;
             switch (s.Type)
             {
                 case StepType.Talk: radius = TalkR; return NpcPos(s.Npc);
+                case StepType.Follow: return NpcPos(s.Npc);
                 case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : GridPos(s.Gx, s.Gy);
                 case StepType.Boss: return TestMapData.WorldPos(FieldSpawner.GuardianGx, FieldSpawner.GuardianGy);
-                case StepType.Domain: return WeeklyAltarPos();
+                case StepType.Domain: return SitePos(s.Site);
                 case StepType.Light: radius = LightR; return GridPos(s.Gx, s.Gy);
+                case StepType.Gather:
+                {
+                    Vector3 best = from; float bd = float.MaxValue;
+                    foreach (var node in GoCooking.Nodes)
+                    {
+                        if (node.Item != s.Item || !CookState.Available(node)) continue;
+                        float d = Flat(from, node.Pos);
+                        if (d < bd) { bd = d; best = node.Pos; }
+                    }
+                    return best;
+                }
+                case StepType.Cook:
+                {
+                    Vector3 best = from; float bd = float.MaxValue;
+                    foreach (var w in GoWorldMap.Waypoints)
+                    {
+                        float d = Flat(from, GoCooking.PotPos(w));
+                        if (d < bd) { bd = d; best = GoCooking.PotPos(w); }
+                    }
+                    return best;
+                }
                 default: return GridPos(s.Gx, s.Gy);
             }
         }

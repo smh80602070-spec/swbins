@@ -47,6 +47,8 @@ namespace Saga.Go.World
             DomainField.Cleared -= OnDomainCleared;
             StoryState.Changed -= OnChanged;
             StoryState.Advanced -= OnAdvanced;
+            CookState.Picked -= OnPicked;
+            CookState.Cooked -= OnCooked;
             StoryState.Talking = false;
         }
 
@@ -61,6 +63,8 @@ namespace Saga.Go.World
             DomainField.Cleared += OnDomainCleared;
             StoryState.Changed += OnChanged;
             StoryState.Advanced += OnAdvanced;
+            CookState.Picked += OnPicked;
+            CookState.Cooked += OnCooked;
             Refresh();
         }
 
@@ -89,13 +93,61 @@ namespace Saga.Go.World
                         any = true;
                     }
                 }
-                if (!any) CharacterVisual.SpawnFallbackCapsule(root.transform, n.Id == "ferryman" ? new Color(0.3f, 0.4f, 0.53f) : new Color(0.55f, 0.42f, 0.6f));
+                if (!any) CharacterVisual.SpawnFallbackCapsule(root.transform, n.Id == "ferryman" ? new Color(0.3f, 0.4f, 0.53f) : n.Id == "wanderer" ? new Color(0.22f, 0.22f, 0.29f) : new Color(0.55f, 0.42f, 0.6f));
+                if (n.Mask) AddMask(root.transform);
                 // 마을 쪽(마을 역참)을 본다
                 Vector3 look = GoWorldMap.WaypointPos(GoWorldMap.Waypoints[0]) - root.transform.position;
                 look.y = 0f;
                 if (look.sqrMagnitude > 0.01f) root.transform.rotation = Quaternion.LookRotation(look);
                 _npcs[n.Id] = root;
             }
+        }
+
+        /// <summary>109-14-13 가면 — 머리뼈(휴머노이드면)에 검은 탈 하나(흰 눈구멍 둘). 뼈가 없으면 키 1.6m 앞.</summary>
+        private static void AddMask(Transform root)
+        {
+            Transform head = null;
+            var anim = root.GetComponentInChildren<Animator>();
+            if (anim != null && anim.isHuman) head = anim.GetBoneTransform(HumanBodyBones.Head);
+            var mask = new GameObject("Mask");
+            mask.transform.SetParent(root, false);
+            mask.transform.localPosition = new Vector3(0f, 1.62f, 0.14f);
+            if (head != null)
+            {
+                mask.transform.position = head.position + root.forward * 0.11f + Vector3.up * 0.04f;
+                mask.transform.SetParent(head, true);
+            }
+            var black = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryMask (generated)", color = new Color(0.08f, 0.08f, 0.1f) };
+            black.SetFloat("_Smoothness", 0.7f);
+            var white = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryMaskEye (generated)", color = new Color(0.9f, 0.9f, 0.85f) };
+            MaskPart(mask.transform, PrimitiveType.Sphere, Vector3.zero, new Vector3(0.2f, 0.26f, 0.09f), black, root);
+            MaskPart(mask.transform, PrimitiveType.Sphere, new Vector3(-0.045f, 0.035f, 0.035f), new Vector3(0.045f, 0.02f, 0.02f), white, root);
+            MaskPart(mask.transform, PrimitiveType.Sphere, new Vector3(0.045f, 0.035f, 0.035f), new Vector3(0.045f, 0.02f, 0.02f), white, root);
+        }
+
+        private static void MaskPart(Transform parent, PrimitiveType t, Vector3 local, Vector3 size, Material m, Transform root)
+        {
+            var go = GameObject.CreatePrimitive(t);
+            Object.Destroy(go.GetComponent<Collider>());
+            go.transform.SetParent(parent, false);
+            go.transform.rotation = root.rotation;
+            go.transform.localPosition = local;
+            // 뼈의 크기에 끌려가지 않게 월드 크기로
+            Vector3 ls = parent.lossyScale;
+            go.transform.localScale = new Vector3(size.x / Mathf.Max(0.0001f, ls.x), size.y / Mathf.Max(0.0001f, ls.y), size.z / Mathf.Max(0.0001f, ls.z));
+            go.GetComponent<MeshRenderer>().sharedMaterial = m;
+        }
+
+        /// <summary>인물 몸이 서 있나(나그네는 4장 둘째~여섯째 단계만).</summary>
+        public bool NpcShown(string id) => _npcs.TryGetValue(id, out var g) && g.activeSelf;
+
+        /// <summary>대화할 때 그 인물이 말 거는 이를 본다.</summary>
+        public void Face(string id, Vector3 at)
+        {
+            if (!_npcs.TryGetValue(id, out var g)) return;
+            Vector3 d = at - g.transform.position;
+            d.y = 0f;
+            if (d.sqrMagnitude > 0.01f) g.transform.rotation = Quaternion.LookRotation(d);
         }
 
         // ---- 금빛 기둥 ----------------------------------------------------------------------------------------
@@ -124,7 +176,8 @@ namespace Saga.Go.World
             radius = 0f;
             var st = StoryState.Current;
             if (st == null) return false;
-            pos = GoStory.TargetOf(st, out radius);
+            var fc = FieldCombat.Instance;
+            pos = GoStory.TargetOf(st, fc != null ? fc.transform.position : Vector3.zero, out radius);
             if (st.Type == GoStory.StepType.Boss && FieldEnemy.GuardianInstance != null) pos = FieldEnemy.GuardianInstance.Home;
             return true;
         }
@@ -136,10 +189,42 @@ namespace Saga.Go.World
                 _pillarMat.SetColor("_EmissionColor", new Color(1f, 0.82f, 0.29f) * (2.4f + Mathf.Sin(_clock * 2.2f) * 0.8f));
             var fc = FieldCombat.Instance;
             if (fc == null) return;
+            Follow(fc.transform.position, Time.deltaTime);
             _wait -= Time.deltaTime;
             if (_wait > 0f) return;
             _wait = CheckSec;
             Check(fc.transform.position);
+        }
+
+        /// <summary>109-14-13 follow — 따라가는 이가 12m 안이면 인물이 초당 2.6m 길을 걷는다(멀면 선다). 길 끝이면 넘긴다. 진단도 부른다.</summary>
+        public void Follow(Vector3 p, float dt)
+        {
+            var st = StoryState.Current;
+            if (st == null || st.Type != GoStory.StepType.Follow || StoryState.Talking || !_npcs.TryGetValue(st.Npc, out var body)) return;
+            var n = GoStory.NpcOf(st.Npc);
+            float len = GoStory.PathLength(n);
+            bool walking = GoStory.Flat(p, GoStory.NpcPos(st.Npc)) <= GoStory.FollowNear;
+            Vector3 before = GoStory.NpcPos(st.Npc);
+            if (walking) StoryState.FollowDist = Mathf.Min(len, StoryState.FollowDist + GoStory.FollowSpeed * dt);
+            Vector3 now = GoStory.NpcPos(st.Npc);
+            body.transform.position = FolkWalker.Grounded(now + Vector3.up * 0.5f);
+            Vector3 d = now - before;
+            d.y = 0f;
+            if (d.sqrMagnitude > 0.0001f) body.transform.rotation = Quaternion.LookRotation(d);
+            var anim = body.GetComponentInChildren<Animator>();
+            if (anim != null && anim.runtimeAnimatorController != null && HasParam(anim, "Speed")) anim.SetFloat("Speed", walking ? 0.3f : 0f);
+            if (StoryState.FollowDist >= len - 0.01f)
+            {
+                if (anim != null && anim.runtimeAnimatorController != null && HasParam(anim, "Speed")) anim.SetFloat("Speed", 0f);
+                Toast(GoLocalization.T("story.follow_arrive", "나그네가 걸음을 멈췄다"), 3f);
+                StoryState.Advance();
+            }
+        }
+
+        private static bool HasParam(Animator a, string name)
+        {
+            foreach (var prm in a.parameters) if (prm.name == name) return true;
+            return false;
         }
 
         /// <summary>한 박자 — go 도착·boss 이미 쓰러짐·kill 무리 세우기·혼잣말. 진단도 부른다.</summary>
@@ -166,8 +251,8 @@ namespace Saga.Go.World
             }
             foreach (var n in GoStory.Npcs)
             {
-                if (n.Existing) continue; // 누리는 옛 촌장이 제 말을 한다
-                if (st != null && st.Type == GoStory.StepType.Talk && st.Npc == n.Id) continue;
+                if (n.Existing || !NpcShown(n.Id)) continue; // 누리는 옛 촌장이 제 말을 한다
+                if (st != null && (st.Type == GoStory.StepType.Talk || st.Type == GoStory.StepType.Follow) && st.Npc == n.Id) continue;
                 if (GoStory.Flat(p, GoStory.NpcPos(n.Id)) > GoStory.IdleR) continue;
                 if (_lastIdle.TryGetValue(n.Id, out float last) && Time.time - last < GoStory.IdleGap) continue;
                 _lastIdle[n.Id] = Time.time;
@@ -183,13 +268,19 @@ namespace Saga.Go.World
             var spawner = Object.FindFirstObjectByType<FieldSpawner>();
             if (spawner == null) return;
             _squadKey = SquadKey;
-            for (int i = 0; i < st.Kinds.Length; i++)
+            for (int i = 0; i < st.Foes.Length; i++)
             {
-                float a = i * Mathf.PI * 2f / st.Kinds.Length;
-                Vector3 home = FolkWalker.Grounded(center + new Vector3(Mathf.Cos(a), 0.5f, Mathf.Sin(a)) * GoStory.KillSpread);
-                _squad.Add(spawner.SpawnStoryFoe(st.Kinds[i], home, _squadKey));
+                // 이야기 보스는 가운데, 졸개는 둘레
+                bool boss = i == 0 && st.BossKo != null;
+                float a = i * Mathf.PI * 2f / st.Foes.Length;
+                Vector3 off = boss ? Vector3.up * 0.5f : new Vector3(Mathf.Cos(a), 0.5f, Mathf.Sin(a)) * GoStory.KillSpread;
+                var e = spawner.SpawnStoryFoe(st.Foes[i].Kind, FolkWalker.Grounded(center + off), _squadKey, st.Foes[i].Over);
+                if (boss) e.MakeStoryBoss(GoLocalization.T(st.BossKey, st.BossKo), GoStory.BossHp, GoStory.BossAtk, GoStory.BossScale);
+                _squad.Add(e);
             }
-            Toast(GoLocalization.T("story.squad", "먹구름 졸개가 나타났다"), 3f);
+            Toast(st.BossKo != null
+                ? string.Format(GoLocalization.T("story.boss_up", "{0}가 나타났다"), GoLocalization.T(st.BossKey, st.BossKo))
+                : GoLocalization.T("story.squad", "먹구름 졸개가 나타났다"), 3f);
         }
 
         private void ClearSquad()
@@ -225,7 +316,24 @@ namespace Saga.Go.World
         private void OnDomainCleared(GoDomain.Kind k)
         {
             var st = StoryState.Current;
-            if (st != null && st.Type == GoStory.StepType.Domain && k == GoDomain.Kind.Weekly) StoryState.Advance();
+            if (st != null && st.Type == GoStory.StepType.Domain && k == GoStory.SiteKind(st.Site)) StoryState.Advance();
+        }
+
+        /// <summary>109-14-13 gather — 그 채집물을 주울 때마다 하나(단계 동안만 센다).</summary>
+        private void OnPicked(string item)
+        {
+            var st = StoryState.Current;
+            if (st == null || st.Type != GoStory.StepType.Gather || item != st.Item) return;
+            StoryState.Progress++;
+            if (StoryState.Progress >= st.Count) StoryState.Advance();
+            else Toast(string.Format(GoLocalization.T("story.gather_n", "{0} {1}/{2}"), GoCooking.ItemName(item), StoryState.Progress, st.Count), 2f);
+        }
+
+        /// <summary>109-14-13 cook — 아무 요리 하나.</summary>
+        private void OnCooked(string dish)
+        {
+            var st = StoryState.Current;
+            if (st != null && st.Type == GoStory.StepType.Cook) StoryState.Advance();
         }
 
         private void OnAdvanced(string reward)
@@ -257,7 +365,18 @@ namespace Saga.Go.World
                 _altar.gameObject.SetActive(!StoryState.OffForTest && (past || (st != null && st.Type == GoStory.StepType.Light)));
                 _altar.SetLit(past);
             }
-            foreach (var kv in _npcs) kv.Value.SetActive(!StoryState.OffForTest);
+            foreach (var kv in _npcs)
+            {
+                bool shown = !StoryState.OffForTest && GoStory.Shown(kv.Key, StoryState.Ch, StoryState.StepIndex);
+                kv.Value.SetActive(shown);
+                // 장·단계마다 옮겨 선다(따라가기 동안은 Follow 가 옮긴다)
+                bool walking = st != null && st.Type == GoStory.StepType.Follow && st.Npc == kv.Key;
+                if (shown && !walking)
+                {
+                    Vector3 want = GoStory.NpcPos(kv.Key);
+                    if (GoStory.Flat(kv.Value.transform.position, want) > 0.3f) kv.Value.transform.position = FolkWalker.Grounded(want + Vector3.up * 0.5f);
+                }
+            }
         }
 
         /// <summary>1장 light 단계 번호 — 넘겼으면 제단에 불이 남는다.</summary>

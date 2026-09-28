@@ -10,11 +10,13 @@ using Saga.Go.World;
 namespace Saga.EditorTools
 {
     /// <summary>
-    /// PLAN.md 109-14-12 "이야기 임무 1~2장"(웹 사가고 ⑲-12 진단 항목 — 표·자리·흐름 둘·화면) — `PlaytestHeadless` 가 고유 스킬 진단 뒤에 부른다.
-    /// 표(인물 셋·1장 8단계·2장 4단계·여정 등급·보상) · 자리(걷는 칸·지역·들판 무리/숨은 터와 떨어짐) · 몸 둘 ·
-    /// 1장 흐름(대화 창·고르는 줄·go 도착·수호장·임무 적 넷(경험 없음·다시 안 섬)·옛 제단 원소 신호·장 끝 보상) · 2장 잠김(여정 5)·제단·주간 보스 깸 ·
+    /// PLAN.md 109-14-12·13 "이야기 임무 1~4장"(웹 사가고 ⑲-12·13 진단 항목 — 표·자리·흐름·화면) — `PlaytestHeadless` 가 고유 스킬 진단 뒤에 부른다.
+    /// 표(인물 넷·1장 8·2장 4·3장 9·4장 8단계·여정 등급·보상) · 자리(걷는 칸·지역·들판 무리/숨은 터와 떨어짐) · 몸 셋·가면 ·
+    /// 1장(대화 창·고르는 줄·go·수호장·임무 적 넷(경험 없음·다시 안 섬)·옛 제단 원소 신호·장 끝 보상) · 2장 잠김(여정 5)·제단·주간 보스 ·
+    /// 3장(청하란 셋 — 다른 채집물 안 셈·요리·불도깨비 우두머리(몸 ×1.8·체력 ×6)·잠든 무덤만·잔치 마당) · 4장(나그네가 둘째 단계부터 섬·따라가기 멀면 섬·
+    /// 가까우면 걷고 길 끝에서 넘김·가면 졸개 빙·암) · 글 흘러나옴(한 번 = 줄 전체)·고른 대답 한 줄·대화 카메라 ·
     /// boss 이미 쓰러짐이면 넘김 · 혼잣말 · 대화 중 `Talking` · 세이브 v28 왕복·v27 로드(1장 처음).
-    /// 옛 진단은 `StoryState.OffForTest` 로 돌고 여기서만 켠다. 끝나면 진행·수호장·돈·레벨·재료·세이브 파일·자리를 되돌린다.
+    /// 옛 진단은 `StoryState.OffForTest` 로 돌고 여기서만 켠다. 끝나면 진행·수호장·돈·레벨·재료·요리·세이브 파일·자리를 되돌린다.
     /// </summary>
     public static class PlaytestGoStory
     {
@@ -33,23 +35,32 @@ namespace Saga.EditorTools
             if (fc == null || pc == null || field == null || ui == null || g == null) { Fail("FieldCombat/PlayerController/StoryField/StoryUi/수호장 없음"); return false; }
 
             bool off0 = StoryState.OffForTest;
+            float cps0 = StoryUi.RevealCps;
             int ch0 = StoryState.Ch, st0 = StoryState.StepIndex;
             bool d0 = GuardianState.Defeated, b0 = GuardianState.Bloom;
             long p0 = GuardianState.PaidAt;
             int gold0 = GoldState.Gold, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
             var tal0 = TalentState.Snapshot();
             var mats0 = TalentState.SnapshotMats();
+            var bag0 = CookState.SnapshotBag();
+            var prof0 = CookState.SnapshotProf();
+            var gat0 = CookState.SnapshotGather();
             string savePath = System.IO.Path.Combine(Application.persistentDataPath, "save.json");
             string originalSave = System.IO.File.Exists(savePath) ? System.IO.File.ReadAllText(savePath) : null;
             try
             {
                 StoryState.OffForTest = false;
+                StoryUi.RevealCps = 0f;
+                CookState.NowForTest = 2_000_000_000;
                 StoryState.Restore(0, 0);
                 field.ResetForTest();
                 CheckTable();
                 CheckPlaces(field);
                 CheckChapter1(fc, pc, field, ui, g);
                 CheckChapter2(pc, field, ui);
+                CheckChapter3(pc, field, ui);
+                CheckChapter4(pc, field, ui);
+                CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
                 CheckSave(savePath);
@@ -59,6 +70,9 @@ namespace Saga.EditorTools
                 if (originalSave != null) System.IO.File.WriteAllText(savePath, originalSave);
                 else if (System.IO.File.Exists(savePath)) System.IO.File.Delete(savePath);
                 ui.ResetForTest();
+                StoryUi.RevealCps = cps0;
+                CookState.NowForTest = -1;
+                CookState.Restore(bag0, prof0, gat0);
                 StoryState.Restore(ch0, st0);
                 StoryState.OffForTest = off0;
                 field.ResetForTest();
@@ -73,29 +87,42 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - 인물 셋·1장 8단계·2장 4단계 · 자리·몸 · 대화·고르는 줄·go·수호장·임무 적 넷·옛 제단·장 끝 보상 · 2장 잠김·제단·주간 보스 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - 인물 넷·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
         // ---- 표 -----------------------------------------------------------------------------------------------
 
+        private static char Letter(GoStory.StepType t) => t switch
+        {
+            GoStory.StepType.Talk => 'T', GoStory.StepType.Go => 'G', GoStory.StepType.Boss => 'B', GoStory.StepType.Kill => 'K',
+            GoStory.StepType.Light => 'L', GoStory.StepType.Domain => 'D', GoStory.StepType.Gather => 'H', GoStory.StepType.Cook => 'C', _ => 'F',
+        };
+
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 3 || GoStory.Chapters.Length != 2) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
-            string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += st.Type.ToString()[0]; return s; }
-            // T=Talk G=Go B=Boss K=Kill L=Light D=Domain
-            if (Types(GoStory.Chapters[0]) != "TGBTKTLT") Fail("1장 단계 " + Types(GoStory.Chapters[0]));
-            if (Types(GoStory.Chapters[1]) != "TGDT") Fail("2장 단계 " + Types(GoStory.Chapters[1]));
-            if (GoStory.Chapters[0].Ar != 1 || GoStory.Chapters[1].Ar != 5) Fail("여정 등급");
-            if (GoStory.Chapters[0].Gold != 500 || GoStory.Chapters[0].Mats[(int)GoTalent.Mat.Guide] != 2 || GoStory.Chapters[0].Mats[(int)GoTalent.Mat.Knot] != 2) Fail("1장 보상");
-            if (GoStory.Chapters[1].Gold != 1000 || GoStory.Chapters[1].Mats[(int)GoTalent.Mat.Secret] != 1 || GoStory.Chapters[1].Mats[(int)GoTalent.Mat.Knot] != 3) Fail("2장 보상");
+            if (GoStory.Npcs.Length != 4 || GoStory.Chapters.Length != 4) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT" };
+            int[] ar = { 1, 5, 7, 10 }, gold = { 500, 1000, 1250, 1500 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 } };
+            for (int c = 0; c < 4; c++)
+            {
+                var ch = GoStory.Chapters[c];
+                if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
+                if (ch.Ar != ar[c] || ch.Gold != gold[c]) Fail($"{c + 1}장 여정·금");
+                for (int i = 0; i < 5; i++) if (ch.Mats[i] != mats[c][i]) Fail($"{c + 1}장 재료 {i}");
+            }
             foreach (var c in GoStory.Chapters)
                 foreach (var st in c.Steps)
                 {
-                    if (st.Type == GoStory.StepType.Talk && (GoStory.NpcIndex(st.Npc) < 0 || st.Lines == null || st.Lines.Length == 0)) Fail("대화 단계 인물·줄 " + st.TextKo);
+                    if ((st.Type == GoStory.StepType.Talk || st.Type == GoStory.StepType.Follow) && GoStory.NpcIndex(st.Npc) < 0) Fail("인물 없는 단계 " + st.TextKo);
+                    if (st.Type == GoStory.StepType.Talk && (st.Lines == null || st.Lines.Length == 0)) Fail("대화 줄 없음 " + st.TextKo);
                     if (st.Type == GoStory.StepType.Talk)
                         foreach (var l in st.Lines)
                             if (l.IsPick ? l.PickKo.Length != 2 : GoStory.NpcIndex(l.Who) < 0) Fail("대화 줄 " + st.TextKo);
+                    if (st.Type == GoStory.StepType.Kill && (st.Foes == null || st.Foes.Length == 0)) Fail("임무 적 없음 " + st.TextKo);
+                    if (st.Type == GoStory.StepType.Domain && st.Site != null && GoStory.SitePos(st.Site) == Vector3.zero) Fail("없는 숨은 터 " + st.Site);
                 }
         }
 
@@ -105,11 +132,12 @@ namespace Saga.EditorTools
         {
             var (gx, gy) = TestMapData.WorldToGrid(p);
             char t = TestMapData.TileAt(gx, gy);
-            return TestMapData.Legend.TryGetValue(t, out var info) && info.Walkable && !TestMapData.IsWater(t);
+            return TestMapData.Legend.TryGetValue(t, out var info) && info.Walkable && (!TestMapData.IsWater(t) || t == 'B');
         }
 
         private static void CheckPlaces(StoryField field)
         {
+            var wander = GoStory.NpcOf("wanderer");
             var spots = new (string name, Vector3 pos, string region)[]
             {
                 ("누리", GoStory.NpcPos("elder"), "village"),
@@ -118,33 +146,51 @@ namespace Saga.EditorTools
                 ("망루 발치", GoStory.GridPos(GoStory.TowerFootGx, GoStory.TowerFootGy), "south_glade"),
                 ("임무 적", GoStory.GridPos(GoStory.SquadGx, GoStory.SquadGy), "north_foot"),
                 ("옛 제단", GoStory.GridPos(GoStory.AltarGx, GoStory.AltarGy), "north_foot"),
+                ("우두머리", GoStory.GridPos(GoStory.ChiefGx, GoStory.ChiefGy), "farmland"),
+                ("잔치 마당", GoStory.GridPos(GoStory.FeastGx, GoStory.FeastGy), "village"),
+                ("가면 졸개", GoStory.GridPos(GoStory.MaskSquadGx, GoStory.MaskSquadGy), "south_glade"),
+                ("나그네 다리목", GoStory.GridPos(GoStory.WanderGx, GoStory.WanderGy), "village"),
+                ("나그네 길 끝", GoStory.PathPos(wander, float.MaxValue), "south_glade"),
             };
             foreach (var s in spots)
             {
                 if (!Walkable(s.pos)) Fail(s.name + " 자리가 걷는 칸이 아니다");
                 if (GoWorldMap.RegionAt(s.pos) != s.region) Fail($"{s.name} 지역 {GoWorldMap.RegionAt(s.pos)} ≠ {s.region}");
             }
+            for (float d = 0f; d < GoStory.PathLength(wander); d += 4f) if (!Walkable(GoStory.PathPos(wander, d))) Fail($"나그네 길 {d:0}m 가 못 걷는 칸");
             // 임무 적·제단은 들판 무리(끈 45m 안에 섞이면 싸움이 뒤엉킨다)·숨은 터 입구 카드(11m)에서 떨어져
-            Vector3 sq = GoStory.GridPos(GoStory.SquadGx, GoStory.SquadGy);
-            foreach (var c in FieldSpawner.GroupCenters()) if (GoStory.Flat(sq, c) < 35f) Fail($"임무 적이 들판 무리 곁 {GoStory.Flat(sq, c):0}m");
-            foreach (var s in GoDomain.Sites)
+            var squads = new[] { (GoStory.SquadGx, GoStory.SquadGy), (GoStory.ChiefGx, GoStory.ChiefGy), (GoStory.FeastGx, GoStory.FeastGy), (GoStory.MaskSquadGx, GoStory.MaskSquadGy) };
+            foreach (var (x, y) in squads)
             {
-                if (GoStory.Flat(sq, s.Pos) < 20f) Fail("임무 적이 숨은 터 입구 곁 " + s.Id);
-                if (GoStory.Flat(GoStory.GridPos(GoStory.AltarGx, GoStory.AltarGy), s.Pos) < 20f) Fail("옛 제단이 숨은 터 입구 곁 " + s.Id);
+                Vector3 sq = GoStory.GridPos(x, y);
+                foreach (var c in FieldSpawner.GroupCenters()) if (GoStory.Flat(sq, c) < 35f) Fail($"임무 적({x},{y})이 들판 무리 곁 {GoStory.Flat(sq, c):0}m");
+                foreach (var s in GoDomain.Sites) if (GoStory.Flat(sq, s.Pos) < 20f) Fail($"임무 적({x},{y})이 숨은 터 입구 곁 " + s.Id);
             }
+            foreach (var s in GoDomain.Sites)
+                if (GoStory.Flat(GoStory.GridPos(GoStory.AltarGx, GoStory.AltarGy), s.Pos) < 20f) Fail("옛 제단이 숨은 터 입구 곁 " + s.Id);
             foreach (var id in new[] { "ferryman", "scholar" })
             {
                 var body = field.NpcBody(id);
                 if (body == null || !body.activeInHierarchy || body.GetComponentsInChildren<Renderer>().Length == 0) Fail(id + " 몸이 없다");
                 else if (GoStory.Flat(body.transform.position, GoStory.NpcPos(id)) > 0.5f) Fail(id + " 몸 자리");
             }
+            var w = field.NpcBody("wanderer");
+            if (w == null || FindDeep(w.transform, "Mask") == null) Fail("나그네 몸·가면이 없다");
+            if (field.NpcShown("wanderer")) Fail("1장인데 나그네가 섰다");
         }
 
-        // ---- 1장 ----------------------------------------------------------------------------------------------
+        private static Transform FindDeep(Transform t, string name)
+        {
+            if (t.name == name) return t;
+            for (int i = 0; i < t.childCount; i++) { var r = FindDeep(t.GetChild(i), name); if (r != null) return r; }
+            return null;
+        }
+
+        // ---- 공통 ---------------------------------------------------------------------------------------------
 
         private static void Near(PlayerController pc, Vector3 p, float dx = 2f) => pc.Teleport(p + new Vector3(dx, 0.4f, 0f));
 
-        /// <summary>곁에서 대화를 열고 끝까지(고르는 줄은 둘째 대답) — 단계가 하나 넘어가야 한다.</summary>
+        /// <summary>곁에서 대화를 열고 끝까지(고르는 줄은 둘째 대답 → "나"의 줄) — 단계가 하나 넘어가야 한다.</summary>
         private static void Talk(PlayerController pc, StoryUi ui, string npc, string label)
         {
             int ch = StoryState.Ch, step = StoryState.StepIndex;
@@ -164,6 +210,9 @@ namespace Saga.EditorTools
                     if (ui.Next(-1)) Fail(label + " — 고르는 줄을 안 고르고 넘어감");
                     if (!ui.PickButton(1).gameObject.activeSelf || ui.NextButton.gameObject.activeSelf) Fail(label + " — 고르는 줄 단추");
                     ui.PickButton(1).onClick.Invoke();
+                    if (ui.WhoText != GoLocalization.T("story.me", "나") || ui.LineText != GoStory.PickText(lines[i], 1) || !ui.NextButton.gameObject.activeSelf)
+                        Fail($"{label} — 고른 대답 줄 '{ui.WhoText}: {ui.LineText}'");
+                    ui.NextButton.onClick.Invoke();
                 }
                 else
                 {
@@ -178,7 +227,7 @@ namespace Saga.EditorTools
 
         private static void Kill(FieldEnemy e)
         {
-            for (int i = 0; i < 4 && e.Alive; i++)
+            for (int i = 0; i < 6 && e.Alive; i++)
             {
                 if (e.Shielded) e.SetShieldForTest(0f);
                 e.TakeRaw(e.Hp + 99999f, Color.white);
@@ -201,6 +250,24 @@ namespace Saga.EditorTools
             var f = typeof(DomainField).GetField("Cleared", BindingFlags.Static | BindingFlags.NonPublic);
             (f?.GetValue(null) as System.Action<GoDomain.Kind>)?.Invoke(k);
         }
+
+        /// <summary>임무 적 자리 60m 안으로 가서 세우고 모두 쓰러뜨린다 — 몇이 섰나.</summary>
+        private static int ClearSquad(PlayerController pc, StoryField field, float gx, float gy, string label)
+        {
+            Vector3 sq = GoStory.GridPos(gx, gy);
+            pc.Teleport(sq + new Vector3(0f, 0.4f, GoStory.KillNear + 10f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 0) Fail(label + " — 멀리서 임무 적이 섬");
+            pc.Teleport(sq + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
+            field.Check(pc.transform.position);
+            int n = field.Squad.Count;
+            foreach (var e in field.Squad) if (!e.StoryFoe || e.GroupId != StoryField.SquadKey) Fail($"{label} — 임무 적 표시 {e.StoryFoe}·{e.GroupId}");
+            var copy = new System.Collections.Generic.List<FieldEnemy>(field.Squad);
+            foreach (var e in copy) Kill(e);
+            return n;
+        }
+
+        // ---- 1장 ----------------------------------------------------------------------------------------------
 
         private static void CheckChapter1(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui, FieldEnemy g)
         {
@@ -239,21 +306,16 @@ namespace Saga.EditorTools
             Talk(pc, ui, "ferryman", "1장 버들");
             Expect(0, 4, "버들 뒤");                                                            // → 4 kill
 
+            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
             Vector3 sq = GoStory.GridPos(GoStory.SquadGx, GoStory.SquadGy);
-            pc.Teleport(sq + new Vector3(0f, 0.4f, GoStory.KillNear + 10f));
-            field.Check(pc.transform.position);
-            if (field.Squad.Count != 0) Fail("멀리서 임무 적이 섬");
             pc.Teleport(sq + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
             field.Check(pc.transform.position);
             if (field.Squad.Count != 4) { Fail($"임무 적 {field.Squad.Count} ≠ 4"); return; }
-            foreach (var e in field.Squad) if (!e.StoryFoe || e.GroupId != "sq:0_4") Fail($"임무 적 표시 {e.StoryFoe}·{e.GroupId}");
             field.Check(pc.transform.position);
             if (field.Squad.Count != 4) Fail("임무 적이 두 번 섬");
-            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
             for (int i = 0; i < 3; i++) Kill(field.Squad[i]);
             Expect(0, 4, "넷 중 셋");
-            var last = field.Squad[3];
-            Kill(last);
+            Kill(field.Squad[3]);
             Expect(0, 5, "임무 적 다 쓰러뜨림");                                                // → 5 talk 은비
             if (PlayerStats.Level != lv || PlayerStats.Exp != exp) Fail("임무 적이 경험을 줬다");
             if (field.Squad.Count != 0) Fail("단계가 넘어갔는데 임무 적이 남음");
@@ -271,7 +333,7 @@ namespace Saga.EditorTools
             int gold = GoldState.Gold; // 수호장 첫 토벌 금은 이미 들어왔다
             Talk(pc, ui, "elder", "1장 끝 누리");
             Expect(1, 0, "1장 끝");
-            if (GoldState.Gold != gold + 500 ||TalentState.Count(GoTalent.Mat.Guide) != 2 || TalentState.Count(GoTalent.Mat.Knot) != 2)
+            if (GoldState.Gold != gold + 500 || TalentState.Count(GoTalent.Mat.Guide) != 2 || TalentState.Count(GoTalent.Mat.Knot) != 2)
                 Fail($"1장 보상 금 {GoldState.Gold - gold}·교본 {TalentState.Count(GoTalent.Mat.Guide)}·매듭 {TalentState.Count(GoTalent.Mat.Knot)}");
         }
 
@@ -300,11 +362,151 @@ namespace Saga.EditorTools
             Expect(1, 3, "주간 보스 깸");                                                       // → 3 talk 누리
             int gold = GoldState.Gold;
             Talk(pc, ui, "elder", "2장 끝 누리");
-            if (!StoryState.Done) Fail("2장 끝났는데 안 끝남");
+            Expect(2, 0, "2장 끝");
             if (GoldState.Gold != gold + 1000 || TalentState.Count(GoTalent.Mat.Secret) != 1 || TalentState.Count(GoTalent.Mat.Knot) != 5) Fail("2장 보상");
+            field.Refresh();
+            ui.Refresh();
+            if (!StoryState.Locked || !ui.TrackText.Contains("7") || field.Pillar.activeSelf) Fail($"여정 5 인데 3장 잠김 줄 '{ui.TrackText}'·기둥");
+        }
+
+        // ---- 3장 ----------------------------------------------------------------------------------------------
+
+        private static void CheckChapter3(PlayerController pc, StoryField field, StoryUi ui)
+        {
+            PlayerStats.Restore(7, 0);
+            field.Refresh();
+            Talk(pc, ui, "elder", "3장 누리");
+            Expect(2, 1, "3장 누리 뒤");                                                        // → 1 gather
+            CookState.Restore(null, null, null);
+            GoCooking.Node other = default; bool hasOther = false;
+            var orchids = new System.Collections.Generic.List<GoCooking.Node>();
+            foreach (var n in GoCooking.Nodes)
+            {
+                if (n.Item == "orchid") orchids.Add(n);
+                else if (!hasOther) { other = n; hasOther = true; }
+            }
+            if (orchids.Count < 3 || !hasOther) { Fail($"청하란 포기 {orchids.Count}"); return; }
+            pc.Teleport(orchids[0].Pos + new Vector3(30f, 0.4f, 0f));
+            field.Refresh();
+            StoryField.Target(out Vector3 t, out _);
+            if (GoStory.Flat(t, orchids[0].Pos) > 40f) Fail("gather 기둥이 가까운 청하란 곁이 아니다");
+            CookState.Pick(other);
+            if (StoryState.Progress != 0) Fail("다른 채집물을 셈");
+            CookState.Pick(orchids[0]);
+            CookState.Pick(orchids[1]);
+            ui.Refresh();
+            if (StoryState.Progress != 2 || !ui.TrackText.Contains("2/3")) Fail($"청하란 2 — 셈 {StoryState.Progress}·줄 '{ui.TrackText}'");
+            CookState.Pick(orchids[2]);
+            Expect(2, 2, "청하란 셋");                                                          // → 2 cook
+            var r = GoCooking.Recipes[0];
+            foreach (var (item, n) in r.Ing) CookState.Add(item, n);
+            if (CookState.Cook(0, 1, true) == null) Fail("요리가 안 됨");
+            Expect(2, 3, "요리 하나");                                                          // → 3 talk 버들
+            Talk(pc, ui, "ferryman", "3장 버들");
+            Expect(2, 4, "3장 버들 뒤");                                                        // → 4 우두머리
+
+            Vector3 chief = GoStory.GridPos(GoStory.ChiefGx, GoStory.ChiefGy);
+            pc.Teleport(chief + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 3) { Fail($"우두머리 무리 {field.Squad.Count} ≠ 3"); return; }
+            var boss = field.Squad[0];
+            if (!boss.IsStoryBoss || boss.DisplayName != GoLocalization.T("story.boss.chief", "불도깨비 우두머리") || Mathf.Abs(boss.transform.localScale.x - GoStory.BossScale) > 0.01f)
+                Fail($"우두머리 표시 {boss.IsStoryBoss}·{boss.DisplayName}·×{boss.transform.localScale.x}");
+            if (Mathf.Abs(boss.MaxHp - field.Squad[1].MaxHp * GoStory.BossHp) > 1f) Fail($"우두머리 체력 {boss.MaxHp} ≠ {field.Squad[1].MaxHp} × {GoStory.BossHp}");
+            var copy = new System.Collections.Generic.List<FieldEnemy>(field.Squad);
+            foreach (var e in copy) Kill(e);
+            Expect(2, 5, "우두머리 쓰러뜨림");                                                  // → 5 talk 은비
+            Talk(pc, ui, "scholar", "3장 은비");
+            Expect(2, 6, "3장 은비 뒤");                                                        // → 6 무덤
+            field.Refresh();
+            if (GoStory.Flat(field.Pillar.transform.position, GoStory.SitePos("d_tomb")) > 1f) Fail("domain 기둥이 잠든 무덤에 없다");
+            DomainClear(GoDomain.Kind.Weekly);
+            Expect(2, 6, "주간 보스를 깼는데 넘어감");
+            DomainClear(GoDomain.Kind.Tomb);
+            Expect(2, 7, "잠든 무덤 깸");                                                       // → 7 잔치 마당
+            if (ClearSquad(pc, field, GoStory.FeastGx, GoStory.FeastGy, "잔치 마당") != 4) Fail("잔치 마당 임무 적 넷이 아니다");
+            Expect(2, 8, "잔치 마당");                                                          // → 8 talk 누리
+            int gold = GoldState.Gold, secret = TalentState.Count(GoTalent.Mat.Secret);
+            Talk(pc, ui, "elder", "3장 끝 누리");
+            Expect(3, 0, "3장 끝");
+            if (GoldState.Gold != gold + 1250 || TalentState.Count(GoTalent.Mat.Secret) != secret + 1) Fail("3장 보상");
+        }
+
+        // ---- 4장 ----------------------------------------------------------------------------------------------
+
+        private static void CheckChapter4(PlayerController pc, StoryField field, StoryUi ui)
+        {
+            PlayerStats.Restore(10, 0);
+            field.Refresh();
+            if (field.NpcShown("wanderer")) Fail("4장 첫 단계에 나그네가 섰다");
+            Talk(pc, ui, "elder", "4장 누리");
+            Expect(3, 1, "4장 누리 뒤");                                                        // → 1 talk 나그네
+            field.Refresh();
+            var body = field.NpcBody("wanderer");
+            if (!field.NpcShown("wanderer") || GoStory.Flat(body.transform.position, GoStory.GridPos(GoStory.WanderGx, GoStory.WanderGy)) > 0.5f) Fail("나그네가 다리목에 안 섰다");
+            Talk(pc, ui, "wanderer", "4장 나그네");
+            Expect(3, 2, "나그네 뒤");                                                          // → 2 follow
+            var n = GoStory.NpcOf("wanderer");
+            float len = GoStory.PathLength(n);
+            pc.Teleport(GoStory.NpcPos("wanderer") + new Vector3(0f, 0.4f, -GoStory.FollowLost - 10f));
+            field.Follow(pc.transform.position, 2f);
+            ui.Refresh();
+            if (StoryState.FollowDist > 0f) Fail("멀리 있는데 나그네가 걸음");
+            if (!ui.TrackText.Contains(GoLocalization.T("story.follow_lost", " · 너무 멀어졌다").Trim(' ', '·'))) Fail($"멀어짐 줄 '{ui.TrackText}'");
+            for (int i = 0; i < 400 && StoryState.StepIndex == 2; i++)
+            {
+                Near(pc, GoStory.NpcPos("wanderer"), 3f);
+                float before = StoryState.FollowDist;
+                field.Follow(pc.transform.position, 1f);
+                if (StoryState.StepIndex == 2 && Mathf.Abs(StoryState.FollowDist - before - GoStory.FollowSpeed) > 0.01f && StoryState.FollowDist < len - 0.01f)
+                { Fail($"따라가기 한 걸음 {StoryState.FollowDist - before}"); break; }
+            }
+            Expect(3, 3, "길 끝");                                                              // → 3 talk 나그네(길 끝)
+            field.Refresh();
+            if (GoStory.Flat(body.transform.position, GoStory.PathPos(n, float.MaxValue)) > 0.5f) Fail("길 끝에 나그네가 없다");
+            Talk(pc, ui, "wanderer", "4장 길 끝 나그네");
+            Expect(3, 4, "길 끝 나그네 뒤");                                                    // → 4 가면 졸개
+            Vector3 sq = GoStory.GridPos(GoStory.MaskSquadGx, GoStory.MaskSquadGy);
+            pc.Teleport(sq + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 4 || field.Squad[2].Element != GoElement.Cryo || field.Squad[3].Element != GoElement.Geo) Fail("가면 졸개 넷·빙·암");
+            var copy = new System.Collections.Generic.List<FieldEnemy>(field.Squad);
+            foreach (var e in copy) Kill(e);
+            Expect(3, 5, "가면 졸개");                                                          // → 5 talk 나그네
+            Talk(pc, ui, "wanderer", "4장 조각 나그네");
+            field.Refresh();
+            if (field.NpcShown("wanderer")) Fail("여섯째 단계 뒤에도 나그네가 섬");
+            Talk(pc, ui, "scholar", "4장 은비");
+            int gold = GoldState.Gold;
+            Talk(pc, ui, "elder", "4장 끝 누리");
+            if (!StoryState.Done || GoldState.Gold != gold + 1500) Fail("4장 끝·보상");
             ui.Refresh();
             field.Refresh();
             if (ui.TrackShown || field.Pillar.activeSelf) Fail("다 끝났는데 추적 줄·기둥");
+        }
+
+        // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------
+
+        private static void CheckReveal(PlayerController pc, StoryUi ui)
+        {
+            var rig = Object.FindFirstObjectByType<CameraRig>();
+            StoryState.Restore(0, 0);
+            PlayerStats.Restore(1, 0);
+            StoryUi.RevealCps = GoStory.RevealCps;
+            Near(pc, GoStory.NpcPos("elder"));
+            ui.Refresh();
+            float zoom0 = rig != null ? rig.CurrentZoom : 0f;
+            if (!ui.StartTalk()) { Fail("대화가 안 열림(흘러나옴)"); return; }
+            if (!ui.Revealing) Fail("글이 한 번에 다 나옴");
+            if (rig != null && (!rig.TalkShot || Mathf.Abs(rig.CurrentZoom - CameraRig.TalkZoom) > 0.01f)) Fail("대화 카메라가 안 붙음");
+            string first = ui.LineText;
+            ui.Next(-1);
+            if (ui.Revealing || ui.LineText != first) Fail("한 번 누르면 줄 전체가 나와야");
+            ui.Next(-1);
+            if (ui.LineText == first) Fail("두 번째 누르면 다음 줄");
+            ui.ResetForTest();
+            if (StoryState.Talking || (rig != null && (rig.TalkShot || Mathf.Abs(rig.CurrentZoom - zoom0) > 0.01f))) Fail("대화를 닫아도 카메라가 안 돌아옴");
+            StoryUi.RevealCps = 0f;
         }
 
         private static void CheckBossAlreadyDown(StoryField field)

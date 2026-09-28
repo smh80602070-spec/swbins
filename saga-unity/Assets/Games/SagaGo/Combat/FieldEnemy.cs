@@ -178,6 +178,22 @@ namespace Saga.Go.Combat
             RefreshElementFx();
         }
 
+        /// <summary>109-14-13 이야기 보스(3장 불도깨비 우두머리) — 제 몸을 키우고 체력·방패·공격·팔 길이를 곱한다(천하 등급은 그대로 받는다).</summary>
+        public void MakeStoryBoss(string name, float hpMul, float atkMul, float scale)
+        {
+            IsStoryBoss = true;
+            DisplayName = name;
+            if (_nameText != null) _nameText.text = DisplayName;
+            MaxHp *= hpMul; Hp = MaxHp;
+            ShieldMax *= hpMul; ShieldHp = ShieldMax;
+            Atk *= atkMul;
+            _reachOverride = StrikeRadius * scale * 0.8f;
+            transform.localScale = Vector3.one * scale;
+            RefreshHeadUi();
+        }
+
+        public bool IsStoryBoss { get; private set; }
+
         /// <summary>주간 보스 2단계 — 그 원소 방패를 두른다.</summary>
         public void RaiseBossShield(GoElement el, float amount)
         {

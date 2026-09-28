@@ -11,6 +11,10 @@ namespace Saga.Go.Data
         public static int Ch { get; private set; }
         public static int StepIndex { get; private set; }
 
+        /// <summary>109-14-13 — follow 단계에서 인물이 걸은 거리(m) · gather 단계에서 모은 수. 저장 안 함(불러오면 그 단계 처음), 단계가 바뀌면 0.</summary>
+        public static float FollowDist { get; set; }
+        public static int Progress { get; set; }
+
         /// <summary>대화 창이 열려 있나 — `FieldCombat`·`FieldEnemy` 가 본다.</summary>
         public static bool Talking { get; set; }
 
@@ -34,6 +38,8 @@ namespace Saga.Go.Data
             var ch = Chapter;
             if (ch == null) return null;
             StepIndex++;
+            FollowDist = 0f;
+            Progress = 0;
             string reward = null;
             if (StepIndex >= ch.Steps.Length)
             {
@@ -53,6 +59,8 @@ namespace Saga.Go.Data
             Ch = Math.Max(0, Math.Min(ch, GoStory.Chapters.Length));
             StepIndex = Done ? 0 : Math.Max(0, Math.Min(step, GoStory.Chapters[Ch].Steps.Length - 1));
             Talking = false;
+            FollowDist = 0f;
+            Progress = 0;
             Changed?.Invoke();
         }
     }
