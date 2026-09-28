@@ -9458,3 +9458,8 @@ PROJECT_STATE.md` 참고. 요약:
 ## GO 그래픽 먼저 ㉕ 잠긴 도읍 바닥 (2026-09-30, 같은 세션)
 
 - 잠긴 도읍 마른 바닥이 (0.72,0.7,0.62) 옅은 회색이라 햇빛에 허옇게 날아갔다(창 모드 u_palace). terrain_builder 지역 색 sunken D → (0.5,0.52,0.46) 젖은 바닥 빛. 전후: 흰 판 → 어두운 청록 회색 바닥. SUNKEN 점검 fails=0.
+
+## GO 그래픽 먼저 ㉖ 공방 몸 눈 깜박임 (2026-09-30, 같은 세션)
+
+- 공방 몸엔 깜박임 블렌드셰이프가 없어 talk_face 가 눈을 못 감았다. anime_eye.closed_texture_for(base, skin) — 눈 윤곽 안을 그 몸 살색으로 채워 감은 눈 텍스처를 만들고(살색은 몸의 skin 재질 텍스처를 12×12 로 성기게 훑어 평균), cel_shader_apply 가 눈 재질에 메타 eye_open·eye_closed 로 실어 둔다. talk_face 가 깜박임(0.14초) 동안 albedo_texture 를 갈아 끼운다(`_shut_eyes`). 처음엔 눈 텍스처의 붉은 눈가 색으로 채워 분홍 눈이 됐다 → 살갗 평균색으로 고침. face_view FACE_SHUT=1 로 감은 눈 촬영.
+- 점검 STORY(talk_face)·STORY8·COMBAT fails=0, REGRESS OK.

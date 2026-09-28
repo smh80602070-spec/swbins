@@ -126,3 +126,53 @@ static func _paint(img: Image, iris: Color) -> void:
 			## 윤곽 안쪽 가장자리 부드럽게 피부와 이어지기.
 			px = px.lerp(col, inside)
 			img.set_pixel(x, y, px)
+
+## 감은 눈 — 깜박임용. 눈 윤곽 안을 피부색으로 덮고 아래로 굽은 속눈썹 선 하나(눈 텍스처를 통째로 바꿔 끼운다).
+## skin 은 그 몸 얼굴 살색(눈꺼풀이 감긴 자리를 이 색으로 채운다 — 눈 텍스처의 붉은 눈가 색은 얼굴과 안 맞는다).
+static func closed_texture_for(base: Texture2D, skin: Color) -> Texture2D:
+	var key := "closed_%d_%s" % [base.get_rid().get_id() if base else 0, skin.to_html(false)]
+	if _cache.has(key):
+		return _cache[key]
+	var open_tex := texture_for(base, Color.WHITE) # 원본 피부 픽셀을 얻으려고 — 눈 안쪽은 아래서 덮는다
+	var img := open_tex.get_image()
+	var lash_col := Color(0.09, 0.05, 0.06)
+	for y in SIZE:
+		for x in SIZE:
+			var d := Vector2(x + 0.5, y + 0.5) - CENTER
+			var t := clampf(absf(d.x) / HALF_W, 0.0, 1.0)
+			var shape := pow(1.0 - t * t, 0.75)
+			var lift := 11.0 * smoothstep(0.2, 1.0, d.x / HALF_W)
+			var hh_up := HALF_UP * shape
+			var hh_dn := HALF_DOWN * shape
+			var dy := d.y + lift
+			var inside := (1.0 - smoothstep(0.94, 1.04, (absf(dy) / maxf(hh_up if dy < 0.0 else hh_dn, 0.001)))) if absf(d.x) < HALF_W else 0.0
+			var px := img.get_pixel(x, y)
+			px = px.lerp(skin, inside)
+			## 감은 눈선: 안쪽 눈가에서 바깥으로 완만히 처지는 호.
+			var arc := (6.0 + 14.0 * shape) - lift
+			var line := (1.0 - smoothstep(2.5, 5.0, absf(d.y - arc))) * (1.0 if absf(d.x) < HALF_W else 0.0)
+			px = px.lerp(lash_col, clampf(line, 0.0, 1.0))
+			img.set_pixel(x, y, px)
+	img.generate_mipmaps()
+	var tex := ImageTexture.create_from_image(img)
+	_cache[key] = tex
+	return tex
+
+## 몸 안 살갗 재질 텍스처를 성기게 훑어 평균 살색을 낸다(감은 눈 채우기용).
+static func skin_average(tex: Texture2D) -> Color:
+	if tex == null:
+		return Color(0.8, 0.6, 0.5)
+	var img := tex.get_image()
+	if img == null:
+		return Color(0.8, 0.6, 0.5)
+	if img.is_compressed():
+		img.decompress()
+	var w := img.get_width()
+	var h := img.get_height()
+	var sum := Color(0, 0, 0, 0)
+	var n := 0
+	for j in 12:
+		for i in 12:
+			sum += img.get_pixel(int((i + 0.5) / 12.0 * w), int((j + 0.5) / 12.0 * h))
+			n += 1
+	return Color(sum.r / n, sum.g / n, sum.b / n)

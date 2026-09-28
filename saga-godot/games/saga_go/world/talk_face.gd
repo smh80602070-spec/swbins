@@ -29,6 +29,8 @@ const FORE_BEND := 42.0
 const ARM_SWAY := 7.0
 const NOD := 5.0
 
+var _eye_mats: Array = [] # 블렌드셰이프 없는 몸(공방): 눈 재질에 감은 눈 그림을 갈아 끼워 깜박인다(cel_shader_apply 가 메타로 실어 둔다)
+var _eye_shut := false
 var _shapes: Dictionary = {} # 블렌드셰이프 이름 → [[MeshInstance3D, idx], …]
 var _mouth := [0.0, 0.0, 0.0, 0.0, 0.0]
 var _mouth_to := [0.0, 0.0, 0.0, 0.0, 0.0]
@@ -73,6 +75,12 @@ func _collect(body: Node) -> void:
 				if not _shapes.has(n):
 					_shapes[n] = []
 				(_shapes[n] as Array).append([m, idx])
+	for mi in body.find_children("Eyes", "MeshInstance3D", true, false):
+		var em := mi as MeshInstance3D
+		for si in em.get_surface_override_material_count():
+			var sm := em.get_surface_override_material(si) as ShaderMaterial
+			if sm != null and sm.has_meta("eye_closed"):
+				_eye_mats.append(sm)
 	var skel := get_parent() as Skeleton3D
 	## 2026-09-29 — 공방 몸(char-forge, UE 식 뼈 이름)도. 몸짓은 뼈대 공간 축으로 돌려(_rotate_global) 뼈 축이 달라도 같은 방향이다.
 	_b_head = _bone(skel, ["J_Bip_C_Head", "Head"])
@@ -164,6 +172,7 @@ func _process(delta: float) -> void:
 	if _blink_left > 0.0:
 		_blink_left -= delta
 		_set_shape(BLINK_SHAPE, 1.0 if _blink_left > 0.0 else 0.0)
+		_shut_eyes(_blink_left > 0.0)
 	else:
 		_blink_t -= delta
 		if _blink_t <= 0.0:
@@ -191,6 +200,13 @@ func _rotate_global(skel: Skeleton3D, bone: int, axis: Vector3, angle: float) ->
 	var g := skel.get_bone_global_pose(bone)
 	g.basis = Basis(axis, angle) * g.basis
 	skel.set_bone_global_pose(bone, g)
+
+func _shut_eyes(shut: bool) -> void:
+	if shut == _eye_shut or _eye_mats.is_empty():
+		return
+	_eye_shut = shut
+	for sm in _eye_mats:
+		(sm as ShaderMaterial).set_shader_parameter("albedo_texture", (sm as ShaderMaterial).get_meta("eye_closed" if shut else "eye_open"))
 
 func _set_shape(n: String, w: float) -> void:
 	for pair in _shapes.get(n, []):

@@ -16,6 +16,13 @@ func _init() -> void:
 	var body: Node3D = (load(glb) as PackedScene).instantiate()
 	root.add_child(body)
 	CelShaderApply.apply_to(body)
+	## FACE_SHUT=1 이면 감은 눈(깜박임 그림)으로 찍는다.
+	if OS.get_environment("FACE_SHUT") != "":
+		for mi in body.find_children("Eyes", "MeshInstance3D", true, false):
+			for si in (mi as MeshInstance3D).get_surface_override_material_count():
+				var sm := (mi as MeshInstance3D).get_surface_override_material(si) as ShaderMaterial
+				if sm != null and sm.has_meta("eye_closed"):
+					sm.set_shader_parameter("albedo_texture", sm.get_meta("eye_closed"))
 	var env := Environment.new()
 	env.background_mode = Environment.BG_COLOR
 	env.background_color = Color(0.62, 0.78, 0.95)

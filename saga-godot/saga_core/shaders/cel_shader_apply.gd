@@ -14,6 +14,7 @@ const ANIME_EYE := preload("res://saga_core/anime_eye.gd")
 ## 공방 몸의 눈 재질 이름("eye") — 실사 눈 텍스처 위에 셀 화풍 눈을 다시 그려 얹는다(anime_eye.gd, 홍채색은 몸 파일마다 하나).
 const EYE_MATERIAL := "eye"
 static var _iris_seed := ""
+static var _skin_tex: Texture2D = null # 이 몸 살갗 재질 텍스처(감은 눈 살색용, apply_to 가 먼저 찾아 둔다)
 
 ## root 아래 모든 MeshInstance3D의 서피스 재질을 cel_toon 셰이더로 덮는다.
 ## 반환값은 적용된 서피스 개수.
@@ -58,6 +59,14 @@ const FACE_BAKE_BY_GLB := {
 static func apply_to(root: Node) -> int:
 	var baked_face: Texture2D = FACE_BAKE_BY_GLB.get(root.scene_file_path)
 	_iris_seed = root.scene_file_path
+	_skin_tex = null
+	for mi in _find_mesh_instances(root):
+		if mi.mesh == null or String(mi.name).begins_with("Eye"):
+			continue
+		for si in mi.mesh.get_surface_count():
+			var sm := mi.get_active_material(si)
+			if _skin_tex == null and sm is BaseMaterial3D and sm.resource_name.to_lower().begins_with("skin") and (sm as BaseMaterial3D).albedo_texture != null:
+				_skin_tex = (sm as BaseMaterial3D).albedo_texture
 	setup_shadow_proxy(root)
 	var applied := 0
 	for mesh_instance in _find_mesh_instances(root):
@@ -151,7 +160,11 @@ static func _apply_one(mesh_instance: MeshInstance3D) -> int:
 		shader_mat.shader = CEL_SHADER
 		var albedo_tex: Texture2D = (original as BaseMaterial3D).albedo_texture
 		if original.resource_name == EYE_MATERIAL:
-			albedo_tex = ANIME_EYE.texture_for(albedo_tex, ANIME_EYE.iris_for(_iris_seed))
+			var raw_tex := albedo_tex
+			albedo_tex = ANIME_EYE.texture_for(raw_tex, ANIME_EYE.iris_for(_iris_seed))
+			## 깜박임(talk_face)이 갈아 끼울 두 장.
+			shader_mat.set_meta("eye_open", albedo_tex)
+			shader_mat.set_meta("eye_closed", ANIME_EYE.closed_texture_for(raw_tex, ANIME_EYE.skin_average(_skin_tex)))
 		shader_mat.set_shader_parameter("albedo_texture", albedo_tex)
 		shader_mat.set_shader_parameter("albedo_tint", (original as BaseMaterial3D).albedo_color)
 		## PLAN 102-3 아웃라인 — 뒤집힌 헐 셰이더를 next_pass로 얹는다.
