@@ -217,6 +217,12 @@
       SKo.marks().forEach(function (km) { if (!km.found) { return; } var kp2 = wl.worldToLatLng(km.x, km.y); pois.push({ lat: kp2.lat, lng: kp2.lng, t: 'frost', name: (km.big ? '🏯 ' : '✨ ') + km.name }); });
     }
 
+    /* 구름 위 항로 섬(§5 ⑲-48) — 찾은 것만 이름 */
+    var SRo = global.DG.skyRoute;
+    if (SRo && SRo.on() && wl) {
+      SRo.marks().forEach(function (rm) { if (!rm.found) { return; } var rp2 = wl.worldToLatLng(rm.x, rm.y); pois.push({ lat: rp2.lat, lng: rp2.lng, t: 'frost', name: '☁️ ' + rm.name }); });
+    }
+
     /* 낚시터(§5 ⑲-24) — 탑을 찾은 지역만 */
     var FSo = global.DG.fishing;
     if (FSo && FSo.mapSpots && wl) {

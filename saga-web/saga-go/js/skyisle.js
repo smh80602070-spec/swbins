@@ -49,12 +49,14 @@
   /* ── ⑲-35 발판·상승 기류 목록 ─────────────────────────── */
   function ES() { var e = global.DG.eraSites; return e && e.on && e.on() ? e : null; }
   function CR() { var c = global.DG.crossing; return c && c.on && c.on() && c.pads ? c : null; }   // ⑲-43 갈림길 끝 섬
+  function SR() { var r = global.DG.skyRoute; return r && r.on && r.on() ? r : null; }                // ⑲-48 구름 위 항로 섬 셋
   /** 떠 있는 발판 — [{ id, name, x, y, r, top, slab, boot? [ch, from, to] }] */
   function pads() {
     var out = [], c = on() ? spot() : null, E = ES();
     if (c) { out.push({ id: 'isle', name: '구름섬', x: c.x, y: c.y, r: ISLE_R, top: top(), slab: SLAB, boot: [SKY_CH, SKY_STEPS[0], SKY_STEPS[1]] }); }
     if (E && E.pads) { out = out.concat(E.pads()); }
     if (CR()) { out = out.concat(CR().pads()); }
+    if (SR()) { out = out.concat(SR().pads()); }
     return out;
   }
   /** (x,y) 위 발판(난간 안) — 없으면 null */
@@ -76,6 +78,7 @@
     if (p) { out.push({ id: 'isle', x: p.x, y: p.y, r: DRAFT_R, top: draftTop(), rise: DRAFT_RISE }); }
     if (E && E.drafts) { out = out.concat(E.drafts()); }
     if (CR()) { out = out.concat(CR().drafts()); }
+    if (SR()) { out = out.concat(SR().drafts()); }
     return out;
   }
   function draftAt(x, y) {

@@ -96,6 +96,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/skyport.js"></script>
 <script src="js/crossing.js"></script>
 <script src="js/sunken.js"></script>
+<script src="js/skyroute.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -13831,6 +13832,54 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { U._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '등대 넷째부터(셋째 ✕·뒤 ○) · 자리 뭍·벽 밖 · 기록실 앞·단말 돔 안' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-48 7부 무대 · 구름 위 항로 (skyroute.js — 떠 있는 섬 셋·바람 기둥 셋, PLAN §5 ⑲-48) ── */
+    t('구름 위 항로 ⑲-48 — 섬은 23장 등롱 뒤에만(발판 목록에 든다) · 등대 서쪽으로 사당 +60·잔해 +82·정거장 +104(반지름 18·20·16) · 가장자리 틈 8m · 기둥은 그 장 뒤(없으면 닫힘, 손잡이로 열림) · 기둥 끝 = 다음 섬 +9 · 다음 섬 가장자리까지 12m 안 · 발견 한 번', function () {
+      var rig = stRig(52), R = DG.skyRoute, SK = DG.skyIsle, U = DG.sunken, r = {};
+      try {
+        U._resetForTest(); R._resetForTest(); delete C.save.skyroute;
+        C.save.story = { ch: 22, step: 2 };
+        r.hidden = !R.on() && R.pads().length === 0 && !SK.pads().some(function (p) { return p.id.indexOf('sr_') === 0; });
+        C.save.story = { ch: 23, step: 0 };
+        var I = R.isles(), L = U.siteById('lighthouse'), base = DG.relief3d.heightAt(L.x, L.y);
+        r.isles = R.on() && I.length === 3 && I.map(function (q) { return q.id; }).join() === 'shrine,wreck,orbit' &&
+          I.map(function (q) { return Math.round(q.top - base); }).join() === '60,82,104' && I.map(function (q) { return q.r; }).join() === '18,20,16' &&
+          I[0].x < L.x && I[1].x < I[0].x && I[2].x < I[1].x;
+        r.gap = Math.abs((I[0].x - I[0].r) - (I[1].x + I[1].r) - 8) < 1e-6 && Math.abs((I[1].x - I[1].r) - (I[2].x + I[2].r) - 8) < 1e-6;
+        r.pads = I.every(function (q) { var p = SK.padAt(q.x, q.y); return p && p.id === 'sr_' + q.id && p.top === q.top; });
+        r.closed = R.drafts().length === 0 && R.DRAFT_CH.join() === 'ch24,ch24,ch25';
+        C.setTune('skyroute.drafts', 1);
+        var D = R.drafts();
+        r.drafts = D.length === 3 && Math.abs(D[0].top - (I[0].top + 9)) < 1e-6 && Math.abs(D[1].top - (I[1].top + 9)) < 1e-6 && Math.abs(D[2].top - (I[2].top + 9)) < 1e-6 &&
+          Math.hypot(D[1].x - I[0].x, D[1].y - I[0].y) <= I[0].r - R.DRAFT_IN + 1e-6 && Math.hypot(D[2].x - I[1].x, D[2].y - I[1].y) <= I[1].r - R.DRAFT_IN + 1e-6 &&
+          [[D[0], I[0]], [D[1], I[1]], [D[2], I[2]]].every(function (z) { var dd = Math.hypot(z[0].x - z[1].x, z[0].y - z[1].y) - z[1].r; return dd > 0 && dd <= 12; }) &&
+          D.every(function (d) { return !!SK.draftAt(d.x, d.y); });
+        var g0 = C.save.player.gold;
+        var f1 = R.discoverOn('shrine'), f2 = R.discoverOn('shrine');
+        r.found = !!f1 && !f2 && R.found('shrine') && C.save.player.gold === g0 + R.REWARD.gold && R.marks().filter(function (m) { return m.found; }).length === 1;
+      } finally { C.setTune('skyroute.drafts', null); delete C.save.skyroute; R._resetForTest(); U._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '23장 등롱 뒤 · 사당 60·잔해 82·정거장 104(서쪽으로) · 틈 8 · 기둥 24·24·25장 뒤(끝 +9, 12m 안) · 발견 금 +200 한 번' : ('실패 ' + bad.join(','));
+    });
+
+    t('구름 위 항로 ⑲-48 — 실제로 탄다: 사당 위 서쪽 기둥에서 뛰면 솟아 잔해 윗면 +9 에서 멎고, 서쪽으로 활공하면 잔해 섬에 내려선다(섬 위 층)', function () {
+      var rig = stRig(52), R = DG.skyRoute, SK = DG.skyIsle, U = DG.sunken, LF = DG.landform, r = {}, i;
+      try {
+        U._resetForTest(); R._resetForTest(); SK._resetForTest(); LF._resetForTest();
+        C.save.story = { ch: 23, step: 0 }; C.setTune('skyroute.drafts', 1);
+        var I = R.isles(), D = R.drafts(), pos = C.save.player.pos;
+        pos.x = D[1].x; pos.y = D[1].y; LF.setSky(true);
+        r.onShrine = LF.onSky() && SK.padAt(pos.x, pos.y).id === 'sr_shrine';
+        LF.jump();
+        for (i = 0; i < 80 && !(LF.gliding() && LF.glideAlt() >= D[1].top - 0.01); i++) { LF.tick(0.1); }
+        r.rose = LF.gliding() && Math.abs(LF.glideAlt() - D[1].top) < 0.05;
+        for (i = 0; i < 120 && LF.gliding(); i++) { pos.x -= 0.8; LF.tick(0.1); }
+        var pd = SK.padAt(pos.x, pos.y);
+        r.landed = !LF.gliding() && LF.onSky() && !!pd && pd.id === 'sr_wreck';
+      } finally { C.setTune('skyroute.drafts', null); LF._resetForTest(); SK._resetForTest(); R._resetForTest(); U._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '사당 기둥 → 잔해 +9 까지 솟음 → 서쪽 활공 → 잔해 섬에 내려섬' : ('실패 ' + bad.join(','));
     });
 
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */
