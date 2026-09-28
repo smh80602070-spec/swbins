@@ -34,7 +34,7 @@ find "/c/Program Files/Unity/Hub/Editor" -maxdepth 1
 
 ```bash
 bash tools/realistic-pack.sh pull             # 구글 드라이브 gdrive:saga-assets 에서 받아 md5 대조 → fetch (rclone, 아래)
-bash tools/realistic-pack.sh fetch            # 드라이브 없이: 보관함 기본 ~/OneDrive/saga-assets (동기화 끝난 뒤) · 다른 자리면 fetch <폴더>
+bash tools/realistic-pack.sh fetch            # 드라이브 없이: 조각을 보관함(기본 ~/saga-assets)에 두고 · 다른 자리면 fetch <폴더>
 bash tools/realistic-pack.sh verify           # 언제든: 목록과 같은지 (OK 면 이 PC 빌드 = 다른 PC 빌드)
 ```
 

@@ -10308,3 +10308,4 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - rclone 1.75.1(winget) + 원격 `gdrive`(scope=drive, 사용자 승인). `realistic-pack.sh push [원격] [보관함]`·`pull [원격] [보관함]` 추가 — 이 목록 묶음만 `rclone copy`, `rclone check --one-way` 로 크기·md5 대조, `pull` 은 이어서 `fetch`. 원격 기본 `gdrive:saga-assets`(`SAGA_ASSET_REMOTE`). winget 직후 PATH 가 옛 셸이면 winget 설치 자리에서 rclone.exe 를 찾는다.
 - 시험: `push` = 전송 0·4파일 일치, 로컬 `md5sum` 과 `rclone md5sum` 네 줄 같음. `pull` = 전송 0·4파일 일치 → fetch "이미 목록과 같다"(실제로 받아 푸는 건 새 PC 에서 첫 확인).
 - 남은 위험: rclone 공용 client_id 가 2026 중 끊긴다는 경고 — 끊기면 구글 클라우드 콘솔에서 자기 client_id(사람 몫) → `rclone config update gdrive client_id=… client_secret=…`.
+- 이어서(같은 날): 사용자가 OneDrive 보관함의 19ad3d530b70 네 파일을 지움(드라이브 사본 `rclone check` 4파일 일치 확인 뒤). 옛 cb71a2102fd9 은 그 전에 이미 없었다. 보관함 기본값을 `~/OneDrive/saga-assets` → `~/saga-assets`(동기화 안 되는 로컬)로 — 그대로 두면 `pull`·`pack` 이 4GB 를 OneDrive 에 다시 올린다. 원본 보관 = 구글 드라이브. 문서 셋(HOW_TO_PLAYTEST·ASSET_GUIDE·PLAN 110 ④) 같이.

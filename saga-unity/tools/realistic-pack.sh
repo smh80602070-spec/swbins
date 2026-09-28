@@ -17,7 +17,8 @@
 # .meta 가 빠지면 GUID 가 새로 나 커밋된 씬의 참조가 끊기므로 Mixamo 에서 다시 받는 것으로는
 # 같은 빌드가 안 된다 — 그래서 받은 결과 폴더를 통째로 나른다.
 # 묶음 이름 = saga-unity-realistic-<목록 해시 12자>.tar.NN (1900MB 조각 — 파일 하나 2GB 제한 대비).
-# 보관함 기본값 = $SAGA_ASSET_STORE, 없으면 ~/OneDrive/saga-assets (2026-09-26 사용자 결정).
+# 보관함 기본값 = $SAGA_ASSET_STORE, 없으면 ~/saga-assets — 동기화 안 되는 로컬 자리, 원본 보관은 구글 드라이브
+# (2026-09-28 사용자 결정, 전엔 ~/OneDrive/saga-assets 였다 — 거기 두면 pull·pack 이 4GB 를 OneDrive 에 다시 올린다).
 # **비공개** 자리만 — 공개 저장소·공개 링크 금지.
 # 빌드는 Editor/SagaAssetGate.cs 가 같은 목록으로 한 번 더 막는다.
 set -u
@@ -26,7 +27,7 @@ ROOT="$PWD"
 SRC="Assets/Art/CharactersRealistic"
 MAN="$ROOT/tools/realistic/manifest.sha256"
 STAGE="$ROOT/.utmp/realistic-incoming"
-DEFAULT_STORE="${SAGA_ASSET_STORE:-$HOME/OneDrive/saga-assets}"   # .utmp/ 는 gitignore, Assets 밖이라 Unity 가 안 읽는다
+DEFAULT_STORE="${SAGA_ASSET_STORE:-$HOME/saga-assets}"   # .utmp/ 는 gitignore, Assets 밖이라 Unity 가 안 읽는다
 DEFAULT_REMOTE="${SAGA_ASSET_REMOTE:-gdrive:saga-assets}"
 SELF="$ROOT/tools/$(basename "$0")"
 
@@ -93,7 +94,7 @@ case "$cmd" in
     ls -l "$base".* | awk '{printf "  %6.0f MB  %s\n", $5/1048576, $NF}'
     ;;
   fetch)
-    store="${1:-$DEFAULT_STORE}"   # saga-unity-realistic-<id>.tar.NN 이 든 곳 (OneDrive 는 동기화가 끝난 뒤에)
+    store="${1:-$DEFAULT_STORE}"   # saga-unity-realistic-<id>.tar.NN 이 든 곳 (클라우드 동기화 폴더면 동기화가 끝난 뒤에)
     [ -f "$MAN" ] || die "목록 없음"
     id=$(pack_id); base="$store/saga-unity-realistic-$id.tar"
     ls "$base".[0-9][0-9] >/dev/null 2>&1 || {

@@ -614,7 +614,7 @@ GO와 같은 procgen 나무로 바꿨다 — 단, GO의 12종 변종 풀과 달�
 
 - `Assets/Art/CharactersRealistic/`(Mixamo 원본 + 그 안에서 구운 프리팹·재질·셰이더 그래프, 4.2GB·1520파일)는 계속 gitignore. **다시 받기로는 같은 빌드가 안 된다** — 커밋된 씬·컨트롤러가 그 폴더 `.meta` 의 GUID 를 물고 있어, Mixamo 에서 새로 받으면 GUID 가 새로 나 참조가 끊긴다. 그래서 받은 결과 폴더를 통째로 나른다.
 - `tools/realistic-pack.sh`: `manifest`(해시 목록 `tools/realistic/manifest.sha256`, 커밋) · `pack <보관함>`(목록 순서대로 tar, 1900MB 조각 `saga-unity-realistic-<목록 해시 12자>.tar.NN`) · `fetch <보관함>`(`.utmp/` 에 풀어 대조 → 제자리) · `verify`.
-- 보관함은 **비공개** — 기본 `~/OneDrive/saga-assets`(사용자 결정, `SAGA_ASSET_STORE` 로 바꿈). Mixamo 약관상 원본을 공개로 재배포하지 않는다 — 공유 링크를 만들지 않는다.
+- 보관함은 **비공개** — 기본 `~/saga-assets`(동기화 안 되는 로컬 자리, `SAGA_ASSET_STORE` 로 바꿈) — 원본 보관은 구글 드라이브 `gdrive:saga-assets`(2026-09-28 사용자 결정, 전엔 `~/OneDrive/saga-assets`). Mixamo 약관상 원본을 공개로 재배포하지 않는다 — 공유 링크를 만들지 않는다.
 - 빌드 문지기 `Editor/SagaAssetGate.cs`(빌드마다 먼저): ① 폴더 = 목록 ② 빌드 씬이 쓰는 그 폴더 파일 ⊂ 목록 ③ `tools/realistic/build_deps.txt`(빌드가 쓰던 몸 576) ⊂ 지금 쓰는 몸 — 줄면 씬이 몸 없는 PC 에서 지어져 폴백 ④ 빌드 씬·텍스트 의존의 끊긴 GUID 0.
 - 몸을 더하거나 고치면: 받기·`Saga/Setup …` → `realistic-pack.sh manifest` → `pack <보관함>` → `push` → `Saga/Build/Write Asset Gate Deps` → 목록 둘 커밋.
 - 구글 드라이브 사본(2026-09-28): `push [원격] [보관함]`·`pull [원격] [보관함]` — rclone, 원격 기본 `gdrive:saga-assets`(`SAGA_ASSET_REMOTE`). 이 목록 묶음만 옮기고 `rclone check` 로 크기·md5 대조(드라이브가 md5 를 준다), `pull` 은 이어서 `fetch`. PC 마다 `winget install Rclone.Rclone` → `rclone config create gdrive drive scope=drive`(승인은 사람). rclone 공용 client_id 는 2026 중 끊긴다고 경고한다 — 끊기면 자기 client_id 를 만들어 `rclone config update gdrive client_id=… client_secret=…`(https://rclone.org/drive/#making-your-own-client-id, 구글 클라우드 콘솔 작업은 사람 몫).
