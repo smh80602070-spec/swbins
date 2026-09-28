@@ -9356,3 +9356,13 @@ PROJECT_STATE.md` 참고. 요약:
 - PERF(모바일 540×960): 마을 삼각형 평균 34.0만 → 33.9만, draw 평균 213 → 207·최댓값 249 → 243.
 - 점검 COMBAT·ELEMENT·KIT·FIELD_BOSS·WEAPON·DOMAIN·WEEKLY·TREASURE·ARCHERY·FROST·FORK·STORY·STORY2~11 fails=0, REGRESS OK.
 - 실기 확인 전: 걷기 다리 흔들림 속도, 원소 발광 세기(폰), 큰 보스(3~5m) 외곽선 두께.
+
+## GO 그래픽 먼저 ⑫ 먼 절벽 (2026-09-29, 같은 세션, "이어해")
+
+- 인물 몸(char-forge 2단계)은 사용자 판정 대기라 건너뛰고 먼 절벽. 새 촬영 컷 v_cliff_n·v_cliff_s·v_cliff_close(마을 북·남 산 정면).
+- 먼 절벽이 48m 칸 경계마다 윗선이 자로 그은 직선인 잿빛 판이었다(돌 텍스처가 멀리선 밉맵으로 한 빛).
+  - terrain_triplanar: 절벽(cliff>0)에 셀 노이즈 큰 바위 판(가로 7m·세로 13m 남짓, 경계 비틂) — 판마다 밝기·온도, 절반쯤 보이는 틈(멀수록 굵게), 판마다 기운 면(NORMAL). 첫 판(4×7m 고른 판)은 돌담처럼 보여 키우고 비틀었다.
+  - terrain_builder _build_cliff_rocks: 산 칸의 5m 넘게 떨어지는 변 윗가장자리에 각진 바위 덩이(5×3 분할 구를 찌그러뜨림, 평면 음영, 윗면 = 산 윗면 빛깔/서리봉 눈)를 8.5m 남짓 간격으로 반쯤 묻어 얹음. **충돌 없음**(_build_collision 뒤) · 그림자 끔 · 지도 바깥을 향한 변 뺌 · visibility_range_end 380m. 첫 판(7분할 둥근 덩이)은 만두처럼 보여 각지게.
+- PERF(모바일 540×960): 마을 삼각형 평균 33.9만 → 35.1만(예산 35만과 같은 수준 — 바위 380개 1.1만 삼각형), draw 평균 207 → 208.
+- 점검 TRAVERSAL·STORY3·STORY9·FROST·SKYPORT·VILLAGE·CROSSING·SUNKEN·AMBER·VAULT·FORK·MAP fails=0, REGRESS OK.
+- FOREST 도 terrain_triplanar 를 쓰나 가파른 면이 거의 없어 영향 작음(창 모드로는 안 봄). 실기 확인 전: 폰에서 절벽 틈 굵기·윗바위 줄 늘어선 모양.

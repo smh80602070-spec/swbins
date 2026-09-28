@@ -42,6 +42,31 @@ float _value_noise(vec2 p) {
 	return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
 }
 
+// 2026-09-29 — 절벽 큰 바위 판. 셀 노이즈(가까운 점 F1·둘째 F2·셀 해시)로 가로 4m·세로 7m 남짓한 판을 나눈다.
+vec3 _voronoi(vec2 p) {
+	vec2 i = floor(p);
+	vec2 f = fract(p);
+	float d1 = 8.0;
+	float d2 = 8.0;
+	float id = 0.0;
+	for (int y = -1; y <= 1; y++) {
+		for (int x = -1; x <= 1; x++) {
+			vec2 g = vec2(float(x), float(y));
+			vec2 o = vec2(_hash(i + g), _hash(i + g + vec2(17.3, 9.1)));
+			vec2 r = g + o * 0.85 - f;
+			float d = dot(r, r);
+			if (d < d1) {
+				d2 = d1;
+				d1 = d;
+				id = _hash(i + g + vec2(3.7, 1.3));
+			} else if (d < d2) {
+				d2 = d;
+			}
+		}
+	}
+	return vec3(sqrt(d1), sqrt(d2), id);
+}
+
 // saga-godot 106장 ㊺ — 눈·얼음·모래 표시(terrain_builder.gd surface_of: CUSTOM0 .r 눈 · .g 얼음 · .b 모래). 안 싣는 메시는 0.
 varying vec3 v_surf;
 
@@ -104,6 +129,25 @@ void fragment() {
 	float streak = _value_noise(vec2((world_pos.x - world_pos.z) * 0.6, world_pos.y * 0.04));
 	rock_tint *= band * mix(0.85, 1.05, streak);
 	ALBEDO *= mix(vec3(1.0), rock_tint, cliff);
+	// 2026-09-29 — 먼 절벽이 여전히 한 빛 잿빛 판이었다(돌 텍스처가 밉맵으로 뭉개진다, 창 모드 v_cliff_*).
+	// 큰 바위 판(판마다 밝기·온도 조금씩) + 판 사이 어두운 틈(멀수록 굵게 — 80m 에서도 두어 픽셀) + 판마다 기운 면(빛을 달리 받아 각져 보인다).
+	if (cliff > 0.01) {
+		vec3 cn = normalize(world_normal);
+		vec2 fp = abs(cn.x) > abs(cn.z) ? world_pos.zy : world_pos.xy;
+		// 경계를 굽이치게 비틀고(돌담처럼 고른 판이 되지 않게) 세로로 긴 판(가로 7m·세로 13m 남짓).
+		vec2 warp = vec2(_value_noise(fp * 0.09), _value_noise(fp * 0.09 + vec2(7.1, 3.3))) - 0.5;
+		vec3 vc = _voronoi((fp + warp * 9.0) * vec2(0.14, 0.075));
+		float cam_d = length(world_pos - CAMERA_POSITION_WORLD);
+		float cw = 0.025 + cam_d * 0.0006;
+		float crack = 1.0 - smoothstep(cw, cw * 2.2, vc.y - vc.x);
+		// 틈은 절반쯤만 — 나머지 경계는 면 기울기 차이로만 갈린다.
+		crack *= smoothstep(0.35, 0.65, _value_noise(fp * 0.18 + vec2(vc.z * 5.0, 0.0)));
+		float slab = mix(0.72, 1.12, vc.z);
+		vec3 slab_tint = mix(vec3(1.06, 0.97, 0.86), vec3(0.9, 0.95, 1.02), fract(vc.z * 7.3));
+		ALBEDO = mix(ALBEDO, ALBEDO * 0.88 * slab * slab_tint * (1.0 - crack * 0.65), cliff);
+		vec3 tilt = vec3(fract(vc.z * 13.1) - 0.5, fract(vc.z * 5.7) * 0.8 - 0.25, fract(vc.z * 29.3) - 0.5) * 1.2;
+		NORMAL = normalize(NORMAL + (VIEW_MATRIX * vec4(tilt, 0.0)).xyz * cliff);
+	}
 	// 이끼 — 절벽의 각진 면 중 조금이라도 위를 보는 턱(법선 y 0.08~0.3)과 큰 얼룩이 겹치는 곳에 풀빛이 앉는다(원신 절벽의 이끼 턱).
 	float ny = normalize(world_normal).y;
 	float moss = cliff * smoothstep(0.04, 0.2, ny) * smoothstep(0.25, 0.5, _value_noise(world_pos.xz * 0.08 + world_pos.y * 0.05));

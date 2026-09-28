@@ -152,6 +152,7 @@ func _ready() -> void:
 	_build()
 	_build_water()
 	_build_collision()
+	_build_cliff_rocks()
 	_build_border()
 
 # ---------------------------------------------------------------- 높이 API
@@ -503,6 +504,119 @@ func _build_water() -> void:
 		cs.shape = box
 		cs.position = p - Vector3(0, depth * 0.5, 0)
 		area.add_child(cs)
+
+# ---------------------------------------------------------------- 절벽 윗바위
+
+## 2026-09-29 "그래픽 먼저" — 산 절벽 윗선이 48m 칸 경계를 따라 자로 그은 직선이라 멀리서 잿빛 판자벽이었다(창 모드 v_cliff_*).
+## 산(^) 칸의 5m 넘게 떨어지는 변마다 윗가장자리를 따라 각진 바위 덩이(폭 2.5~7m·높이 1.5~6.5m, 8.5m 남짓 간격)를 반쯤 묻어 얹는다.
+## 지면과 같은 재질 — 위를 보는 면은 산 윗면 빛깔(서리봉은 눈 표시), 옆면은 절벽 빛깔이라 셰이더가 바위 판·틈을 그린다.
+## **충돌 없음**(_build_collision 뒤에 짓는다) — 등반 꼭대기·활공·지역 점검이 보는 땅은 그대로다. 메시 하나라 draw call 1.
+const RIM_ROCK_MIN_DROP := 5.0
+const RIM_ROCK_GAP_M := 8.5
+
+func _build_cliff_rocks() -> void:
+	var ground := get_node_or_null("Ground") as MeshInstance3D
+	if ground == null:
+		return
+	var rows := TestMap.rows_of(region_id)
+	var s := TestMap.size(region_id)
+	var half := TestMap.tile_size_of(region_id) * 0.5
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	st.set_custom_format(0, SurfaceTool.CUSTOM_RGBA8_UNORM)
+	var count := 0
+	for y in rows.size():
+		for x in (rows[y] as String).length():
+			if TestMap.tile_at(x, y, region_id) != "^":
+				continue
+			var center := TestMap.world_pos(x, y, region_id)
+			var top := tile_base_height(region_id, x, y)
+			var top_col := color_of(region_id, "^")
+			var surf := surface_of(region_id, "^")
+			var edges := [
+				[1, 0, Vector3(half, 0, -half), Vector3(half, 0, half), Vector3.RIGHT],
+				[-1, 0, Vector3(-half, 0, half), Vector3(-half, 0, -half), Vector3.LEFT],
+				[0, 1, Vector3(half, 0, half), Vector3(-half, 0, half), Vector3.BACK],
+				[0, -1, Vector3(-half, 0, -half), Vector3(half, 0, -half), Vector3.FORWARD],
+			]
+			for ei in edges.size():
+				var e: Array = edges[ei]
+				var nx: int = x + e[0]
+				var ny: int = y + e[1]
+				## 지도 바깥을 향한 변(테두리 산의 뒷면)은 안에서 안 보여 뺀다 — 붙은 지역이 있어도 그쪽 테두리 산이 가린다.
+				if nx < 0 or ny < 0 or nx >= s.x or ny >= s.y:
+					continue
+				var bottom := tile_base_height(region_id, nx, ny)
+				if top - bottom < RIM_ROCK_MIN_DROP:
+					continue
+				var a: Vector3 = center + e[2]
+				var b: Vector3 = center + e[3]
+				var n: Vector3 = e[4]
+				var length := a.distance_to(b)
+				var k := int(length / RIM_ROCK_GAP_M)
+				for i in k:
+					var salt := 5000 + ei * 97 + i * 13
+					var u := (float(i) + 0.2 + 0.6 * _hash(x, y, salt)) / float(k)
+					var w := lerpf(2.5, 7.0, pow(_hash(x, y, salt + 1), 1.5))
+					var h := lerpf(1.5, 6.5, pow(_hash(x, y, salt + 2), 2.0))
+					var d := lerpf(2.5, 4.5, _hash(x, y, salt + 3))
+					var p := a.lerp(b, u) + Vector3(0, top + h * 0.2, 0) - n * d * 0.55
+					var yaw := atan2(n.x, n.z) + (_hash(x, y, salt + 4) - 0.5) * 0.8
+					var basis := Basis(Vector3.UP, yaw) * Basis(Vector3.RIGHT, (_hash(x, y, salt + 5) - 0.5) * 0.35)
+					_rock(st, p, Vector3(w, h, d) * 0.5, basis, top_col, surf, salt)
+					count += 1
+	if count == 0:
+		return
+	var mi := MeshInstance3D.new()
+	mi.name = "CliffRocks"
+	mi.mesh = st.commit()
+	mi.material_override = ground.material_override
+	## 그림자 패스(캐스케이드마다 다시 그림)를 빼면 삼각형이 크게 준다 — 절벽 위 바위의 그림자는 절벽 윗면에만 떨어져 거의 안 보인다.
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	## 지역 하나가 메시 하나 — 그 지역 한가운데서 380m 넘게 떨어지면(다른 지역에 있을 때) 안 그린다. 그 거리는 안개가 거의 덮는다.
+	mi.visibility_range_end = 380.0
+	add_child(mi)
+
+## 각진 바위 하나 — 낮은 분할 구를 노이즈로 찌그러뜨리고 면마다 제 법선(평면 음영).
+func _rock(st: SurfaceTool, c: Vector3, r: Vector3, basis: Basis, top_col: Color, surf: Color, salt: int) -> void:
+	var segs := 5
+	var rings := 3
+	var pts: Array[Vector3] = []
+	for j in rings + 1:
+		var phi := PI * float(j) / float(rings)
+		for i in segs:
+			var th := TAU * (float(i) + 0.5 * float(j % 2) + (_hash(salt, i, j + 40) - 0.5) * 0.5) / float(segs)
+			var dir := Vector3(sin(phi) * cos(th), cos(phi), sin(phi) * sin(th))
+			var q := dir * r
+			var nz := _peak_noise().get_noise_3d(q.x * 3.0 + salt, q.y * 3.0, q.z * 3.0) * 0.45 + (_hash(salt, j, i) - 0.5) * 0.3
+			if j == rings:
+				q.y *= 0.6 # 밑은 납작하게(묻히는 쪽)
+			pts.append(c + basis * (q * (1.0 + nz)))
+	for j in rings:
+		for i in segs:
+			var p00 := pts[j * segs + i]
+			var p10 := pts[j * segs + (i + 1) % segs]
+			var p01 := pts[(j + 1) * segs + i]
+			var p11 := pts[(j + 1) * segs + (i + 1) % segs]
+			_rock_tri(st, p00, p10, p11, c, top_col, surf)
+			_rock_tri(st, p00, p11, p01, c, top_col, surf)
+
+func _rock_tri(st: SurfaceTool, p0: Vector3, p1: Vector3, p2: Vector3, c: Vector3, top_col: Color, surf: Color) -> void:
+	var fn := (p1 - p0).cross(p2 - p0)
+	if fn.length_squared() < 1e-8:
+		return
+	fn = fn.normalized()
+	if fn.dot((p0 + p1 + p2) / 3.0 - c) < 0.0:
+		var tmp := p1
+		p1 = p2
+		p2 = tmp
+		fn = -fn
+	var up := fn.y > 0.55
+	for p in [p0, p1, p2]:
+		st.set_normal(fn)
+		st.set_color(top_col if up else CLIFF_COLOR)
+		st.set_custom(0, surf if up else Color(0, 0, 0, 0))
+		st.add_vertex(p)
 
 # ---------------------------------------------------------------- 충돌
 
