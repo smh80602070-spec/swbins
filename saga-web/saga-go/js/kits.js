@@ -122,6 +122,17 @@
         text: '둘레 3.5m 적을 끌어 달군 큰 칼로 올려 베고(화), 나는 12m 위로 솟구친다 — 그대로 낙하 공격으로' },
       burst: { name: '처음의 불', type: 'rally', r: 7, mul: 3.4, sec: 10, atk: 1.2, text: '둘레 7m 를 달군 칼로 내리치고, 10초 동안 명단 공격 +20%' }
     },
+    /* ⑲-70 나래(40장 끝 합류)·소담(41장 끝 합류) — saga-godot 106 56-1 을 이 판 척도로. 있는 틀(zone·lore / shells·vortex)만 쓴다 */
+    story_narae: {
+      skill: { name: '측량선 긋기', type: 'zone', cd: 10, r: 4.5, sec: 10, every: 1.2, n: 2, mul: 0.85, energy: 1.5,
+        text: '발밑에 10초 측량선 — 1.2초마다 안의 가까운 적 둘에 측량추(수 원소)를 떨구고, 맞힐 때마다 명단 기력 +1.5. 인물을 바꿔도 남는다' },
+      burst: { name: '삼각측량', type: 'lore', r: 7, mul: 2.7, sec: 12, rmul: 1.4, text: '둘레 7m 를 치고, 12초 동안 명단 원소 반응 피해 ×1.4' }
+    },
+    story_sodam: {
+      skill: { name: '낟알 흩뿌리기', type: 'shells', cd: 8, reach: 12, n: 4, delay: 0.5, r: 2, mul: 1.9,
+        text: '12m 안 적 넷 자리에 0.5초 뒤 낟알이 흩뿌려져 터진다(둘레 2m, 풍 원소) — 적이 없으면 앞 8m 에 하나' },
+      burst: { name: '곳간 노래', type: 'vortex', r: 5.5, mul: 2.6, ahead: 7, sec: 9, every: 0.5, tick: 0.6, pull: 6, text: '둘레 5.5m 를 치고, 앞 7m 에 9초 노래 소용돌이 — 적을 빨아들이며 0.5초마다 친다' }
+    },
     /* ⑲-51 하늬(26장 끝 합류) — saga-godot 106 51-4 를 이 판 척도로. 있는 틀(shells·lore)만 쓴다 */
     story_haneul: {
       skill: { name: '얼음 관측 풍선', type: 'shells', cd: 8, reach: 12, n: 3, delay: 0.6, r: 2.5, mul: 2.2,

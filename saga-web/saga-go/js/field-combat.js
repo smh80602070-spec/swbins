@@ -275,6 +275,10 @@
        2단계 암 방패(초로 깬다)·졸개는 story.js 가 두른다 */
     garmuri_true: { name: '갈무리 참몸', ref: 'pt_dokkaebi', el: 'rock', hp: 34, atk: 3.2, spd: 4.8, reach: 4.0, type: 'slam', wind: 1.0, cd: 1.7, h: 4.2, exp: 0, r: 4.8,
                 boss: true, rot: ['slam', 'halo', 'melee', 'tide', 'slam', 'spit', 'halo'] },
+    /* ⑲-70 41장 세갈래 고을 마당 — 갈무리의 마지막 마음이 자란 싹(도깨비 몸을 크게, 초). 있는 패턴만 — 내려찍기·침·고리·휘두름·밀물 줄.
+       2단계 초 방패(풍으로 깬다)·졸개는 story.js 가 두른다 */
+    seed_giant: { name: '갈무리의 싹', ref: 'pt_dokkaebi', el: 'grass', hp: 38, atk: 3.3, spd: 4.6, reach: 4.2, type: 'slam', wind: 1.0, cd: 1.7, h: 4.4, exp: 0, r: 5.0,
+                boss: true, rot: ['slam', 'spit', 'halo', 'melee', 'tide', 'slam', 'halo'] },
     /* ⑲-64 35장 금고 앞 — 금고 관리 인공지능이 문 밖으로 내보낸 금고 파수 드론 여왕(정찰 드론 몸을 크게, 풍). 있는 패턴만 — 틈새 질주·고리·침·내려찍기·밀물 줄.
        2단계 풍 방패(암으로 깬다)·졸개는 story.js 가 두른다 */
     vault_queen: { name: '금고 파수 드론 여왕', ref: null, el: 'wind', hp: 28, atk: 2.8, spd: 5.4, reach: 3.8, type: 'slam', wind: 0.9, cd: 1.6, h: 3.6, exp: 0, r: 4.2,

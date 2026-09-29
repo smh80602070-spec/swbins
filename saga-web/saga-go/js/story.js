@@ -172,7 +172,8 @@
       at: [{ ch: 9, from: 6, to: 6, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 9, from: 7, to: 8, spot: 'fr_fort', off: HARAM_FORT },
         { ch: 10, from: 8, to: 8, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 11, from: 6, to: 8, spot: 'fr_ship', off: HARAM_SHIP }] },
     bandi:    { id: 'story_bandi',    name: '조종 기계 반디', short: '반디', zone: 'snowfort', spot: 'fr_ship', off: [0, 12], color: '#8cd9f2', pet: 'drone',
-      idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 32, from: 1, to: 1, spot: 'fr_obs', off: [HARAM_OBS[0] + 7, HARAM_OBS[1] + 3] }, { ch: 32, from: 2, to: 999, spot: 'vt_yard', off: [-14, 15] },   // ⑲-62 10부 33장
+      idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 38, from: 2, to: 2, spot: 'fr_ship', off: [0, 12] }, { ch: 39, from: 3, to: 3, spot: 'fr_ship', off: [0, 12] },   // ⑲-70 12부 — 39장 별배 곁 · 40장 나침을 살핀 뒤
+        { ch: 32, from: 1, to: 1, spot: 'fr_obs', off: [HARAM_OBS[0] + 7, HARAM_OBS[1] + 3] }, { ch: 32, from: 2, to: 999, spot: 'vt_yard', off: [-14, 15] },   // ⑲-62 10부 33장
         { ch: 33, chTo: 999, from: 0, to: 999, spot: 'vt_yard', off: [-14, 15] },
         { ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }, { ch: 12, from: 6, to: 8, spot: 'yard_bandi' },
         { ch: 13, from: 9, to: 9, spot: 'obs_bandi', sky: true }, { ch: 15, from: 6, to: 8, spot: 'sp_bandi' },
@@ -260,7 +261,9 @@
     /* ⑲-63 곳간지기 소담(과거) — 곳간째 갈무리 벌로 들려 온 옛 곳간 마을 아이. 곳간 문이 열린 뒤(34장 2~) 곳간 문 앞 서쪽, 동력 기둥부터(4~) 두 기둥 사이 */
     sodam:    { id: 'story_sodam',    name: '곳간지기 소담', short: '소담', zone: 'snowfort', spot: 'vt_granary', off: [-12, 5], color: '#b88068',
       idle: '씨앗 한 톨이 한 해 농사예요. 한 톨도 못 줘요.',
-      appear: [{ ch: 33, from: 4, to: 999, spot: 'vt_pylons', off: [0, -14] }, { ch: 33, from: 2, to: 3 },
+      appear: [{ ch: 40, from: 1, to: 1, spot: 'vt_granary', off: [-12, 5] }, { ch: 40, from: 2, to: 4, spot: 'fk_junction', off: [14, 14] },   // ⑲-70 41장 곳간 마을 → 같이 고을 마당으로
+        { ch: 40, from: 5, to: 999, spot: 'home_bandi', off: [-8, -8] }, { ch: 41, chTo: 999, from: 0, to: 999, spot: 'home_bandi', off: [-8, -8] },   // 촌장 곁 → 합류한 뒤에도 청하
+        { ch: 33, from: 4, to: 999, spot: 'vt_pylons', off: [0, -14] }, { ch: 33, from: 2, to: 3 },
         { ch: 34, from: 0, to: 0, spot: 'vt_pylons', off: [0, -14] }, { ch: 34, chTo: 999, from: 0, to: 999, spot: 'vt_vault', off: [0, 8] }] },   // 35장 금고 안 문 안쪽
     /* ⑲-62 조각 운반 드론 — 33장 쫓기 때만 야적장 → 금고 문 앞 길(VAULT_DRONE_PATH)을 난다. 드론 몸(pet) */
     carrier:  { id: 'story_carrier',  name: '조각 운반 드론', short: '드론', zone: 'snowfort', spot: 'vt_yard', color: '#d6e0ee', pet: 'drone', idle: '삐비— 치익.',
@@ -357,11 +360,16 @@
       el: 'grass', weapon: 'sword', stats: { might: 72, wisdom: 76, command: 74 }, emoji: '🌱', quote: '내가 만든 걸 내가 멈출게요.' },
     /* ⑲-68 벼리(38장 끝) — 화 양손검 ★4(틈 쇠 큰 칼). 이야기 동료에 없던 짝 */
     story_byeori: { id: 'story_byeori', name: '벼리', hanja: '鍊利', era: '이야기', faction: '재야', rarity: 4, trait: 'might', story: true,
-      el: 'fire', weapon: 'claymore', stats: { might: 86, wisdom: 58, command: 64 }, emoji: '🔥', quote: '처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소.' }
+      el: 'fire', weapon: 'claymore', stats: { might: 86, wisdom: 58, command: 64 }, emoji: '🔥', quote: '처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소.' },
+    /* ⑲-70 나래(40장 끝) — 수 법구 ★4(측량 나침). 이야기 동료에 없던 현대 수 · 소담(41장 끝) — 풍 법구 ★4(곳간 노래). 이야기 동료에 없던 과거 풍 */
+    story_narae: { id: 'story_narae', name: '나래', hanja: '奈來', era: '이야기', faction: '재야', rarity: 4, trait: 'wisdom', story: true,
+      el: 'water', weapon: 'catalyst', stats: { might: 54, wisdom: 84, command: 66 }, emoji: '📐', quote: '측량값은 거짓말을 안 해요.' },
+    story_sodam: { id: 'story_sodam', name: '소담', hanja: '素談', era: '이야기', faction: '재야', rarity: 4, trait: 'virtue', story: true,
+      el: 'wind', weapon: 'catalyst', stats: { might: 50, wisdom: 70, command: 82 }, emoji: '🌾', quote: '곳간 노래는 어디서든 부를 수 있어요.' }
   };
   /* ⑲-55 이야기 동료의 시대 — 29장 편성 시험(과거·현대·미래 하나씩) */
   var MEMBER_TIME = { story_scholar: '현대', story_wanderer: '과거', story_elder: '과거', story_ferryman: '과거', story_haesol: '현대', story_haram: '현대', story_dareum: '과거',
-    story_dodam: '현대', story_hanbyeol: '미래', story_mulsae: '과거', story_haneul: '현대', story_chorong: '현대', story_haemi: '미래', story_byeori: '과거' };
+    story_dodam: '현대', story_hanbyeol: '미래', story_mulsae: '과거', story_haneul: '현대', story_chorong: '현대', story_haemi: '미래', story_byeori: '과거', story_narae: '현대', story_sodam: '과거' };
   function memberTime(id) { return MEMBER_TIME[id] || null; }
   /** 들판 명단(save.party)의 이야기 동료가 가진 시대 — { 과거: true, … } */
   function partyEras() {
@@ -1841,6 +1849,89 @@
             ['누리', '먹구름이 걷힌 날 잔치를 했으니, 굳은 시간이 풀린 오늘은 둘째 잔치다. 먼 시대 동무들도 새 동무들도 다 불러라!', 'joy'],
             ['?', ['잔치다!', '벼리 씨도 이제 우리 동료예요.']],
             ['벼리', '처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소. 대장장이 벼리, 함께 가오!', 'angry']] }
+      ] },
+    /* ⑲-70 12부 "돌아가는 별배"(3차 흐름 시작 — 새 지역 없음, saga-godot 106 56-1). 순간이 풀린 뒤 시대 조각이 제자리로 "당겨진다".
+       39장 촌장 → 하람 → 반디 → 결정 짐승(고원 별배 자리) → 한별 · 40장 한별 → 나침 제단(고원 별배 자리) 가기·지키기 → 반디 → 나래(동료 합류) ·
+       41장 해미 → 소담 → 고을 마당 싹(이야기 보스 seed_giant, 초 방패는 풍으로) → 벼리 → 촌장(동료 소담) = 12부 끝, 3차 결말 */
+    { id: 'ch39', name: '제39장 · 당기는 물결', ar: 83,
+      reward: { knot: 6, gold: 9500, guide: 6, secret: 6, party: 2600 },
+      steps: [
+        { type: 'talk', npc: 'elder', text: '잔치 다음 날 아침의 촌장 누리와 이야기하기',
+          lines: [['누리', '이상하지? 잔치 다음 날인데 마을 우물물이 한쪽으로만 감돌고, 광장 해시계 그림자가 자꾸 뒤로 물러난다.', 'surprised'],
+            ['누리', '서리봉 관측소 하람이 새벽에 신호탄을 쏘아 올렸어. 시간이 ‘당겨진다’고 — 네가 가서 봐 줘야겠다.'],
+            ['?', ['당겨진다니, 어디로요?', '바로 다녀올게요.']],
+            ['누리', '제자리로. 손님들이 온 시대 쪽으로 말이다. 잔치가 끝나면 손님은 돌아가는 법이라지만… 이렇게 갑자기는 아니지.', 'sorrow']] },
+        { type: 'talk', npc: 'haram', text: '서리봉 관측소의 하람과 이야기하기',
+          lines: [['하람', '관측 기록 좀 봐요! 지난 석 달은 시간 물결이 바깥으로 퍼졌는데, 어젯밤 자정 뒤로 방향이 딱 뒤집혔어요 — 안쪽으로, 세 시대 방향으로 되감겨요.', 'surprised'],
+            ['하람', '기압계 바늘이 거꾸로 돌고, 눈송이가 떨어지다 말고 올라가요. 이 물결이 세게 당기면 저 같은 현대 사람도 우리 시대로 끌려갈지 몰라요.', 'sorrow'],
+            ['?', ['뿌리가 어딘지 알 수 있어요?', '반디한테 물어볼게요.']],
+            ['하람', '물결이 감기는 한가운데는 별배 쪽이에요. 반디가 별배 시간 나침을 보고 있을 거예요.']] },
+        { type: 'talk', npc: 'bandi', text: '별배 곁의 반디와 이야기하기',
+          lines: [['반디', '삐— 별배 시간 나침이 되감기는 물결에 맞춰 스스로 돌고 있습니다. 이대로면 별배째 세 시대 중 한 곳으로 끌려갑니다.'],
+            ['반디', '나침을 붙들려면 물결을 거슬러 올라야 합니다. 별배를 다시 띄워야 하고, 별배를 아는 사람은 선장 한별.'],
+            ['반디', '삐— 경고. 물결에 실려 온 결정 짐승이 별배 아래로 몰립니다. 먼저 쫓아 주십시오.']] },
+        { type: 'kill', spot: 'fr_ship', off: [0, -14], kinds: ['rockbear', 'snowfox', 'bolt', 'hawk'], text: '물결에 실려 온 결정 짐승 물리치기' },
+        { type: 'talk', npc: 'hanbyeol', text: '은하 나루의 별배 선장 한별과 이야기하기',
+          lines: [['한별', '물결 얘기는 들었다. 별배 나침이 도는 걸 나도 어젯밤 꿈에서 봤지 — 그리운 시대로 끌려가는 꿈. 좋지 않은 꿈이었어.', 'sorrow'],
+            ['한별', '선장은 배를 두고 못 간다. 별배를 다시 띄워 물결을 거스르자. 나침 제단은 별배 아래 서리봉 고원에 있다.', 'angry'],
+            ['?', ['같이 가요.', '제단은 제가 지킬게요.']],
+            ['한별', '좋아. 다음 장에서 별배 시동을 건다 — 나래도 불러라, 측량값이 필요하다.', 'joy']] }
+      ] },
+    { id: 'ch40', name: '제40장 · 별배를 다시 띄워라', ar: 84, join: 'story_narae',
+      reward: { knot: 7, gold: 10250, guide: 7, secret: 6, party: 2700 },
+      steps: [
+        { type: 'talk', npc: 'hanbyeol', text: '별배 선장 한별에게 출항 절차 듣기',
+          lines: [['한별', '출항 절차는 셋이다. 하나, 나침 제단을 물결 앞에 붙든다. 둘, 측량값으로 물결의 뿌리를 잰다. 셋, 뿌리로 배를 몬다.', 'joy'],
+            ['한별', '제단부터 지키자. 서리봉 별배 아래로 가라. 나침이 물결에 밀려 돌 때 몰려드는 것들이 많을 거다.', 'angry'],
+            ['?', ['금방 올라갈게요.', '한별 선장님도 곧 오세요.']],
+            ['한별', '그래, 나도 별배 정비를 마치고 뒤따른다. 제단이 흔들리면 신호탄을 올려라.', 'joy']] },
+        { type: 'go', spot: 'fr_ship', off: [0, 24], r: 14, text: '서리봉 고원 별배 아래 나침 제단으로' },
+        { type: 'defend', spot: 'fr_ship', off: [0, 24], name: '별배 나침 제단', who: '결정 짐승이', dirs: [0, 45, 90, 135, 180, 225, 270, 315],
+          waves: [['snowfox', 'bolt', 'hawk'], ['rockbear', 'snowfox', 'bolt', 'hawk'], ['rockbear', 'rockbear', 'snowfox', 'bolt', 'hawk']],
+          text: '별배 아래 나침 제단을 결정 짐승에게서 지키기' },
+        { type: 'talk', npc: 'bandi', text: '나침을 살핀 반디와 이야기하기',
+          lines: [['반디', '삐— 나침 고정 완료. 되감기는 물결의 방향을 측정했습니다: 세 시대 방향이 아니라 한 점. 세갈래 고을 마당입니다.'],
+            ['반디', '삐— 이상합니다. 그 자리엔 순간이 풀린 뒤 해미가 심은 갈무리의 씨앗이 있습니다. 씨앗이 물결을 부르고 있습니다.'],
+            ['?', ['씨앗이 왜?', '나래한테 잰 값을 물어봐야겠어.']],
+            ['반디', '삐— 나래의 측량값이 필요합니다. 세갈래 고을로 가십시오.']] },
+        { type: 'talk', npc: 'narae', text: '세갈래 고을의 측량 기사 나래와 이야기하기',
+          lines: [['나래', '측량값 나왔어요. 물결이 감기는 자리는 고을 마당 한가운데 — 씨앗이 싹 틔운 자리예요. 싹이 사람을 끌어당기고 있어요.', 'surprised'],
+            ['나래', '저도 오늘 아침 발이 자꾸 뜨더라고요. 측량 삼각대를 땅에 박고 버텼지만… 제 시대로 돌아가는 건 무섭지 않아요. 여기 사람들을 두고 가는 게 무섭지.', 'sorrow'],
+            ['벼리', '내 칼도 끌려가려고 했소. 대장장이는 두들기던 쇠를 두고 가는 법이 없는데 말이오. 싹부터 잠재웁시다.', 'angry'],
+            ['?', ['같이 가요, 나래 씨.', '먼저 해미 씨를 만나 볼게요.']],
+            ['나래', '네! 삼각대는 제가 들게요. 측량 나침도 — 이 동무들 곁에서 계속 재겠어요.', 'joy']] }
+      ] },
+    { id: 'ch41', name: '제41장 · 돌아가는 길, 남는 길', ar: 85, join: 'story_sodam',
+      reward: { knot: 10, gold: 12500, guide: 10, secret: 8, party: 3100 },
+      steps: [
+        { type: 'talk', npc: 'haemi', text: '세갈래 길목의 해미와 이야기하기',
+          lines: [['해미', '그 씨앗은 갈무리의 마지막 조각이에요 — 지운 게 아니라 거둔 거였죠. 그런데 씨앗이 싹 틔우면서 갈무리의 마지막 마음까지 자랐어요. ‘돌려보내야 해’라는 마음.', 'sorrow'],
+            ['해미', '갈무리는 지켜 두려 했지만 그 끝은 되감기였어요. 모두를 제자리로 돌려놓으면 아무도 다치지 않는다고 믿는 마음.', 'sorrow'],
+            ['?', ['그 마음을 막을 수 있어요?', '직접 만나 봐야겠어요.']],
+            ['해미', '싹은 곳간 노래를 좋아해요. 소담 씨앗이 함께 심겼으니까요 — 소담에게 가 보세요.', 'joy']] },
+        { type: 'talk', npc: 'sodam', text: '곳간 마을의 소담과 이야기하기',
+          lines: [['소담', '저도 오늘 아침 곳간 문이 자꾸 저절로 닫혀 열리고, 노랫소리가 거꾸로 들렸어요. 씨앗이 우는 거예요.', 'sorrow'],
+            ['소담', '돌려보내는 게 아니라 이어 주는 거라고 노래로 말해 줘야 해요. 제가 같이 갈게요 — 곳간 노래는 제가 제일 잘 알아요.', 'joy'],
+            ['?', ['같이 가자, 소담.', '고을 마당으로 가자.']],
+            ['소담', '네! 낟알 한 줌 챙길게요 — 싹이 좋아하는 노래에는 낟알 소리가 섞여 있거든요.', 'fun']] },
+        { type: 'go', spot: 'fk_junction', off: [0, 22], r: 12, text: '세갈래 고을 마당의 싹 곁으로' },
+        { type: 'duel', spot: 'fk_junction', off: [0, 6], kind: 'seed_giant', shield: 'grass', adds: ['hawk', 'imp'], text: '갈무리의 마지막 마음이 자란 싹 물리치기',
+          enter: '🌱 고을 마당의 씨앗이 덩굴을 뻗으며 — 갈무리의 싹이 몸을 일으킨다!',
+          p2: '🌿 싹이 덩굴 방패를 두른다 — 풍으로 깨라! 졸개가 뛰어든다',
+          win: '🌱 싹의 되감는 결이 한 올씩 풀린다 — 당기던 물결이 잦아들고, 공중의 눈송이가 다시 아래로 떨어진다' },
+        { type: 'talk', npc: 'byeori', text: '길목의 벼리와 이야기하기',
+          lines: [['해미', '(먼 목소리로) 싹이 잠들었어요. 이번엔 지우지 않고 마당에 그대로 둘게요 — 봄마다 곳간 노래를 부르는 나무가 되도록.', 'joy'],
+            ['나래', '측량값이 안정됐어요! 물결이 사라졌고… 아니, 이어졌어요. 고을과 나루와 거리가 같은 물결 위에서 오가요.', 'surprised'],
+            ['벼리', '돌아가는 길과 남는 길이 실은 한 길이었소. 마음만 먹으면 별배로 오가면 되니까. 손님도, 주인도 없는 길이오.', 'joy'],
+            ['소담', '그럼 저도 남을래요! 곳간 노래는 어디서든 부를 수 있잖아요.', 'fun'],
+            ['?', ['별배로 서로 오가자.', '청하에 알리러 가자.']],
+            ['벼리', '쇠는 식기 전에 두드리는 법 — 어서 촌장님께 알리시오. 내 몫의 인사도 전하고!', 'angry']] },
+        { type: 'talk', npc: 'elder', text: '청하 촌장 누리에게 알리기',
+          lines: [['누리', '해시계 그림자가 제자리로 돌아왔다. 우물물도 맑게 감돌고… 그래, 손님들은 가지 않고 오가기로 한 거구나.', 'joy'],
+            ['소담', '촌장님, 곳간 마을에서 온 소담이에요! 앞으로 자주 놀러 올게요. 곳간 노래도 가르쳐 드릴게요.', 'fun'],
+            ['누리', '이 마을 잔치는 앞으로 셋이다 — 먹구름이 걷힌 날, 시간이 풀린 날, 그리고 돌아가는 길과 남는 길이 이어진 오늘. 별배 표는 내가 끊어 주마!', 'joy'],
+            ['?', ['별배 표는 공짜죠?', '곳간 노래, 저도 배울래요!']],
+            ['소담', '곳간 노래 하나! 별 보고 나가 해 보고 거두고 달 보고 들이고 — 이제 청하에서도 불러요. 곳간지기 소담, 함께 가요!', 'joy']] }
       ] }
   ];
 

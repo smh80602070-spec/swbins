@@ -15366,6 +15366,90 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '일곱 단계 · 벼리 → 처음의 별까마귀(뇌 방패 불) → 갈무리 → 참몸(암 방패 초) → 순간이 풀림 → 해미 → 고원 고개 → 촌장 · 벼리 합류 · 🪢+10 🪙+12000' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-70 이야기 12부 39~41장 · 돌아가는 별배(3차 흐름 시작) (story ch39~41·seed_giant·나래·소담 합류, PLAN §5 ⑲-70) ── */
+    t('이야기 ⑲-70 — 12부 39~41장(Lv83·84·85) · 촌장 → 하람 → 반디 → 결정 짐승 → 한별 / 한별 → 나침 제단 가기·지키기 → 반디 → 나래(합류) / 해미 → 소담 → 고을 마당 갈무리의 싹(초 방패 풍으로) → 벼리 → 촌장(소담 합류)', function () {
+      var rig = stRig(85), ST = DG.story, FC = DG.fieldCombat, FK = DG.fork, FR = DG.frost, VT = DG.vault, TL = DG.talent, r = {};
+      try {
+        FK._resetForTest(); delete C.save.fork; VT._resetForTest(); delete C.save.vault;
+        var c39 = ST.CHAPTERS[38], c40 = ST.CHAPTERS[39], c41 = ST.CHAPTERS[40];
+        function types(c) { return c.steps.map(function (q) { return q.type; }).join(); }
+        r.table = ST.CHAPTERS.length === 41 && c39.id === 'ch39' && c39.ar === 83 && !c39.join && types(c39) === 'talk,talk,talk,kill,talk' && c39.reward.knot === 6 &&
+          c40.id === 'ch40' && c40.ar === 84 && c40.join === 'story_narae' && types(c40) === 'talk,go,defend,talk,talk' && c40.steps[2].waves.map(function (w) { return w.length; }).join() === '3,4,5' && c40.reward.knot === 7 &&
+          c41.id === 'ch41' && c41.ar === 85 && c41.join === 'story_sodam' && types(c41) === 'talk,talk,go,duel,talk,talk' && c41.steps[3].kind === 'seed_giant' && c41.steps[3].shield === 'grass' && c41.reward.knot === 10 && c41.reward.gold === 12500;
+        r.foe = !!FC.FOES.seed_giant.boss && FC.FOES.seed_giant.el === 'grass' && FC.COUNTER.grass === 'wind';
+        r.time = ST.memberTime('story_narae') === '현대' && ST.memberTime('story_sodam') === '과거' && !!ST.MEMBERS.story_narae && !!ST.MEMBERS.story_sodam;
+        var sh = FR.siteById('ship'), jn = FK.siteById('junction');
+        function np(k, si, ch) { C.save.story = { ch: ch, step: si }; return ST.npcPos(k); }
+        /* 인물 — 반디: 39장 셋째(별배 곁)·40장 넷째(나침 뒤) 고원 별배 자리 / 소담: 41장 곳간 마을 → 길목 → 청하 */
+        r.bandi = st10Eq(np('bandi', 2, 38), { x: sh.x, y: sh.y + 12 }) && st10Eq(np('bandi', 3, 39), { x: sh.x, y: sh.y + 12 }) && !st10Eq(np('bandi', 3, 38), { x: sh.x, y: sh.y + 12 });
+        r.sodam = st10Eq(np('sodam', 1, 40), ST.spotPos('vt_granary', [-12, 5])) && st10Eq(np('sodam', 3, 40), { x: jn.x + 14, y: jn.y + 14 }) &&
+          st10Eq(np('sodam', 5, 40), ST.spotPos('home_bandi', [-8, -8])) && st10Eq(np('sodam', 0, 41), ST.spotPos('home_bandi', [-8, -8])) && st10Eq(np('sodam', 0, 40), ST.spotPos('vt_vault', [0, 8]));
+        var m = TL.mats(), k0, gold0, S, sizes, i;
+        /* ── 39장 ── */
+        C.save.story = { ch: 38, step: 0 };
+        stGo(ST.npcPos('elder')); r.a0 = stTalkAll(ST) && C.save.story.step === 1;
+        stGo(ST.npcPos('haram')); r.a1 = stTalkAll(ST) && C.save.story.step === 2;
+        stGo(ST.npcPos('bandi')); r.a2 = stTalkAll(ST) && C.save.story.step === 3;
+        var kt = ST.targetOf(ST.step());
+        stGo({ x: kt.x + 20, y: kt.y }); FC.tick(0.05); ST.check();
+        S = FC.state(); var cp = S.camps[ST.keyOf()];
+        r.guard = !!cp && cp.uids.length === 4 && cp.uids.map(function (u) { return S.foes[u].kind; }).sort().join() === 'bolt,hawk,rockbear,snowfox';
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05); r.a3 = C.save.story.step === 4;
+        k0 = m.knot || 0; gold0 = C.save.player.gold;
+        stGo(ST.npcPos('hanbyeol')); r.a4 = stTalkAll(ST) && C.save.story.ch === 39 && C.save.story.step === 0 && m.knot === k0 + 6 && !ST.hasMember('story_narae');
+        /* ── 40장 ── */
+        stGo(ST.npcPos('hanbyeol')); r.b0 = stTalkAll(ST) && C.save.story.step === 1;
+        var gt = ST.targetOf(ST.step());
+        stGo({ x: gt.x, y: gt.y + 300 }); ST.check(); var far = C.save.story.step === 1;
+        stGo({ x: gt.x, y: gt.y + 4 }); ST.check(); r.b1 = far && C.save.story.step === 2;
+        var al = ST.targetOf(ST.step());
+        stGo({ x: al.x, y: al.y + 12 }); ST.stepDefend(0.1);
+        S = FC.state(); var w0 = S.camps[ST.waveKey(0)];
+        r.wave0 = !!w0 && w0.uids.length === 3 && ST.defState().wave === 0 && /별배 나침 제단 100% · 물결 1\/3/.test(ST.trackText());
+        sizes = [];
+        for (i = 0; i < 3; i++) {
+          if (i) { ST.defState().t = ST.DEFEND_WAVE_SEC; ST.stepDefend(0.01); }
+          sizes.push(S.camps[ST.waveKey(i)] ? S.camps[ST.waveKey(i)].uids.length : 0);
+          stKillCamp(S, ST.waveKey(i)); FC.tick(0.05);
+        }
+        ST.stepDefend(0.01); r.b2 = sizes.join() === '3,4,5' && C.save.story.step === 3;
+        stGo(ST.npcPos('bandi')); r.b3 = stTalkAll(ST) && C.save.story.step === 4;
+        r.notYet = !ST.hasMember('story_narae');
+        k0 = m.knot || 0; gold0 = C.save.player.gold;
+        stGo(ST.npcPos('narae')); r.b4 = stTalkAll(ST) && C.save.story.ch === 40 && C.save.story.step === 0 && m.knot === k0 + 7 && C.save.player.gold === gold0 + 10250 && ST.hasMember('story_narae');
+        var Mn = ST.MEMBERS.story_narae, kn = DG.kits.kitOf('story_narae');
+        r.narae = DG.data.find('story_narae') === Mn && Mn.rarity === 4 && FC.elementOf('story_narae') === 'water' && DG.weapon.typeOf('story_narae') === 'catalyst' &&
+          kn.skill.type === 'zone' && kn.skill.name === '측량선 긋기' && kn.burst.type === 'lore' && kn.burst.name === '삼각측량';
+        /* ── 41장 ── */
+        stGo(ST.npcPos('haemi')); r.c0 = stTalkAll(ST) && C.save.story.step === 1;
+        stGo(ST.npcPos('sodam')); r.c1 = stTalkAll(ST) && C.save.story.step === 2;
+        var gt2 = ST.targetOf(ST.step());
+        stGo({ x: gt2.x, y: gt2.y + 300 }); ST.check(); var far2 = C.save.story.step === 2;
+        stGo({ x: gt2.x, y: gt2.y + 4 }); ST.check(); r.c2 = far2 && C.save.story.step === 3;
+        var bt = ST.targetOf(ST.step());
+        r.bossAt = st10Eq(bt, { x: jn.x, y: jn.y + 6 });
+        stGo({ x: bt.x + 5, y: bt.y }); FC.tick(0.05); ST.check();
+        S = FC.state(); var cb = S.camps[ST.keyOf()], b = cb && S.foes[cb.uids[0]];
+        var ok1 = !!b && b.kind === 'seed_giant' && b.el === 'grass' && !b.sky;
+        b.hp = Math.round(b.hpMax * 0.4); ST.check();
+        var ad = S.camps[ST.keyOf() + ':add'];
+        var ok2 = b.shEl === 'grass' && !!ad && ad.uids.map(function (u) { return S.foes[u].kind; }).join() === 'hawk,imp' && FC.shieldMul('grass', FC.COUNTER.grass) > 1;
+        b.shield = 0; b.layers = [];
+        for (i = 0; i < 3 && !b.dead; i++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); }
+        FC.tick(0.05);
+        r.seed = ok1 && ok2 && C.save.story.step === 4 && !S.camps[ST.keyOf() + ':add'];
+        stGo(ST.npcPos('byeori')); r.c4 = stTalkAll(ST) && C.save.story.step === 5;
+        r.notYet2 = !ST.hasMember('story_sodam');
+        k0 = m.knot || 0; gold0 = C.save.player.gold;
+        stGo(ST.npcPos('elder')); r.end = stTalkAll(ST) && C.save.story.ch === 41 && ST.done() && m.knot === k0 + 10 && C.save.player.gold === gold0 + 12500 && ST.hasMember('story_sodam');
+        var Ms = ST.MEMBERS.story_sodam, ks = DG.kits.kitOf('story_sodam');
+        r.sodamM = DG.data.find('story_sodam') === Ms && Ms.rarity === 4 && FC.elementOf('story_sodam') === 'wind' && DG.weapon.typeOf('story_sodam') === 'catalyst' &&
+          ks.skill.type === 'shells' && ks.skill.name === '낟알 흩뿌리기' && ks.burst.type === 'vortex' && ks.burst.name === '곳간 노래';
+      } finally { VT._resetForTest(); FK._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '세 장(Lv83~85) · 결정 짐승 → 한별 · 나침 제단 지키기 → 나래 합류 · 마당 싹(초 방패 풍으로) → 촌장 · 소담 합류 · 🪢+6·+7·+10' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑲-61 탈것 — 말(mount.js, PLAN §5 ⑲-61 · SAGA-DESIGN §12) ── */
     t('탈것 ⑲-61 — 말 셋(농마 5·갈색 15·흰 30 레벨 또는 도감 등록) · 타기/내리기 · 걷는 속도 배율(달리기와 겹침) · 고르기 · 저장 한 칸 · 몸 참조', function () {
       var MT = DG.mount, W = DG.world, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
