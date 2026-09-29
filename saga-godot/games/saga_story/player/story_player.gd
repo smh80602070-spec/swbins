@@ -703,11 +703,11 @@ func _story_fly(delta: float) -> void:
 	var axis := Input.get_axis("move_left", "move_right")
 	var fspeed := mount_fly_speed if mount_fly_speed > 0.0 else 14.0
 	velocity.x = lerpf(velocity.x, axis * fspeed, 3.0 * delta)
-	var want_y := -3.0
+	var want_y := -0.6 # 떠 있기
 	if Input.is_action_pressed("jump") and global_position.y < 60.0:
 		want_y = 9.0
 	elif Input.is_action_pressed("story_dash"):
-		want_y = -14.0
+		want_y = -11.0
 	velocity.y = lerpf(velocity.y, want_y, 4.0 * delta)
 	if absf(axis) > 0.05:
 		_facing = signf(axis)

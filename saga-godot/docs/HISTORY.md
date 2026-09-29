@@ -9517,3 +9517,9 @@ PROJECT_STATE.md` 참고. 요약:
 - mount.gd 를 판 무관하게: 공격 액션 목록(combat_quick·dungeon_attack)을 눌러 내림, 회전은 GO 는 _yaw·그 밖엔 visual, 잠금은 go_player.mount_chapter() 가 있으면 이야기 장·없으면 전부 열림(각 판 진행에 잠금 연결은 다음).
 - tools/mount_host.tscn/.gd(씬 경로 인자) 로 세 판 확인 — 말 타면 이동 1.3배↑·나는 탈것 떠오름·손 떼면 내려앉아 땅에 섬·내리면 복귀: DUNGEON·FOREST·STORY fails=0. GO probe_mount 13항목 fails=0, REGRESS OK, STORY·TRAVERSAL fails=0.
 - REALM 은 조작하는 몸이 없는 전략 판(월드맵·성·전쟁 명령)이라 이동식 탈것이 안 맞는다 — 설계가 필요: 후보 ① 군주 초상(LordPortrait)에 탈것 표시 ② 원정 때 기병/비룡 병종 보정(realm_war.gd) ③ 성 사이 이동에 걸리는 달 수 단축. 정해지면 이어서.
+
+## 탈것 손질 — 떠 있기·크기·비행 컷 (2026-09-30, "이어서해")
+
+- 나는 탈것: 손을 떼면 -3m/s 로 내려앉던 것을 제자리에서 -0.6m/s 로 떠 있게(공중에 머물며 경치를 본다), 내려가기는 Shift(사가스토리 story_dash) 11m/s. 판 넷 점검(probe_mount·mount_host) 갱신.
+- 탈것이 사람보다 작아 보여 크기를 키웠다(말 1.9·홍염마 2.0·백호 1.7·삼족오 2.3·주작 2.8·청룡 3.4m). probe_shots: k_fly_dragon·k_fly_crow(mountfly: 점프를 눌러 올라간 뒤 찍고 _undo 가 뗌·내림) — 하늘 위 탈것 컷 확인(용은 뱀 모양이라 타는 자리가 목 뒤).
+- 남은 것: 앉은 자세·날개 펄럭임·터치 단추·저장·사가국지.

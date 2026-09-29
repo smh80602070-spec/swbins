@@ -95,7 +95,7 @@ func mount(id: String) -> void:
 	_body.name = "MountBody"
 	add_child(_body)
 	_apply_to_player(true)
-	Toast.show(self, "%s 에 올랐다%s" % [String(pet.name) if pet != null else id, " — 점프로 오르고 손을 떼면 내려앉는다" if is_flying_mount() else ""], 3.0)
+	Toast.show(self, "%s 에 올랐다%s" % [String(pet.name) if pet != null else id, " — 점프로 오르고 Shift 로 내려간다" if is_flying_mount() else ""], 3.0)
 	mounted_changed.emit(id)
 
 func dismount(reason: String, silent := false) -> void:

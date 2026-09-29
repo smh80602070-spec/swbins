@@ -57,8 +57,16 @@ func _ready() -> void:
 		peak = maxf(peak, _p.global_position.y)
 	Input.action_release("jump")
 	_check("fly_rise", peak > 6.0 and bool(_p.call("is_flying_now")), "peak=%.1f" % peak)
-	for _i in 420:
+	Input.action_press("run")
+	if InputMap.has_action("story_dash"):
+		Input.action_press("story_dash") # 사가스토리는 내려가기가 story_dash
+	for _i in 260:
 		await get_tree().physics_frame
+		if OS.get_environment("SAGA_HOST_DEBUG") != "" and _i % 40 == 0:
+			print("HOSTDBG y=%.2f vy=%.2f fly=%s" % [_p.global_position.y, _p.velocity.y, str(_p.get("fly_on"))])
+	Input.action_release("run")
+	if InputMap.has_action("story_dash"):
+		Input.action_release("story_dash")
 	_check("fly_land", _p.is_on_floor() and not bool(_p.call("is_flying_now")) and bool(_p.get("mounted")), "y=%.1f" % _p.global_position.y)
 	_m.call("dismount", "")
 	print("MOUNT_HOST_DONE fails=%d" % _fails)

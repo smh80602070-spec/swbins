@@ -84,9 +84,11 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 120:
 				_check("fly_rise", _y_peak > 8.0, "peak=%.1f" % _y_peak)
 				Input.action_release("jump")
+				Input.action_press("run")
 				_next()
 		5: # ⑤ 손 떼면 내려앉아 땅에 선다
-			if _frame == 420:
+			if _frame == 260:
+				Input.action_release("run")
 				_check("fly_land", int(_p.mode) == 0 and _p.is_on_floor(), "mode=%d y=%.1f" % [int(_p.mode), _p.global_position.y])
 				_check("still_mounted", bool(_p.mounted), "")
 				_next()

@@ -114,8 +114,8 @@ var _updraft_skip := false
 const UPDRAFT_MIN_CLEARANCE := 1.0 # 이보다 낮은 턱에서 발이 떨어진 건 활공으로 안 친다
 ## 2026-09-30 탈것(player/mount.gd 가 앉힌다) — data/mounts.gd.
 const FLY_RISE := 9.0            # 점프를 누르는 동안 오르는 속도
-const FLY_SINK := 3.0            # 손을 떼면 내려앉는 속도
-const FLY_DIVE := 14.0           # 달리기(Shift)로 급강하
+const FLY_SINK := 0.6            # 손을 떼면 제자리에서 아주 천천히 가라앉는다(떠 있기)
+const FLY_DIVE := 11.0           # 달리기(Shift)로 내려간다
 const FLY_MAX_CLEARANCE := 45.0  # 땅 위 고도 상한
 const FLY_TAKEOFF := 8.5         # 탈것에 오르는 순간 솟는 속도
 const FLY_TURN := 5.0

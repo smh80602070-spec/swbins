@@ -145,11 +145,11 @@ func _base_fly(delta: float) -> void:
 	var fspeed := mount_fly_speed if mount_fly_speed > 0.0 else 14.0
 	velocity.x = lerpf(velocity.x, dir.x * fspeed, 3.0 * delta)
 	velocity.z = lerpf(velocity.z, dir.z * fspeed, 3.0 * delta)
-	var want_y := -3.0
+	var want_y := -0.6 # 떠 있기
 	if Input.is_action_pressed("jump") and global_position.y < 40.0:
 		want_y = 9.0
 	elif Input.is_action_pressed("run"):
-		want_y = -14.0
+		want_y = -11.0
 	velocity.y = lerpf(velocity.y, want_y, 4.0 * delta)
 	if dir.length() > 0.05:
 		visual.rotation.y = lerp_angle(visual.rotation.y, atan2(dir.x, dir.z), TURN_RATE * delta)

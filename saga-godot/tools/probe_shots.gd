@@ -41,6 +41,8 @@ const SHOTS := [
 	["k_ride_tiger", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "mount:pt_baekho"],
 	["k_ride_crow", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -14.0, 9.0, "mount:pt_samjogo"],
 	["k_ride_dragon", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -14.0, 11.0, "mount:pt_cheongryong"],
+	["k_fly_dragon", "village", "v_statue", Vector3(9, 0, 9), "v_statue", 8.0, 16.0, "mountfly:pt_cheongryong"],
+	["k_fly_crow", "village", "v_statue", Vector3(9, 0, 9), "v_statue", 10.0, 14.0, "mountfly:pt_samjogo"],
 	["v_people_lineup", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 7.0, "lineup"],
 	["p_faces", "village", "v_statue", Vector3(-14, 0, 12), "lineup", 12.0, 2.0, "lineup_faces"],
 	["v_cliff_n", "village", Vector2(3.5, 4.4), Vector3.ZERO, Vector2(3.5, 2.6), -4.0, 8.0, ""],
@@ -248,6 +250,11 @@ func _act(a: String) -> void:
 			var gf := get_tree().current_scene.get_node_or_null("GrassField") as Node3D
 			if gf:
 				gf.visible = false # 가까이 한 마리 — 발까지 보려고 풀을 잠깐 끈다
+		_ when a.begins_with("mountfly:"):
+			var mf := _p.get_node_or_null("Mount")
+			if mf:
+				mf.call("mount", a.substr(9))
+				Input.action_press("jump") # 떠올라 계속 오른다 — _undo 가 뗀다
 		_ when a.begins_with("mount:"):
 			var mn := _p.get_node_or_null("Mount")
 			if mn:
@@ -294,6 +301,11 @@ func _act(a: String) -> void:
 				dn.call("open_screen")
 
 func _undo() -> void:
+	if Input.is_action_pressed("jump"):
+		Input.action_release("jump")
+	var mn := _p.get_node_or_null("Mount") if _p else null
+	if mn and bool(mn.call("is_riding")):
+		mn.call("dismount", "", true)
 	if _p:
 		_p.visible = true
 	var gf := get_tree().current_scene.get_node_or_null("GrassField") as Node3D
