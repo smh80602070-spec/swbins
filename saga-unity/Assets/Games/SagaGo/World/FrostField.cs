@@ -433,6 +433,7 @@ namespace Saga.Go.World
         public void TickShip(float dt)
         {
             if (!_sites.TryGetValue("ship", out var ship) || ship == null) return;
+            ship.SetActive(!(GoStory.PortDocked && !StoryState.OffForTest)); // 109-14-38 16장 7째 단계부터 별배는 은하 나루에 매여 고원 선체는 떠났다
             float want = !StoryState.OffForTest && ShipFlown ? ShipLift : 0f;
             if (Mathf.Approximately(_shipY, want)) return;
             _shipY = Mathf.MoveTowards(_shipY, want, ShipLiftSpeed * dt);

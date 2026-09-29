@@ -168,13 +168,21 @@ namespace Saga.Go.World
             switch (id)
             {
                 case "port": // 별배 나루 — 계류 탑(18m 기둥) + 꼭대기 빛 공 + 착륙판 + 부스
-                    P(PrimitiveType.Cube, t, "Port_tower", new Vector3(0f, 9f, 0f), new Vector3(2.4f, 18f, 2.4f), metal, true);
-                    Part("skyport:tower_cap", t, PrimitiveType.Cube, "Port_tower_cap", new Vector3(0f, 18.2f, 0f), new Vector3(3.6f, 0.4f, 3.6f), metal, true);
-                    Part("skyport:beacon", t, PrimitiveType.Sphere, "Port_beacon", new Vector3(0f, 19.4f, 0f), Vector3.one * 1.6f, Mat("s_beacon_off", new Color(0.25f, 0.28f, 0.32f)), false);
+                    P(PrimitiveType.Cube, t, "Port_tower", new Vector3(0f, GoStory.TowerHeight * 0.5f, 0f), new Vector3(GoStory.TowerHalf * 2f, GoStory.TowerHeight, GoStory.TowerHalf * 2f), metal, true);
+                    Part("skyport:beacon", t, PrimitiveType.Sphere, "Port_beacon", new Vector3(0f, GoStory.TowerHeight + 1.2f, 0f), Vector3.one * 1.6f, Mat("s_beacon_off", new Color(0.25f, 0.28f, 0.32f)), false);
+                    // 매인 별배 — 착륙판 위 6m 에 수평으로 떠 있다(그림만, 밑은 비어 지나간다). 16장 7째 단계부터.
+                    var ship = new GameObject("Port_ship");
+                    ship.transform.SetParent(t, false);
+                    ship.transform.localPosition = new Vector3(0f, GoStory.ShipUp + 1.5f, 6f);
+                    P(PrimitiveType.Sphere, ship.transform, "Ship_hull", Vector3.zero, new Vector3(26f, 7f, 8f), metal, false);
+                    P(PrimitiveType.Cube, ship.transform, "Ship_fin", new Vector3(-12.5f, 3f, 0f), new Vector3(3f, 5f, 0.4f), metal, false);
+                    P(PrimitiveType.Cube, ship.transform, "Ship_wing", new Vector3(-1f, -0.5f, 0f), new Vector3(9f, 0.4f, 24f), metal, false);
+                    P(PrimitiveType.Sphere, ship.transform, "Ship_glow", new Vector3(11f, 0.5f, 0f), new Vector3(2.4f, 2f, 3f), glow, false);
+                    _parts["skyport:ship"] = ship;
                     P(PrimitiveType.Cylinder, t, "Port_pave", new Vector3(0f, 0.03f, 6f), new Vector3(28f, 0.03f, 28f), Mat("s_pave", new Color(0.32f, 0.34f, 0.38f), 0f, 0.5f), false);
                     P(PrimitiveType.Cylinder, t, "Port_pad", new Vector3(0f, 0.1f, 6f), new Vector3(18f, 0.1f, 18f), metal, false);
-                    P(PrimitiveType.Cube, t, "Port_booth", new Vector3(-12f, 1.6f, 4f), new Vector3(3.4f, 3.2f, 3.4f), glass, false);
-                    P(PrimitiveType.Cube, t, "Port_booth_roof", new Vector3(-12f, 3.4f, 4f), new Vector3(4f, 0.3f, 4f), dark, false);
+                    P(PrimitiveType.Cube, t, "Port_booth", new Vector3(14f, 1.6f, 4f), new Vector3(3.4f, 3.2f, 3.4f), glass, false);
+                    P(PrimitiveType.Cube, t, "Port_booth_roof", new Vector3(14f, 3.4f, 4f), new Vector3(4f, 0.3f, 4f), dark, false);
                     break;
                 case "temple": // 옛 절터 — 돌 기단 + 부러진 기둥 넷 + 석등
                     P(PrimitiveType.Cube, t, "Temple_base", new Vector3(0f, 0.3f, 0f), new Vector3(16f, 0.6f, 16f), stone, false);
@@ -272,6 +280,13 @@ namespace Saga.Go.World
         {
             foreach (var a in GoAreas.All)
                 if (_gates.TryGetValue(a.Id, out var g) && g != null) g.SetActive(a.Open());
+            bool docked = !StoryState.OffForTest && GoStory.PortDocked;
+            if (_parts.TryGetValue("skyport:ship", out var ship) && ship != null) ship.SetActive(docked);
+            if (_parts.TryGetValue("skyport:beacon", out var beacon) && beacon != null)
+            {
+                var r = beacon.GetComponent<MeshRenderer>();
+                r.sharedMaterial = docked ? Mat("s_beacon_on", new Color(1f, 0.92f, 0.55f), 3.5f) : Mat("s_beacon_off", new Color(0.25f, 0.28f, 0.32f));
+            }
         }
 
         // ---- 화면 ----

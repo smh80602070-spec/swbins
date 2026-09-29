@@ -173,6 +173,9 @@ namespace Saga.Go.Data
             public bool Pet;
             /// <summary>109-14-36 말 몸(도형) — 놀란 역마.</summary>
             public bool Horse;
+            /// <summary>109-14-38 독립 땅 명소 곁에 늘 서는 인물 — 명소 열쇠 + 그 가운데에서 m(Gx·Gy 대신).</summary>
+            public string AtSite;
+            public Vector2 AtOff;
             public Vector2[] RunPath;
             /// <summary>있으면 이 칸들 동안에만 선다(나그네). 칸마다 자리가 다를 수 있다.</summary>
             public Spot[] Appear;
@@ -204,6 +207,8 @@ namespace Saga.Go.Data
             public bool Frost;
             /// <summary>109-14-34 조선소 위 — Arena 는 조선소 가운데에서 m.</summary>
             public bool Yard;
+            /// <summary>109-14-38 독립 땅 명소 곁("지역:명소") — Arena 는 그 명소 가운데에서 m.</summary>
+            public string At;
             /// <summary>109-14-36 옛 역참 터 위 — Arena 는 역참 가운데에서 m.</summary>
             public bool Stn;
             /// <summary>109-14-35 관측대 위(`Sky` 와 함께) — Arena 는 관측대 가운데에서 m.</summary>
@@ -227,7 +232,7 @@ namespace Saga.Go.Data
         public static Vector2 FrostAt(string siteId, float dx, float dz) { GoFrost.TrySite(siteId, out var s); return s.Off + new Vector2(dx, dz); }
 
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
-            a.Stn ? StationPos(a.Arena) : a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            a.At != null ? AreaPos(a.At, a.Arena) : a.Stn ? StationPos(a.Arena) : a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
 
         // ---- 109-14-28 10장 서리봉 고원 자리(고원 가운데에서 m — 웹 명소 자리 × 0.45 위에 얹는다) ----
         public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
@@ -236,6 +241,21 @@ namespace Saga.Go.Data
         // 12장(⑲-30) — 서리 무리·구미호는 얼음굴 어귀 남쪽 14m · 반디는 구미호 뒤 굴 앞 · 심장 받침은 비행선 곁(선체 밖)
         // 18장(⑲-40) 변전함 자리(태양광 밭 가운데에서 m) — 은하 나루 모양이 쓴다.
         public static readonly Vector2 SubstationOff = new Vector2(10.5f, 0f);
+
+        // 16장(⑲-38) — 은하 나루 별배 나루 안 자리(계류 탑 밑에서 m, z 남쪽): 아라는 부스 곁(동쪽), 반디는 서남쪽, 무리·계류 지키기는 착륙판 가운데. 탑 = 18m 기둥(옆면 타기), 매인 별배 = 착륙판 위 6m.
+        public const float TowerHeight = 18.4f, TowerHalf = 1.2f, ShipUp = 6f;
+        public static readonly Vector2 PortAra = new Vector2(11.5f, 5f), PortBandi = new Vector2(-5f, 9f), PortFight = new Vector2(0f, 6f), PortAltar = new Vector2(0f, 6f);
+        /// <summary>단계·인물이 은하 나루 같은 독립 땅 명소 곁에 서는 자리 — 명소 열쇠("지역:명소") + 그 가운데에서 m.</summary>
+        public static Vector3 AreaPos(string siteKey, Vector2 off)
+        {
+            if (!GoAreas.TrySite(siteKey, out var s)) return Vector3.zero;
+            return s.Pos + new Vector3(off.x, 0.05f, off.y);
+        }
+        /// <summary>계류 탑 꼭대기(윗면).</summary>
+        public static Vector3 TowerTop { get { GoAreas.TrySite("skyport:port", out var s); return s.Pos + Vector3.up * TowerHeight; } }
+        public static bool OnTower(Vector3 p) => Flat(p, TowerTop) <= TowerHalf + 0.6f && p.y >= TowerTop.y - 1.2f;
+        /// <summary>계류 탑 빛 공이 켜졌나 · 별배가 나루에 매였나 — 16장 7째 단계(반디)부터 늘.</summary>
+        public static bool PortDocked => StoryState.Ch > 15 || (StoryState.Ch == 15 && StoryState.StepIndex >= 6);
 
         // 15장(⑲-36) — 옛 역참 터: 남쪽 공터와 논밭 사이 길 칸 (3,8) 한가운데(평평한 길 — 위아래 칸도 평지). 자리는 역참 가운데에서 m(x 동쪽·z 남쪽), 동쪽이 트인 돌담 세 변.
         public const float StationGx = 3.0f, StationGy = 8.0f;
@@ -362,8 +382,13 @@ namespace Saga.Go.Data
                     new Spot { Ch = 11, From = 0, To = 4, Frost = true, Arena = BandiShip }, new Spot { Ch = 11, From = 5, To = 5, Frost = true, Arena = BandiCave }, new Spot { Ch = 11, From = 6, To = 8, Frost = true, Arena = BandiShip },
                     new Spot { Ch = 12, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 12, From = 6, To = 8, Yard = true, Arena = YardBandi },
                     new Spot { Ch = 13, From = 0, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 13, From = 9, To = 9, Sky = true, Obs = true, Arena = new Vector2(3f, 3f) },
-                    new Spot { Ch = 14, From = 0, To = 20, Frost = true, Arena = BandiShip } },
+                    new Spot { Ch = 14, From = 0, To = 20, Frost = true, Arena = BandiShip },
+                    new Spot { Ch = 15, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 15, From = 6, To = 8, At = "skyport:port", Arena = PortBandi } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
+            // 109-14-38 16장(웹 ⑲-38) — 나루지기 아라: 늘 은하 나루 별배 나루 부스 곁에 선다
+            new Npc { Id = "ara", NameKey = "story.npc.ara", NameKo = "나루지기 아라", ShortKey = "story.short.ara", ShortKo = "아라",
+                AtSite = "skyport:port", AtOff = PortAra, FolkBody = "Megan",
+                IdleKey = "story.idle.ara", IdleKo = "별배는 꼭 돌아온다고 믿고 불을 켜 두었어요." },
             // 109-14-36 15장(웹 ⑲-36) — 파발꾼 달음(과거): 역참 터에서 만나고(2~8단계) 뒤로는 고원 별배 곁(9~11단계) · 놀란 역마: 늘 마구간, 15장 쫓기 때만 달아난다
             new Npc { Id = "dareum", NameKey = "story.npc.dareum", NameKo = "파발꾼 달음", ShortKey = "story.short.dareum", ShortKo = "달음",
                 Gx = StationGx, Gy = StationGy, FolkBody = "Archer",
@@ -451,6 +476,8 @@ namespace Saga.Go.Data
             public bool Frost;
             /// <summary>109-14-34 조선소 위(자리 = 조선소 가운데 + Arena, climb 은 기중기 꼭대기).</summary>
             public bool Yard;
+            /// <summary>109-14-38 독립 땅 명소 곁("지역:명소" — 자리 = 그 명소 가운데 + Arena, climb 은 명소의 탑).</summary>
+            public string At;
             /// <summary>109-14-36 옛 역참 터 위(자리 = 역참 가운데 + Arena).</summary>
             public bool Stn;
             /// <summary>109-14-35 관측대 위(`Sky` 와 함께 — 자리 = 관측대 가운데 + Arena) · sky 단계는 시간 기둥으로.</summary>
@@ -459,7 +486,7 @@ namespace Saga.Go.Data
             public float Speed;
         }
 
-        public static Vector3 StepPos(Step s) => s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+        public static Vector3 StepPos(Step s) => s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
 
         /// <summary>석등 차례(해·달·별이 기본, 8장은 별·달·해).</summary>
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
@@ -1372,6 +1399,72 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            // 109-14-38 16장(웹 ⑲-38) — 4부 첫 장, 별배가 돌아온 나루: 별배 곁 반디 → 틈 고개 너머 은하 나루 → 나루지기 아라 → 착륙판 무리 → 아라 → 계류 탑 옆면 타기(꼭대기에 서야) → 반디(별배를 몰고 옴 — 이때부터 나루에 매임)
+            // → 계류된 별배 지키기(부스 쪽 동쪽을 뺀 일곱 방향) → 아라. 탑 단계를 지나면 빛 공이 켜지고 별배가 착륙판 위 6m 에 매이며 고원 별배는 떠난다.
+            new Chapter
+            {
+                Id = "ch16", NameKey = "story.ch16", NameKo = "제16장 · 별배가 돌아온 나루", Ar = 38,
+                Gold = 4500, Mats = new[] { 0, 5, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch16.s1", TextKo = "별배 곁의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch16.s1.l1", "삐— 별배가 뜨고 나서 틈이 닫히는 방향을 쫓았습니다. 마을 남쪽 끝 논밭 너머입니다."),
+                            L("bandi", "story.ch16.s1.l2", "그곳에 틈이 문처럼 열렸습니다. 문 너머 좌표는… 제 기억 속 별배의 집, 은하 나루."),
+                            Pick("story.ch16.s1.p", "별배가 온 곳이구나.", "같이 가 보자."),
+                            L("bandi", "story.ch16.s1.l3", "먼저 가 주십시오. 나루의 계류 신호가 살아 있으면 별배를 몰고 뒤따르겠습니다."),
+                        } },
+                    new Step { Type = StepType.Go, At = "skyport:gate", Arena = new Vector2(0f, -8f), TextKey = "story.ch16.s2", TextKo = "마을 남쪽 끝, 틈 고개 너머 은하 나루로" },
+                    new Step { Type = StepType.Talk, Npc = "ara", TextKey = "story.ch16.s3", TextKo = "별배 나루의 나루지기 아라와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("ara", "story.ch16.s3.l1", "…손님? 틈 고개로 사람이 넘어온 건 몇 해 만이에요!"),
+                            Pick("story.ch16.s3.p", "별배를 알아요?", "여기가 은하 나루예요?"),
+                            L("ara", "story.ch16.s3.l2", "별배는 이 나루의 배였어요. 어느 밤 선장님을 태우고 틈으로 떠난 뒤로 돌아오지 않았죠. 저는 그날부터 기다렸고요."),
+                            L("ara", "story.ch16.s3.l3", "별배가 살아 있다고요? 그럼 — 앗, 틈 짐승들이 착륙판을 차지했어요!"),
+                        } },
+                    new Step { Type = StepType.Kill, At = "skyport:port", Arena = PortFight,
+                        Foes = new[] { F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo) },
+                        EnterKey = "story.ch16.enter1", EnterKo = "착륙판 위에 시간 틈 짐승들이 버티고 섰다",
+                        TextKey = "story.ch16.s4", TextKo = "착륙판을 차지한 시간 틈 무리 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "ara", TextKey = "story.ch16.s5", TextKo = "아라와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("ara", "story.ch16.s5.l1", "고마워요. 이제 계류 탑 신호만 켜면 돼요. 꼭대기 빛 공이 꺼져서 별배가 길을 못 찾을 거예요."),
+                            L("ara", "story.ch16.s5.l2", "승강기는 녹아내렸고… 탑 옆면을 타고 오를 수 있겠어요? 열여덟 미터예요."),
+                            Pick("story.ch16.s5.p", "올라가 볼게요.", "높네요…"),
+                            L("ara", "story.ch16.s5.l3", "꼭대기에 서면 신호가 저절로 켜져요. 떨어지면 날개를 펴요!"),
+                        } },
+                    new Step { Type = StepType.Climb, At = "skyport:port", EnterKey = "story.ch16.climbed", EnterKo = "💡 계류 탑 꼭대기 — 빛 공에 신호가 켜졌다",
+                        TextKey = "story.ch16.s6", TextKo = "계류 탑 옆면을 타고 꼭대기로 올라 신호 켜기" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch16.s7", TextKo = "별배를 몰고 온 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch16.s7.l1", "삐— 계류 신호 수신. 별배, 은하 나루에 계류 완료. …돌아왔습니다."),
+                            L("ara", "story.ch16.s7.l2", "정말 별배예요… 날개가 바뀌었지만 틀림없어요!"),
+                            Pick("story.ch16.s7.p", "어서 와, 별배.", "반디, 수고했어."),
+                            L("ara", "story.ch16.s7.l3", "그런데 계류 불빛에 틈 짐승들이 또 몰려와요. 계류 팔이 풀리면 별배가 또 떠내려가요!"),
+                        } },
+                    new Step { Type = StepType.Defend, At = "skyport:port", Arena = PortAltar, NameKey = "story.altar_moored", NameKo = "계류된 별배", Dirs = new[] { 0f, 45f, 135f, 180f, 225f, 270f, 315f },
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro) },
+                        },
+                        TextKey = "story.ch16.s8", TextKo = "별배 계류대 지키기" },
+                    new Step { Type = StepType.Talk, Npc = "ara", TextKey = "story.ch16.s9", TextKo = "아라와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("ara", "story.ch16.s9.l1", "지켰어요… 별배가 다시 나루에 있어요. 고마워요."),
+                            L("bandi", "story.ch16.s9.l2", "삐— 별배 항해 기록 복구. 마지막 기록: 선장, 옛 절터 종소리를 따라 틈으로."),
+                            Pick("story.ch16.s9.p", "선장님이 절터로?", "종소리?"),
+                            L("ara", "story.ch16.s9.l3", "절터 종은 수백 년 전에 떨어져 나뒹구는데… 가끔 밤마다 울려요. 선장님이 거기서 무언가를 들으셨나 봐요."),
+                            L("ara", "story.ch16.s9.l4", "나루는 제가 지킬게요. 별배도 여기 쉬게 두세요. 이제 여기가 여러분 나루이기도 하니까!"),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -1441,6 +1534,7 @@ namespace Saga.Go.Data
                 if (list != null)
                     foreach (var a in list)
                         if (SpotOn(a, ch, step)) return SpotPos(n, a, ch, step, followDist);
+            if (n.AtSite != null) return AreaPos(n.AtSite, n.AtOff);
             return GridPos(n.Gx, n.Gy);
         }
 
@@ -1510,6 +1604,8 @@ namespace Saga.Go.Data
         {
             Vector3 t = TargetRaw(s, from, out radius);
             if (from != Vector3.zero && GoFrost.Contains(t) && !GoFrost.Contains(from)) return GoFrost.GatePos;
+            var ta = GoAreas.AreaAt(t);
+            if (from != Vector3.zero && ta != null && ta != GoAreas.AreaAt(from)) return ta.MapGate(); // 109-14-38 독립 땅 안 목표인데 내가 밖이면 지도 쪽 돌기둥
             return t;
         }
 
@@ -1522,12 +1618,12 @@ namespace Saga.Go.Data
                 case StepType.Sail: radius = TalkR; return NpcPos(s.Npc);
                 case StepType.Chase: return StoryState.ChasePos ?? NpcPos(s.Npc); // 109-14-19 달리는 도둑
                 case StepType.Follow: return NpcPos(s.Npc);
-                case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : s.Frost || s.Yard || s.Stn ? StepPos(s) : GridPos(s.Gx, s.Gy);
+                case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : s.Frost || s.Yard || s.Stn || s.At != null ? StepPos(s) : GridPos(s.Gx, s.Gy);
                 case StepType.Boss: return TestMapData.WorldPos(FieldSpawner.GuardianGx, FieldSpawner.GuardianGy);
                 case StepType.Domain: return SitePos(s.Site);
                 case StepType.Light: radius = LightR; return StepPos(s);
                 case StepType.Seal: return SealPos(s);
-                case StepType.Climb: return s.Yard ? CraneTop : DuelPeak.Top;
+                case StepType.Climb: return s.At != null ? TowerTop : s.Yard ? CraneTop : DuelPeak.Top;
                 case StepType.Sky: radius = DraftR; return s.Obs ? ObsPillarPos : DuelPeak.Top; // 109-14-20 바람 기둥 = 봉우리 정상 · 109-14-35 시간 기둥
                 case StepType.Gather:
                 {

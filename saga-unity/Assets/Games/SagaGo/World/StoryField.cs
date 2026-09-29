@@ -485,7 +485,7 @@ namespace Saga.Go.World
                         }
                         break;
                     case GoStory.StepType.Climb:
-                        if (st.Yard ? GoStory.OnCrane(p) : GoWorldMap.StandsOn(GoStory.DuelPeak, p)) // 109-14-34 조선소 기중기 들보 위
+                        if (st.At != null ? GoStory.OnTower(p) : st.Yard ? GoStory.OnCrane(p) : GoWorldMap.StandsOn(GoStory.DuelPeak, p)) // 109-14-34 조선소 기중기 들보 위 · 109-14-38 계류 탑 꼭대기
                         {
                             Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : GoLocalization.T("story.climbed", "봉우리 꼭대기 — 고원 아래 나그네가 보인다"), 3f);
                             StoryState.Advance();

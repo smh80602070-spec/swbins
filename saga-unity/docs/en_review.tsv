@@ -1083,6 +1083,7 @@
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
 2	go	story.altar4	넷째 제단	the Fourth Altar		
 2	go	story.altar_beacon	봉화 제단	Beacon Altar		
+2	go	story.altar_moored	계류된 별배	moored star-ship		
 2	go	story.altar_weld	용접대	welding bench		
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
 2	go	story.boss.emberfox	여우불 구미호	Foxfire Nine-Tail		
@@ -1347,6 +1348,44 @@
 2	go	story.ch15.s8.p.b	같이 가 줄래요?	Will you come along?		
 2	go	story.ch15.s9	날개 조각 셋을 들고 서리봉 고원 별배로	Carry the three wing fragments to the star-ship on Frostpeak Plateau		
 2	go	story.ch15.win	여우불 구미호가 날개 조각을 떨구고 — 닫히는 시간 틈 속으로 흩어졌다	The Foxfire Nine-Tail drops the wing fragment and scatters into the closing rift		
+2	go	story.ch16	제16장 · 별배가 돌아온 나루	Chapter 16 · The Port the Star-Ship Returned To		
+2	go	story.ch16.climbed	💡 계류 탑 꼭대기 — 빛 공에 신호가 켜졌다	💡 Atop the mooring tower — the signal lights up the beacon		
+2	go	story.ch16.enter1	착륙판 위에 시간 틈 짐승들이 버티고 섰다	Rift beasts stand their ground on the landing pad		
+2	go	story.ch16.s1	별배 곁의 반디와 이야기하기	Talk to Bandi beside the star-ship		
+2	go	story.ch16.s1.l1	삐— 별배가 뜨고 나서 틈이 닫히는 방향을 쫓았습니다. 마을 남쪽 끝 논밭 너머입니다.	Beep — after the star-ship lifted off, I followed the direction the rift was closing. It's beyond the farmland at the village's southern end.		
+2	go	story.ch16.s1.l2	그곳에 틈이 문처럼 열렸습니다. 문 너머 좌표는… 제 기억 속 별배의 집, 은하 나루.	There the rift opened like a door. The coordinates beyond it are… the star-ship's home in my memory, Galaxy Port.		
+2	go	story.ch16.s1.l3	먼저 가 주십시오. 나루의 계류 신호가 살아 있으면 별배를 몰고 뒤따르겠습니다.	Please go first. If the port's mooring signal is alive, I will bring the star-ship after you.		
+2	go	story.ch16.s1.p.a	별배가 온 곳이구나.	So that's where the star-ship came from.		
+2	go	story.ch16.s1.p.b	같이 가 보자.	Let's go together.		
+2	go	story.ch16.s2	마을 남쪽 끝, 틈 고개 너머 은하 나루로	Go through the Rift Pass at the village's southern end to Galaxy Port		
+2	go	story.ch16.s3	별배 나루의 나루지기 아라와 이야기하기	Talk to Ara, the portkeeper of the star-ship port		
+2	go	story.ch16.s3.l1	…손님? 틈 고개로 사람이 넘어온 건 몇 해 만이에요!	…A visitor? It's been years since anyone crossed the Rift Pass!		
+2	go	story.ch16.s3.l2	별배는 이 나루의 배였어요. 어느 밤 선장님을 태우고 틈으로 떠난 뒤로 돌아오지 않았죠. 저는 그날부터 기다렸고요.	The star-ship was this port's ship. One night it left through the rift with the captain and never came back. I've been waiting since that day.		
+2	go	story.ch16.s3.l3	별배가 살아 있다고요? 그럼 — 앗, 틈 짐승들이 착륙판을 차지했어요!	The star-ship is alive? Then — oh no, rift beasts have taken the landing pad!		
+2	go	story.ch16.s3.p.a	별배를 알아요?	Do you know the star-ship?		
+2	go	story.ch16.s3.p.b	여기가 은하 나루예요?	Is this Galaxy Port?		
+2	go	story.ch16.s4	착륙판을 차지한 시간 틈 무리 물리치기	Defeat the rift pack holding the landing pad		
+2	go	story.ch16.s5	아라와 이야기하기	Talk to Ara		
+2	go	story.ch16.s5.l1	고마워요. 이제 계류 탑 신호만 켜면 돼요. 꼭대기 빛 공이 꺼져서 별배가 길을 못 찾을 거예요.	Thank you. Now we only have to light the mooring tower's signal. The beacon at the top is out, so the star-ship can't find its way.		
+2	go	story.ch16.s5.l2	승강기는 녹아내렸고… 탑 옆면을 타고 오를 수 있겠어요? 열여덟 미터예요.	The lift has melted away… Can you climb the tower's side? It's eighteen meters.		
+2	go	story.ch16.s5.l3	꼭대기에 서면 신호가 저절로 켜져요. 떨어지면 날개를 펴요!	The signal lights by itself when you stand on top. If you fall, spread your wings!		
+2	go	story.ch16.s5.p.a	올라가 볼게요.	I'll climb it.		
+2	go	story.ch16.s5.p.b	높네요…	It's high…		
+2	go	story.ch16.s6	계류 탑 옆면을 타고 꼭대기로 올라 신호 켜기	Climb the mooring tower's side to the top and light the signal		
+2	go	story.ch16.s7	별배를 몰고 온 반디와 이야기하기	Talk to Bandi, who brought the star-ship in		
+2	go	story.ch16.s7.l1	삐— 계류 신호 수신. 별배, 은하 나루에 계류 완료. …돌아왔습니다.	Beep — mooring signal received. Star-ship moored at Galaxy Port. …We're home.		
+2	go	story.ch16.s7.l2	정말 별배예요… 날개가 바뀌었지만 틀림없어요!	It really is the star-ship… the wings are different, but it's her, no doubt!		
+2	go	story.ch16.s7.l3	그런데 계류 불빛에 틈 짐승들이 또 몰려와요. 계류 팔이 풀리면 별배가 또 떠내려가요!	But the mooring lights are drawing rift beasts again. If the mooring arm comes loose, the star-ship will drift away again!		
+2	go	story.ch16.s7.p.a	어서 와, 별배.	Welcome back, star-ship.		
+2	go	story.ch16.s7.p.b	반디, 수고했어.	Good work, Bandi.		
+2	go	story.ch16.s8	별배 계류대 지키기	Defend the star-ship's mooring		
+2	go	story.ch16.s9	아라와 이야기하기	Talk to Ara		
+2	go	story.ch16.s9.l1	지켰어요… 별배가 다시 나루에 있어요. 고마워요.	We held it… the star-ship is back at the port. Thank you.		
+2	go	story.ch16.s9.l2	삐— 별배 항해 기록 복구. 마지막 기록: 선장, 옛 절터 종소리를 따라 틈으로.	Beep — star-ship voyage log restored. Last entry: the captain, following the old temple bell into the rift.		
+2	go	story.ch16.s9.l3	절터 종은 수백 년 전에 떨어져 나뒹구는데… 가끔 밤마다 울려요. 선장님이 거기서 무언가를 들으셨나 봐요.	That temple bell fell hundreds of years ago and lies on its side… yet some nights it rings. The captain must have heard something there.		
+2	go	story.ch16.s9.l4	나루는 제가 지킬게요. 별배도 여기 쉬게 두세요. 이제 여기가 여러분 나루이기도 하니까!	I'll look after the port. Let the star-ship rest here. This is your port too now!		
+2	go	story.ch16.s9.p.a	선장님이 절터로?	The captain went to the temple ruins?		
+2	go	story.ch16.s9.p.b	종소리?	A bell?		
 2	go	story.ch2	제2장 · 먹구름 제단	Chapter 2 · The Stormcloud Altar		
 2	go	story.ch2.s1	학자에게 제단 가는 길을 묻기	Ask the scholar the way to the altar		
 2	go	story.ch2.s1.l1	비문을 다 읽었어. 이무기는 너른 강 물가 서쪽, 먹구름 제단 안에 잠들어 있어.	I've finished reading the inscription. The serpent sleeps inside the Stormcloud Altar, west along the Broad River.		
@@ -1636,6 +1675,7 @@
 2	go	story.follow_lost	 · 너무 멀어졌다	 · you fell too far behind		
 2	go	story.gather_n	{0} {1}/{2}	{0} {1}/{2}		
 2	go	story.gold	금 +{0}	Gold +{0}		
+2	go	story.idle.ara	별배는 꼭 돌아온다고 믿고 불을 켜 두었어요.	I kept the lights on, believing the star-ship would come back.		
 2	go	story.idle.bandi	삐— 별배 심장 온도, 계속 하락 중.	Beep — Starship core temperature still falling.		
 2	go	story.idle.bawoo	……불씨는 아직 꺼지지 않았다.	……The ember has not gone out yet.		
 2	go	story.idle.daon	이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.	This yard's been shut for ten years… lately there's clanging every night.		
@@ -1656,6 +1696,7 @@
 2	go	story.lit	옛 제단에 불이 붙었다 — 비문이 빛난다	The old altar caught fire — the inscription glows		
 2	go	story.me	나	Me		
 2	go	story.next	다음 ▶ (F)	Next ▶ (F)		
+2	go	story.npc.ara	나루지기 아라	Portkeeper Ara		
 2	go	story.npc.bandi	조종 기계 반디	Bandi the Pilot Machine		
 2	go	story.npc.bawoo	산성지기 바우	Bawoo the Fortress Keeper		
 2	go	story.npc.daon	조선공 다온	Shipwright Daon		
@@ -1680,6 +1721,7 @@
 2	go	story.seal_done_order	{0} — 봉인이 풀렸다	{0} — the seal is broken		
 2	go	story.seal_lit	{0} 석등에 불이 붙었다 ({1}/3)	The {0} lantern caught fire ({1}/3)		
 2	go	story.seal_wrong	차례가 틀렸다 — 석등이 모두 꺼졌다	Wrong order — all the lanterns went out		
+2	go	story.short.ara	아라	Ara		
 2	go	story.short.bandi	반디	Bandi		
 2	go	story.short.bawoo	바우	Bawoo		
 2	go	story.short.daon	다온	Daon		

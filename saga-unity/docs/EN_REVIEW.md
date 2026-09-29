@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **3681** (표 3626 · 코드 55) — go 1837 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **9** · 넘침 주의 **333**
-- 사람 검수 **0/3681** — 순위1 0/265 · 순위2 0/2698 · 순위3 0/718
+- 짝 **3723** (표 3668 · 코드 55) — go 1879 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **9** · 넘침 주의 **342**
+- 사람 검수 **0/3723** — 순위1 0/265 · 순위2 0/2740 · 순위3 0/718
 
 ## 검수 순서
 
@@ -34,7 +34,7 @@
 - 「가 볼게요.」 → **I'll go.** (go:wq.lighthouse.s1.p.a) · **I'll go take a look.** (go:story.ch10.s1.p.a)
 - 「채집」 → **gathered** (go:ach.unit.gather) · **Foraging** (dungeon:room.forage)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 333)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 342)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -47,11 +47,14 @@
 | 16→33 | go | `story.ch6.s3.l3` | ……He's come. When he wraps himself in stormclouds, break it with fire! |
 | 9→22 | forest | `visitor.dirs` | somewhere in the woods to the {0} of the village |
 | 30→56 | go | `story.ch9.s9.l4` | Let's head down to the village. Granny Nuri will give me an earful — but let's spread our wings and go straight there. |
+| 37→67 | go | `story.ch16.s1.l1` | Beep — after the star-ship lifted off, I followed the direction the rift was closing. It's beyond the farmland at the village's southern end. |
 | 3→12 | go | `cook.recipe.honey_cake` | Honey Blossom Rice Cake |
 | 10→22 | go | `story.ch5` | Chapter 5 · The Old Road over the Western Pass |
 | 4→13 | dungeon | `item.wp_lm_cloud` | Cloud General's Gold Sword |
 | 6→15 | dungeon | `landmark.cloud` | Golden Palace Above the Clouds |
 | 35→63 | go | `wq.lighthouse.s1.l1` | Every night a light signal comes from the far end of the east bank. The pattern is an old beacon code… but the waveform is brand new. |
+| 17→33 | go | `story.ch16.s2` | Go through the Rift Pass at the village's southern end to Galaxy Port |
+| 8→18 | go | `story.ch16.s9.p.a` | The captain went to the temple ruins? |
 | 2→9 | forest | `finish.jangpan` | Oiled Paper Floor |
 | 3→10 | go | `kit.sig.zhuge.skill` | Eight Trigrams Array |
 | 3→10 | dungeon | `enemy.grunt` | Yellow Turban Bandit |
@@ -62,11 +65,8 @@
 | 18→33 | go | `story.ch15.s9` | Carry the three wing fragments to the star-ship on Frostpeak Plateau |
 | 24→43 | go | `wq.idle.researcher` | Something like an old lighthouse beam flickers on the night water. I should write it down. |
 | 5→13 | dungeon | `enemy.boss` | Yellow Turban Bandit Chief |
+| 9→19 | go | `story.ch16.s1.p.a` | So that's where the star-ship came from. |
 | 12→24 | go | `story.ch7` | Chapter 7 · The Fourth Altar on the Riverside Cape |
 | 30→53 | go | `story.ch8.s9.l3` | That's none of your concern. I'll be waiting at the sixth seat above the storm clouds — we'll finish this there. |
 | 4→11 | dungeon | `enemy.miniboss` | Yellow Turban Assassin |
 | 5→13 | dungeon | `saga.snowfort.title` | Giant of the Mountain Fort |
-| 3→9 | forest | `finish.ondol` | Ondol Heated Floor |
-| 4→11 | dungeon | `item.wp_greatblade` | Black Iron Greatsword |
-| 30→52 | go | `wq.lighthouse.s3.l1` | Identity confirmed. Hanbit, lighthouse keeper — a machine that guards this lighthouse in the distant future. |
-| 4→11 | forest | `landmark.rocky` | Giant's Standing Stone |
