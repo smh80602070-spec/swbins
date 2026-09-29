@@ -158,8 +158,9 @@
     var g1 = grade();
     if (g1 > g0) {
       var gr = VD().DELIVERY_GRADES[g1 - 1];
-      text += ' · 🎖️ 배달 ' + gr.name + ' 등급 — ' + gr.note;
+      text += ' · 🎖️ 배달 ' + gr.name + ' 등급 — ' + gr.note + (gr.line ? ' · ' + gr.line : '');       // 정본 side_parcel_* — 등급마다 달음 한 줄
       core.log('🎖️ 배달 ' + gr.name + ' 등급 — ' + gr.note, 'good');
+      if (gr.line) { core.log('📦 ' + gr.line, 'good'); }
       V().buildProps();          // 수레·로버가 서거나 손이 닿게 된다
     }
     core.emit('village:delivered', { dest: dest, kind: kind, reward: reward, chain: chain, broken: broken, late: late });

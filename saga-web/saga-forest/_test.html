@@ -5530,6 +5530,18 @@ window.DG_NO_TUNE = true;
       return out && '10초 살금 → 무사 · 그냥 1.5초 → 무사 · 2.5초 → 깨짐(절반) · 무사히 도착하면 ×1.6';
     });
 
+    t('택배 — 등급이 오르면 그 등급의 달음 한 줄이 함께 나온다 (정본 side_parcel_*)', function () {
+      var undo = parcelKeep(), out = false, P = DG.parcel, dest = P.dests()[0].key, G = DG.villageData.DELIVERY_GRADES;
+      try {
+        parcelGive('plain', dest, { n: G[0].at - 1 });
+        var r1 = P.deliver(dest, '시험');
+        parcelGive('plain', dest, { n: G[0].at - 2 });
+        var r0 = P.deliver(dest, '시험');
+        out = G.every(function (g) { return !!g.line && g.line.indexOf('달음') >= 0; }) && r1.text.indexOf(G[0].note) >= 0 && r1.text.indexOf(G[0].line) >= 0 && r0.text.indexOf('🎖️') < 0;
+      } finally { undo(); }
+      return out && '수레 등급이 오르는 배달에만 달음 한 줄 · 아니면 평소 글 · 세 등급 모두 한 줄';
+    });
+
     t('택배 — 시간제한 소포: 시한 안이면 ×1.5, 넘기면 ×0.7 이고 사슬이 끊긴다', function () {
       var undo = parcelKeep(), out = false, P = DG.parcel, dest = P.dests()[0].key, lim = P.limitSec(P.dests()[0].dist);
       try {
