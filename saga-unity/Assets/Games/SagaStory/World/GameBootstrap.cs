@@ -29,6 +29,7 @@ namespace Saga.Story.World
             StoryAudio.PlayBgm(bgmClip);
             StoryJobState.LeveledUp += OnLeveledUp; // PLAN.md 101-3 G "성장 연출"(DUNGEON/GO와 같은 결, 이번에 처음 연결).
             _cameraFollow = StoryCameraFollow.Instance;
+            StoryScenarioRunner.Install(); // PLAN.md 109-16 시나리오 — 장면 상자·목표 한 줄(Play 때, 씬 재빌드 없이)
             MountField.Install(); // PLAN.md 109-15 탈것·비행 — H 타기·Shift+H 고르기·타기 단추(Play 때, 씬 재빌드 없이)
         }
 

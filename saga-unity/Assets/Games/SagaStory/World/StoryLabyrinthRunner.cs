@@ -403,6 +403,7 @@ namespace Saga.Story.World
         public void CompleteRun()
         {
             StoryLabyrinthState.EndRun();
+            StoryScenario.OnRiftCleared(); // PLAN.md 109-16 — 시나리오 rift 단계(이 단계가 시작된 뒤 한 번 끝까지)
             var player = GameObject.FindWithTag("Player");
             if (player != null) TeleportPlayer(player, _returnPosition);
             DialogueLabel.Instance?.Show(StoryLocalization.T("labyrinth.cleared", "🏆 비경 클리어! 관문의 주인을 넘어섰다"), 4f);

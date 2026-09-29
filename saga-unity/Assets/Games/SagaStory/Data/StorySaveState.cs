@@ -92,6 +92,8 @@ namespace Saga.Story.Data
             public string[] skillPins;
             // PLAN.md 109-15 탈것 — 고른 탈것(탄 채는 저장 안 함). 버전 그대로: 옛 세이브는 null → 안 고른 채.
             public string mountSel;
+            // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 레벨·전직으로 지나온 장을 끝낸 것으로(RestoreLegacy).
+            public string scenarioJson;
         }
 
         public static bool Save()
@@ -137,6 +139,7 @@ namespace Saga.Story.Data
                 skillLevels = skillLevels,
                 skillPins = StorySkillState.SnapshotPins(),
                 mountSel = StoryMounts.Snapshot(),
+                scenarioJson = StoryScenario.Snapshot(),
             };
             return JsonUtility.ToJson(data);
         }
@@ -182,6 +185,8 @@ namespace Saga.Story.Data
             StoryPartyState.Restore(data.partyActiveIndex);
             StorySkillState.Restore(data.skillKeys, data.skillLevels, data.skillPins);
             StoryMounts.Restore(data.mountSel);
+            if (string.IsNullOrEmpty(data.scenarioJson)) StoryScenario.RestoreLegacy(StoryJobState.Level, StoryJobState.HasJob);
+            else StoryScenario.Restore(data.scenarioJson);
 
             Transform player = FindPlayer();
             if (player != null && data.playerPos != null && data.playerPos.Length == 3)

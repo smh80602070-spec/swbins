@@ -4154,6 +4154,34 @@
 2	story	skill.z_orb	성라탄(星羅彈)	Constellation Orbs		
 2	story	skill.z_starfall	낙성우(落星雨)	Starfall		
 2	story	skill.z_step	신행보(神行步)	Divine Stride		
+2	story	sscen.cast.ieum	탐사 대원 이음	Expedition Member Ieum		
+2	story	sscen.cast.mentor	스승	Mentor		
+2	story	sscen.cast.sori	척후병 소리	Scout Sori		
+2	story	sscen.ch.p1_field.blurb	척후병과 들판을 정찰한다. 황건 두목의 진에 다른 시대의 병기가 섞였다.	Scout the plain with the scout. The Yellow Sash chief's camp has weapons from other eras mixed in.		
+2	story	sscen.ch.p1_field.title	허창 들판의 두목	The Chief of Heochang Plain		
+2	story	sscen.ch.p1_job.blurb	허도의 스승에게 첫 전직을 배운다. "이름 없는 자가 제일 빨리 배운다."	Learn your first class from the teacher. "The one without a name learns fastest."		
+2	story	sscen.ch.p1_job.title	첫 스승	The First Teacher		
+2	story	sscen.ch.p3_labyrinth.blurb	이음이 여는 5층 비경. 관문 수호장을 치면 잃은 기억 조각이 나온다 — 떠돌이도 문에서 떨어졌다.	Ieum opens the five-floor labyrinth. Strike down the gate guardian and a lost memory shard may drop - the drifter also fell from the gate.		
+2	story	sscen.ch.p3_labyrinth.title	비경의 기억	Memory of the Labyrinth		
+2	story	sscen.chapter_fmt	제{0}장 · {1}	Ch. {0} · {1}		
+2	story	sscen.done_none	끝	Complete		
+2	story	sscen.done_toast	📖 제{0}장 · {1} 끝 — {2}	📖 Ch. {0} · {1} complete — {2}		
+2	story	sscen.hint.boss	👺 「두목의 목」을 벤다	👺 Fell 「The Chief's Head」		
+2	story	sscen.hint.finish	마무리	Wrapping up		
+2	story	sscen.hint.job	🥋 전직관에게 첫 전직을 배운다	🥋 Learn your first class from the trainer		
+2	story	sscen.hint.kill	🗡️ 「첫 사냥」을 마친다	🗡️ Finish 「First Hunt」		
+2	story	sscen.hint.level	레벨 {0} 이 되면 이어진다	Continues at level {0}		
+2	story	sscen.hint.rift	🌀 비경을 한 번 끝까지 깬다	🌀 Clear the labyrinth once, all the way		
+2	story	sscen.hint.talk	💬 이야기를 듣는다	💬 Listen to the story		
+2	story	sscen.hud	📖 제{0}장 · {1} — {2}	📖 Ch. {0} · {1} — {2}		
+2	story	sscen.next	다음	Next		
+2	story	sscen.page	{0} / {1}	{0} / {1}		
+2	story	sscen.reward.exp	경험치 {0}	EXP {0}		
+2	story	sscen.reward.shard	기억 조각 {0}	Memory shards {0}		
+2	story	sscen.reward.title	🏷️ 칭호 「{0}」	🏷️ Title 「{0}」		
+2	story	sscen.skip	건너뛰기	Skip		
+2	story	sscen.title.nameless_job	이름 없는 {0}	Nameless {0}		
+2	story	sscen.you	나	Me		
 2	story	summon.gauge_hud	⚡ 소환 {0:0}%	⚡ Summon {0:0}%		
 2	story	summon.no_foe	부를 까닭이 없다 — 곁에 적이 없다	No reason to call it — no foes nearby		
 2	story	summon.not_ready	소환 게이지가 아직 덜 찼다	The summon gauge isn't full yet		
@@ -5016,6 +5044,25 @@
 3	story	skill.z_orb.desc	별자리 여덟이 한꺼번에 쏟아진다 — 유성탄 5	Eight constellations pour down at once — Meteor Orbs 5		
 3	story	skill.z_starfall.desc	별들이 통째로 떨어진다 — 유성 5	Whole stars come crashing down — Meteor 5		
 3	story	skill.z_step.desc	신선의 걸음으로 세상을 건넌다 — 이형보 5	Crosses the world with an immortal's stride — Form Shift 5		
+3	story	sscen.scene.field1.0	황건 두목의 진에 요즘 못 보던 병기가 들어갔소. 잿빛 떼쥐가 뛰고, 하늘엔 작은 눈알 같은 것이 뜨오.	Weapons I have never seen have entered the Yellow Sash chief's camp lately. Ashen rats leap about, and small eye-like things float in the sky.		
+3	story	sscen.scene.field1.1	눈알 같은 것이라니, 정찰 짐승입니까?	Eye-like things? Scouting beasts?		
+3	story	sscen.scene.field1.2	짐승이 아니라 날아다니는 쇠붙이요. 들판을 비우지 않고는 두목 근처에도 못 가오.	Not beasts - flying scraps of iron. If we do not clear the plain, we cannot get near the chief.		
+3	story	sscen.scene.field1.3	먼저 들판을 비우고, 그다음에 두목의 목을 보겠습니다.	First I clear the plain, then I see the chief's head.		
+3	story	sscen.scene.field2.0	두목이 쓰러졌소! 진 한복판에서 푸른 빛 조각이 나왔는데, 누가 남긴 건지 모르겠소.	The chief has fallen! A blue shard of light came out of the middle of the camp, and I do not know who left it.		
+3	story	sscen.scene.field2.1	누가 대 주지 않고서야 도적이 저런 병기를 가질 수 없지요.	A bandit could never own such weapons unless someone supplied them.		
+3	story	sscen.scene.field2.2	이제 허도의 스승을 찾아가 보시오. 열 번은 넘게 해가 진 자라면 배울 자격이 있소.	Now go and find the teacher. Anyone who has seen more than ten sunsets is fit to learn.		
+3	story	sscen.scene.job1.0	이름 없는 자가 제일 빨리 배운다. 이름에 매여 있지 않으니까.	The one without a name learns fastest. Because there is no name to hold you back.		
+3	story	sscen.scene.job1.1	저 표적지를 보아라. 누가 세웠는지 모르나, 이 땅의 것이 아닌 나무로 만들었다. 내 무기도 그렇다. 어느 시대 것인지 나도 모른다.	Look at that target. I do not know who set it up, but it is made of wood that does not belong to this land. My weapon is the same. I do not know what age it is from.		
+3	story	sscen.scene.job1.2	🥋 무예창을 열어 네 길을 골라라. 무사·궁수·협객·방사 — 고른 길이 네 첫 이름이 된다.	🥋 Open the martial window and pick your path. Warrior, archer, wanderer, mystic - the path you choose becomes your first name.		
+3	story	sscen.scene.job2.0	골랐구나. 이제 너는 이름 없는 채로 한 갈래를 얻었다.	You have chosen. Now, nameless as you are, you have gained a branch.		
+3	story	sscen.scene.job2.1	동쪽 강릉진 부두에 쇠로 된 배가 걸려 있다더라. 그 배의 사진을 찍는 여행자가 있다지 — 만나 보아라.	They say an iron ship hangs at the eastern Gangneung pier, and a traveler photographs it. Go meet that traveler.		
+3	story	sscen.scene.job2.2	가겠습니다. 이름은 가는 길에서 찾지요.	I will go. I will find my name along the way.		
+3	story	sscen.scene.lab1.0	제 탐사 등으로 비경을 엽니다. 이 층들은 문이 남긴 기억의 껍질이에요. 돌 발판에 박힌 표지판이 보이면 다른 시대의 흔적입니다.	I open the labyrinth with my exploration lamp. These floors are shells of memory left by the gate. Where you see signs embedded in stone footholds, that is a trace of another age.		
+3	story	sscen.scene.lab1.1	5층 수호장을 쓰러뜨리면 잃어버린 조각이 나올지도 몰라요. 도중에 나가도 얻은 조각은 남습니다.	If you fell the floor-5 guardian, a lost piece may appear. Even if you leave midway, the shards you gained remain.		
+3	story	sscen.scene.lab1.2	제 이름이 없는 까닭이 거기 있다면 가야지요.	If the reason I have no name is there, I must go.		
+3	story	sscen.scene.lab2.0	…기억났습니다. 저는 문 너머에서 왔어요. 문이 열릴 때 떨어져 이 땅에 나왔습니다.	…I remember. I came from beyond the gate. When it opened I fell and landed in this land.		
+3	story	sscen.scene.lab2.1	그래서 이름이 없었던 거군요. 문 너머에 두고 온 이름이 있을 겁니다.	So that is why you had no name. There must be a name you left beyond the gate.		
+3	story	sscen.scene.lab2.2	그 이름을 찾으러 문까지 가겠습니다. 잿빛 사자보다 먼저요.	I will go to the gate to find it. Before the Ashen Envoy does.		
 3	realm	event.brave_challenge.a	응한다	Accept		
 3	realm	event.brave_challenge.b	거절한다	Decline		
 3	realm	event.brave_challenge.body	{0}에게 이름 없는 무사가 결투를 신청했다.	A nameless warrior has challenged {0} to a duel.		

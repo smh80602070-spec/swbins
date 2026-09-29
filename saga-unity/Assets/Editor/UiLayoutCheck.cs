@@ -704,6 +704,31 @@ namespace Saga.EditorTools
 
         private static void StoryStates(List<UiState> list)
         {
+            // 109-16 시나리오 장면 상자 — 가장 긴 줄이 든 장면(글 자리)을 그 줄까지 넘겨 띄운다.
+            list.Add(new UiState
+            {
+                name = "시나리오 장면",
+                panel = true,
+                enter = () =>
+                {
+                    var ui = Saga.Story.UI.StoryScenarioUi.Instance;
+                    if (ui == null) return false;
+                    Saga.Story.Data.StoryScenarioData.Scene pick = null;
+                    int max = 0, want = 0;
+                    foreach (var sc in Saga.Story.Data.StoryScenarioData.Scenes)
+                        for (int i = 0; i < sc.Lines.Length; i++)
+                        {
+                            int len = Saga.Story.Data.StoryScenario.LineText(sc.Id, i).Length;
+                            if (len > max) { max = len; pick = sc; want = i; }
+                        }
+                    if (pick == null) return false;
+                    var ch = Saga.Story.Data.StoryScenarioData.ChapterOf(pick.ChapterId);
+                    ui.Play(new Saga.Story.Data.StoryScenario.SceneRequest { Scene = pick, Title = Saga.Story.Data.StoryScenario.ChapterFullTitle(ch) });
+                    for (int i = 0; i < want; i++) ui.Next();
+                    return true;
+                },
+                exit = () => Saga.Story.UI.StoryScenarioUi.Instance?.Hide(),
+            });
             list.Add(new UiState
             {
                 name = "전직 고르기",

@@ -48,6 +48,10 @@ namespace Saga.Story.UI
                          (bossDone ? StoryLocalization.T("hud.done") : "") +
                          $"\n{mp}";
 
+            // PLAN.md 109-16 시나리오 — 지금 장·단계 한 줄(안 열렸거나 다 봤으면 없음).
+            string story = StoryScenario.HudLine();
+            if (story.Length > 0) label.text += "\n" + story;
+
             // PLAN.md 101-2 5-2 1단계 — 전직 뒤에만 남은 무예 점수(웹판 무예 탭 머리글과 같은 값).
             if (StoryJobState.HasJob)
             {

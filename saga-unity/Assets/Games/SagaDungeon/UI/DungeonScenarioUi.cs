@@ -162,7 +162,7 @@ namespace Saga.Dungeon.UI
             _panel.transform.SetParent(canvasGo.transform, false);
             var prt = (RectTransform)_panel.transform;
             prt.anchorMin = prt.anchorMax = prt.pivot = new Vector2(0.5f, 0.5f);
-            prt.sizeDelta = new Vector2(1300f, 640f); // 화면의 30% 를 넘겨 모달로 친다(뒤 단추와 겹침은 설계)
+            prt.sizeDelta = new Vector2(1300f, 720f); // 화면의 30% 를 넘겨 모달로 친다(뒤 단추와 겹침은 설계)
             _panel.AddComponent<Image>().color = new Color(0f, 0f, 0f, 0.88f);
             _panel.AddComponent<TapCatcher>().OnTap = Next; // 상자 아무 데나 누르면 다음 줄 — 단추가 아니라 눌림만 받는다
 

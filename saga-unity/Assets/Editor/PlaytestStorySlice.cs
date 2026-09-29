@@ -173,6 +173,8 @@ namespace Saga.EditorTools
                     StoryLabyrinthState.ResetForTest();
                     StoryLabyrinthState.Restore(0, 0);
                     StorySkillState.Restore(null, null); // 101-2 5-2 1단계 — 위와 같은 이유.
+                    // PLAN.md 109-16 — 새 판 첫 장면(허창 들판의 두목)이 다른 진단 앞에서 상자를 열지 않게 끈다. 시나리오 진단이 스스로 켜고 되돌린다.
+                    StoryScenario.Enabled = false; StoryScenario.AbortScene(); StoryScenarioUi.Instance?.Hide();
                     if (!CheckButtonWiring()) { Fail(); return; }
                     if (!CheckSettingsPanel()) { Fail(); return; }
                     if (!CheckPlayerHudLocalization()) { Fail(); return; }
@@ -190,6 +192,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStoryEras.Run()) { Fail(); return; } // PLAN.md 109-3 세 시대 — 자리·비경 상태를 되돌린다.
                     if (!PlaytestStoryBossPattern.Run()) { Fail(); return; } // PLAN.md 109-11-1 보스 패턴전 — 두목 등장 진단 뒤(컷을 튼 두목만 문다), 자리·체력·두목을 되돌린다.
                     if (!PlaytestStoryMount.Run()) { Fail(); return; } // PLAN.md 109-15 탈것·비행 — 레벨·직업·체력·탈것·자리를 되돌린다.
+                    if (!PlaytestStoryScenario.Run()) { Fail(); return; } // PLAN.md 109-16 시나리오 — 레벨·직업·사명·비경 조각·자리를 되돌린다.
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;
                     break;
