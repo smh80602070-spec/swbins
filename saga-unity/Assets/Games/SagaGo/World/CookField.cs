@@ -31,11 +31,12 @@ namespace Saga.Go.World
 
         private void Start() => Rebuild();
 
-        /// <summary>글자 지도 포기 + 109-14-32 고원 눈꽃 포기.</summary>
+        /// <summary>글자 지도 포기 + 109-14-32 고원 눈꽃 포기 + 109-14-46 잠긴 도읍 바지락 포기.</summary>
         private static IEnumerable<GoCooking.Node> AllNodes()
         {
             foreach (var n in GoCooking.Nodes) yield return n;
             foreach (var n in GoCooking.FrostNodes) yield return n;
+            foreach (var n in GoCooking.SunkenNodes) yield return n;
         }
 
         public Vector3 PosOf(string id) => _pos.TryGetValue(id, out var p) ? p : Vector3.zero;

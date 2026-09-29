@@ -215,6 +215,34 @@ namespace Saga.Go.Data
         /// <summary>109-14-32 눈꽃 자리 셋(웹 frost `bloomSpots`) — 고원 가운데에서 m(명소·곰왕 자리를 비켜) × 자리마다 둘, 자라는 데 특산 값(1시간).</summary>
         public static readonly Vector2[] FrostBloomSpots = { new Vector2(-40f, -100f), new Vector2(30f, 20f), new Vector2(-95f, -110f) };
 
+        /// <summary>109-14-46 잠긴 도읍 바지락 자리 셋(웹 22장 "갯벌 물가" 채집) — 땅 가운데에서 m(궁궐 곁) × 자리마다 둘, 흔한 채집물.</summary>
+        public static readonly Vector2[] SunkenClamSpots = { new Vector2(-85f, 32f), new Vector2(-40f, 12f), new Vector2(-100f, 70f) };
+
+        private static Node[] _sunkenNodes;
+
+        /// <summary>잠긴 도읍 바지락 포기 여섯(`Nodes` 와 따로 — 글자 지도 지역 표를 세는 진단이 안 흔들리게). `CookField` 가 세운다.</summary>
+        public static Node[] SunkenNodes
+        {
+            get
+            {
+                if (_sunkenNodes != null) return _sunkenNodes;
+                var list = new List<Node>();
+                for (int n = 0; n < SunkenClamSpots.Length; n++)
+                    for (int k = 0; k < 2; k++)
+                    {
+                        float a = Mathf.PI * 2f * k / 2f + 0.6f;
+                        Vector2 o = SunkenClamSpots[n];
+                        list.Add(new Node
+                        {
+                            Id = $"ck_sunken_{n}_{k}", Item = "clam", RegionId = "sunken", Special = false,
+                            Pos = GoAreas.Sunken.Center + new Vector3(o.x, 0f, o.y) + new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a)) * Ring,
+                        });
+                    }
+                _sunkenNodes = list.ToArray();
+                return _sunkenNodes;
+            }
+        }
+
         private static Node[] _frostNodes;
 
         /// <summary>고원 눈꽃 포기 여섯(`Nodes` 와 따로 — 글자 지도 지역 표를 세는 진단·이야기 채집 목표가 안 흔들리게). `CookField` 가 둘 다 세운다.</summary>
@@ -244,6 +272,7 @@ namespace Saga.Go.Data
         {
             foreach (var x in Nodes) if (x.Id == id) { n = x; return true; }
             foreach (var x in FrostNodes) if (x.Id == id) { n = x; return true; }
+            foreach (var x in SunkenNodes) if (x.Id == id) { n = x; return true; }
             n = default;
             return false;
         }

@@ -1121,10 +1121,12 @@
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
 2	go	story.altar4	넷째 제단	the Fourth Altar		
 2	go	story.altar_beacon	봉화 제단	Beacon Altar		
+2	go	story.altar_domelock	빛 돔 문 자물쇠	light-dome door lock		
 2	go	story.altar_knot	매듭 제단	knot altar		
 2	go	story.altar_moored	계류된 별배	moored star-ship		
 2	go	story.altar_train	출발을 기다리는 막차	the waiting last train		
 2	go	story.altar_weld	용접대	welding bench		
+2	go	story.boss.angler	심해 등불아귀	Deep-Sea Lantern Anglerfish		
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
 2	go	story.boss.emberfox	여우불 구미호	Foxfire Nine-Tail		
 2	go	story.boss.haesol	먹구름 가면 해솔	Haesol of the Storm Mask		
@@ -1666,6 +1668,53 @@
 2	go	story.ch21.s8.l4	테왁이 궁궐 기와 사이로 이어져요. 물질하는 사람이 정말 있다면… 저 안쪽에 있을 거예요.	The tewak trail runs in among the palace tiles. If someone really is diving down here… they'll be somewhere inside.		
 2	go	story.ch21.s8.p.a	누가 지웠을까?	Who erased it?		
 2	go	story.ch21.s8.p.b	괜찮아, 반디?	Are you all right, Bandi?		
+2	go	story.ch22	제22장 · 잠긴 궁궐의 해녀	Chapter 22 · The Haenyeo of the Sunken Palace		
+2	go	story.ch22.enter	🐟 돔 안 어둠 속에서 등불 하나가 떠올랐다 — 심해 등불아귀!	🐟 A single lantern rises from the darkness inside the dome — the Deep-Sea Lantern Anglerfish!		
+2	go	story.ch22.p2	💧 등불아귀가 물 비늘을 세운다 — 번개로 깨라! 물두꺼비와 날쌘용이 뛰어든다	💧 The anglerfish raises its water scales — break them with lightning! A water toad and a swift dragon leap in		
+2	go	story.ch22.s1	궁궐 기단 위의 여울과 이야기하기	Talk to Yeoul on the palace plinth		
+2	go	story.ch22.s1.l1	테왁 불빛이 동쪽 곁채 쪽에서 가장 밝아요. 누가 거기서 숨을 고르는 것 같아요.	The tewak lights are brightest by the eastern side hall. It looks like someone is catching their breath there.		
+2	go	story.ch22.s1.l2	삐— 사람 한 명의 체온 신호. 곁채 앞에 있습니다.	Beep — one human body-heat signal. In front of the side hall.		
+2	go	story.ch22.s1.l3	물이 얕아도 기와가 미끄러워요. 천천히 가세요.	The water is shallow, but the tiles are slippery. Go slowly.		
+2	go	story.ch22.s1.p.a	가 볼게.	I'll go look.		
+2	go	story.ch22.s1.p.b	조심해서 다가가자.	Let's approach carefully.		
+2	go	story.ch22.s10	돔 안의 물새와 이야기하기	Talk to Mulsae inside the dome		
+2	go	story.ch22.s10.l1	……이 빛 집이 바다를 밀어내고 있었구려. 도읍이 잠기던 날에도 이 안만은 마른 땅이었을 테지.	…So this house of light was pushing back the sea. Even the day the capital sank, only in here would the ground have stayed dry.		
+2	go	story.ch22.s10.l2	저 안쪽 기록실 — 옛 기단 위에 앞 시대 단말이 서 있어요. 기지 자료에도 없는 건물이에요.	That records room inside — an old terminal from a later age stands on an old plinth. It isn't in the base's data either.		
+2	go	story.ch22.s10.l3	삐— 기록실에서 제 신호와 같은 주파수가 나옵니다. 지워진 칸이… 저 안에 있습니다.	Beep — the records room emits the same frequency as my own signal. The erased entry… is in there.		
+2	go	story.ch22.s10.l4	갇힌 줄로만 알았는데, 기다린 거였나 보오. 좋소 — 끝까지 같이 가 보지.	I thought I was trapped, but it seems I was waiting. Very well — I'll go with you to the end.		
+2	go	story.ch22.s10.p.a	기록실로 가자.	Let's go to the records room.		
+2	go	story.ch22.s10.p.b	물새 님도 같이 가요.	Come with us, Mulsae.		
+2	go	story.ch22.s2	곁채 앞의 해녀와 이야기하기	Talk to the haenyeo in front of the side hall		
+2	go	story.ch22.s2.l1	……뭍사람이 여기까지 오다니. 숨이 길구려.	…A land-dweller, all the way down here. You hold your breath long.		
+2	go	story.ch22.s2.l2	나는 해녀 물새. 도읍이 물에 잠기던 날 아침, 물질 나갔다가 그대로 이 물에 갇혔지.	I am Mulsae, a haenyeo. The morning the capital sank, I went out to dive and was trapped in this water ever since.		
+2	go	story.ch22.s2.l3	그날부터 해가 몇 번 떴는지 모르겠소. 다만 저 둥근 빛 집 문이 닫혀 있는 건 알지.	I've lost count of how many suns have risen since. But I know the door of that round house of light is shut.		
+2	go	story.ch22.s2.l4	문 앞 물길 석등 셋에 불을 넣으면 문이 풀린다오. 옛날엔 조개 기름으로 불을 살렸는데… 바지락 좀 캐다 주겠소?	Light the three water-path lanterns before the door and it will open. We used to kindle them with clam oil… would you dig me some clams?		
+2	go	story.ch22.s2.p.a	누구세요?	Who are you?		
+2	go	story.ch22.s2.p.b	테왁 불빛을 따라왔어요.	We followed the tewak lights.		
+2	go	story.ch22.s3	석등 기름으로 쓸 바지락 셋 캐기(갯벌 물가)	Dig up three clams for lantern oil (at the water's edge)		
+2	go	story.ch22.s4	빛 돔 문 앞의 물새와 이야기하기	Talk to Mulsae before the light-dome door		
+2	go	story.ch22.s4.l1	기름은 됐소. 이제 차례가 문제지 — 물길 석등은 해 뜨는 쪽, 별 뜨는 쪽, 달 뜨는 쪽 차례로 켰다오.	The oil will do. Now the order is the problem — we lit the water-path lanterns toward the sunrise, then the star-rise, then the moonrise.		
+2	go	story.ch22.s4.l2	기지 수중 조명 배치도에도 석등 자리가 적혀 있어요. 해, 별, 달 — 맞아요!	The base's underwater lighting plan lists the lantern spots too. Sun, star, moon — that's right!		
+2	go	story.ch22.s4.l3	다 꺼지지. 물은 두 번 가르쳐 주지 않는다오.	They all go out. The water doesn't teach twice.		
+2	go	story.ch22.s4.p.a	해, 별, 달.	Sun, star, moon.		
+2	go	story.ch22.s4.p.b	틀리면 어떻게 돼요?	What if we get it wrong?		
+2	go	story.ch22.s5	빛 돔 문 앞 물길 석등을 차례(해 → 별 → 달)로 밝히기	Light the water-path lanterns before the dome door in order (sun → star → moon)		
+2	go	story.ch22.s6	빛 돔 문 앞의 물새와 이야기하기	Talk to Mulsae before the light-dome door		
+2	go	story.ch22.s6.l1	삐— 돔 문 빛 자물쇠가 돌기 시작했습니다. 다 풀리려면 시간이 걸립니다.	Beep — the dome door's light lock has begun to turn. It will take time to release fully.		
+2	go	story.ch22.s6.l2	물이 술렁이는구려. 불을 보고 바다 것들이 몰려오고 있소.	The water is stirring. The sea things are gathering at the sight of the fire.		
+2	go	story.ch22.s6.l3	동쪽과 서쪽이에요! 문 앞을 지켜 주세요!	East and west! Please hold the front of the door!		
+2	go	story.ch22.s6.p.a	자물쇠를 지킬게요.	We'll guard the lock.		
+2	go	story.ch22.s6.p.b	어느 쪽에서 와요?	Which side will they come from?		
+2	go	story.ch22.s7	빛 돔 문 자물쇠가 풀리는 동안 지키기	Defend while the light-dome door lock unlocks		
+2	go	story.ch22.s8	빛 돔 문 앞의 여울과 이야기하기	Talk to Yeoul before the light-dome door		
+2	go	story.ch22.s8.l1	삐— 자물쇠 해제. 빛 돔 문이 열립니다.	Beep — lock released. The light-dome door is opening.		
+2	go	story.ch22.s8.l2	안이… 말라 있어요. 바다 밑인데 물이 한 방울도 없어요!	It's… dry inside. We're under the sea, and there's not a drop of water!		
+2	go	story.ch22.s8.l3	저 안에 무언가 빛나는구려. 내가 본 테왁 불빛보다 훨씬 큰 것이.	Something shines in there. Far bigger than any tewak light I've seen.		
+2	go	story.ch22.s8.l4	등불을 단 물고기라… 옛 어른들이 말하던 심해 등불아귀인가. 빛을 먹고 산다더니.	A fish carrying a lantern… the deep-sea lantern anglerfish the elders spoke of. They say it lives on light.		
+2	go	story.ch22.s8.p.a	들어가 보자.	Let's go in.		
+2	go	story.ch22.s8.p.b	조심해, 다들.	Careful, everyone.		
+2	go	story.ch22.s9	돔 안에 숨어 빛을 먹던 심해 등불아귀와 맞서기	Face the deep-sea lantern anglerfish that hid in the dome eating light		
+2	go	story.ch22.win	🐟 등불아귀의 등불이 꺼지고 — 어둠 속으로 비늘 조각만 흩어졌다	🐟 The anglerfish's lantern goes out — only scale fragments drift into the dark		
 2	go	story.ch3	제3장 · 잔칫날의 불청객	Chapter 3 · Uninvited Guests at the Feast		
 2	go	story.ch3.s1	촌장에게 잔치 일손을 돕겠다고 하기	Offer the Elder a hand with the feast		
 2	go	story.ch3.s1.l1	하늘이 갠 기념으로 잔치를 열기로 했단다. 그런데 일손이 모자라구나.	We've decided to hold a feast now that the sky has cleared. But we're short of hands.		
@@ -1961,6 +2010,7 @@
 2	go	story.idle.hangyeol	종은 소리로 사람을 부르는 물건이오.	A bell is a thing that calls people by sound.		
 2	go	story.idle.haram	바늘이 또 얼었네… 눈은 언제 그치려나.	The needle froze again… when will this snow ever stop?		
 2	go	story.idle.horse	히힝… 푸르르.	Neigh… snort.		
+2	go	story.idle.mulsae	숨 한 번에 한 길. 물은 서두르는 사람을 싫어한다오.	One breath, one fathom. The water dislikes those in a hurry.		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 2	go	story.idle.thief	헤헤, 못 잡지롱!	Heh heh, can't catch me!		
 2	go	story.idle.wanderer	……	……		
@@ -1987,6 +2037,7 @@
 2	go	story.npc.hangyeol	종지기 한결	Bellkeeper Hangyeol		
 2	go	story.npc.haram	기상 관측원 하람	Haram the Weather Observer		
 2	go	story.npc.horse	놀란 역마	Startled Post Horse		
+2	go	story.npc.mulsae	해녀 물새	Haenyeo Mulsae		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
 2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
@@ -2016,6 +2067,7 @@
 2	go	story.short.hangyeol	한결	Hangyeol		
 2	go	story.short.haram	하람	Haram		
 2	go	story.short.horse	역마	Horse		
+2	go	story.short.mulsae	물새	Mulsae		
 2	go	story.short.scholar	은비	Eunbi		
 2	go	story.short.thief	도둑	Thief		
 2	go	story.short.wanderer	나그네	Traveler		
