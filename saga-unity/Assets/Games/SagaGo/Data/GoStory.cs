@@ -77,9 +77,9 @@ namespace Saga.Go.Data
         public static Vector3 SkyCenter => _skyCenter ??= DuelPeak.Top + new Vector3(-SkyWest, SkyRise, 0f);
         public static Vector3 SkyPos(Vector2 off) => SkyCenter + new Vector3(off.x, 0f, off.y);
         /// <summary>섬 윗면에 섰나(난간 안쪽).</summary>
-        public static bool OnSkyTop(Vector3 p) => (Flat(p, SkyCenter) <= SkyR - 1.5f && Mathf.Abs(p.y - SkyCenter.y) < 3f) || OnDeckTop(p) || OnRiftTop(p);
+        public static bool OnSkyTop(Vector3 p) => (Flat(p, SkyCenter) <= SkyR - 1.5f && Mathf.Abs(p.y - SkyCenter.y) < 3f) || OnDeckTop(p) || OnRiftTop(p) || OnRouteTop(p);
         /// <summary>섬 층인가(윗면 8m 아래까지·난간 3m 밖까지) — 층이 다르면 들판 전투가 서로 못 본다(웹 `apart`).</summary>
-        public static bool OnSkyLayer(Vector3 p) => (Flat(p, SkyCenter) <= SkyR + 3f && p.y > SkyCenter.y - 8f) || (Flat(p, DeckCenter) <= DeckR + 3f && p.y > DeckCenter.y - 8f) || (Flat(p, RiftCenter) <= RiftR + 3f && p.y > RiftCenter.y - 8f);
+        public static bool OnSkyLayer(Vector3 p) => (Flat(p, SkyCenter) <= SkyR + 3f && p.y > SkyCenter.y - 8f) || (Flat(p, DeckCenter) <= DeckR + 3f && p.y > DeckCenter.y - 8f) || (Flat(p, RiftCenter) <= RiftR + 3f && p.y > RiftCenter.y - 8f) || OnRouteLayer(p);
         public static bool SameLayer(Vector3 a, Vector3 b) => OnSkyLayer(a) == OnSkyLayer(b);
         public static float DraftTop => SkyCenter.y + DraftOver;
         /// <summary>구름섬·기둥이 열렸나 — 9장이 열린 뒤 늘(그 전엔 먹구름 덮개).</summary>
@@ -271,6 +271,26 @@ namespace Saga.Go.Data
         // 19장(⑲-42) — 틈새 갈림길 시계탑(16m 옆면 타기 — 기둥과 같은 폭의 곧은 벽)·섬돌(열다섯이 나선으로 1.1m 씩 — 걸어 오르는 턱 안이라 걸어서 오른다).
         public const float ClockHeight = 16f, ClockHalf = 1.5f, StepRise = 1.1f, StepR = 3.2f;
         public const int StepN = 15;
+
+        // 24~26장(⑲-48) 구름 위 항로 — 옛 등대 서쪽 하늘 섬 셋(표 `GoAreas.Route*`). 23장 등롱 불(`LighthouseLit`) 뒤에만 서고 밟힌다.
+        // 바람 기둥 셋 — 등대 서쪽 7m 땅 → 사당 · 사당 서쪽 가장자리 안 → 잔해 · 잔해 서쪽 가장자리 안 → 정거장. 끝 = 다음 섬 윗면 + `DraftOver`. 등대·사당 기둥은 24장 뒤, 잔해 기둥은 25장 뒤.
+        public static Vector3 RouteCenter(int i) { var o = GoAreas.RouteOff(i); return GoAreas.Sunken.Center + new Vector3(o.x, GoAreas.RouteUp[i], o.y); }
+        public static Vector3 RoutePos(int i, Vector2 off) => RouteCenter(i) + new Vector3(off.x, 0.05f, off.y);
+        public static bool OnRouteTop(int i, Vector3 p) => Flat(p, RouteCenter(i)) <= GoAreas.RouteR[i] - 1.5f && Mathf.Abs(p.y - RouteCenter(i).y) < 3f;
+        public static bool OnRouteTop(Vector3 p) { for (int i = 0; i < 3; i++) if (OnRouteTop(i, p)) return true; return false; }
+        public static bool OnRouteLayer(Vector3 p) { for (int i = 0; i < 3; i++) if (Flat(p, RouteCenter(i)) <= GoAreas.RouteR[i] + 3f && p.y > RouteCenter(i).y - 8f) return true; return false; }
+        public static bool RouteOn => LighthouseLit;
+        /// <summary>바람 기둥 i(0 등대→사당 · 1 사당→잔해 · 2 잔해→정거장) 밑자리·솟는 높이·열림.</summary>
+        public static Vector3 RoutePillarPos(int i)
+        {
+            if (i == 0) return GoAreas.Sunken.Center + new Vector3(GoAreas.RouteLightX - GoAreas.RouteLightDraft, 0f, GoAreas.RouteLightZ);
+            var c = RouteCenter(i - 1);
+            return new Vector3(c.x - GoAreas.RouteR[i - 1] + DraftR, c.y, c.z);
+        }
+        public static float RoutePillarTop(int i) => RouteCenter(i).y + DraftOver;
+        /// <summary>진단 전용 — 24·25장이 이식되기 전에 기둥이 서는 모습을 잰다(웹 `skyroute.drafts` 손잡이).</summary>
+        public static bool RouteDraftsForTest;
+        public static bool RoutePillarOpen(int i) => RouteDraftsForTest || (i < 2 ? StoryState.Ch > 23 : StoryState.Ch > 24);
 
         // 21장(⑲-45) — 잠긴 도읍 자리(각 명소 가운데에서 m, z 남쪽): 별배는 해무 어귀 안쪽(가운데 쪽 = 북쪽)에 내린다, 잠수정 선착장 = 기지 잔교 머리, 기단 = 궁궐 앞마당. 한별은 은하 나루 착륙판 곁(웹 hb_port).
         public static readonly Vector2 SunkPortHanbyeol = new Vector2(-9f, 5f), SandArrive = new Vector2(6f, -20f), SandHanbyeol = new Vector2(2f, -14f), SandBandi = new Vector2(10f, -16f),

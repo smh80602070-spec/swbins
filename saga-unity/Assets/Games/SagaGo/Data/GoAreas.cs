@@ -25,7 +25,9 @@ namespace Saga.Go.Data
             public Area Area;
             public string Name => GoLocalization.T("area." + Area.Id + ".site." + Id, NameKo);
             public Vector3 Pos => new Vector3(Area.Center.x + Off.x, 0f, Area.Center.z + Off.y);
-            public float Radius => Big ? BigRadius : SmallRadius;
+            /// <summary>109-14-48 하늘 섬 발견 — 섬 윗면 높이(0 이면 땅 발견) · 발견 원 반지름(0 이면 큰/작은 기본).</summary>
+            public float Up, Reach;
+            public float Radius => Reach > 0f ? Reach : (Big ? BigRadius : SmallRadius);
             public string Key => Area.Id + ":" + Id;
         }
 
@@ -34,6 +36,10 @@ namespace Saga.Go.Data
             public string Id, NameKo, Hanja, LoreKo, GroundHex;
             public Vector3 Center;
             public Site[] Sites;
+            /// <summary>109-14-48 땅 위 하늘 섬 발견(`Sites` 와 따로 — 명소 다섯·발견 열 표를 세는 진단이 안 흔들리게). 섬 윗면에 서야 찾는다.</summary>
+            public Site[] SkySites;
+            /// <summary>보이지 않는 벽 높이(0 이면 `WallHeight`) — 하늘 섬이 있는 땅은 더 높이.</summary>
+            public float Ceil;
             /// <summary>땅으로 드는 지도 쪽 돌기둥 자리(월드).</summary>
             public System.Func<Vector3> MapGate;
             /// <summary>나가는 돌기둥이 서는 명소 id — 그 명소 곁 (4, 0) 에 서고 들어오는 자리는 북쪽 6m.</summary>
@@ -51,6 +57,7 @@ namespace Saga.Go.Data
             public bool TrySite(string id, out Site s)
             {
                 foreach (var x in Sites) if (x.Id == id) { s = x; return true; }
+                if (SkySites != null) foreach (var x in SkySites) if (x.Id == id) { s = x; return true; }
                 s = null;
                 return false;
             }
@@ -78,6 +85,7 @@ namespace Saga.Go.Data
         {
             a.Sites = sites;
             foreach (var s in sites) s.Area = a;
+            if (a.SkySites != null) foreach (var s in a.SkySites) s.Area = a;
             return a;
         }
 
@@ -135,6 +143,19 @@ namespace Saga.Go.Data
             S("ticket", "표 기계", GoEra.Modern, 54f, -108f, false),
             S("helm", "칼과 투구", GoEra.Past, -117f, -90f, false));
 
+        // ---- 7부 구름 위 항로(웹 ⑲-48 `skyroute.js`) — 잠긴 도읍 옛 등대 서쪽 하늘 섬 셋(하늘 사당·비행선 잔해·궤도 정거장 조각). 등대 서쪽으로 사슬, 가장자리 사이 `RouteGap`m ----
+        public const float RouteGap = 8f, RouteLightDraft = 7f, RouteGlide = 12f, RouteDraftR = 4.7f, RouteLightX = 81f, RouteLightZ = -198f;
+        public static readonly string[] RouteIds = { "shrine", "wreck", "orbit" };
+        public static readonly float[] RouteR = { 18f, 20f, 16f }, RouteUp = { 60f, 82f, 104f }, RouteSlab = { 4f, 4f, 3f };
+        /// <summary>섬 i 가운데(땅 가운데에서 x, z) — 등대에서 서쪽으로 기둥 + 활공 거리만큼 띄우고 섬 반지름·틈을 이어 붙인다.</summary>
+        public static Vector2 RouteOff(int i)
+        {
+            float x = RouteLightX - RouteLightDraft - RouteGlide + RouteDraftR, prev = 0f;
+            for (int k = 0; k <= i; k++) { x -= (k > 0 ? prev + RouteGap : 0f) + RouteR[k]; prev = RouteR[k]; }
+            return new Vector2(x, RouteLightZ);
+        }
+        private static Site RouteSite(int i, string name, GoEra era) => new Site { Id = "isle_" + RouteIds[i], NameKo = name, Era = era, Off = RouteOff(i), Big = true, Up = RouteUp[i], Reach = RouteR[i] };
+
         // ---- 일곱째 지역 잠긴 도읍(웹 ⑲-44 `sunken.js`) — 6부 무대. 얕게 잠긴 옛 도읍. 은하 나루 별배 나루 곁 돌기둥(20장 뒤 열림 = 해무 어귀)으로 든다 ----
         public static readonly Area Sunken = Make(new Area
         {
@@ -145,6 +166,8 @@ namespace Saga.Go.Data
             MapGate = () => { Skyport.TrySite("port", out var p); return p.Pos + new Vector3(-10f, 0f, 14f); }, // 별배 나루 착륙판 서남쪽(해무 어귀)
             Open = () => StoryState.Ch > 19, OpenCh = 20, // 20장(5부)을 마쳐야 해무가 걷힌다
             Fog = new Color(0.6f, 0.78f, 0.86f), Sun = new Color(0.9f, 1f, 1f), FogDensity = 2.2f, Danger = 3,
+            Ceil = 140f,
+            SkySites = new[] { RouteSite(0, "하늘 사당", GoEra.Past), RouteSite(1, "비행선 잔해", GoEra.Modern), RouteSite(2, "궤도 정거장 조각", GoEra.Future) },
         },
             S("palace", "잠긴 궁궐", GoEra.Past, -117f, 27f, true),
             S("lab", "해저 연구 기지", GoEra.Modern, 99f, -54f, true),

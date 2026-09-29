@@ -52,6 +52,7 @@ namespace Saga.EditorTools
                     CheckDiscover(a, field, p);
                     parts.Add($"[{a.Id}] {string.Join(" · ", p)}");
                 }
+                CheckRoute(pc, field, parts);
                 CheckSave(savePath, parts);
             }
             finally
@@ -165,6 +166,84 @@ namespace Saga.EditorTools
             if (field.Check(small.Pos + new Vector3(small.Radius - 1f, 0f, 0f)) != 1 || GoldState.Gold != GoAreas.BigGold + GoAreas.SmallGold) Fail("발견 찾기·금");
             if (AreaState.CountIn(a.Id) != 2 || AreaState.Discover(a.Id + ":bogus")) Fail("찾은 수·없는 열쇠");
             parts.Add("발견(밖 못 찾음·명소 16m·발견 7m·보상 한 번·없는 열쇠)");
+        }
+
+        // ---- 109-14-48 구름 위 항로 — 잠긴 도읍 등대 서쪽 하늘 섬 셋·바람 기둥 셋·섬 발견 ----
+        private static void CheckRoute(PlayerController pc, AreaField field, List<string> parts)
+        {
+            var a = GoAreas.Sunken;
+            if (a.SkySites == null || a.SkySites.Length != 3) { Fail("하늘 섬 발견 셋이 아님"); return; }
+            for (int i = 0; i < 3; i++)
+            {
+                var s = a.SkySites[i];
+                if (!GoAreas.TrySite(s.Key, out var t) || t != s || s.Up != GoAreas.RouteUp[i] || s.Name.StartsWith("area.")) Fail($"하늘 섬 {s.Id} 표·이름");
+                Vector2 o = GoAreas.RouteOff(i);
+                if (Mathf.Abs(o.x) + GoAreas.RouteR[i] + 2f > GoAreas.HalfX || Mathf.Abs(o.y) + GoAreas.RouteR[i] + 2f > GoAreas.HalfZ) Fail($"하늘 섬 {s.Id} 가 땅 가장자리에 걸침");
+                if (i > 0)
+                {
+                    float gap = (GoAreas.RouteOff(i - 1).x - GoAreas.RouteR[i - 1]) - (o.x + GoAreas.RouteR[i]);
+                    if (Mathf.Abs(gap - GoAreas.RouteGap) > 0.01f) Fail($"하늘 섬 {i - 1}·{i} 틈 {gap:0.00}");
+                    // 기둥 끝에서 활공해 다음 섬 가장자리 1.5m 안까지: 12m 위에서 초속 3 로 내려오며 초속 10 → 40m 까지
+                    float need = GoAreas.RouteDraftR + GoAreas.RouteGap + 1.5f;
+                    if (need > 30f) Fail($"기둥에서 다음 섬까지 {need:0.0}m — 활공으로 못 닿음");
+                }
+            }
+            if (a.Ceil < GoAreas.RouteUp[2] + 20f) Fail("잠긴 도읍 보이지 않는 벽이 가장 높은 섬보다 낮음");
+            foreach (var o in GoAreas.All) if (o != a && o.SkySites != null) Fail("다른 땅에 하늘 섬");
+
+            // 등롱 앞 — 섬도 기둥도 안 선다
+            StoryState.Restore(22, 0);
+            field.Refresh();
+            if (field.RouteShown || PlayerController.InDraft(GoStory.RoutePillarPos(0) + Vector3.up * 5f)) Fail("등대에 불이 들어오기 전인데 하늘 섬·기둥이 섬");
+            Vector3 top0 = GoStory.RouteCenter(0);
+            if (field.Check(top0 + new Vector3(0f, 0.3f, 0f)) != 0) Fail("등대에 불이 들어오기 전인데 하늘 섬을 찾음");
+            // 등롱 뒤(23장 4째 단계)
+            StoryState.Restore(22, 3);
+            field.Refresh();
+            if (!field.RouteShown) Fail("등롱 불을 넣었는데 하늘 섬이 안 섬");
+            Physics.SyncTransforms();
+            for (int i = 0; i < 3; i++)
+            {
+                Vector3 c = GoStory.RouteCenter(i);
+                if (!Physics.Raycast(c + new Vector3(-3f, 3f, 6f), Vector3.down, out var hit, 8f) || Mathf.Abs(hit.point.y - c.y) > 0.05f) Fail($"하늘 섬 {i} 윗면 충돌 {(hit.collider != null ? hit.point.y - c.y : -99f):0.00}");
+                if (!GoStory.OnRouteTop(i, c + Vector3.up * 0.3f) || !GoStory.OnSkyTop(c + Vector3.up * 0.3f) || !GoStory.OnSkyLayer(c + Vector3.up * 0.3f) || GoStory.OnSkyTop(GoAreas.Sunken.Center)) Fail($"하늘 섬 {i} 층 판정");
+                if (i > 0 && GoStory.OnRouteTop(i - 1, c + Vector3.up * 0.3f)) Fail("두 섬이 한 층으로 셈");
+            }
+            // 기둥 — 24장을 마치면 앞 둘, 25장을 마치면 셋째
+            bool Draft(int i) { var b = GoStory.RoutePillarPos(i); return PlayerController.InDraft(b + Vector3.up * 5f); }
+            if (Draft(0) || Draft(1) || Draft(2)) Fail("24장 앞인데 바람 기둥이 섬");
+            StoryState.Restore(23, 0);
+            field.Refresh();
+            if (Draft(0) || Draft(1) || Draft(2)) Fail("23장 끝인데 바람 기둥이 섬(24장 뒤에 열려야)");
+            GoStory.RouteDraftsForTest = true; // 24·25장이 이식되기 전 — 열린 기둥을 잰다
+            try
+            {
+                field.Refresh();
+                if (!Draft(0) || !Draft(1) || !Draft(2)) Fail("열린 기둥 셋이 안 섬");
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector3 b = GoStory.RoutePillarPos(i);
+                    if (Mathf.Abs(PlayerController.DraftTopAt(b + Vector3.up * 5f) - (GoStory.RouteCenter(i).y + GoStory.DraftOver)) > 0.01f) Fail($"바람 기둥 {i} 솟는 높이");
+                    if (PlayerController.InDraft(b + new Vector3(GoStory.DraftR + 2f, 5f, 0f))) Fail($"바람 기둥 {i} 반지름");
+                    if (!(i == 0 ? !GoStory.OnRouteLayer(b + Vector3.up * 0.3f) : GoStory.OnRouteTop(i - 1, b + Vector3.up * 0.3f))) Fail($"바람 기둥 {i} 밑자리 층");
+                }
+            }
+            finally { GoStory.RouteDraftsForTest = false; field.Refresh(); }
+            // 발견 — 섬 윗면에 서야(땅에서 섬 밑을 지나가는 것으론 안 됨)
+            AreaState.ResetForTest();
+            Vector3 c1 = GoStory.RouteCenter(0);
+            if (field.Check(new Vector3(c1.x, 0.4f, c1.z)) != 0) Fail("섬 밑 땅에서 하늘 섬을 찾음");
+            int g0 = GoldState.Gold;
+            if (field.Check(c1 + new Vector3(0f, 0.3f, 0f)) != 1 || !AreaState.Found("sunken:isle_shrine") || GoldState.Gold != g0 + GoAreas.BigGold) Fail("하늘 사당 섬 윗면에서 발견·보상");
+            if (field.Check(c1 + new Vector3(0f, 0.3f, 0f)) != 0) Fail("하늘 섬을 두 번 찾음");
+            if (field.Check(GoStory.RouteCenter(2) + new Vector3(0f, 0.3f, 0f)) != 1 || !AreaState.Found("sunken:isle_orbit")) Fail("궤도 정거장 조각 발견");
+            var snap = AreaState.Snapshot();
+            AreaState.Restore(snap);
+            if (!AreaState.Found("sunken:isle_shrine") || !AreaState.Found("sunken:isle_orbit") || AreaState.Found("sunken:isle_wreck")) Fail("하늘 섬 발견이 저장·복원에서 빠짐");
+            StoryState.Restore(22, 0);
+            field.Refresh();
+            if (field.RouteShown || Draft(0)) Fail("등롱 앞으로 되돌렸는데 하늘 섬·기둥이 남음");
+            parts.Add("[sunken 구름 위 항로] 하늘 섬 셋 표(등대 서쪽 사슬·틈 8m·기둥→섬 활공 안)·보이지 않는 벽 위·등롱 앞엔 안 섬/뒤엔 섬(윗면 충돌·층 판정)·바람 기둥 셋(23장 끝엔 닫힘·열림 손잡이로 솟는 높이·반지름·밑자리)·섬 윗면에서 발견(밑 땅에선 안 됨·중복 없음·저장 복원)");
         }
 
         private static void CheckSave(string savePath, List<string> parts)

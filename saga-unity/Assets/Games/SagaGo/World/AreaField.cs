@@ -16,7 +16,7 @@ namespace Saga.Go.World
     /// (곁 4.5m 에서 단추 또는 F — 열린 땅만, 싸우는 중엔 막힘). 이야기가 바꾸는 부분(계류 탑 빛 공·매인 별배·종·막차 등)은 `Refresh` 가 진행에 맞춰 켠다.
     /// `WorldMapBuilder` 가 Play 때 붙인다(씬 재빌드 없음).
     /// </summary>
-    public class AreaField : MonoBehaviour
+    public partial class AreaField : MonoBehaviour
     {
         public static AreaField Instance { get; private set; }
         public const float CheckEverySec = 0.25f;
@@ -45,6 +45,7 @@ namespace Saga.Go.World
         private void OnDestroy()
         {
             if (_riftRegistered) PlayerController.ExtraDrafts.Remove(_riftCol);
+            UnregisterRoute();
             if (Instance == this) Instance = null;
         }
 
@@ -94,6 +95,7 @@ namespace Saga.Go.World
         {
             foreach (Transform c in transform) if (c.name.StartsWith("Area_")) Destroy(c.gameObject);
             _sites.Clear(); _gates.Clear(); _steles.Clear(); _parts.Clear();
+            UnregisterRoute();
             foreach (var a in GoAreas.All) BuildArea(a);
             BuildUi();
         }
@@ -107,7 +109,7 @@ namespace Saga.Go.World
             Vector3 c0 = a.Center;
             var ground = P(PrimitiveType.Cube, root.transform, "Area_ground", c0 + new Vector3(0f, -GoAreas.Thickness * 0.5f, 0f), new Vector3(GoAreas.HalfX * 2f, GoAreas.Thickness, GoAreas.HalfZ * 2f), Mat("ground_" + a.Id, Hex(a.GroundHex), 0f, 0.1f), true);
             // 바깥 보이지 않는 벽 넷
-            float hx = GoAreas.HalfX, hz = GoAreas.HalfZ, h = GoAreas.WallHeight, t = 2f;
+            float hx = GoAreas.HalfX, hz = GoAreas.HalfZ, h = Mathf.Max(GoAreas.WallHeight, a.Ceil), t = 2f;
             var defs = new[]
             {
                 (new Vector3(c0.x, h * 0.5f, c0.z - hz - t * 0.5f), new Vector3(hx * 2f + t * 2f, h, t)),
@@ -126,7 +128,7 @@ namespace Saga.Go.World
             }
             foreach (var s in a.Sites) _sites[s.Key] = BuildSite(root.transform, a, s);
             if (a.Id == "crossing") BuildRiftIsland(root.transform);
-            if (a.Id == "sunken") BuildSunkenExtras(root.transform, a);
+            if (a.Id == "sunken") { BuildSunkenExtras(root.transform, a); BuildRoute(root.transform); }
             // 돌기둥 — 지도 쪽(열린 뒤에만 보임) · 땅 쪽(경계비 곁)
             var stone = Mat("gate_stone", new Color(0.55f, 0.58f, 0.64f));
             var glow = Mat("gate_glow", new Color(0.7f, 0.55f, 1f), 2.5f);
@@ -678,6 +680,7 @@ namespace Saga.Go.World
             if (_parts.TryGetValue("skyport:bell_fallen", out var fallen) && fallen != null) fallen.SetActive(!hung);
             _clockOn = !StoryState.OffForTest && GoStory.ClockRunning;
             RefreshRift();
+            RefreshRoute();
             bool powered = !StoryState.OffForTest && GoStory.TrainPowered;
             SetMat("skyport:train_lamp_a", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
             SetMat("skyport:train_lamp_b", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
@@ -742,6 +745,7 @@ namespace Saga.Go.World
             TickClock();
             TickBeam();
             TickRiftRings(Time.deltaTime);
+            TickRoute(Time.deltaTime);
             var (a, g) = NearGate(feet);
             if (kb != null && g != 0 && kb.fKey.wasPressedThisFrame && !FishingField.Busy && !StoryState.Talking
                 && !(StoryUi.Instance != null && StoryUi.Instance.TalkShown) && !DispatchUi.AtBoard() && GoFishing.NearSpot(new Vector2(feet.x, feet.z)) == null && !GoFishing.NearBoard(new Vector2(feet.x, feet.z)))
@@ -802,6 +806,16 @@ namespace Saga.Go.World
                 if (DialogueLabel.Instance != null) DialogueLabel.Instance.Show(LastFound, 3.5f);
                 FieldRingFx.Spawn(feet, 2.5f, new Color(0.7f, 0.9f, 1f), 0.5f);
             }
+            if (a.SkySites != null && !StoryState.OffForTest && GoStory.RouteOn)
+                foreach (var s in a.SkySites) // 109-14-48 하늘 섬 — 섬 윗면(높이 3m 안)에 서야 찾는다
+                {
+                    if (AreaState.Found(s.Key) || feet.y < s.Up - 3f || (Flat(feet) - Flat(s.Pos)).magnitude > s.Radius) continue;
+                    if (!AreaState.Discover(s.Key)) continue;
+                    n++;
+                    LastFound = string.Format(GoLocalization.T("area.found", "{0} — {1} 발견! {2}"), GoWorldMap.RegionName(a.Id), s.Name, GoAreas.RewardText(s));
+                    if (DialogueLabel.Instance != null) DialogueLabel.Instance.Show(LastFound, 3.5f);
+                    FieldRingFx.Spawn(feet, 2.5f, new Color(0.7f, 0.9f, 1f), 0.5f);
+                }
             return n;
         }
     }

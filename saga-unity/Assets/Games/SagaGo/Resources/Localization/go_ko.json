@@ -2270,6 +2270,9 @@
     { "key": "story.ch23.s7.p.a", "value": "먹구름을 부리는 자를 찾자." },
     { "key": "story.ch23.s7.p.b", "value": "물새 님은 이제 어떡해요?" },
     { "key": "story.ch23.s7.l4", "value": "물은 두 번 가르쳐 주지 않는다 했지. 이번엔 나도 안 놓치겠소 — 도읍을 잠기게 한 그 먹구름을." },
-    { "key": "story.ch23.s7.l5", "value": "해녀 물새, 오늘부터 뭍사람들 편이오. 숨 긴 거 하나는 자신 있소." }
+    { "key": "story.ch23.s7.l5", "value": "해녀 물새, 오늘부터 뭍사람들 편이오. 숨 긴 거 하나는 자신 있소." },
+    { "key": "area.sunken.site.isle_shrine", "value": "하늘 사당" },
+    { "key": "area.sunken.site.isle_wreck", "value": "비행선 잔해" },
+    { "key": "area.sunken.site.isle_orbit", "value": "궤도 정거장 조각" }
   ]
 }

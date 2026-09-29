@@ -2270,6 +2270,9 @@
     { "key": "story.ch23.s7.p.a", "value": "Let's find whoever commands the storm cloud." },
     { "key": "story.ch23.s7.p.b", "value": "What will you do now, Mulsae?" },
     { "key": "story.ch23.s7.l4", "value": "I said the water doesn't teach twice. This time I won't miss it — the storm cloud that sank the capital." },
-    { "key": "story.ch23.s7.l5", "value": "Haenyeo Mulsae — from today I'm on the land-dwellers' side. Holding my breath is the one thing I'm sure of." }
+    { "key": "story.ch23.s7.l5", "value": "Haenyeo Mulsae — from today I'm on the land-dwellers' side. Holding my breath is the one thing I'm sure of." },
+    { "key": "area.sunken.site.isle_shrine", "value": "Sky Shrine" },
+    { "key": "area.sunken.site.isle_wreck", "value": "Airship Wreck" },
+    { "key": "area.sunken.site.isle_orbit", "value": "Orbital Station Fragment" }
   ]
 }
