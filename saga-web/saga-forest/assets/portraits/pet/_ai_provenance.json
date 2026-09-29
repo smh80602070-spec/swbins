@@ -1,0 +1,635 @@
+{
+"note": "AI 생성 초상 — tools/ai-art (swbins3 sd-webui, 상업 허용 모델). 프롬프트는 tools/ai-art/batches/web_pets_105.json",
+"items": {
+"pk_alakazam": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 549694613,
+"date": "2026-09-29"
+},
+"pk_bulbasaur": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 863482338,
+"date": "2026-09-29"
+},
+"pk_charizard": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1779600211,
+"date": "2026-09-29"
+},
+"pk_charmander": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 266524838,
+"date": "2026-09-29"
+},
+"pk_dragonite": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3113456366,
+"date": "2026-09-29"
+},
+"pk_eevee": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3473046865,
+"date": "2026-09-29"
+},
+"pk_gengar": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2783823225,
+"date": "2026-09-29"
+},
+"pk_gyarados": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 19201613,
+"date": "2026-09-29"
+},
+"pk_lapras": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2415382820,
+"date": "2026-09-29"
+},
+"pk_magikarp": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3374767337,
+"date": "2026-09-29"
+},
+"pk_mew": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3321378740,
+"date": "2026-09-29"
+},
+"pk_mewtwo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 874374798,
+"date": "2026-09-29"
+},
+"pk_pikachu": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1331290252,
+"date": "2026-09-29"
+},
+"pk_slowbro": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 729327853,
+"date": "2026-09-29"
+},
+"pk_snorlax": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 951764666,
+"date": "2026-09-29"
+},
+"pk_squirtle": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2499375082,
+"date": "2026-09-29"
+},
+"pt_alpaca": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3150788308,
+"date": "2026-09-29"
+},
+"pt_anglerfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1394545559,
+"date": "2026-09-29"
+},
+"pt_apatosaurus": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2608878908,
+"date": "2026-09-29"
+},
+"pt_armored_catfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3211505549,
+"date": "2026-09-29"
+},
+"pt_baekho": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2967005194,
+"date": "2026-09-29"
+},
+"pt_bear": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 332282064,
+"date": "2026-09-29"
+},
+"pt_betta": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3578021826,
+"date": "2026-09-29"
+},
+"pt_black_lion_fish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1405216323,
+"date": "2026-09-29"
+},
+"pt_blobfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2754742695,
+"date": "2026-09-29"
+},
+"pt_blue_goldfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1457760187,
+"date": "2026-09-29"
+},
+"pt_blue_tang": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3741867879,
+"date": "2026-09-29"
+},
+"pt_boar": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2647041946,
+"date": "2026-09-29"
+},
+"pt_bulgasari": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 380528204,
+"date": "2026-09-29"
+},
+"pt_bull": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4286698663,
+"date": "2026-09-29"
+},
+"pt_butterfly_fish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1060436720,
+"date": "2026-09-29"
+},
+"pt_cardinal_fish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1834021229,
+"date": "2026-09-29"
+},
+"pt_carp": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1186337484,
+"date": "2026-09-29"
+},
+"pt_cat": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3683356366,
+"date": "2026-09-29"
+},
+"pt_cheongryong": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1420186719,
+"date": "2026-09-29"
+},
+"pt_clownfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 152582469,
+"date": "2026-09-29"
+},
+"pt_coral_grouper": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2159911720,
+"date": "2026-09-29"
+},
+"pt_cow": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3665593009,
+"date": "2026-09-29"
+},
+"pt_cow_farm": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 734601742,
+"date": "2026-09-29"
+},
+"pt_cowfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1879388983,
+"date": "2026-09-29"
+},
+"pt_crane": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3207117103,
+"date": "2026-09-29"
+},
+"pt_deer": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3149348862,
+"date": "2026-09-29"
+},
+"pt_dokkaebi": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2677690342,
+"date": "2026-09-29"
+},
+"pt_dolphin": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1955762586,
+"date": "2026-09-29"
+},
+"pt_donkey": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3908058346,
+"date": "2026-09-29"
+},
+"pt_fish_1": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 927127320,
+"date": "2026-09-29"
+},
+"pt_fish_2": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 977460177,
+"date": "2026-09-29"
+},
+"pt_fish_3": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 960682558,
+"date": "2026-09-29"
+},
+"pt_flatfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1836929963,
+"date": "2026-09-29"
+},
+"pt_flower_horn": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 46978655,
+"date": "2026-09-29"
+},
+"pt_fox": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 361834523,
+"date": "2026-09-29"
+},
+"pt_goblin_shark": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3567213591,
+"date": "2026-09-29"
+},
+"pt_goldfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3676393346,
+"date": "2026-09-29"
+},
+"pt_gumiho": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4219386861,
+"date": "2026-09-29"
+},
+"pt_haetae": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3013616022,
+"date": "2026-09-29"
+},
+"pt_horse": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2128329175,
+"date": "2026-09-29"
+},
+"pt_horse_farm": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 595233356,
+"date": "2026-09-29"
+},
+"pt_humphead": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 272882678,
+"date": "2026-09-29"
+},
+"pt_hyeonmu": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 545666323,
+"date": "2026-09-29"
+},
+"pt_jeoktoma": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2458096690,
+"date": "2026-09-29"
+},
+"pt_jeolyeong": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2810138344,
+"date": "2026-09-29"
+},
+"pt_jindo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2369227994,
+"date": "2026-09-29"
+},
+"pt_jujak": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 707679603,
+"date": "2026-09-29"
+},
+"pt_koi_2": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3337630494,
+"date": "2026-09-29"
+},
+"pt_lionfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1367851390,
+"date": "2026-09-29"
+},
+"pt_llama": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 415336943,
+"date": "2026-09-29"
+},
+"pt_magpie": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 985417473,
+"date": "2026-09-29"
+},
+"pt_mandarin_fish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3771830561,
+"date": "2026-09-29"
+},
+"pt_manta_ray": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3546685250,
+"date": "2026-09-29"
+},
+"pt_monkey": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1776157087,
+"date": "2026-09-29"
+},
+"pt_moorish_idol": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1162039024,
+"date": "2026-09-29"
+},
+"pt_owl": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 222707788,
+"date": "2026-09-29"
+},
+"pt_panda": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 163855250,
+"date": "2026-09-29"
+},
+"pt_parasaurolophus": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3223508689,
+"date": "2026-09-29"
+},
+"pt_parrot_fish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3405488473,
+"date": "2026-09-29"
+},
+"pt_pig": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2039893206,
+"date": "2026-09-29"
+},
+"pt_piranha": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2713962673,
+"date": "2026-09-29"
+},
+"pt_puffer": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2130741250,
+"date": "2026-09-29"
+},
+"pt_pug": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2038024898,
+"date": "2026-09-29"
+},
+"pt_red_snapper": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1308431093,
+"date": "2026-09-29"
+},
+"pt_royal_gramma": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2663689635,
+"date": "2026-09-29"
+},
+"pt_samjogo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3585762704,
+"date": "2026-09-29"
+},
+"pt_sapsal": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2675136806,
+"date": "2026-09-29"
+},
+"pt_shark": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2261151039,
+"date": "2026-09-29"
+},
+"pt_shark_2": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3829565014,
+"date": "2026-09-29"
+},
+"pt_sheep": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1047144169,
+"date": "2026-09-29"
+},
+"pt_stag": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3164927961,
+"date": "2026-09-29"
+},
+"pt_stegosaurus": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 325638465,
+"date": "2026-09-29"
+},
+"pt_sunfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1819367966,
+"date": "2026-09-29"
+},
+"pt_swordfish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4180848621,
+"date": "2026-09-29"
+},
+"pt_t_rex": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 34677146,
+"date": "2026-09-29"
+},
+"pt_tang": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2455259166,
+"date": "2026-09-29"
+},
+"pt_tetra": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3169561550,
+"date": "2026-09-29"
+},
+"pt_tiger": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1685627085,
+"date": "2026-09-29"
+},
+"pt_toad": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 634083322,
+"date": "2026-09-29"
+},
+"pt_triceratops": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4013047858,
+"date": "2026-09-29"
+},
+"pt_tuna": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 774060040,
+"date": "2026-09-29"
+},
+"pt_turbot": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 101350534,
+"date": "2026-09-29"
+},
+"pt_velociraptor": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 140385054,
+"date": "2026-09-29"
+},
+"pt_whale": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 26330919,
+"date": "2026-09-29"
+},
+"pt_white_horse": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 823670381,
+"date": "2026-09-29"
+},
+"pt_worm": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 634259481,
+"date": "2026-09-29"
+},
+"pt_yellow_tang": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1824379351,
+"date": "2026-09-29"
+},
+"pt_zebra": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3655461226,
+"date": "2026-09-29"
+},
+"pt_zebra_clown_fish": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3300643523,
+"date": "2026-09-29"
+}
+}
+}

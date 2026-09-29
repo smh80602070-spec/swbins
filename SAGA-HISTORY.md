@@ -5210,3 +5210,8 @@ saga-go 정본을 다른 네 판에도 동일 반영, 가드돼 있어 그 판�
 - 로컬 AI 생성(C:\swbins3)은 swbins3 세션에서 따로 — 음악 MusicGen·음성 XTTS-v2 는 비상업이라 상업 허용 모델로 전부 교체(`C:\swbins3\COMMERCIAL_SWAP_TODO.md`).
 - "언리얼급으로 보이게"(내 에셋으로): 조명·후처리 → CC0 4K 재질 → 피부·머리 셰이더 → 표정 → 천 주름(char-forge README ④). 지금 몸은 7~8등신(재 봄), 2등신·애니 얼굴은 새 작업.
 - 웹 다섯 판: "그래픽은 안 좋은데 폰 발열·끊김이 고사양 게임보다 심하다" → SAGA-DESIGN §6.1-B — 잣대 = 화질당 발열, ① 계측(`?perf`) ② 헛일 제거(프레임 상한·멈춘 화면 안 그리기·WebGL 문맥 하나·그림자 캐시·인스턴싱·GC·셰이더 데우기·텍스처 압축) ③ 그다음 그래픽 올리기.
+
+## 2026-09-29 웹 다섯 판 도감(펫) 초상 105 = 로컬 AI 그림 (사가국지는 펫 초상 없음)
+- `tools/ai-art/make_pet_batch.py`(종·생김새 묘사만, 이름 없음, 768×896) → `gen.py`(Animagine XL 4.0 Opt) → `pack_web_pet_portraits.py` 가 `assets/portraits/pet/<id>_s|c.webp` 를 교체(사가고·블로·숲·스토리 4판, 각 3.1MB). 출처 `_ai_provenance.json`·ASSET_LICENSES 절.
+- 함정: 금지어 검사 `BLOCK` 이 `by ` 로 시작하는 구절을 작가 이름으로 본다("chubby yellow"→"by yellow", "by the shore") — 배치를 통째로 거부하고 뒤 15장이 멈췄다. 이전 세션 체인이 살아 있으면 sd-webui 를 같이 쓰다 충돌·타임아웃 — `_out/STOP` 으로 먼저 멈추고 단독 실행.
+- 남은 일: 사가국지 장수 194 초상(`web_realm_194.json`, 0/194) → `pack_web_portraits.py` 확장 후 굽기. 사가블로 미래·현대 30(29→30 완료)도 아직 안 구움.
