@@ -2109,6 +2109,23 @@
     { "key": "hero.story_hanbyeol", "value": "Hanbyeol" },
     { "key": "hero.story_hanbyeol.quote", "value": "A captain's job is to find the next route — this time with you." },
     { "key": "kit.sig.hanbyeol.skill", "value": "Star-Ship Tow Line" },
-    { "key": "kit.sig.hanbyeol.burst", "value": "Rift Closing" }
+    { "key": "kit.sig.hanbyeol.burst", "value": "Rift Closing" },
+    { "key": "region.sunken", "value": "Sunken Capital" },
+    { "key": "region.sunken.lore", "value": "The old capital, shallowly submerged and revealed when the rift closed. A sunken palace, an undersea research base, a light dome and an old lighthouse overlap in one sea." },
+    { "key": "area.sunken.site.palace", "value": "Sunken Palace" },
+    { "key": "area.sunken.site.lab", "value": "Undersea Research Base" },
+    { "key": "area.sunken.site.dome", "value": "Light Dome" },
+    { "key": "area.sunken.site.lighthouse", "value": "Old Lighthouse" },
+    { "key": "area.sunken.site.gate", "value": "Sea-Mist Gateway" },
+    { "key": "area.sunken.site.tewak", "value": "Washed-Up Tewak Float" },
+    { "key": "area.sunken.site.helmet", "value": "Rusty Diving Helmet" },
+    { "key": "area.sunken.site.supply", "value": "Supply Crate" },
+    { "key": "area.sunken.site.pearl", "value": "Pearl Oyster" },
+    { "key": "area.sunken.site.buoy", "value": "Signal Buoy" },
+    { "key": "area.sunken.site.turtle", "value": "Stone Turtle Stele" },
+    { "key": "area.sunken.site.plaque", "value": "Fallen Plaque" },
+    { "key": "area.sunken.site.haetae", "value": "Haetae Statue" },
+    { "key": "area.sunken.site.jelly", "value": "Glowing Jellyfish" },
+    { "key": "area.sunken.site.drone", "value": "Underwater Drone" }
   ]
 }

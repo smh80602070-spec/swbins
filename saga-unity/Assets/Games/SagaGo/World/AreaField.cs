@@ -126,6 +126,7 @@ namespace Saga.Go.World
             }
             foreach (var s in a.Sites) _sites[s.Key] = BuildSite(root.transform, a, s);
             if (a.Id == "crossing") BuildRiftIsland(root.transform);
+            if (a.Id == "sunken") BuildSunkenExtras(root.transform, a);
             // 돌기둥 — 지도 쪽(열린 뒤에만 보임) · 땅 쪽(경계비 곁)
             var stone = Mat("gate_stone", new Color(0.55f, 0.58f, 0.64f));
             var glow = Mat("gate_glow", new Color(0.7f, 0.55f, 1f), 2.5f);
@@ -155,6 +156,7 @@ namespace Saga.Go.World
             root.transform.position = s.Pos;
             if (a.Id == "skyport") BuildSkyportSite(root.transform, s.Id);
             else if (a.Id == "crossing") BuildCrossingSite(root.transform, s.Id);
+            else if (a.Id == "sunken") BuildSunkenSite(root.transform, s.Id);
             return root;
         }
 
@@ -412,6 +414,131 @@ namespace Saga.Go.World
             }
         }
 
+        // ---- 잠긴 도읍 도형(웹 sunken.js 명소 모델을 이 판 크기로) — 땅 전체가 얕은 물(투명 판)에 잠긴 모습 ----
+        private void BuildSunkenExtras(Transform parent, GoAreas.Area a)
+        {
+            var waterMat = new Material(Shader.Find("Sprites/Default")) { name = "SunkenWater (generated)", color = new Color(0.32f, 0.62f, 0.78f, 0.42f) };
+            var water = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            water.name = "Sunken_water";
+            Destroy(water.GetComponent<Collider>());
+            water.transform.SetParent(parent, false);
+            water.transform.position = a.Center + new Vector3(0f, GoStory.SeaLevel, 0f);
+            water.transform.localScale = new Vector3(GoAreas.HalfX * 2f, 0.02f, GoAreas.HalfZ * 2f);
+            water.GetComponent<MeshRenderer>().sharedMaterial = waterMat;
+            water.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            // 궁궐 둘레 불 켜진 테왁 여덟(20장을 마친 뒤 — 5부 끝에 밝혀진다)
+            var lamp = Mat("u_lamp", new Color(1f, 0.85f, 0.45f), 3f);
+            var lampOff = Mat("u_lamp_off", new Color(0.3f, 0.28f, 0.25f));
+            a.TrySite("palace", out var palace);
+            var lights = new GameObject("Sunken_sealights");
+            lights.transform.SetParent(parent, false);
+            for (int i = 0; i < GoStory.SeaLights; i++)
+            {
+                float ang = i * Mathf.PI * 2f / GoStory.SeaLights;
+                P(PrimitiveType.Sphere, lights.transform, "Sea_light", palace.Pos + new Vector3(Mathf.Cos(ang) * GoStory.SeaLightR, 0.5f, Mathf.Sin(ang) * GoStory.SeaLightR), Vector3.one * 0.7f, lamp, false);
+            }
+            _parts["sunken:sealights"] = lights;
+        }
+
+        private void BuildSunkenSite(Transform t, string id)
+        {
+            var stone = Mat("u_stone", new Color(0.52f, 0.53f, 0.55f));
+            var dark = Mat("u_dark", new Color(0.13f, 0.16f, 0.2f));
+            var metal = Mat("u_metal", new Color(0.66f, 0.72f, 0.78f), 0f, 0.65f, 0.6f);
+            var rust = Mat("u_rust", new Color(0.42f, 0.27f, 0.18f), 0f, 0.1f);
+            var wood = Mat("u_wood", new Color(0.4f, 0.3f, 0.2f));
+            var glass = Mat("u_glass", new Color(0.6f, 0.85f, 0.95f), 0.4f, 0.8f);
+            var glow = Mat("u_glow", new Color(0.65f, 0.9f, 1f), 2.4f);
+            var yellow = Mat("u_yellow", new Color(0.9f, 0.72f, 0.12f), 0f, 0.4f);
+            var pearlM = Mat("u_pearl", new Color(0.95f, 0.93f, 0.9f), 0.3f, 0.8f);
+            switch (id)
+            {
+                case "palace": // 잠긴 궁궐 — 기운 정전 + 반쯤 잠긴 돌계단 + 기단 + 동쪽 곁채(22장)
+                    P(PrimitiveType.Cube, t, "Palace_plinth", new Vector3(0f, 0.4f, 0f), new Vector3(20f, 0.8f, 16f), stone, true);
+                    P(PrimitiveType.Cube, t, "Palace_hall", new Vector3(0f, 3.4f, -2f), new Vector3(13f, 5f, 8f), rust, false, new Vector3(0f, 0f, 6f));
+                    P(PrimitiveType.Cube, t, "Palace_roof", new Vector3(0f, 6.6f, -2f), new Vector3(15f, 0.9f, 10f), dark, false, new Vector3(0f, 0f, 6f));
+                    for (int i = 0; i < 5; i++) P(PrimitiveType.Cube, t, "Palace_step", new Vector3(0f, 0.15f + i * 0.15f, 8.6f + (4 - i) * 0.7f), new Vector3(7f, 0.3f, 0.7f), stone, true);
+                    P(PrimitiveType.Cube, t, "Palace_annex", new Vector3(GoStory.AnnexOff.x, 2f, GoStory.AnnexOff.y - 3f), new Vector3(5f, 4f, 4f), rust, false);
+                    P(PrimitiveType.Cube, t, "Palace_annex_roof", new Vector3(GoStory.AnnexOff.x, 4.4f, GoStory.AnnexOff.y - 3f), new Vector3(6f, 0.6f, 5f), dark, false);
+                    break;
+                case "lab": // 해저 연구 기지 — 컨테이너 + 관제실 + 잔교 + 노란 잠수정
+                    P(PrimitiveType.Cube, t, "Lab_container_a", new Vector3(-6f, 1.4f, -6f), new Vector3(6f, 2.8f, 2.6f), metal, true);
+                    P(PrimitiveType.Cube, t, "Lab_container_b", new Vector3(0f, 1.4f, -6f), new Vector3(6f, 2.8f, 2.6f), rust, true);
+                    P(PrimitiveType.Cube, t, "Lab_control", new Vector3(6f, 2f, -5f), new Vector3(4.6f, 4f, 4f), metal, true);
+                    P(PrimitiveType.Cube, t, "Lab_control_glass", new Vector3(6f, 2.6f, -2.98f), new Vector3(3.6f, 1.2f, 0.1f), glass, false);
+                    P(PrimitiveType.Cube, t, "Lab_pier", new Vector3(1f, 0.2f, 9f), new Vector3(3f, 0.3f, 16f), wood, false);
+                    P(PrimitiveType.Sphere, t, "Lab_sub", new Vector3(4.5f, 0.2f, 14f), new Vector3(2.4f, 1.6f, 6f), yellow, false);
+                    P(PrimitiveType.Sphere, t, "Lab_sub_window", new Vector3(4.5f, 0.6f, 11.4f), new Vector3(1.1f, 0.6f, 0.5f), glass, false);
+                    break;
+                case "dome": // 빛 돔 — 받침 고리 + 유리 반구(r11) + 둘레 열두 조각 벽(북쪽 한 조각이 문 — 22장 8째 단계부터 열림)
+                    P(PrimitiveType.Cylinder, t, "Dome_floor", new Vector3(0f, 0.15f, 0f), new Vector3(GoStory.DomeR * 2f + 2f, 0.15f, GoStory.DomeR * 2f + 2f), metal, false);
+                    var shell = P(PrimitiveType.Sphere, t, "Dome_shell", Vector3.zero, new Vector3(GoStory.DomeR * 2f, GoStory.DomeR * 2f, GoStory.DomeR * 2f), glass, false);
+                    for (int i = 0; i < GoStory.DomeSegs; i++)
+                    {
+                        float ang = i * Mathf.PI * 2f / GoStory.DomeSegs;
+                        float wx = Mathf.Sin(ang) * (GoStory.DomeR + 0.3f), wz = -Mathf.Cos(ang) * (GoStory.DomeR + 0.3f);
+                        float wl = 2f * Mathf.PI * GoStory.DomeR / GoStory.DomeSegs + 0.2f;
+                        var seg = P(PrimitiveType.Cube, t, i == 0 ? "Dome_door" : "Dome_wall", new Vector3(wx, 3f, wz), new Vector3(wl, 6f, 0.8f), i == 0 ? Mat("u_door", new Color(0.5f, 0.75f, 0.9f), 0.8f, 0.8f) : metal, true, new Vector3(0f, ang * Mathf.Rad2Deg, 0f));
+                        seg.AddComponent<NoClimb>();
+                        if (i == 0) _parts["sunken:dome_door"] = seg;
+                    }
+                    P(PrimitiveType.Cube, t, "Dome_terminal", new Vector3(GoStory.Term.x, 1f, GoStory.Term.y), new Vector3(1.4f, 2f, 1f), metal, false);
+                    P(PrimitiveType.Cube, t, "Dome_terminal_screen", new Vector3(GoStory.Term.x, 1.5f, GoStory.Term.y - 0.52f), new Vector3(1f, 0.6f, 0.05f), glow, false);
+                    break;
+                case "lighthouse": // 옛 등대 — 15m 돌탑(옆면 타기) + 등롱(23장 3째 단계 뒤 불) + 빛줄기
+                    P(PrimitiveType.Cube, t, "Light_base", new Vector3(0f, 0.6f, 0f), new Vector3(9f, 1.2f, 9f), stone, true);
+                    P(PrimitiveType.Cube, t, "Light_tower", new Vector3(0f, GoStory.LightHeight * 0.5f, 0f), new Vector3(GoStory.LightHalf * 2f, GoStory.LightHeight, GoStory.LightHalf * 2f), stone, true);
+                    Part("sunken:lantern", t, PrimitiveType.Sphere, "Light_lantern", new Vector3(0f, GoStory.LightHeight + 1.2f, 0f), Vector3.one * 1.8f, Mat("u_lantern_off", new Color(0.25f, 0.28f, 0.3f)), false);
+                    Part("sunken:beam", t, PrimitiveType.Cube, "Light_beam", new Vector3(0f, GoStory.LightHeight + 1.2f, 9f), new Vector3(1.2f, 0.6f, 18f), Mat("u_beam", new Color(1f, 0.95f, 0.7f), 2.4f), false);
+                    break;
+                case "gate": // 해무 어귀 경계비
+                    P(PrimitiveType.Cube, t, "Gate_stele", new Vector3(0f, 2.5f, 0f), new Vector3(1.6f, 5f, 1f), stone, true);
+                    P(PrimitiveType.Sphere, t, "Gate_glow", new Vector3(0f, 5.6f, 0f), Vector3.one * 1.1f, glow, false);
+                    break;
+                case "tewak":
+                    P(PrimitiveType.Sphere, t, "Tewak_gourd", new Vector3(0f, 0.4f, 0f), new Vector3(0.9f, 0.7f, 0.9f), Mat("u_gourd", new Color(0.88f, 0.78f, 0.5f)), false);
+                    P(PrimitiveType.Cylinder, t, "Tewak_neck", new Vector3(0f, 0.85f, 0f), new Vector3(0.25f, 0.15f, 0.25f), wood, false);
+                    break;
+                case "helmet":
+                    P(PrimitiveType.Sphere, t, "Helmet_dome", new Vector3(0f, 0.5f, 0f), new Vector3(1.1f, 0.95f, 1.1f), rust, false);
+                    P(PrimitiveType.Sphere, t, "Helmet_visor", new Vector3(0f, 0.55f, 0.45f), new Vector3(0.6f, 0.4f, 0.3f), glass, false);
+                    break;
+                case "supply":
+                    P(PrimitiveType.Cube, t, "Supply_box", new Vector3(0f, 0.7f, 0f), new Vector3(2f, 1.4f, 1.4f), metal, false, new Vector3(0f, 25f, 0f));
+                    P(PrimitiveType.Cube, t, "Supply_band", new Vector3(0f, 0.7f, 0f), new Vector3(2.05f, 0.25f, 1.45f), yellow, false, new Vector3(0f, 25f, 0f));
+                    break;
+                case "pearl":
+                    P(PrimitiveType.Sphere, t, "Pearl_shell_a", new Vector3(0f, 0.3f, 0f), new Vector3(1.6f, 0.4f, 1.3f), Mat("u_shell", new Color(0.88f, 0.8f, 0.75f)), false);
+                    P(PrimitiveType.Sphere, t, "Pearl_pearl", new Vector3(0f, 0.55f, 0f), Vector3.one * 0.45f, pearlM, false);
+                    break;
+                case "buoy":
+                    P(PrimitiveType.Sphere, t, "Buoy_ball", new Vector3(0f, 0.6f, 0f), Vector3.one * 1.2f, Mat("u_buoy", new Color(0.9f, 0.3f, 0.15f)), false);
+                    P(PrimitiveType.Cylinder, t, "Buoy_pole", new Vector3(0f, 1.9f, 0f), new Vector3(0.12f, 1.2f, 0.12f), dark, false);
+                    break;
+                case "turtle":
+                    P(PrimitiveType.Sphere, t, "Turtle_shell", new Vector3(0f, 0.6f, 0f), new Vector3(2.4f, 1f, 1.8f), stone, false);
+                    P(PrimitiveType.Cube, t, "Turtle_stele", new Vector3(0f, 1.9f, 0f), new Vector3(1.1f, 1.8f, 0.3f), stone, false);
+                    break;
+                case "plaque":
+                    P(PrimitiveType.Cube, t, "Plaque_board", new Vector3(0f, 0.3f, 0f), new Vector3(3f, 0.25f, 1.2f), wood, false, new Vector3(0f, 30f, 8f));
+                    break;
+                case "haetae":
+                    P(PrimitiveType.Cube, t, "Haetae_base", new Vector3(0f, 0.5f, 0f), new Vector3(1.6f, 1f, 1.6f), stone, false);
+                    P(PrimitiveType.Sphere, t, "Haetae_body", new Vector3(0f, 1.6f, 0f), new Vector3(1.3f, 1.2f, 1.8f), stone, false);
+                    P(PrimitiveType.Sphere, t, "Haetae_head", new Vector3(0f, 2.1f, 0.9f), Vector3.one * 0.9f, stone, false);
+                    break;
+                case "jelly":
+                    P(PrimitiveType.Sphere, t, "Jelly_bell", new Vector3(0f, 1.8f, 0f), new Vector3(1.6f, 1f, 1.6f), glow, false);
+                    for (int i = 0; i < 4; i++) P(PrimitiveType.Cylinder, t, "Jelly_tentacle", new Vector3(Mathf.Cos(i * 1.57f) * 0.5f, 0.9f, Mathf.Sin(i * 1.57f) * 0.5f), new Vector3(0.08f, 0.8f, 0.08f), glow, false);
+                    break;
+                case "drone":
+                    P(PrimitiveType.Sphere, t, "Drone_body", new Vector3(0f, 1f, 0f), new Vector3(1.4f, 0.8f, 1.8f), metal, false);
+                    P(PrimitiveType.Sphere, t, "Drone_eye", new Vector3(0f, 1.05f, 0.85f), new Vector3(0.4f, 0.3f, 0.2f), glow, false);
+                    P(PrimitiveType.Cube, t, "Drone_fin", new Vector3(0f, 1f, -1.1f), new Vector3(1.6f, 0.08f, 0.5f), dark, false);
+                    break;
+            }
+        }
+
         // ---- 틈새 갈림길 도형(웹 crossing.js 명소 모델을 이 판 크기로) ----
         private void BuildCrossingSite(Transform t, string id)
         {
@@ -513,7 +640,15 @@ namespace Saga.Go.World
             if (_parts.TryGetValue(key, out var g) && g != null) g.GetComponent<MeshRenderer>().sharedMaterial = m;
         }
 
-        private bool _clockOn;
+        private bool _clockOn, _lightLit;
+        public bool LightLit => _lightLit;
+        private void TickBeam()
+        {
+            if (!_lightLit || !_parts.TryGetValue("sunken:beam", out var beam) || beam == null) return;
+            float ang = Time.time * 40f * Mathf.Deg2Rad;
+            beam.transform.localPosition = new Vector3(Mathf.Sin(ang) * 9f, GoStory.LightHeight + 1.2f, Mathf.Cos(ang) * 9f);
+            beam.transform.localRotation = Quaternion.Euler(0f, ang * Mathf.Rad2Deg, 0f);
+        }
         public bool ClockOn => _clockOn;
         private float _ring;
         /// <summary>종각 종을 3초 흔든다(그림만, 잦아드는 흔들림).</summary>
@@ -548,6 +683,14 @@ namespace Saga.Go.World
             SetMat("skyport:train_lamp_b", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
             SetMat("skyport:train_windows", powered ? Mat("s_win_on", new Color(1f, 0.9f, 0.55f), 1.6f, 0.8f) : Mat("s_glass", new Color(0.55f, 0.8f, 0.95f), 0.4f, 0.8f));
             SetMat("skyport:substation_lamp", powered ? Mat("s_lamp_green", new Color(0.2f, 0.9f, 0.3f), 2.4f) : Mat("s_lamp_red", new Color(0.85f, 0.15f, 0.12f), 2f));
+            // 잠긴 도읍 — 테왁 불(20장 뒤)·빛 돔 문(22장 8째 단계부터 열림)·등대 불(23장 4째 단계부터)
+            bool sea = !StoryState.OffForTest && GoStory.SeaLightsOn;
+            if (_parts.TryGetValue("sunken:sealights", out var sl) && sl != null) sl.SetActive(sea);
+            bool domeOpen = !StoryState.OffForTest && GoStory.DomeOpen;
+            if (_parts.TryGetValue("sunken:dome_door", out var door) && door != null) door.SetActive(!domeOpen);
+            _lightLit = !StoryState.OffForTest && GoStory.LighthouseLit;
+            SetMat("sunken:lantern", _lightLit ? Mat("u_lantern_on", new Color(1f, 0.92f, 0.6f), 3.5f) : Mat("u_lantern_off", new Color(0.25f, 0.28f, 0.3f)));
+            if (_parts.TryGetValue("sunken:beam", out var beam) && beam != null) beam.SetActive(_lightLit);
             bool docked = !StoryState.OffForTest && GoStory.PortDocked;
             if (_parts.TryGetValue("skyport:ship", out var ship) && ship != null) ship.SetActive(docked);
             if (_parts.TryGetValue("skyport:beacon", out var beacon) && beacon != null)
@@ -597,6 +740,7 @@ namespace Saga.Go.World
             var kb = Keyboard.current;
             TickBell(Time.deltaTime);
             TickClock();
+            TickBeam();
             TickRiftRings(Time.deltaTime);
             var (a, g) = NearGate(feet);
             if (kb != null && g != 0 && kb.fKey.wasPressedThisFrame && !FishingField.Busy && !StoryState.Talking

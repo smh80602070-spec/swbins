@@ -2109,6 +2109,23 @@
     { "key": "hero.story_hanbyeol", "value": "한별" },
     { "key": "hero.story_hanbyeol.quote", "value": "선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께." },
     { "key": "kit.sig.hanbyeol.skill", "value": "별배 견인줄" },
-    { "key": "kit.sig.hanbyeol.burst", "value": "틈 닫기" }
+    { "key": "kit.sig.hanbyeol.burst", "value": "틈 닫기" },
+    { "key": "region.sunken", "value": "잠긴 도읍" },
+    { "key": "region.sunken.lore", "value": "틈이 닫히자 드러난, 얕게 잠긴 옛 도읍. 잠긴 궁궐과 해저 연구 기지, 빛 돔, 옛 등대가 한 바다에 겹쳐 있다." },
+    { "key": "area.sunken.site.palace", "value": "잠긴 궁궐" },
+    { "key": "area.sunken.site.lab", "value": "해저 연구 기지" },
+    { "key": "area.sunken.site.dome", "value": "빛 돔" },
+    { "key": "area.sunken.site.lighthouse", "value": "옛 등대" },
+    { "key": "area.sunken.site.gate", "value": "해무 어귀" },
+    { "key": "area.sunken.site.tewak", "value": "떠밀려 온 테왁" },
+    { "key": "area.sunken.site.helmet", "value": "녹슨 잠수 투구" },
+    { "key": "area.sunken.site.supply", "value": "보급 상자" },
+    { "key": "area.sunken.site.pearl", "value": "진주조개" },
+    { "key": "area.sunken.site.buoy", "value": "신호 부표" },
+    { "key": "area.sunken.site.turtle", "value": "돌거북 비석" },
+    { "key": "area.sunken.site.plaque", "value": "떨어진 편액" },
+    { "key": "area.sunken.site.haetae", "value": "해태상" },
+    { "key": "area.sunken.site.jelly", "value": "빛 해파리" },
+    { "key": "area.sunken.site.drone", "value": "수중 드론" }
   ]
 }

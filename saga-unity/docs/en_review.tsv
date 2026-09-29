@@ -369,6 +369,21 @@
 2	go	area.skyport.site.sign	갈림길 이정표	Crossroads Signpost		
 2	go	area.skyport.site.station	은하역	Galaxy Station		
 2	go	area.skyport.site.temple	옛 절터	Old Temple Ruins		
+2	go	area.sunken.site.buoy	신호 부표	Signal Buoy		
+2	go	area.sunken.site.dome	빛 돔	Light Dome		
+2	go	area.sunken.site.drone	수중 드론	Underwater Drone		
+2	go	area.sunken.site.gate	해무 어귀	Sea-Mist Gateway		
+2	go	area.sunken.site.haetae	해태상	Haetae Statue		
+2	go	area.sunken.site.helmet	녹슨 잠수 투구	Rusty Diving Helmet		
+2	go	area.sunken.site.jelly	빛 해파리	Glowing Jellyfish		
+2	go	area.sunken.site.lab	해저 연구 기지	Undersea Research Base		
+2	go	area.sunken.site.lighthouse	옛 등대	Old Lighthouse		
+2	go	area.sunken.site.palace	잠긴 궁궐	Sunken Palace		
+2	go	area.sunken.site.pearl	진주조개	Pearl Oyster		
+2	go	area.sunken.site.plaque	떨어진 편액	Fallen Plaque		
+2	go	area.sunken.site.supply	보급 상자	Supply Crate		
+2	go	area.sunken.site.tewak	떠밀려 온 테왁	Washed-Up Tewak Float		
+2	go	area.sunken.site.turtle	돌거북 비석	Stone Turtle Stele		
 2	go	artifact.btn_off	빼기	Remove		
 2	go	artifact.btn_salvage	안 낀 ★4 분해	Salvage unworn ★4		
 2	go	artifact.btn_swap	바꾸기	Switch		
@@ -1101,6 +1116,7 @@
 2	go	region.river	너른 강	Broad River		
 2	go	region.skyport	은하 나루	Galaxy Port		
 2	go	region.south_glade	남쪽 공터	Southern Glade		
+2	go	region.sunken	잠긴 도읍	Sunken Capital		
 2	go	region.village	마을 들판	Village Fields		
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
 2	go	story.altar4	넷째 제단	the Fourth Altar		
@@ -3394,6 +3410,7 @@
 3	go	region.river.lore	마을과 남쪽 땅을 가르는 물줄기. 헤엄칠 땐 기운이 다하지 않게.	The stream that divides the village from the south. Mind your stamina when you swim.		
 3	go	region.skyport.lore	별배가 떠나온 나루. 태양광 밭과 은하역, 옛 절터가 한 땅에 겹쳐 있고 남쪽 끝 틈 고개 너머로 시간 틈 문이 열린다.	The port the star-ship left long ago. A solar field, a galaxy station and an old temple site overlap on one land, and a rift door opens beyond the southern Rift Pass.		
 3	go	region.south_glade.lore	옛 망루 발치의 금빛 풀밭. 망루를 지키던 수호장이 아직 서 있다.	A golden meadow at the foot of the old watchtower. Its guardian still stands.		
+3	go	region.sunken.lore	틈이 닫히자 드러난, 얕게 잠긴 옛 도읍. 잠긴 궁궐과 해저 연구 기지, 빛 돔, 옛 등대가 한 바다에 겹쳐 있다.	The old capital, shallowly submerged and revealed when the rift closed. A sunken palace, an undersea research base, a light dome and an old lighthouse overlap in one sea.		
 3	go	region.village.lore	역참과 장터가 모인 첫 들판. 마을 울타리 안에선 칼 뽑을 일이 없다.	The first fields, where the waypoint and market gather. No blade is drawn inside the village fence.		
 3	go	region.west_wood.lore	벼락 맞은 고목이 늘어선 짙은 숲길. 번개귀가 나무 사이를 건너뛴다.	A dark trail lined with lightning-struck trees. Storm wraiths leap between the trunks.		
 3	dungeon	era_folk.chrononaut	시간 여행자	Time Traveler		

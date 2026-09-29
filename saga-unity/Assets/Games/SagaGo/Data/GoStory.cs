@@ -246,6 +246,15 @@ namespace Saga.Go.Data
         // 18장(⑲-40) 변전함 자리(태양광 밭 가운데에서 m) — 은하 나루 모양이 쓴다.
         public static readonly Vector2 SubstationOff = new Vector2(10.5f, 0f);
 
+        // 21~23장(⑲-45~47) — 잠긴 도읍 상수: 물은 무릎 높이 투명 판(잠수 없음), 테왁 여덟이 궁궐 둘레 9m, 빛 돔 반지름 11m·열두 조각 벽(북쪽 한 조각이 문), 등대 15m 돌탑.
+        public const float SeaLevel = 0.35f, SeaLightR = 9f, DomeR = 11f, LightHeight = 15f, LightHalf = 1.4f;
+        public const int SeaLights = 8, DomeSegs = 12;
+        public static readonly Vector2 AnnexOff = new Vector2(9.5f, 0f), Term = new Vector2(4f, 4f);
+        /// <summary>궁궐 둘레 테왁 불(20장을 마친 뒤 늘) · 빛 돔 문(22장 8째 단계부터 늘 열림) · 등대 불(23장 4째 단계부터 늘).</summary>
+        public static bool SeaLightsOn => StoryState.Ch > 19;
+        public static bool DomeOpen => StoryState.Ch > 21 || (StoryState.Ch == 21 && StoryState.StepIndex >= 7);
+        public static bool LighthouseLit => StoryState.Ch > 22 || (StoryState.Ch == 22 && StoryState.StepIndex >= 3);
+
         // 20장(⑲-43) — 갈림길 끝: 첫 정거장 동남쪽 (31.5, 11.25)m 위 40m 에 뜬 반지름 24m 돌 섬(웹 (70,25)m·46m·20m 을 이 판 크기로). 세 갈래 선로(옛 나무 60°·쇠 300°·빛 180°)가 가운데에서 뻗고 끝마다 닻,
         // 가운데 세로 틈은 `TearState` 0(찢어짐) → 1(석등 뒤 오므라듦·닻 켜짐) → 2(장 끝·닫힘 → 별빛). 바람 기둥 = 섬 남쪽 30m 땅에서 섬 + 12m 까지(20장이 끝난 뒤 늘).
         public const float RiftUp = 40f, RiftR = 24f;
@@ -274,12 +283,12 @@ namespace Saga.Go.Data
                 float a = (StepN - 1) * Mathf.PI * 0.25f;
                 return AreaPos(at, new Vector2(Mathf.Cos(a) * StepR, Mathf.Sin(a) * StepR)) + Vector3.up * (StepN * StepRise - 0.1f);
             }
-            return AreaPos(at, Vector2.zero) + Vector3.up * (at == "crossing:clock" ? ClockHeight : TowerHeight);
+            return AreaPos(at, Vector2.zero) + Vector3.up * (at == "crossing:clock" ? ClockHeight : at == "sunken:lighthouse" ? LightHeight : TowerHeight);
         }
         public static bool OnClimbTop(string at, Vector3 p)
         {
             Vector3 top = ClimbTopOf(at);
-            float r = at == "crossing:steps" ? 1.6f : (at == "crossing:clock" ? ClockHalf : TowerHalf) + 0.6f;
+            float r = at == "crossing:steps" ? 1.6f : (at == "crossing:clock" ? ClockHalf : at == "sunken:lighthouse" ? LightHalf : TowerHalf) + 0.6f;
             return Flat(p, top) <= r && p.y >= top.y - 1.2f;
         }
         /// <summary>시계탑 바늘이 도나 — 19장 6째 단계(태엽을 푼 뒤)부터 늘.</summary>

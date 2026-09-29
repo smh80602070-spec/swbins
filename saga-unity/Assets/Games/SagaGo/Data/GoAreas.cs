@@ -135,7 +135,34 @@ namespace Saga.Go.Data
             S("ticket", "표 기계", GoEra.Modern, 54f, -108f, false),
             S("helm", "칼과 투구", GoEra.Past, -117f, -90f, false));
 
-        public static readonly Area[] All = { Skyport, Crossing };
+        // ---- 일곱째 지역 잠긴 도읍(웹 ⑲-44 `sunken.js`) — 6부 무대. 얕게 잠긴 옛 도읍. 은하 나루 별배 나루 곁 돌기둥(20장 뒤 열림 = 해무 어귀)으로 든다 ----
+        public static readonly Area Sunken = Make(new Area
+        {
+            Id = "sunken", NameKo = "잠긴 도읍", Hanja = "沈都", GroundHex = "6f8a90",
+            LoreKo = "틈이 닫히자 드러난, 얕게 잠긴 옛 도읍. 잠긴 궁궐과 해저 연구 기지, 빛 돔, 옛 등대가 한 바다에 겹쳐 있다.",
+            Center = new Vector3(3000f, 0f, -860f),
+            GateSite = "gate",
+            MapGate = () => { Skyport.TrySite("port", out var p); return p.Pos + new Vector3(-10f, 0f, 14f); }, // 별배 나루 착륙판 서남쪽(해무 어귀)
+            Open = () => StoryState.Ch > 19, OpenCh = 20, // 20장(5부)을 마쳐야 해무가 걷힌다
+            Fog = new Color(0.6f, 0.78f, 0.86f), Sun = new Color(0.9f, 1f, 1f), FogDensity = 2.2f, Danger = 3,
+        },
+            S("palace", "잠긴 궁궐", GoEra.Past, -117f, 27f, true),
+            S("lab", "해저 연구 기지", GoEra.Modern, 99f, -54f, true),
+            S("dome", "빛 돔", GoEra.Future, 27f, 117f, true),
+            S("lighthouse", "옛 등대", GoEra.Past, 81f, -198f, true),
+            S("gate", "해무 어귀", GoEra.Modern, 27f, 234f, true),
+            S("tewak", "떠밀려 온 테왁", GoEra.Past, -54f, -27f, false),
+            S("helmet", "녹슨 잠수 투구", GoEra.Modern, 63f, 18f, false),
+            S("supply", "보급 상자", GoEra.Modern, 144f, -108f, false),
+            S("pearl", "진주조개", GoEra.Past, -162f, 90f, false),
+            S("buoy", "신호 부표", GoEra.Modern, 27f, -135f, false),
+            S("turtle", "돌거북 비석", GoEra.Past, -99f, -90f, false),
+            S("plaque", "떨어진 편액", GoEra.Past, -72f, 81f, false),
+            S("haetae", "해태상", GoEra.Past, -27f, 54f, false),
+            S("jelly", "빛 해파리", GoEra.Future, 81f, 171f, false),
+            S("drone", "수중 드론", GoEra.Future, 162f, 27f, false));
+
+        public static readonly Area[] All = { Skyport, Crossing, Sunken };
 
         public static bool TryArea(string id, out Area a)
         {
