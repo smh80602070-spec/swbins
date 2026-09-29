@@ -9557,3 +9557,7 @@ PROJECT_STATE.md` 참고. 요약:
 - RELIEF_AMP 0.9 → 2.4. 점검이 깬 자리(도주 길·결투장·크리스털·고개 문)는 진폭을 줄이는 대신 **평탄 마스크**로: terrain_builder._collect_sites 가 순간이동 지점 표(waypoints POINTS)·이야기 자료(story.gd 의 Vector2 cell/path)·지역 스크립트 상수의 칸 좌표·지도 가장자리 길 칸(고개)을 한 번 모으고, 그 둘레 RELIEF_SITE_R 18m 는 기복 0, 그 밖 26m 에 걸쳐 올라온다(3×3 칸 격자 색인). 좌표계 주의: 지형 정점 (x+u) 는 칸 왼쪽 모서리 기준이고 자리 좌표는 칸 중심이 정수라 -0.5 를 뺐다(처음엔 어긋나 STORY3 도주 길이 y=1.0 으로 깼다).
 - 전체 점검 46개 중 QMAP 3·WQ 1(기존)·COMBAT(무거운 작업과 겹칠 때만, 단독 0) 외 fails=0. REGRESS OK, PERF 마을 34.1·포구 25.7·폐허 28.2만 그대로.
 - 한계: 마스크 때문에 신상·명소가 촘촘한 곳은 여전히 평탄하고, 그 사이 들에서 굽이친다. 촬영 컷 대부분이 명소 시점이라 컷에선 은은하다.
+
+## 기복 촬영 확인 (2026-09-30, "이어해")
+
+- probe_shots o_village_field·o_crossing_field·o_skyport_field·o_sunken_field(명소에서 떨어진 들 시점) 추가. o_village_field: 플레이어가 언덕 위에 서서 아래 마을 지붕들이 내려다보인다(기복이 실제로 시야를 만든다). o_crossing_field: 완만해 은은.
