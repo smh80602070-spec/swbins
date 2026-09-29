@@ -10396,3 +10396,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 세이브 `frostFound`(버전 28 그대로). 글 20 짝. 진단 `PlaytestGoFrost`(표·지역·땅·발견·드나들기·세이브).
 - 실기 확인 전: 고원 눈밭 색·눈 내림 세기·산성 남쪽 문으로 드는지·비행선·관측소 크기·돌기둥 자리(역참 곁에서 눈에 띄는지)·이동 단추 자리(아래 가운데 y 440).
 - 다음 = 14-28 (웹 ⑲-28 이야기 10장).
+
+## 2026-09-29 — 주역 Maria 동작 = 공방 동작 (char-forge ④)
+- `Maria.controller` 의 Mixamo 동작 열여섯(대기·걷기·달리기·공격·피격·구르기·줍기·오르기·활공·점프·죽음·수영·뜨기·앞/뒤/왼/오른 걷기)을 char-forge 공방 동작(UAL CC0 + 자체 키프레임)으로 갈아 끼움 — `Assets/Editor/SwapMariaMotions.cs`(멱등, 상태 이름 그대로라 게임 코드 무변경).
+- 클립 출처 `CharactersForge/_cmp_real_hero_f_01.fbx`(Humanoid, 레시피 anims 15). 없던 옆걸음은 자체 키프레임 `CF_Strafe_L/R_Loop` 신설(keyframes.py, 렌더로 확인), 뒷걸음 = 걷기 거꾸로(timeScale -1).
+- 검증: `SWAP_MARIA states=11 blend=7 missing=0` · `PlaytestHeadless` 두 판 OK · `PlaytestDungeonHeadless` OK(평타·타격 정지 등 주역 Animator 실사용) · `SagaAssetGate` — 빌드가 안 쓰게 된 Mixamo Maria 동작 16개가 ③ 으로 잡혀 `Write Asset Gate Deps` 로 목록 갱신 뒤 OK.
+- 함정: `BuildMariaLockOnStrafe`·`BuildMariaTraversal` 은 Mixamo 클립으로 컨트롤러를 짓는다 — 다시 돌리면 되돌아가니 그 뒤에 `SwapMariaMotions` 를 돌릴 것. 훅이 명령 전체를 막으면 그 명령 안의 스크립트 만들기도 안 된다(재시도 스크립트가 안 떠 30분 허비).
+- 실기 확인 전: 락온 옆걸음·수영·활공·구르기가 자연스러운지(속도·발 미끄럼), 공격 길이(Sword_Attack 47프레임)가 전투 감각에 맞는지.
+- 다음 = 얼굴·옷 두 버전(사가고 Godot·웹 = 원신급 툰, 사가유니티 = 파판급 사실) + 트랙별 최적화·그래픽 퀄리티.

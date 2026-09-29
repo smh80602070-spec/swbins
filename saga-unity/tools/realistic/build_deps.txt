@@ -258,22 +258,6 @@ Mannequin/MannequinAnimated.prefab
 Mannequin/Textures/Ch36_1001_Diffuse.png
 Mannequin/Textures/Ch36_1001_Normal.png
 Maria WProp J J Ong.fbx
-Maria WProp J J Ong@Action Idle To Fight Idle.fbx
-Maria WProp J J Ong@Climbing.fbx
-Maria WProp J J Ong@Floating.fbx
-Maria WProp J J Ong@Gliding.fbx
-Maria WProp J J Ong@Hit Reaction.fbx
-Maria WProp J J Ong@Jumping.fbx
-Maria WProp J J Ong@Picking Up.fbx
-Maria WProp J J Ong@Running.fbx
-Maria WProp J J Ong@Stand To Roll.fbx
-Maria WProp J J Ong@Swimming.fbx
-Maria WProp J J Ong@Sword And Shield Backward Walk.fbx
-Maria WProp J J Ong@Sword And Shield Left Strafe Walk.fbx
-Maria WProp J J Ong@Sword And Shield Right Strafe Walk.fbx
-Maria WProp J J Ong@Sword And Shield Slash.fbx
-Maria WProp J J Ong@Two Handed Sword Death.fbx
-Maria WProp J J Ong@Walking.fbx
 Maw/Maw.fbx
 Maw/Maw@Attack.fbx
 Maw/Maw@Dying.fbx

@@ -251,7 +251,7 @@ namespace Saga.EditorTools
 
         private static readonly string[] Cycle = { "idle", "walk", "run", "attack", "hit", "dodge", "interaction",
             "climb", "glide", "swim", "tread", "jump", "taunt", "blocked", "heal", "kneel", "death" };
-        private static readonly HashSet<string> Loops = new HashSet<string> { "idle", "walk", "run", "climb", "glide", "swim", "tread", "kneel" };
+        private static readonly HashSet<string> Loops = new HashSet<string> { "idle", "walk", "run", "climb", "glide", "swim", "tread", "kneel", "strafe_l", "strafe_r" };
 
         [MenuItem("Saga/Char Forge/Build Compare Real Scene")]
         public static void Build()
