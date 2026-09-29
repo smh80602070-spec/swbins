@@ -1326,6 +1326,8 @@
     if (SPh && SPh.rectsIn) { var spr = SPh.rectsIn(gx, gy); for (i = 0; i < spr.length; i++) { out.push(spr[i]); } }
     var AMh = global.DG.amber;                                   // §5 ⑲-57 굳은 거리 명소 벽(결정 막·굳은 자리·시계방·장터 돔·부양탑 심…)
     if (AMh && AMh.rectsIn) { var amr = AMh.rectsIn(gx, gy); for (i = 0; i < amr.length; i++) { out.push(amr[i]); } }
+    var VTh = global.DG.vault;                                   // §5 ⑲-61 갈무리 벌 명소 벽(빛 울타리·금고 둥근 벽·동력 기둥·곳간·창고·컨테이너…)
+    if (VTh && VTh.rectsIn) { var vtr = VTh.rectsIn(gx, gy); for (i = 0; i < vtr.length; i++) { out.push(vtr[i]); } }
     var CRh = global.DG.crossing;                                // §5 ⑲-41 틈새 갈림길 명소 벽(시계탑·성문 기둥·틈 문…)
     if (CRh && CRh.rectsIn) { var crr = CRh.rectsIn(gx, gy); for (i = 0; i < crr.length; i++) { out.push(crr[i]); } }
     var SKh = global.DG.sunken;                                  // §5 ⑲-44 잠긴 도읍 명소 벽(정전·돔 둘레·등대·해무 문…)

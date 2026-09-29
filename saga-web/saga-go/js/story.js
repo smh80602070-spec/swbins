@@ -61,6 +61,10 @@
     /* ⑲-58 9부 굳은 거리(amber.js) — 명소 가운데(am: 명소 id·crystal0~2·light0~3) + 단계·인물 칸의 off */
     am_pass: { am: 'pass' }, am_cross: { am: 'cross' }, am_clock: { am: 'clock' }, am_market: { am: 'market' }, am_tower: { am: 'tower' }, am_statue: { am: 'statue' },
     am_crystal0: { am: 'crystal0' }, am_crystal1: { am: 'crystal1' }, am_crystal2: { am: 'crystal2' },
+    /* ⑲-61 10부 갈무리 벌(vault.js) — 명소 가운데(vt: 명소 id·case0~4·haemi·deep·core·door) + 단계·인물 칸의 off */
+    vt_pass: { vt: 'pass' }, vt_vault: { vt: 'vault' }, vt_pylon0: { vt: 'pylon0' }, vt_pylon1: { vt: 'pylon1' }, vt_granary: { vt: 'granary' }, vt_yard: { vt: 'yard' }, vt_statue: { vt: 'statue' },
+    vt_core: { vt: 'core' }, vt_door: { vt: 'door' }, vt_haemi: { vt: 'haemi' }, vt_deep: { vt: 'deep' },
+    vt_case0: { vt: 'case0' }, vt_case1: { vt: 'case1' }, vt_case2: { vt: 'case2' }, vt_case3: { vt: 'case3' }, vt_case4: { vt: 'case4' },
     /* ⑲-53 8부 반디 자리 = 고향 촌장 동쪽(촌장 zone home off [-22,16] 에서 10m) */
     home_bandi: { zone: 'home', off: [-12, 16] },
     /* ⑲-34 3부 시대 명소(era-sites.js) — 갈대 나루 물가 녹슨 조선소. 명소가 꺼져 있으면 자리 없음 */
@@ -1681,6 +1685,10 @@
     if (SPam && SPam.am) {                                      // ⑲-58 굳은 거리 명소·굳은 자리
       var AMq = global.DG.amber, ap = AMq && AMq.on() ? AMq.spot(SPam.am) : null;
       return ap ? { x: ap.x + (off ? off[0] : 0), y: ap.y + (off ? off[1] : 0) } : null;
+    }
+    if (SPam && SPam.vt) {                                      // ⑲-61 갈무리 벌 명소·금고 안 자리
+      var VTq = global.DG.vault, vp = VTq && VTq.on() ? VTq.spot(SPam.vt) : null;
+      return vp ? { x: vp.x + (off ? off[0] : 0), y: vp.y + (off ? off[1] : 0) } : null;
     }
     if (name === 'eye') {                                       // ⑲-55 먹구름 눈 가운데
       var SEq = global.DG.stormEye, ee = SEq ? SEq.spot('eye') : null;

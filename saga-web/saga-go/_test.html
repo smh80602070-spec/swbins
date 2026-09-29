@@ -95,6 +95,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/era-sites.js"></script>
 <script src="js/skyport.js"></script>
 <script src="js/amber.js"></script>
+<script src="js/vault.js"></script>
 <script src="js/crossing.js"></script>
 <script src="js/sunken.js"></script>
 <script src="js/skyroute.js"></script>
@@ -14525,6 +14526,108 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { C.setTune('amber.on', null); C.setTune('amber.pass', null); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '굳은 자리 5·6·7 · 돔 31장 2 · 탑 32장 3 · 신호등 32장 뒤 · 자리 crystal/light · 손잡이' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-61 10부 무대 · 아홉째 지역 갈무리 벌 (vault.js, PLAN §5 ⑲-61) ── */
+    function vtRig() {
+      var rig = stRig(70);
+      DG.vault._resetForTest(); delete C.save.vault;
+      return { VT: DG.vault, undo: function () { DG.vault._resetForTest(); rig.undo(); } };
+    }
+    t('갈무리 벌 ⑲-61 — 자리: 가운데 = 서리봉 고원 동쪽 고개 너머 · 명소 일곱(순간이동 셋)·작은 발견 열 = 열일곱 · 억지 없이 뭍 칸 · 명소끼리 60m·나머지 30m 넘게 · 다시 풀어도 같다', function () {
+      var VT = DG.vault, FRs = DG.frost, r = {}, bad = [];
+      VT._resetForTest();
+      var c = VT.center(), fc = FRs.center(), L = VT.sites();
+      r.center = !!c && Math.abs((c.x - fc.x) - VT.VAULT_OFF[0]) < 260 && Math.abs(c.y - fc.y) < 260 && VT.inRegion(c.x, c.y) && !VT.inRegion(0, 0);
+      r.count = L.length === 17 && L.filter(function (q) { return q.big; }).length === 7 && L.filter(function (q) { return q.way; }).map(function (q) { return q.id; }).join() === 'pass,vault,statue';
+      var SEP_BIG = 60, SEP_SMALL = 30;
+      L.forEach(function (q, k) {
+        var kind = DG.world.terrainAt(Math.floor(q.x / 48), Math.floor(q.y / 48));
+        if (q.forced || ['grass', 'forest', 'farm'].indexOf(kind) < 0) { bad.push(q.id + '땅'); }
+        for (var p = 0; p < k; p++) {
+          var o = L[p], sep = o.big ? SEP_BIG : SEP_SMALL;
+          if (Math.hypot(o.x - q.x, o.y - q.y) < sep - 1e-6) { bad.push(q.id + '-' + o.id); }
+        }
+      });
+      r.place = bad.length === 0;
+      var pass = VT.siteById('pass'), vault = VT.siteById('vault'), yard = VT.siteById('yard'), gr = VT.siteById('granary');
+      r.layout = pass.x < c.x && vault.y < c.y && yard.x > c.x && gr.x < c.x && gr.y > c.y;         // 어귀는 서쪽(고원 쪽), 금고는 북쪽, 야적장은 동쪽, 곳간 마을은 남서쪽
+      var AMs = DG.amber.center();
+      r.apart = !AMs || Math.hypot(AMs.x - c.x, AMs.y - c.y) > 400;                                  // 굳은 거리와 겹치지 않는다
+      var j1 = JSON.stringify(L); VT._resetForTest();
+      r.same = JSON.stringify(VT.sites()) === j1;
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? '가운데 ' + Math.round(c.x) + ',' + Math.round(c.y) + ' · 열일곱(명소 7·이동 3) · 뭍 · 떨어짐 · 고정' : ('실패 ' + bad2.join(',') + ' ' + bad.join(','));
+    });
+
+    t('갈무리 벌 ⑲-61 — 발견·이동·벽·기둥: 명소 30m 안 = 발견 한 번만 · 작은 발견 14m · 찾은 이동 지점(금고 앞은 문 밖 · 키보드만·GPS 막힘) · 빛 울타리는 32장 뒤 열림 · 금고 문은 34장 6단계부터 열림 · 벽(금고 둥근 벽·기둥·동력 기둥·곳간·창고·컨테이너·신상) · 기록 기둥 9m', function () {
+      var rig = vtRig(), VT = rig.VT, W0 = DG.world, r = {};
+      try {
+        var pass = VT.siteById('pass'), vault = VT.siteById('vault'), statue = VT.siteById('statue'), sot = VT.siteById('sotdae');
+        var g0 = C.save.player.gold || 0;
+        r.marks0 = VT.marks().length === 7 && VT.marks().every(function (m) { return m.big && !m.found; });
+        var f1 = VT.discoverAt(pass.x + VT.LANDMARK_R - 1, pass.y);
+        r.big = f1.length === 1 && f1[0].id === 'pass' && C.save.player.gold === g0 + 200 && VT.found('pass') && VT.discoverAt(pass.x, pass.y).length === 0;
+        r.small = VT.discoverAt(sot.x + 15, sot.y).length === 0 && VT.discoverAt(sot.x + 13, sot.y).map(function (q) { return q.id; }).join() === 'sotdae' && VT.marks().length === 8;
+        VT.discoverAt(vault.x, vault.y); VT.discoverAt(statue.x, statue.y);
+        var wp = VT.waypoints();
+        r.way = wp.length === 3 && wp.map(function (w) { return w.key; }).join() === 'vt:pass,vt:vault,vt:statue' && /어귀/.test(wp[0].name) && /금고/.test(wp[1].name) && wp[1].y === vault.y + 22;
+        DG.world = Object.create(W0, { mode: { value: 'geo' } });
+        r.geo = !VT.teleport('pass');
+        DG.world = W0;
+        stGo({ x: 0, y: 0 });
+        r.tp = VT.teleport('vault') && C.save.player.pos.x === vault.x && C.save.player.pos.y === vault.y + 22 && !VT.teleport('haystack');
+        /* 벽 — 울타리는 32장 전에만, 금고 문은 34장 6단계 전에만, 나머지는 늘 */
+        var cell = function (q, dx, dy) { return DG.world3d.houseRects(Math.floor((q.x + (dx || 0)) / 48), Math.floor((q.y + (dy || 0)) / 48)); };
+        var hit = function (q, dx, dy) { return cell(q, dx, dy).some(function (rc) { return frInRect(rc, q.x + (dx || 0), q.y + (dy || 0)); }); };
+        C.save.story = { ch: 31, step: 0 };
+        var gateShut = hit(pass);
+        C.save.story = { ch: 32, step: 0 };
+        var gateOpen = !hit(pass);
+        r.gate = gateShut && gateOpen;
+        C.save.story = { ch: 33, step: 5 };
+        var doorShut = hit(vault, 0, VT.VAULT_R);
+        C.save.story = { ch: 33, step: 6 };
+        var doorOpen = !hit(vault, 0, VT.VAULT_R);
+        r.door = doorShut && doorOpen;
+        var seg = [1, 5, 8, 12].every(function (k) { var a = 2 * Math.PI * k / 16; return hit(vault, -Math.sin(a) * VT.VAULT_R, Math.cos(a) * VT.VAULT_R); });   // 둥근 벽은 문 밖 어디서나
+        r.ring = seg && !hit(vault, 0, VT.VAULT_R * 0.5) && hit(vault, 0, 0);                              // 벽 안쪽 빈 곳은 걷고, 기록 기둥 자리는 막힌다
+        r.walls = hit(VT.siteById('pylon0')) && hit(VT.siteById('pylon1')) && hit(VT.siteById('granary')) && hit(VT.siteById('yard')) && hit(statue);
+        var yardS = VT.siteById('yard');
+        r.container = hit(yardS, -53, -43) && hit(yardS, 38, -38) && hit(yardS, 43, 43);
+        var P = VT.poles();
+        r.pole = P.length === 1 && P[0].id === 'vt_pillar' && P[0].x === vault.x && P[0].top === 9 && P[0].r === 1.5 && !!P[0].beam;
+      } finally { DG.world = W0; rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '명소 30m 한 번 · 작은 14m · 이동 지점 셋(금고 앞 문 밖·GPS ✕) · 울타리 32장 뒤 열림 · 금고 문 34장 6단계 · 둥근 벽·기둥·동력·곳간·창고·컨테이너·신상 막힘 · 기록 기둥 9m' : ('실패 ' + bad.join(','));
+    });
+
+    t('갈무리 벌 ⑲-61 — 이야기 상태: 곳간 문(34장 2단계부터) · 동력 기둥 둘(34장 5·6단계부터 꺼짐) · 금고 문(34장 6단계) · 갈무리의 핵(35장 5단계부터 꺼짐) · 해미 진열장(35장 6단계부터 깨짐) · 깊은 진열장(35장 뒤 드러남·38장 4단계부터 유리 깨짐) · 이야기 자리 · 손잡이', function () {
+      var rig = vtRig(), VT = rig.VT, r = {};
+      try {
+        function at(ch, step) { C.save.story = { ch: ch, step: step }; }
+        at(32, 9); var g1 = !VT.granaryOpen(); at(33, 1); var g2 = !VT.granaryOpen(); at(33, 2); var g3 = VT.granaryOpen(); at(34, 0); r.granary = g1 && g2 && g3 && VT.granaryOpen() && VT.GRANARY_OPEN_STEP === 2;
+        var pyl = function (ch, st) { at(ch, st); return [0, 1].filter(VT.pylonOff).join(''); };
+        r.pylon = [pyl(33, 4), pyl(33, 5), pyl(33, 6), pyl(34, 0)].join('|') === '|0|01|01' && VT.PYLON_OFF_FROM.join() === '5,6';
+        at(33, 5); var d1 = !VT.doorOpen(); at(33, 6); var d2 = VT.doorOpen(); at(34, 0); r.door = d1 && d2 && VT.doorOpen() && VT.DOOR_OPEN_STEP === 6;
+        at(34, 4); var c1 = !VT.coreDim(); at(34, 5); var c2 = VT.coreDim(); at(35, 0); r.core = c1 && c2 && VT.coreDim() && VT.CORE_DIM_STEP === 5;
+        at(34, 5); var h1 = !VT.haemiFree(); at(34, 6); var h2 = VT.haemiFree(); r.haemi = h1 && h2 && VT.HAEMI_FREE_STEP === 6;
+        at(34, 9); var e1 = !VT.deepShown(); at(35, 0); var e2 = VT.deepShown(); r.deep = e1 && e2 && VT.DEEP_CASE_CH === 35;
+        at(37, 3); var m1 = !VT.momentFree(); at(37, 4); var m2 = VT.momentFree(); at(38, 0); r.moment = m1 && m2 && VT.momentFree() && VT.MOMENT_FREE_STEP === 4;
+        var v = VT.siteById('vault');
+        r.spots = [0, 1, 2, 3, 4].every(function (i) { var q = VT.spot('case' + i), e = VT.CASES[i], a = e.deg * Math.PI / 180; return !!q && Math.hypot(q.x - (v.x - Math.sin(a) * VT.CASE_R), q.y - (v.y + Math.cos(a) * VT.CASE_R)) < 1e-6; }) &&
+          VT.spot('haemi').y < v.y && Math.abs(Math.hypot(VT.spot('haemi').x - v.x, VT.spot('haemi').y - v.y) - VT.CASE_R) < 1e-6 && VT.spot('deep').y === v.y - VT.DEEP_R && VT.spot('core').x === v.x &&
+          VT.spot('door').y === v.y + VT.VAULT_R + 2 && VT.spot('yard').x === VT.siteById('yard').x && !VT.spot('nobody');
+        /* 이야기 자리 이름 — story.js SPOTS(vt_*) 가 vault.spot 을 따른다 */
+        var ST = DG.story, sp = ST.spotPos('vt_haemi');
+        r.storySpot = !!sp && Math.abs(sp.x - VT.spot('haemi').x) < 1e-6 && Math.abs(ST.spotPos('vt_yard', [3, -2]).x - (VT.siteById('yard').x + 3)) < 1e-6 && !!ST.spotPos('vt_case0') && !!ST.spotPos('vt_pylon1');
+        C.setTune('vault.on', 0);
+        r.off = !VT.on() && VT.marks().length === 0 && VT.poles().length === 0 && VT.rectsIn(Math.floor(v.x / 48), Math.floor(v.y / 48)).length === 0 && !ST.spotPos('vt_vault');
+        C.setTune('vault.on', null);
+        C.setTune('vault.gate', 1); at(20, 0); r.gateKnob = VT.gateOpen(); C.setTune('vault.gate', null); r.gateShut = !VT.gateOpen();
+      } finally { C.setTune('vault.on', null); C.setTune('vault.gate', null); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '곳간 34장 2 · 동력 5·6 · 금고 문 6 · 핵 35장 5 · 해미 35장 6 · 깊은 진열장 35장 뒤·38장 4 · 자리 case/haemi/deep/core/door · story vt_* · 손잡이' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑲-58 이야기 9부 제30장 · 멈춘 거리 (story ch30·초롱 · amber 굳은 자리 셋 단계 번호 맞물림, PLAN §5 ⑲-58) ── */

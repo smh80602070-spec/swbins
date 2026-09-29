@@ -401,6 +401,7 @@
     if (global.DG.achieve) { global.DG.achieve.tick(dt); }           // 업적 셈·알림(§5⑲-25)
     if (global.DG.dispatch) { global.DG.dispatch.tick(dt); }         // 탐사 파견 — 역참 게시판·다 된 알림(§5⑲-26)
     if (global.DG.frost) { global.DG.frost.tick(dt); }               // 서리봉 고원 — 발견·눈·명소(§5⑲-27)
+    if (global.DG.vault) { global.DG.vault.tick(dt); }                                                // 갈무리 벌 — 발견·명소·이야기 상태(§5⑲-61)
     if (global.DG.amber) { global.DG.amber.tick(dt); }                                           // 굳은 거리 — 발견·명소·이야기 상태(§5⑲-57)
     if (global.DG.skyport) { global.DG.skyport.tick(dt); }           // 은하 나루 — 발견·명소·틈 문(§5⑲-37)
     if (global.DG.crossing) { global.DG.crossing.tick(dt); }         // 틈새 갈림길 — 발견·명소·틈 문(§5⑲-41)

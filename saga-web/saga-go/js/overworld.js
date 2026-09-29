@@ -211,6 +211,11 @@
     if (AMo && AMo.on() && AMo.marks && wl) {
       AMo.marks().forEach(function (am) { if (!am.found) { return; } var ap2 = wl.worldToLatLng(am.x, am.y); pois.push({ lat: ap2.lat, lng: ap2.lng, t: 'frost', name: (am.big ? '🟠 ' : '✨ ') + am.name }); });
     }
+    /* 갈무리 벌 명소(§5 ⑲-61) — 찾은 것만 이름 */
+    var VTo = global.DG.vault;
+    if (VTo && VTo.on() && VTo.marks && wl) {
+      VTo.marks().forEach(function (vm) { if (!vm.found) { return; } var vp2 = wl.worldToLatLng(vm.x, vm.y); pois.push({ lat: vp2.lat, lng: vp2.lng, t: 'frost', name: (vm.big ? '🟦 ' : '✨ ') + vm.name }); });
+    }
     /* 틈새 갈림길 명소(§5 ⑲-41) — 찾은 것만 이름 */
     var CRo = global.DG.crossing;
     if (CRo && CRo.on() && CRo.marks && wl) {
@@ -418,6 +423,9 @@
     /* 굳은 거리(amber.js, §5 ⑲-57) — 찾은 고개 어귀·부양탑·신상 */
     var AMw = global.DG.amber;
     if (AMw && AMw.on() && AMw.waypoints) { list = list.concat(AMw.waypoints()); }
+    /* 갈무리 벌(vault.js, §5 ⑲-61) — 찾은 벌 어귀·금고 앞·벌 신상 */
+    var VTw = global.DG.vault;
+    if (VTw && VTw.on() && VTw.waypoints) { list = list.concat(VTw.waypoints()); }
     /* 틈새 갈림길(crossing.js, §5 ⑲-41) — 찾은 첫 정거장·시계탑·틈 고개 */
     var CRw = global.DG.crossing;
     if (CRw && CRw.on() && CRw.waypoints) { list = list.concat(CRw.waypoints()); }
@@ -441,10 +449,10 @@
     var BMo = global.DG.biome, LFw = global.DG.landform;
     if (!wk || !BMo) { return false; }
     var FRj = global.DG.frost;
-    var SPj = global.DG.skyport, CRj = global.DG.crossing, SKj = global.DG.sunken, AMj = global.DG.amber;
+    var SPj = global.DG.skyport, CRj = global.DG.crossing, SKj = global.DG.sunken, AMj = global.DG.amber, VTj = global.DG.vault;
     var ok = wk.indexOf('pk:') === 0 ? !!(LFw && LFw.teleport(wk.slice(3))) : wk.indexOf('fr:') === 0 ? !!(FRj && FRj.teleport(wk.slice(3))) :
       wk.indexOf('sp:') === 0 ? !!(SPj && SPj.teleport(wk.slice(3))) : wk.indexOf('cr:') === 0 ? !!(CRj && CRj.teleport(wk.slice(3))) :
-      wk.indexOf('sk:') === 0 ? !!(SKj && SKj.teleport(wk.slice(3))) : wk.indexOf('am:') === 0 ? !!(AMj && AMj.teleport(wk.slice(3))) : BMo.teleport(wk);
+      wk.indexOf('sk:') === 0 ? !!(SKj && SKj.teleport(wk.slice(3))) : wk.indexOf('am:') === 0 ? !!(AMj && AMj.teleport(wk.slice(3))) : wk.indexOf('vt:') === 0 ? !!(VTj && VTj.teleport(wk.slice(3))) : BMo.teleport(wk);
     if (ok) { close(); }
     return ok;
   }
