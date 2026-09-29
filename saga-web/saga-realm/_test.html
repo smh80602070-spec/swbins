@@ -3386,6 +3386,49 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { window.DG_NO_SCENARIO = true; evDone(); }
     });
 
+    t('시나리오 이계 군주 열전 — 균열·폐허·묘역으로 시작한 판에만 곁 사슬 셋이 제 때에 뜨고, 사람 판에는 안 뜨며, 본 사슬과 따로 흐른다', function () {
+      var SC = DG.scenario, SD = DG.scenarioData, bad = [], st = evFresh();
+      window.DG_NO_SCENARIO = false;
+      try {
+        var me = R.myForce(); me.gold = 20000;
+        var ids = SD.LORD.map(function (c) { return c.id; });
+        if (ids.length !== 9 || SD.LORD.some(function (c) { return !c.only || !c.mix || !c.mix.past || !c.mix.now || !c.mix.future || c.choices.map(function (x) { return x.k; }).join('') !== 'atkdefutil'; })) { bad.push('표'); }
+        function drain(pick, cap) { var g = 0, seen = []; while (E.view() && g++ < (cap || 6)) { seen.push(E.view().id); E.choose(pick); E.tick(); } return seen; }
+        /* 사람 판(기본 시작) — 열전은 안 뜬다 */
+        st.turn = 0; SC.state(); st.turn = 60;
+        SD.CARDS.forEach(function (c) { SC.state().done[c.id] = { k: 'def', turn: 1 }; });
+        st.scen = '194'; E.tick();
+        if (E.view() && SD.card(E.view().id)) { bad.push('사람 판에 열전 뜸 ' + E.view().id); E.choose('def'); }
+        if (SC.lines().some(function (x) { return x.act === 8; })) { bad.push('사람 판 기록 줄에 열전'); }
+        /* 균열의 왕 — 6달째 첫 카드, 18달째 둘째, 36달째 셋째 */
+        st = evFresh(); me = R.myForce(); me.gold = 20000; st.turn = 0; SC.state(); st.scen = 'rift';
+        SD.CARDS.forEach(function (c) { SC.state().done[c.id] = { k: 'def', turn: 1 }; });
+        st.turn = 5; E.tick();
+        if (E.view()) { bad.push('6달 전에 뜸 ' + E.view().id); E.choose('def'); }
+        st.turn = 6; E.tick();
+        var seen = drain('def');
+        if (seen.join() !== 'lr_rift1') { bad.push('열전 첫 카드 ' + seen.join(',')); }
+        var g0 = me.gold;
+        st.turn = 18; E.tick(); seen = drain('util');
+        if (seen.join() !== 'lr_rift2') { bad.push('둘째 카드 ' + seen.join(',')); }
+        st.turn = 36; E.tick(); seen = drain('atk');
+        if (seen.join() !== 'lr_rift3') { bad.push('셋째 카드 ' + seen.join(',')); }
+        var L8 = SC.lines().filter(function (x) { return x.act === 8; });
+        if (L8.length !== 3 || L8.some(function (x) { return x.state !== 'done'; })) { bad.push('열전 기록 줄 ' + JSON.stringify(L8.map(function (x) { return x.state; }))); }
+        if (me.gold <= g0) { bad.push('보상 없음'); }
+        /* 폐허 — 다른 글 */
+        st = evFresh(); me = R.myForce(); st.turn = 0; SC.state(); st.scen = 'ruin'; st.turn = 6;
+        SD.CARDS.forEach(function (c) { SC.state().done[c.id] = { k: 'def', turn: 1 }; });
+        E.tick();
+        var v = E.view();
+        if (!v || v.id !== 'lr_ruin1' || v.text.indexOf('부생') < 0 || v.text.indexOf('{') >= 0) { bad.push('폐허 첫 카드 ' + (v && v.id)); }
+        if (v) { E.choose('def'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '열전 셋×셋 · 사람 판에는 안 뜸 · 균열의 왕 6·18·36달에 셋 다 · 폐허는 역병 글 · 기록 줄 셋';
+      } finally { window.DG_NO_SCENARIO = true; evDone(); }
+    });
+
+
     t('사연 체인 — 술자리 4달 뒤 화해의 자리가 뜨고, 화해도 2 에 닿으면 앙금이 풀려 충성 +5. 사람이 빠지면 조용히 사라진다', function () {
       var st = evFresh(), c = R.citiesOf('cao')[0];
       EV_CASES.foe_clash(c); R.myForce().gold = 2000;

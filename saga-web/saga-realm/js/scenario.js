@@ -80,7 +80,7 @@
   }
 
   function register() {
-    CD().CARDS.forEach(function (cd) {
+    CD().CARDS.concat(CD().LORD).forEach(function (cd) {
       E().addDef({
         id: cd.id, name: cd.title, emoji: cd.emoji, tag: cd.tag, chain: true,
         valid: function () { return null; },
@@ -110,19 +110,25 @@
     return !!(cd.when.orCities && R().citiesOf(F).length >= cd.when.orCities);
   }
 
-  /** 사람 세력에게 다음 카드 하나 — 표 순서대로, 앞 카드가 끝나야 다음이 온다 */
-  function source(F) {
-    if (!on()) { return null; }
-    var st = R().state();
-    if (F !== st.me || !st.started || st.result) { return null; }
-    var s = save(), list = CD().CARDS, i;
+  /** 표(list)에서 다음 카드 하나 — 표 순서대로, 앞 카드가 끝나야 다음이 온다. 열전(lord)은 제 시나리오 카드만 본다 */
+  function nextIn(list, F, lord) {
+    var st = R().state(), s = save(), i;
     for (i = 0; i < list.length; i++) {
+      if (lord && list[i].only !== st.scen) { continue; }
       if (s.done[list[i].id]) { continue; }
       if (!due(list[i], F)) { return null; }
       var cap = R().citiesOf(F)[0] || '', by = cap ? E().h.wisest(cap, F) : null, nb = neighbourLord(F);
       return { id: list[i].id, step: 1, ctx: { a: by ? by.id : '', b: nb && nb.lord ? nb.lord : '', city: cap, force: F } };
     }
     return null;
+  }
+
+  /** 사람 세력에게 다음 카드 하나 — 본 사슬 먼저, 아직 안 떴으면 이계 군주 열전(곁 사슬) */
+  function source(F) {
+    if (!on()) { return null; }
+    var st = R().state();
+    if (F !== st.me || !st.started || st.result) { return null; }
+    return nextIn(CD().CARDS, F, false) || nextIn(CD().LORD, F, true);
   }
 
   function onDone(e) {
@@ -136,12 +142,15 @@
   /** 기록 시트용 — 카드마다 끝남·다음 */
   function lines() {
     if (!on()) { return []; }
-    var s = save(), out = [], next = false;
-    CD().CARDS.forEach(function (c) {
+    var s = save(), out = [], next = false, scen = R().state().scen;
+    function add(c) {
       var d = s.done[c.id];
       out.push({ id: c.id, no: c.no, act: c.act, title: c.title, emoji: c.emoji, state: d ? (d.legacy ? 'legacy' : 'done') : (!next ? 'next' : 'wait'), k: d ? d.k : '' });
       if (!d && !next) { next = true; }
-    });
+    }
+    CD().CARDS.forEach(add);
+    next = false;
+    CD().LORD.forEach(function (c) { if (c.only === scen) { add(c); } });      // 열전은 제 군주의 것만 — 곁 사슬이라 다음 표시도 따로
     return out;
   }
 

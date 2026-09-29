@@ -14,6 +14,7 @@
  *   choices 세 갈래 atk·def·util — { k, label, hint, cost?, fx:[{ t, n }], text }
  *     fx.t  gold(금) · food(수도 군량) · sec(수도 치안) · train(수도 훈련) · loyal(책사 충성) · rel(이웃과 우호)
  *           recruit({id, bonus?}) 시간 틈 사람·재야를 수도에 등용(이미 우리 사람이면 충성 +5)
+ *   only    (열전 카드 LORD) 그 시나리오 id(rift·ruin·tomb)로 시작한 판에만 뜬다 — 본 사슬과 따로 흐르는 곁 사슬
  *   when.allTime  시간 틈 사람 아홉이 모두 우리 사람이어야 뜬다(7막 첫 카드)
  *   textByK 7막 뒤 두 카드 — 앞 카드(from)에서 고른 답(k)별 글
  *   textBy  결말 카드 — 이룬 승리 종류(hegemony·culture·diplomacy·survival·conquest)별 글
@@ -25,7 +26,7 @@
   var TAG = '📖 1막 · 중원의 난';
 
   var T2 = '📖 2막 · 대전', T3 = '📖 3막 · 강 위', T4 = '📖 4막 · 삼계 균열', T5 = '📖 5막 · 먼 길', T6 = '📖 6막 · 천하', T7 = '📖 7막 · 틈의 끝';
-  var ACTS = { 1: '1막 중원의 난', 2: '2막 대전', 3: '3막 강 위', 4: '4막 삼계 균열', 5: '5막 먼 길', 6: '6막 천하', 7: '7막 틈의 끝' };
+  var ACTS = { 1: '1막 중원의 난', 2: '2막 대전', 3: '3막 강 위', 4: '4막 삼계 균열', 5: '5막 먼 길', 6: '6막 천하', 7: '7막 틈의 끝', 8: '열전 · 이계 군주' };
   /** 시간 틈 사람 아홉 — 7막이 열리는 조건 */
   var TIME_FOLK = ['tm_gangseo', 'tm_gongseok', 'tm_geumdam', 'tm_myeongbyeon', 'tm_doha', 'tm_seongyeon', 'tm_gwedo', 'tm_eunha', 'tm_yeongjeom'];
 
@@ -222,11 +223,96 @@
       ] }
   ];
 
+
+  /* ── 이계 군주 열전 (정본 "다음 막 · 이계 군주 열전 제안") ──────────────────────────────
+     균열의 왕(rift)·폐허의 역병(ruin)·묘역의 진혼(tomb) 시나리오로 시작한 판에만 뜬다(`only`). 사람이 아니라 이계 쪽에서 본 천하 —
+     사람 성을 얻을 때마다 "이질" · 시간 틈 사람들이 사람 편에 서는 싸움 · 끝은 생존 또는 왕좌. 본 사슬(CARDS)과 **따로** 흐르는 곁 사슬이라
+     본 사슬이 아직 안 뜬 때에도 제 때가 되면 뜬다. 군주마다 셋, 같은 사슬 안에서 앞 카드가 끝나야 다음이 온다. */
+  var TL = '📖 열전 · ';
+  var LORD = [
+    { id: 'lr_rift1', no: 20, act: 8, only: 'rift', title: '균열 너머의 첫 성', emoji: '🌌', tag: TL + '균열의 왕', when: { minTurn: 6 },
+      mix: { past: '성벽 위에서 굳은 사람들', now: '강서 특공대의 낯선 눈', future: '유성 무리가 전하는 궤도 소식' },
+      text: '성혼 무리가 사람의 성을 얻었다. 성 안 사람들의 눈빛이 두려움에서 호기심으로 바뀌는 것을 {책사} 이(가) 보았다. 사람의 성을 얻을 때마다 이질이 스민다 — 사람은 이쪽이 낯설고, 이쪽도 사람이 낯설다. 이 낯섦을 어떻게 다스릴 것인가.',
+      choices: [
+        { k: 'atk', label: '이질을 힘으로 눌러 다스린다', hint: '수도 훈련 +8', fx: [{ t: 'train', n: 8 }], text: '성혼 병사들이 성문마다 섰다 — 낯섦은 조용해졌지만 눈길은 차갑다' },
+        { k: 'def', label: '사람의 풍습을 따라 준다', hint: '수도 치안 +10 · 책사 충성 +3', fx: [{ t: 'sec', n: 10 }, { t: 'loyal', n: 3 }], text: '사람의 명절을 따라 지냈다 — 성 안 골목에 조심스러운 웃음이 돌았다' },
+        { k: 'util', label: '이쪽의 것을 나눠 준다', hint: '금 +500', fx: [{ t: 'gold', n: 500 }], text: '유성 조각을 나눠 주자 시장에 새 물건이 돌았다' }
+      ] },
+    { id: 'lr_ruin1', no: 21, act: 8, only: 'ruin', title: '역병이 스민 첫 성', emoji: '🦠', tag: TL + '폐허의 역병', when: { minTurn: 6 },
+      mix: { past: '약재상 골목', now: '금담의 방역 수첩', future: '부생이 남긴 포자 기록' },
+      text: '폐허의 부생이 사람의 성으로 번졌다. 약재상 골목이 하룻밤에 비었고, {책사} 이(가) 병이 아니라 이질이라며 고개를 젓는다. 사람의 성을 얻을 때마다 이쪽의 기운이 그 성에 스민다. 사람도 이쪽도 서로에게 탈이 나는 것이다.',
+      choices: [
+        { k: 'atk', label: '번진 곳을 봉쇄한다', hint: '수도 훈련 +8', fx: [{ t: 'train', n: 8 }], text: '경계가 굳어지자 번짐이 멈췄다 — 성 안은 조용하다' },
+        { k: 'def', label: '약재를 풀어 돌본다', hint: '수도 치안 +10 · 책사 충성 +3', fx: [{ t: 'sec', n: 10 }, { t: 'loyal', n: 3 }], text: '약재를 풀어 돌보자 사람들이 이쪽 병사를 다르게 보기 시작했다' },
+        { k: 'util', label: '부생을 약으로 거둔다', hint: '금 +500', fx: [{ t: 'gold', n: 500 }], text: '부생에서 쓸 만한 약재가 나왔다 — 시장에 조심스럽게 내놓았다' }
+      ] },
+    { id: 'lr_tomb1', no: 22, act: 8, only: 'tomb', title: '종소리가 든 첫 성', emoji: '🔔', tag: TL + '묘역의 진혼', when: { minTurn: 6 },
+      mix: { past: '무덤 앞 종소리', now: '공석의 망자 명부', future: '의체가 반응하는 망자 기운' },
+      text: '묘역의 종소리가 사람의 성에 닿았다. 밤마다 성 안 무덤 곁에서 이름 모를 그림자가 서성인다. {책사} 이(가) 명부를 펼쳐 이름을 하나씩 불러 보았다. 사람의 성을 얻을 때마다 이쪽의 기운이 스민다 — 망자도 산 자도 서로 낯설다.',
+      choices: [
+        { k: 'atk', label: '그림자를 병사로 부린다', hint: '수도 훈련 +8', fx: [{ t: 'train', n: 8 }], text: '망자 병사들이 성벽에 섰다 — 낯섦은 조용해졌지만 눈길은 차갑다' },
+        { k: 'def', label: '이름을 불러 잠재운다', hint: '수도 치안 +10 · 책사 충성 +3', fx: [{ t: 'sec', n: 10 }, { t: 'loyal', n: 3 }], text: '이름을 불러 잠재우자 성 안 종소리가 한결 부드러워졌다' },
+        { k: 'util', label: '제사 음식을 마련한다', hint: '금 +500', fx: [{ t: 'gold', n: 500 }], text: '제사 음식을 나누자 사람들이 이쪽을 다시 보았다' }
+      ] },
+
+    { id: 'lr_rift2', no: 23, act: 8, only: 'rift', title: '사람 편에 선 사람들', emoji: '🛡️', tag: TL + '균열의 왕', when: { minTurn: 18, orCities: 10 },
+      mix: { past: '성벽을 지키는 옛 병사', now: '강서의 특공대 기동', future: '도하의 앞날 지도' },
+      text: '시간 틈 사람들이 사람 편에 서서 성벽을 지킨다는 소문이다. 강서의 특공대가 야습을 준비하고, 도하는 앞날 지도에 이쪽의 이동 길을 표시했다. {책사} 이(가) 묻는다 — 이들을 어떻게 상대할 것인가.',
+      choices: [
+        { k: 'atk', label: '정면으로 맞선다', hint: '수도 훈련 +10', fx: [{ t: 'train', n: 10 }], text: '정면으로 맞서 특공대의 야습을 꺾었다 — 병사들의 기세가 올랐다' },
+        { k: 'def', label: '성문을 닫고 버틴다', hint: '수도 치안 +10 · 군량 +1500', fx: [{ t: 'sec', n: 10 }, { t: 'food', n: 1500 }], text: '성문을 닫고 버티자 야습이 물러났다' },
+        { k: 'util', label: '앞날 지도를 훔쳐 온다', hint: '금 +800 · 책사 충성 +3', fx: [{ t: 'gold', n: 800 }, { t: 'loyal', n: 3 }], text: '도하의 지도 한 장을 손에 넣었다 — 이쪽 길에 밝아졌다' }
+      ] },
+    { id: 'lr_ruin2', no: 24, act: 8, only: 'ruin', title: '방호복을 입은 사람들', emoji: '🥼', tag: TL + '폐허의 역병', when: { minTurn: 18, orCities: 10 },
+      mix: { past: '약재 짊어진 의원', now: '금담의 백신 공장', future: '은하의 방호복' },
+      text: '시간 틈 사람들이 사람 편에 서서 방호복을 나눠 준다는 소문이다. 금담은 백신 공장을 세웠고, 은하는 방호복으로 번짐 길을 막았다. {책사} 이(가) 묻는다 — 이들을 어떻게 상대할 것인가.',
+      choices: [
+        { k: 'atk', label: '공장을 습격한다', hint: '수도 훈련 +10', fx: [{ t: 'train', n: 10 }], text: '공장을 습격해 백신 몇 병을 빼앗았다 — 병사들의 기세가 올랐다' },
+        { k: 'def', label: '번짐 길을 막고 버틴다', hint: '수도 치안 +10 · 군량 +1500', fx: [{ t: 'sec', n: 10 }, { t: 'food', n: 1500 }], text: '길을 막고 버티자 방호복 병사들이 물러났다' },
+        { k: 'util', label: '백신 처방을 몰래 베낀다', hint: '금 +800 · 책사 충성 +3', fx: [{ t: 'gold', n: 800 }, { t: 'loyal', n: 3 }], text: '처방 한 장을 베껴 왔다 — 이쪽 약에 접목할 만하다' }
+      ] },
+    { id: 'lr_tomb2', no: 25, act: 8, only: 'tomb', title: '망자를 달래는 사람들', emoji: '🕯️', tag: TL + '묘역의 진혼', when: { minTurn: 18, orCities: 10 },
+      mix: { past: '무덤 앞 진혼 제례', now: '공석의 망자 명부 정리', future: '영점 의체의 망자 감지' },
+      text: '시간 틈 사람들이 사람 편에 서서 망자를 달랜다는 소문이다. 공석은 망자 명부를 정리했고, 영점의 의체는 망자 기운에 반응해 종소리 길을 가리킨다. {책사} 이(가) 묻는다 — 이들을 어떻게 상대할 것인가.',
+      choices: [
+        { k: 'atk', label: '제례를 방해한다', hint: '수도 훈련 +10', fx: [{ t: 'train', n: 10 }], text: '제례 자리를 흔들자 망자 병사들이 일제히 깨어났다' },
+        { k: 'def', label: '종소리로 막고 버틴다', hint: '수도 치안 +10 · 군량 +1500', fx: [{ t: 'sec', n: 10 }, { t: 'food', n: 1500 }], text: '종소리가 막아 주자 진혼 행렬이 멈췄다' },
+        { k: 'util', label: '명부 한 장을 빌려 온다', hint: '금 +800 · 책사 충성 +3', fx: [{ t: 'gold', n: 800 }, { t: 'loyal', n: 3 }], text: '명부 한 장에서 잊힌 이름들을 알아냈다' }
+      ] },
+
+    { id: 'lr_rift3', no: 26, act: 8, only: 'rift', title: '왕좌와 생존', emoji: '👑', tag: TL + '균열의 왕', when: { minTurn: 36 },
+      mix: { past: '성벽 위의 새벽', now: '강서가 건넨 손', future: '유성 무리의 마지막 궤도' },
+      text: '긴 싸움 끝에 균열의 문은 늘 열려 있다. 강서가 성벽 아래에서 손을 내밀었고, 도하는 앞날 지도의 마지막 장을 접었다. 유성 무리는 궤도 끝에서 기다린다. 왕좌에 앉을지, 문을 열어 둔 채 살아남을지 {책사} 이(가) 묻는다.',
+      choices: [
+        { k: 'atk', label: '왕좌에 앉는다', hint: '금 +2500 · 책사 충성 +8', fx: [{ t: 'gold', n: 2500 }, { t: 'loyal', n: 8 }], text: '균열의 왕좌에 앉았다 — 성혼과 사람이 함께 고개를 숙였다' },
+        { k: 'def', label: '문을 열어 둔 채 산다', hint: '수도 치안 +20 · 책사 충성 +8', fx: [{ t: 'sec', n: 20 }, { t: 'loyal', n: 8 }], text: '문을 열어 둔 채 살아가기로 했다 — 성 안 골목에 두 세계의 등불이 켜졌다' },
+        { k: 'util', label: '문 너머의 기록을 남긴다', hint: '금 +1200 · 군량 +4000', fx: [{ t: 'gold', n: 1200 }, { t: 'food', n: 4000 }], text: '이쪽에서 본 천하가 서고에 꽂혔다' }
+      ] },
+    { id: 'lr_ruin3', no: 27, act: 8, only: 'ruin', title: '왕좌와 생존', emoji: '👑', tag: TL + '폐허의 역병', when: { minTurn: 36 },
+      mix: { past: '약재 상자 위의 새벽', now: '금담이 건넨 백신', future: '은하가 벗은 방호복' },
+      text: '긴 싸움 끝에 역병의 뿌리는 아직 살아 있다. 금담이 백신 한 병을 내밀었고, 은하는 방호복을 벗었다. 폐허의 부생은 조용히 기다린다. 왕좌에 앉을지, 서로 앓으며 살아남을지 {책사} 이(가) 묻는다.',
+      choices: [
+        { k: 'atk', label: '왕좌에 앉는다', hint: '금 +2500 · 책사 충성 +8', fx: [{ t: 'gold', n: 2500 }, { t: 'loyal', n: 8 }], text: '역병의 왕좌에 앉았다 — 부생과 사람이 함께 고개를 숙였다' },
+        { k: 'def', label: '서로 앓으며 산다', hint: '수도 치안 +20 · 책사 충성 +8', fx: [{ t: 'sec', n: 20 }, { t: 'loyal', n: 8 }], text: '서로 앓으며 살아가기로 했다 — 골목마다 약 냄새와 등불이 함께 났다' },
+        { k: 'util', label: '병의 기록을 남긴다', hint: '금 +1200 · 군량 +4000', fx: [{ t: 'gold', n: 1200 }, { t: 'food', n: 4000 }], text: '앓은 기록이 서고에 꽂혔다' }
+      ] },
+    { id: 'lr_tomb3', no: 28, act: 8, only: 'tomb', title: '왕좌와 생존', emoji: '👑', tag: TL + '묘역의 진혼', when: { minTurn: 36 },
+      mix: { past: '무덤 앞의 새벽 종', now: '공석이 정리한 마지막 명부', future: '영점 의체의 잠잠한 반응' },
+      text: '긴 싸움 끝에 묘역의 종소리는 아직 울린다. 공석이 마지막 명부를 덮었고, 영점의 의체는 잠잠해졌다. 망자들은 조용히 기다린다. 왕좌에 앉을지, 종소리와 함께 살아남을지 {책사} 이(가) 묻는다.',
+      choices: [
+        { k: 'atk', label: '왕좌에 앉는다', hint: '금 +2500 · 책사 충성 +8', fx: [{ t: 'gold', n: 2500 }, { t: 'loyal', n: 8 }], text: '진혼의 왕좌에 앉았다 — 망자와 산 자가 함께 고개를 숙였다' },
+        { k: 'def', label: '종소리와 함께 산다', hint: '수도 치안 +20 · 책사 충성 +8', fx: [{ t: 'sec', n: 20 }, { t: 'loyal', n: 8 }], text: '종소리와 함께 살아가기로 했다 — 새벽마다 성 안에 종이 울렸다' },
+        { k: 'util', label: '명부를 서고에 남긴다', hint: '금 +1200 · 군량 +4000', fx: [{ t: 'gold', n: 1200 }, { t: 'food', n: 4000 }], text: '마지막 명부가 서고에 꽂혔다' }
+      ] }
+  ];
+
   function card(id) {
-    for (var i = 0; i < CARDS.length; i++) { if (CARDS[i].id === id) { return CARDS[i]; } }
+    var i;
+    for (i = 0; i < CARDS.length; i++) { if (CARDS[i].id === id) { return CARDS[i]; } }
+    for (i = 0; i < LORD.length; i++) { if (LORD[i].id === id) { return LORD[i]; } }
     return null;
   }
 
   global.DG = global.DG || {};
-  global.DG.scenarioData = { CARDS: CARDS, ACTS: ACTS, TIME_FOLK: TIME_FOLK, card: card };
+  global.DG.scenarioData = { CARDS: CARDS, LORD: LORD, ACTS: ACTS, TIME_FOLK: TIME_FOLK, card: card };
 })(window);
