@@ -2527,6 +2527,22 @@
     { "key": "domain.echo_p2", "value": "🔮 {0} 이(가) 원소 방패를 둘렀다 — 상성 원소로 깨라" },
     { "key": "domain.hud_echo", "value": "{0} {1}%{2}" },
     { "key": "domain.why.echo", "value": "1차 결말 뒤에 열린다" },
-    { "key": "domain.hud_echo_shield", "value": "방패" }
+    { "key": "domain.hud_echo_shield", "value": "방패" },
+    { "key": "night.spot.ruins", "value": "폐허 제단" },
+    { "key": "night.spot.road", "value": "서쪽 옛길" },
+    { "key": "night.spot.peak", "value": "북쪽 봉우리" },
+    { "key": "night.spot.cape", "value": "물마루 곶" },
+    { "key": "night.spot.isle", "value": "바위섬" },
+    { "key": "night.spot.frost", "value": "서리봉 고원" },
+    { "key": "night.spot.sunken", "value": "잠긴 도읍 모래밭" },
+    { "key": "night.line.ruins", "value": "이 불… 비문 밑에서 올라온 거야. 다 꺼졌으면 좋겠는데." },
+    { "key": "night.line.road", "value": "……밤마다 이 길 끝에서 불이 튄다. 임금의 미련이다." },
+    { "key": "night.line.peak", "value": "노랫소리가 남았어. 이번엔 내가 끝을 맺을게." },
+    { "key": "night.line.cape", "value": "허, 이 늙은이 노 소리에 잔불도 물러가는군." },
+    { "key": "night.line.isle", "value": "밤 물살이 잔불을 실어 오네. 이제 진짜 끝이겠지." },
+    { "key": "night.line.frost", "value": "(무전) 관측소 온도계가 밤마다 튀었는데 — 이 불 때문이었어요." },
+    { "key": "night.line.sunken", "value": "밤 바다에 보랏빛이 비치더니 — 그게 이거였구려." },
+    { "key": "night.up", "value": "🔮 밤의 잔불 — {0}에서 잔당이 일어났다" },
+    { "key": "night.clear", "value": "🔮 잔불이 꺼졌다 — {0}: \"{1}\" · 금 {2} · 교본 {3}" }
   ]
 }
