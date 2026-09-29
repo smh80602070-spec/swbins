@@ -85,6 +85,7 @@ window.DG_NO_TUNE = true;
 <script src="js/portrait3d.js"></script>
 <script src="js/account.js"></script>
 <script src="js/hero.js"></script>
+<script src="js/mount.js"></script>
 <script src="js/village.js"></script>
 <script src="js/bug.js"></script>
 <script src="js/home.js"></script>
@@ -5951,6 +5952,99 @@ window.DG_NO_TUNE = true;
         ('손님 ' + VI.VISITORS.length + ' — 과거 ' + eras.past + '·현대 ' + eras.modern + '·미래 ' + eras.future + '·신화 ' + eras.myth +
          ' · 소포 넷 → 🪙 900 + 소포 상자 탑 · 사진 → 🪙 800 · 시간 여행자는 로봇 몸') ||
         (function () { throw new Error(bad.slice(0, 5).join(' ') + ' eras=' + JSON.stringify(eras) + ' parcel=' + parcel + ' photo=' + photo + ' robot=' + robot); })();
+    });
+
+    /* ── 탈것(mount.js, SAGA-DESIGN §15) — 사슴·말 셋 + 학·용(떠서 물·나무를 넘는다) ── */
+    t('탈것 — 카탈로그 5(사슴 3·갈색 말 8·흰 말 14 · 학 10 · 용 18 또는 도감 등록) · 타기/내리기·고르기 · 저장 sel 한 칸 · 손 뻗기(Space)·집 안·손잡이에서 내림', function () {
+      var MT = DG.mount, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null, keepInd = V.indoors;
+      try {
+        MT._resetForTest(); delete C.save.mount;
+        if (C.save.dex && C.save.dex.pets) { MT.MOUNTS.forEach(function (m) { delete C.save.dex.pets[m.pet]; }); }
+        r.table = MT.MOUNTS.map(function (m) { return m.id + ':' + m.lv + ':' + m.mul; }).join() === 'mt_deer:3:1.4,mt_brown:8:1.7,mt_white:14:1.95,mt_crane:10:1.5,mt_dragon:18:1.8' &&
+          MT.MOUNTS.filter(function (m) { return m.kind === 'fly'; }).length === 2 && MT.MOUNTS.every(function (m) { return !!m.pet && !!m.emoji; });
+        C.save.player.level = 2; r.none = MT.unlocked().length === 0 && !MT.selected() && !MT.canRide().ok && /레벨 3/.test(MT.canRide().why);
+        C.save.player.level = 3; r.lv3 = MT.unlocked().map(function (m) { return m.id; }).join() === 'mt_deer' && MT.selected().id === 'mt_deer';
+        C.save.player.level = 10; r.lv10 = MT.unlocked().length === 3 && MT.selected().id === 'mt_brown';           // 학(10)도 열렸지만 기본은 지상 중 가장 빠른 것
+        C.save.player.level = 1; if (!C.save.dex) { C.save.dex = { heroes: {}, pets: {} }; } if (!C.save.dex.pets) { C.save.dex.pets = {}; }
+        C.save.dex.pets.pt_cheongryong = { count: 1, firstAt: 0 };
+        r.dex = MT.unlocked().map(function (m) { return m.id; }).join() === 'mt_dragon' && MT.selected().id === 'mt_dragon';
+        delete C.save.dex.pets.pt_cheongryong;
+        C.save.player.level = 30;
+        r.ride = !MT.active() && MT.petRef() === null && MT.ride().ok && MT.active() && MT.current().id === 'mt_white' && MT.speedMul() === 1.95 && MT.petRef().id === 'pt_white_horse' && !MT.flying();
+        var nx = MT.cycle();
+        r.cycle = nx.id === 'mt_crane' && MT.flying() && MT.speedMul() === 1.5 && C.save.mount.sel === 'mt_crane' && Object.keys(C.save.mount).join() === 'sel' && MT.petRef().id === 'pt_crane';
+        r.off = MT.toggle().mounted === false && !MT.active() && MT.speedMul() === 1 && !MT.flying();
+        /* 손 뻗기(Space=interact)는 먼저 내린다 */
+        MT.ride('mt_brown'); V.interact();
+        r.interact = !MT.active();
+        MT.ride('mt_brown'); r.onI = MT.onInteract() === true && !MT.active() && MT.onInteract() === false;
+        /* 집 안 — 못 타고, 타고 있으면 내린다 */
+        V.indoors = function () { return true; };
+        var noHome = !MT.canRide().ok && /집/.test(MT.canRide().why);
+        V.indoors = keepInd; MT.ride('mt_brown'); V.indoors = function () { return true; }; MT.step(); var homeDown = !MT.active();
+        V.indoors = keepInd;
+        r.home = noHome && homeDown;
+        r.knob = (C.setTune('mount.on', 0), !MT.on() && !MT.canRide().ok) && (C.setTune('mount.on', null), MT.on());
+        MT.ride('mt_brown'); C.setTune('mount.on', 0); MT.step(); r.knobDown = !MT.active(); C.setTune('mount.on', null);
+      } finally {
+        V.indoors = keepInd; C.setTune('mount.on', null); MT._resetForTest(); C.save.player.level = lv0;
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+        if (pets0 !== null) { C.save.dex.pets = JSON.parse(pets0); }
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      if (bad.length) { throw new Error('실패 ' + bad.join(',')); }
+      return '통과 ' + Object.keys(r).join(',');
+    });
+
+    t('탈것 — 이동: 지상 배율 · 학·용은 떠서 물·나무 칸을 넘는다(마을 둘레 8칸까지) · 밖으로는 못 나감 · 물 위에서 내리면 가장 가까운 뭍으로', function () {
+      var MT = DG.mount, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, raw = V.raw(), p = raw.player, T = V.TILE, keepPos = { x: p.x, y: p.y };
+      try {
+        MT._resetForTest(); delete C.save.mount; C.save.player.level = 30;
+        function dxOf(dx, dy, n) { var x0 = p.x, y0 = p.y; V.setJoy(dx, dy); for (var i = 0; i < n; i++) { V.update(0.05); } V.setJoy(0, 0); var m = { x: p.x - x0, y: p.y - y0 }; p.x = x0; p.y = y0; return m; }
+        /* 시작 자리에서 트인 방향 하나 — 걸으면 30 넘게 가는 쪽 */
+        var dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]], dir = null, base = 0, i;
+        for (i = 0; i < dirs.length && !dir; i++) { var m0 = dxOf(dirs[i][0], dirs[i][1], 8); var d0 = Math.abs(m0.x) + Math.abs(m0.y); if (d0 > 30) { dir = dirs[i]; base = d0; } }
+        r.open = !!dir && base > 30;
+        MT.ride('mt_white'); var ride = dxOf(dir[0], dir[1], 8), rd = Math.abs(ride.x) + Math.abs(ride.y);
+        r.speed = Math.abs(rd / base - 1.95) < 0.02;
+        MT.dismount(null);
+        /* 걸을 수 있는 칸 옆의 못 걷는 칸(물·나무 …)을 찾는다 */
+        var W = V.W, H = V.H, edge = null, tx, ty;
+        for (ty = 2; ty < H - 2 && !edge; ty++) {
+          for (tx = 2; tx < W - 3 && !edge; tx++) {
+            if (V.walkable((tx + 0.5) * T, (ty + 0.5) * T) && !V.walkable((tx + 1.5) * T, (ty + 0.5) * T) && !V.walkable((tx + 2.5) * T, (ty + 0.5) * T)) { edge = { tx: tx, ty: ty }; }
+          }
+        }
+        r.edge = !!edge;
+        var sx = (edge.tx + 1) * T - 1, sy = (edge.ty + 0.5) * T;
+        p.x = sx; p.y = sy;
+        var walkM = dxOf(1, 0, 6);
+        r.blocked = walkM.x < 3;                                                   // 걸어선 못 넘는다
+        MT.ride('mt_crane'); p.x = sx; p.y = sy;
+        var flyM = dxOf(1, 0, 6);
+        r.fly = MT.flying() && flyM.x > T * 0.8;                                    // 떠서 넘는다
+        /* 물 위에서 내리면 뭍으로 */
+        p.x = (edge.tx + 2.5) * T; p.y = sy;
+        var onWater = !V.walkable(p.x, p.y);
+        MT.dismount(null);
+        r.land = onWater && V.walkable(p.x, p.y) && Math.hypot(p.x - (edge.tx + 2.5) * T, p.y - sy) < T * 3 + 1;
+        /* 지상 탈것은 못 넘는다 */
+        MT.ride('mt_brown'); p.x = sx; p.y = sy; var horseM = dxOf(1, 0, 6); r.ground = horseM.x < 3; MT.dismount(null);
+        /* 마을 둘레 8칸 밖으론 못 나간다 */
+        var lim = (W + MT.EDGE_TILES) * T;
+        /* 뜬 채 넘을 수 있는 범위는 마을 둘레 8칸까지(canFly) — 그 밖의 못 걷는 칸은 못 넘는다 */
+        var hy = (H / 2) * T;
+        r.bound = MT.canFly(lim - 1, hy) && !MT.canFly(lim + 1, hy) && MT.canFly(-MT.EDGE_TILES * T + 1, hy) && !MT.canFly(-MT.EDGE_TILES * T - 1, hy) && MT.canFly(W * T / 2, (H + MT.EDGE_TILES) * T - 1) && !MT.canFly(W * T / 2, (H + MT.EDGE_TILES) * T + 1);
+        MT.ride('mt_dragon'); p.x = sx; p.y = sy; MT.dismount(null); r.back = V.walkable(p.x, p.y);
+        /* snapToLand 는 뭍 위에선 아무것도 안 한다 */
+        var ok0 = V.walkable(keepPos.x, keepPos.y); p.x = keepPos.x; p.y = keepPos.y; r.noop = ok0 && V.snapToLand() === false && p.x === keepPos.x;
+      } finally {
+        V.setJoy(0, 0); MT._resetForTest(); C.save.player.level = lv0; p.x = keepPos.x; p.y = keepPos.y;
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      if (bad.length) { throw new Error('실패 ' + bad.join(',')); }
+      return '통과 ' + Object.keys(r).join(',');
     });
 
     t('런타임 에러 없음', function () {

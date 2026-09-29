@@ -1345,8 +1345,14 @@
     var k = ZOOM * p.s;
     var me = meStamp();
     shadow(p.x, p.y + 2 * k, 14 * k, 5 * k);
+    var MTd = global.DG.mount, mtd = MTd && MTd.active && MTd.active() ? MTd.current() : null, lift = 0;   // 탈것(mount.js) — 2D 는 이모지로
+    if (mtd) {
+      lift = 16 * k + (MTd.isFly(mtd) ? 12 * k + Math.sin(now / 240) * 2 * k : 0);
+      ctx.font = Math.round(34 * k) + 'px "Segoe UI Emoji", system-ui'; ctx.textAlign = 'center';
+      ctx.fillText(mtd.emoji, p.x, p.y - (MTd.isFly(mtd) ? 12 * k : 0) + 2 * k);
+    }
     global.DG.sprite.stamp(ctx, {
-      kind: 'human', ref: me.ref, x: p.x, y: p.y, s: 1 * k,
+      kind: 'human', ref: me.ref, x: p.x, y: p.y - lift, s: 1 * k,
       facing: p0.facing, phase: p0.phase, walking: p0.walking,
       color: me.color, look: me.look,
       rarity: me.rarity, t: now

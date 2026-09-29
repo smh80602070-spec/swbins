@@ -1384,3 +1384,17 @@ body.tilted3 #vignette {
 @media (hover: none) and (pointer: coarse) {
   .keyhint { display: none; }
 }
+
+/* 탈것(mount.js) — 터치 단추 */
+#mt-ride {
+  display: none; position: fixed; z-index: 20;
+  left: 14px; bottom: calc(150px + env(safe-area-inset-bottom, 0px)); width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(20, 24, 34, 0.72); border: 1px solid rgba(255, 255, 255, 0.18); color: #fff;
+  touch-action: none; -webkit-user-select: none; user-select: none; cursor: pointer;
+  place-items: center; gap: 0; font-weight: 700;
+}
+#mt-ride.show { display: grid; }
+#mt-ride.riding { box-shadow: 0 0 0 2px #ffd27a inset; }
+#mt-ride span { font-size: 20px; line-height: 1; }
+#mt-ride em { font-size: 10px; font-style: normal; opacity: .7; }
+#mt-ride:active { transform: scale(.94); }

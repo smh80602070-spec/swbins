@@ -1604,6 +1604,26 @@
 
   function walkTo(x, y) { target = { x: x, y: y }; }
 
+  /** 걸을 수 없는 자리에 서 있으면(떠서 물 위에서 내렸을 때 등) 가장 가까운 걸을 수 있는 칸 가운데로 옮긴다 — 옮겼으면 true */
+  function snapToLand() {
+    if (indoors || caveIn || walkable(player.x, player.y)) { return false; }
+    var tx0 = Math.floor(player.x / TILE), ty0 = Math.floor(player.y / TILE), best = null, bd = Infinity, r, tx, ty;
+    for (r = 1; r <= 24 && !best; r++) {
+      for (ty = ty0 - r; ty <= ty0 + r; ty++) {
+        for (tx = tx0 - r; tx <= tx0 + r; tx++) {
+          if (Math.max(Math.abs(tx - tx0), Math.abs(ty - ty0)) !== r) { continue; }
+          var cx = (tx + 0.5) * TILE, cy = (ty + 0.5) * TILE;
+          if (!walkable(cx, cy)) { continue; }
+          var d = Math.hypot(cx - player.x, cy - player.y);
+          if (d < bd) { bd = d; best = { x: cx, y: cy }; }
+        }
+      }
+    }
+    if (!best) { return false; }
+    player.x = best.x; player.y = best.y; target = null;
+    return true;
+  }
+
   /* 2026-09-09 — 가상 조이스틱(village-view.js #vjoy). walkTo(절대 좌표)는
      화면을 계속 눌러 끄는 예전 조작에 맞춰져 있어, 고정 조이스틱처럼
      "이 방향으로 계속" 을 표현할 자리가 없었다. keys(WASD)와 같은 자리에
@@ -1643,13 +1663,14 @@
       var len = Math.sqrt(dx * dx + dy * dy) || 1;
       /* 살금살금이면 느리다. 그 대신 벌레가 달아나지 않는다 (bug.js).
          벌에 쏘인 날은 하루 종일 걸음이 무겁다 */
+      var MTv = global.DG.mount, flyOn = !!(MTv && MTv.flying && MTv.flying());
       var sp = SPEED * (sneaking() ? 0.42 : 1) *
-               (global.DG.bug && global.DG.bug.stung() ? 0.8 : 1) * speedMul();
+               (global.DG.bug && global.DG.bug.stung() ? 0.8 : 1) * speedMul() * (MTv && MTv.speedMul ? MTv.speedMul() : 1);   // 탈것 배율(mount.js)
       var nx = player.x + (dx / len) * sp * dt;
       var ny = player.y + (dy / len) * sp * dt;
-      /* 축마다 따로 막는다 — 벽을 스치며 걸을 수 있게 */
-      if (walkable(nx, player.y)) { player.x = nx; }
-      if (walkable(player.x, ny)) { player.y = ny; }
+      /* 축마다 따로 막는다 — 벽을 스치며 걸을 수 있게. 떠서 가는 탈것(학·용)은 물·나무 칸을 넘는다(마을 둘레 EDGE_TILES 칸 안) */
+      if (walkable(nx, player.y) || (flyOn && MTv.canFly(nx, player.y))) { player.x = nx; }
+      if (walkable(player.x, ny) || (flyOn && MTv.canFly(player.x, ny))) { player.y = ny; }
       if (dx) { player.facing = dx > 0 ? 1 : -1; }
       player.phase += dt * 7;
     }
@@ -1891,6 +1912,7 @@
    * @returns {{kind, text}} 화면에 띄울 한 줄 (없으면 null)
    */
   function interact() {
+    if (global.DG.mount && global.DG.mount.onInteract) { global.DG.mount.onInteract(); }   // 탈것 위에선 손이 안 닿는다 — 먼저 내려앉는다(mount.js)
     var f = focus();
     /* 손에 닿는 것이 없으면 하늘을 본다 — 별똥별이 흐르면 소원을 빈다 */
     if (!f) {
@@ -2469,7 +2491,7 @@
     W: W, H: H, TILE: TILE, REACH: REACH,
     init: init, update: update, bindKeys: bindKeys, walkTo: walkTo, setJoy: setJoy,
     keymap: keymap, beginRemap: beginRemap, remapping: function () { return remapping; },
-    tileAt: tileAt, walkable: walkable, ringSpotOk: ringSpotOk,
+    tileAt: tileAt, walkable: walkable, snapToLand: snapToLand, ringSpotOk: ringSpotOk,
     _shellPath: function () { return shellPath; },
     focus: focus, interact: interact, spent: spent,
     talk: talk, requestOf: requestOf, friendOf: friendOf, talkNpc: talkNpc,

@@ -344,6 +344,7 @@
   }
 
   var player = { group: null, mixer: null, actions: null, clipMap: null, action: null };
+  var mount3 = { group: null, id: null, mixer: null, actions: null, clipMap: null, action: null, gen: 0 };   // 탈것(mount.js) 몸 — 탄 동안만 서고 내리면 치운다
   var lastPX = 0, lastPY = 0, haveLast = false, facingYaw = 0;
 
   /** village.js 사물 kind → asset3d 표의 kind. 여기 없는 kind는 3D 로 안 선다.
@@ -1509,6 +1510,36 @@
    *  단순히 `a + (b-a)*k` 를 쓰면 -179°→+179° 처럼 경계를 넘는 회전이 반대
    *  방향(먼 길)으로 돌아버린다 — 각 차를 먼저 -π~π 로 접어(wrap) 최단 회전만
    *  고른다. `2026-09-10 "움직이는 모션을 더 자연스럽게"`로 신설 */
+  /** 탈것(mount.js) — 발밑에 펫 몸을 세우고 나를 등 높이에 앉힌다. 떠서 가는 탈것은 HOVER 만큼 떠서 출렁인다 */
+  function syncMount(dt, moving) {
+    var MT = global.DG.mount, ref = MT && MT.petRef ? MT.petRef() : null, sc = scene;
+    if (!sc || !player.group) { return; }
+    if (mount3.group && (!ref || mount3.id !== ref.id)) {
+      sc.remove(mount3.group); mount3.group = null; mount3.id = null; mount3.mixer = null; mount3.actions = null; mount3.clipMap = null; mount3.action = null; mount3.gen++;
+    }
+    if (!ref) { player.group.position.y = 0; return; }
+    if (!mount3.group && mount3.id !== ref.id) {
+      var gen = ++mount3.gen; mount3.id = ref.id;
+      asset3d().build('pet', ref, function (g) {
+        if (!g || gen !== mount3.gen || !scene) { return; }
+        g.scale.setScalar(PLAYER_H() * MT.SCALE);
+        mount3.group = g; mount3.mixer = g.userData.mixer || null; mount3.actions = g.userData.actions || null; mount3.clipMap = g.userData.clipMap || null;
+        scene.add(g);
+      });
+    }
+    var fly = MT.flying(), t = Date.now() / 1000, hover = fly ? PLAYER_H() * MT.HOVER + Math.sin(t * 3) * 0.08 : 0;
+    player.group.position.y = PLAYER_H() * MT.RIDER_LIFT + hover;
+    if (mount3.group) {
+      mount3.group.position.set(0, hover, 0);
+      mount3.group.rotation.y = facingYaw;
+      if (mount3.actions && mount3.clipMap) {
+        var slot = (moving || fly) ? 'walk' : 'idle', name = mount3.clipMap[slot] || mount3.clipMap.walk, act = name ? mount3.actions[name] : null;
+        if (act && mount3.action !== act) { if (mount3.action) { mount3.action.fadeOut(0.15); } act.reset().fadeIn(0.15).play(); mount3.action = act; }
+      }
+      if (mount3.mixer) { mount3.mixer.update(dt); }
+    }
+  }
+
   function angleLerp(a, b, k) {
     var d = ((b - a + Math.PI) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - Math.PI;
     return a + d * k;
@@ -1540,6 +1571,7 @@
     facingYaw = angleLerp(facingYaw, targetYaw, turnLerpK(dt));
 
     if (player.group) { player.group.rotation.y = facingYaw; }
+    syncMount(dt, moved > MOVE_EPS() * (1 / 60));
 
     /* userZoom 이 커질수록(확대) 거리를 좁힌다 — 그래서 여기선 나눈다.
        iso 쪽 끝값은 ISO_DIST()·ISO_TILT() 를 camPose 가 쓰던 (수평 반지름, 높이) 짝으로

@@ -226,6 +226,7 @@
 
     global.DG.auto.update(dt);
     V.update(dt);
+    if (global.DG.mount) { global.DG.mount.step(); if (!global.DG_NO_DRAW) { global.DG.mount.paint(); } }   // 탈것 — 내림 판정·단추(mount.js)
     if (!global.DG_NO_DRAW) {
       var VV3 = global.DG.villageView3d;
       /* 3D 가 켜져 있으면 2D 캔버스는 display:none 인데도 매 프레임 하늘·땅·사람을 다 그렸다 — 카메라만 맞춘다 */
