@@ -172,6 +172,12 @@ void fragment() {
 	vec2 sc = world_pos.xz * 2.5;
 	float shell = step(0.985, _hash(floor(sc))) * (1.0 - smoothstep(0.18, 0.24, length(fract(sc) - 0.5)));
 	sand = mix(sand, vec3(0.95, 0.9, 0.86), shell * 0.8);
+	// 2026-09-30 — 모래밭이 넓은 한 빛 판이었다(창 모드 u_palace·c_sea). 물기 밴 어두운 큰 얼룩(굽이치는 띠)과 잔자갈 점을 얹는다.
+	float damp = smoothstep(0.42, 0.7, _value_noise(world_pos.xz * 0.045 + vec2(21.0, 4.0)) * 0.7 + _value_noise(world_pos.xz * 0.16) * 0.3);
+	sand *= mix(1.0, 0.74, damp);
+	vec2 pc = world_pos.xz * 4.0;
+	float pebble = step(0.93, _hash(floor(pc) + 7.0)) * (1.0 - smoothstep(0.12, 0.2, length(fract(pc) - 0.5)));
+	sand = mix(sand, sand * vec3(0.55, 0.52, 0.5), pebble * 0.7);
 	ALBEDO = mix(ALBEDO, sand, sand_w);
 	ROUGHNESS = mix(ROUGHNESS, 0.9, sand_w);
 	// saga-godot PLAN 106장 ㊺ 서리봉 고원 — 눈 표시(눈밭·눈 덮인 산)는 풀 텍스처 대신 눈으로,
