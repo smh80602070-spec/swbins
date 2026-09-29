@@ -376,6 +376,8 @@ namespace Saga.Go.UI
             StoryField.Target(out Vector3 t, out _);
             string text = GoStory.StepText(st);
             if (st.Type == GoStory.StepType.Gather) text += $" {StoryState.Progress}/{st.Count}";
+            if (st.Type == GoStory.StepType.Party) // 109-14-55 시대마다 ✔/✗
+                foreach (var e in new[] { GoEra.Past, GoEra.Modern, GoEra.Future }) text += $" {GoEras.EraName(e)}{(GoStory.PartyHasEra(e) ? " ✔" : " ✗")}";
             if (st.Type == GoStory.StepType.Chase) // 109-14-19 · 109-14-21 둥실이
                 text = StoryField.Instance != null && StoryField.Instance.ChaseRunning
                     ? string.Format(GoLocalization.T("story.chase_track2", "{0} {1}m — 달려라!"), GoStory.NpcShort(st.Npc), Mathf.RoundToInt(GoStory.Flat(p, StoryField.Instance.ChasePos)))
