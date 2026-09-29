@@ -2879,9 +2879,54 @@ window.DG_NO_TUNE = true;
         if (!SC.state().done.y2_ruin || !SC.state().said.ans1) { bad.push('제19장 끝·제20장 첫 장면'); }
         ofYear('samjin'); C.emit('changed');
         say();
-        if (!SC.state().done.y2_bloom || SC.current() !== null || SC.titles().indexOf('답장을 받는 이웃') < 0) { bad.push('제20장 끝·칭호 ' + JSON.stringify(SC.titles())); }
+        if (!SC.state().done.y2_bloom || !SC.current() || SC.current().id !== 'y2_album' || SC.titles().indexOf('답장을 받는 이웃') < 0) { bad.push('제20장 끝·칭호 ' + JSON.stringify(SC.titles())); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '별 우체통 답장(배달 둘) → 호연(꽃 다섯·하트 6) → 폐허 → 삼짇날 꽃놀이 · 칭호 답장을 받는 이웃 · 스무 장 끝';
+      } finally {
+        window.DG_NO_SCENARIO = true;
+        SC.abort();
+        s0.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; s0.fest = JSON.parse(keep.fest); s0.visitSettled = JSON.parse(keep.vs);
+        s0.hearts = JSON.parse(keep.hearts); s0.donated = JSON.parse(keep.don);
+        C.save.player = JSON.parse(keep.p); V.raw().player.x = keep.px; V.raw().player.y = keep.py;
+      }
+    });
+
+
+    t('시나리오 둘째 해 여름 — 찰나의 사진첩·빌려 준 카메라·반딧불 야간 촬영·칠석으로 스물네 장이 끝난다', function () {
+      var SC = DG.scenario, C = DG.core, s0 = V.state(), bad = [];
+      var keep = { sc: s0.scenario ? JSON.stringify(s0.scenario) : null, fest: JSON.stringify(s0.fest || {}), vs: JSON.stringify(s0.visitSettled || []),
+        hearts: JSON.stringify(s0.hearts || {}), don: JSON.stringify(s0.donated || {}), p: JSON.stringify(C.save.player), px: V.raw().player.x, py: V.raw().player.y };
+      function say() { var k = 0; while (SC.isOpen() && k++ < 40) { SC.next(); } }
+      function cur() { return SC.isOpen() ? SC.currentScene().id : null; }
+      window.DG_NO_SCENARIO = false;
+      try {
+        s0.fest = {}; s0.visitSettled = []; s0.hearts = {}; s0.donated = {};
+        SC.reset();
+        var done = {}; SC.state().done = done;
+        ['sp_move', 'sp_postbox', 'sp_fox', 'sp_museum', 'su_sailor', 'su_photo', 'su_waterfall', 'su_star', 'au_rumi', 'au_insect', 'au_harvest', 'au_cave',
+          'wi_letters', 'wi_dongji', 'wi_newyear', 'wi_moon', 'y2_reply', 'y2_hoyeon', 'y2_ruin', 'y2_bloom'].forEach(function (id) { done[id] = 1; });
+        SC.init();
+        if (!SC.current() || SC.current().id !== 'y2_album' || cur() !== 'sal1') { bad.push('둘째 해 여름 첫 장면 ' + cur()); }
+        say();
+        C.emit('village:fish', { state: 'catch', item: {} }); C.emit('village:fish', { state: 'catch', item: {} });
+        if (SC.state().done.y2_album) { bad.push('물고기 둘로 끝남'); }
+        C.emit('village:fish', { state: 'catch', item: {} });
+        say();
+        if (!SC.state().done.y2_album || !SC.state().said.lens1) { bad.push('제21장 끝·제22장 첫 장면'); }
+        C.emit('forest:enter', { key: 'solsup' });
+        if (SC.state().done.y2_lens) { bad.push('숲 하나로 끝남'); }
+        C.emit('forest:enter', { key: 'yoseong' });
+        say();
+        if (!SC.state().done.y2_lens || !SC.state().said.night1) { bad.push('제22장 끝·제23장 첫 장면'); }
+        C.emit('forest:enter', { key: 'bandi' });
+        for (var i = 0; i < 3; i++) { C.emit('village:bug', { state: 'swarm' }); C.emit('village:bug', { state: 'catch' }); }
+        say();
+        if (!SC.state().done.y2_night || !SC.state().said.end1) { bad.push('제23장 끝·제24장 첫 장면'); }
+        s0.fest.chilseok = { year: new Date().getFullYear(), done: true, day: s0.day }; C.emit('changed');
+        say();
+        if (!SC.state().done.y2_star || SC.current() !== null || SC.titles().indexOf('한여름의 사진 이웃') < 0) { bad.push('제24장 끝·칭호 ' + JSON.stringify(SC.titles())); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '사진첩(물고기 셋) → 카메라(숲 둘) → 반딧불(곤충 셋) → 칠석 · 칭호 한여름의 사진 이웃 · 스물네 장 끝';
       } finally {
         window.DG_NO_SCENARIO = true;
         SC.abort();
