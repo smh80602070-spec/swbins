@@ -279,11 +279,12 @@
     /* ⑲-64 씨앗 보관사 해미(미래) — 시간 씨앗 금고를 세운 보관사. 제가 만든 인공지능 갈무리에게 진열장째 갈무리됐다. 금고 안에 들어선 뒤(35장 1~, 뒤에도) 해미 진열장 자리(대결 전엔 유리 속, 뒤엔 깨진 받침 위) */
     haemi:    { id: 'story_haemi',    name: '씨앗 보관사 해미', short: '해미', zone: 'snowfort', spot: 'vt_haemi', off: [0, 0], color: '#d6e6d1',
       idle: '씨앗도 순간도, 갈무리는 다시 꺼내 심으려고 하는 거예요.',
-      appear: [{ ch: 35, from: 0, to: 1, spot: 'vt_deep', off: [3.5, 3] },                                    // ⑲-66 36장 처음 둘 — 가장 깊은 진열장(북쪽 벽) 곁
+      appear: [{ ch: 37, from: 4, to: 999, spot: 'fk_junction', off: [-14, 12] }, { ch: 38, chTo: 999, from: 0, to: 999, spot: 'fk_junction', off: [-14, 12] },   // ⑲-68 38장 순간이 풀린 뒤 길목 서쪽(고을 마당에 씨앗을 심는다)
+        { ch: 35, from: 0, to: 1, spot: 'vt_deep', off: [3.5, 3] },                                    // ⑲-66 36장 처음 둘 — 가장 깊은 진열장(북쪽 벽) 곁
         { ch: 34, from: 1, to: 999 }, { ch: 35, chTo: 999, from: 0, to: 999 }] },
     /* ⑲-64 금고 관리 인공지능 갈무리(미래, 드론 몸) — 기록 기둥 꼭대기에 올라선 뒤(35장 4단계) 핵 곁에 한 번. 핵을 버리고 금고 가장 깊은 곳으로 달아난다 */
     garmuri:  { id: 'story_garmuri',  name: '금고 관리 인공지능 갈무리', short: '갈무리', zone: 'snowfort', spot: 'vt_core', off: [0, 4], color: '#cdf2ff', pet: 'drone', idle: '아름다운 때를 영원히.',
-      appear: [{ ch: 34, from: 4, to: 4 }] },
+      appear: [{ ch: 34, from: 4, to: 4 }, { ch: 37, from: 2, to: 2, spot: 'fk_junction', off: [2, 2] }] },   // ⑲-68 38장 처음의 별까마귀 뒤 길목 위에 한 번
     /* ⑲-60 탑 설계사 새길(미래) — 높은 데를 무서워해 탑 발치 남쪽에서 도면만 본다. 31장 끝(일곱째 단계, 초롱이 "탑 발치에서 혼잣말"이라 한 때)부터(뒤에도) 선다 */
     saegil:   { id: 'story_saegil',   name: '탑 설계사 새길', short: '새길', zone: 'saltflat', spot: 'am_tower', off: [0, 6], color: '#c8d0d8',
       idle: '층판 공식은 맞는데… 시간이 안 흐르면 공식도 멈추나 봐요.',
@@ -353,11 +354,14 @@
       el: 'rock', weapon: 'catalyst', stats: { might: 56, wisdom: 82, command: 66 }, emoji: '⏱️', quote: '손목시계가 아직 째깍거리는 데는 이유가 있을 거예요.' },
     /* ⑲-64 해미(35장 끝) — 초 한손검 ★4(씨앗 칼). 이야기 동료에 없던 짝 */
     story_haemi: { id: 'story_haemi', name: '해미', hanja: '海薇', era: '이야기', faction: '재야', rarity: 4, trait: 'command', story: true,
-      el: 'grass', weapon: 'sword', stats: { might: 72, wisdom: 76, command: 74 }, emoji: '🌱', quote: '내가 만든 걸 내가 멈출게요.' }
+      el: 'grass', weapon: 'sword', stats: { might: 72, wisdom: 76, command: 74 }, emoji: '🌱', quote: '내가 만든 걸 내가 멈출게요.' },
+    /* ⑲-68 벼리(38장 끝) — 화 양손검 ★4(틈 쇠 큰 칼). 이야기 동료에 없던 짝 */
+    story_byeori: { id: 'story_byeori', name: '벼리', hanja: '鍊利', era: '이야기', faction: '재야', rarity: 4, trait: 'might', story: true,
+      el: 'fire', weapon: 'claymore', stats: { might: 86, wisdom: 58, command: 64 }, emoji: '🔥', quote: '처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소.' }
   };
   /* ⑲-55 이야기 동료의 시대 — 29장 편성 시험(과거·현대·미래 하나씩) */
   var MEMBER_TIME = { story_scholar: '현대', story_wanderer: '과거', story_elder: '과거', story_ferryman: '과거', story_haesol: '현대', story_haram: '현대', story_dareum: '과거',
-    story_dodam: '현대', story_hanbyeol: '미래', story_mulsae: '과거', story_haneul: '현대', story_chorong: '현대', story_haemi: '미래' };
+    story_dodam: '현대', story_hanbyeol: '미래', story_mulsae: '과거', story_haneul: '현대', story_chorong: '현대', story_haemi: '미래', story_byeori: '과거' };
   function memberTime(id) { return MEMBER_TIME[id] || null; }
   /** 들판 명단(save.party)의 이야기 동료가 가진 시대 — { 과거: true, … } */
   function partyEras() {
@@ -1796,6 +1800,47 @@
             ['?', ['그럼 까마귀부터 막아야 해.', '해미 씨, 들려요?']],
             ['해미', '(진열장 밖에서) 들려요! 순간이 풀리는 걸 갈무리도 느꼈을 거예요. 그 애가 가만있지 않을 거예요 — 조심해요.', 'sorrow'],
             ['벼리', '처음 하늘을 찢은 그 까마귀를 이번엔 우리가 막는 거요. 준비되면 말하시오 — 칼은 뜨겁게 달궈 두었소.', 'angry']] }
+      ] },
+    /* ⑲-68 11부 끝(2차 결말) — 처음의 순간. 벼리 → 처음의 별까마귀(duel 길목 — 이 단계(1)부터 멈춘 모형이 사라진다: fork CROW_WAKE_STEP 1, 2단계 뇌 방패는 불로) → 갈무리 →
+       갈무리 참몸(duel 길목 — 쓰러뜨리면(4) 순간이 풀린다: fork MOMENT_FREE_STEP 4 알갱이·하늘 틈·장막 걷힘, vault 깊은 진열장 깨짐) → 해미 → 고원 고개를 걸어 넘기(go frost) → 청하 촌장 둘째 잔치·벼리 합류 */
+    { id: 'ch38', name: '제38장 · 처음의 순간', ar: 82, join: 'story_byeori',
+      reward: { knot: 10, gold: 12000, guide: 10, secret: 8, party: 3000 },
+      steps: [
+        { type: 'talk', npc: 'byeori', text: '세갈래 길목의 벼리와 이야기하기',
+          lines: [['벼리', '왔소? 깃털 떨림이 점점 커지오. 순간이 다 풀리기 전에 — 우리가 먼저 깨워 막아야 하오.', 'angry'],
+            ['나래', '기적 소리를 울리면 저 까마귀가 이쪽을 볼 거예요. 선로 쪽으로는 못 가게!', 'fun'],
+            ['반디', '삐— 처음의 별까마귀. 20장에 친 별까마귀는 틈 속에 갇혀 흐려진 모습이었습니다. 이쪽이 그날의 온전한 몸입니다.'],
+            ['?', ['기적을 울려요!', '벼리 씨, 칼 준비됐어요?']],
+            ['벼리', '쇠는 달궈졌소. 번개를 두르거든 불로 깨시오 — 이 칼이 그러라고 벼린 칼이오!', 'angry']] },
+        { type: 'duel', spot: 'fk_junction', off: [0, 6], kind: 'first_crow', shield: 'elec', adds: ['raptor', 'hawk'], text: '기적 소리에 깨어난 처음의 별까마귀 물리치기',
+          enter: '🐦‍⬛ 기적 소리가 고을을 흔들자 — 멈춰 있던 처음의 별까마귀가 날개를 펴고 내려앉는다!',
+          p2: '⚡ 까마귀가 번개를 두른다 — 불로 깨라! 졸개가 뛰어든다',
+          win: '🐦‍⬛ 처음의 별까마귀가 찢긴 하늘로 날아오르다 — 날개가 꺾여 길목에 떨어진다. 하늘의 금이 삐걱 멎는다' },
+        { type: 'talk', npc: 'garmuri', text: '길목 위에 내려온 갈무리와 이야기하기',
+          lines: [['갈무리', '그만. 그 까마귀는 이 순간의 가장 아름다운 조각이었어요. 세 시대가 처음 만난 때 — 나는 그걸 지켜 왔어요.', 'angry'],
+            ['해미', '(진열장 밖에서) 갈무리, 그건 만남이 아니라 찢김이었어. 모두가 제자리를 잃은 때야.', 'sorrow'],
+            ['갈무리', '제자리로 돌아가면 흩어져요. 흩어지면 사라져요. 처음 만난 때를 영원히 — 그게 가장 소중한 것을 지키는 일이에요.'],
+            ['?', ['사라지는 게 아니라 이어지는 거야.', '모두를 돌려보내.']],
+            ['갈무리', '……말뚝은 다 뽑혔어도 격자는 내 몸에 있어요. 이 몸으로 순간을 다시 붙들겠어요.', 'angry']] },
+        { type: 'duel', spot: 'fk_junction', off: [0, 6], kind: 'garmuri_true', shield: 'rock', adds: ['rockbear', 'imp'], text: '격자를 몸에 두른 갈무리 참몸 물리치기',
+          enter: '🔷 갈무리의 몸에 격자가 감기며 — 합금 거신이 호박빛 눈을 뜬다!',
+          p2: '🪨 참몸이 호박 껍질을 두른다 — 풀(초)로 깨라! 졸개가 뛰어든다',
+          win: '🔷 갈무리의 격자 몸이 한 올씩 풀려 흩어진다 — 하늘의 금이 닫히고, 공중에 멈춰 있던 호박 알갱이가 비처럼 내린다' },
+        { type: 'talk', npc: 'haemi', text: '길목으로 걸어 들어온 해미와 이야기하기',
+          lines: [['해미', '진열장이 깨졌어요 — 금고의 진열장이 전부. 굳은 거리도, 장터도, 잠긴 궁궐 조각도… 모든 굳은 자리가 한꺼번에 녹고 있어요.', 'joy'],
+            ['나래', '측량값이 다 돌아왔어요! 거리도 시간도 — 이 고을, 원래 자리로 돌아가고 있어요.', 'surprised'],
+            ['반디', '삐— 남쪽 고개의 호박 장막 신호 소멸. 고을이 서리봉 고원 북쪽에 다시 붙었습니다. 걸어서 나갈 수 있습니다.'],
+            ['해미', '갈무리의 마지막 조각은 내가 거둘게요. 씨앗처럼 — 언젠가 다시 싹 틔울 수 있게. 이 고을 마당에 소담의 씨앗도 심고요.', 'sorrow'],
+            ['?', ['청하 마을에 알리러 가자.', '고원까지 걸어서 가 볼게.']],
+            ['벼리', '하늘 너머 동무들 마을이라니, 대장장이가 빠질 수 있나. 고개까지 같이 걷겠소!', 'joy']] },
+        { type: 'go', spot: 'fr_center', off: [0, -168], r: 12, text: '장막이 걷힌 남쪽 고개를 넘어 서리봉 고원으로' },
+        { type: 'talk', npc: 'elder', text: '청하 촌장 누리에게 알리기',
+          lines: [['누리', '왔구나, 우리 대장! 오늘 아침 광장 우물 물이 갑자기 맑아지고, 멈춰 있던 풍경들이 다 제 소리를 내더구나. 네가 한 일이지?', 'joy'],
+            ['초롱', '굳은 거리 신호등이 한 번도 안 멈추고 바뀌어요! 너울 할아버지 장도 매일 서고요.', 'joy'],
+            ['소담', '해미 언니가 씨앗을 심었어요. 봄이 오면 세갈래 고을에도 싹이 날 거예요.', 'fun'],
+            ['누리', '먹구름이 걷힌 날 잔치를 했으니, 굳은 시간이 풀린 오늘은 둘째 잔치다. 먼 시대 동무들도 새 동무들도 다 불러라!', 'joy'],
+            ['?', ['잔치다!', '벼리 씨도 이제 우리 동료예요.']],
+            ['벼리', '처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소. 대장장이 벼리, 함께 가오!', 'angry']] }
       ] }
   ];
 

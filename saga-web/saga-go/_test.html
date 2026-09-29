@@ -15211,6 +15211,73 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '여덟 단계 · 벼리 → 역참길 말뚝 → 나래 → 기관차 지키기 3·4·5 → 선로 말뚝 → 종루 벽 타기 → 종루 말뚝 → 벼리 · 🪢+9 🪙+9250 · 말뚝 2·5·7' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-68 이야기 11부 제38장 · 처음의 순간(11부 끝·2차 결말) (story ch38·first_crow·garmuri_true·벼리 합류 · fork 별까마귀 1·순간이 풀림 4 단계 맞물림, PLAN §5 ⑲-68) ── */
+    t('이야기 ⑲-68 — 38장 일곱 단계(Lv82) · 벼리 → 처음의 별까마귀(뇌 방패 불로 — 이 단계부터 멈춘 모형 사라짐) → 갈무리 → 갈무리 참몸(암 방패 초로 — 쓰러뜨리면 순간이 풀림) → 해미 → 고원 고개 걷기 → 촌장 · 벼리 합류(화 양손검 ★4·고유 스킬) · 🪢+10', function () {
+      var rig = stRig(82), VT = DG.vault, FK = DG.fork, FR = DG.frost, ST = DG.story, FC = DG.fieldCombat, TL = DG.talent, r = {};
+      try {
+        VT._resetForTest(); FK._resetForTest(); delete C.save.vault; delete C.save.fork;
+        var c = ST.CHAPTERS[37], S38 = c.steps;
+        r.table = c.id === 'ch38' && c.ar === 82 && c.join === 'story_byeori' && S38.length === 7 && c.reward.knot === 10 && c.reward.gold === 12000 && c.reward.guide === 10 && c.reward.secret === 8 && c.reward.party === 3000 &&
+          S38.map(function (q) { return q.type; }).join() === 'talk,duel,talk,duel,talk,go,talk' && S38[1].kind === 'first_crow' && S38[1].shield === 'elec' && S38[3].kind === 'garmuri_true' && S38[3].shield === 'rock' &&
+          FC.COUNTER.elec === 'fire' && FC.COUNTER.rock === 'grass' && !!FC.FOES.first_crow.boss && !!FC.FOES.garmuri_true.boss && FC.FOES.first_crow.el === 'elec' && FC.FOES.garmuri_true.el === 'rock' && S38[5].r === 12 && S38[6].npc === 'elder';
+        /* 표 ↔ 이 장 — 별까마귀 모형은 이 단계(1)부터 사라짐 · 순간은 참몸(3) 다음(4)부터 풀림 */
+        r.link = FK.CROW_WAKE_STEP === 1 && S38[1].type === 'duel' && FK.MOMENT_FREE_STEP === 3 + 1 && S38[3].type === 'duel' && VT.MOMENT_FREE_STEP === FK.MOMENT_FREE_STEP && S38[4].npc === 'haemi';
+        var jn = FK.siteById('junction'), fc = FR.center();
+        function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 37 : ch, step: si }; return ST.npcPos(k); }
+        /* 인물 — 갈무리: 38장 둘째(2)에만 길목 위 / 해미: 순간이 풀린 뒤(4~, 뒤에도) 길목 서쪽 / 벼리: 길목 동남쪽 */
+        r.garmuri = (np('garmuri', 1), !ST.visible('garmuri')) && st10Eq(np('garmuri', 2), { x: jn.x + 2, y: jn.y + 2 }) && ST.visible('garmuri') && (np('garmuri', 3), !ST.visible('garmuri'));
+        r.haemi = st10Eq(np('haemi', 4), { x: jn.x - 14, y: jn.y + 12 }) && st10Eq(np('haemi', 6), { x: jn.x - 14, y: jn.y + 12 }) && st10Eq(np('haemi', 0, 38), { x: jn.x - 14, y: jn.y + 12 }) && !st10Eq(np('haemi', 3), { x: jn.x - 14, y: jn.y + 12 });
+        r.byeori = st10Eq(np('byeori', 0), { x: jn.x + 17, y: jn.y + 14 }) && st10Eq(np('byeori', 6), { x: jn.x + 17, y: jn.y + 14 });
+        r.time = ST.memberTime('story_byeori') === '과거' && !!ST.MEMBERS.story_byeori;
+        /* 순간이 풀림 전엔 별까마귀 모형·하늘 틈·장막 그대로(0), 이 장 시작 → 모형만(1) → 참몸 뒤 전부 풀림(4) */
+        C.save.story = { ch: 37, step: 0 }; var s0 = FK.crowFrozen() && !FK.momentFree();
+        C.save.story = { ch: 37, step: 1 }; var s1 = !FK.crowFrozen() && !FK.momentFree() && !FK.gateOpen();
+        C.save.story = { ch: 37, step: 4 }; var s4 = !FK.crowFrozen() && FK.momentFree() && FK.gateOpen() && VT.momentFree();
+        r.state = s0 && s1 && s4;
+        C.save.story = { ch: 37, step: 0 };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('byeori')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        /* 이야기 보스 — 길목 남쪽 6m, 절반에서 방패·졸개 둘, 쓰러뜨리면 다음 */
+        function duelRun(kind, shEl, addKinds, nextStep) {
+          var bt = ST.targetOf(ST.step());
+          stGo({ x: bt.x + 5, y: bt.y }); FC.tick(0.05); ST.check();
+          var S = FC.state(), cb = S.camps[ST.keyOf()], b = cb && S.foes[cb.uids[0]];
+          var ok1 = !!b && b.kind === kind && b.el === (kind === 'first_crow' ? 'elec' : 'rock') && !b.sky;
+          b.hp = Math.round(b.hpMax * 0.4); ST.check();
+          var ad = S.camps[ST.keyOf() + ':add'];
+          var ok2 = b.shEl === shEl && !!ad && ad.uids.map(function (u) { return S.foes[u].kind; }).join(',') === addKinds && FC.shieldMul(shEl, FC.COUNTER[shEl]) > 1;
+          b.shield = 0; b.layers = [];
+          for (var k = 0; k < 3 && !b.dead; k++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); }
+          FC.tick(0.05);
+          return ok1 && ok2 && C.save.story.step === nextStep && !S.camps[ST.keyOf() + ':add'];
+        }
+        var bt1 = ST.targetOf(ST.step());
+        r.bossAt = st10Eq(bt1, { x: jn.x, y: jn.y + 6 });
+        r.crow = duelRun('first_crow', 'elec', 'raptor,hawk', 2);
+        stGo(ST.npcPos('garmuri')); r.t2 = stTalkAll(ST) && C.save.story.step === 3 && !FK.momentFree();
+        r.true1 = duelRun('garmuri_true', 'rock', 'rockbear,imp', 4);
+        r.free = FK.momentFree() && FK.gateOpen() && VT.momentFree() && !FK.crowFrozen();
+        stGo(ST.npcPos('haemi')); r.t4 = stTalkAll(ST) && C.save.story.step === 5;
+        /* 고원 고개 걷기 — 멀면 ✕, 고원 북쪽 끝(12m)에 닿으면 */
+        var gt = ST.targetOf(ST.step());
+        r.goAt = st10Eq(gt, { x: fc.x, y: fc.y - 168 }) && gt.r === 12;
+        stGo({ x: gt.x, y: gt.y + 300 }); ST.check(); var far = C.save.story.step === 5;
+        stGo({ x: gt.x, y: gt.y + 20 }); ST.check(); var mid = C.save.story.step === 5;
+        stGo({ x: gt.x, y: gt.y + 5 }); ST.check();
+        r.go = far && mid && C.save.story.step === 6;
+        /* 촌장 — 끝 보상 + 벼리 합류 */
+        gold0 = C.save.player.gold; k0 = m.knot || 0;
+        r.notYet = !ST.hasMember('story_byeori');
+        stGo(ST.npcPos('elder')); r.end = stTalkAll(ST) && C.save.story.ch === 38 && C.save.story.step === 0 && m.knot === k0 + 10 && C.save.player.gold === gold0 + 12000 && ST.hasMember('story_byeori');
+        var M = ST.MEMBERS.story_byeori, kt = DG.kits.kitOf('story_byeori');
+        r.member = DG.data.find('story_byeori') === M && M.rarity === 4 && FC.elementOf('story_byeori') === 'fire' && DG.weapon.typeOf('story_byeori') === 'claymore' &&
+          !!kt.skill && kt.skill.type === 'updraft' && kt.skill.name === '담금질 올려베기' && !!kt.burst && kt.burst.type === 'rally' && kt.burst.name === '처음의 불';
+        r.after = FK.momentFree() && VT.momentFree() && VT.granaryOpen() && VT.haemiFree() && FK.latticeOff(2);
+      } finally { VT._resetForTest(); FK._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '일곱 단계 · 벼리 → 처음의 별까마귀(뇌 방패 불) → 갈무리 → 참몸(암 방패 초) → 순간이 풀림 → 해미 → 고원 고개 → 촌장 · 벼리 합류 · 🪢+10 🪙+12000' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑲-61 탈것 — 말(mount.js, PLAN §5 ⑲-61 · SAGA-DESIGN §12) ── */
     t('탈것 ⑲-61 — 말 셋(농마 5·갈색 15·흰 30 레벨 또는 도감 등록) · 타기/내리기 · 걷는 속도 배율(달리기와 겹침) · 고르기 · 저장 한 칸 · 몸 참조', function () {
       var MT = DG.mount, W = DG.world, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;

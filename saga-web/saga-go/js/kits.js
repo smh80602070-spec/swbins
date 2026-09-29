@@ -116,6 +116,12 @@
       skill: { name: '씨앗 가르기', type: 'dash', cd: 6.5, len: 5, w: 2, mul: 2.6, text: '굳은 결을 가르듯 앞으로 5m 돌진 — 지나간 길의 적을 초 원소로 벤다(돌진 중 무적)' },
       burst: { name: '싹 틔우는 칼', type: 'infuse', r: 6, mul: 3.4, sec: 10, nmul: 1.2, text: '둘레 6m 에 씨앗을 흩뿌려 치고, 10초 동안 기본·강·낙하 공격에 초 원소가 실린다(피해 ×1.2)' }
     },
+    /* ⑲-68 벼리(38장 끝 합류) — saga-godot 106 55-4 를 이 판 척도로. 있는 틀(updraft·rally)만 쓴다 */
+    story_byeori: {
+      skill: { name: '담금질 올려베기', type: 'updraft', cd: 8, r: 3.5, mul: 2.6, pull: 4, lift: 12,
+        text: '둘레 3.5m 적을 끌어 달군 큰 칼로 올려 베고(화), 나는 12m 위로 솟구친다 — 그대로 낙하 공격으로' },
+      burst: { name: '처음의 불', type: 'rally', r: 7, mul: 3.4, sec: 10, atk: 1.2, text: '둘레 7m 를 달군 칼로 내리치고, 10초 동안 명단 공격 +20%' }
+    },
     /* ⑲-51 하늬(26장 끝 합류) — saga-godot 106 51-4 를 이 판 척도로. 있는 틀(shells·lore)만 쓴다 */
     story_haneul: {
       skill: { name: '얼음 관측 풍선', type: 'shells', cd: 8, reach: 12, n: 3, delay: 0.6, r: 2.5, mul: 2.2,
