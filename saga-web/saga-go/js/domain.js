@@ -11,6 +11,8 @@
  *            (field-combat.js 가 `dm:` 무리를 비킨다). 터 기운은 종류마다 하나.
  *   주간     먹구름 이무기(`w_imugi`) 하나, 180초, 체력 50% 에서 뇌 방패·공격 간격 ×0.69.
  *            원기 45, 이번 주(월요일 새벽 4시 갈림) 처음 둘은 25. 보상에 뇌룡 비늘(무예 7→10).
+ *   메아리   ⑲-56 1차 결말(29장) 뒤에만 입구가 보이고 열린다 — 이야기 보스 넷(매듭 등불의 참몸·얼음굴 구미호·갈림길 별까마귀·빛 돔 파수 거신)을
+ *            다시 만난다. 보스 하나·240초·원기 60(이번 주 처음 둘은 반값 — 주간 보스와 같은 횟수를 함께 센다). 체력 절반에서 보스 원소 방패.
  *   원기     상한 120 · 실제 시각 10분에 1. 처음·옛 세이브는 가득.
  *
  * 자리·배율·보상·원기 계산(`entranceOf`·`rewardOf`·`resinAt`·`weekKey`)은 순수 함수다.
@@ -34,8 +36,18 @@
     forge:  { key: 'forge',  name: '쇠부리 터', icon: '⚒️', loot: '강화석',  color: '#ff9a5a', ley: '적 공격 ×1.3',
               waves: [['imp', 'imp', 'boar'], ['ember', 'imp', 'imp']] },
     weekly: { key: 'weekly', name: '먹구름 제단', icon: '⛈️', loot: '뇌룡 비늘·★5 보패', color: '#b58cff',
-              ley: '체력 절반에서 뇌 방패를 두르고 빨라진다', waves: [['w_imugi']] }
+              ley: '체력 절반에서 뇌 방패를 두르고 빨라진다', waves: [['w_imugi']] },
+    echo:   { key: 'echo',   name: '메아리', icon: '🔮', loot: '뇌룡 비늘·비전·★5 보패', color: '#c9a0ff',
+              ley: '이야기에서 이긴 보스가 메아리로 다시 선다 — 체력 절반에서 원소 방패를 두른다', waves: null }
   };
+  /* ⑲-56 결말 뒤 재대결 — 이야기 보스 넷. 입구 자리는 그 보스와 싸운 곳(story 이름 붙은 자리 + off, 땅 위) */
+  var ECHO_AFTER = 29, ECHO_COST = 60, ECHO_LIMIT = 240;
+  var ECHOES = [
+    { key: 'knot',  name: '매듭 등불의 메아리', boss: 'storm_king_true', spot: 'home_bandi', off: [20, 0] },
+    { key: 'ice',   name: '얼음굴의 메아리',   boss: 'rift_fox',        spot: 'fr_cave', off: [0, 8] },
+    { key: 'cross', name: '갈림길의 메아리',   boss: 'rift_crow',       spot: 'cr_st_duel', off: [0, 8] },
+    { key: 'dome',  name: '빛 돔의 메아리',    boss: 'dome_colossus',   spot: 'sk_sand', off: [0, 12] }
+  ];
   var KIND_ORDER = ['tomb', 'school', 'forge'];
   var STAGES = [
     { n: 'I',   ar: 1,  hp: 1,   atk: 1 },
@@ -95,7 +107,30 @@
     if (al) { _list.push(al); }
     return _list;
   }
-  function byId(id) { var L = list(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
+  /** 1차 결말(29장)을 마쳤나 — 메아리 입구가 보이고 열린다(손잡이 domain.echo 0 이면 없음) */
+  function echoOpen() {
+    var S = global.DG.story, v = S && S.on && S.on() && S.state ? S.state() : null;
+    return !!(K('echo', 1) && v && v.ch >= ECHO_AFTER);
+  }
+  var _echo = null;
+  /** 메아리 입구 넷 — 이야기 보스와 싸운 자리(그 자리를 모르면 그 입구만 빠진다). 열리기 전엔 [] */
+  function echoList() {
+    if (!echoOpen()) { return []; }
+    if (_echo && _echo.length === ECHOES.length) { return _echo; }
+    var S = global.DG.story, out = [];
+    ECHOES.forEach(function (e) {
+      var p = S && S.spotPos ? S.spotPos(e.spot, e.off) : null;
+      if (p) { out.push({ id: 'e:' + e.key, zone: null, zoneName: '', kind: 'echo', boss: e.boss, name: e.name, x: Math.round(p.x), y: Math.round(p.y) }); }
+    });
+    if (out.length === ECHOES.length) { _echo = out; }
+    return out;
+  }
+  /** 보이는 입구 전부 — 숨은 터·먹구름 제단 + 열렸으면 메아리 */
+  function gates() { var L = list(); return echoOpen() ? L.concat(echoList()) : L; }
+  function byId(id) { var L = gates(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
+  /** 이 입구의 파도 표 — 메아리는 그 보스 하나 */
+  function wavesOf(d) { return d.kind === 'echo' ? [[d.boss]] : KINDS[d.kind].waves; }
+  function isBossKind(kind) { return kind === 'weekly' || kind === 'echo'; }
 
   function gps() { var W = global.DG.world; return !!(W && W.mode === 'geo'); }
   function pos() { return core().save.player.pos; }
@@ -103,7 +138,7 @@
   /** 보이는(maxD 안) 가장 가까운 입구 — { d, dist, inRange } 또는 null */
   function nearest(maxD) {
     if (!on()) { return null; }
-    var L = list(), p = pos(), best = null, bd = maxD === undefined ? Infinity : maxD;
+    var L = gates(), p = pos(), best = null, bd = maxD === undefined ? Infinity : maxD;
     for (var i = 0; i < L.length; i++) {
       var dd = Math.hypot(L[i].x - p.x, L[i].y - p.y);
       if (dd <= bd) { bd = dd; best = L[i]; }
@@ -154,7 +189,10 @@
     return Math.max(0, r.t + RESIN_MS - nowFn());
   }
   function weeklyUsed() { return sv().domain.weekly.n; }
-  function costOf(kind) { return kind === 'weekly' ? (weeklyUsed() < WEEKLY_HALF_N ? WEEKLY_HALF : WEEKLY_COST) : COST; }
+  function costOf(kind) {
+    if (kind === 'echo') { return weeklyUsed() < WEEKLY_HALF_N ? Math.round(ECHO_COST / 2) : ECHO_COST; }    // ⑲-56 주간 보스와 같은 횟수를 센다
+    return kind === 'weekly' ? (weeklyUsed() < WEEKLY_HALF_N ? WEEKLY_HALF : WEEKLY_COST) : COST;
+  }
 
   function rank() { return (core().save.player && core().save.player.level) || 1; }
   function stageOpen(i) { return !!STAGES[i] && rank() >= STAGES[i].ar; }
@@ -178,6 +216,11 @@
       r.gold = [150, 200, 260][s]; r.party = [60, 90, 120][s];
       r.mats = [{ guide: 2, scale: 1 }, { guide: 3, scale: 2 }, { secret: 2, scale: 3, knot: 1 }][s];
       r.arts = [[5], [5], [5, 5]][s].map(function (q) { return { r: q, set: ws }; });
+    } else if (kind === 'echo') {                                  // ⑲-56 메아리 — 주간보다 한 단 위(비전·매듭·★5)
+      var es = odd ? 'emblem' : 'gladiator';
+      r.gold = [200, 260, 340][s]; r.party = [80, 110, 150][s];
+      r.mats = [{ guide: 3, scale: 1 }, { guide: 4, scale: 2, secret: 1 }, { secret: 3, scale: 3, knot: 2 }][s];
+      r.arts = [[5], [5], [5, 5]][s].map(function (q) { return { r: q, set: es }; });
     }
     return r;
   }
@@ -236,12 +279,12 @@
     core().emit('domain:enter', { id: d.id, stage: run.stage });
     return { ok: true };
   }
-  function limitOf(kind) { return kind === 'weekly' ? WEEKLY_LIMIT : LIMIT; }
+  function limitOf(kind) { return kind === 'echo' ? ECHO_LIMIT : (kind === 'weekly' ? WEEKLY_LIMIT : LIMIT); }
 
   function spawnWave(w) {
     var F = FC(), S = F && F.state();
     if (!S) { fail('들판 전투가 없다'); return; }
-    var kd = KINDS[run.d.kind], kinds = kd.waves[w], st = STAGES[run.stage], foes = [], i;
+    var kd = KINDS[run.d.kind], kinds = wavesOf(run.d)[w], st = STAGES[run.stage], foes = [], i;
     for (i = 0; i < kinds.length; i++) {
       var a = (i / kinds.length) * Math.PI * 2 + 0.6, rr = kinds.length === 1 ? 0 : FOE_RING;
       foes.push({ kind: kinds[i], dx: Math.cos(a) * rr, dy: Math.sin(a) * rr });
@@ -258,7 +301,7 @@
       f.st = 'chase'; f.stT = 0;
     }
     run.wave = w; run.key = key; run.phase = 'fight';
-    toast('⚔️ 파도 ' + (w + 1) + '/' + kd.waves.length + (run.d.kind === 'weekly' ? ' — 먹구름 이무기' : ''));
+    toast('⚔️ 파도 ' + (w + 1) + '/' + wavesOf(run.d).length + (run.d.kind === 'weekly' ? ' — 먹구름 이무기' : (run.d.kind === 'echo' ? ' — ' + (F.FOES[kinds[0]] ? F.FOES[kinds[0]].name : '보스') + '의 메아리' : '')));
   }
 
   function campFoes() {
@@ -305,7 +348,7 @@
 
   function onClear(e) {
     if (!run || !e || e.camp !== run.key) { return; }
-    var waves = KINDS[run.d.kind].waves;
+    var waves = wavesOf(run.d);
     if (run.wave + 1 < waves.length) { spawnWave(run.wave + 1); return; }
     run.phase = 'tree';
     despawn();
@@ -331,7 +374,7 @@
     spend(cost);
     var s = sv(), r = rewardOf(run.d.kind, run.stage, s.domain.claims);
     s.domain.claims += 1;
-    if (run.d.kind === 'weekly') { s.domain.weekly.n += 1; }
+    if (isBossKind(run.d.kind)) { s.domain.weekly.n += 1; }
     var arts = grant(r), txt = rewardText(r), name = run.d.name + ' ' + STAGES[run.stage].n;
     core().log('🌳 ' + name + ' 보상 — 원기 ' + cost + ' · ' + txt, 'good');
     core().emit('domain:claim', { id: run.d.id, stage: run.stage, cost: cost });
@@ -342,8 +385,19 @@
 
   /* 주간 보스 2단계 — 체력 절반에서 뇌 방패·빨라짐 */
   function stepBoss() {
-    if (run.d.kind !== 'weekly' || run.p2) { return; }
+    if (!isBossKind(run.d.kind) || run.p2) { return; }
     var L = campFoes();
+    if (run.d.kind === 'echo') {                                  // ⑲-56 메아리 — 체력 절반에서 그 보스의 원소 방패
+      for (var j = 0; j < L.length; j++) {
+        var b = L[j];
+        if (b.hp > b.hpMax * P2_AT || !b.el) { continue; }
+        run.p2 = true;
+        b.layers = [b.el]; b.layer = 0; b.shEl = b.el;
+        b.shieldMax = b.shield = Math.round(b.hpMax * P2_SHIELD);
+        toast('🔮 ' + b.name + '이(가) 원소 방패를 둘렀다 — 상성 원소로 깨라');
+      }
+      return;
+    }
     for (var i = 0; i < L.length; i++) {
       var f = L[i];
       if (f.kind !== 'w_imugi' || f.hp > f.hpMax * P2_AT) { continue; }
@@ -437,8 +491,8 @@
         '<h3>' + esc(d.name) + '</h3>' +
         '<p class="quote">터 기운 — ' + esc(kd.ley) + '</p>' +
         '<div class="enc-reward">' + resinLine() + ' · 보상 나무에 ' + cost +
-          (d.kind === 'weekly' ? ' <small>(이번 주 ' + weeklyUsed() + '번 — 처음 ' + WEEKLY_HALF_N + '번은 ' + WEEKLY_HALF + ')</small>' : '') + '</div>' +
-        '<div class="enc-reward">' + (d.kind === 'weekly' ? '보스 하나' : '파도 둘') + ' · 제한 ' + limitOf(d.kind) + '초 · 원판을 벗어나면 실패(원기는 안 쓴다)</div>' +
+          (isBossKind(d.kind) ? ' <small>(이번 주 주간·메아리 ' + weeklyUsed() + '번 — 처음 ' + WEEKLY_HALF_N + '번은 반값)</small>' : '') + '</div>' +
+        '<div class="enc-reward">' + (isBossKind(d.kind) ? '보스 하나' : '파도 둘') + ' · 제한 ' + limitOf(d.kind) + '초 · 원판을 벗어나면 실패(원기는 안 쓴다)</div>' +
         btns +
         '<button class="btn ghost wide" data-act="ok">물러난다</button>' +
       '</div>';
@@ -497,10 +551,10 @@
     if (run.phase === 'wait') { txt = '곧 적이 나타난다…'; }
     else if (run.phase === 'tree') { txt = '🌳 보상 나무로'; }
     else {
-      txt = (run.d.kind === 'weekly' ? '' : '파도 ' + (run.wave + 1) + '/' + kd.waves.length + ' · ') + Math.max(0, Math.ceil(run.left)) + '초';
-      if (run.d.kind === 'weekly') {
+      txt = (isBossKind(run.d.kind) ? '' : '파도 ' + (run.wave + 1) + '/' + wavesOf(run.d).length + ' · ') + Math.max(0, Math.ceil(run.left)) + '초';
+      if (isBossKind(run.d.kind)) {
         var b = campFoes()[0];
-        if (b) { txt = '이무기 ' + Math.ceil(100 * b.hp / b.hpMax) + '%' + (b.shield > 0 ? ' · ⚡방패 ' + b.shield : '') + ' · ' + txt; }
+        if (b) { txt = (run.d.kind === 'echo' ? '메아리' : '이무기') + ' ' + Math.ceil(100 * b.hp / b.hpMax) + '%' + (b.shield > 0 ? ' · 🛡️방패 ' + b.shield : '') + ' · ' + txt; }
       }
     }
     var key = run.phase + '|' + txt;
@@ -544,7 +598,7 @@
     if (!w) { clearFx(); return; }
     var T3 = w.three();
     if (!T3) { return; }
-    var p = pos(), L = list(), seen = {}, i;
+    var p = pos(), L = gates(), seen = {}, i;
     for (i = 0; i < L.length; i++) {
       var d = L[i];
       if (Math.hypot(d.x - p.x, d.y - p.y) > 180) { continue; }
@@ -552,7 +606,7 @@
       var nd = nodes[d.id];
       if (!nd) {
         nd = nodes[d.id] = { root: new T3.Group() };
-        var m = model(d.kind === 'weekly' ? 'domain:altar' : 'domain:gate', d.kind === 'weekly' ? 6 : 5);
+        var m = model(isBossKind(d.kind) ? 'domain:altar' : 'domain:gate', isBossKind(d.kind) ? 6 : 5);
         if (m) { nd.root.add(m); }
         nd.halo = sprite(T3, KINDS[d.kind].color, 5, 0.5); nd.halo.position.y = 2.4; nd.root.add(nd.halo);
         w.addFx(nd.root);
@@ -584,6 +638,7 @@
     P2_AT: P2_AT, P2_SHIELD: P2_SHIELD, P2_CD: P2_CD, LEY_ATK: LEY_ATK, LEY_ENERGY: LEY_ENERGY,
     ARENA_R: ARENA_R, ENTER_R: ENTER_R, TREE_R: TREE_R,
     /* 판정(순수) */
+    ECHOES: ECHOES, ECHO_AFTER: ECHO_AFTER, ECHO_COST: ECHO_COST, ECHO_LIMIT: ECHO_LIMIT, echoOpen: echoOpen, echoList: echoList, gates: gates, wavesOf: wavesOf,
     entranceOf: entranceOf, altarOf: altarOf, resinAt: resinAt, weekKey: weekKey, rewardOf: rewardOf, rewardText: rewardText,
     /* 세이브를 읽는 값 */
     list: list, byId: byId, nearest: nearest, resin: resin, resinNextMs: resinNextMs, spendResin: spend, costOf: costOf, weeklyUsed: weeklyUsed,
@@ -593,6 +648,6 @@
     active: function () { return !!run; },
     run: function () { return run; },
     _setNowForTest: function (fn) { nowFn = fn || function () { return Date.now(); }; },
-    _resetForTest: function () { _list = null; if (run) { despawn(); } run = null; hideHud(); subscribe(); }
+    _resetForTest: function () { _list = null; _echo = null; if (run) { despawn(); } run = null; hideHud(); subscribe(); }
   };
 })(window);

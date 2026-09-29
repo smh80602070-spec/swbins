@@ -98,6 +98,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/sunken.js"></script>
 <script src="js/skyroute.js"></script>
 <script src="js/stormeye.js"></script>
+<script src="js/nightecho.js"></script>
 <script src="js/data-bond.js"></script>
 <script src="js/bond.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -14354,6 +14355,86 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { C.save.party = keepParty; LF._resetForTest(); SK._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '아홉 단계 · 편성 시험(세 시대 ✔/✗·🤖 자동) → 구름섬 기둥 타고 먹구름 눈 → 임금 → 등불 지키기 3·4·5(눈 안) → 참몸(뇌 방패·불) → 소용돌이 걷힘 → 해솔 → 광장 → 촌장 · 🪢+10 🪙+12000' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-56 결말 뒤 — 메아리 재대결(domain.js) · 밤의 잔불(nightecho.js) (PLAN §5 ⑲-56) ── */
+    t('결말 뒤 ⑲-56 — 메아리 재대결 넷: 29장을 마친 뒤에만 입구·이야기 보스 하나씩 · 원기 60(이번 주 처음 둘 반값·주간 보스와 같은 횟수) · 240초 · 체력 절반에서 원소 방패 · 보상 비늘·비전·★5', function () {
+      var rig = dmRig(), DM = rig.DM, TL = DG.talent, FC = rig.FC, r = {};
+      try {
+        C.save.story = { ch: 28, step: 0 };
+        var n0 = DM.list().length;
+        r.closed = !DM.echoOpen() && DM.echoList().length === 0 && DM.gates().length === n0 && !DM.byId('e:knot');
+        C.save.story = { ch: 29, step: 0 };
+        var E = DM.echoList();
+        r.open = DM.echoOpen() && E.length === 4 && E.map(function (d) { return d.id; }).join() === 'e:knot,e:ice,e:cross,e:dome' &&
+          E.map(function (d) { return d.boss; }).join() === 'storm_king_true,rift_fox,rift_crow,dome_colossus' && E.every(function (d) { return d.kind === 'echo' && isFinite(d.x) && isFinite(d.y) && !!FC.FOES[d.boss] && FC.FOES[d.boss].boss; });
+        r.gates = DM.gates().length === n0 + 4 && !!DM.byId('e:ice') && DM.wavesOf(E[0]).length === 1 && DM.wavesOf(E[0])[0][0] === 'storm_king_true' && DM.wavesOf(DM.list()[0]).length === 2;
+        var d = E[1];
+        C.save.player.pos.x = d.x; C.save.player.pos.y = d.y;
+        r.near = DM.nearest(20).d.id === 'e:ice' && DM.nearest(20).inRange;
+        r.cost = DM.costOf('echo') === 30 && DM.ECHO_COST === 60 && DM.ECHO_LIMIT === 240;
+        rig.at(d); DM.enter(d, 0); DM.step(3.1);
+        var L = rig.wave(), b = L[0];
+        r.boss = L.length === 1 && b.kind === 'rift_fox' && b.el === 'ice' && b.shield === 0 && DM.run().left === 240;
+        DM.step(0.1); r.p1 = !DM.run().p2;
+        b.hp = Math.floor(b.hpMax * 0.5); DM.step(0.1);
+        r.p2 = DM.run().p2 && b.shEl === 'ice' && b.shield === Math.round(b.hpMax * 0.1);
+        DM.run().phase = 'tree';
+        var s0 = TL.count('scale'), g0 = TL.count('guide'), res0 = DM.resin(), c = DM.claim();
+        r.claim = c.ok && c.cost === 30 && DM.resin() === res0 - 30 && TL.count('scale') === s0 + 1 && TL.count('guide') === g0 + 3 && DM.weeklyUsed() === 1 && c.arts.length === 1;
+        /* 주간 보스와 같은 횟수 — 둘을 채우면 다음은 60 */
+        C.save.domain.weekly.n = 2;
+        r.full = DM.costOf('echo') === 60 && DM.costOf('weekly') === 45;
+        r.reward = DM.rewardOf('echo', 2, 0).arts.length === 2 && DM.rewardOf('echo', 2, 0).mats.knot === 2 && DM.rewardOf('echo', 0, 1).arts[0].set !== DM.rewardOf('echo', 0, 0).arts[0].set;
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '메아리 넷(29장 뒤) · 보스 하나 · 원기 30→60 · 240초 · 절반 방패 · 🐉+1 📘+3 ★5' : ('실패 ' + bad.join(','));
+    });
+
+    t('결말 뒤 ⑲-56 — 밤의 잔불: 29장 뒤·밤(21~4시)에만 일곱 곳 · 14m 안이면 잔당 셋 · 60m 밖·낮이면 거둠 · 다 쓰러뜨리면 인물 한 줄+🪙800·📘1 · 그날 한 번(새벽 4시 넘김)', function () {
+      var rig = dmRig(), NE = DG.nightEcho, FC = rig.FC, TL = DG.talent, r = {};
+      var NIGHT = new Date(2026, 8, 29, 22, 0).getTime(), DAY = new Date(2026, 8, 30, 12, 0).getTime(), NEXT = new Date(2026, 8, 30, 22, 0).getTime();
+      try {
+        NE._resetForTest();
+        r.pure = NE.isNight(new Date(2026, 8, 29, 21, 0).getTime()) && NE.isNight(new Date(2026, 8, 30, 3, 59).getTime()) && !NE.isNight(new Date(2026, 8, 30, 4, 0).getTime()) && !NE.isNight(new Date(2026, 8, 29, 20, 59).getTime()) &&
+          NE.dayKey(new Date(2026, 8, 30, 3, 0).getTime()) === '2026-9-29' && NE.dayKey(new Date(2026, 8, 30, 4, 0).getTime()) === '2026-9-30';
+        NE._setNowForTest(function () { return NIGHT; });
+        C.save.story = { ch: 28, step: 0 };
+        r.closed = !NE.open() && !NE.lit() && NE.embers().length === 0;
+        C.save.story = { ch: 29, step: 0 };
+        r.lit = NE.open() && NE.lit() && NE.spots().length === 7 && NE.embers().length === 7;
+        NE._setNowForTest(function () { return DAY; });
+        r.day = NE.open() && !NE.lit() && NE.embers().length === 0;
+        NE._setNowForTest(function () { return NIGHT; });
+        var q = NE.spots()[0], S = FC.state();
+        /* 멀면 안 나온다 → 14m 안이면 셋 */
+        C.save.player.pos.x = q.x + 200; C.save.player.pos.y = q.y; FC.tick(0.05); NE.step(1);
+        var farNo = !NE.camp(q.id);
+        C.save.player.pos.x = q.x + 5; C.save.player.pos.y = q.y; FC.tick(0.05); NE.step(1);
+        S = FC.state(); var cp = S.camps['dm:ne:' + q.id];
+        r.spawn = farNo && !!cp && cp.uids.length === 3 && !!NE.camp(q.id) && cp.uids.every(function (u) { return !S.foes[u].sky; });
+        /* 60m 넘게 떠나면 거둔다 */
+        C.save.player.pos.x = q.x + 80; FC.tick(0.05); NE.step(1);
+        r.leave = !S.camps['dm:ne:' + q.id] && !NE.camp(q.id) && !NE.done(q.id);
+        /* 다시 오면 다시 서고, 낮이 되면 거둔다 */
+        C.save.player.pos.x = q.x + 5; FC.tick(0.05); NE.step(1);
+        var again = !!FC.state().camps['dm:ne:' + q.id];
+        NE._setNowForTest(function () { return DAY; }); NE.step(1);
+        r.dayOff = again && !FC.state().camps['dm:ne:' + q.id];
+        NE._setNowForTest(function () { return NIGHT; });
+        NE.step(1); S = FC.state();
+        /* 다 쓰러뜨린다 */
+        var gold0 = C.save.player.gold, g0 = TL.count('guide');
+        S.camps['dm:ne:' + q.id].uids.slice().forEach(function (u) { for (var i = 0; i < 3; i++) { FC.hitFoe(S, S.foes[u], S.party[0], 1e8, null, 'test'); } });
+        FC.tick(0.05);
+        r.clear = NE.done(q.id) && C.save.player.gold === gold0 + 800 && TL.count('guide') === g0 + 1 && C.save.night_echo.done[q.id] === 1 && !FC.state().camps['dm:ne:' + q.id];
+        r.once = (NE.step(1), NE.embers().length === 6 && !NE.camp(q.id) && !FC.state().camps['dm:ne:' + q.id]);
+        /* 새벽 4시를 넘기면 다시 탄다 */
+        NE._setNowForTest(function () { return NEXT; });
+        r.reset = !NE.done(q.id) && NE.embers().length === 7;
+      } finally { NE._setNowForTest(null); NE._resetForTest(); delete C.save.night_echo; rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '일곱 곳(29장 뒤·밤 21~4시) · 14m 잔당 셋 · 60m 밖·낮 거둠 · 처치 🪙800 📘1 · 그날 한 번 · 4시 넘기면 다시' : ('실패 ' + bad.join(','));
     });
 
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */
