@@ -26,7 +26,7 @@ namespace Saga.EditorTools
     public static class PlaytestGoStory
     {
         private static string _tag;
-        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "", _ch15 = "", _ch16 = "", _ch17 = "";
+        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "", _ch15 = "", _ch16 = "", _ch17 = "", _ch18 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -80,6 +80,7 @@ namespace Saga.EditorTools
                 CheckChapter15(fc, pc, field, ui);
                 CheckChapter16(fc, pc, field, ui);
                 CheckChapter17(fc, pc, field, ui);
+                CheckChapter18(fc, pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -112,7 +113,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · " + _ch15 + " · " + _ch16 + " · " + _ch17 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · " + _ch15 + " · " + _ch16 + " · " + _ch17 + " · " + _ch18 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -128,12 +129,12 @@ namespace Saga.EditorTools
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 22 || GoStory.Chapters.Length != 17) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 24 || GoStory.Chapters.Length != 18) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT", "TGTRTKXTGLT", "TGTKTMTET", "TGTKTXTTLT" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34, 36, 38, 40 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 4500, 4750 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 } };
-            for (int c = 0; c < 17; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT", "TGTRTKXTGLT", "TGTKTMTET", "TGTKTXTTLT", "TGTKLTRTET" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34, 36, 38, 40, 42 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 4500, 4750, 5000 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 } };
+            for (int c = 0; c < 18; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -1593,6 +1594,90 @@ namespace Saga.EditorTools
             Talk(pc, ui, "hangyeol", "17장 끝 한결");
             if (StoryState.Ch != 17 || GoldState.Gold != gold + 4750 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6 || TalentState.Count(GoTalent.Mat.Guide) != guide + 5) Fail("17장 끝·보상(금 4750·교본 5·매듭 6)");
             _ch17 = "17장 절터·한결(종 곁으로 옮김)·종 곁 무리(초 둘)·이끼 이무기(초·풍 방패 2단계)·종이 걸리면 누운 종 사라짐·반디 자리·종각 종 울림(등롱 없이)·보상";
+        }
+
+        // ---- 18장 ---------------------------------------------------------------------------------------------
+
+        private static void CheckChapter18(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch18 = "18장 중단";
+            StoryState.OffForTest = false;
+            PlayerStats.Restore(42, 0);
+            StoryState.Restore(17, 0);
+            var area = AreaField.Instance;
+            var sky = GoAreas.Skyport;
+            if (area == null) { Fail("AreaField 없음"); return; }
+            area.Refresh();
+            field.Refresh();
+            if (GoStory.TrainPowered || !area.PartObject("skyport:train_lamp_a").GetComponent<MeshRenderer>().sharedMaterial.name.Contains("off")) Fail("18장 앞인데 막차에 불이 들어옴");
+            if (!field.NpcShown("dodam") || field.NpcShown("captain") || GoStory.Flat(field.NpcBody("dodam").transform.position, GoStory.AreaPos("skyport:station", GoStory.DodamAt)) > 0.6f) Fail("도담이 승강장 끝에 안 섬·잔상은 아직 안 보여야");
+            if (GoStory.Flat(field.NpcBody("bandi").transform.position, GoStory.AreaPos("skyport:temple", GoStory.TempleBandi)) > 0.6f) Fail("18장 첫 단계 반디는 종각 곁");
+            Talk(pc, ui, "bandi", "18장 반디");
+            Expect(17, 1, "반디 뒤");                                                            // → 1 go 은하역
+            pc.Teleport(GoStory.AreaPos("skyport:station", Vector2.zero) + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(17, 2, "은하역 도착");                                                        // → 2 talk 도담
+            Talk(pc, ui, "dodam", "18장 도담");
+            Expect(17, 3, "도담 뒤");                                                            // → 3 kill 태양광 밭
+            Vector3 fight = GoStory.AreaPos("skyport:farm", GoStory.FarmFight);
+            pc.Teleport(fight + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 4 || field.Squad.Any(e => !sky.Contains(e.transform.position))) Fail($"태양광 밭 무리 {field.Squad.Count}");
+            foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) Kill(e);
+            Expect(17, 4, "태양광 밭 무리");                                                     // → 4 light 변전함
+            if (field.AltarOfKey("17_4") != null) Fail("변전함에 등롱 몸이 섰다(등롱 없이여야)");
+            Vector3 sub = GoStory.AreaPos("skyport:farm", GoStory.SubstationOff);
+            Pulse(sub + new Vector3(30f, 0f, 0f), 2f);
+            Expect(17, 4, "멀리서 전기가 들어감");
+            Pulse(sub, 2f);
+            Expect(17, 5, "변전함 전기");                                                        // → 5 talk 도담
+            area.Refresh();
+            if (!GoStory.TrainPowered || area.PartObject("skyport:train_lamp_a").GetComponent<MeshRenderer>().sharedMaterial.name.Contains("off") || !area.PartObject("skyport:substation_lamp").GetComponent<MeshRenderer>().sharedMaterial.name.Contains("green")) Fail("전기 뒤 막차 전조등·변전함 표시등이 안 켜짐");
+            Talk(pc, ui, "dodam", "18장 도담 둘째");
+            Expect(17, 6, "도담 둘째");                                                          // → 6 chase 잔상
+            field.Refresh();
+            if (!field.NpcShown("captain")) Fail("잔상이 선로 위에 안 섬");
+            float len = 0f;
+            for (int i = 1; i < GoStory.CaptainPath.Length; i++) len += GoStory.Flat(GoStory.RunPoint("captain", i - 1), GoStory.RunPoint("captain", i));
+            float avg = len / (len / GoStory.ChaseSpeed + GoStory.ChasePause * (GoStory.CaptainPath.Length - 2));
+            if (avg <= 6f || avg >= 10f) Fail($"잔상 평균 {avg:0.0}m/초");
+            Vector3 t0 = GoStory.RunPoint("captain", 0);
+            Vector3 me = t0 + new Vector3(-10f, 0f, 0f);
+            if (RunAfter(field, ref me, 6f) || StoryState.StepIndex != 6) Fail("걸어서 쫓았는데 잡음");
+            me = t0 + new Vector3(-10f, 0f, 0f);
+            field.ChaseTick(me, 0.05f);
+            if (!field.ChaseRunning) Fail("가까이 갔는데 잔상이 안 달아남");
+            if (!RunAfter(field, ref me, 10f)) Fail("달렸는데 잔상을 못 잡음");
+            Expect(17, 7, "잔상 잡음");                                                          // → 7 talk 도담(선로 끝)
+            field.Refresh();
+            if (GoStory.Flat(field.NpcBody("dodam").transform.position, GoStory.AreaPos("skyport:station", GoStory.DodamEnd)) > 0.6f) Fail("도담이 선로 끝으로 안 옴");
+            Talk(pc, ui, "dodam", "18장 선로 끝 도담");
+            Expect(17, 8, "선로 끝 도담");                                                       // → 8 defend 막차
+            Vector3 train = GoStory.AreaPos("skyport:station", GoStory.TrainAt);
+            pc.Teleport(train + new Vector3(0f, 0.4f, -GoStory.DefendStart - 10f));
+            field.DefendTick(pc.transform.position, 0.1f);
+            if (field.DefendWave != -1 || field.Squad.Count != 0) Fail("멀리서 물결이 옴");
+            pc.Teleport(train + new Vector3(0f, 0.4f, -GoStory.DefendStart + 5f));
+            field.DefendTick(pc.transform.position, 0.1f);
+            if (field.DefendWave != 0 || field.Squad.Count != 3) { Fail($"막차 첫 물결 {field.DefendWave}·{field.Squad.Count}"); return; }
+            foreach (var e in field.Squad) if (!sky.Contains(e.transform.position) || e.transform.position.z - train.z < -GoStory.DefendRing * 0.75f) Fail("물결이 땅 밖·북쪽(객차 쪽)에서 나옴");
+            for (int guard = 0; guard < 30 && StoryState.StepIndex == 8; guard++)
+            {
+                field.DefendTick(pc.transform.position, 0.1f);
+                foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) if (e.Alive) Kill(e);
+            }
+            Expect(17, 9, "막차 물결 셋");                                                       // → 9 talk 도담
+            int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot), guide = TalentState.Count(GoTalent.Mat.Guide);
+            Talk(pc, ui, "dodam", "18장 끝 도담");
+            if (StoryState.Ch != 18 || GoldState.Gold != gold + 5000 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6 || TalentState.Count(GoTalent.Mat.Guide) != guide + 6) Fail("18장 끝·보상(금 5000·교본 6·매듭 6)");
+            if (!PartyState.Has("story_dodam")) Fail("도담이 합류 안 함");
+            bool ko = GoKits.OffForTest;
+            GoKits.OffForTest = false;
+            var kit = GoKits.KitOf("story_dodam", GoElement.Electro);
+            GoKits.OffForTest = ko;
+            if (!GoHeroes.TryGet("story_dodam", out var hh) || hh.Era != HeroEra.Story || hh.Rarity != 4 || GoHeroes.ElementOf(hh) != GoElement.Electro || hh.Trait != HeroTrait.Might || GoWeapons.TypeOf("story_dodam") != GoWeapons.Type.Claymore) Fail("도담 표(★4 뇌 대도 무)");
+            if (kit == null || !kit.Sig || kit.Skill.Type != KitSkillType.Wave || kit.Burst.Type != KitBurstType.Haste || Mathf.Abs(kit.Skill.Knock - 4f) > 0.01f) Fail("도담 한 벌(선로 전류 wave·막차 출발 신호 haste)");
+            _ch18 = "18장 은하역·도담(선로 끝으로 옮김)·태양광 밭 무리·변전함(등롱 없이) 전기 → 막차 전조등/표시등·잔상 쫓기(평균 빠르기 걷기 못 잡고 달리기 잡음)·막차 물결 셋(북쪽 뺌)·도담 합류(★4 뇌 대도)·보상";
         }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------

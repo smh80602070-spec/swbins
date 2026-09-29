@@ -141,6 +141,9 @@ namespace Saga.Go.Data
             // 109-14-36 달음(15장 끝) — 암 창(웹 ⑲-36)
             new Hero { Id = "story_dareum", NameKo = "달음", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Might, Might = 86, Wisdom = 52, Command = 74,
                 WebElement = WebElement.Rock, QuoteKo = "파발꾼은 길 끝을 봐야 직성이 풀리니까!" },
+            // 109-14-40 도담(18장 끝) — 뇌 대도(웹 ⑲-40)
+            new Hero { Id = "story_dodam", NameKo = "도담", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Might, Might = 80, Wisdom = 66, Command = 70,
+                WebElement = WebElement.Elec, QuoteKo = "틈 너머 첫 정거장까지 — 제가 몰게요!" },
         };
 
         public static bool IsStory(string id) => id != null && id.StartsWith("story_");

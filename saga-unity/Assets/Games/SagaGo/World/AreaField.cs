@@ -203,15 +203,16 @@ namespace Saga.Go.World
                     Part("skyport:bell_hidden", t, PrimitiveType.Sphere, "Belfry_bell_tip", new Vector3(10f, 4.4f, 0f), new Vector3(0.6f, 0.4f, 0.6f), bronze, false);
                     break;
                 case "station": // 은하역 — 승강장 + 선로 둘 + 녹슨 객차 + 표지판
-                    P(PrimitiveType.Cube, t, "Station_platform", new Vector3(0f, 0.45f, 0f), new Vector3(40f, 0.9f, 7f), stone, true);
-                    P(PrimitiveType.Cube, t, "Station_rail_a", new Vector3(0f, 0.12f, -6f), new Vector3(80f, 0.24f, 0.4f), dark, false);
-                    P(PrimitiveType.Cube, t, "Station_rail_b", new Vector3(0f, 0.12f, -8f), new Vector3(80f, 0.24f, 0.4f), dark, false);
-                    P(PrimitiveType.Cube, t, "Station_car", new Vector3(0f, 2.5f, -7f), new Vector3(18f, 3.4f, 3.2f), rust, false);
-                    P(PrimitiveType.Cube, t, "Station_car_windows", new Vector3(0f, 3.0f, -5.38f), new Vector3(15f, 1f, 0.1f), glass, false);
-                    Part("skyport:train_lamp_a", t, PrimitiveType.Sphere, "Station_lamp_a", new Vector3(-9.2f, 2.0f, -6.6f), Vector3.one * 0.6f, Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)), false);
-                    Part("skyport:train_lamp_b", t, PrimitiveType.Sphere, "Station_lamp_b", new Vector3(-9.2f, 2.0f, -7.6f), Vector3.one * 0.6f, Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)), false);
-                    P(PrimitiveType.Cube, t, "Station_sign_post", new Vector3(14f, 2.2f, 2.5f), new Vector3(0.3f, 4.4f, 0.3f), dark, false);
-                    P(PrimitiveType.Cube, t, "Station_sign", new Vector3(14f, 4.2f, 2.5f), new Vector3(3.6f, 1f, 0.2f), Mat("s_sign", new Color(0.2f, 0.45f, 0.35f), 0.4f), false);
+                    // 선로가 남쪽(+z)으로 뻗는다(잔상 쫓기 길) — 승강장 7×40, 선로 둘 서쪽, 객차는 선로 위 북쪽 끝에서 남으로
+                    P(PrimitiveType.Cube, t, "Station_platform", new Vector3(0f, 0.45f, 0f), new Vector3(7f, 0.9f, 40f), stone, true);
+                    P(PrimitiveType.Cube, t, "Station_rail_a", new Vector3(-6f, 0.12f, 30f), new Vector3(0.4f, 0.24f, 160f), dark, false);
+                    P(PrimitiveType.Cube, t, "Station_rail_b", new Vector3(-8f, 0.12f, 30f), new Vector3(0.4f, 0.24f, 160f), dark, false);
+                    P(PrimitiveType.Cube, t, "Station_car", new Vector3(-7f, 2.5f, 0f), new Vector3(3.2f, 3.4f, 18f), rust, false);
+                    Part("skyport:train_windows", t, PrimitiveType.Cube, "Station_car_windows", new Vector3(-5.38f, 3.0f, 0f), new Vector3(0.1f, 1f, 15f), glass, false);
+                    Part("skyport:train_lamp_a", t, PrimitiveType.Sphere, "Station_lamp_a", new Vector3(-6.4f, 2.0f, 9.2f), Vector3.one * 0.6f, Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)), false);
+                    Part("skyport:train_lamp_b", t, PrimitiveType.Sphere, "Station_lamp_b", new Vector3(-7.6f, 2.0f, 9.2f), Vector3.one * 0.6f, Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)), false);
+                    P(PrimitiveType.Cube, t, "Station_sign_post", new Vector3(2.5f, 2.2f, 14f), new Vector3(0.3f, 4.4f, 0.3f), dark, false);
+                    P(PrimitiveType.Cube, t, "Station_sign", new Vector3(2.5f, 4.2f, 14f), new Vector3(0.2f, 1f, 3.6f), Mat("s_sign", new Color(0.2f, 0.45f, 0.35f), 0.4f), false);
                     break;
                 case "farm": // 태양광 밭 — 판 3줄 × 5 + 동쪽 변전함
                     for (int r = 0; r < 3; r++)
@@ -276,6 +277,11 @@ namespace Saga.Go.World
         }
 
         /// <summary>이야기 진행에 맞춰 바뀌는 조각·돌기둥을 켜고 끈다(진단도 부른다). 계류 탑 빛 공·매인 별배·종·막차는 각 장에서 여기에 더한다.</summary>
+        private void SetMat(string key, Material m)
+        {
+            if (_parts.TryGetValue(key, out var g) && g != null) g.GetComponent<MeshRenderer>().sharedMaterial = m;
+        }
+
         private float _ring;
         /// <summary>종각 종을 3초 흔든다(그림만, 잦아드는 흔들림).</summary>
         public void RingBell() => _ring = 3f;
@@ -296,6 +302,11 @@ namespace Saga.Go.World
             if (_parts.TryGetValue("skyport:bell", out var bell) && bell != null) bell.SetActive(hung);
             if (_parts.TryGetValue("skyport:bell_hidden", out var tip) && tip != null) tip.SetActive(hung);
             if (_parts.TryGetValue("skyport:bell_fallen", out var fallen) && fallen != null) fallen.SetActive(!hung);
+            bool powered = !StoryState.OffForTest && GoStory.TrainPowered;
+            SetMat("skyport:train_lamp_a", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
+            SetMat("skyport:train_lamp_b", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
+            SetMat("skyport:train_windows", powered ? Mat("s_win_on", new Color(1f, 0.9f, 0.55f), 1.6f, 0.8f) : Mat("s_glass", new Color(0.55f, 0.8f, 0.95f), 0.4f, 0.8f));
+            SetMat("skyport:substation_lamp", powered ? Mat("s_lamp_green", new Color(0.2f, 0.9f, 0.3f), 2.4f) : Mat("s_lamp_red", new Color(0.85f, 0.15f, 0.12f), 2f));
             bool docked = !StoryState.OffForTest && GoStory.PortDocked;
             if (_parts.TryGetValue("skyport:ship", out var ship) && ship != null) ship.SetActive(docked);
             if (_parts.TryGetValue("skyport:beacon", out var beacon) && beacon != null)

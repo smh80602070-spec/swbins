@@ -118,6 +118,11 @@ namespace Saga.Go.Combat
                     s = S(KitSkillType.Dash, "kit.sig.dareum.skill", "파발 질주", 7f, 2.8f); s.Len = 6f; s.W = 2.2f;
                     b = B(KitBurstType.Ward, "kit.sig.dareum.burst", "마패 호령", 7f, 3.6f); b.Sec = 10f; b.Taken = 0.75f;
                     break;
+                // 109-14-40 도담(웹 kits.js story_dodam) — 있는 틀(wave·haste)만
+                case "story_dodam":
+                    s = S(KitSkillType.Wave, "kit.sig.dodam.skill", "선로 전류", 8f, 2.9f); s.Len = 10f; s.W = 2.2f; s.Knock = 4f;
+                    b = B(KitBurstType.Haste, "kit.sig.dodam.burst", "막차 출발 신호", 7f, 3.4f); b.Sec = 10f; b.Energy = 7f;
+                    break;
                 default:
                     return null;
             }

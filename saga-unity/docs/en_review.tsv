@@ -918,6 +918,7 @@
 2	go	hero.sg_zhouyu	화풍	Hwapung		
 2	go	hero.sg_zhugeliang	현책	Hyeonchaek		
 2	go	hero.story_dareum	달음	Dareum		
+2	go	hero.story_dodam	도담	Dodam		
 2	go	hero.story_elder	누리	Nuri		
 2	go	hero.story_ferryman	버들	Beodeul		
 2	go	hero.story_haesol	해솔	Haesol		
@@ -965,6 +966,8 @@
 2	go	kit.noun.shield	방패	Shield Wall		
 2	go	kit.sig.dareum.burst	마패 호령	Horse-Tag Command		
 2	go	kit.sig.dareum.skill	파발 질주	Courier Dash		
+2	go	kit.sig.dodam.burst	막차 출발 신호	Last-Train Departure Signal		
+2	go	kit.sig.dodam.skill	선로 전류	Track Current		
 2	go	kit.sig.elder.burst	잔칫날 순풍	Feast-Day Tailwind		
 2	go	kit.sig.elder.skill	부채 바람	Fan Gust		
 2	go	kit.sig.ferryman.burst	뱃노래	Boat Song		
@@ -1084,6 +1087,7 @@
 2	go	story.altar4	넷째 제단	the Fourth Altar		
 2	go	story.altar_beacon	봉화 제단	Beacon Altar		
 2	go	story.altar_moored	계류된 별배	moored star-ship		
+2	go	story.altar_train	출발을 기다리는 막차	the waiting last train		
 2	go	story.altar_weld	용접대	welding bench		
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
 2	go	story.boss.emberfox	여우불 구미호	Foxfire Nine-Tail		
@@ -1436,6 +1440,50 @@
 2	go	story.ch17.s8.p.b	천천히, 반디.	Slowly, Bandi.		
 2	go	story.ch17.s9	종각에 다시 건 종을 원소 스킬로 울리기	Ring the re-hung bell in the belfry with an elemental skill		
 2	go	story.ch17.win	이무기가 종에서 풀려나 — 틈 속으로 스르르 사라졌다	The serpent slips off the bell and glides away into the rift		
+2	go	story.ch18	제18장 · 은하역 막차	Chapter 18 · The Last Train at Galaxy Station		
+2	go	story.ch18.caught	👤 잔상을 붙잡자 — 흩어지며 운행 기록부만 남았다	👤 You catch the afterimage — it scatters, leaving only the logbook		
+2	go	story.ch18.enter1	부서진 태양광 판 사이로 틈 짐승들이 튀어나왔다	Rift beasts burst out from among the broken solar panels		
+2	go	story.ch18.flee	👤 선장의 잔상이 기록부를 들고 선로 위로 달아난다 — 달려라!	👤 The captain's afterimage flees down the tracks with the logbook — run!		
+2	go	story.ch18.lost	💨 놓쳤다 — 잔상이 처음 자리로 돌아갔다. 다시 가까이 가면 달아난다	💨 Lost it — the afterimage returned to its first spot. It flees again when you get close		
+2	go	story.ch18.powered	⚡ 변전함에 전기가 들어왔다 — 은하역 쪽에서 불빛이 번쩍인다	⚡ Power flows into the substation — lights flash over at Galaxy Station		
+2	go	story.ch18.s1	종각 곁의 반디와 이야기하기	Talk to Bandi by the belfry		
+2	go	story.ch18.s1.l1	삐— 기적 소리 분석 완료. 발신지 은하역, 신호 종류… 막차 운행 예고.	Beep — whistle analysis complete. Source: Galaxy Station. Signal type… last-train service notice.		
+2	go	story.ch18.s1.l2	역에 생체 신호 하나. 녹슨 역에 사람이 있습니다.	One life sign at the station. Someone is in that rusty station.		
+2	go	story.ch18.s1.l3	먼저 가 주십시오. 저는 선로 위 하늘을 살피며 뒤따르겠습니다.	Please go ahead. I will follow, watching the sky above the tracks.		
+2	go	story.ch18.s1.p.a	가 보자, 은하역.	Let's go to Galaxy Station.		
+2	go	story.ch18.s1.p.b	막차라니…	A last train…?		
+2	go	story.ch18.s10	도담과 이야기하기	Talk to Dodam		
+2	go	story.ch18.s10.l1	보일러 압력 정상, 전조등 이상 없음… 막차, 출발 준비 끝!	Boiler pressure normal, headlights fine… last train, ready to depart!		
+2	go	story.ch18.s10.l2	삐— 별배·종·막차, 세 신호 모두 확인. 선장이 남긴 좌표가 열립니다 — 틈 너머 첫 정거장.	Beep — star-ship, bell and last train: all three signals confirmed. The coordinates the captain left open — the first station beyond the rift.		
+2	go	story.ch18.s10.l3	막차 기관사가 막차를 두고 갈 순 없죠. 틈 너머 첫 정거장까지 — 제가 몰게요!	A last-train engineer can't leave the last train behind. To the first station beyond the rift — I'll drive!		
+2	go	story.ch18.s10.l4	별배는 나루에, 종은 절터에, 막차는 선로에. 이 시대의 길이 다시 이어졌습니다.	The star-ship at the port, the bell at the temple, the train on the tracks. This age's road is connected again.		
+2	go	story.ch18.s10.p.a	같이 가 줄래요, 도담?	Will you come with us, Dodam?		
+2	go	story.ch18.s10.p.b	선장님을 만나러 가자.	Let's go meet the captain.		
+2	go	story.ch18.s2	은하 나루 남쪽 은하역으로	Go to Galaxy Station, south of the port		
+2	go	story.ch18.s3	은하역의 기관사 도담과 이야기하기	Talk to Dodam, the engineer of Galaxy Station		
+2	go	story.ch18.s3.l1	종소리 들었어요? 어젯밤 이 녹슨 막차 전조등이 혼자 깜빡였어요. 십 년 만에요!	Did you hear the bell? Last night this rusty train's headlights flickered on their own. First time in ten years!		
+2	go	story.ch18.s3.l2	나는 이 역 마지막 기관사예요. 선로가 끊긴 뒤로도 막차를 두고 떠날 수가 없어서.	I'm this station's last engineer. Even after the line was cut, I couldn't leave the last train behind.		
+2	go	story.ch18.s3.l3	선장이요? 그 사람이 막차 표를 끊었어요 — 행선지 칸이 비어 있는 표를. 그러고는 선로 끝 틈으로 걸어 들어갔죠.	The captain? He bought a last-train ticket — one with the destination blank. Then he walked into the rift at the end of the tracks.		
+2	go	story.ch18.s3.l4	막차를 깨우려면 전기부터예요. 서쪽 태양광 밭 변전함이 틈 짐승들 때문에 꺼져 버렸어요.	To wake the train we need power first. The substation in the western solar field died because of the rift beasts.		
+2	go	story.ch18.s3.p.a	별배 선장님을 알아요?	Do you know the star-ship's captain?		
+2	go	story.ch18.s3.p.b	막차를 움직일 수 있어요?	Can you get the train moving?		
+2	go	story.ch18.s4	태양광 밭을 헤집는 틈 짐승 물리치기	Defeat the rift beasts rummaging through the solar field		
+2	go	story.ch18.s5	꺼진 변전함에 원소 스킬로 전기 넣기	Feed power into the dead substation with an elemental skill		
+2	go	story.ch18.s6	도담과 이야기하기	Talk to Dodam		
+2	go	story.ch18.s6.l1	전조등이 켜졌어요! 막차가… 숨을 쉬어요!	The headlights are on! The last train… is breathing!		
+2	go	story.ch18.s6.l2	어? 선로 위에 누가 — 저 모자, 선장이에요! 그런데 몸이 비쳐 보여요.	Huh? Someone on the tracks — that cap, it's the captain! But I can see through him.		
+2	go	story.ch18.s6.l3	운행 기록부를 들고 남쪽 선로로 가요! 붙잡아 줘요, 나는 막차를 데워 둘게요!	He's heading down the southern tracks with the service logbook! Catch him — I'll warm up the train!		
+2	go	story.ch18.s6.p.a	선장님!	Captain!		
+2	go	story.ch18.s6.p.b	잔상이야, 쫓아가자!	It's an afterimage — after him!		
+2	go	story.ch18.s7	운행 기록부를 든 선장의 잔상 따라잡기(달리기)	Catch the captain's afterimage holding the service logbook (run)		
+2	go	story.ch18.s8	선로 끝의 도담과 이야기하기	Talk to Dodam at the end of the tracks		
+2	go	story.ch18.s8.l1	잔상은 흩어지고… 기록부만 남았네요.	The afterimage scattered… only the logbook is left.		
+2	go	story.ch18.s8.l2	마지막 장 — '막차 행선지: 틈 너머 첫 정거장. 선장은 먼저 내림.'	The last page — 'Last-train destination: first station beyond the rift. Captain got off first.'		
+2	go	story.ch18.s8.l3	끝 줄은 선장 글씨예요. '종이 울리고, 별배가 돌아오고, 막차가 달리면 — 그 정거장에서 다시 만나자.'	The last line is in the captain's hand: 'When the bell rings, the star-ship returns and the last train runs — let's meet again at that station.'		
+2	go	story.ch18.s8.l4	앗, 전조등 불빛을 보고 짐승들이 역으로 몰려가요! 막차가 데워질 때까지 지켜야 해요!	Oh no, the beasts are rushing the station toward the headlights! We must protect the train until it warms up!		
+2	go	story.ch18.s8.p.a	선장님은 틈 너머에 있어!	The captain is beyond the rift!		
+2	go	story.ch18.s8.p.b	다음 줄은?	What's the next line?		
+2	go	story.ch18.s9	출발을 기다리는 막차 지키기	Defend the last train waiting to depart		
 2	go	story.ch2	제2장 · 먹구름 제단	Chapter 2 · The Stormcloud Altar		
 2	go	story.ch2.s1	학자에게 제단 가는 길을 묻기	Ask the scholar the way to the altar		
 2	go	story.ch2.s1.l1	비문을 다 읽었어. 이무기는 너른 강 물가 서쪽, 먹구름 제단 안에 잠들어 있어.	I've finished reading the inscription. The serpent sleeps inside the Stormcloud Altar, west along the Broad River.		
@@ -1728,8 +1776,10 @@
 2	go	story.idle.ara	별배는 꼭 돌아온다고 믿고 불을 켜 두었어요.	I kept the lights on, believing the star-ship would come back.		
 2	go	story.idle.bandi	삐— 별배 심장 온도, 계속 하락 중.	Beep — Starship core temperature still falling.		
 2	go	story.idle.bawoo	……불씨는 아직 꺼지지 않았다.	……The ember has not gone out yet.		
+2	go	story.idle.captain	…종이 울리면 막차가…	…when the bell rings, the last train…		
 2	go	story.idle.daon	이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.	This yard's been shut for ten years… lately there's clanging every night.		
 2	go	story.idle.dareum	파발꾼은 길 끝을 봐야 직성이 풀리오.	A courier isn't satisfied until he's seen the road's end.		
+2	go	story.idle.dodam	막차는 아직 이 역에 서 있어요.	The last train is still standing at this station.		
 2	go	story.idle.elder	먹구름이 걷히면 마을 잔치를 열어야지.	Once the stormclouds clear, we'll hold a village feast.		
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
 2	go	story.idle.gaon	관측대가 또 한 뼘 기울었어요. 기록만 하고 있을 순 없는데…	The deck tilted another hand's breadth. I can't just keep recording…		
@@ -1750,8 +1800,10 @@
 2	go	story.npc.ara	나루지기 아라	Portkeeper Ara		
 2	go	story.npc.bandi	조종 기계 반디	Bandi the Pilot Machine		
 2	go	story.npc.bawoo	산성지기 바우	Bawoo the Fortress Keeper		
+2	go	story.npc.captain	선장의 잔상	Captain's Afterimage		
 2	go	story.npc.daon	조선공 다온	Shipwright Daon		
 2	go	story.npc.dareum	파발꾼 달음	Courier Dareum		
+2	go	story.npc.dodam	기관사 도담	Engineer Dodam		
 2	go	story.npc.elder	청하 촌장 누리	Elder Nuri of Cheongha		
 2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
 2	go	story.npc.gaon	시간 틈 관측사 가온	Rift Observer Gaon		
@@ -1776,8 +1828,10 @@
 2	go	story.short.ara	아라	Ara		
 2	go	story.short.bandi	반디	Bandi		
 2	go	story.short.bawoo	바우	Bawoo		
+2	go	story.short.captain	잔상	Afterimage		
 2	go	story.short.daon	다온	Daon		
 2	go	story.short.dareum	달음	Dareum		
+2	go	story.short.dodam	도담	Dodam		
 2	go	story.short.elder	누리	Nuri		
 2	go	story.short.ferryman	버들	Beodeul		
 2	go	story.short.gaon	가온	Gaon		
@@ -3187,6 +3241,7 @@
 3	go	hero.sg_zhouyu.quote	동남풍이 불면, 그때가 우리의 때입니다.	When the southeast wind blows, our time has come.		
 3	go	hero.sg_zhugeliang.quote	삼고초려의 뜻, 잊지 않겠습니다.	I will not forget the meaning of those three visits.		
 3	go	hero.story_dareum.quote	파발꾼은 길 끝을 봐야 직성이 풀리니까!	A courier isn't satisfied until he's seen the road's end!		
+3	go	hero.story_dodam.quote	틈 너머 첫 정거장까지 — 제가 몰게요!	To the first station beyond the rift — I'll drive!		
 3	go	hero.story_elder.quote	먹구름이 걷히면 마을 잔치를 열어야지.	Once the storm clouds lift, the village must throw a feast.		
 3	go	hero.story_ferryman.quote	물 냄새가 요즘 영 비릿해.	The water has smelled off lately.		
 3	go	hero.story_haesol.quote	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		

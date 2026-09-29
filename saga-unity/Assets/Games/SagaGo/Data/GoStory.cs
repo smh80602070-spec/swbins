@@ -64,7 +64,7 @@ namespace Saga.Go.Data
             DungsilPath0, new Vector2(2.25f, 1.95f), new Vector2(2.8f, 1.95f), new Vector2(3.35f, 1.95f), new Vector2(3.9f, 2.0f), new Vector2(4.45f, 2.0f), new Vector2(4.9f, 2.05f),
         };
         /// <summary>달리는 인물의 길 i 째 점(도둑·둥실이).</summary>
-        public static Vector3 RunPoint(string id, int i) { var p = NpcOf(id).RunPath; return GridPos(p[i].x, p[i].y); }
+        public static Vector3 RunPoint(string id, int i) { var n = NpcOf(id); var p = n.RunPath; return n.RunAt != null ? AreaPos(n.RunAt, p[i]) : GridPos(p[i].x, p[i].y); }
         public static int RunCount(string id) => NpcOf(id).RunPath?.Length ?? 0;
 
         // ---- 109-14-20 9장(웹 ⑲-20) — 구름섬: 6장 봉우리 정상에서 서쪽 36m·위로 54m(웹 북쪽 27m·40m × 1.35 — 이 판 북쪽 하늘엔 옆 봉우리 (6,6) 이 솟아 서쪽 숲 칸 위로), 반지름 19m(웹 14), 난간 1.6m
@@ -177,6 +177,8 @@ namespace Saga.Go.Data
             public string AtSite;
             public Vector2 AtOff;
             public Vector2[] RunPath;
+            /// <summary>109-14-40 달리는 길이 독립 땅 명소 곁이면 그 명소 열쇠 — RunPath 는 그 가운데에서 m.</summary>
+            public string RunAt;
             /// <summary>있으면 이 칸들 동안에만 선다(나그네). 칸마다 자리가 다를 수 있다.</summary>
             public Spot[] Appear;
             /// <summary>늘 서되 이 칸들 동안엔 그 자리로 옮겨 선다(은비 — 5장 옛길·둘째 제단, 6장 봉우리).</summary>
@@ -241,6 +243,12 @@ namespace Saga.Go.Data
         // 12장(⑲-30) — 서리 무리·구미호는 얼음굴 어귀 남쪽 14m · 반디는 구미호 뒤 굴 앞 · 심장 받침은 비행선 곁(선체 밖)
         // 18장(⑲-40) 변전함 자리(태양광 밭 가운데에서 m) — 은하 나루 모양이 쓴다.
         public static readonly Vector2 SubstationOff = new Vector2(10.5f, 0f);
+
+        // 18장(⑲-40) — 은하역·태양광 밭 자리(각 명소 가운데에서 m, z 남쪽): 도담은 승강장 남쪽 끝 아래, 막차 = 승강장 가운데(객차), 잔상은 선로(남쪽)를 지그재그로 달린다(웹 ×1.35).
+        public static readonly Vector2 DodamAt = new Vector2(9f, 3.4f), StationBandi = new Vector2(-6f, 4.5f), DodamEnd = new Vector2(4f, 70f), TrainAt = new Vector2(0f, 0.5f), FarmFight = new Vector2(0f, 12f);
+        public static readonly Vector2[] CaptainPath = { new Vector2(0f, 8f), new Vector2(2f, 22f), new Vector2(-2f, 35f), new Vector2(2f, 49f), new Vector2(-1f, 62f), new Vector2(3f, 78f), new Vector2(-3f, 92f) };
+        /// <summary>변전함에 전기가 들어왔나(18장 6째 단계부터 늘) — 막차 전조등·변전함 표시등이 켜진다.</summary>
+        public static bool TrainPowered => StoryState.Ch > 17 || (StoryState.Ch == 17 && StoryState.StepIndex >= 5);
 
         // 17장(⑲-39) — 옛 절터·떨어진 절 종 곁 자리(각 명소 가운데에서 m): 종각 = 절터 동쪽 10m, 한결은 그 남쪽, 쓰러진 종 곁 무리/이무기/한결/반디
         public static readonly Vector2 Belfry = new Vector2(10f, 0f), Hangyeol = new Vector2(10f, 3.6f), TempleBandi = new Vector2(14.5f, -1f),
@@ -390,8 +398,18 @@ namespace Saga.Go.Data
                     new Spot { Ch = 13, From = 0, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 13, From = 9, To = 9, Sky = true, Obs = true, Arena = new Vector2(3f, 3f) },
                     new Spot { Ch = 14, From = 0, To = 20, Frost = true, Arena = BandiShip },
                     new Spot { Ch = 15, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 15, From = 6, To = 8, At = "skyport:port", Arena = PortBandi },
-                    new Spot { Ch = 16, From = 0, To = 6, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 16, From = 7, To = 7, At = "skyport:bell", Arena = BellBandi }, new Spot { Ch = 16, From = 8, To = 9, At = "skyport:temple", Arena = TempleBandi } },
+                    new Spot { Ch = 16, From = 0, To = 6, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 16, From = 7, To = 7, At = "skyport:bell", Arena = BellBandi }, new Spot { Ch = 16, From = 8, To = 9, At = "skyport:temple", Arena = TempleBandi },
+                    new Spot { Ch = 17, From = 0, To = 0, At = "skyport:temple", Arena = TempleBandi }, new Spot { Ch = 17, From = 1, To = 9, At = "skyport:station", Arena = StationBandi } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
+            // 109-14-40 18장(웹 ⑲-40) — 기관사 도담(늘 승강장 남쪽 끝 아래, 8째 단계는 선로 끝) · 선장의 잔상(18장 쫓기 때만 — 은하역 선로 위를 달린다)
+            new Npc { Id = "dodam", NameKey = "story.npc.dodam", NameKo = "기관사 도담", ShortKey = "story.short.dodam", ShortKo = "도담",
+                AtSite = "skyport:station", AtOff = DodamAt, FolkBody = "PeasantMan",
+                At = new[] { new Spot { Ch = 17, From = 7, To = 7, At = "skyport:station", Arena = DodamEnd } },
+                IdleKey = "story.idle.dodam", IdleKo = "막차는 아직 이 역에 서 있어요." },
+            new Npc { Id = "captain", NameKey = "story.npc.captain", NameKo = "선장의 잔상", ShortKey = "story.short.captain", ShortKo = "잔상",
+                AtSite = "skyport:station", AtOff = new Vector2(0f, 8f), FolkBody = "Remy", RunAt = "skyport:station", RunPath = CaptainPath,
+                Appear = new[] { new Spot { Ch = 17, From = 6, To = 6, At = "skyport:station", Arena = new Vector2(0f, 8f) } },
+                IdleKey = "story.idle.captain", IdleKo = "…종이 울리면 막차가…" },
             // 109-14-39 17장(웹 ⑲-39) — 종지기 한결: 늘 절터 종각 남쪽, 17장 5~8째 단계엔 쓰러진 종 곁
             new Npc { Id = "hangyeol", NameKey = "story.npc.hangyeol", NameKo = "종지기 한결", ShortKey = "story.short.hangyeol", ShortKo = "한결",
                 AtSite = "skyport:temple", AtOff = Hangyeol, FolkBody = "Paladin",
@@ -1552,6 +1570,78 @@ namespace Saga.Go.Data
                             Pick("story.ch17.s10.p", "저 녹슨 역에서 열차가?", "선장님의 신호일까?"),
                             L("hangyeol", "story.ch17.s10.l3", "그 선장이 떠나며 말했소. '종이 다시 울리면 막차가 한 번 더 온다'고. 무슨 뜻인지는 나도 모르오."),
                             L("hangyeol", "story.ch17.s10.l4", "나는 이제 종 곁을 지키겠소. 종지기가 종 곁에 있어야지. 가 보시오 — 은하역으로."),
+                        } },
+                }
+            },
+            // 109-14-40 18장(웹 ⑲-40) — 4부 끝, 은하역 막차: 반디(종각) → 은하역 → 기관사 도담 → 태양광 밭 무리 → 변전함에 원소(등롱 없이 — 이때부터 막차에 불) → 도담 → 선장의 잔상 쫓기(선로 위)
+            // → 도담(선로 끝) → 출발을 기다리는 막차 지키기(북쪽 객차 쪽 뺀 다섯 방향) → 도담 · 도담 합류. 라피드·바위곰은 14-1b 전까지 옛 몸+원소.
+            new Chapter
+            {
+                Id = "ch18", NameKey = "story.ch18", NameKo = "제18장 · 은하역 막차", Ar = 42, Join = "story_dodam",
+                Gold = 5000, Mats = new[] { 0, 6, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch18.s1", TextKo = "종각 곁의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch18.s1.l1", "삐— 기적 소리 분석 완료. 발신지 은하역, 신호 종류… 막차 운행 예고."),
+                            L("bandi", "story.ch18.s1.l2", "역에 생체 신호 하나. 녹슨 역에 사람이 있습니다."),
+                            Pick("story.ch18.s1.p", "가 보자, 은하역.", "막차라니…"),
+                            L("bandi", "story.ch18.s1.l3", "먼저 가 주십시오. 저는 선로 위 하늘을 살피며 뒤따르겠습니다."),
+                        } },
+                    new Step { Type = StepType.Go, At = "skyport:station", Arena = Vector2.zero, TextKey = "story.ch18.s2", TextKo = "은하 나루 남쪽 은하역으로" },
+                    new Step { Type = StepType.Talk, Npc = "dodam", TextKey = "story.ch18.s3", TextKo = "은하역의 기관사 도담과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("dodam", "story.ch18.s3.l1", "종소리 들었어요? 어젯밤 이 녹슨 막차 전조등이 혼자 깜빡였어요. 십 년 만에요!"),
+                            L("dodam", "story.ch18.s3.l2", "나는 이 역 마지막 기관사예요. 선로가 끊긴 뒤로도 막차를 두고 떠날 수가 없어서."),
+                            Pick("story.ch18.s3.p", "별배 선장님을 알아요?", "막차를 움직일 수 있어요?"),
+                            L("dodam", "story.ch18.s3.l3", "선장이요? 그 사람이 막차 표를 끊었어요 — 행선지 칸이 비어 있는 표를. 그러고는 선로 끝 틈으로 걸어 들어갔죠."),
+                            L("dodam", "story.ch18.s3.l4", "막차를 깨우려면 전기부터예요. 서쪽 태양광 밭 변전함이 틈 짐승들 때문에 꺼져 버렸어요."),
+                        } },
+                    new Step { Type = StepType.Kill, At = "skyport:farm", Arena = FarmFight,
+                        Foes = new[] { F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo) },
+                        EnterKey = "story.ch18.enter1", EnterKo = "부서진 태양광 판 사이로 틈 짐승들이 튀어나왔다",
+                        TextKey = "story.ch18.s4", TextKo = "태양광 밭을 헤집는 틈 짐승 물리치기" },
+                    new Step { Type = StepType.Light, Bare = true, At = "skyport:farm", Arena = SubstationOff, EnterKey = "story.ch18.powered", EnterKo = "⚡ 변전함에 전기가 들어왔다 — 은하역 쪽에서 불빛이 번쩍인다",
+                        TextKey = "story.ch18.s5", TextKo = "꺼진 변전함에 원소 스킬로 전기 넣기" },
+                    new Step { Type = StepType.Talk, Npc = "dodam", TextKey = "story.ch18.s6", TextKo = "도담과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("dodam", "story.ch18.s6.l1", "전조등이 켜졌어요! 막차가… 숨을 쉬어요!"),
+                            L("dodam", "story.ch18.s6.l2", "어? 선로 위에 누가 — 저 모자, 선장이에요! 그런데 몸이 비쳐 보여요."),
+                            Pick("story.ch18.s6.p", "선장님!", "잔상이야, 쫓아가자!"),
+                            L("dodam", "story.ch18.s6.l3", "운행 기록부를 들고 남쪽 선로로 가요! 붙잡아 줘요, 나는 막차를 데워 둘게요!"),
+                        } },
+                    new Step { Type = StepType.Chase, Npc = "captain", TextKey = "story.ch18.s7", TextKo = "운행 기록부를 든 선장의 잔상 따라잡기(달리기)",
+                        EnterKey = "story.ch18.flee", EnterKo = "👤 선장의 잔상이 기록부를 들고 선로 위로 달아난다 — 달려라!",
+                        WinKey = "story.ch18.caught", WinKo = "👤 잔상을 붙잡자 — 흩어지며 운행 기록부만 남았다",
+                        LostKey = "story.ch18.lost", LostKo = "💨 놓쳤다 — 잔상이 처음 자리로 돌아갔다. 다시 가까이 가면 달아난다" },
+                    new Step { Type = StepType.Talk, Npc = "dodam", TextKey = "story.ch18.s8", TextKo = "선로 끝의 도담과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("dodam", "story.ch18.s8.l1", "잔상은 흩어지고… 기록부만 남았네요."),
+                            L("dodam", "story.ch18.s8.l2", "마지막 장 — '막차 행선지: 틈 너머 첫 정거장. 선장은 먼저 내림.'"),
+                            Pick("story.ch18.s8.p", "선장님은 틈 너머에 있어!", "다음 줄은?"),
+                            L("dodam", "story.ch18.s8.l3", "끝 줄은 선장 글씨예요. '종이 울리고, 별배가 돌아오고, 막차가 달리면 — 그 정거장에서 다시 만나자.'"),
+                            L("dodam", "story.ch18.s8.l4", "앗, 전조등 불빛을 보고 짐승들이 역으로 몰려가요! 막차가 데워질 때까지 지켜야 해요!"),
+                        } },
+                    new Step { Type = StepType.Defend, At = "skyport:station", Arena = TrainAt, NameKey = "story.altar_train", NameKo = "출발을 기다리는 막차", Dirs = new[] { 45f, 90f, 135f, 180f, 225f },
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.EmberImp) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro) },
+                        },
+                        TextKey = "story.ch18.s9", TextKo = "출발을 기다리는 막차 지키기" },
+                    new Step { Type = StepType.Talk, Npc = "dodam", TextKey = "story.ch18.s10", TextKo = "도담과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("dodam", "story.ch18.s10.l1", "보일러 압력 정상, 전조등 이상 없음… 막차, 출발 준비 끝!"),
+                            L("bandi", "story.ch18.s10.l2", "삐— 별배·종·막차, 세 신호 모두 확인. 선장이 남긴 좌표가 열립니다 — 틈 너머 첫 정거장."),
+                            Pick("story.ch18.s10.p", "같이 가 줄래요, 도담?", "선장님을 만나러 가자."),
+                            L("dodam", "story.ch18.s10.l3", "막차 기관사가 막차를 두고 갈 순 없죠. 틈 너머 첫 정거장까지 — 제가 몰게요!"),
+                            L("bandi", "story.ch18.s10.l4", "별배는 나루에, 종은 절터에, 막차는 선로에. 이 시대의 길이 다시 이어졌습니다."),
                         } },
                 }
             },
