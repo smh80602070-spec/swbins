@@ -3365,14 +3365,14 @@ window.DG_NO_TUNE = true;
           if (st.t === 'mission' && !DG.questData.find(st.quest)) { bad.push(c.id + ' 사명 ' + st.quest); }
           if (st.t === 'job' && !(st.tier >= 1)) { bad.push(c.id + ' 전직 차수'); }
           if (st.t === 'gate' && !SD.STAGES.some(function (x) { return x.key === st.stage && x.gateBoss; })) { bad.push(c.id + ' 관문 대장 없는 곳 ' + st.stage); }
-          if (['stage', 'talk', 'mission', 'job', 'gate'].indexOf(st.t) < 0) { bad.push(c.id + ' 단계 종류 ' + st.t); }
+          if (['stage', 'talk', 'mission', 'job', 'gate', 'rift'].indexOf(st.t) < 0) { bad.push(c.id + ' 단계 종류 ' + st.t); }
         });
         if (c.reward && c.reward.scroll && !DG.gearData.scroll(c.reward.scroll)) { bad.push(c.id + ' 주문서'); }
       });
       Object.keys(D.SCENES).forEach(function (k) {
         if (!used[k]) { bad.push('안 쓰는 장면 ' + k); }
         D.SCENES[k].lines.forEach(function (ln) {
-          if (ln[0] !== 'me' && ln[0] !== 'mentor' && !D.CAST[ln[0]] && !SD.NPC_TALK[ln[0]]) { bad.push(k + ' 인물 ' + ln[0]); }
+          if (ln[0] !== 'me' && ln[0] !== 'mentor' && ln[0] !== 'mentor+' && !D.CAST[ln[0]] && !SD.NPC_TALK[ln[0]]) { bad.push(k + ' 인물 ' + ln[0]); }
           if (!SD.EMOTES[ln[1]]) { bad.push(k + ' 감정 ' + ln[1]); }
           if (!ln[2]) { bad.push(k + ' 빈 말'); }
         });
@@ -3550,11 +3550,11 @@ window.DG_NO_TUNE = true;
         say();
         var titles = SC.titles();
         if (!SC.state().done.p2_cave || titles.length !== 1 || titles[0].indexOf(JD.job(jk).name.replace(/(.*)$/, '')) < 0) { bad.push('제8장 끝·칭호 ' + JSON.stringify(titles)); }
-        if (SC.current() !== null || SC.hint() !== null) { bad.push('이야기 끝인데 힌트가 남음'); }
+        if (!SC.current() || SC.current().id !== 'p3_gisan') { bad.push('2부 뒤 다음 장 ' + (SC.current() && SC.current().id)); }
 
         // 옛 세이브 — 전직 2차면 2부도 건너뛴다
         SC.reset(); C.save.job = jk; C.save.player.level = 20;
-        if (SC.current() !== null) { bad.push('옛 세이브 2차 전직 건너뜀 ' + (SC.current() && SC.current().id)); }
+        if (!SC.current() || SC.current().id !== 'p3_gisan') { bad.push('옛 세이브 2차 전직 건너뜀 ' + (SC.current() && SC.current().id)); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '네 장 차례로 끝 · 대장 힌트 · Lv.25 잠금 · 2차 전직 무예 조건 힌트 · 둘째 스승 이름 · 칭호 ' + titles[0] + ' · 옛 세이브 건너뜀';
       } finally {
@@ -3565,6 +3565,92 @@ window.DG_NO_TUNE = true;
         C.save.player = JSON.parse(keep.p); C.save.quests = JSON.parse(keep.q); C.save.track = keep.tr; C.save.job = keep.job;
         C.save.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; S.state().potions = keep.pot; S.state().gateWeek = JSON.parse(keep.gw);
         C.save.scrolls = JSON.parse(keep.scr); C.save.skills = JSON.parse(keep.skills); S.state().story = JSON.parse(keep.story);
+        if (wasKey) { S.enter(wasKey); }
+      }
+    });
+
+    t('시나리오 3부 — 기산채·호로곡·비경·셋째 스승으로 네 장이 끝나고 기억 조각을 받는다', function () {
+      var SC = DG.scenario, ST = DG.story, Q = DG.quest, G = DG.gear, J = DG.job, A = DG.auto, JD = DG.jobData;
+      var keep = { p: JSON.stringify(C.save.player), q: JSON.stringify(C.save.quests || {}), tr: C.save.track, job: C.save.job,
+        sc: C.save.scenario ? JSON.stringify(C.save.scenario) : null, pot: S.state().potions, scr: JSON.stringify(C.save.scrolls || {}),
+        skills: JSON.stringify(C.save.skills || {}), story: JSON.stringify(S.state().story || {}), rs: JSON.stringify(C.save.riftStat || null),
+        auto: A.active() };
+      var wasKey = S.active() ? S.raw().stage.key : null;
+      var bad = [];
+      function say() { var k = 0; while (ST.isOpen() && k++ < 20) { ST.next(); } }
+      function cur() { return ST.isOpen() ? ST.current().key : null; }
+      function fill(key) { var r = Q.state()[key] || (Q.state()[key] = { taken: 0, n: 0, done: 0 }); r.done = 1; r.taken = 0; C.emit('changed'); }
+      window.DG_NO_STORY = false; window.DG_NO_SCENARIO = false;
+      try {
+        if (S.active()) { S.leave(); }
+        A.setOn(false);
+        C.save.quests = {}; C.save.track = null; C.save.job = 'general'; C.save.player.level = 25; C.save.player.memFrag = 0;
+        C.save.riftStat = { runs: 0, clears: 0, best: 0 };
+        SC.reset(); SC.init();
+        var h = SC.hint();
+        if (!(h && h.ch.id === 'p3_gisan' && h.text.indexOf('기산채') >= 0)) { bad.push('3부 첫 힌트 ' + (h && h.text)); }
+
+        S.enter('gisanchae');
+        if (cur() !== 'scn:gisan1') { bad.push('제9장 첫 장면 ' + cur()); }
+        say();
+        var sc0 = G.scrollCount('def60');
+        fill('q_gold1');
+        if (cur() !== 'scn:gisan2') { bad.push('제9장 끝 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.p3_gisan || G.scrollCount('def60') !== sc0 + 1) { bad.push('제9장 보상'); }
+
+        S.leave(); S.enter('gorge'); say();   // 첫 발 장면(의원)은 그대로 뜬다
+        fill('q_gorge'); fill('q_cinder');
+        if (SC.hint().text.indexOf('Lv.30') < 0) { bad.push('골짜기 주인 힌트 ' + SC.hint().text); }
+        C.save.player.level = 30; C.emit('changed');
+        fill('q_gorge_boss');
+        if (cur() !== 'scn:gorge2') { bad.push('제10장 끝 장면 ' + cur()); }
+        say();   // 이어서 제11장 첫 장면까지 넘어간다
+        if (!SC.state().done.p3_gorge || !SC.state().said.lab1) { bad.push('제10장 끝·제11장 첫 장면 ' + JSON.stringify(SC.state().said)); }
+
+        h = SC.hint();
+        if (!(h && h.text.indexOf('비경') >= 0)) { bad.push('비경 힌트 ' + (h && h.text)); }
+        C.emit('changed');
+        if (SC.state().done.p3_labyrinth || ST.isOpen()) { bad.push('비경을 안 깼는데 넘어감'); }
+        C.save.riftStat.clears = 1; C.emit('changed');
+        if (cur() !== 'scn:lab2') { bad.push('제11장 끝 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.p3_labyrinth || C.save.player.memFrag !== 3) { bad.push('제11장 보상·기억 조각 ' + C.save.player.memFrag); }
+
+        S.leave();
+        var hl = SC.hint();
+        if (!(hl && hl.locked && hl.text.indexOf('Lv.45') >= 0)) { bad.push('제12장 잠금 ' + (hl && hl.text)); }
+        C.save.player.level = 45; C.emit('changed');
+        S.enter('heodo');
+        if (cur() !== 'scn:job31') { bad.push('제12장 첫 장면 ' + cur()); }
+        var ml = J.mentors(), m3 = ml.length > 2 && DG.data.find(ml[2]);
+        var box = (document.getElementById('storybox') || {}).innerHTML || '';
+        if (!m3 || box.indexOf(m3.name) < 0) { bad.push('셋째 스승 이름(전직 전)'); }
+        say();
+        h = SC.hint();
+        if (h.text.indexOf('3차') < 0 || h.text.indexOf('무예') < 0) { bad.push('3차 전직 힌트 ' + h.text); }
+        var low = JD.SKILLS.filter(function (x) { return x.job === 'general'; })[0];
+        C.save.skills = C.save.skills || {}; C.save.skills[low.key] = 8;
+        var jk = JD.JOBS.filter(function (j) { return j.tier === 3 && j.from === 'general'; })[0].key;
+        if (!J.join(jk) || cur() !== 'scn:job32') { bad.push('3차 전직 뒤 장면 ' + cur()); }
+        say();
+        var titles = SC.titles();
+        if (!SC.state().done.p3_job || titles.length !== 1) { bad.push('제12장 끝·칭호 ' + JSON.stringify(titles)); }
+        if (SC.current() !== null || SC.hint() !== null) { bad.push('지금 있는 이야기 끝인데 힌트가 남음'); }
+
+        SC.reset(); C.save.job = jk; C.save.player.level = 46;
+        if (SC.current() !== null) { bad.push('옛 세이브 3차 전직 건너뜀 ' + (SC.current() && SC.current().id)); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '네 장 차례로 끝 · 비경 안 깨면 안 넘어감 · 기억 조각 +3 · Lv.45 잠금 · 셋째 스승 이름 · 칭호 ' + titles[0] + ' · 옛 세이브 건너뜀';
+      } finally {
+        window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;
+        if (ST.isOpen()) { ST.skip(); }
+        if (S.active()) { S.leave(); }
+        A.setOn(keep.auto);
+        C.save.player = JSON.parse(keep.p); C.save.quests = JSON.parse(keep.q); C.save.track = keep.tr; C.save.job = keep.job;
+        C.save.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; S.state().potions = keep.pot;
+        C.save.scrolls = JSON.parse(keep.scr); C.save.skills = JSON.parse(keep.skills); S.state().story = JSON.parse(keep.story);
+        C.save.riftStat = JSON.parse(keep.rs) || undefined;
         if (wasKey) { S.enter(wasKey); }
       }
     });

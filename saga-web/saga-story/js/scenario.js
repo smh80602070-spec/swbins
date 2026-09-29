@@ -7,6 +7,7 @@
  *   talk    대사 장면 — `story.js` 의 검은 띠 장면(`DG.story.play`)
  *   mission 사명(`quest.js`) — 레벨이 되면 저절로 받고, 바치면 넘어간다
  *   gate    관문 대장(`side.js` gateWeek) — 그 마을 대장을 이긴 적이 있으면 넘어간다
+ *   rift    비경(`rift.js`) — 이 단계가 시작된 뒤 5층을 끝까지 깨면(`riftStat.clears` 가 늘면) 넘어간다
  *   job     전직(`job.js`) — 그 차수 이상이면 넘어간다
  *
  * 세이브: `core.save.scenario = { v, init, done:{장id:1}, ch, step, said:{장면id:1}, titles:[] }`
@@ -68,6 +69,8 @@
     return j ? (j.tier || 0) : 0;
   }
 
+  function clears() { return (core.save.riftStat && core.save.riftStat.clears) || 0; }
+
   function runStage() {
     var r = global.DG.side.raw && global.DG.side.raw();
     return r && r.stage ? r.stage.key : null;
@@ -80,6 +83,7 @@
     if (step.t === 'mission') { return !!Q && Q.doneCount(step.quest) > 0; }
     if (step.t === 'job') { return jobTier() >= step.tier; }
     if (step.t === 'gate') { return !!(global.DG.side.state().gateWeek || {})[step.stage]; }
+    if (step.t === 'rift') { var b = raw().riftBase; return typeof b === 'number' && clears() > b; }
     return true;
   }
 
@@ -91,6 +95,7 @@
   /** 이 단계를 시작한다 — 사명은 받고, 장면은 띄운다(못 띄우면 다음 'changed' 에 다시) */
   function begin(step) {
     var Q = global.DG.quest, ST = global.DG.story, d;
+    if (step.t === 'rift' && typeof raw().riftBase !== 'number') { raw().riftBase = clears(); core.persist(); }
     if (step.t === 'mission' && Q) {
       d = global.DG.questData.find(step.quest);
       if (d && !Q.taken(step.quest) && core.save.player.level >= d.need) { Q.take(step.quest); }
@@ -110,6 +115,7 @@
     var bits = [];
     if (rw.exp) { core.gainExp(rw.exp); bits.push('경험치 ' + core.fmt(rw.exp)); }
     if (rw.gold) { core.save.player.gold += rw.gold; bits.push('🪙 ' + core.fmt(rw.gold)); }
+    if (rw.memFrag) { core.save.player.memFrag = (core.save.player.memFrag || 0) + rw.memFrag; bits.push('🧩 기억 조각 ' + rw.memFrag); }
     if (rw.potion && global.DG.side) { global.DG.side.state().potions += rw.potion; bits.push('🧪 ' + rw.potion); }
     if (rw.scroll && global.DG.gear) {
       global.DG.gear.addScroll(rw.scroll, 1);
@@ -150,7 +156,7 @@
         if (s.ch !== ch.id) { s.ch = ch.id; s.step = 0; core.persist(); }
         var step = ch.steps[s.step];
         if (!step) { finish(ch); continue; }
-        if (stepDone(step)) { s.step += 1; core.persist(); continue; }
+        if (stepDone(step)) { s.step += 1; s.riftBase = undefined; core.persist(); continue; }
         begin(step);
         if (stepDone(step)) { continue; }       // 시작하자마자 채워진 것(이미 받아 둔 사명이 다 찼다는 뜻은 아님)
         break;
@@ -180,6 +186,10 @@
         JD.JOBS.forEach(function (j) { if (!why && j.tier === step.tier && j.from === core.save.job) { why = J.canJoin(j.key); } });
         if (why) { text += ' — ' + why; }
       }
+    }
+    else if (step.t === 'rift') {
+      var RF = global.DG.rift, av = RF && RF.available();
+      text = '🌀 비경(사냥터 목록)에서 5층 수호장까지 깬다' + (av && !av.ok ? ' — ' + av.reason : '');
     }
     else if (step.t === 'gate') {
       var gi = global.DG.side.gateInfo(step.stage);

@@ -1,7 +1,7 @@
 /**
  * 시나리오 표 — 사가스토리 "이름 없는 떠돌이" (정본 `../../../scenario/saga-story.md`)
  * ---------------------------------------------------------------
- * 지금은 **1부 · 무명(과거 중심, Lv 1~10) 네 장**과 **2부 · 갈래(현대 중심, Lv 10~25) 네 장**이 있다. 3부~는 이 표 끝에 장을 덧붙이면 된다.
+ * 지금은 **1부 · 무명(과거 중심, Lv 1~10) 네 장**과 **2부 · 갈래(현대 중심, Lv 10~25) 네 장**, **3부 · 불길(미래 중심, Lv 25~45) 네 장**이 있다. 4부~는 이 표 끝에 장을 덧붙이면 된다.
  * 인물은 전부 가상이다(이름 정책) — 'me' 는 앞에 세운 도감 인물, 'mentor' 는 그 갈래의 스승(도감 가명).
  *
  * 한 장 = { id, no, title, stage, need, after, mix, steps, reward, blurb }
@@ -13,8 +13,9 @@
  *     { t: 'mission', quest: 사명 key }             그 사명을 바친다(레벨이 되면 저절로 받는다)
  *     { t: 'job',     tier: 1 }                     n차 전직을 한다
  *     { t: 'gate',    stage: 사냥터 key }           그 마을 관문 대장을 이긴다(이긴 적이 있으면 그것으로 됨)
+ *     { t: 'rift' }                                 비경(5층)을 이 단계가 시작된 뒤 한 번 끝까지 깬다
  *   legacy { level, tier }  옛 세이브 — 레벨이 그 이상이거나 전직이 tier 이상이면 이 장은 보상 없이 지나온 길로 본다
- *   reward { exp, gold, potion, scroll, title }     title 'job' = "이름 없는 " + 방금 고른 직업 이름
+ *   reward { exp, gold, potion, scroll, memFrag, title }   memFrag = 비경 기억 조각(🧩)     title 'job' = "이름 없는 " + 방금 고른 직업 이름
  *
  * 장면 한 줄 = [누가, 감정, 말] — `data-side.js` 의 STORY 와 같은 틀(EMOTES 키).
  */
@@ -28,7 +29,9 @@
     mentor:  { name: '스승',            emoji: '🥋' },
     hankeot: { name: '여행자 한컷',      emoji: '📷' },
     ieum:    { name: '탐사 대원 이음',   emoji: '🧭' },
-    townsman:{ name: '남정성 사람',      emoji: '🏮' }
+    townsman:{ name: '남정성 사람',      emoji: '🏮' },
+    ashen:   { name: '잿빛 사자',        emoji: '🌫️' },
+    yakson:  { name: '의원 약손',        emoji: '⚕️' }
   };
 
   var SCENES = {
@@ -101,6 +104,42 @@
       ['ieum', 'worry', '이 땅의 전쟁에 다른 시대 병기가 섞이는 건 새어 든 것입니다. 동쪽 끝에 난세의 문이 있어요.'],
       ['me', 'fire', '문이라. 그렇다면 이름 없는 제 손에도 할 일이 있겠군요.'],
       ['ieum', 'joy', '마을마다 서 있겠습니다. 소식이 닿으면 어디서든 말을 거세요. 우선 둘째 스승부터 찾으세요.']
+    ] },
+    gisan1: { title: '제9장 · 기산채의 사자', lines: [
+      ['guard', 'worry', '산채 두령이 요즘 빛이 나는 병기를 쥐고 있소. 창고엔 쇠 대롱이 쌓였는데, 그게 불을 뿜으면 활이 무슨 소용이오.'],
+      ['ashen', 'calm', '…좋은 물건이오. 값만 치르면 누구 손에든 가지. 시대가 무슨 상관이겠소.'],
+      ['me', 'shock', '잠깐! 방금 그 도포 차림이 발소리도 없이 사라졌습니다.'],
+      ['guard', 'worry', '잿빛 사자라고들 하오. 두령이 누구에게 병기를 받는지 이제 알겠소.']
+    ] },
+    gisan2: { title: '제9장 · 기산채의 사자', lines: [
+      ['guard', 'joy', '군자금이 모였소! 이걸로 산채 아래 길을 열 병량을 사겠소.'],
+      ['me', 'anger', '잿빛 사자가 그 병기를 어디서 가져오는지 알아야 합니다. 이대로면 전쟁이 끝나지 않아요.'],
+      ['guard', 'worry', '호로곡 쪽에서 불길이 올랐소. 그쪽이 더 급하오.']
+    ] },
+    gorge2: { title: '제10장 · 호로곡의 불길', lines: [
+      ['yakson', 'worry', '부상병을 다 옮겼소. 이상한 일이 있었소 — 불길 속에서 강철 거인이 걸어 나왔는데 불이 붙지 않더이다.'],
+      ['me', 'shock', '진압 특공대 같은 것들도 보았습니다. 이 땅의 전쟁이 아닙니다.'],
+      ['yakson', 'calm', '적국 대장군의 갑주에도 푸른 빛 판이 박혀 있었소. 이음이라는 대원을 찾아가시오. 문 이야기를 아는 이요.']
+    ] },
+    lab1: { title: '제11장 · 비경의 기억', lines: [
+      ['ieum', 'calm', '제 탐사 등으로 비경을 엽니다. 이 층들은 문이 남긴 기억의 껍질이에요. 돌 발판에 박힌 표지판이 보이면 다른 시대의 흔적입니다.'],
+      ['ieum', 'worry', '5층 수호장을 쓰러뜨리면 잃어버린 조각이 나올지도 몰라요. 도중에 나가도 얻은 조각은 남습니다.'],
+      ['me', 'fire', '제 이름이 없는 까닭이 거기 있다면 가야지요.']
+    ] },
+    lab2: { title: '제11장 · 비경의 기억', lines: [
+      ['me', 'shock', '…기억났습니다. 저는 문 너머에서 왔어요. 문이 열릴 때 떨어져 이 땅에 나왔습니다.'],
+      ['ieum', 'worry', '그래서 이름이 없었던 거군요. 문 너머에 두고 온 이름이 있을 겁니다.'],
+      ['me', 'fire', '그 이름을 찾으러 문까지 가겠습니다. 잿빛 사자보다 먼저요.']
+    ] },
+    job31: { title: '제12장 · 셋째 스승', lines: [
+      ['mentor+', 'calm', '네 이름은 문 너머에 두고 왔구나. 내 방 벽의 이 오래된 사진을 보아라 — 이 땅에서 찍을 수 없는 색이다.'],
+      ['mentor+', 'fire', '내 칼날에 비친 것이 무엇이냐. 나도 오래 전에 문을 본 적이 있다. 이제 셋째 자리를 열어 주마.'],
+      ['mentor+', 'calm', '🥋 무예창에서 3차 전직을 하여라.']
+    ] },
+    job32: { title: '제12장 · 셋째 스승', lines: [
+      ['mentor', 'joy', '셋째 자리에 올랐다. 이제 네 손은 이름 없는 채로도 이 땅에서 가장 빠르다.'],
+      ['mentor', 'worry', '잿빛 사자가 옛 도읍 낙양으로 갔다는 소문이다. 도포를 벗게 될 것이다 — 가서 확인하여라.'],
+      ['me', 'fire', '다녀오겠습니다. 이름을 찾는 길이 그쪽에 있습니다.']
     ] },
     cave2: { title: '제8장 · 한중 굴혈', lines: [
       ['mentor', 'calm', '이름 없는 채로 둘째 자리에 올랐구나. 이름이 없으니 남의 시대 기술도 그대로 배우는군.'],
@@ -205,7 +244,54 @@
         { t: 'talk', scene: 'cave2' }
       ],
       legacy: { level: 25, tier: 2 },
-      reward: { exp: 4000, gold: 8000, title: 'job' } }
+      reward: { exp: 4000, gold: 8000, title: 'job' } },
+
+    { id: 'p3_gisan', no: 9, title: '기산채의 사자', stage: '기산채', need: 25, after: 'p2_cave',
+      blurb: '산채 두령에게 빛 병기를 대 주는 잿빛 사자가 나타났다 사라진다.',
+      mix: { past: '산채', now: '산채 창고 기관총', future: '빛 병기·잿빛 사자' },
+      legacy: { level: 45, tier: 3 },
+      steps: [
+        { t: 'stage', stage: 'gisanchae' },
+        { t: 'talk', scene: 'gisan1', at: 'gisanchae' },
+        { t: 'mission', quest: 'q_gold1' },
+        { t: 'talk', scene: 'gisan2' }
+      ],
+      reward: { exp: 8000, gold: 10000, scroll: 'def60' } },
+
+    { id: 'p3_gorge', no: 10, title: '호로곡의 불길', stage: '호로곡', need: 25, after: 'p3_gisan',
+      blurb: '골짜기 전체가 탄다. 의원 약손과 부상병을 옮기고 적국 대장군을 친다.',
+      mix: { past: '의원·약초', now: '진압 특공대', future: '불길 속 강철 거신' },
+      legacy: { level: 45, tier: 3 },
+      steps: [
+        { t: 'stage', stage: 'gorge' },
+        { t: 'mission', quest: 'q_gorge' },
+        { t: 'mission', quest: 'q_cinder' },
+        { t: 'mission', quest: 'q_gorge_boss' },
+        { t: 'talk', scene: 'gorge2' }
+      ],
+      reward: { exp: 20000, gold: 15000, potion: 15 } },
+
+    { id: 'p3_labyrinth', no: 11, title: '비경의 기억', stage: '비경', need: 30, after: 'p3_gorge',
+      blurb: '이음이 여는 5층 비경. 관문 수호장을 치면 잃은 기억 조각이 나온다 — 떠돌이도 문에서 떨어졌다.',
+      mix: { past: '비경 돌 발판', now: '발판에 박힌 표지판', future: '기억 조각 홀로그램' },
+      legacy: { level: 45, tier: 3 },
+      steps: [
+        { t: 'talk', scene: 'lab1' },
+        { t: 'rift' },
+        { t: 'talk', scene: 'lab2' }
+      ],
+      reward: { exp: 30000, gold: 20000, memFrag: 3 } },
+
+    { id: 'p3_job', no: 12, title: '셋째 스승', stage: '허도', need: 45, after: 'p3_labyrinth',
+      blurb: '허도의 스승이 "네 이름은 문 너머에 두고 왔구나" 하며 3차 전직을 준다.',
+      mix: { past: '스승', now: '스승의 오래된 사진', future: '스승의 칼에 비친 문' },
+      legacy: { level: 45, tier: 3 },
+      steps: [
+        { t: 'talk', scene: 'job31', at: 'heodo' },
+        { t: 'job', tier: 3 },
+        { t: 'talk', scene: 'job32' }
+      ],
+      reward: { exp: 40000, gold: 30000, title: 'job' } }
   ];
 
   function chapter(id) {

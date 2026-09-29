@@ -989,9 +989,9 @@
     var emo = SD.EMOTES[ln[1]] || SD.EMOTES.calm;
     var face, name, SCD = global.DG.scenarioData;
     var mentor = null;
-    if (who === 'mentor' && global.DG.job) {          // 시나리오 — 전직한 갈래의 스승(도감 가명), 아직이면 첫 스승
-      var ml = global.DG.job.mentors(), jt = global.DG.job.cur().tier || 1;
-      mentor = ml.length ? global.DG.data.find(ml[Math.min(jt, ml.length) - 1]) : null;
+    if ((who === 'mentor' || who === 'mentor+') && global.DG.job) {   // 시나리오 — 전직한 갈래의 스승(도감 가명). 'mentor+' 는 다음 차수(전직 전 장면)
+      var ml = global.DG.job.mentors(), jt = (global.DG.job.cur().tier || 0) + (who === 'mentor+' ? 1 : 0);
+      mentor = ml.length ? global.DG.data.find(ml[Math.min(Math.max(jt, 1), ml.length) - 1]) : null;
     }
     if (who === 'me') {
       var me = global.DG.side.meRef();
