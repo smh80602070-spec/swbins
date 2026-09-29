@@ -18,6 +18,8 @@ namespace Saga.Go.World
         private readonly bool[] _routeReg = new bool[3];
         private float _routeT;
         private GameObject _shrineClouds;
+        /// <summary>구름 씨앗 장치 k 가 꺼졌나(진단이 본다).</summary>
+        public bool SeederOffNow(int k) => !StoryState.OffForTest && GoStory.SeederOff(k);
         /// <summary>비행선 기관이 살아 프로펠러가 도나(진단이 본다).</summary>
         public bool WreckLiveNow { get; private set; }
         public bool RouteShown => _routeRoot != null && _routeRoot.activeSelf;
@@ -96,8 +98,8 @@ namespace Saga.Go.World
                 else // 궤도 정거장 조각 — 태양 날개·9m 안테나·구름 씨앗 장치 셋(반지름 9m)
                 {
                     P(PrimitiveType.Cube, isle.transform, "Orbit_hub", c + new Vector3(0f, 1.2f, 0f), new Vector3(3f, 2.4f, 3f), metal, true);
-                    P(PrimitiveType.Cube, isle.transform, "Orbit_solar_e", c + new Vector3(10f, 3f, -3f), new Vector3(0.2f, 5f, 9f), solar, false, new Vector3(0f, 0f, 15f));
-                    P(PrimitiveType.Cube, isle.transform, "Orbit_solar_w", c + new Vector3(-10f, 3f, -3f), new Vector3(0.2f, 5f, 9f), solar, false, new Vector3(0f, 0f, -15f));
+                    P(PrimitiveType.Cube, isle.transform, "Orbit_solar_e", c + new Vector3(10.5f, 3f, -8f), new Vector3(0.2f, 5f, 6f), solar, false, new Vector3(0f, 0f, 15f));
+                    P(PrimitiveType.Cube, isle.transform, "Orbit_solar_w", c + new Vector3(-10.5f, 3f, -8f), new Vector3(0.2f, 5f, 6f), solar, false, new Vector3(0f, 0f, -15f));
                     P(PrimitiveType.Cylinder, isle.transform, "Orbit_antenna", c + new Vector3(3f, 4.5f, 3f), new Vector3(0.25f, 4.5f, 0.25f), metal, false);
                     var seeds = new[] { new Vector2(7.8f, 4.5f), new Vector2(0f, -9f), new Vector2(-7.8f, 4.5f) };
                     for (int k = 0; k < 3; k++)
@@ -142,6 +144,8 @@ namespace Saga.Go.World
         {
             bool on = !StoryState.OffForTest && GoStory.RouteOn;
             if (_routeRoot != null) _routeRoot.SetActive(on);
+            for (int k = 0; k < 3; k++)
+                SetMat("route:seeder" + k, SeederOffNow(k) ? Mat("r_seed_off", new Color(0.25f, 0.24f, 0.3f)) : Mat("r_glow", new Color(0.7f, 0.9f, 1f), 2.4f));
             if (_shrineClouds != null) _shrineClouds.SetActive(!GoStory.ShrineClear);
             WreckLiveNow = !StoryState.OffForTest && GoStory.WreckLive;
             SetMat("route:engine_lamp", WreckLiveNow ? Mat("r_lamp_on", new Color(0.2f, 0.9f, 0.3f), 2.4f) : Mat("r_lamp_off", new Color(0.85f, 0.15f, 0.12f), 2f));

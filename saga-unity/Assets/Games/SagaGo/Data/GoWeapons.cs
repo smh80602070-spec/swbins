@@ -118,6 +118,7 @@ namespace Saga.Go.Data
             if (id == "story_dodam") return Type.Claymore; // 109-14-40
             if (id == "story_hanbyeol") return Type.Bow; // 109-14-43
             if (id == "story_mulsae") return Type.Sword; // 109-14-47
+            if (id == "story_haneul") return Type.Polearm; // 109-14-51
             long h = 7;
             foreach (char c in id) h = (h * 37 + c) & 0x7fffffff;
             return (Type)(h % 5);

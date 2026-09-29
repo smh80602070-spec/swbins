@@ -135,6 +135,11 @@ namespace Saga.Go.Combat
                     s = S(KitSkillType.Blink, "kit.sig.mulsae.skill", "자맥질", 7f, 2.8f); s.Reach = 9f; s.Back = 1.4f; s.R = 2.5f; s.Mark = 8f; s.MarkMul = 1.2f; s.Len = 4f;
                     b = B(KitBurstType.Feast, "kit.sig.mulsae.burst", "숨비소리", 6f, 2.4f); b.Sec = 10f; b.Every = 1f; b.FHeal = 0.05f; b.EMul = 0.3f;
                     break;
+                // 109-14-51 하늬(웹 kits.js story_haneul) — 있는 틀(shells·lore)만
+                case "story_haneul":
+                    s = S(KitSkillType.Shells, "kit.sig.haneul.skill", "얼음 관측 풍선", 8f, 2.2f); s.Reach = 12f; s.N = 3; s.Delay = 0.6f; s.R = 2.5f;
+                    b = B(KitBurstType.Lore, "kit.sig.haneul.burst", "한파 예보", 7f, 2.6f); b.Sec = 12f; b.RMul = 1.35f;
+                    break;
                 default:
                     return null;
             }

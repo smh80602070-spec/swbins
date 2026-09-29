@@ -956,6 +956,7 @@
 2	go	hero.story_ferryman	버들	Beodeul		
 2	go	hero.story_haesol	해솔	Haesol		
 2	go	hero.story_hanbyeol	한별	Hanbyeol		
+2	go	hero.story_haneul	하늬	Haneul		
 2	go	hero.story_haram	하람	Haram		
 2	go	hero.story_mulsae	물새	Mulsae		
 2	go	hero.story_scholar	은비	Eunbi		
@@ -1013,6 +1014,8 @@
 2	go	kit.sig.haesol.skill	먹구름 벼락	Storm-Cloud Bolt		
 2	go	kit.sig.hanbyeol.burst	틈 닫기	Rift Closing		
 2	go	kit.sig.hanbyeol.skill	별배 견인줄	Star-Ship Tow Line		
+2	go	kit.sig.haneul.burst	한파 예보	Cold Wave Forecast		
+2	go	kit.sig.haneul.skill	얼음 관측 풍선	Ice Observation Balloons		
 2	go	kit.sig.haram.burst	맑음 예보	Clear-Sky Forecast		
 2	go	kit.sig.haram.skill	휴대 관측기	Portable Gauge		
 2	go	kit.sig.hero.burst	불새 깃	Firebird Plume		
@@ -1144,6 +1147,7 @@
 2	go	story.boss.mossserpent	이끼 이무기	Moss Serpent		
 2	go	story.boss.riftcrow	틈 삼킨 별까마귀	Rift-Swallowing Star Crow		
 2	go	story.boss.riftfox	틈새 서리 구미호	Rift Frost Nine-Tail		
+2	go	story.boss.stormshadow	먹구름 임금의 그림자	Shadow of the Storm King		
 2	go	story.boss.timewarden	멈춘 시간의 파수꾼	Warden of Stopped Time		
 2	go	story.boss_up	{0}가 나타났다	{0} has appeared		
 2	go	story.ch1	제1장 · 먹구름이 오는 마을	Chapter 1 · Stormclouds Over the Village		
@@ -1835,6 +1839,46 @@
 2	go	story.ch25.s7.l3	저도 가요. 제 비행선을 떨어뜨린 놈 얼굴은 봐야죠. 잔해 서쪽 끝에 바람이 모이는 게 보여요 — 거기서 올라가요!	I'm coming too. I want to see the face of whoever brought my airship down. I can see wind gathering at the western end of the wreck — we go up from there!		
 2	go	story.ch25.s7.p.a	거기로 가자.	Let's go there.		
 2	go	story.ch25.s7.p.b	하늬 씨는요?	What about you, Haneul?		
+2	go	story.ch26	제26장 · 궤도 조각의 그림자	Chapter 26 · The Shadow on the Orbital Fragment		
+2	go	story.ch26.enter	🌩️ 먹빛 왕관의 그림자가 합금 판 위에 일어섰다 — 먹구름 임금의 그림자!	🌩️ A shadow with an ink-black crown rises on the alloy deck — the Shadow of the Storm King!		
+2	go	story.ch26.landed	🪂 궤도 정거장 조각에 내려섰다 — 합금 판 위에 구름 씨앗 장치 셋이 검보랏빛으로 타오른다	🪂 You land on the orbital station fragment — three cloud-seed devices burn dark violet on the alloy deck		
+2	go	story.ch26.off0	☁️ 남동쪽 장치의 먹구름 알이 식어 꺼졌다	☁️ The southeast device’s storm-cloud egg cools and goes out		
+2	go	story.ch26.off1	☁️ 북쪽 장치의 먹구름 알이 식어 꺼졌다	☁️ The north device’s storm-cloud egg cools and goes out		
+2	go	story.ch26.off2	☁️ 남서쪽 장치까지 꺼졌다 — 서쪽 끝에서 누군가 박수를 친다	☁️ The southwest device is off too — someone claps at the western end		
+2	go	story.ch26.p2	⚡ 그림자가 구름 씨앗의 먹구름을 두른다 — 불로 방패를 깨라! 매와 살쾡이가 뛰어든다	⚡ The shadow wraps itself in the seeds’ storm cloud — break the shield with fire! A hawk and a wildcat leap in		
+2	go	story.ch26.s1	잔해 섬의 하늬와 이야기하기	Talk to Haneul on the wreck island		
+2	go	story.ch26.s1.l1	바람 기둥이 섰어요. 저 위 — 궤도 정거장 조각이에요. 앞 시대 물건이 저기 떠 있다니.	The wind pillar has risen. Up there — the orbital station fragment. A thing from a later age, floating right there.		
+2	go	story.ch26.s1.l2	삐— 구름 씨앗 장치 신호 셋, 여전히 켜져 있습니다. 먹구름이 계속 빚어지고 있습니다.	Beep — three cloud-seed device signals, still active. Storm cloud is still being shaped.		
+2	go	story.ch26.s1.l3	비행사가 날개 없이 올라가는 건 처음이네요. 먼저 가요, 뒤따를게요!	A pilot climbing up without wings — a first for me. Go ahead, I'll follow!		
+2	go	story.ch26.s1.p.a	먼저 올라갈게요.	I'll go up first.		
+2	go	story.ch26.s1.p.b	같이 가요.	Let's go together.		
+2	go	story.ch26.s2	잔해 바람 기둥을 타고 올라 궤도 정거장 조각으로 건너가기(활공)	Ride the wreck wind pillar up and glide across to the orbital station fragment		
+2	go	story.ch26.s3	정거장 조각의 하늬와 이야기하기	Talk to Haneul on the station fragment		
+2	go	story.ch26.s3.l1	저 셋이에요. 검보랏빛 알에서 먹구름이 피어올라요 — 구름 씨앗 장치.	Those three. Storm cloud blooms out of the dark-violet eggs — the cloud-seed devices.		
+2	go	story.ch26.s3.l2	삐— 장치마다 원소를 대면 멈춥니다. 남동쪽, 북쪽, 남서쪽 차례로 신호가 약합니다.	Beep — each device stops when an element is applied. The signal is weakest at the southeast, then north, then southwest.		
+2	go	story.ch26.s3.l3	먹구름 공장이라니… 다 끄면 하늘이 맑아질 거예요.	A storm-cloud factory… if we shut them all down, the sky will clear.		
+2	go	story.ch26.s3.p.a	하나씩 끌게요.	I'll shut them off one by one.		
+2	go	story.ch26.s3.p.b	알겠어, 남동쪽부터.	Got it, southeast first.		
+2	go	story.ch26.s4	남동쪽 구름 씨앗 장치를 원소 스킬로 끄기	Shut off the southeast cloud-seed device with an elemental skill		
+2	go	story.ch26.s5	북쪽 구름 씨앗 장치를 원소 스킬로 끄기	Shut off the north cloud-seed device with an elemental skill		
+2	go	story.ch26.s6	남서쪽 구름 씨앗 장치를 원소 스킬로 끄기	Shut off the southwest cloud-seed device with an elemental skill		
+2	go	story.ch26.s7	서쪽 끝의 가면 그림자와 이야기하기	Talk to the Masked Shadow at the western end		
+2	go	story.ch26.s7.l1	……구름 공장을 셋 다 끄다니. 별배를 떨어뜨릴 때도 이렇게 성가신 녀석들은 없었는데.	…Shutting down all three cloud factories. Even when I brought the star-ship down, there were no pests this troublesome.		
+2	go	story.ch26.s7.l2	삐— 그 목소리. 그날 기록 속의 그림자입니다! 제 기록을 지운 자!	Beep — that voice. The shadow from that day’s records! The one who erased my records!		
+2	go	story.ch26.s7.l3	별배가 가려던 곳에 가 닿으면 곤란하거든. 매듭이 다시 묶이면 먹구름이 설 자리가 없지.	It would be troublesome if the star-ship reached where it was headed. If the knots are tied again, the storm cloud has no place to stand.		
+2	go	story.ch26.s7.l4	제 비행선도 당신이 떨어뜨렸죠!	You brought down my airship too!		
+2	go	story.ch26.s7.l5	구름 씨앗은 또 뿌리면 그만이다. 그 사이 놀 상대를 붙여 주지 — 네놈들이 한 번 쓰러뜨렸던 먹구름 임금의 그림자로.	Cloud seeds can simply be sown again. Meanwhile I'll give you someone to play with — the shadow of the Storm King you once defeated.		
+2	go	story.ch26.s7.p.a	네가 먹구름을 부렸구나.	So you commanded the storm cloud.		
+2	go	story.ch26.s7.p.b	왜 별배를 떨어뜨렸지?	Why did you bring the star-ship down?		
+2	go	story.ch26.s8	가면 그림자가 불러낸 먹구름 임금의 그림자와 맞서기	Face the shadow of the Storm King summoned by the Masked Shadow		
+2	go	story.ch26.s9	정거장 조각의 하늬와 이야기하기	Talk to Haneul on the station fragment		
+2	go	story.ch26.s9.l1	……갔어요. 먹구름도 같이 걷혔고요. 하늘이 이렇게 파란 건 처음 봐요.	…It's gone. The storm cloud lifted with it. I've never seen the sky this blue.		
+2	go	story.ch26.s9.l2	삐— 여섯 매듭. 1부의 여섯 제단과 수가 같습니다. 청하 마을의 제단이 무언가를 묶고 있었을지도 모릅니다.	Beep — six knots. The same number as the six altars of Part 1. The altars of Cheongha Village may have been binding something.		
+2	go	story.ch26.s9.l3	비행선은 못 뜨지만 닻 갈고리는 멀쩡해요. 먹구름 쫓는 일이라면 기상 비행사가 빠질 수 없죠.	The airship can't fly, but the anchor hook is fine. When it comes to chasing storm clouds, a weather pilot can't be left out.		
+2	go	story.ch26.s9.l4	비행사 하늬, 오늘부터 같이 날아요 — 날개는 빌려 쓰고요!	Pilot Haneul — from today we fly together. Wings are borrowed, you know!		
+2	go	story.ch26.s9.p.a	청하 마을로 돌아가 보자.	Let's go back to Cheongha Village.		
+2	go	story.ch26.s9.p.b	하늬 씨는 이제 어떡해요?	What will you do now, Haneul?		
+2	go	story.ch26.win	🌩️ 그림자 임금이 흩어지고 — 가면 그림자는 "청하의 여섯 매듭이 풀리는 날 다시 보자" 한마디를 남기고 먹구름 속으로 사라졌다	🌩️ The shadow king scatters — the Masked Shadow leaves one line, “See you the day Cheongha’s six knots come undone,” and vanishes into the storm cloud		
 2	go	story.ch3	제3장 · 잔칫날의 불청객	Chapter 3 · Uninvited Guests at the Feast		
 2	go	story.ch3.s1	촌장에게 잔치 일손을 돕겠다고 하기	Offer the Elder a hand with the feast		
 2	go	story.ch3.s1.l1	하늘이 갠 기념으로 잔치를 열기로 했단다. 그런데 일손이 모자라구나.	We've decided to hold a feast now that the sky has cleared. But we're short of hands.		
@@ -2123,6 +2167,7 @@
 2	go	story.idle.dodam	막차는 아직 이 역에 서 있어요.	The last train is still standing at this station.		
 2	go	story.idle.elder	먹구름이 걷히면 마을 잔치를 열어야지.	Once the stormclouds clear, we'll hold a village feast.		
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
+2	go	story.idle.gamyeon	……	…		
 2	go	story.idle.gaon	관측대가 또 한 뼘 기울었어요. 기록만 하고 있을 순 없는데…	The deck tilted another hand's breadth. I can't just keep recording…		
 2	go	story.idle.haesol	……	……		
 2	go	story.idle.haesol2	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
@@ -2154,6 +2199,7 @@
 2	go	story.npc.dodam	기관사 도담	Engineer Dodam		
 2	go	story.npc.elder	청하 촌장 누리	Elder Nuri of Cheongha		
 2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
+2	go	story.npc.gamyeon	가면 그림자	Masked Shadow		
 2	go	story.npc.gaon	시간 틈 관측사 가온	Rift Observer Gaon		
 2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
 2	go	story.npc.haesol2	해솔	Haesol		
@@ -2189,6 +2235,7 @@
 2	go	story.short.dodam	도담	Dodam		
 2	go	story.short.elder	누리	Nuri		
 2	go	story.short.ferryman	버들	Beodeul		
+2	go	story.short.gamyeon	그림자	Shadow		
 2	go	story.short.gaon	가온	Gaon		
 2	go	story.short.haesol	해솔	Haesol		
 2	go	story.short.hanbyeol	한별	Hanbyeol		
@@ -3608,6 +3655,7 @@
 3	go	hero.story_ferryman.quote	물 냄새가 요즘 영 비릿해.	The water has smelled off lately.		
 3	go	hero.story_haesol.quote	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
 3	go	hero.story_hanbyeol.quote	선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께.	A captain's job is to find the next route — this time with you.		
+3	go	hero.story_haneul.quote	날개는 빌려 쓰고요!	Wings are borrowed, you know!		
 3	go	hero.story_haram.quote	날씨도 시간도, 재야 아는 거니까.	Weather, time — you have to measure them to know them.		
 3	go	hero.story_mulsae.quote	숨 긴 거 하나는 자신 있소.	Holding my breath is the one thing I'm sure of.		
 3	go	hero.story_scholar.quote	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		

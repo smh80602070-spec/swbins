@@ -150,6 +150,9 @@ namespace Saga.Go.Data
             // 109-14-47 물새(23장 끝) — 수 한손검(웹 ⑲-47)
             new Hero { Id = "story_mulsae", NameKo = "물새", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Might, Might = 78, Wisdom = 64, Command = 60,
                 WebElement = WebElement.Water, QuoteKo = "숨 긴 거 하나는 자신 있소." },
+            // 109-14-51 하늬(26장 끝) — 빙 장병기(웹 ⑲-51)
+            new Hero { Id = "story_haneul", NameKo = "하늬", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Command, Might = 74, Wisdom = 72, Command = 76,
+                WebElement = WebElement.Ice, QuoteKo = "날개는 빌려 쓰고요!" },
         };
 
         public static bool IsStory(string id) => id != null && id.StartsWith("story_");

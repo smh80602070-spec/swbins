@@ -290,6 +290,10 @@ namespace Saga.Go.Data
         /// <summary>25장 자리(잔해 섬 윗면 가운데에서 m, z 남쪽): 하늬는 조종실 동쪽 앞, 기관은 조종실 앞 남동(찢어진 기낭 밖), 반디는 하늬 곁. 드론은 섬 둘레를 돈다(웹 SEED_DRONE_PATH, 첫 점 = 프로펠러 곁).</summary>
         public static readonly Vector2 WreckHaneul = new Vector2(11f, -1f), WreckEngine = new Vector2(8f, 3f), WreckBandi = new Vector2(12f, 2.5f);
         public static readonly Vector2[] SeedPath = { new Vector2(8f, -9f), new Vector2(-2f, -14f), new Vector2(-13f, -5f), new Vector2(-14f, 10f), new Vector2(0f, 16f), new Vector2(13f, 9f) };
+        /// <summary>26장 자리(정거장 섬 윗면 가운데에서 m, z 남쪽): 구름 씨앗 장치 셋은 가운데에서 9m(남동·북·남서), 가면 그림자는 서쪽 끝, 보스 자리는 남쪽, 하늬·반디는 동쪽(태양 날개 밖).</summary>
+        public static readonly Vector2 SeedSE = new Vector2(7.8f, 4.5f), SeedN = new Vector2(0f, -9f), SeedSW = new Vector2(-7.8f, 4.5f), OrbitGamyeon = new Vector2(-12f, 0f), OrbitDuel = new Vector2(0f, 7f), OrbitHaneul = new Vector2(10f, -3f), OrbitBandi = new Vector2(11f, 1f);
+        /// <summary>구름 씨앗 장치 k(0 남동·1 북·2 남서)가 꺼졌나 — 26장에서 그 장치를 끈 다음 단계부터(장을 마친 뒤에도).</summary>
+        public static bool SeederOff(int k) => StoryState.Ch > 25 || (StoryState.Ch == 25 && StoryState.StepIndex >= 4 + k);
         /// <summary>비행선 기관이 살았나 — 25장 7째 단계(기관을 지켜 낸 뒤)부터 늘. 그 전엔 프로펠러가 멎어 있다.</summary>
         public static bool WreckLive => StoryState.Ch > 24 || (StoryState.Ch == 24 && StoryState.StepIndex >= 6);
         /// <summary>사당 위 먹구름이 걷혔나 — 24장 7째 단계(방울을 다 울린 뒤)부터 늘.</summary>
@@ -502,14 +506,15 @@ namespace Saga.Go.Data
                     new Spot { Ch = 21, From = 3, To = 6, At = "sunken:dome", Arena = FrontBandi }, new Spot { Ch = 21, From = 7, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 22, From = 0, To = 0, At = "sunken:dome", Arena = InBandi },
                     new Spot { Ch = 22, From = 1, To = 3, At = "sunken:lighthouse", Arena = LightBandi }, new Spot { Ch = 22, From = 4, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandBandi },
                     new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineBandi }, new Spot { Ch = 24, From = 0, To = 0, Route = "shrine", Arena = ShrineBandi },
-                    new Spot { Ch = 24, From = 1, To = 99, Route = "wreck", Arena = WreckBandi }, new Spot { Ch = 25, From = 0, To = 99, Route = "wreck", Arena = WreckBandi } },
+                    new Spot { Ch = 24, From = 1, To = 99, Route = "wreck", Arena = WreckBandi }, new Spot { Ch = 25, From = 0, To = 0, Route = "wreck", Arena = WreckBandi },
+                    new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitBandi }, new Spot { Ch = 26, From = 0, To = 99, Route = "orbit", Arena = OrbitBandi } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
                 AtSite = "crossing:platform", AtOff = CrossHanbyeol, FolkBody = "Vanguard",
                 Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = CrossHanbyeol }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftHanbyeol },
                     new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 20, From = 2, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandHanbyeol },
-                    new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 25, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol } },
+                    new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 25, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 26, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol } },
                 IdleKey = "story.idle.hanbyeol", IdleKo = "틈의 끝은 첫 정거장 다음 역이다." },
             // 109-14-45 21장(웹 ⑲-45) — 잠수 기사 여울(현대): 늘 연구 기지 서쪽, 21장 5~7째 단계 선착장 · 8째~ 궁궐 기단
             new Npc { Id = "yeoul", NameKey = "story.npc.yeoul", NameKo = "잠수 기사 여울", ShortKey = "story.short.yeoul", ShortKo = "여울",
@@ -517,10 +522,16 @@ namespace Saga.Go.Data
                 At = new[] { new Spot { Ch = 20, From = 4, To = 6, At = "sunken:lab", Arena = LabDock }, new Spot { Ch = 20, From = 7, To = 99, At = "sunken:palace", Arena = PlinthYeoul }, new Spot { Ch = 21, From = 0, To = 2, At = "sunken:palace", Arena = PlinthYeoul },
                     new Spot { Ch = 21, From = 3, To = 6, At = "sunken:dome", Arena = FrontYeoul }, new Spot { Ch = 21, From = 7, To = 99, At = "sunken:dome", Arena = InYeoul }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:dome", Arena = InYeoul }, new Spot { Ch = 23, From = 0, To = 99, At = "sunken:dome", Arena = InYeoul } },
                 IdleKey = "story.idle.yeoul", IdleKo = "기지 불이 나간 지 한참이에요. 그래도 잠수정은 제가 지켜요." },
+            // 109-14-51 26장(웹 ⑲-51) — 가면 그림자: 23장 반디 기록 속 그자. 26장 장치 셋을 끈 뒤(7째 단계) 한 번만 정거장 서쪽 끝에 선다. 정체는 8부까지.
+            new Npc { Id = "gamyeon", NameKey = "story.npc.gamyeon", NameKo = "가면 그림자", ShortKey = "story.short.gamyeon", ShortKo = "그림자",
+                AtSite = "sunken:lighthouse", AtOff = Vector2.zero, FolkBody = "Vanguard", Mask = true,
+                Appear = new[] { new Spot { Ch = 25, From = 6, To = 6, Route = "orbit", Arena = OrbitGamyeon } },
+                IdleKey = "story.idle.gamyeon", IdleKo = "……" },
             // 109-14-50 25장(웹 ⑲-50) — 비행사 하늬(현대): 먹구름에 휘말려 잔해 섬에 처박힌 기상 비행선 조종사. 25장부터 조종실 동쪽 앞(뒤에도).
             new Npc { Id = "haneul", NameKey = "story.npc.haneul", NameKo = "비행사 하늬", ShortKey = "story.short.haneul", ShortKo = "하늬",
                 AtSite = "sunken:lighthouse", AtOff = Vector2.zero, FolkBody = "Crypto",
-                Appear = new[] { new Spot { Ch = 24, From = 0, To = 99, Route = "wreck", Arena = WreckHaneul }, new Spot { Ch = 25, From = 0, To = 99, Route = "wreck", Arena = WreckHaneul } },
+                Appear = new[] { new Spot { Ch = 24, From = 0, To = 99, Route = "wreck", Arena = WreckHaneul }, new Spot { Ch = 25, From = 0, To = 0, Route = "wreck", Arena = WreckHaneul },
+                    new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitHaneul }, new Spot { Ch = 26, From = 0, To = 99, Route = "orbit", Arena = OrbitHaneul } },
                 IdleKey = "story.idle.haneul", IdleKo = "기록계 바늘이 또 튀어요. 구름이 저절로 생기는 게 아니라니까요." },
             // 구름 씨앗 드론 — 25장 쫓기 때만(4째 단계) 잔해 섬 둘레 길(SeedPath)을 난다. 반디와 같은 기계 몸.
             new Npc { Id = "seeddrone", NameKey = "story.npc.seeddrone", NameKo = "구름 씨앗 드론", ShortKey = "story.short.seeddrone", ShortKo = "드론",
@@ -530,7 +541,7 @@ namespace Saga.Go.Data
             // 109-14-49 24장(웹 ⑲-49) — 바람 무녀 새벽(과거): 사당이 하늘로 들린 날부터 홀로. 24장 3째 단계(별배가 섬에 내린 뒤)부터 사당 앞 서쪽(뒤에도).
             new Npc { Id = "saebyeok", NameKey = "story.npc.saebyeok", NameKo = "바람 무녀 새벽", ShortKey = "story.short.saebyeok", ShortKo = "새벽",
                 AtSite = "sunken:lighthouse", AtOff = Vector2.zero, FolkBody = "Archer",
-                Appear = new[] { new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineSaebyeok }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineSaebyeok }, new Spot { Ch = 25, From = 0, To = 99, Route = "shrine", Arena = ShrineSaebyeok } },
+                Appear = new[] { new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineSaebyeok }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineSaebyeok }, new Spot { Ch = 25, From = 0, To = 99, Route = "shrine", Arena = ShrineSaebyeok }, new Spot { Ch = 26, From = 0, To = 99, Route = "shrine", Arena = ShrineSaebyeok } },
                 IdleKey = "story.idle.saebyeok", IdleKo = "방울이 울면 바람이 길을 안다오." },
             // 109-14-47 23장(웹 ⑲-47) — 돔 관리 인공지능 파랑(미래): 반디와 같은 떠 있는 기계 몸(웹은 파란 빛깔 — 이 판은 14-1b 전까지 같은 빛). 23장부터 돔 안 기록실 앞.
             new Npc { Id = "parang", NameKey = "story.npc.parang", NameKo = "돔 관리 인공지능 파랑", ShortKey = "story.short.parang", ShortKo = "파랑",
@@ -2260,6 +2271,67 @@ namespace Saga.Go.Data
                             L("bandi", "story.ch25.s7.l2", "삐— 앞 시대 궤도 정거장 조각입니다. 구름 씨앗 장치 신호 셋. 먹구름을 부리는 자가 거기서 구름을 빚어 흘려보내고 있습니다."),
                             Pick("story.ch25.s7.p", "거기로 가자.", "하늬 씨는요?"),
                             L("haneul", "story.ch25.s7.l3", "저도 가요. 제 비행선을 떨어뜨린 놈 얼굴은 봐야죠. 잔해 서쪽 끝에 바람이 모이는 게 보여요 — 거기서 올라가요!"),
+                        } },
+                }
+            },
+            // 109-14-51 26장(웹 ⑲-51) — 7부 끝, 궤도 조각의 그림자: 하늬(잔해) → 잔해 바람 기둥 타고 정거장 섬으로 활공(`Sky`+`Route`) → 하늬 → 구름 씨앗 장치 셋을 원소로 끈다(남동 → 북 → 남서, `Light`+`Bare`)
+            // → 가면 그림자 → 먹구름 임금의 그림자(뇌 방패는 불로) → 하늬 합류. 장치는 끈 다음 단계부터 코어가 식는다(`SeederOff`).
+            new Chapter
+            {
+                Id = "ch26", NameKey = "story.ch26", NameKo = "제26장 · 궤도 조각의 그림자", Ar = 58, Join = "story_haneul",
+                Gold = 7000, Mats = new[] { 0, 6, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "haneul", TextKey = "story.ch26.s1", TextKo = "잔해 섬의 하늬와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haneul", "story.ch26.s1.l1", "바람 기둥이 섰어요. 저 위 — 궤도 정거장 조각이에요. 앞 시대 물건이 저기 떠 있다니."),
+                            L("bandi", "story.ch26.s1.l2", "삐— 구름 씨앗 장치 신호 셋, 여전히 켜져 있습니다. 먹구름이 계속 빚어지고 있습니다."),
+                            Pick("story.ch26.s1.p", "먼저 올라갈게요.", "같이 가요."),
+                            L("haneul", "story.ch26.s1.l3", "비행사가 날개 없이 올라가는 건 처음이네요. 먼저 가요, 뒤따를게요!"),
+                        } },
+                    new Step { Type = StepType.Sky, Route = "orbit", EnterKey = "story.ch26.landed", EnterKo = "🪂 궤도 정거장 조각에 내려섰다 — 합금 판 위에 구름 씨앗 장치 셋이 검보랏빛으로 타오른다",
+                        TextKey = "story.ch26.s2", TextKo = "잔해 바람 기둥을 타고 올라 궤도 정거장 조각으로 건너가기(활공)" },
+                    new Step { Type = StepType.Talk, Npc = "haneul", TextKey = "story.ch26.s3", TextKo = "정거장 조각의 하늬와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haneul", "story.ch26.s3.l1", "저 셋이에요. 검보랏빛 알에서 먹구름이 피어올라요 — 구름 씨앗 장치."),
+                            L("bandi", "story.ch26.s3.l2", "삐— 장치마다 원소를 대면 멈춥니다. 남동쪽, 북쪽, 남서쪽 차례로 신호가 약합니다."),
+                            Pick("story.ch26.s3.p", "하나씩 끌게요.", "알겠어, 남동쪽부터."),
+                            L("haneul", "story.ch26.s3.l3", "먹구름 공장이라니… 다 끄면 하늘이 맑아질 거예요."),
+                        } },
+                    new Step { Type = StepType.Light, Bare = true, Route = "orbit", Arena = SeedSE, EnterKey = "story.ch26.off0", EnterKo = "☁️ 남동쪽 장치의 먹구름 알이 식어 꺼졌다",
+                        TextKey = "story.ch26.s4", TextKo = "남동쪽 구름 씨앗 장치를 원소 스킬로 끄기" },
+                    new Step { Type = StepType.Light, Bare = true, Route = "orbit", Arena = SeedN, EnterKey = "story.ch26.off1", EnterKo = "☁️ 북쪽 장치의 먹구름 알이 식어 꺼졌다",
+                        TextKey = "story.ch26.s5", TextKo = "북쪽 구름 씨앗 장치를 원소 스킬로 끄기" },
+                    new Step { Type = StepType.Light, Bare = true, Route = "orbit", Arena = SeedSW, EnterKey = "story.ch26.off2", EnterKo = "☁️ 남서쪽 장치까지 꺼졌다 — 서쪽 끝에서 누군가 박수를 친다",
+                        TextKey = "story.ch26.s6", TextKo = "남서쪽 구름 씨앗 장치를 원소 스킬로 끄기" },
+                    new Step { Type = StepType.Talk, Npc = "gamyeon", TextKey = "story.ch26.s7", TextKo = "서쪽 끝의 가면 그림자와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("gamyeon", "story.ch26.s7.l1", "……구름 공장을 셋 다 끄다니. 별배를 떨어뜨릴 때도 이렇게 성가신 녀석들은 없었는데."),
+                            L("bandi", "story.ch26.s7.l2", "삐— 그 목소리. 그날 기록 속의 그림자입니다! 제 기록을 지운 자!"),
+                            Pick("story.ch26.s7.p", "네가 먹구름을 부렸구나.", "왜 별배를 떨어뜨렸지?"),
+                            L("gamyeon", "story.ch26.s7.l3", "별배가 가려던 곳에 가 닿으면 곤란하거든. 매듭이 다시 묶이면 먹구름이 설 자리가 없지."),
+                            L("haneul", "story.ch26.s7.l4", "제 비행선도 당신이 떨어뜨렸죠!"),
+                            L("gamyeon", "story.ch26.s7.l5", "구름 씨앗은 또 뿌리면 그만이다. 그 사이 놀 상대를 붙여 주지 — 네놈들이 한 번 쓰러뜨렸던 먹구름 임금의 그림자로."),
+                        } },
+                    new Step { Type = StepType.Duel, Route = "orbit", Arena = OrbitDuel, Foes = new[] { F(FieldEnemy.Kind.Bandit, GoElement.Electro) }, Mask = true,
+                        BossKey = "story.boss.stormshadow", BossKo = "먹구름 임금의 그림자", HpMul = 16.8f, AtkMul = 2.5f, ScaleMul = 2.1f,
+                        Rot = new[] { FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Shadow, FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Spit },
+                        P2El = GoElement.Electro, Adds = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith) },
+                        EnterKey = "story.ch26.enter", EnterKo = "🌩️ 먹빛 왕관의 그림자가 합금 판 위에 일어섰다 — 먹구름 임금의 그림자!",
+                        P2Key = "story.ch26.p2", P2Ko = "⚡ 그림자가 구름 씨앗의 먹구름을 두른다 — 불로 방패를 깨라! 매와 살쾡이가 뛰어든다",
+                        WinKey = "story.ch26.win", WinKo = "🌩️ 그림자 임금이 흩어지고 — 가면 그림자는 \"청하의 여섯 매듭이 풀리는 날 다시 보자\" 한마디를 남기고 먹구름 속으로 사라졌다",
+                        TextKey = "story.ch26.s8", TextKo = "가면 그림자가 불러낸 먹구름 임금의 그림자와 맞서기" },
+                    new Step { Type = StepType.Talk, Npc = "haneul", TextKey = "story.ch26.s9", TextKo = "정거장 조각의 하늬와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haneul", "story.ch26.s9.l1", "……갔어요. 먹구름도 같이 걷혔고요. 하늘이 이렇게 파란 건 처음 봐요."),
+                            L("bandi", "story.ch26.s9.l2", "삐— 여섯 매듭. 1부의 여섯 제단과 수가 같습니다. 청하 마을의 제단이 무언가를 묶고 있었을지도 모릅니다."),
+                            Pick("story.ch26.s9.p", "청하 마을로 돌아가 보자.", "하늬 씨는 이제 어떡해요?"),
+                            L("haneul", "story.ch26.s9.l3", "비행선은 못 뜨지만 닻 갈고리는 멀쩡해요. 먹구름 쫓는 일이라면 기상 비행사가 빠질 수 없죠."),
+                            L("haneul", "story.ch26.s9.l4", "비행사 하늬, 오늘부터 같이 날아요 — 날개는 빌려 쓰고요!"),
                         } },
                 }
             },
