@@ -1,7 +1,7 @@
 /**
  * 시나리오 표 — 사가의숲 "하늘 금 우체통" (정본 `../../../scenario/saga-forest.md`)
  * ---------------------------------------------------------------
- * 지금은 **봄 · 옛 우체통(과거 중심) 네 장**과 **여름 · 금으로 온 손님들(현대 중심) 네 장**이 있다. 가을~은 이 표 끝에 장을 덧붙이면 된다.
+ * 지금은 **봄 · 옛 우체통(과거 중심) 네 장**과 **여름 · 금으로 온 손님들(현대 중심) 네 장**, **가을 · 앞날의 기록(미래 중심) 네 장**, **겨울 · 이어진 숲(세 시대) 네 장** — 사계절 열여섯 장 전부가 있다. 다음 계절은 이 표 끝에 장을 덧붙이면 된다.
  * 싸움도 실패도 없다 — 장은 "하루에 조금씩" 크기고, 단계는 며칠에 걸쳐도 된다.
  * 인물은 전부 가상이다(이름 정책) — 'me' 는 마을 주인공(내 아바타 인물의 도감 가명).
  *
@@ -12,7 +12,8 @@
  *     { t: 'place',   n }                        집에 가구를 n 개 놓는다(가구는 처음 주는 기본 한 벌로 된다)
  *     { t: 'deliver', n }                        택배를 이 단계 시작 뒤 n 번 배달한다(접수대 ↔ 배달원)
  *     { t: 'forest',  key }                      그 이름 있는 숲에 든다
- *     { t: 'go',      spot }                     그 고정 자리(ruin 폐허·waterfall 폭포)에 선다
+ *     { t: 'go',      spot }                     그 고정 자리(ruin 폐허·waterfall 폭포·spacebase 우주기지·cave 동굴 안)에 선다
+ *     { t: 'bug',     n }                        곤충을 이 단계 시작 뒤 n 마리 잡는다
  *     { t: 'fish',    n }                        물고기를 이 단계 시작 뒤 n 마리 낚는다
  *     { t: 'cave',    n }                        동굴에 이 단계 시작 뒤 n 번 들어선다(폭포 뒤 굴 대신 기존 동굴)
  *     { t: 'settle',  n }                        방문 손님을 n 명 마을에 눌러앉게 한다(손님과 정이 쌓여야 해서 며칠 걸릴 수 있다)
@@ -20,7 +21,8 @@
  *     { t: 'fest',    key }                      그 행사 놀이를 올해 끝낸다 — 그날이 아니면 **기념 놀이**로 열어 준다(실제 달력을 기다리지 않는다)
  *     { t: 'heart',   n }                        주민·인물 누구든 하트 n 이상
  *     { t: 'donate',  cat, n }                   사고에 그 갈래(fossil 화석…)를 n 점 기증해 채운다
- *   reward { gold, exp, feat }
+ *   talk 단계의 `by: 고르기id` — 그 고르기의 답에 따라 장면 id 가 `scene_답key`(안 골랐으면 첫 갈래)
+ *   reward { gold, exp, feat, title }   title = 칭호(문자열)
  *
  * 장면 \`choice: { id, prompt, options:[{ key, label }] }\` — 마지막 줄 뒤 고르기 단추. 답은 \`save.village.scenario.choices[id]\`.
  * 장면 한 줄 = [누가, 말] — 누가 = 'me' 또는 CAST 키.
@@ -37,7 +39,9 @@
     chalna:  { name: '사진작가 찰나',    emoji: '📷' },
     explorer:{ name: '탐험가',           emoji: '🧭' },
     bandi:   { name: '도깨비불 반디',    emoji: '🔥' },
-    dudu:    { name: '도깨비 대장 두두', emoji: '👹' }
+    dudu:    { name: '도깨비 대장 두두', emoji: '👹' },
+    rumi:    { name: '불시착 탐사원 루미', emoji: '🧑‍🚀' },
+    nabi:    { name: '곤충 박사 나비',   emoji: '🦋' }
   };
 
   var SCENES = {
@@ -114,6 +118,73 @@
       ['dudu', '소원이 하늘 금으로 스르르 올라갔어! 재밌다! 이 마을 정말 살아 볼 만하겠는데?'],
       ['bandi', '두두는 말썽만 피워서 걱정이야. 대신 내가 잘 이끌게. 이 마을에 살아도 될까?'],
       ['me', '함께 지낼 손님이 있으면 마을이 더 밝아지겠지요.']
+    ] },
+    rumi1: { title: '가을 · 우주기지의 불시착', lines: [
+      ['rumi', '탐사원 루미예요. 우주기지에 불시착했는데, 구조 신호가 닿으려면 300년이 걸린대요. 무전기는 이 땅 것이라 옛 봉투에 넣어야 신호가 가고.'],
+      ['me', '봉투에 신호를? 옛 우체통이 신호를 앞날로 부치는 길이라는 말씀이지요?'],
+      ['rumi', '네! 우선 기지 광석 세 개로 송신기를 고치고 싶어요. 도와주실 수 있어요?']
+    ] },
+    rumi2: { title: '가을 · 우주기지의 불시착', lines: [
+      ['rumi', '신호가 우체통으로 들어갔어요! 옛 봉투에 담긴 신호가 300년 뒤에 닿는다니… 이제 기다릴 수 있어요.'],
+      ['me', '탐사차 택배는 앞당겨서 오게 하겠습니다. 편지로 소식을 전해 주세요.']
+    ] },
+    ins1: { title: '가을 · 반딧불이 정원', lines: [
+      ['nabi', '곤충 박사 나비예요! 반딧불이가 해마다 줄어드는 까닭을 찾고 있어요. 금 너머에서 새는 빛이 밤을 밝혀서 짝짓기를 방해하는 것 같아요.'],
+      ['me', '채집망을 빌려 주시면 곤충을 다섯 마리 잡아 보겠습니다.'],
+      ['nabi', '기록용으로 사고에도 기증해 주세요. 옛 정원 돌담 곁에서 반딧불이 정원을 다시 만들어 볼게요.']
+    ] },
+    ins2: { title: '가을 · 반딧불이 정원', lines: [
+      ['nabi', '기증하신 곤충 덕에 빛 공해의 가설이 맞는지 확인했어요. 금에서 새는 빛이 문제였네요.'],
+      ['me', '금을 닫을 수는 없어도 빛이 덜 새게 할 수는 있겠군요.']
+    ] },
+    har1: { title: '가을 · 한가위 줄다리기', lines: [
+      ['keeper', '한가위라오. 주민과 손님을 두 편으로 갈라 줄다리기를 하고 달 아래서 송편을 나눕시다.'],
+      ['chalna', '단체 사진을 찍어 드릴게요! 저기 K-7 씨가 잔치를 기록하러 오셨네요.'],
+      ['k7', '기록 중입니다. 이 마을의 밤이 앞날 기록에 또렷이 남고 있어요.']
+    ] },
+    har2: { title: '가을 · 한가위 줄다리기', lines: [
+      ['k7', '기록판의 "사라진 숲"이 거의 다 지워졌습니다. 이 마을을 기억하는 이들이 늘었어요.'],
+      ['keeper', '잔치가 끝났으니 북쪽 동굴 부탁이나 살펴보시오. 동굴 끝에 이상한 빛 조각이 있다 하오.']
+    ] },
+    cave1: { title: '가을 · 북쪽 동굴의 조각', lines: [
+      ['keeper', '북쪽 동굴 끝까지 가 보시오. 벽화가 있고 그 끝에 빛나는 결정이 박혀 있다 하오.'],
+      ['explorer', '밧줄은 내가 걸어 두었지. 조심해서 들어가 봐.']
+    ] },
+    cave2: { title: '가을 · 북쪽 동굴의 조각', lines: [
+      ['k7', '이 결정은 금의 조각입니다. 금은 우체통이 부르는 길이었어요. 결정을 만지면 금이 더 벌어질 수도, 잠잠해질 수도 있습니다.'],
+      ['me', '금을 활짝 열어 두면 여러 시대 손님이 더 올 것이고, 조용히 해 달라면 밤이 고요해지겠지요.']
+    ], choice: { id: 'crack', prompt: '금을 어떻게 할 것인가', options: [{ key: 'open', label: '금을 활짝 열어 둔다' }, { key: 'quiet', label: '조용히 해 달라 한다' }] } },
+    let1: { title: '겨울 · 편지가 쌓이는 겨울', lines: [
+      ['keeper', '옛 우체통에 앞날의 답장이 쌓였다오. 고맙다는 편지를 주민마다 전해 주시겠소?'],
+      ['dareum', '붓글씨 편지에 택배 상자에 빛 편지까지, 한 상자에 세 시대가 담겼어요! 제가 나눠 실을게요.']
+    ] },
+    let2: { title: '겨울 · 편지가 쌓이는 겨울', lines: [
+      ['keeper', '주민들이 편지를 읽고 웃었소. 편지꽂이 하나를 마련해 드리리다.'],
+      ['me', '앞날의 이웃이 이 마을을 기억하고 있다는 편지였습니다.']
+    ] },
+    dong1: { title: '겨울 · 동지 팥죽 나눔', lines: [
+      ['keeper', '동지 팥죽을 쑬 때가 되었소. 팥죽 솥 곁에 주민과 손님이 모이면 잔치가 차오르오.'],
+      ['rumi', '온열 장치도 가져왔어요! 팥죽이 식지 않게요.']
+    ] },
+    dong2: { title: '겨울 · 동지 팥죽 나눔', lines: [
+      ['keeper', '살러 온 손님이 둘이 되니 잔치가 찼구려. 이 마을이 참 따뜻해졌소.']
+    ] },
+    ny1: { title: '겨울 · 설날 세배 돌기', lines: [
+      ['keeper', '설날이오. 한복 입은 주민마다 세배를 돌아 새해 인사를 나누시오. 복주머니를 드리겠소.'],
+      ['k7', '새해 기록도 남기겠습니다. 이 마을의 새해 인사가 앞날 기록에 들어가요.']
+    ] },
+    moon1: { title: '겨울 · 대보름, 별 우체통', lines: [
+      ['keeper', '대보름이오. 달집에 불을 놓으면 하늘 금이 옛 우체통 위로 내려온다는 말이 있소.'],
+      ['chalna', '마지막 사진을 찍을게요. 달집 불빛이 금에 닿는 순간이요!'],
+      ['k7', '기록판이 바뀌고 있습니다… "사라진 숲" 글자가 흐려지고 있어요.']
+    ] },
+    moon2_open: { title: '겨울 · 대보름, 별 우체통', lines: [
+      ['k7', '"이어진 숲"! 기록판 글자가 바뀌었습니다. 금이 열려 있어서 여러 시대 손님이 모두 모였고, 별 우체통이 되어 하늘에 걸렸어요.'],
+      ['keeper', '이제 이 마을은 잊히지 않소. 별 우체통을 마을 명소로 삼읍시다. 그대는 이어진 숲의 이웃이오.']
+    ] },
+    moon2_quiet: { title: '겨울 · 대보름, 별 우체통', lines: [
+      ['k7', '"이어진 숲"! 기록판 글자가 바뀌었습니다. 금이 조용히 내려앉아 별 우체통이 고요한 밤에 걸렸어요.'],
+      ['keeper', '조용한 밤이 이 마을에 어울리오. 별 우체통은 마을 명소요. 그대는 이어진 숲의 이웃이오.']
     ] },
     mus1: { title: '봄 · 사고를 채우다', lines: [
       ['k7', '…착륙 성공. 시간 여행자 K-7, 기록원입니다. 저는 앞날의 기록을 들고 왔어요. 이 숲의 기록 칸은 "사라진 숲"입니다.'],
@@ -220,10 +291,103 @@
         { t: 'settle', n: 1 },
         { t: 'talk', scene: 'star2' }
       ],
-      reward: { gold: 1000, exp: 200, feat: 20 } }
+      reward: { gold: 1000, exp: 200, feat: 20 } },
+
+    { id: 'au_rumi', no: 9, season: 'autumn', title: '우주기지의 불시착', stage: '우주기지', after: 'su_star',
+      blurb: '탐사원 루미 — 구조 신호가 300년 뒤에 닿는다. 옛 우체통으로 신호를 "부치자".',
+      mix: { past: '우체통 봉투에 넣은 신호', now: '무전기', future: '우주기지·루미' },
+      steps: [
+        { t: 'talk', scene: 'rumi1' },
+        { t: 'gather', cat: 'ore', n: 3 },
+        { t: 'deliver', n: 1 },
+        { t: 'talk', scene: 'rumi2' }
+      ],
+      reward: { gold: 1100, exp: 220 } },
+
+    { id: 'au_insect', no: 10, season: 'autumn', title: '반딧불이 정원', stage: '반딧불 참나무숲 · 사고', after: 'au_rumi',
+      blurb: '곤충 박사 나비가 반딧불이가 줄어드는 까닭을 찾는다 — 금 너머 빛 공해.',
+      mix: { past: '옛 정원 돌담', now: '나비·채집망', future: '금에서 새는 빛' },
+      steps: [
+        { t: 'talk', scene: 'ins1' },
+        { t: 'bug', n: 5 },
+        { t: 'donate', cat: 'bug', n: 5 },
+        { t: 'talk', scene: 'ins2' }
+      ],
+      reward: { gold: 1200, exp: 240 } },
+
+    { id: 'au_harvest', no: 11, season: 'autumn', title: '한가위 줄다리기', stage: '마을 광장', after: 'au_insect',
+      blurb: '주민·손님 모두 두 편으로 — 줄다리기 뒤 달 아래 잔치.',
+      mix: { past: '줄다리기·송편', now: '찰나의 단체 사진', future: 'K-7이 잔치를 기록' },
+      steps: [
+        { t: 'talk', scene: 'har1' },
+        { t: 'fest', key: 'chuseok' },
+        { t: 'heart', n: 3 },
+        { t: 'talk', scene: 'har2' }
+      ],
+      reward: { gold: 1300, exp: 260, feat: 15 } },
+
+    { id: 'au_cave', no: 12, season: 'autumn', title: '북쪽 동굴의 조각', stage: '북쪽 동굴', after: 'au_harvest',
+      blurb: '숲지기 부탁 "동굴의 보물" — 동굴 끝에 금의 조각. K-7: "금은 우체통이 부르는 길".',
+      mix: { past: '동굴 벽화', now: '탐험가 밧줄', future: '금 조각 결정' },
+      steps: [
+        { t: 'talk', scene: 'cave1' },
+        { t: 'go', spot: 'cave' },
+        { t: 'talk', scene: 'cave2' }
+      ],
+      reward: { gold: 1400, exp: 280 } },
+
+    { id: 'wi_letters', no: 13, season: 'winter', title: '편지가 쌓이는 겨울', stage: '마을 · 옛 우체통', after: 'au_cave',
+      blurb: '앞날의 주민들에게서 답장이 온다 — 고맙다는 편지를 주민마다 전한다.',
+      mix: { past: '붓글씨 편지', now: '택배 상자', future: '빛 편지' },
+      steps: [
+        { t: 'talk', scene: 'let1' },
+        { t: 'deliver', n: 5 },
+        { t: 'heart', n: 5 },
+        { t: 'talk', scene: 'let2' }
+      ],
+      reward: { gold: 1500, exp: 300 } },
+
+    { id: 'wi_dongji', no: 14, season: 'winter', title: '동지 팥죽 나눔', stage: '마을', after: 'wi_letters',
+      blurb: '팥죽을 쑤어 손님·주민에게 — 살러 온 손님이 둘 이상이어야 잔치가 찬다.',
+      mix: { past: '팥죽 솥', now: '보온 도시락', future: '루미의 온열 장치' },
+      steps: [
+        { t: 'talk', scene: 'dong1' },
+        { t: 'fest', key: 'dongji' },
+        { t: 'settle', n: 2 },
+        { t: 'talk', scene: 'dong2' }
+      ],
+      reward: { gold: 1600, exp: 320 } },
+
+    { id: 'wi_newyear', no: 15, season: 'winter', title: '설날 세배 돌기', stage: '마을 전체', after: 'wi_dongji',
+      blurb: '주민·살러 온 손님 모두에게 세배.',
+      mix: { past: '세배·한복', now: '새해 문자', future: 'K-7의 새해 기록' },
+      steps: [
+        { t: 'talk', scene: 'ny1' },
+        { t: 'fest', key: 'seollal' }
+      ],
+      reward: { gold: 1700, exp: 340 } },
+
+    { id: 'wi_moon', no: 16, season: 'winter', title: '대보름, 별 우체통', stage: '달집 · 옛 우체통', after: 'wi_newyear',
+      blurb: '달집을 태우는 밤, 하늘 금이 우체통 위로 내려와 별 우체통이 된다. "사라진 숲"이 "이어진 숲"으로.',
+      mix: { past: '달집', now: '찰나의 마지막 사진', future: '기록판 글자가 바뀜' },
+      steps: [
+        { t: 'talk', scene: 'moon1' },
+        { t: 'fest', key: 'daeborum' },
+        { t: 'go', spot: 'ruin' },
+        { t: 'talk', scene: 'moon2', by: 'crack' }
+      ],
+      reward: { gold: 3000, exp: 600, feat: 50, title: '이어진 숲의 이웃' } }
   ];
 
-  var SEASONS = { spring: '봄 · 옛 우체통', summer: '여름 · 금으로 온 손님들' };
+  var SEASONS = { spring: '봄 · 옛 우체통', summer: '여름 · 금으로 온 손님들', autumn: '가을 · 앞날의 기록', winter: '겨울 · 이어진 숲' };
+
+  /** 장면에 달린 고르기를 id 로 찾는다 */
+  function choiceOf(id) {
+    for (var k in SCENES) {
+      if (Object.prototype.hasOwnProperty.call(SCENES, k) && SCENES[k].choice && SCENES[k].choice.id === id) { return SCENES[k].choice; }
+    }
+    return null;
+  }
 
   function chapter(id) {
     for (var i = 0; i < CHAPTERS.length; i++) { if (CHAPTERS[i].id === id) { return CHAPTERS[i]; } }
@@ -231,5 +395,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.scenarioData = { CAST: CAST, SCENES: SCENES, CHAPTERS: CHAPTERS, SEASONS: SEASONS, chapter: chapter };
+  global.DG.scenarioData = { CAST: CAST, SCENES: SCENES, CHAPTERS: CHAPTERS, SEASONS: SEASONS, chapter: chapter, choiceOf: choiceOf };
 })(window);

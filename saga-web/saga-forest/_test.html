@@ -2601,13 +2601,16 @@ window.DG_NO_TUNE = true;
         if (!c.mix || !c.mix.past || !c.mix.now || !c.mix.future) { bad.push(c.id + ' 시대 섞기 빈 칸'); }
         if (!c.steps.length || c.no !== i + 1) { bad.push(c.id + ' 번호·단계'); }
         c.steps.forEach(function (st) {
-          if (['talk', 'place', 'deliver', 'forest', 'go', 'gather', 'fest', 'heart', 'donate', 'fish', 'cave', 'settle'].indexOf(st.t) < 0) { bad.push(c.id + ' 단계 ' + st.t); }
-          if (st.t === 'talk') { used[st.scene] = 1; if (!D.SCENES[st.scene]) { bad.push(c.id + ' 장면 ' + st.scene); } }
+          if (['talk', 'place', 'deliver', 'forest', 'go', 'gather', 'fest', 'heart', 'donate', 'fish', 'cave', 'settle', 'bug'].indexOf(st.t) < 0) { bad.push(c.id + ' 단계 ' + st.t); }
+          if (st.t === 'talk' && st.by) {
+            var chz = D.choiceOf(st.by);
+            if (!chz) { bad.push(c.id + ' 고르기 ' + st.by); } else { chz.options.forEach(function (o) { used[st.scene + '_' + o.key] = 1; if (!D.SCENES[st.scene + '_' + o.key]) { bad.push(c.id + ' 갈래 장면 ' + o.key); } }); }
+          } else if (st.t === 'talk') { used[st.scene] = 1; if (!D.SCENES[st.scene]) { bad.push(c.id + ' 장면 ' + st.scene); } }
           if (st.t === 'forest' && !DG.village.forestByKey(st.key)) { bad.push(c.id + ' 숲 ' + st.key); }
           if (st.t === 'fest' && !VDx.EVENTS.some(function (e) { return e.key === st.key && e.play; })) { bad.push(c.id + ' 행사 ' + st.key); }
           if (st.t === 'gather' && !(VDx.ITEMS[st.cat] && VDx.ITEMS[st.cat].length)) { bad.push(c.id + ' 갈래 ' + st.cat); }
           if (st.t === 'donate' && !VDx.MUSEUM_CATS.some(function (x) { return x.key === st.cat; })) { bad.push(c.id + ' 사고 갈래 ' + st.cat); }
-          if (st.t === 'go' && st.spot !== 'ruin' && st.spot !== 'waterfall') { bad.push(c.id + ' 자리 ' + st.spot); }
+          if (st.t === 'go' && ['ruin', 'waterfall', 'spacebase', 'cave'].indexOf(st.spot) < 0) { bad.push(c.id + ' 자리 ' + st.spot); }
         });
       });
       Object.keys(D.SCENES).forEach(function (k) {
@@ -2743,7 +2746,7 @@ window.DG_NO_TUNE = true;
         s0.visitSettled = ['x']; C.emit('changed');
         if (cur() !== 'star2') { bad.push('정착 뒤 장면 ' + cur()); }
         say();
-        if (!SC.state().done.su_star || SC.current() !== null) { bad.push('제8장 끝'); }
+        if (!SC.state().done.su_star || !SC.current() || SC.current().id !== 'au_rumi') { bad.push('제8장 끝·다음 장 ' + (SC.current() && SC.current().id)); }
         if (!/여름/.test(SC.cardHtml())) { bad.push('카드'); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '낚시 셋 → 단오 → 배달 → 숲 넷 → 폭포·동굴 → 칠석 → 손님 정착 · 여름 네 장 끝';
@@ -2751,6 +2754,88 @@ window.DG_NO_TUNE = true;
         window.DG_NO_SCENARIO = true;
         SC.abort();
         s0.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; s0.fest = JSON.parse(keep.fest); s0.visitSettled = JSON.parse(keep.vs);
+        C.save.player = JSON.parse(keep.p); V.raw().player.x = keep.px; V.raw().player.y = keep.py;
+      }
+    });
+
+    t('시나리오 가을·겨울 — 우주기지·곤충·한가위·동굴 고르기·편지·동지·설날·대보름으로 사계절 열여섯 장이 끝난다', function () {
+      var SC = DG.scenario, C = DG.core, s0 = V.state(), H = DG.home, bad = [];
+      var keep = { sc: s0.scenario ? JSON.stringify(s0.scenario) : null, fest: JSON.stringify(s0.fest || {}), vs: JSON.stringify(s0.visitSettled || []),
+        hearts: JSON.stringify(s0.hearts || {}), don: JSON.stringify(s0.donated || {}), p: JSON.stringify(C.save.player), px: V.raw().player.x, py: V.raw().player.y,
+        cave: V.caveInside() };
+      function say() { var k = 0; while (SC.isOpen() && k++ < 40) { SC.next(); } }
+      function cur() { return SC.isOpen() ? SC.currentScene().id : null; }
+      function ofYear(key) { s0.fest[key] = { year: new Date().getFullYear(), done: true, day: s0.day }; }
+      window.DG_NO_SCENARIO = false;
+      try {
+        s0.fest = {}; s0.visitSettled = []; s0.hearts = {}; s0.donated = {};
+        SC.reset(); SC.state().done = { sp_move: 1, sp_postbox: 1, sp_fox: 1, sp_museum: 1, su_sailor: 1, su_photo: 1, su_waterfall: 1, su_star: 1 }; SC.init();
+        if (cur() !== 'rumi1') { bad.push('가을 첫 장면 ' + cur()); }
+        say();
+        C.emit('village:gather', { item: { cat: 'ore' }, n: 2 });
+        if (SC.hint().text.indexOf('광석') >= 0 && false) { bad.push('힌트'); }
+        C.emit('village:gather', { item: { cat: 'ore' }, n: 1 });
+        C.emit('village:delivered', {});
+        say();
+        if (!SC.state().done.au_rumi || !SC.state().said.ins1) { bad.push('제9장 끝·제10장 첫 장면'); }
+        for (var i = 0; i < 4; i++) { C.emit('village:bug', { state: 'swarm' }); C.emit('village:bug', { state: 'catch' }); }
+        if (SC.hint().text.indexOf('4/5') < 0) { bad.push('곤충 힌트 ' + SC.hint().text); }
+        C.emit('village:bug', { state: 'catch' });
+        var bugs = DG.villageData.ITEMS.bug.slice(0, 5); bugs.forEach(function (b) { s0.donated[b.key] = true; }); C.emit('changed');
+        if (cur() !== 'ins2') { bad.push('기증 뒤 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.au_insect || !SC.state().said.har1) { bad.push('제10장 끝·제11장 첫 장면'); }
+        ofYear('chuseok'); C.emit('changed');
+        s0.hearts.a = { h: 2, lastTalk: 0, gainDay: 0, gained: 0 }; C.emit('changed');
+        if (SC.isOpen()) { bad.push('하트 3 전에 장면'); }
+        s0.hearts.a.h = 3; C.emit('changed');
+        say();
+        if (!SC.state().done.au_harvest || !SC.state().said.cave1) { bad.push('제11장 끝·제12장 첫 장면'); }
+        // 동굴 안 — caveInside 를 잠깐 흉내 낸다
+        var realCave = V.caveInside;
+        V.caveInside = function () { return true; };
+        C.emit('changed');
+        V.caveInside = realCave;
+        if (cur() !== 'cave2') { bad.push('동굴 뒤 장면 ' + cur()); }
+        say();
+        var c = SC.currentScene();
+        if (!(c && c.pick && document.getElementById('scnbox').innerHTML.indexOf('활짝') >= 0)) { bad.push('고르기 단추'); }
+        if (SC.pick('nope')) { bad.push('없는 답이 먹음'); }
+        SC.pick('quiet');
+        if (SC.choice('crack') !== 'quiet' || !SC.state().done.au_cave || cur() !== 'let1') { bad.push('제12장 끝·고르기 ' + SC.choice('crack')); }
+        say();
+
+        // 겨울
+        for (var j = 0; j < 4; j++) { C.emit('village:delivered', {}); }
+        if (SC.hint().text.indexOf('배달') < 0 && SC.hint().text.indexOf('하트') < 0) { bad.push('편지 힌트 ' + SC.hint().text); }
+        C.emit('village:delivered', {});
+        s0.hearts.a.h = 5; C.emit('changed');
+        say();
+        if (!SC.state().done.wi_letters || !SC.state().said.dong1) { bad.push('제13장 끝·제14장 첫 장면'); }
+        ofYear('dongji'); s0.visitSettled = ['x']; C.emit('changed');
+        if (SC.state().done.wi_dongji) { bad.push('손님 하나로 잔치가 참'); }
+        s0.visitSettled = ['x', 'y']; C.emit('changed');
+        say();
+        if (!SC.state().done.wi_dongji || !SC.state().said.ny1) { bad.push('제14장 끝·제15장 첫 장면'); }
+        ofYear('seollal'); C.emit('changed');
+        say();
+        if (!SC.state().done.wi_newyear || !SC.state().said.moon1) { bad.push('제15장 끝·제16장 첫 장면'); }
+        ofYear('daeborum'); C.emit('changed');
+        var spot = V.ruinSpot();
+        if (!spot) { bad.push('폐허 자리 없음'); } else {
+          V.raw().player.x = (spot.tx + 0.5) * V.TILE; V.raw().player.y = (spot.ty + 0.5) * V.TILE; C.emit('changed');
+        }
+        if (cur() !== 'moon2_quiet') { bad.push('고른 결말 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.wi_moon || SC.current() !== null || SC.titles().indexOf('이어진 숲의 이웃') < 0) { bad.push('제16장 끝·칭호 ' + JSON.stringify(SC.titles())); }
+        if (!/이어진|사계절/.test(SC.cardHtml())) { bad.push('카드'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '우주기지 → 곤충 → 한가위 → 동굴(금 고르기) → 편지 → 동지(손님 둘) → 설날 → 대보름(고른 결말) · 칭호 이어진 숲의 이웃 · 열여섯 장 끝';
+      } finally {
+        window.DG_NO_SCENARIO = true;
+        SC.abort();
+        s0.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; s0.fest = JSON.parse(keep.fest); s0.visitSettled = JSON.parse(keep.vs);
+        s0.hearts = JSON.parse(keep.hearts); s0.donated = JSON.parse(keep.don);
         C.save.player = JSON.parse(keep.p); V.raw().player.x = keep.px; V.raw().player.y = keep.py;
       }
     });

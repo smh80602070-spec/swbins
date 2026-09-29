@@ -10,7 +10,9 @@
  *   go      그 고정 자리에 선다(ruin = `village.inRuin`, waterfall = `waterfallSpot` 곁 4칸)
  *   fish    'village:fish' catch — 이 단계가 시작된 뒤 n 마리
  *   cave    'village:cave' inside — 이 단계가 시작된 뒤 n 번
+ *   bug     'village:bug' catch — 이 단계가 시작된 뒤 n 마리
  *   settle  `visitor.settled()` 길이 ≥ n
+ *   (talk 의 `by` — 앞의 고르기 답에 따라 `scene_답key`)
  *   gather  'village:gather' 이 단계가 시작된 뒤 그 갈래를 n 번
  *   fest    `festival.isDone(key)` — 그날이 아니면 **기념 놀이**: 손잡이 \`time.event\` 로 그 행사를 열어 주고 끝나면 놓는다
  *   heart   누구든 하트 n 이상(\`state().hearts\`)
@@ -42,6 +44,8 @@
     if (!sc.cnt || typeof sc.cnt !== 'object') { sc.cnt = { deliver: 0, gather: {} }; }
     if (!sc.cnt.gather) { sc.cnt.gather = {}; }
     if (!sc.cnt.fish) { sc.cnt.fish = 0; }
+    if (!sc.cnt.bug) { sc.cnt.bug = 0; }
+    if (!Array.isArray(sc.titles)) { sc.titles = []; }
     if (!sc.cnt.cave) { sc.cnt.cave = 0; }
     if (typeof sc.step !== 'number') { sc.step = 0; }
     sc.init = 1;
@@ -55,7 +59,13 @@
   }
   function opened(ch) { return !ch.after || !!raw().done[ch.after]; }
 
-  function sceneOf(step) { return step.scene; }
+  /** 장면 id — `by` 가 있으면 앞에서 고른 답에 따라 `scene_답key`(안 골랐으면 첫 갈래) */
+  function sceneOf(step) {
+    if (!step.by) { return step.scene; }
+    var pick = raw().choices[step.by];
+    if (!pick) { var c = CD().choiceOf(step.by); pick = c ? c.options[0].key : ''; }
+    return step.scene + '_' + pick;
+  }
 
   function gatherCount(cat) { return raw().cnt.gather[cat] || 0; }
 
@@ -64,6 +74,8 @@
     if (!p) { return false; }
     var tx = Math.floor(p.x / T), ty = Math.floor(p.y / T);
     if (spot === 'ruin') { return !!(Vv.inRuin && Vv.inRuin(tx, ty)); }
+    if (spot === 'spacebase') { return !!(Vv.inSpaceBase && Vv.inSpaceBase(tx, ty)); }
+    if (spot === 'cave') { return !!(Vv.caveInside && Vv.caveInside()); }
     if (spot === 'waterfall') { var wf = Vv.waterfallSpot && Vv.waterfallSpot(); return !!wf && Math.hypot(wf.tx - tx, wf.ty - ty) <= 4; }
     return false;
   }
@@ -74,6 +86,7 @@
     if (step.t === 'deliver') { return s.cnt.deliver; }
     if (step.t === 'fish') { return s.cnt.fish; }
     if (step.t === 'cave') { return s.cnt.cave; }
+    if (step.t === 'bug') { return s.cnt.bug; }
     if (step.t === 'gather') { return gatherCount(step.cat); }
     return null;
   }
@@ -88,7 +101,7 @@
     var s = raw(), M = global.DG.museum, F = global.DG.festival, H = global.DG.home;
     if (step.t === 'talk') { return !!s.said[sceneOf(step)]; }
     if (step.t === 'place') { return !!H && H.state().items.length >= step.n; }
-    if (step.t === 'deliver' || step.t === 'fish' || step.t === 'cave' || step.t === 'gather') { return typeof s.base === 'number' && counterOf(step) - s.base >= step.n; }
+    if (step.t === 'deliver' || step.t === 'fish' || step.t === 'cave' || step.t === 'bug' || step.t === 'gather') { return typeof s.base === 'number' && counterOf(step) - s.base >= step.n; }
     if (step.t === 'settle') { var Vs = global.DG.visitor; return !!Vs && Vs.settled().length >= step.n; }
     if (step.t === 'forest') { return !!s.seenForest && s.seenForest[step.key] === s.ch + ':' + s.step; }
     if (step.t === 'go') { return inSpot(step.spot); }
@@ -147,6 +160,7 @@
     if (rw.exp) { core.gainExp(rw.exp); bits.push('경험치 ' + core.fmt(rw.exp)); }
     if (rw.gold) { core.save.player.gold += rw.gold; bits.push('🪙 ' + core.fmt(rw.gold)); }
     if (rw.feat) { core.gainFeat(rw.feat, '이야기'); bits.push('공적 ' + rw.feat); }
+    if (rw.title) { var ts = raw().titles; if (ts.indexOf(rw.title) < 0) { ts.push(rw.title); } bits.push('🏷️ 칭호 「' + rw.title + '」'); }
     return bits;
   }
 
@@ -192,9 +206,10 @@
     else if (step.t === 'place') { text = '🪑 집에 가구를 놓는다 (집 🏠 → 놓기)'; }
     else if (step.t === 'deliver') { text = '📦 택배를 배달한다 (접수대 → 배달원)'; }
     else if (step.t === 'forest') { var f = V().forestByKey && V().forestByKey(step.key); text = '🌲 「' + (f ? f.name : step.key) + '」 에 든다'; }
-    else if (step.t === 'go') { text = step.spot === 'waterfall' ? '💧 폭포 곁에 선다' : '🏚️ 탑성 폐허(옛 우체통)에 선다'; }
+    else if (step.t === 'go') { text = { waterfall: '💧 폭포 곁에 선다', spacebase: '🚀 우주기지에 선다', cave: '🕳️ 동굴 안 깊이 들어간다' }[step.spot] || '🏚️ 탑성 폐허(옛 우체통)에 선다'; }
     else if (step.t === 'fish') { text = '🎣 물고기를 낚는다 ' + Math.min(step.n, Math.max(0, s.cnt.fish - (typeof s.base === 'number' ? s.base : s.cnt.fish))) + '/' + step.n; }
     else if (step.t === 'cave') { text = '🕳️ 동굴에 들어선다'; }
+    else if (step.t === 'bug') { text = '🦋 곤충을 잡는다 ' + Math.min(step.n, Math.max(0, s.cnt.bug - (typeof s.base === 'number' ? s.base : s.cnt.bug))) + '/' + step.n; }
     else if (step.t === 'settle') { text = '🏡 손님이 마을에 눌러앉게 한다 (단골이 되면 청한다)'; }
     else if (step.t === 'gather') { text = '🌸 꽃을 모은다 ' + Math.min(step.n, Math.max(0, gatherCount(step.cat) - (typeof s.base === 'number' ? s.base : gatherCount(step.cat)))) + '/' + step.n; }
     else if (step.t === 'fest') { var ev = VD().eventOf && VD().eventOf(); text = '🎊 ' + (ev && ev.key === step.key ? ev.name + ' 놀이를 마친다 (안내판)' : '기념 놀이를 연다'); }
@@ -202,6 +217,8 @@
     else if (step.t === 'donate') { text = '🦴 사고에 화석을 기증한다 ' + step.n + '점'; }
     return { ch: ch, title: pre, text: text, step: step };
   }
+
+  function titles() { return raw().titles.slice(); }
 
   function list() {
     var s = raw(), c0 = current(), out = [];
@@ -227,7 +244,7 @@
         '<div class="stat-row"><span class="muted">' + esc2(x.ch.blurb) + '</span></div>' +
         (x.state === 'now' && h && h.ch === x.ch ? '<div class="stat-row"><b>' + esc2(h.text) + '</b></div>' : '') + '</div>';
     });
-    if (!current()) { html += '<div class="hint">지금 있는 이야기는 여기까지입니다. 다음 계절은 곧 이어집니다.</div>'; }
+    if (!current()) { html += '<div class="hint">🏷️ ' + (titles().length ? '「' + esc2(titles().join('」 「')) + '」 — ' : '') + '사계절 이야기를 다 마쳤습니다. 별 우체통은 이 마을 명소가 되었습니다.</div>'; }
     return html + '</div>';
   }
 
@@ -299,6 +316,7 @@
       listening = true;
       core.on('village:delivered', function () { raw().cnt.deliver += 1; check(); });
       core.on('village:fish', function (e) { if (e && e.state === 'catch') { raw().cnt.fish += 1; check(); } });
+      core.on('village:bug', function (e) { if (e && e.state === 'catch') { raw().cnt.bug += 1; check(); } });
       core.on('village:cave', function (e) { if (e && e.inside) { raw().cnt.cave += 1; check(); } });
       core.on('village:gather', function (e) {
         var cat = e && e.item && e.item.cat;
@@ -330,7 +348,7 @@
   global.DG = global.DG || {};
   global.DG.scenario = {
     init: init, check: check, current: current, hint: hint, list: list, cardHtml: cardHtml, lineHtml: lineHtml, on: on,
-    state: raw, isOpen: function () { return !!cur; }, currentScene: function () { return cur; },
+    state: raw, titles: titles, isOpen: function () { return !!cur; }, currentScene: function () { return cur; },
     next: next, skip: skip, pick: pick, choice: function (id) { return raw().choices[id] || null; },
     abort: function () { cur = null; paint(); },
     reset: function () { closeFest(); V().state().scenario = undefined; cur = null; paint(); }
