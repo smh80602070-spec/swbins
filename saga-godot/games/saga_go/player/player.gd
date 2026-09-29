@@ -37,6 +37,7 @@ var dash_speed := 0.0
 @onready var visual: Node3D = $Visual
 @onready var _anim: AnimationPlayer = visual.find_child("AnimationPlayer", true, false)
 
+const CLOTH_BOOST := 1.7
 var _joystick: Control = null
 var _current_anim := ""
 
@@ -46,6 +47,17 @@ func _ready() -> void:
 		_joystick = found[0]
 	_play_anim("idle")
 	CelShaderApply.apply_to(visual)
+	## 2026-09-30 — 공방 옷 그림이 어두운 가죽이라 주인공만 칙칙했다(마을 사람은 vroid_body boost). 옷 재질 빛을 올려 초록 조끼가 산다.
+	for mi in visual.find_children("*", "MeshInstance3D", true, false):
+		var m := (mi as MeshInstance3D).mesh
+		if m == null:
+			continue
+		for i in m.get_surface_count():
+			var src := m.surface_get_material(i)
+			var over := (mi as MeshInstance3D).get_surface_override_material(i) as ShaderMaterial
+			if src != null and over != null and src.resource_name.to_lower().contains("cloth"):
+				var base: Color = over.get_shader_parameter("albedo_tint")
+				over.set_shader_parameter("albedo_tint", Color(base.r * CLOTH_BOOST, base.g * CLOTH_BOOST, base.b * CLOTH_BOOST, base.a))
 	## 2026-09-24 — FOREST 아바타(saga_forest_avatar_01)는 뼈대 공간 앞이 -Z 라, 아래 target_yaw = atan2(x, z)(앞 = +Z)로
 	## 돌리면 등을 앞으로 한 채 달렸다. world/vroid_body.gd 와 같게 Visual 안쪽을 Y축 180° 돌려 앞을 +Z 로(앞이 +Z 인 GO·DUNGEON 몸은 그대로).
 	var skels := visual.find_children("*", "Skeleton3D", true, false)
