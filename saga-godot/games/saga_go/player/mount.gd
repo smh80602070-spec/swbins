@@ -22,6 +22,7 @@ var current := ""            # 타고 있는 탈것 id("" = 안 탐)
 var last_id := ""            # 마지막에 쓴 탈것
 var _player: CharacterBody3D
 var _body: Node3D = null
+var _anim: AnimationPlayer = null # 신수 몸이 지닌 idle(느린 날갯짓·숨쉬기)/walk(다리 걸음·빠른 날갯짓)
 var _def: Dictionary = {}
 var _t := 0.0
 
@@ -166,6 +167,7 @@ func mount(id: String) -> void:
 	_body = CreatureBuilder.build_pet(id, float(_def.height))
 	_body.name = "MountBody"
 	add_child(_body)
+	_anim = _body.get_node_or_null("AnimationPlayer") as AnimationPlayer
 	_apply_to_player(true)
 	Toast.show(self, "%s 에 올랐다%s" % [String(pet.name) if pet != null else id, " — 점프로 오르고 Shift 로 내려간다" if is_flying_mount() else ""], 3.0)
 	mounted_changed.emit(id)
@@ -211,5 +213,11 @@ func _physics_process(delta: float) -> void:
 	if _body != null:
 		_body.position = Vector3(0.0, bob, 0.0)
 		var fly_now: bool = _player.has_method("is_flying_now") and _player.call("is_flying_now")
+		if _anim != null:
+			## 나는 동안엔 늘 빠른 날갯짓(walk 클립), 땅에선 움직일 때만 다리 걸음.
+			var want := "walk" if (fly_now or speed_h > 1.0) else "idle"
+			if _anim.current_animation != want and _anim.has_animation(want):
+				_anim.play(want, 0.15)
+			_anim.speed_scale = clampf(speed_h / 7.0, 0.7, 2.2) if not fly_now else 1.4
 		_body.rotation.z = lerpf(_body.rotation.z, 0.0 if not fly_now else sin(_t * 2.0) * 0.06, 0.1)
 		_body.rotation.x = lerpf(_body.rotation.x, clampf(-_player.velocity.y * 0.03, -0.35, 0.35) if fly_now else 0.0, 0.1)

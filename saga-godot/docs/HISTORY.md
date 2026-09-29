@@ -9534,3 +9534,8 @@ PROJECT_STATE.md` 참고. 요약:
 
 - mount.gd game_progress(): 사가블로 = 클리어한 방 수×4(7방=28), 사가의숲 = 끝낸 주민 부탁×5(6=30), 사가스토리 = 끝낸 본편 사명×2(13=26)을 이야기 장 값(2·5·8·10·16·26)에 맞춰 잠금. 어느 판인지는 조상 노드의 씬 경로(games/saga_*)로. 사가고돗은 그대로 이야기 장.
 - mount_host: 새 세이브에서 세 판 다 잠김(fresh_locked)·SAGA_MOUNT_ALL 이면 여섯 개 열림(all_open) + 기존 항목 fails=0. probe_mount fails=0, REGRESS OK.
+
+## 탈것 날갯짓·다리 걸음 (2026-09-30, "이어해")
+
+- 신수 몸(CreatureBuilder)이 이미 지닌 AnimationPlayer idle/walk(날개·다리·꼬리 리그)를 mount.gd 가 튼다: 나는 동안은 늘 walk(빠른 날갯짓, 재생 1.4배), 땅에선 움직일 때만 walk(속도에 비례 0.7~2.2배)·서 있으면 idle. probe_mount wing_flap 항목 fails=0, mount_host 세 판·REGRESS OK. 창 모드 k_fly_crow 에서 날개가 펼쳐져 오름.
+- 남은 것: 앉은 자세(뼈 자세)·사가국지.

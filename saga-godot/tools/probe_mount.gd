@@ -83,6 +83,8 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 20:
 				_check("fly_mode", int(_p.mode) == 6, "mode=%d y=%.1f" % [int(_p.mode), _p.global_position.y])
 				Input.action_press("jump")
+				var ap: AnimationPlayer = _m.get("_anim")
+				_check("wing_flap", ap != null and ap.current_animation == "walk", "anim=%s" % (ap.current_animation if ap else "null"))
 			if _frame == 120:
 				_check("fly_rise", _y_peak > 8.0, "peak=%.1f" % _y_peak)
 				Input.action_release("jump")
