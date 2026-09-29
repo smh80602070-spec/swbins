@@ -135,6 +135,9 @@ namespace Saga.Go.Data
             // 109-14-20 해솔(9장 끝) — 뇌 대도(웹 ⑲-20)
             new Hero { Id = "story_haesol", NameKo = "해솔", Era = HeroEra.Story, Faction = "재야", Rarity = 5, Trait = HeroTrait.Might, Might = 91, Wisdom = 70, Command = 68,
                 WebElement = WebElement.Elec, QuoteKo = "……고맙다. 노래를 다시 부를 수 있을 것 같아." },
+            // 109-14-30 하람(12장 끝) — 화 활(신호탄), 지(智) 갈래(웹 ⑲-30)
+            new Hero { Id = "story_haram", NameKo = "하람", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Wisdom, Might = 62, Wisdom = 84, Command = 64,
+                WebElement = WebElement.Fire, QuoteKo = "날씨도 시간도, 재야 아는 거니까." },
         };
 
         public static bool IsStory(string id) => id != null && id.StartsWith("story_");

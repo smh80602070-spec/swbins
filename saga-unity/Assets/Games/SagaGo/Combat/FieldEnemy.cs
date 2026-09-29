@@ -142,7 +142,7 @@ namespace Saga.Go.Combat
         private float EngageReach => _rot != null ? RotEngage : _reachOverride > 0f ? _reachOverride * 0.8f : Ranged ? HeroWisdomRange : EngageRange;
 
         // ---- 109-14-14 이야기 보스 공격 차례(웹 사가고 ⑲-14 `rot`) — 수마다 다가서는 거리·예고·원·배율이 다르다 ----
-        public enum BossMove { Melee, Shadow, Spit, Slam, Tide, Halo }
+        public enum BossMove { Melee, Shadow, Spit, Slam, Tide, Halo, Rift }
         /// <summary>웹 ROT 표 × 1.85(이 판 거리) — 다가서기 · 예고 초 · 원 반지름 · 피해 배율.</summary>
         public static (float reach, float wind, float r, float mul) MoveSpec(BossMove m) => m switch
         {
@@ -150,12 +150,16 @@ namespace Saga.Go.Combat
             BossMove.Spit => (16.7f, 1.0f, 4.4f, 1.0f),     // 내 발밑에 원
             BossMove.Slam => (7.0f, 1.1f, 7.8f, 1.2f),      // 제 둘레 큰 원
             BossMove.Tide => (20.4f, 1.1f, 3.7f, 1.3f),     // 109-14-16 밀물 — 나를 향해 줄지은 원 넷(TideFrom 부터 TideGap 간격)
+            BossMove.Rift => (22.2f, 1.0f, 3.7f, 1.5f),     // 109-14-30 틈새 질주 — 원 다섯 줄 예고(RiftFrom 부터 RiftGap), 칠 때 줄 끝으로 옮긴다
             BossMove.Halo => (14.8f, 1.3f, 16.65f, 1.5f),   // 109-14-20 고리 — 제 둘레 HaloInner~16.65m(웹 3~9m). 곁으로 파고들거나 밖으로
             _ => (0f, 0.55f, 0f, 1.0f),                     // 여느 한 대
         };
         public const float ShadowBack = 4.1f;               // 웹 2.2m × 1.85
         public const int TideN = 4;
         public const float TideFrom = 4.6f, TideGap = 5.55f; // 웹 2.5m·3m × 1.85
+        public const int RiftN = 5;
+        public const float RiftFrom = 3.7f, RiftGap = 4.44f;   // 웹 2m·2.4m × 1.85
+        public const float RiftStep = 2.8f, RiftSlope = 0.3f;  // 옮김 막기는 벼랑만 — 높이 차 > 웹 1.5m × 1.85 + 거리 × 0.3
         public const float HaloInner = 5.55f;               // 109-14-20 고리 안쪽 빈 원(웹 3m × 1.85)
         private float _haloInner;
         private LineRenderer _haloRing;
@@ -186,7 +190,7 @@ namespace Saga.Go.Combat
             {
                 var m = _rot[_rotI % _rot.Length];
                 var s = MoveSpec(m);
-                return m == BossMove.Melee ? (_reachOverride > 0f ? _reachOverride * 0.8f : EngageRange) : m == BossMove.Spit ? s.reach * 0.85f : m == BossMove.Slam || m == BossMove.Tide || m == BossMove.Halo ? s.reach * 0.8f : s.reach;
+                return m == BossMove.Melee ? (_reachOverride > 0f ? _reachOverride * 0.8f : EngageRange) : m == BossMove.Spit ? s.reach * 0.85f : m == BossMove.Slam || m == BossMove.Tide || m == BossMove.Halo || m == BossMove.Rift ? s.reach * 0.8f : s.reach;
             }
         }
 
@@ -198,15 +202,18 @@ namespace Saga.Go.Combat
             _moveWind = s.wind;
             _moveMul = s.mul;
             _moveR = m == BossMove.Melee ? -1f : s.r;
-            _moveAtPoint = m == BossMove.Spit || m == BossMove.Tide;
+            _moveAtPoint = m == BossMove.Spit || m == BossMove.Tide || m == BossMove.Rift;
             if (m == BossMove.Halo) { _haloInner = HaloInner; ShowHaloRing(); } // 109-14-20 안쪽 테
-            if (m == BossMove.Tide)
+            if (m == BossMove.Tide || m == BossMove.Rift)
             {
-                // 가면에서 나 쪽으로 원 넷 — 첫 원이 큰 예고 원(StrikePoint), 나머지 셋은 곁 원
+                // 가면에서 나 쪽으로 원 넷(틈새 질주는 다섯) — 첫 원이 큰 예고 원(StrikePoint), 나머지는 곁 원
+                bool rift = m == BossMove.Rift;
+                int n = rift ? RiftN : TideN;
+                float from = rift ? RiftFrom : TideFrom, gap = rift ? RiftGap : TideGap;
                 Vector3 d = Flat(player - transform.position);
                 Vector3 dir = d.sqrMagnitude > 0.01f ? d.normalized : transform.forward;
                 _tidePts.Clear();
-                for (int i = 0; i < TideN; i++) _tidePts.Add(Grounded(transform.position + dir * (TideFrom + TideGap * i)));
+                for (int i = 0; i < n; i++) _tidePts.Add(Grounded(transform.position + dir * (from + gap * i)));
                 _strikePoint = _tidePts[0];
                 ShowTideRings(s.r);
             }
@@ -221,11 +228,19 @@ namespace Saga.Go.Combat
             }
         }
 
+        /// <summary>틈새 질주 — 줄 끝으로 옮긴다. 설 수 없거나 벼랑이면 제자리(웹 `riftOk`).</summary>
+        private void RiftBlink(Vector3 end)
+        {
+            end = Grounded(end);
+            if (!CanStep(end) || Mathf.Abs(end.y - transform.position.y) > RiftStep + Flat(end - transform.position).magnitude * RiftSlope) return;
+            transform.position = end;
+        }
+
         private void ShowTideRings(float r)
         {
             if (_tideRings == null)
             {
-                _tideRings = new LineRenderer[TideN - 1];
+                _tideRings = new LineRenderer[RiftN - 1];
                 for (int i = 0; i < _tideRings.Length; i++)
                 {
                     var go = new GameObject("TideRing");
@@ -244,6 +259,7 @@ namespace Saga.Go.Combat
             for (int i = 0; i < _tideRings.Length; i++)
             {
                 var lr = _tideRings[i];
+                if (i + 1 >= _tidePts.Count) { lr.enabled = false; continue; }
                 float s = 1f / Mathf.Max(0.01f, transform.lossyScale.x);
                 for (int k = 0; k < lr.positionCount; k++)
                 {
@@ -1011,6 +1027,7 @@ namespace Saga.Go.Combat
             {
                 fc.ReceiveStrike(Atk * _moveMul, this);
             }
+            if (_rot != null && _rot[_rotI % _rot.Length] == BossMove.Rift && _tidePts.Count > 0) RiftBlink(_tidePts[_tidePts.Count - 1]); // 109-14-30 줄 끝으로
             if (_rot != null) { _rotI++; ClearMove(); } // 109-14-14 다음 수
             CurrentState = State.Recover;
             _timer = RecoverTime;

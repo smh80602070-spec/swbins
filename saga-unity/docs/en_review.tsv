@@ -895,6 +895,7 @@
 2	go	hero.story_elder	누리	Nuri		
 2	go	hero.story_ferryman	버들	Beodeul		
 2	go	hero.story_haesol	해솔	Haesol		
+2	go	hero.story_haram	하람	Haram		
 2	go	hero.story_scholar	은비	Eunbi		
 2	go	hero.story_wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	hero.trait.command	통	Command		
@@ -944,6 +945,8 @@
 2	go	kit.sig.gyebaek.skill	결사 방진	Last Stand Square		
 2	go	kit.sig.haesol.burst	가면 없는 노래	Unmasked Song		
 2	go	kit.sig.haesol.skill	먹구름 벼락	Storm-Cloud Bolt		
+2	go	kit.sig.haram.burst	맑음 예보	Clear-Sky Forecast		
+2	go	kit.sig.haram.skill	휴대 관측기	Portable Gauge		
 2	go	kit.sig.hero.burst	불새 깃	Firebird Plume		
 2	go	kit.sig.hero.skill	불꽃 돌진	Flame Rush		
 2	go	kit.sig.huang.burst	돌개 화살	Whirlwind Arrows		
@@ -1056,6 +1059,7 @@
 2	go	story.boss.king	먹구름 임금	Storm King		
 2	go	story.boss.mask	검은 가면	Black Mask		
 2	go	story.boss.mask2	금 간 검은 가면	Cracked Black Mask		
+2	go	story.boss.riftfox	틈새 서리 구미호	Rift Frost Nine-Tail		
 2	go	story.boss_up	{0}가 나타났다	{0} has appeared		
 2	go	story.ch1	제1장 · 먹구름이 오는 마을	Chapter 1 · Stormclouds Over the Village		
 2	go	story.ch1.s1	청하 촌장을 찾아가기	Visit the Elder of Cheongha		
@@ -1153,6 +1157,43 @@
 2	go	story.ch11.s9.l4	무언가라니… 오늘은 여기까지. 내일 날이 개면, 셋이서 배 안으로 들어가요.	Something…? That's enough for today. If the sky clears tomorrow, the three of us will go inside the ship.		
 2	go	story.ch11.s9.p.a	이제 심장을 켤 수 있어?	Can we restart the core now?		
 2	go	story.ch11.s9.p.b	바우가 맡긴 거야.	Bawoo entrusted it to me.		
+2	go	story.ch12	제12장 · 떨어진 별배	Chapter 12 · The Fallen Star-Ship		
+2	go	story.ch12.enter	시간 틈이 찢어지며 꼬리 아홉 달린 흰 여우가 뛰어나왔다 — 틈새 서리 구미호!	The rift tears open and a white fox with nine tails leaps out — the Rift Frost Nine-Tail!		
+2	go	story.ch12.p2	틈새 서리 구미호가 시간 틈의 서리를 둘렀다 — 불로 깨라! 여우와 매가 뛰어든다	The Rift Frost Nine-Tail wraps itself in rift frost — break it with fire! A fox and a hawk leap in		
+2	go	story.ch12.s1	기상 관측소의 하람과 이야기하기	Talk to Haram at the weather station		
+2	go	story.ch12.s1.l1	왔어요? 바늘이 또 이상해요 — 비행선 쪽 온도가 뚝뚝 떨어지는데, 반디 신호는 끊겼다 이어졌다 해요.	You're here? The needle's acting up again — the temperature by the airship keeps dropping, and Bandi's signal cuts in and out.		
+2	go	story.ch12.s1.l2	불씨는 잘 갖고 있죠? 먼저 가요. 나도 기계만 챙겨서 곧 따라갈게요!	You still have the ember, right? Go ahead. I'll grab my instruments and catch up!		
+2	go	story.ch12.s1.p.a	바로 가 볼게요.	I'll go right now.		
+2	go	story.ch12.s1.p.b	반디가 위험해요?	Is Bandi in danger?		
+2	go	story.ch12.s2	추락한 비행선의 반디에게 가기	Go to Bandi at the crashed airship		
+2	go	story.ch12.s2.l1	삐— 경고. 심장실 문을 열었습니다. 심장이… 없습니다.	Beep — warning. I opened the heart chamber. The heart is… gone.		
+2	go	story.ch12.s2.l2	시간 틈에서 흰 짐승이 나와 심장을 물고 갔습니다. 꼬리가 아홉. 발자국은 얼음굴로.	A white beast came out of the rift and carried the heart off in its jaws. Nine tails. Its tracks lead to the ice cave.		
+2	go	story.ch12.s2.l3	그 짐승은 이 시대 것이 아닙니다. 심장의 추위를 먹고 자랍니다. 서둘러 주십시오.	That beast does not belong to this age. It grows on the heart's cold. Please hurry.		
+2	go	story.ch12.s2.p.a	쫓아갈게.	I'll go after it.		
+2	go	story.ch12.s2.p.b	꼬리가 아홉?	Nine tails?		
+2	go	story.ch12.s3	흰 발자국을 따라 얼음굴 어귀로	Follow the white tracks to the ice cave mouth		
+2	go	story.ch12.s4	시간 틈에서 새어 나온 서리 무리 물리치기	Defeat the frost pack that seeped out of the rift		
+2	go	story.ch12.s5	별배 심장을 문 틈새 서리 구미호와 맞서기	Face the Rift Frost Nine-Tail that took the star-ship's heart		
+2	go	story.ch12.s6	얼음굴 앞에 날아온 반디와 심장 살피기	Check the heart with Bandi, who flew to the cave mouth		
+2	go	story.ch12.s6.l1	삐— 심장 회수. 금은 갔지만 멈추지 않았습니다.	Beep — heart recovered. It is cracked, but it has not stopped.		
+2	go	story.ch12.s6.l2	그 짐승은 틈 너머로 달아났습니다. 틈은 아직 닫히지 않았습니다 — 기록해 두겠습니다.	The beast fled beyond the rift. The rift has not closed yet — I will keep a record.		
+2	go	story.ch12.s6.l3	비행선 곁 심장 받침으로. 불씨를 원소로 불어 넣어 주십시오.	To the heart cradle beside the airship. Please breathe the ember into it with an elemental skill.		
+2	go	story.ch12.s6.p.a	이제 불씨로 켜자.	Let's light it with the ember.		
+2	go	story.ch12.s6.p.b	틈이 또 열릴까?	Will the rift open again?		
+2	go	story.ch12.s7	비행선 곁 심장 받침에 원소 스킬로 불씨 불어 넣기	Breathe the ember into the heart cradle by the airship with an elemental skill		
+2	go	story.ch12.s8	심장이 뛰는 비행선의 반디와 이야기하기	Talk to Bandi at the airship, its heart beating		
+2	go	story.ch12.s8.l1	삐— 심장 박동 확인. 선체 온도 상승. 추위 방출… 정지.	Beep — heartbeat confirmed. Hull temperature rising. Cold emission… stopped.		
+2	go	story.ch12.s8.l2	보여요? 눈이 잦아들어요! 사흘 만에 하늘이 보여요.	Do you see that? The snow is dying down! The sky's back after three days.		
+2	go	story.ch12.s8.l3	아직입니다. 날개 조각 셋이 시간 틈 너머 여러 시대에 흩어졌습니다. 그리고 그 흰 짐승도.	Not yet. Three wing fragments are scattered across other ages beyond the rift. And so is that white beast.		
+2	go	story.ch12.s8.p.a	별배는 날 수 있어?	Can the star-ship fly?		
+2	go	story.ch12.s8.p.b	이제 끝난 거야?	Is it over now?		
+2	go	story.ch12.s9	하람과 이야기하기	Talk to Haram		
+2	go	story.ch12.s9.l1	여러 시대라니… 관측원 인생에 이런 날이 올 줄이야.	Other ages… I never thought a day like this would come in a weather watcher's life.		
+2	go	story.ch12.s9.l2	결정했어요. 관측소 기록은 기계한테 맡기고, 나도 같이 갈래요. 날씨도 시간도, 재야 아는 거니까.	I've decided. I'll leave the station log to the machines and come along. Weather, time — you have to measure them to know them.		
+2	go	story.ch12.s9.l3	신호탄 활이면 여우쯤은 문제없어요. 잘 부탁해요!	With a signal-flare bow, a fox is no problem. Take care of me!		
+2	go	story.ch12.s9.p.a	같이 가요!	Let's go together!		
+2	go	story.ch12.s9.p.b	위험할 텐데요?	It'll be dangerous, you know?		
+2	go	story.ch12.win	틈새 서리 구미호 — 별배 심장을 떨구고 시간 틈 속으로 사라졌다	The Rift Frost Nine-Tail drops the star-ship's heart and vanishes into the rift		
 2	go	story.ch2	제2장 · 먹구름 제단	Chapter 2 · The Stormcloud Altar		
 2	go	story.ch2.s1	학자에게 제단 가는 길을 묻기	Ask the scholar the way to the altar		
 2	go	story.ch2.s1.l1	비문을 다 읽었어. 이무기는 너른 강 물가 서쪽, 먹구름 제단 안에 잠들어 있어.	I've finished reading the inscription. The serpent sleeps inside the Stormcloud Altar, west along the Broad River.		
@@ -2888,6 +2929,7 @@
 3	go	hero.story_elder.quote	먹구름이 걷히면 마을 잔치를 열어야지.	Once the storm clouds lift, the village must throw a feast.		
 3	go	hero.story_ferryman.quote	물 냄새가 요즘 영 비릿해.	The water has smelled off lately.		
 3	go	hero.story_haesol.quote	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
+3	go	hero.story_haram.quote	날씨도 시간도, 재야 아는 거니까.	Weather, time — you have to measure them to know them.		
 3	go	hero.story_scholar.quote	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 3	go	hero.story_wanderer.quote	너무 떨어지면 기다려 주지 않을 테니.	Fall too far behind and I won't wait.		
 3	go	hero.wd_akbar.quote	믿음은 강요로 얻어지지 않는다.	Faith is not won by force.		

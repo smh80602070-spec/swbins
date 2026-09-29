@@ -225,6 +225,8 @@ namespace Saga.Go.Data
         public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
         // 11장(⑲-29) — 산성 문루 앞(문 남쪽 22m)·호숫가 석등 자리(호수 북쪽 물가 밖)·바우가 호숫가에서 기다리는 자리·봉화 제단(문 앞 32m)
         public static readonly Vector2 BawooGate = FrostAt("fort", 3f, 22f), LakeSeal = FrostAt("lake", 0f, -36f), BawooLake = FrostAt("lake", 16f, -34f), BeaconAltar = FrostAt("fort", 0f, 32f);
+        // 12장(⑲-30) — 서리 무리·구미호는 얼음굴 어귀 남쪽 14m · 반디는 구미호 뒤 굴 앞 · 심장 받침은 비행선 곁(선체 밖)
+        public static readonly Vector2 CaveFight = FrostAt("cave", 0f, 14f), BandiCave = FrostAt("cave", 8f, 6f), HeartAt = FrostAt("ship", 4f, 7f);
 
         public static readonly Npc[] Npcs =
         {
@@ -308,11 +310,14 @@ namespace Saga.Go.Data
                     new Spot { Ch = 9, From = 7, To = 8, Frost = true, Arena = HaramFort },
                     new Spot { Ch = 10, From = 0, To = 7, Frost = true, Arena = HaramObs }, // 11장 — 관측소에서 바늘을 지킨다
                     new Spot { Ch = 10, From = 8, To = 8, Frost = true, Arena = HaramShip },
+                    new Spot { Ch = 11, From = 0, To = 5, Frost = true, Arena = HaramObs }, // 12장 — 관측소에서 기다린다, 심장이 돌아온 뒤엔 비행선 곁
+                    new Spot { Ch = 11, From = 6, To = 8, Frost = true, Arena = HaramShip },
                 },
                 IdleKey = "story.idle.haram", IdleKo = "바늘이 또 얼었네… 눈은 언제 그치려나." },
             new Npc { Id = "bandi", NameKey = "story.npc.bandi", NameKo = "조종 기계 반디", ShortKey = "story.short.bandi", ShortKo = "반디",
                 Gx = 4.5f, Gy = 0.5f, Pet = true,
-                Appear = new[] { new Spot { Ch = 9, From = 6, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 10, From = 0, To = 8, Frost = true, Arena = BandiShip } },
+                Appear = new[] { new Spot { Ch = 9, From = 6, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 10, From = 0, To = 8, Frost = true, Arena = BandiShip },
+                    new Spot { Ch = 11, From = 0, To = 4, Frost = true, Arena = BandiShip }, new Spot { Ch = 11, From = 5, To = 5, Frost = true, Arena = BandiCave }, new Spot { Ch = 11, From = 6, To = 8, Frost = true, Arena = BandiShip } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-29 11장(웹 ⑲-29) — 산성지기 바우: 문루(2·6~7단계)·호숫가(3~5단계)에 선다
             new Npc { Id = "bawoo", NameKey = "story.npc.bawoo", NameKo = "산성지기 바우", ShortKey = "story.short.bawoo", ShortKo = "바우",
@@ -1037,6 +1042,68 @@ namespace Saga.Go.Data
                             Pick("story.ch11.s9.p", "이제 심장을 켤 수 있어?", "바우가 맡긴 거야."),
                             L("bandi", "story.ch11.s9.l3", "불씨만으로는 부족합니다. 심장실 문이 안쪽에서 얼어붙었고, 시간 틈에서 무언가가 심장을 붙잡고 있습니다."),
                             L("haram", "story.ch11.s9.l4", "무언가라니… 오늘은 여기까지. 내일 날이 개면, 셋이서 배 안으로 들어가요."),
+                        } },
+                }
+            },
+            // 109-14-30 12장(웹 ⑲-30) — 떨어진 별배: 관측소 → 비행선(반디) → 얼음굴 어귀 → 서리 무리 → 틈새 서리 구미호(빙 방패 2단계) → 반디 → 심장 받침 → 반디 → 하람 합류 = 2부 끝.
+            // 눈여우·회오리매는 14-1b(새 원소 괴물 몸) 전까지 옛 몸에 그 원소(빙·풍)를 덧씌우고, 구미호도 물귀신 몸을 키워 빙으로 둘렀다(틈새 질주만 새 수 Rift).
+            new Chapter
+            {
+                Id = "ch12", NameKey = "story.ch12", NameKo = "제12장 · 떨어진 별배", Ar = 30, Join = "story_haram",
+                Gold = 3500, Mats = new[] { 0, 4, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "haram", TextKey = "story.ch12.s1", TextKo = "기상 관측소의 하람과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haram", "story.ch12.s1.l1", "왔어요? 바늘이 또 이상해요 — 비행선 쪽 온도가 뚝뚝 떨어지는데, 반디 신호는 끊겼다 이어졌다 해요."),
+                            Pick("story.ch12.s1.p", "바로 가 볼게요.", "반디가 위험해요?"),
+                            L("haram", "story.ch12.s1.l2", "불씨는 잘 갖고 있죠? 먼저 가요. 나도 기계만 챙겨서 곧 따라갈게요!"),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch12.s2", TextKo = "추락한 비행선의 반디에게 가기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch12.s2.l1", "삐— 경고. 심장실 문을 열었습니다. 심장이… 없습니다."),
+                            L("bandi", "story.ch12.s2.l2", "시간 틈에서 흰 짐승이 나와 심장을 물고 갔습니다. 꼬리가 아홉. 발자국은 얼음굴로."),
+                            Pick("story.ch12.s2.p", "쫓아갈게.", "꼬리가 아홉?"),
+                            L("bandi", "story.ch12.s2.l3", "그 짐승은 이 시대 것이 아닙니다. 심장의 추위를 먹고 자랍니다. 서둘러 주십시오."),
+                        } },
+                    new Step { Type = StepType.Go, Frost = true, Arena = FrostAt("cave", 0f, 0f), TextKey = "story.ch12.s3", TextKo = "흰 발자국을 따라 얼음굴 어귀로" },
+                    new Step { Type = StepType.Kill, Frost = true, Arena = CaveFight,
+                        Foes = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                        TextKey = "story.ch12.s4", TextKo = "시간 틈에서 새어 나온 서리 무리 물리치기" },
+                    new Step { Type = StepType.Duel, Frost = true, Arena = CaveFight, Foes = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                        BossKey = "story.boss.riftfox", BossKo = "틈새 서리 구미호", HpMul = 12f, AtkMul = 2.2f, ScaleMul = 1.9f,
+                        Rot = new[] { FieldEnemy.BossMove.Rift, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Spit, FieldEnemy.BossMove.Rift, FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Halo },
+                        P2El = GoElement.Cryo, Adds = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        EnterKey = "story.ch12.enter", EnterKo = "시간 틈이 찢어지며 꼬리 아홉 달린 흰 여우가 뛰어나왔다 — 틈새 서리 구미호!",
+                        P2Key = "story.ch12.p2", P2Ko = "틈새 서리 구미호가 시간 틈의 서리를 둘렀다 — 불로 깨라! 여우와 매가 뛰어든다",
+                        WinKey = "story.ch12.win", WinKo = "틈새 서리 구미호 — 별배 심장을 떨구고 시간 틈 속으로 사라졌다",
+                        TextKey = "story.ch12.s5", TextKo = "별배 심장을 문 틈새 서리 구미호와 맞서기" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch12.s6", TextKo = "얼음굴 앞에 날아온 반디와 심장 살피기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch12.s6.l1", "삐— 심장 회수. 금은 갔지만 멈추지 않았습니다."),
+                            L("bandi", "story.ch12.s6.l2", "그 짐승은 틈 너머로 달아났습니다. 틈은 아직 닫히지 않았습니다 — 기록해 두겠습니다."),
+                            Pick("story.ch12.s6.p", "이제 불씨로 켜자.", "틈이 또 열릴까?"),
+                            L("bandi", "story.ch12.s6.l3", "비행선 곁 심장 받침으로. 불씨를 원소로 불어 넣어 주십시오."),
+                        } },
+                    new Step { Type = StepType.Light, Frost = true, Arena = HeartAt, TextKey = "story.ch12.s7", TextKo = "비행선 곁 심장 받침에 원소 스킬로 불씨 불어 넣기" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch12.s8", TextKo = "심장이 뛰는 비행선의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch12.s8.l1", "삐— 심장 박동 확인. 선체 온도 상승. 추위 방출… 정지."),
+                            L("haram", "story.ch12.s8.l2", "보여요? 눈이 잦아들어요! 사흘 만에 하늘이 보여요."),
+                            Pick("story.ch12.s8.p", "별배는 날 수 있어?", "이제 끝난 거야?"),
+                            L("bandi", "story.ch12.s8.l3", "아직입니다. 날개 조각 셋이 시간 틈 너머 여러 시대에 흩어졌습니다. 그리고 그 흰 짐승도."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "haram", TextKey = "story.ch12.s9", TextKo = "하람과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haram", "story.ch12.s9.l1", "여러 시대라니… 관측원 인생에 이런 날이 올 줄이야."),
+                            L("haram", "story.ch12.s9.l2", "결정했어요. 관측소 기록은 기계한테 맡기고, 나도 같이 갈래요. 날씨도 시간도, 재야 아는 거니까."),
+                            Pick("story.ch12.s9.p", "같이 가요!", "위험할 텐데요?"),
+                            L("haram", "story.ch12.s9.l3", "신호탄 활이면 여우쯤은 문제없어요. 잘 부탁해요!"),
                         } },
                 }
             },

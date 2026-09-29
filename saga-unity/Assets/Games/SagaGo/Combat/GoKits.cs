@@ -108,6 +108,11 @@ namespace Saga.Go.Combat
                     s = S(KitSkillType.Shells, "kit.sig.haesol.skill", "먹구름 벼락", 8f, 2.3f); s.Reach = 12f; s.N = 3; s.Delay = 0.5f; s.R = 2.4f;
                     b = B(KitBurstType.Infuse, "kit.sig.haesol.burst", "가면 없는 노래", 6.5f, 3.6f); b.Sec = 10f; b.NMul = 1.2f;
                     break;
+                // 109-14-30 하람(웹 kits.js story_haram) — 있는 틀(zone·rally)만
+                case "story_haram":
+                    s = S(KitSkillType.Zone, "kit.sig.haram.skill", "휴대 관측기", 11f, 0.8f); s.R = 5f; s.Sec = 10f; s.Every = 1.2f; s.N = 2; s.Energy = 1.5f;
+                    b = B(KitBurstType.Rally, "kit.sig.haram.burst", "맑음 예보", 7f, 3.2f); b.Sec = 12f; b.Atk = 1.25f;
+                    break;
                 default:
                     return null;
             }
