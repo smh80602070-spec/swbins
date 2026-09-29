@@ -35,6 +35,7 @@
     if (!sc.said || typeof sc.said !== 'object') { sc.said = {}; }
     if (!sc.cnt || typeof sc.cnt !== 'object') { sc.cnt = { kill: 0, rescue: 0 }; }
     if (!sc.choices || typeof sc.choices !== 'object') { sc.choices = {}; }
+    if (!Array.isArray(sc.titles)) { sc.titles = []; }
     if (typeof sc.step !== 'number') { sc.step = 0; }
     if (!sc.init) {
       sc.init = 1;
@@ -120,6 +121,7 @@
     if (rw.exp) { core.gainExp(rw.exp); bits.push('경험치 ' + core.fmt(rw.exp)); }
     if (rw.gold) { core.save.player.gold += rw.gold; bits.push('금 ' + core.fmt(rw.gold)); }
     if (rw.feat) { core.gainFeat(rw.feat, '이야기'); bits.push('공적 ' + rw.feat); }
+    if (rw.title) { var ts = raw().titles; if (ts.indexOf(rw.title) < 0) { ts.push(rw.title); } bits.push('🏷️ 칭호 「' + rw.title + '」'); }
     return bits;
   }
 
@@ -188,14 +190,20 @@
   function cardHtml() {
     if (!on()) { return ''; }
     var h = hint(), L = list(), esc = core.esc || function (t) { return String(t).replace(/[&<>"]/g, function (m) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]; }); };
-    var html = '<div class="sec"><h4>📖 이야기 · 1막 중원의 난</h4>';
+    var html = '', act = null;
     L.forEach(function (x) {
+      var a = CD().actOf(x.ch);
+      if (a !== act) {
+        if (act) { html += '</div>'; }
+        act = a;
+        html += '<div class="sec"><h4>📖 이야기 · ' + esc(CD().ACTS[a] || (a + '막')) + '</h4>';
+      }
       html += '<div class="card' + (x.state === 'done' ? ' on' : '') + '"><div class="stat-row"><span><b>제' + x.ch.no + '장 · ' + esc(x.ch.title) + '</b></span>' +
         '<span class="muted">' + (x.state === 'done' ? '✅ 끝' : x.state === 'now' ? '▶ 지금' : '') + '</span></div>' +
         '<div class="stat-row"><span class="muted">' + esc(x.ch.blurb) + '</span></div>' +
         (x.state === 'now' && h && h.ch === x.ch ? '<div class="stat-row"><b>' + esc(h.text) + '</b></div>' : '') + '</div>';
     });
-    if (!current()) { html += '<div class="hint">지금 있는 이야기는 여기까지입니다. 다음 막은 곧 이어집니다.</div>'; }
+    if (!current()) { html += '<div class="hint">' + (raw().titles.length ? '🏷️ 「' + esc(raw().titles.join('」 「')) + '」 — ' : '') + '지금 있는 이야기는 여기까지입니다. 6막은 곧 이어집니다.</div>'; }
     return html + '</div>';
   }
 
@@ -282,7 +290,7 @@
   global.DG = global.DG || {};
   global.DG.scenario = {
     init: init, check: check, current: current, hint: hint, list: list, cardHtml: cardHtml, on: on,
-    state: raw, isOpen: function () { return !!cur; }, currentScene: function () { return cur; },
+    state: raw, titles: function () { return raw().titles.slice(); }, isOpen: function () { return !!cur; }, currentScene: function () { return cur; },
     next: next, skip: skip, pick: pick, choice: function (id) { return raw().choices[id] || null; }, abort: function () { cur = null; paint(); },
     reset: function () { core.save.scenario = undefined; cur = null; paint(); }
   };

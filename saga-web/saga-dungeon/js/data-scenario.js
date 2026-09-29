@@ -1,7 +1,8 @@
 /**
  * 시나리오 표 — 사가블로 "이름이 지워지는 나라" (정본 `../../../scenario/saga-dungeon.md`)
  * ---------------------------------------------------------------
- * 지금은 **1막 · 중원의 난(과거 중심, 굴혈 1~5층) 세 장**과 **2막 · 잿빛과 소금(현대 중심, 굴혈 6~10층) 세 장**이 있다. 3막~은 이 표 끝에 장을 덧붙이면 된다.
+ * 1막 · 중원의 난(과거)·2막 · 잿빛과 소금(현대)·3막 · 불타는 남쪽(미래+신화)·4막 · 모래와 눈과 고철·5막 · 이름 없는 곳 — 다섯 막 열여섯 장이 있다.
+ * 카드의 defend(태양로 제어반)·climb(케이블카)·duel(무명왕 세 단계)·31층 새 명소 층은 새 시스템이 있어야 해서 만들지 않고 이야기 장면으로 대신했다(정본 트랙 메모). 6막~은 이 표 끝에 장을 덧붙이면 된다.
  * 인물은 전부 가상이다(이름 정책) — 'me' 는 부대 선두 인물(도감 가명)이다.
  *
  * 한 장 = { id, no, title, stage, need, after, mix, steps, reward, blurb, legacy? }
@@ -16,7 +17,7 @@
  *     { t: 'region',   key }                  큰 지도에서 그 지역에 처음 발을 들인다(사연 사슬이 열린 것으로 봄)
  *   talk 단계의 `by: 고르기id` — 그 고르기의 답에 따라 장면 id 가 `scene_답key`(안 골랐으면 첫 갈래)
  *   legacy { floor }   옛 세이브 — 최고 층이 그 이상이면 이 장은 보상 없이 지나온 길로 본다
- *   reward { exp, gold, feat }
+ *   reward { exp, gold, feat, title }   title = 칭호(문자열)
  *
  * 장면 `choice: { id, prompt, options:[{ key, label, reward? }] }` — 마지막 줄 뒤에 고르기 단추가 뜬다. 답은 `save.scenario.choices[id]`, `reward` 는 고른 즉시 준다.
  * 장면 한 줄 = [누가, 말] — 누가 = 'me' 또는 CAST 키.
@@ -31,7 +32,14 @@
     guard:    { name: '벌판 역참지기',    emoji: '🏮' },
     danchu:   { name: '고물 줍는 아이 단추', emoji: '🧒' },
     boatman:  { name: '염전 늙은 뱃사공', emoji: '🚣' },
-    lord:     { name: '망루성 성주의 망령', emoji: '👑' }
+    lord:     { name: '망루성 성주의 망령', emoji: '👑' },
+    soyeon:   { name: '떠돌이 퇴마사 소연', emoji: '🔮' },
+    mechanic: { name: '개척지 정비공',    emoji: '🔧' },
+    mumyeong: { name: '이름을 삼키는 목소리', emoji: '🌑' },
+    caravan:  { name: '대상 우두머리',    emoji: '🐫' },
+    cable:    { name: '케이블카 기사',    emoji: '🚡' },
+    kkik:     { name: '수리 로봇 끽',     emoji: '🤖' },
+    taoist:   { name: '사당지기 도사',    emoji: '☁️' }
   };
 
   var SCENES = {
@@ -97,6 +105,94 @@
     fort2_seal: { title: '제6장 · 무너진 망루성', lines: [
       ['lord', '이름을 빼앗겼지만… 성을 지킬 갑주는 남는군. 가져가라, 이 조각을.'],
       ['mukhyang', '봉인된 이름은 제 기록에 따로 적어 두겠습니다. 어떤 결정이든 기록은 남습니다.']
+    ] },
+    rg1: { title: '제7장 · 갈라진 땅의 문지기', lines: [
+      ['soyeon', '떠돌이 퇴마사 소연이오. 균열은 무명혈의 곁가지요. 문지기 겁옥이 그 문을 지키며 이름을 걸러 내고 있소.'],
+      ['me', '균열에 버스 한 대가 떨어져 있었습니다. 안에는 아무도 없고 창문마다 별바다 손님들이 매달려 있더군요.'],
+      ['soyeon', '시대 손님이오. 문이 열리는 대로 다른 시대의 것이 끼어들지. 봉인비 앞에서 문지기를 상대해 주시오.']
+    ] },
+    rg2: { title: '제7장 · 갈라진 땅의 문지기', lines: [
+      ['soyeon', '봉인비에 새 글자가 새겨졌소. 균열이 멈췄고 부적 던전도 열 수 있게 되었소. 이 부적을 받으시오.'],
+      ['mukhyang', '문지기의 창끝에도 이름이 없었습니다. 겁옥이라는 이름조차 누군가에게서 빌린 듯했지요.']
+    ] },
+    sf1: { title: '제8장 · 과열된 태양로', lines: [
+      ['mechanic', '태양로 온도가 계속 올라요. 발전 설비도 미쳐 날뛰고, 거신 하나가 로 한복판에 선 채 움직이지 않아요. 개척지 우물 곁에 천막을 쳤는데 밤마다 뜨겁습니다.'],
+      ['me', '균열의 열을 먹고 폭주하는군요. 제어반 근처까지 무리를 몰아내겠습니다.']
+    ] },
+    sf2: { title: '제8장 · 과열된 태양로', lines: [
+      ['mechanic', '태양판 위로 다시 새가 앉았어요! 개척지에 불이 들어왔습니다.'],
+      ['me', '거신의 등에서 굴혈로 이어지는 관을 보았습니다. 이 열도 굴혈에서 온 것이더군요.']
+    ] },
+    bw1: { title: '제9장 · 흑풍 산채', lines: [
+      ['mukhyang', '15층에 흑풍 산채가 있습니다. 채주는 이름을 팔아 힘을 샀다고 합니다. 무전기와 총포까지 갖췄다는 소문이에요.'],
+      ['me', '경비 보행기가 산채 앞에 서 있는 것도 보았습니다. 도적들이 다른 시대의 것을 산 셈이군요.']
+    ] },
+    bw2: { title: '제9장 · 흑풍 산채', lines: [
+      ['mukhyang', '채주가 쓰러졌습니다. 그의 이름은 채주가 되기 전에 지워졌더군요. 굴혈이 이름을 사 간 것입니다.'],
+      ['me', '한 사람의 이름이 아니라, 이름이 팔리는 장사가 있었던 것입니다.']
+    ] },
+    pal1: { title: '제10장 · 가라앉은 용궁', lines: [
+      ['mukhyang', '20층은 물에 잠긴 용궁입니다. 용궁 기와 아래로 잠수 장비의 잔해가 흩어져 있고, 수압 돔이 반쯤 남아 있다고 합니다.'],
+      ['me', '용궁지기를 상대해야 아래로 갈 수 있겠지요. 내려가 보겠습니다.']
+    ] },
+    pal2: { title: '제10장 · 가라앉은 용궁', lines: [
+      ['mumyeong', '…이름을 다오. 너도 이름이 있지 않으냐. 나는 그것을 먹으며 자랐다. 이름을 다오.'],
+      ['me', '누구냐! 바닥에서 목소리가 들립니다. 이름을 먹는다고?'],
+      ['mukhyang', '무명혈의 주인입니다. 이 굴혈 전체가 그의 몸이었어요. 기록을 서둘러야 합니다.']
+    ] },
+    car1: { title: '제11장 · 끊긴 대상 길', lines: [
+      ['caravan', '서역 길목이 막힌 지 석 달째요. 낙타도 짐도 돌아오지 않소. 모래에 트럭이 박혀 있고 묻힌 유적 속에서는 빛 문이 열려 있다는 말도 있소.'],
+      ['me', '모래바다 폭군이 길을 막고 있다지요. 대상 길부터 열겠습니다.']
+    ] },
+    car2: { title: '제11장 · 끊긴 대상 길', lines: [
+      ['caravan', '방울 소리가 다시 들리오! 비단 한 필을 남기고 가겠소. 이 길이 열렸으니 더 많은 이름이 돌아올 게요.']
+    ] },
+    snow1: { title: '제12장 · 산성의 거한', lines: [
+      ['cable', '산성 폐허에 누가 눌러앉아 케이블카가 끊겼어요. 골짜기가 고립됐습니다. 칸 안에 커다란 손자국이 얼어붙어 있었고요.'],
+      ['me', '케이블카를 다시 돌려 산성으로 오르겠습니다. 거한이 있다면 그 자리에서 만나지요.']
+    ] },
+    snow2: { title: '제12장 · 산성의 거한', lines: [
+      ['cable', '케이블카가 다시 움직여요! 골짜기에 불빛이 켜졌습니다.'],
+      ['me', '거한의 몸에 냉각관이 박혀 있었습니다. 산 위의 눈은 이 땅의 것이 아니었군요.']
+    ] },
+    scr1: { title: '제13장 · 스스로 일어선 고철', lines: [
+      ['kkik', '끽… 제 이름은 끽입니다. 쓰러진 기계들이 하나씩 사라져요. 누군가 모으고 있어요. 저는 제 이름을 꽉 붙잡아서 멀쩡합니다.'],
+      ['me', '이름을 먹고 일어선 기계라면 고철 거신이겠군요. 옛 감시탑 곁으로 가 보겠습니다.']
+    ] },
+    scr2: { title: '제13장 · 스스로 일어선 고철', lines: [
+      ['kkik', '황무지의 기계들이 잠들었어요. 이제 나사 한 줌을 드릴게요. 저도 함께 갈래요. 이름을 지키는 법을 알려 드릴 수 있어요.'],
+      ['me', '든든한 동행이 생겼습니다. 마을에서 수리도 부탁드리겠습니다.']
+    ] },
+    hg1: { title: '제14장 · 업화 대문', lines: [
+      ['mukhyang', '25층 업화 대문입니다. 돌기둥에 경고 표지판이 붙어 있고, 문지기의 기계 팔이 문을 지킵니다. 문 너머는 천계로 이어져 있다지요.'],
+      ['me', '경고 표지판은 어느 시대 글자로 쓰여 있었습니다. 문 너머가 두렵지만 가야겠습니다.']
+    ] },
+    hg2: { title: '제14장 · 업화 대문', lines: [
+      ['mukhyang', '문이 열렸습니다. 이제 천계 사당이 눈앞입니다. 마지막 막이 다가옵니다.'],
+      ['me', '이름이 돌아오는 날까지 걷겠습니다.']
+    ] },
+    hv1: { title: '제15장 · 칼을 든 수호장', lines: [
+      ['taoist', '하늘 사당의 수호장이 사당을 버렸소. 그 칼끝이 이제 우리를 향하오. 비석에 빛이 꺼지고 엘리베이터도 무너졌소.'],
+      ['me', '수호장은 무명왕에게 이름을 판 첫 장수라 들었습니다. 구름 위 금궐까지 올라가겠습니다.']
+    ] },
+    hv2: { title: '제15장 · 칼을 든 수호장', lines: [
+      ['taoist', '비석에 빛이 돌아왔소. 구주를 평정한 이는 그대가 되겠구려.'],
+      ['mukhyang', '타락 천장군이 쓰러졌습니다. 이제 남은 것은 이름을 먹는 자 하나입니다. 무명왕이 눈앞에 있습니다.']
+    ] },
+    nl1: { title: '제16장 · 이름 없는 곳', lines: [
+      ['mumyeong', '어서 오라. 내가 먹은 이름들이 세 시대의 모습으로 나를 지킨다 — 장수, 폭주족, 기계. 너도 이름을 내놓으라.'],
+      ['me', '지워진 이름은 돌려받겠습니다. 비석 숲에 이름을 되돌리는 것이 제 일입니다.'],
+      ['mukhyang', '제 기록에 적은 이름이 모두 이곳에 있습니다. 하나씩 되찾읍시다.']
+    ] },
+    nl2_restore: { title: '제16장 · 이름 없는 곳', lines: [
+      ['mumyeong', '…이름들이 돌아간다. 비석이 다시 글자를 얻는구나.'],
+      ['lord', '내 이름도 돌아왔으니 이 싸움에 함께하겠다. 성을 떠나 네 곁에 서리라.'],
+      ['mukhyang', '기록이 끝났습니다. 지워졌던 비석의 이름이 모두 되돌아왔어요. 당신은 이름을 찾은 자입니다.']
+    ] },
+    nl2_seal: { title: '제16장 · 이름 없는 곳', lines: [
+      ['mumyeong', '…이름들이 돌아간다. 비석이 다시 글자를 얻는구나.'],
+      ['mukhyang', '봉인했던 망루성 성주의 이름은 제 기록에 따로 남겨 두었습니다. 다 돌려주지는 못했지만 대부분 되돌렸어요.'],
+      ['me', '기록은 남았고 굴혈은 조용해졌습니다. 저는 이름을 찾은 자로 남겠습니다.']
     ] },
     tomb2: { title: '제3장 · 순장 왕릉', lines: [
       ['yeoldusi', '살았다! 저는 시간 여행자 열두시입니다. 이 굴혈의 구멍은 우리 시대 지도에 없습니다 — 무명혈이라 불리는 지도에 없는 구멍이죠.'],
@@ -178,7 +274,76 @@
         { t: 'landmark', key: 'fort' },
         { t: 'talk', scene: 'fort2', by: 'fort' }
       ],
-      reward: { exp: 600, gold: 5000, feat: 30 } }
+      reward: { exp: 600, gold: 5000, feat: 30 } },
+
+    { id: 'a3_riftgate', no: 7, title: '갈라진 땅의 문지기', stage: '지옥 균열', need: 0, after: 'a2_watchtower',
+      blurb: '퇴마사 소연이 쫓던 문지기 겁옥 — 균열은 무명혈의 곁가지.',
+      mix: { past: '퇴마사·부적', now: '균열에 떨어진 버스', future: '균열 속 별바다 손님' },
+      legacy: { floor: 11 },
+      steps: [{ t: 'region', key: 'hellgate' }, { t: 'talk', scene: 'rg1' }, { t: 'chain', key: 'hellgate' }, { t: 'talk', scene: 'rg2' }],
+      reward: { exp: 900, gold: 8000 } },
+
+    { id: 'a3_sunfurnace', no: 8, title: '과열된 태양로', stage: '태양 신도시', need: 0, after: 'a3_riftgate',
+      blurb: '개척지 정비공 — 태양로가 균열의 열을 먹고 폭주한다.',
+      mix: { past: '개척지 우물·천막', now: '발전 설비', future: '태양로 거신' },
+      legacy: { floor: 13 },
+      steps: [{ t: 'region', key: 'solar' }, { t: 'talk', scene: 'sf1' }, { t: 'chain', key: 'solar' }, { t: 'talk', scene: 'sf2' }],
+      reward: { exp: 1100, gold: 9000 } },
+
+    { id: 'a3_blackwind', no: 9, title: '흑풍 산채', stage: '굴혈 11~15층', need: 0, after: 'a3_sunfurnace',
+      blurb: '15층 흑풍 채주 — 도적 떼가 이름을 팔아 힘을 샀다.',
+      mix: { past: '산채 도적', now: '채주의 무전기·총포', future: '경비 보행기' },
+      legacy: { floor: 15 },
+      steps: [{ t: 'talk', scene: 'bw1' }, { t: 'floor', n: 15 }, { t: 'landmark', key: 'bandit' }, { t: 'talk', scene: 'bw2' }],
+      reward: { exp: 1300, gold: 10000, feat: 40 } },
+
+    { id: 'a3_palace', no: 10, title: '가라앉은 용궁', stage: '굴혈 16~20층', need: 0, after: 'a3_blackwind',
+      blurb: '20층 용궁지기를 치자 바닥에서 처음으로 목소리가 들린다 — "이름을 다오".',
+      mix: { past: '용궁 기와', now: '잠수 장비 잔해', future: '수압 돔' },
+      legacy: { floor: 20 },
+      steps: [{ t: 'talk', scene: 'pal1' }, { t: 'floor', n: 20 }, { t: 'landmark', key: 'palace' }, { t: 'talk', scene: 'pal2' }],
+      reward: { exp: 1600, gold: 12000, feat: 50 } },
+
+    { id: 'a4_caravan', no: 11, title: '끊긴 대상 길', stage: '서역 모랫길', need: 0, after: 'a3_palace',
+      blurb: '대상 우두머리 — 모래가 묻힌 유적째 대상 길을 삼켰다.',
+      mix: { past: '대상·묻힌 유적', now: '모래에 박힌 트럭', future: '유적 속 빛 문' },
+      legacy: { floor: 21 },
+      steps: [{ t: 'region', key: 'silkroad' }, { t: 'talk', scene: 'car1' }, { t: 'chain', key: 'silkroad' }, { t: 'talk', scene: 'car2' }],
+      reward: { exp: 2000, gold: 15000 } },
+
+    { id: 'a4_snowfort', no: 12, title: '산성의 거한', stage: '북방 설산', need: 0, after: 'a4_caravan',
+      blurb: '케이블카 기사 — 멈춘 케이블카를 다시 돌려 산성으로.',
+      mix: { past: '산성 폐허', now: '케이블카', future: '거한 몸의 냉각관' },
+      legacy: { floor: 22 },
+      steps: [{ t: 'region', key: 'snowfort' }, { t: 'talk', scene: 'snow1' }, { t: 'chain', key: 'snowfort' }, { t: 'talk', scene: 'snow2' }],
+      reward: { exp: 2200, gold: 17000 } },
+
+    { id: 'a4_scrap', no: 13, title: '스스로 일어선 고철', stage: '기계 황무지', need: 0, after: 'a4_snowfort',
+      blurb: '수리 로봇 끽 — 고철 거신은 이름을 먹고 일어선 기계다. 끽은 제 이름을 지켜 멀쩡하다.',
+      mix: { past: '황무지 옛 감시탑', now: '기계 더미·폐차', future: '홀로그램 표지·끽' },
+      legacy: { floor: 23 },
+      steps: [{ t: 'region', key: 'scrap' }, { t: 'talk', scene: 'scr1' }, { t: 'chain', key: 'scrap' }, { t: 'talk', scene: 'scr2' }],
+      reward: { exp: 2400, gold: 20000 } },
+
+    { id: 'a4_hellgate', no: 14, title: '업화 대문', stage: '굴혈 21~25층', need: 0, after: 'a4_scrap',
+      blurb: '25층 업화 문지기 — 문 너머가 천계로 이어진다.',
+      mix: { past: '지옥문 돌기둥', now: '문에 걸린 경고 표지판', future: '문지기의 기계 팔' },
+      legacy: { floor: 25 },
+      steps: [{ t: 'talk', scene: 'hg1' }, { t: 'floor', n: 25 }, { t: 'landmark', key: 'hellgate' }, { t: 'talk', scene: 'hg2' }],
+      reward: { exp: 2800, gold: 25000, feat: 60 } },
+
+    { id: 'a5_heaven', no: 15, title: '칼을 든 수호장 · 구름 위 금궐', stage: '천계 사당 · 굴혈 26~30층', need: 0, after: 'a4_hellgate',
+      blurb: '사당지기 도사의 사슬을 끝내고 30층 금궐 — 타락 천장군은 무명왕에게 이름을 판 첫 장수.',
+      mix: { past: '사당·도사', now: '사당 안 무너진 엘리베이터', future: '홀로그램 비석' },
+      legacy: { floor: 30 },
+      steps: [{ t: 'talk', scene: 'hv1' }, { t: 'chain', key: 'heaven' }, { t: 'floor', n: 30 }, { t: 'landmark', key: 'heaven' }, { t: 'talk', scene: 'hv2' }],
+      reward: { exp: 4000, gold: 40000, feat: 100 } },
+
+    { id: 'a5_nameless', no: 16, title: '이름 없는 곳', stage: '굴혈 끝', need: 0, after: 'a5_heaven',
+      blurb: '무명왕 — 먹은 이름들이 세 시대 모습으로 번갈아 나온다. 지워졌던 비석 이름이 되돌아온다. (31층 전투는 아직 없다 — 이야기로 맺는다)',
+      mix: { past: '비석 숲', now: '도시 잔해 조각', future: '빛 기둥' },
+      steps: [{ t: 'talk', scene: 'nl1' }, { t: 'talk', scene: 'nl2', by: 'fort' }],
+      reward: { exp: 8000, gold: 80000, feat: 200, title: '이름을 찾은 자' } }
   ];
 
   /** 장면에 달린 고르기를 id 로 찾는다 */
@@ -189,11 +354,14 @@
     return null;
   }
 
+  var ACTS = { 1: '1막 · 중원의 난', 2: '2막 · 잿빛과 소금', 3: '3막 · 불타는 남쪽', 4: '4막 · 모래와 눈과 고철', 5: '5막 · 이름 없는 곳' };
+  function actOf(ch) { return Number(String(ch.id).charAt(1)) || 1; }
+
   function chapter(id) {
     for (var i = 0; i < CHAPTERS.length; i++) { if (CHAPTERS[i].id === id) { return CHAPTERS[i]; } }
     return null;
   }
 
   global.DG = global.DG || {};
-  global.DG.scenarioData = { CAST: CAST, SCENES: SCENES, CHAPTERS: CHAPTERS, chapter: chapter, choiceOf: choiceOf };
+  global.DG.scenarioData = { CAST: CAST, SCENES: SCENES, CHAPTERS: CHAPTERS, ACTS: ACTS, actOf: actOf, chapter: chapter, choiceOf: choiceOf };
 })(window);

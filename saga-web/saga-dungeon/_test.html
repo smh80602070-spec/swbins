@@ -375,9 +375,63 @@ window.requestAnimationFrame = function () { return 0; };
         DN.fixedState()[10] = { clears: 1, firstAt: 1 }; C.emit('changed');
         if (cur() !== 'fort2_seal') { bad.push('고른 결말 장면 ' + cur()); }
         say();
-        if (!SC.state().done.a2_watchtower || SC.current() !== null) { bad.push('제6장 끝'); }
+        if (!SC.state().done.a2_watchtower || !SC.current() || SC.current().id !== 'a3_riftgate') { bad.push('제6장 끝·다음 장 ' + (SC.current() && SC.current().id)); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '지역 발 들이기 → 사슬 둘 → 10층 → 고르기(건너뛰기로 안 닫힘·없는 답 거절) → 봉인 보상·결말 장면 → 2막 끝';
+      } finally {
+        window.DG_NO_SCENARIO = true;
+        SC.abort(); T.active = keep.act;
+        C.save.scenario = keep.sc ? JSON.parse(keep.sc) : undefined;
+        C.save.dungeon = JSON.parse(keep.d) || undefined; C.save.quest = JSON.parse(keep.q) || undefined; C.save.player = JSON.parse(keep.p);
+        var fx2 = DN.fixedState(); Object.keys(fx2).forEach(function (k) { delete fx2[k]; }); var fk = JSON.parse(keep.fs); Object.keys(fk).forEach(function (k) { fx2[k] = fk[k]; });
+      }
+    });
+
+    t('시나리오 3~5막 — 균열·태양로·산채·용궁·모래·설산·고철·업화 대문·천계·이름 없는 곳으로 열여섯 장이 끝나고 칭호를 얻는다', function () {
+      var SC = DG.scenario, T = DG.town, DN = DG.dungeon, D = DG.scenarioData, bad = [];
+      var keep = { sc: C.save.scenario ? JSON.stringify(C.save.scenario) : null, d: JSON.stringify(C.save.dungeon || null),
+        q: JSON.stringify(C.save.quest || null), p: JSON.stringify(C.save.player), fs: JSON.stringify(DN.fixedState()), act: T.active };
+      function say() { var k = 0; while (SC.isOpen() && k++ < 30) { SC.next(); } }
+      function fixedOf(key) { return DG.dungeonData.FIXED.filter(function (f) { return f.key === key; })[0]; }
+      window.DG_NO_SCENARIO = false;
+      try {
+        T.active = function () { return true; };
+        if (!C.save.dungeon) { C.save.dungeon = { best: 0, runs: 0, kills: 0, clears: 0, mode: 'normal' }; }
+        C.save.dungeon.best = 10;
+        if (!C.save.quest) { C.save.quest = { mainIdx: 0, mainHave: 0, region: {}, eventIdx: 0, eventHave: 0, random: null }; }
+        C.save.quest.chain = {};
+        var fx = DN.fixedState(); Object.keys(fx).forEach(function (k) { delete fx[k]; });
+        SC.reset();
+        var st0 = SC.state(); st0.done = { a1_moru: 1, a1_blackflag: 1, a1_tomb: 1, a2_factory: 1, a2_tideflat: 1, a2_watchtower: 1 };
+        st0.choices = { fort: 'seal' };
+        SC.init();
+        var g0 = C.save.player.gold, guard = 0, seen = [];
+        // 열 개 장을 차례로 — 지금 단계를 표가 시키는 대로 채운다
+        while (SC.current() && guard++ < 140) {
+          var ch = SC.current(), ss = SC.state(), step = ch.steps[ss.ch === ch.id ? ss.step : 0];
+          if (seen.indexOf(ch.id) < 0) { seen.push(ch.id); }
+          if (!step) { break; }
+          if (SC.isOpen()) { say(); continue; }
+          if (step.t === 'region') { C.save.quest.chain[step.key] = { step: 0, have: 0, done: false }; }
+          else if (step.t === 'chain') { C.save.quest.chain[step.key] = { step: 3, have: 0, done: true }; }
+          else if (step.t === 'floor') { C.save.dungeon.best = Math.max(C.save.dungeon.best, step.n); }
+          else if (step.t === 'landmark') { DN.fixedState()[fixedOf(step.key).floor] = { clears: 1, firstAt: 1 }; }
+          else if (step.t === 'talk') { SC.check(); }
+          C.emit('changed');
+          if (SC.isOpen()) { say(); }
+        }
+        var want = D.CHAPTERS.slice(6, 15).map(function (c) { return c.id; });   // 마지막 장(이야기만)은 앞 장 끝 장면에 이어져 한 번에 지나간다
+        if (seen.join(',') !== want.join(',') || !SC.state().done.a5_nameless) { bad.push('장 순서 ' + seen.join(',')); }
+        if (SC.current() !== null || SC.hint() !== null) { bad.push('끝났는데 힌트 ' + (SC.current() && SC.current().id)); }
+        if (SC.titles().indexOf('이름을 찾은 자') < 0) { bad.push('칭호 ' + JSON.stringify(SC.titles())); }
+        if (!SC.state().said.nl2_seal || SC.state().said.nl2_restore) { bad.push('고른 결말 장면(봉인) ' + JSON.stringify(Object.keys(SC.state().said).filter(function (k) { return /^nl2/.test(k); }))); }
+        if (C.save.player.gold < g0 + 200000) { bad.push('보상 합 ' + (C.save.player.gold - g0)); }
+        if (!/이름 없는 곳/.test(SC.cardHtml()) || !/3막/.test(SC.cardHtml())) { bad.push('카드 막 머리글'); }
+        // 옛 세이브 — 30층까지 가 본 세이브는 3~5막의 앞 열 장을 건너뛰고 마지막 장만 남는다
+        SC.reset(); C.save.dungeon.best = 30; C.save.player.gold = g0;
+        if (!SC.current() || SC.current().id !== 'a5_nameless') { bad.push('옛 세이브 건너뜀 ' + (SC.current() && SC.current().id)); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '3막~5막 열 장 차례로 끝 · 고른 결말(봉인) 장면 · 칭호 이름을 찾은 자 · 막 머리글 · 옛 세이브 건너뜀';
       } finally {
         window.DG_NO_SCENARIO = true;
         SC.abort(); T.active = keep.act;
