@@ -1144,6 +1144,23 @@
 2	go	mission.next.tower	옛 망루 꼭대기에 올라라	Climb to the top of the old watchtower		
 2	go	mission.next.waypoint	{0}을 켜라	Activate {0}		
 2	go	mission.stage_paid	◆ {0} 사명 {1}/{2} — 금 {3}냥 · 경험치 {4}	◆ {0} mission {1}/{2} — {3} Gold · {4} EXP		
+2	go	mount.auto_combat	싸움이 붙어 탈것에서 내렸다	A fight broke out — you dismount		
+2	go	mount.auto_off	탈것에서 내렸다	You dismount		
+2	go	mount.btn_off	내리기 (H) · {0}	Dismount (H) · {0}		
+2	go	mount.btn_on	🐎 타기 (H) · {0}	🐎 Ride (H) · {0}		
+2	go	mount.down	▼	▼		
+2	go	mount.mt_brown	갈색 말	Brown Horse		
+2	go	mount.mt_crane	학	Crane		
+2	go	mount.mt_dragon	푸른 용	Azure Dragon		
+2	go	mount.mt_farm	농마	Farm Horse		
+2	go	mount.mt_white	흰 말	White Horse		
+2	go	mount.need_ground	땅에 서서 탄다	Mount while standing on the ground		
+2	go	mount.no_combat	싸우는 중엔 탈 수 없다	You can't mount while fighting		
+2	go	mount.none	아직 탈것이 없다 — 모험 레벨 5 에 첫 탈것	No mount yet — your first one comes at adventure level 5		
+2	go	mount.off	탈것에서 내렸다	You dismount		
+2	go	mount.on	{0} 을(를) 탔다	You mount the {0}		
+2	go	mount.sel	{0} 로 골랐다	{0} selected		
+2	go	mount.up	▲	▲		
 2	go	move.drown	기력이 다해 물가로 돌아왔다	Out of stamina — you washed back to shore		
 2	go	night.clear	🔮 잔불이 꺼졌다 — {0}: "{1}" · 금 {2} · 교본 {3}	🔮 The embers go out — {0}: "{1}" · {2} gold · {3} Martial Manual		
 2	go	night.line.cape	허, 이 늙은이 노 소리에 잔불도 물러가는군.	Heh, even the embers retreat at this old man's oar.		

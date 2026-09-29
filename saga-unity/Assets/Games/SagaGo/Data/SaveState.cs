@@ -157,6 +157,8 @@ namespace Saga.Go.Data
             // 109-14-56b 밤의 잔불 — 오늘(새벽 4시에 갈림)·이미 끈 자리(버전 그대로 — 옛 세이브는 빈 채)
             public string nightDay;
             public List<string> nightDone;
+            // 109-15 탈것 — 고른 탈것 id(버전 그대로 — 옛 세이브는 안 고른 채, 탄 채로는 저장 안 함)
+            public string mountSel;
             public List<int> wqSteps;
             public List<bool> wqDone;
             public string wqTrack;
@@ -201,6 +203,7 @@ namespace Saga.Go.Data
                 frostFound = FrostState.Snapshot(), // 109-14-27a
                 areaFound = AreaState.Snapshot(), // 109-14-37
                 nightDay = NightEchoState.Day, nightDone = NightEchoState.Snapshot(), // 109-14-56b
+                mountSel = GoMounts.Snapshot(), // 109-15
                 frostBossDown = FrostBossState.Defeated, // 109-14-31
                 frostBossBloom = FrostBossState.Bloom,
                 frostBossPaidAt = FrostBossState.PaidAt,
@@ -345,6 +348,7 @@ namespace Saga.Go.Data
             FrostBossState.Restore(data.frostBossDown, data.frostBossBloom, data.frostBossPaidAt); // 109-14-31
             AreaState.Restore(data.areaFound); // 109-14-37
             NightEchoState.Restore(data.nightDay, data.nightDone); // 109-14-56b
+            GoMounts.Restore(data.mountSel); // 109-15
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();

@@ -2960,6 +2960,23 @@
     { "key": "story.ch38.s7.l4", "value": "We feasted the day the storm clouds cleared, so today, when the frozen time is released, is the second feast. Call all our friends from distant ages and our new friends too!" },
     { "key": "story.ch38.s7.p.a", "value": "It's a feast!" },
     { "key": "story.ch38.s7.p.b", "value": "Byeori is one of us now." },
-    { "key": "story.ch38.s7.l5", "value": "With the blade I forged the day the sky first tore, I will now protect the days that follow. Byeori the blacksmith — I'm coming with you!" }
+    { "key": "story.ch38.s7.l5", "value": "With the blade I forged the day the sky first tore, I will now protect the days that follow. Byeori the blacksmith — I'm coming with you!" },
+    { "key": "mount.mt_farm", "value": "Farm Horse" },
+    { "key": "mount.mt_brown", "value": "Brown Horse" },
+    { "key": "mount.mt_white", "value": "White Horse" },
+    { "key": "mount.mt_crane", "value": "Crane" },
+    { "key": "mount.mt_dragon", "value": "Azure Dragon" },
+    { "key": "mount.up", "value": "▲" },
+    { "key": "mount.down", "value": "▼" },
+    { "key": "mount.btn_on", "value": "🐎 Ride (H) · {0}" },
+    { "key": "mount.btn_off", "value": "Dismount (H) · {0}" },
+    { "key": "mount.on", "value": "You mount the {0}" },
+    { "key": "mount.off", "value": "You dismount" },
+    { "key": "mount.sel", "value": "{0} selected" },
+    { "key": "mount.none", "value": "No mount yet — your first one comes at adventure level 5" },
+    { "key": "mount.no_combat", "value": "You can't mount while fighting" },
+    { "key": "mount.need_ground", "value": "Mount while standing on the ground" },
+    { "key": "mount.auto_combat", "value": "A fight broke out — you dismount" },
+    { "key": "mount.auto_off", "value": "You dismount" }
   ]
 }

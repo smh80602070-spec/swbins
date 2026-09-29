@@ -186,6 +186,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoDispatch.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-26 탐사 파견(표·흐름·알림·세이브·화면 — 동행·탐사·돈·재료·레벨·지도·세이브 되돌림)
                 if (!PlaytestGoFrost.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-27a 서리봉 고원(표·지역·땅·발견·드나드는 길·세이브 — 발견·돈·연마석·경험·자리·세이브 되돌림)
                 if (!PlaytestGoNight.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-56b 결말 뒤 밤의 잔불
+                if (!PlaytestGoMount.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-15 탈것·비행
                 if (!PlaytestGoKnots.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-52 8부 무대 여섯 매듭·먹구름 눈
                 if (!PlaytestGoAreas.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-37 지도 밖 독립 땅 은하 나루(표·지역·땅·돌기둥·발견·세이브)
                 if (!PlaytestGoStoryAllies.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-15 이야기 동료·고유 스킬 둘·편성(동행·진행·돈·들판 되돌림)

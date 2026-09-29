@@ -2960,6 +2960,23 @@
     { "key": "story.ch38.s7.l4", "value": "먹구름이 걷힌 날 잔치를 했으니, 굳은 시간이 풀린 오늘은 둘째 잔치다. 먼 시대 동무들도 새 동무들도 다 불러라!" },
     { "key": "story.ch38.s7.p.a", "value": "잔치다!" },
     { "key": "story.ch38.s7.p.b", "value": "벼리 씨도 이제 우리 동료예요." },
-    { "key": "story.ch38.s7.l5", "value": "처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소. 대장장이 벼리, 함께 가오!" }
+    { "key": "story.ch38.s7.l5", "value": "처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소. 대장장이 벼리, 함께 가오!" },
+    { "key": "mount.mt_farm", "value": "농마" },
+    { "key": "mount.mt_brown", "value": "갈색 말" },
+    { "key": "mount.mt_white", "value": "흰 말" },
+    { "key": "mount.mt_crane", "value": "학" },
+    { "key": "mount.mt_dragon", "value": "푸른 용" },
+    { "key": "mount.up", "value": "▲" },
+    { "key": "mount.down", "value": "▼" },
+    { "key": "mount.btn_on", "value": "🐎 타기 (H) · {0}" },
+    { "key": "mount.btn_off", "value": "내리기 (H) · {0}" },
+    { "key": "mount.on", "value": "{0} 을(를) 탔다" },
+    { "key": "mount.off", "value": "탈것에서 내렸다" },
+    { "key": "mount.sel", "value": "{0} 로 골랐다" },
+    { "key": "mount.none", "value": "아직 탈것이 없다 — 모험 레벨 5 에 첫 탈것" },
+    { "key": "mount.no_combat", "value": "싸우는 중엔 탈 수 없다" },
+    { "key": "mount.need_ground", "value": "땅에 서서 탄다" },
+    { "key": "mount.auto_combat", "value": "싸움이 붙어 탈것에서 내렸다" },
+    { "key": "mount.auto_off", "value": "탈것에서 내렸다" }
   ]
 }

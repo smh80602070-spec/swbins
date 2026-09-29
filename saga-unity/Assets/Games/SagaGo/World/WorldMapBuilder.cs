@@ -56,6 +56,7 @@ namespace Saga.Go.World
             if (GetComponent<StationField>() == null) gameObject.AddComponent<StationField>(); // 109-14-36 옛 역참 터(돌담·마구간)
             if (GetComponent<KnotField>() == null) gameObject.AddComponent<KnotField>(); // 109-14-52 8부 무대 — 여섯 매듭·먹구름 눈
             if (GetComponent<NightEchoField>() == null) gameObject.AddComponent<NightEchoField>(); // 109-14-56b 결말 뒤 밤의 잔불
+            if (GetComponent<MountField>() == null) gameObject.AddComponent<MountField>(); // 109-15 탈것·비행
             if (GetComponent<Saga.Go.UI.AchieveUi>() == null) gameObject.AddComponent<Saga.Go.UI.AchieveUi>(); // 109-14-25 업적 창(Y)·알림
         }
     }

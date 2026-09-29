@@ -26,7 +26,7 @@ namespace Saga.Go.Player
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : MonoBehaviour
     {
-        public enum MoveMode { Ground, Air, Climb, Mantle, Glide, Swim }
+        public enum MoveMode { Ground, Air, Climb, Mantle, Glide, Swim, Fly }
 
         private const float WalkSpeed = 6f;
         private const float RunSpeed = 10f;
@@ -197,6 +197,7 @@ namespace Saga.Go.Player
             _leapLeft = 0f;
             _plunging = false;
             Mode = HeightAboveGround() < 0.3f ? MoveMode.Ground : MoveMode.Air;
+            if (Mode != MoveMode.Ground && GoMounts.Riding != null) GoMounts.Dismount(); // 109-15 공중으로 옮겨졌으면 탈것에서 내린다
             SetWings(false);
         }
 
@@ -334,8 +335,10 @@ namespace Saga.Go.Player
                 return;
             }
 
+            if (Mode == MoveMode.Fly && !GoMounts.RidingFly) Mode = MoveMode.Air; // 109-15 내렸으면(싸움·직접) 떠 있던 자리에서 떨어진다
             switch (Mode)
             {
+                case MoveMode.Fly: StepFly(dt, moveDir); break;
                 case MoveMode.Climb: StepClimb(dt, raw, jumpPressed); break;
                 case MoveMode.Mantle: StepMantle(dt); break;
                 case MoveMode.Glide: StepGlide(dt, moveDir, jumpPressed); break;
@@ -378,6 +381,13 @@ namespace Saga.Go.Player
                 return;
             }
 
+            if (GoMounts.RidingFly)
+            {
+                jumpPressed = false; // 109-15 비행 탈것에선 Space 가 오르기(점프가 아니다)
+                if (GoMounts.Lift > 0f && !GoMounts.StoryBlocked) { Mode = MoveMode.Fly; _verticalVelocity = 0f; return; }
+            }
+            else if (GoMounts.RidingGround && jumpPressed) GoMounts.Dismount(); // 뛰면 지상 탈것에서 내린다
+
             if (jumpPressed)
             {
                 if (grounded)
@@ -398,7 +408,7 @@ namespace Saga.Go.Player
             bool moving = moveDir.sqrMagnitude > 0.05f * 0.05f;
             // PLAN.md 107-1 — 달리기는 스태미나를 초당 8 쓴다(바닥나면 30까지 잠김). 공중에선 안 닳는다.
             bool running = sprintHeld && moving && grounded && GoStamina.Drain(GoStamina.SprintPerSec * dt);
-            float speed = running ? RunSpeed : WalkSpeed;
+            float speed = (running ? RunSpeed : WalkSpeed) * GoMounts.GroundMul; // 109-15 탄 탈것의 걷는 속도 배율
 
             Vector3 horizontal = moveDir * speed;
             _controller.Move(new Vector3(horizontal.x, _verticalVelocity, horizontal.z) * dt);
@@ -448,6 +458,34 @@ namespace Saga.Go.Player
             if (moving && TryStartClimb(moveDir)) return;
             if (TryStartSwim()) return;
             if (grounded) RecordLastLand(dt);
+        }
+
+        // ---- 비행 탈것(109-15) — Space 누르는 동안 오르고 Z 누르는 동안 내린다(손 떼면 그 높이에 뜬다). 이야기 임무의 오르기·섬·배·따라가기·쫓기·보스·지키기·무리 단계엔 못 날아 내려와 땅에서 내린다 ----
+
+        private void StepFly(float dt, Vector3 moveDir)
+        {
+            if (!GoMounts.RidingFly) { Mode = MoveMode.Air; return; }
+            var m = GoMounts.Riding;
+            float h = HeightAboveGround();
+            bool blocked = GoMounts.StoryBlocked;
+            float lift = blocked ? -1f : GoMounts.Lift;
+            float v = lift > 0f ? (h < m.Ceil ? GoMounts.Rise : 0f) : lift < 0f ? -(blocked ? GoMounts.LandRate : GoMounts.Fall) : 0f;
+            _verticalVelocity = v;
+            Vector3 horizontal = moveDir * WalkSpeed * m.Fly;
+            _controller.Move(new Vector3(horizontal.x, v, horizontal.z) * dt);
+            bool moving = moveDir.sqrMagnitude > 0.05f * 0.05f;
+            if (moving && visual != null)
+            {
+                float targetYaw = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
+                visual.rotation = Quaternion.Euler(0f, Mathf.LerpAngle(visual.eulerAngles.y, targetYaw, TurnRate * dt), 0f);
+            }
+            if (animator != null) animator.SetFloat("Speed", moving ? 0.5f : 0f); // 날 땐 걷기 몸짓
+            if (v <= 0f && _controller.isGrounded)
+            {
+                Mode = MoveMode.Ground; // 착지 — 탄 채(걷는 학·용). 이야기 구간에서 내려온 거면 내린다
+                _verticalVelocity = -2f;
+                if (blocked) GoMounts.Dismount();
+            }
         }
 
         // ---- 등반 --------------------------------------------------------------
