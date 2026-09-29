@@ -159,6 +159,9 @@ namespace Saga.Go.Data
             // 109-14-64 해미(35장 끝) — 초 한손검(웹 ⑲-64)
             new Hero { Id = "story_haemi", NameKo = "해미", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Command, Might = 72, Wisdom = 76, Command = 74,
                 WebElement = WebElement.Grass, QuoteKo = "내가 만든 걸 내가 멈출게요." },
+            // 109-14-68 벼리(38장 끝) — 화 양손검(웹 ⑲-68)
+            new Hero { Id = "story_byeori", NameKo = "벼리", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Might, Might = 86, Wisdom = 58, Command = 64,
+                WebElement = WebElement.Fire, QuoteKo = "처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소." },
         };
 
         public static bool IsStory(string id) => id != null && id.StartsWith("story_");

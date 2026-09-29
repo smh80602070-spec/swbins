@@ -26,7 +26,7 @@ namespace Saga.EditorTools
     public static class PlaytestGoStory
     {
         private static string _tag;
-        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "", _ch15 = "", _ch16 = "", _ch17 = "", _ch18 = "", _ch19 = "", _ch20 = "", _ch21 = "", _ch22 = "", _ch23 = "", _ch24 = "", _ch25 = "", _ch26 = "", _ch27 = "", _ch28 = "", _ch29 = "", _ch30 = "", _ch31 = "", _ch32 = "", _ch33 = "", _ch34 = "", _ch35 = "", _ch36 = "", _ch37 = "";
+        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "", _ch15 = "", _ch16 = "", _ch17 = "", _ch18 = "", _ch19 = "", _ch20 = "", _ch21 = "", _ch22 = "", _ch23 = "", _ch24 = "", _ch25 = "", _ch26 = "", _ch27 = "", _ch28 = "", _ch29 = "", _ch30 = "", _ch31 = "", _ch32 = "", _ch33 = "", _ch34 = "", _ch35 = "", _ch36 = "", _ch37 = "", _ch38 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -100,6 +100,7 @@ namespace Saga.EditorTools
                 CheckChapter35(fc, pc, field, ui);
                 CheckChapter36(fc, pc, field, ui);
                 CheckChapter37(fc, pc, field, ui);
+                CheckChapter38(fc, pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -132,7 +133,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · " + _ch15 + " · " + _ch16 + " · " + _ch17 + " · " + _ch18 + " · " + _ch19 + " · " + _ch20 + " · " + _ch21 + " · " + _ch22 + " · " + _ch23 + " · " + _ch24 + " · " + _ch25 + " · " + _ch26 + " · " + _ch27 + " · " + _ch28 + " · " + _ch29 + " · " + _ch30 + " · " + _ch31 + " · " + _ch32 + " · " + _ch33 + " · " + _ch34 + " · " + _ch35 + " · " + _ch36 + " · " + _ch37 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · " + _ch15 + " · " + _ch16 + " · " + _ch17 + " · " + _ch18 + " · " + _ch19 + " · " + _ch20 + " · " + _ch21 + " · " + _ch22 + " · " + _ch23 + " · " + _ch24 + " · " + _ch25 + " · " + _ch26 + " · " + _ch27 + " · " + _ch28 + " · " + _ch29 + " · " + _ch30 + " · " + _ch31 + " · " + _ch32 + " · " + _ch33 + " · " + _ch34 + " · " + _ch35 + " · " + _ch36 + " · " + _ch37 + " · " + _ch38 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -148,12 +149,12 @@ namespace Saga.EditorTools
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 43 || GoStory.Chapters.Length != 37) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 43 || GoStory.Chapters.Length != 38) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT", "TGTRTKXTGLT", "TGTKTMTET", "TGTKTXTTLT", "TGTKLTRTET", "TVTKMTMTXT", "TVTKTSTETXT", "TVTKGTVT", "TTHTSTETXT", "TMLTTXT", "TVTKTST", "TYTRTET", "TYTLLLTXT", "TTKLSTMLT", "TELVSYKLTT", "TPYTEXTGT", "TGKTLLLT", "TSTRTET", "TMLTXT", "TTGKRT", "TSTELLT", "TGTMTXT", "TVTKFT", "TLTELMLT" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6250, 6500, 6750, 7000, 7250, 7500, 12000, 7750, 8000, 9000, 8500, 8750, 9750, 9000, 9250 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 7, 0 }, new[] { 0, 6, 5, 7, 0 }, new[] { 0, 10, 8, 10, 0 }, new[] { 0, 7, 6, 7, 0 }, new[] { 0, 7, 6, 7, 0 }, new[] { 0, 8, 7, 8, 0 }, new[] { 0, 8, 6, 8, 0 }, new[] { 0, 8, 6, 8, 0 }, new[] { 0, 9, 7, 9, 0 }, new[] { 0, 9, 6, 9, 0 }, new[] { 0, 9, 6, 9, 0 } };
-            for (int c = 0; c < 37; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT", "TGTRTKXTGLT", "TGTKTMTET", "TGTKTXTTLT", "TGTKLTRTET", "TVTKMTMTXT", "TVTKTSTETXT", "TVTKGTVT", "TTHTSTETXT", "TMLTTXT", "TVTKTST", "TYTRTET", "TYTLLLTXT", "TTKLSTMLT", "TELVSYKLTT", "TPYTEXTGT", "TGKTLLLT", "TSTRTET", "TMLTXT", "TTGKRT", "TSTELLT", "TGTMTXT", "TVTKFT", "TLTELMLT", "TXTXTGT" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6250, 6500, 6750, 7000, 7250, 7500, 12000, 7750, 8000, 9000, 8500, 8750, 9750, 9000, 9250, 12000 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 7, 0 }, new[] { 0, 6, 5, 7, 0 }, new[] { 0, 10, 8, 10, 0 }, new[] { 0, 7, 6, 7, 0 }, new[] { 0, 7, 6, 7, 0 }, new[] { 0, 8, 7, 8, 0 }, new[] { 0, 8, 6, 8, 0 }, new[] { 0, 8, 6, 8, 0 }, new[] { 0, 9, 7, 9, 0 }, new[] { 0, 9, 6, 9, 0 }, new[] { 0, 9, 6, 9, 0 }, new[] { 0, 10, 8, 10, 0 } };
+            for (int c = 0; c < 38; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -3305,6 +3306,96 @@ namespace Saga.EditorTools
             if (!field.NpcShown("byeori") || !field.NpcShown("narae") || GoStory.Flat(D("narae"), GoStory.AreaPos("fork:loco", GoStory.NaraeLoco)) > 0.6f) Fail("37장 뒤 벼리·나래 자리");
             if (area.ForkPartOn("fork:lat0") || area.ForkPartOn("fork:lat2") || !area.ForkPartOn("fork:crow")) Fail("37장 뒤 말뚝은 꺼진 채·별까마귀는 그대로");
             _ch37 = "37장 벼리 화덕 앞→길목 동남쪽·격자 말뚝 셋 차례로 끔(멀리서 쏜 원소 ✕·종루 말뚝은 땅에서 ✕)·나래 공사장→기관차 서쪽·기관차 지키기 물결 셋(기관차 북쪽 뺌·고을 안)·종루 10m 벽 타기(땅에선 안 넘어감)·별까마귀·하늘 틈·장막 그대로·보상";
+        }
+
+        // ---- 38장 ---------------------------------------------------------------------------------------------
+
+        private static void CheckChapter38(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch38 = "38장 중단";
+            StoryState.OffForTest = false;
+            PlayerStats.Restore(82, 0);
+            StoryState.Restore(37, 0);
+            var area = AreaField.Instance;
+            var fk = GoAreas.Fork;
+            if (area == null) { Fail("AreaField 없음"); return; }
+            GoStory.ForkPassForTest = false;
+            area.Refresh();
+            field.Refresh();
+            Vector3 D(string id) => field.NpcBody(id).transform.position;
+            fk.TrySite("junction", out var junc);
+            if (!field.NpcShown("byeori") || GoStory.Flat(D("byeori"), GoStory.AreaPos("fork:junction", GoStory.ByeoriJunction)) > 0.6f) Fail("38장 첫 단계: 벼리가 길목 동남쪽에 안 섬");
+            if (field.NpcShown("garmuri")) Fail("38장 첫 단계인데 갈무리가 섬");
+            if (!area.ForkPartOn("fork:crow") || !area.ForkPartOn("fork:rift") || !area.ForkPartOn("fork:veil") || fk.Open()) Fail("38장 처음 모습: 별까마귀 모형·하늘 틈·장막이 서 있고 고개는 닫힘");
+            Talk(pc, ui, "byeori", "38장 벼리");
+            Expect(37, 1, "벼리 뒤");                                                            // → 1 duel 처음의 별까마귀
+            area.Refresh();
+            if (area.ForkPartOn("fork:crow")) Fail("별까마귀 싸움이 시작됐는데 멈춘 모형이 남음");
+            if (!area.ForkPartOn("fork:rift") || !area.ForkPartOn("fork:veil")) Fail("별까마귀 싸움 중인데 하늘 틈·장막이 벌써 걷힘");
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 1) { Fail($"처음의 별까마귀 {field.Squad.Count}"); return; }
+            var crow = field.Squad[0];
+            if (!crow.IsStoryBoss || crow.DisplayName != GoLocalization.T("story.boss.firstcrow", "처음의 별까마귀") || crow.Element != GoElement.Electro || crow.CurrentMove != FieldEnemy.BossMove.Slam) Fail($"별까마귀 이름·뇌·첫 수 {crow.DisplayName}·{crow.Element}·{crow.CurrentMove}");
+            if (!fk.Contains(crow.transform.position) || GoStory.Flat(crow.transform.position, GoStory.AreaPos("fork:junction", GoStory.ForkCrowAt)) > 14f) Fail("별까마귀가 길목 남쪽이 아님");
+            crow.SetShieldForTest(0f);
+            crow.TakeRaw(crow.Hp - crow.MaxHp * 0.45f, Color.white);
+            field.DuelTickForTest();
+            if (!crow.Shielded || crow.Element != GoElement.Electro || field.Squad.Count != 3) Fail($"2단계 뇌 방패·졸개 {crow.Element}·{field.Squad.Count}");
+            Kill(crow);
+            Expect(37, 2, "처음의 별까마귀");                                                    // → 2 talk 갈무리
+            field.Refresh();
+            if (!field.NpcShown("garmuri") || GoStory.Flat(D("garmuri"), GoStory.AreaPos("fork:junction", GoStory.GarmuriJunction)) > 0.6f) Fail("갈무리가 길목 위에 안 섬");
+            Talk(pc, ui, "garmuri", "38장 갈무리");
+            Expect(37, 3, "갈무리 뒤");                                                          // → 3 duel 갈무리 참몸
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 1) { Fail($"갈무리 참몸 {field.Squad.Count}"); return; }
+            var body = field.Squad[0];
+            if (!body.IsStoryBoss || body.DisplayName != GoLocalization.T("story.boss.garmuritrue", "갈무리 참몸") || body.Element != GoElement.Geo || body.CurrentMove != FieldEnemy.BossMove.Slam) Fail($"참몸 이름·암·첫 수 {body.DisplayName}·{body.Element}·{body.CurrentMove}");
+            body.SetShieldForTest(0f);
+            body.TakeRaw(body.Hp - body.MaxHp * 0.45f, Color.white);
+            field.DuelTickForTest();
+            if (!body.Shielded || body.Element != GoElement.Geo || field.Squad.Count != 3) Fail($"2단계 암 방패·졸개 {body.Element}·{field.Squad.Count}");
+            area.Refresh();
+            if (!area.ForkPartOn("fork:rift") || !area.ForkPartOn("fork:veil") || fk.Open()) Fail("참몸을 쓰러뜨리기 전에 순간이 풀림");
+            Kill(body);
+            Expect(37, 4, "갈무리 참몸");                                                        // → 4 talk 해미(순간이 풀렸다)
+            area.Refresh();
+            field.Refresh();
+            if (area.ForkPartOn("fork:rift") || area.ForkPartOn("fork:veil") || !fk.Open()) Fail("참몸을 쓰러뜨린 뒤 하늘 틈·호박 장막이 걷히고 고개가 열려야");
+            if (area.ForkPartOn("fork:crow") || area.ForkPartOn("fork:lat0") || area.ForkPartOn("fork:lat1") || area.ForkPartOn("fork:lat2")) Fail("38장 뒤 별까마귀 모형·격자 말뚝이 남음");
+            if (!GoStory.VaultMomentFree) Fail("고을 순간이 풀렸는데 금고 깊은 진열장 유리가 안 깨짐(같은 때)");
+            if (!field.NpcShown("haemi") || GoStory.Flat(D("haemi"), GoStory.AreaPos("fork:junction", GoStory.HaemiJunction)) > 0.6f) Fail("해미가 길목 서쪽에 안 섬");
+            Talk(pc, ui, "haemi", "38장 해미");
+            Expect(37, 5, "해미 뒤");                                                            // → 5 go 서리봉 고개
+            Vector3 mouth = GoStory.FrostPos(GoStory.FrostNorthGo);
+            if (!GoFrost.Contains(mouth) || GoStory.Flat(mouth, fk.MapGate()) < 12f + 5f) Fail("고원 고개 자리가 서리봉 안·돌기둥에서 걸어갈 거리가 아님");
+            pc.Teleport(fk.ArrivalPos + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(37, 5, "고을에서 고원 고개 단계가 넘어감");
+            var stTarget = GoStory.TargetOf(StoryState.Current, pc.transform.position, out _);
+            if (GoStory.Flat(stTarget, fk.SteleGround) > 0.5f) Fail($"고을 안에서 안내 화살표가 나가는 돌기둥이 아님 {stTarget}");
+            pc.Teleport(fk.MapGate() + new Vector3(0f, 0.4f, 5f));
+            field.Check(pc.transform.position);
+            Expect(37, 5, "돌기둥으로 나온 자리에서 고원 고개 단계가 넘어감");
+            pc.Teleport(mouth + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(37, 6, "서리봉 고원 고개");                                                   // → 6 talk 촌장
+            int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot), guide = TalentState.Count(GoTalent.Mat.Guide), secret = TalentState.Count(GoTalent.Mat.Secret);
+            Talk(pc, ui, "elder", "38장 끝 촌장");
+            if (StoryState.Ch != 38 || GoldState.Gold != gold + 12000 || TalentState.Count(GoTalent.Mat.Knot) != knot + 10 || TalentState.Count(GoTalent.Mat.Guide) != guide + 10 || TalentState.Count(GoTalent.Mat.Secret) != secret + 8) Fail("38장 끝·보상(금 12000·교본 10·비급 8·매듭 10)");
+            if (!StoryState.Done) Fail("이야기 표 끝(2차 결말)인데 Done 이 아님");
+            if (!PartyState.Has("story_byeori")) Fail("벼리가 합류 안 함");
+            bool ko = GoKits.OffForTest;
+            GoKits.OffForTest = false;
+            var kit = GoKits.KitOf("story_byeori", GoElement.Pyro);
+            GoKits.OffForTest = ko;
+            if (!GoHeroes.TryGet("story_byeori", out var hh) || hh.Era != HeroEra.Story || hh.Rarity != 4 || GoHeroes.ElementOf(hh) != GoElement.Pyro || hh.Trait != HeroTrait.Might || GoWeapons.TypeOf("story_byeori") != GoWeapons.Type.Claymore || GoStory.MemberEra("story_byeori") != GoEra.Past) Fail("벼리 표(★4 화 양손검 무용·과거)");
+            if (kit == null || !kit.Sig || kit.Skill.Type != KitSkillType.Updraft || kit.Burst.Type != KitBurstType.Rally || Mathf.Abs(kit.Skill.Lift - 12f) > 0.01f) Fail("벼리 한 벌(담금질 올려베기 updraft·처음의 불 rally)");
+            area.Refresh();
+            field.Refresh();
+            if (area.ForkPartOn("fork:rift") || area.ForkPartOn("fork:veil") || area.ForkPartOn("fork:crow") || !fk.Open()) Fail("2차 결말 뒤 고을이 풀린 채여야");
+            if (!field.NpcShown("byeori") || !field.NpcShown("haemi") || !field.NpcShown("narae")) Fail("2차 결말 뒤 벼리·해미·나래가 안 섬");
+            _ch38 = "38장 벼리 길목→처음의 별까마귀(뇌 2단계 방패·시작하면 멈춘 모형 사라짐)→갈무리 길목 위→갈무리 참몸(암 2단계 방패·쓰러뜨리기 전엔 하늘 틈·장막 그대로)→순간이 풀림(하늘 틈·알갱이·장막 걷힘·고개 열림·금고 유리 같은 때)→해미 길목 서쪽·고원 고개 go(고을·돌기둥 도착 자리에선 안 넘어감·안내 화살표는 나가는 돌기둥)·촌장 보상·벼리 합류(★4 화 양손검 updraft·rally)·이야기 끝";
         }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------

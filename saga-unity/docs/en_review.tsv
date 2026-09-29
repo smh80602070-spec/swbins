@@ -1013,6 +1013,7 @@
 2	go	hero.sg_zhaoyun	은창	Eunchang		
 2	go	hero.sg_zhouyu	화풍	Hwapung		
 2	go	hero.sg_zhugeliang	현책	Hyeonchaek		
+2	go	hero.story_byeori	벼리	Byeori		
 2	go	hero.story_chorong	초롱	Chorong		
 2	go	hero.story_dareum	달음	Dareum		
 2	go	hero.story_dodam	도담	Dodam		
@@ -1065,6 +1066,8 @@
 2	go	kit.noun.oath	맹세	Oath		
 2	go	kit.noun.order	호령	Volley Order		
 2	go	kit.noun.shield	방패	Shield Wall		
+2	go	kit.sig.byeori.burst	처음의 불	First Fire		
+2	go	kit.sig.byeori.skill	담금질 올려베기	Quenched Upswing		
 2	go	kit.sig.chorong.burst	되감은 시간	Rewound Time		
 2	go	kit.sig.chorong.skill	태엽 괘종	Spring Chime		
 2	go	kit.sig.dareum.burst	마패 호령	Horse-Tag Command		
@@ -1233,6 +1236,8 @@
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
 2	go	story.boss.colossus	돔 파수 거신	Dome Sentinel Colossus		
 2	go	story.boss.emberfox	여우불 구미호	Foxfire Nine-Tail		
+2	go	story.boss.firstcrow	처음의 별까마귀	First Star-Crow		
+2	go	story.boss.garmuritrue	갈무리 참몸	Garmuri's True Form		
 2	go	story.boss.haesol	먹구름 가면 해솔	Haesol of the Storm Mask		
 2	go	story.boss.king	먹구름 임금	Storm King		
 2	go	story.boss.kingtrue	먹구름 임금	Storm King		
@@ -2380,6 +2385,46 @@
 2	go	story.ch37.s8.p.a	그럼 까마귀부터 막아야 해.	Then we must stop the crow first.		
 2	go	story.ch37.s8.p.b	해미 씨, 들려요?	Haemi, can you hear me?		
 2	go	story.ch37.stepped	🔔 종루 꼭대기에 올라섰다 — 마지막 격자 말뚝이 발치에서 웅웅거린다	🔔 You stand atop the bell tower — the last lattice stake hums at your feet		
+2	go	story.ch38	제38장 · 처음의 순간	Chapter 38 · The First Moment		
+2	go	story.ch38.enter1	🐦‍⬛ 기적 소리가 고을을 흔들자 — 멈춰 있던 처음의 별까마귀가 날개를 펴고 내려앉는다!	🐦‍⬛ The whistle shakes the town — the stopped first star-crow spreads its wings and lands!		
+2	go	story.ch38.enter2	🔷 갈무리의 몸에 격자가 감기며 — 합금 거신이 호박빛 눈을 뜬다!	🔷 The lattice winds around Garmuri's body — the alloy colossus opens amber eyes!		
+2	go	story.ch38.p21	⚡ 까마귀가 번개를 두른다 — 불로 깨라! 졸개가 뛰어든다	⚡ The crow wraps itself in lightning — break it with fire (pyro)! Minions rush in		
+2	go	story.ch38.p22	🪨 참몸이 호박 껍질을 두른다 — 풀(초)로 깨라! 졸개가 뛰어든다	🪨 The true form puts on an amber shell — break it with grass (dendro)! Minions rush in		
+2	go	story.ch38.s1	세갈래 길목의 벼리와 이야기하기	Talk to Byeori at the three-way junction		
+2	go	story.ch38.s1.l1	왔소? 깃털 떨림이 점점 커지오. 순간이 다 풀리기 전에 — 우리가 먼저 깨워 막아야 하오.	You came? The trembling of the feathers keeps growing. Before the moment fully releases — we must wake it and stop it first.		
+2	go	story.ch38.s1.l2	기적 소리를 울리면 저 까마귀가 이쪽을 볼 거예요. 선로 쪽으로는 못 가게!	If I blow the whistle, that crow will look this way. Don't let it get to the rails!		
+2	go	story.ch38.s1.l3	삐— 처음의 별까마귀. 20장에 친 별까마귀는 틈 속에 갇혀 흐려진 모습이었습니다. 이쪽이 그날의 온전한 몸입니다.	Beep — the first star-crow. The star-crow we fought in chapter 20 was a blurred form trapped inside the rift. This is its whole body from that day.		
+2	go	story.ch38.s1.l4	쇠는 달궈졌소. 번개를 두르거든 불로 깨시오 — 이 칼이 그러라고 벼린 칼이오!	The iron is heated. When it wraps itself in lightning, break it with fire — this blade was forged for exactly that!		
+2	go	story.ch38.s1.p.a	기적을 울려요!	Blow the whistle!		
+2	go	story.ch38.s1.p.b	벼리 씨, 칼 준비됐어요?	Byeori, is your blade ready?		
+2	go	story.ch38.s2	기적 소리에 깨어난 처음의 별까마귀 물리치기	Defeat the first star-crow awakened by the whistle		
+2	go	story.ch38.s3	길목 위에 내려온 갈무리와 이야기하기	Talk to Garmuri who has descended above the junction		
+2	go	story.ch38.s3.l1	그만. 그 까마귀는 이 순간의 가장 아름다운 조각이었어요. 세 시대가 처음 만난 때 — 나는 그걸 지켜 왔어요.	Stop. That crow was the most beautiful piece of this moment. The time the three ages first met — I have been guarding it.		
+2	go	story.ch38.s3.l2	(진열장 밖에서) 갈무리, 그건 만남이 아니라 찢김이었어. 모두가 제자리를 잃은 때야.	(From outside the case) Garmuri, that was not a meeting but a tearing. The time everyone lost their place.		
+2	go	story.ch38.s3.l3	제자리로 돌아가면 흩어져요. 흩어지면 사라져요. 처음 만난 때를 영원히 — 그게 가장 소중한 것을 지키는 일이에요.	If they return to their places, they scatter. If they scatter, they vanish. The first meeting, forever — that is how you protect what is most precious.		
+2	go	story.ch38.s3.l4	……말뚝은 다 뽑혔어도 격자는 내 몸에 있어요. 이 몸으로 순간을 다시 붙들겠어요.	…Even with all the stakes pulled, the lattice is in my body. With this body I will hold the moment again.		
+2	go	story.ch38.s3.p.a	사라지는 게 아니라 이어지는 거야.	It doesn't vanish — it continues.		
+2	go	story.ch38.s3.p.b	모두를 돌려보내.	Send everyone back.		
+2	go	story.ch38.s4	격자를 몸에 두른 갈무리 참몸 물리치기	Defeat Garmuri's true form wrapped in the lattice		
+2	go	story.ch38.s5	길목으로 걸어 들어온 해미와 이야기하기	Talk to Haemi who walked into the junction		
+2	go	story.ch38.s5.l1	진열장이 깨졌어요 — 금고의 진열장이 전부. 굳은 거리도, 장터도, 잠긴 궁궐 조각도… 모든 굳은 자리가 한꺼번에 녹고 있어요.	The display cases broke — every display case in the vault. The Frozen Street, the market, the pieces of the sunken palace… every frozen spot is melting at once.		
+2	go	story.ch38.s5.l2	측량값이 다 돌아왔어요! 거리도 시간도 — 이 고을, 원래 자리로 돌아가고 있어요.	The survey readings all came back! Distance, time — this town is returning to its original place.		
+2	go	story.ch38.s5.l3	삐— 남쪽 고개의 호박 장막 신호 소멸. 고을이 서리봉 고원 북쪽에 다시 붙었습니다. 걸어서 나갈 수 있습니다.	Beep — the amber veil signal at the southern pass has vanished. The town has reattached to the north of Frostpeak Plateau. You can walk out.		
+2	go	story.ch38.s5.l4	갈무리의 마지막 조각은 내가 거둘게요. 씨앗처럼 — 언젠가 다시 싹 틔울 수 있게. 이 고을 마당에 소담의 씨앗도 심고요.	I'll gather Garmuri's last fragment. Like a seed — so that one day it can sprout again. And I'll plant Sodam's seeds in this town's yard too.		
+2	go	story.ch38.s5.l5	하늘 너머 동무들 마을이라니, 대장장이가 빠질 수 있나. 고개까지 같이 걷겠소!	A village of friends beyond the sky — how could the blacksmith miss that? I'll walk with you to the pass!		
+2	go	story.ch38.s5.p.a	청하 마을에 알리러 가자.	Let's go tell Cheongha village.		
+2	go	story.ch38.s5.p.b	고원까지 걸어서 가 볼게.	I'll walk to the plateau.		
+2	go	story.ch38.s6	장막이 걷힌 남쪽 고개를 넘어 서리봉 고원으로	Cross the southern pass, its veil lifted, to Frostpeak Plateau		
+2	go	story.ch38.s7	청하 촌장 누리에게 알리기	Tell Elder Nuri of Cheongha		
+2	go	story.ch38.s7.l1	왔구나, 우리 대장! 오늘 아침 광장 우물 물이 갑자기 맑아지고, 멈춰 있던 풍경들이 다 제 소리를 내더구나. 네가 한 일이지?	You're here, our captain! This morning the water in the plaza well suddenly cleared, and all the stopped scenery started making its own sounds again. That was your doing, wasn't it?		
+2	go	story.ch38.s7.l2	굳은 거리 신호등이 한 번도 안 멈추고 바뀌어요! 너울 할아버지 장도 매일 서고요.	The traffic lights on the Frozen Street change without ever stopping! And Grandfather Neoul's market opens every day.		
+2	go	story.ch38.s7.l3	해미 언니가 씨앗을 심었어요. 봄이 오면 세갈래 고을에도 싹이 날 거예요.	Sister Haemi planted the seeds. When spring comes, sprouts will come up in the Three-Fork Town too.		
+2	go	story.ch38.s7.l4	먹구름이 걷힌 날 잔치를 했으니, 굳은 시간이 풀린 오늘은 둘째 잔치다. 먼 시대 동무들도 새 동무들도 다 불러라!	We feasted the day the storm clouds cleared, so today, when the frozen time is released, is the second feast. Call all our friends from distant ages and our new friends too!		
+2	go	story.ch38.s7.l5	처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소. 대장장이 벼리, 함께 가오!	With the blade I forged the day the sky first tore, I will now protect the days that follow. Byeori the blacksmith — I'm coming with you!		
+2	go	story.ch38.s7.p.a	잔치다!	It's a feast!		
+2	go	story.ch38.s7.p.b	벼리 씨도 이제 우리 동료예요.	Byeori is one of us now.		
+2	go	story.ch38.win1	🐦‍⬛ 처음의 별까마귀가 찢긴 하늘로 날아오르다 — 날개가 꺾여 길목에 떨어진다. 하늘의 금이 삐걱 멎는다	🐦‍⬛ The first star-crow tries to soar into the torn sky — its wings snap and it falls onto the junction. The crack in the sky creaks to a stop		
+2	go	story.ch38.win2	🔷 갈무리의 격자 몸이 한 올씩 풀려 흩어진다 — 하늘의 금이 닫히고, 공중에 멈춰 있던 호박 알갱이가 비처럼 내린다	🔷 Garmuri's lattice body unravels strand by strand — the crack in the sky closes and the amber specks hanging in midair fall like rain		
 2	go	story.ch4	제4장 · 가면 쓴 나그네	Chapter 4 · The Masked Traveler		
 2	go	story.ch4.s1	촌장에게 새벽 소식 듣기	Hear the Elder's news from dawn		
 2	go	story.ch4.s1.l1	잔치 이튿날 새벽이었단다. 남쪽 다리목에 웬 가면 쓴 나그네가 서 있더래.	It was the dawn after the feast. They say a masked traveler was standing at the southern bridgehead.		
@@ -4158,6 +4203,7 @@
 3	go	hero.sg_zhaoyun.quote	한 몸 바쳐 주공을 지키겠습니다.	I will guard my lord with my life.		
 3	go	hero.sg_zhouyu.quote	동남풍이 불면, 그때가 우리의 때입니다.	When the southeast wind blows, our time has come.		
 3	go	hero.sg_zhugeliang.quote	삼고초려의 뜻, 잊지 않겠습니다.	I will not forget the meaning of those three visits.		
+3	go	hero.story_byeori.quote	처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소.	With the blade I forged the day the sky first tore, I will now protect the days that follow.		
 3	go	hero.story_chorong.quote	손목시계가 아직 째깍거리는 데는 이유가 있을 거예요.	There must be a reason my wristwatch is still ticking.		
 3	go	hero.story_dareum.quote	파발꾼은 길 끝을 봐야 직성이 풀리니까!	A courier isn't satisfied until he's seen the road's end!		
 3	go	hero.story_dodam.quote	틈 너머 첫 정거장까지 — 제가 몰게요!	To the first station beyond the rift — I'll drive!		

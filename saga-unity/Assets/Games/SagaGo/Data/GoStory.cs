@@ -320,7 +320,7 @@ namespace Saga.Go.Data
         {
             switch (id)
             {
-                case "story_wanderer": case "story_elder": case "story_ferryman": case "story_dareum": case "story_mulsae": return GoEra.Past;
+                case "story_wanderer": case "story_elder": case "story_ferryman": case "story_dareum": case "story_mulsae": case "story_byeori": return GoEra.Past;
                 case "story_scholar": case "story_haesol": case "story_haram": case "story_dodam": case "story_haneul": case "story_chorong": return GoEra.Modern;
                 case "story_hanbyeol": case "story_haemi": return GoEra.Future;
                 default: return null;
@@ -424,6 +424,8 @@ namespace Saga.Go.Data
         public static readonly Vector2 VaultHaemiDeep = new Vector2(3.5f, -VaultDeepR + 3f), ForkGateArrive = new Vector2(0f, 18f), ByeoriGate = new Vector2(0f, -7.7f), ForkGateKill = new Vector2(0f, 30f);
         /// <summary>37장(⑲-67) 자리(각 명소 가운데에서 m, z 남쪽): 나래 = 공사장 북동쪽 → 기관차 서쪽 끝(웹 × 0.45) · 벼리 = 길목 동남쪽(머리 위 별까마귀를 지켜본다) · 기관차 지키기 제단 = 기관차 남쪽 4.5m.</summary>
         public static readonly Vector2 NaraeWorks = new Vector2(6.3f, -6.3f), NaraeLoco = new Vector2(-5.2f, 3f), ByeoriJunction = new Vector2(7.7f, 6.3f), ForkLocoDefend = new Vector2(0f, 4.5f);
+        /// <summary>38장(⑲-68) 자리: 두 보스 = 길목 남쪽 6m(같은 자리) · 갈무리 대화 = 길목 위 한 번 · 해미 = 길목 서쪽(웹 [-14,12] × 0.45) · 서리봉 고개 go = 고원 북쪽 끝 돌기둥에서 남쪽 30m 안쪽(`GoRadius` 12 — 돌기둥에서 내린 자리에선 안 닿는다).</summary>
+        public static readonly Vector2 ForkCrowAt = new Vector2(0f, 6f), GarmuriJunction = new Vector2(2f, 2f), HaemiJunction = new Vector2(-6.3f, 5.4f), FrostNorthGo = new Vector2(-30f, -215f);
         public static readonly Vector2[] ForkForgePath = { new Vector2(34.7f, 16.2f), new Vector2(27.9f, 11.7f), new Vector2(17.1f, 9.9f), new Vector2(8.6f, 7.7f), new Vector2(1.1f, 5.4f) };
         public static readonly Vector2[] VaultDronePath = { new Vector2(8.6f, -5.4f), new Vector2(-8.5f, -8f), new Vector2(-21.6f, -0.9f), new Vector2(-36.9f, 2.3f), new Vector2(-47.7f, -8.6f), new Vector2(-43.2f, -23.9f),
             new Vector2(-27.9f, -30.2f), new Vector2(-15.3f, -38.7f), new Vector2(-23.9f, -51.8f), new Vector2(-41f, -56.3f), new Vector2(-49.5f, -56.5f) };
@@ -808,13 +810,14 @@ namespace Saga.Go.Data
             // 109-14-64 35장(웹 ⑲-64) — 씨앗 보관사 해미(미래): 금고 해미 진열장 속. 금고에 들어선 뒤(35장 2째~, 뒤에도)
             new Npc { Id = "haemi", NameKey = "story.npc.haemi", NameKo = "씨앗 보관사 해미", ShortKey = "story.short.haemi", ShortKo = "해미",
                 AtSite = "vault:vault", AtOff = VaultHaemiAt, FolkBody = "Vanguard",
-                Appear = new[] { new Spot { Ch = 35, From = 0, To = 1, At = "vault:vault", Arena = VaultHaemiDeep }, // 36장 처음 둘 — 가장 깊은 진열장 곁
+                Appear = new[] { new Spot { Ch = 37, ChTo = 999, From = 4, To = 99, At = "fork:junction", Arena = HaemiJunction }, // 38장 참몸을 쓰러뜨린 뒤(5째~, 뒤에도) 길목 서쪽에 걸어 들어온다
+                    new Spot { Ch = 35, From = 0, To = 1, At = "vault:vault", Arena = VaultHaemiDeep }, // 36장 처음 둘 — 가장 깊은 진열장 곁
                     new Spot { Ch = 34, ChTo = 999, From = 1, To = 99, At = "vault:vault", Arena = VaultHaemiAt } },
                 IdleKey = "story.idle.haemi", IdleKo = "씨앗도 순간도, 갈무리는 다시 꺼내 심으려고 하는 거예요." },
             // 금고 관리 인공지능 갈무리(미래, 기계 몸) — 기둥 위 대화 단계(35장 5째)에만 핵 곁에 선다
             new Npc { Id = "garmuri", NameKey = "story.npc.garmuri", NameKo = "금고 관리 인공지능 갈무리", ShortKey = "story.short.garmuri", ShortKo = "갈무리",
                 AtSite = "vault:vault", AtOff = VaultGarmuriAt, Pet = true,
-                Appear = new[] { new Spot { Ch = 34, From = 4, To = 4, At = "vault:vault", Arena = VaultGarmuriAt } },
+                Appear = new[] { new Spot { Ch = 34, From = 4, To = 4, At = "vault:vault", Arena = VaultGarmuriAt }, new Spot { Ch = 37, From = 2, To = 2, At = "fork:junction", Arena = GarmuriJunction } },
                 IdleKey = "story.idle.garmuri", IdleKo = "아름다운 때를 영원히." },
             // 109-14-66 36장(웹 ⑲-66) — 대장장이 벼리(과거): 그날 새벽 벼리던 칼이 틈 조각 쇠라 멈춘 순간 속에서 혼자 움직인다. 11부(36장~) 성문 안쪽 → 대장간으로 앞장선 뒤(6째~, 뒤에도) 화덕 앞
             new Npc { Id = "byeori", NameKey = "story.npc.byeori", NameKo = "대장장이 벼리", ShortKey = "story.short.byeori", ShortKo = "벼리",
@@ -3180,6 +3183,72 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            // 109-14-68 38장(웹 ⑲-68) — 11부 끝·2차 결말, 처음의 순간: 벼리(길목) → 처음의 별까마귀(duel — 이 단계(2째)부터 멈춘 모형이 사라진다 = `ForkCrowStep`, 뇌 방패는 불로) → 갈무리(길목 위 한 번)
+            // → 갈무리 참몸(duel — 쓰러뜨리면 다음(5째) 단계에 순간이 풀린다 = `ForkMomentFreeAt`/`VaultMomentFreeAt`: 하늘 틈·알갱이·호박 장막 걷힘·금고 깊은 진열장 유리 깨짐, 암 방패는 초로) → 해미(길목 서쪽)
+            // → 서리봉 고원 고개를 걸어 넘기(go frost) → 청하 촌장 누리(둘째 잔치) — **벼리 합류**(이야기 동료 열넷째). 1차 결말(29장)과 같은 보상 크기.
+            new Chapter
+            {
+                Id = "ch38", NameKey = "story.ch38", NameKo = "제38장 · 처음의 순간", Ar = 82, Join = "story_byeori",
+                Gold = 12000, Mats = new[] { 0, 10, 8, 10, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "byeori", TextKey = "story.ch38.s1", TextKo = "세갈래 길목의 벼리와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("byeori", "story.ch38.s1.l1", "왔소? 깃털 떨림이 점점 커지오. 순간이 다 풀리기 전에 — 우리가 먼저 깨워 막아야 하오."),
+                            L("narae", "story.ch38.s1.l2", "기적 소리를 울리면 저 까마귀가 이쪽을 볼 거예요. 선로 쪽으로는 못 가게!"),
+                            L("bandi", "story.ch38.s1.l3", "삐— 처음의 별까마귀. 20장에 친 별까마귀는 틈 속에 갇혀 흐려진 모습이었습니다. 이쪽이 그날의 온전한 몸입니다."),
+                            Pick("story.ch38.s1.p", "기적을 울려요!", "벼리 씨, 칼 준비됐어요?"),
+                            L("byeori", "story.ch38.s1.l4", "쇠는 달궈졌소. 번개를 두르거든 불로 깨시오 — 이 칼이 그러라고 벼린 칼이오!"),
+                        } },
+                    new Step { Type = StepType.Duel, At = "fork:junction", Arena = ForkCrowAt, Foes = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Electro) },
+                        BossKey = "story.boss.firstcrow", BossKo = "처음의 별까마귀", HpMul = 24f, AtkMul = 3f, ScaleMul = 2.7f,
+                        Rot = new[] { FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Tide },
+                        P2El = GoElement.Electro, Adds = new[] { F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        EnterKey = "story.ch38.enter1", EnterKo = "🐦\u200d⬛ 기적 소리가 고을을 흔들자 — 멈춰 있던 처음의 별까마귀가 날개를 펴고 내려앉는다!",
+                        P2Key = "story.ch38.p21", P2Ko = "⚡ 까마귀가 번개를 두른다 — 불로 깨라! 졸개가 뛰어든다",
+                        WinKey = "story.ch38.win1", WinKo = "🐦\u200d⬛ 처음의 별까마귀가 찢긴 하늘로 날아오르다 — 날개가 꺾여 길목에 떨어진다. 하늘의 금이 삐걱 멎는다",
+                        TextKey = "story.ch38.s2", TextKo = "기적 소리에 깨어난 처음의 별까마귀 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "garmuri", TextKey = "story.ch38.s3", TextKo = "길목 위에 내려온 갈무리와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("garmuri", "story.ch38.s3.l1", "그만. 그 까마귀는 이 순간의 가장 아름다운 조각이었어요. 세 시대가 처음 만난 때 — 나는 그걸 지켜 왔어요."),
+                            L("haemi", "story.ch38.s3.l2", "(진열장 밖에서) 갈무리, 그건 만남이 아니라 찢김이었어. 모두가 제자리를 잃은 때야."),
+                            L("garmuri", "story.ch38.s3.l3", "제자리로 돌아가면 흩어져요. 흩어지면 사라져요. 처음 만난 때를 영원히 — 그게 가장 소중한 것을 지키는 일이에요."),
+                            Pick("story.ch38.s3.p", "사라지는 게 아니라 이어지는 거야.", "모두를 돌려보내."),
+                            L("garmuri", "story.ch38.s3.l4", "……말뚝은 다 뽑혔어도 격자는 내 몸에 있어요. 이 몸으로 순간을 다시 붙들겠어요."),
+                        } },
+                    new Step { Type = StepType.Duel, At = "fork:junction", Arena = ForkCrowAt, Foes = new[] { F(FieldEnemy.Kind.EmberImp, GoElement.Geo) },
+                        BossKey = "story.boss.garmuritrue", BossKo = "갈무리 참몸", HpMul = 27.2f, AtkMul = 3.2f, ScaleMul = 2.9f,
+                        Rot = new[] { FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Shadow },
+                        P2El = GoElement.Geo, Adds = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.EmberImp) },
+                        EnterKey = "story.ch38.enter2", EnterKo = "🔷 갈무리의 몸에 격자가 감기며 — 합금 거신이 호박빛 눈을 뜬다!",
+                        P2Key = "story.ch38.p22", P2Ko = "🪨 참몸이 호박 껍질을 두른다 — 풀(초)로 깨라! 졸개가 뛰어든다",
+                        WinKey = "story.ch38.win2", WinKo = "🔷 갈무리의 격자 몸이 한 올씩 풀려 흩어진다 — 하늘의 금이 닫히고, 공중에 멈춰 있던 호박 알갱이가 비처럼 내린다",
+                        TextKey = "story.ch38.s4", TextKo = "격자를 몸에 두른 갈무리 참몸 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "haemi", TextKey = "story.ch38.s5", TextKo = "길목으로 걸어 들어온 해미와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haemi", "story.ch38.s5.l1", "진열장이 깨졌어요 — 금고의 진열장이 전부. 굳은 거리도, 장터도, 잠긴 궁궐 조각도… 모든 굳은 자리가 한꺼번에 녹고 있어요."),
+                            L("narae", "story.ch38.s5.l2", "측량값이 다 돌아왔어요! 거리도 시간도 — 이 고을, 원래 자리로 돌아가고 있어요."),
+                            L("bandi", "story.ch38.s5.l3", "삐— 남쪽 고개의 호박 장막 신호 소멸. 고을이 서리봉 고원 북쪽에 다시 붙었습니다. 걸어서 나갈 수 있습니다."),
+                            L("haemi", "story.ch38.s5.l4", "갈무리의 마지막 조각은 내가 거둘게요. 씨앗처럼 — 언젠가 다시 싹 틔울 수 있게. 이 고을 마당에 소담의 씨앗도 심고요."),
+                            Pick("story.ch38.s5.p", "청하 마을에 알리러 가자.", "고원까지 걸어서 가 볼게."),
+                            L("byeori", "story.ch38.s5.l5", "하늘 너머 동무들 마을이라니, 대장장이가 빠질 수 있나. 고개까지 같이 걷겠소!"),
+                        } },
+                    new Step { Type = StepType.Go, Frost = true, Arena = FrostNorthGo, GoRadius = 12f, TextKey = "story.ch38.s6", TextKo = "장막이 걷힌 남쪽 고개를 넘어 서리봉 고원으로" },
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch38.s7", TextKo = "청하 촌장 누리에게 알리기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch38.s7.l1", "왔구나, 우리 대장! 오늘 아침 광장 우물 물이 갑자기 맑아지고, 멈춰 있던 풍경들이 다 제 소리를 내더구나. 네가 한 일이지?"),
+                            L("chorong", "story.ch38.s7.l2", "굳은 거리 신호등이 한 번도 안 멈추고 바뀌어요! 너울 할아버지 장도 매일 서고요."),
+                            L("sodam", "story.ch38.s7.l3", "해미 언니가 씨앗을 심었어요. 봄이 오면 세갈래 고을에도 싹이 날 거예요."),
+                            L("elder", "story.ch38.s7.l4", "먹구름이 걷힌 날 잔치를 했으니, 굳은 시간이 풀린 오늘은 둘째 잔치다. 먼 시대 동무들도 새 동무들도 다 불러라!"),
+                            Pick("story.ch38.s7.p", "잔치다!", "벼리 씨도 이제 우리 동료예요."),
+                            L("byeori", "story.ch38.s7.l5", "처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소. 대장장이 벼리, 함께 가오!"),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -3325,6 +3394,8 @@ namespace Saga.Go.Data
         public static Vector3 TargetOf(Step s, Vector3 from, out float radius)
         {
             Vector3 t = TargetRaw(s, from, out radius);
+            var inArea = from != Vector3.zero ? GoAreas.AreaAt(from) : null;
+            if (inArea != null && !inArea.Contains(t)) return inArea.SteleGround; // 109-14-68 독립 땅 안인데 목표가 그 땅 밖이면 땅 쪽 나가는 돌기둥
             if (from != Vector3.zero && GoFrost.Contains(t) && !GoFrost.Contains(from)) return GoFrost.GatePos;
             var ta = GoAreas.AreaAt(t);
             if (from != Vector3.zero && ta != null && ta != GoAreas.AreaAt(from)) return ta.MapGate(); // 109-14-38 독립 땅 안 목표인데 내가 밖이면 지도 쪽 돌기둥

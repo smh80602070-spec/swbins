@@ -150,6 +150,11 @@ namespace Saga.Go.Combat
                     s = S(KitSkillType.Dash, "kit.sig.haemi.skill", "씨앗 가르기", 6.5f, 2.6f); s.Len = 5f; s.W = 2f;
                     b = B(KitBurstType.Infuse, "kit.sig.haemi.burst", "싹 틔우는 칼", 6f, 3.4f); b.Sec = 10f; b.NMul = 1.2f;
                     break;
+                // 109-14-68 벼리(웹 kits.js story_byeori) — 있는 틀(updraft·rally)만
+                case "story_byeori":
+                    s = S(KitSkillType.Updraft, "kit.sig.byeori.skill", "담금질 올려베기", 8f, 2.6f); s.R = 3.5f; s.Pull = 4f; s.Lift = 12f;
+                    b = B(KitBurstType.Rally, "kit.sig.byeori.burst", "처음의 불", 7f, 3.4f); b.Sec = 10f; b.Atk = 1.2f;
+                    break;
                 default:
                     return null;
             }
