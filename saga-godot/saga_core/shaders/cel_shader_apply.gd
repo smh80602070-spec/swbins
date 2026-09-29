@@ -10,6 +10,7 @@ extends RefCounted
 const CEL_SHADER := preload("res://saga_core/shaders/cel_toon.gdshader")
 const OUTLINE_SHADER := preload("res://saga_core/shaders/cel_outline.gdshader")
 const ANIME_EYE := preload("res://saga_core/anime_eye.gd")
+const ANIME_MOUTH := preload("res://saga_core/anime_mouth.gd")
 
 ## 공방 몸의 눈 재질 이름("eye") — 실사 눈 텍스처 위에 셀 화풍 눈을 다시 그려 얹는다(anime_eye.gd, 홍채색은 몸 파일마다 하나).
 const EYE_MATERIAL := "eye"
@@ -165,6 +166,12 @@ static func _apply_one(mesh_instance: MeshInstance3D) -> int:
 			## 깜박임(talk_face)이 갈아 끼울 두 장.
 			shader_mat.set_meta("eye_open", albedo_tex)
 			shader_mat.set_meta("eye_closed", ANIME_EYE.closed_texture_for(raw_tex, ANIME_EYE.skin_average(_skin_tex)))
+		elif original.resource_name.to_lower().begins_with("skin"):
+			## 입 자리가 있는 얼굴 살갗이면 talk_face 가 말할 때 벌린 입 그림을 만들어 갈아 끼운다(anime_mouth).
+			var mouth_uv := ANIME_MOUTH.center_for(albedo_tex.resource_path)
+			if mouth_uv.x >= 0.0:
+				shader_mat.set_meta("mouth_base", albedo_tex)
+				shader_mat.set_meta("mouth_uv", mouth_uv)
 		shader_mat.set_shader_parameter("albedo_texture", albedo_tex)
 		shader_mat.set_shader_parameter("albedo_tint", (original as BaseMaterial3D).albedo_color)
 		## PLAN 102-3 아웃라인 — 뒤집힌 헐 셰이더를 next_pass로 얹는다.

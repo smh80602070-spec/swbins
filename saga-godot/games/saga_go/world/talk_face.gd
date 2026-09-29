@@ -8,6 +8,7 @@ extends SkeletonModifier3D
 ##     머리를 글자마다 조금 끄덕인다(NOD°). 뼈 회전은 뼈대 공간 X 축으로 돌리고, 몸 앞이 +Z 인지 -Z 인지는 모델마다
 ##     발목(Foot) → 발끝(ToeBase) 쉬는 자세 방향으로 잰다(_front) — VRoid 셋 다 뼈대 공간 앞이 같다고 가정하지 않는다.
 ##     세기는 SkeletonModifier3D `influence` 로 섞어 켜고 끈다(GESTURE_BLEND).
+##   입 그림: 블렌드셰이프 없는 몸(공방)은 살갗 텍스처의 입 자리에 벌린 입을 덧그린 복사본(anime_mouth)을 갈아 끼운다(open·round·thin, 첫 말할 때 만든다).
 ## 모델에 그 블렌드셰이프·뼈가 없으면 그 부분만 조용히 건너뛴다.
 
 const VISEMES := ["Fcl_MTH_A", "Fcl_MTH_I", "Fcl_MTH_U", "Fcl_MTH_E", "Fcl_MTH_O"]
@@ -16,6 +17,10 @@ const BLINK_SHAPE := "Fcl_EYE_Close"
 ## 가운뎃소리 21 → 입 모양(0 A·1 I·2 U·3 E·4 O). ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ
 const VOWEL_VISEME := [0, 3, 0, 3, 4, 3, 4, 3, 4, 0, 3, 3, 4, 2, 4, 3, 1, 2, 2, 1, 1]
 const MOUTH_OPEN := 0.85
+const MOUTH_SHOW := 0.3 # 입 그림을 바꿔 보여 줄 문턱(블렌드셰이프 없는 몸)
+## 입 모양 번호(A·I·U·E·O) → anime_mouth 종류
+const VISEME_KIND := ["open", "thin", "round", "open", "round"]
+const ANIME_MOUTH := preload("res://saga_core/anime_mouth.gd")
 const MOUTH_DECAY := 6.0 # 입이 닫히는 빠르기(세기/초 — 한 글자 연 입이 0.14초쯤에 닫힌다)
 const MOUTH_BLEND := 22.0
 const MOOD_W := 0.7
@@ -31,6 +36,9 @@ const NOD := 5.0
 
 var _eye_mats: Array = [] # 블렌드셰이프 없는 몸(공방): 눈 재질에 감은 눈 그림을 갈아 끼워 깜박인다(cel_shader_apply 가 메타로 실어 둔다)
 var _eye_shut := false
+var _mouth_mats: Array = [] # 벌린 입 그림을 갈아 끼울 살갗 재질(cel_shader_apply 가 mouth_base 메타로 표시)
+var _mouth_texs: Dictionary = {} # 재질 → {종류: 텍스처}, 첫 말할 때 만든다
+var _mouth_kind := "" # 지금 보이는 입 그림("" = 원본 다문 입)
 var _shapes: Dictionary = {} # 블렌드셰이프 이름 → [[MeshInstance3D, idx], …]
 var _mouth := [0.0, 0.0, 0.0, 0.0, 0.0]
 var _mouth_to := [0.0, 0.0, 0.0, 0.0, 0.0]
@@ -81,6 +89,12 @@ func _collect(body: Node) -> void:
 			var sm := em.get_surface_override_material(si) as ShaderMaterial
 			if sm != null and sm.has_meta("eye_closed"):
 				_eye_mats.append(sm)
+	for mi in body.find_children("*", "MeshInstance3D", true, false):
+		var bm := mi as MeshInstance3D
+		for si in bm.get_surface_override_material_count():
+			var sm := bm.get_surface_override_material(si) as ShaderMaterial
+			if sm != null and sm.has_meta("mouth_base") and not _mouth_mats.has(sm):
+				_mouth_mats.append(sm)
 	var skel := get_parent() as Skeleton3D
 	## 2026-09-29 — 공방 몸(char-forge, UE 식 뼈 이름)도. 몸짓은 뼈대 공간 축으로 돌려(_rotate_global) 뼈 축이 달라도 같은 방향이다.
 	_b_head = _bone(skel, ["J_Bip_C_Head", "Head"])
@@ -111,6 +125,8 @@ func speak(ch: String) -> void:
 	if v >= 0:
 		_mouth_to[v] = MOUTH_OPEN
 		_nod = 1.0
+		if not _mouth_mats.is_empty() and _mouth_texs.is_empty():
+			_build_mouth_texs()
 
 ## 한글 음절 → 입 모양 번호(0~4), 한글이 아니면 -1.
 static func viseme_of(ch: String) -> int:
@@ -161,6 +177,8 @@ func _process(delta: float) -> void:
 		_mouth_to[i] = maxf(float(_mouth_to[i]) - MOUTH_DECAY * delta, 0.0)
 		_mouth[i] = lerpf(float(_mouth[i]), float(_mouth_to[i]), km)
 		_set_shape(VISEMES[i], _mouth[i])
+	if not _mouth_texs.is_empty():
+		_show_mouth()
 	## 표정.
 	var kf := 1.0 - exp(-MOOD_BLEND * delta)
 	for m in MOODS:
@@ -200,6 +218,27 @@ func _rotate_global(skel: Skeleton3D, bone: int, axis: Vector3, angle: float) ->
 	var g := skel.get_bone_global_pose(bone)
 	g.basis = Basis(axis, angle) * g.basis
 	skel.set_bone_global_pose(bone, g)
+
+## 벌린 입 그림 세 장을 재질마다 만든다(2048² 복사·덧그리기 — 첫 말할 때 한 번, 같은 원본은 캐시를 나눠 쓴다).
+func _build_mouth_texs() -> void:
+	for sm in _mouth_mats:
+		var texs: Dictionary = ANIME_MOUTH.textures_for((sm as ShaderMaterial).get_meta("mouth_base"), (sm as ShaderMaterial).get_meta("mouth_uv"))
+		if not texs.is_empty():
+			_mouth_texs[sm] = texs
+
+## 지금 가장 크게 열린 입 모양에 맞는 그림을 보인다 — 문턱 아래면 원본(다문 입).
+func _show_mouth() -> void:
+	var st := mouth_state()
+	var kind: String = VISEME_KIND[int(st[0])] if int(st[0]) >= 0 and float(st[1]) > MOUTH_SHOW else ""
+	if kind == _mouth_kind:
+		return
+	_mouth_kind = kind
+	for sm in _mouth_texs:
+		(sm as ShaderMaterial).set_shader_parameter("albedo_texture", (_mouth_texs[sm] as Dictionary)[kind] if kind != "" else (sm as ShaderMaterial).get_meta("mouth_base"))
+
+## 지금 보이는 입 그림 종류(점검용).
+func mouth_kind() -> String:
+	return _mouth_kind
 
 func _shut_eyes(shut: bool) -> void:
 	if shut == _eye_shut or _eye_mats.is_empty():

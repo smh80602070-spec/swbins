@@ -1344,9 +1344,10 @@ func _physics_process(_delta: float) -> void:
 				PartyState.story = {"ch": Story.CHAPTERS.size(), "step": 0}
 				_sq.call("_enter_step")
 				_near_npc("elder")
-				_v = {"hand": _hand_probe(body), "blink": 0.0, "base_y": 0.0, "base_f": 0.0, "n": 0}
+				_v = {"hand": _hand_probe(body), "blink": 0.0, "base_y": 0.0, "base_f": 0.0, "n": 0, "pic": false}
 			if _frame > 1:
 				_v.blink = maxf(float(_v.blink), float(face.call("blink_weight")))
+				_v.pic = bool(_v.pic) or String(face.call("mouth_kind")) != "" # 블렌드셰이프 없는 몸: 말하는 동안 벌린 입 그림이 한 번은 보였나
 			if _frame >= 30 and _frame < 60: # 몸짓 없을 때 손 자리 평균(서기 애니가 조금 흔든다)
 				var hp: Vector3 = (_v.hand as Node3D).global_position - body.global_position
 				_v.base_y += hp.y
@@ -1377,12 +1378,13 @@ func _physics_process(_delta: float) -> void:
 				var back := absf(hp.y - float(_v.base_y) / float(_v.n)) < 0.05
 				## 09-29 공방 몸(char-forge)엔 입·눈 변형(blend shape)이 없다 — 있는 몸만 입·기쁨·깜빡임을 본다. 손짓·끄덕임은 늘.
 				var faced := bool(face.call("has_mouth"))
+				var drawn: bool = bool(_v.pic) and String(face.call("mouth_kind")) == "" # 그림은 말이 끝나면 다물린 원본으로 돌아온다
 				var ok: bool = _v.map == [0, 1, 2, 3, 4, -1, -1] and bool(_v.opened) and bool(_v.revealing) \
 					and float(_v.lift) > 0.12 and float(_v.fwd) > 0.08 and float(_v.infl) > 0.9 and bool(_v.done_reveal) and bool(_v.open_mid) \
 					and bool(_v.closed) and float(face.get("influence")) < 0.05 and back \
-					and (not faced or (float(_v.mouth) > 0.2 and float(_v.joy) > 0.5 and float(_v.blink) > 0.99))
-				_check("talk_face", ok, "map=%s reveal=%s mouth=%.2f lift=%.2f fwd=%.2f infl=%.2f joy=%.2f closed=%s back=%s blink=%.1f front=%+.0f" % [
-					_v.map, _v.revealing, _v.mouth, _v.lift, _v.fwd, _v.infl, _v.joy, _v.closed, back, _v.blink, face.call("front_sign")])
+					and (not faced or (float(_v.mouth) > 0.2 and float(_v.joy) > 0.5 and float(_v.blink) > 0.99)) and (faced or drawn)
+				_check("talk_face", ok, "map=%s reveal=%s mouth=%.2f lift=%.2f fwd=%.2f infl=%.2f joy=%.2f closed=%s back=%s blink=%.1f front=%+.0f pic=%s" % [
+					_v.map, _v.revealing, _v.mouth, _v.lift, _v.fwd, _v.infl, _v.joy, _v.closed, back, _v.blink, face.call("front_sign"), _v.pic])
 				(_v.hand as Node).queue_free()
 				_next()
 		88:

@@ -9561,3 +9561,10 @@ PROJECT_STATE.md` 참고. 요약:
 ## 기복 촬영 확인 (2026-09-30, "이어해")
 
 - probe_shots o_village_field·o_crossing_field·o_skyport_field·o_sunken_field(명소에서 떨어진 들 시점) 추가. o_village_field: 플레이어가 언덕 위에 서서 아래 마을 지붕들이 내려다보인다(기복이 실제로 시야를 만든다). o_crossing_field: 완만해 은은.
+
+## GO 그래픽 먼저 ㉞ 공방 몸 입 모양 (2026-09-29, "사가고돗 이어해")
+
+- 공방 몸은 입 블렌드셰이프가 없고 입술이 살갗 텍스처에 다문 채 그려져 있어 대화 때 입이 안 움직였다. 정점 UV 로 입 자리를 재어(여자 (0.1838,0.2622)·남자 (0.1860,0.2677), 2048²) saga_core/anime_mouth.gd 가 살갗 텍스처 복사본에 벌린 입(open 윗니·혀 / round / thin 이)을 덧그린 세 장을 만든다.
+- cel_shader_apply — 텍스처 이름이 Superhero_Female/Male 인 살갗 재질에 메타 mouth_base·mouth_uv. talk_face — 첫 speak 에 세 장을 만들고(캐시, 2048² 복사라 첫 대화에 한 번) 가장 열린 입 모양 A·E→open, O·U→round, I→thin 을 문턱 0.3 위에서 갈아 끼운다(mouth_kind()).
+- face_view FACE_MOUTH=open|round|thin 으로 촬영(여자 주역·남자 촌장 확인 — 입 자리 맞음). probe_story talk_face 에 pic(말하는 동안 그림이 보이고 끝나면 원본) 조건 추가.
+- 점검 STORY fails=0(분 진단 "Parameter material is null" 7줄은 probe_story:1263 더미 렌더러 기존 줄), REGRESS OK. 한계: 입술 지오메트리는 그대로라 입 크기 변화는 그림 안에서만, 다른 머리 UV 배치 몸은 다문 입.

@@ -5,6 +5,7 @@ extends SceneTree
 ## 머리 높이는 뼈 "Head" 로 잰다. 카메라는 몸 앞(+Z)에서 머리를 바라본다.
 
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
+const AnimeMouthScript := preload("res://saga_core/anime_mouth.gd")
 
 var _frame := 0
 var _cam: Camera3D
@@ -23,6 +24,14 @@ func _init() -> void:
 				var sm := (mi as MeshInstance3D).get_surface_override_material(si) as ShaderMaterial
 				if sm != null and sm.has_meta("eye_closed"):
 					sm.set_shader_parameter("albedo_texture", sm.get_meta("eye_closed"))
+	## FACE_MOUTH=open|round|thin 이면 그 입 모양(anime_mouth)으로 찍는다.
+	if OS.get_environment("FACE_MOUTH") != "":
+		for mi in body.find_children("*", "MeshInstance3D", true, false):
+			for si in (mi as MeshInstance3D).get_surface_override_material_count():
+				var sm := (mi as MeshInstance3D).get_surface_override_material(si) as ShaderMaterial
+				if sm != null and sm.has_meta("mouth_base"):
+					var texs: Dictionary = AnimeMouthScript.textures_for(sm.get_meta("mouth_base"), sm.get_meta("mouth_uv"))
+					sm.set_shader_parameter("albedo_texture", texs[OS.get_environment("FACE_MOUTH")])
 	var env := Environment.new()
 	env.background_mode = Environment.BG_COLOR
 	env.background_color = Color(0.62, 0.78, 0.95)
