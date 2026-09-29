@@ -1200,6 +1200,7 @@
 2	go	story.altar_clockwind	되감는 괘종시계	the chime clock being rewound		
 2	go	story.altar_domelock	빛 돔 문 자물쇠	light-dome door lock		
 2	go	story.altar_engine	비행선 기관	airship engine		
+2	go	story.altar_granary	씨앗 곳간	the seed granary		
 2	go	story.altar_knot	매듭 제단	knot altar		
 2	go	story.altar_knot4	넷째 매듭	fourth knot		
 2	go	story.altar_lantern	매듭 등불	knot lantern		
@@ -2219,6 +2220,38 @@
 2	go	story.ch33.s6.l6	곳간 마을부터 가 봅시다. 거기 곳간은 노래를 불러야 열린다던데… 지게차 몰고 뒤따라갈게요!	Let's start with the granary village. They say the granary there only opens if you sing… I'll follow you in the forklift!		
 2	go	story.ch33.s6.p.a	그 금고가 뭐예요?	What is that vault?		
 2	go	story.ch33.s6.p.b	금고 안에 들어갈 수 있어요?	Can I get inside the vault?		
+2	go	story.ch34	제34장 · 곳간의 씨앗	Chapter 34 · Seeds of the Granary		
+2	go	story.ch34.lit0	🔌 서쪽 동력 기둥 꼭대기 푸른 구슬이 치직 꺼진다 — 곳간 밑 동력 선이 잠잠해진다	🔌 The blue orb atop the west power pylon sputters out — the power line under the granary goes quiet		
+2	go	story.ch34.lit1	🔌 동쪽 동력 기둥까지 꺼졌다 — 금고 문의 빛 고리가 깜박이더니 스르르 사라진다	🔌 The east power pylon goes out too — the light ring on the vault door flickers and fades away		
+2	go	story.ch34.s1	물류 창고 앞의 마루와 이야기하기	Talk to Maru in front of the logistics warehouse		
+2	go	story.ch34.s1.l1	지게차 시동 걸었어요. 곳간 마을은 고개 쪽 서쪽 — 초가지붕 곳간이 하나 덩그러니 서 있죠.	The forklift is running. The granary village is west, toward the pass — a single thatched-roof granary standing all alone.		
+2	go	story.ch34.s1.l2	문엔 자물쇠 대신 석등 셋이 둘러 있어요. 누가 흥얼거리는 걸 들었는데 — '별 보고 나가, 해 보고 거두고, 달 보고 들인다'.	There's no lock on the door — three stone lanterns stand around it instead. I heard someone humming — 'Go out by the stars, reap by the sun, bring in by the moon.'		
+2	go	story.ch34.s1.l3	장터 노래랑 닮았어요! 그럼 석등도 노래 차례대로 — 별, 해, 달.	It's like the market song! Then the lanterns must go in the song's order too — star, sun, moon.		
+2	go	story.ch34.s1.l4	삐— 곳간 안에서 작은 생체 신호 하나. 사람입니다. 동력 기둥 선도 곳간 밑으로 지나갑니다.	Beep — one small life signal inside the granary. A person. The power pylon cable also runs beneath the granary.		
+2	go	story.ch34.s1.l5	먼저 가 있을게요. 곳간 앞에 지게차 대 놓고 기다리죠!	I'll go ahead. I'll park the forklift in front of the granary and wait!		
+2	go	story.ch34.s1.p.a	곳간 노래 차례대로 켤게요.	I'll light them in the granary song's order.		
+2	go	story.ch34.s1.p.b	안에 누가 있다고?	Someone is inside?		
+2	go	story.ch34.s2	곳간 둘레 석등을 곳간 노래 차례(별 → 해 → 달)대로 밝히기	Light the stone lanterns around the granary in the order of the granary song (star → sun → moon)		
+2	go	story.ch34.s3	곳간에서 나온 아이와 이야기하기	Talk to the child who came out of the granary		
+2	go	story.ch34.s3.l1	……노래를 아는 거 보니 도둑은 아니네. 우리 할머니 곳간 노래예요.	…You know the song, so you're no thief. That's my grandmother's granary song.		
+2	go	story.ch34.s3.l2	난 곳간지기 소담이에요. 하늘이 갈라지던 날, 곳간째 둥 떠서 여기 떨어졌어요. 씨앗 곡식이 다 여기 있어요 — 내년 농사 씨앗.	I'm Sodam, the granary keeper. The day the sky split, the whole granary floated up and landed here. All the seed grain is here — next year's seeds.		
+2	go	story.ch34.s3.l3	석 달을 곳간 안에 숨어 있었다고? 이 꼬마가?	Hidden in the granary for three months? This little one?		
+2	go	story.ch34.s3.l4	밤마다 쇠 새들이 와서 문을 긁어요. 씨앗을 노리는 거예요. 저 둥근 은빛 집에 가져가려고.	Every night iron birds come and scratch at the door. They're after the seeds. To take them to that round silver house.		
+2	go	story.ch34.s3.l5	와요! 문이 열린 걸 알았으니 다 몰려올 거예요 — 저기, 벌써!	They're coming! They know the door is open, so they'll all swarm in — there, already!		
+2	go	story.ch34.s3.p.a	씨앗은 우리가 지켜 줄게.	We'll protect the seeds.		
+2	go	story.ch34.s3.p.b	쇠 새들이 또 와?	The iron birds are coming again?		
+2	go	story.ch34.s4	씨앗 곡식을 노리는 것들에게서 곳간 지키기	Defend the granary from those after the seed grain		
+2	go	story.ch34.s5	금고 앞 서쪽 동력 기둥을 원소 스킬로 끄기	Switch off the west power pylon in front of the vault with an elemental skill		
+2	go	story.ch34.s6	금고 앞 동쪽 동력 기둥을 원소 스킬로 끄기	Switch off the east power pylon in front of the vault with an elemental skill		
+2	go	story.ch34.s7	금고 문 앞의 소담과 이야기하기	Talk to Sodam in front of the vault door		
+2	go	story.ch34.s7.l1	꺼졌다! 이제 저 집이 우리 곳간 동력을 못 빨아 가요.	It's off! That house can't suck the power from our granary anymore.		
+2	go	story.ch34.s7.l2	……그런데요, 곳간에 숨어 있던 밤마다 저 은빛 집에서 목소리가 들렸어요. 사람 목소리 같은데, 사람 같지 않은.	…But you know, every night I hid in the granary I heard a voice from that silver house. Like a human voice, but not like a human.		
+2	go	story.ch34.s7.l3	'아름다운 때를 영원히.' 그 말만 몇 번이고요.	'Beautiful moments, forever.' Just those words, over and over.		
+2	go	story.ch34.s7.l4	삐— 금고 안 신호, 굳은 자리 수백 개. 가운데 한 신호가… 사람의 목소리 기록입니다. 진열장 안에서 납니다.	Beep — signals inside the vault, hundreds of frozen spots. One signal at the center… is a recording of a human voice. It comes from inside a display case.		
+2	go	story.ch34.s7.l5	문이 열린다… 석 달 동안 한 번도 안 열리던 문이.	The door is opening… a door that never opened once in three months.		
+2	go	story.ch34.s7.l6	씨앗 한 줌 챙겨 갈게요. 저 안에 우리 마을 잔칫날도 갇혀 있을지 몰라요. 같이 들어가요!	I'll take a handful of seeds. Our village's feast day might be locked in there too. Let's go in together!		
+2	go	story.ch34.s7.p.a	금고 문이 열렸어!	The vault door is open!		
+2	go	story.ch34.s7.p.b	아름다운 때를 영원히…?	Beautiful moments, forever…?		
 2	go	story.ch4	제4장 · 가면 쓴 나그네	Chapter 4 · The Masked Traveler		
 2	go	story.ch4.s1	촌장에게 새벽 소식 듣기	Hear the Elder's news from dawn		
 2	go	story.ch4.s1.l1	잔치 이튿날 새벽이었단다. 남쪽 다리목에 웬 가면 쓴 나그네가 서 있더래.	It was the dawn after the feast. They say a masked traveler was standing at the southern bridgehead.		
@@ -2500,6 +2533,7 @@
 2	go	story.idle.saegil	층판 공식은 맞는데… 시간이 안 흐르면 공식도 멈추나 봐요.	The floor-plate formula is right… but if time doesn't flow, I guess formulas stop too.		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 2	go	story.idle.seeddrone	삐비— 치익.	Bibi— tsss.		
+2	go	story.idle.sodam	씨앗 한 톨이 한 해 농사예요. 한 톨도 못 줘요.	One seed is a whole year's farming. I won't give up a single one.		
 2	go	story.idle.thief	헤헤, 못 잡지롱!	Heh heh, can't catch me!		
 2	go	story.idle.wanderer	……	……		
 2	go	story.idle.yeoul	기지 불이 나간 지 한참이에요. 그래도 잠수정은 제가 지켜요.	The base lights went out ages ago. But I still look after the submersible.		
@@ -2539,6 +2573,7 @@
 2	go	story.npc.saegil	탑 설계사 새길	Tower Architect Saegil		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
 2	go	story.npc.seeddrone	구름 씨앗 드론	Cloud-Seed Drone		
+2	go	story.npc.sodam	곳간지기 소담	Granary Keeper Sodam		
 2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	story.npc.yeoul	잠수 기사 여울	Diver Yeoul		
@@ -2581,6 +2616,7 @@
 2	go	story.short.saegil	새길	Saegil		
 2	go	story.short.scholar	은비	Eunbi		
 2	go	story.short.seeddrone	드론	Drone		
+2	go	story.short.sodam	소담	Sodam		
 2	go	story.short.thief	도둑	Thief		
 2	go	story.short.wanderer	나그네	Traveler		
 2	go	story.short.yeoul	여울	Yeoul		

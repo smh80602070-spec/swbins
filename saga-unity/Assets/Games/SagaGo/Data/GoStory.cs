@@ -413,6 +413,8 @@ namespace Saga.Go.Data
         /// <summary>33장(⑲-62) 자리(각 명소 가운데에서 m, z 남쪽): 고개 어귀 go = 어귀 동쪽 26m(돌기둥에서 내린 자리에서 20m 넘게 걸어야 닿는다) · 야적장 무리 = 창고 서북쪽 · 마루 = 창고 남쪽 앞 · 반디 = 창고 서남쪽 · 반디(고원) = 하람 곁.
         /// 운반 드론 길 = 웹 열한 점 × 0.45(야적장 → 컨테이너 사이 → 창고 서쪽 → 동력 기둥 사이 → 금고 문 앞), 창고 모서리·금고 문에 걸리는 둘만 밖으로 옮김.</summary>
         public static readonly Vector2 VaultPassGo = new Vector2(26f, 0f), VaultYardKill = new Vector2(-34f, -19f), MaruAt = new Vector2(-5f, 9f), VaultBandi = new Vector2(-10f, 9f), BandiObs = FrostAt("obs", 5f, 10f);
+        /// <summary>34장(⑲-63) 자리(각 명소 가운데에서 m, z 남쪽): 마루 = 곳간 동남쪽(석등 고리 `SealR` 8m 밖) · 소담 = 곳간 문 앞 서쪽 → 동력 기둥부터 금고 문 앞 남쪽 15m(35장 시작도) → 35장 1째부터 금고 안 남쪽 · 곳간 지키기 제단 = 곳간 문 앞 남쪽 7m.</summary>
+        public static readonly Vector2 MaruGranary = new Vector2(11f, 11f), SodamGranary = new Vector2(-12f, 5f), SodamDoor = new Vector2(0f, 15f), SodamVault = new Vector2(0f, 8f), GranaryDefend = new Vector2(0f, 7f);
         public static readonly Vector2[] VaultDronePath = { new Vector2(8.6f, -5.4f), new Vector2(-8.5f, -8f), new Vector2(-21.6f, -0.9f), new Vector2(-36.9f, 2.3f), new Vector2(-47.7f, -8.6f), new Vector2(-43.2f, -23.9f),
             new Vector2(-27.9f, -30.2f), new Vector2(-15.3f, -38.7f), new Vector2(-23.9f, -51.8f), new Vector2(-41f, -56.3f), new Vector2(-49.5f, -56.5f) };
         public static readonly Vector2[] AmberThiefPath = { new Vector2(-26.3f, -9.6f), new Vector2(-19.4f, -26.7f), new Vector2(-1.3f, -38f), new Vector2(14.8f, -23.7f), new Vector2(30.1f, -13.4f), new Vector2(37.4f, 6.6f),
@@ -766,8 +768,15 @@ namespace Saga.Go.Data
             // 109-14-62 33장(웹 ⑲-62) — 창고지기 마루(현대): 갈무리 물류의 마지막 창고지기. 10부(33장~)부터 늘 창고 앞(34장에서 곳간으로 옮긴다)
             new Npc { Id = "maru", NameKey = "story.npc.maru", NameKo = "창고지기 마루", ShortKey = "story.short.maru", ShortKo = "마루",
                 AtSite = "vault:yard", AtOff = MaruAt, FolkBody = "SwatGuy",
-                Appear = new[] { new Spot { Ch = 32, ChTo = 999, From = 0, To = 99, At = "vault:yard", Arena = MaruAt } },
+                Appear = new[] { new Spot { Ch = 33, From = 1, To = 99, At = "vault:granary", Arena = MaruGranary }, // 34장 1째 단계부터 지게차로 곳간 마을에
+                    new Spot { Ch = 32, ChTo = 999, From = 0, To = 99, At = "vault:yard", Arena = MaruAt } },
                 IdleKey = "story.idle.maru", IdleKo = "드론이 또 한 대 지나가네. 오늘만 백스무 번째…" },
+            // 109-14-63 34장(웹 ⑲-63) — 곳간지기 소담(과거): 곳간째 떠서 떨어진 아이. 34장 3~4째 곳간 문 앞 서쪽 → 5째~(동력 기둥부터)·35장 첫 단계는 금고 문 앞 → 35장 2째부터 금고 안
+            new Npc { Id = "sodam", NameKey = "story.npc.sodam", NameKo = "곳간지기 소담", ShortKey = "story.short.sodam", ShortKo = "소담",
+                AtSite = "vault:granary", AtOff = SodamGranary, FolkBody = "PeasantGirl",
+                Appear = new[] { new Spot { Ch = 33, From = 2, To = 3, At = "vault:granary", Arena = SodamGranary }, new Spot { Ch = 33, From = 4, To = 99, At = "vault:vault", Arena = SodamDoor },
+                    new Spot { Ch = 34, From = 0, To = 0, At = "vault:vault", Arena = SodamDoor }, new Spot { Ch = 34, ChTo = 999, From = 0, To = 99, At = "vault:vault", Arena = SodamVault } },
+                IdleKey = "story.idle.sodam", IdleKo = "씨앗 한 톨이 한 해 농사예요. 한 톨도 못 줘요." },
             // 조각 운반 드론 — 33장 쫓기 때만(5째 단계) 야적장에서 금고 문 앞까지 길(VaultDronePath)을 난다. 반디와 같은 기계 몸.
             new Npc { Id = "carrier", NameKey = "story.npc.carrier", NameKo = "조각 운반 드론", ShortKey = "story.short.carrier", ShortKo = "드론",
                 AtSite = "vault:yard", AtOff = Vector2.zero, Pet = true, RunAt = "vault:yard", RunPath = VaultDronePath,
@@ -2897,6 +2906,60 @@ namespace Saga.Go.Data
                             Pick("story.ch33.s6.p", "그 금고가 뭐예요?", "금고 안에 들어갈 수 있어요?"),
                             L("maru", "story.ch33.s6.l5", "시간 씨앗 금고. 문은 꽉 잠겼어요 — 금고 앞 동력 기둥 둘이 문을 붙들고, 그 동력은 서쪽 곳간 마을에서 끌어다 써요."),
                             L("maru", "story.ch33.s6.l6", "곳간 마을부터 가 봅시다. 거기 곳간은 노래를 불러야 열린다던데… 지게차 몰고 뒤따라갈게요!"),
+                        } },
+                }
+            },
+            // 109-14-63 34장(웹 ⑲-63) — 10부 둘째 장, 곳간의 씨앗: 마루(창고 앞) → 곳간 석등 별 → 해 → 달(seal — 다 켜면 곳간 문이 열린다 = `VaultGranaryStep` 2째 단계부터) → 새 인물 곳간지기 소담
+            // → 씨앗 곳간 지키기(defend — 곳간 문 앞 남쪽, 곳간(북) 쪽을 뺀 방향) → 서쪽 동력 기둥 끄기 → 동쪽 동력 기둥 끄기(light bare — 끄면 알이 사라진다 = `VaultPylonFrom` 5·6째) → 소담(금고 문이 열린다 = `VaultDoorStep` 6째).
+            new Chapter
+            {
+                Id = "ch34", NameKey = "story.ch34", NameKo = "제34장 · 곳간의 씨앗", Ar = 74,
+                Gold = 8750, Mats = new[] { 0, 8, 6, 8, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "maru", TextKey = "story.ch34.s1", TextKo = "물류 창고 앞의 마루와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("maru", "story.ch34.s1.l1", "지게차 시동 걸었어요. 곳간 마을은 고개 쪽 서쪽 — 초가지붕 곳간이 하나 덩그러니 서 있죠."),
+                            L("maru", "story.ch34.s1.l2", "문엔 자물쇠 대신 석등 셋이 둘러 있어요. 누가 흥얼거리는 걸 들었는데 — '별 보고 나가, 해 보고 거두고, 달 보고 들인다'."),
+                            L("chorong", "story.ch34.s1.l3", "장터 노래랑 닮았어요! 그럼 석등도 노래 차례대로 — 별, 해, 달."),
+                            L("bandi", "story.ch34.s1.l4", "삐— 곳간 안에서 작은 생체 신호 하나. 사람입니다. 동력 기둥 선도 곳간 밑으로 지나갑니다."),
+                            Pick("story.ch34.s1.p", "곳간 노래 차례대로 켤게요.", "안에 누가 있다고?"),
+                            L("maru", "story.ch34.s1.l5", "먼저 가 있을게요. 곳간 앞에 지게차 대 놓고 기다리죠!"),
+                        } },
+                    new Step { Type = StepType.Seal, At = "vault:granary", Arena = Vector2.zero, Order = new[] { "star", "sun", "moon" }, TextKey = "story.ch34.s2", TextKo = "곳간 둘레 석등을 곳간 노래 차례(별 → 해 → 달)대로 밝히기" },
+                    new Step { Type = StepType.Talk, Npc = "sodam", TextKey = "story.ch34.s3", TextKo = "곳간에서 나온 아이와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("sodam", "story.ch34.s3.l1", "……노래를 아는 거 보니 도둑은 아니네. 우리 할머니 곳간 노래예요."),
+                            L("sodam", "story.ch34.s3.l2", "난 곳간지기 소담이에요. 하늘이 갈라지던 날, 곳간째 둥 떠서 여기 떨어졌어요. 씨앗 곡식이 다 여기 있어요 — 내년 농사 씨앗."),
+                            L("maru", "story.ch34.s3.l3", "석 달을 곳간 안에 숨어 있었다고? 이 꼬마가?"),
+                            L("sodam", "story.ch34.s3.l4", "밤마다 쇠 새들이 와서 문을 긁어요. 씨앗을 노리는 거예요. 저 둥근 은빛 집에 가져가려고."),
+                            Pick("story.ch34.s3.p", "씨앗은 우리가 지켜 줄게.", "쇠 새들이 또 와?"),
+                            L("sodam", "story.ch34.s3.l5", "와요! 문이 열린 걸 알았으니 다 몰려올 거예요 — 저기, 벌써!"),
+                        } },
+                    new Step { Type = StepType.Defend, At = "vault:granary", Arena = GranaryDefend, NameKey = "story.altar_granary", NameKo = "씨앗 곳간", Dirs = new[] { 60f, 110f, 160f, 200f, 250f, 300f },
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                            new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.EmberImp) },
+                        },
+                        TextKey = "story.ch34.s4", TextKo = "씨앗 곡식을 노리는 것들에게서 곳간 지키기" },
+                    new Step { Type = StepType.Light, Bare = true, At = "vault:pylon0", Arena = Vector2.zero, EnterKey = "story.ch34.lit0", EnterKo = "🔌 서쪽 동력 기둥 꼭대기 푸른 구슬이 치직 꺼진다 — 곳간 밑 동력 선이 잠잠해진다",
+                        TextKey = "story.ch34.s5", TextKo = "금고 앞 서쪽 동력 기둥을 원소 스킬로 끄기" },
+                    new Step { Type = StepType.Light, Bare = true, At = "vault:pylon1", Arena = Vector2.zero, EnterKey = "story.ch34.lit1", EnterKo = "🔌 동쪽 동력 기둥까지 꺼졌다 — 금고 문의 빛 고리가 깜박이더니 스르르 사라진다",
+                        TextKey = "story.ch34.s6", TextKo = "금고 앞 동쪽 동력 기둥을 원소 스킬로 끄기" },
+                    new Step { Type = StepType.Talk, Npc = "sodam", TextKey = "story.ch34.s7", TextKo = "금고 문 앞의 소담과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("sodam", "story.ch34.s7.l1", "꺼졌다! 이제 저 집이 우리 곳간 동력을 못 빨아 가요."),
+                            L("sodam", "story.ch34.s7.l2", "……그런데요, 곳간에 숨어 있던 밤마다 저 은빛 집에서 목소리가 들렸어요. 사람 목소리 같은데, 사람 같지 않은."),
+                            L("sodam", "story.ch34.s7.l3", "'아름다운 때를 영원히.' 그 말만 몇 번이고요."),
+                            L("bandi", "story.ch34.s7.l4", "삐— 금고 안 신호, 굳은 자리 수백 개. 가운데 한 신호가… 사람의 목소리 기록입니다. 진열장 안에서 납니다."),
+                            Pick("story.ch34.s7.p", "금고 문이 열렸어!", "아름다운 때를 영원히…?"),
+                            L("maru", "story.ch34.s7.l5", "문이 열린다… 석 달 동안 한 번도 안 열리던 문이."),
+                            L("sodam", "story.ch34.s7.l6", "씨앗 한 줌 챙겨 갈게요. 저 안에 우리 마을 잔칫날도 갇혀 있을지 몰라요. 같이 들어가요!"),
                         } },
                 }
             },
