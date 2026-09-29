@@ -179,6 +179,13 @@ const KINDS := {
 		"phase_text": "갈무리가 격자 말뚝을 몸에 두르고 바위곰과 매를 부른다 — 초로 방패를 깨라",
 		"rotation": ["slam", "tide", "halo", "storm", "slam", "tide", "halo"], "summon": ["rock_bear", "wind_hawk"],
 		"shape": "goblin", "height": 5.2, "colors": [Color(0.84, 0.88, 0.93), Color(1.0, 0.68, 0.22), Color(0.45, 0.85, 1.0)]},
+	## 106장 56-1 41장 이야기 보스 "갈무리의 싹"(세갈래 고을 마당) — 해미가 심은 갈무리의 마지막 조각이 싹 틔워 자란 "돌려보내야 해"라는 마음.
+	## 코드 몸 goblin 5.0m(연초록 몸·이끼 갈색·금빛 눈). 패턴은 있는 틀: 내려찍기·고리·회오리·밀물·틈새 질주. 2단계 초 방패(풍으로 깬다 — 동료 한별·소담 몫).
+	"seed_giant": {"name": "갈무리의 싹", "hp": 13000.0, "atk": 60.0, "speed": 3.6, "aggro": 28.0,
+		"reach": 3.8, "tell": 0.9, "cd": 1.6, "exp": 0.0, "element": "grass", "shield": 0.0, "phase_shield": 1250.0,
+		"phase_text": "갈무리의 싹이 되감는 덩굴을 두르고 덩굴뱀과 매를 부른다 — 풍으로 방패를 깨라",
+		"rotation": ["slam", "halo", "storm", "tide", "rift", "slam", "halo"], "summon": ["grass_snake", "wind_hawk"],
+		"shape": "goblin", "height": 5.0, "colors": [Color(0.55, 0.85, 0.4), Color(0.5, 0.4, 0.25), Color(1.0, 0.85, 0.35)]},
 	## 106장 54-4 35장 이야기 보스 "금고 파수 드론 여왕"(갈무리 벌 금고 앞 광장) — 갈무리가 핵을 버리며 남긴 금고 파수.
 	## 코드 몸 bird 4.6m(합금 몸·푸른 빛 날개 끝·씨앗빛 눈). 패턴은 있는 틀: 틈새 질주·회오리·고리·내려찍기·밀물 줄. 2단계 풍 방패(암으로 깬다).
 	"vault_queen": {"name": "금고 파수 드론 여왕", "hp": 11800.0, "atk": 56.0, "speed": 4.6, "aggro": 28.0,

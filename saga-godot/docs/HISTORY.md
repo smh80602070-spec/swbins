@@ -9599,3 +9599,10 @@ PROJECT_STATE.md` 참고. 요약:
 - 새 dungeon/ui/hud_column_layout.gd(test_room 이 단다, 0.3초마다): 단추 이름 "BoltArcher2Button" → 그룹 "skill_bolt_archer2" → 무예 스크립트 SKILL_KEY → DungeonSkillState.rank_of>0 인 것만 보이고(그룹이 안 이어지는 공격·소켓·상인·대장간·하드코어·무예 창·난입·인장은 늘 보임), 보이는 것을 아래부터 원래 순서로 다시 쌓다 위 여백(170)을 넘으면 왼쪽 옆 줄로. 배우지 않은 무예 단추는 안 보인다(첫 화면: 단추 여덟 — 이전엔 스무 개 넘게 어지러움).
 - test_room 에 orientation_scale 도 달아 다섯 판 가로 UI 완료(창 모드 1280×720 촬영). 개발용 SAGA_QUICK_SHOT.
 - REGRESS OK. 실기 확인 전: 무예를 배운 뒤 단추가 나타나는지·두 줄로 넘어갈 때 겹침.
+
+## GO 원신 기준 56-1 이야기 12부 "돌아가는 별배" 39~41장 (2026-09-29, "묻지말고 이어해")
+
+- 12부는 시나리오에 없어 장 카드부터 — saga-go-part10.md 12부 절(39~41장). 새 지역 없이 있는 땅·인물로(8부 방식) — 자료만 늘려 세 장을 한 번에. 뿌리 이야기: 갈무리의 마지막 씨앗이 싹 틔워 "돌려보내야 해"라는 마음이 시간 물결을 되감는다 → 돌아가는 길과 남는 길은 한 길(별배로 오간다).
+- story.gd 세 장(39 talk·talk·talk·kill·talk, 40 talk·go·defend·talk·talk, 41 talk·talk·go·duel·talk·talk) · 보스 seed_giant(초·goblin) · 동료 나래(현대 수 법구)·소담(과거 풍 법구) + kits 둘. 인물 자리는 늘 있는 인물(촌장·하람·반디·한별(은하 나루 — 29~ 자리)·나래·벼리·해미·소담)만 써서 appear/stations 를 안 건드림. 처음엔 한별을 "틈새 갈림길"이라 적었다가 그가 은하 나루에 있음을 STATIONS 창으로 확인해 고침.
+- 점검 새 probe_story12 — 표·자리(충돌 안 걸림)·세 장 자동 밟기(talk·go·kill·defend·duel 한 함수로)·보상·합류. 첫판 fails=0. probe_kits 고유 21·합류 16. STORY11·ACHIEVE·AFTERMATH fails=0, QMAP 3·WQ 1 은 기존, REGRESS OK.
+- 실기 확인 전: 대사 어조·길이, 나침 제단 지키기 자리(서리봉 별배 아래 (5.3,4.7))가 막히지 않는지, 갈무리의 싹 방패(풍) 손맛, 나래·소담 고유 스킬.

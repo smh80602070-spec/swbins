@@ -145,6 +145,18 @@ const KITS := {
 		"burst": {"name": "처음의 불", "type": "rally", "radius": 7.0, "mul": 1.9, "sec": 10.0, "atk": 1.2,
 			"text": "둘레 7m 를 달군 칼로 내리치고, 10초 동안 명단 공격 +20%"},
 	},
+	"story_narae": {
+		"skill": {"name": "측량선 긋기", "type": "zone", "cd": 10.0, "radius": 5.0, "sec": 10.0, "tick": 1.0, "targets": 2, "mul": 0.35, "energy": 1.5,
+			"text": "발밑에 10초 측량선 — 1초마다 안의 가까운 적 둘에 물줄기 측량탄(수), 맞힐 때마다 명단 기력. 인물을 바꿔도 남는다"},
+		"burst": {"name": "삼각측량", "type": "lore", "radius": 7.0, "mul": 1.4, "sec": 14.0, "react": 1.3,
+			"text": "둘레 7m 에 측량 나침을 던져 치고, 14초 동안 명단의 원소 반응 피해 +30%"},
+	},
+	"story_sodam": {
+		"skill": {"name": "낟알 흩뿌리기", "type": "shells", "cd": 8.0, "reach": 12.0, "count": 3, "delay": 0.6, "radius": 2.5, "mul": 1.0,
+			"text": "12m 안 적 셋 자리에 0.6초 뒤 낟알 바람이 터진다(둘레 2.5m, 풍) — 적이 없으면 앞 8m 에 하나"},
+		"burst": {"name": "곳간 노래", "type": "vortex", "radius": 5.0, "mul": 1.0, "ahead": 7.0, "sec": 8.0, "tick": 0.5, "bolt": 0.3, "pull": 6.0,
+			"text": "앞 7m 에 8초 노래 소용돌이 — 적을 모으며 0.5초마다 풍(확산)"},
+	},
 	"도적_두목": {
 		"skill": {"name": "회오리 도약", "type": "updraft", "cd": 8.0, "radius": 3.5, "mul": 1.2, "lift": 14.0, "pull": 5.0,
 			"text": "둘레 3.5m 적을 끌어 치고 위로 솟구친다 — 그대로 활공하거나 낙하 공격"},
