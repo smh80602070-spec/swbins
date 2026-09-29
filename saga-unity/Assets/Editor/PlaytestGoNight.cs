@@ -48,7 +48,7 @@ namespace Saga.EditorTools
                 if (GoNight.Lit) Fail("낮인데 잔불이 탐");
                 // 자리 일곱 — 서로 떨어져 있고 그 땅 안·땅 위
                 var sp = GoNight.Spots;
-                if (sp.Length != 7) Fail("자리가 일곱이 아님");
+                if (sp.Length != 10) Fail("자리가 열이 아님(일곱 + 2차 결말 뒤 새 지역 셋)");
                 for (int i = 0; i < sp.Length; i++)
                 {
                     if (sp[i].Foes.Length != 3 || sp[i].Name.StartsWith("night.") || sp[i].Line.StartsWith("night.") || GoStory.NpcIndex(sp[i].WhoNpc) < 0) Fail($"{sp[i].Id} 표(잔당 셋·이름·한 줄·인물)");
@@ -57,6 +57,7 @@ namespace Saga.EditorTools
                     if (!Physics.Raycast(p + new Vector3(2f, 30f, 0f), Vector3.down, out var hit, 80f) || Mathf.Abs(hit.point.y - p.y) > 1.5f) Fail($"{sp[i].Id} 자리에 땅이 없다");
                 }
                 if (!GoFrost.Contains(sp[5].Pos) || !GoAreas.Sunken.Contains(sp[6].Pos)) Fail("서리봉·잠긴 도읍 잔불이 그 땅 안이 아님");
+                if (!GoAreas.Amber.Contains(sp[7].Pos) || !GoAreas.Vault.Contains(sp[8].Pos) || !GoAreas.Fork.Contains(sp[9].Pos) || sp[7].After != 38 || sp[8].After != 38 || sp[9].After != 38) Fail("새 지역 셋이 그 땅 안·38장 뒤가 아님");
                 // 낮 — 불도 잔당도 없다
                 Vector3 s0 = NightEchoField.SpotPos(sp[0]);
                 pc.Teleport(s0 + new Vector3(0f, 0.4f, 5f));
@@ -100,7 +101,34 @@ namespace Saga.EditorTools
                 GoNight.NowFn = () => d.AddDays(2).AddHours(22);
                 nf.Tick(pc.transform.position);
                 if (nf.CampCount("ruins") != 3 || NightEchoState.Done("ruins")) Fail("다음 날 밤에 다시 안 섬");
+                // 새 지역 셋(⑲-69) — 38장 앞엔 불도 잔당도 없고, 뒤엔 자리마다 불이 타고 잔당 셋 · 처치 보상 같은 800·교본 1
+                GoNight.NowFn = () => d.AddDays(3).AddHours(23);
+                NightEchoState.ResetForTest();
+                StoryState.Restore(29, 0);
+                foreach (string nid in new[] { "amber", "vault", "fork" })
+                {
+                    Vector3 px = NightEchoField.SpotPos(sp[GoNight.IndexOf(nid)]);
+                    pc.Teleport(px + new Vector3(0f, 0.4f, 6f));
+                    fc.ResetForTest();
+                    nf.Tick(pc.transform.position);
+                    if (nf.FireShown(nid) || nf.CampUp(nid)) Fail($"{nid}: 38장 앞인데 불·잔당이 있음");
+                }
+                StoryState.Restore(38, 0);
+                foreach (string nid in new[] { "amber", "vault", "fork" })
+                {
+                    Vector3 px = NightEchoField.SpotPos(sp[GoNight.IndexOf(nid)]);
+                    pc.Teleport(px + new Vector3(0f, 0.4f, 6f));
+                    fc.ResetForTest();
+                    nf.Tick(pc.transform.position);
+                    if (!nf.FireShown(nid) || nf.CampCount(nid) != 3) { Fail($"{nid}: 38장 뒤 밤인데 불 {nf.FireShown(nid)}·잔당 {nf.CampCount(nid)}"); continue; }
+                    int g1 = GoldState.Gold, gd1 = TalentState.Count(GoTalent.Mat.Guide);
+                    var camp = nf.CampFoes(nid).ToArray();
+                    foreach (var e in camp) if (e != null && e.Alive) { if (e.Shielded) e.SetShieldForTest(0f); e.TakeRaw(e.Hp + 99999f, Color.white); }
+                    foreach (var e in camp) if (e != null) { e.gameObject.SetActive(false); UnityEngine.Object.Destroy(e.gameObject); } // 쓰러진 몸이 이 프레임에 남으면 뒤 지역 진단의 땅 레이를 막는다
+                    if (GoldState.Gold != g1 + 800 || TalentState.Count(GoTalent.Mat.Guide) != gd1 + 1 || !NightEchoState.Done(nid)) Fail($"{nid}: 처치 보상·그날 끝 표시");
+                }
                 // 세이브 칸
+                NightEchoState.ResetForTest();
                 NightEchoState.MarkDone("road");
                 string json = SaveState.ToJson();
                 if (!json.Contains("\"nightDay\":\"" + GoNight.DayKey(GoNight.NowFn()) + "\"") || !json.Contains("\"nightDone\":[\"road\"]")) Fail("세이브에 밤의 잔불 칸이 없다");

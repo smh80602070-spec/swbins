@@ -2977,6 +2977,15 @@
     { "key": "mount.no_combat", "value": "You can't mount while fighting" },
     { "key": "mount.need_ground", "value": "Mount while standing on the ground" },
     { "key": "mount.auto_combat", "value": "A fight broke out — you dismount" },
-    { "key": "mount.auto_off", "value": "You dismount" }
+    { "key": "mount.auto_off", "value": "You dismount" },
+    { "key": "domain.site.e_firstcrow", "value": "Echo of the First Moment" },
+    { "key": "domain.site.e_garmuri", "value": "Echo of Garmuri's Lattice" },
+    { "key": "domain.why.echo_after", "value": "Opens after chapter {0}" },
+    { "key": "night.spot.amber", "value": "Frozen Crossroads" },
+    { "key": "night.spot.vault", "value": "Freight Yard" },
+    { "key": "night.spot.fork", "value": "Before the Three-Fork Gate" },
+    { "key": "night.line.amber", "value": "Even at night the traffic lights glow a clear green. The clock shop's chime found its beat again, too." },
+    { "key": "night.line.vault", "value": "The yard isn't dark even with the vault fire out. I guess these embers were working as streetlamps." },
+    { "key": "night.line.fork", "value": "Storm-cloud scraps at the gate — thanks for sweeping them away. I can light the furnace in peace tonight." }
   ]
 }

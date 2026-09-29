@@ -76,10 +76,11 @@ namespace Saga.Go.World
         /// <summary>한 박자 — 불을 켜고 끄고, 가까우면 잔당을 세우고 멀면 거둔다. 진단도 부른다.</summary>
         public void Tick(Vector3 feet)
         {
-            bool lit = GoNight.Lit;
+            bool litAll = GoNight.Lit; // 1차 결말 뒤 + 밤(자리별 장은 아래)
             foreach (var s in GoNight.Spots)
             {
                 bool done = NightEchoState.Done(s.Id);
+                bool lit = litAll && GoNight.SpotOpen(s); // 109-14-69 새 지역 셋은 38장 뒤에만
                 if (_fires.TryGetValue(s.Id, out var g) && g != null) g.SetActive(lit && !done);
                 Vector3 p = SpotPos(s);
                 float d = GoStory.Flat(feet, p);

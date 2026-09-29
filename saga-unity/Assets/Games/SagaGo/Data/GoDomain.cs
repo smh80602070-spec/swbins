@@ -27,6 +27,8 @@ namespace Saga.Go.Data
             public string NameKo;
             /// <summary>109-14-56 메아리 — 지도 밖 땅(고원·독립 땅)에 서는 입구는 칸 대신 자리 식(그 보스와 싸운 곳).</summary>
             public System.Func<Vector3> Where;
+            /// <summary>109-14-69 메아리마다 열리는 이야기 장(0 이면 <see cref="EchoAfter"/> = 29) · 보상 금에 더하는 몫(웹 `plus`).</summary>
+            public int After, Plus;
             public string Name => GoLocalization.T("domain.site." + Id, NameKo);
             public Vector3 Pos => Where != null ? Where() : TestMapData.WorldPos(Gx, Gy) + Vector3.up * TestMapData.GroundHeight(Mathf.RoundToInt(Gx), Mathf.RoundToInt(Gy));
         }
@@ -46,14 +48,19 @@ namespace Saga.Go.Data
         public const float EchoLimit = 240f;
         public const int EchoCost = 60;
         public static bool EchoOpen => StoryState.Ch >= EchoAfter;
+        /// <summary>이 메아리 입구가 보이고 열리나 — 1차 결말을 마쳤고, 그 메아리의 장(2차 결말 38장 등)도 마쳤다.</summary>
+        public static bool EchoShown(Site s) => s.Kind == Kind.Echo && EchoOpen && StoryState.Ch >= (s.After > 0 ? s.After : EchoAfter);
         public static bool IsBoss(Kind k) => k == Kind.Weekly || k == Kind.Echo;
-        public static readonly string[] EchoBossKeys = { "story.boss.kingtrue", "story.boss.riftfox", "story.boss.riftcrow", "story.boss.colossus" };
+        public static readonly string[] EchoBossKeys = { "story.boss.kingtrue", "story.boss.riftfox", "story.boss.riftcrow", "story.boss.colossus", "story.boss.firstcrow", "story.boss.garmuritrue" };
         public static readonly Site[] Echoes =
         {
             new Site { Id = "e_knot", Kind = Kind.Echo, NameKo = "매듭 등불의 메아리", Where = () => GoStory.GridPos(4.5f, 0.5f) + new Vector3(20f, 0f, 0f) },
             new Site { Id = "e_ice", Kind = Kind.Echo, NameKo = "얼음굴의 메아리", Where = () => GoStory.FrostPos(GoStory.FrostAt("cave", 0f, 8f)) },
             new Site { Id = "e_cross", Kind = Kind.Echo, NameKo = "갈림길의 메아리", Where = () => GoStory.AreaPos("crossing:steps", new Vector2(10f, 0f)) },
             new Site { Id = "e_dome", Kind = Kind.Echo, NameKo = "빛 돔의 메아리", Where = () => GoStory.AreaPos("sunken:gate", GoStory.SandArrive + new Vector2(0f, -12f)) },
+            // 109-14-69 2차 결말(38장) 뒤 — 11부 보스 둘(웹 ⑲-69 `domain.js` firstcrow·garmuri · 입구 = 세갈래 길목 기준 웹 off [-48,-5]·[48,-62] × 0.45 — 이 지역의 웹 배율). 보상 금 +20.
+            new Site { Id = "e_firstcrow", Kind = Kind.Echo, NameKo = "처음 순간의 메아리", After = 38, Plus = 20, Where = () => GoStory.AreaPos("fork:junction", new Vector2(-21.6f, -2.25f)) },
+            new Site { Id = "e_garmuri", Kind = Kind.Echo, NameKo = "갈무리 격자의 메아리", After = 38, Plus = 20, Where = () => GoStory.AreaPos("fork:junction", new Vector2(21.6f, -27.9f)) },
         };
         /// <summary>메아리 입구 i 의 보스(이야기 결투 단계 — 몸·배율·공격 차례·가면·방패 원소).</summary>
         public static GoStory.Step EchoBoss(string siteId)
@@ -65,7 +72,7 @@ namespace Saga.Go.Data
         public static System.Collections.Generic.IEnumerable<Site> Gates()
         {
             foreach (var s in Sites) yield return s;
-            if (EchoOpen) foreach (var s in Echoes) yield return s;
+            foreach (var s in Echoes) if (EchoShown(s)) yield return s;
         }
 
         public struct Stage { public string N; public int Ar; public float Hp, Atk; }

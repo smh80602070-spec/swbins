@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using Saga.Go.Combat;
@@ -237,12 +238,69 @@ namespace Saga.EditorTools
             if (df.Running || ui.HudShown) Fail("물러나기 단추");
         }
 
+        // ---- 109-14-69 2차 결말(38장) 뒤 — 11부 메아리 둘(처음 순간·갈무리 격자, 금 +20) ----
+        private static void CheckEcho69(DomainField df, FieldCombat fc, PlayerController pc)
+        {
+            var echoes = GoDomain.Echoes;
+            var a = echoes[4]; var b = echoes[5];
+            if (a.Id != "e_firstcrow" || b.Id != "e_garmuri" || a.After != 38 || b.After != 38 || a.Plus != 20 || b.Plus != 20) Fail("11부 메아리 표(장 38·금 +20)");
+            if (GoDomain.EchoBossKeys[4] != "story.boss.firstcrow" || GoDomain.EchoBossKeys[5] != "story.boss.garmuritrue") Fail("11부 메아리 보스 열쇠");
+            // 37장까지는 보이지도 열리지도 않는다 — 안내 글에 장이 들어간다
+            StoryState.Restore(37, 0);
+            df.RefreshEchoes();
+            if (df.EchoShown(a.Id) || df.EchoShown(b.Id)) Fail("37장인데 11부 메아리 입구가 보임");
+            if (GoDomain.Gates().Any(s => s.Id == a.Id || s.Id == b.Id)) Fail("37장인데 11부 메아리가 입구 목록에 있음");
+            pc.Teleport(DomainField.SitePos(a) + new Vector3(0f, 0.3f, 3f));
+            fc.ResetForTest();
+            if (DomainField.SiteNear(pc.transform.position).HasValue) Fail("37장인데 11부 메아리 입구에 들어감");
+            if (df.CanEnter(a, 0, out string why) || !why.Contains("38")) Fail($"37장 들어가기 안내 '{why}'");
+            StoryState.Restore(38, 0);
+            df.RefreshEchoes();
+            if (!df.EchoShown(a.Id) || !df.EchoShown(b.Id) || !GoDomain.Gates().Any(s => s.Id == a.Id) || !GoDomain.Gates().Any(s => s.Id == b.Id)) Fail("38장인데 11부 메아리 입구가 안 보임");
+            // 자리 — 세갈래 고을 안, 숨은 터·다른 메아리와 40m 넘게, 땅이 있다
+            foreach (var s in new[] { a, b })
+            {
+                if (!GoAreas.Fork.Contains(s.Pos)) Fail($"{s.Id} 입구가 세갈래 고을 안이 아님");
+                foreach (var o in GoDomain.Sites) if (Flat(o.Pos, s.Pos) < 40f) Fail($"{s.Id} 입구가 숨은 터 {o.Id} 와 너무 가까움");
+                foreach (var o in echoes) if (o.Id != s.Id && Flat(o.Pos, s.Pos) < 40f) Fail($"{s.Id}·{o.Id} 입구가 너무 가까움");
+                Vector3 p = DomainField.SitePos(s);
+                if (!Physics.Raycast(p + new Vector3(4f, 30f, 0f), Vector3.down, out var hit, 80f) || Mathf.Abs(hit.point.y - p.y) > 1f) Fail($"{s.Id} 입구 땅이 없다");
+            }
+            // 들어가 끝까지 — 보스 하나·방패 원소(뇌·암)·보상 금 = 단계 값 + 20
+            PlayerStats.Restore(64, 0);
+            var expectEl = new[] { GoElement.Electro, GoElement.Geo };
+            var sites = new[] { a, b };
+            for (int i = 0; i < 2; i++)
+            {
+                var site = sites[i];
+                var stp = GoDomain.EchoBoss(site.Id);
+                if (stp == null || stp.P2El != expectEl[i]) { Fail($"{site.Id} 보스 단계·방패 원소"); continue; }
+                DomainState.Restore(120, DomainState.NowForTest, 0, "", 0);
+                Stand(pc, site, 3f);
+                fc.ResetForTest();
+                if (!df.Enter(site, 0)) { Fail($"{site.Id} 들어가기"); continue; }
+                df.Step(3.1f);
+                if (df.Current == null || df.Current.Foes.Count != 1) { Fail($"{site.Id} 보스가 하나가 아님"); if (df.Running) df.Leave(); continue; }
+                var boss = df.Current.Foes[0];
+                if (!boss.IsStoryBoss || boss.DisplayName != GoLocalization.T(stp.BossKey, stp.BossKo)) Fail($"{site.Id} 보스 이름 {boss.DisplayName}");
+                boss.SetHpForTest(boss.MaxHp * 0.49f);
+                df.Step(0.1f);
+                if (!df.Current.P2 || !boss.Shielded || boss.Element != expectEl[i]) Fail($"{site.Id} 2단계 방패 {boss.Element}≠{expectEl[i]}");
+                KillAll(df);
+                df.Step(0.1f);
+                if (df.Current == null || df.Current.Phase != "tree") { Fail($"{site.Id} 쓰러뜨렸는데 보상 나무가 안 섬"); if (df.Running) df.Leave(); continue; }
+                int gold = GoldState.Gold;
+                string got = df.Claim(out string why2);
+                if (got == null || GoldState.Gold != gold + 200 + 20) Fail($"{site.Id} 보상 금 {GoldState.Gold - gold} ≠ 220 ({why2})");
+            }
+        }
+
         // ---- 109-14-56 메아리 — 1차 결말 뒤 이야기 보스 재대결(주간 보스 틀) ----
         private static void CheckEcho(DomainField df, DomainUi ui, FieldCombat fc, PlayerController pc)
         {
             StoryState.OffForTest = false;
             var echoes = GoDomain.Echoes;
-            if (echoes.Length != 4 || GoDomain.EchoBossKeys.Length != 4) { Fail("메아리가 넷이 아님"); return; }
+            if (echoes.Length != 6 || GoDomain.EchoBossKeys.Length != 6) { Fail("메아리가 여섯이 아님"); return; }
             // 1차 결말 앞에는 안 보이고 안 열린다
             StoryState.Restore(28, 0);
             df.RefreshEchoes();
@@ -251,7 +309,11 @@ namespace Saga.EditorTools
             if (DomainField.SiteNear(pc.transform.position).HasValue) Fail("결말 앞인데 메아리 입구에 들어감");
             StoryState.Restore(29, 0);
             df.RefreshEchoes();
-            foreach (var s in echoes) if (!df.EchoShown(s.Id)) Fail($"결말 뒤인데 {s.Id} 입구가 안 보임");
+            for (int q = 0; q < echoes.Length; q++)
+            {
+                bool want = q < 4; // 109-14-69 — 11부 메아리 둘은 2차 결말(38장) 뒤에야
+                if (df.EchoShown(echoes[q].Id) != want) Fail($"1차 결말 뒤인데 {echoes[q].Id} 입구 {(want ? "가 안 보임" : "가 보임")}");
+            }
             // 자리 — 그 보스와 싸운 곳(마을 광장 동쪽 · 서리봉 얼음굴 · 갈림길 · 잠긴 도읍 모래밭), 서로 80m 넘게, 숨은 터와도
             var ip = new[] { GoStory.GridPos(4.5f, 0.5f), GoFrost.Center, GoAreas.Crossing.Center, GoAreas.Sunken.Center };
             if (GoFrost.Contains(echoes[0].Pos) || !GoFrost.Contains(echoes[1].Pos) || !GoAreas.Crossing.Contains(echoes[2].Pos) || !GoAreas.Sunken.Contains(echoes[3].Pos)) Fail("메아리 입구 자리가 그 땅 안이 아님");
@@ -294,6 +356,7 @@ namespace Saga.EditorTools
                 if (got == null || DomainState.Resin != 90 || DomainState.WeeklyUsed != 1 || GoldState.Gold != gold + 200 || TalentState.Count(GoTalent.Mat.Scale) != scales + 1 || TalentState.Count(GoTalent.Mat.Guide) != guides + 3) Fail($"메아리 받기 '{got ?? why}' 원기 {DomainState.Resin}·주간 {DomainState.WeeklyUsed}");
                 if (ArtifactState.Snapshot().Count != arts + 1) Fail("메아리 보상 ★5 보패 하나");
             }
+            CheckEcho69(df, fc, pc);
             // 원기 값 — 이번 주 둘을 채우면 60
             DomainState.Restore(120, DomainState.NowForTest, 0, "", 0);
             DomainState.MarkClaim(GoDomain.Kind.Weekly); DomainState.MarkClaim(GoDomain.Kind.Echo);

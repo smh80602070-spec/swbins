@@ -19,6 +19,8 @@ namespace Saga.Go.Data
         public struct Spot
         {
             public string Id, NameKo, WhoNpc, LineKo;
+            /// <summary>109-14-69 이 잔불이 타는 이야기 장(0 이면 <see cref="GoNight.After"/> = 29, 새 지역 셋은 2차 결말 38).</summary>
+            public int After;
             public Func<Vector3> Where;
             public GoDomain.Foe[] Foes;
             public Vector3 Pos => Where();
@@ -31,8 +33,10 @@ namespace Saga.Go.Data
         private static GoDomain.Foe Raptor => new GoDomain.Foe(FieldEnemy.Kind.StormWraith);
         private static GoDomain.Foe Hawk => new GoDomain.Foe(FieldEnemy.Kind.StormWraith, GoElement.Anemo);
         private static GoDomain.Foe Fox => new GoDomain.Foe(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo);
+        private static GoDomain.Foe Rock => new GoDomain.Foe(FieldEnemy.Kind.EmberImp, GoElement.Geo);       // 웹 rockbear — 암 원소 몸
+        private static GoDomain.Foe Bolt => new GoDomain.Foe(FieldEnemy.Kind.StormWraith, GoElement.Electro);   // 웹 bolt — 뇌 원소 몸
 
-        /// <summary>일곱 자리(웹 SPOTS) — 그 이야기 제단 곁 남쪽 4m(매듭 돌은 북쪽 3m) · 서리봉 고원 가운데 · 잠긴 도읍 모래밭.</summary>
+        /// <summary>열 자리(웹 SPOTS 일곱 + 2차 결말 뒤 새 지역 셋) — 그 이야기 제단 곁 남쪽 4m(매듭 돌은 북쪽 3m) · 서리봉 고원 가운데 · 잠긴 도읍 모래밭.</summary>
         public static readonly Spot[] Spots =
         {
             new Spot { Id = "ruins", NameKo = "폐허 제단", WhoNpc = "scholar", LineKo = "이 불… 비문 밑에서 올라온 거야. 다 꺼졌으면 좋겠는데.", Where = () => GoStory.GridPos(GoStory.AltarGx, GoStory.AltarGy) + new Vector3(0f, 0f, 4f), Foes = new[] { Imp, Imp, Raptor } },
@@ -42,6 +46,10 @@ namespace Saga.Go.Data
             new Spot { Id = "isle", NameKo = "바위섬", WhoNpc = "ferryman", LineKo = "밤 물살이 잔불을 실어 오네. 이제 진짜 끝이겠지.", Where = () => GoStory.IslePos(new Vector2(0f, 4f)), Foes = new[] { Imp, Toad, Hawk } },
             new Spot { Id = "frost", NameKo = "서리봉 고원", WhoNpc = "haram", LineKo = "(무전) 관측소 온도계가 밤마다 튀었는데 — 이 불 때문이었어요.", Where = () => GoStory.FrostPos(Vector2.zero), Foes = new[] { Fox, Fox, Hawk } },
             new Spot { Id = "sunken", NameKo = "잠긴 도읍 모래밭", WhoNpc = "mulsae", LineKo = "밤 바다에 보랏빛이 비치더니 — 그게 이거였구려.", Where = () => GoStory.AreaPos("sunken:gate", GoStory.SandArrive), Foes = new[] { Toad, Toad, Raptor } },
+            // 109-14-69 2차 결말(38장) 뒤 — 새 지역 셋(웹 ⑲-69 SPOTS amber·vault·fork, 자리는 그 지역 이야기 kill 칸). 오프셋은 웹 off × 그 지역 배율 0.45(굳은 네거리 3.6m·세갈래 성문 10m) — 야적장은 그 자리가 창고(12×8m) 안이라 건물 앞 8.5m.
+            new Spot { Id = "amber", NameKo = "굳은 네거리", After = 38, WhoNpc = "chorong", LineKo = "밤에도 신호등이 초록으로 또렷해요. 시계방 괘종도 제 박자를 찾았고요.", Where = () => GoStory.AreaPos("amber:cross", new Vector2(0f, 3.6f)), Foes = new[] { Rock, Imp, Bolt } },
+            new Spot { Id = "vault", NameKo = "야적장", After = 38, WhoNpc = "maru", LineKo = "금고 불이 꺼져도 야적장이 어둡지 않아요. 이 잔불이 가로등 노릇을 했나 봐요.", Where = () => GoStory.AreaPos("vault:yard", new Vector2(0f, 8.5f)), Foes = new[] { Rock, Hawk, Fox } },
+            new Spot { Id = "fork", NameKo = "세갈래 성문 앞", After = 38, WhoNpc = "byeori", LineKo = "성문 앞에 먹구름 부스러기라니 — 쓸어 줘서 고맙다. 오늘 밤 화덕은 편히 피우겠어.", Where = () => GoStory.AreaPos("fork:gate", new Vector2(0f, 10f)), Foes = new[] { Imp, Bolt, Fox } },
         };
 
         /// <summary>진단이 시각을 붙든다 — 없으면 지금(지역 시각).</summary>
@@ -50,6 +58,8 @@ namespace Saga.Go.Data
         public static bool AlwaysNightForTest;
 
         public static bool Open => StoryState.Ch >= After && !StoryState.OffForTest;
+        /// <summary>이 자리의 잔불이 타는 장을 마쳤나 — 1차 결말 자리는 29장, 새 지역 셋은 38장.</summary>
+        public static bool SpotOpen(Spot s) => StoryState.Ch >= (s.After > 0 ? s.After : After) && !StoryState.OffForTest;
         /// <summary>실제 시각 21~4시(4시 전)면 밤. 순수.</summary>
         public static bool IsNight(DateTime t) => t.Hour >= NightFrom || t.Hour < NightTo;
         /// <summary>"오늘"의 키 — 새벽 4시에 갈린다. 순수.</summary>

@@ -692,6 +692,8 @@
 2	go	domain.site.d_tomb	산기슭 잠든 무덤	Foothill Sleeping Tomb		
 2	go	domain.site.e_cross	갈림길의 메아리	Echo of the Crossing		
 2	go	domain.site.e_dome	빛 돔의 메아리	Echo of the Light Dome		
+2	go	domain.site.e_firstcrow	처음 순간의 메아리	Echo of the First Moment		
+2	go	domain.site.e_garmuri	갈무리 격자의 메아리	Echo of Garmuri's Lattice		
 2	go	domain.site.e_ice	얼음굴의 메아리	Echo of the Ice Cave		
 2	go	domain.site.e_knot	매듭 등불의 메아리	Echo of the Knot Lantern		
 2	go	domain.site.w_altar	먹구름 제단	Stormcloud Altar		
@@ -700,6 +702,7 @@
 2	go	domain.two_waves	파도 둘	Two waves		
 2	go	domain.wave	파도 {0}/{1}	Wave {0}/{1}		
 2	go	domain.why.echo	1차 결말 뒤에 열린다	Opens after the first ending		
+2	go	domain.why.echo_after	{0}장을 마친 뒤에 열린다	Opens after chapter {0}		
 2	go	domain.why.fight	싸우는 중엔 못 들어간다	Cannot enter during a fight		
 2	go	domain.why.left	물러났다	Withdrew		
 2	go	domain.why.no_field	들판 전투가 없다	No field combat		
@@ -1164,20 +1167,26 @@
 2	go	mount.up	▲	▲		
 2	go	move.drown	기력이 다해 물가로 돌아왔다	Out of stamina — you washed back to shore		
 2	go	night.clear	🔮 잔불이 꺼졌다 — {0}: "{1}" · 금 {2} · 교본 {3}	🔮 The embers go out — {0}: "{1}" · {2} gold · {3} Martial Manual		
+2	go	night.line.amber	밤에도 신호등이 초록으로 또렷해요. 시계방 괘종도 제 박자를 찾았고요.	Even at night the traffic lights glow a clear green. The clock shop's chime found its beat again, too.		
 2	go	night.line.cape	허, 이 늙은이 노 소리에 잔불도 물러가는군.	Heh, even the embers retreat at this old man's oar.		
+2	go	night.line.fork	성문 앞에 먹구름 부스러기라니 — 쓸어 줘서 고맙다. 오늘 밤 화덕은 편히 피우겠어.	Storm-cloud scraps at the gate — thanks for sweeping them away. I can light the furnace in peace tonight.		
 2	go	night.line.frost	(무전) 관측소 온도계가 밤마다 튀었는데 — 이 불 때문이었어요.	(Radio) The observatory thermometer kept jumping every night — it was this fire.		
 2	go	night.line.isle	밤 물살이 잔불을 실어 오네. 이제 진짜 끝이겠지.	The night tide brings the embers in. Surely it's really over now.		
 2	go	night.line.peak	노랫소리가 남았어. 이번엔 내가 끝을 맺을게.	The singing still lingers. This time I'll bring it to an end.		
 2	go	night.line.road	……밤마다 이 길 끝에서 불이 튄다. 임금의 미련이다.	……Every night, fire sparks at the end of this road. It is the king's lingering regret.		
 2	go	night.line.ruins	이 불… 비문 밑에서 올라온 거야. 다 꺼졌으면 좋겠는데.	This fire… it rose from beneath the inscription. I wish it were all out.		
 2	go	night.line.sunken	밤 바다에 보랏빛이 비치더니 — 그게 이거였구려.	Violet light shone on the night sea — so that was this.		
+2	go	night.line.vault	금고 불이 꺼져도 야적장이 어둡지 않아요. 이 잔불이 가로등 노릇을 했나 봐요.	The yard isn't dark even with the vault fire out. I guess these embers were working as streetlamps.		
+2	go	night.spot.amber	굳은 네거리	Frozen Crossroads		
 2	go	night.spot.cape	물마루 곶	Wave-Crest Cape		
+2	go	night.spot.fork	세갈래 성문 앞	Before the Three-Fork Gate		
 2	go	night.spot.frost	서리봉 고원	Frost Peak Plateau		
 2	go	night.spot.isle	바위섬	Rock Island		
 2	go	night.spot.peak	북쪽 봉우리	Northern Peak		
 2	go	night.spot.road	서쪽 옛길	Old Western Road		
 2	go	night.spot.ruins	폐허 제단	Ruins Altar		
 2	go	night.spot.sunken	잠긴 도읍 모래밭	Sunken Capital Sands		
+2	go	night.spot.vault	야적장	Freight Yard		
 2	go	night.up	🔮 밤의 잔불 — {0}에서 잔당이 일어났다	🔮 Night Embers — remnants rise at {0}		
 2	go	npc.elder_active	아직인가? 도적 놈들 때문에 다들 걱정이 크네.	Still not done? Everyone's worried sick about those bandits.		
 2	go	npc.elder_done	고맙네, 자네 덕에 길이 편해졌어.	Thank you. The roads are safer thanks to you.		

@@ -2977,6 +2977,15 @@
     { "key": "mount.no_combat", "value": "싸우는 중엔 탈 수 없다" },
     { "key": "mount.need_ground", "value": "땅에 서서 탄다" },
     { "key": "mount.auto_combat", "value": "싸움이 붙어 탈것에서 내렸다" },
-    { "key": "mount.auto_off", "value": "탈것에서 내렸다" }
+    { "key": "mount.auto_off", "value": "탈것에서 내렸다" },
+    { "key": "domain.site.e_firstcrow", "value": "처음 순간의 메아리" },
+    { "key": "domain.site.e_garmuri", "value": "갈무리 격자의 메아리" },
+    { "key": "domain.why.echo_after", "value": "{0}장을 마친 뒤에 열린다" },
+    { "key": "night.spot.amber", "value": "굳은 네거리" },
+    { "key": "night.spot.vault", "value": "야적장" },
+    { "key": "night.spot.fork", "value": "세갈래 성문 앞" },
+    { "key": "night.line.amber", "value": "밤에도 신호등이 초록으로 또렷해요. 시계방 괘종도 제 박자를 찾았고요." },
+    { "key": "night.line.vault", "value": "금고 불이 꺼져도 야적장이 어둡지 않아요. 이 잔불이 가로등 노릇을 했나 봐요." },
+    { "key": "night.line.fork", "value": "성문 앞에 먹구름 부스러기라니 — 쓸어 줘서 고맙다. 오늘 밤 화덕은 편히 피우겠어." }
   ]
 }

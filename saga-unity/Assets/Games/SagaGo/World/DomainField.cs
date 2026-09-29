@@ -62,8 +62,7 @@ namespace Saga.Go.World
         /// <summary>메아리 입구를 1차 결말 뒤에만 보이게(진단이 직접 부른다).</summary>
         public void RefreshEchoes()
         {
-            bool open = GoDomain.EchoOpen && !StoryState.OffForTest;
-            foreach (var s in GoDomain.Echoes) { var t = transform.Find("Domain_" + s.Id); if (t != null) t.gameObject.SetActive(open); }
+            foreach (var s in GoDomain.Echoes) { var t = transform.Find("Domain_" + s.Id); if (t != null) t.gameObject.SetActive(GoDomain.EchoShown(s) && !StoryState.OffForTest); }
         }
         public bool EchoShown(string id) { var t = transform.Find("Domain_" + id); return t != null && t.gameObject.activeSelf; }
 
@@ -139,7 +138,7 @@ namespace Saga.Go.World
             else if (stage < 0 || stage >= GoDomain.Stages.Length) why = GoLocalization.T("domain.why.stage", "없는 단계");
             else if (!GoDomain.StageOpen(stage, Rank)) why = string.Format(GoLocalization.T("domain.why.rank", "여정 등급 {0} 에 열림"), GoDomain.Stages[stage].Ar);
             else if (WorldMapUi.Fighting()) why = GoLocalization.T("domain.why.fight", "싸우는 중엔 못 들어간다");
-            else if (s.Kind == GoDomain.Kind.Echo && !GoDomain.EchoOpen) why = GoLocalization.T("domain.why.echo", "1차 결말 뒤에 열린다");
+            else if (s.Kind == GoDomain.Kind.Echo && !GoDomain.EchoShown(s)) why = s.After > 0 ? string.Format(GoLocalization.T("domain.why.echo_after", "{0}장을 마친 뒤에 열린다"), s.After) : GoLocalization.T("domain.why.echo", "1차 결말 뒤에 열린다");
             return why == null;
         }
 
@@ -271,6 +270,7 @@ namespace Saga.Go.World
             if (!DomainState.Spend(cost)) { why = string.Format(GoLocalization.T("domain.why.resin", "원기가 모자라다({0}/{1})"), DomainState.Resin, cost); return null; }
             int seq = DomainState.MarkClaim(k);
             var r = GoDomain.RewardOf(k, Current.Stage, seq);
+            r.Gold += Current.Site.Plus; // 109-14-69 — 11부 메아리는 금 +20(웹 `plus`)
             var parts = new List<string> { string.Format(GoLocalization.T("domain.gold", "금 +{0}"), r.Gold) };
             GoldState.Add(r.Gold);
             foreach (var (rarity, set) in r.Arts) parts.Add(GoArtifacts.Label(ArtifactState.Get(ArtifactState.Add(rarity, set))));
