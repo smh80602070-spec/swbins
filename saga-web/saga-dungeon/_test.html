@@ -420,18 +420,18 @@ window.requestAnimationFrame = function () { return 0; };
           C.emit('changed');
           if (SC.isOpen()) { say(); }
         }
-        var want = D.CHAPTERS.slice(6, 15).map(function (c) { return c.id; });   // 마지막 장(이야기만)은 앞 장 끝 장면에 이어져 한 번에 지나간다
+        var want = D.CHAPTERS.slice(6, 15).map(function (c) { return c.id; }).concat(['a6_orphan', 'a6_ford', 'a6_beyond']);   // 5막 마지막 장(이야기만)은 앞 장 끝 장면에 이어져 한 번에 지나간다 · 6막 비석 너머 셋은 결말 뒤(최고 층 32·34·36)
         if (seen.join(',') !== want.join(',') || !SC.state().done.a5_nameless) { bad.push('장 순서 ' + seen.join(',')); }
         if (SC.current() !== null || SC.hint() !== null) { bad.push('끝났는데 힌트 ' + (SC.current() && SC.current().id)); }
-        if (SC.titles().indexOf('이름을 찾은 자') < 0) { bad.push('칭호 ' + JSON.stringify(SC.titles())); }
+        if (SC.titles().indexOf('이름을 찾은 자') < 0 || SC.titles().indexOf('비석 너머의 이름') < 0 || !SC.state().said.bd2 || C.save.dungeon.best < 36) { bad.push('칭호 ' + JSON.stringify(SC.titles())); }
         if (!SC.state().said.nl2_seal || SC.state().said.nl2_restore) { bad.push('고른 결말 장면(봉인) ' + JSON.stringify(Object.keys(SC.state().said).filter(function (k) { return /^nl2/.test(k); }))); }
         if (C.save.player.gold < g0 + 200000) { bad.push('보상 합 ' + (C.save.player.gold - g0)); }
-        if (!/이름 없는 곳/.test(SC.cardHtml()) || !/3막/.test(SC.cardHtml())) { bad.push('카드 막 머리글'); }
+        if (!/이름 없는 곳/.test(SC.cardHtml()) || !/3막/.test(SC.cardHtml()) || !/6막/.test(SC.cardHtml())) { bad.push('카드 막 머리글'); }
         // 옛 세이브 — 30층까지 가 본 세이브는 3~5막의 앞 열 장을 건너뛰고 마지막 장만 남는다
         SC.reset(); C.save.dungeon.best = 30; C.save.player.gold = g0;
         if (!SC.current() || SC.current().id !== 'a5_nameless') { bad.push('옛 세이브 건너뜀 ' + (SC.current() && SC.current().id)); }
         if (bad.length) { throw new Error(bad.join(', ')); }
-        return '3막~5막 열 장 차례로 끝 · 고른 결말(봉인) 장면 · 칭호 이름을 찾은 자 · 막 머리글 · 옛 세이브 건너뜀';
+        return '3막~5막 열 장 + 결말 뒤 6막 세 장(32·34·36층) 차례로 끝 · 고른 결말(봉인) 장면 · 칭호 이름을 찾은 자·비석 너머의 이름 · 막 머리글 · 옛 세이브 건너뜀';
       } finally {
         window.DG_NO_SCENARIO = true;
         SC.abort(); T.active = keep.act;
