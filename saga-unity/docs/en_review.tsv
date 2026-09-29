@@ -2316,6 +2316,37 @@
 2	go	story.ch35.s7.p.b	씨앗 칼은 어디서 났어요?	Where did you get the seed blade?		
 2	go	story.ch35.stepped	🔷 기록 기둥 꼭대기에 올라섰다 — 갈무리의 핵이 코앞에서 맥박친다	🔷 You stand atop the record pillar — Garmuri's core pulses right before you		
 2	go	story.ch35.win	🛸 파수 드론 여왕의 날개가 꺾여 떨어지고 — 금고 안에서 유리 깨지는 소리가 울린다	🛸 The sentinel drone queen's wings snap and she falls — the sound of breaking glass echoes from inside the vault		
+2	go	story.ch36	제36장 · 가장 깊은 진열장	Chapter 36 · The Deepest Display Case		
+2	go	story.ch36.arrive	호박빛이 온몸을 삼키고 — 눈을 뜨니 낯선 고을 성문 앞이다. 바람도, 소리도, 하늘의 금도 멈춰 있다	Amber light swallows you — when you open your eyes you stand before the gate of an unfamiliar town. The wind, the sound, even the cracks in the sky have stopped		
+2	go	story.ch36.enter1	⚔️ 성문 앞 순간의 틈으로 결정 짐승들이 기어든다	⚔️ Crystal beasts crawl in through the gap in the moment in front of the gate		
+2	go	story.ch36.follow	👣 벼리가 대장간 화덕 앞에서 걸음을 멈췄다	👣 Byeori stopped in front of the smithy furnace		
+2	go	story.ch36.s1	금고 안 해미 진열장 곁의 해미와 이야기하기	Talk to Haemi beside the display case inside the vault		
+2	go	story.ch36.s1.l1	봐요, 북쪽 벽 앞. 갈무리가 달아나며 바닥을 열어 드러난 진열장 — '처음의 순간'. 그 애가 가장 아끼는 거예요.	Look, by the north wall. The display case revealed when Garmuri fled and opened the floor — 'the first moment.' It's what that child treasures most.		
+2	go	story.ch36.s1.l2	삐— 진열장 안 신호가 이상합니다. 작은 모형이 아니라… 땅 하나가 통째로 들어 있습니다.	Beep — the signal inside the case is strange. Not a small model… a whole piece of land is in there.		
+2	go	story.ch36.s1.l3	갈무리는 순간을 줄여 넣는 게 아니라, 순간째 떼어 와 유리 너머에 붙잡아 둬요. 유리에 손을 대면 그 안으로 들어갈 수 있을 거예요.	Garmuri doesn't shrink moments to fit them in — it tears off the whole moment and holds it beyond the glass. If you put your hand on the glass, you should be able to go in.		
+2	go	story.ch36.s1.l4	들어가서 순간이동 지점을 켜 두면 언제든 오갈 수 있어요. 준비되면 말해요 — 내가 유리를 열게요.	If you go in and switch on a teleport point, you can come and go any time. Tell me when you're ready — I'll open the glass.		
+2	go	story.ch36.s1.p.a	들어가 볼게요.	I'll go in.		
+2	go	story.ch36.s1.p.b	나올 수는 있는 거죠?	I can come back out, right?		
+2	go	story.ch36.s2	가장 깊은 진열장 속으로 들어가기(해미에게 F)	Go into the deepest display case (press F at Haemi)		
+2	go	story.ch36.s2.l1	손을 유리에 대요 — 셋, 둘, 하나!	Put your hand on the glass — three, two, one!		
+2	go	story.ch36.s3	성문 안쪽에서 움직이는 사람과 이야기하기	Talk to the person moving inside the gate		
+2	go	story.ch36.s3.l1	……움직인다! 당신, 움직이는구나! 까마귀가 하늘을 찢은 뒤로 이 고을에서 숨 쉬는 건 나 하나뿐인 줄 알았소.	…It moves! You — you move! I thought I was the only one breathing in this town since the crow tore the sky.		
+2	go	story.ch36.s3.l2	나는 이 고을 대장장이 벼리요. 그날 새벽 하늘에서 떨어진 이상한 쇠로 칼을 벼리던 참이었지. 담금질하려는 순간 — 하늘이 쩍 갈라졌소.	I'm Byeori, the blacksmith of this town. That dawn I was forging a blade from the strange iron that fell from the sky. The moment I was about to quench it — the sky split open.		
+2	go	story.ch36.s3.l3	(진열장 밖에서 들리는 목소리) 그 쇠가 틈 조각이에요. 벼리 씨의 칼이 벼리 씨의 시간만 붙들어 준 거예요.	(A voice from outside the display case) That iron is a rift fragment. Byeori's blade held only Byeori's own time.		
+2	go	story.ch36.s3.l4	고을 한가운데 세갈래 길목 위를 보시오. 커다란 까마귀가 선로와 역참길을 한입에 삼키려다 하늘째 찢고 그대로 멈췄지.	Look above the three-way junction in the middle of town. A huge crow tried to swallow the rails and the post road in one bite, tore the sky, and just stopped.		
+2	go	story.ch36.s3.l5	쉿 — 성문 밖이 소란하오. 순간 틈으로 무언가 기어들어 왔소!	Shh — there's a commotion outside the gate. Something crawled in through the gap in the moment!		
+2	go	story.ch36.s3.p.a	저 하늘의 금은 뭐예요?	What is that crack in the sky?		
+2	go	story.ch36.s3.p.b	까마귀가 하늘을 찢었다고요?	The crow tore the sky?		
+2	go	story.ch36.s4	성문 앞에 몰려든 결정 짐승 물리치기	Defeat the crystal beasts crowding in front of the gate		
+2	go	story.ch36.s5	대장장이 벼리를 따라 대장간으로	Follow the blacksmith Byeori to the smithy		
+2	go	story.ch36.s6	대장간 화덕 앞의 벼리와 이야기하기	Talk to Byeori in front of the smithy furnace		
+2	go	story.ch36.s6.l1	보시오, 화덕 불도 솟다 말고 굳었소. 쇠를 두드려도 소리가 안 나. 이 고을은 까마귀가 하늘을 찢은 그 한 숨에 붙잡혀 있소.	Look, even the furnace fire froze mid-leap. Strike the iron and there's no sound. This town is caught in the single breath when the crow tore the sky.		
+2	go	story.ch36.s6.l2	삐— 고을 둘레에서 격자 신호 셋. 역참길 끝, 선로 끝, 종루 꼭대기. 셋이 순간을 붙들고 있습니다.	Beep — three lattice signals around the town. The end of the post road, the end of the rails, the top of the bell tower. The three hold the moment.		
+2	go	story.ch36.s6.l3	그 빛나는 말뚝들! 까마귀가 멈춘 직후 하늘에서 내려와 박혔소. 누가 박았는지는 모르지만, 저게 박힌 뒤로 아무것도 안 움직였지.	Those glowing stakes! They came down from the sky and drove in right after the crow stopped. I don't know who drove them, but nothing has moved since they went in.		
+2	go	story.ch36.s6.l4	(진열장 밖에서) 갈무리의 격자 말뚝이에요. 세 시대 길 끝마다 하나씩 — 순간을 유리 안에 고정하는 핀.	(From outside the case) They're Garmuri's lattice stakes. One at the end of each of the three ages' roads — pins that fix the moment inside the glass.		
+2	go	story.ch36.s6.l5	동쪽 선로 공사장에 쇠 수레를 몰던 사람들도 그대로 굳어 있소. 말뚝부터 하나씩 — 역참길 끝이 제일 가깝소. 내 칼을 들고 가겠소!	The people who were driving iron carts at the eastern railway works are frozen too. Start with the stakes, one by one — the end of the post road is closest. I'll take my blade with me!		
+2	go	story.ch36.s6.p.a	말뚝을 뽑으면 순간이 풀려요?	If I pull the stakes, will the moment release?		
+2	go	story.ch36.s6.p.b	공사장 사람들은요?	What about the people at the works?		
 2	go	story.ch4	제4장 · 가면 쓴 나그네	Chapter 4 · The Masked Traveler		
 2	go	story.ch4.s1	촌장에게 새벽 소식 듣기	Hear the Elder's news from dawn		
 2	go	story.ch4.s1.l1	잔치 이튿날 새벽이었단다. 남쪽 다리목에 웬 가면 쓴 나그네가 서 있더래.	It was the dawn after the feast. They say a masked traveler was standing at the southern bridgehead.		
@@ -2570,6 +2601,7 @@
 2	go	story.idle.ara	별배는 꼭 돌아온다고 믿고 불을 켜 두었어요.	I kept the lights on, believing the star-ship would come back.		
 2	go	story.idle.bandi	삐— 별배 심장 온도, 계속 하락 중.	Beep — Starship core temperature still falling.		
 2	go	story.idle.bawoo	……불씨는 아직 꺼지지 않았다.	……The ember has not gone out yet.		
+2	go	story.idle.byeori	쇠는 식기 전에 두드려야 하는데… 불도, 쇠도, 하늘도 다 멈췄어.	Iron must be struck before it cools… but the fire, the iron and the sky have all stopped.		
 2	go	story.idle.captain	…종이 울리면 막차가…	…when the bell rings, the last train…		
 2	go	story.idle.carrier	삐비— 치익.	Bibi— tsss.		
 2	go	story.idle.chorong	다른 시계는 다 멈췄는데 내 손목시계만 째깍거려요.	Every other clock has stopped, but my wristwatch alone keeps ticking.		
@@ -2612,6 +2644,7 @@
 2	go	story.npc.ara	나루지기 아라	Portkeeper Ara		
 2	go	story.npc.bandi	조종 기계 반디	Bandi the Pilot Machine		
 2	go	story.npc.bawoo	산성지기 바우	Bawoo the Fortress Keeper		
+2	go	story.npc.byeori	대장장이 벼리	Blacksmith Byeori		
 2	go	story.npc.captain	선장의 잔상	Captain's Afterimage		
 2	go	story.npc.carrier	조각 운반 드론	Fragment Carrier Drone		
 2	go	story.npc.chorong	시계 수리공 초롱	Clock Repairer Chorong		
@@ -2659,6 +2692,7 @@
 2	go	story.short.ara	아라	Ara		
 2	go	story.short.bandi	반디	Bandi		
 2	go	story.short.bawoo	바우	Bawoo		
+2	go	story.short.byeori	벼리	Byeori		
 2	go	story.short.captain	잔상	Afterimage		
 2	go	story.short.carrier	드론	Drone		
 2	go	story.short.chorong	초롱	Chorong		

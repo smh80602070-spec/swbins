@@ -188,6 +188,8 @@ namespace Saga.Go.Data
             /// <summary>follow 단계에서 걷는 길(칸 좌표, 첫 점 = 걷기 전 자리 — `FrostPath` 면 고원 가운데에서 m).</summary>
             public Vector2[] Path;
             public bool FrostPath;
+            /// <summary>109-14-66 follow 길이 독립 땅 명소 곁이면 그 명소 열쇠("지역:명소") — `Path` 는 그 가운데에서 m(첫 점 = 걷기 전 자리).</summary>
+            public string PathAt;
         }
 
         /// <summary>인물이 서는 칸 — 장(0부터)·단계 From~To 동안 Gx·Gy(또는 길 위·고원 위).</summary>
@@ -417,6 +419,10 @@ namespace Saga.Go.Data
         public static readonly Vector2 MaruGranary = new Vector2(11f, 11f), SodamGranary = new Vector2(-12f, 5f), SodamDoor = new Vector2(0f, 15f), SodamVault = new Vector2(0f, 8f), GranaryDefend = new Vector2(0f, 7f);
         /// <summary>35장(⑲-64) 자리(금고 가운데에서 m, z 남쪽): 안 진열관 go = 금고 안 남쪽(`GoRadius` 4 — 문 밖에선 안 닿는다) · 해미 = 해미 진열장(160° 6.5m — 북쪽) 속 · 갈무리 = 기록 기둥 곁(기둥 꼭대기에서도 대화 거리 안) · 여왕 = 금고 문 앞 광장.</summary>
         public static readonly Vector2 VaultGoIn = new Vector2(0f, 4.8f), VaultHaemiAt = new Vector2(-Mathf.Sin(VaultHaemiDeg * Mathf.Deg2Rad) * VaultCaseR, Mathf.Cos(VaultHaemiDeg * Mathf.Deg2Rad) * VaultCaseR), VaultGarmuriAt = new Vector2(0f, 3f), VaultQueenAt = new Vector2(0f, 18f);
+        /// <summary>36장(⑲-66) 자리: 해미 = 금고 가장 깊은 진열장(북쪽 벽) 곁(금고 가운데에서 m — 진열장 자리 + 웹 [3.5, 3]) · 진열장 속으로 들어가면 성문 남쪽 18m(`Area.ArrivalOff` 와 같음) · 벼리 = 성문 북쪽(안쪽) 7.7m ·
+        /// 결정 짐승 무리 = 성문 남쪽 30m · 대장간까지 걷는 길 = 웹 다섯 점 × 0.45(대장간 가운데에서 m — 시작은 성문 안쪽, 끝은 화덕 앞).</summary>
+        public static readonly Vector2 VaultHaemiDeep = new Vector2(3.5f, -VaultDeepR + 3f), ForkGateArrive = new Vector2(0f, 18f), ByeoriGate = new Vector2(0f, -7.7f), ForkGateKill = new Vector2(0f, 30f);
+        public static readonly Vector2[] ForkForgePath = { new Vector2(34.7f, 16.2f), new Vector2(27.9f, 11.7f), new Vector2(17.1f, 9.9f), new Vector2(8.6f, 7.7f), new Vector2(1.1f, 5.4f) };
         public static readonly Vector2[] VaultDronePath = { new Vector2(8.6f, -5.4f), new Vector2(-8.5f, -8f), new Vector2(-21.6f, -0.9f), new Vector2(-36.9f, 2.3f), new Vector2(-47.7f, -8.6f), new Vector2(-43.2f, -23.9f),
             new Vector2(-27.9f, -30.2f), new Vector2(-15.3f, -38.7f), new Vector2(-23.9f, -51.8f), new Vector2(-41f, -56.3f), new Vector2(-49.5f, -56.5f) };
         public static readonly Vector2[] AmberThiefPath = { new Vector2(-26.3f, -9.6f), new Vector2(-19.4f, -26.7f), new Vector2(-1.3f, -38f), new Vector2(14.8f, -23.7f), new Vector2(30.1f, -13.4f), new Vector2(37.4f, 6.6f),
@@ -800,13 +806,19 @@ namespace Saga.Go.Data
             // 109-14-64 35장(웹 ⑲-64) — 씨앗 보관사 해미(미래): 금고 해미 진열장 속. 금고에 들어선 뒤(35장 2째~, 뒤에도)
             new Npc { Id = "haemi", NameKey = "story.npc.haemi", NameKo = "씨앗 보관사 해미", ShortKey = "story.short.haemi", ShortKo = "해미",
                 AtSite = "vault:vault", AtOff = VaultHaemiAt, FolkBody = "Vanguard",
-                Appear = new[] { new Spot { Ch = 34, ChTo = 999, From = 1, To = 99, At = "vault:vault", Arena = VaultHaemiAt } },
+                Appear = new[] { new Spot { Ch = 35, From = 0, To = 1, At = "vault:vault", Arena = VaultHaemiDeep }, // 36장 처음 둘 — 가장 깊은 진열장 곁
+                    new Spot { Ch = 34, ChTo = 999, From = 1, To = 99, At = "vault:vault", Arena = VaultHaemiAt } },
                 IdleKey = "story.idle.haemi", IdleKo = "씨앗도 순간도, 갈무리는 다시 꺼내 심으려고 하는 거예요." },
             // 금고 관리 인공지능 갈무리(미래, 기계 몸) — 기둥 위 대화 단계(35장 5째)에만 핵 곁에 선다
             new Npc { Id = "garmuri", NameKey = "story.npc.garmuri", NameKo = "금고 관리 인공지능 갈무리", ShortKey = "story.short.garmuri", ShortKo = "갈무리",
                 AtSite = "vault:vault", AtOff = VaultGarmuriAt, Pet = true,
                 Appear = new[] { new Spot { Ch = 34, From = 4, To = 4, At = "vault:vault", Arena = VaultGarmuriAt } },
                 IdleKey = "story.idle.garmuri", IdleKo = "아름다운 때를 영원히." },
+            // 109-14-66 36장(웹 ⑲-66) — 대장장이 벼리(과거): 그날 새벽 벼리던 칼이 틈 조각 쇠라 멈춘 순간 속에서 혼자 움직인다. 11부(36장~) 성문 안쪽 → 대장간으로 앞장선 뒤(6째~, 뒤에도) 화덕 앞
+            new Npc { Id = "byeori", NameKey = "story.npc.byeori", NameKo = "대장장이 벼리", ShortKey = "story.short.byeori", ShortKo = "벼리",
+                AtSite = "fork:gate", AtOff = ByeoriGate, FolkBody = "PeasantMan", PathAt = "fork:forge", Path = ForkForgePath,
+                Appear = new[] { new Spot { Ch = 35, ChTo = 999, From = 4, To = 99, Path = true }, new Spot { Ch = 35, From = 0, To = 3, At = "fork:gate", Arena = ByeoriGate } },
+                IdleKey = "story.idle.byeori", IdleKo = "쇠는 식기 전에 두드려야 하는데… 불도, 쇠도, 하늘도 다 멈췄어." },
             // 조각 운반 드론 — 33장 쫓기 때만(5째 단계) 야적장에서 금고 문 앞까지 길(VaultDronePath)을 난다. 반디와 같은 기계 몸.
             new Npc { Id = "carrier", NameKey = "story.npc.carrier", NameKo = "조각 운반 드론", ShortKey = "story.short.carrier", ShortKo = "드론",
                 AtSite = "vault:yard", AtOff = Vector2.zero, Pet = true, RunAt = "vault:yard", RunPath = VaultDronePath,
@@ -3058,6 +3070,54 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            // 109-14-66 36장(웹 ⑲-66) — 11부 첫 장, 가장 깊은 진열장: 해미(금고 안 가장 깊은 진열장 곁 — 10부를 마친 뒤 드러남) → 진열장 속으로(sail — 세갈래 고을 성문 남쪽에 내림) → 새 인물 대장장이 벼리(성문 안쪽)
+            // → 성문 앞 결정 짐승 넷(kill) → 벼리 따라 대장간(follow — 새 `Npc.PathAt`: 대장간 가운데에서 m 다섯 점) → 벼리(화덕 앞 — 격자 말뚝 셋 = 37장 떡밥).
+            new Chapter
+            {
+                Id = "ch36", NameKey = "story.ch36", NameKo = "제36장 · 가장 깊은 진열장", Ar = 78,
+                Gold = 9000, Mats = new[] { 0, 9, 6, 9, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "haemi", TextKey = "story.ch36.s1", TextKo = "금고 안 해미 진열장 곁의 해미와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haemi", "story.ch36.s1.l1", "봐요, 북쪽 벽 앞. 갈무리가 달아나며 바닥을 열어 드러난 진열장 — '처음의 순간'. 그 애가 가장 아끼는 거예요."),
+                            L("bandi", "story.ch36.s1.l2", "삐— 진열장 안 신호가 이상합니다. 작은 모형이 아니라… 땅 하나가 통째로 들어 있습니다."),
+                            L("haemi", "story.ch36.s1.l3", "갈무리는 순간을 줄여 넣는 게 아니라, 순간째 떼어 와 유리 너머에 붙잡아 둬요. 유리에 손을 대면 그 안으로 들어갈 수 있을 거예요."),
+                            Pick("story.ch36.s1.p", "들어가 볼게요.", "나올 수는 있는 거죠?"),
+                            L("haemi", "story.ch36.s1.l4", "들어가서 순간이동 지점을 켜 두면 언제든 오갈 수 있어요. 준비되면 말해요 — 내가 유리를 열게요."),
+                        } },
+                    new Step { Type = StepType.Sail, Npc = "haemi", At = "fork:gate", Arena = ForkGateArrive, EnterKey = "story.ch36.arrive", EnterKo = "호박빛이 온몸을 삼키고 — 눈을 뜨니 낯선 고을 성문 앞이다. 바람도, 소리도, 하늘의 금도 멈춰 있다",
+                        Lines = new[] { L("haemi", "story.ch36.s2.l1", "손을 유리에 대요 — 셋, 둘, 하나!") },
+                        TextKey = "story.ch36.s2", TextKo = "가장 깊은 진열장 속으로 들어가기(해미에게 F)" },
+                    new Step { Type = StepType.Talk, Npc = "byeori", TextKey = "story.ch36.s3", TextKo = "성문 안쪽에서 움직이는 사람과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("byeori", "story.ch36.s3.l1", "……움직인다! 당신, 움직이는구나! 까마귀가 하늘을 찢은 뒤로 이 고을에서 숨 쉬는 건 나 하나뿐인 줄 알았소."),
+                            L("byeori", "story.ch36.s3.l2", "나는 이 고을 대장장이 벼리요. 그날 새벽 하늘에서 떨어진 이상한 쇠로 칼을 벼리던 참이었지. 담금질하려는 순간 — 하늘이 쩍 갈라졌소."),
+                            L("haemi", "story.ch36.s3.l3", "(진열장 밖에서 들리는 목소리) 그 쇠가 틈 조각이에요. 벼리 씨의 칼이 벼리 씨의 시간만 붙들어 준 거예요."),
+                            Pick("story.ch36.s3.p", "저 하늘의 금은 뭐예요?", "까마귀가 하늘을 찢었다고요?"),
+                            L("byeori", "story.ch36.s3.l4", "고을 한가운데 세갈래 길목 위를 보시오. 커다란 까마귀가 선로와 역참길을 한입에 삼키려다 하늘째 찢고 그대로 멈췄지."),
+                            L("byeori", "story.ch36.s3.l5", "쉿 — 성문 밖이 소란하오. 순간 틈으로 무언가 기어들어 왔소!"),
+                        } },
+                    new Step { Type = StepType.Kill, At = "fork:gate", Arena = ForkGateKill,
+                        Foes = new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                        EnterKey = "story.ch36.enter1", EnterKo = "⚔️ 성문 앞 순간의 틈으로 결정 짐승들이 기어든다",
+                        TextKey = "story.ch36.s4", TextKo = "성문 앞에 몰려든 결정 짐승 물리치기" },
+                    new Step { Type = StepType.Follow, Npc = "byeori", ArriveKey = "story.ch36.follow", ArriveKo = "👣 벼리가 대장간 화덕 앞에서 걸음을 멈췄다",
+                        TextKey = "story.ch36.s5", TextKo = "대장장이 벼리를 따라 대장간으로" },
+                    new Step { Type = StepType.Talk, Npc = "byeori", TextKey = "story.ch36.s6", TextKo = "대장간 화덕 앞의 벼리와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("byeori", "story.ch36.s6.l1", "보시오, 화덕 불도 솟다 말고 굳었소. 쇠를 두드려도 소리가 안 나. 이 고을은 까마귀가 하늘을 찢은 그 한 숨에 붙잡혀 있소."),
+                            L("bandi", "story.ch36.s6.l2", "삐— 고을 둘레에서 격자 신호 셋. 역참길 끝, 선로 끝, 종루 꼭대기. 셋이 순간을 붙들고 있습니다."),
+                            L("byeori", "story.ch36.s6.l3", "그 빛나는 말뚝들! 까마귀가 멈춘 직후 하늘에서 내려와 박혔소. 누가 박았는지는 모르지만, 저게 박힌 뒤로 아무것도 안 움직였지."),
+                            L("haemi", "story.ch36.s6.l4", "(진열장 밖에서) 갈무리의 격자 말뚝이에요. 세 시대 길 끝마다 하나씩 — 순간을 유리 안에 고정하는 핀."),
+                            Pick("story.ch36.s6.p", "말뚝을 뽑으면 순간이 풀려요?", "공사장 사람들은요?"),
+                            L("byeori", "story.ch36.s6.l5", "동쪽 선로 공사장에 쇠 수레를 몰던 사람들도 그대로 굳어 있소. 말뚝부터 하나씩 — 역참길 끝이 제일 가깝소. 내 칼을 들고 가겠소!"),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -3159,7 +3219,7 @@ namespace Saga.Go.Data
         public static float PathLength(Npc n)
         {
             float len = 0f;
-            for (int i = 1; i < n.Path.Length; i++) len += Vector2.Distance(n.Path[i - 1], n.Path[i]) * (n.FrostPath ? 1f : TestMapData.TileSize);
+            for (int i = 1; i < n.Path.Length; i++) len += Vector2.Distance(n.Path[i - 1], n.Path[i]) * (n.FrostPath || n.PathAt != null ? 1f : TestMapData.TileSize);
             return len;
         }
 
@@ -3168,16 +3228,16 @@ namespace Saga.Go.Data
         {
             for (int i = 1; i < n.Path.Length; i++)
             {
-                float seg = Vector2.Distance(n.Path[i - 1], n.Path[i]) * (n.FrostPath ? 1f : TestMapData.TileSize);
+                float seg = Vector2.Distance(n.Path[i - 1], n.Path[i]) * (n.FrostPath || n.PathAt != null ? 1f : TestMapData.TileSize);
                 if (d <= seg)
                 {
                     Vector2 g = Vector2.Lerp(n.Path[i - 1], n.Path[i], seg > 0f ? d / seg : 1f);
-                    return n.FrostPath ? FrostPos(g) : GridPos(g.x, g.y);
+                    return n.PathAt != null ? AreaPos(n.PathAt, g) : n.FrostPath ? FrostPos(g) : GridPos(g.x, g.y);
                 }
                 d -= seg;
             }
             var e = n.Path[n.Path.Length - 1];
-            return n.FrostPath ? FrostPos(e) : GridPos(e.x, e.y);
+            return n.PathAt != null ? AreaPos(n.PathAt, e) : n.FrostPath ? FrostPos(e) : GridPos(e.x, e.y);
         }
 
         public static Vector3 WeeklyAltarPos() => SitePos(null);

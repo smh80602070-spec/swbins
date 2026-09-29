@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **4689** (표 4634 · 코드 55) — go 2845 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **519**
-- 사람 검수 **0/4689** — 순위1 0/265 · 순위2 0/3695 · 순위3 0/729
+- 짝 **4723** (표 4668 · 코드 55) — go 2879 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **526**
+- 사람 검수 **0/4723** — 순위1 0/265 · 순위2 0/3729 · 순위3 0/729
 
 ## 검수 순서
 
@@ -41,7 +41,7 @@
 - 「여기서 끝내자.」 → **End it here.** (go:story.ch20.s9.p.b) · **Let's end this here.** (go:story.ch29.s4.p.b)
 - 「마루」 → **Maru** (go:story.short.maru) · **Wood Floor** (forest:finish.wood)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 519)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 526)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -68,6 +68,7 @@
 | 6→15 | dungeon | `landmark.cloud` | Golden Palace Above the Clouds |
 | 35→63 | go | `wq.lighthouse.s1.l1` | Every night a light signal comes from the far end of the east bank. The pattern is an old beacon code… but the waveform is brand new. |
 | 38→67 | go | `story.ch18.s10.l2` | Beep — star-ship, bell and last train: all three signals confirmed. The coordinates the captain left open — the first station beyond the rift. |
+| 44→76 | go | `story.ch36.arrive` | Amber light swallows you — when you open your eyes you stand before the gate of an unfamiliar town. The wind, the sound, even the cracks in the sky have stopped |
 | 17→33 | go | `story.ch16.s2` | Go through the Rift Pass at the village's southern end to Galaxy Port |
 | 8→18 | go | `story.ch16.s9.p.a` | The captain went to the temple ruins? |
 | 2→9 | forest | `finish.jangpan` | Oiled Paper Floor |
@@ -76,4 +77,3 @@
 | 3→10 | story | `enemy.hwanggeon` | Yellow Turban Bandit |
 | 5→14 | go | `cook.recipe.ash_pancake` | Ash Flower Mushroom Pancake |
 | 7→16 | dungeon | `saga.heaven.title` | The Guardian Who Drew His Sword |
-| 18→33 | go | `story.ch33.s3` | Cross the eastern pass of Frostpeak Plateau to the gate of the fields |
