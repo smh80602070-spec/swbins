@@ -56,6 +56,8 @@ def main():
             continue
         lic = json.load(open(f[:-4] + '.license.json', encoding='utf-8'))
         prov[hid] = {'model': lic['model'], 'license': lic['model_license'], 'seed': lic['seed'], 'date': lic['date']}
+        if lic.get('mode') == 'img2img':      # 밑그림 = 공방 몸 렌더(입력 전부 CC0)
+            prov[hid].update({'mode': 'img2img', 'base_body': lic['base_body'], 'base_license': lic['base_license'], 'denoise': lic['denoise']})
         s, c = crops(Image.open(f).convert('RGB'))
         for g in games:
             d = os.path.join(WEB, g, 'assets', 'portraits', 'hero')
