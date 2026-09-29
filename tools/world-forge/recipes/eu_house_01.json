@@ -1,0 +1,13 @@
+{
+ "id": "eu_house_01", "era": "past",
+ "footprint": [7.0, 8.5],
+ "floors": [{"h": 2.7}, {"h": 2.5}],
+ "walls": {"mat": "beam_wall_01", "tile_m": 2.4},
+ "base": {"mat": "castle_wall_slates", "h": 0.55, "tile_m": 2.0},
+ "trim": {"mat": "brown_planks_03", "tile_m": 1.0, "tint": "#5a4030"},
+ "door": {"mat": "black_painted_planks", "w": 1.1, "h": 2.1, "wall": 0, "at": 0.5},
+ "windows": {"w": 0.9, "h": 1.25, "sill": 0.95, "gap": 2.3},
+ "roof": {"type": "gable", "pitch_deg": 42, "overhang": 0.5, "mat": "clay_roof_tiles", "tile_m": 1.6, "thick": 0.14, "ridge": "x"},
+ "bands": true,
+ "chimney": {"x": 1.4, "y": 2.0, "w": 0.7, "h": 1.0}
+}
