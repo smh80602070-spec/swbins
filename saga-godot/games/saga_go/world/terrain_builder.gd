@@ -754,7 +754,8 @@ func _rock_tri(st: SurfaceTool, p0: Vector3, p1: Vector3, p2: Vector3, c: Vector
 		p2 = tmp
 		fn = -fn
 	var up := fn.y > 0.55
-	for p in [p0, p1, p2]:
+	## Godot 은 시계 방향이 앞면이다 — 바깥에서 반시계인 채로 두면 뒷면으로 쳐서 cull_disabled 셰이더가 법선을 뒤집어(해 받는 면이 까맣게) 그린다.
+	for p in [p0, p2, p1]:
 		st.set_normal(fn)
 		st.set_color(top_col if up else CLIFF_COLOR)
 		st.set_custom(0, surf if up else Color(0, 0, 0, 0))
