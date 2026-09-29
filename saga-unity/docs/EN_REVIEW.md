@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **4903** (표 4848 · 코드 55) — go 2987 · dungeon 532 · forest 272 · story 441 · realm 616
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **543**
-- 사람 검수 **0/4903** — 순위1 0/266 · 순위2 0/3907 · 순위3 0/730
+- 짝 **4993** (표 4938 · 코드 55) — go 3077 · dungeon 532 · forest 272 · story 441 · realm 616
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **552**
+- 사람 검수 **0/4993** — 순위1 0/266 · 순위2 0/3995 · 순위3 0/732
 
 ## 검수 순서
 
@@ -41,7 +41,7 @@
 - 「여기서 끝내자.」 → **End it here.** (go:story.ch20.s9.p.b) · **Let's end this here.** (go:story.ch29.s4.p.b)
 - 「마루」 → **Maru** (go:story.short.maru) · **Wood Floor** (forest:finish.wood)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 543)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 552)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -60,6 +60,7 @@
 | 30→56 | go | `story.ch9.s9.l4` | Let's head down to the village. Granny Nuri will give me an earful — but let's spread our wings and go straight there. |
 | 37→67 | go | `story.ch16.s1.l1` | Beep — after the star-ship lifted off, I followed the direction the rift was closing. It's beyond the farmland at the village's southern end. |
 | 10→23 | go | `domain.loot.echo` | Thunder Drake Scale · Secret Scrolls · ★5 Relics |
+| 16→33 | go | `story.ch40.s2` | Go to the compass altar below the star ship on the Frost Peak plateau |
 | 26→48 | go | `story.ch28.s9.l2` | That mask pattern… the one at the very bottom of the inscription, the first mask. So you are the king. |
 | 19→37 | go | `story.ch34.s5` | Switch off the west power pylon in front of the vault with an elemental skill |
 | 19→37 | go | `story.ch34.s6` | Switch off the east power pylon in front of the vault with an elemental skill |
@@ -76,4 +77,3 @@
 | 17→33 | go | `story.ch16.s2` | Go through the Rift Pass at the village's southern end to Galaxy Port |
 | 8→18 | go | `story.ch16.s9.p.a` | The captain went to the temple ruins? |
 | 2→9 | forest | `finish.jangpan` | Oiled Paper Floor |
-| 3→10 | go | `kit.sig.zhuge.skill` | Eight Trigrams Array |

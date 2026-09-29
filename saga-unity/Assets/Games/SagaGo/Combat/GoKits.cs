@@ -155,6 +155,15 @@ namespace Saga.Go.Combat
                     s = S(KitSkillType.Updraft, "kit.sig.byeori.skill", "담금질 올려베기", 8f, 2.6f); s.R = 3.5f; s.Pull = 4f; s.Lift = 12f;
                     b = B(KitBurstType.Rally, "kit.sig.byeori.burst", "처음의 불", 7f, 3.4f); b.Sec = 10f; b.Atk = 1.2f;
                     break;
+                // 109-14-70 나래·소담(웹 kits.js story_narae·story_sodam) — 있는 틀(zone·lore / shells·vortex)만
+                case "story_narae":
+                    s = S(KitSkillType.Zone, "kit.sig.narae.skill", "측량선 긋기", 10f, 0.85f); s.R = 4.5f; s.Sec = 10f; s.Every = 1.2f; s.N = 2; s.Energy = 1.5f;
+                    b = B(KitBurstType.Lore, "kit.sig.narae.burst", "삼각측량", 7f, 2.7f); b.Sec = 12f; b.RMul = 1.4f;
+                    break;
+                case "story_sodam":
+                    s = S(KitSkillType.Shells, "kit.sig.sodam.skill", "낟알 흩뿌리기", 8f, 1.9f); s.Reach = 12f; s.N = 4; s.Delay = 0.5f; s.R = 2f;
+                    b = B(KitBurstType.Vortex, "kit.sig.sodam.burst", "곳간 노래", 5.5f, 2.6f); b.Ahead = 7f; b.Sec = 9f; b.Every = 0.5f; b.Tick = 0.6f; b.Pull = 6f;
+                    break;
                 default:
                     return null;
             }

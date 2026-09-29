@@ -162,6 +162,11 @@ namespace Saga.Go.Data
             // 109-14-68 벼리(38장 끝) — 화 양손검(웹 ⑲-68)
             new Hero { Id = "story_byeori", NameKo = "벼리", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Might, Might = 86, Wisdom = 58, Command = 64,
                 WebElement = WebElement.Fire, QuoteKo = "처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소." },
+            // 109-14-70 나래(40장 끝, 현대)·소담(41장 끝, 과거) — 수 법구·풍 법구(웹 ⑲-70)
+            new Hero { Id = "story_narae", NameKo = "나래", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Wisdom, Might = 54, Wisdom = 84, Command = 66,
+                WebElement = WebElement.Water, QuoteKo = "측량값은 거짓말을 안 해요." },
+            new Hero { Id = "story_sodam", NameKo = "소담", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Virtue, Might = 50, Wisdom = 70, Command = 82,
+                WebElement = WebElement.Wind, QuoteKo = "곳간 노래는 어디서든 부를 수 있어요." },
         };
 
         public static bool IsStory(string id) => id != null && id.StartsWith("story_");

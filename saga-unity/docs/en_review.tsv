@@ -1029,7 +1029,9 @@
 2	go	hero.story_haneul	하늬	Haneul		
 2	go	hero.story_haram	하람	Haram		
 2	go	hero.story_mulsae	물새	Mulsae		
+2	go	hero.story_narae	나래	Narae		
 2	go	hero.story_scholar	은비	Eunbi		
+2	go	hero.story_sodam	소담	Sodam		
 2	go	hero.story_wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	hero.trait.command	통	Command		
 2	go	hero.trait.might	무	Might		
@@ -1100,8 +1102,12 @@
 2	go	kit.sig.huang.skill	화살비	Arrow Rain		
 2	go	kit.sig.mulsae.burst	숨비소리	Breath Whistle		
 2	go	kit.sig.mulsae.skill	자맥질	Plunge Dive		
+2	go	kit.sig.narae.burst	삼각측량	Triangulation		
+2	go	kit.sig.narae.skill	측량선 긋기	Survey Line		
 2	go	kit.sig.scholar.burst	옛 글자 풀이	Ancient Script Reading		
 2	go	kit.sig.scholar.skill	비문 탁본	Inscription Rubbing		
+2	go	kit.sig.sodam.burst	곳간 노래	Granary Song		
+2	go	kit.sig.sodam.skill	낟알 흩뿌리기	Scattered Grain		
 2	go	kit.sig.wanderer.burst	가면 벗기	Unmasking		
 2	go	kit.sig.wanderer.skill	그림자 걸음	Shadow Step		
 2	go	kit.sig.yisun.burst	학날개 진	Crane Wing Formation		
@@ -1249,6 +1255,7 @@
 2	go	story.altar4	넷째 제단	the Fourth Altar		
 2	go	story.altar_beacon	봉화 제단	Beacon Altar		
 2	go	story.altar_clockwind	되감는 괘종시계	the chime clock being rewound		
+2	go	story.altar_compass	별배 나침 제단	Star Ship Compass Altar		
 2	go	story.altar_domelock	빛 돔 문 자물쇠	light-dome door lock		
 2	go	story.altar_engine	비행선 기관	airship engine		
 2	go	story.altar_granary	씨앗 곳간	the seed granary		
@@ -1274,6 +1281,7 @@
 2	go	story.boss.queen	금고 파수 드론 여왕	Vault Sentinel Drone Queen		
 2	go	story.boss.riftcrow	틈 삼킨 별까마귀	Rift-Swallowing Star Crow		
 2	go	story.boss.riftfox	틈새 서리 구미호	Rift Frost Nine-Tail		
+2	go	story.boss.seedgiant	갈무리의 싹	Garmuri's Sprout		
 2	go	story.boss.stormshadow	먹구름 임금의 그림자	Shadow of the Storm King		
 2	go	story.boss.timewarden	멈춘 시간의 파수꾼	Warden of Stopped Time		
 2	go	story.boss.turtle	호박 등딱지 거북	Amber-Shell Turtle		
@@ -2452,6 +2460,31 @@
 2	go	story.ch38.s7.p.b	벼리 씨도 이제 우리 동료예요.	Byeori is one of us now.		
 2	go	story.ch38.win1	🐦‍⬛ 처음의 별까마귀가 찢긴 하늘로 날아오르다 — 날개가 꺾여 길목에 떨어진다. 하늘의 금이 삐걱 멎는다	🐦‍⬛ The first star-crow tries to soar into the torn sky — its wings snap and it falls onto the junction. The crack in the sky creaks to a stop		
 2	go	story.ch38.win2	🔷 갈무리의 격자 몸이 한 올씩 풀려 흩어진다 — 하늘의 금이 닫히고, 공중에 멈춰 있던 호박 알갱이가 비처럼 내린다	🔷 Garmuri's lattice body unravels strand by strand — the crack in the sky closes and the amber specks hanging in midair fall like rain		
+2	go	story.ch39	제39장 · 당기는 물결	Chapter 39 · The Pulling Wave		
+2	go	story.ch39.enter	⚔️ 물결에 실려 온 결정 짐승들이 별배 아래로 몰려든다	⚔️ Crystal beasts carried in on the wave crowd beneath the star ship		
+2	go	story.ch39.s1	잔치 다음 날 아침의 촌장 누리와 이야기하기	Talk to Village Chief Nuri the morning after the feast		
+2	go	story.ch39.s1.l1	이상하지? 잔치 다음 날인데 마을 우물물이 한쪽으로만 감돌고, 광장 해시계 그림자가 자꾸 뒤로 물러난다.	Strange, isn't it? The morning after the feast, the well water only swirls one way, and the shadow on the plaza sundial keeps creeping backward.		
+2	go	story.ch39.s1.l2	서리봉 관측소 하람이 새벽에 신호탄을 쏘아 올렸어. 시간이 ‘당겨진다’고 — 네가 가서 봐 줘야겠다.	Haram at the Frost Peak observatory fired a signal flare at dawn. She says time is being ‘pulled’ — I need you to go and see.		
+2	go	story.ch39.s1.l3	제자리로. 손님들이 온 시대 쪽으로 말이다. 잔치가 끝나면 손님은 돌아가는 법이라지만… 이렇게 갑자기는 아니지.	Back where they belong. Toward the eras our guests came from. Guests go home when the feast ends, they say… but never this suddenly.		
+2	go	story.ch39.s1.p.a	당겨진다니, 어디로요?	Pulled? Pulled where?		
+2	go	story.ch39.s1.p.b	바로 다녀올게요.	I'll go right away.		
+2	go	story.ch39.s2	서리봉 관측소의 하람과 이야기하기	Talk to Haram at the Frost Peak observatory		
+2	go	story.ch39.s2.l1	관측 기록 좀 봐요! 지난 석 달은 시간 물결이 바깥으로 퍼졌는데, 어젯밤 자정 뒤로 방향이 딱 뒤집혔어요 — 안쪽으로, 세 시대 방향으로 되감겨요.	Look at these readings! For three months the time waves spread outward, but after midnight last night they flipped — inward, rewinding toward the three eras.		
+2	go	story.ch39.s2.l2	기압계 바늘이 거꾸로 돌고, 눈송이가 떨어지다 말고 올라가요. 이 물결이 세게 당기면 저 같은 현대 사람도 우리 시대로 끌려갈지 몰라요.	The barometer needle spins backward and snowflakes rise halfway through their fall. If this wave pulls hard enough, even a modern person like me might get dragged back to my own time.		
+2	go	story.ch39.s2.l3	물결이 감기는 한가운데는 별배 쪽이에요. 반디가 별배 시간 나침을 보고 있을 거예요.	The wave winds tightest around the star ship. Bandi should be watching the ship's time compass.		
+2	go	story.ch39.s2.p.a	뿌리가 어딘지 알 수 있어요?	Can you tell where it starts?		
+2	go	story.ch39.s2.p.b	반디한테 물어볼게요.	I'll ask Bandi.		
+2	go	story.ch39.s3	별배 곁의 반디와 이야기하기	Talk to Bandi beside the star ship		
+2	go	story.ch39.s3.l1	삐— 별배 시간 나침이 되감기는 물결에 맞춰 스스로 돌고 있습니다. 이대로면 별배째 세 시대 중 한 곳으로 끌려갑니다.	Beep— The ship's time compass is spinning by itself with the rewinding wave. At this rate the whole ship will be dragged into one of the three eras.		
+2	go	story.ch39.s3.l2	나침을 붙들려면 물결을 거슬러 올라야 합니다. 별배를 다시 띄워야 하고, 별배를 아는 사람은 선장 한별.	To hold the compass we must rise against the wave. The ship has to fly again, and the one who knows the ship is Captain Hanbyeol.		
+2	go	story.ch39.s3.l3	삐— 경고. 물결에 실려 온 결정 짐승이 별배 아래로 몰립니다. 먼저 쫓아 주십시오.	Beep— Warning. Crystal beasts carried in on the wave are gathering beneath the ship. Please drive them off first.		
+2	go	story.ch39.s4	물결에 실려 온 결정 짐승 물리치기	Defeat the crystal beasts carried in on the wave		
+2	go	story.ch39.s5	은하 나루의 별배 선장 한별과 이야기하기	Talk to Captain Hanbyeol at the Galaxy Pier		
+2	go	story.ch39.s5.l1	물결 얘기는 들었다. 별배 나침이 도는 걸 나도 어젯밤 꿈에서 봤지 — 그리운 시대로 끌려가는 꿈. 좋지 않은 꿈이었어.	I heard about the wave. I saw the compass spinning in a dream last night too — a dream of being dragged toward an era I miss. Not a good dream.		
+2	go	story.ch39.s5.l2	선장은 배를 두고 못 간다. 별배를 다시 띄워 물결을 거스르자. 나침 제단은 별배 아래 서리봉 고원에 있다.	A captain doesn't leave her ship. Let's refloat it and go against the wave. The compass altar is on the Frost Peak plateau, below the ship.		
+2	go	story.ch39.s5.l3	좋아. 다음 장에서 별배 시동을 건다 — 나래도 불러라, 측량값이 필요하다.	Good. Next chapter we start the ship's engines — call Narae too, we need her measurements.		
+2	go	story.ch39.s5.p.a	같이 가요.	Let's go together.		
+2	go	story.ch39.s5.p.b	제단은 제가 지킬게요.	I'll guard the altar.		
 2	go	story.ch4	제4장 · 가면 쓴 나그네	Chapter 4 · The Masked Traveler		
 2	go	story.ch4.s1	촌장에게 새벽 소식 듣기	Hear the Elder's news from dawn		
 2	go	story.ch4.s1.l1	잔치 이튿날 새벽이었단다. 남쪽 다리목에 웬 가면 쓴 나그네가 서 있더래.	It was the dawn after the feast. They say a masked traveler was standing at the southern bridgehead.		
@@ -2486,6 +2519,61 @@
 2	go	story.ch4.s8	청하 촌장에게 알리기	Report to the Elder of Cheongha		
 2	go	story.ch4.s8.l1	나그네가 쫓는 가면 쓴 자라… 먹구름이 다섯 번이나 더 올 수 있다는 말이냐.	A masked one the traveler is chasing… you mean the stormclouds could come five more times?		
 2	go	story.ch4.s8.l2	네가 있어 다행이구나. 마을 사람들 몫으로 모은 것이니 받아 두렴.	I'm glad you're here. The villagers put this together for you — take it.		
+2	go	story.ch40	제40장 · 별배를 다시 띄워라	Chapter 40 · Raise the Star Ship Again		
+2	go	story.ch40.s1	별배 선장 한별에게 출항 절차 듣기	Hear the launch procedure from Captain Hanbyeol		
+2	go	story.ch40.s1.l1	출항 절차는 셋이다. 하나, 나침 제단을 물결 앞에 붙든다. 둘, 측량값으로 물결의 뿌리를 잰다. 셋, 뿌리로 배를 몬다.	The launch procedure has three parts. One: hold the compass altar in front of the wave. Two: measure the wave's root with the survey values. Three: steer the ship to that root.		
+2	go	story.ch40.s1.l2	제단부터 지키자. 서리봉 별배 아래로 가라. 나침이 물결에 밀려 돌 때 몰려드는 것들이 많을 거다.	Start by guarding the altar. Go to the Frost Peak, below the ship. Plenty of things will swarm in when the wave pushes the compass around.		
+2	go	story.ch40.s1.l3	그래, 나도 별배 정비를 마치고 뒤따른다. 제단이 흔들리면 신호탄을 올려라.	Right, I'll finish servicing the ship and follow. If the altar starts to shake, fire a signal flare.		
+2	go	story.ch40.s1.p.a	금방 올라갈게요.	I'll be up there soon.		
+2	go	story.ch40.s1.p.b	한별 선장님도 곧 오세요.	Captain, join us soon.		
+2	go	story.ch40.s2	서리봉 고원 별배 아래 나침 제단으로	Go to the compass altar below the star ship on the Frost Peak plateau		
+2	go	story.ch40.s3	별배 아래 나침 제단을 결정 짐승에게서 지키기	Guard the compass altar below the ship from the crystal beasts		
+2	go	story.ch40.s4	나침을 살핀 반디와 이야기하기	Talk to Bandi, who inspected the compass		
+2	go	story.ch40.s4.l1	삐— 나침 고정 완료. 되감기는 물결의 방향을 측정했습니다: 세 시대 방향이 아니라 한 점. 세갈래 고을 마당입니다.	Beep— Compass locked. I measured the direction of the rewinding wave: not toward three eras, but toward a single point. The Three-Fork Town yard.		
+2	go	story.ch40.s4.l2	삐— 이상합니다. 그 자리엔 순간이 풀린 뒤 해미가 심은 갈무리의 씨앗이 있습니다. 씨앗이 물결을 부르고 있습니다.	Beep— That is odd. The seed of Garmuri that Haemi planted after the moment broke free lies at that spot. The seed is calling the wave.		
+2	go	story.ch40.s4.l3	삐— 나래의 측량값이 필요합니다. 세갈래 고을로 가십시오.	Beep— Narae's survey values are needed. Please go to Three-Fork Town.		
+2	go	story.ch40.s4.p.a	씨앗이 왜?	Why would a seed do that?		
+2	go	story.ch40.s4.p.b	나래한테 잰 값을 물어봐야겠어.	I should ask Narae for her measurements.		
+2	go	story.ch40.s5	세갈래 고을의 측량 기사 나래와 이야기하기	Talk to surveyor Narae in Three-Fork Town		
+2	go	story.ch40.s5.l1	측량값 나왔어요. 물결이 감기는 자리는 고을 마당 한가운데 — 씨앗이 싹 틔운 자리예요. 싹이 사람을 끌어당기고 있어요.	I have the values. The wave winds around the very middle of the town yard — where the seed sprouted. The sprout is pulling people toward it.		
+2	go	story.ch40.s5.l2	저도 오늘 아침 발이 자꾸 뜨더라고요. 측량 삼각대를 땅에 박고 버텼지만… 제 시대로 돌아가는 건 무섭지 않아요. 여기 사람들을 두고 가는 게 무섭지.	My feet kept lifting off the ground this morning too. I dug my survey tripod in and held on… Going back to my own era doesn't scare me. Leaving the people here does.		
+2	go	story.ch40.s5.l3	내 칼도 끌려가려고 했소. 대장장이는 두들기던 쇠를 두고 가는 법이 없는데 말이오. 싹부터 잠재웁시다.	My blade tried to get dragged off too. A smith never walks away from the iron he's hammering. Let's put that sprout to sleep first.		
+2	go	story.ch40.s5.l4	네! 삼각대는 제가 들게요. 측량 나침도 — 이 동무들 곁에서 계속 재겠어요.	Yes! I'll carry the tripod. And the survey compass too — I'll keep measuring beside these friends.		
+2	go	story.ch40.s5.p.a	같이 가요, 나래 씨.	Come with us, Narae.		
+2	go	story.ch40.s5.p.b	먼저 해미 씨를 만나 볼게요.	I'll meet Haemi first.		
+2	go	story.ch41	제41장 · 돌아가는 길, 남는 길	Chapter 41 · The Road Home, the Road to Stay		
+2	go	story.ch41.enter	🌱 고을 마당의 씨앗이 덩굴을 뻗으며 — 갈무리의 싹이 몸을 일으킨다!	🌱 The seed in the town yard sends out vines — Garmuri's sprout rises!		
+2	go	story.ch41.p2	🌿 싹이 덩굴 방패를 두른다 — 풍으로 깨라! 졸개가 뛰어든다	🌿 The sprout wraps itself in a vine shield — break it with wind! Minions rush in		
+2	go	story.ch41.s1	세갈래 길목의 해미와 이야기하기	Talk to Haemi at the Three-Fork junction		
+2	go	story.ch41.s1.l1	그 씨앗은 갈무리의 마지막 조각이에요 — 지운 게 아니라 거둔 거였죠. 그런데 씨앗이 싹 틔우면서 갈무리의 마지막 마음까지 자랐어요. ‘돌려보내야 해’라는 마음.	That seed is Garmuri's last fragment — I didn't erase it, I gathered it. But as the seed sprouted, Garmuri's last feeling grew with it. The feeling that everyone ‘must be sent back’.		
+2	go	story.ch41.s1.l2	갈무리는 지켜 두려 했지만 그 끝은 되감기였어요. 모두를 제자리로 돌려놓으면 아무도 다치지 않는다고 믿는 마음.	Garmuri wanted to keep things safe, but the end of that was rewinding. The belief that if everyone is returned to their place, no one gets hurt.		
+2	go	story.ch41.s1.l3	싹은 곳간 노래를 좋아해요. 소담 씨앗이 함께 심겼으니까요 — 소담에게 가 보세요.	The sprout loves the granary song, because Sodam's seeds were planted with it — go and find Sodam.		
+2	go	story.ch41.s1.p.a	그 마음을 막을 수 있어요?	Can that feeling be stopped?		
+2	go	story.ch41.s1.p.b	직접 만나 봐야겠어요.	I need to meet it myself.		
+2	go	story.ch41.s2	곳간 마을의 소담과 이야기하기	Talk to Sodam in the granary village		
+2	go	story.ch41.s2.l1	저도 오늘 아침 곳간 문이 자꾸 저절로 닫혀 열리고, 노랫소리가 거꾸로 들렸어요. 씨앗이 우는 거예요.	This morning the granary door kept closing and opening by itself, and the song sounded backward. The seed is crying.		
+2	go	story.ch41.s2.l2	돌려보내는 게 아니라 이어 주는 거라고 노래로 말해 줘야 해요. 제가 같이 갈게요 — 곳간 노래는 제가 제일 잘 알아요.	We have to tell it in song that we're not sending anyone back — we're connecting them. I'll go with you. Nobody knows the granary song better than I do.		
+2	go	story.ch41.s2.l3	네! 낟알 한 줌 챙길게요 — 싹이 좋아하는 노래에는 낟알 소리가 섞여 있거든요.	Yes! I'll bring a handful of grain — the song the sprout loves has the sound of grain mixed in.		
+2	go	story.ch41.s2.p.a	같이 가자, 소담.	Let's go together, Sodam.		
+2	go	story.ch41.s2.p.b	고을 마당으로 가자.	Let's go to the town yard.		
+2	go	story.ch41.s3	세갈래 고을 마당의 싹 곁으로	Go to the sprout in the Three-Fork Town yard		
+2	go	story.ch41.s4	갈무리의 마지막 마음이 자란 싹 물리치기	Defeat the sprout grown from Garmuri's last feeling		
+2	go	story.ch41.s5	길목의 벼리와 이야기하기	Talk to Byeori at the junction		
+2	go	story.ch41.s5.l1	(먼 목소리로) 싹이 잠들었어요. 이번엔 지우지 않고 마당에 그대로 둘게요 — 봄마다 곳간 노래를 부르는 나무가 되도록.	(from far away) The sprout is asleep. This time I won't erase it — I'll leave it in the yard so it grows into a tree that sings the granary song every spring.		
+2	go	story.ch41.s5.l2	측량값이 안정됐어요! 물결이 사라졌고… 아니, 이어졌어요. 고을과 나루와 거리가 같은 물결 위에서 오가요.	The measurements have settled! The wave is gone… no, it's connected. The town, the pier and the streets are coming and going on the same wave.		
+2	go	story.ch41.s5.l3	돌아가는 길과 남는 길이 실은 한 길이었소. 마음만 먹으면 별배로 오가면 되니까. 손님도, 주인도 없는 길이오.	The road home and the road to stay turned out to be one road. If you want, you can just travel back and forth by star ship. A road with no guests and no hosts.		
+2	go	story.ch41.s5.l4	그럼 저도 남을래요! 곳간 노래는 어디서든 부를 수 있잖아요.	Then I'll stay too! The granary song can be sung anywhere, right?		
+2	go	story.ch41.s5.l5	쇠는 식기 전에 두드리는 법 — 어서 촌장님께 알리시오. 내 몫의 인사도 전하고!	Iron is struck before it cools — go tell the chief right away. And give her my greetings too!		
+2	go	story.ch41.s5.p.a	별배로 서로 오가자.	Let's visit each other by star ship.		
+2	go	story.ch41.s5.p.b	청하에 알리러 가자.	Let's go tell Cheongha.		
+2	go	story.ch41.s6	청하 촌장 누리에게 알리기	Tell Village Chief Nuri of Cheongha		
+2	go	story.ch41.s6.l1	해시계 그림자가 제자리로 돌아왔다. 우물물도 맑게 감돌고… 그래, 손님들은 가지 않고 오가기로 한 거구나.	The sundial's shadow is back where it belongs. The well water swirls clear again… I see, so the guests chose to come and go rather than leave.		
+2	go	story.ch41.s6.l2	촌장님, 곳간 마을에서 온 소담이에요! 앞으로 자주 놀러 올게요. 곳간 노래도 가르쳐 드릴게요.	Chief, I'm Sodam from the granary village! I'll visit often. I'll teach you the granary song, too.		
+2	go	story.ch41.s6.l3	이 마을 잔치는 앞으로 셋이다 — 먹구름이 걷힌 날, 시간이 풀린 날, 그리고 돌아가는 길과 남는 길이 이어진 오늘. 별배 표는 내가 끊어 주마!	From now on this village has three feasts — the day the storm clouds lifted, the day time was freed, and today, when the road home and the road to stay joined. I'll sell the star ship tickets myself!		
+2	go	story.ch41.s6.l4	곳간 노래 하나! 별 보고 나가 해 보고 거두고 달 보고 들이고 — 이제 청하에서도 불러요. 곳간지기 소담, 함께 가요!	One granary song! Go out under the stars, harvest by the sun, bring it in by the moon — now we sing it in Cheongha too. Sodam the granary keeper, coming along!		
+2	go	story.ch41.s6.p.a	별배 표는 공짜죠?	The ship tickets are free, right?		
+2	go	story.ch41.s6.p.b	곳간 노래, 저도 배울래요!	I want to learn the granary song too!		
+2	go	story.ch41.win	🌱 싹의 되감는 결이 한 올씩 풀린다 — 당기던 물결이 잦아들고, 공중의 눈송이가 다시 아래로 떨어진다	🌱 The sprout's rewinding grain unravels strand by strand — the pulling wave calms and the snowflakes in the air fall downward again		
 2	go	story.ch5	제5장 · 서쪽 고개 옛길	Chapter 5 · The Old Road over the Western Pass		
 2	go	story.ch5.s1	촌장에게 학자 소식 듣기	Hear news of the scholar from the Elder		
 2	go	story.ch5.s1.l1	은비가 서쪽 숲 옛길로 떠난 지 사흘째란다. 그 뒤로 소식이 뚝 끊겼어.	It's been three days since Eunbi left for the old road in the western woods. We haven't heard a word since.		
@@ -4313,7 +4401,9 @@
 3	go	hero.story_haneul.quote	날개는 빌려 쓰고요!	Wings are borrowed, you know!		
 3	go	hero.story_haram.quote	날씨도 시간도, 재야 아는 거니까.	Weather, time — you have to measure them to know them.		
 3	go	hero.story_mulsae.quote	숨 긴 거 하나는 자신 있소.	Holding my breath is the one thing I'm sure of.		
+3	go	hero.story_narae.quote	측량값은 거짓말을 안 해요.	Measurements don't lie.		
 3	go	hero.story_scholar.quote	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
+3	go	hero.story_sodam.quote	곳간 노래는 어디서든 부를 수 있어요.	The granary song can be sung anywhere.		
 3	go	hero.story_wanderer.quote	너무 떨어지면 기다려 주지 않을 테니.	Fall too far behind and I won't wait.		
 3	go	hero.wd_akbar.quote	믿음은 강요로 얻어지지 않는다.	Faith is not won by force.		
 3	go	hero.wd_ashoka.quote	칼로 얻은 땅을 이제 법으로 다스리겠다.	Land won by the sword I will now rule by the law.		

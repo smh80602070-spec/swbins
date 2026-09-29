@@ -251,6 +251,8 @@ namespace Saga.Go.Data
 
         // ---- 109-14-28 10장 서리봉 고원 자리(고원 가운데에서 m — 웹 명소 자리 × 0.45 위에 얹는다) ----
         public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
+        /// <summary>109-14-70 12부(웹 ⑲-70 × 0.45) — 39장 결정 짐승 = 별배 북쪽 6.3m · 40장 나침 제단 = 별배 남쪽 10.8m(가기 반지름 6.3) · 41장 고을 마당 가기 = 길목 남쪽 9.9m · 소담 = 곳간 문 앞 → 고을 길목 동남쪽 → 촌장 곁.</summary>
+        public static readonly Vector2 ShipKill = FrostAt("ship", 0f, -6.3f), ShipAltar = FrostAt("ship", 0f, 10.8f), YardSproutGo = new Vector2(0f, 9.9f), SodamGranary40 = new Vector2(-5.4f, 2.25f), SodamJunction = new Vector2(6.3f, 6.3f);
         // 11장(⑲-29) — 산성 문루 앞(문 남쪽 22m)·호숫가 석등 자리(호수 북쪽 물가 밖)·바우가 호숫가에서 기다리는 자리·봉화 제단(문 앞 32m)
         public static readonly Vector2 BawooGate = FrostAt("fort", 3f, 22f), LakeSeal = FrostAt("lake", 0f, -36f), BawooLake = FrostAt("lake", 16f, -34f), BeaconAltar = FrostAt("fort", 0f, 32f);
         // 12장(⑲-30) — 서리 무리·구미호는 얼음굴 어귀 남쪽 14m · 반디는 구미호 뒤 굴 앞 · 심장 받침은 비행선 곁(선체 밖)
@@ -320,8 +322,8 @@ namespace Saga.Go.Data
         {
             switch (id)
             {
-                case "story_wanderer": case "story_elder": case "story_ferryman": case "story_dareum": case "story_mulsae": case "story_byeori": return GoEra.Past;
-                case "story_scholar": case "story_haesol": case "story_haram": case "story_dodam": case "story_haneul": case "story_chorong": return GoEra.Modern;
+                case "story_wanderer": case "story_elder": case "story_ferryman": case "story_dareum": case "story_mulsae": case "story_byeori": case "story_sodam": return GoEra.Past;
+                case "story_scholar": case "story_haesol": case "story_haram": case "story_dodam": case "story_haneul": case "story_chorong": case "story_narae": return GoEra.Modern;
                 case "story_hanbyeol": case "story_haemi": return GoEra.Future;
                 default: return null;
             }
@@ -656,11 +658,13 @@ namespace Saga.Go.Data
                     new Spot { Ch = 11, From = 0, To = 5, Frost = true, Arena = HaramObs }, // 12장 — 관측소에서 기다린다, 심장이 돌아온 뒤엔 비행선 곁
                     new Spot { Ch = 11, From = 6, To = 8, Frost = true, Arena = HaramShip },
                     new Spot { Ch = 32, From = 1, To = 1, Frost = true, Arena = HaramObs }, // 33장 — 관측소에서 레이더를 본다
+                    new Spot { Ch = 38, From = 1, To = 1, Frost = true, Arena = HaramObs }, // 109-14-70 39장 2째 — 관측소에서 시간 물결 기록을 본다
                 },
                 IdleKey = "story.idle.haram", IdleKo = "바늘이 또 얼었네… 눈은 언제 그치려나." },
             new Npc { Id = "bandi", NameKey = "story.npc.bandi", NameKo = "조종 기계 반디", ShortKey = "story.short.bandi", ShortKo = "반디",
                 Gx = 4.5f, Gy = 0.5f, Pet = true,
-                Appear = new[] { new Spot { Ch = 9, From = 6, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 10, From = 0, To = 8, Frost = true, Arena = BandiShip },
+                Appear = new[] { new Spot { Ch = 38, From = 2, To = 2, Frost = true, Arena = BandiShip }, new Spot { Ch = 39, From = 3, To = 3, Frost = true, Arena = BandiShip }, // 109-14-70 39장 3째 · 40장 4째(나침을 살핀 뒤) 별배 곁
+                    new Spot { Ch = 9, From = 6, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 10, From = 0, To = 8, Frost = true, Arena = BandiShip },
                     new Spot { Ch = 11, From = 0, To = 4, Frost = true, Arena = BandiShip }, new Spot { Ch = 11, From = 5, To = 5, Frost = true, Arena = BandiCave }, new Spot { Ch = 11, From = 6, To = 8, Frost = true, Arena = BandiShip },
                     new Spot { Ch = 12, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 12, From = 6, To = 8, Yard = true, Arena = YardBandi },
                     new Spot { Ch = 13, From = 0, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 13, From = 9, To = 9, Sky = true, Obs = true, Arena = new Vector2(3f, 3f) },
@@ -804,7 +808,9 @@ namespace Saga.Go.Data
             // 109-14-63 34장(웹 ⑲-63) — 곳간지기 소담(과거): 곳간째 떠서 떨어진 아이. 34장 3~4째 곳간 문 앞 서쪽 → 5째~(동력 기둥부터)·35장 첫 단계는 금고 문 앞 → 35장 2째부터 금고 안
             new Npc { Id = "sodam", NameKey = "story.npc.sodam", NameKo = "곳간지기 소담", ShortKey = "story.short.sodam", ShortKo = "소담",
                 AtSite = "vault:granary", AtOff = SodamGranary, FolkBody = "PeasantGirl",
-                Appear = new[] { new Spot { Ch = 33, From = 2, To = 3, At = "vault:granary", Arena = SodamGranary }, new Spot { Ch = 33, From = 4, To = 99, At = "vault:vault", Arena = SodamDoor },
+                Appear = new[] { new Spot { Ch = 40, From = 1, To = 1, At = "vault:granary", Arena = SodamGranary40 }, new Spot { Ch = 40, From = 2, To = 4, At = "fork:junction", Arena = SodamJunction }, // 109-14-70 41장 곳간 마을 → 같이 고을 마당으로
+                    new Spot { Ch = 40, From = 5, To = 99, Gx = 0.94f, Gy = 3.03f }, new Spot { Ch = 41, ChTo = 999, From = 0, To = 99, Gx = 0.94f, Gy = 3.03f }, // 촌장 곁 → 합류한 뒤에도 청하
+                    new Spot { Ch = 33, From = 2, To = 3, At = "vault:granary", Arena = SodamGranary }, new Spot { Ch = 33, From = 4, To = 99, At = "vault:vault", Arena = SodamDoor },
                     new Spot { Ch = 34, From = 0, To = 0, At = "vault:vault", Arena = SodamDoor }, new Spot { Ch = 34, ChTo = 999, From = 0, To = 99, At = "vault:vault", Arena = SodamVault } },
                 IdleKey = "story.idle.sodam", IdleKo = "씨앗 한 톨이 한 해 농사예요. 한 톨도 못 줘요." },
             // 109-14-64 35장(웹 ⑲-64) — 씨앗 보관사 해미(미래): 금고 해미 진열장 속. 금고에 들어선 뒤(35장 2째~, 뒤에도)
@@ -3246,6 +3252,145 @@ namespace Saga.Go.Data
                             L("elder", "story.ch38.s7.l4", "먹구름이 걷힌 날 잔치를 했으니, 굳은 시간이 풀린 오늘은 둘째 잔치다. 먼 시대 동무들도 새 동무들도 다 불러라!"),
                             Pick("story.ch38.s7.p", "잔치다!", "벼리 씨도 이제 우리 동료예요."),
                             L("byeori", "story.ch38.s7.l5", "처음 하늘이 찢기던 날 벼리던 칼로, 이제 이어진 날들을 지키겠소. 대장장이 벼리, 함께 가오!"),
+                        } },
+                }
+            },
+            // 109-14-70 이야기 12부 「돌아가는 별배」 39~41장(웹 ⑲-70 · saga-godot 106 56-1, 새 지역 없음 — 3차 흐름 시작). 순간이 풀린 뒤 시대 조각이 제자리로 ‘당겨진다’.
+            // 39장 촌장→하람→반디→결정 짐승(고원 별배 아래)→한별 · 40장 한별→나침 제단 가기·지키기→반디→나래(**나래 합류**, 현대 수 법구) · 41장 해미→소담→고을 마당 싹(갈무리의 싹 duel, 초 방패는 풍으로)→벼리→촌장(**소담 합류**, 과거 풍 법구) = 12부 끝·3차 결말.
+            new Chapter
+            {
+                Id = "ch39", NameKey = "story.ch39", NameKo = "제39장 · 당기는 물결", Ar = 83,
+                Gold = 9500, Mats = new[] { 0, 6, 6, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch39.s1", TextKo = "잔치 다음 날 아침의 촌장 누리와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch39.s1.l1", "이상하지? 잔치 다음 날인데 마을 우물물이 한쪽으로만 감돌고, 광장 해시계 그림자가 자꾸 뒤로 물러난다."),
+                            L("elder", "story.ch39.s1.l2", "서리봉 관측소 하람이 새벽에 신호탄을 쏘아 올렸어. 시간이 ‘당겨진다’고 — 네가 가서 봐 줘야겠다."),
+                            Pick("story.ch39.s1.p", "당겨진다니, 어디로요?", "바로 다녀올게요."),
+                            L("elder", "story.ch39.s1.l3", "제자리로. 손님들이 온 시대 쪽으로 말이다. 잔치가 끝나면 손님은 돌아가는 법이라지만… 이렇게 갑자기는 아니지."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "haram", TextKey = "story.ch39.s2", TextKo = "서리봉 관측소의 하람과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haram", "story.ch39.s2.l1", "관측 기록 좀 봐요! 지난 석 달은 시간 물결이 바깥으로 퍼졌는데, 어젯밤 자정 뒤로 방향이 딱 뒤집혔어요 — 안쪽으로, 세 시대 방향으로 되감겨요."),
+                            L("haram", "story.ch39.s2.l2", "기압계 바늘이 거꾸로 돌고, 눈송이가 떨어지다 말고 올라가요. 이 물결이 세게 당기면 저 같은 현대 사람도 우리 시대로 끌려갈지 몰라요."),
+                            Pick("story.ch39.s2.p", "뿌리가 어딘지 알 수 있어요?", "반디한테 물어볼게요."),
+                            L("haram", "story.ch39.s2.l3", "물결이 감기는 한가운데는 별배 쪽이에요. 반디가 별배 시간 나침을 보고 있을 거예요."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch39.s3", TextKo = "별배 곁의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch39.s3.l1", "삐— 별배 시간 나침이 되감기는 물결에 맞춰 스스로 돌고 있습니다. 이대로면 별배째 세 시대 중 한 곳으로 끌려갑니다."),
+                            L("bandi", "story.ch39.s3.l2", "나침을 붙들려면 물결을 거슬러 올라야 합니다. 별배를 다시 띄워야 하고, 별배를 아는 사람은 선장 한별."),
+                            L("bandi", "story.ch39.s3.l3", "삐— 경고. 물결에 실려 온 결정 짐승이 별배 아래로 몰립니다. 먼저 쫓아 주십시오."),
+                        } },
+                    new Step { Type = StepType.Kill, Frost = true, Arena = ShipKill,
+                        Foes = new[] { F(FieldEnemy.Kind.EmberImp, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Electro), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        EnterKey = "story.ch39.enter", EnterKo = "⚔️ 물결에 실려 온 결정 짐승들이 별배 아래로 몰려든다",
+                        TextKey = "story.ch39.s4", TextKo = "물결에 실려 온 결정 짐승 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch39.s5", TextKo = "은하 나루의 별배 선장 한별과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch39.s5.l1", "물결 얘기는 들었다. 별배 나침이 도는 걸 나도 어젯밤 꿈에서 봤지 — 그리운 시대로 끌려가는 꿈. 좋지 않은 꿈이었어."),
+                            L("hanbyeol", "story.ch39.s5.l2", "선장은 배를 두고 못 간다. 별배를 다시 띄워 물결을 거스르자. 나침 제단은 별배 아래 서리봉 고원에 있다."),
+                            Pick("story.ch39.s5.p", "같이 가요.", "제단은 제가 지킬게요."),
+                            L("hanbyeol", "story.ch39.s5.l3", "좋아. 다음 장에서 별배 시동을 건다 — 나래도 불러라, 측량값이 필요하다."),
+                        } },
+                }
+            },
+            new Chapter
+            {
+                Id = "ch40", NameKey = "story.ch40", NameKo = "제40장 · 별배를 다시 띄워라", Ar = 84, Join = "story_narae",
+                Gold = 10250, Mats = new[] { 0, 7, 6, 7, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch40.s1", TextKo = "별배 선장 한별에게 출항 절차 듣기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch40.s1.l1", "출항 절차는 셋이다. 하나, 나침 제단을 물결 앞에 붙든다. 둘, 측량값으로 물결의 뿌리를 잰다. 셋, 뿌리로 배를 몬다."),
+                            L("hanbyeol", "story.ch40.s1.l2", "제단부터 지키자. 서리봉 별배 아래로 가라. 나침이 물결에 밀려 돌 때 몰려드는 것들이 많을 거다."),
+                            Pick("story.ch40.s1.p", "금방 올라갈게요.", "한별 선장님도 곧 오세요."),
+                            L("hanbyeol", "story.ch40.s1.l3", "그래, 나도 별배 정비를 마치고 뒤따른다. 제단이 흔들리면 신호탄을 올려라."),
+                        } },
+                    new Step { Type = StepType.Go, Frost = true, Arena = ShipAltar, GoRadius = 6.3f, TextKey = "story.ch40.s2", TextKo = "서리봉 고원 별배 아래 나침 제단으로" },
+                    new Step { Type = StepType.Defend, Frost = true, Arena = ShipAltar, NameKey = "story.altar_compass", NameKo = "별배 나침 제단", Dirs = new[] { 0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f },
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Electro), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                            new[] { F(FieldEnemy.Kind.EmberImp, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Electro), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                            new[] { F(FieldEnemy.Kind.EmberImp, GoElement.Geo), F(FieldEnemy.Kind.EmberImp, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Electro), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        },
+                        TextKey = "story.ch40.s3", TextKo = "별배 아래 나침 제단을 결정 짐승에게서 지키기" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch40.s4", TextKo = "나침을 살핀 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch40.s4.l1", "삐— 나침 고정 완료. 되감기는 물결의 방향을 측정했습니다: 세 시대 방향이 아니라 한 점. 세갈래 고을 마당입니다."),
+                            L("bandi", "story.ch40.s4.l2", "삐— 이상합니다. 그 자리엔 순간이 풀린 뒤 해미가 심은 갈무리의 씨앗이 있습니다. 씨앗이 물결을 부르고 있습니다."),
+                            Pick("story.ch40.s4.p", "씨앗이 왜?", "나래한테 잰 값을 물어봐야겠어."),
+                            L("bandi", "story.ch40.s4.l3", "삐— 나래의 측량값이 필요합니다. 세갈래 고을로 가십시오."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "narae", TextKey = "story.ch40.s5", TextKo = "세갈래 고을의 측량 기사 나래와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("narae", "story.ch40.s5.l1", "측량값 나왔어요. 물결이 감기는 자리는 고을 마당 한가운데 — 씨앗이 싹 틔운 자리예요. 싹이 사람을 끌어당기고 있어요."),
+                            L("narae", "story.ch40.s5.l2", "저도 오늘 아침 발이 자꾸 뜨더라고요. 측량 삼각대를 땅에 박고 버텼지만… 제 시대로 돌아가는 건 무섭지 않아요. 여기 사람들을 두고 가는 게 무섭지."),
+                            L("byeori", "story.ch40.s5.l3", "내 칼도 끌려가려고 했소. 대장장이는 두들기던 쇠를 두고 가는 법이 없는데 말이오. 싹부터 잠재웁시다."),
+                            Pick("story.ch40.s5.p", "같이 가요, 나래 씨.", "먼저 해미 씨를 만나 볼게요."),
+                            L("narae", "story.ch40.s5.l4", "네! 삼각대는 제가 들게요. 측량 나침도 — 이 동무들 곁에서 계속 재겠어요."),
+                        } },
+                }
+            },
+            new Chapter
+            {
+                Id = "ch41", NameKey = "story.ch41", NameKo = "제41장 · 돌아가는 길, 남는 길", Ar = 85, Join = "story_sodam",
+                Gold = 12500, Mats = new[] { 0, 10, 8, 10, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "haemi", TextKey = "story.ch41.s1", TextKo = "세갈래 길목의 해미와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haemi", "story.ch41.s1.l1", "그 씨앗은 갈무리의 마지막 조각이에요 — 지운 게 아니라 거둔 거였죠. 그런데 씨앗이 싹 틔우면서 갈무리의 마지막 마음까지 자랐어요. ‘돌려보내야 해’라는 마음."),
+                            L("haemi", "story.ch41.s1.l2", "갈무리는 지켜 두려 했지만 그 끝은 되감기였어요. 모두를 제자리로 돌려놓으면 아무도 다치지 않는다고 믿는 마음."),
+                            Pick("story.ch41.s1.p", "그 마음을 막을 수 있어요?", "직접 만나 봐야겠어요."),
+                            L("haemi", "story.ch41.s1.l3", "싹은 곳간 노래를 좋아해요. 소담 씨앗이 함께 심겼으니까요 — 소담에게 가 보세요."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "sodam", TextKey = "story.ch41.s2", TextKo = "곳간 마을의 소담과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("sodam", "story.ch41.s2.l1", "저도 오늘 아침 곳간 문이 자꾸 저절로 닫혀 열리고, 노랫소리가 거꾸로 들렸어요. 씨앗이 우는 거예요."),
+                            L("sodam", "story.ch41.s2.l2", "돌려보내는 게 아니라 이어 주는 거라고 노래로 말해 줘야 해요. 제가 같이 갈게요 — 곳간 노래는 제가 제일 잘 알아요."),
+                            Pick("story.ch41.s2.p", "같이 가자, 소담.", "고을 마당으로 가자."),
+                            L("sodam", "story.ch41.s2.l3", "네! 낟알 한 줌 챙길게요 — 싹이 좋아하는 노래에는 낟알 소리가 섞여 있거든요."),
+                        } },
+                    new Step { Type = StepType.Go, At = "fork:junction", Arena = YardSproutGo, GoRadius = 5.4f, TextKey = "story.ch41.s3", TextKo = "세갈래 고을 마당의 싹 곁으로" },
+                    new Step { Type = StepType.Duel, At = "fork:junction", Arena = ForkCrowAt, Foes = new[] { F(FieldEnemy.Kind.EmberImp, GoElement.Dendro) },
+                        BossKey = "story.boss.seedgiant", BossKo = "갈무리의 싹", HpMul = 30.4f, AtkMul = 3.3f, ScaleMul = 3.0f,
+                        Rot = new[] { FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Shadow },
+                        P2El = GoElement.Dendro, Adds = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.EmberImp) },
+                        EnterKey = "story.ch41.enter", EnterKo = "🌱 고을 마당의 씨앗이 덩굴을 뻗으며 — 갈무리의 싹이 몸을 일으킨다!",
+                        P2Key = "story.ch41.p2", P2Ko = "🌿 싹이 덩굴 방패를 두른다 — 풍으로 깨라! 졸개가 뛰어든다",
+                        WinKey = "story.ch41.win", WinKo = "🌱 싹의 되감는 결이 한 올씩 풀린다 — 당기던 물결이 잦아들고, 공중의 눈송이가 다시 아래로 떨어진다",
+                        TextKey = "story.ch41.s4", TextKo = "갈무리의 마지막 마음이 자란 싹 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "byeori", TextKey = "story.ch41.s5", TextKo = "길목의 벼리와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haemi", "story.ch41.s5.l1", "(먼 목소리로) 싹이 잠들었어요. 이번엔 지우지 않고 마당에 그대로 둘게요 — 봄마다 곳간 노래를 부르는 나무가 되도록."),
+                            L("narae", "story.ch41.s5.l2", "측량값이 안정됐어요! 물결이 사라졌고… 아니, 이어졌어요. 고을과 나루와 거리가 같은 물결 위에서 오가요."),
+                            L("byeori", "story.ch41.s5.l3", "돌아가는 길과 남는 길이 실은 한 길이었소. 마음만 먹으면 별배로 오가면 되니까. 손님도, 주인도 없는 길이오."),
+                            L("sodam", "story.ch41.s5.l4", "그럼 저도 남을래요! 곳간 노래는 어디서든 부를 수 있잖아요."),
+                            Pick("story.ch41.s5.p", "별배로 서로 오가자.", "청하에 알리러 가자."),
+                            L("byeori", "story.ch41.s5.l5", "쇠는 식기 전에 두드리는 법 — 어서 촌장님께 알리시오. 내 몫의 인사도 전하고!"),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch41.s6", TextKo = "청하 촌장 누리에게 알리기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch41.s6.l1", "해시계 그림자가 제자리로 돌아왔다. 우물물도 맑게 감돌고… 그래, 손님들은 가지 않고 오가기로 한 거구나."),
+                            L("sodam", "story.ch41.s6.l2", "촌장님, 곳간 마을에서 온 소담이에요! 앞으로 자주 놀러 올게요. 곳간 노래도 가르쳐 드릴게요."),
+                            L("elder", "story.ch41.s6.l3", "이 마을 잔치는 앞으로 셋이다 — 먹구름이 걷힌 날, 시간이 풀린 날, 그리고 돌아가는 길과 남는 길이 이어진 오늘. 별배 표는 내가 끊어 주마!"),
+                            Pick("story.ch41.s6.p", "별배 표는 공짜죠?", "곳간 노래, 저도 배울래요!"),
+                            L("sodam", "story.ch41.s6.l4", "곳간 노래 하나! 별 보고 나가 해 보고 거두고 달 보고 들이고 — 이제 청하에서도 불러요. 곳간지기 소담, 함께 가요!"),
                         } },
                 }
             },
