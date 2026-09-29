@@ -2515,6 +2515,18 @@
     { "key": "story.ch29.s9.l6", "value": "……글쎄. 틈이 삼켰다 못 돌려놓은 시대 조각들이 아직 곳곳에 굳어 있다더군. 하지만 그건 잔치 뒤에 생각하세." },
     { "key": "story.ch29.s9.p.a", "value": "다 같이 잔치해요!" },
     { "key": "story.ch29.s9.p.b", "value": "모두 고마워요." },
-    { "key": "story.ch29.s9.l7", "value": "약속대로 잔치다! 이건 청하 마을과 세 시대 동무들이 너에게 주는 거란다. 고맙다 — 우리 대장." }
+    { "key": "story.ch29.s9.l7", "value": "약속대로 잔치다! 이건 청하 마을과 세 시대 동무들이 너에게 주는 거란다. 고맙다 — 우리 대장." },
+    { "key": "domain.kind.echo", "value": "메아리" },
+    { "key": "domain.loot.echo", "value": "뇌룡 비늘·비전·★5 보패" },
+    { "key": "domain.ley.echo", "value": "이야기에서 이긴 보스가 메아리로 다시 선다 — 체력 절반에서 원소 방패를 두른다" },
+    { "key": "domain.site.e_knot", "value": "매듭 등불의 메아리" },
+    { "key": "domain.site.e_ice", "value": "얼음굴의 메아리" },
+    { "key": "domain.site.e_cross", "value": "갈림길의 메아리" },
+    { "key": "domain.site.e_dome", "value": "빛 돔의 메아리" },
+    { "key": "domain.echo_up", "value": "🔮 {0} 이(가) 깨어났다" },
+    { "key": "domain.echo_p2", "value": "🔮 {0} 이(가) 원소 방패를 둘렀다 — 상성 원소로 깨라" },
+    { "key": "domain.hud_echo", "value": "{0} {1}%{2}" },
+    { "key": "domain.why.echo", "value": "1차 결말 뒤에 열린다" },
+    { "key": "domain.hud_echo_shield", "value": "방패" }
   ]
 }

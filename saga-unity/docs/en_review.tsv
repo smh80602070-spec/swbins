@@ -602,23 +602,30 @@
 2	go	domain.claimed	{0} {1} 보상 — 원기 {2} · {3}	{0} {1} reward — Vigor {2} · {3}		
 2	go	domain.cost	받을 때 원기 {0}	Costs {0} Vigor to claim		
 2	go	domain.cost_weekly	받을 때 원기 {0}(이번 주 {1}번 — 처음 {2}번은 {3})	Costs {0} Vigor to claim ({1} this week — first {2} cost {3})		
+2	go	domain.echo_p2	🔮 {0} 이(가) 원소 방패를 둘렀다 — 상성 원소로 깨라	🔮 {0} has raised an elemental shield — break it with a matching element		
+2	go	domain.echo_up	🔮 {0} 이(가) 깨어났다	🔮 {0} has awakened		
 2	go	domain.enter	{0} {1} — 곧 적이 나타난다	{0} {1} — foes approach		
 2	go	domain.fail	도전 실패 — {0}	Challenge failed — {0}		
 2	go	domain.gold	금 +{0}	Gold +{0}		
 2	go	domain.hud_boss	먹구름 이무기 {0}%{1}	Stormcloud Serpent {0}%{1}		
+2	go	domain.hud_echo	{0} {1}%{2}	{0} {1}%{2}		
+2	go	domain.hud_echo_shield	방패	Shield		
 2	go	domain.hud_left	{0}초	{0}s		
 2	go	domain.hud_shield	뇌 방패	Thunder shield		
 2	go	domain.hud_tree	보상 나무	Reward tree		
 2	go	domain.hud_wait	곧 시작	Starting soon		
+2	go	domain.kind.echo	메아리	Echo		
 2	go	domain.kind.forge	쇠부리 터	Bloomery		
 2	go	domain.kind.school	옛 서당	Old Schoolhouse		
 2	go	domain.kind.tomb	잠든 무덤	Sleeping Tomb		
 2	go	domain.kind.weekly	먹구름 제단	Stormcloud Altar		
 2	go	domain.left_tree	보상을 두고 숨은 터를 나왔다	Left the hidden ground without the reward		
+2	go	domain.ley.echo	이야기에서 이긴 보스가 메아리로 다시 선다 — 체력 절반에서 원소 방패를 두른다	A boss you beat in the story stands again as an echo — it raises an elemental shield at half health		
 2	go	domain.ley.forge	적 공격 ×1.3	Foe ATK ×1.3		
 2	go	domain.ley.school	적을 쓰러뜨리면 명단 기력 +13	Each foe defeated gives the party +13 Energy		
 2	go	domain.ley.tomb	적이 4초마다 물을 띤다	Foes take on Water every 4s		
 2	go	domain.ley.weekly	체력 절반에서 뇌 방패를 두르고 빨라진다	At half HP it raises a thunder shield and speeds up		
+2	go	domain.loot.echo	뇌룡 비늘·비전·★5 보패	Thunder-Dragon Scales · Arcana · ★5 Artifacts	원작 용어: Artifacts	
 2	go	domain.loot.forge	강화석	Ore		
 2	go	domain.loot.school	무예 책	Martial Manuals		
 2	go	domain.loot.tomb	보패	Relics		
@@ -631,11 +638,16 @@
 2	go	domain.site.d_forge	논밭 쇠부리 터	Paddy Bloomery		
 2	go	domain.site.d_school	강가 옛 서당	Riverside Old Schoolhouse		
 2	go	domain.site.d_tomb	산기슭 잠든 무덤	Foothill Sleeping Tomb		
+2	go	domain.site.e_cross	갈림길의 메아리	Echo of the Crossing		
+2	go	domain.site.e_dome	빛 돔의 메아리	Echo of the Light Dome		
+2	go	domain.site.e_ice	얼음굴의 메아리	Echo of the Ice Cave		
+2	go	domain.site.e_knot	매듭 등불의 메아리	Echo of the Knot Lantern		
 2	go	domain.site.w_altar	먹구름 제단	Stormcloud Altar		
 2	go	domain.tree	보상 나무가 자랐다 — 가운데로 가서 원기 {0} 쓰면 받는다	A reward tree has grown — go to the center and spend {0} Vigor to claim		
 2	go	domain.tree_card	보상 나무 — {0} · 원기 {1} 로 받는다\n{2}	Reward tree — {0} · claim for {1} Vigor\n{2}		
 2	go	domain.two_waves	파도 둘	Two waves		
 2	go	domain.wave	파도 {0}/{1}	Wave {0}/{1}		
+2	go	domain.why.echo	1차 결말 뒤에 열린다	Opens after the first ending		
 2	go	domain.why.fight	싸우는 중엔 못 들어간다	Cannot enter during a fight		
 2	go	domain.why.left	물러났다	Withdrew		
 2	go	domain.why.no_field	들판 전투가 없다	No field combat		

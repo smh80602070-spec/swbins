@@ -17,7 +17,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class GoDomain
     {
-        public enum Kind { Tomb, School, Forge, Weekly }
+        public enum Kind { Tomb, School, Forge, Weekly, Echo }
 
         public struct Site
         {
@@ -25,8 +25,10 @@ namespace Saga.Go.Data
             public Kind Kind;
             public float Gx, Gy;
             public string NameKo;
+            /// <summary>109-14-56 메아리 — 지도 밖 땅(고원·독립 땅)에 서는 입구는 칸 대신 자리 식(그 보스와 싸운 곳).</summary>
+            public System.Func<Vector3> Where;
             public string Name => GoLocalization.T("domain.site." + Id, NameKo);
-            public Vector3 Pos => TestMapData.WorldPos(Gx, Gy) + Vector3.up * TestMapData.GroundHeight(Mathf.RoundToInt(Gx), Mathf.RoundToInt(Gy));
+            public Vector3 Pos => Where != null ? Where() : TestMapData.WorldPos(Gx, Gy) + Vector3.up * TestMapData.GroundHeight(Mathf.RoundToInt(Gx), Mathf.RoundToInt(Gy));
         }
 
         public static readonly Site[] Sites =
@@ -36,6 +38,35 @@ namespace Saga.Go.Data
             new Site { Id = "d_forge", Kind = Kind.Forge, Gx = 3.6f, Gy = 9.0f, NameKo = "논밭 쇠부리 터" },
             new Site { Id = "w_altar", Kind = Kind.Weekly, Gx = 1.5f, Gy = 4.35f, NameKo = "먹구름 제단" },
         };
+
+        // ---- 109-14-56 메아리(웹 사가고 ⑲-56 `domain.js` echo) — 1차 결말(29장)을 마친 뒤 이야기에서 이긴 보스 넷이 메아리로 다시 선다(주간 보스 틀).
+        // 입구 = 그 보스와 싸운 자리 · 보스 하나(그 이야기 단계의 몸·배율·공격 차례·가면) 240초 · 원기 60(이번 주 처음 둘은 반값 30 — 주간 보스와 같은 횟수를 센다) ·
+        // 체력 절반에서 그 보스 원소 방패(최대 체력 10%) · 보상 = 금 + 무예 교본·비늘(·단계 II 비급·III 인연 매듭 2)·★5 보패(세트 번갈이).
+        public const int EchoAfter = 29;
+        public const float EchoLimit = 240f;
+        public const int EchoCost = 60;
+        public static bool EchoOpen => StoryState.Ch >= EchoAfter;
+        public static bool IsBoss(Kind k) => k == Kind.Weekly || k == Kind.Echo;
+        public static readonly string[] EchoBossKeys = { "story.boss.kingtrue", "story.boss.riftfox", "story.boss.riftcrow", "story.boss.colossus" };
+        public static readonly Site[] Echoes =
+        {
+            new Site { Id = "e_knot", Kind = Kind.Echo, NameKo = "매듭 등불의 메아리", Where = () => GoStory.GridPos(4.5f, 0.5f) + new Vector3(20f, 0f, 0f) },
+            new Site { Id = "e_ice", Kind = Kind.Echo, NameKo = "얼음굴의 메아리", Where = () => GoStory.FrostPos(GoStory.FrostAt("cave", 0f, 8f)) },
+            new Site { Id = "e_cross", Kind = Kind.Echo, NameKo = "갈림길의 메아리", Where = () => GoStory.AreaPos("crossing:steps", new Vector2(10f, 0f)) },
+            new Site { Id = "e_dome", Kind = Kind.Echo, NameKo = "빛 돔의 메아리", Where = () => GoStory.AreaPos("sunken:gate", GoStory.SandArrive + new Vector2(0f, -12f)) },
+        };
+        /// <summary>메아리 입구 i 의 보스(이야기 결투 단계 — 몸·배율·공격 차례·가면·방패 원소).</summary>
+        public static GoStory.Step EchoBoss(string siteId)
+        {
+            for (int i = 0; i < Echoes.Length; i++) if (Echoes[i].Id == siteId) return GoStory.DuelByBoss(EchoBossKeys[i]);
+            return null;
+        }
+        /// <summary>보이는 입구 전부 — 숨은 터 셋·먹구름 제단 + 열렸으면 메아리 넷.</summary>
+        public static System.Collections.Generic.IEnumerable<Site> Gates()
+        {
+            foreach (var s in Sites) yield return s;
+            if (EchoOpen) foreach (var s in Echoes) yield return s;
+        }
 
         public struct Stage { public string N; public int Ar; public float Hp, Atk; }
         public static readonly Stage[] Stages =
@@ -69,7 +100,7 @@ namespace Saga.Go.Data
         public const float BossHp = 220f * 20f, BossAtk = 20f * 2.2f, BossReach = 4.4f * 1.85f, BossTelegraph = 1.2f, BossRecover = 3.5f, BossScale = 2.2f;
         public const float P2At = 0.5f, P2Shield = 0.1f, P2Cd = 0.69f;
 
-        public static float LimitOf(Kind k) => k == Kind.Weekly ? WeeklyLimit : Limit;
+        public static float LimitOf(Kind k) => k == Kind.Echo ? EchoLimit : k == Kind.Weekly ? WeeklyLimit : Limit;
         public static bool StageOpen(int stage, int rank) => stage >= 0 && stage < Stages.Length && rank >= Stages[stage].Ar;
 
         public static string KindName(Kind k) => k switch
@@ -77,6 +108,7 @@ namespace Saga.Go.Data
             Kind.Tomb => GoLocalization.T("domain.kind.tomb", "잠든 무덤"),
             Kind.School => GoLocalization.T("domain.kind.school", "옛 서당"),
             Kind.Forge => GoLocalization.T("domain.kind.forge", "쇠부리 터"),
+            Kind.Echo => GoLocalization.T("domain.kind.echo", "메아리"),
             _ => GoLocalization.T("domain.kind.weekly", "먹구름 제단"),
         };
 
@@ -85,6 +117,7 @@ namespace Saga.Go.Data
             Kind.Tomb => GoLocalization.T("domain.loot.tomb", "보패"),
             Kind.School => GoLocalization.T("domain.loot.school", "무예 책"),
             Kind.Forge => GoLocalization.T("domain.loot.forge", "강화석"),
+            Kind.Echo => GoLocalization.T("domain.loot.echo", "뇌룡 비늘·비전·★5 보패"),
             _ => GoLocalization.T("domain.loot.weekly", "뇌룡 비늘·★5 보패"),
         };
 
@@ -93,6 +126,7 @@ namespace Saga.Go.Data
             Kind.Tomb => GoLocalization.T("domain.ley.tomb", "적이 4초마다 물을 띤다"),
             Kind.School => GoLocalization.T("domain.ley.school", "적을 쓰러뜨리면 명단 기력 +13"),
             Kind.Forge => GoLocalization.T("domain.ley.forge", "적 공격 ×1.3"),
+            Kind.Echo => GoLocalization.T("domain.ley.echo", "이야기에서 이긴 보스가 메아리로 다시 선다 — 체력 절반에서 원소 방패를 두른다"),
             _ => GoLocalization.T("domain.ley.weekly", "체력 절반에서 뇌 방패를 두르고 빨라진다"),
         };
 
@@ -101,6 +135,7 @@ namespace Saga.Go.Data
             Kind.Tomb => new Color(0.5f, 0.83f, 1f),
             Kind.School => new Color(1f, 0.82f, 0.48f),
             Kind.Forge => new Color(1f, 0.6f, 0.35f),
+            Kind.Echo => new Color(0.79f, 0.63f, 1f),
             _ => new Color(0.71f, 0.55f, 1f),
         };
 
@@ -153,6 +188,14 @@ namespace Saga.Go.Data
                 case Kind.Forge:
                     r.Ore = new[] { 3, 5, 8 }[s];
                     break;
+                case Kind.Echo:
+                {
+                    string es = odd ? "emblem" : "gladiator";
+                    r.Gold = new[] { 200, 260, 340 }[s];
+                    r.Mats = new[] { new[] { 0, 3, 0, 0, 1 }, new[] { 0, 4, 1, 0, 2 }, new[] { 0, 0, 3, 2, 3 } }[s];
+                    foreach (int q in new[] { new[] { 5 }, new[] { 5 }, new[] { 5, 5 } }[s]) r.Arts.Add((q, es));
+                    break;
+                }
                 default:
                 {
                     string ws = odd ? "gladiator" : "emblem";
@@ -197,7 +240,8 @@ namespace Saga.Go.Data
         public static long ResinNextSec { get { Fill(); return _resin >= GoDomain.ResinMax ? 0 : System.Math.Max(0, _resinT + GoDomain.ResinSec - Now); } }
 
         public static int WeeklyUsed { get { Week(); return _weekN; } }
-        public static int CostOf(GoDomain.Kind k) => k == GoDomain.Kind.Weekly ? (WeeklyUsed < GoDomain.WeeklyHalfN ? GoDomain.WeeklyHalf : GoDomain.WeeklyCost) : GoDomain.Cost;
+        public static int CostOf(GoDomain.Kind k) => k == GoDomain.Kind.Echo ? (WeeklyUsed < GoDomain.WeeklyHalfN ? GoDomain.EchoCost / 2 : GoDomain.EchoCost) // 109-14-56 메아리는 주간 보스와 같은 횟수를 센다
+            : k == GoDomain.Kind.Weekly ? (WeeklyUsed < GoDomain.WeeklyHalfN ? GoDomain.WeeklyHalf : GoDomain.WeeklyCost) : GoDomain.Cost;
 
         public static bool Spend(int n)
         {
@@ -213,7 +257,7 @@ namespace Saga.Go.Data
         {
             int seq = Claims;
             Claims++;
-            if (k == GoDomain.Kind.Weekly) { Week(); _weekN++; }
+            if (k == GoDomain.Kind.Weekly || k == GoDomain.Kind.Echo) { Week(); _weekN++; }
             return seq;
         }
 
