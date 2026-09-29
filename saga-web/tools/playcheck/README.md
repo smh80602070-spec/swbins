@@ -14,6 +14,7 @@ node fs-move-click.mjs                         # 사가의숲: 3D 켜고 W(시�
 node go-ch-auto.mjs <장> [초] [nofield] [trace] [defend] [members]  # 사가고: 그 장 첫 단계(defend 면 첫 지키기 단계, members 면 이야기 동료 다 지급)부터 🤖📖 자동 — 단계마다 걸린 초·doing·사진(shots/go_ch<N>_s<i>), trace 면 곁 적 체력·층
 node go-probe-eval.mjs "<js>"                      # 사가고: 새 계정으로 들어가 그 자바스크립트를 게임 안에서 돌려 결과를 찍는다(진단용, 새 프로필로)
 node go-aftermath.mjs [shot]                    # 사가고 ⑲-56: 결말 뒤 밤의 잔불(3D·14m 잔당 셋)·메아리 입구 넷이 예외 없이 서나(shot 을 줄 때만 shots/go_after_*, 새 프로필로)
+node go-amber.mjs [shot]                        # 사가고 ⑲-57: 굳은 거리(amber.js)가 3D 로 예외 없이 서나·명소 자리(지형 칸)·부양탑 기둥(shot 을 줄 때만 shots/go_amber_*, 새 프로필로)
 node go-stormeye.mjs [shot]                     # 사가고 ⑲-52: 8부 매듭 여섯·먹구름 눈이 3D 로 예외 없이 서나 + 눈 곁 발판·기둥 목록(shot 을 줄 때만 shots/go_eye_*, 새 프로필로)
 node go-skyroute.mjs                           # 사가고 ⑲-48: 구름 위 항로 섬 셋 — 땅에서·사당 섬 위에서 + shots/go_sky_* (새 프로필로)
 node go-ch23.mjs [초] [field]                  # 사가고 ⑲-47: 🤖📖 가 등대를 타고 올라 난간 판에서 등롱을 켜나 + shots/go_ch23_* (PC_PROF=tmp/… 새 프로필로)

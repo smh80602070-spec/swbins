@@ -94,6 +94,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/frost.js"></script>
 <script src="js/era-sites.js"></script>
 <script src="js/skyport.js"></script>
+<script src="js/amber.js"></script>
 <script src="js/crossing.js"></script>
 <script src="js/sunken.js"></script>
 <script src="js/skyroute.js"></script>
@@ -14435,6 +14436,94 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { NE._setNowForTest(null); NE._resetForTest(); delete C.save.night_echo; rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '일곱 곳(29장 뒤·밤 21~4시) · 14m 잔당 셋 · 60m 밖·낮 거둠 · 처치 🪙800 📘1 · 그날 한 번 · 4시 넘기면 다시' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-57 9부 무대 · 여덟째 지역 굳은 거리 (amber.js, PLAN §5 ⑲-57) ── */
+    function amRig() {
+      var rig = stRig(64);
+      DG.amber._resetForTest(); delete C.save.amber;
+      return { AM: DG.amber, undo: function () { DG.amber._resetForTest(); rig.undo(); } };
+    }
+    t('굳은 거리 ⑲-57 — 자리: 가운데 = 은하 나루 북쪽 고개 너머 · 명소 일곱(순간이동 셋)·작은 발견 열 = 열일곱 · 억지 없이 뭍 칸 · 명소끼리 60m·나머지 30m 넘게 · 다시 풀어도 같다', function () {
+      var AM = DG.amber, SP = DG.skyport, r = {}, bad = [];
+      AM._resetForTest();
+      var c = AM.center(), sc = SP.center(), L = AM.sites();
+      r.center = !!c && Math.abs((c.y - sc.y) - AM.AMBER_OFF[1]) < 260 && Math.abs(c.x - sc.x) < 260 && AM.inRegion(c.x, c.y) && !AM.inRegion(0, 0);
+      r.count = L.length === 17 && L.filter(function (s) { return s.big; }).length === 7 && L.filter(function (s) { return s.way; }).map(function (s) { return s.id; }).join() === 'pass,tower,statue';
+      var SEP_BIG = 60, SEP_SMALL = 30;
+      L.forEach(function (s, k) {
+        var kind = DG.world.terrainAt(Math.floor(s.x / 48), Math.floor(s.y / 48));
+        if (s.forced || ['grass', 'forest', 'farm'].indexOf(kind) < 0) { bad.push(s.id + '땅'); }
+        for (var q = 0; q < k; q++) {
+          var o = L[q], sep = o.big ? SEP_BIG : SEP_SMALL;
+          if (s.id !== 'cross' && o.id !== 'cross' && Math.hypot(o.x - s.x, o.y - s.y) < sep - 1e-6) { bad.push(s.id + '-' + o.id); }
+        }
+      });
+      r.place = bad.length === 0;
+      var pass = AM.siteById('pass'), cross = AM.siteById('cross');
+      r.layout = pass.y > cross.y && Math.hypot(cross.x - c.x, cross.y - c.y) < 1e-6;         // 결정 막은 고개(나루 쪽 = 남쪽) 끝, 네거리는 가운데
+      var j1 = JSON.stringify(L); AM._resetForTest();
+      r.same = JSON.stringify(AM.sites()) === j1;
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? '가운데 ' + Math.round(c.x) + ',' + Math.round(c.y) + ' · 열일곱(명소 7·이동 3) · 뭍 · 떨어짐 · 고정' : ('실패 ' + bad2.join(',') + ' ' + bad.join(','));
+    });
+
+    t('굳은 거리 ⑲-57 — 발견·이동·벽·기둥: 명소 30m 안 = 발견 한 번만 · 작은 발견 14m · 찾은 이동 지점(키보드만·GPS 막힘) · 결정 막·시계방·신상 막힘(결정 막은 29장 뒤 열림) · 부양탑 심 기둥(6×12m)', function () {
+      var rig = amRig(), AM = rig.AM, W0 = DG.world, r = {};
+      try {
+        var pass = AM.siteById('pass'), lamp = AM.siteById('lamp'), tower = AM.siteById('tower'), clockS = AM.siteById('clock'), statue = AM.siteById('statue');
+        var g0 = C.save.player.gold || 0;
+        r.marks0 = AM.marks().length === 7 && AM.marks().every(function (m) { return m.big && !m.found; });
+        var f1 = AM.discoverAt(pass.x + AM.LANDMARK_R - 1, pass.y);
+        r.big = f1.length === 1 && f1[0].id === 'pass' && C.save.player.gold === g0 + 180 && AM.found('pass') && AM.discoverAt(pass.x, pass.y).length === 0;
+        r.small = AM.discoverAt(lamp.x + 15, lamp.y).length === 0 && AM.discoverAt(lamp.x + 13, lamp.y).map(function (s) { return s.id; }).join() === 'lamp' && AM.marks().length === 8;
+        AM.discoverAt(statue.x, statue.y);
+        var wp = AM.waypoints();
+        r.way = wp.length === 2 && wp.map(function (w) { return w.key; }).join() === 'am:pass,am:statue' && /어귀/.test(wp[0].name) && !AM.teleport('tower');
+        DG.world = Object.create(W0, { mode: { value: 'geo' } });
+        r.geo = !AM.teleport('pass');
+        DG.world = W0;
+        stGo({ x: 0, y: 0 });
+        r.tp = AM.teleport('pass') && C.save.player.pos.x === pass.x && C.save.player.pos.y === pass.y + 8;
+        /* 벽 — 결정 막은 29장 전에만, 시계방·신상·부양탑 심은 늘 */
+        var cell = function (s, dy) { return DG.world3d.houseRects(Math.floor(s.x / 48), Math.floor((s.y + (dy || 0)) / 48)); };
+        C.save.story = { ch: 28, step: 0 };
+        var closed = cell(pass).some(function (q) { return frInRect(q, pass.x, pass.y); });
+        C.save.story = { ch: 29, step: 0 };
+        var opened = !cell(pass).some(function (q) { return frInRect(q, pass.x, pass.y); });
+        r.wall = closed && opened && cell(clockS).some(function (q) { return frInRect(q, clockS.x, clockS.y); }) && cell(statue).some(function (q) { return frInRect(q, statue.x, statue.y); }) &&
+          cell(tower).some(function (q) { return frInRect(q, tower.x + 2, tower.y); });
+        /* 기둥 — 부양탑 심 하나: 6m 네모·12m */
+        var P = AM.poles();
+        r.pole = P.length === 1 && P[0].id === 'am_tower' && P[0].x === tower.x && P[0].top === 12 && P[0].r === 3 && !!P[0].beam && DG.landform.on && true;
+      } finally { DG.world = W0; rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '명소 30m 한 번 · 작은 14m · 이동 지점 둘(GPS ✕) · 결정 막 29장 뒤 열림 · 시계방·신상·부양탑 막힘 · 심 기둥 12m' : ('실패 ' + bad.join(','));
+    });
+
+    t('굳은 거리 ⑲-57 — 이야기 상태: 굳은 자리 셋(30장 5·6·7단계부터 녹음) · 장터 돔(31장 2단계부터 깨짐) · 부양탑(32장 3단계부터 녹음) · 신호등(32장 뒤 초록) · 이야기 자리 crystal·light · 손잡이', function () {
+      var rig = amRig(), AM = rig.AM, r = {};
+      try {
+        function at(ch, step) { C.save.story = { ch: ch, step: step }; }
+        var off = function (ch, s) { at(ch, s); return [0, 1, 2].filter(AM.crystalOff).join(''); };
+        r.crystal = [off(28, 0), off(29, 4), off(29, 5), off(29, 6), off(29, 7), off(30, 0)].join('|') === '||0|01|012|012' && AM.CRYSTAL_OFF_FROM.join() === '5,6,7';
+        at(30, 1); var d1 = !AM.domeBroken(); at(30, 2); var d2 = AM.domeBroken(); at(31, 0); r.dome = d1 && d2 && AM.domeBroken() && AM.DOME_FROM.join() === '30,2';
+        at(31, 2); var t1 = !AM.towerMelted(); at(31, 3); var t2 = AM.towerMelted(); r.tower = t1 && t2 && AM.TOWER_FROM.join() === '31,3';
+        at(31, 99); var l1 = !AM.lightsGreen(); at(32, 0); r.lights = l1 && AM.lightsGreen();
+        var cross = AM.siteById('cross');
+        r.spots = [0, 1, 2].every(function (i) { var s = AM.spot('crystal' + i); return !!s && Math.hypot(s.x - cross.x - AM.CRYSTALS[i].off[0], s.y - cross.y - AM.CRYSTALS[i].off[1]) < 1e-6; }) &&
+          [0, 1, 2, 3].every(function (i) { return !!AM.spot('light' + i); }) && !AM.spot('nobody') && AM.spot('clock').x === AM.siteById('clock').x;
+        /* 굳은 자리·돔 벽은 상태 따라 — 셋 다 녹으면 자리 벽이 사라진다 */
+        var cr = AM.spot('crystal0'), rects = function () { return DG.world3d.houseRects(Math.floor(cr.x / 48), Math.floor(cr.y / 48)).some(function (q) { return frInRect(q, cr.x, cr.y); }); };
+        at(29, 4); var wall0 = rects(); at(29, 5); var wall1 = rects();
+        r.crystalWall = wall0 && !wall1;
+        C.setTune('amber.on', 0);
+        r.off = !AM.on() && AM.marks().length === 0 && AM.poles().length === 0 && DG.world3d.houseRects(Math.floor(cross.x / 48), Math.floor(cross.y / 48)).every(function (q) { return !frInRect(q, cr.x, cr.y); });
+        C.setTune('amber.on', null);
+        C.setTune('amber.pass', 1); at(20, 0); r.passKnob = AM.passOpen(); C.setTune('amber.pass', null); r.passShut = !AM.passOpen();
+      } finally { C.setTune('amber.on', null); C.setTune('amber.pass', null); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '굳은 자리 5·6·7 · 돔 31장 2 · 탑 32장 3 · 신호등 32장 뒤 · 자리 crystal/light · 손잡이' : ('실패 ' + bad.join(','));
     });
 
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */

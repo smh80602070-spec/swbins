@@ -278,6 +278,8 @@
     for (i = 0; i < frl.length; i++) { put(frl[i].found ? 'frost-found' : 'frost', frl[i].x, frl[i].y, (frl[i].big ? '🏔️ ' : '❄️ ') + frl[i].name); }
     var SPm = global.DG.skyport, spl = SPm && SPm.on() && SPm.marks ? SPm.marks() : [];   // §5 ⑲-37 은하 나루
     for (i = 0; i < spl.length; i++) { put(spl[i].found ? 'frost-found' : 'frost', spl[i].x, spl[i].y, (spl[i].big ? '🌌 ' : '✨ ') + spl[i].name); }
+    var AMm = global.DG.amber, aml = AMm && AMm.on() && AMm.marks ? AMm.marks() : [];   // §5 ⑲-57 굳은 거리
+    for (i = 0; i < aml.length; i++) { put(aml[i].found ? 'frost-found' : 'frost', aml[i].x, aml[i].y, (aml[i].big ? '🟠 ' : '✨ ') + aml[i].name); }
     var CRm = global.DG.crossing, crl = CRm && CRm.on() && CRm.marks ? CRm.marks() : [];   // §5 ⑲-41 틈새 갈림길
     for (i = 0; i < crl.length; i++) { put(crl[i].found ? 'frost-found' : 'frost', crl[i].x, crl[i].y, (crl[i].big ? '🌀 ' : '✨ ') + crl[i].name); }
     var SKm = global.DG.sunken, skl = SKm && SKm.on() && SKm.marks ? SKm.marks() : [];   // §5 ⑲-44 잠긴 도읍
