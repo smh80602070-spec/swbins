@@ -72,6 +72,12 @@ namespace Saga.Go.World
             var go = GameObject.CreatePrimitive(t);
             go.name = name;
             if (!collide) Destroy(go.GetComponent<Collider>());
+            else if (t == PrimitiveType.Cylinder)
+            {
+                // 원기둥 기본 충돌은 캡슐이라 납작하게 눌러도 둥근 공이 된다 — 섬돌처럼 발 디디는 원판은 메시 충돌로
+                Destroy(go.GetComponent<Collider>());
+                go.AddComponent<MeshCollider>().sharedMesh = go.GetComponent<MeshFilter>().sharedMesh;
+            }
             go.transform.SetParent(parent, false);
             go.transform.localPosition = local;
             go.transform.localRotation = Quaternion.Euler(euler);
@@ -378,10 +384,18 @@ namespace Saga.Go.World
             if (_parts.TryGetValue(key, out var g) && g != null) g.GetComponent<MeshRenderer>().sharedMaterial = m;
         }
 
+        private bool _clockOn;
+        public bool ClockOn => _clockOn;
         private float _ring;
         /// <summary>종각 종을 3초 흔든다(그림만, 잦아드는 흔들림).</summary>
         public void RingBell() => _ring = 3f;
         public bool Ringing => _ring > 0f;
+        private void TickClock()
+        {
+            if (!_parts.TryGetValue("crossing:clock_hand", out var hand) || hand == null) return;
+            if (_clockOn) hand.transform.localRotation = Quaternion.Euler(0f, 0f, -Time.time * 30f);
+        }
+
         private void TickBell(float dt)
         {
             if (!_parts.TryGetValue("skyport:bell", out var bell) || bell == null) return;
@@ -398,6 +412,7 @@ namespace Saga.Go.World
             if (_parts.TryGetValue("skyport:bell", out var bell) && bell != null) bell.SetActive(hung);
             if (_parts.TryGetValue("skyport:bell_hidden", out var tip) && tip != null) tip.SetActive(hung);
             if (_parts.TryGetValue("skyport:bell_fallen", out var fallen) && fallen != null) fallen.SetActive(!hung);
+            _clockOn = !StoryState.OffForTest && GoStory.ClockRunning;
             bool powered = !StoryState.OffForTest && GoStory.TrainPowered;
             SetMat("skyport:train_lamp_a", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
             SetMat("skyport:train_lamp_b", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
@@ -451,6 +466,7 @@ namespace Saga.Go.World
             Tick(feet);
             var kb = Keyboard.current;
             TickBell(Time.deltaTime);
+            TickClock();
             var (a, g) = NearGate(feet);
             if (kb != null && g != 0 && kb.fKey.wasPressedThisFrame && !FishingField.Busy && !StoryState.Talking
                 && !(StoryUi.Instance != null && StoryUi.Instance.TalkShown) && !DispatchUi.AtBoard() && GoFishing.NearSpot(new Vector2(feet.x, feet.z)) == null && !GoFishing.NearBoard(new Vector2(feet.x, feet.z)))

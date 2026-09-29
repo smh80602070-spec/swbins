@@ -40,7 +40,7 @@ namespace Saga.Go.Data
         /// <summary>섬 위인가(가장자리 1m 안쪽) — 섬 위 이야기 적은 이 안에서만 걷는다.</summary>
         public static bool OnIsle(Vector3 p) => Flat(p, IslePos(Vector2.zero)) <= IsleR - 1f;
         /// <summary>배가 닿는 곳 — 섬(북쪽 물가) 또는 강가 나루(사공 곁).</summary>
-        public static Vector3 SailDest(Step s) => s.ToIsle ? IslePos(IsleLand) : GridPos(DockGx, DockGy);
+        public static Vector3 SailDest(Step s) => s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.ToIsle ? IslePos(IsleLand) : GridPos(DockGx, DockGy);
         public const float DockGx = 2.35f + 3f / 48f, DockGy = 4.4f - 3f / 48f;
 
         /// <summary>chase — 노 도둑(웹 13m/초·점마다 0.5초 = 걷기 8·달리기 17.6 사이) → 이 판 걷기 6·달리기 10 사이로 9m/초·0.5초.
@@ -248,6 +248,28 @@ namespace Saga.Go.Data
         public const float ClockHeight = 16f, ClockHalf = 1.5f, StepRise = 1.1f, StepR = 3.2f;
         public const int StepN = 15;
 
+        // 19장(⑲-42) — 틈새 갈림길 자리(각 명소 가운데에서 m): 막차는 승강장 동쪽에 내린다, 갈림목 = 시계탑 북서쪽, 한별은 섬돌 가운데 밑(틈 수정 아래).
+        public static readonly Vector2 CrossArrive = new Vector2(6.5f, 0f), CrossBandi = new Vector2(7f, 4f), CrossHanbyeol = new Vector2(6.5f, 7f), CrossFork = new Vector2(-18f, -14f), CrossClockBandi = new Vector2(4f, 4f),
+            CrossStepsBandi = new Vector2(6f, 5f), CrossDuel = new Vector2(10f, -8f), CrossStepsHanbyeol = new Vector2(7f, -3f);
+        /// <summary>오르기 단계(`At`)의 꼭대기 — 계류 탑·시계탑은 그 명소 가운데 위, 섬돌은 마지막 돌 위.</summary>
+        public static Vector3 ClimbTopOf(string at)
+        {
+            if (at == "crossing:steps")
+            {
+                float a = (StepN - 1) * Mathf.PI * 0.25f;
+                return AreaPos(at, new Vector2(Mathf.Cos(a) * StepR, Mathf.Sin(a) * StepR)) + Vector3.up * (StepN * StepRise - 0.1f);
+            }
+            return AreaPos(at, Vector2.zero) + Vector3.up * (at == "crossing:clock" ? ClockHeight : TowerHeight);
+        }
+        public static bool OnClimbTop(string at, Vector3 p)
+        {
+            Vector3 top = ClimbTopOf(at);
+            float r = at == "crossing:steps" ? 1.6f : (at == "crossing:clock" ? ClockHalf : TowerHalf) + 0.6f;
+            return Flat(p, top) <= r && p.y >= top.y - 1.2f;
+        }
+        /// <summary>시계탑 바늘이 도나 — 19장 6째 단계(태엽을 푼 뒤)부터 늘.</summary>
+        public static bool ClockRunning => StoryState.Ch > 18 || (StoryState.Ch == 18 && StoryState.StepIndex >= 5);
+
         // 18장(⑲-40) — 은하역·태양광 밭 자리(각 명소 가운데에서 m, z 남쪽): 도담은 승강장 남쪽 끝 아래, 막차 = 승강장 가운데(객차), 잔상은 선로(남쪽)를 지그재그로 달린다(웹 ×1.35).
         public static readonly Vector2 DodamAt = new Vector2(9f, 3.4f), StationBandi = new Vector2(-6f, 4.5f), DodamEnd = new Vector2(4f, 70f), TrainAt = new Vector2(0f, 0.5f), FarmFight = new Vector2(0f, 12f);
         public static readonly Vector2[] CaptainPath = { new Vector2(0f, 8f), new Vector2(2f, 22f), new Vector2(-2f, 35f), new Vector2(2f, 49f), new Vector2(-1f, 62f), new Vector2(3f, 78f), new Vector2(-3f, 92f) };
@@ -403,8 +425,15 @@ namespace Saga.Go.Data
                     new Spot { Ch = 14, From = 0, To = 20, Frost = true, Arena = BandiShip },
                     new Spot { Ch = 15, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 15, From = 6, To = 8, At = "skyport:port", Arena = PortBandi },
                     new Spot { Ch = 16, From = 0, To = 6, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 16, From = 7, To = 7, At = "skyport:bell", Arena = BellBandi }, new Spot { Ch = 16, From = 8, To = 9, At = "skyport:temple", Arena = TempleBandi },
-                    new Spot { Ch = 17, From = 0, To = 0, At = "skyport:temple", Arena = TempleBandi }, new Spot { Ch = 17, From = 1, To = 9, At = "skyport:station", Arena = StationBandi } },
+                    new Spot { Ch = 17, From = 0, To = 0, At = "skyport:temple", Arena = TempleBandi }, new Spot { Ch = 17, From = 1, To = 9, At = "skyport:station", Arena = StationBandi },
+                    new Spot { Ch = 18, From = 0, To = 1, At = "skyport:station", Arena = StationBandi }, new Spot { Ch = 18, From = 2, To = 4, At = "crossing:platform", Arena = CrossBandi },
+                    new Spot { Ch = 18, From = 5, To = 5, At = "crossing:clock", Arena = CrossClockBandi }, new Spot { Ch = 18, From = 6, To = 9, At = "crossing:steps", Arena = CrossStepsBandi } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
+            // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
+            new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
+                AtSite = "crossing:platform", AtOff = CrossHanbyeol, FolkBody = "Vanguard",
+                Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 99, At = "crossing:platform", Arena = CrossHanbyeol } },
+                IdleKey = "story.idle.hanbyeol", IdleKo = "틈의 끝은 첫 정거장 다음 역이다." },
             // 109-14-40 18장(웹 ⑲-40) — 기관사 도담(늘 승강장 남쪽 끝 아래, 8째 단계는 선로 끝) · 선장의 잔상(18장 쫓기 때만 — 은하역 선로 위를 달린다)
             new Npc { Id = "dodam", NameKey = "story.npc.dodam", NameKo = "기관사 도담", ShortKey = "story.short.dodam", ShortKo = "도담",
                 AtSite = "skyport:station", AtOff = DodamAt, FolkBody = "PeasantMan",
@@ -1649,6 +1678,76 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            // 109-14-42 19장(웹 ⑲-42) — 5부 첫 장, 틈 너머 첫 정거장: 도담 → 막차 타기(sail — 틈새 갈림길로) → 반디 → 갈림목 무리 → 멈춘 시계탑 옆면 타기(이때부터 바늘이 돈다) → 반디
+            // → 떠 있는 섬돌 밟고 오르기 → 한별(섬돌 밑) → 멈춘 시간의 파수꾼(풍, 절반에서 풍 방패 — 암으로) → 한별. 눈여우·회오리매·임프는 14-1b 전까지 옛 몸+원소.
+            new Chapter
+            {
+                Id = "ch19", NameKey = "story.ch19", NameKo = "제19장 · 틈 너머 첫 정거장", Ar = 44,
+                Gold = 5250, Mats = new[] { 0, 6, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "dodam", TextKey = "story.ch19.s1", TextKo = "은하역의 도담과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("dodam", "story.ch19.s1.l1", "보일러도 전조등도 문제없어요. 선로 끝 고개의 틈도 활짝 열렸고요!"),
+                            L("bandi", "story.ch19.s1.l2", "삐— 선장 신호, 틈 너머에서 미약하게 수신. 끊겼다 이어졌다 합니다."),
+                            Pick("story.ch19.s1.p", "가자, 틈 너머로.", "선장님이 기다려."),
+                            L("dodam", "story.ch19.s1.l3", "그럼 올라타요. 오늘은 막차가 첫차예요!"),
+                        } },
+                    new Step { Type = StepType.Sail, Npc = "dodam", At = "crossing:platform", Arena = CrossArrive, EnterKey = "story.ch19.arrive", EnterKo = "🚂 막차가 기적을 울리며 틈을 지나 첫 정거장에 닿았다",
+                        Lines = new[] { L("dodam", "story.ch19.s2.l1", "막차, 출발합니다! 다음 정거장은 — 틈 너머 첫 정거장!") },
+                        TextKey = "story.ch19.s2", TextKo = "도담의 막차를 타고 틈 너머로" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch19.s3", TextKo = "첫 정거장의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch19.s3.l1", "삐— 이곳의 시계는 모두 같은 시각에 멈춰 있습니다. 시간이 멈춘 곳에선 신호가 갇힙니다."),
+                            L("dodam", "story.ch19.s3.l2", "저기 성문 조각이 허공에 떠 있어요… 시간이 뒤엉킨 땅이네요."),
+                            Pick("story.ch19.s3.p", "신호를 풀 방법은?", "시계를 다시 돌리면?"),
+                            L("bandi", "story.ch19.s3.l3", "남쪽 멈춘 시계탑 — 꼭대기 태엽을 풀면 신호가 풀릴 겁니다. 다만 갈림목에 틈 짐승이 모여 있습니다."),
+                        } },
+                    new Step { Type = StepType.Kill, At = "crossing:clock", Arena = CrossFork,
+                        Foes = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        EnterKey = "story.ch19.enter1", EnterKo = "뒤엉킨 갈림목에서 틈 짐승들이 시대를 가리지 않고 튀어나왔다",
+                        TextKey = "story.ch19.s4", TextKo = "갈림목에 모인 틈 짐승 물리치기" },
+                    new Step { Type = StepType.Climb, At = "crossing:clock", EnterKey = "story.ch19.clocked", EnterKo = "🕰️ 시계탑 꼭대기 — 태엽을 풀자 네 면 바늘이 다시 돈다",
+                        TextKey = "story.ch19.s5", TextKo = "멈춘 시계탑을 타고 올라 태엽 풀기(꼭대기에 서기)" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch19.s6", TextKo = "시계탑 발치의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch19.s6.l1", "삐— 시계가 다시 갑니다! 선장 신호… 선명합니다!"),
+                            L("bandi", "story.ch19.s6.l2", "발신지 서쪽, 떠 있는 섬돌 꼭대기. 섬돌을 밟고 오를 수 있습니다."),
+                            Pick("story.ch19.s6.p", "바로 갈게!", "높이는?"),
+                            L("bandi", "story.ch19.s6.l3", "열일곱 미터 남짓. 떨어지면 날개를 펴십시오."),
+                        } },
+                    new Step { Type = StepType.Climb, At = "crossing:steps", EnterKey = "story.ch19.stepped", EnterKo = "💎 마지막 섬돌에 올라섰다 — 섬돌 밑 틈 수정 아래에 누군가 서 있다",
+                        TextKey = "story.ch19.s7", TextKo = "떠 있는 섬돌을 밟고 꼭대기에 오르기" },
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch19.s8", TextKo = "섬돌 밑의 선장과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch19.s8.l1", "정말 왔구나. 종이 울리고, 별배가 돌아오고, 막차가 달렸다는 뜻이지."),
+                            Pick("story.ch19.s8.p", "여기서 뭘 하고 계셨어요?", "반디가 기다렸어요."),
+                            L("hanbyeol", "story.ch19.s8.l2", "나는 별배 선장 한별. 틈이 시대를 삼키던 날, 이 틈 한가운데서 시간을 멈춰 틈이 더 벌어지지 않게 붙들고 있었다."),
+                            L("hanbyeol", "story.ch19.s8.l3", "그런데 너희가 시계를 다시 돌렸으니 — 멈춰 있던 파수꾼도 깨어난다. 내려와라, 섬돌 곁이다!"),
+                        } },
+                    new Step { Type = StepType.Duel, At = "crossing:steps", Arena = CrossDuel, Foes = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        BossKey = "story.boss.timewarden", BossKo = "멈춘 시간의 파수꾼", HpMul = 14.4f, AtkMul = 2.4f, ScaleMul = 2.0f,
+                        Rot = new[] { FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Shadow, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Spit },
+                        P2El = GoElement.Anemo, Adds = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                        EnterKey = "story.ch19.enter2", EnterKo = "⏳ 멈춘 시간 조각을 두른 거인이 금빛 가면을 들었다 — 멈춘 시간의 파수꾼!",
+                        P2Key = "story.ch19.p2", P2Ko = "파수꾼이 멈춘 바람을 둘렀다 — 바위로 깨라! 회오리매와 눈여우가 뛰어든다",
+                        WinKey = "story.ch19.win", WinKo = "파수꾼의 금빛 가면이 부서지고 — 멈춘 시간 조각이 흩어졌다",
+                        TextKey = "story.ch19.s9", TextKo = "깨어난 멈춘 시간의 파수꾼과 맞서기" },
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch19.s10", TextKo = "선장 한별과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch19.s10.l1", "고맙다. 이제 틈은 멈춰 있지 않는다. 스스로 닫히지도 않고 — 누군가 틈의 끝을 찾아가 닫아야 해."),
+                            L("bandi", "story.ch19.s10.l2", "선장님… 별배는 은하 나루에 매여 있습니다."),
+                            L("hanbyeol", "story.ch19.s10.l3", "알고 있다, 반디. 잘 지켜 줬구나. 날개가 바뀌었다지?"),
+                            Pick("story.ch19.s10.p", "틈의 끝은 어디예요?", "같이 가요."),
+                            L("hanbyeol", "story.ch19.s10.l4", "첫 정거장 다음 역은 '갈림길 끝'. 틈이 처음 찢어진 곳이지. 준비가 되면 — 함께 가자."),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -1807,7 +1906,7 @@ namespace Saga.Go.Data
                 case StepType.Domain: return SitePos(s.Site);
                 case StepType.Light: radius = LightR; return StepPos(s);
                 case StepType.Seal: return SealPos(s);
-                case StepType.Climb: return s.At != null ? TowerTop : s.Yard ? CraneTop : DuelPeak.Top;
+                case StepType.Climb: return s.At != null ? ClimbTopOf(s.At) : s.Yard ? CraneTop : DuelPeak.Top;
                 case StepType.Sky: radius = DraftR; return s.Obs ? ObsPillarPos : DuelPeak.Top; // 109-14-20 바람 기둥 = 봉우리 정상 · 109-14-35 시간 기둥
                 case StepType.Gather:
                 {

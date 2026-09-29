@@ -485,7 +485,7 @@ namespace Saga.Go.World
                         }
                         break;
                     case GoStory.StepType.Climb:
-                        if (st.At != null ? GoStory.OnTower(p) : st.Yard ? GoStory.OnCrane(p) : GoWorldMap.StandsOn(GoStory.DuelPeak, p)) // 109-14-34 조선소 기중기 들보 위 · 109-14-38 계류 탑 꼭대기
+                        if (st.At != null ? GoStory.OnClimbTop(st.At, p) : st.Yard ? GoStory.OnCrane(p) : GoWorldMap.StandsOn(GoStory.DuelPeak, p)) // 109-14-34 조선소 기중기 들보 위 · 109-14-38 계류 탑 꼭대기
                         {
                             Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : GoLocalization.T("story.climbed", "봉우리 꼭대기 — 고원 아래 나그네가 보인다"), 3f);
                             StoryState.Advance();
@@ -1151,7 +1151,7 @@ namespace Saga.Go.World
             var fc = FieldCombat.Instance;
             var pc = fc != null ? fc.GetComponent<PlayerController>() : null;
             if (pc != null) pc.Teleport(FolkWalker.Grounded(GoStory.SailDest(st) + Vector3.up * 1.5f) + Vector3.up * 0.1f);
-            Toast(st.ToIsle ? GoLocalization.T("story.sail_isle", "⛵ 사공의 배가 물살을 가른다 — 바위섬에 닿았다") : GoLocalization.T("story.sail_dock", "⛵ 배가 강가 나루에 닿았다"), 3.5f);
+            Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : st.ToIsle ? GoLocalization.T("story.sail_isle", "⛵ 사공의 배가 물살을 가른다 — 바위섬에 닿았다") : GoLocalization.T("story.sail_dock", "⛵ 배가 강가 나루에 닿았다"), 3.5f);
         }
     }
 }
