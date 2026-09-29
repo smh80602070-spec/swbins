@@ -14943,6 +14943,71 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '일곱 단계 · 마루 → 곳간 석등 별·해·달 → 곳간 문 열림 → 소담 → 곳간 지키기 3·4·5 → 동력 기둥 서·동 → 금고 문 열림 → 소담 · 🪢+8 🪙+8750' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-64 이야기 10부 제35장 · 갈무리(10부 끝) (story ch35·해미 합류·vault_queen · vault 핵 꺼짐 5·해미 진열장 깨짐 6 단계 맞물림, PLAN §5 ⑲-64) ── */
+    t('이야기 ⑲-64 — 35장 일곱 단계(Lv76) · 소담 → 금고 안(go r4) → 해미 → 기록 기둥 벽 타기(꼭대기에서만) → 갈무리(핵 꺼짐 5) → 금고 파수 드론 여왕(풍 방패 암으로) → 진열장 깨짐(6) → 해미 합류(초 한손검 ★4·고유 스킬) · 🪢+9', function () {
+      var rig = stRig(76), VT = DG.vault, ST = DG.story, FC = DG.fieldCombat, TL = DG.talent, LF = DG.landform, keepP = LF.perched, perch = null, r = {};
+      try {
+        VT._resetForTest(); delete C.save.vault;
+        LF.perched = function () { return perch; };
+        var c = ST.CHAPTERS[34], S35 = c.steps;
+        r.table = c.id === 'ch35' && c.ar === 76 && c.join === 'story_haemi' && S35.length === 7 && c.reward.knot === 9 && c.reward.gold === 9750 && c.reward.guide === 9 && c.reward.secret === 7 && c.reward.party === 2600 &&
+          S35.map(function (q) { return q.type; }).join() === 'talk,go,talk,climb,talk,duel,talk' && S35[1].r === 4 && S35[3].pole === 'vt_pillar' && S35[3].spot === 'vt_core' &&
+          S35[5].kind === 'vault_queen' && S35[5].shield === 'wind' && FC.COUNTER.wind === 'rock' && !!FC.FOES.vault_queen.boss && FC.FOES.vault_queen.el === 'wind';
+        /* 표 ↔ 이 장 — 핵은 갈무리 대화(4) 다음(5)부터 꺼짐 · 해미 진열장은 여왕(5) 다음(6)부터 깨짐 · 기둥 id */
+        r.link = VT.CORE_DIM_STEP === 4 + 1 && S35[4].npc === 'garmuri' && VT.HAEMI_FREE_STEP === 5 + 1 && S35[5].type === 'duel' && S35[3].pole === VT.poles()[0].id;
+        var vault = VT.siteById('vault'), hm = VT.spot('haemi'), core = VT.spot('core'), mid = VT.spot('pylons');
+        function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 34 : ch, step: si }; return ST.npcPos(k); }
+        function vtRect(p) { return VT.rectsIn(Math.floor(p.x / 48), Math.floor(p.y / 48)).some(function (q) { return frInRect(q, p.x, p.y); }); }
+        /* 인물 — 해미: 금고에 들어선 뒤(1~, 뒤에도) 해미 진열장 자리 / 갈무리: 기둥 위 대화 단계(4)에만 핵 곁 / 소담: 첫 단계는 두 기둥 사이·그 뒤엔 문 안쪽 */
+        r.haemi = (np('haemi', 0), !ST.visible('haemi')) && st10Eq(np('haemi', 1), hm) && ST.visible('haemi') && st10Eq(np('haemi', 6), hm) && st10Eq(np('haemi', 0, 35), hm) && (np('haemi', 0, 33), !ST.visible('haemi'));
+        r.garmuri = (np('garmuri', 3), !ST.visible('garmuri')) && st10Eq(np('garmuri', 4), { x: core.x, y: core.y + 4 }) && ST.visible('garmuri') && (np('garmuri', 5), !ST.visible('garmuri')) && !vtRect(np('garmuri', 4));
+        r.sodam = st10Eq(np('sodam', 0), { x: mid.x, y: mid.y - 14 }) && st10Eq(np('sodam', 3), { x: vault.x, y: vault.y + 8 });
+        r.time = ST.memberTime('story_haemi') === '미래' && !!ST.MEMBERS.story_haemi;
+        C.save.story = { ch: 34, step: 0 };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('sodam')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        /* 금고 안 — 문 밖에서 멀면 ✕, 안(4m)에 들어서야 */
+        var gt = ST.targetOf(ST.step());
+        r.goAt = st10Eq(gt, { x: vault.x, y: vault.y + 4.8 }) && gt.r === 4;
+        stGo({ x: vault.x, y: vault.y + VT.VAULT_R + 8 }); ST.check(); var far = C.save.story.step === 1;
+        stGo({ x: gt.x, y: gt.y + 2 }); ST.check();
+        r.go = far && C.save.story.step === 2;
+        stGo(ST.npcPos('haemi')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        /* 기록 기둥 — 멀면 ✕, 붙잡지 않으면 ✕, 꼭대기(perched)에서 ○ */
+        stGo({ x: vault.x + 90, y: vault.y }); ST.check(); var farC = C.save.story.step === 3;
+        stGo({ x: vault.x, y: vault.y + 3 }); ST.check(); var nearC = C.save.story.step === 3;
+        perch = 'vt_pillar'; ST.check();
+        r.climb = farC && nearC && C.save.story.step === 4;
+        perch = null;
+        /* 갈무리 — 핵은 이 대화(4)를 마친 다음(5)부터 꺼짐 */
+        var core0 = !VT.coreDim();
+        stGo(ST.npcPos('garmuri')); r.t4 = stTalkAll(ST) && C.save.story.step === 5 && core0 && VT.coreDim() && !VT.haemiFree();
+        /* 금고 파수 드론 여왕 — 동력 기둥 사이 광장, 절반에서 풍 방패(암)·졸개 둘, 쓰러뜨리면 해미 진열장 깨짐 */
+        var bt = ST.targetOf(ST.step());
+        r.bossAt = st10Eq(bt, { x: mid.x, y: mid.y - 7 }) && !vtRect(bt);
+        stGo({ x: bt.x + 5, y: bt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cb = S.camps[ST.keyOf()], b = cb && S.foes[cb.uids[0]];
+        r.boss = !!b && b.kind === 'vault_queen' && b.el === 'wind' && !b.sky;
+        b.hp = Math.round(b.hpMax * 0.4); ST.check();
+        var ad = S.camps[ST.keyOf() + ':add'];
+        r.p2 = b.shEl === 'wind' && !!ad && ad.uids.map(function (u) { return S.foes[u].kind; }).join(',') === 'hawk,raptor' && FC.shieldMul('wind', 'rock') > 1;
+        b.shield = 0; b.layers = [];
+        for (var k = 0; k < 3 && !b.dead; k++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); }
+        FC.tick(0.05);
+        r.duel = C.save.story.step === 6 && !S.camps[ST.keyOf() + ':add'] && VT.haemiFree();
+        /* 해미 합류 — 끝 보상 + 동료 */
+        gold0 = C.save.player.gold; k0 = m.knot || 0;
+        r.notYet = !ST.hasMember('story_haemi');
+        stGo(ST.npcPos('haemi')); r.end = stTalkAll(ST) && C.save.story.ch === 35 && C.save.story.step === 0 && m.knot === k0 + 9 && C.save.player.gold === gold0 + 9750 && ST.hasMember('story_haemi');
+        var M = ST.MEMBERS.story_haemi, kt = DG.kits.kitOf('story_haemi');
+        r.member = DG.data.find('story_haemi') === M && M.rarity === 4 && FC.elementOf('story_haemi') === 'grass' && DG.weapon.typeOf('story_haemi') === 'sword' &&
+          !!kt.skill && kt.skill.type === 'dash' && kt.skill.name === '씨앗 가르기' && !!kt.burst && kt.burst.type === 'infuse' && kt.burst.name === '싹 틔우는 칼';
+        r.after = VT.granaryOpen() && VT.doorOpen() && VT.coreDim() && VT.haemiFree() && VT.deepShown() && !VT.momentFree();
+      } finally { LF.perched = keepP; VT._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '일곱 단계 · 소담 → 금고 안 → 해미 → 기록 기둥(꼭대기) → 갈무리(핵 꺼짐) → 드론 여왕(풍 방패 암) → 진열장 깨짐 → 해미 합류 · 🪢+9 🪙+9750' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑲-61 탈것 — 말(mount.js, PLAN §5 ⑲-61 · SAGA-DESIGN §12) ── */
     t('탈것 ⑲-61 — 말 셋(농마 5·갈색 15·흰 30 레벨 또는 도감 등록) · 타기/내리기 · 걷는 속도 배율(달리기와 겹침) · 고르기 · 저장 한 칸 · 몸 참조', function () {
       var MT = DG.mount, W = DG.world, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;

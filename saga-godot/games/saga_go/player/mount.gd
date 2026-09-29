@@ -9,6 +9,9 @@ extends Node3D
 const Mounts := preload("res://games/saga_go/data/mounts.gd")
 const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+const SeatPose := preload("res://games/saga_go/player/seat_pose.gd")
+## 앉으면 엉덩이가 내려온다 — 서 있을 때 발 높이(ride)에서 이만큼 뺀다.
+const SEAT_DROP := 0.5
 
 signal mounted_changed(id: String)
 
@@ -184,11 +187,23 @@ func dismount(reason: String, silent := false) -> void:
 		Toast.show(self, "탈것에서 내렸다 (%s)" % reason, 3.0)
 	mounted_changed.emit("")
 
+func _seat(on: bool) -> bool:
+	var vis := _player.get("visual") as Node3D
+	if vis == null:
+		return false
+	for s in vis.find_children("*", "Skeleton3D", true, false):
+		var sp := SeatPose.attach(s as Skeleton3D)
+		if sp != null:
+			sp.call("set_seated", on)
+			return true
+	return false
+
 func _apply_to_player(on: bool) -> void:
+	var seated := _seat(on)
 	_player.set("mounted", on)
 	_player.set("mount_speed_mul", float(_def.get("speed", 1.0)) if on else 1.0)
 	_player.set("mount_jump_mul", float(_def.get("jump", 1.0)) if on else 1.0)
-	_player.set("ride_height", float(_def.get("ride", 0.0)) if on else 0.0)
+	_player.set("ride_height", (float(_def.get("ride", 0.0)) - (SEAT_DROP if seated else 0.0)) if on else 0.0)
 	_player.set("mount_fly_speed", float(_def.get("fly_speed", 0.0)) if on else 0.0)
 	if on and String(_def.get("kind", "")) == "fly":
 		_player.call("begin_fly")

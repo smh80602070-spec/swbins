@@ -9545,3 +9545,9 @@ PROJECT_STATE.md` 참고. 요약:
 - 사가국지는 조작하는 몸이 없어 이동식 탈것 대신 즉위하는 군주 초상(LordPortrait)에 신수 탈것을 태워 보인다(앞서 후보 ①). lord_portrait.gd set_mount: 군주 이름 해시로 mounts.gd 여섯 중 하나(표시 전용), 카메라를 물려 전신이 보이게, idle 동작(전엔 얼굴만이라 T포즈가 안 보였다), 독립 세계 주변광. LordPortrait.tscn SubViewport own_world_3d=true·transparent_bg — 이전엔 도시 3D 세계를 그대로 공유했다(카메라를 물리면 성벽이 비쳐 이 조치가 필요).
 - mount_host 사가국지 분기(portrait·portrait_mount·portrait_swap) fails=0, 창 모드로 뷰포트 PNG(MOUNT_HOST_SHOT) — 홍염마 위 군주. REGRESS OK.
 - 탈것 다섯 판 완료: GO·사가블로·사가의숲·사가스토리(조작 탈것+터치+잠금+날갯짓)·사가국지(초상). 남은 것: 앉은 자세.
+
+## 탈것 앉은 자세 (2026-09-30, "이어해")
+
+- player/seat_pose.gd(SkeletonModifier3D, talk_face 방식): 허벅지 68° 앞으로·무릎 82° 굽힘·다리 16° 벌림, UE 식 뼈(thigh/calf) 공방 몸만. mount.gd 가 타면 켜고(set_seated) 내리면 끄며 엉덩이가 내려오도록 ride_height 를 0.5m 낮춘다. 뼈가 없는 몸이면 서서 탄다.
+- 창 모드 k_ride_horse: 말 등에 앉아 다리가 옆구리로 내려옴. probe_mount·mount_host 다섯 곳·REGRESS·TRAVERSAL·STORY fails=0.
+- 탈것 남은 것 없음(세부 다듬기: 사람 상체 기울기·손 고삐).
