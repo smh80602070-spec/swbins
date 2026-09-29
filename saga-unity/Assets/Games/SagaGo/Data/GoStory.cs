@@ -466,6 +466,7 @@ namespace Saga.Go.Data
                 {
                     new Spot { Ch = 3, From = 1, To = 1, Gx = WanderGx, Gy = WanderGy }, new Spot { Ch = 3, From = 2, To = 5, Path = true },
                     new Spot { Ch = 4, From = 6, To = 6, Gx = Altar2Gx + 7f / 48f, Gy = Altar2Gy + 5f / 48f },
+                    new Spot { Ch = 26, From = 5, To = 5, Gx = Altar2Gx + 7f / 48f, Gy = Altar2Gy + 5f / 48f }, // 27장 — 둘째 매듭 곁
                     new Spot { Ch = 5, From = 2, To = 4, Peak = true, Arena = ArenaWanderer },
                     new Spot { Ch = 6, From = 3, To = 6, Gx = CapeGx + 6f / 48f, Gy = CapeGy - 6f / 48f },
                     new Spot { Ch = 7, From = 6, To = 9, Isle = true, Arena = IsleWanderer },
@@ -478,6 +479,9 @@ namespace Saga.Go.Data
             new Npc { Id = "haesol", NameKey = "story.npc.haesol", NameKo = "검은 가면 해솔", ShortKey = "story.short.haesol", ShortKo = "해솔",
                 Gx = IsleGx, Gy = IsleGy, FolkBody = "Paladin", Mask = true, Crack = true,
                 Appear = new[] { new Spot { Ch = 7, From = 8, To = 8, Isle = true, Arena = IsleHaesol },
+                    // 109-14-53 27장 — 가면 벗은 해솔이 봉우리 셋째 매듭 곁에(9째 단계에만)
+                    new Spot { Ch = 26, From = 8, To = 8, Peak = true, Arena = new Vector2(-14f, -12f), Unmask = true, NameKey = "story.npc.haesol2", NameKo = "해솔",
+                        IdleKey = "story.idle.haesol2", IdleKo = "……고맙다. 노래를 다시 부를 수 있을 것 같아." },
                     // 109-14-20 9장 — 가면을 벗은 해솔이 구름섬에 선다(이름·혼잣말도 그 칸 동안)
                     new Spot { Ch = 8, From = 6, To = 9, Sky = true, Arena = SkyHaesol, Unmask = true, NameKey = "story.npc.haesol2", NameKo = "해솔",
                         IdleKey = "story.idle.haesol2", IdleKo = "……고맙다. 노래를 다시 부를 수 있을 것 같아." } },
@@ -544,7 +548,7 @@ namespace Saga.Go.Data
                     new Spot { Ch = 22, From = 1, To = 3, At = "sunken:lighthouse", Arena = LightBandi }, new Spot { Ch = 22, From = 4, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandBandi },
                     new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineBandi }, new Spot { Ch = 24, From = 0, To = 0, Route = "shrine", Arena = ShrineBandi },
                     new Spot { Ch = 24, From = 1, To = 99, Route = "wreck", Arena = WreckBandi }, new Spot { Ch = 25, From = 0, To = 0, Route = "wreck", Arena = WreckBandi },
-                    new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitBandi }, new Spot { Ch = 26, From = 0, To = 99, Route = "orbit", Arena = OrbitBandi } },
+                    new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitBandi }, new Spot { Ch = 26, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f } }, // 8부(27장~) 반디는 청하 촌장 곁 마을
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
@@ -2369,6 +2373,61 @@ namespace Saga.Go.Data
                             Pick("story.ch26.s9.p", "청하 마을로 돌아가 보자.", "하늬 씨는 이제 어떡해요?"),
                             L("haneul", "story.ch26.s9.l3", "비행선은 못 뜨지만 닻 갈고리는 멀쩡해요. 먹구름 쫓는 일이라면 기상 비행사가 빠질 수 없죠."),
                             L("haneul", "story.ch26.s9.l4", "비행사 하늬, 오늘부터 같이 날아요 — 날개는 빌려 쓰고요!"),
+                        } },
+                }
+            },
+            // 109-14-53 27장(웹 ⑲-53) — 8부 첫 장, 풀리는 매듭. 1부 여섯 제단 자리가 실은 여섯 매듭이었다(`KnotField`). 촌장 → 은비(폐허) → 첫째 매듭 졸개 → 첫째 매듭 불 → 둘째 매듭 석등(달 → 별 → 해) → 나그네 → 봉우리 → 셋째 매듭 불 → 해솔.
+            // 매듭은 그 단계 다음부터 묶인다(`GoStory.KnotStep` 4·5·8 — 단계 번호를 바꾸면 그쪽도).
+            new Chapter
+            {
+                Id = "ch27", NameKey = "story.ch27", NameKo = "제27장 · 풀리는 매듭", Ar = 60,
+                Gold = 7250, Mats = new[] { 0, 6, 5, 7, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch27.s1", TextKo = "청하 촌장에게 돌아가기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch27.s1.l1", "돌아왔구나! 하늘에 뜬 사당이며 정거장이며… 은비한테 다 들었다. 먼 데까지 잘도 다녀왔어."),
+                            L("elder", "story.ch27.s1.l2", "그런데 네가 떠난 그날 밤부터 이상한 일이 생겼단다. 네가 밝혀 둔 옛 제단 불이 하나씩 꺼지고 있어."),
+                            L("bandi", "story.ch27.s1.l3", "삐— 제단 자리마다 먹구름 신호. 가면 그림자가 말한 '여섯 매듭'과 수가 맞습니다."),
+                            Pick("story.ch27.s1.p", "매듭이 풀리고 있다는 거네요.", "자장가 끝 소절이 뭐였죠?"),
+                            L("elder", "story.ch27.s1.l4", "할머니 자장가 끝 소절이 이제야 떠오르는구나 — '여섯 매듭 풀리면 임금이 눈을 뜬다'. 폐허의 은비에게 가 보렴. 비문은 그 아이가 제일 잘 안다."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "scholar", TextKey = "story.ch27.s2", TextKo = "폐허의 학자 은비와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("scholar", "story.ch27.s2.l1", "왔구나! 비문 탁본을 다시 떠 봤어. 다들 앞면만 읽었지 뒷면은 아무도 안 봤더라고."),
+                            L("scholar", "story.ch27.s2.l2", "'매듭 여섯이 틈을 묶고, 틈이 임금을 묶는다' — 제단은 자물쇠이기 전에 매듭이었어. 시간 틈을 꽁꽁 묶어 두는."),
+                            Pick("story.ch27.s2.p", "그래서 가면 그림자가 풀러 왔구나.", "다시 묶을 수 있어?"),
+                            L("scholar", "story.ch27.s2.l3", "원소의 불로 다시 묶으면 돼. 둘째 매듭 석등은 자장가 차례래 — '달이 뜨고, 별이 돌고, 해가 묶는다'."),
+                            L("scholar", "story.ch27.s2.l4", "그런데 첫째 매듭 곁에 먹구름 졸개들이 진을 쳤어. 저것부터!"),
+                        } },
+                    new Step { Type = StepType.Kill, Gx = AltarGx, Gy = AltarGy + 0.45f,
+                        Foes = new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        EnterKey = "story.ch27.enter1", EnterKo = "⚔️ 매듭 돌 곁에 먹구름 졸개들이 진을 쳤다",
+                        TextKey = "story.ch27.s3", TextKo = "첫째 매듭을 둘러싼 먹구름 졸개 물리치기" },
+                    new Step { Type = StepType.Light, Gx = AltarGx, Gy = AltarGy, EnterKey = "story.ch27.tied1", EnterKo = "🔥 매듭 돌의 금줄에 불이 옮겨 붙고 — 금빛 줄이 하늘로 솟았다",
+                        TextKey = "story.ch27.s4", TextKo = "첫째 매듭의 제단에 원소 불 다시 밝히기" },
+                    new Step { Type = StepType.Seal, Order = new[] { "moon", "star", "sun" }, TextKey = "story.ch27.s5", TextKo = "서쪽 옛길 둘째 매듭 석등을 자장가 차례(달 → 별 → 해)대로 밝히기" },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch27.s6", TextKo = "둘째 매듭 곁의 나그네와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch27.s6.l1", "……늦지 않았군. 매듭이 풀린 자리마다 이게 떨어져 있었다."),
+                            L("wanderer", "story.ch27.s6.l2", "가면 조각이다. 무늬를 보게 — 은비가 비문 맨 아래에서 찾았던 그 무늬. 신하들 가면이 아니라, 처음 가면이야."),
+                            Pick("story.ch27.s6.p", "처음 가면이라니요?", "가면 그림자의 것인가요?"),
+                            L("wanderer", "story.ch27.s6.l3", "해솔을 삼킨 가면도, 검은 가면들도 전부 이걸 본떴다. 임금의 신하라는 표식이 아니라 — 임금 자신의 얼굴이었던 게지."),
+                            L("wanderer", "story.ch27.s6.l4", "셋째 매듭은 북쪽 봉우리다. 해솔이 먼저 올라가 있다."),
+                        } },
+                    new Step { Type = StepType.Climb, TextKey = "story.ch27.s7", TextKo = "북쪽 봉우리 꼭대기로 올라가기(벽 타기)" },
+                    new Step { Type = StepType.Light, Arena = ArenaAltar, EnterKey = "story.ch27.tied3", EnterKo = "🔥 셋째 매듭이 다시 묶였다 — 봉우리에서 금빛 줄이 솟는다",
+                        TextKey = "story.ch27.s8", TextKo = "봉우리의 셋째 매듭에 원소 불 다시 밝히기" },
+                    new Step { Type = StepType.Talk, Npc = "haesol", TextKey = "story.ch27.s9", TextKo = "봉우리의 해솔과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haesol", "story.ch27.s9.l1", "셋째 매듭까지… 고마워. 매듭에 불이 붙을 때마다 귓가에 맴돌던 노랫소리가 작아져."),
+                            L("haesol", "story.ch27.s9.l2", "가면에 먹혀 있을 때 먹구름 속에서 누가 계속 노래를 부르라고 했다고 했지. 그 목소리 — 정거장에서 들은 가면 그림자랑 똑같아."),
+                            Pick("story.ch27.s9.p", "그자가 널 부렸던 거구나.", "나머지 매듭은?"),
+                            L("haesol", "story.ch27.s9.l3", "넷째는 물마루 곶, 다섯째는 바위섬, 여섯째는 저 위 구름섬. 그자가 먼저 닿기 전에 — 포구의 버들 할아버지한테 가 보자."),
                         } },
                 }
             },

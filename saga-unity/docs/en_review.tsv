@@ -1879,6 +1879,42 @@
 2	go	story.ch26.s9.p.a	청하 마을로 돌아가 보자.	Let's go back to Cheongha Village.		
 2	go	story.ch26.s9.p.b	하늬 씨는 이제 어떡해요?	What will you do now, Haneul?		
 2	go	story.ch26.win	🌩️ 그림자 임금이 흩어지고 — 가면 그림자는 "청하의 여섯 매듭이 풀리는 날 다시 보자" 한마디를 남기고 먹구름 속으로 사라졌다	🌩️ The shadow king scatters — the Masked Shadow leaves one line, “See you the day Cheongha’s six knots come undone,” and vanishes into the storm cloud		
+2	go	story.ch27	제27장 · 풀리는 매듭	Chapter 27 · The Unraveling Knots		
+2	go	story.ch27.enter1	⚔️ 매듭 돌 곁에 먹구름 졸개들이 진을 쳤다	⚔️ Storm-cloud minions have set up camp beside the knot stone		
+2	go	story.ch27.s1	청하 촌장에게 돌아가기	Return to Village Elder of Cheongha		
+2	go	story.ch27.s1.l1	돌아왔구나! 하늘에 뜬 사당이며 정거장이며… 은비한테 다 들었다. 먼 데까지 잘도 다녀왔어.	You're back! The floating shrine, the station… Eunbi told me everything. You traveled far and well.		
+2	go	story.ch27.s1.l2	그런데 네가 떠난 그날 밤부터 이상한 일이 생겼단다. 네가 밝혀 둔 옛 제단 불이 하나씩 꺼지고 있어.	But strange things began the night you left. The old altar fires you lit are going out one by one.		
+2	go	story.ch27.s1.l3	삐— 제단 자리마다 먹구름 신호. 가면 그림자가 말한 '여섯 매듭'과 수가 맞습니다.	Beep — a storm-cloud signal at every altar site. The number matches the 'six knots' the Masked Shadow spoke of.		
+2	go	story.ch27.s1.l4	할머니 자장가 끝 소절이 이제야 떠오르는구나 — '여섯 매듭 풀리면 임금이 눈을 뜬다'. 폐허의 은비에게 가 보렴. 비문은 그 아이가 제일 잘 안다.	The last line of Grandmother's lullaby comes back to me now — 'When the six knots unravel, the king opens his eye.' Go see Eunbi at the ruins. She knows the inscription best.		
+2	go	story.ch27.s1.p.a	매듭이 풀리고 있다는 거네요.	So the knots are coming undone.		
+2	go	story.ch27.s1.p.b	자장가 끝 소절이 뭐였죠?	What was the last line of the lullaby?		
+2	go	story.ch27.s2	폐허의 학자 은비와 이야기하기	Talk to the scholar Eunbi at the ruins		
+2	go	story.ch27.s2.l1	왔구나! 비문 탁본을 다시 떠 봤어. 다들 앞면만 읽었지 뒷면은 아무도 안 봤더라고.	You came! I made another rubbing of the inscription. Everyone read the front; nobody looked at the back.		
+2	go	story.ch27.s2.l2	'매듭 여섯이 틈을 묶고, 틈이 임금을 묶는다' — 제단은 자물쇠이기 전에 매듭이었어. 시간 틈을 꽁꽁 묶어 두는.	'Six knots bind the rift, and the rift binds the king' — before the altars were locks, they were knots. Tying the time rift down tight.		
+2	go	story.ch27.s2.l3	원소의 불로 다시 묶으면 돼. 둘째 매듭 석등은 자장가 차례래 — '달이 뜨고, 별이 돌고, 해가 묶는다'.	Tie them again with elemental fire. The second knot's lanterns follow the lullaby's order — 'the moon rises, the stars turn, the sun binds.'		
+2	go	story.ch27.s2.l4	그런데 첫째 매듭 곁에 먹구름 졸개들이 진을 쳤어. 저것부터!	But storm-cloud minions have camped by the first knot. Deal with them first!		
+2	go	story.ch27.s2.p.a	그래서 가면 그림자가 풀러 왔구나.	So that is why the Masked Shadow came to undo them.		
+2	go	story.ch27.s2.p.b	다시 묶을 수 있어?	Can we tie them again?		
+2	go	story.ch27.s3	첫째 매듭을 둘러싼 먹구름 졸개 물리치기	Defeat the storm-cloud minions surrounding the first knot		
+2	go	story.ch27.s4	첫째 매듭의 제단에 원소 불 다시 밝히기	Relight the first knot's altar with an elemental fire		
+2	go	story.ch27.s5	서쪽 옛길 둘째 매듭 석등을 자장가 차례(달 → 별 → 해)대로 밝히기	Light the second knot's lanterns on the western old road in lullaby order (moon → star → sun)		
+2	go	story.ch27.s6	둘째 매듭 곁의 나그네와 이야기하기	Talk to the Wanderer beside the second knot		
+2	go	story.ch27.s6.l1	……늦지 않았군. 매듭이 풀린 자리마다 이게 떨어져 있었다.	…Not too late. This was left lying at every place where a knot came undone.		
+2	go	story.ch27.s6.l2	가면 조각이다. 무늬를 보게 — 은비가 비문 맨 아래에서 찾았던 그 무늬. 신하들 가면이 아니라, 처음 가면이야.	A mask fragment. Look at the pattern — the one Eunbi found at the very bottom of the inscription. Not the retainers' masks — the first mask.		
+2	go	story.ch27.s6.l3	해솔을 삼킨 가면도, 검은 가면들도 전부 이걸 본떴다. 임금의 신하라는 표식이 아니라 — 임금 자신의 얼굴이었던 게지.	The mask that swallowed Haesol, the black masks — all were modeled on this. Not a mark of the king's retainers — it was the king's own face.		
+2	go	story.ch27.s6.l4	셋째 매듭은 북쪽 봉우리다. 해솔이 먼저 올라가 있다.	The third knot is on the northern peak. Haesol has gone up ahead.		
+2	go	story.ch27.s6.p.a	처음 가면이라니요?	The first mask?		
+2	go	story.ch27.s6.p.b	가면 그림자의 것인가요?	Is it the Masked Shadow's?		
+2	go	story.ch27.s7	북쪽 봉우리 꼭대기로 올라가기(벽 타기)	Climb to the top of the northern peak (wall climbing)		
+2	go	story.ch27.s8	봉우리의 셋째 매듭에 원소 불 다시 밝히기	Relight the third knot on the peak with an elemental fire		
+2	go	story.ch27.s9	봉우리의 해솔과 이야기하기	Talk to Haesol on the peak		
+2	go	story.ch27.s9.l1	셋째 매듭까지… 고마워. 매듭에 불이 붙을 때마다 귓가에 맴돌던 노랫소리가 작아져.	Even the third knot… thank you. Every time a knot catches fire, the singing that echoed in my ears grows fainter.		
+2	go	story.ch27.s9.l2	가면에 먹혀 있을 때 먹구름 속에서 누가 계속 노래를 부르라고 했다고 했지. 그 목소리 — 정거장에서 들은 가면 그림자랑 똑같아.	I told you that while the mask had me, someone in the storm cloud kept telling me to sing. That voice — it's just like the Masked Shadow you heard at the station.		
+2	go	story.ch27.s9.l3	넷째는 물마루 곶, 다섯째는 바위섬, 여섯째는 저 위 구름섬. 그자가 먼저 닿기 전에 — 포구의 버들 할아버지한테 가 보자.	The fourth is at Wave-Crest Cape, the fifth on the rock island, the sixth on the cloud island above. Before that one gets there first — let's go see Old Man Beodeul at the harbor.		
+2	go	story.ch27.s9.p.a	그자가 널 부렸던 거구나.	So that one was commanding you.		
+2	go	story.ch27.s9.p.b	나머지 매듭은?	And the remaining knots?		
+2	go	story.ch27.tied1	🔥 매듭 돌의 금줄에 불이 옮겨 붙고 — 금빛 줄이 하늘로 솟았다	🔥 Fire catches on the knot stone's golden rope — a golden cord shoots into the sky		
+2	go	story.ch27.tied3	🔥 셋째 매듭이 다시 묶였다 — 봉우리에서 금빛 줄이 솟는다	🔥 The third knot is tied again — a golden cord rises from the peak		
 2	go	story.ch3	제3장 · 잔칫날의 불청객	Chapter 3 · Uninvited Guests at the Feast		
 2	go	story.ch3.s1	촌장에게 잔치 일손을 돕겠다고 하기	Offer the Elder a hand with the feast		
 2	go	story.ch3.s1.l1	하늘이 갠 기념으로 잔치를 열기로 했단다. 그런데 일손이 모자라구나.	We've decided to hold a feast now that the sky has cleared. But we're short of hands.		
