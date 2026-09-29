@@ -2065,6 +2065,38 @@
 2	go	story.ch3.s9.l1	휴, 네가 없었으면 잔치 마당이 잿더미가 될 뻔했구나.	Phew, without you the feast grounds would have been ashes.		
 2	go	story.ch3.s9.l2	가면 쓴 나그네라… 옛이야기에 그런 자가 있었지. 먹구름이 올 때마다 어딘가에 서 있었다던.	A masked traveler… there was one in the old tales. They say he stood somewhere each time the stormclouds came.		
 2	go	story.ch3.s9.l3	오늘은 걱정 말고 실컷 먹고 즐기렴. 이건 잔치 손님께 드리는 선물이란다.	Don't worry today — eat and enjoy yourself. Here's a gift for our feast guest.		
+2	go	story.ch30	제30장 · 멈춘 거리	Chapter 30 · The Stopped Street		
+2	go	story.ch30.enter1	⚔️ 네거리를 서성이던 결정 짐승들이 호박빛 눈을 뜬다	⚔️ The crystal beasts prowling the crossroads open amber eyes		
+2	go	story.ch30.lit0	🔥 신호등 앞 결정이 녹아내리고 — 길을 건너던 사람이 휘청이며 걸음을 마저 뗀다	🔥 The crystal by the traffic light melts away — the person crossing the road staggers and finishes their step		
+2	go	story.ch30.lit1	🔥 정류장 결정이 녹고 — 버스를 기다리던 할머니가 눈을 깜박인다	🔥 The bus stop crystal melts — the old woman waiting for the bus blinks		
+2	go	story.ch30.lit2	🔥 우체통 결정까지 녹았다 — 편지를 넣던 아이가 손을 뗀다. 그런데 신호등은 아직 빨강이다	🔥 The mailbox crystal melts too — the child posting a letter lets go. But the traffic light is still red		
+2	go	story.ch30.s1	은하 나루의 별배 선장 한별과 이야기하기	Talk to Captain Hanbyeol of the star-ship at Galaxy Port		
+2	go	story.ch30.s1.l1	왔군, 대장. 잔치 술은 좀 깼나? 별배 항로표를 보게 — 북쪽 고개 너머에 굳은 신호가 찍혔네.	You made it, Captain. Sobered up from the feast? Look at the star-ship's route chart — a frozen signal has appeared beyond the northern pass.		
+2	go	story.ch30.s1.l2	삐— 시간이 흐르지 않는 자리에서만 나는 신호입니다. 먹구름 눈이 걷히던 밤부터 떴습니다.	Beep — that signal only comes from places where time does not flow. It appeared the night the storm eye cleared.		
+2	go	story.ch30.s1.l3	그 밤에 고개를 막던 호박빛 결정 막도 풀렸다더군. 틈이 닫힐 때 제자리로 못 돌아간 시대 조각 — 잔치 뒤에 생각하자던 그것일세.	They say the amber crystal veil that blocked the pass came loose that same night. Pieces of ages that couldn't return when the rift closed — the ones we said we'd think about after the feast.		
+2	go	story.ch30.s1.l4	거리가 빽빽해서 별배는 못 내려앉네. 고개 경계비를 지나 걸어가게 — 반디를 먼저 날려 보내지.	The street is too crowded for the star-ship to land. Go on foot past the pass marker — I'll send Bandi ahead.		
+2	go	story.ch30.s1.p.a	별배로 가 볼까요?	Shall we go by star-ship?		
+2	go	story.ch30.s1.p.b	걸어서 넘어갈게요.	I'll walk over.		
+2	go	story.ch30.s2	은하 나루 북쪽 고개를 넘어 굳은 거리 어귀로	Cross the northern pass of Galaxy Port to the mouth of the Frozen Street		
+2	go	story.ch30.s3	네거리를 서성이는 결정 짐승 물리치기	Defeat the crystal beasts prowling the crossroads		
+2	go	story.ch30.s4	시계방 앞의 수리공 초롱과 이야기하기	Talk to Chorong, the repairer in front of the clock shop		
+2	go	story.ch30.s4.l1	……사람이다! 움직이는 사람! 이 거리에서 석 달째 나 혼자만 움직였어요.	…A person! A person who moves! For three months I've been the only one moving on this street.		
+2	go	story.ch30.s4.l2	틈이 닫히던 날 거리가 통째로 굳었어요. 신호등도, 전철도, 사람들도. 나만 멀쩡했던 건 — 이 손목시계 덕인 것 같아요.	On the day the rift closed, the whole street froze. Traffic lights, trains, people. I was the only one unharmed — I think it is thanks to this wristwatch.		
+2	go	story.ch30.s4.l3	삐— 그 시계 속 태엽, 틈 조각입니다. 시계가 주인의 시간만 붙들어 준 겁니다.	Beep — the spring inside that watch is a rift fragment. The watch held only its owner's time in place.		
+2	go	story.ch30.s4.l4	굳은 자리요. 네거리에만 셋 — 신호등 앞, 버스 정류장, 우체통. 원소가 닿으면 녹을지도 몰라요. 난 못 하지만 당신은…!	Frozen spots. Three at the crossroads alone — by the traffic light, the bus stop, the mailbox. An element might melt them. I can't, but you can…!		
+2	go	story.ch30.s4.p.a	굳은 사람들을 풀어 줄 수 있어요?	Can you free the frozen people?		
+2	go	story.ch30.s4.p.b	저 호박빛 결정은 뭐죠?	What are those amber crystals?		
+2	go	story.ch30.s5	네거리 신호등 앞 굳은 자리를 원소 스킬로 녹이기	Melt the frozen spot by the crossroads traffic light with an elemental skill		
+2	go	story.ch30.s6	버스 정류장 굳은 자리를 원소 스킬로 녹이기	Melt the frozen spot at the bus stop with an elemental skill		
+2	go	story.ch30.s7	우체통 앞 굳은 자리를 원소 스킬로 녹이기	Melt the frozen spot at the mailbox with an elemental skill		
+2	go	story.ch30.s8	시계방 앞의 초롱에게 돌아가기	Return to Chorong in front of the clock shop		
+2	go	story.ch30.s8.l1	고마워요! 다들 풀려났어요… 그런데 보세요. 신호등은 여전히 빨강이고, 시계방 시계는 한 칸도 안 가요.	Thank you! Everyone's free… but look. The traffic light is still red, and the shop clock won't move a single tick.		
+2	go	story.ch30.s8.l2	사람은 녹여도 거리의 시간은 안 흐르는 거예요. 무언가가 시간을 통째로 붙들고 있어요.	Melting the people doesn't make the street's time flow. Something is holding time entirely in place.		
+2	go	story.ch30.s8.l3	삐— 굳은 신호가 가장 센 곳은 북동쪽. 결정 하나가 거리 전체 신호의 절반입니다.	Beep — the frozen signal is strongest in the northeast. One crystal accounts for half of the whole street's signal.		
+2	go	story.ch30.s8.l4	호박 속 장터요. 옛날 장터가 천막째 통째로 결정에 들어 있어요 — 이 거리에서 제일 큰 굳은 자리예요.	The market in amber. An old market sits whole inside the crystal, tents and all — the biggest frozen spot on this street.		
+2	go	story.ch30.s8.l5	장터 둘레에 낡은 석등이 셋 서 있어요. 가게 문 닫고 따라갈게요. 준비되면 말해 줘요!	Three old stone lanterns stand around the market. I'll close the shop and follow you. Tell me when you're ready!		
+2	go	story.ch30.s8.p.a	북동쪽에 뭐가 있어요?	What's in the northeast?		
+2	go	story.ch30.s8.p.b	제일 큰 결정은 어디죠?	Where is the biggest crystal?		
 2	go	story.ch4	제4장 · 가면 쓴 나그네	Chapter 4 · The Masked Traveler		
 2	go	story.ch4.s1	촌장에게 새벽 소식 듣기	Hear the Elder's news from dawn		
 2	go	story.ch4.s1.l1	잔치 이튿날 새벽이었단다. 남쪽 다리목에 웬 가면 쓴 나그네가 서 있더래.	It was the dawn after the feast. They say a masked traveler was standing at the southern bridgehead.		
@@ -2320,6 +2352,7 @@
 2	go	story.idle.bandi	삐— 별배 심장 온도, 계속 하락 중.	Beep — Starship core temperature still falling.		
 2	go	story.idle.bawoo	……불씨는 아직 꺼지지 않았다.	……The ember has not gone out yet.		
 2	go	story.idle.captain	…종이 울리면 막차가…	…when the bell rings, the last train…		
+2	go	story.idle.chorong	다른 시계는 다 멈췄는데 내 손목시계만 째깍거려요.	Every other clock has stopped, but my wristwatch alone keeps ticking.		
 2	go	story.idle.daon	이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.	This yard's been shut for ten years… lately there's clanging every night.		
 2	go	story.idle.dareum	파발꾼은 길 끝을 봐야 직성이 풀리오.	A courier isn't satisfied until he's seen the road's end.		
 2	go	story.idle.dodam	막차는 아직 이 역에 서 있어요.	The last train is still standing at this station.		
@@ -2353,6 +2386,7 @@
 2	go	story.npc.bandi	조종 기계 반디	Bandi the Pilot Machine		
 2	go	story.npc.bawoo	산성지기 바우	Bawoo the Fortress Keeper		
 2	go	story.npc.captain	선장의 잔상	Captain's Afterimage		
+2	go	story.npc.chorong	시계 수리공 초롱	Clock Repairer Chorong		
 2	go	story.npc.daon	조선공 다온	Shipwright Daon		
 2	go	story.npc.dareum	파발꾼 달음	Courier Dareum		
 2	go	story.npc.dodam	기관사 도담	Engineer Dodam		
@@ -2391,6 +2425,7 @@
 2	go	story.short.bandi	반디	Bandi		
 2	go	story.short.bawoo	바우	Bawoo		
 2	go	story.short.captain	잔상	Afterimage		
+2	go	story.short.chorong	초롱	Chorong		
 2	go	story.short.daon	다온	Daon		
 2	go	story.short.dareum	달음	Dareum		
 2	go	story.short.dodam	도담	Dodam		

@@ -401,6 +401,8 @@ namespace Saga.Go.Data
         public static readonly Vector2[] AmberCrystalAt = { new Vector2(11f, -9f), new Vector2(-14f, 7f), new Vector2(6f, 15f) };
         public static readonly Vector2[] AmberLights = { new Vector2(9f, 9f), new Vector2(-9f, 9f), new Vector2(9f, -9f), new Vector2(-9f, -9f) };
         public static readonly int[] AmberCrystalFrom = { 5, 6, 7 };
+        /// <summary>30장(⑲-58) 자리(각 명소 가운데에서 m, z 남쪽): 고개 어귀 go = 고개 북쪽 40m(돌기둥에서 내린 자리에서 20m 넘게 걸어야 닿는다) · 네거리 무리 = 가운데 남쪽 8m · 초롱 = 시계방 서남쪽 앞 · 반디 = 시계방 남서쪽.</summary>
+        public static readonly Vector2 AmberPassGo = new Vector2(0f, -40f), AmberCrossKill = new Vector2(0f, 8f), ChorongAt = new Vector2(-3f, 6f), ChorongBandi = new Vector2(-8f, 8f);
         public const int AmberCh30 = 29, AmberCh31 = 30, AmberCh32 = 31, AmberDomeStep = 2, AmberTowerStep = 3, AmberGreenStep = 5, AmberWindStep = 5;
         private static bool Reached(int ch, int step, int atCh, int atStep) => ch > atCh || (ch == atCh && step >= atStep);
         /// <summary>고개 결정 막이 풀렸나 — 1차 결말(29장)을 마친 뒤.</summary>
@@ -596,14 +598,16 @@ namespace Saga.Go.Data
                     new Spot { Ch = 22, From = 1, To = 3, At = "sunken:lighthouse", Arena = LightBandi }, new Spot { Ch = 22, From = 4, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandBandi },
                     new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineBandi }, new Spot { Ch = 24, From = 0, To = 0, Route = "shrine", Arena = ShrineBandi },
                     new Spot { Ch = 24, From = 1, To = 99, Route = "wreck", Arena = WreckBandi }, new Spot { Ch = 25, From = 0, To = 0, Route = "wreck", Arena = WreckBandi },
-                    new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitBandi }, new Spot { Ch = 26, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 27, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 28, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f } }, // 8부(27장~) 반디는 청하 촌장 곁 마을
+                    new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitBandi }, new Spot { Ch = 26, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 27, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 28, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f },
+                    new Spot { Ch = 29, From = 0, To = 0, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 29, From = 1, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi } }, // 8부(27장~) 반디는 청하 촌장 곁 마을 · 9부(30장~) 굳은 거리 시계방
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
                 AtSite = "crossing:platform", AtOff = CrossHanbyeol, FolkBody = "Vanguard",
                 Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = CrossHanbyeol }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftHanbyeol },
                     new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 20, From = 2, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandHanbyeol },
-                    new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 25, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 26, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol } },
+                    new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 25, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 26, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol },
+                    new Spot { Ch = 29, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 30, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol } }, // 9부(30장~) 은하 나루 착륙판 곁
                 IdleKey = "story.idle.hanbyeol", IdleKo = "틈의 끝은 첫 정거장 다음 역이다." },
             // 109-14-45 21장(웹 ⑲-45) — 잠수 기사 여울(현대): 늘 연구 기지 서쪽, 21장 5~7째 단계 선착장 · 8째~ 궁궐 기단
             new Npc { Id = "yeoul", NameKey = "story.npc.yeoul", NameKo = "잠수 기사 여울", ShortKey = "story.short.yeoul", ShortKo = "여울",
@@ -689,6 +693,11 @@ namespace Saga.Go.Data
                     new Spot { Ch = 10, From = 6, To = 7, Frost = true, Arena = BawooGate },
                 },
                 IdleKey = "story.idle.bawoo", IdleKo = "……불씨는 아직 꺼지지 않았다." },
+            // 109-14-58 30장(웹 ⑲-58) — 시계 수리공 초롱(현대): 손목시계 속 틈 조각 태엽 덕에 혼자 안 굳었다. 9부(30장~) 늘 시계방 서쪽 앞(뒤 장은 31장 이식 때 자리를 더한다)
+            new Npc { Id = "chorong", NameKey = "story.npc.chorong", NameKo = "시계 수리공 초롱", ShortKey = "story.short.chorong", ShortKo = "초롱",
+                AtSite = "amber:clock", AtOff = ChorongAt, FolkBody = "Megan",
+                Appear = new[] { new Spot { Ch = 29, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt } },
+                IdleKey = "story.idle.chorong", IdleKo = "다른 시계는 다 멈췄는데 내 손목시계만 째깍거려요." },
         };
 
 
@@ -2605,6 +2614,55 @@ namespace Saga.Go.Data
                             L("hanbyeol", "story.ch29.s9.l6", "……글쎄. 틈이 삼켰다 못 돌려놓은 시대 조각들이 아직 곳곳에 굳어 있다더군. 하지만 그건 잔치 뒤에 생각하세."),
                             Pick("story.ch29.s9.p", "다 같이 잔치해요!", "모두 고마워요."),
                             L("elder", "story.ch29.s9.l7", "약속대로 잔치다! 이건 청하 마을과 세 시대 동무들이 너에게 주는 거란다. 고맙다 — 우리 대장."),
+                        } },
+                }
+            },
+            // 109-14-58 30장(웹 ⑲-58) — 9부 첫 장, 멈춘 거리: 한별(은하 나루 별배 곁) → 북쪽 고개 넘어 굳은 거리 어귀(go) → 네거리 결정 짐승 넷(kill) → 초롱(시계방 서쪽 앞, 새 인물)
+            // → 굳은 자리 셋(신호등 앞·정류장·우체통, light bare — 각 단계 다음(5·6·7째)부터 결정이 녹는다 = `AmberCrystalFrom`) → 초롱(사람은 녹아도 거리의 시간은 안 흐름 — 호박 속 장터·석등 셋).
+            new Chapter
+            {
+                Id = "ch30", NameKey = "story.ch30", NameKo = "제30장 · 멈춘 거리", Ar = 66,
+                Gold = 7750, Mats = new[] { 0, 7, 6, 7, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch30.s1", TextKo = "은하 나루의 별배 선장 한별과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch30.s1.l1", "왔군, 대장. 잔치 술은 좀 깼나? 별배 항로표를 보게 — 북쪽 고개 너머에 굳은 신호가 찍혔네."),
+                            L("bandi", "story.ch30.s1.l2", "삐— 시간이 흐르지 않는 자리에서만 나는 신호입니다. 먹구름 눈이 걷히던 밤부터 떴습니다."),
+                            L("hanbyeol", "story.ch30.s1.l3", "그 밤에 고개를 막던 호박빛 결정 막도 풀렸다더군. 틈이 닫힐 때 제자리로 못 돌아간 시대 조각 — 잔치 뒤에 생각하자던 그것일세."),
+                            Pick("story.ch30.s1.p", "별배로 가 볼까요?", "걸어서 넘어갈게요."),
+                            L("hanbyeol", "story.ch30.s1.l4", "거리가 빽빽해서 별배는 못 내려앉네. 고개 경계비를 지나 걸어가게 — 반디를 먼저 날려 보내지."),
+                        } },
+                    new Step { Type = StepType.Go, At = "amber:pass", Arena = AmberPassGo, TextKey = "story.ch30.s2", TextKo = "은하 나루 북쪽 고개를 넘어 굳은 거리 어귀로" },
+                    new Step { Type = StepType.Kill, At = "amber:cross", Arena = AmberCrossKill,
+                        Foes = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith) },
+                        EnterKey = "story.ch30.enter1", EnterKo = "⚔️ 네거리를 서성이던 결정 짐승들이 호박빛 눈을 뜬다",
+                        TextKey = "story.ch30.s3", TextKo = "네거리를 서성이는 결정 짐승 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "chorong", TextKey = "story.ch30.s4", TextKo = "시계방 앞의 수리공 초롱과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("chorong", "story.ch30.s4.l1", "……사람이다! 움직이는 사람! 이 거리에서 석 달째 나 혼자만 움직였어요."),
+                            L("chorong", "story.ch30.s4.l2", "틈이 닫히던 날 거리가 통째로 굳었어요. 신호등도, 전철도, 사람들도. 나만 멀쩡했던 건 — 이 손목시계 덕인 것 같아요."),
+                            L("bandi", "story.ch30.s4.l3", "삐— 그 시계 속 태엽, 틈 조각입니다. 시계가 주인의 시간만 붙들어 준 겁니다."),
+                            Pick("story.ch30.s4.p", "굳은 사람들을 풀어 줄 수 있어요?", "저 호박빛 결정은 뭐죠?"),
+                            L("chorong", "story.ch30.s4.l4", "굳은 자리요. 네거리에만 셋 — 신호등 앞, 버스 정류장, 우체통. 원소가 닿으면 녹을지도 몰라요. 난 못 하지만 당신은…!"),
+                        } },
+                    new Step { Type = StepType.Light, Bare = true, At = "amber:cross", Arena = GoStory.AmberCrystalAt[0], EnterKey = "story.ch30.lit0", EnterKo = "🔥 신호등 앞 결정이 녹아내리고 — 길을 건너던 사람이 휘청이며 걸음을 마저 뗀다",
+                        TextKey = "story.ch30.s5", TextKo = "네거리 신호등 앞 굳은 자리를 원소 스킬로 녹이기" },
+                    new Step { Type = StepType.Light, Bare = true, At = "amber:cross", Arena = GoStory.AmberCrystalAt[1], EnterKey = "story.ch30.lit1", EnterKo = "🔥 정류장 결정이 녹고 — 버스를 기다리던 할머니가 눈을 깜박인다",
+                        TextKey = "story.ch30.s6", TextKo = "버스 정류장 굳은 자리를 원소 스킬로 녹이기" },
+                    new Step { Type = StepType.Light, Bare = true, At = "amber:cross", Arena = GoStory.AmberCrystalAt[2], EnterKey = "story.ch30.lit2", EnterKo = "🔥 우체통 결정까지 녹았다 — 편지를 넣던 아이가 손을 뗀다. 그런데 신호등은 아직 빨강이다",
+                        TextKey = "story.ch30.s7", TextKo = "우체통 앞 굳은 자리를 원소 스킬로 녹이기" },
+                    new Step { Type = StepType.Talk, Npc = "chorong", TextKey = "story.ch30.s8", TextKo = "시계방 앞의 초롱에게 돌아가기",
+                        Lines = new[]
+                        {
+                            L("chorong", "story.ch30.s8.l1", "고마워요! 다들 풀려났어요… 그런데 보세요. 신호등은 여전히 빨강이고, 시계방 시계는 한 칸도 안 가요."),
+                            L("chorong", "story.ch30.s8.l2", "사람은 녹여도 거리의 시간은 안 흐르는 거예요. 무언가가 시간을 통째로 붙들고 있어요."),
+                            L("bandi", "story.ch30.s8.l3", "삐— 굳은 신호가 가장 센 곳은 북동쪽. 결정 하나가 거리 전체 신호의 절반입니다."),
+                            Pick("story.ch30.s8.p", "북동쪽에 뭐가 있어요?", "제일 큰 결정은 어디죠?"),
+                            L("chorong", "story.ch30.s8.l4", "호박 속 장터요. 옛날 장터가 천막째 통째로 결정에 들어 있어요 — 이 거리에서 제일 큰 굳은 자리예요."),
+                            L("chorong", "story.ch30.s8.l5", "장터 둘레에 낡은 석등이 셋 서 있어요. 가게 문 닫고 따라갈게요. 준비되면 말해 줘요!"),
                         } },
                 }
             },

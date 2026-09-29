@@ -300,7 +300,15 @@ namespace Saga.EditorTools
                     a.TrySite(id, out var s);
                     if (!Physics.Raycast(s.Pos + new Vector3(0f, 30f, 0f), Vector3.down, 60f) || field.SiteObject("amber", id).transform.childCount == 0) Fail($"굳은 거리 {id} 도형·바닥");
                 }
-                // 30~32장을 지난 뒤 — 순수 상태가 도형에 닿는 경로는 (Ch, Step) 한계(29 = 마침)라 여기선 안 밟고, 뒤 조각(14-58~60)이 잰다
+                // 30장(14-58) — 굳은 자리는 30장 5·6·7째 단계부터 차례로 녹고(결정 도형·충돌이 사라짐), 돔·심장·신호등은 그대로. 31·32장 상태는 뒤 조각이 잰다
+                StoryState.Restore(29, 5);
+                field.Refresh();
+                Physics.SyncTransforms();
+                if (field.AmberPartOn("amber:crystal0") || !field.AmberPartOn("amber:crystal1") || !field.AmberPartOn("amber:crystal2")) Fail("30장 5째 단계: 신호등 앞 결정만 녹아야");
+                if (Physics.Raycast(c0 + new Vector3(-6f, 1.5f, 0f), Vector3.right, 12f)) Fail("녹은 굳은 자리에 충돌이 남음");
+                StoryState.Restore(29, 7);
+                field.Refresh();
+                if (field.AmberPartOn("amber:crystal0") || field.AmberPartOn("amber:crystal1") || field.AmberPartOn("amber:crystal2") || !field.AmberPartOn("amber:dome") || !field.AmberPartOn("amber:heart") || field.AmberLampsGreen) Fail("30장 7째 단계: 굳은 자리 셋만 녹고 돔·심장·신호등은 그대로여야");
             }
             finally
             {
