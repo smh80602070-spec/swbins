@@ -26,7 +26,7 @@ namespace Saga.EditorTools
     public static class PlaytestGoStory
     {
         private static string _tag;
-        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "", _ch15 = "", _ch16 = "", _ch17 = "", _ch18 = "", _ch19 = "", _ch20 = "", _ch21 = "", _ch22 = "", _ch23 = "";
+        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "", _ch15 = "", _ch16 = "", _ch17 = "", _ch18 = "", _ch19 = "", _ch20 = "", _ch21 = "", _ch22 = "", _ch23 = "", _ch24 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -86,6 +86,7 @@ namespace Saga.EditorTools
                 CheckChapter21(fc, pc, field, ui);
                 CheckChapter22(fc, pc, field, ui);
                 CheckChapter23(fc, pc, field, ui);
+                CheckChapter24(fc, pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -118,7 +119,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · " + _ch15 + " · " + _ch16 + " · " + _ch17 + " · " + _ch18 + " · " + _ch19 + " · " + _ch20 + " · " + _ch21 + " · " + _ch22 + " · " + _ch23 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · " + _ch15 + " · " + _ch16 + " · " + _ch17 + " · " + _ch18 + " · " + _ch19 + " · " + _ch20 + " · " + _ch21 + " · " + _ch22 + " · " + _ch23 + " · " + _ch24 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -134,12 +135,12 @@ namespace Saga.EditorTools
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 28 || GoStory.Chapters.Length != 23) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 29 || GoStory.Chapters.Length != 24) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT", "TGTRTKXTGLT", "TGTKTMTET", "TGTKTXTTLT", "TGTKLTRTET", "TVTKMTMTXT", "TVTKTSTETXT", "TVTKGTVT", "TTHTSTETXT", "TMLTTXT" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6250 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 } };
-            for (int c = 0; c < 23; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT", "TGTRTKXTGLT", "TGTKTMTET", "TGTKTXTTLT", "TGTKLTRTET", "TVTKMTMTXT", "TVTKTSTETXT", "TVTKGTVT", "TTHTSTETXT", "TMLTTXT", "TVTKTST" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6250, 6500 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 } };
+            for (int c = 0; c < 24; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -2084,6 +2085,68 @@ namespace Saga.EditorTools
             field.Refresh();
             if (!field.NpcShown("mulsae") || !field.NpcShown("parang")) Fail("23장 뒤 물새·파랑이 돔 안에 안 섬");
             _ch23 = "23장 파랑·등대 돌탑 벽/꼭대기(땅에선 안 넘어감)·등롱은 난간 판에서만(땅에서 쏘면 안 켜짐)·등대 불·반디 등대 발치→돔·파수 거신 암 2단계 방패·물새 합류(★4 수 검)·보상";
+        }
+
+        // ---- 24장 ---------------------------------------------------------------------------------------------
+
+        private static void CheckChapter24(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch24 = "24장 중단";
+            StoryState.OffForTest = false;
+            PlayerStats.Restore(54, 0);
+            StoryState.Restore(23, 0);
+            var area = AreaField.Instance;
+            var sk = GoAreas.Sunken;
+            if (area == null) { Fail("AreaField 없음"); return; }
+            area.Refresh();
+            field.Refresh();
+            if (!area.RouteShown || !area.ShrineCloudsShown || GoStory.ShrineClear) Fail("24장 첫 단계: 하늘 섬이 서고 사당 위 먹구름이 끼어 있어야");
+            if (!field.NpcShown("hanbyeol") || GoStory.Flat(field.NpcBody("hanbyeol").transform.position, GoStory.AreaPos("sunken:gate", GoStory.SandHanbyeol)) > 0.6f) Fail("한별이 모래밭에 안 섬");
+            if (field.NpcShown("saebyeok")) Fail("24장 첫 단계: 새벽은 아직");
+            Talk(pc, ui, "hanbyeol", "24장 한별");
+            Expect(23, 1, "한별 뒤");                                                            // → 1 sail 별배
+            Talk(pc, ui, "hanbyeol", "24장 별배");
+            Expect(23, 2, "별배 뒤");                                                            // → 2 talk 새벽
+            if (!GoStory.OnRouteTop(0, pc.transform.position) || GoStory.Flat(pc.transform.position, GoStory.RoutePos(0, GoStory.ShrineLand)) > 8f) Fail($"별배가 하늘 사당 섬에 안 닿음 {pc.transform.position}");
+            field.Refresh();
+            Vector3 D(string n) => field.NpcBody(n).transform.position;
+            if (!field.NpcShown("saebyeok") || GoStory.Flat(D("saebyeok"), GoStory.RoutePos(0, GoStory.ShrineSaebyeok)) > 0.6f || !GoStory.OnRouteTop(0, D("saebyeok") + Vector3.up * 0.1f)) Fail("새벽이 사당 앞 섬 위에 안 섬");
+            if (GoStory.Flat(D("hanbyeol"), GoStory.RoutePos(0, GoStory.ShrineHanbyeol)) > 0.6f || GoStory.Flat(D("bandi"), GoStory.RoutePos(0, GoStory.ShrineBandi)) > 0.6f) Fail("한별·반디가 사당 섬에 안 섬");
+            Talk(pc, ui, "saebyeok", "24장 새벽");
+            Expect(23, 3, "새벽 뒤");                                                            // → 3 kill 마당
+            pc.Teleport(GoStory.RoutePos(0, new Vector2(0f, GoStory.KillNear - 15f)) + new Vector3(0f, 0.3f, 0f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 4 || field.Squad.Any(e => !GoStory.OnRouteTop(0, e.transform.position))) Fail($"사당 마당 무리 {field.Squad.Count}(섬 위여야)");
+            foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) Kill(e);
+            Expect(23, 4, "사당 마당 무리");                                                     // → 4 talk 새벽
+            Talk(pc, ui, "saebyeok", "24장 새벽 방울");
+            Expect(23, 5, "새벽 방울");                                                          // → 5 seal 별·해·달
+            field.Refresh();
+            if (!field.SealCenterOf(23).gameObject.activeSelf || field.SealLampOf(23, 0).Lit) Fail("바람 방울 석등이 꺼진 채 안 섬");
+            for (int i = 0; i < 3; i++) if (!GoStory.OnRouteTop(0, field.SealLampOf(23, i).transform.position + Vector3.up * 0.1f)) Fail($"바람 방울 석등 {i} 이 섬 위가 아님");
+            int Lamp(string id) => System.Array.IndexOf(GoStory.SealLayout, id);
+            Vector3 L(string id) => field.SealLampOf(23, Lamp(id)).transform.position;
+            Pulse(L("sun"), 1f);                                                                 // 틀림(첫째는 별)
+            if (StoryState.Progress != 0 || field.SealLampOf(23, Lamp("sun")).Lit) Fail("차례 틀린 해가 켜짐(별·해·달)");
+            Pulse(L("star"), 1f);
+            Pulse(L("sun"), 1f);
+            Expect(23, 5, "둘 켰는데 넘어감");
+            if (!area.ShrineCloudsShown) Fail("방울을 다 울리기 전에 먹구름이 걷힘");
+            Pulse(L("moon"), 1f);
+            Expect(23, 6, "별·해·달");                                                           // → 6 talk 새벽
+            area.Refresh();
+            if (area.ShrineCloudsShown || !GoStory.ShrineClear) Fail("방울을 다 울린 뒤 먹구름이 안 걷힘");
+            int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot), guide = TalentState.Count(GoTalent.Mat.Guide), secret = TalentState.Count(GoTalent.Mat.Secret);
+            Talk(pc, ui, "saebyeok", "24장 끝 새벽");
+            if (StoryState.Ch != 24 || GoldState.Gold != gold + 6500 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6 || TalentState.Count(GoTalent.Mat.Guide) != guide + 6 || TalentState.Count(GoTalent.Mat.Secret) != secret + 5) Fail("24장 끝·보상(금 6500·교본 6·비급 5·매듭 6)");
+            area.Refresh();
+            field.Refresh();
+            if (area.ShrineCloudsShown) Fail("24장 뒤 먹구름이 다시 낌");
+            if (!field.NpcShown("saebyeok") || GoStory.Flat(D("saebyeok"), GoStory.RoutePos(0, GoStory.ShrineSaebyeok)) > 0.6f) Fail("24장 뒤 새벽이 사당 앞에 안 섬");
+            if (!GoStory.RoutePillarOpen(0) || !GoStory.RoutePillarOpen(1) || GoStory.RoutePillarOpen(2)) Fail("24장 뒤 등대·사당 기둥만 열려야");
+            area.Refresh();
+            if (!area.RoutePillarOn(0) || !area.RoutePillarOn(1) || area.RoutePillarOn(2)) Fail("24장 뒤 바람 기둥 둘이 안 섬");
+            _ch24 = "24장 한별 모래밭→별배 sail(하늘 사당 섬 도착)·새벽/한별/반디 섬 위 자리·사당 마당 무리 넷(섬 위)·바람 방울 석등 별·해·달(틀리면 꺼짐, 섬 위)·먹구름 걷힘 7째부터·바람 기둥 둘 열림·보상";
         }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------

@@ -40,7 +40,7 @@ namespace Saga.Go.Data
         /// <summary>섬 위인가(가장자리 1m 안쪽) — 섬 위 이야기 적은 이 안에서만 걷는다.</summary>
         public static bool OnIsle(Vector3 p) => Flat(p, IslePos(Vector2.zero)) <= IsleR - 1f;
         /// <summary>배가 닿는 곳 — 섬(북쪽 물가) 또는 강가 나루(사공 곁).</summary>
-        public static Vector3 SailDest(Step s) => s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.ToIsle ? IslePos(IsleLand) : GridPos(DockGx, DockGy);
+        public static Vector3 SailDest(Step s) => s.Route != null ? RoutePos(RouteIndex(s.Route), s.Arena ?? Vector2.zero) : s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.ToIsle ? IslePos(IsleLand) : GridPos(DockGx, DockGy);
         public const float DockGx = 2.35f + 3f / 48f, DockGy = 4.4f - 3f / 48f;
 
         /// <summary>chase — 노 도둑(웹 13m/초·점마다 0.5초 = 걷기 8·달리기 17.6 사이) → 이 판 걷기 6·달리기 10 사이로 9m/초·0.5초.
@@ -217,6 +217,8 @@ namespace Saga.Go.Data
             public bool Stn;
             /// <summary>109-14-35 관측대 위(`Sky` 와 함께) — Arena 는 관측대 가운데에서 m.</summary>
             public bool Obs;
+            /// <summary>109-14-49 하늘 섬 위("shrine"·"wreck"·"orbit") — Arena 는 그 섬 윗면 가운데에서 m.</summary>
+            public string Route;
         }
 
         /// <summary>그 칸이 지금 서 있는 칸인가 — 세계 임무 칸이면 그 임무 단계, 아니면 이야기 장·단계.</summary>
@@ -236,7 +238,7 @@ namespace Saga.Go.Data
         public static Vector2 FrostAt(string siteId, float dx, float dz) { GoFrost.TrySite(siteId, out var s); return s.Off + new Vector2(dx, dz); }
 
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
-            a.Sky && a.Rift ? RiftPos(a.Arena) : a.At != null ? AreaPos(a.At, a.Arena) : a.Stn ? StationPos(a.Arena) : a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            a.Route != null ? RoutePos(RouteIndex(a.Route), a.Arena) : a.Sky && a.Rift ? RiftPos(a.Arena) : a.At != null ? AreaPos(a.At, a.Arena) : a.Stn ? StationPos(a.Arena) : a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
 
         // ---- 109-14-28 10장 서리봉 고원 자리(고원 가운데에서 m — 웹 명소 자리 × 0.45 위에 얹는다) ----
         public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
@@ -280,6 +282,11 @@ namespace Saga.Go.Data
         public static bool OnRouteTop(Vector3 p) { for (int i = 0; i < 3; i++) if (OnRouteTop(i, p)) return true; return false; }
         public static bool OnRouteLayer(Vector3 p) { for (int i = 0; i < 3; i++) if (Flat(p, RouteCenter(i)) <= GoAreas.RouteR[i] + 3f && p.y > RouteCenter(i).y - 8f) return true; return false; }
         public static bool RouteOn => LighthouseLit;
+        public static int RouteIndex(string id) => System.Array.IndexOf(GoAreas.RouteIds, id);
+        /// <summary>24장 자리(사당 섬 윗면 가운데에서 m, z 남쪽): 별배는 사당 남쪽 10m 에 내린다, 무녀는 사당 앞 서쪽(가운데 8m 석등 자리를 비켜), 한별·반디는 내린 자리 곁.</summary>
+        public static readonly Vector2 ShrineLand = new Vector2(0f, 10f), ShrineSaebyeok = new Vector2(-4.5f, -7.5f), ShrineHanbyeol = new Vector2(3.5f, 11f), ShrineBandi = new Vector2(-3f, 11.5f);
+        /// <summary>사당 위 먹구름이 걷혔나 — 24장 7째 단계(방울을 다 울린 뒤)부터 늘.</summary>
+        public static bool ShrineClear => StoryState.Ch > 23 || (StoryState.Ch == 23 && StoryState.StepIndex >= 6);
         /// <summary>바람 기둥 i(0 등대→사당 · 1 사당→잔해 · 2 잔해→정거장) 밑자리·솟는 높이·열림.</summary>
         public static Vector3 RoutePillarPos(int i)
         {
@@ -486,13 +493,15 @@ namespace Saga.Go.Data
                     new Spot { Ch = 19, From = 0, To = 1, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftBandi }, new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = PortBandi },
                     new Spot { Ch = 20, From = 2, To = 6, At = "sunken:gate", Arena = SandBandi }, new Spot { Ch = 20, From = 7, To = 99, At = "sunken:palace", Arena = PlinthBandi }, new Spot { Ch = 21, From = 0, To = 2, At = "sunken:palace", Arena = PlinthBandi },
                     new Spot { Ch = 21, From = 3, To = 6, At = "sunken:dome", Arena = FrontBandi }, new Spot { Ch = 21, From = 7, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 22, From = 0, To = 0, At = "sunken:dome", Arena = InBandi },
-                    new Spot { Ch = 22, From = 1, To = 3, At = "sunken:lighthouse", Arena = LightBandi }, new Spot { Ch = 22, From = 4, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 23, From = 0, To = 99, At = "sunken:dome", Arena = InBandi } },
+                    new Spot { Ch = 22, From = 1, To = 3, At = "sunken:lighthouse", Arena = LightBandi }, new Spot { Ch = 22, From = 4, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandBandi },
+                    new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineBandi }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineBandi } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
                 AtSite = "crossing:platform", AtOff = CrossHanbyeol, FolkBody = "Vanguard",
                 Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = CrossHanbyeol }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftHanbyeol },
-                    new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 20, From = 2, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 23, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol } },
+                    new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 20, From = 2, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandHanbyeol },
+                    new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol } },
                 IdleKey = "story.idle.hanbyeol", IdleKo = "틈의 끝은 첫 정거장 다음 역이다." },
             // 109-14-45 21장(웹 ⑲-45) — 잠수 기사 여울(현대): 늘 연구 기지 서쪽, 21장 5~7째 단계 선착장 · 8째~ 궁궐 기단
             new Npc { Id = "yeoul", NameKey = "story.npc.yeoul", NameKo = "잠수 기사 여울", ShortKey = "story.short.yeoul", ShortKo = "여울",
@@ -500,6 +509,11 @@ namespace Saga.Go.Data
                 At = new[] { new Spot { Ch = 20, From = 4, To = 6, At = "sunken:lab", Arena = LabDock }, new Spot { Ch = 20, From = 7, To = 99, At = "sunken:palace", Arena = PlinthYeoul }, new Spot { Ch = 21, From = 0, To = 2, At = "sunken:palace", Arena = PlinthYeoul },
                     new Spot { Ch = 21, From = 3, To = 6, At = "sunken:dome", Arena = FrontYeoul }, new Spot { Ch = 21, From = 7, To = 99, At = "sunken:dome", Arena = InYeoul }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:dome", Arena = InYeoul }, new Spot { Ch = 23, From = 0, To = 99, At = "sunken:dome", Arena = InYeoul } },
                 IdleKey = "story.idle.yeoul", IdleKo = "기지 불이 나간 지 한참이에요. 그래도 잠수정은 제가 지켜요." },
+            // 109-14-49 24장(웹 ⑲-49) — 바람 무녀 새벽(과거): 사당이 하늘로 들린 날부터 홀로. 24장 3째 단계(별배가 섬에 내린 뒤)부터 사당 앞 서쪽(뒤에도).
+            new Npc { Id = "saebyeok", NameKey = "story.npc.saebyeok", NameKo = "바람 무녀 새벽", ShortKey = "story.short.saebyeok", ShortKo = "새벽",
+                AtSite = "sunken:lighthouse", AtOff = Vector2.zero, FolkBody = "Archer",
+                Appear = new[] { new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineSaebyeok }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineSaebyeok } },
+                IdleKey = "story.idle.saebyeok", IdleKo = "방울이 울면 바람이 길을 안다오." },
             // 109-14-47 23장(웹 ⑲-47) — 돔 관리 인공지능 파랑(미래): 반디와 같은 떠 있는 기계 몸(웹은 파란 빛깔 — 이 판은 14-1b 전까지 같은 빛). 23장부터 돔 안 기록실 앞.
             new Npc { Id = "parang", NameKey = "story.npc.parang", NameKo = "돔 관리 인공지능 파랑", ShortKey = "story.short.parang", ShortKo = "파랑",
                 AtSite = "sunken:dome", AtOff = ParangAt, Pet = true,
@@ -631,15 +645,17 @@ namespace Saga.Go.Data
             /// <summary>109-14-47 light — 그 명소의 오르기 꼭대기(`At` 의 탑)에 서야 원소가 닿는다 · 못 닿을 때 알림(등대 등롱).</summary>
             public bool Perch;
             public string AwayKey, AwayKo;
+            /// <summary>109-14-49 하늘 섬 위("shrine"·"wreck"·"orbit" — 자리 = 그 섬 윗면 가운데 + Arena).</summary>
+            public string Route;
         }
 
-        public static Vector3 StepPos(Step s) => s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+        public static Vector3 StepPos(Step s) => s.Route != null ? RoutePos(RouteIndex(s.Route), s.Arena ?? Vector2.zero) : s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
 
         /// <summary>석등 차례(해·달·별이 기본, 8장은 별·달·해).</summary>
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
 
         /// <summary>석등 가운데 — 5장 둘째 제단 또는 섬(8장).</summary>
-        public static Vector3 SealPos(Step s) => s.Frost || s.Rift || s.At != null ? StepPos(s) : s.Isle ? IslePos(Vector2.zero) : s.Gx != 0f || s.Gy != 0f ? GridPos(s.Gx, s.Gy) : GridPos(Altar2Gx, Altar2Gy);
+        public static Vector3 SealPos(Step s) => s.Frost || s.Rift || s.At != null || s.Route != null ? StepPos(s) : s.Isle ? IslePos(Vector2.zero) : s.Gx != 0f || s.Gy != 0f ? GridPos(s.Gx, s.Gy) : GridPos(Altar2Gx, Altar2Gy);
 
         public const float BossHp = 6f, BossAtk = 1.5f, BossScale = 1.8f;
 
@@ -2112,6 +2128,60 @@ namespace Saga.Go.Data
                             Pick("story.ch23.s7.p", "먹구름을 부리는 자를 찾자.", "물새 님은 이제 어떡해요?"),
                             L("mulsae", "story.ch23.s7.l4", "물은 두 번 가르쳐 주지 않는다 했지. 이번엔 나도 안 놓치겠소 — 도읍을 잠기게 한 그 먹구름을."),
                             L("mulsae", "story.ch23.s7.l5", "해녀 물새, 오늘부터 뭍사람들 편이오. 숨 긴 거 하나는 자신 있소."),
+                        } },
+                }
+            },
+            // 109-14-49 24장(웹 ⑲-49) — 7부 첫 장, 하늘 사당의 바람 방울: 한별(도읍 모래밭) → 별배 타기(sail — 하늘 사당 섬) → 새벽 → 사당 마당 먹구름 졸개 넷 → 새벽 → 바람 방울 석등 별 → 해 → 달 → 새벽.
+            // 방울을 다 울리면(7째 단계부터) 사당 위 먹구름이 걷힌다(`ShrineClear`). 섬 위 단계는 `Route` 로 하늘 섬 표(`GoAreas.Route*`)에 앉는다.
+            new Chapter
+            {
+                Id = "ch24", NameKey = "story.ch24", NameKo = "제24장 · 하늘 사당의 바람 방울", Ar = 54,
+                Gold = 6500, Mats = new[] { 0, 6, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch24.s1", TextKo = "모래밭의 선장 한별과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch24.s1.l1", "등대 빛줄기가 도는 걸 봤나? 빛 끝이 늘 같은 하늘을 짚고 멈춰. 저기 — 구름 위에 섬이 떠 있어."),
+                            L("bandi", "story.ch24.s1.l2", "삐— 별배 항로표에 새 신호 둘. 하나는 옛 사당의 방울 소리, 하나는… 지금 시대 기상 비행선의 구조 신호입니다."),
+                            L("hanbyeol", "story.ch24.s1.l3", "먹구름을 부리는 자의 명령이 구름 위에서 왔다고 했지. 별배가 원래 가려던 항로도 저 위다."),
+                            Pick("story.ch24.s1.p", "별배로 올라가요.", "비행선에 누가 있을지도 몰라요."),
+                            L("hanbyeol", "story.ch24.s1.l4", "이번엔 하늘길이다. 별배가 제일 잘하는 거지 — 타게!"),
+                        } },
+                    new Step { Type = StepType.Sail, Npc = "hanbyeol", Route = "shrine", Arena = ShrineLand, EnterKey = "story.ch24.arrive", EnterKo = "🛸 별배가 구름을 뚫고 올라 — 기와 사당이 선 떠 있는 섬에 우리를 내려 주었다",
+                        Lines = new[] { L("hanbyeol", "story.ch24.s2.l1", "별배, 등대 빛줄기를 따라 위로! 반디, 구름 사이 길을 읽어 다오.") },
+                        TextKey = "story.ch24.s2", TextKo = "선장의 별배를 타고 하늘 항로로" },
+                    new Step { Type = StepType.Talk, Npc = "saebyeok", TextKey = "story.ch24.s3", TextKo = "사당 앞의 무녀와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("saebyeok", "story.ch24.s3.l1", "……바람이 손님을 데려왔구려. 사당이 하늘로 들린 뒤로 사람 발소리는 처음이오."),
+                            Pick("story.ch24.s3.p", "누구세요?", "여기가 하늘 사당인가요?"),
+                            L("saebyeok", "story.ch24.s3.l2", "나는 바람 무녀 새벽. 이 사당의 바람 방울을 지켰소. 방울이 울면 바람이 길을 알고, 구름이 물러났지."),
+                            L("saebyeok", "story.ch24.s3.l3", "그런데 먹구름이 내려앉아 방울을 틀어막았소. 마당엔 먹구름 먹은 것들이 들끓고."),
+                            L("hanbyeol", "story.ch24.s3.l4", "먹구름이 저 혼자 내려앉았을 리 없지. 마당부터 치우자."),
+                        } },
+                    new Step { Type = StepType.Kill, Route = "shrine", Arena = Vector2.zero,
+                        Foes = new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        EnterKey = "story.ch24.enter1", EnterKo = "⚔️ 사당 마당의 먹구름 속에서 졸개들이 뛰쳐나왔다",
+                        TextKey = "story.ch24.s4", TextKo = "사당 마당의 먹구름 졸개 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "saebyeok", TextKey = "story.ch24.s5", TextKo = "사당 앞의 무녀와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("saebyeok", "story.ch24.s5.l1", "고맙소. 이제 방울을 울릴 차례요. 바람 방울은 하루를 따라 울렸지 — 새벽별, 한낮의 해, 밤의 달."),
+                            L("bandi", "story.ch24.s5.l2", "삐— 마당 석등 셋에서 방울 주파수가 나옵니다. 별, 해, 달 무늬."),
+                            Pick("story.ch24.s5.p", "별, 해, 달.", "틀리면요?"),
+                            L("saebyeok", "story.ch24.s5.l3", "바람은 순서를 잊지 않소. 틀리면 방울이 다 멎고 처음부터요."),
+                        } },
+                    new Step { Type = StepType.Seal, Route = "shrine", Arena = Vector2.zero, Order = new[] { "star", "sun", "moon" }, TextKey = "story.ch24.s6", TextKo = "사당 마당 바람 방울 석등을 차례(별 → 해 → 달)로 울리기" },
+                    new Step { Type = StepType.Talk, Npc = "saebyeok", TextKey = "story.ch24.s7", TextKo = "사당 앞의 무녀와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("saebyeok", "story.ch24.s7.l1", "……들리오? 방울이 다시 운다. 먹구름이 걷히는구려."),
+                            L("bandi", "story.ch24.s7.l2", "삐— 구름 틈으로 더 높은 섬 하나. 비행선 구조 신호가 거기서 나옵니다."),
+                            L("saebyeok", "story.ch24.s7.l3", "저 먹구름은 땅에서 오른 게 아니오. 위에서 흘러내렸소 — 누가 위에서 구름을 빚어 흘려보내는 게지."),
+                            Pick("story.ch24.s7.p", "위로 올라갈 길은요?", "구름을 빚는 자…"),
+                            L("saebyeok", "story.ch24.s7.l4", "방울이 울었으니 바람이 길을 낼 거요. 사당 서쪽 끝에 바람 기둥이 설 테니, 타고 올라 날개를 펴시오."),
+                            L("hanbyeol", "story.ch24.s7.l5", "비행선이라면 지금 시대 사람이 갇혀 있을 거야. 서두르자."),
                         } },
                 }
             },

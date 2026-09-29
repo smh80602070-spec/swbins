@@ -17,7 +17,9 @@ namespace Saga.Go.World
         private readonly PlayerController.DraftCol[] _routeCols = new PlayerController.DraftCol[3];
         private readonly bool[] _routeReg = new bool[3];
         private float _routeT;
+        private GameObject _shrineClouds;
         public bool RouteShown => _routeRoot != null && _routeRoot.activeSelf;
+        public bool ShrineCloudsShown => _shrineClouds != null && _shrineClouds.activeInHierarchy;
         public bool RoutePillarOn(int i) => _routeReg[i];
 
         private void UnregisterRoute()
@@ -59,6 +61,14 @@ namespace Saga.Go.World
                 }
                 if (i == 0) // 하늘 사당 — 북쪽 기와 사당 + 바람 방울 장대 넷(가운데 8m 비움)
                 {
+                    _shrineClouds = new GameObject("Shrine_clouds");
+                    _shrineClouds.transform.SetParent(isle.transform, false);
+                    var cloud = Mat("r_cloud", new Color(0.2f, 0.16f, 0.28f));
+                    for (int k = 0; k < 9; k++)
+                    {
+                        float a = k * Mathf.PI * 2f / 9f + 0.4f, rad = (k % 3) * 4.5f + 3f;
+                        P(PrimitiveType.Sphere, _shrineClouds.transform, "Shrine_cloud", c + new Vector3(Mathf.Sin(a) * rad, 9f + (k % 4) * 1.6f, -Mathf.Cos(a) * rad), new Vector3(6f + (k % 3), 3.2f, 5.5f), cloud, false);
+                    }
                     P(PrimitiveType.Cube, isle.transform, "Shrine_hall", c + new Vector3(0f, 2.5f, -12f), new Vector3(10f, 5f, 6f), wood, true);
                     P(PrimitiveType.Cube, isle.transform, "Shrine_roof", c + new Vector3(0f, 5.6f, -12f), new Vector3(12.5f, 1.2f, 8.5f), roof, false);
                     for (int k = 0; k < 4; k++)
@@ -128,6 +138,7 @@ namespace Saga.Go.World
         {
             bool on = !StoryState.OffForTest && GoStory.RouteOn;
             if (_routeRoot != null) _routeRoot.SetActive(on);
+            if (_shrineClouds != null) _shrineClouds.SetActive(!GoStory.ShrineClear);
             UnregisterRoute();
             if (!on) return;
             for (int i = 0; i < 3; i++)

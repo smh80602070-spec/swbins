@@ -1765,6 +1765,41 @@
 2	go	story.ch23.s7.p.b	물새 님은 이제 어떡해요?	What will you do now, Mulsae?		
 2	go	story.ch23.stepped	🗼 등대 난간 판에 올라섰다 — 꺼진 등롱이 눈앞에 있다	🗼 You stand on the lighthouse railing deck — the unlit lantern is right before you		
 2	go	story.ch23.win	🗿 파수 거신이 무너지고 — 가슴에 박혀 있던 먹구름 조각이 흩어졌다	🗿 The sentinel collapses — the storm-cloud shard lodged in its chest scatters		
+2	go	story.ch24	제24장 · 하늘 사당의 바람 방울	Chapter 24 · The Wind Bells of the Sky Shrine		
+2	go	story.ch24.arrive	🛸 별배가 구름을 뚫고 올라 — 기와 사당이 선 떠 있는 섬에 우리를 내려 주었다	🛸 The star-ship breaks through the clouds and sets us down on a floating island with a tiled shrine		
+2	go	story.ch24.enter1	⚔️ 사당 마당의 먹구름 속에서 졸개들이 뛰쳐나왔다	⚔️ Minions burst out of the storm cloud in the shrine courtyard		
+2	go	story.ch24.s1	모래밭의 선장 한별과 이야기하기	Talk to Captain Hanbyeol on the sands		
+2	go	story.ch24.s1.l1	등대 빛줄기가 도는 걸 봤나? 빛 끝이 늘 같은 하늘을 짚고 멈춰. 저기 — 구름 위에 섬이 떠 있어.	Did you see the lighthouse beam sweeping? Its tip always stops on the same patch of sky. There — an island floats above the clouds.		
+2	go	story.ch24.s1.l2	삐— 별배 항로표에 새 신호 둘. 하나는 옛 사당의 방울 소리, 하나는… 지금 시대 기상 비행선의 구조 신호입니다.	Beep — two new signals on the star-ship's route chart. One is the sound of an old shrine's bells; the other… is a rescue signal from a present-day weather airship.		
+2	go	story.ch24.s1.l3	먹구름을 부리는 자의 명령이 구름 위에서 왔다고 했지. 별배가 원래 가려던 항로도 저 위다.	They said the command from the one commanding the storm cloud came from above the clouds. The route the star-ship meant to take is up there too.		
+2	go	story.ch24.s1.l4	이번엔 하늘길이다. 별배가 제일 잘하는 거지 — 타게!	This time it's the sky road. It's what the star-ship does best — climb aboard!		
+2	go	story.ch24.s1.p.a	별배로 올라가요.	Let's go up in the star-ship.		
+2	go	story.ch24.s1.p.b	비행선에 누가 있을지도 몰라요.	Someone might be aboard that airship.		
+2	go	story.ch24.s2	선장의 별배를 타고 하늘 항로로	Ride the captain's star-ship onto the sky route		
+2	go	story.ch24.s2.l1	별배, 등대 빛줄기를 따라 위로! 반디, 구름 사이 길을 읽어 다오.	Star-ship, follow the lighthouse beam upward! Bandi, read the path between the clouds.		
+2	go	story.ch24.s3	사당 앞의 무녀와 이야기하기	Talk to the priestess in front of the shrine		
+2	go	story.ch24.s3.l1	……바람이 손님을 데려왔구려. 사당이 하늘로 들린 뒤로 사람 발소리는 처음이오.	…The wind has brought guests. This is the first sound of footsteps since the shrine was lifted into the sky.		
+2	go	story.ch24.s3.l2	나는 바람 무녀 새벽. 이 사당의 바람 방울을 지켰소. 방울이 울면 바람이 길을 알고, 구름이 물러났지.	I am Saebyeok, a wind priestess. I kept this shrine's wind bells. When the bells rang, the wind knew its way and the clouds withdrew.		
+2	go	story.ch24.s3.l3	그런데 먹구름이 내려앉아 방울을 틀어막았소. 마당엔 먹구름 먹은 것들이 들끓고.	But storm cloud settled and choked the bells. And the courtyard teems with things that feed on it.		
+2	go	story.ch24.s3.l4	먹구름이 저 혼자 내려앉았을 리 없지. 마당부터 치우자.	That cloud didn't settle by itself. Let's clear the courtyard first.		
+2	go	story.ch24.s3.p.a	누구세요?	Who are you?		
+2	go	story.ch24.s3.p.b	여기가 하늘 사당인가요?	Is this the Sky Shrine?		
+2	go	story.ch24.s4	사당 마당의 먹구름 졸개 물리치기	Defeat the storm-cloud minions in the shrine courtyard		
+2	go	story.ch24.s5	사당 앞의 무녀와 이야기하기	Talk to the priestess in front of the shrine		
+2	go	story.ch24.s5.l1	고맙소. 이제 방울을 울릴 차례요. 바람 방울은 하루를 따라 울렸지 — 새벽별, 한낮의 해, 밤의 달.	Thank you. Now it's time to ring the bells. The wind bells followed the day — the dawn star, the noon sun, the night moon.		
+2	go	story.ch24.s5.l2	삐— 마당 석등 셋에서 방울 주파수가 나옵니다. 별, 해, 달 무늬.	Beep — the three courtyard lanterns emit bell frequencies. Star, sun and moon patterns.		
+2	go	story.ch24.s5.l3	바람은 순서를 잊지 않소. 틀리면 방울이 다 멎고 처음부터요.	The wind never forgets the order. If you err, all the bells fall silent and you start over.		
+2	go	story.ch24.s5.p.a	별, 해, 달.	Star, sun, moon.		
+2	go	story.ch24.s5.p.b	틀리면요?	And if we get it wrong?		
+2	go	story.ch24.s6	사당 마당 바람 방울 석등을 차례(별 → 해 → 달)로 울리기	Ring the courtyard wind-bell lanterns in order (star → sun → moon)		
+2	go	story.ch24.s7	사당 앞의 무녀와 이야기하기	Talk to the priestess in front of the shrine		
+2	go	story.ch24.s7.l1	……들리오? 방울이 다시 운다. 먹구름이 걷히는구려.	…Do you hear it? The bells ring again. The storm cloud is lifting.		
+2	go	story.ch24.s7.l2	삐— 구름 틈으로 더 높은 섬 하나. 비행선 구조 신호가 거기서 나옵니다.	Beep — through a break in the clouds, a higher island. The airship rescue signal comes from there.		
+2	go	story.ch24.s7.l3	저 먹구름은 땅에서 오른 게 아니오. 위에서 흘러내렸소 — 누가 위에서 구름을 빚어 흘려보내는 게지.	That storm cloud didn't rise from the ground. It flowed down from above — someone up there is shaping clouds and sending them down.		
+2	go	story.ch24.s7.l4	방울이 울었으니 바람이 길을 낼 거요. 사당 서쪽 끝에 바람 기둥이 설 테니, 타고 올라 날개를 펴시오.	Now that the bells have rung, the wind will make a path. A wind pillar will rise at the western edge of the shrine — ride it up and spread your wings.		
+2	go	story.ch24.s7.l5	비행선이라면 지금 시대 사람이 갇혀 있을 거야. 서두르자.	If it's an airship, someone from this era must be trapped. Let's hurry.		
+2	go	story.ch24.s7.p.a	위로 올라갈 길은요?	How do we get up there?		
+2	go	story.ch24.s7.p.b	구름을 빚는 자…	Someone shaping clouds…		
 2	go	story.ch3	제3장 · 잔칫날의 불청객	Chapter 3 · Uninvited Guests at the Feast		
 2	go	story.ch3.s1	촌장에게 잔치 일손을 돕겠다고 하기	Offer the Elder a hand with the feast		
 2	go	story.ch3.s1.l1	하늘이 갠 기념으로 잔치를 열기로 했단다. 그런데 일손이 모자라구나.	We've decided to hold a feast now that the sky has cleared. But we're short of hands.		
@@ -2062,6 +2097,7 @@
 2	go	story.idle.horse	히힝… 푸르르.	Neigh… snort.		
 2	go	story.idle.mulsae	숨 한 번에 한 길. 물은 서두르는 사람을 싫어한다오.	One breath, one fathom. The water dislikes those in a hurry.		
 2	go	story.idle.parang	빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오.	This is the Light Dome records room. Please state the record you wish to view.		
+2	go	story.idle.saebyeok	방울이 울면 바람이 길을 안다오.	When the bells ring, the wind knows the way.		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 2	go	story.idle.thief	헤헤, 못 잡지롱!	Heh heh, can't catch me!		
 2	go	story.idle.wanderer	……	……		
@@ -2090,6 +2126,7 @@
 2	go	story.npc.horse	놀란 역마	Startled Post Horse		
 2	go	story.npc.mulsae	해녀 물새	Haenyeo Mulsae		
 2	go	story.npc.parang	돔 관리 인공지능 파랑	Dome Administrator AI Parang		
+2	go	story.npc.saebyeok	바람 무녀 새벽	Wind Priestess Saebyeok		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
 2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
@@ -2121,6 +2158,7 @@
 2	go	story.short.horse	역마	Horse		
 2	go	story.short.mulsae	물새	Mulsae		
 2	go	story.short.parang	파랑	Parang		
+2	go	story.short.saebyeok	새벽	Saebyeok		
 2	go	story.short.scholar	은비	Eunbi		
 2	go	story.short.thief	도둑	Thief		
 2	go	story.short.wanderer	나그네	Traveler		
