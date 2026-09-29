@@ -39,9 +39,15 @@ namespace Saga.Go.World
         public Vector3 GateGround => _gateGround;
         public GameObject SiteObject(string id) => _sites.TryGetValue(id, out var g) ? g : null;
 
-        private void Awake() => Instance = this;
+        // 눈밭·돌기둥은 Awake 에서 짓는다 — `StoryField.Start` 가 고원 위 제단 불·석등을 `Grounded` 로 땅에 앉히기 전에 바닥이 있어야 한다.
+        private void Awake()
+        {
+            Instance = this;
+            Rebuild();
+            Physics.SyncTransforms();
+        }
+
         private void OnDestroy() { if (Instance == this) Instance = null; }
-        private void Start() => Rebuild();
 
         // ---- 짓기 ----
 

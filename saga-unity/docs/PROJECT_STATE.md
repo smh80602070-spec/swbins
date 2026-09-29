@@ -1,7 +1,7 @@
 # PROJECT_STATE — saga-unity (상태만, ≤15KB, 덮어쓴다)
 
 **규칙**(SAGA-DESIGN §9): 지금 상태만, 세션 끝에 덮어쓴다. 경위·이유는 `docs/HISTORY.md` 에 append.
-마지막 갱신: 2026-09-29 (109-14-28 이야기 10장).
+마지막 갱신: 2026-09-29 (109-14-29 이야기 11장).
 
 ## 캐릭터 자산 — 이 PC 기준 (2026-09-19)
 
@@ -21,7 +21,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 
 ## 다음 작업 (우선순위, 상세는 PLAN 해당 장)
 
-0. **다음 = 109 표 14-29(11장)·14-27b·14-1b 괴물 넷(묶음 PC)** — 사람 NPC 공방 몸 교체는 보류분만 남음, 109-13-2b REALM 사실 몸은 끝(09-29). 110 은 사람 칸만(`docs/STORE_CHECKLIST.md`·초안 `docs/store/`) + 묶음 PC 에서 `BuildAndroidAab` 실측 — ③b 폰 결과 대기(새 APK). 앱 번들 진단 `PlaytestSagaAab`. 영어 검수 `node tools/loc-review.mjs`(오류 0, 사람은 `docs/en_review.tsv`). 정체성 `SagaPlayerBuild.AppId` · 아이콘 `make_icon.py`→`SagaAppIcon`. 크레딧 `SagaCredits`·`SagaCreditsCheck`(새 에셋은 표 한 줄부터)·오류 기록 `SagaCrashLog`·버전 = bundleVersion 한 곳. HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`(남은 고레벨 세이브는 옮기고)·`HangulWatch`, 재빌드 `SagaRebuildScenes`.
+0. **다음 = 109 표 14-30(12장)·14-27b·14-1b 괴물 넷(묶음 PC)** — 사람 NPC 공방 몸 교체는 보류분만 남음, 109-13-2b REALM 사실 몸은 끝(09-29). 110 은 사람 칸만(`docs/STORE_CHECKLIST.md`·초안 `docs/store/`) + 묶음 PC 에서 `BuildAndroidAab` 실측 — ③b 폰 결과 대기(새 APK). 앱 번들 진단 `PlaytestSagaAab`. 영어 검수 `node tools/loc-review.mjs`(오류 0, 사람은 `docs/en_review.tsv`). 정체성 `SagaPlayerBuild.AppId` · 아이콘 `make_icon.py`→`SagaAppIcon`. 크레딧 `SagaCredits`·`SagaCreditsCheck`(새 에셋은 표 한 줄부터)·오류 기록 `SagaCrashLog`·버전 = bundleVersion 한 곳. HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`(남은 고레벨 세이브는 옮기고)·`HangulWatch`, 재빌드 `SagaRebuildScenes`.
 0-1. **남은 것**: 사람 영어 검수(tsv 순위 1부터). GO 동료 몸 Maria.controller 리타깃·무기는 주인공 손에만.
 1. STORY 판수(15→20 약 11판·20→25 약 28판)가 무거우면 `JobPromoteLevel3/4`만.
 2. **101-2·104-1 잔여(보류)** — GO⑤·Kenney 폴백·헤어카드.
@@ -61,7 +61,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 
 ## 실기 확인 대기 (항목명만 — 경위는 HISTORY grep)
 
-- GO: **109-14(⑲-1~28) — HISTORY 09-28~29 조각마다 "실기 확인 전" 줄** · **정상·폭포·카메라(109-9)** · **스킬 모양(109-8)** · **인물 몸(109-7) — 꾸밈 자리·몸 너비** · **들판 인물(109-6a) — 겨루기 거리·★5·굴복** · **세 시대(109-1) — 적 몸·역참 사람·잔해 크기** · 옛 107~108·VS 항목(수호장·마을 사람·소품·동료 모델·원소 적·지도·이동·들판 전투 — HISTORY grep) · **폰에서 설정·승급 3택·저장 버튼**
+- GO: **109-14(⑲-1~29) — HISTORY 09-28~29 조각마다 "실기 확인 전" 줄** · **정상·폭포·카메라(109-9)** · **스킬 모양(109-8)** · **인물 몸(109-7) — 꾸밈 자리·몸 너비** · **들판 인물(109-6a) — 겨루기 거리·★5·굴복** · **세 시대(109-1) — 적 몸·역참 사람·잔해 크기** · 옛 107~108·VS 항목(수호장·마을 사람·소품·동료 모델·원소 적·지도·이동·들판 전투 — HISTORY grep) · **폰에서 설정·승급 3택·저장 버튼**
 - DUNGEON: **109-10-5~10 — 우두머리·사연·몸짓·서명·주인 수·몰이(세부 HISTORY 09-27)** · **109-10 비결·비전·시련 체감, 지역 배너·땅빛·M 지도** · **꾸밈 시대 층(109-2b)** · **세 시대 잡졸 여덟·손님·행상** · 옛 항목(두목 몸~101) HISTORY grep · **폰에서 버튼 전부**
 - FOREST: **방문객·단골(109-12) — 조각 찾기·다시 다가서기·빛 구슬·꼬마 크기·손짓 글자·자리 여덟·보상 값** · **세 시대(109-4) — 잔해 크기·뜬 높이, 덮개 차, 마을 사람 여섯 발·키·대사** · **숲지기 모델** · **짐승 여덟 모델** · **존 소품 — 실측 크기·휨 따라 내림·걸림** · **특색 존(108 ②)**, 옛 101 항목(HISTORY grep), **폰에서 저장·설정·밀어내기 버튼**
 - STORY: **보스 패턴전·고유 기술·관문 대장(109-11) — 예고·휩쓸기·쇠사슬·그로기·8초 간격** · **세 시대(109-3) — 시대 적 키·타격감·알림·손님** · 두목 Morak(훅 박자) · 척후병·전직관 모델 · 곁의 동료·소환(106-10) · 두목 등장 컷(106-8) · 사건·관계·선택·전직 팝업·관문 대장·비경 · 무예 1~4차(패널 K·칸·손맛·판수·유파 세트·옷 빛깔) — 세부는 HISTORY grep · **폰에서 버튼 전부**

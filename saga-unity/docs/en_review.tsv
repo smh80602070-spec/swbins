@@ -1050,6 +1050,7 @@
 2	go	region.village	마을 들판	Village Fields		
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
 2	go	story.altar4	넷째 제단	the Fourth Altar		
+2	go	story.altar_beacon	봉화 제단	Beacon Altar		
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
 2	go	story.boss.haesol	먹구름 가면 해솔	Haesol of the Storm Mask		
 2	go	story.boss.king	먹구름 임금	Storm King		
@@ -1113,6 +1114,45 @@
 2	go	story.ch10.s9.l3	오늘은 관측소에서 몸 좀 녹여요. 기계가 풀리면 날씨 지도를 보여 줄게요. 다음엔 산성 안쪽으로!	Let's warm up at the observatory today. Once the machine thaws, I'll show you the weather map. Next, inside the fortress!		
 2	go	story.ch10.s9.p.a	산성지기를 찾아봐요.	Let's look for the keeper.		
 2	go	story.ch10.s9.p.b	불씨가 정말 있을까요?	Is there really an ember?		
+2	go	story.ch11	제11장 · 얼음 아래 산성	Chapter 11 · The Fortress Beneath the Ice		
+2	go	story.ch11.s1	기상 관측소의 하람에게 날씨 지도 보기	See the weather map from Haram at the observatory		
+2	go	story.ch11.s1.l1	기계가 풀렸어요! 이것 봐요 — 찬 기운이 두 군데서 뿜어 나와요. 하나는 비행선, 하나는… 호수 한가운데.	The machine thawed! Look — cold is pouring out from two places. One is the airship, the other… the middle of the lake.		
+2	go	story.ch11.s1.l2	호수 밑엔 아무것도 없을 텐데. 그리고 어젯밤, 산성 문루에 등불 하나가 또 떠 있었어요.	There should be nothing under that lake. And last night, another lantern was floating at the fortress gatehouse.		
+2	go	story.ch11.s1.l3	옛이야기의 산성지기라면, 호수 얘기도 알겠죠. 난 여기서 바늘을 지켜볼게요. 조심해요!	If it's the keeper from the old tale, he'll know about the lake too. I'll watch the needle here. Be careful!		
+2	go	story.ch11.s1.p.a	산성으로 가 볼게요.	I'll go to the fortress.		
+2	go	story.ch11.s1.p.b	등불이요?	A lantern?		
+2	go	story.ch11.s2	옛 산성 문루로	To the old fortress gatehouse		
+2	go	story.ch11.s3	문루에 나타난 산성지기와 이야기하기	Talk to the fortress keeper at the gatehouse		
+2	go	story.ch11.s3.l1	……또 누가 불씨를 찾아왔구나. 먹구름 졸개냐, 하늘에서 떨어진 쇳덩이의 심부름꾼이냐.	……Another one come for the ember. A storm-cloud lackey, or an errand-runner of that iron lump that fell from the sky?		
+2	go	story.ch11.s3.l2	나는 바우. 이 산성이 무너지던 날까지 봉화 불씨를 지켰고, 그 뒤로도 떠나지 못했다.	I am Bawoo. I kept the beacon ember until the day this fortress fell, and I never managed to leave after.		
+2	go	story.ch11.s3.l3	적이 산성을 넘던 밤, 불씨를 호수 얼음 밑 석빙고에 감췄지. 얼음 문은 호숫가 석등 셋으로만 열린다.	The night the enemy crossed the walls, I hid the ember in the ice house beneath the lake. The ice door opens only with the three lakeside lanterns.		
+2	go	story.ch11.s3.l4	옛 노랫말이다 — '달이 얼음에 먼저 비치고, 해가 얼음을 녹이고, 별이 길을 연다'. 차례를 어기면 문은 다시 얼어붙는다.	An old verse: 'The moon first shines on the ice, the sun melts the ice, the star opens the way.' Break the order and the door freezes again.		
+2	go	story.ch11.s3.l5	호숫가에서 기다리마. 네 불이 노랫말을 따르는지 보겠다.	I'll wait by the lake. Let's see if your flame follows the verse.		
+2	go	story.ch11.s3.p.a	불씨를 빌리러 왔어요.	I came to borrow the ember.		
+2	go	story.ch11.s3.p.b	당신이 산성지기?	You're the fortress keeper?		
+2	go	story.ch11.s4	얼어붙은 호수 석등을 노랫말 차례대로 밝히기	Light the frozen lake's lanterns in the order of the verse		
+2	go	story.ch11.s5	얼음 문이 열리며 깨어난 파수 짐승 물리치기	Defeat the guardian beasts awakened as the ice door opens		
+2	go	story.ch11.s6	호숫가의 바우에게 불씨 받기	Receive the ember from Bawoo at the lakeside		
+2	go	story.ch11.s6.l1	석빙고 파수들이 백 년 만에 깼구나. 저놈들도 제 일을 했을 뿐이다.	The ice house guards woke after a hundred years. They were only doing their job.		
+2	go	story.ch11.s6.l2	보아라 — 꺼지지 않았다. 산성 봉화의 불씨다.	Look — it hasn't gone out. The fortress beacon's ember.		
+2	go	story.ch11.s6.l3	쇳덩이의 심장이라… 불씨는 제가 갈 곳을 안다. 헌데 불씨가 얼음 밖에 나오면 그 냄새를 맡고 서리 짐승들이 몰려온다.	An iron lump's heart… the ember knows where it belongs. But once it leaves the ice, frost beasts will swarm to its scent.		
+2	go	story.ch11.s6.l4	산성 문루 앞 봉화 제단에 불씨를 올려라. 불이 제 힘을 되찾을 때까지 지켜 내야 한다. 담이 뒤를 막아 줄 게다.	Place the ember on the beacon altar before the gatehouse. You must defend it until the flame regains its strength. The wall will cover your back.		
+2	go	story.ch11.s6.p.a	하늘 배의 심장을 켜야 해요.	I have to restart the sky ship's core.		
+2	go	story.ch11.s6.p.b	받아도 될까요?	May I take it?		
+2	go	story.ch11.s7	산성 문루 앞 봉화 제단을 서리 짐승에게서 지키기	Defend the beacon altar before the gatehouse from the frost beasts		
+2	go	story.ch11.s8	문루의 바우와 이야기하기	Talk to Bawoo at the gatehouse		
+2	go	story.ch11.s8.l1	……버텼구나. 불씨가 제 빛을 찾았다. 이제 얼음 밖에서도 꺼지지 않을 게다.	……You held. The ember has found its light again. It won't go out even outside the ice now.		
+2	go	story.ch11.s8.l2	백 년을 지켰으니, 이제 넘겨도 되겠지. 산성의 불씨를 네게 맡긴다.	I've kept it a hundred years — it's time to pass it on. I entrust the fortress ember to you.		
+2	go	story.ch11.s8.l3	나는 이 돌담에 남는다. 하늘 배가 다시 떠오르면, 봉화가 오른 것으로 알겠다.	I stay with this stone wall. When the sky ship rises again, I'll know the beacon was lit.		
+2	go	story.ch11.s8.p.a	꼭 지킬게요.	I'll protect it.		
+2	go	story.ch11.s8.p.b	당신은요?	And you?		
+2	go	story.ch11.s9	추락한 비행선의 반디에게 불씨 가져가기	Bring the ember to Bandi at the crashed airship		
+2	go	story.ch11.s9.l1	삐— 열원 감지. 온도… 상승. 이것이 기록 속의 불씨입니까?	Beep — heat source detected. Temperature… rising. Is this the ember from the records?		
+2	go	story.ch11.s9.l2	관측소 바늘이 움직였어요! 호수 쪽 찬 기운이 뚝 끊겼고요.	The observatory needle moved! And the cold from the lake just stopped.		
+2	go	story.ch11.s9.l3	불씨만으로는 부족합니다. 심장실 문이 안쪽에서 얼어붙었고, 시간 틈에서 무언가가 심장을 붙잡고 있습니다.	The ember alone is not enough. The core room door is frozen from inside, and something from the time rift is gripping the core.		
+2	go	story.ch11.s9.l4	무언가라니… 오늘은 여기까지. 내일 날이 개면, 셋이서 배 안으로 들어가요.	Something…? That's enough for today. If the sky clears tomorrow, the three of us will go inside the ship.		
+2	go	story.ch11.s9.p.a	이제 심장을 켤 수 있어?	Can we restart the core now?		
+2	go	story.ch11.s9.p.b	바우가 맡긴 거야.	Bawoo entrusted it to me.		
 2	go	story.ch2	제2장 · 먹구름 제단	Chapter 2 · The Stormcloud Altar		
 2	go	story.ch2.s1	학자에게 제단 가는 길을 묻기	Ask the scholar the way to the altar		
 2	go	story.ch2.s1.l1	비문을 다 읽었어. 이무기는 너른 강 물가 서쪽, 먹구름 제단 안에 잠들어 있어.	I've finished reading the inscription. The serpent sleeps inside the Stormcloud Altar, west along the Broad River.		
@@ -1403,6 +1443,7 @@
 2	go	story.gather_n	{0} {1}/{2}	{0} {1}/{2}		
 2	go	story.gold	금 +{0}	Gold +{0}		
 2	go	story.idle.bandi	삐— 별배 심장 온도, 계속 하락 중.	Beep — Starship core temperature still falling.		
+2	go	story.idle.bawoo	……불씨는 아직 꺼지지 않았다.	……The ember has not gone out yet.		
 2	go	story.idle.elder	먹구름이 걷히면 마을 잔치를 열어야지.	Once the stormclouds clear, we'll hold a village feast.		
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
 2	go	story.idle.haesol	……	……		
@@ -1418,6 +1459,7 @@
 2	go	story.me	나	Me		
 2	go	story.next	다음 ▶ (F)	Next ▶ (F)		
 2	go	story.npc.bandi	조종 기계 반디	Bandi the Pilot Machine		
+2	go	story.npc.bawoo	산성지기 바우	Bawoo the Fortress Keeper		
 2	go	story.npc.elder	청하 촌장 누리	Elder Nuri of Cheongha		
 2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
 2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
@@ -1437,6 +1479,7 @@
 2	go	story.seal_lit	{0} 석등에 불이 붙었다 ({1}/3)	The {0} lantern caught fire ({1}/3)		
 2	go	story.seal_wrong	차례가 틀렸다 — 석등이 모두 꺼졌다	Wrong order — all the lanterns went out		
 2	go	story.short.bandi	반디	Bandi		
+2	go	story.short.bawoo	바우	Bawoo		
 2	go	story.short.elder	누리	Nuri		
 2	go	story.short.ferryman	버들	Beodeul		
 2	go	story.short.haesol	해솔	Haesol		

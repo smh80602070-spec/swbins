@@ -223,6 +223,8 @@ namespace Saga.Go.Data
 
         // ---- 109-14-28 10장 서리봉 고원 자리(고원 가운데에서 m — 웹 명소 자리 × 0.45 위에 얹는다) ----
         public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
+        // 11장(⑲-29) — 산성 문루 앞(문 남쪽 22m)·호숫가 석등 자리(호수 북쪽 물가 밖)·바우가 호숫가에서 기다리는 자리·봉화 제단(문 앞 32m)
+        public static readonly Vector2 BawooGate = FrostAt("fort", 3f, 22f), LakeSeal = FrostAt("lake", 0f, -36f), BawooLake = FrostAt("lake", 16f, -34f), BeaconAltar = FrostAt("fort", 0f, 32f);
 
         public static readonly Npc[] Npcs =
         {
@@ -304,12 +306,24 @@ namespace Saga.Go.Data
                     new Spot { Ch = 9, From = 3, To = 4, Frost = true, Arena = HaramObs },
                     new Spot { Ch = 9, From = 5, To = 6, Path = true },
                     new Spot { Ch = 9, From = 7, To = 8, Frost = true, Arena = HaramFort },
+                    new Spot { Ch = 10, From = 0, To = 7, Frost = true, Arena = HaramObs }, // 11장 — 관측소에서 바늘을 지킨다
+                    new Spot { Ch = 10, From = 8, To = 8, Frost = true, Arena = HaramShip },
                 },
                 IdleKey = "story.idle.haram", IdleKo = "바늘이 또 얼었네… 눈은 언제 그치려나." },
             new Npc { Id = "bandi", NameKey = "story.npc.bandi", NameKo = "조종 기계 반디", ShortKey = "story.short.bandi", ShortKo = "반디",
                 Gx = 4.5f, Gy = 0.5f, Pet = true,
-                Appear = new[] { new Spot { Ch = 9, From = 6, To = 8, Frost = true, Arena = BandiShip } },
+                Appear = new[] { new Spot { Ch = 9, From = 6, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 10, From = 0, To = 8, Frost = true, Arena = BandiShip } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
+            // 109-14-29 11장(웹 ⑲-29) — 산성지기 바우: 문루(2·6~7단계)·호숫가(3~5단계)에 선다
+            new Npc { Id = "bawoo", NameKey = "story.npc.bawoo", NameKo = "산성지기 바우", ShortKey = "story.short.bawoo", ShortKo = "바우",
+                Gx = 4.5f, Gy = 0.5f, FolkBody = "Vanguard",
+                Appear = new[]
+                {
+                    new Spot { Ch = 10, From = 1, To = 2, Frost = true, Arena = BawooGate },
+                    new Spot { Ch = 10, From = 3, To = 5, Frost = true, Arena = BawooLake },
+                    new Spot { Ch = 10, From = 6, To = 7, Frost = true, Arena = BawooGate },
+                },
+                IdleKey = "story.idle.bawoo", IdleKo = "……불씨는 아직 꺼지지 않았다." },
         };
 
 
@@ -379,7 +393,7 @@ namespace Saga.Go.Data
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
 
         /// <summary>석등 가운데 — 5장 둘째 제단 또는 섬(8장).</summary>
-        public static Vector3 SealPos(Step s) => s.Isle ? IslePos(Vector2.zero) : s.Gx != 0f || s.Gy != 0f ? GridPos(s.Gx, s.Gy) : GridPos(Altar2Gx, Altar2Gy);
+        public static Vector3 SealPos(Step s) => s.Frost ? StepPos(s) : s.Isle ? IslePos(Vector2.zero) : s.Gx != 0f || s.Gy != 0f ? GridPos(s.Gx, s.Gy) : GridPos(Altar2Gx, Altar2Gy);
 
         public const float BossHp = 6f, BossAtk = 1.5f, BossScale = 1.8f;
 
@@ -956,6 +970,73 @@ namespace Saga.Go.Data
                             L("haram", "story.ch10.s9.l2", "밤이 되면 산성지기가 나와 불씨를 지킨다는 옛이야기가 있어요. 그냥 이야기인 줄 알았는데…"),
                             Pick("story.ch10.s9.p", "산성지기를 찾아봐요.", "불씨가 정말 있을까요?"),
                             L("haram", "story.ch10.s9.l3", "오늘은 관측소에서 몸 좀 녹여요. 기계가 풀리면 날씨 지도를 보여 줄게요. 다음엔 산성 안쪽으로!"),
+                        } },
+                }
+            },
+            // 109-14-29 11장(웹 ⑲-29) — 얼음 아래 산성: 관측소 → 산성 문루(바우) → 호숫가 석등(달·해·별) → 얼음 밑 파수 → 불씨 → 문 앞 봉화 제단 지키기 → 비행선.
+            // 바위곰·눈여우·매·날쌘용은 14-1b(새 원소 괴물 몸) 전까지 옛 몸에 그 원소(암·빙·풍·뇌)를 덧씌운다.
+            new Chapter
+            {
+                Id = "ch11", NameKey = "story.ch11", NameKo = "제11장 · 얼음 아래 산성", Ar = 28,
+                Gold = 3250, Mats = new[] { 0, 3, 4, 5, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "haram", TextKey = "story.ch11.s1", TextKo = "기상 관측소의 하람에게 날씨 지도 보기",
+                        Lines = new[]
+                        {
+                            L("haram", "story.ch11.s1.l1", "기계가 풀렸어요! 이것 봐요 — 찬 기운이 두 군데서 뿜어 나와요. 하나는 비행선, 하나는… 호수 한가운데."),
+                            L("haram", "story.ch11.s1.l2", "호수 밑엔 아무것도 없을 텐데. 그리고 어젯밤, 산성 문루에 등불 하나가 또 떠 있었어요."),
+                            Pick("story.ch11.s1.p", "산성으로 가 볼게요.", "등불이요?"),
+                            L("haram", "story.ch11.s1.l3", "옛이야기의 산성지기라면, 호수 얘기도 알겠죠. 난 여기서 바늘을 지켜볼게요. 조심해요!"),
+                        } },
+                    new Step { Type = StepType.Go, Frost = true, Arena = FrostAt("fort", 0f, 30f), TextKey = "story.ch11.s2", TextKo = "옛 산성 문루로" },
+                    new Step { Type = StepType.Talk, Npc = "bawoo", TextKey = "story.ch11.s3", TextKo = "문루에 나타난 산성지기와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bawoo", "story.ch11.s3.l1", "……또 누가 불씨를 찾아왔구나. 먹구름 졸개냐, 하늘에서 떨어진 쇳덩이의 심부름꾼이냐."),
+                            Pick("story.ch11.s3.p", "불씨를 빌리러 왔어요.", "당신이 산성지기?"),
+                            L("bawoo", "story.ch11.s3.l2", "나는 바우. 이 산성이 무너지던 날까지 봉화 불씨를 지켰고, 그 뒤로도 떠나지 못했다."),
+                            L("bawoo", "story.ch11.s3.l3", "적이 산성을 넘던 밤, 불씨를 호수 얼음 밑 석빙고에 감췄지. 얼음 문은 호숫가 석등 셋으로만 열린다."),
+                            L("bawoo", "story.ch11.s3.l4", "옛 노랫말이다 — '달이 얼음에 먼저 비치고, 해가 얼음을 녹이고, 별이 길을 연다'. 차례를 어기면 문은 다시 얼어붙는다."),
+                            L("bawoo", "story.ch11.s3.l5", "호숫가에서 기다리마. 네 불이 노랫말을 따르는지 보겠다."),
+                        } },
+                    new Step { Type = StepType.Seal, Frost = true, Arena = LakeSeal, Order = new[] { "moon", "sun", "star" }, TextKey = "story.ch11.s4", TextKo = "얼어붙은 호수 석등을 노랫말 차례대로 밝히기" },
+                    new Step { Type = StepType.Kill, Frost = true, Arena = FrostAt("lake", 0f, 0f),
+                        Foes = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith) },
+                        TextKey = "story.ch11.s5", TextKo = "얼음 문이 열리며 깨어난 파수 짐승 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "bawoo", TextKey = "story.ch11.s6", TextKo = "호숫가의 바우에게 불씨 받기",
+                        Lines = new[]
+                        {
+                            L("bawoo", "story.ch11.s6.l1", "석빙고 파수들이 백 년 만에 깼구나. 저놈들도 제 일을 했을 뿐이다."),
+                            L("bawoo", "story.ch11.s6.l2", "보아라 — 꺼지지 않았다. 산성 봉화의 불씨다."),
+                            Pick("story.ch11.s6.p", "하늘 배의 심장을 켜야 해요.", "받아도 될까요?"),
+                            L("bawoo", "story.ch11.s6.l3", "쇳덩이의 심장이라… 불씨는 제가 갈 곳을 안다. 헌데 불씨가 얼음 밖에 나오면 그 냄새를 맡고 서리 짐승들이 몰려온다."),
+                            L("bawoo", "story.ch11.s6.l4", "산성 문루 앞 봉화 제단에 불씨를 올려라. 불이 제 힘을 되찾을 때까지 지켜 내야 한다. 담이 뒤를 막아 줄 게다."),
+                        } },
+                    new Step { Type = StepType.Defend, Frost = true, Arena = BeaconAltar, NameKey = "story.altar_beacon", NameKo = "봉화 제단", Dirs = new[] { 90f, 135f, 180f, 225f, 270f },
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        },
+                        TextKey = "story.ch11.s7", TextKo = "산성 문루 앞 봉화 제단을 서리 짐승에게서 지키기" },
+                    new Step { Type = StepType.Talk, Npc = "bawoo", TextKey = "story.ch11.s8", TextKo = "문루의 바우와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bawoo", "story.ch11.s8.l1", "……버텼구나. 불씨가 제 빛을 찾았다. 이제 얼음 밖에서도 꺼지지 않을 게다."),
+                            L("bawoo", "story.ch11.s8.l2", "백 년을 지켰으니, 이제 넘겨도 되겠지. 산성의 불씨를 네게 맡긴다."),
+                            Pick("story.ch11.s8.p", "꼭 지킬게요.", "당신은요?"),
+                            L("bawoo", "story.ch11.s8.l3", "나는 이 돌담에 남는다. 하늘 배가 다시 떠오르면, 봉화가 오른 것으로 알겠다."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch11.s9", TextKo = "추락한 비행선의 반디에게 불씨 가져가기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch11.s9.l1", "삐— 열원 감지. 온도… 상승. 이것이 기록 속의 불씨입니까?"),
+                            L("haram", "story.ch11.s9.l2", "관측소 바늘이 움직였어요! 호수 쪽 찬 기운이 뚝 끊겼고요."),
+                            Pick("story.ch11.s9.p", "이제 심장을 켤 수 있어?", "바우가 맡긴 거야."),
+                            L("bandi", "story.ch11.s9.l3", "불씨만으로는 부족합니다. 심장실 문이 안쪽에서 얼어붙었고, 시간 틈에서 무언가가 심장을 붙잡고 있습니다."),
+                            L("haram", "story.ch11.s9.l4", "무언가라니… 오늘은 여기까지. 내일 날이 개면, 셋이서 배 안으로 들어가요."),
                         } },
                 }
             },

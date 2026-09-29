@@ -26,7 +26,7 @@ namespace Saga.EditorTools
     public static class PlaytestGoStory
     {
         private static string _tag;
-        private static string _ch8 = "", _ch9 = "", _ch10 = "";
+        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -73,6 +73,7 @@ namespace Saga.EditorTools
                 CheckChapter8(pc, field, ui);
                 CheckChapter9(fc, pc, field, ui);
                 CheckChapter10(fc, pc, field, ui);
+                CheckChapter11(fc, pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -102,7 +103,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -118,12 +119,12 @@ namespace Saga.EditorTools
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 15 || GoStory.Chapters.Length != 10) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 16 || GoStory.Chapters.Length != 11) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 } };
-            for (int c = 0; c < 10; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 } };
+            for (int c = 0; c < 11; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -1047,10 +1048,85 @@ namespace Saga.EditorTools
             if (GoStory.Flat(hb.transform.position, GoStory.FrostPos(GoStory.HaramFort)) > 0.6f) Fail("하람이 산성 문 안쪽에 안 섰다");
             int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot), guide = TalentState.Count(GoTalent.Mat.Guide), secret = TalentState.Count(GoTalent.Mat.Secret);
             Talk(pc, ui, "haram", "10장 끝 하람");
-            if (!StoryState.Done || StoryState.Ch != 10 || GoldState.Gold != gold + 3000 || TalentState.Count(GoTalent.Mat.Knot) != knot + 5 || TalentState.Count(GoTalent.Mat.Guide) != guide + 3 || TalentState.Count(GoTalent.Mat.Secret) != secret + 4) Fail("10장 끝·보상(금 3000·교본 3·비급 4·매듭 5)");
+            if (StoryState.Ch != 10 || GoldState.Gold != gold + 3000 || TalentState.Count(GoTalent.Mat.Knot) != knot + 5 || TalentState.Count(GoTalent.Mat.Guide) != guide + 3 || TalentState.Count(GoTalent.Mat.Secret) != secret + 4) Fail("10장 끝·보상(금 3000·교본 3·비급 4·매듭 5)");
             field.Refresh();
-            if (field.NpcShown("haram") || field.NpcShown("bandi")) Fail("10장 뒤에도 하람·반디가 섬");
+            if (StoryState.Done) Fail("10장 뒤에 이야기가 끝남(11장이 있다)");
             _ch10 = "10장 고원 자리·화살표는 돌기둥·무리 빙 셋 풍 하나·하람 따라가기 초당 6·관측소→비행선→산성·반디·보상";
+        }
+
+        // ---- 11장 ---------------------------------------------------------------------------------------------
+
+        private static void CheckChapter11(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch11 = "11장 중단";
+            StoryState.OffForTest = false;
+            PlayerStats.Restore(28, 0);
+            StoryState.Restore(10, 0);
+            foreach (var off in new[] { GoStory.BawooGate, GoStory.LakeSeal, GoStory.BawooLake, GoStory.BeaconAltar })
+                if (!GoFrost.Contains(GoStory.FrostPos(off)) || Mathf.Abs(off.x) > GoFrost.HalfX - 25f || Mathf.Abs(off.y) > GoFrost.HalfZ - 5f) Fail($"11장 자리 {off} 가 고원 밖·가장자리");
+            field.Refresh();
+            if (!field.NpcShown("haram") || !field.NpcShown("bandi") || field.NpcShown("bawoo")) Fail("11장 첫 단계: 하람·반디만 서야 함");
+            Talk(pc, ui, "haram", "11장 하람");
+            Expect(10, 1, "하람 뒤");                                                           // → 1 go 문루
+            pc.Teleport(GoStory.FrostPos(GoStory.FrostAt("fort", 0f, 30f)) + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(10, 2, "문루 도착");                                                          // → 2 talk 바우
+            field.Refresh();
+            var bb = field.NpcBody("bawoo");
+            if (!field.NpcShown("bawoo") || bb == null || GoStory.Flat(bb.transform.position, GoStory.FrostPos(GoStory.BawooGate)) > 0.6f) Fail("바우가 문루에 안 섰다");
+            Talk(pc, ui, "bawoo", "11장 문루 바우");
+            Expect(10, 3, "바우 뒤");                                                           // → 3 seal 호숫가
+            field.Refresh();
+            if (!field.SealCenterOf(10).gameObject.activeSelf || field.SealLampOf(10, 0).Lit) Fail("호숫가 석등이 꺼진 채 안 섰다");
+            if (GoStory.Flat(field.SealCenterOf(10).transform.position, GoStory.FrostPos(GoStory.LakeSeal)) > 0.6f) Fail("석등 가운데가 호숫가 자리가 아님");
+            if (GoStory.Flat(bb.transform.position, GoStory.FrostPos(GoStory.BawooLake)) > 0.6f) Fail("바우가 호숫가로 안 옮김");
+            int Lamp(string id) => System.Array.IndexOf(GoStory.SealLayout, id);
+            Vector3 L(string id) => field.SealLampOf(10, Lamp(id)).transform.position;
+            Pulse(L("sun"), 1f);                                                                // 틀림(첫째는 달)
+            if (StoryState.Progress != 0 || field.SealLampOf(10, Lamp("sun")).Lit) Fail("차례 틀린 해가 켜짐(달·해·별)");
+            Pulse(L("moon"), 1f);
+            if (StoryState.Progress != 1 || !field.SealLampOf(10, Lamp("moon")).Lit) Fail("달이 안 켜짐");
+            Pulse(L("star"), 1f);                                                               // 틀림(둘째는 해) → 모두 꺼짐
+            if (StoryState.Progress != 0 || field.SealLampOf(10, Lamp("moon")).Lit) Fail("틀렸는데 안 꺼짐");
+            Pulse(L("moon"), 1f);
+            Pulse(L("sun"), 1f);
+            Expect(10, 3, "둘 켰는데 넘어감");
+            Pulse(L("star"), 1f);
+            Expect(10, 4, "달·해·별");                                                           // → 4 kill 파수
+            Vector3 lake = GoStory.FrostPos(GoStory.FrostAt("lake", 0f, 0f));
+            pc.Teleport(lake + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 4 || field.Squad.Count(e => e.Element == GoElement.Geo) != 1 || field.Squad.Count(e => e.Element == GoElement.Cryo) != 2 || field.Squad.Any(e => !GoFrost.Contains(e.transform.position)))
+                Fail($"파수 무리 {field.Squad.Count}·{string.Join(",", field.Squad.Select(e => e.Element + "@" + e.transform.position.x.ToString("0") + "," + e.transform.position.z.ToString("0")))} (암 1·빙 2·고원 안 기대)");
+            var copy = new System.Collections.Generic.List<FieldEnemy>(field.Squad);
+            foreach (var e in copy) Kill(e);
+            Expect(10, 5, "파수 짐승");                                                          // → 5 talk 바우
+            Talk(pc, ui, "bawoo", "11장 호숫가 바우");
+            Expect(10, 6, "불씨 받음");                                                          // → 6 defend
+            Vector3 altar = GoStory.FrostPos(GoStory.BeaconAltar);
+            pc.Teleport(altar + new Vector3(0f, 0.4f, GoStory.DefendStart + 15f));
+            field.DefendTick(pc.transform.position, 0.1f);
+            if (field.DefendWave != -1 || field.Squad.Count != 0) Fail("멀리서 물결이 옴");
+            pc.Teleport(altar + new Vector3(0f, 0.4f, GoStory.DefendStart - 5f));
+            field.DefendTick(pc.transform.position, 0.1f);
+            if (field.DefendWave != 0 || field.Squad.Count != 3) { Fail($"봉화 첫 물결 {field.DefendWave}·{field.Squad.Count}"); return; }
+            foreach (var e in field.Squad) if (!GoFrost.Contains(e.transform.position)) Fail("물결이 고원 밖에서 나옴");
+            for (int guard = 0; guard < 30 && StoryState.StepIndex == 6; guard++)
+            {
+                field.DefendTick(pc.transform.position, 0.1f);
+                foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) if (e.Alive) Kill(e);
+            }
+            Expect(10, 7, "봉화 물결 셋");                                                       // → 7 talk 바우
+            field.Refresh();
+            if (GoStory.Flat(bb.transform.position, GoStory.FrostPos(GoStory.BawooGate)) > 0.6f) Fail("바우가 문루로 안 돌아옴");
+            Talk(pc, ui, "bawoo", "11장 문루 바우 끝");
+            Expect(10, 8, "바우 끝");                                                           // → 8 talk 반디
+            field.Refresh();
+            if (field.NpcShown("bawoo") || GoStory.Flat(field.NpcBody("haram").transform.position, GoStory.FrostPos(GoStory.HaramShip)) > 0.6f) Fail("바우가 남거나 하람이 비행선 곁에 안 섬");
+            int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot);
+            Talk(pc, ui, "bandi", "11장 끝 반디");
+            if (!StoryState.Done || StoryState.Ch != 11 || GoldState.Gold != gold + 3250 || TalentState.Count(GoTalent.Mat.Knot) != knot + 5) Fail("11장 끝·보상(금 3250·매듭 5)");
+            _ch11 = "11장 바우 문루·호숫가·석등 달·해·별(틀리면 꺼짐)·파수 암·빙·봉화 제단 물결 셋(고원 안)·바우 자리 옮김·보상";
         }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------

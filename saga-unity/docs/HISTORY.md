@@ -10421,3 +10421,15 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - `saga-unity/tools/dedupe_forge_textures.py`(드라이런 기본, `--apply`): md5 + 가져오기 설정이 같은 것만 묶어 .mat 의 guid 를 대표로 바꾸고 겹치는 png·.meta 삭제 → 622장 2255MB. 재질 그림 참조 2729개 끊김 0 · `SagaAssetGate` OK(의존 1321→1317).
 - 텍스처·재질은 저장소 밖(.gitignore)이라 `SetupForgeHeroes`·`SetupForgeImport` 를 다시 돌리면 그림이 다시 생긴다 — 그 뒤에 다시 돌릴 것. Unity 끄고 돌린다.
 - 남은 큰 몫: 옷 텍스처(색 변형마다 다른 diffuse)·hero FBX 안 텍스처 재포함(FBX 105개 2.7GB, 빌드엔 안 실림)·인물당 약 5.5만 삼각형. 화질을 깎지 않는 다음 후보 = 안 보이는 삼각형(가려진 몸·뒷면)·Resources 전량 적재 대신 온디맨드(Addressables/에셋 팩).
+
+## 2026-09-29 GO — 109-14-29 이야기 11장 · 얼음 아래 산성(웹 사가고 ⑲-29)
+
+"이어해" — 14-28 다음. 웹 story.js ch11(아홉 단계)·saga-godot ㊺-3 대조.
+
+- `GoStory`: 산성지기 **바우**(`Vanguard` 몸, 칸마다 문루·호숫가로 옮겨 섬)·`SealPos(Frost)`·자리 상수(`BawooGate`·`LakeSeal`·`BawooLake`·`BeaconAltar`)·하람·반디를 11장에도 세움. 11장 = 하람 → 문루 → 바우 → 호숫가 석등(달·해·별) → 파수(암·빙·뇌) → 바우 불씨 → 봉화 제단 지키기(물결 셋, 담 뒤 = 동·남·서) → 문루 바우 → 반디. 금 3250·교본 3·비급 4·매듭 5.
+- 순서 함정: `StoryField.Start` 가 제단·석등을 `FolkWalker.Grounded` 로 앉히는데 `FrostField` 눈밭 바닥이 그보다 늦게 서면 고원 위 석등이 0.5m 뜬다 → `FrostField` 가 바닥을 `Awake` 에서 짓고 `Physics.SyncTransforms()`.
+- 10장·11장 모두 끝이 이야기 끝이 아니다(`Done` = 11장 뒤). 진단 `PlaytestGoStory`: 표(16·11·"TGTSKTETT")·`CheckChapter11`(자리·석등 차례·파수·봉화 물결·바우 옮김·보상), 10장 끝 검사에서 "이야기 끝" 가정을 뺌.
+- 함정 둘: ① `F(Kind.Skeleton, Geo)` 는 원소 덧씌움이 안 먹는다(해골 몸은 물리 그대로) → 바위곰 대역은 물귀신 몸 + 암. ② 진단이 `SealLamp(i)`·`SealCenter` 를 쓰면 5장 석등만 본다 → 11장은 `SealLampOf(10, i)`·`SealCenterOf(10)`.
+- 글 43 짝(loc-review 오류 0).
+- 실기 확인 전: 석등 세 자리(호수 북쪽 물가)가 눈밭 위에 제대로 앉는지·바우 몸이 눈 위에서 어울리는지·봉화 제단과 산성 담 사이 여유·물결이 담 안에서 나오지 않는지.
+- 다음 = 14-30 (웹 ⑲-30 이야기 12장 · 구미호·동료 하람, 2부 끝) · 14-27b.
