@@ -2527,6 +2527,22 @@
     { "key": "domain.echo_p2", "value": "🔮 {0} has raised an elemental shield — break it with a matching element" },
     { "key": "domain.hud_echo", "value": "{0} {1}%{2}" },
     { "key": "domain.why.echo", "value": "Opens after the first ending" },
-    { "key": "domain.hud_echo_shield", "value": "Shield" }
+    { "key": "domain.hud_echo_shield", "value": "Shield" },
+    { "key": "night.spot.ruins", "value": "Ruins Altar" },
+    { "key": "night.spot.road", "value": "Old Western Road" },
+    { "key": "night.spot.peak", "value": "Northern Peak" },
+    { "key": "night.spot.cape", "value": "Wave-Crest Cape" },
+    { "key": "night.spot.isle", "value": "Rock Island" },
+    { "key": "night.spot.frost", "value": "Frost Peak Plateau" },
+    { "key": "night.spot.sunken", "value": "Sunken Capital Sands" },
+    { "key": "night.line.ruins", "value": "This fire… it rose from beneath the inscription. I wish it were all out." },
+    { "key": "night.line.road", "value": "……Every night, fire sparks at the end of this road. It is the king's lingering regret." },
+    { "key": "night.line.peak", "value": "The singing still lingers. This time I'll bring it to an end." },
+    { "key": "night.line.cape", "value": "Heh, even the embers retreat at this old man's oar." },
+    { "key": "night.line.isle", "value": "The night tide brings the embers in. Surely it's really over now." },
+    { "key": "night.line.frost", "value": "(Radio) The observatory thermometer kept jumping every night — it was this fire." },
+    { "key": "night.line.sunken", "value": "Violet light shone on the night sea — so that was this." },
+    { "key": "night.up", "value": "🔮 Night Embers — remnants rise at {0}" },
+    { "key": "night.clear", "value": "🔮 The embers go out — {0}: \"{1}\" · {2} gold · {3} Martial Manual" }
   ]
 }

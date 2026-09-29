@@ -154,6 +154,9 @@ namespace Saga.Go.Data
             public long frostBossPaidAt;
             // 109-14-37 독립 땅(은하 나루 등)에서 찾은 명소·발견 "지역:명소"(버전 그대로)
             public List<string> areaFound;
+            // 109-14-56b 밤의 잔불 — 오늘(새벽 4시에 갈림)·이미 끈 자리(버전 그대로 — 옛 세이브는 빈 채)
+            public string nightDay;
+            public List<string> nightDone;
             public List<int> wqSteps;
             public List<bool> wqDone;
             public string wqTrack;
@@ -197,6 +200,7 @@ namespace Saga.Go.Data
                 dispDone = DispatchState.Done,
                 frostFound = FrostState.Snapshot(), // 109-14-27a
                 areaFound = AreaState.Snapshot(), // 109-14-37
+                nightDay = NightEchoState.Day, nightDone = NightEchoState.Snapshot(), // 109-14-56b
                 frostBossDown = FrostBossState.Defeated, // 109-14-31
                 frostBossBloom = FrostBossState.Bloom,
                 frostBossPaidAt = FrostBossState.PaidAt,
@@ -340,6 +344,7 @@ namespace Saga.Go.Data
             FrostState.Restore(data.frostFound); // 109-14-27a
             FrostBossState.Restore(data.frostBossDown, data.frostBossBloom, data.frostBossPaidAt); // 109-14-31
             AreaState.Restore(data.areaFound); // 109-14-37
+            NightEchoState.Restore(data.nightDay, data.nightDone); // 109-14-56b
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();

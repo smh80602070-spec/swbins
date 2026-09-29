@@ -1085,6 +1085,22 @@
 2	go	mission.next.waypoint	{0}을 켜라	Activate {0}		
 2	go	mission.stage_paid	◆ {0} 사명 {1}/{2} — 금 {3}냥 · 경험치 {4}	◆ {0} mission {1}/{2} — {3} Gold · {4} EXP		
 2	go	move.drown	기력이 다해 물가로 돌아왔다	Out of stamina — you washed back to shore		
+2	go	night.clear	🔮 잔불이 꺼졌다 — {0}: "{1}" · 금 {2} · 교본 {3}	🔮 The embers go out — {0}: "{1}" · {2} gold · {3} Martial Manual		
+2	go	night.line.cape	허, 이 늙은이 노 소리에 잔불도 물러가는군.	Heh, even the embers retreat at this old man's oar.		
+2	go	night.line.frost	(무전) 관측소 온도계가 밤마다 튀었는데 — 이 불 때문이었어요.	(Radio) The observatory thermometer kept jumping every night — it was this fire.		
+2	go	night.line.isle	밤 물살이 잔불을 실어 오네. 이제 진짜 끝이겠지.	The night tide brings the embers in. Surely it's really over now.		
+2	go	night.line.peak	노랫소리가 남았어. 이번엔 내가 끝을 맺을게.	The singing still lingers. This time I'll bring it to an end.		
+2	go	night.line.road	……밤마다 이 길 끝에서 불이 튄다. 임금의 미련이다.	……Every night, fire sparks at the end of this road. It is the king's lingering regret.		
+2	go	night.line.ruins	이 불… 비문 밑에서 올라온 거야. 다 꺼졌으면 좋겠는데.	This fire… it rose from beneath the inscription. I wish it were all out.		
+2	go	night.line.sunken	밤 바다에 보랏빛이 비치더니 — 그게 이거였구려.	Violet light shone on the night sea — so that was this.		
+2	go	night.spot.cape	물마루 곶	Wave-Crest Cape		
+2	go	night.spot.frost	서리봉 고원	Frost Peak Plateau		
+2	go	night.spot.isle	바위섬	Rock Island		
+2	go	night.spot.peak	북쪽 봉우리	Northern Peak		
+2	go	night.spot.road	서쪽 옛길	Old Western Road		
+2	go	night.spot.ruins	폐허 제단	Ruins Altar		
+2	go	night.spot.sunken	잠긴 도읍 모래밭	Sunken Capital Sands		
+2	go	night.up	🔮 밤의 잔불 — {0}에서 잔당이 일어났다	🔮 Night Embers — remnants rise at {0}		
 2	go	npc.elder_active	아직인가? 도적 놈들 때문에 다들 걱정이 크네.	Still not done? Everyone's worried sick about those bandits.		
 2	go	npc.elder_done	고맙네, 자네 덕에 길이 편해졌어.	Thank you. The roads are safer thanks to you.		
 2	go	npc.elder_name	마을 촌장	Village Elder		
