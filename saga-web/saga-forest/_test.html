@@ -2827,7 +2827,7 @@ window.DG_NO_TUNE = true;
         }
         if (cur() !== 'moon2_quiet') { bad.push('고른 결말 장면 ' + cur()); }
         say();
-        if (!SC.state().done.wi_moon || SC.current() !== null || SC.titles().indexOf('이어진 숲의 이웃') < 0) { bad.push('제16장 끝·칭호 ' + JSON.stringify(SC.titles())); }
+        if (!SC.state().done.wi_moon || !SC.current() || SC.current().id !== 'y2_reply' || SC.titles().indexOf('이어진 숲의 이웃') < 0) { bad.push('제16장 끝·둘째 해 열림·칭호 ' + JSON.stringify(SC.titles())); }
         if (!/이어진|사계절/.test(SC.cardHtml())) { bad.push('카드'); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '우주기지 → 곤충 → 한가위 → 동굴(금 고르기) → 편지 → 동지(손님 둘) → 설날 → 대보름(고른 결말) · 칭호 이어진 숲의 이웃 · 열여섯 장 끝';
@@ -2839,6 +2839,58 @@ window.DG_NO_TUNE = true;
         C.save.player = JSON.parse(keep.p); V.raw().player.x = keep.px; V.raw().player.y = keep.py;
       }
     });
+
+    t('시나리오 둘째 해 봄 — 첫 답장·호연의 답장·다시 쌓는 옛 우체통·답장이 온 봄으로 스무 장이 끝난다', function () {
+      var SC = DG.scenario, C = DG.core, s0 = V.state(), bad = [];
+      var keep = { sc: s0.scenario ? JSON.stringify(s0.scenario) : null, fest: JSON.stringify(s0.fest || {}), vs: JSON.stringify(s0.visitSettled || []),
+        hearts: JSON.stringify(s0.hearts || {}), don: JSON.stringify(s0.donated || {}), p: JSON.stringify(C.save.player), px: V.raw().player.x, py: V.raw().player.y };
+      function say() { var k = 0; while (SC.isOpen() && k++ < 40) { SC.next(); } }
+      function cur() { return SC.isOpen() ? SC.currentScene().id : null; }
+      function ofYear(key) { s0.fest[key] = { year: new Date().getFullYear(), done: true, day: s0.day }; }
+      window.DG_NO_SCENARIO = false;
+      try {
+        s0.fest = {}; s0.visitSettled = []; s0.hearts = {}; s0.donated = {};
+        SC.reset();
+        var done = {}; SC.state().done = done;
+        ['sp_move', 'sp_postbox', 'sp_fox', 'sp_museum', 'su_sailor', 'su_photo', 'su_waterfall', 'su_star', 'au_rumi', 'au_insect', 'au_harvest', 'au_cave',
+          'wi_letters', 'wi_dongji', 'wi_newyear', 'wi_moon'].forEach(function (id) { done[id] = 1; });
+        SC.init();
+        if (!SC.current() || SC.current().id !== 'y2_reply' || cur() !== 'rep1') { bad.push('둘째 해 첫 장면 ' + cur()); }
+        say();
+        C.emit('village:delivered', {});
+        if (SC.state().done.y2_reply) { bad.push('배달 하나로 끝남'); }
+        C.emit('village:delivered', {});
+        say();
+        if (!SC.state().done.y2_reply || !SC.state().said.hoy1) { bad.push('제17장 끝·제18장 첫 장면 '); }
+        s0.hearts.a = { h: 2, lastTalk: 0, gainDay: 0, gained: 0 };
+        C.emit('village:gather', { item: { cat: 'flower' }, n: 5 });
+        if (cur() !== 'hoy2') { bad.push('꽃 뒤 장면 ' + cur()); }
+        say();
+        if (SC.state().done.y2_hoyeon) { bad.push('하트 6 전에 끝남'); }
+        s0.hearts.a.h = 6; C.emit('changed');
+        say();
+        if (!SC.state().done.y2_hoyeon || !SC.state().said.reb1) { bad.push('제18장 끝·제19장 첫 장면'); }
+        var spot = V.ruinSpot();
+        if (!spot) { bad.push('폐허 자리 없음'); } else { V.raw().player.x = (spot.tx + 0.5) * V.TILE; V.raw().player.y = (spot.ty + 0.5) * V.TILE; C.emit('changed'); }
+        if (cur() !== 'reb2') { bad.push('폐허 뒤 장면 ' + cur()); }
+        say();
+        C.emit('village:delivered', {});
+        say();
+        if (!SC.state().done.y2_ruin || !SC.state().said.ans1) { bad.push('제19장 끝·제20장 첫 장면'); }
+        ofYear('samjin'); C.emit('changed');
+        say();
+        if (!SC.state().done.y2_bloom || SC.current() !== null || SC.titles().indexOf('답장을 받는 이웃') < 0) { bad.push('제20장 끝·칭호 ' + JSON.stringify(SC.titles())); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '별 우체통 답장(배달 둘) → 호연(꽃 다섯·하트 6) → 폐허 → 삼짇날 꽃놀이 · 칭호 답장을 받는 이웃 · 스무 장 끝';
+      } finally {
+        window.DG_NO_SCENARIO = true;
+        SC.abort();
+        s0.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; s0.fest = JSON.parse(keep.fest); s0.visitSettled = JSON.parse(keep.vs);
+        s0.hearts = JSON.parse(keep.hearts); s0.donated = JSON.parse(keep.don);
+        C.save.player = JSON.parse(keep.p); V.raw().player.x = keep.px; V.raw().player.y = keep.py;
+      }
+    });
+
 
     t('사고 — 앞에 가야 받는다', function () {
       var raw = V.raw(), s = V.state();
