@@ -395,6 +395,33 @@ namespace Saga.Go.Data
             float r = at == "crossing:steps" ? 1.6f : (at == "crossing:clock" ? ClockHalf : at == "sunken:lighthouse" ? LightHalf : TowerHalf) + 0.6f;
             return Flat(p, top) <= r && p.y >= top.y - 1.2f;
         }
+        // 30~32장(⑲-57) — 굳은 거리(여덟째 지역) 상수·이야기 상태: 부양탑 심 6×6m·12m, 장터 결정 돔 반지름 4.6m(31장 석등 고리 6m 가 바깥), 시계방 5×4.2×5m, 신호등 넷(±9), 굳은 자리 셋(네거리 가운데에서 m).
+        // 상태는 순수 함수(장, 단계) — 30장(이식 전)까지 아직 없어 진단이 장·단계를 직접 넣어 잰다. 장은 0부터(30장 = 29).
+        public const float AmberTowerHalf = 3f, AmberTowerHeight = 12f, AmberDomeR = 4.6f, AmberPassHalf = 9f;
+        public static readonly Vector2[] AmberCrystalAt = { new Vector2(11f, -9f), new Vector2(-14f, 7f), new Vector2(6f, 15f) };
+        public static readonly Vector2[] AmberLights = { new Vector2(9f, 9f), new Vector2(-9f, 9f), new Vector2(9f, -9f), new Vector2(-9f, -9f) };
+        public static readonly int[] AmberCrystalFrom = { 5, 6, 7 };
+        public const int AmberCh30 = 29, AmberCh31 = 30, AmberCh32 = 31, AmberDomeStep = 2, AmberTowerStep = 3, AmberGreenStep = 5, AmberWindStep = 5;
+        private static bool Reached(int ch, int step, int atCh, int atStep) => ch > atCh || (ch == atCh && step >= atStep);
+        /// <summary>고개 결정 막이 풀렸나 — 1차 결말(29장)을 마친 뒤.</summary>
+        public static bool AmberPassOpenAt(int ch) => ch >= 29;
+        /// <summary>굳은 자리 i(0 신호등 앞·1 정류장·2 우체통)가 녹았나 — 30장 5·6·7째 단계(0부터 5·6·7)부터.</summary>
+        public static bool AmberCrystalOffAt(int i, int ch, int step) => Reached(ch, step, AmberCh30, AmberCrystalFrom[i]);
+        /// <summary>장터 결정 돔이 깨졌나 — 31장 석등을 다 켠 뒤(2째 단계)부터.</summary>
+        public static bool AmberDomeBrokenAt(int ch, int step) => Reached(ch, step, AmberCh31, AmberDomeStep);
+        /// <summary>부양탑 태엽 심장이 녹았나 — 32장 3째 단계부터.</summary>
+        public static bool AmberTowerMeltedAt(int ch, int step) => Reached(ch, step, AmberCh32, AmberTowerStep);
+        /// <summary>신호등이 초록(거리 시간이 다시 흐름)인가 — 32장 거북을 쓰러뜨린 뒤(5째 단계)부터.</summary>
+        public static bool AmberLightsGreenAt(int ch, int step) => Reached(ch, step, AmberCh32, AmberGreenStep);
+        /// <summary>시계방 괘종시계 바늘이 도나 — 31장 5째 단계(되감는 동안)만.</summary>
+        public static bool AmberClockWindingAt(int ch, int step) => ch == AmberCh31 && step == AmberWindStep;
+        public static bool AmberPassOpen => AmberPassOpenAt(StoryState.Ch);
+        public static bool AmberCrystalOff(int i) => AmberCrystalOffAt(i, StoryState.Ch, StoryState.StepIndex);
+        public static bool AmberDomeBroken => AmberDomeBrokenAt(StoryState.Ch, StoryState.StepIndex);
+        public static bool AmberTowerMelted => AmberTowerMeltedAt(StoryState.Ch, StoryState.StepIndex);
+        public static bool AmberLightsGreen => AmberLightsGreenAt(StoryState.Ch, StoryState.StepIndex);
+        public static bool AmberClockWinding => AmberClockWindingAt(StoryState.Ch, StoryState.StepIndex);
+
         /// <summary>시계탑 바늘이 도나 — 19장 6째 단계(태엽을 푼 뒤)부터 늘.</summary>
         public static bool ClockRunning => StoryState.Ch > 18 || (StoryState.Ch == 18 && StoryState.StepIndex >= 5);
 

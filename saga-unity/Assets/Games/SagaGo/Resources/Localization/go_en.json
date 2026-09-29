@@ -2543,6 +2543,25 @@
     { "key": "night.line.frost", "value": "(Radio) The observatory thermometer kept jumping every night — it was this fire." },
     { "key": "night.line.sunken", "value": "Violet light shone on the night sea — so that was this." },
     { "key": "night.up", "value": "🔮 Night Embers — remnants rise at {0}" },
-    { "key": "night.clear", "value": "🔮 The embers go out — {0}: \"{1}\" · {2} gold · {3} Martial Manual" }
+    { "key": "night.clear", "value": "🔮 The embers go out — {0}: \"{1}\" · {2} gold · {3} Martial Manual" },
+    { "key": "region.amber", "value": "Frozen Street" },
+    { "key": "region.amber.lore", "value": "The old downtown where, on the day the rift closed, time fragments that could not return froze into amber in a single instant. A stopped traffic light, a clock shop, a market inside crystal and an unfinished levitation tower overlap on one street." },
+    { "key": "area.amber.site.pass", "value": "Northern Pass Crystal Veil" },
+    { "key": "area.amber.site.cross", "value": "Frozen Crossroads" },
+    { "key": "area.amber.site.clock", "value": "Chorong's Clock Shop" },
+    { "key": "area.amber.site.market", "value": "Market in Amber" },
+    { "key": "area.amber.site.tower", "value": "Unfinished Levitation Tower" },
+    { "key": "area.amber.site.rail", "value": "Elevated Rail and Stopped Train" },
+    { "key": "area.amber.site.statue", "value": "Street Idol" },
+    { "key": "area.amber.site.lamp", "value": "Frozen Streetlamp" },
+    { "key": "area.amber.site.bench", "value": "Bench in Amber" },
+    { "key": "area.amber.site.vend", "value": "Stopped Vending Machine" },
+    { "key": "area.amber.site.mailbox", "value": "Frozen Mailbox" },
+    { "key": "area.amber.site.cart", "value": "Stopped Handcart" },
+    { "key": "area.amber.site.jar", "value": "Jar in Amber" },
+    { "key": "area.amber.site.kite", "value": "Kite Frozen in Midair" },
+    { "key": "area.amber.site.drone", "value": "Fallen Delivery Drone" },
+    { "key": "area.amber.site.board", "value": "Dead Signboard" },
+    { "key": "area.amber.site.panel", "value": "Cracked Solar Panel" }
   ]
 }

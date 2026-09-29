@@ -185,7 +185,37 @@ namespace Saga.Go.Data
             S("jelly", "빛 해파리", GoEra.Future, 81f, 171f, false),
             S("drone", "수중 드론", GoEra.Future, 162f, 27f, false));
 
-        public static readonly Area[] All = { Skyport, Crossing, Sunken };
+        // ---- 여덟째 지역 굳은 거리(웹 ⑲-57 `amber.js`) — 9부 무대. 틈이 닫히던 날 통째로 호박빛으로 굳은 옛 도시 거리. 은하 나루 북쪽 끝 돌기둥(29장 뒤 열림 = 고개 결정 막이 풀림)으로 든다.
+        // 명소 일곱(웹 자리 × 0.45 — 고개 어귀·네거리·시계방·장터·부양탑·고가 선로·신상)·작은 발견 열 = 열일곱 ----
+        public static readonly Area Amber = Make(new Area
+        {
+            Id = "amber", NameKo = "굳은 거리", Hanja = "琥珀", GroundHex = "7a6a52",
+            LoreKo = "틈이 닫히던 날, 제자리로 못 돌아간 시대 조각이 한 순간째 호박빛으로 굳어 붙은 옛 번화가. 멈춘 신호등과 시계방, 결정 속 장터, 짓다 만 부양탑이 한 거리에 겹쳐 있다.",
+            Center = new Vector3(3800f, 0f, -860f),
+            GateSite = "pass",
+            MapGate = () => Skyport.Center + new Vector3(63f, 0f, -234f), // 은하 나루 북쪽 끝(고개 결정 막 자리)
+            Open = () => GoStory.AmberPassOpen, OpenCh = 29, // 1차 결말(29장)을 마쳐야 고개 결정 막이 풀린다
+            Fog = new Color(0.9f, 0.72f, 0.42f), Sun = new Color(1f, 0.86f, 0.6f), FogDensity = 1.6f, Danger = 3,
+        },
+            S("pass", "북쪽 고개 결정 막", GoEra.Future, 0f, 207f, true),
+            S("cross", "굳은 거리 네거리", GoEra.Modern, 0f, 0f, true),
+            S("clock", "초롱 시계방", GoEra.Modern, -40.5f, -18f, true),
+            S("market", "호박 속 장터", GoEra.Past, 58.5f, -67.5f, true),
+            S("tower", "짓다 만 부양탑", GoEra.Future, -63f, -135f, true),
+            S("rail", "고가 선로와 멈춘 전철", GoEra.Modern, 94.5f, 40.5f, true),
+            S("statue", "거리의 신상", GoEra.Past, 0f, -54f, true),
+            S("lamp", "굳은 가로등", GoEra.Modern, 27f, 18f, false),
+            S("bench", "호박 든 벤치", GoEra.Modern, -22.5f, 40.5f, false),
+            S("vend", "멈춘 자판기", GoEra.Modern, 49.5f, -13.5f, false),
+            S("mailbox", "굳은 우체통", GoEra.Modern, -13.5f, -36f, false),
+            S("cart", "멈춘 손수레", GoEra.Past, 76.5f, -117f, false),
+            S("jar", "호박 속 옹기", GoEra.Past, 40.5f, -94.5f, false),
+            S("kite", "허공에 굳은 연", GoEra.Past, -90f, 9f, false),
+            S("drone", "떨어진 배달 드론", GoEra.Future, 13.5f, 135f, false),
+            S("board", "꺼진 안내판", GoEra.Future, -27f, 99f, false),
+            S("panel", "금 간 태양 패널", GoEra.Future, -103.5f, -81f, false));
+
+        public static readonly Area[] All = { Skyport, Crossing, Sunken, Amber };
 
         public static bool TryArea(string id, out Area a)
         {

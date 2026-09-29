@@ -2543,6 +2543,25 @@
     { "key": "night.line.frost", "value": "(무전) 관측소 온도계가 밤마다 튀었는데 — 이 불 때문이었어요." },
     { "key": "night.line.sunken", "value": "밤 바다에 보랏빛이 비치더니 — 그게 이거였구려." },
     { "key": "night.up", "value": "🔮 밤의 잔불 — {0}에서 잔당이 일어났다" },
-    { "key": "night.clear", "value": "🔮 잔불이 꺼졌다 — {0}: \"{1}\" · 금 {2} · 교본 {3}" }
+    { "key": "night.clear", "value": "🔮 잔불이 꺼졌다 — {0}: \"{1}\" · 금 {2} · 교본 {3}" },
+    { "key": "region.amber", "value": "굳은 거리" },
+    { "key": "region.amber.lore", "value": "틈이 닫히던 날, 제자리로 못 돌아간 시대 조각이 한 순간째 호박빛으로 굳어 붙은 옛 번화가. 멈춘 신호등과 시계방, 결정 속 장터, 짓다 만 부양탑이 한 거리에 겹쳐 있다." },
+    { "key": "area.amber.site.pass", "value": "북쪽 고개 결정 막" },
+    { "key": "area.amber.site.cross", "value": "굳은 거리 네거리" },
+    { "key": "area.amber.site.clock", "value": "초롱 시계방" },
+    { "key": "area.amber.site.market", "value": "호박 속 장터" },
+    { "key": "area.amber.site.tower", "value": "짓다 만 부양탑" },
+    { "key": "area.amber.site.rail", "value": "고가 선로와 멈춘 전철" },
+    { "key": "area.amber.site.statue", "value": "거리의 신상" },
+    { "key": "area.amber.site.lamp", "value": "굳은 가로등" },
+    { "key": "area.amber.site.bench", "value": "호박 든 벤치" },
+    { "key": "area.amber.site.vend", "value": "멈춘 자판기" },
+    { "key": "area.amber.site.mailbox", "value": "굳은 우체통" },
+    { "key": "area.amber.site.cart", "value": "멈춘 손수레" },
+    { "key": "area.amber.site.jar", "value": "호박 속 옹기" },
+    { "key": "area.amber.site.kite", "value": "허공에 굳은 연" },
+    { "key": "area.amber.site.drone", "value": "떨어진 배달 드론" },
+    { "key": "area.amber.site.board", "value": "꺼진 안내판" },
+    { "key": "area.amber.site.panel", "value": "금 간 태양 패널" }
   ]
 }

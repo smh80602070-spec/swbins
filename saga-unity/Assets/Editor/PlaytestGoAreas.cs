@@ -53,6 +53,7 @@ namespace Saga.EditorTools
                     parts.Add($"[{a.Id}] {string.Join(" · ", p)}");
                 }
                 CheckRoute(pc, field, parts);
+                CheckAmber(fc, pc, field, parts);
                 CheckSave(savePath, parts);
             }
             finally
@@ -78,7 +79,8 @@ namespace Saga.EditorTools
         private static void CheckTables(GoAreas.Area a, List<string> parts)
         {
             var all = a.Sites;
-            if (all.Length != 15 || all.Count(s => s.Big) != 5 || all.Count(s => !s.Big) != 10 || all.Select(s => s.Id).Distinct().Count() != 15) Fail($"{a.Id} 명소 다섯·발견 열이 아님");
+            int nBig = a.Id == "amber" ? 7 : 5; // 굳은 거리는 명소 일곱(웹 ⑲-57 — 고가 선로·신상이 더)
+            if (all.Length != nBig + 10 || all.Count(s => s.Big) != nBig || all.Count(s => !s.Big) != 10 || all.Select(s => s.Id).Distinct().Count() != nBig + 10) Fail($"{a.Id} 명소 {nBig}·발견 열이 아님");
             foreach (var s in all)
             {
                 float r = s.Radius;
@@ -94,7 +96,7 @@ namespace Saga.EditorTools
             foreach (var o in GoAreas.All)
                 if (o != a && Mathf.Abs(a.Center.x - o.Center.x) < GoAreas.HalfX * 2f + 20f && Mathf.Abs(a.Center.z - o.Center.z) < GoAreas.HalfZ * 2f + 20f) Fail($"{a.Id}·{o.Id} 땅이 겹침");
             if (a.MapGate() == Vector3.zero || a.ArrivalPos.x < a.Center.x - GoAreas.HalfX) Fail($"{a.Id} 돌기둥 자리");
-            parts.Add("표(명소 다섯·발견 열·안 겹침·세 시대·다른 땅 밖)");
+            parts.Add("표(명소 다섯(굳은 거리 일곱)·발견 열·안 겹침·세 시대·다른 땅 밖)");
         }
 
         private static void CheckRegion(GoAreas.Area a, List<string> parts)
@@ -118,7 +120,7 @@ namespace Saga.EditorTools
                 if (!Physics.Raycast(from, d, 20f)) Fail($"{a.Id} 땅 바깥 벽 {d}");
             }
             foreach (var s in a.Sites) if (field.SiteObject(a.Id, s.Id) == null) Fail($"{a.Id}:{s.Id} 도형이 없다");
-            parts.Add("땅(바닥·벽 넷·도형 열다섯)");
+            parts.Add("땅(바닥·벽 넷·명소·발견 도형)");
         }
 
         private static void CheckTravel(GoAreas.Area a, FieldCombat fc, PlayerController pc, AreaField field, List<string> parts)
@@ -244,6 +246,75 @@ namespace Saga.EditorTools
             field.Refresh();
             if (field.RouteShown || Draft(0)) Fail("등롱 앞으로 되돌렸는데 하늘 섬·기둥이 남음");
             parts.Add("[sunken 구름 위 항로] 하늘 섬 셋 표(등대 서쪽 사슬·틈 8m·기둥→섬 활공 안)·보이지 않는 벽 위·등롱 앞엔 안 섬/뒤엔 섬(윗면 충돌·층 판정)·바람 기둥 셋(23장 끝엔 닫힘·열림 손잡이로 솟는 높이·반지름·밑자리)·섬 윗면에서 발견(밑 땅에선 안 됨·중복 없음·저장 복원)");
+        }
+
+        // ---- 109-14-57 굳은 거리(여덟째 지역, 9부 무대) — 30~32장은 이식 전이라 이야기 상태는 순수 함수에 (장, 단계)를 직접 넣어 잰다 ----
+        private static void CheckAmber(FieldCombat fc, PlayerController pc, AreaField field, List<string> parts)
+        {
+            var a = GoAreas.Amber;
+            if (a.Id != "amber" || a.OpenCh != 29 || !GoAreas.TryArea("amber", out var t) || t != a || GoAreas.All.Length != 4 || GoAreas.All[3] != a) Fail("굳은 거리 표·열릴 장(29장)");
+            if (a.GateSite != "pass" || !a.Sites.Any(s => s.Id == "pass" && s.Big && s.Era == GoEra.Future)) Fail("굳은 거리 고개 어귀 명소");
+            foreach (var id in new[] { "cross", "clock", "market", "tower", "rail", "statue" }) if (!a.TrySite(id, out var s) || !s.Big) Fail($"굳은 거리 명소 {id}");
+            // 돌기둥 — 은하 나루 북쪽 끝 · 다른 땅 돌기둥과 30m 이상
+            if (!GoAreas.Skyport.Contains(a.MapGate()) || a.MapGate().z > GoAreas.Skyport.Center.z - GoAreas.HalfZ + 60f) Fail("굳은 거리 돌기둥이 은하 나루 북쪽 끝이 아님");
+            foreach (var o in GoAreas.All)
+                if (o != a && ((o.MapGate() - a.MapGate()).magnitude < 30f || (o.SteleGround - a.MapGate()).magnitude < 30f)) Fail($"굳은 거리 돌기둥이 {o.Id} 돌기둥과 가까움");
+            foreach (var s in GoAreas.Skyport.Sites) if ((s.Pos - a.MapGate()).magnitude < s.Radius + 3f) Fail($"굳은 거리 돌기둥이 은하 나루 {s.Id} 발견 원 안");
+            // 이야기 상태 표(장은 0부터 — 30장 = 29)
+            if (GoStory.AmberPassOpenAt(28) || !GoStory.AmberPassOpenAt(29) || !GoStory.AmberPassOpenAt(35)) Fail("고개 결정 막: 29장을 마쳐야 풀림");
+            for (int i = 0; i < 3; i++)
+            {
+                int from = 5 + i;
+                if (GoStory.AmberCrystalOffAt(i, 28, 99) || GoStory.AmberCrystalOffAt(i, 29, from - 1) || !GoStory.AmberCrystalOffAt(i, 29, from) || !GoStory.AmberCrystalOffAt(i, 30, 0)) Fail($"굳은 자리 {i}: 30장 {from}째 단계부터 녹음");
+            }
+            if (GoStory.AmberCrystalOffAt(1, 29, 5) || GoStory.AmberCrystalOffAt(2, 29, 6)) Fail("굳은 자리가 차례대로 안 녹음");
+            if (GoStory.AmberDomeBrokenAt(29, 9) || GoStory.AmberDomeBrokenAt(30, 1) || !GoStory.AmberDomeBrokenAt(30, 2) || !GoStory.AmberDomeBrokenAt(31, 0)) Fail("장터 돔: 31장 2째 단계부터 깨짐");
+            if (GoStory.AmberTowerMeltedAt(30, 9) || GoStory.AmberTowerMeltedAt(31, 2) || !GoStory.AmberTowerMeltedAt(31, 3) || !GoStory.AmberTowerMeltedAt(32, 0)) Fail("태엽 심장: 32장 3째 단계부터 녹음");
+            if (GoStory.AmberLightsGreenAt(30, 9) || GoStory.AmberLightsGreenAt(31, 4) || !GoStory.AmberLightsGreenAt(31, 5) || !GoStory.AmberLightsGreenAt(32, 0)) Fail("신호등: 32장 5째 단계(거북 뒤)부터 초록");
+            if (!GoStory.AmberClockWindingAt(30, 5) || GoStory.AmberClockWindingAt(30, 4) || GoStory.AmberClockWindingAt(30, 6) || GoStory.AmberClockWindingAt(31, 5) || GoStory.AmberClockWindingAt(29, 5)) Fail("괘종시계 바늘: 31장 5째 단계만");
+            // 도형 — 결정·돔·심장·신호등 빛·시계방·부양탑 충돌
+            bool off0 = StoryState.OffForTest;
+            try
+            {
+                StoryState.OffForTest = false;
+                StoryState.Restore(15, 0);
+                field.Refresh();
+                for (int i = 0; i < 3; i++) if (!field.AmberPartOn("amber:crystal" + i)) Fail($"굳은 자리 {i} 결정이 안 보임");
+                if (!field.AmberPartOn("amber:dome") || !field.AmberPartOn("amber:heart") || field.AmberLampsGreen || field.AmberWinding) Fail("돔·태엽 심장·신호등 처음 모습");
+                StoryState.Restore(29, 0); // 29장을 마침(= 1차 결말) — 고개만 풀리고 9부 상태는 그대로
+                field.Refresh();
+                if (!a.Open() || !field.AmberPartOn("amber:crystal0") || !field.AmberPartOn("amber:dome") || !field.AmberPartOn("amber:heart") || field.AmberLampsGreen) Fail("29장 끝인데 9부 상태가 바뀜");
+                Physics.SyncTransforms();
+                a.TrySite("cross", out var cross);
+                var c0 = cross.Pos + new Vector3(GoStory.AmberCrystalAt[0].x, 0f, GoStory.AmberCrystalAt[0].y);
+                if (!Physics.Raycast(c0 + new Vector3(-6f, 1.5f, 0f), Vector3.right, out var hit, 12f) || Mathf.Abs(hit.point.x - (c0.x - 1.2f)) > 0.3f) Fail($"굳은 자리 결정 충돌 {hit.point.x - c0.x:0.00}");
+                a.TrySite("market", out var market);
+                if (!Physics.Raycast(market.Pos + new Vector3(-9f, 1.5f, 0f), Vector3.right, out hit, 12f) || Mathf.Abs(hit.point.x - (market.Pos.x - GoStory.AmberDomeR)) > 0.4f) Fail($"장터 돔 충돌 {hit.point.x - market.Pos.x:0.00}");
+                a.TrySite("tower", out var tower);
+                if (!Physics.Raycast(tower.Pos + new Vector3(0f, 20f, 0f), Vector3.down, out hit, 30f) || Mathf.Abs(hit.point.y - GoStory.AmberTowerHeight) > 0.05f) Fail($"부양탑 윗면 충돌 {hit.point.y:0.00}");
+                if (!Physics.Raycast(tower.Pos + new Vector3(-8f, 6f, 0f), Vector3.right, out hit, 12f) || Mathf.Abs(hit.point.x - (tower.Pos.x - GoStory.AmberTowerHalf)) > 0.05f) Fail($"부양탑 옆면 충돌 {hit.point.x - tower.Pos.x:0.00}");
+                a.TrySite("clock", out var clock);
+                if (!Physics.Raycast(clock.Pos + new Vector3(-8f, 2f, 0f), Vector3.right, out hit, 12f) || Mathf.Abs(hit.point.x - (clock.Pos.x - 2.5f)) > 0.05f) Fail("시계방 벽 충돌");
+                foreach (var id in new[] { "cross", "clock", "market", "tower", "rail", "statue", "pass" })
+                {
+                    a.TrySite(id, out var s);
+                    if (!Physics.Raycast(s.Pos + new Vector3(0f, 30f, 0f), Vector3.down, 60f) || field.SiteObject("amber", id).transform.childCount == 0) Fail($"굳은 거리 {id} 도형·바닥");
+                }
+                // 30~32장을 지난 뒤 — 순수 상태가 도형에 닿는 경로는 (Ch, Step) 한계(29 = 마침)라 여기선 안 밟고, 뒤 조각(14-58~60)이 잰다
+            }
+            finally
+            {
+                StoryState.OffForTest = off0;
+            }
+            // 발견 — 고가 선로 명소(웹 명소 일곱째)·작은 발견
+            AreaState.ResetForTest();
+            GoldState.Restore(0);
+            a.TrySite("rail", out var rail);
+            if (field.Check(rail.Pos + new Vector3(rail.Radius - 1f, 0f, 0f)) != 1 || GoldState.Gold != GoAreas.BigGold) Fail("고가 선로 발견·보상");
+            a.TrySite("lamp", out var lamp);
+            if (field.Check(lamp.Pos + new Vector3(lamp.Radius - 1f, 0f, 0f)) != 1 || GoldState.Gold != GoAreas.BigGold + GoAreas.SmallGold) Fail("굳은 가로등 발견·보상");
+            AreaState.ResetForTest();
+            parts.Add("[amber 굳은 거리] 표(명소 일곱·돌기둥 은하 나루 북쪽 끝·29장 뒤 열림)·이야기 상태 표(고개·굳은 자리 5·6·7·돔·심장·신호등 초록·바늘)·도형(결정·돔·심장·신호등 처음 모습·충돌 다섯·명소 일곱 바닥)·발견");
         }
 
         private static void CheckSave(string savePath, List<string> parts)
