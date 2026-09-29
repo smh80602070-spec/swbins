@@ -1,0 +1,13 @@
+{
+ "id": "hanok_01", "era": "past",
+ "footprint": [10.0, 6.0],
+ "floors": [{"h": 3.1}],
+ "walls": {"mat": "white_stucco", "tile_m": 2.4},
+ "base": {"mat": "japanese_stone_wall", "h": 0.75, "tile_m": 2.0},
+ "trim": {"mat": "brown_planks_03", "tile_m": 1.0, "tint": "#3a281c"},
+ "door": {"mat": "brown_planks_03", "tint": "#4a3324", "w": 1.7, "h": 2.2, "wall": 0, "at": 0.5},
+ "windows": {"w": 1.7, "h": 1.5, "sill": 0.7, "gap": 2.5},
+ "glass": {"color": "#efe3c4"},
+ "posts": {"every": 2.5, "w": 0.24},
+ "roof": {"type": "hip", "pitch_deg": 27, "overhang": 1.15, "mat": "grey_roof_tiles", "tile_m": 1.7, "thick": 0.2, "curve": 0.32, "strips": 8, "ridge": "x"}
+}

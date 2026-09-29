@@ -165,7 +165,16 @@ class Mesh:
         return ob
 
 
-def export_glb(objs, path):
+def cap_textures(max_px=1024):
+    """텍스처 최대 변 — 2k 사진을 그대로 품으면 건물 하나가 100MB 를 넘는다. 트랙 가져오기에서 다시 키울 일은 없다(멀리서 보는 건물)."""
+    for im in bpy.data.images:
+        if im.size[0] > max_px or im.size[1] > max_px:
+            k = max_px / max(im.size)
+            im.scale(max(1, int(im.size[0] * k)), max(1, int(im.size[1] * k)))
+
+
+def export_glb(objs, path, max_px=1024):
+    cap_textures(max_px)
     bpy.ops.object.select_all(action='DESELECT')
     for o in objs:
         o.select_set(True)

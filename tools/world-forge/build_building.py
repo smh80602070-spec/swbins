@@ -110,6 +110,20 @@ def plan_openings(rc, wall_i, w, z0, fh, floor_i):
         dw, dh = door.get('w', 1.1), door.get('h', 2.15)
         cu = w.L * door.get('at', 0.5)
         holes.append((cu - dw / 2, cu + dw / 2, 0.0, dh, 'door'))
+    if rc.get('posts'):   # 기둥이 있으면 창은 기둥 사이 가운데 — 폭은 칸 - 0.5
+        npost = max(1, int(round(w.L / rc['posts'].get('every', 2.4))))
+        span = w.L / npost
+        for k in range(npost):
+            cu = (k + 0.5) * span
+            u0, u1 = cu - min(ww, span - 0.5) / 2, cu + min(ww, span - 0.5) / 2
+            v0 = sill
+            v1 = min(v0 + wh, fh - 0.35)
+            if any(not (u1 < h[0] - 0.1 or u0 > h[1] + 0.1) for h in holes if h[4] == 'door'):
+                continue
+            if wall_i in win.get('skip_walls', []):
+                continue
+            holes.append((u0, u1, v0, v1, 'win'))
+        return holes
     n = max(0, int((w.L - 0.6) // gap))
     if n:
         margin = (w.L - (n - 1) * gap) / 2 if n > 1 else w.L / 2
@@ -324,7 +338,7 @@ def build(rc, out):
     bpy.ops.object.transform_apply(location=True, rotation=False, scale=False)
     tris = sum(len(p.vertices) - 2 for p in ob.data.polygons)
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-    W.export_glb([ob], out)
+    W.export_glb([ob], out, int(rc.get('tex_max', 1024)))
     lic = {'id': rc['id'], 'generator': 'tools/world-forge/build_building.py', 'blender': bpy.app.version_string,
            'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0)',
            'inputs': sorted({f'polyhaven: {m.name}' for m in ob.data.materials}),

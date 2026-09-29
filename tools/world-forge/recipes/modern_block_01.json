@@ -1,0 +1,13 @@
+{
+ "id": "modern_block_01", "era": "present",
+ "footprint": [12.0, 9.0],
+ "floors": [{"h": 3.4}, {"h": 3.1}, {"h": 3.1}],
+ "walls": {"mat": "concrete_wall_001", "tile_m": 3.0, "tint": "#d8d4cc"},
+ "trim": {"mat": "black_painted_planks", "tile_m": 1.0, "tint": "#2b3038"},
+ "door": {"mat": "black_painted_planks", "tint": "#2b3038", "w": 1.8, "h": 2.4, "wall": 0, "at": 0.5},
+ "windows": {"w": 2.4, "h": 1.9, "sill": 0.75, "gap": 3.2, "ribbon": true},
+ "glass": {"color": "#79aac2"},
+ "roof": {"type": "flat", "overhang": 0.35, "mat": "bitumen", "tile_m": 2.0, "thick": 0.3, "parapet": 0.55},
+ "bands": true,
+ "corners": false
+}

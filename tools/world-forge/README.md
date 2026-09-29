@@ -20,6 +20,7 @@ Blender 헤드리스 — 사람 클릭 0회. 결과는 `tools/world-forge/_out/`
 - `build_building.py` — 건물 레시피 → `.glb`(벽 패널 구멍·창·문·층 띠·기둥·박공/모임/평 지붕·굴뚝)
 - `preview.py` — 세 방향 미리보기 렌더
 - `recipes/eu_house_01.json` — 서유럽 2층 집(삼각형 약 1900)
+- `recipes/hanok_01.json` — 한옥(모임지붕·큰 처마·검은 기둥 사이 창·돌 기단, 삼각형 약 1300) · `recipes/modern_block_01.json` — 현대 3층 블록(띠창·평지붕 난간, 약 2900)
 
 ```bash
 B="/c/Program Files/Blender Foundation/Blender 5.2/blender.exe"
@@ -34,5 +35,5 @@ B="/c/Program Files/Blender Foundation/Blender 5.2/blender.exe"
 4. 탈것: 수레·배·뗏목(코드) → 탑승 생물(char-forge 몸 파이프라인 재사용, 마지막)
 
 ## 알려진 한계 / 다음
-- GLB 가 재질 텍스처를 통째로 품어 커진다(집 하나 127MB) — 공용 텍스처 + 재질 참조로 바꿀 것(트랙 가져오기에서).
+- GLB 가 재질 텍스처를 품는다 — 텍스처 최대 1024 로 줄여 집 하나 20~30MB(127MB 에서). 게임 트랙에서는 같은 그림이 여러 건물에 겹치니 가져온 뒤 중복 합치기(`dedupe_forge_textures` 방식)를 쓴다.
 - 툰(Godot)·웹 스프라이트 출력은 아직 없다 — `wf_common` 재질 단계에 `style: toon` 을 더한다.
