@@ -19,6 +19,24 @@ func _ready() -> void:
 	get_tree().current_scene = _scene
 	for _i in 30:
 		await get_tree().physics_frame
+	if String(args[0]).contains("saga_realm"):
+		## 사가국지는 조작하는 몸이 없다 — 군주 초상에 탈것이 앉는지만 본다.
+		var lp := get_tree().get_first_node_in_group("lord_portrait")
+		_check("portrait", lp != null, "")
+		if lp != null:
+			lp.call("set_mount", "가온")
+			var vp := lp.get_node("Viewport/SubViewport")
+			_check("portrait_mount", vp.get_node_or_null("MountBody") != null and (vp.get_node("Visual") as Node3D).position.y > 0.5, "ride=%.2f" % (vp.get_node("Visual") as Node3D).position.y)
+			if OS.get_environment("MOUNT_HOST_SHOT") != "": # 창 모드(비헤드리스)에서만 — 초상을 띄워 화면 PNG 로
+				(lp as Control).show()
+				for _i in 20:
+					await get_tree().process_frame
+				vp.get_texture().get_image().save_png(OS.get_environment("MOUNT_HOST_SHOT"))
+			lp.call("set_mount", "나래")
+			_check("portrait_swap", vp.get_children().filter(func(c: Node) -> bool: return c.name.begins_with("MountBody")).size() <= 2, "")
+		print("MOUNT_HOST_DONE fails=%d" % _fails)
+		get_tree().quit()
+		return
 	_p = get_tree().get_first_node_in_group("player") as CharacterBody3D
 	_m = _p.get_node_or_null("Mount") if _p else null
 	_check("node", _m != null, str(args[0]))

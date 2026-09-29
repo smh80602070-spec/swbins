@@ -9539,3 +9539,9 @@ PROJECT_STATE.md` 참고. 요약:
 
 - 신수 몸(CreatureBuilder)이 이미 지닌 AnimationPlayer idle/walk(날개·다리·꼬리 리그)를 mount.gd 가 튼다: 나는 동안은 늘 walk(빠른 날갯짓, 재생 1.4배), 땅에선 움직일 때만 walk(속도에 비례 0.7~2.2배)·서 있으면 idle. probe_mount wing_flap 항목 fails=0, mount_host 세 판·REGRESS OK. 창 모드 k_fly_crow 에서 날개가 펼쳐져 오름.
 - 남은 것: 앉은 자세(뼈 자세)·사가국지.
+
+## 탈것 — 사가국지: 군주 초상에 탈것 (2026-09-30, 잘못 입력 뒤 "이어서해")
+
+- 사가국지는 조작하는 몸이 없어 이동식 탈것 대신 즉위하는 군주 초상(LordPortrait)에 신수 탈것을 태워 보인다(앞서 후보 ①). lord_portrait.gd set_mount: 군주 이름 해시로 mounts.gd 여섯 중 하나(표시 전용), 카메라를 물려 전신이 보이게, idle 동작(전엔 얼굴만이라 T포즈가 안 보였다), 독립 세계 주변광. LordPortrait.tscn SubViewport own_world_3d=true·transparent_bg — 이전엔 도시 3D 세계를 그대로 공유했다(카메라를 물리면 성벽이 비쳐 이 조치가 필요).
+- mount_host 사가국지 분기(portrait·portrait_mount·portrait_swap) fails=0, 창 모드로 뷰포트 PNG(MOUNT_HOST_SHOT) — 홍염마 위 군주. REGRESS OK.
+- 탈것 다섯 판 완료: GO·사가블로·사가의숲·사가스토리(조작 탈것+터치+잠금+날갯짓)·사가국지(초상). 남은 것: 앉은 자세.
