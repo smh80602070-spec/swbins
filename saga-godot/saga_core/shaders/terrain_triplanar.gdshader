@@ -158,7 +158,9 @@ void fragment() {
 	float ny = normalize(world_normal).y;
 	vec2 mp = vec2(world_pos.x + world_pos.z, world_pos.y * 0.35);
 	float mpatch = _value_noise(mp * 0.11) * 0.65 + _value_noise(mp * 0.37 + vec2(3.7, 1.9)) * 0.35;
-	float moss = cliff * smoothstep(0.55, 0.72, mpatch + ny * 0.12);
+	// 2026-09-30 — 수직 벽 전체에 세로로 긴 연둣빛 띠가 흘렀다(창 모드 u_cliff_n). 이끼는 위를 보는 턱에만 짙게, 벽면엔 아주 옅게.
+	float ledge = smoothstep(0.04, 0.2, ny) * (1.0 - smoothstep(0.4, 0.65, ny));
+	float moss = cliff * smoothstep(0.55, 0.72, mpatch + ny * 0.12) * mix(0.1, 1.0, ledge);
 	ALBEDO = mix(ALBEDO, vec3(0.16, 0.27, 0.1) * (0.85 + 0.3 * n1), moss * 0.6);
 	NORMAL_MAP = detail_normal * 0.5 + 0.5;
 	ROUGHNESS = detail_rough;

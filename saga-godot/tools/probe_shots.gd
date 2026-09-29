@@ -86,6 +86,7 @@ const SHOTS := [
 	["x_tangled", "crossing", Vector2(3.5, 3.7), Vector3.ZERO, Vector2(2.5, 4.5), 2.0, 16.0, ""],
 	["x_stones_clock", "crossing", Vector2(4.4, 6.4), Vector3.ZERO, Vector2(2.5, 7.0), 12.0, 18.0, ""],
 	["u_palace", "sunken", Vector2(2.1, 3.3), Vector3.ZERO, Vector2(2.3, 5.0), -6.0, 12.0, ""],
+	["u_cliff_n", "sunken", Vector2(4.0, 1.4), Vector3.ZERO, Vector2(4.0, 0.3), -3.0, 9.0, ""],
 	["u_base_dome", "sunken", Vector2(6.5, 2.9), Vector3.ZERO, Vector2(5.0, 6.0), -4.0, 14.0, ""],
 	["u_light", "sunken", "u_light", Vector3(-6, 0, -6), Vector2(7.0, 7.0), 8.0, 16.0, ""],
 	["s_gate", "village", Vector2(0.6, 4.0), Vector3.ZERO, Vector2(-0.5, 4.0), -5.0, 8.0, ""],
