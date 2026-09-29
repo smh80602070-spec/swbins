@@ -1061,6 +1061,7 @@
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
 2	go	story.altar4	넷째 제단	the Fourth Altar		
 2	go	story.altar_beacon	봉화 제단	Beacon Altar		
+2	go	story.altar_weld	용접대	welding bench		
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
 2	go	story.boss.haesol	먹구름 가면 해솔	Haesol of the Storm Mask		
 2	go	story.boss.king	먹구름 임금	Storm King		
@@ -1201,6 +1202,43 @@
 2	go	story.ch12.s9.p.a	같이 가요!	Let's go together!		
 2	go	story.ch12.s9.p.b	위험할 텐데요?	It'll be dangerous, you know?		
 2	go	story.ch12.win	틈새 서리 구미호 — 별배 심장을 떨구고 시간 틈 속으로 사라졌다	The Rift Frost Nine-Tail drops the star-ship's heart and vanishes into the rift		
+2	go	story.ch13	제13장 · 녹슨 조선소의 날개	Chapter 13 · Wing of the Rusted Shipyard		
+2	go	story.ch13.climbed	기중기 들보 위 — 끼어 있던 날개 조각을 뽑았다	Atop the crane beam — you pull out the wedged wing fragment		
+2	go	story.ch13.s1	추락한 비행선의 반디와 이야기하기	Talk to Bandi at the crashed airship		
+2	go	story.ch13.s1.l1	삐— 날개 조각 신호 하나 수신. 방향 남쪽, 바다 냄새. 시대 표지는… 지금과 가깝습니다.	Beep — one wing-fragment signal received. Direction south, smell of the sea. Era marker… close to the present.		
+2	go	story.ch13.s1.l2	갈대 나루 물가, 문 닫은 조선소 좌표입니다. 조각이 쇠붙이 사이에 끼어 있을 확률 칠십 퍼센트.	Coordinates: the closed shipyard on the Reed Ferry shore. Seventy percent chance the fragment is wedged among the ironwork.		
+2	go	story.ch13.s1.l3	시간 틈 짐승들도 신호를 맡았을 겁니다. 서둘러 주십시오.	The rift beasts will have caught the signal too. Please hurry.		
+2	go	story.ch13.s1.p.a	바다라면 갈대 나루?	The sea — Reed Ferry?		
+2	go	story.ch13.s1.p.b	지금과 가깝다니?	Close to the present?		
+2	go	story.ch13.s2	갈대 나루 물가의 녹슨 조선소로	Go to the rusted shipyard on the Reed Ferry shore		
+2	go	story.ch13.s3	조선소 창고 앞의 다온과 이야기하기	Talk to Daon in front of the shipyard warehouse		
+2	go	story.ch13.s3.l1	누구세요? 여긴 문 닫은 지 오래인데… 설마 밤마다 쇳소리 내는 게 당신들이에요?	Who are you? This place has been closed for ages… Don't tell me you're the ones clanging every night?		
+2	go	story.ch13.s3.l2	사흘 전 밤에 번쩍하더니 기중기 꼭대기에 뭔가 박혔어요. 그 뒤로 이상한 짐승들이 조선소를 뒤져요.	Three nights ago there was a flash and something lodged in the top of the crane. Since then strange beasts keep rummaging through the yard.		
+2	go	story.ch13.s3.l3	저기 — 또 왔네요!	There — they're back!		
+2	go	story.ch13.s3.p.a	하늘에서 떨어진 조각을 찾고 있어요.	We're looking for a fragment that fell from the sky.		
+2	go	story.ch13.s3.p.b	쇳소리요?	Clanging?		
+2	go	story.ch13.s4	조선소를 뒤지는 시간 틈 무리 물리치기	Defeat the rift pack rummaging through the shipyard		
+2	go	story.ch13.s5	다온과 이야기하기	Talk to Daon		
+2	go	story.ch13.s5.l1	와… 고마워요. 저 짐승들, 기중기 꼭대기만 올려다보더라고요.	Wow… thank you. Those beasts only kept staring up at the top of the crane.		
+2	go	story.ch13.s5.l2	사다리는 녹슬어 다 떨어졌어요. 다리를 타고 오를 수 있으면 모를까…	The ladders rusted through and fell off. Unless you can climb the legs…		
+2	go	story.ch13.s5.l3	노란 다리 바깥쪽에 디딤이 남아 있어요. 기력 아껴서, 조심해요!	There are footholds left on the outside of the yellow legs. Save your stamina and be careful!		
+2	go	story.ch13.s5.p.a	타고 올라가 볼게요.	I'll climb it.		
+2	go	story.ch13.s5.p.b	높네요…	It's high…		
+2	go	story.ch13.s6	녹슨 기중기 다리를 타고 들보 위로 올라 날개 조각 꺼내기	Climb the rusted crane leg to the beam and pull out the wing fragment		
+2	go	story.ch13.s7	날아온 반디에게 조각 보여 주기	Show the fragment to Bandi, who has flown over		
+2	go	story.ch13.s7.l1	삐— 날개 조각 하나 확인. 셋 가운데 하나입니다.	Beep — one wing fragment confirmed. One of three.		
+2	go	story.ch13.s7.l2	잠깐, 그 조각 끝이 휘었어요. 그대로 끼우면 별배 날개에서 떨어져 나갈걸요.	Wait, the end of that piece is bent. If you fit it as is, it'll shear off the star-ship's wing.		
+2	go	story.ch13.s7.l3	이 조선소 용접대, 아직 살아 있어요. 제가 이음매를 펴 붙일게요. 그동안만 막아 줘요.	This yard's welding bench still works. I'll straighten the seam and weld it. Just hold them off meanwhile.		
+2	go	story.ch13.s7.l4	여기서 배만 이십 년 붙였거든요. 불꽃 튀면 짐승들이 또 몰려올 거예요!	I've welded ships here for twenty years. When the sparks fly, the beasts will swarm again!		
+2	go	story.ch13.s7.p.a	맡겨 줘요.	Leave it to us.		
+2	go	story.ch13.s7.p.b	용접 할 줄 알아요?	You know how to weld?		
+2	go	story.ch13.s8	다온이 조각을 붙이는 동안 용접대 지키기	Defend the welding bench while Daon fixes the fragment		
+2	go	story.ch13.s9	다온과 이야기하기	Talk to Daon		
+2	go	story.ch13.s9.l1	다 됐어요! 이음매 반듯하게 폈어요. 십 년 만에 제대로 된 일 한 기분이네요.	Done! The seam is straight. Feels like my first proper job in ten years.		
+2	go	story.ch13.s9.l2	삐— 조각 상태 양호. 남은 둘은 더 먼 시대 신호입니다. 하나는 앞, 하나는 뒤.	Beep — fragment in good condition. The other two are signals from more distant ages. One ahead, one behind.		
+2	go	story.ch13.s9.l3	별배가 날면 꼭 보여 줘요. 배 붙이는 사람은 뜨는 걸 봐야 끝이거든요.	When the star-ship flies, be sure to show me. A ship-welder isn't done until she's seen it float.		
+2	go	story.ch13.s9.p.a	앞 시대와 뒤 시대…	An age ahead and an age behind…		
+2	go	story.ch13.s9.p.b	다온, 고마워요.	Thanks, Daon.		
 2	go	story.ch2	제2장 · 먹구름 제단	Chapter 2 · The Stormcloud Altar		
 2	go	story.ch2.s1	학자에게 제단 가는 길을 묻기	Ask the scholar the way to the altar		
 2	go	story.ch2.s1.l1	비문을 다 읽었어. 이무기는 너른 강 물가 서쪽, 먹구름 제단 안에 잠들어 있어.	I've finished reading the inscription. The serpent sleeps inside the Stormcloud Altar, west along the Broad River.		
@@ -1492,6 +1530,7 @@
 2	go	story.gold	금 +{0}	Gold +{0}		
 2	go	story.idle.bandi	삐— 별배 심장 온도, 계속 하락 중.	Beep — Starship core temperature still falling.		
 2	go	story.idle.bawoo	……불씨는 아직 꺼지지 않았다.	……The ember has not gone out yet.		
+2	go	story.idle.daon	이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.	This yard's been shut for ten years… lately there's clanging every night.		
 2	go	story.idle.elder	먹구름이 걷히면 마을 잔치를 열어야지.	Once the stormclouds clear, we'll hold a village feast.		
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
 2	go	story.idle.haesol	……	……		
@@ -1508,6 +1547,7 @@
 2	go	story.next	다음 ▶ (F)	Next ▶ (F)		
 2	go	story.npc.bandi	조종 기계 반디	Bandi the Pilot Machine		
 2	go	story.npc.bawoo	산성지기 바우	Bawoo the Fortress Keeper		
+2	go	story.npc.daon	조선공 다온	Shipwright Daon		
 2	go	story.npc.elder	청하 촌장 누리	Elder Nuri of Cheongha		
 2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
 2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
@@ -1528,6 +1568,7 @@
 2	go	story.seal_wrong	차례가 틀렸다 — 석등이 모두 꺼졌다	Wrong order — all the lanterns went out		
 2	go	story.short.bandi	반디	Bandi		
 2	go	story.short.bawoo	바우	Bawoo		
+2	go	story.short.daon	다온	Daon		
 2	go	story.short.elder	누리	Nuri		
 2	go	story.short.ferryman	버들	Beodeul		
 2	go	story.short.haesol	해솔	Haesol		

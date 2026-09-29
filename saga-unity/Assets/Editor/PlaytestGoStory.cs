@@ -26,7 +26,7 @@ namespace Saga.EditorTools
     public static class PlaytestGoStory
     {
         private static string _tag;
-        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "";
+        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -75,6 +75,7 @@ namespace Saga.EditorTools
                 CheckChapter10(fc, pc, field, ui);
                 CheckChapter11(fc, pc, field, ui);
                 CheckChapter12(fc, pc, field, ui);
+                CheckChapter13(fc, pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -104,7 +105,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -120,12 +121,12 @@ namespace Saga.EditorTools
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 16 || GoStory.Chapters.Length != 12) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 17 || GoStory.Chapters.Length != 13) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 } };
-            for (int c = 0; c < 11; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 } };
+            for (int c = 0; c < 13; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -1190,7 +1191,7 @@ namespace Saga.EditorTools
             Expect(11, 8, "뛰는 심장 뒤");                                                       // → 8 talk 하람
             int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot), secret = TalentState.Count(GoTalent.Mat.Secret);
             Talk(pc, ui, "haram", "12장 끝 하람");
-            if (!StoryState.Done || StoryState.Ch != 12 || GoldState.Gold != gold + 3500 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6 || TalentState.Count(GoTalent.Mat.Secret) != secret + 5) Fail("12장 끝·보상(금 3500·매듭 6·비급 5)");
+            if (StoryState.Ch != 12 || GoldState.Gold != gold + 3500 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6 || TalentState.Count(GoTalent.Mat.Secret) != secret + 5) Fail("12장 끝·보상(금 3500·매듭 6·비급 5)");
             if (!PartyState.Has("story_haram")) Fail("하람이 합류 안 함");
             bool ko = GoKits.OffForTest;
             GoKits.OffForTest = false;
@@ -1201,6 +1202,81 @@ namespace Saga.EditorTools
             _ch12 = "12장 서리 무리 빙 셋·풍 하나·구미호 틈새 질주(원 다섯·줄 끝 옮김)·2단계 빙 방패·심장 받침·하람 합류(★4 화 활)·보상";
         }
 
+
+        // ---- 13장 ---------------------------------------------------------------------------------------------
+
+        private static bool WaterAt(Vector3 p)
+        {
+            var (gx, gy) = TestMapData.WorldToGrid(p);
+            char c = TestMapData.TileAt(Mathf.Clamp(gx, 0, TestMapData.Cols - 1), Mathf.Clamp(gy, 0, TestMapData.RowCount - 1));
+            return c == '~' || c == '^' || c == 'B';
+        }
+
+        private static void CheckChapter13(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch13 = "13장 중단";
+            StoryState.OffForTest = false;
+            PlayerStats.Restore(32, 0);
+            StoryState.Restore(12, 0);
+            Vector3 yard = GoStory.YardPos(Vector2.zero);
+            foreach (var off in new[] { Vector2.zero, GoStory.YardDaon, GoStory.YardCrane, GoStory.YardWeld, GoStory.YardFight, GoStory.YardBandi })
+                if (WaterAt(GoStory.YardPos(off))) Fail($"조선소 자리 {off} 가 물·산");
+            if (!WaterAt(yard + new Vector3(0f, 0f, 24f)) && !WaterAt(yard + new Vector3(0f, 0f, 30f))) Fail("조선소가 강 둑에서 30m 안이 아님(물가)");
+            field.Refresh();
+            if (!field.NpcShown("daon") || !field.NpcShown("bandi") || field.NpcShown("haram") || GoStory.Flat(field.NpcBody("daon").transform.position, GoStory.YardPos(GoStory.YardDaon)) > 0.6f) Fail("13장 첫 단계: 다온 조선소·반디");
+            if (GoStory.Flat(field.NpcBody("bandi").transform.position, GoStory.FrostPos(GoStory.BandiShip)) > 0.6f) Fail("13장 첫 단계 반디는 고원 비행선 곁");
+            Talk(pc, ui, "bandi", "13장 반디");
+            Expect(12, 1, "반디 뒤");                                                           // → 1 go 조선소
+            pc.Teleport(yard + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(12, 2, "조선소 도착");                                                        // → 2 talk 다온
+            Talk(pc, ui, "daon", "13장 다온");
+            Expect(12, 3, "다온 뒤");                                                           // → 3 kill 무리
+            Vector3 fight = GoStory.YardPos(GoStory.YardFight);
+            pc.Teleport(fight + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 4 || field.Squad.Any(e => WaterAt(e.transform.position))) Fail($"조선소 무리 {field.Squad.Count}");
+            foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) Kill(e);
+            Expect(12, 4, "조선소 무리");                                                        // → 4 talk 다온
+            Talk(pc, ui, "daon", "13장 다온 둘째");
+            Expect(12, 5, "다온 둘째");                                                         // → 5 climb 기중기
+            // 기중기 — 충돌 있는 다리 둘·들보(윗면 = 꼭대기), 땅 위에선 안 넘어감
+            var yf = YardField.Instance;
+            if (yf == null || yf.Crane == null) { Fail("조선소/기중기가 없다"); return; }
+            var cols = yf.Crane.GetComponentsInChildren<Collider>();
+            Vector3 top = GoStory.CraneTop;
+            if (cols.Length != 3 || Mathf.Abs(cols.Max(c => c.bounds.max.y) - top.y) > 0.05f) Fail($"기중기 충돌 {cols.Length}·윗면 {cols.Max(c => c.bounds.max.y):0.00} ≠ {top.y:0.00}");
+            if (!Physics.Raycast(top + Vector3.up * 3f, Vector3.down, out var hit, 6f) || Mathf.Abs(hit.point.y - top.y) > 0.05f) Fail("들보 윗면 레이");
+            if (!Physics.Raycast(top + new Vector3(-5.35f - 4f, -8f, 0f), Vector3.right, 4f)) Fail("기중기 다리가 곧은 벽이 아니다(옆 레이)");
+            pc.Teleport(yard + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(12, 5, "땅에서 기중기 단계가 넘어감");
+            pc.Teleport(top + new Vector3(0f, 0.3f, 0f));
+            field.Check(pc.transform.position);
+            Expect(12, 6, "들보 위");                                                           // → 6 talk 반디
+            field.Refresh();
+            if (GoStory.Flat(field.NpcBody("bandi").transform.position, GoStory.YardPos(GoStory.YardBandi)) > 0.6f) Fail("반디가 조선소로 안 옴");
+            Talk(pc, ui, "bandi", "13장 반디 조각");
+            Expect(12, 7, "조각 뒤");                                                           // → 7 defend 용접대
+            Vector3 weld = GoStory.YardPos(GoStory.YardWeld);
+            pc.Teleport(weld + new Vector3(0f, 0.4f, -GoStory.DefendStart - 10f));
+            field.DefendTick(pc.transform.position, 0.1f);
+            if (field.DefendWave != -1 || field.Squad.Count != 0) Fail("멀리서 물결이 옴");
+            pc.Teleport(weld + new Vector3(0f, 0.4f, -GoStory.DefendStart + 5f));
+            field.DefendTick(pc.transform.position, 0.1f);
+            if (field.DefendWave != 0 || field.Squad.Count != 3) { Fail($"용접대 첫 물결 {field.DefendWave}·{field.Squad.Count}"); return; }
+            foreach (var e in field.Squad) if (WaterAt(e.transform.position)) Fail("물결이 물·산 위에서 나옴");
+            for (int guard = 0; guard < 30 && StoryState.StepIndex == 7; guard++)
+            {
+                field.DefendTick(pc.transform.position, 0.1f);
+                foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) if (e.Alive) Kill(e);
+            }
+            Expect(12, 8, "용접대 물결 셋");                                                     // → 8 talk 다온
+            int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot), secret = TalentState.Count(GoTalent.Mat.Secret);
+            Talk(pc, ui, "daon", "13장 끝 다온");
+            if (!StoryState.Done || StoryState.Ch != 13 || GoldState.Gold != gold + 3750 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6 || TalentState.Count(GoTalent.Mat.Secret) != secret + 5) Fail("13장 끝·보상(금 3750·매듭 6·비급 5)");
+            _ch13 = "13장 조선소(강 서쪽 뭍)·다온·무리 넷·기중기 다리 벽 둘 + 들보 꼭대기(땅에선 안 넘어감)·반디 자리 옮김·용접대 물결 셋(물 위 아님)·보상";
+        }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------
 

@@ -200,6 +200,8 @@ namespace Saga.Go.Data
             public string Wq;
             /// <summary>109-14-28 서리봉 고원 위 — Arena 는 고원 가운데에서 m.</summary>
             public bool Frost;
+            /// <summary>109-14-34 조선소 위 — Arena 는 조선소 가운데에서 m.</summary>
+            public bool Yard;
         }
 
         /// <summary>그 칸이 지금 서 있는 칸인가 — 세계 임무 칸이면 그 임무 단계, 아니면 이야기 장·단계.</summary>
@@ -219,13 +221,20 @@ namespace Saga.Go.Data
         public static Vector2 FrostAt(string siteId, float dx, float dz) { GoFrost.TrySite(siteId, out var s); return s.Off + new Vector2(dx, dz); }
 
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
-            a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            a.Yard ? YardPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
 
         // ---- 109-14-28 10장 서리봉 고원 자리(고원 가운데에서 m — 웹 명소 자리 × 0.45 위에 얹는다) ----
         public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
         // 11장(⑲-29) — 산성 문루 앞(문 남쪽 22m)·호숫가 석등 자리(호수 북쪽 물가 밖)·바우가 호숫가에서 기다리는 자리·봉화 제단(문 앞 32m)
         public static readonly Vector2 BawooGate = FrostAt("fort", 3f, 22f), LakeSeal = FrostAt("lake", 0f, -36f), BawooLake = FrostAt("lake", 16f, -34f), BeaconAltar = FrostAt("fort", 0f, 32f);
         // 12장(⑲-30) — 서리 무리·구미호는 얼음굴 어귀 남쪽 14m · 반디는 구미호 뒤 굴 앞 · 심장 받침은 비행선 곁(선체 밖)
+        // 13장(⑲-34) — 갈대 나루 물가 녹슨 조선소: 마을 강 서쪽 둑(강은 남쪽 19m 밖). 자리는 조선소 가운데에서 m(x 동쪽·z 남쪽). 기중기 다리 둘 사이 들보 윗면이 꼭대기.
+        public const float YardGx = 1.3f, YardGy = 4.1f, CraneHeight = 16f, CraneR = 6.5f;
+        public static readonly Vector2 YardDaon = new Vector2(-6f, -2f), YardCrane = new Vector2(12f, -4f), YardWeld = new Vector2(0f, -8f), YardFight = new Vector2(0f, -18f), YardBandi = new Vector2(3f, -6f);
+        public static Vector3 YardPos(Vector2 off) => GridPos(YardGx, YardGy) + new Vector3(off.x, 0f, off.y);
+        public static Vector3 CraneTop => YardPos(YardCrane) + Vector3.up * CraneHeight;
+        /// <summary>기중기 들보 위에 섰나(수평 `CraneR` 안 · 윗면에서 1.2m 안).</summary>
+        public static bool OnCrane(Vector3 p) => Flat(p, CraneTop) <= CraneR && p.y >= CraneTop.y - 1.2f;
         public static readonly Vector2 CaveFight = FrostAt("cave", 0f, 14f), BandiCave = FrostAt("cave", 8f, 6f), HeartAt = FrostAt("ship", 4f, 7f);
 
         public static readonly Npc[] Npcs =
@@ -317,8 +326,13 @@ namespace Saga.Go.Data
             new Npc { Id = "bandi", NameKey = "story.npc.bandi", NameKo = "조종 기계 반디", ShortKey = "story.short.bandi", ShortKo = "반디",
                 Gx = 4.5f, Gy = 0.5f, Pet = true,
                 Appear = new[] { new Spot { Ch = 9, From = 6, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 10, From = 0, To = 8, Frost = true, Arena = BandiShip },
-                    new Spot { Ch = 11, From = 0, To = 4, Frost = true, Arena = BandiShip }, new Spot { Ch = 11, From = 5, To = 5, Frost = true, Arena = BandiCave }, new Spot { Ch = 11, From = 6, To = 8, Frost = true, Arena = BandiShip } },
+                    new Spot { Ch = 11, From = 0, To = 4, Frost = true, Arena = BandiShip }, new Spot { Ch = 11, From = 5, To = 5, Frost = true, Arena = BandiCave }, new Spot { Ch = 11, From = 6, To = 8, Frost = true, Arena = BandiShip },
+                    new Spot { Ch = 12, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 12, From = 6, To = 8, Yard = true, Arena = YardBandi } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
+            // 109-14-34 13장(웹 ⑲-34) — 조선공 다온: 늘 조선소 창고 앞에 선다(나루 서쪽 둑)
+            new Npc { Id = "daon", NameKey = "story.npc.daon", NameKo = "조선공 다온", ShortKey = "story.short.daon", ShortKo = "다온",
+                Gx = YardGx - 6f / TestMapData.TileSize, Gy = YardGy - 2f / TestMapData.TileSize, FolkBody = "PeasantMan",
+                IdleKey = "story.idle.daon", IdleKo = "이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요." },
             // 109-14-29 11장(웹 ⑲-29) — 산성지기 바우: 문루(2·6~7단계)·호숫가(3~5단계)에 선다
             new Npc { Id = "bawoo", NameKey = "story.npc.bawoo", NameKo = "산성지기 바우", ShortKey = "story.short.bawoo", ShortKo = "바우",
                 Gx = 4.5f, Gy = 0.5f, FolkBody = "Vanguard",
@@ -388,11 +402,13 @@ namespace Saga.Go.Data
             public string LostKey, LostKo;
             /// <summary>109-14-28 서리봉 고원 위(자리 = 고원 가운데 + Arena, 명소 자리는 `GoFrost.Sites` 의 Off + 덧셈) · follow 알림 글(없으면 나그네) · 걷는 빠르기(0 이면 `FollowSpeed`).</summary>
             public bool Frost;
+            /// <summary>109-14-34 조선소 위(자리 = 조선소 가운데 + Arena, climb 은 기중기 꼭대기).</summary>
+            public bool Yard;
             public string ArriveKey, ArriveKo;
             public float Speed;
         }
 
-        public static Vector3 StepPos(Step s) => s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+        public static Vector3 StepPos(Step s) => s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
 
         /// <summary>석등 차례(해·달·별이 기본, 8장은 별·달·해).</summary>
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
@@ -1107,6 +1123,71 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            // 109-14-34 13장(웹 ⑲-34) — 3부 첫 장, 녹슨 조선소의 날개: 비행선 반디 → 강 서쪽 둑 조선소 → 다온 → 시간 틈 무리 → 다온 → 기중기 다리를 타고 들보 위로 → 반디 → 용접대 지키기(강 쪽을 뺀 여섯 방향) → 다온.
+            // 두꺼비·날쌘용·매·도깨비·바위곰은 14-1b(새 몸) 전까지 옛 몸(물귀신·번개귀·풍·불도깨비·암 물귀신).
+            new Chapter
+            {
+                Id = "ch13", NameKey = "story.ch13", NameKo = "제13장 · 녹슨 조선소의 날개", Ar = 32,
+                Gold = 3750, Mats = new[] { 0, 4, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch13.s1", TextKo = "추락한 비행선의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch13.s1.l1", "삐— 날개 조각 신호 하나 수신. 방향 남쪽, 바다 냄새. 시대 표지는… 지금과 가깝습니다."),
+                            Pick("story.ch13.s1.p", "바다라면 갈대 나루?", "지금과 가깝다니?"),
+                            L("bandi", "story.ch13.s1.l2", "갈대 나루 물가, 문 닫은 조선소 좌표입니다. 조각이 쇠붙이 사이에 끼어 있을 확률 칠십 퍼센트."),
+                            L("bandi", "story.ch13.s1.l3", "시간 틈 짐승들도 신호를 맡았을 겁니다. 서둘러 주십시오."),
+                        } },
+                    new Step { Type = StepType.Go, Yard = true, Arena = Vector2.zero, TextKey = "story.ch13.s2", TextKo = "갈대 나루 물가의 녹슨 조선소로" },
+                    new Step { Type = StepType.Talk, Npc = "daon", TextKey = "story.ch13.s3", TextKo = "조선소 창고 앞의 다온과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("daon", "story.ch13.s3.l1", "누구세요? 여긴 문 닫은 지 오래인데… 설마 밤마다 쇳소리 내는 게 당신들이에요?"),
+                            Pick("story.ch13.s3.p", "하늘에서 떨어진 조각을 찾고 있어요.", "쇳소리요?"),
+                            L("daon", "story.ch13.s3.l2", "사흘 전 밤에 번쩍하더니 기중기 꼭대기에 뭔가 박혔어요. 그 뒤로 이상한 짐승들이 조선소를 뒤져요."),
+                            L("daon", "story.ch13.s3.l3", "저기 — 또 왔네요!"),
+                        } },
+                    new Step { Type = StepType.Kill, Yard = true, Arena = YardFight,
+                        Foes = new[] { F(FieldEnemy.Kind.DrownedGhost), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost) },
+                        TextKey = "story.ch13.s4", TextKo = "조선소를 뒤지는 시간 틈 무리 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "daon", TextKey = "story.ch13.s5", TextKo = "다온과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("daon", "story.ch13.s5.l1", "와… 고마워요. 저 짐승들, 기중기 꼭대기만 올려다보더라고요."),
+                            L("daon", "story.ch13.s5.l2", "사다리는 녹슬어 다 떨어졌어요. 다리를 타고 오를 수 있으면 모를까…"),
+                            Pick("story.ch13.s5.p", "타고 올라가 볼게요.", "높네요…"),
+                            L("daon", "story.ch13.s5.l3", "노란 다리 바깥쪽에 디딤이 남아 있어요. 기력 아껴서, 조심해요!"),
+                        } },
+                    new Step { Type = StepType.Climb, Yard = true, TextKey = "story.ch13.s6", TextKo = "녹슨 기중기 다리를 타고 들보 위로 올라 날개 조각 꺼내기",
+                        EnterKey = "story.ch13.climbed", EnterKo = "기중기 들보 위 — 끼어 있던 날개 조각을 뽑았다" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch13.s7", TextKo = "날아온 반디에게 조각 보여 주기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch13.s7.l1", "삐— 날개 조각 하나 확인. 셋 가운데 하나입니다."),
+                            L("daon", "story.ch13.s7.l2", "잠깐, 그 조각 끝이 휘었어요. 그대로 끼우면 별배 날개에서 떨어져 나갈걸요."),
+                            L("daon", "story.ch13.s7.l3", "이 조선소 용접대, 아직 살아 있어요. 제가 이음매를 펴 붙일게요. 그동안만 막아 줘요."),
+                            Pick("story.ch13.s7.p", "맡겨 줘요.", "용접 할 줄 알아요?"),
+                            L("daon", "story.ch13.s7.l4", "여기서 배만 이십 년 붙였거든요. 불꽃 튀면 짐승들이 또 몰려올 거예요!"),
+                        } },
+                    new Step { Type = StepType.Defend, Yard = true, Arena = YardWeld, NameKey = "story.altar_weld", NameKo = "용접대", Dirs = new[] { 225f, 270f, 315f, 0f, 45f, 90f, 135f },
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.DrownedGhost), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost), F(FieldEnemy.Kind.DrownedGhost), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.EmberImp) },
+                        },
+                        TextKey = "story.ch13.s8", TextKo = "다온이 조각을 붙이는 동안 용접대 지키기" },
+                    new Step { Type = StepType.Talk, Npc = "daon", TextKey = "story.ch13.s9", TextKo = "다온과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("daon", "story.ch13.s9.l1", "다 됐어요! 이음매 반듯하게 폈어요. 십 년 만에 제대로 된 일 한 기분이네요."),
+                            L("bandi", "story.ch13.s9.l2", "삐— 조각 상태 양호. 남은 둘은 더 먼 시대 신호입니다. 하나는 앞, 하나는 뒤."),
+                            Pick("story.ch13.s9.p", "앞 시대와 뒤 시대…", "다온, 고마워요."),
+                            L("daon", "story.ch13.s9.l3", "별배가 날면 꼭 보여 줘요. 배 붙이는 사람은 뜨는 걸 봐야 끝이거든요."),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -1257,12 +1338,12 @@ namespace Saga.Go.Data
                 case StepType.Sail: radius = TalkR; return NpcPos(s.Npc);
                 case StepType.Chase: return StoryState.ChasePos ?? NpcPos(s.Npc); // 109-14-19 달리는 도둑
                 case StepType.Follow: return NpcPos(s.Npc);
-                case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : s.Frost ? StepPos(s) : GridPos(s.Gx, s.Gy);
+                case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : s.Frost || s.Yard ? StepPos(s) : GridPos(s.Gx, s.Gy);
                 case StepType.Boss: return TestMapData.WorldPos(FieldSpawner.GuardianGx, FieldSpawner.GuardianGy);
                 case StepType.Domain: return SitePos(s.Site);
                 case StepType.Light: radius = LightR; return StepPos(s);
                 case StepType.Seal: return SealPos(s);
-                case StepType.Climb: return DuelPeak.Top;
+                case StepType.Climb: return s.Yard ? CraneTop : DuelPeak.Top;
                 case StepType.Sky: radius = DraftR; return DuelPeak.Top; // 109-14-20 바람 기둥 = 봉우리 정상
                 case StepType.Gather:
                 {
