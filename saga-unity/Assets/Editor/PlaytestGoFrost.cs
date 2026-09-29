@@ -46,6 +46,7 @@ namespace Saga.EditorTools
                 CheckGround(field, parts);
                 CheckDiscover(field, parts);
                 CheckTravel(fc, pc, field, parts);
+                CheckWild(fc, pc, field, parts);
                 CheckKing(fc, pc, field, savePath, parts);
                 CheckSave(savePath, parts);
             }
@@ -201,6 +202,39 @@ namespace Saga.EditorTools
             if (field.SnowOn || field.NearGate(fc.transform.position) != 0) Fail("내려왔는데 눈·돌기둥 곁");
             if (field.TravelHere()) Fail("돌기둥 곁이 아닌데 이동함");
             parts.Add("드나드는 길(돌기둥 곁 판정·단추·오름·눈·내림·도착 자리는 곁이 아님)");
+        }
+
+        // ---- 고원 들판 무리(109-14-27b) ----
+
+        private static void CheckWild(FieldCombat fc, PlayerController pc, FrostField field, List<string> parts)
+        {
+            fc.ResetForTest();
+            field.TickKing(fc.SafePoint);
+            if (FieldSpawner.FrostWild.Any(e => e != null && e.gameObject.activeSelf)) Fail("고원 밖인데 들판 무리가 서 있다");
+            pc.Teleport(GoFrost.Center + new Vector3(0f, 0.4f, 200f));
+            field.TickKing(pc.transform.position);
+            var wild = FieldSpawner.FrostWild;
+            int want = GoFrost.Wild.Sum(g => g.Foes.Length);
+            if (wild.Count != want || wild.Any(e => e == null || !e.gameObject.activeSelf || !e.Alive || !GoFrost.Contains(e.transform.position))) { Fail($"고원 들판 무리 {wild.Count}/{want}"); return; }
+            foreach (var g in GoFrost.Wild)
+            {
+                var mine = wild.Where(e => e.GroupId == g.Id).ToArray();
+                if (mine.Length != g.Foes.Length) Fail($"{g.Id} 무리 {mine.Length}");
+                for (int i = 0; i < mine.Length && i < g.Foes.Length; i++)
+                    if (mine[i].EnemyKind != g.Foes[i].Kind || mine[i].Element != g.Foes[i].El) Fail($"{g.Id}[{i}] 종류·원소 {mine[i].EnemyKind}·{mine[i].Element}");
+            }
+            foreach (var e in wild)
+                foreach (var s in GoFrost.Sites)
+                    if (new Vector3(e.Home.x - s.Pos.x, 0f, e.Home.z - s.Pos.z).magnitude < (s.Big ? 40f : 20f)) Fail($"들판 무리가 {s.Id} 를 막음");
+            var first = wild[0];
+            first.TakeRaw(first.Hp * 0.5f, Color.white);
+            field.TickKing(fc.SafePoint);
+            if (wild.Any(e => e.gameObject.activeSelf) || FieldEnemy.All.Any(e => wild.Contains(e))) Fail("고원을 나섰는데 들판 무리가 남음");
+            pc.Teleport(GoFrost.Center + new Vector3(0f, 0.4f, 200f));
+            field.TickKing(pc.transform.position);
+            if (!first.gameObject.activeSelf || !first.Alive || first.Hp < first.MaxHp) Fail("다시 들어섰는데 들판 무리가 처음부터가 아님");
+            field.TickKing(fc.SafePoint);
+            parts.Add($"들판 무리({GoFrost.Wild.Length}무리 {want}마리·원소·명소 밖·나서면 꺼졌다 처음부터)");
         }
 
         // ---- 만년설 바위곰왕(109-14-31) ----

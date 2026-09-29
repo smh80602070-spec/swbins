@@ -420,12 +420,28 @@ namespace Saga.Go.World
             TickKing(feet);
         }
 
-        private bool _kingParked;
+        private bool _kingParked, _wildOn;
+
+        /// <summary>109-14-27b 고원 들판 무리 — 들어서면 (처음이면 만들어) 처음 상태로 켜고, 나서면 꺼 둔다.</summary>
+        private void TickWild(bool inside)
+        {
+            if (inside == _wildOn) return;
+            if (inside)
+            {
+                var sp = FindFirstObjectByType<FieldSpawner>();
+                if (sp == null) return;
+                sp.EnsureFrostWild();
+                foreach (var e in FieldSpawner.FrostWild) if (e != null) { e.gameObject.SetActive(true); e.ReviveNow(); }
+            }
+            else foreach (var e in FieldSpawner.FrostWild) if (e != null) e.gameObject.SetActive(false);
+            _wildOn = inside;
+        }
 
         /// <summary>109-14-31 곰왕 — 고원에 들어서면 세우고(없으면 만든다), 나가면 살아 있는 채 꺼 둔다(들판 적 수·다른 진단에 안 섞이게). 다시 들어서면 처음부터. 진단도 부른다.</summary>
         public void TickKing(Vector3 feet)
         {
             var king = FieldEnemy.FrostKingInstance;
+            TickWild(Contains(feet));
             if (Contains(feet))
             {
                 if (king == null) { var sp = FindFirstObjectByType<FieldSpawner>(); if (sp != null) king = sp.EnsureFrostKing(); }

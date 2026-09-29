@@ -123,6 +123,29 @@ namespace Saga.Go.Combat
                 GoEra.Past, null, GoElement.Physical, true);
         }
 
+        private static readonly System.Collections.Generic.List<FieldEnemy> _frostWild = new System.Collections.Generic.List<FieldEnemy>();
+        /// <summary>109-14-27b 고원 들판 무리(꺼져 있어도) — 고원에 들어설 때 처음 만들고, 나서면 꺼 둔다(`FrostField.TickKing`).</summary>
+        public static System.Collections.Generic.IReadOnlyList<FieldEnemy> FrostWild => _frostWild;
+
+        public void EnsureFrostWild()
+        {
+            _frostWild.RemoveAll(e => e == null);
+            if (_frostWild.Count > 0) return;
+            int danger = GoWorldMap.DangerOf(GoFrost.RegionId);
+            foreach (var g in GoFrost.Wild)
+            {
+                Vector3 center = GoFrost.Center + new Vector3(g.Off.x, 0f, g.Off.y);
+                for (int i = 0; i < g.Foes.Length; i++)
+                {
+                    float a = i * Mathf.PI * 2f / g.Foes.Length;
+                    var f = g.Foes[i];
+                    var e = FieldEnemy.Spawn(f.Kind, center + new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a)) * GroupSpread, skeletonModel, g.Id, transform, GoEra.Past, null, f.El);
+                    e.ApplyDanger(danger);
+                    _frostWild.Add(e);
+                }
+            }
+        }
+
         /// <summary>세우는 들판 적 수 — 이미 쓰러뜨린 수호장은 안 센다.</summary>
         public static int PlannedCount
         {
