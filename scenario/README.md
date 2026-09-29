@@ -178,7 +178,7 @@
 |---|---|---|---|---|
 | 사가고 | 29 (8부 1차 결말) | 1~9장 | 1~29장 | 0 |
 | 사가블로 | 16 (5막) | 1~6장(1·2막 — `js/data-scenario.js`·`scenario.js`) | 0 | 0 (기존 3단계 퀘스트 — 1막에 흡수 예정) |
-| 사가의숲 | 16 (사계절) | 1~4장(봄 — `js/data-scenario.js`·`scenario.js`) | 0 | 0 |
+| 사가의숲 | 16 (사계절) | 1~8장(봄·여름 — `js/data-scenario.js`·`scenario.js`) | 0 | 0 |
 | 사가스토리 | 16 (4부) | 1~16장(1~4부 전부 — `js/data-scenario.js`·`scenario.js`, 첫 발 장면은 장 안 대사로 흡수) | 0 | 0 |
 | 사가국지 | 16 사슬 (6막) | 1막 카드 셋(`js/data-scenario.js`·`scenario.js` — event.js 사연 카드에 얹음) | 0 | 0 |
 

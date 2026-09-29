@@ -7,7 +7,10 @@
  *   place   집 가구 `home.state().items`
  *   deliver 'village:delivered' 이 단계가 시작된 뒤 n 번
  *   forest  'forest:enter' 그 이름 있는 숲에 든다
- *   go      그 고정 자리에 선다(ruin = `village.inRuin`)
+ *   go      그 고정 자리에 선다(ruin = `village.inRuin`, waterfall = `waterfallSpot` 곁 4칸)
+ *   fish    'village:fish' catch — 이 단계가 시작된 뒤 n 마리
+ *   cave    'village:cave' inside — 이 단계가 시작된 뒤 n 번
+ *   settle  `visitor.settled()` 길이 ≥ n
  *   gather  'village:gather' 이 단계가 시작된 뒤 그 갈래를 n 번
  *   fest    `festival.isDone(key)` — 그날이 아니면 **기념 놀이**: 손잡이 \`time.event\` 로 그 행사를 열어 주고 끝나면 놓는다
  *   heart   누구든 하트 n 이상(\`state().hearts\`)
@@ -38,6 +41,8 @@
     if (!sc.choices || typeof sc.choices !== 'object') { sc.choices = {}; }
     if (!sc.cnt || typeof sc.cnt !== 'object') { sc.cnt = { deliver: 0, gather: {} }; }
     if (!sc.cnt.gather) { sc.cnt.gather = {}; }
+    if (!sc.cnt.fish) { sc.cnt.fish = 0; }
+    if (!sc.cnt.cave) { sc.cnt.cave = 0; }
     if (typeof sc.step !== 'number') { sc.step = 0; }
     sc.init = 1;
     return sc;
@@ -59,7 +64,18 @@
     if (!p) { return false; }
     var tx = Math.floor(p.x / T), ty = Math.floor(p.y / T);
     if (spot === 'ruin') { return !!(Vv.inRuin && Vv.inRuin(tx, ty)); }
+    if (spot === 'waterfall') { var wf = Vv.waterfallSpot && Vv.waterfallSpot(); return !!wf && Math.hypot(wf.tx - tx, wf.ty - ty) <= 4; }
     return false;
+  }
+
+  /** 세는 단계의 지금 값 — 이 단계가 시작될 때 base 로 적어 두고 늘어난 만큼을 본다 */
+  function counterOf(step) {
+    var s = raw();
+    if (step.t === 'deliver') { return s.cnt.deliver; }
+    if (step.t === 'fish') { return s.cnt.fish; }
+    if (step.t === 'cave') { return s.cnt.cave; }
+    if (step.t === 'gather') { return gatherCount(step.cat); }
+    return null;
   }
 
   function maxHeart() {
@@ -72,8 +88,8 @@
     var s = raw(), M = global.DG.museum, F = global.DG.festival, H = global.DG.home;
     if (step.t === 'talk') { return !!s.said[sceneOf(step)]; }
     if (step.t === 'place') { return !!H && H.state().items.length >= step.n; }
-    if (step.t === 'deliver') { return typeof s.base === 'number' && s.cnt.deliver - s.base >= step.n; }
-    if (step.t === 'gather') { return typeof s.base === 'number' && gatherCount(step.cat) - s.base >= step.n; }
+    if (step.t === 'deliver' || step.t === 'fish' || step.t === 'cave' || step.t === 'gather') { return typeof s.base === 'number' && counterOf(step) - s.base >= step.n; }
+    if (step.t === 'settle') { var Vs = global.DG.visitor; return !!Vs && Vs.settled().length >= step.n; }
     if (step.t === 'forest') { return !!s.seenForest && s.seenForest[step.key] === s.ch + ':' + s.step; }
     if (step.t === 'go') { return inSpot(step.spot); }
     if (step.t === 'fest') { return !!F && F.isDone(step.key); }
@@ -111,8 +127,7 @@
 
   function begin(step) {
     var s = raw();
-    if (step.t === 'deliver' && typeof s.base !== 'number') { s.base = s.cnt.deliver; core.persist(); }
-    if (step.t === 'gather' && typeof s.base !== 'number') { s.base = gatherCount(step.cat); core.persist(); }
+    if (counterOf(step) !== null && typeof s.base !== 'number') { s.base = counterOf(step); core.persist(); }
     if (step.t === 'fest') { openFest(step); }
     if (step.t === 'talk' && !cur) {
       var sid = sceneOf(step), sc = CD().SCENES[sid];
@@ -177,7 +192,10 @@
     else if (step.t === 'place') { text = '🪑 집에 가구를 놓는다 (집 🏠 → 놓기)'; }
     else if (step.t === 'deliver') { text = '📦 택배를 배달한다 (접수대 → 배달원)'; }
     else if (step.t === 'forest') { var f = V().forestByKey && V().forestByKey(step.key); text = '🌲 「' + (f ? f.name : step.key) + '」 에 든다'; }
-    else if (step.t === 'go') { text = '🏚️ 탑성 폐허(옛 우체통)에 선다'; }
+    else if (step.t === 'go') { text = step.spot === 'waterfall' ? '💧 폭포 곁에 선다' : '🏚️ 탑성 폐허(옛 우체통)에 선다'; }
+    else if (step.t === 'fish') { text = '🎣 물고기를 낚는다 ' + Math.min(step.n, Math.max(0, s.cnt.fish - (typeof s.base === 'number' ? s.base : s.cnt.fish))) + '/' + step.n; }
+    else if (step.t === 'cave') { text = '🕳️ 동굴에 들어선다'; }
+    else if (step.t === 'settle') { text = '🏡 손님이 마을에 눌러앉게 한다 (단골이 되면 청한다)'; }
     else if (step.t === 'gather') { text = '🌸 꽃을 모은다 ' + Math.min(step.n, Math.max(0, gatherCount(step.cat) - (typeof s.base === 'number' ? s.base : gatherCount(step.cat)))) + '/' + step.n; }
     else if (step.t === 'fest') { var ev = VD().eventOf && VD().eventOf(); text = '🎊 ' + (ev && ev.key === step.key ? ev.name + ' 놀이를 마친다 (안내판)' : '기념 놀이를 연다'); }
     else if (step.t === 'heart') { text = '💗 주민과 마음을 나눈다 (말 걸기·선물) — 하트 ' + maxHeart() + '/' + step.n; }
@@ -197,14 +215,19 @@
   function cardHtml() {
     if (!on()) { return ''; }
     var h = hint(), L = list();
-    var html = '<div class="sec"><h4>📖 이야기 · 봄 옛 우체통</h4>';
+    var html = '', season = null;
     L.forEach(function (x) {
+      if (x.ch.season !== season) {
+        if (season) { html += '</div>'; }
+        season = x.ch.season;
+        html += '<div class="sec"><h4>📖 이야기 · ' + esc2(CD().SEASONS[season] || season) + '</h4>';
+      }
       html += '<div class="card' + (x.state === 'done' ? ' on' : '') + '"><div class="stat-row"><span><b>' + x.ch.no + '장 · ' + esc2(x.ch.title) + '</b></span>' +
         '<span class="muted">' + (x.state === 'done' ? '✅ 끝' : x.state === 'now' ? '▶ 지금' : '') + '</span></div>' +
         '<div class="stat-row"><span class="muted">' + esc2(x.ch.blurb) + '</span></div>' +
         (x.state === 'now' && h && h.ch === x.ch ? '<div class="stat-row"><b>' + esc2(h.text) + '</b></div>' : '') + '</div>';
     });
-    if (!current()) { html += '<div class="hint">지금 있는 이야기는 여기까지입니다. 여름은 곧 이어집니다.</div>'; }
+    if (!current()) { html += '<div class="hint">지금 있는 이야기는 여기까지입니다. 다음 계절은 곧 이어집니다.</div>'; }
     return html + '</div>';
   }
 
@@ -275,6 +298,8 @@
     if (!listening) {
       listening = true;
       core.on('village:delivered', function () { raw().cnt.deliver += 1; check(); });
+      core.on('village:fish', function (e) { if (e && e.state === 'catch') { raw().cnt.fish += 1; check(); } });
+      core.on('village:cave', function (e) { if (e && e.inside) { raw().cnt.cave += 1; check(); } });
       core.on('village:gather', function (e) {
         var cat = e && e.item && e.item.cat;
         if (cat) { var g = raw().cnt.gather; g[cat] = (g[cat] || 0) + (e.n || 1); }

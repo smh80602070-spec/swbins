@@ -2601,13 +2601,13 @@ window.DG_NO_TUNE = true;
         if (!c.mix || !c.mix.past || !c.mix.now || !c.mix.future) { bad.push(c.id + ' 시대 섞기 빈 칸'); }
         if (!c.steps.length || c.no !== i + 1) { bad.push(c.id + ' 번호·단계'); }
         c.steps.forEach(function (st) {
-          if (['talk', 'place', 'deliver', 'forest', 'go', 'gather', 'fest', 'heart', 'donate'].indexOf(st.t) < 0) { bad.push(c.id + ' 단계 ' + st.t); }
+          if (['talk', 'place', 'deliver', 'forest', 'go', 'gather', 'fest', 'heart', 'donate', 'fish', 'cave', 'settle'].indexOf(st.t) < 0) { bad.push(c.id + ' 단계 ' + st.t); }
           if (st.t === 'talk') { used[st.scene] = 1; if (!D.SCENES[st.scene]) { bad.push(c.id + ' 장면 ' + st.scene); } }
           if (st.t === 'forest' && !DG.village.forestByKey(st.key)) { bad.push(c.id + ' 숲 ' + st.key); }
           if (st.t === 'fest' && !VDx.EVENTS.some(function (e) { return e.key === st.key && e.play; })) { bad.push(c.id + ' 행사 ' + st.key); }
           if (st.t === 'gather' && !(VDx.ITEMS[st.cat] && VDx.ITEMS[st.cat].length)) { bad.push(c.id + ' 갈래 ' + st.cat); }
           if (st.t === 'donate' && !VDx.MUSEUM_CATS.some(function (x) { return x.key === st.cat; })) { bad.push(c.id + ' 사고 갈래 ' + st.cat); }
-          if (st.t === 'go' && st.spot !== 'ruin') { bad.push(c.id + ' 자리 ' + st.spot); }
+          if (st.t === 'go' && st.spot !== 'ruin' && st.spot !== 'waterfall') { bad.push(c.id + ' 자리 ' + st.spot); }
         });
       });
       Object.keys(D.SCENES).forEach(function (k) {
@@ -2685,7 +2685,7 @@ window.DG_NO_TUNE = true;
         SC.next(); SC.skip();
         if (!SC.isOpen()) { bad.push('고르기 중 건너뛰기로 닫힘'); }
         if (SC.pick('nope') || !SC.isOpen()) { bad.push('없는 답이 먹음'); }
-        if (!SC.pick('secret') || SC.choice('name') !== 'secret' || !SC.state().done.sp_museum || SC.current() !== null) { bad.push('4장 끝·고르기 ' + SC.choice('name')); }
+        if (!SC.pick('secret') || SC.choice('name') !== 'secret' || !SC.state().done.sp_museum || !SC.current() || SC.current().id !== 'su_sailor') { bad.push('4장 끝·고르기 ' + SC.choice('name')); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '이사(가구·택배) → 폐허 우체통 → 꽃 다섯·꽃놀이·하트 → 화석 다섯 → 이름 고르기 · 네 장 끝';
       } finally {
@@ -2693,6 +2693,64 @@ window.DG_NO_TUNE = true;
         SC.abort();
         s0.scenario = keep.sc ? JSON.parse(keep.sc) : undefined;
         H.state().items = JSON.parse(keep.items); s0.donated = JSON.parse(keep.don); s0.hearts = JSON.parse(keep.hearts); s0.fest = JSON.parse(keep.fest);
+        C.save.player = JSON.parse(keep.p); V.raw().player.x = keep.px; V.raw().player.y = keep.py;
+      }
+    });
+
+    t('시나리오 여름 — 낚시·단오·숲 넷 사진·폭포 굴·칠석·손님 정착으로 네 장이 끝난다', function () {
+      var SC = DG.scenario, C = DG.core, s0 = V.state(), bad = [];
+      var keep = { sc: s0.scenario ? JSON.stringify(s0.scenario) : null, fest: JSON.stringify(s0.fest || {}), vs: JSON.stringify(s0.visitSettled || []),
+        p: JSON.stringify(C.save.player), px: V.raw().player.x, py: V.raw().player.y };
+      function say() { var k = 0; while (SC.isOpen() && k++ < 40) { SC.next(); } }
+      function cur() { return SC.isOpen() ? SC.currentScene().id : null; }
+      window.DG_NO_SCENARIO = false;
+      try {
+        s0.fest = {}; s0.visitSettled = [];
+        SC.reset(); SC.state().done = { sp_move: 1, sp_postbox: 1, sp_fox: 1, sp_museum: 1 }; SC.init();
+        if (cur() !== 'sail1') { bad.push('여름 첫 장면 ' + cur()); }
+        say();
+        C.emit('village:fish', { state: 'cast' }); C.emit('village:fish', { state: 'miss' });
+        C.emit('village:fish', { state: 'catch', item: {} }); C.emit('village:fish', { state: 'catch', item: {} });
+        if (SC.hint().text.indexOf('2/3') < 0) { bad.push('낚시 힌트 ' + SC.hint().text); }
+        C.emit('village:fish', { state: 'catch', item: {} });
+        if (SC.hint().text.indexOf('기념 놀이') < 0 && SC.hint().text.indexOf('놀이') < 0) { bad.push('단오 힌트 ' + SC.hint().text); }
+        s0.fest.dano = { year: new Date().getFullYear(), done: true, day: s0.day }; C.emit('changed');
+        if (cur() !== 'sail2') { bad.push('단오 뒤 장면 ' + cur()); }
+        say();
+        C.emit('village:delivered', {});
+        say();
+        if (!SC.state().done.su_sailor || !SC.state().said.photo1) { bad.push('제5장 끝·제6장 첫 장면'); }
+        ['solsup', 'yoseong', 'georin', 'bandi'].forEach(function (k, i) {
+          if (SC.hint().text.indexOf(V.forestByKey(k).name) < 0) { bad.push('숲 힌트 ' + k + ' ' + SC.hint().text); }
+          C.emit('forest:enter', { key: k });
+        });
+        if (cur() !== 'photo2') { bad.push('숲 넷 뒤 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.su_photo || !SC.state().said.fall1) { bad.push('제6장 끝·제7장 첫 장면'); }
+        var wf = V.waterfallSpot();
+        if (!wf) { bad.push('폭포 자리 없음'); } else {
+          V.raw().player.x = (wf.tx + 0.5) * V.TILE; V.raw().player.y = (wf.ty + 0.5) * V.TILE; C.emit('changed');
+          if (SC.hint().text.indexOf('동굴') < 0) { bad.push('동굴 힌트 ' + SC.hint().text); }
+        }
+        C.emit('village:cave', { inside: false });
+        if (SC.isOpen()) { bad.push('나오는 것에 장면'); }
+        C.emit('village:cave', { inside: true });
+        if (cur() !== 'fall2') { bad.push('동굴 뒤 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.su_waterfall || !SC.state().said.star1) { bad.push('제7장 끝·제8장 첫 장면'); }
+        s0.fest.chilseok = { year: new Date().getFullYear(), done: true, day: s0.day }; C.emit('changed');
+        if (SC.hint().text.indexOf('눌러앉') < 0) { bad.push('정착 힌트 ' + SC.hint().text); }
+        s0.visitSettled = ['x']; C.emit('changed');
+        if (cur() !== 'star2') { bad.push('정착 뒤 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.su_star || SC.current() !== null) { bad.push('제8장 끝'); }
+        if (!/여름/.test(SC.cardHtml())) { bad.push('카드'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '낚시 셋 → 단오 → 배달 → 숲 넷 → 폭포·동굴 → 칠석 → 손님 정착 · 여름 네 장 끝';
+      } finally {
+        window.DG_NO_SCENARIO = true;
+        SC.abort();
+        s0.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; s0.fest = JSON.parse(keep.fest); s0.visitSettled = JSON.parse(keep.vs);
         C.save.player = JSON.parse(keep.p); V.raw().player.x = keep.px; V.raw().player.y = keep.py;
       }
     });
