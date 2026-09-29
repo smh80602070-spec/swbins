@@ -96,6 +96,7 @@ namespace Saga.EditorTools
                 if (!PlaytestForestZoneProps.Run()) _hadError = true; // PLAN.md 108 끝줄 존 전용 소품
                 if (!PlaytestForestEras.Run()) _hadError = true; // PLAN.md 109-4 세 시대 — 마을 사람 여섯·존 소품 시대 조각
                 if (!PlaytestForestVisitors.Run()) _hadError = true; // PLAN.md 109-12-1 떠돌이 방문객
+                if (!PlaytestForestMount.Run()) _hadError = true; // PLAN.md 109-15 탈것·비행 — 탈것·점수 손잡이·자리·세이브를 되돌린다.
                 if (!PlaytestNpcModels.Forest()) _hadError = true; // PLAN.md 106-4 FOREST 몫 — 숲지기 사실 모델
             }
             if (_framesSeen >= FramesToRun)

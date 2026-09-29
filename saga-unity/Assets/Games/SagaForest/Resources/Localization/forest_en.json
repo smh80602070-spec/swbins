@@ -257,6 +257,20 @@
     { "key": "visitor.settled_now", "value": "Thank you! From tomorrow I'll live by the square — drop by for a small gift" },
     { "key": "furniture.visit_dokkaebi", "value": "Dokkaebi Club Table" },
     { "key": "furniture.visit_alien", "value": "Star Map Frame" },
-    { "key": "town_score.guest_line", "value": "Neighbor guests {0} (+{1} pts)" }
+    { "key": "town_score.guest_line", "value": "Neighbor guests {0} (+{1} pts)" },
+    { "key": "mount.mt_deer", "value": "Deer" },
+    { "key": "mount.mt_brown", "value": "Brown Horse" },
+    { "key": "mount.mt_white", "value": "White Horse" },
+    { "key": "mount.mt_crane", "value": "Crane" },
+    { "key": "mount.mt_dragon", "value": "Azure Dragon" },
+    { "key": "mount.btn_on", "value": "Ride" },
+    { "key": "mount.btn_off", "value": "Dismount" },
+    { "key": "mount.on", "value": "You mount the {0}" },
+    { "key": "mount.on_fly", "value": "You mount the {0} — it floats over the village (H to dismount)" },
+    { "key": "mount.off", "value": "You dismount" },
+    { "key": "mount.sel", "value": "{0} selected" },
+    { "key": "mount.none", "value": "No mount yet — your first one, the deer, comes at {0} town points" },
+    { "key": "mount.no_house", "value": "You can't ride indoors" },
+    { "key": "mount.auto_house", "value": "You went inside and dismount" }
   ]
 }

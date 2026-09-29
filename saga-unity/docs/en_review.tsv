@@ -3562,6 +3562,20 @@
 2	forest	landmark.found	명소 발견! ◆ {0}	Landmark found! ◆ {0}		
 2	forest	landmark.mushroom_forest	요정 돌고리	Fairy Stone Ring		
 2	forest	landmark.rocky	거인 선돌	Giant's Standing Stone		
+2	forest	mount.auto_house	집에 들어가 탈것에서 내렸다	You went inside and dismount		
+2	forest	mount.btn_off	내리기	Dismount		
+2	forest	mount.btn_on	타기	Ride		
+2	forest	mount.mt_brown	갈색 말	Brown Horse		
+2	forest	mount.mt_crane	학	Crane		
+2	forest	mount.mt_deer	사슴	Deer		
+2	forest	mount.mt_dragon	푸른 용	Azure Dragon		
+2	forest	mount.mt_white	흰 말	White Horse		
+2	forest	mount.no_house	집 안에선 못 탄다	You can't ride indoors		
+2	forest	mount.none	아직 탈것이 없다 — 마을 점수 {0}점에 첫 사슴	No mount yet — your first one, the deer, comes at {0} town points		
+2	forest	mount.off	탈것에서 내렸다	You dismount		
+2	forest	mount.on	{0} 을(를) 탔다	You mount the {0}		
+2	forest	mount.on_fly	{0} 을(를) 탔다 — 마을 위를 떠서 간다(내리려면 H)	You mount the {0} — it floats over the village (H to dismount)		
+2	forest	mount.sel	{0} 로 골랐다	{0} selected		
 2	forest	museum.all_done_toast	🚩 네 갈래를 모두 채웠다 — 마을 어귀에 깃발이 섰다!	🚩 All four lines complete — a flag now stands at the town entrance!		
 2	forest	museum.bundle_done_toast	🎉 도감 한 갈래를 다 채웠다 — 마을에 새 시설이 생겼다!	🎉 You completed a collection line — a new facility opened in town!		
 2	forest	museum.cat.flower	꽃	Flower		
