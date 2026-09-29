@@ -9592,3 +9592,10 @@ PROJECT_STATE.md` 참고. 요약:
 - orientation_scale.gd 를 saga_core/ui 로 옮기고 사가의숲(forest_village)·사가스토리(story_town)·사가국지(realm_city)도 _ready 첫머리에서 단다. 가로 화면이면 UI 기준을 1920×1280(배율 0.375→0.5625). 창 모드 1280×720 촬영으로 세 판 HUD·메뉴 잘림 없음 확인. SAGA_QUICK_SHOT=<png> 로 150프레임 뒤 화면 저장(개발용).
 - 사가블로는 뺐다: 오른쪽 기술 단추(DungeonHUD, 80px 간격 ~20개 이상)가 1900px 쯤이라 기준 높이 1280 은 물론 1600 에서도 위가 잘린다. 다음에 단추 줄을 스크롤/2열로 손질할 때 같이.
 - 촬영하다 발견: 사가스토리에서 mount.gd:125 `bool(_player.get("frozen"))` 가 "Nonexistent 'bool' constructor"(스토리 플레이어엔 frozen 없음 → null). `== true` 로 고침(MOUNT·STORY 점검 fails=0). 같은 꼴 다른 곳(character_screen 등 GO 전용 화면)은 GO 플레이어만 써서 그대로.
+
+## 사가블로 가로 UI · 기술 단추 줄 (2026-09-29, "묻지말고 이어해")
+
+- DungeonHUD.tscn 은 무예 단추 80여 개를 오른쪽 아래에서 80px 간격으로 쌓아 두고 전부 visible — 배우든 말든 스무 개만 화면 안이고 나머지는 화면 밖(세로 6800px)이라 실제로 못 누르던 상태였다.
+- 새 dungeon/ui/hud_column_layout.gd(test_room 이 단다, 0.3초마다): 단추 이름 "BoltArcher2Button" → 그룹 "skill_bolt_archer2" → 무예 스크립트 SKILL_KEY → DungeonSkillState.rank_of>0 인 것만 보이고(그룹이 안 이어지는 공격·소켓·상인·대장간·하드코어·무예 창·난입·인장은 늘 보임), 보이는 것을 아래부터 원래 순서로 다시 쌓다 위 여백(170)을 넘으면 왼쪽 옆 줄로. 배우지 않은 무예 단추는 안 보인다(첫 화면: 단추 여덟 — 이전엔 스무 개 넘게 어지러움).
+- test_room 에 orientation_scale 도 달아 다섯 판 가로 UI 완료(창 모드 1280×720 촬영). 개발용 SAGA_QUICK_SHOT.
+- REGRESS OK. 실기 확인 전: 무예를 배운 뒤 단추가 나타나는지·두 줄로 넘어갈 때 겹침.

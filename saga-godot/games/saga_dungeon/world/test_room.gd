@@ -127,6 +127,9 @@ var _session_start_cleared := 0  # 표준 B(세션 카드) — 이번 세션에 
 
 
 func _ready() -> void:
+	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게 + 기술 단추 줄이 길면 옆 줄로(hud_column_layout.gd).
+	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
+	add_child(preload("res://games/saga_dungeon/ui/hud_column_layout.gd").new())
 	for i in range(ROOM_COUNT):
 		var origin_z := -float(i) * ROOM_SPACING
 		_room_origin_z.append(origin_z)
