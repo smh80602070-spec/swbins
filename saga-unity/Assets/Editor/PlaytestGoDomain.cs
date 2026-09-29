@@ -242,9 +242,10 @@ namespace Saga.EditorTools
         private static void CheckEcho69(DomainField df, FieldCombat fc, PlayerController pc)
         {
             var echoes = GoDomain.Echoes;
-            var a = echoes[4]; var b = echoes[5];
+            var a = echoes[4]; var b = echoes[5]; var sd = echoes[6];
             if (a.Id != "e_firstcrow" || b.Id != "e_garmuri" || a.After != 38 || b.After != 38 || a.Plus != 20 || b.Plus != 20) Fail("11부 메아리 표(장 38·금 +20)");
-            if (GoDomain.EchoBossKeys[4] != "story.boss.firstcrow" || GoDomain.EchoBossKeys[5] != "story.boss.garmuritrue") Fail("11부 메아리 보스 열쇠");
+            if (sd.Id != "e_seed" || sd.After != 41 || sd.Plus != 32) Fail("12부 메아리 표(장 41·금 +32)");
+            if (GoDomain.EchoBossKeys[4] != "story.boss.firstcrow" || GoDomain.EchoBossKeys[5] != "story.boss.garmuritrue" || GoDomain.EchoBossKeys[6] != "story.boss.seedgiant") Fail("메아리 보스 열쇠");
             // 37장까지는 보이지도 열리지도 않는다 — 안내 글에 장이 들어간다
             StoryState.Restore(37, 0);
             df.RefreshEchoes();
@@ -257,8 +258,17 @@ namespace Saga.EditorTools
             StoryState.Restore(38, 0);
             df.RefreshEchoes();
             if (!df.EchoShown(a.Id) || !df.EchoShown(b.Id) || !GoDomain.Gates().Any(s => s.Id == a.Id) || !GoDomain.Gates().Any(s => s.Id == b.Id)) Fail("38장인데 11부 메아리 입구가 안 보임");
+            if (df.EchoShown(sd.Id) || GoDomain.Gates().Any(s => s.Id == sd.Id)) Fail("38장인데 12부 메아리 입구가 보임(41장 뒤에야)");
+            StoryState.Restore(40, 0);
+            df.RefreshEchoes();
+            if (df.EchoShown(sd.Id)) Fail("40장인데 12부 메아리 입구가 보임");
+            if (df.CanEnter(sd, 0, out string why40) || !why40.Contains("41")) Fail($"40장 곳간 노래 메아리 들어가기 안내 '{why40}'");
+            StoryState.Restore(41, 0);
+            df.RefreshEchoes();
+            if (!df.EchoShown(sd.Id) || !df.EchoShown(a.Id) || !df.EchoShown(b.Id) || !GoDomain.Gates().Any(s => s.Id == sd.Id)) Fail("41장 뒤 12부 메아리 입구가 안 보임(앞 둘도 그대로여야)");
+            StoryState.Restore(38, 0);
             // 자리 — 세갈래 고을 안, 숨은 터·다른 메아리와 40m 넘게, 땅이 있다
-            foreach (var s in new[] { a, b })
+            foreach (var s in new[] { a, b, sd })
             {
                 if (!GoAreas.Fork.Contains(s.Pos)) Fail($"{s.Id} 입구가 세갈래 고을 안이 아님");
                 foreach (var o in GoDomain.Sites) if (Flat(o.Pos, s.Pos) < 40f) Fail($"{s.Id} 입구가 숨은 터 {o.Id} 와 너무 가까움");
@@ -268,10 +278,13 @@ namespace Saga.EditorTools
             }
             // 들어가 끝까지 — 보스 하나·방패 원소(뇌·암)·보상 금 = 단계 값 + 20
             PlayerStats.Restore(64, 0);
-            var expectEl = new[] { GoElement.Electro, GoElement.Geo };
-            var sites = new[] { a, b };
-            for (int i = 0; i < 2; i++)
+            var expectEl = new[] { GoElement.Electro, GoElement.Geo, GoElement.Dendro };
+            var sites = new[] { a, b, sd };
+            var plus = new[] { 20, 20, 32 };
+            for (int i = 0; i < 3; i++)
             {
+                StoryState.Restore(i == 2 ? 41 : 38, 0);
+                df.RefreshEchoes();
                 var site = sites[i];
                 var stp = GoDomain.EchoBoss(site.Id);
                 if (stp == null || stp.P2El != expectEl[i]) { Fail($"{site.Id} 보스 단계·방패 원소"); continue; }
@@ -291,7 +304,7 @@ namespace Saga.EditorTools
                 if (df.Current == null || df.Current.Phase != "tree") { Fail($"{site.Id} 쓰러뜨렸는데 보상 나무가 안 섬"); if (df.Running) df.Leave(); continue; }
                 int gold = GoldState.Gold;
                 string got = df.Claim(out string why2);
-                if (got == null || GoldState.Gold != gold + 200 + 20) Fail($"{site.Id} 보상 금 {GoldState.Gold - gold} ≠ 220 ({why2})");
+                if (got == null || GoldState.Gold != gold + 200 + plus[i]) Fail($"{site.Id} 보상 금 {GoldState.Gold - gold} ≠ {200 + plus[i]} ({why2})");
             }
         }
 
@@ -300,7 +313,7 @@ namespace Saga.EditorTools
         {
             StoryState.OffForTest = false;
             var echoes = GoDomain.Echoes;
-            if (echoes.Length != 6 || GoDomain.EchoBossKeys.Length != 6) { Fail("메아리가 여섯이 아님"); return; }
+            if (echoes.Length != 7 || GoDomain.EchoBossKeys.Length != 7) { Fail("메아리가 일곱이 아님"); return; }
             // 1차 결말 앞에는 안 보이고 안 열린다
             StoryState.Restore(28, 0);
             df.RefreshEchoes();

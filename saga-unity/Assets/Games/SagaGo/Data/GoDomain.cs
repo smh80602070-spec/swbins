@@ -51,7 +51,7 @@ namespace Saga.Go.Data
         /// <summary>이 메아리 입구가 보이고 열리나 — 1차 결말을 마쳤고, 그 메아리의 장(2차 결말 38장 등)도 마쳤다.</summary>
         public static bool EchoShown(Site s) => s.Kind == Kind.Echo && EchoOpen && StoryState.Ch >= (s.After > 0 ? s.After : EchoAfter);
         public static bool IsBoss(Kind k) => k == Kind.Weekly || k == Kind.Echo;
-        public static readonly string[] EchoBossKeys = { "story.boss.kingtrue", "story.boss.riftfox", "story.boss.riftcrow", "story.boss.colossus", "story.boss.firstcrow", "story.boss.garmuritrue" };
+        public static readonly string[] EchoBossKeys = { "story.boss.kingtrue", "story.boss.riftfox", "story.boss.riftcrow", "story.boss.colossus", "story.boss.firstcrow", "story.boss.garmuritrue", "story.boss.seedgiant" };
         public static readonly Site[] Echoes =
         {
             new Site { Id = "e_knot", Kind = Kind.Echo, NameKo = "매듭 등불의 메아리", Where = () => GoStory.GridPos(4.5f, 0.5f) + new Vector3(20f, 0f, 0f) },
@@ -61,6 +61,8 @@ namespace Saga.Go.Data
             // 109-14-69 2차 결말(38장) 뒤 — 11부 보스 둘(웹 ⑲-69 `domain.js` firstcrow·garmuri · 입구 = 세갈래 길목 기준 웹 off [-48,-5]·[48,-62] × 0.45 — 이 지역의 웹 배율). 보상 금 +20.
             new Site { Id = "e_firstcrow", Kind = Kind.Echo, NameKo = "처음 순간의 메아리", After = 38, Plus = 20, Where = () => GoStory.AreaPos("fork:junction", new Vector2(-21.6f, -2.25f)) },
             new Site { Id = "e_garmuri", Kind = Kind.Echo, NameKo = "갈무리 격자의 메아리", After = 38, Plus = 20, Where = () => GoStory.AreaPos("fork:junction", new Vector2(21.6f, -27.9f)) },
+            // 109-14-71 3차 결말(41장) 뒤 — 12부 보스 하나(웹 ⑲-71 seed: 곳간 노래의 메아리 — 갈무리의 싹, 고을 마당 곁). 보상 금 +32. 웹 off [-67,-43] × 0.45 는 처음 순간의 메아리와 19m 라 입구 간격 40m 를 지키려 길목 서쪽 (-60,-25) 로.
+            new Site { Id = "e_seed", Kind = Kind.Echo, NameKo = "곳간 노래의 메아리", After = 41, Plus = 32, Where = () => GoStory.AreaPos("fork:junction", new Vector2(-60f, -25f)) },
         };
         /// <summary>메아리 입구 i 의 보스(이야기 결투 단계 — 몸·배율·공격 차례·가면·방패 원소).</summary>
         public static GoStory.Step EchoBoss(string siteId)

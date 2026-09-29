@@ -3076,6 +3076,7 @@
     { "key": "kit.sig.narae.skill", "value": "Survey Line" },
     { "key": "kit.sig.narae.burst", "value": "Triangulation" },
     { "key": "kit.sig.sodam.skill", "value": "Scattered Grain" },
-    { "key": "kit.sig.sodam.burst", "value": "Granary Song" }
+    { "key": "kit.sig.sodam.burst", "value": "Granary Song" },
+    { "key": "domain.site.e_seed", "value": "Echo of the Granary Song" }
   ]
 }

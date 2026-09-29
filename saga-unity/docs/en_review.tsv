@@ -696,6 +696,7 @@
 2	go	domain.site.e_garmuri	갈무리 격자의 메아리	Echo of Garmuri's Lattice		
 2	go	domain.site.e_ice	얼음굴의 메아리	Echo of the Ice Cave		
 2	go	domain.site.e_knot	매듭 등불의 메아리	Echo of the Knot Lantern		
+2	go	domain.site.e_seed	곳간 노래의 메아리	Echo of the Granary Song		
 2	go	domain.site.w_altar	먹구름 제단	Stormcloud Altar		
 2	go	domain.tree	보상 나무가 자랐다 — 가운데로 가서 원기 {0} 쓰면 받는다	A reward tree has grown — go to the center and spend {0} Vigor to claim		
 2	go	domain.tree_card	보상 나무 — {0} · 원기 {1} 로 받는다\n{2}	Reward tree — {0} · claim for {1} Vigor\n{2}		

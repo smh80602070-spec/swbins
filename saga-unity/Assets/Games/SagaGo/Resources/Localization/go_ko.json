@@ -3076,6 +3076,7 @@
     { "key": "kit.sig.narae.skill", "value": "측량선 긋기" },
     { "key": "kit.sig.narae.burst", "value": "삼각측량" },
     { "key": "kit.sig.sodam.skill", "value": "낟알 흩뿌리기" },
-    { "key": "kit.sig.sodam.burst", "value": "곳간 노래" }
+    { "key": "kit.sig.sodam.burst", "value": "곳간 노래" },
+    { "key": "domain.site.e_seed", "value": "곳간 노래의 메아리" }
   ]
 }
