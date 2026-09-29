@@ -43,6 +43,7 @@ namespace Saga.Go.Combat
         public const float GuardianGx = 3.6f;
         public const float GuardianGy = 6.75f;
         public const string GuardianGroupId = "tower_guardian";
+        public const string FrostKingGroupId = "frost_king";
 
         [SerializeField] private GameObject banditModel;
         [SerializeField] private GameObject skeletonModel;
@@ -112,6 +113,14 @@ namespace Saga.Go.Combat
             e.ApplyDanger(GoWorldMap.DangerOf(GoWorldMap.RegionAt(home)));
             e.MarkStory();
             return e;
+        }
+
+        /// <summary>109-14-31 서리봉 고원 가운데 곰왕 — 만들어 둔 것이 없으면 세운다(`FrostField` 가 고원에 처음 들어설 때 부른다). 이미 쓰러뜨렸으면 첫 틱에 스스로 꺼진다.</summary>
+        public FieldEnemy EnsureFrostKing()
+        {
+            if (FieldEnemy.FrostKingInstance != null) return FieldEnemy.FrostKingInstance;
+            return FieldEnemy.Spawn(FieldEnemy.Kind.Guardian, GoFrost.KingHome, guardianModel != null ? guardianModel : banditModel, FrostKingGroupId, transform,
+                GoEra.Past, null, GoElement.Physical, true);
         }
 
         /// <summary>세우는 들판 적 수 — 이미 쓰러뜨린 수호장은 안 센다.</summary>

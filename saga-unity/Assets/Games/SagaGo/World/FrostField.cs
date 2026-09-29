@@ -323,6 +323,32 @@ namespace Saga.Go.World
             if (_wait > 0f) return;
             _wait = CheckEverySec;
             Check(feet);
+            TickKing(feet);
+        }
+
+        private bool _kingParked;
+
+        /// <summary>109-14-31 곰왕 — 고원에 들어서면 세우고(없으면 만든다), 나가면 살아 있는 채 꺼 둔다(들판 적 수·다른 진단에 안 섞이게). 다시 들어서면 처음부터. 진단도 부른다.</summary>
+        public void TickKing(Vector3 feet)
+        {
+            var king = FieldEnemy.FrostKingInstance;
+            if (Contains(feet))
+            {
+                if (king == null) { var sp = FindFirstObjectByType<FieldSpawner>(); if (sp != null) king = sp.EnsureFrostKing(); }
+                if (king == null || !FrostBossState.Standing) return;
+                if (!king.gameObject.activeSelf || !king.Alive)
+                {
+                    king.gameObject.SetActive(true);
+                    king.ReviveNow();
+                    if (!_kingParked && FrostBossState.Defeated) DialogueLabel.Instance?.Show(GoLocalization.T("boss.back_frost", "만년설 바위곰왕이 다시 섰다"), 3f);
+                    _kingParked = false;
+                }
+            }
+            else if (king != null && king.gameObject.activeSelf && king.Alive)
+            {
+                king.gameObject.SetActive(false);
+                _kingParked = true;
+            }
         }
 
         /// <summary>눈·이동 단추를 발 자리에 맞춘다(진단도 부른다).</summary>

@@ -10445,3 +10445,15 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 글 42 짝(loc-review 오류 0).
 - 실기 확인 전: 굴 앞 비탈에서 구미호 질주가 자연스러운지(줄 끝 순간 이동)·구미호가 물귀신 몸 ×1.9 로 어색하지 않은지·심장 받침 자리(비행선 곁 선체 밖)·하람 활 조준·휴대 관측기 모양.
 - 다음 = 14-27b · 14-31.
+
+## 2026-09-29 GO — 109-14-31 고원 들판 보스 · 만년설 바위곰왕(웹 사가고 ⑲-31)
+
+"이어해" — 14-30 다음. 웹 field-combat `g_frost`·fieldboss.js 대조.
+
+- 새 보스를 따로 짓지 않고 수호장 틀을 넓혔다: `FieldEnemy` 에 `FrostKing`(kind 는 Guardian 그대로) — `OuterElement`/`InnerElement` 가 빙/암, `BossStanding`·`BossDefeated` 가 `GuardianState`/`FrostBossState` 를 가려 쓰고, 등장 컷(`GuardianEngaged`)은 망루 것이라 곰왕은 안 부른다, `CanStep` 이 고원(지도 밖) 위에서 걷게(`StoryFoe` 와 같은 칸 안 걷기). 차례는 웹 rot 그대로.
+- **고원에 들어서야 선다** — 항상 세우면 `FieldEnemy.All` 이 하나 늘어 들판 적 수를 세는 진단이 흔들리고, 이야기 10~12장 진단이 고원에 텔레포트해 들어가면 곰왕이 끼어든다. `FrostField.TickKing`(0.25초마다, 진단도 부름)이 안이면 세우고 밖이면 꺼 둔다.
+- `GuardianBloom` 리팩터: 꽃·카드·"둔다"를 `Slot`(망루·고원)으로. 망루 쪽 공개 API·동작은 그대로(PlaytestGoFieldBoss 무수정 통과).
+- 세이브: 옛 세이브에 곰왕 칸이 없으면 안 쓰러뜨린 채(버전 28 그대로, `frostFound` 와 같은 방식).
+- 글 6 짝(loc-review 오류 0). `boss.card_frost` 는 JSON 안에서 `\\n` 로 적는다(기존 `boss.card` 와 같은 관례).
+- 실기 확인 전: 곰왕이 수호장 몸 ×1.8 로 어색하지 않은지·눈사태 줄이 고원 비탈에서 읽히는지·서북쪽 64m 자리가 눈밭 위에 제대로 앉는지·빙 꽃 빛.
+- 다음 = 14-27b (지도 M 순간이동 지점·고원 적/무리·눈꽃·눈 나무).

@@ -379,13 +379,17 @@
 2	go	artifact.why.none	없는 보패	Not owned		
 2	go	artifact.why.polish	연마석 부족	Not enough polish stones		
 2	go	boss.again	망루 수호장을 다시 쓰러뜨렸다 — 보상 꽃이 피었다	Defeated the Watchtower Warden again — a reward flower bloomed		
+2	go	boss.again_frost	만년설 바위곰왕을 다시 쓰러뜨렸다 — 보상 꽃이 피었다	Defeated the Snowcap Rock Bear King again — a reward flower bloomed		
 2	go	boss.back	망루 수호장이 다시 섰다	The Watchtower Warden stands again		
+2	go	boss.back_frost	만년설 바위곰왕이 다시 섰다	The Snowcap Rock Bear King stands again		
 2	go	boss.bloomed	보상 꽃이 피었다	a reward flower bloomed		
 2	go	boss.btn_claim	원기 {0} 쓰고 받는다	Spend {0} Vigor to claim		
 2	go	boss.btn_keep	둔다	Leave it		
 2	go	boss.btn_short	원기가 모자라다 — 꽃은 남는다	Not enough Vigor — the flower stays		
 2	go	boss.card	쓰러진 망루 수호장 자리에 꽃이 피었다.\n★{0} 보패 1 · 금 {1}\n원기 {2}/{3} · 받으면 150초 뒤 수호장이 다시 선다	A flower bloomed where the Watchtower Warden fell.\n★{0} Relic 1 · Gold {1}\nVigor {2}/{3} · once claimed, the Warden returns in 150s		
+2	go	boss.card_frost	쓰러진 만년설 바위곰왕 자리에 꽃이 피었다.\n★{0} 보패 1 · 금 {1}\n원기 {2}/{3} · 받으면 150초 뒤 곰왕이 다시 선다	A flower bloomed where the Snowcap Rock Bear King fell.\n★{0} Relic 1 · Gold {1}\nVigor {2}/{3} · once claimed, the King returns in 150s		
 2	go	boss.claimed	보상 꽃 — 원기 {0} · 금 +{1} · {2} — 150초 뒤 망루 수호장이 다시 선다	Reward flower — Vigor {0} · Gold +{1} · {2} — the Watchtower Warden returns in 150s		
+2	go	boss.claimed_frost	보상 꽃 — 원기 {0} · 금 +{1} · {2} — 150초 뒤 만년설 바위곰왕이 다시 선다	Reward flower — Vigor {0} · Gold +{1} · {2} — the Snowcap Rock Bear King returns in 150s		
 2	go	boss.title	보상 꽃	Reward Flower		
 2	go	boss.why.none	꽃이 없다	No flower		
 2	go	chest.grade0	나무 상자	Wooden Chest		
@@ -665,12 +669,14 @@
 2	go	field.el7_notice	원소가 일곱이 되었다 — 풍·빙·암·초. 동료 원소가 바뀌었을 수 있다	Seven elements now — Wind, Ice, Stone, Grass. Companion elements may have changed		
 2	go	field.evade	회피!	Evade!		
 2	go	field.foe.bandit	산적	Bandit		
+2	go	field.foe.frostking	만년설 바위곰왕	Snowcap Rock Bear King		
 2	go	field.foe.ghost	물귀신	Drowned Ghost		
 2	go	field.foe.guardian	망루 수호장	Watchtower Warden		
 2	go	field.foe.hero	들판 인물	Wandering Hero		
 2	go	field.foe.imp	불도깨비	Ember Imp		
 2	go	field.foe.skeleton	해골 병사	Skeleton Soldier		
 2	go	field.foe.wraith	번개귀	Storm Wraith		
+2	go	field.frostking_slain	만년설 바위곰왕 토벌! 금 {0}냥 · 경험치 {1}	Snowcap Rock Bear King defeated! {0} Gold · {1} EXP		
 2	go	field.guard_block	굳힘 −{0}	Harden −{0}		
 2	go	field.guard_down	속 방패 깨짐! — 드러누웠다	Inner shield broken! — it collapsed		
 2	go	field.guard_inner	속 방패 {0} — {1} 원소 동료로 바꿔라	Inner shield {0} — switch to a {1} ally		

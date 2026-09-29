@@ -1669,6 +1669,12 @@
     { "key": "hero.story_haram", "value": "하람" },
     { "key": "hero.story_haram.quote", "value": "날씨도 시간도, 재야 아는 거니까." },
     { "key": "kit.sig.haram.skill", "value": "휴대 관측기" },
-    { "key": "kit.sig.haram.burst", "value": "맑음 예보" }
+    { "key": "kit.sig.haram.burst", "value": "맑음 예보" },
+    { "key": "field.foe.frostking", "value": "만년설 바위곰왕" },
+    { "key": "field.frostking_slain", "value": "만년설 바위곰왕 토벌! 금 {0}냥 · 경험치 {1}" },
+    { "key": "boss.again_frost", "value": "만년설 바위곰왕을 다시 쓰러뜨렸다 — 보상 꽃이 피었다" },
+    { "key": "boss.back_frost", "value": "만년설 바위곰왕이 다시 섰다" },
+    { "key": "boss.claimed_frost", "value": "보상 꽃 — 원기 {0} · 금 +{1} · {2} — 150초 뒤 만년설 바위곰왕이 다시 선다" },
+    { "key": "boss.card_frost", "value": "쓰러진 만년설 바위곰왕 자리에 꽃이 피었다.\\n★{0} 보패 1 · 금 {1}\\n원기 {2}/{3} · 받으면 150초 뒤 곰왕이 다시 선다" }
   ]
 }

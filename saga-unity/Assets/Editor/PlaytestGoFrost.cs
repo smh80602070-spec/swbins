@@ -46,6 +46,7 @@ namespace Saga.EditorTools
                 CheckGround(field, parts);
                 CheckDiscover(field, parts);
                 CheckTravel(fc, pc, field, parts);
+                CheckKing(fc, pc, field, savePath, parts);
                 CheckSave(savePath, parts);
             }
             finally
@@ -189,6 +190,127 @@ namespace Saga.EditorTools
             if (field.SnowOn || field.NearGate(fc.transform.position) != 0) Fail("내려왔는데 눈·돌기둥 곁");
             if (field.TravelHere()) Fail("돌기둥 곁이 아닌데 이동함");
             parts.Add("드나드는 길(돌기둥 곁 판정·단추·오름·눈·내림·도착 자리는 곁이 아님)");
+        }
+
+        // ---- 만년설 바위곰왕(109-14-31) ----
+
+        private static void KillKing(FieldEnemy k)
+        {
+            for (int i = 0; i < 6 && k.Alive; i++)
+            {
+                if (k.Shielded) k.SetShieldForTest(0f);
+                k.TakeRaw(k.Hp + 99999f, Color.white);
+            }
+        }
+
+        private static void CheckKing(FieldCombat fc, PlayerController pc, FrostField field, string savePath, List<string> parts)
+        {
+            var bloom = GuardianBloom.Instance;
+            if (bloom == null) { Fail("GuardianBloom 없음"); return; }
+            bool d0 = FrostBossState.Defeated, b0 = FrostBossState.Bloom;
+            long p0 = FrostBossState.PaidAt;
+            var dom0 = DomainState.Snapshot();
+            int gold0 = GoldState.Gold, lv0 = PlayerStats.Level, exp0 = PlayerStats.Exp;
+            var arts0 = ArtifactState.Snapshot();
+            int seq0 = ArtifactState.Seq, pol0 = ArtifactState.Polish;
+            try
+            {
+                FrostBossState.NowForTest = 7_000_000;
+                DomainState.NowForTest = 1_000_000_000;
+                FrostBossState.Restore(false);
+                fc.ResetForTest();
+                // 고원 밖 — 곰왕은 안 서 있다
+                field.TickKing(fc.SafePoint);
+                if (FieldEnemy.FrostKingInstance != null && FieldEnemy.FrostKingInstance.gameObject.activeSelf) Fail("고원 밖인데 곰왕이 서 있다");
+                // 고원 안 — 선다
+                pc.Teleport(GoFrost.Center + new Vector3(0f, 0.4f, 150f));
+                field.TickKing(pc.transform.position);
+                var k = FieldEnemy.FrostKingInstance;
+                if (k == null || !k.gameObject.activeSelf || !k.Alive || !k.FrostKing || !k.IsGuardian || k == FieldEnemy.GuardianInstance) { Fail("고원에 들어섰는데 곰왕이 안 섬"); return; }
+                if (GoStory.Flat(k.transform.position, GoFrost.KingHome) > 3f || !GoFrost.Contains(k.transform.position)) Fail($"곰왕 자리 {k.transform.position}");
+                if (k.Element != GoElement.Cryo || k.ShieldLayers != 2 || !k.Shielded) Fail($"곰왕 겉 방패 빙·두 겹 {k.Element}·{k.ShieldLayers}");
+                if (Mathf.Abs(k.MaxHp / k.ShieldMax - FieldEnemy.FrostKingHp / FieldEnemy.FrostKingShield) > 0.05f) Fail($"곰왕 체력·방패 {k.MaxHp}·{k.ShieldMax}");
+                if (k.DisplayName != GoLocalization.T("field.foe.frostking", "만년설 바위곰왕") || k.CurrentMove != FieldEnemy.BossMove.Slam) Fail($"곰왕 이름·첫 수 {k.DisplayName}·{k.CurrentMove}");
+                if (!k.CanStep(GoFrost.KingHome + new Vector3(12f, 0f, 0f)) || k.CanStep(GoFrost.Center + new Vector3(500f, 0f, 0f))) Fail("곰왕이 고원 안에서 못 걷거나 밖으로 나감");
+                // 첫 토벌 — 금·경험·꽃
+                GoldState.Restore(0);
+                PlayerStats.Restore(1, 0);
+                int goldFirst = k.GuardianGoldNow;
+                KillKing(k);
+                if (k.Alive || !FrostBossState.Defeated || !FrostBossState.Bloom || FrostBossState.Standing) Fail("곰왕 첫 토벌 기록·꽃");
+                if (GoldState.Gold != goldFirst || (PlayerStats.Exp == 0 && PlayerStats.Level == 1)) Fail($"곰왕 첫 토벌 금 {GoldState.Gold} ≠ {goldFirst}·경험");
+                bloom.Refresh();
+                if (!bloom.FrostFlowerShown) Fail("곰왕 꽃이 안 핌");
+                if (bloom.FlowerShown != GuardianState.Bloom) Fail("고원 꽃이 망루 꽃을 건드림");
+                // 꽃이 핀 동안 다시 안 선다
+                field.TickKing(pc.transform.position);
+                if (k.Alive) Fail("꽃이 핀 동안 곰왕이 섬");
+                // 카드
+                pc.Teleport(GuardianBloom.FrostSpot + new Vector3(2f, 0.3f, 0f));
+                DomainState.SetResinForTest(10);
+                bloom.Refresh();
+                if (!bloom.FrostCardShown || !bloom.FrostCardText.Contains("★4") || bloom.FrostClaimButton.interactable) Fail($"곰왕 꽃 카드(원기 10) '{bloom.FrostCardText}'");
+                if (bloom.ClaimFrost(out _) != null || !FrostBossState.Bloom) Fail("원기 10 으로 곰왕 꽃을 받음");
+                DomainState.SetResinForTest(120);
+                bloom.Refresh();
+                int arts = ArtifactState.Count, gold = GoldState.Gold;
+                bloom.FrostClaimButton.onClick.Invoke();
+                var last = ArtifactState.All.Count > 0 ? ArtifactState.All[ArtifactState.All.Count - 1] : null;
+                if (FrostBossState.Bloom || FrostBossState.PaidAt != FrostBossState.Now || DomainState.Resin != 90) Fail($"곰왕 꽃 받기 기록·원기 {DomainState.Resin}");
+                if (GoldState.Gold != gold + GuardianBloom.GoldPerTier * GoWorldMap.MaxDanger || ArtifactState.Count != arts + 1 || last == null || last.rarity != 4) Fail($"곰왕 꽃 보상 금 {GoldState.Gold - gold}·보패 {ArtifactState.Count - arts}");
+                bloom.Refresh();
+                if (bloom.FrostFlowerShown || bloom.FrostCardShown) Fail("받았는데 곰왕 꽃·카드가 남음");
+                // 150초 뒤 다시 선다(고원 안에서)
+                pc.Teleport(GoFrost.Center + new Vector3(0f, 0.4f, 150f));
+                FrostBossState.NowForTest += FrostBossState.BackSec - 1;
+                field.TickKing(pc.transform.position);
+                if (k.Alive) Fail("149초에 곰왕이 섬");
+                FrostBossState.NowForTest += 1;
+                field.TickKing(pc.transform.position);
+                if (!k.Alive || !k.gameObject.activeSelf) Fail("150초에 곰왕이 안 섬");
+                // 다시 잡으면 금·경험 없이 꽃만
+                gold = GoldState.Gold;
+                int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+                KillKing(k);
+                if (GoldState.Gold != gold || PlayerStats.Level != lv || PlayerStats.Exp != exp || !FrostBossState.Bloom) Fail("곰왕을 다시 잡았는데 금·경험이 나옴(꽃만이어야)");
+                // 서 있는 곰왕은 고원을 나서면 꺼 둔다
+                FrostBossState.Restore(false);
+                field.TickKing(pc.transform.position);
+                if (!k.Alive || !k.gameObject.activeSelf) Fail("안 쓰러뜨린 곰왕이 안 섬");
+                field.TickKing(fc.SafePoint);
+                if (k.gameObject.activeSelf) Fail("고원을 나섰는데 곰왕이 서 있다");
+                field.TickKing(pc.transform.position);
+                if (!k.gameObject.activeSelf || !k.Alive || k.Hp < k.MaxHp) Fail("다시 들어섰는데 곰왕이 처음부터가 아님");
+                field.TickKing(fc.SafePoint);
+                // 세이브 왕복 — 옛 세이브는 안 쓰러뜨린 채
+                FrostBossState.Restore(true, true, 0);
+                if (!SaveState.Save()) { Fail("SaveState.Save 실패(곰왕)"); return; }
+                string json = System.IO.File.ReadAllText(savePath);
+                if (!json.Contains("\"frostBossBloom\":true") || !json.Contains("\"version\":28")) Fail("세이브에 곰왕 꽃이 없다(버전은 28 그대로)");
+                FrostBossState.Restore(true, false, 123);
+                if (!SaveState.TryLoad() || !FrostBossState.Bloom || FrostBossState.PaidAt != 0) Fail("곰왕 세이브 왕복 뒤 꽃이 달라짐");
+                string old = Regex.Replace(json, ",\"frostBossDown\":(true|false),\"frostBossBloom\":(true|false),\"frostBossPaidAt\":\\d+", "");
+                if (old.Contains("frostBoss")) { Fail("곰왕 없는 옛 세이브 가짜 파일 만들기 실패"); return; }
+                System.IO.File.WriteAllText(savePath, old);
+                FrostBossState.Restore(true, true, 0);
+                if (!SaveState.TryLoad() || FrostBossState.Defeated || !FrostBossState.Standing) Fail("곰왕 없는 옛 세이브를 읽었는데 쓰러진 채");
+                parts.Add("곰왕(고원 밖 꺼짐·안 서고 빙 두 겹·첫 토벌 금·경험·꽃·원기 30 받기·150초 뒤 다시·다시 잡으면 꽃만·나서면 꺼졌다 처음부터·세이브 왕복·옛 세이브)");
+            }
+            finally
+            {
+                var k2 = FieldEnemy.FrostKingInstance;
+                FrostBossState.NowForTest = -1;
+                DomainState.NowForTest = -1;
+                FrostBossState.Restore(d0, b0, p0);
+                DomainState.Restore(dom0.resin, dom0.t, dom0.claims, dom0.week, dom0.weekN);
+                GoldState.Restore(gold0);
+                PlayerStats.Restore(lv0, exp0);
+                ArtifactState.Restore(arts0, seq0, pol0);
+                if (k2 != null && k2.gameObject.activeSelf) k2.gameObject.SetActive(false);
+                bloom.Refresh();
+                fc.ResetForTest();
+                pc.Teleport(fc.SafePoint);
+            }
         }
 
         // ---- 세이브 ----

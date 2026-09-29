@@ -149,6 +149,9 @@ namespace Saga.Go.Data
             public int dispDone;
             // 109-14-27a 서리봉 고원 — 찾은 명소·발견(버전 그대로 — 옛 세이브는 아무것도 못 찾은 채)
             public List<string> frostFound;
+            // 109-14-31 서리봉 고원 들판 보스 만년설 바위곰왕 — 쓰러뜨림·꽃·받은 때(버전 그대로)
+            public bool frostBossDown, frostBossBloom;
+            public long frostBossPaidAt;
             public List<int> wqSteps;
             public List<bool> wqDone;
             public string wqTrack;
@@ -191,6 +194,9 @@ namespace Saga.Go.Data
                 dispOut = DispatchState.Snapshot(), // 109-14-26
                 dispDone = DispatchState.Done,
                 frostFound = FrostState.Snapshot(), // 109-14-27a
+                frostBossDown = FrostBossState.Defeated, // 109-14-31
+                frostBossBloom = FrostBossState.Bloom,
+                frostBossPaidAt = FrostBossState.PaidAt,
                 wqSteps = WorldQuestState.SnapshotSteps(), // 109-14-21
                 wqDone = WorldQuestState.SnapshotDone(),
                 wqTrack = StoryState.TrackId,
@@ -329,6 +335,7 @@ namespace Saga.Go.Data
             AchieveState.Restore(data.achStats, data.achKinds, data.achGot); // 109-14-25
             DispatchState.Restore(data.dispOut, data.dispDone); // 109-14-26
             FrostState.Restore(data.frostFound); // 109-14-27a
+            FrostBossState.Restore(data.frostBossDown, data.frostBossBloom, data.frostBossPaidAt); // 109-14-31
             World.GoOrbField.Instance?.Rebuild();
 
             Transform player = FindPlayer();

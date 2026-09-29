@@ -49,6 +49,11 @@ namespace Saga.Go.Combat
         public const float GuardianDownSec = 3f;
         public const GoElement GuardianOuter = GoElement.Electro; // 주인공(화)이 상성으로 깬다
         public const GoElement GuardianInner = GoElement.Pyro;    // 주인공은 면역 — 수 동료(또는 물리 0.4)로
+        // 109-14-31 서리봉 고원 만년설 바위곰왕(웹 g_frost — 체력 8.5·공격 2.0·경험 14·방패 1.4 는 다른 수호자 6.5·1.9·12·1.3 에 견줘) — 겉 빙(화로 깬다) · 속 암(초로 깬다)
+        public const float FrostKingHp = 220f * 8.5f, FrostKingShield = 300f * 1.4f, FrostKingAtk = 38f;
+        public const int FrostKingExp = 105;
+        public const float FrostKingHeight = 1.8f;
+        public const GoElement FrostKingOuter = GoElement.Cryo, FrostKingInner = GoElement.Geo;
 
         /// <summary>PLAN.md 106-9 — 등장 컷이 넓은→가까운 샷으로 자르는 순간. 플레이어를 보고 공격 클립을 포효 대신 한 번(판정 없음).</summary>
         public void PlayRoar()
@@ -108,6 +113,10 @@ namespace Saga.Go.Combat
         public bool Shielded => ShieldHp > 0f;
         public bool IsElemental => Element != GoElement.Physical;
         public bool IsGuardian => kind == Kind.Guardian;
+        /// <summary>109-14-31 서리봉 고원 만년설 바위곰왕 — 수호장 틀(두 겹 방패·쓰러뜨림 꽃)을 쓰되 제 기록(<see cref="FrostBossState"/>)·제 자리.</summary>
+        public bool FrostKing { get; private set; }
+        private bool BossStanding => FrostKing ? FrostBossState.Standing : GuardianState.Standing;
+        private bool BossDefeated => FrostKing ? FrostBossState.Defeated : GuardianState.Defeated;
 
         // ---- PLAN.md 109-6 들판 인물(웹 사가고 ⑯ 싸워서 등용) — `FieldHeroes` 가 겨루기를 열 때만 세운다 ----
         public bool IsHero => kind == Kind.Hero;
@@ -317,7 +326,7 @@ namespace Saga.Go.Combat
         /// <summary>설 수 있나 — 여느 들판 적은 산·강 칸이 아닌 곳, 이야기 보스는 제 고원 칸 안(봉우리 밑동 밖)도.</summary>
         public bool CanStep(Vector3 p)
         {
-            bool arena = StoryFoe && !CanStandOn(Home); // 고원 위에 선 이야기 적(6장 검은 가면·졸개)
+            bool arena = (StoryFoe || FrostKing) && !CanStandOn(Home); // 고원 위에 선 이야기 적(6장 검은 가면·졸개)·서리봉 고원 곰왕
             if (StoryFoe && GoStory.OnSkyLayer(Home)) return GoStory.OnSkyTop(p); // 109-14-20 구름섬 무리는 난간 안에서만(칸을 넘나든다)
             if (!arena) return CanStandOn(p);
             if (!SameCell(p, Home)) return false;
@@ -442,8 +451,8 @@ namespace Saga.Go.Combat
         }
         /// <summary>두 겹 방패 — 수호장과 ★5 인물.</summary>
         private bool TwoLayered => IsGuardian || (IsHero && HeroRarity >= 5);
-        private GoElement OuterElement => IsGuardian ? GuardianOuter : _outerElement;
-        private GoElement InnerElement => IsGuardian ? GuardianInner : _innerElement;
+        private GoElement OuterElement => IsGuardian ? (FrostKing ? FrostKingOuter : GuardianOuter) : _outerElement;
+        private GoElement InnerElement => IsGuardian ? (FrostKing ? FrostKingInner : GuardianInner) : _innerElement;
         public Vector3 StrikePoint => Ranged || _moveAtPoint ? _strikePoint : transform.position;
         /// <summary>남은 방패 겹(수호장 2→1→0, 원소 적 1→0, 보통 적 0).</summary>
         public int ShieldLayers { get; private set; }
@@ -482,12 +491,13 @@ namespace Saga.Go.Combat
 
         /// <summary>PLAN.md 109-1 — 다른 시대 무리의 적. 종류(체력·원소·방패)는 그대로, 몸(`eraBody`)·이름만 그 시대 것.</summary>
         public static FieldEnemy Spawn(Kind kind, Vector3 home, GameObject model, string groupId, Transform parent, GoEra era, string eraBody,
-            GoElement elementOverride = GoElement.Physical)
+            GoElement elementOverride = GoElement.Physical, bool frostKing = false)
         {
-            var go = new GameObject($"FieldEnemy_{kind}");
+            var go = new GameObject(frostKing ? "FieldEnemy_FrostKing" : $"FieldEnemy_{kind}");
             go.transform.SetParent(parent, false);
             var e = go.AddComponent<FieldEnemy>();
             e.kind = kind;
+            e.FrostKing = frostKing;
             e._elementOverride = elementOverride;
             e.model = model;
             e.GroupId = groupId;
@@ -496,12 +506,16 @@ namespace Saga.Go.Combat
             e.Home = home;
             e._spawnHome = home;
             e.Setup();
-            if (kind == Kind.Guardian) GuardianInstance = e; // 109-14-10 꺼져 있어도 다시 세울 수 있게
+            if (frostKing) { FrostKingInstance = e; e.SetRotation(FrostKingRot); }
+            else if (kind == Kind.Guardian) GuardianInstance = e; // 109-14-10 꺼져 있어도 다시 세울 수 있게
             return e;
         }
 
         /// <summary>109-14-10 망루 수호장(꺼져 있어도 — `All` 은 켜진 적만).</summary>
         public static FieldEnemy GuardianInstance { get; private set; }
+        /// <summary>109-14-31 만년설 바위곰왕(꺼져 있어도) · 공격 차례(웹 rot 그대로 — 내려찍기·물기·눈사태·내려찍기·고리·물기).</summary>
+        public static FieldEnemy FrostKingInstance { get; private set; }
+        public static readonly BossMove[] FrostKingRot = { BossMove.Slam, BossMove.Melee, BossMove.Tide, BossMove.Slam, BossMove.Halo, BossMove.Melee };
 
         /// <summary>109-6 — 들판 인물 하나를 겨루기 상대로 세운다(몸은 동행이 됐을 때와 같은 몸, 컨트롤러는 Maria 것 리타깃).</summary>
         public static FieldEnemy SpawnHero(GoHeroes.Hero hero, Vector3 home, GameObject model, RuntimeAnimatorController controller, Transform parent,
@@ -575,8 +589,9 @@ namespace Saga.Go.Combat
                     MaxHp = 230f; Atk = 28f; ExpReward = 20; Element = GoElement.Electro; ShieldMax = 130f;
                     break;
                 case Kind.Guardian:
-                    DisplayName = KindName(kind);
-                    MaxHp = GuardianHp; Atk = GuardianAtk; ExpReward = GuardianExp; Element = GuardianOuter; ShieldMax = GuardianShield;
+                    DisplayName = FrostKing ? GoLocalization.T("field.foe.frostking", "만년설 바위곰왕") : KindName(kind);
+                    if (FrostKing) { MaxHp = FrostKingHp; Atk = FrostKingAtk; ExpReward = FrostKingExp; Element = FrostKingOuter; ShieldMax = FrostKingShield; }
+                    else { MaxHp = GuardianHp; Atk = GuardianAtk; ExpReward = GuardianExp; Element = GuardianOuter; ShieldMax = GuardianShield; }
                     break;
                 case Kind.Hero:
                     DisplayName = GoHeroes.Label(_hero);
@@ -677,7 +692,7 @@ namespace Saga.Go.Combat
                 case Kind.Skeleton: return 1.05f;
                 case Kind.EmberImp: return 0.85f;
                 case Kind.DrownedGhost: return 1.15f;
-                case Kind.Guardian: return 1.6f;
+                case Kind.Guardian: return FrostKing ? FrostKingHeight : 1.6f;
                 default: return 1f;
             }
         }
@@ -865,7 +880,7 @@ namespace Saga.Go.Combat
             CurrentState = State.Chase;
             if (!(IsGuardian || IsHero) || Engaged) return;
             Engaged = true;
-            if (IsGuardian) GuardianEngaged?.Invoke(this);
+            if (IsGuardian && !FrostKing) GuardianEngaged?.Invoke(this);
         }
 
         /// <summary>109-6 — `FieldHeroes` 가 겨루기를 연다(바로 달려든다).</summary>
@@ -876,7 +891,7 @@ namespace Saga.Go.Combat
         {
             TickStatus(dt);
             if (CurrentState != State.Telegraph && _tidePts.Count > 0) ClearMove(); // 예고가 끊겼으면(비틀·얼음·쓰러짐) 밀물 원을 거둔다
-            if (IsGuardian && !GuardianState.Standing && Alive)
+            if (IsGuardian && !BossStanding && Alive)
             {
                 gameObject.SetActive(false); // 세이브에서 이미 쓰러뜨린 수호장 — 꽃을 받고 150초가 지나기 전엔 안 선다(109-14-10 `GuardianBloom` 이 다시 세운다).
                 return;
@@ -1408,7 +1423,7 @@ namespace Saga.Go.Combat
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
             if (DomainFoe || StoryFoe) { if (IsWeeklyBoss || IsStoryBoss) AchieveState.Bump("boss"); Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음(109-14-12 임무 적도)
-            if (!(IsGuardian && GuardianState.Defeated)) PlayerStats.AddExp(ExpReward); // 109-14-10 다시 선 수호장은 경험 없이 꽃만
+            if (!(IsGuardian && BossDefeated)) PlayerStats.AddExp(ExpReward); // 109-14-10 다시 선 수호장은 경험 없이 꽃만
             DailyTaskState.ReportProgress(DailyTaskState.Kind.FieldKill, 1); // 109-14-8 일일 의뢰 — 들판 적
             AchieveState.Bump("kills"); // 109-14-25 업적 — 들판 처치
             if (IsGuardian) AchieveState.Bump("boss");
@@ -1422,13 +1437,13 @@ namespace Saga.Go.Combat
             if (IsGuardian)
             {
                 _timer = float.MaxValue; // 저절로 다시 안 선다 — 꽃을 받고 150초 뒤 `GuardianBloom` 이 세운다(109-14-10)
-                if (GuardianState.MarkDefeated())
+                if (FrostKing ? FrostBossState.MarkDefeated() : GuardianState.MarkDefeated())
                 {
                     GoldState.Add(GuardianGoldNow); // 109-14-7 천하 등급 전리품 배율 — 첫 토벌만
                     Saga.Go.UI.DialogueLabel.Instance?.Show(string.Format(
-                        GoLocalization.T("field.guard_slain", "망루 수호장 토벌! 금 {0}냥 · 경험치 {1}"), GuardianGoldNow, ExpReward) + " — " + GoLocalization.T("boss.bloomed", "보상 꽃이 피었다"), 4f);
+                        FrostKing ? GoLocalization.T("field.frostking_slain", "만년설 바위곰왕 토벌! 금 {0}냥 · 경험치 {1}") : GoLocalization.T("field.guard_slain", "망루 수호장 토벌! 금 {0}냥 · 경험치 {1}"), GuardianGoldNow, ExpReward) + " — " + GoLocalization.T("boss.bloomed", "보상 꽃이 피었다"), 4f);
                 }
-                else Saga.Go.UI.DialogueLabel.Instance?.Show(GoLocalization.T("boss.again", "망루 수호장을 다시 쓰러뜨렸다 — 보상 꽃이 피었다"), 3.5f);
+                else Saga.Go.UI.DialogueLabel.Instance?.Show(FrostKing ? GoLocalization.T("boss.again_frost", "만년설 바위곰왕을 다시 쓰러뜨렸다 — 보상 꽃이 피었다") : GoLocalization.T("boss.again", "망루 수호장을 다시 쓰러뜨렸다 — 보상 꽃이 피었다"), 3.5f);
             }
             if (IsElemental && ShieldMax > 0f && !IsGuardian && !IsHero)
             {

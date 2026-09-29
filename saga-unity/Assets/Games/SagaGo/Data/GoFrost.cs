@@ -19,6 +19,9 @@ namespace Saga.Go.Data
         public static readonly Vector3 Center = new Vector3(0f, 0f, -860f);
         public const float HalfX = 200f, HalfZ = 270f, Thickness = 10f, WallHeight = 60f;
 
+        /// <summary>109-14-31 만년설 바위곰왕이 서는 자리 — 고원 가운데에서 서북쪽 64m(명소·이야기 자리·돌기둥에서 멀고, 10장의 "고원 가운데까지 걷기" 를 비킨다).</summary>
+        public static readonly Vector3 KingHome = Center + new Vector3(-45f, 0f, 45f);
+
         public const float BigRadius = 16f, SmallRadius = 7f, GateRadius = 4.5f;
         public const int BigGold = 150, BigPolish = 2, BigExp = 40, SmallGold = 60, SmallExp = 20;
 
