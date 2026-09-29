@@ -136,7 +136,7 @@ func _add_beacon() -> void:
 func _add_field_markers() -> void:
 	for m in FIELD_MARKERS:
 		var ch: String = TestMap.tile_at(m.grid.x, m.grid.y)
-		var ground: float = TerrainBuilder.LEGEND[ch].height
+		var ground: float = TerrainBuilder.height_at("village", TestMap.world_pos(m.grid.x, m.grid.y))  # 09-30 평지 기복 — LEGEND 평탄 값이 아니라 실제 지면
 		var pos := TestMap.world_pos(m.grid.x, m.grid.y) + Vector3(0, ground, 0)
 		var mi := MeshInstance3D.new()
 		match m.shape:
@@ -418,7 +418,7 @@ func _build_house(node_name: String, pos: Vector3, footprint: Vector3, variant: 
 
 
 func _add_waystation() -> void:
-	var ground: float = TerrainBuilder.LEGEND["="].height
+	var ground: float = TerrainBuilder.height_at("village", TestMap.world_pos(5, 3))
 	var pos := TestMap.world_pos(5, 3) + Vector3(0, ground, 0)
 	var house := _build_house("Waystation", pos, WAYSTATION_FOOTPRINT, 2)
 	add_child(house)

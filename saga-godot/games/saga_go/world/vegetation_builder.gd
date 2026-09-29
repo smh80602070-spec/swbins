@@ -279,6 +279,12 @@ const SHRUB_CHANCE := 0.4  # "." 칸당 1개 상한, 40% 확률
 
 var region_id := "village"
 
+## 09-30 평지 기복 — 칸 (x, y) 중심에서 off 만큼 떨어진 자리를 실제 지면 높이에 앉힌다(예전엔 LEGEND 평탄 값).
+func _on_ground(x: int, y: int, off: Vector3) -> Vector3:
+	var p := TestMap.world_pos(x, y, region_id) + off
+	p.y = TerrainBuilder.height_at(region_id, p)
+	return p
+
 
 func _ready() -> void:
 	_scatter_trees()
@@ -326,7 +332,6 @@ func _apply_wind_shader(mesh: Mesh, surface_idx: int) -> void:
 
 
 func _scatter_trees() -> void:
-	var ground: float = TerrainBuilder.LEGEND["T"].height
 	var variants: Array = REGION_TREE_VARIANTS.get(region_id, REGION_TREE_VARIANTS["village"])
 	var positions: Array[Vector3] = []
 	var scales: Array[float] = []
@@ -342,7 +347,7 @@ func _scatter_trees() -> void:
 				var jx := (_hash(x, y, i * 2) - 0.5) * TestMap.TILE_SIZE * 0.9
 				var jz := (_hash(x, y, i * 2 + 1) - 0.5) * TestMap.TILE_SIZE * 0.9
 				var s := TREE_SCALE_MIN + _hash(x, y, i * 2 + 100) * TREE_SCALE_SPAN
-				var tp := TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz)
+				var tp := _on_ground(x, y, Vector3(jx, 0.0, jz))
 				if KeepSpots.near(region_id, tp, TREE_KEEP_M):
 					continue
 				positions.append(tp)
@@ -422,7 +427,6 @@ func _scatter_trees() -> void:
 ## "스쳐도 안 걸린다" 쪽이 논밭 한가운데를 걸어 지날 때 자연스럽다
 ## (다른 지면 장식인 vegetation 없음, 새로 만든 첫 예외).
 func _scatter_crops() -> void:
-	var ground: float = TerrainBuilder.LEGEND["F"].height
 	var positions: Array[Vector3] = []
 	var scales: Array[float] = []
 	var yaws: Array[float] = []
@@ -436,7 +440,7 @@ func _scatter_crops() -> void:
 				var jx := (_hash(x, y, i * 2 + 700) - 0.5) * TestMap.TILE_SIZE * 0.85
 				var jz := (_hash(x, y, i * 2 + 701) - 0.5) * TestMap.TILE_SIZE * 0.85
 				var s := 0.8 + _hash(x, y, i * 2 + 800) * 0.4
-				positions.append(TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz))
+				positions.append(_on_ground(x, y, Vector3(jx, 0.0, jz)))
 				scales.append(s)
 				yaws.append(_hash(x, y, i * 2 + 900) * TAU)
 
@@ -527,7 +531,6 @@ func _build_rock_multimesh(mesh: Mesh, transforms: Array[Transform3D], node_name
 
 
 func _scatter_clutter() -> void:
-	var ground: float = TerrainBuilder.LEGEND["."].height
 	var positions: Array[Vector3] = []
 	var yaws: Array[float] = []
 	var rows := TestMap.rows_of(region_id)
@@ -540,7 +543,7 @@ func _scatter_clutter() -> void:
 				continue
 			var jx := (_hash(x, y, 601) - 0.5) * TestMap.TILE_SIZE * 0.7
 			var jz := (_hash(x, y, 602) - 0.5) * TestMap.TILE_SIZE * 0.7
-			positions.append(TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz))
+			positions.append(_on_ground(x, y, Vector3(jx, 0.0, jz)))
 			yaws.append(_hash(x, y, 603) * TAU)
 
 	if positions.is_empty():
@@ -574,7 +577,6 @@ func _scatter_clutter() -> void:
 func _scatter_village_path() -> void:
 	if region_id != "village":
 		return
-	var ground: float = TerrainBuilder.LEGEND["."].height
 	var xf_by_variant: Array[Array] = []
 	for i in VILLAGE_PATH_GLB.size():
 		var arr: Array[Transform3D] = []
@@ -589,7 +591,7 @@ func _scatter_village_path() -> void:
 				continue
 			var jx := (_hash(x, y, 951) - 0.5) * TestMap.TILE_SIZE * 0.6
 			var jz := (_hash(x, y, 952) - 0.5) * TestMap.TILE_SIZE * 0.6
-			var pos := TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz)
+			var pos := _on_ground(x, y, Vector3(jx, 0.0, jz))
 			var yaw := _hash(x, y, 953) * TAU
 			var variant := int(_hash(x, y, 954) * VILLAGE_PATH_GLB.size()) % VILLAGE_PATH_GLB.size()
 			(xf_by_variant[variant] as Array[Transform3D]).append(Transform3D(Basis(Vector3.UP, yaw), pos))
@@ -609,7 +611,6 @@ func _scatter_village_path() -> void:
 func _scatter_coast_pebbles() -> void:
 	if region_id != "coast":
 		return
-	var ground: float = TerrainBuilder.LEGEND["D"].height
 	var xf_by_variant: Array[Array] = []
 	for i in COAST_PEBBLE_GLB.size():
 		var arr: Array[Transform3D] = []
@@ -624,7 +625,7 @@ func _scatter_coast_pebbles() -> void:
 				continue
 			var jx := (_hash(x, y, 961) - 0.5) * TestMap.TILE_SIZE * 0.7
 			var jz := (_hash(x, y, 962) - 0.5) * TestMap.TILE_SIZE * 0.7
-			var pos := TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz)
+			var pos := _on_ground(x, y, Vector3(jx, 0.0, jz))
 			var yaw := _hash(x, y, 963) * TAU
 			var variant := int(_hash(x, y, 964) * COAST_PEBBLE_GLB.size()) % COAST_PEBBLE_GLB.size()
 			(xf_by_variant[variant] as Array[Transform3D]).append(Transform3D(Basis(Vector3.UP, yaw), pos))
@@ -643,7 +644,6 @@ func _scatter_coast_pebbles() -> void:
 func _scatter_understory() -> void:
 	if region_id != "village":
 		return
-	var ground: float = TerrainBuilder.LEGEND["T"].height
 	var rows := TestMap.rows_of(region_id)
 	for k in UNDERSTORY.size():
 		var spec: Dictionary = UNDERSTORY[k]
@@ -659,7 +659,7 @@ func _scatter_understory() -> void:
 					continue
 				var jx := (_hash(x, y, salt + 1) - 0.5) * TestMap.TILE_SIZE * 0.8
 				var jz := (_hash(x, y, salt + 2) - 0.5) * TestMap.TILE_SIZE * 0.8
-				var pos := TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz)
+				var pos := _on_ground(x, y, Vector3(jx, 0.0, jz))
 				var basis := Basis(Vector3.UP, _hash(x, y, salt + 3) * TAU).scaled(Vector3.ONE * s)
 				xforms.append(Transform3D(basis, pos))
 		if xforms.is_empty():
@@ -675,7 +675,6 @@ func _scatter_understory() -> void:
 func _scatter_wildflowers() -> void:
 	if region_id != "village":
 		return
-	var ground: float = TerrainBuilder.LEGEND["."].height
 	var xf_by_kind: Array[Array] = []
 	for k in WILDFLOWERS.size():
 		var arr: Array[Transform3D] = []
@@ -691,7 +690,7 @@ func _scatter_wildflowers() -> void:
 				var kind := int(_hash(x, y, salt) * WILDFLOWERS.size()) % WILDFLOWERS.size()
 				var jx := (_hash(x, y, salt + 1) - 0.5) * TestMap.TILE_SIZE * 0.85
 				var jz := (_hash(x, y, salt + 2) - 0.5) * TestMap.TILE_SIZE * 0.85
-				var pos := TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz)
+				var pos := _on_ground(x, y, Vector3(jx, 0.0, jz))
 				var s: float = WILDFLOWERS[kind].scale
 				var basis := Basis(Vector3.UP, _hash(x, y, salt + 3) * TAU).scaled(Vector3.ONE * s)
 				(xf_by_kind[kind] as Array[Transform3D]).append(Transform3D(basis, pos))
@@ -722,7 +721,6 @@ const MEADOW_COLORS := [
 func _scatter_meadow() -> void:
 	if region_id in MEADOW_SKIP_REGIONS:
 		return
-	var ground: float = TerrainBuilder.LEGEND["."].height
 	var stems: Array[Transform3D] = []
 	var heads: Array[Transform3D] = []
 	var colors: Array[Color] = []
@@ -740,7 +738,7 @@ func _scatter_meadow() -> void:
 				for i in MEADOW_PER_PATCH:
 					var a := _hash(x, y, ps + 3 + i * 3) * TAU
 					var r := sqrt(_hash(x, y, ps + 4 + i * 3)) * MEADOW_RADIUS
-					var pos := TestMap.world_pos(x, y, region_id) + Vector3(cx + cos(a) * r, ground, cz + sin(a) * r)
+					var pos := _on_ground(x, y, Vector3(cx + cos(a) * r, 0.0, cz + sin(a) * r))
 					var s := 0.8 + 0.5 * _hash(x, y, ps + 5 + i * 3)
 					stems.append(Transform3D(Basis.IDENTITY.scaled(Vector3(1, s, 1)), pos + Vector3(0, 0.3 * s, 0)))
 					heads.append(Transform3D(Basis(Vector3.UP, a).scaled(Vector3.ONE * s), pos + Vector3(0, 0.6 * s, 0)))
@@ -795,7 +793,6 @@ func _scatter_meadow() -> void:
 func _scatter_shrubs() -> void:
 	if region_id != "village":
 		return
-	var ground: float = TerrainBuilder.LEGEND["."].height
 	var xf_by_kind: Array[Array] = []
 	for k in SHRUBS.size():
 		var arr: Array[Transform3D] = []
@@ -811,7 +808,7 @@ func _scatter_shrubs() -> void:
 			var kind := int(_hash(x, y, 1031) * SHRUBS.size()) % SHRUBS.size()
 			var jx := (_hash(x, y, 1032) - 0.5) * TestMap.TILE_SIZE * 0.6
 			var jz := (_hash(x, y, 1033) - 0.5) * TestMap.TILE_SIZE * 0.6
-			var pos := TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz)
+			var pos := _on_ground(x, y, Vector3(jx, 0.0, jz))
 			var s: float = SHRUBS[kind].scale
 			var basis := Basis(Vector3.UP, _hash(x, y, 1034) * TAU).scaled(Vector3.ONE * s)
 			(xf_by_kind[kind] as Array[Transform3D]).append(Transform3D(basis, pos))
@@ -832,7 +829,6 @@ func _scatter_shrubs() -> void:
 func _scatter_ruins_debris() -> void:
 	if region_id != "ruins":
 		return
-	var ground: float = TerrainBuilder.LEGEND["R"].height
 	var positions: Array[Vector3] = []
 	var yaws: Array[float] = []
 	var use_b: Array[bool] = []
@@ -846,7 +842,7 @@ func _scatter_ruins_debris() -> void:
 				continue
 			var jx := (_hash(x, y, 701) - 0.5) * TestMap.TILE_SIZE * 0.6
 			var jz := (_hash(x, y, 702) - 0.5) * TestMap.TILE_SIZE * 0.6
-			positions.append(TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz))
+			positions.append(_on_ground(x, y, Vector3(jx, 0.0, jz)))
 			yaws.append(_hash(x, y, 703) * TAU)
 			use_b.append(_hash(x, y, 704) > 0.5)
 
@@ -886,7 +882,6 @@ func _scatter_ruins_debris() -> void:
 func _scatter_ruins_rubble() -> void:
 	if region_id != "ruins":
 		return
-	var ground: float = TerrainBuilder.LEGEND["R"].height
 	var xf_by_variant: Array[Array] = []
 	for i in RUBBLE_ROCK_GLB.size():
 		var arr: Array[Transform3D] = []
@@ -901,7 +896,7 @@ func _scatter_ruins_rubble() -> void:
 				continue
 			var jx := (_hash(x, y, 721) - 0.5) * TestMap.TILE_SIZE * 0.65
 			var jz := (_hash(x, y, 722) - 0.5) * TestMap.TILE_SIZE * 0.65
-			var pos := TestMap.world_pos(x, y, region_id) + Vector3(jx, ground, jz)
+			var pos := _on_ground(x, y, Vector3(jx, 0.0, jz))
 			var yaw := _hash(x, y, 723) * TAU
 			var variant := int(_hash(x, y, 724) * RUBBLE_ROCK_GLB.size()) % RUBBLE_ROCK_GLB.size()
 			(xf_by_variant[variant] as Array[Transform3D]).append(Transform3D(Basis(Vector3.UP, yaw), pos))

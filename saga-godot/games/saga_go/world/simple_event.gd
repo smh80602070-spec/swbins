@@ -94,7 +94,7 @@ func _apply_weather_gate() -> void:
 
 func _spawn_visual() -> void:
 	var ch: String = TestMap.tile_at(grid.x, grid.y)
-	var ground: float = TerrainBuilder.LEGEND[ch].height
+	var ground: float = TerrainBuilder.height_at("village", TestMap.world_pos(grid.x, grid.y))  # 09-30 평지 기복 — LEGEND 평탄 값이 아니라 실제 지면
 	position = TestMap.world_pos(grid.x, grid.y) + Vector3(0, ground, 0)
 
 	var visual: Node3D = null

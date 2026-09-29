@@ -76,7 +76,7 @@ func _physics_process(_delta: float) -> void:
 						col_ok = true
 			var h := TerrainBuilder.height_at(R, TestMap.world_pos(5, 1, R))
 			var ray: Variant = _ray_down(TestMap.world_pos(4.3, 1.2, R))
-			_check("terrain", mesh_ok and col_ok and absf(h - 0.05) < 0.01 and ray != null and absf(float(ray) - 0.05) < 0.3, "mesh=%s col=%s h=%.2f ray=%s" % [mesh_ok, col_ok, h, ray])
+			_check("terrain", mesh_ok and col_ok and h >= 0.04 and h <= 1.0 and ray != null and absf(float(ray) - h) < 0.6, "mesh=%s col=%s h=%.2f ray=%s" % [mesh_ok, col_ok, h, ray])
 			_next()
 		2: # ③ 시간 틈 문 — 4부 전
 			if _frame == 1:

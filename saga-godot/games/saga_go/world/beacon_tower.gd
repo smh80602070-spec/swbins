@@ -35,7 +35,7 @@ var _lit := false
 
 func _ready() -> void:
 	var ch: String = TestMap.tile_at(grid.x, grid.y, region_id)
-	var ground: float = TerrainBuilder.LEGEND[ch].height
+	var ground: float = TerrainBuilder.height_at(region_id, TestMap.world_pos(grid.x, grid.y, region_id))  # 09-30 평지 기복 — LEGEND 평탄 값이 아니라 실제 지면
 	position = TestMap.world_pos(grid.x, grid.y, region_id) + Vector3(0, ground, 0)
 	_spawn_visual()
 	_spawn_area()

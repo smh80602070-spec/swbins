@@ -148,6 +148,18 @@ const CLIFF_JAG_M := 4.5
 const LOW_STEP_M := 0.6 # 이보다 낮은 턱 옆면은 땅처럼 칠한다(_add_cliffs)
 
 static var _noise: FastNoiseLite = null
+static var _relief_noise: FastNoiseLite = null
+
+## 2026-09-30 "빈 들판" — 평지가 자로 잰 듯 평평해 넓은 들이 판때기 같았다. 완만한 물결 기복(파장 ~125m, ±RELIEF_AMP)을 얹는다.
+## 대상은 이어진 "평지 글자"(RELIEF_FLAT: 풀·숲 바닥·밭·길) — 이 글자끼리 이웃한 변에선 같은 함수라 칸 이음이 그대로,
+## 다른 글자(물·산·다리·집터·모래…)와 맞닿는 변에선 RELIEF_FADE_M 안에서 0 으로 잦아든다(기준 높이·절벽 판정은 tile_base_height 그대로).
+## **지면에 물건을 앉힐 때는 LEGEND 값이 아니라 height_at() 을 쓴다**(안 그러면 진폭만큼 뜨거나 묻힌다).
+const RELIEF_AMP := 0.9
+const RELIEF_FADE_M := 14.0
+const RELIEF_FLAT := [".", "T", "F", "="]
+## 평지 글자끼리는 기준 높이를 하나로(LEGEND 의 0~0.15 계단이 기복 위에서 균열·떠 있는 옆면이 되지 않게).
+const RELIEF_BASE := 0.05
+const RELIEF_REGIONS := ["village", "ruins", "frost", "skyport", "crossing", "sunken", "amber", "vault", "fork"]
 
 func _ready() -> void:
 	_build()
@@ -161,6 +173,8 @@ func _ready() -> void:
 ## 칸의 기준 높이. 산은 씨앗 해시로 2m 계단, 나머지는 LEGEND 값.
 static func tile_base_height(region: String, x: int, y: int) -> float:
 	var ch := TestMap.tile_at(x, y, region)
+	if ch in RELIEF_FLAT and region in RELIEF_REGIONS:
+		return RELIEF_BASE
 	if ch != "^":
 		return LEGEND[ch].height if LEGEND.has(ch) else 0.0
 	var s := TestMap.size(region)
@@ -175,6 +189,8 @@ static func tile_base_height(region: String, x: int, y: int) -> float:
 static func vertex_height(region: String, x: int, y: int, u: float, v: float) -> float:
 	var base := tile_base_height(region, x, y)
 	var tch := TestMap.tile_at(x, y, region)
+	if tch in RELIEF_FLAT and region in RELIEF_REGIONS:
+		return base + _relief(region, x, y, u, v)
 	if tch == "K":
 		var r := Vector2(u - 0.5, v - 0.5).length()
 		var fk := 1.0 - smoothstep(ISLET_TOP_R, ISLET_SHORE_R, r)
@@ -204,6 +220,31 @@ static func _grid_of(region: String, world: Vector3) -> Vector4:
 	var ix := clampi(int(floor(gx)), 0, s.x - 1)
 	var iy := clampi(int(floor(gy)), 0, s.y - 1)
 	return Vector4(ix, iy, clampf(gx - ix, 0.0, 1.0), clampf(gy - iy, 0.0, 1.0))
+
+static func _relief(region: String, x: int, y: int, u: float, v: float) -> float:
+	var ts := TestMap.tile_size_of(region)
+	if _relief_noise == null:
+		_relief_noise = FastNoiseLite.new()
+		_relief_noise.seed = 20260930
+		_relief_noise.frequency = 0.014
+		_relief_noise.fractal_octaves = 2
+	## 잦아듦은 "가장 가까운 비평지 칸까지의 거리"로 — 칸 변마다 따로 계산하면 이웃한 평지 두 칸이 모서리에서 다른 값을 내 이음에 틈이 났다.
+	var f := 1.0
+	var px := (x + u) * ts
+	var pz := (y + v) * ts
+	for dy in [-1, 0, 1]:
+		for dx in [-1, 0, 1]:
+			if TestMap.tile_at(x + dx, y + dy, region) in RELIEF_FLAT:
+				continue
+			var rx := maxf(maxf((x + dx) * ts - px, 0.0), px - (x + dx + 1) * ts)
+			var rz := maxf(maxf((y + dy) * ts - pz, 0.0), pz - (y + dy + 1) * ts)
+			f = minf(f, smoothstep(0.0, RELIEF_FADE_M, sqrt(rx * rx + rz * rz)))
+	if f <= 0.0:
+		return 0.0
+	## 지역마다 다른 결 — 지역 이름 해시로 잡음 위치를 옮긴다.
+	var off := float(region.hash() & 0xffff)
+	## 솟기만 한다(0~RELIEF_AMP) — 꺼지는 쪽은 물길·다리 높이(-1m 안팎)와 겹치고 기존 점검(물 아님·상자 높이)이 깨진다.
+	return (_relief_noise.get_noise_2d((x + u) * ts + off, (y + v) * ts + off * 0.7) * 0.5 + 0.5) * RELIEF_AMP * f
 
 static func _peak_noise() -> FastNoiseLite:
 	if _noise == null:

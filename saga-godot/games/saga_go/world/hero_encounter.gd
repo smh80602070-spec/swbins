@@ -63,7 +63,7 @@ func _ready() -> void:
 
 func _spawn_visual() -> void:
 	var ch: String = TestMap.tile_at(grid.x, grid.y, region_id)
-	var ground: float = TerrainBuilder.LEGEND[ch].height
+	var ground: float = TerrainBuilder.height_at(region_id, TestMap.world_pos(grid.x, grid.y, region_id))  # 09-30 평지 기복 — LEGEND 평탄 값이 아니라 실제 지면
 	position = TestMap.world_pos(grid.x, grid.y, region_id) + Vector3(0, ground, 0)
 
 	## PLAN 106장 ④ — 캡슐 → VRoid 몸(인물 id 로 머리·옷 색 고정, ★5 는 금 테두리).

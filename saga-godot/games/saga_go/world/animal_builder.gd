@@ -80,7 +80,7 @@ static func _hash(i: int, salt: int) -> float:
 
 
 func _spawn_deer() -> void:
-	var ground: float = TerrainBuilder.LEGEND["T"].height
+	var ground: float = TerrainBuilder.height_at("village", TestMap.world_pos(DEER_HOME.x, DEER_HOME.y))  # 09-30 평지 기복 — LEGEND 평탄 값이 아니라 실제 지면
 	var home_pos := TestMap.world_pos(DEER_HOME.x, DEER_HOME.y) + Vector3(0, ground, 0)
 	for i in DEER_COUNT:
 		var body := _build_deer_body()
@@ -114,8 +114,8 @@ func _build_deer_body() -> Node3D:
 
 
 func _spawn_magpies() -> void:
-	var ground: float = TerrainBuilder.LEGEND["T"].height
 	for home in MAGPIE_HOMES:
+		var ground: float = TerrainBuilder.height_at("village", TestMap.world_pos(home.x, home.y))
 		var perch_pos := TestMap.world_pos(home.x, home.y) + Vector3(0, ground + 2.6, 0)
 		var body := _build_magpie_body()
 		body.position = perch_pos
@@ -159,8 +159,8 @@ func _build_carp_body() -> MeshInstance3D:
 
 
 func _spawn_oxen() -> void:
-	var ground: float = TerrainBuilder.LEGEND["F"].height
 	for home in OX_HOMES:
+		var ground: float = TerrainBuilder.height_at("village", TestMap.world_pos(home.x, home.y))
 		var pos := TestMap.world_pos(home.x, home.y) + Vector3(0, ground, 0)
 		var body := _build_ox_body()
 		body.position = pos

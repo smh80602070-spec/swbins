@@ -75,7 +75,7 @@ func _ready() -> void:
 
 func _spawn(v: Dictionary) -> void:
 	var ch: String = TestMap.tile_at(v.grid.x, v.grid.y)
-	var ground: float = TerrainBuilder.LEGEND[ch].height
+	var ground: float = TerrainBuilder.height_at("village", TestMap.world_pos(v.grid.x, v.grid.y))  # 09-30 평지 기복 — LEGEND 평탄 값이 아니라 실제 지면
 
 	var root := Node3D.new()
 	root.name = "Villager_%s" % v.id
