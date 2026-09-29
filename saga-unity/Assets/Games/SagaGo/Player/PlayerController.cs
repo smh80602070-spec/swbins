@@ -64,11 +64,21 @@ namespace Saga.Go.Player
         public static Vector3 DraftBase;
         public static float DraftR, DraftTop, DraftRise = 9f;
         private bool _draftFolded;
+        /// <summary>109-14-35 구름섬 바람 기둥 말고 더 있는 솟는 기둥(시간 기둥) — 밑자리·반지름·솟는 높이.</summary>
+        public struct DraftCol { public Vector3 Base; public float R, Top; public bool Has(Vector3 p) { float dx = p.x - Base.x, dz = p.z - Base.z; return dx * dx + dz * dz <= R * R && p.y > Base.y - 1f && p.y < Top + 3f; } }
+        public static readonly System.Collections.Generic.List<DraftCol> ExtraDrafts = new System.Collections.Generic.List<DraftCol>();
         public static bool InDraft(Vector3 p)
         {
+            foreach (var d in ExtraDrafts) if (d.Has(p)) return true;
             if (!DraftOn) return false;
             float dx = p.x - DraftBase.x, dz = p.z - DraftBase.z;
             return dx * dx + dz * dz <= DraftR * DraftR && p.y > DraftBase.y - 1f && p.y < DraftTop + 3f;
+        }
+        /// <summary>p 가 든 기둥의 솟는 높이(없으면 구름섬 기둥 것).</summary>
+        public static float DraftTopAt(Vector3 p)
+        {
+            foreach (var d in ExtraDrafts) if (d.Has(p)) return d.Top;
+            return DraftTop;
         }
         public const float SwimDepth = 2.6f;             // 수면에서 발까지 — 머리가 다리 널판 밑을 지난다
         public const float SwimSpeed = 4f;
@@ -568,7 +578,7 @@ namespace Saga.Go.Player
                 _verticalVelocity = 0f;
                 return;
             }
-            _verticalVelocity = draft ? Mathf.Clamp((DraftTop - transform.position.y) / Mathf.Max(dt, 1e-4f), 0f, DraftRise) : -GlideFallSpeed;
+            _verticalVelocity = draft ? Mathf.Clamp((DraftTopAt(transform.position) - transform.position.y) / Mathf.Max(dt, 1e-4f), 0f, DraftRise) : -GlideFallSpeed;
             Vector3 horizontal = moveDir * GlideSpeed;
             _controller.Move(new Vector3(horizontal.x, _verticalVelocity, horizontal.z) * dt);
             if (moveDir.sqrMagnitude > 0.0025f && visual != null)

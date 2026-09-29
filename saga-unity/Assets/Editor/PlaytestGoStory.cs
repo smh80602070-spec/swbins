@@ -26,7 +26,7 @@ namespace Saga.EditorTools
     public static class PlaytestGoStory
     {
         private static string _tag;
-        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "";
+        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -76,6 +76,7 @@ namespace Saga.EditorTools
                 CheckChapter11(fc, pc, field, ui);
                 CheckChapter12(fc, pc, field, ui);
                 CheckChapter13(fc, pc, field, ui);
+                CheckChapter14(fc, pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -90,6 +91,7 @@ namespace Saga.EditorTools
                 CookState.NowForTest = -1;
                 CookState.Restore(bag0, prof0, gat0);
                 StoryState.Restore(ch0, st0);
+                ObsField.Instance?.Refresh();
                 StoryState.OffForTest = off0;
                 field.ResetForTest();
                 ui.ResetForTest();
@@ -105,7 +107,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -121,12 +123,12 @@ namespace Saga.EditorTools
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 17 || GoStory.Chapters.Length != 13) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 18 || GoStory.Chapters.Length != 14) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 } };
-            for (int c = 0; c < 13; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 } };
+            for (int c = 0; c < 14; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -1274,8 +1276,79 @@ namespace Saga.EditorTools
             Expect(12, 8, "용접대 물결 셋");                                                     // → 8 talk 다온
             int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot), secret = TalentState.Count(GoTalent.Mat.Secret);
             Talk(pc, ui, "daon", "13장 끝 다온");
-            if (!StoryState.Done || StoryState.Ch != 13 || GoldState.Gold != gold + 3750 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6 || TalentState.Count(GoTalent.Mat.Secret) != secret + 5) Fail("13장 끝·보상(금 3750·매듭 6·비급 5)");
+            if (StoryState.Ch != 13 || GoldState.Gold != gold + 3750 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6 || TalentState.Count(GoTalent.Mat.Secret) != secret + 5) Fail("13장 끝·보상(금 3750·매듭 6·비급 5)");
             _ch13 = "13장 조선소(강 서쪽 뭍)·다온·무리 넷·기중기 다리 벽 둘 + 들보 꼭대기(땅에선 안 넘어감)·반디 자리 옮김·용접대 물결 셋(물 위 아님)·보상";
+        }
+
+        // ---- 14장 ---------------------------------------------------------------------------------------------
+
+        private static void CheckChapter14(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch14 = "14장 중단";
+            StoryState.OffForTest = false;
+            PlayerStats.Restore(34, 0);
+            StoryState.Restore(13, 0);
+            var obs = ObsField.Instance;
+            if (obs == null || obs.Deck == null) { Fail("관측소/관측대가 없다"); return; }
+            obs.Refresh();
+            Vector3 g = GoStory.ObsPos(Vector2.zero), deck = GoStory.DeckCenter;
+            foreach (var off in new[] { Vector2.zero, GoStory.ObsPillar, GoStory.ObsGaon })
+                if (WaterAt(GoStory.ObsPos(off))) Fail($"관측소 자리 {off} 가 물·산");
+            if (Mathf.Abs(deck.y - g.y - GoStory.ObsRise) > 0.01f) Fail("관측대 높이");
+            if (!Physics.Raycast(deck + Vector3.up * 3f, Vector3.down, out var dh, 6f) || Mathf.Abs(dh.point.y - deck.y) > 0.05f) Fail("관측대 윗면 충돌");
+            if (PlayerController.InDraft(GoStory.ObsPillarPos + Vector3.up * 5f) || obs.PillarOpen) Fail("석등 전인데 시간 기둥이 섰다");
+            field.Refresh();
+            if (!field.NpcShown("gaon") || GoStory.Flat(field.NpcBody("gaon").transform.position, GoStory.ObsPos(GoStory.ObsGaon)) > 0.6f) Fail("가온이 관측소 발치에 안 섬");
+            Talk(pc, ui, "bandi", "14장 반디");
+            Expect(13, 1, "반디 뒤");                                                            // → 1 go 관측소
+            pc.Teleport(g + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(13, 2, "관측소 도착");                                                         // → 2 talk 가온
+            Talk(pc, ui, "gaon", "14장 가온");
+            Expect(13, 3, "가온 뒤");                                                            // → 3 kill 무리
+            pc.Teleport(g + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 4 || field.Squad.Any(e => GoStory.OnSkyTop(e.transform.position) || e.transform.position.y > g.y + 6f)) Fail($"관측소 무리 {field.Squad.Count}(땅 위여야)");
+            foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) Kill(e);
+            Expect(13, 4, "관측소 무리");                                                         // → 4 talk 가온
+            Talk(pc, ui, "gaon", "14장 가온 둘째");
+            Expect(13, 5, "가온 둘째");                                                          // → 5 seal 별·해·달
+            field.Refresh();
+            if (!field.SealCenterOf(13).gameObject.activeSelf || field.SealLampOf(13, 0).Lit) Fail("틈 석등이 꺼진 채 안 섰다");
+            int Lamp(string id) => System.Array.IndexOf(GoStory.SealLayout, id);
+            Vector3 L(string id) => field.SealLampOf(13, Lamp(id)).transform.position;
+            Pulse(L("sun"), 1f);                                                                 // 틀림(첫째는 별)
+            if (StoryState.Progress != 0 || field.SealLampOf(13, Lamp("sun")).Lit) Fail("차례 틀린 해가 켜짐(별·해·달)");
+            Pulse(L("star"), 1f);
+            Pulse(L("sun"), 1f);
+            Expect(13, 5, "둘 켰는데 넘어감");
+            Pulse(L("moon"), 1f);
+            Expect(13, 6, "별·해·달");                                                            // → 6 talk 가온
+            obs.Refresh();
+            if (!obs.PillarOpen || !PlayerController.InDraft(GoStory.ObsPillarPos + Vector3.up * 5f) || PlayerController.InDraft(GoStory.ObsPillarPos + new Vector3(GoStory.DraftR + 2f, 5f, 0f))) Fail("석등 뒤 시간 기둥이 안 섬(기둥 안 솟음·밖 안 솟음)");
+            if (Mathf.Abs(PlayerController.DraftTopAt(GoStory.ObsPillarPos + Vector3.up * 5f) - GoStory.ObsDraftTop) > 0.01f) Fail("시간 기둥 솟는 높이");
+            Talk(pc, ui, "gaon", "14장 가온 석등 뒤");
+            Expect(13, 7, "가온 석등 뒤");                                                        // → 7 sky 시간 기둥
+            pc.Teleport(g + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(13, 7, "땅에서 하늘 단계가 넘어감");
+            pc.Teleport(deck + new Vector3(0f, 0.3f, 0f));
+            field.Check(pc.transform.position);
+            Expect(13, 8, "관측대에 내려앉음");                                                    // → 8 kill 관측대 파수
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 3 || field.Squad.Any(e => !GoStory.OnSkyTop(e.transform.position))) { Fail($"관측대 파수 {field.Squad.Count}(관측대 위여야)"); return; }
+            var e0 = field.Squad[0];
+            if (e0.CanStep(deck + new Vector3(GoStory.DeckR + 3f, 0f, 0f)) || !e0.CanStep(deck + new Vector3(3f, 0f, 3f))) Fail("관측대 파수가 난간을 넘거나 못 걷는다");
+            foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) Kill(e);
+            Expect(13, 9, "관측대 파수");                                                         // → 9 talk 반디
+            field.Refresh();
+            if (GoStory.Flat(field.NpcBody("bandi").transform.position, GoStory.DeckPos(new Vector2(3f, 3f))) > 0.6f) Fail("반디가 관측대로 안 옴");
+            int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot);
+            Talk(pc, ui, "bandi", "14장 끝 반디");
+            if (!StoryState.Done || StoryState.Ch != 14 || GoldState.Gold != gold + 4000 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6) Fail("14장 끝·보상(금 4000·매듭 6)");
+            obs.Refresh();
+            if (!obs.PillarOpen) Fail("14장 뒤에도 시간 기둥이 늘 켜져 있어야");
+            _ch14 = "14장 관측소(마을 서북쪽 뭍)·가온·무리 넷(땅 위)·석등 별·해·달(틀리면 꺼짐)·시간 기둥(석등 뒤 솟음·밖 안 솟음)·관측대 착지·파수 셋(난간 안)·반디 관측대·보상";
         }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------

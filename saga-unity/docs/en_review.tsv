@@ -1239,6 +1239,46 @@
 2	go	story.ch13.s9.l3	별배가 날면 꼭 보여 줘요. 배 붙이는 사람은 뜨는 걸 봐야 끝이거든요.	When the star-ship flies, be sure to show me. A ship-welder isn't done until she's seen it float.		
 2	go	story.ch13.s9.p.a	앞 시대와 뒤 시대…	An age ahead and an age behind…		
 2	go	story.ch13.s9.p.b	다온, 고마워요.	Thanks, Daon.		
+2	go	story.ch14	제14장 · 시간 틈 관측소	Chapter 14 · The Rift Observatory		
+2	go	story.ch14.enter1	틈에서 시간 틈 짐승들이 쏟아져 나왔다	Rift beasts pour out of the rift		
+2	go	story.ch14.enter2	관측대의 틈새 파수가 몸을 일으켰다	The rift sentries on the deck rise to their feet		
+2	go	story.ch14.landed	🔭 관측대에 내려앉았다 — 틈새 파수가 지키고 있다	🔭 You land on the observation deck — rift sentries guard it		
+2	go	story.ch14.s1	추락한 비행선의 반디와 이야기하기	Talk to Bandi at the crashed airship		
+2	go	story.ch14.s1.l1	삐— 둘째 조각 신호 수신. 시대 표지가 이상합니다. 지금보다 앞 — 아직 오지 않은 때.	Beep — second fragment signal received. The era marker is strange. Ahead of now — a time that hasn't come yet.		
+2	go	story.ch14.s1.l2	좌표는 마을 서북쪽 풀밭. 그런데 높이 값이 땅 위 이십사 미터입니다. 하늘에 뭔가 떠 있습니다.	Coordinates: the meadow northwest of the village. But the altitude reads twenty-four meters above ground. Something is floating in the sky.		
+2	go	story.ch14.s1.l3	먼저 가 주십시오. 저는 동력을 모아 뒤따르겠습니다.	Please go ahead. I will gather power and follow.		
+2	go	story.ch14.s1.p.a	오지 않은 때라니?	A time that hasn't come?		
+2	go	story.ch14.s1.p.b	어디서 오는 신호야?	Where is the signal coming from?		
+2	go	story.ch14.s10	관측대로 날아온 반디에게 조각 보여 주기	Show the fragment to Bandi, who flew up to the deck		
+2	go	story.ch14.s10.l1	삐— 둘째 날개 조각 확인. 관측경 틀에 끼어 있었군요.	Beep — second wing fragment confirmed. It was wedged in the scope's frame.		
+2	go	story.ch14.s10.l2	(아래에서) 관측경에 남은 기록이 떴어요! 조각이 박히기 직전 — 꼬리 아홉 흰 짐승이 틈을 지나갔대요.	(From below) A record showed up in the scope! Just before the fragment lodged — a white beast with nine tails passed through the rift.		
+2	go	story.ch14.s10.l3	마지막 조각은 뒤 시대 신호. 옛 역참 길 쪽입니다. 구미호도 같은 곳을 향했을 확률이 높습니다.	The last fragment is a signal from a past age, toward the old post road. The nine-tail likely headed the same way.		
+2	go	story.ch14.s10.l4	(아래에서) 시간 기둥은 켜 둘게요. 언제든 다시 올라와 하늘을 봐요!	(From below) I'll leave the time pillar on. Come up and look at the sky anytime!		
+2	go	story.ch14.s10.p.a	그 구미호가…	That nine-tail…		
+2	go	story.ch14.s10.p.b	어느 쪽으로?	Which way?		
+2	go	story.ch14.s2	마을 서북쪽 시간 틈 관측소로	Go to the rift observatory northwest of the village		
+2	go	story.ch14.s3	관측소 발치의 가온과 이야기하기	Talk to Gaon at the foot of the observatory		
+2	go	story.ch14.s3.l1	여기까지 걸어 들어온 사람은 처음이네요. 이 관측소, 원래는 이 시대에 없어야 하는 건물이에요.	You're the first to walk all the way in. This observatory isn't supposed to exist in this age.		
+2	go	story.ch14.s3.l2	저 틈에서 흘러나왔어요. 저도 같이요. 틈 석등 셋이 받쳐 줄 땐 시간 기둥이 서서 오르내릴 수 있었는데…	It leaked out of that rift. So did I. When the three rift lamps held it up, a time pillar stood and we could go up and down…		
+2	go	story.ch14.s3.l3	며칠 전 하늘에서 빛나는 조각이 관측대에 박히더니 석등이 다 꺼졌어요. 그 뒤로 짐승들이 — 또 와요!	A few days ago a glowing fragment fell from the sky and lodged in the deck, and the lamps all went out. Since then the beasts — they're back!		
+2	go	story.ch14.s3.p.a	저 위에 뜬 게 관측소예요?	Is that floating thing the observatory?		
+2	go	story.ch14.s3.p.b	없어야 한다고요?	Not supposed to exist?		
+2	go	story.ch14.s4	관측소를 둘러싼 시간 틈 무리 물리치기	Defeat the rift pack surrounding the observatory		
+2	go	story.ch14.s5	가온과 이야기하기	Talk to Gaon		
+2	go	story.ch14.s5.l1	고마워요. 석등을 다시 켜면 시간 기둥이 설 거예요. 그런데 차례가 있어요.	Thank you. Relight the lamps and the time pillar will rise. But there's an order.		
+2	go	story.ch14.s5.l2	우리 시대 아이들이 부르는 노래가 있거든요 — "별이 먼저 깨우고, 해가 밝히고, 달이 닫는다."	The children of my age sing a song — "The star wakes first, the sun lights it, the moon closes it."		
+2	go	story.ch14.s5.l3	틀리면 다 꺼져요. 원소 힘을 석등에 대 주세요.	If you get it wrong they all go out. Touch the lamps with elemental power.		
+2	go	story.ch14.s5.p.a	별, 해, 달 차례군요.	Star, sun, moon — in that order.		
+2	go	story.ch14.s5.p.b	노래가 열쇠예요?	The song is the key?		
+2	go	story.ch14.s6	틈 석등을 노래 차례(별 → 해 → 달)로 밝히기	Light the rift lamps in the song's order (star → sun → moon)		
+2	go	story.ch14.s7	가온과 이야기하기	Talk to Gaon		
+2	go	story.ch14.s7.l1	섰어요! 관측소 남쪽에 빛기둥 보이죠? 저게 시간 기둥이에요.	It's up! See the pillar of light south of the observatory? That's the time pillar.		
+2	go	story.ch14.s7.l2	뛰어올라 몸을 맡기면 위로 솟아요. 꼭대기에서 날개를 펴고 관측대로 내려앉으면 돼요.	Jump in and let it carry you up. At the top, spread your wings and glide down onto the deck.		
+2	go	story.ch14.s7.l3	조각 빛에 이끌린 파수들이 관측대를 차지했어요. 조심해요!	Sentries drawn by the fragment's light have taken the deck. Be careful!		
+2	go	story.ch14.s7.p.a	다녀올게요.	I'll be back.		
+2	go	story.ch14.s7.p.b	위에 뭐가 있어요?	What's up there?		
+2	go	story.ch14.s8	시간 기둥을 타고 떠 있는 관측대 위로(기둥 안에서 점프)	Ride the time pillar up to the floating deck (jump inside the pillar)		
+2	go	story.ch14.s9	관측대를 차지한 틈새 파수 물리치기	Defeat the rift sentries holding the deck		
 2	go	story.ch2	제2장 · 먹구름 제단	Chapter 2 · The Stormcloud Altar		
 2	go	story.ch2.s1	학자에게 제단 가는 길을 묻기	Ask the scholar the way to the altar		
 2	go	story.ch2.s1.l1	비문을 다 읽었어. 이무기는 너른 강 물가 서쪽, 먹구름 제단 안에 잠들어 있어.	I've finished reading the inscription. The serpent sleeps inside the Stormcloud Altar, west along the Broad River.		
@@ -1533,6 +1573,7 @@
 2	go	story.idle.daon	이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.	This yard's been shut for ten years… lately there's clanging every night.		
 2	go	story.idle.elder	먹구름이 걷히면 마을 잔치를 열어야지.	Once the stormclouds clear, we'll hold a village feast.		
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
+2	go	story.idle.gaon	관측대가 또 한 뼘 기울었어요. 기록만 하고 있을 순 없는데…	The deck tilted another hand's breadth. I can't just keep recording…		
 2	go	story.idle.haesol	……	……		
 2	go	story.idle.haesol2	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
 2	go	story.idle.haram	바늘이 또 얼었네… 눈은 언제 그치려나.	The needle froze again… when will this snow ever stop?		
@@ -1550,6 +1591,7 @@
 2	go	story.npc.daon	조선공 다온	Shipwright Daon		
 2	go	story.npc.elder	청하 촌장 누리	Elder Nuri of Cheongha		
 2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
+2	go	story.npc.gaon	시간 틈 관측사 가온	Rift Observer Gaon		
 2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
 2	go	story.npc.haesol2	해솔	Haesol		
 2	go	story.npc.haram	기상 관측원 하람	Haram the Weather Observer		
@@ -1571,6 +1613,7 @@
 2	go	story.short.daon	다온	Daon		
 2	go	story.short.elder	누리	Nuri		
 2	go	story.short.ferryman	버들	Beodeul		
+2	go	story.short.gaon	가온	Gaon		
 2	go	story.short.haesol	해솔	Haesol		
 2	go	story.short.haram	하람	Haram		
 2	go	story.short.scholar	은비	Eunbi		

@@ -77,9 +77,9 @@ namespace Saga.Go.Data
         public static Vector3 SkyCenter => _skyCenter ??= DuelPeak.Top + new Vector3(-SkyWest, SkyRise, 0f);
         public static Vector3 SkyPos(Vector2 off) => SkyCenter + new Vector3(off.x, 0f, off.y);
         /// <summary>섬 윗면에 섰나(난간 안쪽).</summary>
-        public static bool OnSkyTop(Vector3 p) => Flat(p, SkyCenter) <= SkyR - 1.5f && Mathf.Abs(p.y - SkyCenter.y) < 3f;
+        public static bool OnSkyTop(Vector3 p) => (Flat(p, SkyCenter) <= SkyR - 1.5f && Mathf.Abs(p.y - SkyCenter.y) < 3f) || OnDeckTop(p);
         /// <summary>섬 층인가(윗면 8m 아래까지·난간 3m 밖까지) — 층이 다르면 들판 전투가 서로 못 본다(웹 `apart`).</summary>
-        public static bool OnSkyLayer(Vector3 p) => Flat(p, SkyCenter) <= SkyR + 3f && p.y > SkyCenter.y - 8f;
+        public static bool OnSkyLayer(Vector3 p) => (Flat(p, SkyCenter) <= SkyR + 3f && p.y > SkyCenter.y - 8f) || (Flat(p, DeckCenter) <= DeckR + 3f && p.y > DeckCenter.y - 8f);
         public static bool SameLayer(Vector3 a, Vector3 b) => OnSkyLayer(a) == OnSkyLayer(b);
         public static float DraftTop => SkyCenter.y + DraftOver;
         /// <summary>구름섬·기둥이 열렸나 — 9장이 열린 뒤 늘(그 전엔 먹구름 덮개).</summary>
@@ -202,6 +202,8 @@ namespace Saga.Go.Data
             public bool Frost;
             /// <summary>109-14-34 조선소 위 — Arena 는 조선소 가운데에서 m.</summary>
             public bool Yard;
+            /// <summary>109-14-35 관측대 위(`Sky` 와 함께) — Arena 는 관측대 가운데에서 m.</summary>
+            public bool Obs;
         }
 
         /// <summary>그 칸이 지금 서 있는 칸인가 — 세계 임무 칸이면 그 임무 단계, 아니면 이야기 장·단계.</summary>
@@ -221,13 +223,25 @@ namespace Saga.Go.Data
         public static Vector2 FrostAt(string siteId, float dx, float dz) { GoFrost.TrySite(siteId, out var s); return s.Off + new Vector2(dx, dz); }
 
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
-            a.Yard ? YardPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
 
         // ---- 109-14-28 10장 서리봉 고원 자리(고원 가운데에서 m — 웹 명소 자리 × 0.45 위에 얹는다) ----
         public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
         // 11장(⑲-29) — 산성 문루 앞(문 남쪽 22m)·호숫가 석등 자리(호수 북쪽 물가 밖)·바우가 호숫가에서 기다리는 자리·봉화 제단(문 앞 32m)
         public static readonly Vector2 BawooGate = FrostAt("fort", 3f, 22f), LakeSeal = FrostAt("lake", 0f, -36f), BawooLake = FrostAt("lake", 16f, -34f), BeaconAltar = FrostAt("fort", 0f, 32f);
         // 12장(⑲-30) — 서리 무리·구미호는 얼음굴 어귀 남쪽 14m · 반디는 구미호 뒤 굴 앞 · 심장 받침은 비행선 곁(선체 밖)
+        // 14장(⑲-35) — 시간 틈 관측소: 마을 서북쪽 풀밭. 자리는 관측소 가운데에서 m(x 동쪽·z 남쪽). 관측대 = 그 위 24m 에 뜬 반지름 12m 돌 원판, 시간 기둥 = 남쪽 13m(구름섬 바람 기둥과 같은 반지름·솟는 빠르기).
+        public const float ObsGx = 1.0f, ObsGy = 2.4f, ObsRise = 24f, DeckR = 12f;
+        public static readonly Vector2 ObsPillar = new Vector2(0f, 13f), ObsGaon = new Vector2(-9f, 8f);
+        public static Vector3 ObsPos(Vector2 off) => GridPos(ObsGx, ObsGy) + new Vector3(off.x, 0f, off.y);
+        public static Vector3 DeckCenter => ObsPos(Vector2.zero) + Vector3.up * ObsRise;
+        public static Vector3 DeckPos(Vector2 off) => DeckCenter + new Vector3(off.x, 0f, off.y);
+        public static Vector3 ObsPillarPos => ObsPos(ObsPillar);
+        public static float ObsDraftTop => DeckCenter.y + DraftOver;
+        public static bool OnDeckTop(Vector3 p) => Flat(p, DeckCenter) <= DeckR - 1.5f && Mathf.Abs(p.y - DeckCenter.y) < 3f;
+        /// <summary>시간 기둥이 섰나 — 14장 틈 석등(6단계)을 밝힌 뒤부터 늘.</summary>
+        public static bool ObsPillarOpen => StoryState.Ch > 13 || (StoryState.Ch == 13 && StoryState.StepIndex >= 6);
+
         // 13장(⑲-34) — 갈대 나루 물가 녹슨 조선소: 마을 강 서쪽 둑(강은 남쪽 19m 밖). 자리는 조선소 가운데에서 m(x 동쪽·z 남쪽). 기중기 다리 둘 사이 들보 윗면이 꼭대기.
         public const float YardGx = 1.3f, YardGy = 4.1f, CraneHeight = 16f, CraneR = 6.5f;
         public static readonly Vector2 YardDaon = new Vector2(-6f, -2f), YardCrane = new Vector2(12f, -4f), YardWeld = new Vector2(0f, -8f), YardFight = new Vector2(0f, -18f), YardBandi = new Vector2(3f, -6f);
@@ -327,8 +341,13 @@ namespace Saga.Go.Data
                 Gx = 4.5f, Gy = 0.5f, Pet = true,
                 Appear = new[] { new Spot { Ch = 9, From = 6, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 10, From = 0, To = 8, Frost = true, Arena = BandiShip },
                     new Spot { Ch = 11, From = 0, To = 4, Frost = true, Arena = BandiShip }, new Spot { Ch = 11, From = 5, To = 5, Frost = true, Arena = BandiCave }, new Spot { Ch = 11, From = 6, To = 8, Frost = true, Arena = BandiShip },
-                    new Spot { Ch = 12, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 12, From = 6, To = 8, Yard = true, Arena = YardBandi } },
+                    new Spot { Ch = 12, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 12, From = 6, To = 8, Yard = true, Arena = YardBandi },
+                    new Spot { Ch = 13, From = 0, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 13, From = 9, To = 9, Sky = true, Obs = true, Arena = new Vector2(3f, 3f) } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
+            // 109-14-35 14장(웹 ⑲-35) — 시간 틈 관측사 가온: 늘 관측소 남서쪽 발치에 선다
+            new Npc { Id = "gaon", NameKey = "story.npc.gaon", NameKo = "시간 틈 관측사 가온", ShortKey = "story.short.gaon", ShortKo = "가온",
+                Gx = ObsGx + ObsGaon.x / TestMapData.TileSize, Gy = ObsGy + ObsGaon.y / TestMapData.TileSize, FolkBody = "Crypto",
+                IdleKey = "story.idle.gaon", IdleKo = "관측대가 또 한 뼘 기울었어요. 기록만 하고 있을 순 없는데…" },
             // 109-14-34 13장(웹 ⑲-34) — 조선공 다온: 늘 조선소 창고 앞에 선다(나루 서쪽 둑)
             new Npc { Id = "daon", NameKey = "story.npc.daon", NameKo = "조선공 다온", ShortKey = "story.short.daon", ShortKo = "다온",
                 Gx = YardGx - 6f / TestMapData.TileSize, Gy = YardGy - 2f / TestMapData.TileSize, FolkBody = "PeasantMan",
@@ -404,11 +423,13 @@ namespace Saga.Go.Data
             public bool Frost;
             /// <summary>109-14-34 조선소 위(자리 = 조선소 가운데 + Arena, climb 은 기중기 꼭대기).</summary>
             public bool Yard;
+            /// <summary>109-14-35 관측대 위(`Sky` 와 함께 — 자리 = 관측대 가운데 + Arena) · sky 단계는 시간 기둥으로.</summary>
+            public bool Obs;
             public string ArriveKey, ArriveKo;
             public float Speed;
         }
 
-        public static Vector3 StepPos(Step s) => s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+        public static Vector3 StepPos(Step s) => s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
 
         /// <summary>석등 차례(해·달·별이 기본, 8장은 별·달·해).</summary>
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
@@ -1188,6 +1209,69 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            // 109-14-35 14장(웹 ⑲-35) — 시간 틈 관측소: 반디 → 관측소 → 가온 → 시간 틈 무리 → 가온 → 틈 석등 별·해·달 → 가온 → 시간 기둥 타고 관측대로 → 관측대 파수 → 반디(관측대 위).
+            // 회오리매·바위곰·눈여우·날쌘용은 14-1b(새 몸) 전까지 옛 몸에 그 원소.
+            new Chapter
+            {
+                Id = "ch14", NameKey = "story.ch14", NameKo = "제14장 · 시간 틈 관측소", Ar = 34,
+                Gold = 4000, Mats = new[] { 0, 4, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch14.s1", TextKo = "추락한 비행선의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch14.s1.l1", "삐— 둘째 조각 신호 수신. 시대 표지가 이상합니다. 지금보다 앞 — 아직 오지 않은 때."),
+                            Pick("story.ch14.s1.p", "오지 않은 때라니?", "어디서 오는 신호야?"),
+                            L("bandi", "story.ch14.s1.l2", "좌표는 마을 서북쪽 풀밭. 그런데 높이 값이 땅 위 이십사 미터입니다. 하늘에 뭔가 떠 있습니다."),
+                            L("bandi", "story.ch14.s1.l3", "먼저 가 주십시오. 저는 동력을 모아 뒤따르겠습니다."),
+                        } },
+                    new Step { Type = StepType.Go, Gx = ObsGx, Gy = ObsGy, TextKey = "story.ch14.s2", TextKo = "마을 서북쪽 시간 틈 관측소로" },
+                    new Step { Type = StepType.Talk, Npc = "gaon", TextKey = "story.ch14.s3", TextKo = "관측소 발치의 가온과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("gaon", "story.ch14.s3.l1", "여기까지 걸어 들어온 사람은 처음이네요. 이 관측소, 원래는 이 시대에 없어야 하는 건물이에요."),
+                            Pick("story.ch14.s3.p", "저 위에 뜬 게 관측소예요?", "없어야 한다고요?"),
+                            L("gaon", "story.ch14.s3.l2", "저 틈에서 흘러나왔어요. 저도 같이요. 틈 석등 셋이 받쳐 줄 땐 시간 기둥이 서서 오르내릴 수 있었는데…"),
+                            L("gaon", "story.ch14.s3.l3", "며칠 전 하늘에서 빛나는 조각이 관측대에 박히더니 석등이 다 꺼졌어요. 그 뒤로 짐승들이 — 또 와요!"),
+                        } },
+                    new Step { Type = StepType.Kill, Gx = ObsGx, Gy = ObsGy,
+                        Foes = new[] { F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith) },
+                        EnterKey = "story.ch14.enter1", EnterKo = "틈에서 시간 틈 짐승들이 쏟아져 나왔다",
+                        TextKey = "story.ch14.s4", TextKo = "관측소를 둘러싼 시간 틈 무리 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "gaon", TextKey = "story.ch14.s5", TextKo = "가온과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("gaon", "story.ch14.s5.l1", "고마워요. 석등을 다시 켜면 시간 기둥이 설 거예요. 그런데 차례가 있어요."),
+                            L("gaon", "story.ch14.s5.l2", "우리 시대 아이들이 부르는 노래가 있거든요 — \"별이 먼저 깨우고, 해가 밝히고, 달이 닫는다.\""),
+                            Pick("story.ch14.s5.p", "별, 해, 달 차례군요.", "노래가 열쇠예요?"),
+                            L("gaon", "story.ch14.s5.l3", "틀리면 다 꺼져요. 원소 힘을 석등에 대 주세요."),
+                        } },
+                    new Step { Type = StepType.Seal, Gx = ObsGx, Gy = ObsGy, Order = new[] { "star", "sun", "moon" }, TextKey = "story.ch14.s6", TextKo = "틈 석등을 노래 차례(별 → 해 → 달)로 밝히기" },
+                    new Step { Type = StepType.Talk, Npc = "gaon", TextKey = "story.ch14.s7", TextKo = "가온과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("gaon", "story.ch14.s7.l1", "섰어요! 관측소 남쪽에 빛기둥 보이죠? 저게 시간 기둥이에요."),
+                            L("gaon", "story.ch14.s7.l2", "뛰어올라 몸을 맡기면 위로 솟아요. 꼭대기에서 날개를 펴고 관측대로 내려앉으면 돼요."),
+                            Pick("story.ch14.s7.p", "다녀올게요.", "위에 뭐가 있어요?"),
+                            L("gaon", "story.ch14.s7.l3", "조각 빛에 이끌린 파수들이 관측대를 차지했어요. 조심해요!"),
+                        } },
+                    new Step { Type = StepType.Sky, Obs = true, EnterKey = "story.ch14.landed", EnterKo = "🔭 관측대에 내려앉았다 — 틈새 파수가 지키고 있다",
+                        TextKey = "story.ch14.s8", TextKo = "시간 기둥을 타고 떠 있는 관측대 위로(기둥 안에서 점프)" },
+                    new Step { Type = StepType.Kill, Sky = true, Obs = true, Arena = new Vector2(0f, 2.7f),
+                        Foes = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                        EnterKey = "story.ch14.enter2", EnterKo = "관측대의 틈새 파수가 몸을 일으켰다",
+                        TextKey = "story.ch14.s9", TextKo = "관측대를 차지한 틈새 파수 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch14.s10", TextKo = "관측대로 날아온 반디에게 조각 보여 주기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch14.s10.l1", "삐— 둘째 날개 조각 확인. 관측경 틀에 끼어 있었군요."),
+                            L("gaon", "story.ch14.s10.l2", "(아래에서) 관측경에 남은 기록이 떴어요! 조각이 박히기 직전 — 꼬리 아홉 흰 짐승이 틈을 지나갔대요."),
+                            Pick("story.ch14.s10.p", "그 구미호가…", "어느 쪽으로?"),
+                            L("bandi", "story.ch14.s10.l3", "마지막 조각은 뒤 시대 신호. 옛 역참 길 쪽입니다. 구미호도 같은 곳을 향했을 확률이 높습니다."),
+                            L("gaon", "story.ch14.s10.l4", "(아래에서) 시간 기둥은 켜 둘게요. 언제든 다시 올라와 하늘을 봐요!"),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -1344,7 +1428,7 @@ namespace Saga.Go.Data
                 case StepType.Light: radius = LightR; return StepPos(s);
                 case StepType.Seal: return SealPos(s);
                 case StepType.Climb: return s.Yard ? CraneTop : DuelPeak.Top;
-                case StepType.Sky: radius = DraftR; return DuelPeak.Top; // 109-14-20 바람 기둥 = 봉우리 정상
+                case StepType.Sky: radius = DraftR; return s.Obs ? ObsPillarPos : DuelPeak.Top; // 109-14-20 바람 기둥 = 봉우리 정상 · 109-14-35 시간 기둥
                 case StepType.Gather:
                 {
                     Vector3 best = from; float bd = float.MaxValue;

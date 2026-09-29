@@ -449,7 +449,7 @@ namespace Saga.Go.World
                     case GoStory.StepType.Sky:
                         if (GoStory.OnSkyTop(p)) // 109-14-20 섬 윗면에 내려섰다
                         {
-                            Toast(GoLocalization.T("story.sky_landed", "☁️ 구름섬에 올라섰다 — 먹구름 무리가 지키고 있다"), 3f);
+                            Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : GoLocalization.T("story.sky_landed", "☁️ 구름섬에 올라섰다 — 먹구름 무리가 지키고 있다"), 3f);
                             StoryState.Advance();
                             return;
                         }
