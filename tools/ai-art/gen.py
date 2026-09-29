@@ -28,7 +28,7 @@ MAX_PIXELS = 800_000          # 768x1024 = 786k — SDXL 이 VRAM 8GB 안에 든
 MIN_FREE_GB = 6.0
 PER_IMAGE_TIMEOUT = 480       # 초
 PAUSE = 8
-MAX_ITEMS = 24
+MAX_ITEMS = int(os.environ.get('AI_ART_MAX', 24))   # 러너는 8 — sd-webui 파이썬이 장수가 늘수록 RAM 을 12GB 넘게 쥔다(09-29 관찰), 묶음마다 껐다 켠다
 
 # 상업 허용으로 확인한 모델만 (COMMERCIAL_SWAP_TODO.md 2026-09-28)
 MODELS = {
@@ -117,7 +117,8 @@ def main():
     if model not in MODELS:
         sys.exit(f'모델 {model} — 상업 허용 확인 목록(MODELS)에 없다')
     d = b.get('defaults', {})
-    items = [i for i in b['items'] if not a.only or i['id'] in a.only.split(',')][:MAX_ITEMS]
+    out_dir = os.path.join(OUT, b.get('out', os.path.splitext(os.path.basename(a.batch))[0]))
+    items = [i for i in b['items'] if (not a.only or i['id'] in a.only.split(',')) and not os.path.exists(os.path.join(out_dir, i['id'] + '.png'))][:MAX_ITEMS]   # 있는 그림은 셈에서 뺀다
     for i in items:
         txt = i['prompt'] + ' ' + d.get('prompt_prefix', '')
         m = BLOCK.search(txt)
