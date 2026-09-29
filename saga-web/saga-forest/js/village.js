@@ -73,6 +73,7 @@
     if (!s.village.caught) { s.village.caught = {}; }
     if (!s.village.donated) { s.village.donated = {}; }
     if (!s.village.gifted) { s.village.gifted = {}; }
+    if (!s.village.memento) { s.village.memento = {}; }      // 하트 10 주민 사연을 들은 사람 { id: 틀 key }
     if (!s.village.weeds) { s.village.weeds = []; }
     if (!s.village.terrain) { s.village.terrain = {}; }
     if (s.village.soldGold === undefined) { s.village.soldGold = 0; }
@@ -2201,6 +2202,21 @@
     return bio ? '문득 지난 이야기가 떠오르는구려... ' + bio : null;
   }
 
+  /** 하트 10(기념품 해제) 주민 사연 — 사람마다 한 번. 틀 셋 가운데 인물 id 로 하나를 고르고 도감 열전 한 줄을 끼운다. 아직 못 들었으면 그 결과를, 아니면 null */
+  function mementoStory(res) {
+    var s = st(), id = res.id;
+    if (s.memento[id] || heartOf(id) < heartUnlockAt('기념품')) { return null; }
+    var FR = VD.MEMENTO_FRAMES, fr = FR[idNum(id) % FR.length], bio = global.DG.data ? global.DG.data.bio(id) : '';
+    s.memento[id] = fr.key;
+    core.save.player.gold += VD.MEMENTO_GOLD;
+    core.gainFeat(VD.MEMENTO_FEAT, '기념품');
+    core.log('🎁 ' + res.ref.name + ' 의 사연을 들었다 — 기념품 🪙 +' + core.fmt(VD.MEMENTO_GOLD), 'good');
+    core.emit('changed');
+    core.persist();
+    return { kind: 'talk', name: res.ref.name, memento: fr.key,
+             text: fr.emoji + ' ' + fr.text.replace('{이름}', res.ref.name).replace('{bio}', bio || '') + ' (🪙 +' + core.fmt(VD.MEMENTO_GOLD) + ')' };
+  }
+
   /** 동행(PLAN §5.4, 7♥ 해제) — 자격 판정은 여기(하트를 쥔 쪽)가 하고,
    *  실제 "따라 걷기"는 `folk.js` 몫이다. */
   function canFollow(id) { return heartOf(id) >= heartUnlockAt('동행'); }
@@ -2288,6 +2304,9 @@
                text: '떠날 뜻을 굳혔소 (' + lv.left + '일 남음). ' +
                      (kept ? kept.text : '') };
     }
+
+    var mem = mementoStory(res);                     // 하트 10 — 사람마다 한 번 사연과 기념품
+    if (mem) { return mem; }
 
     var F = global.DG.folk;
     var ty = F ? F.typeOf(res.id) : null;
@@ -2496,7 +2515,7 @@
     focus: focus, interact: interact, spent: spent,
     talk: talk, requestOf: requestOf, friendOf: friendOf, talkNpc: talkNpc,
     heartOf: heartOf, bumpHeart: bumpHeart, heartNext: heartNext,
-    heartUnlockAt: heartUnlockAt, canFollow: canFollow, requestFollow: requestFollow,
+    heartUnlockAt: heartUnlockAt, mementoStory: mementoStory, canFollow: canFollow, requestFollow: requestFollow,
     bagList: bagList, bagCount: bagCount, bagCatCount: bagCatCount, bagAdd: bagAdd,
     sell: sell, sellAll: sellAll, questProgress: questProgress,
     caughtCount: caughtCount, shake: shake, speedMul: speedMul,

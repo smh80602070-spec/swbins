@@ -4614,6 +4614,26 @@ window.DG_NO_TUNE = true;
         ('하트4: 평소 인사 · 하트5: ' + (bio ? '열전 한 줄 포함' : 'BIOS 없는 인물이라 스킵'));
     });
 
+    t('기념품(PLAN §5.4 10♥ 해제 · 정본 주민 사연 칸) — 하트 10 주민은 사람마다 한 번 사연 틀(고향·꿈·선물) 하나와 기념품 금을 준다', function () {
+      var s = V.state(), C = DG.core, VDx = DG.villageData, r = V.raw().residents[0];
+      var savedHeart = JSON.parse(JSON.stringify(s.hearts[r.id] || {})), savedReq = s.requests[r.id], savedMem = JSON.stringify(s.memento || {}), gold0 = C.save.player.gold;
+      s.requests[r.id] = { want: 'fruit', n: 1, done: true };
+      delete s.memento[r.id];
+      s.hearts[r.id] = { h: 9, lastTalk: s.day, gainDay: 0, gained: 0 };
+      var t9 = V.talk(r);
+      var no9 = !t9.memento && !s.memento[r.id] && C.save.player.gold === gold0;
+      s.hearts[r.id] = { h: 10, lastTalk: s.day, gainDay: 0, gained: 0 };
+      var t10 = V.talk(r), bio = DG.data.bio(r.id);
+      var keys = VDx.MEMENTO_FRAMES.map(function (f) { return f.key; });
+      var first = keys.length === 3 && keys.indexOf(t10.memento) >= 0 && s.memento[r.id] === t10.memento && t10.text.indexOf(r.ref.name) >= 0 && t10.text.indexOf('{') < 0 &&
+        (!bio || t10.text.indexOf(bio) >= 0) && C.save.player.gold === gold0 + VDx.MEMENTO_GOLD;
+      var t10b = V.talk(r), again = !t10b.memento && C.save.player.gold === gold0 + VDx.MEMENTO_GOLD && (!bio || t10b.text.indexOf(bio) >= 0);
+      /* 사람마다 틀이 고정 — 같은 id 는 늘 같은 틀 */
+      var stable = VDx.MEMENTO_FRAMES.length === 3;
+      s.hearts[r.id] = savedHeart; s.requests[r.id] = savedReq; s.memento = JSON.parse(savedMem); C.save.player.gold = gold0;
+      return no9 && first && again && stable && ('하트 9 아무 일 없음 · 하트 10 첫 말에 ' + t10.memento + ' 틀 + 🪙 ' + VDx.MEMENTO_GOLD + ' · 다시 말 걸면 평소 대화(열전 한 줄)');
+    });
+
     t('고유 대화(PLAN §5.4 5♥ 해제) — NPC 도 하트 5부터 대사 셋 중 하나로 갈리고, 대화하면 하트가 오른다', function () {
       var s = V.state(), npc = V.raw().npcs.filter(function (n) { return n.kind === 'angler'; })[0];
       var savedHeart = JSON.parse(JSON.stringify(s.hearts[npc.id] || {}));

@@ -277,7 +277,7 @@
 
   /**
    * 하트 해제 문턱(PLAN §5.4) — 이번엔 **이름표만** 둔다(집 방문·고유 대화·
-   * 동행·기념품 넷 다 실제 기능은 아직 — HANDOFF 참고). 화면에 "다음: n♥ 에
+   * 동행·기념품 — 기념품은 2026-09-30 "주민 사연"으로 열렸다, HANDOFF 참고). 화면에 "다음: n♥ 에
    * …" 를 보여줄 자리가 있어야 하트가 왜 있는지 알 수 있어서, 문턱과 이름만
    * 먼저 채운다.
    */
@@ -287,6 +287,18 @@
     { at: 7,  name: '동행' },
     { at: 10, name: '기념품' }
   ];
+
+  /**
+   * 주민 사연 틀 셋(정본 scenario/saga-forest.md "주민 사연 칸", 하트 10 = 기념품 해제) — 주민은 도감 인물이라 무작위로 뽑힌다.
+   * 그래서 이야기를 사람마다 새로 쓰지 않고 "{이름}" 칸이 있는 틀 셋(고향·꿈·선물) 가운데 인물 id 로 하나를 고르고, 도감 열전(bio) 한 줄을 끼운다.
+   * {bio} 는 열전이 없으면 빈 채로(문장이 이어지게) 쓴다. 사람마다 한 번 — 받으면 기념품 값(금)과 업적을 준다.
+   */
+  var MEMENTO_FRAMES = [
+    { key: 'home',  emoji: '🏡', text: '{이름}: 그대에게만 하는 얘기요. 내 고향 이야기를 한 번도 못 했구려. {bio} 그 하늘 아래 배운 것이 이 마을에서도 통하니 신기한 일이오.' },
+    { key: 'dream', emoji: '🌠', text: '{이름}: 내 꿈을 말해도 웃지 않겠소? 이 마을에서 이웃과 오래오래 사는 것이오. {bio} 그런 꿈을 이루게 해 준 이가 바로 그대요.' },
+    { key: 'gift',  emoji: '🎁', text: '{이름}: 이것을 받아 주시오. 오래 아껴 온 것인데 그대가 가질 때가 되었소. {bio} 정이란 이렇게 손에서 손으로 넘어가는 것이라 배웠소.' }
+  ];
+  var MEMENTO_GOLD = 3000, MEMENTO_FEAT = 20;
 
   /* ── 마을 ────────────────────────────────────────────────
    * 원작은 처음에 마을 이름을 묻고, 마을 기를 손수 그리게 한다.
@@ -1171,7 +1183,7 @@
     FURNITURE: FURNITURE, FURN_SETS: FURN_SETS, furn: furn,
     WALLS: WALLS, FLOORS: FLOORS, wall: wall, floor: floor,
     MUSEUM_GRADES: MUSEUM_GRADES, MUSEUM_CATS: MUSEUM_CATS, BUNDLES: BUNDLES,
-    FOLK_TYPES: FOLK_TYPES, HEART_UNLOCKS: HEART_UNLOCKS,
+    FOLK_TYPES: FOLK_TYPES, HEART_UNLOCKS: HEART_UNLOCKS, MEMENTO_FRAMES: MEMENTO_FRAMES, MEMENTO_GOLD: MEMENTO_GOLD, MEMENTO_FEAT: MEMENTO_FEAT,
     WEAR_PARTS: WEAR_PARTS, WEAR_COATS: WEAR_COATS, WEAR_HEADS: WEAR_HEADS,
     WEAR_DYES: WEAR_DYES, WEAR_CAPES: WEAR_CAPES,
     wearPart: wearPart, wearItem: wearItem,
