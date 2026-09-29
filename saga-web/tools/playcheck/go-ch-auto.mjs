@@ -16,7 +16,7 @@ try {
   await c.ev(`(function(){ var b=document.getElementById('title-continue'); if(b){ b.click(); } })()`);
   await sleep(5000);
   console.log(await c.ev(`(function(){
-    DG.perf.pin('LOW'); DG.core.save.settings.autoBattle = true; DG.core.save.player.level = 60;
+    DG.perf.pin('LOW'); DG.core.save.settings.autoBattle = true; DG.core.save.player.level = Math.max(60, DG.story.CHAPTERS[${CH - 1}].ar + 2);
     ${process.argv.includes('nofield') ? "DG.core.setTune('field.on', 0);" : ''}
     DG.fieldCombat._resetForTest && DG.fieldCombat._resetForTest();
     var sv = DG.story.state(); sv.ch = ${CH - 1}; sv.step = ${process.argv.includes('defend') ? "DG.story.CHAPTERS[" + (CH - 1) + "].steps.findIndex(function (x) { return x.type === 'defend'; })" : 0};

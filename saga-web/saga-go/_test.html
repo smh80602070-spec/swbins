@@ -14182,6 +14182,84 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '아홉 단계 · 폐허 졸개 → 첫째 매듭 → 둘째 석등 달·별·해 → 봉우리 → 셋째 매듭 · 매듭 묶임 4·5·8 · 🪢+7 🪙+7250 · 반디 촌장 동쪽' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-54 이야기 8부 제28장 · 여섯째 매듭 (story ch28 · 매듭 넷째·다섯째·여섯째 stormeye 와 맞물림 · 먹구름 눈 보임 = 끝, PLAN §5 ⑲-54) ── */
+    t('이야기 ⑲-54 — 28장 열 단계(Lv62) · 매듭 묶임(3·5·8)·눈 보임(9)이 불·석등·불·끝 단계와 맞물림 · 흐름: 버들 → 곶 지키기 3·4·5(땅) → 넷째 매듭 불 → 버들 배로 바위섬 → 석등 해·별·달 → 구름섬 오르기 → 무리(섬 위) → 여섯째 매듭 불(줄이 등불로) → 가면 그림자(구름섬 한 번) → 나그네 → 먹구름 눈 서고 29장 기둥', function () {
+      var rig = stRig(62), ST = rig.ST, FC = DG.fieldCombat, SE = DG.stormEye, SK = DG.skyIsle, LF = DG.landform, TL = DG.talent, r = {}, i;
+      try {
+        LF._resetForTest(); SK._resetForTest();
+        var c = ST.CHAPTERS[27], S28 = c.steps;
+        r.table = c.id === 'ch28' && c.ar === 62 && !c.join && S28.length === 10 && c.reward.knot === 7 && c.reward.gold === 7500 &&
+          S28.map(function (q) { return q.type; }).join() === 'talk,defend,light,sail,seal,sky,kill,light,talk,talk' && S28[1].waves.map(function (w) { return w.length; }).join() === '3,4,5' &&
+          S28[4].order.join() === 'sun,star,moon' && S28[6].sky && S28[7].sky && S28[6].kinds.length === 5;
+        /* 매듭·눈 표 ↔ 이 장 — 넷째 = 불(2) 다음 3 · 다섯째 = 석등(4) 다음 5 · 여섯째 = 불(7) 다음 8 · 눈 = 마지막(9) 단계부터 */
+        r.link = SE.KNOTS[3].ch === 27 && SE.KNOTS[3].step === 2 + 1 && SE.KNOTS[4].step === 4 + 1 && SE.KNOTS[5].step === 7 + 1 && SE.EYE_FROM[0] === 27 && SE.EYE_FROM[1] === S28.length - 1 &&
+          SE.KNOTS[3].spot === S28[2].spot && SE.KNOTS[4].spot === S28[4].spot && SE.KNOTS[5].spot === S28[7].spot && SE.KNOTS[5].sky && S28[7].sky;
+        function np(k, si) { C.save.story = { ch: 27, step: si }; return ST.npcPos(k); }
+        var sk = SK.spot();
+        /* 인물 — 사공: 처음 포구(집) · 곶 지키기~배 앞 곶 · 바위섬 뒤 섬 / 가면 그림자: 여덟째(8)에만 구름섬 / 나그네: 열째(9)에만 구름섬 */
+        r.npcs = st10Eq(np('ferryman', 0), { x: ST.anchorOf('galdae').x - 18, y: ST.anchorOf('galdae').y - 24 }) && st10Eq(np('ferryman', 3), ST.spotPos('cape', [-6, 6])) && st10Eq(np('ferryman', 4), ST.spotPos('isle', [-4, 18])) &&
+          st10Eq(np('gamyeon', 8), ST.spotPos('sky', [7, -7])) && ST.visible('gamyeon') && ST.npcInfo('gamyeon').sky && Math.hypot(np('gamyeon', 8).x - sk.x, np('gamyeon', 8).y - sk.y) < SK.ISLE_R - 1 &&
+          (np('gamyeon', 7), !ST.visible('gamyeon')) && (np('gamyeon', 9), !ST.visible('gamyeon')) &&
+          st10Eq(np('wanderer', 9), ST.spotPos('sky', [5, 6])) && ST.visible('wanderer') && ST.npcInfo('wanderer').sky && (np('wanderer', 8), !ST.visible('wanderer'));
+        var tied = function (s) { C.save.story = { ch: 27, step: s }; return [3, 4, 5].filter(SE.knotTied).join(''); };
+        r.boot = JSON.stringify(SK.pads().filter(function (p) { return p.id === 'isle'; })[0].boot) === '[[8,4,9],[27,6,9]]';
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        C.save.story = { ch: 27, step: 0 };
+        stGo(ST.npcPos('ferryman')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        /* 곶 지키기 — 물결 3·4·5(땅) → 넷째 매듭 불 */
+        var dt = ST.targetOf(ST.step());
+        stGo({ x: dt.x, y: dt.y + 2 }); FC.tick(0.05); ST.stepDefend(0.1);
+        var S = FC.state(), sizes = [], ground = true;
+        for (i = 0; i < 3; i++) {
+          if (i) { ST.defState().t = ST.DEFEND_WAVE_SEC; ST.stepDefend(0.01); }
+          var cw = S.camps[ST.waveKey(i)];
+          sizes.push(cw ? cw.uids.length : 0);
+          if (cw && cw.uids.some(function (u) { return S.foes[u].sky; })) { ground = false; }
+          stKillCamp(S, ST.waveKey(i)); FC.tick(0.05);
+        }
+        ST.stepDefend(0.01);
+        r.defend = sizes.join() === '3,4,5' && ground && C.save.story.step === 2 && tied(2) === '';
+        C.save.story = { ch: 27, step: 2 };
+        var lt = ST.targetOf(ST.step());
+        C.emit('field:element', { el: 'fire', x: lt.x + 60, y: lt.y, r: 1, t: 'skill' }); var far = C.save.story.step === 2;
+        C.emit('field:element', { el: 'fire', x: lt.x, y: lt.y, r: 1, t: 'skill' });
+        r.light4 = far && C.save.story.step === 3 && tied(3) === '3';
+        C.save.story = { ch: 27, step: 3 };
+        stGo(ST.npcPos('ferryman')); r.sail = stTalkAll(ST) && C.save.story.step === 4 && st10Eq(C.save.player.pos, ST.spotPos('isle', [0, 14]));
+        /* 바위섬 석등 — 해 → 별 → 달 */
+        var lamps = ST.sealLamps(ST.step()), byK = {};
+        lamps.forEach(function (l) { byK[l.k] = l; });
+        function hitLamp(k) { C.emit('field:element', { el: 'wind', x: byK[k].x, y: byK[k].y, r: 1, t: 'skill' }); }
+        hitLamp('moon'); var wrong = ST.sealLit() === 0 && C.save.story.step === 4;
+        hitLamp('sun'); hitLamp('star'); hitLamp('moon');
+        r.seal = wrong && C.save.story.step === 5 && tied(5) === '34';
+        C.save.story = { ch: 27, step: 5 };
+        /* 구름섬 오르기 — 땅에선 안 되고 섬 위에 서면 */
+        var pos = C.save.player.pos; stGo({ x: sk.x + 40, y: sk.y }); ST.check(); var still = C.save.story.step === 5;
+        stGo({ x: sk.x, y: sk.y }); LF.setSky(true); ST.check();
+        r.sky = still && LF.onSky() && C.save.story.step === 6;
+        /* 무리 — 구름섬 위 다섯 */
+        var kt = ST.targetOf(ST.step());
+        stGo({ x: kt.x + 3, y: kt.y }); FC.tick(0.05); ST.check();
+        var cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.map(function (u) { return S.foes[u].kind; }).join() === 'hawk,raptor,imp,imp,snowfox' && cp.uids.every(function (u) { return S.foes[u].sky; });
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 7;
+        /* 여섯째 매듭 — 여섯 다 묶이면 줄이 등불로 */
+        var st7 = ST.targetOf(ST.step());
+        C.emit('field:element', { el: 'fire', x: st7.x, y: st7.y, r: 1, t: 'skill' });
+        r.light6 = C.save.story.step === 8 && tied(8) === '345' && SE.allTied() && [0, 1, 2, 3, 4, 5].every(function (k) { return SE.beamMode(k) === 'eye'; }) && !SE.eyeShown();
+        C.save.story = { ch: 27, step: 8 };
+        stGo(ST.npcPos('gamyeon')); r.t8 = stTalkAll(ST) && C.save.story.step === 9;
+        stGo(ST.npcPos('wanderer')); r.end = stTalkAll(ST) && C.save.story.ch === 28 && C.save.story.step === 0 && m.knot === k0 + 7 && C.save.player.gold === gold0 + 7500;
+        /* 끝나면 먹구름 눈이 서고 29장 기둥이 열린다 */
+        r.eye = SE.eyeShown() && !!SK.padAt(SE.eyeSpot().x, SE.eyeSpot().y) && SE.drafts().length === 1 && SK.drafts().some(function (d) { return d.id === 'se_eye'; }) && SE.allTied() && !SE.eyeClear();
+        C.save.story = { ch: 27, step: 8 }; r.eyeNot = !SE.eyeShown() && SE.drafts().length === 0;
+      } finally { LF._resetForTest(); SK._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '열 단계 · 곶 지키기 3·4·5 → 넷째 매듭 → 배로 바위섬 → 석등 해·별·달 → 구름섬 무리 → 여섯째 매듭(줄이 등불로) → 가면 그림자 → 나그네 · 🪢+7 🪙+7500 · 눈 서고 기둥 열림' : ('실패 ' + bad.join(','));
+    });
+
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */
     t('3인칭 이동 Q1 — 3D 로 시점을 돌리면 키·스틱 방향도 같이 돈다(W = 카메라가 보는 쪽) · 3D 가 꺼져 있으면 그대로', function () {
       var W = DG.world, W3 = DG.world3d, r = {};

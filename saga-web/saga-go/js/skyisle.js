@@ -23,6 +23,7 @@
   var ISLE_OFF = [0, -27], ISLE_R = 14, ISLE_UP = 40, RAIL_H = 1, SLAB = 4;
   var DRAFT_R = 3.5, DRAFT_OVER = 9, DRAFT_RISE = 9, DRAFT_MIN_AIR = 1;
   var SKY_CH = 8, SKY_STEPS = [4, 9];           // 9장(0부터 8) 섬 단계 — 불러오면 섬 위로(boot)
+  var SKY_CH28 = 27, SKY_STEPS28 = [6, 9];      // ⑲-54 28장 구름섬 무리·여섯째 매듭·가면 그림자·나그네 단계도 같다
 
   function ST() { var s = global.DG.story; return s && s.on && s.on() ? s : null; }
   function LF() { var l = global.DG.landform; return l && l.on && l.on() ? l : null; }
@@ -54,7 +55,7 @@
   /** 떠 있는 발판 — [{ id, name, x, y, r, top, slab, boot? [ch, from, to] 또는 그 목록(⑲-50) }] */
   function pads() {
     var out = [], c = on() ? spot() : null, E = ES();
-    if (c) { out.push({ id: 'isle', name: '구름섬', x: c.x, y: c.y, r: ISLE_R, top: top(), slab: SLAB, boot: [SKY_CH, SKY_STEPS[0], SKY_STEPS[1]] }); }
+    if (c) { out.push({ id: 'isle', name: '구름섬', x: c.x, y: c.y, r: ISLE_R, top: top(), slab: SLAB, boot: [[SKY_CH, SKY_STEPS[0], SKY_STEPS[1]], [SKY_CH28, SKY_STEPS28[0], SKY_STEPS28[1]]] }); }
     if (E && E.pads) { out = out.concat(E.pads()); }
     if (CR()) { out = out.concat(CR().pads()); }
     if (SR()) { out = out.concat(SR().pads()); }

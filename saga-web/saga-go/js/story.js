@@ -133,14 +133,16 @@
   var NPCS = {
     elder:    { id: 'story_elder',    name: '청하 촌장 누리', short: '누리', zone: 'home',    off: [-22, 16],  color: '#6b7f61', idle: '먹구름이 걷히면 마을 잔치를 열어야지.' },
     ferryman: { id: 'story_ferryman', name: '늙은 사공 버들', short: '버들', zone: 'galdae',  off: [-18, -24], color: '#4d6688', idle: '물 냄새가 요즘 영 비릿해.',
-      at: [{ ch: 6, from: 8, to: 8, spot: 'cape', off: [-6, 6] }, { ch: 7, from: 5, to: 10, spot: 'isle', off: [-4, 18] }] },
+      at: [{ ch: 6, from: 8, to: 8, spot: 'cape', off: [-6, 6] }, { ch: 7, from: 5, to: 10, spot: 'isle', off: [-4, 18] },
+        { ch: 27, from: 1, to: 3, spot: 'cape', off: [-6, 6] }, { ch: 27, from: 4, to: 9, spot: 'isle', off: [-4, 18] }] },   // ⑲-54 28장 곶 지키기 → 바위섬
     scholar:  { id: 'story_scholar',  name: '떠돌이 학자 은비', short: '은비', zone: 'gojeong', off: [-18, -24], color: '#8c6b99', idle: '이 비문, 읽을수록 이상하다니까.',
       at: [{ ch: 4, from: 0, to: 3, spot: 'road' }, { ch: 4, from: 4, to: 7, spot: 'altar2', off: [-5, 7] }, { ch: 5, from: 6, to: 6, spot: 'peak', off: [-5, 6] }] },
     wanderer: { id: 'story_wanderer', name: '가면 쓴 나그네', short: '나그네', zone: 'home',  off: [8, 70],    color: '#38384a', idle: '……',
       mask: true, appear: [{ ch: 3, from: 1, to: 5 }, { ch: 4, from: 6, to: 6, spot: 'altar2', off: [7, 5] }, { ch: 5, from: 2, to: 4, spot: 'peak', off: [5, 5] },
         { ch: 6, from: 3, to: 6, spot: 'cape', off: [6, 6] }, { ch: 7, from: 6, to: 9, spot: 'isle', off: [7, 8] },
         { ch: 8, from: 2, to: 2, spot: 'peak', off: [5, 5] }, { ch: 8, from: 3, to: 9, spot: 'sky', off: [5, 6], sky: true },
-        { ch: 26, from: 5, to: 5, spot: 'altar2', off: [7, 5] }] },                                             // ⑲-53 27장 둘째 매듭 곁
+        { ch: 26, from: 5, to: 5, spot: 'altar2', off: [7, 5] },                                                // ⑲-53 27장 둘째 매듭 곁
+        { ch: 27, from: 9, to: 9, spot: 'sky', off: [5, 6], sky: true }] },                                     // ⑲-54 28장 구름섬(먹구름 눈이 선 뒤)
     /* ⑲-19 해솔(검은 가면의 참이름, 금 간 가면) · 노 도둑(쫓기 단계에만 — 자리는 달리는 곳).
        ⑲-20 9장엔 가면을 벗은 해솔이 구름섬에 선다(칸이 mask·name·idle 을 덮는다) */
     haesol:   { id: 'story_haesol',   name: '검은 가면 해솔', short: '해솔', zone: 'galdae', off: [0, 0], color: '#26222e', idle: '……',
@@ -223,7 +225,7 @@
         { ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_haneul', sky: true }] },
     /* ⑲-51 가면 그림자 — 23장 반디 기록 속 그자. 26장 장치 셋을 끈 뒤(일곱째 단계) 한 번만 정거장 서쪽 끝에 선다. 정체는 8부까지 */
     gamyeon:  { id: 'story_gamyeon',  name: '가면 그림자', short: '그림자', zone: 'saltflat', spot: 'sr_gamyeon', off: [0, 0], color: '#14121c', mask: true, idle: '……',
-      appear: [{ ch: 25, from: 6, to: 6, spot: 'sr_gamyeon', sky: true }] },
+      appear: [{ ch: 25, from: 6, to: 6, spot: 'sr_gamyeon', sky: true }, { ch: 27, from: 8, to: 8, spot: 'sky', off: [7, -7], sky: true }] },   // ⑲-54 28장 구름섬 북동쪽 한 번
     /* ⑲-50 구름 씨앗 드론 — 25장 쫓기 때만 잔해 섬 둘레 길(SEED_DRONE_PATH)을 난다. 드론 모델(pet) */
     seeddrone: { id: 'story_seeddrone', name: '구름 씨앗 드론', short: '드론', zone: 'saltflat', spot: 'sr_wreck', color: '#4d4266', pet: 'drone', idle: '삐비— 치익.',
       appear: [{ ch: 24, from: 3, to: 3, sky: true }], runSpot: 'sr_wreck', runPath: SEED_DRONE_PATH },
@@ -1323,6 +1325,45 @@
             ['해솔', '가면에 먹혀 있을 때 먹구름 속에서 누가 계속 노래를 부르라고 했다고 했지. 그 목소리 — 정거장에서 들은 가면 그림자랑 똑같아.', 'sorrow'],
             ['?', ['그자가 널 부렸던 거구나.', '나머지 매듭은?']],
             ['해솔', '넷째는 물마루 곶, 다섯째는 바위섬, 여섯째는 저 위 구름섬. 그자가 먼저 닿기 전에 — 포구의 버들 할아버지한테 가 보자.', 'angry']] }
+      ] },
+    /* ⑲-54 8부 둘째 장 — 여섯째 매듭. 매듭 셋을 더 묶는다: 곶 넷째(7장 제단 자리 — 지키기 뒤 불) · 바위섬 다섯째(8장 석등 자리) · 구름섬 여섯째(9장 자리, sky).
+       여섯이 다 묶이면(여덟째 단계부터) 줄이 매듭 등불로 모이고 가면 그림자가 구름섬에 서서 정체를 밝힌다. 끝나면(열째 단계부터) 먹구름 눈이 선다.
+       stormeye KNOTS: 넷째 3(불 2 다음)·다섯째 5(석등 4 다음)·여섯째 8(불 7 다음) · 눈 보임 9 — 단계 번호를 바꾸면 그쪽도 */
+    { id: 'ch28', name: '제28장 · 여섯째 매듭', ar: 62,
+      reward: { knot: 7, gold: 7500, guide: 6, secret: 5, party: 1900 },
+      steps: [
+        { type: 'talk', npc: 'ferryman', text: '포구의 사공 버들과 이야기하기',
+          lines: [['버들', '왔구나. 해솔이 먼저 기별을 넣었더라 — 매듭이니 뭐니, 늙은이 귀엔 어렵다만 곶이 요새 수상한 건 안다.', 'surprised'],
+            ['버들', '어젯밤부터 곶 제단에 가면 쓴 놈들이 떼로 몰려. 이번엔 제단째 바다에 밀어 넣을 기세야.', 'angry'],
+            ['하람', '(무전) 여기 서리봉 관측소! 먹구름이 전부 한 방향으로 빨려 들고 있어요 — 청하 북쪽 봉우리 위 하늘로!', 'surprised'],
+            ['한별', '(신호) 별배 항로표에 빛 점이 여섯 떴네. 바위섬 점은 해 → 별 → 달 차례로 깜빡이고 있어.'],
+            ['?', ['곶부터 지킬게요.', '할아버지는 배를 준비해 주세요.']],
+            ['버들', '그래, 곶을 지키고 나면 바위섬까지 태워 주마. 조심하거라!']] },
+        { type: 'defend', spot: 'cape', name: '넷째 매듭', who: '가면 무리가',
+          waves: [['imp', 'imp', 'toad'], ['imp', 'raptor', 'hawk', 'toad'], ['rockbear', 'imp', 'snowfox', 'raptor', 'hawk']],
+          text: '물마루 곶의 넷째 매듭을 가면 무리에게서 지키기' },
+        { type: 'light', spot: 'cape', text: '넷째 매듭의 제단에 원소 불 다시 밝히기',
+          done: '🔥 넷째 매듭에 불이 붙었다 — 곶에서 금빛 줄이 솟는다' },
+        { type: 'sail', npc: 'ferryman', to: 'isle', toOff: [0, 14], text: '버들의 배를 타고 바위섬으로(사공에게 F)',
+          lines: [['버들', '자, 타거라. 바위섬 매듭도 우리 손으로 묶자꾸나!']],
+          arrive: '🚣 버들이 노를 저어 앞바다 바위섬에 배를 댔다' },
+        { type: 'seal', spot: 'isle', order: ['sun', 'star', 'moon'], text: '바위섬 다섯째 매듭 석등을 항로표 차례(해 → 별 → 달)대로 밝히기' },
+        { type: 'sky', text: '북쪽 봉우리 바람 기둥을 타고 구름섬에 오르기(기둥 안에서 뛰어올라 활공)' },
+        { type: 'kill', spot: 'sky', off: [0, 2], sky: true, kinds: ['hawk', 'raptor', 'imp', 'imp', 'snowfox'], text: '여섯째 자리를 덮은 먹구름 무리 물리치기' },
+        { type: 'light', spot: 'sky', sky: true, text: '구름섬 여섯째 매듭에 원소 불 다시 밝히기',
+          done: '🔥 여섯째 매듭까지 — 여섯 금빛 줄이 휘어 하늘 한 점으로 모인다' },
+        { type: 'talk', npc: 'gamyeon', text: '구름섬에 나타난 가면 그림자와 이야기하기',
+          lines: [['가면 그림자', '……여섯 줄이 다 묶였군. 매듭이 조여 올수록 내 몸이 틈 밖으로 밀려난다.', 'angry'],
+            ['나그네', '그 가면 무늬… 비문 맨 아래, 처음 가면. 네가 임금이로구나.', 'angry'],
+            ['?', ['먹구름 임금의 참몸…!', '구름섬에서 쓰러뜨린 임금은 뭐였지?']],
+            ['가면 그림자', '네가 이 섬에서 친 것은 내 꿈, 정거장에서 친 것은 내 그림자. 나는 여섯 매듭 밑 틈에 묶여 먹구름 한 줄기로만 시대를 떠돌았지.'],
+            ['가면 그림자', '틈이 닫히자 돌아갈 길도 막혔다. 그래서 뿌리부터 풀러 왔건만 — 좋다. 매듭이 나를 밀어낸다면, 하늘의 먹구름을 전부 한데 모아 매듭째 끊어 주마.', 'angry'],
+            ['가면 그림자', '올라와라. 먹구름 눈에서 기다리지.']] },
+        { type: 'talk', npc: 'wanderer', text: '구름섬의 나그네와 이야기하기',
+          lines: [['나그네', '……먹구름이 저 위로 빨려 든다. 저게 먹구름 눈인가.', 'surprised'],
+            ['나그네', '혼자서는 못 간다. 마을로 내려가 모두를 불러 모으게 — 은비, 버들, 해솔… 네가 시대를 건너 만난 동무들 전부.'],
+            ['?', ['다 같이 가요.', '마지막 싸움이네요.']],
+            ['나그네', '과거·현대·미래가 다 모여야 틈 위의 임금을 칠 수 있다. 누리 할머니가 광장에서 기다린다.', 'joy']] }
       ] }
   ];
 
