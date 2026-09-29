@@ -221,6 +221,8 @@ func _ready() -> void:
 	add_child(dispatch)
 	if OS.get_environment("SAGA_DISPATCH_PROBE") != "":
 		add_child(load("res://tools/probe_dispatch.gd").new())
+	if OS.get_environment("SAGA_MOUNT_PROBE") != "": # 탈것
+		add_child(load("res://tools/probe_mount.gd").new())
 	if OS.get_environment("SAGA_FROST_PROBE") != "": # 106장 ㊺ 서리봉 고원
 		add_child(load("res://tools/probe_frost.gd").new())
 	if OS.get_environment("SAGA_STORY2_PROBE") != "": # 106장 ㊺ 이야기 2부(10장~)

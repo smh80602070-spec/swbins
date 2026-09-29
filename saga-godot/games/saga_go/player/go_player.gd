@@ -18,7 +18,7 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const FieldCombat := preload("res://games/saga_go/combat/field_combat.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 
-enum Mode { GROUND, AIR, GLIDE, CLIMB, SWIM, MANTLE }
+enum Mode { GROUND, AIR, GLIDE, CLIMB, SWIM, MANTLE, FLY }
 
 const JUMP_VELOCITY := 7.5          # 정점 약 1.4m (중력 20)
 const COYOTE_SEC := 0.1
@@ -112,6 +112,18 @@ var _updraft_t := 0.0
 var _updraft_vy := 0.0
 var _updraft_skip := false
 const UPDRAFT_MIN_CLEARANCE := 1.0 # 이보다 낮은 턱에서 발이 떨어진 건 활공으로 안 친다
+## 2026-09-30 탈것(player/mount.gd 가 앉힌다) — data/mounts.gd.
+var mounted := false
+var mount_speed_mul := 1.0
+var mount_jump_mul := 1.0
+var ride_height := 0.0
+var mount_fly_speed := 0.0
+const FLY_RISE := 9.0            # 점프를 누르는 동안 오르는 속도
+const FLY_SINK := 3.0            # 손을 떼면 내려앉는 속도
+const FLY_DIVE := 14.0           # 달리기(Shift)로 급강하
+const FLY_MAX_CLEARANCE := 45.0  # 땅 위 고도 상한
+const FLY_TAKEOFF := 8.5         # 탈것에 오르는 순간 솟는 속도
+const FLY_TURN := 5.0
 var combat: Node = null
 var aiming := false # 106장 ㊵ 활 조준 중(combat/aimed_shot.gd 가 켜고 끈다)
 
@@ -128,6 +140,9 @@ func _ready() -> void:
 	visual.add_child(_glider)
 	_glider.visible = false
 	_build_hud()
+	var mount_node := Node3D.new()
+	mount_node.set_script(load("res://games/saga_go/player/mount.gd"))
+	add_child(mount_node)
 	combat = FieldCombat.new()
 	combat.name = "FieldCombat"
 	add_child(combat)
@@ -169,6 +184,7 @@ func _physics_process(delta: float) -> void:
 		Mode.CLIMB: _tick_climb(delta, input_dir)
 		Mode.SWIM: _tick_swim(delta, move_dir)
 		Mode.MANTLE: _tick_mantle(delta)
+		Mode.FLY: _tick_fly(delta, move_dir)
 
 	_tick_stamina(delta)
 	_apply_pose(delta)
@@ -194,19 +210,19 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 	if aiming:
 		move_dir = Vector3.ZERO
 	var running := Input.is_action_pressed("run") and not _exhausted and stamina > 0.0 and move_dir.length() > 0.05
-	var speed := (RUN_SPEED if running else WALK_SPEED) * speed_mult
+	var speed := (RUN_SPEED if running else WALK_SPEED) * speed_mult * mount_speed_mul
 	if _action_t > 0.0:
 		speed *= _action_move
 		running = false
 	velocity.x = move_dir.x * speed
 	velocity.z = move_dir.z * speed
-	if running:
+	if running and not mounted:
 		_spend(COST_SPRINT * delta)
 
 	if move_dir.length() > 0.05:
 		_face(move_dir, delta)
 		_play_anim("sprint" if running else "walk")
-		if _try_wall(move_dir, delta, true):
+		if not mounted and _try_wall(move_dir, delta, true):
 			return
 	else:
 		_grab_t = 0.0
@@ -214,7 +230,7 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 
 	if _jump_buffer > 0.0:
 		_jump_buffer = 0.0
-		velocity.y = JUMP_VELOCITY
+		velocity.y = JUMP_VELOCITY * mount_jump_mul
 		_set_mode(Mode.AIR)
 		move_and_slide()
 		return
@@ -245,11 +261,11 @@ func _tick_air(delta: float, move_dir: Vector3) -> void:
 		_jump_buffer = 0.0
 		_coyote = 0.0
 		velocity.y = JUMP_VELOCITY
-	elif _jump_buffer > 0.0 and velocity.y < 1.0 and stamina > 0.0 and _clearance() >= GLIDE_MIN_CLEARANCE:
+	elif not mounted and _jump_buffer > 0.0 and velocity.y < 1.0 and stamina > 0.0 and _clearance() >= GLIDE_MIN_CLEARANCE:
 		_jump_buffer = 0.0
 		_set_mode(Mode.GLIDE)
 		return
-	elif _updraft_t > 0.0 and not _updraft_skip and stamina > 0.0 and not _exhausted \
+	elif not mounted and _updraft_t > 0.0 and not _updraft_skip and stamina > 0.0 and not _exhausted \
 			and (velocity.y > 0.5 or _clearance() >= UPDRAFT_MIN_CLEARANCE):
 		_set_mode(Mode.GLIDE) # 바람 기둥 안 공중(뛰어올랐거나 발밑이 떴다) — 저절로 활공
 		return
@@ -297,6 +313,36 @@ func _tick_glide(delta: float, move_dir: Vector3) -> void:
 		return
 	move_and_slide()
 	if is_on_floor():
+		_set_mode(Mode.GROUND)
+
+## 나는 탈것 — 중력 없이 난다. 점프 = 오르기, 손 떼면 천천히 내려앉기, 달리기(Shift) = 급강하. 땅에 닿으면 땅 탈것처럼 걷는다.
+func begin_fly() -> void:
+	velocity.y = FLY_TAKEOFF
+	_set_mode(Mode.FLY)
+
+func end_fly() -> void:
+	_set_mode(Mode.AIR)
+
+func _tick_fly(delta: float, move_dir: Vector3) -> void:
+	if not mounted:
+		_set_mode(Mode.AIR)
+		return
+	var fspeed := mount_fly_speed if mount_fly_speed > 0.0 else 14.0
+	if move_dir.length() > 0.05:
+		_face(move_dir, delta * FLY_TURN * 0.25)
+	var dir := move_dir if move_dir.length() > 0.05 else Vector3.ZERO
+	velocity.x = lerpf(velocity.x, dir.x * fspeed, 3.0 * delta)
+	velocity.z = lerpf(velocity.z, dir.z * fspeed, 3.0 * delta)
+	var want_y := -FLY_SINK
+	if Input.is_action_pressed("jump") and _clearance() < FLY_MAX_CLEARANCE:
+		want_y = FLY_RISE
+	elif Input.is_action_pressed("run"):
+		want_y = -FLY_DIVE
+	velocity.y = lerpf(velocity.y, want_y, 4.0 * delta)
+	_jump_buffer = 0.0
+	_play_anim("idle")
+	move_and_slide()
+	if is_on_floor() and velocity.y <= 0.5:
 		_set_mode(Mode.GROUND)
 
 func _tick_climb(delta: float, input_dir: Vector2) -> void:
@@ -669,7 +715,7 @@ func _apply_pose(delta: float) -> void:
 	_pose_pitch = lerpf(_pose_pitch, target, clampf(8.0 * delta, 0.0, 1.0))
 	var b := Basis.from_euler(Vector3(_pose_pitch, _yaw, 0.0))
 	visual.rotation = Vector3(_pose_pitch, _yaw, 0.0)
-	visual.position = Vector3.UP * CHEST - b * (Vector3.UP * CHEST)
+	visual.position = Vector3.UP * CHEST - b * (Vector3.UP * CHEST) + Vector3.UP * ride_height
 
 ## 활공 날개 — 어깨 위로 펼친 연 모양 천 두 장(코드로 그린다, 원작 에셋 아님).
 func _build_glider() -> MeshInstance3D:

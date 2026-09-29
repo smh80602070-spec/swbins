@@ -37,6 +37,10 @@ const SHOTS := [
 	["x_fxring", "ruins", "r_statue", Vector3(14, 0, -4), "r_statue", -32.0, 14.0, "fxring"],
 	["v_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, ""],
 	["v_station_boards", "village", "v_station", Vector3(0, 0, 9), "v_station", -22.0, 10.0, ""],
+	["k_ride_horse", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "mount:pt_jeolyeong"],
+	["k_ride_tiger", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "mount:pt_baekho"],
+	["k_ride_crow", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -14.0, 9.0, "mount:pt_samjogo"],
+	["k_ride_dragon", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -14.0, 11.0, "mount:pt_cheongryong"],
 	["v_people_lineup", "village", "v_statue", Vector3(-14, 0, 12), "lineup", -8.0, 7.0, "lineup"],
 	["p_faces", "village", "v_statue", Vector3(-14, 0, 12), "lineup", 12.0, 2.0, "lineup_faces"],
 	["v_cliff_n", "village", Vector2(3.5, 4.4), Vector3.ZERO, Vector2(3.5, 2.6), -4.0, 8.0, ""],
@@ -244,6 +248,10 @@ func _act(a: String) -> void:
 			var gf := get_tree().current_scene.get_node_or_null("GrassField") as Node3D
 			if gf:
 				gf.visible = false # 가까이 한 마리 — 발까지 보려고 풀을 잠깐 끈다
+		_ when a.begins_with("mount:"):
+			var mn := _p.get_node_or_null("Mount")
+			if mn:
+				mn.call("mount", a.substr(6))
 		"night":
 			TimeOfDay.force(true)
 			var nv := get_tree().get_first_node_in_group("go_night_visual")

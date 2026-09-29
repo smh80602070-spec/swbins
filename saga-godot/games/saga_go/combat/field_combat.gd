@@ -412,6 +412,9 @@ const INPUT_ACTIONS := ["combat_quick", "combat_ult", "combat_burst", "combat_do
 func _unhandled_input(event: InputEvent) -> void:
 	if _duel_open() or _player == null or _player.get("frozen") or _mouse_blocked(event):
 		return
+	## 탈것을 타는 동안엔 전투 입력을 받지 않는다(mount.gd 가 공격을 누르면 내려 준다).
+	if bool(_player.get("mounted")):
+		return
 	for action in INPUT_ACTIONS:
 		if event.is_action_pressed(action):
 			_act(action, true)

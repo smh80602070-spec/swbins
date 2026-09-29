@@ -9502,3 +9502,11 @@ PROJECT_STATE.md` 참고. 요약:
 ## GO 그래픽 먼저 ㉝ 마을 꽃무리 (2026-09-30, 같은 세션)
 
 - 마을에도 칸당 꽃무리 하나(MEADOW_PATCHES_BY_REGION village 1) — 2곳이면 PERF 마을 평균 35.0만으로 예산선, 1곳은 34.2만. 점검 TRAVERSAL·TREASURE·STORY fails=0, REGRESS OK.
+
+## GO 탈것 — 말·호랑이(땅) · 새·주작·용(나는 것) (2026-09-30, 사용자 "탈것이고 날아다니는 것도 있음" · "다섯 판 다")
+
+- data/mounts.gd(신수 6종: 섬영마·홍염마·백호=땅 / 삼족오·주작·청룡=날기, 요구 장 2·5·8·10·16·26, 환경변수 SAGA_MOUNT_ALL 이면 전부) + player/mount.gd(V 타기/내리기·B 바꿔 타기, 신수 모습 CreatureBuilder.build_pet 재사용, 출렁임) + go_player.gd Mode.FLY(점프=오르기 9m/s·손 떼면 3m/s 내려앉기·Shift=급강하 14·고도 상한 45m·땅에 닿으면 땅 탈것으로 걸음).
+- 땅 탈것: 이동 배율 1.9~2.2·스태미나 안 씀·점프 배율·등반·활공 못 함·전투 못 함(field_combat 입력 막음, 공격을 누르면 내림)·깊은 물에서 내림. 몸은 플레이어 발 밑에서 같은 쪽을 보며 사람이 ride_height 만큼 올라앉는다(go_player._apply_pose).
+- tools/probe_mount.gd(SAGA_MOUNT_PROBE) 13항목 fails=0, probe_shots k_ride_* 네 컷. TRAVERSAL·FIELD_BOSS·KIT fails=0, REGRESS OK(COMBAT 은 무거운 작업과 겹치면 가끔 2, 혼자 돌리면 0).
+- 아직: 사람이 말 등에 앉은 자세 없음(서 있음)·날개 펄럭임 없음·터치 단추 없음·세이브에 마지막 탈것 안 저장.
+- 다섯 판 다: 사가블로·사가의숲·사가스토리·사가국지 적용은 다음 조각.
