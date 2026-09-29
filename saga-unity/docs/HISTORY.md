@@ -10837,3 +10837,12 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 진단 `PlaytestForestMount`(표·열림·타고 내리기·속도 ×1.95·비행·화면·세이브)를 `PlaytestForestHeadless` 에 등록. 함정: 원점엔 깃대 시설이 있어 그 위에 내려앉으니 착지 진단은 빈 땅(-20,0)에서.
 - 실기 확인 전: 몸 크기·타기 단추 자리·뜬 채 카메라·뜬 높이 2.8m 가 나무보다 낮은지(나무 관통이 어떻게 보이나)·내릴 때 나무/집 위 착지·달리다 택배 파손.
 - 다음 = 탈것 STORY·REALM·웹 12부 유무 확인·14-27b·14-1b·실기 확인.
+
+### 2026-09-30 — saga-unity STORY 탈것·비행 (PLAN 109-15-4)
+- 웹 사가스토리 `js/mount.js` 이식. `StoryMounts`(순수 표·열림·고르기·`mountSel` 세이브 v6 그대로) + `MountField`(H·Shift+H·공격 단추 왼쪽 타기 단추 (-380,140), 말/학/용 원시 도형) + `StoryPlayerController.Walk`: 지상 탈것은 이동·점프 배율, 날개 탈것은 중력 ×0.22·낙하 상한 2.8m/초·공중 점프 = 날갯짓(점프의 0.8배, 0.16초 쉼)·천장(웹 y=20px = `FieldMapData.HeightOfPx(20)` 10.8m).
+- **웹과 다름 하나**: 웹은 '보스가 있는 사냥터에선 못 난다'인데 이 판 들판엔 두목이 오른쪽 끝에 늘 살아 서 있어 그대로 옮기면 두목을 잡기 전엔 영영 못 난다 → **두목의 싸움터**(살아 있는 두목에서 X 14m 안, 비경 두목은 방 전체)에서만 막는다(`MountField.BossNear`, 등장 컷 거리 9m 보다 조금 넓게). `StoryMounts.BossHere` 를 `MountField.Update` 가 매 프레임 채운다.
+- 저절로 내림: `StoryPlayerController.Attacked`(새 정적 이벤트 — 연참·횡소·기탄·기합·직업 무예·소환에서 `NotifyAttacked()`)·`StoryPlayerHp.Hurted`·컷·지상 탈것이 줄을 잡을 때. 웹 자동 사냥·대화는 이 트랙에 없다.
+- 진단 쪽 손잡이: `StoryPlayerController.Step(dt)`(Update 가 부름)·`SetTestAxis`·`ClearTestInput`·`Teleport`, 모바일 점프 단추가 공중이면 날갯짓 요청(`_jumpQueued`).
+- 진단 `PlaytestStoryMount` 를 `PlaytestStorySlice` 에 등록. **함정 둘**: ① 진단의 평타(`TriggerAttack`)가 높은 레벨이라 사거리 2.2m 안 잡졸을 한 방에 죽여 뒤 단계(KillEnemies)가 어긋났다 → 잡졸 8·13m 에서 각 2.5m 인 x=10.5 에서 시험. ② 앞 실행이 남긴 `save_story.json` 이 두목 등장 컷 진단을 깨뜨린다(기존 특성) → 매 회 치우고 돌린다.
+- 실기 확인 전: 말·학·용 몸 크기(옆 화면에서 어떻게 보이나)·타기 단추 자리·날갯짓 손맛(점프 연타 리듬)·낙하 속도·두목 싸움터 경계에서 날개가 꺼지는 느낌·카메라.
+- 다음 = 탈것 REALM·웹 12부 유무 확인·14-27b·14-1b·실기 확인.

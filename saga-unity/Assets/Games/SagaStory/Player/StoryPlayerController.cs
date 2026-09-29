@@ -62,6 +62,15 @@ namespace Saga.Story.Player
         private StoryRope _ropeArea;
         private bool _onRope;
 
+        // PLAN.md 109-15 탈것·비행 — 날갯짓 쉼·모바일 점프 단추의 공중 눌림(날갯짓 요청)·날개 탈것이 뜬 채인가.
+        private float _flapCooldownLeft;
+        private bool _jumpQueued;
+        public bool FlyActive { get; private set; }
+
+        /// <summary>PLAN.md 109-15 — 공격·무예를 쓸 때마다 쏜다(탈것에서 저절로 내린다 — 메이플의 "탈것 위에선 못 싸운다").</summary>
+        public static event System.Action Attacked;
+        public static void NotifyAttacked() => Attacked?.Invoke();
+
         private bool BuffActive => Time.time < _buffUntilTime;
 
         /// <summary>PLAN.md 106-10 소환 — 지금 한 타의 공격력(소환 피해 = 이 값 × 8), 줄에 매달렸는지(매달리면 못 부른다).</summary>
@@ -87,7 +96,24 @@ namespace Saga.Story.Player
             if (Application.isPlaying && GetComponent<StoryPlayerVitals>() == null) gameObject.AddComponent<StoryPlayerVitals>();
         }
 
-        private void Update()
+        private void Update() => Step(Time.deltaTime);
+
+        // 진단용(PLAN.md 109-15) — 가로 입력을 곧장 주고(−1~1), 시간을 건너뛰며 한 프레임씩 굴린다.
+        private bool _testInput;
+        private float _testAxis;
+        public void SetTestAxis(float axis) { _testInput = true; _testAxis = axis; }
+        public void ClearTestInput() { _testInput = false; _testAxis = 0f; _jumpQueued = false; }
+        /// <summary>진단용 순간이동 — 세로 속도도 비운다.</summary>
+        public void Teleport(Vector3 pos)
+        {
+            _controller.enabled = false;
+            transform.position = pos;
+            _controller.enabled = true;
+            _verticalVelocity = 0f;
+        }
+
+        /// <summary>한 프레임 — 진단이 시간을 건너뛰려고 직접 부른다.</summary>
+        public void Step(float dt)
         {
             // PLAN.md 106-8 — 두목 등장 컷 동안은 선다(입력·이동·중력 전부 — 짧은 컷이라 땅 위에서만 튼다).
             if (Saga.Story.Cinematics.StoryCutscenes.Playing)
@@ -95,7 +121,6 @@ namespace Saga.Story.Player
                 if (animator != null) animator.SetFloat("Speed", 0f);
                 return;
             }
-            float dt = Time.deltaTime;
             _attackCooldownLeft = Mathf.Max(0f, _attackCooldownLeft - dt);
             _sweepCooldownLeft = Mathf.Max(0f, _sweepCooldownLeft - dt);
             _boltCooldownLeft = Mathf.Max(0f, _boltCooldownLeft - dt);
@@ -162,6 +187,7 @@ namespace Saga.Story.Player
             if (StorySkillState.LevelOf(sk.Key) <= 0) return false;
             if (JobSkillCooldownLeft(sk.Key) > 0f) return false;
             if (!StoryCombat.TrySpendMp(sk.Cost)) return false;
+            NotifyAttacked();
 
             // 5-2 2단계 유파 세트 — 판정은 StorySkillState.BonusOf() 한 곳, 여기선 제자리에
             // 곱하거나 더할 뿐(웹판 castSkill()의 `var sb = JB.schoolBonus(sk)`와 같은 결).
@@ -343,13 +369,16 @@ namespace Saga.Story.Player
         /// <summary>모바일 "점프" 버튼(OnClick)이 부른다.</summary>
         public void TriggerJump()
         {
-            if (!_onRope && _controller.isGrounded) _verticalVelocity = JumpSpeed;
+            if (_onRope) return;
+            if (_controller.isGrounded) _verticalVelocity = JumpSpeed * StoryMounts.JumpMul;
+            else _jumpQueued = true; // 공중이면 날갯짓 요청(날개 탈것이 아니면 다음 Walk 에서 그냥 버려진다)
         }
 
         private void TryAttack()
         {
             if (_attackCooldownLeft > 0f) return;
             _attackCooldownLeft = AttackCooldown * StoryLabyrinthState.CooldownMul;
+            NotifyAttacked();
             PlayAttackAnim();
 
             bool hitAny = false;
@@ -379,6 +408,7 @@ namespace Saga.Story.Player
             if (_sweepCooldownLeft > 0f) return;
             if (!free && !StoryCombat.TrySpendMp(StoryCombat.SweepCost)) return;
             _sweepCooldownLeft = StoryCombat.SweepCooldown * StoryLabyrinthState.CooldownMul;
+            NotifyAttacked();
             PlayAttackAnim();
 
             bool hitAny = false;
@@ -420,6 +450,7 @@ namespace Saga.Story.Player
             if (_boltCooldownLeft > 0f) return;
             if (!free && !StoryCombat.TrySpendMp(StoryCombat.BoltCost)) return;
             _boltCooldownLeft = StoryCombat.BoltCooldown * StoryLabyrinthState.CooldownMul;
+            NotifyAttacked();
             PlayAttackAnim();
 
             var go = new GameObject("StoryBolt");
@@ -436,15 +467,36 @@ namespace Saga.Story.Player
             if (_braceCooldownLeft > 0f) return;
             if (!free && !StoryCombat.TrySpendMp(StoryCombat.BraceCost)) return;
             _braceCooldownLeft = StoryCombat.BraceCooldown * StoryLabyrinthState.CooldownMul;
+            NotifyAttacked();
             SetBuff(StoryCombat.BraceSeconds, StoryCombat.BraceAtkMul, StoryCombat.BraceSpeedMul, 1f);
         }
 
         private void Walk(float dt)
         {
             if (_controller.isGrounded && _verticalVelocity < 0f) _verticalVelocity = 0f;
-            _verticalVelocity -= Gravity * dt;
+            // PLAN.md 109-15 탈것·비행 — 날개 탈것(두목 없는 사냥터)은 중력 ×0.22·낙하 상한이 걸리고, 공중에서 점프를 다시 누르면 날갯짓.
+            bool fly = StoryMounts.CanFlyNow(_onRope);
+            _flapCooldownLeft = Mathf.Max(0f, _flapCooldownLeft - dt);
+            _verticalVelocity -= Gravity * (fly ? StoryMounts.FlyGrav : 1f) * dt;
+            if (fly && _verticalVelocity < -StoryMounts.FlyFallCap) _verticalVelocity = -StoryMounts.FlyFallCap;
 
-            if (_controller.isGrounded && WantsJump()) _verticalVelocity = JumpSpeed;
+            bool jumpPressed = WantsJump() || _jumpQueued;
+            _jumpQueued = false;
+            if (_controller.isGrounded && jumpPressed) _verticalVelocity = JumpSpeed * StoryMounts.JumpMul;
+            else if (fly && !_controller.isGrounded && jumpPressed && _flapCooldownLeft <= 0f)
+            {
+                _verticalVelocity = JumpSpeed * StoryMounts.FlapVy;
+                _flapCooldownLeft = StoryMounts.FlapCd;
+            }
+            if (fly)
+            {
+                // 맨 위 천장에서 멎는다(웹 y=20px).
+                float ceilY = FieldMapData.HeightOfPx(StoryMounts.CeilPx);
+                float y = transform.position.y;
+                if (y >= ceilY && _verticalVelocity > 0f) _verticalVelocity = 0f;
+                else if (_verticalVelocity > 0f && y + _verticalVelocity * dt > ceilY) _verticalVelocity = Mathf.Max(0f, (ceilY - y) / Mathf.Max(dt, 0.0001f));
+            }
+            FlyActive = fly && !_controller.isGrounded;
 
             float axis = HorizontalInput();
             if (Mathf.Abs(axis) > 0.05f)
@@ -457,7 +509,7 @@ namespace Saga.Story.Player
                 }
             }
 
-            float runSpeed = RunSpeed * (BuffActive ? _buffSpeed : 1f) * StoryLabyrinthState.MoveSpeedMul;
+            float runSpeed = RunSpeed * (BuffActive ? _buffSpeed : 1f) * StoryLabyrinthState.MoveSpeedMul * StoryMounts.SpeedMul; // 109-15 — 안 탔으면 ×1
             var move = new Vector3(axis * runSpeed, _verticalVelocity, 0f);
             _controller.Move(move * dt);
 
@@ -543,6 +595,7 @@ namespace Saga.Story.Player
 
         private float HorizontalInput()
         {
+            if (_testInput) return _testAxis;
             float v = 0f;
             var kb = Keyboard.current;
             if (kb != null)

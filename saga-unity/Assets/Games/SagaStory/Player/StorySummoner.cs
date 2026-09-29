@@ -49,6 +49,7 @@ namespace Saga.Story.Player
                 return Refuse("summon.no_foe", "부를 까닭이 없다 — 곁에 적이 없다");
 
             StorySummonState.TrySpend();
+            StoryPlayerController.NotifyAttacked(); // PLAN.md 109-15 — 소환도 싸움이라 탈것에서 내린다
             float damage = (_pc != null ? _pc.AttackPower : StoryCombat.StartAtk) * StorySummon.DamageMul;
             var s = StorySummon.Spawn(summonPrefab, transform.position, facing, damage);
             LastSummon = s;

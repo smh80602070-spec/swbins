@@ -3784,6 +3784,22 @@
 2	story	labyrinth.treasure	💰 보물 노드 — 기억 조각 +{0}	💰 Treasure node — +{0} memory shards		
 2	story	labyrinth.upgrade_fail	기억 조각이 부족하거나 이미 최대 단계다	Not enough memory shards, or already at max rank		
 2	story	labyrinth.upgrade_ok	기억을 새겼다 — 영구 강화 {0}단(공격력 소폭 상승)	Memory engraved — permanent upgrade rank {0} (slightly more attack)		
+2	story	mount.auto_attack	싸우려고 탈것에서 내렸다	You dismount to fight		
+2	story	mount.auto_hurt	맞아서 탈것에서 내렸다	You were hit and dismount		
+2	story	mount.auto_rope	줄을 잡아 탈것에서 내렸다	You grab the rope and dismount		
+2	story	mount.btn_off	내리기	Dismount		
+2	story	mount.btn_on	타기	Ride		
+2	story	mount.mt_brown	갈색 말	Brown Horse		
+2	story	mount.mt_crane	학	Crane		
+2	story	mount.mt_dragon	푸른 용	Azure Dragon		
+2	story	mount.mt_farm	농마	Farm Horse		
+2	story	mount.mt_white	흰 말	White Horse		
+2	story	mount.no_rope	줄에 매달린 채로는 못 탄다	You can't mount while hanging on a rope		
+2	story	mount.none	아직 탈것이 없다 — 레벨 {0} 에 첫 탈것	No mount yet — your first one comes at level {0}		
+2	story	mount.off	탈것에서 내렸다	You dismount		
+2	story	mount.on	{0} 을(를) 탔다	You mount the {0}		
+2	story	mount.on_fly	{0} 을(를) 탔다 — 공중에서 점프를 거듭 눌러 난다	You mount the {0} — press Jump again in the air to fly		
+2	story	mount.sel	{0} 로 골랐다	{0} selected		
 2	story	npc.scout_choice_a	함께 축배를 든다	Share a toast together		
 2	story	npc.scout_choice_b	간단히 치하만 받는다	Just accept simple thanks		
 2	story	npc.scout_choice_line_a	좋습니다, 오늘은 마음 놓고 한 잔 합시다!	Wonderful, let's drink freely tonight!		

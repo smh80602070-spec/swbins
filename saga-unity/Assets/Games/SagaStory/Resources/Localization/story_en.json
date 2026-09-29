@@ -424,6 +424,22 @@
     { "key": "bp.pull", "value": "⛓ {0}'s {1} — run against the pull!" },
     { "key": "bp.sig_band", "value": "⚔ {0} — {1}" },
     { "key": "bp.groggy", "value": "💫 {0} is stunned — takes ×{2} damage for {1}s!" },
-    { "key": "bp.groggy_hud", "value": "Stunned {0}s" }
+    { "key": "bp.groggy_hud", "value": "Stunned {0}s" },
+    { "key": "mount.mt_farm", "value": "Farm Horse" },
+    { "key": "mount.mt_brown", "value": "Brown Horse" },
+    { "key": "mount.mt_white", "value": "White Horse" },
+    { "key": "mount.mt_crane", "value": "Crane" },
+    { "key": "mount.mt_dragon", "value": "Azure Dragon" },
+    { "key": "mount.btn_on", "value": "Ride" },
+    { "key": "mount.btn_off", "value": "Dismount" },
+    { "key": "mount.on", "value": "You mount the {0}" },
+    { "key": "mount.on_fly", "value": "You mount the {0} — press Jump again in the air to fly" },
+    { "key": "mount.off", "value": "You dismount" },
+    { "key": "mount.sel", "value": "{0} selected" },
+    { "key": "mount.none", "value": "No mount yet — your first one comes at level {0}" },
+    { "key": "mount.no_rope", "value": "You can't mount while hanging on a rope" },
+    { "key": "mount.auto_attack", "value": "You dismount to fight" },
+    { "key": "mount.auto_hurt", "value": "You were hit and dismount" },
+    { "key": "mount.auto_rope", "value": "You grab the rope and dismount" }
   ]
 }

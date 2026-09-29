@@ -424,6 +424,22 @@
     { "key": "bp.pull", "value": "⛓ {0}의 {1} — 거슬러 달려라!" },
     { "key": "bp.sig_band", "value": "⚔ {0} — {1}" },
     { "key": "bp.groggy", "value": "💫 {0} 그로기 — {1}초 동안 받는 피해 ×{2}!" },
-    { "key": "bp.groggy_hud", "value": "그로기 {0}초" }
+    { "key": "bp.groggy_hud", "value": "그로기 {0}초" },
+    { "key": "mount.mt_farm", "value": "농마" },
+    { "key": "mount.mt_brown", "value": "갈색 말" },
+    { "key": "mount.mt_white", "value": "흰 말" },
+    { "key": "mount.mt_crane", "value": "학" },
+    { "key": "mount.mt_dragon", "value": "푸른 용" },
+    { "key": "mount.btn_on", "value": "타기" },
+    { "key": "mount.btn_off", "value": "내리기" },
+    { "key": "mount.on", "value": "{0} 을(를) 탔다" },
+    { "key": "mount.on_fly", "value": "{0} 을(를) 탔다 — 공중에서 점프를 거듭 눌러 난다" },
+    { "key": "mount.off", "value": "탈것에서 내렸다" },
+    { "key": "mount.sel", "value": "{0} 로 골랐다" },
+    { "key": "mount.none", "value": "아직 탈것이 없다 — 레벨 {0} 에 첫 탈것" },
+    { "key": "mount.no_rope", "value": "줄에 매달린 채로는 못 탄다" },
+    { "key": "mount.auto_attack", "value": "싸우려고 탈것에서 내렸다" },
+    { "key": "mount.auto_hurt", "value": "맞아서 탈것에서 내렸다" },
+    { "key": "mount.auto_rope", "value": "줄을 잡아 탈것에서 내렸다" }
   ]
 }

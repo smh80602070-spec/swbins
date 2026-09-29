@@ -90,6 +90,8 @@ namespace Saga.Story.Data
             // 5-2 3단계(2026-09-23) "칸 고정" — 같은 이유로 버전 안 올림. 옛 세이브는 null →
             // 고정 없음(자동 배치만, 예전과 같다).
             public string[] skillPins;
+            // PLAN.md 109-15 탈것 — 고른 탈것(탄 채는 저장 안 함). 버전 그대로: 옛 세이브는 null → 안 고른 채.
+            public string mountSel;
         }
 
         public static bool Save()
@@ -134,6 +136,7 @@ namespace Saga.Story.Data
                 skillKeys = skillKeys,
                 skillLevels = skillLevels,
                 skillPins = StorySkillState.SnapshotPins(),
+                mountSel = StoryMounts.Snapshot(),
             };
             return JsonUtility.ToJson(data);
         }
@@ -178,6 +181,7 @@ namespace Saga.Story.Data
             StoryLabyrinthState.Restore(data.memoryShards, data.memoryTier);
             StoryPartyState.Restore(data.partyActiveIndex);
             StorySkillState.Restore(data.skillKeys, data.skillLevels, data.skillPins);
+            StoryMounts.Restore(data.mountSel);
 
             Transform player = FindPlayer();
             if (player != null && data.playerPos != null && data.playerPos.Length == 3)
