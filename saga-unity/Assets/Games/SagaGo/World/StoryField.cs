@@ -115,7 +115,7 @@ namespace Saga.Go.World
             foreach (var (line, steps) in Lines())
                 for (int i = 0; i < steps.Length; i++)
                 {
-                    if (steps[i].Type == GoStory.StepType.Light)
+                    if (steps[i].Type == GoStory.StepType.Light && !steps[i].Bare) // 109-14-39 등롱 없는 light(종각 종·변전함…)는 몸을 안 세운다
                         _altars[$"{line}_{i}"] = ElementTorch.Spawn(FolkWalker.Grounded(GoStory.StepPos(steps[i]) + Vector3.up * 0.5f), GoElement.Pyro, transform, stone, $"StoryAltar_{line}_{i}");
                     if (steps[i].Type == GoStory.StepType.Seal) BuildSeal(line, i, steps[i], stone);
                 }
@@ -570,7 +570,8 @@ namespace Saga.Go.World
             if (st != null && st.Type == GoStory.StepType.Seal) { SealPulse(center, radius); return; }
             if (st == null || st.Type != GoStory.StepType.Light) return;
             if (GoStory.Flat(center, GoStory.TargetOf(st, out _)) > radius + GoStory.LightR) return;
-            Toast(GoLocalization.T("story.lit", "옛 제단에 불이 붙었다 — 비문이 빛난다"), 3.5f);
+            Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : GoLocalization.T("story.lit", "옛 제단에 불이 붙었다 — 비문이 빛난다"), 3.5f);
+            if (st.Bare && st.At == "skyport:temple") AreaField.Instance?.RingBell(); // 109-14-39 종각 종이 흔들린다
             StoryState.Advance();
         }
 

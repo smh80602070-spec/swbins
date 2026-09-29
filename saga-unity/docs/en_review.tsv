@@ -1091,6 +1091,7 @@
 2	go	story.boss.king	먹구름 임금	Storm King		
 2	go	story.boss.mask	검은 가면	Black Mask		
 2	go	story.boss.mask2	금 간 검은 가면	Cracked Black Mask		
+2	go	story.boss.mossserpent	이끼 이무기	Moss Serpent		
 2	go	story.boss.riftfox	틈새 서리 구미호	Rift Frost Nine-Tail		
 2	go	story.boss_up	{0}가 나타났다	{0} has appeared		
 2	go	story.ch1	제1장 · 먹구름이 오는 마을	Chapter 1 · Stormclouds Over the Village		
@@ -1386,6 +1387,55 @@
 2	go	story.ch16.s9.l4	나루는 제가 지킬게요. 별배도 여기 쉬게 두세요. 이제 여기가 여러분 나루이기도 하니까!	I'll look after the port. Let the star-ship rest here. This is your port too now!		
 2	go	story.ch16.s9.p.a	선장님이 절터로?	The captain went to the temple ruins?		
 2	go	story.ch16.s9.p.b	종소리?	A bell?		
+2	go	story.ch17	제17장 · 옛 절터의 종	Chapter 17 · The Bell of the Old Temple		
+2	go	story.ch17.enter1	이끼 덮인 종 곁에 틈 짐승들이 똬리를 틀었다	Rift beasts coil beside the moss-covered bell		
+2	go	story.ch17.enter2	종을 감고 있던 이끼 이무기가 머리를 들었다!	The moss serpent coiled around the bell raises its head!		
+2	go	story.ch17.p2	이끼 이무기가 덩굴 비늘을 곤두세웠다 — 바람으로 찢어라! 덩굴뱀과 회오리매가 뛰어든다	The moss serpent bristles its vine scales — tear them with wind! A vine snake and a whirlwind hawk leap in		
+2	go	story.ch17.rung	🔔 뎅— 종이 울렸다	🔔 Dong— the bell rings		
+2	go	story.ch17.s1	나루지기 아라와 이야기하기	Talk to Ara, the portkeeper		
+2	go	story.ch17.s1.l1	어젯밤에도 울렸어요. 옛 절터 쪽에서 — 뎅, 하고 딱 한 번.	It rang again last night. From the old temple ruins — one single dong.		
+2	go	story.ch17.s1.l2	절터엔 늘 한 분이 계세요. 스스로 종지기라고 하시는데… 종이 떨어진 지 수백 년인데도요.	Someone is always at the ruins. He calls himself the bellkeeper… though the bell fell hundreds of years ago.		
+2	go	story.ch17.s1.l3	선장님이 무얼 들으셨는지, 그분이라면 알 거예요.	He'd know what the captain heard.		
+2	go	story.ch17.s1.p.a	떨어진 종이 운다고?	A fallen bell, ringing?		
+2	go	story.ch17.s1.p.b	선장님 기록의 그 종소리?	The bell from the captain's log?		
+2	go	story.ch17.s10	한결과 이야기하기	Talk to Hangyeol		
+2	go	story.ch17.s10.l1	…삼백 년 만의 종소리요. 이 소리를 다시 듣다니.	…The first bell in three hundred years. To hear that sound again.		
+2	go	story.ch17.s10.l2	삐— 종소리에 응답 신호. 남쪽, 은하역 방향 — 열차 기적 소리입니다.	Beep — a response to the bell. South, toward Galaxy Station — a train whistle.		
+2	go	story.ch17.s10.l3	그 선장이 떠나며 말했소. '종이 다시 울리면 막차가 한 번 더 온다'고. 무슨 뜻인지는 나도 모르오.	The captain said as he left: 'When the bell rings again, the last train comes once more.' I don't know what he meant.		
+2	go	story.ch17.s10.l4	나는 이제 종 곁을 지키겠소. 종지기가 종 곁에 있어야지. 가 보시오 — 은하역으로.	I'll stay by the bell now. A bellkeeper belongs beside his bell. Go — to Galaxy Station.		
+2	go	story.ch17.s10.p.a	저 녹슨 역에서 열차가?	A train, from that rusty station?		
+2	go	story.ch17.s10.p.b	선장님의 신호일까?	Could it be the captain's signal?		
+2	go	story.ch17.s2	은하 나루 서쪽 옛 절터로	Go to the old temple ruins west of Galaxy Port		
+2	go	story.ch17.s3	옛 절터의 종지기 한결과 이야기하기	Talk to Hangyeol, the bellkeeper of the old temple		
+2	go	story.ch17.s3.l1	종을 찾아왔소? …별배를 탄 그 선장도 같은 말을 했지.	Come for the bell? …The captain who rode the star-ship said the same.		
+2	go	story.ch17.s3.l2	나는 이 절의 종지기요. 종각이 무너지던 밤 종을 붙들다 시간 틈에 휩쓸려 — 눈을 떠 보니 절은 주춧돌만 남았더군.	I am this temple's bellkeeper. The night the belfry fell I clung to the bell and was swept into a rift — when I opened my eyes only the foundation stones were left.		
+2	go	story.ch17.s3.l3	종은 그때 서쪽 비탈로 굴러떨어졌소. 요즘 밤마다 우는 건 종이 아니오 — 종을 감은 무언가가 틈 짐승을 부르는 소리지.	The bell rolled down the western slope then. What cries at night isn't the bell — it's something coiled around it, calling rift beasts.		
+2	go	story.ch17.s3.l4	선장도 그 울음을 따라 비탈로 갔소. 먼저 비탈에 몰린 짐승들부터 쫓아 주시오.	The captain followed that cry to the slope too. First drive off the beasts crowded there.		
+2	go	story.ch17.s3.p.a	선장님을 만났어요?	You met the captain?		
+2	go	story.ch17.s3.p.b	종은 어디 있어요?	Where is the bell?		
+2	go	story.ch17.s4	쓰러진 종 곁에 몰려든 틈 짐승 물리치기	Defeat the rift beasts crowded around the fallen bell		
+2	go	story.ch17.s5	쓰러진 종 곁의 한결과 이야기하기	Talk to Hangyeol beside the fallen bell		
+2	go	story.ch17.s5.l1	이 종이오. 이끼가 두껍게 덮였어도 소리는 그대로요.	This is the bell. Even under thick moss, its voice is unchanged.		
+2	go	story.ch17.s5.l2	…쉿. 종 속에서 무언가 몸을 뒤채는 소리가 들리오?	…Shh. Do you hear something stirring inside the bell?		
+2	go	story.ch17.s5.l3	이무기요! 틈에서 기어 나와 종에 똬리를 틀고 수백 년 이끼를 먹은 놈 — 덩굴 비늘은 바람이 찢소!	A serpent! It crawled out of the rift, coiled on the bell and fed on centuries of moss — wind tears vine scales!		
+2	go	story.ch17.s5.p.a	뭔가 있어요!	There's something!		
+2	go	story.ch17.s5.p.b	물러나요!	Back away!		
+2	go	story.ch17.s6	종을 감은 이끼 이무기와 맞서기	Face the moss serpent coiled around the bell		
+2	go	story.ch17.s7	한결과 이야기하기	Talk to Hangyeol		
+2	go	story.ch17.s7.l1	풀려났소… 종이 다시 숨을 쉬는구려.	It's freed… the bell breathes again.		
+2	go	story.ch17.s7.l2	허나 이 무게를 어찌 종각까지 올린단 말이오. 옛날엔 스님 서른이 밧줄로 끌어 올렸소.	But how do we lift this weight to the belfry? In the old days thirty monks hauled it up with ropes.		
+2	go	story.ch17.s7.l3	하늘 배로 종을 든다고? …허허, 오래 살고 볼 일이오.	Lifting a bell with a sky ship? …Ha, one lives long enough to see everything.		
+2	go	story.ch17.s7.p.a	별배라면 들 수 있어요.	The star-ship can lift it.		
+2	go	story.ch17.s7.p.b	반디를 불러 볼게요.	I'll call Bandi.		
+2	go	story.ch17.s8	별배를 몰고 온 반디와 이야기하기	Talk to Bandi, who brought the star-ship		
+2	go	story.ch17.s8.l1	삐— 별배 견인 빛줄 연결. 무게 십이 톤. 들어 올립니다.	Beep — star-ship tractor beam linked. Weight twelve tons. Lifting.		
+2	go	story.ch17.s8.l2	종이… 하늘을 나는구려!	The bell… is flying!		
+2	go	story.ch17.s8.l3	삐— 종각 들보에 걸었습니다. 새 종고리는 별배 계류 쇠붙이로 만들었습니다.	Beep — hung on the belfry beam. The new bell-loop is made from the star-ship's mooring iron.		
+2	go	story.ch17.s8.l4	앞날의 쇠로 옛 종을 걸다니. 자, 이제 종을 울려 주시오 — 무엇으로든 힘껏!	Hanging an old bell with iron from the future. Now ring it — with anything, as hard as you can!		
+2	go	story.ch17.s8.p.a	종각 들보에 맞춰!	Line it up with the belfry beam!		
+2	go	story.ch17.s8.p.b	천천히, 반디.	Slowly, Bandi.		
+2	go	story.ch17.s9	종각에 다시 건 종을 원소 스킬로 울리기	Ring the re-hung bell in the belfry with an elemental skill		
+2	go	story.ch17.win	이무기가 종에서 풀려나 — 틈 속으로 스르르 사라졌다	The serpent slips off the bell and glides away into the rift		
 2	go	story.ch2	제2장 · 먹구름 제단	Chapter 2 · The Stormcloud Altar		
 2	go	story.ch2.s1	학자에게 제단 가는 길을 묻기	Ask the scholar the way to the altar		
 2	go	story.ch2.s1.l1	비문을 다 읽었어. 이무기는 너른 강 물가 서쪽, 먹구름 제단 안에 잠들어 있어.	I've finished reading the inscription. The serpent sleeps inside the Stormcloud Altar, west along the Broad River.		
@@ -1685,6 +1735,7 @@
 2	go	story.idle.gaon	관측대가 또 한 뼘 기울었어요. 기록만 하고 있을 순 없는데…	The deck tilted another hand's breadth. I can't just keep recording…		
 2	go	story.idle.haesol	……	……		
 2	go	story.idle.haesol2	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
+2	go	story.idle.hangyeol	종은 소리로 사람을 부르는 물건이오.	A bell is a thing that calls people by sound.		
 2	go	story.idle.haram	바늘이 또 얼었네… 눈은 언제 그치려나.	The needle froze again… when will this snow ever stop?		
 2	go	story.idle.horse	히힝… 푸르르.	Neigh… snort.		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
@@ -1706,6 +1757,7 @@
 2	go	story.npc.gaon	시간 틈 관측사 가온	Rift Observer Gaon		
 2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
 2	go	story.npc.haesol2	해솔	Haesol		
+2	go	story.npc.hangyeol	종지기 한결	Bellkeeper Hangyeol		
 2	go	story.npc.haram	기상 관측원 하람	Haram the Weather Observer		
 2	go	story.npc.horse	놀란 역마	Startled Post Horse		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
@@ -1730,6 +1782,7 @@
 2	go	story.short.ferryman	버들	Beodeul		
 2	go	story.short.gaon	가온	Gaon		
 2	go	story.short.haesol	해솔	Haesol		
+2	go	story.short.hangyeol	한결	Hangyeol		
 2	go	story.short.haram	하람	Haram		
 2	go	story.short.horse	역마	Horse		
 2	go	story.short.scholar	은비	Eunbi		

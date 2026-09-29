@@ -233,7 +233,7 @@ namespace Saga.Go.World
                     P(PrimitiveType.Sphere, t, "Courier_eye", new Vector3(0f, 1.2f, 0.65f), new Vector3(0.4f, 0.3f, 0.2f), glow, false);
                     break;
                 case "bell": // 떨어진 절 종 — 누운 종 + 나무 틀
-                    P(PrimitiveType.Cylinder, t, "Bell_fallen", new Vector3(0f, 0.7f, 0f), new Vector3(1.4f, 1f, 1.4f), bronze, false, new Vector3(0f, 0f, 90f));
+                    Part("skyport:bell_fallen", t, PrimitiveType.Cylinder, "Bell_fallen", new Vector3(0f, 0.7f, 0f), new Vector3(1.4f, 1f, 1.4f), bronze, false, new Vector3(0f, 0f, 90f));
                     P(PrimitiveType.Cube, t, "Bell_frame_a", new Vector3(-2f, 1.2f, 0f), new Vector3(0.3f, 2.4f, 0.3f), wood, false, new Vector3(0f, 0f, 12f));
                     P(PrimitiveType.Cube, t, "Bell_frame_b", new Vector3(2f, 1.2f, 0f), new Vector3(0.3f, 2.4f, 0.3f), wood, false, new Vector3(0f, 0f, -12f));
                     break;
@@ -276,10 +276,26 @@ namespace Saga.Go.World
         }
 
         /// <summary>이야기 진행에 맞춰 바뀌는 조각·돌기둥을 켜고 끈다(진단도 부른다). 계류 탑 빛 공·매인 별배·종·막차는 각 장에서 여기에 더한다.</summary>
+        private float _ring;
+        /// <summary>종각 종을 3초 흔든다(그림만, 잦아드는 흔들림).</summary>
+        public void RingBell() => _ring = 3f;
+        public bool Ringing => _ring > 0f;
+        private void TickBell(float dt)
+        {
+            if (!_parts.TryGetValue("skyport:bell", out var bell) || bell == null) return;
+            _ring = Mathf.Max(0f, _ring - dt);
+            float amp = _ring / 3f * 25f;
+            bell.transform.localRotation = Quaternion.Euler(0f, 0f, Mathf.Sin(Time.time * 9f) * amp);
+        }
+
         public void Refresh()
         {
             foreach (var a in GoAreas.All)
                 if (_gates.TryGetValue(a.Id, out var g) && g != null) g.SetActive(a.Open());
+            bool hung = !StoryState.OffForTest && GoStory.BellHung;
+            if (_parts.TryGetValue("skyport:bell", out var bell) && bell != null) bell.SetActive(hung);
+            if (_parts.TryGetValue("skyport:bell_hidden", out var tip) && tip != null) tip.SetActive(hung);
+            if (_parts.TryGetValue("skyport:bell_fallen", out var fallen) && fallen != null) fallen.SetActive(!hung);
             bool docked = !StoryState.OffForTest && GoStory.PortDocked;
             if (_parts.TryGetValue("skyport:ship", out var ship) && ship != null) ship.SetActive(docked);
             if (_parts.TryGetValue("skyport:beacon", out var beacon) && beacon != null)
@@ -327,6 +343,7 @@ namespace Saga.Go.World
             Vector3 feet = fc.transform.position;
             Tick(feet);
             var kb = Keyboard.current;
+            TickBell(Time.deltaTime);
             var (a, g) = NearGate(feet);
             if (kb != null && g != 0 && kb.fKey.wasPressedThisFrame && !FishingField.Busy && !StoryState.Talking
                 && !(StoryUi.Instance != null && StoryUi.Instance.TalkShown) && !DispatchUi.AtBoard() && GoFishing.NearSpot(new Vector2(feet.x, feet.z)) == null && !GoFishing.NearBoard(new Vector2(feet.x, feet.z)))

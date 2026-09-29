@@ -26,7 +26,7 @@ namespace Saga.EditorTools
     public static class PlaytestGoStory
     {
         private static string _tag;
-        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "", _ch15 = "", _ch16 = "";
+        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "", _ch15 = "", _ch16 = "", _ch17 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -79,6 +79,7 @@ namespace Saga.EditorTools
                 CheckChapter14(fc, pc, field, ui);
                 CheckChapter15(fc, pc, field, ui);
                 CheckChapter16(fc, pc, field, ui);
+                CheckChapter17(fc, pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -111,7 +112,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · " + _ch15 + " · " + _ch16 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · " + _ch15 + " · " + _ch16 + " · " + _ch17 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -127,12 +128,12 @@ namespace Saga.EditorTools
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 21 || GoStory.Chapters.Length != 16) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 22 || GoStory.Chapters.Length != 17) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT", "TGTRTKXTGLT", "TGTKTMTET" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34, 36, 38 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 4500 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 } };
-            for (int c = 0; c < 16; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT", "TGTRTKXTGLT", "TGTKTMTET", "TGTKTXTTLT" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34, 36, 38, 40 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 4500, 4750 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 } };
+            for (int c = 0; c < 17; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -1525,6 +1526,73 @@ namespace Saga.EditorTools
             Talk(pc, ui, "ara", "16장 끝 아라");
             if (StoryState.Ch != 16 || GoldState.Gold != gold + 4500 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6 || TalentState.Count(GoTalent.Mat.Guide) != guide + 5) Fail("16장 끝·보상(금 4500·교본 5·매듭 6)");
             _ch16 = "16장 은하 나루(땅 밖 화살표는 돌기둥)·아라·무리 넷·계류 탑 벽 18m 꼭대기(땅에선 안 넘어감)·탑 뒤 빛 공/매인 별배/고원 선체 떠남·반디 자리·계류 물결 셋(동쪽 뺌)·보상";
+        }
+
+        // ---- 17장 ---------------------------------------------------------------------------------------------
+
+        private static void CheckChapter17(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch17 = "17장 중단";
+            StoryState.OffForTest = false;
+            PlayerStats.Restore(40, 0);
+            StoryState.Restore(16, 0);
+            var area = AreaField.Instance;
+            var sky = GoAreas.Skyport;
+            if (area == null) { Fail("AreaField 없음"); return; }
+            area.Refresh();
+            field.Refresh();
+            if (area.PartObject("skyport:bell").activeSelf || !area.PartObject("skyport:bell_fallen").activeSelf) Fail("17장 앞인데 종이 걸려 있다");
+            if (!field.NpcShown("hangyeol") || GoStory.Flat(field.NpcBody("hangyeol").transform.position, GoStory.AreaPos("skyport:temple", GoStory.Hangyeol)) > 0.6f) Fail("한결이 절터 종각 남쪽에 안 섬");
+            if (GoStory.Flat(field.NpcBody("bandi").transform.position, GoStory.AreaPos("skyport:port", GoStory.PortBandi)) > 0.6f) Fail("17장 첫 단계 반디는 나루");
+            Talk(pc, ui, "ara", "17장 아라");
+            Expect(16, 1, "아라 뒤");                                                            // → 1 go 절터
+            pc.Teleport(GoStory.AreaPos("skyport:temple", Vector2.zero) + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(16, 2, "절터 도착");                                                          // → 2 talk 한결
+            Talk(pc, ui, "hangyeol", "17장 한결");
+            Expect(16, 3, "한결 뒤");                                                            // → 3 kill 쓰러진 종 곁
+            Vector3 fight = GoStory.AreaPos("skyport:bell", GoStory.BellFight);
+            pc.Teleport(fight + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 4 || field.Squad.Count(e => e.Element == GoElement.Dendro) != 2 || field.Squad.Any(e => !sky.Contains(e.transform.position))) Fail($"종 곁 무리 {field.Squad.Count}");
+            foreach (var e in new System.Collections.Generic.List<FieldEnemy>(field.Squad)) Kill(e);
+            Expect(16, 4, "종 곁 무리");                                                         // → 4 talk 한결(종 곁)
+            field.Refresh();
+            if (GoStory.Flat(field.NpcBody("hangyeol").transform.position, GoStory.AreaPos("skyport:bell", GoStory.HgBell)) > 0.6f) Fail("한결이 쓰러진 종 곁으로 안 감");
+            Talk(pc, ui, "hangyeol", "17장 한결 둘째");
+            Expect(16, 5, "한결 둘째");                                                          // → 5 duel 이무기
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 1) { Fail($"이끼 이무기 {field.Squad.Count}"); return; }
+            var snake = field.Squad[0];
+            if (!snake.IsStoryBoss || snake.DisplayName != GoLocalization.T("story.boss.mossserpent", "이끼 이무기") || snake.Element != GoElement.Dendro || snake.CurrentMove != FieldEnemy.BossMove.Spit) Fail($"이무기 이름·초·첫 수 {snake.DisplayName}·{snake.Element}·{snake.CurrentMove}");
+            snake.SetShieldForTest(0f);
+            snake.TakeRaw(snake.Hp - snake.MaxHp * 0.45f, Color.white);
+            field.DuelTickForTest();
+            if (!snake.Shielded || snake.Element != GoElement.Dendro || field.Squad.Count != 3) Fail($"2단계 초 방패·졸개 {snake.Element}·{field.Squad.Count}");
+            Kill(snake);
+            Expect(16, 6, "이끼 이무기");                                                        // → 6 talk 한결
+            Talk(pc, ui, "hangyeol", "17장 한결 종");
+            Expect(16, 7, "한결 종");                                                            // → 7 talk 반디(종 곁, 종이 걸림)
+            area.Refresh();
+            field.Refresh();
+            if (!area.PartObject("skyport:bell").activeSelf || area.PartObject("skyport:bell_fallen").activeSelf) Fail("반디 단계에 종이 걸리고 누운 종이 사라져야");
+            if (GoStory.Flat(field.NpcBody("bandi").transform.position, GoStory.AreaPos("skyport:bell", GoStory.BellBandi)) > 0.6f) Fail("반디가 종 곁으로 안 옴");
+            Talk(pc, ui, "bandi", "17장 반디");
+            Expect(16, 8, "반디 뒤");                                                            // → 8 light 종각
+            field.Refresh();
+            if (field.AltarOfKey("16_8") != null) Fail("종각 종 울리기에 등롱 몸이 섰다(등롱 없이여야)");
+            Vector3 belfry = GoStory.AreaPos("skyport:temple", GoStory.Belfry);
+            Pulse(belfry + new Vector3(30f, 0f, 0f), 2f);
+            Expect(16, 8, "멀리서 종이 울림");
+            Pulse(belfry, 2f);
+            Expect(16, 9, "종 울림");                                                            // → 9 talk 한결
+            if (!area.Ringing) Fail("종이 흔들리지 않음");
+            field.Refresh();
+            if (GoStory.Flat(field.NpcBody("hangyeol").transform.position, GoStory.AreaPos("skyport:temple", GoStory.Hangyeol)) > 0.6f) Fail("한결이 종각 곁으로 안 돌아옴");
+            int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot), guide = TalentState.Count(GoTalent.Mat.Guide);
+            Talk(pc, ui, "hangyeol", "17장 끝 한결");
+            if (StoryState.Ch != 17 || GoldState.Gold != gold + 4750 || TalentState.Count(GoTalent.Mat.Knot) != knot + 6 || TalentState.Count(GoTalent.Mat.Guide) != guide + 5) Fail("17장 끝·보상(금 4750·교본 5·매듭 6)");
+            _ch17 = "17장 절터·한결(종 곁으로 옮김)·종 곁 무리(초 둘)·이끼 이무기(초·풍 방패 2단계)·종이 걸리면 누운 종 사라짐·반디 자리·종각 종 울림(등롱 없이)·보상";
         }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------

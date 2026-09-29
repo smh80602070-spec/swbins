@@ -242,6 +242,12 @@ namespace Saga.Go.Data
         // 18장(⑲-40) 변전함 자리(태양광 밭 가운데에서 m) — 은하 나루 모양이 쓴다.
         public static readonly Vector2 SubstationOff = new Vector2(10.5f, 0f);
 
+        // 17장(⑲-39) — 옛 절터·떨어진 절 종 곁 자리(각 명소 가운데에서 m): 종각 = 절터 동쪽 10m, 한결은 그 남쪽, 쓰러진 종 곁 무리/이무기/한결/반디
+        public static readonly Vector2 Belfry = new Vector2(10f, 0f), Hangyeol = new Vector2(10f, 3.6f), TempleBandi = new Vector2(14.5f, -1f),
+            BellFight = new Vector2(-4f, 7f), BellDuel = new Vector2(3f, 6f), HgBell = new Vector2(-3f, 3f), BellBandi = new Vector2(4f, -3f);
+        /// <summary>종이 종각에 걸렸나(반디가 들어 올린 17장 8째 단계부터 늘) — 걸리면 쓰러진 종은 사라진다.</summary>
+        public static bool BellHung => StoryState.Ch > 16 || (StoryState.Ch == 16 && StoryState.StepIndex >= 7);
+
         // 16장(⑲-38) — 은하 나루 별배 나루 안 자리(계류 탑 밑에서 m, z 남쪽): 아라는 부스 곁(동쪽), 반디는 서남쪽, 무리·계류 지키기는 착륙판 가운데. 탑 = 18m 기둥(옆면 타기), 매인 별배 = 착륙판 위 6m.
         public const float TowerHeight = 18.4f, TowerHalf = 1.2f, ShipUp = 6f;
         public static readonly Vector2 PortAra = new Vector2(11.5f, 5f), PortBandi = new Vector2(-5f, 9f), PortFight = new Vector2(0f, 6f), PortAltar = new Vector2(0f, 6f);
@@ -383,8 +389,14 @@ namespace Saga.Go.Data
                     new Spot { Ch = 12, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 12, From = 6, To = 8, Yard = true, Arena = YardBandi },
                     new Spot { Ch = 13, From = 0, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 13, From = 9, To = 9, Sky = true, Obs = true, Arena = new Vector2(3f, 3f) },
                     new Spot { Ch = 14, From = 0, To = 20, Frost = true, Arena = BandiShip },
-                    new Spot { Ch = 15, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 15, From = 6, To = 8, At = "skyport:port", Arena = PortBandi } },
+                    new Spot { Ch = 15, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 15, From = 6, To = 8, At = "skyport:port", Arena = PortBandi },
+                    new Spot { Ch = 16, From = 0, To = 6, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 16, From = 7, To = 7, At = "skyport:bell", Arena = BellBandi }, new Spot { Ch = 16, From = 8, To = 9, At = "skyport:temple", Arena = TempleBandi } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
+            // 109-14-39 17장(웹 ⑲-39) — 종지기 한결: 늘 절터 종각 남쪽, 17장 5~8째 단계엔 쓰러진 종 곁
+            new Npc { Id = "hangyeol", NameKey = "story.npc.hangyeol", NameKo = "종지기 한결", ShortKey = "story.short.hangyeol", ShortKo = "한결",
+                AtSite = "skyport:temple", AtOff = Hangyeol, FolkBody = "Paladin",
+                At = new[] { new Spot { Ch = 16, From = 4, To = 7, At = "skyport:bell", Arena = HgBell } },
+                IdleKey = "story.idle.hangyeol", IdleKo = "종은 소리로 사람을 부르는 물건이오." },
             // 109-14-38 16장(웹 ⑲-38) — 나루지기 아라: 늘 은하 나루 별배 나루 부스 곁에 선다
             new Npc { Id = "ara", NameKey = "story.npc.ara", NameKo = "나루지기 아라", ShortKey = "story.short.ara", ShortKo = "아라",
                 AtSite = "skyport:port", AtOff = PortAra, FolkBody = "Megan",
@@ -476,6 +488,8 @@ namespace Saga.Go.Data
             public bool Frost;
             /// <summary>109-14-34 조선소 위(자리 = 조선소 가운데 + Arena, climb 은 기중기 꼭대기).</summary>
             public bool Yard;
+            /// <summary>109-14-39 light — 등롱(제단 불) 없이 그 자리에 원소를 대면 된다(종각 종·변전함…). 알림은 EnterKo.</summary>
+            public bool Bare;
             /// <summary>109-14-38 독립 땅 명소 곁("지역:명소" — 자리 = 그 명소 가운데 + Arena, climb 은 명소의 탑).</summary>
             public string At;
             /// <summary>109-14-36 옛 역참 터 위(자리 = 역참 가운데 + Arena).</summary>
@@ -1462,6 +1476,82 @@ namespace Saga.Go.Data
                             Pick("story.ch16.s9.p", "선장님이 절터로?", "종소리?"),
                             L("ara", "story.ch16.s9.l3", "절터 종은 수백 년 전에 떨어져 나뒹구는데… 가끔 밤마다 울려요. 선장님이 거기서 무언가를 들으셨나 봐요."),
                             L("ara", "story.ch16.s9.l4", "나루는 제가 지킬게요. 별배도 여기 쉬게 두세요. 이제 여기가 여러분 나루이기도 하니까!"),
+                        } },
+                }
+            },
+            // 109-14-39 17장(웹 ⑲-39) — 4부 둘째 장, 옛 절터의 종: 아라 → 옛 절터 → 종지기 한결 → 쓰러진 종 곁 무리 → 한결 → 이끼 이무기(2단계 초 방패 — 풍으로) → 한결 → 반디(견인 빛줄로 종을 종각에 — 이때부터 걸린다)
+            // → 종각 종 울리기(등롱 없이 원소) → 한결. 덩굴뱀·회오리매는 14-1b(새 몸) 전까지 옛 몸에 초·풍, 이끼 이무기는 물귀신 몸을 키워 초로.
+            new Chapter
+            {
+                Id = "ch17", NameKey = "story.ch17", NameKo = "제17장 · 옛 절터의 종", Ar = 40,
+                Gold = 4750, Mats = new[] { 0, 5, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "ara", TextKey = "story.ch17.s1", TextKo = "나루지기 아라와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("ara", "story.ch17.s1.l1", "어젯밤에도 울렸어요. 옛 절터 쪽에서 — 뎅, 하고 딱 한 번."),
+                            Pick("story.ch17.s1.p", "떨어진 종이 운다고?", "선장님 기록의 그 종소리?"),
+                            L("ara", "story.ch17.s1.l2", "절터엔 늘 한 분이 계세요. 스스로 종지기라고 하시는데… 종이 떨어진 지 수백 년인데도요."),
+                            L("ara", "story.ch17.s1.l3", "선장님이 무얼 들으셨는지, 그분이라면 알 거예요."),
+                        } },
+                    new Step { Type = StepType.Go, At = "skyport:temple", Arena = Vector2.zero, TextKey = "story.ch17.s2", TextKo = "은하 나루 서쪽 옛 절터로" },
+                    new Step { Type = StepType.Talk, Npc = "hangyeol", TextKey = "story.ch17.s3", TextKo = "옛 절터의 종지기 한결과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hangyeol", "story.ch17.s3.l1", "종을 찾아왔소? …별배를 탄 그 선장도 같은 말을 했지."),
+                            Pick("story.ch17.s3.p", "선장님을 만났어요?", "종은 어디 있어요?"),
+                            L("hangyeol", "story.ch17.s3.l2", "나는 이 절의 종지기요. 종각이 무너지던 밤 종을 붙들다 시간 틈에 휩쓸려 — 눈을 떠 보니 절은 주춧돌만 남았더군."),
+                            L("hangyeol", "story.ch17.s3.l3", "종은 그때 서쪽 비탈로 굴러떨어졌소. 요즘 밤마다 우는 건 종이 아니오 — 종을 감은 무언가가 틈 짐승을 부르는 소리지."),
+                            L("hangyeol", "story.ch17.s3.l4", "선장도 그 울음을 따라 비탈로 갔소. 먼저 비탈에 몰린 짐승들부터 쫓아 주시오."),
+                        } },
+                    new Step { Type = StepType.Kill, At = "skyport:bell", Arena = BellFight,
+                        Foes = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro), F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        EnterKey = "story.ch17.enter1", EnterKo = "이끼 덮인 종 곁에 틈 짐승들이 똬리를 틀었다",
+                        TextKey = "story.ch17.s4", TextKo = "쓰러진 종 곁에 몰려든 틈 짐승 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "hangyeol", TextKey = "story.ch17.s5", TextKo = "쓰러진 종 곁의 한결과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hangyeol", "story.ch17.s5.l1", "이 종이오. 이끼가 두껍게 덮였어도 소리는 그대로요."),
+                            L("hangyeol", "story.ch17.s5.l2", "…쉿. 종 속에서 무언가 몸을 뒤채는 소리가 들리오?"),
+                            Pick("story.ch17.s5.p", "뭔가 있어요!", "물러나요!"),
+                            L("hangyeol", "story.ch17.s5.l3", "이무기요! 틈에서 기어 나와 종에 똬리를 틀고 수백 년 이끼를 먹은 놈 — 덩굴 비늘은 바람이 찢소!"),
+                        } },
+                    new Step { Type = StepType.Duel, At = "skyport:bell", Arena = BellDuel, Foes = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro) },
+                        BossKey = "story.boss.mossserpent", BossKo = "이끼 이무기", HpMul = 13.6f, AtkMul = 2.3f, ScaleMul = 1.9f,
+                        Rot = new[] { FieldEnemy.BossMove.Spit, FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Spit },
+                        P2El = GoElement.Dendro, Adds = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        EnterKey = "story.ch17.enter2", EnterKo = "종을 감고 있던 이끼 이무기가 머리를 들었다!",
+                        P2Key = "story.ch17.p2", P2Ko = "이끼 이무기가 덩굴 비늘을 곤두세웠다 — 바람으로 찢어라! 덩굴뱀과 회오리매가 뛰어든다",
+                        WinKey = "story.ch17.win", WinKo = "이무기가 종에서 풀려나 — 틈 속으로 스르르 사라졌다",
+                        TextKey = "story.ch17.s6", TextKo = "종을 감은 이끼 이무기와 맞서기" },
+                    new Step { Type = StepType.Talk, Npc = "hangyeol", TextKey = "story.ch17.s7", TextKo = "한결과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hangyeol", "story.ch17.s7.l1", "풀려났소… 종이 다시 숨을 쉬는구려."),
+                            L("hangyeol", "story.ch17.s7.l2", "허나 이 무게를 어찌 종각까지 올린단 말이오. 옛날엔 스님 서른이 밧줄로 끌어 올렸소."),
+                            Pick("story.ch17.s7.p", "별배라면 들 수 있어요.", "반디를 불러 볼게요."),
+                            L("hangyeol", "story.ch17.s7.l3", "하늘 배로 종을 든다고? …허허, 오래 살고 볼 일이오."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch17.s8", TextKo = "별배를 몰고 온 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch17.s8.l1", "삐— 별배 견인 빛줄 연결. 무게 십이 톤. 들어 올립니다."),
+                            L("hangyeol", "story.ch17.s8.l2", "종이… 하늘을 나는구려!"),
+                            Pick("story.ch17.s8.p", "종각 들보에 맞춰!", "천천히, 반디."),
+                            L("bandi", "story.ch17.s8.l3", "삐— 종각 들보에 걸었습니다. 새 종고리는 별배 계류 쇠붙이로 만들었습니다."),
+                            L("hangyeol", "story.ch17.s8.l4", "앞날의 쇠로 옛 종을 걸다니. 자, 이제 종을 울려 주시오 — 무엇으로든 힘껏!"),
+                        } },
+                    new Step { Type = StepType.Light, Bare = true, At = "skyport:temple", Arena = Belfry, EnterKey = "story.ch17.rung", EnterKo = "🔔 뎅— 종이 울렸다",
+                        TextKey = "story.ch17.s9", TextKo = "종각에 다시 건 종을 원소 스킬로 울리기" },
+                    new Step { Type = StepType.Talk, Npc = "hangyeol", TextKey = "story.ch17.s10", TextKo = "한결과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hangyeol", "story.ch17.s10.l1", "…삼백 년 만의 종소리요. 이 소리를 다시 듣다니."),
+                            L("bandi", "story.ch17.s10.l2", "삐— 종소리에 응답 신호. 남쪽, 은하역 방향 — 열차 기적 소리입니다."),
+                            Pick("story.ch17.s10.p", "저 녹슨 역에서 열차가?", "선장님의 신호일까?"),
+                            L("hangyeol", "story.ch17.s10.l3", "그 선장이 떠나며 말했소. '종이 다시 울리면 막차가 한 번 더 온다'고. 무슨 뜻인지는 나도 모르오."),
+                            L("hangyeol", "story.ch17.s10.l4", "나는 이제 종 곁을 지키겠소. 종지기가 종 곁에 있어야지. 가 보시오 — 은하역으로."),
                         } },
                 }
             },
