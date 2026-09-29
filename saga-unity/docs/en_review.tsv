@@ -1628,6 +1628,44 @@
 2	go	story.ch20.s9.p.a	같이 막아요, 선장님!	Let's stop it together, Captain!		
 2	go	story.ch20.s9.p.b	여기서 끝내자.	End it here.		
 2	go	story.ch20.win	🐦‍⬛ 별까마귀가 틈 속으로 떨어지고 — 찢어진 틈이 소리 없이 닫혔다	🐦‍⬛ The star crow falls into the rift — and the torn rift closes without a sound		
+2	go	story.ch21	제21장 · 바다 밑 등불	Chapter 21 · Lanterns Beneath the Sea		
+2	go	story.ch21.arrive	🛸 별배가 바다 위에서 멈칫하더니 — 잠긴 도읍 모래밭에 우리를 내려 주었다	🛸 The star-ship hesitates above the sea — then sets us down on the sands of the Sunken Capital		
+2	go	story.ch21.arrive2	🌊 잠수정이 물속 불빛 사이로 내려갔다가 — 잠긴 궁궐 기단 곁에 떠올랐다	🌊 The submersible sinks among the lights in the water — then surfaces beside the sunken palace plinth		
+2	go	story.ch21.enter1	⚔️ 기지 갑판 앞 모래밭에 물짐승들이 기어올라 왔다	⚔️ Water beasts crawl up onto the sands in front of the base deck		
+2	go	story.ch21.s1	은하 나루 별배 곁의 선장 한별과 이야기하기	Talk to Captain Hanbyeol beside the star-ship at Galaxy Port		
+2	go	story.ch21.s1.l1	틈이 닫힌 날부터 별배 항로표에 없던 불빛 하나가 떠 있다. 소금 갯벌 너머 바다 밑이야.	Since the day the rift closed, a light that isn't on the star-ship's route chart has been shining. Beneath the sea, beyond the salt flats.		
+2	go	story.ch21.s1.l2	삐— 그 좌표… 별배가 떨어지기 전에 가려던 항로 끝과 같습니다. 그런데 제 기록엔 그 까닭이 없습니다.	Beep — those coordinates… match the end of the route the star-ship was heading for before it fell. But my records don't say why.		
+2	go	story.ch21.s1.l3	선장이 제 항로를 모르면 안 되지. 원래 가려던 곳을 확인하러 가자.	A captain shouldn't be a stranger to her own route. Let's go check where we were headed all along.		
+2	go	story.ch21.s1.l4	별배는 물에 못 들어가지만 바다 위까진 간다. 타게!	The star-ship can't dive, but it can sail over the water. Climb aboard!		
+2	go	story.ch21.s1.p.a	별배로 가요.	Let's take the star-ship.		
+2	go	story.ch21.s1.p.b	바다 밑이라니…	Beneath the sea…?		
+2	go	story.ch21.s2	선장의 별배를 타고 옛 항로 끝으로	Ride the captain's star-ship to the end of the old route		
+2	go	story.ch21.s2.l1	별배, 남쪽 바다로! 반디, 항로를 잡아 다오.	Star-ship, south over the sea! Bandi, set the course.		
+2	go	story.ch21.s3	모래밭의 반디와 이야기하기	Talk to Bandi on the sands		
+2	go	story.ch21.s3.l1	삐— 항로 신호가 여기서 물속으로 꺾입니다. 별배 기관이 저절로 멈췄습니다.	Beep — the route signal bends down into the water here. The star-ship's engine stopped on its own.		
+2	go	story.ch21.s3.l2	저 물속을 보게. 기와 지붕이… 도읍 하나가 통째로 잠겨 있어.	Look into the water. Tiled roofs… a whole capital lies submerged.		
+2	go	story.ch21.s3.l3	궁궐 둘레에 불빛이 흔들립니다. 옛 해녀가 물질할 때 들던 등불과 같은 빛깔입니다.	Lights flicker around the palace. They're the same color as the lanterns the old sea-women carried when they dove.		
+2	go	story.ch21.s3.l4	모래밭 끝에 지금 시대의 해저 연구 기지가 있습니다. 잠수정 신호가 하나 살아 있습니다. 다만 기지 앞에 물짐승이 올라와 있습니다.	At the edge of the sands is a present-day undersea research base. One submersible signal is still alive. But water beasts have climbed up in front of the base.		
+2	go	story.ch21.s3.p.a	어떻게 내려가지?	How do we get down there?		
+2	go	story.ch21.s3.p.b	저 쇠 갑판은 뭐야?	What's that iron deck?		
+2	go	story.ch21.s4	해저 연구 기지 앞 모래밭에 올라온 물짐승 물리치기	Defeat the water beasts that crawled onto the sands before the undersea research base		
+2	go	story.ch21.s5	기지 잔교를 따라 잠수정 선착장으로	Follow the base pier to the submersible dock		
+2	go	story.ch21.s6	잠수정 선착장의 여울과 이야기하기	Talk to Yeoul at the submersible dock		
+2	go	story.ch21.s6.l1	누, 누구세요? 이 기지엔 이제 저 혼자뿐인데요.	Wh-who are you? I'm the only one left at this base.		
+2	go	story.ch21.s6.l2	저는 잠수 기사 여울. 해저 연구 기지 마지막 대원이에요. 틈이 닫히던 밤, 기지 불이 다 나갔어요.	I'm Yeoul, a diver — the last crew member of this undersea research base. The night the rift closed, every light in the base went out.		
+2	go	story.ch21.s6.l3	그날부터 바다 밑에 옛 궁궐이 보이고, 그 둘레에 등불이 켜졌어요. 누군가 아직 물질을 하는 것처럼요.	Since that day an old palace has been visible beneath the sea, with lanterns lit around it. As if someone were still diving out there.		
+2	go	story.ch21.s6.l4	잠수정은 살아 있어요. 불빛까지 모셔다 드릴게요 — 대신 저도 그 불빛이 뭔지 알고 싶어요.	The submersible still works. I'll take you to those lights — but only because I want to know what they are too.		
+2	go	story.ch21.s6.p.a	물속 불빛을 따라왔어요.	We followed the lights in the water.		
+2	go	story.ch21.s6.p.b	별배 선장과 함께 왔어요.	We came with the star-ship captain.		
+2	go	story.ch21.s7	여울의 잠수정을 타고 물속 불빛을 따라가기	Ride Yeoul's submersible and follow the lights in the water		
+2	go	story.ch21.s7.l1	해치 닫습니다. 잠수정, 물속 불빛을 따라 — 잠항!	Closing the hatch. Submersible, follow the lights in the water — diving!		
+2	go	story.ch21.s8	궁궐 기단 위의 여울과 이야기하기	Talk to Yeoul on the palace plinth		
+2	go	story.ch21.s8.l1	가까이서 보니 등불이 아니었어요. 테왁 — 해녀들이 물에 띄우던 뒤웅박에 불이 들어 있어요.	Up close, they aren't lanterns. They're tewak — the gourd floats the sea-women used — with lights inside.		
+2	go	story.ch21.s8.l2	삐— 이 궁궐 좌표, 제 기록에… 있었습니다. 지워진 칸이 하나 있습니다. 읽을 수 없습니다.	Beep — these palace coordinates… are in my records. There is one erased entry. I can't read it.		
+2	go	story.ch21.s8.l3	모르겠습니다. 다만 지워진 칸 끝에 적힌 말은 하나 — '등대'.	I don't know. But the last word left at the end of the erased entry is one thing — 'lighthouse'.		
+2	go	story.ch21.s8.l4	테왁이 궁궐 기와 사이로 이어져요. 물질하는 사람이 정말 있다면… 저 안쪽에 있을 거예요.	The tewak trail runs in among the palace tiles. If someone really is diving down here… they'll be somewhere inside.		
+2	go	story.ch21.s8.p.a	누가 지웠을까?	Who erased it?		
+2	go	story.ch21.s8.p.b	괜찮아, 반디?	Are you all right, Bandi?		
 2	go	story.ch3	제3장 · 잔칫날의 불청객	Chapter 3 · Uninvited Guests at the Feast		
 2	go	story.ch3.s1	촌장에게 잔치 일손을 돕겠다고 하기	Offer the Elder a hand with the feast		
 2	go	story.ch3.s1.l1	하늘이 갠 기념으로 잔치를 열기로 했단다. 그런데 일손이 모자라구나.	We've decided to hold a feast now that the sky has cleared. But we're short of hands.		
@@ -1926,6 +1964,7 @@
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 2	go	story.idle.thief	헤헤, 못 잡지롱!	Heh heh, can't catch me!		
 2	go	story.idle.wanderer	……	……		
+2	go	story.idle.yeoul	기지 불이 나간 지 한참이에요. 그래도 잠수정은 제가 지켜요.	The base lights went out ages ago. But I still look after the submersible.		
 2	go	story.joined	{0} 합류	{0} joined		
 2	go	story.list_close	닫는다 (O)	Close (O)		
 2	go	story.list_title	이야기 임무	Story Quests		
@@ -1951,6 +1990,7 @@
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
 2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
+2	go	story.npc.yeoul	잠수 기사 여울	Diver Yeoul		
 2	go	story.reward	장 끝 보상 {0}	Chapter reward {0}		
 2	go	story.sail_dock	⛵ 배가 강가 나루에 닿았다	⛵ The boat reaches the river landing		
 2	go	story.sail_isle	⛵ 사공의 배가 물살을 가른다 — 바위섬에 닿았다	⛵ The ferryman's boat cuts through the current — you reach the Rock Isle		
@@ -1979,6 +2019,7 @@
 2	go	story.short.scholar	은비	Eunbi		
 2	go	story.short.thief	도둑	Thief		
 2	go	story.short.wanderer	나그네	Traveler		
+2	go	story.short.yeoul	여울	Yeoul		
 2	go	story.sky_landed	☁️ 구름섬에 올라섰다 — 먹구름 무리가 지키고 있다	☁️ You set foot on the cloud isle — a storm-cloud gang stands guard		
 2	go	story.sky_open	🌬️ 봉우리 꼭대기에서 하늘로 바람 기둥이 솟았다 — 먹구름 덮개가 걷힌다	🌬️ A pillar of wind rises from the summit into the sky — the storm-cloud cover lifts		
 2	go	story.squad	먹구름 졸개가 나타났다	Stormcloud minions appeared		

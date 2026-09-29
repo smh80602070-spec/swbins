@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **3971** (표 3916 · 코드 55) — go 2127 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **9** · 넘침 주의 **388**
-- 사람 검수 **0/3971** — 순위1 0/265 · 순위2 0/2984 · 순위3 0/722
+- 짝 **4012** (표 3957 · 코드 55) — go 2168 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **9** · 넘침 주의 **396**
+- 사람 검수 **0/4012** — 순위1 0/265 · 순위2 0/3025 · 순위3 0/722
 
 ## 검수 순서
 
@@ -34,7 +34,7 @@
 - 「가 볼게요.」 → **I'll go.** (go:wq.lighthouse.s1.p.a) · **I'll go take a look.** (go:story.ch10.s1.p.a)
 - 「채집」 → **gathered** (go:ach.unit.gather) · **Foraging** (dungeon:room.forage)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 388)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 396)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -69,4 +69,4 @@
 | 5→13 | dungeon | `enemy.boss` | Yellow Turban Bandit Chief |
 | 9→19 | go | `story.ch16.s1.p.a` | So that's where the star-ship came from. |
 | 12→24 | go | `story.ch7` | Chapter 7 · The Fourth Altar on the Riverside Cape |
-| 30→53 | go | `story.ch8.s9.l3` | That's none of your concern. I'll be waiting at the sixth seat above the storm clouds — we'll finish this there. |
+| 23→41 | go | `story.ch21.s4` | Defeat the water beasts that crawled onto the sands before the undersea research base |

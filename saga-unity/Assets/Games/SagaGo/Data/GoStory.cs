@@ -272,6 +272,10 @@ namespace Saga.Go.Data
         public const float ClockHeight = 16f, ClockHalf = 1.5f, StepRise = 1.1f, StepR = 3.2f;
         public const int StepN = 15;
 
+        // 21장(⑲-45) — 잠긴 도읍 자리(각 명소 가운데에서 m, z 남쪽): 별배는 해무 어귀 안쪽(가운데 쪽 = 북쪽)에 내린다, 잠수정 선착장 = 기지 잔교 머리, 기단 = 궁궐 앞마당. 한별은 은하 나루 착륙판 곁(웹 hb_port).
+        public static readonly Vector2 SunkPortHanbyeol = new Vector2(-9f, 5f), SandArrive = new Vector2(6f, -20f), SandHanbyeol = new Vector2(2f, -14f), SandBandi = new Vector2(10f, -16f),
+            LabFront = new Vector2(0f, -14f), LabDock = new Vector2(1f, 6f), LabYeoul = new Vector2(-8f, 4f), PlinthArrive = new Vector2(0f, 3.5f), PlinthYeoul = new Vector2(2.5f, 3.2f), PlinthBandi = new Vector2(-3f, 3.2f);
+
         // 19장(⑲-42) — 틈새 갈림길 자리(각 명소 가운데에서 m): 막차는 승강장 동쪽에 내린다, 갈림목 = 시계탑 북서쪽, 한별은 섬돌 가운데 밑(틈 수정 아래).
         public static readonly Vector2 CrossArrive = new Vector2(6.5f, 0f), CrossBandi = new Vector2(7f, 4f), CrossHanbyeol = new Vector2(6.5f, 7f), CrossFork = new Vector2(-18f, -14f), CrossClockBandi = new Vector2(4f, 4f),
             CrossStepsBandi = new Vector2(6f, 5f), CrossDuel = new Vector2(10f, -8f), CrossStepsHanbyeol = new Vector2(7f, -3f);
@@ -452,13 +456,20 @@ namespace Saga.Go.Data
                     new Spot { Ch = 17, From = 0, To = 0, At = "skyport:temple", Arena = TempleBandi }, new Spot { Ch = 17, From = 1, To = 9, At = "skyport:station", Arena = StationBandi },
                     new Spot { Ch = 18, From = 0, To = 1, At = "skyport:station", Arena = StationBandi }, new Spot { Ch = 18, From = 2, To = 4, At = "crossing:platform", Arena = CrossBandi },
                     new Spot { Ch = 18, From = 5, To = 5, At = "crossing:clock", Arena = CrossClockBandi }, new Spot { Ch = 18, From = 6, To = 9, At = "crossing:steps", Arena = CrossStepsBandi },
-                    new Spot { Ch = 19, From = 0, To = 1, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftBandi }, new Spot { Ch = 20, From = 0, To = 99, At = "skyport:port", Arena = PortBandi } },
+                    new Spot { Ch = 19, From = 0, To = 1, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftBandi }, new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = PortBandi },
+                    new Spot { Ch = 20, From = 2, To = 6, At = "sunken:gate", Arena = SandBandi }, new Spot { Ch = 20, From = 7, To = 99, At = "sunken:palace", Arena = PlinthBandi }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:palace", Arena = PlinthBandi } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
                 AtSite = "crossing:platform", AtOff = CrossHanbyeol, FolkBody = "Vanguard",
-                Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = CrossHanbyeol }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftHanbyeol } },
+                Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = CrossHanbyeol }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftHanbyeol },
+                    new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 20, From = 2, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol } },
                 IdleKey = "story.idle.hanbyeol", IdleKo = "틈의 끝은 첫 정거장 다음 역이다." },
+            // 109-14-45 21장(웹 ⑲-45) — 잠수 기사 여울(현대): 늘 연구 기지 서쪽, 21장 5~7째 단계 선착장 · 8째~ 궁궐 기단
+            new Npc { Id = "yeoul", NameKey = "story.npc.yeoul", NameKo = "잠수 기사 여울", ShortKey = "story.short.yeoul", ShortKo = "여울",
+                AtSite = "sunken:lab", AtOff = LabYeoul, FolkBody = "SwatGuy",
+                At = new[] { new Spot { Ch = 20, From = 4, To = 6, At = "sunken:lab", Arena = LabDock }, new Spot { Ch = 20, From = 7, To = 99, At = "sunken:palace", Arena = PlinthYeoul }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:palace", Arena = PlinthYeoul } },
+                IdleKey = "story.idle.yeoul", IdleKo = "기지 불이 나간 지 한참이에요. 그래도 잠수정은 제가 지켜요." },
             // 109-14-40 18장(웹 ⑲-40) — 기관사 도담(늘 승강장 남쪽 끝 아래, 8째 단계는 선로 끝) · 선장의 잔상(18장 쫓기 때만 — 은하역 선로 위를 달린다)
             new Npc { Id = "dodam", NameKey = "story.npc.dodam", NameKo = "기관사 도담", ShortKey = "story.short.dodam", ShortKo = "도담",
                 AtSite = "skyport:station", AtOff = DodamAt, FolkBody = "PeasantMan",
@@ -1857,6 +1868,63 @@ namespace Saga.Go.Data
                             Pick("story.ch20.s11.p", "선장님은 이제 어떡하실 거예요?", "별배로 돌아가세요?"),
                             L("hanbyeol", "story.ch20.s11.l4", "별배는 나루에 매여 있고 틈은 닫혔다. 선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께."),
                             L("hanbyeol", "story.ch20.s11.l5", "별배 선장 한별, 오늘부터 너희 편에 선다. 잘 부탁하네."),
+                        } },
+                }
+            },
+            // 109-14-45 21장(웹 ⑲-45) — 6부 첫 장, 바다 밑 등불: 한별(별배 곁) → 별배 타기(sail — 잠긴 도읍 해무 어귀 안쪽) → 반디 → 기지 앞 물짐승 → 잔교 따라 선착장 → 여울
+            // → 잠수정 타기(sail — 궁궐 기단) → 여울(테왁 불빛·반디의 지워진 칸 "등대"). 두꺼비·날쌘용·회오리매는 14-1b 전까지 옛 몸+원소.
+            new Chapter
+            {
+                Id = "ch21", NameKey = "story.ch21", NameKo = "제21장 · 바다 밑 등불", Ar = 48,
+                Gold = 5750, Mats = new[] { 0, 6, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch21.s1", TextKo = "은하 나루 별배 곁의 선장 한별과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch21.s1.l1", "틈이 닫힌 날부터 별배 항로표에 없던 불빛 하나가 떠 있다. 소금 갯벌 너머 바다 밑이야."),
+                            L("bandi", "story.ch21.s1.l2", "삐— 그 좌표… 별배가 떨어지기 전에 가려던 항로 끝과 같습니다. 그런데 제 기록엔 그 까닭이 없습니다."),
+                            L("hanbyeol", "story.ch21.s1.l3", "선장이 제 항로를 모르면 안 되지. 원래 가려던 곳을 확인하러 가자."),
+                            Pick("story.ch21.s1.p", "별배로 가요.", "바다 밑이라니…"),
+                            L("hanbyeol", "story.ch21.s1.l4", "별배는 물에 못 들어가지만 바다 위까진 간다. 타게!"),
+                        } },
+                    new Step { Type = StepType.Sail, Npc = "hanbyeol", At = "sunken:gate", Arena = SandArrive, EnterKey = "story.ch21.arrive", EnterKo = "🛸 별배가 바다 위에서 멈칫하더니 — 잠긴 도읍 모래밭에 우리를 내려 주었다",
+                        Lines = new[] { L("hanbyeol", "story.ch21.s2.l1", "별배, 남쪽 바다로! 반디, 항로를 잡아 다오.") },
+                        TextKey = "story.ch21.s2", TextKo = "선장의 별배를 타고 옛 항로 끝으로" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch21.s3", TextKo = "모래밭의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch21.s3.l1", "삐— 항로 신호가 여기서 물속으로 꺾입니다. 별배 기관이 저절로 멈췄습니다."),
+                            L("hanbyeol", "story.ch21.s3.l2", "저 물속을 보게. 기와 지붕이… 도읍 하나가 통째로 잠겨 있어."),
+                            L("bandi", "story.ch21.s3.l3", "궁궐 둘레에 불빛이 흔들립니다. 옛 해녀가 물질할 때 들던 등불과 같은 빛깔입니다."),
+                            Pick("story.ch21.s3.p", "어떻게 내려가지?", "저 쇠 갑판은 뭐야?"),
+                            L("bandi", "story.ch21.s3.l4", "모래밭 끝에 지금 시대의 해저 연구 기지가 있습니다. 잠수정 신호가 하나 살아 있습니다. 다만 기지 앞에 물짐승이 올라와 있습니다."),
+                        } },
+                    new Step { Type = StepType.Kill, At = "sunken:lab", Arena = LabFront,
+                        Foes = new[] { F(FieldEnemy.Kind.DrownedGhost), F(FieldEnemy.Kind.DrownedGhost), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        EnterKey = "story.ch21.enter1", EnterKo = "⚔️ 기지 갑판 앞 모래밭에 물짐승들이 기어올라 왔다",
+                        TextKey = "story.ch21.s4", TextKo = "해저 연구 기지 앞 모래밭에 올라온 물짐승 물리치기" },
+                    new Step { Type = StepType.Go, At = "sunken:lab", Arena = LabDock, TextKey = "story.ch21.s5", TextKo = "기지 잔교를 따라 잠수정 선착장으로" },
+                    new Step { Type = StepType.Talk, Npc = "yeoul", TextKey = "story.ch21.s6", TextKo = "잠수정 선착장의 여울과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("yeoul", "story.ch21.s6.l1", "누, 누구세요? 이 기지엔 이제 저 혼자뿐인데요."),
+                            Pick("story.ch21.s6.p", "물속 불빛을 따라왔어요.", "별배 선장과 함께 왔어요."),
+                            L("yeoul", "story.ch21.s6.l2", "저는 잠수 기사 여울. 해저 연구 기지 마지막 대원이에요. 틈이 닫히던 밤, 기지 불이 다 나갔어요."),
+                            L("yeoul", "story.ch21.s6.l3", "그날부터 바다 밑에 옛 궁궐이 보이고, 그 둘레에 등불이 켜졌어요. 누군가 아직 물질을 하는 것처럼요."),
+                            L("yeoul", "story.ch21.s6.l4", "잠수정은 살아 있어요. 불빛까지 모셔다 드릴게요 — 대신 저도 그 불빛이 뭔지 알고 싶어요."),
+                        } },
+                    new Step { Type = StepType.Sail, Npc = "yeoul", At = "sunken:palace", Arena = PlinthArrive, EnterKey = "story.ch21.arrive2", EnterKo = "🌊 잠수정이 물속 불빛 사이로 내려갔다가 — 잠긴 궁궐 기단 곁에 떠올랐다",
+                        Lines = new[] { L("yeoul", "story.ch21.s7.l1", "해치 닫습니다. 잠수정, 물속 불빛을 따라 — 잠항!") },
+                        TextKey = "story.ch21.s7", TextKo = "여울의 잠수정을 타고 물속 불빛을 따라가기" },
+                    new Step { Type = StepType.Talk, Npc = "yeoul", TextKey = "story.ch21.s8", TextKo = "궁궐 기단 위의 여울과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("yeoul", "story.ch21.s8.l1", "가까이서 보니 등불이 아니었어요. 테왁 — 해녀들이 물에 띄우던 뒤웅박에 불이 들어 있어요."),
+                            L("bandi", "story.ch21.s8.l2", "삐— 이 궁궐 좌표, 제 기록에… 있었습니다. 지워진 칸이 하나 있습니다. 읽을 수 없습니다."),
+                            Pick("story.ch21.s8.p", "누가 지웠을까?", "괜찮아, 반디?"),
+                            L("bandi", "story.ch21.s8.l3", "모르겠습니다. 다만 지워진 칸 끝에 적힌 말은 하나 — '등대'."),
+                            L("yeoul", "story.ch21.s8.l4", "테왁이 궁궐 기와 사이로 이어져요. 물질하는 사람이 정말 있다면… 저 안쪽에 있을 거예요."),
                         } },
                 }
             },
