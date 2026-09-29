@@ -29,3 +29,12 @@ Animagine XL 4.0 Opt · 768×1024 · 28단계 · 초상 3장 = 68초(모델 로�
 sd-webui 파이썬이 시작하자마자 RAM 13GB 를 쥐고 장수가 늘수록 더 쥔다(12장에서 여유 6GB 까지, 껐다 켜니 회복). 105장 약 100분(장당 35초 + 재시작), 실패 0, RAM 여유 4.6~25GB, CPU 30% 안쪽.
 결과 = `_out/web_heroes_105/hero_<id>.png` + `.license.json`(gitignore). 눈으로 본 결과: 문화·역할·성별 모두 맞음. 결함: 얼굴 반쯤 가린 역할(첩자·병사)이 이빨 무늬 마스크로 나오는 것이 몇 장 — `face covered` 표현을 바꿔 재생성.
 안전 멈춤: `tools/ai-art/_out/STOP` 파일. 러너를 강제로 끌 땐 process 이름으로 넓게 죽이지 말고 `_out/run_all.pid` 로만(이름으로 죽였다가 작업 셸이 함께 죽었다).
+
+## 다음 세션 순서 (2026-09-29 밤 인계)
+**상태**: 도감 105 초상은 웹 다섯 판에 반영·푸시 끝(c2cbffc8). 결함 재생성 12장 중 10장 고침(옛 파일은 `_out/web_heroes_105/*.old.png`) — **남은 2장**: `hero_jp_yoshitsune`·`hero_jp_kenshin`(여전히 이를 드러낸 마스크) → 그 두 장의 `.png`·`.license.json` 을 지우고 `make_hero_batch.py` 프롬프트에 `closed mouth, calm expression` 을 더하거나 씨앗을 바꿔 다시.
+**돌고 있던 일**: `run_chain.sh` 가 ① 결함 12(끝) ② `web_dungeon_30.json`(사가블로 미래·현대 인물 30, 12/30 까지) ③ `web_realm_194.json`(사가국지 장수 194, 0/194) 를 순서대로. 세션이 끝나면 함께 죽었을 수 있다 — 이어서 하려면:
+```bash
+cd /c/swbins && bash tools/ai-art/run_chain.sh /tmp/chain.status tools/ai-art/batches/web_dungeon_30.json tools/ai-art/batches/web_realm_194.json   # 있는 그림은 건너뛴다
+```
+(끄기: `tools/ai-art/_out/STOP` 파일 → 다음 묶음 전에 멈춤. 강제로 끌 때는 `_out/run_all.pid`·`stop_sd.ps1` 만 — process 이름으로 넓게 죽이지 말 것.)
+**끝난 뒤**: `pack_web_portraits.py` 는 지금 도감 105 만 굽는다 → 사가블로 30(`--games saga-dungeon`)·사가국지 194(`--games saga-realm`) 도 굽도록 입력 폴더·id 처리를 확장(`_out/web_dungeon_30`·`_out/web_realm_194` 에서 `<id>.png` → `assets/portraits/hero/<id>_s|c.webp`, 파일명 접두 `hero_` 없음에 주의) → 크기 검증 → 각 판 ASSET_LICENSES 수 갱신 → 커밋·푸시. 웹 화면 실기 확인은 사용자 몫.

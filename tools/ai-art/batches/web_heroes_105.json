@@ -14,632 +14,632 @@
   {
    "id": "hero_eu_alexander",
    "seed": 1740164386,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, ancient shield-bearer, bronze helmet on the side, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_augustus",
    "seed": 4108429877,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, black hair, blue eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_aurelius",
    "seed": 940511556,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, teal eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_caesar",
    "seed": 1089700655,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, blonde hair, grey eyes, ancient roman clothing, toga and laurel, ancient roman statesman, laurel wreath, toga, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_charlemagne",
    "seed": 368087479,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, medieval european inspired clothing, tunic and cloak, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_davinci",
    "seed": 2369919264,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, blonde hair, brown eyes, medieval european inspired clothing, tunic and cloak, creative artist, paint stained fingers, curious eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_eleanor",
    "seed": 3906945874,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, adult, brown hair, teal eyes, medieval european inspired clothing, tunic and cloak, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_eu_elizabeth",
    "seed": 4160497268,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, adult, dark brown hair, blue eyes, medieval european inspired clothing, tunic and cloak, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_eu_frederick",
    "seed": 1495804095,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, teal eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_hannibal",
    "seed": 3111364249,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_harald",
    "seed": 1279663974,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, auburn hair, light brown eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_joan",
    "seed": 3203461320,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, young adult, blonde hair, light brown eyes, medieval european inspired clothing, tunic and cloak, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_eu_leonidas",
    "seed": 1646341167,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, blonde hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield-bearer, bronze helmet on the side, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, blonde hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_machiavelli",
    "seed": 3075346317,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, dark brown hair, teal eyes, medieval european inspired clothing, tunic and cloak, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_michelangelo",
    "seed": 2940536074,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, auburn hair, grey eyes, medieval european inspired clothing, tunic and cloak, creative artist, paint stained fingers, curious eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_napoleon",
    "seed": 1514479202,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_nelson",
    "seed": 3661386217,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_newton",
    "seed": 1931722087,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, light brown eyes, medieval european inspired clothing, tunic and cloak, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_peter",
    "seed": 2501149290,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, dark brown hair, brown eyes, medieval european inspired clothing, tunic and cloak, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_richard",
    "seed": 2293257459,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, teal eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_scipio",
    "seed": 2355052583,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, dark brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield-bearer, bronze helmet on the side, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, dark brown hair, grey eyes, medieval european inspired clothing, tunic and cloak, ancient shield bearer, plumed bronze helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_eu_william",
    "seed": 3004000773,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, brown eyes, medieval european inspired clothing, tunic and cloak, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_hanzo",
    "seed": 2763915240,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, shadowy scout, face half covered by cloth, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, shadowy scout in a dark hood, sharp eyes, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_hideyoshi",
    "seed": 1270217146,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_himiko",
    "seed": 3153552979,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_jp_ieyasu",
    "seed": 2941112484,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_kenshin",
    "seed": 595798182,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor, helmet crest, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_masamune",
    "seed": 3150814113,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor, helmet crest, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_mitsukuni",
    "seed": 1804665087,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_murasaki",
    "seed": 142333919,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, graceful court lady, refined makeup, layered robes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_jp_musashi",
    "seed": 394160184,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, wandering swordsman, calm eyes, worn clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_naosuke",
    "seed": 368829482,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_nobunaga",
    "seed": 2849220679,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor, helmet crest, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_ryoma",
    "seed": 2731459640,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_saigo",
    "seed": 2137661601,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, disciplined officer, neat uniform, sharp gaze, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_seishonagon",
    "seed": 2354566452,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, graceful court lady, refined makeup, layered robes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_jp_shingen",
    "seed": 2684146674,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor, helmet crest, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_taira",
    "seed": 1707283619,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_tomoegozen",
    "seed": 2047467619,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_jp_yoritomo",
    "seed": 1972504936,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, black hair, brown eyes, ancient japanese inspired clothing, kimono and hakama, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_yoshitsune",
    "seed": 3336580555,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor, helmet crest, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_jp_yukimura",
    "seed": 2538461809,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor, helmet crest, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, proud samurai armor with ornate helmet, face fully visible, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_ahnjunggeun",
    "seed": 3310996019,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_choemuseon",
    "seed": 1991358549,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_daejoyeong",
    "seed": 3315891910,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_euljimundeok",
    "seed": 454299885,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_ganggamchan",
    "seed": 3177650153,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_gwakjaeu",
    "seed": 4266008688,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_gwanggaeto",
    "seed": 1872669889,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_gyebaek",
    "seed": 3466522569,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_heojun",
    "seed": 312020916,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, elderly, wrinkles, gray beard, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_hwanghui",
    "seed": 1167525386,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_jangyeongsil",
    "seed": 1951792283,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_jeongmongju",
    "seed": 4231149840,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, elderly, wrinkles, gray beard, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_jeongyakyong",
    "seed": 4158328290,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_kimgu",
    "seed": 2466012812,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, modern person, casual stylish clothes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_kimjeongho",
    "seed": 12624424,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, adventurous traveler, travel cloak, bright eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_kimyusin",
    "seed": 1304720684,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_nongae",
    "seed": 1176201487,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, graceful dancer, flowing ribbons, cheerful, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_kr_sejong",
    "seed": 168659597,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_sinsaimdang",
    "seed": 2624364695,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, elegant noble lady, hairpins, poised, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_kr_wanggeon",
    "seed": 3182499431,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_wonhyo",
    "seed": 2547233969,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, serene monk, prayer beads, shaved head, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_yeongaesomun",
    "seed": 2154642529,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_yihwang",
    "seed": 1278432202,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_yii",
    "seed": 3184600442,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, black hair, light brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_yisunsin",
    "seed": 1774648747,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_kr_yugwansun",
    "seed": 2376411564,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, earnest young student, neat clothes, bright smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_sg_caocao",
    "seed": 1226674354,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_diaochan",
    "seed": 3478820035,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, graceful dancer, flowing ribbons, cheerful, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_sg_ganning",
    "seed": 3748729584,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_guanyu",
    "seed": 1348139693,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_huangzhong",
    "seed": 1249309659,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, elderly, wrinkles, gray beard, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_huatuo",
    "seed": 1347869134,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_liubei",
    "seed": 407118598,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_lubu",
    "seed": 1706003698,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_luxun",
    "seed": 3206003926,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_machao",
    "seed": 3374712509,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_menghuo",
    "seed": 3523456787,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, tribal warrior, face paint, feathers, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_pangtong",
    "seed": 229981078,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_simayi",
    "seed": 3179672984,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_sunquan",
    "seed": 202891007,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_taishici",
    "seed": 3509893072,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_xiahoudun",
    "seed": 392163373,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_xunyu",
    "seed": 3597184121,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, thoughtful scholar, holding a scroll, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_zhangfei",
    "seed": 2766734466,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, light brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_zhangliao",
    "seed": 2144744137,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, stern armored commander, commanding presence, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_zhaoyun",
    "seed": 1436686182,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, young adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, fierce warrior, confident grin, battle worn armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_zhouyu",
    "seed": 118576088,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_sg_zhugeliang",
    "seed": 2575382022,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_akbar",
    "seed": 1203798864,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, brown hair, brown eyes, mughal court clothing, jeweled turban, long embroidered coat, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_ashoka",
    "seed": 229021442,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, auburn hair, blue eyes, ancient indian royal clothing, gold jewelry, saffron cloth, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_attila",
    "seed": 2919383630,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, light brown eyes, steppe nomad warrior, fur-trimmed leather coat, braided hair, nomad rider, wind blown hair, scarf, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, light brown eyes, steppe nomad warrior, fur-trimmed leather coat, braided hair, nomad rider, wind blown hair, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_cleopatra",
    "seed": 338809288,
    "prompt": "1girl, female focus, feminine, solo, upper body portrait, adult, brown hair, grey eyes, ancient egyptian queen, gold collar necklace, kohl eye makeup, headdress, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1boy, male focus, beard"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
   },
   {
    "id": "hero_wd_genghis",
    "seed": 985378096,
-   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, brown eyes, steppe khan, fur hat, layered silk deel robe, nomad rider, wind blown hair, scarf, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, brown eyes, steppe khan, fur hat, layered silk deel robe, nomad rider, wind blown hair, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_hammurabi",
    "seed": 2745018093,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, dark brown hair, blue eyes, ancient mesopotamian king, tiered fringed robe, curled beard, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_ibnbattuta",
    "seed": 211591253,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, grey eyes, arab traveler scholar, turban, long striped robe, satchel, adventurous traveler, travel cloak, bright eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_ibnsina",
    "seed": 1081169327,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, brown hair, brown eyes, persian scholar physician, turban, dark robe, thoughtful, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_khubilai",
    "seed": 3619714648,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, brown hair, blue eyes, steppe emperor, ornate fur-trimmed silk robe, tall hat, ruthless steppe ruler, fur collar, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_mansamusa",
    "seed": 3377572075,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, green eyes, west african king, gold crown, gold embroidered robe, jewelry, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_moctezuma",
    "seed": 440441040,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, green eyes, mesoamerican ruler, tall feather headdress, jade jewelry, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_pachacuti",
    "seed": 954383925,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, blonde hair, brown eyes, andean emperor, woven patterned tunic, gold ear ornaments, crowned ruler, regal, wise expression, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_saladin",
    "seed": 991811863,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, mature adult, brown hair, blue eyes, arab sultan, white turban, chainmail under robe, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_shaka",
    "seed": 2236940843,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, dark brown hair, green eyes, african warrior chief, feather headband, cowhide shield strap, leopard fur cloak, tribal warrior, face paint, feathers, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   },
   {
    "id": "hero_wd_suleiman",
    "seed": 1686996305,
    "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, brown hair, grey eyes, ottoman sultan, huge white turban, ornate fur robe, regal ruler, jeweled turban, calm authority, looking at viewer, soft dramatic lighting, simple painterly gradient background",
-   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, 1girl, feminine, breasts, makeup"
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
   }
  ]
 }

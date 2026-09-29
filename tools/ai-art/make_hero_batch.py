@@ -43,12 +43,12 @@ ROLE_TXT = {
     'general': 'stern armored commander, commanding presence',
     'warrior': 'fierce warrior, confident grin, battle worn armor',
     'warrior_f': 'fierce female warrior, determined eyes, light armor',
-    'samurai': 'proud samurai armor, helmet crest',
+    'samurai': 'proud samurai armor with ornate helmet, face fully visible',
     'ronin': 'wandering swordsman, calm eyes, worn clothes',
-    'ninja': 'shadowy scout, face half covered by cloth',
-    'hoplite': 'ancient shield-bearer, bronze helmet on the side',
+    'ninja': 'shadowy scout in a dark hood, sharp eyes, face fully visible',
+    'hoplite': 'ancient shield bearer, plumed bronze helmet, face fully visible',
     'tribal': 'tribal warrior, face paint, feathers',
-    'nomad': 'nomad rider, wind blown hair, scarf',
+    'nomad': 'nomad rider, wind blown hair, fur collar',
     'khan': 'ruthless steppe ruler, fur collar',
     'officer': 'disciplined officer, neat uniform, sharp gaze',
     'king': 'crowned ruler, regal, wise expression',
@@ -114,7 +114,7 @@ def main():
         who = '1girl, female focus, feminine' if female else '1boy, male focus, masculine, strong jaw'
         prompt = ', '.join([who, 'solo', 'upper body portrait', age_txt(r['macro']['age'], female), hair, EYE.get(r.get('eye_color', 'brown'), 'brown eyes'),
                             culture, ROLE_TXT.get(role, 'confident'), 'looking at viewer', 'soft dramatic lighting', 'simple painterly gradient background'])
-        neg = 'lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, ' + \
+        neg = 'lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, ' + \
             ('1boy, male focus, beard' if female else '1girl, feminine, breasts, makeup')
         items.append({'id': 'hero_' + hid, 'seed': fnv(hid), 'prompt': prompt, 'negative': neg})
     b = {'model': 'animagine-xl-4.0-opt', 'out': 'web_heroes_105',
