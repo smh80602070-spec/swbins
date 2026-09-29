@@ -403,7 +403,7 @@ namespace Saga.Go.World
             float len = GoStory.PathLength(n);
             bool walking = GoStory.Flat(p, GoStory.NpcPos(st.Npc)) <= GoStory.FollowNear;
             Vector3 before = GoStory.NpcPos(st.Npc);
-            if (walking) StoryState.FollowDist = Mathf.Min(len, StoryState.FollowDist + GoStory.FollowSpeed * dt);
+            if (walking) StoryState.FollowDist = Mathf.Min(len, StoryState.FollowDist + (st.Speed > 0f ? st.Speed : GoStory.FollowSpeed) * dt); // 109-14-28 단계마다 걷는 빠르기
             Vector3 now = GoStory.NpcPos(st.Npc);
             body.transform.position = FolkWalker.Grounded(now + Vector3.up * 0.5f);
             Vector3 d = now - before;
@@ -414,7 +414,7 @@ namespace Saga.Go.World
             if (StoryState.FollowDist >= len - 0.01f)
             {
                 if (anim != null && anim.runtimeAnimatorController != null && HasParam(anim, "Speed")) anim.SetFloat("Speed", 0f);
-                Toast(GoLocalization.T("story.follow_arrive", "나그네가 걸음을 멈췄다"), 3f);
+                Toast(st.ArriveKey != null ? GoLocalization.T(st.ArriveKey, st.ArriveKo) : GoLocalization.T("story.follow_arrive", "나그네가 걸음을 멈췄다"), 3f);
                 StoryState.Advance();
             }
         }

@@ -176,8 +176,9 @@ namespace Saga.Go.Data
             public Spot[] Appear;
             /// <summary>늘 서되 이 칸들 동안엔 그 자리로 옮겨 선다(은비 — 5장 옛길·둘째 제단, 6장 봉우리).</summary>
             public Spot[] At;
-            /// <summary>follow 단계에서 걷는 길(칸 좌표, 첫 점 = 걷기 전 자리).</summary>
+            /// <summary>follow 단계에서 걷는 길(칸 좌표, 첫 점 = 걷기 전 자리 — `FrostPath` 면 고원 가운데에서 m).</summary>
             public Vector2[] Path;
+            public bool FrostPath;
         }
 
         /// <summary>인물이 서는 칸 — 장(0부터)·단계 From~To 동안 Gx·Gy(또는 길 위·고원 위).</summary>
@@ -197,6 +198,8 @@ namespace Saga.Go.Data
             public string NameKey, NameKo, IdleKey, IdleKo;
             /// <summary>109-14-21 세계 임무 칸 — 그 임무(id)를 맡은 동안 단계 From~To 에만(Ch 는 안 본다).</summary>
             public string Wq;
+            /// <summary>109-14-28 서리봉 고원 위 — Arena 는 고원 가운데에서 m.</summary>
+            public bool Frost;
         }
 
         /// <summary>그 칸이 지금 서 있는 칸인가 — 세계 임무 칸이면 그 임무 단계, 아니면 이야기 장·단계.</summary>
@@ -210,8 +213,16 @@ namespace Saga.Go.Data
             return a.Ch == ch && step >= a.From && step <= a.To;
         }
 
+        /// <summary>109-14-28 서리봉 고원 위 자리 — 고원 가운데에서 (x, z) m(눈 바닥 높이 0).</summary>
+        public static Vector3 FrostPos(Vector2 off) => GoFrost.Center + new Vector3(off.x, 0.05f, off.y);
+        /// <summary>고원 명소 site 곁 — 명소 자리 + 덧셈.</summary>
+        public static Vector2 FrostAt(string siteId, float dx, float dz) { GoFrost.TrySite(siteId, out var s); return s.Off + new Vector2(dx, dz); }
+
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
-            a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+
+        // ---- 109-14-28 10장 서리봉 고원 자리(고원 가운데에서 m — 웹 명소 자리 × 0.45 위에 얹는다) ----
+        public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
 
         public static readonly Npc[] Npcs =
         {
@@ -285,7 +296,22 @@ namespace Saga.Go.Data
                 EraKey = "era.past", EraKo = "과거", Gx = RiftGx - 0.25f, Gy = RiftGy + 0.05f, FolkBody = "PeasantMan",
                 Appear = new[] { new Spot { Wq = "wq_rift", From = 2, To = 6, Gx = RiftGx - 0.25f, Gy = RiftGy + 0.05f } },
                 IdleKey = "wq.idle.dolsoe", IdleKo = "돌은 거짓말을 안 하지. 사람이 할 뿐." },
+            // 109-14-28 10장(웹 ⑲-28) — 서리봉 고원. 하람 = 기상 관측원(관측소 곁 → 따라가면 비행선 곁 → 산성 문 안쪽) · 반디 = 비행선 곁 떠 있는 조종 기계
+            new Npc { Id = "haram", NameKey = "story.npc.haram", NameKo = "기상 관측원 하람", ShortKey = "story.short.haram", ShortKo = "하람",
+                Gx = 4.5f, Gy = 0.5f, FolkBody = "SwatGuy", FrostPath = true, Path = new[] { HaramObs, HaramShip },
+                Appear = new[]
+                {
+                    new Spot { Ch = 9, From = 3, To = 4, Frost = true, Arena = HaramObs },
+                    new Spot { Ch = 9, From = 5, To = 6, Path = true },
+                    new Spot { Ch = 9, From = 7, To = 8, Frost = true, Arena = HaramFort },
+                },
+                IdleKey = "story.idle.haram", IdleKo = "바늘이 또 얼었네… 눈은 언제 그치려나." },
+            new Npc { Id = "bandi", NameKey = "story.npc.bandi", NameKo = "조종 기계 반디", ShortKey = "story.short.bandi", ShortKo = "반디",
+                Gx = 4.5f, Gy = 0.5f, Pet = true,
+                Appear = new[] { new Spot { Ch = 9, From = 6, To = 8, Frost = true, Arena = BandiShip } },
+                IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
         };
+
 
         /// <summary>남쪽 다리 북쪽 머리(마을 남쪽 길 끝) — 4장 나그네가 강물을 보고 선 자리.</summary>
         public const float WanderGx = 3.0f, WanderGy = 4.45f;
@@ -341,9 +367,13 @@ namespace Saga.Go.Data
             public bool Sky, Crown;
             /// <summary>109-14-21 chase 알림 — 달아날 때(Enter)·잡았을 때(Win)는 위 칸을 쓰고, 놓쳤을 때만 여기(없으면 노 도둑 글).</summary>
             public string LostKey, LostKo;
+            /// <summary>109-14-28 서리봉 고원 위(자리 = 고원 가운데 + Arena, 명소 자리는 `GoFrost.Sites` 의 Off + 덧셈) · follow 알림 글(없으면 나그네) · 걷는 빠르기(0 이면 `FollowSpeed`).</summary>
+            public bool Frost;
+            public string ArriveKey, ArriveKo;
+            public float Speed;
         }
 
-        public static Vector3 StepPos(Step s) => s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+        public static Vector3 StepPos(Step s) => s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
 
         /// <summary>석등 차례(해·달·별이 기본, 8장은 별·달·해).</summary>
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
@@ -877,6 +907,58 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            // 109-14-28 10장(웹 ⑲-28, 정본 대사 saga-godot `story.gd` ch10) — 서리 고개 너머: 이야기 2부의 첫 장. 무대 = 서리봉 고원(`GoFrost`, 지도 밖 눈밭).
+            // 눈여우·매는 14-1b(새 원소 괴물 몸) 전까지 옛 몸에 그 원소(빙·풍)를 덧씌운다. 웹의 "고원 탑 켜기"는 지도 순간이동 지점이 14-27b 라 고원 가운데까지 걸어가기로.
+            new Chapter
+            {
+                Id = "ch10", NameKey = "story.ch10", NameKo = "제10장 · 서리 고개 너머", Ar = 26,
+                Gold = 3000, Mats = new[] { 0, 3, 4, 5, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch10.s1", TextKo = "청하 촌장에게 북쪽 소식 듣기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch10.s1.l1", "잔치가 끝나자마자 북쪽 산길이 얼어붙었단다. 고개에서 찬바람이 내려와."),
+                            L("elder", "story.ch10.s1.l2", "고개 너머 서리봉 고원엔 옛 산성 터가 있고, 요즘은 날씨를 재는 관측소도 있다지. 그 불빛이 사흘째 꺼져 있구나."),
+                            Pick("story.ch10.s1.p", "가 볼게요.", "관측소요?"),
+                            L("elder", "story.ch10.s1.l3", "해솔 말로는 그날 밤 불붙은 별 하나가 고원 쪽으로 떨어졌대. 두껍게 입고 가거라."),
+                        } },
+                    new Step { Type = StepType.Go, Frost = true, Arena = FrostAt("stele", 0f, -4f), TextKey = "story.ch10.s2", TextKo = "북쪽 산기슭 역참 곁 서리 고개 돌기둥에서 고원으로 오르기" },
+                    new Step { Type = StepType.Go, Frost = true, Arena = new Vector2(0f, 8f), TextKey = "story.ch10.s3", TextKo = "눈밭을 가로질러 고원 가운데로 걸어가기" },
+                    new Step { Type = StepType.Kill, Frost = true, Arena = FrostAt("obs", 0f, 20f),
+                        Foes = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                        TextKey = "story.ch10.s4", TextKo = "기상 관측소를 에워싼 눈여우 무리 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "haram", TextKey = "story.ch10.s5", TextKo = "기상 관측소 앞의 관측원과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haram", "story.ch10.s5.l1", "살았다…! 저 여우들, 사흘째 관측소를 에워싸고 있었어요."),
+                            L("haram", "story.ch10.s5.l2", "난 기상 관측원 하람이에요. 사흘 전 밤, 은빛 배가 하늘에서 떨어진 뒤로 눈이 한 번도 안 멎어요. 바늘도 다 얼었고."),
+                            Pick("story.ch10.s5.p", "은빛 배요?", "같이 가 봐요."),
+                            L("haram", "story.ch10.s5.l3", "떨어진 자리는 알아요. 따라와요 — 여우가 또 올지 모르니까 가까이 붙어서!"),
+                        } },
+                    new Step { Type = StepType.Follow, Npc = "haram", Speed = 6f, ArriveKey = "story.ch10.arrive", ArriveKo = "하람이 걸음을 멈췄다",
+                        TextKey = "story.ch10.s6", TextKo = "관측원 하람을 따라 추락한 비행선으로" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch10.s7", TextKo = "추락한 비행선 곁의 기계와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch10.s7.l1", "삐— 생체 신호 둘. 구조대입니까?"),
+                            L("haram", "story.ch10.s7.l2", "구조대는 아니고… 넌 누구니?"),
+                            L("bandi", "story.ch10.s7.l3", "조종 기계 반디. 이 배 「별배」는 먼 앞날에서 시간 틈을 지나다 떨어졌습니다. 심장이 식으면서 추위를 뿜고 있습니다."),
+                            Pick("story.ch10.s7.p", "심장을 다시 켤 수 있어?", "앞날에서 왔다고?"),
+                            L("bandi", "story.ch10.s7.l4", "불씨가 필요합니다. 기록에 따르면 이 고원의 옛 산성에 꺼지지 않는 불씨가 지켜졌습니다."),
+                            L("haram", "story.ch10.s7.l5", "산성이라면 고원 북쪽 돌담이에요. 요즘 밤마다 거기서 등불이 떠다닌다던데…"),
+                        } },
+                    new Step { Type = StepType.Go, Frost = true, Arena = FrostAt("fort", 0f, 30f), TextKey = "story.ch10.s8", TextKo = "옛 산성 터 둘러보기" },
+                    new Step { Type = StepType.Talk, Npc = "haram", TextKey = "story.ch10.s9", TextKo = "산성 터에서 하람과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haram", "story.ch10.s9.l1", "봐요, 눈 위에 발자국 하나 없는데 등불 그을음만 남았어요."),
+                            L("haram", "story.ch10.s9.l2", "밤이 되면 산성지기가 나와 불씨를 지킨다는 옛이야기가 있어요. 그냥 이야기인 줄 알았는데…"),
+                            Pick("story.ch10.s9.p", "산성지기를 찾아봐요.", "불씨가 정말 있을까요?"),
+                            L("haram", "story.ch10.s9.l3", "오늘은 관측소에서 몸 좀 녹여요. 기계가 풀리면 날씨 지도를 보여 줄게요. 다음엔 산성 안쪽으로!"),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -970,7 +1052,7 @@ namespace Saga.Go.Data
         public static float PathLength(Npc n)
         {
             float len = 0f;
-            for (int i = 1; i < n.Path.Length; i++) len += Vector2.Distance(n.Path[i - 1], n.Path[i]) * TestMapData.TileSize;
+            for (int i = 1; i < n.Path.Length; i++) len += Vector2.Distance(n.Path[i - 1], n.Path[i]) * (n.FrostPath ? 1f : TestMapData.TileSize);
             return len;
         }
 
@@ -979,16 +1061,16 @@ namespace Saga.Go.Data
         {
             for (int i = 1; i < n.Path.Length; i++)
             {
-                float seg = Vector2.Distance(n.Path[i - 1], n.Path[i]) * TestMapData.TileSize;
+                float seg = Vector2.Distance(n.Path[i - 1], n.Path[i]) * (n.FrostPath ? 1f : TestMapData.TileSize);
                 if (d <= seg)
                 {
                     Vector2 g = Vector2.Lerp(n.Path[i - 1], n.Path[i], seg > 0f ? d / seg : 1f);
-                    return GridPos(g.x, g.y);
+                    return n.FrostPath ? FrostPos(g) : GridPos(g.x, g.y);
                 }
                 d -= seg;
             }
             var e = n.Path[n.Path.Length - 1];
-            return GridPos(e.x, e.y);
+            return n.FrostPath ? FrostPos(e) : GridPos(e.x, e.y);
         }
 
         public static Vector3 WeeklyAltarPos() => SitePos(null);
@@ -1010,7 +1092,15 @@ namespace Saga.Go.Data
         /// gather 는 `from` 에서 가장 가까운 자란 그 채집물, cook 은 가장 가까운 역참 솥.</summary>
         public static Vector3 TargetOf(Step s, out float radius) => TargetOf(s, Vector3.zero, out radius);
 
+        /// <summary>109-14-28 — 목표가 서리봉 고원 안인데 내가 고원 밖이면 화살표는 서리 고개 돌기둥(마을 쪽)을 가리킨다(`from` 이 영벡터면 실제 목표).</summary>
         public static Vector3 TargetOf(Step s, Vector3 from, out float radius)
+        {
+            Vector3 t = TargetRaw(s, from, out radius);
+            if (from != Vector3.zero && GoFrost.Contains(t) && !GoFrost.Contains(from)) return GoFrost.GatePos;
+            return t;
+        }
+
+        private static Vector3 TargetRaw(Step s, Vector3 from, out float radius)
         {
             radius = 0f;
             switch (s.Type)
@@ -1019,7 +1109,7 @@ namespace Saga.Go.Data
                 case StepType.Sail: radius = TalkR; return NpcPos(s.Npc);
                 case StepType.Chase: return StoryState.ChasePos ?? NpcPos(s.Npc); // 109-14-19 달리는 도둑
                 case StepType.Follow: return NpcPos(s.Npc);
-                case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : GridPos(s.Gx, s.Gy);
+                case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : s.Frost ? StepPos(s) : GridPos(s.Gx, s.Gy);
                 case StepType.Boss: return TestMapData.WorldPos(FieldSpawner.GuardianGx, FieldSpawner.GuardianGy);
                 case StepType.Domain: return SitePos(s.Site);
                 case StepType.Light: radius = LightR; return StepPos(s);

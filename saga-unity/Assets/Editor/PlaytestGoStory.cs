@@ -26,7 +26,7 @@ namespace Saga.EditorTools
     public static class PlaytestGoStory
     {
         private static string _tag;
-        private static string _ch8 = "", _ch9 = "";
+        private static string _ch8 = "", _ch9 = "", _ch10 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -72,6 +72,7 @@ namespace Saga.EditorTools
                 CheckChapter7(pc, field, ui);
                 CheckChapter8(pc, field, ui);
                 CheckChapter9(fc, pc, field, ui);
+                CheckChapter10(fc, pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -101,7 +102,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -117,12 +118,12 @@ namespace Saga.EditorTools
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 13 || GoStory.Chapters.Length != 9) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 15 || GoStory.Chapters.Length != 10) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 } };
-            for (int c = 0; c < 9; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 } };
+            for (int c = 0; c < 10; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -969,13 +970,87 @@ namespace Saga.EditorTools
             Expect(8, 11, "마을 도착");
             int gold = GoldState.Gold;
             Talk(pc, ui, "elder", "9장 끝 누리");
-            if (!StoryState.Done || GoldState.Gold != gold + 2750) Fail("9장 끝·보상");
+            if (StoryState.Ch != 9 || GoldState.Gold != gold + 2750) Fail("9장 끝·보상");
             if (!PartyState.Has("story_haesol")) Fail("해솔이 합류 안 함");
             ui.Refresh();
             field.Refresh();
-            if (ui.TrackShown || field.Pillar.activeSelf) Fail("다 끝났는데 추적 줄·기둥");
+            if (StoryState.Done || !StoryState.Locked || field.Pillar.activeSelf) Fail("9장 뒤 10장이 여정 등급 26 에 열리는 잠김이어야 함(기둥 없음)");
+            if (!ui.TrackShown || !ui.TrackText.Contains("26")) Fail($"10장 잠김 줄 '{ui.TrackText}'");
             if (field.SkyCover.activeSelf || !PlayerController.DraftOn) Fail("다 끝났는데 덮개가 돌아오거나 기둥이 꺼짐");
             _ch9 = "9장 " + body + "·난간·층·구름섬 무리 난간 안·해솔·가면 벗음·임금 ×2 왕관·고리 안쪽 빔·해솔 합류";
+        }
+
+        // ---- 10장 ---------------------------------------------------------------------------------------------
+
+        private static void CheckChapter10(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch10 = "10장 중단";
+            foreach (var off in new[] { GoStory.HaramObs, GoStory.HaramShip, GoStory.BandiShip, GoStory.HaramFort })
+                if (!GoFrost.Contains(GoStory.FrostPos(off)) || Mathf.Abs(off.x) > GoFrost.HalfX - 5f || Mathf.Abs(off.y) > GoFrost.HalfZ - 5f) Fail($"10장 인물 자리 {off} 가 고원 밖·가장자리");
+            var hn = GoStory.NpcOf("haram");
+            for (float d = 0f; d < GoStory.PathLength(hn); d += 4f) if (!GoFrost.Contains(GoStory.PathPos(hn, d))) Fail($"하람 길 {d:0}m 가 고원 밖");
+            if (GoStory.Flat(GoStory.FrostPos(GoStory.HaramObs), GoFrost.Center + new Vector3(GoStory.FrostAt("obs", 0f, 0f).x, 0f, GoStory.FrostAt("obs", 0f, 0f).y)) < 6f) Fail("하람이 관측소 건물 속");
+            StoryState.OffForTest = false;
+            PlayerStats.Restore(26, 0);
+            StoryState.Restore(9, 0);
+            field.Refresh();
+            if (field.NpcShown("haram") || field.NpcShown("bandi")) Fail("10장 첫 단계에 하람·반디가 섰다");
+            Talk(pc, ui, "elder", "10장 누리");
+            Expect(9, 1, "10장 누리 뒤");                                                       // → 1 go 경계비
+            var go = StoryState.Current;
+            pc.Teleport(GoStory.GridPos(1.2f, 3.2f) + new Vector3(2f, 0.4f, 0f));
+            if (GoStory.Flat(GoStory.TargetOf(go, pc.transform.position, out _), GoFrost.GatePos) > 0.01f) Fail("고원 밖에서 화살표가 서리 고개 돌기둥을 안 가리킴");
+            if (!GoFrost.Contains(GoStory.TargetOf(go, out _))) Fail("실제 목표가 고원 안이 아님");
+            pc.Teleport(GoStory.FrostPos(GoStory.FrostAt("stele", 0f, -4f)) + new Vector3(0f, 0.4f, 0f));
+            if (GoStory.Flat(GoStory.TargetOf(go, pc.transform.position, out _), GoStory.FrostPos(GoStory.FrostAt("stele", 0f, -4f))) > 0.01f) Fail("고원 안에서는 실제 목표를 가리켜야 함");
+            field.Check(pc.transform.position);
+            Expect(9, 2, "서리 고개 넘음");                                                     // → 2 go 고원 가운데
+            pc.Teleport(GoStory.FrostPos(new Vector2(0f, 8f)) + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(9, 3, "고원 가운데");                                                        // → 3 kill 관측소 무리
+            Vector3 sq = GoStory.FrostPos(GoStory.FrostAt("obs", 0f, 20f));
+            pc.Teleport(sq + new Vector3(0f, 0.4f, GoStory.KillNear - 15f));
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 4 || field.Squad[0].Element != GoElement.Cryo || field.Squad[2].Element != GoElement.Anemo || field.Squad.Any(e => !GoFrost.Contains(e.transform.position))) Fail($"관측소 무리 {field.Squad.Count}·빙·풍·고원 안");
+            var copy = new System.Collections.Generic.List<FieldEnemy>(field.Squad);
+            foreach (var e in copy) Kill(e);
+            Expect(9, 4, "관측소 무리");                                                        // → 4 talk 하람
+            field.Refresh();
+            var hb = field.NpcBody("haram");
+            if (!field.NpcShown("haram") || hb == null || GoStory.Flat(hb.transform.position, GoStory.FrostPos(GoStory.HaramObs)) > 0.6f) Fail("하람이 관측소 곁에 안 섰다");
+            if (field.NpcShown("bandi")) Fail("반디가 일찍 섰다");
+            Talk(pc, ui, "haram", "10장 하람");
+            Expect(9, 5, "하람 뒤");                                                            // → 5 follow
+            var n = GoStory.NpcOf("haram");
+            float len = GoStory.PathLength(n);
+            if (len < 100f || len > 300f || !n.FrostPath) Fail($"하람 길 {len:0}m");
+            pc.Teleport(GoStory.NpcPos("haram") + new Vector3(0f, 0.4f, -GoStory.FollowLost - 10f));
+            field.Follow(pc.transform.position, 2f);
+            if (StoryState.FollowDist > 0f) Fail("멀리 있는데 하람이 걸음");
+            for (int i = 0; i < 400 && StoryState.StepIndex == 5; i++)
+            {
+                Near(pc, GoStory.NpcPos("haram"), 3f);
+                float before = StoryState.FollowDist;
+                field.Follow(pc.transform.position, 1f);
+                if (StoryState.StepIndex == 5 && Mathf.Abs(StoryState.FollowDist - before - 6f) > 0.01f && StoryState.FollowDist < len - 0.01f) { Fail($"하람 한 걸음 {StoryState.FollowDist - before}(6 기대)"); break; }
+            }
+            Expect(9, 6, "비행선 도착");                                                        // → 6 talk 반디
+            field.Refresh();
+            if (GoStory.Flat(hb.transform.position, GoStory.FrostPos(GoStory.HaramShip)) > 0.6f) Fail("하람이 비행선 곁에 안 섰다");
+            if (!field.NpcShown("bandi") || GoStory.Flat(field.NpcBody("bandi").transform.position, GoStory.FrostPos(GoStory.BandiShip)) > 0.6f) Fail("반디가 비행선 곁에 안 섰다");
+            Talk(pc, ui, "bandi", "10장 반디");
+            Expect(9, 7, "반디 뒤");                                                            // → 7 go 산성
+            pc.Teleport(GoStory.FrostPos(GoStory.FrostAt("fort", 0f, 30f)) + new Vector3(0f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(9, 8, "산성 앞");                                                            // → 8 talk 하람
+            field.Refresh();
+            if (GoStory.Flat(hb.transform.position, GoStory.FrostPos(GoStory.HaramFort)) > 0.6f) Fail("하람이 산성 문 안쪽에 안 섰다");
+            int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot), guide = TalentState.Count(GoTalent.Mat.Guide), secret = TalentState.Count(GoTalent.Mat.Secret);
+            Talk(pc, ui, "haram", "10장 끝 하람");
+            if (!StoryState.Done || StoryState.Ch != 10 || GoldState.Gold != gold + 3000 || TalentState.Count(GoTalent.Mat.Knot) != knot + 5 || TalentState.Count(GoTalent.Mat.Guide) != guide + 3 || TalentState.Count(GoTalent.Mat.Secret) != secret + 4) Fail("10장 끝·보상(금 3000·교본 3·비급 4·매듭 5)");
+            field.Refresh();
+            if (field.NpcShown("haram") || field.NpcShown("bandi")) Fail("10장 뒤에도 하람·반디가 섬");
+            _ch10 = "10장 고원 자리·화살표는 돌기둥·무리 빙 셋 풍 하나·하람 따라가기 초당 6·관측소→비행선→산성·반디·보상";
         }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------

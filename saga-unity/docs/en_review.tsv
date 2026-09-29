@@ -1080,6 +1080,39 @@
 2	go	story.ch1.s8.l1	먹구름 이무기라… 옛이야기인 줄로만 알았는데.	A stormcloud serpent… I thought that was only an old tale.		
 2	go	story.ch1.s8.l2	고맙다. 네 덕에 마을이 한시름 놓았구나. 이건 마을이 모은 작은 성의란다.	Thank you. Thanks to you, the village can breathe easier. Here's a small token the village gathered.		
 2	go	story.ch1.s8.l3	이무기를 상대하려면 더 강해져야 할 게다. 모험을 더 쌓고 오렴.	To face the serpent you'll need to grow stronger. Go gain more experience, then come back.		
+2	go	story.ch10	제10장 · 서리 고개 너머	Chapter 10 · Beyond the Frost Pass		
+2	go	story.ch10.arrive	하람이 걸음을 멈췄다	Haram stopped walking		
+2	go	story.ch10.s1	청하 촌장에게 북쪽 소식 듣기	Hear the news from the north from Elder Nuri		
+2	go	story.ch10.s1.l1	잔치가 끝나자마자 북쪽 산길이 얼어붙었단다. 고개에서 찬바람이 내려와.	The northern mountain road froze up the moment the feast ended. A cold wind is pouring down from the pass.		
+2	go	story.ch10.s1.l2	고개 너머 서리봉 고원엔 옛 산성 터가 있고, 요즘은 날씨를 재는 관측소도 있다지. 그 불빛이 사흘째 꺼져 있구나.	Beyond the pass, the Frostpeak Plateau holds an old fortress ruin and, lately, a weather observatory. Its lights have been out for three days.		
+2	go	story.ch10.s1.l3	해솔 말로는 그날 밤 불붙은 별 하나가 고원 쪽으로 떨어졌대. 두껍게 입고 가거라.	Haesol says a burning star fell toward the plateau that night. Dress warmly.		
+2	go	story.ch10.s1.p.a	가 볼게요.	I'll go take a look.		
+2	go	story.ch10.s1.p.b	관측소요?	The observatory?		
+2	go	story.ch10.s2	북쪽 산기슭 역참 곁 서리 고개 돌기둥에서 고원으로 오르기	Climb to the plateau from the Frost Pass pillar by the north foot waystation		
+2	go	story.ch10.s3	눈밭을 가로질러 고원 가운데로 걸어가기	Walk across the snowfield to the middle of the plateau		
+2	go	story.ch10.s4	기상 관측소를 에워싼 눈여우 무리 물리치기	Defeat the snow fox pack surrounding the weather observatory		
+2	go	story.ch10.s5	기상 관측소 앞의 관측원과 이야기하기	Talk to the observer in front of the weather observatory		
+2	go	story.ch10.s5.l1	살았다…! 저 여우들, 사흘째 관측소를 에워싸고 있었어요.	Saved…! Those foxes have been surrounding the observatory for three days.		
+2	go	story.ch10.s5.l2	난 기상 관측원 하람이에요. 사흘 전 밤, 은빛 배가 하늘에서 떨어진 뒤로 눈이 한 번도 안 멎어요. 바늘도 다 얼었고.	I'm Haram, the weather observer. Since a silver ship fell from the sky three nights ago, the snow hasn't stopped once. And the needles are all frozen.		
+2	go	story.ch10.s5.l3	떨어진 자리는 알아요. 따라와요 — 여우가 또 올지 모르니까 가까이 붙어서!	I know where it fell. Follow me — stay close in case the foxes come back!		
+2	go	story.ch10.s5.p.a	은빛 배요?	A silver ship?		
+2	go	story.ch10.s5.p.b	같이 가 봐요.	Let's go together.		
+2	go	story.ch10.s6	관측원 하람을 따라 추락한 비행선으로	Follow Haram the observer to the crashed airship		
+2	go	story.ch10.s7	추락한 비행선 곁의 기계와 이야기하기	Talk to the machine beside the crashed airship		
+2	go	story.ch10.s7.l1	삐— 생체 신호 둘. 구조대입니까?	Beep — two life signs. Are you the rescue team?		
+2	go	story.ch10.s7.l2	구조대는 아니고… 넌 누구니?	Not exactly rescue… who are you?		
+2	go	story.ch10.s7.l3	조종 기계 반디. 이 배 「별배」는 먼 앞날에서 시간 틈을 지나다 떨어졌습니다. 심장이 식으면서 추위를 뿜고 있습니다.	Pilot machine Bandi. This ship, the 'Starship', fell while crossing a time rift from the far future. Its core is cooling and venting cold.		
+2	go	story.ch10.s7.l4	불씨가 필요합니다. 기록에 따르면 이 고원의 옛 산성에 꺼지지 않는 불씨가 지켜졌습니다.	An ember is required. According to the records, a never-dying ember was kept in this plateau's old fortress.		
+2	go	story.ch10.s7.l5	산성이라면 고원 북쪽 돌담이에요. 요즘 밤마다 거기서 등불이 떠다닌다던데…	The fortress is the stone wall in the north of the plateau. They say lanterns float there every night lately…		
+2	go	story.ch10.s7.p.a	심장을 다시 켤 수 있어?	Can the core be restarted?		
+2	go	story.ch10.s7.p.b	앞날에서 왔다고?	You came from the future?		
+2	go	story.ch10.s8	옛 산성 터 둘러보기	Look around the old fortress ruin		
+2	go	story.ch10.s9	산성 터에서 하람과 이야기하기	Talk to Haram at the fortress ruin		
+2	go	story.ch10.s9.l1	봐요, 눈 위에 발자국 하나 없는데 등불 그을음만 남았어요.	Look — not a single footprint in the snow, yet there's lantern soot.		
+2	go	story.ch10.s9.l2	밤이 되면 산성지기가 나와 불씨를 지킨다는 옛이야기가 있어요. 그냥 이야기인 줄 알았는데…	There's an old tale that the fortress keeper comes out at night to guard the ember. I thought it was only a story…		
+2	go	story.ch10.s9.l3	오늘은 관측소에서 몸 좀 녹여요. 기계가 풀리면 날씨 지도를 보여 줄게요. 다음엔 산성 안쪽으로!	Let's warm up at the observatory today. Once the machine thaws, I'll show you the weather map. Next, inside the fortress!		
+2	go	story.ch10.s9.p.a	산성지기를 찾아봐요.	Let's look for the keeper.		
+2	go	story.ch10.s9.p.b	불씨가 정말 있을까요?	Is there really an ember?		
 2	go	story.ch2	제2장 · 먹구름 제단	Chapter 2 · The Stormcloud Altar		
 2	go	story.ch2.s1	학자에게 제단 가는 길을 묻기	Ask the scholar the way to the altar		
 2	go	story.ch2.s1.l1	비문을 다 읽었어. 이무기는 너른 강 물가 서쪽, 먹구름 제단 안에 잠들어 있어.	I've finished reading the inscription. The serpent sleeps inside the Stormcloud Altar, west along the Broad River.		
@@ -1369,10 +1402,12 @@
 2	go	story.follow_lost	 · 너무 멀어졌다	 · you fell too far behind		
 2	go	story.gather_n	{0} {1}/{2}	{0} {1}/{2}		
 2	go	story.gold	금 +{0}	Gold +{0}		
+2	go	story.idle.bandi	삐— 별배 심장 온도, 계속 하락 중.	Beep — Starship core temperature still falling.		
 2	go	story.idle.elder	먹구름이 걷히면 마을 잔치를 열어야지.	Once the stormclouds clear, we'll hold a village feast.		
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
 2	go	story.idle.haesol	……	……		
 2	go	story.idle.haesol2	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
+2	go	story.idle.haram	바늘이 또 얼었네… 눈은 언제 그치려나.	The needle froze again… when will this snow ever stop?		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 2	go	story.idle.thief	헤헤, 못 잡지롱!	Heh heh, can't catch me!		
 2	go	story.idle.wanderer	……	……		
@@ -1382,10 +1417,12 @@
 2	go	story.lit	옛 제단에 불이 붙었다 — 비문이 빛난다	The old altar caught fire — the inscription glows		
 2	go	story.me	나	Me		
 2	go	story.next	다음 ▶ (F)	Next ▶ (F)		
+2	go	story.npc.bandi	조종 기계 반디	Bandi the Pilot Machine		
 2	go	story.npc.elder	청하 촌장 누리	Elder Nuri of Cheongha		
 2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
 2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
 2	go	story.npc.haesol2	해솔	Haesol		
+2	go	story.npc.haram	기상 관측원 하람	Haram the Weather Observer		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
 2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
@@ -1399,9 +1436,11 @@
 2	go	story.seal_done_order	{0} — 봉인이 풀렸다	{0} — the seal is broken		
 2	go	story.seal_lit	{0} 석등에 불이 붙었다 ({1}/3)	The {0} lantern caught fire ({1}/3)		
 2	go	story.seal_wrong	차례가 틀렸다 — 석등이 모두 꺼졌다	Wrong order — all the lanterns went out		
+2	go	story.short.bandi	반디	Bandi		
 2	go	story.short.elder	누리	Nuri		
 2	go	story.short.ferryman	버들	Beodeul		
 2	go	story.short.haesol	해솔	Haesol		
+2	go	story.short.haram	하람	Haram		
 2	go	story.short.scholar	은비	Eunbi		
 2	go	story.short.thief	도둑	Thief		
 2	go	story.short.wanderer	나그네	Traveler		
