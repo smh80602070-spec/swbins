@@ -1816,6 +1816,26 @@
     { "key": "hero.story_dareum", "value": "달음" },
     { "key": "hero.story_dareum.quote", "value": "파발꾼은 길 끝을 봐야 직성이 풀리니까!" },
     { "key": "kit.sig.dareum.skill", "value": "파발 질주" },
-    { "key": "kit.sig.dareum.burst", "value": "마패 호령" }
+    { "key": "kit.sig.dareum.burst", "value": "마패 호령" },
+    { "key": "region.skyport", "value": "은하 나루" },
+    { "key": "region.skyport.lore", "value": "별배가 떠나온 나루. 태양광 밭과 은하역, 옛 절터가 한 땅에 겹쳐 있고 남쪽 끝 틈 고개 너머로 시간 틈 문이 열린다." },
+    { "key": "area.go_in", "value": "{0} 으로 든다" },
+    { "key": "area.go_out", "value": "마을 쪽으로 돌아간다" },
+    { "key": "area.found", "value": "{0} — {1} 발견! {2}" },
+    { "key": "area.skyport.site.port", "value": "별배 나루" },
+    { "key": "area.skyport.site.temple", "value": "옛 절터" },
+    { "key": "area.skyport.site.station", "value": "은하역" },
+    { "key": "area.skyport.site.farm", "value": "태양광 밭" },
+    { "key": "area.skyport.site.gate", "value": "틈 고개 경계비" },
+    { "key": "area.skyport.site.courier", "value": "멈춘 배달 기계" },
+    { "key": "area.skyport.site.bell", "value": "떨어진 절 종" },
+    { "key": "area.skyport.site.phone", "value": "낡은 공중전화" },
+    { "key": "area.skyport.site.capsule", "value": "묻힌 시간 캡슐" },
+    { "key": "area.skyport.site.cairn", "value": "길가 돌탑" },
+    { "key": "area.skyport.site.sign", "value": "갈림길 이정표" },
+    { "key": "area.skyport.site.crate", "value": "별배 화물 상자" },
+    { "key": "area.skyport.site.busstop", "value": "빈 정류장" },
+    { "key": "area.skyport.site.jar", "value": "깨진 옹기" },
+    { "key": "area.skyport.site.antenna", "value": "녹슨 안테나" }
   ]
 }

@@ -336,6 +336,24 @@
 2	go	adv.why.not_lowered	낮춘 적이 없다	Not lowered		
 2	go	adv.why.zero	천하 등급 0 은 더 낮출 수 없다	World Rank 0 cannot go lower		
 2	go	adv.world_up	천하 등급 {0} — 들판 적이 세지고 수호장 금이 늘어난다	World Rank {0} — field foes grow stronger and guardian gold rises		
+2	go	area.found	{0} — {1} 발견! {2}	{0} — found {1}! {2}		
+2	go	area.go_in	{0} 으로 든다	Enter {0}		
+2	go	area.go_out	마을 쪽으로 돌아간다	Return toward the village		
+2	go	area.skyport.site.antenna	녹슨 안테나	Rusty Antenna		
+2	go	area.skyport.site.bell	떨어진 절 종	Fallen Temple Bell		
+2	go	area.skyport.site.busstop	빈 정류장	Empty Bus Stop		
+2	go	area.skyport.site.cairn	길가 돌탑	Roadside Cairn		
+2	go	area.skyport.site.capsule	묻힌 시간 캡슐	Buried Time Capsule		
+2	go	area.skyport.site.courier	멈춘 배달 기계	Stopped Courier Machine		
+2	go	area.skyport.site.crate	별배 화물 상자	Star-Ship Cargo Crate		
+2	go	area.skyport.site.farm	태양광 밭	Solar Field		
+2	go	area.skyport.site.gate	틈 고개 경계비	Rift Pass Marker		
+2	go	area.skyport.site.jar	깨진 옹기	Broken Jar		
+2	go	area.skyport.site.phone	낡은 공중전화	Old Payphone		
+2	go	area.skyport.site.port	별배 나루	Star-Ship Port		
+2	go	area.skyport.site.sign	갈림길 이정표	Crossroads Signpost		
+2	go	area.skyport.site.station	은하역	Galaxy Station		
+2	go	area.skyport.site.temple	옛 절터	Old Temple Ruins		
 2	go	artifact.btn_off	빼기	Remove		
 2	go	artifact.btn_salvage	안 낀 ★4 분해	Salvage unworn ★4		
 2	go	artifact.btn_swap	바꾸기	Switch		
@@ -1059,6 +1077,7 @@
 2	go	region.no_foes	적 없음	No foes		
 2	go	region.north_foot	북쪽 산기슭	Northern Foothills		
 2	go	region.river	너른 강	Broad River		
+2	go	region.skyport	은하 나루	Galaxy Port		
 2	go	region.south_glade	남쪽 공터	Southern Glade		
 2	go	region.village	마을 들판	Village Fields		
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
@@ -3100,6 +3119,7 @@
 3	go	region.frost.lore	고개 너머 눈에 덮인 고원. 옛 산성 터와 기상 관측소, 추락한 비행선이 한 땅에 함께 있다.	A snow-covered plateau beyond the pass, where an old fortress ruin, a weather observatory and a crashed airship share one land.		
 3	go	region.north_foot.lore	무너진 성터 무덤이 흩어진 서늘한 비탈. 해골 병사가 줄지어 지킨다.	A cold slope strewn with graves of a fallen fort. Skeleton soldiers stand guard in rows.		
 3	go	region.river.lore	마을과 남쪽 땅을 가르는 물줄기. 헤엄칠 땐 기운이 다하지 않게.	The stream that divides the village from the south. Mind your stamina when you swim.		
+3	go	region.skyport.lore	별배가 떠나온 나루. 태양광 밭과 은하역, 옛 절터가 한 땅에 겹쳐 있고 남쪽 끝 틈 고개 너머로 시간 틈 문이 열린다.	The port the star-ship left long ago. A solar field, a galaxy station and an old temple site overlap on one land, and a rift door opens beyond the southern Rift Pass.		
 3	go	region.south_glade.lore	옛 망루 발치의 금빛 풀밭. 망루를 지키던 수호장이 아직 서 있다.	A golden meadow at the foot of the old watchtower. Its guardian still stands.		
 3	go	region.village.lore	역참과 장터가 모인 첫 들판. 마을 울타리 안에선 칼 뽑을 일이 없다.	The first fields, where the waypoint and market gather. No blade is drawn inside the village fence.		
 3	go	region.west_wood.lore	벼락 맞은 고목이 늘어선 짙은 숲길. 번개귀가 나무 사이를 건너뛴다.	A dark trail lined with lightning-struck trees. Storm wraiths leap between the trunks.		

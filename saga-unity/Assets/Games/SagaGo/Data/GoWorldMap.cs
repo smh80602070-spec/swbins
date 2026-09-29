@@ -141,6 +141,7 @@ namespace Saga.Go.Data
         public static Atmosphere AtmosphereOf(string regionId)
         {
             foreach (var a in Atmospheres) if (a.RegionId == regionId) return a;
+            if (GoAreas.TryArea(regionId, out var area)) return area.Atmosphere; // 109-14-37 독립 땅
             return Atmospheres[0];
         }
 
@@ -162,6 +163,8 @@ namespace Saga.Go.Data
         public static string RegionAt(Vector3 world)
         {
             if (GoFrost.Contains(world)) return GoFrost.RegionId; // 109-14-27a 서리봉 고원 — 지도 밖 독립 눈밭
+            var area = GoAreas.AreaAt(world);
+            if (area != null) return area.Id; // 109-14-37 은하 나루 같은 독립 땅
             var (gx, gy) = TestMapData.WorldToGrid(world);
             return RegionAt(Mathf.Clamp(gx, 0, TestMapData.Cols - 1), Mathf.Clamp(gy, 0, TestMapData.RowCount - 1));
         }
@@ -170,6 +173,7 @@ namespace Saga.Go.Data
         {
             foreach (var r in Regions) if (r.Id == id) return GoLocalization.T(r.NameKey, r.NameKo);
             if (id == Frost.Id) return GoLocalization.T(Frost.NameKey, Frost.NameKo);
+            if (GoAreas.TryArea(id, out var area)) return GoLocalization.T(area.NameKey, area.NameKo);
             return id;
         }
 
@@ -177,6 +181,7 @@ namespace Saga.Go.Data
         {
             foreach (var r in Regions) if (r.Id == id) return r;
             if (id == Frost.Id) return Frost;
+            if (GoAreas.TryArea(id, out var area)) return area.Region;
             return Regions[0];
         }
 

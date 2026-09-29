@@ -1816,6 +1816,26 @@
     { "key": "hero.story_dareum", "value": "Dareum" },
     { "key": "hero.story_dareum.quote", "value": "A courier isn't satisfied until he's seen the road's end!" },
     { "key": "kit.sig.dareum.skill", "value": "Courier Dash" },
-    { "key": "kit.sig.dareum.burst", "value": "Horse-Tag Command" }
+    { "key": "kit.sig.dareum.burst", "value": "Horse-Tag Command" },
+    { "key": "region.skyport", "value": "Galaxy Port" },
+    { "key": "region.skyport.lore", "value": "The port the star-ship left long ago. A solar field, a galaxy station and an old temple site overlap on one land, and a rift door opens beyond the southern Rift Pass." },
+    { "key": "area.go_in", "value": "Enter {0}" },
+    { "key": "area.go_out", "value": "Return toward the village" },
+    { "key": "area.found", "value": "{0} — found {1}! {2}" },
+    { "key": "area.skyport.site.port", "value": "Star-Ship Port" },
+    { "key": "area.skyport.site.temple", "value": "Old Temple Ruins" },
+    { "key": "area.skyport.site.station", "value": "Galaxy Station" },
+    { "key": "area.skyport.site.farm", "value": "Solar Field" },
+    { "key": "area.skyport.site.gate", "value": "Rift Pass Marker" },
+    { "key": "area.skyport.site.courier", "value": "Stopped Courier Machine" },
+    { "key": "area.skyport.site.bell", "value": "Fallen Temple Bell" },
+    { "key": "area.skyport.site.phone", "value": "Old Payphone" },
+    { "key": "area.skyport.site.capsule", "value": "Buried Time Capsule" },
+    { "key": "area.skyport.site.cairn", "value": "Roadside Cairn" },
+    { "key": "area.skyport.site.sign", "value": "Crossroads Signpost" },
+    { "key": "area.skyport.site.crate", "value": "Star-Ship Cargo Crate" },
+    { "key": "area.skyport.site.busstop", "value": "Empty Bus Stop" },
+    { "key": "area.skyport.site.jar", "value": "Broken Jar" },
+    { "key": "area.skyport.site.antenna", "value": "Rusty Antenna" }
   ]
 }

@@ -234,6 +234,9 @@ namespace Saga.Go.Data
         // 11장(⑲-29) — 산성 문루 앞(문 남쪽 22m)·호숫가 석등 자리(호수 북쪽 물가 밖)·바우가 호숫가에서 기다리는 자리·봉화 제단(문 앞 32m)
         public static readonly Vector2 BawooGate = FrostAt("fort", 3f, 22f), LakeSeal = FrostAt("lake", 0f, -36f), BawooLake = FrostAt("lake", 16f, -34f), BeaconAltar = FrostAt("fort", 0f, 32f);
         // 12장(⑲-30) — 서리 무리·구미호는 얼음굴 어귀 남쪽 14m · 반디는 구미호 뒤 굴 앞 · 심장 받침은 비행선 곁(선체 밖)
+        // 18장(⑲-40) 변전함 자리(태양광 밭 가운데에서 m) — 은하 나루 모양이 쓴다.
+        public static readonly Vector2 SubstationOff = new Vector2(10.5f, 0f);
+
         // 15장(⑲-36) — 옛 역참 터: 남쪽 공터와 논밭 사이 길 칸 (3,8) 한가운데(평평한 길 — 위아래 칸도 평지). 자리는 역참 가운데에서 m(x 동쪽·z 남쪽), 동쪽이 트인 돌담 세 변.
         public const float StationGx = 3.0f, StationGy = 8.0f;
         public static readonly Vector2 StationHorse = new Vector2(-9f, -4f), StationDareum = new Vector2(6f, -3f), StationFight = new Vector2(0f, 13f), StationDuel = new Vector2(0f, 17f);
