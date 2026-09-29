@@ -56,9 +56,13 @@ namespace Saga.Dungeon.UI
             if (region >= 0) floorLine = DungeonRegionFoes.DangerLabel(region);
             string landmark = DungeonFloorRunner.Instance?.LandmarkHud ?? ""; // PLAN.md 108 ③ 명소 층
             if (landmark.Length > 0) floorLine += "  " + landmark;
+            // PLAN.md 109-16 — 시나리오가 열려 있으면 그 장·단계 한 줄(다 봤으면 얻은 칭호)이 옛 메인 퀘스트 줄 자리를 쓴다
+            // (웹 "목표판은 이야기 목표를 먼저", 옛 3단계는 1장에 흡수). 줄이 늘면 체력 막대와 겹친다.
+            string objective = DungeonScenario.HudLine();
+            if (objective.Length == 0) objective = QuestState.ObjectiveText;
             label.text = $"Lv.{HeroState.Level}  {hp}  ({exp})  {gold}\n" +
                          $"{weapon} ({atk})  {floorLine}\n" +
-                         $"{QuestState.ObjectiveText}"; // "퀘스트 시스템" 슬라이스
+                         $"{objective}"; // "퀘스트 시스템" 슬라이스
 
             // PLAN.md 109-10-6 지역 사연 — 지금 칸 사슬이 걸음 중이면 한 줄.
             string saga = RegionSagaRunner.HudLine(region);

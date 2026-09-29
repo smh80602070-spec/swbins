@@ -10891,3 +10891,12 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 진단 `PlaytestRealmScenario`(표·때·효과·글·승리/시간 틈·사건 연결·세이브) — `RealmScenario.VictoryForTest/VictoryKindForTest/CitiesForTest/MineForTest/TurnForTest` 로 붙든다(전 성 함락 뒤라 승리가 이미 났고 도시 값이 바뀔 때마다 승리 검사가 다시 돎). `PlaytestRealmSlice` 3연속 OK · loc-review 오류 0(경고 1·흔들림 16 기준선 그대로).
 - 실기 확인 전: 사건 판에서 긴 본문·버튼 세 개 · 카드 순서·문턱 달.
 - 다음 = 다른 판 시나리오(사용자가 판 순서 결정) · 14-27b·14-1b.
+
+### 2026-09-30 — saga-unity DUNGEON 109-16-2 시나리오 「이름이 지워지는 나라」 열아홉 장 (웹 사가블로 시나리오)
+- 웹 `data-scenario.js` 를 node 로 덤프 → 스크립트로 `DungeonScenarioData`(장 19·장면 41·인물 14) 생성. 층 주인 이름은 이 트랙 것으로(scenario/saga-dungeon.md 트랙 메모), 명소 키 `heaven` → `cloud`. 한국어·영어 글 208 키(`dscen.*`, 영어는 기존 지역·명소 번역 표기에 맞춤 — loc-review 흔들림 기준선 1/16 유지).
+- `DungeonScenario`(Data) = 웹 `scenario.js` 엔진: 현재 장 = 표에서 안 끝난 첫 장, 단계가 채워졌으면 넘기고 못 채웠으면 시작만(kill/rescue 는 기준값), 장면은 칸 안일 때만 `ScenePlay` 신호 → UI. 세이브 `scenarioJson`(버전 그대로 — 없는 세이브는 `RestoreLegacy(dungeonFloor)`).
+- `DungeonScenarioRunner`(World): 적 처치·`DungeonCaptive.Freed`(새 이벤트)·`FloorDescended`·굴혈에서의 층·Poll. `DungeonScenarioUi`: 장면 상자(모달 크기 1300×640, 판 눌림은 `IPointerClickHandler` — `Button` 이면 배치 점검이 판 전체를 단추 하나로 세서 안쪽 단추와 겹친다고 나옴).
+- `PlayerHud`: 시나리오가 열려 있으면 장·단계 한 줄이 옛 메인 퀘스트 줄 자리를 쓴다(줄을 더하면 체력 막대와 겹침 — 배치 점검이 잡음).
+- 진단 `PlaytestDungeonScenario`(표·글·진행·단계 종류·고르기·옛 세이브·세이브 왕복·열아홉 끝까지·UI·러너) — `PlaytestDungeonHeadless` 첫 프레임에 시나리오를 끄고(새 판 첫 장면이 다른 진단 앞에서 상자를 열지 않게) 시나리오 진단이 스스로 켜고 되돌린다. 3연속 OK ×2 · `UiLayoutCheck` "시나리오 장면"·"시나리오 고르기" 상태 세 화면비 한·영 겹침 0 (남은 4건 = GO 월드맵 글 겹침·이 작업 무관).
+- 실기 확인 전: 모루골에서 첫 장면 상자 · 굴혈 층 단계 · 갇힌 인물 구출 단계(구출 방이 나오는 층까지) · 고르기.
+- 다음 = 사가의숲(계절 16+둘째 해 16)·사가스토리(4부+5부) 시나리오(순서는 사용자) · 14-27b·14-1b.

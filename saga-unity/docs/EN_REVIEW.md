@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **5176** (표 5121 · 코드 55) — go 3078 · dungeon 532 · forest 272 · story 441 · realm 798
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **586**
-- 사람 검수 **0/5176** — 순위1 0/266 · 순위2 0/4171 · 순위3 0/739
+- 짝 **5384** (표 5329 · 코드 55) — go 3078 · dungeon 740 · forest 272 · story 441 · realm 798
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **621**
+- 사람 검수 **0/5384** — 순위1 0/266 · 순위2 0/4269 · 순위3 0/849
 
 ## 검수 순서
 
@@ -31,7 +31,7 @@
 - 「바꾸기」 → **Switch** (go:weapon.btn_swap, go:artifact.btn_swap) · **Trade** (go:fish.swap)
 - 「요리」 → **Cooking** (go:cook.button, go:cook.title) · **dishes cooked** (go:ach.unit.cook)
 - 「방패」 → **Shield Wall** (go:kit.noun.shield) · **Shield** (go:domain.hud_echo_shield)
-- 「끝」 → **Complete** (go:story.state_done, go:wq.state_done) · **Done** (go:ach.end)
+- 「끝」 → **Complete** (go:story.state_done, go:wq.state_done, dungeon:dscen.done_none) · **Done** (go:ach.end)
 - 「청하 촌장에게 알리기」 → **Report to the Elder of Cheongha** (go:story.ch1.s8, go:story.ch2.s4, go:story.ch3.s9 외 4) · **Report to the elder of Cheongha** (go:story.ch8.s12, go:story.ch9.s12) · **Report to the Village Elder of Cheongha** (go:story.ch29.s9)
 - 「……」 → **……** (go:story.idle.wanderer, go:story.idle.haesol) · **…** (go:story.idle.gamyeon, go:story.idle.king)
 - 「가 볼게요.」 → **I'll go.** (go:wq.lighthouse.s1.p.a) · **I'll go take a look.** (go:story.ch10.s1.p.a)
@@ -41,21 +41,25 @@
 - 「여기서 끝내자.」 → **End it here.** (go:story.ch20.s9.p.b) · **Let's end this here.** (go:story.ch29.s4.p.b)
 - 「마루」 → **Maru** (go:story.short.maru) · **Wood Floor** (forest:finish.wood)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 586)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 621)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
 | 폭 한→영 | 판 | 키 | 영어 |
 |---|---|---|---|
+| 26→54 | dungeon | `dscen.ch.a3_riftgate.blurb` | The gatekeeper Geomok, whom the exorcist Soyeon has been chasing - the rift is a side branch of the Nameless Hole. |
 | 51→93 | go | `story.ch33.s2.l1` | Captain! You came at the right time. Something odd has been showing on the weather radar these past days — not a flock of birds, but things going back and forth in a line beyond the eastern cliffs. |
 | 21→44 | go | `wq.lighthouse.s1.l2` | There's nothing out there but the old lighthouse site. Will you come and take a look with me? |
 | 11→29 | go | `wq.lighthouse.s2` | Go to the old lighthouse site at the far end of the east bank |
+| 22→46 | dungeon | `dscen.ch.a3_blackwind.blurb` | The Black Wind chieftain of floor 15 - the bandits bought their strength by selling their names. |
 | 15→34 | go | `story.ch7.s9` | Watch the light across the water with the ferryman who came to the cape |
 | 18→38 | go | `story.ch37.s2` | Switch off the lattice stake at the end of the post road with an elemental skill |
 | 17→36 | go | `story.ch37.s5` | Switch off the lattice stake at the end of the rails with an elemental skill |
 | 10→25 | go | `story.ch5.s2` | To the mouth of the old road on the western wood path |
+| 13→29 | dungeon | `dscen.ch.a5_heaven.title` | The Sword-Bearing Guardian - Golden Palace Above the Clouds |
 | 16→33 | go | `story.ch6.s3.l3` | ……He's come. When he wraps himself in stormclouds, break it with fire! |
 | 9→22 | forest | `visitor.dirs` | somewhere in the woods to the {0} of the village |
+| 24→46 | dungeon | `dscen.ch.a4_caravan.blurb` | The Western road has been blocked for three months. A sand-sea tyrant sits on the caravan route. |
 | 9→22 | go | `story.ch18` | Chapter 18 · The Last Train at Galaxy Station |
 | 30→56 | go | `story.ch9.s9.l4` | Let's head down to the village. Granny Nuri will give me an earful — but let's spread our wings and go straight there. |
 | 37→67 | go | `story.ch16.s1.l1` | Beep — after the star-ship lifted off, I followed the direction the rift was closing. It's beyond the farmland at the village's southern end. |
@@ -73,7 +77,3 @@
 | 7→17 | go | `mount.need_ground` | Mount while standing on the ground |
 | 7→17 | dungeon | `mount.need_ground` | Mount while standing on the ground |
 | 4→13 | realm | `scenario.r2_plains.title` | Showdown on the Great Road |
-| 35→63 | go | `wq.lighthouse.s1.l1` | Every night a light signal comes from the far end of the east bank. The pattern is an old beacon code… but the waveform is brand new. |
-| 38→67 | go | `story.ch18.s10.l2` | Beep — star-ship, bell and last train: all three signals confirmed. The coordinates the captain left open — the first station beyond the rift. |
-| 44→76 | go | `story.ch36.arrive` | Amber light swallows you — when you open your eyes you stand before the gate of an unfamiliar town. The wind, the sound, even the cracks in the sky have stopped |
-| 17→33 | go | `story.ch16.s2` | Go through the Rift Pass at the village's southern end to Galaxy Port |

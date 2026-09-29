@@ -3162,6 +3162,104 @@
 2	dungeon	cut.summon_title	바위 거신	Stone Colossus		
 2	dungeon	cut.temple_sub	이름 잃은 왕이 잠든 곳	Where a nameless king sleeps		
 2	dungeon	cut.temple_title	잊힌 능묘	The Forgotten Tomb		
+2	dungeon	dscen.cast.boatman	염전 늙은 뱃사공	Old salt-field boatman		
+2	dungeon	dscen.cast.cable	케이블카 기사	Cable car operator		
+2	dungeon	dscen.cast.caravan	대상 우두머리	Caravan Master		
+2	dungeon	dscen.cast.danchu	고물 줍는 아이 단추	Scrap-Picking Child Danchu		
+2	dungeon	dscen.cast.guard	벌판 역참지기	Plains relay keeper		
+2	dungeon	dscen.cast.gyogyo	교두	Drillmaster		
+2	dungeon	dscen.cast.kkik	수리 로봇 끽	Repair Robot Kkik		
+2	dungeon	dscen.cast.lord	잿빛 성주의 망령	Ghost of the Ashen Castellan		
+2	dungeon	dscen.cast.mechanic	개척지 정비공	Settlement mechanic		
+2	dungeon	dscen.cast.mukhyang	사관 묵향	Scribe Mukhyang		
+2	dungeon	dscen.cast.mumyeong	이름을 삼키는 목소리	The Voice That Eats Names		
+2	dungeon	dscen.cast.soyeon	떠돌이 퇴마사 소연	Wandering Exorcist Soyeon		
+2	dungeon	dscen.cast.taoist	사당지기 도사	Shrine-keeper sage		
+2	dungeon	dscen.cast.yeoldusi	시간 여행자 열두시	Time Traveler Yeoldusi		
+2	dungeon	dscen.ch.a1_blackflag.blurb	벌판 역참지기의 부탁으로 흑기 대장을 친다. 대장의 깃발에도 이름이 없다.	At the post keeper's request, take down the Black Flag chief. Even his banner bears no name.		
+2	dungeon	dscen.ch.a1_blackflag.stage	중원 벌판	Central Plains		
+2	dungeon	dscen.ch.a1_blackflag.title	흑기 도적의 밤	Night of the Black Banners		
+2	dungeon	dscen.ch.a1_moru.blurb	부임 첫날 황건 떼가 마을 어귀를 친다. 사관 묵향이 "죽은 이들 이름이 비석에서 지워진다"고 털어놓는다.	On the first day, Yellow Sash raiders hit the village gate. Scribe Mukhyang confesses that the names of the dead are vanishing from the steles.		
+2	dungeon	dscen.ch.a1_moru.stage	모루골	Morugol		
+2	dungeon	dscen.ch.a1_moru.title	모루골 부임	Arriving in Morugol		
+2	dungeon	dscen.ch.a1_tomb.blurb	5층 왕릉의 옥관 수릉장. 갇힌 시간 여행자 열두시가 "이 구멍은 미래 지도에 없다"고 말한다.	The jade-coffin warden of the floor-5 mausoleum. The trapped time traveler Yeoldusi says, "This hole is not on any future map."		
+2	dungeon	dscen.ch.a1_tomb.stage	굴혈 1~5층	Burrow floors 1-5		
+2	dungeon	dscen.ch.a1_tomb.title	순장 왕릉	Royal Burial Tomb		
+2	dungeon	dscen.ch.a2_factory.blurb	단추의 부탁 — 멈춘 공장 굴뚝에서 폭주룡이 난다. 공장 심장은 굴혈로 이어진 관이다.	Danchu's plea - a rampaging dragon roams the stopped factory's chimney. The factory's heart is a pipe leading into the Burrow.		
+2	dungeon	dscen.ch.a2_factory.stage	잿빛 폐도시	Ashen Ruined City		
+2	dungeon	dscen.ch.a2_factory.title	멈춘 공장의 심장	Heart of the Silent Factory		
+2	dungeon	dscen.ch.a2_tideflat.blurb	염전 늙은 뱃사공이 "바다가 이름을 부르며 물러갔다"고 한다. 녹슨 관측탑 아래 촉수왕.	Something weeps under the mudflats at every ebb tide, and three boats have vanished.		
+2	dungeon	dscen.ch.a2_tideflat.stage	소금 개펄	Salt Flats		
+2	dungeon	dscen.ch.a2_tideflat.title	물 빠진 바다의 노래	Song of the Drained Sea		
+2	dungeon	dscen.ch.a2_watchtower.blurb	10층 성주의 망령은 제 이름을 잃어 성을 떠나지 못한다. 묵향의 기록에서 이름을 찾아 줄지 고른다.	On floor 10 the Castellan's ghost cannot leave because he lost his own name. Choose whether to find it in Mukhyang's records.		
+2	dungeon	dscen.ch.a2_watchtower.stage	굴혈 6~10층	Burrow floors 6-10		
+2	dungeon	dscen.ch.a2_watchtower.title	무너진 망루성	Fallen Watchtower Fort		
+2	dungeon	dscen.ch.a3_blackwind.blurb	15층 흑풍 채주 — 도적 떼가 이름을 팔아 힘을 샀다.	The Black Wind chieftain of floor 15 - the bandits bought their strength by selling their names.		
+2	dungeon	dscen.ch.a3_blackwind.stage	굴혈 11~15층	Burrow floors 11-15		
+2	dungeon	dscen.ch.a3_blackwind.title	흑풍 산채	Black Wind Stronghold		
+2	dungeon	dscen.ch.a3_palace.blurb	20층 비늘 수문장을 치자 바닥에서 처음으로 목소리가 들린다 — "이름을 다오".	When the Scaled Gatekeeper of floor 20 falls, a voice rises from below for the first time: "Give me a name."		
+2	dungeon	dscen.ch.a3_palace.stage	굴혈 16~20층	Burrow floors 16-20		
+2	dungeon	dscen.ch.a3_palace.title	가라앉은 용궁	Sunken Dragon Palace		
+2	dungeon	dscen.ch.a3_riftgate.blurb	퇴마사 소연이 쫓던 문지기 겁옥 — 균열은 무명혈의 곁가지.	The gatekeeper Geomok, whom the exorcist Soyeon has been chasing - the rift is a side branch of the Nameless Hole.		
+2	dungeon	dscen.ch.a3_riftgate.stage	지옥 균열	Hell Rift		
+2	dungeon	dscen.ch.a3_riftgate.title	갈라진 땅의 문지기	Warden of the Split Earth		
+2	dungeon	dscen.ch.a3_sunfurnace.blurb	개척지 정비공 — 태양로가 균열의 열을 먹고 폭주한다.	The furnace temperature keeps climbing, and the machines around it run wild.		
+2	dungeon	dscen.ch.a3_sunfurnace.stage	태양 신도시	Solar New City		
+2	dungeon	dscen.ch.a3_sunfurnace.title	과열된 태양로	The Overheated Furnace		
+2	dungeon	dscen.ch.a4_caravan.blurb	대상 우두머리 — 모래가 묻힌 유적째 대상 길을 삼켰다.	The Western road has been blocked for three months. A sand-sea tyrant sits on the caravan route.		
+2	dungeon	dscen.ch.a4_caravan.stage	서역 모랫길	Western Sand Road		
+2	dungeon	dscen.ch.a4_caravan.title	끊긴 대상 길	The Severed Caravan Road		
+2	dungeon	dscen.ch.a4_hellgate.blurb	25층 업화 문지기 — 문 너머가 천계로 이어진다.	The Hellfire Gatekeeper of floor 25 - beyond the gate lies the heavens.		
+2	dungeon	dscen.ch.a4_hellgate.stage	굴혈 21~25층	Burrow floors 21-25		
+2	dungeon	dscen.ch.a4_hellgate.title	업화 대문	Gate of Karmic Fire		
+2	dungeon	dscen.ch.a4_scrap.blurb	수리 로봇 끽 — 고철 거신은 이름을 먹고 일어선 기계다. 끽은 제 이름을 지켜 멀쩡하다.	Fallen machines vanish one by one. Someone is gathering them.		
+2	dungeon	dscen.ch.a4_scrap.stage	기계 황무지	Machine Wasteland		
+2	dungeon	dscen.ch.a4_scrap.title	스스로 일어선 고철	The Scrap That Rose		
+2	dungeon	dscen.ch.a4_snowfort.blurb	케이블카 기사 — 멈춘 케이블카를 다시 돌려 산성으로.	Someone has settled in the fort ruins and the cable car stopped, leaving the valley cut off.		
+2	dungeon	dscen.ch.a4_snowfort.stage	북방 설산	Northern Snow Peaks		
+2	dungeon	dscen.ch.a4_snowfort.title	산성의 거한	Giant of the Mountain Fort		
+2	dungeon	dscen.ch.a5_heaven.blurb	사당지기 도사의 사슬을 끝내고 30층 금궐 — 구름 천장은 무명왕에게 이름을 판 첫 장수.	Finish the shrine keeper's chain, then reach the Golden Palace on floor 30. The Cloud General sold his name to the Nameless King first.		
+2	dungeon	dscen.ch.a5_heaven.stage	천계 사당 · 굴혈 26~30층	Heavenly Shrine · Burrow floors 26-30		
+2	dungeon	dscen.ch.a5_heaven.title	칼을 든 수호장 · 구름 위 금궐	The Sword-Bearing Guardian - Golden Palace Above the Clouds		
+2	dungeon	dscen.ch.a5_nameless.blurb	무명왕 — 먹은 이름들이 세 시대 모습으로 번갈아 나온다. 지워졌던 비석 이름이 되돌아온다. (31층 전투는 아직 없다 — 이야기로 맺는다)	The Nameless King who eats names waits at the very bottom.		
+2	dungeon	dscen.ch.a5_nameless.stage	굴혈 끝	End of the Burrow		
+2	dungeon	dscen.ch.a5_nameless.title	이름 없는 곳	The Nameless Place		
+2	dungeon	dscen.ch.a6_beyond.blurb	삼켜지지 않은 이름이 문 너머에서 기다린다. 싸우러 가는 길이 아니라 이름을 돌려주러 가는 길.	The final gate. This time you go not to fight but to give a name back.		
+2	dungeon	dscen.ch.a6_beyond.stage	굴혈 36층	Burrow floor 36		
+2	dungeon	dscen.ch.a6_beyond.title	비석 너머	Beyond the Stele		
+2	dungeon	dscen.ch.a6_ford.blurb	밤마다 배 없는 노 소리가 나는 갈대나루. 이름 없는 노꾼은 이름을 잃은 것이 아니라 지키려고 지운 사람이다.	Every night an oar sounds at the ford with no boat. The rower has no name, so the water will not answer.		
+2	dungeon	dscen.ch.a6_ford.stage	굴혈 34층	Burrow floor 34		
+2	dungeon	dscen.ch.a6_ford.title	갈대나루의 새 틈	The New Crack at Reed Ford		
+2	dungeon	dscen.ch.a6_orphan.blurb	이름은 모두 돌아왔는데 비석 한 구석에 어느 기록에도 없는 글자가 남았다. 그 이름이 새 틈을 연다.	One name remains on the stele that belongs to no record, and it opens a new crack.		
+2	dungeon	dscen.ch.a6_orphan.stage	굴혈 32층	Burrow floor 32		
+2	dungeon	dscen.ch.a6_orphan.title	주인 없는 이름	The Ownerless Name		
+2	dungeon	dscen.chapter_fmt	제{0}장 · {1}	Ch. {0} · {1}		
+2	dungeon	dscen.choice.fort.prompt	성주의 이름을 어떻게 할 것인가	What will you do with the lord's name?		
+2	dungeon	dscen.choice.fort.restore	이름을 돌려준다	Give the name back		
+2	dungeon	dscen.choice.fort.seal	이름을 봉인한다	Seal the name		
+2	dungeon	dscen.done_none	끝	Complete		
+2	dungeon	dscen.done_toast	📖 제{0}장 · {1} 끝 — {2}	📖 Ch. {0} · {1} complete — {2}		
+2	dungeon	dscen.hint.chain	🗺️ 큰 지도의 사연 「{0}」 를 평정한다	🗺️ Pacify the region saga 「{0}」		
+2	dungeon	dscen.hint.finish	마무리	Wrapping up		
+2	dungeon	dscen.hint.floor	🕳️ 굴혈 {0}층에 닿는다 (최고 {1})	🕳️ Reach Burrow floor {0} (best {1})		
+2	dungeon	dscen.hint.kill	⚔️ 몬스터 {0}/{1}	⚔️ Monsters {0}/{1}		
+2	dungeon	dscen.hint.landmark	🏛️ 명소 「{0}」 ({1}층)을 답파한다	🏛️ Conquer the landmark 「{0}」 (floor {1})		
+2	dungeon	dscen.hint.region	🗺️ 큰 지도에서 「{0}」 에 발을 들인다	🗺️ Set foot in 「{0}」 on the big map		
+2	dungeon	dscen.hint.rescue	🙏 갇힌 인물을 구한다	🙏 Rescue a captive		
+2	dungeon	dscen.hint.talk	💬 이야기를 듣는다	💬 Listen to the story		
+2	dungeon	dscen.hint.talk_wait	💬 마을로 돌아가면 이야기가 이어진다	💬 Return to town and the story goes on		
+2	dungeon	dscen.hud	📖 제{0}장 · {1} — {2}	📖 Ch. {0} · {1} — {2}		
+2	dungeon	dscen.next	다음	Next		
+2	dungeon	dscen.page	{0} / {1}	{0} / {1}		
+2	dungeon	dscen.picked	📖 {0} — 골랐다	📖 {0} — chosen		
+2	dungeon	dscen.reward.exp	경험치 {0}	EXP {0}		
+2	dungeon	dscen.reward.feat	공적 {0} (금 {1})	Merit {0} (gold {1})		
+2	dungeon	dscen.reward.gold	금 {0}	Gold {0}		
+2	dungeon	dscen.reward.title	🏷️ 칭호 「{0}」	🏷️ Title 「{0}」		
+2	dungeon	dscen.skip	건너뛰기	Skip		
+2	dungeon	dscen.title.a5_nameless	이름을 찾은 자	The Finder of Names		
+2	dungeon	dscen.title.a6_beyond	비석 너머의 이름	The Name Beyond the Stele		
+2	dungeon	dscen.you	나	Me		
 2	dungeon	enemy.bestiary_new	⏎📖 도감에 처음 기록됨 — {0}	⏎📖 Newly recorded in the bestiary — {0}		
 2	dungeon	enemy.boss	황건적 두목	Yellow Turban Bandit Chief		
 2	dungeon	enemy.defeat_msg	{0}{1} — 경험치 +{2} · 돈 +{3}냥	{0}{1} — +{2} EXP · +{3} Gold		
@@ -4611,6 +4709,116 @@
 3	go	region.vault.lore	세 시대가 저마다 쌓아 두던 벌판이 한데 붙은 곳. 옛 곳간 마을과 현대 물류 야적장, 미래의 시간 씨앗 금고가 한 벌에 겹쳐 있다.	Fields where the three ages each stored their harvest, fused into one. An old granary village, a modern logistics yard and the future time-seed vault overlap on a single plain.		
 3	go	region.village.lore	역참과 장터가 모인 첫 들판. 마을 울타리 안에선 칼 뽑을 일이 없다.	The first fields, where the waypoint and market gather. No blade is drawn inside the village fence.		
 3	go	region.west_wood.lore	벼락 맞은 고목이 늘어선 짙은 숲길. 번개귀가 나무 사이를 건너뛴다.	A dark trail lined with lightning-struck trees. Storm wraiths leap between the trunks.		
+3	dungeon	dscen.act.1	1막 · 중원의 난	Act 1 · Rebellion of the Plains		
+3	dungeon	dscen.act.2	2막 · 잿빛과 소금	Act 2 · Ash and Salt		
+3	dungeon	dscen.act.3	3막 · 불타는 남쪽	Act 3 · The Burning South		
+3	dungeon	dscen.act.4	4막 · 모래와 눈과 고철	Act 4 · Sand, Snow and Scrap		
+3	dungeon	dscen.act.5	5막 · 이름 없는 곳	Act 5 · The Nameless Place		
+3	dungeon	dscen.act.6	6막 · 비석 너머	Act 6 · Beyond the Stele		
+3	dungeon	dscen.scene.bd1.0	(작은 목소리로) 내가 삼킨 이름 중에 삼켜지지 않은 하나가 있었다. 그 이름이 내 뱃속에서 문을 열었지.	(In a small voice) Among the names I swallowed, there was one that was never swallowed. That name opened a door inside my belly.		
+3	dungeon	dscen.scene.bd1.1	삼킨 이름을 지키려는 이름이 있었다는 말이군요.	So there was a name that tried to protect the swallowed one.		
+3	dungeon	dscen.scene.bd1.2	문 너머 36층에 그가 기다려요. 이번에는 싸우러가 아니라 이름을 돌려주러 가는 길이에요.	He waits beyond the door on floor 36. This time we go not to fight but to give the name back.		
+3	dungeon	dscen.scene.bd2.0	비석 너머에도 비석이 있었구려. 그 위에 글자를 새기는 이는 늘 새 이름을 얻는다 하오.	So there was a stele beyond the stele. Whoever carves letters on it always gains a new name, they say.		
+3	dungeon	dscen.scene.bd2.1	제가 새겨 봐도 돼요? …이름은 "이 땅을 걸어온 사람"으로 하래요!	May I carve it? ...They told me the name is "the one who walked this land"!		
+3	dungeon	dscen.scene.bd2.2	주인 없던 이름이 주인을 얻었습니다. 기록을 맺겠습니다 — 당신은 비석 너머의 이름입니다.	The ownerless name has found its owner. I close the record - you are the name beyond the stele.		
+3	dungeon	dscen.scene.bw1.0	15층에 흑풍 산채가 있습니다. 채주는 이름을 팔아 힘을 샀다고 합니다. 무전기와 총포까지 갖췄다는 소문이에요.	There is Black Wind Stronghold on floor 15. The chieftain is said to have sold his name to buy power. Rumor says they even have radios and guns.		
+3	dungeon	dscen.scene.bw1.1	경비 보행기가 산채 앞에 서 있는 것도 보았습니다. 도적들이 다른 시대의 것을 산 셈이군요.	I also saw a security walker standing at the stronghold's gate. The bandits bought things from other eras.		
+3	dungeon	dscen.scene.bw2.0	채주가 쓰러졌습니다. 그의 이름은 채주가 되기 전에 지워졌더군요. 굴혈이 이름을 사 간 것입니다.	The chieftain has fallen. His name had been erased before he became chieftain. The Burrow bought it.		
+3	dungeon	dscen.scene.bw2.1	한 사람의 이름이 아니라, 이름이 팔리는 장사가 있었던 것입니다.	It was not a single man's name - there was a trade in which names were sold.		
+3	dungeon	dscen.scene.car1.0	서역 길목이 막힌 지 석 달째요. 낙타도 짐도 돌아오지 않소. 모래에 트럭이 박혀 있고 묻힌 유적 속에서는 빛 문이 열려 있다는 말도 있소.	The Western road has been blocked for three months. Neither camels nor cargo return. A truck is stuck in the sand, and they say a light gate stands open in a buried ruin.		
+3	dungeon	dscen.scene.car1.1	모래바다 폭군이 길을 막고 있다지요. 대상 길부터 열겠습니다.	I hear a sand-sea tyrant blocks the road. I will open the caravan route first.		
+3	dungeon	dscen.scene.car2.0	방울 소리가 다시 들리오! 비단 한 필을 남기고 가겠소. 이 길이 열렸으니 더 많은 이름이 돌아올 게요.	I hear the bells again! Let me leave you a bolt of silk. With this road open, more names will come home.		
+3	dungeon	dscen.scene.fac1.0	아저씨, 공장 굴뚝에서 쇠 긁는 소리가 밤새 나요. 무서워서 못 가겠어요. 고물을 주우러 가야 하는데.	Mister, all night there's a scraping-iron noise from the factory chimney. I'm too scared to go. But I have to go pick scrap.		
+3	dungeon	dscen.scene.fac1.1	공장 아래에 옛 성벽이 있다더군요. 방역복 차림의 누가 폐도시를 훑고 다닌다는 말도 들었습니다.	They say there is an old city wall under the factory. I also heard someone in a hazmat suit has been combing the ruined city.		
+3	dungeon	dscen.scene.fac1.2	맞아요, 회색 옷 입은 이들이 있어요. 공장의 심장이 굴혈로 이어진 관이래요. 부탁이에요!	Yes, there are people in gray clothes! They say the factory's heart is a pipe into the Burrow. Please!		
+3	dungeon	dscen.scene.fac2.0	소리가 멎었어요! 폭주룡도 없어졌고요. 고철을 한 아름 주웠어요.	The noise stopped! The rampaging dragon is gone too. I picked up an armful of scrap.		
+3	dungeon	dscen.scene.fac2.1	공장 심장의 관은 굴혈로 이어져 있었습니다. 굴혈의 이름 먹는 소리와 같은 결이더군요.	The factory heart's pipe ran into the Burrow. It felt the same as the Burrow's name-eating sound.		
+3	dungeon	dscen.scene.fac2.2	이 고물 상점은 아저씨께 드릴게요. 필요한 부품이 있을 거예요.	I'll give you this junk shop, mister. You may need some parts.		
+3	dungeon	dscen.scene.fd1.0	갈대나루에 밤마다 배 없는 노 소리가 난다오. 노 젓는 이가 누구든 이름이 없으니 물이 대답을 안 해.	At Reed Ford every night there is the sound of an oar with no boat. Whoever rows has no name, so the water will not answer.		
+3	dungeon	dscen.scene.fd1.1	틈이 나루까지 번졌어요. 이름 없는 노꾼이 배를 저어 시대를 건너다니고 있더군요.	The crack has spread as far as the ferry landing. A nameless oarsman rows across the ages.		
+3	dungeon	dscen.scene.fd1.2	굴혈 34층에 그 노꾼의 배가 정박해 있을 것 같습니다. 내려가 보겠습니다.	That oarsman's boat must be moored on floor 34 of the Burrow. I will go down.		
+3	dungeon	dscen.scene.fd2.0	34층 물가에서 배 한 척 발견! 뱃머리에 새겨진 글자를 스캔했어요 — 도시 잔해 조각의 그 글자와 같은 획이에요.	Found a boat on the floor-34 shore! I scanned the letters on its prow - same strokes as the letter on the city-ruin shard.		
+3	dungeon	dscen.scene.fd2.1	내 늙은 눈에도 알겠소. 저 노꾼은 이름을 잃은 게 아니라 이름을 지키려고 스스로 지운 사람이오.	Even my old eyes see it. That oarsman did not lose his name - he erased it himself to protect it.		
+3	dungeon	dscen.scene.fd2.2	그렇다면 마지막 문 너머에서 이름을 되돌려 줄 수 있습니다.	Then beyond the last gate we can give the name back.		
+3	dungeon	dscen.scene.flag1.0	벌판 역참을 밤마다 검은 깃발 무리가 턴다오. 그 깃발에는 이름 하나 적혀 있지 않소. 대장의 갑옷에는 빛나는 문양이 박혀 있다는 소문도 있고.	Every night a mob under a black flag robs the plains post. Not one name is written on that flag. They say the chief's armor is studded with glowing marks.		
+3	dungeon	dscen.scene.flag1.1	폭주하는 젊은이들까지 도적 편에 붙었다지요. 이 벌판부터 잠재우겠습니다.	I hear even reckless youngsters have joined the bandits. I will settle this plain first.		
+3	dungeon	dscen.scene.flag2.0	흑기 대장이 쓰러졌소! 이제 수레가 다시 다니겠소.	The Black Flag chief has fallen! Carts will roll again.		
+3	dungeon	dscen.scene.flag2.1	결사비가 열렸소. 결사로 들어서면 한 번 죽으면 끝이라, 각오가 있어야 하오.	The Vow Stele is open. Enter the Vow and one death ends it, so you need resolve.		
+3	dungeon	dscen.scene.flag2.2	깃발에 이름이 없던 까닭은 결국 알 수 없었습니다. 굴혈 안에 답이 있을 것 같습니다.	I never learned why the flag had no name. The answer must be inside the Burrow.		
+3	dungeon	dscen.scene.fort1.0	내… 이름이 무엇이었더냐. 비상등만 깜박이는 성문 앞에서 수백 해를 서 있었다. 투구 속의 이 기계 눈은 누가 심었느냐.	What... was my name? For hundreds of years I have stood before a gate where only an emergency lamp blinks. Who planted this mechanical eye inside my helm?		
+3	dungeon	dscen.scene.fort1.1	제 기록에 남은 성주의 이름을 찾았습니다. 돌려주면 망령이 성을 떠나겠지만, 이름을 봉인하면 성이 그 갑주를 내놓을 것입니다.	I found the lord's name in my records. If you give it back the ghost will leave the castle, but if you seal the name the castle will give up his armor.		
+3	dungeon	dscen.scene.fort1.2	이름을 돌려줄지, 봉인할지 — 결정은 제가 하겠습니다.	Whether to return the name or seal it - I will decide.		
+3	dungeon	dscen.scene.fort2_restore.0	이제 기억난다. 그 이름을 내 것이라 부르니 가슴이 가볍다. 성을 떠나마. 네게 가호를 남긴다.	Now I remember. Hearing that name called mine, my chest feels light. I shall leave the castle. I leave my blessing with you.		
+3	dungeon	dscen.scene.fort2_restore.1	이름 하나가 돌아왔습니다. 굴혈이 삼킨 이름들 중 하나를 되찾은 셈이지요.	One name has come back. You have recovered one of the names the Burrow swallowed.		
+3	dungeon	dscen.scene.fort2_seal.0	이름을 빼앗겼지만… 성을 지킬 갑주는 남는군. 가져가라, 이 조각을.	My name is taken... but the armor that guards the castle remains. Take this fragment.		
+3	dungeon	dscen.scene.fort2_seal.1	봉인된 이름은 제 기록에 따로 적어 두겠습니다. 어떤 결정이든 기록은 남습니다.	I will note the sealed name separately in my records. Whatever you decide, the record remains.		
+3	dungeon	dscen.scene.hg1.0	25층 업화 대문입니다. 돌기둥에 경고 표지판이 붙어 있고, 문지기의 기계 팔이 문을 지킵니다. 문 너머는 천계로 이어져 있다지요.	This is the Karmic Fire Gate on floor 25. Warning signs are stuck to the stone pillars, and the gatekeeper's mechanical arm guards the gate. Beyond it, they say, lies the heavens.		
+3	dungeon	dscen.scene.hg1.1	경고 표지판은 어느 시대 글자로 쓰여 있었습니다. 문 너머가 두렵지만 가야겠습니다.	The warning sign was written in letters of some era. I fear what is beyond the gate, but I must go.		
+3	dungeon	dscen.scene.hg2.0	문이 열렸습니다. 이제 천계 사당이 눈앞입니다. 마지막 막이 다가옵니다.	The gate is open. The Heavenly Shrine is right before us. The final act draws near.		
+3	dungeon	dscen.scene.hg2.1	이름이 돌아오는 날까지 걷겠습니다.	I will keep walking until the day the names return.		
+3	dungeon	dscen.scene.hv1.0	하늘 사당의 수호장이 사당을 버렸소. 그 칼끝이 이제 우리를 향하오. 비석에 빛이 꺼지고 엘리베이터도 무너졌소.	The shrine's guardian has abandoned the shrine. His blade now points at us. The light has gone out on the stele, and the elevator has collapsed.		
+3	dungeon	dscen.scene.hv1.1	수호장은 무명왕에게 이름을 판 첫 장수라 들었습니다. 구름 위 금궐까지 올라가겠습니다.	I hear the guardian was the first general to sell his name to the Nameless King. I will climb to the Golden Palace above the clouds.		
+3	dungeon	dscen.scene.hv2.0	비석에 빛이 돌아왔소. 구주를 평정한 이는 그대가 되겠구려.	The light has returned to the stele. It seems you will be the one who pacifies the Nine Provinces.		
+3	dungeon	dscen.scene.hv2.1	구름 천장이 쓰러졌습니다. 이제 남은 것은 이름을 먹는 자 하나입니다. 무명왕이 눈앞에 있습니다.	The Cloud General has fallen. Now only the one who eats names remains. The Nameless King is before us.		
+3	dungeon	dscen.scene.moru1.0	부임 첫날부터 황건 떼가 마을 어귀를 쳤습니다. 다행히 담이 버텼지요. 저는 이 마을 사관 묵향입니다.	From my very first day the Yellow Sash mob hit the village gate. Luckily the wall held. I am Mukhyang, this village's scribe.		
+3	dungeon	dscen.scene.moru1.1	기와 담 너머로 이상한 것이 지나갔습니다. 하늘을 나는 작은 쇠 눈알 같은 것이요.	Something strange passed over the tiled wall - like a tiny iron eye, flying.		
+3	dungeon	dscen.scene.moru1.2	정찰 드론이라 하더군요. 택배 기사 손님이 짐을 떨어뜨리고 도망갔는데, 그 짐도 이 시대 것이 아니었습니다.	They call it a scout drone. A courier customer dropped his parcel and ran, and that parcel was not of this age, either.		
+3	dungeon	dscen.scene.moru1.3	그보다 큰일이 있습니다. 요즘 죽은 이들의 이름이 비석에서 지워집니다. 굴혈 쪽에서 시작된 일입니다. 우선 어귀의 무리부터 쓸어 주십시오.	But there is a bigger matter. Lately the names of the dead are vanishing from the steles. It began near the Burrow. First, please clear the mob at the gate.		
+3	dungeon	dscen.scene.moru2.0	어귀가 조용해졌습니다. 무리의 창끝에 쓰인 글자 하나 없는 것을 보셨습니까? 이름을 모르는 병사들이었습니다.	The gate is quiet. Did you notice there was not a single letter on their spearheads? Those soldiers did not know their own names.		
+3	dungeon	dscen.scene.moru2.1	굴혈이 저 아래에 열려 있다고 하셨지요. 첫 층을 보고 오겠습니다.	You said the Burrow opens just below. I will go and look at the first floor.		
+3	dungeon	dscen.scene.moru3.0	첫 층에 닿았습니다. 벽에 이름 자국이 긁혀 있었는데, 누가 새겼다 지운 듯했습니다.	I reached the first floor. Name scratches ran along the wall, as if someone carved them and rubbed them out.		
+3	dungeon	dscen.scene.moru3.1	굴혈이 사람들의 이름을 먹고 있다는 소문이 사실인가 봅니다. 이 기록을 잇는 것이 제 일입니다. 더 내려가시면 제가 적겠습니다.	The rumor may be true - the Burrow is eating people's names. Continuing this record is my work. Go deeper and I will write it down.		
+3	dungeon	dscen.scene.moru3.2	거기 새 부임자. 교두 노릇을 맡은 늙은이요. 벌판의 흑기 도적부터 정리하시오. 결사의 비석도 그다음에 알려 주겠소.	You there, the new appointee. I am the old man who serves as drillmaster. Deal with the Black Flag bandits on the plain first. Then I will tell you about the Vow Stele.		
+3	dungeon	dscen.scene.nl1.0	어서 오라. 내가 먹은 이름들이 세 시대의 모습으로 나를 지킨다 — 장수, 폭주족, 기계. 너도 이름을 내놓으라.	Welcome. The names I ate protect me in the forms of three eras - general, biker, machine. You too, give up your name.		
+3	dungeon	dscen.scene.nl1.1	지워진 이름은 돌려받겠습니다. 비석 숲에 이름을 되돌리는 것이 제 일입니다.	I will take back the erased names. Returning names to the stele forest is my work.		
+3	dungeon	dscen.scene.nl1.2	제 기록에 적은 이름이 모두 이곳에 있습니다. 하나씩 되찾읍시다.	Every name in my record is here. Let us recover them one by one.		
+3	dungeon	dscen.scene.nl2_restore.0	…이름들이 돌아간다. 비석이 다시 글자를 얻는구나.	…The names go back. The stele gains its letters again.		
+3	dungeon	dscen.scene.nl2_restore.1	내 이름도 돌아왔으니 이 싸움에 함께하겠다. 성을 떠나 네 곁에 서리라.	My name has returned, so I will join this fight. I shall leave the castle and stand at your side.		
+3	dungeon	dscen.scene.nl2_restore.2	기록이 끝났습니다. 지워졌던 비석의 이름이 모두 되돌아왔어요. 당신은 이름을 찾은 자입니다.	The record is complete. Every erased name on the stele has returned. You are the one who found the names.		
+3	dungeon	dscen.scene.nl2_seal.0	…이름들이 돌아간다. 비석이 다시 글자를 얻는구나.	…The names go back. The stele gains its letters again.		
+3	dungeon	dscen.scene.nl2_seal.1	봉인했던 잿빛 성주의 이름은 제 기록에 따로 남겨 두었습니다. 다 돌려주지는 못했지만 대부분 되돌렸어요.	I kept the sealed lord's name separately in my record. We could not return every one, but most were restored.		
+3	dungeon	dscen.scene.nl2_seal.2	기록은 남았고 굴혈은 조용해졌습니다. 저는 이름을 찾은 자로 남겠습니다.	The record remains and the Burrow is quiet. I will stay as the one who found the names.		
+3	dungeon	dscen.scene.or1.0	이상합니다. 이름은 모두 돌아왔는데 비석 한 구석에 글자가 하나 남았어요. 어느 기록에도 없는 이름입니다.	Strange. Every name came back, yet one letter remains in a corner of the stele. It is a name in no record.		
+3	dungeon	dscen.scene.or1.1	이 글자, 도시 잔해 조각에도 새겨져 있었어요! 주인이 없는 이름이라 어디에도 돌려줄 데가 없대요.	This letter was carved on the city-ruin shard, too! They say it has no owner, so there is nowhere to return it.		
+3	dungeon	dscen.scene.or1.2	주인 없는 이름이 비석 아래 새 틈을 열고 있군요. 굴혈을 더 내려가 보겠습니다.	The ownerless name is opening a new crack under the stele. I will go deeper into the Burrow.		
+3	dungeon	dscen.scene.or2.0	삐걱— 32층 지도에 없는 문. 문틀에는 빛 기둥의 글자가, 문짝에는 비석 숲의 이끼가 붙어 있어요.	Creeeak - a door on floor 32 that is not on the map. The lintel has letters of the light pillar, the door leaf has moss from the stele forest.		
+3	dungeon	dscen.scene.or2.1	이름 하나가 세 시대를 다 건너와 이 문 앞에 섰다는 뜻이겠지요. 기록해 두겠습니다.	It means one name crossed all three eras and came to stand before this door. I will record it.		
+3	dungeon	dscen.scene.or2.2	문 너머에 주인을 찾아 주러 가겠습니다.	I will go beyond the door and find its owner.		
+3	dungeon	dscen.scene.pal1.0	20층은 물에 잠긴 용궁입니다. 용궁 기와 아래로 잠수 장비의 잔해가 흩어져 있고, 수압 돔이 반쯤 남아 있다고 합니다.	Floor 20 is a dragon palace under water. Diving-gear wreckage lies scattered beneath its tiles, and half of a pressure dome remains.		
+3	dungeon	dscen.scene.pal1.1	비늘 수문장을 상대해야 아래로 갈 수 있겠지요. 내려가 보겠습니다.	I have to deal with the Scaled Gatekeeper to go deeper. I will go down.		
+3	dungeon	dscen.scene.pal2.0	…이름을 다오. 너도 이름이 있지 않으냐. 나는 그것을 먹으며 자랐다. 이름을 다오.	…Give me a name. You have one, do you not? I grew up eating them. Give me a name.		
+3	dungeon	dscen.scene.pal2.1	누구냐! 바닥에서 목소리가 들립니다. 이름을 먹는다고?	Who are you! A voice from the floor. It eats names?		
+3	dungeon	dscen.scene.pal2.2	무명혈의 주인입니다. 이 굴혈 전체가 그의 몸이었어요. 기록을 서둘러야 합니다.	That is the master of the Nameless Hole. This whole Burrow was his body. We must hurry the record.		
+3	dungeon	dscen.scene.rg1.0	떠돌이 퇴마사 소연이오. 균열은 무명혈의 곁가지요. 문지기 겁옥이 그 문을 지키며 이름을 걸러 내고 있소.	I am the wandering exorcist Soyeon. The rift is a side branch of the Nameless Hole. The gatekeeper Geomok guards that gate and filters names.		
+3	dungeon	dscen.scene.rg1.1	균열에 버스 한 대가 떨어져 있었습니다. 안에는 아무도 없고 창문마다 별바다 손님들이 매달려 있더군요.	A bus had fallen into the rift. Nobody inside, and guests from a sea of stars clung to every window.		
+3	dungeon	dscen.scene.rg1.2	시대 손님이오. 문이 열리는 대로 다른 시대의 것이 끼어들지. 봉인비 앞에서 문지기를 상대해 주시오.	Guests from other eras. Whenever the gate opens, things of other times slip in. Deal with the gatekeeper in front of the seal stele.		
+3	dungeon	dscen.scene.rg2.0	봉인비에 새 글자가 새겨졌소. 균열이 멈췄고 부적 던전도 열 수 있게 되었소. 이 부적을 받으시오.	New letters are carved on the seal stele. The rift has stopped, and the talisman dungeon can be opened. Please take this talisman.		
+3	dungeon	dscen.scene.rg2.1	문지기의 창끝에도 이름이 없었습니다. 겁옥이라는 이름조차 누군가에게서 빌린 듯했지요.	There was no name on the gatekeeper's spearhead either. Even the name Geomok seemed borrowed from someone.		
+3	dungeon	dscen.scene.scr1.0	끽… 제 이름은 끽입니다. 쓰러진 기계들이 하나씩 사라져요. 누군가 모으고 있어요. 저는 제 이름을 꽉 붙잡아서 멀쩡합니다.	Creak... my name is Kkik. Fallen machines vanish one by one. Someone is gathering them. I am holding on to my name tightly, so I am fine.		
+3	dungeon	dscen.scene.scr1.1	이름을 먹고 일어선 기계라면 고철 거신이겠군요. 옛 감시탑 곁으로 가 보겠습니다.	If a machine stood up by eating names, it must be the scrap colossus. I will go by the old watchtower.		
+3	dungeon	dscen.scene.scr2.0	황무지의 기계들이 잠들었어요. 이제 나사 한 줌을 드릴게요. 저도 함께 갈래요. 이름을 지키는 법을 알려 드릴 수 있어요.	The wasteland's machines have fallen asleep. Let me give you a handful of screws. I want to come along too. I can teach you how to protect a name.		
+3	dungeon	dscen.scene.scr2.1	든든한 동행이 생겼습니다. 마을에서 수리도 부탁드리겠습니다.	I have a reliable companion now. Please do repairs for me in the village, too.		
+3	dungeon	dscen.scene.sf1.0	태양로 온도가 계속 올라요. 발전 설비도 미쳐 날뛰고, 거신 하나가 로 한복판에 선 채 움직이지 않아요. 개척지 우물 곁에 천막을 쳤는데 밤마다 뜨겁습니다.	The furnace temperature keeps rising. The power equipment runs wild, and one colossus stands motionless in the middle of the furnace. I pitched a tent by the frontier well, but it is hot every night.		
+3	dungeon	dscen.scene.sf1.1	균열의 열을 먹고 폭주하는군요. 제어반 근처까지 무리를 몰아내겠습니다.	So it feeds on the rift's heat and runs amok. I will drive the mob back to near the control panel.		
+3	dungeon	dscen.scene.sf2.0	태양판 위로 다시 새가 앉았어요! 개척지에 불이 들어왔습니다.	Birds are perching on the solar panels again! The frontier has power.		
+3	dungeon	dscen.scene.sf2.1	거신의 등에서 굴혈로 이어지는 관을 보았습니다. 이 열도 굴혈에서 온 것이더군요.	I saw a pipe from the colossus's back running to the Burrow. This heat came from the Burrow as well.		
+3	dungeon	dscen.scene.snow1.0	산성 폐허에 누가 눌러앉아 케이블카가 끊겼어요. 골짜기가 고립됐습니다. 칸 안에 커다란 손자국이 얼어붙어 있었고요.	Someone has settled in the fort ruins and the cable car has stopped. The valley is cut off. Huge handprints were frozen inside the cabin.		
+3	dungeon	dscen.scene.snow1.1	케이블카를 다시 돌려 산성으로 오르겠습니다. 거한이 있다면 그 자리에서 만나지요.	I will get the cable car running and climb to the fort. If there is a giant, we will meet there.		
+3	dungeon	dscen.scene.snow2.0	케이블카가 다시 움직여요! 골짜기에 불빛이 켜졌습니다.	The cable car is moving again! Lights are on in the valley.		
+3	dungeon	dscen.scene.snow2.1	거한의 몸에 냉각관이 박혀 있었습니다. 산 위의 눈은 이 땅의 것이 아니었군요.	The giant's body had cooling pipes driven into it. The snow on that mountain did not belong to this land.		
+3	dungeon	dscen.scene.tide1.0	썰물 때마다 갯벌 밑에서 무언가 운다오. 배가 셋이나 사라졌소. 바다가 이름을 부르며 물러갔다고들 하지.	At every ebb tide something weeps under the mudflats. Three boats have vanished. They say the sea called their names and pulled back.		
+3	dungeon	dscen.scene.tide1.1	녹슨 관측탑이 갯벌 한가운데 서 있다지요. 실험실 장갑을 두른 것들도 보입니다.	A rusty observation tower stands in the middle of the flats, they say. I can see things wrapped in lab gloves, too.		
+3	dungeon	dscen.scene.tide1.2	뱃노래 가락이 갯벌 밑에서 되돌아 나오는 밤이 있소. 촉수왕이 그걸 흉내 내는 것 같소.	Some nights a boat-song melody echoes back up from beneath the flats. The Tentacle King seems to be mimicking it.		
+3	dungeon	dscen.scene.tide2.0	밀물이 제 소리로 돌아왔소. 소금 한 섬을 받아 주시오.	The tide has returned with its own voice. Please take a sack of salt.		
+3	dungeon	dscen.scene.tide2.1	갯벌이 부르던 이름은 결국 배 셋의 사공들 이름이었습니다. 이제 그 이름이 굴혈에 남는 일은 없겠지요.	The names the flats were calling turned out to be those of the three boats' boatmen. Now those names will not stay in the Burrow.		
+3	dungeon	dscen.scene.tide2.2	잿빛 성주가 이름을 잃어 성을 떠나지 못한다는 소문이오. 10층으로 내려가 보시오.	The rumor is that the Ashen Castellan cannot leave his castle because he lost his name. Go down to floor 10.		
+3	dungeon	dscen.scene.tomb1.0	굴혈 다섯째 층에는 옛 왕릉이 있습니다. 순장된 병사들이 아직도 칼을 쥐고 서 있다지요. 가장 안쪽 현실에 옥관을 쓴 수릉장이 있습니다.	On the Burrow's fifth floor lies an old royal tomb. The buried soldiers are said to still stand gripping their swords. In the innermost chamber sits a jade-coffin warden.		
+3	dungeon	dscen.scene.tomb1.1	왕릉의 벽마다 도굴꾼의 손전등 자국이 남아 있었습니다. 누군가 먼저 드나든 흔적입니다.	Every wall of the tomb bore the marks of grave robbers' flashlights. Someone had come and gone before us.		
+3	dungeon	dscen.scene.tomb1.2	그 벽에 새 이름을 적는 빛 비석이 있다는 이야기도 들었습니다. 잘 살펴봐 주십시오.	I also heard of a light stele that writes new names on that wall. Please look closely.		
+3	dungeon	dscen.scene.tomb2.0	살았다! 저는 시간 여행자 열두시입니다. 이 굴혈의 구멍은 우리 시대 지도에 없습니다 — 무명혈이라 불리는 지도에 없는 구멍이죠.	Alive! I am the time traveler Yeoldusi. This hole is not on our era's maps - people call it the Nameless Hole, the hole missing from the map.		
+3	dungeon	dscen.scene.tomb2.1	지도에 없는 구멍이라니. 이 땅의 이름을 먹는 것과 관계가 있습니까?	A hole missing from the map? Does it have to do with whatever eats this land's names?		
+3	dungeon	dscen.scene.tomb2.2	있습니다. 이름이 지워진 곳은 앞날의 기록에서도 지워지지요. 더 깊은 곳에서 그 주인이 이름을 모으고 있을 겁니다.	It does. A place whose names are erased is erased from future records too. Deeper down, its master must be gathering names.		
+3	dungeon	dscen.scene.tomb2.3	기록해 두겠습니다. 1막은 여기까지입니다. 이름이 지워지는 나라의 끝을 함께 찾아봅시다.	I will record it. Act 1 ends here. Let us find the end of this land where names vanish, together.		
 3	dungeon	era_folk.chrononaut	시간 여행자	Time Traveler		
 3	dungeon	era_folk.chrononaut.0	기록엔 이 마을이 이번 난리에 사라진다고 돼 있어요. 제가 틀렸으면 좋겠네요.	The records say this village vanishes in these riots. I hope I'm wrong.		
 3	dungeon	era_folk.chrononaut.1	깊은 층일수록 시간 틈이 넓어요. 제 시대 기계가 거기서 길을 잃었죠.	The deeper the floor, the wider the rift. Machines from my era got lost down there.		

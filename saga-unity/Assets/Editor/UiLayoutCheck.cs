@@ -597,6 +597,45 @@ namespace Saga.EditorTools
 
         private static void DungeonStates(List<UiState> list)
         {
+            // 109-16 시나리오 장면 상자 — 가장 긴 줄이 든 장면(글 자리)과 고르기 장면(답 단추 둘)을 각각 띄운다.
+            foreach (bool choiceMode in new[] { false, true })
+            {
+                list.Add(new UiState
+                {
+                    name = choiceMode ? "시나리오 고르기" : "시나리오 장면",
+                    panel = true,
+                    enter = () =>
+                    {
+                        var ui = Saga.Dungeon.UI.DungeonScenarioUi.Instance;
+                        if (ui == null) return false;
+                        Saga.Dungeon.Data.DungeonScenarioData.Scene pick = null;
+                        int max = 0;
+                        foreach (var sc in Saga.Dungeon.Data.DungeonScenarioData.Scenes)
+                        {
+                            if (choiceMode ? sc.Choice == null : sc.Choice != null) continue;
+                            for (int i = 0; i < sc.Lines.Length; i++)
+                            {
+                                int len = Saga.Dungeon.Data.DungeonScenario.LineText(sc.Id, i).Length;
+                                if (len > max) { max = len; pick = sc; }
+                            }
+                        }
+                        if (pick == null) return false;
+                        var ch = Saga.Dungeon.Data.DungeonScenarioData.ChapterOf(pick.ChapterId);
+                        ui.Play(new Saga.Dungeon.Data.DungeonScenario.SceneRequest { Scene = pick, Title = Saga.Dungeon.Data.DungeonScenario.ChapterTitle(ch) });
+                        // 가장 긴 줄까지 넘긴다
+                        int want = 0; int best = 0;
+                        for (int i = 0; i < pick.Lines.Length; i++)
+                        {
+                            int len = Saga.Dungeon.Data.DungeonScenario.LineText(pick.Id, i).Length;
+                            if (len > best) { best = len; want = i; }
+                        }
+                        for (int i = 0; i < want; i++) ui.Next();
+                        if (choiceMode) ui.Skip();
+                        return true;
+                    },
+                    exit = () => Saga.Dungeon.UI.DungeonScenarioUi.Instance?.Hide(),
+                });
+            }
             list.Add(new UiState
             {
                 name = "축복 3택",

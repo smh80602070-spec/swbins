@@ -42,6 +42,9 @@ namespace Saga.Dungeon.World
 
         public bool IsFreed => _freed;
 
+        /// <summary>PLAN.md 109-16 시나리오 `rescue` 단계 — 갇힌 인물을 구했을 때(어느 층이든).</summary>
+        public static event System.Action Freed;
+
         private void Awake()
         {
             if (transform.childCount == 0) BuildVisual();
@@ -88,6 +91,7 @@ namespace Saga.Dungeon.World
             if (HeroState.Level > levelBefore) msg += string.Format(DungeonLocalization.T("combat.levelup_suffix", " — 레벨업! ({0} → {1})"), levelBefore, HeroState.Level);
             DialogueLabel.Instance?.Show(msg, ToastSec);
             QuestState.MarkCaptiveFreed(); // "퀘스트 시스템" 슬라이스 — 메인 퀘스트 마지막 단계.
+            Freed?.Invoke();
         }
     }
 }

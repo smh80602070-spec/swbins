@@ -89,6 +89,7 @@ namespace Saga.Dungeon.Data
             public RegionSagaState.Entry[] regionSaga; // v14
             public bool regionSagaAll;
             public string mountSel; // PLAN.md 109-15 — 고른 탈것(탄 채는 저장 안 함). 버전 그대로: 옛 세이브는 null → 안 고른 채.
+            public string scenarioJson; // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 저장된 층으로 지나온 장을 끝낸 것으로(RestoreLegacy).
         }
 
         public static bool Save()
@@ -147,6 +148,7 @@ namespace Saga.Dungeon.Data
                 regionSaga = RegionSagaState.Snapshot(),
                 regionSagaAll = RegionSagaState.AllDone,
                 mountSel = DungeonMounts.Snapshot(),
+                scenarioJson = DungeonScenario.Snapshot(),
             };
             return JsonUtility.ToJson(data);
         }
@@ -195,6 +197,8 @@ namespace Saga.Dungeon.Data
             RegionBossState.Restore(data.version >= 13 ? data.regionBoss : null);
             RegionSagaState.Restore(data.version >= 14 ? data.regionSaga : null, data.version >= 14 && data.regionSagaAll);
             DungeonMounts.Restore(data.mountSel);
+            if (string.IsNullOrEmpty(data.scenarioJson)) DungeonScenario.RestoreLegacy(data.dungeonFloor);
+            else DungeonScenario.Restore(data.scenarioJson);
             BestiaryState.Restore(data.discovered);
             if (data.version >= 4)
             {
