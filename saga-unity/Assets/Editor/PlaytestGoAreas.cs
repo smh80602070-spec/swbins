@@ -55,10 +55,12 @@ namespace Saga.EditorTools
                 CheckRoute(pc, field, parts);
                 CheckAmber(fc, pc, field, parts);
                 CheckVault(fc, pc, field, parts);
+                CheckFork(fc, pc, field, parts);
                 CheckSave(savePath, parts);
             }
             finally
             {
+                GoStory.ForkPassForTest = false;
                 if (originalSave != null) System.IO.File.WriteAllText(savePath, originalSave);
                 else if (System.IO.File.Exists(savePath)) System.IO.File.Delete(savePath);
                 AreaState.Restore(found);
@@ -80,7 +82,7 @@ namespace Saga.EditorTools
         private static void CheckTables(GoAreas.Area a, List<string> parts)
         {
             var all = a.Sites;
-            int nBig = a.Id == "amber" || a.Id == "vault" ? 7 : 5; // 굳은 거리·갈무리 벌은 명소 일곱(웹 ⑲-57·61 — 신상 등이 더)
+            int nBig = a.Id == "amber" || a.Id == "vault" || a.Id == "fork" ? 7 : 5; // 굳은 거리·갈무리 벌은 명소 일곱(웹 ⑲-57·61 — 신상 등이 더)
             if (all.Length != nBig + 10 || all.Count(s => s.Big) != nBig || all.Count(s => !s.Big) != 10 || all.Select(s => s.Id).Distinct().Count() != nBig + 10) Fail($"{a.Id} 명소 {nBig}·발견 열이 아님");
             foreach (var s in all)
             {
@@ -132,6 +134,7 @@ namespace Saga.EditorTools
             if (a.Open() || field.GateObject(a.Id).activeSelf) Fail($"{a.Id} 열릴 장 전인데 틈 문이 열림");
             pc.Teleport(a.MapGate() + new Vector3(3f, 0.3f, 0f));
             if (field.NearGate(fc.transform.position).dir != 0 || field.TravelHere()) Fail($"{a.Id} 닫힌 문에서 이동함");
+            if (a.OpenCh > GoStory.Chapters.Length) GoStory.ForkPassForTest = true; // 열리는 장(세갈래 고을 38장)이 이식되기 전 — 열린 뒤 길을 재도록 호박 장막이 걷힌 척
             StoryState.Restore(a.OpenCh, 0);
             field.Refresh();
             if (!a.Open() || !field.GateObject(a.Id).activeSelf) Fail($"{a.Id} 열릴 장 뒤인데 틈 문이 안 열림");
@@ -149,6 +152,7 @@ namespace Saga.EditorTools
             if (field.TravelLabel != GoLocalization.T("area.go_out", "마을 쪽으로 돌아간다")) Fail("돌아가기 단추 글");
             if (!field.TravelHere() || a.Contains(fc.transform.position) || (fc.transform.position - a.ReturnPos).magnitude > 2f) Fail($"{a.Id} 땅에서 못 돌아옴");
             if (field.TravelHere()) Fail("돌기둥 곁이 아닌데 이동함");
+            GoStory.ForkPassForTest = false;
             parts.Add("드나드는 길(열릴 장 전 닫힘·뒤 열림·곁 판정·단추·듦·도착 자리는 곁이 아님·돌아옴)");
         }
 
@@ -253,7 +257,7 @@ namespace Saga.EditorTools
         private static void CheckAmber(FieldCombat fc, PlayerController pc, AreaField field, List<string> parts)
         {
             var a = GoAreas.Amber;
-            if (a.Id != "amber" || a.OpenCh != 29 || !GoAreas.TryArea("amber", out var t) || t != a || GoAreas.All.Length != 5 || GoAreas.All[3] != a) Fail("굳은 거리 표·열릴 장(29장)");
+            if (a.Id != "amber" || a.OpenCh != 29 || !GoAreas.TryArea("amber", out var t) || t != a || GoAreas.All.Length != 6 || GoAreas.All[3] != a) Fail("굳은 거리 표·열릴 장(29장)");
             if (a.GateSite != "pass" || !a.Sites.Any(s => s.Id == "pass" && s.Big && s.Era == GoEra.Future)) Fail("굳은 거리 고개 어귀 명소");
             foreach (var id in new[] { "cross", "clock", "market", "tower", "rail", "statue" }) if (!a.TrySite(id, out var s) || !s.Big) Fail($"굳은 거리 명소 {id}");
             // 돌기둥 — 은하 나루 북쪽 끝 · 다른 땅 돌기둥과 30m 이상
@@ -418,6 +422,80 @@ namespace Saga.EditorTools
             if (field.Check(st.Pos + new Vector3(st.Radius - 1f, 0f, 0f)) != 1 || GoldState.Gold != GoAreas.BigGold) Fail("벌 신상 발견·보상");
             AreaState.ResetForTest();
             parts.Add("[vault 갈무리 벌] 표(명소 일곱·돌기둥 서리봉 동쪽 끝·32장 뒤 열림)·이야기 상태 표(울타리·곳간·동력 기둥·금고 문·핵·해미·깊은 진열장·순간 유리)·도형(처음 닫힌 모습·금고 문/둥근 벽/지붕·동력 기둥·곳간·창고 충돌·운반 드론 셋)·발견");
+        }
+
+        // ---- 109-14-65 세갈래 고을(열째 지역, 11부 무대) — 36~38장은 이식 전이라 이야기 상태는 순수 함수에 (장, 단계)를 직접 넣어 잰다 ----
+        private static void CheckFork(FieldCombat fc, PlayerController pc, AreaField field, List<string> parts)
+        {
+            var a = GoAreas.Fork;
+            if (a.Id != "fork" || a.OpenCh != 38 || !GoAreas.TryArea("fork", out var t) || t != a || GoAreas.All[5] != a) Fail("세갈래 고을 표·열릴 장(38장)");
+            if (a.GateSite != "gate" || !a.Sites.Any(s => s.Id == "gate" && s.Big && s.Era == GoEra.Past) || !a.Sites.Any(s => s.Id == "tower" && s.Big && s.Era == GoEra.Past)) Fail("세갈래 고을 성문·종루 명소");
+            foreach (var id in new[] { "junction", "forge", "works", "loco", "statue" }) if (!a.TrySite(id, out var s) || !s.Big) Fail($"세갈래 고을 명소 {id}");
+            // 돌기둥 — 서리봉 고원 북쪽 끝, 고원 명소 발견 원 밖 · 다른 땅 돌기둥과 30m 이상
+            if (!GoFrost.Contains(a.MapGate()) || a.MapGate().z > GoFrost.Center.z - GoFrost.HalfZ + 40f) Fail("세갈래 고을 돌기둥이 서리봉 고원 북쪽 끝이 아님");
+            foreach (var s in GoFrost.Sites) if ((s.Pos - a.MapGate()).magnitude < GoFrost.RadiusOf(s) + 3f) Fail($"세갈래 고을 돌기둥이 서리봉 {s.Id} 발견 원 안");
+            foreach (var o in GoAreas.All)
+                if (o != a && ((o.MapGate() - a.MapGate()).magnitude < 30f || (o.SteleGround - a.MapGate()).magnitude < 30f)) Fail($"세갈래 고을 돌기둥이 {o.Id} 돌기둥과 가까움");
+            // 성문 남쪽에 내리고(문루·성벽 밖), 나가는 돌기둥은 그 곁이지만 도착하자마자 곁으로 잡히진 않는다
+            a.TrySite("gate", out var gate);
+            if (!a.Contains(a.ArrivalPos) || !a.Contains(a.SteleGround) || a.ArrivalPos.z < gate.Pos.z + 10f || (a.ArrivalPos - a.SteleGround).magnitude < GoAreas.GateRadius + 3f) Fail("세갈래 고을 도착 자리·나가는 돌기둥");
+            if ((new Vector3(a.SteleGround.x, 0f, a.SteleGround.z) - new Vector3(gate.Pos.x, 0f, gate.Pos.z)).magnitude < 10f) Fail("나가는 돌기둥이 성문 문루에 걸림");
+            // 이야기 상태 표(장은 0부터 — 37장 = 36, 38장 = 37)
+            for (int k = 0; k < 3; k++)
+            {
+                int from = new[] { 2, 5, 7 }[k];
+                if (GoStory.ForkLatticeOffAt(k, 35, 99) || GoStory.ForkLatticeOffAt(k, 36, from - 1) || !GoStory.ForkLatticeOffAt(k, 36, from) || !GoStory.ForkLatticeOffAt(k, 37, 0)) Fail($"격자 말뚝 {k}: 37장 {from}째 단계부터 꺼짐");
+            }
+            if (!GoStory.ForkCrowFrozenAt(36, 9) || !GoStory.ForkCrowFrozenAt(37, 0) || GoStory.ForkCrowFrozenAt(37, 1) || GoStory.ForkCrowFrozenAt(38, 0)) Fail("별까마귀: 38장 1째 단계 전까지 있음");
+            if (GoStory.ForkMomentFreeAt(36, 9) || GoStory.ForkMomentFreeAt(37, 3) || !GoStory.ForkMomentFreeAt(37, 4) || !GoStory.ForkMomentFreeAt(38, 0)) Fail("순간이 풀림: 38장 4째 단계부터");
+            for (int c = 30; c < 40; c++) for (int st = 0; st < 10; st++) if (GoStory.ForkMomentFreeAt(c, st) != GoStory.VaultMomentFreeAt(c, st)) Fail("고을 장막과 금고 깊은 진열장 유리가 다른 때에 풀림");
+            // 도형 — 처음(굳은 채) 모습과 충돌
+            bool off0 = StoryState.OffForTest;
+            try
+            {
+                StoryState.OffForTest = false;
+                StoryState.Restore(31, 0);
+                GoStory.ForkPassForTest = false;
+                field.Refresh();
+                foreach (var k in new[] { "fork:crow", "fork:rift", "fork:veil", "fork:lat0", "fork:lat1", "fork:lat2" }) if (!field.ForkPartOn(k)) Fail($"세갈래 고을 처음 모습: {k} 가 없음");
+                if (a.Open()) Fail("38장 전인데 호박 장막이 걷힘");
+                Physics.SyncTransforms();
+                Vector3 gp = gate.Pos;
+                if (!Physics.Raycast(gp + new Vector3(-30f, 3f, 0f), Vector3.right, out var hit, 30f) || Mathf.Abs(hit.point.x - (gp.x - 17.5f)) > 0.1f) Fail($"성벽 충돌 {hit.point.x - gp.x:0.00}");
+                if (Physics.Raycast(gp + new Vector3(0f, 3f, -12f), Vector3.forward, 24f)) Fail("성문 가운데 5m 가 안 열려 있음");
+                if (!Physics.Raycast(gp + new Vector3(-4f, 3f, -12f), Vector3.forward, out hit, 24f) || Mathf.Abs(hit.point.z - (gp.z - 1.5f)) > 0.1f) Fail("문루 충돌");
+                a.TrySite("forge", out var forge);
+                if (!Physics.Raycast(forge.Pos + new Vector3(-10f, 2f, 0f), Vector3.right, out hit, 10f) || Mathf.Abs(hit.point.x - (forge.Pos.x - 3f)) > 0.1f) Fail("대장간 벽 충돌");
+                a.TrySite("loco", out var loco);
+                if (!Physics.Raycast(loco.Pos + new Vector3(0f, 2f, -12f), Vector3.forward, out hit, 12f) || Mathf.Abs(hit.point.z - (loco.Pos.z - 1.5f)) > 0.1f) Fail("기관차 몸통 충돌");
+                a.TrySite("tower", out var tower);
+                if (!Physics.Raycast(tower.Pos + new Vector3(1.8f, 20f, 1.8f), Vector3.down, out hit, 30f) || Mathf.Abs(hit.point.y - GoStory.ForkTowerH) > 0.05f) Fail($"종루 윗면 충돌 {hit.point.y:0.00}");
+                if (!Physics.Raycast(tower.Pos + new Vector3(-8f, 5f, 0f), Vector3.right, out hit, 12f) || Mathf.Abs(hit.point.x - (tower.Pos.x - GoStory.ForkTowerW * 0.5f)) > 0.05f) Fail("종루 옆면 충돌(곧은 벽)");
+                Vector3 l0 = a.Center + new Vector3(-60.3f, 0f, -10.8f);
+                if (!Physics.Raycast(l0 + new Vector3(-6f, 0.7f, 0f), Vector3.right, out hit, 8f) || Mathf.Abs(hit.point.x - (l0.x - 0.7f)) > 0.05f) Fail("격자 말뚝 밑동 충돌");
+                var lat = field.PartObject("fork:lat0");
+                lat.SetActive(false);
+                Physics.SyncTransforms();
+                bool clear = !Physics.Raycast(l0 + new Vector3(-6f, 0.7f, 0f), Vector3.right, 8f);
+                lat.SetActive(true);
+                Physics.SyncTransforms();
+                if (!clear) Fail("격자 말뚝을 치웠는데 밑동 충돌이 남음");
+                foreach (var id in new[] { "gate", "junction", "forge", "works", "loco", "tower", "statue" })
+                {
+                    a.TrySite(id, out var s);
+                    if (!Physics.Raycast(s.Pos + new Vector3(0f, 30f, 0f), Vector3.down, 60f) || field.SiteObject("fork", id).transform.childCount == 0) Fail($"세갈래 고을 {id} 도형·바닥");
+                }
+            }
+            finally
+            {
+                StoryState.OffForTest = off0;
+            }
+            AreaState.ResetForTest();
+            GoldState.Restore(0);
+            a.TrySite("tower", out var tw);
+            if (field.Check(tw.Pos + new Vector3(tw.Radius - 1f, 0f, 0f)) != 1 || GoldState.Gold != GoAreas.BigGold) Fail("종루 발견·보상");
+            AreaState.ResetForTest();
+            parts.Add("[fork 세갈래 고을] 표(명소 일곱·돌기둥 서리봉 북쪽 끝·성문 남쪽 도착)·이야기 상태 표(격자 말뚝 2·5·7·별까마귀 38장 1·순간 38장 4 = 금고 유리와 같음)·도형(처음 굳은 모습·성문 문루/성벽/가운데 열림·대장간·기관차·종루 윗면/옆면·격자 말뚝 밑동)·발견");
         }
 
         private static void CheckSave(string savePath, List<string> parts)

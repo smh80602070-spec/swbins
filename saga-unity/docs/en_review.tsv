@@ -368,6 +368,23 @@
 2	go	area.crossing.site.tgate	뒤엉킨 성문	Tangled Gate		
 2	go	area.crossing.site.ticket	표 기계	Ticket Machine		
 2	go	area.crossing.site.tile	기와 조각	Roof-Tile Shards		
+2	go	area.fork.site.birds	날아오르다 멈춘 새 떼	Flock Stopped Mid-Flight		
+2	go	area.fork.site.dronedn	떨어진 보관 드론	Fallen Storage Drone		
+2	go	area.fork.site.flag	측량 깃발	Survey Flag		
+2	go	area.fork.site.forge	대장간	Smithy		
+2	go	area.fork.site.gate	세갈래 고을 성문	Three-Fork Town Gate		
+2	go	area.fork.site.junction	세갈래 길목	Three-Way Junction		
+2	go	area.fork.site.kite	공중에 멈춘 방패연	Shield Kite Stopped in Midair		
+2	go	area.fork.site.laundry	멈춘 빨래	Stopped Laundry		
+2	go	area.fork.site.loco	멈춘 증기 기관차	Stopped Steam Locomotive		
+2	go	area.fork.site.rails	깔다 만 레일 더미	Pile of Half-Laid Rails		
+2	go	area.fork.site.rain	떨어지다 멈춘 빗방울	Raindrops Stopped Mid-Fall		
+2	go	area.fork.site.shard	부러진 격자 조각	Broken Lattice Shard		
+2	go	area.fork.site.statue	고을 신상	Town Idol		
+2	go	area.fork.site.tower	종루	Bell Tower		
+2	go	area.fork.site.tripod	측량 삼각대	Survey Tripod		
+2	go	area.fork.site.well	고을 우물	Town Well		
+2	go	area.fork.site.works	선로 공사장	Railway Works		
 2	go	area.found	{0} — {1} 발견! {2}	{0} — found {1}! {2}		
 2	go	area.go_in	{0} 으로 든다	Enter {0}		
 2	go	area.go_out	마을 쪽으로 돌아간다	Return toward the village		
@@ -1188,6 +1205,7 @@
 2	go	region.enter_new	— {0} —⏎새 지역	— {0} —⏎New Region		
 2	go	region.era_foes	시간 틈 {0}	Time rift: {0}		
 2	go	region.farmland	끝 논밭	Far Paddies		
+2	go	region.fork	세갈래 고을	Three-Fork Town		
 2	go	region.frost	서리봉 고원	Frostpeak Plateau		
 2	go	region.no_foes	적 없음	No foes		
 2	go	region.north_foot	북쪽 산기슭	Northern Foothills		
@@ -4103,6 +4121,7 @@
 3	go	region.crossing.lore	시간 틈 안쪽, 시대가 가장 심하게 뒤엉킨 땅. 멈춘 시계와 떠 있는 섬돌, 뒤엉킨 성문이 한 갈림길에 겹쳐 있다.	Inside the time rift, the land where the ages are most tangled. A stopped clock, floating stepping stones and a tangled gate overlap at a single crossroads.		
 3	go	region.east_grove.lore	호박빛 단풍 숲에 산적 소굴이 숨어 있다. 옛 싸움터 해골과 숲 못의 물귀신도 깨어난다.	A bandit den hides in the amber autumn grove. Old battlefield skeletons and pond ghosts stir as well.		
 3	go	region.farmland.lore	마른 논둑에 도깨비불이 인다. 산적이 가을걷이를 노린다.	Will-o'-wisps flare on the dry paddy banks. Bandits eye the harvest.		
+3	go	region.fork.lore	틈이 처음 찢어지던 순간째 굳은 옛 고을. 세 갈래 길 위 하늘엔 금이 가 있고, 별까마귀와 증기 기관차, 대장간의 불꽃이 그대로 멈춰 있다.	An old town frozen in the very moment the rift first tore. The sky above the three-way road is cracked, and a star-crow, a steam locomotive and the forge flames all stand stopped.		
 3	go	region.frost.lore	고개 너머 눈에 덮인 고원. 옛 산성 터와 기상 관측소, 추락한 비행선이 한 땅에 함께 있다.	A snow-covered plateau beyond the pass, where an old fortress ruin, a weather observatory and a crashed airship share one land.		
 3	go	region.north_foot.lore	무너진 성터 무덤이 흩어진 서늘한 비탈. 해골 병사가 줄지어 지킨다.	A cold slope strewn with graves of a fallen fort. Skeleton soldiers stand guard in rows.		
 3	go	region.river.lore	마을과 남쪽 땅을 가르는 물줄기. 헤엄칠 땐 기운이 다하지 않게.	The stream that divides the village from the south. Mind your stamina when you swim.		

@@ -62,10 +62,12 @@ namespace Saga.Go.Data
                 return false;
             }
             public Site GateSiteObj { get { TrySite(GateSite, out var s); return s; } }
+            /// <summary>109-14-65 나가는 돌기둥이 그 명소에서 떨어진 자리(기본 동쪽 4m) · 땅에 내리는 자리(기본 북쪽 6m) — 명소 가운데에 문루처럼 막는 것이 있는 땅은 바꾼다.</summary>
+            public Vector3 SteleOff = new Vector3(4f, 0f, 0f), ArrivalOff = new Vector3(0f, 0.3f, -6f);
             /// <summary>땅 쪽 나가는 돌기둥(경계비 곁).</summary>
-            public Vector3 SteleGround => GateSiteObj.Pos + new Vector3(4f, 0f, 0f);
+            public Vector3 SteleGround => GateSiteObj.Pos + SteleOff;
             /// <summary>땅에 내리는 자리 — 경계비 북쪽 6m.</summary>
-            public Vector3 ArrivalPos => GateSiteObj.Pos + new Vector3(0f, 0.3f, -6f);
+            public Vector3 ArrivalPos => GateSiteObj.Pos + ArrivalOff;
             /// <summary>지도 쪽에 내리는 자리 — 돌기둥 남쪽 5m.</summary>
             public Vector3 ReturnPos => MapGate() + new Vector3(0f, 0.3f, 5f);
 
@@ -245,7 +247,38 @@ namespace Saga.Go.Data
             S("dronedown", "떨어진 운반 드론", GoEra.Future, 51.8f, -38.7f, false),
             S("caseshard", "깨진 진열장 조각", GoEra.Future, 30.2f, -60.3f, false));
 
-        public static readonly Area[] All = { Skyport, Crossing, Sunken, Amber, Vault };
+        // ---- 열째 지역 세갈래 고을(웹 ⑲-65 `fork.js`) — 11부 무대. 틈이 처음 찢어진 순간째 갈무리가 붙잡아 둔 옛 고을. 서리봉 고원 북쪽 끝 돌기둥(38장 4째 단계에 순간이 풀린 뒤 = 호박 장막이 걷힘)으로도 들지만
+        // 36장엔 금고 가장 깊은 진열장에서 곧장 성문 남쪽에 내린다. 명소 일곱(웹 자리 × 0.45)·작은 발견 열 = 열일곱 ----
+        public static readonly Area Fork = Make(new Area
+        {
+            Id = "fork", NameKo = "세갈래 고을", Hanja = "三岐", GroundHex = "7a6c78",
+            LoreKo = "틈이 처음 찢어지던 순간째 굳은 옛 고을. 세 갈래 길 위 하늘엔 금이 가 있고, 별까마귀와 증기 기관차, 대장간의 불꽃이 그대로 멈춰 있다.",
+            Center = new Vector3(5400f, 0f, -860f),
+            GateSite = "gate",
+            SteleOff = new Vector3(10f, 0f, 22f), ArrivalOff = new Vector3(0f, 0.3f, 18f), // 성문(문루·성벽) 남쪽 바깥에 내리고 나가는 돌기둥도 그 곁
+            MapGate = () => GoFrost.Center + new Vector3(-30f, 0f, -250f), // 서리봉 고원 북쪽 끝(호박 장막 자리)
+            Open = () => GoStory.ForkPassOpen, OpenCh = 38, // 38장 4째 단계에 순간이 풀려야 장막이 걷힌다(36장은 진열장으로만)
+            Fog = new Color(0.8f, 0.72f, 0.88f), Sun = new Color(1f, 0.9f, 0.96f), FogDensity = 1.5f, Danger = 3,
+        },
+            S("gate", "세갈래 고을 성문", GoEra.Past, 0f, 49.5f, true),
+            S("junction", "세갈래 길목", GoEra.Past, 0f, -10.8f, true),
+            S("forge", "대장간", GoEra.Past, -34.7f, 26.1f, true),
+            S("works", "선로 공사장", GoEra.Modern, 54f, 19.4f, true),
+            S("loco", "멈춘 증기 기관차", GoEra.Modern, 47.7f, -21.6f, true),
+            S("tower", "종루", GoEra.Past, 0f, -60.3f, true),
+            S("statue", "고을 신상", GoEra.Past, -24f, -2f, true),
+            S("well", "고을 우물", GoEra.Past, -19.4f, 15.3f, false),
+            S("laundry", "멈춘 빨래", GoEra.Past, -45.5f, 51.8f, false),
+            S("kite", "공중에 멈춘 방패연", GoEra.Past, 26.1f, 41f, false),
+            S("tripod", "측량 삼각대", GoEra.Modern, 32.4f, -6.3f, false),
+            S("rails", "깔다 만 레일 더미", GoEra.Modern, 69.3f, -8.6f, false),
+            S("flag", "측량 깃발", GoEra.Modern, 41f, -41f, false),
+            S("dronedn", "떨어진 보관 드론", GoEra.Future, 49.5f, -54f, false),
+            S("shard", "부러진 격자 조각", GoEra.Future, -32.4f, -41f, false),
+            S("rain", "떨어지다 멈춘 빗방울", GoEra.Modern, -15.3f, -32.4f, false),
+            S("birds", "날아오르다 멈춘 새 떼", GoEra.Past, 17.1f, 27.9f, false));
+
+        public static readonly Area[] All = { Skyport, Crossing, Sunken, Amber, Vault, Fork };
 
         public static bool TryArea(string id, out Area a)
         {

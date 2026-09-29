@@ -2825,6 +2825,25 @@
     { "key": "story.ch35.s7.l6", "value": "모든 굳은 자리가 한꺼번에 풀려요. 그 애가 세상에서 제일 소중히 하는 거라, 제일 단단히 잠가 뒀을 거예요." },
     { "key": "story.ch35.s7.p.a", "value": "같이 가요, 해미 씨." },
     { "key": "story.ch35.s7.p.b", "value": "씨앗 칼은 어디서 났어요?" },
-    { "key": "story.ch35.s7.l7", "value": "진열장 받침 밑에 숨겨 둔 씨앗 칼이요 — 굳은 결을 가르는 칼. 씨앗 보관사 해미, 내가 만든 걸 내가 멈출게요. 같이 가요!" }
+    { "key": "story.ch35.s7.l7", "value": "진열장 받침 밑에 숨겨 둔 씨앗 칼이요 — 굳은 결을 가르는 칼. 씨앗 보관사 해미, 내가 만든 걸 내가 멈출게요. 같이 가요!" },
+    { "key": "region.fork", "value": "세갈래 고을" },
+    { "key": "region.fork.lore", "value": "틈이 처음 찢어지던 순간째 굳은 옛 고을. 세 갈래 길 위 하늘엔 금이 가 있고, 별까마귀와 증기 기관차, 대장간의 불꽃이 그대로 멈춰 있다." },
+    { "key": "area.fork.site.gate", "value": "세갈래 고을 성문" },
+    { "key": "area.fork.site.junction", "value": "세갈래 길목" },
+    { "key": "area.fork.site.forge", "value": "대장간" },
+    { "key": "area.fork.site.works", "value": "선로 공사장" },
+    { "key": "area.fork.site.loco", "value": "멈춘 증기 기관차" },
+    { "key": "area.fork.site.tower", "value": "종루" },
+    { "key": "area.fork.site.statue", "value": "고을 신상" },
+    { "key": "area.fork.site.well", "value": "고을 우물" },
+    { "key": "area.fork.site.laundry", "value": "멈춘 빨래" },
+    { "key": "area.fork.site.kite", "value": "공중에 멈춘 방패연" },
+    { "key": "area.fork.site.tripod", "value": "측량 삼각대" },
+    { "key": "area.fork.site.rails", "value": "깔다 만 레일 더미" },
+    { "key": "area.fork.site.flag", "value": "측량 깃발" },
+    { "key": "area.fork.site.dronedn", "value": "떨어진 보관 드론" },
+    { "key": "area.fork.site.shard", "value": "부러진 격자 조각" },
+    { "key": "area.fork.site.rain", "value": "떨어지다 멈춘 빗방울" },
+    { "key": "area.fork.site.birds", "value": "날아오르다 멈춘 새 떼" }
   ]
 }

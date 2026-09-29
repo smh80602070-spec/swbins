@@ -473,6 +473,24 @@ namespace Saga.Go.Data
         public static bool VaultDeepShown => VaultDeepShownAt(StoryState.Ch);
         public static bool VaultMomentFree => VaultMomentFreeAt(StoryState.Ch, StoryState.StepIndex);
 
+        // 36~38장(⑲-65) — 세갈래 고을(열째 지역) 상수·이야기 상태: 종루 5×5×10m(꼭대기 5m 네모), 격자 말뚝 밑동 1.4m·빛 틀 6m, 멈춘 별까마귀 높이 20m, 하늘 틈 42m, 공중 호박 알갱이 48. 장은 0부터(37장 = 36, 38장 = 37).
+        public const float ForkTowerW = 5f, ForkTowerH = 10f, ForkLatticeH = 6f, ForkCrowY = 20f, ForkRiftY = 42f;
+        public const int ForkSpecks = 48, ForkCh37 = 36, ForkCh38 = 37, ForkCrowStep = 1;
+        public static readonly int[] ForkLatticeFrom = { 2, 5, 7 };
+        /// <summary>진단이 `Chapters` 가 38장까지 없을 때 호박 장막이 걷힌 척한다(땅 진단이 열림 뒤 길을 재도록).</summary>
+        public static bool ForkPassForTest;
+        /// <summary>격자 말뚝 k(0 역참길·1 선로·2 종루 위)의 빛 틀이 사라졌나 — 37장 2·5·7째 단계부터.</summary>
+        public static bool ForkLatticeOffAt(int k, int ch, int step) => Reached(ch, step, ForkCh37, ForkLatticeFrom[k]);
+        /// <summary>멈춘 별까마귀가 아직 있나 — 38장 1째 단계 전까지(그 뒤 이야기 보스로).</summary>
+        public static bool ForkCrowFrozenAt(int ch, int step) => !Reached(ch, step, ForkCh38, ForkCrowStep);
+        /// <summary>순간이 풀렸나(하늘 틈·알갱이·고개 장막 걷힘) — 38장 4째 단계부터(금고 깊은 진열장 유리와 같은 때).</summary>
+        public static bool ForkMomentFreeAt(int ch, int step) => Reached(ch, step, ForkCh38, VaultMomentStep);
+        public static bool ForkLatticeOff(int k) => ForkLatticeOffAt(k, StoryState.Ch, StoryState.StepIndex);
+        public static bool ForkCrowFrozen => ForkCrowFrozenAt(StoryState.Ch, StoryState.StepIndex);
+        public static bool ForkMomentFree => ForkMomentFreeAt(StoryState.Ch, StoryState.StepIndex);
+        /// <summary>서리봉 쪽 돌기둥이 열렸나 — 순간이 풀린 뒤(호박 장막이 걷힌 뒤).</summary>
+        public static bool ForkPassOpen => ForkPassForTest || ForkMomentFree;
+
         /// <summary>시계탑 바늘이 도나 — 19장 6째 단계(태엽을 푼 뒤)부터 늘.</summary>
         public static bool ClockRunning => StoryState.Ch > 18 || (StoryState.Ch == 18 && StoryState.StepIndex >= 5);
 

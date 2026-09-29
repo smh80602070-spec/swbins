@@ -129,6 +129,7 @@ namespace Saga.Go.World
             foreach (var s in a.Sites) _sites[s.Key] = BuildSite(root.transform, a, s);
             if (a.Id == "crossing") BuildRiftIsland(root.transform);
             if (a.Id == "sunken") { BuildSunkenExtras(root.transform, a); BuildRoute(root.transform); }
+            if (a.Id == "fork") BuildForkExtras(root.transform, a);
             // 돌기둥 — 지도 쪽(열린 뒤에만 보임) · 땅 쪽(경계비 곁)
             var stone = Mat("gate_stone", new Color(0.55f, 0.58f, 0.64f));
             var glow = Mat("gate_glow", new Color(0.7f, 0.55f, 1f), 2.5f);
@@ -161,6 +162,7 @@ namespace Saga.Go.World
             else if (a.Id == "sunken") BuildSunkenSite(root.transform, s.Id);
             else if (a.Id == "amber") BuildAmberSite(root.transform, s.Id);
             else if (a.Id == "vault") BuildVaultSite(root.transform, s.Id);
+            else if (a.Id == "fork") BuildForkSite(root.transform, s.Id);
             return root;
         }
 
@@ -685,6 +687,7 @@ namespace Saga.Go.World
             RefreshRoute();
             RefreshAmber();
             RefreshVault();
+            RefreshFork();
             bool powered = !StoryState.OffForTest && GoStory.TrainPowered;
             SetMat("skyport:train_lamp_a", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
             SetMat("skyport:train_lamp_b", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));

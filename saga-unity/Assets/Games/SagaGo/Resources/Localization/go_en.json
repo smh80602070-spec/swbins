@@ -2825,6 +2825,25 @@
     { "key": "story.ch35.s7.l6", "value": "Every frozen spot is released at once. It's what that child treasures most in the world, so it will have locked it away the tightest." },
     { "key": "story.ch35.s7.p.a", "value": "Come with us, Haemi." },
     { "key": "story.ch35.s7.p.b", "value": "Where did you get the seed blade?" },
-    { "key": "story.ch35.s7.l7", "value": "The seed blade I hid under the display stand — a blade that splits frozen grain. Haemi the seed keeper — I'll stop what I made. Let's go together!" }
+    { "key": "story.ch35.s7.l7", "value": "The seed blade I hid under the display stand — a blade that splits frozen grain. Haemi the seed keeper — I'll stop what I made. Let's go together!" },
+    { "key": "region.fork", "value": "Three-Fork Town" },
+    { "key": "region.fork.lore", "value": "An old town frozen in the very moment the rift first tore. The sky above the three-way road is cracked, and a star-crow, a steam locomotive and the forge flames all stand stopped." },
+    { "key": "area.fork.site.gate", "value": "Three-Fork Town Gate" },
+    { "key": "area.fork.site.junction", "value": "Three-Way Junction" },
+    { "key": "area.fork.site.forge", "value": "Smithy" },
+    { "key": "area.fork.site.works", "value": "Railway Works" },
+    { "key": "area.fork.site.loco", "value": "Stopped Steam Locomotive" },
+    { "key": "area.fork.site.tower", "value": "Bell Tower" },
+    { "key": "area.fork.site.statue", "value": "Town Idol" },
+    { "key": "area.fork.site.well", "value": "Town Well" },
+    { "key": "area.fork.site.laundry", "value": "Stopped Laundry" },
+    { "key": "area.fork.site.kite", "value": "Shield Kite Stopped in Midair" },
+    { "key": "area.fork.site.tripod", "value": "Survey Tripod" },
+    { "key": "area.fork.site.rails", "value": "Pile of Half-Laid Rails" },
+    { "key": "area.fork.site.flag", "value": "Survey Flag" },
+    { "key": "area.fork.site.dronedn", "value": "Fallen Storage Drone" },
+    { "key": "area.fork.site.shard", "value": "Broken Lattice Shard" },
+    { "key": "area.fork.site.rain", "value": "Raindrops Stopped Mid-Fall" },
+    { "key": "area.fork.site.birds", "value": "Flock Stopped Mid-Flight" }
   ]
 }
