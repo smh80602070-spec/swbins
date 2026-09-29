@@ -3237,19 +3237,21 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     });
 
     t('시나리오 표 — 카드·갈래·효과가 서로 맞고, 카드마다 과거·현대·미래가 셋 다 있다', function () {
-      var SD = DG.scenarioData, bad = [], ids = {}, FXT = ['gold', 'food', 'sec', 'train', 'loyal', 'rel'];
+      var SD = DG.scenarioData, bad = [], ids = {}, FXT = ['gold', 'food', 'sec', 'train', 'loyal', 'rel', 'recruit'];
       SD.CARDS.forEach(function (c, i) {
         if (ids[c.id]) { bad.push(c.id + ' id 겹침'); } ids[c.id] = 1;
         if (c.no !== i + 1) { bad.push(c.id + ' 번호'); }
         if (!c.mix || !c.mix.past || !c.mix.now || !c.mix.future) { bad.push(c.id + ' 시대 섞기 빈 칸'); }
-        if (!c.when || typeof c.when.minTurn !== 'number' || (i && c.when.minTurn < SD.CARDS[i - 1].when.minTurn)) { bad.push(c.id + ' 때'); }
+        if (!c.when || typeof c.when.minTurn !== 'number' || (i && !c.when.victory && c.when.minTurn < SD.CARDS[i - 1].when.minTurn)) { bad.push(c.id + ' 때'); }
+        if (c.act !== ((SD.CARDS[i].id.charAt(1) | 0) || c.act) || !SD.ACTS[c.act]) { bad.push(c.id + ' 막'); }
+        c.mix && ['past', 'now', 'future'].forEach(function (k) { if (!c.mix[k]) { bad.push(c.id + ' 시대 ' + k); } });
         if (!DG.event.DEFS[c.id] || DG.event.ORDER.indexOf(c.id) >= 0) { bad.push(c.id + ' 정의 등록(무작위 풀에 안 섞여야)'); }
         var ks = c.choices.map(function (x) { return x.k; }).join('');
         if (ks !== 'atkdefutil') { bad.push(c.id + ' 세 갈래 ' + ks); }
         c.choices.forEach(function (ch) {
           if (!ch.label || !ch.hint || !ch.text || !ch.fx.length) { bad.push(c.id + '.' + ch.k + ' 빈 칸'); }
           if (/\{/.test(ch.hint)) { bad.push(c.id + '.' + ch.k + ' 힌트에 칸'); }
-          ch.fx.forEach(function (f) { if (FXT.indexOf(f.t) < 0 || typeof f.n !== 'number') { bad.push(c.id + ' 효과 ' + f.t); } });
+          ch.fx.forEach(function (f) { if (FXT.indexOf(f.t) < 0 || (f.t === 'recruit' ? !DG.off.has(f.id) : typeof f.n !== 'number')) { bad.push(c.id + ' 효과 ' + f.t); } });
         });
       });
       if (bad.length) { throw new Error(bad.join(', ')); }
@@ -3287,7 +3289,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         E.choose('def');
         if (!SC.state().done.r1_first_ally) { bad.push('셋째 카드 기록'); }
         var lines = SC.lines();
-        if (!lines.every(function (x) { return x.state === 'done'; })) { bad.push('기록 줄 ' + JSON.stringify(lines.map(function (x) { return x.state; }))); }
+        if (!lines.slice(0, 3).every(function (x) { return x.state === 'done'; })) { bad.push('기록 줄 ' + JSON.stringify(lines.map(function (x) { return x.state; }))); }
         // 다 끝나면 더는 안 뜬다
         st.turn += 12; E.tick();
         if (E.view() && E.view().tag && E.view().tag.indexOf('1막') >= 0) { bad.push('끝난 카드가 또 뜸'); }
@@ -3299,6 +3301,49 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         if ((E.view() && E.view().tag && E.view().tag.indexOf('1막') >= 0) || SC.lines().some(function (x) { return x.state !== 'legacy'; })) { bad.push('옛 세이브 건너뜀'); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '첫 카드(시작) → 12달 뒤 → 24달 뒤 · 치안 +8 · 금 +300 · 다 끝나면 조용 · 옛 세이브 건너뜀';
+      } finally { window.DG_NO_SCENARIO = true; evDone(); }
+    });
+
+    t('시나리오 2~6막 — 열세 장이 때가 되면 차례로 뜨고, 시간 틈 사람이 등용되며, 결말 카드는 이룬 승리 글로 뜬다', function () {
+      var SC = DG.scenario, SD = DG.scenarioData, bad = [], st = evFresh();
+      window.DG_NO_SCENARIO = false;
+      try {
+        var me = R.myForce();
+        me.gold = 20000;
+        st.turn = 30;
+        // 1막 셋은 끝낸 판으로 — 옛 세이브 건너뜀(24달 넘게 지난 판)
+        E.tick();
+        if (SC.lines().some(function (x) { return x.state !== 'legacy'; })) { bad.push('1막 건너뜀'); }
+        st.turn = 0; st = evFresh(); st.turn = 0; me = R.myForce(); me.gold = 20000;
+        SC.state().done = { r1_start: {}, r1_rift_sign: {}, r1_first_ally: {} };
+        var recruited = {}, order = [];
+        SD.CARDS.slice(3).forEach(function (cd) {
+          st.turn = Math.max(st.turn, cd.when.minTurn);
+          if (cd.when.victory) { st.victories = [{ kind: 'culture', month: st.turn }]; }
+          E.tick();
+          var v = E.view();
+          if (!(v && v.id === cd.id && v.tag.indexOf(cd.act + '막') >= 0 && v.text.indexOf('{') < 0 && v.choices.length === 3)) { bad.push(cd.id + ' 카드 ' + (v && v.id) + (v && v.text.indexOf('{') >= 0 ? ' 칸 남음' : '')); if (v) { E.choose('def'); } return; }
+          order.push(cd.id);
+          var pick = cd.choices.some(function (ch) { return ch.fx.some(function (f) { return f.t === 'recruit'; }); }) ? cd.choices.filter(function (ch) { return ch.fx.some(function (f) { return f.t === 'recruit'; }); })[0].k : 'def';
+          var rec = cd.choices.filter(function (ch) { return ch.k === pick; })[0].fx.filter(function (f) { return f.t === 'recruit'; })[0];
+          var before = me.gold;
+          var r = E.choose(pick);
+          if (!r.ok) { bad.push(cd.id + ' 고르기 ' + r.why); }
+          if (rec) {
+            var rr = off.rec(rec.id);
+            if (rr.force !== 'cao') { bad.push(cd.id + ' 등용 안 됨 ' + rec.id); } else { recruited[rec.id] = 1; }
+          }
+          if (!SC.state().done[cd.id]) { bad.push(cd.id + ' 기록'); }
+        });
+        if (order.length !== SD.CARDS.length - 3) { bad.push('뜬 카드 ' + order.length); }
+        if (SC.lines().some(function (x) { return x.state !== 'done'; })) { bad.push('기록 줄'); }
+        var n = Object.keys(recruited).length;
+        if (n < 4) { bad.push('등용한 시간 틈 사람 ' + n); }
+        st.turn += 12; E.tick();
+        if (E.view() && SD.card(E.view().id)) { bad.push('끝난 뒤 또 뜸'); }
+        E.view() && E.choose('def');
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '2~6막 열세 카드 차례로 뜸 · 시간 틈 사람 ' + n + '명 등용 · 결말 카드(승리 글) · 끝나면 조용';
       } finally { window.DG_NO_SCENARIO = true; evDone(); }
     });
 

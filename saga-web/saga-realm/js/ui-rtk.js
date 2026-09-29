@@ -2121,9 +2121,11 @@
     }
     var scn = global.DG.scenario ? global.DG.scenario.lines() : [];
     if (scn.length) {
-      out += '<div class="loglist"><div class="lrow info"><b>📖 이야기 · 1막 중원의 난</b></div>';
+      out += '<div class="loglist"><div class="lrow info"><b>📖 이야기</b></div>';
+      var lastAct = 0;
       for (var si = 0; si < scn.length; si++) {
         var sl = scn[si];
+        if (sl.act !== lastAct) { lastAct = sl.act; out += '<div class="lrow info"><small class="muted">' + esc(global.DG.scenarioData.ACTS[sl.act] || (sl.act + '막')) + '</small></div>'; }
         out += '<div class="lrow ' + (sl.state === 'done' ? 'good' : 'info') + '">' + sl.emoji + ' ' + esc(sl.title) + ' — ' + (sl.state === 'done' ? '✅ 끝' : sl.state === 'legacy' ? '지나온 길' : sl.state === 'next' ? '▶ 다음 사건' : '·') + '</div>';
       }
       out += '</div>';

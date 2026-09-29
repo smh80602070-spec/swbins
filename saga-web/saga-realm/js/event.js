@@ -908,6 +908,6 @@
     pickNew: pickNew, activeView: activeView, roll: roll,
     addDef: add, addSource: addSource,
     /** 시나리오가 쓰는 손잡이 — 새 판정을 안 만들고 있는 것만 만진다 */
-    h: { nm: nm, wisest: wisest, gold: gold, goldOf: goldOf, adjust: adjust, loyal: loyal, cityRec: cityRec }
+    h: { nm: nm, wisest: wisest, gold: gold, goldOf: goldOf, adjust: adjust, loyal: loyal, cityRec: cityRec, hire: hire, isFree: isFree, mineOf: mineOf }
   };
 })(window);

@@ -34,9 +34,25 @@
     return s;
   }
 
+  function victoryKind() {
+    var v = R().state().victories;
+    if (v && v.length) { return v[0].kind; }
+    var res = R().state().result;
+    return res && res.kind ? res.kind : 'conquest';
+  }
+
+  /** 그 세력에서 무력이 가장 높은 사람 — {맹장} 칸 */
+  function bravest(F) {
+    var list = F ? OFF().ofForce(F) : [], best = null, i;
+    for (i = 0; i < list.length; i++) {
+      if (!best || global.DG.hero.stats(list[i].id).might > global.DG.hero.stats(best.id).might) { best = list[i]; }
+    }
+    return best ? E().h.nm(best.id) : '맹장';
+  }
+
   function fill(text, c) {
     var b = c.b ? E().h.nm(c.b) : '이웃 군주';
-    return String(text).replace(/\{책사\}/g, c.a ? E().h.nm(c.a) : '책사').replace(/\{이웃\}/g, b);
+    return String(text).replace(/\{책사\}/g, c.a ? E().h.nm(c.a) : '책사').replace(/\{이웃\}/g, b).replace(/\{맹장\}/g, c.force ? bravest(c.force) : '맹장');
   }
 
   /** 이웃 = 다른 살아 있는 세력 하나의 군주(가까운 쪽을 따지지 않고 첫 세력) */
@@ -53,6 +69,10 @@
     else if (fx.t === 'sec') { h.adjust(cy, 'sec', fx.n, 0, 100); }
     else if (fx.t === 'train') { h.adjust(cy, 'train', fx.n, 0, 100); }
     else if (fx.t === 'loyal' && c.a) { h.loyal(c.a, fx.n); }
+    else if (fx.t === 'recruit') {
+      if (h.isFree(fx.id)) { h.hire(fx.id, cy, F, fx.bonus || 0); }
+      else if (h.mineOf(fx.id, F)) { h.loyal(fx.id, 5); }
+    }
     else if (fx.t === 'rel' && c.b) {
       var rec = OFF().rec(c.b), DIP = global.DG.diplo;
       if (rec && rec.force && DIP && DIP.addRelation) { DIP.addRelation(F, rec.force, fx.n); }
@@ -64,7 +84,7 @@
       E().addDef({
         id: cd.id, name: cd.title, emoji: cd.emoji, tag: cd.tag, chain: true,
         valid: function () { return null; },
-        text: function (c) { return fill(cd.text, c); },
+        text: function (c) { return fill(cd.textBy ? (cd.textBy[victoryKind()] || cd.text) : cd.text, c); },
         choices: cd.choices.map(function (ch) {
           return {
             k: ch.k, label: fill(ch.label, {}), hint: ch.hint, cost: ch.cost || 0,
@@ -80,6 +100,7 @@
 
   function due(cd, F) {
     var st = R().state(), s = save(), since = (st.turn || 0) - s.t0;
+    if (cd.when.victory) { return !!(st.victories && st.victories.length) || (st.result && st.result.kind); }
     if (since >= cd.when.minTurn) { return true; }
     return !!(cd.when.orCities && R().citiesOf(F).length >= cd.when.orCities);
   }
@@ -113,7 +134,7 @@
     var s = save(), out = [], next = false;
     CD().CARDS.forEach(function (c) {
       var d = s.done[c.id];
-      out.push({ id: c.id, no: c.no, title: c.title, emoji: c.emoji, state: d ? (d.legacy ? 'legacy' : 'done') : (!next ? 'next' : 'wait'), k: d ? d.k : '' });
+      out.push({ id: c.id, no: c.no, act: c.act, title: c.title, emoji: c.emoji, state: d ? (d.legacy ? 'legacy' : 'done') : (!next ? 'next' : 'wait'), k: d ? d.k : '' });
       if (!d && !next) { next = true; }
     });
     return out;
