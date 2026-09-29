@@ -4233,6 +4233,181 @@
 2	realm	plot.rumor_effect	{0} 훈련도 {1} → {2}	{0} training {1} → {2}		
 2	realm	plot.rumor_name	유언비어	Rumor Campaign		
 2	realm	plot.succeeded	{0} {1} 성공 — {2}	{0} {1} succeeded — {2}		
+2	realm	scenario.adviser	책사	the adviser		
+2	realm	scenario.champion	맹장	the champion		
+2	realm	scenario.hint.cost	금 {0} 든다	costs {0} gold		
+2	realm	scenario.hint.food	수도 군량 +{0}	Capital food +{0}		
+2	realm	scenario.hint.gold	금 +{0}	Gold +{0}		
+2	realm	scenario.hint.recruit	{0} 합류	{0} joins		
+2	realm	scenario.hint.sec	수도 치안 +{0}	Capital security +{0}		
+2	realm	scenario.hint.tech	수도 기술 +{0}	Capital tech +{0}		
+2	realm	scenario.hint.train	수도 훈련 +{0}	Capital training +{0}		
+2	realm	scenario.neighbour	이웃 군주	the neighboring lord		
+2	realm	scenario.no_card	없는 카드	No such card		
+2	realm	scenario.no_gold	금이 모자라 못 했다 — 다음 달에 다시 묻는다	Not enough gold — we will ask again next month		
+2	realm	scenario.r1_first_ally.atk.label	선전 포고로 답한다	Answer with a declaration of war		
+2	realm	scenario.r1_first_ally.atk.result	예물을 돌려보냈다 — 국경에 긴장이 돈다	We sent the gifts back — tension runs along the border		
+2	realm	scenario.r1_first_ally.def.label	화친을 받아들인다	Accept the truce		
+2	realm	scenario.r1_first_ally.def.result	설전 끝에 화친 조건을 더 얻어 냈다	After the debate we won better terms for the truce		
+2	realm	scenario.r1_first_ally.text	{이웃} 의 사신이 예물을 들고 왔다. 예물 속에는 빛나는 부적이 섞여 있고, 재야의 한 논객이 끼어들어 "손잡는 편이 덜 잃는다" 며 설전을 청한다. 싸울지 손잡을지 정해야 한다.	An envoy from {neighbour} arrived with gifts. Among the gifts is a glowing talisman, and a freelance debater cuts in, demanding a debate: "Joining hands loses less." We must decide whether to fight or to ally.		
+2	realm	scenario.r1_first_ally.title	첫 화친	The First Truce		
+2	realm	scenario.r1_first_ally.util.label	예물을 더해 우호를 산다	Add gifts to buy goodwill		
+2	realm	scenario.r1_first_ally.util.result	예물을 더해 보내니 사신이 웃었다	We sent more gifts and the envoy smiled		
+2	realm	scenario.r1_rift_sign.atk.label	봉화를 올려 널리 알린다	Light the beacons and spread the word		
+2	realm	scenario.r1_rift_sign.atk.result	봉화가 이어 오르자 군사의 기세가 올랐다	The beacons lit one after another and the soldiers' spirits rose		
+2	realm	scenario.r1_rift_sign.def.label	성문을 닫고 살핀다	Close the gates and watch		
+2	realm	scenario.r1_rift_sign.def.result	성문을 닫고 지켜보니 백성이 안심했다	With the gates shut and the situation watched, the people felt safe		
+2	realm	scenario.r1_rift_sign.text	북쪽 하늘에 가느다란 금이 갔다. 봉화대 병사가 금 아래에서 낯선 수레를 보았다 — 쇠 껍질에 바퀴가 달렸고 안은 비어 있다. 금에서는 옅은 빛이 새어 나오며, 바람이 그쪽으로 빨려 든다.	A thin crack has split the northern sky. A beacon soldier saw a strange cart beneath the crack — an iron shell on wheels, empty inside. Faint light seeps out of the crack, and the wind is being sucked toward it.		
+2	realm	scenario.r1_rift_sign.title	균열의 울림	The Rift's Echo		
+2	realm	scenario.r1_rift_sign.util.label	척후를 금 아래로 보낸다	Send scouts beneath the crack		
+2	realm	scenario.r1_rift_sign.util.result	척후가 수레 안에서 쓸 만한 것을 가져왔다	The scouts brought back something useful from the cart		
+2	realm	scenario.r1_start.atk.label	이웃 땅으로 넓히자	Expand into the neighbor's land		
+2	realm	scenario.r1_start.atk.result	{책사} 이(가) 첫 출정 길을 그었다 — 곳간이 든든해졌다	{adviser} drew our first march route — the granary feels fuller		
+2	realm	scenario.r1_start.def.label	성부터 다지자	Strengthen the castle first		
+2	realm	scenario.r1_start.def.result	성문과 곳간을 손보았다 — {책사} 이(가) 믿음을 얻었다	The gates and granary were repaired — {adviser} earned trust		
+2	realm	scenario.r1_start.text	{책사} 이(가) 천하 지도를 펴고 첫 목표를 묻는다. 지도 끝에는 어제까지 없던 땅이 희미하게 그려져 있다. 지도 위에는 이 시대 것이 아닌 볼펜 한 자루가 떨어져 있고, 가장자리로 빛 얼룩이 번져 간다.	{adviser} spreads out the map of the realm and asks for our first goal. At the edge of the map, a land that did not exist yesterday is faintly drawn. A ballpoint pen from another age lies on the map, and a smear of light is spreading along its border.		
+2	realm	scenario.r1_start.title	첫 성의 밤	The First Night in the Castle		
+2	realm	scenario.r1_start.util.label	빛 얼룩부터 살핀다	Look into the light smear first		
+2	realm	scenario.r1_start.util.result	얼룩 근처에서 옛 주화 꾸러미가 나왔다	A bundle of old coins turned up near the smear		
+2	realm	scenario.r2_debate.atk.label	명변을 군사로 등용한다	Recruit Myeongbyeon as an adviser		
+2	realm	scenario.r2_debate.atk.result	명변이 확성기를 들고 서당 앞에서 큰 설전을 벌였다	Myeongbyeon held a great debate in front of the academy with his megaphone		
+2	realm	scenario.r2_debate.def.label	서고를 정비한다	Tidy up the library		
+2	realm	scenario.r2_debate.def.result	서고가 정돈되니 배우러 오는 이가 늘었다	With the library in order, more people came to learn		
+2	realm	scenario.r2_debate.text	논객 명변이 확성기를 들고 찾아왔다. "이름난 재야 학자를 설전으로 불러 옵시다. 서당에 사람이 모이면 성이 밝아집니다." 퀴즈 판이 빛 판으로 바뀐 서고 앞에서 {책사} 도 고개를 끄덕인다.	The debater Myeongbyeon arrives with a megaphone. "Let's summon the famous scholars of the countryside to a debate. When people gather at the academy, the castle grows brighter." In front of the library, where the quiz board has become a light board, {adviser} nods too.		
+2	realm	scenario.r2_debate.title	논객의 설전	The Debater's Argument		
+2	realm	scenario.r2_debate.util.label	학자에게 예물을 보낸다	Send gifts to the scholar		
+2	realm	scenario.r2_debate.util.result	학자가 예물에 감복해 서고에 이름을 올렸다	The scholar, moved by the gifts, put his name in the library		
+2	realm	scenario.r2_fallen.atk.label	강서를 직접 찾아 등용한다	Recruit Gangseo in person		
+2	realm	scenario.r2_fallen.atk.result	강서가 특공대 제복 그대로 찾아와 절도 있게 인사했다	Gangseo came in his special forces uniform and saluted crisply		
+2	realm	scenario.r2_fallen.def.label	소문을 더 모은다	Gather more rumors		
+2	realm	scenario.r2_fallen.def.result	소문을 모아 지도에 표시하니 성 안이 술렁임을 그쳤다	We marked the rumors on the map, and the castle stopped buzzing		
+2	realm	scenario.r2_fallen.text	재야를 탐색하던 척후가 이상한 소문을 물어 왔다. 현대 옷차림의 사람 다섯이 하늘에서 떨어졌다는 것이다. 그중 강서라는 이는 특공대장이었다고 하고, 노트북을 든 도하의 화면에는 아직 그려지지 않은 앞날의 지도가 떠 있다 한다. {책사} 이(가) 한 사람부터 찾자고 한다.	Scouts searching the countryside brought back a strange rumor: five people in modern clothes fell from the sky. One, named Gangseo, is said to have been a special forces captain, and the screen of Doha's laptop reportedly shows a map of a future not yet drawn. {adviser} suggests we find one of them first.		
+2	realm	scenario.r2_fallen.title	하늘에서 떨어진 사람들	People Who Fell from the Sky		
+2	realm	scenario.r2_fallen.util.label	도하의 노트북부터 산다	Buy Doha's laptop first		
+2	realm	scenario.r2_fallen.util.result	도하가 값을 치른 노트북 앞에서 앞날 지도를 펼쳐 보였다	Doha unfolded the future map before the laptop we paid for		
+2	realm	scenario.r2_plains.atk.label	강서의 야습을 허락한다	Approve Gangseo's night raid		
+2	realm	scenario.r2_plains.atk.result	야습이 적진의 곳간을 태우자 군사의 기세가 하늘을 찔렀다	The raid burned the enemy's granary and our soldiers' spirits soared		
+2	realm	scenario.r2_plains.def.label	성 안에서 버틴다	Hold out inside the castle		
+2	realm	scenario.r2_plains.def.result	태양광 등이 성벽 위를 환히 밝히니 적이 다가오지 못했다	Solar lamps lit the ramparts brightly and the enemy could not approach		
+2	realm	scenario.r2_plains.text	{이웃} 의 대군이 큰 들판에 진을 쳤다. 강서가 특공대를 이끌고 밤에 야습하자고 제안하고, 금담은 태양광 등을 내밀며 "밤을 낮처럼 쓰자" 한다. 대군과 군량을 두고 한 판을 정해야 한다.	The great army of {neighbour} has camped on the wide plain. Gangseo proposes a night raid with his special forces, and Geumdam offers a solar lamp, saying "Let's use the night like day." With a great army and our provisions at stake, we must settle this in one battle.		
+2	realm	scenario.r2_plains.title	관도 결전	Showdown on the Great Road		
+2	realm	scenario.r2_plains.util.label	금담의 등을 큰 값에 산다	Buy Geumdam's lamps at a high price		
+2	realm	scenario.r2_plains.util.result	등불로 밤 수레길이 열려 군량이 넉넉히 들어왔다	The lamps opened the night supply road and provisions poured in		
+2	realm	scenario.r3_duel.atk.label	{맹장}이 직접 받아 친다	{champion} takes the duel in person		
+2	realm	scenario.r3_duel.atk.result	일기토 끝에 영점이 무기를 내리고 절했다	After the duel, Yeongjeom lowered his weapon and bowed		
+2	realm	scenario.r3_duel.def.label	구경꾼을 물리고 정중히 청한다	Clear the onlookers and ask politely		
+2	realm	scenario.r3_duel.def.result	구경꾼을 물리니 영점이 한 걸음 물러섰다	With the onlookers cleared, Yeongjeom stepped back one pace		
+2	realm	scenario.r3_duel.text	의체 무사 영점이 성 앞 공터에 서서 "나보다 강한 장수 밑에만 서겠다" 한다. 구경꾼들이 휴대폰 불빛을 켜 들고 모여들었다. 영점의 팔이 기계 소리를 낸다. 누가 이 일기토를 받겠는가.	The cyborg warrior Yeongjeom stands in the open ground before the castle: "I will serve only under someone stronger than me." Onlookers gather with their phone lights on. Yeongjeom's arm whirs with machinery. Who will take this duel?		
+2	realm	scenario.r3_duel.title	의체 무사의 일기토	The Cyborg Warrior's Duel		
+2	realm	scenario.r3_duel.util.label	예물과 술로 마음을 산다	Win his heart with gifts and wine		
+2	realm	scenario.r3_duel.util.result	술잔 앞에서 영점이 기계 팔을 내려놓았다	Before the wine cup, Yeongjeom lowered his mechanical arm		
+2	realm	scenario.r3_navigator.atk.label	성연을 군사로 삼는다	Take Seongyeon as an adviser		
+2	realm	scenario.r3_navigator.atk.result	성연이 항법 판을 펴 강의 바람을 손가락으로 짚었다	Seongyeon unfolded the board and pointed to the river wind with a finger		
+2	realm	scenario.r3_navigator.def.label	기록을 고이 간직한다	Keep the records safely		
+2	realm	scenario.r3_navigator.def.result	기록을 서고에 넣어 두고 바람이 바뀌길 기다렸다	We stored the records in the library and waited for the wind to change		
+2	realm	scenario.r3_navigator.text	항법사 성연이 항법 판을 들고 찾아왔다. "이 강의 바람이 사흘 뒤에 바뀝니다. 미래 기록에 그렇게 남아 있습니다." 도하가 기록을 해독해 보니 정말로 같은 말이 적혀 있었다. 강가 수채화 같은 풍경 위에 항법 판의 빛이 겹친다.	The navigator Seongyeon comes with a navigation board. "The wind on this river changes in three days. It is written so in the future records." Doha deciphered the records and found the very same words. The light of the board overlays a riverside scene like a watercolor.		
+2	realm	scenario.r3_navigator.title	항법사가 본 강	The River the Navigator Saw		
+2	realm	scenario.r3_navigator.util.label	궤도에게도 사람을 보낸다	Send word to Gwedo as well		
+2	realm	scenario.r3_navigator.util.result	궤도가 탐사 장비를 메고 성 문을 두드렸다	Gwedo knocked on the castle gate with survey gear on his back		
+2	realm	scenario.r3_river.atk.label	바람 예보를 믿고 화공을 쓴다	Trust the forecast and use fire		
+2	realm	scenario.r3_river.atk.result	바람이 예보대로 바뀌어 불길이 적선을 삼켰다	The wind changed as forecast and the flames swallowed the enemy ships		
+2	realm	scenario.r3_river.def.label	구조선으로 강가를 지킨다	Guard the bank with rescue boats		
+2	realm	scenario.r3_river.def.result	구조선이 강가 백성을 실어 나르니 성 안이 든든해졌다	The rescue boats ferried the riverside people and the castle felt secure		
+2	realm	scenario.r3_river.text	강 위에서 큰 싸움이 다가온다. 성연이 "사흘 뒤 바람이 바뀌니 그때 불을 쓰라" 하고, 공석은 구조선을 끌어와 강가를 지키자 한다. 바람 예보를 믿을지, 수군과 화공으로 정면을 택할지 정해야 한다.	A great battle approaches on the river. Seongyeon says, "The wind changes in three days — use fire then," while Gongseok suggests bringing rescue boats to protect the riverbank. We must decide whether to trust the wind forecast or take the front with navy and fire attack.		
+2	realm	scenario.r3_river.title	적벽 강 위	On the Red Cliff River		
+2	realm	scenario.r3_river.util.label	수군을 늘려 정면으로 간다	Expand the navy and go head-on		
+2	realm	scenario.r3_river.util.result	수군을 늘려 정면에서 맞서니 적이 물러갔다	We enlarged the navy and met them head-on — the enemy withdrew		
+2	realm	scenario.r4_plague.atk.label	거해의 근원을 직접 친다	Strike Geohae's source directly		
+2	realm	scenario.r4_plague.atk.result	방호복 부대가 근원을 봉쇄하니 역병이 잦아들었다	The protective-suit unit sealed off the source and the plague subsided		
+2	realm	scenario.r4_plague.def.label	백신 공장을 세운다	Build a vaccine factory		
+2	realm	scenario.r4_plague.def.result	공장이 백신을 쏟아내 성 안이 나았다	The factory poured out vaccines and the castle recovered		
+2	realm	scenario.r4_plague.text	폐허에서 번지는 역병의 근원이 드러났다. 금담이 백신 공장을 세우자 하고, 의원들은 약재를 모아 왔다. 은하가 방호복을 입고 이계 부생의 정체를 확인했다. 성 안 백성이 기다리고 있다.	The source of the plague spreading from the ruins has been revealed. Geumdam proposes building a vaccine factory, and the physicians have gathered herbs. Eunha, in a protective suit, confirmed the identity of the other-realm rot. The people inside the castle are waiting.		
+2	realm	scenario.r4_plague.title	역병의 근원	The Source of the Plague		
+2	realm	scenario.r4_plague.util.label	은하에게 방호를 맡긴다	Entrust the protection to Eunha		
+2	realm	scenario.r4_plague.util.result	은하가 방호복을 입고 성 문 앞에 섰다	Eunha stood at the castle gate in a protective suit		
+2	realm	scenario.r4_rift.atk.label	성문 밖에서 맞받는다	Meet them outside the gate		
+2	realm	scenario.r4_rift.atk.result	성문 밖에서 맞받으니 성혼의 기세가 꺾였다	Meeting them outside the gate broke the star-marks' momentum		
+2	realm	scenario.r4_rift.def.label	성벽을 걸고 지킨다	Hold the walls and defend		
+2	realm	scenario.r4_rift.def.result	성벽이 버티니 유성 무리가 흩어졌다	The walls held and the meteor swarm scattered		
+2	realm	scenario.r4_rift.text	균열의 문이 활짝 열렸다. 종왕이 성혼과 유성 무리를 이끌고 내려온다. 성벽 위에는 강서의 특공대가 서 있고, 궤도의 탐사 장비가 이계 성혼의 정체를 알아낸다. 세 시대가 한 성벽에 모였다.	The gate of the rift has swung wide open. Jongwang leads a swarm of star-marks and meteors down. On the ramparts stand Gangseo's special forces, and Gwedo's survey gear uncovers the true nature of the other-realm star-marks. Three ages have gathered on one wall.		
+2	realm	scenario.r4_rift.title	균열의 왕	The King of the Rift		
+2	realm	scenario.r4_rift.util.label	궤도의 장비로 성혼을 읽는다	Read the star-marks with Gwedo's gear		
+2	realm	scenario.r4_rift.util.result	장비가 성혼의 약한 자리를 짚어 주었다	The gear pointed out the star-marks' weak spot		
+2	realm	scenario.r4_tomb.atk.label	{맹장}이 일기토를 받는다	{champion} accepts the duel		
+2	realm	scenario.r4_tomb.atk.result	{맹장} 의 칼이 종소리를 갈랐다 — 백기가 물러났다	{champion}'s blade split the tolling bells — Baekgi withdrew		
+2	realm	scenario.r4_tomb.def.label	망자를 봉인한다	Seal the dead		
+2	realm	scenario.r4_tomb.def.result	봉인비가 세워지니 종소리가 그쳤다	A sealing stele was raised and the bells fell silent		
+2	realm	scenario.r4_tomb.text	묘역의 종소리가 멎지 않는다. 백기가 이계 군세를 걸고 일기토를 청했다. 공석은 망자 명부를 정리해 이름을 대조하고, 영점의 의체는 망자 기운에 반응해 삐걱댄다. 이긴 뒤 이계 장수를 어떻게 할지도 정해야 한다.	The bells of the tomb field will not stop tolling. Baekgi has offered a duel with his other-realm army at stake. Gongseok is sorting the register of the dead and matching names, and Yeongjeom's cyborg body creaks in response to the aura of the dead. We must also decide what to do with the other-realm general after winning.		
+2	realm	scenario.r4_tomb.title	망자의 맹세	The Oath of the Dead		
+2	realm	scenario.r4_tomb.util.label	이계 장수를 등용한다	Recruit the other-realm general		
+2	realm	scenario.r4_tomb.util.result	이질의 장수가 무릎을 꿇었다(충성은 낮다)	The alien general knelt (his loyalty is low)		
+2	realm	scenario.r5_silk.atk.label	관문을 열고 병사를 보낸다	Open the pass and send soldiers		
+2	realm	scenario.r5_silk.atk.result	병사가 관문을 지키니 대상이 줄을 이었다	Soldiers guarded the pass and the caravans formed a line		
+2	realm	scenario.r5_silk.def.label	길을 열되 통행세를 받는다	Open the road but charge tolls		
+2	realm	scenario.r5_silk.def.result	통행세가 곳간을 채웠다	The tolls filled the granary		
+2	realm	scenario.r5_silk.text	서쪽에서 대상 행렬이 길을 열어 달라 청한다. 사막 트럭이 낙타 곁을 달리고, 궤도의 탐사 드론이 모래 밑 옛 도시를 찾고 있다. 길을 열면 교역이 들어오지만 관문을 지킬 병사가 든다.	A caravan from the west asks us to open the road. Desert trucks run beside the camels, and Gwedo's survey drone searches for an old city beneath the sand. Opening the road brings trade, but guarding the pass will cost soldiers.		
+2	realm	scenario.r5_silk.title	실크로드 대상	The Silk Road Caravan		
+2	realm	scenario.r5_silk.util.label	드론에게 길 안내를 맡긴다	Leave the guiding to the drone		
+2	realm	scenario.r5_silk.util.result	드론이 길을 비추니 짐이 하나도 잃지 않고 닿았다	The drone lit the road and not a single load was lost		
+2	realm	scenario.r5_south.atk.label	수군을 보내 섬을 살핀다	Send the navy to inspect the islands		
+2	realm	scenario.r5_south.atk.result	수군이 섬을 살피니 표류물에서 병기가 나왔다	The navy inspected the islands and found weapons among the flotsam		
+2	realm	scenario.r5_south.def.label	포구를 다진다	Reinforce the harbor		
+2	realm	scenario.r5_south.def.result	포구가 다져져 배가 안전히 드나들었다	With the harbor strengthened, ships came and went safely		
+2	realm	scenario.r5_south.text	남해의 섬들이 이어 보인다. 목선이 늘어선 포구에서 공석이 구조선을 띄우고, 성연이 항법으로 항로를 연다. 섬마다 다른 시대의 것들이 표류해 왔다는 소문이 있다.	The islands of the southern sea appear one after another. At the harbor lined with wooden boats, Gongseok launches rescue boats and Seongyeon opens a sea lane by navigation. Rumor has it that things from different ages have drifted to each island.		
+2	realm	scenario.r5_south.title	남해의 배	Ships of the Southern Sea		
+2	realm	scenario.r5_south.util.label	항로를 열어 교역한다	Open the sea lane and trade		
+2	realm	scenario.r5_south.util.result	성연의 항법으로 남해 교역이 열렸다	Seongyeon's navigation opened southern sea trade		
+2	realm	scenario.r5_west.atk.label	군세를 보여 위세를 세운다	Show our strength to assert authority		
+2	realm	scenario.r5_west.atk.result	위세에 눌린 사신이 조용해졌다	The envoy, overawed, grew quiet		
+2	realm	scenario.r5_west.def.label	화친을 청한다	Ask for peace		
+2	realm	scenario.r5_west.def.result	화친 조약이 맺어졌다	A peace treaty was signed		
+2	realm	scenario.r5_west.text	서쪽 끝 나라의 사신이 이르렀다. 도하가 번역기를 들어 말을 옮기고, 은하가 본 별 지도에 그 나라가 표시되어 있다. 화친할지, 싸울지, 교역할지 정해야 한다.	An envoy from a country at the far western edge has arrived. Doha translates with a translator, and the star map Eunha saw marks that country. We must decide whether to make peace, to fight, or to trade.		
+2	realm	scenario.r5_west.title	대진의 사신	The Envoy from the Far West		
+2	realm	scenario.r5_west.util.label	교역을 튼다	Open trade		
+2	realm	scenario.r5_west.util.result	별 지도를 따라 교역이 열렸다	Trade opened along the star map		
+2	realm	scenario.r6_end.atk.label	돌아가는 이를 배웅한다	See off those who return		
+2	realm	scenario.r6_end.atk.result	귀환 항로에 등불이 켜졌고 시간 틈 사람들이 손을 흔들었다	Lanterns were lit along the route home and the time-rift people waved		
+2	realm	scenario.r6_end.def.label	남는 이와 함께 지낸다	Live together with those who stay		
+2	realm	scenario.r6_end.def.result	남은 이들이 성 안에 눌러앉아 이 시대의 이웃이 되었다	Those who stayed settled in the castle and became neighbors of this age		
+2	realm	scenario.r6_end.text	천하의 끝이 다가왔다. 잔치의 등불 아래 도하가 기록 영상을 찍고, 성연이 귀환 항로를 펼쳐 보인다. 시간 틈 사람들은 제 시대로 돌아갈지 남을지 저마다 고민한다. 이 판의 이야기는 여기서 매듭짓는다.	The end of the realm draws near. Under the feast lanterns Doha records a video, and Seongyeon unfolds the route home. The people from the time rift each wonder whether to return to their own age or stay. The story of this game ends here.		
+2	realm	scenario.r6_end.text.conquest	천하가 하나가 되었다. 통일 잔치의 등불 아래 도하가 기록 영상을 찍고, 성연이 귀환 항로를 펼쳐 보인다. 시간 틈 사람들은 제 시대로 돌아갈지 남을지 저마다 고민한다.	The realm has become one. Under the lanterns of the unification feast Doha records a video, and Seongyeon unfolds the route home. The people from the time rift each wonder whether to return to their own age or stay.		
+2	realm	scenario.r6_end.text.culture	서고에 세 시대의 책이 나란히 꽂혔다. 도하가 기록 영상을 찍고 성연이 귀환 항로를 그려 넣었다. 시간 틈 사람들은 책 곁에 남을지 고민한다.	Books of three ages now stand side by side in the library. Doha records a video and Seongyeon draws in the route home. The people from the time rift wonder whether to stay beside the books.		
+2	realm	scenario.r6_end.text.diplomacy	화친의 잔치가 열렸다. 도하가 기록 영상을 찍고 성연이 귀환 항로를 펼친다. 이웃 나라 사신과 시간 틈 사람들이 한 자리에 앉았다.	A feast of peace has been held. Doha records a video and Seongyeon unfolds the route home. Envoys of the neighboring lands and the people from the time rift sit in one place.		
+2	realm	scenario.r6_end.text.hegemony	패권의 문턱을 넘었다. 잔치 등불 아래 시간 틈 사람들이 도하의 기록 영상 앞에 모였다. 성연이 귀환 항로를 펼치며 돌아갈 이는 돌아가라 한다.	We have crossed the threshold of hegemony. Under the feast lanterns the people from the time rift gathered before Doha's video. Seongyeon unfolds the route home, telling those who wish to return to go.		
+2	realm	scenario.r6_end.text.survival	이백마흔 달을 버텨 낸 성이 등불을 밝혔다. 도하가 기록 영상을 찍고 성연이 귀환 항로를 펼친다. 시간 틈 사람들은 이 성에 남기로 마음이 기운다.	The castle that endured two hundred and forty months has lit its lanterns. Doha records a video and Seongyeon unfolds the route home. The people from the time rift are inclined to stay in this castle.		
+2	realm	scenario.r6_end.title	천하의 끝	The End of the Realm		
+2	realm	scenario.r6_end.util.label	기록 영상을 서고에 남긴다	Leave the video in the library		
+2	realm	scenario.r6_end.util.result	기록 영상은 서고에서 세 시대를 잇는 책이 되었다	The video became a book linking three ages in the library		
+2	realm	scenario.r7_after.atk.label	아홉을 장수로 세워 나아간다	Appoint the nine as officers and advance		
+2	realm	scenario.r7_after.atk.result	아홉이 각자 제 시대의 솜씨로 군사를 가르쳤다	Each of the nine drilled the troops with the skills of their own age		
+2	realm	scenario.r7_after.def.label	성터를 성벽으로 둘러 지킨다	Ring the site with a wall and defend		
+2	realm	scenario.r7_after.def.result	성터 둘레에 낮은 성벽이 올라 백성이 마음을 놓았다	A low wall rose around the site and the people relaxed		
+2	realm	scenario.r7_after.text	틈이 남긴 것을 살필 때가 왔다. {책사} 이(가) 성터에서 소식을 모아 왔다.	It is time to examine what the rift left behind. {adviser} has gathered news from the castle site.		
+2	realm	scenario.r7_after.textk.atk	틈이 닫히고 열두 달이 지났다. 하늘의 금은 흔적도 없고 귀환 항로는 사라졌다. 아홉은 이 시대에 남기로 했고, 도하는 새 관측 기록에 "이곳의 하늘" 이라 적었다. 성연은 항로 대신 성벽 위 별자리를 그린다. {책사} 이(가) 성터에 비석을 세우자고 한다.	Twelve months have passed since the rift closed. There is no trace of the crack in the sky and the route home has vanished. The nine decided to stay in this age, and Doha wrote "the sky of this place" in her new observation records. Instead of a route, Seongyeon draws the constellations above the ramparts. {adviser} suggests raising a stele at the castle site.		
+2	realm	scenario.r7_after.textk.def	틈을 두고 열두 달이 지났다. 하늘의 금은 조금 넓어졌다 줄었다를 되풀이한다. 아홉은 번갈아 성터를 지키고, 도하의 관측 기록은 벌써 한 권을 채웠다. 성연은 흔들리는 항로를 손보며 "이대로 두어도 좋겠다" 고 웃는다.	Twelve months have passed since we left the rift open. The crack in the sky widens and narrows again and again. The nine take turns guarding the site, and Doha's observation records have already filled a volume. Seongyeon tends the swaying route and laughs, "It might be fine to leave it like this."		
+2	realm	scenario.r7_after.textk.util	틈을 길로 쓰고 열두 달이 지났다. 세 시대의 물자와 소식이 성터를 오간다. 도하는 새 관측 기록에 오가는 이를 세고, 성연은 항로에 등불을 하나씩 더 건다. {책사} 이(가) 오가는 것들을 어떻게 다스릴지 묻는다.	Twelve months have passed since we made the rift a road. Goods and news of three ages travel to and from the castle site. Doha counts those who come and go in her new observation records, and Seongyeon hangs one more lantern on the route each time. {adviser} asks how we should govern what comes and goes.		
+2	realm	scenario.r7_after.title	틈이 남긴 것	What the Rift Left Behind		
+2	realm	scenario.r7_after.util.label	틈에서 나온 것을 거둔다	Gather what came out of the rift		
+2	realm	scenario.r7_after.util.result	성터에서 세 시대의 쓸 만한 것들이 나왔다	Useful things of three ages turned up at the castle site		
+2	realm	scenario.r7_end.atk.label	아홉과 함께 잔을 든다	Raise a cup with the nine		
+2	realm	scenario.r7_end.atk.result	아홉과 이 성의 사람들이 함께 잔을 들었다 — 웃음이 성터를 채웠다	The nine and the castle's people raised their cups together — laughter filled the site		
+2	realm	scenario.r7_end.def.label	이 성을 모두의 고향으로 삼는다	Make this castle everyone's home		
+2	realm	scenario.r7_end.def.result	아홉이 이 성을 고향이라 불렀다 — 성 안 골목마다 등불이 켜졌다	The nine called this castle home — lanterns were lit in every alley		
+2	realm	scenario.r7_end.text	틈의 이야기가 매듭지어질 때가 왔다. 성터에 잔치가 차려진다.	The time has come to bring the story of the rift to a close. A feast is laid out at the castle site.		
+2	realm	scenario.r7_end.textk.atk	닫힌 하늘 아래 마지막 잔치가 열렸다. 성터 비석 옆에서 아홉이 잔을 든다. 도하가 마지막 영상을 찍고, 성연이 항로 대신 별자리를 새겼다. 돌아갈 길은 없어도 갈 곳은 이곳이라고, {책사} 이(가) 비문에 적었다. 틈의 이야기는 여기서 끝난다.	The last feast was held beneath the closed sky. Beside the stele at the castle site, the nine raise their cups. Doha records a final video, and Seongyeon carved constellations in place of the route. "Though there is no road back, this place is where we belong," {adviser} wrote on the inscription. The story of the rift ends here.		
+2	realm	scenario.r7_end.textk.def	틈이 흔들리는 하늘 아래 마지막 잔치가 열렸다. 번갈아 지키던 아홉이 오랜만에 한자리에 앉았다. 도하가 마지막 영상을 찍고, 성연이 흔들리는 항로를 잔에 비춘다. 열린 채로 두는 것도 하나의 끝이라고, {책사} 이(가) 붓을 든다. 틈의 이야기는 여기서 끝난다.	The last feast was held beneath the swaying sky of the rift. The nine who took turns guarding sat together for the first time in a long while. Doha records a final video, and Seongyeon reflects the swaying route in a cup. "Leaving it open is also a kind of ending," {adviser} says, taking up a brush. The story of the rift ends here.		
+2	realm	scenario.r7_end.textk.util	길이 된 하늘 아래 마지막 잔치가 열렸다. 세 시대의 손님이 성터에 모였다. 도하가 마지막 영상을 찍고, 성연이 항로 끝에 마지막 등불을 걸었다. 오가는 길이 곧 이 성의 이름이라고, {책사} 이(가) 붓을 든다. 틈의 이야기는 여기서 끝난다.	The last feast was held beneath the sky that became a road. Guests of three ages gathered at the castle site. Doha records a final video, and Seongyeon hung the last lantern at the end of the route. "The road of comings and goings is the name of this castle," {adviser} says, taking up a brush. The story of the rift ends here.		
+2	realm	scenario.r7_end.title	틈의 끝	The End of the Rift		
+2	realm	scenario.r7_end.util.label	틈의 기록을 서고에 남긴다	Leave the rift's records in the library		
+2	realm	scenario.r7_end.util.result	마지막 기록이 서고에 꽂혔다 — 세 시대가 한 책장에서 만난다	The last records were shelved — three ages meet on one bookshelf		
+2	realm	scenario.r7_gather.atk.label	틈을 닫는다	Close the rift		
+2	realm	scenario.r7_gather.atk.result	시간 기둥에 마지막 쐐기를 박았다 — 하늘의 금이 소리 없이 아물기 시작한다	The last wedge was driven into the time pillar — the crack in the sky begins to heal without a sound		
+2	realm	scenario.r7_gather.def.label	틈을 그대로 둔다	Leave the rift as it is		
+2	realm	scenario.r7_gather.def.result	틈은 그대로 두기로 했다 — 아홉이 번갈아 지켜보기로 약속했다	We decided to leave the rift — the nine promised to watch it in turns		
+2	realm	scenario.r7_gather.text	결말의 잔치가 끝난 뒤, 시간 틈 사람 아홉이 성 앞 옛 성터에 모였다. 하늘의 금은 아직 아물지 않았다. {책사} 이(가) 시간 기둥의 그림자를 재고, 도하는 관측 기록을 펼치고, 성연은 귀환 항로의 마지막 눈금을 짚는다. 틈을 닫을지, 그대로 둘지, 길로 쓸지 — 이 성의 주인이 정할 차례다.	After the closing feast, the nine people of the time rift gathered at the old castle site before the castle. The crack in the sky has not yet healed. {adviser} measures the shadow of the time pillar, Doha spreads out her observation records, and Seongyeon points to the last mark on the route home. Close the rift, leave it as it is, or use it as a road — it is the castle lord's turn to decide.		
+2	realm	scenario.r7_gather.title	틈 아래 모인 아홉	Nine Gathered Beneath the Rift		
+2	realm	scenario.r7_gather.util.label	틈을 길로 쓴다	Use the rift as a road		
+2	realm	scenario.r7_gather.util.result	성연이 항로에 첫 등불을 걸었다 — 틈이 세 시대를 잇는 길이 되었다	Seongyeon hung the first lantern on the route — the rift became a road linking three ages		
 2	realm	succession.occurred	{0}이(가) 연로하여 허창을 {1}에게 물려주었다. 정권 이양으로 치안이 흔들렸다.	{0} has grown old and handed Xuchang over to {1}. The transition of power has shaken security.		
 2	realm	summary.gold	금 {0}({1})	Gold {0} ({1})		
 2	realm	summary.next	다음: {0}	Next: {0}		
@@ -4993,3 +5168,10 @@
 3	realm	quiz.w11.q	종교개혁의 불을 붙인 「95개조 반박문」을 쓴 사람은?	Who wrote the "Ninety-Five Theses" that sparked the Reformation?		
 3	realm	quiz.w11.why	1517년 비텐하르트가 면벌부 판매를 비판하는 95개조를 붙였다.	In 1517, Wittenhart posted the Ninety-Five Theses criticizing the sale of indulgences.		
 3	realm	quiz.wrong	❌ 오답 — 정답은 "{0}". {1}	❌ Wrong — the answer was "{0}". {1}		
+3	realm	scenario.act.1	📖 1막 · 중원의 난	📖 Act 1 · Turmoil in the Heartland		
+3	realm	scenario.act.2	📖 2막 · 대전	📖 Act 2 · The Great War		
+3	realm	scenario.act.3	📖 3막 · 강 위	📖 Act 3 · On the River		
+3	realm	scenario.act.4	📖 4막 · 삼계 균열	📖 Act 4 · Rifts of Three Realms		
+3	realm	scenario.act.5	📖 5막 · 먼 길	📖 Act 5 · The Long Road		
+3	realm	scenario.act.6	📖 6막 · 천하	📖 Act 6 · The Realm		
+3	realm	scenario.act.7	📖 7막 · 틈의 끝	📖 Act 7 · The End of the Rift		

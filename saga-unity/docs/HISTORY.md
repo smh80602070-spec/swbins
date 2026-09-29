@@ -10882,3 +10882,12 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 검증(묶음 없는 PC): 컴파일 0 · `PlaytestHeadless` 3연속 OK. 진단 실행 전에 GO 세이브를 백업했다 되돌린다.
 - 실기 확인 전: 길목 서쪽 곳간 노래 메아리 입구 자리와 카드 · 싹 240초전 체력과 절반 초 방패.
 - **웹 ⑲ 이식 순서 1~71 끝**(이야기 표 41장·재대결 메아리 일곱·밤의 잔불 열 곳). 다음 = 웹 ⑲ 72~ 유무 확인·14-27b·14-1b 괴물 몸·실기 확인.
+
+### 2026-09-30 — saga-unity REALM 109-16 시나리오 「천하와 균열」 열아홉 카드 (웹 사가국지 시나리오)
+- 웹 `data-scenario.js` 표를 스크립트로 옮겨 `RealmScenarioData`(카드 19·시간 틈 사람 9) 생성 — 한 자도 손으로 안 옮김. `RealmScenario`(달 수 `(Year-194)*12+Month-1`·정해진 때·`Describe/Resolve`·세이브 스냅샷), `RealmEventState.Kind.Scenario`(월간 추첨 앞에서 한 장씩), `AdjustCity(food)`.
+- 때: 1막 0·12·24달(또는 성 5), 2~5막 문턱 달, 6막 승리 뒤, 7막 시간 틈 사람 아홉 다 모이면. 금이 모자란 카드는 안 끝내고 다음 달 다시. 옛 세이브(24달 넘음)는 카드 전부 끝난 것으로 읽는다.
+- 이 트랙 다름: 충성 → 수도 기술 +2n · 이웃 우호 → 수도 치안 +0.4n(선전은 뺌). 영어 글 사람 칸은 `{adviser}`·`{neighbour}`·`{champion}` (loc-review 가 영어의 한글을 오류로 셈).
+- 사건 판: 씬에 구워진 680×520 이 긴 본문(150~250자)을 못 담아 `ApplyEventLayout` 이 열 때마다 720×660·본문 240×글 22 로 맞춤. `UiLayoutCheck` 에 "시나리오 카드"(가장 긴 카드) 상태 추가 — 세 화면비 한·영 겹침 0·밖 0.
+- 진단 `PlaytestRealmScenario`(표·때·효과·글·승리/시간 틈·사건 연결·세이브) — `RealmScenario.VictoryForTest/VictoryKindForTest/CitiesForTest/MineForTest/TurnForTest` 로 붙든다(전 성 함락 뒤라 승리가 이미 났고 도시 값이 바뀔 때마다 승리 검사가 다시 돎). `PlaytestRealmSlice` 3연속 OK · loc-review 오류 0(경고 1·흔들림 16 기준선 그대로).
+- 실기 확인 전: 사건 판에서 긴 본문·버튼 세 개 · 카드 순서·문턱 달.
+- 다음 = 다른 판 시나리오(사용자가 판 순서 결정) · 14-27b·14-1b.

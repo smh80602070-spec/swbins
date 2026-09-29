@@ -107,6 +107,8 @@ namespace Saga.EditorTools
             // Init 단계가 깨지지 않도록 먼저 지운다(RealmSaveState.cs
             // DeleteForTest() 주석 참고).
             RealmSaveState.DeleteForTest();
+            RealmScenario.ResetForTest();
+            RealmScenario.Enabled = false; // PLAN.md 109-16 — 시나리오 카드가 월간 사건 진단을 가로채지 않게(시나리오 진단만 잠깐 켠다)
 
             // CheckSettingsPanel()이 설정 버튼을 "Btn_설정"(한국어 라벨)으로
             // 찾는다 — RealmCommandUi.Build()가 그 이름을 지을 때 쓰는
@@ -1365,6 +1367,8 @@ namespace Saga.EditorTools
                     if (!PlaytestRealmBattlefield.Run()) { Fail(); return; }
                     // PLAN.md 109-15 명마·비행 — 장착·고르기·지도 보기·세이브 상태를 되돌린다.
                     if (!PlaytestRealmMount.Run()) { Fail(); return; }
+                    // PLAN.md 109-16 시나리오 「천하와 균열」 — 끝나면 세이브 JSON 으로 판 상태를 되돌린다.
+                    if (!PlaytestRealmScenario.Run()) { Fail(); return; }
                     // PLAN.md 109-13-2 지도 위 인물 — 전 성이 우리 것일 때 상한·태수 자리·재야·월드맵 배우 층.
                     if (!PlaytestRealmActors.Run()) { Fail(); return; }
                     _phase = Phase.QuizCorrect;
@@ -1932,6 +1936,7 @@ namespace Saga.EditorTools
         {
             foreach (RealmEventState.Kind kind in System.Enum.GetValues(typeof(RealmEventState.Kind)))
             {
+                if (kind == RealmEventState.Kind.Scenario) continue; // 109-16 시나리오 카드는 무장이 아니라 카드 id — `PlaytestRealmScenario` 가 따로 본다
                 var card = new RealmEventState.Card(kind, RealmOfficerPool.StartingOfficerId);
                 var (title, body, a, b, c) = RealmEventState.Describe(card);
                 if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(body) ||

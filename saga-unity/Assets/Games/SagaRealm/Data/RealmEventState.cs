@@ -36,6 +36,8 @@ namespace Saga.Realm.Data
             BraveChallenge, BraveReward, CunningIntel, WiseInvite, WealthChance, RivalTip, ScholarLecture,
             // PLAN.md 109-5 퓨전 사연 셋(웹 사가국지 5-9) — 여는 카드 → 이어지는 카드. 관문 성(`RealmEras.Gateways`)을 쥐고 있을 때만.
             RiftEcho, RiftGate, PlagueMist, PlagueCure, TombBell, TombOath,
+            // PLAN.md 109-16 시나리오 카드(웹 사가국지 「천하와 균열」) — `Card.OfficerId` 가 카드 id(`RealmScenario`).
+            Scenario,
         }
         public enum Choice { A, B, C }
 
@@ -162,6 +164,10 @@ namespace Saga.Realm.Data
         {
             if (Current != null) return;
 
+            // PLAN.md 109-16 — 시나리오 카드는 월간 무작위 사건보다 먼저(정해진 때가 되면 표 순서대로 하나씩).
+            string scenarioId = RealmScenario.DueCardId();
+            if (scenarioId != null) { Present(new Card(Kind.Scenario, scenarioId)); return; }
+
             for (int i = _pending.Count - 1; i >= 0; i--)
             {
                 var p = _pending[i];
@@ -233,6 +239,7 @@ namespace Saga.Realm.Data
         /// 효과를 한곳에서 다시 계산하지 않도록 분리).</summary>
         public static (string title, string body, string a, string b, string c) Describe(Card card)
         {
+            if (card.Kind == Kind.Scenario) return RealmScenario.Describe(card.OfficerId);
             string name = OfficerName(card.OfficerId);
             string gate = IsFusion(card.Kind) ? GatewayCityName(card.Kind) : null;
             switch (card.Kind)
@@ -333,6 +340,12 @@ namespace Saga.Realm.Data
                 case Kind.WealthChance: result = ResolveWealthChance(card, choice); break;
                 case Kind.RivalTip: result = ResolveRivalTip(card, choice); break;
                 case Kind.ScholarLecture: result = ResolveScholarLecture(card, choice); break;
+                case Kind.Scenario:
+                {
+                    var (message, ok) = RealmScenario.Resolve(card.OfficerId, (int)choice);
+                    result = new Outcome(message, ok);
+                    break;
+                }
                 default: result = ResolveFusion(card, choice); break;
             }
             Current = null;

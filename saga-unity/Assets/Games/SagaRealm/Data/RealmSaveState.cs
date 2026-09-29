@@ -87,6 +87,11 @@ namespace Saga.Realm.Data
             public string mountSel;
             public string[] mountEqOfficers;
             public string[] mountEqMounts;
+            // PLAN.md 109-16 시나리오 「천하와 균열」 — 본 달·끝낸 카드 셋(id·고른 답·달). 버전 그대로: 없는 필드는 seen=false → 옛 세이브로 읽는다.
+            public bool scenarioSeen;
+            public int scenarioT0, scenarioTurnSeen;
+            public string[] scenarioIds, scenarioKs;
+            public int[] scenarioTurns;
         }
 
         /// <summary>PlaytestRealmSlice.cs 전용 — GameBootstrap.Awake()가
@@ -174,6 +179,7 @@ namespace Saga.Realm.Data
                 mountSel = RealmMounts.Snapshot(),
             };
             RealmMounts.SnapshotEq(out data.mountEqOfficers, out data.mountEqMounts);
+            RealmScenario.Snapshot(out data.scenarioSeen, out data.scenarioT0, out data.scenarioTurnSeen, out data.scenarioIds, out data.scenarioKs, out data.scenarioTurns);
             return JsonUtility.ToJson(data);
         }
 
@@ -236,6 +242,7 @@ namespace Saga.Realm.Data
             RealmOfficerTraits.Restore(data.officerAmbitionsDone);
             RealmVictoryState.Restore(data.victoryResult);
             RealmMounts.Restore(data.mountSel, data.mountEqOfficers, data.mountEqMounts);
+            RealmScenario.Restore(data.scenarioSeen, data.scenarioT0, data.scenarioTurnSeen, data.scenarioIds, data.scenarioKs, data.scenarioTurns);
             return true;
         }
 

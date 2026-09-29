@@ -388,6 +388,30 @@ namespace Saga.EditorTools
                         enter = () => { var t = Saga.Realm.UI.RealmToast.Instance; if (t == null) return false; t.Show(LongLine, 60f); return true; },
                         exit = () => Saga.Realm.UI.RealmToast.Instance?.Show("", 0.01f),
                     });
+                    // 109-16 시나리오 카드 — 본문이 가장 긴 카드(고른 답 글까지)를 사건 판에 띄운다. 판은 열릴 때 스스로 크기를 맞춘다.
+                    GameObject eventPanel = null;
+                    list.Add(new UiState
+                    {
+                        name = "시나리오 카드",
+                        panel = true,
+                        enter = () =>
+                        {
+                            var ui = Object.FindFirstObjectByType<Saga.Realm.UI.RealmCommandUi>();
+                            if (ui == null) return false;
+                            eventPanel = (GameObject)Get(ui, "_eventPanel");
+                            string longest = null; int max = 0;
+                            foreach (var c in Saga.Realm.Data.RealmScenarioData.Cards)
+                            {
+                                var d = Saga.Realm.Data.RealmScenario.Describe(c.Id);
+                                int len = d.body.Length + d.a.Length + d.b.Length + d.c.Length;
+                                if (len > max) { max = len; longest = c.Id; }
+                            }
+                            var present = typeof(Saga.Realm.Data.RealmEventState).GetMethod("Present", Any);
+                            present.Invoke(null, new object[] { new Saga.Realm.Data.RealmEventState.Card(Saga.Realm.Data.RealmEventState.Kind.Scenario, longest) });
+                            return true;
+                        },
+                        exit = () => { eventPanel.SetActive(false); Saga.Realm.Data.RealmEventState.ClearForTest(); },
+                    });
                     break;
             }
             return list;

@@ -1094,14 +1094,16 @@ namespace Saga.Realm.UI
         /// 자리 자체는 재사용).</summary>
         private void BuildEventPanel(Transform parent)
         {
-            _eventPanel = RealmUiKit.NewPanel(parent, new Vector2(0.5f, 0.5f), new Vector2(680f, 520f),
+            // PLAN.md 109-16 — 시나리오 카드는 본문이 길다(150~250자): 판 높이 660 · 본문 상자 높이 240·글 22.
+            _eventPanel = RealmUiKit.NewPanel(parent, new Vector2(0.5f, 0.5f), new Vector2(720f, 660f),
                 new Color(0f, 0f, 0f, 0.85f));
             _eventPanel.SetActive(false);
 
-            _eventTitleText = RealmUiKit.NewText(_eventPanel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -60f),
-                new Vector2(600f, 60f), 32);
-            _eventBodyText = RealmUiKit.NewText(_eventPanel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -140f),
-                new Vector2(600f, 100f), 24);
+            _eventTitleText = RealmUiKit.NewText(_eventPanel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -50f),
+                new Vector2(660f, 60f), 32);
+            _eventBodyText = RealmUiKit.NewText(_eventPanel.transform, "", new Vector2(0.5f, 1f), new Vector2(0f, -110f),
+                new Vector2(660f, 240f), 22);
+            _eventBodyText.alignment = TextAlignmentOptions.Top;
 
             var root = new GameObject("EventButtons", typeof(RectTransform));
             root.transform.SetParent(_eventPanel.transform, false);
@@ -1121,8 +1123,24 @@ namespace Saga.Realm.UI
             _eventPanel.SetActive(true);
         }
 
+        /// <summary>PLAN.md 109-16 — 씬에 구워진 옛 카드 판(680×520)도 긴 시나리오 본문을 담게 열 때마다 크기·자리를 맞춘다(씬 재빌드 없이).</summary>
+        private void ApplyEventLayout()
+        {
+            var panelRect = (RectTransform)_eventPanel.transform;
+            panelRect.sizeDelta = new Vector2(720f, 660f);
+            var t = (RectTransform)_eventTitleText.transform;
+            t.anchoredPosition = new Vector2(0f, -50f);
+            t.sizeDelta = new Vector2(660f, 60f);
+            var b = (RectTransform)_eventBodyText.transform;
+            b.anchoredPosition = new Vector2(0f, -110f);
+            b.sizeDelta = new Vector2(660f, 240f);
+            _eventBodyText.fontSize = 22;
+            _eventBodyText.alignment = TextAlignmentOptions.Top;
+        }
+
         private void RefreshEventPanel(RealmEventState.Card card)
         {
+            ApplyEventLayout();
             for (int i = _eventButtonsRoot.childCount - 1; i >= 0; i--)
             {
                 Destroy(_eventButtonsRoot.GetChild(i).gameObject);
@@ -1134,13 +1152,13 @@ namespace Saga.Realm.UI
 
             var labels = new[] { a, b, c };
             var choices = new[] { RealmEventState.Choice.A, RealmEventState.Choice.B, RealmEventState.Choice.C };
-            float y = -260f;
+            float y = -380f;
             for (int i = 0; i < labels.Length; i++)
             {
                 var choice = choices[i];
                 RealmUiKit.NewButton(_eventButtonsRoot, labels[i], new Vector2(0.5f, 1f), new Vector2(0f, y),
-                    new Vector2(600f, 84f), () => ChooseEvent(card, choice));
-                y -= 100f;
+                    new Vector2(660f, 84f), () => ChooseEvent(card, choice));
+                y -= 96f;
             }
         }
 

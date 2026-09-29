@@ -389,9 +389,10 @@ namespace Saga.Realm.Data
         public static bool OwnsCity(string cityId) => _activeCityIds.Contains(cityId);
 
         /// <summary>PLAN.md 109-5 퓨전 사연 — 한 성의 값을 더하고(치안·훈련 0~100, 기술 ~900, 병력·상업 0 이상) 인구에 배율을 곱한다.</summary>
-        public static void AdjustCity(string cityId, int sec = 0, int troops = 0, int train = 0, int tech = 0, int comm = 0, float popMul = 1f)
+        public static void AdjustCity(string cityId, int sec = 0, int troops = 0, int train = 0, int tech = 0, int comm = 0, float popMul = 1f, int food = 0)
         {
             if (!_cities.TryGetValue(cityId, out var r)) return;
+            r.Food = Mathf.Max(0, r.Food + food); // 109-16 시나리오 카드의 군량
             r.Sec = Mathf.Clamp(r.Sec + sec, 0, 100);
             r.Train = Mathf.Clamp(r.Train + train, 0, 100);
             r.Tech = Mathf.Clamp(r.Tech + tech, 0, 900);
