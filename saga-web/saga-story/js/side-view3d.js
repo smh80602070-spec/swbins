@@ -32,6 +32,7 @@
   var renderer = null, scene = null, camera = null, ready = false;
   var W = 0, H = 0;
   var lastMood = null, worldGroup = null, actorGroup = null, dirLight = null, ambLight = null;
+  var mountMesh = null, mountMeshId = null;   // 탈것(mount.js) 몸 — 탄 동안만 서고 내리면 치운다
   var pendingMesh = null, pendingMeshId = null, pendingT = 0;   // 전직으로 새로 조립 중인 주인공 몸(도착 전엔 옛 몸이 선다)
   var playerMesh = null, playerMeshId = null, enemyPool = [], npcPool = [], gatherPool = [], critterPool = [], chestMesh = null;
   var deadMeshes = {};   // run.dying 의 uid → 배우. 인덱스가 아니라 uid로 붙드므로
@@ -866,6 +867,32 @@
       actorGroup.add(playerMesh);
     }
     place(playerMesh, p.x + S.P_W / 2, stg.floor - (p.y + S.P_H), p.facing);
+    /* 탈것 — 말·학·용은 발밑에 서고 나는 그 등 높이에 앉는다(mount.js). 날개 탈것은 날갯짓에 맞춰 살짝 출렁 */
+    var MTv = global.DG.mount, mtDef = MTv && MTv.active && MTv.active() ? MTv.current() : null;
+    if (mountMesh && (!mtDef || mountMeshId !== mtDef.id)) { actorGroup.remove(mountMesh); disposeDeep(mountMesh); mountMesh = null; mountMeshId = null; }
+    if (mtDef) {
+      var fly = mtDef.kind === 'fly';
+      if (!mountMesh) {
+        mountMesh = new Tc.Group(); mountMeshId = mtDef.id;
+        var mprim = new Tc.Mesh(new Tc.CapsuleGeometry(14, 30, 3, 6), LM({ color: 0x8a6a45 }));
+        mprim.rotation.z = Math.PI / 2; mprim.position.set(0, 26, 0); mountMesh.add(mprim);
+        actorGroup.add(mountMesh);
+        var mkey = mtDef.id, A3 = global.DG.asset3d;
+        if (A3) {
+          A3.build(mtDef.model, mtDef.id, fly ? 54 : 66, function (model) {
+            if (!model || !mountMesh || mountMeshId !== mkey) { return; }
+            while (mountMesh.children.length) { var mc = mountMesh.children[0]; disposeDeep(mc); mountMesh.remove(mc); }
+            mountMesh.add(model);
+            mountMesh.userData.mixer = model.userData.mixer || null; mountMesh.userData.actions = model.userData.actions || null;
+            mountMesh.userData.clipMap = model.userData.clipMap || null; mountMesh.userData.anim = null;
+          });
+        }
+      }
+      var mbob = fly ? Math.sin(Date.now() / 220) * 3 : 0;
+      place(mountMesh, p.x + S.P_W / 2, stg.floor - (p.y + S.P_H) + mbob, p.facing);
+      playerMesh.position.y += (fly ? 24 : 30) + mbob;
+      if (mountMesh.userData.mixer) { stepActor(mountMesh, (!!p.vx && (p.onGround || fly)) ? 'walk' : 'idle'); }
+    }
     tintHurt(playerMesh, p.hurt || 0);
     applyGearOutline(playerMesh);
     var walking = !!p.vx && p.onGround;

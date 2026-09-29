@@ -370,6 +370,7 @@
       S.update(dt);
     }
     if (!global.DG_NO_DRAW) {
+      if (global.DG.mount) { global.DG.mount.paint(); }                            // 탈것 단추(mount.js)
       /* camX 는 sideView.draw() 가 매 프레임 새로 잰다 — 3D 는 그 값을 그대로 받아
          쓰므로(_cam()) 반드시 뒤에 부른다. 그려지는 순서는(캔버스가 둘이라) 상관없다 */
       global.DG.sideView.draw();

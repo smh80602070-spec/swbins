@@ -145,6 +145,7 @@
     'critter:stag': ANIMALS_EXTRA + 'Stag.glb',
     'critter:white_horse': ANIMALS_EXTRA + 'White_Horse.glb',
     'critter:horse': ANIMALS_EXTRA + 'Horse.glb',
+    'critter:white_horse': ANIMALS_EXTRA + 'White_Horse.glb',   // 탈것(mount.js)
     'critter:fish_1': ANIMALS_EXTRA + 'Fish1.glb',
     'critter:fish_2': ANIMALS_EXTRA + 'Fish2.glb',
     'critter:fish_3': ANIMALS_EXTRA + 'Fish3.glb',

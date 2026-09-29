@@ -83,6 +83,7 @@ window.DG_NO_TUNE = true;
 <script src="js/account.js"></script>
 <script src="js/hero.js"></script>
 <script src="js/boss-pattern.js"></script>
+<script src="js/mount.js"></script>
 <script src="js/side.js"></script>
 <script src="js/side-view.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -4823,6 +4824,123 @@ window.DG_NO_TUNE = true;
       return bad.length === 0 && towns === 5 && near &&
         ('마을 ' + towns + ' 모두 과거·현대·미래 · 새 사람 넷(택배 기사·여행자·시간 여행자·탐사 대원) 제 몸 · 신야성에 택배 기사·시간 여행자(↑ 로 말 걸림)') ||
         (function () { throw new Error(bad.slice(0, 5).join(' ') + ' near=' + near + ' keys=' + keys.join(',')); })();
+    });
+
+    /* ── 탈것(mount.js, SAGA-DESIGN §15) — 말 셋·날개 둘 ── */
+    t('탈것 — 카탈로그 5(말 셋 레벨 4·12·22 · 학 16 · 용 30 또는 도감 등록) · 타기/내리기·H·고르기 · 저장 sel 한 칸 · 못 타는 때(사냥터 밖·대화·자동)', function () {
+      var MT = DG.mount, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
+      try {
+        MT._resetForTest(); delete C.save.mount;
+        if (C.save.dex && C.save.dex.pets) { MT.MOUNTS.forEach(function (m) { delete C.save.dex.pets[m.pet]; }); }
+        if (S.active()) { S.leave(); }
+        r.table = MT.MOUNTS.map(function (m) { return m.id + ':' + m.lv + ':' + m.mul; }).join() === 'mt_farm:4:1.35,mt_brown:12:1.55,mt_white:22:1.75,mt_crane:16:1.25,mt_dragon:30:1.5' &&
+          MT.MOUNTS.filter(function (m) { return m.kind === 'fly'; }).length === 2 && MT.MOUNTS.every(function (m) { return /^critter:/.test(m.model) && !!m.pet && !!m.emoji; });
+        C.save.player.level = 3; r.none = MT.unlocked().length === 0 && !MT.selected();
+        C.save.player.level = 4; r.lv4 = MT.unlocked().map(function (m) { return m.id; }).join() === 'mt_farm' && MT.selected().id === 'mt_farm';
+        C.save.player.level = 16; r.lv16 = MT.unlocked().length === 3 && MT.selected().id === 'mt_brown';            // 학(16)도 열렸지만 기본은 지상 중 가장 빠른 것
+        C.save.player.level = 1; if (!C.save.dex) { C.save.dex = { heroes: {}, pets: {} }; } if (!C.save.dex.pets) { C.save.dex.pets = {}; }
+        C.save.dex.pets.pt_cheongryong = { count: 1, firstAt: 0 };
+        r.dex = MT.unlocked().map(function (m) { return m.id; }).join() === 'mt_dragon' && MT.selected().id === 'mt_dragon';
+        delete C.save.dex.pets.pt_cheongryong;
+        C.save.player.level = 30;
+        /* 사냥터 밖에선 못 탄다 */
+        r.out = !S.active() && !MT.canRide().ok && /사냥터/.test(MT.canRide().why) && !MT.ride().ok && !MT.active();
+        S.enter('field'); var run = S.raw();
+        r.ride = MT.ride().ok && MT.active() && MT.current().id === 'mt_white' && MT.speedMul() === 1.75 && MT.jumpMul() === 1.14;
+        var nx = MT.cycle();
+        r.cycle = nx.id === 'mt_crane' && MT.current().id === 'mt_crane' && C.save.mount.sel === 'mt_crane' && Object.keys(C.save.mount).join() === 'sel' && MT.jumpMul() === 1 && MT.speedMul() === 1.25;
+        r.off = MT.toggle().mounted === false && !MT.active() && MT.speedMul() === 1 && MT.jumpMul() === 1 && MT.gravMul() === 1;
+        /* 대화 중 · 자동 사냥 중엔 못 탄다 · 타고 있다가 켜지면 내린다 */
+        run.talk = { name: 'x' }; var talkNo = !MT.canRide().ok && /대화/.test(MT.canRide().why); run.talk = null;
+        MT.ride('mt_white'); run.talk = { name: 'x' }; MT.step(0.1); var talkDown = !MT.active(); run.talk = null;
+        var A = DG.auto, was = A.active(); if (!was) { A.toggle(); }
+        var autoNo = !MT.canRide().ok && /자동/.test(MT.canRide().why) && !MT.ride('mt_white').ok;
+        if (was) { MT.ride('mt_white'); } else { A.toggle(); MT.ride('mt_white'); A.toggle(); MT.step(0.1); }
+        r.block = talkNo && talkDown && autoNo && (was || !MT.active());
+        if (A.active() !== was) { A.toggle(); }
+        /* 사냥터를 떠나면 내린다 */
+        MT.dismount(null); MT.ride('mt_white'); S.leave(); MT.step(0.1);
+        r.leave = !MT.active();
+        r.knob = (C.setTune('mount.on', 0), !MT.on() && !MT.canRide().ok) && (C.setTune('mount.on', null), MT.on());
+      } finally {
+        C.setTune('mount.on', null); MT._resetForTest(); C.save.player.level = lv0;
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+        if (pets0 !== null) { C.save.dex.pets = JSON.parse(pets0); }
+        if (S.active()) { S.leave(); }
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      if (bad.length) { throw new Error('실패 ' + bad.join(',') + ' ' + (window.__mtdbg || '')); }
+      return '통과 ' + Object.keys(r).join(',');
+    });
+
+    t('탈것 — 물리: 말 이동 ×배율·점프 ×배율 · 날개(중력 ×0.22·낙하 상한 140·공중 날갯짓 쉼 0.16초·천장 20) · 보스가 있으면 못 남 · 무예를 쓰면 내림', function () {
+      var MT = DG.mount, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, autoWas = DG.auto.active();
+      try {
+        if (autoWas) { DG.auto.toggle(); }
+        MT._resetForTest(); delete C.save.mount; C.save.player.level = 30;
+        if (S.active()) { S.leave(); }
+        S.enter('field');
+        var run = S.raw(), p = run.player, jump = S.GRAV && 760;
+        var boss = run.boss;
+        /* 보스가 있는 사냥터 — 날개 탈것도 못 난다(걷는 배율만) */
+        r.bossOn = !!boss && MT.ride('mt_crane').ok && !MT.flying() && MT.gravMul() === 1 && MT.fallCap() === Infinity && MT.flap(p, 760) === false;
+        MT.dismount(null);
+        /* 보스를 치우고 잡졸도 치워서 고요한 바닥에서 잰다 */
+        run.boss = null; run.enemies = []; run.dying = []; run.eshots = [];
+        function walkDx(steps) {
+          p.climb = null; p.rollT = 0; p.wallKickT = 0; p.x = 300; p.y = run.stage.floor - S.P_H; p.vy = 0; p.onGround = true; p.buff = null;
+          S.setInput('right', true);
+          for (var i = 0; i < steps; i++) { S.update(0.03); }
+          S.setInput('right', false);
+          return p.x - 300;
+        }
+        var base = walkDx(10);
+        MT.ride('mt_white');
+        var ride = walkDx(10);
+        MT.dismount(null);
+        r.speed = base > 10 && Math.abs(ride / base - 1.75) < 0.02;
+        /* 점프 높이 — 흰 말 ×1.14 */
+        function jumpVy() { p.climb = null; p.y = run.stage.floor - S.P_H; p.vy = 0; p.onGround = true; p.coyoteT = 0; S.jump(); return -p.vy; }
+        var jb = jumpVy(); MT.ride('mt_white'); var jr = jumpVy(); MT.dismount(null);
+        r.jump = jb > 100 && Math.abs(jr / jb - 1.14) < 1e-6;
+        /* 학 — 가벼운 중력 */
+        MT.ride('mt_crane');
+        r.fly = MT.flying() && MT.gravMul() === 0.22 && MT.fallCap() === 140;
+        p.onGround = false; p.y = run.stage.floor - S.P_H - 300; p.vy = 0; p.climb = null; p.wallKickT = 0;
+        S.update(0.05); var vLight = p.vy;
+        MT.dismount(null); p.onGround = false; p.y = run.stage.floor - S.P_H - 300; p.vy = 0; S.update(0.05); var vNorm = p.vy;
+        r.grav = vLight > 0 && Math.abs(vLight / vNorm - 0.22) < 0.02;
+        MT.ride('mt_crane');
+        p.onGround = false; p.y = run.stage.floor - S.P_H - 300; p.vy = 900; S.update(0.05);
+        r.cap = p.vy <= 140 + 1e-6 && p.vy > 0;
+        /* 공중 점프 = 날갯짓 (쉼 동안은 안 됨) */
+        p.onGround = false; p.y = run.stage.floor - S.P_H - 300; p.vy = 100; p.coyoteT = 0; p.climb = null; p.wallKickT = 0;
+        var f1 = S.jump(); var vy1 = p.vy;
+        p.vy = 100; var f2 = S.jump();
+        for (var q = 0; q < 4; q++) { S.update(0.05); }   // update 는 프레임당 0.05초까지만 센다
+        p.onGround = false; p.vy = 100; var f3 = S.jump();
+        r.flap = f1 === true && Math.abs(vy1 + 760 * 0.8) < 1e-6 && f2 === false && f3 === true;
+        /* 천장 */
+        p.onGround = false; p.y = 5; p.vy = -400; S.update(0.03);
+        r.ceil = p.y >= 20 - 1e-6 && p.vy >= 0;
+        /* 땅에서 뛰면(학) 배율 1 · 줄에 매달리면 못 남 */
+        p.y = run.stage.floor - S.P_H; p.vy = 0; p.onGround = true; S.jump();
+        r.hop = Math.abs(-p.vy - 760) < 1e-6;
+        /* 무예를 쓰면 내린다 */
+        run.mp = 999; p.cds = [0, 0, 0, 0, 0, 0, 0, 0]; p.onGround = true; p.y = run.stage.floor - S.P_H; p.vy = 0;
+        var cast = S.castSkill(0);
+        r.attack = cast !== undefined && !MT.active();
+        MT.ride('mt_white'); MT.onHurt();
+        r.hurt = !MT.active();
+      } finally {
+        S.setInput('right', false); MT._resetForTest(); C.save.player.level = lv0;
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+        if (S.active()) { S.leave(); }
+        if (DG.auto.active() !== autoWas) { DG.auto.toggle(); }
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      if (bad.length) { throw new Error('실패 ' + bad.join(',') + ' ' + (window.__mtdbg || '')); }
+      return '통과 ' + Object.keys(r).join(',');
     });
 
     t('런타임 에러 없음', function () {

@@ -951,6 +951,12 @@
   function drawMe(p) {
     var ref = S.meRef();
     var x = p.x + S.P_W / 2 - camX, y = p.y + S.P_H;
+    var MTd = global.DG.mount, mtd = MTd && MTd.active && MTd.active() ? MTd.current() : null;   // 탈것(mount.js) — 2D 는 이모지로
+    if (mtd && !(global.DG.sideView3d && global.DG.sideView3d.ready())) {
+      ctx.font = '38px "Segoe UI Emoji", system-ui'; ctx.textAlign = 'center';
+      ctx.fillText(mtd.emoji, x, y + 4);
+      y -= 20;
+    }
     if (!(global.DG.sideView3d && global.DG.sideView3d.ready())) {
       global.DG.sprite.stamp(ctx, {
         kind: 'human', ref: ref, x: x, y: y, s: 1.05,

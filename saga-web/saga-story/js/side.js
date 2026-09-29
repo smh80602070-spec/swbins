@@ -890,11 +890,13 @@
     if (p.onGround || p.coyoteT > 0) {
       p.coyoteT = 0;
       if (input.down && dropThrough()) { return true; }
-      p.vy = -JUMP;
+      p.vy = -JUMP * (global.DG.mount ? global.DG.mount.jumpMul() : 1);
       p.onGround = false;
       sfx('jump');
       return true;
     }
+    var MTj = global.DG.mount;
+    if (MTj && MTj.flying && MTj.flying()) { return MTj.flap(p, JUMP); }      // 날개 탈것 — 공중에서 점프 = 날갯짓
     var w = wallSide(p);
     if (w) {
       /* 좌우 이동은 매 프레임 입력으로 다시 정해지므로(아래 update()), 킥 방향은
@@ -1277,6 +1279,7 @@
     fx.push({ t: 'ouch', x: p.x, y: p.y, life: 0.45 });
     fx.push({ t: 'shake', x: p.x, y: p.y, life: 0.18, big: false });
     p.hurt = 0.3;
+    if (global.DG.mount && global.DG.mount.onHurt) { global.DG.mount.onHurt(); }      // 맞으면 내린다
     p.invuln = HIT_COOL + (run.rm ? run.rm.invuln : 0);
     if (run.hp <= 0) {
       /* 불굴(§5-3) — 비경에서 한 번은 일어선다 */
@@ -1368,6 +1371,7 @@
   /** 무예 한 번의 효과. swapMul 이 있으면 교대 서명(§5-8) — 배율을 그 값으로 고정하고 유파 보정·무예 레벨은 안 탄다 */
   function castBody(sk, swapMul) {
     var p = run.player;
+    if (global.DG.mount && global.DG.mount.onAttack) { global.DG.mount.onAttack(); }   // 탈것 위에선 못 싸운다 — 무예를 쓰면 내린다
     p.atkCd = ATK_ANIM_DUR;
     var S0 = global.DG.sfx;
     sfx(sk.cost === 0 ? 'swing' : (S0 ? S0.skillCue(sk.effect) : 'skill'));
@@ -1520,6 +1524,7 @@
   function update(dt) {
     if (!run) { return; }
     dt = Math.min(dt, 0.05);
+    var MTs = global.DG.mount; if (MTs && MTs.step) { MTs.step(dt); }         // 탈것 — 날갯짓 쉼·내림 판정(mount.js)
     /* 손맛 표준(§5-7) — 타격 정지(hitstop). 한 대 맞은 순간 몇 프레임만 확
        늦춘다(멈추지는 않는다 — dt=0 이면 몇몇 카운트다운이 얼어붙은 티가
        난다). 실제 경과 시간(줄지 않은 dt)으로 hitstopT 를 줄이고, 이
@@ -1585,7 +1590,7 @@
 
     /* 궁수 당기기(§5-1) — 힘을 모으는 동안 이동이 느려진다(누른 시간이 곧
        위력이니 "가만히 서서 당긴다"는 선택을 만든다) */
-    var mul = (bf ? bf.speed : 1) * (p.archerCharging ? p.archerMoveMul : 1);
+    var mul = (bf ? bf.speed : 1) * (p.archerCharging ? p.archerMoveMul : 1) * (MTs ? MTs.speedMul() : 1);   // 탈것 이동 배율(mount.js)
 
     if (p.climb) {
       /* 줄에 매달린 동안은 **중력도 좌우 이동도 없다** — ↑↓ 로만 오르내린다.
@@ -1628,8 +1633,10 @@
       /* 중력 · 발판 */
       var prevBottom = p.y + P_H;
       p.vyPrev = p.vy;                        // 착지 먼지가 읽는다 (닿는 순간엔 0 이 된다)
-      p.vy += GRAV * dt;
+      p.vy += GRAV * (MTs ? MTs.gravMul() : 1) * dt;
+      if (MTs && p.vy > MTs.fallCap()) { p.vy = MTs.fallCap(); }               // 날개 탈것 — 가볍게 가라앉는다
       p.y += p.vy * dt;
+      if (MTs) { MTs.ceil(p); }
       var bottom = p.y + P_H;
       var wasFalling = p.vy > 0;
       p.onGround = false;
@@ -1662,7 +1669,7 @@
         if (p.jumpBufferT > 0) {
           /* 점프 버퍼(§5-5) — 착지 직전 눌러 둔 입력을 여기서 그대로 이어 쓴다 */
           p.jumpBufferT = 0; p.rollT = 0;
-          p.vy = -JUMP; p.onGround = false;
+          p.vy = -JUMP * (MTs ? MTs.jumpMul() : 1); p.onGround = false;
           sfx('jump');
         }
       }
