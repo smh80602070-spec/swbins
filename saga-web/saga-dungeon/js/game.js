@@ -354,6 +354,7 @@
 
       var segT0 = performance.now();
       global.DG.auto.update(dt);
+      if (global.DG.mount) { global.DG.mount.frame(); }                      // 탈것 — 내림 판정·단추(mount.js)
       lastAutoMs = performance.now() - segT0;
 
       segT0 = performance.now();

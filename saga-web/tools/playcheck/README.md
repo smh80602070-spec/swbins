@@ -6,6 +6,7 @@
 node serve.mjs C:/swbins/saga-web 8871        # 정적 서버(백그라운드로)
 node st-mount.mjs [shot]                        # 사가스토리 탈것: 말 ×배율·학 날갯짓·무예를 쓰면 내림·3D 예외 없나(shot 을 줄 때만 shots/st_mount_*, 새 프로필로)
 node fs-mount.mjs [shot]                        # 사가의숲 탈것: 말 ×배율·학이 물 칸을 떠서 넘나·물 위에서 내리면 뭍으로·3D 예외 없나(shot 을 줄 때만 shots/fs_mount_*, 새 프로필로)
+node dg-mount.mjs [shot]                        # 사가블로 탈것: 흰 말 ×배율·학 이동·던전에 들어가면 내림·3D 예외 없나(shot 을 줄 때만 shots/dg_mount_*, 새 프로필로)
 node go-move-click.mjs                         # 사가고: 새 계정 → 이어하기 → W·시점 돌린 W·클릭 이동·조명 값 + shots/
 node go-house-walls.mjs                        # 사가고: 가까운 집 넷에 네 방향으로 걸어 들어가 멈춘 거리 / 벽 끝 거리
 node go-house-perf.mjs                         # 사가고: 성능 등급을 내려도 보이는 집의 벽이 그대로인가(멀리 갔다 오면 새 밀도)

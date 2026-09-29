@@ -112,6 +112,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/gesture.js"></script>
 <script src="js/world-map.js"></script>
 <script src="js/dungeon.js"></script>
+<script src="js/mount.js"></script>
 <script src="js/town.js"></script>
 <script src="js/ssao3d.js"></script>
 <script src="js/post3d.js"></script>
@@ -7210,6 +7211,109 @@ window.requestAnimationFrame = function () { return 0; };
       q.chain = keepCh;
       return !!g1 && g1.x === c1.x && g1.y === c1.y && gLow === null && !!g3 && g3.x === b3.x && g3.y === b3.y && gd === null &&
         ('흔적 (' + Math.round(c1.x) + ',' + Math.round(c1.y) + ') · 층 모자라면 우두머리 미룸 · 닿으면 (' + Math.round(b3.x) + ',' + Math.round(b3.y) + ') · 끝나면 없음');
+    });
+
+    /* ── 탈것(mount.js, SAGA-DESIGN §15) — 열린 세계에서만 · 말 셋 + 학·용(소품을 넘는다) ── */
+    t('탈것 — 카탈로그 5(농마 5·갈색 말 14·흰 말 26 · 학 18 · 용 34 또는 도감 등록) · 열린 세계(마을·들판)에서만 타기 · 던전 안·자동 전투 중 ✕ · 고르기 · 저장 sel 한 칸 · 손잡이', function () {
+      var MT = DG.mount, T = DG.town, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
+      try {
+        MT._resetForTest(); delete C.save.mount;
+        if (C.save.dex && C.save.dex.pets) { MT.MOUNTS.forEach(function (m) { delete C.save.dex.pets[m.pet]; }); }
+        if (DN.active()) { DN.leave(); }
+        T._reset(); T.enter();
+        r.table = MT.MOUNTS.map(function (m) { return m.id + ':' + m.lv + ':' + m.mul + (m.kind === 'fly' ? '/' + m.fly : ''); }).join() === 'mt_farm:5:1.5,mt_brown:14:1.75,mt_white:26:2,mt_crane:18:1.3/1.6,mt_dragon:34:1.4/1.9' && MT.MOUNTS.every(function (m) { return /^pet:/.test(m.model) && !!m.pet && !!m.emoji; });
+        C.save.player.level = 4; r.none = MT.unlocked().length === 0 && !MT.selected() && !MT.canRide().ok && /레벨 5/.test(MT.canRide().why);
+        C.save.player.level = 5; r.lv5 = MT.unlocked().map(function (m) { return m.id; }).join() === 'mt_farm' && MT.selected().id === 'mt_farm';
+        C.save.player.level = 20; r.lv20 = MT.unlocked().length === 3 && MT.selected().id === 'mt_brown';           // 학(18)도 열렸지만 기본은 지상 중 가장 빠른 것
+        C.save.player.level = 1; if (!C.save.dex) { C.save.dex = { heroes: {}, pets: {} }; } if (!C.save.dex.pets) { C.save.dex.pets = {}; }
+        C.save.dex.pets.pt_cheongryong = { count: 1, firstAt: 0 };
+        r.dex = MT.unlocked().map(function (m) { return m.id; }).join() === 'mt_dragon' && MT.selected().id === 'mt_dragon';
+        delete C.save.dex.pets.pt_cheongryong;
+        C.save.player.level = 40;
+        r.ride = T.active() && MT.inOpenWorld() && MT.ride().ok && MT.active() && MT.current().id === 'mt_white' && MT.speedMul() === 2 && !MT.flying() && MT.bodyRef().model === 'pet:white_horse' && MT.lift() === MT.LIFT && MT.mountLift() === 0;
+        var nx = MT.cycle();
+        r.cycle = nx.id === 'mt_crane' && MT.flying() && MT.speedMul() === 1.6 && C.save.mount.sel === 'mt_crane' && Object.keys(C.save.mount).join() === 'sel' && MT.lift() === MT.LIFT + MT.HOVER && MT.mountLift() === MT.HOVER && MT.bodyRef().h === MT.FLY_H;
+        r.off = MT.toggle().mounted === false && !MT.active() && MT.speedMul() === 1 && !MT.flying() && MT.lift() === 0 && MT.bodyRef() === null;
+        /* 던전 안 — 못 타고, 타고 들어가면 내린다 */
+        MT.ride('mt_brown'); var party0 = C.save.party; if (!party0.length) { C.save.party = [DG.data.heroes[0].id]; } var enOk = DN.enter({ floor: 1 }); C.save.party = party0; MT.step();
+        var inDun = !MT.active() && !MT.canRide().ok && /마을·들판/.test(MT.canRide().why);
+        DN.leave(); T._reset(); T.enter();
+        var reRide = MT.ride('mt_brown'); r.dungeon = inDun && reRide.ok; if (!r.dungeon) { throw new Error('dungeon 상세 inDun=' + inDun + ' T=' + T.active() + ' enOk=' + enOk + ' DN=' + DN.active() + ' why=' + reRide.why); }
+        /* 자동 전투 중 */
+        var A = DG.auto, was = A.active(); if (!was) { A.toggle(); }
+        var autoNo = !MT.canRide().ok && /자동/.test(MT.canRide().why); MT.step(); var autoDown = !MT.active();
+        if (A.active() !== was) { A.toggle(); }
+        r.auto = autoNo && autoDown;
+        r.knob = (C.setTune('mount.on', 0), !MT.on() && !MT.canRide().ok) && (C.setTune('mount.on', null), MT.on());
+        MT.ride('mt_brown'); C.setTune('mount.on', 0); MT.step(); r.knobDown = !MT.active(); C.setTune('mount.on', null);
+        MT.onHurt(); MT.ride('mt_brown'); r.hurt = MT.onHurt() === true && !MT.active() && MT.onHurt() === false;
+        MT.ride('mt_brown'); r.atk = MT.onAttack() === true && !MT.active();
+      } finally {
+        C.setTune('mount.on', null); MT._resetForTest(); C.save.player.level = lv0;
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+        if (pets0 !== null) { C.save.dex.pets = JSON.parse(pets0); }
+        if (DN.active()) { DN.leave(); }
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      if (bad.length) { throw new Error('실패 ' + bad.join(',')); }
+      return '통과 ' + Object.keys(r).join(',');
+    });
+
+    t('탈것 — 마을·들판 이동: 말 걷는 속도 ×배율 · 학·용은 나무·바위·건물 소품을 떠서 넘는다(걸어선 못 넘는다) · 들판에서 적이 붙으면(자동 공격이 나갈 때) 내림', function () {
+      var MT = DG.mount, T = DG.town, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
+      try {
+        MT._resetForTest(); delete C.save.mount;
+        if (C.save.dex && C.save.dex.pets) { MT.MOUNTS.forEach(function (m) { delete C.save.dex.pets[m.pet]; }); }
+        C.save.player.level = 40;
+        if (DN.active()) { DN.leave(); }
+        T._reset(); T.enter();
+        var raw = T.raw(), p = raw.player, x0 = p.x, y0 = p.y, i;
+        function walk(dx, dy, n) { var ax = p.x, ay = p.y; T.setInput(dx, dy); for (var k = 0; k < n; k++) { T.update(0.05); } T.setInput(0, 0); var m = { x: p.x - ax, y: p.y - ay }; return m; }
+        /* 트인 방향 하나 — 걸으면 30 넘게 가는 쪽 */
+        var dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]], dir = null, base = 0;
+        for (i = 0; i < dirs.length && !dir; i++) { T._put(x0, y0); var m0 = walk(dirs[i][0], dirs[i][1], 6); var d0 = Math.abs(m0.x) + Math.abs(m0.y); if (d0 > 30) { dir = dirs[i]; base = d0; } }
+        r.open = !!dir;
+        T._put(x0, y0); MT.ride('mt_white'); var m1 = walk(dir[0], dir[1], 6), rd = Math.abs(m1.x) + Math.abs(m1.y);
+        r.speed = Math.abs(rd / base - 2) < 0.02;
+        MT.dismount(null);
+        /* 소품에 막힌 자리를 찾는다 — 걸어선 못 들어가고 떠서는 들어간다 */
+        var ctx = T.raw(), bx = null, by = null, sx, sy, found = null;
+        for (sy = y0 - 500; sy <= y0 + 500 && !found; sy += 20) {
+          for (sx = x0 - 500; sx <= x0 + 500 && !found; sx += 20) {
+            if (DN._fieldBlockedAt(sx, sy, ctx) && !DN._fieldBlockedAt(sx - 24, sy, ctx)) { found = { x: sx, y: sy }; }
+          }
+        }
+        r.prop = !!found;
+        var blockedWalk = DN._fieldBlockedAt(found.x, found.y, ctx);
+        MT.ride('mt_crane');
+        var blockedFly = DN._fieldBlockedAt(found.x, found.y, ctx);
+        MT.dismount(null);
+        MT.ride('mt_brown'); var blockedHorse = DN._fieldBlockedAt(found.x, found.y, ctx); MT.dismount(null);
+        r.fly = blockedWalk === true && blockedFly === false && blockedHorse === true;
+        /* 실제로 들어간다 — 소품 바로 앞에서 그쪽으로 걸어 들어가면 걸어선 막히고 떠서는 들어간다 */
+        T._put(found.x - 30, found.y); walk(1, 0, 12); var walked = p.x;
+        T._put(found.x - 30, found.y); MT.ride('mt_dragon'); walk(1, 0, 12); var flew = p.x; MT.dismount(null);
+        r.enter = walked < found.x + 2 && flew > found.x + 4 && flew > walked;
+        /* 몸 참조 */
+        MT.ride('mt_crane'); r.body = MT.bodyRef().model === 'pet:crane'; MT.dismount(null);
+        /* 들판에서 적이 붙으면 내린다 — 곁에 정예 하나를 세운다 */
+        T._put(x0, y0); T.update(0.05);
+        MT.ride('mt_brown');
+        var rr = T.raw(); rr.room.enemies.length = 0;
+        var e = DN._spawnEnemy(1, false, { spawned: true, x: p.x + 8, y: p.y });
+        e.hp = 9999; e.hpMax = 9999; e.aggro = true; rr.room.enemies.push(e);
+        for (i = 0; i < 6 && MT.active(); i++) { T.update(0.05); }
+        r.fight = !MT.active();
+      } finally {
+        T.setInput(0, 0); MT._resetForTest(); C.save.player.level = lv0;
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+        if (pets0 !== null) { C.save.dex.pets = JSON.parse(pets0); }
+        if (DN.active()) { DN.leave(); }
+        try { T._reset(); } catch (err) { /* 진단 뒷정리 */ }
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      if (bad.length) { throw new Error('실패 ' + bad.join(',')); }
+      return '통과 ' + Object.keys(r).join(',');
     });
 
     t('런타임 에러 없음', function () {

@@ -1537,8 +1537,9 @@
     var len = Math.hypot(dx, dy);
     if (len > 0) {
       dx /= len; dy /= len;
-      player.x += dx * SPD * dt;
-      player.y += dy * SPD * dt;
+      var MTt = global.DG.mount, spdT = SPD * (MTt && MTt.speedMul ? MTt.speedMul() : 1);   // 탈것 배율(mount.js)
+      player.x += dx * spdT * dt;
+      player.y += dy * spdT * dt;
       player.walking = true;
       player.phase += dt * 9;
       if (dx) { player.facing = dx > 0 ? 1 : -1; }

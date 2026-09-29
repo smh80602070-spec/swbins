@@ -1845,6 +1845,7 @@
     amount = Math.max(1, amount);
     run.hp -= amount;
     run.player.hurt = 0.28;
+    if (global.DG.mount && global.DG.mount.onHurt) { global.DG.mount.onHurt(); }      // 탈것 — 맞으면 내린다
     fx.push({ t: 'hit', x: run.player.x, y: run.player.y, v: Math.round(amount),
               life: 0.7, foe: true, el: el && el !== 'phys' ? el : null });
     sfx('hurt');
@@ -2060,6 +2061,8 @@
    *            {roomW, roomH, pr, floor, roomIdx, theme}.
    */
   function fieldBlockedAt(x, y, ctx) {
+    var MTb = global.DG.mount;
+    if (MTb && MTb.flying && MTb.flying() && ctx && ctx.town) { return false; }      // 학·용을 타고 뜨면 마을·들판 소품(나무·바위·건물)을 넘는다(mount.js)
     var F = global.DG.field3d;
     var floor = ctx ? ctx.floor : (run && run.floor);
     if (!F || floor === undefined || floor === null) { return false; }
@@ -2838,6 +2841,7 @@
         if (d < nd) { nd = d; near = e; }
       }
       if (near && nd <= reach && p.atkCd <= 0) {
+        if (global.DG.mount && global.DG.mount.onAttack) { global.DG.mount.onAttack(); }   // 탈것 위에선 못 싸운다 — 자동 공격이 나갈 때 내린다
         p.atkCd = atkCdOf() / (rally ? 1.4 : 1);
         p.atkAnim = 0.22;
         p.castAnim = false;
@@ -3182,6 +3186,7 @@
       if (d < nd) { nd = d; near = e; }
     }
     if (near && nd <= reach && p.atkCd <= 0) {
+      if (global.DG.mount && global.DG.mount.onAttack) { global.DG.mount.onAttack(); }
       p.atkCd = atkCdOf() / (rally ? 1.4 : 1);
       p.atkAnim = 0.22;
       p.castAnim = false;

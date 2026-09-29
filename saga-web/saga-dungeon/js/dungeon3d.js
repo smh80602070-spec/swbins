@@ -2396,6 +2396,14 @@
       foeGear(g, meLookOf(), 31.2, 12, null);
       return g;
     }
+    if (kind === 'mount') {
+      /* 탈것(mount.js) — 펫 몸(말·학·용)을 발밑에 세운다. GLB 가 오기 전엔 도형 */
+      var mrf = ref || {};
+      var mBody = AS3 ? AS3.build(mrf.model || 'pet:horse', 'mount:' + (mrf.id || ''), mrf.h || 46, null, function () { return foeShape(12, mrf.h || 46, 0x8a6a45); }) : new T.Group();
+      g.add(mBody);
+      g.userData.mixerNode = mBody;
+      return g;
+    }
     if (kind === 'ally') {
       /* 동행(同行, PLAN §51) — 부대 2번째 인물. 'me'와 같은 몸(buildHero) ·
          장비(foeGear) 조립이지만, seed를 그 인물 id로 박아 선두와
@@ -2815,9 +2823,19 @@
     /* 걸으면 위아래로 튄다 — 도형으로 남아 있을 때만 도드라진다(GLB 는 제 다리로 걷는다).
        땅 높이(meGroundY) 위에 얹는다 — 안 그러면 언덕에서 튈 때마다 땅 밑으로 파고든다 */
     me.node.position.y = meGroundY + (p.walking ? Math.abs(Math.sin(p.phase || 0)) * 2.2 : 0);
+    /* 탈것(mount.js) — 말·학·용은 발밑에 서고 나는 그 등 높이에 앉는다. 뜬 탈것은 HOVER 만큼 띄워 출렁 */
+    var MT3 = global.DG.mount, mtRef = MT3 && MT3.active && MT3.active() ? MT3.bodyRef() : null;
+    if (mtRef) {
+      var mtA = actorOf('mount', 'mount', mtRef), bob = MT3.flying() ? Math.sin(nowT * 3) * 1.6 : 0;
+      mtA.node.position.set(plx, meGroundY + MT3.mountLift() + bob, ply);
+      if (p.walking || MT3.flying()) { mtA.ang = me.ang; }
+      mtA.node.rotation.y = mtA.ang;
+      me.node.position.y = meGroundY + MT3.lift() + bob;
+      if (AS3) { AS3.step(mtA.node.userData.mixerNode, { t: nowT, walking: !!p.walking || MT3.flying(), anim: 'idle' }); }
+    }
     if (AS3) {
-      AS3.step(me.node.userData.mixerNode, { t: nowT, walking: !!p.walking,
-        anim: p.dodge ? 'dodge' : (p.atkAnim > 0 ? (p.castAnim ? 'interaction' : 'attack') : (p.walking ? 'walk' : 'idle')) });
+      AS3.step(me.node.userData.mixerNode, { t: nowT, walking: !!p.walking && !mtRef,
+        anim: p.dodge ? 'dodge' : (p.atkAnim > 0 ? (p.castAnim ? 'interaction' : 'attack') : (p.walking && !mtRef ? 'walk' : 'idle')) });
       AS3.flashAllMat(ensureFlash(me.node), p.hurt, 0.28);
     }
 
