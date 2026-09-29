@@ -4,7 +4,9 @@ extends Node
 ## 가로로 들면(PC 창 1280×720·폰 가로) 배율이 min(1280/1080, 720/1920) = 0.375 로 글자가 깨알만 했다(알려진 오류 "UI 56%", 09-28 창 모드 촬영).
 ## 가로일 때만 기준을 LANDSCAPE 로 바꿔 배율을 올린다(1280×720 이면 0.5625 — 1.5배). 세로(폰 기본)는 그대로.
 ## 세로를 1920 → 1280 로 줄여 쓰는 셈이라 키 큰 창(지도·인물 화면)이 모자라지 않은지는 probe_shots ui_* 로 본다.
-## test_village.gd 가 단다(GO 만 — 다른 판은 안 건드린다).
+## GO·사가의숲·사가스토리·사가국지 루트 스크립트가 _ready 첫머리에서 단다(2026-09-29 GO 만이던 것을 넓힘).
+## 사가블로는 안 단다 — 오른쪽 기술 단추 줄이 세로 1900px 쯤이라 기준 높이를 1280 으로 줄이면 위가 잘린다(창 모드 촬영, 1600 도 잘림).
+## 개발용: SAGA_QUICK_SHOT=<png 경로> 가 있으면 150프레임 뒤 화면을 저장하고 끝낸다(창 모드 가로 UI 확인용).
 
 const PORTRAIT := Vector2i(1080, 1920)
 const LANDSCAPE := Vector2i(1920, 1280)
@@ -13,6 +15,10 @@ const LANDSCAPE := Vector2i(1920, 1280)
 func _ready() -> void:
 	get_tree().root.size_changed.connect(_fit)
 	_fit()
+	if OS.get_environment("SAGA_QUICK_SHOT") != "":
+		await get_tree().create_timer(2.5).timeout
+		get_viewport().get_texture().get_image().save_png(OS.get_environment("SAGA_QUICK_SHOT"))
+		get_tree().quit()
 
 
 func _fit() -> void:

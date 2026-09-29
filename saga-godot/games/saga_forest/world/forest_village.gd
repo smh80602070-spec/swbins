@@ -21,6 +21,8 @@ var _player: Node3D = null
 
 
 func _ready() -> void:
+	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게(saga_core/ui/orientation_scale.gd).
+	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
 	WorldCurveMaterial.ensure_global_registered()
 	ForestSaveState.try_load()
 	ForestSaveState.begin_session()

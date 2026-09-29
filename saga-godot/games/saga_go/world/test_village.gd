@@ -34,7 +34,7 @@ static func _any_probe() -> bool:
 func _ready() -> void:
 	SaveState.try_load()
 	## 2026-09-28 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게(orientation_scale.gd).
-	add_child(preload("res://games/saga_go/ui/orientation_scale.gd").new())
+	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
 	if _any_probe():
 		PartyState.party_size = PartyState.PARTY_MAX
 	## PLAN 106장 ㊺ — 넷째 지역 서리봉 고원(마을 북쪽 고개 너머). 지형이 다른 것보다 먼저 서게 맨 앞에.

@@ -122,7 +122,7 @@ func game_progress() -> int:
 	return 99
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _player == null or bool(_player.get("frozen")):
+	if _player == null or _player.get("frozen") == true:
 		return
 	if event.is_action_pressed("go_mount"):
 		toggle()

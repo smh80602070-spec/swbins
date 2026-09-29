@@ -9586,3 +9586,9 @@ PROJECT_STATE.md` 참고. 요약:
 - 밤의 잔불: night_echoes.gd 에 굳은 네거리(초롱)·야적장(마루)·세갈래 성문 앞(벼리) 셋 — 열 곳. 자리는 각 지역 이야기 kill 칸이라 명소에 안 묻힘(점검으로 확인).
 - 점검 probe_aftermath: 29장엔 새 입구 숨김, 38장 뒤 열림·자리·처음의 별까마귀 입장 8항목 fails=0. DOMAIN·MAP·FORK fails=0, REGRESS OK.
 - 실기 확인 전: 세갈래 고을 입구 두 자리가 길목·성문을 안 막는지, 처음의 별까마귀·참몸 재대결이 240초 안에 잡히는지, 새 잔불 세 자리 밤 화면.
+
+## 가로 UI 를 GO 밖 세 판으로 · 탈것 입력 오류 (2026-09-29, "묻지말고 이어해")
+
+- orientation_scale.gd 를 saga_core/ui 로 옮기고 사가의숲(forest_village)·사가스토리(story_town)·사가국지(realm_city)도 _ready 첫머리에서 단다. 가로 화면이면 UI 기준을 1920×1280(배율 0.375→0.5625). 창 모드 1280×720 촬영으로 세 판 HUD·메뉴 잘림 없음 확인. SAGA_QUICK_SHOT=<png> 로 150프레임 뒤 화면 저장(개발용).
+- 사가블로는 뺐다: 오른쪽 기술 단추(DungeonHUD, 80px 간격 ~20개 이상)가 1900px 쯤이라 기준 높이 1280 은 물론 1600 에서도 위가 잘린다. 다음에 단추 줄을 스크롤/2열로 손질할 때 같이.
+- 촬영하다 발견: 사가스토리에서 mount.gd:125 `bool(_player.get("frozen"))` 가 "Nonexistent 'bool' constructor"(스토리 플레이어엔 frozen 없음 → null). `== true` 로 고침(MOUNT·STORY 점검 fails=0). 같은 꼴 다른 곳(character_screen 등 GO 전용 화면)은 GO 플레이어만 써서 그대로.

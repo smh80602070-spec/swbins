@@ -61,6 +61,8 @@ var _last_sig := ""
 ## 가 이미 매 프레임 sig()로 "값이 바뀌었나"만 보고 있어 `start_scenario()`
 ## 가 바꾼 현재 성 값을 다음 프레임에 저절로 집어 든다.
 func _ready() -> void:
+	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게(saga_core/ui/orientation_scale.gd).
+	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
 	if not RealmSaveState.try_load():
 		RealmSaveState.scenario_ready = false
 		_show_scenario_picker()
