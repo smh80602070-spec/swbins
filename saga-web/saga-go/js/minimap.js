@@ -282,6 +282,8 @@
     for (i = 0; i < aml.length; i++) { put(aml[i].found ? 'frost-found' : 'frost', aml[i].x, aml[i].y, (aml[i].big ? '🟠 ' : '✨ ') + aml[i].name); }
     var VTm = global.DG.vault, vtl = VTm && VTm.on() && VTm.marks ? VTm.marks() : [];   // §5 ⑲-61 갈무리 벌
     for (i = 0; i < vtl.length; i++) { put(vtl[i].found ? 'frost-found' : 'frost', vtl[i].x, vtl[i].y, (vtl[i].big ? '🟦 ' : '✨ ') + vtl[i].name); }
+    var FKm = global.DG.fork, fkl = FKm && FKm.on() && FKm.marks ? FKm.marks() : [];   // §5 ⑲-65 세갈래 고을
+    for (i = 0; i < fkl.length; i++) { put(fkl[i].found ? 'frost-found' : 'frost', fkl[i].x, fkl[i].y, (fkl[i].big ? '🟪 ' : '✨ ') + fkl[i].name); }
     var CRm = global.DG.crossing, crl = CRm && CRm.on() && CRm.marks ? CRm.marks() : [];   // §5 ⑲-41 틈새 갈림길
     for (i = 0; i < crl.length; i++) { put(crl[i].found ? 'frost-found' : 'frost', crl[i].x, crl[i].y, (crl[i].big ? '🌀 ' : '✨ ') + crl[i].name); }
     var SKm = global.DG.sunken, skl = SKm && SKm.on() && SKm.marks ? SKm.marks() : [];   // §5 ⑲-44 잠긴 도읍

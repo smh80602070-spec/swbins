@@ -63,6 +63,9 @@
     am_crystal0: { am: 'crystal0' }, am_crystal1: { am: 'crystal1' }, am_crystal2: { am: 'crystal2' },
     /* ⑲-61 10부 갈무리 벌(vault.js) — 명소 가운데(vt: 명소 id·case0~4·haemi·deep·core·door) + 단계·인물 칸의 off */
     vt_pass: { vt: 'pass' }, vt_vault: { vt: 'vault' }, vt_pylon0: { vt: 'pylon0' }, vt_pylon1: { vt: 'pylon1' }, vt_granary: { vt: 'granary' }, vt_yard: { vt: 'yard' }, vt_statue: { vt: 'statue' },
+    /* ⑲-65 11부 세갈래 고을(fork.js) — 명소 가운데(fk: 명소 id·lat0~2·pass·arrive) + 단계·인물 칸의 off */
+    fk_gate: { fk: 'gate' }, fk_junction: { fk: 'junction' }, fk_forge: { fk: 'forge' }, fk_works: { fk: 'works' }, fk_loco: { fk: 'loco' }, fk_tower: { fk: 'tower' }, fk_statue: { fk: 'statue' },
+    fk_lat0: { fk: 'lat0' }, fk_lat1: { fk: 'lat1' }, fk_lat2: { fk: 'lat2' }, fk_pass: { fk: 'pass' }, fk_arrive: { fk: 'arrive' },
     vt_pylons: { vt: 'pylons' }, vt_core: { vt: 'core' }, vt_door: { vt: 'door' }, vt_haemi: { vt: 'haemi' }, vt_deep: { vt: 'deep' },
     vt_case0: { vt: 'case0' }, vt_case1: { vt: 'case1' }, vt_case2: { vt: 'case2' }, vt_case3: { vt: 'case3' }, vt_case4: { vt: 'case4' },
     /* ⑲-53 8부 반디 자리 = 고향 촌장 동쪽(촌장 zone home off [-22,16] 에서 10m) */
@@ -1823,6 +1826,10 @@
     if (SPam && SPam.am) {                                      // ⑲-58 굳은 거리 명소·굳은 자리
       var AMq = global.DG.amber, ap = AMq && AMq.on() ? AMq.spot(SPam.am) : null;
       return ap ? { x: ap.x + (off ? off[0] : 0), y: ap.y + (off ? off[1] : 0) } : null;
+    }
+    if (SPam && SPam.fk) {                                      // ⑲-65 세갈래 고을 명소·이야기 자리
+      var FKq = global.DG.fork, fp = FKq && FKq.on() ? FKq.spot(SPam.fk) : null;
+      return fp ? { x: fp.x + (off ? off[0] : 0), y: fp.y + (off ? off[1] : 0) } : null;
     }
     if (SPam && SPam.vt) {                                      // ⑲-61 갈무리 벌 명소·금고 안 자리
       var VTq = global.DG.vault, vp = VTq && VTq.on() ? VTq.spot(SPam.vt) : null;

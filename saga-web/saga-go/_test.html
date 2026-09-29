@@ -96,6 +96,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/skyport.js"></script>
 <script src="js/amber.js"></script>
 <script src="js/vault.js"></script>
+<script src="js/fork.js"></script>
 <script src="js/crossing.js"></script>
 <script src="js/sunken.js"></script>
 <script src="js/skyroute.js"></script>
@@ -15006,6 +15007,93 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { LF.perched = keepP; VT._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '일곱 단계 · 소담 → 금고 안 → 해미 → 기록 기둥(꼭대기) → 갈무리(핵 꺼짐) → 드론 여왕(풍 방패 암) → 진열장 깨짐 → 해미 합류 · 🪢+9 🪙+9750' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-65 11부 무대 · 열째 지역 세갈래 고을 (fork.js, PLAN §5 ⑲-65) ── */
+    function fkRig() {
+      var rig = stRig(78);
+      DG.fork._resetForTest(); delete C.save.fork;
+      return { FK: DG.fork, undo: function () { DG.fork._resetForTest(); rig.undo(); } };
+    }
+    t('세갈래 고을 ⑲-65 — 자리: 가운데 = 서리봉 고원 북쪽 고개 너머 · 명소 일곱(순간이동 셋)·작은 발견 열 = 열일곱 + 이야기 자리(격자 말뚝 둘·장막) · 억지 없이 뭍 칸 · 명소끼리 60m·나머지 30m 넘게 · 다시 풀어도 같다', function () {
+      var FK = DG.fork, FRs = DG.frost, r = {}, bad = [];
+      FK._resetForTest();
+      var c = FK.center(), fc = FRs.center(), A = FK.allSites(), L = FK.sites();
+      r.center = !!c && Math.abs(c.x - fc.x - FK.FORK_OFF[0]) < 260 && Math.abs(c.y - fc.y - FK.FORK_OFF[1]) < 260 && FK.inRegion(c.x, c.y) && !FK.inRegion(0, 0);
+      r.count = L.length === 17 && L.filter(function (q) { return q.big; }).length === 7 && L.filter(function (q) { return q.way; }).map(function (q) { return q.id; }).join() === 'gate,junction,statue' &&
+        A.length === 20 && A.filter(function (q) { return q.fix; }).map(function (q) { return q.id; }).join() === 'lat0,lat1,pass';
+      A.forEach(function (q, k) {
+        var kind = DG.world.terrainAt(Math.floor(q.x / 48), Math.floor(q.y / 48));
+        if (q.id !== 'pass' && (q.forced || ['grass', 'forest', 'farm'].indexOf(kind) < 0)) { bad.push(q.id + '땅'); }
+        for (var p = 0; p < k; p++) {
+          var o = A[p], sep = o.big ? 60 : 30;
+          if (q.id !== 'pass' && o.id !== 'pass' && Math.hypot(o.x - q.x, o.y - q.y) < sep - 1e-6) { bad.push(q.id + '-' + o.id); }
+        }
+      });
+      r.place = bad.length === 0;
+      var gate = FK.siteById('gate'), tower = FK.siteById('tower'), forge = FK.siteById('forge'), works = FK.siteById('works'), pass = FK.siteById('pass');
+      r.layout = gate.y > c.y && tower.y < c.y && forge.x < c.x && works.x > c.x && pass.y > gate.y && Math.abs(pass.y - (c.y + 216)) < 1e-6;   // 성문은 남쪽, 종루는 북쪽, 대장간은 서쪽, 공사장은 동쪽, 장막은 남쪽 끝
+      var AMs = DG.amber.center(), VTs = DG.vault.center();
+      r.apart = (!AMs || Math.hypot(AMs.x - c.x, AMs.y - c.y) > 400) && (!VTs || Math.hypot(VTs.x - c.x, VTs.y - c.y) > 400);   // 굳은 거리·갈무리 벌과 겹치지 않는다
+      var j1 = JSON.stringify(A); FK._resetForTest();
+      r.same = JSON.stringify(FK.allSites()) === j1;
+      var bad2 = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad2.length === 0 ? '가운데 ' + Math.round(c.x) + ',' + Math.round(c.y) + ' · 열일곱(명소 7·이동 3) + 자리 셋 · 뭍 · 떨어짐 · 고정' : ('실패 ' + bad2.join(',') + ' ' + bad.join(','));
+    });
+
+    t('세갈래 고을 ⑲-65 — 발견·이동·벽·기둥: 명소 30m 안 = 발견 한 번만 · 작은 발견 14m · 찾은 이동 지점(키보드만·GPS 막힘) · 호박 장막은 38장 4단계 전까지 · 벽(문루·성벽·대장간·기관차·종루·격자 말뚝·신상) · 종루 10m 기둥', function () {
+      var rig = fkRig(), FK = rig.FK, W0 = DG.world, r = {};
+      try {
+        var gate = FK.siteById('gate'), jn = FK.siteById('junction'), statue = FK.siteById('statue'), well = FK.siteById('well'), pass = FK.siteById('pass');
+        var g0 = C.save.player.gold || 0;
+        r.marks0 = FK.marks().length === 7 && FK.marks().every(function (m) { return m.big && !m.found; });
+        var f1 = FK.discoverAt(gate.x + FK.LANDMARK_R - 1, gate.y);
+        r.big = f1.length === 1 && f1[0].id === 'gate' && C.save.player.gold === g0 + 220 && FK.found('gate') && FK.discoverAt(gate.x, gate.y).length === 0;
+        r.small = FK.discoverAt(well.x + 15, well.y).length === 0 && FK.discoverAt(well.x + 13, well.y).map(function (q) { return q.id; }).join() === 'well' && FK.marks().length === 8;
+        FK.discoverAt(jn.x, jn.y); FK.discoverAt(statue.x, statue.y);
+        var wp = FK.waypoints();
+        r.way = wp.length === 3 && wp.map(function (w) { return w.key; }).join() === 'fk:gate,fk:junction,fk:statue' && /어귀/.test(wp[0].name) && wp[0].y === gate.y + 30 && !FK.teleport('well');
+        DG.world = Object.create(W0, { mode: { value: 'geo' } });
+        r.geo = !FK.teleport('gate');
+        DG.world = W0;
+        stGo({ x: 0, y: 0 });
+        r.tp = FK.teleport('junction') && C.save.player.pos.x === jn.x && C.save.player.pos.y === jn.y + 12;
+        var cell = function (q, dx, dy) { return DG.world3d.houseRects(Math.floor((q.x + (dx || 0)) / 48), Math.floor((q.y + (dy || 0)) / 48)); };
+        var hit = function (q, dx, dy) { return cell(q, dx, dy).some(function (rc) { return frInRect(rc, q.x + (dx || 0), q.y + (dy || 0)); }); };
+        /* 장막은 순간이 풀리기(38장 4단계) 전에만 */
+        C.save.story = { ch: 37, step: 3 };
+        var veilShut = hit(pass);
+        C.save.story = { ch: 37, step: 4 };
+        var veilOpen = !hit(pass) && FK.gateOpen() && FK.momentFree();
+        r.veil = veilShut && veilOpen;
+        r.walls = hit(gate, -4, 0) && hit(gate, 4, 0) && hit(gate, -11.5, 0) && hit(gate, 11.5, 0) && !hit(gate, 0, 0) && hit(FK.siteById('forge')) && hit(FK.siteById('loco')) && hit(FK.siteById('tower')) && hit(FK.siteById('lat0')) && hit(FK.siteById('lat1')) && hit(statue);
+        var P = FK.poles();
+        r.pole = P.length === 1 && P[0].id === 'fk_tower' && P[0].x === FK.siteById('tower').x && P[0].top === 10 && P[0].r === 2.5 && !!P[0].beam && DG.landform.on && true;
+      } finally { DG.world = W0; rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '명소 30m 한 번 · 작은 14m · 이동 지점 셋(GPS ✕) · 장막 38장 4단계 뒤 열림 · 문루·성벽(가운데 5m 열림)·대장간·기관차·종루·격자 말뚝·신상 막힘 · 종루 10m' : ('실패 ' + bad.join(','));
+    });
+
+    t('세갈래 고을 ⑲-65 — 이야기 상태: 격자 말뚝 셋(37장 2·5·7단계부터 꺼짐) · 멈춘 별까마귀(38장 1단계부터 사라짐) · 순간이 풀림(38장 4단계 — 장막·하늘 틈·알갱이) · 이야기 자리 lat0~2·pass·arrive · story fk_* · 손잡이', function () {
+      var rig = fkRig(), FK = rig.FK, r = {};
+      try {
+        function at(ch, step) { C.save.story = { ch: ch, step: step }; }
+        var lat = function (ch, st) { at(ch, st); return [0, 1, 2].filter(FK.latticeOff).join(''); };
+        r.lattice = [lat(36, 1), lat(36, 2), lat(36, 4), lat(36, 5), lat(36, 6), lat(36, 7), lat(37, 0)].join('|') === '|0|0|01|01|012|012' && FK.LATTICE_OFF_FROM.join() === '2,5,7';
+        at(37, 0); var c1 = FK.crowFrozen(); at(37, 1); var c2 = !FK.crowFrozen(); at(35, 9); var c3 = FK.crowFrozen(); r.crow = c1 && c2 && c3 && FK.CROW_WAKE_STEP === 1;
+        at(37, 3); var m1 = !FK.momentFree(); at(37, 4); var m2 = FK.momentFree(); at(38, 0); r.moment = m1 && m2 && FK.momentFree() && FK.MOMENT_FREE_STEP === 4;
+        var c = FK.center(), tw = FK.siteById('tower');
+        r.spots = FK.spot('lat0').x === FK.siteById('lat0').x && FK.spot('lat1').y === FK.siteById('lat1').y && FK.spot('lat2').x === tw.x && FK.spot('lat2').y === tw.y &&
+          FK.spot('pass').y === FK.siteById('pass').y && FK.spot('arrive').x === c.x && Math.abs(FK.spot('arrive').y - (c.y + 151)) < 1e-6 && FK.spot('gate').x === FK.siteById('gate').x && !FK.spot('nobody');
+        var ST = DG.story;
+        r.storySpot = !!ST.spotPos('fk_tower') && Math.abs(ST.spotPos('fk_forge', [3, -2]).x - (FK.siteById('forge').x + 3)) < 1e-6 && !!ST.spotPos('fk_arrive') && !!ST.spotPos('fk_lat2') && !!ST.spotPos('fk_pass');
+        C.setTune('fork.on', 0);
+        r.off = !FK.on() && FK.marks().length === 0 && FK.poles().length === 0 && FK.rectsIn(Math.floor(tw.x / 48), Math.floor(tw.y / 48)).length === 0 && !ST.spotPos('fk_tower');
+        C.setTune('fork.on', null);
+        C.setTune('fork.gate', 1); at(20, 0); r.gateKnob = FK.gateOpen() && !FK.momentFree(); C.setTune('fork.gate', null); r.gateShut = !FK.gateOpen();
+      } finally { C.setTune('fork.on', null); C.setTune('fork.gate', null); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '격자 말뚝 37장 2·5·7 · 별까마귀 38장 1 · 순간이 풀림 38장 4 · 자리 lat/pass/arrive · story fk_* · 손잡이' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑲-61 탈것 — 말(mount.js, PLAN §5 ⑲-61 · SAGA-DESIGN §12) ── */
