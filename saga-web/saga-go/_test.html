@@ -14960,7 +14960,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 34 : ch, step: si }; return ST.npcPos(k); }
         function vtRect(p) { return VT.rectsIn(Math.floor(p.x / 48), Math.floor(p.y / 48)).some(function (q) { return frInRect(q, p.x, p.y); }); }
         /* 인물 — 해미: 금고에 들어선 뒤(1~, 뒤에도) 해미 진열장 자리 / 갈무리: 기둥 위 대화 단계(4)에만 핵 곁 / 소담: 첫 단계는 두 기둥 사이·그 뒤엔 문 안쪽 */
-        r.haemi = (np('haemi', 0), !ST.visible('haemi')) && st10Eq(np('haemi', 1), hm) && ST.visible('haemi') && st10Eq(np('haemi', 6), hm) && st10Eq(np('haemi', 0, 35), hm) && (np('haemi', 0, 33), !ST.visible('haemi'));
+        r.haemi = (np('haemi', 0), !ST.visible('haemi')) && st10Eq(np('haemi', 1), hm) && ST.visible('haemi') && st10Eq(np('haemi', 6), hm) && st10Eq(np('haemi', 2, 35), hm) && (np('haemi', 0, 33), !ST.visible('haemi'));
         r.garmuri = (np('garmuri', 3), !ST.visible('garmuri')) && st10Eq(np('garmuri', 4), { x: core.x, y: core.y + 4 }) && ST.visible('garmuri') && (np('garmuri', 5), !ST.visible('garmuri')) && !vtRect(np('garmuri', 4));
         r.sodam = st10Eq(np('sodam', 0), { x: mid.x, y: mid.y - 14 }) && st10Eq(np('sodam', 3), { x: vault.x, y: vault.y + 8 });
         r.time = ST.memberTime('story_haemi') === '미래' && !!ST.MEMBERS.story_haemi;
@@ -15094,6 +15094,55 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { C.setTune('fork.on', null); C.setTune('fork.gate', null); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '격자 말뚝 37장 2·5·7 · 별까마귀 38장 1 · 순간이 풀림 38장 4 · 자리 lat/pass/arrive · story fk_* · 손잡이' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-66 이야기 11부 제36장 · 가장 깊은 진열장 (story ch36·벼리 · fork 무대·vault 깊은 진열장, PLAN §5 ⑲-66) ── */
+    t('이야기 ⑲-66 — 36장 여섯 단계(Lv78) · 흐름: 해미(금고 깊은 진열장 곁) → 진열장 속으로(sail — 세갈래 고을 성문 남쪽에 내림) → 벼리 → 성문 앞 결정 짐승 넷(땅) → 벼리 따라 대장간(follow 다섯 점) → 벼리 · 벼리·해미 자리 · 🪢+9 🪙+9000', function () {
+      var rig = stRig(78), VT = DG.vault, FK = DG.fork, ST = DG.story, FC = DG.fieldCombat, TL = DG.talent, W0 = DG.world, r = {}, i;
+      try {
+        VT._resetForTest(); FK._resetForTest(); delete C.save.vault; delete C.save.fork;
+        var c = ST.CHAPTERS[35], S36 = c.steps;
+        r.table = c.id === 'ch36' && c.ar === 78 && !c.join && S36.length === 6 && c.reward.knot === 9 && c.reward.gold === 9000 && c.reward.guide === 9 && c.reward.secret === 6 && c.reward.party === 2500 &&
+          S36.map(function (q) { return q.type; }).join() === 'talk,sail,talk,kill,follow,talk' && S36[1].npc === 'haemi' && S36[1].to === 'fk_arrive' && S36[3].spot === 'fk_gate' && S36[3].kinds.join() === 'imp,rockbear,raptor,snowfox' && S36[4].npc === 'byeori' && S36[4].path.length === 5;
+        var gate = FK.siteById('gate'), forge = FK.siteById('forge'), deep = VT.spot('deep'), hc = VT.spot('haemi');
+        function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 35 : ch, step: si }; return ST.npcPos(k); }
+        /* 인물 — 해미: 36장 처음 둘은 금고 가장 깊은 진열장 곁, 그 뒤엔 해미 진열장 자리 / 벼리: 성문 안쪽(0~4) → 대장간 화덕 앞(5~, 뒤에도) */
+        r.haemi = st10Eq(np('haemi', 0), { x: deep.x + 3.5, y: deep.y + 3 }) && st10Eq(np('haemi', 1), { x: deep.x + 3.5, y: deep.y + 3 }) && st10Eq(np('haemi', 2), hc) && st10Eq(np('haemi', 0, 36), hc);
+        r.by0 = st10Eq(np('byeori', 0), { x: gate.x, y: gate.y - 17 }); r.by1 = ST.visible('byeori'); r.by2 = st10Eq(np('byeori', 3), { x: gate.x, y: gate.y - 17 }); r.by3 = st10Eq(np('byeori', 5), { x: forge.x + 2.4, y: forge.y + 12 });
+        r.byeori = r.by0 && r.by1 && r.by2 && r.by3 &&
+          st10Eq(np('byeori', 0, 36), { x: forge.x + 2.4, y: forge.y + 12 }) && (np('byeori', 0, 34), !ST.visible('byeori'));
+        C.save.story = { ch: 35, step: 0 };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('haemi')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        /* 진열장 속으로 — 해미에게 말을 걸면 세갈래 고을 성문 남쪽에 내린다(키보드 판 — GPS 판은 걸어서) */
+        var arrive = FK.spot('arrive');
+        stGo(ST.npcPos('haemi')); var talked = stTalkAll(ST);
+        var kb = W0.mode === 'keyboard';
+        r.sail = talked && C.save.story.step === 2 && (!kb || (Math.abs(C.save.player.pos.x - arrive.x) < 1e-6 && Math.abs(C.save.player.pos.y - arrive.y) < 1e-6));
+        stGo(ST.npcPos('byeori')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        /* 성문 앞 결정 짐승 넷(땅) */
+        var kt = ST.targetOf(ST.step());
+        r.killAt = st10Eq(kt, { x: gate.x, y: gate.y + 22 });
+        stGo({ x: kt.x + 4, y: kt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.map(function (u) { return S.foes[u].kind; }).join() === 'imp,rockbear,raptor,snowfox' && cp.uids.every(function (u) { return !S.foes[u].sky; });
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 4;
+        /* 벼리 따라 대장간 — 다섯 점(성문 안쪽 → 화덕 앞) */
+        var st = ST.step(), P = ST.followPts(st), p0 = ST.npcPos('byeori');
+        r.path = P.length === 5 && st10Eq(P[0], { x: forge.x + 77, y: forge.y + 36 }) && st10Eq(P[4], { x: forge.x + 2.4, y: forge.y + 12 }) && st10Eq(p0, P[0]) &&
+          Math.hypot(P[0].x - (gate.x), P[0].y - (gate.y - 17)) < 60;                                  // 시작은 성문 안쪽 가까이
+        stGo({ x: p0.x + ST.FOLLOW_NEAR() + 5, y: p0.y });
+        var f1 = ST.stepFollow(1);
+        r.wait = !!f1 && !f1.walking && st10Eq(ST.npcPos('byeori'), p0);
+        for (i = 0; i < 400 && C.save.story.step === 4; i++) { var q = ST.npcPos('byeori'); stGo({ x: q.x + 3, y: q.y }); ST.stepFollow(1); }
+        r.arrive = C.save.story.step === 5 && st10Eq(ST.npcPos('byeori'), P[4]);
+        gold0 = C.save.player.gold; k0 = m.knot || 0;
+        stGo(ST.npcPos('byeori')); r.end = stTalkAll(ST) && C.save.story.ch === 36 && C.save.story.step === 0 && m.knot === k0 + 9 && C.save.player.gold >= gold0 + 9000;
+        r.after = !FK.momentFree() && FK.crowFrozen() && VT.deepShown();
+      } finally { DG.world = W0; VT._resetForTest(); FK._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '여섯 단계 · 해미 → 진열장 속으로(성문 남쪽) → 벼리 → 짐승 넷 → 대장간 따라가기 → 벼리 · 🪢+9 🪙+9000 · 해미·벼리 자리' : ('실패 ' + bad.join(','));
     });
 
     /* ── ⑲-61 탈것 — 말(mount.js, PLAN §5 ⑲-61 · SAGA-DESIGN §12) ── */

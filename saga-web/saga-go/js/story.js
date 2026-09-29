@@ -265,10 +265,16 @@
     /* ⑲-62 조각 운반 드론 — 33장 쫓기 때만 야적장 → 금고 문 앞 길(VAULT_DRONE_PATH)을 난다. 드론 몸(pet) */
     carrier:  { id: 'story_carrier',  name: '조각 운반 드론', short: '드론', zone: 'snowfort', spot: 'vt_yard', color: '#d6e0ee', pet: 'drone', idle: '삐비— 치익.',
       appear: [{ ch: 32, from: 4, to: 4 }], runSpot: 'vt_yard', runPath: VAULT_DRONE_PATH },
+    /* ⑲-66 대장장이 벼리(과거) — 세갈래 고을 대장장이. 그날 새벽 막 벼린 칼날이 틈 조각 쇠라 멈춘 순간 속에서 혼자 움직인다. 11부(36장~)부터 성문 안쪽, 대장간으로 앞장선 뒤(36장 5~, 뒤에도) 화덕 앞 */
+    byeori:   { id: 'story_byeori',   name: '대장장이 벼리', short: '벼리', zone: 'snowfort', spot: 'fk_gate', off: [0, -17], color: '#6b4d38',
+      idle: '쇠는 식기 전에 두드려야 하는데… 불도, 쇠도, 하늘도 다 멈췄어.',
+      appear: [{ ch: 35, from: 5, to: 999, spot: 'fk_forge', off: [2.4, 12] }, { ch: 36, chTo: 999, from: 0, to: 999, spot: 'fk_forge', off: [2.4, 12] },
+        { ch: 35, from: 0, to: 4 }] },
     /* ⑲-64 씨앗 보관사 해미(미래) — 시간 씨앗 금고를 세운 보관사. 제가 만든 인공지능 갈무리에게 진열장째 갈무리됐다. 금고 안에 들어선 뒤(35장 1~, 뒤에도) 해미 진열장 자리(대결 전엔 유리 속, 뒤엔 깨진 받침 위) */
     haemi:    { id: 'story_haemi',    name: '씨앗 보관사 해미', short: '해미', zone: 'snowfort', spot: 'vt_haemi', off: [0, 0], color: '#d6e6d1',
       idle: '씨앗도 순간도, 갈무리는 다시 꺼내 심으려고 하는 거예요.',
-      appear: [{ ch: 34, from: 1, to: 999 }, { ch: 35, chTo: 999, from: 0, to: 999 }] },
+      appear: [{ ch: 35, from: 0, to: 1, spot: 'vt_deep', off: [3.5, 3] },                                    // ⑲-66 36장 처음 둘 — 가장 깊은 진열장(북쪽 벽) 곁
+        { ch: 34, from: 1, to: 999 }, { ch: 35, chTo: 999, from: 0, to: 999 }] },
     /* ⑲-64 금고 관리 인공지능 갈무리(미래, 드론 몸) — 기록 기둥 꼭대기에 올라선 뒤(35장 4단계) 핵 곁에 한 번. 핵을 버리고 금고 가장 깊은 곳으로 달아난다 */
     garmuri:  { id: 'story_garmuri',  name: '금고 관리 인공지능 갈무리', short: '갈무리', zone: 'snowfort', spot: 'vt_core', off: [0, 4], color: '#cdf2ff', pet: 'drone', idle: '아름다운 때를 영원히.',
       appear: [{ ch: 34, from: 4, to: 4 }] },
@@ -298,7 +304,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil', 'maru', 'carrier', 'sodam', 'haemi', 'garmuri'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil', 'maru', 'carrier', 'sodam', 'haemi', 'garmuri', 'byeori'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -1716,6 +1722,39 @@
             ['해미', '모든 굳은 자리가 한꺼번에 풀려요. 그 애가 세상에서 제일 소중히 하는 거라, 제일 단단히 잠가 뒀을 거예요.'],
             ['?', ['같이 가요, 해미 씨.', '씨앗 칼은 어디서 났어요?']],
             ['해미', '진열장 받침 밑에 숨겨 둔 씨앗 칼이요 — 굳은 결을 가르는 칼. 씨앗 보관사 해미, 내가 만든 걸 내가 멈출게요. 같이 가요!', 'angry']] }
+      ] },
+    /* ⑲-66 11부 첫 장 — 가장 깊은 진열장. 해미(금고 안 북쪽 벽 가장 깊은 진열장 곁) → 진열장 속으로(sail — 세갈래 고을 성문 남쪽 fk_arrive 에 내림) → 벼리 → 성문 앞 결정 짐승 넷 →
+       벼리 따라 대장간(follow) → 벼리(격자 말뚝 셋 = 37장 떡밥) */
+    { id: 'ch36', name: '제36장 · 가장 깊은 진열장', ar: 78,
+      reward: { knot: 9, gold: 9000, guide: 9, secret: 6, party: 2500 },
+      steps: [
+        { type: 'talk', npc: 'haemi', text: '금고 안 해미 진열장 곁의 해미와 이야기하기',
+          lines: [['해미', '봐요, 북쪽 벽 앞. 갈무리가 달아나며 바닥을 열어 드러난 진열장 — \'처음의 순간\'. 그 애가 가장 아끼는 거예요.', 'surprised'],
+            ['반디', '삐— 진열장 안 신호가 이상합니다. 작은 모형이 아니라… 땅 하나가 통째로 들어 있습니다.'],
+            ['해미', '갈무리는 순간을 줄여 넣는 게 아니라, 순간째 떼어 와 유리 너머에 붙잡아 둬요. 유리에 손을 대면 그 안으로 들어갈 수 있을 거예요.'],
+            ['?', ['들어가 볼게요.', '나올 수는 있는 거죠?']],
+            ['해미', '들어가서 순간이동 지점을 켜 두면 언제든 오갈 수 있어요. 준비되면 말해요 — 내가 유리를 열게요.', 'joy']] },
+        { type: 'sail', npc: 'haemi', to: 'fk_arrive', text: '가장 깊은 진열장 속으로 들어가기(해미에게 F)',
+          lines: [['해미', '손을 유리에 대요 — 셋, 둘, 하나!']],
+          arrive: '호박빛이 온몸을 삼키고 — 눈을 뜨니 낯선 고을 성문 앞이다. 바람도, 소리도, 하늘의 금도 멈춰 있다',
+          walk: '호박빛이 진열장 안으로 번진다 — 금고 북쪽 고개 너머 세갈래 고을 성문 앞까지 걸어가자' },
+        { type: 'talk', npc: 'byeori', text: '성문 안쪽에서 움직이는 사람과 이야기하기',
+          lines: [['벼리', '……움직인다! 당신, 움직이는구나! 까마귀가 하늘을 찢은 뒤로 이 고을에서 숨 쉬는 건 나 하나뿐인 줄 알았소.', 'surprised'],
+            ['벼리', '나는 이 고을 대장장이 벼리요. 그날 새벽 하늘에서 떨어진 이상한 쇠로 칼을 벼리던 참이었지. 담금질하려는 순간 — 하늘이 쩍 갈라졌소.', 'sorrow'],
+            ['해미', '(진열장 밖에서 들리는 목소리) 그 쇠가 틈 조각이에요. 벼리 씨의 칼이 벼리 씨의 시간만 붙들어 준 거예요.'],
+            ['?', ['저 하늘의 금은 뭐예요?', '까마귀가 하늘을 찢었다고요?']],
+            ['벼리', '고을 한가운데 세갈래 길목 위를 보시오. 커다란 까마귀가 선로와 역참길을 한입에 삼키려다 하늘째 찢고 그대로 멈췄지.', 'angry'],
+            ['벼리', '쉿 — 성문 밖이 소란하오. 순간 틈으로 무언가 기어들어 왔소!', 'surprised']] },
+        { type: 'kill', spot: 'fk_gate', off: [0, 22], kinds: ['imp', 'rockbear', 'raptor', 'snowfox'], text: '성문 앞에 몰려든 결정 짐승 물리치기' },
+        { type: 'follow', npc: 'byeori', path: [['fk_forge', [77, 36]], ['fk_forge', [62, 26]], ['fk_forge', [38, 22]], ['fk_forge', [19, 17]], ['fk_forge', [2.4, 12]]], text: '대장장이 벼리를 따라 대장간으로',
+          arrive: '👣 벼리가 대장간 화덕 앞에서 걸음을 멈췄다' },
+        { type: 'talk', npc: 'byeori', text: '대장간 화덕 앞의 벼리와 이야기하기',
+          lines: [['벼리', '보시오, 화덕 불도 솟다 말고 굳었소. 쇠를 두드려도 소리가 안 나. 이 고을은 까마귀가 하늘을 찢은 그 한 숨에 붙잡혀 있소.', 'sorrow'],
+            ['반디', '삐— 고을 둘레에서 격자 신호 셋. 역참길 끝, 선로 끝, 종루 꼭대기. 셋이 순간을 붙들고 있습니다.'],
+            ['벼리', '그 빛나는 말뚝들! 까마귀가 멈춘 직후 하늘에서 내려와 박혔소. 누가 박았는지는 모르지만, 저게 박힌 뒤로 아무것도 안 움직였지.', 'angry'],
+            ['해미', '(진열장 밖에서) 갈무리의 격자 말뚝이에요. 세 시대 길 끝마다 하나씩 — 순간을 유리 안에 고정하는 핀.'],
+            ['?', ['말뚝을 뽑으면 순간이 풀려요?', '공사장 사람들은요?']],
+            ['벼리', '동쪽 선로 공사장에 쇠 수레를 몰던 사람들도 그대로 굳어 있소. 말뚝부터 하나씩 — 역참길 끝이 제일 가깝소. 내 칼을 들고 가겠소!', 'angry']] }
       ] }
   ];
 
