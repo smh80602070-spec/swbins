@@ -357,7 +357,23 @@ def eye_color(arm, name, outdir):
             n.image = img
 
 
-def makeup_masks(basemesh):
+def makeup_masks(basemesh, svc, gender):
+    """화장 마스크 — **성별 표준 몸**(나이·체격 0.5, 모프 없음) 정점 기준으로 굽는다. 마스크는 "입술·볼·눈두덩 정점"이라 인물 모프와 무관하게
+    UV 에서 같은 자리다(정점이 얼굴을 따라간다). 인물마다 모프로 다시 재던 옛 방식은 같은 피부 종류·성별끼리도 그림이 미세하게 달라 105장이 모두 따로
+    실렸다(피부 283MB) — 이제 같은 종류는 완전히 같은 그림이라 dedupe_forge_textures 가 하나로 합친다(09-29)."""
+    node = next(n for n in basemesh.data.materials[0].node_tree.nodes if n.type == 'TEX_IMAGE')
+    W, H = node.image.size
+    neutral = svc['HumanService'].create_human(
+        mask_helpers=True, detailed_helpers=True, extra_vertex_groups=True, feet_on_ground=True, scale=0.1,
+        macro_detail_dict={'gender': float(gender), 'age': 0.5, 'muscle': 0.5, 'weight': 0.5, 'proportions': 0.5, 'height': 0.5,
+                           'cupsize': 0.5, 'firmness': 0.5, 'race': {'asian': 0.34, 'caucasian': 0.33, 'african': 0.33}})
+    try:
+        return _makeup_masks_of(neutral, W, H)
+    finally:
+        bpy.data.objects.remove(neutral, do_unlink=True)
+
+
+def _makeup_masks_of(basemesh, W, H):
     """화장 자리 마스크 — 도우미 정점(이빨·눈)으로 입·눈 위치를 재서(모프를 따라간다) UV 그림 크기의 마스크 셋(입술·볼·눈두덩)을 만든다.
     도우미는 bake_for_export 가 지우므로 그 전에 부른다. 좌표는 세계 좌표, 앞 = -y·위 = +z·좌우 = x."""
     mw = basemesh.matrix_world
@@ -396,9 +412,6 @@ def makeup_masks(basemesh):
     half_w = (teeth[:, 0].max() - teeth[:, 0].min()) / 2
     eyes = [le.mean(0), re.mean(0)]
     ey = sum(e[2] for e in eyes) / 2
-    mat = basemesh.data.materials[0]
-    node = next(n for n in mat.node_tree.nodes if n.type == 'TEX_IMAGE')
-    W, H = node.image.size
     nv = len(basemesh.data.vertices)
     front = co[:, 1] < mouth[1] - 0.002      # 입 안쪽(이빨·혀 뒤)·뒤통수 제외
     lip = np.clip(1.0 - (((co[:, 0] - mouth[0]) / (half_w * 1.05)) ** 2 + ((co[:, 2] - mouth[2]) / 0.0125) ** 2), 0.0, 1.0)
@@ -1038,7 +1051,7 @@ def main():
     bpy.ops.wm.read_factory_settings(use_empty=True)
     svc = mpfb()
     basemesh = make_human(svc, r)
-    mk_masks = makeup_masks(basemesh) if r.get('makeup') else None
+    mk_masks = makeup_masks(basemesh, svc, r['macro']['gender']) if r.get('makeup') else None
     arm = bake_for_export(svc, basemesh)
     arm.name = arm.data.name = r['id']
     name_materials(svc, arm)
