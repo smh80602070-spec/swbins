@@ -539,7 +539,10 @@
     var W = global.DG.world;
     if (W && W.inputBlocked && W.inputBlocked()) { return false; }
     var MTj = global.DG.mount;                                       // ⑲-61 탄 채로 점프 = 말에서 뛰어내린다(그 자리에서 내리기만)
-    if (MTj && MTj.active && MTj.active()) { MTj.dismount('말에서 뛰어내렸다'); return true; }
+    if (MTj && MTj.active && MTj.active()) {
+      if (MTj.isFly && MTj.isFly(MTj.current())) { return true; }              // ⑲-62 나는 탈것 — Space 는 오르기(mount.js 가 누르는 동안 본다)
+      MTj.dismount('말에서 뛰어내렸다'); return true;
+    }
     sta();
     var pos = core().save.player.pos;
     var FCj = global.DG.fieldCombat;

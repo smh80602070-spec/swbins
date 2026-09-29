@@ -14720,8 +14720,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var MT = DG.mount, W = DG.world, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
       try {
         MT._resetForTest(); delete C.save.mount; DG.landform._resetForTest();
-        r.table = MT.MOUNTS.map(function (m) { return m.id + ':' + m.lv + ':' + m.mul; }).join() === 'mt_farm:5:1.6,mt_brown:15:1.85,mt_white:30:2.1' && MT.MOUNTS.every(function (m) { return m.kind === 'ground' && !!m.pet; });
-        C.save.player.level = 4; if (C.save.dex && C.save.dex.pets) { delete C.save.dex.pets.pt_white_horse; delete C.save.dex.pets.pt_horse; delete C.save.dex.pets.pt_horse_farm; }
+        r.table = MT.MOUNTS.map(function (m) { return m.id + ':' + m.lv + ':' + m.mul; }).join() === 'mt_farm:5:1.6,mt_brown:15:1.85,mt_white:30:2.1,mt_crane:20:1.5,mt_dragon:40:1.7' && MT.MOUNTS.every(function (m) { return (m.kind === 'ground' || (m.kind === 'fly' && m.fly > m.mul && m.ceil > 0)) && !!m.pet; });
+        C.save.player.level = 4; if (C.save.dex && C.save.dex.pets) { MT.MOUNTS.forEach(function (m) { delete C.save.dex.pets[m.pet]; }); }
         r.none = MT.unlocked().length === 0 && !MT.selected() && !MT.canRide().ok && /레벨 5/.test(MT.canRide().why);
         C.save.player.level = 5; r.lv5 = MT.unlocked().map(function (m) { return m.id; }).join() === 'mt_farm' && MT.selected().id === 'mt_farm';
         C.save.player.level = 15; r.lv15 = MT.unlocked().length === 2 && MT.selected().id === 'mt_brown';
@@ -14730,17 +14730,17 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         r.dex = MT.unlocked().map(function (m) { return m.id; }).join() === 'mt_white' && MT.isUnlocked(MT.def('mt_white')) && !MT.isUnlocked(MT.def('mt_brown'));
         delete C.save.dex.pets.pt_white_horse;
         C.save.player.level = 30;
-        r.lv30 = MT.unlocked().length === 3 && MT.selected().id === 'mt_white';
+        r.lv30 = MT.unlocked().length === 4 && MT.selected().id === 'mt_white';   // 학(20)도 열렸지만 안 골랐으면 지상 중 가장 빠른 말
         /* 타기 — 배율은 걷기·달리기에 다 곱해진다 */
         var base = W.moveSpeed(false), baseRun = W.moveSpeed(true);
         r.ride = !MT.active() && MT.petRef() === null && MT.ride().ok && MT.active() && MT.current().id === 'mt_white' && MT.petRef().id === 'pt_white_horse' && MT.speedMul() === 2.1;
         r.speed = Math.abs(W.moveSpeed(false) / base - 2.1) < 1e-9 && Math.abs(W.moveSpeed(true) / baseRun - 2.1) < 1e-9 && Math.abs(baseRun / base - 2.2) < 1e-9;
         /* 고르기(Shift+H) — 타고 있으면 그 자리에서 바꾼다 · 저장은 sel 한 칸 */
         var nx = MT.cycle();
-        r.cycle = nx.id === 'mt_farm' && MT.current().id === 'mt_farm' && MT.speedMul() === 1.6 && C.save.mount.sel === 'mt_farm' && Object.keys(C.save.mount).join() === 'sel';
+        r.cycle = nx.id === 'mt_crane' && MT.current().id === 'mt_crane' && MT.speedMul() === 1.5 && C.save.mount.sel === 'mt_crane' && Object.keys(C.save.mount).join() === 'sel';
         r.off = MT.toggle().mounted === false && !MT.active() && MT.speedMul() === 1 && Math.abs(W.moveSpeed(false) / base - 1) < 1e-9;
         MT._resetForTest();
-        r.fresh = !MT.active() && MT.selected().id === 'mt_farm' && MT.ride('mt_brown').ok && MT.current().id === 'mt_brown' && C.save.mount.sel === 'mt_brown' && !MT.ride('nope').ok;
+        r.fresh = !MT.active() && MT.selected().id === 'mt_crane' && MT.ride('mt_brown').ok && MT.current().id === 'mt_brown' && C.save.mount.sel === 'mt_brown' && !MT.ride('nope').ok;
         MT.dismount(null);
         r.knob = (C.setTune('mount.on', 0), !MT.canRide().ok && !MT.ride().ok) && (C.setTune('mount.on', null), MT.ride().ok);
       } finally {
@@ -14791,6 +14791,105 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '점프 = 내리기 · GPS 판 ✕ · 섬 위 ✕ · 싸움이 붙으면 내림·못 탐 · 끝나면 다시 · 손잡이' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-62 비행 탈것 T2 — 학·푸른 용 (mount.js, PLAN §5 ⑲-62 · SAGA-DESIGN §15) ── */
+    t('탈것 ⑲-62 — 비행: 학(레벨 20·×1.5 · 뜨면 ×2.6·40m)·푸른 용(40·×1.7 · ×3.4·70m) · Space 오름·Z 내림·손 떼면 그 높이 · 2m 넘게 뜨면 빠름 · 6m 넘게 뜨면 지붕 넘음 · 땅에 내려도 탄 채 · 지상 말은 못 뜸 · Space 가 내리게 하지 않음', function () {
+      var MT = DG.mount, W = DG.world, LF = DG.landform, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
+      try {
+        MT._resetForTest(); delete C.save.mount; LF._resetForTest();
+        if (C.save.dex && C.save.dex.pets) { MT.MOUNTS.forEach(function (m) { delete C.save.dex.pets[m.pet]; }); }
+        C.save.player.level = 19; var no19 = MT.unlocked().every(function (m) { return m.kind === 'ground'; });
+        C.save.player.level = 40;
+        var base = W.moveSpeed(false);
+        r.catalog = no19 && MT.def('mt_crane').lv === 20 && MT.def('mt_crane').ceil === 40 && MT.def('mt_crane').fly === 2.6 && MT.def('mt_dragon').lv === 40 && MT.def('mt_dragon').ceil === 70 && MT.def('mt_dragon').fly === 3.4 &&
+          MT.isFly(MT.def('mt_crane')) && !MT.isFly(MT.def('mt_white')) && MT.unlocked().length === 5 && MT.selected().id === 'mt_white';
+        /* 지상 말은 못 뜬다 */
+        MT.ride('mt_white'); MT.setLift(1); MT.step(1);
+        r.ground = MT.active() && MT.altitude() === 0 && !MT.flying() && !MT.overRoofs();
+        MT.dismount(null);
+        /* 학 — 오르기 */
+        r.ride = MT.ride('mt_crane').ok && MT.isFly(MT.current()) && MT.petRef().id === 'pt_crane' && MT.altitude() === 0 && MT.speedMul() === 1.5 && !MT.flying();
+        MT.setLift(1); MT.step(0.1); var a1 = MT.altitude();
+        r.rise = Math.abs(a1 - MT.RISE * 0.1) < 1e-9 && !MT.flying();                     // 1m — 아직 땅에 붙어 걷는다
+        MT.step(0.3);
+        r.air = MT.flying() && MT.altitude() >= MT.AIR_MIN && !MT.overRoofs() && MT.speedMul() === 2.6 && Math.abs(W.moveSpeed(false) / base - 2.6) < 1e-9 && Math.abs(W.moveSpeed(true) / base - 2.6 * 2.2) < 1e-9;
+        MT.step(0.3);
+        r.roof = MT.altitude() >= MT.ROOF_H && MT.overRoofs();
+        /* 손을 떼면 그 높이 · 천장 40m · Space(점프)는 내리게 하지 않고 뛰지도 않는다 */
+        MT.setLift(0); var hold = MT.altitude(); MT.step(2);
+        r.hover = MT.altitude() === hold;
+        MT.setLift(1); MT.step(10);
+        r.ceil = MT.altitude() === 40 && MT.flying();
+        var jumped = LF.jump();
+        r.space = jumped === true && MT.active() && LF.airH() === 0 && !LF.gliding();
+        /* 내리기 — 땅에 닿아도 탄 채(걷는 학) */
+        MT.setLift(-1); MT.step(1); var a2 = MT.altitude();
+        r.fall = Math.abs(a2 - (40 - MT.FALL)) < 1e-9;
+        MT.step(10);
+        r.land = MT.altitude() === 0 && MT.active() && !MT.flying() && MT.speedMul() === 1.5 && !MT.overRoofs();
+        /* 푸른 용 — 70m */
+        MT.dismount(null); r.dragon = MT.ride('mt_dragon').ok && MT.petRef().id === 'pt_cheongryong' && (MT.setLift(1), MT.step(20), MT.altitude() === 70) && MT.speedMul() === 3.4;
+        /* 내리면 높이도 없다 */
+        MT.dismount(null); r.off = MT.altitude() === 0 && !MT.flying() && MT.speedMul() === 1;
+      } finally {
+        MT._resetForTest(); C.save.player.level = lv0;
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+        if (pets0 !== null) { C.save.dex.pets = JSON.parse(pets0); }
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '학 ×1.5→×2.6·40m · 용 ×1.7→×3.4·70m · Space 오름·Z 내림·손 떼면 그 높이 · 2m 빠름·6m 지붕 · 땅에선 걷는 새 · 지상 말은 못 뜸' : ('실패 ' + bad.join(','));
+    });
+
+    t('탈것 ⑲-62 — 비행 제한: 이야기 임무 단계(오르기·섬·배·따라가기·쫓기·보스·지키기·무리)에선 못 오르고 떠 있으면 천천히 내려 내림 · 대화 등은 허용 · 싸움이 붙으면 그 자리서 내림 · GPS 판이면 내림', function () {
+      var rig = stRig(40), MT = DG.mount, ST = rig.ST, W0 = DG.world, FC = DG.fieldCombat, r = {}, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
+      try {
+        MT._resetForTest(); delete C.save.mount; FC._resetForTest(); FC.tick(0.05);
+        if (C.save.dex && C.save.dex.pets) { MT.MOUNTS.forEach(function (m) { delete C.save.dex.pets[m.pet]; }); }
+        /* 단계 종류별로 하나씩 찾는다 */
+        var found = {};
+        ST.CHAPTERS.forEach(function (ch, ci) { ch.steps.forEach(function (st, si) { if (!found[st.type]) { found[st.type] = { ch: ci, step: si }; } }); });
+        r.types = !!found.talk && !!found.kill && !!found.duel && !!found.defend && !!found.sky && !!found.climb && !!found.chase &&
+          Object.keys(MT.BLOCK_TYPES).sort().join() === 'chase,climb,defend,duel,follow,kill,sail,sky' && !MT.BLOCK_TYPES.talk && !MT.BLOCK_TYPES.light && !MT.BLOCK_TYPES.seal && !MT.BLOCK_TYPES.go;
+        C.save.story = { ch: found.talk.ch, step: found.talk.step };
+        r.talkOk = !MT.storyBlocks();
+        MT.ride('mt_crane'); MT.setLift(1); MT.step(1);
+        r.up = MT.flying() && MT.altitude() === MT.RISE;
+        /* 막는 단계가 되면 — 천천히 내리고(LAND_RATE), 땅에 닿으면 내림 */
+        MT.setLift(0);
+        C.save.story = { ch: found.kill.ch, step: found.kill.step };
+        r.blocks = MT.storyBlocks() && MT.storyBlocks();
+        MT.step(0.2); var a = MT.altitude();
+        r.slow = a < MT.RISE && a > 0 && MT.active();
+        MT.step(2);
+        r.landDown = !MT.active() && MT.altitude() === 0;
+        /* 막는 단계에선 못 오른다 — 땅에서도 */
+        MT.ride('mt_crane'); MT.setLift(1); MT.step(1);
+        r.noRise = MT.active() && MT.altitude() === 0;
+        MT.dismount(null);
+        /* 종류마다 막힘 */
+        r.each = Object.keys(MT.BLOCK_TYPES).every(function (k) { var f = found[k]; if (!f) { return true; } C.save.story = { ch: f.ch, step: f.step }; return MT.storyBlocks(); });
+        /* 싸움이 붙으면 뜬 채로도 내린다 */
+        C.save.story = { ch: found.talk.ch, step: found.talk.step };
+        MT.ride('mt_crane'); MT.setLift(1); MT.step(1);
+        var p = C.save.player.pos, S = FC.state();
+        FC.spawnCamp(S, { key: 't:fly', x: p.x + 3, y: p.y, tier: 1, kind: 'field', foes: [{ kind: 'imp', dx: 0, dy: 0 }] });
+        S.camps['t:fly'].uids.forEach(function (u) { S.foes[u].st = 'chase'; S.foes[u].stT = 0; });
+        FC.tick(0.05); MT.step(1);
+        r.fight = !MT.active() && MT.altitude() === 0;
+        S.camps['t:fly'].uids.forEach(function (u) { delete S.foes[u]; }); delete S.camps['t:fly']; FC.state().calmT = 999; FC.tick(0.05);
+        /* GPS 판 */
+        MT.ride('mt_crane'); MT.setLift(1); MT.step(1);
+        DG.world = Object.create(W0, { mode: { value: 'geo' } }); MT.step(1);
+        r.geo = !MT.active() && MT.altitude() === 0;
+        DG.world = W0;
+      } finally {
+        DG.world = W0; FC._resetForTest(); MT._resetForTest(); rig.undo();
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+        if (pets0 !== null) { C.save.dex.pets = JSON.parse(pets0); }
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '이야기 단계 8종 막힘(대화·등불·석등·이동은 허용) · 막히면 천천히 내려 내림·못 오름 · 싸움 → 내림 · GPS → 내림' : ('실패 ' + bad.join(','));
     });
 
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */

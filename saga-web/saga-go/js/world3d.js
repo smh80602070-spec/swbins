@@ -2422,8 +2422,10 @@
     if (mtRef) {                                                                     // ⑲-61 말 — 같은 자리·같은 걸음, 나는 등 높이로
       var mtA = actorOf('mount', 'pet', mtRef, 96);
       mtA.sky = meSky();
-      placeActor(mtA, mx, my, h * farBoost(mx, my) * MTr.SCALE, 0, walking && !air, mot.phase, now);
-      if (meA.mesh) { meA.node.position.y += h * farBoost(mx, my) * MTr.RIDER_LIFT; }
+      var mtAlt = MTr.altitude ? MTr.altitude() : 0, fl = mtAlt >= MTr.AIR_MIN;
+      placeActor(mtA, mx, my, h * farBoost(mx, my) * MTr.SCALE, 0, (walking || fl) && !air, mot.phase, now);
+      if (fl && mtA.mesh) { mtA.node.position.y += mtAlt + Math.sin(now / 260) * 0.25; }   // ⑲-62 뜬 높이 — 날갯짓에 맞춰 살짝 출렁
+      if (meA.mesh) { meA.node.position.y += h * farBoost(mx, my) * MTr.RIDER_LIFT + (fl ? mtAlt + Math.sin(now / 260) * 0.25 : 0); }
     }
     /* ⑰ 여울 다리 — 상판 위면 몸을 상판 높이에 세운다(땅은 물 바닥이라 안 올리면 다리 밑을 걷는다) */
     var deck = LFa && LFa.deckAt ? LFa.deckAt(mx, my) : null;

@@ -325,10 +325,10 @@
     var step = moveSpeed(run) * dt;
     var ux = dx / len, uy = dy / len;
     /* §5 ⑰ 오르기·헤엄·점프 — 능선 오르막은 절반(기력이 다하면 0), 강은 0.6. 능선·강 밖은 늘 1 */
-    var LFm = global.DG.landform;
-    if (LFm) { step *= LFm.moveMul(pos.x, pos.y, ux, uy, dt); }
+    var LFm = global.DG.landform, MTf = global.DG.mount, flyOn = !!(MTf && MTf.flying && MTf.flying());
+    if (LFm && !flyOn) { step *= LFm.moveMul(pos.x, pos.y, ux, uy, dt); }               // ⑲-62 뜬 동안은 강·능선 감속이 없다
     var nx = pos.x + ux * step, ny = pos.y + uy * step;
-    var rects = LFm && LFm.onPole && LFm.onPole() ? [] : solidRectsNear(pos.x, pos.y);   // ⑲-34 들보 위는 벽 위다
+    var rects = (LFm && LFm.onPole && LFm.onPole()) || (MTf && MTf.overRoofs && MTf.overRoofs()) ? [] : solidRectsNear(pos.x, pos.y);   // ⑲-34 들보 위는 벽 위다 · ⑲-62 6m 넘게 뜨면 지붕을 넘는다
     /* 2026-09-28 — 이미 벽 안이면(모델이 와서 벽이 커졌거나·품질이 올라 집이 새로 섰거나·순간이동) 사방이 막혀
        영영 갇혔다 → 안에서는 막지 않는다(걸어 나가게) */
     if (rects.length && hitsHouse(pos.x, pos.y, rects)) { rects = []; }
