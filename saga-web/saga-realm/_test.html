@@ -3317,7 +3317,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         st.turn = 0; st = evFresh(); st.turn = 0; me = R.myForce(); me.gold = 20000;
         SC.state().done = { r1_start: {}, r1_rift_sign: {}, r1_first_ally: {} };
         var recruited = {}, order = [];
-        SD.CARDS.slice(3).forEach(function (cd) {
+        SD.CARDS.slice(3, 16).forEach(function (cd) {
           st.turn = Math.max(st.turn, cd.when.minTurn);
           if (cd.when.victory) { st.victories = [{ kind: 'culture', month: st.turn }]; }
           E.tick();
@@ -3335,8 +3335,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
           }
           if (!SC.state().done[cd.id]) { bad.push(cd.id + ' 기록'); }
         });
-        if (order.length !== SD.CARDS.length - 3) { bad.push('뜬 카드 ' + order.length); }
-        if (SC.lines().some(function (x) { return x.state !== 'done'; })) { bad.push('기록 줄'); }
+        if (order.length !== 13) { bad.push('뜬 카드 ' + order.length); }
+        if (SC.lines().slice(0, 16).some(function (x) { return x.state !== 'done'; })) { bad.push('기록 줄'); }
         var n = Object.keys(recruited).length;
         if (n < 4) { bad.push('등용한 시간 틈 사람 ' + n); }
         st.turn += 12; E.tick();
@@ -3344,6 +3344,45 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         E.view() && E.choose('def');
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '2~6막 열세 카드 차례로 뜸 · 시간 틈 사람 ' + n + '명 등용 · 결말 카드(승리 글) · 끝나면 조용';
+      } finally { window.DG_NO_SCENARIO = true; evDone(); }
+    });
+
+    t('시나리오 7막 — 시간 틈 사람 아홉이 다 모여야 열리고, 틈을 고른 답이 뒤 두 카드 글을 가르며, 끝나면 조용하다', function () {
+      var SC = DG.scenario, SD = DG.scenarioData, bad = [], st = evFresh();
+      window.DG_NO_SCENARIO = false;
+      try {
+        st.turn = 0; var me = R.myForce(); me.gold = 20000; SC.state();
+        st.turn = 100;
+        SD.CARDS.slice(0, 16).forEach(function (c) { SC.state().done[c.id] = { k: 'def', turn: 1 }; });
+        st.victories = [{ kind: 'culture', month: 100 }];
+        var cap = R.citiesOf('cao')[0], ids = SD.TIME_FOLK;
+        if (ids.length !== 9) { bad.push('시간 틈 사람 ' + ids.length); }
+        /* 아홉 전에는 안 뜬다 — 여덟만 모은 판 */
+        ids.slice(0, 8).forEach(function (id) { if (E.h.isFree(id)) { E.h.hire(id, cap, 'cao', 0); } });
+        E.tick();
+        if (E.view() && SD.card(E.view().id)) { bad.push('아홉 전에 뜸 ' + E.view().id); E.choose('def'); }
+        if (!ids.slice(0, 8).every(function (id) { return E.h.mineOf(id, 'cao'); })) { bad.push('여덟 등용'); }
+        if (E.h.isFree(ids[8])) { E.h.hire(ids[8], cap, 'cao', 0); }
+        E.tick();
+        var v = E.view();
+        if (!(v && v.id === 'r7_gather' && v.tag.indexOf('7막') >= 0 && v.text.indexOf('{') < 0 && v.choices.length === 3)) { bad.push('첫 카드 ' + (v && v.id)); if (v) { E.choose('def'); } }
+        else {
+          var g0 = me.gold, r = E.choose('util');
+          if (!r.ok || me.gold !== g0 + 1500 || SC.state().done.r7_gather.k !== 'util') { bad.push('틈을 길로 쓴다 ' + (me.gold - g0)); }
+          E.tick(); v = E.view();
+          if (!(v && v.id === 'r7_after' && v.text.indexOf('길로 쓰고') >= 0 && v.text.indexOf('{') < 0)) { bad.push('둘째 카드 글 ' + (v && v.id)); }
+          if (v) { E.choose('util'); }
+          E.tick(); v = E.view();
+          if (!(v && v.id === 'r7_end' && v.text.indexOf('길이 된 하늘') >= 0 && v.text.indexOf('{') < 0)) { bad.push('끝 카드 글 ' + (v && v.id)); }
+          g0 = me.gold;
+          if (v) { r = E.choose('atk'); if (!r.ok || me.gold !== g0 + 2500) { bad.push('끝 카드 고르기'); } }
+        }
+        if (SC.lines().some(function (x) { return x.state !== 'done' && x.state !== 'legacy'; })) { bad.push('기록 줄'); }
+        st.turn += 12; E.tick();
+        if (E.view() && SD.card(E.view().id)) { bad.push('끝난 뒤 또 뜸'); }
+        E.view() && E.choose('def');
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '7막 셋 — 아홉이 모여야 열림 · 틈 답(길로 쓴다)이 뒤 두 카드 글을 가름 · 끝나면 조용';
       } finally { window.DG_NO_SCENARIO = true; evDone(); }
     });
 

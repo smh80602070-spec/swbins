@@ -84,7 +84,10 @@
       E().addDef({
         id: cd.id, name: cd.title, emoji: cd.emoji, tag: cd.tag, chain: true,
         valid: function () { return null; },
-        text: function (c) { return fill(cd.textBy ? (cd.textBy[victoryKind()] || cd.text) : cd.text, c); },
+        text: function (c) {
+          if (cd.textByK) { var pd = save().done[cd.textByK.from]; return fill((pd && cd.textByK[pd.k]) || cd.text, c); }      // 7막 — 앞 카드에서 고른 답별 글
+          return fill(cd.textBy ? (cd.textBy[victoryKind()] || cd.text) : cd.text, c);
+        },
         choices: cd.choices.map(function (ch) {
           return {
             k: ch.k, label: fill(ch.label, {}), hint: ch.hint, cost: ch.cost || 0,
@@ -100,7 +103,9 @@
 
   function due(cd, F) {
     var st = R().state(), s = save(), since = (st.turn || 0) - s.t0;
-    if (cd.when.victory) { return !!(st.victories && st.victories.length) || (st.result && st.result.kind); }
+    if (cd.when.victory && !((st.victories && st.victories.length) || (st.result && st.result.kind))) { return false; }
+    if (cd.when.allTime) { return CD().TIME_FOLK.every(function (id) { return E().h.mineOf(id, F); }); }        // 7막 — 시간 틈 사람 아홉이 다 모였을 때
+    if (cd.when.victory) { return true; }
     if (since >= cd.when.minTurn) { return true; }
     return !!(cd.when.orCities && R().citiesOf(F).length >= cd.when.orCities);
   }
