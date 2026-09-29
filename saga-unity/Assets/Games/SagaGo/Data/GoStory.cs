@@ -448,6 +448,7 @@ namespace Saga.Go.Data
             new Npc { Id = "ferryman", NameKey = "story.npc.ferryman", NameKo = "늙은 사공 버들", ShortKey = "story.short.ferryman", ShortKo = "버들",
                 Gx = 2.35f, Gy = 4.4f, BodyFrom = "npc_elder",
                 At = new[] { new Spot { Ch = 6, From = 8, To = 8, Gx = CapeGx - 6f / 48f, Gy = CapeGy - 6f / 48f }, // 7장 — 곶에 노 저어 온다
+                    new Spot { Ch = 27, From = 0, To = 3, Gx = CapeGx - 6f / 48f, Gy = CapeGy - 6f / 48f }, new Spot { Ch = 27, From = 4, To = 9, Isle = true, Arena = IsleFerry }, // 28장 — 곶에서 배를 기다리다 바위섬에
                     new Spot { Ch = 7, From = 5, To = 10, Isle = true, Arena = IsleFerry } }, // 8장 — 섬 북쪽에 배를 대고 기다린다
                 IdleKey = "story.idle.ferryman", IdleKo = "물 냄새가 요즘 영 비릿해." },
             new Npc { Id = "scholar", NameKey = "story.npc.scholar", NameKo = "떠돌이 학자 은비", ShortKey = "story.short.scholar", ShortKo = "은비",
@@ -467,6 +468,7 @@ namespace Saga.Go.Data
                     new Spot { Ch = 3, From = 1, To = 1, Gx = WanderGx, Gy = WanderGy }, new Spot { Ch = 3, From = 2, To = 5, Path = true },
                     new Spot { Ch = 4, From = 6, To = 6, Gx = Altar2Gx + 7f / 48f, Gy = Altar2Gy + 5f / 48f },
                     new Spot { Ch = 26, From = 5, To = 5, Gx = Altar2Gx + 7f / 48f, Gy = Altar2Gy + 5f / 48f }, // 27장 — 둘째 매듭 곁
+                    new Spot { Ch = 27, From = 9, To = 9, Sky = true, Arena = SkyWanderer }, // 28장 — 구름섬
                     new Spot { Ch = 5, From = 2, To = 4, Peak = true, Arena = ArenaWanderer },
                     new Spot { Ch = 6, From = 3, To = 6, Gx = CapeGx + 6f / 48f, Gy = CapeGy - 6f / 48f },
                     new Spot { Ch = 7, From = 6, To = 9, Isle = true, Arena = IsleWanderer },
@@ -566,7 +568,7 @@ namespace Saga.Go.Data
             // 109-14-51 26장(웹 ⑲-51) — 가면 그림자: 23장 반디 기록 속 그자. 26장 장치 셋을 끈 뒤(7째 단계) 한 번만 정거장 서쪽 끝에 선다. 정체는 8부까지.
             new Npc { Id = "gamyeon", NameKey = "story.npc.gamyeon", NameKo = "가면 그림자", ShortKey = "story.short.gamyeon", ShortKo = "그림자",
                 AtSite = "sunken:lighthouse", AtOff = Vector2.zero, FolkBody = "Vanguard", Mask = true,
-                Appear = new[] { new Spot { Ch = 25, From = 6, To = 6, Route = "orbit", Arena = OrbitGamyeon } },
+                Appear = new[] { new Spot { Ch = 25, From = 6, To = 6, Route = "orbit", Arena = OrbitGamyeon }, new Spot { Ch = 27, From = 8, To = 8, Sky = true, Arena = new Vector2(7f, -7f) } }, // 28장 — 구름섬 북동쪽 한 번
                 IdleKey = "story.idle.gamyeon", IdleKo = "……" },
             // 109-14-50 25장(웹 ⑲-50) — 비행사 하늬(현대): 먹구름에 휘말려 잔해 섬에 처박힌 기상 비행선 조종사. 25장부터 조종실 동쪽 앞(뒤에도).
             new Npc { Id = "haneul", NameKey = "story.npc.haneul", NameKo = "비행사 하늬", ShortKey = "story.short.haneul", ShortKo = "하늬",
@@ -2428,6 +2430,64 @@ namespace Saga.Go.Data
                             L("haesol", "story.ch27.s9.l2", "가면에 먹혀 있을 때 먹구름 속에서 누가 계속 노래를 부르라고 했다고 했지. 그 목소리 — 정거장에서 들은 가면 그림자랑 똑같아."),
                             Pick("story.ch27.s9.p", "그자가 널 부렸던 거구나.", "나머지 매듭은?"),
                             L("haesol", "story.ch27.s9.l3", "넷째는 물마루 곶, 다섯째는 바위섬, 여섯째는 저 위 구름섬. 그자가 먼저 닿기 전에 — 포구의 버들 할아버지한테 가 보자."),
+                        } },
+                }
+            },
+            // 109-14-54 28장(웹 ⑲-54) — 8부 둘째 장, 여섯째 매듭. 매듭 셋을 더 묶는다: 곶 넷째(지키기 뒤 불) · 바위섬 다섯째(석등) · 구름섬 여섯째. 여섯이 다 묶이면 줄이 매듭 등불로 모이고(`KnotField`) 가면 그림자가 구름섬에 서서 정체를 밝힌다.
+            // 끝나면(10째 단계 = 인덱스 9 부터) 먹구름 눈이 선다. `GoStory.KnotStep` 3·5·8 · `EyeShown` 9째 단계 — 단계 번호를 바꾸면 그쪽도.
+            new Chapter
+            {
+                Id = "ch28", NameKey = "story.ch28", NameKo = "제28장 · 여섯째 매듭", Ar = 62,
+                Gold = 7500, Mats = new[] { 0, 6, 5, 7, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "ferryman", TextKey = "story.ch28.s1", TextKo = "포구의 사공 버들과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("ferryman", "story.ch28.s1.l1", "왔구나. 해솔이 먼저 기별을 넣었더라 — 매듭이니 뭐니, 늙은이 귀엔 어렵다만 곶이 요새 수상한 건 안다."),
+                            L("ferryman", "story.ch28.s1.l2", "어젯밤부터 곶 제단에 가면 쓴 놈들이 떼로 몰려. 이번엔 제단째 바다에 밀어 넣을 기세야."),
+                            L("haram", "story.ch28.s1.l3", "(무전) 여기 서리봉 관측소! 먹구름이 전부 한 방향으로 빨려 들고 있어요 — 청하 북쪽 봉우리 위 하늘로!"),
+                            L("hanbyeol", "story.ch28.s1.l4", "(신호) 별배 항로표에 빛 점이 여섯 떴네. 바위섬 점은 해 → 별 → 달 차례로 깜빡이고 있어."),
+                            Pick("story.ch28.s1.p", "곶부터 지킬게요.", "할아버지는 배를 준비해 주세요."),
+                            L("ferryman", "story.ch28.s1.l5", "그래, 곶을 지키고 나면 바위섬까지 태워 주마. 조심하거라!"),
+                        } },
+                    new Step { Type = StepType.Defend, Gx = CapeGx, Gy = CapeGy, NameKey = "story.altar_knot4", NameKo = "넷째 매듭", Dirs = CapeDirs,
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost) },
+                            new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        },
+                        TextKey = "story.ch28.s2", TextKo = "물마루 곶의 넷째 매듭을 가면 무리에게서 지키기" },
+                    new Step { Type = StepType.Light, Gx = CapeGx, Gy = CapeGy, AltarFrom = 1, EnterKey = "story.ch28.tied4", EnterKo = "🔥 넷째 매듭에 불이 붙었다 — 곶에서 금빛 줄이 솟는다",
+                        TextKey = "story.ch28.s3", TextKo = "넷째 매듭의 제단에 원소 불 다시 밝히기" },
+                    new Step { Type = StepType.Sail, Npc = "ferryman", ToIsle = true, EnterKey = "story.ch28.arrive1", EnterKo = "🚣 버들이 노를 저어 앞바다 바위섬에 배를 댔다",
+                        Lines = new[] { L("ferryman", "story.ch28.s4.l1", "자, 타거라. 바위섬 매듭도 우리 손으로 묶자꾸나!") },
+                        TextKey = "story.ch28.s4", TextKo = "버들의 배를 타고 바위섬으로(사공에게 F)" },
+                    new Step { Type = StepType.Seal, Isle = true, Order = new[] { "sun", "star", "moon" }, TextKey = "story.ch28.s5", TextKo = "바위섬 다섯째 매듭 석등을 항로표 차례(해 → 별 → 달)대로 밝히기" },
+                    new Step { Type = StepType.Sky, TextKey = "story.ch28.s6", TextKo = "북쪽 봉우리 바람 기둥을 타고 구름섬에 오르기(기둥 안에서 뛰어올라 활공)" },
+                    new Step { Type = StepType.Kill, Sky = true, Arena = SkySquad,
+                        Foes = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                        TextKey = "story.ch28.s7", TextKo = "여섯째 자리를 덮은 먹구름 무리 물리치기" },
+                    new Step { Type = StepType.Light, Sky = true, Arena = Vector2.zero, EnterKey = "story.ch28.tied6", EnterKo = "🔥 여섯째 매듭까지 — 여섯 금빛 줄이 휘어 하늘 한 점으로 모인다",
+                        TextKey = "story.ch28.s8", TextKo = "구름섬 여섯째 매듭에 원소 불 다시 밝히기" },
+                    new Step { Type = StepType.Talk, Npc = "gamyeon", TextKey = "story.ch28.s9", TextKo = "구름섬에 나타난 가면 그림자와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("gamyeon", "story.ch28.s9.l1", "……여섯 줄이 다 묶였군. 매듭이 조여 올수록 내 몸이 틈 밖으로 밀려난다."),
+                            L("wanderer", "story.ch28.s9.l2", "그 가면 무늬… 비문 맨 아래, 처음 가면. 네가 임금이로구나."),
+                            Pick("story.ch28.s9.p", "먹구름 임금의 참몸…!", "구름섬에서 쓰러뜨린 임금은 뭐였지?"),
+                            L("gamyeon", "story.ch28.s9.l3", "네가 이 섬에서 친 것은 내 꿈, 정거장에서 친 것은 내 그림자. 나는 여섯 매듭 밑 틈에 묶여 먹구름 한 줄기로만 시대를 떠돌았지."),
+                            L("gamyeon", "story.ch28.s9.l4", "틈이 닫히자 돌아갈 길도 막혔다. 그래서 뿌리부터 풀러 왔건만 — 좋다. 매듭이 나를 밀어낸다면, 하늘의 먹구름을 전부 한데 모아 매듭째 끊어 주마."),
+                            L("gamyeon", "story.ch28.s9.l5", "올라와라. 먹구름 눈에서 기다리지."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "wanderer", TextKey = "story.ch28.s10", TextKo = "구름섬의 나그네와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("wanderer", "story.ch28.s10.l1", "……먹구름이 저 위로 빨려 든다. 저게 먹구름 눈인가."),
+                            L("wanderer", "story.ch28.s10.l2", "혼자서는 못 간다. 마을로 내려가 모두를 불러 모으게 — 은비, 버들, 해솔… 네가 시대를 건너 만난 동무들 전부."),
+                            Pick("story.ch28.s10.p", "다 같이 가요.", "마지막 싸움이네요."),
+                            L("wanderer", "story.ch28.s10.l3", "과거·현대·미래가 다 모여야 틈 위의 임금을 칠 수 있다. 누리 할머니가 광장에서 기다린다."),
                         } },
                 }
             },

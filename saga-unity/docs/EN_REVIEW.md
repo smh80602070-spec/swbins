@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **4281** (표 4226 · 코드 55) — go 2437 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **11** · 넘침 주의 **450**
-- 사람 검수 **0/4281** — 순위1 0/265 · 순위2 0/3292 · 순위3 0/724
+- 짝 **4316** (표 4261 · 코드 55) — go 2472 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **11** · 넘침 주의 **459**
+- 사람 검수 **0/4316** — 순위1 0/265 · 순위2 0/3327 · 순위3 0/724
 
 ## 검수 순서
 
@@ -36,7 +36,7 @@
 - 「채집」 → **gathered** (go:ach.unit.gather) · **Foraging** (dungeon:room.forage)
 - 「올라가 볼게요.」 → **I'll climb it.** (go:story.ch16.s5.p.a) · **I'll go up and see.** (go:story.ch25.s1.p.a)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 450)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 459)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -51,6 +51,7 @@
 | 9→22 | go | `story.ch18` | Chapter 18 · The Last Train at Galaxy Station |
 | 30→56 | go | `story.ch9.s9.l4` | Let's head down to the village. Granny Nuri will give me an earful — but let's spread our wings and go straight there. |
 | 37→67 | go | `story.ch16.s1.l1` | Beep — after the star-ship lifted off, I followed the direction the rift was closing. It's beyond the farmland at the village's southern end. |
+| 26→48 | go | `story.ch28.s9.l2` | That mask pattern… the one at the very bottom of the inscription, the first mask. So you are the king. |
 | 3→12 | go | `cook.recipe.honey_cake` | Honey Blossom Rice Cake |
 | 10→22 | go | `story.ch5` | Chapter 5 · The Old Road over the Western Pass |
 | 4→13 | dungeon | `item.wp_lm_cloud` | Cloud General's Gold Sword |
@@ -67,8 +68,7 @@
 | 5→14 | go | `cook.recipe.ash_pancake` | Ash Flower Mushroom Pancake |
 | 7→16 | dungeon | `saga.heaven.title` | The Guardian Who Drew His Sword |
 | 5→13 | story | `bp.sig.hwanggeon_chief` | Netherworld Talisman Array |
+| 39→67 | go | `story.ch28.s1.l4` | (Signal) Six points of light have appeared on the star-ship's route chart. The rock island's point is blinking in the order sun → star → moon. |
 | 18→33 | go | `story.ch15.s9` | Carry the three wing fragments to the star-ship on Frostpeak Plateau |
 | 24→43 | go | `wq.idle.researcher` | Something like an old lighthouse beam flickers on the night water. I should write it down. |
 | 5→13 | dungeon | `enemy.boss` | Yellow Turban Bandit Chief |
-| 9→19 | go | `story.ch16.s1.p.a` | So that's where the star-ship came from. |
-| 12→24 | go | `story.ch7` | Chapter 7 · The Fourth Altar on the Riverside Cape |

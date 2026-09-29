@@ -1071,6 +1071,7 @@ namespace Saga.Go.World
         {
             if (_pc == null) _pc = fc.GetComponent<PlayerController>();
             if (_pc == null || _pc.Mode != PlayerController.MoveMode.Swim) return;
+            if (StoryState.Ch == 27 && StoryState.StepIndex >= 5) return; // 109-14-54 28장 — 섬을 떠나 봉우리로 가는 동안은 헤엄쳐 나갈 수 있다
             Vector3 c = GoStory.IslePos(Vector2.zero), d = _pc.transform.position - c;
             d.y = 0f;
             if (d.magnitude > GoStory.IsleR + 2.5f || d.magnitude < 0.1f) return;
