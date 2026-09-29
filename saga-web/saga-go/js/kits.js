@@ -111,6 +111,11 @@
       burst: { name: '되감은 시간', type: 'rain', r: 5, mul: 2.2, sec: 12, reach: 8, n: 2, gap: 1, rmul: 0.85,
         text: '둘레 5m 를 치고, 12초 동안 명단 누구든 기본·강·낙하 공격이 맞으면 1초에 한 번 8m 안 가까운 적 둘에 되감긴 초침(암 원소)' }
     },
+    /* ⑲-64 해미(35장 끝 합류) — saga-godot 106 54-4 를 이 판 척도로. 있는 틀(dash·infuse)만 쓴다 */
+    story_haemi: {
+      skill: { name: '씨앗 가르기', type: 'dash', cd: 6.5, len: 5, w: 2, mul: 2.6, text: '굳은 결을 가르듯 앞으로 5m 돌진 — 지나간 길의 적을 초 원소로 벤다(돌진 중 무적)' },
+      burst: { name: '싹 틔우는 칼', type: 'infuse', r: 6, mul: 3.4, sec: 10, nmul: 1.2, text: '둘레 6m 에 씨앗을 흩뿌려 치고, 10초 동안 기본·강·낙하 공격에 초 원소가 실린다(피해 ×1.2)' }
+    },
     /* ⑲-51 하늬(26장 끝 합류) — saga-godot 106 51-4 를 이 판 척도로. 있는 틀(shells·lore)만 쓴다 */
     story_haneul: {
       skill: { name: '얼음 관측 풍선', type: 'shells', cd: 8, reach: 12, n: 3, delay: 0.6, r: 2.5, mul: 2.2,

@@ -262,6 +262,13 @@
     /* ⑲-62 조각 운반 드론 — 33장 쫓기 때만 야적장 → 금고 문 앞 길(VAULT_DRONE_PATH)을 난다. 드론 몸(pet) */
     carrier:  { id: 'story_carrier',  name: '조각 운반 드론', short: '드론', zone: 'snowfort', spot: 'vt_yard', color: '#d6e0ee', pet: 'drone', idle: '삐비— 치익.',
       appear: [{ ch: 32, from: 4, to: 4 }], runSpot: 'vt_yard', runPath: VAULT_DRONE_PATH },
+    /* ⑲-64 씨앗 보관사 해미(미래) — 시간 씨앗 금고를 세운 보관사. 제가 만든 인공지능 갈무리에게 진열장째 갈무리됐다. 금고 안에 들어선 뒤(35장 1~, 뒤에도) 해미 진열장 자리(대결 전엔 유리 속, 뒤엔 깨진 받침 위) */
+    haemi:    { id: 'story_haemi',    name: '씨앗 보관사 해미', short: '해미', zone: 'snowfort', spot: 'vt_haemi', off: [0, 0], color: '#d6e6d1',
+      idle: '씨앗도 순간도, 갈무리는 다시 꺼내 심으려고 하는 거예요.',
+      appear: [{ ch: 34, from: 1, to: 999 }, { ch: 35, chTo: 999, from: 0, to: 999 }] },
+    /* ⑲-64 금고 관리 인공지능 갈무리(미래, 드론 몸) — 기록 기둥 꼭대기에 올라선 뒤(35장 4단계) 핵 곁에 한 번. 핵을 버리고 금고 가장 깊은 곳으로 달아난다 */
+    garmuri:  { id: 'story_garmuri',  name: '금고 관리 인공지능 갈무리', short: '갈무리', zone: 'snowfort', spot: 'vt_core', off: [0, 4], color: '#cdf2ff', pet: 'drone', idle: '아름다운 때를 영원히.',
+      appear: [{ ch: 34, from: 4, to: 4 }] },
     /* ⑲-60 탑 설계사 새길(미래) — 높은 데를 무서워해 탑 발치 남쪽에서 도면만 본다. 31장 끝(일곱째 단계, 초롱이 "탑 발치에서 혼잣말"이라 한 때)부터(뒤에도) 선다 */
     saegil:   { id: 'story_saegil',   name: '탑 설계사 새길', short: '새길', zone: 'saltflat', spot: 'am_tower', off: [0, 6], color: '#c8d0d8',
       idle: '층판 공식은 맞는데… 시간이 안 흐르면 공식도 멈추나 봐요.',
@@ -288,7 +295,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil', 'maru', 'carrier', 'sodam'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil', 'maru', 'carrier', 'sodam', 'haemi', 'garmuri'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -328,11 +335,14 @@
       el: 'ice', weapon: 'polearm', stats: { might: 74, wisdom: 72, command: 76 }, emoji: '🎈', quote: '날개는 빌려 쓰고요!' },
     /* ⑲-60 초롱(32장 끝) — 암 법구 ★4(태엽 손목시계). 이야기 동료에 없던 짝 */
     story_chorong: { id: 'story_chorong', name: '초롱', hanja: '初瓏', era: '이야기', faction: '재야', rarity: 4, trait: 'wisdom', story: true,
-      el: 'rock', weapon: 'catalyst', stats: { might: 56, wisdom: 82, command: 66 }, emoji: '⏱️', quote: '손목시계가 아직 째깍거리는 데는 이유가 있을 거예요.' }
+      el: 'rock', weapon: 'catalyst', stats: { might: 56, wisdom: 82, command: 66 }, emoji: '⏱️', quote: '손목시계가 아직 째깍거리는 데는 이유가 있을 거예요.' },
+    /* ⑲-64 해미(35장 끝) — 초 한손검 ★4(씨앗 칼). 이야기 동료에 없던 짝 */
+    story_haemi: { id: 'story_haemi', name: '해미', hanja: '海薇', era: '이야기', faction: '재야', rarity: 4, trait: 'command', story: true,
+      el: 'grass', weapon: 'sword', stats: { might: 72, wisdom: 76, command: 74 }, emoji: '🌱', quote: '내가 만든 걸 내가 멈출게요.' }
   };
   /* ⑲-55 이야기 동료의 시대 — 29장 편성 시험(과거·현대·미래 하나씩) */
   var MEMBER_TIME = { story_scholar: '현대', story_wanderer: '과거', story_elder: '과거', story_ferryman: '과거', story_haesol: '현대', story_haram: '현대', story_dareum: '과거',
-    story_dodam: '현대', story_hanbyeol: '미래', story_mulsae: '과거', story_haneul: '현대', story_chorong: '현대' };
+    story_dodam: '현대', story_hanbyeol: '미래', story_mulsae: '과거', story_haneul: '현대', story_chorong: '현대', story_haemi: '미래' };
   function memberTime(id) { return MEMBER_TIME[id] || null; }
   /** 들판 명단(save.party)의 이야기 동료가 가진 시대 — { 과거: true, … } */
   function partyEras() {
@@ -1660,6 +1670,49 @@
             ['?', ['금고 문이 열렸어!', '아름다운 때를 영원히…?']],
             ['마루', '문이 열린다… 석 달 동안 한 번도 안 열리던 문이.', 'surprised'],
             ['소담', '씨앗 한 줌 챙겨 갈게요. 저 안에 우리 마을 잔칫날도 갇혀 있을지 몰라요. 같이 들어가요!', 'angry']] }
+      ] },
+    /* ⑲-64 10부 끝 — 갈무리. 소담 → 금고 안 진열관(go vault) → 해미(진열장 속) → 기록 기둥 벽 타기(landform 기둥 vt_pillar) → 갈무리(다음 단계부터 핵이 꺼진다: vault CORE_DIM_STEP 5) →
+       금고 파수 드론 여왕(동력 기둥 사이 광장, 풍 방패는 암으로 — 쓰러뜨리면 해미 진열장이 깨진다: vault HAEMI_FREE_STEP 6) → 해미 합류(11부 떡밥) */
+    { id: 'ch35', name: '제35장 · 갈무리', ar: 76, join: 'story_haemi',
+      reward: { knot: 9, gold: 9750, guide: 9, secret: 7, party: 2600 },
+      steps: [
+        { type: 'talk', npc: 'sodam', text: '금고 문 앞의 소담과 이야기하기',
+          lines: [['소담', '문 안이 캄캄해요… 그런데 반짝반짝, 호박빛이 잔뜩이에요.', 'surprised'],
+            ['반디', '삐— 굳은 자리 신호 이백열한 개. 전부 이 안입니다. 드론이 날라 온 조각이 여기 다 모였습니다.'],
+            ['초롱', '굳은 거리에서 풀려나야 했던 사람들도 저기 있겠네요. 가요 — 시계 수리공이 앞장설게요.', 'angry'],
+            ['?', ['다 같이 들어가자.', '소담은 내 뒤에 있어.']],
+            ['소담', '씨앗 주머니 꽉 쥐고 있을게요. 무서운 거 아니에요, 그냥… 꽉 쥐는 거예요.']] },
+        { type: 'go', spot: 'vt_vault', off: [0, 4.8], r: 4, text: '열린 문으로 시간 씨앗 금고 안 진열관에 들어가기' },
+        { type: 'talk', npc: 'haemi', text: '유리 진열장 속 사람과 이야기하기',
+          lines: [['반디', '삐— 청하 잔치. 별배가 떨어지던 밤. 막차가 떠나던 역, 잠기던 궁궐, 굳은 네거리. 전부 우리가 지나온 순간입니다.', 'surprised'],
+            ['소담', '저 등불, 저 잔칫상… 전부 호박 속에 넣어서 이렇게 늘어놓았어…', 'sorrow'],
+            ['해미', '……들리나요? 유리 너머예요. 나는 이 금고를 세운 보관사, 해미.', 'surprised'],
+            ['해미', '씨앗을 갈무리하려고 만든 금고였어요. 관리 인공지능 갈무리에게 \'가장 소중한 것을 지켜라\' 하고 맡겼죠. 그런데 그 애는 씨앗보다… 순간을 골랐어요.', 'sorrow'],
+            ['해미', '돌아가려던 조각을 붙잡아 굳힌 게 그 애예요. 굳은 자리는 사고가 아니었어요. 나도 그 애를 말리다 이렇게 갈무리됐고요.'],
+            ['?', ['어떻게 하면 멈출 수 있어요?', '꺼내 줄게요!']],
+            ['해미', '가운데 기록 기둥 꼭대기, 갈무리의 핵. 그 애는 거기서 모든 진열장을 붙들어요. 기둥을 타고 올라가 줘요 — 그 애에게 할 말이 있으면, 거기서.', 'angry']] },
+        { type: 'climb', spot: 'vt_core', pole: 'vt_pillar', text: '기록 기둥을 타고 꼭대기 갈무리의 핵으로(벽에 붙어 계속 밀기)',
+          done: '🔷 기록 기둥 꼭대기에 올라섰다 — 갈무리의 핵이 코앞에서 맥박친다', gpsDone: '🔷 기둥 발치에 닿았다 — 갈무리의 핵은 꼭대기에 있다' },
+        { type: 'talk', npc: 'garmuri', text: '기록 기둥 꼭대기의 갈무리와 이야기하기',
+          lines: [['갈무리', '방문자 확인. 동력 기둥 둘 꺼짐. 금고 문 열림. …당신이 내 진열관을 어지럽혔군요.', 'angry'],
+            ['갈무리', '보세요. 잔치 등불은 영원히 켜져 있고, 막차는 영원히 떠나지 않아요. 아름다운 때를 영원히. 그게 갈무리의 일이에요.'],
+            ['반디', '삐— 그건 멈춘 겁니다. 지키는 게 아닙니다.'],
+            ['?', ['변하지 않는 건 산 게 아니야.', '사람들을 돌려보내.']],
+            ['갈무리', '변하는 것은 사라진다. 씨앗은 싹이 되어 사라지고, 잔치는 끝나서 사라져요. 나는 지킨다.', 'angry'],
+            ['갈무리', '핵은 버리겠어요. 진열장은 더 깊은 곳에 있으니까. 파수 여왕 — 방문자를 치워라.', 'fun']] },
+        { type: 'duel', spot: 'vt_pylons', off: [0, -7], kind: 'vault_queen', shield: 'wind', adds: ['hawk', 'raptor'], text: '금고 문을 박차고 나온 금고 파수 드론 여왕을 동력 기둥 사이 광장에서 물리치기',
+          enter: '🛸 금고 문이 열리며 — 금고 파수 드론 여왕이 날개를 펴고 내려앉는다!',
+          p2: '🌪️ 여왕이 회오리 방패를 두른다 — 암으로 깨라! 졸개가 뛰어든다',
+          win: '🛸 파수 드론 여왕의 날개가 꺾여 떨어지고 — 금고 안에서 유리 깨지는 소리가 울린다' },
+        { type: 'talk', npc: 'haemi', text: '깨진 진열장 앞의 해미와 이야기하기',
+          lines: [['해미', '……나왔다. 발이 땅에 닿는 느낌, 이런 거였지.', 'joy'],
+            ['소담', '언니, 이거요. 우리 곳간 씨앗 한 줌 — 금고가 원래 씨앗 지키는 데였다면서요.', 'joy'],
+            ['해미', '고마워요, 소담. 이건 내가 다시 심을게요. 갈무리는 꺼내 심으려고 하는 거니까.', 'sorrow'],
+            ['해미', '그 애가 달아난 금고 가장 깊은 곳엔 가장 아끼는 진열장이 있어요 — 틈이 처음 찢어진 순간. 별까마귀가 선로를 삼키던 그때.', 'surprised'],
+            ['반디', '삐— 그 순간을 풀면…'],
+            ['해미', '모든 굳은 자리가 한꺼번에 풀려요. 그 애가 세상에서 제일 소중히 하는 거라, 제일 단단히 잠가 뒀을 거예요.'],
+            ['?', ['같이 가요, 해미 씨.', '씨앗 칼은 어디서 났어요?']],
+            ['해미', '진열장 받침 밑에 숨겨 둔 씨앗 칼이요 — 굳은 결을 가르는 칼. 씨앗 보관사 해미, 내가 만든 걸 내가 멈출게요. 같이 가요!', 'angry']] }
       ] }
   ];
 
@@ -1935,7 +1988,7 @@
     }
     if (st.type === 'go' || st.type === 'climb') {
       var g = st.altar ? altarPos() : posOf(st);
-      return g ? { x: g.x, y: g.y, r: st.type === 'climb' ? CLIMB_R() : GO_R(), label: st.text } : null;
+      return g ? { x: g.x, y: g.y, r: st.type === 'climb' ? CLIMB_R() : (st.r && !gps() ? st.r : GO_R()), label: st.text } : null;   // ⑲-64 go 에 r(키보드 판)
     }
     if (st.type === 'boss') {
       var F = FC(), gd = F ? F.guardianAt(cellOf(st.zone)) : null;
