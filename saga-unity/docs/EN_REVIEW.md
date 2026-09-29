@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **3605** (표 3550 · 코드 55) — go 1761 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **9** · 넘침 주의 **317**
-- 사람 검수 **0/3605** — 순위1 0/265 · 순위2 0/2624 · 순위3 0/716
+- 짝 **3661** (표 3606 · 코드 55) — go 1817 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **9** · 넘침 주의 **329**
+- 사람 검수 **0/3661** — 순위1 0/265 · 순위2 0/2679 · 순위3 0/717
 
 ## 검수 순서
 
@@ -34,7 +34,7 @@
 - 「가 볼게요.」 → **I'll go.** (go:wq.lighthouse.s1.p.a) · **I'll go take a look.** (go:story.ch10.s1.p.a)
 - 「채집」 → **gathered** (go:ach.unit.gather) · **Foraging** (dungeon:room.forage)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 317)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 329)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -59,6 +59,7 @@
 | 5→14 | go | `cook.recipe.ash_pancake` | Ash Flower Mushroom Pancake |
 | 7→16 | dungeon | `saga.heaven.title` | The Guardian Who Drew His Sword |
 | 5→13 | story | `bp.sig.hwanggeon_chief` | Netherworld Talisman Array |
+| 18→33 | go | `story.ch15.s9` | Carry the three wing fragments to the star-ship on Frostpeak Plateau |
 | 24→43 | go | `wq.idle.researcher` | Something like an old lighthouse beam flickers on the night water. I should write it down. |
 | 5→13 | dungeon | `enemy.boss` | Yellow Turban Bandit Chief |
 | 12→24 | go | `story.ch7` | Chapter 7 · The Fourth Altar on the Riverside Cape |
@@ -69,4 +70,3 @@
 | 4→11 | dungeon | `item.wp_greatblade` | Black Iron Greatsword |
 | 30→52 | go | `wq.lighthouse.s3.l1` | Identity confirmed. Hanbit, lighthouse keeper — a machine that guards this lighthouse in the distant future. |
 | 4→11 | forest | `landmark.rocky` | Giant's Standing Stone |
-| 27→47 | go | `story.ch5.s1.l3` | Head into the western wood path from the village and you'll reach the mouth of the old road. Hurry. |

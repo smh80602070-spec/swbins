@@ -159,6 +159,7 @@ namespace Saga.Go.World
                 Transform src = villagers != null ? villagers.transform.Find("Villager_" + n.BodyFrom) : null;
                 bool any = false;
                 if (n.Pet) any = BuildDrone(root.transform); // 109-14-21 둥실이 — 떠 있는 배달 기계
+                else if (n.Horse) any = BuildHorse(root.transform); // 109-14-36 놀란 역마 — 도형 말
                 else if (n.FolkBody != null && FolkBuilder.Instance != null) // 109-14-19 노 도둑 = 나무꾼 몸 · 해솔 = 파수꾼 몸
                     any = NpcIdle.SpawnRigged(FolkBuilder.Instance.BodyModel(n.FolkBody), root.transform, CharacterVisual.HumanHeight) != null;
                 else if (src != null)
@@ -217,6 +218,35 @@ namespace Saga.Go.World
         }
 
         public bool BangShown(string id, bool bright) => _bangs.TryGetValue(id, out var b) && (bright ? b.bright : b.dim).activeInHierarchy;
+
+        /// <summary>109-14-36 놀란 역마 — 밤색 몸통(앞이 +z)·목·머리·다리 넷·갈기·꼬리, 도형만.</summary>
+        private static bool BuildHorse(Transform root)
+        {
+            var coat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryHorse (generated)", color = new Color(0.42f, 0.26f, 0.16f) };
+            coat.SetFloat("_Smoothness", 0.25f);
+            var dark = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "StoryHorseMane (generated)", color = new Color(0.12f, 0.09f, 0.08f) };
+            var h = new GameObject("Horse");
+            h.transform.SetParent(root, false);
+            GameObject Part(PrimitiveType t, Vector3 pos, Vector3 scale, Vector3 euler, Material m)
+            {
+                var g = GameObject.CreatePrimitive(t);
+                DestroyImmediate(g.GetComponent<Collider>());
+                g.transform.SetParent(h.transform, false);
+                g.transform.localPosition = pos;
+                g.transform.localRotation = Quaternion.Euler(euler);
+                g.transform.localScale = scale;
+                g.GetComponent<MeshRenderer>().sharedMaterial = m;
+                return g;
+            }
+            Part(PrimitiveType.Sphere, new Vector3(0f, 1.45f, 0f), new Vector3(1f, 1.05f, 2.2f), Vector3.zero, coat);
+            Part(PrimitiveType.Cylinder, new Vector3(0f, 2.0f, 1.05f), new Vector3(0.42f, 0.55f, 0.42f), new Vector3(35f, 0f, 0f), coat);
+            Part(PrimitiveType.Sphere, new Vector3(0f, 2.4f, 1.5f), new Vector3(0.42f, 0.45f, 0.85f), new Vector3(-15f, 0f, 0f), coat);
+            Part(PrimitiveType.Cube, new Vector3(0f, 2.25f, 0.85f), new Vector3(0.12f, 0.7f, 0.25f), new Vector3(35f, 0f, 0f), dark);
+            for (int i = 0; i < 4; i++)
+                Part(PrimitiveType.Cylinder, new Vector3((i % 2 == 0 ? -0.3f : 0.3f), 0.55f, (i < 2 ? 0.75f : -0.75f)), new Vector3(0.16f, 0.6f, 0.16f), Vector3.zero, coat);
+            Part(PrimitiveType.Cylinder, new Vector3(0f, 1.5f, -1.2f), new Vector3(0.14f, 0.5f, 0.14f), new Vector3(-35f, 0f, 0f), dark);
+            return true;
+        }
 
         private static bool BuildDrone(Transform root)
         {

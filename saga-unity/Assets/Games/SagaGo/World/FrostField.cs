@@ -408,6 +408,7 @@ namespace Saga.Go.World
             if (fc == null) return;
             Vector3 feet = fc.transform.position;
             Tick(feet);
+            TickShip(Time.deltaTime);
             int g = NearGate(feet);
             var kb = Keyboard.current;
             if (kb != null && g != 0 && kb.fKey.wasPressedThisFrame && !FishingField.Busy && !StoryState.Talking
@@ -421,6 +422,23 @@ namespace Saga.Go.World
         }
 
         private bool _kingParked, _wildOn;
+
+        /// <summary>109-14-36 별배가 떴나 — 15장을 마친 뒤 늘.</summary>
+        public const float ShipLift = 9f, ShipLiftSpeed = 2.25f;
+        public static bool ShipFlown => StoryState.Ch > 14;
+        private float _shipY;
+        public float ShipHeight => _shipY;
+
+        /// <summary>선체를 목표 높이(뜬 뒤 9m)로 초당 2.25m 씩 옮긴다(4초). 진단은 `dt` 를 크게 준다.</summary>
+        public void TickShip(float dt)
+        {
+            if (!_sites.TryGetValue("ship", out var ship) || ship == null) return;
+            float want = !StoryState.OffForTest && ShipFlown ? ShipLift : 0f;
+            if (Mathf.Approximately(_shipY, want)) return;
+            _shipY = Mathf.MoveTowards(_shipY, want, ShipLiftSpeed * dt);
+            if (GoFrost.TrySite("ship", out var s)) ship.transform.position = s.Pos + Vector3.up * _shipY;
+            Physics.SyncTransforms();
+        }
 
         /// <summary>109-14-27b 고원 들판 무리 — 들어서면 (처음이면 만들어) 처음 상태로 켜고, 나서면 꺼 둔다.</summary>
         private void TickWild(bool inside)

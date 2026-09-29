@@ -52,6 +52,7 @@ namespace Saga.Go.World
             if (GetComponent<FrostField>() == null) gameObject.AddComponent<FrostField>(); // 109-14-27a 서리봉 고원(지도 밖 눈밭)
             if (GetComponent<YardField>() == null) gameObject.AddComponent<YardField>(); // 109-14-34 갈대 나루 물가 녹슨 조선소(기중기)
             if (GetComponent<ObsField>() == null) gameObject.AddComponent<ObsField>(); // 109-14-35 시간 틈 관측소(관측대·시간 기둥)
+            if (GetComponent<StationField>() == null) gameObject.AddComponent<StationField>(); // 109-14-36 옛 역참 터(돌담·마구간)
             if (GetComponent<Saga.Go.UI.AchieveUi>() == null) gameObject.AddComponent<Saga.Go.UI.AchieveUi>(); // 109-14-25 업적 창(Y)·알림
         }
     }

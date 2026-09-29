@@ -138,6 +138,9 @@ namespace Saga.Go.Data
             // 109-14-30 하람(12장 끝) — 화 활(신호탄), 지(智) 갈래(웹 ⑲-30)
             new Hero { Id = "story_haram", NameKo = "하람", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Wisdom, Might = 62, Wisdom = 84, Command = 64,
                 WebElement = WebElement.Fire, QuoteKo = "날씨도 시간도, 재야 아는 거니까." },
+            // 109-14-36 달음(15장 끝) — 암 창(웹 ⑲-36)
+            new Hero { Id = "story_dareum", NameKo = "달음", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Might, Might = 86, Wisdom = 52, Command = 74,
+                WebElement = WebElement.Rock, QuoteKo = "파발꾼은 길 끝을 봐야 직성이 풀리니까!" },
         };
 
         public static bool IsStory(string id) => id != null && id.StartsWith("story_");

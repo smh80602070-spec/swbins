@@ -171,6 +171,8 @@ namespace Saga.Go.Data
             /// <summary>109-14-21 세계 임무 인물 — 시대 글자(대화 단추·이름 옆) · 사람 대신 떠 있는 기계 몸(둥실이) · 쫓기 단계에서 달리는 길(칸 좌표, 첫 점 = 서 있는 곳).</summary>
             public string EraKey, EraKo;
             public bool Pet;
+            /// <summary>109-14-36 말 몸(도형) — 놀란 역마.</summary>
+            public bool Horse;
             public Vector2[] RunPath;
             /// <summary>있으면 이 칸들 동안에만 선다(나그네). 칸마다 자리가 다를 수 있다.</summary>
             public Spot[] Appear;
@@ -202,6 +204,8 @@ namespace Saga.Go.Data
             public bool Frost;
             /// <summary>109-14-34 조선소 위 — Arena 는 조선소 가운데에서 m.</summary>
             public bool Yard;
+            /// <summary>109-14-36 옛 역참 터 위 — Arena 는 역참 가운데에서 m.</summary>
+            public bool Stn;
             /// <summary>109-14-35 관측대 위(`Sky` 와 함께) — Arena 는 관측대 가운데에서 m.</summary>
             public bool Obs;
         }
@@ -223,13 +227,25 @@ namespace Saga.Go.Data
         public static Vector2 FrostAt(string siteId, float dx, float dz) { GoFrost.TrySite(siteId, out var s); return s.Off + new Vector2(dx, dz); }
 
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
-            a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            a.Stn ? StationPos(a.Arena) : a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
 
         // ---- 109-14-28 10장 서리봉 고원 자리(고원 가운데에서 m — 웹 명소 자리 × 0.45 위에 얹는다) ----
         public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
         // 11장(⑲-29) — 산성 문루 앞(문 남쪽 22m)·호숫가 석등 자리(호수 북쪽 물가 밖)·바우가 호숫가에서 기다리는 자리·봉화 제단(문 앞 32m)
         public static readonly Vector2 BawooGate = FrostAt("fort", 3f, 22f), LakeSeal = FrostAt("lake", 0f, -36f), BawooLake = FrostAt("lake", 16f, -34f), BeaconAltar = FrostAt("fort", 0f, 32f);
         // 12장(⑲-30) — 서리 무리·구미호는 얼음굴 어귀 남쪽 14m · 반디는 구미호 뒤 굴 앞 · 심장 받침은 비행선 곁(선체 밖)
+        // 15장(⑲-36) — 옛 역참 터: 남쪽 공터와 논밭 사이 길 칸 (3,8) 한가운데(평평한 길 — 위아래 칸도 평지). 자리는 역참 가운데에서 m(x 동쪽·z 남쪽), 동쪽이 트인 돌담 세 변.
+        public const float StationGx = 3.0f, StationGy = 8.0f;
+        public static readonly Vector2 StationHorse = new Vector2(-9f, -4f), StationDareum = new Vector2(6f, -3f), StationFight = new Vector2(0f, 13f), StationDuel = new Vector2(0f, 17f);
+        public static Vector3 StationPos(Vector2 off) => GridPos(StationGx, StationGy) + new Vector3(off.x, 0f, off.y);
+        /// <summary>고원 별배 곁 — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽(웹 DAREUM_SHIP·WING_SEAM).</summary>
+        public static readonly Vector2 DareumShip = FrostAt("ship", -12f, 10f), WingSeam = FrostAt("ship", -4f, 8f);
+        /// <summary>역마가 달아나는 길(칸 좌표, 첫 점 = 마구간) — 길 칸을 따라 남쪽 논밭 칸으로, 접히지 않게(걸어선 못 따라잡는다).</summary>
+        public static readonly Vector2[] HorsePath =
+        {
+            new Vector2(StationGx - 9f / 48f, StationGy - 4f / 48f), new Vector2(3.0f, 8.3f), new Vector2(3.05f, 8.8f), new Vector2(3.35f, 9.2f), new Vector2(4.0f, 9.2f), new Vector2(4.35f, 9.15f),
+        };
+
         // 14장(⑲-35) — 시간 틈 관측소: 마을 서북쪽 풀밭. 자리는 관측소 가운데에서 m(x 동쪽·z 남쪽). 관측대 = 그 위 24m 에 뜬 반지름 12m 돌 원판, 시간 기둥 = 남쪽 13m(구름섬 바람 기둥과 같은 반지름·솟는 빠르기).
         public const float ObsGx = 1.0f, ObsGy = 2.4f, ObsRise = 24f, DeckR = 12f;
         public static readonly Vector2 ObsPillar = new Vector2(0f, 13f), ObsGaon = new Vector2(-9f, 8f);
@@ -342,8 +358,17 @@ namespace Saga.Go.Data
                 Appear = new[] { new Spot { Ch = 9, From = 6, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 10, From = 0, To = 8, Frost = true, Arena = BandiShip },
                     new Spot { Ch = 11, From = 0, To = 4, Frost = true, Arena = BandiShip }, new Spot { Ch = 11, From = 5, To = 5, Frost = true, Arena = BandiCave }, new Spot { Ch = 11, From = 6, To = 8, Frost = true, Arena = BandiShip },
                     new Spot { Ch = 12, From = 0, To = 5, Frost = true, Arena = BandiShip }, new Spot { Ch = 12, From = 6, To = 8, Yard = true, Arena = YardBandi },
-                    new Spot { Ch = 13, From = 0, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 13, From = 9, To = 9, Sky = true, Obs = true, Arena = new Vector2(3f, 3f) } },
+                    new Spot { Ch = 13, From = 0, To = 8, Frost = true, Arena = BandiShip }, new Spot { Ch = 13, From = 9, To = 9, Sky = true, Obs = true, Arena = new Vector2(3f, 3f) },
+                    new Spot { Ch = 14, From = 0, To = 20, Frost = true, Arena = BandiShip } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
+            // 109-14-36 15장(웹 ⑲-36) — 파발꾼 달음(과거): 역참 터에서 만나고(2~8단계) 뒤로는 고원 별배 곁(9~11단계) · 놀란 역마: 늘 마구간, 15장 쫓기 때만 달아난다
+            new Npc { Id = "dareum", NameKey = "story.npc.dareum", NameKo = "파발꾼 달음", ShortKey = "story.short.dareum", ShortKo = "달음",
+                Gx = StationGx, Gy = StationGy, FolkBody = "Archer",
+                Appear = new[] { new Spot { Ch = 14, From = 1, To = 7, Stn = true, Arena = StationDareum }, new Spot { Ch = 14, From = 8, To = 10, Frost = true, Arena = DareumShip } },
+                IdleKey = "story.idle.dareum", IdleKo = "파발꾼은 길 끝을 봐야 직성이 풀리오." },
+            new Npc { Id = "horse", NameKey = "story.npc.horse", NameKo = "놀란 역마", ShortKey = "story.short.horse", ShortKo = "역마",
+                Gx = StationGx - 9f / 48f, Gy = StationGy - 4f / 48f, Horse = true, RunPath = HorsePath,
+                IdleKey = "story.idle.horse", IdleKo = "히힝… 푸르르." },
             // 109-14-35 14장(웹 ⑲-35) — 시간 틈 관측사 가온: 늘 관측소 남서쪽 발치에 선다
             new Npc { Id = "gaon", NameKey = "story.npc.gaon", NameKo = "시간 틈 관측사 가온", ShortKey = "story.short.gaon", ShortKo = "가온",
                 Gx = ObsGx + ObsGaon.x / TestMapData.TileSize, Gy = ObsGy + ObsGaon.y / TestMapData.TileSize, FolkBody = "Crypto",
@@ -423,13 +448,15 @@ namespace Saga.Go.Data
             public bool Frost;
             /// <summary>109-14-34 조선소 위(자리 = 조선소 가운데 + Arena, climb 은 기중기 꼭대기).</summary>
             public bool Yard;
+            /// <summary>109-14-36 옛 역참 터 위(자리 = 역참 가운데 + Arena).</summary>
+            public bool Stn;
             /// <summary>109-14-35 관측대 위(`Sky` 와 함께 — 자리 = 관측대 가운데 + Arena) · sky 단계는 시간 기둥으로.</summary>
             public bool Obs;
             public string ArriveKey, ArriveKo;
             public float Speed;
         }
 
-        public static Vector3 StepPos(Step s) => s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+        public static Vector3 StepPos(Step s) => s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
 
         /// <summary>석등 차례(해·달·별이 기본, 8장은 별·달·해).</summary>
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
@@ -1272,6 +1299,76 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            // 109-14-36 15장(웹 ⑲-36) — 3부 끝, 옛 역참 길: 반디 → 옛 역참 터(남쪽 공터·논밭 사이 길 칸) → 파발꾼 달음 → 놀란 역마 쫓기 → 달음 → 여우불 무리 → 여우불 구미호(화, 절반에서 화 방패 — 물로)
+            // → 달음 → 고원 별배 → 날개 이음매에 원소 → 반디(달음 곁) · 달음 합류. 장이 끝나면 별배가 뜬다(`FrostField` 가 선체를 9m 띄운다).
+            new Chapter
+            {
+                Id = "ch15", NameKey = "story.ch15", NameKo = "제15장 · 옛 역참 길", Ar = 36, Join = "story_dareum",
+                Gold = 4250, Mats = new[] { 0, 5, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch15.s1", TextKo = "추락한 비행선의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch15.s1.l1", "삐— 셋째 조각 신호. 시대 표지는 뒤 — 아주 오래전. 좌표는 청하 마을 남쪽 옛 길입니다."),
+                            L("bandi", "story.ch15.s1.l2", "같은 자리에 차가운 신호가 하나 더. 꼬리 아홉… 구미호입니다. 그런데 이번엔 뜨겁습니다."),
+                            Pick("story.ch15.s1.p", "뜨겁다고?", "구미호가 먼저 가 있구나."),
+                            L("bandi", "story.ch15.s1.l3", "옛 시대의 여우불을 먹은 것으로 보입니다. 조심하십시오."),
+                        } },
+                    new Step { Type = StepType.Go, Stn = true, Arena = Vector2.zero, TextKey = "story.ch15.s2", TextKo = "청하 마을 남쪽 옛 역참 길로" },
+                    new Step { Type = StepType.Talk, Npc = "dareum", TextKey = "story.ch15.s3", TextKo = "역참 터 앞의 파발꾼 달음과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("dareum", "story.ch15.s3.l1", "어이쿠, 길손이구려! 여기가 어딘지 아시오? 나는 분명 한양 가는 파발을 달리던 참인데…"),
+                            L("dareum", "story.ch15.s3.l2", "사흘 전 밤, 하늘에서 떨어진 빛 조각을 주웠소. 파발 주머니에 넣은 순간 눈앞이 번쩍 — 정신 차려 보니 이 길이오."),
+                            Pick("story.ch15.s3.p", "그 조각, 우리가 찾던 거예요.", "지금 조각은 어디 있어요?"),
+                            L("dareum", "story.ch15.s3.l3", "말 안장 주머니에… 아니, 저놈! 흰 여우불에 놀라 말이 달아나오! 저 말부터 잡아 주시오!"),
+                        } },
+                    new Step { Type = StepType.Chase, Npc = "horse", TextKey = "story.ch15.s4", TextKo = "여우불에 놀라 달아난 역마 따라잡기(달리기)",
+                        EnterKey = "story.ch15.flee", EnterKo = "🐎 역마가 여우불 냄새에 놀라 내달린다 — 달려라!",
+                        WinKey = "story.ch15.caught", WinKo = "🐎 역마의 고삐를 붙잡았다 — 워, 워",
+                        LostKey = "story.ch15.lost", LostKo = "💨 놓쳤다 — 역마가 처음 자리로 돌아갔다. 다시 가까이 가면 달아난다" },
+                    new Step { Type = StepType.Talk, Npc = "dareum", TextKey = "story.ch15.s5", TextKo = "달음에게 역마 데려다주기",
+                        Lines = new[]
+                        {
+                            L("dareum", "story.ch15.s5.l1", "워, 워— 착하지. 고맙소, 길손. 그런데 이걸 보시오. 안장 주머니가 불에 그을려 찢겼소."),
+                            L("dareum", "story.ch15.s5.l2", "여우불이 말을 쫓은 게 아니었소. 주머니를 노린 게요. 조각을 문 흰 여우가 길 남쪽 끝으로 갔소."),
+                            Pick("story.ch15.s5.p", "구미호예요. 되찾아 올게요.", "같이 가요."),
+                            L("dareum", "story.ch15.s5.l3", "파발꾼은 길을 잃은 짐을 끝까지 쫓는 법이오. 앞장서시오!"),
+                        } },
+                    new Step { Type = StepType.Kill, Stn = true, Arena = StationFight,
+                        Foes = new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        EnterKey = "story.ch15.enter1", EnterKo = "길 위에 여우불이 번지며 도깨비들이 튀어나왔다",
+                        TextKey = "story.ch15.s6", TextKo = "길을 막은 여우불 무리 물리치기" },
+                    new Step { Type = StepType.Duel, Stn = true, Arena = StationDuel, Foes = new[] { F(FieldEnemy.Kind.EmberImp) },
+                        BossKey = "story.boss.emberfox", BossKo = "여우불 구미호", HpMul = 12.8f, AtkMul = 2.3f, ScaleMul = 1.9f,
+                        Rot = new[] { FieldEnemy.BossMove.Rift, FieldEnemy.BossMove.Shadow, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Rift, FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Halo },
+                        P2El = GoElement.Pyro, Adds = new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith) },
+                        EnterKey = "story.ch15.enter2", EnterKo = "여우불을 두른 흰 여우가 길을 막아섰다 — 여우불 구미호!",
+                        P2Key = "story.ch15.p2", P2Ko = "여우불 구미호가 옛 길의 여우불을 둘렀다 — 물로 깨라! 도깨비와 날쌘용이 뛰어든다",
+                        WinKey = "story.ch15.win", WinKo = "여우불 구미호가 날개 조각을 떨구고 — 닫히는 시간 틈 속으로 흩어졌다",
+                        TextKey = "story.ch15.s7", TextKo = "셋째 조각을 문 여우불 구미호와 맞서기" },
+                    new Step { Type = StepType.Talk, Npc = "dareum", TextKey = "story.ch15.s8", TextKo = "달음과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("dareum", "story.ch15.s8.l1", "해냈소! 그 여우, 이제 틈 너머로도 못 돌아오겠구려. 자, 셋째 조각이오."),
+                            L("dareum", "story.ch15.s8.l2", "그런데 길손, 이 조각이 가야 할 곳이 있다고 했지요? 파발은 받는 이 손에 닿아야 끝나는 법이오."),
+                            Pick("story.ch15.s8.p", "서리봉 고원 별배로 가요.", "같이 가 줄래요?"),
+                            L("dareum", "story.ch15.s8.l3", "말은 여기 두고, 발로 먼저 가 있겠소. 파발꾼 다리를 얕보지 마시오!"),
+                        } },
+                    new Step { Type = StepType.Go, Frost = true, Arena = FrostAt("ship", 0f, 14f), TextKey = "story.ch15.s9", TextKo = "날개 조각 셋을 들고 서리봉 고원 별배로" },
+                    new Step { Type = StepType.Light, Frost = true, Arena = WingSeam, TextKey = "story.ch15.s10", TextKo = "별배 날개 이음매에 조각 셋을 끼우고 원소 스킬로 불 넣기" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch15.s11", TextKo = "반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch15.s11.l1", "삐— 날개 조각 셋, 연결 완료. 별배 심장 출력 백 퍼센트. 기동합니다!"),
+                            L("dareum", "story.ch15.s11.l2", "허어, 쇳덩이 배가 하늘로… 내 평생 이런 파발은 처음이오."),
+                            Pick("story.ch15.s11.p", "드디어 떴다!", "반디, 이제 어디로 가?"),
+                            L("bandi", "story.ch15.s11.l3", "틈이 닫히는 방향을 따라가면 이 배가 온 시대에 닿을 겁니다. 그 전까지 — 이 하늘은 여러분 것입니다."),
+                            L("dareum", "story.ch15.s11.l4", "그 길, 나도 따라가겠소. 파발꾼은 길 끝을 봐야 직성이 풀리니까!"),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -1422,7 +1519,7 @@ namespace Saga.Go.Data
                 case StepType.Sail: radius = TalkR; return NpcPos(s.Npc);
                 case StepType.Chase: return StoryState.ChasePos ?? NpcPos(s.Npc); // 109-14-19 달리는 도둑
                 case StepType.Follow: return NpcPos(s.Npc);
-                case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : s.Frost || s.Yard ? StepPos(s) : GridPos(s.Gx, s.Gy);
+                case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : s.Frost || s.Yard || s.Stn ? StepPos(s) : GridPos(s.Gx, s.Gy);
                 case StepType.Boss: return TestMapData.WorldPos(FieldSpawner.GuardianGx, FieldSpawner.GuardianGy);
                 case StepType.Domain: return SitePos(s.Site);
                 case StepType.Light: radius = LightR; return StepPos(s);

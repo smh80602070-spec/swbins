@@ -899,6 +899,7 @@
 2	go	hero.sg_zhaoyun	은창	Eunchang		
 2	go	hero.sg_zhouyu	화풍	Hwapung		
 2	go	hero.sg_zhugeliang	현책	Hyeonchaek		
+2	go	hero.story_dareum	달음	Dareum		
 2	go	hero.story_elder	누리	Nuri		
 2	go	hero.story_ferryman	버들	Beodeul		
 2	go	hero.story_haesol	해솔	Haesol		
@@ -944,6 +945,8 @@
 2	go	kit.noun.oath	맹세	Oath		
 2	go	kit.noun.order	호령	Volley Order		
 2	go	kit.noun.shield	방패	Shield Wall		
+2	go	kit.sig.dareum.burst	마패 호령	Horse-Tag Command		
+2	go	kit.sig.dareum.skill	파발 질주	Courier Dash		
 2	go	kit.sig.elder.burst	잔칫날 순풍	Feast-Day Tailwind		
 2	go	kit.sig.elder.skill	부채 바람	Fan Gust		
 2	go	kit.sig.ferryman.burst	뱃노래	Boat Song		
@@ -1063,6 +1066,7 @@
 2	go	story.altar_beacon	봉화 제단	Beacon Altar		
 2	go	story.altar_weld	용접대	welding bench		
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
+2	go	story.boss.emberfox	여우불 구미호	Foxfire Nine-Tail		
 2	go	story.boss.haesol	먹구름 가면 해솔	Haesol of the Storm Mask		
 2	go	story.boss.king	먹구름 임금	Storm King		
 2	go	story.boss.mask	검은 가면	Black Mask		
@@ -1279,6 +1283,51 @@
 2	go	story.ch14.s7.p.b	위에 뭐가 있어요?	What's up there?		
 2	go	story.ch14.s8	시간 기둥을 타고 떠 있는 관측대 위로(기둥 안에서 점프)	Ride the time pillar up to the floating deck (jump inside the pillar)		
 2	go	story.ch14.s9	관측대를 차지한 틈새 파수 물리치기	Defeat the rift sentries holding the deck		
+2	go	story.ch15	제15장 · 옛 역참 길	Chapter 15 · The Old Post Road		
+2	go	story.ch15.caught	🐎 역마의 고삐를 붙잡았다 — 워, 워	🐎 You seize the horse's reins — whoa, whoa		
+2	go	story.ch15.enter1	길 위에 여우불이 번지며 도깨비들이 튀어나왔다	Foxfire spreads along the road and goblins leap out		
+2	go	story.ch15.enter2	여우불을 두른 흰 여우가 길을 막아섰다 — 여우불 구미호!	A white fox wreathed in foxfire blocks the road — the Foxfire Nine-Tail!		
+2	go	story.ch15.flee	🐎 역마가 여우불 냄새에 놀라 내달린다 — 달려라!	🐎 The post horse bolts at the smell of foxfire — run!		
+2	go	story.ch15.lost	💨 놓쳤다 — 역마가 처음 자리로 돌아갔다. 다시 가까이 가면 달아난다	💨 Lost it — the horse went back to its first spot. It bolts again when you get close		
+2	go	story.ch15.p2	여우불 구미호가 옛 길의 여우불을 둘렀다 — 물로 깨라! 도깨비와 날쌘용이 뛰어든다	The Foxfire Nine-Tail wraps itself in the old road's foxfire — break it with water! A goblin and a swift wraith leap in		
+2	go	story.ch15.s1	추락한 비행선의 반디와 이야기하기	Talk to Bandi at the crashed airship		
+2	go	story.ch15.s1.l1	삐— 셋째 조각 신호. 시대 표지는 뒤 — 아주 오래전. 좌표는 청하 마을 남쪽 옛 길입니다.	Beep — third fragment signal. Era marker: behind us — very long ago. Coordinates: the old road south of Cheongha Village.		
+2	go	story.ch15.s1.l2	같은 자리에 차가운 신호가 하나 더. 꼬리 아홉… 구미호입니다. 그런데 이번엔 뜨겁습니다.	One more signal at the same spot, a cold one. Nine tails… the nine-tail. But this time it is hot.		
+2	go	story.ch15.s1.l3	옛 시대의 여우불을 먹은 것으로 보입니다. 조심하십시오.	It appears to have eaten the foxfire of an older age. Be careful.		
+2	go	story.ch15.s1.p.a	뜨겁다고?	Hot?		
+2	go	story.ch15.s1.p.b	구미호가 먼저 가 있구나.	The nine-tail got there first.		
+2	go	story.ch15.s10	별배 날개 이음매에 조각 셋을 끼우고 원소 스킬로 불 넣기	Fit the three fragments into the ship's wing seam and fire them with an elemental skill		
+2	go	story.ch15.s11	반디와 이야기하기	Talk to Bandi		
+2	go	story.ch15.s11.l1	삐— 날개 조각 셋, 연결 완료. 별배 심장 출력 백 퍼센트. 기동합니다!	Beep — all three wing fragments connected. Star-ship heart output one hundred percent. Starting up!		
+2	go	story.ch15.s11.l2	허어, 쇳덩이 배가 하늘로… 내 평생 이런 파발은 처음이오.	Well, well, an iron ship into the sky… in all my days, I've never run a courier route like this.		
+2	go	story.ch15.s11.l3	틈이 닫히는 방향을 따라가면 이 배가 온 시대에 닿을 겁니다. 그 전까지 — 이 하늘은 여러분 것입니다.	If we follow the direction the rift is closing, we will reach the age this ship came from. Until then — this sky is yours.		
+2	go	story.ch15.s11.l4	그 길, 나도 따라가겠소. 파발꾼은 길 끝을 봐야 직성이 풀리니까!	I'll follow that road too. A courier isn't satisfied until he's seen the road's end!		
+2	go	story.ch15.s11.p.a	드디어 떴다!	It's finally airborne!		
+2	go	story.ch15.s11.p.b	반디, 이제 어디로 가?	Bandi, where to now?		
+2	go	story.ch15.s2	청하 마을 남쪽 옛 역참 길로	Go to the old post road south of Cheongha Village		
+2	go	story.ch15.s3	역참 터 앞의 파발꾼 달음과 이야기하기	Talk to Courier Dareum at the old post station		
+2	go	story.ch15.s3.l1	어이쿠, 길손이구려! 여기가 어딘지 아시오? 나는 분명 한양 가는 파발을 달리던 참인데…	Goodness, a traveler! Do you know where this is? I was surely running the courier route to Hanyang…		
+2	go	story.ch15.s3.l2	사흘 전 밤, 하늘에서 떨어진 빛 조각을 주웠소. 파발 주머니에 넣은 순간 눈앞이 번쩍 — 정신 차려 보니 이 길이오.	Three nights ago I picked up a shard of light that fell from the sky. The moment I put it in my courier pouch, a flash — and when I came to, I was on this road.		
+2	go	story.ch15.s3.l3	말 안장 주머니에… 아니, 저놈! 흰 여우불에 놀라 말이 달아나오! 저 말부터 잡아 주시오!	In the saddle pouch… no, that beast! The white foxfire has spooked my horse! Catch the horse first!		
+2	go	story.ch15.s3.p.a	그 조각, 우리가 찾던 거예요.	That fragment is what we've been looking for.		
+2	go	story.ch15.s3.p.b	지금 조각은 어디 있어요?	Where's the fragment now?		
+2	go	story.ch15.s4	여우불에 놀라 달아난 역마 따라잡기(달리기)	Catch the post horse spooked by the foxfire (run)		
+2	go	story.ch15.s5	달음에게 역마 데려다주기	Bring the horse back to Dareum		
+2	go	story.ch15.s5.l1	워, 워— 착하지. 고맙소, 길손. 그런데 이걸 보시오. 안장 주머니가 불에 그을려 찢겼소.	Whoa, whoa — good girl. Thank you, traveler. But look at this: the saddle pouch is scorched and torn.		
+2	go	story.ch15.s5.l2	여우불이 말을 쫓은 게 아니었소. 주머니를 노린 게요. 조각을 문 흰 여우가 길 남쪽 끝으로 갔소.	The foxfire wasn't chasing the horse. It was after the pouch. The white fox with the fragment went to the south end of the road.		
+2	go	story.ch15.s5.l3	파발꾼은 길을 잃은 짐을 끝까지 쫓는 법이오. 앞장서시오!	A courier chases a lost parcel to the end. Lead the way!		
+2	go	story.ch15.s5.p.a	구미호예요. 되찾아 올게요.	It's the nine-tail. I'll get it back.		
+2	go	story.ch15.s5.p.b	같이 가요.	Let's go together.		
+2	go	story.ch15.s6	길을 막은 여우불 무리 물리치기	Defeat the foxfire pack blocking the road		
+2	go	story.ch15.s7	셋째 조각을 문 여우불 구미호와 맞서기	Face the Foxfire Nine-Tail holding the third fragment		
+2	go	story.ch15.s8	달음과 이야기하기	Talk to Dareum		
+2	go	story.ch15.s8.l1	해냈소! 그 여우, 이제 틈 너머로도 못 돌아오겠구려. 자, 셋째 조각이오.	We did it! That fox won't make it back beyond the rift now. Here — the third fragment.		
+2	go	story.ch15.s8.l2	그런데 길손, 이 조각이 가야 할 곳이 있다고 했지요? 파발은 받는 이 손에 닿아야 끝나는 법이오.	But traveler, you said this fragment has somewhere to go? A courier's job ends only when it reaches the recipient's hands.		
+2	go	story.ch15.s8.l3	말은 여기 두고, 발로 먼저 가 있겠소. 파발꾼 다리를 얕보지 마시오!	I'll leave the horse here and go ahead on foot. Don't underestimate a courier's legs!		
+2	go	story.ch15.s8.p.a	서리봉 고원 별배로 가요.	To the star-ship on Frostpeak Plateau.		
+2	go	story.ch15.s8.p.b	같이 가 줄래요?	Will you come along?		
+2	go	story.ch15.s9	날개 조각 셋을 들고 서리봉 고원 별배로	Carry the three wing fragments to the star-ship on Frostpeak Plateau		
+2	go	story.ch15.win	여우불 구미호가 날개 조각을 떨구고 — 닫히는 시간 틈 속으로 흩어졌다	The Foxfire Nine-Tail drops the wing fragment and scatters into the closing rift		
 2	go	story.ch2	제2장 · 먹구름 제단	Chapter 2 · The Stormcloud Altar		
 2	go	story.ch2.s1	학자에게 제단 가는 길을 묻기	Ask the scholar the way to the altar		
 2	go	story.ch2.s1.l1	비문을 다 읽었어. 이무기는 너른 강 물가 서쪽, 먹구름 제단 안에 잠들어 있어.	I've finished reading the inscription. The serpent sleeps inside the Stormcloud Altar, west along the Broad River.		
@@ -1571,12 +1620,14 @@
 2	go	story.idle.bandi	삐— 별배 심장 온도, 계속 하락 중.	Beep — Starship core temperature still falling.		
 2	go	story.idle.bawoo	……불씨는 아직 꺼지지 않았다.	……The ember has not gone out yet.		
 2	go	story.idle.daon	이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.	This yard's been shut for ten years… lately there's clanging every night.		
+2	go	story.idle.dareum	파발꾼은 길 끝을 봐야 직성이 풀리오.	A courier isn't satisfied until he's seen the road's end.		
 2	go	story.idle.elder	먹구름이 걷히면 마을 잔치를 열어야지.	Once the stormclouds clear, we'll hold a village feast.		
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
 2	go	story.idle.gaon	관측대가 또 한 뼘 기울었어요. 기록만 하고 있을 순 없는데…	The deck tilted another hand's breadth. I can't just keep recording…		
 2	go	story.idle.haesol	……	……		
 2	go	story.idle.haesol2	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
 2	go	story.idle.haram	바늘이 또 얼었네… 눈은 언제 그치려나.	The needle froze again… when will this snow ever stop?		
+2	go	story.idle.horse	히힝… 푸르르.	Neigh… snort.		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 2	go	story.idle.thief	헤헤, 못 잡지롱!	Heh heh, can't catch me!		
 2	go	story.idle.wanderer	……	……		
@@ -1589,12 +1640,14 @@
 2	go	story.npc.bandi	조종 기계 반디	Bandi the Pilot Machine		
 2	go	story.npc.bawoo	산성지기 바우	Bawoo the Fortress Keeper		
 2	go	story.npc.daon	조선공 다온	Shipwright Daon		
+2	go	story.npc.dareum	파발꾼 달음	Courier Dareum		
 2	go	story.npc.elder	청하 촌장 누리	Elder Nuri of Cheongha		
 2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
 2	go	story.npc.gaon	시간 틈 관측사 가온	Rift Observer Gaon		
 2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
 2	go	story.npc.haesol2	해솔	Haesol		
 2	go	story.npc.haram	기상 관측원 하람	Haram the Weather Observer		
+2	go	story.npc.horse	놀란 역마	Startled Post Horse		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
 2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
@@ -1611,11 +1664,13 @@
 2	go	story.short.bandi	반디	Bandi		
 2	go	story.short.bawoo	바우	Bawoo		
 2	go	story.short.daon	다온	Daon		
+2	go	story.short.dareum	달음	Dareum		
 2	go	story.short.elder	누리	Nuri		
 2	go	story.short.ferryman	버들	Beodeul		
 2	go	story.short.gaon	가온	Gaon		
 2	go	story.short.haesol	해솔	Haesol		
 2	go	story.short.haram	하람	Haram		
+2	go	story.short.horse	역마	Horse		
 2	go	story.short.scholar	은비	Eunbi		
 2	go	story.short.thief	도둑	Thief		
 2	go	story.short.wanderer	나그네	Traveler		
@@ -3017,6 +3072,7 @@
 3	go	hero.sg_zhaoyun.quote	한 몸 바쳐 주공을 지키겠습니다.	I will guard my lord with my life.		
 3	go	hero.sg_zhouyu.quote	동남풍이 불면, 그때가 우리의 때입니다.	When the southeast wind blows, our time has come.		
 3	go	hero.sg_zhugeliang.quote	삼고초려의 뜻, 잊지 않겠습니다.	I will not forget the meaning of those three visits.		
+3	go	hero.story_dareum.quote	파발꾼은 길 끝을 봐야 직성이 풀리니까!	A courier isn't satisfied until he's seen the road's end!		
 3	go	hero.story_elder.quote	먹구름이 걷히면 마을 잔치를 열어야지.	Once the storm clouds lift, the village must throw a feast.		
 3	go	hero.story_ferryman.quote	물 냄새가 요즘 영 비릿해.	The water has smelled off lately.		
 3	go	hero.story_haesol.quote	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		

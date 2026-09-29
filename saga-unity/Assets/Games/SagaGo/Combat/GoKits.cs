@@ -113,6 +113,11 @@ namespace Saga.Go.Combat
                     s = S(KitSkillType.Zone, "kit.sig.haram.skill", "휴대 관측기", 11f, 0.8f); s.R = 5f; s.Sec = 10f; s.Every = 1.2f; s.N = 2; s.Energy = 1.5f;
                     b = B(KitBurstType.Rally, "kit.sig.haram.burst", "맑음 예보", 7f, 3.2f); b.Sec = 12f; b.Atk = 1.25f;
                     break;
+                // 109-14-36 달음(웹 kits.js story_dareum) — 있는 틀(dash·ward)만
+                case "story_dareum":
+                    s = S(KitSkillType.Dash, "kit.sig.dareum.skill", "파발 질주", 7f, 2.8f); s.Len = 6f; s.W = 2.2f;
+                    b = B(KitBurstType.Ward, "kit.sig.dareum.burst", "마패 호령", 7f, 3.6f); b.Sec = 10f; b.Taken = 0.75f;
+                    break;
                 default:
                     return null;
             }
