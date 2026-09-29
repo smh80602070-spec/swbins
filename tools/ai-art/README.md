@@ -30,11 +30,18 @@ sd-webui 파이썬이 시작하자마자 RAM 13GB 를 쥐고 장수가 늘수록
 결과 = `_out/web_heroes_105/hero_<id>.png` + `.license.json`(gitignore). 눈으로 본 결과: 문화·역할·성별 모두 맞음. 결함: 얼굴 반쯤 가린 역할(첩자·병사)이 이빨 무늬 마스크로 나오는 것이 몇 장 — `face covered` 표현을 바꿔 재생성.
 안전 멈춤: `tools/ai-art/_out/STOP` 파일. 러너를 강제로 끌 땐 process 이름으로 넓게 죽이지 말고 `_out/run_all.pid` 로만(이름으로 죽였다가 작업 셸이 함께 죽었다).
 
-## 다음 세션 순서 (2026-09-29 밤 인계)
-**상태**: 도감 105 초상은 웹 다섯 판에 반영·푸시 끝(c2cbffc8). 결함 재생성 12장 중 10장 고침(옛 파일은 `_out/web_heroes_105/*.old.png`) — **남은 2장**: `hero_jp_yoshitsune`·`hero_jp_kenshin`(여전히 이를 드러낸 마스크) → 그 두 장의 `.png`·`.license.json` 을 지우고 `make_hero_batch.py` 프롬프트에 `closed mouth, calm expression` 을 더하거나 씨앗을 바꿔 다시.
-**돌고 있던 일**: `run_chain.sh` 가 ① 결함 12(끝) ② `web_dungeon_30.json`(사가블로 미래·현대 인물 30, 12/30 까지) ③ `web_realm_194.json`(사가국지 장수 194, 0/194) 를 순서대로. 세션이 끝나면 함께 죽었을 수 있다 — 이어서 하려면:
+## 다음 세션 순서 (2026-09-29 밤 인계 2 — 사용자 "초상과 실제 모델을 맞추기")
+**끝난 것(푸시)**: 웹 다섯 판 도감 인물 105·펫 105·사가블로 30 초상 = AI 그림. 사가국지 장수 194 는 56/194 까지 생성(`_out/web_realm_194`, 아직 안 구움).
+**새 방식(모델에 맞춘 초상)**: 도감 인물 초상이 공방 몸(`tools/char-forge/_out/hero/hero_*.glb`, 로컬 전용)과 안 맞았다 → ① `render_busts.py`(Blender)로 몸 가슴 위 렌더 → `_out/busts/hero_<id>.png` ② `make_hero_batch.py --i2i` → `batches/web_heroes_105_i2i.json`(밑그림 `init_image` + `denoise` 0.55) ③ `gen.py` 이미지→이미지(`/sdapi/v1/img2img`) → `_out/web_heroes_105_i2i/`. 시험 6장: 머리색·옷 색·실루엣이 모델과 맞고 그림체만 원신풍 — 옛 초상(글만으로 생성)은 모델과 달랐다.
+**이어 하기**:
 ```bash
-cd /c/swbins && bash tools/ai-art/run_chain.sh /tmp/chain.status tools/ai-art/batches/web_dungeon_30.json tools/ai-art/batches/web_realm_194.json   # 있는 그림은 건너뛴다
+cd /c/swbins && rm -f tools/ai-art/_out/STOP
+# 밑그림이 없으면(105장, 약 5분, Unity·다른 Blender·sd-webui 가 꺼져 있을 때):
+B="/c/Program Files/Blender Foundation/Blender 5.2/blender.exe"; H=$PWD/tools/char-forge/_out/hero; O=$(cygpath -m $PWD/tools/ai-art/_out/busts)
+"$B" -b --factory-startup -P tools/ai-art/render_busts.py -- $O $(ls $H/hero_*.glb)      # 출력 폴더는 절대 경로(Blender 작업 폴더가 다르다)
+nohup bash tools/ai-art/run_chain.sh /tmp/chain.status tools/ai-art/batches/web_heroes_105_i2i.json > /dev/null 2>&1 &   # 있는 그림은 건너뛴다, 105장 약 90분
 ```
-(끄기: `tools/ai-art/_out/STOP` 파일 → 다음 묶음 전에 멈춤. 강제로 끌 때는 `_out/run_all.pid`·`stop_sd.ps1` 만 — process 이름으로 넓게 죽이지 말 것.)
-**끝난 뒤**: `pack_web_portraits.py` 는 지금 도감 105 만 굽는다 → 사가블로 30(`--games saga-dungeon`)·사가국지 194(`--games saga-realm`) 도 굽도록 입력 폴더·id 처리를 확장(`_out/web_dungeon_30`·`_out/web_realm_194` 에서 `<id>.png` → `assets/portraits/hero/<id>_s|c.webp`, 파일명 접두 `hero_` 없음에 주의) → 크기 검증 → 각 판 ASSET_LICENSES 수 갱신 → 커밋·푸시. 웹 화면 실기 확인은 사용자 몫.
+**끝난 뒤**: `py tools/ai-art/pack_web_portraits.py --src web_heroes_105_i2i` 로 다섯 판에 굽기(파일명 `hero_<id>.png`) → 눈으로 몇 장 확인(어색한 손·마스크 얼굴은 `--only` 로 씨앗을 바꿔 재생성) → ASSET_LICENSES 항목에 "밑그림 = 공방 몸 렌더(img2img)" 한 줄 → 커밋·푸시. 사가블로 30·사가국지 194 는 공방 몸이 없다(모델 맞추기 대상 아님).
+**함정**: `start_sd.ps1 | tail` 처럼 파이프로 받으면 sd-webui 가 파이프를 붙잡아 명령이 안 끝난다 — `run_chain.sh`(파일로 보냄)를 쓰거나 파일로 리다이렉트. 이전 체인이 살아 있으면 sd-webui 를 같이 써 충돌한다 — `_out/STOP` 으로 먼저 멈출 것. 금지어 검사가 `by ` 로 시작하는 구절을 거부한다("chubby yellow" 등).
+**사가국지 194 이어 하기**: `bash tools/ai-art/run_chain.sh /tmp/chain.status tools/ai-art/batches/web_realm_194.json` (139장 남음, 약 2시간) → 굽기는 `pack_web_portraits.py --src web_realm_194 --games saga-realm`.
+

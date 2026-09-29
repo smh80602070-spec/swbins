@@ -82,10 +82,16 @@ def generate(item, model, d):
         'send_images': True, 'save_images': False,
     }
     result = {}
+    ep = '/sdapi/v1/txt2img'
+    if item.get('init_image'):       # 이미지→이미지: 모델 렌더(_out/busts)의 머리색·옷·실루엣을 남기고 그림체만 바꾼다
+        ep = '/sdapi/v1/img2img'
+        body['init_images'] = [base64.b64encode(open(item['init_image'], 'rb').read()).decode('ascii')]
+        body['denoising_strength'] = float(item.get('denoise', d.get('denoise', 0.55)))
+        body['resize_mode'] = 0
 
     def run():
         try:
-            result['r'] = call('/sdapi/v1/txt2img', body, timeout=PER_IMAGE_TIMEOUT + 60)
+            result['r'] = call(ep, body, timeout=PER_IMAGE_TIMEOUT + 60)
         except Exception as e:      # noqa
             result['e'] = e
     t = threading.Thread(target=run, daemon=True)

@@ -1,6 +1,7 @@
 """도감 인물 105 → 초상 배치(JSON). 공방 레시피(지역·역할·성별·나이·머리색·눈 색)에서 프롬프트를 짠다.
 
   py tools/ai-art/make_hero_batch.py            # tools/ai-art/batches/web_heroes_105.json 을 쓴다
+  py tools/ai-art/make_hero_batch.py --i2i      # web_heroes_105_i2i.json — 공방 몸 렌더(_out/busts/<id>.png, render_busts.py)를 밑그림으로 이미지→이미지
 
 이름 정책: **인물 이름·실명은 프롬프트에 안 쓴다** — 문화·역할·외모 묘사만(id 접두 지역 + 역할 + 문화 표). gen.py 의 BLOCK 검사도 통과해야 한다.
 씨앗 = id 해시(같은 인물은 언제나 같은 그림 — 재생성 가능).
@@ -100,6 +101,7 @@ def fnv(s):
 
 
 def main():
+    i2i = '--i2i' in sys.argv
     items = []
     for f in sorted(glob.glob(os.path.join(FORGE, 'recipes', 'hero', '*.json'))):
         r = json.load(open(f, encoding='utf-8'))
@@ -116,12 +118,17 @@ def main():
                             culture, ROLE_TXT.get(role, 'confident'), 'looking at viewer', 'soft dramatic lighting', 'simple painterly gradient background'])
         neg = 'lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, ' + \
             ('1boy, male focus, beard' if female else '1girl, feminine, breasts, makeup')
-        items.append({'id': 'hero_' + hid, 'seed': fnv(hid), 'prompt': prompt, 'negative': neg})
-    b = {'model': 'animagine-xl-4.0-opt', 'out': 'web_heroes_105',
+        it = {'id': 'hero_' + hid, 'seed': fnv(hid), 'prompt': prompt, 'negative': neg}
+        if i2i:
+            it['init_image'] = os.path.join(HERE, '_out', 'busts', 'hero_' + hid + '.png')
+        items.append(it)
+    b = {'model': 'animagine-xl-4.0-opt', 'out': 'web_heroes_105_i2i' if i2i else 'web_heroes_105',
          'defaults': {'prompt_prefix': 'masterpiece, high score, great score, absurdres', 'width': 768, 'height': 1024, 'steps': 28, 'cfg': 5.0, 'sampler': 'Euler a',
                       'negative': ''},
          'items': items}
-    out = os.path.join(HERE, 'batches', 'web_heroes_105.json')
+    if i2i:
+        b['defaults']['denoise'] = 0.55
+    out = os.path.join(HERE, 'batches', 'web_heroes_105_i2i.json' if i2i else 'web_heroes_105.json')
     json.dump(b, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(len(items), '->', out)
     for i in items[:3] + items[-2:]:
