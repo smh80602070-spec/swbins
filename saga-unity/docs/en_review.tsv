@@ -2188,6 +2188,37 @@
 2	go	story.ch32.s6.p.b	초롱 씨는 이제 어떻게 해요?	What will you do now, Chorong?		
 2	go	story.ch32.stepped	🏗️ 부양탑 꼭대기에 올라섰다 — 호박 껍질에 싸인 태엽 심장이 코앞에서 떨고 있다	🏗️ You stand atop the levitation tower — the amber-shelled spring heart trembles right before you		
 2	go	story.ch32.win	🐢 호박 등딱지가 쩍 갈라지고 — 겹겹이 굳어 있던 시간이 빛이 되어 거리로 흩어진다	🐢 The amber shell splits open — layers of frozen time scatter over the street as light		
+2	go	story.ch33	제33장 · 지도 가장자리 너머	Chapter 33 · Beyond the Edge of the Map		
+2	go	story.ch33.caught	🛸 금고 문 앞에서 운반 드론을 붙잡았다 — 발톱에서 호박빛 조각이 툭 떨어진다. 속에 작은 장터 풍경이 굳어 있다	🛸 You caught the carrier drone in front of the vault door — an amber fragment drops from its claws. A tiny market scene is frozen inside		
+2	go	story.ch33.enter1	⚔️ 야적장 컨테이너 사이로 결정 짐승들이 몰려든다	⚔️ Crystal beasts pour out from between the containers in the yard		
+2	go	story.ch33.flee	🛸 운반 드론이 굳은 조각을 매단 채 금고 쪽으로 날아간다 — 쫓아라!	🛸 The carrier drone flies toward the vault with a frozen fragment hanging from it — chase it!		
+2	go	story.ch33.lost	💨 놓쳤다 — 드론이 야적장으로 돌아가 숨었다. 다시 가까이 가면 날아간다	💨 It got away — the drone went back to hide in the yard. Get close again and it will fly off		
+2	go	story.ch33.s1	굳은 거리 시계방 곁의 반디와 이야기하기	Talk to Bandi beside the clock shop on the Frozen Street		
+2	go	story.ch33.s1.l1	삐— 굳은 신호 추적 완료. 지도 가장자리 너머, 동쪽입니다. 서리봉 고원을 지나 더 동쪽.	Beep — frozen signal traced. Beyond the edge of the map, to the east. Past Frostpeak Plateau, further east.		
+2	go	story.ch33.s1.l2	고원이면 관측소 하람 씨 동네잖아요? 거기서 동쪽은 깎아지른 절벽뿐인데.	The plateau — that's where Haram from the observatory lives, isn't it? East of there is nothing but sheer cliffs.		
+2	go	story.ch33.s1.l3	삐— 신호는 절벽 너머로 이어집니다. 관측소 기상 기록에 흔적이 남았을 확률 칠십팔 퍼센트.	Beep — the signal continues beyond the cliffs. Seventy-eight percent chance a trace remains in the observatory weather records.		
+2	go	story.ch33.s1.l4	먼저 날아가 있겠습니다. 관측소 앞에서 뵙겠습니다. 삐—	I will fly ahead. See you in front of the observatory. Beep—		
+2	go	story.ch33.s1.p.a	하람한테 물어보자.	Let's ask Haram.		
+2	go	story.ch33.s1.p.b	절벽 너머라고?	Beyond the cliffs?		
+2	go	story.ch33.s2	서리봉 고원 기상 관측소의 하람과 이야기하기	Talk to Haram at the weather observatory on Frostpeak Plateau		
+2	go	story.ch33.s2.l1	대장! 마침 잘 왔어요. 요 며칠 기상 레이더에 이상한 게 잡혀요 — 새 떼도 아닌 것이 동쪽 절벽 너머로 줄지어 오가요.	Captain! You came at the right time. Something odd has been showing on the weather radar these past days — not a flock of birds, but things going back and forth in a line beyond the eastern cliffs.		
+2	go	story.ch33.s2.l2	삐— 운반 드론 편대입니다. 발톱마다 굳은 신호를 매달고 있습니다.	Beep — a squadron of carrier drones. Each one carries a frozen signal in its claws.		
+2	go	story.ch33.s2.l3	그리고 동쪽 고개 말인데요 — 늘 푸른 빛 울타리가 서 있어서 아무도 못 넘었거든요. 굳은 거리 시간이 다시 흐르던 밤, 그게 스르르 꺼졌어요.	And about the eastern pass — a blue light fence always stood there, so nobody could cross it. The night time started flowing again on the Frozen Street, it just faded out.		
+2	go	story.ch33.s2.l4	지도에도 없는 벌판이요. 망원경으로 보면 둥근 은빛 지붕이 번쩍여요. 동쪽 고개로 가 봐요 — 난 여기서 레이더를 볼게요!	A field that isn't even on the map. Through the telescope a round silver roof glints. Head for the eastern pass — I'll keep watching the radar here!		
+2	go	story.ch33.s2.p.a	울타리 너머엔 뭐가 있어요?	What's beyond the fence?		
+2	go	story.ch33.s2.p.b	드론을 따라가 볼게요.	I'll follow the drones.		
+2	go	story.ch33.s3	서리봉 고원 동쪽 고개를 넘어 벌 어귀로	Cross the eastern pass of Frostpeak Plateau to the gate of the fields		
+2	go	story.ch33.s4	물류 야적장에 몰려든 결정 짐승 물리치기	Defeat the crystal beasts crowding the logistics yard		
+2	go	story.ch33.s5	굳은 조각을 매달고 금고로 날아가는 운반 드론 쫓기	Chase the carrier drone flying to the vault with a frozen fragment		
+2	go	story.ch33.s6	물류 창고 앞의 창고지기와 이야기하기	Talk to the warehouse keeper in front of the warehouse		
+2	go	story.ch33.s6.l1	……그 드론을 잡았다고요? 허, 석 달 동안 저놈들을 붙잡은 사람은 처음 보네.	…You caught that drone? Heh, in three months you're the first person I've seen catch one of those.		
+2	go	story.ch33.s6.l2	난 갈무리 물류의 마지막 창고지기 마루요. 벌판이 이렇게 들러붙던 날부터 드론이 날마다 저 조각을 금고로 날라요. 굳은 거리에서, 고원에서, 바닷가에서까지.	I'm Maru, the last warehouse keeper of Storehouse Logistics. Ever since the fields fused like this, the drones carry those fragments to the vault every day. From the Frozen Street, from the plateau, even from the seashore.		
+2	go	story.ch33.s6.l3	이 조각 속… 장터 사람이에요. 너울 할아버지 옆 좌판에 있던 떡 장수 아주머니 — 결정이 깨질 때 같이 풀려났어야 했는데.	Inside this fragment… it's a market person. The rice-cake seller from the stall next to Grandfather Neoul — she should have been freed when the crystal broke.		
+2	go	story.ch33.s6.l4	삐— 조각의 결이 이상합니다. 제자리로 돌아가던 도중에 붙잡힌 흔적입니다. 누군가 일부러 모으고 있습니다.	Beep — the grain of the fragment is strange. It bears traces of being caught on its way back to its place. Someone is deliberately collecting them.		
+2	go	story.ch33.s6.l5	시간 씨앗 금고. 문은 꽉 잠겼어요 — 금고 앞 동력 기둥 둘이 문을 붙들고, 그 동력은 서쪽 곳간 마을에서 끌어다 써요.	The Time-Seed Vault. The door is locked tight — two power pylons in front of the vault hold the door, and they draw their power from the granary village in the west.		
+2	go	story.ch33.s6.l6	곳간 마을부터 가 봅시다. 거기 곳간은 노래를 불러야 열린다던데… 지게차 몰고 뒤따라갈게요!	Let's start with the granary village. They say the granary there only opens if you sing… I'll follow you in the forklift!		
+2	go	story.ch33.s6.p.a	그 금고가 뭐예요?	What is that vault?		
+2	go	story.ch33.s6.p.b	금고 안에 들어갈 수 있어요?	Can I get inside the vault?		
 2	go	story.ch4	제4장 · 가면 쓴 나그네	Chapter 4 · The Masked Traveler		
 2	go	story.ch4.s1	촌장에게 새벽 소식 듣기	Hear the Elder's news from dawn		
 2	go	story.ch4.s1.l1	잔치 이튿날 새벽이었단다. 남쪽 다리목에 웬 가면 쓴 나그네가 서 있더래.	It was the dawn after the feast. They say a masked traveler was standing at the southern bridgehead.		
@@ -2443,6 +2474,7 @@
 2	go	story.idle.bandi	삐— 별배 심장 온도, 계속 하락 중.	Beep — Starship core temperature still falling.		
 2	go	story.idle.bawoo	……불씨는 아직 꺼지지 않았다.	……The ember has not gone out yet.		
 2	go	story.idle.captain	…종이 울리면 막차가…	…when the bell rings, the last train…		
+2	go	story.idle.carrier	삐비— 치익.	Bibi— tsss.		
 2	go	story.idle.chorong	다른 시계는 다 멈췄는데 내 손목시계만 째깍거려요.	Every other clock has stopped, but my wristwatch alone keeps ticking.		
 2	go	story.idle.daon	이 조선소 문 닫은 지 십 년인데… 요즘 밤마다 쇳소리가 나요.	This yard's been shut for ten years… lately there's clanging every night.		
 2	go	story.idle.dareum	파발꾼은 길 끝을 봐야 직성이 풀리오.	A courier isn't satisfied until he's seen the road's end.		
@@ -2459,6 +2491,7 @@
 2	go	story.idle.haram	바늘이 또 얼었네… 눈은 언제 그치려나.	The needle froze again… when will this snow ever stop?		
 2	go	story.idle.horse	히힝… 푸르르.	Neigh… snort.		
 2	go	story.idle.king	……	…		
+2	go	story.idle.maru	드론이 또 한 대 지나가네. 오늘만 백스무 번째…	Another drone just went by. That's the hundred and twentieth today…		
 2	go	story.idle.mulsae	숨 한 번에 한 길. 물은 서두르는 사람을 싫어한다오.	One breath, one fathom. The water dislikes those in a hurry.		
 2	go	story.idle.neoul	저울추는 셈이 정확해야 하는 법이지. 쇠 수레 구경도 한두 번이지, 허허.	A scale weight has to be exact, you know. Even iron carts get old after a while, heh heh.		
 2	go	story.idle.parang	빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오.	This is the Light Dome records room. Please state the record you wish to view.		
@@ -2480,6 +2513,7 @@
 2	go	story.npc.bandi	조종 기계 반디	Bandi the Pilot Machine		
 2	go	story.npc.bawoo	산성지기 바우	Bawoo the Fortress Keeper		
 2	go	story.npc.captain	선장의 잔상	Captain's Afterimage		
+2	go	story.npc.carrier	조각 운반 드론	Fragment Carrier Drone		
 2	go	story.npc.chorong	시계 수리공 초롱	Clock Repairer Chorong		
 2	go	story.npc.daon	조선공 다온	Shipwright Daon		
 2	go	story.npc.dareum	파발꾼 달음	Courier Dareum		
@@ -2496,6 +2530,7 @@
 2	go	story.npc.haram	기상 관측원 하람	Haram the Weather Observer		
 2	go	story.npc.horse	놀란 역마	Startled Post Horse		
 2	go	story.npc.king	먹구름 임금	Storm King		
+2	go	story.npc.maru	창고지기 마루	Warehouse Keeper Maru		
 2	go	story.npc.mulsae	해녀 물새	Haenyeo Mulsae		
 2	go	story.npc.neoul	장돌뱅이 너울	Peddler Neoul		
 2	go	story.npc.parang	돔 관리 인공지능 파랑	Dome Administrator AI Parang		
@@ -2522,6 +2557,7 @@
 2	go	story.short.bandi	반디	Bandi		
 2	go	story.short.bawoo	바우	Bawoo		
 2	go	story.short.captain	잔상	Afterimage		
+2	go	story.short.carrier	드론	Drone		
 2	go	story.short.chorong	초롱	Chorong		
 2	go	story.short.daon	다온	Daon		
 2	go	story.short.dareum	달음	Dareum		
@@ -2536,6 +2572,7 @@
 2	go	story.short.hangyeol	한결	Hangyeol		
 2	go	story.short.haram	하람	Haram		
 2	go	story.short.horse	역마	Horse		
+2	go	story.short.maru	마루	Maru		
 2	go	story.short.mulsae	물새	Mulsae		
 2	go	story.short.neoul	너울	Neoul		
 2	go	story.short.parang	파랑	Parang		

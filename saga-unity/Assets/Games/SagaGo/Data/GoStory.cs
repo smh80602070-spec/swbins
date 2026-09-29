@@ -194,6 +194,8 @@ namespace Saga.Go.Data
         public struct Spot
         {
             public int Ch, From, To;
+            /// <summary>109-14-62 웹 `chTo` — 0 이면 `Ch` 장 하나만, 아니면 `Ch`~`ChTo` 장(`Ch` 장은 From~To 단계, 그 뒤 장은 늘).</summary>
+            public int ChTo;
             public float Gx, Gy;
             /// <summary>길(Path) 위 — 따라가기 동안은 걸은 거리, 뒤는 길 끝.</summary>
             public bool Path;
@@ -233,6 +235,7 @@ namespace Saga.Go.Data
                 int q = GoWorldQuests.IndexOf(a.Wq);
                 return q >= 0 && WorldQuestState.Taken(q) && WorldQuestState.Step(q) >= a.From && WorldQuestState.Step(q) <= a.To;
             }
+            if (a.ChTo > a.Ch) return ch > a.Ch ? ch <= a.ChTo : ch == a.Ch && step >= a.From && step <= a.To;
             return a.Ch == ch && step >= a.From && step <= a.To;
         }
 
@@ -407,6 +410,11 @@ namespace Saga.Go.Data
         public static readonly Vector2 NeoulAt = new Vector2(0f, 3.8f), ChorongMarket = new Vector2(9f, 0f), ClockDefend = new Vector2(-8f, 2f);
         /// <summary>32장(⑲-60) 자리(탑 가운데에서 m, z 남쪽): 새길 = 탑 발치 남쪽 · 거북·초롱(거북 뒤) = 탑 밑 광장(웹 [16,8]·[8,10]).</summary>
         public static readonly Vector2 SaegilAt = new Vector2(0f, 6f), AmberTurtleAt = new Vector2(16f, 8f), ChorongTower = new Vector2(8f, 10f);
+        /// <summary>33장(⑲-62) 자리(각 명소 가운데에서 m, z 남쪽): 고개 어귀 go = 어귀 동쪽 26m(돌기둥에서 내린 자리에서 20m 넘게 걸어야 닿는다) · 야적장 무리 = 창고 서북쪽 · 마루 = 창고 남쪽 앞 · 반디 = 창고 서남쪽 · 반디(고원) = 하람 곁.
+        /// 운반 드론 길 = 웹 열한 점 × 0.45(야적장 → 컨테이너 사이 → 창고 서쪽 → 동력 기둥 사이 → 금고 문 앞), 창고 모서리·금고 문에 걸리는 둘만 밖으로 옮김.</summary>
+        public static readonly Vector2 VaultPassGo = new Vector2(26f, 0f), VaultYardKill = new Vector2(-34f, -19f), MaruAt = new Vector2(-5f, 9f), VaultBandi = new Vector2(-10f, 9f), BandiObs = FrostAt("obs", 5f, 10f);
+        public static readonly Vector2[] VaultDronePath = { new Vector2(8.6f, -5.4f), new Vector2(-8.5f, -8f), new Vector2(-21.6f, -0.9f), new Vector2(-36.9f, 2.3f), new Vector2(-47.7f, -8.6f), new Vector2(-43.2f, -23.9f),
+            new Vector2(-27.9f, -30.2f), new Vector2(-15.3f, -38.7f), new Vector2(-23.9f, -51.8f), new Vector2(-41f, -56.3f), new Vector2(-49.5f, -56.5f) };
         public static readonly Vector2[] AmberThiefPath = { new Vector2(-26.3f, -9.6f), new Vector2(-19.4f, -26.7f), new Vector2(-1.3f, -38f), new Vector2(14.8f, -23.7f), new Vector2(30.1f, -13.4f), new Vector2(37.4f, 6.6f),
             new Vector2(20.1f, 19.5f), new Vector2(6.9f, 32.3f), new Vector2(-14.2f, 35.2f), new Vector2(-23.2f, 15.7f), new Vector2(-33f, 0f) };
         public const int AmberCh30 = 29, AmberCh31 = 30, AmberCh32 = 31, AmberDomeStep = 2, AmberTowerStep = 3, AmberGreenStep = 5, AmberWindStep = 5;
@@ -615,6 +623,7 @@ namespace Saga.Go.Data
                     new Spot { Ch = 10, From = 8, To = 8, Frost = true, Arena = HaramShip },
                     new Spot { Ch = 11, From = 0, To = 5, Frost = true, Arena = HaramObs }, // 12장 — 관측소에서 기다린다, 심장이 돌아온 뒤엔 비행선 곁
                     new Spot { Ch = 11, From = 6, To = 8, Frost = true, Arena = HaramShip },
+                    new Spot { Ch = 32, From = 1, To = 1, Frost = true, Arena = HaramObs }, // 33장 — 관측소에서 레이더를 본다
                 },
                 IdleKey = "story.idle.haram", IdleKo = "바늘이 또 얼었네… 눈은 언제 그치려나." },
             new Npc { Id = "bandi", NameKey = "story.npc.bandi", NameKo = "조종 기계 반디", ShortKey = "story.short.bandi", ShortKo = "반디",
@@ -636,7 +645,8 @@ namespace Saga.Go.Data
                     new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineBandi }, new Spot { Ch = 24, From = 0, To = 0, Route = "shrine", Arena = ShrineBandi },
                     new Spot { Ch = 24, From = 1, To = 99, Route = "wreck", Arena = WreckBandi }, new Spot { Ch = 25, From = 0, To = 0, Route = "wreck", Arena = WreckBandi },
                     new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitBandi }, new Spot { Ch = 26, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 27, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 28, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f },
-                    new Spot { Ch = 29, From = 0, To = 0, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 29, From = 1, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 32, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi } }, // 8부(27장~) 반디는 청하 촌장 곁 마을 · 9부(30장~) 굳은 거리 시계방
+                    new Spot { Ch = 29, From = 0, To = 0, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 29, From = 1, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 32, From = 0, To = 0, At = "amber:clock", Arena = ChorongBandi },
+                    new Spot { Ch = 32, From = 1, To = 1, Frost = true, Arena = BandiObs }, new Spot { Ch = 32, ChTo = 999, From = 2, To = 99, At = "vault:yard", Arena = VaultBandi } }, // 8부(27장~) 반디는 청하 촌장 곁 마을 · 9부(30장~) 굳은 거리 시계방
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
@@ -644,7 +654,7 @@ namespace Saga.Go.Data
                 Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = CrossHanbyeol }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftHanbyeol },
                     new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 20, From = 2, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandHanbyeol },
                     new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 25, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 26, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol },
-                    new Spot { Ch = 29, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 30, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 31, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 32, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol } }, // 9부(30장~) 은하 나루 착륙판 곁
+                    new Spot { Ch = 29, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 30, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 31, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 32, ChTo = 999, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol } }, // 9부(30장~) 은하 나루 착륙판 곁
                 IdleKey = "story.idle.hanbyeol", IdleKo = "틈의 끝은 첫 정거장 다음 역이다." },
             // 109-14-45 21장(웹 ⑲-45) — 잠수 기사 여울(현대): 늘 연구 기지 서쪽, 21장 5~7째 단계 선착장 · 8째~ 궁궐 기단
             new Npc { Id = "yeoul", NameKey = "story.npc.yeoul", NameKo = "잠수 기사 여울", ShortKey = "story.short.yeoul", ShortKo = "여울",
@@ -736,12 +746,12 @@ namespace Saga.Go.Data
                 Appear = new[] { new Spot { Ch = 29, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt },
                     new Spot { Ch = 30, From = 1, To = 4, At = "amber:market", Arena = ChorongMarket }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt }, // 31장 석등·너울·도둑·저울추 — 장터 동쪽 앞
                     new Spot { Ch = 31, From = 5, To = 5, At = "amber:tower", Arena = ChorongTower }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt }, // 32장 거북을 쓰러뜨린 뒤 탑 밑 광장
-                    new Spot { Ch = 32, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt } },
+                    new Spot { Ch = 32, ChTo = 999, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt } },
                 IdleKey = "story.idle.chorong", IdleKo = "다른 시계는 다 멈췄는데 내 손목시계만 째깍거려요." },
             // 109-14-59 31장(웹 ⑲-59) — 장돌뱅이 너울(과거): 장터 결정 속에 좌판째 굳어 있던 사람. 결정이 깨진 뒤(31장 3째 단계부터, 뒤에도) 장터 가운데 굳어 있던 자리
             new Npc { Id = "neoul", NameKey = "story.npc.neoul", NameKo = "장돌뱅이 너울", ShortKey = "story.short.neoul", ShortKo = "너울",
                 AtSite = "amber:market", AtOff = NeoulAt, FolkBody = "PeasantMan",
-                Appear = new[] { new Spot { Ch = 30, From = 2, To = 99, At = "amber:market", Arena = NeoulAt }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:market", Arena = NeoulAt }, new Spot { Ch = 32, From = 0, To = 99, At = "amber:market", Arena = NeoulAt } },
+                Appear = new[] { new Spot { Ch = 30, From = 2, To = 99, At = "amber:market", Arena = NeoulAt }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:market", Arena = NeoulAt }, new Spot { Ch = 32, ChTo = 999, From = 0, To = 99, At = "amber:market", Arena = NeoulAt } },
                 IdleKey = "story.idle.neoul", IdleKo = "저울추는 셈이 정확해야 하는 법이지. 쇠 수레 구경도 한두 번이지, 허허." },
             // 조각 도둑 — 31장 쫓기 때만(4째 단계) 네거리 둘레 길(AmberThiefPath)을 난다. 반디와 같은 기계 몸.
             new Npc { Id = "partthief", NameKey = "story.npc.partthief", NameKo = "조각 도둑", ShortKey = "story.short.partthief", ShortKo = "도둑",
@@ -751,8 +761,18 @@ namespace Saga.Go.Data
             // 109-14-60 32장(웹 ⑲-60) — 탑 설계사 새길(미래): 높은 데를 무서워해 탑 발치 남쪽에서 도면만 본다. 31장 끝(7째 단계)부터(뒤에도)
             new Npc { Id = "saegil", NameKey = "story.npc.saegil", NameKo = "탑 설계사 새길", ShortKey = "story.short.saegil", ShortKo = "새길",
                 AtSite = "amber:tower", AtOff = SaegilAt, FolkBody = "ExoGray",
-                Appear = new[] { new Spot { Ch = 30, From = 6, To = 99, At = "amber:tower", Arena = SaegilAt }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:tower", Arena = SaegilAt }, new Spot { Ch = 32, From = 0, To = 99, At = "amber:tower", Arena = SaegilAt } },
+                Appear = new[] { new Spot { Ch = 30, From = 6, To = 99, At = "amber:tower", Arena = SaegilAt }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:tower", Arena = SaegilAt }, new Spot { Ch = 32, ChTo = 999, From = 0, To = 99, At = "amber:tower", Arena = SaegilAt } },
                 IdleKey = "story.idle.saegil", IdleKo = "층판 공식은 맞는데… 시간이 안 흐르면 공식도 멈추나 봐요." },
+            // 109-14-62 33장(웹 ⑲-62) — 창고지기 마루(현대): 갈무리 물류의 마지막 창고지기. 10부(33장~)부터 늘 창고 앞(34장에서 곳간으로 옮긴다)
+            new Npc { Id = "maru", NameKey = "story.npc.maru", NameKo = "창고지기 마루", ShortKey = "story.short.maru", ShortKo = "마루",
+                AtSite = "vault:yard", AtOff = MaruAt, FolkBody = "SwatGuy",
+                Appear = new[] { new Spot { Ch = 32, ChTo = 999, From = 0, To = 99, At = "vault:yard", Arena = MaruAt } },
+                IdleKey = "story.idle.maru", IdleKo = "드론이 또 한 대 지나가네. 오늘만 백스무 번째…" },
+            // 조각 운반 드론 — 33장 쫓기 때만(5째 단계) 야적장에서 금고 문 앞까지 길(VaultDronePath)을 난다. 반디와 같은 기계 몸.
+            new Npc { Id = "carrier", NameKey = "story.npc.carrier", NameKo = "조각 운반 드론", ShortKey = "story.short.carrier", ShortKo = "드론",
+                AtSite = "vault:yard", AtOff = Vector2.zero, Pet = true, RunAt = "vault:yard", RunPath = VaultDronePath,
+                Appear = new[] { new Spot { Ch = 32, From = 4, To = 4, At = "vault:yard", Arena = new Vector2(8.6f, -5.4f) } },
+                IdleKey = "story.idle.carrier", IdleKo = "삐비— 치익." },
         };
 
 
@@ -2829,6 +2849,54 @@ namespace Saga.Go.Data
                             Pick("story.ch32.s6.p", "또 굳은 곳이 있다는 거야?", "초롱 씨는 이제 어떻게 해요?"),
                             L("chorong", "story.ch32.s6.l5", "거리 밖에도 굳은 시간이 있다면 — 시계 수리공이 빠질 수 없죠. 손목시계가 아직 째깍거리는 데는 이유가 있을 거예요."),
                             L("chorong", "story.ch32.s6.l6", "시계 수리공 초롱, 오늘부터 같이 가요. 가게는 너울 할아버지가 봐 주신대요!"),
+                        } },
+                }
+            },
+            // 109-14-62 33장(웹 ⑲-62) — 10부 첫 장, 지도 가장자리 너머: 반디(굳은 거리 시계방) → 하람(서리봉 고원 관측소) → 고개 넘어 벌 어귀(go) → 야적장 결정 짐승 넷(kill)
+            // → 조각 운반 드론 쫓기(chase — 야적장에서 열한 점 `VaultDronePath`, 끝 = 금고 문 앞) → 새 인물 창고지기 마루(야적장 창고 앞). 울타리는 9부 뒤(32장)라 이미 꺼져 있다.
+            new Chapter
+            {
+                Id = "ch33", NameKey = "story.ch33", NameKo = "제33장 · 지도 가장자리 너머", Ar = 72,
+                Gold = 8500, Mats = new[] { 0, 8, 6, 8, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch33.s1", TextKo = "굳은 거리 시계방 곁의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch33.s1.l1", "삐— 굳은 신호 추적 완료. 지도 가장자리 너머, 동쪽입니다. 서리봉 고원을 지나 더 동쪽."),
+                            L("chorong", "story.ch33.s1.l2", "고원이면 관측소 하람 씨 동네잖아요? 거기서 동쪽은 깎아지른 절벽뿐인데."),
+                            L("bandi", "story.ch33.s1.l3", "삐— 신호는 절벽 너머로 이어집니다. 관측소 기상 기록에 흔적이 남았을 확률 칠십팔 퍼센트."),
+                            Pick("story.ch33.s1.p", "하람한테 물어보자.", "절벽 너머라고?"),
+                            L("bandi", "story.ch33.s1.l4", "먼저 날아가 있겠습니다. 관측소 앞에서 뵙겠습니다. 삐—"),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "haram", TextKey = "story.ch33.s2", TextKo = "서리봉 고원 기상 관측소의 하람과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haram", "story.ch33.s2.l1", "대장! 마침 잘 왔어요. 요 며칠 기상 레이더에 이상한 게 잡혀요 — 새 떼도 아닌 것이 동쪽 절벽 너머로 줄지어 오가요."),
+                            L("bandi", "story.ch33.s2.l2", "삐— 운반 드론 편대입니다. 발톱마다 굳은 신호를 매달고 있습니다."),
+                            L("haram", "story.ch33.s2.l3", "그리고 동쪽 고개 말인데요 — 늘 푸른 빛 울타리가 서 있어서 아무도 못 넘었거든요. 굳은 거리 시간이 다시 흐르던 밤, 그게 스르르 꺼졌어요."),
+                            Pick("story.ch33.s2.p", "울타리 너머엔 뭐가 있어요?", "드론을 따라가 볼게요."),
+                            L("haram", "story.ch33.s2.l4", "지도에도 없는 벌판이요. 망원경으로 보면 둥근 은빛 지붕이 번쩍여요. 동쪽 고개로 가 봐요 — 난 여기서 레이더를 볼게요!"),
+                        } },
+                    new Step { Type = StepType.Go, At = "vault:pass", Arena = VaultPassGo, TextKey = "story.ch33.s3", TextKo = "서리봉 고원 동쪽 고개를 넘어 벌 어귀로" },
+                    new Step { Type = StepType.Kill, At = "vault:yard", Arena = VaultYardKill,
+                        Foes = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                        EnterKey = "story.ch33.enter1", EnterKo = "⚔️ 야적장 컨테이너 사이로 결정 짐승들이 몰려든다",
+                        TextKey = "story.ch33.s4", TextKo = "물류 야적장에 몰려든 결정 짐승 물리치기" },
+                    new Step { Type = StepType.Chase, Npc = "carrier", TextKey = "story.ch33.s5", TextKo = "굳은 조각을 매달고 금고로 날아가는 운반 드론 쫓기",
+                        EnterKey = "story.ch33.flee", EnterKo = "🛸 운반 드론이 굳은 조각을 매단 채 금고 쪽으로 날아간다 — 쫓아라!",
+                        WinKey = "story.ch33.caught", WinKo = "🛸 금고 문 앞에서 운반 드론을 붙잡았다 — 발톱에서 호박빛 조각이 툭 떨어진다. 속에 작은 장터 풍경이 굳어 있다",
+                        LostKey = "story.ch33.lost", LostKo = "💨 놓쳤다 — 드론이 야적장으로 돌아가 숨었다. 다시 가까이 가면 날아간다" },
+                    new Step { Type = StepType.Talk, Npc = "maru", TextKey = "story.ch33.s6", TextKo = "물류 창고 앞의 창고지기와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("maru", "story.ch33.s6.l1", "……그 드론을 잡았다고요? 허, 석 달 동안 저놈들을 붙잡은 사람은 처음 보네."),
+                            L("maru", "story.ch33.s6.l2", "난 갈무리 물류의 마지막 창고지기 마루요. 벌판이 이렇게 들러붙던 날부터 드론이 날마다 저 조각을 금고로 날라요. 굳은 거리에서, 고원에서, 바닷가에서까지."),
+                            L("chorong", "story.ch33.s6.l3", "이 조각 속… 장터 사람이에요. 너울 할아버지 옆 좌판에 있던 떡 장수 아주머니 — 결정이 깨질 때 같이 풀려났어야 했는데."),
+                            L("bandi", "story.ch33.s6.l4", "삐— 조각의 결이 이상합니다. 제자리로 돌아가던 도중에 붙잡힌 흔적입니다. 누군가 일부러 모으고 있습니다."),
+                            Pick("story.ch33.s6.p", "그 금고가 뭐예요?", "금고 안에 들어갈 수 있어요?"),
+                            L("maru", "story.ch33.s6.l5", "시간 씨앗 금고. 문은 꽉 잠겼어요 — 금고 앞 동력 기둥 둘이 문을 붙들고, 그 동력은 서쪽 곳간 마을에서 끌어다 써요."),
+                            L("maru", "story.ch33.s6.l6", "곳간 마을부터 가 봅시다. 거기 곳간은 노래를 불러야 열린다던데… 지게차 몰고 뒤따라갈게요!"),
                         } },
                 }
             },

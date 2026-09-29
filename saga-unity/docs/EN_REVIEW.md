@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **4544** (표 4489 · 코드 55) — go 2700 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **15** · 넘침 주의 **499**
-- 사람 검수 **0/4544** — 순위1 0/265 · 순위2 0/3552 · 순위3 0/727
+- 짝 **4581** (표 4526 · 코드 55) — go 2737 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **504**
+- 사람 검수 **0/4581** — 순위1 0/265 · 순위2 0/3589 · 순위3 0/727
 
 ## 검수 순서
 
@@ -22,7 +22,7 @@
 
 - `go` `map.mark_legend` — 문장부호 앞 띄움
 
-## 용어 흔들림 — 같은 한국어, 다른 영어 (15)
+## 용어 흔들림 — 같은 한국어, 다른 영어 (16)
 
 - 「물결」 → **Tidal** (go:era.foe.pre_hydro, go:kit.word.hydro) · **Mulgyeol** (go:wq.short.researcher)
 - 「회오리」 → **Whirl** (go:field.re.swirl) · **swirls** (go:ach.unit.swirl)
@@ -39,13 +39,15 @@
 - 「서리봉 고원」 → **Frostpeak Plateau** (go:region.frost) · **Frost Peak Plateau** (go:night.spot.frost)
 - 「올라가 볼게요.」 → **I'll climb it.** (go:story.ch16.s5.p.a) · **I'll go up and see.** (go:story.ch25.s1.p.a)
 - 「여기서 끝내자.」 → **End it here.** (go:story.ch20.s9.p.b) · **Let's end this here.** (go:story.ch29.s4.p.b)
+- 「마루」 → **Maru** (go:story.short.maru) · **Wood Floor** (forest:finish.wood)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 499)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 504)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
 | 폭 한→영 | 판 | 키 | 영어 |
 |---|---|---|---|
+| 51→93 | go | `story.ch33.s2.l1` | Captain! You came at the right time. Something odd has been showing on the weather radar these past days — not a flock of birds, but things going back and forth in a line beyond the eastern cliffs. |
 | 21→44 | go | `wq.lighthouse.s1.l2` | There's nothing out there but the old lighthouse site. Will you come and take a look with me? |
 | 11→29 | go | `wq.lighthouse.s2` | Go to the old lighthouse site at the far end of the east bank |
 | 15→34 | go | `story.ch7.s9` | Watch the light across the water with the ferryman who came to the cape |
@@ -72,7 +74,6 @@
 | 3→10 | story | `enemy.hwanggeon` | Yellow Turban Bandit |
 | 5→14 | go | `cook.recipe.ash_pancake` | Ash Flower Mushroom Pancake |
 | 7→16 | dungeon | `saga.heaven.title` | The Guardian Who Drew His Sword |
+| 18→33 | go | `story.ch33.s3` | Cross the eastern pass of Frostpeak Plateau to the gate of the fields |
 | 11→22 | go | `story.ch32` | Chapter 32 · The Unfinished Levitation Tower |
 | 5→13 | story | `bp.sig.hwanggeon_chief` | Netherworld Talisman Array |
-| 39→67 | go | `story.ch28.s1.l4` | (Signal) Six points of light have appeared on the star-ship's route chart. The rock island's point is blinking in the order sun → star → moon. |
-| 18→33 | go | `story.ch15.s9` | Carry the three wing fragments to the star-ship on Frostpeak Plateau |
