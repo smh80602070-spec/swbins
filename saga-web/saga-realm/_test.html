@@ -81,6 +81,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/hero.js"></script>
 <script src="js/officer.js"></script>
 <script src="js/rtk.js"></script>
+<script src="js/mount.js"></script>
 <script src="js/war.js"></script>
 <script src="js/diplo.js"></script>
 <script src="js/rtk-ai.js"></script>
@@ -4601,6 +4602,94 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var none = A3.assembleTrooper('inf', { body: null }, 0x2255aa) === null;
       return okInf && okCav && none &&
         ('보병 장식 천만 물듦·걷기·창 오른손 x ' + fp.x.toFixed(2) + ' · 기수 엉덩이 = 말 등 · 몸 없으면 null');
+    });
+
+    /* ── 명마·비행(mount.js, SAGA-DESIGN §15) — 장수에게 얹는 말 셋(땅 싸움 부대 힘) + 3D 지도 비행 카메라 둘 ── */
+    function mtCount(n) {
+      /* 우리(cao) 성을 정확히 n 곳으로 — 나머지는 남의 성으로 돌린다(fresh() 가 다음 항목에서 되돌린다) */
+      var st = R.state(), ids = Object.keys(st.cities), i, k = 0;
+      for (i = 0; i < ids.length; i++) { if (st.cities[ids[i]].force === 'cao') { if (k < n) { k++; } else { st.cities[ids[i]].force = 'sun'; } } }
+      for (i = 0; i < ids.length && k < n; i++) { if (st.cities[ids[i]].force !== 'cao') { st.cities[ids[i]].force = 'cao'; k++; } }
+      return R.citiesOf('cao').length;
+    }
+    t('탈것 — 카탈로그 5(농마 2성·갈색 말 4성·흰 말 7성 · 학 5성 · 용 9성) · 성 수로 열림 · 장수에게 얹기(한 필 한 사람) · 비행 고르기 · 저장 칸 · 손잡이', function () {
+      var M = DG.mount, r = {}, mount0 = C.save.mount, dex0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
+      try {
+        M._resetForTest(); delete C.save.mount;
+        fresh('cao');
+        if (C.save.dex && C.save.dex.pets) { M.MOUNTS.forEach(function (m) { delete C.save.dex.pets[m.pet]; }); }
+        r.table = M.MOUNTS.map(function (m) { return m.id + ':' + m.lv + ':' + m.mul + (m.kind === 'fly' ? '/' + m.fly : ''); }).join() === 'mt_farm:2:1.03,mt_brown:4:1.06,mt_white:7:1.1,mt_crane:5:1/1.7,mt_dragon:9:1/2.4' && M.MOUNTS.every(function (m) { return !!m.pet && !!m.emoji; });
+        var ids = function () { return M.unlocked().map(function (m) { return m.id; }).join(); };
+        mtCount(1); r.n1 = M.cityCount() === 1 && ids() === '' && !M.selected() && !M.canRide().ok;
+        mtCount(2); r.n2 = ids() === 'mt_farm';
+        mtCount(4); r.n4 = ids() === 'mt_farm,mt_brown';
+        mtCount(5); r.n5 = ids() === 'mt_farm,mt_brown,mt_crane' && M.selected().id === 'mt_crane';
+        mtCount(9); r.n9 = M.unlocked().length === 5 && M.selected().id === 'mt_dragon';           // 비행 기본은 열린 것 중 가장 빠른 것
+        /* 장수에게 얹기 */
+        var mine = off.atCity('chenliu', 'cao').slice(0, 2).map(function (h) { return h.id; }), a = mine[0], b = mine[1];
+        var foe = null, oks = Object.keys(R.state().officers); oks.forEach(function (k) { var o = R.state().officers[k]; if (!foe && o.force && o.force !== 'cao' && !o.dead) { foe = { id: k }; } });   // 다른 세력 장수 하나
+        r.none = M.mountOf(a) === null && M.freeFor(a).length === 3 && !M.equip(a, 'mt_crane').ok && !M.equip(a, 'mt_nope').ok;
+        r.eq = M.equip(a, 'mt_white').ok && M.mountOf(a).id === 'mt_white' && M.riderOf('mt_white') === a;
+        r.one = !M.equip(b, 'mt_white').ok && /이미/.test(M.equip(b, 'mt_white').why) && M.freeFor(b).map(function (m) { return m.id; }).join() === 'mt_farm,mt_brown';
+        r.foe = !!foe && !M.equip(foe.id, 'mt_farm').ok && M.mountOf(foe.id) === null;
+        r.cycle = M.cycleEquip(b).mount.id === 'mt_farm' && M.cycleEquip(b).mount.id === 'mt_brown' && M.cycleEquip(b).mount === null && M.mountOf(b) === null;
+        r.save = Object.keys(C.save.mount).sort().join() === 'eq,sel' && C.save.mount.eq[a] === 'mt_white';
+        /* 비행 고르기 */
+        var nx = M.cycle();
+        r.fly = nx.id === 'mt_crane' && C.save.mount.sel === 'mt_crane' && M.cycle().id === 'mt_dragon' && M.def('mt_dragon').fly === 2.4;
+        /* 손잡이 */
+        r.knob = (C.setTune('mount.on', 0), !M.on() && M.mountOf(a) === null && !M.equip(b, 'mt_farm').ok) && (C.setTune('mount.on', null), M.on() && M.mountOf(a).id === 'mt_white');
+      } finally {
+        C.setTune('mount.on', null); M._resetForTest();
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+        if (dex0 !== null) { C.save.dex.pets = JSON.parse(dex0); }
+        fresh('cao');
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      if (bad.length) { throw new Error('실패 ' + bad.join(',')); }
+      return '통과 ' + Object.keys(r).join(',');
+    });
+
+    t('탈것 — 명마: 땅 싸움 부대 힘 ×mul(수전 ✕) · 우리 세력을 떠나면 효과 없음 · 싸움 기록·3D 돌격 배율 · 비행 카메라·이동 배율', function () {
+      var M = DG.mount, r = {}, mount0 = C.save.mount;
+      try {
+        M._resetForTest(); delete C.save.mount;
+        fresh('cao'); mtCount(9);
+        var lead = off.atCity('chenliu', 'cao').slice(0, 3).map(function (h) { return h.id; }), a = lead[0];
+        var army = function (w) { return { troops: 10000, train: 60, tech: 300, morale: 1, officers: lead.slice(), water: !!w }; };
+        var p0 = W.armyPower(army(false)), pw0 = W.armyPower(army(true));
+        M.equip(a, 'mt_brown'); M.equip(lead[1], 'mt_white');
+        var p1 = W.armyPower(army(false)), pw1 = W.armyPower(army(true));
+        r.power = Math.abs(p1 / p0 - 1.1) < 1e-9 && pw1 === pw0;                       // 부대에서 가장 좋은 한 필만 — 겹치지 않는다
+        r.best = M.bestId(lead, false) === 'mt_white' && M.bestId(lead, true) === null && M.powerMul(lead, false) === 1.1;
+        /* 우리 세력을 떠난 장수의 말은 안 듣는다 */
+        off.rec(lead[1]).force = 'sun';
+        r.left = M.mountOf(lead[1]) === null && Math.abs(W.armyPower(army(false)) / p0 - 1.06) < 1e-9;
+        off.rec(lead[1]).force = 'cao';
+        /* 싸움 기록 */
+        var from = R.city('chenliu'), to = R.city('luoyang'); from.troops = to.troops * 6; from.food = 999999;
+        var rep = W.march('chenliu', 'luoyang', lead, from.troops - 1);
+        r.log = rep.mountA === 'mt_white' && rep.log.some(function (l) { return /흰 말/.test(l) && /×1\.1/.test(l); });
+        r.charge = Math.abs(M.chargeOf('mt_white') - 1.3) < 1e-9 && Math.abs(M.chargeOf('mt_brown') - 1.18) < 1e-9 && M.chargeOf('mt_crane') === 1 && M.chargeOf(null) === 1;
+        var pOn = W.armyPower(army(false)); C.setTune('mount.on', 0); var pOff = W.armyPower(army(false)); r.knob = Math.abs(pOn / pOff - 1.1) < 1e-9 && M.chargeOf('mt_white') === 1; C.setTune('mount.on', null);   // 싸움 뒤 경험으로 능력치가 올랐을 수 있어 p0 가 아니라 같은 때의 켬/끔을 비교
+        /* 비행 — 3D 지도가 안 떠 있는 진단 환경에선 못 타고, 떠 있다고 흉내 내면 카메라 값이 들어간다 */
+        var R3 = DG.realm3d, calls = [], keepA = R3.active, keepS = R3.setFlight;
+        r.no3d = !M.canRide().ok && /3D/.test(M.canRide().why) && !M.ride().ok;
+        R3.active = function () { return true; }; R3.setFlight = function (c) { calls.push(c); };
+        r.ride = M.ride().ok && M.flying() && M.current().id === 'mt_dragon' && M.panMul() === 2.4 && calls.length === 1 && calls[0].pan === 2.4 && calls[0].pitch === M.FLY_PITCH && calls[0].dist === M.FLY_DIST;
+        M.cycle(); r.swap = M.current().id === 'mt_crane' && M.panMul() === 1.7 && calls.length === 2;
+        R3.active = function () { return false; }; M.step(); r.auto = !M.active() && M.panMul() === 1 && calls.length === 3 && calls[2] === null;   // 2D 로 돌아가면 저절로 내림
+        R3.active = function () { return true; }; M.ride(); M.toggle(); r.off = !M.active() && calls[calls.length - 1] === null;
+        C.setTune('mount.on', 0); M.ride(); r.offRide = !M.active(); C.setTune('mount.on', null);
+        R3.active = keepA; R3.setFlight = keepS;
+      } finally {
+        C.setTune('mount.on', null); M._resetForTest();
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+        fresh('cao');
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      if (bad.length) { throw new Error('실패 ' + bad.join(',')); }
+      return '통과 ' + Object.keys(r).join(',');
     });
 
     t('런타임 에러 없음', function () {

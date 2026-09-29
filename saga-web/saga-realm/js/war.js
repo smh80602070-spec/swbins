@@ -267,7 +267,8 @@
       Math.max(0, army.officers.length - 1) * 0.03;
     if (extra === 0) { lead = 0.6; }         // 장수 없는 군대는 오합지졸이다
     var form = formationOf(army.officers, army.formation);
-    return army.troops * trainF * techF * lead * navy * (army.morale || 1) * (form ? form.mul : 1);
+    var mtM = global.DG.mount && global.DG.mount.powerMul ? global.DG.mount.powerMul(army.officers, army.water) : 1;   // 명마(mount.js) — 땅 싸움에서만, 안 탔으면 1
+    return army.troops * trainF * techF * lead * navy * (army.morale || 1) * (form ? form.mul : 1) * mtM;
   }
 
   /**
@@ -635,7 +636,7 @@
     var water = intro.water, sortie = intro.sortie, du = intro.du;
     var leadA = intro.leadA, leadD = intro.leadD;
     var formA = intro.formA, formD = intro.formD;
-    var mixA = intro.mixA, mixD = intro.mixD;
+    var mixA = intro.mixA, mixD = intro.mixD, mountA = intro.mountA, mountD = intro.mountD;
     var startWall = wallRef.wall;
     var frames = [], r = 0;
 
@@ -644,7 +645,7 @@
         to: toId2, water: water, force: atk.force, defForce: def.force,
         atkStart: atk.start, defStart: def.start, duel: du, wallFrom: startWall,
         leadA: leadA, leadD: leadD, formA: formA, formD: formD,
-        mixA: mixA, mixD: mixD, land: land.key, sortie: sortie
+        mixA: mixA, mixD: mixD, mountA: mountA, mountD: mountD, land: land.key, sortie: sortie
       });
     }
 
@@ -667,7 +668,7 @@
         atkStart: atk.start, defStart: def.start,
         wallFrom: startWall, wallTo: wallRef.wall, sortie: sortie, water: water,
         leadA: leadA, leadD: leadD, formA: formA, formD: formD,
-        mixA: mixA, mixD: mixD,
+        mixA: mixA, mixD: mixD, mountA: mountA, mountD: mountD,
         frames: frames
       };
       var full = finishMarch(setup, report);
@@ -813,9 +814,13 @@
     /* formA/formD — 2026-09-22, PLAN §6 "무리 병종 기둥"의 첫 조각. af/df 는
        바로 위에서 이미 구했다(로그 문구용) — 새로 굴리지 않고 그 key 만
        battle3d.js 로 넘겨 무리 배치 모양(쐐기·활·원)을 고르게 한다 */
+    /* 명마(mount.js) — 그 군이 탄 가장 좋은 말. 기록 한 줄 + 3D 전장이 돌격 달리기 배율로 읽는다(판정은 armyPower 가 이미 했다) */
+    var MTw = global.DG.mount, mtA = MTw && MTw.bestId ? MTw.bestId(atk.officers, water) : null, mtD = MTw && MTw.bestId ? MTw.bestId(def.officers, water) : null;
+    if (mtA) { lines(MTw.note(atk.officers, water)); }
+    if (mtD) { lines(MTw.note(def.officers, water)); }
     return { water: water, sortie: sortie, du: du, leadA: aTop, leadD: dTop,
       formA: af && af.key, formD: df && df.key,
-      mixA: troopMixOf(atk), mixD: troopMixOf(def) };
+      mixA: troopMixOf(atk), mixD: troopMixOf(def), mountA: mtA, mountD: mtD };
   }
 
   /**
@@ -925,7 +930,7 @@
     var water = intro.water, sortie = intro.sortie, du = intro.du;
     var leadA = intro.leadA, leadD = intro.leadD;
     var formA = intro.formA, formD = intro.formD;
-    var mixA = intro.mixA, mixD = intro.mixD;
+    var mixA = intro.mixA, mixD = intro.mixD, mountA = intro.mountA, mountD = intro.mountD;
 
     var startWall = wallRef.wall;
     var r, won = false, routed = false;
@@ -955,7 +960,7 @@
       atkStart: atk.start, defStart: def.start,
       wallFrom: startWall, wallTo: wallRef.wall, sortie: sortie, water: water,
       leadA: leadA, leadD: leadD, formA: formA, formD: formD,
-      mixA: mixA, mixD: mixD,
+      mixA: mixA, mixD: mixD, mountA: mountA, mountD: mountD,
       /* 실시간 재생용(battle3d.js) — 판정과 무관, dry(가늠)면 안 쓰이니 그대로 둬도 된다 */
       frames: frames
     };

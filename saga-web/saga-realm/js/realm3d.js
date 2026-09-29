@@ -347,9 +347,25 @@
    *  늘 수평이므로 pitch는 무시) */
   function panBy(dx, dy) {
     var s = Math.sin(yaw), c = Math.cos(yaw);
-    targetPivotX = clampPan(targetPivotX + (dx * c + dy * s) * PAN_SPEED);
-    targetPivotZ = clampPan(targetPivotZ + (dy * c - dx * s) * PAN_SPEED);
+    var pm = PAN_SPEED * (global.DG.mount && global.DG.mount.panMul ? global.DG.mount.panMul() : 1);   // 학·용을 타고 날면 빨라진다(mount.js)
+    targetPivotX = clampPan(targetPivotX + (dx * c + dy * s) * pm);
+    targetPivotZ = clampPan(targetPivotZ + (dy * c - dx * s) * pm);
   }
+
+  /* 비행 둘러보기(mount.js) — 타면 카메라가 낮게 기울고 다가선다, 내리면 타기 전 자리로. 판정은 없다(그림만) */
+  var flightOn = false, flightSaved = null;
+  function setFlight(cfg) {
+    if (cfg) {
+      if (!flightOn) { flightSaved = { pitch: targetPitch, dist: targetDist }; }
+      flightOn = true;
+      targetPitch = clamp(cfg.pitch, PITCH_MIN(), PITCH_MAX());
+      targetDist = clamp(cfg.dist, DIST_MIN(), DIST_MAX());
+    } else if (flightOn) {
+      flightOn = false;
+      if (flightSaved) { targetPitch = flightSaved.pitch; targetDist = flightSaved.dist; flightSaved = null; }
+    }
+  }
+  function flying() { return flightOn; }
 
   /** 절대 이동 — 지도 좌표(0~100대, data-city.js 와 같은 잣대)를 받아 그 자리로
    *  궤도 중심을 옮긴다("내 땅으로" 버튼·범례 탭이 부른다).
@@ -1901,9 +1917,11 @@
     pivotX += (targetPivotX - pivotX) * 0.15;
     pivotZ += (targetPivotZ - pivotZ) * 0.15;
 
+    if (global.DG.mount && global.DG.mount.frame) { global.DG.mount.frame(); }       // 비행 단추·내림 판정(mount.js)
+    var flyBob = flightOn ? Math.sin((now || 0) / 800) * 2.2 : 0;                  // 나는 동안 살짝 출렁
     camera.position.set(
       pivotX + Math.cos(pitch) * Math.sin(yaw) * dist,
-      Math.sin(pitch) * dist + pivotY + 6,
+      Math.sin(pitch) * dist + pivotY + 6 + flyBob,
       pivotZ + Math.cos(pitch) * Math.cos(yaw) * dist
     );
     camera.lookAt(pivotX, pivotY + 6, pivotZ);
@@ -1963,6 +1981,9 @@
     WANDER_MAX: WANDER_MAX,
     BATTLE_MAX: BATTLE_MAX,
     panBy: panBy,
+    setFlight: setFlight,
+    flying: flying,
+    focusMap: focusMap,
     panTo: panTo,
     /* SAGA-DESIGN §7-2 "3D 진단 공백" — three 없이도 도는 순수 함수라 _test.html 이 부른다 */
     elevAt: elevAt,

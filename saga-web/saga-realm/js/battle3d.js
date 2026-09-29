@@ -498,11 +498,13 @@
     if (flagBearer) { h.userData.flagBearer = true; }
     return h;
   }
+  function chargeOf(id) { var M = global.DG.mount; return id && M && M.chargeOf ? M.chargeOf(id) : 1; }
   function buildArmy(rep, h) {
     var t = three();
     /* wallZ — 성벽 고리(renderLive 의 ring(6, h×0.7))의 앞쪽 두 조각이 서는 줄. 공성이면 두 군이 이 줄을 사이에 두고 붙는다 */
     army = { g: new t.Group(), a: [], d: [], sortie: !!rep.sortie, water: !!rep.water, stance: null, t: 0,
-      endT: 0, end: null, wallZ: -6.5 + Math.sin(Math.PI / 3) * h * 0.7, wallUp: !rep.water };
+      endT: 0, end: null, wallZ: -6.5 + Math.sin(Math.PI / 3) * h * 0.7, wallUp: !rep.water,
+      charge: { a: chargeOf(rep.mountA), d: chargeOf(rep.mountD) } };       // 명마(mount.js) — 그 군이 더 빨리 달려 붙는다
     dyn.add(army.g);
     [['a', rep.atkStart, rep.force, rep.formA, rep.mixA], ['d', rep.defStart, rep.defForce, rep.formD, rep.mixD]].forEach(function (S) {
       var side = S[0], n = armyCount(S[1]), color = forceColor(S[2]);
@@ -601,7 +603,7 @@
       /* 이 쪽의 버티는 자리 — 공격군은 명령이 수비면 제 진영(z 3.4)에서, 수비군은 공성이면 성벽 뒤에서 버틴다 */
       var siege = !army.sortie && !army.water;
       var holdZ = side === 'a' ? (army.stance === 'hold' ? 3.4 : null) : (siege && army.wallUp ? army.wallZ - 0.45 : null);
-      var run = side === 'a' ? (army.stance === 'press' ? 1.45 : (army.stance === 'hold' ? 0.8 : 1)) : 1;
+      var run = (side === 'a' ? (army.stance === 'press' ? 1.45 : (army.stance === 'hold' ? 0.8 : 1)) : 1) * (army.charge ? army.charge[side] : 1);
       var end = army.end, flee = false, cheer = false;
       if (end) {
         var aWon = end === 'won';

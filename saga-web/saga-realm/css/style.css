@@ -1475,3 +1475,16 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
 /* 따로 크기를 안 준 <small> 은 브라우저 기본(부모의 0.8배)이라 10px 대로 떨어진다 — 바닥 11px.
    :where 로 특이도 0 이라 크기를 준 규칙은 그대로 이긴다 */
 :where(#sheet-body, #encounter) small { font-size: max(11px, .8em); }
+/* ── 비행 단추(2026-09-29, js/mount.js) — 3D 지도에서 학·용을 타고 둘러본다. 조이스틱(#rjoy) 바로 위 */
+#mt-ride {
+  display: none; position: fixed; z-index: 9;
+  left: 14px; bottom: calc(212px + var(--safe-b)); width: 52px; height: 52px; border-radius: 50%;
+  background: rgba(20, 22, 28, .5); border: 1px solid var(--glass-br); color: #fff;
+  touch-action: none; -webkit-user-select: none; user-select: none; cursor: pointer;
+  place-items: center; gap: 0; font-weight: 700;
+}
+#mt-ride.show { display: grid; }
+#mt-ride.riding { box-shadow: 0 0 0 2px var(--gold) inset; }
+#mt-ride span { font-size: 20px; line-height: 1; }
+#mt-ride em { font-size: 10px; font-style: normal; opacity: .7; }
+#mt-ride:active { transform: scale(.94); }

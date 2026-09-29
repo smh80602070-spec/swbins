@@ -670,6 +670,9 @@
     } else if (a === 'promote') {
       var pr = off().promote(g('data-id'));
       toast(pr.ok ? '✨ ' + pr.name + ' — 충성 ' + pr.loyal : pr.why);
+    } else if (a === 'mount-eq') {
+      var me2 = global.DG.mount.cycleEquip(g('data-id'));
+      toast(me2.ok ? (me2.mount ? '🐎 ' + me2.mount.name + ' — 이 장수가 든 부대가 땅 싸움에서 ×' + me2.mount.mul : '🐎 말을 내렸다') : me2.why);
     } else if (a === 'reward') {
       var rr = R().reward(g('data-id'), 300);
       toast(rr.ok ? '🎁 충성 ' + rr.loyal : rr.why);
@@ -1288,6 +1291,7 @@
   }
 
   function renderMap() {
+    if (global.DG.mount && global.DG.mount.frame) { global.DG.mount.frame(); }
     var st = R().state();
     if (!st.started) { els.realm.innerHTML = ''; return; }
     var i, j, s = '';
@@ -1875,6 +1879,17 @@
       ' +' + it.bonus + ')</span></b></div>';
   }
 
+  /** 명마 한 줄 + 바꾸기 단추(mount.js) — 우리 세력 장수만. 말이 하나도 안 열렸으면 감춘다 */
+  function mountRow(id, mine) {
+    var M = global.DG.mount;
+    if (!M || !M.on() || !mine) { return ''; }
+    var cur = M.mountOf(id), can = M.freeFor(id).length > 0;
+    if (!cur && !can) { return ''; }
+    return '<div class="stat-row"><span class="muted">명마</span><b>' +
+      (cur ? cur.emoji + ' ' + esc(cur.name) + ' <span class="muted">(땅 싸움 부대 힘 ×' + cur.mul + ')</span>' : '<span class="muted">없음</span>') +
+      ' <button class="btn tiny" data-act="mount-eq" data-id="' + id + '">🐎 ' + (cur ? '바꾸기' : '태우기') + '</button></b></div>';
+  }
+
   /** 특성 배지 둘(PLAN §5-1) — 이모지 + 이름, 설명은 title */
   function traitTags(id) {
     return off().traitsOf(id).map(function (t) {
@@ -1927,6 +1942,7 @@
         '</div></div>' +
       '<div class="traits">' + traitTags(h.id) + '</div>' +
       (itemBadge(r.item)) +
+      mountRow(h.id, mine) +
       '<div class="rstat"><span>충성</span><div class="bar sm' +
         (r.loyal < 25 ? ' bad' : '') + '"><i style="width:' + r.loyal + '%"></i></div>' +
         '<b>' + r.loyal + '</b></div>' +
