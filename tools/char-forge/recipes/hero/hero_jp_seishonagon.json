@@ -24,6 +24,7 @@
  "skin": "young_asian_female/young_asian_female.mhmat",
  "eyes": "high-poly/high-poly.mhclo",
  "eye_color": "brown",
+ "mouth_close": 0.003,
  "makeup": {
   "lip": 0.75,
   "blush": 0.7,

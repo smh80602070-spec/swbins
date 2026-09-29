@@ -24,6 +24,7 @@
  "skin": "young_asian_male/young_asian_male.mhmat",
  "eyes": "high-poly/high-poly.mhclo",
  "eye_color": "green",
+ "mouth_close": 0.003,
  "makeup": {
   "lip": 0.3,
   "blush": 0.15,

@@ -75,6 +75,8 @@ def make_human(svc, r):
                                feet_on_ground=True, scale=0.1, macro_detail_dict=macro)
     if r.get('targets'):
         load_targets(svc, basemesh, r['targets'])
+        if r.get('mouth_close'):
+            mouth_close(basemesh, float(r['mouth_close']))
         # 다리 길이 모프(upperlegs-height-decr 등)는 발을 띄운다 — create_human 의 땅 맞춤은 macro 만 봐서 다시 맞춘다
         # (MPFB deserialize 도 모프 뒤에 한 번 더 한다. 그쪽은 abs(최저점)이라 뜬 발은 더 올리므로 부호를 지켜 내린다)
         low = svc['ObjectService'].get_lowest_point(basemesh)
@@ -373,12 +375,8 @@ def makeup_masks(basemesh, svc, gender):
         bpy.data.objects.remove(neutral, do_unlink=True)
 
 
-def _makeup_masks_of(basemesh, W, H):
-    """화장 자리 마스크 — 도우미 정점(이빨·눈)으로 입·눈 위치를 재서(모프를 따라간다) UV 그림 크기의 마스크 셋(입술·볼·눈두덩)을 만든다.
-    도우미는 bake_for_export 가 지우므로 그 전에 부른다. 좌표는 세계 좌표, 앞 = -y·위 = +z·좌우 = x."""
-    mw = basemesh.matrix_world
-    gi = {g.name: g.index for g in basemesh.vertex_groups}
-    # 모프는 셰이프키라 v.co 는 바탕 모양이다 — 키를 값만큼 섞은 자리를 직접 잰다(bake_for_export 가 굳히는 것과 같은 결과)
+def _mixed_world_co(basemesh):
+    """세계 좌표 (n,3) — 모프는 셰이프키라 v.co 는 바탕 모양이다. 키를 값만큼 섞은 자리를 직접 잰다(bake_for_export 가 굳히는 것과 같은 결과)."""
     n = len(basemesh.data.vertices)
     sk = basemesh.data.shape_keys
     loc = np.empty(n * 3, np.float32)
@@ -396,8 +394,54 @@ def _makeup_masks_of(basemesh, W, H):
             kb.data.foreach_get('co', k)
             kb.relative_key.data.foreach_get('co', r0)
             loc += kb.value * (k - r0).reshape(n, 3)
-    M = np.array(mw)
-    co = loc @ M[:3, :3].T + M[:3, 3]
+    M = np.array(basemesh.matrix_world)
+    return loc @ M[:3, :3].T + M[:3, 3]
+
+
+def _helper_pts(basemesh, co, name):
+    i = next((g.index for g in basemesh.vertex_groups if g.name == name), None)
+    idx = [v.index for v in basemesh.data.vertices if any(g.group == i and g.weight > 0.5 for g in v.groups)] if i is not None else []
+    return co[idx] if idx else np.zeros((0, 3))
+
+
+def mouth_close(basemesh, amount):
+    """자체 셰이프키 `cf_mouth_close` — 벌어진 입(MakeHuman 기본은 입술이 살짝 벌어져 이가 보인다)을 다문다. 이빨 도우미 정점으로 입 자리를 재서
+    윗입술 쪽 정점은 아래로, 아랫입술 쪽은 위로 amount(m)씩 — 가로 코사인·세로 가우시안 가중치. 모프 뒤(값 섞은 자리)에 걸고 키 하나로 남겨 굳히기(bake)가 처리한다."""
+    n = len(basemesh.data.vertices)
+    co = _mixed_world_co(basemesh)
+    teeth = np.vstack([_helper_pts(basemesh, co, 'helper-upper-teeth'), _helper_pts(basemesh, co, 'helper-lower-teeth')])
+    if not len(teeth):
+        sys.exit('mouth_close: 이빨 도우미 정점이 없다')
+    mouth = teeth.mean(0)
+    half_w = (teeth[:, 0].max() - teeth[:, 0].min()) / 2
+    dx = np.clip(1.0 - np.abs(co[:, 0] - mouth[0]) / (half_w * 1.05), 0.0, 1.0)
+    dz = co[:, 2] - mouth[2]
+    wz = np.exp(-(dz ** 2) / (2 * 0.0085 ** 2))
+    front = np.clip((mouth[1] + 0.012 - co[:, 1]) / 0.02, 0.0, 1.0)     # 입술 앞쪽 살만(안쪽 이빨·혀는 그대로)
+    w = np.sin(dx * math.pi / 2) * wz * front
+    disp = np.zeros((n, 3))
+    disp[:, 2] = -amount * np.tanh(dz / 0.003) * w        # 세계 z: 위 입술은 아래로, 아래 입술은 위로(경계는 부드럽게 — 부호가 딱 갈리면 입꼬리가 톱니로 찢긴다)
+    # 세계 변위 → 셰이프키(국소) 변위. 몸 회전이 없어 z 만 같은 축, 크기 배율만 나눠 준다
+    M = np.array(basemesh.matrix_world)[:3, :3]
+    loc_disp = disp @ np.linalg.inv(M).T
+    if not basemesh.data.shape_keys:
+        basemesh.shape_key_add(name='Basis')
+    sk = basemesh.data.shape_keys
+    base = np.empty(n * 3, np.float32)
+    sk.reference_key.data.foreach_get('co', base)
+    key = basemesh.shape_key_add(name='cf_mouth_close', from_mix=False)
+    key.data.foreach_set('co', (base.reshape(n, 3) + loc_disp).astype(np.float32).ravel())
+    key.value = 1.0
+    bpy.context.view_layer.update()
+
+
+def _makeup_masks_of(basemesh, W, H):
+    """화장 자리 마스크 — 도우미 정점(이빨·눈)으로 입·눈 위치를 재서(모프를 따라간다) UV 그림 크기의 마스크 셋(입술·볼·눈두덩)을 만든다.
+    도우미는 bake_for_export 가 지우므로 그 전에 부른다. 좌표는 세계 좌표, 앞 = -y·위 = +z·좌우 = x."""
+    mw = basemesh.matrix_world
+    gi = {g.name: g.index for g in basemesh.vertex_groups}
+    n = len(basemesh.data.vertices)
+    co = _mixed_world_co(basemesh)
 
     def pts(name):
         i = gi.get(name)

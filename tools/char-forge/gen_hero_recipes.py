@@ -599,6 +599,7 @@ def make(h):
         'skin': skin_of(race, age, female),
         'eyes': 'high-poly/high-poly.mhclo',
         'eye_color': pick(EYE_EAST if reg in EAST_REG else EYE_WEST, hs, 4),
+        'mouth_close': 0.003,   # 자체 셰이프키 — 벌어진 기본 입을 다문다(build_real.mouth_close)
         'makeup': ({'lip': 0.75, 'blush': 0.7, 'lid': 0.4} if female else {'lip': 0.3, 'blush': 0.15, 'lid': 0.15}),
         'eyebrows': f"eyebrow{(hs >> 5) % 12 + 1:03d}/eyebrow{(hs >> 5) % 12 + 1:03d}.mhclo",
         'eyelashes': ('eyelashes02/eyelashes02.mhclo' if (hs >> 9) & 1 else 'eyelashes04/eyelashes04.mhclo') if female

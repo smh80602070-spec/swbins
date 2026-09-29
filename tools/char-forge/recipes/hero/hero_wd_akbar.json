@@ -24,6 +24,7 @@
  "skin": "middleage_caucasian_male/middleage_caucasian_male.mhmat",
  "eyes": "high-poly/high-poly.mhclo",
  "eye_color": "brown",
+ "mouth_close": 0.003,
  "makeup": {
   "lip": 0.3,
   "blush": 0.15,
