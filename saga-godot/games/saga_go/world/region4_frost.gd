@@ -15,6 +15,7 @@ const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const VegetationBuilder := preload("res://games/saga_go/world/vegetation_builder.gd")
 const Skyport := preload("res://games/saga_go/world/region5_skyport.gd")
+const LandmarkTower := preload("res://games/saga_go/world/landmark_tower.gd")
 
 const REGION := "frost"
 const DISCOVER_R := 30.0
@@ -143,6 +144,12 @@ func _build_fort() -> void:
 	## 가운데 망루 돌단(올라설 수 있는 두 단).
 	_solid_box(root, Vector3(4.0, 1.0, 4.0), Vector3(0, 0.5, -1.5), STONE)
 	_solid_box(root, Vector3(2.4, 1.0, 2.4), Vector3(0, 1.5, -1.5), STONE_DARK)
+	## 산성 뒤(북쪽 담 밖)에 높은 성루 — 먼 들판에서도 산성 자리가 보이게(2026-09-29).
+	var keep := Node3D.new()
+	keep.name = "FortKeep"
+	keep.position = Vector3(0, 0, -13.0)
+	root.add_child(keep)
+	LandmarkTower.keep(keep, 24.0, STONE, STONE_DARK, Color(0.3, 0.26, 0.24), Color(0.78, 0.2, 0.18))
 	_label(root, "옛 산성 터", Vector3(0, 6.6, half), Color(0.9, 0.85, 0.75))
 
 ## 기상 관측소 — 흰 원통 건물 + 둥근 지붕 + 전파 탑 + 풍속계(돈다) + 태양 전지판.

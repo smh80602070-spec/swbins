@@ -15,6 +15,7 @@ extends Node3D
 ##   고개 경계비((1.35,0.65)) · 디딤 지붕 셋(궁궐 곁채·물에 잠긴 대문·석탑 꼭대기)
 
 const PropMaterial := preload("res://games/saga_go/world/prop_material.gd")
+const LandmarkTower := preload("res://games/saga_go/world/landmark_tower.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const VegetationBuilder := preload("res://games/saga_go/world/vegetation_builder.gd")
@@ -271,6 +272,14 @@ func _build_palace() -> void:
 	for w in [[Vector3(-14.0, SEABED + 1.0, 2.0), 0.3], [Vector3(13.0, SEABED + 1.0, -3.0), -0.2], [Vector3(-4.0, SEABED + 1.0, -13.0), 1.5]]:
 		var wall := _box(root, Vector3(10.0, 2.0, 0.8), w[0], STONE_DARK)
 		wall.rotation.y = float(w[1])
+	## 기단 동쪽 물속에서 솟는 다섯 층 탑 — 먼 바다·모래밭에서도 궁궐 자리가 보이게(2026-09-29).
+	var pth := TERRACE_Y - SEABED
+	_solid_box(root, Vector3(10.0, pth, 10.0), Vector3(19.0, SEABED + pth * 0.5, 0), STONE)
+	var pagoda := Node3D.new()
+	pagoda.name = "PalacePagoda"
+	pagoda.position = Vector3(19.0, TERRACE_Y, 0)
+	root.add_child(pagoda)
+	LandmarkTower.pagoda(pagoda, 5, 6.4, 5.0, Color(0.78, 0.74, 0.66), ROOF, Color(1.0, 0.75, 0.35))
 	_label(root, "잠긴 궁궐", Vector3(0, 11.5, 0), Color(0.95, 0.88, 0.72))
 
 ## 물속 불빛 — 궁궐 둘레 물 위에 뜬 불 켜진 테왁 여덟과 그 밑 물속 빛 망울(충돌 없음). 20장 뒤에만 보인다(sea_lights_on).

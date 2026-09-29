@@ -9568,3 +9568,9 @@ PROJECT_STATE.md` 참고. 요약:
 - cel_shader_apply — 텍스처 이름이 Superhero_Female/Male 인 살갗 재질에 메타 mouth_base·mouth_uv. talk_face — 첫 speak 에 세 장을 만들고(캐시, 2048² 복사라 첫 대화에 한 번) 가장 열린 입 모양 A·E→open, O·U→round, I→thin 을 문턱 0.3 위에서 갈아 끼운다(mouth_kind()).
 - face_view FACE_MOUTH=open|round|thin 으로 촬영(여자 주역·남자 촌장 확인 — 입 자리 맞음). probe_story talk_face 에 pic(말하는 동안 그림이 보이고 끝나면 원본) 조건 추가.
 - 점검 STORY fails=0(분 진단 "Parameter material is null" 7줄은 probe_story:1263 더미 렌더러 기존 줄), REGRESS OK. 한계: 입술 지오메트리는 그대로라 입 크기 변화는 그림 안에서만, 다른 머리 UV 배치 몸은 다문 입.
+
+## GO 그래픽 먼저 ㉟ 명소 높은 실루엣 — 서리봉 성루 · 잠긴 궁궐 다층탑 (2026-09-29, "이어해")
+
+- 들판 시점 촬영(o_*_field·f_fort·u_palace): 이야기 지역 명소가 담 2.6m·궁궐 지붕 7m 로 낮아 멀리선 안 보였다. 새 world/landmark_tower.gd — keep(돌 성루: 기단·아래 큰 몸·성가퀴 방·창·뾰족 지붕·깃발)·pagoda(층마다 처마·꼭대기 빛 구슬), 아래 한 토막만 충돌, 재질은 prop_material.
+- 서리봉 옛 산성 북쪽 담 밖 24m 성루(region4_frost _build_fort), 잠긴 궁궐 동쪽 물속 기단 위 5층 탑(region7_sunken _build_palace). 창 모드 전후: 궁궐 옆에 탑이 솟아 어디서든 자리가 보인다.
+- 점검 SUNKEN·FROST·STORY3 fails=0, REGRESS OK. 나머지 지역(굳은 거리·갈림길 등)은 이미 16m 시계탑·부양탑 같은 높은 것이 있어 미룸 — 촬영 뒤 필요하면 keep/pagoda 를 같은 방식으로.
