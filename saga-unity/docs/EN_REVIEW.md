@@ -3,7 +3,7 @@
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
 - 짝 **4894** (표 4839 · 코드 55) — go 2978 · dungeon 532 · forest 272 · story 441 · realm 616
-- 자동 오류 **0** · 경고 **2** · 용어 흔들림 **17** · 넘침 주의 **541**
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **541**
 - 사람 검수 **0/4894** — 순위1 0/266 · 순위2 0/3898 · 순위3 0/730
 
 ## 검수 순서
@@ -18,12 +18,11 @@
 
 없음.
 
-## 경고 — 의도면 두고, 아니면 고친다 (2)
+## 경고 — 의도면 두고, 아니면 고친다 (1)
 
 - `go` `map.mark_legend` — 문장부호 앞 띄움
-- `realm` `mount.more` — 첫 기호 다름 ko「」 en「+」
 
-## 용어 흔들림 — 같은 한국어, 다른 영어 (17)
+## 용어 흔들림 — 같은 한국어, 다른 영어 (16)
 
 - 「물결」 → **Tidal** (go:era.foe.pre_hydro, go:kit.word.hydro) · **Mulgyeol** (go:wq.short.researcher)
 - 「회오리」 → **Whirl** (go:field.re.swirl) · **swirls** (go:ach.unit.swirl)
@@ -41,7 +40,6 @@
 - 「올라가 볼게요.」 → **I'll climb it.** (go:story.ch16.s5.p.a) · **I'll go up and see.** (go:story.ch25.s1.p.a)
 - 「여기서 끝내자.」 → **End it here.** (go:story.ch20.s9.p.b) · **Let's end this here.** (go:story.ch29.s4.p.b)
 - 「마루」 → **Maru** (go:story.short.maru) · **Wood Floor** (forest:finish.wood)
-- 「내리기」 → **Dismount** (dungeon:mount.btn_off, forest:mount.btn_off, story:mount.btn_off) · **Land** (realm:mount.btn_land)
 
 ## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 541)
 
