@@ -15145,6 +15145,72 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '여섯 단계 · 해미 → 진열장 속으로(성문 남쪽) → 벼리 → 짐승 넷 → 대장간 따라가기 → 벼리 · 🪢+9 🪙+9000 · 해미·벼리 자리' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-67 이야기 11부 제37장 · 세 갈래 길 (story ch37·나래 · fork 격자 말뚝 2·5·7 단계 맞물림, PLAN §5 ⑲-67) ── */
+    t('이야기 ⑲-67 — 37장 여덟 단계(Lv80) · 벼리 → 역참길 말뚝(2) → 나래 → 멈춘 기관차 지키기 3·4·5(기관차 벽 밖) → 선로 말뚝(5) → 종루 벽 타기(꼭대기에서만) → 종루 말뚝(7) → 벼리 · 벼리·나래 자리 · 🪢+9 🪙+9250', function () {
+      var rig = stRig(80), FK = DG.fork, ST = DG.story, FC = DG.fieldCombat, TL = DG.talent, LF = DG.landform, keepP = LF.perched, perch = null, r = {}, i;
+      try {
+        FK._resetForTest(); delete C.save.fork;
+        LF.perched = function () { return perch; };
+        var c = ST.CHAPTERS[36], S37 = c.steps;
+        r.table = c.id === 'ch37' && c.ar === 80 && !c.join && S37.length === 8 && c.reward.knot === 9 && c.reward.gold === 9250 && c.reward.guide === 9 && c.reward.secret === 6 && c.reward.party === 2600 &&
+          S37.map(function (q) { return q.type; }).join() === 'talk,light,talk,defend,light,climb,light,talk' && S37.filter(function (q) { return q.type === 'light'; }).every(function (q) { return q.bare; }) && S37[3].bare &&
+          S37[3].waves.map(function (w) { return w.length; }).join() === '3,4,5' && S37[5].pole === 'fk_tower' && S37[6].perch === 'fk_tower';
+        /* 표 ↔ 이 장 — 말뚝은 불(1·4·6) 다음(2·5·7)부터 꺼짐 · 종루 기둥 id */
+        r.link = FK.LATTICE_OFF_FROM.join() === [1, 4, 6].map(function (k) { return k + 1; }).join() && S37[1].spot === 'fk_lat0' && S37[4].spot === 'fk_lat1' && S37[6].spot === 'fk_lat2' && S37[5].pole === FK.poles()[0].id;
+        var forge = FK.siteById('forge'), works = FK.siteById('works'), loco = FK.siteById('loco'), jn = FK.siteById('junction'), tw = FK.siteById('tower');
+        function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 36 : ch, step: si }; return ST.npcPos(k); }
+        function fkRect(p) { return FK.rectsIn(Math.floor(p.x / 48), Math.floor(p.y / 48)).some(function (q) { return frInRect(q, p.x, p.y); }); }
+        /* 인물 — 벼리: 37장 첫 단계는 화덕 앞, 1~(뒤에도) 길목 동남쪽 / 나래: 역참길 말뚝 뒤(2) 공사장 북동쪽, 기관차로 간 뒤(3~, 뒤에도) 기관차 서쪽 끝 */
+        r.byeori = st10Eq(np('byeori', 0), { x: forge.x + 2.4, y: forge.y + 12 }) && st10Eq(np('byeori', 1), { x: jn.x + 17, y: jn.y + 14 }) && st10Eq(np('byeori', 7), { x: jn.x + 17, y: jn.y + 14 }) && st10Eq(np('byeori', 0, 37), { x: jn.x + 17, y: jn.y + 14 });
+        r.narae = (np('narae', 1), !ST.visible('narae')) && st10Eq(np('narae', 2), { x: works.x + 14, y: works.y - 14 }) && ST.visible('narae') && st10Eq(np('narae', 3), { x: loco.x - 10, y: loco.y + 5 }) && st10Eq(np('narae', 7), { x: loco.x - 10, y: loco.y + 5 }) &&
+          st10Eq(np('narae', 0, 37), { x: loco.x - 10, y: loco.y + 5 }) && (np('narae', 0, 35), !ST.visible('narae')) && !fkRect(np('narae', 2)) && !fkRect(np('narae', 3));
+        C.save.story = { ch: 36, step: 0 };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('byeori')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        /* 말뚝 셋 — 차례로, 먼 곳은 ✕, 끄면 그 말뚝이 꺼진다 */
+        function lightAt(si, k, spotName) {
+          var tg = ST.targetOf(ST.step()), ps = FK.spot(spotName), pre = C.save.story.step === si && !FK.latticeOff(k) && st10Eq(tg, ps);
+          C.emit('field:element', { el: 'fire', x: tg.x + 90, y: tg.y, r: 1, t: 'skill' });
+          var stay = C.save.story.step === si;
+          C.emit('field:element', { el: 'fire', x: tg.x, y: tg.y, r: 1, t: 'skill' });
+          return pre && stay && C.save.story.step === si + 1 && FK.latticeOff(k);
+        }
+        r.l0 = lightAt(1, 0, 'lat0') && !FK.latticeOff(1);
+        stGo(ST.npcPos('narae')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        /* 기관차 지키기 — 기관차 서쪽(남 4.5m), 물결 3·4·5(땅), 기관차 벽 안엔 안 나온다 */
+        var dt = ST.targetOf(ST.step());
+        r.defAt = st10Eq(dt, { x: loco.x, y: loco.y + 4.5 }) && !fkRect(dt);
+        stGo({ x: dt.x, y: dt.y + 2 }); FC.tick(0.05); ST.stepDefend(0.1);
+        var S = FC.state(), sizes = [], okPos = true;
+        for (i = 0; i < 3; i++) {
+          if (i) { ST.defState().t = ST.DEFEND_WAVE_SEC; ST.stepDefend(0.01); }
+          var cw = S.camps[ST.waveKey(i)];
+          sizes.push(cw ? cw.uids.length : 0);
+          if (cw && !cw.uids.every(function (u) { var f0 = S.foes[u]; return !f0.sky && !fkRect(f0) && Math.hypot(f0.x - dt.x, f0.y - dt.y) < ST.DEFEND_RING + 1; })) { okPos = false; }
+          stKillCamp(S, ST.waveKey(i)); FC.tick(0.05);
+        }
+        ST.stepDefend(0.01);
+        r.defend = sizes.join() === '3,4,5' && okPos && C.save.story.step === 4;
+        r.l1 = lightAt(4, 1, 'lat1') && FK.latticeOff(0) && !FK.latticeOff(2);
+        /* 종루 벽 타기 — 멀면 ✕, 붙잡지 않으면 ✕, 꼭대기에서 ○ */
+        stGo({ x: tw.x + 90, y: tw.y }); ST.check(); var far = C.save.story.step === 5;
+        stGo({ x: tw.x, y: tw.y + 4 }); ST.check(); var near = C.save.story.step === 5;
+        perch = 'fk_tower'; ST.check();
+        r.climb = far && near && C.save.story.step === 6;
+        /* 종루 말뚝 — 땅에선 안 붙고 꼭대기에선 붙는다(7 — 별까마귀는 아직 멈춘 채) */
+        var tg2 = ST.targetOf(ST.step());
+        perch = null; C.emit('field:element', { el: 'fire', x: tg2.x, y: tg2.y, r: 1, t: 'skill' });
+        var ground = C.save.story.step === 6 && !FK.latticeOff(2);
+        perch = 'fk_tower'; C.emit('field:element', { el: 'fire', x: tg2.x, y: tg2.y, r: 1, t: 'skill' });
+        r.l2 = ground && st10Eq(tg2, { x: tw.x, y: tw.y }) && C.save.story.step === 7 && FK.latticeOff(2) && FK.crowFrozen() && !FK.momentFree();
+        perch = null;
+        gold0 = C.save.player.gold; k0 = m.knot || 0;
+        stGo(ST.npcPos('byeori')); r.end = stTalkAll(ST) && C.save.story.ch === 37 && C.save.story.step === 0 && m.knot === k0 + 9 && C.save.player.gold >= gold0 + 9250;
+      } finally { LF.perched = keepP; FK._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '여덟 단계 · 벼리 → 역참길 말뚝 → 나래 → 기관차 지키기 3·4·5 → 선로 말뚝 → 종루 벽 타기 → 종루 말뚝 → 벼리 · 🪢+9 🪙+9250 · 말뚝 2·5·7' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑲-61 탈것 — 말(mount.js, PLAN §5 ⑲-61 · SAGA-DESIGN §12) ── */
     t('탈것 ⑲-61 — 말 셋(농마 5·갈색 15·흰 30 레벨 또는 도감 등록) · 타기/내리기 · 걷는 속도 배율(달리기와 겹침) · 고르기 · 저장 한 칸 · 몸 참조', function () {
       var MT = DG.mount, W = DG.world, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;

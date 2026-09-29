@@ -268,8 +268,14 @@
     /* ⑲-66 대장장이 벼리(과거) — 세갈래 고을 대장장이. 그날 새벽 막 벼린 칼날이 틈 조각 쇠라 멈춘 순간 속에서 혼자 움직인다. 11부(36장~)부터 성문 안쪽, 대장간으로 앞장선 뒤(36장 5~, 뒤에도) 화덕 앞 */
     byeori:   { id: 'story_byeori',   name: '대장장이 벼리', short: '벼리', zone: 'snowfort', spot: 'fk_gate', off: [0, -17], color: '#6b4d38',
       idle: '쇠는 식기 전에 두드려야 하는데… 불도, 쇠도, 하늘도 다 멈췄어.',
-      appear: [{ ch: 35, from: 5, to: 999, spot: 'fk_forge', off: [2.4, 12] }, { ch: 36, chTo: 999, from: 0, to: 999, spot: 'fk_forge', off: [2.4, 12] },
+      appear: [{ ch: 35, from: 5, to: 999, spot: 'fk_forge', off: [2.4, 12] }, { ch: 36, from: 0, to: 0, spot: 'fk_forge', off: [2.4, 12] },
+        { ch: 36, chTo: 999, from: 0, to: 999, spot: 'fk_junction', off: [17, 14] },                         // ⑲-67 37장 말뚝을 끄러 나선 뒤(1~, 뒤에도) 길목 동남쪽(머리 위 별까마귀를 지켜본다)
         { ch: 35, from: 0, to: 4 }] },
+    /* ⑲-67 측량 기사 나래(현대) — 세갈래 고을 동쪽 선로 공사장의 측량 기사. 하늘이 찢어질 때 공사장째 끌려와 굳어 있다가, 역참길 말뚝이 꺼진 뒤(37장 2~) 풀려나 공사장 북동쪽에 서고,
+       기관차로 간 뒤(3~, 뒤에도) 기관차 서쪽 끝 */
+    narae:    { id: 'story_narae',    name: '측량 기사 나래', short: '나래', zone: 'snowfort', spot: 'fk_works', off: [14, -14], color: '#eb8c26',
+      idle: '측량값이 전부 0 이에요. 거리도, 시간도.',
+      appear: [{ ch: 36, from: 3, to: 999, spot: 'fk_loco', off: [-10, 5] }, { ch: 36, from: 2, to: 2 }, { ch: 37, chTo: 999, from: 0, to: 999, spot: 'fk_loco', off: [-10, 5] }] },
     /* ⑲-64 씨앗 보관사 해미(미래) — 시간 씨앗 금고를 세운 보관사. 제가 만든 인공지능 갈무리에게 진열장째 갈무리됐다. 금고 안에 들어선 뒤(35장 1~, 뒤에도) 해미 진열장 자리(대결 전엔 유리 속, 뒤엔 깨진 받침 위) */
     haemi:    { id: 'story_haemi',    name: '씨앗 보관사 해미', short: '해미', zone: 'snowfort', spot: 'vt_haemi', off: [0, 0], color: '#d6e6d1',
       idle: '씨앗도 순간도, 갈무리는 다시 꺼내 심으려고 하는 거예요.',
@@ -304,7 +310,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil', 'maru', 'carrier', 'sodam', 'haemi', 'garmuri', 'byeori'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil', 'maru', 'carrier', 'sodam', 'haemi', 'garmuri', 'byeori', 'narae'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -1755,6 +1761,41 @@
             ['해미', '(진열장 밖에서) 갈무리의 격자 말뚝이에요. 세 시대 길 끝마다 하나씩 — 순간을 유리 안에 고정하는 핀.'],
             ['?', ['말뚝을 뽑으면 순간이 풀려요?', '공사장 사람들은요?']],
             ['벼리', '동쪽 선로 공사장에 쇠 수레를 몰던 사람들도 그대로 굳어 있소. 말뚝부터 하나씩 — 역참길 끝이 제일 가깝소. 내 칼을 들고 가겠소!', 'angry']] }
+      ] },
+    /* ⑲-67 11부 둘째 장 — 세 갈래 길. 벼리 → 역참길 격자 말뚝(light bare — 끄면(2) 꺼짐: fork LATTICE_OFF_FROM 2) → 나래(공사장 사람) → 멈춘 기관차 지키기(defend bare — 기관차(북)를 뺀 dirs) →
+       선로 격자 말뚝(5) → 종루 벽 타기(landform fk_tower) → 종루 위 격자 말뚝(light bare·perch — 7, 종이 한 번 울림) → 벼리(별까마귀 깃털이 떨린다 = 38장) */
+    { id: 'ch37', name: '제37장 · 세 갈래 길', ar: 80,
+      reward: { knot: 9, gold: 9250, guide: 9, secret: 6, party: 2600 },
+      steps: [
+        { type: 'talk', npc: 'byeori', text: '대장간 화덕 앞의 벼리와 이야기하기',
+          lines: [['벼리', '칼은 챙겼소. 서쪽 역참길 끝 — 옛날엔 파발마가 쉬어 가던 자리에 말뚝이 박혀 있소.', 'angry'],
+            ['반디', '삐— 말뚝 심에 굳은 신호가 모여 있습니다. 원소가 닿으면 심이 흩어질 것입니다.'],
+            ['?', ['원소로 끄면 되겠네.', '벼리 씨는 어디서 기다려요?']],
+            ['벼리', '나는 길목에 가 있겠소. 까마귀 밑이 영 마음에 걸려서 — 무슨 일이 생기면 쇠를 두드려 알리리다.']] },
+        { type: 'light', spot: 'fk_lat0', bare: true, text: '역참길 끝 격자 말뚝을 원소 스킬로 끄기',
+          done: '🔌 역참길 격자 말뚝의 빛 틀이 치직 흩어진다 — 동쪽 공사장에서 누군가 헛기침하는 소리가 난다' },
+        { type: 'talk', npc: 'narae', text: '선로 공사장에서 풀려난 사람과 이야기하기',
+          lines: [['나래', '……콜록. 어? 삼각대 수평이 — 아니, 여기 어디예요? 방금까지 첫 선로를 놓던 참이었는데.', 'surprised'],
+            ['나래', '측량 기사 나래예요. 하늘에 번쩍 금이 가더니 공사장째 쑥 빨려 들어왔어요. 이 고을은… 지도에도 없는 옛날 고을이잖아요?', 'sorrow'],
+            ['반디', '삐— 틈이 처음 찢어진 순간, 세 시대가 이 한 자리에서 만났습니다. 이 공사장도 그때 끌려온 현대 조각입니다.'],
+            ['?', ['다른 말뚝도 꺼야 해요.', '저 기관차는 움직여요?']],
+            ['나래', '선로 끝 말뚝은 기관차 너머예요. 그런데 저 말뚝 앞을 짐승들이 지켜요. 기관 불을 되살려 기적을 울리면 쫓을 수 있을지도 — 불 붙이는 동안만 지켜 줘요!', 'angry']] },
+        { type: 'defend', spot: 'fk_loco', off: [0, 4.5], bare: true, name: '멈춘 기관차', who: '결정 짐승이', dirs: [60, 100, 140, 180, 220, 260, 300],
+          waves: [['raptor', 'hawk', 'imp'], ['rockbear', 'snowfox', 'raptor', 'hawk'], ['imp', 'rockbear', 'snowfox', 'hawk', 'raptor']],
+          text: '나래가 기관 불을 되살리는 동안 멈춘 기관차 지키기' },
+        { type: 'light', spot: 'fk_lat1', bare: true, text: '선로 끝 격자 말뚝을 원소 스킬로 끄기',
+          done: '🔌 선로 격자 말뚝이 꺼진다 — 기관차 굴뚝의 굳은 김이 한 뼘 움직인 것 같다' },
+        { type: 'climb', spot: 'fk_tower', pole: 'fk_tower', text: '북쪽 종루 벽을 타고 꼭대기로(벽에 붙어 계속 밀기)',
+          done: '🔔 종루 꼭대기에 올라섰다 — 마지막 격자 말뚝이 발치에서 웅웅거린다', gpsDone: '🔔 종루 발치에 닿았다 — 격자 말뚝은 꼭대기에 있다' },
+        { type: 'light', spot: 'fk_lat2', bare: true, perch: 'fk_tower', text: '종루 꼭대기 격자 말뚝을 원소 스킬로 끄기(꼭대기에서)',
+          done: '🔔 종루 격자 말뚝까지 꺼졌다 — 멈춰 있던 종이 한 번, 둥 — 하고 울린다. 길목 위 하늘에서 무언가 꿈틀한다', away: '🔔 격자 말뚝은 종루 꼭대기에 있다 — 벽을 타고 올라서야 원소가 닿는다' },
+        { type: 'talk', npc: 'byeori', text: '세갈래 길목의 벼리에게 가기',
+          lines: [['벼리', '종소리가 났소! 그런데 — 보시오, 저 위. 까마귀 깃털이 떨리고 있소.', 'surprised'],
+            ['나래', '측량값이 움직여요! 거리도, 시간도… 순간이 풀리기 시작했어요.', 'joy'],
+            ['반디', '삐— 경고. 순간이 풀리면 멈춰 있던 일도 마저 일어납니다. 까마귀가 하던 일 — 세 시대 길을 한입에 삼키는 것.'],
+            ['?', ['그럼 까마귀부터 막아야 해.', '해미 씨, 들려요?']],
+            ['해미', '(진열장 밖에서) 들려요! 순간이 풀리는 걸 갈무리도 느꼈을 거예요. 그 애가 가만있지 않을 거예요 — 조심해요.', 'sorrow'],
+            ['벼리', '처음 하늘을 찢은 그 까마귀를 이번엔 우리가 막는 거요. 준비되면 말하시오 — 칼은 뜨겁게 달궈 두었소.', 'angry']] }
       ] }
   ];
 
