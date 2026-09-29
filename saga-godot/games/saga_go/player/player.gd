@@ -33,6 +33,15 @@ var frozen := false
 var dash_dir := Vector3.ZERO
 var dash_speed := 0.0
 
+## 2026-09-30 탈것(player/mount.gd 가 앉힌다, data/mounts.gd) — 다섯 판 공용. GO 는 go_player.gd 가 이동을 통째로 다시 써서
+## mount_speed_mul 등을 직접 쓰고, DUNGEON·FOREST 는 이 파일의 이동에서 배율·나는 탈것(fly_on)을 쓴다.
+var mounted := false
+var mount_speed_mul := 1.0
+var mount_jump_mul := 1.0
+var ride_height := 0.0
+var mount_fly_speed := 0.0
+var fly_on := false
+
 @onready var camera_rig: Node3D = $CameraRig
 @onready var visual: Node3D = $Visual
 @onready var _anim: AnimationPlayer = visual.find_child("AnimationPlayer", true, false)
@@ -47,6 +56,10 @@ func _ready() -> void:
 		_joystick = found[0]
 	_play_anim("idle")
 	CelShaderApply.apply_to(visual)
+	if get_node_or_null("Mount") == null:
+		var mount_node := Node3D.new()
+		mount_node.set_script(load("res://games/saga_go/player/mount.gd"))
+		add_child(mount_node)
 	## 2026-09-30 — 공방 옷 그림이 어두운 가죽이라 주인공만 칙칙했다(마을 사람은 vroid_body boost). 옷 재질 빛을 올려 초록 조끼가 산다.
 	for mi in visual.find_children("*", "MeshInstance3D", true, false):
 		var m := (mi as MeshInstance3D).mesh
@@ -79,6 +92,11 @@ func _physics_process(delta: float) -> void:
 		global_position += dash_dir * dash_speed * delta
 		return
 
+	if fly_on:
+		_base_fly(delta)
+		return
+
+	visual.position.y = ride_height
 	if not is_on_floor():
 		velocity.y -= GRAVITY * delta
 	else:
@@ -95,7 +113,7 @@ func _physics_process(delta: float) -> void:
 	var move_dir := _world_direction(input_dir)
 
 	var running := Input.is_action_pressed("run")
-	var speed := (RUN_SPEED if running else WALK_SPEED) * speed_mult
+	var speed := (RUN_SPEED if running else WALK_SPEED) * speed_mult * mount_speed_mul
 	velocity.x = move_dir.x * speed
 	velocity.z = move_dir.z * speed
 
@@ -111,6 +129,36 @@ func _physics_process(delta: float) -> void:
 ## character-a.glb 안의 이름 그대로 재생한다(idle/walk/sprint) — 같은 걸
 ## 다시 요청하면 매 프레임 play()를 다시 걸지 않는다(안 그러면 블렌드가
 ## 매번 처음으로 튄다).
+## 나는 탈것(DUNGEON·FOREST) — 점프 = 오르기, 손 떼면 내려앉기, 달리기 = 급강하. GO 는 go_player.gd 의 Mode.FLY 가 따로 한다.
+func begin_fly() -> void:
+	fly_on = true
+	velocity.y = 8.5
+
+func end_fly() -> void:
+	fly_on = false
+
+func is_flying_now() -> bool:
+	return fly_on
+
+func _base_fly(delta: float) -> void:
+	var dir := _world_direction(_movement_input())
+	var fspeed := mount_fly_speed if mount_fly_speed > 0.0 else 14.0
+	velocity.x = lerpf(velocity.x, dir.x * fspeed, 3.0 * delta)
+	velocity.z = lerpf(velocity.z, dir.z * fspeed, 3.0 * delta)
+	var want_y := -3.0
+	if Input.is_action_pressed("jump") and global_position.y < 40.0:
+		want_y = 9.0
+	elif Input.is_action_pressed("run"):
+		want_y = -14.0
+	velocity.y = lerpf(velocity.y, want_y, 4.0 * delta)
+	if dir.length() > 0.05:
+		visual.rotation.y = lerp_angle(visual.rotation.y, atan2(dir.x, dir.z), TURN_RATE * delta)
+	visual.position.y = ride_height
+	_play_anim("idle")
+	move_and_slide()
+	if is_on_floor() and velocity.y <= 0.5:
+		fly_on = false
+
 func _play_anim(anim_name: String) -> void:
 	if _anim == null or not _anim.has_animation(anim_name):
 		return

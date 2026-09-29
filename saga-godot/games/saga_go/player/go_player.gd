@@ -113,11 +113,6 @@ var _updraft_vy := 0.0
 var _updraft_skip := false
 const UPDRAFT_MIN_CLEARANCE := 1.0 # 이보다 낮은 턱에서 발이 떨어진 건 활공으로 안 친다
 ## 2026-09-30 탈것(player/mount.gd 가 앉힌다) — data/mounts.gd.
-var mounted := false
-var mount_speed_mul := 1.0
-var mount_jump_mul := 1.0
-var ride_height := 0.0
-var mount_fly_speed := 0.0
 const FLY_RISE := 9.0            # 점프를 누르는 동안 오르는 속도
 const FLY_SINK := 3.0            # 손을 떼면 내려앉는 속도
 const FLY_DIVE := 14.0           # 달리기(Shift)로 급강하
@@ -140,9 +135,6 @@ func _ready() -> void:
 	visual.add_child(_glider)
 	_glider.visible = false
 	_build_hud()
-	var mount_node := Node3D.new()
-	mount_node.set_script(load("res://games/saga_go/player/mount.gd"))
-	add_child(mount_node)
 	combat = FieldCombat.new()
 	combat.name = "FieldCombat"
 	add_child(combat)
@@ -317,11 +309,20 @@ func _tick_glide(delta: float, move_dir: Vector3) -> void:
 
 ## 나는 탈것 — 중력 없이 난다. 점프 = 오르기, 손 떼면 천천히 내려앉기, 달리기(Shift) = 급강하. 땅에 닿으면 땅 탈것처럼 걷는다.
 func begin_fly() -> void:
+	fly_on = true
 	velocity.y = FLY_TAKEOFF
 	_set_mode(Mode.FLY)
 
 func end_fly() -> void:
+	fly_on = false
 	_set_mode(Mode.AIR)
+
+func is_flying_now() -> bool:
+	return mode == Mode.FLY
+
+## 탈것 잠금 — 이야기 장(PartyState.story.ch).
+func mount_chapter() -> int:
+	return int(PartyState.story.get("ch", 0))
 
 func _tick_fly(delta: float, move_dir: Vector3) -> void:
 	if not mounted:

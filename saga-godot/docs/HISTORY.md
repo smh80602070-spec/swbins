@@ -9510,3 +9510,10 @@ PROJECT_STATE.md` 참고. 요약:
 - tools/probe_mount.gd(SAGA_MOUNT_PROBE) 13항목 fails=0, probe_shots k_ride_* 네 컷. TRAVERSAL·FIELD_BOSS·KIT fails=0, REGRESS OK(COMBAT 은 무거운 작업과 겹치면 가끔 2, 혼자 돌리면 0).
 - 아직: 사람이 말 등에 앉은 자세 없음(서 있음)·날개 펄럭임 없음·터치 단추 없음·세이브에 마지막 탈것 안 저장.
 - 다섯 판 다: 사가블로·사가의숲·사가스토리·사가국지 적용은 다음 조각.
+
+## 탈것 — 다섯 판 확장: GO·DUNGEON·FOREST·STORY 적용, REALM 보류 (2026-09-30, "다섯 판 다")
+
+- 탈것 필드·나는 탈것을 공용 player.gd(GO 상속·DUNGEON·FOREST 씬이 그대로 씀)로 올리고 Mount 노드도 거기서 붙인다(go_player 는 자체 이동이라 mount_speed_mul 등을 직접 쓰고 Mode.FLY 유지). STORY 는 story_player.gd 에 같은 필드·가로 평면 비행(_story_fly: 점프=오르기·story_dash=급강하)·이동/점프 배율·ride_height.
+- mount.gd 를 판 무관하게: 공격 액션 목록(combat_quick·dungeon_attack)을 눌러 내림, 회전은 GO 는 _yaw·그 밖엔 visual, 잠금은 go_player.mount_chapter() 가 있으면 이야기 장·없으면 전부 열림(각 판 진행에 잠금 연결은 다음).
+- tools/mount_host.tscn/.gd(씬 경로 인자) 로 세 판 확인 — 말 타면 이동 1.3배↑·나는 탈것 떠오름·손 떼면 내려앉아 땅에 섬·내리면 복귀: DUNGEON·FOREST·STORY fails=0. GO probe_mount 13항목 fails=0, REGRESS OK, STORY·TRAVERSAL fails=0.
+- REALM 은 조작하는 몸이 없는 전략 판(월드맵·성·전쟁 명령)이라 이동식 탈것이 안 맞는다 — 설계가 필요: 후보 ① 군주 초상(LordPortrait)에 탈것 표시 ② 원정 때 기병/비룡 병종 보정(realm_war.gd) ③ 성 사이 이동에 걸리는 달 수 단축. 정해지면 이어서.

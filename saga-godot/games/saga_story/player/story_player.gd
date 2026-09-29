@@ -43,6 +43,15 @@ const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const BlobShadow := preload("res://saga_core/world/blob_shadow.gd")
 
 @onready var visual: Node3D = $Visual
+
+## 2026-09-30 탈것(games/saga_go/player/mount.gd, data/mounts.gd — 다섯 판 공용).
+## 땅 탈것: 이동·점프 배율 · 나는 탈것(fly_on): 점프=오르기·손 떼면 내려앉기·Shift(story_dash)=급강하 — 가로 평면(X·Y)에서.
+var mounted := false
+var mount_speed_mul := 1.0
+var mount_jump_mul := 1.0
+var ride_height := 0.0
+var mount_fly_speed := 0.0
+var fly_on := false
 @onready var _anim: AnimationPlayer = visual.find_child("AnimationPlayer", true, false)
 
 var _current_anim := ""
@@ -312,6 +321,9 @@ func _ready() -> void:
 	var shadow := BlobShadow.make_decal(0.7)
 	shadow.position = Vector3(0, 0.15, 0)
 	add_child(shadow)
+	var mount_node := Node3D.new()
+	mount_node.set_script(load("res://games/saga_go/player/mount.gd"))
+	add_child(mount_node)
 
 
 func _physics_process(delta: float) -> void:
@@ -426,7 +438,10 @@ func _physics_process(delta: float) -> void:
 	mp = minf(max_mp, mp + StoryCombat.MP_REGEN * regen_mul * delta)
 	_check_rope()
 
-	if _on_rope and _rope_area != null:
+	visual.position.y = ride_height
+	if fly_on:
+		_story_fly(delta)
+	elif _on_rope and _rope_area != null:
 		_climb(delta)
 	else:
 		_walk(delta)
@@ -437,6 +452,8 @@ func _physics_process(delta: float) -> void:
 	global_position.z = 0.0
 
 	move_and_slide()
+	if fly_on and is_on_floor() and velocity.y <= 0.5:
+		fly_on = false
 
 	if Input.is_action_just_pressed("combat_quick") and _attack_cd_left <= 0.0:
 		_attack()
@@ -671,6 +688,33 @@ func _physics_process(delta: float) -> void:
 			_cast_ascendant_orb()
 
 
+## 나는 탈것 — 가로 평면에서 난다(중력 없음).
+func begin_fly() -> void:
+	fly_on = true
+	velocity.y = 8.5
+
+func end_fly() -> void:
+	fly_on = false
+
+func is_flying_now() -> bool:
+	return fly_on
+
+func _story_fly(delta: float) -> void:
+	var axis := Input.get_axis("move_left", "move_right")
+	var fspeed := mount_fly_speed if mount_fly_speed > 0.0 else 14.0
+	velocity.x = lerpf(velocity.x, axis * fspeed, 3.0 * delta)
+	var want_y := -3.0
+	if Input.is_action_pressed("jump") and global_position.y < 60.0:
+		want_y = 9.0
+	elif Input.is_action_pressed("story_dash"):
+		want_y = -14.0
+	velocity.y = lerpf(velocity.y, want_y, 4.0 * delta)
+	if absf(axis) > 0.05:
+		_facing = signf(axis)
+		visual.rotation.y = lerp_angle(visual.rotation.y, PI * 0.5 if _facing > 0 else -PI * 0.5, TURN_RATE * delta)
+	_play_anim("idle")
+
+
 func _walk(delta: float) -> void:
 	## 코요테 타임 — 발판 위에 있는 동안은 늘 꽉 채워 두고(그래서 평범한
 	## 즉시 점프도 아래 조건 하나로 같이 처리된다), 떠나면 그때부터 깎인다.
@@ -687,7 +731,7 @@ func _walk(delta: float) -> void:
 	if Input.is_action_just_pressed("jump"):
 		_jump_buffer_left = JUMP_BUFFER_TIME
 	if _jump_buffer_left > 0.0 and _coyote_time_left > 0.0:
-		velocity.y = JUMP_SPEED
+		velocity.y = JUMP_SPEED * mount_jump_mul
 		_jump_buffer_left = 0.0
 		_coyote_time_left = 0.0
 	elif is_on_floor():
@@ -703,7 +747,8 @@ func _walk(delta: float) -> void:
 	var speed := RUN_SPEED * (StoryCombat.BRACE_SPEED_MUL if _buff_time_left > 0.0 else 1.0) \
 		* (_job_buff_speed_mul if _job_buff_time_left > 0.0 else 1.0) \
 		* (StoryCombat.ARCHER_DRAW_MOVE_MUL if _archer_charging else 1.0) \
-		* StoryLabyrinthState.move_speed_mult()  # PLAN 101-2 STORY ⑤(비경, 질주 은사)
+		* StoryLabyrinthState.move_speed_mult() \
+		* mount_speed_mul  # PLAN 101-2 STORY ⑤(비경, 질주 은사) · 탈것
 	velocity.x = axis * speed
 
 	if absf(axis) > 0.05:
