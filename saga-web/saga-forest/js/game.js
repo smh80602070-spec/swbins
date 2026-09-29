@@ -43,6 +43,7 @@
       core.log('🏡 ' + me.name + ' 의 모습으로 지냅니다 (도감에서 바꿀 수 있습니다)', 'info');
     }
 
+    if (global.DG.scenario) { global.DG.scenario.init(); }   // 시나리오 장 진행(scenario.js) — 세이브·마을이 준비된 뒤
     bindTopbar();
     lastFrame = performance.now();
     /* 자가진단은 **루프를 켜지 않는다**(`DG_NO_LOOP`).

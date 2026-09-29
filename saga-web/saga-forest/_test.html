@@ -50,7 +50,7 @@
      아래 씨앗 고정 다음에 실린다 -->
 <script src="js/vendor/three.iife.js"></script>
 <script>
-window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_LOOP = true;
+window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_LOOP = true; window.DG_NO_SCENARIO = true;
 /* 어드민의 균형 손잡이를 읽지 않는다 — 손잡이를 잡아 둔 기기에서
    판정이 흔들리면 안 된다 (씨앗을 고정한 것과 같은 이유다) */
 window.DG_NO_TUNE = true;
@@ -95,6 +95,8 @@ window.DG_NO_TUNE = true;
 <script src="js/grid.js"></script>
 <script src="js/parcel.js"></script>
 <script src="js/festival.js"></script>
+<script src="js/data-scenario.js"></script>
+<script src="js/scenario.js"></script>
 <script src="js/visitor.js"></script>
 <script src="js/town.js"></script>
 <script src="js/folk.js"></script>
@@ -2590,6 +2592,110 @@ window.DG_NO_TUNE = true;
       raw.player.x = m.x; raw.player.y = m.y + 10;
       return m;
     }
+
+    t('시나리오 표 — 장·장면·인물·숲·행사·갈래가 서로 맞고, 장마다 과거·현대·미래가 셋 다 있다', function () {
+      var D = DG.scenarioData, VDx = DG.villageData, bad = [], ids = {}, used = {};
+      D.CHAPTERS.forEach(function (c, i) {
+        if (ids[c.id]) { bad.push(c.id + ' id 겹침'); } ids[c.id] = 1;
+        if (c.after && D.CHAPTERS.indexOf(D.chapter(c.after)) >= i) { bad.push(c.id + ' after'); }
+        if (!c.mix || !c.mix.past || !c.mix.now || !c.mix.future) { bad.push(c.id + ' 시대 섞기 빈 칸'); }
+        if (!c.steps.length || c.no !== i + 1) { bad.push(c.id + ' 번호·단계'); }
+        c.steps.forEach(function (st) {
+          if (['talk', 'place', 'deliver', 'forest', 'go', 'gather', 'fest', 'heart', 'donate'].indexOf(st.t) < 0) { bad.push(c.id + ' 단계 ' + st.t); }
+          if (st.t === 'talk') { used[st.scene] = 1; if (!D.SCENES[st.scene]) { bad.push(c.id + ' 장면 ' + st.scene); } }
+          if (st.t === 'forest' && !DG.village.forestByKey(st.key)) { bad.push(c.id + ' 숲 ' + st.key); }
+          if (st.t === 'fest' && !VDx.EVENTS.some(function (e) { return e.key === st.key && e.play; })) { bad.push(c.id + ' 행사 ' + st.key); }
+          if (st.t === 'gather' && !(VDx.ITEMS[st.cat] && VDx.ITEMS[st.cat].length)) { bad.push(c.id + ' 갈래 ' + st.cat); }
+          if (st.t === 'donate' && !VDx.MUSEUM_CATS.some(function (x) { return x.key === st.cat; })) { bad.push(c.id + ' 사고 갈래 ' + st.cat); }
+          if (st.t === 'go' && st.spot !== 'ruin') { bad.push(c.id + ' 자리 ' + st.spot); }
+        });
+      });
+      Object.keys(D.SCENES).forEach(function (k) {
+        if (!used[k]) { bad.push('안 쓰는 장면 ' + k); }
+        var cz = D.SCENES[k].choice;
+        if (cz && (!cz.id || !cz.options || cz.options.length < 2)) { bad.push(k + ' 고르기 모양'); }
+        D.SCENES[k].lines.forEach(function (ln) {
+          if (ln[0] !== 'me' && !D.CAST[ln[0]]) { bad.push(k + ' 인물 ' + ln[0]); }
+          if (!ln[1]) { bad.push(k + ' 빈 말'); }
+        });
+      });
+      if (bad.length) { throw new Error(bad.join(', ')); }
+      return '장 ' + D.CHAPTERS.length + ' · 장면 ' + Object.keys(D.SCENES).length + ' · 인물 ' + Object.keys(D.CAST).length;
+    });
+
+    t('시나리오 봄 — 이사·폐허 우체통·꽃놀이·사고로 네 장이 끝나고, 사고 장면에서 마을 이름을 알릴지 고른다', function () {
+      var SC = DG.scenario, C = DG.core, s0 = V.state(), H = DG.home, bad = [];
+      var keep = { sc: s0.scenario ? JSON.stringify(s0.scenario) : null, items: JSON.stringify(H.state().items), don: JSON.stringify(s0.donated || {}),
+        hearts: JSON.stringify(s0.hearts || {}), fest: JSON.stringify(s0.fest || {}), p: JSON.stringify(C.save.player), px: V.raw().player.x, py: V.raw().player.y };
+      function say() { var k = 0; while (SC.isOpen() && k++ < 30) { SC.next(); } }
+      function cur() { return SC.isOpen() ? SC.currentScene().id : null; }
+      window.DG_NO_SCENARIO = false;
+      try {
+        var g0 = C.save.player.gold;
+        H.state().items = []; s0.donated = {}; s0.hearts = {}; s0.fest = {};
+        SC.reset(); SC.init();
+        if (cur() !== 'move1') { bad.push('첫 장면 ' + cur()); }
+        if (!document.getElementById('scnbox') || document.getElementById('scnbox').innerHTML.indexOf('솔바람') < 0) { bad.push('글 상자'); }
+        say();
+        if (SC.hint().text.indexOf('가구') < 0) { bad.push('가구 힌트 ' + SC.hint().text); }
+        H.state().items.push({ key: 'x', x: 0, y: 0 }); C.emit('changed');
+        if (cur() !== 'move2') { bad.push('가구 뒤 장면 ' + cur()); }
+        say();
+        if (SC.hint().text.indexOf('택배') < 0) { bad.push('택배 힌트 ' + SC.hint().text); }
+        C.emit('village:delivered', { dest: 'x' });
+        say();
+        if (!SC.state().done.sp_move || C.save.player.gold <= g0 || !SC.state().said.post1) { bad.push('1장 끝·2장 첫 장면'); }
+
+        // 2장 — 억새 바람벌에 들고 폐허에 선다
+        C.emit('forest:enter', { key: 'eoksae' });
+        if (SC.hint().text.indexOf('폐허') < 0) { bad.push('폐허 힌트 ' + SC.hint().text); }
+        var spot = V.ruinSpot(), raw = V.raw();
+        if (spot) {
+          raw.player.x = (spot.tx + 0.5) * V.TILE; raw.player.y = (spot.ty + 0.5) * V.TILE;
+          if (V.inRuin(spot.tx, spot.ty)) { C.emit('changed'); if (cur() !== 'post2') { bad.push('폐허 뒤 장면 ' + cur()); } say(); }
+          else { bad.push('폐허 안이 아님'); }
+        } else { bad.push('폐허 자리 없음'); }
+        C.emit('village:delivered', { dest: 'y' });
+        say();
+        if (!SC.state().done.sp_postbox || !SC.state().said.fox1) { bad.push('2장 끝'); }
+
+        // 3장 — 꽃 다섯 송이 → 꽃놀이(기념 놀이 대신 끝난 것으로) → 하트
+        for (var i = 0; i < 4; i++) { C.emit('village:gather', { item: { cat: 'flower' }, n: 1 }); }
+        if (SC.isOpen()) { bad.push('꽃 넷에 장면'); }
+        C.emit('village:gather', { item: { cat: 'flower' }, n: 1 });
+        if (cur() !== 'fox2') { bad.push('꽃 다섯 뒤 장면 ' + cur()); }
+        say();
+        if (SC.hint().text.indexOf('기념 놀이') < 0 && SC.hint().text.indexOf('꽃놀이') < 0) { bad.push('행사 힌트 ' + SC.hint().text); }
+        s0.fest.samjin = { year: new Date().getFullYear(), done: true, day: s0.day };
+        C.emit('changed');
+        if (SC.hint().text.indexOf('하트') < 0) { bad.push('하트 힌트 ' + SC.hint().text); }
+        s0.hearts.someone = { h: 1, lastTalk: 0, gainDay: 0, gained: 0 };
+        C.emit('changed');
+        say();
+        if (!SC.state().done.sp_fox || !SC.state().said.mus1) { bad.push('3장 끝·4장 첫 장면'); }
+
+        // 4장 — 화석 다섯 점 → 이름 고르기
+        var fossils = DG.villageData.ITEMS.fossil.slice(0, 5);
+        fossils.forEach(function (f) { s0.donated[f.key] = true; });
+        C.emit('changed');
+        if (cur() !== 'mus2') { bad.push('기증 뒤 장면 ' + cur()); }
+        say();
+        var c = SC.currentScene(), box = document.getElementById('scnbox');
+        if (!(c && c.pick && box.innerHTML.indexOf('scn-pick') >= 0 && box.innerHTML.indexOf('비밀로 한다') >= 0)) { bad.push('고르기 단추'); }
+        SC.next(); SC.skip();
+        if (!SC.isOpen()) { bad.push('고르기 중 건너뛰기로 닫힘'); }
+        if (SC.pick('nope') || !SC.isOpen()) { bad.push('없는 답이 먹음'); }
+        if (!SC.pick('secret') || SC.choice('name') !== 'secret' || !SC.state().done.sp_museum || SC.current() !== null) { bad.push('4장 끝·고르기 ' + SC.choice('name')); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '이사(가구·택배) → 폐허 우체통 → 꽃 다섯·꽃놀이·하트 → 화석 다섯 → 이름 고르기 · 네 장 끝';
+      } finally {
+        window.DG_NO_SCENARIO = true;
+        SC.abort();
+        s0.scenario = keep.sc ? JSON.parse(keep.sc) : undefined;
+        H.state().items = JSON.parse(keep.items); s0.donated = JSON.parse(keep.don); s0.hearts = JSON.parse(keep.hearts); s0.fest = JSON.parse(keep.fest);
+        C.save.player = JSON.parse(keep.p); V.raw().player.x = keep.px; V.raw().player.y = keep.py;
+      }
+    });
 
     t('사고 — 앞에 가야 받는다', function () {
       var raw = V.raw(), s = V.state();

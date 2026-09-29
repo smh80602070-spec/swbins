@@ -574,6 +574,7 @@
           SEASON_ICON[st.season.key] + ' ' + st.season.name +
           ' · ' + st.phase.name + ' · 채집 <b>' + core.fmt(st.gathered) +
           '</b></div>' +
+        (global.DG.scenario ? global.DG.scenario.lineHtml() : '') +
         taskGoalLine() +
       '</div>';
 
@@ -1445,7 +1446,7 @@
     if (!V || !V.taskList) { return ''; }
     var list = V.taskList(), w = V.weeklyTaskInfo();
     var s = V.state();
-    var html = '<div class="sec"><h4>오늘의 일과 <small class="muted">' +
+    var html = (global.DG.scenario ? global.DG.scenario.cardHtml() : '') + '<div class="sec"><h4>오늘의 일과 <small class="muted">' +
       (s.tasks ? (s.tasks.streak || 0) + '일째' : '') + '</small></h4>';
     for (var i = 0; i < list.length; i++) {
       var t = list[i];
