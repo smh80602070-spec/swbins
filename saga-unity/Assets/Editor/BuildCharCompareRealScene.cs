@@ -430,6 +430,11 @@ namespace Saga.EditorTools
             if (mi == null) return;
             mi.animationType = ModelImporterAnimationType.Human;
             mi.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
+            // 최적화(09-29, 화질 변화 없음): 메시 압축 Low(정점 16비트 양자화 — 1.7m 몸에서 눈에 안 보인다) · 공방 FBX 엔 없는 카메라·빛·블렌드셰이프 가져오기 끔
+            mi.meshCompression = ModelImporterMeshCompression.Low;
+            mi.importCameras = false;
+            mi.importLights = false;
+            mi.importBlendShapes = false;
             // 재질은 FBX 안(재질 이름 그대로)에 두고 아래에서 이름으로 바꿔 끼운다 — .meta 에 칸이 없으면 기본값 0 이 옛 방식
             // (External·텍스처 이름)이라 재질이 밖에 텍스처 이름으로 생기고 .fbm 폴더가 생긴다(2026-09-25 겪음)
             mi.materialImportMode = ModelImporterMaterialImportMode.ImportViaMaterialDescription;
