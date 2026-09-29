@@ -38,7 +38,7 @@
 ## 테스트 상태
 
 - `godot_regress.sh` REGRESS OK(09-27, 38장 뒤).
-- GO 그리기 부담 `SAGA_PERF_PROBE=1`(창 모드·모바일 렌더러, PLAN 104-7 예산 draw call ≤260·삼각형 평균 ≤35만) — 09-24 마을 32만·포구 19만·폐허 22만. GO 자동 점검 마흔여섯(`SAGA_<이름>_PROBE=1`, 괄호는 항목 수): STORY11(24) · FORK(6) · STORY10(23) · VAULT(6) · STORY9(24) · AMBER(6) · AFTERMATH(6) · STORY8(31) · STORMEYE(7) · STORY7(24) · SKYROUTE(9) · STORY6(28) · SUNKEN(14) · FROST(10) · STORY2(30) · STORY3(33) · SKYPORT(10) · CROSSING(11) · STORY4(33) · STORY5(24) · DISPATCH(12) · ACHIEVE(9) · FISH(11) · QMAP(8) · ARCHERY(17) · STORY(87) · WQ(12) · KIT(23) · FIELD_BOSS(10) · ADVENTURE(9) · WEEKLY(9) · DOMAIN(11) · COMMISSION(10) · COOK(13) · TRAVERSAL(14) · COMBAT(19) · TREASURE(9) · MAP(10) · GROWTH(10) · SHARD(6) · TALENT(10) · SIGHT(8) · ELEMENT(15) · WEAPON(11) · ARTIFACT(12) · LayoutWalk 씬 LAYOUT — 전부 fails=0.
+- GO 그리기 부담 `SAGA_PERF_PROBE=1`(창 모드·모바일 렌더러, PLAN 104-7 예산 draw call ≤260·삼각형 평균 ≤35만) — 09-24 마을 32만·포구 19만·폐허 22만. GO 자동 점검 마흔여섯은 `tools/probe_*.gd`(`SAGA_<이름>_PROBE=1`, 이름은 파일명) — 전부 fails=0.
 - 화면 촬영 `SAGA_SHOT_PROBE=1 SAGA_SHOT_DIR=<경로>`(창 모드·화면 밖, `tools/probe_shots.gd`) — 09-26 땅 뒷면·눈·안개 발견.
 - 새 스크립트는 `--check-only --script res://…` 로 먼저 문법만(자동 로드 이름 오류는 정상) — 문법 오류 판은 씬이 안 떠 timeout 까지 멈춘다.
 - 셰이더(물·하늘)는 창 모드 콘솔 exe 를 화면 밖에서 300프레임 돌려 Forward+·Mobile 오류 0(헤드리스는 셰이더를 컴파일 안 함). 미니맵 원형 셰이더(⑨)·원소 시야 막(⑬)도 창 모드 두 렌더러 오류 0(09-24).
