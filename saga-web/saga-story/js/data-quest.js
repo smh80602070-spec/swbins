@@ -124,6 +124,37 @@
       desc: '가장 깊은 굴의 귀장을 베어라.',
       reward: { exp: 200000, gold: 150000, scroll: 'atk10' } },
 
+    /* 5부 문 너머 — 사냥터 셋마다 적 백여든 + 보스(레벨 문턱 72·74·76) */
+    { key: 'q_beyond1', name: '문 너머 옛 전장', need: 72, repeat: false,
+      goal: { type: 'kill', n: 180, stage: 'beyond_past' },
+      desc: '문 너머 옛 전장의 적 백여든.',
+      reward: { exp: 180000, gold: 130000, scroll: 'def60' } },
+
+    { key: 'q_beyond1_boss', name: '전장의 원혼 장수', need: 72, repeat: false,
+      goal: { type: 'boss', n: 1, stage: 'beyond_past' },
+      desc: '깃발 무덤을 지키는 원혼 장수를 베어라.',
+      reward: { exp: 260000, gold: 190000, scroll: 'atk10' } },
+
+    { key: 'q_beyond2', name: '문 너머 무너진 도심', need: 74, repeat: false,
+      goal: { type: 'kill', n: 190, stage: 'beyond_now' },
+      desc: '문 너머 무너진 도심의 적 백아흔.',
+      reward: { exp: 220000, gold: 160000, scroll: 'def60' } },
+
+    { key: 'q_beyond2_boss', name: '도심의 통제관', need: 74, repeat: false,
+      goal: { type: 'boss', n: 1, stage: 'beyond_now' },
+      desc: '꺼지지 않는 신호를 쥔 통제관을 베어라.',
+      reward: { exp: 320000, gold: 230000, scroll: 'hp10' } },
+
+    { key: 'q_beyond3', name: '문 너머 궤도 기지', need: 76, repeat: false,
+      goal: { type: 'kill', n: 200, stage: 'beyond_future' },
+      desc: '문 너머 궤도 기지의 적 이백.',
+      reward: { exp: 280000, gold: 200000, scroll: 'def60' } },
+
+    { key: 'q_beyond3_boss', name: '기지의 감시관', need: 76, repeat: false,
+      goal: { type: 'boss', n: 1, stage: 'beyond_future' },
+      desc: '기지를 깨어 있게 한 감시관을 베어라.',
+      reward: { exp: 400000, gold: 300000, scroll: 'atk10' } },
+
     /* 되받는 셋 — 바친 뒤 다시 받는다 */
     { key: 'r_hunt', name: '토벌령(討伐令)', need: 3, repeat: true,
       goal: { type: 'kill', n: 30 },

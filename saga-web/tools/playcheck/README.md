@@ -4,6 +4,7 @@
 
 ```
 node serve.mjs C:/swbins/saga-web 8871        # 정적 서버(백그라운드로)
+node st-beyond.mjs [shot]                       # 사가스토리 5부: 문 너머 사냥터 셋 3D 예외 없나·적·보스·문 사슬·보스 몸(shot 을 줄 때만 shots/st_beyond_*, 새 프로필로)
 node st-mount.mjs [shot]                        # 사가스토리 탈것: 말 ×배율·학 날갯짓·무예를 쓰면 내림·3D 예외 없나(shot 을 줄 때만 shots/st_mount_*, 새 프로필로)
 node fs-mount.mjs [shot]                        # 사가의숲 탈것: 말 ×배율·학이 물 칸을 떠서 넘나·물 위에서 내리면 뭍으로·3D 예외 없나(shot 을 줄 때만 shots/fs_mount_*, 새 프로필로)
 node dg-mount.mjs [shot]                        # 사가블로 탈것: 흰 말 ×배율·학 이동·던전에 들어가면 내림·3D 예외 없나(shot 을 줄 때만 shots/dg_mount_*, 새 프로필로)

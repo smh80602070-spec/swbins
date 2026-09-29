@@ -887,7 +887,7 @@ window.DG_NO_TUNE = true;
       return r;
     }
 
-    t('보스 고유 기술 — 사냥터 보스 여섯이 다 제 기술이 있고, 등장 뒤 첫 기술이 그것이며 모든 단계 후보에 낀다', function () {
+    t('보스 고유 기술 — 사냥터 보스 아홉이 다 제 기술이 있고, 등장 뒤 첫 기술이 그것이며 모든 단계 후보에 낀다', function () {
       var BP = DG.bossPattern, bad = [], names = [];
       SD.STAGES.forEach(function (st) {
         if (!st.boss) { return; }
@@ -902,7 +902,7 @@ window.DG_NO_TUNE = true;
       var plain = bpSig('시험 대장');
       if (plain.e.bp.sig || BP.poolOf(0).length !== 2) { bad.push('일반 보스'); }
       if (bad.length) { throw new Error(bad.join(',')); }
-      return names.length === 6 && ('여섯: ' + names.join('·'));
+      return names.length === 9 && ('아홉: ' + names.join('·'));
     });
 
     t('보스 고유 기술 — 도넛은 붙으면 살고, 공중 쇠뇌는 땅에 있으면 산다', function () {
@@ -2433,7 +2433,7 @@ window.DG_NO_TUNE = true;
 
     /* ── 넷째 사냥터 (2026-08-26) ───────────────────────── */
 
-    t('사냥터 여섯이 레벨 순으로 계단을 이룬다', function () {
+    t('사냥터 아홉이 레벨 순으로 계단을 이룬다', function () {
       /* 넷째(호로곡)를 넣은 까닭이 이 계단이다 — 3차 전직이 Lv.45 인데 마지막
          사냥터가 Lv.12 에 열려 있어, 무예를 스물 얹어 놓고 쓸 데가 없었다. */
       /* 오버월드 마을(town:true)은 사냥터가 아니라 문턱 계단에서 뺀다 —
@@ -2445,8 +2445,8 @@ window.DG_NO_TUNE = true;
       for (i = 1; i < need.length; i++) {
         if (need[i] <= need[i - 1] || lvs[i] <= lvs[i - 1]) { up = false; }
       }
-      /* 2026-09-23 — 다섯째·여섯째(낙양 옛터 Lv.45·검각 암굴 Lv.70)로 여섯 */
-      return combat.length === 6 && up &&
+      /* 2026-09-23 — 다섯째·여섯째(낙양 옛터 Lv.45·검각 암굴 Lv.70)로 여섯, 2026-09-30 5부 문 너머 셋(Lv.72·74·76)으로 아홉 */
+      return combat.length === 9 && up &&
         ('문턱 ' + need.join('→') + ' · 적 Lv.' + lvs.join('→'));
     });
 
@@ -3733,7 +3733,7 @@ window.DG_NO_TUNE = true;
         say();
         var titles = SC.titles();
         if (!SC.state().done.p4_name || titles.indexOf('문 너머의 나그네') < 0 || titles.length !== 2) { bad.push('칭호 ' + JSON.stringify(titles)); }
-        if (SC.current() !== null || SC.hint() !== null) { bad.push('이야기 끝인데 힌트가 남음'); }
+        if (!SC.current() || SC.current().id !== 'p5_past' || !SC.hint()) { bad.push('4부 뒤 5부 첫 장이 안 열림'); }
 
         // 다른 갈래 — "문을 닫는다" 를 고른 세이브는 닫는 결말 장면
         SC.reset(); C.save.job = 'marshal'; C.save.player.level = 60;
@@ -3749,9 +3749,82 @@ window.DG_NO_TUNE = true;
         if (SC.state().titles.indexOf('이름을 되찾은 자') < 0) { bad.push('닫는 갈래 칭호'); }
 
         SC.reset(); C.save.job = 'marshal'; C.save.player.level = 70;
-        if (SC.current() !== null) { bad.push('옛 세이브 Lv70 건너뜀 ' + (SC.current() && SC.current().id)); }
+        if (!SC.current() || SC.current().id !== 'p5_past') { bad.push('옛 세이브 Lv70 은 4부까지 건너뛰고 5부부터 ' + (SC.current() && SC.current().id)); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '열여섯 장 끝 · 고르기 단추(건너뛰기로 안 닫힘·없는 답 거절) · 문 지킨다/닫는다에 따라 결말 장면 · 칭호 고르기 · 옛 세이브 건너뜀';
+      } finally {
+        window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;
+        if (ST.isOpen()) { ST.abort(); }
+        if (S.active()) { S.leave(); }
+        A.setOn(keep.auto);
+        C.save.player = JSON.parse(keep.p); C.save.quests = JSON.parse(keep.q); C.save.track = keep.tr; C.save.job = keep.job;
+        C.save.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; S.state().potions = keep.pot;
+        C.save.scrolls = JSON.parse(keep.scr); C.save.skills = JSON.parse(keep.skills); S.state().story = JSON.parse(keep.story);
+        if (wasKey) { S.enter(wasKey); }
+      }
+    });
+
+    t('시나리오 5부 — 문 너머 사냥터 셋이 문에서 이어지고(보스·사명·기술 다 있음), 4부가 끝나면 세 장이 차례로 열려 문 고른 답에 따라 끝 장면이 갈린다', function () {
+      var SC = DG.scenario, ST = DG.story, Q = DG.quest, A = DG.auto, D = DG.scenarioData, ED = DG.enemyData, BP = DG.bossPattern;
+      var keep = { p: JSON.stringify(C.save.player), q: JSON.stringify(C.save.quests || {}), tr: C.save.track, job: C.save.job,
+        sc: C.save.scenario ? JSON.stringify(C.save.scenario) : null, pot: S.state().potions, scr: JSON.stringify(C.save.scrolls || {}),
+        skills: JSON.stringify(C.save.skills || {}), story: JSON.stringify(S.state().story || {}), auto: A.active() };
+      var wasKey = S.active() ? S.raw().stage.key : null;
+      var bad = [];
+      function say() { var k = 0; while (ST.isOpen() && k++ < 20) { ST.next(); } }
+      function cur() { return ST.isOpen() ? ST.current().key : null; }
+      function fill(key) { var r = Q.state()[key] || (Q.state()[key] = { taken: 0, n: 0, done: 0 }); r.done = 1; r.taken = 0; C.emit('changed'); }
+      /* 표 — 사냥터 사슬·보스·기술·사명 */
+      var keys = ['beyond_past', 'beyond_now', 'beyond_future'], chain = ['deepcave'].concat(keys);
+      keys.forEach(function (k, i) {
+        var stg = SD.stage(k);
+        if (stg.key !== k || stg.need !== 72 + 2 * i || !stg.boss || stg.enemyLv <= SD.stage('deepcave').enemyLv) { bad.push(k + ' 표'); }
+        if (ED.bossByName(stg.boss.name).name !== stg.boss.name) { bad.push(k + ' 보스 정의 없음'); }
+        if (BP && !BP.SIG[stg.boss.name]) { bad.push(k + ' 고유 기술'); }
+        if (!SD.stage(chain[i]).portals.some(function (p) { return p[1] === k; }) || !stg.portals.some(function (p) { return p[1] === chain[i]; })) { bad.push(k + ' 문 양쪽'); }
+        if (!SD.STORY[k]) { bad.push(k + ' 첫 발 장면'); }
+        [['q_beyond' + (i + 1), 'kill'], ['q_beyond' + (i + 1) + '_boss', 'boss']].forEach(function (q) {
+          var qd = DG.questData.find(q[0]);
+          if (!qd || qd.goal.type !== q[1] || qd.goal.stage !== k) { bad.push(q[0] + ' 사명'); }
+        });
+      });
+      window.DG_NO_STORY = false; window.DG_NO_SCENARIO = false;
+      try {
+        if (S.active()) { S.leave(); }
+        A.setOn(false);
+        C.save.quests = {}; C.save.track = null; C.save.job = 'warlord'; C.save.player.level = 76;
+        SC.reset(); SC.init();
+        SC.state().done = { p1_sinya: 1, p1_heodo: 1, p1_field: 1, p1_job: 1, p2_port: 1, p2_forest: 1, p2_namjeong: 1, p2_cave: 1,
+          p3_gisan: 1, p3_gorge: 1, p3_labyrinth: 1, p3_job: 1, p4_luoyang: 1, p4_depth: 1, p4_gate: 1, p4_name: 1 };
+        SC.state().choices = { gate: 'keep', name: 'found' };
+        C.emit('changed');
+        if (!SC.current() || SC.current().id !== 'p5_past' || !SC.hint()) { bad.push('5부 첫 장 ' + (SC.current() && SC.current().id)); }
+        S.enter('beyond_past'); say();
+        fill('q_beyond1'); fill('q_beyond1_boss');
+        if (cur() !== 'scn:beyond1') { bad.push('제17장 끝 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.p5_past || !SC.current() || SC.current().id !== 'p5_now') { bad.push('제17장 끝·제18장 열림'); }
+        S.leave(); S.enter('beyond_now'); say();
+        fill('q_beyond2'); fill('q_beyond2_boss');
+        if (cur() !== 'scn:beyond2') { bad.push('제18장 끝 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.p5_now || !SC.current() || SC.current().id !== 'p5_future') { bad.push('제18장 끝·제19장 열림'); }
+        S.leave(); S.enter('beyond_future'); say();
+        fill('q_beyond3'); fill('q_beyond3_boss');
+        if (cur() !== 'scn:beyond3_keep') { bad.push('문을 지킨 끝 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.p5_future || SC.current() !== null || SC.hint() !== null) { bad.push('이야기 끝'); }
+        /* 문을 닫은 세이브 — 끝 장면이 갈린다 */
+        S.leave(); SC.reset(); SC.init();
+        SC.state().done = { p1_sinya: 1, p1_heodo: 1, p1_field: 1, p1_job: 1, p2_port: 1, p2_forest: 1, p2_namjeong: 1, p2_cave: 1,
+          p3_gisan: 1, p3_gorge: 1, p3_labyrinth: 1, p3_job: 1, p4_luoyang: 1, p4_depth: 1, p4_gate: 1, p4_name: 1, p5_past: 1, p5_now: 1 };
+        SC.state().choices = { gate: 'close' };
+        C.save.quests = {}; C.emit('changed');
+        S.enter('beyond_future'); say(); fill('q_beyond3'); fill('q_beyond3_boss');
+        if (cur() !== 'scn:beyond3_close') { bad.push('문을 닫은 끝 장면 ' + cur()); }
+        say();
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '사냥터 셋(문 양쪽·보스·기술·사명) · 19장 차례로 열림 · 문 지킨다/닫는다에 따라 끝 장면 갈림';
       } finally {
         window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;
         if (ST.isOpen()) { ST.abort(); }

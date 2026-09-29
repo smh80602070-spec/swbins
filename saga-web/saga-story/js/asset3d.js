@@ -464,6 +464,9 @@
     '뇌격 기병': 'F:kaykit_adventurers_Mage.glb',
     '폐도 흉장': 'F:polypizza_apoc_Lis.glb',
     '암굴 귀장': 'F:polypizza_wide_Wizard.glb',
+    '전장 원혼 장수': 'Q:Monk.glb',                 // 5부 문 너머 보스 셋
+    '폐허 도심 통제관': 'Q:Rogue.glb',
+    '궤도 기지 감시관': 'Q:Wizard.glb',
     'npc:elder': 'F:oga_ultimate_OldClassy_Male.glb',
     'npc:guard': 'F:polypizza_men_Man2.glb',
     'npc:merchant': 'F:oga_ultimate_Chef_Male.glb',

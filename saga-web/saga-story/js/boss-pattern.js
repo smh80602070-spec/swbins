@@ -62,6 +62,9 @@
     '적국 대장군': { kind: 'pillar', name: '화계 불기둥' },
     '폐도 흉장': { kind: 'pull', name: '쇠사슬 끌어당김' },
     '암굴 귀장': { kind: 'chase', name: '귀화 추적' },
+    '전장 원혼 장수': { kind: 'ring', name: '원혼 포위진' },      // 5부 문 너머
+    '폐허 도심 통제관': { kind: 'beam', name: '신호등 일제사' },
+    '궤도 기지 감시관': { kind: 'pull', name: '중력 그물' },
     /* 관문 대장(§5-11) */
     '산채 두령': { kind: 'volley', name: '돌팔매 소나기' },
     '왜구 선장': { kind: 'pull', name: '갈고리 끌어당김' },

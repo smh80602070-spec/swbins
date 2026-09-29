@@ -1,7 +1,7 @@
 /**
  * 시나리오 표 — 사가스토리 "이름 없는 떠돌이" (정본 `../../../scenario/saga-story.md`)
  * ---------------------------------------------------------------
- * 지금은 **1부 · 무명(과거 중심, Lv 1~10) 네 장**과 **2부 · 갈래(현대 중심, Lv 10~25) 네 장**, **3부 · 불길(미래 중심, Lv 25~45) 네 장**, **4부 · 난세의 문(세 시대 모두, Lv 45~70) 네 장**이 있다. 5부~는 이 표 끝에 장을 덧붙이면 된다.
+ * 지금은 **1부 · 무명(과거 중심, Lv 1~10) 네 장**과 **2부 · 갈래(현대 중심, Lv 10~25) 네 장**, **3부 · 불길(미래 중심, Lv 25~45) 네 장**, **4부 · 난세의 문(세 시대 모두, Lv 45~70) 네 장**이 있다. 결말 뒤 **5부 · 문 너머(세 시대, Lv 72~76) 세 장**이 이어진다(사냥터 beyond_* 셋). 6부~는 이 표 끝에 장을 덧붙이면 된다.
  * 인물은 전부 가상이다(이름 정책) — 'me' 는 앞에 세운 도감 인물, 'mentor' 는 그 갈래의 스승(도감 가명).
  *
  * 한 장 = { id, no, title, stage, need, after, mix, steps, reward, blurb }
@@ -35,7 +35,8 @@
     townsman:{ name: '남정성 사람',      emoji: '🏮' },
     ashen:   { name: '잿빛 사자',        emoji: '🌫️' },
     gwijang: { name: '암굴 귀장',        emoji: '👹' },
-    yakson:  { name: '의원 약손',        emoji: '⚕️' }
+    yakson:  { name: '의원 약손',        emoji: '⚕️' },
+    lamp:    { name: '길잡이 등불이',    emoji: '🏮' }
   };
 
   var SCENES = {
@@ -181,6 +182,30 @@
         { key: 'found', label: '이름을 되찾은 자', title: '이름을 되찾은 자' },
         { key: 'wander', label: '문 너머의 나그네', title: '문 너머의 나그네' },
         { key: 'none', label: '이름 없이 걷는 자', title: '이름 없이 걷는 자' }] } },
+    beyond1: { title: '제17장 · 문 너머 옛 전장', lines: [
+      ['lamp', 'shock', '문 저편 땅이 온통 깃발 무덤이오. 어느 시대의 전장인지 표지 하나 없소.'],
+      ['hankeot', 'worry', '사진기 초점이 자꾸 나가요. 여긴 시간이 겹쳐 찍혀요. 창 든 그림자와 총 든 그림자가 한자리에…'],
+      ['me', 'calm', '문을 지키는 것은 문 이쪽만이 아니었군요. 넘어온 것이 있으면 넘어간 자리도 있겠지요.'],
+      ['lamp', 'joy', '다음은 무너진 도시 쪽이오. 전철 소리 같은 것이 들리오.']
+    ] },
+    beyond2: { title: '제18장 · 문 너머 무너진 도심', lines: [
+      ['hankeot', 'shock', '여기가… 도시였어요? 간판은 남았는데 글자가 다 거꾸로예요.'],
+      ['lamp', 'calm', '신호등이 켜질 때마다 옛 전장에서 넘어온 그림자가 길을 건너오. 문이 이쪽과 저쪽을 자꾸 섞어 놓소.'],
+      ['me', 'anger', '문이 열려 있는 한 섞임은 멈추지 않겠군요.'],
+      ['hankeot', 'worry', '마지막 신호는 하늘에서 와요. 궤도 기지가 아직 깨어 있대요.']
+    ] },
+    beyond3_close: { title: '제19장 · 문 너머 궤도 기지', lines: [
+      ['ieum', 'joy', '(기지 통신) 제 시대에서도 이 기지 불빛이 보여요! 문이 닫혔는데도 신호가 남아 있었어요.'],
+      ['me', 'shock', '이곳에서 문 너머의 전부가 보입니다 — 옛 전장, 무너진 도시, 그리고 저 별.'],
+      ['hankeot', 'calm', '찍었어요. 세 시대가 한 장에 담겼어요. 문 이쪽 사람들에게 보여 줄 거예요.'],
+      ['me', 'fire', '닫은 문 저편이라도 잊지는 않겠습니다. 다음 길로 가지요.']
+    ] },
+    beyond3_keep: { title: '제19장 · 문 너머 궤도 기지', lines: [
+      ['ieum', 'joy', '기지 등불이 켜졌어요! 제가 나고 자란 곳의 등불과 같은 색이에요. 문지기님, 여기까지 오셨군요.'],
+      ['me', 'shock', '이곳에서 문 너머의 전부가 보입니다 — 옛 전장, 무너진 도시, 그리고 저 별.'],
+      ['hankeot', 'calm', '찍었어요. 세 시대가 한 장에 담겼어요. 문 이쪽 사람들에게 보여 줄 거예요.'],
+      ['me', 'fire', '문을 지키려면 저쪽을 알아야 하지요. 이제 알았습니다. 다음 길로 가지요.']
+    ] },
     name3_close: { title: '제16장 · 이름', lines: [
       ['ieum', 'joy', '문이 닫혔으니 저는 제 시대로 돌아갑니다. 이 시대에 새어 든 것들은 남겠지만, 더는 늘지 않을 거예요.'],
       ['hankeot', 'joy', '마지막 사진이에요. 이름 없던 분이 웃고 있네요.'],
@@ -387,7 +412,41 @@
         { t: 'talk', scene: 'name2' },
         { t: 'talk', scene: 'name3', by: 'gate' }
       ],
-      reward: { exp: 200000, gold: 150000, title: 'job' } }
+      reward: { exp: 200000, gold: 150000, title: 'job' } },
+
+    /* 5부 · 문 너머(결말 뒤, Lv72~) — 이음·한컷과 문 너머 길잡이 등불이와 함께 문 저편 세 시대를 차례로 걷는다. 사냥터는 data-side.js beyond_* */
+    { id: 'p5_past', no: 17, title: '문 너머 옛 전장', stage: '문 너머 옛 전장', need: 72, after: 'p4_name',
+      blurb: '문 저편 첫째 땅 — 깃발 무덤 위에 창 든 그림자와 총 든 그림자가 겹쳐 선다.',
+      mix: { past: '깃발 무덤의 옛 창병', now: '한컷의 초점 나간 사진기', future: '그림자 속 총 든 병사' },
+      steps: [
+        { t: 'stage', stage: 'beyond_past' },
+        { t: 'mission', quest: 'q_beyond1' },
+        { t: 'mission', quest: 'q_beyond1_boss' },
+        { t: 'talk', scene: 'beyond1' }
+      ],
+      reward: { exp: 300000, gold: 220000, potion: 30 } },
+
+    { id: 'p5_now', no: 18, title: '문 너머 무너진 도심', stage: '문 너머 무너진 도심', need: 74, after: 'p5_past',
+      blurb: '문 저편 둘째 땅 — 거꾸로 쓴 간판 아래 신호등이 켜질 때마다 그림자가 길을 건넌다.',
+      mix: { past: '건너오는 옛 그림자', now: '거꾸로 쓴 간판과 신호등', future: '하늘에서 오는 마지막 신호' },
+      steps: [
+        { t: 'stage', stage: 'beyond_now' },
+        { t: 'mission', quest: 'q_beyond2' },
+        { t: 'mission', quest: 'q_beyond2_boss' },
+        { t: 'talk', scene: 'beyond2' }
+      ],
+      reward: { exp: 400000, gold: 280000, scroll: 'atk10' } },
+
+    { id: 'p5_future', no: 19, title: '문 너머 궤도 기지', stage: '문 너머 궤도 기지', need: 76, after: 'p5_now',
+      blurb: '문 저편 마지막 땅 — 깨어 있는 궤도 기지에서 세 시대가 한 장에 담긴다.',
+      mix: { past: '기지 창밖의 옛 전장', now: '한컷이 찍은 한 장', future: '이음이 나고 자란 기지 등불' },
+      steps: [
+        { t: 'stage', stage: 'beyond_future' },
+        { t: 'mission', quest: 'q_beyond3' },
+        { t: 'mission', quest: 'q_beyond3_boss' },
+        { t: 'talk', scene: 'beyond3', by: 'gate' }
+      ],
+      reward: { exp: 600000, gold: 400000, scroll: 'hp10' } }
   ];
 
   /** 장면에 달린 고르기를 id 로 찾는다 */

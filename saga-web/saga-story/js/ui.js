@@ -1582,7 +1582,8 @@
    * 지금 어디 있는지 + 마을(🏘️)·사냥터(⚔️)가 어떤 순서로 이어지는지 한눈에.
    * 걸어서 문을 통해 실제로 오가는 것과는 별개로, 상태만 보여 주는 읽기 전용 판이다. */
   var OW_CHAIN = ['sinya', 'heodo', 'field', 'gangneungjin', 'forest',
-                  'namjeongseong', 'cave', 'gisanchae', 'gorge', 'ruin', 'deepcave'];
+                  'namjeongseong', 'cave', 'gisanchae', 'gorge', 'ruin', 'deepcave',
+                  'beyond_past', 'beyond_now', 'beyond_future'];
 
   function owmapHost() {
     var el = $('owmap');
