@@ -1,6 +1,9 @@
 """AI 초상(_out/web_heroes_105) → 웹 다섯 판의 도감 초상 webp 로 자르고 굽는다.
 
-  py tools/ai-art/pack_web_portraits.py [--games saga-go,saga-dungeon,...] [--only id,id] [--preview 경로]
+  py tools/ai-art/pack_web_portraits.py [--games saga-go,saga-dungeon,...] [--only id,id] [--src web_dungeon_30|web_realm_194] [--preview 경로]
+
+`--src` 는 `_out/` 아래 폴더 이름(기본 web_heroes_105, 파일명 `hero_<id>.png`). 던전 30·국지 194 는 파일명이 `<id>.png` 이고 그 판에만 있는 인물이라 `--games` 도 함께.
+출처 표는 `_ai_provenance.json` 에 **합쳐 쓴다**(도감 105 표를 지우지 않는다).
 
 게임은 `assets/portraits/hero/<id>_s.webp`(정사각 192)·`<id>_c.webp`(카드 300×344)를 그대로 `<img>` 로 쓴다(manifest.js 에 적힌 id 만) —
 이름·크기만 맞추면 게임 코드는 안 바뀐다. 다섯 판 모두 도감 105 id 를 갖고 있다(던전은 미래 인물 30·국지는 장수 194 를 따로 더 갖는데 그건 건드리지 않는다).
@@ -34,7 +37,8 @@ def main():
     opt = lambda k, d: a[a.index(k) + 1] if k in a else d
     games = opt('--games', ','.join(GAMES)).split(',')
     only = set(opt('--only', '').split(',')) - {''}
-    files = sorted(glob.glob(os.path.join(SRC, 'hero_*.png')))
+    src = os.path.join(HERE, '_out', opt('--src', 'web_heroes_105'))
+    files = sorted(f for f in glob.glob(os.path.join(src, '*.png')) if not f.endswith('.old.png'))
     if opt('--preview', ''):
         row = [crops(Image.open(f).convert('RGB')) for f in files[:8]]
         sheet = Image.new('RGB', (300 * 8, 344 + 192))
@@ -45,7 +49,9 @@ def main():
         return
     prov = {}
     for f in files:
-        hid = os.path.basename(f)[5:-4]
+        hid = os.path.basename(f)[:-4]
+        if hid.startswith('hero_'):
+            hid = hid[5:]
         if only and hid not in only:
             continue
         lic = json.load(open(f[:-4] + '.license.json', encoding='utf-8'))
@@ -59,8 +65,11 @@ def main():
             c.save(os.path.join(d, hid + '_c.webp'), 'WEBP', quality=84, method=6)
     for g in games:
         d = os.path.join(WEB, g, 'assets', 'portraits', 'hero')
+        pj = os.path.join(d, '_ai_provenance.json')
+        items = json.load(open(pj, encoding='utf-8')).get('items', {}) if os.path.exists(pj) else {}
+        items.update({k: v for k, v in prov.items() if os.path.exists(os.path.join(d, k + '_s.webp'))})
         json.dump({'note': 'AI 생성 초상 — tools/ai-art (swbins3 sd-webui, 상업 허용 모델). 프롬프트는 tools/ai-art/batches/web_heroes_105.json',
-                   'items': prov}, open(os.path.join(d, '_ai_provenance.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
+                   'items': items}, open(pj, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
     print('packed', len(prov), 'heroes ->', games)
 
 

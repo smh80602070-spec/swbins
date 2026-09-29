@@ -1905,7 +1905,7 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가고처럼 대역 입�
 ## AI 생성 도감 초상 (2026-09-29)
 | 항목 | 내용 |
 |---|---|
-| **파일** | `assets/portraits/hero/<id>_s.webp`(192×192)·`<id>_c.webp`(300×344) — 도감 105 인물 |
+| **파일** | `assets/portraits/hero/<id>_s.webp`(192×192)·`<id>_c.webp`(300×344) — 도감 105 인물 + 사가블로 미래·현대 인물 30(`--src web_dungeon_30`, 프롬프트 `batches/web_dungeon_30.json`) |
 | **만든 법** | swbins3 로컬 sd-webui + **Animagine XL 4.0 Opt**(CreativeML OpenRAIL++-M, 상업 사용 허용) — `tools/ai-art/gen.py` → `pack_web_portraits.py` |
 | **프롬프트** | 인물 이름 없이 문화·역할·성별·나이·머리·눈 묘사만 — `tools/ai-art/batches/web_heroes_105.json` |
 | **출처 기록** | `assets/portraits/hero/_ai_provenance.json`(모델·라이선스·씨앗) |

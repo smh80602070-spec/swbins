@@ -630,6 +630,186 @@
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1686996305,
 "date": "2026-09-29"
+},
+"ft_airesearch": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 827028531,
+"date": "2026-09-29"
+},
+"ft_astronaut": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3708249903,
+"date": "2026-09-29"
+},
+"ft_bioeng": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1093768174,
+"date": "2026-09-29"
+},
+"ft_climateeng": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1015529101,
+"date": "2026-09-29"
+},
+"ft_cyberdoc": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3469071857,
+"date": "2026-09-29"
+},
+"ft_dronecmd": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4019243906,
+"date": "2026-09-29"
+},
+"ft_ewarfare": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 35120903,
+"date": "2026-09-29"
+},
+"ft_fusioneng": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2545667776,
+"date": "2026-09-29"
+},
+"ft_hacker": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1776467466,
+"date": "2026-09-29"
+},
+"ft_hologramartist": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2854482544,
+"date": "2026-09-29"
+},
+"ft_marspioneer": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 522332673,
+"date": "2026-09-29"
+},
+"ft_nanotech": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2945930906,
+"date": "2026-09-29"
+},
+"ft_orbitmech": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2495158837,
+"date": "2026-09-29"
+},
+"ft_quantumphy": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2331579236,
+"date": "2026-09-29"
+},
+"ft_roboteng": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 718799212,
+"date": "2026-09-29"
+},
+"md_architect": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4232968704,
+"date": "2026-09-29"
+},
+"md_athlete": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1356801148,
+"date": "2026-09-29"
+},
+"md_ceo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2123509746,
+"date": "2026-09-29"
+},
+"md_chef": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1969015281,
+"date": "2026-09-29"
+},
+"md_developer": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1778235337,
+"date": "2026-09-29"
+},
+"md_doctor": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2639308910,
+"date": "2026-09-29"
+},
+"md_entrepreneur": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2660860506,
+"date": "2026-09-29"
+},
+"md_explorer": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3768757958,
+"date": "2026-09-29"
+},
+"md_firefighter": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4198850514,
+"date": "2026-09-29"
+},
+"md_journalist": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3271547184,
+"date": "2026-09-29"
+},
+"md_lawyer": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3164054149,
+"date": "2026-09-29"
+},
+"md_musician": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4229576472,
+"date": "2026-09-29"
+},
+"md_photographer": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 620692046,
+"date": "2026-09-29"
+},
+"md_pilot": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 164129549,
+"date": "2026-09-29"
+},
+"md_scientist": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4170621749,
+"date": "2026-09-29"
 }
 }
 }
