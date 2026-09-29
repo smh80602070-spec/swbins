@@ -46,7 +46,7 @@
 <div id="report">진단 중…</div>
 
 <script>
-window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_STORY = true;   // 첫 발 장면은 제 진단에서만 켠다
+window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;   // 첫 발 장면은 제 진단에서만 켠다
 /* 어드민의 균형 손잡이를 읽지 않는다 — 손잡이를 잡아 둔 기기에서
    판정이 흔들리면 안 된다 (씨앗을 고정한 것과 같은 이유다) */
 window.DG_NO_TUNE = true;
@@ -75,6 +75,7 @@ window.DG_NO_TUNE = true;
 <script src="js/data-unique.js"></script>
 <script src="js/data-job.js"></script>
 <script src="js/data-quest.js"></script>
+<script src="js/data-scenario.js"></script>
 <script src="js/data-rift.js"></script>
 <script src="js/data-achieve.js"></script>
 <script src="js/sprite.js"></script>
@@ -97,6 +98,7 @@ window.DG_NO_TUNE = true;
 <script src="js/quest.js"></script>
 <script src="js/rift.js"></script>
 <script src="js/story.js"></script>
+<script src="js/scenario.js"></script>
 <script src="js/party.js"></script>
 <script src="js/achieve.js"></script>
 <script src="js/sfx.js"></script>
@@ -3341,6 +3343,141 @@ window.DG_NO_TUNE = true;
         S.state().story = JSON.parse(keep);
         if (S.active()) { S.leave(); }
         C.save.player.level = lvWas;
+        if (wasKey) { S.enter(wasKey); }
+      }
+    });
+
+    t('시나리오 표 — 장·장면·인물이 서로 맞고, 장마다 과거·현대·미래가 셋 다 있다', function () {
+      var D = DG.scenarioData, bad = [], ids = {}, used = {};
+      D.CHAPTERS.forEach(function (c, i) {
+        if (ids[c.id]) { bad.push(c.id + ' id 겹침'); } ids[c.id] = 1;
+        if (c.after && !D.chapter(c.after)) { bad.push(c.id + ' after ' + c.after); }
+        if (c.after && D.CHAPTERS.indexOf(D.chapter(c.after)) >= i) { bad.push(c.id + ' after 가 뒤'); }
+        if (!c.mix || !c.mix.past || !c.mix.now || !c.mix.future) { bad.push(c.id + ' 시대 섞기 빈 칸'); }
+        if (!c.steps.length || c.no !== i + 1) { bad.push(c.id + ' 번호·단계'); }
+        c.steps.forEach(function (st) {
+          if (st.t === 'stage' && !SD.STAGES.some(function (x) { return x.key === st.stage; })) { bad.push(c.id + ' 사냥터 ' + st.stage); }
+          if (st.t === 'talk') {
+            used[st.scene] = 1;
+            if (!D.SCENES[st.scene]) { bad.push(c.id + ' 장면 ' + st.scene); }
+            if (st.at && !SD.STAGES.some(function (x) { return x.key === st.at; })) { bad.push(c.id + ' at ' + st.at); }
+          }
+          if (st.t === 'mission' && !DG.questData.find(st.quest)) { bad.push(c.id + ' 사명 ' + st.quest); }
+          if (st.t === 'job' && !(st.tier >= 1)) { bad.push(c.id + ' 전직 차수'); }
+          if (['stage', 'talk', 'mission', 'job'].indexOf(st.t) < 0) { bad.push(c.id + ' 단계 종류 ' + st.t); }
+        });
+        if (c.reward && c.reward.scroll && !DG.gearData.scroll(c.reward.scroll)) { bad.push(c.id + ' 주문서'); }
+      });
+      Object.keys(D.SCENES).forEach(function (k) {
+        if (!used[k]) { bad.push('안 쓰는 장면 ' + k); }
+        D.SCENES[k].lines.forEach(function (ln) {
+          if (ln[0] !== 'me' && ln[0] !== 'mentor' && !D.CAST[ln[0]] && !SD.NPC_TALK[ln[0]]) { bad.push(k + ' 인물 ' + ln[0]); }
+          if (!SD.EMOTES[ln[1]]) { bad.push(k + ' 감정 ' + ln[1]); }
+          if (!ln[2]) { bad.push(k + ' 빈 말'); }
+        });
+      });
+      if (bad.length) { throw new Error(bad.join(', ')); }
+      return '장 ' + D.CHAPTERS.length + ' · 장면 ' + Object.keys(D.SCENES).length + ' · 인물 ' + Object.keys(D.CAST).length;
+    });
+
+    t('시나리오 1부 — 신야성에서 시작해 사명·전직을 넘기며 네 장이 차례로 끝나고 칭호를 얻는다', function () {
+      var SC = DG.scenario, ST = DG.story, Q = DG.quest, G = DG.gear, J = DG.job, A = DG.auto;
+      var keep = { p: JSON.stringify(C.save.player), q: JSON.stringify(C.save.quests || {}), tr: C.save.track, job: C.save.job,
+        sc: C.save.scenario ? JSON.stringify(C.save.scenario) : null, pot: S.state().potions, scr: JSON.stringify(C.save.scrolls || {}),
+        skills: JSON.stringify(C.save.skills || {}), story: JSON.stringify(S.state().story || {}), auto: A.active() };
+      var wasKey = S.active() ? S.raw().stage.key : null;
+      var bad = [];
+      function say(n) { var k = 0; while (ST.isOpen() && k++ < 20) { ST.next(); } return k; }
+      function cur() { return ST.isOpen() ? ST.current().key : null; }
+      function fill(key) { var r = Q.state()[key] || (Q.state()[key] = { taken: 0, n: 0, done: 0 }); r.done = 1; r.taken = 0; C.emit('changed'); }
+      window.DG_NO_STORY = false; window.DG_NO_SCENARIO = false;
+      try {
+        if (S.active()) { S.leave(); }
+        A.setOn(false);
+        C.save.quests = {}; C.save.track = null; C.save.job = 'none'; C.save.player.level = 1;
+        var g0 = C.save.player.gold;
+        SC.reset(); SC.init();
+        var h0 = SC.hint();
+        if (!(h0 && h0.ch.id === 'p1_sinya' && h0.text.indexOf('신야성') >= 0)) { bad.push('첫 힌트 ' + (h0 && h0.text)); }
+
+        // 자동 순행 중엔 장면을 미룬다
+        A.setOn(true); S.enter('sinya');
+        if (ST.isOpen()) { bad.push('자동 중 장면이 뜸'); }
+        S.leave(); A.setOn(false); S.enter('sinya');
+        if (cur() !== 'scn:sinya1') { bad.push('제1장 첫 장면 ' + cur()); }
+        if (!ST.seen('sinya')) { bad.push('대신한 첫 발 장면을 본 것으로 안 적음'); }
+        say();
+        if (!Q.taken('q_first')) { bad.push('첫 사냥 사명을 안 받음'); }
+        if (SC.state().step !== 2) { bad.push('제1장 단계 ' + SC.state().step); }
+        // 사명 채우고 바치기
+        Q.state().q_first.n = 10; Q.turnIn('q_first');
+        if (cur() !== 'scn:sinya2') { bad.push('제1장 끝 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.p1_sinya || C.save.player.gold <= g0) { bad.push('제1장 보상'); }
+
+        // 제2장 — 허도, 사명은 레벨이 되어야 받는다
+        var h1 = SC.hint();
+        if (!(h1 && h1.ch.id === 'p1_heodo' && h1.text.indexOf('허도') >= 0)) { bad.push('제2장 힌트 ' + (h1 && h1.text)); }
+        S.leave(); S.enter('heodo');
+        if (cur() !== 'scn:heodo1') { bad.push('제2장 첫 장면 ' + cur()); }
+        say();
+        if (Q.taken('q_gear1') || SC.hint().text.indexOf('Lv.4') < 0) { bad.push('레벨 모자란데 받음/힌트 ' + SC.hint().text); }
+        C.save.player.level = 4; C.emit('changed');
+        if (!Q.taken('q_gear1')) { bad.push('Lv4 에 저절로 안 받음'); }
+        fill('q_gear1');
+        if (cur() !== 'scn:heodo2') { bad.push('제2장 끝 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.p1_heodo) { bad.push('제2장 끝'); }
+
+        // 제3장 — 허창 들판, 사명 둘
+        S.leave(); S.enter('field');
+        if (cur() !== 'scn:field1') { bad.push('제3장 첫 장면 ' + cur()); }
+        say();
+        fill('q_field');
+        C.save.player.level = 4;
+        if (SC.hint().text.indexOf('Lv.5') < 0) { bad.push('두목 사명 힌트 ' + SC.hint().text); }
+        C.save.player.level = 5; C.emit('changed');
+        fill('q_boss1');
+        if (cur() !== 'scn:field2') { bad.push('제3장 끝 장면 ' + cur()); }
+        var sc0 = G.scrollCount('def100');
+        say();
+        if (!SC.state().done.p1_field || G.scrollCount('def100') !== sc0 + 1) { bad.push('제3장 보상'); }
+
+        // 제4장 — Lv10 이 되어야 열리고, 허도에서 스승을 만난 뒤 전직
+        S.leave();
+        var hl = SC.hint();
+        if (!(hl && hl.locked && hl.text.indexOf('Lv.10') >= 0)) { bad.push('제4장 잠금 힌트 ' + (hl && hl.text)); }
+        C.save.player.level = 10; C.emit('changed');
+        S.enter('heodo');
+        if (cur() !== 'scn:job1') { bad.push('제4장 첫 장면 ' + cur()); }
+        say();
+        if (SC.hint().text.indexOf('전직') < 0) { bad.push('전직 힌트 ' + SC.hint().text); }
+        var joined = J.join('warrior');
+        if (!joined || cur() !== 'scn:job2') { bad.push('전직 뒤 장면 ' + cur()); }
+        var boxHtml = (function () { var b = document.getElementById('storybox'); return b ? b.innerHTML : ''; })();
+        var mentorName = (function () { var l = J.mentors(), h = l.length && DG.data.find(l[0]); return h ? h.name : null; })();
+        if (!mentorName || boxHtml.indexOf(mentorName) < 0) { bad.push('스승 이름이 대사 창에 안 보임 ' + mentorName); }
+        say();
+        var titles = SC.titles();
+        if (!SC.state().done.p1_job || titles.length !== 1 || titles[0].indexOf('무사') < 0) { bad.push('제4장 끝·칭호 ' + JSON.stringify(titles)); }
+        if (SC.current() !== null || SC.hint() !== null) { bad.push('이야기 끝인데 힌트가 남음'); }
+        if (!SC.list().every(function (x) { return x.state === 'done'; })) { bad.push('목록'); }
+
+        // 옛 세이브(Lv10 이상)는 1부를 보상 없이 끝낸 것으로 본다
+        SC.reset(); C.save.job = 'none'; C.save.player.level = 12; var gg = C.save.player.gold;
+        var oldOk = SC.current() === null && C.save.player.gold === gg && Object.keys(SC.state().done).length === DG.scenarioData.CHAPTERS.length;
+        if (!oldOk) { bad.push('옛 세이브 건너뜀'); }
+
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '네 장 차례로 끝 · 자동 중엔 미룸 · 레벨 모자라면 사명 안 받음 · 스승 이름 · 칭호 ' + titles[0] + ' · 옛 세이브 건너뜀';
+      } finally {
+        window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;
+        if (ST.isOpen()) { ST.skip(); }
+        if (S.active()) { S.leave(); }
+        A.setOn(keep.auto);
+        C.save.player = JSON.parse(keep.p); C.save.quests = JSON.parse(keep.q); C.save.track = keep.tr; C.save.job = keep.job;
+        C.save.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; S.state().potions = keep.pot;
+        C.save.scrolls = JSON.parse(keep.scr); C.save.skills = JSON.parse(keep.skills); S.state().story = JSON.parse(keep.story);
         if (wasKey) { S.enter(wasKey); }
       }
     });

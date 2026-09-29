@@ -36,18 +36,30 @@
   /** 이 사냥터에 들어서며 띄울 장면이 있으면 띄운다 — 띄웠으면 true */
   function maybeOpen(key) {
     var beat = SD().STORY && SD().STORY[key];
+    var SC = global.DG.scenario;
+    if (SC && SC.owns(key)) { return false; }    // 시나리오 제1장 안 대사가 대신한다(scenario.js)
     if (!beat || cur || seen(key) || blocked()) { return false; }
     cur = { key: key, title: beat.title, lines: beat.lines, i: 0 };
     core.emit('story:change', cur);
     return true;
   }
 
+  /** 시나리오 장면(scenario.js) — 본 기록은 안 남기고, 닫히면 `done` 을 부른다. 못 띄우면 false */
+  function play(key, title, lines, done) {
+    if (cur || blocked() || !lines || !lines.length) { return false; }
+    cur = { key: key, title: title, lines: lines, i: 0, scn: true, done: done };
+    core.emit('story:change', cur);
+    return true;
+  }
+
   function close() {
     if (!cur) { return; }
-    seenMap()[cur.key] = 1;
+    var done = cur.scn ? cur.done : null;
+    if (!cur.scn) { seenMap()[cur.key] = 1; }
     cur = null;
     core.persist();
     core.emit('story:change', null);
+    if (done) { done(); }
   }
 
   /** 다음 줄 — 마지막 줄에서 부르면 닫는다 */
@@ -66,7 +78,9 @@
   global.DG.story = {
     isOpen: function () { return !!cur; },
     current: function () { return cur; },
-    maybeOpen: maybeOpen, next: next, skip: close, seen: seen,
+    maybeOpen: maybeOpen, play: play, next: next,
+    /** 시나리오가 이 사냥터 장면을 대신했을 때 — 첫 발 장면을 본 것으로 적는다 */
+    markSeen: function (key) { seenMap()[key] = 1; }, skip: close, seen: seen,
     /** 어드민·진단용 — 본 기록을 지운다 */
     reset: function () { if (core.save.side) { core.save.side.story = {}; } cur = null; core.emit('story:change', null); }
   };

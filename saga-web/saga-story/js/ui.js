@@ -362,8 +362,28 @@
   var SHEET_TITLE = {
     field: '🏃 사냥터', bag: '🎒 가방', job: '🥋 무예', shop: '🏪 저자',
     dex: '📖 도감', log: '📜 기록', keys: '⌨️ 키설정', settings: '⚙️ 설정',
-    achieve: '🏅 업적', sessionEnd: '🚪 이번 사냥 요약', rift: '🌀 비경'
+    achieve: '🏅 업적', sessionEnd: '🚪 이번 사냥 요약', rift: '🌀 비경', story: '📚 이야기'
   };
+
+  /** 이야기(scenario.js) — 장마다 끝남·지금·기다림. 지금 장은 할 일 한 줄이 붙는다 */
+  function viewStory() {
+    var SC = global.DG.scenario;
+    if (!SC || !SC.on()) { return '<div class="hint">이야기가 꺼져 있습니다</div>'; }
+    var titles = SC.titles(), h = SC.hint(), list = SC.list();
+    var html = '<div class="hint">1부 <b>무명</b> — 이름 없는 떠돌이가 사냥터를 지나며 이름을 얻습니다.' +
+      (titles.length ? '<br>🏷️ ' + titles.map(function (t) { return '「' + esc(t) + '」'; }).join(' ') : '') + '</div>';
+    for (var i = 0; i < list.length; i++) {
+      var c = list[i].ch, st = list[i].state;
+      html += '<div class="card' + (st === 'done' ? ' on' : '') + '">' +
+        '<div class="stat-row"><span><b>제' + c.no + '장 · ' + esc(c.title) + '</b></span>' +
+          '<span class="muted">' + (st === 'done' ? '✅ 끝' : st === 'now' ? '▶ 지금' : (c.need > 1 ? 'Lv.' + c.need : '')) + '</span></div>' +
+        '<div class="stat-row"><span class="muted">' + esc(c.blurb) + '</span></div>' +
+        (st === 'now' && h && h.ch === c ? '<div class="stat-row"><b>' + esc(h.text) + '</b></div>' : '') +
+        '</div>';
+    }
+    if (!SC.current()) { html += '<div class="hint">지금 있는 이야기는 여기까지입니다. 다음 부는 곧 이어집니다.</div>'; }
+    return html;
+  }
 
   /** 업적(PLAN 33절) — 사명과 달리 한 번 이루면 다시 안 없어진다.
    *  누르는 단추가 없다(스스로 'changed' 를 듣고 터진다) — 여기는 훑어보기만 */
@@ -665,6 +685,7 @@
           : openTab === 'settings' ? viewSettings()
           : openTab === 'achieve' ? viewAchieve()
           : openTab === 'rift' ? viewRift()
+          : openTab === 'story' ? viewStory()
           : openTab === 'sessionEnd' ? viewSessionEnd() : viewLog();
     els['sheet-body'].innerHTML = v;
   }
@@ -715,15 +736,17 @@
     if (!els.goalboard) { return; }
     var Q = global.DG.quest;
     if (!Q) { els.goalboard.innerHTML = ''; return; }
+    var SC = global.DG.scenario, sh = SC && SC.hint();
     var t = Q.trackedInfo();
     var s = Q.sessionGoalInfo();
     var n = Q.nextInfo();
     els.goalboard.innerHTML =
+      (sh ? '<div class="goal-row goal-scn">' + esc(sh.title) + ' — <b>' + esc(sh.text) + '</b></div>' : '') +
       '<div class="goal-row">📋 ' +
         (t ? esc(t.name) + ' <b>' + t.n + '/' + t.goal + '</b>' : '추적 중인 사명이 없습니다') +
       '</div>' +
-      '<div class="goal-row">⏱️ 이번 접속: ' + esc(s.label) + ' <b>' + s.n + '/' + s.goal + '</b></div>' +
-      '<div class="goal-row">🔜 ' +
+      '<div class="goal-row goal-sess">⏱️ 이번 접속: ' + esc(s.label) + ' <b>' + s.n + '/' + s.goal + '</b></div>' +
+      '<div class="goal-row goal-next">🔜 ' +
         (n ? '다음: ' + esc(n.name) + ' (Lv.' + n.need + ')' : '다음 목표 없음 — 레벨을 올리세요') +
       '</div>';
   }
@@ -964,12 +987,19 @@
     if (!c) { el.classList.remove('show'); el.innerHTML = ''; return; }
     var SD = global.DG.sideData, ln = c.lines[c.i], who = ln[0];
     var emo = SD.EMOTES[ln[1]] || SD.EMOTES.calm;
-    var face, name;
+    var face, name, SCD = global.DG.scenarioData;
+    var mentor = null;
+    if (who === 'mentor' && global.DG.job) {          // 시나리오 — 전직한 갈래의 스승(도감 가명), 아직이면 첫 스승
+      var ml = global.DG.job.mentors();
+      mentor = ml.length ? global.DG.data.find(ml[0]) : null;
+    }
     if (who === 'me') {
       var me = global.DG.side.meRef();
       face = pt('hero', me, 72); name = me.name;
+    } else if (mentor) {
+      face = pt('hero', mentor, 72); name = mentor.name;
     } else {
-      var npc = SD.NPC_TALK[who] || { name: '?', emoji: '💬' };
+      var npc = SD.NPC_TALK[who] || (SCD && SCD.CAST[who]) || { name: '?', emoji: '💬' };
       face = '<span class="story-emoji">' + npc.emoji + '</span>'; name = npc.name;
     }
     el.innerHTML = '<div class="story-title">' + esc(c.title) + '</div>' +

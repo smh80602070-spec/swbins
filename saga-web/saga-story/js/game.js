@@ -51,6 +51,7 @@
        인 채로 시작해 제 손으로 enter() 하는 것을 전제로 짜여 있다. 여기서 미리
        사냥터에 들어가 버리면 씨앗 난수가 밀려 모든 뒷 항목의 수치가 흔들린다 */
     if (!global.DG_NO_ACCOUNT) { S.resume(); }
+    if (global.DG.scenario) { global.DG.scenario.init(); }   // 시나리오 장 진행(scenario.js) — 세이브·동행이 다 준비된 뒤
 
     bindTopbar();
     lastFrame = performance.now();

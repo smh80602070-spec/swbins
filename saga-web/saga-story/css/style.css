@@ -1063,7 +1063,7 @@ body.tilted3 #vignette {
   /* 목표판(§5-6) — 세로로 좁아지면 3줄이 다 안 들어가 1줄(추적 사명)만 남기고
      접는다("탭으로 펼치기"까지는 이번엔 안 넣었다 — HANDOFF 기록) */
   .goals { max-width: calc(100vw - 24px); font-size: 11px; padding: 3px 10px; gap: 0; }
-  .goal-row:nth-child(2), .goal-row:nth-child(3) { display: none; }
+  .goal-sess, .goal-next { display: none; }
 
   /* 도구 — 지도·자동·더보기 셋뿐이라 한 줄로 끝난다(예전엔 아홉이라 두세 줄이었다) */
   .tools { gap: 5px; }
