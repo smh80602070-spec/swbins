@@ -112,6 +112,15 @@ namespace Saga.EditorTools
                 foreach (var (item, _) in s.Items) if (!GoCooking.TryItem(item, out _)) Fail($"{s.Id} 재료 {item} 없음");
             }
             if (GoDispatch.Sites.Count(s => s.Region == "village") != 2) Fail("마을 들판 둘(늘 열림)");
+            // 109-14-32 고원 탐사지 둘 — 눈꽃 1씩, 경계비를 찾아야 열림(글자 지도 지역은 안 본다)
+            var frostSites = GoDispatch.Sites.Where(s => s.Frost).ToArray();
+            if (frostSites.Length != 2 || frostSites.Any(s => s.Id != "snow_fort" && s.Id != "ship_wreck" || !s.Items.Any(i => i.item == "snow_bloom" && i.n == 1) || s.Place != GoWorldMap.RegionName("frost"))) Fail("고원 탐사지 둘(눈꽃 1)");
+            var fsnap = FrostState.Snapshot();
+            FrostState.Restore(new string[0]);
+            if (frostSites.Any(DispatchState.Open) || DispatchState.SendCheck("snow_fort", "x", 4, true) == null) Fail("경계비를 안 밟았는데 고원 탐사지가 열림");
+            FrostState.Restore(new[] { "stele" });
+            if (frostSites.Any(s => !DispatchState.Open(s))) Fail("경계비를 밟았는데 고원 탐사지가 잠김");
+            FrostState.Restore(fsnap);
             var road = Site("old_road");
             if (GoDispatch.RewardOf(road, 4, false).Gold != 400 || GoDispatch.RewardOf(road, 8, false).Gold != 720 || GoDispatch.RewardOf(road, 20, false).Gold != 1520) Fail("금 배율(×1·1.8·3.8)");
             if (GoDispatch.RewardOf(road, 4, true).Gold != 500 || GoDispatch.RewardOf(road, 12, true).Gold != 1250) Fail("잘 맞는 원소 +25%(올림)");
@@ -133,7 +142,7 @@ namespace Saga.EditorTools
                 if (Vector3.Distance(b, CookField.Instance != null && CookField.Instance.Pots.Count > 0 ? GoCooking.PotPos(w) : b + Vector3.right * 13f) < 12f) Fail($"{w.Id} 게시판이 솥과 너무 가까움");
                 if (!field.Boards.TryGetValue(w.Id, out var p) || Mathf.Abs(p.y - GoWorldMap.WaypointPos(w).y) > 6f) Fail($"{w.Id} 게시판 높이");
             }
-            parts.Add("표(탐사지 여덟·글·지역·보상 셈·+25%·자리 2~5·게시판 다섯 곁 판정)");
+            parts.Add("표(탐사지 여덟·글·지역·고원 둘 눈꽃·경계비 열림·보상 셈·+25%·자리 2~5·게시판 다섯 곁 판정)");
         }
 
         // ---- 흐름 ----

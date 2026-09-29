@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using Saga.Go.Combat;
@@ -66,7 +67,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log($"[{_tag}] cooking OK - 재료 9·요리 8·포기 {GoCooking.Nodes.Length}(지역 일곱 모두·뭍에)·솥 {field.Pots.Count} · 바늘·품질 · 줍기·다시 자라기 30분/1시간 · 솥 거리 · 조리·숙련·자동 · {parts} · 버프(공격·치명·방어·스태미나·계열 갈이·300초) · 산적 고기 · 요리 창 단추 · 세이브 v23 왕복·v22 로드");
+            if (_ok) Debug.Log($"[{_tag}] cooking OK - 재료 10(눈꽃)·요리 8·포기 {GoCooking.Nodes.Length}(지역 일곱 모두·뭍에)·솥 {field.Pots.Count} · 바늘·품질 · 줍기·다시 자라기 30분/1시간 · 눈꽃 여섯(고원) · 솥 거리 · 조리·숙련·자동 · {parts} · 버프(공격·치명·방어·스태미나·계열 갈이·300초) · 산적 고기 · 요리 창 단추 · 세이브 v23 왕복·v22 로드");
             return _ok;
         }
 
@@ -74,7 +75,7 @@ namespace Saga.EditorTools
 
         private static void CheckTables(CookField field)
         {
-            if (GoCooking.Items.Length != 9 || GoCooking.Recipes.Length != 8) Fail("재료 9·요리 8 이 아님");
+            if (GoCooking.Items.Length != 10 || GoCooking.Recipes.Length != 8) Fail("재료 10(눈꽃 포함)·요리 8 이 아님");
             foreach (var r in GoCooking.Recipes)
                 foreach (var (item, _) in r.Ing) if (!GoCooking.TryItem(item, out _)) Fail($"{r.Id} 재료 {item} 없음");
             var ids = new HashSet<string>();
@@ -130,6 +131,21 @@ namespace Saga.EditorTools
             CookState.NowForTest += GoCooking.RespawnSpecialSec;
             if (!CookState.Available(special)) Fail("특산이 1시간 넘어도 안 자람");
             if (field.Check(cp + Vector3.up * 8f) != 0) Fail("높이 8m 위에서 주움");
+            // 109-14-32 서리봉 고원 눈꽃 — 자리 셋 × 둘, 특산(1시간), 글자 지도 포기 표에는 안 섞임
+            var fnodes = GoCooking.FrostNodes;
+            if (fnodes.Length != 6 || fnodes.Any(n => n.Item != "snow_bloom" || !n.Special || n.RegionId != "frost" || !GoFrost.Contains(n.Pos))) Fail("눈꽃 포기 여섯(고원 안·특산)");
+            if (GoCooking.Nodes.Any(n => n.Item == "snow_bloom" || n.RegionId == "frost")) Fail("눈꽃이 글자 지도 포기 표에 섞임");
+            foreach (var n in fnodes)
+                foreach (var s in GoFrost.Sites)
+                    if ((n.Pos - s.Pos).magnitude < GoFrost.RadiusOf(s)) Fail($"{n.Id} 가 {s.Id} 발견 원 안");
+            var bloom = fnodes[0];
+            if (!field.Shown(bloom.Id)) Fail("눈꽃 포기가 안 섬");
+            field.Check(field.PosOf(bloom.Id));
+            if (CookState.Count("snow_bloom") < 1 || field.Shown(bloom.Id) || GoCooking.ItemName("snow_bloom") == "snow_bloom") Fail("눈꽃 줍기·이름");
+            CookState.NowForTest += GoCooking.RespawnSpecialSec - 1;
+            if (CookState.Available(bloom)) Fail("눈꽃이 1시간 전에 자람");
+            CookState.NowForTest += 1;
+            if (!CookState.Available(bloom)) Fail("눈꽃이 1시간에 안 자람");
             // 솥 거리
             Vector3 pot = field.Pots[0];
             if (!field.AtPot(pot + Vector3.right * 6f) || field.AtPot(pot + Vector3.right * 9f)) Fail("솥 7.4m 거리");

@@ -449,6 +449,7 @@
 2	go	cook.item.mint	박하	Mint		
 2	go	cook.item.mushroom	송이버섯	Pine Mushroom		
 2	go	cook.item.orchid	청하란	Blue River Orchid		
+2	go	cook.item.snow_bloom	눈꽃	Snow Bloom		
 2	go	cook.meat_plus	{0} +{1}	{0} +{1}		
 2	go	cook.needle	{0} — 바늘이 맛있는 칸에 올 때 불을 끈다	{0} — take it off the heat when the needle is in the tasty zone		
 2	go	cook.prof	숙련 {0}/{1}	Skill {0}/{1}		

@@ -206,7 +206,7 @@ namespace Saga.Go.UI
         private string RowLine(int i)
         {
             var s = GoDispatch.Sites[i];
-            string head = $"<b>{s.Name}</b>  <size=14><color=#b9c2cc>{GoEras.EraName(s.Era)} · {GoElements.NameOf(s.El)} · {GoWorldMap.RegionName(s.Region)}</color></size>";
+            string head = $"<b>{s.Name}</b>  <size=14><color=#b9c2cc>{GoEras.EraName(s.Era)} · {GoElements.NameOf(s.El)} · {s.Place}</color></size>";
             string body;
             if (DispatchState.TryOut(s.Id, out var e))
             {
@@ -217,7 +217,7 @@ namespace Saga.Go.UI
                     ? string.Format(GoLocalization.T("dispatch.row_done", "{0} 돌아옴 — 받으세요: {1}"), GoHeroes.Name(h), GoDispatch.RewardText(r))
                     : string.Format(GoLocalization.T("dispatch.row_out", "{0} 탐사 중 — 남은 {1} ({2}시간): {3}"), GoHeroes.Name(h), GoDispatch.TimeText(left), e.hours, GoDispatch.RewardText(r)));
             }
-            else if (!DispatchState.Open(s)) body = string.Format(GoLocalization.T("dispatch.row_locked", "잠김 — {0} 을(를) 밟으면 열린다"), GoWorldMap.RegionName(s.Region));
+            else if (!DispatchState.Open(s)) body = string.Format(GoLocalization.T("dispatch.row_locked", "잠김 — {0} 을(를) 밟으면 열린다"), s.Place);
             else
             {
                 string hid = HeroId();

@@ -1675,6 +1675,7 @@
     { "key": "boss.again_frost", "value": "Defeated the Snowcap Rock Bear King again — a reward flower bloomed" },
     { "key": "boss.back_frost", "value": "The Snowcap Rock Bear King stands again" },
     { "key": "boss.claimed_frost", "value": "Reward flower — Vigor {0} · Gold +{1} · {2} — the Snowcap Rock Bear King returns in 150s" },
-    { "key": "boss.card_frost", "value": "A flower bloomed where the Snowcap Rock Bear King fell.\\n★{0} Relic 1 · Gold {1}\\nVigor {2}/{3} · once claimed, the King returns in 150s" }
+    { "key": "boss.card_frost", "value": "A flower bloomed where the Snowcap Rock Bear King fell.\\n★{0} Relic 1 · Gold {1}\\nVigor {2}/{3} · once claimed, the King returns in 150s" },
+    { "key": "cook.item.snow_bloom", "value": "Snow Bloom" }
   ]
 }

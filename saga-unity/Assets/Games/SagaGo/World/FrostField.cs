@@ -89,6 +89,7 @@ namespace Saga.Go.World
             ground.name = "Frost_ground";
             BuildWalls(root.transform);
             foreach (var s in GoFrost.Sites) _sites[s.Id] = BuildSite(root.transform, s);
+            BuildTrees(root.transform);
             BuildGate(root.transform);
             BuildSnow(root.transform);
             BuildUi();
@@ -246,6 +247,99 @@ namespace Saga.Go.World
                 }
             _dot.Apply();
             return _dot;
+        }
+
+        // ---- 109-14-33 눈 나무(웹 ⑲-33 — 고원 나무 위를 보는 잎·가지에 눈) ----
+
+        public const int TreeCount = 160;
+        /// <summary>눈 덮인 침엽수 — 꼭짓점 하나 메시 셋(잎·눈·줄기)로 합쳐 그린다(160그루 = 그리기 3번). 충돌은 안 준다(땅 레이·이야기 걷기 자리를 안 막게).</summary>
+        public int TreesBuilt { get; private set; }
+        private const int TreeSeed = 20260929;
+
+        private static bool TreeClear(Vector3 p)
+        {
+            Vector3 c = GoFrost.Center;
+            if (Mathf.Abs(p.x - c.x) > GoFrost.HalfX - 18f || Mathf.Abs(p.z - c.z) > GoFrost.HalfZ - 18f) return false;
+            foreach (var s in GoFrost.Sites)
+                if ((new Vector3(p.x - s.Pos.x, 0f, p.z - s.Pos.z)).magnitude < (s.Big ? 46f : 24f)) return false;
+            if ((new Vector3(p.x - GoFrost.KingHome.x, 0f, p.z - GoFrost.KingHome.z)).magnitude < 20f) return false;
+            foreach (var n in GoCooking.FrostNodes)
+                if ((new Vector3(p.x - n.Pos.x, 0f, p.z - n.Pos.z)).magnitude < 9f) return false;
+            return true;
+        }
+
+        private static void AddCone(List<Vector3> v, List<int> t, Vector3 b, float r, float h, int sides, float yaw)
+        {
+            Vector3 apex = b + Vector3.up * h;
+            for (int i = 0; i < sides; i++)
+            {
+                float a0 = yaw + i * Mathf.PI * 2f / sides, a1 = yaw + (i + 1) * Mathf.PI * 2f / sides;
+                int k = v.Count;
+                v.Add(b + new Vector3(Mathf.Cos(a0), 0f, Mathf.Sin(a0)) * r);
+                v.Add(apex);
+                v.Add(b + new Vector3(Mathf.Cos(a1), 0f, Mathf.Sin(a1)) * r);
+                t.Add(k); t.Add(k + 1); t.Add(k + 2);
+            }
+        }
+
+        private static void AddTrunk(List<Vector3> v, List<int> t, Vector3 b, float r, float h, int sides)
+        {
+            for (int i = 0; i < sides; i++)
+            {
+                float a0 = i * Mathf.PI * 2f / sides, a1 = (i + 1) * Mathf.PI * 2f / sides;
+                Vector3 p0 = b + new Vector3(Mathf.Cos(a0), 0f, Mathf.Sin(a0)) * r, p1 = b + new Vector3(Mathf.Cos(a1), 0f, Mathf.Sin(a1)) * r;
+                int k = v.Count;
+                v.Add(p0); v.Add(p0 + Vector3.up * h); v.Add(p1); v.Add(p1 + Vector3.up * h);
+                t.Add(k); t.Add(k + 1); t.Add(k + 2); t.Add(k + 2); t.Add(k + 1); t.Add(k + 3);
+            }
+        }
+
+        private void BuildTrees(Transform parent)
+        {
+            var rnd = new System.Random(TreeSeed);
+            var leaf = (v: new List<Vector3>(), t: new List<int>());
+            var snow = (v: new List<Vector3>(), t: new List<int>());
+            var wood = (v: new List<Vector3>(), t: new List<int>());
+            Vector3 c = GoFrost.Center;
+            int n = 0;
+            for (int tries = 0; tries < TreeCount * 40 && n < TreeCount; tries++)
+            {
+                float x = c.x + ((float)rnd.NextDouble() * 2f - 1f) * GoFrost.HalfX, z = c.z + ((float)rnd.NextDouble() * 2f - 1f) * GoFrost.HalfZ;
+                float h = 6f + (float)rnd.NextDouble() * 4f, r = 2.4f + (float)rnd.NextDouble() * 1.2f, yaw = (float)rnd.NextDouble() * 6.28f;
+                var b = new Vector3(x, c.y, z);
+                if (!TreeClear(b)) continue;
+                AddTrunk(wood.v, wood.t, b, 0.35f, h * 0.3f, 6);
+                // 잎 세 층(아래가 넓다) — 눈은 층마다 위쪽 절반을 조금 더 굵게 덮는다(위를 보는 면만)
+                for (int tier = 0; tier < 3; tier++)
+                {
+                    float f = 1f - tier * 0.28f;
+                    Vector3 tb = b + Vector3.up * (h * (0.22f + tier * 0.24f));
+                    float th = h * 0.42f * f + 1.2f, tr = r * f;
+                    AddCone(leaf.v, leaf.t, tb, tr, th, 8, yaw + tier);
+                    AddCone(snow.v, snow.t, tb + Vector3.up * (th * 0.42f), tr * 0.58f * 1.06f, th * 0.58f * 1.02f, 8, yaw + tier);
+                }
+                n++;
+            }
+            TreesBuilt = n;
+            MakeMesh(parent, "Frost_trees_leaf", leaf.v, leaf.t, Mat("tree_leaf", new Color(0.13f, 0.27f, 0.2f), 0f, 0.1f));
+            MakeMesh(parent, "Frost_trees_snow", snow.v, snow.t, Mat("tree_snow", new Color(0.95f, 0.97f, 1f), 0f, 0.3f));
+            MakeMesh(parent, "Frost_trees_wood", wood.v, wood.t, Mat("tree_wood", new Color(0.25f, 0.17f, 0.11f), 0f, 0.05f));
+        }
+
+        private static void MakeMesh(Transform parent, string name, List<Vector3> v, List<int> t, Material m)
+        {
+            var mesh = new Mesh { name = name };
+            mesh.indexFormat = v.Count > 60000 ? UnityEngine.Rendering.IndexFormat.UInt32 : UnityEngine.Rendering.IndexFormat.UInt16;
+            mesh.SetVertices(v);
+            mesh.SetTriangles(t, 0);
+            mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
+            var go = new GameObject(name, typeof(MeshFilter), typeof(MeshRenderer));
+            go.transform.SetParent(parent, false);
+            go.GetComponent<MeshFilter>().sharedMesh = mesh;
+            var mr = go.GetComponent<MeshRenderer>();
+            mr.sharedMaterial = m;
+            mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
         }
 
         /// <summary>눈 — 발 둘레 위에서 상자 모양으로 내림. 고원 밖이면 멈춘다.</summary>

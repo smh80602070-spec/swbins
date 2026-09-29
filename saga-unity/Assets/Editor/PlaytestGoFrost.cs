@@ -138,7 +138,18 @@ namespace Saga.EditorTools
             }
             foreach (var s in GoFrost.Sites) if (field.SiteObject(s.Id) == null) Fail($"{s.Id} 모델이 안 섬");
             if (field.GateGround == Vector3.zero || Mathf.Abs(field.GateGround.y) > 60f) Fail("돌기둥 높이");
-            parts.Add("땅(눈밭 바닥·산성 담과 남쪽 문·경계벽 넷·모델 열둘)");
+            // 109-14-33 눈 나무 — 160그루 세 메시(잎·눈·줄기), 충돌 없음, 명소·곰왕 자리를 비킴
+            if (field.TreesBuilt != FrostField.TreeCount) Fail($"눈 나무 {field.TreesBuilt} ≠ {FrostField.TreeCount}");
+            var treeMeshes = field.GetComponentsInChildren<MeshFilter>(true).Where(m => m.name.StartsWith("Frost_trees_")).ToArray();
+            if (treeMeshes.Length != 3 || treeMeshes.Any(m => m.sharedMesh == null || m.sharedMesh.vertexCount < 1000 || m.GetComponent<Collider>() != null)) Fail("눈 나무 메시 셋(잎·눈·줄기)·충돌 없음");
+            else
+            {
+                var leaf = treeMeshes.First(m => m.name.EndsWith("leaf")).sharedMesh;
+                foreach (var s in GoFrost.Sites)
+                    if (leaf.vertices.Any(p => new Vector3(p.x - s.Pos.x, 0f, p.z - s.Pos.z).magnitude < (s.Big ? 40f : 20f) && p.y < GoFrost.Center.y + 3f)) { Fail($"눈 나무가 {s.Id} 를 막음"); break; }
+                if (leaf.vertices.Any(p => new Vector3(p.x - GoFrost.KingHome.x, 0f, p.z - GoFrost.KingHome.z).magnitude < 12f)) Fail("눈 나무가 곰왕 자리를 막음");
+            }
+            parts.Add("땅(눈밭 바닥·산성 담과 남쪽 문·경계벽 넷·모델 열둘·눈 나무 160)");
         }
 
         // ---- 발견 ----

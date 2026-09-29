@@ -31,6 +31,13 @@ namespace Saga.Go.World
 
         private void Start() => Rebuild();
 
+        /// <summary>글자 지도 포기 + 109-14-32 고원 눈꽃 포기.</summary>
+        private static IEnumerable<GoCooking.Node> AllNodes()
+        {
+            foreach (var n in GoCooking.Nodes) yield return n;
+            foreach (var n in GoCooking.FrostNodes) yield return n;
+        }
+
         public Vector3 PosOf(string id) => _pos.TryGetValue(id, out var p) ? p : Vector3.zero;
         public bool Shown(string id) => _nodes.TryGetValue(id, out var go) && go != null && go.activeSelf;
 
@@ -40,7 +47,7 @@ namespace Saga.Go.World
             _nodes.Clear();
             _pos.Clear();
             _pots.Clear();
-            foreach (var n in GoCooking.Nodes)
+            foreach (var n in AllNodes())
             {
                 Vector3 p = FolkWalker.Grounded(n.Pos);
                 _pos[n.Id] = p;
@@ -136,7 +143,7 @@ namespace Saga.Go.World
 
         private void RefreshShown()
         {
-            foreach (var n in GoCooking.Nodes)
+            foreach (var n in AllNodes())
                 if (_nodes.TryGetValue(n.Id, out var go) && go != null) go.SetActive(CookState.Available(n));
         }
 
@@ -161,7 +168,7 @@ namespace Saga.Go.World
         {
             var got = new Dictionary<string, int>();
             int picked = 0;
-            foreach (var n in GoCooking.Nodes)
+            foreach (var n in AllNodes())
             {
                 if (!GoCooking.CanReach(_pos.TryGetValue(n.Id, out var p) ? p : n.Pos, feet)) continue;
                 if (!CookState.Pick(n)) continue;

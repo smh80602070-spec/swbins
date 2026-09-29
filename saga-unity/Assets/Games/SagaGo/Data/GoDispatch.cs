@@ -31,14 +31,18 @@ namespace Saga.Go.Data
             public string Id, NameKo, DescKo, Region;
             public GoEra Era;
             public GoElement El;
+            /// <summary>109-14-32 서리봉 고원 탐사지 — 고원 어귀 경계비를 찾아야 열린다(지역 표기도 고원).</summary>
+            public bool Frost;
             public int Gold, Ore, Dust;
             public (string item, int n)[] Items;
             public string Name => GoLocalization.T("dispatch.site." + Id, NameKo);
+            /// <summary>잠김 글·줄 머리에 쓰는 땅 이름 — 고원 탐사지는 서리봉 고원.</summary>
+            public string Place => GoWorldMap.RegionName(Frost ? GoFrost.RegionId : Region);
             public string Desc => GoLocalization.T("dispatch.desc." + Id, DescKo);
         }
 
-        private static Site S(string id, string name, string region, GoEra era, GoElement el, string desc, int gold = 0, int ore = 0, int dust = 0, params (string, int)[] items) =>
-            new Site { Id = id, NameKo = name, Region = region, Era = era, El = el, DescKo = desc, Gold = gold, Ore = ore, Dust = dust, Items = items };
+        private static Site S(string id, string name, string region, GoEra era, GoElement el, string desc, int gold = 0, int ore = 0, int dust = 0, bool frost = false, params (string, int)[] items) =>
+            new Site { Id = id, NameKo = name, Region = region, Era = era, El = el, DescKo = desc, Gold = gold, Ore = ore, Dust = dust, Items = items, Frost = frost };
 
         /// <summary>웹 `SITES` 순서·이름·보상 그대로(땅만 이 판 지역).</summary>
         public static readonly Site[] Sites =
@@ -49,8 +53,8 @@ namespace Saga.Go.Data
             S("shipyard", "녹슨 조선소", "river", GoEra.Modern, GoElement.Pyro, "버려진 조선소에서 쓸 만한 쇠를 고른다", ore: 2),
             S("quarry", "잿빛 채석장", "south_glade", GoEra.Past, GoElement.Geo, "옛 채석장 돌무더기를 뒤진다", ore: 1, items: new[] { ("meat", 1) }),
             S("observatory", "시간 틈 관측소", "south_glade", GoEra.Future, GoElement.Electro, "틈 곁 관측소의 기록을 거둔다", ore: 1, dust: 3),
-            S("snow_fort", "얼음 아래 산성 터", "north_foot", GoEra.Past, GoElement.Cryo, "얼어붙은 산성 터 밑 곳간을 더듬는다", ore: 1, items: new[] { ("mushroom", 2), ("orchid", 1) }),
-            S("ship_wreck", "추락한 비행선 잔해", "north_foot", GoEra.Future, GoElement.Anemo, "눈에 묻힌 비행선 잔해에서 쓸 만한 것을 건진다", ore: 2, dust: 1, items: new[] { ("orchid", 1) }),
+            S("snow_fort", "얼음 아래 산성 터", "north_foot", GoEra.Past, GoElement.Cryo, "얼어붙은 산성 터 밑 곳간을 더듬는다", ore: 1, items: new[] { ("mushroom", 2), ("snow_bloom", 1) }, frost: true),
+            S("ship_wreck", "추락한 비행선 잔해", "north_foot", GoEra.Future, GoElement.Anemo, "눈에 묻힌 비행선 잔해에서 쓸 만한 것을 건진다", ore: 2, dust: 1, items: new[] { ("snow_bloom", 1) }, frost: true),
         };
 
         public static bool TrySite(string id, out Site s)
@@ -153,7 +157,7 @@ namespace Saga.Go.Data
         }
 
         /// <summary>그 지역에 발 디뎠나(마을 들판은 늘).</summary>
-        public static bool Open(GoDispatch.Site s) => s.Region == "village" || WorldMapState.IsVisited(s.Region);
+        public static bool Open(GoDispatch.Site s) => s.Frost ? FrostState.Found("stele") : s.Region == "village" || WorldMapState.IsVisited(s.Region); // 109-14-32 고원 탐사지는 경계비를 밟아야
 
         /// <summary>남은 초(0 이면 다 됨), 안 나간 곳은 −1.</summary>
         public static long Left(string site) => _out.TryGetValue(site, out var e) ? System.Math.Max(0, e.start + e.hours * 3600L - CookState.Now) : -1;
@@ -178,7 +182,7 @@ namespace Saga.Go.Data
         {
             if (!GoDispatch.TrySite(site, out var s)) return GoLocalization.T("dispatch.why.nosite", "없는 탐사지");
             if (!atBoard) return GoLocalization.T("dispatch.why.board", "역참 곁 게시판에서만");
-            if (!Open(s)) return string.Format(GoLocalization.T("dispatch.why.locked", "{0} 을(를) 밟아야 열린다"), GoWorldMap.RegionName(s.Region));
+            if (!Open(s)) return string.Format(GoLocalization.T("dispatch.why.locked", "{0} 을(를) 밟아야 열린다"), s.Place);
             if (_out.ContainsKey(site)) return GoLocalization.T("dispatch.why.taken", "이미 누가 가 있다");
             if (Used >= Slots) return GoLocalization.T("dispatch.why.full", "자리가 꽉 찼다(여정 등급을 올리면 는다)");
             if (System.Array.IndexOf(GoDispatch.Hours, hours) < 0) return GoLocalization.T("dispatch.why.hours", "시간을 고르자");

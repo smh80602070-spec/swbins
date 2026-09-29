@@ -34,6 +34,7 @@ namespace Saga.Go.Data
             new Item { Id = "orchid", NameKo = "청하란", Kind = Kind.Special, Color = new Color(0.72f, 0.86f, 1f) },
             new Item { Id = "conch", NameKo = "갯소라", Kind = Kind.Special, Color = new Color(1f, 0.62f, 0.52f) },
             new Item { Id = "ash_flower", NameKo = "재꽃", Kind = Kind.Special, Color = new Color(0.8f, 0.74f, 0.9f) },
+            new Item { Id = "snow_bloom", NameKo = "눈꽃", Kind = Kind.Special, Color = new Color(0.86f, 0.95f, 1f) }, // 109-14-32 서리봉 고원 특산(글자 지도 지역엔 없다)
             new Item { Id = "meat", NameKo = "짐승 고기", Kind = Kind.Drop, Color = new Color(0.7f, 0.3f, 0.25f) },
         };
 
@@ -211,9 +212,38 @@ namespace Saga.Go.Data
             }
         }
 
+        /// <summary>109-14-32 눈꽃 자리 셋(웹 frost `bloomSpots`) — 고원 가운데에서 m(명소·곰왕 자리를 비켜) × 자리마다 둘, 자라는 데 특산 값(1시간).</summary>
+        public static readonly Vector2[] FrostBloomSpots = { new Vector2(-40f, -100f), new Vector2(30f, 20f), new Vector2(-95f, -110f) };
+
+        private static Node[] _frostNodes;
+
+        /// <summary>고원 눈꽃 포기 여섯(`Nodes` 와 따로 — 글자 지도 지역 표를 세는 진단·이야기 채집 목표가 안 흔들리게). `CookField` 가 둘 다 세운다.</summary>
+        public static Node[] FrostNodes
+        {
+            get
+            {
+                if (_frostNodes != null) return _frostNodes;
+                var list = new List<Node>();
+                for (int n = 0; n < FrostBloomSpots.Length; n++)
+                    for (int k = 0; k < 2; k++)
+                    {
+                        float a = Mathf.PI * 2f * k / 2f + 0.6f;
+                        Vector2 o = FrostBloomSpots[n];
+                        list.Add(new Node
+                        {
+                            Id = $"ck_frost_{n}_{k}", Item = "snow_bloom", RegionId = GoFrost.RegionId, Special = true,
+                            Pos = GoFrost.Center + new Vector3(o.x, 0f, o.y) + new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a)) * Ring,
+                        });
+                    }
+                _frostNodes = list.ToArray();
+                return _frostNodes;
+            }
+        }
+
         public static bool TryNode(string id, out Node n)
         {
             foreach (var x in Nodes) if (x.Id == id) { n = x; return true; }
+            foreach (var x in FrostNodes) if (x.Id == id) { n = x; return true; }
             n = default;
             return false;
         }
