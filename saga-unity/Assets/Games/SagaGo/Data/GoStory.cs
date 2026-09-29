@@ -77,9 +77,9 @@ namespace Saga.Go.Data
         public static Vector3 SkyCenter => _skyCenter ??= DuelPeak.Top + new Vector3(-SkyWest, SkyRise, 0f);
         public static Vector3 SkyPos(Vector2 off) => SkyCenter + new Vector3(off.x, 0f, off.y);
         /// <summary>섬 윗면에 섰나(난간 안쪽).</summary>
-        public static bool OnSkyTop(Vector3 p) => (Flat(p, SkyCenter) <= SkyR - 1.5f && Mathf.Abs(p.y - SkyCenter.y) < 3f) || OnDeckTop(p) || OnRiftTop(p) || OnRouteTop(p);
+        public static bool OnSkyTop(Vector3 p) => (Flat(p, SkyCenter) <= SkyR - 1.5f && Mathf.Abs(p.y - SkyCenter.y) < 3f) || OnDeckTop(p) || OnRiftTop(p) || OnRouteTop(p) || OnEyeTop(p);
         /// <summary>섬 층인가(윗면 8m 아래까지·난간 3m 밖까지) — 층이 다르면 들판 전투가 서로 못 본다(웹 `apart`).</summary>
-        public static bool OnSkyLayer(Vector3 p) => (Flat(p, SkyCenter) <= SkyR + 3f && p.y > SkyCenter.y - 8f) || (Flat(p, DeckCenter) <= DeckR + 3f && p.y > DeckCenter.y - 8f) || (Flat(p, RiftCenter) <= RiftR + 3f && p.y > RiftCenter.y - 8f) || OnRouteLayer(p);
+        public static bool OnSkyLayer(Vector3 p) => (Flat(p, SkyCenter) <= SkyR + 3f && p.y > SkyCenter.y - 8f) || (Flat(p, DeckCenter) <= DeckR + 3f && p.y > DeckCenter.y - 8f) || (Flat(p, RiftCenter) <= RiftR + 3f && p.y > RiftCenter.y - 8f) || OnRouteLayer(p) || (Flat(p, EyeCenter) <= EyeR + 3f && p.y > EyeCenter.y - 8f);
         public static bool SameLayer(Vector3 a, Vector3 b) => OnSkyLayer(a) == OnSkyLayer(b);
         public static float DraftTop => SkyCenter.y + DraftOver;
         /// <summary>구름섬·기둥이 열렸나 — 9장이 열린 뒤 늘(그 전엔 먹구름 덮개).</summary>
@@ -275,6 +275,43 @@ namespace Saga.Go.Data
         // 19장(⑲-42) — 틈새 갈림길 시계탑(16m 옆면 타기 — 기둥과 같은 폭의 곧은 벽)·섬돌(열다섯이 나선으로 1.1m 씩 — 걸어 오르는 턱 안이라 걸어서 오른다).
         public const float ClockHeight = 16f, ClockHalf = 1.5f, StepRise = 1.1f, StepR = 3.2f;
         public const int StepN = 15;
+
+        // 27~29장(⑲-52) 8부 무대 — 새 고정 지역 없이 첫 지역들로 돌아온다. 여섯 매듭 = 1부 여섯 제단 자리 북쪽 `KnotNorth`m 의 금줄 감은 돌(보기만) · 먹구름 눈 = 구름섬 서쪽 `EyeWest`m·윗면 +`EyeRise`m 위 판.
+        // 매듭은 26장을 마친 뒤부터 보이고(풀린 = 먹구름 연기), `KnotCh`/`KnotStep` 부터 묶인다(불 + 금빛 줄) — 27·28장을 짤 때 이 단계 번호에 맞춘다. 여섯이 다 묶이면 줄이 눈 가운데 등불로 기울고, 29장 6째 단계(보스 뒤)부터 거둔다.
+        public const float KnotNorth = 3f, KnotBeamUp = 90f, EyeWest = 42f, EyeRise = 24f, EyeR = 18f, EyeSlab = 4f, EyeLantern = 3.6f;
+        public static readonly int[] KnotCh = { 26, 26, 26, 27, 27, 27 }, KnotStep = { 4, 5, 8, 3, 5, 8 };
+        /// <summary>진단 전용 — 27~29장이 이식되기 전에 장·단계를 가정한다(웹 `stormeye` 손잡이 대신). 없으면 지금 이야기 진행.</summary>
+        public static int? TestCh; public static int TestStep;
+        private static bool Reached(int ch, int step) { int c = TestCh ?? StoryState.Ch, s = TestCh.HasValue ? TestStep : StoryState.StepIndex; return c > ch || (c == ch && s >= step); }
+        public static bool KnotsShown => Reached(26, 0);
+        public static bool KnotTied(int k) => Reached(KnotCh[k], KnotStep[k]);
+        public static bool AllKnotsTied { get { for (int k = 0; k < 6; k++) if (!KnotTied(k)) return false; return true; } }
+        public static bool EyeShown => Reached(27, 9);
+        public static bool EyeClear => Reached(28, 6);
+        public static bool EyePillarOpen => Reached(28, 0);
+        /// <summary>매듭 k 금빛 줄 — 0 없음 · 1 곧게 위로 · 2 눈 가운데 등불로(여섯 다 묶인 뒤 29장 보스 전까지).</summary>
+        public static int KnotBeam(int k) => !KnotTied(k) || EyeClear ? 0 : (AllKnotsTied ? 2 : 1);
+        /// <summary>매듭 돌 k 밑자리(땅) — 1장 옛 제단 · 5장 둘째 제단 · 6장 봉우리 제단 · 7장 곶 · 8장 바위섬 · 9장 구름섬, 각각 북쪽 `KnotNorth`m.</summary>
+        public static Vector3 KnotBase(int k)
+        {
+            Vector3 b;
+            switch (k)
+            {
+                case 0: b = GridPos(AltarGx, AltarGy); break;
+                case 1: b = GridPos(Altar2Gx, Altar2Gy); break;
+                case 2: b = ArenaPos(ArenaAltar); break;
+                case 3: b = GridPos(CapeGx, CapeGy - 22f / 48f); break;
+                case 4: b = IslePos(Vector2.zero); break;
+                default: b = SkyCenter; break;
+            }
+            return b + new Vector3(0f, 0f, -KnotNorth);
+        }
+        public static Vector3 EyeCenter => SkyCenter + new Vector3(-EyeWest, EyeRise, 0f);
+        public static Vector3 EyePos(Vector2 off) => EyeCenter + new Vector3(off.x, 0.05f, off.y);
+        public static bool OnEyeTop(Vector3 p) => Flat(p, EyeCenter) <= EyeR - 1.5f && Mathf.Abs(p.y - EyeCenter.y) < 3f;
+        /// <summary>눈으로 가는 바람 기둥 — 구름섬 서쪽 가장자리 안, 끝 = 눈 윗면 + `DraftOver`(29장부터).</summary>
+        public static Vector3 EyePillarPos => new Vector3(SkyCenter.x - SkyR + DraftR, SkyCenter.y, SkyCenter.z);
+        public static float EyePillarTop => EyeCenter.y + DraftOver;
 
         // 24~26장(⑲-48) 구름 위 항로 — 옛 등대 서쪽 하늘 섬 셋(표 `GoAreas.Route*`). 23장 등롱 불(`LighthouseLit`) 뒤에만 서고 밟힌다.
         // 바람 기둥 셋 — 등대 서쪽 7m 땅 → 사당 · 사당 서쪽 가장자리 안 → 잔해 · 잔해 서쪽 가장자리 안 → 정거장. 끝 = 다음 섬 윗면 + `DraftOver`. 등대·사당 기둥은 24장 뒤, 잔해 기둥은 25장 뒤.
