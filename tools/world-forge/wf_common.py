@@ -22,6 +22,11 @@ def sources():
 
 
 _mat_cache = {}
+STYLE = {'mode': 'real'}      # 'real' = 사실 PBR(Unity) · 'toon' = 바탕색 한 장(Godot cel_toon·웹 스프라이트)
+
+
+def set_style(mode):
+    STYLE['mode'] = mode
 
 
 def _image(fn, colorspace):
@@ -42,6 +47,8 @@ def pbr_material(tid, tile_m=2.0, tint=None, rough_mul=1.0, name=None):
     mat.use_nodes = True
     nt = mat.node_tree
     bsdf = next(n for n in nt.nodes if n.type == 'BSDF_PRINCIPLED')
+    if STYLE['mode'] == 'toon':
+        return _toon_material(mat, nt, bsdf, tid, tint, key)
     idx = {}
     idx_path = os.path.join(SRC, 'index.json')
     if os.path.exists(idx_path):
@@ -83,6 +90,34 @@ def pbr_material(tid, tile_m=2.0, tint=None, rough_mul=1.0, name=None):
         nt.links.new(nor.outputs['Color'], nm.inputs['Color'])
         nt.links.new(nm.outputs['Normal'], bsdf.inputs['Normal'])
     mat['tile_m'] = float(tile_m)
+    _mat_cache[key] = mat
+    return mat
+
+
+def _toon_material(mat, nt, bsdf, tid, tint, key):
+    """툰(원신풍) — 노멀·거칠기를 떼고 바탕색 그림 하나만(256px, 채도 +18%). saga-godot cel_toon 은 바탕색 텍스처 하나만 읽는다."""
+    import numpy as np
+    idx = json.load(open(os.path.join(SRC, 'index.json'), encoding='utf-8')).get(tid, {}) if os.path.exists(os.path.join(SRC, 'index.json')) else {}
+    fn = idx.get('diff')
+    if fn:
+        im = bpy.data.images.load(os.path.join(SRC, fn), check_existing=False)
+        im.scale(256, 256)
+        px = np.array(im.pixels[:], np.float32).reshape(256, 256, 4)
+        rgb = px[..., :3]
+        lum = rgb.mean(axis=2, keepdims=True)
+        rgb = np.clip(lum + (rgb - lum) * 1.18, 0, 1)
+        if tint:
+            rgb = rgb * np.array(hex_rgba(tint)[:3], np.float32) ** (1 / 2.2)
+        px[..., :3] = rgb
+        out = bpy.data.images.new(f'{tid}_toon', 256, 256, alpha=False)
+        out.pixels.foreach_set(px.ravel())
+        out.pack()
+        n = nt.nodes.new('ShaderNodeTexImage')
+        n.image = out
+        nt.links.new(n.outputs['Color'], bsdf.inputs['Base Color'])
+    bsdf.inputs['Roughness'].default_value = 1.0
+    bsdf.inputs['Specular IOR Level'].default_value = 0.0
+    mat['style'] = 'toon'
     _mat_cache[key] = mat
     return mat
 

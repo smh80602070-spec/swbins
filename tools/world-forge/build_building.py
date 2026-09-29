@@ -262,6 +262,7 @@ def build_roof(M, rc, w, d, z_eave, s_roof, s_trim, s_wall_gable):
 
 def build(rc, out):
     bpy.ops.wm.read_factory_settings(use_empty=True)
+    W.set_style(arg('--style', 'real'))
     M = W.Mesh(rc['id'])
     wl, tr, rf = rc['walls'], rc.get('trim', {}), rc['roof']
     tile = wl.get('tile_m', 2.0)
@@ -338,7 +339,7 @@ def build(rc, out):
     bpy.ops.object.transform_apply(location=True, rotation=False, scale=False)
     tris = sum(len(p.vertices) - 2 for p in ob.data.polygons)
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-    W.export_glb([ob], out, int(rc.get('tex_max', 1024)))
+    W.export_glb([ob], out, 256 if arg('--style', 'real') == 'toon' else int(rc.get('tex_max', 1024)))
     lic = {'id': rc['id'], 'generator': 'tools/world-forge/build_building.py', 'blender': bpy.app.version_string,
            'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0)',
            'inputs': sorted({f'polyhaven: {m.name}' for m in ob.data.materials}),
