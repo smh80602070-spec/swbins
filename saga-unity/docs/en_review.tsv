@@ -1134,6 +1134,7 @@
 2	go	story.altar_engine	비행선 기관	airship engine		
 2	go	story.altar_knot	매듭 제단	knot altar		
 2	go	story.altar_knot4	넷째 매듭	fourth knot		
+2	go	story.altar_lantern	매듭 등불	knot lantern		
 2	go	story.altar_moored	계류된 별배	moored star-ship		
 2	go	story.altar_train	출발을 기다리는 막차	the waiting last train		
 2	go	story.altar_weld	용접대	welding bench		
@@ -1143,6 +1144,7 @@
 2	go	story.boss.emberfox	여우불 구미호	Foxfire Nine-Tail		
 2	go	story.boss.haesol	먹구름 가면 해솔	Haesol of the Storm Mask		
 2	go	story.boss.king	먹구름 임금	Storm King		
+2	go	story.boss.kingtrue	먹구름 임금	Storm King		
 2	go	story.boss.mask	검은 가면	Black Mask		
 2	go	story.boss.mask2	금 간 검은 가면	Cracked Black Mask		
 2	go	story.boss.mossserpent	이끼 이무기	Moss Serpent		
@@ -1950,6 +1952,45 @@
 2	go	story.ch28.s9.p.b	구름섬에서 쓰러뜨린 임금은 뭐였지?	Then what was the king we defeated on the cloud island?		
 2	go	story.ch28.tied4	🔥 넷째 매듭에 불이 붙었다 — 곶에서 금빛 줄이 솟는다	🔥 The fourth knot catches fire — a golden cord rises from the cape		
 2	go	story.ch28.tied6	🔥 여섯째 매듭까지 — 여섯 금빛 줄이 휘어 하늘 한 점으로 모인다	🔥 Even the sixth knot — the six golden cords bend and gather at a single point in the sky		
+2	go	story.ch29	제29장 · 먹구름의 근원	Chapter 29 · The Source of the Storm Cloud		
+2	go	story.ch29.enter	🌩️ 흰 처음 가면의 임금이 먹구름을 두르고 일어섰다 — 먹구름 임금의 참몸!	🌩️ The king in the white first mask rises wrapped in storm cloud — the true body of the Storm King!		
+2	go	story.ch29.landed	🪂 먹구름 눈에 내려섰다 — 소용돌이 한가운데, 매듭 등불이 떨고 있다	🪂 You land in the eye of the storm — at the heart of the vortex, the knot lantern trembles		
+2	go	story.ch29.p2	⚡ 임금이 소용돌이의 먹구름을 몸에 두른다 — 불로 방패를 깨라! 매와 살쾡이가 뛰어든다	⚡ The king wraps the vortex’s storm cloud around his body — break the shield with fire! A hawk and a wildcat leap in		
+2	go	story.ch29.s1	광장의 청하 촌장에게 가기	Go to the Village Elder of Cheongha in the square		
+2	go	story.ch29.s1.l1	다들 모였구나. 은비, 버들 영감, 해솔, 나그네… 먼 시대에서 온 동무들까지. 청하 광장이 이렇게 북적인 건 처음이다.	Everyone has gathered. Eunbi, Old Man Beodeul, Haesol, the Wanderer… even companions from distant ages. Cheongha Square has never been this crowded.		
+2	go	story.ch29.s1.l2	막차 기관은 식혀 두고 왔어요. 신호만 떨어지면 바로 달립니다!	I left the last-train engine cooled down. The moment the signal drops, it runs!		
+2	go	story.ch29.s1.l3	별배도 닻을 올렸네. 마지막 항로는 대장이 정하게.	The star-ship has weighed anchor too. Let the leader set the final route.		
+2	go	story.ch29.s1.l4	삐— 먹구름 눈 안쪽 기압 급강하. 세 시대의 힘이 한 부대에 모여야 매듭 등불이 버팁니다.	Beep — air pressure inside the storm's eye is plunging. The knot lantern will hold only if the strength of three ages gathers in one squad.		
+2	go	story.ch29.s1.l5	과거와 현대와 미래 — 세 시대에서 한 사람씩 네 곁에 세우렴. 매듭은 세 시대를 함께 묶어야 다시는 풀리지 않는단다.	Past, present and future — stand one person from each age beside you. The knots never come undone again only if they bind all three ages together.		
+2	go	story.ch29.s1.p.a	편성을 짤게요.	I'll set the roster.		
+2	go	story.ch29.s1.p.b	누구를 데려가죠?	Who should I bring?		
+2	go	story.ch29.s2	과거·현대·미래 이야기 동료를 하나씩 들판 명단에 넣기(도감 탭 → 편성)	Put one story companion each from the past, present and future into the field roster (Codex tab → Formation)		
+2	go	story.ch29.s3	구름섬 서쪽 바람 기둥을 타고 먹구름 눈으로(기둥 안에서 뛰어올라 활공)	Ride the wind pillar on the western edge of the cloud island to the eye of the storm (jump inside the pillar and glide)		
+2	go	story.ch29.s4	먹구름 눈의 임금과 맞서기	Face the king in the eye of the storm		
+2	go	story.ch29.s4.l1	왔구나, 매듭을 묶는 자. 과거와 현재와 미래를 한 줄에 꿰어 오다니 — 그 줄째 끊어 주마.	You came, knot-binder. Threading past, present and future on a single cord — I will sever the cord itself.		
+2	go	story.ch29.s4.l2	매듭 등불만 꺼지면 여섯 줄은 도로 풀린다. 먹구름아, 등불을 덮어라!	Once the knot lantern goes out, all six cords come loose again. Storm clouds — cover the lantern!		
+2	go	story.ch29.s4.p.a	등불은 우리가 지킨다!	We'll protect the lantern!		
+2	go	story.ch29.s4.p.b	여기서 끝내자.	Let's end this here.		
+2	go	story.ch29.s5	먹구름 눈의 매듭 등불을 먹구름 무리에게서 지키기	Defend the knot lantern in the storm's eye from the storm-cloud horde		
+2	go	story.ch29.s6	먹구름 임금의 참몸 물리치기	Defeat the Storm King's true body		
+2	go	story.ch29.s7	먹구름 눈의 해솔과 이야기하기	Talk to Haesol in the eye of the storm		
+2	go	story.ch29.s7.l1	……들려? 바람이 노래해. 먹구름에 먹혀 부르던 노래가 아니라, 내 노래로.	…Do you hear it? The wind is singing. Not the song I sang while swallowed by the storm cloud, but my own song.		
+2	go	story.ch29.s7.l2	가면이 갈라지던 순간 임금이 뭐라고 했는지 알아? '매듭이 이렇게 따뜻한 줄 몰랐다' — 그러고는 틈 아래로 가라앉았어.	Do you know what the king said the moment the mask split? 'I never knew a knot could be this warm' — and then he sank beneath the rift.		
+2	go	story.ch29.s7.l3	먹구름 눈이 맑은 하늘로 바뀌었어. 자, 날개를 펴고 광장까지 — 할머니가 잔칫상을 차려 놨대!	The eye of the storm has turned into clear sky. Come, spread your wings and glide to the square — Grandmother has set out a feast!		
+2	go	story.ch29.s7.p.a	이제 정말 끝이야.	It's truly over now.		
+2	go	story.ch29.s7.p.b	잘 가라, 임금.	Farewell, king.		
+2	go	story.ch29.s8	먹구름 눈에서 활공해 청하 광장으로 내려가기	Glide down from the storm’s eye to Cheongha Square		
+2	go	story.ch29.s9	청하 촌장에게 알리기	Report to the Village Elder of Cheongha		
+2	go	story.ch29.s9.l1	하늘 좀 보렴…! 먹구름 한 점 없이 파랗구나. 여섯 매듭 불빛이 별처럼 반짝이고.	Look at the sky…! Blue without a single cloud. And the lights of the six knots twinkle like stars.		
+2	go	story.ch29.s9.l2	비문 맨 끝 줄이 새로 보여! '매듭을 다시 묶은 이들이 있어 청하는 오래 맑으리라' — 방금 새겨진 것 같아.	A new line at the end of the inscription! 'Because some retied the knots, Cheongha shall stay clear for long' — it looks freshly carved.		
+2	go	story.ch29.s9.l3	허허, 이 늙은이 노가 하늘까지 닿은 셈이로구먼.	Ha ha, so this old man's oar reached all the way to the sky.		
+2	go	story.ch29.s9.l4	비행선은 없어도 오늘 하늘은 제 거예요. 이렇게 맑은 날 기상 보고는 처음 써 봐요!	I may have no airship, but today's sky is mine. This is the first time I've written a weather report on a day this clear!		
+2	go	story.ch29.s9.l5	삐— 틈 신호 안정. 먹구름 발생률 0퍼센트. 선장님, 이제 어디로 갈까요?	Beep — rift signal stable. Storm-cloud occurrence rate zero percent. Captain, where to now?		
+2	go	story.ch29.s9.l6	……글쎄. 틈이 삼켰다 못 돌려놓은 시대 조각들이 아직 곳곳에 굳어 있다더군. 하지만 그건 잔치 뒤에 생각하세.	…Who knows. They say pieces of ages the rift swallowed and couldn't return are still frozen here and there. But let's think about that after the feast.		
+2	go	story.ch29.s9.l7	약속대로 잔치다! 이건 청하 마을과 세 시대 동무들이 너에게 주는 거란다. 고맙다 — 우리 대장.	A feast, as promised! This is what Cheongha Village and your companions from three ages give you. Thank you — our leader.		
+2	go	story.ch29.s9.p.a	다 같이 잔치해요!	Let's all feast together!		
+2	go	story.ch29.s9.p.b	모두 고마워요.	Thank you, everyone.		
+2	go	story.ch29.win	🌩️ 먹구름 임금의 흰 가면이 두 쪽으로 갈라지고 — 먹구름이 소용돌이째 흩어진다	🌩️ The Storm King's white mask splits in two — the storm cloud scatters, vortex and all		
 2	go	story.ch3	제3장 · 잔칫날의 불청객	Chapter 3 · Uninvited Guests at the Feast		
 2	go	story.ch3.s1	촌장에게 잔치 일손을 돕겠다고 하기	Offer the Elder a hand with the feast		
 2	go	story.ch3.s1.l1	하늘이 갠 기념으로 잔치를 열기로 했단다. 그런데 일손이 모자라구나.	We've decided to hold a feast now that the sky has cleared. But we're short of hands.		
@@ -2247,6 +2288,7 @@
 2	go	story.idle.hangyeol	종은 소리로 사람을 부르는 물건이오.	A bell is a thing that calls people by sound.		
 2	go	story.idle.haram	바늘이 또 얼었네… 눈은 언제 그치려나.	The needle froze again… when will this snow ever stop?		
 2	go	story.idle.horse	히힝… 푸르르.	Neigh… snort.		
+2	go	story.idle.king	……	…		
 2	go	story.idle.mulsae	숨 한 번에 한 길. 물은 서두르는 사람을 싫어한다오.	One breath, one fathom. The water dislikes those in a hurry.		
 2	go	story.idle.parang	빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오.	This is the Light Dome records room. Please state the record you wish to view.		
 2	go	story.idle.saebyeok	방울이 울면 바람이 길을 안다오.	When the bells ring, the wind knows the way.		
@@ -2279,6 +2321,7 @@
 2	go	story.npc.hangyeol	종지기 한결	Bellkeeper Hangyeol		
 2	go	story.npc.haram	기상 관측원 하람	Haram the Weather Observer		
 2	go	story.npc.horse	놀란 역마	Startled Post Horse		
+2	go	story.npc.king	먹구름 임금	Storm King		
 2	go	story.npc.mulsae	해녀 물새	Haenyeo Mulsae		
 2	go	story.npc.parang	돔 관리 인공지능 파랑	Dome Administrator AI Parang		
 2	go	story.npc.saebyeok	바람 무녀 새벽	Wind Priestess Saebyeok		
@@ -2287,6 +2330,7 @@
 2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	story.npc.yeoul	잠수 기사 여울	Diver Yeoul		
+2	go	story.party_ok	🤝 세 시대의 동료가 한 명단에 모였다	🤝 Companions from all three ages have gathered in one roster		
 2	go	story.reward	장 끝 보상 {0}	Chapter reward {0}		
 2	go	story.sail_dock	⛵ 배가 강가 나루에 닿았다	⛵ The boat reaches the river landing		
 2	go	story.sail_isle	⛵ 사공의 배가 물살을 가른다 — 바위섬에 닿았다	⛵ The ferryman's boat cuts through the current — you reach the Rock Isle		

@@ -20,7 +20,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class GoStory
     {
-        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow, Seal, Climb, Duel, Defend, Chase, Sail, Sky }
+        public enum StepType { Talk, Go, Boss, Kill, Light, Domain, Gather, Cook, Follow, Seal, Climb, Duel, Defend, Chase, Sail, Sky, Party }
 
         // ---- 109-14-16 7장(웹 ⑲-16) — 곶 → 강 북쪽 물가 마을 동쪽 끝(이 판 강은 곧은 띠라 곶이 없다, 강 쪽을 뺀 다섯 방향에서 무리가 온다) ----
         public const float CapeGx = 5.35f, CapeGy = 4.45f;
@@ -40,7 +40,7 @@ namespace Saga.Go.Data
         /// <summary>섬 위인가(가장자리 1m 안쪽) — 섬 위 이야기 적은 이 안에서만 걷는다.</summary>
         public static bool OnIsle(Vector3 p) => Flat(p, IslePos(Vector2.zero)) <= IsleR - 1f;
         /// <summary>배가 닿는 곳 — 섬(북쪽 물가) 또는 강가 나루(사공 곁).</summary>
-        public static Vector3 SailDest(Step s) => s.Route != null ? RoutePos(RouteIndex(s.Route), s.Arena ?? Vector2.zero) : s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.ToIsle ? IslePos(IsleLand) : GridPos(DockGx, DockGy);
+        public static Vector3 SailDest(Step s) => s.Eye ? EyePos(s.Arena ?? Vector2.zero) : s.Route != null ? RoutePos(RouteIndex(s.Route), s.Arena ?? Vector2.zero) : s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.ToIsle ? IslePos(IsleLand) : GridPos(DockGx, DockGy);
         public const float DockGx = 2.35f + 3f / 48f, DockGy = 4.4f - 3f / 48f;
 
         /// <summary>chase — 노 도둑(웹 13m/초·점마다 0.5초 = 걷기 8·달리기 17.6 사이) → 이 판 걷기 6·달리기 10 사이로 9m/초·0.5초.
@@ -221,6 +221,8 @@ namespace Saga.Go.Data
             public bool Obs;
             /// <summary>109-14-49 하늘 섬 위("shrine"·"wreck"·"orbit") — Arena 는 그 섬 윗면 가운데에서 m.</summary>
             public string Route;
+            /// <summary>109-14-55 먹구름 눈 위 — Arena 는 눈 윗면 가운데에서 m.</summary>
+            public bool Eye;
         }
 
         /// <summary>그 칸이 지금 서 있는 칸인가 — 세계 임무 칸이면 그 임무 단계, 아니면 이야기 장·단계.</summary>
@@ -240,7 +242,7 @@ namespace Saga.Go.Data
         public static Vector2 FrostAt(string siteId, float dx, float dz) { GoFrost.TrySite(siteId, out var s); return s.Off + new Vector2(dx, dz); }
 
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
-            a.Route != null ? RoutePos(RouteIndex(a.Route), a.Arena) : a.Sky && a.Rift ? RiftPos(a.Arena) : a.At != null ? AreaPos(a.At, a.Arena) : a.Stn ? StationPos(a.Arena) : a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            a.Eye ? EyePos(a.Arena) : a.Route != null ? RoutePos(RouteIndex(a.Route), a.Arena) : a.Sky && a.Rift ? RiftPos(a.Arena) : a.At != null ? AreaPos(a.At, a.Arena) : a.Stn ? StationPos(a.Arena) : a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
 
         // ---- 109-14-28 10장 서리봉 고원 자리(고원 가운데에서 m — 웹 명소 자리 × 0.45 위에 얹는다) ----
         public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
@@ -306,6 +308,22 @@ namespace Saga.Go.Data
             }
             return b + new Vector3(0f, 0f, -KnotNorth);
         }
+        /// <summary>29장 자리(눈 윗면 가운데에서 m, z 남쪽): 임금은 눈 북쪽, 해솔은 북동쪽, 참몸 자리는 남쪽 9m(가운데 등불·소용돌이 밖).</summary>
+        public static readonly Vector2 EyeKing = new Vector2(0f, -9f), EyeHaesol = new Vector2(7f, -6f), EyeDuel = new Vector2(0f, 9f);
+        /// <summary>과거·현대·미래 이야기 동료 시대(웹 `MEMBER_TIME`) — 없으면 null.</summary>
+        public static GoEra? MemberEra(string id)
+        {
+            switch (id)
+            {
+                case "story_wanderer": case "story_elder": case "story_ferryman": case "story_dareum": case "story_mulsae": return GoEra.Past;
+                case "story_scholar": case "story_haesol": case "story_haram": case "story_dodam": case "story_haneul": return GoEra.Modern;
+                case "story_hanbyeol": return GoEra.Future;
+                default: return null;
+            }
+        }
+        /// <summary>들판 명단(주인공 곁 동행 셋)에 든 이야기 동료의 시대들.</summary>
+        public static bool PartyHasEra(GoEra e) { foreach (var id in PartyState.FieldIds()) if (MemberEra(id) == e) return true; return false; }
+        public static bool PartyOk => PartyHasEra(GoEra.Past) && PartyHasEra(GoEra.Modern) && PartyHasEra(GoEra.Future);
         public static Vector3 EyeCenter => SkyCenter + new Vector3(-EyeWest, EyeRise, 0f);
         public static Vector3 EyePos(Vector2 off) => EyeCenter + new Vector3(off.x, 0.05f, off.y);
         public static bool OnEyeTop(Vector3 p) => Flat(p, EyeCenter) <= EyeR - 1.5f && Mathf.Abs(p.y - EyeCenter.y) < 3f;
@@ -482,6 +500,7 @@ namespace Saga.Go.Data
                 Gx = IsleGx, Gy = IsleGy, FolkBody = "Paladin", Mask = true, Crack = true,
                 Appear = new[] { new Spot { Ch = 7, From = 8, To = 8, Isle = true, Arena = IsleHaesol },
                     // 109-14-53 27장 — 가면 벗은 해솔이 봉우리 셋째 매듭 곁에(9째 단계에만)
+                    new Spot { Ch = 28, From = 6, To = 6, Eye = true, Arena = EyeHaesol, Unmask = true, NameKey = "story.npc.haesol2", NameKo = "해솔", IdleKey = "story.idle.haesol2", IdleKo = "……고맙다. 노래를 다시 부를 수 있을 것 같아." }, // 29장 — 먹구름 눈 북동쪽
                     new Spot { Ch = 26, From = 8, To = 8, Peak = true, Arena = new Vector2(-14f, -12f), Unmask = true, NameKey = "story.npc.haesol2", NameKo = "해솔",
                         IdleKey = "story.idle.haesol2", IdleKo = "……고맙다. 노래를 다시 부를 수 있을 것 같아." },
                     // 109-14-20 9장 — 가면을 벗은 해솔이 구름섬에 선다(이름·혼잣말도 그 칸 동안)
@@ -550,7 +569,7 @@ namespace Saga.Go.Data
                     new Spot { Ch = 22, From = 1, To = 3, At = "sunken:lighthouse", Arena = LightBandi }, new Spot { Ch = 22, From = 4, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandBandi },
                     new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineBandi }, new Spot { Ch = 24, From = 0, To = 0, Route = "shrine", Arena = ShrineBandi },
                     new Spot { Ch = 24, From = 1, To = 99, Route = "wreck", Arena = WreckBandi }, new Spot { Ch = 25, From = 0, To = 0, Route = "wreck", Arena = WreckBandi },
-                    new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitBandi }, new Spot { Ch = 26, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f } }, // 8부(27장~) 반디는 청하 촌장 곁 마을
+                    new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitBandi }, new Spot { Ch = 26, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 27, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 28, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f } }, // 8부(27장~) 반디는 청하 촌장 곁 마을
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
@@ -568,7 +587,9 @@ namespace Saga.Go.Data
             // 109-14-51 26장(웹 ⑲-51) — 가면 그림자: 23장 반디 기록 속 그자. 26장 장치 셋을 끈 뒤(7째 단계) 한 번만 정거장 서쪽 끝에 선다. 정체는 8부까지.
             new Npc { Id = "gamyeon", NameKey = "story.npc.gamyeon", NameKo = "가면 그림자", ShortKey = "story.short.gamyeon", ShortKo = "그림자",
                 AtSite = "sunken:lighthouse", AtOff = Vector2.zero, FolkBody = "Vanguard", Mask = true,
-                Appear = new[] { new Spot { Ch = 25, From = 6, To = 6, Route = "orbit", Arena = OrbitGamyeon }, new Spot { Ch = 27, From = 8, To = 8, Sky = true, Arena = new Vector2(7f, -7f) } }, // 28장 — 구름섬 북동쪽 한 번
+                Appear = new[] { new Spot { Ch = 25, From = 6, To = 6, Route = "orbit", Arena = OrbitGamyeon }, new Spot { Ch = 27, From = 8, To = 8, Sky = true, Arena = new Vector2(7f, -7f) }, // 28장 — 구름섬 북동쪽 한 번
+                    // 29장 — 먹구름 눈 북쪽의 임금(참몸, 이름·혼잣말을 덮는다)
+                    new Spot { Ch = 28, From = 3, To = 3, Eye = true, Arena = EyeKing, NameKey = "story.npc.king", NameKo = "먹구름 임금", IdleKey = "story.idle.king", IdleKo = "……" } },
                 IdleKey = "story.idle.gamyeon", IdleKo = "……" },
             // 109-14-50 25장(웹 ⑲-50) — 비행사 하늬(현대): 먹구름에 휘말려 잔해 섬에 처박힌 기상 비행선 조종사. 25장부터 조종실 동쪽 앞(뒤에도).
             new Npc { Id = "haneul", NameKey = "story.npc.haneul", NameKo = "비행사 하늬", ShortKey = "story.short.haneul", ShortKo = "하늬",
@@ -719,11 +740,13 @@ namespace Saga.Go.Data
             public string AwayKey, AwayKo;
             /// <summary>109-14-49 하늘 섬 위("shrine"·"wreck"·"orbit" — 자리 = 그 섬 윗면 가운데 + Arena).</summary>
             public string Route;
+            /// <summary>109-14-55 먹구름 눈 위(자리 = 눈 윗면 가운데 + Arena, `Sky` 단계는 눈 바람 기둥).</summary>
+            public bool Eye;
             /// <summary>109-14-50 defend — 물결이 나오는 거리(0 이면 `DefendRing`) — 작은 하늘 섬 위에서 섬 밖으로 안 나오게.</summary>
             public float Ring;
         }
 
-        public static Vector3 StepPos(Step s) => s.Route != null ? RoutePos(RouteIndex(s.Route), s.Arena ?? Vector2.zero) : s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+        public static Vector3 StepPos(Step s) => s.Eye ? EyePos(s.Arena ?? Vector2.zero) : s.Route != null ? RoutePos(RouteIndex(s.Route), s.Arena ?? Vector2.zero) : s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
 
         /// <summary>석등 차례(해·달·별이 기본, 8장은 별·달·해).</summary>
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
@@ -2491,6 +2514,73 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            // 109-14-55 29장(웹 ⑲-55) — 8부 끝·1차 결말, 먹구름의 근원: 광장 촌장 → **편성 시험**(새 단계 `Party` — 들판 명단에 과거·현대·미래 이야기 동료 하나씩) → 구름섬 서쪽 바람 기둥으로 먹구름 눈(`Sky`+`Eye`) → 임금(참몸) →
+            // 매듭 등불 지키기(눈 가운데, 바깥 12m) → 먹구름 임금 참몸(눈 남쪽 9m) → 해솔(소용돌이 걷힘 = `EyeClear` 29장 6째 단계 — 보스 다음) → 활공해 광장 → 잔치.
+            new Chapter
+            {
+                Id = "ch29", NameKey = "story.ch29", NameKo = "제29장 · 먹구름의 근원", Ar = 64,
+                Gold = 12000, Mats = new[] { 0, 10, 8, 10, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch29.s1", TextKo = "광장의 청하 촌장에게 가기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch29.s1.l1", "다들 모였구나. 은비, 버들 영감, 해솔, 나그네… 먼 시대에서 온 동무들까지. 청하 광장이 이렇게 북적인 건 처음이다."),
+                            L("dodam", "story.ch29.s1.l2", "막차 기관은 식혀 두고 왔어요. 신호만 떨어지면 바로 달립니다!"),
+                            L("hanbyeol", "story.ch29.s1.l3", "별배도 닻을 올렸네. 마지막 항로는 대장이 정하게."),
+                            L("bandi", "story.ch29.s1.l4", "삐— 먹구름 눈 안쪽 기압 급강하. 세 시대의 힘이 한 부대에 모여야 매듭 등불이 버팁니다."),
+                            Pick("story.ch29.s1.p", "편성을 짤게요.", "누구를 데려가죠?"),
+                            L("elder", "story.ch29.s1.l5", "과거와 현대와 미래 — 세 시대에서 한 사람씩 네 곁에 세우렴. 매듭은 세 시대를 함께 묶어야 다시는 풀리지 않는단다."),
+                        } },
+                    new Step { Type = StepType.Party, TextKey = "story.ch29.s2", TextKo = "과거·현대·미래 이야기 동료를 하나씩 들판 명단에 넣기(도감 탭 → 편성)" },
+                    new Step { Type = StepType.Sky, Eye = true, EnterKey = "story.ch29.landed", EnterKo = "🪂 먹구름 눈에 내려섰다 — 소용돌이 한가운데, 매듭 등불이 떨고 있다",
+                        TextKey = "story.ch29.s3", TextKo = "구름섬 서쪽 바람 기둥을 타고 먹구름 눈으로(기둥 안에서 뛰어올라 활공)" },
+                    new Step { Type = StepType.Talk, Npc = "gamyeon", TextKey = "story.ch29.s4", TextKo = "먹구름 눈의 임금과 맞서기",
+                        Lines = new[]
+                        {
+                            L("gamyeon", "story.ch29.s4.l1", "왔구나, 매듭을 묶는 자. 과거와 현재와 미래를 한 줄에 꿰어 오다니 — 그 줄째 끊어 주마."),
+                            L("gamyeon", "story.ch29.s4.l2", "매듭 등불만 꺼지면 여섯 줄은 도로 풀린다. 먹구름아, 등불을 덮어라!"),
+                            Pick("story.ch29.s4.p", "등불은 우리가 지킨다!", "여기서 끝내자."),
+                        } },
+                    new Step { Type = StepType.Defend, Eye = true, Arena = Vector2.zero, Ring = 12f, NameKey = "story.altar_lantern", NameKo = "매듭 등불", Dirs = new[] { 0f, 72f, 144f, 216f, 288f },
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.DrownedGhost), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.EmberImp) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                        },
+                        TextKey = "story.ch29.s5", TextKo = "먹구름 눈의 매듭 등불을 먹구름 무리에게서 지키기" },
+                    new Step { Type = StepType.Duel, Eye = true, Arena = EyeDuel, Foes = new[] { F(FieldEnemy.Kind.Bandit, GoElement.Electro) }, Mask = true, Crown = true,
+                        BossKey = "story.boss.kingtrue", BossKo = "먹구름 임금", HpMul = 20.8f, AtkMul = 2.7f, ScaleMul = 2.4f,
+                        Rot = new[] { FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Shadow, FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Spit },
+                        P2El = GoElement.Electro, Adds = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith) },
+                        EnterKey = "story.ch29.enter", EnterKo = "🌩️ 흰 처음 가면의 임금이 먹구름을 두르고 일어섰다 — 먹구름 임금의 참몸!",
+                        P2Key = "story.ch29.p2", P2Ko = "⚡ 임금이 소용돌이의 먹구름을 몸에 두른다 — 불로 방패를 깨라! 매와 살쾡이가 뛰어든다",
+                        WinKey = "story.ch29.win", WinKo = "🌩️ 먹구름 임금의 흰 가면이 두 쪽으로 갈라지고 — 먹구름이 소용돌이째 흩어진다",
+                        TextKey = "story.ch29.s6", TextKo = "먹구름 임금의 참몸 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "haesol", TextKey = "story.ch29.s7", TextKo = "먹구름 눈의 해솔과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haesol", "story.ch29.s7.l1", "……들려? 바람이 노래해. 먹구름에 먹혀 부르던 노래가 아니라, 내 노래로."),
+                            L("haesol", "story.ch29.s7.l2", "가면이 갈라지던 순간 임금이 뭐라고 했는지 알아? '매듭이 이렇게 따뜻한 줄 몰랐다' — 그러고는 틈 아래로 가라앉았어."),
+                            Pick("story.ch29.s7.p", "이제 정말 끝이야.", "잘 가라, 임금."),
+                            L("haesol", "story.ch29.s7.l3", "먹구름 눈이 맑은 하늘로 바뀌었어. 자, 날개를 펴고 광장까지 — 할머니가 잔칫상을 차려 놨대!"),
+                        } },
+                    new Step { Type = StepType.Go, Gx = 1.2f, Gy = 3.2f, TextKey = "story.ch29.s8", TextKo = "먹구름 눈에서 활공해 청하 광장으로 내려가기" },
+                    new Step { Type = StepType.Talk, Npc = "elder", TextKey = "story.ch29.s9", TextKo = "청하 촌장에게 알리기",
+                        Lines = new[]
+                        {
+                            L("elder", "story.ch29.s9.l1", "하늘 좀 보렴…! 먹구름 한 점 없이 파랗구나. 여섯 매듭 불빛이 별처럼 반짝이고."),
+                            L("scholar", "story.ch29.s9.l2", "비문 맨 끝 줄이 새로 보여! '매듭을 다시 묶은 이들이 있어 청하는 오래 맑으리라' — 방금 새겨진 것 같아."),
+                            L("ferryman", "story.ch29.s9.l3", "허허, 이 늙은이 노가 하늘까지 닿은 셈이로구먼."),
+                            L("haneul", "story.ch29.s9.l4", "비행선은 없어도 오늘 하늘은 제 거예요. 이렇게 맑은 날 기상 보고는 처음 써 봐요!"),
+                            L("bandi", "story.ch29.s9.l5", "삐— 틈 신호 안정. 먹구름 발생률 0퍼센트. 선장님, 이제 어디로 갈까요?"),
+                            L("hanbyeol", "story.ch29.s9.l6", "……글쎄. 틈이 삼켰다 못 돌려놓은 시대 조각들이 아직 곳곳에 굳어 있다더군. 하지만 그건 잔치 뒤에 생각하세."),
+                            Pick("story.ch29.s9.p", "다 같이 잔치해요!", "모두 고마워요."),
+                            L("elder", "story.ch29.s9.l7", "약속대로 잔치다! 이건 청하 마을과 세 시대 동무들이 너에게 주는 거란다. 고맙다 — 우리 대장."),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -2515,7 +2605,7 @@ namespace Saga.Go.Data
             var n = NpcOf(id);
             return GoLocalization.T(n.NameKey, n.NameKo);
         }
-        public static string NpcShort(string id) { var n = NpcOf(id); return GoLocalization.T(n.ShortKey, n.ShortKo); }
+        public static string NpcShort(string id) { var sp = SpotNow(id); if (sp.HasValue && sp.Value.NameKo != null) return GoLocalization.T(sp.Value.NameKey, sp.Value.NameKo); var n = NpcOf(id); return GoLocalization.T(n.ShortKey, n.ShortKo); }
         /// <summary>109-14-21 시대 글자(세계 임무 인물만, 없으면 null).</summary>
         public static string NpcEra(string id) { var n = NpcOf(id); return n.EraKo != null ? GoLocalization.T(n.EraKey, n.EraKo) : null; }
         public static string NpcIdle(string id)
@@ -2650,7 +2740,8 @@ namespace Saga.Go.Data
                 case StepType.Light: radius = LightR; return StepPos(s);
                 case StepType.Seal: return SealPos(s);
                 case StepType.Climb: return s.At != null ? ClimbTopOf(s.At) : s.Yard ? CraneTop : DuelPeak.Top;
-                case StepType.Sky: radius = DraftR; return s.Route != null ? RoutePillarPos(RouteIndex(s.Route)) : s.Obs ? ObsPillarPos : DuelPeak.Top; // 109-14-20 바람 기둥 = 봉우리 정상 · 109-14-35 시간 기둥
+                case StepType.Party: return NpcPos("elder");
+                case StepType.Sky: radius = DraftR; return s.Eye ? EyePillarPos : s.Route != null ? RoutePillarPos(RouteIndex(s.Route)) : s.Obs ? ObsPillarPos : DuelPeak.Top; // 109-14-20 바람 기둥 = 봉우리 정상 · 109-14-35 시간 기둥
                 case StepType.Gather:
                 {
                     Vector3 best = from; float bd = float.MaxValue;

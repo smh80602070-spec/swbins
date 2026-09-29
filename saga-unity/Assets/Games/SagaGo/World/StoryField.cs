@@ -476,8 +476,11 @@ namespace Saga.Go.World
                     case GoStory.StepType.Duel:
                         if (_squad.Count == 0 && GoStory.Flat(p, t) < GoStory.KillNear) SpawnSquad(st, t);
                         break;
+                    case GoStory.StepType.Party:
+                        if (GoStory.PartyOk) { Toast(GoLocalization.T("story.party_ok", "🤝 세 시대의 동료가 한 명단에 모였다"), 3f); StoryState.Advance(); return; }
+                        break;
                     case GoStory.StepType.Sky:
-                        if (st.Route != null ? GoStory.OnRouteTop(GoStory.RouteIndex(st.Route), p) : GoStory.OnSkyTop(p)) // 109-14-20 섬 윗면에 내려섰다 · 109-14-50 그 하늘 섬 윗면
+                        if (st.Eye ? GoStory.OnEyeTop(p) : st.Route != null ? GoStory.OnRouteTop(GoStory.RouteIndex(st.Route), p) : GoStory.OnSkyTop(p)) // 109-14-20 섬 윗면에 내려섰다 · 109-14-50 그 하늘 섬 윗면
                         {
                             Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : GoLocalization.T("story.sky_landed", "☁️ 구름섬에 올라섰다 — 먹구름 무리가 지키고 있다"), 3f);
                             StoryState.Advance();
