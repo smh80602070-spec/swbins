@@ -38,9 +38,9 @@ def _image(fn, colorspace):
     return im
 
 
-def pbr_material(tid, tile_m=2.0, tint=None, rough_mul=1.0, name=None):
+def pbr_material(tid, tile_m=2.0, tint=None, rough_mul=1.0, name=None, gain=1.0, sat=1.0):
     """Poly Haven 재질 세트 → 원리 재질(밝기·거칠기·노멀). tint = 헥스, 곱해 색을 바꾼다. UV 는 미터 단위(tile_m 미터 = 그림 한 장)."""
-    key = (tid, tint, rough_mul, name)
+    key = (tid, tint, rough_mul, name, gain, sat)
     if key in _mat_cache:
         return _mat_cache[key]
     mat = bpy.data.materials.new(name or tid)
@@ -48,7 +48,7 @@ def pbr_material(tid, tile_m=2.0, tint=None, rough_mul=1.0, name=None):
     nt = mat.node_tree
     bsdf = next(n for n in nt.nodes if n.type == 'BSDF_PRINCIPLED')
     if STYLE['mode'] == 'toon':
-        return _toon_material(mat, nt, bsdf, tid, tint, key)
+        return _toon_material(mat, nt, bsdf, tid, tint, key, gain, sat)
     idx = {}
     idx_path = os.path.join(SRC, 'index.json')
     if os.path.exists(idx_path):
@@ -63,6 +63,21 @@ def pbr_material(tid, tile_m=2.0, tint=None, rough_mul=1.0, name=None):
         n.interpolation = 'Linear'
         return n
     d = tex('diff', 'sRGB')
+    d_out = d.outputs['Color'] if d is not None else None
+    if d is not None and (gain != 1.0 or sat != 1.0):
+        # glTF 는 바탕색 배율을 1 보다 크게 못 싣는다(노드가 내보내기에서 사라진다) — 밝기·채도는 그림 픽셀에 구워 넣는다(옷 공방 tint 와 같은 사정)
+        import numpy as np
+        src = d.image
+        w_, h_ = src.size
+        px = np.empty(w_ * h_ * 4, np.float32)
+        src.pixels.foreach_get(px)
+        px = px.reshape(-1, 4)
+        lum = px[:, :3].mean(axis=1, keepdims=True)
+        px[:, :3] = np.clip((lum + (px[:, :3] - lum) * sat) * gain, 0.0, 1.0)
+        img = bpy.data.images.new(f'{tid}_g{gain:g}_s{sat:g}', w_, h_, alpha=False)
+        img.pixels.foreach_set(px.ravel())
+        img.pack()      # 새 그림은 기본이 sRGB — 픽셀을 채운 뒤 색공간을 만지면 버퍼가 지워진다
+        d.image = img
     if d is not None:
         if tint:
             mix = nt.nodes.new('ShaderNodeMix')
@@ -70,10 +85,10 @@ def pbr_material(tid, tile_m=2.0, tint=None, rough_mul=1.0, name=None):
             mix.blend_type = 'MULTIPLY'
             mix.inputs['Factor'].default_value = 1.0
             mix.inputs['B'].default_value = hex_rgba(tint)
-            nt.links.new(d.outputs['Color'], mix.inputs['A'])
+            nt.links.new(d_out, mix.inputs['A'])
             nt.links.new(mix.outputs['Result'], bsdf.inputs['Base Color'])
         else:
-            nt.links.new(d.outputs['Color'], bsdf.inputs['Base Color'])
+            nt.links.new(d_out, bsdf.inputs['Base Color'])
     r = tex('rough', 'Non-Color')
     if r is not None:
         if rough_mul != 1.0:
@@ -94,7 +109,7 @@ def pbr_material(tid, tile_m=2.0, tint=None, rough_mul=1.0, name=None):
     return mat
 
 
-def _toon_material(mat, nt, bsdf, tid, tint, key):
+def _toon_material(mat, nt, bsdf, tid, tint, key, gain=1.0, sat=1.0):
     """툰(원신풍) — 노멀·거칠기를 떼고 바탕색 그림 하나만(256px, 채도 +18%). saga-godot cel_toon 은 바탕색 텍스처 하나만 읽는다."""
     import numpy as np
     idx = json.load(open(os.path.join(SRC, 'index.json'), encoding='utf-8')).get(tid, {}) if os.path.exists(os.path.join(SRC, 'index.json')) else {}
@@ -105,7 +120,8 @@ def _toon_material(mat, nt, bsdf, tid, tint, key):
         px = np.array(im.pixels[:], np.float32).reshape(256, 256, 4)
         rgb = px[..., :3]
         lum = rgb.mean(axis=2, keepdims=True)
-        rgb = np.clip(lum + (rgb - lum) * 1.18, 0, 1)
+        rgb = np.clip(lum + (rgb - lum) * 1.18 * sat, 0, 1)
+        rgb = np.clip(rgb * gain, 0, 1)
         if tint:
             rgb = rgb * np.array(hex_rgba(tint)[:3], np.float32) ** (1 / 2.2)
         px[..., :3] = rgb

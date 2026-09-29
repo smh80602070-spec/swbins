@@ -1,0 +1,60 @@
+{
+ "id": "chinese_hall_01",
+ "era": "past",
+ "footprint": [
+  12.0,
+  7.5
+ ],
+ "floors": [
+  {
+   "h": 3.6
+  }
+ ],
+ "walls": {
+  "mat": "white_stucco",
+  "tile_m": 2.6,
+  "tint": "#f0e4c8"
+ },
+ "base": {
+  "mat": "castle_wall_slates",
+  "h": 0.9,
+  "tile_m": 2.0
+ },
+ "trim": {
+  "mat": "brown_planks_03",
+  "tile_m": 1.0,
+  "tint": "#7a2620"
+ },
+ "door": {
+  "mat": "brown_planks_03",
+  "tint": "#5c1e18",
+  "w": 2.2,
+  "h": 2.6,
+  "wall": 0,
+  "at": 0.5
+ },
+ "windows": {
+  "w": 1.5,
+  "h": 1.7,
+  "sill": 0.8,
+  "gap": 3.0
+ },
+ "glass": {
+  "color": "#e8d8b0"
+ },
+ "posts": {
+  "every": 3.0,
+  "w": 0.34
+ },
+ "roof": {
+  "type": "hip",
+  "pitch_deg": 30,
+  "overhang": 1.4,
+  "mat": "grey_roof_tiles",
+  "tile_m": 1.8,
+  "thick": 0.24,
+  "curve": 0.5,
+  "strips": 9,
+  "ridge": "x"
+ }
+}

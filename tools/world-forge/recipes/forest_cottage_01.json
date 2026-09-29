@@ -1,0 +1,59 @@
+{
+ "id": "forest_cottage_01",
+ "era": "past",
+ "footprint": [
+  5.6,
+  6.4
+ ],
+ "floors": [
+  {
+   "h": 2.55
+  }
+ ],
+ "walls": {
+  "mat": "white_stucco",
+  "tile_m": 2.2,
+  "tint": "#f2e6c8"
+ },
+ "base": {
+  "mat": "castle_wall_slates",
+  "h": 0.35,
+  "tile_m": 1.8
+ },
+ "trim": {
+  "mat": "brown_planks_03",
+  "tile_m": 1.0,
+  "tint": "#5b4230"
+ },
+ "door": {
+  "mat": "brown_planks_03",
+  "tint": "#6a4a32",
+  "w": 1.0,
+  "h": 2.0,
+  "wall": 0,
+  "at": 0.5
+ },
+ "windows": {
+  "w": 0.85,
+  "h": 1.0,
+  "sill": 1.0,
+  "gap": 2.6
+ },
+ "roof": {
+  "type": "gable",
+  "pitch_deg": 46,
+  "overhang": 0.6,
+  "mat": "thatch_roof_angled",
+  "tile_m": 1.6,
+  "thick": 0.28,
+  "ridge": "y",
+  "gain": 1.75,
+  "sat": 2.0
+ },
+ "chimney": {
+  "x": 4.3,
+  "y": 3.2,
+  "w": 0.6,
+  "h": 0.8
+ }
+}

@@ -260,19 +260,25 @@ def build_roof(M, rc, w, d, z_eave, s_roof, s_trim, s_wall_gable):
     return top
 
 
+def pm(cfg, default_tile, name):
+    """레시피 재질 칸 {mat, tile_m, tint, gain, sat} → 원리 재질. gain·sat 는 어두운 사진 재질을 밝고 선명하게(곱하기 색으로는 못 밝힌다)."""
+    return W.pbr_material(cfg['mat'], cfg.get('tile_m', default_tile), cfg.get('tint'), name=name,
+                          gain=cfg.get('gain', 1.0), sat=cfg.get('sat', 1.0))
+
+
 def build(rc, out):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     W.set_style(arg('--style', 'real'))
     M = W.Mesh(rc['id'])
     wl, tr, rf = rc['walls'], rc.get('trim', {}), rc['roof']
     tile = wl.get('tile_m', 2.0)
-    s_wall = M.slot_of('wall', W.pbr_material(wl['mat'], tile, wl.get('tint'), name='wall'))
-    s_base = M.slot_of('base', W.pbr_material(rc['base']['mat'], rc['base'].get('tile_m', 2.0), rc['base'].get('tint'), name='base')) if rc.get('base') else s_wall
-    s_trim = M.slot_of('trim', W.pbr_material(tr.get('mat', 'brown_planks_03'), tr.get('tile_m', 1.0), tr.get('tint'), name='trim'))
-    s_roof = M.slot_of('roof', W.pbr_material(rf['mat'], rf.get('tile_m', 1.5), rf.get('tint'), name='roof'))
+    s_wall = M.slot_of('wall', pm(wl, tile, 'wall'))
+    s_base = M.slot_of('base', pm(rc['base'], 2.0, 'base')) if rc.get('base') else s_wall
+    s_trim = M.slot_of('trim', pm({'mat': 'brown_planks_03', **tr}, 1.0, 'trim'))
+    s_roof = M.slot_of('roof', pm(rf, 1.5, 'roof'))
     s_glass = M.slot_of('glass', W.flat_material('glass', rc.get('glass', {}).get('color', '#8fb4c8'), rough=0.05, alpha=0.35))
     dm = rc.get('door', {})
-    s_door = M.slot_of('door', W.pbr_material(dm.get('mat', 'black_painted_planks'), 1.0, dm.get('tint'), name='door')) if dm else s_trim
+    s_door = M.slot_of('door', pm({'mat': 'black_painted_planks', **dm}, 1.0, 'door')) if dm else s_trim
 
     w, d = rc['footprint']
     floors = rc['floors']

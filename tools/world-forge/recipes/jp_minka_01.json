@@ -1,0 +1,62 @@
+{
+ "id": "jp_minka_01",
+ "era": "past",
+ "footprint": [
+  9.5,
+  7.0
+ ],
+ "floors": [
+  {
+   "h": 2.9
+  }
+ ],
+ "walls": {
+  "mat": "white_stucco",
+  "tile_m": 2.4,
+  "tint": "#e8d9b8"
+ },
+ "base": {
+  "mat": "japanese_stone_wall",
+  "h": 0.45,
+  "tile_m": 2.0
+ },
+ "trim": {
+  "mat": "black_painted_planks",
+  "tile_m": 1.0,
+  "tint": "#34261c"
+ },
+ "door": {
+  "mat": "brown_planks_03",
+  "tint": "#4a3626",
+  "w": 1.5,
+  "h": 2.1,
+  "wall": 0,
+  "at": 0.35
+ },
+ "windows": {
+  "w": 1.3,
+  "h": 1.2,
+  "sill": 0.9,
+  "gap": 2.5
+ },
+ "glass": {
+  "color": "#efe6cc"
+ },
+ "posts": {
+  "every": 2.4,
+  "w": 0.22
+ },
+ "roof": {
+  "type": "hip",
+  "pitch_deg": 42,
+  "overhang": 1.0,
+  "mat": "thatch_roof_angled",
+  "tile_m": 1.8,
+  "thick": 0.3,
+  "curve": 0.1,
+  "strips": 6,
+  "ridge": "x",
+  "gain": 1.75,
+  "sat": 2.0
+ }
+}

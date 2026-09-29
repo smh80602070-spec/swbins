@@ -1,0 +1,6 @@
+{"id":"stone_tower_01","era":"past","footprint":[6.2,6.2],"floors":[{"h":3.4},{"h":3.2},{"h":3.2},{"h":3.0}],
+ "walls":{"mat":"castle_wall_slates","tile_m":2.2},"trim":{"mat":"black_painted_planks","tile_m":1.0,"tint":"#3a3028"},
+ "door":{"mat":"black_painted_planks","w":1.3,"h":2.3,"wall":0,"at":0.5},
+ "windows":{"w":0.5,"h":1.0,"sill":1.2,"gap":3.4},"glass":{"color":"#3a4a5a"},
+ "roof":{"type":"hip","pitch_deg":52,"overhang":0.55,"mat":"roof_slates_02","tile_m":1.4,"thick":0.16,"strips":4},
+ "bands":true}

@@ -1,0 +1,6 @@
+{"id":"barn_01","era":"past","footprint":[9.0,13.0],"floors":[{"h":4.6}],
+ "walls":{"mat":"brown_planks_03","tile_m":2.6,"tint":"#8a3a2a"},"base":{"mat":"castle_wall_slates","h":0.4,"tile_m":2.0},
+ "trim":{"mat":"black_painted_planks","tile_m":1.0,"tint":"#e8e2d4"},
+ "door":{"mat":"brown_planks_03","tint":"#5a3222","w":3.0,"h":3.4,"wall":0,"at":0.5},
+ "windows":{"w":0.8,"h":0.8,"sill":2.6,"gap":3.5},
+ "roof":{"type":"gable","pitch_deg":32,"overhang":0.5,"mat":"corrugated_iron","tile_m":2.0,"thick":0.1,"ridge":"y"}}

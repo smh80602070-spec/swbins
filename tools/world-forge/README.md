@@ -21,6 +21,7 @@ Blender 헤드리스 — 사람 클릭 0회. 결과는 `tools/world-forge/_out/`
 - `preview.py` — 세 방향 미리보기 렌더
 - **트랙별 출력** — 같은 레시피에서: `--style real`(기본, Unity 사실 PBR GLB) · `--style toon`(Godot cel_toon: 노멀·거칠기 없이 바탕색 256px·채도 +18%, GLB 0.5MB) · `render_sprite.py`(웹: 등각 투명 PNG, `--az`·`--el`·`--size`)
 - `recipes/eu_house_01.json` — 서유럽 2층 집(삼각형 약 1900)
+- 종류 늘림(09-29): `chinese_hall_01`(전각·붉은 기둥·큰 처마) · `jp_minka_01`(초가 모임지붕) · `stone_tower_01`(4층 성탑) · `forest_cottage_01`(초가 오두막) · `barn_01`(헛간) · `inn_01`(3층 여관) — 재질 칸 `{mat, tile_m, tint, gain, sat}`: **원본 사진 재질은 어둡다**(회반죽 #72593b·초가 #544f49) — `tint`(곱하기)로는 못 밝히니 `gain`·`sat` 를 그림 픽셀에 구워 쓴다(glTF 는 1 보다 큰 배율을 못 싣는다).
 - `recipes/hanok_01.json` — 한옥(모임지붕·큰 처마·검은 기둥 사이 창·돌 기단, 삼각형 약 1300) · `recipes/modern_block_01.json` — 현대 3층 블록(띠창·평지붕 난간, 약 2900)
 
 ```bash
