@@ -285,7 +285,7 @@ namespace Saga.Go.World
 
         private readonly Dictionary<string, GameObject> _masks = new Dictionary<string, GameObject>();
 
-        private static GameObject AddMask(Transform root, bool crack = false, bool storm = false)
+        internal static GameObject AddMask(Transform root, bool crack = false, bool storm = false)
         {
             Transform head = null;
             var anim = root.GetComponentInChildren<Animator>();
@@ -316,7 +316,7 @@ namespace Saga.Go.World
         }
 
         /// <summary>109-14-20 먹구름 임금 왕관 — 가면 위(머리뼈 곁)에 금빛 테 + 뿔 다섯.</summary>
-        private static void AddCrown(Transform root)
+        internal static void AddCrown(Transform root)
         {
             var mask = FindDeep(root, "Mask");
             if (mask == null) return;

@@ -54,7 +54,18 @@ namespace Saga.Go.World
             FieldCombat.Wiped += OnWiped;
             FieldEnemy.Killed += OnKilled;
             foreach (var s in GoDomain.Sites) SpawnSite(s);
+            foreach (var s in GoDomain.Echoes) SpawnSite(s); // 109-14-56 메아리 — 1차 결말 뒤에만 보인다(`RefreshEchoes`)
+            RefreshEchoes();
         }
+
+        private float _echoWait;
+        /// <summary>메아리 입구를 1차 결말 뒤에만 보이게(진단이 직접 부른다).</summary>
+        public void RefreshEchoes()
+        {
+            bool open = GoDomain.EchoOpen && !StoryState.OffForTest;
+            foreach (var s in GoDomain.Echoes) { var t = transform.Find("Domain_" + s.Id); if (t != null) t.gameObject.SetActive(open); }
+        }
+        public bool EchoShown(string id) { var t = transform.Find("Domain_" + id); return t != null && t.gameObject.activeSelf; }
 
         // ---- 모양 ----
 
@@ -87,7 +98,7 @@ namespace Saga.Go.World
             root.transform.position = SitePos(s);
             var stone = Mat("stone", new Color(0.36f, 0.34f, 0.33f), 0f);
             var glow = Mat(s.Kind.ToString(), GoDomain.ColorOf(s.Kind), 2.2f);
-            if (s.Kind == GoDomain.Kind.Weekly)
+            if (GoDomain.IsBoss(s.Kind))
             {
                 Prim(PrimitiveType.Cylinder, root.transform, new Vector3(0f, 0.3f, 0f), new Vector3(9f, 0.3f, 9f), Mat("altar", new Color(0.12f, 0.11f, 0.14f), 0f));
                 Prim(PrimitiveType.Cube, root.transform, new Vector3(0f, 3.4f, 0f), new Vector3(1.4f, 6f, 1.4f), stone, true);
@@ -110,8 +121,9 @@ namespace Saga.Go.World
         /// <summary>발 자리에서 들어갈 수 있는 입구(11m 안, 없으면 null).</summary>
         public static GoDomain.Site? SiteNear(Vector3 feet)
         {
-            foreach (var s in GoDomain.Sites)
+            foreach (var s in GoDomain.Gates())
             {
+                if (s.Kind == GoDomain.Kind.Echo && StoryState.OffForTest) continue;
                 Vector3 d = SitePos(s) - feet;
                 d.y = 0f;
                 if (d.magnitude <= GoDomain.EnterR) return s;
@@ -127,6 +139,7 @@ namespace Saga.Go.World
             else if (stage < 0 || stage >= GoDomain.Stages.Length) why = GoLocalization.T("domain.why.stage", "없는 단계");
             else if (!GoDomain.StageOpen(stage, Rank)) why = string.Format(GoLocalization.T("domain.why.rank", "여정 등급 {0} 에 열림"), GoDomain.Stages[stage].Ar);
             else if (WorldMapUi.Fighting()) why = GoLocalization.T("domain.why.fight", "싸우는 중엔 못 들어간다");
+            else if (s.Kind == GoDomain.Kind.Echo && !GoDomain.EchoOpen) why = GoLocalization.T("domain.why.echo", "1차 결말 뒤에 열린다");
             return why == null;
         }
 
@@ -142,9 +155,10 @@ namespace Saga.Go.World
         private void SpawnWave(int w)
         {
             var r = Current;
-            var foes = GoDomain.Waves(r.Site.Kind)[w];
             var st = GoDomain.Stages[r.Stage];
             Vector3 c = SitePos(r.Site);
+            if (r.Site.Kind == GoDomain.Kind.Echo) { SpawnEcho(r, st, c); return; }
+            var foes = GoDomain.Waves(r.Site.Kind)[w];
             for (int i = 0; i < foes.Length; i++)
             {
                 float a = i * Mathf.PI * 2f / foes.Length + 0.6f;
@@ -159,6 +173,26 @@ namespace Saga.Go.World
             r.Phase = "fight";
             Toast(r.Site.Kind == GoDomain.Kind.Weekly ? GoLocalization.T("domain.boss_up", "먹구름 이무기가 깨어났다")
                 : string.Format(GoLocalization.T("domain.wave", "파도 {0}/{1}"), w + 1, GoDomain.Waves(r.Site.Kind).Length));
+            Changed?.Invoke();
+        }
+
+        /// <summary>109-14-56 메아리 — 그 이야기 결투 단계의 보스 하나(몸·배율·공격 차례·가면)를 단계 배율로 세운다. 졸개는 없다.</summary>
+        private void SpawnEcho(Run r, GoDomain.Stage st, Vector3 c)
+        {
+            var stp = GoDomain.EchoBoss(r.Site.Id);
+            if (stp == null) { Fail("no boss"); return; }
+            var f = stp.Foes[0];
+            var e = _spawner.SpawnDomainFoe(f.Kind, f.Over, c + Vector3.forward * 8f, $"dm:{r.Site.Id}:0");
+            e.ApplyDomain(st.Hp, st.Atk);
+            e.MakeStoryBoss(GoLocalization.T(stp.BossKey, stp.BossKo), stp.HpMul, stp.AtkMul, stp.ScaleMul);
+            if (stp.Rot != null) e.SetRotation(stp.Rot);
+            if (stp.Mask) StoryField.AddMask(e.transform, stp.Crack, stp.Crown);
+            if (stp.Crown) StoryField.AddCrown(e.transform);
+            e.ForceChase();
+            r.Foes.Add(e);
+            r.Wave = 0;
+            r.Phase = "fight";
+            Toast(string.Format(GoLocalization.T("domain.echo_up", "🔮 {0} 이(가) 깨어났다"), r.Site.Name));
             Changed?.Invoke();
         }
 
@@ -251,6 +285,8 @@ namespace Saga.Go.World
 
         private void Update()
         {
+            _echoWait -= Time.deltaTime;
+            if (_echoWait <= 0f) { _echoWait = 1f; RefreshEchoes(); }
             if (Current == null) return;
             Step(Time.deltaTime);
         }
@@ -301,9 +337,21 @@ namespace Saga.Go.World
                     Toast(GoLocalization.T("domain.boss_p2", "먹구름 이무기가 뇌 방패를 둘렀다 — 불·물로 깨라"));
                 }
             }
+            if (r.Site.Kind == GoDomain.Kind.Echo && !r.P2)
+            {
+                var stp = GoDomain.EchoBoss(r.Site.Id);
+                foreach (var e in r.Foes)
+                {
+                    if (e == null || !e.Alive || !e.IsStoryBoss || e.Hp > e.MaxHp * GoDomain.P2At) continue;
+                    r.P2 = true;
+                    e.RaiseBossShield(stp.P2El, e.MaxHp * GoDomain.P2Shield);
+                    Toast(string.Format(GoLocalization.T("domain.echo_p2", "🔮 {0} 이(가) 원소 방패를 둘렀다 — 상성 원소로 깨라"), e.DisplayName));
+                }
+            }
             if (WaveCleared())
             {
-                if (r.Wave + 1 < GoDomain.Waves(r.Site.Kind).Length) SpawnWave(r.Wave + 1);
+                if (r.Site.Kind == GoDomain.Kind.Echo) GrowTree();
+                else if (r.Wave + 1 < GoDomain.Waves(r.Site.Kind).Length) SpawnWave(r.Wave + 1);
                 else GrowTree();
             }
         }

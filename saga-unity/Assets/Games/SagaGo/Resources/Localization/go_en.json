@@ -2515,6 +2515,18 @@
     { "key": "story.ch29.s9.l6", "value": "…Who knows. They say pieces of ages the rift swallowed and couldn't return are still frozen here and there. But let's think about that after the feast." },
     { "key": "story.ch29.s9.p.a", "value": "Let's all feast together!" },
     { "key": "story.ch29.s9.p.b", "value": "Thank you, everyone." },
-    { "key": "story.ch29.s9.l7", "value": "A feast, as promised! This is what Cheongha Village and your companions from three ages give you. Thank you — our leader." }
+    { "key": "story.ch29.s9.l7", "value": "A feast, as promised! This is what Cheongha Village and your companions from three ages give you. Thank you — our leader." },
+    { "key": "domain.kind.echo", "value": "Echo" },
+    { "key": "domain.loot.echo", "value": "Thunder-Dragon Scales · Arcana · ★5 Artifacts" },
+    { "key": "domain.ley.echo", "value": "A boss you beat in the story stands again as an echo — it raises an elemental shield at half health" },
+    { "key": "domain.site.e_knot", "value": "Echo of the Knot Lantern" },
+    { "key": "domain.site.e_ice", "value": "Echo of the Ice Cave" },
+    { "key": "domain.site.e_cross", "value": "Echo of the Crossing" },
+    { "key": "domain.site.e_dome", "value": "Echo of the Light Dome" },
+    { "key": "domain.echo_up", "value": "🔮 {0} has awakened" },
+    { "key": "domain.echo_p2", "value": "🔮 {0} has raised an elemental shield — break it with a matching element" },
+    { "key": "domain.hud_echo", "value": "{0} {1}%{2}" },
+    { "key": "domain.why.echo", "value": "Opens after the first ending" },
+    { "key": "domain.hud_echo_shield", "value": "Shield" }
   ]
 }

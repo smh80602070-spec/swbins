@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **4360** (표 4305 · 코드 55) — go 2516 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **13** · 넘침 주의 **467**
-- 사람 검수 **0/4360** — 순위1 0/265 · 순위2 0/3371 · 순위3 0/724
+- 짝 **4372** (표 4317 · 코드 55) — go 2528 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **1** · 경고 **1** · 용어 흔들림 **14** · 넘침 주의 **469**
+- 사람 검수 **0/4372** — 순위1 0/265 · 순위2 0/3383 · 순위3 0/724
 
 ## 검수 순서
 
@@ -14,15 +14,15 @@
 
 볼 것: 뜻이 맞는지 · 어색한 직역 · 같은 것을 같은 말로 부르는지(아래 용어 흔들림) · 단추 글은 Title Case, 문장은 문장 끝 부호 · 가명(인물·지명)은 로마자 그대로 · 원작 게임 고유 용어를 쓰지 않는지.
 
-## 자동 오류 — 0 이어야 한다 (0)
+## 자동 오류 — 0 이어야 한다 (1)
 
-없음.
+- `go` `domain.loot.echo` — 원작 용어: Artifacts
 
 ## 경고 — 의도면 두고, 아니면 고친다 (1)
 
 - `go` `map.mark_legend` — 문장부호 앞 띄움
 
-## 용어 흔들림 — 같은 한국어, 다른 영어 (13)
+## 용어 흔들림 — 같은 한국어, 다른 영어 (14)
 
 - 「물결」 → **Tidal** (go:era.foe.pre_hydro, go:kit.word.hydro) · **Mulgyeol** (go:wq.short.researcher)
 - 「회오리」 → **Whirl** (go:field.re.swirl) · **swirls** (go:ach.unit.swirl)
@@ -30,6 +30,7 @@
 - 「강화석 +{0}」 → **Ore +{0}** (go:weapon.ore_plus) · **Enhancement Ore +{0}** (go:fish.got_ore)
 - 「바꾸기」 → **Switch** (go:weapon.btn_swap, go:artifact.btn_swap) · **Trade** (go:fish.swap)
 - 「요리」 → **Cooking** (go:cook.button, go:cook.title) · **dishes cooked** (go:ach.unit.cook)
+- 「방패」 → **Shield Wall** (go:kit.noun.shield) · **Shield** (go:domain.hud_echo_shield)
 - 「끝」 → **Complete** (go:story.state_done, go:wq.state_done) · **Done** (go:ach.end)
 - 「청하 촌장에게 알리기」 → **Report to the Elder of Cheongha** (go:story.ch1.s8, go:story.ch2.s4, go:story.ch3.s9 외 4) · **Report to the elder of Cheongha** (go:story.ch8.s12, go:story.ch9.s12) · **Report to the Village Elder of Cheongha** (go:story.ch29.s9)
 - 「……」 → **……** (go:story.idle.wanderer, go:story.idle.haesol) · **…** (go:story.idle.gamyeon, go:story.idle.king)
@@ -38,7 +39,7 @@
 - 「올라가 볼게요.」 → **I'll climb it.** (go:story.ch16.s5.p.a) · **I'll go up and see.** (go:story.ch25.s1.p.a)
 - 「여기서 끝내자.」 → **End it here.** (go:story.ch20.s9.p.b) · **Let's end this here.** (go:story.ch29.s4.p.b)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 467)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 469)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -62,6 +63,7 @@
 | 35→63 | go | `wq.lighthouse.s1.l1` | Every night a light signal comes from the far end of the east bank. The pattern is an old beacon code… but the waveform is brand new. |
 | 38→67 | go | `story.ch18.s10.l2` | Beep — star-ship, bell and last train: all three signals confirmed. The coordinates the captain left open — the first station beyond the rift. |
 | 17→33 | go | `story.ch16.s2` | Go through the Rift Pass at the village's southern end to Galaxy Port |
+| 10→22 | go | `domain.loot.echo` | Thunder-Dragon Scales · Arcana · ★5 Artifacts |
 | 8→18 | go | `story.ch16.s9.p.a` | The captain went to the temple ruins? |
 | 2→9 | forest | `finish.jangpan` | Oiled Paper Floor |
 | 3→10 | go | `kit.sig.zhuge.skill` | Eight Trigrams Array |
@@ -73,4 +75,3 @@
 | 39→67 | go | `story.ch28.s1.l4` | (Signal) Six points of light have appeared on the star-ship's route chart. The rock island's point is blinking in the order sun → star → moon. |
 | 18→33 | go | `story.ch15.s9` | Carry the three wing fragments to the star-ship on Frostpeak Plateau |
 | 12→24 | go | `story.ch29.s1` | Go to the Village Elder of Cheongha in the square |
-| 24→43 | go | `wq.idle.researcher` | Something like an old lighthouse beam flickers on the night water. I should write it down. |

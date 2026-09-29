@@ -102,7 +102,7 @@ namespace Saga.Go.UI
         {
             var df = DomainField.Instance;
             if (df == null || _cardSite == null) return;
-            foreach (var s in GoDomain.Sites) if (s.Id == _cardSite) { if (df.Enter(s, stage)) _card.SetActive(false); break; }
+            foreach (var s in GoDomain.Gates()) if (s.Id == _cardSite) { if (df.Enter(s, stage)) _card.SetActive(false); break; }
             Refresh();
         }
 
@@ -157,8 +157,12 @@ namespace Saga.Go.UI
                 if (run.Phase == "wait") line += " · " + GoLocalization.T("domain.hud_wait", "곧 시작");
                 else if (run.Phase == "fight")
                 {
-                    if (run.Site.Kind != GoDomain.Kind.Weekly) line += " · " + string.Format(GoLocalization.T("domain.wave", "파도 {0}/{1}"), run.Wave + 1, GoDomain.Waves(run.Site.Kind).Length);
+                    if (!GoDomain.IsBoss(run.Site.Kind)) line += " · " + string.Format(GoLocalization.T("domain.wave", "파도 {0}/{1}"), run.Wave + 1, GoDomain.Waves(run.Site.Kind).Length);
                     line += " · " + string.Format(GoLocalization.T("domain.hud_left", "{0}초"), Mathf.Max(0, Mathf.CeilToInt(run.Left)));
+                    if (run.Site.Kind == GoDomain.Kind.Echo)
+                        foreach (var e in run.Foes)
+                            if (e != null && e.IsStoryBoss && e.Alive)
+                                line += "\n" + string.Format(GoLocalization.T("domain.hud_echo", "{0} {1}%{2}"), e.DisplayName, Mathf.CeilToInt(e.Hp / e.MaxHp * 100f), e.ShieldHp > 0f ? " · " + GoLocalization.T("domain.hud_echo_shield", "방패") : "");
                     foreach (var e in run.Foes)
                         if (e != null && e.IsWeeklyBoss && e.Alive)
                             line += "\n" + string.Format(GoLocalization.T("domain.hud_boss", "먹구름 이무기 {0}%{1}"), Mathf.CeilToInt(e.Hp / e.MaxHp * 100f), e.ShieldHp > 0f ? " · " + GoLocalization.T("domain.hud_shield", "뇌 방패") : "");
@@ -181,12 +185,12 @@ namespace Saga.Go.UI
         private void FillCard(GoDomain.Site s)
         {
             _cardTitle.text = $"{s.Name} · {GoDomain.KindName(s.Kind)}";
-            string cost = s.Kind == GoDomain.Kind.Weekly
+            string cost = GoDomain.IsBoss(s.Kind)
                 ? string.Format(GoLocalization.T("domain.cost_weekly", "받을 때 원기 {0}(이번 주 {1}번 — 처음 {2}번은 {3})"), DomainState.CostOf(s.Kind), DomainState.WeeklyUsed, GoDomain.WeeklyHalfN, GoDomain.WeeklyHalf)
                 : string.Format(GoLocalization.T("domain.cost", "받을 때 원기 {0}"), DomainState.CostOf(s.Kind));
             _cardInfo.text = string.Format(GoLocalization.T("domain.card", "보상 {0} · 터 기운: {1}\n{2} · 제한 {3}초 · 원판을 벗어나면 실패(원기는 안 쓴다)\n{4} · {5}"),
                 GoDomain.LootName(s.Kind), GoDomain.LeyText(s.Kind),
-                s.Kind == GoDomain.Kind.Weekly ? GoLocalization.T("domain.one_boss", "보스 하나") : GoLocalization.T("domain.two_waves", "파도 둘"),
+                GoDomain.IsBoss(s.Kind) ? GoLocalization.T("domain.one_boss", "보스 하나") : GoLocalization.T("domain.two_waves", "파도 둘"),
                 Mathf.RoundToInt(GoDomain.LimitOf(s.Kind)), cost, ResinLine());
             var df = DomainField.Instance;
             for (int i = 0; i < 3; i++)

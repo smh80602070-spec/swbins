@@ -2591,6 +2591,13 @@ namespace Saga.Go.Data
             new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
         };
 
+        /// <summary>109-14-56 메아리 — 그 보스 이름 열쇠를 쓰는 이야기 결투 단계(없으면 null).</summary>
+        public static Step DuelByBoss(string bossKey)
+        {
+            foreach (var c in Chapters) foreach (var s in c.Steps) if (s.Type == StepType.Duel && s.BossKey == bossKey) return s;
+            return null;
+        }
+
         public static int NpcIndex(string id)
         {
             for (int i = 0; i < Npcs.Length; i++) if (Npcs[i].Id == id) return i;
