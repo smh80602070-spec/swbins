@@ -4495,4 +4495,4 @@ SAGA-HANDOFF 열린 항목 "tower_ruin.glb(역참) 아이콘 굽기 — 여섯 �
 - 도구: go-ch-auto 에 `members` 인자(이야기 동료 전부 지급). 시험 측정: 지키기·보스 클리어에도 골드가 붙으니 장 보상은 마지막 대화 직전 기준으로 잰다.
 - sw go-v6.36.0 · **실기 확인 대기**(먹구름 눈 위 지키기·참몸 싸움 공간·소용돌이 걷힌 뒤 하늘 뜰·편성 시험 글).
 - 8부 끝. **다음 세션**: 순서 56(52-5 결말 뒤 · 이야기 보스 재대결·밤의 잔불 — 주간 보스(⑲-9)와 잇는 결말 뒤 콘텐츠). 원본 `grep -n "^| 52-5 " saga-godot/PLAN.md`. 그 뒤 9부(57~60: 굳은 거리 무대·30~32장)·10부.
-- ⑲ 접은 순서 +55 (해시는 푸시 뒤 채움) story ch29·새 단계 party·`MEMBER_TIME`·눈 위 단계(spot eye)·defend bare·storm_king_true·가면 first/shadow.
+- ⑲ 접은 순서 +55 `802b0d5e` story ch29·새 단계 party·`MEMBER_TIME`·눈 위 단계(spot eye)·defend bare·storm_king_true·가면 first/shadow.
