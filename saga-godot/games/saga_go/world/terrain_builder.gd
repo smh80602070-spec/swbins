@@ -61,6 +61,8 @@ const LEGEND := {
 }
 ## 106장 ㊺ 지역마다 같은 글자의 색을 바꾼다 — 서리봉 고원의 산은 눈 덮인 흰 산, 숲 바닥은 서늘한 침엽수 빛.
 ## 흰 정점색(세 채널 모두 밝음)은 terrain_triplanar.gdshader 가 풀 텍스처 대신 눈으로 칠한다(다른 지역 글자엔 해당 없음).
+## 2026-09-30 — 풀 텍스처가 초록이라 정점색을 누렇게 해도 땅이 초록 그대로였다(창 모드 w_plain). 가을빛 지역은 텍스처의 색기를 빼고(밝기만 남기고) 정점색이 빛깔을 정하게 한다.
+const REGION_TEX_DESAT := {"amber": 0.85, "vault": 0.9, "fork": 0.6}
 const REGION_COLORS := {
 	"frost": {"^": Color(0.84, 0.87, 0.91), "T": Color(0.2, 0.3, 0.26)},
 	## 106장 ㊾ 틈새 갈림길 — 시간 틈 안쪽이라 풀빛이 푸르스름하게 바래고, 산은 보랏빛 돌.
@@ -68,11 +70,11 @@ const REGION_COLORS := {
 	## 106장 ㊿ 잠긴 도읍 — 잿빛 모래·푸른 바위 산·바다 밑은 청록 돌.
 	"sunken": {"D": Color(0.5, 0.52, 0.46), "^": Color(0.42, 0.47, 0.5), "~": Color(0.22, 0.3, 0.3), "T": Color(0.18, 0.3, 0.24)},
 	## 106장 53 굳은 거리 — 포장은 아스팔트 잿빛, 풀은 호박빛으로 바랜 누런 풀, 산은 황토빛 돌, 장터 바닥은 다진 흙.
-	"amber": {"M": Color(0.3, 0.3, 0.32), ".": Color(0.5, 0.47, 0.3), "T": Color(0.28, 0.27, 0.15), "^": Color(0.56, 0.48, 0.38), "H": Color(0.62, 0.5, 0.34)},
+	"amber": {"M": Color(0.3, 0.3, 0.32), ".": Color(0.74, 0.58, 0.24), "T": Color(0.28, 0.27, 0.15), "^": Color(0.56, 0.48, 0.38), "H": Color(0.62, 0.5, 0.34)},
 	## 106장 54 갈무리 벌 — 가을 벌판·누런 밭·밝은 잿빛 금고·야적장 포장·마른 흙빛 곳간 마당.
-	"vault": {".": Color(0.46, 0.5, 0.28), "F": Color(0.72, 0.62, 0.3), "M": Color(0.58, 0.61, 0.66), "^": Color(0.5, 0.47, 0.44), "H": Color(0.64, 0.54, 0.38), "T": Color(0.3, 0.34, 0.16)},
+	"vault": {".": Color(0.78, 0.64, 0.22), "F": Color(0.72, 0.62, 0.3), "M": Color(0.58, 0.61, 0.66), "^": Color(0.5, 0.47, 0.44), "H": Color(0.64, 0.54, 0.38), "T": Color(0.3, 0.34, 0.16)},
 	## 106장 55 세갈래 고을 — 멈춘 늦여름 풀빛(호박빛이 살짝 도는)·흙 마당·자갈 공사장·누런 밭.
-	"fork": {".": Color(0.5, 0.52, 0.28), "F": Color(0.74, 0.62, 0.3), "M": Color(0.5, 0.48, 0.45), "^": Color(0.48, 0.44, 0.4), "H": Color(0.66, 0.55, 0.4), "T": Color(0.3, 0.34, 0.16)},
+	"fork": {".": Color(0.66, 0.6, 0.24), "F": Color(0.74, 0.62, 0.3), "M": Color(0.5, 0.48, 0.45), "^": Color(0.48, 0.44, 0.4), "H": Color(0.66, 0.55, 0.4), "T": Color(0.3, 0.34, 0.16)},
 }
 
 ## 눈·얼음·모래 표시(정점 CUSTOM0 .r = 눈 · .g = 얼음 · .b = 모래) — terrain_triplanar.gdshader 가 이 값으로 칠한다.
@@ -392,6 +394,7 @@ func _build() -> void:
 	mat.set_shader_parameter("stone_albedo", load("res://assets/generated/tiles/stone_512.png"))
 	mat.set_shader_parameter("stone_normal", load("res://assets/generated/tiles/stone_512_n.png"))
 	mat.set_shader_parameter("stone_rough", load("res://assets/generated/tiles/stone_512_r.png"))
+	mat.set_shader_parameter("hue_desat", float(REGION_TEX_DESAT.get(region_id, 0.0)))
 
 	var mi := MeshInstance3D.new()
 	mi.mesh = mesh

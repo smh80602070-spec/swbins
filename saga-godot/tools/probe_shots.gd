@@ -97,6 +97,7 @@ const SHOTS := [
 	["f_n_close", "frost", Vector2(5.0, 3.35), Vector3.ZERO, Vector2(5.0, 3.0), -60.0, 8.0, "nofog"],
 	["a_tower_far", "amber", Vector2(4.0, 3.6), Vector3.ZERO, Vector2(4.0, 1.4), -3.0, 10.0, ""],
 	["a_cross_far", "amber", Vector2(4.3, 6.2), Vector3.ZERO, Vector2(4.3, 4.2), -3.0, 10.0, ""],
+	["w_plain", "vault", Vector2(1.5, 2.5), Vector3.ZERO, Vector2(1.5, 1.5), -3.0, 10.0, ""],
 	["w_vault_far", "vault", Vector2(4.0, 4.2), Vector3.ZERO, Vector2(4.0, 1.5), -3.0, 10.0, ""],
 	["w_granary_far", "vault", Vector2(2.6, 6.6), Vector3.ZERO, Vector2(1.4, 5.4), -3.0, 10.0, ""],
 	["k_tower_far", "fork", Vector2(4.0, 4.6), Vector3.ZERO, Vector2(4.0, 1.2), -3.0, 10.0, ""],

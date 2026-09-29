@@ -23,6 +23,8 @@ uniform sampler2D stone_rough;
 
 uniform float tile_scale : hint_range(0.05, 2.0) = 0.4; // 텍스처 반복 밀도(1/m)
 uniform float patch_scale : hint_range(0.02, 1.0) = 0.12; // 얼룩 크기
+// 2026-09-30 — 풀 텍스처의 초록기를 얼마나 뺄지(0 = 그대로). 가을빛 지역(정점색이 누런 땅)만 올린다.
+uniform float hue_desat : hint_range(0.0, 1.0) = 0.0;
 uniform vec3 cliff_color = vec3(0.62, 0.53, 0.42); // 가파른 비탈 빛깔(terrain_builder.gd CLIFF_COLOR)
 
 varying vec3 world_pos;
@@ -115,6 +117,7 @@ void fragment() {
 	float wsum = grass_w + dirt_w + stone_w;
 
 	vec3 detail_albedo = (grass_a * grass_w + dirt_a * dirt_w + stone_a * stone_w) / wsum;
+	detail_albedo = mix(detail_albedo, vec3(dot(detail_albedo, vec3(0.3, 0.59, 0.11)) * 1.55), hue_desat * (1.0 - stone_w) * (1.0 - smoothstep(4.0, 8.0, world_pos.y)));
 	vec3 detail_normal = normalize(grass_n * grass_w + dirt_n * dirt_w + stone_n * stone_w);
 	float detail_rough = (grass_r * grass_w + dirt_r * dirt_w + stone_r * stone_w) / wsum;
 
