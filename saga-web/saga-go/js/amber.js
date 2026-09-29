@@ -53,6 +53,7 @@
   var CRYSTALS = [{ name: '신호등 앞', off: [11, -9] }, { name: '버스 정류장', off: [-14, 7] }, { name: '우체통 곁', off: [6, 15] }];
   var LIGHTS = [[9, 9], [-9, 9], [9, -9], [-9, -9]];            // 네거리 신호등 넷
   var CH30 = 29, CH31 = 30, CH32 = 31, PASS_CH = 29;              // 0부터
+  var CLOCK_WIND_STEP = 5;
   var CRYSTAL_OFF_FROM = [5, 6, 7], DOME_FROM = [CH31, 2], TOWER_FROM = [CH32, 3];
   var LANDMARK_R = 30, SMALL_R = function (g) { return g ? 30 : 14; };
   var REWARD_BIG = { gold: 180, dust: 2, exp: 50 }, REWARD_SMALL = { gold: 70, exp: 24 };
@@ -126,6 +127,8 @@
   function domeBroken() { return reached(DOME_FROM[0], DOME_FROM[1]); }
   function towerMelted() { return reached(TOWER_FROM[0], TOWER_FROM[1]); }
   function lightsGreen() { return storyAt().ch > CH32; }
+  /** 괘종시계·처마 시계 바늘이 도나 — 31장 다섯째(5)단계(되감는 동안) */
+  function clockWinding() { var s = storyAt(); return s.ch === CH31 && (s.step || 0) === CLOCK_WIND_STEP; }
   function inRegion(x, y) { var c = center(); return on() && !!c && Math.hypot(x - c.x, y - c.y) <= 620; }
 
   var poleMemo = null;
@@ -287,6 +290,8 @@
         box(T3, g, m.dark, 1.4, 2.6, 0.2, 2.4, 1.3, 3.55);                                              // 문
         box(T3, g, m.alloy, 2.6, 1.6, 0.15, -2.2, 2.6, 3.55);                                            // 쇼윈도
         ball(T3, g, m.line, 0.9, 0, 5.6, 3.5).scale.z = 0.25;                                             // 처마 시계
+        o.hands = new T3.Group(); o.hands.position.set(0, 5.6, 3.72); g.add(o.hands);                     // 바늘(되감는 동안 돈다, ⑲-59)
+        box(T3, o.hands, m.dark, 0.08, 0.7, 0.04, 0, 0.3, 0); box(T3, o.hands, m.dark, 0.5, 0.06, 0.04, 0.2, 0, 0);
         box(T3, g, m.wood, 1.1, 3.2, 0.9, -6.4, 1.6, 0); ball(T3, g, m.bronze, 0.3, -6.4, 2.4, 0.5);      // 서쪽 괘종시계
         break;
       }
@@ -352,6 +357,7 @@
       if (o.crystals.length) { o.crystals.forEach(function (cg, i) { cg.visible = !crystalOff(i); }); }
       if (o.lights.length) { var gr = lightsGreen(); o.lights.forEach(function (l, i) { l.material = gr ? mats.green : (crystalOff(2) ? (i % 2 ? mats.red : mats.off) : mats.red); }); }
       if (o.dome) { o.dome.visible = !domeBroken(); o.shell.visible = !domeBroken(); }
+      if (o.hands) { o.hands.rotation.z = clockWinding() ? -clock * 4 : -0.6; }
       if (st.model === 'tower' && o.shell) { o.shell.visible = !towerMelted(); }
     });
   }
@@ -371,7 +377,7 @@
     REGION: REGION, LANDMARKS: LANDMARKS, SMALL: SMALL, CRYSTALS: CRYSTALS, LIGHTS: LIGHTS, AMBER_OFF: AMBER_OFF, PASS_CH: PASS_CH,
     CRYSTAL_OFF_FROM: CRYSTAL_OFF_FROM, DOME_FROM: DOME_FROM, TOWER_FROM: TOWER_FROM, LANDMARK_R: LANDMARK_R, TOWER_H: TOWER_H, TOWER_HALF: TOWER_HALF, DOME_R: DOME_R,
     on: on, center: center, sites: sites, siteById: siteById, spot: spot, poles: poles, rectsIn: rectsIn, inRegion: inRegion,
-    passOpen: passOpen, crystalOff: crystalOff, domeBroken: domeBroken, towerMelted: towerMelted, lightsGreen: lightsGreen,
+    passOpen: passOpen, crystalOff: crystalOff, domeBroken: domeBroken, towerMelted: towerMelted, lightsGreen: lightsGreen, clockWinding: clockWinding, CLOCK_WIND_STEP: CLOCK_WIND_STEP,
     found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks, tick: tick,
     _resetForTest: function () { memo = null; centerMemo = undefined; rectMemo = null; poleMemo = null; fx = {}; accT = 0; }
   };

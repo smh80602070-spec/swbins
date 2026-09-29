@@ -14584,6 +14584,74 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '여덟 단계 · 한별(나루) → 어귀 → 네거리 짐승 → 초롱 → 굳은 자리 셋(5·6·7 녹음) → 초롱 · 🪢+7 🪙+7750 · 신호등은 아직 빨강' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-59 이야기 9부 제31장 · 호박 속 장터 (story ch31·너울·조각 도둑 · amber 결정 돔 깨짐 단계 맞물림·괘종시계 바늘, PLAN §5 ⑲-59) ── */
+    t('이야기 ⑲-59 — 31장 일곱 단계(Lv68) · 석등 다 켜면(2) 결정 돔 깨짐(벽 사라짐) · 흐름: 초롱 → 장터 석등 해·달·별(틀리면 ✕) → 너울 → 조각 도둑 쫓기(네거리 둘레 길) → 너울 → 괘종시계 지키기 3·4·5(시계방 벽 밖) → 초롱 · 초롱·너울 자리', function () {
+      var rig = stRig(68), AM = DG.amber, ST = DG.story, FC = DG.fieldCombat, TL = DG.talent, r = {}, i;
+      try {
+        AM._resetForTest(); delete C.save.amber;
+        var c = ST.CHAPTERS[30], S31 = c.steps;
+        r.table = c.id === 'ch31' && c.ar === 68 && !c.join && S31.length === 7 && c.reward.knot === 7 && c.reward.gold === 8000 &&
+          S31.map(function (q) { return q.type; }).join() === 'talk,seal,talk,chase,talk,defend,talk' && S31[1].order.join() === 'sun,moon,star' && S31[1].bare && S31[5].bare &&
+          S31[5].waves.map(function (w) { return w.length; }).join() === '3,4,5' && S31[3].npc === 'partthief';
+        /* 표 ↔ 이 장 — 돔은 석등(1) 다음(2)부터 · 바늘은 지키기(5) 동안 */
+        r.link = AM.DOME_FROM.join() === '30,2' && S31[1].type === 'seal' && S31[1].spot === 'am_market' && AM.CLOCK_WIND_STEP === 5 && S31[5].type === 'defend';
+        var mk = AM.siteById('market'), ck = AM.siteById('clock'), cr = AM.siteById('cross');
+        function np(k, si) { C.save.story = { ch: 30, step: si }; return ST.npcPos(k); }
+        function rectAt(p) { return DG.world3d.houseRects(Math.floor(p.x / 48), Math.floor(p.y / 48)).some(function (q) { return frInRect(q, p.x, p.y); }); }
+        function amRectAt(p) { return AM.rectsIn(Math.floor(p.x / 48), Math.floor(p.y / 48)).some(function (q) { return frInRect(q, p.x, p.y); }); }
+        /* 인물 — 초롱: 1~4 장터 동쪽 앞·나머지 시계방 앞 / 너울: 셋째(2)부터 장터 가운데(뒤에도) / 조각 도둑: 넷째(3)에만 */
+        r.npcs = st10Eq(np('chorong', 0), { x: ck.x - 3, y: ck.y + 6 }) && st10Eq(np('chorong', 1), { x: mk.x + 9, y: mk.y }) && st10Eq(np('chorong', 4), { x: mk.x + 9, y: mk.y }) && st10Eq(np('chorong', 5), { x: ck.x - 3, y: ck.y + 6 }) &&
+          (np('neoul', 1), !ST.visible('neoul')) && st10Eq(np('neoul', 2), { x: mk.x, y: mk.y + 3.8 }) && ST.visible('neoul') && st10Eq(np('neoul', 6), { x: mk.x, y: mk.y + 3.8 }) &&
+          (np('partthief', 2), !ST.visible('partthief')) && (np('partthief', 3), ST.visible('partthief')) && (np('partthief', 4), !ST.visible('partthief'));
+        C.save.story = { ch: 31, step: 0 }; r.after = st10Eq(ST.npcPos('neoul'), { x: mk.x, y: mk.y + 3.8 }) && st10Eq(ST.npcPos('chorong'), { x: ck.x - 3, y: ck.y + 6 });
+        /* 도둑 길 — 네거리 둘레 열한 점, 시계방·신상·장터·탑에 안 걸린다 */
+        var TP = ST.AMBER_THIEF_PATH;
+        r.path = TP.length === 11 && TP.every(function (o) { var d = Math.hypot(o[0], o[1]); return d >= 41 && d <= 59; }) &&
+          TP.every(function (o) { var p = { x: cr.x + o[0], y: cr.y + o[1] }; return !amRectAt(p) && ['clock', 'market', 'statue', 'tower', 'rail'].every(function (id) { var s = AM.siteById(id); return Math.hypot(s.x - p.x, s.y - p.y) > 12; }); });
+        C.save.story = { ch: 30, step: 0 };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('chorong')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        /* 장터 석등 — 해 → 달 → 별, 틀리면 ✕. 다 켜면 돔이 깨진다(벽 사라짐) */
+        var lamps = ST.sealLamps(ST.step()), byK = {};
+        lamps.forEach(function (l) { byK[l.k] = l; });
+        function hitLamp(k) { C.emit('field:element', { el: 'wind', x: byK[k].x, y: byK[k].y, r: 1, t: 'skill' }); }
+        var domeWall0 = rectAt(mk) && !AM.domeBroken();
+        r.lampsAt = lamps.every(function (l) { return Math.hypot(l.x - mk.x, l.y - mk.y) > AM.DOME_R + 0.5 && Math.hypot(l.x - mk.x, l.y - mk.y) < 8; });
+        hitLamp('star'); var wrong = ST.sealLit() === 0 && C.save.story.step === 1;
+        hitLamp('sun'); hitLamp('moon'); hitLamp('star');
+        r.seal = domeWall0 && wrong && C.save.story.step === 2 && AM.domeBroken() && !rectAt(mk);
+        stGo(ST.npcPos('neoul')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        /* 조각 도둑 — 곁이면 달아나고(길 위), 붙잡으면 다음 */
+        ST.stepChase(0.1);
+        var cs0 = ST.chaseState(); stGo({ x: cs0.x + 6, y: cs0.y }); ST.stepChase(0.1);
+        var cs = ST.chaseState(), h0 = cs ? { x: cs.x, y: cs.y } : null, onPath = true;
+        for (i = 0; i < 90; i++) { ST.stepChase(0.1); cs = ST.chaseState(); if (Math.hypot(cs.x - cr.x, cs.y - cr.y) > 62) { onPath = false; } }
+        r.flee = !!cs && cs.npc === 'partthief' && onPath && Math.hypot(cs.x - h0.x, cs.y - h0.y) > 3;
+        stGo({ x: cs.x + 1, y: cs.y }); ST.stepChase(0.01);
+        r.chase = C.save.story.step === 4;
+        stGo(ST.npcPos('neoul')); r.t4 = stTalkAll(ST) && C.save.story.step === 5;
+        /* 괘종시계 지키기 — 시계방 서쪽, 물결 3·4·5(땅), 시계방 벽 안엔 안 나온다, 바늘은 이 단계에만 돈다 */
+        var dt = ST.targetOf(ST.step());
+        r.defAt = st10Eq(dt, { x: ck.x - 8, y: ck.y + 2 }) && AM.clockWinding() && (C.save.story = { ch: 30, step: 4 }, !AM.clockWinding()) && (C.save.story = { ch: 30, step: 6 }, !AM.clockWinding()) && (C.save.story = { ch: 30, step: 5 }, true);
+        stGo({ x: dt.x, y: dt.y + 2 }); FC.tick(0.05); ST.stepDefend(0.1);
+        var S = FC.state(), sizes = [], okPos = true;
+        for (i = 0; i < 3; i++) {
+          if (i) { ST.defState().t = ST.DEFEND_WAVE_SEC; ST.stepDefend(0.01); }
+          var cw = S.camps[ST.waveKey(i)];
+          sizes.push(cw ? cw.uids.length : 0);
+          if (cw && !cw.uids.every(function (u) { var f0 = S.foes[u]; return !f0.sky && !amRectAt(f0) && Math.hypot(f0.x - dt.x, f0.y - dt.y) < ST.DEFEND_RING + 1; })) { okPos = false; }
+          stKillCamp(S, ST.waveKey(i)); FC.tick(0.05);
+        }
+        ST.stepDefend(0.01);
+        r.defend = sizes.join() === '3,4,5' && okPos && C.save.story.step === 6;
+        gold0 = C.save.player.gold; k0 = m.knot || 0;
+        stGo(ST.npcPos('chorong')); r.end = stTalkAll(ST) && C.save.story.ch === 31 && C.save.story.step === 0 && m.knot === k0 + 7 && C.save.player.gold === gold0 + 8000;
+        r.done = AM.domeBroken() && [0, 1, 2].every(AM.crystalOff) && !AM.towerMelted();
+      } finally { AM._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '일곱 단계 · 석등 해·달·별 → 결정 돔 깨짐 → 너울 → 도둑 쫓기 → 너울 → 괘종시계 지키기 3·4·5 → 초롱 · 🪢+7 🪙+8000 · 바늘' : ('실패 ' + bad.join(','));
+    });
+
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */
     t('3인칭 이동 Q1 — 3D 로 시점을 돌리면 키·스틱 방향도 같이 돈다(W = 카메라가 보는 쪽) · 3D 가 꺼져 있으면 그대로', function () {
       var W = DG.world, W3 = DG.world3d, r = {};

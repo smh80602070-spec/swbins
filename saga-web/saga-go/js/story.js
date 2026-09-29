@@ -100,6 +100,8 @@
     sr_orbit_duel: { sr: 'orbit_duel' }, sr_orbit_haneul: { sr: 'orbit_haneul' }, sr_orbit_bandi: { sr: 'orbit_bandi' } };
   /* ⑲-40 18장 선장의 잔상 — 은하역 가운데에서 남쪽 선로(z 2~42) 위를 지그재그로, 선로 끝 너머 틈 쪽까지 */
   /* ⑲-50 25장 구름 씨앗 드론 — 잔해 섬 가운데에서 섬 둘레 반지름 11~18m(조종실·프로펠러·꼬리 날개를 비켜) */
+  /* ⑲-59 31장 조각 도둑 — 네거리 가운데에서 반지름 42~58m 를 열한 점으로 한 바퀴 반(시계방 서쪽·신상을 비켜) */
+  var AMBER_THIEF_PATH = (function () { var o = [], k; for (k = 0; k < 11; k++) { var a = (200 + k * 34) * Math.PI / 180, r = 42 + (k % 3) * 8; o.push([Math.round(Math.cos(a) * r * 10) / 10, Math.round(Math.sin(a) * r * 10) / 10]); } return o; })();
   var SEED_DRONE_PATH = [[8, -9], [-2, -14], [-13, -5], [-14, 10], [0, 16], [13, 9]];
   var CAPTAIN_PATH = [[0, 6], [1.5, 16], [-1.5, 26], [1.5, 36], [-1, 46], [2, 58], [-2, 68]];
   /* ⑲-36 15장 고원 자리(비행선 가운데에서) — 달음은 선체 밖 서쪽, 날개 이음매는 선체 밖 남서쪽 */
@@ -232,7 +234,15 @@
     /* ⑲-58 시계 수리공 초롱(현대) — 손목시계 속 틈 조각 태엽 덕에 혼자 안 굳었다. 9부(30장~)부터 늘 시계방 서쪽 앞 */
     chorong:  { id: 'story_chorong',  name: '시계 수리공 초롱', short: '초롱', zone: 'saltflat', spot: 'am_clock', off: [-3, 6], color: '#5c8070',
       idle: '다른 시계는 다 멈췄는데 내 손목시계만 째깍거려요.',
-      appear: [{ ch: 29, chTo: 999, from: 0, to: 999, spot: 'am_clock', off: [-3, 6] }] },
+      appear: [{ ch: 30, from: 1, to: 4, spot: 'am_market', off: [9, 0] },                                     // ⑲-59 31장 석등·너울·도둑·저울추 — 장터 동쪽 앞(석등 고리 밖)
+        { ch: 29, chTo: 999, from: 0, to: 999, spot: 'am_clock', off: [-3, 6] }] },
+    /* ⑲-59 장돌뱅이 너울(과거) — 장터 결정 속에 좌판째 굳어 있던 사람. 결정이 깨진 뒤(31장 셋째 단계부터, 뒤에도) 장터 가운데 굳어 있던 자리 */
+    neoul:    { id: 'story_neoul',    name: '장돌뱅이 너울', short: '너울', zone: 'saltflat', spot: 'am_market', off: [0, 3.8], color: '#9a7a4c',
+      idle: '저울추는 셈이 정확해야 하는 법이지. 쇠 수레 구경도 한두 번이지, 허허.',
+      appear: [{ ch: 30, from: 2, to: 999, spot: 'am_market', off: [0, 3.8] }, { ch: 31, chTo: 999, from: 0, to: 999, spot: 'am_market', off: [0, 3.8] }] },
+    /* ⑲-59 조각 도둑 — 31장 쫓기 때만 네거리 둘레 길(AMBER_THIEF_PATH)을 난다. 드론 몸(pet) */
+    partthief: { id: 'story_partthief', name: '조각 도둑', short: '도둑', zone: 'saltflat', spot: 'am_cross', color: '#b3803a', pet: 'drone', idle: '삐비— 치익.',
+      appear: [{ ch: 30, from: 3, to: 3 }], runSpot: 'am_cross', runPath: AMBER_THIEF_PATH },
     /* ⑲-51 가면 그림자 — 23장 반디 기록 속 그자. 26장 장치 셋을 끈 뒤(일곱째 단계) 한 번만 정거장 서쪽 끝에 선다. 정체는 8부까지 */
     gamyeon:  { id: 'story_gamyeon',  name: '가면 그림자', short: '그림자', zone: 'saltflat', spot: 'sr_gamyeon', off: [0, 0], color: '#14121c', mask: true, idle: '……',
       appear: [{ ch: 25, from: 6, to: 6, spot: 'sr_gamyeon', sky: true }, { ch: 27, from: 8, to: 8, spot: 'sky', off: [7, -7], sky: true },   // ⑲-54 28장 구름섬 북동쪽 한 번
@@ -252,7 +262,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -1481,6 +1491,45 @@
             ['?', ['서쪽에 뭐가 있어요?', '제일 큰 결정은 어디죠?']],
             ['초롱', '호박 속 장터요. 옛날 장터가 천막째 통째로 결정에 들어 있어요 — 이 거리에서 제일 큰 굳은 자리예요.', 'surprised'],
             ['초롱', '장터 둘레에 낡은 석등이 셋 서 있어요. 가게 문 닫고 따라갈게요. 준비되면 말해 줘요!', 'joy']] }
+      ] },
+    /* ⑲-59 9부 둘째 장 — 호박 속 장터. 초롱 → 장터 석등 해 → 달 → 별(seal bare — 다 켜면 결정 돔이 깨진다: amber DOME_FROM 31장 2단계) → 너울 → 조각 도둑 쫓기 →
+       너울 → 되감는 괘종시계 지키기(defend bare — 시계방 서쪽, 다섯째 단계 동안 바늘이 돎) → 초롱(부양탑) */
+    { id: 'ch31', name: '제31장 · 호박 속 장터', ar: 68,
+      reward: { knot: 7, gold: 8000, guide: 7, secret: 6, party: 2000 },
+      steps: [
+        { type: 'talk', npc: 'chorong', text: '시계방 앞의 초롱과 이야기하기',
+          lines: [['초롱', '가게 문 닫았어요! 장터 석등 셋 말인데요 — 할머니가 늘 흥얼거리던 장터 노래가 있어요.', 'joy'],
+            ['초롱', '\'해 뜨면 장이 서고, 달 뜨면 셈을 하고, 별 뜨면 짐을 싼다\' — 석등마다 해·달·별이 새겨져 있거든요.'],
+            ['반디', '삐— 석등 셋에서 약한 틈 신호. 차례대로 켜면 결정의 결이 풀릴 수 있습니다.'],
+            ['?', ['노래 차례대로 켜 볼게요.', '해, 달, 별 순서죠?']],
+            ['초롱', '장터 앞에서 기다릴게요. 틀리면 다 꺼질지도 몰라요 — 천천히요!']] },
+        { type: 'seal', spot: 'am_market', bare: true, order: ['sun', 'moon', 'star'], text: '호박 속 장터 둘레 석등을 장터 노래 차례(해 → 달 → 별)대로 밝히기' },
+        { type: 'talk', npc: 'neoul', text: '풀려난 장돌뱅이와 이야기하기',
+          lines: [['너울', '……어, 어라? 장이 파했나? 방금까지 저울질하던 참인데 — 손님들은 다 어디 가고.', 'surprised'],
+            ['초롱', '할아버지, 여기 결정 속에 굳어 계셨어요. 바깥은 벌써… 아주 먼 뒷날이에요.'],
+            ['너울', '뒷날이라니, 허허. 쇠 수레가 하늘길로 다니는 걸 보니 꿈은 아니로구먼. 이 장돌뱅이 너울, 팔도 장은 다 돌았어도 이런 장은 처음일세.', 'fun'],
+            ['?', ['다친 데는 없으세요?', '굳기 전에 무슨 일이 있었어요?']],
+            ['너울', '하늘이 쩍 갈라지더니 그 틈에서 쇳조각 하나가 내 저울판에 떨어졌지. 태엽처럼 도르르 감긴 놈인데, 저울추로 딱 맞아서—', 'surprised'],
+            ['너울', '어이쿠! 저, 저놈 봐라! 날개 달린 쇳덩이가 내 저울추를 물고 간다!', 'angry']] },
+        { type: 'chase', npc: 'partthief', text: '너울의 저울추를 물고 달아나는 조각 도둑 쫓기',
+          flee: '🛸 조각 도둑이 저울추를 물고 네거리 쪽으로 달아난다 — 쫓아라!',
+          caught: '🛸 조각 도둑을 붙잡았다 — 발톱에서 태엽 저울추가 툭 떨어진다',
+          lost: '💨 놓쳤다 — 도둑이 장터 곁으로 돌아가 숨었다. 다시 가까이 가면 달아난다' },
+        { type: 'talk', npc: 'neoul', text: '장터의 너울에게 저울추 돌려주기',
+          lines: [['너울', '고맙네, 젊은이! 이 저울추 — 보게, 초롱 아가씨 손목시계 태엽과 결이 똑같지 않은가.', 'joy'],
+            ['초롱', '정말… 틈 조각이에요. 이거라면 가게 큰 괘종시계를 되감을 수 있을지도 몰라요. 거리에서 제일 오래된 시계라 거리 시간과 이어져 있거든요!', 'surprised'],
+            ['반디', '삐— 도둑 드론은 굳은 조각을 한곳으로 모으고 있었습니다. 되감기 시작하면 조각을 노리는 것들이 몰려옵니다.'],
+            ['?', ['시계는 내가 지킬게.', '되감는 동안 막아 줄게요.']],
+            ['너울', '나는 장터를 지키겠네. 저울추는 아가씨가 가져가게 — 장돌뱅이는 셈이 정확해야지.']] },
+        { type: 'defend', spot: 'am_clock', off: [-8, 2], bare: true, name: '되감는 괘종시계', who: '결정 짐승이', dirs: [0, 160, 200, 250, 300, 340],
+          waves: [['rockbear', 'raptor', 'imp'], ['snowfox', 'imp', 'hawk', 'raptor'], ['rockbear', 'snowfox', 'raptor', 'imp', 'hawk']],
+          text: '초롱이 괘종시계를 되감는 동안 시계방 지키기' },
+        { type: 'talk', npc: 'chorong', text: '시계방 앞의 초롱과 이야기하기',
+          lines: [['초롱', '다 감았어요…! 들려요? 째깍, 째깍 — 괘종시계가 가요!', 'joy'],
+            ['초롱', '……그런데 한 칸 가고 멈춰요. 몇 번을 감아도 딱 한 칸.', 'sorrow'],
+            ['반디', '삐— 괘종시계 신호가 북쪽으로 당겨집니다. 부양탑 꼭대기. 거리의 시간이 그곳에 묶여 있습니다.'],
+            ['?', ['부양탑에 뭐가 있죠?', '탑까지 가 봐요.']],
+            ['초롱', '짓다 만 탑이요. 꼭대기에 \'시간 태엽 심장\'이 있대요 — 탑을 짓던 설계사가 가끔 탑 발치에서 혼잣말을 해요. 그 사람도 안 굳었나 봐요!', 'surprised']] }
       ] }
   ];
 
@@ -2748,7 +2797,7 @@
     talkables: talkables, storyStep: storyStep, stepAt: stepAt, aimPoints: aimPoints,
     FOLLOW_NEAR: FOLLOW_NEAR, FOLLOW_LOST: FOLLOW_LOST,
     HARAM_OBS: HARAM_OBS, HARAM_SHIP: HARAM_SHIP, HARAM_FORT: HARAM_FORT, frostSpot: frostSpot, followPts: followPts,
-    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, DAREUM_SHIP: DAREUM_SHIP, CAPTAIN_PATH: CAPTAIN_PATH, SEED_DRONE_PATH: SEED_DRONE_PATH, WING_SEAM: WING_SEAM, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
+    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, DAREUM_SHIP: DAREUM_SHIP, CAPTAIN_PATH: CAPTAIN_PATH, SEED_DRONE_PATH: SEED_DRONE_PATH, AMBER_THIEF_PATH: AMBER_THIEF_PATH, WING_SEAM: WING_SEAM, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
     on: on, anchorOf: anchorOf, npcPos: npcPos, visible: visible, targetOf: targetOf, trackText: trackText, listHtml: listHtml,
     state: sv, chapter: chapter, step: step, locked: locked, done: done, keyOf: keyOf, gathered: gathered,
     advance: advance, check: check, stepFollow: stepFollow, nearTalk: nearTalk, talkStart: talkStart, talking: talking, next: next,
