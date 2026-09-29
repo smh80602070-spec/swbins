@@ -117,13 +117,14 @@
   function siteById(id) { var L = sites(); for (var i = 0; i < L.length; i++) { if (L[i].id === id) { return L[i]; } } return null; }
   /** 금고 안 자리 — 금고 가운데에서 남쪽 0°·시계 방향 deg 로 r m */
   function ringPos(v, deg, r) { var a = deg * Math.PI / 180; return { x: v.x - Math.sin(a) * r, y: v.y + Math.cos(a) * r }; }
-  /** 이야기 자리 — 명소 id 가운데, 또는 'case0~4'(굳은 순간 진열장)·'haemi'(해미 진열장)·'deep'(가장 깊은 진열장)·'core'(기록 기둥·핵 = 금고 가운데)·'door'(금고 문 앞) — 없으면 null */
+  /** 이야기 자리 — 명소 id 가운데, 또는 'case0~4'(굳은 순간 진열장)·'haemi'(해미 진열장)·'deep'(가장 깊은 진열장)·'core'(기록 기둥·핵 = 금고 가운데)·'door'(금고 문 앞)·'pylons'(동력 기둥 둘의 가운데) — 없으면 null */
   function spot(part) {
     var v = siteById('vault'), m = /^case(\d)$/.exec(part);
     if (m) { var e = CASES[+m[1]]; return v && e ? ringPos(v, e.deg, CASE_R) : null; }
     if (part === 'haemi') { return v ? ringPos(v, HAEMI_DEG, CASE_R) : null; }
     if (part === 'deep') { return v ? { x: v.x, y: v.y - DEEP_R } : null; }
     if (part === 'core') { return v ? { x: v.x, y: v.y } : null; }
+    if (part === 'pylons') { var p0 = siteById('pylon0'), p1 = siteById('pylon1'); return p0 && p1 ? { x: (p0.x + p1.x) / 2, y: (p0.y + p1.y) / 2 } : null; }   // 금고 앞 동력 기둥 둘의 가운데
     if (part === 'door') { return v ? { x: v.x, y: v.y + VAULT_R + 2 } : null; }
     var s = siteById(part);
     return s ? { x: s.x, y: s.y } : null;

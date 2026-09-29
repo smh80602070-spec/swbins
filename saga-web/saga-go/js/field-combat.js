@@ -1975,7 +1975,7 @@
       } else if (e.t === 'zone') {
         if (e.kind === 'field' || e.kind === 'seed' || e.kind === 'kitzone' || e.kind === 'vortex' || e.kind === 'feast' || e.kind === 'rain') { ring(e.x, e.y, e.r, EL[e.el].color, e.kind === 'seed' ? 0.7 : 0.4); }
         else if (e.kind === 'shell') { ring(e.x, e.y, e.r, EL[e.el].color, 0.55); if (W3()) { W3().shake(0.15); } }
-        else { ring(e.x, e.y, 0.9, EL[e.el].color, 0.3); ring(e.tx, e.ty, e.r, EL[e.el].color, 0.3); }
+        else { ring(e.x, e.y, 0.9, EL[e.el].color, 0.3); if (e.tx !== undefined) { ring(e.tx, e.ty, e.r, EL[e.el].color, 0.3); } }   // echo 등 tx 없는 구역은 발밑 고리만(안 그러면 undefined 좌표로 예외)
       } else if (e.t === 'dodge') { if (W3()) { W3().playAnim('me', 'dodge', 300); } }
       else if (e.t === 'tell') { if (W3()) { W3().playAnim('fc' + e.uid, 'attack', 700); } }
       else if (e.t === 'strike') { if (e.r) { ring(e.x, e.y, e.r, '#ff4d4d', 0.3); } }

@@ -63,7 +63,7 @@
     am_crystal0: { am: 'crystal0' }, am_crystal1: { am: 'crystal1' }, am_crystal2: { am: 'crystal2' },
     /* ⑲-61 10부 갈무리 벌(vault.js) — 명소 가운데(vt: 명소 id·case0~4·haemi·deep·core·door) + 단계·인물 칸의 off */
     vt_pass: { vt: 'pass' }, vt_vault: { vt: 'vault' }, vt_pylon0: { vt: 'pylon0' }, vt_pylon1: { vt: 'pylon1' }, vt_granary: { vt: 'granary' }, vt_yard: { vt: 'yard' }, vt_statue: { vt: 'statue' },
-    vt_core: { vt: 'core' }, vt_door: { vt: 'door' }, vt_haemi: { vt: 'haemi' }, vt_deep: { vt: 'deep' },
+    vt_pylons: { vt: 'pylons' }, vt_core: { vt: 'core' }, vt_door: { vt: 'door' }, vt_haemi: { vt: 'haemi' }, vt_deep: { vt: 'deep' },
     vt_case0: { vt: 'case0' }, vt_case1: { vt: 'case1' }, vt_case2: { vt: 'case2' }, vt_case3: { vt: 'case3' }, vt_case4: { vt: 'case4' },
     /* ⑲-53 8부 반디 자리 = 고향 촌장 동쪽(촌장 zone home off [-22,16] 에서 10m) */
     home_bandi: { zone: 'home', off: [-12, 16] },
@@ -252,7 +252,13 @@
     /* ⑲-62 창고지기 마루(현대) — 갈무리 물류의 마지막 창고지기. 10부(33장~)부터 늘 창고 셔터 앞(34장에서 곳간으로 옮긴다) */
     maru:     { id: 'story_maru',     name: '창고지기 마루', short: '마루', zone: 'snowfort', spot: 'vt_yard', off: [-5, 9], color: '#807a4c',
       idle: '드론이 또 한 대 지나가네. 오늘만 백스무 번째…',
-      appear: [{ ch: 32, chTo: 999, from: 0, to: 999, spot: 'vt_yard', off: [-5, 9] }] },
+      appear: [{ ch: 33, from: 1, to: 999, spot: 'vt_granary', off: [11, 11] },                                   // ⑲-63 34장 지게차로 곳간 마을로(석등 고리 SEAL_R 밖)
+        { ch: 32, chTo: 999, from: 0, to: 999, spot: 'vt_yard', off: [-5, 9] }] },
+    /* ⑲-63 곳간지기 소담(과거) — 곳간째 갈무리 벌로 들려 온 옛 곳간 마을 아이. 곳간 문이 열린 뒤(34장 2~) 곳간 문 앞 서쪽, 동력 기둥부터(4~) 두 기둥 사이 */
+    sodam:    { id: 'story_sodam',    name: '곳간지기 소담', short: '소담', zone: 'snowfort', spot: 'vt_granary', off: [-12, 5], color: '#b88068',
+      idle: '씨앗 한 톨이 한 해 농사예요. 한 톨도 못 줘요.',
+      appear: [{ ch: 33, from: 4, to: 999, spot: 'vt_pylons', off: [0, -14] }, { ch: 33, from: 2, to: 3 },
+        { ch: 34, from: 0, to: 0, spot: 'vt_pylons', off: [0, -14] }, { ch: 34, chTo: 999, from: 0, to: 999, spot: 'vt_vault', off: [0, 8] }] },   // 35장 금고 안 문 안쪽
     /* ⑲-62 조각 운반 드론 — 33장 쫓기 때만 야적장 → 금고 문 앞 길(VAULT_DRONE_PATH)을 난다. 드론 몸(pet) */
     carrier:  { id: 'story_carrier',  name: '조각 운반 드론', short: '드론', zone: 'snowfort', spot: 'vt_yard', color: '#d6e0ee', pet: 'drone', idle: '삐비— 치익.',
       appear: [{ ch: 32, from: 4, to: 4 }], runSpot: 'vt_yard', runPath: VAULT_DRONE_PATH },
@@ -282,7 +288,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil', 'maru', 'carrier'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil', 'maru', 'carrier', 'sodam'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -1618,6 +1624,42 @@
             ['?', ['그 금고가 뭐예요?', '금고 안에 들어갈 수 있어요?']],
             ['마루', '시간 씨앗 금고. 문은 꽉 잠겼어요 — 금고 앞 동력 기둥 둘이 문을 붙들고, 그 동력은 서쪽 곳간 마을에서 끌어다 써요.', 'angry'],
             ['마루', '곳간 마을부터 가 봅시다. 거기 곳간은 노래를 불러야 열린다던데… 지게차 몰고 뒤따라갈게요!', 'fun']] }
+      ] },
+    /* ⑲-63 10부 둘째 장 — 곳간의 씨앗. 마루 → 곳간 석등 별 → 해 → 달(seal bare — 다 켜면 곳간 문이 열린다: vault GRANARY_OPEN_STEP 2) → 소담 → 씨앗 곳간 지키기(defend bare — 곳간(북) 쪽을 뺀 dirs) →
+       동력 기둥 서 → 동(light bare — 끄면 알이 사라진다: vault PYLON_OFF_FROM 5·6) → 소담(금고 문이 열린다: vault DOOR_OPEN_STEP 6) */
+    { id: 'ch34', name: '제34장 · 곳간의 씨앗', ar: 74,
+      reward: { knot: 8, gold: 8750, guide: 8, secret: 6, party: 2400 },
+      steps: [
+        { type: 'talk', npc: 'maru', text: '물류 창고 앞의 마루와 이야기하기',
+          lines: [['마루', '지게차 시동 걸었어요. 곳간 마을은 고개 쪽 서쪽 — 초가지붕 곳간이 하나 덩그러니 서 있죠.', 'joy'],
+            ['마루', '문엔 자물쇠 대신 석등 셋이 둘러 있어요. 누가 흥얼거리는 걸 들었는데 — \'별 보고 나가, 해 보고 거두고, 달 보고 들인다\'.'],
+            ['초롱', '장터 노래랑 닮았어요! 그럼 석등도 노래 차례대로 — 별, 해, 달.'],
+            ['반디', '삐— 곳간 안에서 작은 생체 신호 하나. 사람입니다. 동력 기둥 선도 곳간 밑으로 지나갑니다.'],
+            ['?', ['곳간 노래 차례대로 켤게요.', '안에 누가 있다고?']],
+            ['마루', '먼저 가 있을게요. 곳간 앞에 지게차 대 놓고 기다리죠!']] },
+        { type: 'seal', spot: 'vt_granary', bare: true, order: ['star', 'sun', 'moon'], text: '곳간 둘레 석등을 곳간 노래 차례(별 → 해 → 달)대로 밝히기' },
+        { type: 'talk', npc: 'sodam', text: '곳간에서 나온 아이와 이야기하기',
+          lines: [['소담', '……노래를 아는 거 보니 도둑은 아니네. 우리 할머니 곳간 노래예요.', 'surprised'],
+            ['소담', '난 곳간지기 소담이에요. 하늘이 갈라지던 날, 곳간째 둥 떠서 여기 떨어졌어요. 씨앗 곡식이 다 여기 있어요 — 내년 농사 씨앗.', 'sorrow'],
+            ['마루', '석 달을 곳간 안에 숨어 있었다고? 이 꼬마가?', 'surprised'],
+            ['소담', '밤마다 쇠 새들이 와서 문을 긁어요. 씨앗을 노리는 거예요. 저 둥근 은빛 집에 가져가려고.', 'angry'],
+            ['?', ['씨앗은 우리가 지켜 줄게.', '쇠 새들이 또 와?']],
+            ['소담', '와요! 문이 열린 걸 알았으니 다 몰려올 거예요 — 저기, 벌써!', 'surprised']] },
+        { type: 'defend', spot: 'vt_granary', off: [0, 7], bare: true, name: '씨앗 곳간', who: '결정 짐승이', dirs: [60, 110, 160, 200, 250, 300],
+          waves: [['hawk', 'raptor', 'vine'], ['rockbear', 'hawk', 'imp', 'snowfox'], ['hawk', 'rockbear', 'raptor', 'snowfox', 'imp']],
+          text: '씨앗 곡식을 노리는 것들에게서 곳간 지키기' },
+        { type: 'light', spot: 'vt_pylon0', bare: true, text: '금고 앞 서쪽 동력 기둥을 원소 스킬로 끄기',
+          done: '🔌 서쪽 동력 기둥 꼭대기 푸른 구슬이 치직 꺼진다 — 곳간 밑 동력 선이 잠잠해진다' },
+        { type: 'light', spot: 'vt_pylon1', bare: true, text: '금고 앞 동쪽 동력 기둥을 원소 스킬로 끄기',
+          done: '🔌 동쪽 동력 기둥까지 꺼졌다 — 금고 문의 빛 고리가 깜박이더니 스르르 사라진다' },
+        { type: 'talk', npc: 'sodam', text: '금고 문 앞의 소담과 이야기하기',
+          lines: [['소담', '꺼졌다! 이제 저 집이 우리 곳간 동력을 못 빨아 가요.', 'joy'],
+            ['소담', '……그런데요, 곳간에 숨어 있던 밤마다 저 은빛 집에서 목소리가 들렸어요. 사람 목소리 같은데, 사람 같지 않은.', 'sorrow'],
+            ['소담', '\'아름다운 때를 영원히.\' 그 말만 몇 번이고요.'],
+            ['반디', '삐— 금고 안 신호, 굳은 자리 수백 개. 가운데 한 신호가… 사람의 목소리 기록입니다. 진열장 안에서 납니다.', 'surprised'],
+            ['?', ['금고 문이 열렸어!', '아름다운 때를 영원히…?']],
+            ['마루', '문이 열린다… 석 달 동안 한 번도 안 열리던 문이.', 'surprised'],
+            ['소담', '씨앗 한 줌 챙겨 갈게요. 저 안에 우리 마을 잔칫날도 갇혀 있을지 몰라요. 같이 들어가요!', 'angry']] }
       ] }
   ];
 

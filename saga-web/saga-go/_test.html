@@ -14875,6 +14875,74 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '여섯 단계 · 반디 → 하람 → 벌 어귀 → 야적장 짐승 넷 → 운반 드론 쫓기(길 위) → 마루 · 🪢+8 🪙+8500 · 마루·드론·반디 자리' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-63 이야기 10부 제34장 · 곳간의 씨앗 (story ch34·소담 · vault 곳간 문·동력 기둥·금고 문 단계 맞물림, PLAN §5 ⑲-63) ── */
+    t('이야기 ⑲-63 — 34장 일곱 단계(Lv74) · 곳간 석등 별·해·달(틀리면 ✕ — 다 켜면(2) 곳간 문 열림) → 소담 → 곳간 지키기 3·4·5(곳간 벽 밖) → 동력 기둥 서·동(끄면 알이 사라짐, 6에서 금고 문 열림) → 소담 · 마루·소담 자리 · 🪢+8 🪙+8750', function () {
+      var rig = stRig(74), VT = DG.vault, ST = DG.story, FC = DG.fieldCombat, TL = DG.talent, r = {}, i;
+      try {
+        VT._resetForTest(); delete C.save.vault;
+        var c = ST.CHAPTERS[33], S34 = c.steps;
+        r.table = c.id === 'ch34' && c.ar === 74 && !c.join && S34.length === 7 && c.reward.knot === 8 && c.reward.gold === 8750 && c.reward.guide === 8 && c.reward.secret === 6 && c.reward.party === 2400 &&
+          S34.map(function (q) { return q.type; }).join() === 'talk,seal,talk,defend,light,light,talk' && S34[1].order.join() === 'star,sun,moon' && S34[1].bare && S34[3].bare && S34[4].bare && S34[5].bare &&
+          S34[3].waves.map(function (w) { return w.length; }).join() === '3,4,5';
+        /* 표 ↔ 이 장 — 곳간 문은 석등(1) 다음(2)부터 · 동력 기둥은 불(4·5) 다음(5·6)부터 · 금고 문은 둘째 불(5) 다음(6)부터 */
+        r.link = VT.GRANARY_OPEN_STEP === 1 + 1 && S34[1].spot === 'vt_granary' && VT.PYLON_OFF_FROM.join() === [4, 5].map(function (k) { return k + 1; }).join() && S34[4].spot === 'vt_pylon0' && S34[5].spot === 'vt_pylon1' &&
+          VT.DOOR_OPEN_STEP === 5 + 1 && S34[6].type === 'talk' && S34[3].spot === 'vt_granary';
+        var gr = VT.siteById('granary'), yard = VT.siteById('yard'), p0 = VT.siteById('pylon0'), p1 = VT.siteById('pylon1'), vault = VT.siteById('vault'), mid = VT.spot('pylons');
+        function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 33 : ch, step: si }; return ST.npcPos(k); }
+        function vtRect(p) { return VT.rectsIn(Math.floor(p.x / 48), Math.floor(p.y / 48)).some(function (q) { return frInRect(q, p.x, p.y); }); }
+        /* 인물 — 마루: 34장 첫 단계는 야적장 셔터 앞, 1~부터 곳간 동남쪽(석등 고리 밖) / 소담: 곳간 문이 열린 뒤(2~3) 곳간 문 앞 서쪽, 동력 기둥부터(4~) 두 기둥 사이, 35장 첫 단계는 두 기둥 사이·그 뒤엔 금고 문 안쪽 */
+        r.maru = st10Eq(np('maru', 0), { x: yard.x - 5, y: yard.y + 9 }) && st10Eq(np('maru', 1), { x: gr.x + 11, y: gr.y + 11 }) && st10Eq(np('maru', 6), { x: gr.x + 11, y: gr.y + 11 }) &&
+          Math.hypot(np('maru', 1).x - gr.x, np('maru', 1).y - gr.y) > 6 + 3 && st10Eq(np('maru', 0, 34), { x: yard.x - 5, y: yard.y + 9 });
+        r.sodam = (np('sodam', 1), !ST.visible('sodam')) && st10Eq(np('sodam', 2), { x: gr.x - 12, y: gr.y + 5 }) && ST.visible('sodam') && st10Eq(np('sodam', 3), { x: gr.x - 12, y: gr.y + 5 }) &&
+          st10Eq(np('sodam', 4), { x: mid.x, y: mid.y - 14 }) && st10Eq(np('sodam', 6), { x: mid.x, y: mid.y - 14 }) && st10Eq(np('sodam', 0, 34), { x: mid.x, y: mid.y - 14 }) && st10Eq(np('sodam', 1, 34), { x: vault.x, y: vault.y + 8 }) &&
+          (np('sodam', 0, 32), !ST.visible('sodam')) && !vtRect(np('sodam', 2)) && !vtRect(np('sodam', 4));
+        r.mid = !!mid && Math.abs(mid.x - (p0.x + p1.x) / 2) < 1e-6 && Math.hypot(p1.x - p0.x, p1.y - p0.y) > 60;
+        C.save.story = { ch: 33, step: 0 };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('maru')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        /* 곳간 석등 — 별 → 해 → 달, 틀리면 ✕. 다 켜면 곳간 문이 열린다(문짝 그림) */
+        var lamps = ST.sealLamps(ST.step()), byK = {};
+        lamps.forEach(function (l) { byK[l.k] = l; });
+        function hitLamp(k) { C.emit('field:element', { el: 'wind', x: byK[k].x, y: byK[k].y, r: 1, t: 'skill' }); }
+        var open0 = !VT.granaryOpen();
+        r.lampsAt = lamps.every(function (l) { return Math.abs(Math.hypot(l.x - gr.x, l.y - gr.y) - 6) < 1e-6; }) && lamps.every(function (l) { return !vtRect(l); });
+        hitLamp('sun'); var wrong = ST.sealLit() === 0 && C.save.story.step === 1;
+        hitLamp('star'); hitLamp('sun'); hitLamp('moon');
+        r.seal = open0 && wrong && C.save.story.step === 2 && VT.granaryOpen();
+        stGo(ST.npcPos('sodam')); r.t2 = stTalkAll(ST) && C.save.story.step === 3;
+        /* 곳간 지키기 — 곳간 문 앞(남쪽 7m), 물결 3·4·5(땅), 곳간 벽 안엔 안 나온다 */
+        var dt = ST.targetOf(ST.step());
+        r.defAt = st10Eq(dt, { x: gr.x, y: gr.y + 7 });
+        stGo({ x: dt.x, y: dt.y + 2 }); FC.tick(0.05); ST.stepDefend(0.1);
+        var S = FC.state(), sizes = [], okPos = true;
+        for (i = 0; i < 3; i++) {
+          if (i) { ST.defState().t = ST.DEFEND_WAVE_SEC; ST.stepDefend(0.01); }
+          var cw = S.camps[ST.waveKey(i)];
+          sizes.push(cw ? cw.uids.length : 0);
+          if (cw && !cw.uids.every(function (u) { var f0 = S.foes[u]; return !f0.sky && !vtRect(f0) && Math.hypot(f0.x - dt.x, f0.y - dt.y) < ST.DEFEND_RING + 1; })) { okPos = false; }
+          stKillCamp(S, ST.waveKey(i)); FC.tick(0.05);
+        }
+        ST.stepDefend(0.01);
+        r.defend = sizes.join() === '3,4,5' && okPos && C.save.story.step === 4;
+        /* 동력 기둥 둘 — 차례로, 먼 곳은 ✕, 끄면 알이 사라진다(6에서 금고 문 벽이 사라짐) */
+        var door = { x: vault.x, y: vault.y + VT.VAULT_R }, doorWall0 = vtRect(door);
+        var offs = [];
+        for (i = 0; i < 2; i++) {
+          var tg = ST.targetOf(ST.step()), ps = VT.siteById('pylon' + i);
+          var pre = C.save.story.step === 4 + i && !VT.pylonOff(i) && st10Eq(tg, { x: ps.x, y: ps.y });
+          C.emit('field:element', { el: 'fire', x: tg.x + 90, y: tg.y, r: 1, t: 'skill' });
+          var stay = C.save.story.step === 4 + i;
+          C.emit('field:element', { el: 'fire', x: tg.x, y: tg.y, r: 1, t: 'skill' });
+          offs.push(pre && stay && C.save.story.step === 5 + i && VT.pylonOff(i));
+        }
+        r.lights = offs.every(Boolean) && VT.doorOpen() && doorWall0 && !vtRect(door);
+        stGo(ST.npcPos('sodam')); r.end = stTalkAll(ST) && C.save.story.ch === 34 && C.save.story.step === 0 && m.knot === k0 + 8 && C.save.player.gold >= gold0 + 8750;
+        r.done = VT.granaryOpen() && VT.doorOpen() && !VT.coreDim() && !VT.haemiFree();
+      } finally { VT._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '일곱 단계 · 마루 → 곳간 석등 별·해·달 → 곳간 문 열림 → 소담 → 곳간 지키기 3·4·5 → 동력 기둥 서·동 → 금고 문 열림 → 소담 · 🪢+8 🪙+8750' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑲-61 탈것 — 말(mount.js, PLAN §5 ⑲-61 · SAGA-DESIGN §12) ── */
     t('탈것 ⑲-61 — 말 셋(농마 5·갈색 15·흰 30 레벨 또는 도감 등록) · 타기/내리기 · 걷는 속도 배율(달리기와 겹침) · 고르기 · 저장 한 칸 · 몸 참조', function () {
       var MT = DG.mount, W = DG.world, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
