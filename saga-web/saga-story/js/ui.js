@@ -990,8 +990,8 @@
     var face, name, SCD = global.DG.scenarioData;
     var mentor = null;
     if (who === 'mentor' && global.DG.job) {          // 시나리오 — 전직한 갈래의 스승(도감 가명), 아직이면 첫 스승
-      var ml = global.DG.job.mentors();
-      mentor = ml.length ? global.DG.data.find(ml[0]) : null;
+      var ml = global.DG.job.mentors(), jt = global.DG.job.cur().tier || 1;
+      mentor = ml.length ? global.DG.data.find(ml[Math.min(jt, ml.length) - 1]) : null;
     }
     if (who === 'me') {
       var me = global.DG.side.meRef();

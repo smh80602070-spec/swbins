@@ -6,11 +6,12 @@
  *   stage   사냥터에 들어선다(`side:enter`·`side:travel`)
  *   talk    대사 장면 — `story.js` 의 검은 띠 장면(`DG.story.play`)
  *   mission 사명(`quest.js`) — 레벨이 되면 저절로 받고, 바치면 넘어간다
+ *   gate    관문 대장(`side.js` gateWeek) — 그 마을 대장을 이긴 적이 있으면 넘어간다
  *   job     전직(`job.js`) — 그 차수 이상이면 넘어간다
  *
  * 세이브: `core.save.scenario = { v, init, done:{장id:1}, ch, step, said:{장면id:1}, titles:[] }`
- *   없으면 빈 것으로 본다(마이그레이션 불필요). **옛 세이브**(Lv10 이상이거나 이미 전직)는 1부를
- *   보상 없이 끝낸 것으로 본다 — 지나온 길을 다시 걷게 하지 않는다.
+ *   없으면 빈 것으로 본다(마이그레이션 불필요). **옛 세이브**는 장의 `legacy`(레벨 또는 전직 차수)를
+ *   넘었으면 그 장을 보상 없이 끝낸 것으로 본다 — 지나온 길을 다시 걷게 하지 않는다.
  * 끄는 법: `window.DG_NO_SCENARIO = true`(진단이 기본으로 켠다).
  * 손잡이: 장면은 `DG_NO_STORY` 이거나 자동 순행 중이면 안 뜨고 미뤄진다(다음 'changed' 에 다시 본다).
  */
@@ -34,11 +35,13 @@
     if (typeof sc.step !== 'number') { sc.step = 0; }
     if (!sc.init) {
       sc.init = 1;
-      /* 옛 세이브 — 이미 Lv10 이상이거나 전직했다면 1부는 지나온 길 */
-      if (core.save.player.level >= 10 || (core.save.job && core.save.job !== 'none')) {
-        CD().CHAPTERS.forEach(function (c) { sc.done[c.id] = 1; });
-        sc.ch = null; sc.step = 0;
-      }
+      /* 옛 세이브 — 그 장의 legacy(레벨·전직 차수)를 넘었다면 지나온 길 */
+      var lv = core.save.player.level, tier = jobTier();
+      CD().CHAPTERS.forEach(function (c) {
+        var g = c.legacy;
+        if (g && (lv >= g.level || (g.tier && tier >= g.tier))) { sc.done[c.id] = 1; }
+      });
+      sc.ch = null; sc.step = 0;
     }
     return sc;
   }
@@ -76,6 +79,7 @@
     if (step.t === 'talk') { return !!raw().said[step.scene]; }
     if (step.t === 'mission') { return !!Q && Q.doneCount(step.quest) > 0; }
     if (step.t === 'job') { return jobTier() >= step.tier; }
+    if (step.t === 'gate') { return !!(global.DG.side.state().gateWeek || {})[step.stage]; }
     return true;
   }
 
@@ -169,7 +173,19 @@
     var text = '';
     if (step.t === 'stage') { text = '🚪 ' + stageName(step.stage) + ' 으로 간다'; }
     else if (step.t === 'talk') { text = step.at ? '💬 ' + stageName(step.at) + ' 에서 말을 나눈다' : '💬 이야기를 듣는다'; }
-    else if (step.t === 'job') { text = '🥋 무예창에서 ' + step.tier + '차 전직을 한다'; }
+    else if (step.t === 'job') {
+      text = '🥋 무예창에서 ' + step.tier + '차 전직을 한다';
+      var J = global.DG.job, JD = global.DG.jobData, why = null;
+      if (J && JD) {
+        JD.JOBS.forEach(function (j) { if (!why && j.tier === step.tier && j.from === core.save.job) { why = J.canJoin(j.key); } });
+        if (why) { text += ' — ' + why; }
+      }
+    }
+    else if (step.t === 'gate') {
+      var gi = global.DG.side.gateInfo(step.stage);
+      text = '🏯 ' + stageName(step.stage) + ' 의 대장 「' + (gi ? gi.name : '?') + '」 에게 도전한다';
+      if (gi && gi.triedToday && !gi.ready) { text += ' (오늘은 이미 붙었다 — 내일)'; }
+    }
     else if (step.t === 'mission') {
       var d = global.DG.questData.find(step.quest), Q = global.DG.quest;
       if (d && core.save.player.level < d.need) { text = '📋 「' + d.name + '」 — Lv.' + d.need + ' 이 되면 받는다'; }
