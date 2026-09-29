@@ -712,7 +712,9 @@ func _scatter_wildflowers() -> void:
 const MEADOW_PATCHES := 4
 const MEADOW_PER_PATCH := 14
 const MEADOW_RADIUS := 4.5
-const MEADOW_SKIP_REGIONS := ["frost", "village"]  # village 는 삼각형 예산(PLAN 104-7)이 빠듯하고 자기 들꽃이 있다
+const MEADOW_SKIP_REGIONS := ["frost"]
+## 마을은 삼각형 예산(PLAN 104-7 평균 35만)이 빠듯해 칸당 무리 하나만(2곳이면 35.0만)(자기 들꽃이 이미 있다).
+const MEADOW_PATCHES_BY_REGION := {"village": 1}
 const MEADOW_COLORS := [
 	Color(1.0, 0.95, 0.75), Color(1.0, 0.8, 0.15), Color(0.98, 0.5, 0.66),
 	Color(0.72, 0.62, 0.98), Color(0.55, 0.78, 1.0), Color(1.0, 0.6, 0.3),
@@ -730,7 +732,7 @@ func _scatter_meadow() -> void:
 		for x in row.length():
 			if row[x] != ".":
 				continue
-			for p in MEADOW_PATCHES:
+			for p in int(MEADOW_PATCHES_BY_REGION.get(region_id, MEADOW_PATCHES)):
 				var ps := 1100 + p * 60
 				var col: Color = MEADOW_COLORS[int(_hash(x, y, ps) * MEADOW_COLORS.size()) % MEADOW_COLORS.size()]
 				var cx := (_hash(x, y, ps + 1) - 0.5) * TestMap.TILE_SIZE * 0.8
