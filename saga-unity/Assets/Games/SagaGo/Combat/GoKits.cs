@@ -145,6 +145,11 @@ namespace Saga.Go.Combat
                     s = S(KitSkillType.Zone, "kit.sig.chorong.skill", "태엽 괘종", 10f, 0.8f); s.R = 5f; s.Sec = 10f; s.Every = 1f; s.N = 2; s.Energy = 1.5f;
                     b = B(KitBurstType.Rain, "kit.sig.chorong.burst", "되감은 시간", 5f, 2.2f); b.Sec = 12f; b.Reach = 8f; b.N = 2; b.Gap = 1f; b.RMul = 0.85f;
                     break;
+                // 109-14-64 해미(웹 kits.js story_haemi) — 있는 틀(dash·infuse)만
+                case "story_haemi":
+                    s = S(KitSkillType.Dash, "kit.sig.haemi.skill", "씨앗 가르기", 6.5f, 2.6f); s.Len = 5f; s.W = 2f;
+                    b = B(KitBurstType.Infuse, "kit.sig.haemi.burst", "싹 틔우는 칼", 6f, 3.4f); b.Sec = 10f; b.NMul = 1.2f;
+                    break;
                 default:
                     return null;
             }

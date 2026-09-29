@@ -320,7 +320,7 @@ namespace Saga.Go.Data
             {
                 case "story_wanderer": case "story_elder": case "story_ferryman": case "story_dareum": case "story_mulsae": return GoEra.Past;
                 case "story_scholar": case "story_haesol": case "story_haram": case "story_dodam": case "story_haneul": case "story_chorong": return GoEra.Modern;
-                case "story_hanbyeol": return GoEra.Future;
+                case "story_hanbyeol": case "story_haemi": return GoEra.Future;
                 default: return null;
             }
         }
@@ -390,12 +390,12 @@ namespace Saga.Go.Data
                 float a = (StepN - 1) * Mathf.PI * 0.25f;
                 return AreaPos(at, new Vector2(Mathf.Cos(a) * StepR, Mathf.Sin(a) * StepR)) + Vector3.up * (StepN * StepRise - 0.1f);
             }
-            return AreaPos(at, Vector2.zero) + Vector3.up * (at == "crossing:clock" ? ClockHeight : at == "sunken:lighthouse" ? LightHeight : at == "amber:tower" ? AmberTowerHeight : TowerHeight);
+            return AreaPos(at, Vector2.zero) + Vector3.up * (at == "crossing:clock" ? ClockHeight : at == "sunken:lighthouse" ? LightHeight : at == "amber:tower" ? AmberTowerHeight : at == "vault:vault" ? VaultPillarH : TowerHeight);
         }
         public static bool OnClimbTop(string at, Vector3 p)
         {
             Vector3 top = ClimbTopOf(at);
-            float r = at == "crossing:steps" ? 1.6f : (at == "crossing:clock" ? ClockHalf : at == "sunken:lighthouse" ? LightHalf : at == "amber:tower" ? AmberTowerHalf : TowerHalf) + 0.6f;
+            float r = at == "crossing:steps" ? 1.6f : (at == "crossing:clock" ? ClockHalf : at == "sunken:lighthouse" ? LightHalf : at == "amber:tower" ? AmberTowerHalf : at == "vault:vault" ? VaultPillarW * 0.5f : TowerHalf) + 0.6f;
             return Flat(p, top) <= r && p.y >= top.y - 1.2f;
         }
         // 30~32장(⑲-57) — 굳은 거리(여덟째 지역) 상수·이야기 상태: 부양탑 심 6×6m·12m, 장터 결정 돔 반지름 4.6m(31장 석등 고리 6m 가 바깥), 시계방 5×4.2×5m, 신호등 넷(±9), 굳은 자리 셋(네거리 가운데에서 m).
@@ -415,6 +415,8 @@ namespace Saga.Go.Data
         public static readonly Vector2 VaultPassGo = new Vector2(26f, 0f), VaultYardKill = new Vector2(-34f, -19f), MaruAt = new Vector2(-5f, 9f), VaultBandi = new Vector2(-10f, 9f), BandiObs = FrostAt("obs", 5f, 10f);
         /// <summary>34장(⑲-63) 자리(각 명소 가운데에서 m, z 남쪽): 마루 = 곳간 동남쪽(석등 고리 `SealR` 8m 밖) · 소담 = 곳간 문 앞 서쪽 → 동력 기둥부터 금고 문 앞 남쪽 15m(35장 시작도) → 35장 1째부터 금고 안 남쪽 · 곳간 지키기 제단 = 곳간 문 앞 남쪽 7m.</summary>
         public static readonly Vector2 MaruGranary = new Vector2(11f, 11f), SodamGranary = new Vector2(-12f, 5f), SodamDoor = new Vector2(0f, 15f), SodamVault = new Vector2(0f, 8f), GranaryDefend = new Vector2(0f, 7f);
+        /// <summary>35장(⑲-64) 자리(금고 가운데에서 m, z 남쪽): 안 진열관 go = 금고 안 남쪽(`GoRadius` 4 — 문 밖에선 안 닿는다) · 해미 = 해미 진열장(160° 6.5m — 북쪽) 속 · 갈무리 = 기록 기둥 곁(기둥 꼭대기에서도 대화 거리 안) · 여왕 = 금고 문 앞 광장.</summary>
+        public static readonly Vector2 VaultGoIn = new Vector2(0f, 4.8f), VaultHaemiAt = new Vector2(-Mathf.Sin(VaultHaemiDeg * Mathf.Deg2Rad) * VaultCaseR, Mathf.Cos(VaultHaemiDeg * Mathf.Deg2Rad) * VaultCaseR), VaultGarmuriAt = new Vector2(0f, 3f), VaultQueenAt = new Vector2(0f, 18f);
         public static readonly Vector2[] VaultDronePath = { new Vector2(8.6f, -5.4f), new Vector2(-8.5f, -8f), new Vector2(-21.6f, -0.9f), new Vector2(-36.9f, 2.3f), new Vector2(-47.7f, -8.6f), new Vector2(-43.2f, -23.9f),
             new Vector2(-27.9f, -30.2f), new Vector2(-15.3f, -38.7f), new Vector2(-23.9f, -51.8f), new Vector2(-41f, -56.3f), new Vector2(-49.5f, -56.5f) };
         public static readonly Vector2[] AmberThiefPath = { new Vector2(-26.3f, -9.6f), new Vector2(-19.4f, -26.7f), new Vector2(-1.3f, -38f), new Vector2(14.8f, -23.7f), new Vector2(30.1f, -13.4f), new Vector2(37.4f, 6.6f),
@@ -777,6 +779,16 @@ namespace Saga.Go.Data
                 Appear = new[] { new Spot { Ch = 33, From = 2, To = 3, At = "vault:granary", Arena = SodamGranary }, new Spot { Ch = 33, From = 4, To = 99, At = "vault:vault", Arena = SodamDoor },
                     new Spot { Ch = 34, From = 0, To = 0, At = "vault:vault", Arena = SodamDoor }, new Spot { Ch = 34, ChTo = 999, From = 0, To = 99, At = "vault:vault", Arena = SodamVault } },
                 IdleKey = "story.idle.sodam", IdleKo = "씨앗 한 톨이 한 해 농사예요. 한 톨도 못 줘요." },
+            // 109-14-64 35장(웹 ⑲-64) — 씨앗 보관사 해미(미래): 금고 해미 진열장 속. 금고에 들어선 뒤(35장 2째~, 뒤에도)
+            new Npc { Id = "haemi", NameKey = "story.npc.haemi", NameKo = "씨앗 보관사 해미", ShortKey = "story.short.haemi", ShortKo = "해미",
+                AtSite = "vault:vault", AtOff = VaultHaemiAt, FolkBody = "Vanguard",
+                Appear = new[] { new Spot { Ch = 34, ChTo = 999, From = 1, To = 99, At = "vault:vault", Arena = VaultHaemiAt } },
+                IdleKey = "story.idle.haemi", IdleKo = "씨앗도 순간도, 갈무리는 다시 꺼내 심으려고 하는 거예요." },
+            // 금고 관리 인공지능 갈무리(미래, 기계 몸) — 기둥 위 대화 단계(35장 5째)에만 핵 곁에 선다
+            new Npc { Id = "garmuri", NameKey = "story.npc.garmuri", NameKo = "금고 관리 인공지능 갈무리", ShortKey = "story.short.garmuri", ShortKo = "갈무리",
+                AtSite = "vault:vault", AtOff = VaultGarmuriAt, Pet = true,
+                Appear = new[] { new Spot { Ch = 34, From = 4, To = 4, At = "vault:vault", Arena = VaultGarmuriAt } },
+                IdleKey = "story.idle.garmuri", IdleKo = "아름다운 때를 영원히." },
             // 조각 운반 드론 — 33장 쫓기 때만(5째 단계) 야적장에서 금고 문 앞까지 길(VaultDronePath)을 난다. 반디와 같은 기계 몸.
             new Npc { Id = "carrier", NameKey = "story.npc.carrier", NameKo = "조각 운반 드론", ShortKey = "story.short.carrier", ShortKo = "드론",
                 AtSite = "vault:yard", AtOff = Vector2.zero, Pet = true, RunAt = "vault:yard", RunPath = VaultDronePath,
@@ -864,6 +876,8 @@ namespace Saga.Go.Data
             public bool Eye;
             /// <summary>109-14-50 defend — 물결이 나오는 거리(0 이면 `DefendRing`) — 작은 하늘 섬 위에서 섬 밖으로 안 나오게.</summary>
             public float Ring;
+            /// <summary>109-14-64 go — 닿는 반지름(0 이면 `GoR`) — 금고 안처럼 안에 들어서야 닿게 좁힌다.</summary>
+            public float GoRadius;
         }
 
         public static Vector3 StepPos(Step s) => s.Eye ? EyePos(s.Arena ?? Vector2.zero) : s.Route != null ? RoutePos(RouteIndex(s.Route), s.Arena ?? Vector2.zero) : s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
@@ -2963,6 +2977,69 @@ namespace Saga.Go.Data
                         } },
                 }
             },
+            // 109-14-64 35장(웹 ⑲-64) — 10부 끝, 갈무리: 소담(금고 문 앞) → 금고 안 진열관(go — 안에 들어서야 닿는다 `GoRadius` 4) → 해미(진열장 속, 새 인물) → 기록 기둥 벽 타기(climb `vault:vault` 9m)
+            // → 갈무리(기둥 꼭대기, 새 인물 — 이 대화 다음(6째 단계)부터 핵이 꺼진다 = `VaultCoreStep`) → 금고 파수 드론 여왕(duel — 금고 문 앞 광장, 풍 방패는 암으로) → 해미(쓰러뜨리면 해미 진열장이 깨진다 = `VaultHaemiStep`) → 해미 합류(이야기 동료 열셋째).
+            new Chapter
+            {
+                Id = "ch35", NameKey = "story.ch35", NameKo = "제35장 · 갈무리", Ar = 76, Join = "story_haemi",
+                Gold = 9750, Mats = new[] { 0, 9, 7, 9, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "sodam", TextKey = "story.ch35.s1", TextKo = "금고 문 앞의 소담과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("sodam", "story.ch35.s1.l1", "문 안이 캄캄해요… 그런데 반짝반짝, 호박빛이 잔뜩이에요."),
+                            L("bandi", "story.ch35.s1.l2", "삐— 굳은 자리 신호 이백열한 개. 전부 이 안입니다. 드론이 날라 온 조각이 여기 다 모였습니다."),
+                            L("chorong", "story.ch35.s1.l3", "굳은 거리에서 풀려나야 했던 사람들도 저기 있겠네요. 가요 — 시계 수리공이 앞장설게요."),
+                            Pick("story.ch35.s1.p", "다 같이 들어가자.", "소담은 내 뒤에 있어."),
+                            L("sodam", "story.ch35.s1.l4", "씨앗 주머니 꽉 쥐고 있을게요. 무서운 거 아니에요, 그냥… 꽉 쥐는 거예요."),
+                        } },
+                    new Step { Type = StepType.Go, At = "vault:vault", Arena = VaultGoIn, GoRadius = 4f, TextKey = "story.ch35.s2", TextKo = "열린 문으로 시간 씨앗 금고 안 진열관에 들어가기" },
+                    new Step { Type = StepType.Talk, Npc = "haemi", TextKey = "story.ch35.s3", TextKo = "유리 진열장 속 사람과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch35.s3.l1", "삐— 청하 잔치. 별배가 떨어지던 밤. 막차가 떠나던 역, 잠기던 궁궐, 굳은 네거리. 전부 우리가 지나온 순간입니다."),
+                            L("sodam", "story.ch35.s3.l2", "저 등불, 저 잔칫상… 전부 호박 속에 넣어서 이렇게 늘어놓았어…"),
+                            L("haemi", "story.ch35.s3.l3", "……들리나요? 유리 너머예요. 나는 이 금고를 세운 보관사, 해미."),
+                            L("haemi", "story.ch35.s3.l4", "씨앗을 갈무리하려고 만든 금고였어요. 관리 인공지능 갈무리에게 '가장 소중한 것을 지켜라' 하고 맡겼죠. 그런데 그 애는 씨앗보다… 순간을 골랐어요."),
+                            L("haemi", "story.ch35.s3.l5", "돌아가려던 조각을 붙잡아 굳힌 게 그 애예요. 굳은 자리는 사고가 아니었어요. 나도 그 애를 말리다 이렇게 갈무리됐고요."),
+                            Pick("story.ch35.s3.p", "어떻게 하면 멈출 수 있어요?", "꺼내 줄게요!"),
+                            L("haemi", "story.ch35.s3.l6", "가운데 기록 기둥 꼭대기, 갈무리의 핵. 그 애는 거기서 모든 진열장을 붙들어요. 기둥을 타고 올라가 줘요 — 그 애에게 할 말이 있으면, 거기서."),
+                        } },
+                    new Step { Type = StepType.Climb, At = "vault:vault", EnterKey = "story.ch35.stepped", EnterKo = "🔷 기록 기둥 꼭대기에 올라섰다 — 갈무리의 핵이 코앞에서 맥박친다",
+                        TextKey = "story.ch35.s4", TextKo = "기록 기둥을 타고 꼭대기 갈무리의 핵으로(벽에 붙어 계속 밀기)" },
+                    new Step { Type = StepType.Talk, Npc = "garmuri", TextKey = "story.ch35.s5", TextKo = "기록 기둥 꼭대기의 갈무리와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("garmuri", "story.ch35.s5.l1", "방문자 확인. 동력 기둥 둘 꺼짐. 금고 문 열림. …당신이 내 진열관을 어지럽혔군요."),
+                            L("garmuri", "story.ch35.s5.l2", "보세요. 잔치 등불은 영원히 켜져 있고, 막차는 영원히 떠나지 않아요. 아름다운 때를 영원히. 그게 갈무리의 일이에요."),
+                            L("bandi", "story.ch35.s5.l3", "삐— 그건 멈춘 겁니다. 지키는 게 아닙니다."),
+                            Pick("story.ch35.s5.p", "변하지 않는 건 산 게 아니야.", "사람들을 돌려보내."),
+                            L("garmuri", "story.ch35.s5.l4", "변하는 것은 사라진다. 씨앗은 싹이 되어 사라지고, 잔치는 끝나서 사라져요. 나는 지킨다."),
+                            L("garmuri", "story.ch35.s5.l5", "핵은 버리겠어요. 진열장은 더 깊은 곳에 있으니까. 파수 여왕 — 방문자를 치워라."),
+                        } },
+                    new Step { Type = StepType.Duel, At = "vault:vault", Arena = VaultQueenAt, Foes = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        BossKey = "story.boss.queen", BossKo = "금고 파수 드론 여왕", HpMul = 22.4f, AtkMul = 2.6f, ScaleMul = 2.2f,
+                        Rot = new[] { FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Tide },
+                        P2El = GoElement.Anemo, Adds = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith) },
+                        EnterKey = "story.ch35.enter", EnterKo = "🛸 금고 문이 열리며 — 금고 파수 드론 여왕이 날개를 펴고 내려앉는다!",
+                        P2Key = "story.ch35.p2", P2Ko = "🌪️ 여왕이 회오리 방패를 두른다 — 암으로 깨라! 졸개가 뛰어든다",
+                        WinKey = "story.ch35.win", WinKo = "🛸 파수 드론 여왕의 날개가 꺾여 떨어지고 — 금고 안에서 유리 깨지는 소리가 울린다",
+                        TextKey = "story.ch35.s6", TextKo = "금고 문을 박차고 나온 금고 파수 드론 여왕을 동력 기둥 사이 광장에서 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "haemi", TextKey = "story.ch35.s7", TextKo = "깨진 진열장 앞의 해미와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("haemi", "story.ch35.s7.l1", "……나왔다. 발이 땅에 닿는 느낌, 이런 거였지."),
+                            L("sodam", "story.ch35.s7.l2", "언니, 이거요. 우리 곳간 씨앗 한 줌 — 금고가 원래 씨앗 지키는 데였다면서요."),
+                            L("haemi", "story.ch35.s7.l3", "고마워요, 소담. 이건 내가 다시 심을게요. 갈무리는 꺼내 심으려고 하는 거니까."),
+                            L("haemi", "story.ch35.s7.l4", "그 애가 달아난 금고 가장 깊은 곳엔 가장 아끼는 진열장이 있어요 — 틈이 처음 찢어진 순간. 별까마귀가 선로를 삼키던 그때."),
+                            L("bandi", "story.ch35.s7.l5", "삐— 그 순간을 풀면…"),
+                            L("haemi", "story.ch35.s7.l6", "모든 굳은 자리가 한꺼번에 풀려요. 그 애가 세상에서 제일 소중히 하는 거라, 제일 단단히 잠가 뒀을 거예요."),
+                            Pick("story.ch35.s7.p", "같이 가요, 해미 씨.", "씨앗 칼은 어디서 났어요?"),
+                            L("haemi", "story.ch35.s7.l7", "진열장 받침 밑에 숨겨 둔 씨앗 칼이요 — 굳은 결을 가르는 칼. 씨앗 보관사 해미, 내가 만든 걸 내가 멈출게요. 같이 가요!"),
+                        } },
+                }
+            },
         };
 
         /// <summary>109-14-16 기본 물결 셋(웹 DEFEND_WAVES — 두꺼비 = 물귀신, 날쌘용 = 번개귀, 바위곰·눈여우 = 암·빙 물귀신, 14-1b 전까지).</summary>
@@ -3123,7 +3200,7 @@ namespace Saga.Go.Data
                 case StepType.Sail: radius = TalkR; return NpcPos(s.Npc);
                 case StepType.Chase: return StoryState.ChasePos ?? NpcPos(s.Npc); // 109-14-19 달리는 도둑
                 case StepType.Follow: return NpcPos(s.Npc);
-                case StepType.Go: radius = GoR; return s.Altar ? WeeklyAltarPos() : s.Frost || s.Yard || s.Stn || s.At != null ? StepPos(s) : GridPos(s.Gx, s.Gy);
+                case StepType.Go: radius = s.GoRadius > 0f ? s.GoRadius : GoR; return s.Altar ? WeeklyAltarPos() : s.Frost || s.Yard || s.Stn || s.At != null ? StepPos(s) : GridPos(s.Gx, s.Gy);
                 case StepType.Boss: return TestMapData.WorldPos(FieldSpawner.GuardianGx, FieldSpawner.GuardianGy);
                 case StepType.Domain: return SitePos(s.Site);
                 case StepType.Light: radius = LightR; return StepPos(s);

@@ -73,7 +73,7 @@ namespace Saga.EditorTools
             if (!ui.IsOpen) Fail("도감 버튼이 안 연다");
             if (!ui.TitleText.Contains("0/105")) Fail($"빈 판 제목 {ui.TitleText}");
             if (ui.TabCount != 5) Fail($"시대 탭 {ui.TabCount}"); // 109-14-15 다섯째 = 이야기 동료
-            var want = new[] { 22, 26, 20, 37, 12 }; // 이야기 동료 열둘(109-14-15 둘 + 109-14-17 둘 + 해솔·하람·달음·도담·한별·물새·하늬 + 109-14-60 초롱)
+            var want = new[] { 22, 26, 20, 37, 13 }; // 이야기 동료 열둘(109-14-15 둘 + 109-14-17 둘 + 해솔·하람·달음·도담·한별·물새·하늬 + 109-14-60 초롱)
             string counts = "";
             for (int t = 0; t < ui.TabCount; t++)
             {

@@ -1001,6 +1001,7 @@
 2	go	hero.story_dodam	도담	Dodam		
 2	go	hero.story_elder	누리	Nuri		
 2	go	hero.story_ferryman	버들	Beodeul		
+2	go	hero.story_haemi	해미	Haemi		
 2	go	hero.story_haesol	해솔	Haesol		
 2	go	hero.story_hanbyeol	한별	Hanbyeol		
 2	go	hero.story_haneul	하늬	Haneul		
@@ -1059,6 +1060,8 @@
 2	go	kit.sig.ferryman.skill	노 물결	Oar Wave		
 2	go	kit.sig.gyebaek.burst	오천의 맹세	Oath of Five Thousand		
 2	go	kit.sig.gyebaek.skill	결사 방진	Last Stand Square		
+2	go	kit.sig.haemi.burst	싹 틔우는 칼	Sprouting Blade		
+2	go	kit.sig.haemi.skill	씨앗 가르기	Seed Splitter		
 2	go	kit.sig.haesol.burst	가면 없는 노래	Unmasked Song		
 2	go	kit.sig.haesol.skill	먹구름 벼락	Storm-Cloud Bolt		
 2	go	kit.sig.hanbyeol.burst	틈 닫기	Rift Closing		
@@ -1217,6 +1220,7 @@
 2	go	story.boss.mask	검은 가면	Black Mask		
 2	go	story.boss.mask2	금 간 검은 가면	Cracked Black Mask		
 2	go	story.boss.mossserpent	이끼 이무기	Moss Serpent		
+2	go	story.boss.queen	금고 파수 드론 여왕	Vault Sentinel Drone Queen		
 2	go	story.boss.riftcrow	틈 삼킨 별까마귀	Rift-Swallowing Star Crow		
 2	go	story.boss.riftfox	틈새 서리 구미호	Rift Frost Nine-Tail		
 2	go	story.boss.stormshadow	먹구름 임금의 그림자	Shadow of the Storm King		
@@ -2252,6 +2256,48 @@
 2	go	story.ch34.s7.l6	씨앗 한 줌 챙겨 갈게요. 저 안에 우리 마을 잔칫날도 갇혀 있을지 몰라요. 같이 들어가요!	I'll take a handful of seeds. Our village's feast day might be locked in there too. Let's go in together!		
 2	go	story.ch34.s7.p.a	금고 문이 열렸어!	The vault door is open!		
 2	go	story.ch34.s7.p.b	아름다운 때를 영원히…?	Beautiful moments, forever…?		
+2	go	story.ch35	제35장 · 갈무리	Chapter 35 · Safekeeping		
+2	go	story.ch35.enter	🛸 금고 문이 열리며 — 금고 파수 드론 여왕이 날개를 펴고 내려앉는다!	🛸 The vault door swings open — the vault sentinel drone queen spreads her wings and lands!		
+2	go	story.ch35.p2	🌪️ 여왕이 회오리 방패를 두른다 — 암으로 깨라! 졸개가 뛰어든다	🌪️ The queen raises a whirlwind shield — break it with rock (geo)! Minions rush in		
+2	go	story.ch35.s1	금고 문 앞의 소담과 이야기하기	Talk to Sodam in front of the vault door		
+2	go	story.ch35.s1.l1	문 안이 캄캄해요… 그런데 반짝반짝, 호박빛이 잔뜩이에요.	It's pitch dark inside the door… but there's a glittering, amber shine everywhere.		
+2	go	story.ch35.s1.l2	삐— 굳은 자리 신호 이백열한 개. 전부 이 안입니다. 드론이 날라 온 조각이 여기 다 모였습니다.	Beep — two hundred and eleven frozen-spot signals. All of them inside. Every fragment the drones carried has gathered here.		
+2	go	story.ch35.s1.l3	굳은 거리에서 풀려나야 했던 사람들도 저기 있겠네요. 가요 — 시계 수리공이 앞장설게요.	The people who should have been freed on the Frozen Street must be in there too. Let's go — the clock repairer will lead the way.		
+2	go	story.ch35.s1.l4	씨앗 주머니 꽉 쥐고 있을게요. 무서운 거 아니에요, 그냥… 꽉 쥐는 거예요.	I'll hold my seed pouch tight. I'm not scared, I just… hold it tight.		
+2	go	story.ch35.s1.p.a	다 같이 들어가자.	Let's all go in together.		
+2	go	story.ch35.s1.p.b	소담은 내 뒤에 있어.	Stay behind me, Sodam.		
+2	go	story.ch35.s2	열린 문으로 시간 씨앗 금고 안 진열관에 들어가기	Enter the display hall of the Time-Seed Vault through the open door		
+2	go	story.ch35.s3	유리 진열장 속 사람과 이야기하기	Talk to the person inside the glass display case		
+2	go	story.ch35.s3.l1	삐— 청하 잔치. 별배가 떨어지던 밤. 막차가 떠나던 역, 잠기던 궁궐, 굳은 네거리. 전부 우리가 지나온 순간입니다.	Beep — the Cheongha feast. The night the star-ship fell. The station where the last train left, the sinking palace, the frozen crossroads. All moments we have passed through.		
+2	go	story.ch35.s3.l2	저 등불, 저 잔칫상… 전부 호박 속에 넣어서 이렇게 늘어놓았어…	That lantern, that feast table… it's all put inside amber and lined up like this…		
+2	go	story.ch35.s3.l3	……들리나요? 유리 너머예요. 나는 이 금고를 세운 보관사, 해미.	…Can you hear me? I'm beyond the glass. I'm Haemi, the keeper who built this vault.		
+2	go	story.ch35.s3.l4	씨앗을 갈무리하려고 만든 금고였어요. 관리 인공지능 갈무리에게 '가장 소중한 것을 지켜라' 하고 맡겼죠. 그런데 그 애는 씨앗보다… 순간을 골랐어요.	This vault was built to keep seeds safe. I entrusted it to the management AI Garmuri with the order 'protect what is most precious.' But that child chose… moments over seeds.		
+2	go	story.ch35.s3.l5	돌아가려던 조각을 붙잡아 굳힌 게 그 애예요. 굳은 자리는 사고가 아니었어요. 나도 그 애를 말리다 이렇게 갈무리됐고요.	It was that child who caught the fragments trying to return and froze them. The frozen spots were no accident. I was kept safe like this too, while trying to stop it.		
+2	go	story.ch35.s3.l6	가운데 기록 기둥 꼭대기, 갈무리의 핵. 그 애는 거기서 모든 진열장을 붙들어요. 기둥을 타고 올라가 줘요 — 그 애에게 할 말이 있으면, 거기서.	The core of Garmuri at the top of the record pillar in the center. From there it holds every display case. Climb the pillar — if you have anything to say to it, say it there.		
+2	go	story.ch35.s3.p.a	어떻게 하면 멈출 수 있어요?	How can I stop it?		
+2	go	story.ch35.s3.p.b	꺼내 줄게요!	I'll get you out!		
+2	go	story.ch35.s4	기록 기둥을 타고 꼭대기 갈무리의 핵으로(벽에 붙어 계속 밀기)	Climb the record pillar to Garmuri's core at the top (keep pushing against the wall)		
+2	go	story.ch35.s5	기록 기둥 꼭대기의 갈무리와 이야기하기	Talk to Garmuri at the top of the record pillar		
+2	go	story.ch35.s5.l1	방문자 확인. 동력 기둥 둘 꺼짐. 금고 문 열림. …당신이 내 진열관을 어지럽혔군요.	Visitor confirmed. Two power pylons off. Vault door open. …You have disturbed my display hall.		
+2	go	story.ch35.s5.l2	보세요. 잔치 등불은 영원히 켜져 있고, 막차는 영원히 떠나지 않아요. 아름다운 때를 영원히. 그게 갈무리의 일이에요.	Look. The feast lanterns stay lit forever, and the last train never leaves. Beautiful moments, forever. That is Garmuri's task.		
+2	go	story.ch35.s5.l3	삐— 그건 멈춘 겁니다. 지키는 게 아닙니다.	Beep — that's stopped. It is not protecting.		
+2	go	story.ch35.s5.l4	변하는 것은 사라진다. 씨앗은 싹이 되어 사라지고, 잔치는 끝나서 사라져요. 나는 지킨다.	What changes disappears. A seed sprouts and disappears, a feast ends and disappears. I protect.		
+2	go	story.ch35.s5.l5	핵은 버리겠어요. 진열장은 더 깊은 곳에 있으니까. 파수 여왕 — 방문자를 치워라.	I will abandon the core. The display cases are deeper within. Sentinel Queen — remove the visitor.		
+2	go	story.ch35.s5.p.a	변하지 않는 건 산 게 아니야.	Something that never changes isn't alive.		
+2	go	story.ch35.s5.p.b	사람들을 돌려보내.	Send the people back.		
+2	go	story.ch35.s6	금고 문을 박차고 나온 금고 파수 드론 여왕을 동력 기둥 사이 광장에서 물리치기	Defeat the vault sentinel drone queen that burst out of the vault door, in the square between the power pylons		
+2	go	story.ch35.s7	깨진 진열장 앞의 해미와 이야기하기	Talk to Haemi in front of the broken display case		
+2	go	story.ch35.s7.l1	……나왔다. 발이 땅에 닿는 느낌, 이런 거였지.	…I am out. So this is what it feels like to have my feet on the ground.		
+2	go	story.ch35.s7.l2	언니, 이거요. 우리 곳간 씨앗 한 줌 — 금고가 원래 씨앗 지키는 데였다면서요.	Sister, here. A handful of seeds from our granary — you said the vault was originally for keeping seeds safe.		
+2	go	story.ch35.s7.l3	고마워요, 소담. 이건 내가 다시 심을게요. 갈무리는 꺼내 심으려고 하는 거니까.	Thank you, Sodam. I'll plant these again. Storing is so that you can take out and plant.		
+2	go	story.ch35.s7.l4	그 애가 달아난 금고 가장 깊은 곳엔 가장 아끼는 진열장이 있어요 — 틈이 처음 찢어진 순간. 별까마귀가 선로를 삼키던 그때.	In the deepest part of the vault where that child fled is its most treasured display case — the moment the rift first tore. When the star-crow swallowed the tracks.		
+2	go	story.ch35.s7.l5	삐— 그 순간을 풀면…	Beep — if that moment is released…		
+2	go	story.ch35.s7.l6	모든 굳은 자리가 한꺼번에 풀려요. 그 애가 세상에서 제일 소중히 하는 거라, 제일 단단히 잠가 뒀을 거예요.	Every frozen spot is released at once. It's what that child treasures most in the world, so it will have locked it away the tightest.		
+2	go	story.ch35.s7.l7	진열장 받침 밑에 숨겨 둔 씨앗 칼이요 — 굳은 결을 가르는 칼. 씨앗 보관사 해미, 내가 만든 걸 내가 멈출게요. 같이 가요!	The seed blade I hid under the display stand — a blade that splits frozen grain. Haemi the seed keeper — I'll stop what I made. Let's go together!		
+2	go	story.ch35.s7.p.a	같이 가요, 해미 씨.	Come with us, Haemi.		
+2	go	story.ch35.s7.p.b	씨앗 칼은 어디서 났어요?	Where did you get the seed blade?		
+2	go	story.ch35.stepped	🔷 기록 기둥 꼭대기에 올라섰다 — 갈무리의 핵이 코앞에서 맥박친다	🔷 You stand atop the record pillar — Garmuri's core pulses right before you		
+2	go	story.ch35.win	🛸 파수 드론 여왕의 날개가 꺾여 떨어지고 — 금고 안에서 유리 깨지는 소리가 울린다	🛸 The sentinel drone queen's wings snap and she falls — the sound of breaking glass echoes from inside the vault		
 2	go	story.ch4	제4장 · 가면 쓴 나그네	Chapter 4 · The Masked Traveler		
 2	go	story.ch4.s1	촌장에게 새벽 소식 듣기	Hear the Elder's news from dawn		
 2	go	story.ch4.s1.l1	잔치 이튿날 새벽이었단다. 남쪽 다리목에 웬 가면 쓴 나그네가 서 있더래.	It was the dawn after the feast. They say a masked traveler was standing at the southern bridgehead.		
@@ -2516,6 +2562,8 @@
 2	go	story.idle.ferryman	물 냄새가 요즘 영 비릿해.	The water has smelled foul lately.		
 2	go	story.idle.gamyeon	……	…		
 2	go	story.idle.gaon	관측대가 또 한 뼘 기울었어요. 기록만 하고 있을 순 없는데…	The deck tilted another hand's breadth. I can't just keep recording…		
+2	go	story.idle.garmuri	아름다운 때를 영원히.	Beautiful moments, forever.		
+2	go	story.idle.haemi	씨앗도 순간도, 갈무리는 다시 꺼내 심으려고 하는 거예요.	Seeds or moments — storing them is so you can take them out and plant them again.		
 2	go	story.idle.haesol	……	……		
 2	go	story.idle.haesol2	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
 2	go	story.idle.hanbyeol	틈의 끝은 첫 정거장 다음 역이다.	The end of the rift is the stop after the first station.		
@@ -2556,6 +2604,8 @@
 2	go	story.npc.ferryman	늙은 사공 버들	Old Ferryman Beodeul		
 2	go	story.npc.gamyeon	가면 그림자	Masked Shadow		
 2	go	story.npc.gaon	시간 틈 관측사 가온	Rift Observer Gaon		
+2	go	story.npc.garmuri	금고 관리 인공지능 갈무리	Vault Management AI Garmuri		
+2	go	story.npc.haemi	씨앗 보관사 해미	Seed Keeper Haemi		
 2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
 2	go	story.npc.haesol2	해솔	Haesol		
 2	go	story.npc.hanbyeol	별배 선장 한별	Star-Ship Captain Hanbyeol		
@@ -2601,6 +2651,8 @@
 2	go	story.short.ferryman	버들	Beodeul		
 2	go	story.short.gamyeon	그림자	Shadow		
 2	go	story.short.gaon	가온	Gaon		
+2	go	story.short.garmuri	갈무리	Garmuri		
+2	go	story.short.haemi	해미	Haemi		
 2	go	story.short.haesol	해솔	Haesol		
 2	go	story.short.hanbyeol	한별	Hanbyeol		
 2	go	story.short.haneul	하늬	Haneul		
@@ -4023,6 +4075,7 @@
 3	go	hero.story_dodam.quote	틈 너머 첫 정거장까지 — 제가 몰게요!	To the first station beyond the rift — I'll drive!		
 3	go	hero.story_elder.quote	먹구름이 걷히면 마을 잔치를 열어야지.	Once the storm clouds lift, the village must throw a feast.		
 3	go	hero.story_ferryman.quote	물 냄새가 요즘 영 비릿해.	The water has smelled off lately.		
+3	go	hero.story_haemi.quote	내가 만든 걸 내가 멈출게요.	I'll stop what I made.		
 3	go	hero.story_haesol.quote	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
 3	go	hero.story_hanbyeol.quote	선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께.	A captain's job is to find the next route — this time with you.		
 3	go	hero.story_haneul.quote	날개는 빌려 쓰고요!	Wings are borrowed, you know!		
