@@ -148,6 +148,18 @@ a.icon-btn { display: flex; align-items: center; justify-content: center; text-d
   font-size: 12px; white-space: nowrap;
 }
 .goal-row .gi { flex: 0 0 auto; }
+/* 시나리오 장면(scenario.js) — 마을에서만. 위아래 검은 띠 없이 아래 카드 하나 */
+#scnbox { position: fixed; inset: 0; z-index: 60; display: none; flex-direction: column; justify-content: flex-end; align-items: center;
+  padding: 0 16px calc(24px + var(--safe-b, 0px)); cursor: pointer; background: rgba(0,0,0,.28); }
+#scnbox.show { display: flex; }
+.scn-title { position: fixed; top: calc(70px + var(--safe-t, 0px)); left: 50%; transform: translateX(-50%); font-size: 15px; letter-spacing: .12em; color: #f0e2c8; text-shadow: 0 1px 4px #000; }
+.scn-card { display: flex; align-items: center; gap: 12px; width: min(560px, 100%); padding: 12px 14px; border-radius: 18px;
+  background: var(--glass, rgba(14,16,24,.9)); border: 1px solid var(--glass-br, rgba(255,255,255,.18)); box-shadow: var(--shadow, 0 6px 24px rgba(0,0,0,.5)); }
+.scn-card.me { flex-direction: row-reverse; text-align: right; }
+.scn-face { flex: none; width: 56px; height: 56px; line-height: 56px; text-align: center; font-size: 38px; }
+.scn-say { flex: 1; min-width: 0; }
+.scn-say b { display: block; font-size: 13px; margin-bottom: 4px; color: #f0e2c8; }
+.scn-say p { margin: 0 0 4px; font-size: 14px; line-height: 1.55; }
 .goal-row .gl { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; opacity: .9; }
 .goal-row .gp { flex: 0 0 auto; font-variant-numeric: tabular-nums; opacity: .7; }
 /* 숨김 단추(✕)는 오른쪽 위 모서리에 얹고, 숨기면 칩 하나만 남긴다 */

@@ -749,6 +749,12 @@
 
   /** 목표판(§5.6) — 지금·이번 세션·이번 주 세 줄. 폰에서는 첫 줄만 보이다가
    *  탭하면 펼쳐진다(css .goals.open). */
+  /** 시나리오(scenario.js) 지금 할 일 한 줄 — 목표판 맨 윗줄 */
+  function scnRow() {
+    var SC = global.DG.scenario, h = SC && SC.hint();
+    return h ? '<div class="goal-row"><span class="gi">📖</span><span class="gl">' + esc(h.title) + ' — <b>' + esc(h.text) + '</b></span></div>' : '';
+  }
+
   function renderGoals() {
     if (!els.goals) { return; }
     var G = global.DG.goals;
@@ -768,7 +774,7 @@
     }
     els.goals.innerHTML =
       '<button class="goal-hide" data-goals="hide" title="목표판 숨기기">✕</button>' +
-      row('⏱️', L.now) + row('🎯', L.session) + row('📅', L.weekly);
+      scnRow() + row('⏱️', L.now) + row('🎯', L.session) + row('📅', L.weekly);
   }
 
   /** 세션 카드 — 탈출·사망·마을 귀환 대신 이 판은 dungeon:end 하나로 셋을
@@ -1304,7 +1310,7 @@
     var Q = global.DG.quest;
     if (!Q) { return '<div class="hint">퀘스트 모듈이 없습니다.</div>'; }
     var st = Q.status();
-    var html = '';
+    var html = global.DG.scenario ? global.DG.scenario.cardHtml() : '';
 
     html += '<div class="sec"><h4>🚩 메인</h4>';
     if (st.mainDone) {

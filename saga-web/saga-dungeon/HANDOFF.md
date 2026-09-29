@@ -4330,3 +4330,11 @@ VRoid 인물이 unlit(`MeshBasicMaterial`) 그대로라 명암 없이 평면이�
 - 배선: `town.js` 걷는 속도 ×`speedMul()` · `dungeon.js` `fieldBlockedAt` 는 뜬 탈것이면 마을 소품을 안 막음(`ctx.town` 일 때만) · `hurtPlayer` 에서 `onHurt` · `dungeon3d.js` `buildActor('mount')` 로 펫 몸을 발밑에 세우고 나를 등 높이(`LIFT` 16, 뜬 것은 `HOVER` 22 더)에 얹음 · `game.js` 프레임 `mount.frame()`.
 - 진단 424/424(새 시험 둘: 카탈로그·게이트·내림 / 마을 이동·소품 넘기·들판 싸움), 세 판 동일. 주의: 던전 시험은 `DN.enter` 가 부대가 비면 거절하니 부대를 임시로 채운다. `playcheck/dg-mount.mjs`(새 프로필): 흰 말 1.5초 126 vs 걸어 71(부딪힘 포함 ×1.77) · 학 101 · 던전 들어가면 내림 · 예외는 기존 지형 셰이더(`__wn`·`__roadFade` 스위프트셰이더 컴파일 경고)뿐, 탈것 무관. 사진은 안 찍음 — 말 크기·앉은 높이는 눈대중, 실기 확인 대기.
 - sw dungeon-v0.170.0. **다음**: 사가국지(명마 장수 장착·전장 병력 이동 배율, 비행은 도시 3D 둘러보기 카메라만). 이야기 순서 61(사가고 10부)은 그 뒤.
+
+## 2026-09-29 — 시나리오 1막 · 중원의 난 세 장 (PLAN §8 Phase 10, 사용자 "다른 네 판 시나리오 1장부터" → 사가스토리에 이어 사가블로)
+- 새 `js/data-scenario.js`(장 3·장면 7·인물 4 — 모루골 부임·흑기 도적의 밤·순장 왕릉, 장마다 세 시대) · 새 `js/scenario.js`(엔진 + 장면 상자 `#scnbox`). 사가스토리 것을 복사해 이 판 단계로 바꿨다(다섯 판 별개 코드).
+- 단계: talk(**마을에 있을 때만** — 굴혈은 실시간이라 안 띄움, 1초마다·귀환 때 다시 봄) · kill(이 단계 시작 뒤 n 마리, `dungeon:kill`) · floor(최고 층) · chain(`save.quest.chain[key].done` — 새 판정 없음) · landmark(`fixedState()[층].clears`) · rescue(`dungeon:rescue`). 판정 파일(dungeon.js·quest.js)은 안 건드림.
+- 붙인 곳: ui.js 목표판 맨 윗줄 📖(`scnRow`)·🚩 퀘스트 시트 맨 위 이야기 카드 · game.js `finishBoot` 에서 init · index/_test/sw · css `#scnbox`. 장면 동안 키(Space·Enter 다음, Esc 건너뛰기)는 장면이 먹는다(캡처).
+- 세이브 `save.scenario = { init, done, ch, step, said, cnt:{kill,rescue}, base }`. 옛 세이브는 최고 층이 장의 `legacy.floor`(1·3·5) 이상이면 보상 없이 건너뜀. 보상은 경험치·금·공적만 — 카드의 "출사표 인물 셋"은 시작 때 이미 받고, "도감 인물 한 명 확정 합류"는 뺐다(합류 함수가 game.js 안에 갇혀 있음).
+- 확인: jsdom `_test.html` 426/426 — 새 진단 2(표 정합, 1막 흐름: 마을 밖에선 안 뜸·열 마리·1층·사슬·명소+구출·옛 세이브). 진단 함정: `say()` 가 이어진 장면(장 끝 → 다음 장 첫 장면)까지 넘기니 첫 장면은 `said` 로 확인. sw dungeon-v0.171.0. **실기 확인 대기**: 마을로 돌아온 순간 장면이 뜨는 타이밍·상자가 마을 조작을 가리는지·폰 글 크기.
+- **다음**: 2막(a2_factory·a2_tideflat·a2_watchtower — region·choice 단계가 새로 필요) 또는 사가의숲·사가국지 1장.

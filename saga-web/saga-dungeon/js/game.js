@@ -127,6 +127,7 @@
 
     /* 목표판(§5.6) — vendor.js 와 같은 자리, 같은 이유로 여기서 켠다 */
     if (global.DG.goals) { global.DG.goals.init(); }
+    if (global.DG.scenario) { global.DG.scenario.init(); }   // 시나리오 장 진행(scenario.js) — 마을에 서면 이야기가 이어진다
 
     /* 던전이 끝나면 마을로 돌아온다.
        **dungeonView.init() 보다 먼저 걸어 둔다** — 화면도 dungeon:end 를 듣고
