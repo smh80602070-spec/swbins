@@ -54,6 +54,7 @@ namespace Saga.Dungeon.World
             RegionBossRunner.Install(); // PLAN.md 109-10-5 지역 우두머리 아홉 — 칸마다 표식(Play 때, 몸만 층 진행기에).
             RegionSagaRunner.Install(); // PLAN.md 109-10-6 지역 사연 — 흔적·사냥터(Play 때).
             GestureRunner.Install(); // PLAN.md 109-10-7 몸짓 — 촌민에 붙이고 레벨업·두목급 처치 → 동행 환호(Play 때).
+            MountField.Install(); // PLAN.md 109-15 탈것·비행 — H 타기·Shift+H 고르기·X/Z 오르내림(Play 때, 씬 재빌드 없이).
             if (DungeonFloorRunner.Instance != null) DungeonFloorRunner.Instance.FloorDescended += OnFloorDescended;
         }
 

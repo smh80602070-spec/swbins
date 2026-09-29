@@ -514,6 +514,23 @@
     { "key": "lordsig.bandit", "value": "Black Wind Triple Charge" },
     { "key": "lordsig.palace", "value": "Abyssal Maelstrom" },
     { "key": "lordsig.hellgate", "value": "Hellfire Ground" },
-    { "key": "lordsig.cloud", "value": "Heaven Thunder Cross" }
+    { "key": "lordsig.cloud", "value": "Heaven Thunder Cross" },
+    { "key": "mount.mt_farm", "value": "Farm Horse" },
+    { "key": "mount.mt_brown", "value": "Brown Horse" },
+    { "key": "mount.mt_white", "value": "White Horse" },
+    { "key": "mount.mt_crane", "value": "Crane" },
+    { "key": "mount.mt_dragon", "value": "Azure Dragon" },
+    { "key": "mount.btn_on", "value": "Ride" },
+    { "key": "mount.btn_off", "value": "Dismount" },
+    { "key": "mount.on", "value": "You mount the {0}" },
+    { "key": "mount.off", "value": "You dismount" },
+    { "key": "mount.sel", "value": "{0} selected" },
+    { "key": "mount.none", "value": "No mount yet — your first one comes at adventure level 5" },
+    { "key": "mount.no_dungeon", "value": "You can only ride in towns and the open field (not in the dungeon)" },
+    { "key": "mount.need_ground", "value": "Mount while standing on the ground" },
+    { "key": "mount.auto_attack", "value": "You dismount to fight" },
+    { "key": "mount.auto_hurt", "value": "You were hit and dismount" },
+    { "key": "mount.auto_dungeon", "value": "You entered the dungeon and dismount" },
+    { "key": "mount.auto_off", "value": "You dismount" }
   ]
 }

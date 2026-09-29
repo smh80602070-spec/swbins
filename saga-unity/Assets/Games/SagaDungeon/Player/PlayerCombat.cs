@@ -282,9 +282,13 @@ namespace Saga.Dungeon.Player
         }
 
         /// <summary>한 번 때리기 — 비결 한기면 얼리고, 흡혈 창이면 준 피해로 체력을 되찾는다.</summary>
+        /// <summary>PLAN.md 109-15 — 적을 칠 때마다 쏜다(탈것에서 저절로 내린다).</summary>
+        public static event System.Action Struck;
+
         private static void Strike(DungeonEnemy enemy, float damage, bool heavy, SecretMove move)
         {
             if (enemy == null || !enemy.IsAlive) return;
+            Struck?.Invoke();
             enemy.TakeDamage(damage, heavy);
             float chill = SecretState.ChillSec(move);
             if (chill > 0f && enemy.IsAlive) enemy.Chill(chill);

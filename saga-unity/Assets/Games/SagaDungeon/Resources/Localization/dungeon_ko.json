@@ -514,6 +514,23 @@
     { "key": "lordsig.bandit", "value": "흑풍 삼연돌" },
     { "key": "lordsig.palace", "value": "심연 소용돌이" },
     { "key": "lordsig.hellgate", "value": "업화 장판" },
-    { "key": "lordsig.cloud", "value": "천뢰 십자" }
+    { "key": "lordsig.cloud", "value": "천뢰 십자" },
+    { "key": "mount.mt_farm", "value": "농마" },
+    { "key": "mount.mt_brown", "value": "갈색 말" },
+    { "key": "mount.mt_white", "value": "흰 말" },
+    { "key": "mount.mt_crane", "value": "학" },
+    { "key": "mount.mt_dragon", "value": "푸른 용" },
+    { "key": "mount.btn_on", "value": "타기" },
+    { "key": "mount.btn_off", "value": "내리기" },
+    { "key": "mount.on", "value": "{0} 을(를) 탔다" },
+    { "key": "mount.off", "value": "탈것에서 내렸다" },
+    { "key": "mount.sel", "value": "{0} 로 골랐다" },
+    { "key": "mount.none", "value": "아직 탈것이 없다 — 모험 레벨 5 에 첫 탈것" },
+    { "key": "mount.no_dungeon", "value": "마을·들판에서만 탈 수 있다(던전 안 ✕)" },
+    { "key": "mount.need_ground", "value": "땅에 서서 탄다" },
+    { "key": "mount.auto_attack", "value": "싸우려고 탈것에서 내렸다" },
+    { "key": "mount.auto_hurt", "value": "맞아서 탈것에서 내렸다" },
+    { "key": "mount.auto_dungeon", "value": "던전에 들어가 탈것에서 내렸다" },
+    { "key": "mount.auto_off", "value": "탈것에서 내렸다" }
   ]
 }

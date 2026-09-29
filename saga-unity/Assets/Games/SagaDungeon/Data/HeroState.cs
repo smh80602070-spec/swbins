@@ -73,6 +73,9 @@ namespace Saga.Dungeon.Data
         /// 이 값으로 그 자리에 `GraveMarker`를 세운다.</summary>
         public static event Action<int> Died;
 
+        /// <summary>PLAN.md 109-15 — 실제로 맞았을 때(무적·0 피해 제외) 쏜다(탈것에서 저절로 내린다).</summary>
+        public static event Action Hurt;
+
         /// <summary>PLAN.md 101-3 G "장비 가시화" — `WeaponVisual`이 무기를
         /// 다시 쥐어야 할 때만 구독(`EquipIfBetter`가 실제로 바뀔 때만
         /// 부른다 — `LeveledUp`과 같은 결).</summary>
@@ -137,6 +140,7 @@ namespace Saga.Dungeon.Data
         {
             if (Invulnerable || amount <= 0f || Hp <= 0) return;
             Hp = Math.Max(0, Hp - RoundInt(amount / BlessingState.DefMultiplier));
+            Hurt?.Invoke();
             if (Hp <= 0) Died?.Invoke(DropGoldAsGrave());
         }
 

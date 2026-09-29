@@ -146,6 +146,7 @@ namespace Saga.EditorTools
                 if (!PlaytestDungeonAllySig.Run()) _hadError = true; // PLAN.md 109-10-8 동행 서명·합격 — 더미·셈·창·재사용을 되돌린다.
                 if (!PlaytestDungeonLordSigs.Run()) _hadError = true; // PLAN.md 109-10-9 명소 주인 고유 수 — 층·명소 기록·영웅·자리를 되돌린다.
                 if (!PlaytestDungeonHunt.Run()) _hadError = true; // PLAN.md 109-10-10 몰이 사냥 — 층·영웅·비결·자리·손잡이를 되돌린다.
+                if (!PlaytestDungeonMount.Run()) _hadError = true; // PLAN.md 109-15 탈것·비행 — 레벨·탈것·자리·세이브 상태를 되돌린다.
                 CheckTemple(); // PLAN.md 106-2 — 플레이어를 순간이동시키므로 맨 끝(finally 에서 되돌린다).
                 StartCutCameraProbe(); // PLAN.md 106-3 — 6·8프레임째에 이어서 본다.
             }

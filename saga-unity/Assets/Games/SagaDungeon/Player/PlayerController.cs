@@ -68,7 +68,7 @@ namespace Saga.Dungeon.Player
         private const float LockTurnRate = 14f;
 
         // PLAN.md 106-5 "탐험" — GO 값 × 0.53(사람 키 1.8/3.4)
-        public enum MoveMode { Ground, Air, Climb, Mantle }
+        public enum MoveMode { Ground, Air, Climb, Mantle, Fly }
         public const float JumpVelocity = 7.2f;          // v²/2g = 1.3m
         public const float ClimbSpeed = 1.7f;
         public const float ClimbSideSpeed = 1.4f;
@@ -255,12 +255,13 @@ namespace Saga.Dungeon.Player
         {
             if (_regrabCooldown > 0f) _regrabCooldown -= dt;
             if (Mode == MoveMode.Mantle) { StepMantle(dt); SetModeParams(); return; }
+            if (Mode == MoveMode.Fly && !DungeonMounts.RidingFly) Mode = MoveMode.Air; // 탈것에서 내렸다 — 떠 있던 자리에서 떨어진다
 
             if (_controller.isGrounded && _verticalVelocity < 0f)
             {
                 _verticalVelocity = 0f;
             }
-            if (Mode != MoveMode.Climb) _verticalVelocity -= Gravity * dt;
+            if (Mode != MoveMode.Climb && Mode != MoveMode.Fly) _verticalVelocity -= Gravity * dt;
 
             if (_dodgeCooldownLeft > 0f) _dodgeCooldownLeft -= dt;
             if (_invulnTimeLeft > 0f) _invulnTimeLeft -= dt;
@@ -298,6 +299,12 @@ namespace Saga.Dungeon.Player
             {
                 StepClimb(dt, inputDir, jumpPressed);
                 SetModeParams();
+                return;
+            }
+            // PLAN.md 109-15 — 비행 탈것: X 로 오르면 뜨고, 뜬 뒤엔 손을 떼도 그 높이(내려앉아 땅에 닿을 때까지).
+            if (DungeonMounts.RidingFly && _dodgeTimeLeft <= 0f && (Mode == MoveMode.Fly || DungeonMounts.Lift > 0f))
+            {
+                StepFly(dt, moveDir);
                 return;
             }
             if (jumpPressed && _dodgeTimeLeft <= 0f && _controller.isGrounded)
@@ -348,7 +355,7 @@ namespace Saga.Dungeon.Player
             SetStrafeFlag(false);
 
             bool running = !_testInput && _sprintAction != null && _sprintAction.IsPressed();
-            float speed = running ? RunSpeed : WalkSpeed;
+            float speed = (running ? RunSpeed : WalkSpeed) * DungeonMounts.GroundMul; // PLAN.md 109-15 — 안 탔으면 ×1
 
             Vector3 horizontal = moveDir * speed;
             bool wasGrounded = _controller.isGrounded && _verticalVelocity <= 0f;
@@ -399,7 +406,7 @@ namespace Saga.Dungeon.Player
         /// 좌우=돌기)으로 옆걸음한다. 옆걸음 블렌드가 있으면 몸 기준 MoveX/MoveY 를 준다.</summary>
         private void UpdateLockedMove(Vector3 moveDir, float dt)
         {
-            Vector3 horizontal = moveDir * LockMoveSpeed;
+            Vector3 horizontal = moveDir * (LockMoveSpeed * DungeonMounts.GroundMul);
             _controller.Move(new Vector3(horizontal.x, _verticalVelocity, horizontal.z) * dt);
 
             Vector3 toTarget = lockOn.Target.transform.position - transform.position;
@@ -503,6 +510,43 @@ namespace Saga.Dungeon.Player
             if (dir.sqrMagnitude > 1f) dir.Normalize();
             return dir;
         }
+        // ---- PLAN.md 109-15 탈것·비행 ------------------------------------------------------
+
+        /// <summary>비행 탈것을 탄 채 한 프레임 — 오르내림은 `DungeonMounts.Lift`(X·Z·▲▼), 높이는 지면 위 <c>Mount.Ceil</c> 까지,
+        /// 뜬 동안 속도는 <c>Mount.Fly</c> 배. 뜬 채로는 칸 밖(던전 문·바깥 벽)으로 못 나간다(가장자리는 미끄러진다).</summary>
+        private void StepFly(float dt, Vector3 moveDir)
+        {
+            var m = DungeonMounts.Riding;
+            Mode = MoveMode.Fly;
+            float h = HeightAboveGround();
+            float lift = DungeonMounts.Lift;
+            float vy = lift > 0f ? (h >= m.Ceil ? 0f : DungeonMounts.Rise) : lift < 0f ? -DungeonMounts.Fall : 0f;
+            bool running = !_testInput && _sprintAction != null && _sprintAction.IsPressed();
+            float speed = (running ? RunSpeed : WalkSpeed) * (DungeonMounts.Airborne(h) ? m.Fly : m.Mul);
+            Vector3 horizontal = moveDir * speed;
+            Vector3 p = transform.position;
+            if (horizontal.sqrMagnitude > 0f && DungeonWorldMap.IndexAt(p + horizontal * dt) < 0)
+            {
+                var onlyX = new Vector3(horizontal.x, 0f, 0f);
+                var onlyZ = new Vector3(0f, 0f, horizontal.z);
+                if (DungeonWorldMap.IndexAt(p + onlyX * dt) >= 0) horizontal = onlyX;
+                else if (DungeonWorldMap.IndexAt(p + onlyZ * dt) >= 0) horizontal = onlyZ;
+                else horizontal = Vector3.zero;
+            }
+            _verticalVelocity = vy;
+            _controller.Move(new Vector3(horizontal.x, vy, horizontal.z) * dt);
+            if (lift <= 0f && _controller.isGrounded) { Mode = MoveMode.Ground; _verticalVelocity = 0f; } // 내려앉아 땅에 닿았다 — 탄 채로 걷는다
+            SetModeParams();
+            bool moving = moveDir.sqrMagnitude > 0.05f * 0.05f;
+            if (animator != null) animator.SetFloat("Speed", moving ? (running ? 1f : 0.5f) : 0f);
+            if (moving && visual != null)
+            {
+                float targetYaw = Mathf.Atan2(moveDir.x, moveDir.z) * Mathf.Rad2Deg;
+                float yaw = Mathf.LerpAngle(visual.eulerAngles.y, targetYaw, TurnRate * dt);
+                visual.rotation = Quaternion.Euler(0f, yaw, 0f);
+            }
+        }
+
         // ---- PLAN.md 106-5 탐험 — 땅/공중·등반·넘어오르기 ----------------------------------
 
         private void UpdateGroundMode()

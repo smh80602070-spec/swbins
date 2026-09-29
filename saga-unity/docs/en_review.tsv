@@ -3208,6 +3208,23 @@
 2	dungeon	merchant.bought_plain	행상 — {0}을(를) {1}냥에 샀다.	Merchant — bought {0} for {1} gold.		
 2	dungeon	merchant.bought_socketed	행상 — {0}을(를) {1}냥에 샀다 — 바로 세공했다.	Merchant — bought {0} for {1} gold — socketed it right away.		
 2	dungeon	merchant.cant_afford	행상 — {0}({1}냥)를 살 돈이 모자라다.	Merchant — not enough gold for {0} ({1} gold).		
+2	dungeon	mount.auto_attack	싸우려고 탈것에서 내렸다	You dismount to fight		
+2	dungeon	mount.auto_dungeon	던전에 들어가 탈것에서 내렸다	You entered the dungeon and dismount		
+2	dungeon	mount.auto_hurt	맞아서 탈것에서 내렸다	You were hit and dismount		
+2	dungeon	mount.auto_off	탈것에서 내렸다	You dismount		
+2	dungeon	mount.btn_off	내리기	Dismount		
+2	dungeon	mount.btn_on	타기	Ride		
+2	dungeon	mount.mt_brown	갈색 말	Brown Horse		
+2	dungeon	mount.mt_crane	학	Crane		
+2	dungeon	mount.mt_dragon	푸른 용	Azure Dragon		
+2	dungeon	mount.mt_farm	농마	Farm Horse		
+2	dungeon	mount.mt_white	흰 말	White Horse		
+2	dungeon	mount.need_ground	땅에 서서 탄다	Mount while standing on the ground		
+2	dungeon	mount.no_dungeon	마을·들판에서만 탈 수 있다(던전 안 ✕)	You can only ride in towns and the open field (not in the dungeon)		
+2	dungeon	mount.none	아직 탈것이 없다 — 모험 레벨 5 에 첫 탈것	No mount yet — your first one comes at adventure level 5		
+2	dungeon	mount.off	탈것에서 내렸다	You dismount		
+2	dungeon	mount.on	{0} 을(를) 탔다	You mount the {0}		
+2	dungeon	mount.sel	{0} 로 골랐다	{0} selected		
 2	dungeon	party.guard_down	동행 무사가 쓰러졌다 — 술사의 치유로 일으킬 수 있다	Your warrior fell — the mystic's heal can revive them		
 2	dungeon	party.guard_is_down	무사가 쓰러져 있다 — 술사의 치유로 일으키자	The warrior is down — revive them with the mystic's heal		
 2	dungeon	party.heal	동행 술사: 「치유의 빛!」 — 체력이 차오른다	Mystic: "Light of healing!" — your health recovers		
