@@ -2,7 +2,7 @@
  * 밤의 잔불 — 결말 뒤 밤에만 타는 보랏빛 불 (PLAN §5 ⑲-56, saga-godot PLAN 106 52-5 `world/night_echoes.gd`)
  * ---------------------------------------------------------------
  *   열림     1차 결말(29장)을 마친 뒤 · 실제 시각 21~4시(밤)에만. 낮이 되면 불이 꺼진다(무리도 거둔다)
- *   자리     이야기가 지나간 일곱 곳마다 잔불 하나 — 폐허 제단 · 서쪽 옛길 · 북쪽 봉우리 · 물마루 곶 · 바위섬 · 서리봉 고원 · 잠긴 도읍 모래밭
+ *   자리     이야기가 지나간 일곱 곳마다 잔불 하나 — 폐허 제단 · 서쪽 옛길 · 북쪽 봉우리 · 물마루 곶 · 바위섬 · 서리봉 고원 · 잠긴 도읍 모래밭 (2차 결말 38장 뒤 굳은 네거리·야적장·세갈래 성문 앞 셋 더 = 열 곳)
  *   도전     14m 안에 들면 잔당 셋(들판 전투 무리, 키 `dm:ne:<자리>`) — 60m 넘게 떠나면 거둔다. 다 쓰러뜨리면 그 자리 이야기 인물 한 줄 +
  *            금·무예 교본, 그 자리는 그날(새벽 4시 넘김) 다시 안 탄다
  *   세이브   `save.night_echo = { day, done: { 자리: 1 } }` 한 칸(필드만 더함). 진행 중 무리는 저장하지 않는다
@@ -31,7 +31,11 @@
     { id: 'cape',  name: '물마루 곶',     spot: 'cape',                       who: '버들',   line: '허, 이 늙은이 노 소리에 잔불도 물러가는군.',         foes: ['imp', 'toad', 'toad'] },
     { id: 'isle',  name: '바위섬',        spot: 'isle',                       who: '버들',   line: '밤 물살이 잔불을 실어 오네. 이제 진짜 끝이겠지.',     foes: ['imp', 'toad', 'hawk'] },
     { id: 'frost', name: '서리봉 고원',   spot: 'fr_center',                  who: '하람',   line: '(무전) 관측소 온도계가 밤마다 튀었는데 — 이 불 때문이었어요.', foes: ['snowfox', 'snowfox', 'hawk'] },
-    { id: 'sunken', name: '잠긴 도읍 모래밭', spot: 'sk_sand',                who: '물새',   line: '밤 바다에 보랏빛이 비치더니 — 그게 이거였구려.',       foes: ['toad', 'toad', 'raptor'] }
+    { id: 'sunken', name: '잠긴 도읍 모래밭', spot: 'sk_sand',                who: '물새',   line: '밤 바다에 보랏빛이 비치더니 — 그게 이거였구려.',       foes: ['toad', 'toad', 'raptor'] },
+    /* ⑲-69 2차 결말(38장) 뒤 — 새 지역 셋(9~11부). 자리는 그 지역 이야기 kill 칸 */
+    { id: 'amber', name: '굳은 네거리', spot: 'am_cross', off: [0, 8], after: 38, who: '초롱', line: '밤에도 신호등이 초록으로 또렷해요. 시계방 괘종도 제 박자를 찾았고요.', foes: ['rockbear', 'imp', 'bolt'] },
+    { id: 'vault', name: '야적장', spot: 'vt_yard', off: [0, 8], after: 38, who: '마루', line: '금고 불이 꺼져도 야적장이 어둡지 않아요. 이 잔불이 가로등 노릇을 했나 봐요.', foes: ['rockbear', 'hawk', 'snowfox'] },
+    { id: 'fork', name: '세갈래 성문 앞', spot: 'fk_gate', off: [0, 22], after: 38, who: '벼리', line: '성문 앞에 먹구름 부스러기라니 — 쓸어 줘서 고맙다. 오늘 밤 화덕은 편히 피우겠어.', foes: ['imp', 'bolt', 'snowfox'] }
   ];
 
   /* ── 판정(순수) ─────────────────────────────────────── */
@@ -55,8 +59,8 @@
     return p ? { x: p.x, y: p.y } : null;
   }
   function spots() {
-    var out = [];
-    SPOTS.forEach(function (d, i) { var p = posOf(i); if (p) { out.push({ i: i, id: d.id, name: d.name, x: p.x, y: p.y, who: d.who, line: d.line }); } });
+    var out = [], S = ST(), v = S && S.state ? S.state() : null;
+    SPOTS.forEach(function (d, i) { if (d.after && !(v && v.ch >= d.after)) { return; } var p = posOf(i); if (p) { out.push({ i: i, id: d.id, name: d.name, x: p.x, y: p.y, who: d.who, line: d.line }); } });
     return out;
   }
   function rewardOf() { return { gold: REWARD.gold, mats: { guide: REWARD.mats.guide } }; }

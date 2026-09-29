@@ -14482,6 +14482,53 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '일곱 곳(29장 뒤·밤 21~4시) · 14m 잔당 셋 · 60m 밖·낮 거둠 · 처치 🪙800 📘1 · 그날 한 번 · 4시 넘기면 다시' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-69 2차 결말(38장) 뒤 — 11부 재대결 메아리 둘(domain.js) · 새 지역 밤의 잔불 셋(nightecho.js) ── */
+    t('결말 뒤 ⑲-69 — 11부 메아리 둘: 38장을 마친 뒤에만 입구 둘(세갈래 고을 안)·보스 처음의 별까마귀·갈무리 참몸 · 앞 넷은 29장 뒤 그대로 · 보상 금 +20', function () {
+      var rig = dmRig(), DM = rig.DM, FC = rig.FC, r = {};
+      try {
+        C.save.story = { ch: 37, step: 0 };
+        r.pre = DM.echoList().length === 4 && !DM.byId('e:firstcrow') && !DM.byId('e:garmuri');
+        C.save.story = { ch: 38, step: 0 };
+        var E = DM.echoList(), c = DG.fork.center();
+        r.open = E.length === 6 && E.slice(4).map(function (d) { return d.id + ':' + d.boss; }).join() === 'e:firstcrow:first_crow,e:garmuri:garmuri_true' &&
+          E.slice(4).every(function (d) { return d.kind === 'echo' && !!FC.FOES[d.boss] && FC.FOES[d.boss].boss && DG.fork.inRegion(d.x, d.y); });
+        r.apart = Math.hypot(E[4].x - E[5].x, E[4].y - E[5].y) > 60;
+        r.gates = DM.gates().length === DM.list().length + 6 && !!DM.byId('e:garmuri') && DM.wavesOf(E[5])[0][0] === 'garmuri_true';
+        var d = E[4];
+        rig.at(d); DM.enter(d, 0); DM.step(3.1);
+        var L = rig.wave();
+        r.boss = L.length === 1 && L[0].kind === 'first_crow' && DM.run().left === 240 && DM.costOf('echo') === 30;
+        r.reward = DM.rewardOf('echo', 0, 0, E[4]).gold === DM.rewardOf('echo', 0, 0, E[0]).gold + 20 && DM.rewardOf('echo', 2, 0, E[5]).gold === 360 && DM.rewardOf('echo', 0, 0).gold === 200;
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '메아리 여섯(38장 뒤 둘 더) · 세갈래 고을 안 · 별까마귀·참몸 · 금 +20' : ('실패 ' + bad.join(','));
+    });
+
+    t('결말 뒤 ⑲-69 — 밤의 잔불 열 곳: 38장 뒤에만 굳은 네거리·야적장·세갈래 성문 앞 셋 더 · 자리는 그 지역 안 · 잔당 셋 · 처치하면 그 지역 인물 한 줄', function () {
+      var rig = dmRig(), NE = DG.nightEcho, FC = rig.FC, r = {};
+      var NIGHT = new Date(2026, 8, 29, 22, 0).getTime();
+      try {
+        NE._resetForTest(); NE._setNowForTest(function () { return NIGHT; });
+        C.save.story = { ch: 37, step: 0 };
+        r.pre = NE.spots().length === 7;
+        C.save.story = { ch: 38, step: 0 };
+        var L = NE.spots();
+        r.ten = L.length === 10 && L.slice(7).map(function (q) { return q.id; }).join() === 'amber,vault,fork' && NE.embers().length === 10;
+        r.in = DG.amber.inRegion(L[7].x, L[7].y) && DG.vault.inRegion(L[8].x, L[8].y) && DG.fork.inRegion(L[9].x, L[9].y);
+        r.foes = NE.SPOTS.slice(7).every(function (d) { return d.foes.length === 3 && d.foes.every(function (k) { return !!FC.FOES[k]; }); });
+        var q = L[9], S = FC.state();
+        C.save.player.pos.x = q.x + 5; C.save.player.pos.y = q.y; FC.tick(0.05); NE.step(1);
+        S = FC.state(); var cp = S.camps['dm:ne:fork'];
+        r.spawn = !!cp && cp.uids.length === 3;
+        var gold0 = C.save.player.gold;
+        cp.uids.slice().forEach(function (u) { for (var i = 0; i < 3; i++) { FC.hitFoe(S, S.foes[u], S.party[0], 1e8, null, 'test'); } });
+        FC.tick(0.05);
+        r.clear = NE.done('fork') && C.save.player.gold === gold0 + 800 && NE.embers().length === 9;
+      } finally { NE._setNowForTest(null); NE._resetForTest(); delete C.save.night_echo; rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '열 곳(38장 뒤 셋 더) · 지역 안 · 잔당 셋 · 처치 🪙800' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑲-57 9부 무대 · 여덟째 지역 굳은 거리 (amber.js, PLAN §5 ⑲-57) ── */
     function amRig() {
       var rig = stRig(64);

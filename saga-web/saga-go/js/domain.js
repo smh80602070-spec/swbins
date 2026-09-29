@@ -46,7 +46,10 @@
     { key: 'knot',  name: '매듭 등불의 메아리', boss: 'storm_king_true', spot: 'home_bandi', off: [20, 0] },
     { key: 'ice',   name: '얼음굴의 메아리',   boss: 'rift_fox',        spot: 'fr_cave', off: [0, 8] },
     { key: 'cross', name: '갈림길의 메아리',   boss: 'rift_crow',       spot: 'cr_st_duel', off: [0, 8] },
-    { key: 'dome',  name: '빛 돔의 메아리',    boss: 'dome_colossus',   spot: 'sk_sand', off: [0, 12] }
+    { key: 'dome',  name: '빛 돔의 메아리',    boss: 'dome_colossus',   spot: 'sk_sand', off: [0, 12] },
+    /* ⑲-69 2차 결말(38장) 뒤 — 11부 보스 둘. 입구는 세갈래 고을(Godot 칸 (3.0,3.4)·(5.0,2.2) → 길목 기준 m). 보상 금 +20(모라 +500) */
+    { key: 'firstcrow', name: '처음 순간의 메아리',  boss: 'first_crow',   spot: 'fk_junction', off: [-48, -5],  after: 38, plus: 20 },
+    { key: 'garmuri',   name: '갈무리 격자의 메아리', boss: 'garmuri_true', spot: 'fk_junction', off: [48, -62],  after: 38, plus: 20 }
   ];
   var KIND_ORDER = ['tomb', 'school', 'forge'];
   var STAGES = [
@@ -116,13 +119,17 @@
   /** 메아리 입구 넷 — 이야기 보스와 싸운 자리(그 자리를 모르면 그 입구만 빠진다). 열리기 전엔 [] */
   function echoList() {
     if (!echoOpen()) { return []; }
-    if (_echo && _echo.length === ECHOES.length) { return _echo; }
-    var S = global.DG.story, out = [];
+    var v0 = global.DG.story.state(), n0 = 0;
+    ECHOES.forEach(function (e) { if (v0.ch >= (e.after || ECHO_AFTER)) { n0++; } });
+    if (_echo && _echo.length === n0) { return _echo; }
+    var S = global.DG.story, out = [], v = S && S.state ? S.state() : null, want = 0;
     ECHOES.forEach(function (e) {
+      if (v.ch < (e.after || ECHO_AFTER)) { return; }                  // ⑲-69 메아리마다 열리는 장이 다르다
+      want++;
       var p = S && S.spotPos ? S.spotPos(e.spot, e.off) : null;
-      if (p) { out.push({ id: 'e:' + e.key, zone: null, zoneName: '', kind: 'echo', boss: e.boss, name: e.name, x: Math.round(p.x), y: Math.round(p.y) }); }
+      if (p) { out.push({ id: 'e:' + e.key, zone: null, zoneName: '', kind: 'echo', boss: e.boss, name: e.name, plus: e.plus || 0, x: Math.round(p.x), y: Math.round(p.y) }); }
     });
-    if (out.length === ECHOES.length) { _echo = out; }
+    if (out.length === want) { _echo = out; }
     return out;
   }
   /** 보이는 입구 전부 — 숨은 터·먹구름 제단 + 열렸으면 메아리 */
@@ -200,7 +207,7 @@
   /* ── 보상(순수) ───────────────────────────────────────── */
 
   /** 종류·단계·몇 번째 받는지(세트 번갈이) → 보상 묶음. **순수 함수** */
-  function rewardOf(kind, stage, seq) {
+  function rewardOf(kind, stage, seq, d) {
     var s = Math.max(0, Math.min(2, stage | 0)), odd = (seq | 0) % 2 === 1;
     var r = { gold: [60, 90, 130][s], party: [40, 60, 90][s], arts: [], polish: 0, ore: 0, mats: {} };
     if (kind === 'tomb') {
@@ -218,7 +225,7 @@
       r.arts = [[5], [5], [5, 5]][s].map(function (q) { return { r: q, set: ws }; });
     } else if (kind === 'echo') {                                  // ⑲-56 메아리 — 주간보다 한 단 위(비전·매듭·★5)
       var es = odd ? 'emblem' : 'gladiator';
-      r.gold = [200, 260, 340][s]; r.party = [80, 110, 150][s];
+      r.gold = [200, 260, 340][s] + (d && d.plus ? d.plus : 0); r.party = [80, 110, 150][s];
       r.mats = [{ guide: 3, scale: 1 }, { guide: 4, scale: 2, secret: 1 }, { secret: 3, scale: 3, knot: 2 }][s];
       r.arts = [[5], [5], [5, 5]][s].map(function (q) { return { r: q, set: es }; });
     }
@@ -372,7 +379,7 @@
     var cost = costOf(run.d.kind);
     if (resin() < cost) { return { ok: false, why: '원기가 모자라다(' + resin() + '/' + cost + ')', cost: cost }; }
     spend(cost);
-    var s = sv(), r = rewardOf(run.d.kind, run.stage, s.domain.claims);
+    var s = sv(), r = rewardOf(run.d.kind, run.stage, s.domain.claims, run.d);
     s.domain.claims += 1;
     if (isBossKind(run.d.kind)) { s.domain.weekly.n += 1; }
     var arts = grant(r), txt = rewardText(r), name = run.d.name + ' ' + STAGES[run.stage].n;
@@ -482,7 +489,7 @@
     for (i = 0; i < STAGES.length; i++) {
       var ok = stageOpen(i);
       btns += '<button class="btn ' + (ok ? 'primary' : 'ghost') + ' wide" data-stage="' + i + '"' + (ok ? '' : ' disabled') + '>' +
-        '단계 ' + STAGES[i].n + (ok ? ' <small>' + esc(rewardText(rewardOf(d.kind, i, sd.domain.claims))) + '</small>'
+        '단계 ' + STAGES[i].n + (ok ? ' <small>' + esc(rewardText(rewardOf(d.kind, i, sd.domain.claims, d))) + '</small>'
           : ' <small>여정 등급 ' + STAGES[i].ar + ' 에 열림</small>') + '</button>';
     }
     el.innerHTML =
@@ -511,7 +518,7 @@
   function openTree() {
     var el = host();
     if (!el || !run) { return; }
-    var cost = costOf(run.d.kind), have = resin(), r = rewardOf(run.d.kind, run.stage, sv().domain.claims);
+    var cost = costOf(run.d.kind), have = resin(), r = rewardOf(run.d.kind, run.stage, sv().domain.claims, run.d);
     el.innerHTML =
       '<div class="enc-card">' +
         '<div class="enc-big"><span style="font-size:56px">🌳</span></div>' +
