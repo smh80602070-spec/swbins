@@ -38,6 +38,8 @@ namespace Saga.Go.Data
             public Site[] Sites;
             /// <summary>109-14-48 땅 위 하늘 섬 발견(`Sites` 와 따로 — 명소 다섯·발견 열 표를 세는 진단이 안 흔들리게). 섬 윗면에 서야 찾는다.</summary>
             public Site[] SkySites;
+            /// <summary>109-14-67 발견이 아닌 이야기·벽 자리(웹 `FIXTURES` — 격자 말뚝 등). `TrySite` 로는 찾지만 `Sites` 밖이라 발견·보상·표 검사에 안 든다.</summary>
+            public Site[] Fixtures;
             /// <summary>보이지 않는 벽 높이(0 이면 `WallHeight`) — 하늘 섬이 있는 땅은 더 높이.</summary>
             public float Ceil;
             /// <summary>땅으로 드는 지도 쪽 돌기둥 자리(월드).</summary>
@@ -58,6 +60,7 @@ namespace Saga.Go.Data
             {
                 foreach (var x in Sites) if (x.Id == id) { s = x; return true; }
                 if (SkySites != null) foreach (var x in SkySites) if (x.Id == id) { s = x; return true; }
+                if (Fixtures != null) foreach (var x in Fixtures) if (x.Id == id) { s = x; return true; }
                 s = null;
                 return false;
             }
@@ -88,6 +91,7 @@ namespace Saga.Go.Data
             a.Sites = sites;
             foreach (var s in sites) s.Area = a;
             if (a.SkySites != null) foreach (var s in a.SkySites) s.Area = a;
+            if (a.Fixtures != null) foreach (var s in a.Fixtures) s.Area = a;
             return a;
         }
 
@@ -259,6 +263,8 @@ namespace Saga.Go.Data
             MapGate = () => GoFrost.Center + new Vector3(-30f, 0f, -250f), // 서리봉 고원 북쪽 끝(호박 장막 자리)
             Open = () => GoStory.ForkPassOpen, OpenCh = 38, // 38장 4째 단계에 순간이 풀려야 장막이 걷힌다(36장은 진열장으로만)
             Fog = new Color(0.8f, 0.72f, 0.88f), Sun = new Color(1f, 0.9f, 0.96f), FogDensity = 1.5f, Danger = 3,
+            // 격자 말뚝 둘(웹 FIXTURES lat0·lat1 × 0.45 — 역참길 끝·선로 끝). 셋째는 종루 윗면이라 자리는 종루(`Step.Perch`)
+            Fixtures = new[] { new Site { Id = "lat0", NameKo = "역참길 격자 말뚝", Era = GoEra.Past, Off = new Vector2(-60.3f, -10.8f) }, new Site { Id = "lat1", NameKo = "선로 격자 말뚝", Era = GoEra.Modern, Off = new Vector2(69.3f, -21.6f) } },
         },
             S("gate", "세갈래 고을 성문", GoEra.Past, 0f, 49.5f, true),
             S("junction", "세갈래 길목", GoEra.Past, 0f, -10.8f, true),

@@ -1225,6 +1225,7 @@
 2	go	story.altar_knot	매듭 제단	knot altar		
 2	go	story.altar_knot4	넷째 매듭	fourth knot		
 2	go	story.altar_lantern	매듭 등불	knot lantern		
+2	go	story.altar_loco	멈춘 기관차	the stopped locomotive		
 2	go	story.altar_moored	계류된 별배	moored star-ship		
 2	go	story.altar_train	출발을 기다리는 막차	the waiting last train		
 2	go	story.altar_weld	용접대	welding bench		
@@ -2347,6 +2348,38 @@
 2	go	story.ch36.s6.l5	동쪽 선로 공사장에 쇠 수레를 몰던 사람들도 그대로 굳어 있소. 말뚝부터 하나씩 — 역참길 끝이 제일 가깝소. 내 칼을 들고 가겠소!	The people who were driving iron carts at the eastern railway works are frozen too. Start with the stakes, one by one — the end of the post road is closest. I'll take my blade with me!		
 2	go	story.ch36.s6.p.a	말뚝을 뽑으면 순간이 풀려요?	If I pull the stakes, will the moment release?		
 2	go	story.ch36.s6.p.b	공사장 사람들은요?	What about the people at the works?		
+2	go	story.ch37	제37장 · 세 갈래 길	Chapter 37 · The Three Roads		
+2	go	story.ch37.away	🔔 격자 말뚝은 종루 꼭대기에 있다 — 벽을 타고 올라서야 원소가 닿는다	🔔 The lattice stake is atop the bell tower — you must climb the wall for an element to reach it		
+2	go	story.ch37.lit0	🔌 역참길 격자 말뚝의 빛 틀이 치직 흩어진다 — 동쪽 공사장에서 누군가 헛기침하는 소리가 난다	🔌 The light frame of the post-road lattice stake sputters apart — someone clears their throat at the eastern works		
+2	go	story.ch37.lit1	🔌 선로 격자 말뚝이 꺼진다 — 기관차 굴뚝의 굳은 김이 한 뼘 움직인 것 같다	🔌 The rail lattice stake goes out — the frozen steam from the locomotive chimney seems to have moved a hand's breadth		
+2	go	story.ch37.lit2	🔔 종루 격자 말뚝까지 꺼졌다 — 멈춰 있던 종이 한 번, 둥 — 하고 울린다. 길목 위 하늘에서 무언가 꿈틀한다	🔔 The bell tower lattice stake is off too — the stopped bell tolls once, dong —. Something stirs in the sky above the junction		
+2	go	story.ch37.s1	대장간 화덕 앞의 벼리와 이야기하기	Talk to Byeori in front of the smithy furnace		
+2	go	story.ch37.s1.l1	칼은 챙겼소. 서쪽 역참길 끝 — 옛날엔 파발마가 쉬어 가던 자리에 말뚝이 박혀 있소.	I've got my blade. At the west end of the post road — where the courier horses once rested — a stake is driven in.		
+2	go	story.ch37.s1.l2	삐— 말뚝 심에 굳은 신호가 모여 있습니다. 원소가 닿으면 심이 흩어질 것입니다.	Beep — frozen signals are gathered in the stake core. An element touching it should scatter the core.		
+2	go	story.ch37.s1.l3	나는 길목에 가 있겠소. 까마귀 밑이 영 마음에 걸려서 — 무슨 일이 생기면 쇠를 두드려 알리리다.	I'll go to the junction. Something about the place under that crow bothers me — if anything happens I'll strike iron to signal you.		
+2	go	story.ch37.s1.p.a	원소로 끄면 되겠네.	Then an element should switch it off.		
+2	go	story.ch37.s1.p.b	벼리 씨는 어디서 기다려요?	Where will you wait, Byeori?		
+2	go	story.ch37.s2	역참길 끝 격자 말뚝을 원소 스킬로 끄기	Switch off the lattice stake at the end of the post road with an elemental skill		
+2	go	story.ch37.s3	선로 공사장에서 풀려난 사람과 이야기하기	Talk to the person freed at the railway works		
+2	go	story.ch37.s3.l1	……콜록. 어? 삼각대 수평이 — 아니, 여기 어디예요? 방금까지 첫 선로를 놓던 참이었는데.	…*cough* Huh? The tripod level is — wait, where is this? I was just laying the first rails.		
+2	go	story.ch37.s3.l2	측량 기사 나래예요. 하늘에 번쩍 금이 가더니 공사장째 쑥 빨려 들어왔어요. 이 고을은… 지도에도 없는 옛날 고을이잖아요?	I'm Narae, a surveyor. A crack flashed across the sky and the whole works got sucked in. This town… it's an old town that isn't even on the map, isn't it?		
+2	go	story.ch37.s3.l3	삐— 틈이 처음 찢어진 순간, 세 시대가 이 한 자리에서 만났습니다. 이 공사장도 그때 끌려온 현대 조각입니다.	Beep — in the moment the rift first tore, the three ages met in this one place. This works site is a modern fragment pulled in then.		
+2	go	story.ch37.s3.l4	선로 끝 말뚝은 기관차 너머예요. 그런데 저 말뚝 앞을 짐승들이 지켜요. 기관 불을 되살려 기적을 울리면 쫓을 수 있을지도 — 불 붙이는 동안만 지켜 줘요!	The rail-end stake is beyond the locomotive. But beasts guard it. If I relight the engine and blow the whistle, I might drive them off — just guard me while I light the fire!		
+2	go	story.ch37.s3.p.a	다른 말뚝도 꺼야 해요.	The other stakes have to be switched off too.		
+2	go	story.ch37.s3.p.b	저 기관차는 움직여요?	Does that locomotive move?		
+2	go	story.ch37.s4	나래가 기관 불을 되살리는 동안 멈춘 기관차 지키기	Guard the stopped locomotive while Narae relights its engine fire		
+2	go	story.ch37.s5	선로 끝 격자 말뚝을 원소 스킬로 끄기	Switch off the lattice stake at the end of the rails with an elemental skill		
+2	go	story.ch37.s6	북쪽 종루 벽을 타고 꼭대기로(벽에 붙어 계속 밀기)	Climb the north bell tower wall to the top (keep pushing against the wall)		
+2	go	story.ch37.s7	종루 꼭대기 격자 말뚝을 원소 스킬로 끄기(꼭대기에서)	Switch off the lattice stake atop the bell tower with an elemental skill (from the top)		
+2	go	story.ch37.s8	세갈래 길목의 벼리에게 가기	Go to Byeori at the three-way junction		
+2	go	story.ch37.s8.l1	종소리가 났소! 그런데 — 보시오, 저 위. 까마귀 깃털이 떨리고 있소.	The bell rang! But — look, up there. The crow's feathers are trembling.		
+2	go	story.ch37.s8.l2	측량값이 움직여요! 거리도, 시간도… 순간이 풀리기 시작했어요.	The survey readings are moving! Distance, time… the moment is starting to release.		
+2	go	story.ch37.s8.l3	삐— 경고. 순간이 풀리면 멈춰 있던 일도 마저 일어납니다. 까마귀가 하던 일 — 세 시대 길을 한입에 삼키는 것.	Beep — warning. When the moment releases, what was stopped will finish happening. What the crow was doing — swallowing the roads of three ages in one bite.		
+2	go	story.ch37.s8.l4	(진열장 밖에서) 들려요! 순간이 풀리는 걸 갈무리도 느꼈을 거예요. 그 애가 가만있지 않을 거예요 — 조심해요.	(From outside the case) I hear you! Garmuri must have felt the moment releasing too. That child won't sit still — be careful.		
+2	go	story.ch37.s8.l5	처음 하늘을 찢은 그 까마귀를 이번엔 우리가 막는 거요. 준비되면 말하시오 — 칼은 뜨겁게 달궈 두었소.	This time we are the ones stopping the crow that first tore the sky. Tell me when you are ready — the blade is heated hot.		
+2	go	story.ch37.s8.p.a	그럼 까마귀부터 막아야 해.	Then we must stop the crow first.		
+2	go	story.ch37.s8.p.b	해미 씨, 들려요?	Haemi, can you hear me?		
+2	go	story.ch37.stepped	🔔 종루 꼭대기에 올라섰다 — 마지막 격자 말뚝이 발치에서 웅웅거린다	🔔 You stand atop the bell tower — the last lattice stake hums at your feet		
 2	go	story.ch4	제4장 · 가면 쓴 나그네	Chapter 4 · The Masked Traveler		
 2	go	story.ch4.s1	촌장에게 새벽 소식 듣기	Hear the Elder's news from dawn		
 2	go	story.ch4.s1.l1	잔치 이튿날 새벽이었단다. 남쪽 다리목에 웬 가면 쓴 나그네가 서 있더래.	It was the dawn after the feast. They say a masked traveler was standing at the southern bridgehead.		
@@ -2624,6 +2657,7 @@
 2	go	story.idle.king	……	…		
 2	go	story.idle.maru	드론이 또 한 대 지나가네. 오늘만 백스무 번째…	Another drone just went by. That's the hundred and twentieth today…		
 2	go	story.idle.mulsae	숨 한 번에 한 길. 물은 서두르는 사람을 싫어한다오.	One breath, one fathom. The water dislikes those in a hurry.		
+2	go	story.idle.narae	측량값이 전부 0 이에요. 거리도, 시간도.	The survey readings are all zero. Distance, and time too.		
 2	go	story.idle.neoul	저울추는 셈이 정확해야 하는 법이지. 쇠 수레 구경도 한두 번이지, 허허.	A scale weight has to be exact, you know. Even iron carts get old after a while, heh heh.		
 2	go	story.idle.parang	빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오.	This is the Light Dome records room. Please state the record you wish to view.		
 2	go	story.idle.partthief	삐비— 치익.	Bibi— tsss.		
@@ -2667,6 +2701,7 @@
 2	go	story.npc.king	먹구름 임금	Storm King		
 2	go	story.npc.maru	창고지기 마루	Warehouse Keeper Maru		
 2	go	story.npc.mulsae	해녀 물새	Haenyeo Mulsae		
+2	go	story.npc.narae	측량 기사 나래	Surveyor Narae		
 2	go	story.npc.neoul	장돌뱅이 너울	Peddler Neoul		
 2	go	story.npc.parang	돔 관리 인공지능 파랑	Dome Administrator AI Parang		
 2	go	story.npc.partthief	조각 도둑	Part Thief		
@@ -2713,6 +2748,7 @@
 2	go	story.short.horse	역마	Horse		
 2	go	story.short.maru	마루	Maru		
 2	go	story.short.mulsae	물새	Mulsae		
+2	go	story.short.narae	나래	Narae		
 2	go	story.short.neoul	너울	Neoul		
 2	go	story.short.parang	파랑	Parang		
 2	go	story.short.partthief	도둑	Thief		

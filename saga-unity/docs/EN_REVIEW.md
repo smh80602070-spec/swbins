@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **4723** (표 4668 · 코드 55) — go 2879 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **526**
-- 사람 검수 **0/4723** — 순위1 0/265 · 순위2 0/3729 · 순위3 0/729
+- 짝 **4759** (표 4704 · 코드 55) — go 2915 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **533**
+- 사람 검수 **0/4759** — 순위1 0/265 · 순위2 0/3765 · 순위3 0/729
 
 ## 검수 순서
 
@@ -41,7 +41,7 @@
 - 「여기서 끝내자.」 → **End it here.** (go:story.ch20.s9.p.b) · **Let's end this here.** (go:story.ch29.s4.p.b)
 - 「마루」 → **Maru** (go:story.short.maru) · **Wood Floor** (forest:finish.wood)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 526)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 533)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -51,6 +51,8 @@
 | 21→44 | go | `wq.lighthouse.s1.l2` | There's nothing out there but the old lighthouse site. Will you come and take a look with me? |
 | 11→29 | go | `wq.lighthouse.s2` | Go to the old lighthouse site at the far end of the east bank |
 | 15→34 | go | `story.ch7.s9` | Watch the light across the water with the ferryman who came to the cape |
+| 18→38 | go | `story.ch37.s2` | Switch off the lattice stake at the end of the post road with an elemental skill |
+| 17→36 | go | `story.ch37.s5` | Switch off the lattice stake at the end of the rails with an elemental skill |
 | 10→25 | go | `story.ch5.s2` | To the mouth of the old road on the western wood path |
 | 16→33 | go | `story.ch6.s3.l3` | ……He's come. When he wraps himself in stormclouds, break it with fire! |
 | 9→22 | forest | `visitor.dirs` | somewhere in the woods to the {0} of the village |
@@ -75,5 +77,3 @@
 | 3→10 | go | `kit.sig.zhuge.skill` | Eight Trigrams Array |
 | 3→10 | dungeon | `enemy.grunt` | Yellow Turban Bandit |
 | 3→10 | story | `enemy.hwanggeon` | Yellow Turban Bandit |
-| 5→14 | go | `cook.recipe.ash_pancake` | Ash Flower Mushroom Pancake |
-| 7→16 | dungeon | `saga.heaven.title` | The Guardian Who Drew His Sword |

@@ -34,8 +34,10 @@ namespace Saga.Go.World
         /// <summary>땅 전체에 걸린 것 — 격자 말뚝 둘(땅)·호박 장막(서리봉 쪽 고개, 순간이 풀리면 걷힘).</summary>
         private void BuildForkExtras(Transform parent, GoAreas.Area a)
         {
-            ForkLattice(parent, "fork:lat0", "Fork_lattice0", a.Center + new Vector3(-60.3f, 0f, -10.8f));
-            ForkLattice(parent, "fork:lat1", "Fork_lattice1", a.Center + new Vector3(69.3f, 0f, -21.6f));
+            a.TrySite("lat0", out var l0);
+            a.TrySite("lat1", out var l1);
+            ForkLattice(parent, "fork:lat0", "Fork_lattice0", l0.Pos);
+            ForkLattice(parent, "fork:lat1", "Fork_lattice1", l1.Pos);
             // 호박 장막 — 성문 남쪽 97m 가로 48m(보기만 — 이 판은 독립 땅이라 벽이 아니라 자리 표지)
             var veil = new GameObject("Fork_veil");
             veil.transform.SetParent(parent, false);

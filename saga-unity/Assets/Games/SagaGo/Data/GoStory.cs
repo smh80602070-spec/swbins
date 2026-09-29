@@ -392,12 +392,12 @@ namespace Saga.Go.Data
                 float a = (StepN - 1) * Mathf.PI * 0.25f;
                 return AreaPos(at, new Vector2(Mathf.Cos(a) * StepR, Mathf.Sin(a) * StepR)) + Vector3.up * (StepN * StepRise - 0.1f);
             }
-            return AreaPos(at, Vector2.zero) + Vector3.up * (at == "crossing:clock" ? ClockHeight : at == "sunken:lighthouse" ? LightHeight : at == "amber:tower" ? AmberTowerHeight : at == "vault:vault" ? VaultPillarH : TowerHeight);
+            return AreaPos(at, Vector2.zero) + Vector3.up * (at == "crossing:clock" ? ClockHeight : at == "sunken:lighthouse" ? LightHeight : at == "amber:tower" ? AmberTowerHeight : at == "vault:vault" ? VaultPillarH : at == "fork:tower" ? ForkTowerH : TowerHeight);
         }
         public static bool OnClimbTop(string at, Vector3 p)
         {
             Vector3 top = ClimbTopOf(at);
-            float r = at == "crossing:steps" ? 1.6f : (at == "crossing:clock" ? ClockHalf : at == "sunken:lighthouse" ? LightHalf : at == "amber:tower" ? AmberTowerHalf : at == "vault:vault" ? VaultPillarW * 0.5f : TowerHalf) + 0.6f;
+            float r = at == "crossing:steps" ? 1.6f : (at == "crossing:clock" ? ClockHalf : at == "sunken:lighthouse" ? LightHalf : at == "amber:tower" ? AmberTowerHalf : at == "vault:vault" ? VaultPillarW * 0.5f : at == "fork:tower" ? ForkTowerW * 0.5f : TowerHalf) + 0.6f;
             return Flat(p, top) <= r && p.y >= top.y - 1.2f;
         }
         // 30~32장(⑲-57) — 굳은 거리(여덟째 지역) 상수·이야기 상태: 부양탑 심 6×6m·12m, 장터 결정 돔 반지름 4.6m(31장 석등 고리 6m 가 바깥), 시계방 5×4.2×5m, 신호등 넷(±9), 굳은 자리 셋(네거리 가운데에서 m).
@@ -422,6 +422,8 @@ namespace Saga.Go.Data
         /// <summary>36장(⑲-66) 자리: 해미 = 금고 가장 깊은 진열장(북쪽 벽) 곁(금고 가운데에서 m — 진열장 자리 + 웹 [3.5, 3]) · 진열장 속으로 들어가면 성문 남쪽 18m(`Area.ArrivalOff` 와 같음) · 벼리 = 성문 북쪽(안쪽) 7.7m ·
         /// 결정 짐승 무리 = 성문 남쪽 30m · 대장간까지 걷는 길 = 웹 다섯 점 × 0.45(대장간 가운데에서 m — 시작은 성문 안쪽, 끝은 화덕 앞).</summary>
         public static readonly Vector2 VaultHaemiDeep = new Vector2(3.5f, -VaultDeepR + 3f), ForkGateArrive = new Vector2(0f, 18f), ByeoriGate = new Vector2(0f, -7.7f), ForkGateKill = new Vector2(0f, 30f);
+        /// <summary>37장(⑲-67) 자리(각 명소 가운데에서 m, z 남쪽): 나래 = 공사장 북동쪽 → 기관차 서쪽 끝(웹 × 0.45) · 벼리 = 길목 동남쪽(머리 위 별까마귀를 지켜본다) · 기관차 지키기 제단 = 기관차 남쪽 4.5m.</summary>
+        public static readonly Vector2 NaraeWorks = new Vector2(6.3f, -6.3f), NaraeLoco = new Vector2(-5.2f, 3f), ByeoriJunction = new Vector2(7.7f, 6.3f), ForkLocoDefend = new Vector2(0f, 4.5f);
         public static readonly Vector2[] ForkForgePath = { new Vector2(34.7f, 16.2f), new Vector2(27.9f, 11.7f), new Vector2(17.1f, 9.9f), new Vector2(8.6f, 7.7f), new Vector2(1.1f, 5.4f) };
         public static readonly Vector2[] VaultDronePath = { new Vector2(8.6f, -5.4f), new Vector2(-8.5f, -8f), new Vector2(-21.6f, -0.9f), new Vector2(-36.9f, 2.3f), new Vector2(-47.7f, -8.6f), new Vector2(-43.2f, -23.9f),
             new Vector2(-27.9f, -30.2f), new Vector2(-15.3f, -38.7f), new Vector2(-23.9f, -51.8f), new Vector2(-41f, -56.3f), new Vector2(-49.5f, -56.5f) };
@@ -817,8 +819,14 @@ namespace Saga.Go.Data
             // 109-14-66 36장(웹 ⑲-66) — 대장장이 벼리(과거): 그날 새벽 벼리던 칼이 틈 조각 쇠라 멈춘 순간 속에서 혼자 움직인다. 11부(36장~) 성문 안쪽 → 대장간으로 앞장선 뒤(6째~, 뒤에도) 화덕 앞
             new Npc { Id = "byeori", NameKey = "story.npc.byeori", NameKo = "대장장이 벼리", ShortKey = "story.short.byeori", ShortKo = "벼리",
                 AtSite = "fork:gate", AtOff = ByeoriGate, FolkBody = "PeasantMan", PathAt = "fork:forge", Path = ForkForgePath,
-                Appear = new[] { new Spot { Ch = 35, ChTo = 999, From = 4, To = 99, Path = true }, new Spot { Ch = 35, From = 0, To = 3, At = "fork:gate", Arena = ByeoriGate } },
+                Appear = new[] { new Spot { Ch = 36, ChTo = 999, From = 1, To = 99, At = "fork:junction", Arena = ByeoriJunction }, // 37장 말뚝을 끄러 나선 뒤(2째~, 뒤에도) 길목 동남쪽
+                    new Spot { Ch = 35, ChTo = 999, From = 4, To = 99, Path = true }, new Spot { Ch = 35, From = 0, To = 3, At = "fork:gate", Arena = ByeoriGate } },
                 IdleKey = "story.idle.byeori", IdleKo = "쇠는 식기 전에 두드려야 하는데… 불도, 쇠도, 하늘도 다 멈췄어." },
+            // 109-14-67 37장(웹 ⑲-67) — 측량 기사 나래(현대): 공사장째 끌려온 측량 기사. 역참길 말뚝 뒤(3째) 공사장 북동쪽 → 기관차로 간 뒤(4째~, 뒤에도) 기관차 서쪽 끝
+            new Npc { Id = "narae", NameKey = "story.npc.narae", NameKo = "측량 기사 나래", ShortKey = "story.short.narae", ShortKo = "나래",
+                AtSite = "fork:works", AtOff = NaraeWorks, FolkBody = "Remy",
+                Appear = new[] { new Spot { Ch = 36, ChTo = 999, From = 3, To = 99, At = "fork:loco", Arena = NaraeLoco }, new Spot { Ch = 36, From = 2, To = 2, At = "fork:works", Arena = NaraeWorks } },
+                IdleKey = "story.idle.narae", IdleKo = "측량값이 전부 0 이에요. 거리도, 시간도." },
             // 조각 운반 드론 — 33장 쫓기 때만(5째 단계) 야적장에서 금고 문 앞까지 길(VaultDronePath)을 난다. 반디와 같은 기계 몸.
             new Npc { Id = "carrier", NameKey = "story.npc.carrier", NameKo = "조각 운반 드론", ShortKey = "story.short.carrier", ShortKo = "드론",
                 AtSite = "vault:yard", AtOff = Vector2.zero, Pet = true, RunAt = "vault:yard", RunPath = VaultDronePath,
@@ -3115,6 +3123,60 @@ namespace Saga.Go.Data
                             L("haemi", "story.ch36.s6.l4", "(진열장 밖에서) 갈무리의 격자 말뚝이에요. 세 시대 길 끝마다 하나씩 — 순간을 유리 안에 고정하는 핀."),
                             Pick("story.ch36.s6.p", "말뚝을 뽑으면 순간이 풀려요?", "공사장 사람들은요?"),
                             L("byeori", "story.ch36.s6.l5", "동쪽 선로 공사장에 쇠 수레를 몰던 사람들도 그대로 굳어 있소. 말뚝부터 하나씩 — 역참길 끝이 제일 가깝소. 내 칼을 들고 가겠소!"),
+                        } },
+                }
+            },
+            // 109-14-67 37장(웹 ⑲-67) — 11부 둘째 장, 세 갈래 길: 벼리(화덕 앞) → 역참길 격자 말뚝(light bare — 끄면 다음(2째) 단계부터 빛 틀이 사라진다 = `ForkLatticeFrom`) → 새 인물 측량 기사 나래(공사장)
+            // → 멈춘 기관차 지키기(defend — 기관차(북)를 뺀 방향) → 선로 끝 격자 말뚝(5째) → 종루 벽 타기(climb `fork:tower` 10m) → 종루 위 격자 말뚝(light bare·perch — 7째, 종이 한 번 울림) → 벼리(길목, 별까마귀 깃털이 떨림 = 38장 떡밥).
+            new Chapter
+            {
+                Id = "ch37", NameKey = "story.ch37", NameKo = "제37장 · 세 갈래 길", Ar = 80,
+                Gold = 9250, Mats = new[] { 0, 9, 6, 9, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "byeori", TextKey = "story.ch37.s1", TextKo = "대장간 화덕 앞의 벼리와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("byeori", "story.ch37.s1.l1", "칼은 챙겼소. 서쪽 역참길 끝 — 옛날엔 파발마가 쉬어 가던 자리에 말뚝이 박혀 있소."),
+                            L("bandi", "story.ch37.s1.l2", "삐— 말뚝 심에 굳은 신호가 모여 있습니다. 원소가 닿으면 심이 흩어질 것입니다."),
+                            Pick("story.ch37.s1.p", "원소로 끄면 되겠네.", "벼리 씨는 어디서 기다려요?"),
+                            L("byeori", "story.ch37.s1.l3", "나는 길목에 가 있겠소. 까마귀 밑이 영 마음에 걸려서 — 무슨 일이 생기면 쇠를 두드려 알리리다."),
+                        } },
+                    new Step { Type = StepType.Light, Bare = true, At = "fork:lat0", Arena = Vector2.zero, EnterKey = "story.ch37.lit0", EnterKo = "🔌 역참길 격자 말뚝의 빛 틀이 치직 흩어진다 — 동쪽 공사장에서 누군가 헛기침하는 소리가 난다",
+                        TextKey = "story.ch37.s2", TextKo = "역참길 끝 격자 말뚝을 원소 스킬로 끄기" },
+                    new Step { Type = StepType.Talk, Npc = "narae", TextKey = "story.ch37.s3", TextKo = "선로 공사장에서 풀려난 사람과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("narae", "story.ch37.s3.l1", "……콜록. 어? 삼각대 수평이 — 아니, 여기 어디예요? 방금까지 첫 선로를 놓던 참이었는데."),
+                            L("narae", "story.ch37.s3.l2", "측량 기사 나래예요. 하늘에 번쩍 금이 가더니 공사장째 쑥 빨려 들어왔어요. 이 고을은… 지도에도 없는 옛날 고을이잖아요?"),
+                            L("bandi", "story.ch37.s3.l3", "삐— 틈이 처음 찢어진 순간, 세 시대가 이 한 자리에서 만났습니다. 이 공사장도 그때 끌려온 현대 조각입니다."),
+                            Pick("story.ch37.s3.p", "다른 말뚝도 꺼야 해요.", "저 기관차는 움직여요?"),
+                            L("narae", "story.ch37.s3.l4", "선로 끝 말뚝은 기관차 너머예요. 그런데 저 말뚝 앞을 짐승들이 지켜요. 기관 불을 되살려 기적을 울리면 쫓을 수 있을지도 — 불 붙이는 동안만 지켜 줘요!"),
+                        } },
+                    new Step { Type = StepType.Defend, At = "fork:loco", Arena = ForkLocoDefend, NameKey = "story.altar_loco", NameKo = "멈춘 기관차", Dirs = new[] { 60f, 100f, 140f, 180f, 220f, 260f, 300f },
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.EmberImp) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                            new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith) },
+                        },
+                        TextKey = "story.ch37.s4", TextKo = "나래가 기관 불을 되살리는 동안 멈춘 기관차 지키기" },
+                    new Step { Type = StepType.Light, Bare = true, At = "fork:lat1", Arena = Vector2.zero, EnterKey = "story.ch37.lit1", EnterKo = "🔌 선로 격자 말뚝이 꺼진다 — 기관차 굴뚝의 굳은 김이 한 뼘 움직인 것 같다",
+                        TextKey = "story.ch37.s5", TextKo = "선로 끝 격자 말뚝을 원소 스킬로 끄기" },
+                    new Step { Type = StepType.Climb, At = "fork:tower", EnterKey = "story.ch37.stepped", EnterKo = "🔔 종루 꼭대기에 올라섰다 — 마지막 격자 말뚝이 발치에서 웅웅거린다",
+                        TextKey = "story.ch37.s6", TextKo = "북쪽 종루 벽을 타고 꼭대기로(벽에 붙어 계속 밀기)" },
+                    new Step { Type = StepType.Light, Bare = true, Perch = true, At = "fork:tower", Arena = Vector2.zero, EnterKey = "story.ch37.lit2", EnterKo = "🔔 종루 격자 말뚝까지 꺼졌다 — 멈춰 있던 종이 한 번, 둥 — 하고 울린다. 길목 위 하늘에서 무언가 꿈틀한다",
+                        AwayKey = "story.ch37.away", AwayKo = "🔔 격자 말뚝은 종루 꼭대기에 있다 — 벽을 타고 올라서야 원소가 닿는다",
+                        TextKey = "story.ch37.s7", TextKo = "종루 꼭대기 격자 말뚝을 원소 스킬로 끄기(꼭대기에서)" },
+                    new Step { Type = StepType.Talk, Npc = "byeori", TextKey = "story.ch37.s8", TextKo = "세갈래 길목의 벼리에게 가기",
+                        Lines = new[]
+                        {
+                            L("byeori", "story.ch37.s8.l1", "종소리가 났소! 그런데 — 보시오, 저 위. 까마귀 깃털이 떨리고 있소."),
+                            L("narae", "story.ch37.s8.l2", "측량값이 움직여요! 거리도, 시간도… 순간이 풀리기 시작했어요."),
+                            L("bandi", "story.ch37.s8.l3", "삐— 경고. 순간이 풀리면 멈춰 있던 일도 마저 일어납니다. 까마귀가 하던 일 — 세 시대 길을 한입에 삼키는 것."),
+                            Pick("story.ch37.s8.p", "그럼 까마귀부터 막아야 해.", "해미 씨, 들려요?"),
+                            L("haemi", "story.ch37.s8.l4", "(진열장 밖에서) 들려요! 순간이 풀리는 걸 갈무리도 느꼈을 거예요. 그 애가 가만있지 않을 거예요 — 조심해요."),
+                            L("byeori", "story.ch37.s8.l5", "처음 하늘을 찢은 그 까마귀를 이번엔 우리가 막는 거요. 준비되면 말하시오 — 칼은 뜨겁게 달궈 두었소."),
                         } },
                 }
             },

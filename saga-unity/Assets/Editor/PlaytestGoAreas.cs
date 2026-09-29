@@ -431,6 +431,8 @@ namespace Saga.EditorTools
             if (a.Id != "fork" || a.OpenCh != 38 || !GoAreas.TryArea("fork", out var t) || t != a || GoAreas.All[5] != a) Fail("세갈래 고을 표·열릴 장(38장)");
             if (a.GateSite != "gate" || !a.Sites.Any(s => s.Id == "gate" && s.Big && s.Era == GoEra.Past) || !a.Sites.Any(s => s.Id == "tower" && s.Big && s.Era == GoEra.Past)) Fail("세갈래 고을 성문·종루 명소");
             foreach (var id in new[] { "junction", "forge", "works", "loco", "statue" }) if (!a.TrySite(id, out var s) || !s.Big) Fail($"세갈래 고을 명소 {id}");
+            // 격자 말뚝 둘은 이야기 자리(Fixtures) — 열쇠로 찾지만 발견 표(Sites)엔 없다
+            if (!GoAreas.TrySite("fork:lat0", out var fx0) || !GoAreas.TrySite("fork:lat1", out var fx1) || a.Sites.Any(s => s.Id == "lat0" || s.Id == "lat1") || !a.Contains(fx0.Pos) || !a.Contains(fx1.Pos)) Fail("격자 말뚝 이야기 자리(Fixtures)");
             // 돌기둥 — 서리봉 고원 북쪽 끝, 고원 명소 발견 원 밖 · 다른 땅 돌기둥과 30m 이상
             if (!GoFrost.Contains(a.MapGate()) || a.MapGate().z > GoFrost.Center.z - GoFrost.HalfZ + 40f) Fail("세갈래 고을 돌기둥이 서리봉 고원 북쪽 끝이 아님");
             foreach (var s in GoFrost.Sites) if ((s.Pos - a.MapGate()).magnitude < GoFrost.RadiusOf(s) + 3f) Fail($"세갈래 고을 돌기둥이 서리봉 {s.Id} 발견 원 안");
