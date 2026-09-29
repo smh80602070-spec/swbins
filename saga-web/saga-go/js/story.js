@@ -2887,8 +2887,13 @@
   }
   /** O 목록 — 장마다 끝남·지금(단계 ✓)·잠김 */
   function listHtml() {
-    var s = sv(), out = '<div class="st-box"><b class="st-who">📖 이야기 임무</b>';
+    var s = sv(), out = '<div class="st-box"><div class="st-head"><b class="st-who">📖 이야기 임무</b><span class="st-head-btns">' +
+      (canAutoWalk() ? '<button class="btn ghost" data-st-go="1">' + (autoWalk ? '⏹ 자동 이동 끄기' : '🧭 자동 이동') + '</button>' : '') +
+      '<button class="btn ghost" data-st-close="1" aria-label="닫기">✕</button></span></div><div class="st-scroll">';
+    var doneN = 0, hidLock = 0;
     for (var c = 0; c < CHAPTERS.length; c++) {
+      if (c < s.ch) { doneN++; if (c === s.ch - 1) { out += '<div class="st-ch"><small class="muted">✅ 끝난 이야기 ' + doneN + '장</small></div>'; } continue; }
+      if (c > s.ch + 2) { hidLock++; if (c === CHAPTERS.length - 1) { out += '<div class="st-ch"><small class="muted">🔒 그 뒤 ' + hidLock + '장</small></div>'; } continue; }
       var ch = CHAPTERS[c], state = c < s.ch ? '✅ 끝' : (c === s.ch ? ((core().save.player.level || 1) < ch.ar ? '🔒 여정 등급 ' + ch.ar : '▶ 진행 중') : '🔒 여정 등급 ' + ch.ar);
       out += '<div class="st-ch"><b>' + esc(ch.name) + '</b> <small>' + state + '</small>';
       if (c === s.ch && state === '▶ 진행 중') {
@@ -2916,7 +2921,56 @@
       });
       if (tq && !done()) { out += '<div class="st-ch"><button class="btn ghost" data-wq-track="">📖 이야기 임무 따라가기</button></div>'; }
     }
-    return out + '<div class="st-acts"><button class="btn ghost" data-st-close="1">닫기 (O)</button></div></div>';
+    return out + '</div><div class="st-acts"><button class="btn ghost" data-st-close="1">닫기 (O)</button></div></div>';
+  }
+
+  /* ── 자동 이동 — 지금 임무 표식까지 저절로 걸어간다(키보드 판 전용 — GPS 판은 사람이 걷는다) ─────────
+     끄는 때: 표식 가까이 닿았을 때 · 직접 조작(스틱·키·탭)했을 때 · 대화가 시작됐을 때 · 표식이 없을 때.
+     싸움 중엔 world 가 걷기를 막으니 그 동안은 기다린다(무리를 쓰러뜨리면 이어 걷는다). */
+  var autoWalk = false, awArmed = false, awAcc = 0, awLast = { x: 0, y: 0 };
+  function canAutoWalk() {
+    var W = global.DG.world;
+    return !!(W && W.walkTo && !gps());
+  }
+  function setAutoWalk(v) {
+    autoWalk = !!v && canAutoWalk();
+    awArmed = false; awAcc = 0;
+    if (!autoWalk) { var W = global.DG.world; if (W && W.walkingTo && W.walkingTo() && W.walkTo) { /* 걷던 목표는 그대로 두면 도착까지 간다 */ } }
+    lastGo = null;
+    if (listOpen) { toggleList(true); }
+  }
+  function stepAutoWalk(dt) {
+    if (!autoWalk) { return; }
+    var W = global.DG.world, st = step(), t = st ? targetOf(st) : null;
+    if (!W || !t || talk) { if (!t || talk) { setAutoWalk(false); } return; }
+    var p = pos(), d = Math.hypot(t.x - p.x, t.y - p.y), stopR = Math.max((t.r || 0) * 0.7, 5);
+    if (d <= stopR) { setAutoWalk(false); return; }
+    var wt = W.walkingTo();
+    if (awArmed) {                            // 우리가 건 걷기가 아니게 됐다 — 도착이 아니라면(멀다) 사람이 직접 조작(스틱·다른 곳 탭)한 것
+      if (!wt || Math.hypot(wt.x - awLast.x, wt.y - awLast.y) > 1) {
+        awArmed = false;
+        if (d > stopR + 8) { setAutoWalk(false); return; }
+      } else if (Math.hypot(t.x - awLast.x, t.y - awLast.y) > 3) {
+        awArmed = false;                      // 표식이 움직였다(따라가기·추격) — 새로 건다
+      }
+    }
+    awAcc += dt || 0;
+    if (!awArmed && awAcc > 0.25 && !W.inputBlocked()) {
+      awAcc = 0;
+      W.walkTo(t.x, t.y, d > 45);
+      awLast = { x: t.x, y: t.y };
+      awArmed = true;
+    }
+  }
+  var lastGo = null;
+  function paintGo() {
+    var b = el('story-go'), t = !talk && !busy() && canAutoWalk() ? (step() && targetOf(step()) ? (autoWalk ? '⏹' : '🧭') : '') : '';
+    if (!t && autoWalk && !talk) { setAutoWalk(false); }
+    if (t !== lastGo) {
+      lastGo = t; b.textContent = t; b.style.display = t ? '' : 'none';
+      b.title = autoWalk ? '자동 이동 끄기' : '임무 표식까지 자동 이동';
+      b.classList.toggle('on', autoWalk);
+    }
   }
   var listOpen = false;
   function toggleList(v) {
@@ -3054,11 +3108,12 @@
     if (!on()) { return; }
     acc += dt || 0;
     if (acc > 0.5) { acc = 0; check(); }
+    stepAutoWalk(dt);
     stepFollow(dt);
     stepChase(dt);
     stepDefend(dt);
     reveal(dt);
-    if (!global.DG_NO_DRAW) { paintHud(); paint3d(dt); paintMarks3d(); }
+    if (!global.DG_NO_DRAW) { paintHud(); paintGo(); paint3d(dt); paintMarks3d(); }
   }
   function bind() {
     if (bound) { return; }
@@ -3080,6 +3135,8 @@
       else if (t.closest('[data-st-pick]')) { next(+t.closest('[data-st-pick]').getAttribute('data-st-pick')); }
       else if (t.closest('[data-st-next]')) { next(); }
       else if (t.closest('[data-st-close]')) { toggleList(false); }
+      else if (t.closest('[data-st-go]')) { setAutoWalk(!autoWalk); toggleList(false); }
+      else if (t.closest('#story-go')) { setAutoWalk(!autoWalk); }
       else if (t.closest('[data-wq-track]')) { setTrack(t.closest('[data-wq-track]').getAttribute('data-wq-track') || null); toggleList(true); }
       else if (t.closest('#story-track')) { toggleList(); }
     });
@@ -3095,6 +3152,7 @@
       }
       if (k === 'f' && nearTalk()) { e.preventDefault(); talkStart(); }
       else if (k === 'o') { toggleList(); }
+      else if (k === 'g' && canAutoWalk() && step()) { setAutoWalk(!autoWalk); }
       else if (k === 'escape' && listOpen) { toggleList(false); }
     });
   }
@@ -3122,6 +3180,7 @@
     advance: advance, check: check, stepFollow: stepFollow, nearTalk: nearTalk, talkStart: talkStart, talking: talking, next: next,
     lineFull: lineFull, curLine: curLine, reveal: reveal, talkShot: talkShot,
     live: live, marker: marker, toggleList: toggleList, init: init, tick: tick,
+    autoWalk: function () { return autoWalk; }, setAutoWalk: setAutoWalk,
     _resetForTest: function () {
       talk = null; lastIdle = {}; anchorMemo = {}; lastTrack = ''; lastBtn = ''; listOpen = false;
       fol = null; prog = { key: '', n: 0 }; aimMemo = { k: '', v: null }; seal = { key: '', n: 0 }; duel = null; peakMemo = null;

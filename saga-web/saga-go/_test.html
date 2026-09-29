@@ -10433,6 +10433,47 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? ('장 6 · 사공 ' + ga.key + ' · 학자 ' + go.key + ' · 대숲 수호자 ' + boss.rk + ' · 몸 넷') : ('실패 ' + bad.join(',') + ' ' + miss.join(','));
     });
 
+    t('이야기 목록·자동 이동 — 머리에 ✕ 닫기 + 몸통만 스크롤, 끝난 장은 접힘 / 🧭 임무 표식까지 저절로 걷고, 닿거나 직접 조작하면 멈춘다', function () {
+      var rig = stRig(1), ST = rig.ST, W = DG.world, r = {};
+      try {
+        C.save.story = { ch: 6, step: 0 };
+        ST.toggleList(true);
+        var box = document.getElementById('story-list');
+        var html = box ? box.innerHTML : '';
+        var head = box && box.querySelector('.st-head'), body = box && box.querySelector('.st-scroll');
+        r.head = !!head && !!head.querySelector('[data-st-close]') && !!body && html.indexOf('st-head') < html.indexOf('st-scroll');
+        r.fold = html.indexOf('끝난 이야기 6장') >= 0 && (html.match(/class="st-ch"/g) || []).length <= 10;
+        r.later = ST.CHAPTERS.length <= 9 || html.indexOf('그 뒤') >= 0;
+        var closeBtn = box && box.querySelector('[data-st-close]');
+        if (closeBtn) { closeBtn.click(); }
+        r.closed = !box.classList.contains('show');
+
+        // 자동 이동 — 처음 단계(촌장 말 걸기) 표식이 멀리 있을 때
+        C.save.story = { ch: 0, step: 0 };
+        var tg = ST.targetOf(ST.step());
+        stGo({ x: tg.x + 200, y: tg.y });
+        r.can = ST.setAutoWalk(true) === undefined && ST.autoWalk() === true;
+        ST.tick(0.3);
+        var wt = W.walkingTo();
+        r.walk = !!wt && Math.abs(wt.x - tg.x) < 1 && Math.abs(wt.y - tg.y) < 1 && wt.run === true;
+        // 사람이 직접 조작하면 멈춘다(스틱은 걷기 목표를 지운다)
+        W.setStick(1, 0); W.setStick(0, 0);
+        ST.tick(0.3);
+        r.stopInput = ST.autoWalk() === false;
+        // 다시 켜고 표식 가까이 닿으면 저절로 꺼진다
+        ST.setAutoWalk(true);
+        stGo({ x: tg.x + 1, y: tg.y });
+        ST.tick(0.3);
+        r.arrive = ST.autoWalk() === false;
+        // 표식이 없으면(다 끝난 뒤) 켜져도 바로 꺼진다
+        C.save.story = { ch: ST.CHAPTERS.length, step: 0 };
+        ST.setAutoWalk(true); ST.tick(0.3);
+        r.none = ST.autoWalk() === false;
+      } finally { ST.setAutoWalk(false); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '머리 ✕ · 끝난 6장 접힘 · 닫힘 · 표식까지 달려 걷기 · 조작하면 멈춤 · 닿으면 멈춤 · 표식 없으면 안 켜짐' : ('실패 ' + bad.join(','));
+    });
+
     t('이야기 ⑲-12 — 흐름 1: 곁에서만 말(F) · 고르는 줄은 대답을 골라야 넘어감 · 말 끝 → 다음 단계·부대 경험 10 · go 도착 · boss(수호자 토벌 신호) · 잠긴 장은 여정 등급 글', function () {
       var rig = stRig(1), ST = rig.ST, r = {};
       try {

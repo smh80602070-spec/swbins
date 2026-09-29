@@ -1739,6 +1739,22 @@ body.fc-on #dock, body.fc-on #near { display: none !important; }
 #story-talk .st-line { margin: 6px 0 10px; font-size: 15px; line-height: 1.55; }
 #story-talk .st-acts, #story-list .st-acts { display: flex; gap: 8px; justify-content: flex-end; align-items: center; flex-wrap: wrap; }
 #story-list .st-ch { margin: 8px 0; }
+/* 목록이 길어도 화면 안에서 — 머리(✕ 닫기)는 늘 보이고 몸통만 스크롤한다(모바일에서 닫기가 화면 밖으로 밀리던 것) */
+#story-list .st-box { display: flex; flex-direction: column; max-height: calc(100vh - 70px - var(--safe-t) - 24px - var(--safe-b)); max-height: calc(100dvh - 70px - var(--safe-t) - 24px - var(--safe-b)); }
+#story-list .st-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex: 0 0 auto; padding-bottom: 6px; border-bottom: 1px solid rgba(255,226,140,.2); }
+#story-list .st-head-btns { display: flex; gap: 6px; align-items: center; }
+#story-list .st-head .btn { min-height: 40px; min-width: 40px; }
+#story-list .st-scroll { flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-top: 4px; }
+#story-list .st-acts { flex: 0 0 auto; padding-top: 6px; }
+/* 자동 이동 단추 — 임무 표식이 있을 때만 */
+#story-go {
+  position: fixed; right: 12px; top: calc(84px + var(--safe-t)); z-index: 25; width: 42px; height: 42px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; color: #1b1405;
+  background: linear-gradient(#ffe38a, #f2b640); border: 1px solid #fff3c4; box-shadow: 0 2px 10px rgba(0,0,0,.45);
+}
+#story-go:empty { display: none; }
+#story-go.on { background: linear-gradient(#ff9a8a, #e0503c); color: #fff; }
+#story-track { max-width: calc(100vw - 32px - 56px); }
 #overworld-map .ow-way { margin-top: 8px; max-height: 120px; overflow-y: auto; }
 #overworld-map .ow-way-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
 #overworld-map .ow-way-list .btn em { font-style: normal; opacity: .6; font-size: 11px; }
