@@ -316,7 +316,7 @@ namespace Saga.Go.Data
             switch (id)
             {
                 case "story_wanderer": case "story_elder": case "story_ferryman": case "story_dareum": case "story_mulsae": return GoEra.Past;
-                case "story_scholar": case "story_haesol": case "story_haram": case "story_dodam": case "story_haneul": return GoEra.Modern;
+                case "story_scholar": case "story_haesol": case "story_haram": case "story_dodam": case "story_haneul": case "story_chorong": return GoEra.Modern;
                 case "story_hanbyeol": return GoEra.Future;
                 default: return null;
             }
@@ -387,12 +387,12 @@ namespace Saga.Go.Data
                 float a = (StepN - 1) * Mathf.PI * 0.25f;
                 return AreaPos(at, new Vector2(Mathf.Cos(a) * StepR, Mathf.Sin(a) * StepR)) + Vector3.up * (StepN * StepRise - 0.1f);
             }
-            return AreaPos(at, Vector2.zero) + Vector3.up * (at == "crossing:clock" ? ClockHeight : at == "sunken:lighthouse" ? LightHeight : TowerHeight);
+            return AreaPos(at, Vector2.zero) + Vector3.up * (at == "crossing:clock" ? ClockHeight : at == "sunken:lighthouse" ? LightHeight : at == "amber:tower" ? AmberTowerHeight : TowerHeight);
         }
         public static bool OnClimbTop(string at, Vector3 p)
         {
             Vector3 top = ClimbTopOf(at);
-            float r = at == "crossing:steps" ? 1.6f : (at == "crossing:clock" ? ClockHalf : at == "sunken:lighthouse" ? LightHalf : TowerHalf) + 0.6f;
+            float r = at == "crossing:steps" ? 1.6f : (at == "crossing:clock" ? ClockHalf : at == "sunken:lighthouse" ? LightHalf : at == "amber:tower" ? AmberTowerHalf : TowerHalf) + 0.6f;
             return Flat(p, top) <= r && p.y >= top.y - 1.2f;
         }
         // 30~32장(⑲-57) — 굳은 거리(여덟째 지역) 상수·이야기 상태: 부양탑 심 6×6m·12m, 장터 결정 돔 반지름 4.6m(31장 석등 고리 6m 가 바깥), 시계방 5×4.2×5m, 신호등 넷(±9), 굳은 자리 셋(네거리 가운데에서 m).
@@ -405,6 +405,8 @@ namespace Saga.Go.Data
         public static readonly Vector2 AmberPassGo = new Vector2(0f, -40f), AmberCrossKill = new Vector2(0f, 8f), ChorongAt = new Vector2(-3f, 6f), ChorongBandi = new Vector2(-8f, 8f);
         /// <summary>31장(⑲-59) 자리: 너울 = 장터 가운데 굳어 있던 자리(돔이 깨진 뒤) · 초롱 = 장터 동쪽 앞(석등 고리 밖) · 괘종시계 지키기 제단 = 시계방 서쪽 · 조각 도둑 길 = 네거리 둘레 열한 점(웹 열한 점을 이 땅 크기로 — 시계방·신상·장터·탑·굳은 자리에서 9m 넘게 떨어짐).</summary>
         public static readonly Vector2 NeoulAt = new Vector2(0f, 3.8f), ChorongMarket = new Vector2(9f, 0f), ClockDefend = new Vector2(-8f, 2f);
+        /// <summary>32장(⑲-60) 자리(탑 가운데에서 m, z 남쪽): 새길 = 탑 발치 남쪽 · 거북·초롱(거북 뒤) = 탑 밑 광장(웹 [16,8]·[8,10]).</summary>
+        public static readonly Vector2 SaegilAt = new Vector2(0f, 6f), AmberTurtleAt = new Vector2(16f, 8f), ChorongTower = new Vector2(8f, 10f);
         public static readonly Vector2[] AmberThiefPath = { new Vector2(-26.3f, -9.6f), new Vector2(-19.4f, -26.7f), new Vector2(-1.3f, -38f), new Vector2(14.8f, -23.7f), new Vector2(30.1f, -13.4f), new Vector2(37.4f, 6.6f),
             new Vector2(20.1f, 19.5f), new Vector2(6.9f, 32.3f), new Vector2(-14.2f, 35.2f), new Vector2(-23.2f, 15.7f), new Vector2(-33f, 0f) };
         public const int AmberCh30 = 29, AmberCh31 = 30, AmberCh32 = 31, AmberDomeStep = 2, AmberTowerStep = 3, AmberGreenStep = 5, AmberWindStep = 5;
@@ -603,7 +605,7 @@ namespace Saga.Go.Data
                     new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineBandi }, new Spot { Ch = 24, From = 0, To = 0, Route = "shrine", Arena = ShrineBandi },
                     new Spot { Ch = 24, From = 1, To = 99, Route = "wreck", Arena = WreckBandi }, new Spot { Ch = 25, From = 0, To = 0, Route = "wreck", Arena = WreckBandi },
                     new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitBandi }, new Spot { Ch = 26, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 27, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 28, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f },
-                    new Spot { Ch = 29, From = 0, To = 0, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 29, From = 1, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi } }, // 8부(27장~) 반디는 청하 촌장 곁 마을 · 9부(30장~) 굳은 거리 시계방
+                    new Spot { Ch = 29, From = 0, To = 0, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 29, From = 1, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 32, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi } }, // 8부(27장~) 반디는 청하 촌장 곁 마을 · 9부(30장~) 굳은 거리 시계방
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
@@ -611,7 +613,7 @@ namespace Saga.Go.Data
                 Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = CrossHanbyeol }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftHanbyeol },
                     new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 20, From = 2, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandHanbyeol },
                     new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 25, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 26, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol },
-                    new Spot { Ch = 29, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 30, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 31, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol } }, // 9부(30장~) 은하 나루 착륙판 곁
+                    new Spot { Ch = 29, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 30, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 31, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 32, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol } }, // 9부(30장~) 은하 나루 착륙판 곁
                 IdleKey = "story.idle.hanbyeol", IdleKo = "틈의 끝은 첫 정거장 다음 역이다." },
             // 109-14-45 21장(웹 ⑲-45) — 잠수 기사 여울(현대): 늘 연구 기지 서쪽, 21장 5~7째 단계 선착장 · 8째~ 궁궐 기단
             new Npc { Id = "yeoul", NameKey = "story.npc.yeoul", NameKo = "잠수 기사 여울", ShortKey = "story.short.yeoul", ShortKo = "여울",
@@ -702,18 +704,24 @@ namespace Saga.Go.Data
                 AtSite = "amber:clock", AtOff = ChorongAt, FolkBody = "Megan",
                 Appear = new[] { new Spot { Ch = 29, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt },
                     new Spot { Ch = 30, From = 1, To = 4, At = "amber:market", Arena = ChorongMarket }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt }, // 31장 석등·너울·도둑·저울추 — 장터 동쪽 앞
-                    new Spot { Ch = 31, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt } },
+                    new Spot { Ch = 31, From = 5, To = 5, At = "amber:tower", Arena = ChorongTower }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt }, // 32장 거북을 쓰러뜨린 뒤 탑 밑 광장
+                    new Spot { Ch = 32, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt } },
                 IdleKey = "story.idle.chorong", IdleKo = "다른 시계는 다 멈췄는데 내 손목시계만 째깍거려요." },
             // 109-14-59 31장(웹 ⑲-59) — 장돌뱅이 너울(과거): 장터 결정 속에 좌판째 굳어 있던 사람. 결정이 깨진 뒤(31장 3째 단계부터, 뒤에도) 장터 가운데 굳어 있던 자리
             new Npc { Id = "neoul", NameKey = "story.npc.neoul", NameKo = "장돌뱅이 너울", ShortKey = "story.short.neoul", ShortKo = "너울",
                 AtSite = "amber:market", AtOff = NeoulAt, FolkBody = "PeasantMan",
-                Appear = new[] { new Spot { Ch = 30, From = 2, To = 99, At = "amber:market", Arena = NeoulAt }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:market", Arena = NeoulAt } },
+                Appear = new[] { new Spot { Ch = 30, From = 2, To = 99, At = "amber:market", Arena = NeoulAt }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:market", Arena = NeoulAt }, new Spot { Ch = 32, From = 0, To = 99, At = "amber:market", Arena = NeoulAt } },
                 IdleKey = "story.idle.neoul", IdleKo = "저울추는 셈이 정확해야 하는 법이지. 쇠 수레 구경도 한두 번이지, 허허." },
             // 조각 도둑 — 31장 쫓기 때만(4째 단계) 네거리 둘레 길(AmberThiefPath)을 난다. 반디와 같은 기계 몸.
             new Npc { Id = "partthief", NameKey = "story.npc.partthief", NameKo = "조각 도둑", ShortKey = "story.short.partthief", ShortKo = "도둑",
                 AtSite = "amber:cross", AtOff = Vector2.zero, Pet = true, RunAt = "amber:cross", RunPath = AmberThiefPath,
                 Appear = new[] { new Spot { Ch = 30, From = 3, To = 3, At = "amber:cross", Arena = new Vector2(-26.3f, -9.6f) } },
                 IdleKey = "story.idle.partthief", IdleKo = "삐비— 치익." },
+            // 109-14-60 32장(웹 ⑲-60) — 탑 설계사 새길(미래): 높은 데를 무서워해 탑 발치 남쪽에서 도면만 본다. 31장 끝(7째 단계)부터(뒤에도)
+            new Npc { Id = "saegil", NameKey = "story.npc.saegil", NameKo = "탑 설계사 새길", ShortKey = "story.short.saegil", ShortKo = "새길",
+                AtSite = "amber:tower", AtOff = SaegilAt, FolkBody = "ExoGray",
+                Appear = new[] { new Spot { Ch = 30, From = 6, To = 99, At = "amber:tower", Arena = SaegilAt }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:tower", Arena = SaegilAt }, new Spot { Ch = 32, From = 0, To = 99, At = "amber:tower", Arena = SaegilAt } },
+                IdleKey = "story.idle.saegil", IdleKo = "층판 공식은 맞는데… 시간이 안 흐르면 공식도 멈추나 봐요." },
         };
 
 
@@ -2739,6 +2747,57 @@ namespace Saga.Go.Data
                             L("bandi", "story.ch31.s7.l3", "삐— 괘종시계 신호가 북쪽으로 당겨집니다. 부양탑 꼭대기. 거리의 시간이 그곳에 묶여 있습니다."),
                             Pick("story.ch31.s7.p", "부양탑에 뭐가 있죠?", "탑까지 가 봐요."),
                             L("chorong", "story.ch31.s7.l4", "짓다 만 탑이요. 꼭대기에 '시간 태엽 심장'이 있대요 — 탑을 짓던 설계사가 가끔 탑 발치에서 혼잣말을 해요. 그 사람도 안 굳었나 봐요!"),
+                        } },
+                }
+            },
+            // 109-14-60 32장(웹 ⑲-60) — 9부 끝, 짓다 만 부양탑: 새길(탑 발치, 새 인물) → 탑 벽 타기(climb `amber:tower` 12m) → 꼭대기 태엽 심장(light bare·perch — 다음 단계(3째)부터 심장이 녹는다 = `AmberTowerStep`)
+            // → 새길 → 호박 등딱지 거북(duel — 탑 밑 광장, 암 방패는 초로) → 초롱 합류(신호등 초록 = 6째(5) 단계부터 `AmberGreenStep`) — 이야기 동료 열한째.
+            new Chapter
+            {
+                Id = "ch32", NameKey = "story.ch32", NameKo = "제32장 · 짓다 만 부양탑", Ar = 70, Join = "story_chorong",
+                Gold = 9000, Mats = new[] { 0, 8, 7, 8, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "saegil", TextKey = "story.ch32.s1", TextKo = "부양탑 발치의 설계사와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("saegil", "story.ch32.s1.l1", "……또 멈췄어. 층판을 띄우던 공식이 딱 이 자리에서 — 아, 사람이다. 움직이는 사람!"),
+                            L("saegil", "story.ch32.s1.l2", "시간 태엽 심장 때문에 왔죠? 층판을 띄우려고 시간을 감아 두는 장치예요. 틈이 닫히던 날, 심장이 거리 시간을 통째로 감아 버렸어요."),
+                            L("bandi", "story.ch32.s1.l3", "삐— 탑 꼭대기에서 굳은 신호가 가장 셉니다. 괘종시계가 당기던 방향과 같습니다."),
+                            Pick("story.ch32.s1.p", "어떻게 멈추죠?", "꼭대기엔 어떻게 올라가요?"),
+                            L("saegil", "story.ch32.s1.l4", "승강기는 멈췄어요. 벽을 타고 올라가 심장에 원소를 대면 감긴 태엽이 풀릴 거예요 — 설계한 사람이 할 말은 아니지만, 난 높은 데가 무서워서."),
+                        } },
+                    new Step { Type = StepType.Climb, At = "amber:tower", EnterKey = "story.ch32.stepped", EnterKo = "🏗️ 부양탑 꼭대기에 올라섰다 — 호박 껍질에 싸인 태엽 심장이 코앞에서 떨고 있다",
+                        TextKey = "story.ch32.s2", TextKo = "짓다 만 부양탑 벽을 타고 꼭대기로(벽에 붙어 계속 밀기)" },
+                    new Step { Type = StepType.Light, Bare = true, Perch = true, At = "amber:tower", Arena = Vector2.zero, EnterKey = "story.ch32.lit", EnterKo = "⏱️ 태엽 심장의 호박 껍질이 녹아내리고 — 감겨 있던 태엽이 드르륵 풀린다. 탑 밑에서 땅이 울린다",
+                        AwayKey = "story.ch32.away", AwayKo = "⏱️ 태엽 심장은 탑 꼭대기에 있다 — 벽을 타고 올라서야 원소가 닿는다",
+                        TextKey = "story.ch32.s3", TextKo = "탑 꼭대기 시간 태엽 심장을 원소 스킬로 녹이기(꼭대기에서)" },
+                    new Step { Type = StepType.Talk, Npc = "saegil", TextKey = "story.ch32.s4", TextKo = "탑 발치의 새길에게 내려가기",
+                        Lines = new[]
+                        {
+                            L("saegil", "story.ch32.s4.l1", "풀렸어요…! 그런데 이 울림 — 탑 밑 광장이에요. 심장이 감아 둔 시간을 몰래 받아먹던 게 있었어요."),
+                            L("bandi", "story.ch32.s4.l2", "삐— 커다란 반응. 등딱지에 굳은 신호가 겹겹이 쌓여 있습니다. 거리 시간 대부분이 저기 있습니다."),
+                            Pick("story.ch32.s4.p", "저걸 쓰러뜨리면 시간이 돌아와요?", "물러서 있어요."),
+                            L("saegil", "story.ch32.s4.l3", "등딱지를 깨면요! 도면엔 없던 놈이에요 — 조심해요!"),
+                        } },
+                    new Step { Type = StepType.Duel, At = "amber:tower", Arena = AmberTurtleAt, Foes = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo) },
+                        BossKey = "story.boss.turtle", BossKo = "호박 등딱지 거북", HpMul = 19.2f, AtkMul = 2.6f, ScaleMul = 2.5f,
+                        Rot = new[] { FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Halo },
+                        P2El = GoElement.Geo, Adds = new[] { F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith) },
+                        EnterKey = "story.ch32.enter", EnterKo = "🐢 탑 밑 광장 바닥이 갈라지며 — 호박 등딱지 거북이 일어섰다!",
+                        P2Key = "story.ch32.p2", P2Ko = "🪨 거북이 호박 등딱지를 두른다 — 풀(초)로 깨라! 졸개가 뛰어든다",
+                        WinKey = "story.ch32.win", WinKo = "🐢 호박 등딱지가 쩍 갈라지고 — 겹겹이 굳어 있던 시간이 빛이 되어 거리로 흩어진다",
+                        TextKey = "story.ch32.s5", TextKo = "탑 밑 광장의 호박 등딱지 거북 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "chorong", TextKey = "story.ch32.s6", TextKo = "탑 밑 광장의 초롱과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("chorong", "story.ch32.s6.l1", "들려요? 째깍째깍 — 거리 시계가 전부 같이 가요! 신호등도 초록이에요!"),
+                            L("neoul", "story.ch32.s6.l2", "허허, 장이 다시 서는구먼! 거북 등딱지 틈에서 잃어버린 내 엽전 부적까지 나왔네 — 저울추 값은 톡톡히 받았어."),
+                            L("saegil", "story.ch32.s6.l3", "공중에 걸린 층판도 천천히 내려앉고 있어요. 이제야 탑을 마저 지을 수 있겠네요."),
+                            L("bandi", "story.ch32.s6.l4", "삐— 굳은 신호 소멸…… 아닙니다. 지도 가장자리 너머에서 같은 신호가 약하게 이어집니다."),
+                            Pick("story.ch32.s6.p", "또 굳은 곳이 있다는 거야?", "초롱 씨는 이제 어떻게 해요?"),
+                            L("chorong", "story.ch32.s6.l5", "거리 밖에도 굳은 시간이 있다면 — 시계 수리공이 빠질 수 없죠. 손목시계가 아직 째깍거리는 데는 이유가 있을 거예요."),
+                            L("chorong", "story.ch32.s6.l6", "시계 수리공 초롱, 오늘부터 같이 가요. 가게는 너울 할아버지가 봐 주신대요!"),
                         } },
                 }
             },

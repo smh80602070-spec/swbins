@@ -26,7 +26,7 @@ namespace Saga.EditorTools
     public static class PlaytestGoStory
     {
         private static string _tag;
-        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "", _ch15 = "", _ch16 = "", _ch17 = "", _ch18 = "", _ch19 = "", _ch20 = "", _ch21 = "", _ch22 = "", _ch23 = "", _ch24 = "", _ch25 = "", _ch26 = "", _ch27 = "", _ch28 = "", _ch29 = "", _ch30 = "", _ch31 = "";
+        private static string _ch8 = "", _ch9 = "", _ch10 = "", _ch11 = "", _ch12 = "", _ch13 = "", _ch14 = "", _ch15 = "", _ch16 = "", _ch17 = "", _ch18 = "", _ch19 = "", _ch20 = "", _ch21 = "", _ch22 = "", _ch23 = "", _ch24 = "", _ch25 = "", _ch26 = "", _ch27 = "", _ch28 = "", _ch29 = "", _ch30 = "", _ch31 = "", _ch32 = "";
         private static bool _ok;
 
         public static bool Run(string tag)
@@ -94,6 +94,7 @@ namespace Saga.EditorTools
                 CheckChapter29(fc, pc, field, ui);
                 CheckChapter30(fc, pc, field, ui);
                 CheckChapter31(fc, pc, field, ui);
+                CheckChapter32(fc, pc, field, ui);
                 CheckReveal(pc, ui);
                 CheckBossAlreadyDown(field);
                 CheckIdle(pc, field);
@@ -126,7 +127,7 @@ namespace Saga.EditorTools
                 pc.Teleport(fc.SafePoint);
                 foreach (var e in FieldEnemy.All) e.RestoreHomeForTest();
             }
-            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · " + _ch15 + " · " + _ch16 + " · " + _ch17 + " · " + _ch18 + " · " + _ch19 + " · " + _ch20 + " · " + _ch21 + " · " + _ch22 + " · " + _ch23 + " · " + _ch24 + " · " + _ch25 + " · " + _ch26 + " · " + _ch27 + " · " + _ch28 + " · " + _ch29 + " · " + _ch30 + " · " + _ch31 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
+            if (_ok) Debug.Log("[" + _tag + "] story OK - " + _ch8 + " · " + _ch9 + " · " + _ch10 + " · " + _ch11 + " · " + _ch12 + " · " + _ch13 + " · " + _ch14 + " · " + _ch15 + " · " + _ch16 + " · " + _ch17 + " · " + _ch18 + " · " + _ch19 + " · " + _ch20 + " · " + _ch21 + " · " + _ch22 + " · " + _ch23 + " · " + _ch24 + " · " + _ch25 + " · " + _ch26 + " · " + _ch27 + " · " + _ch28 + " · " + _ch29 + " · " + _ch30 + " · " + _ch31 + " · " + _ch32 + " · 인물 여섯·1~4장 · 자리·몸·가면 · 1장 대화·go·수호장·임무 적·옛 제단 · 2장 잠김·주간 보스 · 3장 청하란·요리·우두머리·무덤·잔치 마당 · 4장 나그네·따라가기·가면 졸개 · 글 흘러나옴·고른 대답·대화 카메라 · 이미 쓰러진 수호장 · 혼잣말 · 세이브 v28 왕복·v27 로드");
             return _ok;
         }
 
@@ -142,12 +143,12 @@ namespace Saga.EditorTools
 
         private static void CheckTable()
         {
-            if (GoStory.Npcs.Length != 35 || GoStory.Chapters.Length != 31) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
+            if (GoStory.Npcs.Length != 36 || GoStory.Chapters.Length != 32) { Fail($"인물 {GoStory.Npcs.Length}·장 {GoStory.Chapters.Length}"); return; }
             string Types(GoStory.Chapter c) { var s = ""; foreach (var st in c.Steps) s += Letter(st.Type); return s; }
-            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT", "TGTRTKXTGLT", "TGTKTMTET", "TGTKTXTTLT", "TGTKLTRTET", "TVTKMTMTXT", "TVTKTSTETXT", "TVTKGTVT", "TTHTSTETXT", "TMLTTXT", "TVTKTST", "TYTRTET", "TYTLLLTXT", "TTKLSTMLT", "TELVSYKLTT", "TPYTEXTGT", "TGKTLLLT", "TSTRTET" };
-            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6250, 6500, 6750, 7000, 7250, 7500, 12000, 7750, 8000 };
-            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 7, 0 }, new[] { 0, 6, 5, 7, 0 }, new[] { 0, 10, 8, 10, 0 }, new[] { 0, 7, 6, 7, 0 }, new[] { 0, 7, 6, 7, 0 } };
-            for (int c = 0; c < 31; c++)
+            string[] want = { "TGBTKTLT", "TGDT", "THCTKTDKT", "TTFTKTTT", "TGKTSKTTT", "TMTXTLTT", "TTGTEXTLTT", "TTRTVKTSTTVT", "TMTYKXTXTTGT", "TGGKTFTGT", "TGTSKTETT", "TTGKXTLTT", "TGTKTMTET", "TGTKTSTYKT", "TGTRTKXTGLT", "TGTKTMTET", "TGTKTXTTLT", "TGTKLTRTET", "TVTKMTMTXT", "TVTKTSTETXT", "TVTKGTVT", "TTHTSTETXT", "TMLTTXT", "TVTKTST", "TYTRTET", "TYTLLLTXT", "TTKLSTMLT", "TELVSYKLTT", "TPYTEXTGT", "TGKTLLLT", "TSTRTET", "TMLTXT" };
+            int[] ar = { 1, 5, 7, 10, 12, 15, 18, 20, 25, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70 }, gold = { 500, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3250, 3500, 3750, 4000, 4250, 4500, 4750, 5000, 5250, 5500, 5750, 6000, 6250, 6500, 6750, 7000, 7250, 7500, 12000, 7750, 8000, 9000 };
+            int[][] mats = { new[] { 0, 2, 0, 2, 0 }, new[] { 0, 0, 1, 3, 0 }, new[] { 0, 2, 1, 3, 0 }, new[] { 0, 2, 2, 3, 0 }, new[] { 0, 3, 2, 3, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 2, 4, 0 }, new[] { 0, 3, 3, 4, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 3, 4, 5, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 4, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 5, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 6, 0 }, new[] { 0, 6, 5, 7, 0 }, new[] { 0, 6, 5, 7, 0 }, new[] { 0, 10, 8, 10, 0 }, new[] { 0, 7, 6, 7, 0 }, new[] { 0, 7, 6, 7, 0 }, new[] { 0, 8, 7, 8, 0 } };
+            for (int c = 0; c < 32; c++)
             {
                 var ch = GoStory.Chapters[c];
                 if (Types(ch) != want[c]) Fail($"{c + 1}장 단계 {Types(ch)}");
@@ -2777,6 +2778,82 @@ namespace Saga.EditorTools
             if (area.AmberPartOn("amber:dome") || !area.AmberPartOn("amber:heart") || area.AmberLampsGreen) Fail("31장 뒤 돔은 깨진 채·심장·신호등은 그대로");
             if (!field.NpcShown("neoul") || !field.NpcShown("chorong") || GoStory.Flat(D("neoul"), GoStory.AreaPos("amber:market", GoStory.NeoulAt)) > 0.6f) Fail("31장 뒤 너울·초롱 자리");
             _ch31 = "31장 초롱 시계방→장터 동쪽·장터 석등 해·달·별(틀린 차례 ✕·돔 밖 고리)·돔 깨짐·너울 장터 가운데·조각 도둑 길(11점 땅 안·충돌 없음·평균 속도)·걸어선 못 잡고 달려서 잡음·괘종시계 지키기 물결 셋(동쪽 뺌·굳은 거리 안)·바늘 돎(그 단계만)·보상";
+        }
+
+        // ---- 32장 ---------------------------------------------------------------------------------------------
+
+        private static void CheckChapter32(FieldCombat fc, PlayerController pc, StoryField field, StoryUi ui)
+        {
+            _ch32 = "32장 중단";
+            StoryState.OffForTest = false;
+            PlayerStats.Restore(70, 0);
+            StoryState.Restore(31, 0);
+            var area = AreaField.Instance;
+            var am = GoAreas.Amber;
+            if (area == null) { Fail("AreaField 없음"); return; }
+            area.Refresh();
+            field.Refresh();
+            Vector3 D(string id) => field.NpcBody(id).transform.position;
+            Vector3 towerPos = GoStory.AreaPos("amber:tower", Vector2.zero);
+            if (!field.NpcShown("saegil") || GoStory.Flat(D("saegil"), GoStory.AreaPos("amber:tower", GoStory.SaegilAt)) > 0.6f) Fail("새길이 탑 발치 남쪽에 안 섬");
+            if (!area.AmberPartOn("amber:heart") || area.AmberLampsGreen) Fail("32장 앞 심장·신호등 처음 모습");
+            Talk(pc, ui, "saegil", "32장 새길");
+            Expect(31, 1, "새길 뒤");                                                            // → 1 climb 탑
+            Physics.SyncTransforms();
+            Vector3 top = GoStory.ClimbTopOf("amber:tower");
+            var core = area.SiteObject("amber", "tower").transform.Find("Tower_core");
+            if (Mathf.Abs(top.y - GoStory.AmberTowerHeight - towerPos.y) > 0.1f) Fail("탑 꼭대기 높이 표");
+            if (core == null || core.GetComponent<Collider>() == null || Mathf.Abs(core.GetComponent<Collider>().bounds.max.y - top.y) > 0.1f) Fail("부양탑 심 충돌·윗면이 꼭대기 표와 안 맞음");
+            if (!Physics.Raycast(top + new Vector3(-GoStory.AmberTowerHalf - 4f, -6f, 0f), Vector3.right, 4f)) Fail("부양탑이 곧은 벽이 아니다");
+            pc.Teleport(towerPos + new Vector3(8f, 0.4f, 0f));
+            field.Check(pc.transform.position);
+            Expect(31, 1, "땅에서 탑 오르기 단계가 넘어감");
+            pc.Teleport(top + new Vector3(0f, 0.3f, 0f));
+            field.Check(pc.transform.position);
+            Expect(31, 2, "탑 꼭대기");                                                          // → 2 light 태엽 심장
+            pc.Teleport(towerPos + new Vector3(8f, 0.4f, 0f));                                   // 땅에서는 불이 안 닿는다
+            Pulse(towerPos, 4f);
+            Expect(31, 2, "땅에서 쏜 원소로 태엽 심장이 녹음");
+            area.Refresh();
+            if (!area.AmberPartOn("amber:heart")) Fail("땅에서 쏘았는데 심장이 녹음");
+            pc.Teleport(top + new Vector3(0f, 0.3f, 0f));
+            Pulse(towerPos, 1f);
+            Expect(31, 3, "꼭대기에서 태엽 심장");                                               // → 3 talk 새길
+            area.Refresh();
+            field.Refresh();
+            if (area.AmberPartOn("amber:heart") || area.AmberLampsGreen) Fail("심장을 녹인 뒤 심장만 꺼지고 신호등은 아직 빨강이어야");
+            Talk(pc, ui, "saegil", "32장 새길 발치");
+            Expect(31, 4, "새길 발치");                                                          // → 4 duel 거북
+            field.Check(pc.transform.position);
+            if (field.Squad.Count != 1) { Fail($"호박 등딱지 거북 {field.Squad.Count}"); return; }
+            var turtle = field.Squad[0];
+            if (!turtle.IsStoryBoss || turtle.DisplayName != GoLocalization.T("story.boss.turtle", "호박 등딱지 거북") || turtle.Element != GoElement.Geo || turtle.CurrentMove != FieldEnemy.BossMove.Slam) Fail($"거북 이름·암·첫 수 {turtle.DisplayName}·{turtle.Element}·{turtle.CurrentMove}");
+            if (!am.Contains(turtle.transform.position) || GoStory.Flat(turtle.transform.position, GoStory.AreaPos("amber:tower", GoStory.AmberTurtleAt)) > 12f) Fail("거북이 탑 밑 광장이 아님");
+            turtle.SetShieldForTest(0f);
+            turtle.TakeRaw(turtle.Hp - turtle.MaxHp * 0.45f, Color.white);
+            field.DuelTickForTest();
+            if (!turtle.Shielded || turtle.Element != GoElement.Geo || field.Squad.Count != 3) Fail($"2단계 암 방패·졸개 {turtle.Element}·{field.Squad.Count}");
+            Kill(turtle);
+            Expect(31, 5, "호박 등딱지 거북");                                                   // → 5 talk 초롱
+            area.Refresh();
+            field.Refresh();
+            if (!area.AmberLampsGreen) Fail("거북을 쓰러뜨린 뒤 신호등이 초록이 안 됨");
+            if (!field.NpcShown("chorong") || GoStory.Flat(D("chorong"), GoStory.AreaPos("amber:tower", GoStory.ChorongTower)) > 0.6f) Fail("초롱이 탑 밑 광장에 안 섬");
+            int gold = GoldState.Gold, knot = TalentState.Count(GoTalent.Mat.Knot), guide = TalentState.Count(GoTalent.Mat.Guide), secret = TalentState.Count(GoTalent.Mat.Secret);
+            Talk(pc, ui, "chorong", "32장 끝 초롱");
+            if (StoryState.Ch != 32 || GoldState.Gold != gold + 9000 || TalentState.Count(GoTalent.Mat.Knot) != knot + 8 || TalentState.Count(GoTalent.Mat.Guide) != guide + 8 || TalentState.Count(GoTalent.Mat.Secret) != secret + 7) Fail("32장 끝·보상(금 9000·교본 8·비급 7·매듭 8)");
+            if (!PartyState.Has("story_chorong")) Fail("초롱이 합류 안 함");
+            bool ko = GoKits.OffForTest;
+            GoKits.OffForTest = false;
+            var kit = GoKits.KitOf("story_chorong", GoElement.Geo);
+            GoKits.OffForTest = ko;
+            if (!GoHeroes.TryGet("story_chorong", out var hh) || hh.Era != HeroEra.Story || hh.Rarity != 4 || GoHeroes.ElementOf(hh) != GoElement.Geo || hh.Trait != HeroTrait.Wisdom || GoWeapons.TypeOf("story_chorong") != GoWeapons.Type.Catalyst || GoStory.MemberEra("story_chorong") != GoEra.Modern) Fail("초롱 표(★4 암 법구 지략·현대)");
+            if (kit == null || !kit.Sig || kit.Skill.Type != KitSkillType.Zone || kit.Burst.Type != KitBurstType.Rain || Mathf.Abs(kit.Skill.R - 5f) > 0.01f) Fail("초롱 한 벌(태엽 괘종 zone·되감은 시간 rain)");
+            area.Refresh();
+            field.Refresh();
+            if (area.AmberPartOn("amber:heart") || !area.AmberLampsGreen) Fail("9부 뒤 태엽 심장은 꺼지고 신호등은 초록이어야");
+            if (!field.NpcShown("saegil") || !field.NpcShown("chorong") || !field.NpcShown("neoul") || !field.NpcShown("bandi") || !field.NpcShown("hanbyeol")) Fail("9부 뒤 새길·초롱·너울·반디·한별이 안 섬");
+            _ch32 = "32장 새길 탑 발치·부양탑 12m 벽/꼭대기(땅에선 안 넘어감)·태엽 심장은 꼭대기에서만(땅에서 쏘면 안 녹음)·심장 꺼짐(신호등은 아직 빨강)·호박 등딱지 거북 암 2단계 방패·신호등 초록·초롱 탑 밑 광장·초롱 합류(★4 암 법구 zone·rain)·보상";
         }
 
         // ---- 글 흘러나옴·대화 카메라 -------------------------------------------------------------------------

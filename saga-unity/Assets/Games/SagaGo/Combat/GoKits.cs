@@ -140,6 +140,11 @@ namespace Saga.Go.Combat
                     s = S(KitSkillType.Shells, "kit.sig.haneul.skill", "얼음 관측 풍선", 8f, 2.2f); s.Reach = 12f; s.N = 3; s.Delay = 0.6f; s.R = 2.5f;
                     b = B(KitBurstType.Lore, "kit.sig.haneul.burst", "한파 예보", 7f, 2.6f); b.Sec = 12f; b.RMul = 1.35f;
                     break;
+                // 109-14-60 초롱(웹 kits.js story_chorong) — 있는 틀(zone·rain)만
+                case "story_chorong":
+                    s = S(KitSkillType.Zone, "kit.sig.chorong.skill", "태엽 괘종", 10f, 0.8f); s.R = 5f; s.Sec = 10f; s.Every = 1f; s.N = 2; s.Energy = 1.5f;
+                    b = B(KitBurstType.Rain, "kit.sig.chorong.burst", "되감은 시간", 5f, 2.2f); b.Sec = 12f; b.Reach = 8f; b.N = 2; b.Gap = 1f; b.RMul = 0.85f;
+                    break;
                 default:
                     return null;
             }

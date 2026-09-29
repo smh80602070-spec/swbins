@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **4485** (표 4430 · 코드 55) — go 2641 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **15** · 넘침 주의 **487**
-- 사람 검수 **0/4485** — 순위1 0/265 · 순위2 0/3495 · 순위3 0/725
+- 짝 **4525** (표 4470 · 코드 55) — go 2681 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **1** · 경고 **1** · 용어 흔들림 **15** · 넘침 주의 **495**
+- 사람 검수 **0/4525** — 순위1 0/265 · 순위2 0/3534 · 순위3 0/726
 
 ## 검수 순서
 
@@ -14,9 +14,9 @@
 
 볼 것: 뜻이 맞는지 · 어색한 직역 · 같은 것을 같은 말로 부르는지(아래 용어 흔들림) · 단추 글은 Title Case, 문장은 문장 끝 부호 · 가명(인물·지명)은 로마자 그대로 · 원작 게임 고유 용어를 쓰지 않는지.
 
-## 자동 오류 — 0 이어야 한다 (0)
+## 자동 오류 — 0 이어야 한다 (1)
 
-없음.
+- `go` `story.ch32.p2` — 원작 용어: Dendro
 
 ## 경고 — 의도면 두고, 아니면 고친다 (1)
 
@@ -40,7 +40,7 @@
 - 「올라가 볼게요.」 → **I'll climb it.** (go:story.ch16.s5.p.a) · **I'll go up and see.** (go:story.ch25.s1.p.a)
 - 「여기서 끝내자.」 → **End it here.** (go:story.ch20.s9.p.b) · **Let's end this here.** (go:story.ch29.s4.p.b)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 487)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 495)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -72,7 +72,7 @@
 | 3→10 | story | `enemy.hwanggeon` | Yellow Turban Bandit |
 | 5→14 | go | `cook.recipe.ash_pancake` | Ash Flower Mushroom Pancake |
 | 7→16 | dungeon | `saga.heaven.title` | The Guardian Who Drew His Sword |
+| 11→22 | go | `story.ch32` | Chapter 32 · The Unfinished Levitation Tower |
 | 5→13 | story | `bp.sig.hwanggeon_chief` | Netherworld Talisman Array |
 | 39→67 | go | `story.ch28.s1.l4` | (Signal) Six points of light have appeared on the star-ship's route chart. The rock island's point is blinking in the order sun → star → moon. |
 | 18→33 | go | `story.ch15.s9` | Carry the three wing fragments to the star-ship on Frostpeak Plateau |
-| 12→24 | go | `story.ch29.s1` | Go to the Village Elder of Cheongha in the square |

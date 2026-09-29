@@ -153,6 +153,9 @@ namespace Saga.Go.Data
             // 109-14-51 하늬(26장 끝) — 빙 장병기(웹 ⑲-51)
             new Hero { Id = "story_haneul", NameKo = "하늬", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Command, Might = 74, Wisdom = 72, Command = 76,
                 WebElement = WebElement.Ice, QuoteKo = "날개는 빌려 쓰고요!" },
+            // 109-14-60 초롱(32장 끝) — 암 법구(웹 ⑲-60)
+            new Hero { Id = "story_chorong", NameKo = "초롱", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Wisdom, Might = 56, Wisdom = 82, Command = 66,
+                WebElement = WebElement.Rock, QuoteKo = "손목시계가 아직 째깍거리는 데는 이유가 있을 거예요." },
         };
 
         public static bool IsStory(string id) => id != null && id.StartsWith("story_");
