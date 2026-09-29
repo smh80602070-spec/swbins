@@ -49,7 +49,9 @@
     { key: 'dome',  name: '빛 돔의 메아리',    boss: 'dome_colossus',   spot: 'sk_sand', off: [0, 12] },
     /* ⑲-69 2차 결말(38장) 뒤 — 11부 보스 둘. 입구는 세갈래 고을(Godot 칸 (3.0,3.4)·(5.0,2.2) → 길목 기준 m). 보상 금 +20(모라 +500) */
     { key: 'firstcrow', name: '처음 순간의 메아리',  boss: 'first_crow',   spot: 'fk_junction', off: [-48, -5],  after: 38, plus: 20 },
-    { key: 'garmuri',   name: '갈무리 격자의 메아리', boss: 'garmuri_true', spot: 'fk_junction', off: [48, -62],  after: 38, plus: 20 }
+    { key: 'garmuri',   name: '갈무리 격자의 메아리', boss: 'garmuri_true', spot: 'fk_junction', off: [48, -62],  after: 38, plus: 20 },
+    /* ⑲-71 3차 결말(41장) 뒤 — 12부 보스 하나. 입구는 고을 마당 곁(Godot (2.6,2.6)). 보상 금 +32(모라 +800) */
+    { key: 'seed',      name: '곳간 노래의 메아리',   boss: 'seed_giant',   spot: 'fk_junction', off: [-67, -43], after: 41, plus: 32 }
   ];
   var KIND_ORDER = ['tomb', 'school', 'forge'];
   var STAGES = [

@@ -14482,6 +14482,25 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '일곱 곳(29장 뒤·밤 21~4시) · 14m 잔당 셋 · 60m 밖·낮 거둠 · 처치 🪙800 📘1 · 그날 한 번 · 4시 넘기면 다시' : ('실패 ' + bad.join(','));
     });
 
+    t('결말 뒤 ⑲-71 — 12부 메아리: 41장을 마친 뒤에만 곳간 노래의 메아리(갈무리의 싹) 입구 하나 더 · 세갈래 고을 안 · 앞 여섯은 그대로 · 보상 금 +32', function () {
+      var rig = dmRig(), DM = rig.DM, FC = rig.FC, r = {};
+      try {
+        C.save.story = { ch: 40, step: 0 };
+        r.pre = DM.echoList().length === 6 && !DM.byId('e:seed');
+        C.save.story = { ch: 41, step: 0 };
+        var E = DM.echoList(), d = E[6];
+        r.open = E.length === 7 && !!d && d.id === 'e:seed' && d.boss === 'seed_giant' && d.kind === 'echo' && !!FC.FOES.seed_giant.boss && DG.fork.inRegion(d.x, d.y) &&
+          E.slice(0, 6).map(function (q) { return q.id; }).join() === 'e:knot,e:ice,e:cross,e:dome,e:firstcrow,e:garmuri';
+        r.apart = E.slice(4, 6).every(function (q) { return Math.hypot(q.x - d.x, q.y - d.y) > 40; });
+        rig.at(d); DM.enter(d, 0); DM.step(3.1);
+        var L = rig.wave();
+        r.boss = L.length === 1 && L[0].kind === 'seed_giant' && L[0].el === 'grass' && DM.run().left === 240;
+        r.reward = DM.rewardOf('echo', 0, 0, d).gold === 232 && DM.rewardOf('echo', 2, 0, d).gold === 372;
+      } finally { rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '메아리 일곱(41장 뒤 하나 더) · 갈무리의 싹 · 금 +32' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑲-69 2차 결말(38장) 뒤 — 11부 재대결 메아리 둘(domain.js) · 새 지역 밤의 잔불 셋(nightecho.js) ── */
     t('결말 뒤 ⑲-69 — 11부 메아리 둘: 38장을 마친 뒤에만 입구 둘(세갈래 고을 안)·보스 처음의 별까마귀·갈무리 참몸 · 앞 넷은 29장 뒤 그대로 · 보상 금 +20', function () {
       var rig = dmRig(), DM = rig.DM, FC = rig.FC, r = {};
