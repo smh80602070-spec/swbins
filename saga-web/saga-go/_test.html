@@ -14818,6 +14818,63 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '여섯 단계 · 탑 벽 타기 → 태엽 심장(꼭대기) → 탑 녹음 → 새길 → 거북(암 방패 초) → 신호등 초록 → 초롱 합류 · 🪢+8 🪙+9000' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-62 이야기 10부 제33장 · 지도 가장자리 너머 (story ch33·마루·조각 운반 드론 · vault 무대, PLAN §5 ⑲-62) ── */
+    t('이야기 ⑲-62 — 33장 여섯 단계(Lv72) · 흐름: 반디(굳은 거리) → 하람(고원 관측소) → 동쪽 고개 넘어 벌 어귀(go) → 야적장 결정 짐승 넷(땅) → 조각 운반 드론 쫓기(야적장 → 동력 기둥 사이 → 금고 문 앞) → 마루 · 마루·드론 자리 · 반디 자리 · 🪢+8 🪙+8500', function () {
+      var rig = stRig(72), VT = DG.vault, ST = DG.story, FC = DG.fieldCombat, TL = DG.talent, r = {}, i;
+      try {
+        VT._resetForTest(); delete C.save.vault;
+        var c = ST.CHAPTERS[32], S33 = c.steps;
+        r.table = c.id === 'ch33' && c.ar === 72 && !c.join && S33.length === 6 && c.reward.knot === 8 && c.reward.gold === 8500 && c.reward.guide === 8 && c.reward.secret === 6 && c.reward.party === 2300 &&
+          S33.map(function (q) { return q.type; }).join() === 'talk,talk,go,kill,chase,talk' && S33[2].spot === 'vt_pass' && S33[3].spot === 'vt_yard' && S33[4].npc === 'carrier' &&
+          S33[3].kinds.join() === 'rockbear,raptor,hawk,snowfox';
+        var yard = VT.siteById('yard'), pass = VT.siteById('pass'), ck = DG.amber.siteById('clock'), obs = ST.spotPos('fr_obs');
+        function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 32 : ch, step: si }; return ST.npcPos(k); }
+        /* 인물 — 마루: 10부(33장~)부터 늘 창고 셔터 앞 / 운반 드론: 쫓기 단계(4)에만 / 반디: 굳은 거리(0) → 고원 관측소 곁(1) → 창고 앞(2~, 뒤에도) */
+        r.maru = (np('maru', 0, 31), !ST.visible('maru')) && st10Eq(np('maru', 0), { x: yard.x - 5, y: yard.y + 9 }) && ST.visible('maru') && st10Eq(np('maru', 5), { x: yard.x - 5, y: yard.y + 9 }) && st10Eq(np('maru', 0, 33), { x: yard.x - 5, y: yard.y + 9 });
+        r.drone = (np('carrier', 3), !ST.visible('carrier')) && (np('carrier', 4), ST.visible('carrier')) && (np('carrier', 5), !ST.visible('carrier')) && (np('carrier', 4, 33), !ST.visible('carrier'));
+        r.bandi = st10Eq(np('bandi', 0), { x: ck.x - 8, y: ck.y + 8 }) && Math.hypot(np('bandi', 1).x - obs.x, np('bandi', 1).y - obs.y) < 30 && st10Eq(np('bandi', 2), { x: yard.x - 14, y: yard.y + 15 }) &&
+          st10Eq(np('bandi', 5), { x: yard.x - 14, y: yard.y + 15 }) && st10Eq(np('bandi', 0, 33), { x: yard.x - 14, y: yard.y + 15 });
+        /* 드론 길 — 야적장 가운데에서 열한 점, 금고·창고·컨테이너·동력 기둥 벽 안이 아니다 */
+        var DP = ST.VAULT_DRONE_PATH, vault = VT.siteById('vault');
+        function vtRect(p) { return VT.rectsIn(Math.floor(p.x / 48), Math.floor(p.y / 48)).some(function (q) { return frInRect(q, p.x, p.y); }); }
+        C.save.story = { ch: 35, step: 0 };
+        r.path = DP.length === 11 && DP.every(function (o) { return Math.hypot(o[0], o[1]) < 220; }) && DP.every(function (o) { return !vtRect({ x: yard.x + o[0], y: yard.y + o[1] }); }) &&
+          Math.hypot(yard.x + DP[10][0] - vault.x, yard.y + DP[10][1] - (vault.y + VT.VAULT_R)) < 40;               // 끝은 금고 문 앞
+        C.save.story = { ch: 32, step: 0 };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('bandi')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        stGo(ST.npcPos('haram')); r.t1 = stTalkAll(ST) && C.save.story.step === 2;
+        /* 동쪽 고개 넘어 벌 어귀 — 멀면 ✕ */
+        var gt = ST.targetOf(ST.step());
+        r.goAt = st10Eq(gt, { x: pass.x + 20, y: pass.y });
+        stGo({ x: gt.x, y: gt.y + 300 }); ST.check(); var far = C.save.story.step === 2;
+        stGo({ x: gt.x, y: gt.y }); ST.check();
+        r.go = far && C.save.story.step === 3;
+        /* 야적장 결정 짐승 넷 */
+        var kt = ST.targetOf(ST.step());
+        r.killAt = st10Eq(kt, { x: yard.x - 34, y: yard.y - 19 });
+        stGo({ x: kt.x + 4, y: kt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.map(function (u) { return S.foes[u].kind; }).join() === 'rockbear,raptor,hawk,snowfox';
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 4;
+        /* 조각 운반 드론 — 곁이면 날아가고(길 위), 붙잡으면 다음 */
+        ST.stepChase(0.1);
+        var cs0 = ST.chaseState(); stGo({ x: cs0.x + 6, y: cs0.y }); ST.stepChase(0.1);
+        var cs = ST.chaseState(), h0 = cs ? { x: cs.x, y: cs.y } : null, onPath = true;
+        for (i = 0; i < 120; i++) { ST.stepChase(0.1); cs = ST.chaseState(); if (Math.hypot(cs.x - yard.x, cs.y - yard.y) > 240) { onPath = false; } }
+        r.flee = !!cs && cs.npc === 'carrier' && onPath && Math.hypot(cs.x - h0.x, cs.y - h0.y) > 3;
+        stGo({ x: cs.x + 1, y: cs.y }); ST.stepChase(0.01);
+        r.chase = C.save.story.step === 5;
+        /* 창고지기 마루 — 끝 보상, 다음 장(34장)으로 */
+        gold0 = C.save.player.gold; k0 = m.knot || 0;
+        stGo(ST.npcPos('maru')); r.end = stTalkAll(ST) && C.save.story.ch === 33 && C.save.story.step === 0 && m.knot === k0 + 8 && C.save.player.gold >= gold0 + 8500;
+        r.next = !!ST.CHAPTERS[33] || ST.CHAPTERS.length === 33;
+      } finally { VT._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '여섯 단계 · 반디 → 하람 → 벌 어귀 → 야적장 짐승 넷 → 운반 드론 쫓기(길 위) → 마루 · 🪢+8 🪙+8500 · 마루·드론·반디 자리' : ('실패 ' + bad.join(','));
+    });
+
     /* ── ⑲-61 탈것 — 말(mount.js, PLAN §5 ⑲-61 · SAGA-DESIGN §12) ── */
     t('탈것 ⑲-61 — 말 셋(농마 5·갈색 15·흰 30 레벨 또는 도감 등록) · 타기/내리기 · 걷는 속도 배율(달리기와 겹침) · 고르기 · 저장 한 칸 · 몸 참조', function () {
       var MT = DG.mount, W = DG.world, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;

@@ -15,7 +15,7 @@ node go-story-walls.mjs                        # 사가고: 이야기 인물 자
 node go-combat.mjs auto [short] [prof]         # 사가고: 가까운 무리와 싸워 적 거리·몸 반지름·체력·GL 수·프레임 + shots/go_combat_* (prof = CPU 자기 시간 상위)
 node go-combat-time.mjs [plain elite boss] [tune=field.x:v]  # 사가고: 판정만 1/30초씩 — 무리별 처치 시간(게임 초)·피해/초·휘두름·체력
 node fs-move-click.mjs                         # 사가의숲: 3D 켜고 W(시점 0°·90°)·왼쪽 클릭 이동·목표 고리 + shots/fs_*
-node go-ch-auto.mjs <장> [초] [nofield] [trace] [defend] [members]  # 사가고: 그 장 첫 단계(defend 면 첫 지키기 단계, members 면 이야기 동료 다 지급)부터 🤖📖 자동 — 단계마다 걸린 초·doing·사진(shots/go_ch<N>_s<i>), trace 면 곁 적 체력·층
+node go-ch-auto.mjs <장> [초] [nofield] [trace] [defend] [members] [step=N]  # 사가고: 그 장 첫 단계(defend 면 첫 지키기 단계, members 면 이야기 동료 다 지급)부터 🤖📖 자동 — 단계마다 걸린 초·doing·사진(shots/go_ch<N>_s<i>), trace 면 곁 적 체력·층
 node go-probe-eval.mjs "<js>"                      # 사가고: 새 계정으로 들어가 그 자바스크립트를 게임 안에서 돌려 결과를 찍는다(진단용, 새 프로필로)
 node go-aftermath.mjs [shot]                    # 사가고 ⑲-56: 결말 뒤 밤의 잔불(3D·14m 잔당 셋)·메아리 입구 넷이 예외 없이 서나(shot 을 줄 때만 shots/go_after_*, 새 프로필로)
 node go-vault.mjs [shot]                        # 사가고 ⑲-61: 갈무리 벌(vault.js)이 3D 로 예외 없이 서나·명소 자리(지형 칸)·기록 기둥(shot 을 줄 때만 shots/go_vault_*, 새 프로필로)

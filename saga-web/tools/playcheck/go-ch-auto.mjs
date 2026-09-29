@@ -1,10 +1,11 @@
 // 사가고 — 한 장을 처음부터 🤖📖 자동으로: 그 장 첫 단계로 옮겨 놓고 단계가 넘어가는 시각·doing 을 적는다 + 단계마다 사진(shots/go_ch<N>_s<i>)
-// 인자: 장 번호(1부터, 기본 24) · 초(기본 300) · nofield(들판 무리 끔 — 헤드리스는 느려 곁 무리에 끌려간다)
+// 인자: 장 번호(1부터, 기본 24) · 초(기본 300) · step=N(그 단계부터) · nofield(들판 무리 끔 — 헤드리스는 느려 곁 무리에 끌려간다)
 // PC_PROF=tmp/… 새 프로필로 돌릴 것(저장된 자동·이야기 자리가 남으면 헛결과)
 import { launch, sleep } from './cdp.mjs';
 const B = 'http://127.0.0.1:8871/saga-go/';
 const nums = process.argv.filter((a) => /^\d+$/.test(a)).map(Number);
 const CH = nums[0] || 24, SECS = nums[1] || 300;
+const stepArg = process.argv.find((a) => /^step=[0-9]+$/.test(a)), STEP = stepArg ? +stepArg.slice(5) : null;
 const c = await launch(1280, 720);
 const hard = setTimeout(() => { console.log('TIMEOUT'); c.close(); process.exit(1); }, (SECS + 120) * 1000);
 try {
@@ -20,7 +21,7 @@ try {
     ${process.argv.includes('nofield') ? "DG.core.setTune('field.on', 0);" : ''}
     DG.fieldCombat._resetForTest && DG.fieldCombat._resetForTest();
     ${process.argv.includes('members') ? "Object.keys(DG.story.MEMBERS).forEach(function (id) { DG.story.join(id, true); });" : ''}
-    var sv = DG.story.state(); sv.ch = ${CH - 1}; sv.step = ${process.argv.includes('defend') ? "DG.story.CHAPTERS[" + (CH - 1) + "].steps.findIndex(function (x) { return x.type === 'defend'; })" : 0};
+    var sv = DG.story.state(); sv.ch = ${CH - 1}; sv.step = ${STEP !== null ? STEP : (process.argv.includes('defend') ? "DG.story.CHAPTERS[" + (CH - 1) + "].steps.findIndex(function (x) { return x.type === 'defend'; })" : 0)};
     var t = DG.story.targetOf(DG.story.step()), p = DG.core.save.player.pos; p.x = t.x + 15; p.y = t.y; DG.world.walkTo(p.x, p.y);
     DG.auto.setOn(true);
     return JSON.stringify({ ch: DG.story.chapter().name, steps: DG.story.CHAPTERS[${CH - 1}].steps.length });

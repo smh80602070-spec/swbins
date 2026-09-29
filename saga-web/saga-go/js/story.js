@@ -105,6 +105,8 @@
   /* ⑲-40 18장 선장의 잔상 — 은하역 가운데에서 남쪽 선로(z 2~42) 위를 지그재그로, 선로 끝 너머 틈 쪽까지 */
   /* ⑲-50 25장 구름 씨앗 드론 — 잔해 섬 가운데에서 섬 둘레 반지름 11~18m(조종실·프로펠러·꼬리 날개를 비켜) */
   /* ⑲-59 31장 조각 도둑 — 네거리 가운데에서 반지름 42~58m 를 열한 점으로 한 바퀴 반(시계방 서쪽·신상을 비켜) */
+  /* ⑲-62 33장 조각 운반 드론 — 야적장(vault 'yard') 가운데에서 열한 점: 컨테이너 사이 → 창고 서쪽 → 동력 기둥 사이 → 금고 문 앞(Godot 54-2 chase path 를 칸→m) */
+  var VAULT_DRONE_PATH = [[19, -12], [-14, -10], [-48, -2], [-82, 5], [-106, -19], [-96, -53], [-62, -67], [-34, -86], [-53, -115], [-91, -125], [-110, -134]];
   var AMBER_THIEF_PATH = (function () { var o = [], k; for (k = 0; k < 11; k++) { var a = (200 + k * 34) * Math.PI / 180, r = 42 + (k % 3) * 8; o.push([Math.round(Math.cos(a) * r * 10) / 10, Math.round(Math.sin(a) * r * 10) / 10]); } return o; })();
   var SEED_DRONE_PATH = [[8, -9], [-2, -14], [-13, -5], [-14, 10], [0, 16], [13, 9]];
   var CAPTAIN_PATH = [[0, 6], [1.5, 16], [-1.5, 26], [1.5, 36], [-1, 46], [2, 58], [-2, 68]];
@@ -167,7 +169,9 @@
       at: [{ ch: 9, from: 6, to: 6, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 9, from: 7, to: 8, spot: 'fr_fort', off: HARAM_FORT },
         { ch: 10, from: 8, to: 8, spot: 'fr_ship', off: HARAM_SHIP }, { ch: 11, from: 6, to: 8, spot: 'fr_ship', off: HARAM_SHIP }] },
     bandi:    { id: 'story_bandi',    name: '조종 기계 반디', short: '반디', zone: 'snowfort', spot: 'fr_ship', off: [0, 12], color: '#8cd9f2', pet: 'drone',
-      idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }, { ch: 12, from: 6, to: 8, spot: 'yard_bandi' },
+      idle: '삐— 동력 3퍼센트. 추위 경고.', at: [{ ch: 32, from: 1, to: 1, spot: 'fr_obs', off: [HARAM_OBS[0] + 7, HARAM_OBS[1] + 3] }, { ch: 32, from: 2, to: 999, spot: 'vt_yard', off: [-14, 15] },   // ⑲-62 10부 33장
+        { ch: 33, chTo: 999, from: 0, to: 999, spot: 'vt_yard', off: [-14, 15] },
+        { ch: 11, from: 5, to: 5, spot: 'fr_cave', off: BANDI_CAVE }, { ch: 12, from: 6, to: 8, spot: 'yard_bandi' },
         { ch: 13, from: 9, to: 9, spot: 'obs_bandi', sky: true }, { ch: 15, from: 6, to: 8, spot: 'sp_bandi' },
         { ch: 16, from: 0, to: 6, spot: 'sp_bandi' }, { ch: 16, from: 7, to: 7, spot: 'sp_bell_bandi' }, { ch: 16, from: 8, to: 9, spot: 'sp_tp_bandi' },
         { ch: 17, from: 0, to: 0, spot: 'sp_tp_bandi' }, { ch: 17, from: 1, to: 9, spot: 'sp_st_bandi' },
@@ -245,6 +249,13 @@
     neoul:    { id: 'story_neoul',    name: '장돌뱅이 너울', short: '너울', zone: 'saltflat', spot: 'am_market', off: [0, 3.8], color: '#9a7a4c',
       idle: '저울추는 셈이 정확해야 하는 법이지. 쇠 수레 구경도 한두 번이지, 허허.',
       appear: [{ ch: 30, from: 2, to: 999, spot: 'am_market', off: [0, 3.8] }, { ch: 31, chTo: 999, from: 0, to: 999, spot: 'am_market', off: [0, 3.8] }] },
+    /* ⑲-62 창고지기 마루(현대) — 갈무리 물류의 마지막 창고지기. 10부(33장~)부터 늘 창고 셔터 앞(34장에서 곳간으로 옮긴다) */
+    maru:     { id: 'story_maru',     name: '창고지기 마루', short: '마루', zone: 'snowfort', spot: 'vt_yard', off: [-5, 9], color: '#807a4c',
+      idle: '드론이 또 한 대 지나가네. 오늘만 백스무 번째…',
+      appear: [{ ch: 32, chTo: 999, from: 0, to: 999, spot: 'vt_yard', off: [-5, 9] }] },
+    /* ⑲-62 조각 운반 드론 — 33장 쫓기 때만 야적장 → 금고 문 앞 길(VAULT_DRONE_PATH)을 난다. 드론 몸(pet) */
+    carrier:  { id: 'story_carrier',  name: '조각 운반 드론', short: '드론', zone: 'snowfort', spot: 'vt_yard', color: '#d6e0ee', pet: 'drone', idle: '삐비— 치익.',
+      appear: [{ ch: 32, from: 4, to: 4 }], runSpot: 'vt_yard', runPath: VAULT_DRONE_PATH },
     /* ⑲-60 탑 설계사 새길(미래) — 높은 데를 무서워해 탑 발치 남쪽에서 도면만 본다. 31장 끝(일곱째 단계, 초롱이 "탑 발치에서 혼잣말"이라 한 때)부터(뒤에도) 선다 */
     saegil:   { id: 'story_saegil',   name: '탑 설계사 새길', short: '새길', zone: 'saltflat', spot: 'am_tower', off: [0, 6], color: '#c8d0d8',
       idle: '층판 공식은 맞는데… 시간이 안 흐르면 공식도 멈추나 봐요.',
@@ -271,7 +282,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil', 'maru', 'carrier'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -1575,6 +1586,38 @@
             ['?', ['또 굳은 곳이 있다는 거야?', '초롱 씨는 이제 어떻게 해요?']],
             ['초롱', '거리 밖에도 굳은 시간이 있다면 — 시계 수리공이 빠질 수 없죠. 손목시계가 아직 째깍거리는 데는 이유가 있을 거예요.', 'angry'],
             ['초롱', '시계 수리공 초롱, 오늘부터 같이 가요. 가게는 너울 할아버지가 봐 주신대요!', 'joy']] }
+      ] },
+    /* ⑲-62 10부 첫 장 — 지도 가장자리 너머(vault.js 갈무리 벌). 반디 → 고원 관측소 하람 → 동쪽 고개 넘어 벌 어귀(울타리는 9부 뒤 꺼짐) → 야적장 결정 짐승 넷 →
+       조각 운반 드론 쫓기(야적장 → 동력 기둥 사이 → 금고 문 앞) → 마루(34장 떡밥: 문은 동력 기둥 둘이 붙들고 동력은 곳간 마을에서) */
+    { id: 'ch33', name: '제33장 · 지도 가장자리 너머', ar: 72,
+      reward: { knot: 8, gold: 8500, guide: 8, secret: 6, party: 2300 },
+      steps: [
+        { type: 'talk', npc: 'bandi', text: '굳은 거리 시계방 곁의 반디와 이야기하기',
+          lines: [['반디', '삐— 굳은 신호 추적 완료. 지도 가장자리 너머, 동쪽입니다. 서리봉 고원을 지나 더 동쪽.', 'surprised'],
+            ['초롱', '고원이면 관측소 하람 씨 동네잖아요? 거기서 동쪽은 깎아지른 절벽뿐인데.'],
+            ['반디', '삐— 신호는 절벽 너머로 이어집니다. 관측소 기상 기록에 흔적이 남았을 확률 칠십팔 퍼센트.'],
+            ['?', ['하람한테 물어보자.', '절벽 너머라고?']],
+            ['반디', '먼저 날아가 있겠습니다. 관측소 앞에서 뵙겠습니다. 삐—']] },
+        { type: 'talk', npc: 'haram', text: '서리봉 고원 기상 관측소의 하람과 이야기하기',
+          lines: [['하람', '대장! 마침 잘 왔어요. 요 며칠 기상 레이더에 이상한 게 잡혀요 — 새 떼도 아닌 것이 동쪽 절벽 너머로 줄지어 오가요.', 'surprised'],
+            ['반디', '삐— 운반 드론 편대입니다. 발톱마다 굳은 신호를 매달고 있습니다.'],
+            ['하람', '그리고 동쪽 고개 말인데요 — 늘 푸른 빛 울타리가 서 있어서 아무도 못 넘었거든요. 굳은 거리 시간이 다시 흐르던 밤, 그게 스르르 꺼졌어요.'],
+            ['?', ['울타리 너머엔 뭐가 있어요?', '드론을 따라가 볼게요.']],
+            ['하람', '지도에도 없는 벌판이요. 망원경으로 보면 둥근 은빛 지붕이 번쩍여요. 동쪽 고개로 가 봐요 — 난 여기서 레이더를 볼게요!', 'joy']] },
+        { type: 'go', spot: 'vt_pass', off: [20, 0], text: '서리봉 고원 동쪽 고개를 넘어 벌 어귀로' },
+        { type: 'kill', spot: 'vt_yard', off: [-34, -19], kinds: ['rockbear', 'raptor', 'hawk', 'snowfox'], text: '물류 야적장에 몰려든 결정 짐승 물리치기' },
+        { type: 'chase', npc: 'carrier', text: '굳은 조각을 매달고 금고로 날아가는 운반 드론 쫓기',
+          flee: '🛸 운반 드론이 굳은 조각을 매단 채 금고 쪽으로 날아간다 — 쫓아라!',
+          caught: '🛸 금고 문 앞에서 운반 드론을 붙잡았다 — 발톱에서 호박빛 조각이 툭 떨어진다. 속에 작은 장터 풍경이 굳어 있다',
+          lost: '💨 놓쳤다 — 드론이 야적장으로 돌아가 숨었다. 다시 가까이 가면 날아간다' },
+        { type: 'talk', npc: 'maru', text: '물류 창고 앞의 창고지기와 이야기하기',
+          lines: [['마루', '……그 드론을 잡았다고요? 허, 석 달 동안 저놈들을 붙잡은 사람은 처음 보네.', 'surprised'],
+            ['마루', '난 갈무리 물류의 마지막 창고지기 마루요. 벌판이 이렇게 들러붙던 날부터 드론이 날마다 저 조각을 금고로 날라요. 굳은 거리에서, 고원에서, 바닷가에서까지.'],
+            ['초롱', '이 조각 속… 장터 사람이에요. 너울 할아버지 옆 좌판에 있던 떡 장수 아주머니 — 결정이 깨질 때 같이 풀려났어야 했는데.', 'sorrow'],
+            ['반디', '삐— 조각의 결이 이상합니다. 제자리로 돌아가던 도중에 붙잡힌 흔적입니다. 누군가 일부러 모으고 있습니다.'],
+            ['?', ['그 금고가 뭐예요?', '금고 안에 들어갈 수 있어요?']],
+            ['마루', '시간 씨앗 금고. 문은 꽉 잠겼어요 — 금고 앞 동력 기둥 둘이 문을 붙들고, 그 동력은 서쪽 곳간 마을에서 끌어다 써요.', 'angry'],
+            ['마루', '곳간 마을부터 가 봅시다. 거기 곳간은 노래를 불러야 열린다던데… 지게차 몰고 뒤따라갈게요!', 'fun']] }
       ] }
   ];
 
@@ -2846,7 +2889,7 @@
     talkables: talkables, storyStep: storyStep, stepAt: stepAt, aimPoints: aimPoints,
     FOLLOW_NEAR: FOLLOW_NEAR, FOLLOW_LOST: FOLLOW_LOST,
     HARAM_OBS: HARAM_OBS, HARAM_SHIP: HARAM_SHIP, HARAM_FORT: HARAM_FORT, frostSpot: frostSpot, followPts: followPts,
-    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, DAREUM_SHIP: DAREUM_SHIP, CAPTAIN_PATH: CAPTAIN_PATH, SEED_DRONE_PATH: SEED_DRONE_PATH, AMBER_THIEF_PATH: AMBER_THIEF_PATH, WING_SEAM: WING_SEAM, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
+    CAVE_FIGHT: CAVE_FIGHT, BANDI_CAVE: BANDI_CAVE, HEART: HEART, DAREUM_SHIP: DAREUM_SHIP, CAPTAIN_PATH: CAPTAIN_PATH, SEED_DRONE_PATH: SEED_DRONE_PATH, VAULT_DRONE_PATH: VAULT_DRONE_PATH, AMBER_THIEF_PATH: AMBER_THIEF_PATH, WING_SEAM: WING_SEAM, FORT_GATE: FORT_GATE, BAWOO_GATE: BAWOO_GATE, BEACON: BEACON, LAKE_SEAL: LAKE_SEAL, BAWOO_LAKE: BAWOO_LAKE, BEACON_DIRS: BEACON_DIRS, defendSlots: defendSlots,
     on: on, anchorOf: anchorOf, npcPos: npcPos, visible: visible, targetOf: targetOf, trackText: trackText, listHtml: listHtml,
     state: sv, chapter: chapter, step: step, locked: locked, done: done, keyOf: keyOf, gathered: gathered,
     advance: advance, check: check, stepFollow: stepFollow, nearTalk: nearTalk, talkStart: talkStart, talking: talking, next: next,
