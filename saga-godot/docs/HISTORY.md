@@ -9574,3 +9574,7 @@ PROJECT_STATE.md` 참고. 요약:
 - 들판 시점 촬영(o_*_field·f_fort·u_palace): 이야기 지역 명소가 담 2.6m·궁궐 지붕 7m 로 낮아 멀리선 안 보였다. 새 world/landmark_tower.gd — keep(돌 성루: 기단·아래 큰 몸·성가퀴 방·창·뾰족 지붕·깃발)·pagoda(층마다 처마·꼭대기 빛 구슬), 아래 한 토막만 충돌, 재질은 prop_material.
 - 서리봉 옛 산성 북쪽 담 밖 24m 성루(region4_frost _build_fort), 잠긴 궁궐 동쪽 물속 기단 위 5층 탑(region7_sunken _build_palace). 창 모드 전후: 궁궐 옆에 탑이 솟아 어디서든 자리가 보인다.
 - 점검 SUNKEN·FROST·STORY3 fails=0, REGRESS OK. 나머지 지역(굳은 거리·갈림길 등)은 이미 16m 시계탑·부양탑 같은 높은 것이 있어 미룸 — 촬영 뒤 필요하면 keep/pagoda 를 같은 방식으로.
+
+## 명소 실루엣 — 나머지 지역 촬영 확인 (2026-09-29, "이어해")
+
+- probe_shots a_tower_far·a_cross_far(굳은 거리)·w_vault_far·w_granary_far(갈무리 벌)·k_tower_far·k_gate_far(세갈래 고을) 여섯 컷 추가, c_shipyard·x_first_stop 과 함께 찍어 봤다. 갈무리 금고 돔·동력 기둥·굳은 거리 부양탑 기둥·고을 성문과 빛줄기는 멀리서도 읽힌다 — 성루·탑을 더하지 않는다. 틈새 갈림길 첫 정거장(낮은 승강장)만 작지만 멀리 시계탑이 따로 있어 보류.
