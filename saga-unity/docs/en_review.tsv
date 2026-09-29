@@ -625,7 +625,7 @@
 2	go	domain.ley.school	적을 쓰러뜨리면 명단 기력 +13	Each foe defeated gives the party +13 Energy		
 2	go	domain.ley.tomb	적이 4초마다 물을 띤다	Foes take on Water every 4s		
 2	go	domain.ley.weekly	체력 절반에서 뇌 방패를 두르고 빨라진다	At half HP it raises a thunder shield and speeds up		
-2	go	domain.loot.echo	뇌룡 비늘·비전·★5 보패	Thunder-Dragon Scales · Arcana · ★5 Artifacts	원작 용어: Artifacts	
+2	go	domain.loot.echo	뇌룡 비늘·비전·★5 보패	Thunder Drake Scale · Secret Scrolls · ★5 Relics		
 2	go	domain.loot.forge	강화석	Ore		
 2	go	domain.loot.school	무예 책	Martial Manuals		
 2	go	domain.loot.tomb	보패	Relics		

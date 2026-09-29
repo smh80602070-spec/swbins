@@ -3,7 +3,7 @@
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
 - 짝 **4372** (표 4317 · 코드 55) — go 2528 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **1** · 경고 **1** · 용어 흔들림 **14** · 넘침 주의 **469**
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **14** · 넘침 주의 **469**
 - 사람 검수 **0/4372** — 순위1 0/265 · 순위2 0/3383 · 순위3 0/724
 
 ## 검수 순서
@@ -14,9 +14,9 @@
 
 볼 것: 뜻이 맞는지 · 어색한 직역 · 같은 것을 같은 말로 부르는지(아래 용어 흔들림) · 단추 글은 Title Case, 문장은 문장 끝 부호 · 가명(인물·지명)은 로마자 그대로 · 원작 게임 고유 용어를 쓰지 않는지.
 
-## 자동 오류 — 0 이어야 한다 (1)
+## 자동 오류 — 0 이어야 한다 (0)
 
-- `go` `domain.loot.echo` — 원작 용어: Artifacts
+없음.
 
 ## 경고 — 의도면 두고, 아니면 고친다 (1)
 
@@ -54,6 +54,7 @@
 | 9→22 | go | `story.ch18` | Chapter 18 · The Last Train at Galaxy Station |
 | 30→56 | go | `story.ch9.s9.l4` | Let's head down to the village. Granny Nuri will give me an earful — but let's spread our wings and go straight there. |
 | 37→67 | go | `story.ch16.s1.l1` | Beep — after the star-ship lifted off, I followed the direction the rift was closing. It's beyond the farmland at the village's southern end. |
+| 10→23 | go | `domain.loot.echo` | Thunder Drake Scale · Secret Scrolls · ★5 Relics |
 | 26→48 | go | `story.ch28.s9.l2` | That mask pattern… the one at the very bottom of the inscription, the first mask. So you are the king. |
 | 3→12 | go | `cook.recipe.honey_cake` | Honey Blossom Rice Cake |
 | 10→22 | go | `story.ch5` | Chapter 5 · The Old Road over the Western Pass |
@@ -63,7 +64,6 @@
 | 35→63 | go | `wq.lighthouse.s1.l1` | Every night a light signal comes from the far end of the east bank. The pattern is an old beacon code… but the waveform is brand new. |
 | 38→67 | go | `story.ch18.s10.l2` | Beep — star-ship, bell and last train: all three signals confirmed. The coordinates the captain left open — the first station beyond the rift. |
 | 17→33 | go | `story.ch16.s2` | Go through the Rift Pass at the village's southern end to Galaxy Port |
-| 10→22 | go | `domain.loot.echo` | Thunder-Dragon Scales · Arcana · ★5 Artifacts |
 | 8→18 | go | `story.ch16.s9.p.a` | The captain went to the temple ruins? |
 | 2→9 | forest | `finish.jangpan` | Oiled Paper Floor |
 | 3→10 | go | `kit.sig.zhuge.skill` | Eight Trigrams Array |
