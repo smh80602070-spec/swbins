@@ -194,6 +194,31 @@ def _guard_idle():
     return True, [(0, _guard_pose()), (30, _guard_pose(0.008)), (60, _guard_pose())]
 
 
+def _strafe_pose(lx, lz, rx, rz, px):
+    """옆걸음 자세 — 칼 쥔 대기(_guard_pose)의 팔·몸을 받고 발만 옆으로. 좌표는 (왼쪽, 앞, 위), 발목 높이 0.104 = 땅."""
+    p = _guard_pose()
+    p['ik'] = {'foot_l': (lx, 0.03, lz), 'foot_r': (rx, 0.03, rz)}
+    p['pelvis'] = (px, 0.0, -0.03)
+    return p
+
+
+def _strafe_l():
+    """왼쪽 옆걸음(잠금 겨눔 이동) — 왼발이 옆으로 나가 딛고, 오른발이 따라 붙는다. 두 걸음이 한 바퀴. 몸은 게임이 옮긴다.
+    딛은 발은 몸 기준으로 반대(오른)쪽으로 미끄러지고 든 발은 빠르게 왼쪽으로 간다."""
+    k0 = _strafe_pose(0.12, 0.104, -0.12, 0.104, 0.0)
+    k1 = _strafe_pose(0.30, 0.20, -0.12, 0.104, -0.02)    # 왼발 듦
+    k2 = _strafe_pose(0.30, 0.104, -0.14, 0.104, 0.05)    # 왼발 딛음, 체중 왼쪽
+    k3 = _strafe_pose(0.22, 0.104, 0.06, 0.20, 0.05)      # 오른발 듦(따라 붙는 중)
+    k4 = _strafe_pose(0.20, 0.104, 0.02, 0.104, 0.02)     # 오른발 딛음
+    return True, [(0, k0), (10, k1), (20, k2), (30, k3), (40, k4), (48, k0)]
+
+
+def _strafe_r():
+    """오른쪽 옆걸음 — 왼쪽 옆걸음의 좌우 대칭."""
+    loop, keys = _strafe_l()
+    return loop, [(f, mirror(p)) for f, p in keys]
+
+
 CLIPS = {
     'CF_Guard_Idle_Loop': _guard_idle,
     'CF_Climb_Loop': _climb,
@@ -204,6 +229,8 @@ CLIPS = {
     'CF_Bow_Shoot': _bow_shoot,
     'CF_Kneel_Loop': _kneel,
     'CF_Heal': _heal,
+    'CF_Strafe_L_Loop': _strafe_l,
+    'CF_Strafe_R_Loop': _strafe_r,
 }
 
 
