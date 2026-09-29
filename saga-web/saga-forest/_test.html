@@ -2924,9 +2924,68 @@ window.DG_NO_TUNE = true;
         if (!SC.state().done.y2_night || !SC.state().said.end1) { bad.push('제23장 끝·제24장 첫 장면'); }
         s0.fest.chilseok = { year: new Date().getFullYear(), done: true, day: s0.day }; C.emit('changed');
         say();
-        if (!SC.state().done.y2_star || SC.current() !== null || SC.titles().indexOf('한여름의 사진 이웃') < 0) { bad.push('제24장 끝·칭호 ' + JSON.stringify(SC.titles())); }
+        if (!SC.state().done.y2_star || !SC.current() || SC.current().id !== 'y2_rumi' || SC.titles().indexOf('한여름의 사진 이웃') < 0) { bad.push('제24장 끝·칭호 ' + JSON.stringify(SC.titles())); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '사진첩(물고기 셋) → 카메라(숲 둘) → 반딧불(곤충 셋) → 칠석 · 칭호 한여름의 사진 이웃 · 스물네 장 끝';
+      } finally {
+        window.DG_NO_SCENARIO = true;
+        SC.abort();
+        s0.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; s0.fest = JSON.parse(keep.fest); s0.visitSettled = JSON.parse(keep.vs);
+        s0.hearts = JSON.parse(keep.hearts); s0.donated = JSON.parse(keep.don);
+        C.save.player = JSON.parse(keep.p); V.raw().player.x = keep.px; V.raw().player.y = keep.py;
+      }
+    });
+
+
+    t('시나리오 둘째 해 가을·겨울 — 루미의 답신·기록판·한가위 답례·동굴 상자·겨울 편지·동지·설날·두 번째 대보름으로 서른두 장이 끝난다', function () {
+      var SC = DG.scenario, C = DG.core, s0 = V.state(), bad = [];
+      var keep = { sc: s0.scenario ? JSON.stringify(s0.scenario) : null, fest: JSON.stringify(s0.fest || {}), vs: JSON.stringify(s0.visitSettled || []),
+        hearts: JSON.stringify(s0.hearts || {}), don: JSON.stringify(s0.donated || {}), p: JSON.stringify(C.save.player), px: V.raw().player.x, py: V.raw().player.y };
+      function say() { var k = 0; while (SC.isOpen() && k++ < 40) { SC.next(); } }
+      function cur() { return SC.isOpen() ? SC.currentScene().id : null; }
+      function ofYear(key) { s0.fest[key] = { year: new Date().getFullYear(), done: true, day: s0.day }; }
+      window.DG_NO_SCENARIO = false;
+      try {
+        s0.fest = {}; s0.visitSettled = []; s0.hearts = {}; s0.donated = {};
+        SC.reset();
+        var done = {}; SC.state().done = done;
+        DG.scenarioData.CHAPTERS.slice(0, 24).forEach(function (c) { done[c.id] = 1; });
+        SC.init();
+        if (!SC.current() || SC.current().id !== 'y2_rumi' || cur() !== 'rum1') { bad.push('둘째 해 가을 첫 장면 ' + cur()); }
+        say();
+        say();
+        C.emit('village:gather', { item: { cat: 'ore' }, n: 3 });
+        say();
+        C.emit('village:delivered', {});
+        say();
+        if (!SC.state().done.y2_rumi || !SC.state().said.rec1) { bad.push('제25장 끝·제26장 첫 장면'); }
+        DG.villageData.ITEMS.shell.slice(0, 3).forEach(function (b) { s0.donated[b.key] = true; }); C.emit('changed');
+        say();
+        if (!SC.state().done.y2_record || !SC.state().said.har1) { bad.push('제26장 끝·제27장 첫 장면'); }
+        s0.hearts.a = { h: 8, lastTalk: 0, gainDay: 0, gained: 0 }; ofYear('chuseok'); C.emit('changed');
+        say();
+        if (!SC.state().done.y2_moon || !SC.state().said.ccv1) { bad.push('제27장 끝·제28장 첫 장면'); }
+        say();
+        C.emit('village:cave', { inside: false }); C.emit('village:cave', { inside: true });
+        say();
+        if (!SC.state().done.y2_cavebox || !SC.state().said.wl1 || SC.titles().indexOf('앞날의 답장을 여는 이웃') < 0) { bad.push('제28장 끝·칭호 ' + JSON.stringify(SC.titles())); }
+        say();
+        for (var j = 0; j < 5; j++) { C.emit('village:delivered', {}); }
+        say();
+        if (!SC.state().done.y2_wletter || !SC.state().said.wd1) { bad.push('제29장 끝·제30장 첫 장면'); }
+        ofYear('dongji'); C.emit('changed');
+        say();
+        if (!SC.state().done.y2_wdongji || !SC.state().said.wy1) { bad.push('제30장 끝·제31장 첫 장면'); }
+        ofYear('seollal'); C.emit('changed');
+        say();
+        if (!SC.state().done.y2_wyear || !SC.state().said.wm1) { bad.push('제31장 끝·제32장 첫 장면'); }
+        ofYear('daeborum'); C.emit('changed');
+        var spot = V.ruinSpot();
+        if (!spot) { bad.push('폐허 자리 없음'); } else { V.raw().player.x = (spot.tx + 0.5) * V.TILE; V.raw().player.y = (spot.ty + 0.5) * V.TILE; C.emit('changed'); }
+        say();
+        if (!SC.state().done.y2_wmoon || SC.current() !== null || SC.titles().indexOf('두 해째의 이어진 숲의 이웃') < 0) { bad.push('제32장 끝·칭호 ' + JSON.stringify(SC.titles())); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '루미(광석 셋·배달) → 사고(조개 셋) → 한가위(하트 8) → 동굴 → 겨울 편지(배달 다섯) → 동지 → 설날 → 대보름 · 칭호 둘 · 서른두 장 끝';
       } finally {
         window.DG_NO_SCENARIO = true;
         SC.abort();
