@@ -477,7 +477,7 @@ namespace Saga.Go.World
                         if (_squad.Count == 0 && GoStory.Flat(p, t) < GoStory.KillNear) SpawnSquad(st, t);
                         break;
                     case GoStory.StepType.Sky:
-                        if (GoStory.OnSkyTop(p)) // 109-14-20 섬 윗면에 내려섰다
+                        if (st.Route != null ? GoStory.OnRouteTop(GoStory.RouteIndex(st.Route), p) : GoStory.OnSkyTop(p)) // 109-14-20 섬 윗면에 내려섰다 · 109-14-50 그 하늘 섬 윗면
                         {
                             Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : GoLocalization.T("story.sky_landed", "☁️ 구름섬에 올라섰다 — 먹구름 무리가 지키고 있다"), 3f);
                             StoryState.Advance();
@@ -741,7 +741,7 @@ namespace Saga.Go.World
             var wave = new List<FieldEnemy>();
             for (int i = 0; i < W[n].Length; i++)
             {
-                Vector3 home = FolkWalker.Grounded(GoStory.DefendSlot(c, st.Dirs ?? GoStory.CapeDirs, n, i) + Vector3.up * 0.5f);
+                Vector3 home = FolkWalker.Grounded(GoStory.DefendSlot(c, st.Dirs ?? GoStory.CapeDirs, n, i, st.Ring) + Vector3.up * 0.5f);
                 var e = spawner.SpawnStoryFoe(W[n][i].Kind, home, $"{_squadKey}:w{n}", W[n][i].Over);
                 e.SetSiege(c);
                 wave.Add(e);

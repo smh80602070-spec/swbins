@@ -1128,6 +1128,7 @@
 2	go	story.altar4	넷째 제단	the Fourth Altar		
 2	go	story.altar_beacon	봉화 제단	Beacon Altar		
 2	go	story.altar_domelock	빛 돔 문 자물쇠	light-dome door lock		
+2	go	story.altar_engine	비행선 기관	airship engine		
 2	go	story.altar_knot	매듭 제단	knot altar		
 2	go	story.altar_moored	계류된 별배	moored star-ship		
 2	go	story.altar_train	출발을 기다리는 막차	the waiting last train		
@@ -1800,6 +1801,40 @@
 2	go	story.ch24.s7.l5	비행선이라면 지금 시대 사람이 갇혀 있을 거야. 서두르자.	If it's an airship, someone from this era must be trapped. Let's hurry.		
 2	go	story.ch24.s7.p.a	위로 올라갈 길은요?	How do we get up there?		
 2	go	story.ch24.s7.p.b	구름을 빚는 자…	Someone shaping clouds…		
+2	go	story.ch25	제25장 · 멈춘 기상 비행선	Chapter 25 · The Stalled Weather Airship		
+2	go	story.ch25.caught	🛸 구름 씨앗 드론을 붙잡았다 — 배 속에서 검보랏빛 씨앗 알갱이가 쏟아진다	🛸 You catch the cloud-seed drone — dark-violet seed pellets spill from its belly		
+2	go	story.ch25.flee	🛸 드론이 검보랏빛 씨앗을 흩뿌리며 섬 둘레로 달아난다 — 쫓아라!	🛸 The drone scatters dark-violet seeds and flees around the island — chase it!		
+2	go	story.ch25.landed	🪂 비행선 잔해 섬에 내려섰다 — 찢어진 기낭 곁에서 누가 손을 흔든다	🪂 You land on the airship wreck island — someone waves beside the torn balloon		
+2	go	story.ch25.lost	💨 놓쳤다 — 드론이 프로펠러 곁으로 돌아가 숨었다. 다시 가까이 가면 달아난다	💨 Lost it — the drone hid back by the propeller. Get close again and it will flee		
+2	go	story.ch25.s1	사당 앞의 무녀와 이야기하기	Talk to the priestess in front of the shrine		
+2	go	story.ch25.s1.l1	바람 기둥이 섰소. 사당 서쪽 끝이오 — 기둥에 들어서면 바람이 몸을 들어 올릴 거요.	The wind pillar has risen. At the western edge of the shrine — step into it and the wind will lift your body.		
+2	go	story.ch25.s1.l2	삐— 위 섬에서 구조 신호가 계속됩니다. 사람 한 명, 기상 비행선 조종실.	Beep — the rescue signal continues from the upper island. One person, the weather airship cockpit.		
+2	go	story.ch25.s1.l3	기둥 꼭대기에서 날개를 펴고 저 섬으로 미끄러지시오. 바람은 한 번 연 길은 닫지 않소.	Spread your wings at the top of the pillar and glide to that island. The wind never closes a path it has opened.		
+2	go	story.ch25.s1.p.a	올라가 볼게요.	I'll go up and see.		
+2	go	story.ch25.s1.p.b	날개를 펴면 되죠?	I just spread my wings, right?		
+2	go	story.ch25.s2	사당 바람 기둥을 타고 올라 비행선 잔해 섬으로 건너가기(활공)	Ride the shrine wind pillar up and glide across to the airship wreck island		
+2	go	story.ch25.s3	조종실 앞의 비행사와 이야기하기	Talk to the pilot in front of the cockpit		
+2	go	story.ch25.s3.l1	사, 사람이다! 구조대…는 아니죠? 날개 달고 날아온 사람은 처음 봐요.	P-people! A rescue team… no? I've never seen anyone fly in on wings.		
+2	go	story.ch25.s3.l2	저는 비행사 하늬. 기상 비행선을 몰다가 먹구름에 휘말려 이 섬에 처박혔어요. 벌써 며칠째인지…	I'm Haneul, a pilot. I was flying a weather airship when I got caught in the storm cloud and crashed on this island. I've lost count of the days…		
+2	go	story.ch25.s3.l3	그런데 이상해요. 기록계를 보면 먹구름이 저절로 생긴 게 아니에요. 누가 구름을 “만들고” 있어요.	But it's strange. According to my recorder, the storm cloud didn't form on its own. Someone is “making” the clouds.		
+2	go	story.ch25.s3.l4	저기 — 또 왔다! 저 드론이 구름 씨앗을 뿌리고 다녀요. 잡아 주세요!	There — it's back! That drone goes around scattering cloud seeds. Please catch it!		
+2	go	story.ch25.s3.p.a	구조 신호를 따라왔어요.	We followed the rescue signal.		
+2	go	story.ch25.s3.p.b	괜찮아요?	Are you all right?		
+2	go	story.ch25.s4	구름 씨앗을 뿌리며 달아나는 드론 쫓기	Chase the drone fleeing while scattering cloud seeds		
+2	go	story.ch25.s5	조종실 앞의 비행사와 이야기하기	Talk to the pilot in front of the cockpit		
+2	go	story.ch25.s5.l1	이 씨앗… 우리 시대 물건이 아니에요. 물기를 빨아들여 먹구름으로 부풀어요.	This seed… isn't from our era. It soaks up moisture and swells into storm cloud.		
+2	go	story.ch25.s5.l2	삐— 앞 시대 기상 조작 장치의 씨앗과 같은 구조입니다. 누군가 앞 시대 기술을 쓰고 있습니다.	Beep — the same structure as the seeds of a later-era weather-control device. Someone is using technology from a later age.		
+2	go	story.ch25.s5.l3	비행선 기관만 살리면 기록계로 드론 신호가 어디서 오는지 짚을 수 있어요. 그런데 기관 소리를 들으면 먹구름 것들이 몰려올 거예요.	If I can just revive the airship engine, the recorder can pinpoint where the drone's signal comes from. But the storm-cloud things will swarm at the sound of the engine.		
+2	go	story.ch25.s5.l4	좋아요, 시동 겁니다! 조종실 앞 기관을 지켜 주세요!	All right, starting it up! Please guard the engine in front of the cockpit!		
+2	go	story.ch25.s5.p.a	기관을 지킬게요.	We'll guard the engine.		
+2	go	story.ch25.s5.p.b	어서 시동을 걸어요.	Start it up already.		
+2	go	story.ch25.s6	비행선 기관이 데워지는 동안 지키기	Defend the airship engine while it warms up		
+2	go	story.ch25.s7	조종실 앞의 비행사와 이야기하기	Talk to the pilot in front of the cockpit		
+2	go	story.ch25.s7.l1	기관 살았다! 기록계 켜졌어요 — 드론 신호 발신지… 여기보다 위예요. 서쪽 하늘 제일 높은 섬.	The engine's alive! The recorder is on — the drone signal's origin… is above here. The highest island in the western sky.		
+2	go	story.ch25.s7.l2	삐— 앞 시대 궤도 정거장 조각입니다. 구름 씨앗 장치 신호 셋. 먹구름을 부리는 자가 거기서 구름을 빚어 흘려보내고 있습니다.	Beep — a fragment of a later-era orbital station. Three cloud-seed device signals. The one commanding the storm cloud is shaping clouds there and sending them down.		
+2	go	story.ch25.s7.l3	저도 가요. 제 비행선을 떨어뜨린 놈 얼굴은 봐야죠. 잔해 서쪽 끝에 바람이 모이는 게 보여요 — 거기서 올라가요!	I'm coming too. I want to see the face of whoever brought my airship down. I can see wind gathering at the western end of the wreck — we go up from there!		
+2	go	story.ch25.s7.p.a	거기로 가자.	Let's go there.		
+2	go	story.ch25.s7.p.b	하늬 씨는요?	What about you, Haneul?		
 2	go	story.ch3	제3장 · 잔칫날의 불청객	Chapter 3 · Uninvited Guests at the Feast		
 2	go	story.ch3.s1	촌장에게 잔치 일손을 돕겠다고 하기	Offer the Elder a hand with the feast		
 2	go	story.ch3.s1.l1	하늘이 갠 기념으로 잔치를 열기로 했단다. 그런데 일손이 모자라구나.	We've decided to hold a feast now that the sky has cleared. But we're short of hands.		
@@ -2092,6 +2127,7 @@
 2	go	story.idle.haesol	……	……		
 2	go	story.idle.haesol2	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
 2	go	story.idle.hanbyeol	틈의 끝은 첫 정거장 다음 역이다.	The end of the rift is the stop after the first station.		
+2	go	story.idle.haneul	기록계 바늘이 또 튀어요. 구름이 저절로 생기는 게 아니라니까요.	The recorder needle is jumping again. I keep telling you, clouds don't just form by themselves.		
 2	go	story.idle.hangyeol	종은 소리로 사람을 부르는 물건이오.	A bell is a thing that calls people by sound.		
 2	go	story.idle.haram	바늘이 또 얼었네… 눈은 언제 그치려나.	The needle froze again… when will this snow ever stop?		
 2	go	story.idle.horse	히힝… 푸르르.	Neigh… snort.		
@@ -2099,6 +2135,7 @@
 2	go	story.idle.parang	빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오.	This is the Light Dome records room. Please state the record you wish to view.		
 2	go	story.idle.saebyeok	방울이 울면 바람이 길을 안다오.	When the bells ring, the wind knows the way.		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
+2	go	story.idle.seeddrone	삐비— 치익.	Bibi— tsss.		
 2	go	story.idle.thief	헤헤, 못 잡지롱!	Heh heh, can't catch me!		
 2	go	story.idle.wanderer	……	……		
 2	go	story.idle.yeoul	기지 불이 나간 지 한참이에요. 그래도 잠수정은 제가 지켜요.	The base lights went out ages ago. But I still look after the submersible.		
@@ -2121,6 +2158,7 @@
 2	go	story.npc.haesol	검은 가면 해솔	Haesol the Black Mask		
 2	go	story.npc.haesol2	해솔	Haesol		
 2	go	story.npc.hanbyeol	별배 선장 한별	Star-Ship Captain Hanbyeol		
+2	go	story.npc.haneul	비행사 하늬	Pilot Haneul		
 2	go	story.npc.hangyeol	종지기 한결	Bellkeeper Hangyeol		
 2	go	story.npc.haram	기상 관측원 하람	Haram the Weather Observer		
 2	go	story.npc.horse	놀란 역마	Startled Post Horse		
@@ -2128,6 +2166,7 @@
 2	go	story.npc.parang	돔 관리 인공지능 파랑	Dome Administrator AI Parang		
 2	go	story.npc.saebyeok	바람 무녀 새벽	Wind Priestess Saebyeok		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
+2	go	story.npc.seeddrone	구름 씨앗 드론	Cloud-Seed Drone		
 2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	story.npc.yeoul	잠수 기사 여울	Diver Yeoul		
@@ -2153,6 +2192,7 @@
 2	go	story.short.gaon	가온	Gaon		
 2	go	story.short.haesol	해솔	Haesol		
 2	go	story.short.hanbyeol	한별	Hanbyeol		
+2	go	story.short.haneul	하늬	Haneul		
 2	go	story.short.hangyeol	한결	Hangyeol		
 2	go	story.short.haram	하람	Haram		
 2	go	story.short.horse	역마	Horse		
@@ -2160,6 +2200,7 @@
 2	go	story.short.parang	파랑	Parang		
 2	go	story.short.saebyeok	새벽	Saebyeok		
 2	go	story.short.scholar	은비	Eunbi		
+2	go	story.short.seeddrone	드론	Drone		
 2	go	story.short.thief	도둑	Thief		
 2	go	story.short.wanderer	나그네	Traveler		
 2	go	story.short.yeoul	여울	Yeoul		

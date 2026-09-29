@@ -18,6 +18,8 @@ namespace Saga.Go.World
         private readonly bool[] _routeReg = new bool[3];
         private float _routeT;
         private GameObject _shrineClouds;
+        /// <summary>비행선 기관이 살아 프로펠러가 도나(진단이 본다).</summary>
+        public bool WreckLiveNow { get; private set; }
         public bool RouteShown => _routeRoot != null && _routeRoot.activeSelf;
         public bool ShrineCloudsShown => _shrineClouds != null && _shrineClouds.activeInHierarchy;
         public bool RoutePillarOn(int i) => _routeReg[i];
@@ -86,6 +88,8 @@ namespace Saga.Go.World
                     P(PrimitiveType.Sphere, isle.transform, "Wreck_balloon", c + new Vector3(-6f, 2.2f, 2f), new Vector3(9f, 4.4f, 6f), balloon, false, new Vector3(0f, 25f, 10f));
                     P(PrimitiveType.Cube, isle.transform, "Wreck_tail", c + new Vector3(-8f, 3f, -7f), new Vector3(0.4f, 5f, 4f), rust, false, new Vector3(0f, 20f, 8f));
                     Part("route:propeller", isle.transform, PrimitiveType.Cube, "Wreck_propeller", c + new Vector3(5f, 1.8f, -6.8f), new Vector3(0.3f, 3.6f, 0.15f), dark, false);
+                    P(PrimitiveType.Cube, isle.transform, "Wreck_engine", c + new Vector3(8f, 0.7f, 3f), new Vector3(1.6f, 1.4f, 1.2f), metal, true);
+                    Part("route:engine_lamp", isle.transform, PrimitiveType.Sphere, "Wreck_engine_lamp", c + new Vector3(8f, 1.75f, 3f), Vector3.one * 0.5f, Mat("r_lamp_off", new Color(0.85f, 0.15f, 0.12f), 2f), false);
                     P(PrimitiveType.Cylinder, isle.transform, "Wreck_vane_pole", c + new Vector3(12f, 2f, 5f), new Vector3(0.15f, 2f, 0.15f), metal, false);
                     P(PrimitiveType.Cube, isle.transform, "Wreck_vane", c + new Vector3(12f, 4.1f, 5f), new Vector3(1.4f, 0.5f, 0.1f), balloon, false);
                 }
@@ -139,6 +143,8 @@ namespace Saga.Go.World
             bool on = !StoryState.OffForTest && GoStory.RouteOn;
             if (_routeRoot != null) _routeRoot.SetActive(on);
             if (_shrineClouds != null) _shrineClouds.SetActive(!GoStory.ShrineClear);
+            WreckLiveNow = !StoryState.OffForTest && GoStory.WreckLive;
+            SetMat("route:engine_lamp", WreckLiveNow ? Mat("r_lamp_on", new Color(0.2f, 0.9f, 0.3f), 2.4f) : Mat("r_lamp_off", new Color(0.85f, 0.15f, 0.12f), 2f));
             UnregisterRoute();
             if (!on) return;
             for (int i = 0; i < 3; i++)
@@ -156,6 +162,7 @@ namespace Saga.Go.World
         {
             if (_routeRoot == null || !_routeRoot.activeSelf) return;
             _routeT += dt;
+            if (WreckLiveNow && _parts.TryGetValue("route:propeller", out var prop) && prop != null) prop.transform.Rotate(0f, 0f, 900f * dt, Space.Self);
             for (int i = 0; i < 3; i++)
             {
                 if (_routePillars[i] == null || !_routePillars[i].activeSelf) continue;
