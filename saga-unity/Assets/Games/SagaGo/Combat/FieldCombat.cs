@@ -1240,6 +1240,26 @@ namespace Saga.Go.Combat
                     ElementPulse?.Invoke(pos + dir * r * 0.5f, r * 0.5f, m.Element);
                     break;
                 }
+                case KitSkillType.Updraft:
+                {
+                    // 109-14-43 별배 견인줄 — 둘레 R 적을 Pull 만큼 끌어당겨 치고, 나는 Lift 만큼 솟구쳐 날개를 편다(점프로 활공)
+                    float r = s.R * D, ra = Atk * ReactMul;
+                    foreach (var e in Snapshot())
+                    {
+                        Vector3 d = Flat(pos - e.transform.position);
+                        float dl = d.magnitude;
+                        if (dl > r) continue;
+                        float cm = CritMul(m.Id, out bool crit);
+                        e.TakeHit(amount * cm, m.Element, ra, out _, crit: crit);
+                        e.KnockBack(d, Mathf.Min(s.Pull * D, Mathf.Max(0f, dl - 1.2f * D)));
+                        hits++;
+                    }
+                    FieldRingFx.Spawn(pos, r, fx, 0.5f);
+                    FieldLineFx.Spawn(pos + Vector3.up * 0.3f, pos + Vector3.up * (s.Lift * 0.5f), 0.8f, fx, 0.5f);
+                    ElementPulse?.Invoke(pos, r, m.Element);
+                    if (player != null) player.Launch(s.Lift);
+                    break;
+                }
                 case KitSkillType.Wave:
                 {
                     // 109-14-17 노 물결 — 앞으로 Len·폭 W 의 길을 치고 앞으로 밀어낸다(나는 제자리)

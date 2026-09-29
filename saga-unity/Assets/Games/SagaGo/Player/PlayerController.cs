@@ -164,6 +164,15 @@ namespace Saga.Go.Player
             if (animator != null) animator.SetTrigger("Dodge");
         }
 
+        /// <summary>109-14-43 별배 견인줄 — `height` m 위로 솟구친다(v = √(2gh)). 공중이 되어 점프 단추로 날개(활공)를 펼 수 있다.</summary>
+        public void Launch(float height)
+        {
+            _verticalVelocity = Mathf.Sqrt(2f * Gravity * Mathf.Max(0f, height));
+            Mode = MoveMode.Air;
+            _plunging = false;
+            if (animator != null && _hasJumpParam) animator.SetTrigger("Jump");
+        }
+
         /// <summary>`FieldCombat` 이 공격 순간 몸을 대상 쪽으로 돌릴 때.</summary>
         public void FaceToward(Vector3 worldPos)
         {

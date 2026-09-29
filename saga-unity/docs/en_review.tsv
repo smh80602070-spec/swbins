@@ -937,6 +937,7 @@
 2	go	hero.story_elder	누리	Nuri		
 2	go	hero.story_ferryman	버들	Beodeul		
 2	go	hero.story_haesol	해솔	Haesol		
+2	go	hero.story_hanbyeol	한별	Hanbyeol		
 2	go	hero.story_haram	하람	Haram		
 2	go	hero.story_scholar	은비	Eunbi		
 2	go	hero.story_wanderer	가면 쓴 나그네	Masked Traveler		
@@ -991,6 +992,8 @@
 2	go	kit.sig.gyebaek.skill	결사 방진	Last Stand Square		
 2	go	kit.sig.haesol.burst	가면 없는 노래	Unmasked Song		
 2	go	kit.sig.haesol.skill	먹구름 벼락	Storm-Cloud Bolt		
+2	go	kit.sig.hanbyeol.burst	틈 닫기	Rift Closing		
+2	go	kit.sig.hanbyeol.skill	별배 견인줄	Star-Ship Tow Line		
 2	go	kit.sig.haram.burst	맑음 예보	Clear-Sky Forecast		
 2	go	kit.sig.haram.skill	휴대 관측기	Portable Gauge		
 2	go	kit.sig.hero.burst	불새 깃	Firebird Plume		
@@ -1102,6 +1105,7 @@
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
 2	go	story.altar4	넷째 제단	the Fourth Altar		
 2	go	story.altar_beacon	봉화 제단	Beacon Altar		
+2	go	story.altar_knot	매듭 제단	knot altar		
 2	go	story.altar_moored	계류된 별배	moored star-ship		
 2	go	story.altar_train	출발을 기다리는 막차	the waiting last train		
 2	go	story.altar_weld	용접대	welding bench		
@@ -1112,6 +1116,7 @@
 2	go	story.boss.mask	검은 가면	Black Mask		
 2	go	story.boss.mask2	금 간 검은 가면	Cracked Black Mask		
 2	go	story.boss.mossserpent	이끼 이무기	Moss Serpent		
+2	go	story.boss.riftcrow	틈 삼킨 별까마귀	Rift-Swallowing Star Crow		
 2	go	story.boss.riftfox	틈새 서리 구미호	Rift Frost Nine-Tail		
 2	go	story.boss.timewarden	멈춘 시간의 파수꾼	Warden of Stopped Time		
 2	go	story.boss_up	{0}가 나타났다	{0} has appeared		
@@ -1556,6 +1561,57 @@
 2	go	story.ch2.s4.l1	하늘이… 개었구나! 몇 해 만에 보는 맑은 하늘이냐.	The sky… it's cleared! First clear sky in years.		
 2	go	story.ch2.s4.l2	이무기는 또 깨어날지 모르지만, 네가 있으니 든든하다. 잔치 준비를 해야겠구나!	The serpent may wake again, but with you here I feel safe. I'd better prepare the feast!		
 2	go	story.ch2.s4.l3	참, 은비가 너와 함께 다니고 싶다더구나. 비문 읽는 솜씨가 싸움에도 쓸모 있을 게다.	Oh, Eunbi says she'd like to travel with you. Her knack for inscriptions should come in handy in a fight.		
+2	go	story.ch20	제20장 · 갈림길 끝	Chapter 20 · Crossroads' End		
+2	go	story.ch20.arrive	🚂 막차가 끊긴 선로 조각을 밟고 올라 갈림길 끝 차막이에 닿았다	🚂 The last train climbs the severed track and reaches the buffer at Crossroads' End		
+2	go	story.ch20.enter1	찢어진 틈 밑에서 시대가 뒤섞인 짐승들이 쏟아져 나왔다	Beasts of mixed ages pour out from beneath the torn rift		
+2	go	story.ch20.enter2	🐦‍⬛ 섬만 한 날개가 틈을 가리고 내려앉았다 — 틈 삼킨 별까마귀!	🐦‍⬛ Wings as wide as the island cover the rift and descend — the Rift-Swallowing Star Crow!		
+2	go	story.ch20.p2	❄️ 별까마귀가 틈의 냉기를 두른다 — 불로 녹여라! 회오리매와 눈여우가 뛰어든다	❄️ The star crow wraps itself in the rift's cold — melt it with fire! A whirlwind hawk and a snow fox leap in		
+2	go	story.ch20.s1	첫 정거장의 선장 한별과 이야기하기	Talk to Captain Hanbyeol at the first station		
+2	go	story.ch20.s1.l1	저 위를 보게. 동쪽 하늘에 뜬 섬 — 저기가 갈림길 끝, 틈이 처음 찢어진 곳이다.	Look up there. The island floating in the eastern sky — that's Crossroads' End, where the rift first tore.		
+2	go	story.ch20.s1.l2	틈이 찢어지던 날 선로가 통째로 들려 올라갔지. 막차 선로는 끊긴 채로 아직 그 섬까지 이어져 있어.	The day it tore, the track was lifted whole into the air. The last train's track, severed, still runs up to that island.		
+2	go	story.ch20.s1.l3	도담에게 부탁하자. 반디는 벌써 날아 올라갔다.	Let's ask Dodam. Bandi has already flown up.		
+2	go	story.ch20.s1.p.a	막차로 갈 수 있어요?	Can the last train take us?		
+2	go	story.ch20.s1.p.b	틈을 닫으러 가요.	Let's go close the rift.		
+2	go	story.ch20.s10	틈을 처음 찢은 틈 삼킨 별까마귀와 맞서기	Face the Rift-Swallowing Star Crow that first tore the rift		
+2	go	story.ch20.s11	선장 한별과 이야기하기	Talk to Captain Hanbyeol		
+2	go	story.ch20.s11.l1	……닫혔다. 틈이 처음 찢어진 곳이, 이제 그냥 하늘이다.	……Closed. The place where the rift first tore is now just sky.		
+2	go	story.ch20.s11.l2	삐— 세 갈래 선로 신호, 모두 안정. 옛날도 지금도 앞날도 제자리에 있습니다.	Beep — all three track signals stable. The past, the present and the future are each in place.		
+2	go	story.ch20.s11.l3	막차는 계속 달릴 수 있겠네요. 첫 정거장도, 은하역도!	The last train can keep running. The first station, Galaxy Station too!		
+2	go	story.ch20.s11.l4	별배는 나루에 매여 있고 틈은 닫혔다. 선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께.	The star-ship is moored and the rift is closed. A captain's job is to find the next route — this time with you.		
+2	go	story.ch20.s11.l5	별배 선장 한별, 오늘부터 너희 편에 선다. 잘 부탁하네.	Captain Hanbyeol of the star-ship stands with you from today. I'm counting on you.		
+2	go	story.ch20.s11.p.a	선장님은 이제 어떡하실 거예요?	What will you do now, Captain?		
+2	go	story.ch20.s11.p.b	별배로 돌아가세요?	Will you go back to the star-ship?		
+2	go	story.ch20.s2	도담의 막차를 타고 갈림길 끝으로	Ride Dodam's last train to Crossroads' End		
+2	go	story.ch20.s2.l1	하늘로 끊긴 선로라도 선로는 선로죠! 막차, 갈림길 끝까지 — 출발!	A track cut off in the sky is still a track! Last train, to Crossroads' End — departing!		
+2	go	story.ch20.s3	갈림길 끝의 반디와 이야기하기	Talk to Bandi at Crossroads' End		
+2	go	story.ch20.s3.l1	삐— 이곳에서 선로가 세 갈래로 갈립니다. 옛 나무 선로, 쇠 선로, 빛 선로.	Beep — here the track splits three ways: the old wooden track, the iron track, the light track.		
+2	go	story.ch20.s3.l2	갈래마다 끝이 뚝 끊겨 있네요. 가다 만 선로처럼……	Each branch ends abruptly. Like tracks that stopped halfway……		
+2	go	story.ch20.s3.l3	세 갈래가 서로 엉키며 틈을 찢었습니다. 틈 한가운데에 짐승이 모여 있습니다.	The three branches tangled and tore the rift. Beasts are gathered at its very center.		
+2	go	story.ch20.s3.p.a	짐승부터 치우자.	Clear the beasts first.		
+2	go	story.ch20.s3.p.b	한가운데로 가자.	Let's go to the center.		
+2	go	story.ch20.s4	틈 한가운데에 모인 틈 짐승 물리치기	Defeat the rift beasts gathered at the rift's center		
+2	go	story.ch20.s5	선장 한별과 이야기하기	Talk to Captain Hanbyeol		
+2	go	story.ch20.s5.l1	틈 밑을 보게. 옛 매듭 자리다 — 시대를 하나씩 묶어 두는 매듭이지.	Look beneath the rift. The old knot site — the knot that binds the ages one by one.		
+2	go	story.ch20.s5.l2	틈이 찢어진 차례대로 묶어야 한다. 옛날의 달, 지금의 별, 앞날의 해.	It must be tied in the order the rift tore: the moon of old, the star of now, the sun to come.		
+2	go	story.ch20.s5.l3	다 풀린다. 차례만 지키면 돼 — 원소를 매듭 석등에 대 보게.	It all unravels. Just keep the order — touch the knot lamps with elemental power.		
+2	go	story.ch20.s5.p.a	달, 별, 해.	Moon, star, sun.		
+2	go	story.ch20.s5.p.b	차례가 틀리면요?	And if the order is wrong?		
+2	go	story.ch20.s6	틈 밑 매듭 석등을 차례(달 → 별 → 해)로 밝히기	Light the knot lamps beneath the rift in order (moon → star → sun)		
+2	go	story.ch20.s7	선장 한별과 이야기하기	Talk to Captain Hanbyeol		
+2	go	story.ch20.s7.l1	삐— 세 갈래 끝의 닻이 켜졌습니다! 틈이 오므라듭니다!	Beep — the anchors at the ends of the three branches are lit! The rift is narrowing!		
+2	go	story.ch20.s7.l2	아직이다. 틈이 닫히려 하면 틈 너머 짐승들이 한꺼번에 몰려온다.	Not yet. When the rift starts to close, the beasts beyond it will all rush in at once.		
+2	go	story.ch20.s7.l3	나는 틈을 붙들고 있겠다 — 매듭 제단이 무너지지 않게 지켜 다오!	I'll hold the rift — keep the knot altar from falling!		
+2	go	story.ch20.s7.p.a	매듭을 지킬게요.	We'll guard the knot.		
+2	go	story.ch20.s7.p.b	선장님은요?	And you, Captain?		
+2	go	story.ch20.s8	틈이 닫히는 동안 매듭 제단 지키기	Defend the knot altar while the rift closes		
+2	go	story.ch20.s9	선장 한별과 이야기하기	Talk to Captain Hanbyeol		
+2	go	story.ch20.s9.l1	……온다. 틈을 처음 찢은 놈이다.	……It's coming. The one that first tore the rift.		
+2	go	story.ch20.s9.l2	그날 세 갈래 선로를 한입에 삼키려다 틈을 찢고 스스로 틈 속에 갇혔던 짐승 — 틈 삼킨 별까마귀.	That day it tried to swallow all three tracks in one bite, tore the rift, and trapped itself inside — the Rift-Swallowing Star Crow.		
+2	go	story.ch20.s9.l3	저, 저 날개 좀 봐요! 섬만 해요!	L-look at those wings! They're as big as the island!		
+2	go	story.ch20.s9.l4	그래, 함께다. 이번엔 멈춰 두지 않는다 — 끝낸다!	Yes, together. This time we don't freeze it — we finish it!		
+2	go	story.ch20.s9.p.a	같이 막아요, 선장님!	Let's stop it together, Captain!		
+2	go	story.ch20.s9.p.b	여기서 끝내자.	End it here.		
+2	go	story.ch20.win	🐦‍⬛ 별까마귀가 틈 속으로 떨어지고 — 찢어진 틈이 소리 없이 닫혔다	🐦‍⬛ The star crow falls into the rift — and the torn rift closes without a sound		
 2	go	story.ch3	제3장 · 잔칫날의 불청객	Chapter 3 · Uninvited Guests at the Feast		
 2	go	story.ch3.s1	촌장에게 잔치 일손을 돕겠다고 하기	Offer the Elder a hand with the feast		
 2	go	story.ch3.s1.l1	하늘이 갠 기념으로 잔치를 열기로 했단다. 그런데 일손이 모자라구나.	We've decided to hold a feast now that the sky has cleared. But we're short of hands.		
@@ -3310,6 +3366,7 @@
 3	go	hero.story_elder.quote	먹구름이 걷히면 마을 잔치를 열어야지.	Once the storm clouds lift, the village must throw a feast.		
 3	go	hero.story_ferryman.quote	물 냄새가 요즘 영 비릿해.	The water has smelled off lately.		
 3	go	hero.story_haesol.quote	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
+3	go	hero.story_hanbyeol.quote	선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께.	A captain's job is to find the next route — this time with you.		
 3	go	hero.story_haram.quote	날씨도 시간도, 재야 아는 거니까.	Weather, time — you have to measure them to know them.		
 3	go	hero.story_scholar.quote	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 3	go	hero.story_wanderer.quote	너무 떨어지면 기다려 주지 않을 테니.	Fall too far behind and I won't wait.		

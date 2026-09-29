@@ -144,6 +144,9 @@ namespace Saga.Go.Data
             // 109-14-40 도담(18장 끝) — 뇌 대도(웹 ⑲-40)
             new Hero { Id = "story_dodam", NameKo = "도담", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Might, Might = 80, Wisdom = 66, Command = 70,
                 WebElement = WebElement.Elec, QuoteKo = "틈 너머 첫 정거장까지 — 제가 몰게요!" },
+            // 109-14-43 한별(20장 끝) — ★5 풍 활(웹 ⑲-43)
+            new Hero { Id = "story_hanbyeol", NameKo = "한별", Era = HeroEra.Story, Faction = "재야", Rarity = 5, Trait = HeroTrait.Command, Might = 76, Wisdom = 84, Command = 90,
+                WebElement = WebElement.Wind, QuoteKo = "선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께." },
         };
 
         public static bool IsStory(string id) => id != null && id.StartsWith("story_");

@@ -40,7 +40,7 @@ namespace Saga.Go.Data
         /// <summary>섬 위인가(가장자리 1m 안쪽) — 섬 위 이야기 적은 이 안에서만 걷는다.</summary>
         public static bool OnIsle(Vector3 p) => Flat(p, IslePos(Vector2.zero)) <= IsleR - 1f;
         /// <summary>배가 닿는 곳 — 섬(북쪽 물가) 또는 강가 나루(사공 곁).</summary>
-        public static Vector3 SailDest(Step s) => s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.ToIsle ? IslePos(IsleLand) : GridPos(DockGx, DockGy);
+        public static Vector3 SailDest(Step s) => s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.ToIsle ? IslePos(IsleLand) : GridPos(DockGx, DockGy);
         public const float DockGx = 2.35f + 3f / 48f, DockGy = 4.4f - 3f / 48f;
 
         /// <summary>chase — 노 도둑(웹 13m/초·점마다 0.5초 = 걷기 8·달리기 17.6 사이) → 이 판 걷기 6·달리기 10 사이로 9m/초·0.5초.
@@ -77,9 +77,9 @@ namespace Saga.Go.Data
         public static Vector3 SkyCenter => _skyCenter ??= DuelPeak.Top + new Vector3(-SkyWest, SkyRise, 0f);
         public static Vector3 SkyPos(Vector2 off) => SkyCenter + new Vector3(off.x, 0f, off.y);
         /// <summary>섬 윗면에 섰나(난간 안쪽).</summary>
-        public static bool OnSkyTop(Vector3 p) => (Flat(p, SkyCenter) <= SkyR - 1.5f && Mathf.Abs(p.y - SkyCenter.y) < 3f) || OnDeckTop(p);
+        public static bool OnSkyTop(Vector3 p) => (Flat(p, SkyCenter) <= SkyR - 1.5f && Mathf.Abs(p.y - SkyCenter.y) < 3f) || OnDeckTop(p) || OnRiftTop(p);
         /// <summary>섬 층인가(윗면 8m 아래까지·난간 3m 밖까지) — 층이 다르면 들판 전투가 서로 못 본다(웹 `apart`).</summary>
-        public static bool OnSkyLayer(Vector3 p) => (Flat(p, SkyCenter) <= SkyR + 3f && p.y > SkyCenter.y - 8f) || (Flat(p, DeckCenter) <= DeckR + 3f && p.y > DeckCenter.y - 8f);
+        public static bool OnSkyLayer(Vector3 p) => (Flat(p, SkyCenter) <= SkyR + 3f && p.y > SkyCenter.y - 8f) || (Flat(p, DeckCenter) <= DeckR + 3f && p.y > DeckCenter.y - 8f) || (Flat(p, RiftCenter) <= RiftR + 3f && p.y > RiftCenter.y - 8f);
         public static bool SameLayer(Vector3 a, Vector3 b) => OnSkyLayer(a) == OnSkyLayer(b);
         public static float DraftTop => SkyCenter.y + DraftOver;
         /// <summary>구름섬·기둥이 열렸나 — 9장이 열린 뒤 늘(그 전엔 먹구름 덮개).</summary>
@@ -209,6 +209,8 @@ namespace Saga.Go.Data
             public bool Frost;
             /// <summary>109-14-34 조선소 위 — Arena 는 조선소 가운데에서 m.</summary>
             public bool Yard;
+            /// <summary>109-14-43 갈림길 끝 섬 위(`Sky` 와 함께) — Arena 는 섬 가운데에서 m.</summary>
+            public bool Rift;
             /// <summary>109-14-38 독립 땅 명소 곁("지역:명소") — Arena 는 그 명소 가운데에서 m.</summary>
             public string At;
             /// <summary>109-14-36 옛 역참 터 위 — Arena 는 역참 가운데에서 m.</summary>
@@ -234,7 +236,7 @@ namespace Saga.Go.Data
         public static Vector2 FrostAt(string siteId, float dx, float dz) { GoFrost.TrySite(siteId, out var s); return s.Off + new Vector2(dx, dz); }
 
         private static Vector3 SpotPos(Npc n, Spot a, int ch, int step, float followDist) =>
-            a.At != null ? AreaPos(a.At, a.Arena) : a.Stn ? StationPos(a.Arena) : a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
+            a.Sky && a.Rift ? RiftPos(a.Arena) : a.At != null ? AreaPos(a.At, a.Arena) : a.Stn ? StationPos(a.Arena) : a.Yard ? YardPos(a.Arena) : a.Sky && a.Obs ? DeckPos(a.Arena) : a.Frost ? FrostPos(a.Arena) : a.Sky ? SkyPos(a.Arena) : a.Summit ? DuelPeak.Top + new Vector3(a.Arena.x, 0f, a.Arena.y) : a.Isle ? IslePos(a.Arena) : a.Peak ? ArenaPos(a.Arena) : a.Path ? PathPos(n, step == FollowStepOf(n.Id, ch) ? followDist : float.MaxValue) : GridPos(a.Gx, a.Gy);
 
         // ---- 109-14-28 10장 서리봉 고원 자리(고원 가운데에서 m — 웹 명소 자리 × 0.45 위에 얹는다) ----
         public static readonly Vector2 HaramObs = FrostAt("obs", 0f, 9f), HaramShip = FrostAt("ship", -7f, 13f), BandiShip = FrostAt("ship", 1f, 12f), HaramFort = FrostAt("fort", 0f, 16f);
@@ -243,6 +245,19 @@ namespace Saga.Go.Data
         // 12장(⑲-30) — 서리 무리·구미호는 얼음굴 어귀 남쪽 14m · 반디는 구미호 뒤 굴 앞 · 심장 받침은 비행선 곁(선체 밖)
         // 18장(⑲-40) 변전함 자리(태양광 밭 가운데에서 m) — 은하 나루 모양이 쓴다.
         public static readonly Vector2 SubstationOff = new Vector2(10.5f, 0f);
+
+        // 20장(⑲-43) — 갈림길 끝: 첫 정거장 동남쪽 (31.5, 11.25)m 위 40m 에 뜬 반지름 24m 돌 섬(웹 (70,25)m·46m·20m 을 이 판 크기로). 세 갈래 선로(옛 나무 60°·쇠 300°·빛 180°)가 가운데에서 뻗고 끝마다 닻,
+        // 가운데 세로 틈은 `TearState` 0(찢어짐) → 1(석등 뒤 오므라듦·닻 켜짐) → 2(장 끝·닫힘 → 별빛). 바람 기둥 = 섬 남쪽 30m 땅에서 섬 + 12m 까지(20장이 끝난 뒤 늘).
+        public const float RiftUp = 40f, RiftR = 24f;
+        public static readonly Vector2 RiftOff = new Vector2(31.5f, 11.25f), RiftPillarOff = new Vector2(0f, 30f);
+        public static readonly Vector2 RiftArrive = new Vector2(-12.1f, -7f), RiftHanbyeol = new Vector2(-4f, 5f), RiftBandi = new Vector2(5f, 4f), RiftDodam = new Vector2(-9f, -2f);
+        public static Vector3 RiftCenter { get { GoAreas.TrySite("crossing:platform", out var s); return s.Pos + new Vector3(RiftOff.x, RiftUp, RiftOff.y); } }
+        public static Vector3 RiftPos(Vector2 off) => RiftCenter + new Vector3(off.x, 0.05f, off.y);
+        public static bool OnRiftTop(Vector3 p) => Flat(p, RiftCenter) <= RiftR - 1.5f && Mathf.Abs(p.y - RiftCenter.y) < 3f;
+        public static Vector3 RiftPillarPos { get { var c = RiftCenter; return new Vector3(c.x + RiftPillarOff.x, 0f, c.z + RiftPillarOff.y); } }
+        public static float RiftDraftTop => RiftCenter.y + DraftOver;
+        public static bool RiftPillarOpen => StoryState.Ch > 19;
+        public static int TearState => StoryState.Ch > 19 ? 2 : (StoryState.Ch == 19 && StoryState.StepIndex >= 6 ? 1 : 0);
 
         // 19장(⑲-42) — 틈새 갈림길 시계탑(16m 옆면 타기 — 기둥과 같은 폭의 곧은 벽)·섬돌(열다섯이 나선으로 1.1m 씩 — 걸어 오르는 턱 안이라 걸어서 오른다).
         public const float ClockHeight = 16f, ClockHalf = 1.5f, StepRise = 1.1f, StepR = 3.2f;
@@ -427,17 +442,18 @@ namespace Saga.Go.Data
                     new Spot { Ch = 16, From = 0, To = 6, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 16, From = 7, To = 7, At = "skyport:bell", Arena = BellBandi }, new Spot { Ch = 16, From = 8, To = 9, At = "skyport:temple", Arena = TempleBandi },
                     new Spot { Ch = 17, From = 0, To = 0, At = "skyport:temple", Arena = TempleBandi }, new Spot { Ch = 17, From = 1, To = 9, At = "skyport:station", Arena = StationBandi },
                     new Spot { Ch = 18, From = 0, To = 1, At = "skyport:station", Arena = StationBandi }, new Spot { Ch = 18, From = 2, To = 4, At = "crossing:platform", Arena = CrossBandi },
-                    new Spot { Ch = 18, From = 5, To = 5, At = "crossing:clock", Arena = CrossClockBandi }, new Spot { Ch = 18, From = 6, To = 9, At = "crossing:steps", Arena = CrossStepsBandi } },
+                    new Spot { Ch = 18, From = 5, To = 5, At = "crossing:clock", Arena = CrossClockBandi }, new Spot { Ch = 18, From = 6, To = 9, At = "crossing:steps", Arena = CrossStepsBandi },
+                    new Spot { Ch = 19, From = 0, To = 1, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftBandi }, new Spot { Ch = 20, From = 0, To = 99, At = "skyport:port", Arena = PortBandi } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
                 AtSite = "crossing:platform", AtOff = CrossHanbyeol, FolkBody = "Vanguard",
-                Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 99, At = "crossing:platform", Arena = CrossHanbyeol } },
+                Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = CrossHanbyeol }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftHanbyeol } },
                 IdleKey = "story.idle.hanbyeol", IdleKo = "틈의 끝은 첫 정거장 다음 역이다." },
             // 109-14-40 18장(웹 ⑲-40) — 기관사 도담(늘 승강장 남쪽 끝 아래, 8째 단계는 선로 끝) · 선장의 잔상(18장 쫓기 때만 — 은하역 선로 위를 달린다)
             new Npc { Id = "dodam", NameKey = "story.npc.dodam", NameKo = "기관사 도담", ShortKey = "story.short.dodam", ShortKo = "도담",
                 AtSite = "skyport:station", AtOff = DodamAt, FolkBody = "PeasantMan",
-                At = new[] { new Spot { Ch = 17, From = 7, To = 7, At = "skyport:station", Arena = DodamEnd } },
+                At = new[] { new Spot { Ch = 17, From = 7, To = 7, At = "skyport:station", Arena = DodamEnd }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = new Vector2(6.5f, -3f) }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftDodam } },
                 IdleKey = "story.idle.dodam", IdleKo = "막차는 아직 이 역에 서 있어요." },
             new Npc { Id = "captain", NameKey = "story.npc.captain", NameKo = "선장의 잔상", ShortKey = "story.short.captain", ShortKo = "잔상",
                 AtSite = "skyport:station", AtOff = new Vector2(0f, 8f), FolkBody = "Remy", RunAt = "skyport:station", RunPath = CaptainPath,
@@ -539,6 +555,8 @@ namespace Saga.Go.Data
             public bool Frost;
             /// <summary>109-14-34 조선소 위(자리 = 조선소 가운데 + Arena, climb 은 기중기 꼭대기).</summary>
             public bool Yard;
+            /// <summary>109-14-43 갈림길 끝 섬 위(`Sky` 와 함께 — 자리 = 섬 가운데 + Arena).</summary>
+            public bool Rift;
             /// <summary>109-14-39 light — 등롱(제단 불) 없이 그 자리에 원소를 대면 된다(종각 종·변전함…). 알림은 EnterKo.</summary>
             public bool Bare;
             /// <summary>109-14-38 독립 땅 명소 곁("지역:명소" — 자리 = 그 명소 가운데 + Arena, climb 은 명소의 탑).</summary>
@@ -551,13 +569,13 @@ namespace Saga.Go.Data
             public float Speed;
         }
 
-        public static Vector3 StepPos(Step s) => s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
+        public static Vector3 StepPos(Step s) => s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
 
         /// <summary>석등 차례(해·달·별이 기본, 8장은 별·달·해).</summary>
         public static string[] OrderOf(Step s) => s.Order ?? SealOrder;
 
         /// <summary>석등 가운데 — 5장 둘째 제단 또는 섬(8장).</summary>
-        public static Vector3 SealPos(Step s) => s.Frost ? StepPos(s) : s.Isle ? IslePos(Vector2.zero) : s.Gx != 0f || s.Gy != 0f ? GridPos(s.Gx, s.Gy) : GridPos(Altar2Gx, Altar2Gy);
+        public static Vector3 SealPos(Step s) => s.Frost || s.Rift || s.At != null ? StepPos(s) : s.Isle ? IslePos(Vector2.zero) : s.Gx != 0f || s.Gy != 0f ? GridPos(s.Gx, s.Gy) : GridPos(Altar2Gx, Altar2Gy);
 
         public const float BossHp = 6f, BossAtk = 1.5f, BossScale = 1.8f;
 
@@ -1745,6 +1763,91 @@ namespace Saga.Go.Data
                             L("hanbyeol", "story.ch19.s10.l3", "알고 있다, 반디. 잘 지켜 줬구나. 날개가 바뀌었다지?"),
                             Pick("story.ch19.s10.p", "틈의 끝은 어디예요?", "같이 가요."),
                             L("hanbyeol", "story.ch19.s10.l4", "첫 정거장 다음 역은 '갈림길 끝'. 틈이 처음 찢어진 곳이지. 준비가 되면 — 함께 가자."),
+                        } },
+                }
+            },
+            // 109-14-43 20장(웹 ⑲-43) — 5부 끝, 갈림길 끝: 한별 → 막차로 섬 위(sail) → 반디 → 틈 짐승 다섯 → 한별 → 매듭 석등 달 → 별 → 해 → 한별(틈이 오므라든다) → 매듭 제단 지키기 → 한별 → 틈 삼킨 별까마귀(빙, 절반에서 빙 방패 — 화로)
+            // → 한별 · 한별 합류(틈이 닫힌다). 섬 위는 첫 정거장 동남쪽 40m 하늘에 뜬 반지름 24m 돌 섬. 덩굴·바위곰·눈여우·회오리매는 14-1b(새 몸) 전까지 옛 몸+원소.
+            new Chapter
+            {
+                Id = "ch20", NameKey = "story.ch20", NameKo = "제20장 · 갈림길 끝", Ar = 46, Join = "story_hanbyeol",
+                Gold = 5500, Mats = new[] { 0, 6, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch20.s1", TextKo = "첫 정거장의 선장 한별과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch20.s1.l1", "저 위를 보게. 동쪽 하늘에 뜬 섬 — 저기가 갈림길 끝, 틈이 처음 찢어진 곳이다."),
+                            L("hanbyeol", "story.ch20.s1.l2", "틈이 찢어지던 날 선로가 통째로 들려 올라갔지. 막차 선로는 끊긴 채로 아직 그 섬까지 이어져 있어."),
+                            Pick("story.ch20.s1.p", "막차로 갈 수 있어요?", "틈을 닫으러 가요."),
+                            L("hanbyeol", "story.ch20.s1.l3", "도담에게 부탁하자. 반디는 벌써 날아 올라갔다."),
+                        } },
+                    new Step { Type = StepType.Sail, Npc = "dodam", Sky = true, Rift = true, Arena = RiftArrive, EnterKey = "story.ch20.arrive", EnterKo = "🚂 막차가 끊긴 선로 조각을 밟고 올라 갈림길 끝 차막이에 닿았다",
+                        Lines = new[] { L("dodam", "story.ch20.s2.l1", "하늘로 끊긴 선로라도 선로는 선로죠! 막차, 갈림길 끝까지 — 출발!") },
+                        TextKey = "story.ch20.s2", TextKo = "도담의 막차를 타고 갈림길 끝으로" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch20.s3", TextKo = "갈림길 끝의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch20.s3.l1", "삐— 이곳에서 선로가 세 갈래로 갈립니다. 옛 나무 선로, 쇠 선로, 빛 선로."),
+                            L("dodam", "story.ch20.s3.l2", "갈래마다 끝이 뚝 끊겨 있네요. 가다 만 선로처럼……"),
+                            L("bandi", "story.ch20.s3.l3", "세 갈래가 서로 엉키며 틈을 찢었습니다. 틈 한가운데에 짐승이 모여 있습니다."),
+                            Pick("story.ch20.s3.p", "짐승부터 치우자.", "한가운데로 가자."),
+                        } },
+                    new Step { Type = StepType.Kill, Sky = true, Rift = true, Arena = Vector2.zero,
+                        Foes = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro) },
+                        EnterKey = "story.ch20.enter1", EnterKo = "찢어진 틈 밑에서 시대가 뒤섞인 짐승들이 쏟아져 나왔다",
+                        TextKey = "story.ch20.s4", TextKo = "틈 한가운데에 모인 틈 짐승 물리치기" },
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch20.s5", TextKo = "선장 한별과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch20.s5.l1", "틈 밑을 보게. 옛 매듭 자리다 — 시대를 하나씩 묶어 두는 매듭이지."),
+                            L("hanbyeol", "story.ch20.s5.l2", "틈이 찢어진 차례대로 묶어야 한다. 옛날의 달, 지금의 별, 앞날의 해."),
+                            Pick("story.ch20.s5.p", "달, 별, 해.", "차례가 틀리면요?"),
+                            L("hanbyeol", "story.ch20.s5.l3", "다 풀린다. 차례만 지키면 돼 — 원소를 매듭 석등에 대 보게."),
+                        } },
+                    new Step { Type = StepType.Seal, Sky = true, Rift = true, Arena = Vector2.zero, Order = new[] { "moon", "star", "sun" }, TextKey = "story.ch20.s6", TextKo = "틈 밑 매듭 석등을 차례(달 → 별 → 해)로 밝히기" },
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch20.s7", TextKo = "선장 한별과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch20.s7.l1", "삐— 세 갈래 끝의 닻이 켜졌습니다! 틈이 오므라듭니다!"),
+                            L("hanbyeol", "story.ch20.s7.l2", "아직이다. 틈이 닫히려 하면 틈 너머 짐승들이 한꺼번에 몰려온다."),
+                            Pick("story.ch20.s7.p", "매듭을 지킬게요.", "선장님은요?"),
+                            L("hanbyeol", "story.ch20.s7.l3", "나는 틈을 붙들고 있겠다 — 매듭 제단이 무너지지 않게 지켜 다오!"),
+                        } },
+                    new Step { Type = StepType.Defend, Sky = true, Rift = true, Arena = Vector2.zero, NameKey = "story.altar_knot", NameKo = "매듭 제단", Dirs = new[] { 0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f },
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.DrownedGhost, GoElement.Dendro), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.EmberImp) },
+                        },
+                        TextKey = "story.ch20.s8", TextKo = "틈이 닫히는 동안 매듭 제단 지키기" },
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch20.s9", TextKo = "선장 한별과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch20.s9.l1", "……온다. 틈을 처음 찢은 놈이다."),
+                            L("hanbyeol", "story.ch20.s9.l2", "그날 세 갈래 선로를 한입에 삼키려다 틈을 찢고 스스로 틈 속에 갇혔던 짐승 — 틈 삼킨 별까마귀."),
+                            L("dodam", "story.ch20.s9.l3", "저, 저 날개 좀 봐요! 섬만 해요!"),
+                            Pick("story.ch20.s9.p", "같이 막아요, 선장님!", "여기서 끝내자."),
+                            L("hanbyeol", "story.ch20.s9.l4", "그래, 함께다. 이번엔 멈춰 두지 않는다 — 끝낸다!"),
+                        } },
+                    new Step { Type = StepType.Duel, Sky = true, Rift = true, Arena = new Vector2(0f, -4f), Foes = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Cryo) },
+                        BossKey = "story.boss.riftcrow", BossKo = "틈 삼킨 별까마귀", HpMul = 16f, AtkMul = 2.5f, ScaleMul = 2.2f,
+                        Rot = new[] { FieldEnemy.BossMove.Rift, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Spit, FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Rift },
+                        P2El = GoElement.Cryo, Adds = new[] { F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo) },
+                        EnterKey = "story.ch20.enter2", EnterKo = "🐦‍⬛ 섬만 한 날개가 틈을 가리고 내려앉았다 — 틈 삼킨 별까마귀!",
+                        P2Key = "story.ch20.p2", P2Ko = "❄️ 별까마귀가 틈의 냉기를 두른다 — 불로 녹여라! 회오리매와 눈여우가 뛰어든다",
+                        WinKey = "story.ch20.win", WinKo = "🐦‍⬛ 별까마귀가 틈 속으로 떨어지고 — 찢어진 틈이 소리 없이 닫혔다",
+                        TextKey = "story.ch20.s10", TextKo = "틈을 처음 찢은 틈 삼킨 별까마귀와 맞서기" },
+                    new Step { Type = StepType.Talk, Npc = "hanbyeol", TextKey = "story.ch20.s11", TextKo = "선장 한별과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("hanbyeol", "story.ch20.s11.l1", "……닫혔다. 틈이 처음 찢어진 곳이, 이제 그냥 하늘이다."),
+                            L("bandi", "story.ch20.s11.l2", "삐— 세 갈래 선로 신호, 모두 안정. 옛날도 지금도 앞날도 제자리에 있습니다."),
+                            L("dodam", "story.ch20.s11.l3", "막차는 계속 달릴 수 있겠네요. 첫 정거장도, 은하역도!"),
+                            Pick("story.ch20.s11.p", "선장님은 이제 어떡하실 거예요?", "별배로 돌아가세요?"),
+                            L("hanbyeol", "story.ch20.s11.l4", "별배는 나루에 매여 있고 틈은 닫혔다. 선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께."),
+                            L("hanbyeol", "story.ch20.s11.l5", "별배 선장 한별, 오늘부터 너희 편에 선다. 잘 부탁하네."),
                         } },
                 }
             },

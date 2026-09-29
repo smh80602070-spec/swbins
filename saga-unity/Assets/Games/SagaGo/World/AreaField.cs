@@ -42,7 +42,11 @@ namespace Saga.Go.World
             Physics.SyncTransforms();
         }
 
-        private void OnDestroy() { if (Instance == this) Instance = null; }
+        private void OnDestroy()
+        {
+            if (_riftRegistered) PlayerController.ExtraDrafts.Remove(_riftCol);
+            if (Instance == this) Instance = null;
+        }
 
         public GameObject SiteObject(string areaId, string siteId) => _sites.TryGetValue(areaId + ":" + siteId, out var g) ? g : null;
         /// <summary>이야기가 켜고 끄는 조각(예: "skyport:beacon") — 없으면 null.</summary>
@@ -121,6 +125,7 @@ namespace Saga.Go.World
                 go.AddComponent<NoClimb>();
             }
             foreach (var s in a.Sites) _sites[s.Key] = BuildSite(root.transform, a, s);
+            if (a.Id == "crossing") BuildRiftIsland(root.transform);
             // 돌기둥 — 지도 쪽(열린 뒤에만 보임) · 땅 쪽(경계비 곁)
             var stone = Mat("gate_stone", new Color(0.55f, 0.58f, 0.64f));
             var glow = Mat("gate_glow", new Color(0.7f, 0.55f, 1f), 2.5f);
@@ -283,6 +288,130 @@ namespace Saga.Go.World
             }
         }
 
+        // ---- 갈림길 끝 섬(웹 ⑲-43) — 첫 정거장 동남쪽 하늘에 뜬 돌 섬 + 세 갈래 선로(끝마다 닻) + 세로 틈 + 별빛 + 바람 기둥(20장이 끝난 뒤) ----
+        private PlayerController.DraftCol _riftCol;
+        private bool _riftRegistered;
+        private GameObject _riftRings;
+        private readonly List<LineRenderer> _riftRingList = new List<LineRenderer>();
+        private float _riftT;
+        public bool RiftPillarOpen { get; private set; }
+        public int TearNow { get; private set; }
+
+        private void BuildRiftIsland(Transform parent)
+        {
+            var stone = Mat("c_stone", new Color(0.52f, 0.5f, 0.55f));
+            var dark = Mat("c_dark", new Color(0.15f, 0.14f, 0.2f));
+            var metal = Mat("c_metal", new Color(0.66f, 0.68f, 0.76f), 0f, 0.65f, 0.6f);
+            var wood = Mat("c_wood", new Color(0.36f, 0.25f, 0.16f));
+            var glow = Mat("c_glow", new Color(0.72f, 0.55f, 1f), 2.6f);
+            var root = new GameObject("Area_rift_island");
+            root.transform.SetParent(parent, false);
+            Vector3 c = GoStory.RiftCenter;
+            float r = GoStory.RiftR;
+            var disc = P(PrimitiveType.Cylinder, root.transform, "Rift_disc", c - Vector3.up * 1.5f, new Vector3(r * 2f, 1.5f, r * 2f), stone, true);
+            disc.AddComponent<NoClimb>();
+            P(PrimitiveType.Sphere, root.transform, "Rift_horn", c - Vector3.up * 11f, new Vector3(r * 1.2f, 16f, r * 1.2f), stone, false);
+            const int seg = 28;
+            float rr = r - 0.7f, len = 2f * Mathf.PI * rr / seg + 0.2f;
+            for (int i = 0; i < seg; i++)
+            {
+                float a = (i + 0.5f) * Mathf.PI * 2f / seg;
+                var w = P(PrimitiveType.Cube, root.transform, "Rift_rail", c + new Vector3(Mathf.Sin(a) * rr, GoStory.SkyRail * 0.5f, Mathf.Cos(a) * rr), new Vector3(len, GoStory.SkyRail, 0.5f), stone, true, new Vector3(0f, a * Mathf.Rad2Deg + 90f, 0f));
+                w.AddComponent<NoClimb>();
+            }
+            // 세 갈래 선로 — 가운데 3m 에서 17m 까지, 끝마다 닻(빛 공)
+            var branches = new[] { ("wood", 60f, wood), ("iron", 300f, metal), ("light", 180f, glow) };
+            int bi = 0;
+            foreach (var (id, deg, mat) in branches)
+            {
+                float a = deg * Mathf.Deg2Rad;
+                Vector3 dir = new Vector3(Mathf.Sin(a), 0f, -Mathf.Cos(a));
+                float yaw = deg;
+                P(PrimitiveType.Cube, root.transform, "Rift_rail_" + id + "_a", c + dir * 10f + Vector3.up * 0.1f + Quaternion.Euler(0f, yaw, 0f) * Vector3.left * 0.7f, new Vector3(0.3f, 0.2f, 14f), mat, false, new Vector3(0f, yaw, 0f));
+                P(PrimitiveType.Cube, root.transform, "Rift_rail_" + id + "_b", c + dir * 10f + Vector3.up * 0.1f + Quaternion.Euler(0f, yaw, 0f) * Vector3.right * 0.7f, new Vector3(0.3f, 0.2f, 14f), mat, false, new Vector3(0f, yaw, 0f));
+                Part("crossing:anchor" + bi, root.transform, PrimitiveType.Sphere, "Rift_anchor_" + id, c + dir * 17f + Vector3.up * 1.0f, Vector3.one * 1.4f, Mat("c_anchor_off", new Color(0.25f, 0.25f, 0.3f)), false);
+                bi++;
+            }
+            // 세로 틈 — 가운데 위에 서 있는 빛 판 둘(닫히면 사라지고 별빛)
+            var tear = new GameObject("Rift_tear");
+            tear.transform.SetParent(root.transform, false);
+            P(PrimitiveType.Cube, tear.transform, "Rift_tear_a", c + Vector3.up * 8f, new Vector3(0.2f, 14f, 6f), glow, false, new Vector3(0f, 20f, 0f));
+            P(PrimitiveType.Cube, tear.transform, "Rift_tear_b", c + new Vector3(0.4f, 8.5f, 0f), new Vector3(0.14f, 12f, 4f), glow, false, new Vector3(0f, 100f, 0f));
+            _parts["crossing:tear"] = tear;
+            var stars = new GameObject("Rift_stars");
+            stars.transform.SetParent(root.transform, false);
+            var starMat = Mat("c_star", new Color(1f, 0.95f, 0.75f), 3.2f);
+            for (int i = 0; i < 9; i++)
+            {
+                float a = i * 2.4f;
+                P(PrimitiveType.Sphere, stars.transform, "Rift_star", c + new Vector3(Mathf.Cos(a) * (2f + i * 0.5f), 6f + (i % 4) * 2.2f, Mathf.Sin(a) * (2f + i * 0.5f)), Vector3.one * 0.35f, starMat, false);
+            }
+            _parts["crossing:stars"] = stars;
+            // 바람 기둥 고리 여덟(20장이 끝난 뒤)
+            _riftRings = new GameObject("Rift_rings");
+            _riftRings.transform.SetParent(root.transform, false);
+            _riftRingList.Clear();
+            var lineMat = new Material(Shader.Find("Sprites/Default")) { name = "RiftPillar (generated)" };
+            for (int i = 0; i < 8; i++)
+            {
+                var go = new GameObject("Rift_ring");
+                go.transform.SetParent(_riftRings.transform, false);
+                var lr = go.AddComponent<LineRenderer>();
+                lr.useWorldSpace = false;
+                lr.loop = true;
+                lr.positionCount = 32;
+                lr.widthMultiplier = 0.25f;
+                lr.material = lineMat;
+                lr.startColor = lr.endColor = new Color(0.85f, 0.75f, 1f, 0.6f);
+                lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                for (int k = 0; k < 32; k++)
+                {
+                    float a = k * Mathf.PI * 2f / 32f;
+                    lr.SetPosition(k, new Vector3(Mathf.Cos(a) * GoStory.DraftR, 0f, Mathf.Sin(a) * GoStory.DraftR));
+                }
+                _riftRingList.Add(lr);
+            }
+            Physics.SyncTransforms();
+        }
+
+        private void RefreshRift()
+        {
+            int tear = StoryState.OffForTest ? 0 : GoStory.TearState;
+            TearNow = tear;
+            if (_parts.TryGetValue("crossing:tear", out var t) && t != null)
+            {
+                t.SetActive(tear < 2);
+                t.transform.localScale = tear == 1 ? new Vector3(1f, 1f, 0.45f) : Vector3.one;
+            }
+            if (_parts.TryGetValue("crossing:stars", out var st) && st != null) st.SetActive(tear >= 2);
+            for (int i = 0; i < 3; i++)
+                SetMat("crossing:anchor" + i, tear >= 1 ? Mat("c_anchor_on", new Color(1f, 0.9f, 0.5f), 3f) : Mat("c_anchor_off", new Color(0.25f, 0.25f, 0.3f)));
+            bool open = !StoryState.OffForTest && GoStory.RiftPillarOpen;
+            RiftPillarOpen = open;
+            if (_riftRings != null) _riftRings.SetActive(open);
+            if (_riftRegistered) PlayerController.ExtraDrafts.Remove(_riftCol);
+            _riftRegistered = false;
+            if (open)
+            {
+                _riftCol = new PlayerController.DraftCol { Base = GoStory.RiftPillarPos, R = GoStory.DraftR, Top = GoStory.RiftDraftTop };
+                PlayerController.ExtraDrafts.Add(_riftCol);
+                _riftRegistered = true;
+            }
+        }
+
+        private void TickRiftRings(float dt)
+        {
+            if (_riftRings == null || !_riftRings.activeSelf) return;
+            _riftT += dt;
+            Vector3 b = GoStory.RiftPillarPos;
+            float h = GoStory.RiftDraftTop - b.y;
+            for (int i = 0; i < _riftRingList.Count; i++)
+            {
+                float f = Mathf.Repeat(_riftT * GoStory.DraftRise / h + i / (float)_riftRingList.Count, 1f);
+                _riftRingList[i].transform.position = b + Vector3.up * (f * h);
+            }
+        }
+
         // ---- 틈새 갈림길 도형(웹 crossing.js 명소 모델을 이 판 크기로) ----
         private void BuildCrossingSite(Transform t, string id)
         {
@@ -413,6 +542,7 @@ namespace Saga.Go.World
             if (_parts.TryGetValue("skyport:bell_hidden", out var tip) && tip != null) tip.SetActive(hung);
             if (_parts.TryGetValue("skyport:bell_fallen", out var fallen) && fallen != null) fallen.SetActive(!hung);
             _clockOn = !StoryState.OffForTest && GoStory.ClockRunning;
+            RefreshRift();
             bool powered = !StoryState.OffForTest && GoStory.TrainPowered;
             SetMat("skyport:train_lamp_a", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
             SetMat("skyport:train_lamp_b", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
@@ -467,6 +597,7 @@ namespace Saga.Go.World
             var kb = Keyboard.current;
             TickBell(Time.deltaTime);
             TickClock();
+            TickRiftRings(Time.deltaTime);
             var (a, g) = NearGate(feet);
             if (kb != null && g != 0 && kb.fKey.wasPressedThisFrame && !FishingField.Busy && !StoryState.Talking
                 && !(StoryUi.Instance != null && StoryUi.Instance.TalkShown) && !DispatchUi.AtBoard() && GoFishing.NearSpot(new Vector2(feet.x, feet.z)) == null && !GoFishing.NearBoard(new Vector2(feet.x, feet.z)))

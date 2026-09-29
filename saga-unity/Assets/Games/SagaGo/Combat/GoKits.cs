@@ -3,7 +3,7 @@ using Saga.Go.Data;
 
 namespace Saga.Go.Combat
 {
-    public enum KitSkillType { Dash, Shells, Guard, Zone, Blink, Gust, Wave }
+    public enum KitSkillType { Dash, Shells, Guard, Zone, Blink, Gust, Wave, Updraft }
     public enum KitBurstType { Infuse, Rally, Ward, Haste, Vortex, Lore, Echo, Feast, Rain }
 
     /// <summary>원소 스킬 한 가지 — 값은 웹 척도(거리 m · 배율 · 기력 60), 쓸 때 이 트랙 크기로(<see cref="GoKits"/>).</summary>
@@ -17,6 +17,8 @@ namespace Saga.Go.Combat
         public float Back, Mark, MarkMul;
         /// <summary>109-14-17 부채 바람(앞 부채꼴 — 내적 Arc 이상)·노 물결 — 맞은 적을 Knock m 밀어낸다.</summary>
         public float Arc, Knock;
+        /// <summary>109-14-43 별배 견인줄 — 둘레 적을 Pull m 끌어당기고 나는 Lift m 위로 솟구친다.</summary>
+        public float Pull, Lift;
     }
 
     public class KitBurst
@@ -122,6 +124,11 @@ namespace Saga.Go.Combat
                 case "story_dodam":
                     s = S(KitSkillType.Wave, "kit.sig.dodam.skill", "선로 전류", 8f, 2.9f); s.Len = 10f; s.W = 2.2f; s.Knock = 4f;
                     b = B(KitBurstType.Haste, "kit.sig.dodam.burst", "막차 출발 신호", 7f, 3.4f); b.Sec = 10f; b.Energy = 7f;
+                    break;
+                // 109-14-43 한별(웹 kits.js story_hanbyeol) — 새 틀 updraft(견인줄) + 있는 vortex(틈 닫기)
+                case "story_hanbyeol":
+                    s = S(KitSkillType.Updraft, "kit.sig.hanbyeol.skill", "별배 견인줄", 9f, 2.6f); s.R = 4.5f; s.Pull = 6f; s.Lift = 15f;
+                    b = B(KitBurstType.Vortex, "kit.sig.hanbyeol.burst", "틈 닫기", 6f, 3.6f); b.Ahead = 8f; b.Sec = 8f; b.Every = 0.5f; b.Tick = 0.7f; b.Pull = 7f;
                     break;
                 default:
                     return null;
