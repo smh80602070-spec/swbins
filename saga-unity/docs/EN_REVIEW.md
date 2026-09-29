@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **4064** (표 4009 · 코드 55) — go 2220 · dungeon 515 · forest 258 · story 425 · realm 591
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **9** · 넘침 주의 **405**
-- 사람 검수 **0/4064** — 순위1 0/265 · 순위2 0/3077 · 순위3 0/722
+- 짝 **4115** (표 4060 · 코드 55) — go 2271 · dungeon 515 · forest 258 · story 425 · realm 591
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **9** · 넘침 주의 **419**
+- 사람 검수 **0/4115** — 순위1 0/265 · 순위2 0/3127 · 순위3 0/723
 
 ## 검수 순서
 
@@ -34,7 +34,7 @@
 - 「가 볼게요.」 → **I'll go.** (go:wq.lighthouse.s1.p.a) · **I'll go take a look.** (go:story.ch10.s1.p.a)
 - 「채집」 → **gathered** (go:ach.unit.gather) · **Foraging** (dungeon:room.forage)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 405)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 419)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -52,6 +52,7 @@
 | 3→12 | go | `cook.recipe.honey_cake` | Honey Blossom Rice Cake |
 | 10→22 | go | `story.ch5` | Chapter 5 · The Old Road over the Western Pass |
 | 4→13 | dungeon | `item.wp_lm_cloud` | Cloud General's Gold Sword |
+| 11→23 | go | `story.ch23.s1.p.b` | The last word of the erased entry — 'lighthouse'… |
 | 6→15 | dungeon | `landmark.cloud` | Golden Palace Above the Clouds |
 | 35→63 | go | `wq.lighthouse.s1.l1` | Every night a light signal comes from the far end of the east bank. The pattern is an old beacon code… but the waveform is brand new. |
 | 38→67 | go | `story.ch18.s10.l2` | Beep — star-ship, bell and last train: all three signals confirmed. The coordinates the captain left open — the first station beyond the rift. |
@@ -69,4 +70,3 @@
 | 5→13 | dungeon | `enemy.boss` | Yellow Turban Bandit Chief |
 | 9→19 | go | `story.ch16.s1.p.a` | So that's where the star-ship came from. |
 | 12→24 | go | `story.ch7` | Chapter 7 · The Fourth Altar on the Riverside Cape |
-| 23→41 | go | `story.ch21.s4` | Defeat the water beasts that crawled onto the sands before the undersea research base |

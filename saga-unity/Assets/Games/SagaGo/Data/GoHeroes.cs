@@ -147,6 +147,9 @@ namespace Saga.Go.Data
             // 109-14-43 한별(20장 끝) — ★5 풍 활(웹 ⑲-43)
             new Hero { Id = "story_hanbyeol", NameKo = "한별", Era = HeroEra.Story, Faction = "재야", Rarity = 5, Trait = HeroTrait.Command, Might = 76, Wisdom = 84, Command = 90,
                 WebElement = WebElement.Wind, QuoteKo = "선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께." },
+            // 109-14-47 물새(23장 끝) — 수 한손검(웹 ⑲-47)
+            new Hero { Id = "story_mulsae", NameKo = "물새", Era = HeroEra.Story, Faction = "재야", Rarity = 4, Trait = HeroTrait.Might, Might = 78, Wisdom = 64, Command = 60,
+                WebElement = WebElement.Water, QuoteKo = "숨 긴 거 하나는 자신 있소." },
         };
 
         public static bool IsStory(string id) => id != null && id.StartsWith("story_");

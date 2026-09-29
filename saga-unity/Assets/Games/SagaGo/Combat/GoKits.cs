@@ -130,6 +130,11 @@ namespace Saga.Go.Combat
                     s = S(KitSkillType.Updraft, "kit.sig.hanbyeol.skill", "별배 견인줄", 9f, 2.6f); s.R = 4.5f; s.Pull = 6f; s.Lift = 15f;
                     b = B(KitBurstType.Vortex, "kit.sig.hanbyeol.burst", "틈 닫기", 6f, 3.6f); b.Ahead = 8f; b.Sec = 8f; b.Every = 0.5f; b.Tick = 0.7f; b.Pull = 7f;
                     break;
+                // 109-14-47 물새(웹 kits.js story_mulsae) — 있는 틀(blink·feast)만
+                case "story_mulsae":
+                    s = S(KitSkillType.Blink, "kit.sig.mulsae.skill", "자맥질", 7f, 2.8f); s.Reach = 9f; s.Back = 1.4f; s.R = 2.5f; s.Mark = 8f; s.MarkMul = 1.2f; s.Len = 4f;
+                    b = B(KitBurstType.Feast, "kit.sig.mulsae.burst", "숨비소리", 6f, 2.4f); b.Sec = 10f; b.Every = 1f; b.FHeal = 0.05f; b.EMul = 0.3f;
+                    break;
                 default:
                     return null;
             }

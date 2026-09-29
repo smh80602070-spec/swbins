@@ -280,6 +280,9 @@ namespace Saga.Go.Data
         public static readonly Vector2 AnnexMulsae = new Vector2(9.5f, 3.2f), DomeFront = new Vector2(0f, -19f), FrontMulsae = new Vector2(-8f, -20f), FrontYeoul = new Vector2(8f, -20f), FrontBandi = new Vector2(0f, -28f),
             DomeDuel = new Vector2(-5f, 0f), InMulsae = new Vector2(3f, 3f), InYeoul = new Vector2(4f, -2f), InBandi = new Vector2(0f, 5f);
 
+        // 23장(⑲-47) — 등대 발치(등대 가운데에서 m, 남쪽 5.5) · 기록실 앞(돔 가운데에서 m) — 파랑은 단말 남쪽.
+        public static readonly Vector2 LightBandi = new Vector2(0f, 5.5f), ParangAt = new Vector2(4f, 6.5f);
+
         // 19장(⑲-42) — 틈새 갈림길 자리(각 명소 가운데에서 m): 막차는 승강장 동쪽에 내린다, 갈림목 = 시계탑 북서쪽, 한별은 섬돌 가운데 밑(틈 수정 아래).
         public static readonly Vector2 CrossArrive = new Vector2(6.5f, 0f), CrossBandi = new Vector2(7f, 4f), CrossHanbyeol = new Vector2(6.5f, 7f), CrossFork = new Vector2(-18f, -14f), CrossClockBandi = new Vector2(4f, 4f),
             CrossStepsBandi = new Vector2(6f, 5f), CrossDuel = new Vector2(10f, -8f), CrossStepsHanbyeol = new Vector2(7f, -3f);
@@ -462,25 +465,31 @@ namespace Saga.Go.Data
                     new Spot { Ch = 18, From = 5, To = 5, At = "crossing:clock", Arena = CrossClockBandi }, new Spot { Ch = 18, From = 6, To = 9, At = "crossing:steps", Arena = CrossStepsBandi },
                     new Spot { Ch = 19, From = 0, To = 1, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftBandi }, new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = PortBandi },
                     new Spot { Ch = 20, From = 2, To = 6, At = "sunken:gate", Arena = SandBandi }, new Spot { Ch = 20, From = 7, To = 99, At = "sunken:palace", Arena = PlinthBandi }, new Spot { Ch = 21, From = 0, To = 2, At = "sunken:palace", Arena = PlinthBandi },
-                    new Spot { Ch = 21, From = 3, To = 6, At = "sunken:dome", Arena = FrontBandi }, new Spot { Ch = 21, From = 7, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:dome", Arena = InBandi } },
+                    new Spot { Ch = 21, From = 3, To = 6, At = "sunken:dome", Arena = FrontBandi }, new Spot { Ch = 21, From = 7, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 22, From = 0, To = 0, At = "sunken:dome", Arena = InBandi },
+                    new Spot { Ch = 22, From = 1, To = 3, At = "sunken:lighthouse", Arena = LightBandi }, new Spot { Ch = 22, From = 4, To = 99, At = "sunken:dome", Arena = InBandi }, new Spot { Ch = 23, From = 0, To = 99, At = "sunken:dome", Arena = InBandi } },
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
                 AtSite = "crossing:platform", AtOff = CrossHanbyeol, FolkBody = "Vanguard",
                 Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = CrossHanbyeol }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftHanbyeol },
-                    new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 20, From = 2, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol } },
+                    new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 20, From = 2, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 23, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol } },
                 IdleKey = "story.idle.hanbyeol", IdleKo = "틈의 끝은 첫 정거장 다음 역이다." },
             // 109-14-45 21장(웹 ⑲-45) — 잠수 기사 여울(현대): 늘 연구 기지 서쪽, 21장 5~7째 단계 선착장 · 8째~ 궁궐 기단
             new Npc { Id = "yeoul", NameKey = "story.npc.yeoul", NameKo = "잠수 기사 여울", ShortKey = "story.short.yeoul", ShortKo = "여울",
                 AtSite = "sunken:lab", AtOff = LabYeoul, FolkBody = "SwatGuy",
                 At = new[] { new Spot { Ch = 20, From = 4, To = 6, At = "sunken:lab", Arena = LabDock }, new Spot { Ch = 20, From = 7, To = 99, At = "sunken:palace", Arena = PlinthYeoul }, new Spot { Ch = 21, From = 0, To = 2, At = "sunken:palace", Arena = PlinthYeoul },
-                    new Spot { Ch = 21, From = 3, To = 6, At = "sunken:dome", Arena = FrontYeoul }, new Spot { Ch = 21, From = 7, To = 99, At = "sunken:dome", Arena = InYeoul }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:dome", Arena = InYeoul } },
+                    new Spot { Ch = 21, From = 3, To = 6, At = "sunken:dome", Arena = FrontYeoul }, new Spot { Ch = 21, From = 7, To = 99, At = "sunken:dome", Arena = InYeoul }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:dome", Arena = InYeoul }, new Spot { Ch = 23, From = 0, To = 99, At = "sunken:dome", Arena = InYeoul } },
                 IdleKey = "story.idle.yeoul", IdleKo = "기지 불이 나간 지 한참이에요. 그래도 잠수정은 제가 지켜요." },
+            // 109-14-47 23장(웹 ⑲-47) — 돔 관리 인공지능 파랑(미래): 반디와 같은 떠 있는 기계 몸(웹은 파란 빛깔 — 이 판은 14-1b 전까지 같은 빛). 23장부터 돔 안 기록실 앞.
+            new Npc { Id = "parang", NameKey = "story.npc.parang", NameKo = "돔 관리 인공지능 파랑", ShortKey = "story.short.parang", ShortKo = "파랑",
+                AtSite = "sunken:dome", AtOff = ParangAt, Pet = true,
+                Appear = new[] { new Spot { Ch = 22, From = 0, To = 99, At = "sunken:dome", Arena = ParangAt }, new Spot { Ch = 23, From = 0, To = 99, At = "sunken:dome", Arena = ParangAt } },
+                IdleKey = "story.idle.parang", IdleKo = "빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오." },
             // 109-14-46 22장(웹 ⑲-46) — 해녀 물새(과거): 도읍이 잠기던 날 물질 나갔다 갇혔다. 22장 2~3째 곁채 앞 · 4~7째 돔 문 앞 · 8째~ 돔 안(뒤에도). 23장에서 동료.
             new Npc { Id = "mulsae", NameKey = "story.npc.mulsae", NameKo = "해녀 물새", ShortKey = "story.short.mulsae", ShortKo = "물새",
                 AtSite = "sunken:dome", AtOff = InMulsae, FolkBody = "Megan",
                 Appear = new[] { new Spot { Ch = 21, From = 1, To = 2, At = "sunken:palace", Arena = AnnexMulsae }, new Spot { Ch = 21, From = 3, To = 6, At = "sunken:dome", Arena = FrontMulsae },
-                    new Spot { Ch = 21, From = 7, To = 99, At = "sunken:dome", Arena = InMulsae }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:dome", Arena = InMulsae } },
+                    new Spot { Ch = 21, From = 7, To = 99, At = "sunken:dome", Arena = InMulsae }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:dome", Arena = InMulsae }, new Spot { Ch = 23, From = 0, To = 99, At = "sunken:dome", Arena = InMulsae } },
                 IdleKey = "story.idle.mulsae", IdleKo = "숨 한 번에 한 길. 물은 서두르는 사람을 싫어한다오." },
             // 109-14-40 18장(웹 ⑲-40) — 기관사 도담(늘 승강장 남쪽 끝 아래, 8째 단계는 선로 끝) · 선장의 잔상(18장 쫓기 때만 — 은하역 선로 위를 달린다)
             new Npc { Id = "dodam", NameKey = "story.npc.dodam", NameKo = "기관사 도담", ShortKey = "story.short.dodam", ShortKo = "도담",
@@ -599,6 +608,9 @@ namespace Saga.Go.Data
             public bool Obs;
             public string ArriveKey, ArriveKo;
             public float Speed;
+            /// <summary>109-14-47 light — 그 명소의 오르기 꼭대기(`At` 의 탑)에 서야 원소가 닿는다 · 못 닿을 때 알림(등대 등롱).</summary>
+            public bool Perch;
+            public string AwayKey, AwayKo;
         }
 
         public static Vector3 StepPos(Step s) => s.Sky && s.Rift ? RiftPos(s.Arena ?? Vector2.zero) : s.At != null ? AreaPos(s.At, s.Arena ?? Vector2.zero) : s.Stn ? StationPos(s.Arena ?? Vector2.zero) : s.Yard ? YardPos(s.Arena ?? Vector2.zero) : s.Sky && s.Obs ? DeckPos(s.Arena ?? Vector2.zero) : s.Frost ? FrostPos(s.Arena ?? Vector2.zero) : s.Sky ? SkyPos(s.Arena ?? Vector2.zero) : s.Isle ? IslePos(s.Arena ?? Vector2.zero) : s.Arena.HasValue ? ArenaPos(s.Arena.Value) : GridPos(s.Gx, s.Gy);
@@ -2016,6 +2028,70 @@ namespace Saga.Go.Data
                             L("bandi", "story.ch22.s10.l3", "삐— 기록실에서 제 신호와 같은 주파수가 나옵니다. 지워진 칸이… 저 안에 있습니다."),
                             Pick("story.ch22.s10.p", "기록실로 가자.", "물새 님도 같이 가요."),
                             L("mulsae", "story.ch22.s10.l4", "갇힌 줄로만 알았는데, 기다린 거였나 보오. 좋소 — 끝까지 같이 가 보지."),
+                        } },
+                }
+            },
+            // 109-14-47 23장(웹 ⑲-47) — 6부 끝, 빛 돔의 기록: 파랑(기록실 앞) → 옛 등대 돌탑 타고 난간 판 → 난간 판 위에서 꺼진 등롱에 원소(`Perch`) → 반디(등대 발치)
+            // → 파랑(기록 재생) → 돔 파수 거신(암, 절반에서 암 방패 — 초로) → 물새 합류. 등대 불은 4째 단계부터(`LighthouseLit`).
+            new Chapter
+            {
+                Id = "ch23", NameKey = "story.ch23", NameKo = "제23장 · 빛 돔의 기록", Ar = 52, Join = "story_mulsae",
+                Gold = 6250, Mats = new[] { 0, 6, 5, 6, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "parang", TextKey = "story.ch23.s1", TextKo = "기록실 앞의 파랑과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("parang", "story.ch23.s1.l1", "방문자 확인. 빛 돔 관리 인공지능 파랑입니다. 문이 열린 것은 도읍이 잠긴 뒤 처음입니다."),
+                            L("bandi", "story.ch23.s1.l2", "삐— 파랑. 그 이름… 제 기록에 있습니다. 지워진 칸 바로 앞에."),
+                            L("parang", "story.ch23.s1.l3", "조종 기계 반디, 별배 소속. 당신의 기록 사본이 이 기록실에 맡겨져 있습니다. 다만 열람할 전력이 모자랍니다."),
+                            L("parang", "story.ch23.s1.l4", "돔은 옛 등대에서 전력을 받았습니다. 도읍이 잠기던 날 등대 불이 꺼진 뒤로, 기록실은 옥새 봉인만 남은 채 잠들어 있습니다."),
+                            Pick("story.ch23.s1.p", "등대에 불을 켜면 돼요?", "지워진 칸 끝 말, '등대'…"),
+                            L("mulsae", "story.ch23.s1.l5", "북쪽 바위섬 등대 말이오? 물질 나갈 때 늘 보던 불이오. 돌탑을 타고 오르면 등롱까지 닿을 거요."),
+                            L("yeoul", "story.ch23.s1.l6", "제 잠수복 불빛으로 물길을 비춰 드릴게요. 꼭대기 난간 판에 서야 등롱에 손이 닿아요."),
+                        } },
+                    new Step { Type = StepType.Climb, At = "sunken:lighthouse", EnterKey = "story.ch23.stepped", EnterKo = "🗼 등대 난간 판에 올라섰다 — 꺼진 등롱이 눈앞에 있다",
+                        TextKey = "story.ch23.s2", TextKo = "옛 등대 돌탑을 타고 난간 판까지 오르기" },
+                    new Step { Type = StepType.Light, Bare = true, Perch = true, At = "sunken:lighthouse", Arena = Vector2.zero, EnterKey = "story.ch23.lit", EnterKo = "🗼 등롱에 불이 들어왔다 — 빛줄기가 돌며 빛 돔 꼭대기를 비춘다",
+                        AwayKey = "story.ch23.away", AwayKo = "🗼 등롱은 탑 꼭대기에 있다 — 난간 판에 올라서야 불이 닿는다",
+                        TextKey = "story.ch23.s3", TextKo = "꺼진 등롱에 원소 스킬로 불 넣기(난간 판 위에서)" },
+                    new Step { Type = StepType.Talk, Npc = "bandi", TextKey = "story.ch23.s4", TextKo = "등대 발치의 반디와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("bandi", "story.ch23.s4.l1", "삐— 등대 빛 수신. 빛 돔 전력 회복. 기록실이 깨어납니다."),
+                            L("bandi", "story.ch23.s4.l2", "……이상합니다. 이 자리에 서니 무언가 떠오릅니다. 그날 별배는 이 등대 불빛을 보고 항로를 잡았습니다."),
+                            L("bandi", "story.ch23.s4.l3", "그런데 불빛이 한순간 꺼졌습니다. 누군가 먹구름으로 등롱을 덮었습니다. 거기서 기억이 끊깁니다."),
+                            Pick("story.ch23.s4.p", "먹구름이라고?", "기록실로 돌아가자."),
+                            L("bandi", "story.ch23.s4.l4", "나머지는 기록실 사본에 있을 겁니다. 파랑에게 돌아가 주십시오."),
+                        } },
+                    new Step { Type = StepType.Talk, Npc = "parang", TextKey = "story.ch23.s5", TextKo = "기록실 앞의 파랑과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("parang", "story.ch23.s5.l1", "전력 회복 확인. 옥새 봉인 해제. 조종 기계 반디의 기록 사본을 재생합니다."),
+                            L("bandi", "story.ch23.s5.l2", "(기록 재생) 별배 항로 끝, 잠긴 도읍 등대. 등롱 꺼짐. 항로 밖에서 먹구름 접근 — 먹구름 속에 사람 그림자, 가면."),
+                            L("bandi", "story.ch23.s5.l3", "(기록 재생) 그림자가 손을 들자 먹구름이 별배를 덮쳤습니다. 기관 정지, 추락. …그리고 그림자가 제 기록을 지웠습니다."),
+                            L("mulsae", "story.ch23.s5.l4", "도읍이 잠기던 날에도 하늘이 그렇게 검었소. 파도보다 먹구름이 먼저 왔었지."),
+                            Pick("story.ch23.s5.p", "별배를 떨어뜨린 건 틈이 아니었어…", "먹구름을 부리는 누군가가 있어."),
+                            L("parang", "story.ch23.s5.l5", "경고. 기록 복원이 '기록을 지운 자'가 남긴 명령에 걸렸습니다. 돔 파수 거신이 침입자 제거를 시작합니다."),
+                            L("yeoul", "story.ch23.s5.l6", "돔 바닥이 울려요! 바위 거인이 — 서쪽에서 일어나요!"),
+                        } },
+                    new Step { Type = StepType.Duel, At = "sunken:dome", Arena = DomeDuel, Foes = new[] { F(FieldEnemy.Kind.EmberImp, GoElement.Geo) },
+                        BossKey = "story.boss.colossus", BossKo = "돔 파수 거신", HpMul = 17.6f, AtkMul = 2.6f, ScaleMul = 2.5f,
+                        Rot = new[] { FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Melee, FieldEnemy.BossMove.Halo, FieldEnemy.BossMove.Slam, FieldEnemy.BossMove.Tide, FieldEnemy.BossMove.Shadow },
+                        P2El = GoElement.Geo, Adds = new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.EmberImp) },
+                        EnterKey = "story.ch23.enter", EnterKo = "🗿 돔 서쪽 바닥이 갈라지며 — 돔 파수 거신이 일어섰다!",
+                        P2Key = "story.ch23.p2", P2Ko = "🪨 거신이 바위 껍질을 두른다 — 풀(초)로 깨라! 바위곰과 불도깨비가 뛰어든다",
+                        WinKey = "story.ch23.win", WinKo = "🗿 파수 거신이 무너지고 — 가슴에 박혀 있던 먹구름 조각이 흩어졌다",
+                        TextKey = "story.ch23.s6", TextKo = "기록을 지운 자의 명령으로 깨어난 돔 파수 거신과 맞서기" },
+                    new Step { Type = StepType.Talk, Npc = "mulsae", TextKey = "story.ch23.s7", TextKo = "돔 안의 물새와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("mulsae", "story.ch23.s7.l1", "……바위 속에 먹구름이 박혀 있었구려. 누가 이 빛 집까지 손을 뻗은 게요."),
+                            L("parang", "story.ch23.s7.l2", "파수 거신 정지. 명령 기록 추적 — 발신지는 하늘 항로 위, 구름 위입니다."),
+                            L("bandi", "story.ch23.s7.l3", "삐— 기억이 돌아왔습니다. 별배가 가려던 곳은 등대가 아니라, 등대가 비추던 하늘 항로였습니다."),
+                            Pick("story.ch23.s7.p", "먹구름을 부리는 자를 찾자.", "물새 님은 이제 어떡해요?"),
+                            L("mulsae", "story.ch23.s7.l4", "물은 두 번 가르쳐 주지 않는다 했지. 이번엔 나도 안 놓치겠소 — 도읍을 잠기게 한 그 먹구름을."),
+                            L("mulsae", "story.ch23.s7.l5", "해녀 물새, 오늘부터 뭍사람들 편이오. 숨 긴 거 하나는 자신 있소."),
                         } },
                 }
             },

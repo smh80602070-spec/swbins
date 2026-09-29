@@ -954,6 +954,7 @@
 2	go	hero.story_haesol	해솔	Haesol		
 2	go	hero.story_hanbyeol	한별	Hanbyeol		
 2	go	hero.story_haram	하람	Haram		
+2	go	hero.story_mulsae	물새	Mulsae		
 2	go	hero.story_scholar	은비	Eunbi		
 2	go	hero.story_wanderer	가면 쓴 나그네	Masked Traveler		
 2	go	hero.trait.command	통	Command		
@@ -1015,6 +1016,8 @@
 2	go	kit.sig.hero.skill	불꽃 돌진	Flame Rush		
 2	go	kit.sig.huang.burst	돌개 화살	Whirlwind Arrows		
 2	go	kit.sig.huang.skill	화살비	Arrow Rain		
+2	go	kit.sig.mulsae.burst	숨비소리	Breath Whistle		
+2	go	kit.sig.mulsae.skill	자맥질	Plunge Dive		
 2	go	kit.sig.scholar.burst	옛 글자 풀이	Ancient Script Reading		
 2	go	kit.sig.scholar.skill	비문 탁본	Inscription Rubbing		
 2	go	kit.sig.wanderer.burst	가면 벗기	Unmasking		
@@ -1128,6 +1131,7 @@
 2	go	story.altar_weld	용접대	welding bench		
 2	go	story.boss.angler	심해 등불아귀	Deep-Sea Lantern Anglerfish		
 2	go	story.boss.chief	불도깨비 우두머리	Ember Imp Chief		
+2	go	story.boss.colossus	돔 파수 거신	Dome Sentinel Colossus		
 2	go	story.boss.emberfox	여우불 구미호	Foxfire Nine-Tail		
 2	go	story.boss.haesol	먹구름 가면 해솔	Haesol of the Storm Mask		
 2	go	story.boss.king	먹구름 임금	Storm King		
@@ -1715,6 +1719,49 @@
 2	go	story.ch22.s8.p.b	조심해, 다들.	Careful, everyone.		
 2	go	story.ch22.s9	돔 안에 숨어 빛을 먹던 심해 등불아귀와 맞서기	Face the deep-sea lantern anglerfish that hid in the dome eating light		
 2	go	story.ch22.win	🐟 등불아귀의 등불이 꺼지고 — 어둠 속으로 비늘 조각만 흩어졌다	🐟 The anglerfish's lantern goes out — only scale fragments drift into the dark		
+2	go	story.ch23	제23장 · 빛 돔의 기록	Chapter 23 · Records of the Light Dome		
+2	go	story.ch23.away	🗼 등롱은 탑 꼭대기에 있다 — 난간 판에 올라서야 불이 닿는다	🗼 The lantern is at the top of the tower — you must stand on the railing deck for the fire to reach it		
+2	go	story.ch23.enter	🗿 돔 서쪽 바닥이 갈라지며 — 돔 파수 거신이 일어섰다!	🗿 The floor of the dome splits in the west — the Dome Sentinel Colossus rises!		
+2	go	story.ch23.lit	🗼 등롱에 불이 들어왔다 — 빛줄기가 돌며 빛 돔 꼭대기를 비춘다	🗼 The lantern is lit — the beam sweeps around and lights the top of the Light Dome		
+2	go	story.ch23.p2	🪨 거신이 바위 껍질을 두른다 — 풀(초)로 깨라! 바위곰과 불도깨비가 뛰어든다	🪨 The colossus wraps itself in a rock shell — break it with grass (dendro)! A rock bear and a fire goblin leap in		
+2	go	story.ch23.s1	기록실 앞의 파랑과 이야기하기	Talk to Parang in front of the records room		
+2	go	story.ch23.s1.l1	방문자 확인. 빛 돔 관리 인공지능 파랑입니다. 문이 열린 것은 도읍이 잠긴 뒤 처음입니다.	Visitors detected. I am Parang, administrator AI of the Light Dome. This is the first time the door has opened since the capital sank.		
+2	go	story.ch23.s1.l2	삐— 파랑. 그 이름… 제 기록에 있습니다. 지워진 칸 바로 앞에.	Beep — Parang. That name… is in my records. Right before the erased entry.		
+2	go	story.ch23.s1.l3	조종 기계 반디, 별배 소속. 당신의 기록 사본이 이 기록실에 맡겨져 있습니다. 다만 열람할 전력이 모자랍니다.	Pilot Machine Bandi, of the star-ship. A copy of your records is kept in this records room. However, there is not enough power to open it.		
+2	go	story.ch23.s1.l4	돔은 옛 등대에서 전력을 받았습니다. 도읍이 잠기던 날 등대 불이 꺼진 뒤로, 기록실은 옥새 봉인만 남은 채 잠들어 있습니다.	The dome drew its power from the old lighthouse. Since the lighthouse fire went out the day the capital sank, the records room has slept with only its seal remaining.		
+2	go	story.ch23.s1.l5	북쪽 바위섬 등대 말이오? 물질 나갈 때 늘 보던 불이오. 돌탑을 타고 오르면 등롱까지 닿을 거요.	The lighthouse on the northern rock island? The fire I always watched when I went out to dive. Climb the stone tower and you can reach the lantern.		
+2	go	story.ch23.s1.l6	제 잠수복 불빛으로 물길을 비춰 드릴게요. 꼭대기 난간 판에 서야 등롱에 손이 닿아요.	I'll light the way through the water with my dive-suit lamp. You have to stand on the railing deck at the top to reach the lantern.		
+2	go	story.ch23.s1.p.a	등대에 불을 켜면 돼요?	Do we just light the lighthouse?		
+2	go	story.ch23.s1.p.b	지워진 칸 끝 말, '등대'…	The last word of the erased entry — 'lighthouse'…		
+2	go	story.ch23.s2	옛 등대 돌탑을 타고 난간 판까지 오르기	Climb the old lighthouse tower to the railing deck		
+2	go	story.ch23.s3	꺼진 등롱에 원소 스킬로 불 넣기(난간 판 위에서)	Light the unlit lantern with an elemental skill (from the railing deck)		
+2	go	story.ch23.s4	등대 발치의 반디와 이야기하기	Talk to Bandi at the foot of the lighthouse		
+2	go	story.ch23.s4.l1	삐— 등대 빛 수신. 빛 돔 전력 회복. 기록실이 깨어납니다.	Beep — lighthouse light received. Light Dome power restored. The records room is waking.		
+2	go	story.ch23.s4.l2	……이상합니다. 이 자리에 서니 무언가 떠오릅니다. 그날 별배는 이 등대 불빛을 보고 항로를 잡았습니다.	…Strange. Standing here, something surfaces. That day the star-ship set its course by this lighthouse fire.		
+2	go	story.ch23.s4.l3	그런데 불빛이 한순간 꺼졌습니다. 누군가 먹구름으로 등롱을 덮었습니다. 거기서 기억이 끊깁니다.	But the light went out for a moment. Someone covered the lantern with storm cloud. My memory cuts off there.		
+2	go	story.ch23.s4.l4	나머지는 기록실 사본에 있을 겁니다. 파랑에게 돌아가 주십시오.	The rest should be in the records-room copy. Please go back to Parang.		
+2	go	story.ch23.s4.p.a	먹구름이라고?	Storm cloud?		
+2	go	story.ch23.s4.p.b	기록실로 돌아가자.	Let's go back to the records room.		
+2	go	story.ch23.s5	기록실 앞의 파랑과 이야기하기	Talk to Parang in front of the records room		
+2	go	story.ch23.s5.l1	전력 회복 확인. 옥새 봉인 해제. 조종 기계 반디의 기록 사본을 재생합니다.	Power restoration confirmed. Seal released. Playing back the copy of Pilot Machine Bandi's records.		
+2	go	story.ch23.s5.l2	(기록 재생) 별배 항로 끝, 잠긴 도읍 등대. 등롱 꺼짐. 항로 밖에서 먹구름 접근 — 먹구름 속에 사람 그림자, 가면.	(Playback) End of the star-ship route, the Sunken Capital lighthouse. Lantern out. Storm cloud approaching from off the route — a human shadow inside the cloud, a mask.		
+2	go	story.ch23.s5.l3	(기록 재생) 그림자가 손을 들자 먹구름이 별배를 덮쳤습니다. 기관 정지, 추락. …그리고 그림자가 제 기록을 지웠습니다.	(Playback) When the shadow raised a hand, the storm cloud swallowed the star-ship. Engine stopped, crash. …And the shadow erased my records.		
+2	go	story.ch23.s5.l4	도읍이 잠기던 날에도 하늘이 그렇게 검었소. 파도보다 먹구름이 먼저 왔었지.	The sky was that black the day the capital sank too. The storm cloud came before the waves.		
+2	go	story.ch23.s5.l5	경고. 기록 복원이 '기록을 지운 자'가 남긴 명령에 걸렸습니다. 돔 파수 거신이 침입자 제거를 시작합니다.	Warning. The record restoration triggered a command left by 'the one who erased the records.' The Dome Sentinel Colossus is beginning intruder removal.		
+2	go	story.ch23.s5.l6	돔 바닥이 울려요! 바위 거인이 — 서쪽에서 일어나요!	The dome floor is shaking! A rock giant — rising in the west!		
+2	go	story.ch23.s5.p.a	별배를 떨어뜨린 건 틈이 아니었어…	It wasn't the rift that brought the star-ship down…		
+2	go	story.ch23.s5.p.b	먹구름을 부리는 누군가가 있어.	Someone is commanding the storm cloud.		
+2	go	story.ch23.s6	기록을 지운 자의 명령으로 깨어난 돔 파수 거신과 맞서기	Face the Dome Sentinel Colossus awakened by the command of the one who erased the records		
+2	go	story.ch23.s7	돔 안의 물새와 이야기하기	Talk to Mulsae inside the dome		
+2	go	story.ch23.s7.l1	……바위 속에 먹구름이 박혀 있었구려. 누가 이 빛 집까지 손을 뻗은 게요.	…There was storm cloud lodged inside the rock. Who reached out a hand even to this house of light?		
+2	go	story.ch23.s7.l2	파수 거신 정지. 명령 기록 추적 — 발신지는 하늘 항로 위, 구름 위입니다.	Sentinel halted. Tracing the command record — the origin is above the sky route, above the clouds.		
+2	go	story.ch23.s7.l3	삐— 기억이 돌아왔습니다. 별배가 가려던 곳은 등대가 아니라, 등대가 비추던 하늘 항로였습니다.	Beep — my memory has returned. The star-ship wasn't heading for the lighthouse, but for the sky route the lighthouse lit.		
+2	go	story.ch23.s7.l4	물은 두 번 가르쳐 주지 않는다 했지. 이번엔 나도 안 놓치겠소 — 도읍을 잠기게 한 그 먹구름을.	I said the water doesn't teach twice. This time I won't miss it — the storm cloud that sank the capital.		
+2	go	story.ch23.s7.l5	해녀 물새, 오늘부터 뭍사람들 편이오. 숨 긴 거 하나는 자신 있소.	Haenyeo Mulsae — from today I'm on the land-dwellers' side. Holding my breath is the one thing I'm sure of.		
+2	go	story.ch23.s7.p.a	먹구름을 부리는 자를 찾자.	Let's find whoever commands the storm cloud.		
+2	go	story.ch23.s7.p.b	물새 님은 이제 어떡해요?	What will you do now, Mulsae?		
+2	go	story.ch23.stepped	🗼 등대 난간 판에 올라섰다 — 꺼진 등롱이 눈앞에 있다	🗼 You stand on the lighthouse railing deck — the unlit lantern is right before you		
+2	go	story.ch23.win	🗿 파수 거신이 무너지고 — 가슴에 박혀 있던 먹구름 조각이 흩어졌다	🗿 The sentinel collapses — the storm-cloud shard lodged in its chest scatters		
 2	go	story.ch3	제3장 · 잔칫날의 불청객	Chapter 3 · Uninvited Guests at the Feast		
 2	go	story.ch3.s1	촌장에게 잔치 일손을 돕겠다고 하기	Offer the Elder a hand with the feast		
 2	go	story.ch3.s1.l1	하늘이 갠 기념으로 잔치를 열기로 했단다. 그런데 일손이 모자라구나.	We've decided to hold a feast now that the sky has cleared. But we're short of hands.		
@@ -2011,6 +2058,7 @@
 2	go	story.idle.haram	바늘이 또 얼었네… 눈은 언제 그치려나.	The needle froze again… when will this snow ever stop?		
 2	go	story.idle.horse	히힝… 푸르르.	Neigh… snort.		
 2	go	story.idle.mulsae	숨 한 번에 한 길. 물은 서두르는 사람을 싫어한다오.	One breath, one fathom. The water dislikes those in a hurry.		
+2	go	story.idle.parang	빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오.	This is the Light Dome records room. Please state the record you wish to view.		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 2	go	story.idle.thief	헤헤, 못 잡지롱!	Heh heh, can't catch me!		
 2	go	story.idle.wanderer	……	……		
@@ -2038,6 +2086,7 @@
 2	go	story.npc.haram	기상 관측원 하람	Haram the Weather Observer		
 2	go	story.npc.horse	놀란 역마	Startled Post Horse		
 2	go	story.npc.mulsae	해녀 물새	Haenyeo Mulsae		
+2	go	story.npc.parang	돔 관리 인공지능 파랑	Dome Administrator AI Parang		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
 2	go	story.npc.thief	노 도둑	Oar Thief		
 2	go	story.npc.wanderer	가면 쓴 나그네	Masked Traveler		
@@ -2068,6 +2117,7 @@
 2	go	story.short.haram	하람	Haram		
 2	go	story.short.horse	역마	Horse		
 2	go	story.short.mulsae	물새	Mulsae		
+2	go	story.short.parang	파랑	Parang		
 2	go	story.short.scholar	은비	Eunbi		
 2	go	story.short.thief	도둑	Thief		
 2	go	story.short.wanderer	나그네	Traveler		
@@ -3477,6 +3527,7 @@
 3	go	hero.story_haesol.quote	……고맙다. 노래를 다시 부를 수 있을 것 같아.	…Thank you. I think I can sing again.		
 3	go	hero.story_hanbyeol.quote	선장이 할 일은 다음 항로를 찾는 거지 — 이번엔 너희와 함께.	A captain's job is to find the next route — this time with you.		
 3	go	hero.story_haram.quote	날씨도 시간도, 재야 아는 거니까.	Weather, time — you have to measure them to know them.		
+3	go	hero.story_mulsae.quote	숨 긴 거 하나는 자신 있소.	Holding my breath is the one thing I'm sure of.		
 3	go	hero.story_scholar.quote	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 3	go	hero.story_wanderer.quote	너무 떨어지면 기다려 주지 않을 테니.	Fall too far behind and I won't wait.		
 3	go	hero.wd_akbar.quote	믿음은 강요로 얻어지지 않는다.	Faith is not won by force.		

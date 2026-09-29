@@ -570,6 +570,7 @@ namespace Saga.Go.World
             if (st != null && st.Type == GoStory.StepType.Seal) { SealPulse(center, radius); return; }
             if (st == null || st.Type != GoStory.StepType.Light) return;
             if (GoStory.Flat(center, GoStory.TargetOf(st, out _)) > radius + GoStory.LightR) return;
+            if (st.Perch && FieldCombat.Instance != null && !GoStory.OnClimbTop(st.At, FieldCombat.Instance.transform.position)) { Toast(GoLocalization.T(st.AwayKey, st.AwayKo), 3f); return; } // 109-14-47 등롱은 탑 꼭대기에서만
             Toast(st.EnterKo != null ? GoLocalization.T(st.EnterKey, st.EnterKo) : GoLocalization.T("story.lit", "옛 제단에 불이 붙었다 — 비문이 빛난다"), 3.5f);
             if (st.Bare && st.At == "skyport:temple") AreaField.Instance?.RingBell(); // 109-14-39 종각 종이 흔들린다
             StoryState.Advance();
