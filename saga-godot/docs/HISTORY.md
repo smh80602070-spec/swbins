@@ -9485,3 +9485,8 @@ PROJECT_STATE.md` 참고. 요약:
 
 - 주인공만 어두운 가죽 그대로 칙칙했다. player.gd 가 apply_to 뒤 cloth 재질 albedo_tint ×1.7(CLOTH_BOOST). 창 모드 v_people_lineup 전후: 검은 옷 → 초록 조끼가 마을 사람 사이에서 눈에 띈다. 점검 COMBAT·TRAVERSAL fails=0, REGRESS OK.
 - 사가블로·사가의숲 주인공은 셀 셰이더를 안 쓴다(위에서 내려다보는 카메라 — 얼굴·눈 보정은 안 보이는 거리라 적용 안 함).
+
+## GO 지형 기복 시험 — 접음 (2026-09-30, 같은 세션)
+
+- terrain_builder.vertex_height 에 평지(".") 완만한 물결 기복(FastNoiseLite 파장 80~125m, 이웃이 평지 아닌 변에서 12m 안에 0 으로 잦아듦)을 얹어 창 모드로 봤다. 결과: (1) 이야기 지역 지도는 "." 가 작은 무리로 흩어지고 T(숲 바닥)·=(길)·H 같은 평지 글자와 섞여 있어 "." 만 올리면 변마다 잦아들어 거의 안 보인다(skyport 무변화). (2) 진폭을 4m 로 키우면 마을에서 가로등·집이 떠 보였다 — 소품이 LEGEND 평탄 높이를 직접 쓰는 자리가 GO 에만 약 50곳(vegetation_builder 11·region2_coast 14·landmarks 8 …).
+- 결정: 되돌림(코드 변화 없음). 하려면 평지 글자(. T = H F …)를 한 묶음으로 보고 지면에 앉히는 모든 곳을 height_at 으로 바꾼 뒤 진폭을 올려야 한다 — 별도 작업으로 잡을 것.
