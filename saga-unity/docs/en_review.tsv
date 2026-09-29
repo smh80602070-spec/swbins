@@ -1176,6 +1176,7 @@
 2	go	region.west_wood	서쪽 숲길	Western Woodpath		
 2	go	story.altar4	넷째 제단	the Fourth Altar		
 2	go	story.altar_beacon	봉화 제단	Beacon Altar		
+2	go	story.altar_clockwind	되감는 괘종시계	the chime clock being rewound		
 2	go	story.altar_domelock	빛 돔 문 자물쇠	light-dome door lock		
 2	go	story.altar_engine	비행선 기관	airship engine		
 2	go	story.altar_knot	매듭 제단	knot altar		
@@ -2097,6 +2098,42 @@
 2	go	story.ch30.s8.l5	장터 둘레에 낡은 석등이 셋 서 있어요. 가게 문 닫고 따라갈게요. 준비되면 말해 줘요!	Three old stone lanterns stand around the market. I'll close the shop and follow you. Tell me when you're ready!		
 2	go	story.ch30.s8.p.a	북동쪽에 뭐가 있어요?	What's in the northeast?		
 2	go	story.ch30.s8.p.b	제일 큰 결정은 어디죠?	Where is the biggest crystal?		
+2	go	story.ch31	제31장 · 호박 속 장터	Chapter 31 · The Market in Amber		
+2	go	story.ch31.caught	🛸 조각 도둑을 붙잡았다 — 발톱에서 태엽 저울추가 툭 떨어진다	🛸 You caught the part thief — the spring scale weight drops from its claws		
+2	go	story.ch31.flee	🛸 조각 도둑이 저울추를 물고 네거리 쪽으로 달아난다 — 쫓아라!	🛸 The part thief runs toward the crossroads with the scale weight in its beak — chase it!		
+2	go	story.ch31.lost	💨 놓쳤다 — 도둑이 장터 곁으로 돌아가 숨었다. 다시 가까이 가면 달아난다	💨 It got away — the thief went back to hide near the market. Get close again and it will run		
+2	go	story.ch31.s1	시계방 앞의 초롱과 이야기하기	Talk to Chorong in front of the clock shop		
+2	go	story.ch31.s1.l1	가게 문 닫았어요! 장터 석등 셋 말인데요 — 할머니가 늘 흥얼거리던 장터 노래가 있어요.	I closed up the shop! About the three market lanterns — my grandmother always hummed a market song.		
+2	go	story.ch31.s1.l2	'해 뜨면 장이 서고, 달 뜨면 셈을 하고, 별 뜨면 짐을 싼다' — 석등마다 해·달·별이 새겨져 있거든요.	'Sun up, the market opens; moon up, we count the coins; stars up, we pack our goods' — each lantern is carved with a sun, a moon or a star.		
+2	go	story.ch31.s1.l3	삐— 석등 셋에서 약한 틈 신호. 차례대로 켜면 결정의 결이 풀릴 수 있습니다.	Beep — faint rift signals from all three lanterns. Lighting them in order may loosen the grain of the crystal.		
+2	go	story.ch31.s1.l4	장터 앞에서 기다릴게요. 틀리면 다 꺼질지도 몰라요 — 천천히요!	I'll wait in front of the market. If you get it wrong they might all go out — take it slow!		
+2	go	story.ch31.s1.p.a	노래 차례대로 켜 볼게요.	I'll light them in the song's order.		
+2	go	story.ch31.s1.p.b	해, 달, 별 순서죠?	Sun, moon, star — right?		
+2	go	story.ch31.s2	호박 속 장터 둘레 석등을 장터 노래 차례(해 → 달 → 별)대로 밝히기	Light the stone lanterns around the market in amber in the order of the market song (sun → moon → star)		
+2	go	story.ch31.s3	풀려난 장돌뱅이와 이야기하기	Talk to the freed peddler		
+2	go	story.ch31.s3.l1	……어, 어라? 장이 파했나? 방금까지 저울질하던 참인데 — 손님들은 다 어디 가고.	…Huh? Has the market closed? I was just weighing goods — where did all the customers go?		
+2	go	story.ch31.s3.l2	할아버지, 여기 결정 속에 굳어 계셨어요. 바깥은 벌써… 아주 먼 뒷날이에요.	Grandfather, you were frozen inside the crystal here. Outside it's already… a very distant future.		
+2	go	story.ch31.s3.l3	뒷날이라니, 허허. 쇠 수레가 하늘길로 다니는 걸 보니 꿈은 아니로구먼. 이 장돌뱅이 너울, 팔도 장은 다 돌았어도 이런 장은 처음일세.	The future, heh heh. Iron carts travelling the sky roads — it can't be a dream. I, Neoul the peddler, have worked every market in the land, but never one like this.		
+2	go	story.ch31.s3.l4	하늘이 쩍 갈라지더니 그 틈에서 쇳조각 하나가 내 저울판에 떨어졌지. 태엽처럼 도르르 감긴 놈인데, 저울추로 딱 맞아서—	The sky split open and a piece of iron fell from the gap onto my scale pan. Coiled like a spring, and it fit perfectly as a weight—		
+2	go	story.ch31.s3.l5	어이쿠! 저, 저놈 봐라! 날개 달린 쇳덩이가 내 저울추를 물고 간다!	Oh my! Look at that thing! A winged lump of iron is carrying off my scale weight!		
+2	go	story.ch31.s3.p.a	다친 데는 없으세요?	Are you hurt anywhere?		
+2	go	story.ch31.s3.p.b	굳기 전에 무슨 일이 있었어요?	What happened before you froze?		
+2	go	story.ch31.s4	너울의 저울추를 물고 달아나는 조각 도둑 쫓기	Chase the part thief running off with Neoul's scale weight		
+2	go	story.ch31.s5	장터의 너울에게 저울추 돌려주기	Return the scale weight to Neoul at the market		
+2	go	story.ch31.s5.l1	고맙네, 젊은이! 이 저울추 — 보게, 초롱 아가씨 손목시계 태엽과 결이 똑같지 않은가.	Thank you, young one! This scale weight — look, its grain is exactly like the spring in Miss Chorong's wristwatch.		
+2	go	story.ch31.s5.l2	정말… 틈 조각이에요. 이거라면 가게 큰 괘종시계를 되감을 수 있을지도 몰라요. 거리에서 제일 오래된 시계라 거리 시간과 이어져 있거든요!	It really is… a rift fragment. With this I might be able to rewind the shop's big chime clock. It's the oldest clock on the street, so it's tied to the street's time!		
+2	go	story.ch31.s5.l3	삐— 도둑 드론은 굳은 조각을 한곳으로 모으고 있었습니다. 되감기 시작하면 조각을 노리는 것들이 몰려옵니다.	Beep — the thief drone was gathering frozen fragments in one place. Once the rewinding starts, things after the fragments will swarm in.		
+2	go	story.ch31.s5.l4	나는 장터를 지키겠네. 저울추는 아가씨가 가져가게 — 장돌뱅이는 셈이 정확해야지.	I'll look after the market. Miss, take the scale weight — a peddler's accounts must be exact.		
+2	go	story.ch31.s5.p.a	시계는 내가 지킬게.	I'll guard the clock.		
+2	go	story.ch31.s5.p.b	되감는 동안 막아 줄게요.	I'll hold them off while you rewind.		
+2	go	story.ch31.s6	초롱이 괘종시계를 되감는 동안 시계방 지키기	Guard the clock shop while Chorong rewinds the chime clock		
+2	go	story.ch31.s7	시계방 앞의 초롱과 이야기하기	Talk to Chorong in front of the clock shop		
+2	go	story.ch31.s7.l1	다 감았어요…! 들려요? 째깍, 째깍 — 괘종시계가 가요!	All wound up…! Can you hear it? Tick, tock — the chime clock is running!		
+2	go	story.ch31.s7.l2	……그런데 한 칸 가고 멈춰요. 몇 번을 감아도 딱 한 칸.	…But it moves one notch and stops. No matter how many times I wind it, just one notch.		
+2	go	story.ch31.s7.l3	삐— 괘종시계 신호가 북쪽으로 당겨집니다. 부양탑 꼭대기. 거리의 시간이 그곳에 묶여 있습니다.	Beep — the chime clock's signal is being pulled north. The top of the levitation tower. The street's time is bound there.		
+2	go	story.ch31.s7.l4	짓다 만 탑이요. 꼭대기에 '시간 태엽 심장'이 있대요 — 탑을 짓던 설계사가 가끔 탑 발치에서 혼잣말을 해요. 그 사람도 안 굳었나 봐요!	The unfinished tower. They say there's a 'time-spring heart' at the top — the architect who was building it sometimes mutters to himself at the foot of the tower. He must not have frozen either!		
+2	go	story.ch31.s7.p.a	부양탑에 뭐가 있죠?	What's at the levitation tower?		
+2	go	story.ch31.s7.p.b	탑까지 가 봐요.	Let's go to the tower.		
 2	go	story.ch4	제4장 · 가면 쓴 나그네	Chapter 4 · The Masked Traveler		
 2	go	story.ch4.s1	촌장에게 새벽 소식 듣기	Hear the Elder's news from dawn		
 2	go	story.ch4.s1.l1	잔치 이튿날 새벽이었단다. 남쪽 다리목에 웬 가면 쓴 나그네가 서 있더래.	It was the dawn after the feast. They say a masked traveler was standing at the southern bridgehead.		
@@ -2369,7 +2406,9 @@
 2	go	story.idle.horse	히힝… 푸르르.	Neigh… snort.		
 2	go	story.idle.king	……	…		
 2	go	story.idle.mulsae	숨 한 번에 한 길. 물은 서두르는 사람을 싫어한다오.	One breath, one fathom. The water dislikes those in a hurry.		
+2	go	story.idle.neoul	저울추는 셈이 정확해야 하는 법이지. 쇠 수레 구경도 한두 번이지, 허허.	A scale weight has to be exact, you know. Even iron carts get old after a while, heh heh.		
 2	go	story.idle.parang	빛 돔 기록실입니다. 열람하실 기록을 말씀해 주십시오.	This is the Light Dome records room. Please state the record you wish to view.		
+2	go	story.idle.partthief	삐비— 치익.	Bibi— tsss.		
 2	go	story.idle.saebyeok	방울이 울면 바람이 길을 안다오.	When the bells ring, the wind knows the way.		
 2	go	story.idle.scholar	이 비문, 읽을수록 이상하다니까.	The more I read this inscription, the stranger it gets.		
 2	go	story.idle.seeddrone	삐비— 치익.	Bibi— tsss.		
@@ -2403,7 +2442,9 @@
 2	go	story.npc.horse	놀란 역마	Startled Post Horse		
 2	go	story.npc.king	먹구름 임금	Storm King		
 2	go	story.npc.mulsae	해녀 물새	Haenyeo Mulsae		
+2	go	story.npc.neoul	장돌뱅이 너울	Peddler Neoul		
 2	go	story.npc.parang	돔 관리 인공지능 파랑	Dome Administrator AI Parang		
+2	go	story.npc.partthief	조각 도둑	Part Thief		
 2	go	story.npc.saebyeok	바람 무녀 새벽	Wind Priestess Saebyeok		
 2	go	story.npc.scholar	떠돌이 학자 은비	Wandering Scholar Eunbi		
 2	go	story.npc.seeddrone	구름 씨앗 드론	Cloud-Seed Drone		
@@ -2440,7 +2481,9 @@
 2	go	story.short.haram	하람	Haram		
 2	go	story.short.horse	역마	Horse		
 2	go	story.short.mulsae	물새	Mulsae		
+2	go	story.short.neoul	너울	Neoul		
 2	go	story.short.parang	파랑	Parang		
+2	go	story.short.partthief	도둑	Thief		
 2	go	story.short.saebyeok	새벽	Saebyeok		
 2	go	story.short.scholar	은비	Eunbi		
 2	go	story.short.seeddrone	드론	Drone		

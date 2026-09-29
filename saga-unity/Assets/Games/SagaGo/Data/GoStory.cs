@@ -403,6 +403,10 @@ namespace Saga.Go.Data
         public static readonly int[] AmberCrystalFrom = { 5, 6, 7 };
         /// <summary>30장(⑲-58) 자리(각 명소 가운데에서 m, z 남쪽): 고개 어귀 go = 고개 북쪽 40m(돌기둥에서 내린 자리에서 20m 넘게 걸어야 닿는다) · 네거리 무리 = 가운데 남쪽 8m · 초롱 = 시계방 서남쪽 앞 · 반디 = 시계방 남서쪽.</summary>
         public static readonly Vector2 AmberPassGo = new Vector2(0f, -40f), AmberCrossKill = new Vector2(0f, 8f), ChorongAt = new Vector2(-3f, 6f), ChorongBandi = new Vector2(-8f, 8f);
+        /// <summary>31장(⑲-59) 자리: 너울 = 장터 가운데 굳어 있던 자리(돔이 깨진 뒤) · 초롱 = 장터 동쪽 앞(석등 고리 밖) · 괘종시계 지키기 제단 = 시계방 서쪽 · 조각 도둑 길 = 네거리 둘레 열한 점(웹 열한 점을 이 땅 크기로 — 시계방·신상·장터·탑·굳은 자리에서 9m 넘게 떨어짐).</summary>
+        public static readonly Vector2 NeoulAt = new Vector2(0f, 3.8f), ChorongMarket = new Vector2(9f, 0f), ClockDefend = new Vector2(-8f, 2f);
+        public static readonly Vector2[] AmberThiefPath = { new Vector2(-26.3f, -9.6f), new Vector2(-19.4f, -26.7f), new Vector2(-1.3f, -38f), new Vector2(14.8f, -23.7f), new Vector2(30.1f, -13.4f), new Vector2(37.4f, 6.6f),
+            new Vector2(20.1f, 19.5f), new Vector2(6.9f, 32.3f), new Vector2(-14.2f, 35.2f), new Vector2(-23.2f, 15.7f), new Vector2(-33f, 0f) };
         public const int AmberCh30 = 29, AmberCh31 = 30, AmberCh32 = 31, AmberDomeStep = 2, AmberTowerStep = 3, AmberGreenStep = 5, AmberWindStep = 5;
         private static bool Reached(int ch, int step, int atCh, int atStep) => ch > atCh || (ch == atCh && step >= atStep);
         /// <summary>고개 결정 막이 풀렸나 — 1차 결말(29장)을 마친 뒤.</summary>
@@ -599,7 +603,7 @@ namespace Saga.Go.Data
                     new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineBandi }, new Spot { Ch = 24, From = 0, To = 0, Route = "shrine", Arena = ShrineBandi },
                     new Spot { Ch = 24, From = 1, To = 99, Route = "wreck", Arena = WreckBandi }, new Spot { Ch = 25, From = 0, To = 0, Route = "wreck", Arena = WreckBandi },
                     new Spot { Ch = 25, From = 1, To = 99, Route = "orbit", Arena = OrbitBandi }, new Spot { Ch = 26, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 27, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f }, new Spot { Ch = 28, From = 0, To = 99, Gx = 4.5f, Gy = 0.5f },
-                    new Spot { Ch = 29, From = 0, To = 0, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 29, From = 1, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi } }, // 8부(27장~) 반디는 청하 촌장 곁 마을 · 9부(30장~) 굳은 거리 시계방
+                    new Spot { Ch = 29, From = 0, To = 0, At = "skyport:port", Arena = PortBandi }, new Spot { Ch = 29, From = 1, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:clock", Arena = ChorongBandi } }, // 8부(27장~) 반디는 청하 촌장 곁 마을 · 9부(30장~) 굳은 거리 시계방
                 IdleKey = "story.idle.bandi", IdleKo = "삐— 별배 심장 온도, 계속 하락 중." },
             // 109-14-42 19장(웹 ⑲-42) — 별배 선장 한별: 첫 정거장 승강장 남쪽 끝에 서고(19장 뒤 20장까지), 19장 8~10째 단계엔 섬돌 밑 틈 수정 아래 (20장에서 동료)
             new Npc { Id = "hanbyeol", NameKey = "story.npc.hanbyeol", NameKo = "별배 선장 한별", ShortKey = "story.short.hanbyeol", ShortKo = "한별",
@@ -607,7 +611,7 @@ namespace Saga.Go.Data
                 Appear = new[] { new Spot { Ch = 18, From = 7, To = 9, At = "crossing:steps", Arena = CrossStepsHanbyeol }, new Spot { Ch = 19, From = 0, To = 1, At = "crossing:platform", Arena = CrossHanbyeol }, new Spot { Ch = 19, From = 2, To = 10, Sky = true, Rift = true, Arena = RiftHanbyeol },
                     new Spot { Ch = 20, From = 0, To = 1, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 20, From = 2, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 21, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 22, From = 0, To = 99, At = "sunken:gate", Arena = SandHanbyeol }, new Spot { Ch = 23, From = 0, To = 1, At = "sunken:gate", Arena = SandHanbyeol },
                     new Spot { Ch = 23, From = 2, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 24, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 25, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol }, new Spot { Ch = 26, From = 0, To = 99, Route = "shrine", Arena = ShrineHanbyeol },
-                    new Spot { Ch = 29, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 30, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol } }, // 9부(30장~) 은하 나루 착륙판 곁
+                    new Spot { Ch = 29, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 30, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol }, new Spot { Ch = 31, From = 0, To = 99, At = "skyport:port", Arena = SunkPortHanbyeol } }, // 9부(30장~) 은하 나루 착륙판 곁
                 IdleKey = "story.idle.hanbyeol", IdleKo = "틈의 끝은 첫 정거장 다음 역이다." },
             // 109-14-45 21장(웹 ⑲-45) — 잠수 기사 여울(현대): 늘 연구 기지 서쪽, 21장 5~7째 단계 선착장 · 8째~ 궁궐 기단
             new Npc { Id = "yeoul", NameKey = "story.npc.yeoul", NameKo = "잠수 기사 여울", ShortKey = "story.short.yeoul", ShortKo = "여울",
@@ -696,8 +700,20 @@ namespace Saga.Go.Data
             // 109-14-58 30장(웹 ⑲-58) — 시계 수리공 초롱(현대): 손목시계 속 틈 조각 태엽 덕에 혼자 안 굳었다. 9부(30장~) 늘 시계방 서쪽 앞(뒤 장은 31장 이식 때 자리를 더한다)
             new Npc { Id = "chorong", NameKey = "story.npc.chorong", NameKo = "시계 수리공 초롱", ShortKey = "story.short.chorong", ShortKo = "초롱",
                 AtSite = "amber:clock", AtOff = ChorongAt, FolkBody = "Megan",
-                Appear = new[] { new Spot { Ch = 29, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt } },
+                Appear = new[] { new Spot { Ch = 29, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt },
+                    new Spot { Ch = 30, From = 1, To = 4, At = "amber:market", Arena = ChorongMarket }, new Spot { Ch = 30, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt }, // 31장 석등·너울·도둑·저울추 — 장터 동쪽 앞
+                    new Spot { Ch = 31, From = 0, To = 99, At = "amber:clock", Arena = ChorongAt } },
                 IdleKey = "story.idle.chorong", IdleKo = "다른 시계는 다 멈췄는데 내 손목시계만 째깍거려요." },
+            // 109-14-59 31장(웹 ⑲-59) — 장돌뱅이 너울(과거): 장터 결정 속에 좌판째 굳어 있던 사람. 결정이 깨진 뒤(31장 3째 단계부터, 뒤에도) 장터 가운데 굳어 있던 자리
+            new Npc { Id = "neoul", NameKey = "story.npc.neoul", NameKo = "장돌뱅이 너울", ShortKey = "story.short.neoul", ShortKo = "너울",
+                AtSite = "amber:market", AtOff = NeoulAt, FolkBody = "PeasantMan",
+                Appear = new[] { new Spot { Ch = 30, From = 2, To = 99, At = "amber:market", Arena = NeoulAt }, new Spot { Ch = 31, From = 0, To = 99, At = "amber:market", Arena = NeoulAt } },
+                IdleKey = "story.idle.neoul", IdleKo = "저울추는 셈이 정확해야 하는 법이지. 쇠 수레 구경도 한두 번이지, 허허." },
+            // 조각 도둑 — 31장 쫓기 때만(4째 단계) 네거리 둘레 길(AmberThiefPath)을 난다. 반디와 같은 기계 몸.
+            new Npc { Id = "partthief", NameKey = "story.npc.partthief", NameKo = "조각 도둑", ShortKey = "story.short.partthief", ShortKo = "도둑",
+                AtSite = "amber:cross", AtOff = Vector2.zero, Pet = true, RunAt = "amber:cross", RunPath = AmberThiefPath,
+                Appear = new[] { new Spot { Ch = 30, From = 3, To = 3, At = "amber:cross", Arena = new Vector2(-26.3f, -9.6f) } },
+                IdleKey = "story.idle.partthief", IdleKo = "삐비— 치익." },
         };
 
 
@@ -2663,6 +2679,66 @@ namespace Saga.Go.Data
                             Pick("story.ch30.s8.p", "북동쪽에 뭐가 있어요?", "제일 큰 결정은 어디죠?"),
                             L("chorong", "story.ch30.s8.l4", "호박 속 장터요. 옛날 장터가 천막째 통째로 결정에 들어 있어요 — 이 거리에서 제일 큰 굳은 자리예요."),
                             L("chorong", "story.ch30.s8.l5", "장터 둘레에 낡은 석등이 셋 서 있어요. 가게 문 닫고 따라갈게요. 준비되면 말해 줘요!"),
+                        } },
+                }
+            },
+            // 109-14-59 31장(웹 ⑲-59) — 9부 둘째 장, 호박 속 장터: 초롱(시계방) → 장터 석등 해 → 달 → 별(seal — 다 켜면 결정 돔이 깨진다 = `AmberDomeStep` 2째 단계부터) → 새 인물 장돌뱅이 너울
+            // → 조각 도둑 쫓기(chase — 네거리 둘레 길 `AmberThiefPath`) → 너울 → 되감는 괘종시계 지키기(defend — 시계방 서쪽, 6째(5) 단계 동안 바늘이 돈다 = `AmberWindStep`) → 초롱(부양탑).
+            new Chapter
+            {
+                Id = "ch31", NameKey = "story.ch31", NameKo = "제31장 · 호박 속 장터", Ar = 68,
+                Gold = 8000, Mats = new[] { 0, 7, 6, 7, 0 },
+                Steps = new[]
+                {
+                    new Step { Type = StepType.Talk, Npc = "chorong", TextKey = "story.ch31.s1", TextKo = "시계방 앞의 초롱과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("chorong", "story.ch31.s1.l1", "가게 문 닫았어요! 장터 석등 셋 말인데요 — 할머니가 늘 흥얼거리던 장터 노래가 있어요."),
+                            L("chorong", "story.ch31.s1.l2", "'해 뜨면 장이 서고, 달 뜨면 셈을 하고, 별 뜨면 짐을 싼다' — 석등마다 해·달·별이 새겨져 있거든요."),
+                            L("bandi", "story.ch31.s1.l3", "삐— 석등 셋에서 약한 틈 신호. 차례대로 켜면 결정의 결이 풀릴 수 있습니다."),
+                            Pick("story.ch31.s1.p", "노래 차례대로 켜 볼게요.", "해, 달, 별 순서죠?"),
+                            L("chorong", "story.ch31.s1.l4", "장터 앞에서 기다릴게요. 틀리면 다 꺼질지도 몰라요 — 천천히요!"),
+                        } },
+                    new Step { Type = StepType.Seal, At = "amber:market", Arena = Vector2.zero, Order = new[] { "sun", "moon", "star" }, TextKey = "story.ch31.s2", TextKo = "호박 속 장터 둘레 석등을 장터 노래 차례(해 → 달 → 별)대로 밝히기" },
+                    new Step { Type = StepType.Talk, Npc = "neoul", TextKey = "story.ch31.s3", TextKo = "풀려난 장돌뱅이와 이야기하기",
+                        Lines = new[]
+                        {
+                            L("neoul", "story.ch31.s3.l1", "……어, 어라? 장이 파했나? 방금까지 저울질하던 참인데 — 손님들은 다 어디 가고."),
+                            L("chorong", "story.ch31.s3.l2", "할아버지, 여기 결정 속에 굳어 계셨어요. 바깥은 벌써… 아주 먼 뒷날이에요."),
+                            L("neoul", "story.ch31.s3.l3", "뒷날이라니, 허허. 쇠 수레가 하늘길로 다니는 걸 보니 꿈은 아니로구먼. 이 장돌뱅이 너울, 팔도 장은 다 돌았어도 이런 장은 처음일세."),
+                            Pick("story.ch31.s3.p", "다친 데는 없으세요?", "굳기 전에 무슨 일이 있었어요?"),
+                            L("neoul", "story.ch31.s3.l4", "하늘이 쩍 갈라지더니 그 틈에서 쇳조각 하나가 내 저울판에 떨어졌지. 태엽처럼 도르르 감긴 놈인데, 저울추로 딱 맞아서—"),
+                            L("neoul", "story.ch31.s3.l5", "어이쿠! 저, 저놈 봐라! 날개 달린 쇳덩이가 내 저울추를 물고 간다!"),
+                        } },
+                    new Step { Type = StepType.Chase, Npc = "partthief", TextKey = "story.ch31.s4", TextKo = "너울의 저울추를 물고 달아나는 조각 도둑 쫓기",
+                        EnterKey = "story.ch31.flee", EnterKo = "🛸 조각 도둑이 저울추를 물고 네거리 쪽으로 달아난다 — 쫓아라!",
+                        WinKey = "story.ch31.caught", WinKo = "🛸 조각 도둑을 붙잡았다 — 발톱에서 태엽 저울추가 툭 떨어진다",
+                        LostKey = "story.ch31.lost", LostKo = "💨 놓쳤다 — 도둑이 장터 곁으로 돌아가 숨었다. 다시 가까이 가면 달아난다" },
+                    new Step { Type = StepType.Talk, Npc = "neoul", TextKey = "story.ch31.s5", TextKo = "장터의 너울에게 저울추 돌려주기",
+                        Lines = new[]
+                        {
+                            L("neoul", "story.ch31.s5.l1", "고맙네, 젊은이! 이 저울추 — 보게, 초롱 아가씨 손목시계 태엽과 결이 똑같지 않은가."),
+                            L("chorong", "story.ch31.s5.l2", "정말… 틈 조각이에요. 이거라면 가게 큰 괘종시계를 되감을 수 있을지도 몰라요. 거리에서 제일 오래된 시계라 거리 시간과 이어져 있거든요!"),
+                            L("bandi", "story.ch31.s5.l3", "삐— 도둑 드론은 굳은 조각을 한곳으로 모으고 있었습니다. 되감기 시작하면 조각을 노리는 것들이 몰려옵니다."),
+                            Pick("story.ch31.s5.p", "시계는 내가 지킬게.", "되감는 동안 막아 줄게요."),
+                            L("neoul", "story.ch31.s5.l4", "나는 장터를 지키겠네. 저울추는 아가씨가 가져가게 — 장돌뱅이는 셈이 정확해야지."),
+                        } },
+                    new Step { Type = StepType.Defend, At = "amber:clock", Arena = ClockDefend, NameKey = "story.altar_clockwind", NameKo = "되감는 괘종시계", Dirs = new[] { 0f, 160f, 200f, 250f, 300f, 340f },
+                        Waves = new[]
+                        {
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.EmberImp) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo), F(FieldEnemy.Kind.StormWraith) },
+                            new[] { F(FieldEnemy.Kind.DrownedGhost, GoElement.Geo), F(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo), F(FieldEnemy.Kind.StormWraith), F(FieldEnemy.Kind.EmberImp), F(FieldEnemy.Kind.StormWraith, GoElement.Anemo) },
+                        },
+                        TextKey = "story.ch31.s6", TextKo = "초롱이 괘종시계를 되감는 동안 시계방 지키기" },
+                    new Step { Type = StepType.Talk, Npc = "chorong", TextKey = "story.ch31.s7", TextKo = "시계방 앞의 초롱과 이야기하기",
+                        Lines = new[]
+                        {
+                            L("chorong", "story.ch31.s7.l1", "다 감았어요…! 들려요? 째깍, 째깍 — 괘종시계가 가요!"),
+                            L("chorong", "story.ch31.s7.l2", "……그런데 한 칸 가고 멈춰요. 몇 번을 감아도 딱 한 칸."),
+                            L("bandi", "story.ch31.s7.l3", "삐— 괘종시계 신호가 북쪽으로 당겨집니다. 부양탑 꼭대기. 거리의 시간이 그곳에 묶여 있습니다."),
+                            Pick("story.ch31.s7.p", "부양탑에 뭐가 있죠?", "탑까지 가 봐요."),
+                            L("chorong", "story.ch31.s7.l4", "짓다 만 탑이요. 꼭대기에 '시간 태엽 심장'이 있대요 — 탑을 짓던 설계사가 가끔 탑 발치에서 혼잣말을 해요. 그 사람도 안 굳었나 봐요!"),
                         } },
                 }
             },

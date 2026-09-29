@@ -306,6 +306,18 @@ namespace Saga.EditorTools
                 Physics.SyncTransforms();
                 if (field.AmberPartOn("amber:crystal0") || !field.AmberPartOn("amber:crystal1") || !field.AmberPartOn("amber:crystal2")) Fail("30장 5째 단계: 신호등 앞 결정만 녹아야");
                 if (Physics.Raycast(c0 + new Vector3(-6f, 1.5f, 0f), Vector3.right, 12f)) Fail("녹은 굳은 자리에 충돌이 남음");
+                StoryState.Restore(30, 1); // 31장 석등 단계 — 돔은 아직
+                field.Refresh();
+                if (!field.AmberPartOn("amber:dome") || field.AmberWinding) Fail("31장 1째 단계: 돔은 아직 굳은 채·바늘 안 돎");
+                StoryState.Restore(30, 2); // 31장 2째 단계(석등을 켠 뒤) — 돔이 깨진다
+                field.Refresh();
+                if (field.AmberPartOn("amber:dome") || !field.AmberPartOn("amber:heart") || field.AmberLampsGreen || field.AmberWinding) Fail("31장 2째 단계: 돔만 깨져야(심장·신호등·바늘은 그대로)");
+                StoryState.Restore(30, 5); // 되감는 괘종시계 지키기
+                field.Refresh();
+                if (!field.AmberWinding || field.AmberPartOn("amber:dome")) Fail("31장 5째 단계: 바늘이 돌고 돔은 깨진 채여야");
+                StoryState.Restore(30, 6);
+                field.Refresh();
+                if (field.AmberWinding) Fail("31장 6째 단계: 바늘이 멈춰야");
                 StoryState.Restore(29, 7);
                 field.Refresh();
                 if (field.AmberPartOn("amber:crystal0") || field.AmberPartOn("amber:crystal1") || field.AmberPartOn("amber:crystal2") || !field.AmberPartOn("amber:dome") || !field.AmberPartOn("amber:heart") || field.AmberLampsGreen) Fail("30장 7째 단계: 굳은 자리 셋만 녹고 돔·심장·신호등은 그대로여야");
