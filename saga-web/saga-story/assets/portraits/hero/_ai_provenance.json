@@ -389,247 +389,247 @@
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1278432202,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "kr_yii": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3184600442,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "kr_yisunsin": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1774648747,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "kr_yugwansun": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2376411564,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_caocao": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1226674354,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_diaochan": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3478820035,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_ganning": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3748729584,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_guanyu": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1348139693,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_huangzhong": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1249309659,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_huatuo": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1347869134,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_liubei": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 407118598,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_lubu": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1706003698,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_luxun": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3206003926,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_machao": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3374712509,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_menghuo": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3523456787,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_pangtong": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 229981078,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_simayi": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3179672984,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_sunquan": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 202891007,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_taishici": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3509893072,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_xiahoudun": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 392163373,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_xunyu": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3597184121,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_zhangfei": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2766734466,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_zhangliao": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2144744137,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_zhaoyun": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1436686182,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_zhouyu": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 118576088,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "sg_zhugeliang": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2575382022,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_akbar": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1203798864,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_ashoka": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 229021442,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_attila": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2919383630,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_cleopatra": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 338809288,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_genghis": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 985378096,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_hammurabi": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2745018093,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_ibnbattuta": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 211591253,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_ibnsina": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1081169327,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_khubilai": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3619714648,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_mansamusa": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 3377572075,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_moctezuma": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 440441040,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_pachacuti": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 954383925,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_saladin": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 991811863,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_shaka": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 2236940843,
-"date": "2026-09-29"
+"date": "2026-09-30"
 },
 "wd_suleiman": {
 "model": "animagine-xl-4.0-opt",
 "license": "CreativeML OpenRAIL++-M",
 "seed": 1686996305,
-"date": "2026-09-29"
+"date": "2026-09-30"
 }
 }
 }
