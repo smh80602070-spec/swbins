@@ -2119,6 +2119,15 @@
       }
       out += '</div>';
     }
+    var scn = global.DG.scenario ? global.DG.scenario.lines() : [];
+    if (scn.length) {
+      out += '<div class="loglist"><div class="lrow info"><b>📖 이야기 · 1막 중원의 난</b></div>';
+      for (var si = 0; si < scn.length; si++) {
+        var sl = scn[si];
+        out += '<div class="lrow ' + (sl.state === 'done' ? 'good' : 'info') + '">' + sl.emoji + ' ' + esc(sl.title) + ' — ' + (sl.state === 'done' ? '✅ 끝' : sl.state === 'legacy' ? '지나온 길' : sl.state === 'next' ? '▶ 다음 사건' : '·') + '</div>';
+      }
+      out += '</div>';
+    }
     if (!log.length) { return out + '<div class="hint">아직 기록이 없습니다.</div>'; }
     out += '<div class="loglist">';
     for (var i = 0; i < log.length; i++) {
@@ -2233,7 +2242,7 @@
     var kd = v.kind ? global.DG.relData.KINDS[v.kind] : null, html, i;
     html = '<div style="text-align:center"><div class="enc-big">' + v.emoji + '</div>' +
       '<h3 style="margin:6px 0 2px;font-size:19px;color:var(--gold)">' + esc(v.name) + '</h3>' +
-      '<small class="muted">' + (kd ? kd.emoji + ' ' + kd.name + ' · ' : '') + (v.step > 1 ? v.step + '번째 이야기' : '사연') + '</small></div>' +
+      '<small class="muted">' + (kd ? kd.emoji + ' ' + kd.name + ' · ' : '') + (v.tag || (v.step > 1 ? v.step + '번째 이야기' : '사연')) + '</small></div>' +
       '<div class="enc-hist">' + esc(v.text) + '</div>';
     for (i = 0; i < v.choices.length; i++) {
       var c = v.choices[i];

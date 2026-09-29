@@ -43,7 +43,7 @@
 <div id="report">진단 중…</div>
 
 <script>
-window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
+window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true; window.DG_NO_SCENARIO = true;
 
 /* 무작위 고정 — 진단이 굴릴 때마다 달라지면 판정이 흔들린다.
    게임 스크립트보다 **먼저** 갈아 둬야 부트에서 쓰는 난수까지 잡힌다.
@@ -86,6 +86,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/diplo.js"></script>
 <script src="js/rtk-ai.js"></script>
 <script src="js/event.js"></script>
+<script src="js/data-scenario.js"></script>
+<script src="js/scenario.js"></script>
 <script src="js/quiz.js"></script>
 <script src="js/net.js"></script>
 <script src="js/ai.js"></script>
@@ -3191,7 +3193,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     });
 
     t('사연 표 — 열다섯 사연 + 체인 일곱(퓨전 셋·둘째 단 셋 포함), 모두 세 갈래(공세·신중·수단, 중복 0)이고 신중은 값이 안 든다', function () {
-      var chains = Object.keys(E.DEFS).filter(function (k) { return E.DEFS[k].chain; });
+      var chains = Object.keys(E.DEFS).filter(function (k) { return E.DEFS[k].chain && !(DG.scenarioData && DG.scenarioData.card(k)); });   // 시나리오 카드는 따로(시나리오 표 진단)
       var bad = [];
       Object.keys(E.DEFS).forEach(function (k) {
         var d = E.DEFS[k], ks = d.choices.map(function (c) { return c.k; }).sort().join(',');
@@ -3232,6 +3234,72 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         util.act.length === 1 && util.act[0].id === 'foe_truce' && util.act[0].due === util.turn + 4 && util.act[0].step === 2;
       var poorOk = !poor.r.ok && poor.a === 60 && poor.b === 60 && poor.gold === 100 && poor.act.length === 0;
       return atkOk && defOk && utilOk && poorOk && ('벌 → 48/64 · 갈라놓기 → 58/58 · 술자리 → 66/66 · 금 -400 · 체인 예약 · 금 100 이면 거절');
+    });
+
+    t('시나리오 표 — 카드·갈래·효과가 서로 맞고, 카드마다 과거·현대·미래가 셋 다 있다', function () {
+      var SD = DG.scenarioData, bad = [], ids = {}, FXT = ['gold', 'food', 'sec', 'train', 'loyal', 'rel'];
+      SD.CARDS.forEach(function (c, i) {
+        if (ids[c.id]) { bad.push(c.id + ' id 겹침'); } ids[c.id] = 1;
+        if (c.no !== i + 1) { bad.push(c.id + ' 번호'); }
+        if (!c.mix || !c.mix.past || !c.mix.now || !c.mix.future) { bad.push(c.id + ' 시대 섞기 빈 칸'); }
+        if (!c.when || typeof c.when.minTurn !== 'number' || (i && c.when.minTurn < SD.CARDS[i - 1].when.minTurn)) { bad.push(c.id + ' 때'); }
+        if (!DG.event.DEFS[c.id] || DG.event.ORDER.indexOf(c.id) >= 0) { bad.push(c.id + ' 정의 등록(무작위 풀에 안 섞여야)'); }
+        var ks = c.choices.map(function (x) { return x.k; }).join('');
+        if (ks !== 'atkdefutil') { bad.push(c.id + ' 세 갈래 ' + ks); }
+        c.choices.forEach(function (ch) {
+          if (!ch.label || !ch.hint || !ch.text || !ch.fx.length) { bad.push(c.id + '.' + ch.k + ' 빈 칸'); }
+          if (/\{/.test(ch.hint)) { bad.push(c.id + '.' + ch.k + ' 힌트에 칸'); }
+          ch.fx.forEach(function (f) { if (FXT.indexOf(f.t) < 0 || typeof f.n !== 'number') { bad.push(c.id + ' 효과 ' + f.t); } });
+        });
+      });
+      if (bad.length) { throw new Error(bad.join(', ')); }
+      return '카드 ' + SD.CARDS.length + ' · 세 갈래 · 효과 종류 ' + FXT.length;
+    });
+
+    t('시나리오 1막 — 카드가 때에 맞춰 하나씩 뜨고, 고르면 성 값·금·우호가 바뀌며, 옛 세이브는 건너뛴다', function () {
+      var SC = DG.scenario, bad = [], st = evFresh();
+      window.DG_NO_SCENARIO = false;
+      try {
+        var me = R.myForce(), cap = R.citiesOf('cao')[0];
+        // 카드 1 — 시작하자마자
+        E.tick();
+        var v = E.view();
+        if (!(v && v.id === 'r1_start' && v.tag.indexOf('1막') >= 0 && v.text.indexOf('{') < 0 && v.choices.length === 3)) { bad.push('첫 카드 ' + (v && v.id)); }
+        var sec0 = R.city(cap).sec;
+        var r1 = E.choose('def');
+        if (!r1.ok || R.city(cap).sec !== Math.min(100, sec0 + 8) || !SC.state().done.r1_start || E.view() !== null) { bad.push('첫 카드 고르기'); }
+        E.tick();
+        var v2 = E.view();
+        if (v2 && v2.id === 'r1_rift_sign') { bad.push('열두 달 전에 둘째 카드'); }
+        // 카드 2 — 12달 뒤
+        st.turn += 12; E.tick();
+        v = E.view();
+        if (!(v && v.id === 'r1_rift_sign')) { bad.push('둘째 카드 ' + (v && v.id)); }
+        var g0 = me.gold;
+        E.choose('util');
+        if (me.gold !== g0 + 300 || !SC.state().done.r1_rift_sign) { bad.push('둘째 카드 고르기 ' + (me.gold - g0)); }
+        // 카드 3 — 24달 뒤(또는 성 다섯)
+        st.turn += 12; E.tick();
+        v = E.view();
+        if (!(v && v.id === 'r1_first_ally' && v.text.indexOf('{') < 0)) { bad.push('셋째 카드 ' + (v && v.id)); }
+        var nbF = null, rel0 = 0; R.liveForces().forEach(function (f) { if (!nbF && f !== 'cao') { nbF = f; } });
+        rel0 = D.relation('cao', nbF);
+        E.choose('def');
+        if (!SC.state().done.r1_first_ally) { bad.push('셋째 카드 기록'); }
+        var lines = SC.lines();
+        if (!lines.every(function (x) { return x.state === 'done'; })) { bad.push('기록 줄 ' + JSON.stringify(lines.map(function (x) { return x.state; }))); }
+        // 다 끝나면 더는 안 뜬다
+        st.turn += 12; E.tick();
+        if (E.view() && E.view().tag && E.view().tag.indexOf('1막') >= 0) { bad.push('끝난 카드가 또 뜸'); }
+        E.view() && E.choose('def');
+
+        // 옛 세이브 — 24달 넘게 지난 판에서 처음 만나면 1막은 지나온 길
+        st = evFresh(); st.turn = 30;
+        E.tick();
+        if ((E.view() && E.view().tag && E.view().tag.indexOf('1막') >= 0) || SC.lines().some(function (x) { return x.state !== 'legacy'; })) { bad.push('옛 세이브 건너뜀'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '첫 카드(시작) → 12달 뒤 → 24달 뒤 · 치안 +8 · 금 +300 · 다 끝나면 조용 · 옛 세이브 건너뜀';
+      } finally { window.DG_NO_SCENARIO = true; evDone(); }
     });
 
     t('사연 체인 — 술자리 4달 뒤 화해의 자리가 뜨고, 화해도 2 에 닿으면 앙금이 풀려 충성 +5. 사람이 빠지면 조용히 사라진다', function () {

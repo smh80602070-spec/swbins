@@ -1,0 +1,134 @@
+/**
+ * 시나리오 — 사가국지 "천하와 균열" 사건 카드 진행
+ * ---------------------------------------------------------------
+ * 표는 `data-scenario.js`(CARDS). 카드는 `event.js` 의 사연 카드(세 갈래 고르기)로 뜬다 — 이 파일은
+ *   ① 표의 카드를 사연 정의(`E.addDef`)로 등록하고
+ *   ② 사람 세력에게 정해진 때에 카드를 내는 원천(`E.addSource`)을 달고
+ *   ③ 고른 뒤(`rtk:eventDone`) 끝낸 카드를 세이브에 적는다.
+ * AI 세력에게는 안 뜬다(원천이 사람 세력만 본다). 새 판정은 없다 — 금·성 값·충성·우호 손잡이만 만진다.
+ *
+ * 세이브: `rtk.state().scenario = { t0, done:{카드id:{k,turn}} }` — 없으면 빈 것. **옛 세이브**(시작 24달 뒤에 처음 만난 판)는
+ *   지나온 길로 보고 1막을 건너뛴다. 끄는 법: `window.DG_NO_SCENARIO = true`(진단이 기본으로 켠다).
+ */
+(function (global) {
+  'use strict';
+
+  var core = global.DG.core;
+  function E() { return global.DG.event; }
+  function R() { return global.DG.rtk; }
+  function OFF() { return global.DG.off; }
+  function CD() { return global.DG.scenarioData; }
+  function on() { return !global.DG_NO_SCENARIO; }
+
+  function save() {
+    var st = R().state();
+    if (!st.scenario || typeof st.scenario !== 'object') { st.scenario = {}; }
+    var s = st.scenario;
+    if (!s.done || typeof s.done !== 'object') { s.done = {}; }
+    if (s.turnSeen !== undefined && (st.turn || 0) < s.turnSeen) { st.scenario = {}; s = st.scenario; s.done = {}; }   // 새 판(달이 되돌아갔다) — 처음부터
+    s.turnSeen = st.turn || 0;
+    if (s.t0 === undefined) {
+      s.t0 = st.turn || 0;
+      if ((st.turn || 0) > 24) { CD().CARDS.forEach(function (c) { s.done[c.id] = { k: '', turn: st.turn, legacy: true }; }); }   // 옛 세이브
+    }
+    return s;
+  }
+
+  function fill(text, c) {
+    var b = c.b ? E().h.nm(c.b) : '이웃 군주';
+    return String(text).replace(/\{책사\}/g, c.a ? E().h.nm(c.a) : '책사').replace(/\{이웃\}/g, b);
+  }
+
+  /** 이웃 = 다른 살아 있는 세력 하나의 군주(가까운 쪽을 따지지 않고 첫 세력) */
+  function neighbourLord(F) {
+    var ids = R().liveForces(), i;
+    for (i = 0; i < ids.length; i++) { if (ids[i] !== F) { return { force: ids[i], lord: OFF().lordOf(ids[i]) }; } }
+    return null;
+  }
+
+  function apply(fx, c, F) {
+    var h = E().h, cy = c.city;
+    if (fx.t === 'gold') { h.gold(F, fx.n); }
+    else if (fx.t === 'food') { h.adjust(cy, 'food', fx.n, 0, 999999999); }
+    else if (fx.t === 'sec') { h.adjust(cy, 'sec', fx.n, 0, 100); }
+    else if (fx.t === 'train') { h.adjust(cy, 'train', fx.n, 0, 100); }
+    else if (fx.t === 'loyal' && c.a) { h.loyal(c.a, fx.n); }
+    else if (fx.t === 'rel' && c.b) {
+      var rec = OFF().rec(c.b), DIP = global.DG.diplo;
+      if (rec && rec.force && DIP && DIP.addRelation) { DIP.addRelation(F, rec.force, fx.n); }
+    }
+  }
+
+  function register() {
+    CD().CARDS.forEach(function (cd) {
+      E().addDef({
+        id: cd.id, name: cd.title, emoji: cd.emoji, tag: cd.tag, chain: true,
+        valid: function () { return null; },
+        text: function (c) { return fill(cd.text, c); },
+        choices: cd.choices.map(function (ch) {
+          return {
+            k: ch.k, label: fill(ch.label, {}), hint: ch.hint, cost: ch.cost || 0,
+            go: function (c, F) {
+              ch.fx.forEach(function (fx) { apply(fx, c, F); });
+              return { text: fill(ch.text, c) };
+            }
+          };
+        })
+      });
+    });
+  }
+
+  function due(cd, F) {
+    var st = R().state(), s = save(), since = (st.turn || 0) - s.t0;
+    if (since >= cd.when.minTurn) { return true; }
+    return !!(cd.when.orCities && R().citiesOf(F).length >= cd.when.orCities);
+  }
+
+  /** 사람 세력에게 다음 카드 하나 — 표 순서대로, 앞 카드가 끝나야 다음이 온다 */
+  function source(F) {
+    if (!on()) { return null; }
+    var st = R().state();
+    if (F !== st.me || !st.started || st.result) { return null; }
+    var s = save(), list = CD().CARDS, i;
+    for (i = 0; i < list.length; i++) {
+      if (s.done[list[i].id]) { continue; }
+      if (!due(list[i], F)) { return null; }
+      var cap = R().citiesOf(F)[0] || '', by = cap ? E().h.wisest(cap, F) : null, nb = neighbourLord(F);
+      return { id: list[i].id, step: 1, ctx: { a: by ? by.id : '', b: nb && nb.lord ? nb.lord : '', city: cap, force: F } };
+    }
+    return null;
+  }
+
+  function onDone(e) {
+    if (!on() || !e || !CD().card(e.id)) { return; }
+    var st = R().state();
+    if (e.force !== st.me) { return; }
+    save().done[e.id] = { k: e.k, turn: st.turn };
+    core.persist();
+  }
+
+  /** 기록 시트용 — 카드마다 끝남·다음 */
+  function lines() {
+    if (!on()) { return []; }
+    var s = save(), out = [], next = false;
+    CD().CARDS.forEach(function (c) {
+      var d = s.done[c.id];
+      out.push({ id: c.id, no: c.no, title: c.title, emoji: c.emoji, state: d ? (d.legacy ? 'legacy' : 'done') : (!next ? 'next' : 'wait'), k: d ? d.k : '' });
+      if (!d && !next) { next = true; }
+    });
+    return out;
+  }
+
+  var inited = false;
+  function init() {
+    if (inited) { return; }
+    inited = true;
+    register();
+    E().addSource(source);
+    core.on('rtk:eventDone', onDone);
+  }
+
+  global.DG = global.DG || {};
+  global.DG.scenario = { init: init, source: source, lines: lines, on: on, state: save, card: function (id) { return CD().card(id); } };
+  init();     // 정의·원천은 늘 등록하고, 켜고 끄는 것은 on()(DG_NO_SCENARIO)이 가른다
+})(window);

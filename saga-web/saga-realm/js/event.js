@@ -193,6 +193,13 @@
   var DEFS = {};
   var ORDER = [];
   function add(d) { DEFS[d.id] = d; if (!d.chain) { ORDER.push(d.id); } }
+  /* 시나리오(scenario.js) — 밖에서 사연 정의를 더하고, 사람 세력에게 정해진 때에 카드를 내는 "원천"을 단다 */
+  var SOURCES = [];
+  function addSource(fn) { SOURCES.push(fn); }
+  function fromSources(F) {
+    for (var i = 0; i < SOURCES.length; i++) { var f = SOURCES[i](F); if (f) { return f; } }
+    return null;
+  }
 
   /* 1. 의형제 합류 청원 */
   add({
@@ -695,6 +702,7 @@
       var F = ids[i], isMe = F === st.me;
       if (isMe && ev.pending) { continue; }
       var fire = dueChain(F);
+      if (!fire && isMe) { fire = fromSources(F); }        // 시나리오 카드 — 정해진 때, 사람 세력만
       if (!fire && activeCount(F) < MAX_ACTIVE && roll(F, 'r') < chance()) { fire = pickNew(F); }
       if (!fire) { continue; }
       if (isMe) {
@@ -714,7 +722,7 @@
     var d = DEFS[p.id];
     if (!d) { ev.pending = null; return null; }
     return {
-      id: p.id, step: p.step, name: d.name, emoji: d.emoji, text: d.text(p.ctx, p.step),
+      id: p.id, step: p.step, tag: d.tag || '', name: d.name, emoji: d.emoji, text: d.text(p.ctx, p.step),
       a: p.ctx.a, b: p.ctx.b, kind: p.ctx.b ? kindOf(p.ctx.a, p.ctx.b) : null,
       choices: d.choices.map(function (ch) {
         return { k: ch.k, label: labelOf(ch, p.ctx), hint: ch.hint || '', cost: ch.cost || 0, ok: choiceOk(ch, p.ctx, p.ctx.force) };
@@ -897,6 +905,9 @@
     DEFS: DEFS, ORDER: ORDER, CHANCE: CHANCE, MAX_ACTIVE: MAX_ACTIVE, COOL: COOL, MAX_STEP: MAX_STEP,
     relLv: relLv, relAdd: relAdd, kindOf: kindOf, pairsOf: pairsOf,
     tick: tick, view: view, choose: choose, resolve: resolve, autoPick: autoPick, pref: pref,
-    pickNew: pickNew, activeView: activeView, roll: roll
+    pickNew: pickNew, activeView: activeView, roll: roll,
+    addDef: add, addSource: addSource,
+    /** 시나리오가 쓰는 손잡이 — 새 판정을 안 만들고 있는 것만 만진다 */
+    h: { nm: nm, wisest: wisest, gold: gold, goldOf: goldOf, adjust: adjust, loyal: loyal, cityRec: cityRec }
   };
 })(window);
