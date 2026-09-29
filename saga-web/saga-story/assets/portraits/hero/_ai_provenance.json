@@ -1,0 +1,635 @@
+{
+"note": "AI 생성 초상 — tools/ai-art (swbins3 sd-webui, 상업 허용 모델). 프롬프트는 tools/ai-art/batches/web_heroes_105.json",
+"items": {
+"eu_alexander": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1740164386,
+"date": "2026-09-29"
+},
+"eu_augustus": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4108429877,
+"date": "2026-09-29"
+},
+"eu_aurelius": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 940511556,
+"date": "2026-09-29"
+},
+"eu_caesar": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1089700655,
+"date": "2026-09-29"
+},
+"eu_charlemagne": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 368087479,
+"date": "2026-09-29"
+},
+"eu_davinci": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2369919264,
+"date": "2026-09-29"
+},
+"eu_eleanor": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3906945874,
+"date": "2026-09-29"
+},
+"eu_elizabeth": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4160497268,
+"date": "2026-09-29"
+},
+"eu_frederick": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1495804095,
+"date": "2026-09-29"
+},
+"eu_hannibal": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3111364249,
+"date": "2026-09-29"
+},
+"eu_harald": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1279663974,
+"date": "2026-09-29"
+},
+"eu_joan": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3203461320,
+"date": "2026-09-29"
+},
+"eu_leonidas": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1646341167,
+"date": "2026-09-29"
+},
+"eu_machiavelli": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3075346317,
+"date": "2026-09-29"
+},
+"eu_michelangelo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2940536074,
+"date": "2026-09-29"
+},
+"eu_napoleon": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1514479202,
+"date": "2026-09-29"
+},
+"eu_nelson": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3661386217,
+"date": "2026-09-29"
+},
+"eu_newton": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1931722087,
+"date": "2026-09-29"
+},
+"eu_peter": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2501149290,
+"date": "2026-09-29"
+},
+"eu_richard": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2293257459,
+"date": "2026-09-29"
+},
+"eu_scipio": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2355052583,
+"date": "2026-09-29"
+},
+"eu_william": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3004000773,
+"date": "2026-09-29"
+},
+"jp_hanzo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2763915240,
+"date": "2026-09-29"
+},
+"jp_hideyoshi": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1270217146,
+"date": "2026-09-29"
+},
+"jp_himiko": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3153552979,
+"date": "2026-09-29"
+},
+"jp_ieyasu": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2941112484,
+"date": "2026-09-29"
+},
+"jp_kenshin": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 595798182,
+"date": "2026-09-29"
+},
+"jp_masamune": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3150814113,
+"date": "2026-09-29"
+},
+"jp_mitsukuni": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1804665087,
+"date": "2026-09-29"
+},
+"jp_murasaki": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 142333919,
+"date": "2026-09-29"
+},
+"jp_musashi": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 394160184,
+"date": "2026-09-29"
+},
+"jp_naosuke": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 368829482,
+"date": "2026-09-29"
+},
+"jp_nobunaga": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2849220679,
+"date": "2026-09-29"
+},
+"jp_ryoma": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2731459640,
+"date": "2026-09-29"
+},
+"jp_saigo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2137661601,
+"date": "2026-09-29"
+},
+"jp_seishonagon": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2354566452,
+"date": "2026-09-29"
+},
+"jp_shingen": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2684146674,
+"date": "2026-09-29"
+},
+"jp_taira": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1707283619,
+"date": "2026-09-29"
+},
+"jp_tomoegozen": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2047467619,
+"date": "2026-09-29"
+},
+"jp_yoritomo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1972504936,
+"date": "2026-09-29"
+},
+"jp_yoshitsune": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3336580555,
+"date": "2026-09-29"
+},
+"jp_yukimura": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2538461809,
+"date": "2026-09-29"
+},
+"kr_ahnjunggeun": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3310996019,
+"date": "2026-09-29"
+},
+"kr_choemuseon": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1991358549,
+"date": "2026-09-29"
+},
+"kr_daejoyeong": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3315891910,
+"date": "2026-09-29"
+},
+"kr_euljimundeok": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 454299885,
+"date": "2026-09-29"
+},
+"kr_ganggamchan": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3177650153,
+"date": "2026-09-29"
+},
+"kr_gwakjaeu": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4266008688,
+"date": "2026-09-29"
+},
+"kr_gwanggaeto": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1872669889,
+"date": "2026-09-29"
+},
+"kr_gyebaek": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3466522569,
+"date": "2026-09-29"
+},
+"kr_heojun": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 312020916,
+"date": "2026-09-29"
+},
+"kr_hwanghui": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1167525386,
+"date": "2026-09-29"
+},
+"kr_jangyeongsil": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1951792283,
+"date": "2026-09-29"
+},
+"kr_jeongmongju": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4231149840,
+"date": "2026-09-29"
+},
+"kr_jeongyakyong": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 4158328290,
+"date": "2026-09-29"
+},
+"kr_kimgu": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2466012812,
+"date": "2026-09-29"
+},
+"kr_kimjeongho": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 12624424,
+"date": "2026-09-29"
+},
+"kr_kimyusin": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1304720684,
+"date": "2026-09-29"
+},
+"kr_nongae": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1176201487,
+"date": "2026-09-29"
+},
+"kr_sejong": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 168659597,
+"date": "2026-09-29"
+},
+"kr_sinsaimdang": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2624364695,
+"date": "2026-09-29"
+},
+"kr_wanggeon": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3182499431,
+"date": "2026-09-29"
+},
+"kr_wonhyo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2547233969,
+"date": "2026-09-29"
+},
+"kr_yeongaesomun": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2154642529,
+"date": "2026-09-29"
+},
+"kr_yihwang": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1278432202,
+"date": "2026-09-29"
+},
+"kr_yii": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3184600442,
+"date": "2026-09-29"
+},
+"kr_yisunsin": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1774648747,
+"date": "2026-09-29"
+},
+"kr_yugwansun": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2376411564,
+"date": "2026-09-29"
+},
+"sg_caocao": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1226674354,
+"date": "2026-09-29"
+},
+"sg_diaochan": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3478820035,
+"date": "2026-09-29"
+},
+"sg_ganning": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3748729584,
+"date": "2026-09-29"
+},
+"sg_guanyu": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1348139693,
+"date": "2026-09-29"
+},
+"sg_huangzhong": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1249309659,
+"date": "2026-09-29"
+},
+"sg_huatuo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1347869134,
+"date": "2026-09-29"
+},
+"sg_liubei": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 407118598,
+"date": "2026-09-29"
+},
+"sg_lubu": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1706003698,
+"date": "2026-09-29"
+},
+"sg_luxun": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3206003926,
+"date": "2026-09-29"
+},
+"sg_machao": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3374712509,
+"date": "2026-09-29"
+},
+"sg_menghuo": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3523456787,
+"date": "2026-09-29"
+},
+"sg_pangtong": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 229981078,
+"date": "2026-09-29"
+},
+"sg_simayi": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3179672984,
+"date": "2026-09-29"
+},
+"sg_sunquan": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 202891007,
+"date": "2026-09-29"
+},
+"sg_taishici": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3509893072,
+"date": "2026-09-29"
+},
+"sg_xiahoudun": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 392163373,
+"date": "2026-09-29"
+},
+"sg_xunyu": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3597184121,
+"date": "2026-09-29"
+},
+"sg_zhangfei": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2766734466,
+"date": "2026-09-29"
+},
+"sg_zhangliao": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2144744137,
+"date": "2026-09-29"
+},
+"sg_zhaoyun": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1436686182,
+"date": "2026-09-29"
+},
+"sg_zhouyu": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 118576088,
+"date": "2026-09-29"
+},
+"sg_zhugeliang": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2575382022,
+"date": "2026-09-29"
+},
+"wd_akbar": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1203798864,
+"date": "2026-09-29"
+},
+"wd_ashoka": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 229021442,
+"date": "2026-09-29"
+},
+"wd_attila": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2919383630,
+"date": "2026-09-29"
+},
+"wd_cleopatra": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 338809288,
+"date": "2026-09-29"
+},
+"wd_genghis": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 985378096,
+"date": "2026-09-29"
+},
+"wd_hammurabi": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2745018093,
+"date": "2026-09-29"
+},
+"wd_ibnbattuta": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 211591253,
+"date": "2026-09-29"
+},
+"wd_ibnsina": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1081169327,
+"date": "2026-09-29"
+},
+"wd_khubilai": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3619714648,
+"date": "2026-09-29"
+},
+"wd_mansamusa": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 3377572075,
+"date": "2026-09-29"
+},
+"wd_moctezuma": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 440441040,
+"date": "2026-09-29"
+},
+"wd_pachacuti": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 954383925,
+"date": "2026-09-29"
+},
+"wd_saladin": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 991811863,
+"date": "2026-09-29"
+},
+"wd_shaka": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 2236940843,
+"date": "2026-09-29"
+},
+"wd_suleiman": {
+"model": "animagine-xl-4.0-opt",
+"license": "CreativeML OpenRAIL++-M",
+"seed": 1686996305,
+"date": "2026-09-29"
+}
+}
+}

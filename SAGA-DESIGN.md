@@ -190,7 +190,7 @@
 - **2D**(초상·아이콘·텍스처): Stable Diffusion 로컬(GPU 8GB+)·ControlNet 으로 실루엣 유지·LoRA 로 스타일 고정. 상용 서비스는 라이선스 확인 필수.
 - **3D**(소품·건물): TRELLIS·Hunyuan3D-2(오픈)·Meshy/Tripo(서비스) — 소품·건물엔 쓸 만, 애니 캐릭터는 리깅 후처리(Mixamo) 필요. 폴리 수 정리(Blender decimate) 필수.
 - **정책**: 원작 IP·실존 인물을 프롬프트에 쓰지 않는다(이름 정책과 같은 이유). 생성물도 §7.2 팔레트 스냅을 거쳐 스타일을 맞춘다.
-- 이 PC 의 GPU 여부·모델 설치는 미확인(§10-Q5).
+- **구현(09-29 승인)**: `tools/ai-art/` — 로컬 sd-webui·상업 허용 모델만·이름 금지·출처 기록. 웹 도감 초상 105 적용(상세 그 README). 3D 는 char-forge·world-forge.
 
 ## 8. 버그 대책(웹)
 

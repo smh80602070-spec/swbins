@@ -304,3 +304,12 @@ Quaternius CC0 1.0, 사가블로에서 md5 그대로 복사(이미 Meshopt). `Kn
 클립 11개(`CharacterArmature|Idle·Walk·Punch·RecieveHit·Defeat·SitDown`…). `Horse_Farm.glb` = poly.pizza "Farm Animal Pack"
 (사가블로 `animals_extra/`, 같은 파일 절) — 클립 `Armature|Idle·Walk·Run·Death`. `js/asset3d.js` `buildTrooper` 가 부른다
 (보병 = 기사, 기병 = 짐말 위 기사). 창은 이미 있던 `weapons/spear.glb`.
+
+## AI 생성 도감 초상 (2026-09-29)
+| 항목 | 내용 |
+|---|---|
+| **파일** | `assets/portraits/hero/<id>_s.webp`(192×192)·`<id>_c.webp`(300×344) — 도감 105 인물 |
+| **만든 법** | swbins3 로컬 sd-webui + **Animagine XL 4.0 Opt**(CreativeML OpenRAIL++-M, 상업 사용 허용) — `tools/ai-art/gen.py` → `pack_web_portraits.py` |
+| **프롬프트** | 인물 이름 없이 문화·역할·성별·나이·머리·눈 묘사만 — `tools/ai-art/batches/web_heroes_105.json` |
+| **출처 기록** | `assets/portraits/hero/_ai_provenance.json`(모델·라이선스·씨앗) |
+| **주의** | AI 생성물은 저작권 보호가 약하다. 되돌리려면 git 에서 이전 webp 복구 |
