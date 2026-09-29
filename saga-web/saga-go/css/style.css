@@ -1827,6 +1827,20 @@ body.fc-on #dock, body.fc-on #near { display: none !important; }
 #lf-jump span { font-size: 22px; line-height: 1; }
 #lf-jump em { font-size: 11px; font-style: normal; opacity: .7; }
 #lf-jump:active { transform: scale(.94); }
+#mt-ride {
+  display: none; position: fixed; z-index: 20;
+  left: 44px; bottom: calc(348px + var(--safe-b)); width: 52px; height: 52px; border-radius: 50%;   /* 점프 단추 바로 위 */
+  background: var(--glass); border: 1px solid var(--glass-br); color: var(--ink);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  touch-action: none; -webkit-user-select: none; user-select: none; cursor: pointer;
+  place-items: center; gap: 0; font-weight: 700;
+}
+#mt-ride.show { display: grid; }
+#mt-ride.riding { box-shadow: 0 0 0 2px #ffd27a inset; }
+#mt-ride span { font-size: 20px; line-height: 1; }
+#mt-ride em { font-size: 10px; font-style: normal; opacity: .7; }
+#mt-ride:active { transform: scale(.94); }
+@media (max-height: 500px) { #mt-ride { left: 142px; bottom: calc(214px + var(--safe-b)); } }
 @media (max-height: 500px) { #lf-jump { left: 142px; bottom: calc(150px + var(--safe-b)); } }   /* 가로: 위가 #top 이라 조이스틱 오른쪽 */
 /* ── 기척 보기(treasure.js, PLAN §5 ⑲-3) — V 누르는 동안 / 👁 단추. 3D 화면만 잿빛, HUD 는 제 색 ── */
 #map3d { transition: filter .2s ease; }

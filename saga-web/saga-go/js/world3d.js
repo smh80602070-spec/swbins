@@ -2393,6 +2393,7 @@
     var mot = W.motion;
     var h = ACTOR_H();
     var walking = mot.speed > 1.5;
+    var MTr = global.DG.mount, mtRef = MTr && MTr.petRef ? MTr.petRef() : null;   // ⑲-61 탄 말 — 몸은 말이 걷고 나는 위에 앉는다
     var walkBob = walking
       ? Math.abs(Math.sin(mot.phase)) * h * 0.045
       : Math.sin(now / 700) * h * 0.016;
@@ -2416,8 +2417,14 @@
     var LFa = global.DG.landform, air = LFa ? LFa.airH() : 0;
     if (air > 0) { meA.animName = 'jump'; meA.animUntil = now + 120; }
     meA.sky = meSky();
-    placeActor(meA, mx, my, h * farBoost(mx, my), walkBob + air, walking && !air, mot.phase, now);
+    placeActor(meA, mx, my, h * farBoost(mx, my), walkBob + air, walking && !air && !mtRef, mot.phase, now);
     if (air > 0 && meA.mesh) { meA.node.position.y += air; }
+    if (mtRef) {                                                                     // ⑲-61 말 — 같은 자리·같은 걸음, 나는 등 높이로
+      var mtA = actorOf('mount', 'pet', mtRef, 96);
+      mtA.sky = meSky();
+      placeActor(mtA, mx, my, h * farBoost(mx, my) * MTr.SCALE, 0, walking && !air, mot.phase, now);
+      if (meA.mesh) { meA.node.position.y += h * farBoost(mx, my) * MTr.RIDER_LIFT; }
+    }
     /* ⑰ 여울 다리 — 상판 위면 몸을 상판 높이에 세운다(땅은 물 바닥이라 안 올리면 다리 밑을 걷는다) */
     var deck = LFa && LFa.deckAt ? LFa.deckAt(mx, my) : null;
     if (deck !== null && meA.mesh && !air) {

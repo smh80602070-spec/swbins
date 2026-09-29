@@ -405,6 +405,7 @@
     if (global.DG.skyport) { global.DG.skyport.tick(dt); }           // 은하 나루 — 발견·명소·틈 문(§5⑲-37)
     if (global.DG.crossing) { global.DG.crossing.tick(dt); }         // 틈새 갈림길 — 발견·명소·틈 문(§5⑲-41)
     if (global.DG.sunken) { global.DG.sunken.tick(dt); }             // 잠긴 도읍 — 발견·명소·해무 문(§5⑲-44)
+    if (global.DG.mount) { global.DG.mount.tick(dt); }                                           // 탈것 — 내림 판정·단추(§5⑲-61)
     if (global.DG.nightEcho) { global.DG.nightEcho.tick(dt); }                                   // 결말 뒤 밤의 잔불(§5⑲-56)
     if (global.DG.stormEye) { global.DG.stormEye.tick(dt); }                                     // 8부 먹구름 눈·여섯 매듭(§5⑲-52)
     if (global.DG.skyRoute) { global.DG.skyRoute.tick(dt); }         // 구름 위 항로 — 섬 셋·바람 기둥·발견(§5⑲-48)

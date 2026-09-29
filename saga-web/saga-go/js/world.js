@@ -287,6 +287,11 @@
     return { x: u * cs - v * sn, y: u * sn + v * cs };
   }
 
+  /** 걷는 속도(m/초) — 손잡이 배율 × 탈것(⑲-61, 안 탔으면 1) × 달리기 */
+  function moveSpeed(run) {
+    var MT = global.DG.mount;
+    return speed * speedMul() * (MT && MT.speedMul ? MT.speedMul() : 1) * (run ? 2.2 : 1);
+  }
   function moveByKeys(dt) {
     if (mode !== 'keyboard') { return; }
     var live = liveDuel();
@@ -317,7 +322,7 @@
 
     if (!dx && !dy) { return; }
     var len = Math.hypot(dx, dy) || 1;
-    var step = speed * speedMul() * (run ? 2.2 : 1) * dt;
+    var step = moveSpeed(run) * dt;
     var ux = dx / len, uy = dy / len;
     /* §5 ⑰ 오르기·헤엄·점프 — 능선 오르막은 절반(기력이 다하면 0), 강은 0.6. 능선·강 밖은 늘 1 */
     var LFm = global.DG.landform;
@@ -2055,7 +2060,7 @@
        function"으로 조용히 실패하고 있었다(HTTP는 200이었는데도) */
     latLngToWorld: latLngToWorld,
     useKeyboard: useKeyboard, useGeo: useGeo,
-    setStick: setStick, walkTo: walkTo, walkingTo: walkingTo, inputBlocked: inputBlocked, camRot: camRot,
+    setStick: setStick, walkTo: walkTo, moveSpeed: moveSpeed, walkingTo: walkingTo, inputBlocked: inputBlocked, camRot: camRot,
     /** 2026-09-27 Q3 — (x, y) 가 벽(집 몸통 + 몸 반지름) 안인가. 진단·확인용 */
     wallAt: function (x, y) { return hitsHouse(x, y, solidRectsNear(x, y)); },
     keymap: keymap, beginRemap: beginRemap, remapping: function () { return remapping; },

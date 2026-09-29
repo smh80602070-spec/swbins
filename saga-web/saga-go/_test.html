@@ -107,6 +107,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/land.js"></script>
 <script src="js/biome.js"></script>
 <script src="js/landform.js"></script>
+<script src="js/mount.js"></script>
 <script src="js/geo.js"></script>
 <script src="js/world.js"></script>
 <script src="js/npc.js"></script>
@@ -14712,6 +14713,84 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { LF.perched = keepP; AM._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '여섯 단계 · 탑 벽 타기 → 태엽 심장(꼭대기) → 탑 녹음 → 새길 → 거북(암 방패 초) → 신호등 초록 → 초롱 합류 · 🪢+8 🪙+9000' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-61 탈것 — 말(mount.js, PLAN §5 ⑲-61 · SAGA-DESIGN §12) ── */
+    t('탈것 ⑲-61 — 말 셋(농마 5·갈색 15·흰 30 레벨 또는 도감 등록) · 타기/내리기 · 걷는 속도 배율(달리기와 겹침) · 고르기 · 저장 한 칸 · 몸 참조', function () {
+      var MT = DG.mount, W = DG.world, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount, pets0 = C.save.dex && C.save.dex.pets ? JSON.stringify(C.save.dex.pets) : null;
+      try {
+        MT._resetForTest(); delete C.save.mount; DG.landform._resetForTest();
+        r.table = MT.MOUNTS.map(function (m) { return m.id + ':' + m.lv + ':' + m.mul; }).join() === 'mt_farm:5:1.6,mt_brown:15:1.85,mt_white:30:2.1' && MT.MOUNTS.every(function (m) { return m.kind === 'ground' && !!m.pet; });
+        C.save.player.level = 4; if (C.save.dex && C.save.dex.pets) { delete C.save.dex.pets.pt_white_horse; delete C.save.dex.pets.pt_horse; delete C.save.dex.pets.pt_horse_farm; }
+        r.none = MT.unlocked().length === 0 && !MT.selected() && !MT.canRide().ok && /레벨 5/.test(MT.canRide().why);
+        C.save.player.level = 5; r.lv5 = MT.unlocked().map(function (m) { return m.id; }).join() === 'mt_farm' && MT.selected().id === 'mt_farm';
+        C.save.player.level = 15; r.lv15 = MT.unlocked().length === 2 && MT.selected().id === 'mt_brown';
+        C.save.player.level = 1; if (!C.save.dex) { C.save.dex = { heroes: {}, pets: {} }; } if (!C.save.dex.pets) { C.save.dex.pets = {} }
+        C.save.dex.pets.pt_white_horse = { count: 1, firstAt: 0 };
+        r.dex = MT.unlocked().map(function (m) { return m.id; }).join() === 'mt_white' && MT.isUnlocked(MT.def('mt_white')) && !MT.isUnlocked(MT.def('mt_brown'));
+        delete C.save.dex.pets.pt_white_horse;
+        C.save.player.level = 30;
+        r.lv30 = MT.unlocked().length === 3 && MT.selected().id === 'mt_white';
+        /* 타기 — 배율은 걷기·달리기에 다 곱해진다 */
+        var base = W.moveSpeed(false), baseRun = W.moveSpeed(true);
+        r.ride = !MT.active() && MT.petRef() === null && MT.ride().ok && MT.active() && MT.current().id === 'mt_white' && MT.petRef().id === 'pt_white_horse' && MT.speedMul() === 2.1;
+        r.speed = Math.abs(W.moveSpeed(false) / base - 2.1) < 1e-9 && Math.abs(W.moveSpeed(true) / baseRun - 2.1) < 1e-9 && Math.abs(baseRun / base - 2.2) < 1e-9;
+        /* 고르기(Shift+H) — 타고 있으면 그 자리에서 바꾼다 · 저장은 sel 한 칸 */
+        var nx = MT.cycle();
+        r.cycle = nx.id === 'mt_farm' && MT.current().id === 'mt_farm' && MT.speedMul() === 1.6 && C.save.mount.sel === 'mt_farm' && Object.keys(C.save.mount).join() === 'sel';
+        r.off = MT.toggle().mounted === false && !MT.active() && MT.speedMul() === 1 && Math.abs(W.moveSpeed(false) / base - 1) < 1e-9;
+        MT._resetForTest();
+        r.fresh = !MT.active() && MT.selected().id === 'mt_farm' && MT.ride('mt_brown').ok && MT.current().id === 'mt_brown' && C.save.mount.sel === 'mt_brown' && !MT.ride('nope').ok;
+        MT.dismount(null);
+        r.knob = (C.setTune('mount.on', 0), !MT.canRide().ok && !MT.ride().ok) && (C.setTune('mount.on', null), MT.ride().ok);
+      } finally {
+        C.setTune('mount.on', null); MT._resetForTest(); C.save.player.level = lv0;
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+        if (pets0 !== null) { C.save.dex.pets = JSON.parse(pets0); }
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '농마 ×1.6 · 갈색 ×1.85 · 흰 ×2.1 (레벨 5·15·30 / 도감) · 걷기·달리기에 곱 · Shift+H 고르기 · 저장 sel 한 칸' : ('실패 ' + bad.join(','));
+    });
+
+    t('탈것 ⑲-61 — 저절로 내림: GPS 판 · 뛰기(점프 = 내리기만) · 섬 위 · 싸움이 붙으면(그동안 못 탐) · 손잡이', function () {
+      var MT = DG.mount, W0 = DG.world, LF = DG.landform, FC = DG.fieldCombat, r = {}, lv0 = C.save.player.level, mount0 = C.save.mount;
+      try {
+        MT._resetForTest(); delete C.save.mount; LF._resetForTest(); FC._resetForTest();
+        C.save.player.level = 30;
+        FC.tick(0.05);
+        var p = C.save.player.pos;
+        r.up = MT.ride().ok;
+        /* 뛰면 말에서 뛰어내린다 — 날개는 안 편다 */
+        var j = LF.jump();
+        r.jump = j === true && !MT.active() && LF.airH() === 0 && !LF.gliding();
+        /* GPS 판 — 못 타고, 탄 채로 넘어가면 내린다 */
+        MT.ride(); DG.world = Object.create(W0, { mode: { value: 'geo' } });
+        var geoNo = !MT.canRide().ok && /GPS/.test(MT.canRide().why);
+        MT.step(1); var geoDown = !MT.active();
+        DG.world = W0;
+        r.geo = geoNo && geoDown;
+        /* 섬 위(다른 층) */
+        MT.ride(); LF.setSky(true); var skyNo = !MT.canRide().ok; MT.step(1); var skyDown = !MT.active(); LF.setSky(false);
+        r.sky = skyNo && skyDown;
+        /* 싸움 — 붙으면 내리고, 그동안 못 탄다. 끝나면 다시 탄다 */
+        MT.ride();
+        var S = FC.state();
+        FC.spawnCamp(S, { key: 't:mt', x: p.x + 3, y: p.y, tier: 1, kind: 'field', foes: [{ kind: 'imp', dx: 0, dy: 0 }] });
+        S.camps['t:mt'].uids.forEach(function (u) { S.foes[u].st = 'chase'; S.foes[u].stT = 0; });
+        FC.tick(0.05);
+        var fight = FC.inCombat(S, p.x, p.y);
+        MT.step(1);
+        r.fight = fight && !MT.active() && !MT.canRide().ok && /싸우는/.test(MT.canRide().why);
+        S.camps['t:mt'].uids.forEach(function (u) { delete S.foes[u]; }); delete S.camps['t:mt']; FC.state().calmT = 999; FC.tick(0.05);   // 싸움 뒤 잠깐(교전 진정 시간)은 못 탄다 — 진정 시간을 건너뛴다
+        r.after = !FC.inCombat(FC.state(), p.x, p.y) && MT.ride().ok && MT.active();
+        /* 손잡이 — 끄면 탄 채로도 내린다 */
+        C.setTune('mount.on', 0); MT.step(1); r.knob = !MT.active() && MT.speedMul() === 1;
+      } finally {
+        C.setTune('mount.on', null); DG.world = W0; LF._resetForTest(); FC._resetForTest(); MT._resetForTest(); C.save.player.level = lv0;
+        if (mount0 === undefined) { delete C.save.mount; } else { C.save.mount = mount0; }
+      }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '점프 = 내리기 · GPS 판 ✕ · 섬 위 ✕ · 싸움이 붙으면 내림·못 탐 · 끝나면 다시 · 손잡이' : ('실패 ' + bad.join(','));
     });
 
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */
