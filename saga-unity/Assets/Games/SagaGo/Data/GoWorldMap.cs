@@ -101,6 +101,7 @@ namespace Saga.Go.Data
             new Atmosphere { RegionId = "river",       Fog = new Color(0.68f, 0.77f, 0.86f), DensityMul = 2.6f, Sun = new Color(0.9f, 0.95f, 1f) },     // 물안개
             new Atmosphere { RegionId = "south_glade", Fog = new Color(0.93f, 0.78f, 0.54f), DensityMul = 1.2f, Sun = new Color(1f, 0.92f, 0.76f) },    // 금빛 공터
             new Atmosphere { RegionId = "farmland",    Fog = new Color(0.90f, 0.83f, 0.60f), DensityMul = 0.9f, Sun = new Color(1f, 0.96f, 0.82f) },    // 밀빛 논밭
+            new Atmosphere { RegionId = "frost",       Fog = new Color(0.82f, 0.88f, 0.96f), DensityMul = 1.7f, Sun = new Color(0.86f, 0.93f, 1f) },     // 109-14-27a 서리봉 고원 — 눈안개
         };
 
         /// <summary>procgen.py 나무 수관 모양(씨앗마다 셋 중 하나) — 비트로 섞어 고른다.</summary>
@@ -160,6 +161,7 @@ namespace Saga.Go.Data
 
         public static string RegionAt(Vector3 world)
         {
+            if (GoFrost.Contains(world)) return GoFrost.RegionId; // 109-14-27a 서리봉 고원 — 지도 밖 독립 눈밭
             var (gx, gy) = TestMapData.WorldToGrid(world);
             return RegionAt(Mathf.Clamp(gx, 0, TestMapData.Cols - 1), Mathf.Clamp(gy, 0, TestMapData.RowCount - 1));
         }
@@ -167,14 +169,23 @@ namespace Saga.Go.Data
         public static string RegionName(string id)
         {
             foreach (var r in Regions) if (r.Id == id) return GoLocalization.T(r.NameKey, r.NameKo);
+            if (id == Frost.Id) return GoLocalization.T(Frost.NameKey, Frost.NameKo);
             return id;
         }
 
         public static Region RegionOf(string id)
         {
             foreach (var r in Regions) if (r.Id == id) return r;
+            if (id == Frost.Id) return Frost;
             return Regions[0];
         }
+
+        /// <summary>109-14-27a 서리봉 고원 — `Regions`(글자 지도 칸을 덮는 일곱)에 안 넣는다(구슬·채집·사명·진단이 그 일곱을 센다). 이름·사연·바이옴만 여기서.</summary>
+        public static readonly Region Frost = new Region
+        {
+            Id = "frost", NameKey = "region.frost", NameKo = "서리봉 고원", LabelGx = 0f, LabelGy = 0f, Hanja = "霜峰", Danger = 1, Roster = new FieldEnemy.Kind[0],
+            LoreKey = "region.frost.lore", LoreKo = "고개 너머 눈에 덮인 고원. 옛 산성 터와 기상 관측소, 추락한 비행선이 한 땅에 함께 있다.",
+        };
 
         public static int DangerOf(string id) => RegionOf(id).Danger;
 

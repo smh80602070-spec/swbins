@@ -1525,6 +1525,26 @@
     { "key": "dispatch.title", "value": "Expeditions — slots {0}/{1} · completed {2}" },
     { "key": "dispatch.no_hero", "value": "No companion to send (benched companions only)" },
     { "key": "dispatch.hours", "value": "{0}h (×{1})" },
-    { "key": "dispatch.away_hint", "value": "· send and claim only beside a board" }
+    { "key": "dispatch.away_hint", "value": "· send and claim only beside a board" },
+    { "key": "region.frost", "value": "Frostpeak Plateau" },
+    { "key": "region.frost.lore", "value": "A snow-covered plateau beyond the pass, where an old fortress ruin, a weather observatory and a crashed airship share one land." },
+    { "key": "frost.site.fort", "value": "Old Fortress Ruin" },
+    { "key": "frost.site.obs", "value": "Weather Observatory" },
+    { "key": "frost.site.ship", "value": "Crashed Airship" },
+    { "key": "frost.site.lake", "value": "Frozen Lake" },
+    { "key": "frost.site.stele", "value": "Frost Pass Marker" },
+    { "key": "frost.site.sat", "value": "Fallen Satellite Piece" },
+    { "key": "frost.site.statue", "value": "General's Statue" },
+    { "key": "frost.site.hut", "value": "Hunter's Hut" },
+    { "key": "frost.site.snowman", "value": "Someone's Snowman" },
+    { "key": "frost.site.cable", "value": "Stalled Cable Car" },
+    { "key": "frost.site.cave", "value": "Ice Cave Mouth" },
+    { "key": "frost.site.beacon", "value": "Plateau Beacon" },
+    { "key": "frost.r_gold", "value": "Gold {0}" },
+    { "key": "frost.r_polish", "value": "Polishing Stone {0}" },
+    { "key": "frost.r_exp", "value": "EXP {0}" },
+    { "key": "frost.found", "value": "Frostpeak Plateau — found {0}! {1}" },
+    { "key": "frost.go_up", "value": "Climb the Frost Pass" },
+    { "key": "frost.go_down", "value": "Descend toward the village" }
   ]
 }

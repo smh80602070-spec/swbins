@@ -776,6 +776,24 @@
 2	go	foe.shrine_pack	사당을 지키는 들개떼	Wild Dogs Guarding the Shrine		
 2	go	foe.shrine_raiders	사당을 노리는 도적 무리	Raiders Eyeing the Shrine		
 2	go	foe.shrine_scout	사당의 척후병	Shrine Scouts		
+2	go	frost.found	서리봉 고원 — {0} 발견! {1}	Frostpeak Plateau — found {0}! {1}		
+2	go	frost.go_down	마을 쪽으로 내려간다	Descend toward the village		
+2	go	frost.go_up	서리 고개로 오른다	Climb the Frost Pass		
+2	go	frost.r_exp	경험치 {0}	EXP {0}		
+2	go	frost.r_gold	금 {0}	Gold {0}		
+2	go	frost.r_polish	연마석 {0}	Polishing Stone {0}		
+2	go	frost.site.beacon	고원 봉화	Plateau Beacon		
+2	go	frost.site.cable	멈춘 케이블카	Stalled Cable Car		
+2	go	frost.site.cave	얼음굴 어귀	Ice Cave Mouth		
+2	go	frost.site.fort	옛 산성 터	Old Fortress Ruin		
+2	go	frost.site.hut	사냥꾼 오두막	Hunter's Hut		
+2	go	frost.site.lake	얼어붙은 호수	Frozen Lake		
+2	go	frost.site.obs	기상 관측소	Weather Observatory		
+2	go	frost.site.sat	떨어진 위성 조각	Fallen Satellite Piece		
+2	go	frost.site.ship	추락한 비행선	Crashed Airship		
+2	go	frost.site.snowman	누가 만든 눈사람	Someone's Snowman		
+2	go	frost.site.statue	장수 석상	General's Statue		
+2	go	frost.site.stele	서리 고개 경계비	Frost Pass Marker		
 2	go	hero.challenge	⚔ {0} — "{1}"⏎겨루기! 이겨서 굴복시키면 동행이 된다	⚔ {0} — "{1}"⏎A duel! Make them yield and they will join you		
 2	go	hero.era.japan	일본사	Japan		
 2	go	hero.era.korea	한국사	Korea		
@@ -1024,6 +1042,7 @@
 2	go	region.enter_new	— {0} —⏎새 지역	— {0} —⏎New Region		
 2	go	region.era_foes	시간 틈 {0}	Time rift: {0}		
 2	go	region.farmland	끝 논밭	Far Paddies		
+2	go	region.frost	서리봉 고원	Frostpeak Plateau		
 2	go	region.no_foes	적 없음	No foes		
 2	go	region.north_foot	북쪽 산기슭	Northern Foothills		
 2	go	region.river	너른 강	Broad River		
@@ -2807,6 +2826,7 @@
 3	go	mission.line	◆ {0} 사명 {1}/{2} · {3}	◆ {0} mission {1}/{2} · {3}		
 3	go	region.east_grove.lore	호박빛 단풍 숲에 산적 소굴이 숨어 있다. 옛 싸움터 해골과 숲 못의 물귀신도 깨어난다.	A bandit den hides in the amber autumn grove. Old battlefield skeletons and pond ghosts stir as well.		
 3	go	region.farmland.lore	마른 논둑에 도깨비불이 인다. 산적이 가을걷이를 노린다.	Will-o'-wisps flare on the dry paddy banks. Bandits eye the harvest.		
+3	go	region.frost.lore	고개 너머 눈에 덮인 고원. 옛 산성 터와 기상 관측소, 추락한 비행선이 한 땅에 함께 있다.	A snow-covered plateau beyond the pass, where an old fortress ruin, a weather observatory and a crashed airship share one land.		
 3	go	region.north_foot.lore	무너진 성터 무덤이 흩어진 서늘한 비탈. 해골 병사가 줄지어 지킨다.	A cold slope strewn with graves of a fallen fort. Skeleton soldiers stand guard in rows.		
 3	go	region.river.lore	마을과 남쪽 땅을 가르는 물줄기. 헤엄칠 땐 기운이 다하지 않게.	The stream that divides the village from the south. Mind your stamina when you swim.		
 3	go	region.south_glade.lore	옛 망루 발치의 금빛 풀밭. 망루를 지키던 수호장이 아직 서 있다.	A golden meadow at the foot of the old watchtower. Its guardian still stands.		

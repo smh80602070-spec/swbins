@@ -1525,6 +1525,26 @@
     { "key": "dispatch.title", "value": "탐사 파견 — 자리 {0}/{1} · 다녀온 탐사 {2}" },
     { "key": "dispatch.no_hero", "value": "보낼 동료가 없다 (들판 명단 밖 동료만)" },
     { "key": "dispatch.hours", "value": "{0}시간 (×{1})" },
-    { "key": "dispatch.away_hint", "value": "· 게시판 곁에서만 보내고 받는다" }
+    { "key": "dispatch.away_hint", "value": "· 게시판 곁에서만 보내고 받는다" },
+    { "key": "region.frost", "value": "서리봉 고원" },
+    { "key": "region.frost.lore", "value": "고개 너머 눈에 덮인 고원. 옛 산성 터와 기상 관측소, 추락한 비행선이 한 땅에 함께 있다." },
+    { "key": "frost.site.fort", "value": "옛 산성 터" },
+    { "key": "frost.site.obs", "value": "기상 관측소" },
+    { "key": "frost.site.ship", "value": "추락한 비행선" },
+    { "key": "frost.site.lake", "value": "얼어붙은 호수" },
+    { "key": "frost.site.stele", "value": "서리 고개 경계비" },
+    { "key": "frost.site.sat", "value": "떨어진 위성 조각" },
+    { "key": "frost.site.statue", "value": "장수 석상" },
+    { "key": "frost.site.hut", "value": "사냥꾼 오두막" },
+    { "key": "frost.site.snowman", "value": "누가 만든 눈사람" },
+    { "key": "frost.site.cable", "value": "멈춘 케이블카" },
+    { "key": "frost.site.cave", "value": "얼음굴 어귀" },
+    { "key": "frost.site.beacon", "value": "고원 봉화" },
+    { "key": "frost.r_gold", "value": "금 {0}" },
+    { "key": "frost.r_polish", "value": "연마석 {0}" },
+    { "key": "frost.r_exp", "value": "경험치 {0}" },
+    { "key": "frost.found", "value": "서리봉 고원 — {0} 발견! {1}" },
+    { "key": "frost.go_up", "value": "서리 고개로 오른다" },
+    { "key": "frost.go_down", "value": "마을 쪽으로 내려간다" }
   ]
 }
