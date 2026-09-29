@@ -19,7 +19,9 @@ const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const REMATCH := ["rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus"]
 ## 55-5 — 2차 결말(38장) 뒤에만 열리는 재대결 둘
 const REMATCH2 := ["rematch_first_crow", "rematch_garmuri"]
-const BOSS_OF := {"rematch_king": "storm_king_true", "rematch_fox": "rift_fox", "rematch_crow": "rift_crow", "rematch_colossus": "dome_colossus", "rematch_first_crow": "first_crow", "rematch_garmuri": "garmuri_true"}
+## 56-2 — 3차 결말(41장) 뒤에만 열리는 재대결 하나
+const REMATCH3 := ["rematch_seed"]
+const BOSS_OF := {"rematch_king": "storm_king_true", "rematch_fox": "rift_fox", "rematch_crow": "rift_crow", "rematch_colossus": "dome_colossus", "rematch_first_crow": "first_crow", "rematch_garmuri": "garmuri_true", "rematch_seed": "seed_giant"}
 
 var _p: CharacterBody3D
 var _ne: Node
@@ -87,7 +89,7 @@ func _physics_process(_delta: float) -> void:
 					bad.append("gate region %s" % id)
 				if not _hits(gp).is_empty():
 					bad.append("gate buried %s %s" % [id, _hits(gp)])
-			for id in REMATCH2:
+			for id in REMATCH2 + REMATCH3:
 				if _gate_node(id).visible or Domains.domain_open(id):
 					bad.append("gate2 early %s" % id)
 			_check("after_ending_day", bad.is_empty(), str(bad))
@@ -164,6 +166,9 @@ func _physics_process(_delta: float) -> void:
 						bad.append("gate2 region %s" % id)
 					if not _hits(gp).is_empty():
 						bad.append("gate2 buried %s %s" % [id, _hits(gp)])
+				for id in REMATCH3:
+					if _gate_node(id).visible or Domains.domain_open(id):
+						bad.append("gate3 early %s" % id) # 38장 뒤엔 아직 닫혀 있다
 				_check("after_second_ending", bad.is_empty(), str(bad))
 				_put(_dm.call("gate_pos", "rematch_first_crow") + Vector3(0, 0, 1.0))
 			if _frame == 50:
@@ -173,9 +178,36 @@ func _physics_process(_delta: float) -> void:
 				_check("rematch_first_crow", _v.near == "rematch_first_crow" and bool(_v.entered) and alive.size() == 1 and String(alive[0].get("kind")) == "first_crow", "%s n=%d" % [_v, alive.size()])
 				for e in alive:
 					e.call("_die")
+				_dm.call("leave") # 다음 입구에 들어가려면 이 비경에서 나와야 한다
 			if _frame == 400:
 				_next()
-		8:
+		8: # [8] 3차 결말(41장) 뒤 — 곳간 노래 재대결 입구가 열림·자리 맞음·입장
+			if _frame == 1:
+				PartyState.story = {"ch": 41, "step": 0}
+			if _frame == 45:
+				var bad: Array = []
+				for id in REMATCH3:
+					var d: Dictionary = Domains.DOMAINS[id]
+					if not _gate_node(id).visible or not Domains.domain_open(id) or String(d.waves[0][0]) != String(BOSS_OF[id]):
+						bad.append("gate3 %s" % id)
+					var gp: Vector3 = _dm.call("gate_pos", id)
+					if TestMap.region_at(gp) != String(d.gate[0]):
+						bad.append("gate3 region %s" % id)
+					if not _hits(gp).is_empty():
+						bad.append("gate3 buried %s %s" % [id, _hits(gp)])
+				_check("after_third_ending", bad.is_empty(), str(bad))
+				_put(_dm.call("gate_pos", "rematch_seed") + Vector3(0, 0, 1.0))
+			if _frame == 50:
+				_v = {"near": String(_dm.call("near_gate")), "entered": bool(_dm.call("enter", "rematch_seed", 0))}
+			if _frame == 250:
+				var alive: Array = _dm.call("alive_enemies")
+				_check("rematch_seed", _v.near == "rematch_seed" and bool(_v.entered) and alive.size() == 1 and String(alive[0].get("kind")) == "seed_giant", "%s n=%d" % [_v, alive.size()])
+				for e in alive:
+					e.call("_die")
+				_dm.call("leave") # 다음 입구에 들어가려면 이 비경에서 나와야 한다
+			if _frame == 400:
+				_next()
+		9:
 			TimeOfDay.force(null)
 			PartyState.story = _saved.story
 			PartyState.bag = _saved.bag

@@ -9606,3 +9606,9 @@ PROJECT_STATE.md` 참고. 요약:
 - story.gd 세 장(39 talk·talk·talk·kill·talk, 40 talk·go·defend·talk·talk, 41 talk·talk·go·duel·talk·talk) · 보스 seed_giant(초·goblin) · 동료 나래(현대 수 법구)·소담(과거 풍 법구) + kits 둘. 인물 자리는 늘 있는 인물(촌장·하람·반디·한별(은하 나루 — 29~ 자리)·나래·벼리·해미·소담)만 써서 appear/stations 를 안 건드림. 처음엔 한별을 "틈새 갈림길"이라 적었다가 그가 은하 나루에 있음을 STATIONS 창으로 확인해 고침.
 - 점검 새 probe_story12 — 표·자리(충돌 안 걸림)·세 장 자동 밟기(talk·go·kill·defend·duel 한 함수로)·보상·합류. 첫판 fails=0. probe_kits 고유 21·합류 16. STORY11·ACHIEVE·AFTERMATH fails=0, QMAP 3·WQ 1 은 기존, REGRESS OK.
 - 실기 확인 전: 대사 어조·길이, 나침 제단 지키기 자리(서리봉 별배 아래 (5.3,4.7))가 막히지 않는지, 갈무리의 싹 방패(풍) 손맛, 나래·소담 고유 스킬.
+
+## GO 3차 결말 뒤 56-2 · 12부 재대결 비경 (2026-09-29, "묻지말고 이어해")
+
+- 55-5 와 같은 틀 — domains.gd rematch_seed(곳간 노래의 메아리 = 갈무리의 싹), after_ch 41, 입구 세갈래 고을 (2.6,2.6), 아레나 (−1400,40,2000). ORDER 끝에 덧붙임.
+- probe_aftermath: 38장엔 새 입구 닫힘·41장 뒤 열림·자리·입장 3항목 더 — 첫판에 입장이 막혀 FAIL 이라 원인을 보니 앞 비경(첫 별까마귀)에서 나오지 않아 상태가 OUTSIDE 가 아니었다(enter 는 OUTSIDE 에서만) → 비경 점검마다 leave() 로 나오게. DOMAIN·MAP fails=0, REGRESS OK.
+- 실기 확인 전: 입구 자리가 고을 길목을 안 막는지, 갈무리의 싹 재대결 240초.
