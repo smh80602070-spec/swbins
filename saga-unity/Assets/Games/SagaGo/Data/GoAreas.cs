@@ -215,7 +215,37 @@ namespace Saga.Go.Data
             S("board", "꺼진 안내판", GoEra.Future, -27f, 99f, false),
             S("panel", "금 간 태양 패널", GoEra.Future, -103.5f, -81f, false));
 
-        public static readonly Area[] All = { Skyport, Crossing, Sunken, Amber };
+        // ---- 아홉째 지역 갈무리 벌(웹 ⑲-61 `vault.js`) — 10부 무대. 세 시대가 저마다 쌓아 두던 벌판이 한데 붙은 곳. 서리봉 고원 동쪽 끝 돌기둥(9부 = 32장을 마친 뒤 열림 = 빛 울타리가 꺼짐)으로 든다.
+        // 명소 일곱(웹 자리 × 0.45 — 고개 어귀·시간 씨앗 금고·동력 기둥 둘·곳간 마을·물류 야적장·벌 신상)·작은 발견 열 = 열일곱 ----
+        public static readonly Area Vault = Make(new Area
+        {
+            Id = "vault", NameKo = "갈무리 벌", Hanja = "藏野", GroundHex = "6b7d5e",
+            LoreKo = "세 시대가 저마다 쌓아 두던 벌판이 한데 붙은 곳. 옛 곳간 마을과 현대 물류 야적장, 미래의 시간 씨앗 금고가 한 벌에 겹쳐 있다.",
+            Center = new Vector3(4600f, 0f, -860f),
+            GateSite = "pass",
+            MapGate = () => GoFrost.Center + new Vector3(188f, 0f, 60f), // 서리봉 고원 동쪽 끝(빛 울타리 자리)
+            Open = () => GoStory.VaultGateOpen, OpenCh = 32, // 9부(32장)를 마쳐야 울타리가 꺼진다
+            Fog = new Color(0.66f, 0.84f, 0.8f), Sun = new Color(0.92f, 1f, 0.96f), FogDensity = 1.2f, Danger = 3,
+        },
+            S("pass", "갈무리 벌 어귀", GoEra.Past, -75.6f, -21.6f, true),
+            S("vault", "시간 씨앗 금고", GoEra.Future, 0f, -54f, true),
+            S("pylon0", "서쪽 동력 기둥", GoEra.Future, -17.1f, -30.2f, true),
+            S("pylon1", "동쪽 동력 기둥", GoEra.Future, 17.1f, -30.2f, true),
+            S("granary", "곳간 마을", GoEra.Past, -56.3f, 30.2f, true),
+            S("yard", "갈무리 물류 야적장", GoEra.Modern, 49.5f, 17.1f, true),
+            S("statue", "벌 신상", GoEra.Past, -30.2f, 4.5f, true),
+            S("haystack", "볏가리", GoEra.Past, -38.7f, 56.3f, false),
+            S("jars", "장독대", GoEra.Past, -67f, 17.1f, false),
+            S("mortar", "디딜방아", GoEra.Past, -64.8f, 51.8f, false),
+            S("sotdae", "솟대", GoEra.Past, -60.3f, -8.6f, false),
+            S("forklift", "멈춘 지게차", GoEra.Modern, 30.2f, 34.7f, false),
+            S("parcels", "택배 상자 더미", GoEra.Modern, 71.1f, 17.1f, false),
+            S("container", "문 열린 컨테이너", GoEra.Modern, 34.7f, -8.6f, false),
+            S("seedpod", "떨어진 씨앗 캡슐", GoEra.Future, -26.1f, -56.3f, false),
+            S("dronedown", "떨어진 운반 드론", GoEra.Future, 51.8f, -38.7f, false),
+            S("caseshard", "깨진 진열장 조각", GoEra.Future, 30.2f, -60.3f, false));
+
+        public static readonly Area[] All = { Skyport, Crossing, Sunken, Amber, Vault };
 
         public static bool TryArea(string id, out Area a)
         {

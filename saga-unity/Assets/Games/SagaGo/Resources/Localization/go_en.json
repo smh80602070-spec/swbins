@@ -2680,6 +2680,25 @@
     { "key": "story.ch32.s6.p.a", "value": "Is there somewhere else that is frozen?" },
     { "key": "story.ch32.s6.p.b", "value": "What will you do now, Chorong?" },
     { "key": "story.ch32.s6.l5", "value": "If there's frozen time outside the street too — a clock repairer can't sit it out. There must be a reason my wristwatch is still ticking." },
-    { "key": "story.ch32.s6.l6", "value": "Clock repairer Chorong — I'm coming with you from today. Grandfather Neoul says he'll mind the shop!" }
+    { "key": "story.ch32.s6.l6", "value": "Clock repairer Chorong — I'm coming with you from today. Grandfather Neoul says he'll mind the shop!" },
+    { "key": "region.vault", "value": "Storehouse Fields" },
+    { "key": "region.vault.lore", "value": "Fields where the three ages each stored their harvest, fused into one. An old granary village, a modern logistics yard and the future time-seed vault overlap on a single plain." },
+    { "key": "area.vault.site.pass", "value": "Storehouse Fields Gate" },
+    { "key": "area.vault.site.vault", "value": "Time-Seed Vault" },
+    { "key": "area.vault.site.pylon0", "value": "West Power Pylon" },
+    { "key": "area.vault.site.pylon1", "value": "East Power Pylon" },
+    { "key": "area.vault.site.granary", "value": "Granary Village" },
+    { "key": "area.vault.site.yard", "value": "Storehouse Logistics Yard" },
+    { "key": "area.vault.site.statue", "value": "Field Idol" },
+    { "key": "area.vault.site.haystack", "value": "Rice Straw Stack" },
+    { "key": "area.vault.site.jars", "value": "Jar Terrace" },
+    { "key": "area.vault.site.mortar", "value": "Foot Mortar" },
+    { "key": "area.vault.site.sotdae", "value": "Sotdae Pole" },
+    { "key": "area.vault.site.forklift", "value": "Stopped Forklift" },
+    { "key": "area.vault.site.parcels", "value": "Pile of Parcels" },
+    { "key": "area.vault.site.container", "value": "Open Container" },
+    { "key": "area.vault.site.seedpod", "value": "Fallen Seed Capsule" },
+    { "key": "area.vault.site.dronedown", "value": "Fallen Carrier Drone" },
+    { "key": "area.vault.site.caseshard", "value": "Broken Display Case Shard" }
   ]
 }

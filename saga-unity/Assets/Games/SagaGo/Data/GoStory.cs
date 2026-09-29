@@ -430,6 +430,37 @@ namespace Saga.Go.Data
         public static bool AmberLightsGreen => AmberLightsGreenAt(StoryState.Ch, StoryState.StepIndex);
         public static bool AmberClockWinding => AmberClockWindingAt(StoryState.Ch, StoryState.StepIndex);
 
+        // 33~35장(⑲-61) — 갈무리 벌(아홉째 지역) 상수·이야기 상태: 금고 반지름 11m·벽 12m·열여섯 조각(남쪽 한 조각이 문 4.6m), 기록 기둥 3×3×9m, 진열장 다섯은 금고 가운데에서 6.5m, 해미 진열장은 160°(남쪽 0·시계 방향)라 북쪽, 가장 깊은 진열장은 북쪽 9.5m, 동력 기둥 10m.
+        // 장은 0부터(33장 = 32) — 33~35장·11부는 이식 전이라 진단이 (장, 단계)를 직접 넣어 순수 함수를 잰다.
+        public const float VaultR = 11f, VaultH = 12f, VaultDoorW = 4.6f, VaultPillarW = 3f, VaultPillarH = 9f, VaultCaseR = 6.5f, VaultDeepR = 9.5f, VaultHaemiDeg = 160f, VaultPylonH = 10f;
+        public const int VaultSegs = 16, VaultCh33 = 32, VaultCh34 = 33, VaultCh35 = 34, VaultCh38 = 37;
+        public static readonly int[] VaultPylonFrom = { 5, 6 };
+        public const int VaultGranaryStep = 2, VaultDoorStep = 6, VaultCoreStep = 5, VaultHaemiStep = 6, VaultMomentStep = 4;
+        /// <summary>빛 울타리가 꺼졌나 — 9부(32장)를 마친 뒤.</summary>
+        public static bool VaultGateOpenAt(int ch) => ch >= 32;
+        /// <summary>곳간 문이 열렸나 — 34장 2째 단계부터.</summary>
+        public static bool VaultGranaryOpenAt(int ch, int step) => Reached(ch, step, VaultCh34, VaultGranaryStep);
+        /// <summary>동력 기둥 k(0 서·1 동)가 꺼졌나 — 34장 5·6째 단계부터.</summary>
+        public static bool VaultPylonOffAt(int k, int ch, int step) => Reached(ch, step, VaultCh34, VaultPylonFrom[k]);
+        /// <summary>금고 남쪽 문이 열렸나 — 34장 6째 단계부터.</summary>
+        public static bool VaultDoorOpenAt(int ch, int step) => Reached(ch, step, VaultCh34, VaultDoorStep);
+        /// <summary>갈무리의 핵이 꺼졌나 — 35장 5째 단계부터.</summary>
+        public static bool VaultCoreDimAt(int ch, int step) => Reached(ch, step, VaultCh35, VaultCoreStep);
+        /// <summary>해미 진열장이 깨졌나 — 35장 6째 단계부터.</summary>
+        public static bool VaultHaemiFreeAt(int ch, int step) => Reached(ch, step, VaultCh35, VaultHaemiStep);
+        /// <summary>가장 깊은 진열장이 드러났나 — 10부(35장)를 마친 뒤.</summary>
+        public static bool VaultDeepShownAt(int ch) => ch >= 35;
+        /// <summary>가장 깊은 진열장 유리가 깨졌나 — 11부 38장 4째 단계부터.</summary>
+        public static bool VaultMomentFreeAt(int ch, int step) => Reached(ch, step, VaultCh38, VaultMomentStep);
+        public static bool VaultGateOpen => VaultGateOpenAt(StoryState.Ch);
+        public static bool VaultGranaryOpen => VaultGranaryOpenAt(StoryState.Ch, StoryState.StepIndex);
+        public static bool VaultPylonOff(int k) => VaultPylonOffAt(k, StoryState.Ch, StoryState.StepIndex);
+        public static bool VaultDoorOpen => VaultDoorOpenAt(StoryState.Ch, StoryState.StepIndex);
+        public static bool VaultCoreDim => VaultCoreDimAt(StoryState.Ch, StoryState.StepIndex);
+        public static bool VaultHaemiFree => VaultHaemiFreeAt(StoryState.Ch, StoryState.StepIndex);
+        public static bool VaultDeepShown => VaultDeepShownAt(StoryState.Ch);
+        public static bool VaultMomentFree => VaultMomentFreeAt(StoryState.Ch, StoryState.StepIndex);
+
         /// <summary>시계탑 바늘이 도나 — 19장 6째 단계(태엽을 푼 뒤)부터 늘.</summary>
         public static bool ClockRunning => StoryState.Ch > 18 || (StoryState.Ch == 18 && StoryState.StepIndex >= 5);
 

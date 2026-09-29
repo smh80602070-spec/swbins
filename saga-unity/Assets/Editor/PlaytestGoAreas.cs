@@ -54,6 +54,7 @@ namespace Saga.EditorTools
                 }
                 CheckRoute(pc, field, parts);
                 CheckAmber(fc, pc, field, parts);
+                CheckVault(fc, pc, field, parts);
                 CheckSave(savePath, parts);
             }
             finally
@@ -79,7 +80,7 @@ namespace Saga.EditorTools
         private static void CheckTables(GoAreas.Area a, List<string> parts)
         {
             var all = a.Sites;
-            int nBig = a.Id == "amber" ? 7 : 5; // 굳은 거리는 명소 일곱(웹 ⑲-57 — 고가 선로·신상이 더)
+            int nBig = a.Id == "amber" || a.Id == "vault" ? 7 : 5; // 굳은 거리·갈무리 벌은 명소 일곱(웹 ⑲-57·61 — 신상 등이 더)
             if (all.Length != nBig + 10 || all.Count(s => s.Big) != nBig || all.Count(s => !s.Big) != 10 || all.Select(s => s.Id).Distinct().Count() != nBig + 10) Fail($"{a.Id} 명소 {nBig}·발견 열이 아님");
             foreach (var s in all)
             {
@@ -252,7 +253,7 @@ namespace Saga.EditorTools
         private static void CheckAmber(FieldCombat fc, PlayerController pc, AreaField field, List<string> parts)
         {
             var a = GoAreas.Amber;
-            if (a.Id != "amber" || a.OpenCh != 29 || !GoAreas.TryArea("amber", out var t) || t != a || GoAreas.All.Length != 4 || GoAreas.All[3] != a) Fail("굳은 거리 표·열릴 장(29장)");
+            if (a.Id != "amber" || a.OpenCh != 29 || !GoAreas.TryArea("amber", out var t) || t != a || GoAreas.All.Length != 5 || GoAreas.All[3] != a) Fail("굳은 거리 표·열릴 장(29장)");
             if (a.GateSite != "pass" || !a.Sites.Any(s => s.Id == "pass" && s.Big && s.Era == GoEra.Future)) Fail("굳은 거리 고개 어귀 명소");
             foreach (var id in new[] { "cross", "clock", "market", "tower", "rail", "statue" }) if (!a.TrySite(id, out var s) || !s.Big) Fail($"굳은 거리 명소 {id}");
             // 돌기둥 — 은하 나루 북쪽 끝 · 다른 땅 돌기둥과 30m 이상
@@ -344,6 +345,79 @@ namespace Saga.EditorTools
             if (field.Check(lamp.Pos + new Vector3(lamp.Radius - 1f, 0f, 0f)) != 1 || GoldState.Gold != GoAreas.BigGold + GoAreas.SmallGold) Fail("굳은 가로등 발견·보상");
             AreaState.ResetForTest();
             parts.Add("[amber 굳은 거리] 표(명소 일곱·돌기둥 은하 나루 북쪽 끝·29장 뒤 열림)·이야기 상태 표(고개·굳은 자리 5·6·7·돔·심장·신호등 초록·바늘)·도형(결정·돔·심장·신호등 처음 모습·충돌 다섯·명소 일곱 바닥)·발견");
+        }
+
+        // ---- 109-14-61 갈무리 벌(아홉째 지역, 10부 무대) — 33~35장·11부는 이식 전이라 이야기 상태는 순수 함수에 (장, 단계)를 직접 넣어 잰다 ----
+        private static void CheckVault(FieldCombat fc, PlayerController pc, AreaField field, List<string> parts)
+        {
+            var a = GoAreas.Vault;
+            if (a.Id != "vault" || a.OpenCh != 32 || !GoAreas.TryArea("vault", out var t) || t != a || GoAreas.All[4] != a) Fail("갈무리 벌 표·열릴 장(32장)");
+            if (a.GateSite != "pass" || !a.Sites.Any(s => s.Id == "pass" && s.Big && s.Era == GoEra.Past) || !a.Sites.Any(s => s.Id == "vault" && s.Big && s.Era == GoEra.Future)) Fail("갈무리 벌 어귀·금고 명소");
+            foreach (var id in new[] { "pylon0", "pylon1", "granary", "yard", "statue" }) if (!a.TrySite(id, out var s) || !s.Big) Fail($"갈무리 벌 명소 {id}");
+            // 돌기둥 — 서리봉 고원 동쪽 끝, 고원 명소 발견 원 밖
+            if (!GoFrost.Contains(a.MapGate()) || a.MapGate().x < GoFrost.Center.x + GoFrost.HalfX - 30f) Fail("갈무리 벌 돌기둥이 서리봉 고원 동쪽 끝이 아님");
+            foreach (var s in GoFrost.Sites) if ((s.Pos - a.MapGate()).magnitude < GoFrost.RadiusOf(s) + 3f) Fail($"갈무리 벌 돌기둥이 서리봉 {s.Id} 발견 원 안");
+            foreach (var o in GoAreas.All)
+                if (o != a && ((o.MapGate() - a.MapGate()).magnitude < 30f || (o.SteleGround - a.MapGate()).magnitude < 30f)) Fail($"갈무리 벌 돌기둥이 {o.Id} 돌기둥과 가까움");
+            // 이야기 상태 표(장은 0부터 — 33장 = 32)
+            if (GoStory.VaultGateOpenAt(31) || !GoStory.VaultGateOpenAt(32) || !GoStory.VaultGateOpenAt(40)) Fail("울타리: 9부(32장)를 마쳐야 꺼짐");
+            if (GoStory.VaultGranaryOpenAt(32, 99) || GoStory.VaultGranaryOpenAt(33, 1) || !GoStory.VaultGranaryOpenAt(33, 2) || !GoStory.VaultGranaryOpenAt(34, 0)) Fail("곳간 문: 34장 2째 단계부터");
+            if (GoStory.VaultPylonOffAt(0, 33, 4) || GoStory.VaultPylonOffAt(1, 33, 5) || !GoStory.VaultPylonOffAt(0, 33, 5) || !GoStory.VaultPylonOffAt(1, 33, 6) || !GoStory.VaultPylonOffAt(0, 34, 0) || !GoStory.VaultPylonOffAt(1, 34, 0)) Fail("동력 기둥: 34장 5·6째 단계부터 차례로");
+            if (GoStory.VaultDoorOpenAt(33, 5) || !GoStory.VaultDoorOpenAt(33, 6) || !GoStory.VaultDoorOpenAt(34, 0)) Fail("금고 문: 34장 6째 단계부터");
+            if (GoStory.VaultCoreDimAt(33, 9) || GoStory.VaultCoreDimAt(34, 4) || !GoStory.VaultCoreDimAt(34, 5) || !GoStory.VaultCoreDimAt(35, 0)) Fail("갈무리의 핵: 35장 5째 단계부터");
+            if (GoStory.VaultHaemiFreeAt(34, 5) || !GoStory.VaultHaemiFreeAt(34, 6) || !GoStory.VaultHaemiFreeAt(35, 0)) Fail("해미 진열장: 35장 6째 단계부터");
+            if (GoStory.VaultDeepShownAt(34) || !GoStory.VaultDeepShownAt(35)) Fail("가장 깊은 진열장: 10부(35장)를 마친 뒤");
+            if (GoStory.VaultMomentFreeAt(36, 9) || GoStory.VaultMomentFreeAt(37, 3) || !GoStory.VaultMomentFreeAt(37, 4) || !GoStory.VaultMomentFreeAt(38, 0)) Fail("깊은 진열장 유리: 11부 38장 4째 단계부터");
+            // 도형 — 처음 모습(닫힌 채)과 충돌
+            bool off0 = StoryState.OffForTest;
+            try
+            {
+                StoryState.OffForTest = false;
+                StoryState.Restore(31, 0);
+                field.Refresh();
+                foreach (var k in new[] { "vault:door", "vault:granary_door", "vault:pylon0orb", "vault:pylon1orb", "vault:core", "vault:haemi" }) if (!field.VaultPartOn(k)) Fail($"갈무리 벌 처음 모습: {k} 가 없음");
+                if (field.VaultPartOn("vault:deep")) Fail("가장 깊은 진열장이 10부 전에 드러남");
+                if (a.Open()) Fail("9부 전인데 갈무리 벌이 열림");
+                StoryState.Restore(32, 0); // 9부를 마침 — 울타리만 꺼지고 10부 상태는 그대로
+                field.Refresh();
+                if (!a.Open() || !field.VaultPartOn("vault:door") || !field.VaultPartOn("vault:granary_door") || !field.VaultPartOn("vault:core") || field.VaultPartOn("vault:deep")) Fail("32장 끝인데 10부 상태가 바뀜");
+                Physics.SyncTransforms();
+                a.TrySite("vault", out var vault);
+                Vector3 vp = vault.Pos;
+                if (!Physics.Raycast(vp + new Vector3(0f, 1.5f, 20f), Vector3.back, out var hit, 20f) || Mathf.Abs(hit.point.z - (vp.z + GoStory.VaultR)) > 0.6f) Fail($"금고 남쪽 문 충돌 {hit.point.z - vp.z:0.00}");
+                var doorObj = field.PartObject("vault:door");
+                doorObj.SetActive(false);
+                Physics.SyncTransforms();
+                bool passes = !Physics.Raycast(vp + new Vector3(0f, 1.5f, 20f), Vector3.back, 9f);
+                doorObj.SetActive(true);
+                Physics.SyncTransforms();
+                if (!passes) Fail("금고 문을 치웠는데 충돌이 남음(문 충돌이 문 조각 밑에 있어야)");
+                if (!Physics.Raycast(vp + new Vector3(-24f, 1.5f, 0f), Vector3.right, out hit, 20f) || Mathf.Abs(hit.point.x - (vp.x - GoStory.VaultR)) > 1f) Fail($"금고 둥근 벽 충돌 {hit.point.x - vp.x:0.00}");
+                if (!Physics.Raycast(vp + new Vector3(0f, 30f, 0f), Vector3.down, out hit, 40f) || hit.point.y < GoStory.VaultH - 0.1f || hit.point.y > GoStory.VaultH + 0.7f) Fail($"금고 지붕 충돌 {hit.point.y:0.00}");
+                a.TrySite("pylon0", out var pyl);
+                if (!Physics.Raycast(pyl.Pos + new Vector3(0f, 20f, 0f), Vector3.down, out hit, 30f) || Mathf.Abs(hit.point.y - GoStory.VaultPylonH) > 0.05f) Fail($"동력 기둥 윗면 충돌 {hit.point.y:0.00}");
+                a.TrySite("granary", out var gr);
+                if (!Physics.Raycast(gr.Pos + new Vector3(-10f, 2f, 0f), Vector3.right, out hit, 10f) || Mathf.Abs(hit.point.x - (gr.Pos.x - 2.5f)) > 0.05f) Fail("곳간 벽 충돌");
+                a.TrySite("yard", out var yd);
+                if (!Physics.Raycast(yd.Pos + new Vector3(-16f, 3f, 0f), Vector3.right, out hit, 12f) || Mathf.Abs(hit.point.x - (yd.Pos.x - 6f)) > 0.05f) Fail("야적장 창고 벽 충돌");
+                var yardObj = field.SiteObject("vault", "yard");
+                for (int i = 0; i < 3; i++) if (yardObj.transform.Find("Yard_carrier" + i) == null) Fail($"운반 드론 {i} 이 없음");
+                foreach (var id in new[] { "pass", "vault", "pylon0", "pylon1", "granary", "yard", "statue" })
+                {
+                    a.TrySite(id, out var s);
+                    if (!Physics.Raycast(s.Pos + new Vector3(0f, 30f, 0f), Vector3.down, 60f) || field.SiteObject("vault", id).transform.childCount == 0) Fail($"갈무리 벌 {id} 도형·바닥");
+                }
+            }
+            finally
+            {
+                StoryState.OffForTest = off0;
+            }
+            AreaState.ResetForTest();
+            GoldState.Restore(0);
+            a.TrySite("statue", out var st);
+            if (field.Check(st.Pos + new Vector3(st.Radius - 1f, 0f, 0f)) != 1 || GoldState.Gold != GoAreas.BigGold) Fail("벌 신상 발견·보상");
+            AreaState.ResetForTest();
+            parts.Add("[vault 갈무리 벌] 표(명소 일곱·돌기둥 서리봉 동쪽 끝·32장 뒤 열림)·이야기 상태 표(울타리·곳간·동력 기둥·금고 문·핵·해미·깊은 진열장·순간 유리)·도형(처음 닫힌 모습·금고 문/둥근 벽/지붕·동력 기둥·곳간·창고 충돌·운반 드론 셋)·발견");
         }
 
         private static void CheckSave(string savePath, List<string> parts)

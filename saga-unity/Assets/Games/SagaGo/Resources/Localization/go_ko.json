@@ -2680,6 +2680,25 @@
     { "key": "story.ch32.s6.p.a", "value": "또 굳은 곳이 있다는 거야?" },
     { "key": "story.ch32.s6.p.b", "value": "초롱 씨는 이제 어떻게 해요?" },
     { "key": "story.ch32.s6.l5", "value": "거리 밖에도 굳은 시간이 있다면 — 시계 수리공이 빠질 수 없죠. 손목시계가 아직 째깍거리는 데는 이유가 있을 거예요." },
-    { "key": "story.ch32.s6.l6", "value": "시계 수리공 초롱, 오늘부터 같이 가요. 가게는 너울 할아버지가 봐 주신대요!" }
+    { "key": "story.ch32.s6.l6", "value": "시계 수리공 초롱, 오늘부터 같이 가요. 가게는 너울 할아버지가 봐 주신대요!" },
+    { "key": "region.vault", "value": "갈무리 벌" },
+    { "key": "region.vault.lore", "value": "세 시대가 저마다 쌓아 두던 벌판이 한데 붙은 곳. 옛 곳간 마을과 현대 물류 야적장, 미래의 시간 씨앗 금고가 한 벌에 겹쳐 있다." },
+    { "key": "area.vault.site.pass", "value": "갈무리 벌 어귀" },
+    { "key": "area.vault.site.vault", "value": "시간 씨앗 금고" },
+    { "key": "area.vault.site.pylon0", "value": "서쪽 동력 기둥" },
+    { "key": "area.vault.site.pylon1", "value": "동쪽 동력 기둥" },
+    { "key": "area.vault.site.granary", "value": "곳간 마을" },
+    { "key": "area.vault.site.yard", "value": "갈무리 물류 야적장" },
+    { "key": "area.vault.site.statue", "value": "벌 신상" },
+    { "key": "area.vault.site.haystack", "value": "볏가리" },
+    { "key": "area.vault.site.jars", "value": "장독대" },
+    { "key": "area.vault.site.mortar", "value": "디딜방아" },
+    { "key": "area.vault.site.sotdae", "value": "솟대" },
+    { "key": "area.vault.site.forklift", "value": "멈춘 지게차" },
+    { "key": "area.vault.site.parcels", "value": "택배 상자 더미" },
+    { "key": "area.vault.site.container", "value": "문 열린 컨테이너" },
+    { "key": "area.vault.site.seedpod", "value": "떨어진 씨앗 캡슐" },
+    { "key": "area.vault.site.dronedown", "value": "떨어진 운반 드론" },
+    { "key": "area.vault.site.caseshard", "value": "깨진 진열장 조각" }
   ]
 }

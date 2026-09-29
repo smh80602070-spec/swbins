@@ -94,7 +94,7 @@ namespace Saga.Go.World
         public void Rebuild()
         {
             foreach (Transform c in transform) if (c.name.StartsWith("Area_")) Destroy(c.gameObject);
-            _sites.Clear(); _gates.Clear(); _steles.Clear(); _parts.Clear(); _floaters.Clear(); _lampMats.Clear();
+            _sites.Clear(); _gates.Clear(); _steles.Clear(); _parts.Clear(); _floaters.Clear(); _lampMats.Clear(); _vaultDrones.Clear();
             UnregisterRoute();
             foreach (var a in GoAreas.All) BuildArea(a);
             BuildUi();
@@ -160,6 +160,7 @@ namespace Saga.Go.World
             else if (a.Id == "crossing") BuildCrossingSite(root.transform, s.Id);
             else if (a.Id == "sunken") BuildSunkenSite(root.transform, s.Id);
             else if (a.Id == "amber") BuildAmberSite(root.transform, s.Id);
+            else if (a.Id == "vault") BuildVaultSite(root.transform, s.Id);
             return root;
         }
 
@@ -683,6 +684,7 @@ namespace Saga.Go.World
             RefreshRift();
             RefreshRoute();
             RefreshAmber();
+            RefreshVault();
             bool powered = !StoryState.OffForTest && GoStory.TrainPowered;
             SetMat("skyport:train_lamp_a", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
             SetMat("skyport:train_lamp_b", powered ? Mat("s_lamp_on", new Color(1f, 0.95f, 0.7f), 3f) : Mat("s_lamp_off", new Color(0.22f, 0.22f, 0.22f)));
@@ -749,6 +751,7 @@ namespace Saga.Go.World
             TickRiftRings(Time.deltaTime);
             TickRoute(Time.deltaTime);
             TickAmber(Time.deltaTime);
+            TickVault(Time.deltaTime);
             var (a, g) = NearGate(feet);
             if (kb != null && g != 0 && kb.fKey.wasPressedThisFrame && !FishingField.Busy && !StoryState.Talking
                 && !(StoryUi.Instance != null && StoryUi.Instance.TalkShown) && !DispatchUi.AtBoard() && GoFishing.NearSpot(new Vector2(feet.x, feet.z)) == null && !GoFishing.NearBoard(new Vector2(feet.x, feet.z)))
