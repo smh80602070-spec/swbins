@@ -58,6 +58,9 @@
     /* ⑲-28 서리봉 고원 — frost.js 가운데(탑)·명소. 고원이 꺼져 있으면 자리 없음 */
     fr_center: { frost: 'center' }, fr_stele: { frost: 'stele' }, fr_obs: { frost: 'obs' }, fr_ship: { frost: 'ship' }, fr_fort: { frost: 'fort' },
     fr_lake: { frost: 'lake' }, fr_cave: { frost: 'cave' },
+    /* ⑲-58 9부 굳은 거리(amber.js) — 명소 가운데(am: 명소 id·crystal0~2·light0~3) + 단계·인물 칸의 off */
+    am_pass: { am: 'pass' }, am_cross: { am: 'cross' }, am_clock: { am: 'clock' }, am_market: { am: 'market' }, am_tower: { am: 'tower' }, am_statue: { am: 'statue' },
+    am_crystal0: { am: 'crystal0' }, am_crystal1: { am: 'crystal1' }, am_crystal2: { am: 'crystal2' },
     /* ⑲-53 8부 반디 자리 = 고향 촌장 동쪽(촌장 zone home off [-22,16] 에서 10m) */
     home_bandi: { zone: 'home', off: [-12, 16] },
     /* ⑲-34 3부 시대 명소(era-sites.js) — 갈대 나루 물가 녹슨 조선소. 명소가 꺼져 있으면 자리 없음 */
@@ -169,6 +172,7 @@
         { ch: 22, from: 1, to: 3, spot: 'sk_light_bandi' },                                                          // ⑲-47 23장 등대 발치
         { ch: 23, from: 0, to: 1, spot: 'sk_sand_bandi' }, { ch: 23, from: 2, to: 999, spot: 'sr_bandi', sky: true },    // ⑲-49 24장 모래밭 → 사당 섬
         { ch: 24, from: 0, to: 0, spot: 'sr_bandi', sky: true }, { ch: 24, from: 1, to: 999, spot: 'sr_wreck_bandi', sky: true },   // ⑲-50 25장 잔해 섬(뒤에도)
+        { ch: 29, from: 0, to: 0, spot: 'sp_bandi' }, { ch: 29, from: 1, to: 999, spot: 'am_clock', off: [-8, 8] }, { ch: 30, chTo: 999, from: 0, to: 999, spot: 'am_clock', off: [-8, 8] },   // ⑲-58 9부
         { ch: 25, from: 1, to: 999, spot: 'sr_orbit_bandi', sky: true }, { ch: 26, chTo: 999, from: 0, to: 999, spot: 'home_bandi' },   // ⑲-51 26장 정거장 섬 → ⑲-53 8부(27장~)는 청하 촌장 동쪽
         { ch: 25, chTo: 999, from: 0, to: 999, spot: 'sr_wreck_bandi', sky: true },
         { ch: 22, chTo: 999, from: 0, to: 999, spot: 'sk_in_bandi' },
@@ -195,7 +199,8 @@
     /* ⑲-42 별배 선장 한별(미래) — 19장 7째 섬돌 가운데 밑(틈 수정 아래) · 8~9 섬돌 곁 · 19장 뒤 첫 정거장 곁 */
     hanbyeol: { id: 'story_hanbyeol', name: '별배 선장 한별', short: '한별', zone: 'dragon', spot: 'cr_hanbyeol', off: [0, 0], color: '#232e57',
       idle: '틈은 멈춰 있지 않다. 누군가 끝을 찾아가 닫아야 해.',
-      appear: [{ ch: 18, from: 7, to: 7, spot: 'cr_st_foot' }, { ch: 18, from: 8, to: 9, spot: 'cr_st_hanbyeol' }, { ch: 19, from: 2, to: 10, spot: 'cr_rift_hanbyeol', sky: true },
+      appear: [{ ch: 29, chTo: 999, from: 0, to: 999, spot: 'sp_hb_port' },                                    // ⑲-58 9부 — 은하 나루 착륙판 곁(하늘 사당 자리보다 먼저)
+        { ch: 18, from: 7, to: 7, spot: 'cr_st_foot' }, { ch: 18, from: 8, to: 9, spot: 'cr_st_hanbyeol' }, { ch: 19, from: 2, to: 10, spot: 'cr_rift_hanbyeol', sky: true },
         { ch: 20, from: 0, to: 1, spot: 'sp_hb_port' },
         { ch: 23, from: 2, to: 999, spot: 'sr_hanbyeol', sky: true }, { ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_hanbyeol', sky: true },   // ⑲-49 24장 별배로 사당 섬(뒤에도)
         { ch: 20, chTo: 999, from: 0, to: 999, spot: 'sk_sand_hanbyeol' },   // ⑲-45 21장 — 별배 곁 → 도읍 모래밭(뒤에도)
@@ -224,6 +229,10 @@
       idle: '기록계 바늘이 또 튀어요. 구름이 저절로 생기는 게 아니라니까요.',
       appear: [{ ch: 25, from: 1, to: 999, spot: 'sr_orbit_haneul', sky: true }, { ch: 26, chTo: 999, from: 0, to: 999, spot: 'sr_orbit_haneul', sky: true },   // ⑲-51 26장 잔해 기둥 뒤엔 정거장 섬
         { ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_haneul', sky: true }] },
+    /* ⑲-58 시계 수리공 초롱(현대) — 손목시계 속 틈 조각 태엽 덕에 혼자 안 굳었다. 9부(30장~)부터 늘 시계방 서쪽 앞 */
+    chorong:  { id: 'story_chorong',  name: '시계 수리공 초롱', short: '초롱', zone: 'saltflat', spot: 'am_clock', off: [-3, 6], color: '#5c8070',
+      idle: '다른 시계는 다 멈췄는데 내 손목시계만 째깍거려요.',
+      appear: [{ ch: 29, chTo: 999, from: 0, to: 999, spot: 'am_clock', off: [-3, 6] }] },
     /* ⑲-51 가면 그림자 — 23장 반디 기록 속 그자. 26장 장치 셋을 끈 뒤(일곱째 단계) 한 번만 정거장 서쪽 끝에 선다. 정체는 8부까지 */
     gamyeon:  { id: 'story_gamyeon',  name: '가면 그림자', short: '그림자', zone: 'saltflat', spot: 'sr_gamyeon', off: [0, 0], color: '#14121c', mask: true, idle: '……',
       appear: [{ ch: 25, from: 6, to: 6, spot: 'sr_gamyeon', sky: true }, { ch: 27, from: 8, to: 8, spot: 'sky', off: [7, -7], sky: true },   // ⑲-54 28장 구름섬 북동쪽 한 번
@@ -243,7 +252,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -1439,6 +1448,39 @@
             ['한별', '……글쎄. 틈이 삼켰다 못 돌려놓은 시대 조각들이 아직 곳곳에 굳어 있다더군. 하지만 그건 잔치 뒤에 생각하세.'],
             ['?', ['다 같이 잔치해요!', '모두 고마워요.']],
             ['누리', '약속대로 잔치다! 이건 청하 마을과 세 시대 동무들이 너에게 주는 거란다. 고맙다 — 우리 대장.', 'joy']] }
+      ] },
+    /* ⑲-58 이야기 9부 첫 장 — 멈춘 거리(amber.js 굳은 거리). 한별(나루) → 고개 넘어 거리 어귀 → 네거리 결정 짐승 → 초롱 → 굳은 자리 셋(신호등 앞 → 정류장 → 우체통, light bare) → 초롱.
+       굳은 자리는 그 단계 다음부터 녹는다(amber CRYSTAL_OFF_FROM 5·6·7 — 단계 번호를 바꾸면 그쪽도) */
+    { id: 'ch30', name: '제30장 · 멈춘 거리', ar: 66,
+      reward: { knot: 7, gold: 7750, guide: 7, secret: 6, party: 1950 },
+      steps: [
+        { type: 'talk', npc: 'hanbyeol', text: '은하 나루의 별배 선장 한별과 이야기하기',
+          lines: [['한별', '왔군, 대장. 잔치 술은 좀 깼나? 별배 항로표를 보게 — 북쪽 고개 너머에 굳은 신호가 찍혔네.', 'fun'],
+            ['반디', '삐— 시간이 흐르지 않는 자리에서만 나는 신호입니다. 먹구름 눈이 걷히던 밤부터 떴습니다.'],
+            ['한별', '그 밤에 고개를 막던 호박빛 결정 막도 풀렸다더군. 틈이 닫힐 때 제자리로 못 돌아간 시대 조각 — 잔치 뒤에 생각하자던 그것일세.', 'surprised'],
+            ['?', ['별배로 가 볼까요?', '걸어서 넘어갈게요.']],
+            ['한별', '거리가 빽빽해서 별배는 못 내려앉네. 고개 경계비를 지나 걸어가게 — 반디를 먼저 날려 보내지.']] },
+        { type: 'go', spot: 'am_pass', off: [0, -25], text: '은하 나루 북쪽 고개를 넘어 굳은 거리 어귀로' },
+        { type: 'kill', spot: 'am_cross', off: [0, 8], kinds: ['rockbear', 'imp', 'snowfox', 'raptor'], text: '네거리를 서성이는 결정 짐승 물리치기' },
+        { type: 'talk', npc: 'chorong', text: '시계방 앞의 수리공 초롱과 이야기하기',
+          lines: [['초롱', '……사람이다! 움직이는 사람! 이 거리에서 석 달째 나 혼자만 움직였어요.', 'surprised'],
+            ['초롱', '틈이 닫히던 날 거리가 통째로 굳었어요. 신호등도, 전철도, 사람들도. 나만 멀쩡했던 건 — 이 손목시계 덕인 것 같아요.', 'sorrow'],
+            ['반디', '삐— 그 시계 속 태엽, 틈 조각입니다. 시계가 주인의 시간만 붙들어 준 겁니다.'],
+            ['?', ['굳은 사람들을 풀어 줄 수 있어요?', '저 호박빛 결정은 뭐죠?']],
+            ['초롱', '굳은 자리요. 네거리에만 셋 — 신호등 앞, 버스 정류장, 우체통. 원소가 닿으면 녹을지도 몰라요. 난 못 하지만 당신은…!']] },
+        { type: 'light', spot: 'am_crystal0', bare: true, text: '네거리 신호등 앞 굳은 자리를 원소 스킬로 녹이기',
+          done: '🔥 신호등 앞 결정이 녹아내리고 — 길을 건너던 사람이 휘청이며 걸음을 마저 뗀다' },
+        { type: 'light', spot: 'am_crystal1', bare: true, text: '버스 정류장 굳은 자리를 원소 스킬로 녹이기',
+          done: '🔥 정류장 결정이 녹고 — 버스를 기다리던 할머니가 눈을 깜박인다' },
+        { type: 'light', spot: 'am_crystal2', bare: true, text: '우체통 앞 굳은 자리를 원소 스킬로 녹이기',
+          done: '🔥 우체통 결정까지 녹았다 — 편지를 넣던 아이가 손을 뗀다. 그런데 신호등은 아직 빨강이다' },
+        { type: 'talk', npc: 'chorong', text: '시계방 앞의 초롱에게 돌아가기',
+          lines: [['초롱', '고마워요! 다들 풀려났어요… 그런데 보세요. 신호등은 여전히 빨강이고, 시계방 시계는 한 칸도 안 가요.', 'sorrow'],
+            ['초롱', '사람은 녹여도 거리의 시간은 안 흐르는 거예요. 무언가가 시간을 통째로 붙들고 있어요.'],
+            ['반디', '삐— 굳은 신호가 가장 센 곳은 서쪽. 결정 하나가 거리 전체 신호의 절반입니다.'],
+            ['?', ['서쪽에 뭐가 있어요?', '제일 큰 결정은 어디죠?']],
+            ['초롱', '호박 속 장터요. 옛날 장터가 천막째 통째로 결정에 들어 있어요 — 이 거리에서 제일 큰 굳은 자리예요.', 'surprised'],
+            ['초롱', '장터 둘레에 낡은 석등이 셋 서 있어요. 가게 문 닫고 따라갈게요. 준비되면 말해 줘요!', 'joy']] }
       ] }
   ];
 
@@ -1545,6 +1587,11 @@
   }
   /** 이름 붙은 자리 + off */
   function spotPos(name, off) {
+    var SPam = SPOTS[name];
+    if (SPam && SPam.am) {                                      // ⑲-58 굳은 거리 명소·굳은 자리
+      var AMq = global.DG.amber, ap = AMq && AMq.on() ? AMq.spot(SPam.am) : null;
+      return ap ? { x: ap.x + (off ? off[0] : 0), y: ap.y + (off ? off[1] : 0) } : null;
+    }
     if (name === 'eye') {                                       // ⑲-55 먹구름 눈 가운데
       var SEq = global.DG.stormEye, ee = SEq ? SEq.spot('eye') : null;
       return ee ? { x: ee.x + (off ? off[0] : 0), y: ee.y + (off ? off[1] : 0) } : null;

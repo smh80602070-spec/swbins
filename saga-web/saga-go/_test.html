@@ -14526,6 +14526,64 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '굳은 자리 5·6·7 · 돔 31장 2 · 탑 32장 3 · 신호등 32장 뒤 · 자리 crystal/light · 손잡이' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-58 이야기 9부 제30장 · 멈춘 거리 (story ch30·초롱 · amber 굳은 자리 셋 단계 번호 맞물림, PLAN §5 ⑲-58) ── */
+    t('이야기 ⑲-58 — 30장 여덟 단계(Lv66) · 굳은 자리 녹음 단계(5·6·7)가 불 세 단계(4·5·6) 다음과 맞물림 · 흐름: 한별(나루 착륙판) → 고개 넘어 어귀(go) → 네거리 결정 짐승 넷(땅) → 초롱 → 굳은 자리 신호등 앞·정류장·우체통(먼 곳 ✕) → 초롱 · 반디·초롱 자리', function () {
+      var rig = stRig(66), AM = DG.amber, ST = DG.story, FC = DG.fieldCombat, TL = DG.talent, r = {};
+      try {
+        AM._resetForTest(); delete C.save.amber;
+        var c = ST.CHAPTERS[29], S30 = c.steps;
+        r.table = c.id === 'ch30' && c.ar === 66 && !c.join && S30.length === 8 && c.reward.knot === 7 && c.reward.gold === 7750 &&
+          S30.map(function (q) { return q.type; }).join() === 'talk,go,kill,talk,light,light,light,talk' && S30.slice(4, 7).every(function (q) { return q.bare; }) &&
+          S30[2].kinds.join() === 'rockbear,imp,snowfox,raptor';
+        /* 굳은 자리 표 ↔ 이 장 — 첫째 = 불(4) 다음(5) · 둘째 = 불(5) 다음(6) · 셋째 = 불(6) 다음(7) */
+        r.link = AM.CRYSTAL_OFF_FROM.join() === [4, 5, 6].map(function (k) { return k + 1; }).join() && S30.slice(4, 7).map(function (q) { return q.spot; }).join() === 'am_crystal0,am_crystal1,am_crystal2';
+        function np(k, si) { C.save.story = { ch: 29, step: si }; return ST.npcPos(k); }
+        var clockS = AM.siteById('clock'), port = ST.spotPos('sp_hb_port');
+        /* 인물 — 한별은 9부에 나루 착륙판 곁 · 반디는 첫 단계만 나루 → 시계방 남서쪽 · 초롱은 시계방 서쪽 앞 */
+        r.npcs = st10Eq(np('hanbyeol', 0), port) && ST.visible('hanbyeol') && st10Eq(np('bandi', 0), ST.spotPos('sp_bandi')) &&
+          st10Eq(np('bandi', 1), { x: clockS.x - 8, y: clockS.y + 8 }) && st10Eq(np('bandi', 7), { x: clockS.x - 8, y: clockS.y + 8 }) &&
+          st10Eq(np('chorong', 3), { x: clockS.x - 3, y: clockS.y + 6 }) && ST.visible('chorong') && !ST.npcInfo('chorong').sky &&
+          Math.hypot(np('chorong', 3).x - clockS.x, np('chorong', 3).y - clockS.y) > 5.5;
+        C.save.story = { ch: 30, step: 0 };
+        r.after = st10Eq(ST.npcPos('bandi'), { x: clockS.x - 8, y: clockS.y + 8 }) && st10Eq(ST.npcPos('chorong'), { x: clockS.x - 3, y: clockS.y + 6 }) && st10Eq(ST.npcPos('hanbyeol'), port);
+        C.save.story = { ch: 28, step: 0 }; r.before = !ST.visible('chorong');
+        C.save.story = { ch: 29, step: 0 };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('hanbyeol')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        /* 고개 넘어 어귀 — 멀면 ✕ */
+        var gt = ST.targetOf(ST.step()), pass = AM.siteById('pass');
+        r.goAt = st10Eq(gt, { x: pass.x, y: pass.y - 25 });
+        stGo({ x: gt.x, y: gt.y + 300 }); ST.check(); var far = C.save.story.step === 1;
+        stGo({ x: gt.x, y: gt.y }); ST.check();
+        r.go = far && C.save.story.step === 2;
+        /* 네거리 결정 짐승 넷(땅) */
+        var kt = ST.targetOf(ST.step()), cross = AM.siteById('cross');
+        r.killAt = st10Eq(kt, { x: cross.x, y: cross.y + 8 });
+        stGo({ x: kt.x + 4, y: kt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cp = S.camps[ST.keyOf()];
+        r.camp = !!cp && cp.uids.map(function (u) { return S.foes[u].kind; }).join() === 'rockbear,imp,snowfox,raptor' && cp.uids.every(function (u) { return !S.foes[u].sky; });
+        stKillCamp(S, ST.keyOf()); FC.tick(0.05);
+        r.kill = C.save.story.step === 3;
+        stGo(ST.npcPos('chorong')); r.t3 = stTalkAll(ST) && C.save.story.step === 4;
+        /* 굳은 자리 셋 — 차례로, 먼 곳은 ✕, 다음 단계부터 녹음(벽이 사라짐) */
+        function rectAt(p) { return DG.world3d.houseRects(Math.floor(p.x / 48), Math.floor(p.y / 48)).some(function (q) { return frInRect(q, p.x, p.y); }); }
+        var lights = [];
+        for (var i = 0; i < 3; i++) {
+          var tg = ST.targetOf(ST.step()), cs = AM.spot('crystal' + i);
+          var pre = C.save.story.step === 4 + i && !AM.crystalOff(i) && rectAt(cs);
+          C.emit('field:element', { el: 'fire', x: tg.x + 90, y: tg.y, r: 1, t: 'skill' });
+          var stay = C.save.story.step === 4 + i;
+          C.emit('field:element', { el: 'fire', x: tg.x, y: tg.y, r: 1, t: 'skill' });
+          lights.push(pre && stay && st10Eq(tg, cs) && C.save.story.step === 5 + i && AM.crystalOff(i) && !rectAt(cs));
+        }
+        r.lights = lights.every(Boolean) && !AM.lightsGreen();
+        stGo(ST.npcPos('chorong')); r.end = stTalkAll(ST) && C.save.story.ch === 30 && C.save.story.step === 0 && m.knot === k0 + 7 && C.save.player.gold >= gold0 + 7750;
+        r.done = [0, 1, 2].every(AM.crystalOff) && !AM.domeBroken();
+      } finally { AM._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '여덟 단계 · 한별(나루) → 어귀 → 네거리 짐승 → 초롱 → 굳은 자리 셋(5·6·7 녹음) → 초롱 · 🪢+7 🪙+7750 · 신호등은 아직 빨강' : ('실패 ' + bad.join(','));
+    });
+
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */
     t('3인칭 이동 Q1 — 3D 로 시점을 돌리면 키·스틱 방향도 같이 돈다(W = 카메라가 보는 쪽) · 3D 가 꺼져 있으면 그대로', function () {
       var W = DG.world, W3 = DG.world3d, r = {};
