@@ -9635,3 +9635,11 @@ PROJECT_STATE.md` 참고. 요약:
 - 갈무리 벌·굳은 거리·세갈래 고을의 정점색은 누런데 땅은 마을과 똑같은 연두(w_plain·a_cross_far·k_gate_far): 풀 텍스처가 초록이라 정점색을 곱해도 초록이 남는다. 풀잎(정점색 그대로)만 누렇고 땅은 초록이라 어긋났다.
 - terrain_triplanar.gdshader 에 hue_desat(텍스처 색기를 빼고 밝기 ×1.55 만 남김, 높이 4~8m 위 산은 제외) + terrain_builder REGION_TEX_DESAT{amber .85·vault .9·fork .6}. 세 지역 "." 정점색도 더 누렇게(amber .74/.58/.24 · vault .78/.64/.22 · fork .66/.6/.24). 다른 지역 값 0 이라 화면 그대로.
 - 전후 같은 컷: 갈무리 벌이 황금 벌판+누런 풀, 산·먼 언덕은 초록 유지. 세갈래 고을은 여전히 칙칙(길 칸 위에 서 있음)·오른쪽 짙은 청록 판(원인 못 찾음). probe_shots 새 컷 w_plain. REGRESS OK.
+
+## 나머지 네 판 첫 화면 점검 — 사가의숲 땅이 안 보이던 것·잿빛 하늘 (2026-09-30, "묻지말고 이어해")
+
+- GO 만 보다 SAGA_QUICK_SHOT 으로 DUNGEON·FOREST·STORY·REALM 첫 화면을 찍음(창 모드). 넷 다 하늘이 잿빛 안개, FOREST 는 땅 자리가 통째로 회색.
+- **FOREST 땅이 안 그려졌다**: forest_terrain_builder 삼각형이 위에서 반시계(00,11,10) — 09-26 GO 땅 뒷면과 같은 버그인데, 09-22 에 곡률 셰이더(curved_triplanar, cull_back)로 바꾼 뒤엔 뒷면이 아예 안 보여 하늘 아래 반구만 비쳤다. 시계 방향(00,10,11 / 00,11,01)으로 → 풀밭·흙길·바이옴 얼룩이 나타남(전후 촬영).
+- **하늘·색**: env_pc/mobile.tres 는 GO 만 environment_profile 이 덮어 써 왔고 나머지 넷은 기준값 그대로(안개 0.012·하늘 85% 덮음·AgX)라 잿빛이었다. 기준값을 안개 0.004·하늘 30%·ACES·노출 .9·대비 1.08·채도 1.2 로(GO 는 제 값으로 덮어 그대로). STORY 하늘이 원래 설계색(사냥터별 크림색)으로, REALM 은 파란 하늘. STORY 발판 아래 반구는 story_sky 가 하늘 지평색으로 이어 줌.
+- 개발용 SAGA_QUICK_SHOT_DELAY=<초> 추가(기본 2.5). REGRESS OK.
+- 실기 확인 전: 의숲 땅 밝기·구면 투영에서 땅이 제대로 굽는지(폰), 던전 굴 분위기가 밝아져 어색한지, 사가국지 월드맵.

@@ -16,7 +16,7 @@ func _ready() -> void:
 	get_tree().root.size_changed.connect(_fit)
 	_fit()
 	if OS.get_environment("SAGA_QUICK_SHOT") != "":
-		await get_tree().create_timer(2.5).timeout
+		await get_tree().create_timer(float(OS.get_environment("SAGA_QUICK_SHOT_DELAY")) if OS.get_environment("SAGA_QUICK_SHOT_DELAY") != "" else 2.5).timeout
 		get_viewport().get_texture().get_image().save_png(OS.get_environment("SAGA_QUICK_SHOT"))
 		get_tree().quit()
 

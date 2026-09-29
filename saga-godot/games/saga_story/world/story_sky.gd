@@ -40,3 +40,6 @@ func _ready() -> void:
 		return
 	sky_mat.sky_top_color = sky_top_color
 	sky_mat.sky_horizon_color = sky_horizon_color
+	## 발판 아래 허공이 잿빛 땅 반구로 보였다(창 모드 SinyaField) — 아래 반구도 같은 하늘빛으로 이어 준다.
+	sky_mat.ground_horizon_color = sky_horizon_color
+	sky_mat.ground_bottom_color = sky_horizon_color.darkened(0.12)

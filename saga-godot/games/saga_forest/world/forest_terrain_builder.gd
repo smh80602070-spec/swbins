@@ -60,14 +60,15 @@ func _build_ground() -> void:
 			var p11 := center + Vector3(half, 0, half)
 
 			st.set_normal(Vector3.UP)
+			## 시계 방향이 앞면(위에서 본 GO 땅과 같다 — 반시계면 cull_back 재질에서 땅이 통째로 안 보인다).
 			st.set_color(col); st.add_vertex(p00)
-			st.set_color(col); st.add_vertex(p11)
 			st.set_color(col); st.add_vertex(p10)
+			st.set_color(col); st.add_vertex(p11)
 
 			st.set_normal(Vector3.UP)
 			st.set_color(col); st.add_vertex(p00)
-			st.set_color(col); st.add_vertex(p01)
 			st.set_color(col); st.add_vertex(p11)
+			st.set_color(col); st.add_vertex(p01)
 
 	var mesh := st.commit()
 	## PLAN 102-5 "바닥 한 색" 처방(2026-09-22) — GO에 먼저 물린
