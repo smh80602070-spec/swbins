@@ -19,6 +19,7 @@ try {
     DG.perf.pin('LOW'); DG.core.save.settings.autoBattle = true; DG.core.save.player.level = Math.max(60, DG.story.CHAPTERS[${CH - 1}].ar + 2);
     ${process.argv.includes('nofield') ? "DG.core.setTune('field.on', 0);" : ''}
     DG.fieldCombat._resetForTest && DG.fieldCombat._resetForTest();
+    ${process.argv.includes('members') ? "Object.keys(DG.story.MEMBERS).forEach(function (id) { DG.story.join(id, true); });" : ''}
     var sv = DG.story.state(); sv.ch = ${CH - 1}; sv.step = ${process.argv.includes('defend') ? "DG.story.CHAPTERS[" + (CH - 1) + "].steps.findIndex(function (x) { return x.type === 'defend'; })" : 0};
     var t = DG.story.targetOf(DG.story.step()), p = DG.core.save.player.pos; p.x = t.x + 15; p.y = t.y; DG.world.walkTo(p.x, p.y);
     DG.auto.setOn(true);

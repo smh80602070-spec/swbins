@@ -141,6 +141,8 @@
      먹구름 임금(⑲-20, 다섯째 = 왕관 — 금빛 눈) = [얼굴, 눈, 줄, 금?, 왕관?] */
   var MASKS = { white: [0xf2efe6, 0x15151a, 0xc0282c], black: [0x1b1a21, 0x7a1822, 0x8a4fd0], crack: [0x1b1a21, 0x7a1822, 0x8a4fd0, 0xf4f1ea],
     storm: [0x100f18, 0xf2d24a, 0x5b46c8, 0, 0xe0b23a],
+    shadow: [0x2a2340, 0xb98cff, 0x5b46c8, 0, 0x48385c],   // ⑲-51 먹구름 임금의 그림자 — 먹빛 얼굴·보랏빛 눈·먹빛 왕관
+    first: [0xf2efe6, 0x15151a, 0x5b46c8, 0, 0x2b2238],    // ⑲-55 먹구름 임금의 참몸 — 흰 처음 가면(1부 비문 무늬)·먹빛 왕관
     gold: [0xe2b84a, 0x2a1d0a, 0x6fd6ff] };                 // ⑲-42 멈춘 시간의 파수꾼 — 금빛 가면·푸른 시간 줄
   function mask(T, node, kind) {
     if (!T || !node) { return false; }

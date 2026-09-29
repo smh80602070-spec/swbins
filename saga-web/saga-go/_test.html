@@ -14260,6 +14260,102 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 ? '열 단계 · 곶 지키기 3·4·5 → 넷째 매듭 → 배로 바위섬 → 석등 해·별·달 → 구름섬 무리 → 여섯째 매듭(줄이 등불로) → 가면 그림자 → 나그네 · 🪢+7 🪙+7500 · 눈 서고 기둥 열림' : ('실패 ' + bad.join(','));
     });
 
+    /* ── ⑲-55 이야기 8부 제29장 · 먹구름의 근원 — 8부 끝 (story ch29 · 새 단계 party · 눈 위 단계·인물 · defend bare · 참몸 보스, PLAN §5 ⑲-55) ── */
+    t('이야기 ⑲-55 — 29장 아홉 단계(Lv64) · 편성 시험(과거·현대·미래 하나씩 ✔/✗ · 🤖 자동 편성) · 잔해가 아니라 **구름섬 서쪽 기둥을 실제로 타고** 먹구름 눈에 · 임금 → 등불 지키기 3·4·5(눈 안) → 참몸(뇌 방패 불·눈 안) → 해솔(소용돌이 걷힘) → 광장 → 촌장 · 🪢+10', function () {
+      var rig = stRig(64), ST = rig.ST, FC = DG.fieldCombat, SE = DG.stormEye, SK = DG.skyIsle, LF = DG.landform, TL = DG.talent, r = {}, i;
+      var keepParty = C.save.party;
+      try {
+        LF._resetForTest(); SK._resetForTest();
+        var c = ST.CHAPTERS[28], S29 = c.steps;
+        r.table = c.id === 'ch29' && c.ar === 64 && !c.join && S29.length === 9 && c.reward.knot === 10 && c.reward.gold === 12000 &&
+          S29.map(function (q) { return q.type; }).join() === 'talk,party,sky,talk,defend,duel,talk,go,talk' && S29[2].pad === 'se_eye' && S29[2].draft === 'se_eye' &&
+          S29[4].bare && S29[4].sky && S29[4].waves.map(function (w) { return w.length; }).join() === '3,4,5' && S29[5].kind === 'storm_king_true' && S29[5].shield === 'elec' && S29[5].sky &&
+          S29[1].eras.join() === '과거,현대,미래' && !!FC.FOES.storm_king_true && FC.FOES.storm_king_true.boss && FC.FOES.storm_king_true.el === 'elec';
+        /* 소용돌이 걷힘 = 보스(5) 다음 단계(6) */
+        r.link = SE.EYE_CLEAR[0] === 28 && SE.EYE_CLEAR[1] === 5 + 1;
+        var ey = SE.eyeSpot();
+        function inEye(q, m) { return !!q && Math.hypot(q.x - ey.x, q.y - ey.y) <= ey.r - (m || 0); }
+        function np(k, si) { C.save.story = { ch: 28, step: si }; return ST.npcPos(k); }
+        /* 인물 — 임금은 넷째(3)에만 눈 북쪽(먹구름 임금·처음 가면) · 해솔은 일곱째(6)에만 눈 북동쪽(가면 벗음) */
+        r.npcs = st10Eq(np('gamyeon', 3), ST.spotPos('eye', [0, -9])) && ST.visible('gamyeon') && ST.npcInfo('gamyeon').sky && ST.npcInfo('gamyeon').name === '먹구름 임금' && ST.npcInfo('gamyeon').mask === 'first' && inEye(np('gamyeon', 3), 3) &&
+          (np('gamyeon', 2), !ST.visible('gamyeon')) && (np('gamyeon', 4), !ST.visible('gamyeon')) &&
+          st10Eq(np('haesol', 6), ST.spotPos('eye', [8, -6])) && ST.visible('haesol') && ST.npcInfo('haesol').mask === false && ST.npcInfo('haesol').sky && inEye(np('haesol', 6), 3) && (np('haesol', 5), !ST.visible('haesol'));
+        /* 동료의 시대 표 */
+        r.times = ST.memberTime('story_elder') === '과거' && ST.memberTime('story_haneul') === '현대' && ST.memberTime('story_hanbyeol') === '미래' && ST.memberTime('story_scholar') === '현대' && !ST.memberTime('nobody') &&
+          Object.keys(ST.MEMBERS).every(function (k) { return !!ST.memberTime(k); });
+        C.save.story = { ch: 28, step: 0 };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('elder')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        /* 편성 시험 — 두 시대만이면 안 되고, 미래가 들어오면 넘어간다. 목표 글에 ✔/✗ */
+        ['story_elder', 'story_haneul', 'story_hanbyeol'].forEach(function (id) { ST.join(id, true); });
+        C.save.party = ['story_elder', 'story_haneul'];
+        ST.check(); var two = C.save.story.step === 1 && ST.partyEras()['과거'] && ST.partyEras()['현대'] && !ST.partyEras()['미래'];
+        var tt = ST.trackText();
+        var txt = /과거 ✔/.test(tt) && /현대 ✔/.test(tt) && /미래 ✗/.test(tt);
+        C.save.party.push('story_hanbyeol'); ST.check();
+        r.party = two && txt && C.save.story.step === 2 && !!ST.targetOf(S29[1]);
+        /* 🤖 자동 편성 — 빈 명단에서도 가진 동료로 세 시대를 채운다(자리가 차 있어도) */
+        C.save.story = { ch: 28, step: 1 }; C.save.party = [];
+        var ap = ST.autoParty() && ST.partyOk(S29[1]); ST.check();
+        var apOk = ap && C.save.story.step === 2;
+        C.save.story = { ch: 28, step: 1 }; C.save.party = ['story_elder', 'story_ferryman', 'story_wanderer', 'story_dareum', 'story_mulsae'];   // 다섯이 다 과거
+        ST.autoParty(); var full = ST.partyOk(S29[1]) && C.save.party.length <= 5;
+        r.auto = apOk && full;
+        C.save.party = ['story_elder', 'story_haneul', 'story_hanbyeol'];
+        C.save.story = { ch: 28, step: 2 };
+        /* 먹구름 눈 — 구름섬 서쪽 기둥을 실제로 타고 활공해 내려서면 다음 */
+        var sk = SK.spot(), dr = SE.drafts()[0], pos = C.save.player.pos, tg = ST.targetOf(ST.step());
+        r.aim = !!dr && st10Eq(tg, dr) && tg.r === dr.r;
+        pos.x = sk.x; pos.y = sk.y; LF.setSky(true);
+        pos.x = dr.x; pos.y = dr.y; LF.jump();
+        for (i = 0; i < 80 && !(LF.gliding() && LF.glideAlt() >= dr.top - 0.01); i++) { LF.tick(0.1); }
+        ST.check(); var still = C.save.story.step === 2;
+        for (i = 0; i < 120 && LF.gliding(); i++) { pos.x -= 0.8; LF.tick(0.1); }
+        ST.check();
+        r.climb = still && LF.onSky() && SK.padAt(pos.x, pos.y).id === 'se_eye' && C.save.story.step === 3;
+        stGo(ST.npcPos('gamyeon')); r.t3 = stTalkAll(ST) && C.save.story.step === 4;
+        /* 매듭 등불 지키기 — 눈 가운데, 물결 3·4·5 모두 눈 위·눈 안 */
+        var dt = ST.targetOf(ST.step());
+        r.defAim = st10Eq(dt, ST.spotPos('eye')) && SE.knotsShown();
+        stGo({ x: dt.x, y: dt.y + 2 }); FC.tick(0.05); ST.stepDefend(0.1);
+        var S = FC.state(), sizes = [], inside = true, sky = true;
+        for (i = 0; i < 3; i++) {
+          if (i) { ST.defState().t = ST.DEFEND_WAVE_SEC; ST.stepDefend(0.01); }
+          var cw = S.camps[ST.waveKey(i)];
+          sizes.push(cw ? cw.uids.length : 0);
+          if (cw && !cw.uids.every(function (u) { return inEye(S.foes[u], 0.5); })) { inside = false; }
+          if (cw && !cw.uids.every(function (u) { return S.foes[u].sky; })) { sky = false; }
+          stKillCamp(S, ST.waveKey(i)); FC.tick(0.05);
+        }
+        ST.stepDefend(0.01);
+        r.defend = sizes.join() === '3,4,5' && inside && sky && C.save.story.step === 5;
+        /* 참몸 — 눈 남쪽 9m, 절반에서 뇌 방패(불)·졸개 둘(눈 안) */
+        var bt = ST.targetOf(ST.step());
+        r.bossAt = st10Eq(bt, ST.spotPos('eye', [0, 9])) && !SE.eyeClear();
+        stGo({ x: bt.x + 3, y: bt.y }); FC.tick(0.05); ST.check();
+        var cb = S.camps[ST.keyOf()], b = cb && S.foes[cb.uids[0]];
+        r.boss = !!b && b.kind === 'storm_king_true' && b.el === 'elec' && !!b.sky && inEye(b, 2);
+        b.hp = Math.round(b.hpMax * 0.4); ST.check();
+        var ad = S.camps[ST.keyOf() + ':add'];
+        r.p2 = b.shEl === 'elec' && !!ad && ad.uids.map(function (u) { return S.foes[u].kind; }).join(',') === 'hawk,raptor' && ad.uids.every(function (u) { return S.foes[u].sky && inEye(S.foes[u], 0.5); });
+        b.shield = 0; b.layers = [];
+        for (var k = 0; k < 3 && !b.dead; k++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); }
+        FC.tick(0.05);
+        r.duel = C.save.story.step === 6 && !S.camps[ST.keyOf() + ':add'] && SE.eyeClear() && [0, 1, 2, 3, 4, 5].every(function (k) { return SE.beamMode(k) === ''; });
+        stGo(ST.npcPos('haesol')); r.t6 = stTalkAll(ST) && C.save.story.step === 7;
+        /* 활공해 광장 — 촌장 곁에 닿으면 */
+        var gt = ST.targetOf(ST.step());
+        stGo({ x: gt.x + 90, y: gt.y }); ST.check(); var far = C.save.story.step === 7;
+        stGo({ x: gt.x, y: gt.y }); ST.check();
+        r.go = far && C.save.story.step === 8;
+        gold0 = C.save.player.gold; k0 = m.knot || 0;   // 지키기·보스 클리어 보상은 빼고 이 장 보상만
+        stGo(ST.npcPos('elder')); r.end = stTalkAll(ST) && C.save.story.ch === 29 && C.save.story.step === 0 && m.knot === k0 + 10 && C.save.player.gold === gold0 + 12000;
+        r.after = SE.allTied() && SE.eyeClear() && SE.eyeShown() && SE.drafts().length === 1;
+      } finally { C.save.party = keepParty; LF._resetForTest(); SK._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '아홉 단계 · 편성 시험(세 시대 ✔/✗·🤖 자동) → 구름섬 기둥 타고 먹구름 눈 → 임금 → 등불 지키기 3·4·5(눈 안) → 참몸(뇌 방패·불) → 소용돌이 걷힘 → 해솔 → 광장 → 촌장 · 🪢+10 🪙+12000' : ('실패 ' + bad.join(','));
+    });
+
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */
     t('3인칭 이동 Q1 — 3D 로 시점을 돌리면 키·스틱 방향도 같이 돈다(W = 카메라가 보는 쪽) · 3D 가 꺼져 있으면 그대로', function () {
       var W = DG.world, W3 = DG.world3d, r = {};

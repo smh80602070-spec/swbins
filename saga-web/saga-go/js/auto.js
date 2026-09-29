@@ -252,6 +252,7 @@
       if (!S.done() && S.locked()) { doing = '📖 다음 장은 모험 레벨 ' + S.chapter().ar + ' 부터 — 그동안 순행'; }
       return false;
     }
+    if (st.type === 'party' && S.autoParty) { S.autoParty(); S.check(); if (S.step() !== st) { doing = '📖 🤝 세 시대 동료로 명단을 짰다'; return true; } }   // ⑲-55 편성 시험 — 가진 동료로 채운다
     var t = S.targetOf(st);
     if (!t) { doing = '📖 ' + (st.text || st.type) + ' — 목표 자리를 아직 못 찾음'; return false; }
     var p = core.save.player.pos, d = Math.hypot(t.x - p.x, t.y - p.y);

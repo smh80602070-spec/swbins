@@ -148,7 +148,8 @@
     haesol:   { id: 'story_haesol',   name: '검은 가면 해솔', short: '해솔', zone: 'galdae', off: [0, 0], color: '#26222e', idle: '……',
       mask: 'crack', appear: [{ ch: 7, from: 8, to: 8, spot: 'isle', off: [0, -9] },
         { ch: 8, from: 6, to: 9, spot: 'sky', off: [-5, 5], sky: true, mask: false, name: '해솔', idle: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' },
-        { ch: 26, from: 8, to: 8, spot: 'peak', off: [5, 5], mask: false, name: '해솔', idle: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' }] },   // ⑲-53 27장 봉우리 꼭대기
+        { ch: 26, from: 8, to: 8, spot: 'peak', off: [5, 5], mask: false, name: '해솔', idle: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' },   // ⑲-53 27장 봉우리 꼭대기
+        { ch: 28, from: 6, to: 6, spot: 'eye', off: [8, -6], sky: true, mask: false, name: '해솔', idle: '……고맙다. 노래를 다시 부를 수 있을 것 같아.' }] },   // ⑲-55 29장 소용돌이가 걷힌 눈
     thief:    { id: 'story_thief',    name: '노 도둑', short: '도둑', zone: 'galdae', off: [-10, -50], color: '#5a4a3a', idle: '헤헤, 못 잡지롱!',
       appear: [{ ch: 7, from: 2, to: 2 }], runPath: THIEF_PATH },
     /* ⑲-28 서리봉 고원 둘 — 자리가 ⑮ 땅 탑이 아니라 이름 붙은 자리(spot, 고원이 꺼지면 안 선다). 반디는 드론 몸(pet) */
@@ -225,7 +226,8 @@
         { ch: 24, chTo: 999, from: 0, to: 999, spot: 'sr_haneul', sky: true }] },
     /* ⑲-51 가면 그림자 — 23장 반디 기록 속 그자. 26장 장치 셋을 끈 뒤(일곱째 단계) 한 번만 정거장 서쪽 끝에 선다. 정체는 8부까지 */
     gamyeon:  { id: 'story_gamyeon',  name: '가면 그림자', short: '그림자', zone: 'saltflat', spot: 'sr_gamyeon', off: [0, 0], color: '#14121c', mask: true, idle: '……',
-      appear: [{ ch: 25, from: 6, to: 6, spot: 'sr_gamyeon', sky: true }, { ch: 27, from: 8, to: 8, spot: 'sky', off: [7, -7], sky: true }] },   // ⑲-54 28장 구름섬 북동쪽 한 번
+      appear: [{ ch: 25, from: 6, to: 6, spot: 'sr_gamyeon', sky: true }, { ch: 27, from: 8, to: 8, spot: 'sky', off: [7, -7], sky: true },   // ⑲-54 28장 구름섬 북동쪽 한 번
+        { ch: 28, from: 3, to: 3, spot: 'eye', off: [0, -9], sky: true, mask: 'first', name: '먹구름 임금', idle: '……' }] },   // ⑲-55 29장 먹구름 눈 북쪽(참몸 — 정체를 드러낸 뒤)
     /* ⑲-50 구름 씨앗 드론 — 25장 쫓기 때만 잔해 섬 둘레 길(SEED_DRONE_PATH)을 난다. 드론 모델(pet) */
     seeddrone: { id: 'story_seeddrone', name: '구름 씨앗 드론', short: '드론', zone: 'saltflat', spot: 'sr_wreck', color: '#4d4266', pet: 'drone', idle: '삐비— 치익.',
       appear: [{ ch: 24, from: 3, to: 3, sky: true }], runSpot: 'sr_wreck', runPath: SEED_DRONE_PATH },
@@ -280,6 +282,37 @@
     story_haneul: { id: 'story_haneul', name: '하늬', hanja: '河嬔', era: '이야기', faction: '재야', rarity: 4, trait: 'command', story: true,
       el: 'ice', weapon: 'polearm', stats: { might: 74, wisdom: 72, command: 76 }, emoji: '🎈', quote: '날개는 빌려 쓰고요!' }
   };
+  /* ⑲-55 이야기 동료의 시대 — 29장 편성 시험(과거·현대·미래 하나씩) */
+  var MEMBER_TIME = { story_scholar: '현대', story_wanderer: '과거', story_elder: '과거', story_ferryman: '과거', story_haesol: '현대', story_haram: '현대', story_dareum: '과거',
+    story_dodam: '현대', story_hanbyeol: '미래', story_mulsae: '과거', story_haneul: '현대' };
+  function memberTime(id) { return MEMBER_TIME[id] || null; }
+  /** 들판 명단(save.party)의 이야기 동료가 가진 시대 — { 과거: true, … } */
+  function partyEras() {
+    var out = {}, P = core() && core().save && Array.isArray(core().save.party) ? core().save.party : [];
+    P.forEach(function (id) { var t = memberTime(id); if (t) { out[t] = true; } });
+    return out;
+  }
+  function partyOk(st) { var e = partyEras(); return (st.eras || ['과거', '현대', '미래']).every(function (k) { return !!e[k]; }); }
+  /** 🤖 자동 — 명단에 없는 시대는 가진 이야기 동료 중에서 채운다(자리가 없으면 명단 끝 인물과 바꾼다). 바꿨으면 true */
+  function autoParty() {
+    var st = step();
+    if (!st || st.type !== 'party') { return false; }
+    var c = core(), FM = global.DG.formation, max = FM ? FM.MAX : 5, changed = false;
+    if (!Array.isArray(c.save.party)) { c.save.party = []; }
+    (st.eras || ['과거', '현대', '미래']).forEach(function (era) {
+      if (partyEras()[era]) { return; }
+      var pick = Object.keys(MEMBERS).filter(function (id) { return memberTime(id) === era && hasMember(id) && c.save.party.indexOf(id) < 0; })[0];
+      if (!pick) { return; }
+      if (c.save.party.length >= max) {
+        var removable = function (id) { var t = memberTime(id); return !t || c.save.party.filter(function (q) { return memberTime(q) === t; }).length > 1; };
+        for (var i = c.save.party.length - 1; i >= 0; i--) { if (removable(c.save.party[i])) { c.save.party.splice(i, 1); break; } }
+        if (c.save.party.length >= max) { c.save.party.pop(); }
+      }
+      c.save.party.push(pick); changed = true;
+    });
+    if (changed) { c.emit('changed'); }
+    return changed;
+  }
   function hookFind() {
     var D = global.DG.data;
     if (!D || !D.find || D.find._story) { return; }
@@ -1364,6 +1397,48 @@
             ['나그네', '혼자서는 못 간다. 마을로 내려가 모두를 불러 모으게 — 은비, 버들, 해솔… 네가 시대를 건너 만난 동무들 전부.'],
             ['?', ['다 같이 가요.', '마지막 싸움이네요.']],
             ['나그네', '과거·현대·미래가 다 모여야 틈 위의 임금을 칠 수 있다. 누리 할머니가 광장에서 기다린다.', 'joy']] }
+      ] },
+    /* ⑲-55 8부 끝·1차 결말 — 먹구름의 근원. 광장 촌장 → **편성 시험**(새 단계 party — 들판 명단에 과거·현대·미래 이야기 동료 하나씩) → 구름섬 서쪽 바람 기둥으로 먹구름 눈(sky pad se_eye) →
+       임금(참몸) → 매듭 등불 지키기(defend bare — 눈 가운데) → 먹구름 임금 참몸(눈 남쪽 9m) → 해솔(소용돌이 걷힘 = stormeye EYE_CLEAR 29장 6단계 — 보스 다음) → 활공해 광장 → 잔치 */
+    { id: 'ch29', name: '제29장 · 먹구름의 근원', ar: 64,
+      reward: { knot: 10, gold: 12000, guide: 10, secret: 8, party: 3000 },
+      steps: [
+        { type: 'talk', npc: 'elder', text: '광장의 청하 촌장에게 가기',
+          lines: [['누리', '다들 모였구나. 은비, 버들 영감, 해솔, 나그네… 먼 시대에서 온 동무들까지. 청하 광장이 이렇게 북적인 건 처음이다.', 'joy'],
+            ['도담', '막차 기관은 식혀 두고 왔어요. 신호만 떨어지면 바로 달립니다!', 'fun'],
+            ['한별', '별배도 닻을 올렸네. 마지막 항로는 대장이 정하게.'],
+            ['반디', '삐— 먹구름 눈 안쪽 기압 급강하. 세 시대의 힘이 한 부대에 모여야 매듭 등불이 버팁니다.'],
+            ['?', ['편성을 짤게요.', '누구를 데려가죠?']],
+            ['누리', '과거와 현대와 미래 — 세 시대에서 한 사람씩 네 곁에 세우렴. 매듭은 세 시대를 함께 묶어야 다시는 풀리지 않는단다.']] },
+        { type: 'party', eras: ['과거', '현대', '미래'], text: '과거·현대·미래 이야기 동료를 하나씩 들판 명단에 넣기(도감 탭 → 편성)' },
+        { type: 'sky', pad: 'se_eye', draft: 'se_eye', spot: 'eye', sky: true, text: '구름섬 서쪽 바람 기둥을 타고 먹구름 눈으로(기둥 안에서 뛰어올라 활공)',
+          done: '🪂 먹구름 눈에 내려섰다 — 소용돌이 한가운데, 매듭 등불이 떨고 있다', gpsDone: '🌬️ 먹구름 눈 밑에 닿았다 — 마지막 싸움은 이 둘레에서 이어진다' },
+        { type: 'talk', npc: 'gamyeon', text: '먹구름 눈의 임금과 맞서기',
+          lines: [['먹구름 임금', '왔구나, 매듭을 묶는 자. 과거와 현재와 미래를 한 줄에 꿰어 오다니 — 그 줄째 끊어 주마.', 'angry'],
+            ['먹구름 임금', '매듭 등불만 꺼지면 여섯 줄은 도로 풀린다. 먹구름아, 등불을 덮어라!'],
+            ['?', ['등불은 우리가 지킨다!', '여기서 끝내자.']]] },
+        { type: 'defend', spot: 'eye', sky: true, bare: true, name: '매듭 등불', who: '먹구름 무리가',
+          waves: [['imp', 'imp', 'hawk'], ['snowfox', 'toad', 'raptor', 'imp'], ['rockbear', 'vine', 'hawk', 'raptor', 'snowfox']],
+          text: '먹구름 눈의 매듭 등불을 먹구름 무리에게서 지키기' },
+        { type: 'duel', spot: 'eye', off: [0, 9], sky: true, kind: 'storm_king_true', shield: 'elec', adds: ['hawk', 'raptor'], text: '먹구름 임금의 참몸 물리치기',
+          enter: '🌩️ 흰 처음 가면의 임금이 먹구름을 두르고 일어섰다 — 먹구름 임금의 참몸!',
+          p2: '⚡ 임금이 소용돌이의 먹구름을 몸에 두른다 — 불로 방패를 깨라! 매와 살쾡이가 뛰어든다',
+          win: '🌩️ 먹구름 임금의 흰 가면이 두 쪽으로 갈라지고 — 먹구름이 소용돌이째 흩어진다' },
+        { type: 'talk', npc: 'haesol', text: '먹구름 눈의 해솔과 이야기하기',
+          lines: [['해솔', '……들려? 바람이 노래해. 먹구름에 먹혀 부르던 노래가 아니라, 내 노래로.', 'joy'],
+            ['해솔', '가면이 갈라지던 순간 임금이 뭐라고 했는지 알아? \'매듭이 이렇게 따뜻한 줄 몰랐다\' — 그러고는 틈 아래로 가라앉았어.', 'sorrow'],
+            ['?', ['이제 정말 끝이야.', '잘 가라, 임금.']],
+            ['해솔', '먹구름 눈이 맑은 하늘로 바뀌었어. 자, 날개를 펴고 광장까지 — 할머니가 잔칫상을 차려 놨대!', 'fun']] },
+        { type: 'go', zone: 'home', off: [-22, 16], text: '먹구름 눈에서 활공해 청하 광장으로 내려가기' },
+        { type: 'talk', npc: 'elder', text: '청하 촌장에게 알리기',
+          lines: [['누리', '하늘 좀 보렴…! 먹구름 한 점 없이 파랗구나. 여섯 매듭 불빛이 별처럼 반짝이고.', 'joy'],
+            ['은비', '비문 맨 끝 줄이 새로 보여! \'매듭을 다시 묶은 이들이 있어 청하는 오래 맑으리라\' — 방금 새겨진 것 같아.', 'surprised'],
+            ['버들', '허허, 이 늙은이 노가 하늘까지 닿은 셈이로구먼.', 'fun'],
+            ['하늬', '비행선은 없어도 오늘 하늘은 제 거예요. 이렇게 맑은 날 기상 보고는 처음 써 봐요!', 'joy'],
+            ['반디', '삐— 틈 신호 안정. 먹구름 발생률 0퍼센트. 선장님, 이제 어디로 갈까요?'],
+            ['한별', '……글쎄. 틈이 삼켰다 못 돌려놓은 시대 조각들이 아직 곳곳에 굳어 있다더군. 하지만 그건 잔치 뒤에 생각하세.'],
+            ['?', ['다 같이 잔치해요!', '모두 고마워요.']],
+            ['누리', '약속대로 잔치다! 이건 청하 마을과 세 시대 동무들이 너에게 주는 거란다. 고맙다 — 우리 대장.', 'joy']] }
       ] }
   ];
 
@@ -1470,6 +1545,10 @@
   }
   /** 이름 붙은 자리 + off */
   function spotPos(name, off) {
+    if (name === 'eye') {                                       // ⑲-55 먹구름 눈 가운데
+      var SEq = global.DG.stormEye, ee = SEq ? SEq.spot('eye') : null;
+      return ee ? { x: ee.x + (off ? off[0] : 0), y: ee.y + (off ? off[1] : 0) } : null;
+    }
     var SKI = global.DG.skyIsle;
     var ES = global.DG.eraSites;
     var sp = SPOTS[name], b = !sp ? null : sp.era ? (ES ? ES.spot(sp.era) : null) : (sp.frost ? frostSpot(sp.frost) : (sp.peak ? peakSpot() : (sp.cape ? capeSpot() : (sp.isle ? isleSpot() :
@@ -1619,6 +1698,10 @@
     if (st.type === 'sky') {                                 // ⑲-20 바람 기둥 = 봉우리 정상
       var SKt = global.DG.skyIsle, pk = SKt ? SKt.peak() : null;
       return pk ? { x: pk.x, y: pk.y, r: SKt.DRAFT_R, label: st.text } : null;
+    }
+    if (st.type === 'party') {                               // ⑲-55 편성 시험 — 표식은 촌장 앞(어디서든 되는 단계)
+      var pe = npcPos('elder');
+      return pe ? { x: pe.x, y: pe.y, r: 0, label: st.text } : null;
     }
     if (st.type === 'go' || st.type === 'climb') {
       var g = st.altar ? altarPos() : posOf(st);
@@ -2151,6 +2234,8 @@
     if (st && st.type === 'go') {
       t = targetOf(st);
       if (t && Math.hypot(p.x - t.x, p.y - t.y) <= t.r) { advance(); return; }
+    } else if (st && st.type === 'party') {
+      if (partyOk(st)) { toast('🤝 세 시대의 동료가 한 명단에 모였다'); advance(); return; }
     } else if (st && st.type === 'boss') {
       t = targetOf(st);
       var FB = global.DG.fieldBoss;
@@ -2321,6 +2406,7 @@
     var st = step(), t = targetOf(st), p = pos(), d = t ? Math.hypot(p.x - t.x, p.y - t.y) : 0;
     var what = st.text;
     if (st.type === 'gather') { what += ' ' + gathered() + '/' + st.count; }
+    if (st.type === 'party') { var pe0 = partyEras(); what += ' — ' + (st.eras || ['과거', '현대', '미래']).map(function (k) { return k + (pe0[k] ? ' ✔' : ' ✗'); }).join(' '); }
     if (st.type === 'follow' && d > FOLLOW_LOST()) { what = '너무 멀다, 가까이!'; }
     if (st.type === 'chase') { what = chase && chase.key === keyOf() && chase.run ? NPCS[st.npc].name + ' ' + Math.round(d) + 'm — 달려라!' : st.text + ' (가까이 가면 달아난다)'; }   // ⑲-19
     if (st.type === 'seal') { what += ' ' + sealLit() + '/' + (st.order || SEAL_ORDER).length + ' (' + orderText(st) + ')'; }
@@ -2455,7 +2541,7 @@
     /* ⑲-16 지키는 동안은 기둥이 제단 체력 — 초록 → 빨강 */
     var dd = st.type === 'defend' && def && def.key === keyOf() && def.hpMax && def.wave >= 0 ? def : null;
     fx.pillar.children[0].material.color.setHex(dd ? pillarHex(dd.hp / dd.hpMax) : 0xffd24a);
-    if ((st.type === 'light' && !st.bell && !st.bare) || st.type === 'defend') {   // ⑲-39·40 종·변전함은 등롱 없이(장치가 skyport 에 있다)
+    if ((st.type === 'light' && !st.bell && !st.bare) || (st.type === 'defend' && !st.bare)) {   // ⑲-39·40 종·변전함은 등롱 없이(장치가 skyport 에 있다)
       if (!fx.altar) {
         var A = global.DG.asset3d, m = A && A.build ? A.build('lantern', { id: 'story_altar' }) : null, ag = new T3.Group();
         if (m) { m.scale.set(1.8, 1.8, 1.8); ag.add(m); }
@@ -2603,6 +2689,7 @@
   global.DG.story = {
     NPCS: NPCS, CHAPTERS: CHAPTERS, MEMBERS: MEMBERS, join: join, catchUp: catchUp, hasMember: hasMember, STEP_EXP: STEP_EXP, WANDER_PATH: WANDER_PATH, FOLLOW_SPEED: FOLLOW_SPEED,
     POLE_GPS_R: POLE_GPS_R, SEAL_R: SEAL_R, SEAL_LAYOUT: SEAL_LAYOUT, SEAL_ORDER: SEAL_ORDER, SEAL_MARKS: SEAL_MARKS, SPOTS: SPOTS, CLIMB_R: CLIMB_R,
+    MEMBER_TIME: MEMBER_TIME, memberTime: memberTime, partyEras: partyEras, partyOk: partyOk, autoParty: autoParty,
     DUEL_P2_AT: DUEL_P2_AT, DUEL_P2_SHIELD: DUEL_P2_SHIELD, peakSpot: peakSpot, spotPos: spotPos, placeOf: placeOf,
     DEFEND_RING: DEFEND_RING, DEFEND_WAVE_SEC: DEFEND_WAVE_SEC, DEFEND_REST: DEFEND_REST, DEFEND_HITS: DEFEND_HITS, DEFEND_WAVES: DEFEND_WAVES, DEFEND_START: DEFEND_START,
     CAPE_CLEAR: CAPE_CLEAR, capeSpot: capeSpot, landAt: landAt, ringAt: ringAt, stepDefend: stepDefend, defState: function () { return def && def.key === keyOf() ? def : null; },
