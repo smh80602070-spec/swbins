@@ -17,7 +17,9 @@ const NE := preload("res://games/saga_go/world/night_echoes.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 
 const REMATCH := ["rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus"]
-const BOSS_OF := {"rematch_king": "storm_king_true", "rematch_fox": "rift_fox", "rematch_crow": "rift_crow", "rematch_colossus": "dome_colossus"}
+## 55-5 — 2차 결말(38장) 뒤에만 열리는 재대결 둘
+const REMATCH2 := ["rematch_first_crow", "rematch_garmuri"]
+const BOSS_OF := {"rematch_king": "storm_king_true", "rematch_fox": "rift_fox", "rematch_crow": "rift_crow", "rematch_colossus": "dome_colossus", "rematch_first_crow": "first_crow", "rematch_garmuri": "garmuri_true"}
 
 var _p: CharacterBody3D
 var _ne: Node
@@ -85,15 +87,18 @@ func _physics_process(_delta: float) -> void:
 					bad.append("gate region %s" % id)
 				if not _hits(gp).is_empty():
 					bad.append("gate buried %s %s" % [id, _hits(gp)])
+			for id in REMATCH2:
+				if _gate_node(id).visible or Domains.domain_open(id):
+					bad.append("gate2 early %s" % id)
 			_check("after_ending_day", bad.is_empty(), str(bad))
 			TimeOfDay.force(true)
 			_put(NE.pos_of("village") + Vector3(0, 0, 40.0))
 			_next()
-		3: # [3] 밤 — 잔불 일곱, 먼 데선 잔당 안 섬
+		3: # [3] 밤 — 잔불 열, 먼 데선 잔당 안 섬
 			if _frame < 40:
 				return
 			var lit := NightEchoes.ECHOES.filter(func(r: Array) -> bool: return bool(_ne.call("ember_visible", String(r[0]))))
-			var ok: bool = lit.size() == 7 and (_ne.call("foes", "village") as Array).is_empty()
+			var ok: bool = lit.size() == NightEchoes.ECHOES.size() and NightEchoes.ECHOES.size() == 10 and (_ne.call("foes", "village") as Array).is_empty()
 			_check("night_embers", ok, "lit=%d foes=%d" % [lit.size(), (_ne.call("foes", "village") as Array).size()])
 			_next()
 		4: # [4] 마을 잔불 — 다가가면 잔당 · 멀리 가면 거둠 · 다시 와 다 쓰러뜨리면 꺼지고 보상
@@ -145,7 +150,32 @@ func _physics_process(_delta: float) -> void:
 				_check("rematch_king", ok, "%s claimed=%s resin=%d mat=%d claims=%d" % [_v, _dm.get("claimed"), Domains.resin_now(), PartyState.count("boss_mat"), Domains.weekly_claims()])
 			if _frame == 400:
 				_next()
-		7:
+		7: # [7] 2차 결말(38장) 뒤 — 새 재대결 입구 둘 열림·자리 맞음, 처음의 별까마귀 재대결 입장
+			if _frame == 1:
+				PartyState.story = {"ch": 38, "step": 0}
+			if _frame == 45:
+				var bad: Array = []
+				for id in REMATCH2:
+					var d: Dictionary = Domains.DOMAINS[id]
+					if not _gate_node(id).visible or not Domains.domain_open(id) or String(d.waves[0][0]) != String(BOSS_OF[id]):
+						bad.append("gate2 %s" % id)
+					var gp: Vector3 = _dm.call("gate_pos", id)
+					if TestMap.region_at(gp) != String(d.gate[0]):
+						bad.append("gate2 region %s" % id)
+					if not _hits(gp).is_empty():
+						bad.append("gate2 buried %s %s" % [id, _hits(gp)])
+				_check("after_second_ending", bad.is_empty(), str(bad))
+				_put(_dm.call("gate_pos", "rematch_first_crow") + Vector3(0, 0, 1.0))
+			if _frame == 50:
+				_v = {"near": String(_dm.call("near_gate")), "entered": bool(_dm.call("enter", "rematch_first_crow", 0))}
+			if _frame == 250:
+				var alive: Array = _dm.call("alive_enemies")
+				_check("rematch_first_crow", _v.near == "rematch_first_crow" and bool(_v.entered) and alive.size() == 1 and String(alive[0].get("kind")) == "first_crow", "%s n=%d" % [_v, alive.size()])
+				for e in alive:
+					e.call("_die")
+			if _frame == 400:
+				_next()
+		8:
 			TimeOfDay.force(null)
 			PartyState.story = _saved.story
 			PartyState.bag = _saved.bag

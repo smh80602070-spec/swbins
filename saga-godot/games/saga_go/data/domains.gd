@@ -66,6 +66,19 @@ const DOMAINS := {
 		"sets": ["viridescent", "emblem"],
 		"reward": [{"mora": 3000, "boss_mat": 1, "talent_3": 1}, {"mora": 4500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 6000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
+	## 106장 55-5 2차 결말 뒤 재대결 — 11부 이야기 보스 둘(after_ch 38 = 38장을 마친 뒤). 입구는 세갈래 고을.
+	"rematch_first_crow": {"name": "처음 순간의 메아리", "kind": "boss", "boss": true, "after_ch": 38, "gate": ["fork", Vector2(3.0, 3.4)], "arena": Vector3(-1400.0, 40.0, 1600.0),
+		"waves": [["first_crow"]], "modifier": "none", "time": 240.0,
+		"modifier_text": "재대결: 처음의 별까마귀 · 찢긴 하늘의 번개 방패(불로 깬다)",
+		"sets": ["viridescent", "emblem"],
+		"reward": [{"mora": 3500, "boss_mat": 1, "talent_3": 1}, {"mora": 5000, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 7000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
+		"artifacts": [[0, 1], [0, 1], [0, 2]]},
+	"rematch_garmuri": {"name": "갈무리 격자의 메아리", "kind": "boss", "boss": true, "after_ch": 38, "gate": ["fork", Vector2(5.0, 2.2)], "arena": Vector3(-1400.0, 40.0, 1800.0),
+		"waves": [["garmuri_true"]], "modifier": "none", "time": 240.0,
+		"modifier_text": "재대결: 갈무리 — 참몸 · 격자를 몸에 두른 보관 거신",
+		"sets": ["crimson", "depth"],
+		"reward": [{"mora": 3500, "boss_mat": 1, "talent_3": 1}, {"mora": 5000, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 7000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
+		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 	"rematch_colossus": {"name": "빛 돔의 메아리", "kind": "boss", "boss": true, "after_ch": 29, "gate": ["sunken", Vector2(3.7, 2.1)], "arena": Vector3(-1400.0, 40.0, 1400.0),
 		"waves": [["dome_colossus"]], "modifier": "none", "time": 240.0,
 		"modifier_text": "재대결: 돔 파수 거신 · 체력 절반에서 암 방패(초로 깬다)",
@@ -73,7 +86,7 @@ const DOMAINS := {
 		"reward": [{"mora": 3000, "boss_mat": 1, "talent_3": 1}, {"mora": 4500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 6000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 }
-const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus"]
+const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus", "rematch_first_crow", "rematch_garmuri"]
 const KIND_NAMES := {"artifact": "성유물", "talent": "특성 재료", "weapon": "무기 재료", "boss": "주간 보스"}
 const WEEKLY_COST := 60
 const WEEKLY_DISCOUNT_COST := 30

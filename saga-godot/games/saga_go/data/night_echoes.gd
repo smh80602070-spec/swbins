@@ -30,6 +30,13 @@ const ECHOES := [
 		"한별", "틈 너머에도 잔불이 남아 있었군. 밤 항해가 한결 편하겠네."],
 	["sunken", "sunken", Vector2(6.0, 2.55), "잠긴 도읍 모래밭의 잔불", ["water_turtle", "water_turtle", "wind_hawk"],
 		"여울", "물 밑 불빛이 다시 맑아졌어요. 오늘 밤 잠수는 안심이네요."],
+	## 106장 55-5 — 2차 결말 뒤 새 지역 셋(9~11부)도 같은 규칙. 자리는 그 지역 이야기 kill 칸.
+	["amber", "amber", Vector2(4.3, 4.2), "굳은 네거리의 잔불", ["rock_bear", "fire_imp", "thunder_cat"],
+		"초롱", "밤에도 신호등이 초록으로 또렷해요. 시계방 괘종도 제 박자를 찾았고요."],
+	["vault", "vault", Vector2(5.6, 4.6), "야적장 밤바람의 잔불", ["rock_bear", "wind_hawk", "ice_fox"],
+		"마루", "금고 불이 꺼져도 야적장이 어둡지 않아요. 이 잔불이 가로등 노릇을 했나 봐요."],
+	["fork", "fork", Vector2(4.0, 6.75), "세갈래 성문 앞의 잔불", ["fire_imp", "thunder_cat", "ice_fox"],
+		"벼리", "성문 앞에 먹구름 부스러기라니 — 쓸어 줘서 고맙다. 오늘 밤 화덕은 편히 피우겠어."],
 ]
 
 static func row(id: String) -> Array:
