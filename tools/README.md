@@ -23,6 +23,7 @@
 | `tools/asset-forge/` | 파이썬 절차 생성 — `palette`(팔레트 스냅) · `kitbash`(부품 조립) · `procgen`(바위·나무·소품) · `tilegen`(시임리스 타일) · `spritegen`(아이콘) · `sfxgen`(효과음) · `vroid_face_bake_project`(VRoid 얼굴 재베이크) |
 | `tools/glb-compress/` | `compress.mjs` Meshopt+WebP 압축(처리 기록 manifest) · `vrm-slim.mjs` VRM 모프 떼기 · `seam-simplify.mjs` 사진측량 UV 조각 모델 줄이기 · `join-parts.mjs` 부품 따로인 GLB 를 재질별 한 덩이로(그리기 호출 줄이기) |
 | `tools/obj-split/` | OBJ 쪼개기 |
+| `saga-unity/tools/dedupe_forge_textures.py` | 공방 몸 텍스처 중복 합치기 — 내용·가져오기 설정이 같은 그림을 하나로(화질 변화 0, 드라이런 기본, Unity 끄고, `--apply`) |
 | `tools/mixamo_automation/` | Mixamo 모션 받기(`fetch.mjs --dest`) — 원본은 로컬 전용(.gitignore) |
 | `tools/char-forge/` | 자체 인물 공방(Blender 헤드리스 + CC0) — 레시피 → `.glb`/`.fbx`(`build.py`)·파일 검증(`verify.py`)·팩 받기(`fetch_sources.py`)·기존 뼈대에 동작 굽기(`bake_for_rig.py`)·**VRoid 주역 들이기 `vroid_intake.sh <vrm> <id>`** |
 | `saga-web/tools/bake-portraits/` | 도감·카드 초상을 webp 로 미리 굽기 |
