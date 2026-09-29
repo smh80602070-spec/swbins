@@ -40,6 +40,8 @@ namespace Saga.Go.Data
             public string GateSite;
             /// <summary>열렸나(드나들 수 있나).</summary>
             public System.Func<bool> Open;
+            /// <summary>이 장(0부터)을 마친 뒤부터 열린다 — 진단이 앞뒤로 재는 값(`Open` 과 같아야 한다).</summary>
+            public int OpenCh;
             public int Danger = 1;
             public Color Fog, Sun;
             public float FogDensity = 1.5f;
@@ -87,7 +89,7 @@ namespace Saga.Go.Data
             Center = new Vector3(1400f, 0f, -860f),
             GateSite = "gate",
             MapGate = () => GoStory.GridPos(3.0f, 9.0f),
-            Open = () => StoryState.Ch > 14, // 15장을 마쳐야 틈 문이 열린다
+            Open = () => StoryState.Ch > 14, OpenCh = 15, // 15장을 마쳐야 틈 문이 열린다
             Fog = new Color(0.62f, 0.66f, 0.8f), Sun = new Color(0.9f, 0.92f, 1f), FogDensity = 1.1f, Danger = 2,
         },
             S("port", "별배 나루", GoEra.Future, 0f, -99f, true),
@@ -106,7 +108,34 @@ namespace Saga.Go.Data
             S("jar", "깨진 옹기", GoEra.Past, -153f, 108f, false),
             S("antenna", "녹슨 안테나", GoEra.Future, 108f, -117f, false));
 
-        public static readonly Area[] All = { Skyport };
+        // ---- 여섯째 지역 틈새 갈림길(웹 ⑲-41 `crossing.js`) — 5부 무대. 은하 나루 남쪽 끝 틈 고개 경계비 곁 돌기둥(18장 뒤 열림)으로 든다 ----
+        public static readonly Area Crossing = Make(new Area
+        {
+            Id = "crossing", NameKo = "틈새 갈림길", Hanja = "岐路", GroundHex = "6a6470",
+            LoreKo = "시간 틈 안쪽, 시대가 가장 심하게 뒤엉킨 땅. 멈춘 시계와 떠 있는 섬돌, 뒤엉킨 성문이 한 갈림길에 겹쳐 있다.",
+            Center = new Vector3(2200f, 0f, -860f),
+            GateSite = "gate",
+            MapGate = () => Skyport.GateSiteObj.Pos + new Vector3(-4f, 0f, 0f), // 은하 나루 틈 고개 경계비 곁(나가는 돌기둥 맞은편)
+            Open = () => StoryState.Ch > 17, OpenCh = 18, // 18장(4부)을 마쳐야 틈 문이 열린다
+            Fog = new Color(0.72f, 0.62f, 0.84f), Sun = new Color(0.96f, 0.9f, 1f), FogDensity = 1.4f, Danger = 3,
+        },
+            S("platform", "첫 정거장", GoEra.Modern, 0f, -90f, true),
+            S("tgate", "뒤엉킨 성문", GoEra.Past, -126f, 36f, true),
+            S("clock", "멈춘 시계탑", GoEra.Modern, 108f, 81f, true),
+            S("steps", "떠 있는 섬돌", GoEra.Future, -27f, 171f, true),
+            S("gate", "틈 고개 경계비", GoEra.Future, 27f, 234f, true),
+            S("dial", "떨어진 문자판", GoEra.Modern, 72f, -36f, false),
+            S("lantern", "틈 등롱", GoEra.Past, -81f, -54f, false),
+            S("guard", "멈춘 경비 기계", GoEra.Future, 144f, -9f, false),
+            S("tile", "기와 조각", GoEra.Past, -162f, 99f, false),
+            S("signal", "녹슨 신호기", GoEra.Modern, 27f, -144f, false),
+            S("crystal", "틈 수정", GoEra.Future, -99f, 144f, false),
+            S("cart", "버려진 수레", GoEra.Past, -54f, 72f, false),
+            S("pod", "탈출 포드", GoEra.Future, 135f, 144f, false),
+            S("ticket", "표 기계", GoEra.Modern, 54f, -108f, false),
+            S("helm", "칼과 투구", GoEra.Past, -117f, -90f, false));
+
+        public static readonly Area[] All = { Skyport, Crossing };
 
         public static bool TryArea(string id, out Area a)
         {

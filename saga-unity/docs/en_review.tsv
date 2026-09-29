@@ -336,6 +336,21 @@
 2	go	adv.why.not_lowered	낮춘 적이 없다	Not lowered		
 2	go	adv.why.zero	천하 등급 0 은 더 낮출 수 없다	World Rank 0 cannot go lower		
 2	go	adv.world_up	천하 등급 {0} — 들판 적이 세지고 수호장 금이 늘어난다	World Rank {0} — field foes grow stronger and guardian gold rises		
+2	go	area.crossing.site.cart	버려진 수레	Abandoned Cart		
+2	go	area.crossing.site.clock	멈춘 시계탑	Stopped Clock Tower		
+2	go	area.crossing.site.crystal	틈 수정	Rift Crystal		
+2	go	area.crossing.site.dial	떨어진 문자판	Fallen Clock Face		
+2	go	area.crossing.site.gate	틈 고개 경계비	Rift Pass Marker		
+2	go	area.crossing.site.guard	멈춘 경비 기계	Stopped Guard Machine		
+2	go	area.crossing.site.helm	칼과 투구	Sword and Helm		
+2	go	area.crossing.site.lantern	틈 등롱	Rift Lantern		
+2	go	area.crossing.site.platform	첫 정거장	First Station		
+2	go	area.crossing.site.pod	탈출 포드	Escape Pod		
+2	go	area.crossing.site.signal	녹슨 신호기	Rusty Signal		
+2	go	area.crossing.site.steps	떠 있는 섬돌	Floating Stepping Stones		
+2	go	area.crossing.site.tgate	뒤엉킨 성문	Tangled Gate		
+2	go	area.crossing.site.ticket	표 기계	Ticket Machine		
+2	go	area.crossing.site.tile	기와 조각	Roof-Tile Shards		
 2	go	area.found	{0} — {1} 발견! {2}	{0} — found {1}! {2}		
 2	go	area.go_in	{0} 으로 든다	Enter {0}		
 2	go	area.go_out	마을 쪽으로 돌아간다	Return toward the village		
@@ -1070,6 +1085,7 @@
 2	go	preset.empty	빈 칸	Empty		
 2	go	preset.none	없는 편성	No such team		
 2	go	preset.used	⚔ 편성 {0} — 들판 {1}명	⚔ Team {0} — {1} in the field		
+2	go	region.crossing	틈새 갈림길	Rift Crossroads		
 2	go	region.danger	위험 {0} · {1}	Danger {0} · {1}		
 2	go	region.east_grove	동쪽 숲	Eastern Grove		
 2	go	region.enter	— {0} —	— {0} —		
@@ -3264,6 +3280,7 @@
 3	go	hero.wd_shaka.quote	짧은 창이 긴 창을 이긴다.	The short spear beats the long spear.		
 3	go	hero.wd_suleiman.quote	법과 영광을 함께 세우겠다.	I will build law and glory together.		
 3	go	mission.line	◆ {0} 사명 {1}/{2} · {3}	◆ {0} mission {1}/{2} · {3}		
+3	go	region.crossing.lore	시간 틈 안쪽, 시대가 가장 심하게 뒤엉킨 땅. 멈춘 시계와 떠 있는 섬돌, 뒤엉킨 성문이 한 갈림길에 겹쳐 있다.	Inside the time rift, the land where the ages are most tangled. A stopped clock, floating stepping stones and a tangled gate overlap at a single crossroads.		
 3	go	region.east_grove.lore	호박빛 단풍 숲에 산적 소굴이 숨어 있다. 옛 싸움터 해골과 숲 못의 물귀신도 깨어난다.	A bandit den hides in the amber autumn grove. Old battlefield skeletons and pond ghosts stir as well.		
 3	go	region.farmland.lore	마른 논둑에 도깨비불이 인다. 산적이 가을걷이를 노린다.	Will-o'-wisps flare on the dry paddy banks. Bandits eye the harvest.		
 3	go	region.frost.lore	고개 너머 눈에 덮인 고원. 옛 산성 터와 기상 관측소, 추락한 비행선이 한 땅에 함께 있다.	A snow-covered plateau beyond the pass, where an old fortress ruin, a weather observatory and a crashed airship share one land.		

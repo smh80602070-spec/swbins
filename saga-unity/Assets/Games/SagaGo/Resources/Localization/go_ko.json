@@ -1986,6 +1986,23 @@
     { "key": "hero.story_dodam", "value": "도담" },
     { "key": "hero.story_dodam.quote", "value": "틈 너머 첫 정거장까지 — 제가 몰게요!" },
     { "key": "kit.sig.dodam.skill", "value": "선로 전류" },
-    { "key": "kit.sig.dodam.burst", "value": "막차 출발 신호" }
+    { "key": "kit.sig.dodam.burst", "value": "막차 출발 신호" },
+    { "key": "region.crossing", "value": "틈새 갈림길" },
+    { "key": "region.crossing.lore", "value": "시간 틈 안쪽, 시대가 가장 심하게 뒤엉킨 땅. 멈춘 시계와 떠 있는 섬돌, 뒤엉킨 성문이 한 갈림길에 겹쳐 있다." },
+    { "key": "area.crossing.site.platform", "value": "첫 정거장" },
+    { "key": "area.crossing.site.tgate", "value": "뒤엉킨 성문" },
+    { "key": "area.crossing.site.clock", "value": "멈춘 시계탑" },
+    { "key": "area.crossing.site.steps", "value": "떠 있는 섬돌" },
+    { "key": "area.crossing.site.gate", "value": "틈 고개 경계비" },
+    { "key": "area.crossing.site.dial", "value": "떨어진 문자판" },
+    { "key": "area.crossing.site.lantern", "value": "틈 등롱" },
+    { "key": "area.crossing.site.guard", "value": "멈춘 경비 기계" },
+    { "key": "area.crossing.site.tile", "value": "기와 조각" },
+    { "key": "area.crossing.site.signal", "value": "녹슨 신호기" },
+    { "key": "area.crossing.site.crystal", "value": "틈 수정" },
+    { "key": "area.crossing.site.cart", "value": "버려진 수레" },
+    { "key": "area.crossing.site.pod", "value": "탈출 포드" },
+    { "key": "area.crossing.site.ticket", "value": "표 기계" },
+    { "key": "area.crossing.site.helm", "value": "칼과 투구" }
   ]
 }

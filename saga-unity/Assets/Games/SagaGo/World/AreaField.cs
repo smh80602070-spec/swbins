@@ -143,6 +143,7 @@ namespace Saga.Go.World
             root.transform.SetParent(parent, false);
             root.transform.position = s.Pos;
             if (a.Id == "skyport") BuildSkyportSite(root.transform, s.Id);
+            else if (a.Id == "crossing") BuildCrossingSite(root.transform, s.Id);
             return root;
         }
 
@@ -275,6 +276,101 @@ namespace Saga.Go.World
                     break;
             }
         }
+
+        // ---- 틈새 갈림길 도형(웹 crossing.js 명소 모델을 이 판 크기로) ----
+        private void BuildCrossingSite(Transform t, string id)
+        {
+            var stone = Mat("c_stone", new Color(0.52f, 0.5f, 0.55f));
+            var dark = Mat("c_dark", new Color(0.15f, 0.14f, 0.2f));
+            var metal = Mat("c_metal", new Color(0.66f, 0.68f, 0.76f), 0f, 0.65f, 0.6f);
+            var rust = Mat("c_rust", new Color(0.42f, 0.25f, 0.16f), 0f, 0.1f);
+            var wood = Mat("c_wood", new Color(0.36f, 0.25f, 0.16f));
+            var glassM = Mat("c_glass", new Color(0.7f, 0.6f, 0.95f), 0.5f, 0.8f);
+            var glow = Mat("c_glow", new Color(0.72f, 0.55f, 1f), 2.6f);
+            var clay = Mat("c_clay", new Color(0.35f, 0.3f, 0.3f));
+            switch (id)
+            {
+                case "platform": // 첫 정거장 — 선로 남북 60m · 승강장 · 빛 지붕 · 역명판 · 차막이
+                    P(PrimitiveType.Cube, t, "Plat_rail_a", new Vector3(-1.4f, 0.12f, 0f), new Vector3(0.4f, 0.24f, 60f), dark, false);
+                    P(PrimitiveType.Cube, t, "Plat_rail_b", new Vector3(1.4f, 0.12f, 0f), new Vector3(0.4f, 0.24f, 60f), dark, false);
+                    P(PrimitiveType.Cube, t, "Plat_platform", new Vector3(PlatOff, 0.45f, 0f), new Vector3(5f, 0.9f, 44f), stone, true);
+                    P(PrimitiveType.Cube, t, "Plat_roof", new Vector3(PlatOff, 4.4f, 0f), new Vector3(6f, 0.25f, 44f), glassM, false);
+                    for (int i = 0; i < 6; i++) P(PrimitiveType.Cylinder, t, "Plat_post", new Vector3(PlatOff + 2f, 2.6f, -20f + i * 8f), new Vector3(0.3f, 1.8f, 0.3f), metal, false);
+                    P(PrimitiveType.Cube, t, "Plat_nameplate", new Vector3(PlatOff + 2.6f, 2.4f, -6f), new Vector3(0.1f, 0.9f, 4f), Mat("c_paper", new Color(0.92f, 0.88f, 0.78f), 0.2f), false);
+                    P(PrimitiveType.Cube, t, "Plat_timetable", new Vector3(PlatOff + 2.6f, 2.0f, 6f), new Vector3(0.1f, 1.4f, 2.4f), Mat("c_paper", new Color(0.92f, 0.88f, 0.78f), 0.2f), false);
+                    P(PrimitiveType.Cube, t, "Plat_bumper", new Vector3(0f, 0.7f, 30.4f), new Vector3(3f, 1.4f, 0.8f), rust, true);
+                    break;
+                case "tgate": // 뒤엉킨 성문 — 기운 누각 + 문 기둥 둘 + 떠 있는 성벽 조각 넷
+                    P(PrimitiveType.Cube, t, "TGate_pillar_l", new Vector3(-3f, 3.5f, 0f), new Vector3(2f, 7f, 2.4f), stone, true);
+                    P(PrimitiveType.Cube, t, "TGate_pillar_r", new Vector3(3f, 3.5f, 0f), new Vector3(2f, 7f, 2.4f), stone, true);
+                    P(PrimitiveType.Cube, t, "TGate_tower", new Vector3(0f, 8.2f, 0f), new Vector3(10f, 2f, 3.6f), wood, false, new Vector3(0f, 0f, 12f));
+                    P(PrimitiveType.Cube, t, "TGate_roof", new Vector3(0f, 9.6f, 0f), new Vector3(12f, 0.5f, 4.6f), dark, false, new Vector3(0f, 0f, 12f));
+                    for (int i = 0; i < 4; i++)
+                        P(PrimitiveType.Cube, t, "TGate_chunk", new Vector3(-9f + i * 6f, 6f + (i % 2) * 3f, -5f - i), new Vector3(3.5f, 1.4f, 1.2f), stone, false, new Vector3(i * 9f, i * 20f, i * 12f));
+                    break;
+                case "clock": // 멈춘 시계탑 — 16m 기둥(옆면 타기) · 네 면 빛 문자판 · 바늘
+                    P(PrimitiveType.Cube, t, "Clock_tower", new Vector3(0f, GoStory.ClockHeight * 0.5f, 0f), new Vector3(GoStory.ClockHalf * 2f, GoStory.ClockHeight, GoStory.ClockHalf * 2f), stone, true);
+                    foreach (var (dx, dz, yaw) in new[] { (0f, GoStory.ClockHalf + 0.05f, 0f), (0f, -GoStory.ClockHalf - 0.05f, 180f), (GoStory.ClockHalf + 0.05f, 0f, 90f), (-GoStory.ClockHalf - 0.05f, 0f, -90f) })
+                        P(PrimitiveType.Cylinder, t, "Clock_dial", new Vector3(dx, GoStory.ClockHeight - 3f, dz), new Vector3(2.2f, 0.05f, 2.2f), glow, false, new Vector3(90f, yaw, 0f));
+                    Part("crossing:clock_hand", t, PrimitiveType.Cube, "Clock_hand", new Vector3(0f, GoStory.ClockHeight - 3f, GoStory.ClockHalf + 0.12f), new Vector3(0.12f, 0.9f, 0.05f), dark, false);
+                    break;
+                case "steps": // 떠 있는 섬돌 — 열다섯 개가 나선으로 1.1m 씩 떠오르고 꼭대기에 틈 수정
+                    for (int i = 0; i < GoStory.StepN; i++)
+                    {
+                        float a = i * Mathf.PI * 0.25f;
+                        P(PrimitiveType.Cylinder, t, "Steps_stone", new Vector3(Mathf.Cos(a) * GoStory.StepR, (i + 1) * GoStory.StepRise - 0.2f, Mathf.Sin(a) * GoStory.StepR), new Vector3(2.3f, 0.2f, 2.3f), stone, true);
+                    }
+                    P(PrimitiveType.Sphere, t, "Steps_crystal", new Vector3(0f, GoStory.StepN * GoStory.StepRise + 1.4f, 0f), new Vector3(1.2f, 2.6f, 1.2f), glow, false);
+                    break;
+                case "gate": // 틈 고개 경계비
+                    P(PrimitiveType.Cube, t, "Gate_stele", new Vector3(0f, 2.5f, 0f), new Vector3(1.6f, 5f, 1f), stone, true);
+                    P(PrimitiveType.Sphere, t, "Gate_glow", new Vector3(0f, 5.6f, 0f), Vector3.one * 1.1f, glow, false);
+                    break;
+                case "dial":
+                    P(PrimitiveType.Cylinder, t, "Dial_face", new Vector3(0f, 0.3f, 0f), new Vector3(2.4f, 0.12f, 2.4f), glow, false, new Vector3(12f, 0f, 8f));
+                    break;
+                case "lantern":
+                    P(PrimitiveType.Cube, t, "Lantern_post", new Vector3(0f, 1.2f, 0f), new Vector3(0.25f, 2.4f, 0.25f), wood, false);
+                    P(PrimitiveType.Sphere, t, "Lantern_lamp", new Vector3(0f, 2.6f, 0f), Vector3.one * 0.7f, glow, false);
+                    break;
+                case "guard":
+                    P(PrimitiveType.Cube, t, "Guard_body", new Vector3(0f, 1.5f, 0f), new Vector3(1.3f, 2f, 1f), metal, false);
+                    P(PrimitiveType.Sphere, t, "Guard_head", new Vector3(0f, 2.9f, 0f), Vector3.one * 0.8f, metal, false);
+                    P(PrimitiveType.Sphere, t, "Guard_eye", new Vector3(0f, 2.95f, 0.36f), new Vector3(0.4f, 0.14f, 0.1f), glow, false);
+                    break;
+                case "tile":
+                    for (int i = 0; i < 4; i++) P(PrimitiveType.Cube, t, "Tile_piece", new Vector3(i * 0.5f - 0.7f, 0.15f + i * 0.08f, (i % 2) * 0.4f), new Vector3(1.4f, 0.12f, 1f), clay, false, new Vector3(0f, i * 25f, i * 6f));
+                    break;
+                case "signal":
+                    P(PrimitiveType.Cylinder, t, "Signal_pole", new Vector3(0f, 2.5f, 0f), new Vector3(0.2f, 2.5f, 0.2f), rust, false);
+                    P(PrimitiveType.Cube, t, "Signal_arm", new Vector3(0.7f, 4.7f, 0f), new Vector3(1.6f, 0.15f, 0.15f), rust, false, new Vector3(0f, 0f, -20f));
+                    P(PrimitiveType.Sphere, t, "Signal_lamp", new Vector3(1.5f, 4.4f, 0f), Vector3.one * 0.5f, Mat("c_lamp_red", new Color(0.8f, 0.12f, 0.1f), 1.6f), false);
+                    break;
+                case "crystal":
+                    P(PrimitiveType.Sphere, t, "Crystal_a", new Vector3(0f, 1.2f, 0f), new Vector3(1f, 2.6f, 1f), glow, false, new Vector3(0f, 0f, 8f));
+                    P(PrimitiveType.Sphere, t, "Crystal_b", new Vector3(0.8f, 0.7f, 0.3f), new Vector3(0.6f, 1.5f, 0.6f), glow, false, new Vector3(0f, 0f, -22f));
+                    break;
+                case "cart":
+                    P(PrimitiveType.Cube, t, "Cart_bed", new Vector3(0f, 0.9f, 0f), new Vector3(2.6f, 0.4f, 1.6f), wood, false, new Vector3(0f, 0f, 6f));
+                    P(PrimitiveType.Cylinder, t, "Cart_wheel_a", new Vector3(-0.9f, 0.5f, 0.9f), new Vector3(1f, 0.1f, 1f), wood, false, new Vector3(90f, 0f, 0f));
+                    P(PrimitiveType.Cylinder, t, "Cart_wheel_b", new Vector3(0.9f, 0.5f, -0.9f), new Vector3(1f, 0.1f, 1f), wood, false, new Vector3(90f, 0f, 0f));
+                    break;
+                case "pod":
+                    P(PrimitiveType.Sphere, t, "Pod_body", new Vector3(0f, 1.1f, 0f), new Vector3(2.2f, 1.7f, 3f), metal, false, new Vector3(0f, 25f, 12f));
+                    P(PrimitiveType.Sphere, t, "Pod_window", new Vector3(0f, 1.5f, 1.1f), new Vector3(0.9f, 0.6f, 0.4f), glassM, false, new Vector3(0f, 25f, 12f));
+                    break;
+                case "ticket":
+                    P(PrimitiveType.Cube, t, "Ticket_box", new Vector3(0f, 1.1f, 0f), new Vector3(1.2f, 2.2f, 0.9f), metal, false);
+                    P(PrimitiveType.Cube, t, "Ticket_screen", new Vector3(0f, 1.6f, 0.47f), new Vector3(0.8f, 0.5f, 0.05f), glow, false);
+                    break;
+                case "helm":
+                    P(PrimitiveType.Sphere, t, "Helm_helmet", new Vector3(0f, 0.5f, 0f), new Vector3(0.9f, 0.8f, 0.9f), metal, false);
+                    P(PrimitiveType.Cube, t, "Helm_sword", new Vector3(1f, 0.3f, 0.2f), new Vector3(0.12f, 0.06f, 1.9f), metal, false, new Vector3(0f, 30f, 0f));
+                    break;
+            }
+        }
+
+        private const float PlatOff = 3.2f;
 
         /// <summary>이야기 진행에 맞춰 바뀌는 조각·돌기둥을 켜고 끈다(진단도 부른다). 계류 탑 빛 공·매인 별배·종·막차는 각 장에서 여기에 더한다.</summary>
         private void SetMat(string key, Material m)

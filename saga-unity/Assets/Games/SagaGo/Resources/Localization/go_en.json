@@ -1986,6 +1986,23 @@
     { "key": "hero.story_dodam", "value": "Dodam" },
     { "key": "hero.story_dodam.quote", "value": "To the first station beyond the rift — I'll drive!" },
     { "key": "kit.sig.dodam.skill", "value": "Track Current" },
-    { "key": "kit.sig.dodam.burst", "value": "Last-Train Departure Signal" }
+    { "key": "kit.sig.dodam.burst", "value": "Last-Train Departure Signal" },
+    { "key": "region.crossing", "value": "Rift Crossroads" },
+    { "key": "region.crossing.lore", "value": "Inside the time rift, the land where the ages are most tangled. A stopped clock, floating stepping stones and a tangled gate overlap at a single crossroads." },
+    { "key": "area.crossing.site.platform", "value": "First Station" },
+    { "key": "area.crossing.site.tgate", "value": "Tangled Gate" },
+    { "key": "area.crossing.site.clock", "value": "Stopped Clock Tower" },
+    { "key": "area.crossing.site.steps", "value": "Floating Stepping Stones" },
+    { "key": "area.crossing.site.gate", "value": "Rift Pass Marker" },
+    { "key": "area.crossing.site.dial", "value": "Fallen Clock Face" },
+    { "key": "area.crossing.site.lantern", "value": "Rift Lantern" },
+    { "key": "area.crossing.site.guard", "value": "Stopped Guard Machine" },
+    { "key": "area.crossing.site.tile", "value": "Roof-Tile Shards" },
+    { "key": "area.crossing.site.signal", "value": "Rusty Signal" },
+    { "key": "area.crossing.site.crystal", "value": "Rift Crystal" },
+    { "key": "area.crossing.site.cart", "value": "Abandoned Cart" },
+    { "key": "area.crossing.site.pod", "value": "Escape Pod" },
+    { "key": "area.crossing.site.ticket", "value": "Ticket Machine" },
+    { "key": "area.crossing.site.helm", "value": "Sword and Helm" }
   ]
 }

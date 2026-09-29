@@ -244,6 +244,10 @@ namespace Saga.Go.Data
         // 18장(⑲-40) 변전함 자리(태양광 밭 가운데에서 m) — 은하 나루 모양이 쓴다.
         public static readonly Vector2 SubstationOff = new Vector2(10.5f, 0f);
 
+        // 19장(⑲-42) — 틈새 갈림길 시계탑(16m 옆면 타기 — 기둥과 같은 폭의 곧은 벽)·섬돌(열다섯이 나선으로 1.1m 씩 — 걸어 오르는 턱 안이라 걸어서 오른다).
+        public const float ClockHeight = 16f, ClockHalf = 1.5f, StepRise = 1.1f, StepR = 3.2f;
+        public const int StepN = 15;
+
         // 18장(⑲-40) — 은하역·태양광 밭 자리(각 명소 가운데에서 m, z 남쪽): 도담은 승강장 남쪽 끝 아래, 막차 = 승강장 가운데(객차), 잔상은 선로(남쪽)를 지그재그로 달린다(웹 ×1.35).
         public static readonly Vector2 DodamAt = new Vector2(9f, 3.4f), StationBandi = new Vector2(-6f, 4.5f), DodamEnd = new Vector2(4f, 70f), TrainAt = new Vector2(0f, 0.5f), FarmFight = new Vector2(0f, 12f);
         public static readonly Vector2[] CaptainPath = { new Vector2(0f, 8f), new Vector2(2f, 22f), new Vector2(-2f, 35f), new Vector2(2f, 49f), new Vector2(-1f, 62f), new Vector2(3f, 78f), new Vector2(-3f, 92f) };
