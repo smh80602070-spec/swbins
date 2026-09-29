@@ -264,6 +264,9 @@
     /* ⑲-51 26장 궤도 정거장 조각 — 가면 그림자가 불러낸 먹구름 임금의 그림자(같은 몸·먹빛 왕관, 뇌, 더 단단하다). 2단계 뇌 방패(불로 깬다)·졸개는 story.js */
     storm_shadow: { name: '먹구름 임금의 그림자', ref: null, body: 'story_blackmask', mask: 'shadow', el: 'elec', hp: 21, atk: 2.5, spd: 4.4, reach: 3.4, type: 'melee', wind: 0.8, cd: 1.6, h: 2.0, exp: 0,
                 boss: true, rot: ['slam', 'halo', 'spit', 'shadow', 'melee', 'tide', 'halo', 'spit'] },
+    /* ⑲-60 32장 부양탑 밑 광장 — 거리 시간을 등딱지에 굳혀 온 호박 등딱지 거북(현무 펫 몸을 크게, 암). 2단계 암 방패(초로 깬다)·졸개는 story.js */
+    amber_turtle: { name: '호박 등딱지 거북', ref: 'pt_hyeonmu', el: 'rock', hp: 24, atk: 2.6, spd: 3.2, reach: 4.4, type: 'slam', wind: 1.1, cd: 1.7, h: 3.2, exp: 0, r: 4.6,
+                boss: true, rot: ['slam', 'tide', 'melee', 'halo', 'slam', 'spit'] },
     /* ⑲-55 29장 먹구름 눈 — 먹구름 임금의 참몸(사람 몸 2.4배·먹빛 왕관·흰 처음 가면, 뇌, 8부 끝 보스). 2단계 뇌 방패(불로 깬다)·졸개는 story.js */
     storm_king_true: { name: '먹구름 임금', ref: null, body: 'story_blackmask', mask: 'first', el: 'elec', hp: 26, atk: 2.7, spd: 4.2, reach: 3.8, type: 'melee', wind: 0.8, cd: 1.5, h: 2.4, exp: 0, r: 3.0,
                 boss: true, rot: ['slam', 'halo', 'spit', 'shadow', 'melee', 'tide', 'halo', 'slam', 'spit'] },

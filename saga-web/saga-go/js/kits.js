@@ -104,6 +104,13 @@
       burst: { name: '숨비소리', type: 'feast', r: 6, mul: 2.4, sec: 10, every: 1, fheal: 0.05, emul: 0.3,
         text: '둘레 6m 를 치고, 10초 숨비소리 자리 — 1초마다 안에 선 지금 인물 체력 5% 회복·안의 적을 수 원소로 친다' }
     },
+    /* ⑲-60 초롱(32장 끝 합류) — saga-godot 106 53-4 를 이 판 척도로. 있는 틀(zone·rain)만 쓴다 */
+    story_chorong: {
+      skill: { name: '태엽 괘종', type: 'zone', cd: 10, r: 5, sec: 10, every: 1, n: 2, mul: 0.8, energy: 1.5,
+        text: '발밑에 10초 괘종시계 — 1초마다 5m 안 가까운 적 둘에 호박 초침(암 원소, 맞힐 때마다 명단 기력 +1.5). 인물을 바꿔도 남는다' },
+      burst: { name: '되감은 시간', type: 'rain', r: 5, mul: 2.2, sec: 12, reach: 8, n: 2, gap: 1, rmul: 0.85,
+        text: '둘레 5m 를 치고, 12초 동안 명단 누구든 기본·강·낙하 공격이 맞으면 1초에 한 번 8m 안 가까운 적 둘에 되감긴 초침(암 원소)' }
+    },
     /* ⑲-51 하늬(26장 끝 합류) — saga-godot 106 51-4 를 이 판 척도로. 있는 틀(shells·lore)만 쓴다 */
     story_haneul: {
       skill: { name: '얼음 관측 풍선', type: 'shells', cd: 8, reach: 12, n: 3, delay: 0.6, r: 2.5, mul: 2.2,

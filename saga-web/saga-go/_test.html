@@ -14509,7 +14509,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         r.crystal = [off(28, 0), off(29, 4), off(29, 5), off(29, 6), off(29, 7), off(30, 0)].join('|') === '||0|01|012|012' && AM.CRYSTAL_OFF_FROM.join() === '5,6,7';
         at(30, 1); var d1 = !AM.domeBroken(); at(30, 2); var d2 = AM.domeBroken(); at(31, 0); r.dome = d1 && d2 && AM.domeBroken() && AM.DOME_FROM.join() === '30,2';
         at(31, 2); var t1 = !AM.towerMelted(); at(31, 3); var t2 = AM.towerMelted(); r.tower = t1 && t2 && AM.TOWER_FROM.join() === '31,3';
-        at(31, 99); var l1 = !AM.lightsGreen(); at(32, 0); r.lights = l1 && AM.lightsGreen();
+        at(31, 4); var l1 = !AM.lightsGreen(); at(31, 5); var l2 = AM.lightsGreen(); at(32, 0); r.lights = l1 && l2 && AM.lightsGreen() && AM.LIGHTS_GREEN_STEP === 5;
         var cross = AM.siteById('cross');
         r.spots = [0, 1, 2].every(function (i) { var s = AM.spot('crystal' + i); return !!s && Math.hypot(s.x - cross.x - AM.CRYSTALS[i].off[0], s.y - cross.y - AM.CRYSTALS[i].off[1]) < 1e-6; }) &&
           [0, 1, 2, 3].every(function (i) { return !!AM.spot('light' + i); }) && !AM.spot('nobody') && AM.spot('clock').x === AM.siteById('clock').x;
@@ -14650,6 +14650,68 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       } finally { AM._resetForTest(); rig.undo(); }
       var bad = Object.keys(r).filter(function (k) { return !r[k]; });
       return bad.length === 0 ? '일곱 단계 · 석등 해·달·별 → 결정 돔 깨짐 → 너울 → 도둑 쫓기 → 너울 → 괘종시계 지키기 3·4·5 → 초롱 · 🪢+7 🪙+8000 · 바늘' : ('실패 ' + bad.join(','));
+    });
+
+    /* ── ⑲-60 이야기 9부 제32장 · 짓다 만 부양탑(9부 끝) (story ch32·새길·초롱 합류·amber_turtle · amber 탑 녹음·신호등 초록 단계 맞물림, PLAN §5 ⑲-60) ── */
+    t('이야기 ⑲-60 — 32장 여섯 단계(Lv70) · 탑 벽 타기(꼭대기에서만 태엽 심장 ○) → 탑 녹음(3) → 새길 → 호박 등딱지 거북(암 방패 초로) → 신호등 초록(5) → 초롱 합류(암 법구 ★4·고유 스킬) · 🪢+8', function () {
+      var rig = stRig(70), AM = DG.amber, ST = DG.story, FC = DG.fieldCombat, TL = DG.talent, LF = DG.landform, keepP = LF.perched, perch = null, r = {};
+      try {
+        AM._resetForTest(); delete C.save.amber;
+        LF.perched = function () { return perch; };
+        var c = ST.CHAPTERS[31], S32 = c.steps;
+        r.table = c.id === 'ch32' && c.ar === 70 && c.join === 'story_chorong' && S32.length === 6 && c.reward.knot === 8 && c.reward.gold === 9000 &&
+          S32.map(function (q) { return q.type; }).join() === 'talk,climb,light,talk,duel,talk' && S32[1].pole === 'am_tower' && S32[2].perch === 'am_tower' && S32[2].bare &&
+          S32[4].kind === 'amber_turtle' && S32[4].shield === 'rock' && FC.COUNTER.rock === 'grass' && !!FC.FOES.amber_turtle.boss && FC.FOES.amber_turtle.el === 'rock';
+        /* 표 ↔ 이 장 — 탑은 심장 불(2) 다음(3)부터 녹음 · 신호등은 거북(4) 다음(5)부터 초록 */
+        r.link = AM.TOWER_FROM.join() === '31,3' && S32[2].type === 'light' && AM.LIGHTS_GREEN_STEP === 4 + 1 && S32[4].type === 'duel' && S32[1].pole === AM.poles()[0].id;
+        var tw = AM.siteById('tower'), ck = AM.siteById('clock');
+        function np(k, si, ch) { C.save.story = { ch: ch === undefined ? 31 : ch, step: si }; return ST.npcPos(k); }
+        /* 인물 — 새길: 31장 일곱째(6)부터(뒤에도) 탑 발치 남쪽 · 초롱: 32장 다섯째(5)에만 탑 밑 광장, 나머지 시계방 앞 */
+        r.npcs = (np('saegil', 5, 30), !ST.visible('saegil')) && st10Eq(np('saegil', 6, 30), { x: tw.x, y: tw.y + 6 }) && ST.visible('saegil') && st10Eq(np('saegil', 0), { x: tw.x, y: tw.y + 6 }) && st10Eq(np('saegil', 0, 32), { x: tw.x, y: tw.y + 6 }) &&
+          st10Eq(np('chorong', 5), { x: tw.x + 8, y: tw.y + 10 }) && st10Eq(np('chorong', 4), { x: ck.x - 3, y: ck.y + 6 }) && st10Eq(np('chorong', 0, 32), { x: ck.x - 3, y: ck.y + 6 }) &&
+          Math.hypot(np('saegil', 0).x - tw.x, np('saegil', 0).y - tw.y) > AM.TOWER_HALF + 1;
+        r.time = ST.memberTime('story_chorong') === '현대' && !!ST.MEMBERS.story_chorong;
+        C.save.story = { ch: 31, step: 0 };
+        var m = TL.mats(), k0 = m.knot || 0, gold0 = C.save.player.gold;
+        stGo(ST.npcPos('saegil')); r.t0 = stTalkAll(ST) && C.save.story.step === 1;
+        /* 벽 타기 — 멀면 ✕, 붙잡고 오르면 ○ */
+        stGo({ x: tw.x + 90, y: tw.y }); ST.check(); var far = C.save.story.step === 1;
+        stGo({ x: tw.x, y: tw.y + 3 }); ST.check(); var near = C.save.story.step === 1;
+        perch = 'am_tower'; ST.check();
+        r.climb = far && near && C.save.story.step === 2;
+        /* 태엽 심장 — 땅에선 안 붙고 꼭대기에선 붙는다. 붙으면 탑이 녹는다(3부터) */
+        var tg = ST.targetOf(ST.step()), melted0 = !AM.towerMelted();
+        perch = null; C.emit('field:element', { el: 'fire', x: tg.x, y: tg.y, r: 1, t: 'skill' });
+        var ground = C.save.story.step === 2;
+        perch = 'am_tower'; C.emit('field:element', { el: 'fire', x: tg.x, y: tg.y, r: 1, t: 'skill' });
+        r.light = melted0 && ground && st10Eq(tg, { x: tw.x, y: tw.y }) && C.save.story.step === 3 && AM.towerMelted();
+        perch = null;
+        stGo(ST.npcPos('saegil')); r.t3 = stTalkAll(ST) && C.save.story.step === 4;
+        /* 거북 — 탑 밑 광장, 절반에서 암 방패(초)·졸개 둘, 쓰러뜨리면 신호등 초록 */
+        var bt = ST.targetOf(ST.step());
+        r.bossAt = st10Eq(bt, { x: tw.x + 16, y: tw.y + 8 }) && !AM.lightsGreen();
+        stGo({ x: bt.x + 5, y: bt.y }); FC.tick(0.05); ST.check();
+        var S = FC.state(), cb = S.camps[ST.keyOf()], b = cb && S.foes[cb.uids[0]];
+        var lv = b && FC.live().filter(function (x) { return x.uid === b.uid; })[0];
+        r.boss = !!b && b.kind === 'amber_turtle' && b.el === 'rock' && !b.sky && !!lv && lv.ref.id === 'pt_hyeonmu';
+        b.hp = Math.round(b.hpMax * 0.4); ST.check();
+        var ad = S.camps[ST.keyOf() + ':add'];
+        r.p2 = b.shEl === 'rock' && !!ad && ad.uids.map(function (u) { return S.foes[u].kind; }).join(',') === 'imp,raptor' && FC.shieldMul('rock', 'grass') > 1;
+        b.shield = 0; b.layers = [];
+        for (var k = 0; k < 3 && !b.dead; k++) { FC.hitFoe(S, b, S.party[0], 1e8, null, 'test'); }
+        FC.tick(0.05);
+        r.duel = C.save.story.step === 5 && !S.camps[ST.keyOf() + ':add'] && AM.lightsGreen();
+        /* 초롱 합류 — 끝 보상 + 동료 */
+        gold0 = C.save.player.gold; k0 = m.knot || 0;
+        r.notYet = !ST.hasMember('story_chorong');
+        stGo(ST.npcPos('chorong')); r.end = stTalkAll(ST) && C.save.story.ch === 32 && C.save.story.step === 0 && m.knot === k0 + 8 && C.save.player.gold === gold0 + 9000 && ST.hasMember('story_chorong');
+        var M = ST.MEMBERS.story_chorong, kt = DG.kits.kitOf('story_chorong');
+        r.member = DG.data.find('story_chorong') === M && M.rarity === 4 && FC.elementOf('story_chorong') === 'rock' && DG.weapon.typeOf('story_chorong') === 'catalyst' &&
+          !!kt.skill && kt.skill.type === 'zone' && kt.skill.name === '태엽 괘종' && !!kt.burst && kt.burst.type === 'rain' && kt.burst.name === '되감은 시간';
+        r.after = AM.lightsGreen() && AM.towerMelted() && AM.domeBroken() && [0, 1, 2].every(AM.crystalOff);
+      } finally { LF.perched = keepP; AM._resetForTest(); rig.undo(); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? '여섯 단계 · 탑 벽 타기 → 태엽 심장(꼭대기) → 탑 녹음 → 새길 → 거북(암 방패 초) → 신호등 초록 → 초롱 합류 · 🪢+8 🪙+9000' : ('실패 ' + bad.join(','));
     });
 
     /* ── 2026-09-27 실기 보고 Q1·Q4 — 3인칭 이동(키는 카메라 기준)·밝기 ── */

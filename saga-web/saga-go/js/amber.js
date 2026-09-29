@@ -53,7 +53,7 @@
   var CRYSTALS = [{ name: '신호등 앞', off: [11, -9] }, { name: '버스 정류장', off: [-14, 7] }, { name: '우체통 곁', off: [6, 15] }];
   var LIGHTS = [[9, 9], [-9, 9], [9, -9], [-9, -9]];            // 네거리 신호등 넷
   var CH30 = 29, CH31 = 30, CH32 = 31, PASS_CH = 29;              // 0부터
-  var CLOCK_WIND_STEP = 5;
+  var CLOCK_WIND_STEP = 5, LIGHTS_GREEN_STEP = 5;            // 32장 다섯째 단계(거북을 쓰러뜨린 뒤)부터 신호등 초록
   var CRYSTAL_OFF_FROM = [5, 6, 7], DOME_FROM = [CH31, 2], TOWER_FROM = [CH32, 3];
   var LANDMARK_R = 30, SMALL_R = function (g) { return g ? 30 : 14; };
   var REWARD_BIG = { gold: 180, dust: 2, exp: 50 }, REWARD_SMALL = { gold: 70, exp: 24 };
@@ -126,7 +126,7 @@
   function crystalOff(i) { return reached(CH30, CRYSTAL_OFF_FROM[i]); }
   function domeBroken() { return reached(DOME_FROM[0], DOME_FROM[1]); }
   function towerMelted() { return reached(TOWER_FROM[0], TOWER_FROM[1]); }
-  function lightsGreen() { return storyAt().ch > CH32; }
+  function lightsGreen() { return reached(CH32, LIGHTS_GREEN_STEP); }
   /** 괘종시계·처마 시계 바늘이 도나 — 31장 다섯째(5)단계(되감는 동안) */
   function clockWinding() { var s = storyAt(); return s.ch === CH31 && (s.step || 0) === CLOCK_WIND_STEP; }
   function inRegion(x, y) { var c = center(); return on() && !!c && Math.hypot(x - c.x, y - c.y) <= 620; }
@@ -377,7 +377,7 @@
     REGION: REGION, LANDMARKS: LANDMARKS, SMALL: SMALL, CRYSTALS: CRYSTALS, LIGHTS: LIGHTS, AMBER_OFF: AMBER_OFF, PASS_CH: PASS_CH,
     CRYSTAL_OFF_FROM: CRYSTAL_OFF_FROM, DOME_FROM: DOME_FROM, TOWER_FROM: TOWER_FROM, LANDMARK_R: LANDMARK_R, TOWER_H: TOWER_H, TOWER_HALF: TOWER_HALF, DOME_R: DOME_R,
     on: on, center: center, sites: sites, siteById: siteById, spot: spot, poles: poles, rectsIn: rectsIn, inRegion: inRegion,
-    passOpen: passOpen, crystalOff: crystalOff, domeBroken: domeBroken, towerMelted: towerMelted, lightsGreen: lightsGreen, clockWinding: clockWinding, CLOCK_WIND_STEP: CLOCK_WIND_STEP,
+    passOpen: passOpen, crystalOff: crystalOff, domeBroken: domeBroken, towerMelted: towerMelted, lightsGreen: lightsGreen, clockWinding: clockWinding, CLOCK_WIND_STEP: CLOCK_WIND_STEP, LIGHTS_GREEN_STEP: LIGHTS_GREEN_STEP,
     found: found, discoverAt: discoverAt, waypoints: waypoints, teleport: teleport, marks: marks, tick: tick,
     _resetForTest: function () { memo = null; centerMemo = undefined; rectMemo = null; poleMemo = null; fx = {}; accT = 0; }
   };

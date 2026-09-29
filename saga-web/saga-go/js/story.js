@@ -234,12 +234,17 @@
     /* ⑲-58 시계 수리공 초롱(현대) — 손목시계 속 틈 조각 태엽 덕에 혼자 안 굳었다. 9부(30장~)부터 늘 시계방 서쪽 앞 */
     chorong:  { id: 'story_chorong',  name: '시계 수리공 초롱', short: '초롱', zone: 'saltflat', spot: 'am_clock', off: [-3, 6], color: '#5c8070',
       idle: '다른 시계는 다 멈췄는데 내 손목시계만 째깍거려요.',
-      appear: [{ ch: 30, from: 1, to: 4, spot: 'am_market', off: [9, 0] },                                     // ⑲-59 31장 석등·너울·도둑·저울추 — 장터 동쪽 앞(석등 고리 밖)
+      appear: [{ ch: 31, from: 5, to: 5, spot: 'am_tower', off: [8, 10] },                                     // ⑲-60 32장 거북을 쓰러뜨린 뒤 탑 밑 광장
+        { ch: 30, from: 1, to: 4, spot: 'am_market', off: [9, 0] },                                     // ⑲-59 31장 석등·너울·도둑·저울추 — 장터 동쪽 앞(석등 고리 밖)
         { ch: 29, chTo: 999, from: 0, to: 999, spot: 'am_clock', off: [-3, 6] }] },
     /* ⑲-59 장돌뱅이 너울(과거) — 장터 결정 속에 좌판째 굳어 있던 사람. 결정이 깨진 뒤(31장 셋째 단계부터, 뒤에도) 장터 가운데 굳어 있던 자리 */
     neoul:    { id: 'story_neoul',    name: '장돌뱅이 너울', short: '너울', zone: 'saltflat', spot: 'am_market', off: [0, 3.8], color: '#9a7a4c',
       idle: '저울추는 셈이 정확해야 하는 법이지. 쇠 수레 구경도 한두 번이지, 허허.',
       appear: [{ ch: 30, from: 2, to: 999, spot: 'am_market', off: [0, 3.8] }, { ch: 31, chTo: 999, from: 0, to: 999, spot: 'am_market', off: [0, 3.8] }] },
+    /* ⑲-60 탑 설계사 새길(미래) — 높은 데를 무서워해 탑 발치 남쪽에서 도면만 본다. 31장 끝(일곱째 단계, 초롱이 "탑 발치에서 혼잣말"이라 한 때)부터(뒤에도) 선다 */
+    saegil:   { id: 'story_saegil',   name: '탑 설계사 새길', short: '새길', zone: 'saltflat', spot: 'am_tower', off: [0, 6], color: '#c8d0d8',
+      idle: '층판 공식은 맞는데… 시간이 안 흐르면 공식도 멈추나 봐요.',
+      appear: [{ ch: 30, from: 6, to: 999, spot: 'am_tower', off: [0, 6] }, { ch: 31, chTo: 999, from: 0, to: 999, spot: 'am_tower', off: [0, 6] }] },
     /* ⑲-59 조각 도둑 — 31장 쫓기 때만 네거리 둘레 길(AMBER_THIEF_PATH)을 난다. 드론 몸(pet) */
     partthief: { id: 'story_partthief', name: '조각 도둑', short: '도둑', zone: 'saltflat', spot: 'am_cross', color: '#b3803a', pet: 'drone', idle: '삐비— 치익.',
       appear: [{ ch: 30, from: 3, to: 3 }], runSpot: 'am_cross', runPath: AMBER_THIEF_PATH },
@@ -262,7 +267,7 @@
       appear: [{ ch: 10, from: 2, to: 2, spot: 'fr_fort', off: BAWOO_GATE }, { ch: 10, from: 3, to: 5, spot: 'fr_lake', off: BAWOO_LAKE },
         { ch: 10, from: 6, to: 7, spot: 'fr_fort', off: BAWOO_GATE }] }
   };
-  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief'];
+  var NPC_KEYS = ['elder', 'ferryman', 'scholar', 'wanderer', 'haesol', 'thief', 'haram', 'bandi', 'bawoo', 'daon', 'gaon', 'dareum', 'horse', 'ara', 'hangyeol', 'dodam', 'captain', 'hanbyeol', 'yeoul', 'mulsae', 'parang', 'saebyeok', 'haneul', 'seeddrone', 'gamyeon', 'chorong', 'neoul', 'partthief', 'saegil'];
   /* ⑲-21 세계 임무 인물 일곱(worldquest.js)을 같은 표에 — 대화·자리·혼잣말이 이야기 인물과 같은 길로 돈다 */
   var WQD = global.DG.worldQuests || null;
   if (WQD) { Object.keys(WQD.NPCS).forEach(function (k) { NPCS[k] = WQD.NPCS[k]; NPC_KEYS.push(k); }); }
@@ -299,11 +304,14 @@
       el: 'water', weapon: 'sword', stats: { might: 78, wisdom: 64, command: 60 }, emoji: '🐚', quote: '숨 긴 거 하나는 자신 있소.' },
     /* ⑲-51 하늬(26장 끝) — 빙 장병기 ★4(비행선 닻 갈고리). 이야기 동료에 없던 짝 */
     story_haneul: { id: 'story_haneul', name: '하늬', hanja: '河嬔', era: '이야기', faction: '재야', rarity: 4, trait: 'command', story: true,
-      el: 'ice', weapon: 'polearm', stats: { might: 74, wisdom: 72, command: 76 }, emoji: '🎈', quote: '날개는 빌려 쓰고요!' }
+      el: 'ice', weapon: 'polearm', stats: { might: 74, wisdom: 72, command: 76 }, emoji: '🎈', quote: '날개는 빌려 쓰고요!' },
+    /* ⑲-60 초롱(32장 끝) — 암 법구 ★4(태엽 손목시계). 이야기 동료에 없던 짝 */
+    story_chorong: { id: 'story_chorong', name: '초롱', hanja: '初瓏', era: '이야기', faction: '재야', rarity: 4, trait: 'wisdom', story: true,
+      el: 'rock', weapon: 'catalyst', stats: { might: 56, wisdom: 82, command: 66 }, emoji: '⏱️', quote: '손목시계가 아직 째깍거리는 데는 이유가 있을 거예요.' }
   };
   /* ⑲-55 이야기 동료의 시대 — 29장 편성 시험(과거·현대·미래 하나씩) */
   var MEMBER_TIME = { story_scholar: '현대', story_wanderer: '과거', story_elder: '과거', story_ferryman: '과거', story_haesol: '현대', story_haram: '현대', story_dareum: '과거',
-    story_dodam: '현대', story_hanbyeol: '미래', story_mulsae: '과거', story_haneul: '현대' };
+    story_dodam: '현대', story_hanbyeol: '미래', story_mulsae: '과거', story_haneul: '현대', story_chorong: '현대' };
   function memberTime(id) { return MEMBER_TIME[id] || null; }
   /** 들판 명단(save.party)의 이야기 동료가 가진 시대 — { 과거: true, … } */
   function partyEras() {
@@ -1530,6 +1538,39 @@
             ['반디', '삐— 괘종시계 신호가 북쪽으로 당겨집니다. 부양탑 꼭대기. 거리의 시간이 그곳에 묶여 있습니다.'],
             ['?', ['부양탑에 뭐가 있죠?', '탑까지 가 봐요.']],
             ['초롱', '짓다 만 탑이요. 꼭대기에 \'시간 태엽 심장\'이 있대요 — 탑을 짓던 설계사가 가끔 탑 발치에서 혼잣말을 해요. 그 사람도 안 굳었나 봐요!', 'surprised']] }
+      ] },
+    /* ⑲-60 9부 끝 — 짓다 만 부양탑. 새길 → 탑 벽 타기(landform 기둥 am_tower) → 꼭대기 태엽 심장(light bare·perch — 다음 단계부터 탑이 녹는다: amber TOWER_FROM 32장 3) → 새길 →
+       호박 등딱지 거북(탑 밑 광장, 암 방패는 초로) → 초롱 합류(신호등 초록: amber LIGHTS_GREEN_STEP 5) */
+    { id: 'ch32', name: '제32장 · 짓다 만 부양탑', ar: 70, join: 'story_chorong',
+      reward: { knot: 8, gold: 9000, guide: 8, secret: 7, party: 2200 },
+      steps: [
+        { type: 'talk', npc: 'saegil', text: '부양탑 발치의 설계사와 이야기하기',
+          lines: [['새길', '……또 멈췄어. 층판을 띄우던 공식이 딱 이 자리에서 — 아, 사람이다. 움직이는 사람!', 'surprised'],
+            ['새길', '시간 태엽 심장 때문에 왔죠? 층판을 띄우려고 시간을 감아 두는 장치예요. 틈이 닫히던 날, 심장이 거리 시간을 통째로 감아 버렸어요.', 'sorrow'],
+            ['반디', '삐— 탑 꼭대기에서 굳은 신호가 가장 셉니다. 괘종시계가 당기던 방향과 같습니다.'],
+            ['?', ['어떻게 멈추죠?', '꼭대기엔 어떻게 올라가요?']],
+            ['새길', '승강기는 멈췄어요. 벽을 타고 올라가 심장에 원소를 대면 감긴 태엽이 풀릴 거예요 — 설계한 사람이 할 말은 아니지만, 난 높은 데가 무서워서.', 'fun']] },
+        { type: 'climb', spot: 'am_tower', pole: 'am_tower', text: '짓다 만 부양탑 벽을 타고 꼭대기로(벽에 붙어 계속 밀기)',
+          done: '🏗️ 부양탑 꼭대기에 올라섰다 — 호박 껍질에 싸인 태엽 심장이 코앞에서 떨고 있다', gpsDone: '🏗️ 탑 발치에 닿았다 — 태엽 심장은 꼭대기에 있다' },
+        { type: 'light', spot: 'am_tower', bare: true, perch: 'am_tower', text: '탑 꼭대기 시간 태엽 심장을 원소 스킬로 녹이기(꼭대기에서)',
+          done: '⏱️ 태엽 심장의 호박 껍질이 녹아내리고 — 감겨 있던 태엽이 드르륵 풀린다. 탑 밑에서 땅이 울린다', away: '⏱️ 태엽 심장은 탑 꼭대기에 있다 — 벽을 타고 올라서야 원소가 닿는다' },
+        { type: 'talk', npc: 'saegil', text: '탑 발치의 새길에게 내려가기',
+          lines: [['새길', '풀렸어요…! 그런데 이 울림 — 탑 밑 광장이에요. 심장이 감아 둔 시간을 몰래 받아먹던 게 있었어요.', 'surprised'],
+            ['반디', '삐— 커다란 반응. 등딱지에 굳은 신호가 겹겹이 쌓여 있습니다. 거리 시간 대부분이 저기 있습니다.'],
+            ['?', ['저걸 쓰러뜨리면 시간이 돌아와요?', '물러서 있어요.']],
+            ['새길', '등딱지를 깨면요! 도면엔 없던 놈이에요 — 조심해요!', 'angry']] },
+        { type: 'duel', spot: 'am_tower', off: [16, 8], kind: 'amber_turtle', shield: 'rock', adds: ['imp', 'raptor'], text: '탑 밑 광장의 호박 등딱지 거북 물리치기',
+          enter: '🐢 탑 밑 광장 바닥이 갈라지며 — 호박 등딱지 거북이 일어섰다!',
+          p2: '🪨 거북이 호박 등딱지를 두른다 — 풀(초)로 깨라! 졸개가 뛰어든다',
+          win: '🐢 호박 등딱지가 쩍 갈라지고 — 겹겹이 굳어 있던 시간이 빛이 되어 거리로 흩어진다' },
+        { type: 'talk', npc: 'chorong', text: '탑 밑 광장의 초롱과 이야기하기',
+          lines: [['초롱', '들려요? 째깍째깍 — 거리 시계가 전부 같이 가요! 신호등도 초록이에요!', 'joy'],
+            ['너울', '허허, 장이 다시 서는구먼! 거북 등딱지 틈에서 잃어버린 내 엽전 부적까지 나왔네 — 저울추 값은 톡톡히 받았어.', 'fun'],
+            ['새길', '공중에 걸린 층판도 천천히 내려앉고 있어요. 이제야 탑을 마저 지을 수 있겠네요.', 'joy'],
+            ['반디', '삐— 굳은 신호 소멸…… 아닙니다. 지도 가장자리 너머에서 같은 신호가 약하게 이어집니다.', 'surprised'],
+            ['?', ['또 굳은 곳이 있다는 거야?', '초롱 씨는 이제 어떻게 해요?']],
+            ['초롱', '거리 밖에도 굳은 시간이 있다면 — 시계 수리공이 빠질 수 없죠. 손목시계가 아직 째깍거리는 데는 이유가 있을 거예요.', 'angry'],
+            ['초롱', '시계 수리공 초롱, 오늘부터 같이 가요. 가게는 너울 할아버지가 봐 주신대요!', 'joy']] }
       ] }
   ];
 
