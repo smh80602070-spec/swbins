@@ -9551,3 +9551,9 @@ PROJECT_STATE.md` 참고. 요약:
 - player/seat_pose.gd(SkeletonModifier3D, talk_face 방식): 허벅지 68° 앞으로·무릎 82° 굽힘·다리 16° 벌림, UE 식 뼈(thigh/calf) 공방 몸만. mount.gd 가 타면 켜고(set_seated) 내리면 끄며 엉덩이가 내려오도록 ride_height 를 0.5m 낮춘다. 뼈가 없는 몸이면 서서 탄다.
 - 창 모드 k_ride_horse: 말 등에 앉아 다리가 옆구리로 내려옴. probe_mount·mount_host 다섯 곳·REGRESS·TRAVERSAL·STORY fails=0.
 - 탈것 남은 것 없음(세부 다듬기: 사람 상체 기울기·손 고삐).
+
+## 평지 기복 2.4m — 손으로 놓은 자리 둘레는 평탄 (2026-09-30, "이어해")
+
+- RELIEF_AMP 0.9 → 2.4. 점검이 깬 자리(도주 길·결투장·크리스털·고개 문)는 진폭을 줄이는 대신 **평탄 마스크**로: terrain_builder._collect_sites 가 순간이동 지점 표(waypoints POINTS)·이야기 자료(story.gd 의 Vector2 cell/path)·지역 스크립트 상수의 칸 좌표·지도 가장자리 길 칸(고개)을 한 번 모으고, 그 둘레 RELIEF_SITE_R 18m 는 기복 0, 그 밖 26m 에 걸쳐 올라온다(3×3 칸 격자 색인). 좌표계 주의: 지형 정점 (x+u) 는 칸 왼쪽 모서리 기준이고 자리 좌표는 칸 중심이 정수라 -0.5 를 뺐다(처음엔 어긋나 STORY3 도주 길이 y=1.0 으로 깼다).
+- 전체 점검 46개 중 QMAP 3·WQ 1(기존)·COMBAT(무거운 작업과 겹칠 때만, 단독 0) 외 fails=0. REGRESS OK, PERF 마을 34.1·포구 25.7·폐허 28.2만 그대로.
+- 한계: 마스크 때문에 신상·명소가 촘촘한 곳은 여전히 평탄하고, 그 사이 들에서 굽이친다. 촬영 컷 대부분이 명소 시점이라 컷에선 은은하다.

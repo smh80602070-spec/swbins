@@ -154,7 +154,19 @@ static var _relief_noise: FastNoiseLite = null
 ## 대상은 이어진 "평지 글자"(RELIEF_FLAT: 풀·숲 바닥·밭·길) — 이 글자끼리 이웃한 변에선 같은 함수라 칸 이음이 그대로,
 ## 다른 글자(물·산·다리·집터·모래…)와 맞닿는 변에선 RELIEF_FADE_M 안에서 0 으로 잦아든다(기준 높이·절벽 판정은 tile_base_height 그대로).
 ## **지면에 물건을 앉힐 때는 LEGEND 값이 아니라 height_at() 을 쓴다**(안 그러면 진폭만큼 뜨거나 묻힌다).
-const RELIEF_AMP := 0.9
+const RELIEF_AMP := 2.4
+## 게임이 손으로 놓은 자리(순간이동 지점·이야기 인물/도주 길/결투장·지역 명소)는 평탄해야 한다(도주 길·결투장은 점검이 1m 이내 평탄을 전제로 삼는다).
+## 그 둘레 RELIEF_SITE_R 안은 기복 0, 그 밖 RELIEF_SITE_FADE 에 걸쳐 서서히 올라온다.
+const RELIEF_SITE_R := 18.0
+const RELIEF_SITE_FADE := 26.0
+const RELIEF_SITE_SCRIPTS := {
+	"village": ["landmarks_builder", "era_sites", "village_dressing", "npc_builder", "fishing", "dispatch"],
+	"coast": ["region2_coast"], "ruins": ["region3_ruins"], "frost": ["region4_frost"], "skyport": ["region5_skyport"],
+	"crossing": ["region6_crossing"], "sunken": ["region7_sunken"], "amber": ["region8_amber"], "vault": ["region9_vault"],
+	"fork": ["region10_fork"],
+}
+static var _sites: Dictionary = {}   # 지역 → {Vector2i 칸 → PackedVector2Array(칸 좌표)}
+static var _sites_ready := false
 const RELIEF_FADE_M := 14.0
 const RELIEF_FLAT := [".", "T", "F", "="]
 ## 평지 글자끼리는 기준 높이를 하나로(LEGEND 의 0~0.15 계단이 기복 위에서 균열·떠 있는 옆면이 되지 않게).
@@ -221,6 +233,74 @@ static func _grid_of(region: String, world: Vector3) -> Vector4:
 	var iy := clampi(int(floor(gy)), 0, s.y - 1)
 	return Vector4(ix, iy, clampf(gx - ix, 0.0, 1.0), clampf(gy - iy, 0.0, 1.0))
 
+## 평탄해야 하는 자리들을 한 번 모은다 — 순간이동 지점 표(waypoints.gd POINTS) + 이야기 자료(story.gd 의 region·cell·path) +
+## 지역 스크립트의 칸 좌표 상수(Vector2). 스크립트는 로드 순환을 피하려고 런타임에 load() 한다.
+static func _collect_sites() -> void:
+	_sites_ready = true
+	_border_road_sites()
+	var wp: Script = load("res://games/saga_go/world/waypoints.gd")
+	for p in wp.get_script_constant_map().get("POINTS", []):
+		_add_site(String(p[1]), p[2] as Vector2)
+	var story: Script = load("res://games/saga_go/data/story.gd")
+	for k in story.get_script_constant_map():
+		_walk_sites(story.get_script_constant_map()[k], "village")
+	for region in RELIEF_SITE_SCRIPTS:
+		for name in RELIEF_SITE_SCRIPTS[region]:
+			var s: Script = load("res://games/saga_go/world/%s.gd" % name)
+			if s == null:
+				continue
+			var cm := s.get_script_constant_map()
+			for k in cm:
+				_walk_sites(cm[k], String(region))
+
+## 지도 가장자리 길 칸(고개 — 이웃 지역과 이어지는 문·시간 틈 문이 서는 자리)도 평탄해야 한다.
+static func _border_road_sites() -> void:
+	for region in RELIEF_REGIONS:
+		var rows: Array = TestMap.rows_of(region)
+		for y in rows.size():
+			var row: String = rows[y]
+			for x in row.length():
+				if row[x] != "=":
+					continue
+				if x == 0 or y == 0 or x == row.length() - 1 or y == rows.size() - 1:
+					_add_site(region, Vector2(x, y))
+
+static func _add_site(region: String, c: Vector2) -> void:
+	if c.x < -0.5 or c.y < -0.5 or c.x > 12.5 or c.y > 12.5:
+		return
+	if not _sites.has(region):
+		_sites[region] = {}
+	var key := Vector2i(floori(c.x), floori(c.y))
+	var arr: PackedVector2Array = (_sites[region] as Dictionary).get(key, PackedVector2Array())
+	arr.append(c)
+	(_sites[region] as Dictionary)[key] = arr
+
+static func _walk_sites(v: Variant, region: String) -> void:
+	if v is Vector2:
+		_add_site(region, v)
+	elif v is Dictionary:
+		var r := String(v.get("region", region))
+		if not r in RELIEF_REGIONS:
+			r = region
+		for k in v:
+			_walk_sites(v[k], r)
+	elif v is Array:
+		for e in v:
+			_walk_sites(e, region)
+
+## (칸 좌표 gx, gy — 칸 중심이 정수인 world_pos 좌표계) 에서 가장 가까운 손으로 놓은 자리까지의 칸 단위 거리(둘레 3×3 칸만 본다).
+static func _site_dist_tiles(region: String, gx: float, gy: float) -> float:
+	var grid: Dictionary = _sites.get(region, {})
+	var best := 99.0
+	var cx := floori(gx)
+	var cy := floori(gy)
+	for dy in [-1, 0, 1]:
+		for dx in [-1, 0, 1]:
+			var arr: PackedVector2Array = grid.get(Vector2i(cx + dx, cy + dy), PackedVector2Array())
+			for c in arr:
+				best = minf(best, Vector2(gx, gy).distance_to(c))
+	return best
+
 static func _relief(region: String, x: int, y: int, u: float, v: float) -> float:
 	var ts := TestMap.tile_size_of(region)
 	if _relief_noise == null:
@@ -239,6 +319,12 @@ static func _relief(region: String, x: int, y: int, u: float, v: float) -> float
 			var rx := maxf(maxf((x + dx) * ts - px, 0.0), px - (x + dx + 1) * ts)
 			var rz := maxf(maxf((y + dy) * ts - pz, 0.0), pz - (y + dy + 1) * ts)
 			f = minf(f, smoothstep(0.0, RELIEF_FADE_M, sqrt(rx * rx + rz * rz)))
+	if f <= 0.0:
+		return 0.0
+	if not _sites_ready:
+		_collect_sites()
+	var dm := _site_dist_tiles(region, x + u - 0.5, y + v - 0.5) * ts
+	f *= smoothstep(RELIEF_SITE_R, RELIEF_SITE_R + RELIEF_SITE_FADE, dm)
 	if f <= 0.0:
 		return 0.0
 	## 지역마다 다른 결 — 지역 이름 해시로 잡음 위치를 옮긴다.
