@@ -96,8 +96,26 @@ func is_flying_mount() -> bool:
 	return is_riding() and String(_def.get("kind", "")) == "fly"
 
 func owned() -> Array:
-	## GO 는 이야기 장으로 잠그고(go_player.mount_chapter), 다른 판은 아직 잠금 없이 전부(각 판 진행 연결은 다음 조각).
-	return Mounts.unlocked(int(_player.call("mount_chapter")) if _player.has_method("mount_chapter") else 99)
+	return Mounts.unlocked(int(_player.call("mount_chapter")) if _player.has_method("mount_chapter") else game_progress())
+
+## 판마다 진행을 이야기 장(mounts.gd req_ch 2·5·8·10·16·26)에 맞춘 값으로 — 사가블로: 클리어한 방 수 ×4(7방이면 28),
+## 사가의숲: 끝낸 주민 부탁 ×5(6이면 30), 사가스토리: 끝낸 본편 사명 ×2(13이면 26). 그 밖의 곳은 전부 열림.
+func game_progress() -> int:
+	## 어느 판인지는 조상 가운데 씬 파일 경로가 games/saga_* 인 첫 노드(플레이어 씬 자신 또는 판 씬)로 — 점검 호스트처럼 current_scene 이 다른 씬이어도 맞는다.
+	var sp := ""
+	var n: Node = self
+	while n != null:
+		if n.scene_file_path.contains("/games/saga_"):
+			sp = n.scene_file_path
+			break
+		n = n.get_parent()
+	if sp.contains("saga_dungeon"):
+		return DungeonSaveState.rooms_cleared.count(true) * 4
+	if sp.contains("saga_forest"):
+		return ForestSaveState.quests_done.size() * 5
+	if sp.contains("saga_story"):
+		return mini(StorySaveState.quests_done.size(), 13) * 2
+	return 99
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _player == null or bool(_player.get("frozen")):

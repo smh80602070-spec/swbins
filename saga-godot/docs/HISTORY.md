@@ -9529,3 +9529,8 @@ PROJECT_STATE.md` 참고. 요약:
 - mount.gd: 터치 화면이면 "탈것"(타기/내리기) 단추와, 나는 탈것 중에만 보이는 "내려가기"(run/story_dash 누름) 단추(오른쪽 아래, 점프 단추 왼쪽). 마지막에 쓴 탈것은 user://mount.cfg 에 설치마다 기억(세이브 스키마는 그대로).
 - 탄 동안 걷기·달리기 애니 대신 idle(다리가 허공에서 걷지 않게) — go_player·player·story_player.
 - probe_mount 15항목(터치 단추 생성·기억 저장 포함) fails=0, mount_host 세 판 fails=0, REGRESS OK, STORY·TRAVERSAL fails=0. 남은 것: 앉은 자세(뼈 자세 손질)·날개 펄럭임·사가국지.
+
+## 탈것 잠금 — 사가블로·사가의숲·사가스토리 진행에 연결 (2026-09-30, "이어해")
+
+- mount.gd game_progress(): 사가블로 = 클리어한 방 수×4(7방=28), 사가의숲 = 끝낸 주민 부탁×5(6=30), 사가스토리 = 끝낸 본편 사명×2(13=26)을 이야기 장 값(2·5·8·10·16·26)에 맞춰 잠금. 어느 판인지는 조상 노드의 씬 경로(games/saga_*)로. 사가고돗은 그대로 이야기 장.
+- mount_host: 새 세이브에서 세 판 다 잠김(fresh_locked)·SAGA_MOUNT_ALL 이면 여섯 개 열림(all_open) + 기존 항목 fails=0. probe_mount fails=0, REGRESS OK.

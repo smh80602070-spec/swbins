@@ -26,6 +26,10 @@ func _ready() -> void:
 		print("MOUNT_HOST_DONE fails=%d" % _fails)
 		get_tree().quit()
 		return
+	if OS.get_environment("SAGA_MOUNT_ALL") == "":
+		_check("fresh_locked", (_m.call("owned") as Array).is_empty(), "%s progress=%s scene=%s" % [str(_m.call("owned")), str(_m.call("game_progress")), get_tree().current_scene.scene_file_path])
+	else:
+		_check("all_open", (_m.call("owned") as Array).size() == 6, str(_m.call("owned")))
 	var x0 := _p.global_position.x
 	Input.action_press("move_right")
 	for _i in 30:
