@@ -14,6 +14,7 @@ signal mounted_changed(id: String)
 
 ## 공격을 누르면 내린다 — 판마다 다른 공격 액션(없는 것은 건너뜀).
 const ATTACK_ACTIONS := ["combat_quick", "dungeon_attack"]
+const CONFIG_PATH := "user://mount.cfg"
 const MODE_SWIM := 4  # go_player.gd Mode enum 값 (GROUND0 AIR1 GLIDE2 CLIMB3 SWIM4 MANTLE5 FLY6)
 const MODE_FLY := 6
 
@@ -29,6 +30,12 @@ func _ready() -> void:
 	name = "Mount"
 	_ensure_action("go_mount", KEY_V)
 	_ensure_action("go_mount_next", KEY_B)
+	## 마지막에 쓴 탈것은 설치마다 기억한다(세이브 밖 — 세이브 스키마를 건드리지 않는다).
+	var cf := ConfigFile.new()
+	if cf.load(CONFIG_PATH) == OK:
+		last_id = String(cf.get_value("mount", "last", ""))
+	if DisplayServer.is_touchscreen_available():
+		_build_touch()
 
 static func _ensure_action(action: String, key: Key) -> void:
 	if InputMap.has_action(action):
@@ -37,6 +44,50 @@ static func _ensure_action(action: String, key: Key) -> void:
 	var ev := InputEventKey.new()
 	ev.physical_keycode = key
 	InputMap.action_add_event(action, ev)
+
+## 터치 단추 — "탈것"(타기/내리기)과, 나는 탈것을 타는 동안만 보이는 "내려가기"(Shift/story_dash 와 같은 입력).
+var _touch_down: Button = null
+
+func _build_touch() -> void:
+	var layer := CanvasLayer.new()
+	layer.name = "MountTouch"
+	add_child(layer)
+	var b := Button.new()
+	b.name = "MountButton"
+	b.text = "탈것"
+	b.anchor_left = 1.0
+	b.anchor_right = 1.0
+	b.anchor_top = 1.0
+	b.anchor_bottom = 1.0
+	b.offset_left = -440
+	b.offset_right = -320
+	b.offset_top = -170
+	b.offset_bottom = -50
+	b.pressed.connect(toggle)
+	layer.add_child(b)
+	_touch_down = Button.new()
+	_touch_down.name = "MountDownButton"
+	_touch_down.text = "내려가기"
+	_touch_down.visible = false
+	_touch_down.anchor_left = 1.0
+	_touch_down.anchor_right = 1.0
+	_touch_down.anchor_top = 1.0
+	_touch_down.anchor_bottom = 1.0
+	_touch_down.offset_left = -440
+	_touch_down.offset_right = -320
+	_touch_down.offset_top = -300
+	_touch_down.offset_bottom = -190
+	_touch_down.button_down.connect(func() -> void: _hold_down(true))
+	_touch_down.button_up.connect(func() -> void: _hold_down(false))
+	layer.add_child(_touch_down)
+
+func _hold_down(on: bool) -> void:
+	for a in ["run", "story_dash"]:
+		if InputMap.has_action(a):
+			if on:
+				Input.action_press(a)
+			else:
+				Input.action_release(a)
 
 func is_riding() -> bool:
 	return current != ""
@@ -87,6 +138,9 @@ func mount(id: String) -> void:
 	_def = def
 	current = id
 	last_id = id
+	var cf := ConfigFile.new()
+	cf.set_value("mount", "last", id)
+	cf.save(CONFIG_PATH)
 	var pet: Variant = null
 	for p in preload("res://saga_core/data/pets.gd").PETS:
 		if p.id == id:
@@ -122,6 +176,8 @@ func _apply_to_player(on: bool) -> void:
 		_player.call("end_fly")
 
 func _physics_process(delta: float) -> void:
+	if _touch_down != null:
+		_touch_down.visible = is_flying_mount()
 	if not is_riding() or _player == null:
 		return
 	_t += delta

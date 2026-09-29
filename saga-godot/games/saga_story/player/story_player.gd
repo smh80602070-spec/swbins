@@ -754,7 +754,7 @@ func _walk(delta: float) -> void:
 	if absf(axis) > 0.05:
 		_facing = signf(axis)
 		visual.rotation.y = lerp_angle(visual.rotation.y, PI * 0.5 if _facing > 0 else -PI * 0.5, TURN_RATE * delta)
-		_play_anim("walk")
+		_play_anim("idle" if mounted else "walk")
 	else:
 		_play_anim("idle")
 

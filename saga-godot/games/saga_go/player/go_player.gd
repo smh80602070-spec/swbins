@@ -213,7 +213,7 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 
 	if move_dir.length() > 0.05:
 		_face(move_dir, delta)
-		_play_anim("sprint" if running else "walk")
+		_play_anim("idle" if mounted else ("sprint" if running else "walk"))
 		if not mounted and _try_wall(move_dir, delta, true):
 			return
 	else:

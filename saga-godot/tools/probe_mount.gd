@@ -31,6 +31,8 @@ func _physics_process(_delta: float) -> void:
 				_check("locked_ch0", Mounts.unlocked(0).is_empty() or OS.get_environment("SAGA_MOUNT_ALL") != "", str(Mounts.unlocked(0)))
 				_check("locked_ch2", Mounts.unlocked(2).has("pt_jeolyeong") and not Mounts.unlocked(2).has("pt_samjogo") or OS.get_environment("SAGA_MOUNT_ALL") != "", str(Mounts.unlocked(2)))
 				_check("locked_ch26", Mounts.unlocked(26).has("pt_cheongryong"), "")
+				_m.call("_build_touch") # 터치 화면이 아니라 안 만들어지므로 직접 — 단추 둘이 생기는지
+				_check("touch_buttons", _m.find_child("MountButton", true, false) != null and _m.find_child("MountDownButton", true, false) != null, "")
 				_teleport(TestMap.world_pos(5, 4) + Vector3(0, 1.0, 0))
 			if _frame == 30:
 				_next()
@@ -97,6 +99,8 @@ func _physics_process(_delta: float) -> void:
 				_m.call("dismount", "")
 			if _frame == 5:
 				_check("dismounted", not bool(_p.mounted) and int(_p.mode) != 6, "mode=%d" % int(_p.mode))
+				var cf := ConfigFile.new()
+				_check("last_saved", cf.load("user://mount.cfg") == OK and String(cf.get_value("mount", "last", "")) == "pt_samjogo", "")
 				_next()
 		7:
 			print("MOUNT_PROBE_DONE fails=%d" % _fails)

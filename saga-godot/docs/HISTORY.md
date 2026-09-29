@@ -9523,3 +9523,9 @@ PROJECT_STATE.md` 참고. 요약:
 - 나는 탈것: 손을 떼면 -3m/s 로 내려앉던 것을 제자리에서 -0.6m/s 로 떠 있게(공중에 머물며 경치를 본다), 내려가기는 Shift(사가스토리 story_dash) 11m/s. 판 넷 점검(probe_mount·mount_host) 갱신.
 - 탈것이 사람보다 작아 보여 크기를 키웠다(말 1.9·홍염마 2.0·백호 1.7·삼족오 2.3·주작 2.8·청룡 3.4m). probe_shots: k_fly_dragon·k_fly_crow(mountfly: 점프를 눌러 올라간 뒤 찍고 _undo 가 뗌·내림) — 하늘 위 탈것 컷 확인(용은 뱀 모양이라 타는 자리가 목 뒤).
 - 남은 것: 앉은 자세·날개 펄럭임·터치 단추·저장·사가국지.
+
+## 탈것 — 터치 단추·마지막 탈것 기억·타는 동안 다리 안 걷기 (2026-09-30, "이어해")
+
+- mount.gd: 터치 화면이면 "탈것"(타기/내리기) 단추와, 나는 탈것 중에만 보이는 "내려가기"(run/story_dash 누름) 단추(오른쪽 아래, 점프 단추 왼쪽). 마지막에 쓴 탈것은 user://mount.cfg 에 설치마다 기억(세이브 스키마는 그대로).
+- 탄 동안 걷기·달리기 애니 대신 idle(다리가 허공에서 걷지 않게) — go_player·player·story_player.
+- probe_mount 15항목(터치 단추 생성·기억 저장 포함) fails=0, mount_host 세 판 fails=0, REGRESS OK, STORY·TRAVERSAL fails=0. 남은 것: 앉은 자세(뼈 자세 손질)·날개 펄럭임·사가국지.

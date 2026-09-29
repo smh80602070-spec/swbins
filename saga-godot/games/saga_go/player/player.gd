@@ -120,7 +120,7 @@ func _physics_process(delta: float) -> void:
 	if move_dir.length() > 0.05:
 		var target_yaw := atan2(move_dir.x, move_dir.z)
 		visual.rotation.y = lerp_angle(visual.rotation.y, target_yaw, TURN_RATE * delta)
-		_play_anim("sprint" if running else "walk")
+		_play_anim("idle" if mounted else ("sprint" if running else "walk"))
 	else:
 		_play_anim("idle")
 
