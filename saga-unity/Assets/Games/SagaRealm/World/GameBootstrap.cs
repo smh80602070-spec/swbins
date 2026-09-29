@@ -18,6 +18,7 @@ namespace Saga.Realm.World
             RealmSettingsState.ApplyToAllScalers();
             RealmSettingsState.ApplyGraphicsQuality();
             RealmAudio.PlayBgm(bgmClip);
+            Saga.Realm.UI.RealmMountUi.Install(); // PLAN.md 109-15 명마·비행 — 명마 패널·날기 단추·H 키(Play 때, 씬 재빌드 없이)
         }
     }
 }

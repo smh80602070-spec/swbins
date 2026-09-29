@@ -10846,3 +10846,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 진단 `PlaytestStoryMount` 를 `PlaytestStorySlice` 에 등록. **함정 둘**: ① 진단의 평타(`TriggerAttack`)가 높은 레벨이라 사거리 2.2m 안 잡졸을 한 방에 죽여 뒤 단계(KillEnemies)가 어긋났다 → 잡졸 8·13m 에서 각 2.5m 인 x=10.5 에서 시험. ② 앞 실행이 남긴 `save_story.json` 이 두목 등장 컷 진단을 깨뜨린다(기존 특성) → 매 회 치우고 돌린다.
 - 실기 확인 전: 말·학·용 몸 크기(옆 화면에서 어떻게 보이나)·타기 단추 자리·날갯짓 손맛(점프 연타 리듬)·낙하 속도·두목 싸움터 경계에서 날개가 꺼지는 느낌·카메라.
 - 다음 = 탈것 REALM·웹 12부 유무 확인·14-27b·14-1b·실기 확인.
+
+### 2026-09-30 — saga-unity REALM 명마·비행 (PLAN 109-15-5) — 탈것 다섯 판 끝
+- 웹 사가국지 `js/mount.js` 이식. `RealmMounts`(순수: 표·열림(다스리는 성 수)·장착 표(장수 → 말, 한 필 한 사람)·`BestFor`/`PowerMul`/`ChargeOf`/`Note`·비행 고르기/나는 상태) + `RealmMountUi`(명마 패널·날기 단추·H/Shift+H, `GameBootstrap` 이 Play 때 붙임).
+- 효과 세 곳: ① `RealmWar.ArmyPower(army, land = Plain)` × 그 군의 가장 좋은 명마 배율(로스터 장수만, `land == River` = 수전이면 1 — 옛 호출은 기본값이라 그대로) ② 공격 알림 첫머리에 "🐎 …앞장선다" 한 줄 + `AttackResult.Charge`(새 선택 인자)→`RealmBattlefield` 공격군만 `_t × Charge` 로 일찍 붙음(장수·머릿수 기둥) ③ 국토 지도 카메라 `RealmWorldMapCamera.Tick(dt)`: 나는 동안 거리 130·기울기 0.35(클램프)로 부드럽게, 자동 돌기 0.12rad/초×배율(A·D·←→ 0.9rad/초), 드래그 회전 ×배율, 내리면 날기 전 거리·기울기로.
+- **이 트랙 다름**: 웹 장수 카드 대신 명마 패널(9줄×2열, 넘치면 "외 n명"). 월드맵 카메라가 궤도뿐이라 '이동 ×fly' 는 돌아보기 속도로. 도감 펫 열림 없음. 세이브 `mountSel`+`mountEqOfficers/Mounts`(버전 4 그대로, 모르는 값·중복 말·비행을 얹은 표는 버림).
+- 진단 `PlaytestRealmMount` 를 `PlaytestRealmSlice` Eras 단계(싸움터 진단 뒤)에 등록 — 판 상태를 안 건드리고 장착·고르기·지도 보기·세이브를 되돌린다. 세이브 치운 채 3연속(실행마다 `save_realm.json` 을 치움).
+- 실기 확인 전: 명마 패널 줄 글자·누름 반응 · 날기 단추 자리(왼쪽 아래 — 오른쪽 열은 일기토 단추까지 차서 처음 자리(오른쪽 아래)가 UiLayoutCheck 에 겹침 1로 잡혔다) · 나는 카메라 손맛(거리 130 이 지도 안에서 어떻게 보이나)·자동 돌기 속도 · 싸움터 컷에서 공격군이 일찍 붙는 느낌 · 알림 첫머리 한 줄.
+- **탈것 다섯 판 끝**(GO 109-15-1 · DUNGEON -2 · FOREST -3 · STORY -4 · REALM -5). 다음 = 웹 12부 유무 확인·14-27b·14-1b·실기 확인.

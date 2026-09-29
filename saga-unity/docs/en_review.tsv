@@ -160,6 +160,7 @@
 1	realm	command.duel	일기토	Duel		
 1	realm	command.game_over	이미 판이 끝났다.	The game has already ended.		
 1	realm	command.map	지도	Map		
+1	realm	command.mounts	명마	Steeds		
 1	realm	command.next_month	다음 달	Next Month		
 1	realm	command.orders	명령	Orders		
 1	realm	command.plot	계략	Schemes		
@@ -4058,6 +4059,30 @@
 2	realm	month.harvest_suffix	, 수확	, harvest		
 2	realm	month.starved_suffix	 — {0} 굶주려 병사 흩어짐	 — {0} starved, troops scattered		
 2	realm	month.summary	{0}년 {1}월 — 금 +{2}-{3}(봉록){4}	Year {0}, Month {1} — Gold +{2}-{3}(upkeep){4}		
+2	realm	mount.btn_fly	날기	Fly		
+2	realm	mount.btn_land	내리기	Land		
+2	realm	mount.fly_sel	🕊️ {0} (돌아보기 ×{1})	🕊️ {0} (look-around ×{1})		
+2	realm	mount.flying	🕊️ {0}을(를) 타고 국토를 난다 — 돌아보기 ×{1} (H 로 내림)	🕊️ Flying on the {0} — look-around ×{1} (H to land)		
+2	realm	mount.landed	🕊️ 내렸다	🕊️ You land		
+2	realm	mount.locked	아직 못 쓰는 말 — 다스리는 성 {0}곳이 되면 열린다	Not yet available — unlocks when you rule {0} cities		
+2	realm	mount.map_only	국토 지도에서만 난다	You can only fly over the realm map		
+2	realm	mount.more	외 {0}명	+{0} more	첫 기호 다름 ko「」 en「+」	
+2	realm	mount.mt_brown	갈색 말	Brown Horse		
+2	realm	mount.mt_crane	학	Crane		
+2	realm	mount.mt_dragon	푸른 용	Azure Dragon		
+2	realm	mount.mt_farm	농마	Farm Horse		
+2	realm	mount.mt_white	흰 말	White Horse		
+2	realm	mount.no_fly	아직 날 것이 없다 — 다스리는 성 {0}곳이 되면 학이 열린다	Nothing to fly yet — the crane unlocks at {0} cities		
+2	realm	mount.no_fly_short	🕊️ 아직 날 것이 없다	🕊️ Nothing to fly yet		
+2	realm	mount.no_horse	쓸 수 있는 말이 없다 — 다스리는 성 {0}곳이 되면 첫 말이 열린다	No steed available — the first one unlocks at {0} cities		
+2	realm	mount.no_horse_row	말 없음	No steed		
+2	realm	mount.none_ridden	탄 말이 없다	No steed to take away		
+2	realm	mount.not_mine	우리 세력 장수만 말을 탄다	Only officers of your force can ride		
+2	realm	mount.note	🐎 {0}이(가) {1}을(를) 타고 앞장선다 — 부대의 힘 ×{2}	🐎 {0} leads on the {1} — army power ×{2}		
+2	realm	mount.off	탈것이 꺼져 있다	Mounts are turned off		
+2	realm	mount.only_horse	장수에게 얹는 건 명마뿐이다	Only steeds can be given to officers		
+2	realm	mount.panel_title	명마 — 장수를 눌러 말을 얹는다 (한 필은 한 사람만)⏎다스리는 성 {0}곳 · 농마 2 · 갈색 말 4 · 흰 말 7 · (학 5 · 푸른 용 9 = 날기)	Steeds — tap an officer to give a horse (one horse, one rider)⏎Cities ruled: {0} · Farm Horse 2 · Brown Horse 4 · White Horse 7 · (Crane 5 · Azure Dragon 9 = flying)		
+2	realm	mount.taken	이미 다른 장수가 탄 말이다	Another officer already rides this horse		
 2	realm	officer.fu_seonghon	성혼	Seonghon		
 2	realm	officer.jp_musashi	이도인	Idoin		
 2	realm	officer.kr_yisunsin	해장	Haejang		

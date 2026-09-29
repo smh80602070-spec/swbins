@@ -50,11 +50,14 @@ namespace Saga.Realm.Data
             // PLAN.md 109-13 싸움터 땅 — 싸움터 장면(`RealmBattlefield`)이 양군 머릿수를 그리는 값. Ok=false 면 비어 있다.
             public readonly string EnemyId;
             public readonly int AtkStart, AtkLeft, DefStart, DefLeft;
+            // PLAN.md 109-15 명마 — 싸움터 컷에서 공격군이 달려 붙는 속도 배율(안 탔으면 1).
+            public readonly float Charge;
             public AttackResult(bool ok, string message, bool won = false) : this(ok, message, won, null, 0, 0, 0, 0) { }
-            public AttackResult(bool ok, string message, bool won, string enemyId, int atkStart, int atkLeft, int defStart, int defLeft)
+            public AttackResult(bool ok, string message, bool won, string enemyId, int atkStart, int atkLeft, int defStart, int defLeft, float charge = 1f)
             {
                 Ok = ok; Message = message; Won = won;
                 EnemyId = enemyId; AtkStart = atkStart; AtkLeft = atkLeft; DefStart = defStart; DefLeft = defLeft;
+                Charge = charge;
             }
         }
 
@@ -139,8 +142,15 @@ namespace Saga.Realm.Data
 
             if (tacticNote != null) message = tacticNote + " " + message;
 
+            // PLAN.md 109-15 명마 — 땅 싸움(강가 ✕)에서 명마를 탄 장수가 앞장서면 한 줄 남기고, 싸움터 컷의 돌격 속도를 넘긴다.
+            bool water = def.Land == RealmLand.River;
+            string mountNote = RealmMounts.Note(officers, water);
+            if (mountNote.Length > 0) message = mountNote + " " + message;
+            var (mountUsed, _) = RealmMounts.BestFor(officers, water);
+            float charge = mountUsed != null ? RealmMounts.ChargeOf(mountUsed.Id) : 1f;
+
             Changed?.Invoke();
-            return new AttackResult(true, message, result.Won, enemyId, troops, atk.Troops, defArmy.Start, defArmy.Troops);
+            return new AttackResult(true, message, result.Won, enemyId, troops, atk.Troops, defArmy.Start, defArmy.Troops, charge);
         }
 
         /// <summary>PLAN.md 101-2 5-6 "지형·진형 전술 개입" — 웹판(`saga-web/saga-realm/PLAN.md`

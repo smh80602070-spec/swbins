@@ -40,7 +40,7 @@ namespace Saga.Realm.Data
         /// 가장 나은 한 사람이 끌고 나머지는 조금씩 보탠다(war.js
         /// armyPower() 그대로 — 진형·수전 보정은 이 슬라이스에 없어
         /// 항상 1).</summary>
-        public static float ArmyPower(RealmArmy army)
+        public static float ArmyPower(RealmArmy army, RealmLand land = RealmLand.Plain)
         {
             float trainF = 0.5f + Mathf.Clamp(army.Train, 0, 100) / 200f;
             float techF = 0.7f + Mathf.Clamp(army.Tech, 0, 900) / 900f * 0.6f;
@@ -60,7 +60,8 @@ namespace Saga.Realm.Data
                          Mathf.Max(0, army.OfficerIds.Count - 1) * 0.03f) * (1f + braveBonus);
             if (extra == 0f) lead = 0.6f; // 장수 없는 군대는 오합지졸이다.
 
-            return army.Troops * trainF * techF * lead * army.Morale;
+            // PLAN.md 109-15 명마 — 땅 싸움(강가 = 수전 ✕)에서 그 군의 가장 좋은 명마 배율. 안 탔으면 1.
+            return army.Troops * trainF * techF * lead * army.Morale * RealmMounts.PowerMul(army.OfficerIds, land == RealmLand.River);
         }
 
         /// <summary>합(合) 하나 — war.js stepRound() 그대로. `round==0`에만
@@ -76,8 +77,8 @@ namespace Saga.Realm.Data
                 ? RealmCityData.DefMul(land)
                 : RealmCityData.DefMul(land) * (1f + (float)wallRef.Wall / Mathf.Max(1, wallRef.MaxWall) * 0.9f);
 
-            float ap = ArmyPower(atk) * (round == 0 ? firstRoundPowerMul : 1f) * duelPowerMul;
-            float dp = ArmyPower(def) * wallF * defPowerMul;
+            float ap = ArmyPower(atk, land) * (round == 0 ? firstRoundPowerMul : 1f) * duelPowerMul;
+            float dp = ArmyPower(def, land) * wallF * defPowerMul;
 
             int lossA = Mathf.RoundToInt(dp * 0.055f * (0.85f + UnityEngine.Random.value * 0.3f));
             int lossD = Mathf.RoundToInt(ap * 0.055f * (0.85f + UnityEngine.Random.value * 0.3f));

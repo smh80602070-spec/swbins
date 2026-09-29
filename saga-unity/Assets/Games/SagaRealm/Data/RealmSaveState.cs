@@ -82,6 +82,11 @@ namespace Saga.Realm.Data
             // JsonUtility가 null로 채워 옛 세이브도 RealmVictoryState.Restore(null)
             // 로 "아직 안 끝남" 상태로 시작한다.
             public string victoryResult;
+            // PLAN.md 109-15 명마·비행 — 날 탈것 고르기 + 장착 표(장수 → 말, 나란한 두 배열). victoryResult 와 같은 이유로 버전을 안 올린다 —
+            // 없는 필드는 null 로 들어와 옛 세이브는 "안 고름·장착 없음".
+            public string mountSel;
+            public string[] mountEqOfficers;
+            public string[] mountEqMounts;
         }
 
         /// <summary>PlaytestRealmSlice.cs 전용 — GameBootstrap.Awake()가
@@ -166,7 +171,9 @@ namespace Saga.Realm.Data
                 quizBestStreak = RealmQuizState.GetProgress().BestStreak,
                 officerAmbitionsDone = RealmOfficerTraits.SnapshotDone(),
                 victoryResult = RealmVictoryState.SnapshotResult(),
+                mountSel = RealmMounts.Snapshot(),
             };
+            RealmMounts.SnapshotEq(out data.mountEqOfficers, out data.mountEqMounts);
             return JsonUtility.ToJson(data);
         }
 
@@ -228,6 +235,7 @@ namespace Saga.Realm.Data
                 data.quizTotal, data.quizCorrect, data.quizStreak, data.quizBestStreak);
             RealmOfficerTraits.Restore(data.officerAmbitionsDone);
             RealmVictoryState.Restore(data.victoryResult);
+            RealmMounts.Restore(data.mountSel, data.mountEqOfficers, data.mountEqMounts);
             return true;
         }
 

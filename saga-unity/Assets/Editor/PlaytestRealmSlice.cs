@@ -1363,6 +1363,8 @@ namespace Saga.EditorTools
                     if (!PlaytestRealmEras.Run()) { Fail(); return; }
                     // PLAN.md 109-13 ① 싸움터 땅 — 화면 층이라 판 상태를 안 건드린다.
                     if (!PlaytestRealmBattlefield.Run()) { Fail(); return; }
+                    // PLAN.md 109-15 명마·비행 — 장착·고르기·지도 보기·세이브 상태를 되돌린다.
+                    if (!PlaytestRealmMount.Run()) { Fail(); return; }
                     // PLAN.md 109-13-2 지도 위 인물 — 전 성이 우리 것일 때 상한·태수 자리·재야·월드맵 배우 층.
                     if (!PlaytestRealmActors.Run()) { Fail(); return; }
                     _phase = Phase.QuizCorrect;

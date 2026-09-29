@@ -40,6 +40,12 @@ namespace Saga.Realm.Player
         private Vector2 _dragStart;
         private Vector2 _lastPointerPos;
 
+        // PLAN.md 109-15 비행 — 나는 동안 카메라가 낮고 가깝게 내려와(FlyPitch·FlyRadius) 천천히 돌며 둘러보고, 돌아보는 속도가 탈것 배율만큼 빨라진다.
+        // 내리면 날기 전 기울기·거리로 돌아간다. 자동 돌기 0.12rad/초 × 배율, 키(A·D·←→)는 0.9rad/초 × 배율.
+        public const float FlyAutoYawRad = 0.12f, FlyKeyYawRad = 0.9f, FlyBlendPerSec = 2.2f;
+        private bool _wasFlying;
+        private float _prevRadius, _prevPitch;
+
         public float DebugYaw => _yawRad;
         public float DebugPitch => _pitchRad;
         public float DebugRadius => _radius;
@@ -60,6 +66,35 @@ namespace Saga.Realm.Player
         private void Update()
         {
             HandlePointer();
+            Tick(Time.deltaTime);
+        }
+
+        /// <summary>한 프레임 — 비행 중이면 카메라를 낮고 가깝게 내리며 돌고, 아니면 날기 전 자리로 돌아온다. 진단이 시간을 건너뛰려고 직접 부른다.</summary>
+        public void Tick(float dt)
+        {
+            bool flying = RealmMounts.IsFlying;
+            if (flying && !_wasFlying) { _prevRadius = _radius; _prevPitch = _pitchRad; }
+            if (flying)
+            {
+                float pan = RealmMounts.PanMul;
+                float k = 1f - Mathf.Exp(-FlyBlendPerSec * dt);
+                _radius = Mathf.Lerp(_radius, Mathf.Clamp(RealmMounts.FlyRadius, MinRadius, MaxRadius), k);
+                _pitchRad = Mathf.Lerp(_pitchRad, Mathf.Clamp(RealmMounts.FlyPitch, MinPitchRad, MaxPitchRad), k);
+                float turn = FlyAutoYawRad;
+                var kb = Keyboard.current;
+                if (kb != null)
+                {
+                    if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) turn -= FlyKeyYawRad;
+                    if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) turn += FlyKeyYawRad;
+                }
+                _yawRad += turn * pan * dt;
+            }
+            else if (_wasFlying)
+            {
+                _radius = _prevRadius;
+                _pitchRad = _prevPitch;
+            }
+            _wasFlying = flying;
             ApplyOrbit();
         }
 
@@ -122,8 +157,9 @@ namespace Saga.Realm.Player
                 if (Vector2.Distance(pos, _dragStart) < DragThresholdPx) return;
                 _dragConfirmed = true;
             }
-            _yawRad += relative.x * RotateSpeedRad;
-            _pitchRad = Mathf.Clamp(_pitchRad + relative.y * RotateSpeedRad, MinPitchRad, MaxPitchRad);
+            float pan = RealmMounts.PanMul; // 나는 동안 돌아보기가 빨라진다(안 날면 1)
+            _yawRad += relative.x * RotateSpeedRad * pan;
+            _pitchRad = Mathf.Clamp(_pitchRad + relative.y * RotateSpeedRad * pan, MinPitchRad, MaxPitchRad);
         }
 
         private void Zoom(float delta)

@@ -33,6 +33,8 @@ namespace Saga.Realm.World
         public int DefCount { get; private set; }
         public int DefAlive { get; private set; }
         public bool Won { get; private set; }
+        /// <summary>PLAN.md 109-15 명마 — 공격군이 달려 붙는 속도 배율(1 = 그대로). 공격군이 그만큼 일찍 맞붙는 자리에 서서 기다린다.</summary>
+        public float Charge { get; private set; } = 1f;
         public Camera Cam { get; private set; }
         public int PropCount { get; private set; }
 
@@ -91,6 +93,7 @@ namespace Saga.Realm.World
             CityId = r.EnemyId;
             Look = RealmBattleLook.For(r.EnemyId);
             Won = r.Won;
+            Charge = Mathf.Max(1f, r.Charge);
 
             Spawn("Ground", PrimitiveType.Cylinder, new Vector3(0f, -0.05f, 0f), new Vector3(GroundRadius * 2f, 0.05f, GroundRadius * 2f), Look.Ground);
             if (Look.Stream)
@@ -157,11 +160,12 @@ namespace Saga.Realm.World
         private void Pose()
         {
             float advance = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(_t / AdvanceEnd));
+            float advanceAtk = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(_t * Charge / AdvanceEnd)); // 명마 — 공격군만 일찍 붙는다
             float clash = Mathf.Clamp01((_t - AdvanceEnd) / (ClashEnd - AdvanceEnd));
             float after = Mathf.Clamp01((_t - ClashEnd) / (Duration - ClashEnd));
-            PoseSide(_atk, _atkHome, -1f, AtkAlive, advance, clash, after, Won);
+            PoseSide(_atk, _atkHome, -1f, AtkAlive, advanceAtk, clash, after, Won);
             PoseSide(_def, _defHome, 1f, DefAlive, advance, clash, after, !Won);
-            PoseGeneral(AtkGeneral, -1f, true, advance);
+            PoseGeneral(AtkGeneral, -1f, true, advanceAtk);
             PoseGeneral(DefGeneral, 1f, false, advance);
         }
 
