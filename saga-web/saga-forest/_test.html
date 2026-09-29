@@ -4998,8 +4998,9 @@ window.DG_NO_TUNE = true;
         var settledNow = VI.settled().indexOf('angler') >= 0;
         s.day = visDay('fox'); DG.visitor._reset();
         var other = VI.list().filter(function (x) { return x.settled && x.visitor === 'angler'; })[0];
+        var story = VI.talk(other);                       // 눌러앉은 뒤 첫 말은 각자 사연(side_guest_*), 선물은 그 다음 말
         var g0 = C.save.player.gold, gift = VI.talk(other), g1 = C.save.player.gold, again = VI.talk(other);
-        return /눌러앉아도/.test(ask.text) && yes.kind === 'quest' && settledNow && other && V.walkable(other.x, other.y) &&
+        return story.story === true && /눌러앉아도/.test(ask.text) && yes.kind === 'quest' && settledNow && other && V.walkable(other.x, other.y) &&
           g1 === g0 + VI.GIFT.angler && again.kind === 'talk' && C.save.player.gold === g1 &&
           VI.list()[0].visitor === 'fox' && ('단골 3 → 청함 → 눌러앉음 · 여우 날에도 곁에 · 🪙 ' + VI.GIFT.angler + ' 하루 한 번');
       });
@@ -5540,6 +5541,21 @@ window.DG_NO_TUNE = true;
         out = G.every(function (g) { return !!g.line && g.line.indexOf('달음') >= 0; }) && r1.text.indexOf(G[0].note) >= 0 && r1.text.indexOf(G[0].line) >= 0 && r0.text.indexOf('🎖️') < 0;
       } finally { undo(); }
       return out && '수레 등급이 오르는 배달에만 달음 한 줄 · 아니면 평소 글 · 세 등급 모두 한 줄';
+    });
+
+    t('손님 사연(정본 side_guest_*) — 눌러앉은 손님 열은 눌러앉은 뒤 처음 말을 걸면 각자 사연을 한 번 들려주고, 그 뒤엔 선물·한마디', function () {
+      var s = V.state(), Vi = DG.visitor, keys = Vi.VISITORS.map(function (v) { return v.key; }), C = DG.core;
+      var keep = JSON.stringify({ vs: s.visitSettled || [], st: s.visitStory || {}, vg: s.visitGift || null, gold: C.save.player.gold });
+      try {
+        s.visitSettled = ['fox']; s.visitStory = {}; s.visitGift = { day: s.day, got: {} };
+        var g0 = C.save.player.gold, a = Vi.talk({ settled: true, visitor: 'fox' });
+        var first = a.story === true && a.text.indexOf('옛 방울') >= 0 && C.save.player.gold === g0 + Vi.STORY_GOLD && s.visitStory.fox === true;
+        var b = Vi.talk({ settled: true, visitor: 'fox' });
+        var second = !b.story && C.save.player.gold === g0 + Vi.STORY_GOLD + Vi.GIFT.fox;
+        var c = Vi.talk({ settled: true, visitor: 'fox' });
+        var third = !c.story && C.save.player.gold === g0 + Vi.STORY_GOLD + Vi.GIFT.fox;
+        return keys.length === 10 && keys.every(function (k) { return !!Vi.STORY[k] && Vi.STORY[k].indexOf('{') < 0; }) && first && second && third && '열 손님 모두 사연 · 눌러앉은 뒤 첫 말 사연(🪙 ' + Vi.STORY_GOLD + ') · 둘째 말 하루 선물 · 셋째 한마디';
+      } finally { var k = JSON.parse(keep); s.visitSettled = k.vs; s.visitStory = k.st; s.visitGift = k.vg || undefined; C.save.player.gold = k.gold; }
     });
 
     t('택배 — 시간제한 소포: 시한 안이면 ×1.5, 넘기면 ×0.7 이고 사슬이 끊긴다', function () {

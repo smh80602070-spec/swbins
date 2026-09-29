@@ -72,6 +72,21 @@
     dokkaebi: '꼬마들이 마을 아이들이랑 잘 논다', alien: '이 별, 정착지로 등록했어요',
     courier: '이 마을은 제가 맡을게요 — 주소도 이제 다 외웠어요', photo: '오늘 빛이 좋아요, 한 장 찍어 드릴까요?'
   };
+  /** 눌러앉은 손님 열의 각자 사연(정본 side_guest_*) — 눌러앉은 뒤 처음 말을 걸면 한 번 들려준다. 사연마다 글 한 토막 + 금·업적 */
+  var STORY = {
+    fox: '실은 내가 시대를 넘나드는 장사꾼이 된 까닭이 있소. 젊을 적 아끼던 옛 방울 하나를 어느 시대 시장에선가 잃어버렸다오. 그걸 찾으려 물건을 사고팔며 떠돌았지. 이 마을 좌판에서 그 방울 소리를 들은 것 같은 날이 있소.',
+    sailor: '내 옛 항구는 바다가 물러나며 뭍이 되었다오. 배 없는 뱃사람이 되고 나서야 배가 나를 태운 게 아니라 내가 배를 아꼈다는 걸 알았소. 이 호수에 박힌 배가 내 고향의 마지막 돛대라오.',
+    wisp: '히히, 나는 옛날 이 숲 길 잃은 나그네를 밝혀 주던 등불이었어. 나그네가 다 떠나고 나서도 불이 안 꺼져서 도깨비불이 됐지. 마을 등불 옆이 제일 따뜻해서 눌러앉았어!',
+    angler: '낚싯대를 처음 잡은 건 일곱 살, 할아버지 곁이었소. 못 가장자리에서 한나절 아무것도 못 잡고도 할아버지는 웃으셨지. 낚시란 물고기가 아니라 기다림을 잡는 일이라 하셨소. 그 말뜻을 이제야 알겠구려.',
+    bugdoc: '제가 곤충 박사가 된 건 어릴 적 나비 한 마리 때문이에요. 날개 무늬가 어느 도감에도 없었거든요. 그 나비를 찾아 이 숲까지 왔는데, 도감을 새로 쓰다 보니 어쩌면 제가 그 나비의 이름을 짓게 될지도 몰라요.',
+    traveler: '삐빗. 기록: 저의 귀환 일정은 원래 사흘이었습니다. 그런데 이 숲의 기록판에서 처음으로 ‘사라진 숲’ 이 ‘이어진 숲’ 으로 바뀌는 것을 보았습니다. 관측자가 결과를 바꾸는 사례는 흔치 않아 일정을 무기한 미뤘습니다.',
+    dokkaebi: '허허, 내 꼬마들이 원래는 쓸쓸한 폐허의 도깨비불이었다네. 이 마을 아이들이 겁내지 않고 놀아 주니 꼬마들이 처음으로 웃는 걸 보았지. 대장으로서 이보다 더한 선물은 없네.',
+    alien: '제 모선은 별을 세는 배예요. 그런데 이 별에서 밥을 하루 세 번 먹는 사람들을 보고 처음으로 별을 세는 것보다 이웃을 세고 싶어졌어요. 모선에는 정착지 등록 신호를 이미 보냈답니다.',
+    courier: '제가 처음 배달한 소포는 주소가 없는 소포였어요. 받을 사람을 못 찾아 사흘을 헤맸는데, 결국 소포를 열어 보니 안에 든 건 ‘누군가에게 전해질 마음’ 이라는 쪽지였죠. 그 뒤로 저는 주소보다 사람을 먼저 봐요.',
+    photo: '제 첫 사진은 흐릿한 새벽 풍경이었어요. 잘 안 찍혔다고 버리려는데 옆 사람이 ‘이 흐릿함이 좋다’ 고 하더라고요. 그때 알았어요, 사진은 잘 찍는 게 아니라 누구와 같이 보느냐라는 걸요.'
+  };
+  var STORY_GOLD = 1500, STORY_FEAT = 10;
+
   /** 수다(§5.11) — 먼저 꺼내는 말 · 받는 말. 둘을 이어 붙여 한 쌍의 대화가 된다 */
   var CHAT_OPEN = {
     fox: '요즘 바다 건너 물건값이 부쩍 올랐다오', sailor: '어젯밤 바람 냄새가 폭풍 전날 같았소',
@@ -292,6 +307,15 @@
       var me = list().filter(function (x) { return x.settled && x.visitor === d.key; })[0];
       return { kind: 'talk', name: d.name, text: me && me.chat ? '(수다 중) ' + me.chat : d.emoji + ' ' + (SETTLE_LINE[d.key] || d.line) };
     }
+    if (!s.visitStory) { s.visitStory = {}; }
+    if (!s.visitStory[d.key] && STORY[d.key]) {                       // 눌러앉은 뒤 처음 — 각자 사연 한 번(선물은 이 말 뒤에)
+      s.visitStory[d.key] = true;
+      core.save.player.gold += STORY_GOLD;
+      core.gainFeat(STORY_FEAT, '손님 사연');
+      core.log(d.emoji + ' ' + d.name + '의 사연을 들었다 — 🪙 ' + core.fmt(STORY_GOLD), 'good');
+      core.emit('changed'); core.persist();
+      return { kind: 'talk', name: d.name, story: true, text: d.emoji + ' ' + STORY[d.key] + ' (🪙 +' + core.fmt(STORY_GOLD) + ')' };
+    }
     s.visitGift.got[d.key] = true;
     var g = GIFT[d.key] || 200;
     core.save.player.gold += g;
@@ -381,7 +405,7 @@
     whoOn: whoOn, today: today, list: list, spot: spot, pieces: pieces, marks: marks, foxItem: foxItem, blocked: blocked,
     /* 세이브가 바뀌는 곳 */
     pick: pick, talk: talk, rec: rec, status: status,
-    SETTLE_N: SETTLE_N, SETTLE_SPOTS: SETTLE_SPOTS, GIFT: GIFT, settleSpot: settleSpot, settled: settled, bonds: bonds,
+    STORY: STORY, STORY_GOLD: STORY_GOLD, SETTLE_N: SETTLE_N, SETTLE_SPOTS: SETTLE_SPOTS, GIFT: GIFT, settleSpot: settleSpot, settled: settled, bonds: bonds,
     GUEST_BEAUTY: GUEST_BEAUTY, CHAT_OPEN: CHAT_OPEN, CHAT_REPLY: CHAT_REPLY,
     /** 마을 평가(town.beauty)가 읽는다 — 눌러앉은 손님 몫 */
     beautyBonus: function () { return settled().length * GUEST_BEAUTY; },
