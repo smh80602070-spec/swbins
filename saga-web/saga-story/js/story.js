@@ -45,27 +45,47 @@
   }
 
   /** 시나리오 장면(scenario.js) — 본 기록은 안 남기고, 닫히면 `done` 을 부른다. 못 띄우면 false */
-  function play(key, title, lines, done) {
+  function play(key, title, lines, done, choice) {
     if (cur || blocked() || !lines || !lines.length) { return false; }
-    cur = { key: key, title: title, lines: lines, i: 0, scn: true, done: done };
+    cur = { key: key, title: title, lines: lines, i: 0, scn: true, done: done, choice: choice || null, pick: false };
     core.emit('story:change', cur);
     return true;
   }
 
-  function close() {
+  function close(picked) {
     if (!cur) { return; }
+    if (cur.choice && typeof picked !== 'string') { toChoice(); return; }   // 고르기 장면은 건너뛰어도 고르기 앞까지만
     var done = cur.scn ? cur.done : null;
     if (!cur.scn) { seenMap()[cur.key] = 1; }
     cur = null;
     core.persist();
     core.emit('story:change', null);
-    if (done) { done(); }
+    if (done) { done(picked); }
   }
 
-  /** 다음 줄 — 마지막 줄에서 부르면 닫는다 */
+  /** 고르기 장면(`choice: { id, prompt, options:[{key,label}] }`)의 마지막 줄 다음 — 단추를 보인다 */
+  function toChoice() {
+    if (!cur || cur.pick) { return; }
+    cur.i = cur.lines.length - 1;
+    cur.pick = true;
+    core.emit('story:change', cur);
+  }
+
+  /** 고른다 — 고르기 단계에서만 먹는다 */
+  function pick(key) {
+    if (!cur || !cur.pick || !cur.choice) { return false; }
+    var ok = cur.choice.options.some(function (o) { return o.key === key; });
+    if (!ok) { return false; }
+    close(key);
+    return true;
+  }
+
+  /** 다음 줄 — 마지막 줄에서 부르면 닫는다(고르기 장면은 고르기로 넘어가고, 고르기 중엔 아무 일도 없다) */
   function next() {
-    if (!cur) { return; }
-    if (cur.i < cur.lines.length - 1) { cur.i += 1; core.emit('story:change', cur); } else { close(); }
+    if (!cur || cur.pick) { return; }
+    if (cur.i < cur.lines.length - 1) { cur.i += 1; core.emit('story:change', cur); }
+    else if (cur.choice) { toChoice(); }
+    else { close(); }
   }
 
   function onEnter(run) {
@@ -78,9 +98,11 @@
   global.DG.story = {
     isOpen: function () { return !!cur; },
     current: function () { return cur; },
-    maybeOpen: maybeOpen, play: play, next: next,
+    maybeOpen: maybeOpen, play: play, next: next, pick: pick,
     /** 시나리오가 이 사냥터 장면을 대신했을 때 — 첫 발 장면을 본 것으로 적는다 */
-    markSeen: function (key) { seenMap()[key] = 1; }, skip: close, seen: seen,
+    markSeen: function (key) { seenMap()[key] = 1; }, skip: function () { close(); }, seen: seen,
+    /** 진단용 — 고르기 중이어도 장면을 강제로 닫는다(done 은 안 부른다) */
+    abort: function () { cur = null; core.emit('story:change', null); },
     /** 어드민·진단용 — 본 기록을 지운다 */
     reset: function () { if (core.save.side) { core.save.side.story = {}; } cur = null; core.emit('story:change', null); }
   };

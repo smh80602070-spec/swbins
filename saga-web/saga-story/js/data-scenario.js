@@ -1,7 +1,7 @@
 /**
  * 시나리오 표 — 사가스토리 "이름 없는 떠돌이" (정본 `../../../scenario/saga-story.md`)
  * ---------------------------------------------------------------
- * 지금은 **1부 · 무명(과거 중심, Lv 1~10) 네 장**과 **2부 · 갈래(현대 중심, Lv 10~25) 네 장**, **3부 · 불길(미래 중심, Lv 25~45) 네 장**이 있다. 4부~는 이 표 끝에 장을 덧붙이면 된다.
+ * 지금은 **1부 · 무명(과거 중심, Lv 1~10) 네 장**과 **2부 · 갈래(현대 중심, Lv 10~25) 네 장**, **3부 · 불길(미래 중심, Lv 25~45) 네 장**, **4부 · 난세의 문(세 시대 모두, Lv 45~70) 네 장**이 있다. 5부~는 이 표 끝에 장을 덧붙이면 된다.
  * 인물은 전부 가상이다(이름 정책) — 'me' 는 앞에 세운 도감 인물, 'mentor' 는 그 갈래의 스승(도감 가명).
  *
  * 한 장 = { id, no, title, stage, need, after, mix, steps, reward, blurb }
@@ -9,7 +9,9 @@
  *   mix    시대 섞기 — 과거·현대·미래가 **셋 다** 있어야 한다(시나리오 README §1-4, 진단이 지킨다)
  *   steps  차례대로 하나씩 — 아래 넷 중 하나
  *     { t: 'stage',   stage: 사냥터 key }           그 사냥터에 들어선다
- *     { t: 'talk',    scene: 장면 id, at?: key }    대사 장면(at 이 있으면 그 사냥터 안에서만 뜬다)
+ *     { t: 'talk',    scene: 장면 id, at?: key, by?: 고르기id }
+ *                                                   대사 장면(at 이 있으면 그 사냥터 안에서만 뜬다). 장면에 `choice` 가 있으면 끝에서 고르기 단추가 뜬다.
+ *                                                   `by` 가 있으면 그 고르기의 답에 따라 장면 id 는 `scene_답key`(예: name3_close)
  *     { t: 'mission', quest: 사명 key }             그 사명을 바친다(레벨이 되면 저절로 받는다)
  *     { t: 'job',     tier: 1 }                     n차 전직을 한다
  *     { t: 'gate',    stage: 사냥터 key }           그 마을 관문 대장을 이긴다(이긴 적이 있으면 그것으로 됨)
@@ -17,6 +19,7 @@
  *   legacy { level, tier }  옛 세이브 — 레벨이 그 이상이거나 전직이 tier 이상이면 이 장은 보상 없이 지나온 길로 본다
  *   reward { exp, gold, potion, scroll, memFrag, title }   memFrag = 비경 기억 조각(🧩)     title 'job' = "이름 없는 " + 방금 고른 직업 이름
  *
+ * 장면 `choice: { id, prompt, options:[{ key, label, title? }] }` — 고른 답은 `save.scenario.choices[id]`, `title` 이 있으면 칭호가 된다.
  * 장면 한 줄 = [누가, 감정, 말] — `data-side.js` 의 STORY 와 같은 틀(EMOTES 키).
  */
 (function (global) {
@@ -31,6 +34,7 @@
     ieum:    { name: '탐사 대원 이음',   emoji: '🧭' },
     townsman:{ name: '남정성 사람',      emoji: '🏮' },
     ashen:   { name: '잿빛 사자',        emoji: '🌫️' },
+    gwijang: { name: '암굴 귀장',        emoji: '👹' },
     yakson:  { name: '의원 약손',        emoji: '⚕️' }
   };
 
@@ -140,6 +144,52 @@
       ['mentor', 'joy', '셋째 자리에 올랐다. 이제 네 손은 이름 없는 채로도 이 땅에서 가장 빠르다.'],
       ['mentor', 'worry', '잿빛 사자가 옛 도읍 낙양으로 갔다는 소문이다. 도포를 벗게 될 것이다 — 가서 확인하여라.'],
       ['me', 'fire', '다녀오겠습니다. 이름을 찾는 길이 그쪽에 있습니다.']
+    ] },
+    luoyang2: { title: '제13장 · 옛 도읍의 잿더미', lines: [
+      ['ashen', 'anger', '…도포가 걸리적거리는군. 어차피 이 땅에서 오래 못 입을 옷이었다.'],
+      ['me', 'shock', '당신이 폐도 흉장이었습니까! 무너진 궁궐 한복판에서 전철 소리가 났던 까닭이군요.'],
+      ['ashen', 'calm', '병기를 대 준 것은 나요. 문이 열려 있는 한 어느 시대 물건이든 흘러오지. 잿더미 위 기계 갑주는 덤이었소.'],
+      ['me', 'fire', '그럼 문 앞에서 다시 만납시다. 문을 닫으려는 사람이 여기 있으니까요.']
+    ] },
+    depth2: { title: '제14장 · 검각 깊이', lines: [
+      ['ieum', 'calm', '여기부터는 빛이 안 닿습니다. 제 탐사 등을 앞세울게요.'],
+      ['hankeot', 'joy', '조명은 제가 맡을게요! 암굴 석벽에 이 땅 것이 아닌 색이 번져 있어요. 사진 한 장만!'],
+      ['me', 'calm', '석벽이 점점 따뜻해집니다. 문이 가까운가 봅니다.'],
+      ['ieum', 'worry', '문 앞엔 귀장이 서 있을 거예요. 전쟁이 끝나지 않게 문을 연 자입니다.']
+    ] },
+    gate1: { title: '제15장 · 난세의 문', lines: [
+      ['gwijang', 'anger', '전쟁이 끝나면 문도 닫히지… 그러니 끝나지 않게 했다. 옛 갑옷 속에 든 것은 사람이 아니다.'],
+      ['me', 'anger', '그 때문에 수많은 시대가 이 땅에 새어 들었습니다. 이제 끝입니다.'],
+      ['gwijang', 'shock', '문이 흔들린다…! 문 둘레의 전선이 무너진다. 이제 문은 네가 정해라.']
+    ] },
+    gate2: { title: '제15장 · 난세의 문', lines: [
+      ['ieum', 'worry', '문이 흔들리며 빛 소용돌이가 일어요. 닫으면 새어 드는 시대도 멎지만 저는 제 시대로 돌아가야 해요.'],
+      ['ieum', 'calm', '지키면 당신이 문지기가 됩니다. 문은 열린 채, 새어 드는 것을 막는 쪽이에요.'],
+      ['me', 'fire', '이름 없는 제가, 이 문 앞에서 정합니다.']
+    ], choice: { id: 'gate', prompt: '난세의 문을 어떻게 할 것인가',
+      options: [{ key: 'close', label: '문을 닫는다' }, { key: 'keep', label: '문을 지킨다' }] } },
+    name1: { title: '제16장 · 이름', lines: [
+      ['mentor+', 'calm', '이름 없이 여기까지 왔구나. 마지막 자리다. 한컷의 사진 속 너는 이 땅의 사람이 아니더구나.'],
+      ['mentor+', 'fire', '이음이 돌아갈 빛이 문 앞에서 기다린다. 서둘러 마지막 전직을 마쳐라.'],
+      ['mentor+', 'calm', '🥋 무예창에서 4차 전직을 하여라.']
+    ] },
+    name2: { title: '제16장 · 이름', lines: [
+      ['mentor', 'joy', '넷째 자리에 올랐다. 이제 이름을 붙일 때다. 남이 붙여 준 것 말고, 네가 붙이는 이름.'],
+      ['me', 'calm', '문 너머에 두고 온 이름은 잃었지만, 이 땅에서 걸어온 길이 이름이 되겠습니다.']
+    ], choice: { id: 'name', prompt: '스스로 붙일 칭호',
+      options: [
+        { key: 'found', label: '이름을 되찾은 자', title: '이름을 되찾은 자' },
+        { key: 'wander', label: '문 너머의 나그네', title: '문 너머의 나그네' },
+        { key: 'none', label: '이름 없이 걷는 자', title: '이름 없이 걷는 자' }] } },
+    name3_close: { title: '제16장 · 이름', lines: [
+      ['ieum', 'joy', '문이 닫혔으니 저는 제 시대로 돌아갑니다. 이 시대에 새어 든 것들은 남겠지만, 더는 늘지 않을 거예요.'],
+      ['hankeot', 'joy', '마지막 사진이에요. 이름 없던 분이 웃고 있네요.'],
+      ['me', 'fire', '이름은 얻었으니 남은 길은 제 발로 걷겠습니다. 고맙습니다, 두 분.']
+    ] },
+    name3_keep: { title: '제16장 · 이름', lines: [
+      ['ieum', 'worry', '문지기가 되신다니… 저는 이 시대 소식을 문 너머에 전하겠습니다. 문은 열린 채, 당신이 지켜 주세요.'],
+      ['hankeot', 'joy', '문 너머엔 다른 하늘이 있대요. 다음에 오면 사진 한 장만 부탁해요!'],
+      ['me', 'fire', '이름은 얻었습니다. 문 너머 층이 열리는 날까지 이 자리를 지키겠습니다.']
     ] },
     cave2: { title: '제8장 · 한중 굴혈', lines: [
       ['mentor', 'calm', '이름 없는 채로 둘째 자리에 올랐구나. 이름이 없으니 남의 시대 기술도 그대로 배우는군.'],
@@ -291,8 +341,62 @@
         { t: 'job', tier: 3 },
         { t: 'talk', scene: 'job32' }
       ],
-      reward: { exp: 40000, gold: 30000, title: 'job' } }
+      reward: { exp: 40000, gold: 30000, title: 'job' } },
+
+    { id: 'p4_luoyang', no: 13, title: '옛 도읍의 잿더미', stage: '낙양 옛터', need: 45, after: 'p3_job',
+      blurb: '잿빛 사자가 도포를 벗는다 — 옛 도읍을 쥔 폐도 흉장이다.',
+      mix: { past: '무너진 궁궐', now: '잿더미 속 전철', future: '흉장의 기계 갑주' },
+      legacy: { level: 70, tier: 4 },
+      steps: [
+        { t: 'stage', stage: 'ruin' },
+        { t: 'mission', quest: 'q_ruin' },
+        { t: 'mission', quest: 'q_ruin_boss' },
+        { t: 'talk', scene: 'luoyang2' }
+      ],
+      reward: { exp: 40000, gold: 30000, potion: 20 } },
+
+    { id: 'p4_depth', no: 14, title: '검각 깊이', stage: '검각 암굴', need: 70, after: 'p4_luoyang',
+      blurb: '빛이 닿지 않는 깊이. 이음과 한컷이 문 앞까지 길을 비춘다.',
+      mix: { past: '암굴 석벽', now: '한컷의 조명', future: '이음의 탐사 등' },
+      legacy: { level: 70, tier: 4 },
+      steps: [
+        { t: 'stage', stage: 'deepcave' },
+        { t: 'mission', quest: 'q_deep' },
+        { t: 'talk', scene: 'depth2' }
+      ],
+      reward: { exp: 70000, gold: 50000, scroll: 'def60' } },
+
+    { id: 'p4_gate', no: 15, title: '난세의 문', stage: '검각 암굴 끝', need: 70, after: 'p4_depth',
+      blurb: '암굴 귀장 — 전쟁이 끝나지 않게 문을 연 자. 쓰러뜨리면 문이 흔들린다. 닫을지 지킬지 정한다.',
+      mix: { past: '귀장의 옛 갑옷', now: '문 둘레 전선', future: '문의 빛 소용돌이' },
+      legacy: { level: 70, tier: 4 },
+      steps: [
+        { t: 'mission', quest: 'q_deep_boss' },
+        { t: 'talk', scene: 'gate1' },
+        { t: 'talk', scene: 'gate2' }
+      ],
+      reward: { exp: 120000, gold: 100000, scroll: 'hp10' } },
+
+    { id: 'p4_name', no: 16, title: '이름', stage: '허도', need: 70, after: 'p4_gate',
+      blurb: '넷째 스승이 마지막 전직을 준다. 떠돌이는 스스로 칭호를 고른다.',
+      mix: { past: '스승', now: '한컷의 마지막 사진', future: '이음이 돌아가는 빛' },
+      legacy: { level: 70, tier: 4 },
+      steps: [
+        { t: 'talk', scene: 'name1', at: 'heodo' },
+        { t: 'job', tier: 4 },
+        { t: 'talk', scene: 'name2' },
+        { t: 'talk', scene: 'name3', by: 'gate' }
+      ],
+      reward: { exp: 200000, gold: 150000, title: 'job' } }
   ];
+
+  /** 장면에 달린 고르기를 id 로 찾는다 */
+  function choiceOf(id) {
+    for (var k in SCENES) {
+      if (Object.prototype.hasOwnProperty.call(SCENES, k) && SCENES[k].choice && SCENES[k].choice.id === id) { return SCENES[k].choice; }
+    }
+    return null;
+  }
 
   function chapter(id) {
     for (var i = 0; i < CHAPTERS.length; i++) { if (CHAPTERS[i].id === id) { return CHAPTERS[i]; } }
@@ -300,5 +404,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.scenarioData = { CAST: CAST, SCENES: SCENES, CHAPTERS: CHAPTERS, chapter: chapter };
+  global.DG.scenarioData = { CAST: CAST, SCENES: SCENES, CHAPTERS: CHAPTERS, chapter: chapter, choiceOf: choiceOf };
 })(window);

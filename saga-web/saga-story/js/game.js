@@ -121,6 +121,10 @@
       if (ST && ST.isOpen()) {
         if (e.key === ' ' || e.key === 'Enter') { ST.next(); }
         else if (e.key === 'Escape') { ST.skip(); }
+        else if (e.key === '1' || e.key === '2' || e.key === '3') {   // 고르기 장면 — 숫자로도 고른다
+          var cc = ST.current(), oo = cc && cc.pick && cc.choice.options[Number(e.key) - 1];
+          if (oo) { ST.pick(oo.key); }
+        }
         e.preventDefault();
         return;
       }

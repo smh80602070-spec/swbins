@@ -3358,8 +3358,18 @@ window.DG_NO_TUNE = true;
         c.steps.forEach(function (st) {
           if (st.t === 'stage' && !SD.STAGES.some(function (x) { return x.key === st.stage; })) { bad.push(c.id + ' 사냥터 ' + st.stage); }
           if (st.t === 'talk') {
-            used[st.scene] = 1;
-            if (!D.SCENES[st.scene]) { bad.push(c.id + ' 장면 ' + st.scene); }
+            if (st.by) {
+              var ch = D.choiceOf(st.by);
+              if (!ch) { bad.push(c.id + ' 고르기 ' + st.by); } else {
+                ch.options.forEach(function (o) {
+                  used[st.scene + '_' + o.key] = 1;
+                  if (!D.SCENES[st.scene + '_' + o.key]) { bad.push(c.id + ' 갈래 장면 ' + st.scene + '_' + o.key); }
+                });
+              }
+            } else {
+              used[st.scene] = 1;
+              if (!D.SCENES[st.scene]) { bad.push(c.id + ' 장면 ' + st.scene); }
+            }
             if (st.at && !SD.STAGES.some(function (x) { return x.key === st.at; })) { bad.push(c.id + ' at ' + st.at); }
           }
           if (st.t === 'mission' && !DG.questData.find(st.quest)) { bad.push(c.id + ' 사명 ' + st.quest); }
@@ -3371,6 +3381,8 @@ window.DG_NO_TUNE = true;
       });
       Object.keys(D.SCENES).forEach(function (k) {
         if (!used[k]) { bad.push('안 쓰는 장면 ' + k); }
+        var cz = D.SCENES[k].choice;
+        if (cz && (!cz.id || !cz.options || cz.options.length < 2 || cz.options.some(function (o) { return !o.key || !o.label; }))) { bad.push(k + ' 고르기 모양'); }
         D.SCENES[k].lines.forEach(function (ln) {
           if (ln[0] !== 'me' && ln[0] !== 'mentor' && ln[0] !== 'mentor+' && !D.CAST[ln[0]] && !SD.NPC_TALK[ln[0]]) { bad.push(k + ' 인물 ' + ln[0]); }
           if (!SD.EMOTES[ln[1]]) { bad.push(k + ' 감정 ' + ln[1]); }
@@ -3473,7 +3485,7 @@ window.DG_NO_TUNE = true;
         return '네 장 차례로 끝 · 자동 중엔 미룸 · 레벨 모자라면 사명 안 받음 · 스승 이름 · 칭호 ' + titles[0] + ' · 옛 세이브 건너뜀';
       } finally {
         window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;
-        if (ST.isOpen()) { ST.skip(); }
+        if (ST.isOpen()) { ST.abort(); }
         if (S.active()) { S.leave(); }
         A.setOn(keep.auto);
         C.save.player = JSON.parse(keep.p); C.save.quests = JSON.parse(keep.q); C.save.track = keep.tr; C.save.job = keep.job;
@@ -3559,7 +3571,7 @@ window.DG_NO_TUNE = true;
         return '네 장 차례로 끝 · 대장 힌트 · Lv.25 잠금 · 2차 전직 무예 조건 힌트 · 둘째 스승 이름 · 칭호 ' + titles[0] + ' · 옛 세이브 건너뜀';
       } finally {
         window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;
-        if (ST.isOpen()) { ST.skip(); }
+        if (ST.isOpen()) { ST.abort(); }
         if (S.active()) { S.leave(); }
         A.setOn(keep.auto);
         C.save.player = JSON.parse(keep.p); C.save.quests = JSON.parse(keep.q); C.save.track = keep.tr; C.save.job = keep.job;
@@ -3636,21 +3648,118 @@ window.DG_NO_TUNE = true;
         say();
         var titles = SC.titles();
         if (!SC.state().done.p3_job || titles.length !== 1) { bad.push('제12장 끝·칭호 ' + JSON.stringify(titles)); }
-        if (SC.current() !== null || SC.hint() !== null) { bad.push('지금 있는 이야기 끝인데 힌트가 남음'); }
+        if (!SC.current() || SC.current().id !== 'p4_luoyang') { bad.push('3부 뒤 다음 장 ' + (SC.current() && SC.current().id)); }
 
         SC.reset(); C.save.job = jk; C.save.player.level = 46;
-        if (SC.current() !== null) { bad.push('옛 세이브 3차 전직 건너뜀 ' + (SC.current() && SC.current().id)); }
+        if (!SC.current() || SC.current().id !== 'p4_luoyang') { bad.push('옛 세이브 3차 전직 건너뜀 ' + (SC.current() && SC.current().id)); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '네 장 차례로 끝 · 비경 안 깨면 안 넘어감 · 기억 조각 +3 · Lv.45 잠금 · 셋째 스승 이름 · 칭호 ' + titles[0] + ' · 옛 세이브 건너뜀';
       } finally {
         window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;
-        if (ST.isOpen()) { ST.skip(); }
+        if (ST.isOpen()) { ST.abort(); }
         if (S.active()) { S.leave(); }
         A.setOn(keep.auto);
         C.save.player = JSON.parse(keep.p); C.save.quests = JSON.parse(keep.q); C.save.track = keep.tr; C.save.job = keep.job;
         C.save.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; S.state().potions = keep.pot;
         C.save.scrolls = JSON.parse(keep.scr); C.save.skills = JSON.parse(keep.skills); S.state().story = JSON.parse(keep.story);
         C.save.riftStat = JSON.parse(keep.rs) || undefined;
+        if (wasKey) { S.enter(wasKey); }
+      }
+    });
+
+    t('시나리오 4부 — 낙양·검각 암굴·난세의 문 고르기·이름으로 열여섯 장이 끝난다', function () {
+      var SC = DG.scenario, ST = DG.story, Q = DG.quest, J = DG.job, A = DG.auto, JD = DG.jobData;
+      var keep = { p: JSON.stringify(C.save.player), q: JSON.stringify(C.save.quests || {}), tr: C.save.track, job: C.save.job,
+        sc: C.save.scenario ? JSON.stringify(C.save.scenario) : null, pot: S.state().potions, scr: JSON.stringify(C.save.scrolls || {}),
+        skills: JSON.stringify(C.save.skills || {}), story: JSON.stringify(S.state().story || {}), auto: A.active() };
+      var wasKey = S.active() ? S.raw().stage.key : null;
+      var bad = [];
+      function say() { var k = 0; while (ST.isOpen() && k++ < 20) { ST.next(); } }
+      function cur() { return ST.isOpen() ? ST.current().key : null; }
+      function fill(key) { var r = Q.state()[key] || (Q.state()[key] = { taken: 0, n: 0, done: 0 }); r.done = 1; r.taken = 0; C.emit('changed'); }
+      function boxHtml() { var b = document.getElementById('storybox'); return b ? b.innerHTML : ''; }
+      window.DG_NO_STORY = false; window.DG_NO_SCENARIO = false;
+      try {
+        if (S.active()) { S.leave(); }
+        A.setOn(false);
+        C.save.quests = {}; C.save.track = null; C.save.job = 'marshal'; C.save.player.level = 45;
+        SC.reset(); SC.init();
+        var h = SC.hint();
+        if (!(h && h.ch.id === 'p4_luoyang' && h.text.indexOf('낙양') >= 0)) { bad.push('4부 첫 힌트 ' + (h && h.text)); }
+
+        S.enter('ruin'); say();   // 첫 발 장면(낙양)은 그대로 뜬다
+        fill('q_ruin');
+        if (SC.hint().text.indexOf('Lv.50') < 0) { bad.push('흉장 사명 힌트 ' + SC.hint().text); }
+        C.save.player.level = 50; C.emit('changed');
+        fill('q_ruin_boss');
+        if (cur() !== 'scn:luoyang2') { bad.push('제13장 끝 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.p4_luoyang) { bad.push('제13장 끝'); }
+
+        C.save.player.level = 70; S.leave(); C.emit('changed'); S.enter('deepcave'); say();
+        fill('q_deep');
+        if (cur() !== 'scn:depth2') { bad.push('제14장 끝 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.p4_depth) { bad.push('제14장 끝'); }
+
+        if (SC.hint().text.indexOf('Lv.75') < 0) { bad.push('귀장 사명 힌트 ' + SC.hint().text); }
+        C.save.player.level = 75; C.emit('changed');
+        fill('q_deep_boss');
+        if (cur() !== 'scn:gate1') { bad.push('제15장 첫 장면 ' + cur()); }
+        say();
+        if (cur() !== 'scn:gate2') { bad.push('제15장 고르기 장면 ' + cur()); }
+        say();
+        var c = ST.current();
+        if (!(c && c.pick && boxHtml().indexOf('story-pick') >= 0 && boxHtml().indexOf('문을 닫는다') >= 0)) { bad.push('고르기 단추 안 뜸'); }
+        ST.next(); ST.skip();
+        if (!ST.isOpen()) { bad.push('고르기 중 건너뛰기로 닫힘'); }
+        if (ST.pick('nope') || !ST.isOpen()) { bad.push('없는 답이 먹음'); }
+        if (SC.hint().text.indexOf('결말') < 0) { bad.push('결말 고르기 힌트 ' + SC.hint().text); }
+        var pk = ST.pick('keep');
+        if (!pk || SC.choice('gate') !== 'keep' || !SC.state().done.p4_gate) { bad.push('문을 지킨다 고르기 ' + SC.choice('gate')); }
+
+        S.leave(); S.enter('heodo');
+        if (cur() !== 'scn:name1') { bad.push('제16장 첫 장면 ' + cur()); }
+        say();
+        h = SC.hint();
+        if (h.text.indexOf('4차') < 0 || h.text.indexOf('무예') < 0) { bad.push('4차 전직 힌트 ' + h.text); }
+        var low = JD.SKILLS.filter(function (x) { return x.job === 'marshal'; })[0];
+        C.save.skills = C.save.skills || {}; C.save.skills[low.key] = 10;
+        if (!J.join('warlord') || cur() !== 'scn:name2') { bad.push('4차 전직 뒤 장면 ' + cur()); }
+        say();
+        if (SC.hint().text.indexOf('결말') < 0) { bad.push('칭호 고르기 힌트 ' + SC.hint().text); }
+        if (!ST.pick('wander') || SC.choice('name') !== 'wander') { bad.push('칭호 고르기'); }
+        if (cur() !== 'scn:name3_keep') { bad.push('고른 결말 장면 ' + cur()); }
+        say();
+        var titles = SC.titles();
+        if (!SC.state().done.p4_name || titles.indexOf('문 너머의 나그네') < 0 || titles.length !== 2) { bad.push('칭호 ' + JSON.stringify(titles)); }
+        if (SC.current() !== null || SC.hint() !== null) { bad.push('이야기 끝인데 힌트가 남음'); }
+
+        // 다른 갈래 — "문을 닫는다" 를 고른 세이브는 닫는 결말 장면
+        SC.reset(); C.save.job = 'marshal'; C.save.player.level = 60;
+        SC.state().done = { p1_sinya: 1, p1_heodo: 1, p1_field: 1, p1_job: 1, p2_port: 1, p2_forest: 1, p2_namjeong: 1, p2_cave: 1,
+          p3_gisan: 1, p3_gorge: 1, p3_labyrinth: 1, p3_job: 1, p4_luoyang: 1, p4_depth: 1, p4_gate: 1 };
+        SC.state().choices = { gate: 'close' };
+        C.save.player.level = 70; C.save.job = 'warlord'; C.emit('changed');
+        say();   // 스승 장면 → 전직은 이미 됨 → 칭호 고르기 앞까지
+        if (cur() !== 'scn:name2') { bad.push('닫는 갈래 칭호 장면 ' + cur()); }
+        ST.pick('found');
+        if (cur() !== 'scn:name3_close') { bad.push('닫는 결말 장면 ' + cur()); }
+        say();
+        if (SC.state().titles.indexOf('이름을 되찾은 자') < 0) { bad.push('닫는 갈래 칭호'); }
+
+        SC.reset(); C.save.job = 'marshal'; C.save.player.level = 70;
+        if (SC.current() !== null) { bad.push('옛 세이브 Lv70 건너뜀 ' + (SC.current() && SC.current().id)); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '열여섯 장 끝 · 고르기 단추(건너뛰기로 안 닫힘·없는 답 거절) · 문 지킨다/닫는다에 따라 결말 장면 · 칭호 고르기 · 옛 세이브 건너뜀';
+      } finally {
+        window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;
+        if (ST.isOpen()) { ST.abort(); }
+        if (S.active()) { S.leave(); }
+        A.setOn(keep.auto);
+        C.save.player = JSON.parse(keep.p); C.save.quests = JSON.parse(keep.q); C.save.track = keep.tr; C.save.job = keep.job;
+        C.save.scenario = keep.sc ? JSON.parse(keep.sc) : undefined; S.state().potions = keep.pot;
+        C.save.scrolls = JSON.parse(keep.scr); C.save.skills = JSON.parse(keep.skills); S.state().story = JSON.parse(keep.story);
         if (wasKey) { S.enter(wasKey); }
       }
     });

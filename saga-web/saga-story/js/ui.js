@@ -974,7 +974,8 @@
         var ST = global.DG.story;
         if (!ST) { return; }
         var b = e.target.closest('[data-act]');
-        if (b && b.getAttribute('data-act') === 'story-skip') { ST.skip(); } else { ST.next(); }
+        if (b && b.getAttribute('data-act') === 'story-pick') { ST.pick(b.getAttribute('data-k')); }
+        else if (b && b.getAttribute('data-act') === 'story-skip') { ST.skip(); } else { ST.next(); }
       });
     }
     return el;
@@ -1008,8 +1009,13 @@
           (emo.mark ? '<i class="story-mark" title="' + esc(emo.name) + '">' + emo.mark + '</i>' : '') +
         '</div>' +
         '<div class="story-say"><b>' + esc(name) + '</b><p>' + esc(ln[2]) + '</p>' +
-          '<small class="muted">' + (c.i + 1) + ' / ' + c.lines.length + ' · 누르면 다음</small></div>' +
-        '<button class="btn tiny ghost" data-act="story-skip">건너뛰기</button>' +
+          (c.pick
+            ? '<div class="story-pick"><small class="muted">' + esc(c.choice.prompt || '고른다') + '</small>' +
+              c.choice.options.map(function (o) {
+                return '<button class="btn primary wide" data-act="story-pick" data-k="' + esc(o.key) + '">' + esc(o.label) + '</button>';
+              }).join('') + '</div>'
+            : '<small class="muted">' + (c.i + 1) + ' / ' + c.lines.length + ' · 누르면 다음</small>') + '</div>' +
+        (c.pick ? '' : '<button class="btn tiny ghost" data-act="story-skip">건너뛰기</button>') +
       '</div>';
     el.classList.add('show');
   }

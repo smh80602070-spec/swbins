@@ -11,7 +11,7 @@
  *   job     전직(`job.js`) — 그 차수 이상이면 넘어간다
  *
  * 세이브: `core.save.scenario = { v, init, done:{장id:1}, ch, step, said:{장면id:1}, titles:[] }`
- *   없으면 빈 것으로 본다(마이그레이션 불필요). **옛 세이브**는 장의 `legacy`(레벨 또는 전직 차수)를
+ *   choices:{고르기id:고른key}(장면의 `choice`) — 없으면 빈 것으로 본다(마이그레이션 불필요). **옛 세이브**는 장의 `legacy`(레벨 또는 전직 차수)를
  *   넘었으면 그 장을 보상 없이 끝낸 것으로 본다 — 지나온 길을 다시 걷게 하지 않는다.
  * 끄는 법: `window.DG_NO_SCENARIO = true`(진단이 기본으로 켠다).
  * 손잡이: 장면은 `DG_NO_STORY` 이거나 자동 순행 중이면 안 뜨고 미뤄진다(다음 'changed' 에 다시 본다).
@@ -33,6 +33,7 @@
     if (!sc.done || typeof sc.done !== 'object') { sc.done = {}; }
     if (!sc.said || typeof sc.said !== 'object') { sc.said = {}; }
     if (!Array.isArray(sc.titles)) { sc.titles = []; }
+    if (!sc.choices || typeof sc.choices !== 'object') { sc.choices = {}; }
     if (typeof sc.step !== 'number') { sc.step = 0; }
     if (!sc.init) {
       sc.init = 1;
@@ -76,10 +77,18 @@
     return r && r.stage ? r.stage.key : null;
   }
 
+  /** 장면 id — `by` 가 있으면 앞에서 고른 것에 따라 `scene_고른key` (안 골랐으면 첫 갈래) */
+  function sceneOf(step) {
+    if (!step.by) { return step.scene; }
+    var pick = raw().choices[step.by];
+    if (!pick) { var c = CD().choiceOf(step.by); pick = c ? c.options[0].key : ''; }
+    return step.scene + '_' + pick;
+  }
+
   function stepDone(step) {
     var Q = global.DG.quest;
     if (step.t === 'stage') { return runStage() === step.stage; }
-    if (step.t === 'talk') { return !!raw().said[step.scene]; }
+    if (step.t === 'talk') { return !!raw().said[sceneOf(step)]; }
     if (step.t === 'mission') { return !!Q && Q.doneCount(step.quest) > 0; }
     if (step.t === 'job') { return jobTier() >= step.tier; }
     if (step.t === 'gate') { return !!(global.DG.side.state().gateWeek || {})[step.stage]; }
@@ -100,14 +109,23 @@
       d = global.DG.questData.find(step.quest);
       if (d && !Q.taken(step.quest) && core.save.player.level >= d.need) { Q.take(step.quest); }
     } else if (step.t === 'talk' && ST && !ST.isOpen() && scenePlayable(step)) {
-      var sc = CD().SCENES[step.scene];
+      var sid = sceneOf(step), sc = CD().SCENES[sid];
       if (step.at && ST.markSeen) { ST.markSeen(step.at); }
-      if (sc && ST.play('scn:' + step.scene, sc.title, sc.lines, function () {
+      if (sc && ST.play('scn:' + sid, sc.title, sc.lines, function (picked) {
         sceneOpen = false;
-        raw().said[step.scene] = 1;
+        var s = raw();
+        s.said[sid] = 1;
+        if (sc.choice && picked) {
+          s.choices[sc.choice.id] = picked;
+          var opt = sc.choice.options.filter(function (o) { return o.key === picked; })[0];
+          if (opt && opt.title && s.titles.indexOf(opt.title) < 0) {
+            s.titles.push(opt.title);
+            core.log('🏷️ 칭호 「' + opt.title + '」를 골랐다', 'good');
+          }
+        }
         core.persist();
         check();
-      })) { sceneOpen = true; }
+      }, sc.choice)) { sceneOpen = true; }
     }
   }
 
@@ -178,6 +196,7 @@
     if (!step) { return { ch: ch, title: pre, text: '마무리', locked: false }; }
     var text = '';
     if (step.t === 'stage') { text = '🚪 ' + stageName(step.stage) + ' 으로 간다'; }
+    else if (step.t === 'talk' && CD().SCENES[sceneOf(step)] && CD().SCENES[sceneOf(step)].choice) { text = '🚪 결말에서 길을 정한다'; }
     else if (step.t === 'talk') { text = step.at ? '💬 ' + stageName(step.at) + ' 에서 말을 나눈다' : '💬 이야기를 듣는다'; }
     else if (step.t === 'job') {
       text = '🥋 무예창에서 ' + step.tier + '차 전직을 한다';
@@ -242,7 +261,7 @@
   global.DG = global.DG || {};
   global.DG.scenario = {
     init: init, check: check, current: current, hint: hint, list: list, owns: owns, on: on,
-    state: raw, titles: function () { return raw().titles.slice(); },
+    state: raw, choice: function (id) { return raw().choices[id] || null; }, titles: function () { return raw().titles.slice(); },
     /** 진단·어드민용 — 진행을 지운다(옛 세이브 판정도 다시 한다) */
     reset: function () { core.save.scenario = undefined; sceneOpen = false; }
   };

@@ -1196,6 +1196,7 @@ body.cine::after { bottom: 0; }
 .story-emoji { display: block; width: 72px; height: 72px; line-height: 72px; text-align: center; font-size: 44px; }
 .story-mark { position: absolute; top: -8px; right: -8px; font-style: normal; font-size: 22px; }
 .story-say { flex: 1; min-width: 0; }
+.story-pick { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
 .story-say b { display: block; font-size: 13px; margin-bottom: 4px; color: #f0e2c8; }
 .story-say p { margin: 0 0 4px; font-size: 14px; line-height: 1.55; color: var(--ink); }
 .story-card .btn { flex: none; align-self: flex-start; }
