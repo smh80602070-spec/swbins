@@ -9,6 +9,8 @@
  *   chain    save.quest.chain[key].done  지역 사연 사슬 평정(quest.js)
  *   landmark dungeon.fixedState()[명소 층].clears  명소 층 답파(dungeon.js)
  *   rescue   'dungeon:rescue' 이 단계가 시작된 뒤 n 번
+ *   region   save.quest.chain[key] 가 열림 — 큰 지도에서 그 지역에 처음 발을 들임
+ *   (장면의 `choice` 는 마지막 줄 뒤 고르기 단추 — 답은 save.scenario.choices)
  *
  * 세이브: `core.save.scenario = { init, done:{장id:1}, ch, step, said:{장면id:1}, cnt:{kill,rescue}, base }`
  *   없으면 빈 것으로 본다(마이그레이션 불필요). 옛 세이브는 장의 \`legacy.floor\` 이상 내려가 봤으면 그 장을 보상 없이 지나온 길로 본다.
@@ -32,6 +34,7 @@
     if (!sc.done || typeof sc.done !== 'object') { sc.done = {}; }
     if (!sc.said || typeof sc.said !== 'object') { sc.said = {}; }
     if (!sc.cnt || typeof sc.cnt !== 'object') { sc.cnt = { kill: 0, rescue: 0 }; }
+    if (!sc.choices || typeof sc.choices !== 'object') { sc.choices = {}; }
     if (typeof sc.step !== 'number') { sc.step = 0; }
     if (!sc.init) {
       sc.init = 1;
@@ -63,9 +66,18 @@
     return null;
   }
 
+  /** 장면 id — `by` 가 있으면 앞에서 고른 답에 따라 `scene_답key`(안 골랐으면 첫 갈래) */
+  function sceneOf(step) {
+    if (!step.by) { return step.scene; }
+    var pick = raw().choices[step.by];
+    if (!pick) { var c = CD().choiceOf(step.by); pick = c ? c.options[0].key : ''; }
+    return step.scene + '_' + pick;
+  }
+
   function stepDone(step) {
     var s = raw();
-    if (step.t === 'talk') { return !!s.said[step.scene]; }
+    if (step.t === 'talk') { return !!s.said[sceneOf(step)]; }
+    if (step.t === 'region') { var qq = core.save.quest; return !!(qq && qq.chain && qq.chain[step.key]); }
     if (step.t === 'kill') { return typeof s.base === 'number' && s.cnt.kill - s.base >= step.n; }
     if (step.t === 'rescue') { return typeof s.base === 'number' && s.cnt.rescue - s.base >= step.n; }
     if (step.t === 'floor') { return bestFloor() >= step.n; }
@@ -87,12 +99,23 @@
     var s = raw();
     if ((step.t === 'kill' || step.t === 'rescue') && typeof s.base !== 'number') { s.base = s.cnt[step.t]; core.persist(); }
     if (step.t === 'talk' && !cur && inTown()) {
-      var sc = CD().SCENES[step.scene];
-      if (sc) { play(step.scene, sc.title, sc.lines, function () { raw().said[step.scene] = 1; core.persist(); check(); }); }
+      var sid = sceneOf(step), sc = CD().SCENES[sid];
+      if (sc) {
+        play(sid, sc.title, sc.lines, function (picked) {
+          var s2 = raw();
+          s2.said[sid] = 1;
+          if (sc.choice && picked) {
+            s2.choices[sc.choice.id] = picked;
+            var opt = sc.choice.options.filter(function (o) { return o.key === picked; })[0];
+            if (opt && opt.reward) { grant(opt.reward); core.log('📖 ' + opt.label + ' — 골랐다', 'good'); }
+          }
+          core.persist(); check();
+        }, sc.choice);
+      }
     }
   }
 
-  function grant(rw) {
+  function grant(rw) {   // 아래 finish·고르기 보상이 함께 쓴다
     var bits = [];
     if (rw.exp) { core.gainExp(rw.exp); bits.push('경험치 ' + core.fmt(rw.exp)); }
     if (rw.gold) { core.save.player.gold += rw.gold; bits.push('금 ' + core.fmt(rw.gold)); }
@@ -140,6 +163,10 @@
     if (!step) { return { ch: ch, title: pre, text: '마무리' }; }
     var text = '';
     if (step.t === 'talk') { text = inTown() ? '💬 이야기를 듣는다' : '💬 마을로 돌아가면 이야기가 이어진다'; }
+    else if (step.t === 'region') {
+      var W = global.DG.worldMap, rg = W && W.byKey ? W.byKey(step.key) : null;
+      text = '🗺️ 큰 지도에서 「' + (rg ? rg.name : step.key) + '」 에 발을 들인다';
+    }
     else if (step.t === 'kill') { text = '⚔️ 몬스터 ' + Math.min(step.n, Math.max(0, s.cnt.kill - (typeof s.base === 'number' ? s.base : s.cnt.kill))) + '/' + step.n; }
     else if (step.t === 'rescue') { text = '🙏 갇힌 인물을 구한다'; }
     else if (step.t === 'floor') { text = '🕳️ 굴혈 ' + step.n + '층에 닿는다 (최고 ' + bestFloor() + ')'; }
@@ -181,7 +208,8 @@
       document.body.appendChild(e);
       e.addEventListener('click', function (ev) {
         var b = ev.target && ev.target.closest ? ev.target.closest('[data-scn]') : null;
-        if (b && b.getAttribute('data-scn') === 'skip') { skip(); } else { next(); }
+        var act = b && b.getAttribute('data-scn');
+        if (act === 'pick') { pick(b.getAttribute('data-k')); } else if (act === 'skip') { skip(); } else { next(); }
       });
     }
     return e;
@@ -197,26 +225,39 @@
     e.innerHTML = '<div class="scn-title">' + esc2(cur.title) + '</div>' +
       '<div class="scn-card' + (who === 'me' ? ' me' : '') + '"><div class="scn-face">' + npc.emoji + '</div>' +
       '<div class="scn-say"><b>' + esc2(npc.name) + '</b><p>' + esc2(ln[1]) + '</p>' +
-      '<small class="muted">' + (cur.i + 1) + ' / ' + cur.lines.length + ' · 누르면 다음</small></div>' +
-      '<button class="btn tiny ghost" data-scn="skip">건너뛰기</button></div>';
+      (cur.pick
+        ? '<div class="scn-pick"><small class="muted">' + esc2(cur.choice.prompt || '고른다') + '</small>' +
+          cur.choice.options.map(function (o) { return '<button class="btn primary wide" data-scn="pick" data-k="' + esc2(o.key) + '">' + esc2(o.label) + '</button>'; }).join('') + '</div>'
+        : '<small class="muted">' + (cur.i + 1) + ' / ' + cur.lines.length + ' · 누르면 다음</small>') + '</div>' +
+      (cur.pick ? '' : '<button class="btn tiny ghost" data-scn="skip">건너뛰기</button>') + '</div>';
     e.classList.add('show');
     document.body.classList.add('scn-open');
   }
 
-  function play(id, title, lines, done) {
+  function play(id, title, lines, done, choice) {
     if (cur || !lines || !lines.length || global.DG_NO_SCENE) { return false; }
-    cur = { id: id, title: title, lines: lines, i: 0, done: done };
+    cur = { id: id, title: title, lines: lines, i: 0, done: done, choice: choice || null, pick: false };
     paint();
     return true;
   }
 
-  function close() {
+  function close(picked) {
     if (!cur) { return; }
+    if (cur.choice && typeof picked !== 'string') { toChoice(); return; }   // 고르기 장면은 건너뛰어도 고르기 앞까지만
     var d = cur.done;
     cur = null; paint();
-    if (d) { d(); }
+    if (d) { d(picked); }
   }
-  function next() { if (!cur) { return; } if (cur.i < cur.lines.length - 1) { cur.i += 1; paint(); } else { close(); } }
+  function toChoice() { if (!cur || cur.pick) { return; } cur.i = cur.lines.length - 1; cur.pick = true; paint(); }
+  function pick(key) {
+    if (!cur || !cur.pick || !cur.choice || !cur.choice.options.some(function (o) { return o.key === key; })) { return false; }
+    close(key);
+    return true;
+  }
+  function next() {
+    if (!cur || cur.pick) { return; }
+    if (cur.i < cur.lines.length - 1) { cur.i += 1; paint(); } else if (cur.choice) { toChoice(); } else { close(); }
+  }
   function skip() { close(); }
 
   function init() {
@@ -229,6 +270,7 @@
         global.addEventListener('keydown', function (e) {       // 장면 동안 키는 장면이 먹는다(마을 조작으로 새지 않게)
           if (!cur) { return; }
           if (e.key === ' ' || e.key === 'Enter') { next(); } else if (e.key === 'Escape') { skip(); }
+          else if ((e.key === '1' || e.key === '2' || e.key === '3') && cur.pick && cur.choice.options[Number(e.key) - 1]) { pick(cur.choice.options[Number(e.key) - 1].key); }
           e.preventDefault(); e.stopPropagation();
         }, true);
       }
@@ -241,7 +283,7 @@
   global.DG.scenario = {
     init: init, check: check, current: current, hint: hint, list: list, cardHtml: cardHtml, on: on,
     state: raw, isOpen: function () { return !!cur; }, currentScene: function () { return cur; },
-    next: next, skip: skip, abort: function () { cur = null; paint(); },
+    next: next, skip: skip, pick: pick, choice: function (id) { return raw().choices[id] || null; }, abort: function () { cur = null; paint(); },
     reset: function () { core.save.scenario = undefined; cur = null; paint(); }
   };
 })(window);

@@ -160,6 +160,7 @@ a.icon-btn { display: flex; align-items: center; justify-content: center; text-d
 .scn-say { flex: 1; min-width: 0; }
 .scn-say b { display: block; font-size: 13px; margin-bottom: 4px; color: #f0e2c8; }
 .scn-say p { margin: 0 0 4px; font-size: 14px; line-height: 1.55; }
+.scn-pick { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
 .goal-row .gl { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; opacity: .9; }
 .goal-row .gp { flex: 0 0 auto; font-variant-numeric: tabular-nums; opacity: .7; }
 /* 숨김 단추(✕)는 오른쪽 위 모서리에 얹고, 숨기면 칩 하나만 남긴다 */

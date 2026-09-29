@@ -449,7 +449,7 @@
 | **9 고정 세계** | 5.12 고정 세계 지도·지역 아홉·끼임 수정 · 5.13 지역 몬스터·위험도·우두머리 · 5.14 지역 사연 사슬 · 5.15 명소 층(**넷 다 코드분 완료, 2026-09-24**) · 5.18 명소 주인 고유 수(**코드분 완료, 2026-09-24**) · 5.20 세 시대 사람·적(**코드분 완료, 2026-09-25**) · 다음 후보: 명소 층 전용 3D 소품(왕릉 석상·산채 깃발 등) | E G H | 세계 지도 진단 5·지역 진단 4·사연 진단 4·명소 진단 4(닫힘) |
 | **6 그래픽 통일** | §6.1 1~7 + §6.3 팔레트 스냅·건물 kitbash·타일 24 | G(시각) | 스타일 혼재 0, 폰 60fps(MEDIUM), 실기 스크린샷 확인 |
 | 11 탈것 | §15 mount.js — 말·학·용 | — | 코드분 완료 |
-| 10 시나리오 | `../../scenario/saga-dungeon.md` 5막 16장 — 새 `data-scenario.js`·`scenario.js`(save.scenario), 단계 kill·floor·chain·landmark·rescue 는 기존 사건만 듣고 talk 는 **마을에서만**(#scnbox) · 옛 세이브는 `legacy.floor` | A F | **1막 세 장 코드분 완료(2026-09-29, 실기 확인 대기)** · 다음 2막 a2_factory~(region·choice 단계 필요) |
+| 10 시나리오 | `../../scenario/saga-dungeon.md` 5막 16장 — 새 `data-scenario.js`·`scenario.js`(save.scenario), 단계 kill·floor·chain·landmark·rescue·region 은 기존 사건만 듣고 talk 는 **마을에서만**(#scnbox) · 옛 세이브는 `legacy.floor` | A F | **1·2막 여섯 장 코드분 완료(2026-09-29, 실기 확인 대기)** · 다음 3막 a3_riftgate~ |
 
 각 Phase 끝: `_test.html` 3회 동일, ADMIN n/n, `sw.js` 버전, HANDOFF 에 날짜 절 append, README "어디까지 왔나" 덮어쓰기, 이 PLAN 은 결정이 바뀐 자리만 수정.
 

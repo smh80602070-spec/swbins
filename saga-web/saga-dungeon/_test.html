@@ -232,8 +232,12 @@ window.requestAnimationFrame = function () { return 0; };
         if (!c.mix || !c.mix.past || !c.mix.now || !c.mix.future) { bad.push(c.id + ' 시대 섞기 빈 칸'); }
         if (!c.steps.length || c.no !== i + 1) { bad.push(c.id + ' 번호·단계'); }
         c.steps.forEach(function (st) {
-          if (['talk', 'kill', 'floor', 'chain', 'landmark', 'rescue'].indexOf(st.t) < 0) { bad.push(c.id + ' 단계 ' + st.t); }
-          if (st.t === 'talk') { used[st.scene] = 1; if (!D.SCENES[st.scene]) { bad.push(c.id + ' 장면 ' + st.scene); } }
+          if (['talk', 'kill', 'floor', 'chain', 'landmark', 'rescue', 'region'].indexOf(st.t) < 0) { bad.push(c.id + ' 단계 ' + st.t); }
+          if (st.t === 'region' && !DG.worldMap.byKey(st.key)) { bad.push(c.id + ' 지역 ' + st.key); }
+          if (st.t === 'talk' && st.by) {
+            var chz = D.choiceOf(st.by);
+            if (!chz) { bad.push(c.id + ' 고르기 ' + st.by); } else { chz.options.forEach(function (o) { used[st.scene + '_' + o.key] = 1; if (!D.SCENES[st.scene + '_' + o.key]) { bad.push(c.id + ' 갈래 장면 ' + o.key); } }); }
+          } else if (st.t === 'talk') { used[st.scene] = 1; if (!D.SCENES[st.scene]) { bad.push(c.id + ' 장면 ' + st.scene); } }
           if (st.t === 'chain' && !DG.questData.CHAINS[st.key]) { bad.push(c.id + ' 사슬 ' + st.key); }
           if (st.t === 'landmark' && !FX.some(function (f) { return f.key === st.key; })) { bad.push(c.id + ' 명소 ' + st.key); }
           if ((st.t === 'kill' || st.t === 'floor' || st.t === 'rescue') && !(st.n >= 1)) { bad.push(c.id + ' 수 ' + st.t); }
@@ -241,6 +245,8 @@ window.requestAnimationFrame = function () { return 0; };
       });
       Object.keys(D.SCENES).forEach(function (k) {
         if (!used[k]) { bad.push('안 쓰는 장면 ' + k); }
+        var cz = D.SCENES[k].choice;
+        if (cz && (!cz.id || !cz.options || cz.options.length < 2 || cz.options.some(function (o) { return !o.key || !o.label; }))) { bad.push(k + ' 고르기 모양'); }
         D.SCENES[k].lines.forEach(function (ln) {
           if (ln[0] !== 'me' && !D.CAST[ln[0]]) { bad.push(k + ' 인물 ' + ln[0]); }
           if (!ln[1]) { bad.push(k + ' 빈 말'); }
@@ -305,14 +311,73 @@ window.requestAnimationFrame = function () { return 0; };
         C.emit('dungeon:rescue', { floor: 5 });
         if (cur() !== 'tomb2') { bad.push('구출 뒤 장면 ' + cur()); }
         say();
-        if (!SC.state().done.a1_tomb || SC.current() !== null || SC.hint() !== null) { bad.push('제3장 끝 ' + JSON.stringify(SC.state().done)); }
+        if (!SC.state().done.a1_tomb || !SC.current() || SC.current().id !== 'a2_factory') { bad.push('제3장 끝 ' + JSON.stringify(SC.state().done)); }
         if (!/이야기/.test(SC.cardHtml() || '이야기')) { bad.push('카드'); }
 
         // 옛 세이브 — 이미 5층까지 가 본 세이브는 1막을 건너뛴다
         SC.reset(); C.save.dungeon.best = 5; C.save.player.gold = g0;
-        if (SC.current() !== null || C.save.player.gold !== g0) { bad.push('옛 세이브 건너뜀'); }
+        if (!SC.current() || SC.current().id !== 'a2_factory' || C.save.player.gold !== g0) { bad.push('옛 세이브 건너뜀'); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '마을 밖에선 안 뜸 · 사냥 열 마리 · 1층 · 사슬 · 명소·구출 · 세 장 끝 · 옛 세이브 건너뜀';
+      } finally {
+        window.DG_NO_SCENARIO = true;
+        SC.abort(); T.active = keep.act;
+        C.save.scenario = keep.sc ? JSON.parse(keep.sc) : undefined;
+        C.save.dungeon = JSON.parse(keep.d) || undefined; C.save.quest = JSON.parse(keep.q) || undefined; C.save.player = JSON.parse(keep.p);
+        var fx2 = DN.fixedState(); Object.keys(fx2).forEach(function (k) { delete fx2[k]; }); var fk = JSON.parse(keep.fs); Object.keys(fk).forEach(function (k) { fx2[k] = fk[k]; });
+      }
+    });
+
+    t('시나리오 2막 — 지역 발 들이기·사슬 둘·10층 성주 이름 고르기로 세 장이 끝난다', function () {
+      var SC = DG.scenario, T = DG.town, DN = DG.dungeon, bad = [];
+      var keep = { sc: C.save.scenario ? JSON.stringify(C.save.scenario) : null, d: JSON.stringify(C.save.dungeon || null),
+        q: JSON.stringify(C.save.quest || null), p: JSON.stringify(C.save.player), fs: JSON.stringify(DN.fixedState()), act: T.active };
+      function say() { var k = 0; while (SC.isOpen() && k++ < 30) { SC.next(); } }
+      function cur() { return SC.isOpen() ? SC.currentScene().id : null; }
+      window.DG_NO_SCENARIO = false;
+      try {
+        T.active = function () { return true; };
+        if (!C.save.dungeon) { C.save.dungeon = { best: 0, runs: 0, kills: 0, clears: 0, mode: 'normal' }; }
+        C.save.dungeon.best = 5;
+        if (!C.save.quest) { C.save.quest = { mainIdx: 0, mainHave: 0, region: {}, eventIdx: 0, eventHave: 0, random: null }; }
+        C.save.quest.chain = {};
+        var fx = DN.fixedState(); Object.keys(fx).forEach(function (k) { delete fx[k]; });
+        SC.reset(); SC.init();   // 최고 층 5 — 1막은 건너뛴 옛 세이브
+        var h = SC.hint();
+        if (!(h && h.ch.id === 'a2_factory' && h.text.indexOf('잿빛 폐도시') >= 0)) { bad.push('2막 첫 힌트 ' + (h && h.text)); }
+        C.save.quest.chain.neon = { step: 0, have: 0, done: false }; C.emit('changed');
+        if (cur() !== 'fac1') { bad.push('제4장 첫 장면 ' + cur()); }
+        say();
+        C.save.quest.chain.neon.done = true; C.emit('changed');
+        if (cur() !== 'fac2') { bad.push('제4장 끝 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.a2_factory) { bad.push('제4장 끝'); }
+        // 이어서 제5장 — 소금 개펄에 발 들이기부터
+        if (SC.hint().text.indexOf('소금 개펄') < 0) { bad.push('제5장 힌트 ' + SC.hint().text); }
+        C.save.quest.chain.saltmarsh = { step: 0, have: 0, done: false }; C.emit('changed');
+        if (cur() !== 'tide1') { bad.push('제5장 첫 장면 ' + cur()); }
+        say();
+        C.save.quest.chain.saltmarsh.done = true; C.emit('changed');
+        say();
+        if (!SC.state().done.a2_tideflat) { bad.push('제5장 끝'); }
+        // 제6장 — 10층에 닿으면 성주 장면, 고르기 단추
+        if (SC.hint().text.indexOf('10층') < 0) { bad.push('제6장 힌트 ' + SC.hint().text); }
+        C.save.dungeon.best = 10; C.emit('changed');
+        if (cur() !== 'fort1') { bad.push('제6장 첫 장면 ' + cur()); }
+        say();
+        var c = SC.currentScene(), box = document.getElementById('scnbox');
+        if (!(c && c.pick && box.innerHTML.indexOf('scn-pick') >= 0 && box.innerHTML.indexOf('이름을 봉인한다') >= 0)) { bad.push('고르기 단추 안 뜸'); }
+        SC.next(); SC.skip();
+        if (!SC.isOpen()) { bad.push('고르기 중 건너뛰기로 닫힘'); }
+        if (SC.pick('nope') || !SC.isOpen()) { bad.push('없는 답이 먹음'); }
+        var g0 = C.save.player.gold;
+        if (!SC.pick('seal') || SC.choice('fort') !== 'seal' || C.save.player.gold < g0 + 3000) { bad.push('봉인 고르기·보상 ' + SC.choice('fort')); }
+        DN.fixedState()[10] = { clears: 1, firstAt: 1 }; C.emit('changed');
+        if (cur() !== 'fort2_seal') { bad.push('고른 결말 장면 ' + cur()); }
+        say();
+        if (!SC.state().done.a2_watchtower || SC.current() !== null) { bad.push('제6장 끝'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '지역 발 들이기 → 사슬 둘 → 10층 → 고르기(건너뛰기로 안 닫힘·없는 답 거절) → 봉인 보상·결말 장면 → 2막 끝';
       } finally {
         window.DG_NO_SCENARIO = true;
         SC.abort(); T.active = keep.act;
