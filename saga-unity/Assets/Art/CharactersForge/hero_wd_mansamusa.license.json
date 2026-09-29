@@ -6,7 +6,7 @@
  "inputs": [
   "mpfb 2.0.17: base.obj · targets · rig.game_engine",
   "ual1_standard: Unreal Engine/AL_Standard.fbx",
-  "makehuman_system_assets: middleage_african_male/middleage_african_male.mhmat",
+  "makehuman_system_assets: young_african_male/young_african_male.mhmat",
   "makehuman_system_assets: high-poly/high-poly.mhclo",
   "makehuman_system_assets: eyebrow008/eyebrow008.mhclo",
   "makehuman_system_assets: eyelashes03/eyelashes03.mhclo",
