@@ -26,15 +26,17 @@ namespace Saga.Go.Data
         /// <summary>109-14-27b 고원 들판 무리 다섯(웹 절차 무리 대신 고정 자리 — 명소 큰 46m·작은 24m·곰왕 20m 밖) · 가운데에서 m.</summary>
         public struct WildGroup { public string Id; public Vector2 Off; public FoeSpec[] Foes; }
         public struct FoeSpec { public FieldEnemy.Kind Kind; public GoElement El; }
-        private static FoeSpec G(GoElement e) => new FoeSpec { Kind = FieldEnemy.Kind.DrownedGhost, El = e };
-        private static FoeSpec W(GoElement e) => new FoeSpec { Kind = FieldEnemy.Kind.StormWraith, El = e };
+        // 14-1b — 웹 그대로 제 괴물: 눈여우(빙)·바위곰(암)·회오리매(풍). 원소는 그 괴물이 가진다.
+        private static FoeSpec Fx() => new FoeSpec { Kind = FieldEnemy.Kind.IceFox, El = GoElement.Cryo };
+        private static FoeSpec Bear() => new FoeSpec { Kind = FieldEnemy.Kind.RockBear, El = GoElement.Geo };
+        private static FoeSpec Hawk() => new FoeSpec { Kind = FieldEnemy.Kind.WindHawk, El = GoElement.Anemo };
         public static readonly WildGroup[] Wild =
         {
-            new WildGroup { Id = "frost_w", Off = new Vector2(-80f, 10f), Foes = new[] { G(GoElement.Cryo), G(GoElement.Cryo), G(GoElement.Geo) } },
-            new WildGroup { Id = "frost_e", Off = new Vector2(70f, 60f), Foes = new[] { W(GoElement.Anemo), W(GoElement.Anemo), G(GoElement.Cryo) } },
-            new WildGroup { Id = "frost_s", Off = new Vector2(-30f, 130f), Foes = new[] { G(GoElement.Geo), G(GoElement.Cryo), W(GoElement.Anemo) } },
-            new WildGroup { Id = "frost_ne", Off = new Vector2(150f, -100f), Foes = new[] { G(GoElement.Cryo), G(GoElement.Cryo), G(GoElement.Cryo) } },
-            new WildGroup { Id = "frost_c", Off = new Vector2(20f, -40f), Foes = new[] { W(GoElement.Anemo), G(GoElement.Geo), G(GoElement.Cryo) } },
+            new WildGroup { Id = "frost_w", Off = new Vector2(-80f, 10f), Foes = new[] { Fx(), Fx(), Bear() } },
+            new WildGroup { Id = "frost_e", Off = new Vector2(70f, 60f), Foes = new[] { Hawk(), Hawk(), Fx() } },
+            new WildGroup { Id = "frost_s", Off = new Vector2(-30f, 130f), Foes = new[] { Bear(), Fx(), Hawk() } },
+            new WildGroup { Id = "frost_ne", Off = new Vector2(150f, -100f), Foes = new[] { Fx(), Fx(), Fx() } },
+            new WildGroup { Id = "frost_c", Off = new Vector2(20f, -40f), Foes = new[] { Hawk(), Bear(), Fx() } },
         };
 
         public const float BigRadius = 16f, SmallRadius = 7f, GateRadius = 4.5f;

@@ -1204,7 +1204,7 @@ namespace Saga.EditorTools
             fox.SetShieldForTest(0f); // 빙 원소라 처음부터 방패가 있다 — 벗겨야 체력이 깎인다
             fox.TakeRaw(fox.Hp - fox.MaxHp * 0.45f, Color.white);
             field.DuelTickForTest();
-            if (!fox.Shielded || fox.Element != GoElement.Cryo || field.Squad.Count != 3 || field.Squad[2].EnemyKind != FieldEnemy.Kind.StormWraith) Fail($"2단계 빙 방패·졸개 {fox.Element}·{field.Squad.Count}");
+            if (!fox.Shielded || fox.Element != GoElement.Cryo || field.Squad.Count != 3 || field.Squad[2].EnemyKind != FieldEnemy.Kind.WindHawk) Fail($"2단계 빙 방패·졸개 {fox.Element}·{field.Squad.Count}");
             Kill(fox);
             Expect(11, 5, "틈새 서리 구미호");                                                   // → 5 talk 반디
             field.Refresh();

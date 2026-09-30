@@ -10935,3 +10935,11 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 ### 2026-09-30 — saga-unity STORY 곁가지 side_guests 들판 시대 손님 사연 (웹 사가스토리 곁가지)
 - 웹 NPC_TALK story 넷 중 이 트랙 손님 둘(사진 찍는 여행자·시간 여행자)의 넷 토막씩. `StoryEraFolk.Speak` 가 사연이 남았으면 그 토막(끝에 경험치 400), 다 들었으면 예전 대사. 세이브 `folkStoryIds/Counts`(버전 그대로). 진단 `PlaytestStoryEras.CheckFolkStory`(옛 대사 진단은 사연을 다 들은 것으로 시작). 스토리 진단 3연속 OK.
 - 안 넣음: side_mentor(스승 사연 — 갈래별 처치 수·사제 유대가 이 트랙에 없다) · 웹 택배 기사·탐사 대원 사연(이 트랙 손님이 아님).
+
+### 2026-09-30 — saga-unity GO 109-14-1b 새 원소 괴물 넷 (웹 사가고 ⑲-1b 회오리매·눈여우·바위곰·덩굴뱀) — "이어해"
+- `FieldEnemy.Kind` 에 `WindHawk·IceFox·RockBear·GrassSnake`(끝에 덧붙임 — 정수 값 안 밀림). 표는 웹 체력·방패 그대로, 공격은 옛 셋과 같은 배율(×1.5): 매 200/22/풍/방패 140 · 여우 240/24/빙/170 · 곰 380/33/암/230 · 뱀 250/22/초/160. 이름 `field.foe.{hawk,fox,bear,snake}`(ko·en).
+- **옮김 규칙**: 옛 원소 적(불도깨비·물귀신·번개귀)에 풍·빙·암·초를 덧씌우던 자리는 전부 `FieldEnemy.BeastFor` 가 제 괴물로 옮긴다 — 이야기 적·숨은 터·밤의 잔불·인물 졸개·일일 의뢰 등 `F(kind, 원소)` 가 한 곳에서 바뀐다(개별 표는 안 고침). 괴물은 제 원소를 가져 덧씌움을 무시. 이름표가 "빙 졸개" → "눈여우". 고원 무리(`GoFrost.Wild`)는 표에 괴물을 직접 적음.
+- **몸**: 새 짐승 몸을 안 받고 FOREST 짐승 몸 재사용(사실 트랙 결에 안 맞는 저폴리 동물 GLB 대신) — 회오리매 Jolleen(0.7)·눈여우 Goblin(0.8)·바위곰 Hulk(1.45)·덩굴뱀 Parasite(1.1), 살갗 위에 원소 빛 45%만. 움직임은 `Skeleton.controller` 를 사람형 몸에 리타깃(Attack·Hit·Death 없는 제 컨트롤러 대신). `FieldSpawner.beastModels/beastController`(씬 빌더가 꽂음) → `FieldEnemy.RegisterBeastBodies`. 트리거는 `Trig()` 로 없는 파라미터를 건너뛴다. 옛 시대 무리(era≠과거)는 그 시대 몸 그대로.
+- 진단 `PlaytestGoBeasts`(표·`BeastFor` 여덟 짝·몸 리타깃·컨트롤러 파라미터·덧씌움 무시·인물 졸개 일곱 원소·고원 무리) + `PlaytestGoStory` 틈새 구미호 2단계 졸개 기대를 번개귀 → 회오리매로.
+- 안 한 것: 무리 꼴 셋(웹 표의 지역별 절차 무리 — 이 트랙은 고정 무리라 새 무리를 안 더함)·지역 몬스터 명단(`GoWorldMap.Roster`)에 새 괴물 안 넣음. 몸이 사람형이라 짐승 모습은 아님 — 진짜 짐승 몸(네발·새·뱀)은 에셋이 생기면 `BeastBodyNames` 만 바꾸면 된다.
+- 실기 확인 전: 사람형 몸에 원소 빛이 얹힌 모습이 눈여우·바위곰·덩굴뱀·회오리매로 읽히는지, 걷기 박자, 키.

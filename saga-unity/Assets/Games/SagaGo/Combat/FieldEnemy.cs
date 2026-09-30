@@ -19,7 +19,7 @@ namespace Saga.Go.Combat
     /// </summary>
     public class FieldEnemy : MonoBehaviour
     {
-        public enum Kind { Bandit, Skeleton, EmberImp, DrownedGhost, StormWraith, Guardian, Hero }
+        public enum Kind { Bandit, Skeleton, EmberImp, DrownedGhost, StormWraith, Guardian, Hero, WindHawk, IceFox, RockBear, GrassSnake }
         public enum State { Wander, Chase, Telegraph, Recover, Return, Dead, Stagger }
 
         public const float DetectRadius = 24f;
@@ -64,7 +64,7 @@ namespace Saga.Go.Combat
                 Vector3 d = Flat(fc.transform.position - transform.position);
                 if (d.sqrMagnitude > 0.0001f) transform.rotation = Quaternion.LookRotation(d);
             }
-            if (_animator != null) _animator.SetTrigger("Attack");
+            if (_animator != null) Trig("Attack");
             FieldRingFx.Spawn(transform.position, 5f, GoElements.ColorOf(Element), 0.4f);
         }
 
@@ -489,10 +489,49 @@ namespace Saga.Go.Combat
         public static FieldEnemy Spawn(Kind kind, Vector3 home, GameObject model, string groupId, Transform parent)
             => Spawn(kind, home, model, groupId, parent, GoEra.Past, null);
 
+        // ---- 109-14-1b 새 원소 괴물 넷(웹 회오리매·눈여우·바위곰·덩굴뱀) — 제 몸(FOREST 짐승 몸 재사용)·제 표. `FieldSpawner` 가 몸 넷과 움직임 컨트롤러를 등록한다 ----
+        public static bool IsBeastKind(Kind k) => k == Kind.WindHawk || k == Kind.IceFox || k == Kind.RockBear || k == Kind.GrassSnake;
+        public static readonly Kind[] BeastKinds = { Kind.WindHawk, Kind.IceFox, Kind.RockBear, Kind.GrassSnake };
+        private static readonly GameObject[] _beastModels = new GameObject[4];
+        private static RuntimeAnimatorController _beastController;
+
+        /// <summary>몸 넷(`BeastKinds` 순서)과 움직임 컨트롤러(Idle·걷기·달리기·Attack·Hit·Death — 사람형 몸에 리타깃)를 등록. 없으면 부르는 쪽 몸 그대로.</summary>
+        public static void RegisterBeastBodies(GameObject[] models, RuntimeAnimatorController controller)
+        {
+            for (int i = 0; i < _beastModels.Length; i++) _beastModels[i] = models != null && i < models.Length ? models[i] : null;
+            _beastController = controller;
+        }
+        public static GameObject BeastModel(Kind k) { int i = System.Array.IndexOf(BeastKinds, k); return i >= 0 ? _beastModels[i] : null; }
+
+        /// <summary>옛 원소 적(불도깨비·물귀신·번개귀)에 풍·빙·암·초를 덧씌우려는 부름 = 제 괴물이다(웹 이야기·들판은 처음부터 그 괴물을 쓴다).</summary>
+        public static Kind BeastFor(Kind kind, GoElement over)
+        {
+            if (kind != Kind.EmberImp && kind != Kind.DrownedGhost && kind != Kind.StormWraith) return kind;
+            switch (over)
+            {
+                case GoElement.Anemo: return Kind.WindHawk;
+                case GoElement.Cryo: return Kind.IceFox;
+                case GoElement.Geo: return Kind.RockBear;
+                case GoElement.Dendro: return Kind.GrassSnake;
+                default: return kind;
+            }
+        }
+
         /// <summary>PLAN.md 109-1 — 다른 시대 무리의 적. 종류(체력·원소·방패)는 그대로, 몸(`eraBody`)·이름만 그 시대 것.</summary>
         public static FieldEnemy Spawn(Kind kind, Vector3 home, GameObject model, string groupId, Transform parent, GoEra era, string eraBody,
             GoElement elementOverride = GoElement.Physical, bool frostKing = false)
         {
+            Kind mapped = BeastFor(kind, elementOverride);
+            if (mapped != kind)
+            {
+                kind = mapped; elementOverride = GoElement.Physical; // 그 괴물이 제 원소를 가진다
+                if (era == GoEra.Past && BeastModel(kind) != null) model = BeastModel(kind);
+            }
+            else if (IsBeastKind(kind))
+            {
+                elementOverride = GoElement.Physical; // 제 원소가 있다
+                if (era == GoEra.Past && BeastModel(kind) != null) model = BeastModel(kind);
+            }
             var go = new GameObject(frostKing ? "FieldEnemy_FrostKing" : $"FieldEnemy_{kind}");
             go.transform.SetParent(parent, false);
             var e = go.AddComponent<FieldEnemy>();
@@ -549,6 +588,10 @@ namespace Saga.Go.Combat
                 case Kind.StormWraith: return GoLocalization.T("field.foe.wraith", "번개귀");
                 case Kind.Guardian: return GoLocalization.T("field.foe.guardian", "망루 수호장");
                 case Kind.Hero: return GoLocalization.T("field.foe.hero", "들판 인물");
+                case Kind.WindHawk: return GoLocalization.T("field.foe.hawk", "회오리매");
+                case Kind.IceFox: return GoLocalization.T("field.foe.fox", "눈여우");
+                case Kind.RockBear: return GoLocalization.T("field.foe.bear", "바위곰");
+                case Kind.GrassSnake: return GoLocalization.T("field.foe.snake", "덩굴뱀");
                 default: return GoLocalization.T("field.foe.skeleton", "해골 병사");
             }
         }
@@ -587,6 +630,22 @@ namespace Saga.Go.Combat
                 case Kind.StormWraith:
                     DisplayName = KindName(kind);
                     MaxHp = 230f; Atk = 28f; ExpReward = 20; Element = GoElement.Electro; ShieldMax = 130f;
+                    break;
+                case Kind.WindHawk:
+                    DisplayName = KindName(kind);
+                    MaxHp = 200f; Atk = 22f; ExpReward = 20; Element = GoElement.Anemo; ShieldMax = 140f;
+                    break;
+                case Kind.IceFox:
+                    DisplayName = KindName(kind);
+                    MaxHp = 240f; Atk = 24f; ExpReward = 20; Element = GoElement.Cryo; ShieldMax = 170f;
+                    break;
+                case Kind.RockBear:
+                    DisplayName = KindName(kind);
+                    MaxHp = 380f; Atk = 33f; ExpReward = 20; Element = GoElement.Geo; ShieldMax = 230f;
+                    break;
+                case Kind.GrassSnake:
+                    DisplayName = KindName(kind);
+                    MaxHp = 250f; Atk = 22f; ExpReward = 20; Element = GoElement.Dendro; ShieldMax = 160f;
                     break;
                 case Kind.Guardian:
                     DisplayName = FrostKing ? GoLocalization.T("field.foe.frostking", "만년설 바위곰왕") : KindName(kind);
@@ -669,6 +728,8 @@ namespace Saga.Go.Combat
                 if (h > 0.01f) inst.transform.localScale = Vector3.one * (BodyHeight * HeightFactor() / h);
                 _animator = inst.GetComponentInChildren<Animator>();
                 if (_animator != null) _animator.applyRootMotion = false;
+                if (IsBeastKind(kind) && EraBody == null && _animator != null && _animator.isHuman && _beastController != null)
+                    _animator.runtimeAnimatorController = _beastController; // 사람형 몸에 Idle·걷기·달리기·Attack·Hit·Death 를 리타깃
                 if (IsHero)
                 {
                     if (_dresser != null) _dresser.Dress(inst, HeroId, BodyHeight * HeightFactor()); // 109-7 선 인물·동행과 같은 겉모습
@@ -692,6 +753,10 @@ namespace Saga.Go.Combat
                 case Kind.Skeleton: return 1.05f;
                 case Kind.EmberImp: return 0.85f;
                 case Kind.DrownedGhost: return 1.15f;
+                case Kind.WindHawk: return 0.7f;
+                case Kind.IceFox: return 0.8f;
+                case Kind.RockBear: return 1.45f;
+                case Kind.GrassSnake: return 1.1f;
                 case Kind.Guardian: return FrostKing ? FrostKingHeight : 1.6f;
                 default: return 1f;
             }
@@ -704,6 +769,7 @@ namespace Saga.Go.Combat
             if (IsHero) { c = Color.Lerp(Color.white, GoElements.ColorOf(Element), 0.15f); return true; } // 109-6 — 제 몸은 그대로, 원소만 옅게
             // 수호장 — 전용 몸(Maw, 2026-09-24)의 제 빛깔 위에 지금 겹의 원소가 은은히 밴다(옛 Brute 몸 때의 돌빛은 뺐다).
             if (IsGuardian) { c = Color.Lerp(Color.white, GoElements.ColorOf(Element), 0.3f); return true; }
+            if (IsBeastKind(kind) && EraBody == null) { c = Color.Lerp(Color.white, GoElements.ColorOf(Element), 0.45f); return true; } // 제 몸의 살갗 위에 원소 빛만 옅게
             if (IsElemental) { c = Color.Lerp(new Color(0.35f, 0.33f, 0.32f), GoElements.ColorOf(Element), 0.75f); return true; }
             c = Color.white;
             return false;
@@ -1030,7 +1096,7 @@ namespace Saga.Go.Combat
             _alertText.gameObject.SetActive(false);
             _warnRing.enabled = false;
             TintVisual(Color.white, false);
-            if (_animator != null) _animator.SetTrigger("Attack");
+            if (_animator != null) Trig("Attack");
             var fc = FieldCombat.Instance;
             if (_siegeStrike)
             {
@@ -1293,7 +1359,7 @@ namespace Saga.Go.Combat
                 _warnRing.enabled = false;
                 CurrentState = State.Stagger;
                 _timer = GuardianOuterStaggerSec;
-                if (_animator != null) _animator.SetTrigger("Hit");
+                if (_animator != null) Trig("Hit");
                 FieldDamageText.Spawn(transform.position + Vector3.up * (BodyTop + 2f),
                     GoLocalization.T("field.guard_outer_break", "겉 방패 깨짐!"), GoElements.ColorOf(OuterElement), 1.4f);
                 FieldRingFx.Spawn(transform.position, 6f, GoElements.ColorOf(OuterElement), 0.5f);
@@ -1312,7 +1378,7 @@ namespace Saga.Go.Combat
             TintVisual(Color.white, false);
             CurrentState = State.Stagger;
             _timer = IsGuardian ? GuardianDownSec : GoElements.ShieldBreakStaggerSec;
-            if (_animator != null) _animator.SetTrigger("Hit");
+            if (_animator != null) Trig("Hit");
             FieldDamageText.Spawn(transform.position + Vector3.up * (BodyTop + 2f),
                 IsGuardian ? GoLocalization.T("field.guard_down", "속 방패 깨짐! — 드러누웠다") : GoLocalization.T("field.shield_break", "방패 깨짐!"),
                 GoElements.ColorOf(Element), 1.4f);
@@ -1399,7 +1465,7 @@ namespace Saga.Go.Combat
             }
             else if (_animator != null && CurrentState != State.Telegraph)
             {
-                _animator.SetTrigger("Hit");
+                Trig("Hit");
             }
             RefreshHeadUi();
             return dealt;
@@ -1419,7 +1485,7 @@ namespace Saga.Go.Combat
             _alertText.gameObject.SetActive(false);
             _warnRing.enabled = false;
             TintVisual(Color.white, false);
-            if (_animator != null) _animator.SetTrigger("Death");
+            if (_animator != null) Trig("Death");
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
             if (DomainFoe || StoryFoe) { if (IsWeeklyBoss || IsStoryBoss) AchieveState.Bump("boss"); Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음(109-14-12 임무 적도)
@@ -1472,7 +1538,7 @@ namespace Saga.Go.Combat
             _alertText.gameObject.SetActive(false);
             _warnRing.enabled = false;
             TintVisual(Color.white, false);
-            if (_animator != null) _animator.SetTrigger("Interact");
+            if (_animator != null) Trig("Interact");
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
             PlayerStats.AddExp(ExpReward);
@@ -1610,6 +1676,19 @@ namespace Saga.Go.Combat
             Quaternion want = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation, want, 0.25f);
         }
+
+        /// <summary>움직임 컨트롤러에 그 트리거가 없으면(짐승 몸이 제 컨트롤러만 가졌을 때) 경고 없이 건너뛴다.</summary>
+        private void Trig(string name)
+        {
+            if (_animator == null || _animator.runtimeAnimatorController == null) return;
+            if (_trigNames == null)
+            {
+                _trigNames = new System.Collections.Generic.HashSet<string>();
+                foreach (var p in _animator.parameters) if (p.type == AnimatorControllerParameterType.Trigger) _trigNames.Add(p.name);
+            }
+            if (_trigNames.Contains(name)) _animator.SetTrigger(name);
+        }
+        private System.Collections.Generic.HashSet<string> _trigNames;
 
         private void SetMoveAnim(float speed)
         {

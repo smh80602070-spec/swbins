@@ -33,7 +33,7 @@ namespace Saga.Go.Data
         private static GoDomain.Foe Raptor => new GoDomain.Foe(FieldEnemy.Kind.StormWraith);
         private static GoDomain.Foe Hawk => new GoDomain.Foe(FieldEnemy.Kind.StormWraith, GoElement.Anemo);
         private static GoDomain.Foe Fox => new GoDomain.Foe(FieldEnemy.Kind.DrownedGhost, GoElement.Cryo);
-        private static GoDomain.Foe Rock => new GoDomain.Foe(FieldEnemy.Kind.EmberImp, GoElement.Geo);       // 웹 rockbear — 암 원소 몸
+        private static GoDomain.Foe Rock => new GoDomain.Foe(FieldEnemy.Kind.EmberImp, GoElement.Geo);       // 웹 rockbear — 바위곰(14-1b, FieldEnemy.BeastFor 가 옮긴다)
         private static GoDomain.Foe Bolt => new GoDomain.Foe(FieldEnemy.Kind.StormWraith, GoElement.Electro);   // 웹 bolt — 뇌 원소 몸
 
         /// <summary>열 자리(웹 SPOTS 일곱 + 2차 결말 뒤 새 지역 셋) — 그 이야기 제단 곁 남쪽 4m(매듭 돌은 북쪽 3m) · 서리봉 고원 가운데 · 잠긴 도읍 모래밭.</summary>

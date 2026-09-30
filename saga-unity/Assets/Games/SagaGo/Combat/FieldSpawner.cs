@@ -48,6 +48,11 @@ namespace Saga.Go.Combat
         [SerializeField] private GameObject banditModel;
         [SerializeField] private GameObject skeletonModel;
         [SerializeField] private GameObject guardianModel;
+        // 109-14-1b 새 원소 괴물 넷의 몸(`FieldEnemy.BeastKinds` 순서 — 회오리매·눈여우·바위곰·덩굴뱀)과 움직임 컨트롤러. 없는 PC 는 옛 몸.
+        [SerializeField] private GameObject[] beastModels = new GameObject[0];
+        [SerializeField] private RuntimeAnimatorController beastController;
+
+        private void Awake() => FieldEnemy.RegisterBeastBodies(beastModels, beastController);
         // PLAN.md 109-1 — 다른 시대 적 몸(`GoEras.FoeBodies` 이름과 같은 순서로 씬 빌더가 채운다). 없는 PC 는 null → 옛 몸.
         [SerializeField] private string[] eraBodyNames = new string[0];
         [SerializeField] private GameObject[] eraBodyModels = new GameObject[0];

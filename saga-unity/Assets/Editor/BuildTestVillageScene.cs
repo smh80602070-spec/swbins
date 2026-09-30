@@ -355,6 +355,9 @@ namespace Saga.EditorTools
 
         /// <summary>PLAN.md 107-1 "들판 전투" — 플레이어에 `FieldCombat`(HUD 는 Play 때 스스로 만든다),
         /// 적 무리 여섯 곳을 세울 `FieldSpawner` 에 모델 둘(산적 Abe·해골 Skeleton, 없으면 캡슐)만 넘긴다.</summary>
+        /// <summary>`FieldEnemy.BeastKinds` 순서(회오리매·눈여우·바위곰·덩굴뱀)의 몸 이름.</summary>
+        private static readonly string[] BeastBodyNames = { "Jolleen", "Goblin", "Hulk", "Parasite" };
+
         private static void BuildFieldCombat(GameObject playerGo)
         {
             var combat = playerGo.AddComponent<Saga.Go.Combat.FieldCombat>();
@@ -374,6 +377,9 @@ namespace Saga.EditorTools
             foreach (var era in GoEras.All) eraNames.AddRange(GoEras.FoeBodies(era));
             SetPrivateField(spawner, "eraBodyNames", eraNames.ToArray());
             SetPrivateField(spawner, "eraBodyModels", LoadNpcPrefabs(eraNames));
+            // PLAN.md 109-14-1b — 새 원소 괴물 넷(회오리매·눈여우·바위곰·덩굴뱀 = FOREST 짐승 몸 Jolleen·Goblin·Hulk·Parasite 를 재사용, 움직임은 Skeleton 컨트롤러로 리타깃). 없는 PC 는 옛 몸.
+            SetPrivateField(spawner, "beastModels", LoadNpcPrefabs(new List<string>(BeastBodyNames)));
+            SetPrivateField(spawner, "beastController", AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>("Assets/Animators/Skeleton.controller"));
 
             // PLAN.md 107-6 "동료 모델" — 교체하면 몸이 바뀐다(모델은 로컬 전용, 없으면 주인공 몸 + 원소 빛깔)
             var bodies = playerGo.AddComponent<PartyBodies>();
