@@ -11,7 +11,7 @@ extends Node
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
-const VroidBody := preload("res://games/saga_go/world/vroid_body.gd")
+const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const DispatchNode := preload("res://games/saga_go/world/dispatch.gd")
 const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")

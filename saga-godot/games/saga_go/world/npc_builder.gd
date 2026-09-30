@@ -11,7 +11,7 @@ const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
-const VroidBody := preload("res://games/saga_go/world/vroid_body.gd")
+const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 
 const TALK_RADIUS := 14.0
 const TALK_GAP_SEC := 45.0

@@ -30,7 +30,7 @@ const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 ## 산적임을 옷 색만으로도 구별한다(docs/ASSET_GUIDE.md). 실측·스케일 근거는
 ## Player.tscn과 동일(2.7m 실측 → 1.25배).
 const BANDIT_GLB := "res://assets/characters/character-d.glb"
-const VroidBody := preload("res://games/saga_go/world/vroid_body.gd")
+const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
 ## PLAN 106장 ④ — 씬 노드 이름 → 겉모습(씬 파일은 안 고친다).
 const LOOK_BY_NODE := {

@@ -6,7 +6,7 @@ extends CharacterBody3D
 ## (CC0 Kenney Blocky Characters, ASSET_GUIDE.md 참고) — 안에 idle·walk·
 ## sprint 애니메이션이 이미 들어 있어서 그걸 그대로 재생만 한다.
 
-const VroidBody := preload("res://games/saga_go/world/vroid_body.gd")
+const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const BlobShadow := preload("res://saga_core/world/blob_shadow.gd")
 

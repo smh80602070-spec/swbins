@@ -1258,7 +1258,7 @@ func _physics_process(_delta: float) -> void:
 				_boss = bosses[0] if bosses.size() == 1 else null
 				_v = {"n": bosses.size(), "size": 0.0, "crown": false, "on": false, "hits": [], "h0": 0}
 				if _boss:
-					var ref: Node3D = load("res://games/saga_go/world/vroid_body.gd").build(String(_boss.name), 5)
+					var ref: Node3D = load("res://saga_core/world/vroid_body.gd").build(String(_boss.name), 5)
 					var base_scale := ref.scale.x
 					ref.free()
 					_v.size = float((_boss.get("_visual") as Node3D).scale.x) / base_scale
