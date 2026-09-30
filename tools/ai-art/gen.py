@@ -35,6 +35,9 @@ MODELS = {
     'animagine-xl-4.0-opt': {'license': 'CreativeML OpenRAIL++-M', 'sdxl': True, 'note': 'anime'},
     'sd_xl_base_1.0': {'license': 'CreativeML OpenRAIL++-M', 'sdxl': True, 'note': 'general'},
     'v1-5-pruned-emaonly': {'license': 'CreativeML OpenRAIL-M', 'sdxl': False, 'note': 'fallback'},
+    # K-0013 점검용 — 비교 배치(model_compare_*)에만 쓴다. 게임 폴더에 넣기 전 사용자 판정 필요
+    'Illustrious-XL-v2.0': {'license': 'CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)', 'sdxl': True, 'note': 'anime-compare'},
+    'NoobAI-XL-v1.1': {'license': 'Fair AI Public License 1.0-SD 변형 — 생성물 상업 사용 금지(NC)', 'sdxl': True, 'note': 'anime-compare-NC', 'nc': True},
 }
 BLOCK = re.compile(r'(genshin|honkai|pokemon|pok[eé]mon|final fantasy|zelda|diablo|maplestory|animal crossing|naruto|one piece|ghibli|'
                    r'\bin the style of\b|by [a-z]+ [a-z]+\b|greg rutkowski|artgerm|makoto shinkai|hayao|sejong|yi sun|napoleon|caesar|genghis)', re.I)
@@ -122,8 +125,10 @@ def main():
     model = b['model']
     if model not in MODELS:
         sys.exit(f'모델 {model} — 상업 허용 확인 목록(MODELS)에 없다')
+    if MODELS[model].get('nc') and not str(b.get('out', '')).startswith('model_compare_'):
+        sys.exit(f'모델 {model} 은 비상업(NC) — 점검 배치(out 이 model_compare_ 로 시작) 밖에서는 쓰지 않는다(K-0013)')
     d = b.get('defaults', {})
-    out_dir = os.path.join(OUT, b.get('out', os.path.splitext(os.path.basename(a.batch))[0]))
+    out_dir =os.path.join(OUT, b.get('out', os.path.splitext(os.path.basename(a.batch))[0]))
     items = [i for i in b['items'] if (not a.only or i['id'] in a.only.split(',')) and not os.path.exists(os.path.join(out_dir, i['id'] + '.png'))][:MAX_ITEMS]   # 있는 그림은 셈에서 뺀다
     for i in items:
         txt = i['prompt'] + ' ' + d.get('prompt_prefix', '')

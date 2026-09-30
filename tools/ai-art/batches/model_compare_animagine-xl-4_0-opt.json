@@ -1,0 +1,39 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "model_compare_animagine-xl-4_0-opt",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 1024,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": ""
+ },
+ "items": [
+  {
+   "id": "cmp_eu_eleanor",
+   "seed": 3906945874,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, adult, brown hair, teal eyes, medieval european inspired clothing, tunic and cloak, majestic queen, crown, jewels, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
+  },
+  {
+   "id": "cmp_jp_tomoegozen",
+   "seed": 2047467619,
+   "prompt": "1girl, female focus, feminine, solo, upper body portrait, young adult, black hair, light brown eyes, ancient japanese inspired clothing, kimono and hakama, fierce female warrior, determined eyes, light armor, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1boy, male focus, beard"
+  },
+  {
+   "id": "cmp_kr_heojun",
+   "seed": 312020916,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, elderly, wrinkles, gray beard, black hair, brown eyes, ancient korean inspired clothing, hanbok-inspired layered robe, gentle healer, herb pouch, kind eyes, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
+  },
+  {
+   "id": "cmp_sg_zhugeliang",
+   "seed": 2575382022,
+   "prompt": "1boy, male focus, masculine, strong jaw, solo, upper body portrait, adult, black hair, brown eyes, ancient chinese inspired clothing, hanfu-style robe with wide sleeves, cunning strategist holding a feather fan, knowing smile, looking at viewer, soft dramatic lighting, simple painterly gradient background",
+   "negative": "lowres, bad anatomy, bad hands, text, error, missing finger, extra digits, fewer digits, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, mask, mouth mask, menpo, face covered, fangs, mouth guard, 1girl, feminine, breasts, makeup"
+  }
+ ]
+}
