@@ -22,9 +22,9 @@ function block(msg) { process.stderr.write(msg + '\n'); process.exit(2); }
 
 if (name === 'SessionStart') {
   process.stdout.write([
-    'saga 세션 절차(SAGA-DESIGN §9): ① 폴더 CLAUDE.md → PLAN.md 목차(grep "^## ") → 상태 파일(README 현재 절 / docs/PROJECT_STATE.md). 큰 문서는 절만 sed -n.',
-    '② 구현은 PLAN §8 Phase 0(안정화)부터, §5 후보는 적힌 9필드(수치·세이브 스키마·진단 항목)대로. ③ 도감 data.js 는 다섯 벌 함께 + md5.',
-    '④ 커밋 전 bash tools/precheck.sh (git commit 훅이 자동 실행·차단). ⑤ 세션 기록은 HANDOFF.md/HISTORY.md 에만 append, PLAN 은 결정이 바뀔 때만. 헤드리스 크롬·서버는 띄우지 않는다.'
+    'saga 세션 절차(tasks/README.md, 체제 SAGA-ARCH.md): ① 다음 일 = tasks/QUEUE.md 맨 위 티켓. 티켓과 그 "파일" 칸만 읽는다(첫 턴 20KB). PLAN·HANDOFF·HISTORY 는 티켓이 시킬 때만 절만 sed -n.',
+    '② 티켓의 목표·파일·단계·검증·완료 조건 중 빈 칸이 있거나 "미작성"이면 멈추고 보고. 큐가 비면 tasks/RECURRING.md. 새 기능은 티켓 없이 만들지 않는다.',
+    '③ 검증은 티켓 명령 그대로 한 번. 3회 실패면 되돌리고 멈춘다. ④ 커밋 전 bash tools/precheck.sh (훅이 자동 실행·차단), git commit -F <파일> -- <경로>. ⑤ 세션 기록은 티켓 메모·커밋 메시지뿐. 도감 data.js 는 다섯 벌 함께 + md5. 서버·크롬은 검증 명령이 스스로 띄우고 끈다.'
   ].join('\n') + '\n');
   process.exit(0);
 }

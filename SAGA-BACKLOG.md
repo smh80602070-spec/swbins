@@ -161,6 +161,12 @@
 | 음악 | 11파일 | swbins3 ACE-Step 생성(T-28) + 모델 기록 + 크레딧 표. AI 단독 곡은 저작권 보호가 약하니 사람이 고르고 편집한 흔적을 남긴다 |
 | 튜토리얼 | **없음** | §1-1 |
 
+## 7. 정리 후보 — 필요 없거나 낡은 플랜·기능 (2026-09-30, 사용자 질문)
+
+**지금 정리해도 되는 것**(T-0006 archive 이동에 묶는다): Godot `glb_utils.fit_height()` 미호출 · char-forge 몸 생성(`build_real.py`·MakeHuman)·레시피 566·`_out` 21GB · char-forge README 세션 일지 · 사가고 `mobile/` Capacitor(v1.7) · Godot `docs/VERTICAL_SLICE_*.md` 셋 · SAGA-HANDOFF "이어서" 중 끝난 항목 · 웹 PLAN "Phase 6 genchar 확장 대기"(§13 으로 대체) · SAGA-DESIGN §10 Q7(§13 이 답) · 사가블로 루트 `_cdp_*.py` 넷(playcheck 와 중복).
+
+**결정이 필요한 것**(ARCH §8 에 붙임): 웹 2D 모드 전체(`sprite.js` 100KB×5·2D 시트, "3D 못 쓸 때 비상 경로" — 지우면 코드 15% 가량과 유지 부담이 줆) · 사가고 온라인 사관 서버(Claude API 비용, 오프라인과 독립) · Godot `assets/generated/variants` 1GB(참조 조사 뒤 안 쓰는 것) · 사가국지 옛 사람 에셋(Q5 유지 결정 — 유지 권고) · 웹 후처리 폰 경로(계측 뒤).
+
 ## 6. 한 줄 순서 (사용자가 §8 결정 뒤)
 
 P0 1·2·3·7·8 → P1 플래그십 셋(사가고 회피·타격음, 사가블로 미검증 30, 사가스토리 손맛) → P2 구조(ARCH T-10~T-19) → P3 플래그십 추가 → 나머지 열두 판은 확인 시트로 D3 올리기만.
