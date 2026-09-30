@@ -910,6 +910,18 @@
                      x: gtx * TILE + TILE * 0.5, y: gty * TILE + TILE * 0.5 });
       }
     }
+    /* 별 우체통(정본 트랙 메모 "별 우체통 장식 하나") — 이야기 겨울 대보름(wi_moon)을 마치면 광장 곁에 선다. 세이브 조건부 고정 자리(번들 시설과 같은 결) */
+    var scn_sp = st().scenario;
+    if (scn_sp && scn_sp.done && scn_sp.done.wi_moon) {
+      var spOff = [[3, -3], [4, -2], [-3, -3], [4, 3], [-4, 3], [2, -4], [5, 0], [-5, -1]], spBest = null, spi, spj;
+      for (spi = 0; spi < spOff.length && !spBest; spi++) {                // 다른 소품(나무·집 …)에서 1.4칸 이상 떨어진 첫 자리
+        var spx = (cx + spOff[spi][0]) * TILE + 20, spy = (cy + spOff[spi][1]) * TILE + 20, spOk = true;
+        for (spj = 0; spj < props.length; spj++) { if (Math.hypot(props[spj].x - spx, props[spj].y - spy) < TILE * 1.4) { spOk = false; break; } }
+        if (spOk) { spBest = { x: spx, y: spy }; }
+      }
+      if (!spBest) { spBest = { x: (cx + 3) * TILE + 20, y: (cy - 3) * TILE + 20 }; }
+      props.push({ id: 'starpost', kind: 'starpost', x: spBest.x, y: spBest.y });
+    }
   }
 
   /* ── 심기 ─────────────────────────────────────────────────
@@ -1951,6 +1963,12 @@
        없는 이름이라 엉뚱하게 "기록" 시트가 열린다) */
     if (prop.kind === 'stele') {
       return { kind: 'empty', text: '🪧 화석을 모두 갖춘 사고를 기려 세운 비석입니다' };
+    }
+    if (prop.kind === 'starpost') {
+      var sd = (st().scenario && st().scenario.done) || {};
+      return { kind: 'empty', text: sd.y2_bloom
+        ? '🌠 별 우체통 — 옛 우체통과 한 쌍이 되어 이어 쌓는 중입니다. 부친 편지에 여러 시대가 답장합니다'
+        : '🌠 별 우체통 — 하늘 금이 내려앉은 우체통입니다. 이 마을이 여러 시대에 기억되는 한 사라지지 않는다고 합니다' };
     }
     if (prop.kind === 'fireflyplot') {
       return { kind: 'empty', text: '✨ 낮에는 그저 풀밭이지만, 밤이 되면 반딧불이가 모여든다고 합니다' };

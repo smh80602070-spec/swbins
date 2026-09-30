@@ -5558,6 +5558,28 @@ window.DG_NO_TUNE = true;
       } finally { var k = JSON.parse(keep); s.visitSettled = k.vs; s.visitStory = k.st; s.visitGift = k.vg || undefined; C.save.player.gold = k.gold; }
     });
 
+    t('별 우체통(정본 트랙 메모) — 겨울 대보름 장을 마치면 마을 광장 곁에 서고, 그 전엔 없다 · 3D 몸이 있다', function () {
+      var s0 = V.state(), keep = s0.scenario ? JSON.stringify(s0.scenario) : null, bad = [];
+      try {
+        s0.scenario = { done: {} }; V.buildProps();
+        if (V.raw().props.some(function (p) { return p.kind === 'starpost'; })) { bad.push('대보름 전에 있음'); }
+        s0.scenario.done.wi_moon = 1; V.buildProps();
+        var sp = V.raw().props.filter(function (p) { return p.kind === 'starpost'; })[0];
+        if (!sp || !isFinite(sp.x) || !isFinite(sp.y)) { bad.push('대보름 뒤에 없음'); }
+        else {
+          var pl = V.raw().player, px0 = pl.x, py0 = pl.y; pl.x = sp.x; pl.y = sp.y + 6;
+          var t1 = V.interact();
+          if (!t1 || t1.text.indexOf('별 우체통') < 0) { bad.push('읽기 ' + (t1 && t1.text)); }
+          s0.scenario.done.y2_bloom = 1;
+          var t2 = V.interact(); pl.x = px0; pl.y = py0;
+          if (!t2 || t2.text.indexOf('한 쌍') < 0) { bad.push('둘째 해 글'); }
+        }
+        if (!DG.villageData.PROPS.starpost) { bad.push('표'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '대보름 전 없음 · 뒤엔 광장 곁 · 읽으면 글(둘째 해엔 옛 우체통과 한 쌍)';
+      } finally { s0.scenario = keep ? JSON.parse(keep) : undefined; V.buildProps(); }
+    });
+
     t('택배 — 시간제한 소포: 시한 안이면 ×1.5, 넘기면 ×0.7 이고 사슬이 끊긴다', function () {
       var undo = parcelKeep(), out = false, P = DG.parcel, dest = P.dests()[0].key, lim = P.limitSec(P.dests()[0].dist);
       try {

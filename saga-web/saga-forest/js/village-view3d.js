@@ -364,7 +364,7 @@
     /* 숲의 정령(PLAN §5.5) — 안 푼 터는 횃불(밤에 눈에 띄게), 푼 터는 꽃 한 송이 자국 */
     spiritmark: 'lantern', spiritdone: 'flower',
     /* 발견 밀도 격자(PLAN §5.5 ①) — 새 GLB 없이 기존 키를 빌린다: 상자=작은 상자, 병=풀 한 포기, 채집터=이끼 바위, 야영=천막+불 */
-    oldpost: 'building:mail',
+    oldpost: 'building:mail', starpost: 'lantern',
     /* 축제 하루(PLAN §5.6) — 새 GLB 없이 기존 키: 안내판=표지판, 달집=모닥불, 줄=통나무, 솥=우물, 등롱=등 */
     festboard: 'building:board', festfire: 'campfire', festrope: 'log', festpot: 'well', festlantern: 'lantern',
     /* 방문객 조각(§5.9) — 새 GLB 없이: 나침반 조각=작은 상자, 도깨비불=등(밤에 빛난다) */
@@ -442,7 +442,7 @@
        사이) 눈대중으로 잡았다 */
     bridge: 1.4,
     stele: 1.3, fireflyplot: 0.9, spiritmark: 1.5, spiritdone: 0.5,
-    oldpost: 0.9,
+    oldpost: 0.9, starpost: 2.0,
     festboard: 1.2, festfire: 0.5, festrope: 0.5, festpot: 1.0, festlantern: 1.6,
     visitcompass: 0.5, visitwisp: 0.9, visitkid: 0.9, visitufo: 0.45, visitparcel: 0.5,
     gridchest: 0.6, gridbottle: 0.35, gridnode: 0.9, gridcamp: 1.8, gridfire: 0.5,

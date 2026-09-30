@@ -139,6 +139,8 @@
     visitufo:     { name: '탐사선 부품',   emoji: '🔩', gather: null, reset: 0, hint: '줍는다' },
     visitparcel:  { name: '떨어진 소포',   emoji: '📦', gather: null, reset: 0, hint: '줍는다' },   // §5.13 택배 기사
     oldpost: { name: '옛 우체통', emoji: '📮', gather: null, reset: 0, hint: '소포를 넣는다' },
+    /* 별 우체통(정본 트랙 메모 "별 우체통 장식 하나") — 대보름(wi_moon) 장을 마치면 마을 광장 곁에 선다 */
+    starpost: { name: '별 우체통', emoji: '🌠', gather: null, reset: 0, hint: '읽는다' },
     /* 폐허 확장(PLAN 46-2절, 2026-09-11) — §45가 냈던 "과거" 목적지를
        아치 하나뿐이던 폐허(ruinSpot)에 실제로 채웠다. ruinTower는 진짜
        13~14세기 탑성 폐허 사진측량 스캔(saga-go에서 하드링크, 새로 안

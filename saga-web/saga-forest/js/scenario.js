@@ -170,6 +170,7 @@
     core.log('📖 ' + ch.no + '장 · ' + ch.title + ' — ' + (bits.join(' · ') || '끝'), 'good');
     core.emit('toast', '📖 ' + ch.no + '장 · ' + ch.title + ' 끝');
     core.emit('scenario:chapter', ch.id);
+    if (ch.id === 'wi_moon' && V() && V().buildProps) { V().buildProps(); }        // 별 우체통이 마을에 선다
     core.persist();
     core.emit('changed');
   }
