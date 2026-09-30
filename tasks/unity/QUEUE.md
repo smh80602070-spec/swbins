@@ -4,7 +4,7 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 6 | [U-0006](U-0006.md) 나머지 복제 6개 → SagaCore(NpcIdle·VirtualJoystick·HitSpark·DamagePopup·LocalizedButtonLabel·GroundDecal) | 통합 | 초안 |
+| 6 | [U-0006](U-0006.md) 나머지 복제 5개 → SagaCore(VirtualJoystick·GroundDecal·HitSpark·DamagePopup·NpcIdle; LocalizedButtonLabel 은 설계 판단이라 제외) | 통합 | 작성됨 |
 | 7 | [U-0007](U-0007.md) `MountField`×4 → `Saga.Core.MountRig` + `MountConfig` | 통합 | 초안 |
 | 8 | [U-0008](U-0008.md) PLAN 372KB → `PLAN.md`(≤100KB) + `docs/spec/` | 통합 | 초안 |
 | 9 | [U-0009](U-0009.md) 시나리오 표 → `Resources/scenario_<판>.json` + 로더 | 통합 | 초안 |
