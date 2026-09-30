@@ -114,6 +114,9 @@ var home: Dictionary = {}
 var cycle: int = 0
 ## 2026-09-30 도움말 — 이미 띄운 첫 걸음 안내 id 들(data/help.gd TIPS). 필드만 더해 SAVE_VERSION 그대로.
 var tips: Array = []
+## 2026-09-30 사냥 기록 — {"kills": {종: 마릿수}, "claimed": {종: 받은 단계 수}}. 필드만 더해 SAVE_VERSION 그대로.
+## world/hunt_log.gd 가 읽고 쓴다(규칙은 data/hunt.gd).
+var hunt: Dictionary = {}
 signal world_changed()
 
 var _session_start_exp: float = 0.0

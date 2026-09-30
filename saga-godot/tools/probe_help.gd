@@ -80,12 +80,12 @@ func _run() -> void:
 	# ② 글이 실제 키와 맞는가
 	var wrong: Array = []
 	var pairs := [["combat_quick", KEY_J], ["combat_ult", KEY_K], ["combat_dodge", KEY_L], ["jump", KEY_SPACE], ["run", KEY_SHIFT], ["move_forward", KEY_W],
-		["go_eggs", KEY_I], ["go_homestead", KEY_T], ["go_cycle", KEY_N], ["go_help", KEY_F1]]
+		["go_eggs", KEY_I], ["go_homestead", KEY_T], ["go_cycle", KEY_N], ["go_help", KEY_F1], ["go_hunt", KEY_H]]
 	for pr in pairs:
 		if not _has_key(String(pr[0]), int(pr[1])):
 			wrong.append(String(pr[0]))
 	var txt := _all_text()
-	var mention := ["Shift", "Space", "J", "E · K", "F1", "I", "T", "N", "V", "M", "C", "G", "U", "O", "Y", "F"]
+	var mention := ["Shift", "Space", "J", "E · K", "F1", "I", "T", "N", "V", "M", "C", "G", "U", "O", "Y", "F", "H"]
 	var missing: Array = []
 	for m in mention:
 		if not txt.contains(String(m)):

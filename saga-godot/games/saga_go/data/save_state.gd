@@ -59,6 +59,7 @@ func save() -> bool:
 		"home": PartyState.home,
 		"cycle": PartyState.cycle,
 		"tips": PartyState.tips,
+		"hunt": PartyState.hunt,
 		"drops": DropState.drops,
 		"quest_active_id": QuestState.active_id,
 		"quest_active_name": QuestState.active_name,
@@ -153,6 +154,9 @@ func try_load() -> bool:
 	## tips(2026-09-30 도움말) — 없으면 빈 목록(안내를 처음부터 다시 본다).
 	var tp: Variant = data.get("tips", [])
 	PartyState.tips = (tp as Array).duplicate() if typeof(tp) == TYPE_ARRAY else []
+	## hunt(2026-09-30 사냥 기록) — 없으면 빈 사전(기록 없음).
+	var hn: Variant = data.get("hunt", {})
+	PartyState.hunt = (hn as Dictionary).duplicate(true) if typeof(hn) == TYPE_DICTIONARY else {}
 
 	var pos: Array = data.get("player_pos", [])
 	var player := _find_player()
