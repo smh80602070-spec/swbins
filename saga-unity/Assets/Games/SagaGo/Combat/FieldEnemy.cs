@@ -457,7 +457,13 @@ namespace Saga.Go.Combat
         /// <summary>남은 방패 겹(수호장 2→1→0, 원소 적 1→0, 보통 적 0).</summary>
         public int ShieldLayers { get; private set; }
         public bool Engaged { get; private set; }
-        public float BodyTop => BodyHeight * HeightFactor();
+        public float BodyTop => _animalBody ? _animalTop : BodyHeight * HeightFactor();
+
+        // 109-14-1b — 임시 짐승 몸(Quaternius 저폴리 동물: 눈여우·회오리매·덩굴뱀)은 사람 키가 아니라 몸 길이로 크기를 맞춘다.
+        private bool _animalBody;
+        private float _animalTop;
+        public bool IsAnimalBody => _animalBody;
+        private static float AnimalSize(Kind k) => k == Kind.IceFox ? 3.0f : k == Kind.WindHawk ? 2.4f : 2.8f;
 
         private Transform _visual;
         private Animator _animator;
@@ -724,8 +730,16 @@ namespace Saga.Go.Combat
                 inst.name = "Visual";
                 inst.transform.localPosition = Vector3.zero;
                 inst.transform.localRotation = Quaternion.identity;
+                var an0 = inst.GetComponentInChildren<Animator>();
+                _animalBody = IsBeastKind(kind) && EraBody == null && an0 != null && (an0.avatar == null || !an0.avatar.isHuman);
                 float h = MeasureHeight(inst);
-                if (h > 0.01f) inst.transform.localScale = Vector3.one * (BodyHeight * HeightFactor() / h);
+                if (_animalBody)
+                {
+                    float len = MeasureLength(inst);
+                    if (len > 0.01f) { float k = AnimalSize(kind) / len; inst.transform.localScale = Vector3.one * k; _animalTop = h * k; }
+                    else _animalBody = false;
+                }
+                else if (h > 0.01f) inst.transform.localScale = Vector3.one * (BodyHeight * HeightFactor() / h);
                 _animator = inst.GetComponentInChildren<Animator>();
                 if (_animator != null) _animator.applyRootMotion = false;
                 if (IsBeastKind(kind) && EraBody == null && _animator != null && _animator.isHuman && _beastController != null)
@@ -779,7 +793,7 @@ namespace Saga.Go.Combat
         private void BuildElementFx()
         {
             Color c = GoElements.ColorOf(Element);
-            float h = BodyHeight * HeightFactor();
+            float h = BodyTop;
             _shieldBubble = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             _shieldBubble.name = "ShieldBubble";
             Destroy(_shieldBubble.GetComponent<Collider>());
@@ -833,6 +847,15 @@ namespace Saga.Go.Combat
             _elementLight.intensity = Shielded ? 1.6f : 0.7f;
         }
 
+        private static float MeasureLength(GameObject go)
+        {
+            var renderers = go.GetComponentsInChildren<Renderer>();
+            if (renderers.Length == 0) return 0f;
+            var b = renderers[0].bounds;
+            foreach (var r in renderers) b.Encapsulate(r.bounds);
+            return Mathf.Max(b.size.x, Mathf.Max(b.size.y, b.size.z));
+        }
+
         private static float MeasureHeight(GameObject go)
         {
             var renderers = go.GetComponentsInChildren<Renderer>();
@@ -847,7 +870,7 @@ namespace Saga.Go.Combat
             _block = new MaterialPropertyBlock();
             var head = new GameObject("HeadUI");
             head.transform.SetParent(transform, false);
-            head.transform.localPosition = new Vector3(0f, BodyHeight * (IsGuardian ? HeightFactor() : 1f) + 0.9f, 0f);
+            head.transform.localPosition = new Vector3(0f, (_animalBody ? _animalTop : BodyHeight * (IsGuardian ? HeightFactor() : 1f)) + 0.9f, 0f);
             _headUi = head.transform;
 
             _nameText = NewText(_headUi, DisplayName, new Vector3(0f, 0.45f, 0f), 0.035f, Color.white);

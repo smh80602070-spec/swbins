@@ -110,7 +110,17 @@ namespace Saga.EditorTools
                     foreach (var need in new[] { "Speed", "Attack", "Hit", "Death" }) if (!names.Contains(need)) Fail($"{r.Name} 컨트롤러에 {need} 없음");
                     parts.Add($"{r.Kind}=리타깃");
                 }
-                else parts.Add($"{r.Kind}=비휴머노이드(제 컨트롤러)");
+                else
+                {
+                    // 저폴리 동물(Quaternius CC0, `Art/Creatures`) — 사람 키가 아니라 몸 길이로 크기를 맞추고 제 컨트롤러를 쓴다(뱀은 피격·쓰러짐 클립이 없다)
+                    if (!e.IsAnimalBody) Fail($"{r.Name} 동물 몸인데 크기를 길이로 안 맞춤");
+                    if (an.runtimeAnimatorController == null) { Fail($"{r.Name} 컨트롤러 없음"); continue; }
+                    var names = new HashSet<string>();
+                    foreach (var p in an.parameters) names.Add(p.name);
+                    foreach (var need in new[] { "Speed", "Attack" }) if (!names.Contains(need)) Fail($"{r.Name} 컨트롤러에 {need} 없음");
+                    if (e.BodyTop < 0.8f || e.BodyTop > 4f) Fail($"{r.Name} 동물 몸 높이 {e.BodyTop:F2}");
+                    parts.Add($"{r.Kind}=동물({an.runtimeAnimatorController.name})");
+                }
             }
         }
 

@@ -355,8 +355,33 @@ namespace Saga.EditorTools
 
         /// <summary>PLAN.md 107-1 "들판 전투" — 플레이어에 `FieldCombat`(HUD 는 Play 때 스스로 만든다),
         /// 적 무리 여섯 곳을 세울 `FieldSpawner` 에 모델 둘(산적 Abe·해골 Skeleton, 없으면 캡슐)만 넘긴다.</summary>
-        /// <summary>`FieldEnemy.BeastKinds` 순서(회오리매·눈여우·바위곰·덩굴뱀)의 몸 이름.</summary>
-        private static readonly string[] BeastBodyNames = { "Jolleen", "Goblin", "Hulk", "Parasite" };
+        /// <summary>
+        /// `FieldEnemy.BeastKinds` 순서(회오리매·눈여우·바위곰·덩굴뱀)의 몸 후보 — 앞이 먼저. 저폴리 동물(`Art/Creatures`, 커밋됨, `SetupBeastAnimals`)이 있으면
+        /// 그것, 없으면 FOREST 짐승 몸(Jolleen·Goblin·Parasite — 로컬 전용)을 사람형 그대로. 바위곰은 동물 대역이 없어(곰 모델은 뼈대가 없다) Hulk.
+        /// 저폴리 동물을 안 쓰려면 이 후보에서 앞 줄을 빼면 된다.
+        /// </summary>
+        private static readonly string[][] BeastBodyCandidates =
+        {
+            new[] { "Assets/Art/Creatures/Birb/BirbAnimated.prefab", SetupNpcCharacterImports.PrefabPath("Jolleen") },
+            new[] { "Assets/Art/Creatures/Fox/FoxAnimated.prefab", SetupNpcCharacterImports.PrefabPath("Goblin") },
+            new[] { SetupNpcCharacterImports.PrefabPath("Hulk") },
+            new[] { "Assets/Art/Creatures/Snake/SnakeAnimated.prefab", SetupNpcCharacterImports.PrefabPath("Parasite") },
+        };
+
+        private static GameObject[] LoadBeastBodies()
+        {
+            var models = new GameObject[BeastBodyCandidates.Length];
+            for (int i = 0; i < models.Length; i++)
+            {
+                foreach (var path in BeastBodyCandidates[i])
+                {
+                    models[i] = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                    if (models[i] != null) break;
+                }
+                if (models[i] == null) Debug.LogWarning($"[BuildTestVillageScene] 새 원소 괴물 몸 {i} 후보가 다 없음 — 폴백");
+            }
+            return models;
+        }
 
         private static void BuildFieldCombat(GameObject playerGo)
         {
@@ -378,7 +403,7 @@ namespace Saga.EditorTools
             SetPrivateField(spawner, "eraBodyNames", eraNames.ToArray());
             SetPrivateField(spawner, "eraBodyModels", LoadNpcPrefabs(eraNames));
             // PLAN.md 109-14-1b — 새 원소 괴물 넷(회오리매·눈여우·바위곰·덩굴뱀 = FOREST 짐승 몸 Jolleen·Goblin·Hulk·Parasite 를 재사용, 움직임은 Skeleton 컨트롤러로 리타깃). 없는 PC 는 옛 몸.
-            SetPrivateField(spawner, "beastModels", LoadNpcPrefabs(new List<string>(BeastBodyNames)));
+            SetPrivateField(spawner, "beastModels", LoadBeastBodies());
             SetPrivateField(spawner, "beastController", AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>("Assets/Animators/Skeleton.controller"));
 
             // PLAN.md 107-6 "동료 모델" — 교체하면 몸이 바뀐다(모델은 로컬 전용, 없으면 주인공 몸 + 원소 빛깔)

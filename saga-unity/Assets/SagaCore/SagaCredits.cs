@@ -62,6 +62,10 @@ namespace Saga.Core
                 TitleKo = "숲 꾸밈", TitleEn = "Nature decorations",
                 BodyKo = "Quaternius — Stylized Nature MegaKit — CC0", BodyEn = "Quaternius — Stylized Nature MegaKit — CC0" },
 
+            new Entry { Id = "quaternius_animals", Paths = new[] { "Assets/Art/Creatures/" },
+                TitleKo = "짐승 몸(임시)", TitleEn = "Creature bodies (placeholder)",
+                BodyKo = "Quaternius — Animals pack(Fox·Birb) · Easy Enemies pack(Snake) — CC0", BodyEn = "Quaternius — Animals pack (Fox, Birb), Easy Enemies pack (Snake) — CC0" },
+
             new Entry { Id = "bgm", Paths = new[] { "Assets/Art/Audio/CC0_BGM/" },
                 TitleKo = "배경음악", TitleEn = "Music",
                 BodyKo = "\"Town Theme (RPG)\" cynicmusic · \"Dungeon Ambience\" yd · \"Peaceful Town\" aroachifoundonmypillow · \"It's time for a… Fight, run, breath deeply\" Komiku · \"War Theme\" spring-spring — OpenGameArt.org, CC0",
