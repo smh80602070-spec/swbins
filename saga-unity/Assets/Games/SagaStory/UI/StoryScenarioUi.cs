@@ -24,6 +24,8 @@ namespace Saga.Story.UI
         private GameObject _panel;
         private TextMeshProUGUI _title, _who, _text, _page, _nextText, _skipText;
         private Button _nextButton, _skipButton;
+        private TextMeshProUGUI _prompt;
+        private readonly System.Collections.Generic.List<Button> _choiceButtons = new System.Collections.Generic.List<Button>();
         private StoryScenarioData.Scene _scene;
         private string _sceneTitle;
         private int _line;
@@ -36,6 +38,11 @@ namespace Saga.Story.UI
         public string TitleText => _title != null ? _title.text : null;
         public Button NextButton => _nextButton;
         public Button SkipButton => _skipButton;
+        /// <summary>장면 끝 고르기가 떠 있다 — 단추를 눌러야 닫힌다(건너뛰기는 첫 답).</summary>
+        public bool Choosing => IsOpen && _scene != null && _scene.Choice != null && _line == _scene.Lines.Length - 1;
+        public int ChoiceCount => Choosing ? _scene.Choice.Options.Length : 0;
+        public Button ChoiceButton(int i) => _choiceButtons[i];
+        public string PromptText => _prompt != null ? _prompt.text : null;
 
         private void Awake()
         {
@@ -77,12 +84,19 @@ namespace Saga.Story.UI
         {
             if (!IsOpen) return;
             if (_line < _scene.Lines.Length - 1) { _line++; Paint(); }
-            else Close();
+            else if (_scene.Choice == null) Close();
         }
 
         public void Skip()
         {
             if (IsOpen) Close();
+        }
+
+        private void Pick(int i)
+        {
+            if (!Choosing || i < 0 || i >= _scene.Choice.Options.Length) return;
+            StoryScenario.Choose(_scene.Choice.Id, _scene.Choice.Options[i].Key);
+            Close();
         }
 
         private void Close()
@@ -103,6 +117,20 @@ namespace Saga.Story.UI
             _page.text = string.Format(StoryLocalization.T("sscen.page", "{0} / {1}"), _line + 1, _scene.Lines.Length);
             _nextText.text = StoryLocalization.T("sscen.next", "다음");
             _skipText.text = StoryLocalization.T("sscen.skip", "건너뛰기");
+            bool choosing = Choosing;
+            _nextButton.gameObject.SetActive(!choosing);
+            _prompt.gameObject.SetActive(choosing);
+            for (int i = 0; i < _choiceButtons.Count; i++)
+            {
+                bool on = choosing && i < _scene.Choice.Options.Length;
+                _choiceButtons[i].gameObject.SetActive(on);
+                if (!on) continue;
+                var rt = (RectTransform)_choiceButtons[i].transform;
+                int n = _scene.Choice.Options.Length;
+                rt.anchoredPosition = new Vector2((i - (n - 1) * 0.5f) * 410f, 165f);
+                _choiceButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = StoryScenario.ChoiceLabel(_scene.Choice, _scene.Choice.Options[i]);
+            }
+            if (choosing) _prompt.text = "▶ " + StoryScenario.ChoicePrompt(_scene.Choice);
         }
 
         private void Build()
@@ -140,6 +168,16 @@ namespace Saga.Story.UI
             _skipButton = NewButton(_panel.transform, new Vector2(1f, 0f), new Vector2(-410f, 50f), new Vector2(240f, 70f), new Color(1f, 1f, 1f, 0.16f), 26);
             _skipButton.onClick.AddListener(Skip);
             _skipText = _skipButton.GetComponentInChildren<TextMeshProUGUI>();
+            // 장면 끝 고르기 — 본문 아래 안내 줄 + 답 단추 셋 자리(답이 둘이면 둘만 켠다)
+            _prompt = NewText(_panel.transform, new Vector2(0.5f, 0f), new Vector2(0f, 250f), new Vector2(1200f, 50f), 30);
+            _prompt.color = new Color(1f, 0.9f, 0.5f);
+            for (int i = 0; i < 3; i++)
+            {
+                var cb = NewButton(_panel.transform, new Vector2(0.5f, 0f), Vector2.zero, new Vector2(390f, 78f), new Color(0.3f, 0.45f, 0.8f, 0.75f), 28);
+                int idx = i;
+                cb.onClick.AddListener(() => Pick(idx));
+                _choiceButtons.Add(cb);
+            }
             _panel.SetActive(false);
         }
 

@@ -33,15 +33,16 @@ namespace Saga.Story.Data
         private class SaveBlob
         {
             public string ch;
-            public int step, rifts, riftBase;
-            public string[] done, said, titles;
+            public int step, rifts, riftBase, killBase, bossBase;
+            public string[] done, said, titles, choiceIds, choiceKeys;
         }
 
         private static readonly HashSet<string> Done = new HashSet<string>();
         private static readonly HashSet<string> Said = new HashSet<string>();
         private static readonly List<string> Titles = new List<string>();
+        private static readonly Dictionary<string, string> Choices = new Dictionary<string, string>();
         private static string _ch;
-        private static int _step, _rifts, _riftBase = -1;
+        private static int _step, _rifts, _riftBase = -1, _killBase = -1, _bossBase = -1;
         private static bool _busy, _playing;
 
         public static int DoneCount => Done.Count;
@@ -70,10 +71,12 @@ namespace Saga.Story.Data
         {
             switch (step.T)
             {
-                case "talk": return Said.Contains(step.Scene);
+                case "talk": return Said.Contains(SceneIdOf(step));
                 case "mission": return step.Key == "q_field" ? StoryQuestState.QuestDone : step.Key == "q_boss1" ? StoryQuestState.QuestBossDone : true;
                 case "job": return step.N <= 1 ? StoryJobState.HasJob : StoryJobState.Tier >= step.N;
                 case "gate": return StorySaveState.ChampionEverClaimed;
+                case "kills": return _killBase >= 0 && StoryQuestState.Kills - _killBase >= step.N;
+                case "boss": return _bossBase >= 0 && StoryQuestState.BossKills - _bossBase >= Math.Max(1, step.N);
                 case "rift": return _riftBase >= 0 && _rifts - _riftBase >= 1;
             }
             return true;
@@ -82,17 +85,65 @@ namespace Saga.Story.Data
         private static void Begin(StoryScenarioData.Step step)
         {
             if (step.T == "rift" && _riftBase < 0) _riftBase = _rifts;
+            if (step.T == "kills" && _killBase < 0) _killBase = StoryQuestState.Kills;
+            if (step.T == "boss" && _bossBase < 0) _bossBase = StoryQuestState.BossKills;
             if (step.T != "talk" || _playing || !InField()) return;
-            var scene = StoryScenarioData.SceneOf(step.Scene);
+            var scene = StoryScenarioData.SceneOf(SceneIdOf(step));
             if (scene == null || ScenePlay == null) return;
             _playing = true;
             var ch = StoryScenarioData.ChapterOf(scene.ChapterId);
             ScenePlay.Invoke(new SceneRequest { Scene = scene, Title = ChapterFullTitle(ch) });
         }
 
+        /// <summary>단계가 뜻하는 장면 id — `By` 가 있으면 그 고르기의 답(없으면 첫 답)에 따라 `장면_답`.</summary>
+        public static string SceneIdOf(StoryScenarioData.Step step)
+        {
+            if (string.IsNullOrEmpty(step.By)) return step.Scene;
+            string key = ChoiceOf(step.By) ?? DefaultChoiceKey(step.By);
+            return step.Scene + "_" + key;
+        }
+
+        private static StoryScenarioData.Choice ChoiceDef(string choiceId)
+        {
+            foreach (var s in StoryScenarioData.Scenes) if (s.Choice != null && s.Choice.Id == choiceId) return s.Choice;
+            return null;
+        }
+
+        private static string DefaultChoiceKey(string choiceId)
+        {
+            var c = ChoiceDef(choiceId);
+            return c != null && c.Options.Length > 0 ? c.Options[0].Key : "";
+        }
+
+        /// <summary>고른 답의 key — 아직 안 골랐으면 null.</summary>
+        public static string ChoiceOf(string choiceId) => Choices.TryGetValue(choiceId, out var k) ? k : null;
+
+        /// <summary>장면 끝 고르기 — 답을 적고, 답에 칭호가 있으면 칭호로 받는다. 이미 골랐으면 무시(true 는 새로 기록).</summary>
+        public static bool Choose(string choiceId, string key)
+        {
+            var def = ChoiceDef(choiceId);
+            if (def == null || Choices.ContainsKey(choiceId)) return false;
+            StoryScenarioData.ChoiceOption opt = null;
+            foreach (var o in def.Options) if (o.Key == key) opt = o;
+            if (opt == null) return false;
+            Choices[choiceId] = key;
+            if (!string.IsNullOrEmpty(opt.TitleKo))
+            {
+                string title = Loc($"sscen.choice.{choiceId}.{key}.title", opt.TitleKo);
+                if (!Titles.Contains(title)) Titles.Add(title);
+            }
+            Changed?.Invoke();
+            return true;
+        }
+
+        public static string ChoicePrompt(StoryScenarioData.Choice c) => Loc($"sscen.choice.{c.Id}.prompt", c.PromptKo);
+        public static string ChoiceLabel(StoryScenarioData.Choice c, StoryScenarioData.ChoiceOption o) => Loc($"sscen.choice.{c.Id}.{o.Key}", o.LabelKo);
+
         public static void SceneFinished(string sceneId)
         {
             _playing = false;
+            var fin = StoryScenarioData.SceneOf(sceneId);
+            if (fin != null && fin.Choice != null && !Choices.ContainsKey(fin.Choice.Id)) Choose(fin.Choice.Id, fin.Choice.Options[0].Key); // 건너뛰면 첫 답
             Said.Add(sceneId);
             Changed?.Invoke();
             Check();
@@ -119,7 +170,7 @@ namespace Saga.Story.Data
         {
             string reward = Finish(c);
             Done.Add(c.Id);
-            _ch = null; _step = 0; _riftBase = -1;
+            _ch = null; _step = 0; _riftBase = -1; _killBase = -1; _bossBase = -1;
             ChapterFinished?.Invoke(c, string.Format(StoryLocalization.T("sscen.done_toast", "📖 제{0}장 · {1} 끝 — {2}"), c.No, ChapterTitle(c), reward));
             Changed?.Invoke();
         }
@@ -136,12 +187,12 @@ namespace Saga.Story.Data
                     if (ch == null || !Opened(ch)) break;
                     if (_ch != ch.Id)
                     {
-                        _ch = ch.Id; _step = 0; _riftBase = -1;
+                        _ch = ch.Id; _step = 0; _riftBase = -1; _killBase = -1; _bossBase = -1;
                         ChapterStarted?.Invoke(ch);
                     }
                     if (_step >= ch.Steps.Length) { Complete(ch); continue; }
                     var step = ch.Steps[_step];
-                    if (StepDone(step)) { _step++; _riftBase = -1; Changed?.Invoke(); continue; }
+                    if (StepDone(step)) { _step++; _riftBase = -1; _killBase = -1; _bossBase = -1; Changed?.Invoke(); continue; }
                     Begin(step);
                     if (StepDone(step)) continue;
                     break;
@@ -191,6 +242,8 @@ namespace Saga.Story.Data
                 case "mission": text = step.Key == "q_field" ? StoryLocalization.T("sscen.hint.kill", "🗡️ 「첫 사냥」을 마친다") : StoryLocalization.T("sscen.hint.boss", "👺 「두목의 목」을 벤다"); break;
                 case "job": text = step.N <= 1 ? StoryLocalization.T("sscen.hint.job", "🥋 전직관에게 첫 전직을 배운다") : string.Format(StoryLocalization.T("sscen.hint.job_n", "🥋 전직관에게 {0}차 전직을 배운다"), step.N); break;
                 case "gate": text = StoryLocalization.T("sscen.hint.gate", "🛡️ 관문 대장을 쓰러뜨린다"); break;
+                case "kills": text = string.Format(StoryLocalization.T("sscen.hint.kills", "🗡️ 잡졸을 쓰러뜨린다 ({0}/{1})"), _ch == ch.Id && _killBase >= 0 ? Math.Min(step.N, StoryQuestState.Kills - _killBase) : 0, step.N); break;
+                case "boss": text = StoryLocalization.T("sscen.hint.boss_n", "👺 두목을 쓰러뜨린다"); break;
                 case "rift": text = StoryLocalization.T("sscen.hint.rift", "🌀 비경을 한 번 끝까지 깬다"); break;
                 default: text = StoryLocalization.T("sscen.hint.finish", "마무리"); break;
             }
@@ -201,8 +254,9 @@ namespace Saga.Story.Data
 
         public static string Snapshot() => JsonUtility.ToJson(new SaveBlob
         {
-            ch = _ch, step = _step, rifts = _rifts, riftBase = _riftBase,
+            ch = _ch, step = _step, rifts = _rifts, riftBase = _riftBase, killBase = _killBase, bossBase = _bossBase,
             done = new List<string>(Done).ToArray(), said = new List<string>(Said).ToArray(), titles = Titles.ToArray(),
+            choiceIds = new List<string>(Choices.Keys).ToArray(), choiceKeys = new List<string>(Choices.Values).ToArray(),
         });
 
         public static void Restore(string json)
@@ -213,6 +267,9 @@ namespace Saga.Story.Data
             if (b == null) return;
             _ch = string.IsNullOrEmpty(b.ch) ? null : b.ch;
             _step = b.step; _rifts = b.rifts; _riftBase = b.riftBase;
+            _killBase = b.killBase; _bossBase = b.bossBase; // 옛 세이브(필드 없음)는 0 — 다음 단계 넘김에서 -1 로 돌아온다(kills·boss 단계는 그 뒤에야 시작)
+            if (b.choiceIds != null && b.choiceKeys != null)
+                for (int i = 0; i < b.choiceIds.Length && i < b.choiceKeys.Length; i++) Choices[b.choiceIds[i]] = b.choiceKeys[i];
             if (b.done != null) foreach (var s in b.done) if (StoryScenarioData.ChapterOf(s) != null) Done.Add(s);
             if (b.said != null) foreach (var s in b.said) Said.Add(s);
             if (b.titles != null) Titles.AddRange(b.titles);
@@ -230,8 +287,8 @@ namespace Saga.Story.Data
 
         private static void ResetState()
         {
-            Done.Clear(); Said.Clear(); Titles.Clear();
-            _ch = null; _step = 0; _rifts = 0; _riftBase = -1; _playing = false;
+            Done.Clear(); Said.Clear(); Titles.Clear(); Choices.Clear();
+            _ch = null; _step = 0; _rifts = 0; _riftBase = -1; _killBase = -1; _bossBase = -1; _playing = false;
         }
 
         public static void ResetForTest()
