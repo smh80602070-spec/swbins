@@ -55,6 +55,6 @@ func summary() -> String:
 	if PartyState.wl_lowered:
 		s += " — 한 단계 낮춤"
 	var nxt := wl + (1 if PartyState.wl_lowered else 0) + 1
-	if nxt < Adventure.WL_AR.size():
-		s += "\n다음 세계 등급: 모험 등급 %d" % int(Adventure.WL_AR[nxt])
+	if Adventure.ar_for_wl(nxt) > 0:
+		s += "\n다음 세계 등급: 모험 등급 %d" % Adventure.ar_for_wl(nxt)
 	return s

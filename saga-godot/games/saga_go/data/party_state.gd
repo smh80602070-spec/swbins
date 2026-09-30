@@ -109,6 +109,9 @@ var eggs: Dictionary = {}
 ## 2026-09-30 쉼터 마당 — {"items": [{"id","x","z","r"}…], "t": 정산 시각, "acc": 은행 냥, "spent": 총 쓴 냥}. 필드만 더해 SAVE_VERSION 그대로.
 ## world/homestead.gd 가 읽고 쓴다(규칙은 data/homestead.gd).
 var home: Dictionary = {}
+## 2026-09-30 회차(별배 재출항) — 이야기를 끝낸 뒤 다시 연 횟수(0 = 첫 회차). 필드만 더해 SAVE_VERSION 그대로.
+## data/cycle.gd 가 읽고 쓴다(공격력·경험치 +5%/회차, 세계 등급 상한 +2/회차).
+var cycle: int = 0
 signal world_changed()
 
 var _session_start_exp: float = 0.0
@@ -260,7 +263,7 @@ func recruit(id: String) -> void:
 func add_exp(amount: float) -> void:
 	if amount <= 0.0:
 		return
-	exp += amount * Weather.exp_bonus_mul() * (1.0 + _support_bonus()) * (1.0 + buddy_bonus("exp"))
+	exp += amount * Weather.exp_bonus_mul() * (1.0 + _support_bonus()) * (1.0 + buddy_bonus("exp")) * (1.0 + 0.05 * float(cycle))
 	var old_level := level
 	_recompute()
 	power_changed.emit(atk, def)
@@ -338,7 +341,7 @@ func _perk_mul(axis: String) -> float:
 	return mul
 
 func atk_mul() -> float:
-	return _perk_mul("attack") * (1.0 + buddy_bonus("atk"))
+	return _perk_mul("attack") * (1.0 + buddy_bonus("atk")) * (1.0 + 0.05 * float(cycle))
 
 func def_mul() -> float:
 	return _perk_mul("defense") * (1.0 + buddy_bonus("def"))

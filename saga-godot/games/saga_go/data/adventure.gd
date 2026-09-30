@@ -13,7 +13,10 @@ const HP_PER_WL := 0.35
 const ATK_PER_WL := 0.22
 const MORA_PER_WL := 0.25
 const EXTRA_ITEM_EVERY := 3
-const ENEMY_LV := [8, 20, 26, 36, 45, 54, 63, 72, 85]
+const ENEMY_LV := [8, 20, 26, 36, 45, 54, 63, 72, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135]
+## 회차(data/cycle.gd)로 여는 세계 등급 9~18 — 모험 등급 45·50·…·90 에 하나씩. 회차 하나가 둘을 연다.
+const WL_AR_EXTRA := [45, 50, 55, 60, 65, 70, 75, 80, 85, 90]
+const CYCLE_WL := 2
 const AR_REWARD := {"mora": 2000, "book_s": 3, "ore_s": 2}
 const AR_REWARD_5 := {"fate_knot": 1}
 
@@ -31,7 +34,23 @@ static func max_world_level() -> int:
 	for i in WL_AR.size():
 		if a >= int(WL_AR[i]):
 			wl = i
-	return mini(wl, WL_MAX)
+	wl = mini(wl, WL_MAX)
+	if wl >= WL_MAX:
+		var extra := 0
+		for a2 in WL_AR_EXTRA:
+			if a >= int(a2):
+				extra += 1
+		wl += mini(extra, CYCLE_WL * PartyState.cycle)
+	return wl
+
+## 세계 등급 n 이 열리는 모험 등급(회차가 모자라 못 열면 -1).
+static func ar_for_wl(n: int) -> int:
+	if n < WL_AR.size():
+		return int(WL_AR[n])
+	var i := n - WL_AR.size()
+	if i >= WL_AR_EXTRA.size() or i >= CYCLE_WL * PartyState.cycle:
+		return -1
+	return int(WL_AR_EXTRA[i])
 
 static func world_level() -> int:
 	return maxi(max_world_level() - (1 if PartyState.wl_lowered else 0), 0)

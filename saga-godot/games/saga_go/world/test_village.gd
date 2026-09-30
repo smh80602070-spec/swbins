@@ -216,6 +216,11 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_archery.gd").new())
 
 	## PLAN 106장 ㊹ — 탐사 파견(마을 역참 곁 게시판).
+	var cycle_screen := preload("res://games/saga_go/world/cycle_screen.gd").new()
+	cycle_screen.name = "CycleScreen"
+	add_child(cycle_screen)
+	if OS.get_environment("SAGA_CYCLE_PROBE") != "":
+		add_child(load("res://tools/probe_cycle.gd").new())
 	var homestead := preload("res://games/saga_go/world/homestead.gd").new()
 	homestead.name = "Homestead"
 	add_child(homestead)

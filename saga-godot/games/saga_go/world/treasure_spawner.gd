@@ -81,9 +81,18 @@ const CHESTS := [
 
 
 func _ready() -> void:
+	add_to_group("go_treasure")
+	respawn()
+
+
+## 아직 안 연 상자를 (없는 것만) 세운다 — 처음 세울 때와, 회차(data/cycle.gd)로 열어 둔 상자가 되살아날 때.
+func respawn() -> void:
 	for row in CHESTS:
 		var id: String = row[0]
 		if EventState.is_resolved("chest_" + id):
+			continue
+		var old := get_node_or_null("Chest_" + id)
+		if old != null and not old.is_queued_for_deletion() and not bool(old.get("is_open")):
 			continue
 		var region: String = row[1]
 		var g: Vector2 = row[2]
