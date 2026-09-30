@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Saga.Core;
 
 namespace Saga.EditorTools
 {
@@ -19,9 +20,9 @@ namespace Saga.EditorTools
         public static bool Go()
         {
             Begin("PlaytestHeadless");
-            string m = Check("Villager_npc_elder", "PeasantMan", Saga.Go.World.CharacterVisual.HumanHeight, typeof(Saga.Go.World.NpcIdle))
-                + Check("Villager_npc_merchant", "PeasantGirl", Saga.Go.World.CharacterVisual.HumanHeight, typeof(Saga.Go.World.NpcIdle))
-                + Check("Villager_npc_traveler", "Archer", Saga.Go.World.CharacterVisual.HumanHeight, typeof(Saga.Go.World.NpcIdle));
+            string m = Check("Villager_npc_elder", "PeasantMan", Saga.Go.World.CharacterVisual.HumanHeight, typeof(Saga.Core.NpcIdle))
+                + Check("Villager_npc_merchant", "PeasantGirl", Saga.Go.World.CharacterVisual.HumanHeight, typeof(Saga.Core.NpcIdle))
+                + Check("Villager_npc_traveler", "Archer", Saga.Go.World.CharacterVisual.HumanHeight, typeof(Saga.Core.NpcIdle));
             // 두목 전용 몸 — 망루 수호장 = Maw(없는 PC 는 Brute).
             var spawner = Object.FindFirstObjectByType<Saga.Go.Combat.FieldSpawner>();
             var maw = AssetDatabase.LoadAssetAtPath<GameObject>(SetupNpcCharacterImports.PrefabPath("Maw"));
@@ -42,7 +43,7 @@ namespace Saga.EditorTools
             var keeper = Object.FindFirstObjectByType<Saga.Forest.World.ForestVillager>();
             if (keeper == null) { Fail("숲지기 없음"); return End(""); }
             keeper.FollowCurve(keeper.transform.position); // 제 자리 기준이면 휨 0
-            string m = Check(keeper.gameObject.name, "PeasantMan", 1.8f, typeof(Saga.Forest.World.NpcIdle));
+            string m = Check(keeper.gameObject.name, "PeasantMan", 1.8f, typeof(Saga.Core.NpcIdle));
             if (keeper.RigVisual != null)
             {
                 float y0 = keeper.RigVisual.localPosition.y;
@@ -133,7 +134,7 @@ namespace Saga.EditorTools
         public static bool Story()
         {
             Begin("PlaytestStorySlice");
-            string m = Check("Npc_Scout", "PeasantMan", 1.75f, typeof(Saga.Story.World.NpcIdle)) + Check("Npc_JobTrainer", "Jolleen", 1.75f, typeof(Saga.Story.World.NpcIdle));
+            string m = Check("Npc_Scout", "PeasantMan", 1.75f, typeof(Saga.Core.NpcIdle)) + Check("Npc_JobTrainer", "Jolleen", 1.75f, typeof(Saga.Core.NpcIdle));
             // 두목 전용 몸 — 황건 두목 = Morak(들판·비경 둘 다), 배율 × 몸 키 = 2.24m(±8%).
             var morak = AssetDatabase.LoadAssetAtPath<GameObject>(SetupNpcCharacterImports.PrefabPath("Morak"));
             if (morak == null) return End(m + " 두목: Morak 프리팹 없음(건너뜀)");

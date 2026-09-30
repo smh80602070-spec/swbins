@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Saga.Go.Data;
+using Saga.Core;
 
 namespace Saga.Go.World
 {

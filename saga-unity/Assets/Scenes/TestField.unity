@@ -5199,7 +5199,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 384713948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21bdb846ffcad1e478dce0466afe0e4a, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Saga.Story.World.NpcIdle
   stateName: Idle
@@ -8464,7 +8464,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 558388561}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21bdb846ffcad1e478dce0466afe0e4a, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Saga.Story.World.NpcIdle
   stateName: Idle

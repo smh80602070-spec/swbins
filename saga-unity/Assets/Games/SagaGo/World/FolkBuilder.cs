@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Saga.Go.Combat;
 using Saga.Go.Data;
+using Saga.Core;
 
 namespace Saga.Go.World
 {

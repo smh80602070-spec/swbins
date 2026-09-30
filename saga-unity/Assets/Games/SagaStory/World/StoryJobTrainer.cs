@@ -1,6 +1,7 @@
 using UnityEngine;
 using Saga.Story.Data;
 using Saga.Story.UI;
+using Saga.Core;
 
 namespace Saga.Story.World
 {

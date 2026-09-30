@@ -4319,7 +4319,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 174068764}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41b2f4e7b93610349bfc3f3854921c84, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaForest::Saga.Forest.World.NpcIdle
   stateName: Idle
@@ -9493,7 +9493,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 388879777}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41b2f4e7b93610349bfc3f3854921c84, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaForest::Saga.Forest.World.NpcIdle
   stateName: Idle
@@ -10776,7 +10776,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 429554427}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41b2f4e7b93610349bfc3f3854921c84, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaForest::Saga.Forest.World.NpcIdle
   stateName: Idle
@@ -25511,7 +25511,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 975264351}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41b2f4e7b93610349bfc3f3854921c84, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaForest::Saga.Forest.World.NpcIdle
   stateName: Idle
@@ -48054,7 +48054,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1926812842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41b2f4e7b93610349bfc3f3854921c84, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaForest::Saga.Forest.World.NpcIdle
   stateName: Idle
@@ -51786,7 +51786,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2104912144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41b2f4e7b93610349bfc3f3854921c84, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaForest::Saga.Forest.World.NpcIdle
   stateName: Idle

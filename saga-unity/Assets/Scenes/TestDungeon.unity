@@ -34105,7 +34105,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 497213669}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8338388a6971a8e498ed702d56bb8937, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaDungeon::Saga.Dungeon.World.NpcIdle
   stateName: Idle
@@ -42099,7 +42099,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 622135025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8338388a6971a8e498ed702d56bb8937, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaDungeon::Saga.Dungeon.World.NpcIdle
   stateName: Idle
@@ -44414,7 +44414,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 662647489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8338388a6971a8e498ed702d56bb8937, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaDungeon::Saga.Dungeon.World.NpcIdle
   stateName: Idle
@@ -66450,7 +66450,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 985594965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8338388a6971a8e498ed702d56bb8937, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaDungeon::Saga.Dungeon.World.NpcIdle
   stateName: Idle
@@ -77520,7 +77520,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1143299159}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8338388a6971a8e498ed702d56bb8937, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaDungeon::Saga.Dungeon.World.NpcIdle
   stateName: Idle
@@ -109243,7 +109243,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1637420706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8338388a6971a8e498ed702d56bb8937, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaDungeon::Saga.Dungeon.World.NpcIdle
   stateName: Idle
@@ -121930,7 +121930,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1862008814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8338388a6971a8e498ed702d56bb8937, type: 3}
+  m_Script: {fileID: 11500000, guid: a52f8da140f551e4a985467278cab101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: SagaDungeon::Saga.Dungeon.World.NpcIdle
   stateName: Idle
