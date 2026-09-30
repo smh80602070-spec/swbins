@@ -75,7 +75,7 @@ func on_kill(kind: String) -> void:
 func _physics_process(_delta: float) -> void:
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Node3D
-	_btn.visible = not is_open and _player != null and not bool(_player.get("frozen"))
+	_btn.visible = not is_open and _player != null and not bool(_player.get("frozen")) and not get_tree().has_group("go_hud_menu")
 	var c := Hunt.claimable_total()
 	_btn.text = "사냥 기록 (H)" + (" ●%d" % c if c > 0 else "")
 

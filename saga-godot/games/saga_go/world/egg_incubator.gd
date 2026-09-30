@@ -85,7 +85,7 @@ func _physics_process(delta: float) -> void:
 				_dir = flat.normalized()
 	_last_pos = p
 	_update_buddy(delta)
-	_prompt_btn.visible = not is_open and not bool(_player.get("frozen")) and (Eggs.state().bag as Array).size() + (Eggs.state().inc as Array).size() > 0
+	_prompt_btn.visible = not is_open and not bool(_player.get("frozen")) and (Eggs.state().bag as Array).size() + (Eggs.state().inc as Array).size() > 0 and not get_tree().has_group("go_hud_menu")
 	_prompt_btn.text = "신수 알 (I)"
 	if is_open:
 		_refresh_t -= delta

@@ -127,7 +127,7 @@ func _physics_process(delta: float) -> void:
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Node3D
 		return
-	_prompt_btn.visible = not is_open and not bool(_player.get("frozen")) and near()
+	_prompt_btn.visible = not is_open and not bool(_player.get("frozen")) and near() and not get_tree().has_group("go_hud_menu")
 	var pend := Homestead.pending()
 	_prompt_btn.text = "쉼터 (T)" + (" ●%d냥" % pend if pend >= 100 else "")
 	if is_open:

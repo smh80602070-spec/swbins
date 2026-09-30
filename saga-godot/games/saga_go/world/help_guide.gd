@@ -64,7 +64,7 @@ func _physics_process(delta: float) -> void:
 	_t += delta
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Node3D
-	_btn.visible = not is_open and _player != null and not bool(_player.get("frozen"))
+	_btn.visible = not is_open and _player != null and not bool(_player.get("frozen")) and not get_tree().has_group("go_hud_menu")
 	_busy = maxf(_busy - delta, 0.0)
 	if _busy <= 0.0 and _banner.visible:
 		_banner.visible = false

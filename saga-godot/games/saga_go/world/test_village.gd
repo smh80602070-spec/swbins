@@ -216,6 +216,9 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_archery.gd").new())
 
 	## PLAN 106장 ㊹ — 탐사 파견(마을 역참 곁 게시판).
+	var hud_menu := preload("res://games/saga_go/world/hud_menu.gd").new()
+	hud_menu.name = "HudMenu"
+	add_child(hud_menu)
 	var photo_album := preload("res://games/saga_go/world/photo_album.gd").new()
 	photo_album.name = "PhotoAlbum"
 	add_child(photo_album)

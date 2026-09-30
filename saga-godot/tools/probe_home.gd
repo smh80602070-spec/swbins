@@ -164,11 +164,13 @@ func _run() -> void:
 
 	# ⑨ 안내 단추
 	await _frames(3)
-	var btn := (_n.get("_prompt_btn") as Button)
-	var near_vis := btn.visible
+	## 안내 단추는 화면 메뉴(hud_menu.gd)가 대신한다 — 메뉴 항목이 마당 곁에서만 보이는지.
+	var menu := get_tree().get_first_node_in_group("go_hud_menu")
+	await _frames(3)
+	var near_vis := bool(menu.call("shown", "go_homestead"))
 	_p.global_position = c + Vector3(60.0, 0, 60.0)
 	await _frames(3)
-	var far_vis := btn.visible
+	var far_vis := bool(menu.call("shown", "go_homestead"))
 	_check("prompt", near_vis and not far_vis, "near=%s far=%s" % [near_vis, far_vis])
 
 	PartyState.home = _saved.home

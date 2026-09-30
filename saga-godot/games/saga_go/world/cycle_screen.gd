@@ -36,7 +36,7 @@ func _physics_process(_delta: float) -> void:
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Node3D
 		return
-	_prompt_btn.visible = not is_open and not bool(_player.get("frozen")) and Cycle.story_done()
+	_prompt_btn.visible = not is_open and not bool(_player.get("frozen")) and Cycle.story_done() and not get_tree().has_group("go_hud_menu")
 	_prompt_btn.text = "재출항 (N)" + (" ★%d" % PartyState.cycle if PartyState.cycle > 0 else "")
 
 
