@@ -14,7 +14,7 @@ const ENV_MOBILE: Environment = preload("res://assets/environment/env_mobile.tre
 ## 그대로 두고, GO 씬(games/saga_go/ 아래)일 때만 복제본의 하늘을 갈아 끼운다(두
 ## 프로파일 같은 값 — 66-1 "톤은 같게"). 안개 색 = 지평선 색(102-2 규칙).
 const SKY_HORIZON := Color(0.76, 0.88, 0.96)
-const TOON_SKY_SCENE_PREFIX := "res://games/saga_go/"
+const TOON_SKY_SCENE_PREFIX := "res://games/saga_go/"  # check_refs:allow — 씬 경로 판별용 문자열일 뿐 GO 스크립트를 부르지 않는다
 ## GO 만 안개를 옅게 — env_*.tres 의 0.012 는 방 하나·마을 하나 크기 판(다섯 판 공용) 값이라, 이어진 네 지역을 걷는 GO 에선
 ## 맑은 날(날씨 배율 0.6)에도 100m 앞이 절반 가려져 화면이 뿌옜다(2026-09-26 창 모드 촬영). 원신처럼 멀리 산이 비치게.
 ## 안개는 그리기 부담과 무관하다(가리기만 하고 덜 그리지 않는다).
