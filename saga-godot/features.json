@@ -1,0 +1,2009 @@
+[
+ {
+  "id": "gd.go.events",
+  "name": "사건 7·밤 2·굴·여울·폭포",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.heroes",
+  "name": "역사 인물 조우 3(설득 3라운드)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.codex",
+  "name": "도감 5갈래+신수 11 배치(place 43개)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.animals",
+  "name": "동물 6",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.weather",
+  "name": "날씨·계절·TimeOfDay",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.posts",
+  "name": "역참·사진 모드·소문",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.regions",
+  "name": "지역 3(REGIONS 레지스트리)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.save",
+  "name": "저장/버전",
+  "files": [],
+  "tests": [
+   "autosave"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.density",
+  "name": "101-1 E 발견 밀도",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-20"
+ },
+ {
+  "id": "gd.go.odds",
+  "name": "승산 표시",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-20"
+ },
+ {
+  "id": "gd.go.daily-card",
+  "name": "101-4 ①일과판+마무리 카드",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.promotion",
+  "name": "101-2 ②승급 3택",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.defeat-cost",
+  "name": "101-2 ③패배 비용·회수",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.shrine-trial",
+  "name": "101-2 ④사당 시련",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.beacon",
+  "name": "101-2 ⑤봉수대",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.just-dodge",
+  "name": "101-2 ⑥저스트 회피+75초 토벌+부위 파괴",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-21"
+ },
+ {
+  "id": "gd.go.companion-sil",
+  "name": "101-3 G 동행 실루엣",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.triplanar",
+  "name": "102-5 지형 트라이플레이너",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.ruins-procgen",
+  "name": "폐허 procgen 배선",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-22"
+ },
+ {
+  "id": "gd.go.g1-traversal",
+  "name": "106장 ①~⑥ 점프·스태미나·등반·활공·수영+절벽 지형",
+  "files": [],
+  "tests": [
+   "traversal"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-23"
+ },
+ {
+  "id": "gd.go.g1-toon",
+  "name": "106장 ①~⑥ 툰 물·손그림 하늘",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-23"
+ },
+ {
+  "id": "gd.go.g1-field-combat",
+  "name": "106장 ①~⑥ 들판 전투·원소 반응·인물 교체",
+  "files": [],
+  "tests": [
+   "combat"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-23"
+ },
+ {
+  "id": "gd.go.g1-pet-model",
+  "name": "106장 ①~⑥ VRoid/코드 신수 모델",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-23"
+ },
+ {
+  "id": "gd.go.g1-regions-walk",
+  "name": "106장 ①~⑥ 포구·폐허를 마을 옆에 붙여 고개로 걸어서",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-23"
+ },
+ {
+  "id": "gd.go.g1-treasure",
+  "name": "106장 ①~⑥ 보물 상자 16(등급 4×잠금 3)",
+  "files": [],
+  "tests": [
+   "treasure"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-23"
+ },
+ {
+  "id": "gd.go.g1-elem-enemies",
+  "name": "106장 ①~⑥ 원소 쓰는 적 3종",
+  "files": [],
+  "tests": [
+   "element"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-23"
+ },
+ {
+  "id": "gd.go.g8-combat-input",
+  "name": "106장 ⑧ 전투 조작",
+  "files": [],
+  "tests": [
+   "combat"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g9-map",
+  "name": "106장 ⑨ 지도",
+  "files": [],
+  "tests": [
+   "map"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g10-growth",
+  "name": "106장 ⑩ 육성",
+  "files": [],
+  "tests": [
+   "growth"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g11-shards",
+  "name": "106장 ⑪ 별조각",
+  "files": [],
+  "tests": [
+   "shard"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g12-talent",
+  "name": "106장 ⑫ 특성·운명의 자리",
+  "files": [],
+  "tests": [
+   "talent"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g13-sight",
+  "name": "106장 ⑬ 원소 시야",
+  "files": [],
+  "tests": [
+   "sight"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g14-elements",
+  "name": "106장 ⑭ 원소 7·반응 13",
+  "files": [],
+  "tests": [
+   "element"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g15-elem-monsters",
+  "name": "106장 ⑮ 새 원소 괴물",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g16-weapons",
+  "name": "106장 ⑯ 무기",
+  "files": [],
+  "tests": [
+   "weapon"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g17-artifacts",
+  "name": "106장 ⑰ 성유물",
+  "files": [],
+  "tests": [
+   "artifact"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g18-cooking",
+  "name": "106장 ⑱ 채집·요리",
+  "files": [],
+  "tests": [
+   "cook"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g19-commission",
+  "name": "106장 ⑲ 일일 의뢰",
+  "files": [],
+  "tests": [
+   "commission"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g20-domain",
+  "name": "106장 ⑳ 비경",
+  "files": [],
+  "tests": [
+   "domain"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g21-weekly-boss",
+  "name": "106장 ㉑ 주간 보스",
+  "files": [],
+  "tests": [
+   "weekly"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g22-adventure",
+  "name": "106장 ㉒ 모험·세계 등급",
+  "files": [],
+  "tests": [
+   "adventure"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g23-field-boss",
+  "name": "106장 ㉓ 들판 보스",
+  "files": [],
+  "tests": [
+   "field_boss"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g24-kits",
+  "name": "106장 ㉔ 고유 스킬 다섯",
+  "files": [],
+  "tests": [
+   "kit"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g25-story-two",
+  "name": "106장 ㉕ 이야기 임무 두 장",
+  "files": [],
+  "tests": [
+   "story"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-24"
+ },
+ {
+  "id": "gd.go.g26-branch-skills",
+  "name": "106장 ㉖~㊹ 갈래 스킬",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g26-story-3-9",
+  "name": "106장 ㉖~㊹ 이야기 3~9장·대화 카메라",
+  "files": [],
+  "tests": [
+   "story"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g26-gestures",
+  "name": "106장 ㉖~㊹ 몸짓",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g26-companions",
+  "name": "106장 ㉖~㊹ 동료 다섯",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g26-party",
+  "name": "106장 ㉖~㊹ 편성",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g26-world-quests",
+  "name": "106장 ㉖~㊹ 세계 임무 셋",
+  "files": [],
+  "tests": [
+   "wq"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g26-archery",
+  "name": "106장 ㉖~㊹ 활 조준",
+  "files": [],
+  "tests": [
+   "archery"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g26-quest-marks",
+  "name": "106장 ㉖~㊹ 지도 임무 표식",
+  "files": [],
+  "tests": [
+   "qmap"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g26-fishing",
+  "name": "106장 ㉖~㊹ 낚시",
+  "files": [],
+  "tests": [
+   "fish"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g26-achievements",
+  "name": "106장 ㉖~㊹ 업적",
+  "files": [],
+  "tests": [
+   "achieve"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g26-dispatch",
+  "name": "106장 ㉖~㊹ 탐사 파견",
+  "files": [],
+  "tests": [
+   "dispatch"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g45-frost-region",
+  "name": "106장 ㊺-1 넷째 지역 서리봉 고원",
+  "files": [],
+  "tests": [
+   "frost"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g45-ch10",
+  "name": "106장 ㊺-2 제10장",
+  "files": [],
+  "tests": [
+   "story2"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g45-ch11",
+  "name": "106장 ㊺-3 제11장 얼음 아래 산성",
+  "files": [],
+  "tests": [
+   "story2"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g45-ch12",
+  "name": "106장 ㊺-4 제12장 떨어진 별배(2부 끝)",
+  "files": [],
+  "tests": [
+   "story2"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g46-frost-boss",
+  "name": "106장 ㊻-1 고원 들판 보스 만년설 바위곰왕",
+  "files": [],
+  "tests": [
+   "frost"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g46-frost-sites",
+  "name": "106장 ㊻-2 고원 탐사지 둘",
+  "files": [],
+  "tests": [
+   "frost"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g46-snowflower",
+  "name": "106장 ㊻-3 고원 특산물 눈꽃",
+  "files": [],
+  "tests": [
+   "frost"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.g46-snow-conifer",
+  "name": "106장 ㊻-4 눈 덮인 침엽수",
+  "files": [],
+  "tests": [
+   "frost"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part3",
+  "name": "이야기 3부 ㊼ 13~15장(조선소·관측소·역참)",
+  "files": [],
+  "tests": [
+   "story3"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part4",
+  "name": "이야기 4부 16~18장·은하 나루",
+  "files": [],
+  "tests": [
+   "story4",
+   "skyport"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part5",
+  "name": "이야기 5부 틈새 갈림길",
+  "files": [],
+  "tests": [
+   "story5",
+   "crossing"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part6",
+  "name": "이야기 6부 잠긴 도읍",
+  "files": [],
+  "tests": [
+   "story6",
+   "sunken"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part7",
+  "name": "이야기 7부 구름 위 항로(51)",
+  "files": [],
+  "tests": [
+   "story7",
+   "skyroute"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part37-companions",
+  "name": "이야기 3~7부 동료 달음·도담·한별·물새·하늬",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part8-knots",
+  "name": "이야기 8부 52-1 여섯 매듭·먹구름 눈",
+  "files": [
+   "games/saga_go/world/storm_eye.gd"
+  ],
+  "tests": [
+   "stormeye"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part8-chapters",
+  "name": "이야기 8부 52-2~4 27~29장(1차 결말)",
+  "files": [],
+  "tests": [
+   "story8"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.after-ending",
+  "name": "52-5 결말 뒤(재대결 비경 넷·밤의 잔불 일곱)",
+  "files": [],
+  "tests": [
+   "aftermath"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part9-region",
+  "name": "9부 53-1 여덟째 지역 굳은 거리",
+  "files": [
+   "games/saga_go/world/region8_amber.gd"
+  ],
+  "tests": [
+   "amber"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part9-chapters",
+  "name": "9부 53-2~4 제30~32장(동료 초롱)",
+  "files": [],
+  "tests": [
+   "story9"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part10-region",
+  "name": "10부 54-1 아홉째 지역 갈무리 벌",
+  "files": [
+   "games/saga_go/world/region9_vault.gd"
+  ],
+  "tests": [
+   "vault"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part10-chapters",
+  "name": "10부 54-2~4 제33~35장(보스 금고 파수 드론 여왕·동료 해미)",
+  "files": [],
+  "tests": [
+   "story10"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part11-region",
+  "name": "11부 55-1 열째 지역 세갈래 고을",
+  "files": [
+   "games/saga_go/world/region10_fork.gd"
+  ],
+  "tests": [
+   "fork"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.go.part11-chapters",
+  "name": "11부 55-2~4 제36~38장(2차 결말)",
+  "files": [],
+  "tests": [
+   "story11"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.rooms",
+  "name": "방 6(보스 2)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.room-kinds",
+  "name": "방 종류 5(상자·우물·정예 소굴·미니보스·채광)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.elites",
+  "name": "엘리트 8",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.boons",
+  "name": "은사",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.gear-affix",
+  "name": "장비 등급+접사",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.sockets",
+  "name": "소켓",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.runewords",
+  "name": "룬워드",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.sets",
+  "name": "세트",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.durability",
+  "name": "내구",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.merchant",
+  "name": "행상",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.gamble",
+  "name": "투전",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.forge",
+  "name": "연단",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.elements",
+  "name": "원소 6",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.recruit",
+  "name": "인물 등용",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.guild",
+  "name": "결사",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.boss-floor",
+  "name": "보스층",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.jobs",
+  "name": "직업 5",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.martial",
+  "name": "무예 9모양×6갈래×3단",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.armor-slots",
+  "name": "갑주 등 부위 6",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.hero-vroid",
+  "name": "플레이어 전용 VRoid(dungeon_hero_01)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.blessing",
+  "name": "101-2 ①축복 3택",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.relic",
+  "name": "101-2 ②유품",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.feel2",
+  "name": "101-2 ③손맛 2차",
+  "files": [
+   "saga_core/combat_feel.gd"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.charm-dungeon",
+  "name": "101-2 ④부적 던전",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.raid",
+  "name": "101-2 ⑤난입",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.world-boss",
+  "name": "101-2 ⑥월드 보스",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.goal-board",
+  "name": "101-4 ①목표판+세션 카드",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.loot-glow",
+  "name": "101-3 G 노획물 등급색 외곽선+전설 잔광+동행 실루엣",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.dg.relic-synergy",
+  "name": "유품·원소시너지 헤드리스 실측",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-22"
+ },
+ {
+  "id": "gd.dg.cave-mood",
+  "name": "굴혈 mood 3종+문 아치 버그 수정",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-23"
+ },
+ {
+  "id": "gd.dg.save",
+  "name": "세이브 왕복·마이그레이션(G-0001 추가)",
+  "files": [],
+  "tests": [
+   "save_dungeon"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-10-01"
+ },
+ {
+  "id": "gd.fs.gather",
+  "name": "채집",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.fishing",
+  "name": "낚시",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.villagers",
+  "name": "주민 5+부탁",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.museum",
+  "name": "곤충/화석/조개+박물관",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.turnip",
+  "name": "순무 시세",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.wallpaper",
+  "name": "벽지/장판",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.breeding",
+  "name": "꽃 교배(깊이+경제)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.seasons",
+  "name": "계절행사 8",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.wear",
+  "name": "옷",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.biomes",
+  "name": "바이옴 지형",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.furniture",
+  "name": "가구·집 증축",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.fusion-monsters",
+  "name": "퓨전 몬스터 4+바이옴별 2~4종째",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.player-vroid",
+  "name": "플레이어 VRoid(105 Q3)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.goal-board",
+  "name": "101-4 ①목표판+세션 카드",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.hearts",
+  "name": "101-2 ②관계 하트",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.bundles",
+  "name": "101-2 ③마을 번들",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.pickup-feel",
+  "name": "101-3 C 채집 손맛",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.landmarks",
+  "name": "101-2 ④발견 격자",
+  "files": [
+   "games/saga_forest/world/forest_landmarks.gd"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.fs.heart-icon",
+  "name": "하트 아이콘 배선",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-22"
+ },
+ {
+  "id": "gd.fs.triplanar",
+  "name": "지형 트라이플레이너",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-22"
+ },
+ {
+  "id": "gd.fs.save",
+  "name": "세이브 왕복·마이그레이션(G-0001 추가)",
+  "files": [],
+  "tests": [
+   "save_forest"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-10-01"
+ },
+ {
+  "id": "gd.st.stages",
+  "name": "사냥터 9 완주",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.martial",
+  "name": "무예",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.mp",
+  "name": "MP",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.ladder",
+  "name": "사다리",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.gather",
+  "name": "채집",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.boss",
+  "name": "보스",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.background",
+  "name": "배경",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.gear",
+  "name": "장비 10부위 tier1~4·고유·주문서",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.ranged",
+  "name": "원거리 적",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.achievements",
+  "name": "업적",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.shop",
+  "name": "상점",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.quests",
+  "name": "사명 20/20(본편 13+반복/일일 7)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-22"
+ },
+ {
+  "id": "gd.st.jobs",
+  "name": "전직 4단(tier1~4 무예 완주)·SP 투자·칭호 라벨",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.npc-talk",
+  "name": "NPC_TALK 밀도",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.player-vroid",
+  "name": "플레이어 VRoid(임시)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.goal-board",
+  "name": "101-4 ①목표판+세션 카드",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.feel",
+  "name": "101-2 ①손맛 표준",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.move-feel",
+  "name": "101-2 ②이동 손맛",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.job-identity",
+  "name": "101-2 ③직업 정체성",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.gate-champion",
+  "name": "101-2 ④관문 대장",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.labyrinth",
+  "name": "101-2 ⑤비경",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.st.mentor-bond",
+  "name": "51장 \"관계\" 축 — 사제 유대",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-23"
+ },
+ {
+  "id": "gd.st.save",
+  "name": "세이브 왕복·마이그레이션(G-0001 추가)",
+  "files": [],
+  "tests": [
+   "save_story"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-10-01"
+ },
+ {
+  "id": "gd.rk.cities",
+  "name": "성 107",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.orders",
+  "name": "명령 7·전임",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.world-map",
+  "name": "월드맵",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.war-diplomacy",
+  "name": "전쟁·외교(조공·화친)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.annex",
+  "name": "정복 편입",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.loyalty-plots",
+  "name": "충성·계략·이간·매수",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.quiz",
+  "name": "문답 260·서고",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.population",
+  "name": "인구·재해·성벽·승진 5단·정복 후 관리",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.enemy-ai",
+  "name": "타 세력 AI(creed)·멸망 판정·경제 AI",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.scenarios",
+  "name": "시나리오 3+새 게임 UI",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.monster-sil",
+  "name": "3D 몬스터 실루엣",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.goal-board",
+  "name": "101-4 ①목표판+월간 요약 카드",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.victory",
+  "name": "101-2 ②승리 조건",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.ambition",
+  "name": "101-2 ③인물 특성·야망",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.duel-debate",
+  "name": "101-2 ④일기토·설전",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.event-chain",
+  "name": "101-2 ⑤이벤트 체인",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.succession",
+  "name": "101-2 ⑥계승",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "gd.rk.save",
+  "name": "세이브 왕복·마이그레이션(G-0001 추가)",
+  "files": [],
+  "tests": [
+   "save_realm"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-10-01"
+ }
+]

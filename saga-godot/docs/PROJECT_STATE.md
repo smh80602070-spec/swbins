@@ -3,6 +3,8 @@
 **현재 상태만, 세션 끝에 덮어쓴다(≤15KB).** 경위는 `docs/HISTORY.md` 에 append(15줄 이내). 규칙: PLAN 104장·SAGA-DESIGN §9.
 2026-09-16 이전 내용은 `docs/HISTORY.md` 첫 절에 있다.
 
+**"완료 요약" 표는 `saga-godot/features.json` 이 정본**, `docs/STATE.md` 는 그 생성본(G-0002 — 생성기는 W-0003 `tools/status.mjs` 뒤).
+
 ## 완료 요약 — 다섯 게임 × 진척
 
 | 게임 | 대표 씬 | VS 승인(100단계) | 51장 확장 진척(끝난 것) |
