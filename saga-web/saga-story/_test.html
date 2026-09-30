@@ -3070,6 +3070,8 @@ window.DG_NO_TUNE = true;
         if (!SC.roundWhy() || SC.roundWhy().indexOf('이야기') < 0 || SC.nextRound().ok) { bad.push('이야기 전에 열림'); }
         SC.state().done[CDt.CHAPTERS[0].id] = 1;
         if (SC.roundWhy() !== null || SC.roundNo() !== 1 || SC.roundFoe() !== 1 || SC.roundGain() !== 1) { bad.push('첫 회귀 조건 ' + SC.roundWhy()); }
+        S.enter('field'); var inField = SC.roundWhy(); S.leave(); S.enter('sinya'); var inTown = SC.roundWhy(); S.leave();
+        if (!inField || inField.indexOf('사냥터') < 0 || inTown !== null) { bad.push('사냥터 안 막힘·마을 열림 ' + inField + ' / ' + inTown); }
         /* 적 체력 — 1회차 기준 */
         function foeHp() {
           Math.random = function () { return 0.9; };

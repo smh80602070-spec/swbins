@@ -343,7 +343,7 @@
       '<span class="muted">적 ×' + roundFoe().toFixed(2) + ' · 보상 ×' + roundGain().toFixed(1) + '</span></div>' +
       (open
         ? '<div class="stat-row"><span class="muted">' + (rp.first ? '이야기를 다 봤습니다' : '이번 회차 처치 ' + Math.min(rp.kills, rp.needKills) + '/' + rp.needKills + ' · 층 답파 ' + Math.min(rp.clears, rp.needClears) + '/' + rp.needClears) + '</span></div>' +
-          (why ? '' : '<button class="btn wide primary" data-act="round-next">🔁 ' + (rn + 1) + '회차로 회귀 (적 ×' + roundFoe(rn + 1).toFixed(2) + ' · 보상 ×' + roundGain(rn + 1).toFixed(1) + ' · 금 +' + roundGold(rn + 1) + ')</button>')
+          (why ? '<div class="stat-row"><b>' + why + '</b></div>' : '<button class="btn wide primary" data-act="round-next">🔁 ' + (rn + 1) + '회차로 회귀 (적 ×' + roundFoe(rn + 1).toFixed(2) + ' · 보상 ×' + roundGain(rn + 1).toFixed(1) + ' · 금 +' + roundGold(rn + 1) + ')</button>')
         : '<div class="stat-row"><span class="muted">이야기를 다 본 뒤에 열립니다</span></div>') +
       '</div></div>';
   }

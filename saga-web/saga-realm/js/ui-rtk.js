@@ -1063,7 +1063,7 @@
       var mul = Q.debateMul(d.ok);
       html += '<div class="qresult ' + (mul >= 1 ? 'good' : 'bad') + '">정답 ' + d.ok + ' / ' + d.qs.length + ' — 성공률 ×' + mul + '</div>' +
         '<div class="camp-acts"><button class="btn primary" data-act="deb-go">📜 청한다</button>' +
-        '<button class="btn ghost" data-act="deb-quit">그만</button></div>';
+        (d.must ? '' : '<button class="btn ghost" data-act="deb-quit">그만</button>') + '</div>';
     } else {
       var p = d.qs[d.i], cat = QD.catOf(p.cat), j;
       html += '<small class="muted">제 ' + (d.i + 1) + ' / ' + d.qs.length + ' 문 · 맞힌 ' + d.ok + ' · ' + esc(DEBATE_TIP) + '</small>' +

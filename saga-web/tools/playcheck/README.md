@@ -4,6 +4,10 @@
 
 ```
 node serve.mjs C:/swbins/saga-web 8871        # 정적 서버(백그라운드로)
+node rk-stage.mjs [shot]                        # 사가국지 §5-13·5-14: 설전·성 차지·일기토 단계 카드 흐름(도입→문답/손 싸움→결과)·회차 카드 단추→2회차·예외 없나(shot 을 줄 때만 shots/rk_stage_*, 새 프로필로)
+node fs-ruin.mjs [shot]                         # 사가의숲 탑성 조각 번들: 돌무더기 여섯 자리·뒤지기(하루 한 번)·정자 서기·3D 예외 없나(shot 을 줄 때만 shots/fs_ruin_*)
+node st-tier5.mjs [shot]                        # 사가스토리 5차 전직·회귀: 무예창 5차·띠 첫 자리·천멸격 실전·이야기 시트 회귀 단추(마을에서만)·적 체력 ×1.25(shot 을 줄 때만 shots/st_tier5_*)
+node dg-round.mjs [shot]                        # 사가블로 회귀: 퀘스트 시트 🔁 카드·단추→2회차·적 체력·공격·보스 ×1.25(shot 을 줄 때만 shots/dg_round_*)
 node st-beyond.mjs [shot]                       # 사가스토리 5부: 문 너머 사냥터 셋 3D 예외 없나·적·보스·문 사슬·보스 몸(shot 을 줄 때만 shots/st_beyond_*, 새 프로필로)
 node fs-starpost.mjs [shot]                     # 사가의숲 별 우체통: 대보름 장을 마친 세이브에서 서는 자리·겹침·걸을 수 있나·3D 예외(shot 을 줄 때만 shots/fs_starpost, 새 프로필로)
 node st-mount.mjs [shot]                        # 사가스토리 탈것: 말 ×배율·학 날갯짓·무예를 쓰면 내림·3D 예외 없나(shot 을 줄 때만 shots/st_mount_*, 새 프로필로)

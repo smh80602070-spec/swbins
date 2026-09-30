@@ -271,7 +271,8 @@
     if (!on()) { return '이야기가 꺼져 있습니다'; }
     if (roundNo() >= ROUND_MAX) { return ROUND_MAX + '회차가 끝입니다'; }
     if (current()) { return '지금 있는 이야기를 다 본 뒤에 열립니다'; }
-    if (global.DG.side && global.DG.side.active && global.DG.side.active()) { return '사냥터 안에서는 못 합니다'; }
+    var sd = global.DG.side, rr = sd && sd.active && sd.active() && sd.raw && sd.raw();
+    if (rr && !(rr.stage && rr.stage.town)) { return '사냥터 안에서는 못 합니다(마을에서만)'; }
     var p = roundProgress();
     if (!p.done) { return '이번 회차에 처치 ' + p.need + '(지금 ' + p.kills + ')과 비경 5층 한 번(지금 ' + p.rift + ')이 더 필요합니다'; }
     return null;

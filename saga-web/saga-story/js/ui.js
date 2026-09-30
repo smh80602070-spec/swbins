@@ -391,7 +391,7 @@
       '<span class="muted">적 ×' + SC.roundFoe().toFixed(2) + ' · 보상 ×' + SC.roundGain().toFixed(1) + '</span></div>' +
       (rn < SC.ROUND_MAX && !SC.current()
         ? '<div class="stat-row"><span class="muted">' + (rp.first ? '이야기를 다 봤습니다' : '이번 회차 처치 ' + Math.min(rp.kills, rp.need) + '/' + rp.need + ' · 비경 5층 ' + Math.min(rp.rift, 1) + '/1') + '</span></div>' +
-          (why ? '' : '<button class="btn wide primary" data-act="round-next">🔁 ' + (rn + 1) + '회차로 회귀 (적 ×' + SC.roundFoe(rn + 1).toFixed(2) + ' · 보상 ×' + SC.roundGain(rn + 1).toFixed(1) + ' · 금 +' + (SC.roundGold(rn + 1) || 0) + ')</button>')
+          (why ? '<div class="stat-row"><b>' + esc(why) + '</b></div>' : '<button class="btn wide primary" data-act="round-next">🔁 ' + (rn + 1) + '회차로 회귀 (적 ×' + SC.roundFoe(rn + 1).toFixed(2) + ' · 보상 ×' + SC.roundGain(rn + 1).toFixed(1) + ' · 금 +' + (SC.roundGold(rn + 1) || 0) + ')</button>')
         : '<div class="stat-row"><span class="muted">이야기를 다 본 뒤에 열립니다</span></div>') +
       '</div>';
     return html;
