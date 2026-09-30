@@ -9781,3 +9781,11 @@ PROJECT_STATE.md` 참고. 요약:
 - 새 시스템 노드들이 매 물리 틱마다 배지(받을 수)를 다시 셌다: hunt_log 는 종 서른둘을 도는 claimable_total(270µs), 메뉴는 그걸 또 부르고(합 490µs), weekly_goals 는 업적 셈(value_of — 탐험도 regions_full 255µs·지점 26µs)까지 읽어 노드 아홉 개가 틱당 약 1ms(헤드리스 PC) — 폰이면 3~5배로 16ms 틱의 큰 몫. hunt_log·weekly_goals·hud_menu 의 배지·표시 갱신을 0.25초마다로 늦춤 → 아홉 노드 합 틱당 약 90µs(측정 스크래치 cost.gd·frame.gd). 나머지(알·마당·재출항·도움말·자동 저장·사진첩)는 값싼 읽기뿐.
 - 교훈: UI 갱신에서 셈 함수(도감·업적·지도 탐험도 등)를 매 틱 부르지 말 것 — 폰에서 재고 0.25초 캐시.
 - 사고 기록: 측정 명령 끝에 습관으로 `git stash` 를 한 줄 잘못 넣어 다른 세션의 웹 수정까지 잠깐 보관됐다가 곧바로 pop 으로 복구(내용 그대로). 이 저장소에서 git stash 는 쓰지 않는다.
+
+## 의상 착용 교체 — 옷만 갈아 끼우는 모듈과 점검 (2026-09-30, "이어해")
+
+- 사용자 지시: 얼굴·몸은 고정, **장비 세팅마다 옷만** 달라지게. 설계 정본 `tools/char-forge/COSTUME-SYSTEM.md`(§1 층 세 겹: 장비 위에 캐시 의상이 덮임, §8 VRM 방식). 얼굴은 VRoid 몸으로, 옷은 조각 질감 교체.
+- 새 `games/saga_go/world/wardrobe.gd`(정적 도우미): 아이템 표 읽기·`visible_look(gear, cosmetic)`(캐시 ?? 장비)·`apply(body, base, look)`(셀 셰이더 재질의 `albedo_texture` 만 교체 — VRoid 재질 이름 `Tops/Bottoms/Shoes` 로 슬롯 판별)·세이브 왕복. 기존 파일은 안 고쳤다.
+- 자산 `assets/wardrobe/AvatarSample_A/`: 상의·하의·신발 × AI 무늬 32종 = 96 변형 WebP(8.8MB) + `items.json`. `tools/char-forge/make_wardrobe_textures.py` 산출물의 사본(원본은 로컬 `_out/wardrobe`).
+- 점검 `tools/probe_wardrobe.gd`: 15항목 OK(96 아이템·캐시 덮기·장비 유지·원래 옷 유지·세이브 왕복·질감 실제 교체·둘째 몸 번짐 없음).
+- **아직 안 한 것**: 플레이어 씬에 착용 상태를 물리는 일(세이브 새 키·UI·획득 경로) — 자리는 정해졌으나 다른 시스템과 겹칠 수 있어 따로. 옷 **모양**은 VRoid 에서 손으로 늘려야 한다(무늬만 자동). 이 헤드리스 점검이 임포트하며 기존 `.import` 57개를 건드려 되돌렸다(다른 Godot 버전 임포트 부수 효과 — 임포트 뒤 `git status` 로 확인할 것).

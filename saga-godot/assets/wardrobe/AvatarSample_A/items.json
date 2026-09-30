@@ -1,0 +1,774 @@
+{
+ "note": "AvatarSample_A 옷 변형 아이템 표 — tools/char-forge/make_wardrobe_textures.py 산출. 텍스처 = <slot>/<pattern>.webp",
+ "base": "AvatarSample_A",
+ "items": [
+  {
+   "id": "cos_AvatarSample_A_bottom_bamboo_green",
+   "name": "대나무 비단 하의",
+   "slot": "bottom",
+   "pattern": "bamboo_green",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_batik_indigo",
+   "name": "쪽빛 염색 하의",
+   "slot": "bottom",
+   "pattern": "batik_indigo",
+   "rarity": 2,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_brocade_gold",
+   "name": "금빛 비단무늬 하의",
+   "slot": "bottom",
+   "pattern": "brocade_gold",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_buffalo_plaid",
+   "name": "붉은 체크 플란넬 하의",
+   "slot": "bottom",
+   "pattern": "buffalo_plaid",
+   "rarity": 3,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_camo_green",
+   "name": "녹색 얼룩무늬 하의",
+   "slot": "bottom",
+   "pattern": "camo_green",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_canvas_beige",
+   "name": "베이지 캔버스 하의",
+   "slot": "bottom",
+   "pattern": "canvas_beige",
+   "rarity": 5,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_carbon_weave",
+   "name": "탄소 직조 하의",
+   "slot": "bottom",
+   "pattern": "carbon_weave",
+   "rarity": 5,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_checker_bw",
+   "name": "흑백 체크 하의",
+   "slot": "bottom",
+   "pattern": "checker_bw",
+   "rarity": 5,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_circuit_neon",
+   "name": "빛나는 회로 하의",
+   "slot": "bottom",
+   "pattern": "circuit_neon",
+   "rarity": 5,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_coins_maroon",
+   "name": "엽전무늬 하의",
+   "slot": "bottom",
+   "pattern": "coins_maroon",
+   "rarity": 4,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_cyber_gradient",
+   "name": "사이버 그라데이션 하의",
+   "slot": "bottom",
+   "pattern": "cyber_gradient",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_damask_crimson",
+   "name": "진홍 다마스크 하의",
+   "slot": "bottom",
+   "pattern": "damask_crimson",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_denim_worn",
+   "name": "낡은 청 하의",
+   "slot": "bottom",
+   "pattern": "denim_worn",
+   "rarity": 4,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_ethnic_geo",
+   "name": "민속 기하무늬 하의",
+   "slot": "bottom",
+   "pattern": "ethnic_geo",
+   "rarity": 4,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_floral_blue",
+   "name": "푸른 꽃무늬 하의",
+   "slot": "bottom",
+   "pattern": "floral_blue",
+   "rarity": 3,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_heraldic_blue_gold",
+   "name": "푸른 금문장 하의",
+   "slot": "bottom",
+   "pattern": "heraldic_blue_gold",
+   "rarity": 4,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_herringbone_camel",
+   "name": "낙타색 헤링본 하의",
+   "slot": "bottom",
+   "pattern": "herringbone_camel",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_holo_iridescent",
+   "name": "무지갯빛 홀로 하의",
+   "slot": "bottom",
+   "pattern": "holo_iridescent",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_lace_white",
+   "name": "흰 레이스 하의",
+   "slot": "bottom",
+   "pattern": "lace_white",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_leather_brown",
+   "name": "낡은 갈색 가죽 하의",
+   "slot": "bottom",
+   "pattern": "leather_brown",
+   "rarity": 4,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_leather_studs",
+   "name": "징 박은 검은 가죽 하의",
+   "slot": "bottom",
+   "pattern": "leather_studs",
+   "rarity": 5,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_linen_stripes",
+   "name": "푸른 줄 마 하의",
+   "slot": "bottom",
+   "pattern": "linen_stripes",
+   "rarity": 2,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_sakura_pink",
+   "name": "벚꽃 하의",
+   "slot": "bottom",
+   "pattern": "sakura_pink",
+   "rarity": 4,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_scale_silver",
+   "name": "은빛 비늘 하의",
+   "slot": "bottom",
+   "pattern": "scale_silver",
+   "rarity": 4,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_silk_red_gold",
+   "name": "금수 붉은 비단 하의",
+   "slot": "bottom",
+   "pattern": "silk_red_gold",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_starry_night",
+   "name": "별밤 하의",
+   "slot": "bottom",
+   "pattern": "starry_night",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_stripes_pastel",
+   "name": "파스텔 줄무늬 하의",
+   "slot": "bottom",
+   "pattern": "stripes_pastel",
+   "rarity": 5,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_sunflower",
+   "name": "해바라기 하의",
+   "slot": "bottom",
+   "pattern": "sunflower",
+   "rarity": 4,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_tartan_green",
+   "name": "초록 격자 하의",
+   "slot": "bottom",
+   "pattern": "tartan_green",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_tweed_grey",
+   "name": "회색 트위드 하의",
+   "slot": "bottom",
+   "pattern": "tweed_grey",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_velvet_purple",
+   "name": "보라 벨벳 하의",
+   "slot": "bottom",
+   "pattern": "velvet_purple",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_bottom_waves_teal",
+   "name": "청록 물결 하의",
+   "slot": "bottom",
+   "pattern": "waves_teal",
+   "rarity": 2,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_bamboo_green",
+   "name": "대나무 비단 신발",
+   "slot": "shoes",
+   "pattern": "bamboo_green",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_batik_indigo",
+   "name": "쪽빛 염색 신발",
+   "slot": "shoes",
+   "pattern": "batik_indigo",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_brocade_gold",
+   "name": "금빛 비단무늬 신발",
+   "slot": "shoes",
+   "pattern": "brocade_gold",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_buffalo_plaid",
+   "name": "붉은 체크 플란넬 신발",
+   "slot": "shoes",
+   "pattern": "buffalo_plaid",
+   "rarity": 3,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_camo_green",
+   "name": "녹색 얼룩무늬 신발",
+   "slot": "shoes",
+   "pattern": "camo_green",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_canvas_beige",
+   "name": "베이지 캔버스 신발",
+   "slot": "shoes",
+   "pattern": "canvas_beige",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_carbon_weave",
+   "name": "탄소 직조 신발",
+   "slot": "shoes",
+   "pattern": "carbon_weave",
+   "rarity": 4,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_checker_bw",
+   "name": "흑백 체크 신발",
+   "slot": "shoes",
+   "pattern": "checker_bw",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_circuit_neon",
+   "name": "빛나는 회로 신발",
+   "slot": "shoes",
+   "pattern": "circuit_neon",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_coins_maroon",
+   "name": "엽전무늬 신발",
+   "slot": "shoes",
+   "pattern": "coins_maroon",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_cyber_gradient",
+   "name": "사이버 그라데이션 신발",
+   "slot": "shoes",
+   "pattern": "cyber_gradient",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_damask_crimson",
+   "name": "진홍 다마스크 신발",
+   "slot": "shoes",
+   "pattern": "damask_crimson",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_denim_worn",
+   "name": "낡은 청 신발",
+   "slot": "shoes",
+   "pattern": "denim_worn",
+   "rarity": 4,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_ethnic_geo",
+   "name": "민속 기하무늬 신발",
+   "slot": "shoes",
+   "pattern": "ethnic_geo",
+   "rarity": 4,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_floral_blue",
+   "name": "푸른 꽃무늬 신발",
+   "slot": "shoes",
+   "pattern": "floral_blue",
+   "rarity": 4,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_heraldic_blue_gold",
+   "name": "푸른 금문장 신발",
+   "slot": "shoes",
+   "pattern": "heraldic_blue_gold",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_herringbone_camel",
+   "name": "낙타색 헤링본 신발",
+   "slot": "shoes",
+   "pattern": "herringbone_camel",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_holo_iridescent",
+   "name": "무지갯빛 홀로 신발",
+   "slot": "shoes",
+   "pattern": "holo_iridescent",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_lace_white",
+   "name": "흰 레이스 신발",
+   "slot": "shoes",
+   "pattern": "lace_white",
+   "rarity": 4,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_leather_brown",
+   "name": "낡은 갈색 가죽 신발",
+   "slot": "shoes",
+   "pattern": "leather_brown",
+   "rarity": 3,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_leather_studs",
+   "name": "징 박은 검은 가죽 신발",
+   "slot": "shoes",
+   "pattern": "leather_studs",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_linen_stripes",
+   "name": "푸른 줄 마 신발",
+   "slot": "shoes",
+   "pattern": "linen_stripes",
+   "rarity": 3,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_sakura_pink",
+   "name": "벚꽃 신발",
+   "slot": "shoes",
+   "pattern": "sakura_pink",
+   "rarity": 3,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_scale_silver",
+   "name": "은빛 비늘 신발",
+   "slot": "shoes",
+   "pattern": "scale_silver",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_silk_red_gold",
+   "name": "금수 붉은 비단 신발",
+   "slot": "shoes",
+   "pattern": "silk_red_gold",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_starry_night",
+   "name": "별밤 신발",
+   "slot": "shoes",
+   "pattern": "starry_night",
+   "rarity": 2,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_stripes_pastel",
+   "name": "파스텔 줄무늬 신발",
+   "slot": "shoes",
+   "pattern": "stripes_pastel",
+   "rarity": 4,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_sunflower",
+   "name": "해바라기 신발",
+   "slot": "shoes",
+   "pattern": "sunflower",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_tartan_green",
+   "name": "초록 격자 신발",
+   "slot": "shoes",
+   "pattern": "tartan_green",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_tweed_grey",
+   "name": "회색 트위드 신발",
+   "slot": "shoes",
+   "pattern": "tweed_grey",
+   "rarity": 4,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_velvet_purple",
+   "name": "보라 벨벳 신발",
+   "slot": "shoes",
+   "pattern": "velvet_purple",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_shoes_waves_teal",
+   "name": "청록 물결 신발",
+   "slot": "shoes",
+   "pattern": "waves_teal",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_bamboo_green",
+   "name": "대나무 비단 상의",
+   "slot": "top",
+   "pattern": "bamboo_green",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_batik_indigo",
+   "name": "쪽빛 염색 상의",
+   "slot": "top",
+   "pattern": "batik_indigo",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_brocade_gold",
+   "name": "금빛 비단무늬 상의",
+   "slot": "top",
+   "pattern": "brocade_gold",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_buffalo_plaid",
+   "name": "붉은 체크 플란넬 상의",
+   "slot": "top",
+   "pattern": "buffalo_plaid",
+   "rarity": 3,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_camo_green",
+   "name": "녹색 얼룩무늬 상의",
+   "slot": "top",
+   "pattern": "camo_green",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_canvas_beige",
+   "name": "베이지 캔버스 상의",
+   "slot": "top",
+   "pattern": "canvas_beige",
+   "rarity": 3,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_carbon_weave",
+   "name": "탄소 직조 상의",
+   "slot": "top",
+   "pattern": "carbon_weave",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_checker_bw",
+   "name": "흑백 체크 상의",
+   "slot": "top",
+   "pattern": "checker_bw",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_circuit_neon",
+   "name": "빛나는 회로 상의",
+   "slot": "top",
+   "pattern": "circuit_neon",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_coins_maroon",
+   "name": "엽전무늬 상의",
+   "slot": "top",
+   "pattern": "coins_maroon",
+   "rarity": 3,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_cyber_gradient",
+   "name": "사이버 그라데이션 상의",
+   "slot": "top",
+   "pattern": "cyber_gradient",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_damask_crimson",
+   "name": "진홍 다마스크 상의",
+   "slot": "top",
+   "pattern": "damask_crimson",
+   "rarity": 4,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_denim_worn",
+   "name": "낡은 청 상의",
+   "slot": "top",
+   "pattern": "denim_worn",
+   "rarity": 3,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_ethnic_geo",
+   "name": "민속 기하무늬 상의",
+   "slot": "top",
+   "pattern": "ethnic_geo",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_floral_blue",
+   "name": "푸른 꽃무늬 상의",
+   "slot": "top",
+   "pattern": "floral_blue",
+   "rarity": 2,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_heraldic_blue_gold",
+   "name": "푸른 금문장 상의",
+   "slot": "top",
+   "pattern": "heraldic_blue_gold",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_herringbone_camel",
+   "name": "낙타색 헤링본 상의",
+   "slot": "top",
+   "pattern": "herringbone_camel",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_holo_iridescent",
+   "name": "무지갯빛 홀로 상의",
+   "slot": "top",
+   "pattern": "holo_iridescent",
+   "rarity": 3,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_lace_white",
+   "name": "흰 레이스 상의",
+   "slot": "top",
+   "pattern": "lace_white",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_leather_brown",
+   "name": "낡은 갈색 가죽 상의",
+   "slot": "top",
+   "pattern": "leather_brown",
+   "rarity": 4,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_leather_studs",
+   "name": "징 박은 검은 가죽 상의",
+   "slot": "top",
+   "pattern": "leather_studs",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_linen_stripes",
+   "name": "푸른 줄 마 상의",
+   "slot": "top",
+   "pattern": "linen_stripes",
+   "rarity": 3,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_sakura_pink",
+   "name": "벚꽃 상의",
+   "slot": "top",
+   "pattern": "sakura_pink",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_scale_silver",
+   "name": "은빛 비늘 상의",
+   "slot": "top",
+   "pattern": "scale_silver",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_silk_red_gold",
+   "name": "금수 붉은 비단 상의",
+   "slot": "top",
+   "pattern": "silk_red_gold",
+   "rarity": 5,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_starry_night",
+   "name": "별밤 상의",
+   "slot": "top",
+   "pattern": "starry_night",
+   "rarity": 2,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_stripes_pastel",
+   "name": "파스텔 줄무늬 상의",
+   "slot": "top",
+   "pattern": "stripes_pastel",
+   "rarity": 5,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_sunflower",
+   "name": "해바라기 상의",
+   "slot": "top",
+   "pattern": "sunflower",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_tartan_green",
+   "name": "초록 격자 상의",
+   "slot": "top",
+   "pattern": "tartan_green",
+   "rarity": 1,
+   "kind": "cash"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_tweed_grey",
+   "name": "회색 트위드 상의",
+   "slot": "top",
+   "pattern": "tweed_grey",
+   "rarity": 1,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_velvet_purple",
+   "name": "보라 벨벳 상의",
+   "slot": "top",
+   "pattern": "velvet_purple",
+   "rarity": 3,
+   "kind": "gear"
+  },
+  {
+   "id": "cos_AvatarSample_A_top_waves_teal",
+   "name": "청록 물결 상의",
+   "slot": "top",
+   "pattern": "waves_teal",
+   "rarity": 3,
+   "kind": "cash"
+  }
+ ]
+}
