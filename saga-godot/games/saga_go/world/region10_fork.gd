@@ -17,7 +17,7 @@ const PropMaterial := preload("res://games/saga_go/world/prop_material.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const VegetationBuilder := preload("res://games/saga_go/world/vegetation_builder.gd")
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 
 const REGION := "fork"
 const DISCOVER_R := 30.0

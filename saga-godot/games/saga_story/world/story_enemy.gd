@@ -43,7 +43,7 @@ const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 const StoryGearPickup := preload("res://games/saga_story/world/story_gear_pickup.gd")
 const StoryGoldPickup := preload("res://games/saga_story/world/story_gold_pickup.gd")
 const StoryEnemyShot := preload("res://games/saga_story/world/story_enemy_shot.gd")
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 
 ## 사냥터별 몸 모양(GO 짐승 공방 재사용 — 캡슐 대신). 정해진 게 없으면(비경 등) 도깨비꼴.
 const KIND_BY_STAGE := {"field": "goblin", "forest": "wolf", "cave": "beast", "gorge": "bear"}

@@ -11,7 +11,7 @@ extends Node3D
 
 signal opened(chest: Node3D)
 
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const Elements := preload("res://games/saga_go/combat/elements.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")

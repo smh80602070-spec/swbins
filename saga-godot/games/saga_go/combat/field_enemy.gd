@@ -9,7 +9,7 @@ extends CharacterBody3D
 const Elements := preload("res://games/saga_go/combat/elements.gd")
 const Growth := preload("res://games/saga_go/data/growth.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const Adventure := preload("res://games/saga_go/data/adventure.gd")
 
 signal died(enemy: Node)

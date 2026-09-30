@@ -17,7 +17,7 @@ const Growth := preload("res://games/saga_go/data/growth.gd")
 const Weapons := preload("res://games/saga_go/data/weapons.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 enum S { IDLE, AIM, WAIT, NIBBLE, BITE, REEL }

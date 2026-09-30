@@ -13,7 +13,7 @@ extends Node3D
 const PropMaterial := preload("res://games/saga_go/world/prop_material.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 
 const DISCOVER_R := 30.0
 ## 조선소 칸(바다 칸 (7,3) 남쪽 물가 — 북쪽 = 바다). 둘레 1칸 안의 가장 가까운 것: 조개 무리 (6.8,4.1) 29m · 쇠부리 터 비경 (7.3,4.6) 36m.

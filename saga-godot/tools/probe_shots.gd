@@ -16,7 +16,7 @@ const Characters := preload("res://saga_core/data/characters.gd")
 const DispatchNode := preload("res://games/saga_go/world/dispatch.gd")
 const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")
 const Elements := preload("res://games/saga_go/combat/elements.gd")
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 
 const SETTLE := 90

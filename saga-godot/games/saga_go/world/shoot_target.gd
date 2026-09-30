@@ -9,7 +9,7 @@ extends Node3D
 
 signal struck(target: Node3D)
 
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 
 const BOARD_R := 0.6
 const SWAY_PERIOD := 4.0

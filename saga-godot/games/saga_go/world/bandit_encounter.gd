@@ -31,7 +31,7 @@ const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 ## Player.tscn과 동일(2.7m 실측 → 1.25배).
 const BANDIT_GLB := "res://assets/characters/character-d.glb"
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 ## PLAN 106장 ④ — 씬 노드 이름 → 겉모습(씬 파일은 안 고친다).
 const LOOK_BY_NODE := {
 	"BanditLeaderEncounter": "leader",

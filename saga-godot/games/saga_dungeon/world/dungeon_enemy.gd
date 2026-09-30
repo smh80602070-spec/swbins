@@ -61,7 +61,7 @@ const BOSS_SCALE := 22.0 / 13.0  # dungeon.js spawnEnemy()의 r = boss?22:13 그
 const ELITE_SCALE := 16.0 / 13.0  # spawnEnemy()의 정예 r=16 그대로
 const SHADE_SCALE := 10.0 / 13.0  # spawnEnemy()의 그림자 분신 r=10 그대로
 const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")  # 색 캡슐 대신 GO 짐승 공방 몸(2026-09-30)
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")  # 색 캡슐 대신 GO 짐승 공방 몸(2026-09-30)
 const Toast := preload("res://saga_core/ui/toast.gd")  # "그림자가 갈라졌다" 토스트용
 
 ## dungeon.js ELITES 그대로(8종, 색까지 원작 값) — hp/dmg 배율 없는 항목은

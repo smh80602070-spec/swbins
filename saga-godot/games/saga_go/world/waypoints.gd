@@ -9,7 +9,7 @@ extends Node3D
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
-const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const HouseBuilder := preload("res://games/saga_go/world/house_builder.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
