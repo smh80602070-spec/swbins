@@ -2966,6 +2966,94 @@ window.DG_NO_TUNE = true;
       return bar.length === 8 && t4 === 4 && t3 === 4 && out;
     });
 
+    /* ── 5차 전직 (2026-09-30, PLAN §10-Q7) ───────────────── */
+
+    t('갈래 넷이 저마다 5차까지 이어지고, 각성기 둘은 4차 사슬 끝에 붙어 그 유파·효과를 그대로 쓴다', function () {
+      var ends = JD.JOBS.filter(function (j) { return j.tier === 5; }), bad = [];
+      if (ends.length !== 4) { bad.push('5차 ' + ends.length); }
+      ends.forEach(function (j) {
+        var chain = [], k = j;
+        while (k) { chain.unshift(k.key); k = k.from ? JD.job(k.from) : null; }
+        if (chain.length !== 6 || chain[0] !== 'none') { bad.push(j.key + ' 사슬 ' + chain.length); }
+        if (j.need !== 80 || JD.job(j.from).tier !== 4) { bad.push(j.key + ' 자리'); }
+        var mine = JD.SKILLS.filter(function (s) { return s.job === j.key; });
+        if (mine.length !== 2) { bad.push(j.key + ' 무예 ' + mine.length); }
+        mine.forEach(function (s) {
+          var base = JD.skill(s.need.key);
+          if (!base || base.job !== j.from) { bad.push(s.key + ' need ' + s.need.key); }
+          else if (base.school !== s.school) { bad.push(s.key + ' 유파'); }
+          if (!JD.schoolDef(s.school) || JD.schoolDef(s.school).job !== chain[1]) { bad.push(s.key + ' 유파표'); }
+          if (s.max !== 10 || s.need.lv !== 5 || s.cost <= base.cost) { bad.push(s.key + ' 수치'); }
+        });
+      });
+      if (bad.length) { throw new Error(bad.join(', ')); }
+      return ends.map(function (j) { return j.name; }).join(' · ');
+    });
+
+    t('5차는 Lv.80 이고 4차 무예 하나를 10(만렙) 익혀야 오르며, 각성기는 4차 사슬을 밟아야 열리고, 띠는 여덟 그대로 5차가 맨 윗자리를 차지한다', function () {
+      unlearn();
+      C.save.player.level = 90;
+      J.join('warrior');
+      var i;
+      for (i = 0; i < 5; i++) { J.raise('w_cut'); }
+      J.join('general');
+      for (i = 0; i < 8; i++) { J.raise('g_smash'); }
+      J.join('marshal');
+      for (i = 0; i < 10; i++) { J.raise('n_heaven'); }
+      J.join('warlord');
+      for (i = 0; i < 5; i++) { J.raise('o_ruin'); }
+      C.save.player.level = 79;
+      var lowLv = J.canJoin('godwar');
+      C.save.player.level = 80;
+      var lowSkill = J.canJoin('godwar');                // 4차 무예가 아직 5
+      for (i = 0; i < 5; i++) { J.raise('o_ruin'); }
+      var okNow = J.canJoin('godwar');
+      var joined = J.join('godwar');
+      var opens = J.canRaise('p_wrath'), locked = J.canRaise('p_banner');    // 패천기 0 이라 군신강림은 잠김
+      for (i = 0; i < 3; i++) { J.raise('p_wrath'); }
+      var bar = J.bar(), top = bar[0], tiers = bar.map(function (sk) { return JD.job(sk.job).tier; });
+      var out = 'Lv.79 "' + lowLv + '" · 무예 5 "' + lowSkill + '" · 10 뒤 ' + (joined ? '오름' : '못 오름') + ' · 띠 ' + bar.length + '칸 첫 자리 ' + (top && top.name);
+      unlearn();
+      return !!lowLv && lowLv.indexOf('80') >= 0 && !!lowSkill && lowSkill.indexOf('10') >= 0 && okNow === null && joined &&
+        opens === null && !!locked && bar.length <= 8 && top.key === 'p_wrath' && tiers[0] === 5 && out;
+    });
+
+    t('5차 각성기도 실제로 적을 친다(천멸격) · 5차가 되어도 4차 무예는 그대로 쓴다', function () {
+      unlearn();
+      if (S.active()) { S.leave(); }
+      C.save.player.level = 90;
+      J.join('warrior');
+      var i;
+      for (i = 0; i < 5; i++) { J.raise('w_cut'); }
+      J.join('general');
+      for (i = 0; i < 8; i++) { J.raise('g_smash'); }
+      J.join('marshal');
+      for (i = 0; i < 10; i++) { J.raise('n_heaven'); }
+      J.join('warlord');
+      for (i = 0; i < 10; i++) { J.raise('o_ruin'); }
+      C.save.player.level = 90;
+      J.join('godwar');
+      for (i = 0; i < 3; i++) { J.raise('p_wrath'); }
+      S.enter('field');
+      var run = S.raw(), p = run.player;
+      calm(run);
+      p.x = 200; p.y = run.stage.floor - S.P_H; p.onGround = true; p.facing = 1;
+      run.enemies = [{ ref: { name: '허수아비', kind: 'human', look: {} },
+                       x: p.x + 40, y: p.y, w: 34, h: 34,
+                       hp: 99999, hpMax: 99999, dmg: 0, dir: -1, homeY: p.y + 34,
+                       spd: 0, phase: 0, hurt: 0, cd: 99 }];
+      run.mp = run.mpMax = 999;
+      var bar = J.bar(), at = -1, at4 = -1;
+      for (i = 0; i < bar.length; i++) { if (bar[i].key === 'p_wrath') { at = i; } if (bar[i].key === 'o_ruin') { at4 = i; } }
+      var before = run.enemies[0].hp;
+      if (at >= 0) { S.castSkill(at); }
+      var dealt = before - run.enemies[0].hp;
+      var okOld = at4 >= 0;
+      S.leave();
+      unlearn();
+      return at >= 0 && okOld && dealt > 0 && ('천멸격 ' + at + '번 자리 · 피해 ' + dealt + ' · 파멸격도 띠에 ' + at4 + '번');
+    });
+
     t('4차 무예도 실제로 적을 친다', function () {
       unlearn();
       if (S.active()) { S.leave(); }
@@ -2999,13 +3087,13 @@ window.DG_NO_TUNE = true;
       return at >= 0 && dealt > 0 && ('파멸격 ' + at + '번 자리 · 피해 ' + dealt);
     });
 
-    t('무예 아흔여섯은 side.js 가 아는 효과 아홉만 쓴다', function () {
+    t('무예 백넷(5차 각성기 여덟 포함)은 side.js 가 아는 효과 아홉만 쓴다', function () {
       /* 데이터는 **무엇을 할지만** 적고 어떻게 하는지는 side.js 에만 있다.
          새 효과를 만들면 그 규칙을 두 곳에 적게 된다 — 3차·4차, 다섯째·여섯째
          무예를 넣으며 하나도 안 늘렸다(2026-09-10, 64 → 80 → 2026-09-11, 96). */
       var KNOWN = ['melee', 'aoe', 'bolt', 'arrow', 'volley', 'dash', 'rain', 'buff', 'heal'];
       var bad = JD.SKILLS.filter(function (sk) { return KNOWN.indexOf(sk.effect) < 0; });
-      return JD.SKILLS.length === 96 && bad.length === 0 &&
+      return JD.SKILLS.length === 104 && bad.length === 0 &&
         ('무예 ' + JD.SKILLS.length + ' · 효과 ' + KNOWN.length + ' · 모르는 것 0');
     });
 

@@ -7,7 +7,9 @@
  *   3) Lv.25 에 **2차 전직** — 같은 갈래의 윗자리로 오르고 무예 셋이 열린다
  *   4) Lv.45 에 **3차 전직** — 무예 넷이 더 열린다 (2026-08-26)
  *   5) Lv.70 에 **4차 전직** — 갈래의 끝. 무예 넷이 더 열린다 (2026-09-10)
- *   6) 레벨마다 **무예 점수(SP) 3점**. 점수를 부어 무예를 올린다
+ *   6) Lv.80 에 **5차 전직** — 원작 문법에 없던 단(2026-09-30, PLAN §10-Q7). 무예는 갈래마다 **둘**뿐 —
+ *      4차 무예 사슬 둘의 끝에 붙는 각성기다(효과는 아홉 그대로, 유파도 그 사슬의 것)
+ *   7) 레벨마다 **무예 점수(SP)**. 점수를 부어 무예를 올린다(지금은 2점 — §5-2)
  *
  * **SP 는 세이브에 따로 담지 않는다.** 총점은 (레벨-1)×3 이고 쓴 점수는 찍은
  * 무예 레벨의 합이다 — 파생값이라 옛 세이브도 그냥 맞는다(core.js 를 안 건드린다).
@@ -64,7 +66,17 @@
     { key: 'reaper', name: '명왕(冥王)', emoji: '👑', tier: 4, need: 70, from: 'wraith',
       grow: { hp: 155, atk: 30 }, desc: '귀영의 윗자리 — 저승의 문지기가 된다' },
     { key: 'ascendant', name: '천존(天尊)', emoji: '🌠', tier: 4, need: 70, from: 'immortal',
-      grow: { hp: 130, atk: 26, mp: 260 }, desc: '진인의 윗자리 — 하늘과 땅을 굽어본다' }
+      grow: { hp: 130, atk: 26, mp: 260 }, desc: '진인의 윗자리 — 하늘과 땅을 굽어본다' },
+
+    /* 5차 — 4차 무예 하나를 끝까지 익힌 사람만(canJoin 은 4차와 같은 10). 범용 칭호만 쓴다 */
+    { key: 'godwar', name: '군신(軍神)', emoji: '🏵️', tier: 5, need: 80, from: 'warlord',
+      grow: { hp: 420, atk: 27 }, desc: '전신의 윗자리 — 전장이 그의 이름을 따른다' },
+    { key: 'skybow', name: '천궁(天弓)', emoji: '🌈', tier: 5, need: 80, from: 'falcon',
+      grow: { hp: 160, atk: 52 }, desc: '궁성의 윗자리 — 활을 든 곳이 하늘이다' },
+    { key: 'noshadow', name: '무영(無影)', emoji: '🫥', tier: 5, need: 80, from: 'reaper',
+      grow: { hp: 210, atk: 40 }, desc: '명왕의 윗자리 — 베이고 난 뒤에야 보인다' },
+    { key: 'voidsage', name: '태허(太虛)', emoji: '🪐', tier: 5, need: 80, from: 'ascendant',
+      grow: { hp: 175, atk: 35, mp: 360 }, desc: '천존의 윗자리 — 비어 있어서 무엇이든 담는다' }
   ];
 
   /**
@@ -372,7 +384,33 @@
       desc: '신선의 걸음으로 세상을 건넌다 — 이형보 5' },
     { key: 'z_orb', job: 'ascendant', school: 'm_tan', name: '성라탄(星羅彈)', emoji: '🔵', cost: 56, cd: 8, max: 10,
       effect: 'volley', mul: [2.4, 0.2], shots: 8, need: { key: 'i_orb', lv: 5 },
-      desc: '별자리 여덟이 한꺼번에 쏟아진다 — 유성탄 5' }
+      desc: '별자리 여덟이 한꺼번에 쏟아진다 — 유성탄 5' },
+
+    /* 5차 각성기 — 갈래마다 둘. 4차 사슬 하나의 끝에 붙고(need 5) 그 유파를 그대로 쓴다 */
+    { key: 'p_wrath', job: 'godwar', school: 'w_jung', name: '천멸격(天滅擊)', emoji: '☄️', cost: 74, cd: 13, max: 10,
+      effect: 'melee', mul: [8.4, 0.76], hits: 5, need: { key: 'o_ruin', lv: 5 },
+      desc: '앞을 다섯 번 내리쳐 하늘을 무너뜨린다 — 파멸격 5' },
+    { key: 'p_banner', job: 'godwar', school: 'w_su', name: '군신강림(軍神降臨)', emoji: '🏵️', cost: 72, cd: 32, max: 10,
+      effect: 'buff', mul: [0, 0], buff: { sec: 20, atk: 2.2, guard: 0.6, regen: 3.4 },
+      need: { key: 'o_conquer', lv: 5 }, desc: '20초간 전장의 이름을 몸에 둘렀다 — 패천기 5' },
+    { key: 'p_stars', job: 'skybow', school: 'a_yeon', name: '성궁만천(星弓滿天)', emoji: '🌌', cost: 68, cd: 9, max: 10,
+      effect: 'volley', mul: [2.9, 0.24], shots: 16, need: { key: 'h_swarm', lv: 5 },
+      desc: '화살 열여섯이 별처럼 흩어진다 — 십이시 5' },
+    { key: 'p_sun', job: 'skybow', school: 'a_gwan', name: '일월시(日月矢)', emoji: '🌞', cost: 72, cd: 11, max: 10,
+      effect: 'bolt', mul: [10.5, 0.85], need: { key: 'h_ray', lv: 5 },
+      desc: '해와 달을 한 살에 꿴다 — 광시 5' },
+    { key: 'p_afterimage', job: 'noshadow', school: 'r_cham', name: '무영참(無影斬)', emoji: '🫥', cost: 72, cd: 10, max: 10,
+      effect: 'melee', mul: [3.6, 0.3], hits: 12, need: { key: 'd_carve', lv: 5 },
+      desc: '열두 번 그은 뒤에야 모습이 남는다 — 팔도 5' },
+    { key: 'p_gate', job: 'noshadow', school: 'r_bo', name: '유명문(幽冥門)', emoji: '🚪', cost: 62, cd: 9, max: 10,
+      effect: 'dash', mul: [4.6, 0.38], dist: 460, invuln: 2, need: { key: 'd_veil', lv: 5 },
+      desc: '문을 열고 닫는 사이에 건너간다 — 명계보 5' },
+    { key: 'p_void', job: 'voidsage', school: 'm_jin', name: '태허붕(太虛崩)', emoji: '🌑', cost: 88, cd: 16, max: 10,
+      effect: 'aoe', mul: [8.2, 0.68], r: 380, need: { key: 'z_collapse', lv: 5 },
+      desc: '비어 있던 자리가 한꺼번에 무너져 내린다 — 건곤붕 5' },
+    { key: 'p_all', job: 'voidsage', school: 'm_saeng', name: '만상환생(萬象還生)', emoji: '🌱', cost: 70, cd: 15, max: 10,
+      effect: 'heal', mul: [0, 0], heal: [0.8, 0.06], need: { key: 'z_rebirth', lv: 5 },
+      desc: '모든 모습이 처음으로 돌아간다 (체력 80%+) — 환생 5' }
   ];
 
   /**
