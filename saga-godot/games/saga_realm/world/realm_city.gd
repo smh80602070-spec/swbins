@@ -297,14 +297,23 @@ func _build_sec_torch(c: Dictionary) -> void:
 ## 밭 — 개간(agri). city3d.js: clamp(round(agri/90), 2, 6).
 func _build_farms(c: Dictionary) -> void:
 	var n := clampi(roundi(float(c.get("agri", 0)) / FARM_PER), 2, 6)
+	var wheat := load("res://assets/vegetation/crops_wheatStageB.glb") as PackedScene
 	for p: Vector2 in _ring(n, 6.4, -2.0):
 		var mi := MeshInstance3D.new()
 		var mesh := BoxMesh.new()
 		mesh.size = Vector3(1.1, 0.12, 0.8)
 		mi.mesh = mesh
 		mi.position = Vector3(p.x, 0.06, p.y)
-		mi.material_override = _mat(COLOR_FARM)
+		mi.material_override = _mat(COLOR_FARM.darkened(0.45))
 		_dyn.add_child(mi)
+		## 2026-09-30 — 흙밭 위에 밀 포기(3×2).
+		if wheat != null:
+			for ix in 3:
+				for iz in 2:
+					var w := wheat.instantiate() as Node3D
+					w.scale = Vector3.ONE * 0.75
+					w.position = Vector3(p.x + (float(ix) - 1.0) * 0.36, 0.12, p.y + (float(iz) - 0.5) * 0.36)
+					_dyn.add_child(w)
 
 
 ## 시장 — 상업(comm). city3d.js: clamp(round(comm/80), 1, 5).
@@ -325,17 +334,15 @@ func _build_markets(c: Dictionary) -> void:
 ## 곳간 통나무 — 군량(food). city3d.js: clamp(round(food/400)+1, 1, 4).
 func _build_granary(c: Dictionary) -> void:
 	var n := clampi(roundi(float(c.get("food", 0)) / GRANARY_PER) + 1, 1, 4)
+	## 2026-09-30 — 통나무 대신 작은 곳간채(asset-forge house_s2_02, 폭 10m → 0.15배)가 군량만큼 늘어선다.
+	var ps := load("res://assets/generated/props/house_s2_02.glb") as PackedScene
 	for i in n:
-		var mi := MeshInstance3D.new()
-		var mesh := CylinderMesh.new()
-		mesh.top_radius = 0.16
-		mesh.bottom_radius = 0.16
-		mesh.height = 1.0
-		mi.mesh = mesh
-		mi.rotation_degrees = Vector3(0, 0, 90)
-		mi.position = Vector3(-4.6 - i * 0.4, 0.16, -1.4)
-		mi.material_override = _mat(COLOR_GRANARY)
-		_dyn.add_child(mi)
+		var p := Vector3(-6.4, 0.0, -3.4 + float(i) * 2.0)
+		var h := ps.instantiate() as Node3D
+		h.scale = Vector3.ONE * 0.15
+		h.position = p
+		h.rotation.y = atan2(-p.x, -p.z)
+		_dyn.add_child(h)
 
 
 ## 로스터 깃발 — 원작에 없는, 이 슬라이스만의 값(무장 수). 등용에 성공할

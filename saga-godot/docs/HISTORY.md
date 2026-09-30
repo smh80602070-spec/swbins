@@ -9678,3 +9678,9 @@ PROJECT_STATE.md` 참고. 요약:
 
 - realm_city `_build_tower`(원기둥+원뿔) → assets/generated/props/tower_s1_01.glb(0.36배, 층층 지붕 누각), `_build_markets`(상자+원뿔) → market_s1_01.glb(0.3배, 줄무늬 천막 좌판, 성 쪽을 향함). 장터 수(comm)·동작 그대로, 충돌 없음. 창 모드 촬영으로 확인. REGRESS OK.
 - 남은 도형: 성벽(상자 넷)·기단·우물·횃불·밭(초록 판)·곳간 통나무.
+
+## REALM 밭·곳간 모델 (2026-09-30, "이어해")
+
+- 밭: 초록 판 → 흙빛 판 위 밀 포기 3×2(assets/vegetation/crops_wheatStageB.glb 0.75배). 곳간: 통나무 → 작은 곳간채(house_s2_02 0.15배) 군량만큼 줄지어. 창 모드 촬영 확인, REGRESS OK.
+- 담장을 assets/buildings/wall-block.glb 로 바꿔 봤으나 흰 바탕에 주황 테두리 텍스처라 성 분위기와 안 맞아 원래 상자로 되돌림(그 GLB 는 임시 조립 부품용 색).
+- 밀 포기가 희끗해 갈대처럼 보인다 — 다음에 재질 색을 황금빛으로 얹을 것.
