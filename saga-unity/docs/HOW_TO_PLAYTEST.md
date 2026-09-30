@@ -556,6 +556,7 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 - 바꾼 옛 guid 는 `tools/remap-guid.done.txt` 에 쌓인다. `node tools/remap-guid.mjs --check` 가 그 guid 들이 Assets 에 0건인지 본다.
 - 그 뒤 컴파일 `error CS` 0 → `Saga.EditorTools.PlaytestMissingScripts.Run`(씬 전체·프리팹 Missing Script 수, OK 한 줄) → 판별 Playtest 하나.
 - 씬 재빌드(`SagaRebuildScenes`)는 사실 몸 묶음 없는 PC 에선 금지 — 이 도구가 재빌드를 대신한다.
+- 다섯 복제 중 SagaCore 로 옮긴 것(U-0003·0006): `PlatformVolumeProfile`·`VirtualJoystick`·`GroundDecal`·`HitSpark`·`DamagePopup`·`NpcIdle`(SpawnRigged 오버로드 둘·SetState). 큰 파일은 `using` 대신 `Saga.Core.X` 완전 이름.
 
 ## 15. 세이브 마이그레이션 — `SaveMigrator` (tasks U-0005)
 
