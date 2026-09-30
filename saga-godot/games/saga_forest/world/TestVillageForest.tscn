@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/saga_forest/world/forest_village.gd" id="1"]
 [ext_resource type="Environment" path="res://assets/environment/env_pc.tres" id="2"]
-[ext_resource type="Script" path="res://games/saga_go/world/environment_profile.gd" id="3"]
+[ext_resource type="Script" path="res://saga_core/world/environment_profile.gd" id="3"]
 [ext_resource type="Script" path="res://games/saga_forest/world/forest_terrain_builder.gd" id="4"]
 [ext_resource type="Script" path="res://games/saga_forest/world/forest_vegetation_builder.gd" id="5"]
 [ext_resource type="Script" path="res://games/saga_forest/world/forest_house.gd" id="6"]

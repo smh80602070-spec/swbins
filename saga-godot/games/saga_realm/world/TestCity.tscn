@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3]
 
 [ext_resource type="Environment" path="res://assets/environment/env_pc.tres" id="1"]
-[ext_resource type="Script" path="res://games/saga_go/world/environment_profile.gd" id="2"]
+[ext_resource type="Script" path="res://saga_core/world/environment_profile.gd" id="2"]
 [ext_resource type="Script" path="res://games/saga_realm/world/realm_city.gd" id="3"]
 [ext_resource type="Script" path="res://games/saga_realm/world/realm_camera.gd" id="4"]
 [ext_resource type="PackedScene" path="res://games/saga_realm/ui/RealmHUD.tscn" id="5"]

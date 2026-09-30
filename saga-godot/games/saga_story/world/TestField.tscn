@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/saga_story/world/story_field.gd" id="1"]
 [ext_resource type="Environment" path="res://assets/environment/env_pc.tres" id="2"]
-[ext_resource type="Script" path="res://games/saga_go/world/environment_profile.gd" id="3"]
+[ext_resource type="Script" path="res://saga_core/world/environment_profile.gd" id="3"]
 [ext_resource type="Script" path="res://games/saga_story/world/story_terrain_builder.gd" id="4"]
 [ext_resource type="Script" path="res://games/saga_story/world/story_enemy_spawner.gd" id="5"]
 [ext_resource type="Script" path="res://games/saga_story/world/story_camera.gd" id="6"]
