@@ -35,19 +35,28 @@ namespace Saga.Realm.Data
         private static bool _seen;
         private static int _t0, _turnSeen;
         private static readonly Dictionary<string, (string k, int turn)> _done = new Dictionary<string, (string, int)>();
+        /// <summary>곁가지 — 시간 틈 사람이 우리 사람인 걸 처음 본 달(웹 `scenario.seen[id]`). 열두 달 뒤 그 사람 카드가 온다.</summary>
+        private static readonly Dictionary<string, int> _sideSeen = new Dictionary<string, int>();
+        public const int SideMonths = 12;
+        /// <summary>곁가지 켜기 — 진단(<see cref="ResetForTest"/>)은 끄고 시작한다(본 사슬 진단이 곁가지 카드에 흔들리지 않게).</summary>
+        public static bool SideEnabled = true;
+        /// <summary>지금 글을 만드는 곁가지 카드의 사람 — {책사} 가 이 사람이 된다.</summary>
+        private static string _who;
+
+        public static RealmScenarioData.Card CardOf(string id) => RealmScenarioData.Get(id) ?? RealmScenarioSideData.Get(id);
 
         public static int TurnNow => TurnForTest ?? ((RealmCityState.Year - StartYear) * 12 + (RealmCityState.Month - 1));
 
         private static readonly string[] ActKo =
         {
-            "", "📖 1막 · 중원의 난", "📖 2막 · 대전", "📖 3막 · 강 위", "📖 4막 · 삼계 균열", "📖 5막 · 먼 길", "📖 6막 · 천하", "📖 7막 · 틈의 끝",
+            "", "📖 1막 · 중원의 난", "📖 2막 · 대전", "📖 3막 · 강 위", "📖 4막 · 삼계 균열", "📖 5막 · 먼 길", "📖 6막 · 천하", "📖 7막 · 틈의 끝", "", "📖 곁가지 · 시간 틈 사람",
         };
 
         /// <summary>처음 본 달을 적는다(옛 세이브는 앞 카드를 건너뜀) · 달이 되돌아갔으면(새 판) 처음부터.</summary>
         private static void Sync()
         {
             int turn = TurnNow;
-            if (_seen && turn < _turnSeen) { _done.Clear(); _seen = false; }
+            if (_seen && turn < _turnSeen) { _done.Clear(); _sideSeen.Clear(); _seen = false; }
             _turnSeen = turn;
             if (_seen) return;
             _seen = true;
@@ -75,7 +84,7 @@ namespace Saga.Realm.Data
             return c.OrCities > 0 && CityCount >= c.OrCities;
         }
 
-        /// <summary>사람 세력에게 다음 카드 하나 — 표 순서대로, 앞 카드가 끝나야 다음이 온다. 없으면 null.</summary>
+        /// <summary>사람 세력에게 다음 카드 하나 — 표 순서대로, 앞 카드가 끝나야 다음이 온다. 본 사슬에 받을 카드가 없으면 곁가지(시간 틈 사람 열두 달)를 본다. 없으면 null.</summary>
         public static string DueCardId()
         {
             if (!Enabled || RealmCityState.ActiveCityIds.Count == 0) return null;
@@ -83,10 +92,27 @@ namespace Saga.Realm.Data
             foreach (var c in RealmScenarioData.Cards)
             {
                 if (_done.ContainsKey(c.Id)) continue;
-                return IsDue(c) ? c.Id : null;
+                if (IsDue(c)) return c.Id;
+                break;
             }
-            return null;
+            return SideEnabled ? DueSideId() : null;
         }
+
+        /// <summary>곁가지 — 시간 틈 사람이 우리 사람이 된 지 <see cref="SideMonths"/> 달이 지났으면 그 사람 고향 이야기. 처음 본 달은 여기서 적는다.</summary>
+        private static string DueSideId()
+        {
+            string due = null;
+            foreach (var c in RealmScenarioSideData.Side)
+            {
+                if (!Mine(c.Who)) continue;
+                if (!_sideSeen.ContainsKey(c.Who)) _sideSeen[c.Who] = TurnNow;
+                if (due == null && !_done.ContainsKey(c.Id) && TurnNow - _sideSeen[c.Who] >= SideMonths) due = c.Id;
+            }
+            return due;
+        }
+
+        /// <summary>진단 — 그 사람을 처음 본 달.</summary>
+        public static int? SideSeenTurn(string who) => _sideSeen.TryGetValue(who, out var t) ? t : (int?)null;
 
         // ---- 글 -----------------------------------------------------------------------------------------------
 
@@ -128,8 +154,8 @@ namespace Saga.Realm.Data
         }
 
         public static string Fill(string text) =>
-            text.Replace("{책사}", Adviser()).Replace("{이웃}", Neighbour()).Replace("{맹장}", Champion())
-                .Replace("{adviser}", Adviser()).Replace("{neighbour}", Neighbour()).Replace("{champion}", Champion());
+            text.Replace("{책사}", _who != null ? NameOf(_who) : Adviser()).Replace("{이웃}", Neighbour()).Replace("{맹장}", Champion())
+                .Replace("{adviser}", _who != null ? NameOf(_who) : Adviser()).Replace("{neighbour}", Neighbour()).Replace("{champion}", Champion());
 
         /// <summary>이룬 승리 종류 — 이 트랙 승리는 정복·문화 둘.</summary>
         public static string VictoryKind() => VictoryKindForTest ?? (RealmVictoryState.Result == RealmVictoryState.Kind.Culture ? "culture" : "conquest");
@@ -173,8 +199,15 @@ namespace Saga.Realm.Data
         /// <summary>카드 하나의 제목·본문·선택지 셋 글(<see cref="RealmEventState.Describe"/> 가 부른다).</summary>
         public static (string title, string body, string a, string b, string c) Describe(string id)
         {
-            var c = RealmScenarioData.Get(id);
+            var c = CardOf(id);
             if (c == null) return (id, "", "", "", "");
+            _who = c.Who;
+            try { return DescribeCard(c, id); }
+            finally { _who = null; }
+        }
+
+        private static (string title, string body, string a, string b, string c) DescribeCard(RealmScenarioData.Card c, string id)
+        {
             string title = c.Emoji + " " + RealmLocalization.T($"scenario.{id}.title", c.TitleKo);
             string act = RealmLocalization.T($"scenario.act.{c.Act}", ActKo[c.Act]);
             string body = "<size=70%>" + act + "</size>\n" + Fill(BodyOf(c));
@@ -192,9 +225,16 @@ namespace Saga.Realm.Data
         /// <summary>선택 효과 — 금이 모자라면 카드를 안 끝내고(다음 달 다시) 실패 글. 성공하면 카드를 끝낸 것으로 적는다.</summary>
         public static (string message, bool ok) Resolve(string id, int choiceIndex)
         {
-            var c = RealmScenarioData.Get(id);
+            var c = CardOf(id);
             if (c == null || choiceIndex < 0 || choiceIndex > 2) return (RealmLocalization.T("scenario.no_card", "없는 카드"), false);
             Sync();
+            _who = c.Who;
+            try { return ResolveCard(c, id, choiceIndex); }
+            finally { _who = null; }
+        }
+
+        private static (string message, bool ok) ResolveCard(RealmScenarioData.Card c, string id, int choiceIndex)
+        {
             var ch = c.Choices[choiceIndex];
             if (ch.Cost > 0 && !RealmCityState.TrySpendGold(ch.Cost))
                 return (RealmLocalization.T("scenario.no_gold", "금이 모자라 못 했다 — 다음 달에 다시 묻는다"), false);
@@ -223,23 +263,31 @@ namespace Saga.Realm.Data
 
         // ---- 세이브 -------------------------------------------------------------------------------------------
 
-        public static void Snapshot(out bool seen, out int t0, out int turnSeen, out string[] ids, out string[] ks, out int[] turns)
+        public static void Snapshot(out bool seen, out int t0, out int turnSeen, out string[] ids, out string[] ks, out int[] turns, out string[] sideWho, out int[] sideTurn)
         {
             seen = _seen; t0 = _t0; turnSeen = _turnSeen;
             var i = new List<string>(); var k = new List<string>(); var t = new List<int>();
             foreach (var c in RealmScenarioData.Cards)
                 if (_done.TryGetValue(c.Id, out var d)) { i.Add(c.Id); k.Add(d.k); t.Add(d.turn); }
+            foreach (var c in RealmScenarioSideData.Side)
+                if (_done.TryGetValue(c.Id, out var d)) { i.Add(c.Id); k.Add(d.k); t.Add(d.turn); }
             ids = i.ToArray(); ks = k.ToArray(); turns = t.ToArray();
+            var sw = new List<string>(); var st = new List<int>();
+            foreach (var kv in _sideSeen) { sw.Add(kv.Key); st.Add(kv.Value); }
+            sideWho = sw.ToArray(); sideTurn = st.ToArray();
         }
 
         /// <summary>불러오기·새 게임 — 없으면(옛 세이브) 안 본 것으로(다음에 Sync 가 처음 본 달을 적는다). 모르는 카드는 버린다.</summary>
-        public static void Restore(bool seen, int t0, int turnSeen, string[] ids, string[] ks, int[] turns)
+        public static void Restore(bool seen, int t0, int turnSeen, string[] ids, string[] ks, int[] turns, string[] sideWho = null, int[] sideTurn = null)
         {
             _done.Clear();
+            _sideSeen.Clear();
+            if (seen && sideWho != null && sideTurn != null)
+                for (int j = 0; j < sideWho.Length && j < sideTurn.Length; j++) _sideSeen[sideWho[j]] = sideTurn[j];
             _seen = seen; _t0 = t0; _turnSeen = turnSeen;
             if (seen && ids != null)
                 for (int i = 0; i < ids.Length; i++)
-                    if (RealmScenarioData.Get(ids[i]) != null)
+                    if (CardOf(ids[i]) != null)
                         _done[ids[i]] = (ks != null && i < ks.Length ? ks[i] ?? "" : "", turns != null && i < turns.Length ? turns[i] : 0);
         }
 
@@ -251,6 +299,7 @@ namespace Saga.Realm.Data
             MineForTest = null;
             VictoryForTest = null;
             VictoryKindForTest = null;
+            SideEnabled = false;
             Restore(false, 0, 0, null, null, null);
         }
     }

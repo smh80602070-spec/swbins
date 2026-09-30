@@ -30,6 +30,8 @@ namespace Saga.Realm.Data
         public sealed class Card
         {
             public string Id, Emoji, TitleKo, TextKo, FromId;
+            /// <summary>곁가지 카드(<see cref="RealmScenarioSideData"/>) — 그 시간 틈 사람. 카드 속 {책사} 가 이 사람이다.</summary>
+            public string Who;
             public int No, Act, MinTurn, OrCities;
             /// <summary>승리 하나를 이룬 뒤에 뜬다(6막·7막) · 시간 틈 사람 아홉이 다 우리 사람이어야 뜬다(7막 첫 카드).</summary>
             public bool Victory, AllTime;

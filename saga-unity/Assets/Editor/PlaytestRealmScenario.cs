@@ -39,6 +39,7 @@ namespace Saga.EditorTools
                 CheckVictoryAndTime(parts);
                 CheckEventLink(parts);
                 CheckSave(parts);
+                CheckSide(parts);
             }
             finally
             {
@@ -157,6 +158,74 @@ namespace Saga.EditorTools
             var (msg, ok) = RealmScenario.Resolve(id, choice);
             if (!ok || string.IsNullOrEmpty(msg) || msg.Contains("{")) Fail($"{id} 답 {choice}: '{msg}'");
         }
+
+        // ---- 곁가지(시간 틈 사람 각자 두 번째 카드) --------------------------------------------------------------
+
+        private static void CheckSide(List<string> parts)
+        {
+            var side = RealmScenarioSideData.Side;
+            if (side.Length != 9 || side.Select(c => c.Who).Distinct().Count() != 9 || side.Any(c => System.Array.IndexOf(RealmScenarioData.TimeFolk, c.Who) < 0)) Fail("곁가지 표(아홉·시간 틈 사람 아홉)");
+            foreach (var c in side)
+                if (c.Choices.Length != 3 || !c.TextKo.Contains("{책사}") || c.Choices.Any(ch => ch.Fx.Length != 2 || !ch.Fx.Any(f => f.T == "tech" && f.N == 10))) Fail($"{c.Id} 모양");
+            RealmScenario.ResetForTest();
+            RealmScenario.SideEnabled = true;
+            RealmScenario.CitiesForTest = 1;
+            var mine = new HashSet<string>();
+            RealmScenario.MineForTest = id => mine.Contains(id);
+            // 본 사슬을 다 끝낸 것으로 — 곁가지만 본다
+            var all = RealmScenarioData.Cards;
+            RealmScenario.Restore(true, 0, 100, all.Select(c => c.Id).ToArray(), all.Select(c => "atk").ToArray(), all.Select(c => 0).ToArray());
+            RealmScenario.TurnForTest = 100;
+            if (RealmScenario.DueCardId() != null) Fail("우리 사람이 없는데 곁가지가 옴");
+            mine.Add("tm_doha");
+            if (RealmScenario.DueCardId() != null || RealmScenario.SideSeenTurn("tm_doha") != 100) Fail("처음 본 달에 곁가지가 옴");
+            RealmScenario.TurnForTest = 111;
+            if (RealmScenario.DueCardId() != null) Fail("열한 달째에 곁가지가 옴");
+            mine.Add("tm_gangseo");
+            RealmScenario.TurnForTest = 112;
+            if (RealmScenario.DueCardId() != "sd_tm_doha") Fail("열두 달째 도하 카드 " + RealmScenario.DueCardId());
+            // 글: {책사} 는 로스터의 책사가 아니라 그 사람
+            var d = RealmScenario.Describe("sd_tm_doha");
+            string doha = RealmOfficerPool.Get("tm_doha")?.Name ?? "tm_doha";
+            if (!d.body.Contains(doha) || d.body.Contains("{") || !d.a.Contains("수도 훈련 +6") || !d.a.Contains("수도 기술 +10") || !d.title.Contains("도하")) Fail("곁가지 글 " + d.body);
+            var rec = RealmCityState.CityRecord(Cap);
+            int train = rec.Train, tech = rec.Tech, gold = RealmCityState.Gold;
+            Answer("sd_tm_doha", 0);
+            if (rec.Train != train + 6 || rec.Tech != tech + 10) Fail($"곁가지 효과 훈련 {rec.Train - train} 기술 {rec.Tech - tech}");
+            if (!RealmScenario.IsDone("sd_tm_doha") || RealmScenario.DueCardId() != null) Fail("곁가지 뒤 또 옴 " + RealmScenario.DueCardId());
+            TurnAndCheck(gold);
+            // 다른 사람은 그 사람을 처음 본 달부터 열두 달
+            RealmScenario.TurnForTest = 123;
+            if (RealmScenario.DueCardId() != null) Fail("강서 카드가 열한 달째에 옴");
+            RealmScenario.TurnForTest = 124;
+            if (RealmScenario.DueCardId() != "sd_tm_gangseo") Fail("강서 카드 " + RealmScenario.DueCardId());
+            // 본 사슬에 받을 카드가 있으면 그것이 먼저, 곁가지는 진단이 끄면 안 온다
+            RealmScenario.SideEnabled = false;
+            if (RealmScenario.DueCardId() != null) Fail("곁가지를 끄면 안 와야");
+            RealmScenario.SideEnabled = true;
+            RealmScenario.Restore(true, 0, 100, new[] { "r1_start", "r1_rift_sign" }, new[] { "atk", "atk" }, new[] { 0, 0 }, new[] { "tm_gangseo" }, new[] { 100 });
+            RealmScenario.TurnForTest = 125;
+            if (RealmScenario.DueCardId() != "r1_first_ally") Fail("본 사슬 카드가 먼저여야 " + RealmScenario.DueCardId());
+            // 세이브 왕복 — 처음 본 달·끝낸 곁가지
+            RealmScenario.Restore(true, 0, 100, all.Select(c => c.Id).ToArray(), all.Select(c => "atk").ToArray(), all.Select(c => 0).ToArray());
+            RealmScenario.TurnForTest = 100;
+            RealmScenario.DueCardId();
+            RealmScenario.TurnForTest = 112;
+            Answer(RealmScenario.DueCardId(), 2);
+            string json = RealmSaveState.ToJson();
+            if (!json.Contains("scenarioSideWho")) Fail("세이브 필드");
+            RealmScenario.ResetForTest();
+            RealmScenario.SideEnabled = true;
+            RealmScenario.MineForTest = id => mine.Contains(id);
+            RealmSaveState.ApplyJson(json);
+            RealmScenario.TurnForTest = 112;
+            if (!RealmScenario.IsDone("sd_tm_doha") && !RealmScenario.IsDone("sd_tm_gangseo")) Fail("곁가지 끝남이 세이브에 없음");
+            if (RealmScenario.SideSeenTurn("tm_gangseo") != 100 && RealmScenario.SideSeenTurn("tm_doha") != 100) Fail("처음 본 달이 세이브에 없음");
+            RealmScenario.ResetForTest();
+            parts.Add("곁가지(시간 틈 사람 아홉·처음 본 달부터 열두 달·{책사}=그 사람·훈련 +6/기술 +10·본 사슬이 먼저·끄기·세이브 왕복)");
+        }
+
+        private static void TurnAndCheck(int gold0) { if (RealmCityState.Gold < gold0) Fail("곁가지가 금을 깎음"); }
 
         // ---- 효과 ---------------------------------------------------------------------------------------------
 
@@ -358,7 +427,7 @@ namespace Saga.EditorTools
             RealmScenario.TurnForTest = 24;
             if (RealmScenario.DueCardId() != "r1_first_ally") Fail("왕복 뒤 셋째 카드 때");
             // 옛 세이브(시나리오 칸 없음) — 24달을 넘긴 판이면 앞 카드를 다 건너뛴 것으로, 갓 시작한 판이면 처음부터
-            string old = System.Text.RegularExpressions.Regex.Replace(json, ",\"scenarioSeen\":(true|false),\"scenarioT0\":-?\\d+,\"scenarioTurnSeen\":-?\\d+,\"scenarioIds\":\\[[^\\]]*\\],\"scenarioKs\":\\[[^\\]]*\\],\"scenarioTurns\":\\[[^\\]]*\\]", "");
+            string old = System.Text.RegularExpressions.Regex.Replace(json, ",\"scenarioSeen\":(true|false),\"scenarioSideWho\":\\[[^\\]]*\\],\"scenarioSideTurn\":\\[[^\\]]*\\],\"scenarioT0\":-?\\d+,\"scenarioTurnSeen\":-?\\d+,\"scenarioIds\":\\[[^\\]]*\\],\"scenarioKs\":\\[[^\\]]*\\],\"scenarioTurns\":\\[[^\\]]*\\]", "");
             if (old.Contains("scenario")) { Fail("옛 세이브 가짜 만들기 실패"); return; }
             RealmScenario.TurnForTest = 30;
             if (!RealmSaveState.ApplyJson(old)) Fail("옛 세이브를 못 읽음");

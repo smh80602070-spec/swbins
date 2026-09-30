@@ -10917,3 +10917,7 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 진단 `PlaytestForestScenario`(표·글·진행·단계 종류·스물아홉 장 끝까지 open/quiet 두 갈래·세이브·UI·러너) 3연속 OK · 사가블로 진단 재확인 OK · `UiLayoutCheck` "시나리오 장면·고르기"(숲) 겹침 0 · loc-review 오류 0(경고 1·흔들림 16 기준선).
 - 실기 확인 전: 마을에서 첫 장면 상자, 기념 놀이(그날이 아니어도 열리는지)·손님 정 8(며칠 걸림)·명소 곁 서기, 칭호 다섯.
 - 다음 = 웹 시나리오 다섯 판 이식 끝(REALM 19·DUNGEON 19·STORY 3·FOREST 29). 남은 것: 실기 확인 · 14-27b·14-1b.
+
+### 2026-09-30 — saga-unity REALM 곁가지 side_time_* 시간 틈 사람 두 번째 카드 아홉 (웹 사가국지 곁가지)
+- 웹 `data-scenario.js` SIDE 아홉을 스크립트로 옮겨 `RealmScenarioSideData`. `RealmScenario.DueCardId` 는 본 사슬에 받을 카드가 없을 때 `DueSideId` — 시간 틈 사람이 우리 사람인 걸 처음 본 달(`_sideSeen`, 세이브 `scenarioSideWho/Turn`)부터 12달 뒤. 카드 속 {책사} 는 그 사람(`_who`), 효과 훈련 +6/치안 +8/금 +600 에 충성 +5 → 수도 기술 +10.
+- 진단은 `SideEnabled=false` 로 시작(`ResetForTest`)해 본 사슬 진단이 곁가지에 흔들리지 않는다. `PlaytestRealmScenario.CheckSide` 추가, 3연속 OK.

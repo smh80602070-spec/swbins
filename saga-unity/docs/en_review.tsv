@@ -4645,6 +4645,78 @@
 2	realm	scenario.r7_gather.title	틈 아래 모인 아홉	Nine Gathered Beneath the Rift		
 2	realm	scenario.r7_gather.util.label	틈을 길로 쓴다	Use the rift as a road		
 2	realm	scenario.r7_gather.util.result	성연이 항로에 첫 등불을 걸었다 — 틈이 세 시대를 잇는 길이 되었다	Seongyeon hung the first lantern on the route — the rift became a road linking three ages		
+2	realm	scenario.sd_tm_doha.atk.label	서고 필사본 정리를 군 문서에 넓힌다	Extend manuscript organizing to military documents		
+2	realm	scenario.sd_tm_doha.atk.result	{책사} 이(가) 문서를 정리하자 명령이 어긋나는 일이 줄었다	{adviser} sorted the documents, and mismatched orders became rarer		
+2	realm	scenario.sd_tm_doha.def.label	서고를 백성에게 잠시 연다	Open the library to the people for a while		
+2	realm	scenario.sd_tm_doha.def.result	서고에 사람들이 드나들자 성 안에 글 읽는 소리가 났다	With people coming and going, the sound of reading filled the castle		
+2	realm	scenario.sd_tm_doha.text	{책사} 이(가) 서고에서 필사본을 넘기다 웃는다. 처음 짠 프로그램은 화면에 안녕이라는 글자만 띄웠다고 한다. 그 글자가 이 시대 붓글씨와 닮아 신기하다는 것이다.	{adviser} smiles while turning manuscripts in the library. The first program printed only the word "hello" on the screen, they say - and it is odd how that resembles this age's brush calligraphy.		
+2	realm	scenario.sd_tm_doha.title	도하의 첫 프로그램	Doha's First Program		
+2	realm	scenario.sd_tm_doha.util.label	첫 프로그램 이야기를 기록으로 남긴다	Record the first program's story		
+2	realm	scenario.sd_tm_doha.util.result	이야기가 기록으로 남아 서고에 새 줄이 생겼다	The story was recorded and a new line appeared in the library		
+2	realm	scenario.sd_tm_eunha.atk.label	기병 훈련에 조종의 요령을 보탠다	Add piloting knacks to cavalry training		
+2	realm	scenario.sd_tm_eunha.atk.result	{책사} 이(가) 요령을 가르치자 기병 대열의 돌격이 매끄러워졌다	{adviser} taught the knack and the cavalry line's charge grew smooth		
+2	realm	scenario.sd_tm_eunha.def.label	마구간을 새로 고친다	Renovate the stable		
+2	realm	scenario.sd_tm_eunha.def.result	마구간이 새로워지자 말도 사람도 마음이 놓였다	With the stable renewed, horses and people felt at ease		
+2	realm	scenario.sd_tm_eunha.text	{책사} 이(가) 마구간 앞에서 말의 갈기를 쓸어 준다. 처음 조종간을 잡았을 때 손이 떨렸다고 한다. 말도 조종간도 손을 믿어 줄 때 가장 잘 따른다며 웃는다.	{adviser} strokes a horse's mane in front of the stable. When they first gripped the control stick their hands trembled, they say. Both horses and sticks follow best when the hand is trusted.		
+2	realm	scenario.sd_tm_eunha.title	은하의 첫 조종간	Eunha's First Control Stick		
+2	realm	scenario.sd_tm_eunha.util.label	비행 궤적을 서고에 남긴다	Leave the flight trajectories in the library		
+2	realm	scenario.sd_tm_eunha.util.result	궤적 그림이 서고에 걸려 볼거리가 되었다	The trajectory drawings hung in the library and became a sight to see		
+2	realm	scenario.sd_tm_gangseo.atk.label	옛 부대의 훈련을 이 성 병사들에게 가르쳐 달라 청한다	Ask them to teach the old unit's drills to this castle's soldiers		
+2	realm	scenario.sd_tm_gangseo.atk.result	{책사} 이(가) 옛 부대식으로 병사를 가르치자 대열이 눈에 띄게 반듯해졌다	{adviser} drilled the soldiers the old unit's way, and their ranks straightened visibly		
+2	realm	scenario.sd_tm_gangseo.def.label	군번줄을 성문에 걸어 부대를 기린다	Hang the dog tag on the castle gate to honor the unit		
+2	realm	scenario.sd_tm_gangseo.def.result	군번줄이 성문에서 반짝이자 병사들이 옷깃을 여몄다	The tag glittered on the gate and the soldiers straightened their collars		
+2	realm	scenario.sd_tm_gangseo.text	{책사} 이(가) 성벽 위에서 오래 서 있다. 낡은 군번줄을 만지작거리며 옛 부대 이야기를 꺼낸다. 마지막 훈련 날 함께 웃던 이들의 얼굴이 이 시대 병사들의 얼굴과 겹친다고 한다.	{adviser} has stood on the wall for a long while, fingering a worn dog tag and telling of an old unit. On the last training day, the faces of those laughing together overlap the faces of this age's soldiers, they say.		
+2	realm	scenario.sd_tm_gangseo.title	강서의 옛 부대	Gangseo's Old Unit		
+2	realm	scenario.sd_tm_gangseo.util.label	옛 부대 이야기를 기록으로 남긴다	Keep the old unit's story as a record		
+2	realm	scenario.sd_tm_gangseo.util.result	이야기가 기록으로 남자 서고에 새 책이 꽂혔다	The story was recorded and a new book joined the library shelf		
+2	realm	scenario.sd_tm_geumdam.atk.label	가게를 다시 열 사람을 군수품 조달로 세운다	Appoint shop-minded people to procure military supplies		
+2	realm	scenario.sd_tm_geumdam.atk.result	{책사} 이(가) 장부를 다듬자 군수품이 제때 도착하기 시작했다	{adviser} tidied the ledgers, and supplies began arriving on time		
+2	realm	scenario.sd_tm_geumdam.def.label	장터 자릿세를 낮춰 작은 가게를 돕는다	Lower stall fees to help small shops		
+2	realm	scenario.sd_tm_geumdam.def.result	작은 가게들이 늘자 장터에 사람이 북적였다	As small shops multiplied, the market bustled with people		
+2	realm	scenario.sd_tm_geumdam.text	{책사} 이(가) 장터 한구석을 오래 바라본다. 처음 차린 가게가 망했던 날이 떠오른다고 한다. 그날 배운 것이 지금 이 성의 장부에 다 들어 있다며 웃는다.	{adviser} gazes at a corner of the market for a long time, recalling the day the first shop failed. What was learned that day is all in this castle's ledgers now, they say with a smile.		
+2	realm	scenario.sd_tm_geumdam.title	금담의 첫 가게	Geumdam's First Shop		
+2	realm	scenario.sd_tm_geumdam.util.label	첫 가게 자리에 새 가게를 낸다	Open a new shop on the first shop's spot		
+2	realm	scenario.sd_tm_geumdam.util.result	새 가게가 문을 열자 금이 돌기 시작했다	The new shop opened and gold began to circulate		
+2	realm	scenario.sd_tm_gongseok.atk.label	수칙대로 성벽 훈련장을 정비한다	Set up the wall training ground by the rules		
+2	realm	scenario.sd_tm_gongseok.atk.result	수칙을 따르자 훈련 중 다치는 병사가 눈에 띄게 줄었다	Following the rules, soldiers hurt in training dropped visibly		
+2	realm	scenario.sd_tm_gongseok.def.label	수칙을 성 곳곳에 붙인다	Post the rules all around the castle		
+2	realm	scenario.sd_tm_gongseok.def.result	성 곳곳에 수칙이 붙자 골목의 사고가 줄고 마음이 놓였다	With rules posted everywhere, accidents in the alleys fell and hearts settled		
+2	realm	scenario.sd_tm_gongseok.text	{책사} 이(가) 성벽 공사장 한쪽에 안전 수칙을 적어 붙이고 있다. 공사판에서 동료를 잃은 뒤 생긴 버릇이라 한다. 수칙 한 줄마다 누군가의 이름이 있다고.	{adviser} is writing safety rules and pasting them at one side of the wall construction site - a habit from losing a coworker on a job. Behind every line of the rules is somebody's name, they say.		
+2	realm	scenario.sd_tm_gongseok.title	공석의 안전 수칙	Gongseok's Safety Rules		
+2	realm	scenario.sd_tm_gongseok.util.label	수칙을 공사 기록으로 묶는다	Bind the rules into a construction record		
+2	realm	scenario.sd_tm_gongseok.util.result	수칙 기록이 서고에서 성 안 공사의 기준이 되었다	The rules record became the library's standard for castle works		
+2	realm	scenario.sd_tm_gwedo.atk.label	성루의 감시를 궤도식으로 바꾼다	Change the watchtower's watch to the orbital way		
+2	realm	scenario.sd_tm_gwedo.atk.result	{책사} 이(가) 성루 경계를 손보자 밤 경계가 한결 빈틈없어졌다	{adviser} adjusted the watch and the night guard became tighter		
+2	realm	scenario.sd_tm_gwedo.def.label	성루에 별 보는 자리를 만든다	Make a stargazing spot on the watchtower		
+2	realm	scenario.sd_tm_gwedo.def.result	성루 별 자리에 사람들이 모이자 밤 골목이 평온해졌다	As people gathered at the stargazing spot, the night alleys grew calm		
+2	realm	scenario.sd_tm_gwedo.text	{책사} 이(가) 성루 위에서 밤하늘을 올려다본다. 처음 궤도에 오른 날 밑을 내려다보며 이 세상이 얼마나 작고 따뜻한지 알았다고 한다. 지금은 그 마음으로 이 성을 본다는 것이다.	{adviser} looks up at the night sky from the watchtower. On the first day in orbit, looking down, they learned how small and warm the world is - and now they look at this castle with that heart.		
+2	realm	scenario.sd_tm_gwedo.title	궤도의 첫 비행	Orbit's First Flight		
+2	realm	scenario.sd_tm_gwedo.util.label	하늘 사진을 서고에 남긴다	Leave the sky photographs in the library		
+2	realm	scenario.sd_tm_gwedo.util.result	하늘 사진이 서고 한 벽을 채웠다	The sky photographs filled a wall of the library		
+2	realm	scenario.sd_tm_myeongbyeon.atk.label	재판을 병사 규율에도 세운다	Set up trials for soldiers' discipline as well		
+2	realm	scenario.sd_tm_myeongbyeon.atk.result	{책사} 이(가) 규율 조항을 세우자 병영의 다툼이 조용히 가라앉았다	{adviser} set down disciplinary rules, and quarrels in the barracks quietly subsided		
+2	realm	scenario.sd_tm_myeongbyeon.def.label	재판 마당을 백성에게 연다	Open the courtyard to the people		
+2	realm	scenario.sd_tm_myeongbyeon.def.result	재판 마당이 열리자 억울하다는 소리가 줄었다	With the courtyard open, cries of injustice decreased		
+2	realm	scenario.sd_tm_myeongbyeon.text	{책사} 이(가) 재판 마당에서 조용히 서류를 정리한다. 처음 맡았던 사건에서 졌던 기억을 꺼낸다. 진 뒤에야 말을 아끼는 법을 배웠다고 한다.	{adviser} quietly sorts documents in the courtyard, recalling the first case they lost. It was only after losing that they learned to hold back words.		
+2	realm	scenario.sd_tm_myeongbyeon.title	명변의 첫 변론	Myeongbyeon's First Plea		
+2	realm	scenario.sd_tm_myeongbyeon.util.label	변론 기록을 서고에 묶는다	Bind the pleading records into the library		
+2	realm	scenario.sd_tm_myeongbyeon.util.result	변론 기록이 서고에 꽂혔다	The pleading records joined the library shelf		
+2	realm	scenario.sd_tm_seongyeon.atk.label	항로를 군 이동 길에 접목한다	Graft the route onto the army's marching roads		
+2	realm	scenario.sd_tm_seongyeon.atk.result	{책사} 이(가) 길을 손보자 행군이 하루 빨라졌다	{adviser} adjusted the roads and the march became a day faster		
+2	realm	scenario.sd_tm_seongyeon.def.label	나루에 등불을 세운다	Raise lanterns at the ferry landing		
+2	realm	scenario.sd_tm_seongyeon.def.result	나루 등불이 서자 밤 뱃길이 안전해졌다	With lanterns up at the landing, night river crossings became safe		
+2	realm	scenario.sd_tm_seongyeon.text	{책사} 이(가) 나루에서 강물을 오래 바라본다. 첫 항로를 그렸던 날, 지도에 없는 길을 그어서 야단맞았다고 한다. 그 길이 결국 맞았다는 얘기를 하며 웃는다.	{adviser} gazes at the river from the ferry landing. On the day the first route was drawn, they drew a road that wasn't on the map and got scolded - and laughs that the road turned out right.		
+2	realm	scenario.sd_tm_seongyeon.title	성연의 첫 항로	Seongyeon's First Route		
+2	realm	scenario.sd_tm_seongyeon.util.label	첫 항로 그림을 서고에 남긴다	Leave the first route drawing in the library		
+2	realm	scenario.sd_tm_seongyeon.util.result	항로 그림이 서고에서 길 찾는 이의 안내가 되었다	The route drawing became a guide for road-seekers in the library		
+2	realm	scenario.sd_tm_yeongjeom.atk.label	무예 마당에서 직접 병사를 상대해 준다	Face the soldiers in person in the martial yard		
+2	realm	scenario.sd_tm_yeongjeom.atk.result	{책사} 이(가) 병사들과 겨루자 마당 가득 함성이 울렸다	{adviser} sparred with the soldiers, and the whole yard rang with cheers		
+2	realm	scenario.sd_tm_yeongjeom.def.label	무예 마당에 쉼터를 세운다	Build a resting place in the martial yard		
+2	realm	scenario.sd_tm_yeongjeom.def.result	쉼터가 서자 다친 병사가 쉬어 갈 수 있게 되었다	With the resting place built, injured soldiers could rest		
+2	realm	scenario.sd_tm_yeongjeom.text	{책사} 이(가) 무예 마당 한가운데 서서 말없이 의체를 살핀다. 처음 의체를 입던 날 아팠다는 얘기는 안 했다. 대신 이 마당이 옛 훈련장을 닮았다고만 한다.	{adviser} stands in the middle of the martial yard, silently checking a prosthetic. They don't mention that it hurt the day they first wore it - only that this yard resembles an old training ground.		
+2	realm	scenario.sd_tm_yeongjeom.title	영점의 옛 훈련장	Yeongjeom's Old Training Ground		
+2	realm	scenario.sd_tm_yeongjeom.util.label	기동 기록을 서고에 남긴다	Leave the movement records in the library		
+2	realm	scenario.sd_tm_yeongjeom.util.result	기동 기록이 서고에 꽂혀 무예서의 옆자리를 차지했다	The movement records joined the library and took the seat beside the martial manuals		
 2	realm	succession.occurred	{0}이(가) 연로하여 허창을 {1}에게 물려주었다. 정권 이양으로 치안이 흔들렸다.	{0} has grown old and handed Xuchang over to {1}. The transition of power has shaken security.		
 2	realm	summary.gold	금 {0}({1})	Gold {0} ({1})		
 2	realm	summary.next	다음: {0}	Next: {0}		
@@ -5681,3 +5753,4 @@
 3	realm	scenario.act.5	📖 5막 · 먼 길	📖 Act 5 · The Long Road		
 3	realm	scenario.act.6	📖 6막 · 천하	📖 Act 6 · The Realm		
 3	realm	scenario.act.7	📖 7막 · 틈의 끝	📖 Act 7 · The End of the Rift		
+3	realm	scenario.act.9	📖 곁가지 · 시간 틈 사람	📖 Side Story · Time-Rift Folk		
