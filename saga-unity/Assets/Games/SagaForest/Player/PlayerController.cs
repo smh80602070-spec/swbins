@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using Saga.Forest.Data;
 using Saga.Forest.UI;
 using Saga.Forest.World;
+using Saga.Core;
 
 namespace Saga.Forest.Player
 {

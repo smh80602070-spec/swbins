@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Saga.Go.UI
+namespace Saga.Core
 {
     /// <summary>
     /// VERTICAL_SLICE.md Phase 4 — 왼쪽 아래 가상 조이스틱. saga-godot의

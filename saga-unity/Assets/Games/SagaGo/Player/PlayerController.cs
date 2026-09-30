@@ -4,6 +4,7 @@ using Saga.Go.Combat;
 using Saga.Go.Data;
 using Saga.Go.UI;
 using Saga.Go.World;
+using Saga.Core;
 
 namespace Saga.Go.Player
 {

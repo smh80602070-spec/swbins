@@ -9,6 +9,7 @@ using Saga.Go.Layout;
 using Saga.Go.Player;
 using Saga.Go.UI;
 using Saga.Go.World;
+using Saga.Core;
 
 namespace Saga.EditorTools
 {
