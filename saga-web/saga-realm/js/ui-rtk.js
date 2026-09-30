@@ -603,6 +603,15 @@
       renderTop(); renderMap(); syncDock();
       return;
     }
+    if (a === 'next-round') {
+      var nrr = R().nextRound();
+      if (!nrr.ok) { toast(nrr.why); return; }
+      closeEnc();
+      centerOnMine();
+      renderTop(); renderMap(); syncDock();
+      toast('🔁 ' + nrr.n + '회차');
+      return;
+    }
     if (a === 'next-month') {
       var was = R().state();
       if (was.result) { return; }
@@ -2314,9 +2323,16 @@
     for (i = 0; i < card.lines.length; i++) { html += '<br>' + esc(card.lines[i]); }
     if (card.next) { html += '<br><b>🎯 다음 도전</b><br>' + esc(card.next); }
     html += '</div>';
+    /* 회차(§5-14) — 이긴 판이면 같은 깃발로 다시. 조건을 카드에 미리 적는다 */
+    var nr = card.nr, nrBtn = '';
+    if (nr) {
+      html += '<div class="enc-hist"><b>🔁 ' + nr.n + '회차</b><br>다른 세력 병력·금 ×' + nr.foe.toFixed(1) + ' · 금 +' + core.fmt(nr.gold) +
+        (nr.folk.length ? '<br>돌아올 사람 ' + nr.folk.map(function (id) { return esc(off().find(id).name); }).join(' · ') : '<br><small class="muted">시간 틈 사람을 모셔 두면 다음 회차에 돌아옵니다</small>') + '</div>';
+      nrBtn = '<button class="btn wide" data-act="next-round">🔁 ' + nr.n + '회차로 — 같은 깃발</button>';
+    }
     return html + (over
-      ? '<button class="btn primary wide" data-act="back-scen">새 판</button><button class="btn wide" data-act="close-enc">닫기</button>'
-      : '<button class="btn primary wide" data-act="close-enc">이어하기</button><button class="btn wide" data-act="back-scen">새 판</button>');
+      ? '<button class="btn primary wide" data-act="back-scen">새 판</button>' + nrBtn + '<button class="btn wide" data-act="close-enc">닫기</button>'
+      : '<button class="btn primary wide" data-act="close-enc">이어하기</button>' + nrBtn + '<button class="btn wide" data-act="back-scen">새 판</button>');
   }
 
   function showVictory(card) { showEncQueued(resultHtml(card, false)); }
@@ -2324,7 +2340,8 @@
   /** 먼저 **판(시나리오)** 을 고른다 */
   function showScenPick() {
     var html = '<h3 style="margin:0 0 2px;font-size:19px">어느 해에서 시작하시겠습니까</h3>' +
-      '<small class="muted">누가 어디서 시작하는지가 판마다 다릅니다. ★ 은 어려운 정도입니다.</small>' +
+      '<small class="muted">누가 어디서 시작하는지가 판마다 다릅니다. ★ 은 어려운 정도입니다.' +
+        (R().roundBest() ? ' · 🔁 최고 ' + R().roundBest() + '회차 클리어' : '') + '</small>' +
       '<div class="fpick scen">';
     for (var i = 0; i < FD.SCENARIOS.length; i++) {
       var sc = FD.SCENARIOS[i];

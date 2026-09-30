@@ -226,6 +226,7 @@
    */
   function setup(meId, scen, seed) {
     var st = state();
+    var rd = pendingRound; pendingRound = null;          // nextRound() 가 넘긴 이월분 — 일반 새 판은 없다
     monthOrders = {};
     monthBattles = {};
     monthScouts = {};
@@ -243,6 +244,7 @@
     st.year = sc.year || START_YEAR; st.month = 1; st.turn = 0;
     st.me = meId; st.result = null;
     st.victories = []; st.pactStreak = 0; st.topStreak = 0; st.challenge = null;
+    st.round = rd ? rd.n : 1;                        // 회차(§5-14) — 새 판은 1회차, nextRound() 는 +1
     st.events = null; st.rel = {};                   // 사연·관계(§5-2) — 새 판은 이어받지 않는다(event.js 가 필요할 때 채운다)
     st.cities = {}; st.forces = {}; st.officers = {}; st.captives = {};
     st.camps = []; st.campSeq = 0;
@@ -306,6 +308,7 @@
     }
 
     st.milestone = { idx: 0, at: 0, base: { core: coreCount(st, meId), cities: citiesOf(meId).length } };
+    if (rd) { applyRound(st, meId, rd); }
 
     core.log('🏳️ ' + st.year + '년 봄 · ' + sc.name + '(' + sc.hanja + ') — ' +
       forceName(meId) + ' 의 깃발을 들었다.', 'good');
@@ -1021,6 +1024,7 @@
     return {
       kind: kind, name: name, emoji: kind === 'conquest' ? CONQUEST.emoji : VICTORY[kind].emoji,
       month: st.turn || 0, year: st.year, mon: st.month, cities: s.cities, total: total, top: top,
+      round: roundNo(), nr: canNextRound().ok ? roundPreview() : null,
       lines: [
         '성 ' + s.cities + '/' + total + ' · 병력 ' + core.fmt(s.troops) + ' · 금 ' + core.fmt(s.gold),
         '세력 ' + rankOf(st.me) + '위(살아 있는 ' + liveForces().length + ') · 무장 ' + s.officers + '명',
@@ -1107,6 +1111,97 @@
     st.challenge = { week: wk.key, seed: wk.seed, months: CHALLENGE_MONTHS, done: false, score: null };
     core.persist();
     return st.challenge;
+  }
+
+  /* ── 회차 — 결말 뒤 같은 깃발로 다시 (PLAN §5-14, 2026-09-30) ───────────
+   * `nextRound()` 는 이긴 판(정복 또는 승리 조건 하나 이상)에서만 열린다. 같은 시나리오·같은 깃발로 처음부터 다시 세우되
+   *   ① 다른 세력의 병력·금이 회차마다 ×0.2 씩 는다(최대 ×2)  ② 우리 금이 회차마다 +1500(최대 +6000)
+   *   ③ 지난 회차에 우리 사람이던 **시간 틈 사람**(최대 둘, 능력 높은 순)이 첫 성에서 다시 합류한다.
+   * 세이브: `save.rtk.round`(이번 판의 회차, 없으면 1) · `save.rtkRound = { clears: { 시나리오id: { round, month, kind } } }` — 새 판을 세워도 남게 rtk 밖에 둔다. */
+  var ROUND_MAX = 9, ROUND_FOE_STEP = 0.2, ROUND_FOE_CAP = 2, ROUND_GOLD = 1500, ROUND_GOLD_CAP = 6000, ROUND_FOLK = 2;
+  var pendingRound = null;
+
+  function roundNo() { return state().round || 1; }
+
+  function roundInfo() {
+    var r = core.save.rtkRound;
+    if (!r || typeof r !== 'object') { r = core.save.rtkRound = {}; }
+    if (!r.clears || typeof r.clears !== 'object') { r.clears = {}; }
+    return r;
+  }
+
+  /** 이긴 판인가 — 정복(result 'win')이거나 승리 조건 하나 이상 */
+  function wonNow(st) {
+    return !!st.started && st.result !== 'lose' && (st.result === 'win' || !!(st.victories && st.victories.length));
+  }
+
+  /** 지금 판에서 다음 회차를 열 수 있는가 — { ok, why? } */
+  function canNextRound() {
+    var st = state();
+    if (!st.started) { return { ok: false, why: '판이 없습니다' }; }
+    if (st.challenge) { return { ok: false, why: '주간 도전 판은 회차가 없습니다' }; }
+    if (!wonNow(st)) { return { ok: false, why: '승리를 이룬 뒤에 열립니다' }; }
+    if (roundNo() >= ROUND_MAX) { return { ok: false, why: ROUND_MAX + '회차가 끝입니다' }; }
+    return { ok: true };
+  }
+
+  /** 다음 회차의 조건 미리보기 — { n, foe, gold, folk:[id] } (화면이 카드에 적는다) */
+  function roundPreview() {
+    var st = state(), n = roundNo() + 1, off = global.DG.off, SD = global.DG.scenarioData, folk = [];
+    if (SD && SD.TIME_FOLK) {
+      folk = SD.TIME_FOLK.filter(function (id) { return off.has(id) && off.rec(id).force === st.me; })
+        .sort(function (a, b) { return off.power(b) - off.power(a); }).slice(0, ROUND_FOLK);
+    }
+    return { n: n, foe: Math.min(ROUND_FOE_CAP, 1 + ROUND_FOE_STEP * (n - 1)), gold: Math.min(ROUND_GOLD_CAP, ROUND_GOLD * (n - 1)), folk: folk };
+  }
+
+  /** 같은 시나리오·같은 깃발로 다음 회차를 세운다. 성공하면 { ok, n, ... } */
+  function nextRound() {
+    var chk = canNextRound();
+    if (!chk.ok) { return chk; }
+    var st = state(), pv = roundPreview(), me0 = st.me, scen0 = st.scen, kind = victoryKindOf(st);
+    var rec = roundInfo().clears[scen0];
+    if (!rec || rec.round < roundNo()) { roundInfo().clears[scen0] = { round: roundNo(), month: st.turn || 0, kind: kind }; }
+    pendingRound = pv;
+    setup(me0, scen0);
+    return { ok: true, n: pv.n, foe: pv.foe, gold: pv.gold, folk: pv.folk.slice() };
+  }
+
+  function victoryKindOf(st) {
+    if (st.victories && st.victories.length) { return st.victories[st.victories.length - 1].kind; }
+    return st.result === 'win' ? 'conquest' : '';
+  }
+
+  /** 가장 높이 이긴 회차 — 시나리오 고르기 화면이 한 줄로 보인다 (없으면 0) */
+  function roundBest() {
+    var c = roundInfo().clears, best = 0, k;
+    for (k in c) { if (Object.prototype.hasOwnProperty.call(c, k)) { best = Math.max(best, c[k].round || 0); } }
+    return best;
+  }
+
+  /** setup() 꼬리에서 — 이월분을 새 판에 얹는다 */
+  function applyRound(st, meId, rd) {
+    var off = global.DG.off, k, i;
+    for (k in st.cities) {
+      if (Object.prototype.hasOwnProperty.call(st.cities, k) && st.cities[k].force && st.cities[k].force !== meId) {
+        st.cities[k].troops = Math.round(st.cities[k].troops * rd.foe);
+      }
+    }
+    for (k in st.forces) {
+      if (Object.prototype.hasOwnProperty.call(st.forces, k) && k !== meId) { st.forces[k].gold = Math.round(st.forces[k].gold * rd.foe); }
+    }
+    if (st.forces[meId]) { st.forces[meId].gold += rd.gold; }
+    var cap = citiesOf(meId)[0] || '', back = [];
+    for (i = 0; i < rd.folk.length; i++) {
+      var id = rd.folk[i];
+      if (!cap || !off.has(id) || off.rec(id).force) { continue; }
+      var r = off.placeAt(id, cap, meId);
+      r.loyal = core.clamp(off.baseLoyal(id, meId) + 15, 0, 100);
+      r.found = true; r.camp = null; r.journey = null;
+      back.push(off.find(id).name);
+    }
+    core.log('🔁 ' + rd.n + '회차 — 다른 세력 병력·금 ×' + rd.foe.toFixed(1) + ' · 금 +' + core.fmt(rd.gold) +
+      (back.length ? ' · 돌아온 사람 ' + back.join('·') : ''), 'good');
   }
 
   /** 도전을 끝낸다(한 번만) — 점수·최고 기록·공유 코드. 카드는 화면이 'rtk:challenge' 로 띄운다 */
@@ -1398,6 +1493,7 @@
     challengeWeek: challengeWeek, challengeScore: challengeScore, challengeView: challengeView, setupChallenge: setupChallenge,
     tickChallenge: tickChallenge, monthReport: monthReport, snapshot: snapshot, recommend: recommend, isoWeek: isoWeek,
     CHALLENGE_MONTHS: CHALLENGE_MONTHS, bests: bests,
+    roundNo: roundNo, canNextRound: canNextRound, roundPreview: roundPreview, nextRound: nextRound, roundBest: roundBest, ROUND_MAX: ROUND_MAX,
     VICTORY: VICTORY, victoryKinds: victoryKinds, victoryProgress: victoryProgress, victoryNext: victoryNext,
     victoryDone: function (k) { return victoryDone(state(), k); }, resultCard: resultCard, tickVictories: tickVictories,
     readyAt: readyAt, capOf: capOf, order: order, monthOrders: monthOrdersView, monthBattles: monthBattlesView, monthScouts: monthScoutsView, tryHire: tryHire, bumpStat: bumpStat,

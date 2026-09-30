@@ -2729,7 +2729,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var acts = Array.prototype.map.call(btns, function (b) { return b.getAttribute('data-act'); }).join();
       var card = R.resultCard('hegemony');
       var shown = html.indexOf('패권 승리') >= 0 && html.indexOf('이끈 사람') >= 0 && html.indexOf('다음 도전') >= 0 &&
-        acts === 'close-enc,back-scen';
+        acts === 'close-enc,next-round,back-scen';       // 회차 단추(§5-14)가 사이에 든다
       DG.ui.closeEnc();
       var before = st.turn, m = R.endMonth();
       var goes = !!m && st.turn === before + 1 && st.result === null;
@@ -2749,7 +2749,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var acts = Array.prototype.map.call(enc.querySelectorAll('[data-act]'), function (b) { return b.getAttribute('data-act'); }).join();
       var txt = enc.textContent;
       var ok = r === 'win' && st.victories.length === 1 && st.victories[0].kind === 'conquest' &&
-        txt.indexOf('천하통일') >= 0 && acts === 'back-scen,close-enc' && R.endMonth() === null;
+        txt.indexOf('천하통일') >= 0 && acts === 'back-scen,next-round,close-enc' && R.endMonth() === null;
       DG.ui.closeEnc();
       R.setup('cao');
       return ok && ('win · 기록 conquest · 카드 단추 ' + acts);
@@ -3519,6 +3519,53 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '설전: 도입 → 문답 네 보기(그만·건너뛰기 없음) → 결과 카드 · 일기토: 도입 → 손 싸움 → "결과로" → 결과 카드 · 성 차지: 앞 단 없이 결과';
       } finally { window.DG_NO_SCENARIO = true; evDone(); }
+    });
+
+    t('회차(§5-14) — 이긴 판에서만 열리고, 같은 시나리오·깃발로 다시 서며 다른 세력이 세지고 금이 늘고 시간 틈 사람이 돌아온다 · 카드와 단추가 뜬다', function () {
+      var bad = [], keepRound = C.save.rtkRound;
+      try {
+        C.save.rtkRound = undefined;
+        R.setup('cao', '194'); var st = R.state();
+        function foeTroops() { var n = 0, s2 = R.state(); Object.keys(s2.cities).forEach(function (k) { if (s2.cities[k].force && s2.cities[k].force !== 'cao') { n += s2.cities[k].troops; } }); return n; }
+        var foeF = R.liveForces().filter(function (f) { return f !== 'cao'; })[0];
+        var base = foeTroops(), goldBase = R.force('cao').gold, foeGold = R.force(foeF).gold;
+        if (R.roundNo() !== 1 || R.canNextRound().ok || R.nextRound().ok) { bad.push('안 이겼는데 열림'); }
+        var cap = R.citiesOf('cao')[0];
+        off.placeAt('tm_gangseo', cap, 'cao'); off.placeAt('tm_doha', cap, 'cao'); off.placeAt('tm_gwedo', cap, 'cao');
+        st.victories = [{ kind: 'culture', month: 5 }];
+        var pv = R.roundPreview();
+        if (!(pv.n === 2 && Math.abs(pv.foe - 1.2) < 1e-9 && pv.gold === 1500 && pv.folk.length === 2)) { bad.push('미리보기 ' + JSON.stringify(pv)); }
+        /* 카드 — 이긴 판의 결과 카드에 회차 단추가 든다 */
+        var enc = document.querySelector('#encounter'), gg = 0;
+        while (enc.classList.contains('show') && gg++ < 10) { DG.ui.closeEnc(); }
+        C.emit('rtk:victory', R.resultCard('culture'));
+        if (!(encHtml().indexOf('data-act="next-round"') >= 0 && enc.textContent.indexOf('2회차') >= 0)) { bad.push('카드 단추'); }
+        DG.ui._act('next-round', uiBtn({}));
+        st = R.state();
+        if (!(st.round === 2 && st.scen === '194' && st.me === 'cao' && st.turn === 0 && (!st.victories || st.victories.length === 0) && !st.result)) { bad.push('둘째 회차 판 ' + JSON.stringify([st.round, st.scen, st.me, st.turn])); }
+        var ratio = foeTroops() / base;
+        if (!(ratio > 1.17 && ratio < 1.23)) { bad.push('적 병력 ×' + ratio.toFixed(3)); }
+        if (R.force('cao').gold !== goldBase + 1500) { bad.push('금 ' + (R.force('cao').gold - goldBase)); }
+        if (Math.abs(R.force(foeF).gold / foeGold - 1.2) > 0.01) { bad.push('적 금 ×' + (R.force(foeF).gold / foeGold)); }
+        var trio = ['tm_gangseo', 'tm_doha', 'tm_gwedo'], back = trio.filter(function (k) { return off.rec(k).force === 'cao'; });
+        if (back.length !== 2 || pv.folk.slice().sort().join() !== back.sort().join()) { bad.push('돌아온 사람(능력 높은 둘) ' + trio.map(function (k) { return off.rec(k).force; }).join() + ' 미리보기 ' + pv.folk.join()); }
+        if (R.roundBest() !== 1 || !C.save.rtkRound.clears['194'] || C.save.rtkRound.clears['194'].kind !== 'culture') { bad.push('기록'); }
+        DG.ui.closeEnc();
+        /* 셋째 회차 · 끝 · 막힘 */
+        st.victories = [{ kind: 'hegemony', month: 9 }];
+        var r3 = R.nextRound();
+        if (!(r3.ok && r3.n === 3 && Math.abs(r3.foe - 1.4) < 1e-9 && r3.gold === 3000 && R.roundBest() === 2)) { bad.push('셋째 ' + JSON.stringify(r3)); }
+        st = R.state(); st.result = 'lose';
+        if (R.canNextRound().ok) { bad.push('진 판에서 열림'); }
+        st.result = 'win';
+        if (!R.canNextRound().ok) { bad.push('정복 판에서 안 열림'); }
+        st.result = null; st.victories = [{ kind: 'survival', month: 1 }]; st.round = R.ROUND_MAX;
+        if (R.canNextRound().ok) { bad.push('끝 회차에서 열림'); }
+        st.round = 3; st.challenge = { week: 'x' };
+        if (R.canNextRound().ok) { bad.push('도전 판에서 열림'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '안 이기면 닫힘 · 카드 단추 → 2회차(적 ×' + ratio.toFixed(2) + ' · 금 +1500 · 시간 틈 사람 둘 귀환) · 3회차 ×1.4 · 진 판·9회차·도전 판은 막힘 · 최고 2회차 기록';
+      } finally { C.save.rtkRound = keepRound; R.setup('cao'); }
     });
 
     t('시나리오 7막 — 시간 틈 사람 아홉이 다 모여야 열리고, 틈을 고른 답이 뒤 두 카드 글을 가르며, 끝나면 조용하다', function () {
