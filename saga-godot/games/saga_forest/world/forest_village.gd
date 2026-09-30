@@ -26,6 +26,8 @@ func _ready() -> void:
 	WorldCurveMaterial.ensure_global_registered()
 	ForestSaveState.try_load()
 	ForestSaveState.begin_session()
+	## 자동 저장(saga_core/world/autosave_timer.gd) — 60초마다·앱 멈춤 때.
+	preload("res://saga_core/world/autosave_timer.gd").attach(self, ForestSaveState.save, func() -> bool: return get_tree().get_first_node_in_group("player") != null)
 
 	## 제외 목록 6번(계절행사 8일) — 오늘이 그 여덟 날 중 하나면 들어오자마자
 	## 안내한다(gather_label.gd가 상시 표시하는 것과 별개로, 첫 인상은

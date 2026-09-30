@@ -17,6 +17,8 @@ extends Node3D
 func _ready() -> void:
 	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게(saga_core/ui/orientation_scale.gd).
 	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
+	## 자동 저장(saga_core/world/autosave_timer.gd) — 60초마다·앱 멈춤 때.
+	preload("res://saga_core/world/autosave_timer.gd").attach(self, StorySaveState.save, func() -> bool: return get_tree().get_first_node_in_group("player") != null)
 	if StorySaveState.has_pending_spawn:
 		var player := get_tree().get_first_node_in_group("player")
 		var x_m: float = StorySaveState.consume_pending_spawn()

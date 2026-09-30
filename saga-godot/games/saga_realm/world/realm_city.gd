@@ -63,6 +63,8 @@ var _last_sig := ""
 func _ready() -> void:
 	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게(saga_core/ui/orientation_scale.gd).
 	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
+	## 자동 저장(saga_core/world/autosave_timer.gd) — 60초마다·앱 멈춤 때. 시나리오를 고르는 중에는 안 한다.
+	preload("res://saga_core/world/autosave_timer.gd").attach(self, RealmSaveState.save, func() -> bool: return RealmSaveState.scenario_ready)
 	if not RealmSaveState.try_load():
 		RealmSaveState.scenario_ready = false
 		_show_scenario_picker()

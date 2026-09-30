@@ -9728,3 +9728,9 @@ PROJECT_STATE.md` 참고. 요약:
 - 새 `world/autosave.gd`(GO, test_village 가 붙임): 서명(경험·가방·도감·이야기·인물·상자·알·마당·회차·무기·성유물·육성)이 바뀌면 마지막 저장 20초 뒤(2초마다 살핌), 변화 없어도 5분마다, 창 닫기·앱 멈춤(폰 홈 버튼)·초점 잃음 때 변화가 있으면 바로. 안전할 때만(플레이어가 지도 안·안 얼림·비경/대결 없음). 헤드리스·`--script`·SAGA_NO_AUTOSAVE·점검 노드가 붙었을 때는 스스로 꺼져 점검·촬영이 진짜 세이브를 덮지 않는다. 화면 왼쪽 아래에 "💾 자동 저장" 1.4초. SaveState.path_override 로 점검은 임시 파일.
 - 새 점검 `tools/probe_autosave.gd`(SAGA_AUTOSAVE_PROBE=1, 8항목) fails=0(진짜 save.json 은 안 만들어졌다). 실기(창 모드 실제 달리기, 임시 파일): 경험이 늘자 16초에 "변화" 저장, 앱 멈춤 알림에 "떠남" 저장, 파일의 경험 = 실제 경험. 던전·국지 세이브 왕복(.bak 생김·.tmp 없음·불러오기 성공)도 확인, 의숲·스토리는 플레이어 씬이 있어야 저장돼 씬 없이는 못 봤다(REGRESS 는 통과).
 - 남은 것: 자동 저장 노드는 GO 만 붙였다(다른 네 판 월드에도 같은 노드가 필요 — 서명 내용이 판마다 다르다).
+
+## 자동 저장 — 다른 판(의숲·스토리·국지)에도 (2026-09-30, "이어해")
+
+- 새 `saga_core/world/autosave_timer.gd`(단순판): 60초마다 + 창 닫기·앱 멈춤(폰 홈 버튼)·초점 잃음 때 저장하고 "💾 자동 저장" 표시. `AutosaveTimer.attach(부모, 저장 Callable, 안전 Callable)`. 헤드리스·`--script`·SAGA_NO_AUTOSAVE·점검 노드가 있으면 꺼짐. forest_village·story_town·story_field·realm_city 가 한 줄로 붙임(의숲·스토리는 플레이어가 있을 때, 국지는 시나리오를 고른 뒤 — `scenario_ready`). 사가블로는 방 클리어·피격 때 이미 저장한다.
+- 창 모드 확인(스크래치 auto4.gd, 진짜 세이브는 시험 뒤 지움): 의숲·신야·TestField 저장 성공·파일 생김, 국지는 시나리오 선택 전이라 저장 안 함(의도). REGRESS OK.
+- GO 는 변화를 보는 world/autosave.gd 를 그대로 쓴다.
