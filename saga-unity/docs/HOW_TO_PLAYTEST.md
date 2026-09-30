@@ -548,3 +548,11 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 - `PlaytestKit.Begin("[이름표]")` — 실패 수를 0 으로. `Check(cond, msg)`·`Fail(msg)` 로 세고 `Summary(name)` 이 `[name] OK`/`FAIL n` 한 줄을 남긴다.
 - `using var s = PlaytestKit.IsolatedSaves("save_dungeon.json")` — 실제 세이브를 잠깐 치웠다 Dispose 에서 되돌린다(이름 없으면 `save*.json` 전부). 플레이 모드로 여러 프레임 도는 진단은 객체를 들고 있다가 끝날 때 Dispose. 프로세스가 죽어 남은 백업(`_playtest_saves_backup`)은 다음 호출이 먼저 되돌린다.
 - `using var e = PlaytestKit.ErrorCounter()` — Error·Exception 로그를 `Fails` 에 센다(`Fail` 이 남긴 로그·에디터 검색 색인 로그는 제외).
+
+## 14. 스크립트 옮기기 — `tools/remap-guid.mjs` (tasks U-0003)
+
+- 다섯 판 복제를 `Assets/SagaCore/` 하나로 합칠 때 씬·프리팹이 가리키던 옛 스크립트 GUID 를 새 GUID 로 바꾼다.
+- `node tools/remap-guid.mjs --delete <옛.meta>... <새.meta>` — 옛 guid → 새 guid 치환(`Assets/**/*.{unity,prefab,asset}`, 바이너리 모드), 바꾼 파일 수 출력, 끝나면 옛 `.cs`+`.meta` 삭제. 새 `.meta` 는 `git mv` 로 옮겨 온 것(GUID 유지).
+- 바꾼 옛 guid 는 `tools/remap-guid.done.txt` 에 쌓인다. `node tools/remap-guid.mjs --check` 가 그 guid 들이 Assets 에 0건인지 본다.
+- 그 뒤 컴파일 `error CS` 0 → `Saga.EditorTools.PlaytestMissingScripts.Run`(씬 전체·프리팹 Missing Script 수, OK 한 줄) → 판별 Playtest 하나.
+- 씬 재빌드(`SagaRebuildScenes`)는 사실 몸 묶음 없는 PC 에선 금지 — 이 도구가 재빌드를 대신한다.

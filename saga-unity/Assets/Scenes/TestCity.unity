@@ -8929,7 +8929,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 767142540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0691914bf9eb20c4fac20681635ab0be, type: 3}
+  m_Script: {fileID: 11500000, guid: f8149baa75dfad94386014906ef877e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Saga.Realm.World.PlatformVolumeProfile
   pcProfile: {fileID: 11400000, guid: 6a3667ad08dec284d817aac1a595f132, type: 2}

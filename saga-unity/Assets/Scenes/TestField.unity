@@ -23349,7 +23349,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1872670873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91c605e097ceb6549a3214b3ad989481, type: 3}
+  m_Script: {fileID: 11500000, guid: f8149baa75dfad94386014906ef877e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Saga.Story.World.PlatformVolumeProfile
   pcProfile: {fileID: 11400000, guid: 6a3667ad08dec284d817aac1a595f132, type: 2}

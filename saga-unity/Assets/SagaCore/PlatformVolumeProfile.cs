@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Saga.Realm.World
+namespace Saga.Core
 {
     /// <summary>
     /// PLAN.md 66-2장(파이널 판타지 최신작 기준) — PC/Mobile 두 Volume
