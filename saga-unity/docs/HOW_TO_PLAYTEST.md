@@ -556,3 +556,9 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 - 바꾼 옛 guid 는 `tools/remap-guid.done.txt` 에 쌓인다. `node tools/remap-guid.mjs --check` 가 그 guid 들이 Assets 에 0건인지 본다.
 - 그 뒤 컴파일 `error CS` 0 → `Saga.EditorTools.PlaytestMissingScripts.Run`(씬 전체·프리팹 Missing Script 수, OK 한 줄) → 판별 Playtest 하나.
 - 씬 재빌드(`SagaRebuildScenes`)는 사실 몸 묶음 없는 PC 에선 금지 — 이 도구가 재빌드를 대신한다.
+
+## 15. 세이브 마이그레이션 — `SaveMigrator` (tasks U-0005)
+
+- `Assets/SagaCore/SaveMigrator.cs` — `Run(data, current, getVersion, step)` 가 버전이 낮으면 `step(from, data)` 를 한 단계씩 적용하고, 경로가 없거나 미래 버전이면 null. GO·REALM 이 쓰고, DUNGEON·FOREST·STORY 는 `IsFuture` 로 미래 버전만 거른다(조건부 읽기는 그대로).
+- REALM 은 옛 v3(소패 고정 필드)를 `RealmStep(3)` 이 `enemies` 목록으로 옮겨 이어받는다. 새 단계가 필요하면 그 판의 `*Step` 에 `from == N` 분기를 더하고 `SaveVersion` 을 올린다(버전 값·JSON 필드 이름은 지우지 않는다).
+- 진단 `Saga.EditorTools.PlaytestSaveMigration.Run` → `[PlaytestSaveMigration] OK`: 다섯 판의 옛 버전 fixture 가 읽히고 미래 버전(99)은 거절되는지 본다. 실제 세이브는 `PlaytestKit.IsolatedSaves` 로 격리.

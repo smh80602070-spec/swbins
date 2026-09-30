@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using Saga.Core;
 using Saga.Dungeon.World;
 
 namespace Saga.Dungeon.Data
@@ -191,7 +192,7 @@ namespace Saga.Dungeon.Data
             if (data == null) return false;
 
             // 이 빌드보다 나중 버전(다운그레이드)이면 반쯤 바뀐 채로 적용하지 않는다.
-            if (data.version > SaveVersion) return false;
+            if (SaveMigrator.IsFuture(data.version, SaveVersion)) return false;
 
             HeroState.Restore(data.level, data.exp, data.hp, data.gold, data.weaponId, data.gemId);
             SecretState.Restore(data.version >= 11 ? data.secrets : null); // 레벨 뒤(모자라면 없는 것으로 읽는다).
