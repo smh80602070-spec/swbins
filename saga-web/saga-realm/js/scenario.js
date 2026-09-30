@@ -178,8 +178,8 @@
     return { id: g.id + '_end', step: 1, ctx: { a: by ? by.id : '', b: nb && nb.lord ? nb.lord : '', city: cap, force: F, won: won } };
   }
 
-  /** 성 차지 목표 — 우리 성에 맞닿은 남의 성 하나(어울리는 땅 먼저, 병력 적은 성 먼저). 없으면 '' */
-  function pickTarget(F, near) {
+  /** 성 차지 목표 — 우리 성에 맞닿은 남의 성 하나(어울리는 지역·땅 먼저, 병력 적은 성 먼저). 없으면 '' */
+  function pickTarget(F, near, prov) {
     var mine = R().citiesOf(F), seen = {}, list = [];
     mine.forEach(function (id) {
       var cd = global.DG.cityData.find(id);
@@ -187,7 +187,8 @@
         var c = R().city(a);
         if (seen[a] || !c || c.force === F) { return; }
         seen[a] = 1;
-        list.push({ id: a, fit: near && global.DG.cityData.find(a).land === near ? 0 : 1, troops: c.troops || 0 });
+        var ca = global.DG.cityData.find(a);
+        list.push({ id: a, fit: prov && ca.prov === prov ? 0 : (near && ca.land === near ? 1 : 2), troops: c.troops || 0 });
       });
     });
     list.sort(function (x, y) { return x.fit - y.fit || x.troops - y.troops || (x.id < y.id ? -1 : 1); });
@@ -197,7 +198,7 @@
   function beginStage(id, sd, F) {
     var s = save(), st = R().state(), target = '';
     if (sd.kind === 'own') {
-      target = pickTarget(F, sd.near);
+      target = pickTarget(F, sd.near, sd.prov);
       if (!target) { return; }
     }
     if (sd.kind === 'duel' && E().h.mineOf(sd.foe, F)) { return; }

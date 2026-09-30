@@ -236,14 +236,15 @@
 ### 5-13. 시나리오 단계 — own·debate·duel1 (정본 뼈대 "event · own/debate/duel1 · event", 2026-09-30)
 | 필드 | 내용 |
 |---|---|
-| 왜 | 시나리오 카드 다섯(r1_first_ally·r2_plains·r2_debate·r3_river·r3_duel)의 뼈대 가운데 "가운데 단"이 세 갈래 고르기로 줄어 있었다 — 이야기가 판 결과(성·설전·일기토)를 기다리지 않았다 |
+| 왜 | 시나리오 카드 열하나(1~3막 다섯 + 4·5막 여섯 — r1_first_ally·r2_plains·r2_debate·r3_river·r3_duel·r4_rift·r4_plague·r4_tomb·r5_silk·r5_west·r5_south)의 뼈대 가운데 "가운데 단"이 세 갈래 고르기로 줄어 있었다 — 이야기가 판 결과(성·설전·일기토)를 기다리지 않았다 |
 | 참고·표준 | 코에이 삼국지 "역사 이벤트" · 사가스토리 퀘스트 단계 · D |
 | 메커니즘 | `data-scenario.js STAGES[카드id]` — 카드(도입)를 고르면 `scenario.js` 가 단계를 연다. **own**: 우리 성에 맞닿은 남의 성 하나(어울리는 땅 plain·river 먼저, 병력 적은 성 먼저)를 목표로 정해 열 달 안에 차지하면 이긴 결과, 넘기면 진 결과. **debate**: 다음 달 카드 앞에서 `startDebate`(must — 그만·건너뛰기 없음) 세 문답, 둘 이상 맞히면 이김. **duel**: {맹장}(무력 으뜸) 대 영점, `war.duelHand` 손 싸움(세 수, 무력 차 문턱 없음), 이기면 영점 합류·지면 {이웃}에게. 끝나면 결과 카드 `<id>_end`(단추 하나, 이긴·진 쪽 fx). 열려 있는 동안 본 사슬만 쉰다(열전·곁가지는 흐른다). 앞 단은 `event.js` def.pre·`setPre`·`view().pre`, 화면은 `ui-rtk.js showEventPre`(도입 카드 → 문답·손 싸움 → 결과 카드) |
 | 수치 | 성 차지 열 달 · 설전 세 문(정답 ≥2) · 이긴 값 예: 관도 훈련 +8·금 +500·강서 충성 +5 / 진 값 군량 -800. 새 fx: loyalId·recruitFree·lend·quiz. r3_duel 의 예물 갈래(util)는 영점을 바로 들이므로 일기토가 없다 |
 | 세이브 | `rtk.scenario.stage = { id, kind, target, since }`(없으면 없음) · 앞 단 결과는 사연 `pending.ctx.pre` |
 | 진단 | 표 다섯 모양·목표 성(들판 우선)·열려 있는 동안 본 사슬 쉼·기록 줄 🎯·열 달 뒤 진 결과·이긴 결과·설전 진/이김(recruitFree·quiz)·일기토 손 싸움→합류/이웃·예물이면 일기토 없음 + 화면(도입→문답→결과) |
 | 범위 | MODIFY `data-scenario.js` `scenario.js` `event.js` `war.js`(duelDrive·duelSet·duelHand 를 출진 일기토에서 꺼냄) `ui-rtk.js` `_test.html` |
-| 남은 것 | 정본의 "이질 사건(사람 성을 얻을 때마다)"은 아직 사연 카드뿐 · 4막 own(균열 문 성)·5막 own(실크로드·남해)은 정본 표에 있으나 웹 표엔 없다(4·5막은 세 갈래) |
+| 4·5막(같은 날 이어 붙임) | 성 차지 여섯(r2_plains·r3_river·r4_rift·r4_plague·r5_silk·r5_south) — 목표 성은 맞닿은 남의 성 가운데 `prov`(fu 균열·pf 폐허·xi 서역·jiao 교주) 먼저, 그다음 `near` 땅, 병력 적은 성 · 설전 셋(r1_first_ally·r2_debate·r5_west) · 일기토 둘(r3_duel 영점·r4_tomb 백기). 성 차지는 12달(1~3막은 10달). r6_end 는 그대로 |
+| 남은 것 | 정본의 "이질 사건(사람 성을 얻을 때마다)"은 아직 사연 카드뿐 · 균열·폐허 지역이 우리 성에 안 맞닿은 판은 아무 이웃 성이 목표가 된다 |
 | 상태 | 코드분 완료(2026-09-30), 실기 확인 대기(설전·일기토 카드 흐름·목표 성 안내가 눈에 띄는지) |
 
 ## 6. 그래픽·에셋 (이 판 적용분)

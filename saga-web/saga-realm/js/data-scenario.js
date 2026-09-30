@@ -352,7 +352,7 @@
 
   /**
    * 단계 표 — 카드 id 마다 { kind, title, win, lose, ... }
-   *   kind   own(목표 성을 months 달 안에 차지 — near 는 어울리는 땅 plain·river, 없으면 아무 이웃 성) · debate(세 문답, 둘 이상 맞히면 이김) · duel(손 싸움 — {맹장} 대 foe)
+   *   kind   own(목표 성을 months 달 안에 차지 — prov 는 어울리는 지역(fu 균열·pf 폐허·xi 서역·jiao 교주), near 는 어울리는 땅 plain·river, 없으면 아무 이웃 성) · debate(세 문답, 둘 이상 맞히면 이김) · duel(손 싸움 — {맹장} 대 foe)
    *   intro  (debate·duel) 앞 단 카드에 뜨는 도입 글
    *   win·lose  { text, hint, fx } — fx 는 카드 갈래와 같은 종류에 더해
    *            loyalId({id,n} 그 사람이 우리 사람이면 충성) · recruitFree(재야 중 지력 으뜸 하나를 등용) · lend(foe 가 {이웃}에게 간다) · quiz(문답 정답 수 +n, 문화 승리)
@@ -372,6 +372,26 @@
     r3_river: { kind: 'own', near: 'river', months: 10, title: '적벽 강 위 · 강가의 성',
       win: { text: '강가의 성을 얻었다 — 성연의 바람 기록이 그날 밤 정확히 들어맞았다', hint: '성연 충성 +8 · 금 +600 · 수도 치안 +5', fx: [{ t: 'loyalId', id: 'tm_seongyeon', n: 8 }, { t: 'gold', n: 600 }, { t: 'sec', n: 5 }] },
       lose: { text: '강 위의 싸움을 끝내 못 이겼다 — 성연이 조용히 기록을 접었다', hint: '성연 충성 -4', fx: [{ t: 'loyalId', id: 'tm_seongyeon', n: -4 }] } },
+    r4_rift: { kind: 'own', prov: 'fu', months: 12, title: '균열의 왕 · 문 곁의 성',
+      win: { text: '균열 곁의 성을 빼앗아 문을 눌렀다 — 성벽 위에서 강서의 특공대가 함성을 올렸다', hint: '수도 훈련 +8 · 강서 충성 +5 · 금 +600', fx: [{ t: 'train', n: 8 }, { t: 'loyalId', id: 'tm_gangseo', n: 5 }, { t: 'gold', n: 600 }] },
+      lose: { text: '열두 달이 지나도록 문 곁의 성을 못 얻었다 — 성혼의 기세가 성벽을 갉았다', hint: '수도 치안 -6', fx: [{ t: 'sec', n: -6 }] } },
+    r4_plague: { kind: 'own', prov: 'pf', months: 12, title: '역병의 근원 · 폐허 곁의 성',
+      win: { text: '폐허 곁의 성을 얻어 근원을 막았다 — 금담의 백신 공장이 성 안까지 이어졌다', hint: '수도 치안 +8 · 군량 +1000 · 금 +500', fx: [{ t: 'sec', n: 8 }, { t: 'food', n: 1000 }, { t: 'gold', n: 500 }] },
+      lose: { text: '근원을 못 막은 채 열두 달이 갔다 — 역병이 곳간까지 번졌다', hint: '수도 군량 -1200', fx: [{ t: 'food', n: -1200 }] } },
+    r4_tomb: { kind: 'duel', foe: 'tb_baekgi', title: '망자의 맹세 · 묘문의 일기토',
+      intro: '백기가 묘역 종소리 속에서 창을 세웠다. "이기는 쪽이 이 밤을 갖는다." {맹장} 이(가) 나선다 — 세 수 가운데 하나씩, 승부가 날 때까지.',
+      win: { text: '{맹장} 이(가) 백기를 꺾었다 — 종소리가 멎고 망자 명부에 이름이 하나 지워졌다', hint: '수도 치안 +8 · 금 +600 · 책사 충성 +3', fx: [{ t: 'sec', n: 8 }, { t: 'gold', n: 600 }, { t: 'loyal', n: 3 }] },
+      lose: { text: '{맹장} 이(가) 밀렸다 — 백기가 웃으며 물러났고 종소리가 밤새 이어졌다', hint: '수도 훈련 -6 · 치안 -4', fx: [{ t: 'train', n: -6 }, { t: 'sec', n: -4 }] } },
+    r5_silk: { kind: 'own', prov: 'xi', months: 12, title: '실크로드 대상 · 오아시스의 성',
+      win: { text: '오아시스의 성을 얻어 관문을 세웠다 — 궤도의 드론이 모래 밑 옛 도시를 하나 찾았다', hint: '금 +800 · 군량 +1000', fx: [{ t: 'gold', n: 800 }, { t: 'food', n: 1000 }] },
+      lose: { text: '길을 지킬 성을 못 얻었다 — 대상이 다른 길로 돌아갔다', hint: '금 -300', fx: [{ t: 'gold', n: -300 }] } },
+    r5_west: { kind: 'debate', title: '대진의 사신 · 통역의 설전',
+      intro: '도하의 번역기가 사신의 말을 옮긴다. 문답 세 개 — 두 개 이상 맞히면 사신이 조건을 낮춘다.',
+      win: { text: '사신이 설전에 웃으며 조건을 낮췄다 — 별 지도에 새 길이 그어졌다', hint: '이웃 우호 +15 · 금 +700', fx: [{ t: 'rel', n: 15 }, { t: 'gold', n: 700 }] },
+      lose: { text: '말이 어긋나 사신이 불쾌해했다 — 번역기가 조용해졌다', hint: '이웃 우호 -5', fx: [{ t: 'rel', n: -5 }] } },
+    r5_south: { kind: 'own', prov: 'jiao', months: 12, title: '남해의 배 · 포구의 성',
+      win: { text: '포구의 성을 얻어 항로를 열었다 — 성연의 항법이 섬마다 표류물을 짚어 냈다', hint: '성연 충성 +5 · 금 +700 · 수도 훈련 +6', fx: [{ t: 'loyalId', id: 'tm_seongyeon', n: 5 }, { t: 'gold', n: 700 }, { t: 'train', n: 6 }] },
+      lose: { text: '포구를 얻지 못한 채 계절이 갔다 — 표류물은 다른 이의 것이 되었다', hint: '금 -300', fx: [{ t: 'gold', n: -300 }] } },
     r3_duel: { kind: 'duel', foe: 'tm_yeongjeom', title: '의체 무사의 일기토',
       intro: '영점이 의체 팔로 창을 세웠다. "나보다 강한 장수 밑에만 선다." {맹장} 이(가) 마당에 나선다 — 세 수 가운데 하나씩, 승부가 날 때까지.',
       win: { text: '{맹장} 이(가) 영점을 꺾었다 — 영점이 창을 거두고 무릎을 꿇었다', hint: '영점 합류', fx: [{ t: 'recruit', id: 'tm_yeongjeom', bonus: 10 }] },

@@ -3334,7 +3334,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         if (SC.lines().some(function (x) { return x.state !== 'legacy'; })) { bad.push('1막 건너뜀'); }
         st.turn = 0; st = evFresh(); st.turn = 0; me = R.myForce(); me.gold = 20000;
         SC.state().done = { r1_start: {}, r1_rift_sign: {}, r1_first_ally: {} };
-        var recruited = {}, order = [];
+        var recruited = {}, order = [], nSettled = 0;
         SD.CARDS.slice(3, 16).forEach(function (cd) {
           st.turn = Math.max(st.turn, cd.when.minTurn);
           if (cd.when.victory) { st.victories = [{ kind: 'culture', month: st.turn }]; }
@@ -3352,10 +3352,11 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
             if (rr.force !== 'cao') { bad.push(cd.id + ' 등용 안 됨 ' + rec.id); } else { recruited[rec.id] = 1; }
           }
           if (!SC.state().done[cd.id]) { bad.push(cd.id + ' 기록'); }
-          try { settleStage(cd.id); } catch (e) { bad.push(e.message); }
+          try { if (settleStage(cd.id)) { nSettled++; } } catch (e) { bad.push(e.message); }
           if (SC.state().stage) { bad.push(cd.id + ' 단계가 안 닫힘'); }
         });
         if (order.length !== 13) { bad.push('뜬 카드 ' + order.length); }
+        if (nSettled < 8) { bad.push('단계를 닫은 카드 ' + nSettled); }
         if (SC.lines().slice(0, 16).some(function (x) { return x.state !== 'done'; })) { bad.push('기록 줄'); }
         var n = Object.keys(recruited).length;
         if (n < 4) { bad.push('등용한 시간 틈 사람 ' + n); }
@@ -3373,7 +3374,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       try {
         var me = R.myForce(); me.gold = 20000;
         var FXS = ['gold', 'food', 'sec', 'train', 'loyal', 'rel', 'recruit', 'loyalId', 'recruitFree', 'lend', 'quiz'];
-        if (Object.keys(SD.STAGES).join() !== 'r1_first_ally,r2_plains,r2_debate,r3_river,r3_duel') { bad.push('단계 표 ' + Object.keys(SD.STAGES).join()); }
+        if (Object.keys(SD.STAGES).join() !== 'r1_first_ally,r2_plains,r2_debate,r3_river,r4_rift,r4_plague,r4_tomb,r5_silk,r5_west,r5_south,r3_duel') { bad.push('단계 표 ' + Object.keys(SD.STAGES).join()); }
         Object.keys(SD.STAGES).forEach(function (id) {
           var sd = SD.STAGES[id];
           if (['own', 'debate', 'duel'].indexOf(sd.kind) < 0) { bad.push(id + ' 종류'); }
@@ -3472,7 +3473,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
           if (!E.h.mineOf('tm_yeongjeom', 'cao') || SC.state().stage) { bad.push('예물로 합류하면 일기토 없음'); }
         }
         if (bad.length) { throw new Error(bad.join(', ')); }
-        return '단계 다섯(성 차지 둘·설전 둘·일기토 하나) · 목표 성 들판 우선 · 열 달 뒤 진 결과 · 설전 ok<2 진/≥2 이김 · 일기토 손 싸움→영점 합류/이웃 · 열려 있는 동안 본 사슬 쉼';
+        return '단계 열하나(성 차지 여섯·설전 셋·일기토 둘) · 목표 성 들판 우선 · 열 달 뒤 진 결과 · 설전 ok<2 진/≥2 이김 · 일기토 손 싸움→영점 합류/이웃 · 열려 있는 동안 본 사슬 쉼';
       } finally { window.DG_NO_SCENARIO = true; evDone(); }
     });
 
