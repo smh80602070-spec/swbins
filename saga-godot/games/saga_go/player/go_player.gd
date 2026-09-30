@@ -1,4 +1,4 @@
-extends "res://games/saga_go/player/player.gd"
+extends "res://saga_core/player/player.gd"
 
 ## 2026-09-23 — 원신 기준 이동(사용자 "원신 같아야 해", PLAN 106장 ①).
 ## GO 전용이다. player.gd 는 DUNGEON·FOREST 도 같이 쓰므로 거기엔 손대지
