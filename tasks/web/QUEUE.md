@@ -4,7 +4,6 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 3 | [W-0003](W-0003.md) `tools/status.mjs` + `saga-web/STATE.md` | 통합 | 작성됨 |
 | 4 | [W-0004](W-0004.md) precheck 게이트 확장 | 통합 | 작성됨 |
 | 5 | [W-0005](W-0005.md) 확인 시트 `status.mjs --sheet` | 측정 | 작성됨 |
 | 6 | [W-0006](W-0006.md) `saga-web/RULES.md` + 판별 CLAUDE.md 를 큐로 | 통합 | 작성됨 |

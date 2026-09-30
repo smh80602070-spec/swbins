@@ -36,6 +36,7 @@
 | 도구 | 하는 일 |
 |---|---|
 | `tools/precheck.sh` | 커밋 전 점검(커밋 훅이 자동 실행) — js 구문 · 도감 md5 · sw.js 버전 · **바뀐 에셋 🔴** · 문서 크기 |
+| `tools/status.mjs` | 웹 다섯 판 `features.json`·러너 결과로 판별 완성도(D3+÷전체)·D0/D1·WIP 초과·1,500줄 넘는 js 를 표로 — `saga-web/STATE.md` 와 README "현재" 표 블록을 덮어쓴다. `--big`(큰 파일만) · `--json` |
 | `tools/test-web.mjs` | 웹 판 `_test.html` 헤드리스 러너 — 빈 포트 서버 + 전용 프로필 크롬으로 `RESULT n/m`·실패 이름을 찍고 종료 코드 0/1. `node tools/test-web.mjs [판…] [--runs=N] [--budget=ms]` · 결과 `tools/_out/test-web.json` · `precheck.sh --full` 이 다섯 판 전부 돌린다 |
 | `tools/asset-audit/` | 세 트랙 에셋 점검 — 공개 유출 · 압축 디코더 누락 · 용량 · .meta/.import 짝 · 폰 예산 · 출처 문서 · 미참조 · 사본. `--quick` 은 바뀐 것만 |
 | `tools/claude-home/` | 좀비 청소기 — 부모 죽은 bash·git·serena·헤드리스 크롬 묶음만 끔(일반 node·Unity·Godot 품은 묶음은 보존), 세션 시작·턴 끝(10분 간격) 훅. PC마다 `node tools/claude-home/install.js`(되돌리기 `--uninstall`), 기록 `~/.claude/reap-orphans.log`(끈 것)·`reap-orphans.last`(마지막으로 돈 시각). 훅이 WMI(cscript `reap-launch.wsf`)로 띄운다 — 그냥 detached 로 띄우면 훅과 함께 죽는다. 끄는 건 이름난 단명 보조(statusline·rtk hook 등)·MCP·30분 넘은 헤드리스 크롬·한 번도 실행 못 한 일시정지 고아뿐 — 부모 죽은 bash 라도 남의 백그라운드 작업일 수 있어 안 끈다. 시험: `reap-orphans.ps1 -DryRun` |
