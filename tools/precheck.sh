@@ -30,6 +30,9 @@ if [ "$distinct" -gt 1 ]; then
   fi
 fi
 
+echo "== shared 정본 (saga-web/shared → 다섯 판 사본 md5, tools/sync-shared.mjs)"
+node tools/sync-shared.mjs --check || fail=1
+
 echo "== sw.js 캐시 버전 (판별 PLAN §7 함정: js/ 고치고 VERSION 안 올리면 옛 캐시를 계속 본다)"
 for d in "${targets[@]}"; do
   [ -f "$d/sw.js" ] || continue

@@ -13,6 +13,8 @@
  *   서비스워커 file:// 에서는 등록하지 않는다 (index.html 이 이미 막아 둔다)
  *   GPS       보안 컨텍스트가 아니라 못 쓴다 → 키보드 이동 + 🤖 자동 순행으로 논다
  *
+ * 정본은 saga-web/shared/build/build-single.mjs — 판별 build/ 는 tools/sync-shared.mjs 가 복사한 사본이다(직접 고치지 않는다).
+ *
  * 쓰는 법:  node build/build-single.mjs      (또는 build-pc.bat 더블클릭)
  * 결과   :  dist/<게임이름>.html  ·  dist/play.bat  ·  dist/사용법.txt
  */
@@ -24,13 +26,16 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SRC = path.resolve(HERE, '..');
 const DIST = path.join(SRC, 'dist');
 /** 결과 파일 이름 — 게임마다 다르다 (다섯 판을 한 폴더에 모아도 안 겹친다) */
-const OUT_NAME = '사가고.html';
+const NAMES = { 'saga-go': '사가고', 'saga-dungeon': '사가블로', 'saga-forest': '사가의숲', 'saga-story': '사가스토리', 'saga-realm': '사가국지' };
+const GAME = NAMES[path.basename(SRC)];
+if (!GAME) { throw new Error('모르는 판 폴더: ' + path.basename(SRC) + ' (shared/build/build-single.mjs 의 NAMES 에 넣을 것)'); }
+const OUT_NAME = GAME + '.html';
 
 const indexHtml = fs.readFileSync(path.join(SRC, 'index.html'), 'utf8');
 
 /* index.html 이 부르는 순서를 그대로 쓴다 — 순서를 여기서 다시 적으면
    스크립트를 하나 늘릴 때 두 곳을 고쳐야 하므로, html 에서 뽑아 쓴다. */
-const scriptSrcs = [...indexHtml.matchAll(/<script src="([^"]+)"><\/script>/g)].map((m) => m[1]).filter((src) => !/^assets\/portraits\//.test(src));   // 구운 초상(assets/portraits)는 단독 파일에 안 들어간다
+const scriptSrcs = [...indexHtml.matchAll(/<script src="([^"]+)"><\/script>/g)].map((m) => m[1]).filter((src) => !/^assets\/(portraits|sprites2d)\//.test(src));   // 구운 초상·몬스터 시트(assets/portraits·sprites2d)는 단독 파일에 안 들어간다
 const cssHrefs = [...indexHtml.matchAll(/<link rel="stylesheet" href="([^"]+)">/g)].map((m) => m[1]);
 
 if (!scriptSrcs.length) { throw new Error('index.html 에서 <script src> 를 못 찾았습니다'); }
@@ -44,7 +49,7 @@ const readAll = (list) => list.map((rel) => {
 const cssParts = readAll(cssHrefs);
 const jsParts = readAll(scriptSrcs);
 
-let html = indexHtml.replace(/<script src="assets\/portraits\/manifest\.js"><\/script>\s*/, '');   // 없는 파일을 가리키면 깨진 그림이 뜬다
+let html = indexHtml.replace(/<script src="assets\/(?:portraits|sprites2d)\/[^"]*manifest\.js"><\/script>\s*/g, '');   // 없는 파일을 가리키면 깨진 그림이 뜬다
 
 /* 스타일시트 → <style> */
 for (const href of cssHrefs) {
@@ -73,7 +78,7 @@ html = html.replace(/<script>\s*\/\* 서비스 워커[\s\S]*?<\/script>/, '');
 
 /* 단독판 표시 — 어디서 온 파일인지 알 수 있게 */
 const stamp = process.env.DG_BUILD_STAMP || '';
-const banner = `<!-- 사가고 단독 실행판 (build/build-single.mjs 로 생성${stamp ? ' · ' + stamp : ''}) -->\n<title>`;
+const banner = `<!-- ${GAME} 단독 실행판 (build/build-single.mjs 로 생성${stamp ? ' · ' + stamp : ''}) -->\n<title>`;
 html = html.replace('<title>', () => banner);
 
 fs.mkdirSync(DIST, { recursive: true });
@@ -91,7 +96,7 @@ fs.writeFileSync(path.join(DIST, 'play.bat'),
 
 fs.writeFileSync(path.join(DIST, '사용법.txt'),
   [
-    '사가고 단독 실행판',
+    GAME + ' 단독 실행판',
     '',
     '1) 이 폴더를 통째로 집 PC 로 복사하세요 (USB · 메일 · 클라우드 아무거나).',
     '2) play.bat 을 더블클릭하면 기본 브라우저로 열립니다.',
