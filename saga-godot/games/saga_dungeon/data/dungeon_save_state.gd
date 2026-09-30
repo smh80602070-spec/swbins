@@ -1,4 +1,4 @@
-extends Node
+extends SagaSaveBase
 
 ## VERTICAL_SLICE_DUNGEON.md 완료 조건의 마지막 단계 — "저장한다 → 다시
 ## 켜서 이어진다". GO의 save_state.gd와 같은 정신(로컬 파일 하나, 버전
@@ -13,6 +13,15 @@ extends Node
 const SAVE_PATH := "user://save_dungeon.json"
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
 const SAVE_VERSION := 2
+
+
+func save_version() -> int:
+	return SAVE_VERSION
+
+
+func save_path() -> String:
+	return SAVE_PATH
+
 
 ## "제외" 목록 2번(여러 방 연결) — 방 하나짜리 `room_cleared: bool`을
 ## 방마다 하나씩인 `rooms_cleared: Array[bool]`로 바꿨다. 기존 필드의
@@ -205,22 +214,6 @@ func try_load() -> bool:
 	DungeonWorldBossState.restore(
 		int(worldboss_last_slot) if (typeof(worldboss_last_slot) == TYPE_INT or typeof(worldboss_last_slot) == TYPE_FLOAT) else -1)
 	return true
-
-
-## GO의 save_state.gd::_migrate()와 완전히 같은 계약 — 버전이 낮으면
-## _migrate_step()을 한 단계씩 적용, 경로가 없거나(null) 이 빌드보다
-## 나중 버전(다운그레이드)이면 null.
-func _migrate(data: Dictionary) -> Variant:
-	var version := int(data.get("version", 0))
-	while version < SAVE_VERSION:
-		var stepped: Variant = _migrate_step(version, data)
-		if stepped == null:
-			return null
-		data = stepped
-		version = int(data.get("version", version + 1))
-	if version > SAVE_VERSION:
-		return null
-	return data
 
 
 func _migrate_step(from_version: int, data: Dictionary) -> Variant:
