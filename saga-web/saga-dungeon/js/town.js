@@ -218,6 +218,41 @@
   }
 
   /**
+   * 지워진 이름의 비석(정본 side_names_*) — 마을마다 하나, 밟으면 굴혈이 삼킨 이름 하나가 보이고 사관 묵향의 기록에 적힌다(마을마다 한 번 금·업적).
+   * 이름은 가상 음절 조합(실명 없음)이고 마을 id 해시로 정해 늘 같다. 자리는 손님·NPC·소품·표식에서 떨어진 빈자리(`placePoints`).
+   */
+  var NAME_STONE_NAMES = ['서하', '온유', '도윤', '해담', '가람', '이든', '나루', '다솜', '보리', '새롬', '아람', '우솔', '초록', '한결', '여울', '슬기', '미르', '별찬', '소담', '푸름', '하늬', '려온', '지안', '단비'];
+  var NAME_STONE_GOLD = 600, NAME_STONE_FEAT = 8;
+  function nameStoneNameOf(id) {
+    var h = 5381, i, s = String(id || '');
+    for (i = 0; i < s.length; i++) { h = ((h * 33) ^ s.charCodeAt(i)) >>> 0; }
+    return NAME_STONE_NAMES[h % NAME_STONE_NAMES.length];
+  }
+  function nameStoneSpot(cfg) {
+    var avoid = [{ x: 195, y: 240 }], i, salt = 90011, ef = ERA_FOLK_ON() ? eraFolkSpot(cfg) : null;
+    if (ef) { avoid.push({ x: ef.x, y: ef.y }); }
+    for (i = 0; i < cfg.npcs.length; i++) { avoid.push({ x: cfg.npcs[i].x, y: cfg.npcs[i].y }); }
+    for (i = 0; i < (cfg.decor || []).length; i++) { if (typeof cfg.decor[i].x === 'number') { avoid.push({ x: cfg.decor[i].x, y: cfg.decor[i].y }); } }
+    if (cfg.hasGate) { for (i = 0; i < MARKS.length; i++) { if (typeof MARKS[i].x === 'number') { avoid.push({ x: MARKS[i].x, y: MARKS[i].y }); } } }
+    for (i = 0; i < String(cfg.id).length; i++) { salt += String(cfg.id).charCodeAt(i) * (i + 11); }
+    var pts = placePoints(1, ERA_FOLK_GAP, avoid, salt);
+    return pts.length ? pts[0] : null;
+  }
+  /** 비석을 밟았다 — 마을마다 한 번 기록·보상. 다시 밟으면 이미 적어 둔 이름만 보인다. `ui.js` 가 `town:mark`(nameStone)에서 부른다 */
+  function rewardNameStone(mark) {
+    var sv = core.save, id = mark.townId, nm = nameStoneNameOf(id);
+    if (!sv.nameStones || typeof sv.nameStones !== 'object') { sv.nameStones = {}; }
+    if (sv.nameStones[id]) { core.emit('toast', mark.emoji + ' 비석에 새겨진 이름 — ' + nm + ' (이미 기록해 두었다)'); return false; }
+    sv.nameStones[id] = nm;
+    sv.player.gold = (sv.player.gold || 0) + NAME_STONE_GOLD;
+    core.gainFeat(NAME_STONE_FEAT, '지워진 이름');
+    core.log(mark.emoji + ' 지워진 이름 "' + nm + '" — 묵향의 기록에 적었다 · 금 +' + core.fmt(NAME_STONE_GOLD), 'good');
+    core.emit('toast', mark.emoji + ' 지워진 이름을 찾았다 — ' + nm + ' · 🪙 +' + core.fmt(NAME_STONE_GOLD) + ' (' + Object.keys(sv.nameStones).length + '번째)');
+    core.emit('changed'); core.persist();
+    return true;
+  }
+
+  /**
    * 표식 셋 — 사람이 아니라 **밟는 것**이다. 모루골에만 있다(원작에도 야영지가
    * 하나뿐이라 굴혈·역참·결사비도 하나씩이다).
    *   gate      굴혈 입구. 밟으면 제1층부터 (원작의 던전 입구 — 고르는 창이 없다)
@@ -1328,6 +1363,12 @@
         room.marks.push({ key: n.key, name: n.name, emoji: n.emoji, x: anchor.x + p.x, y: anchor.y + p.y });
       }
     }
+    /* 지워진 이름의 비석 — 마을마다 하나(정본 side_names_*) */
+    var nsSpot = nameStoneSpot(cfg);
+    if (nsSpot) {
+      p = scalePt(nsSpot.x, nsSpot.y);
+      room.marks.push({ key: 'namestone:' + cfg.id, nameStone: true, townId: cfg.id, name: '지워진 이름의 비석', emoji: '🪦', x: anchor.x + p.x, y: anchor.y + p.y });
+    }
     /* 굴혈(던전 입구) — cfg.exits 중 목적지가 'dungeon'인 것만 실제 발동
        표식으로 세운다. **다른 마을로의 exits는 더는 표식을 안 세운다** —
        §28-8부터 마을 사이는 걸어서 자연히 건너간다(활성 마을이 세계
@@ -1775,7 +1816,7 @@
     active: active, enter: enter, leave: leave, update: update,
     npcKeys: function () { return Object.keys(NPC_DEFS); },   // §5.16 몸짓 표 진단
     npcDefs: NPC_DEFS,                                        // 2D 사람 시트 굽기(sprite.peopleList)가 옷 빛깔을 읽는다
-    FOLK_STORY_GOLD: 5000, eraFolk: ERA_FOLK, eraFolkKeyOf: eraFolkKeyOf, eraFolkSpot: function (id) { return TOWNS[id] ? eraFolkSpot(TOWNS[id]) : null; },
+    FOLK_STORY_GOLD: 5000, NAME_STONE_GOLD: NAME_STONE_GOLD, nameStoneNameOf: nameStoneNameOf, nameStoneSpot: function (id) { return TOWNS[id] ? nameStoneSpot(TOWNS[id]) : null; }, rewardNameStone: rewardNameStone, eraFolk: ERA_FOLK, eraFolkKeyOf: eraFolkKeyOf, eraFolkSpot: function (id) { return TOWNS[id] ? eraFolkSpot(TOWNS[id]) : null; },
     townIds: function () { return TOWN_ORDER.slice(); },
     setInput: setInput, moveTo: moveTo, castSkill: castSkill, refill: refill,
     heavyAttack: heavyAttack, doDodge: doDodge, castSetSkill: castSetSkill,

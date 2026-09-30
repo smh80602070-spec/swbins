@@ -971,6 +971,8 @@
       else if (o.roadMark) { global.DG.town.rewardRoadMark(o); }
       /* 필드 유적(PLAN §60 후보 4) — 도감 'relics'에 등록되며 같은 결로 끝난다. */
       else if (o.fieldRelic) { global.DG.town.rewardFieldRelic(o); }
+      /* 지워진 이름의 비석(정본 side_names_*) — 마을마다 한 번 기록·보상 */
+      else if (o.nameStone) { global.DG.town.rewardNameStone(o); }
       /* 세계 보스 예고(§5.4) — 순전히 알림이다. 밟아도 여는 창이 없다. */
       else if (o.worldBossNotice) { toast('⚠️ 세계 보스가 곧 나타납니다'); }
       else { openVow(); }

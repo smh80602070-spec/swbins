@@ -6824,6 +6824,32 @@ window.requestAnimationFrame = function () { return 0; };
       } finally { sv.folkStory = JSON.parse(keep) || undefined; sv.player.gold = gold0; }
     });
 
+    t('지워진 이름의 비석(정본 side_names_*) — 마을마다 자리가 있고(손님과 떨어짐) 밟으면 마을마다 한 번 이름을 기록해 금·업적, 다시 밟으면 기록만', function () {
+      var T = DG.town, sv = C.save, ids = Object.keys(DG.town.eraFolk ? T.TOWN_IDS || {} : {}), bad = [];
+      var keep = JSON.stringify(sv.nameStones || null), gold0 = sv.player.gold;
+      try {
+        var towns = (T.townIds ? T.townIds() : ['moru', 'galdae', 'jakjae', 'sogeum']).filter(function (id) { return T.nameStoneSpot(id); });
+        if (towns.length < 4) { bad.push('자리 있는 마을 ' + towns.length); }
+        towns.forEach(function (id) {
+          var sp = T.nameStoneSpot(id), ef = T.eraFolkSpot(id);
+          if (!isFinite(sp.x) || !isFinite(sp.y) || (ef && Math.hypot(sp.x - ef.x, sp.y - ef.y) < 60)) { bad.push(id + ' 자리'); }
+          if (!T.nameStoneNameOf(id)) { bad.push(id + ' 이름'); }
+        });
+        sv.nameStones = {};
+        var id0 = towns[0], m = { key: 'namestone:' + id0, nameStone: true, townId: id0, name: '지워진 이름의 비석', emoji: '🪦' };
+        var g0 = sv.player.gold;
+        C.emit('town:mark', m);
+        if (sv.player.gold !== g0 + T.NAME_STONE_GOLD || sv.nameStones[id0] !== T.nameStoneNameOf(id0)) { bad.push('첫 발견 ' + (sv.player.gold - g0)); }
+        C.emit('town:mark', m);
+        if (sv.player.gold !== g0 + T.NAME_STONE_GOLD) { bad.push('두 번째에 또 줌'); }
+        var m2 = { key: 'namestone:' + towns[1], nameStone: true, townId: towns[1], name: '지워진 이름의 비석', emoji: '🪦' };
+        C.emit('town:mark', m2);
+        if (sv.player.gold !== g0 + 2 * T.NAME_STONE_GOLD || Object.keys(sv.nameStones).length !== 2) { bad.push('다른 마을'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '마을 ' + towns.length + '곳 비석 자리 · 마을마다 한 번 🪙 ' + T.NAME_STONE_GOLD + ' · 다시 밟으면 기록만';
+      } finally { sv.nameStones = JSON.parse(keep) || undefined; sv.player.gold = gold0; }
+    });
+
     t('세 시대 손님 — 마을마다 한 명(현대 둘·미래 둘 모두 어딘가), 제 몸 folk:*, 볼일 없이 말만, 다른 사람과 닿는 거리가 안 겹친다', function () { return ownSeed(926, function () {
       var T = DG.town, AS = DG.asset3d, ids = T.townIds(), seen = {}, placed = 0, bad = [];
       Object.keys(T.eraFolk).forEach(function (k) { var f = T.eraFolk[k]; if (!AS.lookup(f.model) || f.lines.length < 3 || !DG.gesture.JOB[k]) { bad.push('표:' + k); } });
