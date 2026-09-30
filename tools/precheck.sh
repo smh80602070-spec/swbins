@@ -9,7 +9,7 @@ cd "$(dirname "$0")/.." || exit 1
 fail=0
 
 echo "== js 구문"
-targets=("$@"); [ ${#targets[@]} -eq 0 ] && targets=(saga-web/saga-go saga-web/saga-dungeon saga-web/saga-forest saga-web/saga-story saga-web/saga-realm)
+targets=(); for a in "$@"; do [ "$a" = "--full" ] || targets+=("$a"); done; [ ${#targets[@]} -eq 0 ] && targets=(saga-web/saga-go saga-web/saga-dungeon saga-web/saga-forest saga-web/saga-story saga-web/saga-realm)
 # node 한 번으로 전부 파싱하고 걸린 파일만 node --check 로 재판정(파일마다 띄우면 5분 → 수 초)
 jsdirs=(); for d in "${targets[@]}"; do [ -d "$d/js" ] && jsdirs+=("$d/js"); done
 [ ${#jsdirs[@]} -gt 0 ] && { node tools/hooks/syntax-check.js "${jsdirs[@]}" || fail=1; }
@@ -57,5 +57,8 @@ for g in saga-go saga-forest saga-story saga-realm; do limit "saga-web/$g/PLAN.m
 limit saga-web/saga-dungeon/PLAN.md 92160
 limit saga-godot/docs/PROJECT_STATE.md 15360
 limit saga-unity/docs/PROJECT_STATE.md 15360
+
+echo "== � �� (--full | L�: tools/test-web.mjs all)"
+for a in "$@"; do [ "$a" = "--full" ] && { node tools/test-web.mjs all || fail=1; break; }; done
 
 [ $fail -eq 0 ] && echo "PRECHECK OK" || { echo "PRECHECK FAIL"; exit 1; }

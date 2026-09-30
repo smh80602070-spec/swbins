@@ -44,3 +44,7 @@ dist/
 # Claude Code 로컬 전용 (프로젝트 훅 settings.json 은 커밋한다)
 .claude/worktrees/
 .claude/settings.local.json
+
+# 웹 러너(tools/test-web.mjs) 전용 크롬 프로필·결과
+tools/_prof/
+tools/_out/

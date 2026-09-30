@@ -4,7 +4,6 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 1 | [W-0001](W-0001.md) 헤드리스 러너 `tools/test-web.mjs` | 통합 | 작성됨 |
 | 2 | [W-0002](W-0002.md) 다섯 판 `features.json` 첫 채우기 | 측정 | 작성됨 |
 | 3 | [W-0003](W-0003.md) `tools/status.mjs` + `saga-web/STATE.md` | 통합 | 작성됨 |
 | 4 | [W-0004](W-0004.md) precheck 게이트 확장 | 통합 | 작성됨 |
