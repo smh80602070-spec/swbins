@@ -8,6 +8,17 @@
 
 ---
 
+## 0. 자동 점검(헤드리스, 사람 손 없이)
+
+```
+GODOT=<콘솔 exe> bash saga-godot/tools/probe_all.sh                                       # 전부(GO 씬 probe + SceneTree probe, 15분 넘음)
+GODOT=<콘솔 exe> bash saga-godot/tools/probe_all.sh --only=save_dungeon,save_forest,save_story,save_realm   # 골라서
+```
+
+끝 줄 `PROBE_ALL fails=N probes=M`(N=0 이면 통과) · 표는 `tools/_out/probe_all.json`. 이 문서의 나머지는 손으로 하는 실기 테스트다.
+
+---
+
 ## 1. Godot 에디터 준비
 
 이 프로젝트는 `project.godot`의 `config/features`에 `"4.7"`이 적혀 있다 —

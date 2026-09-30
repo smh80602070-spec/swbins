@@ -4,7 +4,6 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 1 | [G-0001](G-0001.md) `tools/probe_all.sh` + 네 판 세이브 왕복 probe | 닫기 | 작성됨 |
 | 2 | [G-0002](G-0002.md) `docs/STATE.md`(생성) + `features.json`(PROJECT_STATE 표에서) | 측정 | 작성됨 |
 | 3 | [G-0003](G-0003.md) `saga_go/` 공용 스크립트 7개 → `saga_core/` + 참조 방향 게이트 | 통합 | 작성됨 |
 | 4 | [G-0004](G-0004.md) `saga_core/data/save_base.gd` — 다섯 세이브가 extends | 통합 | 작성됨 |
