@@ -6804,6 +6804,26 @@ window.requestAnimationFrame = function () { return 0; };
       return seeds.length >= 36 && heroAnime && off && A.fixedRecipe('산적') && ('사람 적·보스·마을 사람 ' + seeds.length + ' · 몸 ' + Object.keys(used).length + ' 모두 다름 · 도감 인물은 VRoid');
     });
 
+    t('시대 손님 사연(정본 side_visitors) — 택배 기사·출장 회사원·시간 여행자는 닿을 때마다 사연 한 토막씩, 끝에 금 한 번, 그 뒤엔 예전 대사', function () {
+      var T = DG.town, sv = C.save, keep = JSON.stringify(sv.folkStory || null), gold0 = sv.player.gold, bad = [];
+      try {
+        sv.folkStory = {};
+        ['courier', 'officeworker', 'timetraveler'].forEach(function (k) {
+          var ef = T.eraFolk[k];
+          if (!ef || !ef.story || ef.story.length !== 4 || ef.story.some(function (x) { return !x; })) { bad.push(k + ' 표'); return; }
+          var g0 = sv.player.gold, i;
+          var o = { key: k, name: ef.name, emoji: ef.emoji, sheet: null, line: ef.lines[0], lines: ef.lines, story: ef.story };
+          for (i = 0; i < 4; i++) { C.emit('town:npc', o); if ((sv.folkStory[ef.name] || 0) !== i + 1) { bad.push(k + ' ' + (i + 1) + '토막'); } }
+          if (sv.player.gold !== g0 + T.FOLK_STORY_GOLD) { bad.push(k + ' 금 ' + (sv.player.gold - g0)); }
+          C.emit('town:npc', o);
+          if (sv.folkStory[ef.name] !== 4 || sv.player.gold !== g0 + T.FOLK_STORY_GOLD) { bad.push(k + ' 끝난 뒤'); }
+        });
+        if (T.eraFolk.explorer.story) { bad.push('탐사 대원은 사연 없음(정본은 셋)'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '손님 셋 · 네 토막 · 끝에 🪙 ' + T.FOLK_STORY_GOLD + ' 한 번 · 그 뒤엔 예전 대사';
+      } finally { sv.folkStory = JSON.parse(keep) || undefined; sv.player.gold = gold0; }
+    });
+
     t('세 시대 손님 — 마을마다 한 명(현대 둘·미래 둘 모두 어딘가), 제 몸 folk:*, 볼일 없이 말만, 다른 사람과 닿는 거리가 안 겹친다', function () { return ownSeed(926, function () {
       var T = DG.town, AS = DG.asset3d, ids = T.townIds(), seen = {}, placed = 0, bad = [];
       Object.keys(T.eraFolk).forEach(function (k) { var f = T.eraFolk[k]; if (!AS.lookup(f.model) || f.lines.length < 3 || !DG.gesture.JOB[k]) { bad.push('표:' + k); } });

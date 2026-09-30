@@ -166,17 +166,32 @@
       '받는 분이 갑옷 차림이던데… 서명은 붓으로 하시더라고요.',
       '굴혈 쪽 주소는 지도에 안 나와서 늘 헤매요.',
       '들판에 폭주 청년들이 수레를 막아요. 가시는 길에 좀 혼내 주세요.',
-      '야장 어르신이 제 수레 바퀴를 공짜로 벼려 주셨어요.' ] },
+      '야장 어르신이 제 수레 바퀴를 공짜로 벼려 주셨어요.' ],
+      story: [
+        '제가 처음 배달한 짐은 주소 없는 상자였어요. 받는 사람을 못 찾아 사흘을 헤맸죠.',
+        '결국 상자를 열어 봤는데 안에는 "누군가에게 전해질 마음"이라 적힌 쪽지 한 장뿐이더라고요.',
+        '그 쪽지를 들고 다니다 이 시대까지 왔어요. 신기하게 여기선 받을 사람이 자꾸 나타나요.',
+        '어제 마을 사관님께 쪽지를 보여 드렸더니 "내 기록에도 없는 글씨네" 하셨어요. 주소가 생겼네요!' ] },
     officeworker: { name: '출장 온 회사원', emoji: '💼', era: 'modern', model: 'folk:officeworker', color: '#3a3a4a', lines: [
       '회의가 저 굴혈 밑에서 잡혔다는데, 농담이겠죠?',
       '여기 비단값이면 본사에서 칭찬받겠어요.',
       '방역복 입은 사람들이 개펄 쪽을 뒤지고 다녀요. 뭘 찾는 걸까요.',
-      '신호가 한 칸도 안 잡혀요. 봉화라도 올려야 하나.' ] },
+      '신호가 한 칸도 안 잡혀요. 봉화라도 올려야 하나.' ],
+      story: [
+        '저는 원래 본사 지시서만 따라 움직이는 사람이었어요. 출장도 지시서대로 왔죠.',
+        '그런데 도착하니 지시서에 없는 일이 하나도 안 멈추는 거예요. 굴혈에서 사람 이름이 지워지는 일 같은.',
+        '지시서를 접어 넣고 처음으로 제 판단으로 한 일이 지워진 이름 하나를 적어 두는 거였어요.',
+        '오늘 사관님이 그 이름을 기록에 올려 주셨어요. 보고서로 쓰면 한 줄일 일인데 이렇게 마음이 무겁네요.' ] },
     timetraveler: { name: '시간 여행자', emoji: '⌛', era: 'future', model: 'folk:timetraveler', color: '#5a8aa8', lines: [
       '제가 온 해에는 이 마을이 유리 탑 숲이었어요.',
       '경비 보행기가 제 뒤를 따라 넘어왔나 봐요. 미안해요.',
       '여기 무예는 우리 시대 기록에도 전설로 남아 있어요.',
-      '지옥 균열은… 우리 때까지도 안 닫혀요. 조심하세요.' ] },
+      '지옥 균열은… 우리 때까지도 안 닫혀요. 조심하세요.' ],
+      story: [
+        '제 귀환 일정은 원래 사흘이었어요. 이 시대를 관찰하고 돌아가는 일이었죠.',
+        '그런데 관찰이란 게 이상해요. 제가 보면 보는 대로 이 마을이 조금씩 바뀌더라고요.',
+        '그래서 일정을 미뤘어요. 바뀌는 걸 끝까지 보고 싶어서요. 우리 시대 기록에 이 마을은 없거든요.',
+        '어제 굴혈 이름 없는 비석 앞에서 한참 서 있었어요. 우리 시대에도 그 자리에 비석이 있어요. 이름이 없는 채로요.' ] },
     explorer: { name: '탐사 대원', emoji: '🧑‍🚀', era: 'future', model: 'folk:explorer', color: '#c9c9d0', lines: [
       '과거 신호가 겹쳐 잡히는 좌표예요. 흥미롭네요.',
       '정찰 드론이 길을 잃었어요. 보이면 떨어뜨려 주세요.',
@@ -1296,7 +1311,7 @@
       var efKey = eraFolkKeyOf(cfg.id), ef = ERA_FOLK[efKey];
       p = scalePt(efSpot.x, efSpot.y);
       room.npcs.push({
-        key: efKey, name: ef.name, emoji: ef.emoji, sheet: null, line: ef.lines[0], lines: ef.lines,
+        key: efKey, name: ef.name, emoji: ef.emoji, sheet: null, line: ef.lines[0], lines: ef.lines, story: ef.story || null,
         era: ef.era, model: ef.model, x: anchor.x + p.x, y: anchor.y + p.y, color: ef.color,
         ref: { id: 'town_' + efKey, name: ef.name, trait: 'virtue', rarity: 2 },
         phase: core.hash2(cfg.npcs.length + 1, 7) * 6.28, facing: efSpot.x > 380 ? -1 : 1
@@ -1760,7 +1775,7 @@
     active: active, enter: enter, leave: leave, update: update,
     npcKeys: function () { return Object.keys(NPC_DEFS); },   // §5.16 몸짓 표 진단
     npcDefs: NPC_DEFS,                                        // 2D 사람 시트 굽기(sprite.peopleList)가 옷 빛깔을 읽는다
-    eraFolk: ERA_FOLK, eraFolkKeyOf: eraFolkKeyOf, eraFolkSpot: function (id) { return TOWNS[id] ? eraFolkSpot(TOWNS[id]) : null; },
+    FOLK_STORY_GOLD: 5000, eraFolk: ERA_FOLK, eraFolkKeyOf: eraFolkKeyOf, eraFolkSpot: function (id) { return TOWNS[id] ? eraFolkSpot(TOWNS[id]) : null; },
     townIds: function () { return TOWN_ORDER.slice(); },
     setInput: setInput, moveTo: moveTo, castSkill: castSkill, refill: refill,
     heavyAttack: heavyAttack, doDodge: doDodge, castSetSkill: castSetSkill,

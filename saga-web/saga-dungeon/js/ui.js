@@ -928,6 +928,19 @@
    * town.js 는 "닿았다" 만 알린다. 그것이 무엇을 뜻하는지는 여기서 정한다 —
    * 마을은 시트를 모르고, 이 파일은 좌표를 모른다.
    */
+  /** 시대 손님 사연 — 닿을 때마다 네 토막을 차례로, 끝 토막에 금 한 번(세이브 `folkStory[이름]`). 다 들었으면 false(예전 대사로) */
+  function folkStory(o) {
+    var sv = core.save, n;
+    if (!sv.folkStory || typeof sv.folkStory !== 'object') { sv.folkStory = {}; }
+    n = sv.folkStory[o.name] || 0;
+    if (n >= o.story.length) { return false; }
+    sv.folkStory[o.name] = n + 1;
+    var gold = global.DG.town && global.DG.town.FOLK_STORY_GOLD || 0, last = n + 1 === o.story.length;
+    if (last) { sv.player.gold = (sv.player.gold || 0) + gold; core.persist(); }
+    toast(o.emoji + ' ' + o.name + ' — ' + o.story[n] + ' (사연 ' + (n + 1) + '/' + o.story.length + ')' + (last ? ' · 🪙 +' + core.fmt(gold) : ''));
+    return true;
+  }
+
   function bindTown() {
     core.on('town:npc', function (o) {
       /* 들판 방랑 상인(PLAN §60 후보 1 나머지 절반) — 마을 붙박이 NPC와
@@ -936,6 +949,7 @@
       if (o.key === 'fieldmerchant') { openFieldMerchant(o); return; }
       /* 세 시대 손님(§5.20) — 볼일(시트) 없이 말만 한다. 대사는 닿을 때마다 돌아간다 */
       if (!o.sheet) {
+        if (o.story && o.story.length && folkStory(o)) { return; }          // 시대 손님 사연(정본 side_visitors) — 말 걸 때마다 한 토막씩
         var ln = o.lines && o.lines.length ? o.lines[(o.talkN = ((o.talkN || 0) + 1)) % o.lines.length] : o.line;
         toast(o.emoji + ' ' + o.name + ' — ' + ln);
         return;
