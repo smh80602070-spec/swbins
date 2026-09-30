@@ -80,7 +80,7 @@ namespace Saga.EditorTools
             var ch = StoryScenarioData.Chapters;
             string[] ids = { "p1_field", "p1_job", "p2_port", "p2_forest", "p2_namjeong", "p2_cave", "p3_gisan", "p3_gorge", "p3_labyrinth", "p3_job",
                 "p4_luoyang", "p4_depth", "p4_gate", "p4_name", "p5_past", "p5_now", "p5_future" };
-            int[] needs = { 1, 10, 10, 10, 12, 15, 18, 22, 30, 30, 30, 30, 30, 30, 30, 30, 30 };
+            int[] needs = { 1, 10, 10, 10, 12, 15, 17, 20, 22, 25, 26, 28, 29, 30, 30, 30, 30 };
             if (ch.Length != ids.Length) Fail($"장 {ids.Length} ({ch.Length})");
             for (int k = 0; k < ids.Length && k < ch.Length; k++)
             {
@@ -113,7 +113,7 @@ namespace Saga.EditorTools
             var byId = StoryScenarioData.Chapters.ToDictionary(x => x.Id);
             if (!byId["p1_job"].JobTitle || !byId["p2_cave"].JobTitle || !byId["p3_job"].JobTitle || !byId["p4_name"].JobTitle || byId["p3_labyrinth"].Shards != 3
                 || byId["p1_field"].Exp != 400 || byId["p2_port"].Exp != 1200 || byId["p2_cave"].Exp != 4000 || byId["p3_job"].Exp != 40000 || byId["p5_future"].Exp != 600000) Fail("보상");
-            parts.Add("표(열일곱·문턱 1/10/10/10/12/15/18/22/30…·잇는 순서·장면 스물아홉·관문·전직 차수·고르기 둘·보상)");
+            parts.Add("표(열일곱·문턱 1/10/10/10/12/15/17/20/22/25/26/28/29/30…·잇는 순서·장면 스물아홉·관문·전직 차수·고르기 둘·보상)");
         }
 
         private static void CheckTexts(List<string> parts)

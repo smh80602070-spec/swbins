@@ -268,7 +268,7 @@ namespace Saga.Story.Data
                     new Step { T = "talk", Scene = "cave2" },
                 } },
             new Chapter { Id = "p3_gisan", No = 7, TitleKo = "기산채의 사자", StageKo = "기산채", BlurbKo = "산채 두령에게 빛 병기를 대 주는 잿빛 사자가 나타났다 사라진다.",
-                Need = 18, After = "p2_cave", Exp = 8000, Shards = 0, JobTitle = false,
+                Need = 17, After = "p2_cave", Exp = 8000, Shards = 0, JobTitle = false,
                 LegacyLevel = 45, LegacyTier = 4,
                 Steps = new[]
                 {
@@ -276,7 +276,7 @@ namespace Saga.Story.Data
                     new Step { T = "talk", Scene = "gisan2" },
                 } },
             new Chapter { Id = "p3_gorge", No = 8, TitleKo = "호로곡의 불길", StageKo = "호로곡", BlurbKo = "골짜기 전체가 탄다. 의원 약손과 부상병을 옮기고 적국 대장군을 친다.",
-                Need = 22, After = "p3_gisan", Exp = 20000, Shards = 0, JobTitle = false,
+                Need = 20, After = "p3_gisan", Exp = 20000, Shards = 0, JobTitle = false,
                 LegacyLevel = 45, LegacyTier = 4,
                 Steps = new[]
                 {
@@ -285,7 +285,7 @@ namespace Saga.Story.Data
                     new Step { T = "talk", Scene = "gorge2" },
                 } },
             new Chapter { Id = "p3_labyrinth", No = 9, TitleKo = "비경의 기억", StageKo = "비경", BlurbKo = "이음이 여는 5층 비경. 관문 수호장을 치면 잃은 기억 조각이 나온다 — 떠돌이도 문에서 떨어졌다.",
-                Need = 30, After = "p3_gorge", Exp = 30000, Shards = 3, JobTitle = false,
+                Need = 22, After = "p3_gorge", Exp = 30000, Shards = 3, JobTitle = false,
                 LegacyLevel = 45, LegacyTier = 3,
                 Steps = new[]
                 {
@@ -294,7 +294,7 @@ namespace Saga.Story.Data
                     new Step { T = "talk", Scene = "lab2" },
                 } },
             new Chapter { Id = "p3_job", No = 10, TitleKo = "셋째 스승", StageKo = "허도", BlurbKo = "허도의 스승이 \"네 이름은 문 너머에 두고 왔구나\" 하며 3차 전직을 준다.",
-                Need = 30, After = "p3_labyrinth", Exp = 40000, Shards = 0, JobTitle = true,
+                Need = 25, After = "p3_labyrinth", Exp = 40000, Shards = 0, JobTitle = true,
                 LegacyLevel = 45, LegacyTier = 3,
                 Steps = new[]
                 {
@@ -303,7 +303,7 @@ namespace Saga.Story.Data
                     new Step { T = "talk", Scene = "job32" },
                 } },
             new Chapter { Id = "p4_luoyang", No = 11, TitleKo = "옛 도읍의 잿더미", StageKo = "낙양 옛터", BlurbKo = "잿빛 사자가 도포를 벗는다 — 옛 도읍을 쥔 폐도 흉장이다.",
-                Need = 30, After = "p3_job", Exp = 40000, Shards = 0, JobTitle = false,
+                Need = 26, After = "p3_job", Exp = 40000, Shards = 0, JobTitle = false,
                 LegacyLevel = 70, LegacyTier = 4,
                 Steps = new[]
                 {
@@ -312,7 +312,7 @@ namespace Saga.Story.Data
                     new Step { T = "talk", Scene = "luoyang2" },
                 } },
             new Chapter { Id = "p4_depth", No = 12, TitleKo = "검각 깊이", StageKo = "검각 암굴", BlurbKo = "빛이 닿지 않는 깊이. 이음과 한컷이 문 앞까지 길을 비춘다.",
-                Need = 30, After = "p4_luoyang", Exp = 70000, Shards = 0, JobTitle = false,
+                Need = 28, After = "p4_luoyang", Exp = 70000, Shards = 0, JobTitle = false,
                 LegacyLevel = 70, LegacyTier = 4,
                 Steps = new[]
                 {
@@ -320,7 +320,7 @@ namespace Saga.Story.Data
                     new Step { T = "talk", Scene = "depth2" },
                 } },
             new Chapter { Id = "p4_gate", No = 13, TitleKo = "난세의 문", StageKo = "검각 암굴 끝", BlurbKo = "암굴 귀장 — 전쟁이 끝나지 않게 문을 연 자. 쓰러뜨리면 문이 흔들린다. 닫을지 지킬지 정한다.",
-                Need = 30, After = "p4_depth", Exp = 120000, Shards = 0, JobTitle = false,
+                Need = 29, After = "p4_depth", Exp = 120000, Shards = 0, JobTitle = false,
                 LegacyLevel = 70, LegacyTier = 4,
                 Steps = new[]
                 {
