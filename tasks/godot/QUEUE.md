@@ -4,7 +4,6 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 4 | [G-0004](G-0004.md) `saga_core/data/save_base.gd` — 다섯 세이브가 extends | 통합 | 작성됨 |
 | 5 | [G-0005](G-0005.md) PLAN 217KB → `PLAN.md`(≤100KB) + `docs/spec/` 분할 | 통합 | 초안 |
 | 6 | [G-0006](G-0006.md) `realm_save_state.gd` 저장/경영 분리 | 통합 | 초안 |
 | 7 | [G-0007](G-0007.md) `story_player.gd` 무예 분할 | 통합 | 초안 |

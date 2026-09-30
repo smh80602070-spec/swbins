@@ -1,4 +1,4 @@
-extends Node
+extends SagaSaveBase
 
 ## VERTICAL_SLICE.md 26절 "저장/로드(로컬 파일 하나)" — 12단계 완료 조건의
 ## 마지막 단계. PLAN.md 28장은 레벨·경험치·장비·인벤토리·퀘스트·월드
@@ -20,6 +20,10 @@ func save_path() -> String:
 	return path_override if path_override != "" else SAVE_PATH
 const SAVE_VERSION := 3
 const Growth := preload("res://games/saga_go/data/growth.gd")
+
+
+func save_version() -> int:
+	return SAVE_VERSION
 
 
 func save() -> bool:
@@ -204,23 +208,6 @@ func try_load() -> bool:
 	var drops: Variant = data.get("drops", {})
 	DropState.restore(drops if typeof(drops) == TYPE_DICTIONARY else {})
 	return true
-
-
-## data의 "version"이 SAVE_VERSION보다 낮으면 _migrate_step()을 한 단계씩
-## 적용해 최신 모양으로 바꿔 돌려준다(딱 맞으면 그대로). 마이그레이션
-## 경로가 없거나(_migrate_step이 null을 돌려줌) 이 빌드보다 나중 버전
-## (다운그레이드)이면 null — 데이터를 반쯤 바꾼 채로 적용하지 않는다.
-func _migrate(data: Dictionary) -> Variant:
-	var version := int(data.get("version", 0))
-	while version < SAVE_VERSION:
-		var stepped: Variant = _migrate_step(version, data)
-		if stepped == null:
-			return null
-		data = stepped
-		version = int(data.get("version", version + 1))
-	if version > SAVE_VERSION:
-		return null
-	return data
 
 
 ## 버전 from_version에서 온 data를 from_version+1 모양으로 바꿔 돌려준다.

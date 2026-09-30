@@ -2216,6 +2216,9 @@ func try_load() -> bool:
 	return true
 
 
+## 올린 1~15단계는 필드 추가뿐이고 try_load()가 전부 .get(key, 기본값)으로
+## 읽으므로, 여기 단계들은 실제 변환 없이 버전 숫자만 올려 통과시킨다
+## (필드 이름을 바꾸거나 옮기는 변경이 생기면 그 단계에 변환을 추가한다).
 func _migrate_step(from_version: int, data: Dictionary) -> Variant:
 	if from_version < 1 or from_version >= SAVE_VERSION:
 		return null
