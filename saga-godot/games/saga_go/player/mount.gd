@@ -9,7 +9,7 @@ extends Node3D
 const Mounts := preload("res://games/saga_go/data/mounts.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
-const SeatPose := preload("res://games/saga_go/player/seat_pose.gd")
+const SeatPose := preload("res://saga_core/player/seat_pose.gd")
 ## 앉으면 엉덩이가 내려온다 — 서 있을 때 발 높이(ride)에서 이만큼 뺀다.
 const SEAT_DROP := 0.5
 

@@ -24,7 +24,7 @@ static func attach(skel: Skeleton3D) -> Node:
 	var t_l := skel.find_bone("thigh_l")
 	if t_l < 0:
 		return null
-	var sp: SkeletonModifier3D = (load("res://games/saga_go/player/seat_pose.gd") as GDScript).new()
+	var sp: SkeletonModifier3D = (load("res://saga_core/player/seat_pose.gd") as GDScript).new()
 	sp.name = "SeatPose"
 	sp.set_meta("seat_pose", true)
 	skel.add_child(sp)
