@@ -1,0 +1,1317 @@
+[
+ {
+  "id": "un.go.slice",
+  "name": "Vertical Slice 도적의 습격(이동·촌장·상인·나그네·조우·전투·등용·EXP·장비·루트·저장)",
+  "files": [],
+  "tests": [
+   "PlaytestHeadless"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.animals",
+  "name": "동물 Group·나그네",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.hidden-treasure",
+  "name": "은닉 보물",
+  "files": [],
+  "tests": [
+   "PlaytestGoTreasure"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.shrines",
+  "name": "산신당·행운 돌탑·동굴 유물",
+  "files": [],
+  "tests": [
+   "PlaytestGoArtifacts"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.gather",
+  "name": "채집",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.daily-board",
+  "name": "101-2 일과판·승급 3택·75초 토벌",
+  "files": [],
+  "tests": [
+   "PlaytestGoDaily"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.beacon-bond",
+  "name": "101-2 봉수대·인연·패배 비용·회수",
+  "files": [],
+  "tests": [
+   "PlaytestGoKnots"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.shrine-trial",
+  "name": "101-2 사당 시련(파도 3·인장 조각)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.field-combat",
+  "name": "107 들판 전투 + 원소 쓰는 적 8",
+  "files": [],
+  "tests": [
+   "PlaytestGoFieldCombat",
+   "PlaytestGoElementalFoe"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.move-map",
+  "name": "107 이동 + 지역 지도(세이브 v14)",
+  "files": [],
+  "tests": [
+   "PlaytestGoWorldMap"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.chests",
+  "name": "107 보물 상자 16",
+  "files": [],
+  "tests": [
+   "PlaytestGoTreasure"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.party-swap",
+  "name": "107 동료 몸 교체",
+  "files": [],
+  "tests": [
+   "PlaytestGoPartyBodies"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.guardian",
+  "name": "107-7 망루 수호장(v15)·106-9 등장 컷",
+  "files": [],
+  "tests": [
+   "PlaytestGoGuardian"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.region-mission",
+  "name": "107-8 지역 사명 사슬(v16)",
+  "files": [],
+  "tests": [
+   "PlaytestGoRegionMission"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.region-traits",
+  "name": "108① 지역 한자·사연·위험 1~3·몬스터 명단",
+  "files": [],
+  "tests": [
+   "PlaytestGoRegionTraits"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.region-props",
+  "name": "108① 지역 소품 무더기 9(Poly Haven)",
+  "files": [],
+  "tests": [
+   "PlaytestGoRegionProps"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.eras-foes",
+  "name": "109-1 세 시대 적(무리 4/9)",
+  "files": [],
+  "tests": [
+   "PlaytestGoEras"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.eras-people",
+  "name": "109-1 역참 사람 15",
+  "files": [],
+  "tests": [
+   "PlaytestGoEras"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.eras-props",
+  "name": "109-1 소품 현대 13",
+  "files": [],
+  "tests": [
+   "PlaytestGoEras"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.rift-debris",
+  "name": "109-1 시간 틈 잔해 9",
+  "files": [],
+  "tests": [
+   "PlaytestGoEras"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.hero-dex",
+  "name": "109-6 도감 105",
+  "files": [],
+  "tests": [
+   "PlaytestGoHeroDex"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.recruit",
+  "name": "109-6 싸워서 등용(v17)",
+  "files": [],
+  "tests": [
+   "PlaytestGoHeroes"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.hero-looks",
+  "name": "109-7 몸 17×모양 다섯(GoHeroLooks)",
+  "files": [
+   "Assets/Games/SagaGo/Data/GoHeroLooks.cs"
+  ],
+  "tests": [
+   "PlaytestGoHeroLooks"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.skill-shapes",
+  "name": "109-8 스킬 모양 넷",
+  "files": [],
+  "tests": [
+   "PlaytestGoSkillShapes"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.peaks",
+  "name": "109-9 정상 28(v18)",
+  "files": [],
+  "tests": [
+   "PlaytestGoPeaks",
+   "PlaytestGoTraversal"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.falls-roof-cam",
+  "name": "109-9 폭포·지붕 카메라",
+  "files": [],
+  "tests": [
+   "PlaytestGoTraversal"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.elements",
+  "name": "109-14 웹 ⑲ 원소 7",
+  "files": [],
+  "tests": [
+   "PlaytestGoElementalFoe"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.story-ch",
+  "name": "109-14 웹 ⑲ 이야기 9장",
+  "files": [],
+  "tests": [
+   "PlaytestGoStory",
+   "PlaytestGoStoryAllies"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.world-quests",
+  "name": "109-14 세계 임무",
+  "files": [],
+  "tests": [
+   "PlaytestGoWorldQuests"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.aim",
+  "name": "109-14 조준",
+  "files": [],
+  "tests": [
+   "PlaytestGoAim"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.map-marks",
+  "name": "109-14 지도 임무 표식",
+  "files": [],
+  "tests": [
+   "PlaytestGoMapMarks"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.fishing",
+  "name": "109-14 낚시",
+  "files": [],
+  "tests": [
+   "PlaytestGoFishing"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.achieve",
+  "name": "109-14 업적(v28)",
+  "files": [],
+  "tests": [
+   "PlaytestGoAchieve"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.assets",
+  "name": "44장 에셋 교체(Player·Enemy·Environment·Building GLB/PBR, Kenney 넷·Poly Haven 열 벌, procgen 102-4)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.common",
+  "name": "공통 66-2 라이팅·67~69 사운드/설정/Localization·목표판/세션카드·101-3 C·F·G",
+  "files": [],
+  "tests": [
+   "PlaytestMobileGraphics"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.slice",
+  "name": "Vertical Slice 첫 방→무리·엘리트/보스·방 종류·회피·강공격·필드·동행",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonHeadless"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.towns",
+  "name": "마을 넷",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonTown2",
+   "PlaytestDungeonTowns34"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.floors",
+  "name": "층 진행",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonFloorProgression"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.ambush",
+  "name": "매복",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonFieldAmbush"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.rescue-riddle",
+  "name": "구출·수수께끼·은닉 창고",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.build-dex",
+  "name": "빌드·도감·보석/영웅 상태",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.explore",
+  "name": "106-5 탐험 점프 F·담쟁이 등반·옛 감시탑 뜰",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonExplore"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.party",
+  "name": "106-6 무사·술사 파티·명령 1·2·소환 V",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonParty"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.boss-intro",
+  "name": "106-7 층 두목 등장 컷",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonBossIntro"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.landmarks",
+  "name": "108③ 명소 층 여섯(5~30층 고정 방·층 주인·첫 토벌 무기, v10)",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonLandmarks"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.eras",
+  "name": "109-2a 잡졸 41% 시대 적 8",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonEras"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.peddler-guests",
+  "name": "109-2a 행상·손님 4",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonEras"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.era-decor",
+  "name": "109-2b 명소 층 여섯·마을 다섯 꾸밈 현대·미래 조각",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonEraDecor"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.secrets",
+  "name": "109-10 비결(K)",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonSecrets"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.light-pillar",
+  "name": "109-10 빛기둥(v11)",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonSecrets"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.visions",
+  "name": "109-10 비전",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonSecrets"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.trial",
+  "name": "109-10 시련(v12)",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonTrial"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.regions",
+  "name": "109-10 지역 아홉(3×3 칸 배너·땅빛·M 지도)",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonRegions"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.region-foes",
+  "name": "109-10 위험도·우두머리 아홉(표식 밟기·빌린 몸, v13)",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonRegionFoes"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.region-sagas",
+  "name": "109-10 지역 사연(v14)",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonRegionSagas"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.gestures",
+  "name": "109-10 몸짓",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonGestures"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.ally-sig",
+  "name": "109-10 동행 서명·합격",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonAllySig"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.lord-sigs",
+  "name": "109-10 주인 고유 수",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonLordSigs"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.hunt",
+  "name": "109-10 몰이 사냥",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonHunt"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.assets",
+  "name": "44장 에셋 교체(Player·잡졸·미니보스/두목·Environment·Building)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.wear-tiers",
+  "name": "103-1 방 셸 마모 3단",
+  "files": [],
+  "tests": [
+   "PlaytestDungeonWearTiersGui"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.dg.common",
+  "name": "공통 66-2 라이팅·67~69 사운드/설정/Localization·목표판/세션카드·101-3 C·F·G",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.slice",
+  "name": "Vertical Slice(이동 전용) 마을·집·주민",
+  "files": [],
+  "tests": [
+   "PlaytestForestHeadless"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.house",
+  "name": "집 안 전환",
+  "files": [],
+  "tests": [
+   "PlaytestForestHouseTransition"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.wallpaper-furniture",
+  "name": "벽지/장판·가구 배치",
+  "files": [],
+  "tests": [
+   "PlaytestForestFurniture"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.creatures",
+  "name": "생물·짐승 여덟 사실 모델(Mixamo 몸 + 빛깔·꾸밈)",
+  "files": [],
+  "tests": [
+   "PlaytestForestCreatures"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.fruit-gather",
+  "name": "과일나무·채집·좌판",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.push-combat",
+  "name": "밀어내기 전투",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.finish",
+  "name": "101-2 번들·채집 손맛·평가·택배 사슬·축제",
+  "files": [],
+  "tests": [
+   "PlaytestForestFinish"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.zones",
+  "name": "108② 존 한자·사연·짐승 명단·명소 넷·존 자막",
+  "files": [],
+  "tests": [
+   "PlaytestForestZones"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.zone-props",
+  "name": "108② 존 소품 무더기 8",
+  "files": [],
+  "tests": [
+   "PlaytestForestZoneProps"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.eras",
+  "name": "109-4 존 소품 38% 현대·미래·마을 사람 여섯",
+  "files": [],
+  "tests": [
+   "PlaytestForestEras"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.visitors",
+  "name": "109-12 방문객 여덟·단골·몸짓·이웃(v9)",
+  "files": [],
+  "tests": [
+   "PlaytestForestVisitors"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.assets",
+  "name": "44장 에셋 교체(Environment 완료·과일나무 procgen 102-4)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.fs.common",
+  "name": "공통 66-2 라이팅·67~69 사운드/설정/Localization·목표판/세션카드",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.slice",
+  "name": "Vertical Slice 2.5D 횡스크롤(Z 고정)·잡졸 10·두목·사명 2·볼트·로프",
+  "files": [],
+  "tests": [
+   "PlaytestStorySlice"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.npc-events",
+  "name": "척후병 NPC·사건·관계·선택",
+  "files": [],
+  "tests": [
+   "PlaytestStorySlice"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.job-change",
+  "name": "전직",
+  "files": [],
+  "tests": [
+   "PlaytestStorySlice"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.gate-captain",
+  "name": "5-4 관문 대장",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.rift",
+  "name": "5-3 비경",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.party-swap",
+  "name": "5-8 동료 교대",
+  "files": [],
+  "tests": [
+   "PlaytestStorySlice"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.boss-intro",
+  "name": "106-8 두목 등장 컷",
+  "files": [],
+  "tests": [
+   "PlaytestStoryBossIntro"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.companions",
+  "name": "106-10 교대 셋이 곁에서 싸움(Paladin·Archer·Peasant Girl)",
+  "files": [],
+  "tests": [
+   "PlaytestStoryCompanions"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.summon",
+  "name": "106-10 소환 우레뿔 거수(V)",
+  "files": [],
+  "tests": [
+   "PlaytestStorySummon"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.skills",
+  "name": "5-2 무예 1~4차(StorySkillData·StorySkillState·패널 K·칸 4 자동/고정)",
+  "files": [
+   "Assets/Games/SagaStory/Data/StorySkillData.cs",
+   "Assets/Games/SagaStory/Data/StorySkillState.cs"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.job-tiers",
+  "name": "5-2 전직 1~4차(Lv.10/15/20/25)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.school-sets",
+  "name": "5-2 유파 세트·옷 빛깔(차수×12%)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.eras",
+  "name": "109-3 시대 적 여덟(들판 4/10·비경 40%)·손님 둘",
+  "files": [],
+  "tests": [
+   "PlaytestStoryEras"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.boss-pattern",
+  "name": "109-11 체력·보스 패턴전·고유 기술·그로기·주간 관문 대장",
+  "files": [],
+  "tests": [
+   "PlaytestStoryBossPattern"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.npc-models",
+  "name": "44장 척후병·전직관·마을 사람·숲지기 Mixamo(106-4)",
+  "files": [],
+  "tests": [
+   "PlaytestNpcModels"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.st.common",
+  "name": "공통 66-2 라이팅·67~69 사운드/설정/Localization·목표판/세션카드·101-3 C·F·G",
+  "files": [],
+  "tests": [
+   "PlaytestStorySlice"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.slice",
+  "name": "Vertical Slice(경영형) 명령·계략·문답 36·서고·월드맵·전투·함락 편입",
+  "files": [],
+  "tests": [
+   "PlaytestRealmSlice"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.orders",
+  "name": "명령 10",
+  "files": [],
+  "tests": [
+   "PlaytestRealmSlice"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.quiz",
+  "name": "문답 36",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.library",
+  "name": "서고",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.war-capture",
+  "name": "전투·함락 편입",
+  "files": [],
+  "tests": [
+   "PlaytestRealmSlice"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.enemy-castles",
+  "name": "적국 55·성 58",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.r101-2",
+  "name": "101-2 REALM 5-1·5-6·5-2·5-8·5-3·5-5(5-4 제외 확정)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.eras",
+  "name": "109-5 시간 틈 아홉(적국 성에 재야)·퓨전 사연 셋(관문 운중·오원·일남)",
+  "files": [],
+  "tests": [
+   "PlaytestRealmEras"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.battlefield",
+  "name": "109-13 싸움터",
+  "files": [],
+  "tests": [
+   "PlaytestRealmBattlefield"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.actors",
+  "name": "109-13 지도 위 인물(대역)",
+  "files": [],
+  "tests": [
+   "PlaytestRealmActors"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.wall-tiers",
+  "name": "103-1 성벽 3단",
+  "files": [],
+  "tests": [
+   "PlaytestRealmWallTiersGui"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.assets",
+  "name": "44장 에셋 교체(도시 Environment/Building)",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ },
+ {
+  "id": "un.rk.common",
+  "name": "공통 66-2 라이팅·67~69 사운드/설정/Localization·목표판/세션카드",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-16"
+ }
+]

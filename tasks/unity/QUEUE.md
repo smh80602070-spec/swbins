@@ -7,7 +7,7 @@
 | 1 | [U-0001](U-0001.md) `Editor/PlaytestKit.cs` — 세이브 격리·Check·오류 카운트, DUNGEON 에 적용 | 닫기 | 완료 |
 | 2 | [U-0002](U-0002.md) asmdef 셋(SagaStory·SagaRealm·SagaTitle) | 통합 | 완료 |
 | 3 | [U-0003](U-0003.md) 5곳 동일 복제 → SagaCore(`PlatformVolumeProfile`·`DebugHud`) | 통합 | 완료(DebugHud 제외) |
-| 4 | [U-0004](U-0004.md) `docs/STATE.md`(생성) + `features.json` + CLAUDE.md 95KB 정정 | 측정 | 진행중 |
+| 4 | [U-0004](U-0004.md) `docs/STATE.md`(생성) + `features.json` + CLAUDE.md 95KB 정정 | 측정 | 완료 |
 | 5 | [U-0005](U-0005.md) `ISaveState` + 공통 마이그레이션, REALM 도 옮긴다 | 통합 | 초안 |
 | 6 | [U-0006](U-0006.md) 나머지 복제 6개 → SagaCore(NpcIdle·VirtualJoystick·HitSpark·DamagePopup·LocalizedButtonLabel·GroundDecal) | 통합 | 초안 |
 | 7 | [U-0007](U-0007.md) `MountField`×4 → `Saga.Core.MountRig` + `MountConfig` | 통합 | 초안 |

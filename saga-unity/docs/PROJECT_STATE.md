@@ -1,5 +1,7 @@
 # PROJECT_STATE — saga-unity (상태만, ≤15KB, 덮어쓴다)
 
+> 기능 %: `features.json` → `docs/STATE.md`(생성)
+
 **규칙**(SAGA-DESIGN §9): 지금 상태만, 세션 끝에 덮어쓴다. 경위·이유는 `docs/HISTORY.md` 에 append.
 마지막 갱신: 2026-09-30 (109-15 탈것 · GO 14-71 · 109-16 시나리오 넷 판).
 

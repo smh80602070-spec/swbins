@@ -97,8 +97,37 @@ else {
 }
 fs.writeFileSync(readme, md);
 
+/* saga-unity — features.json(id 접두 un.) 로 saga-unity/docs/STATE.md 를 만든다(U-0004). 러너 결과는 saga-unity/.utmp/playtest_last.json({n,m,fails[]})이 있으면 쓴다. */
+const UNITY = path.join(ROOT, 'saga-unity');
+const UNITY_GAMES = [['un.go.', 'GO'], ['un.dg.', 'DUNGEON'], ['un.fs.', 'FOREST'], ['un.st.', 'STORY'], ['un.rk.', 'REALM']];
+const uAll = readJson(path.join(UNITY, 'features.json'), []);
+const uRun = readJson(path.join(UNITY, '.utmp', 'playtest_last.json'), null);
+const uFails = new Set(uRun ? uRun.fails || [] : []);
+const uRows = UNITY_GAMES.map(([pre, name]) => {
+  const a = uAll.filter(x => x.id.startsWith(pre));
+  const lv = k => a.filter(x => x.level === k).length;
+  const d3 = lv('D3') + lv('D4'), wip = lv('D0') + lv('D1');
+  return { game: name, total: a.length, D0: lv('D0'), D1: lv('D1'), D2: lv('D2'), D3p: d3,
+    pct: a.length ? Math.round(d3 * 1000 / a.length) / 10 : 0, wip, over: wip > WIP_MAX,
+    failN: uRun ? a.filter(x => x.tests.some(t => uFails.has(t))).length : 0 };
+});
+function uTable() {
+  const L = ['| 판 | 기능 | D0 | D1 | D2 | D3+ | 완성도 | WIP | 초과 | 러너 | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|'];
+  uRows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.wip} | ${r.over ? '초과' : '-'} | ${uRun ? `${uRun.n}/${uRun.m}` : '-'} | ${r.failN ? 'FAIL ' + r.failN : '-'} |`));
+  return L.join('\n');
+}
+const uNoTest = uAll.filter(x => x.tests.length === 0).length;
+const uState = [`<!-- 생성: tools/status.mjs · ${at} — 손으로 고치지 않는다(덮어쓴다) -->`, '# saga-unity 상태', '',
+  '완성도 = D3+ ÷ 전체 · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1 · 기능 목록 `saga-unity/features.json`', '',
+  uTable(), '', `Playtest 가 안 붙은 기능(D0): ${uNoTest}개 — 목록은 features.json 에서 tests 가 빈 것`, ''].join('\n');
+if (uAll.length) {
+  fs.mkdirSync(path.join(UNITY, 'docs'), { recursive: true });
+  fs.writeFileSync(path.join(UNITY, 'docs', 'STATE.md'), uState);
+}
+
 console.log(table());
 console.log(`STATE.md 갱신 (${Buffer.byteLength(state)}B) · README.md "현재" 표 갱신`);
+if (uAll.length) { console.log(uTable()); console.log(`saga-unity/docs/STATE.md 갱신 (${Buffer.byteLength(uState)}B)`); }
 if (argv.includes('--json')) {
   fs.mkdirSync(path.join(ROOT, 'tools', '_out'), { recursive: true });
   fs.writeFileSync(path.join(ROOT, 'tools', '_out', 'status.json'), JSON.stringify({ at, rows, big }, null, 1));
