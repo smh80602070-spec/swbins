@@ -6,7 +6,7 @@ extends Node3D
 ## 전투는 못 한다 — 공격(combat_quick)을 누르면 내린다. 깊은 물에 들면 내린다.
 ## 몸은 신수 모습(CreatureBuilder.build_pet)을 그대로 쓴다(따로 탈것 그림을 만들지 않는다).
 
-const Mounts := preload("res://games/saga_go/data/mounts.gd")
+const Mounts := preload("res://saga_core/data/mounts.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const SeatPose := preload("res://saga_core/player/seat_pose.gd")

@@ -10,7 +10,7 @@ signal tip_shown(id: String)
 const Help := preload("res://games/saga_go/data/help.gd")
 const Cycle := preload("res://games/saga_go/data/cycle.gd")
 const Adventure := preload("res://games/saga_go/data/adventure.gd")
-const Mounts := preload("res://games/saga_go/data/mounts.gd")
+const Mounts := preload("res://saga_core/data/mounts.gd")
 
 const START_SEC := 6.0
 const SHOW_SEC := 4.5

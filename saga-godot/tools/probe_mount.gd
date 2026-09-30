@@ -6,7 +6,7 @@ extends Node
 ## ⑥ 내리면 원래 속도. 끝에 MOUNT_PROBE_DONE 한 줄. 저장은 안 한다.
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
-const Mounts := preload("res://games/saga_go/data/mounts.gd")
+const Mounts := preload("res://saga_core/data/mounts.gd")
 
 var _p: CharacterBody3D
 var _m: Node
