@@ -4,7 +4,6 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 6 | [W-0006](W-0006.md) `saga-web/RULES.md` + 판별 CLAUDE.md 를 큐로 | 통합 | 작성됨 |
 | 7 | [W-0007](W-0007.md) `perf.js` 다섯 판 (`?perf`) | 통합 | 작성됨 |
 | 8 | [W-0008](W-0008.md) `saga-web/shared/js/` 4파일 + `sync-shared.mjs` | 통합 | 초안 |
 | 9 | [W-0009](W-0009.md) `account.js` 다섯 벌 합침 | 통합 | 초안 |
