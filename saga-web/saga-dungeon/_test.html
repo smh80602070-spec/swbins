@@ -5801,7 +5801,7 @@ window.requestAnimationFrame = function () { return 0; };
          돌아간다 — `#include <map_fragment>` 지시문이 정확히 사라졌는지 확인 */
       var includeGone = shader.fragmentShader.indexOf('#include <map_fragment>') === -1;
       var triOk = shader.fragmentShader.indexOf('triSample') >= 0 &&
-        shader.fragmentShader.indexOf('diffuseColor.rgb *= __blend;') >= 0;
+        shader.fragmentShader.indexOf('diffuseColor.rgb *= k_blend;') >= 0;
       var uOk = shader.uniforms.uGrassMap.value.name === 'grass' &&
         shader.uniforms.uDirtMap.value.name === 'dirt' &&
         shader.uniforms.uStoneMap.value.name === 'stone' && shader.uniforms.uTexScale.value > 0;
@@ -5887,8 +5887,8 @@ window.requestAnimationFrame = function () { return 0; };
       var includeCountBefore = shader.fragmentShader.split('#include <map_fragment>').length - 1;
       RD.patchShader(shader);
       var includeCountAfter = shader.fragmentShader.split('#include <map_fragment>').length - 1;
-      var spliced = shader.fragmentShader.indexOf('#include <map_fragment>\n  float __roadFade') >= 0;
-      var fadeOk = shader.fragmentShader.indexOf('diffuseColor.a *= __roadFade;') >= 0;
+      var spliced = shader.fragmentShader.indexOf('#include <map_fragment>\n  float k_roadFade') >= 0;
+      var fadeOk = shader.fragmentShader.indexOf('diffuseColor.a *= k_roadFade;') >= 0;
       return includeCountBefore === includeCountAfter && spliced && fadeOk &&
         ('#include <map_fragment> 지시문 수 그대로(' + includeCountAfter + ') · 그 뒤에 가장자리 페이드 삽입');
     });

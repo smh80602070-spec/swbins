@@ -88,17 +88,17 @@
   ].join('\n');
 
   var TRI_BLEND_BODY = [
-    '  vec3 __wn = normalize(vTriWorldNormal);',
-    '  float __slope = 1.0 - clamp(abs(__wn.y), 0.0, 1.0);',
-    '  float __rockW = smoothstep(0.15, 0.45, __slope);',
-    '  float __n = triFbm(vTriWorldPos.xz * uNoiseScale);',
-    '  float __dirtW = smoothstep(0.35, 0.65, __n) * (1.0 - __rockW);',
-    '  float __grassW = (1.0 - __rockW) - __dirtW;',
-    '  vec3 __grassC = triSample(uGrassMap, vTriWorldPos, __wn, uTexScale);',
-    '  vec3 __dirtC = triSample(uDirtMap, vTriWorldPos, __wn, uTexScale);',
-    '  vec3 __stoneC = triSample(uStoneMap, vTriWorldPos, __wn, uTexScale);',
-    '  vec3 __blend = __grassC * __grassW + __dirtC * __dirtW + __stoneC * __rockW;',
-    '  diffuseColor.rgb *= __blend;'
+    '  vec3 k_wn = normalize(vTriWorldNormal);',
+    '  float k_slope = 1.0 - clamp(abs(k_wn.y), 0.0, 1.0);',
+    '  float k_rockW = smoothstep(0.15, 0.45, k_slope);',
+    '  float k_n = triFbm(vTriWorldPos.xz * uNoiseScale);',
+    '  float k_dirtW = smoothstep(0.35, 0.65, k_n) * (1.0 - k_rockW);',
+    '  float k_grassW = (1.0 - k_rockW) - k_dirtW;',
+    '  vec3 k_grassC = triSample(uGrassMap, vTriWorldPos, k_wn, uTexScale);',
+    '  vec3 k_dirtC = triSample(uDirtMap, vTriWorldPos, k_wn, uTexScale);',
+    '  vec3 k_stoneC = triSample(uStoneMap, vTriWorldPos, k_wn, uTexScale);',
+    '  vec3 k_blend = k_grassC * k_grassW + k_dirtC * k_dirtW + k_stoneC * k_rockW;',
+    '  diffuseColor.rgb *= k_blend;'
   ].join('\n');
 
   /** `onBeforeCompile`의 본체 — 셰이더 문자열 치환만 하는 순수 로직이라

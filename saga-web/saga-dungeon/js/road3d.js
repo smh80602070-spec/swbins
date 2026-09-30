@@ -42,16 +42,23 @@
     return tex;
   }
 
-  var FADE_BODY = [
-    '  float __roadFade = min(smoothstep(0.0, 0.22, vUv.y), smoothstep(1.0, 0.78, vUv.y));',
-    '  diffuseColor.a *= __roadFade;'
-  ].join('\n');
+  /* 이 셰이더의 uv varying 이름 — 새 three(r152~)는 map 용 `vMapUv`, 옛 것은 `vUv` 다. 맞는 것을 골라야 컴파일이 된다 */
+  function uvName() {
+    var t = three(), rev = t ? parseInt(t.REVISION, 10) : 0;      // 셰이더 청크는 include 가 풀리기 전이라 글자로 못 고른다 — three 버전으로 고른다
+    return rev >= 151 ? 'vMapUv' : 'vUv';
+  }
+  function fadeBody(uv) {
+    return [
+      '  float k_roadFade = min(smoothstep(0.0, 0.22, ' + uv + '.y), smoothstep(1.0, 0.78, ' + uv + '.y));',
+      '  diffuseColor.a *= k_roadFade;'
+    ].join('\n');
+  }
 
   /** `onBeforeCompile`의 본체 — 순수 문자열 치환이라 GPU 없이도 자가진단이
    *  결과를 값으로 잰다(`terrain3d.js`의 `patchShader`와 같은 요령). */
   function patchShader(shader) {
     shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>',
-      '#include <map_fragment>\n' + FADE_BODY);
+      '#include <map_fragment>\n' + fadeBody(uvName()));
     return shader;
   }
 

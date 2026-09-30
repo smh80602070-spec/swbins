@@ -4373,3 +4373,8 @@ VRoid 인물이 unlit(`MeshBasicMaterial`) 그대로라 명암 없이 평면이�
 ## 2026-09-30 (이어서 3) — 결사 서약자 (정본 곁가지 side_vow)
 - 결사(하드코어)로 굴혈 10·20·30·36층에 **처음** 내려서면 사관 묵향이 서약자 기록에 한 줄을 적는다(`dungeon.js vowMilestone` — `descend()` 가 부름, 토스트·기록 로그) + 🪙 4000 + 업적 25, 판마다 한 번(`dungeon.vow[층]`). 결사가 아니면 아무 일도 없다 — 안 해도 되는 곁가지.
 - 확인: jsdom `_test.html` 429/431 — 실패 둘은 기준선. 새 진단 1. sw dungeon-v0.177.0. **정본 곁가지 셋(side_names·side_visitors·side_vow) 모두 끝.**
+
+## 2026-09-30 (이어서 4) — 길 데칼 셰이더 컴파일 오류 고침 (헤드리스 확인 중 발견)
+- 증상: 사가블로 3D 에서 `THREE.WebGLProgram: Shader Error … 'vUv' : undeclared identifier`(road3d 의 길 가장자리 페이드). 원인: 벤더 three 가 r151+ 라 map 용 uv varying 이 `vUv` 가 아니라 `vMapUv` — 옛 이름을 그대로 써 **어느 GPU 에서도** 컴파일이 안 되는 진짜 결함(길 조각이 안 그려지거나 기본 재질로 떨어짐). `road3d.js` 가 `THREE.REVISION` 으로 이름을 고른다(셰이더 청크는 include 가 풀리기 전이라 글자로 못 고름).
+- 같이: `terrain3d.js`·`road3d.js` GLSL 의 `__이름` 지역 변수를 `k_이름` 으로 — 연속 밑줄 식별자는 SwiftShader(헤드리스)가 오류로 막는다(진짜 GPU 는 경고). 진단 문자열도 맞춤.
+- 확인: jsdom 429/431(실패 둘은 기준선) · `playcheck/dg-mount.mjs` 예외 없음(전엔 셰이더 오류 줄). sw dungeon-v0.178.0.
