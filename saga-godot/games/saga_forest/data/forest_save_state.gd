@@ -1,4 +1,4 @@
-extends Node
+extends SagaSaveBase
 
 ## VERTICAL_SLICE_FOREST.md 4절 "저장/불러오기(위치+채집한 과일 개수
 ## 정도, GO/DUNGEON과 같은 최소 범위)". GO save_state.gd·DUNGEON
@@ -19,6 +19,15 @@ extends Node
 const SAVE_PATH := "user://save_forest.json"
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
 const SAVE_VERSION := 2
+
+
+func save_version() -> int:
+	return SAVE_VERSION
+
+
+func save_path() -> String:
+	return SAVE_PATH
+
 
 var items: Dictionary = {}  # item_label(String) -> count(int)
 
@@ -510,22 +519,6 @@ func try_load() -> bool:
 	if player != null:
 		player.global_position = Vector3(float(pos[0]), float(pos[1]), float(pos[2]))
 	return true
-
-
-## GO save_state.gd·DUNGEON dungeon_save_state.gd와 완전히 같은 계약 —
-## 버전이 낮으면 _migrate_step()을 한 단계씩 적용, 경로가 없거나(null)
-## 이 빌드보다 나중 버전(다운그레이드)이면 null.
-func _migrate(data: Dictionary) -> Variant:
-	var version := int(data.get("version", 0))
-	while version < SAVE_VERSION:
-		var stepped: Variant = _migrate_step(version, data)
-		if stepped == null:
-			return null
-		data = stepped
-		version = int(data.get("version", version + 1))
-	if version > SAVE_VERSION:
-		return null
-	return data
 
 
 func _migrate_step(from_version: int, data: Dictionary) -> Variant:
