@@ -6,7 +6,7 @@ extends Button
 ## 셋(dungeon_skills.gd::skills_of())을 보여주고, 누르면 그 무예에 점
 ## 하나를 투자한다.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 

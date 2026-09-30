@@ -6,7 +6,7 @@ extends Button
 ## 결과는 saga_core Toast로 한 줄 알린다.
 
 const RealmOrders := preload("res://games/saga_realm/data/realm_orders.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 

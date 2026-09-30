@@ -6,7 +6,7 @@ extends Button
 ## 감정서·물약 구매, 수리, 투전(무기/부적 한 점을 사서 바로 장착)은
 ## 전부 가방 없이도 되는 일이라 옮겼다.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 

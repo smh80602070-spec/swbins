@@ -16,7 +16,7 @@ extends Button
 ## realm_diplo_button.gd와 같은 이유(diplo.js "주인 없는 성입니다") —
 ## 자세한 근거는 그쪽 머리말 참고, 여기서 반복하지 않는다.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
 const RealmDiplo := preload("res://games/saga_realm/data/realm_diplo.gd")

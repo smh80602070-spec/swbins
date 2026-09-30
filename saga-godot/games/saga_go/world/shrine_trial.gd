@@ -15,7 +15,7 @@ extends Node3D
 ##
 ## `landmarks_builder.gd` `_add_shrine()`가 이 노드를 사당 제단 자리에 심는다.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const DuelHud := preload("res://saga_core/ui/duel_hud.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")

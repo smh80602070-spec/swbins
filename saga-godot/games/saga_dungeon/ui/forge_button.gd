@@ -8,7 +8,7 @@ extends Button
 ## (forge.js makeGem(), dungeon_materials_state.gd::combine_gem() 참고).
 ## 나머지 둘(장비 셋·접사 다시 굴리기)은 여전히 가방이 없어 이 슬라이스 밖.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 

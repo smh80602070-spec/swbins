@@ -9,7 +9,7 @@ extends Node
 ## 서 있는 반경 안에 그대로 스폰한다(dungeon_horde_state.gd 헤더 참고).
 
 const DungeonEnemy := preload("res://games/saga_dungeon/world/dungeon_enemy.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 const SPAWN_RADIUS_MIN := 4.0

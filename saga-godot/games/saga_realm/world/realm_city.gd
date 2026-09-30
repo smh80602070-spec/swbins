@@ -28,7 +28,7 @@ extends Node3D
 ## 짓는다)을 그대로 옮겨 매 프레임 재생성을 피한다.
 
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
 
 const COLOR_BASE := Color(0.56, 0.5, 0.4)     # 흙빛 기단

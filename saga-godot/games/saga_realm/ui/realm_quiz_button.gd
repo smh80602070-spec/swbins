@@ -6,7 +6,7 @@ extends Button
 ## (`RealmSaveState.quiz_draw()`). 보기 넷을 ChoicePrompt로 띄워
 ## 고르면 그대로 채점 — 다른 realm UI 버튼들과 같은 패턴.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 

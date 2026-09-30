@@ -8,7 +8,7 @@ extends Button
 ## 뒤엔 버튼을 비활성화하는 것과 같은 뜻으로, 여기서도 이미 켜져 있으면
 ## 확인창을 안 열고 바로 "이미 결사입니다"만 보여준다.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 

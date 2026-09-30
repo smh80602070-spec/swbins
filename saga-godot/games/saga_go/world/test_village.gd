@@ -1,6 +1,6 @@
 extends Node3D
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Perks := preload("res://games/saga_go/data/perks.gd")
 const CompanionFollow := preload("res://saga_core/world/companion_follow.gd")
 

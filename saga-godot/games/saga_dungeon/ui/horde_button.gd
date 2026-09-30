@@ -5,7 +5,7 @@ extends Button
 ## 실제 시작·스폰·HUD는 형제 노드 `horde_arena.gd`(그룹 "horde_arena")가
 ## 맡는다.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 

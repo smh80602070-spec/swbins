@@ -28,7 +28,7 @@ extends Node3D
 
 const StoryNpcBody := preload("res://games/saga_story/world/story_npc_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 
 const BODY_COLOR := Color(0.72, 0.18, 0.2)  # 상인 — 다른 NPC 도입 전까지 이 판 유일의 붉은 톤

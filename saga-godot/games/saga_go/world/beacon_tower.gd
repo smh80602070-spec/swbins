@@ -11,7 +11,7 @@ extends Node3D
 ## 입력이 없어(전부 ChoicePrompt 버튼 확인, 사당 시련과 같은 판단)
 ## "불을 올린다" 확인으로 갈아탔고, 재화("금 120·단사 5")는 경험치로.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")

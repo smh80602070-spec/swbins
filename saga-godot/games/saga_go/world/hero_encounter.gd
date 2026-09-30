@@ -20,7 +20,7 @@ extends Node3D
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const VroidBody := preload("res://games/saga_go/world/vroid_body.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 ## PersuadeRules는 class_name으로 전역 등록돼 있어(duel_rules.gd와 같은

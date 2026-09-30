@@ -24,7 +24,7 @@ signal died
 
 const Toast := preload("res://saga_core/ui/toast.gd")
 const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 
 ## PLAN 101-2 DUNGEON ②(유품, 2026-09-17) — dungeon_grave_state.gd 헤더
 ## 참고. 웹 5.2는 "노획물 전부"지만 이 슬라이스 지갑은 이미 영구 상태라

@@ -12,7 +12,7 @@ const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 
 const GRID := Vector2i(12, 6)
 const RADIUS := 3.5

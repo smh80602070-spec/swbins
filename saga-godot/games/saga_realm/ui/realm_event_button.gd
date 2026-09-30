@@ -6,7 +6,7 @@ extends Button
 ## 빈 배열이면 "대기 중인 이벤트가 없습니다"만 띄운다(다른 버튼들과 같은
 ## 결 — 새 빈 상태 UI를 안 만든다).
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const RealmEvents := preload("res://games/saga_realm/data/realm_events.gd")

@@ -29,7 +29,7 @@ const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_bu
 const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 ## PLAN 103-1 spritegen.py 산출물(09-20, 그동안 어디서도 안 쓰였다) — 관계
 ## 메뉴 제목의 "(♥%d)" 숫자 대신 실제 하트 한 줄로 보여준다. ChoicePrompt
 ## 자체(5판 39곳 공유)는 안 건드리고, 그 패널 바로 위에 별도 줄을 하나

@@ -11,7 +11,7 @@ extends Button
 ## 부문어가 안 된다는 걸 사용자가 알 수 있게, 이미 룬이 아닌 것이 섞여
 ## 있으면 목록 맨 위에 그 사실만 짧게 알린다(막지는 않는다 — 원작도 안 막는다).
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 

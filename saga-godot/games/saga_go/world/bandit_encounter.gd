@@ -21,7 +21,7 @@ extends Node3D
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const DuelHud := preload("res://saga_core/ui/duel_hud.gd")
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")

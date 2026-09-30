@@ -16,7 +16,7 @@ extends Button
 ## (삼국지 30성만 있을 땐 전부 force가 있었다). 새 규칙이 아니라 원작
 ## 규칙을 이제야 만난 것뿐이다.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")

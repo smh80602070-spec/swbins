@@ -17,7 +17,7 @@ const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_bu
 const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const ForestHome := preload("res://games/saga_forest/data/forest_home.gd")
 
 ## 제외 목록 6번(벽지/장판) — 웹판 js/data-village.js WALLS/FLOORS 그대로

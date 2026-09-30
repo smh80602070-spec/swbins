@@ -16,7 +16,7 @@ const StoryGoldPickup := preload("res://games/saga_story/world/story_gold_pickup
 const StoryGearPickup := preload("res://games/saga_story/world/story_gear_pickup.gd")
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 const StoryLabyrinth := preload("res://games/saga_story/data/story_labyrinth.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 const TOWN_SCENE := "res://games/saga_story/world/HeodoField.tscn"

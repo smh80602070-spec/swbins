@@ -5,7 +5,7 @@ extends Button
 ## ChoicePrompt 패턴이되 1단(무장 고르기 하나로 끝난다 — promote()에 대상
 ## 성 같은 둘째 물음이 없다).
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 const RealmGrowth := preload("res://games/saga_realm/data/realm_growth.gd")

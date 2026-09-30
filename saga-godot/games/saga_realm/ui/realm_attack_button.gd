@@ -16,7 +16,7 @@ extends Button
 
 const RealmCities := preload("res://games/saga_realm/data/realm_cities.gd")
 const RealmWar := preload("res://games/saga_realm/data/realm_war.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 const TOAST_SEC := 3.5

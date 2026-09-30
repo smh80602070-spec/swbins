@@ -6,7 +6,7 @@ extends Node3D
 ## 둘을 고른다 — story_merchant.gd처럼 폴링 방식(이 판은 입력 콜백을 안 쓴다).
 
 const Toast := preload("res://saga_core/ui/toast.gd")
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const StoryLabyrinth := preload("res://games/saga_story/data/story_labyrinth.gd")
 
 @export var target_scene: String = "res://games/saga_story/world/StoryLabyrinth.tscn"

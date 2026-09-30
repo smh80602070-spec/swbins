@@ -8,7 +8,7 @@ extends Button
 ## 때까지 못 끈다(dungeon_sigil_state.gd::activate() 참고 — is_active()
 ## 인 동안은 다시 activate() 해도 실패한다).
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 

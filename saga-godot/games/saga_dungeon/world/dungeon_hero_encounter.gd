@@ -21,7 +21,7 @@ extends Node3D
 ## "물러난다"는 GO와 같이 조우 자체를 안 지운다 — 트리거를 다시 들어오면
 ## 처음부터 다시 설득해 볼 수 있다.
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const VroidBody := preload("res://games/saga_go/world/vroid_body.gd")
 const Characters := preload("res://saga_core/data/characters.gd")

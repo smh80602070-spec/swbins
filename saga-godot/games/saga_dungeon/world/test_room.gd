@@ -22,7 +22,7 @@ const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 ## GO의 사건 선택지 패널을 그대로 재사용한다(GLBUtils·Toast와 같은 cross-game
 ## 재사용 경계 — GO 전용 로직이 아니라 순수 UI 빌더라 옮길 필요가 없다).
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 ## 표준 A/B(목표판·세션 카드, PLAN.md 101-4 공통 순서 1번) — GO
 ## test_village.gd·save_button.gd와 같은 경계.

@@ -4,7 +4,7 @@ extends Button
 ## button.gd와 같은 ChoicePrompt 패턴, 한 화면에 손잡이 켜기/끄기와 후계
 ## 지정을 같이 담는다(HUD 자리를 아끼려고 새 버튼을 둘로 안 늘렸다).
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 

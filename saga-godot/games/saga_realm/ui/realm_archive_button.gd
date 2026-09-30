@@ -11,7 +11,7 @@ extends Button
 ## 한 단계를 더 둔다(각 분야는 최대 15문항이라 quiz_learned_list의
 ## limit=20에 걸릴 일이 없다 — 분야 목록은 항상 그 분야 전체다).
 
-const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
+const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const RealmQuizData := preload("res://games/saga_realm/data/realm_quiz_data.gd")
 
