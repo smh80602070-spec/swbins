@@ -43,6 +43,10 @@ const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 const StoryGearPickup := preload("res://games/saga_story/world/story_gear_pickup.gd")
 const StoryGoldPickup := preload("res://games/saga_story/world/story_gold_pickup.gd")
 const StoryEnemyShot := preload("res://games/saga_story/world/story_enemy_shot.gd")
+const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")
+
+## 사냥터별 몸 모양(GO 짐승 공방 재사용 — 캡슐 대신). 정해진 게 없으면(비경 등) 도깨비꼴.
+const KIND_BY_STAGE := {"field": "goblin", "forest": "wolf", "cave": "beast", "gorge": "bear"}
 
 signal died
 
@@ -61,6 +65,7 @@ var stage_key := ""  # data-quest.js goal.stage 그대로 — story_save_state.g
 var hp: float
 var max_hp: float
 var _dead := false
+var _creature: Node3D
 var _attack_cd_left := 0.0
 var _shot_cd_left := 0.0
 
@@ -102,16 +107,14 @@ func _ready() -> void:
 
 func _spawn_visual() -> void:
 	var scale_mul: float = (CHAMPION_VISUAL_SCALE if is_champion else BOSS_VISUAL_SCALE) if is_boss else 1.0
-	var mi := MeshInstance3D.new()
-	var mesh := CapsuleMesh.new()
-	mesh.radius = 0.6 * scale_mul
-	mesh.height = 1.6 * scale_mul
-	mi.mesh = mesh
-	mi.position = Vector3(0, 0.8 * scale_mul, 0)
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = enemy_color
-	mi.material_override = mat
-	add_child(mi)
+	## 2026-09-30 — 색 캡슐이 몸이던 것을 짐승 공방 몸으로. 정면(+Z)이 옆(±X)을 보게 _face 가 매 틱 플레이어 쪽으로 돌린다.
+	_creature = CreatureBuilder.build(String(KIND_BY_STAGE.get(stage_key, "goblin")),
+		[enemy_color, enemy_color.darkened(0.4), enemy_color.lightened(0.45)], {"enemy": true})
+	CreatureBuilder._fit(_creature, String(KIND_BY_STAGE.get(stage_key, "goblin")), 1.6 * scale_mul)
+	add_child(_creature)
+	var ap := _creature.get_node_or_null("AnimationPlayer") as AnimationPlayer
+	if ap != null and ap.has_animation("idle"):
+		ap.play("idle")
 
 	var cs := CollisionShape3D.new()
 	var shape := CapsuleShape3D.new()
@@ -135,6 +138,8 @@ func _physics_process(delta: float) -> void:
 		return
 	var scale_mul: float = (CHAMPION_VISUAL_SCALE if is_champion else BOSS_VISUAL_SCALE) if is_boss else 1.0
 	var dx: float = player.global_position.x - global_position.x
+	if _creature != null and absf(dx) > 0.1:
+		_creature.rotation.y = PI * 0.5 if dx > 0.0 else -PI * 0.5
 
 	if _attack_cd_left <= 0.0 and absf(dx) <= OVERLAP_RANGE * scale_mul:
 		_attack_cd_left = ATTACK_COOLDOWN

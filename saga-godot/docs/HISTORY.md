@@ -9647,3 +9647,9 @@ PROJECT_STATE.md` 참고. 요약:
 ## STORY 마을 다섯 필드에 배경 층 (2026-09-30, "묻지말고 이어해")
 
 - 신야·허도·강릉진·기산채·남정성 필드는 사냥터와 달리 Background(먼 나무·언덕 실루엣) 노드가 없어 빈 하늘에 발판만 떴다(창 모드 SinyaField). 다섯 tscn 에 story_background.gd 노드를 각자 지도(map_path)로 추가. 신야·허도 촬영으로 실루엣이 서는 것 확인. REGRESS OK.
+
+## STORY 잡졸·보스 몸을 짐승 공방으로 (2026-09-30, "묻지말고 이어해" — 그래픽은 툴로 넣는가?)
+
+- story_enemy 몸이 색 캡슐이었다. GO creature_builder(코드 짐승 공방)를 재사용: KIND_BY_STAGE {field 도깨비꼴 · forest 늑대 · cave 네발짐승 · gorge 곰}, 없으면(비경) 도깨비꼴. 색은 사냥터가 넘긴 enemy_color 에서 어두운·밝은 변형 둘, opts enemy(사나운 눈·송곳니). 키 1.6m × 보스·대장 배율. 충돌은 캡슐 그대로. 매 틱 플레이어 쪽(±X)으로 돌고 idle 애니.
+- 스크래치 스크립트 enemy_look.gd(SceneTree 로 씬을 띄워 플레이어를 첫 적 앞에 세움 + --write-movie)로 TestField 확인 — 황건적이 곤봉 든 노란 도깨비로. REGRESS OK.
+- 실기 확인 전: 사냥터별 몸 모양 어울림·피격 번쩍임(재질이 정점색 공방 재질이라 combat_feel 이 스토리 적엔 안 걸릴 수 있음)·보스 크기.
