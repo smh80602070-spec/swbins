@@ -409,26 +409,47 @@
       '성문 파수병이 제 수레를 세 번이나 뒤졌어요.',
       '사냥터 쪽 주소는 지도에 안 나와서 늘 헤매요.',
       '요즘 떼쥐가 짐을 뜯어요. 가시는 길에 좀 잡아 주세요.'
+    ], story: [
+      '실은 제가 처음 배달한 짐이 주소 없는 상자였어요. 받는 사람을 못 찾아 사흘을 헤맸죠.',
+      '결국 상자를 열어 봤는데, 안에는 "누군가에게 전해질 마음"이라고 적힌 쪽지 한 장뿐이더라고요.',
+      '그 쪽지를 들고 다니다 이 시대까지 왔어요. 신기하게 여기선 받을 사람이 자꾸 나타나요.',
+      '어제 파수병에게 그 쪽지를 보여 드렸더니 "내 고향 사투리네" 하시며 웃으셨어요. 주소가 생겼네요!'
     ] },
     tourist: { name: '사진 찍는 여행자', emoji: '📷', era: 'modern', model: 'folk:hoodie', lines: [
       '이 성 사진 한 장만요! 기와 빛이 정말 좋네요.',
       '여기는 신호가 한 칸도 안 잡혀요.',
       '특공대 복장한 사람들이 사냥터에서 총을 쏘던데, 촬영인가요?',
       '옛날 옷 입은 분들이 다들 진짜처럼 연기를 잘하시네요.'
+    ], story: [
+      '제 첫 사진은 흐릿한 새벽 풍경이었어요. 잘 안 찍혔다고 버리려 했죠.',
+      '옆에서 누가 "그 흐릿함이 좋다"고 하더라고요. 그때 처음 사진이 잘 찍는 게 아니란 걸 알았어요.',
+      '여기 오니 흐릿한 게 더 많아요. 안개, 연기, 옛 성벽… 다 제 취향이에요.',
+      '어제 기와 위 아침 안개를 찍었는데 그 안에 낯선 그림자들이 겹쳐 찍혔어요. 누구였을까요?'
     ] },
     timetraveler: { name: '시간 여행자', emoji: '⌛', era: 'future', model: 'folk:scifi', lines: [
       '제가 온 해에는 이 마을이 유리 탑 숲이었어요.',
       '경비 보행기가 제 뒤를 따라 넘어왔나 봐요. 미안해요.',
       '촌로께 내일 비가 온다 했더니 놀라시더군요.',
       '여기 무예는 우리 시대 기록에도 전설로 남아 있어요.'
+    ], story: [
+      '제 귀환 일정은 원래 사흘이었어요. 이 시대를 관찰하고 돌아가는 일이죠.',
+      '그런데 관찰이란 게 이상해요. 제가 보면 보는 대로 이 마을이 조금씩 바뀌더라고요.',
+      '그래서 일정을 미뤘어요. 바뀌는 걸 끝까지 보고 싶어서요.',
+      '어제 촌로께서 "자네가 온 뒤로 마을이 밝아졌네" 하셨어요. 제 일정표에 없는 말이라 한참 웃었어요.'
     ] },
     explorer: { name: '탐사 대원', emoji: '🧑‍🚀', era: 'future', model: 'folk:astronaut', lines: [
       '과거 신호가 겹쳐 잡히는 좌표예요. 흥미롭네요.',
       '정찰 드론이 길을 잃었어요. 보이면 떨어뜨려 주세요.',
       '강철 거신은 옛 전장 쇳물로 만든 거래요. 무섭죠?',
       '이 시대 햇빛은 약해서 충전이 더뎌요.'
+    ], story: [
+      '저는 궤도 기지에서 태어났어요. 하늘이 늘 검고 별이 늘 아래에도 있었죠.',
+      '이 시대 하늘은 파랗대요. 처음 봤을 때는 눈이 아파서 한참을 서 있었어요.',
+      '파란 하늘 아래서 처음 비를 맞았어요. 기지에는 없는 것이라 모든 게 새로웠죠.',
+      '이음 대원이 그러더군요. "돌아가면 이 하늘이 그리울 거야." 벌써 그립습니다.'
     ] }
   };
+  var GUEST_STORY_GOLD = 4000, GUEST_STORY_FEAT = 20;   // 시대 손님 사연을 끝까지 들으면(정본 side_guests)
 
   /* 세 시대 적(PLAN §5-12) — `data-enemy.js` 는 사가블로와 나눠 든 파일이라 칸을 안 늘리고(§2-2) 여기 둔다.
      모양은 ENEMIES 와 같다(+ era·model). 관문대(tier)마다 현대 하나 이상·미래 하나 이상.
@@ -476,7 +497,7 @@
 
   global.DG = global.DG || {};
   global.DG.sideData = {
-    STAGES: STAGES, SKILLS: SKILLS, DROPS: DROPS, GATHERS: GATHERS, NPC_TALK: NPC_TALK,
+    STAGES: STAGES, SKILLS: SKILLS, DROPS: DROPS, GATHERS: GATHERS, NPC_TALK: NPC_TALK, GUEST_STORY_GOLD: GUEST_STORY_GOLD, GUEST_STORY_FEAT: GUEST_STORY_FEAT,
     RECIPES: RECIPES, recipe: recipe, STORY: STORY, EMOTES: EMOTES,
     NPC_CHAT: NPC_CHAT, RANGED_WEAPON: RANGED_WEAPON, ERA_ENEMIES: ERA_ENEMIES, eraPoolFor: eraPoolFor,
     stage: stage, rangedOf: rangedOf

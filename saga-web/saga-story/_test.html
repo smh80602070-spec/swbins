@@ -3347,6 +3347,31 @@ window.DG_NO_TUNE = true;
       }
     });
 
+    t('시대 손님 사연(정본 side_guests) — 택배 기사·여행자·시간 여행자·탐사 대원은 말 걸 때마다 사연 한 토막씩, 끝까지 들으면 금 · 그 뒤엔 예전 대사', function () {
+      var st = S.state(), keys = ['courier', 'tourist', 'timetraveler', 'explorer'], bad = [], before = S.raw().stage.key;
+      var keep = JSON.stringify(st.guestStory || null), gold0 = C.save.player.gold;
+      try {
+        st.guestStory = {};
+        keys.forEach(function (k) {
+          var T = SD.NPC_TALK[k];
+          if (!T || !T.story || T.story.length !== 4 || T.story.some(function (x) { return !x; })) { bad.push(k + ' 표'); return; }
+          var npc = { key: k, x: 100 }, g0 = C.save.player.gold, i;
+          S.travel('sinya');
+          for (i = 0; i < 4; i++) {
+            S.talk(npc);
+            var tx = S.raw().talk && S.raw().talk.text;
+            if (!tx || tx.indexOf(T.story[i]) < 0 || tx.indexOf('(사연 ' + (i + 1) + '/4)') < 0) { bad.push(k + ' ' + (i + 1) + '토막 ' + tx); }
+          }
+          if (C.save.player.gold !== g0 + SD.GUEST_STORY_GOLD) { bad.push(k + ' 금 ' + (C.save.player.gold - g0)); }
+          S.talk(npc);
+          var after = S.raw().talk && S.raw().talk.text;
+          if (!after || after.indexOf('(사연') >= 0 || C.save.player.gold !== g0 + SD.GUEST_STORY_GOLD) { bad.push(k + ' 끝난 뒤'); }
+        });
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '손님 넷 · 네 토막 순서대로 · 끝에 🪙 ' + SD.GUEST_STORY_GOLD + ' 한 번 · 그 뒤엔 예전 대사';
+      } finally { st.guestStory = JSON.parse(keep) || undefined; C.save.player.gold = gold0; S.raw().talk = null; S.travel(before); S.raw().player.invuln = 0; }
+    });
+
     t('시나리오 표 — 장·장면·인물이 서로 맞고, 장마다 과거·현대·미래가 셋 다 있다', function () {
       var D = DG.scenarioData, bad = [], ids = {}, used = {};
       D.CHAPTERS.forEach(function (c, i) {

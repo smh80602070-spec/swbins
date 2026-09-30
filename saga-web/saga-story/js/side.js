@@ -450,6 +450,21 @@
     var t = SD.NPC_TALK[npc.key];
     if (!t || !t.lines.length) { return false; }
     var text = t.lines[Math.floor(Math.random() * t.lines.length)];
+    if (t.story && t.story.length) {                                  // 시대 손님 — 말 걸 때마다 사연 한 토막씩 끝까지(정본 side_guests)
+      var gs = st();
+      if (!gs.guestStory) { gs.guestStory = {}; }
+      var gn = gs.guestStory[npc.key] || 0;
+      if (gn < t.story.length) {
+        text = t.story[gn] + ' (사연 ' + (gn + 1) + '/' + t.story.length + ')';
+        gs.guestStory[npc.key] = gn + 1;
+        if (gn + 1 === t.story.length) {
+          core.save.player.gold = (core.save.player.gold || 0) + SD.GUEST_STORY_GOLD;
+          text += ' — 🪙 +' + core.fmt(SD.GUEST_STORY_GOLD);
+          core.emit('toast', t.emoji + ' ' + t.name + ' 의 사연을 끝까지 들었다 — 🪙 ' + core.fmt(SD.GUEST_STORY_GOLD));
+          core.persist();
+        }
+      }
+    }
     run.talk = { x: npc.x, key: npc.key, name: t.name, emoji: t.emoji || '💬', text: text, shop: !!t.shop };
     sfx('talk');
     core.emit('side:talk', { stage: run.stage.key, npc: npc.key });
