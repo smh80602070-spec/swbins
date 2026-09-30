@@ -16,6 +16,7 @@ var _layer: CanvasLayer
 var _btn: Button
 var _list: VBoxContainer
 var _rows := {}
+var _refresh_t := 0.0
 
 
 func _ready() -> void:
@@ -71,13 +72,18 @@ func _yard_near() -> bool:
 	return n != null and bool(n.call("near"))
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Node3D
 	var frozen := _player == null or bool(_player.get("frozen"))
 	_btn.visible = not frozen
 	if frozen and is_open:
 		toggle(false)
+	## 배지·항목 표시는 셈이 무거워(종 서른둘·업적 셈) 0.25초마다만 갱신한다.
+	_refresh_t -= delta
+	if _refresh_t > 0.0:
+		return
+	_refresh_t = 0.25
 	var total := 0
 	var i := 0
 	for e in ENTRIES:

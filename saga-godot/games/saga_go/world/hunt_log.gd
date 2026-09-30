@@ -72,12 +72,20 @@ func on_kill(kind: String) -> void:
 		_refresh()
 
 
-func _physics_process(_delta: float) -> void:
+## 받을 수 있는 수 — 종 서른둘을 도는 값이라(폰에서 매 틱은 무겁다) 0.25초마다 다시 센다.
+var _badge := 0
+var _badge_t := 0.0
+
+
+func _physics_process(delta: float) -> void:
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Node3D
 	_btn.visible = not is_open and _player != null and not bool(_player.get("frozen")) and not get_tree().has_group("go_hud_menu")
-	var c := Hunt.claimable_total()
-	_btn.text = "사냥 기록 (H)" + (" ●%d" % c if c > 0 else "")
+	_badge_t -= delta
+	if _badge_t <= 0.0:
+		_badge_t = 0.25
+		_badge = Hunt.claimable_total()
+		_btn.text = "사냥 기록 (H)" + (" ●%d" % _badge if _badge > 0 else "")
 
 
 func do_claim(kind: String) -> Dictionary:

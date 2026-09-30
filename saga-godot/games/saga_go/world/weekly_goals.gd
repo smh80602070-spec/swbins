@@ -18,6 +18,8 @@ var is_open := false
 var _player: Node3D
 var _frozen_before := false
 var _poll := 0.0
+var _badge := 0
+var _badge_t := 0.0
 var _notified := {}
 var _layer: CanvasLayer
 var _panel: PanelContainer
@@ -80,9 +82,13 @@ func do_claim_bonus() -> bool:
 func _physics_process(delta: float) -> void:
 	if _player == null or not is_instance_valid(_player):
 		_player = get_tree().get_first_node_in_group("player") as Node3D
-	var n := claimable_count() if _player != null else 0
 	_btn.visible = not is_open and _player != null and not bool(_player.get("frozen")) and not get_tree().has_group("go_hud_menu")
-	_btn.text = "주간 도전 (Z)" + (" ●%d" % n if n > 0 else "")
+	## 받을 수 있는 수 — 업적 셈을 읽는 값이라 0.25초마다만 다시 센다(폰에서 매 틱은 무겁다).
+	_badge_t -= delta
+	if _badge_t <= 0.0 and _player != null:
+		_badge_t = 0.25
+		_badge = claimable_count()
+		_btn.text = "주간 도전 (Z)" + (" ●%d" % _badge if _badge > 0 else "")
 	_poll += delta
 	if _poll >= POLL_SEC and _player != null:
 		_poll = 0.0
