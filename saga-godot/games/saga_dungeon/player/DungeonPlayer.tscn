@@ -1,7 +1,7 @@
 [gd_scene load_steps=85 format=3]
 
 [ext_resource type="Script" path="res://saga_core/player/player.gd" id="1"]
-[ext_resource type="Script" path="res://games/saga_dungeon/player/dungeon_camera_rig.gd" id="2"]
+[ext_resource type="Script" path="res://saga_core/player/dungeon_camera_rig.gd" id="2"]
 [ext_resource type="PackedScene" path="res://assets/characters_cf/cmp_dungeon_01.glb" id="3"]
 [ext_resource type="Script" path="res://saga_core/player/anim_library_loader.gd" id="84"]
 [ext_resource type="Script" path="res://games/saga_dungeon/player/player_health.gd" id="4"]
