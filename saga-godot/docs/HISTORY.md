@@ -9692,3 +9692,9 @@ PROJECT_STATE.md` 참고. 요약:
 - 새 `world/egg_incubator.gd`(test_village 가 붙임): 플레이어 실제 움직임(1틱 3m 넘는 순간이동 제외)을 부화기에 줌, 그룹 "go_eggs" award(곳,열쇠) 로 상자·의뢰·비경·보스 꽃이 알을 준다(treasure_chest·commissions·domains·field_bosses 에 한 줄씩), I 화면(부화기 진행 막대·주머니 넣기/빼기·동행 고르기), 동행 신수는 CreatureBuilder.build_pet 몸이 뒤따라 걷고(걷기/서기 애니, 탈것 타면 숨김) 지형 높이에 붙는다.
 - 새 점검 `tools/probe_eggs.gd`(SAGA_EGGS_PROBE=1, 11항목) fails=0. COMMISSION·DOMAIN·TREASURE·FIELD_BOSS fails=0, REGRESS OK. 창 모드 촬영으로 화면 확인(HOW_TO_PLAYTEST 에 I 키 추가).
 - 실기 확인 전: 알 수치(300/800/1500m — 마을~고원 왕복 1km 기준)가 너무 짜거나 후한지, 동행 신수가 좁은 길에서 끼는지, I 화면 폰 배치(가로), 알 얻는 확률(상자 12~100%).
+
+## 신수 알·동행 — 실기(창 모드 실제 입력) 확인 (2026-09-30, "실기도 직접해")
+
+- 스크래치 egg_play.gd(SceneTree · Input.action_press 로 달리기 · 시간 6배)로 TestVillage 를 창 모드에서 실제 달리며: 작은 알 300m 가 달린 지 약 33초(모험 등급 1 달리기 8~9m/s)에 부화(불가사리), 부화 토스트·도감 도장, 동행 구미호가 플레이어 뒤에서 따라 달림(촬영 확인). 부화 수치는 대략 "마을 한 바퀴 반".
+- 실제 상자 33개를 열어 보니 알 9개(주머니 한도 9에서 멈춤) — 등급별 확률대로. chest_egg.gd.
+- 발견(알과 무관): 같은 입력으로 앞·뒤를 5초씩 번갈아 누르면 카메라 거리가 8.5m↔1.3m 로 접힌다(동행 없어도 같음, 서쪽 경계 x=−48 에 붙어 달림). 스크립트 입력 탓인지 실제 카메라 문제인지는 더 볼 것.
