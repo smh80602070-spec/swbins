@@ -4,7 +4,7 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 7 | [U-0007](U-0007.md) `MountField`×4 → `Saga.Core.MountRig` + `MountConfig` | 통합 | 초안 |
+| 7 | [U-0007](U-0007.md) `MountField`×4 → `Saga.Core.MountRig`(모양 공통부; 수치가 같아 MountConfig 는 안 만듦) | 통합 | 작성됨 |
 | 8 | [U-0008](U-0008.md) PLAN 372KB → `PLAN.md`(≤100KB) + `docs/spec/` | 통합 | 초안 |
 | 9 | [U-0009](U-0009.md) 시나리오 표 → `Resources/scenario_<판>.json` + 로더 | 통합 | 초안 |
 | 10 | [U-0010](U-0010.md) Playtest 3,000줄 초과 셋 분할 | 통합 | 초안 |
