@@ -24,6 +24,8 @@ namespace Saga.Dungeon.World
         public DungeonEras.Folk Data => DungeonEras.FolkList[folkIndex];
         /// <summary>진단 — 지금까지 말한 수.</summary>
         public int SaidCount => _said;
+        /// <summary>진단 — 말한 수를 처음으로(사연 진단이 대사 차례를 밀어 놓은 걸 되돌린다).</summary>
+        public void ResetSaid() => _said = 0;
 
         public void Init(int index, GameObject model)
         {
@@ -49,6 +51,19 @@ namespace Saga.Dungeon.World
         /// <summary>다음 한 마디를 띄우고 차례를 넘긴다(진단도 부른다).</summary>
         public string Speak()
         {
+            // PLAN.md 109-16 곁가지 side_visitors — 사연이 남았으면 그 토막이 먼저(끝 토막에 금 한 번), 다 들었으면 예전 대사.
+            string story = DungeonEras.NextStory(Data.Id, out int gold);
+            if (story != null)
+            {
+                string storyLine = $"{DungeonEras.FolkName(Data)} — {story}";
+                if (gold > 0)
+                {
+                    HeroState.AddGold(gold);
+                    storyLine += $" · {string.Format(DungeonLocalization.T("era_folk.story_gold", "금 +{0}"), gold)}";
+                }
+                DialogueLabel.Instance?.Show(storyLine, LineSec);
+                return storyLine;
+            }
             string line = $"{DungeonEras.FolkName(Data)} — {DungeonEras.FolkLine(Data, _said)}";
             _said++;
             DialogueLabel.Instance?.Show(line, LineSec);

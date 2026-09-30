@@ -5044,16 +5044,30 @@
 3	dungeon	era_folk.chrononaut.1	깊은 층일수록 시간 틈이 넓어요. 제 시대 기계가 거기서 길을 잃었죠.	The deeper the floor, the wider the rift. Machines from my era got lost down there.		
 3	dungeon	era_folk.chrononaut.2	그 칼, 제 시대 박물관에 걸려 있던 것과 똑같이 생겼어요.	That blade looks exactly like one hanging in a museum in my time.		
 3	dungeon	era_folk.chrononaut.3	돌아갈 문이 닫혔어요. 당분간 이 시대 밥을 먹어야겠네요.	My way back has closed. I'll be eating this era's food for a while.		
+3	dungeon	era_folk.chrononaut.story.0	제 귀환 일정은 원래 사흘이었어요. 이 시대를 관찰하고 돌아가는 일이었죠.	My return schedule was originally three days. I was to observe this age and go back.		
+3	dungeon	era_folk.chrononaut.story.1	그런데 관찰이란 게 이상해요. 제가 보면 보는 대로 이 마을이 조금씩 바뀌더라고요.	But observing is strange. This village changes bit by bit just as I look at it.		
+3	dungeon	era_folk.chrononaut.story.2	그래서 일정을 미뤘어요. 바뀌는 걸 끝까지 보고 싶어서요. 우리 시대 기록에 이 마을은 없거든요.	So I postponed the schedule. I want to see the changes through. This village isn't in my age's records.		
+3	dungeon	era_folk.chrononaut.story.3	어제 굴혈 이름 없는 비석 앞에서 한참 서 있었어요. 우리 시대에도 그 자리에 비석이 있어요. 이름이 없는 채로요.	Yesterday I stood a long time before the nameless stele in the Burrow. In my age too there is a stele in that spot - nameless.		
 3	dungeon	era_folk.courier	택배 기사	Courier		
 3	dungeon	era_folk.courier.0	주소가 '황건 난리 통 셋째 마을'이라고만 적혀 있네요. 여기 맞죠?	The address just says 'third village, during the Yellow Turban riots'. This is it, right?		
 3	dungeon	era_folk.courier.1	짐이 자꾸 무거워져요. 상자 속에서 뭔가 칼 가는 소리가 나요.	The parcel keeps getting heavier. Something inside sounds like a blade being sharpened.		
 3	dungeon	era_folk.courier.2	아래층엔 배달 안 갑니다. 지난번에 강철 인형이 서명 대신 주먹을 줬거든요.	No deliveries to the lower floors. Last time a steel doll signed with its fist.		
 3	dungeon	era_folk.courier.3	시간 틈 요금이 따로 붙는다던데, 누가 내 주실 분?	They say there's a time-rift surcharge. Anyone want to pay it?		
+3	dungeon	era_folk.courier.story.0	제가 처음 배달한 짐은 주소 없는 상자였어요. 받는 사람을 못 찾아 사흘을 헤맸죠.	The first parcel I ever delivered was a box with no address. I wandered three days unable to find the recipient.		
+3	dungeon	era_folk.courier.story.1	결국 상자를 열어 봤는데 안에는 "누군가에게 전해질 마음"이라 적힌 쪽지 한 장뿐이더라고요.	In the end I opened it, and inside was just one note that read "a heart that will be delivered to someone".		
+3	dungeon	era_folk.courier.story.2	그 쪽지를 들고 다니다 이 시대까지 왔어요. 신기하게 여기선 받을 사람이 자꾸 나타나요.	I carried that note until I came to this age. Strangely, here recipients keep showing up.		
+3	dungeon	era_folk.courier.story.3	어제 마을 사관님께 쪽지를 보여 드렸더니 "내 기록에도 없는 글씨네" 하셨어요. 주소가 생겼네요!	Yesterday I showed the note to the village scribe, who said "that handwriting isn't even in my records." Now it has an address!		
 3	dungeon	era_folk.salaryman	출장 온 회사원	Office Worker on a Business Trip		
 3	dungeon	era_folk.salaryman.0	지하철에서 졸았을 뿐인데 눈 떠 보니 갈림길이더군요.	I only dozed off on the subway, and I woke up at this crossroads.		
 3	dungeon	era_folk.salaryman.1	보고서 마감이 내일인데… 여기 전기 들어오는 데 없나요?	My report is due tomorrow... is there anywhere with electricity here?		
 3	dungeon	era_folk.salaryman.2	방독면 쓴 사람들, 우리 회사 방역팀 같던데 말이 안 통해요.	Those people in gas masks look like our company's disinfection team, but they won't talk to me.		
 3	dungeon	era_folk.salaryman.3	명함이라도 드릴까요? 아, 이 시대엔 종이가 귀하다고요.	Shall I give you my card? Ah, paper is precious in this era, you say.		
+3	dungeon	era_folk.salaryman.story.0	저는 원래 본사 지시서만 따라 움직이는 사람이었어요. 출장도 지시서대로 왔죠.	I used to be a man who only moved by head-office directives. I came on this business trip by directive too.		
+3	dungeon	era_folk.salaryman.story.1	그런데 도착하니 지시서에 없는 일이 하나도 안 멈추는 거예요. 굴혈에서 사람 이름이 지워지는 일 같은.	But on arrival, I found the things not in the directive never stop. Like people's names being erased in the Burrow.		
+3	dungeon	era_folk.salaryman.story.2	지시서를 접어 넣고 처음으로 제 판단으로 한 일이 지워진 이름 하나를 적어 두는 거였어요.	I folded the directive away, and the first thing I did on my own judgment was to write down one erased name.		
+3	dungeon	era_folk.salaryman.story.3	오늘 사관님이 그 이름을 기록에 올려 주셨어요. 보고서로 쓰면 한 줄일 일인데 이렇게 마음이 무겁네요.	Today the scribe entered that name in the record. It would be a single line in a report, yet it weighs on my heart like this.		
+3	dungeon	era_folk.story_gold	금 +{0}	Gold +{0}		
+3	dungeon	era_folk.story_of	사연	story		
 3	dungeon	era_folk.surveyor	탐사 대원	Surveyor		
 3	dungeon	era_folk.surveyor.0	지하 공명 측정 중. 층을 내려갈수록 수치가 요동친다.	Measuring underground resonance. The readings swing wildly the deeper you go.		
 3	dungeon	era_folk.surveyor.1	경비 보행병을 만나면 다리 관절을 노려라. 우리 시대 교범 그대로다.	If you meet a sentry walker, aim for the knee joints. Straight from our field manual.		

@@ -10926,3 +10926,8 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 웹 `visitor.js` STORY 중 이 트랙 손님 여덟(호연·풍랑·반디·청파·나비·K-7·두두·루미)의 글을 그대로. `ForestVisitors.TalkSettled` 가 눌러앉은 뒤 첫 말에 사연을 한 번 들려주고 과일 40(웹 금 1500 ÷ 50 + 공적 10) — 그날 선물은 그다음 말부터. 세이브 `visitStoryDone`(버전 그대로).
 - 기존 `PlaytestForestVisitors` 는 하루 선물을 보니 사연을 다 들은 것으로 시작하게 고쳤고, 사연은 `PlaytestForestScenario.CheckGuestStory` 가 본다. 숲 진단 3연속 OK · loc-review 기준선.
 - 안 넣은 곁가지: side_parcel(택배 등급 — 이 트랙에 등급이 없다) · side_resident(주민 하트 10 — 이 트랙 주민은 숲지기 하나).
+
+### 2026-09-30 — saga-unity DUNGEON 곁가지 side_visitors 시대 손님 사연 (웹 사가블로 곁가지)
+- 웹 `town.js` ERA_FOLK story 셋(택배 기사·출장 회사원·시간 여행자)의 넷 토막씩을 이 트랙 손님(courier·salaryman·chrononaut)에게: `EraFolk.Speak` 가 사연이 남았으면 그 토막(끝에 금 5000), 다 들었으면 예전 대사. 탐사 대원은 사연 없음(웹도 셋뿐). 세이브 `folkStoryIds/Counts`(버전 그대로).
+- 함정: 사연 진단이 `EraFolk` 의 말한 수를 밀어 옛 대사 진단이 어긋남 → `ResetSaid()`. 옛 대사 진단은 사연을 다 들은 것으로 시작.
+- 안 넣은 곁가지: side_names(지워진 이름 비석 — 칸마다 빈 자리를 헤드리스로 못 믿음, 실기에서 자리 확인 뒤) · side_vow(이 트랙에 결사 없음).

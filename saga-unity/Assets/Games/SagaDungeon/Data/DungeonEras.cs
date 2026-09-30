@@ -132,6 +132,66 @@ namespace Saga.Dungeon.Data
                 } },
         };
 
+        // ---- 곁가지 side_visitors(웹 사가블로 town.js ERA_FOLK story) — 손님 셋의 사연 ----
+        /// <summary>마을 시대 손님이 다가설 때마다 사연 네 토막을 차례로, 끝 토막에 금 한 번(웹 FOLK_STORY_GOLD). 다 들었으면 예전 대사로.</summary>
+        public const int StoryGold = 5000;
+        public const int StoryLength = 4;
+        private static readonly System.Collections.Generic.Dictionary<string, string[]> StoryKo = new System.Collections.Generic.Dictionary<string, string[]>
+        {
+            ["courier"] = new[] {
+                "제가 처음 배달한 짐은 주소 없는 상자였어요. 받는 사람을 못 찾아 사흘을 헤맸죠.",
+                "결국 상자를 열어 봤는데 안에는 \"누군가에게 전해질 마음\"이라 적힌 쪽지 한 장뿐이더라고요.",
+                "그 쪽지를 들고 다니다 이 시대까지 왔어요. 신기하게 여기선 받을 사람이 자꾸 나타나요.",
+                "어제 마을 사관님께 쪽지를 보여 드렸더니 \"내 기록에도 없는 글씨네\" 하셨어요. 주소가 생겼네요!",
+            },
+            ["salaryman"] = new[] {
+                "저는 원래 본사 지시서만 따라 움직이는 사람이었어요. 출장도 지시서대로 왔죠.",
+                "그런데 도착하니 지시서에 없는 일이 하나도 안 멈추는 거예요. 굴혈에서 사람 이름이 지워지는 일 같은.",
+                "지시서를 접어 넣고 처음으로 제 판단으로 한 일이 지워진 이름 하나를 적어 두는 거였어요.",
+                "오늘 사관님이 그 이름을 기록에 올려 주셨어요. 보고서로 쓰면 한 줄일 일인데 이렇게 마음이 무겁네요.",
+            },
+            ["chrononaut"] = new[] {
+                "제 귀환 일정은 원래 사흘이었어요. 이 시대를 관찰하고 돌아가는 일이었죠.",
+                "그런데 관찰이란 게 이상해요. 제가 보면 보는 대로 이 마을이 조금씩 바뀌더라고요.",
+                "그래서 일정을 미뤘어요. 바뀌는 걸 끝까지 보고 싶어서요. 우리 시대 기록에 이 마을은 없거든요.",
+                "어제 굴혈 이름 없는 비석 앞에서 한참 서 있었어요. 우리 시대에도 그 자리에 비석이 있어요. 이름이 없는 채로요.",
+            },
+        };
+        private static readonly System.Collections.Generic.Dictionary<string, int> StoryHeard = new System.Collections.Generic.Dictionary<string, int>();
+
+        public static bool HasStory(string folkId) => StoryKo.ContainsKey(folkId);
+        public static int StoryHeardCount(string folkId) => StoryHeard.TryGetValue(folkId, out var n) ? n : 0;
+        public static string StoryLine(string folkId, int i) =>
+            DungeonLocalization.T($"era_folk.{folkId}.story.{i}", StoryKo[folkId][i]);
+
+        /// <summary>다음 사연 토막을 돌려주고 차례를 넘긴다. 사연이 없거나 다 들었으면 null. 마지막 토막이면 <paramref name="gold"/> 에 금을 준다.</summary>
+        public static string NextStory(string folkId, out int gold)
+        {
+            gold = 0;
+            if (!StoryKo.ContainsKey(folkId)) return null;
+            int n = StoryHeardCount(folkId);
+            if (n >= StoryKo[folkId].Length) return null;
+            StoryHeard[folkId] = n + 1;
+            bool last = n + 1 == StoryKo[folkId].Length;
+            if (last) gold = StoryGold;
+            return StoryLine(folkId, n) + $" ({DungeonLocalization.T("era_folk.story_of", "사연")} {n + 1}/{StoryKo[folkId].Length})";
+        }
+
+        public static void SnapshotStories(out string[] ids, out int[] counts)
+        {
+            var i = new System.Collections.Generic.List<string>(); var c = new System.Collections.Generic.List<int>();
+            foreach (var kv in StoryHeard) { i.Add(kv.Key); c.Add(kv.Value); }
+            ids = i.ToArray(); counts = c.ToArray();
+        }
+
+        public static void RestoreStories(string[] ids, int[] counts)
+        {
+            StoryHeard.Clear();
+            if (ids == null || counts == null) return;
+            for (int i = 0; i < ids.Length && i < counts.Length; i++)
+                if (StoryKo.ContainsKey(ids[i])) StoryHeard[ids[i]] = System.Math.Min(counts[i], StoryKo[ids[i]].Length);
+        }
+
         public static string FolkName(Folk f) => DungeonLocalization.T(f.NameKey, f.NameKo);
 
         public static string FolkLine(Folk f, int i)

@@ -739,6 +739,20 @@
     { "key": "dscen.reward.gold", "value": "Gold {0}" },
     { "key": "dscen.reward.feat", "value": "Merit {0} (gold {1})" },
     { "key": "dscen.reward.title", "value": "🏷️ Title 「{0}」" },
-    { "key": "dscen.picked", "value": "📖 {0} — chosen" }
+    { "key": "dscen.picked", "value": "📖 {0} — chosen" },
+    { "key": "era_folk.courier.story.0", "value": "The first parcel I ever delivered was a box with no address. I wandered three days unable to find the recipient." },
+    { "key": "era_folk.courier.story.1", "value": "In the end I opened it, and inside was just one note that read \"a heart that will be delivered to someone\"." },
+    { "key": "era_folk.courier.story.2", "value": "I carried that note until I came to this age. Strangely, here recipients keep showing up." },
+    { "key": "era_folk.courier.story.3", "value": "Yesterday I showed the note to the village scribe, who said \"that handwriting isn't even in my records.\" Now it has an address!" },
+    { "key": "era_folk.salaryman.story.0", "value": "I used to be a man who only moved by head-office directives. I came on this business trip by directive too." },
+    { "key": "era_folk.salaryman.story.1", "value": "But on arrival, I found the things not in the directive never stop. Like people's names being erased in the Burrow." },
+    { "key": "era_folk.salaryman.story.2", "value": "I folded the directive away, and the first thing I did on my own judgment was to write down one erased name." },
+    { "key": "era_folk.salaryman.story.3", "value": "Today the scribe entered that name in the record. It would be a single line in a report, yet it weighs on my heart like this." },
+    { "key": "era_folk.chrononaut.story.0", "value": "My return schedule was originally three days. I was to observe this age and go back." },
+    { "key": "era_folk.chrononaut.story.1", "value": "But observing is strange. This village changes bit by bit just as I look at it." },
+    { "key": "era_folk.chrononaut.story.2", "value": "So I postponed the schedule. I want to see the changes through. This village isn't in my age's records." },
+    { "key": "era_folk.chrononaut.story.3", "value": "Yesterday I stood a long time before the nameless stele in the Burrow. In my age too there is a stele in that spot - nameless." },
+    { "key": "era_folk.story_of", "value": "story" },
+    { "key": "era_folk.story_gold", "value": "Gold +{0}" }
   ]
 }

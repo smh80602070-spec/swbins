@@ -29,12 +29,21 @@ namespace Saga.EditorTools
             string[] bestiary = BestiaryState.Snapshot();
             Vector3 pos = playerGo.transform.position;
             string m = "";
+            int gold0 = HeroState.Gold;
+            DungeonEras.SnapshotStories(out var storyIds0, out var storyCounts0);
             try
             {
+                m += CheckFolkStory(); // 사연은 처음 상태에서 — 뒤 대사 진단은 사연을 다 들은 것으로 시작한다
+                var ids = new string[DungeonEras.FolkList.Length];
+                var counts = new int[ids.Length];
+                for (int i = 0; i < ids.Length; i++) { ids[i] = DungeonEras.FolkList[i].Id; counts[i] = DungeonEras.StoryLength; }
+                DungeonEras.RestoreStories(ids, counts);
                 m += CheckTable() + CheckShares() + CheckRooms(runner) + CheckPeddlers(runner) + CheckFolk();
             }
             finally
             {
+                DungeonEras.RestoreStories(storyIds0, storyCounts0);
+                HeroState.Restore(HeroState.Level, HeroState.Exp, HeroState.Hp, gold0, HeroState.EquippedWeaponId, HeroState.SocketedGemId);
                 runner.JumpToFloor(floor0 >= 2 ? floor0 : 2);
                 BestiaryState.Restore(bestiary);
                 var cc = playerGo.GetComponent<CharacterController>();
@@ -44,6 +53,42 @@ namespace Saga.EditorTools
             }
             if (_ok) Debug.Log($"{T} OK - 표(몸 여덟·옛 몸과 안 겹침)·해시 몫·단계×시대 실제 방(이름·몸)·정예 호위 그대로·행상 몸·마을 손님 넷(몸·대사 돌림·자리) |{m}");
             return _ok;
+        }
+
+        /// <summary>PLAN.md 109-16 곁가지 side_visitors — 사연 넷 토막 차례로·끝 토막에 금 5000 한 번·다 들으면 예전 대사·사연 없는 손님은 예전 대사 그대로·세이브 왕복.</summary>
+        private static string CheckFolkStory()
+        {
+            DungeonEras.RestoreStories(null, null);
+            var folks = Object.FindObjectsByType<EraFolk>(FindObjectsSortMode.None);
+            int withStory = 0;
+            foreach (var f in folks)
+            {
+                var data = f.Data;
+                if (!DungeonEras.HasStory(data.Id))
+                {
+                    if (f.Speak() != $"{DungeonEras.FolkName(data)} — {DungeonEras.FolkLine(data, 0)}") Fail($"{data.Id} 사연이 없는데 첫 대사가 다름");
+                    continue;
+                }
+                withStory++;
+                int gold = HeroState.Gold;
+                for (int i = 0; i < DungeonEras.StoryLength; i++)
+                {
+                    string line = f.Speak();
+                    if (!line.Contains(DungeonEras.StoryLine(data.Id, i)) || !line.Contains($"{i + 1}/{DungeonEras.StoryLength}")) Fail($"{data.Id} 사연 {i + 1}토막 {line}");
+                    if (i < DungeonEras.StoryLength - 1 && HeroState.Gold != gold) Fail($"{data.Id} 끝 토막 전에 금이 들어옴");
+                }
+                if (HeroState.Gold != gold + DungeonEras.StoryGold) Fail($"{data.Id} 끝 토막 금 +{DungeonEras.StoryGold} ({HeroState.Gold - gold})");
+                if (!f.Speak().Contains(DungeonEras.FolkLine(data, f.SaidCount - 1)) || HeroState.Gold != gold + DungeonEras.StoryGold) Fail($"{data.Id} 사연 뒤엔 예전 대사여야(금 다시 없음)");
+            }
+            if (withStory != 3) Fail($"사연 있는 손님 {withStory}");
+            foreach (var f in folks) f.ResetSaid();
+            DungeonEras.SnapshotStories(out var ids, out var counts);
+            string json = SaveState.ToJson();
+            if (!json.Contains("folkStoryIds")) Fail("세이브 필드");
+            DungeonEras.RestoreStories(null, null);
+            SaveState.ApplyJson(json);
+            if (DungeonEras.StoryHeardCount("courier") != DungeonEras.StoryLength) Fail("사연 세이브 왕복");
+            return "손님 사연(셋·넷 토막 차례·끝 토막 금 5000 한 번·다 들으면 예전 대사·사연 없는 손님 그대로·세이브 왕복) · ";
         }
 
         private static string CheckTable()
