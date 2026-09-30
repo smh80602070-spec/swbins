@@ -220,26 +220,15 @@ func _build_base() -> void:
 	add_child(mi)
 
 
+## 2026-09-30 — 원기둥+원뿔 대신 asset-forge 망루 GLB(폭 8.8·높이 18.8m → 0.36배).
 func _build_tower() -> void:
-	var mi := MeshInstance3D.new()
-	var mesh := CylinderMesh.new()
-	mesh.top_radius = 1.6
-	mesh.bottom_radius = 2.0
-	mesh.height = 4.0
-	mi.mesh = mesh
-	mi.position = Vector3(0, 2.6, 0)
-	mi.material_override = _mat(COLOR_TOWER)
-	add_child(mi)
-
-	var roof := MeshInstance3D.new()
-	var roof_mesh := CylinderMesh.new()
-	roof_mesh.top_radius = 0.0
-	roof_mesh.bottom_radius = 2.1
-	roof_mesh.height = 1.4
-	roof.mesh = roof_mesh
-	roof.position = Vector3(0, 5.3, 0)
-	roof.material_override = _mat(COLOR_WALL)
-	add_child(roof)
+	var ps := load("res://assets/generated/props/tower_s1_01.glb") as PackedScene
+	if ps == null:
+		return
+	var n := ps.instantiate() as Node3D
+	n.scale = Vector3.ONE * 0.36
+	n.position = Vector3(0, 0.6, 0)
+	add_child(n)
 
 
 ## 담장 넷 — 기단 둘레에 상자를 사방으로 두른다(포위·공성은 이 슬라이스
@@ -321,24 +310,16 @@ func _build_farms(c: Dictionary) -> void:
 ## 시장 — 상업(comm). city3d.js: clamp(round(comm/80), 1, 5).
 func _build_markets(c: Dictionary) -> void:
 	var n := clampi(roundi(float(c.get("comm", 0)) / MARKET_PER), 1, 5)
+	var ps := load("res://assets/generated/props/market_s1_01.glb") as PackedScene
 	for p: Vector2 in _ring(n, 5.6, 1.1):
-		var stall := MeshInstance3D.new()
-		var stall_mesh := BoxMesh.new()
-		stall_mesh.size = Vector3(0.7, 0.5, 0.6)
-		stall.mesh = stall_mesh
-		stall.position = Vector3(p.x, 0.25, p.y)
-		stall.material_override = _mat(COLOR_MARKET)
+		if ps == null:
+			continue
+		## asset-forge 장터 좌판 GLB(폭 4m → 0.3배), 정면이 성 쪽을 보게.
+		var stall := ps.instantiate() as Node3D
+		stall.scale = Vector3.ONE * 0.3
+		stall.position = Vector3(p.x, 0.0, p.y)
+		stall.rotation.y = atan2(-p.x, -p.y)
 		_dyn.add_child(stall)
-
-		var roof := MeshInstance3D.new()
-		var roof_mesh := CylinderMesh.new()
-		roof_mesh.top_radius = 0.0
-		roof_mesh.bottom_radius = 0.55
-		roof_mesh.height = 0.35
-		roof.mesh = roof_mesh
-		roof.position = Vector3(p.x, 0.68, p.y)
-		roof.material_override = _mat(COLOR_MARKET_ROOF)
-		_dyn.add_child(roof)
 
 
 ## 곳간 통나무 — 군량(food). city3d.js: clamp(round(food/400)+1, 1, 4).
