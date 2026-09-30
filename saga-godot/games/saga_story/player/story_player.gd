@@ -322,7 +322,7 @@ func _ready() -> void:
 	shadow.position = Vector3(0, 0.15, 0)
 	add_child(shadow)
 	var mount_node := Node3D.new()
-	mount_node.set_script(load("res://games/saga_go/player/mount.gd"))
+	mount_node.set_script(load("res://saga_core/player/mount.gd"))
 	add_child(mount_node)
 
 

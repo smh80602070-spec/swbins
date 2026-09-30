@@ -58,7 +58,7 @@ func _ready() -> void:
 	CelShaderApply.apply_to(visual)
 	if get_node_or_null("Mount") == null:
 		var mount_node := Node3D.new()
-		mount_node.set_script(load("res://games/saga_go/player/mount.gd"))
+		mount_node.set_script(load("res://saga_core/player/mount.gd"))
 		add_child(mount_node)
 	## 2026-09-30 — 공방 옷 그림이 어두운 가죽이라 주인공만 칙칙했다(마을 사람은 vroid_body boost). 옷 재질 빛을 올려 초록 조끼가 산다.
 	for mi in visual.find_children("*", "MeshInstance3D", true, false):
