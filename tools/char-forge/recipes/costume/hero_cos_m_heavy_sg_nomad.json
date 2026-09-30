@@ -1,0 +1,149 @@
+{
+ "id": "hero_cos_m_heavy_sg_nomad",
+ "_note": "의상 시스템 마네킹 — 칸 m_heavy·갈래 sg·옷 틀 nomad. gen_costume_recipes.py 가 쓴다(손으로 고치지 말 것).",
+ "axes": {
+  "height": 2,
+  "build": 3,
+  "head": "short01",
+  "outfit": "nomad"
+ },
+ "height_target_m": 1.76,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.55,
+  "muscle": 0.6,
+  "weight": 0.85,
+  "height": 0.5,
+  "proportions": 0.7,
+  "race": {
+   "asian": 0.85,
+   "caucasian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_asian_male/young_asian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brown",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow007/eyebrow007.mhclo",
+ "eyelashes": "eyelashes01/eyelashes01.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.35,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.35,
+  "eye-corner1-up": 0.1,
+  "mouth-scale-horiz-incr": 0.311,
+  "chin-height-decr": 0.262,
+  "nose-point-down": 0.211,
+  "nose-scale-vert-incr": 0.189,
+  "forehead-scale-vert-decr": 0.152,
+  "head-oval": 0.418
+ },
+ "_garments": [
+  "sangtu_bun"
+ ],
+ "clothes": [
+  "cf_sangtu_bun/cf_sangtu_bun.mhclo"
+ ],
+ "kitbash": [
+  {
+   "part": "shell",
+   "slot": "cloth",
+   "color": "#70634b",
+   "rough": 0.85,
+   "offset": 0.004,
+   "thick": 0.004,
+   "groups": [
+    "spine_0*",
+    "clavicle_*",
+    "upperarm_*",
+    "lowerarm_*"
+   ],
+   "minw": 0.5
+  },
+  {
+   "part": "shell",
+   "slot": "cloth_pants",
+   "color": "#26262e",
+   "rough": 0.85,
+   "offset": 0.004,
+   "thick": 0.004,
+   "groups": [
+    "thigh_*",
+    "calf_*"
+   ],
+   "minw": 0.5
+  },
+  {
+   "part": "shell",
+   "slot": "leather",
+   "color": "#4a3526",
+   "rough": 0.7,
+   "offset": 0.012,
+   "thick": 0.005,
+   "groups": [
+    "foot_*",
+    "ball_*",
+    "calf_*"
+   ],
+   "z": [
+    0.0,
+    0.3
+   ],
+   "minw": 0.3
+  },
+  {
+   "part": "robe",
+   "color": "#70634b",
+   "top": 0.12,
+   "flare": 0.35,
+   "jag": 0.0,
+   "weights": "skin",
+   "rough": 0.85,
+   "length": 0.8
+  },
+  {
+   "part": "shell",
+   "slot": "cloth_fur",
+   "color": "#302a24",
+   "rough": 0.95,
+   "offset": 0.03,
+   "thick": 0.015,
+   "groups": [
+    "clavicle_*",
+    "upperarm_*",
+    "spine_03"
+   ],
+   "z": [
+    0.74,
+    0.85
+   ],
+   "minw": 0.4
+  }
+ ],
+ "anims": {
+  "idle": "Sword_Idle",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

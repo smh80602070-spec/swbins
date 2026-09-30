@@ -1,0 +1,80 @@
+{
+ "id": "hero_cos_f_avg_sg_dress",
+ "_note": "의상 시스템 마네킹 — 칸 f_avg·갈래 sg·옷 틀 dress. gen_costume_recipes.py 가 쓴다(손으로 고치지 말 것).",
+ "axes": {
+  "height": 2,
+  "build": 1,
+  "head": "long01",
+  "outfit": "dress"
+ },
+ "height_target_m": 1.62,
+ "macro": {
+  "gender": 0.0,
+  "age": 0.45,
+  "muscle": 0.375,
+  "weight": 0.5,
+  "height": 0.5,
+  "proportions": 0.8,
+  "race": {
+   "asian": 0.85,
+   "caucasian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_asian_female/young_asian_female.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brownlight",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.75,
+  "blush": 0.7,
+  "lid": 0.4
+ },
+ "eyebrows": "eyebrow011/eyebrow011.mhclo",
+ "eyelashes": "eyelashes02/eyelashes02.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "mouth-lowerlip-volume-incr": 0.3,
+  "chin-width-decr": 0.25,
+  "chin-prominent-decr": 0.15,
+  "eye-corner1-up": 0.2,
+  "nose-point-up": 0.223,
+  "mouth-scale-horiz-incr": 0.323,
+  "nose-scale-vert-decr": 0.323,
+  "mouth-upperlip-height-decr": 0.29,
+  "chin-height-incr": 0.154,
+  "head-oval": 0.271
+ },
+ "hair": "rehmanpolanski_hair_bun_brown/rehmanpolanski_hair_bun_brown.mhclo",
+ "tints": {
+  "hair": "#211812"
+ },
+ "_garments": [
+  "hanbok_f@605641,e9e4d6"
+ ],
+ "clothes": [
+  "cf_hanbok_f_605641_e9e4d6/cf_hanbok_f_605641_e9e4d6.mhclo",
+  "toigo_mj_cloth_shoes/toigo_mj_cloth_shoes.mhclo"
+ ],
+ "anims": {
+  "idle": "CF_Guard_Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

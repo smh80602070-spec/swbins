@@ -1,0 +1,116 @@
+{
+ "id": "hero_cos_m_avg_jp_toga",
+ "_note": "의상 시스템 마네킹 — 칸 m_avg·갈래 jp·옷 틀 toga. gen_costume_recipes.py 가 쓴다(손으로 고치지 말 것).",
+ "axes": {
+  "height": 2,
+  "build": 1,
+  "head": "short01",
+  "outfit": "toga"
+ },
+ "height_target_m": 1.76,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.5,
+  "muscle": 0.5,
+  "weight": 0.5,
+  "height": 0.5,
+  "proportions": 0.7,
+  "race": {
+   "asian": 0.85,
+   "caucasian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_asian_male/young_asian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brown",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow005/eyebrow005.mhclo",
+ "eyelashes": "eyelashes01/eyelashes01.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.35,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.35,
+  "eye-corner1-up": 0.1,
+  "eyebrows-trans-up": 0.141,
+  "nose-point-up": 0.299,
+  "mouth-scale-horiz-incr": 0.248,
+  "nose-scale-vert-incr": 0.328,
+  "mouth-upperlip-height-decr": 0.242,
+  "head-oval": 0.363
+ },
+ "_garments": [
+  "chonmage"
+ ],
+ "clothes": [
+  "cf_chonmage/cf_chonmage.mhclo"
+ ],
+ "kitbash": [
+  {
+   "part": "shell",
+   "slot": "leather",
+   "color": "#4a3526",
+   "rough": 0.7,
+   "offset": 0.007,
+   "thick": 0.004,
+   "groups": [
+    "foot_*",
+    "ball_*"
+   ],
+   "minw": 0.4
+  },
+  {
+   "part": "robe",
+   "color": "#7e6455",
+   "top": 0.1,
+   "flare": 0.45,
+   "jag": 0.0,
+   "weights": "skin",
+   "rough": 0.85,
+   "hem": 0.03
+  },
+  {
+   "part": "shell",
+   "slot": "cloth_sash",
+   "color": "#1f2226",
+   "rough": 0.85,
+   "offset": 0.02,
+   "thick": 0.006,
+   "groups": [
+    "spine_03",
+    "clavicle_l",
+    "upperarm_l"
+   ],
+   "z": [
+    0.7,
+    0.84
+   ],
+   "minw": 0.4
+  }
+ ],
+ "anims": {
+  "idle": "Sword_Idle",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

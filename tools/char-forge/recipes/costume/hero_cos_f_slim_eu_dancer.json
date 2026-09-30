@@ -1,0 +1,116 @@
+{
+ "id": "hero_cos_f_slim_eu_dancer",
+ "_note": "의상 시스템 마네킹 — 칸 f_slim·갈래 eu·옷 틀 dancer. gen_costume_recipes.py 가 쓴다(손으로 고치지 말 것).",
+ "axes": {
+  "height": 1,
+  "build": 0,
+  "head": "long01",
+  "outfit": "dancer"
+ },
+ "height_target_m": 1.56,
+ "macro": {
+  "gender": 0.0,
+  "age": 0.42,
+  "muscle": 0.225,
+  "weight": 0.35,
+  "height": 0.5,
+  "proportions": 0.8,
+  "race": {
+   "caucasian": 0.9,
+   "asian": 0.05,
+   "african": 0.05
+  }
+ },
+ "skin": "young_caucasian_female/young_caucasian_female.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "blue",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.75,
+  "blush": 0.7,
+  "lid": 0.4
+ },
+ "eyebrows": "eyebrow007/eyebrow007.mhclo",
+ "eyelashes": "eyelashes04/eyelashes04.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "mouth-lowerlip-volume-incr": 0.3,
+  "chin-width-decr": 0.25,
+  "chin-prominent-decr": 0.15,
+  "eye-corner1-up": 0.2,
+  "eye-trans-down": 0.227,
+  "mouth-scale-horiz-decr": 0.281,
+  "mouth-upperlip-height-decr": 0.308,
+  "nose-scale-vert-incr": 0.309,
+  "nose-point-up": 0.309,
+  "head-diamond": 0.392
+ },
+ "hair": "elvs_french_braid_variation/elvs_french_braid_variation.mhclo",
+ "tints": {
+  "hair": "#7a3a22"
+ },
+ "kitbash": [
+  {
+   "part": "shell",
+   "slot": "cloth",
+   "color": "#1f2226",
+   "rough": 0.8,
+   "offset": 0.004,
+   "thick": 0.004,
+   "groups": [
+    "spine_02",
+    "spine_03",
+    "clavicle_*"
+   ],
+   "z": [
+    0.62,
+    0.82
+   ],
+   "minw": 0.5
+  },
+  {
+   "part": "shell",
+   "slot": "leather",
+   "color": "#2e2218",
+   "rough": 0.7,
+   "offset": 0.007,
+   "thick": 0.004,
+   "groups": [
+    "foot_*",
+    "ball_*"
+   ],
+   "minw": 0.4
+  },
+  {
+   "part": "robe",
+   "color": "#5e523f",
+   "top": 0.3,
+   "flare": 0.8,
+   "jag": 0.0,
+   "weights": "skin",
+   "rough": 0.85,
+   "hem": 0.02
+  }
+ ],
+ "anims": {
+  "idle": "Sword_Idle",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

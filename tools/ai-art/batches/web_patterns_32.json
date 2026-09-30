@@ -1,0 +1,207 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "web_patterns_32",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": ""
+ },
+ "items": [
+  {
+   "id": "pat_floral_blue",
+   "seed": 2043299872,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, blue and white floral cotton print, hibiscus flowers, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_silk_red_gold",
+   "seed": 36967547,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, red silk fabric with gold embroidered cloud motifs, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_leather_studs",
+   "seed": 890624450,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, black leather with small silver studs, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_tartan_green",
+   "seed": 3199150371,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, green and navy tartan plaid wool, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_brocade_gold",
+   "seed": 969848572,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, gold brocade with ornate scroll pattern on deep blue, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_batik_indigo",
+   "seed": 3647156923,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, indigo batik fabric with white wax resist pattern, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_linen_stripes",
+   "seed": 60570802,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, white linen with thin blue stripes, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_velvet_purple",
+   "seed": 105790318,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, deep purple velvet with subtle gold trim pattern, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_camo_green",
+   "seed": 1124456053,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, green camouflage pattern fabric, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_denim_worn",
+   "seed": 3052228797,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, faded blue denim texture with stitching, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_circuit_neon",
+   "seed": 3935836641,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, dark fabric with glowing cyan circuit board lines, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_holo_iridescent",
+   "seed": 2877463974,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, iridescent holographic fabric in pink and teal, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_carbon_weave",
+   "seed": 2472034065,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, black carbon fiber weave with subtle highlights, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_sakura_pink",
+   "seed": 1098207445,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, pale pink fabric with cherry blossom petals pattern, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_damask_crimson",
+   "seed": 3431283484,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, crimson damask fabric with tonal floral pattern, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_checker_bw",
+   "seed": 1013189442,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, black and white checkered pattern cloth, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_ethnic_geo",
+   "seed": 3429500952,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, orange and yellow geometric woven pattern, folk textile, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_scale_silver",
+   "seed": 3365815295,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, silver metallic scale armor pattern, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_waves_teal",
+   "seed": 3137335956,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, teal fabric with concentric wave pattern, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_leather_brown",
+   "seed": 2753418941,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, worn brown leather with stitching lines, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_sunflower",
+   "seed": 1324078842,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, yellow sunflower print on green cloth, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_starry_night",
+   "seed": 2642969033,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, deep navy fabric with small gold stars, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_herringbone_camel",
+   "seed": 1331071597,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, camel colored wool herringbone tweed, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_lace_white",
+   "seed": 2819237684,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, white lace fabric with delicate floral openwork, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_buffalo_plaid",
+   "seed": 3408256331,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, red and black buffalo plaid flannel, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_bamboo_green",
+   "seed": 2527934541,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, emerald green silk with bamboo leaf pattern, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_tweed_grey",
+   "seed": 2742816632,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, grey tweed fabric with flecks, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_cyber_gradient",
+   "seed": 1511897195,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, magenta and cyan gradient fabric with thin grid lines, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_canvas_beige",
+   "seed": 2981982294,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, beige canvas fabric with visible weave, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_heraldic_blue_gold",
+   "seed": 2365272131,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, royal blue fabric with repeating gold emblem pattern, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_coins_maroon",
+   "seed": 3594956950,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, maroon fabric with repeating gold coin circles, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  },
+  {
+   "id": "pat_stripes_pastel",
+   "seed": 516865975,
+   "prompt": "no humans, flat lay, seamless tileable textile pattern, top-down close up, pastel rainbow stripes cotton fabric, even lighting, high detail fabric texture",
+   "negative": "lowres, text, watermark, signature, people, face, hands, blurry, 3d render, border, frame, perspective, folds, worst quality, low quality"
+  }
+ ]
+}

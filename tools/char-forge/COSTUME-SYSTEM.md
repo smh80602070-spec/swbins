@@ -49,3 +49,13 @@
 ## 7. 알려진 한계
 - 조각마다 텍스처를 자기 GLB 에 품는다(시험 1인: 몸 8.7MB · 갑옷 15.6MB · 상투 2.3MB). 게임 반입 때 중복 합치기(`dedupe_forge_textures` 방식)·메시 압축을 쓴다.
 - 통옷 아래 가려진 살은 `build_real.hide_under`(레시피 `under`)와 MakeHuman 옷의 마스크로 **지운 채** 굽는다 → 옷을 벗기면 구멍이 난다. `export_parts.py --keep-under` 는 둘 다 건너뛰어 맨몸을 온전히 낸다(09-30 시험: 삼국 갑옷 인물은 삼각형 수가 같았다 = 그 옷은 원래 살을 지우지 않는다. 지우는 옷(긴 도포·치마 등)으로 렌더 확인 필요).
+
+## 8. VRM 방식 — 얼굴·몸은 VRoid, 옷만 조각으로 (09-30 결정)
+사용자 지시: "옷을 바꾸는 것만 가능하게, 장비 세팅마다 다르게". 공방(MakeHuman) 몸의 얼굴이 미달이라(§ README 8-1) **얼굴·몸은 VRoid 로 손으로 디자인**하고 옷만 갈아 끼운다.
+VRoid Studio 는 명령줄·일괄 생성이 없고 `.vroid` 는 전용 형식이라 디자인 자체는 자동화할 수 없다(조사: 공식 문서에 CLI·배치 없음). 대신 VRM 은 GLB 라서 **그 뒤의 모든 것**은 자동이다:
+1. `export_vrm_parts.py` — VRM → `base.glb`(얼굴·눈·피부·머리) + `top__/bottom__/shoes__*.glb` 옷 조각(같은 뼈대). VRoid 재질 이름(`…Tops…`·`…Bottoms…`·`…Shoes…`)이 슬롯을 말해 준다. (시험 3명: 저장소 VRM 셋)
+2. `vrm_piece_tex.py` — 옷 조각의 바탕색 질감 펼침도를 PNG 로.
+3. `tools/ai-art/make_pattern_batch.py` → `run_chain.sh` — AI 천 무늬 타일 32종(Animagine XL 4.0, 상업 허용).
+4. `make_wardrobe_textures.py` — 패널 안에 `무늬 × 원래 질감의 명암` 합성 → 조각 × 32 무늬 = 변형 질감(WebP)과 `items.json`(id·슬롯·조각·질감·가명 표시 이름·희귀도·gear/cash). 시험: 조각 9 × 32 = **288 변형**. 메시는 그대로라 GLB 를 변형마다 안 낸다 — 게임은 조각 GLB 한 개의 바탕색 질감만 바꿔 끼운다.
+5. `render_wardrobe.py` — 확인 렌더(같은 몸에 무늬만 다른 옷이 입혀지는 것 확인됨).
+**한계**: 조각은 그 VRoid 몸 체형에 맞는다 — 같은 체형 설정으로 만든 VRM 끼리만 교환된다(얼굴은 달라도 됨). 옷 **모양**(치마·코트 등)은 VRoid 에서 손으로 디자인해야 늘어난다(무늬는 자동). AI 무늬 타일은 이음새가 안 맞아 보이는 곳이 있다. VRM 의 MToon(셀 셰이더)은 Blender 를 거치며 사라져 게임 쪽 셀 셰이더 재질로 다시 물려야 한다. 변형 질감·`items.json` 은 `_out/wardrobe/`(로컬) — 게임 반입은 트랙 PLAN 조각.
