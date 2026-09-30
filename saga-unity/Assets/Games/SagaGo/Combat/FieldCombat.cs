@@ -435,7 +435,7 @@ namespace Saga.Go.Combat
             if (hits > 0)
             {
                 Active.Energy = Mathf.Min(BurstCost, Active.Energy + EnergyPerHit * EnergyMul);
-                GroundDecal.Spawn(transform.position + fwd * 2f, GroundDecal.Kind.HitMark);
+                Saga.Core.GroundDecal.Spawn(transform.position + fwd * 2f, Saga.Core.GroundDecal.Kind.HitMark);
                 RainFollow(); // 109-14-17 뱃노래
             }
             return hits;
@@ -531,7 +531,7 @@ namespace Saga.Go.Combat
             if (hits > 0) RainFollow(); // 109-14-17 뱃노래
             FieldRingFx.Spawn(transform.position, PlungeRadius, Color.white, 0.45f);
             FieldRingFx.Spawn(transform.position, PlungeRadius * 0.55f, Color.white, 0.3f);
-            GroundDecal.Spawn(transform.position, GroundDecal.Kind.HitMark);
+            Saga.Core.GroundDecal.Spawn(transform.position, Saga.Core.GroundDecal.Kind.HitMark);
             FieldDamageText.Spawn(transform.position + Vector3.up * 4.6f, GoLocalization.T("field.plunge", "낙하 공격"), Color.white, 1.1f);
             LastPlungeHits = hits;
             return hits;

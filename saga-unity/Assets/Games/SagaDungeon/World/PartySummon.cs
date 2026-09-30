@@ -1,6 +1,7 @@
 using UnityEngine;
 using Saga.Dungeon.Audio;
 using Saga.Dungeon.Data;
+using Saga.Core;
 
 namespace Saga.Dungeon.World
 {
