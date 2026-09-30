@@ -420,7 +420,7 @@ window.requestAnimationFrame = function () { return 0; };
           C.emit('changed');
           if (SC.isOpen()) { say(); }
         }
-        var want = D.CHAPTERS.slice(6, 15).map(function (c) { return c.id; }).concat(['a6_orphan', 'a6_ford', 'a6_beyond']);   // 5막 마지막 장(이야기만)은 앞 장 끝 장면에 이어져 한 번에 지나간다 · 6막 비석 너머 셋은 결말 뒤(최고 층 32·34·36)
+        var want = D.CHAPTERS.slice(6, 16).map(function (c) { return c.id; }).concat(['a6_orphan', 'a6_ford', 'a6_beyond']);   // 5막 마지막 장(이야기만)은 앞 장 끝 장면에 이어져 한 번에 지나간다 · 6막 비석 너머 셋은 결말 뒤(최고 층 32·34·36)
         if (seen.join(',') !== want.join(',') || !SC.state().done.a5_nameless) { bad.push('장 순서 ' + seen.join(',')); }
         if (SC.current() !== null || SC.hint() !== null) { bad.push('끝났는데 힌트 ' + (SC.current() && SC.current().id)); }
         if (SC.titles().indexOf('이름을 찾은 자') < 0 || SC.titles().indexOf('비석 너머의 이름') < 0 || !SC.state().said.bd2 || C.save.dungeon.best < 36) { bad.push('칭호 ' + JSON.stringify(SC.titles())); }
@@ -7016,7 +7016,7 @@ window.requestAnimationFrame = function () { return 0; };
         });
       });
       if (bad.length) { throw new Error(bad.join(',')); }
-      return floors === '5,10,15,20,25,30' && DD.FIXED.map(function (f) { return f.emoji + f.name; }).join(' · ');
+      return floors === '5,10,15,20,25,30,31' && DD.FIXED.map(function (f) { return f.emoji + f.name; }).join(' · ');
     });
 
     t('명소 층 — 늘 같다: 두 번 지어도 방 순서·적 명단·자리·기둥·항아리가 한 치도 안 다르고, 적은 방 안에 선다', function () { return withTrial(function () {
@@ -7038,7 +7038,7 @@ window.requestAnimationFrame = function () { return 0; };
           });
         });
         DN.leave();
-        return same === all && all === 30 && inside && ('방 ' + all + ' 모두 같음 · 적은 방 안');
+        return same === all && all === 35 && inside && ('방 ' + all + ' 모두 같음 · 적은 방 안');
       } finally { if (DN.active()) { DN.leave(); } C.save.dungeon = JSON.parse(keepD); }
     }); });
 
@@ -7075,13 +7075,13 @@ window.requestAnimationFrame = function () { return 0; };
       delete C.save.dungeon.fallen;
       var keepD = JSON.stringify(C.save.dungeon || {});
       try {
-        var on5 = !!DN.fixedFor(5), off4 = !DN.fixedFor(4) && !DN.fixedFor(31);
+        var on5 = !!DN.fixedFor(5), off4 = !DN.fixedFor(4) && !DN.fixedFor(32) && !!DN.fixedFor(31);
         C.setTune('dungeon.fixed', 0);
         var off5 = !DN.fixedFor(5);
         DN.enter({ floor: 5 });
         var plain = !DN.status().fixed && DN.raw().room.doors.length >= 2;
         DN.leave();
-        return on5 && off4 && off5 && plain && '켜면 명소 · 끄면 갈림길 · 4·31층은 늘 갈림길';
+        return on5 && off4 && off5 && plain && '켜면 명소 · 끄면 갈림길 · 4·32층은 늘 갈림길(31층은 명소)';
       } finally { C.setTune('dungeon.fixed', null); if (DN.active()) { DN.leave(); } C.save.dungeon = JSON.parse(keepD); }
     }); });
 

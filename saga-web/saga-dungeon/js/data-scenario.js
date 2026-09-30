@@ -371,9 +371,9 @@
       reward: { exp: 4000, gold: 40000, feat: 100 } },
 
     { id: 'a5_nameless', no: 16, title: '이름 없는 곳', stage: '굴혈 끝', need: 0, after: 'a5_heaven',
-      blurb: '무명왕 — 먹은 이름들이 세 시대 모습으로 번갈아 나온다. 지워졌던 비석 이름이 되돌아온다. (31층 전투는 아직 없다 — 이야기로 맺는다)',
+      blurb: '무명왕 — 먹은 이름들이 세 시대 모습으로 번갈아 나온다. 지워졌던 비석 이름이 되돌아온다. (31층 명소 층 — 이름 없는 곳의 무명왕)',
       mix: { past: '비석 숲', now: '도시 잔해 조각', future: '빛 기둥' },
-      steps: [{ t: 'talk', scene: 'nl1' }, { t: 'talk', scene: 'nl2', by: 'fort' }],
+      steps: [{ t: 'talk', scene: 'nl1' }, { t: 'landmark', key: 'nameless' }, { t: 'talk', scene: 'nl2', by: 'fort' }],
       reward: { exp: 8000, gold: 80000, feat: 200, title: '이름을 찾은 자' } },
 
     /* 6막 · 비석 너머(결말 뒤) — 굴혈이 31층 너머로 이어진다. 새 명소 층은 만들지 않고 최고 층으로 센다 */

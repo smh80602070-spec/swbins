@@ -98,6 +98,18 @@
         { kind: 'puzzle', title: '별자리 기관', pat: 'open', foes: [['요술사', 1]] },
         { kind: 'elite', title: '천병 사열장', pat: 'cross', foes: [['노왕도깨비', 1, true], ['요술사', 2]] },
         { kind: 'boss', title: '금궐 정전', pat: 'hall', foes: [['폭풍 정령', 2]] }
+      ] },
+    /* 31층 — 정본 트랙 메모 "31층 '이름 없는 곳'은 명소 층 표에 한 줄 더한다". 5막 끝 무명왕이 서는 곳(먹은 이름들이 세 시대 모습으로 번갈아 나온다) */
+    { floor: 31, key: 'nameless', name: '이름 없는 곳', hanja: '無名處', emoji: '🌑',
+      intro: '비석 숲 한가운데, 글자가 다 지워진 비석들이 빛 기둥처럼 서 있다 — 삼켜진 이름들이 저마다 다른 모습으로 일어난다',
+      guard: { name: '이름을 삼키는 무명왕', emoji: '🌑', base: '대요술사', color: '#3a3a4a', desc: '먹은 이름의 수만큼 모습을 바꾸는 왕 — 장수, 폭주족, 기계가 번갈아 나온다',
+        sig: { name: '삼킨 이름들', kind: 'summon', at: [0.66, 0.33], add: '원혼', n: 3, line: '삼킨 이름들이 세 시대의 모습으로 일어난다' } },
+      rooms: [
+        { kind: 'fight', title: '비석 숲', pat: 'hall', foes: [['원혼', 3], ['해골무사', 2]] },
+        { kind: 'shrine', title: '지워진 이름의 제단', pat: 'open', foes: [['풋귀', 2]] },
+        { kind: 'elite', title: '도시 잔해 조각', pat: 'ring', foes: [['역병강시', 1, true], ['원혼', 3]] },
+        { kind: 'trove', title: '빛 기둥 곁', pat: 'cross', foes: [['요술사', 1]] },
+        { kind: 'boss', title: '이름 없는 곳', pat: 'hall', foes: [['노왕도깨비', 2]] }
       ] }
   ];
   /** 방 기둥 배치 — 방 크기 비율(x, y). 판정은 없고 눈으로만(makeDecor 의 기둥과 같다) */
