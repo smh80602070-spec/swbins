@@ -5,6 +5,7 @@ using UnityEngine;
 using Saga.Go.Combat;
 using Saga.Go.Data;
 using Saga.Go.Player;
+using Saga.Go.UI;
 using Saga.Go.World;
 
 namespace Saga.EditorTools
@@ -46,6 +47,7 @@ namespace Saga.EditorTools
                 CheckGround(field, parts);
                 CheckDiscover(field, parts);
                 CheckTravel(fc, pc, field, parts);
+                CheckMapJump(fc, pc, parts);
                 CheckWild(fc, pc, field, parts);
                 CheckKing(fc, pc, field, savePath, parts);
                 CheckSave(savePath, parts);
@@ -202,6 +204,39 @@ namespace Saga.EditorTools
             if (field.SnowOn || field.NearGate(fc.transform.position) != 0) Fail("내려왔는데 눈·돌기둥 곁");
             if (field.TravelHere()) Fail("돌기둥 곁이 아닌데 이동함");
             parts.Add("드나드는 길(돌기둥 곁 판정·단추·오름·눈·내림·도착 자리는 곁이 아님)");
+        }
+
+        // ---- 지도(M) 순간이동 지점 둘(109-14-27b) — 서리 고개(경계비를 찾으면)·기상 관측소(관측소를 찾으면) ----
+
+        private static void CheckMapJump(FieldCombat fc, PlayerController pc, List<string> parts)
+        {
+            var map = WorldMapUi.Instance;
+            if (map == null) { Fail("지도 UI 없음"); return; }
+            fc.ResetForTest();
+            pc.Teleport(fc.SafePoint);
+            FrostState.ResetForTest();
+            map.Open();
+            if (map.FrostButton(0).gameObject.activeSelf || map.FrostButton(1).gameObject.activeSelf) Fail("아무것도 못 찾았는데 고원 단추가 보임");
+            if (map.TeleportToFrost(0) || map.TeleportToFrost(1)) Fail("못 찾은 지점으로 순간이동됨");
+            FrostState.Discover("stele");
+            if (!map.FrostButton(0).gameObject.activeSelf || !map.FrostButton(1).gameObject.activeSelf) Fail("경계비를 찾았는데 고원 단추가 안 보임");
+            var name0 = map.FrostButton(0).GetComponentInChildren<TMPro.TextMeshProUGUI>().text;
+            if (!name0.Contains(WorldMapUi.FrostJumpName(0)) || WorldMapUi.FrostJumpName(1) != Site("obs").Name) Fail($"단추 글 {name0}");
+            if (map.TeleportToFrost(1)) Fail("관측소를 못 찾았는데 순간이동됨");
+            DuelGate.Report(true);
+            bool duel = map.TeleportToFrost(0);
+            DuelGate.ResetForTest();
+            if (duel) Fail("결투 중에 순간이동됨");
+            if (!map.TeleportToFrost(0) || (fc.transform.position - GoFrost.ArrivalPos).magnitude > 2f || !GoFrost.Contains(fc.transform.position)) Fail($"서리 고개 순간이동 자리 {fc.transform.position}");
+            if (map.IsOpen) Fail("순간이동 뒤 지도가 안 닫힘");
+            map.Open();
+            FrostState.Discover("obs");
+            if (!map.TeleportToFrost(1)) Fail("관측소 순간이동 거절");
+            Vector3 obs = Site("obs").Pos;
+            if (!GoFrost.Contains(fc.transform.position) || (fc.transform.position - obs).magnitude > 12f || (fc.transform.position - obs).magnitude < 8f) Fail($"관측소 도착 {(fc.transform.position - obs).magnitude:F1}m");
+            map.Close();
+            FrostState.ResetForTest();
+            parts.Add("지도 순간이동(못 찾으면 단추 숨김·거절 · 경계비 → 서리 고개 · 관측소 → 문 앞 · 결투 중 거절 · 뒤에 지도 닫힘)");
         }
 
         // ---- 고원 들판 무리(109-14-27b) ----

@@ -196,6 +196,8 @@
     { "key": "region.no_foes", "value": "No foes" },
     { "key": "map.region_now", "value": "Here · {0} {1} · {2}" },
     { "key": "map.wp_locked", "value": "Waypoint not yet active — go near it to activate" },
+    { "key": "map.frost_pass", "value": "Frost Pass" },
+    { "key": "map.frost_locked", "value": "Not found yet — get close to it on the plateau" },
     { "key": "map.teleported", "value": "Teleported to {0}" },
     { "key": "encounter.drop_lost", "value": "\nYou dropped {0} Gold — come back here within 10 minutes to recover it." },
     { "key": "event.beacon_hint", "value": " {0} landmark(s) still undiscovered." },

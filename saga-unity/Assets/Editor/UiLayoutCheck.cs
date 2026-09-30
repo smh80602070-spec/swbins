@@ -514,6 +514,28 @@ namespace Saga.EditorTools
                 exit = () => { var ui = Object.FindFirstObjectByType<Saga.Go.UI.PerkChoiceUi>(); if (ui != null) Call(ui, "Reject"); },
             });
 
+            // 109-14-27b 지도 — 고원 순간이동 단추 둘이 보일 때(경계비·관측소를 찾은 상태)의 배치
+            List<string> frostBefore = null;
+            list.Add(new UiState
+            {
+                name = "지도 고원 단추",
+                panel = true,
+                enter = () =>
+                {
+                    var map = Saga.Go.UI.WorldMapUi.Instance;
+                    if (map == null) return false;
+                    frostBefore = Saga.Go.Data.FrostState.Snapshot();
+                    Saga.Go.Data.FrostState.Restore(new[] { "stele", "obs" });
+                    map.Open();
+                    return true;
+                },
+                exit = () =>
+                {
+                    Saga.Go.UI.WorldMapUi.Instance?.Close();
+                    Saga.Go.Data.FrostState.Restore(frostBefore);
+                },
+            });
+
             // ⑤ 낚시(109-14-24) — 낚시 칸(고리 겨누기) · 줄다리기 막대(낚시 칸 위에 함께) · 게시판 창. 서는 자리로 옮겨 켜고 끝나면 되돌린다.
             Vector3 fishFrom = default;
             System.Func<System.Func<Saga.Go.World.FishingField, Vector3>, bool> fishEnter = where =>

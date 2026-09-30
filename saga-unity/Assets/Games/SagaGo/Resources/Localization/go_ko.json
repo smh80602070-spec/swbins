@@ -196,6 +196,8 @@
     { "key": "region.no_foes", "value": "적 없음" },
     { "key": "map.region_now", "value": "지금 · {0} {1} · {2}" },
     { "key": "map.wp_locked", "value": "아직 켜지 않은 역참 — 가까이 가서 켜야 한다" },
+    { "key": "map.frost_pass", "value": "서리 고개" },
+    { "key": "map.frost_locked", "value": "아직 못 찾은 곳 — 고원에서 그 자리에 가까이 가야 한다" },
     { "key": "map.teleported", "value": "{0}(으)로 순간이동" },
     { "key": "encounter.drop_lost", "value": "\n짐 {0}냥을 떨어뜨렸다 — 10분 안에 이 자리로 돌아오면 되찾을 수 있다." },
     { "key": "event.beacon_hint", "value": " 아직 못 찾은 명소가 {0}곳 남았다." },

@@ -91,6 +91,43 @@ namespace Saga.Go.UI
         /// <summary>진단용 — 지도 텍스처에서 칸 가운데 색.</summary>
         public Color TileColorOnMap(int gx, int gy) => _tex.GetPixel(gx * TilePx + TilePx / 2, (TestMapData.RowCount - 1 - gy) * TilePx + TilePx / 2);
 
+        // ---- 109-14-27b 서리봉 고원 순간이동(웹 지도 순간이동 지점 "서리 고개"·"기상 관측소") — 고원은 글자 지도 밖이라 오른쪽 열에 단추 둘.
+        // 켜짐 = 그 명소(경계비·관측소)를 찾았다(FrostState). 고개 = 고원 들머리(경계비 북쪽), 관측소 = 건물 문 앞.
+        public static readonly string[] FrostJumpSites = { "stele", "obs" };
+        private readonly List<Button> _frostButtons = new List<Button>();
+        public Button FrostButton(int i) => _frostButtons[i];
+        public static Vector3 FrostJumpPos(int i)
+        {
+            if (i == 0) return GoFrost.ArrivalPos;
+            GoFrost.TrySite("obs", out var s);
+            return s.Pos + new Vector3(0f, 0.3f, 10f);
+        }
+        public static string FrostJumpName(int i)
+        {
+            if (i == 0) return GoLocalization.T("map.frost_pass", "서리 고개");
+            GoFrost.TrySite("obs", out var s);
+            return s.Name;
+        }
+
+        /// <summary>고원 순간이동 — 찾은 지점이면 그 자리로(true). 결투 중·못 찾은 지점은 거절.</summary>
+        public bool TeleportToFrost(int i)
+        {
+            if (!FrostState.Found(FrostJumpSites[i]))
+            {
+                if (DialogueLabel.Instance != null) DialogueLabel.Instance.Show(GoLocalization.T("map.frost_locked", "아직 못 찾은 곳 — 고원에서 그 자리에 가까이 가야 한다"), 2f);
+                return false;
+            }
+            if (DuelGate.Active) return false;
+            var fc = FieldCombat.Instance;
+            var pc = fc != null ? fc.GetComponent<PlayerController>() : Object.FindFirstObjectByType<PlayerController>();
+            if (pc == null) return false;
+            pc.Teleport(FrostJumpPos(i));
+            foreach (var e in FieldEnemy.All) e.ForceReturn();
+            Close();
+            if (DialogueLabel.Instance != null) DialogueLabel.Instance.Show(string.Format(GoLocalization.T("map.teleported", "{0}(으)로 순간이동"), FrostJumpName(i)), 2f);
+            return true;
+        }
+
         private void Awake() => Instance = this;
 
         private void Start()
@@ -98,6 +135,7 @@ namespace Saga.Go.UI
             Build();
             WorldMapState.Changed += OnChanged;
             StoryState.Changed += OnChanged;
+            FrostState.Changed += OnChanged;
             OnChanged();
             _panel.SetActive(false);
         }
@@ -106,6 +144,7 @@ namespace Saga.Go.UI
         {
             WorldMapState.Changed -= OnChanged;
             StoryState.Changed -= OnChanged;
+            FrostState.Changed -= OnChanged;
             AdventureState.Changed -= OnChanged;
             if (Instance == this) Instance = null;
         }
@@ -258,6 +297,16 @@ namespace Saga.Go.UI
             _arrow = arrowText.GetComponent<RectTransform>();
             _arrow.pivot = new Vector2(0.5f, 0.5f);
 
+            // 109-14-27b 서리봉 고원 순간이동 단추 둘 — 맨 아래 줄, 닫기 단추(가운데 260폭) 양옆 빈 자리
+            for (int i = 0; i < FrostJumpSites.Length; i++)
+            {
+                var fb = EncounterUiKit.NewButton(_panel.transform, "◆", new Vector2(0.5f, 0f), new Vector2(ColX + (i == 0 ? -222f : 222f), 50f), new Vector2(170f, 70f), null);
+                fb.GetComponentInChildren<TextMeshProUGUI>().fontSize = 15;
+                int idx = i;
+                fb.onClick.AddListener(() => TeleportToFrost(idx));
+                _frostButtons.Add(fb);
+            }
+
             var close = EncounterUiKit.NewButton(_panel.transform, GoLocalization.T("map.close", "닫기 (M)"), new Vector2(0.5f, 0f), new Vector2(ColX, 50f), new Vector2(260f, 80f), null);
             close.onClick.AddListener(Close);
         }
@@ -301,6 +350,15 @@ namespace Saga.Go.UI
                 _peakButtons[i].GetComponentInChildren<TextMeshProUGUI>().color = found ? new Color(1f, 0.82f, 0.35f) : new Color(0.6f, 0.58f, 0.55f);
                 _peakButtons[i].GetComponent<Image>().color = found ? new Color(0.8f, 0.6f, 0.2f, 0.35f) : new Color(1f, 1f, 1f, 0.05f);
                 _peakButtons[i].gameObject.SetActive(found || WorldMapState.IsVisited(p.RegionId));
+            }
+            for (int i = 0; i < _frostButtons.Count; i++)
+            {
+                bool on = FrostState.Found(FrostJumpSites[i]);
+                var ft = _frostButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+                ft.text = "◆ " + FrostJumpName(i);
+                ft.color = on ? new Color(0.75f, 0.92f, 1f) : new Color(0.55f, 0.55f, 0.6f);
+                _frostButtons[i].GetComponent<Image>().color = on ? new Color(0.35f, 0.65f, 0.85f, 0.35f) : new Color(1f, 1f, 1f, 0.08f);
+                _frostButtons[i].gameObject.SetActive(FrostState.Count > 0);
             }
             RefreshAdventure();
             RefreshMarks();
