@@ -9668,3 +9668,8 @@ PROJECT_STATE.md` 참고. 요약:
 
 - story_talk_npc·story_merchant·story_job_trainer 의 색 캡슐을 새 `world/story_npc_body.gd`(도감 별 ≤3 인물에서 key 해시로 골라 GO VroidBody.build) 로. 같은 key 는 늘 같은 몸. 충돌·대화 범위 그대로. 스크래치 npc_look.gd 로 SinyaField 확인(붉은 옷 NPC). REGRESS OK.
 - 실기 확인 전: 상인·전직 스승이 역할 색(붉은·푸른 톤)을 잃어 구분이 약해졌다 — 필요하면 cloth_override 로 역할색을 얹을 것.
+
+## REALM 성 둘레 풀밭·나무 (2026-09-30, "이어해")
+
+- 성 디오라마 둘레가 빈 하늘 아래 반구(안개 초록)였다. realm_city `_build_scenery`: 반지름 46m 풀밭 원반 + GO 마을 나무·소나무·바위 34개를 반지름 9.5~18.5m 고리로(결정적 해시 자리, 나무 0.16~0.26배·바위 0.5배). 충돌 없음, 성·건물 동작 그대로. 창 모드 촬영으로 확인. REGRESS OK.
+- 실기 확인 전: 나무가 성 시야를 가리는 각도가 있는지, 폰 그리기 부담(나무 34 개 각자 메시).

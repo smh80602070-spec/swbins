@@ -71,6 +71,7 @@ func _ready() -> void:
 	_build_tower()
 	_build_walls()
 	_build_fixtures()
+	_build_scenery()
 
 	_dyn = Node3D.new()
 	_dyn.name = "Diorama"
@@ -166,6 +167,45 @@ func _rebuild_if_changed() -> void:
 	_build_granary(c)
 	_build_roster_banners()
 	_build_sec_torch(c)
+
+
+## 2026-09-30 — 성 둘레가 하늘 아래 반구(빈 안개)였다(창 모드 TestCity). 풀밭 원반 + GO 마을 나무·바위 고리로 자리를 깐다.
+const SCENERY_TREES := [
+	"res://assets/generated/variants/CommonTree_1__go_village.glb",
+	"res://assets/generated/variants/CommonTree_2__go_village.glb",
+	"res://assets/generated/variants/CommonTree_3__go_village.glb",
+	"res://assets/generated/variants/Pine_1__go_village.glb",
+	"res://assets/generated/variants/Pine_2__go_village.glb",
+]
+const SCENERY_ROCK := "res://assets/generated/variants/Rock_Medium_1__go_village.glb"
+
+
+func _build_scenery() -> void:
+	var root := Node3D.new()
+	root.name = "Scenery"
+	add_child(root)
+	var ground := MeshInstance3D.new()
+	var disc := CylinderMesh.new()
+	disc.top_radius = 46.0
+	disc.bottom_radius = 46.0
+	disc.height = 0.4
+	ground.mesh = disc
+	ground.position = Vector3(0, -0.2, 0)
+	ground.material_override = _mat(Color(0.34, 0.52, 0.24))
+	root.add_child(ground)
+	for i in 34:
+		var ang := TAU * (float(i) + 0.5 * absf(sin(float(i) * 12.9898))) / 34.0
+		var r := 9.5 + 9.0 * absf(fmod(sin(float(i) * 78.233) * 43758.5453, 1.0))
+		var glb: String = SCENERY_ROCK if i % 7 == 3 else SCENERY_TREES[i % SCENERY_TREES.size()]
+		var ps := load(glb) as PackedScene
+		if ps == null:
+			continue
+		var n := ps.instantiate() as Node3D
+		var sc := 0.16 + 0.1 * absf(fmod(sin(float(i) * 39.346) * 12345.6789, 1.0)) if glb != SCENERY_ROCK else 0.5
+		n.scale = Vector3.ONE * sc
+		n.rotation.y = float(i) * 2.4
+		n.position = Vector3(cos(ang) * r, 0.0, sin(ang) * r)
+		root.add_child(n)
 
 
 func _build_base() -> void:
