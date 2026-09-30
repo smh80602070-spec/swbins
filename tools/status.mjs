@@ -125,8 +125,38 @@ if (uAll.length) {
   fs.writeFileSync(path.join(UNITY, 'docs', 'STATE.md'), uState);
 }
 
+/* saga-godot — features.json(id 접두 gd.) 로 saga-godot/docs/STATE.md 를 만든다(G-0002). 러너 결과는 saga-godot/tools/_out/probe_all.json({probes,results[{name,fails}]})이 있으면 쓴다(부분 실행이면 그 만큼만). */
+const GODOT = path.join(ROOT, 'saga-godot');
+const GODOT_GAMES = [['gd.go.', 'GO'], ['gd.dg.', 'DUNGEON'], ['gd.fs.', 'FOREST'], ['gd.st.', 'STORY'], ['gd.rk.', 'REALM']];
+const gAll = readJson(path.join(GODOT, 'features.json'), []);
+const gRun = readJson(path.join(GODOT, 'tools', '_out', 'probe_all.json'), null);
+const gFails = new Set(gRun ? gRun.results.filter(x => x.fails > 0).map(x => x.name) : []);
+const gRows = GODOT_GAMES.map(([pre, name]) => {
+  const a = gAll.filter(x => x.id.startsWith(pre));
+  const lv = k => a.filter(x => x.level === k).length;
+  const d3 = lv('D3') + lv('D4'), wip = lv('D0') + lv('D1');
+  return { game: name, total: a.length, D0: lv('D0'), D1: lv('D1'), D2: lv('D2'), D3p: d3,
+    pct: a.length ? Math.round(d3 * 1000 / a.length) / 10 : 0, wip, over: wip > WIP_MAX,
+    failN: gRun ? a.filter(x => x.tests.some(t => gFails.has(t))).length : 0 };
+});
+function gTable() {
+  const L = ['| 판 | 기능 | D0 | D1 | D2 | D3+ | 완성도 | WIP | 초과 | 러너 | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|'];
+  const run = gRun ? `${gRun.probes - gFails.size}/${gRun.probes}` : '-';
+  gRows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.wip} | ${r.over ? '초과' : '-'} | ${run} | ${r.failN ? 'FAIL ' + r.failN : '-'} |`));
+  return L.join('\n');
+}
+const gNoTest = gAll.filter(x => x.tests.length === 0).length;
+const gState = [`<!-- 생성: tools/status.mjs · ${at} — 손으로 고치지 않는다(덮어쓴다) -->`, '# saga-godot 상태', '',
+  '완성도 = D3+ ÷ 전체 · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1 · 기능 목록 `saga-godot/features.json` · 러너 = `tools/probe_all.sh`(마지막 실행의 통과/실행 probe 수)', '',
+  gTable(), '', `probe 가 안 붙은 기능(D0): ${gNoTest}개 — 목록은 features.json 에서 tests 가 빈 것`, ''].join('\n');
+if (gAll.length) {
+  fs.mkdirSync(path.join(GODOT, 'docs'), { recursive: true });
+  fs.writeFileSync(path.join(GODOT, 'docs', 'STATE.md'), gState);
+}
+
 console.log(table());
 console.log(`STATE.md 갱신 (${Buffer.byteLength(state)}B) · README.md "현재" 표 갱신`);
+if (gAll.length) { console.log(gTable()); console.log(`saga-godot/docs/STATE.md 갱신 (${Buffer.byteLength(gState)}B)`); }
 if (uAll.length) { console.log(uTable()); console.log(`saga-unity/docs/STATE.md 갱신 (${Buffer.byteLength(uState)}B)`); }
 if (argv.includes('--json')) {
   fs.mkdirSync(path.join(ROOT, 'tools', '_out'), { recursive: true });
