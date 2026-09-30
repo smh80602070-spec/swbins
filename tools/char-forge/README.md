@@ -221,3 +221,10 @@ bash tools/char-forge/vroid_intake.sh ~/Downloads/hero_go_02.vrm hero_go_02
 
 사본(.vrm+.glb) → 얼굴 데칼 굽기 → CC0 동작 여덟 굽기·파일 검증 → Godot 동작 묶음(`anim_cc0/<id>_lib.res`) → 셀 셰이더 얼굴 표 등록 → 실제 몸 점검(`probe_anim_cc0.gd`).
 VRM 메타의 라이선스 칸을 찍어 준다 — 상업·재배포가 허가가 아니면 들이지 않는다. 게임 씬에 물리는 건 자리가 정해진 뒤 따로 한다.
+
+## 다음 세션 순서 (2026-09-30 밤)
+사용자 지시 = 얼굴·몸 고정, **옷만** 장비/캐시 의상으로 교체. 3D 몸(MakeHuman) 품질은 미달 판정 → 얼굴·몸은 VRoid 손 디자인, 공방은 옷 조각·무늬 자동화를 맡는다. 정본 `COSTUME-SYSTEM.md` §8.
+1. saga-godot 플레이어에 `games/saga_go/world/wardrobe.gd` 연결(세이브 새 키·창 UI·획득 경로) — Godot 세션과 겹치지 않게 `docs/PROJECT_STATE.md` 먼저.
+2. VRM 둘(dungeon_hero_01·saga_forest_avatar_01)도 옷 변형 자산을 `assets/wardrobe/<몸>/` 에(같은 `export_vrm_parts.py`→`vrm_piece_tex.py`→`make_wardrobe_textures.py`).
+3. 옷 모양 = VRoid Studio 에서 사람이 디자인(같은 체형 슬라이더) → `export_vrm_parts.py`. 무늬 변형은 자동.
+4. 로컬 산출물 `_out/vrm_parts`·`_out/wardrobe`(36MB)·`ai-art/_out/web_patterns_32` 는 gitignore — 새 PC 는 도구로 다시 만든다.
