@@ -4,7 +4,6 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 7 | [W-0007](W-0007.md) `perf.js` 다섯 판 (`?perf`) | 통합 | 작성됨 |
 | 8 | [W-0008](W-0008.md) `saga-web/shared/js/` 4파일 + `sync-shared.mjs` | 통합 | 초안 |
 | 9 | [W-0009](W-0009.md) `account.js` 다섯 벌 합침 | 통합 | 초안 |
 | 10 | [W-0010](W-0010.md) `js/manifest.json` + `gen-index.mjs` | 통합 | 초안 |
