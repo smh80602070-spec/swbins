@@ -1,7 +1,7 @@
 extends Node3D
 
 ## 쉼터 마당 (2026-09-30) — 규칙·수치는 data/homestead.gd, 상태는 PartyState.home. test_village.gd 가 붙인다.
-##   마을 신상 곁 열린 풀밭에 표지(등롱 하나 + 돌 여덟 줄)로 마당을 그리고, 둘레 PROMPT_M 안에서 "쉼터 (J)" 단추/J → 화면:
+##   마을 신상 곁 열린 풀밭에 표지(등롱 하나 + 돌 여덟 줄)로 마당을 그리고, 둘레 PROMPT_M 안에서 "쉼터 (T)" 단추/T → 화면:
 ##   소품 열두 종(냥) 중 하나를 골라 "여기에 놓기"(서 있는 자리·돌림 4방향) · "가까운 것 치우기"(절반 환불) · "수확"(쌓인 냥).
 ##   놓인 소품은 마당에 서 있다(충돌 없음, 세이브에 남는다). 안락도 등급이 오를수록 실제 시간으로 냥이 쌓인다.
 
@@ -35,7 +35,7 @@ func _ready() -> void:
 	if not InputMap.has_action("go_homestead"):
 		InputMap.add_action("go_homestead")
 		var ev := InputEventKey.new()
-		ev.physical_keycode = KEY_J
+		ev.physical_keycode = KEY_T
 		InputMap.action_add_event("go_homestead", ev)
 	_items_root = Node3D.new()
 	_items_root.name = "Items"
@@ -129,7 +129,7 @@ func _physics_process(delta: float) -> void:
 		return
 	_prompt_btn.visible = not is_open and not bool(_player.get("frozen")) and near()
 	var pend := Homestead.pending()
-	_prompt_btn.text = "쉼터 (J)" + (" ●%d냥" % pend if pend >= 100 else "")
+	_prompt_btn.text = "쉼터 (T)" + (" ●%d냥" % pend if pend >= 100 else "")
 	if is_open:
 		_refresh_t -= delta
 		if _refresh_t <= 0.0:
@@ -262,7 +262,7 @@ func _build_screen() -> void:
 	_body.add_theme_constant_override("separation", 5)
 	scroll.add_child(_body)
 	var close := Button.new()
-	close.text = "닫기 (J)"
+	close.text = "닫기 (T)"
 	close.pressed.connect(close_screen)
 	box.add_child(close)
 

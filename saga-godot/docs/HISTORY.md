@@ -9734,3 +9734,7 @@ PROJECT_STATE.md` 참고. 요약:
 - 새 `saga_core/world/autosave_timer.gd`(단순판): 60초마다 + 창 닫기·앱 멈춤(폰 홈 버튼)·초점 잃음 때 저장하고 "💾 자동 저장" 표시. `AutosaveTimer.attach(부모, 저장 Callable, 안전 Callable)`. 헤드리스·`--script`·SAGA_NO_AUTOSAVE·점검 노드가 있으면 꺼짐. forest_village·story_town·story_field·realm_city 가 한 줄로 붙임(의숲·스토리는 플레이어가 있을 때, 국지는 시나리오를 고른 뒤 — `scenario_ready`). 사가블로는 방 클리어·피격 때 이미 저장한다.
 - 창 모드 확인(스크래치 auto4.gd, 진짜 세이브는 시험 뒤 지움): 의숲·신야·TestField 저장 성공·파일 생김, 국지는 시나리오 선택 전이라 저장 안 함(의도). REGRESS OK.
 - GO 는 변화를 보는 world/autosave.gd 를 그대로 쓴다.
+
+## 쉼터 마당 키 J → T (2026-09-30, 충돌 정정)
+
+- 쉼터 마당을 J 로 열게 했는데 J 는 GO 의 기본 공격(combat_quick) 별칭이었다 — 마당 둘레 12m 에서 공격하면 창이 열렸다. project.godot 입력 지도를 훑어 GO 에서 안 쓰는 T 로 옮김(I·N 은 GO 에서 안 씀 확인 — 73·78 은 STORY/DUNGEON 액션뿐). 새 키를 쓰기 전엔 project.godot 의 physical_keycode 를 먼저 볼 것.
