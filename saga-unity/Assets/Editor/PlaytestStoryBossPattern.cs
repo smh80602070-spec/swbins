@@ -3,6 +3,7 @@ using UnityEngine;
 using Saga.Story.Data;
 using Saga.Story.Player;
 using Saga.Story.World;
+using Saga.Core;
 
 namespace Saga.EditorTools
 {

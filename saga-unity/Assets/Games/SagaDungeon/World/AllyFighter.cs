@@ -2,6 +2,7 @@ using UnityEngine;
 using Saga.Dungeon.Cinematics;
 using Saga.Dungeon.Data;
 using Saga.Dungeon.UI;
+using Saga.Core;
 
 namespace Saga.Dungeon.World
 {

@@ -1,16 +1,13 @@
 using UnityEngine;
 
-namespace Saga.Dungeon.World
+namespace Saga.Core
 {
     /// <summary>
-    /// PLAN.md(saga-dungeon 웹판) 38장 "시각 효과" — "damage popup"만 이
-    /// 슬라이스에서 가져왔다(slash trail·hit spark·ground effect·skill
-    /// particles는 셰이더·파티클 에셋이 새로 필요해 범위 밖). Canvas/UI
-    /// 대신 `TMPro.TextMeshPro`(월드 공간, 카메라를 바라보게 매 프레임 회전)로
-    /// 가장 가볍게 만들었다 — 히트마다 하나씩 생겼다 0.6초 뒤 사라지는
-    /// 짧은 수명이라 풀링 없이 Destroy해도 모바일 성능에 부담이 적다고
-    /// 판단(PLAN.md 38장 "quality scaling" 요구는 이 정도 수명·개수에선
-    /// 아직 필요 없음 — 나중에 팝업이 많아지면 재검토).
+    /// PLAN.md 101-2 STORY "5-7 손맛 표준"(2026-09-17) — DUNGEON
+    /// `World/DamagePopup.cs`와 완전히 같은 로직(SagaStory.asmdef 자체가
+    /// 없어 타입을 직접 못 쓴다 — 루트 CLAUDE.md "다섯 판은 다섯 벌 복사"
+    /// 원칙). "heavy"(강공격) 대신 이 판의 대응 개념인 크리티컬(crit)로
+    /// 색을 가른다.
     /// </summary>
     public class DamagePopup : MonoBehaviour
     {
@@ -18,19 +15,28 @@ namespace Saga.Dungeon.World
         private const float LifeSec = 0.6f;
 
         private static readonly Color NormalColor = Color.white;
-        private static readonly Color HeavyColor = new Color(1f, 0.55f, 0.1f); // 강공격 버튼과 같은 주황
+        private static readonly Color CritColor = new Color(1f, 0.55f, 0.1f);
 
         private float _t;
         private TMPro.TextMeshPro _mesh;
         private Camera _cam;
 
-        public static void Spawn(Vector3 worldPos, float amount, bool heavy)
+        public static void Spawn(Vector3 worldPos, float amount, bool crit)
         {
             var go = new GameObject("DamagePopup");
             go.transform.position = worldPos;
 
-            var mesh = Saga.Core.SagaWorldText.Add(go, Mathf.RoundToInt(amount).ToString(), 48f * (heavy ? 0.32f : 0.22f), heavy ? HeavyColor : NormalColor);
+            var mesh = Saga.Core.SagaWorldText.Add(go, Mathf.RoundToInt(amount).ToString(), 48f * (crit ? 0.32f : 0.22f), crit ? CritColor : NormalColor);
 
+            go.AddComponent<DamagePopup>();
+        }
+
+        /// <summary>PLAN.md 109-11-1 — 플레이어가 맞은 피해(빛깔을 따로).</summary>
+        public static void Spawn(Vector3 worldPos, float amount, Color color)
+        {
+            var go = new GameObject("DamagePopup");
+            go.transform.position = worldPos;
+            Saga.Core.SagaWorldText.Add(go, Mathf.RoundToInt(amount).ToString(), 48f * 0.26f, color);
             go.AddComponent<DamagePopup>();
         }
 
