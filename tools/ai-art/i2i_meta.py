@@ -3,14 +3,15 @@ import json
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-HERO = os.path.join(HERE, '..', 'char-forge', '_out', 'hero')
+HEROES = [('hero', os.path.join(HERE, '..', 'char-forge', '_out', 'hero')), ('realm', os.path.join(HERE, '..', 'char-forge', '_out', 'realm'))]
 
 
 def base_meta(init_image, denoise):
     name = os.path.splitext(os.path.basename(init_image))[0]      # busts/hero_<id>.png -> hero_<id>
-    m = {'mode': 'img2img', 'init_image': f'tools/ai-art/_out/busts/{name}.png', 'denoise': float(denoise),
-         'base_body': f'tools/char-forge/_out/hero/{name}.glb'}
-    p = os.path.join(HERO, name + '.license.json')
+    sub, d = next(((s, h) for s, h in HEROES if os.path.exists(os.path.join(h, name + '.glb'))), HEROES[0])
+    m = {'mode': 'img2img', 'init_image': f'tools/ai-art/_out/busts{"_realm" if sub == "realm" else ""}/{name}.png', 'denoise': float(denoise),
+         'base_body': f'tools/char-forge/_out/{sub}/{name}.glb'}
+    p = os.path.join(d, name + '.license.json')
     if os.path.exists(p):
         b = json.load(open(p, encoding='utf-8'))
         m['base_license'] = b.get('license', '')

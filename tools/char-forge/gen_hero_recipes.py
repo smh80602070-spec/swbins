@@ -519,8 +519,8 @@ def shape_diff(a, b):
     return sum(x != y for x, y in zip(a, b))
 
 
-def assign(heroes):
-    chosen, used_o, used_h, used_k, used_b = [], {}, {}, {}, {}
+def assign(heroes, chosen0=()):      # chosen0 = 이미 정해진 다른 명단의 축(사가국지 장수가 도감 105 와도 둘 이상 달라지게)
+    chosen, used_o, used_h, used_k, used_b = list(chosen0), {}, {}, {}, {}
     for h in heroes:
         role = ROLE[h['id']]
         outs, heads, ks, bs, _age, _arms = ROLES[role]
@@ -531,14 +531,31 @@ def assign(heroes):
         if h['might'] >= 92 and role not in ('king', 'sultan', 'khan'):
             bs = [2, 3] + [b for b in bs if b not in (2, 3)]
         best = None
-        for (io, o), (ih, hd), (ik, k), (ib, b) in itertools.product(enumerate(outs), enumerate(heads), enumerate(ks), enumerate(bs)):
-            ax = (k, b, hd, o)
-            if any(shape_diff(ax, c) < 2 for c in chosen):
-                continue
-            cost = io * 3 + ih * 2 + ik * 1.2 + ib * 1.5 + used_o.get(o, 0) / 5 + used_h.get(hd, 0) / 5 \
-                + used_k.get(k, 0) / 25 + used_b.get(b, 0) / 25 + ((fnv(h['id'] + o + hd) % 97) / 1000)
-            if best is None or cost < best[0]:
-                best = (cost, ax)
+        # 선호로 조합이 안 나오면(사가국지 194 를 도감 105 옆에 놓을 때) 키·체격 → 머리 → 옷 순으로 칸을 넓힌다. 도감 105 단독은 첫 단계에서 끝난다.
+        ALLH = [x for x in dict.fromkeys(y for r in ROLES.values() for y in r[1]) if x not in ('crown', 'crown_long', 'turban', 'furhat', 'hood', 'afro01', 'bald')]
+        FEM_ONLY = ('dress', 'court', 'skirt', 'dancer', 'royal_f')
+        ALLO = [x for x in dict.fromkeys(y for r in ROLES.values() for y in r[0])
+                if x not in ('royal', 'royal_f', 'ninja', 'monk', 'suit', 'worksuit', 'casualsuit', 'uniform') and ((x in FEM_ONLY) == bool(h.get('female')))]
+        ALLH2 = [x for x in dict.fromkeys(y for r in ROLES.values() for y in r[1]) if x not in ('crown_long',) and (h.get('female') or x != 'crown_long')]
+        for stage in range(5):
+            if stage >= 1:
+                ks = ks + [k for k in range(5) if k not in ks]
+                bs = bs + [b for b in range(4) if b not in bs]
+            if stage >= 2:
+                heads = heads + [x for x in ALLH if x not in heads]
+            if stage >= 3:
+                outs = outs + [x for x in ALLO if x not in outs]
+            if stage >= 4:
+                heads = heads + [x for x in ALLH2 if x not in heads and (h['era'] == 'World' or x != 'turban')]
+            for (io, o), (ih, hd), (ik, k), (ib, b) in itertools.product(enumerate(outs), enumerate(heads), enumerate(ks), enumerate(bs)):
+                ax = (k, b, hd, o)
+                if any(shape_diff(ax, c) < 2 for c in chosen):
+                    continue
+                cost = io * 3 + ih * 2 + ik * 1.2 + ib * 1.5 + used_o.get(o, 0) / 5 + used_h.get(hd, 0) / 5                     + used_k.get(k, 0) / 25 + used_b.get(b, 0) / 25 + ((fnv(h['id'] + o + hd) % 97) / 1000)
+                if best is None or cost < best[0]:
+                    best = (cost, ax)
+            if best is not None:
+                break
         if best is None:
             sys.exit(f"{h['id']}: 네 축 중 둘 이상 다른 조합이 없다 — 역할 {role} 선호를 늘릴 것")
         ax = best[1]
@@ -578,7 +595,7 @@ def make(h):
     else:
         mh = []
     hair, hparts = head_parts(h['axes']['head'], c3, mt, gold, fur)
-    reg, specs = h['id'][:2], []
+    reg, specs = h.get('reg', h['id'][:2]), []      # 사가국지 장수(gen_realm_recipes.py)는 id 접두가 세력이라 reg 를 따로 준다
     ro = real_outfit(reg, role, h['axes']['outfit'], female, c1, c2, c3, hs)
     if ro:                     # 진짜 옷이 있는 틀 — 껍데기 옷을 빼고 옷 메시로
         parts, mh = [], list(ro[0])
@@ -590,8 +607,8 @@ def make(h):
         specs += rh[2]
     r = {
         'id': 'hero_' + h['id'],
-        '_note': f"단계 4 도감 인물 몸 — saga-unity GO 도감 id {h['id']}(가명 {h['name']}) 자리 후보. 역할 {role}·{h['faction']}·★{h['rarity']}. "
-                 f"gen_hero_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다). 게임 몸 교체는 사용자 판정 뒤.",
+        '_note': h.get('note') or (f"단계 4 도감 인물 몸 — saga-unity GO 도감 id {h['id']}(가명 {h['name']}) 자리 후보. 역할 {role}·{h['faction']}·★{h['rarity']}. "
+                                   f"gen_hero_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다). 게임 몸 교체는 사용자 판정 뒤."),
         'axes': h['axes'],
         'height_target_m': HEIGHT_M[female][h['axes']['height']],
         'macro': {'gender': 0.0 if female else 1.0, 'age': age, 'muscle': muscle, 'weight': weight, 'height': 0.5,
