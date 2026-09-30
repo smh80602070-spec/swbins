@@ -39,6 +39,7 @@ const SOURCES := {
 	"domain": [[0.6, "e_mid"]],
 	"weekly": [[1.0, "e_rare"]],
 	"bloom": [[0.5, "e_mid"]],
+	"weekly_goal": [[1.0, "e_rare"]],
 }
 
 

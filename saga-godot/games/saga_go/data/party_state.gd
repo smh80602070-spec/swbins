@@ -117,6 +117,9 @@ var tips: Array = []
 ## 2026-09-30 사냥 기록 — {"kills": {종: 마릿수}, "claimed": {종: 받은 단계 수}}. 필드만 더해 SAVE_VERSION 그대로.
 ## world/hunt_log.gd 가 읽고 쓴다(규칙은 data/hunt.gd).
 var hunt: Dictionary = {}
+## 2026-09-30 주간 도전 — {"week", "base": {셈: 주 시작 값}, "claimed": [도전 id], "bonus": 완주 보상 받음}. 필드만 더해 SAVE_VERSION 그대로.
+## world/weekly_goals.gd 가 읽고 쓴다(규칙은 data/weekly_goals.gd).
+var weekly_goals: Dictionary = {}
 signal world_changed()
 
 var _session_start_exp: float = 0.0

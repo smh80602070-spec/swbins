@@ -216,6 +216,11 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_archery.gd").new())
 
 	## PLAN 106장 ㊹ — 탐사 파견(마을 역참 곁 게시판).
+	var weekly_goals := preload("res://games/saga_go/world/weekly_goals.gd").new()
+	weekly_goals.name = "WeeklyGoals"
+	add_child(weekly_goals)
+	if OS.get_environment("SAGA_WEEKLYGOAL_PROBE") != "":
+		add_child(load("res://tools/probe_weekly_goals.gd").new())
 	var hunt_log := preload("res://games/saga_go/world/hunt_log.gd").new()
 	hunt_log.name = "HuntLog"
 	add_child(hunt_log)
