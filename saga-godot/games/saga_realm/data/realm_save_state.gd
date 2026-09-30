@@ -1,4 +1,4 @@
-extends Node
+extends SagaSaveBase
 
 ## VERTICAL_SLICE_REALM.md 완료 조건 — GO/DUNGEON/FOREST/STORY save_state
 ## 계열과 같은 정신(로컬 파일 하나, 버전 필드, 게임마다 완전히 분리된
@@ -55,6 +55,16 @@ const LordPortrait := preload("res://games/saga_realm/ui/lord_portrait.gd")
 const SAVE_PATH := "user://save_realm.json"
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
 const SAVE_VERSION := 16  # 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
+
+
+func save_version() -> int:
+	return SAVE_VERSION
+
+
+func save_path() -> String:
+	return SAVE_PATH
+
+
 const RNG_SEED := 20260824  # 루트 CLAUDE.md 진단 시드와 같은 값(우연 아님, 관례를 따름)
 
 ## **2026-09-14 추가 — 시나리오(RealmCities.SCENARIO_CAO_CITIES 키).**
@@ -2204,23 +2214,6 @@ func try_load() -> bool:
 	_succession_shock_until = loaded_shock if typeof(loaded_shock) == TYPE_DICTIONARY else {}
 	_done_this_month.clear()
 	return true
-
-
-## GO의 save_state.gd::_migrate()와 같은 계약. 지금까지 SAVE_VERSION을
-## 올린 1~13단계는 필드 추가뿐이고 try_load()가 전부 .get(key, 기본값)으로
-## 읽으므로, 여기 단계들은 실제 변환 없이 버전 숫자만 올려 통과시킨다
-## (필드 이름을 바꾸거나 옮기는 변경이 생기면 그 단계에 변환을 추가한다).
-func _migrate(data: Dictionary) -> Variant:
-	var version := int(data.get("version", 0))
-	while version < SAVE_VERSION:
-		var stepped: Variant = _migrate_step(version, data)
-		if stepped == null:
-			return null
-		data = stepped
-		version = int(data.get("version", version + 1))
-	if version > SAVE_VERSION:
-		return null
-	return data
 
 
 func _migrate_step(from_version: int, data: Dictionary) -> Variant:
