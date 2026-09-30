@@ -17,7 +17,7 @@ extends Node3D
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const ForestBiome := preload("res://games/saga_forest/data/forest_biome.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
-const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
+const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 
 const CURVE_AMOUNT := 0.004

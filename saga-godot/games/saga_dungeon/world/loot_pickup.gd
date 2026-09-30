@@ -42,7 +42,7 @@ extends RefCounted
 ## 층에서도 훨씬 센 물건이 나온다.
 
 const Toast := preload("res://saga_core/ui/toast.gd")
-const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
+const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const OUTLINE_SHADER := preload("res://saga_core/shaders/cel_outline.gdshader")
 const LEGENDARY_TIER_KEY := 4 # DungeonItems.TIERS[4] == "전설"
 

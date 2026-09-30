@@ -15,7 +15,7 @@ extends Node3D
 ## (실측 4.0x4.05x4.0, 바닥 중앙 피벗 — 측정 스크립트로 확인)로 잇는다.
 ## 방 사이를 오갈 때 씬 전환이 전혀 없다 — 문을 지나면 그냥 다음 방이다.
 
-const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
+const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const DungeonEnemy := preload("res://games/saga_dungeon/world/dungeon_enemy.gd")
 const DungeonHeroEncounter := preload("res://games/saga_dungeon/world/dungeon_hero_encounter.gd")
 const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")

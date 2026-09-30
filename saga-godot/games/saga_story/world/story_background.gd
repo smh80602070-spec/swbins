@@ -19,7 +19,7 @@ extends Node3D
 ## (44m)만큼만 깔려 뒷부분이 빈 채로 남는다.
 @export var map_path: String = "res://games/saga_story/data/field_map.gd"
 
-const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
+const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 
 const TREE_GLB := "res://assets/vegetation/tree_oak.glb"
 const HILL_GLB := "res://assets/rocks/rock_largeA.glb"

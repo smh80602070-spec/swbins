@@ -13,7 +13,7 @@ extends Node3D
 
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const ForestBiome := preload("res://games/saga_forest/data/forest_biome.gd")
-const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
+const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 
 ## 2026-09-20 — GO와 같은 이유(vegetation_builder.gd 해당 날짜 주석)로

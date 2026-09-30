@@ -15,7 +15,7 @@ extends Node3D
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const KeepSpots := preload("res://games/saga_go/world/keep_spots.gd")
-const GLBUtils := preload("res://games/saga_go/world/glb_utils.gd")
+const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 
 ## 2026-09-28 "그래픽 먼저" — 3 → 10. 숲 칸(48m)에 세 그루면 원신 숲이 아니라 들판에 나무 몇 그루였다(창 모드 촬영).
 ## 크기도 0.7~1.3 → 0.8~1.8배(약 4~10m, TREE_SCALE_MIN·SPAN). 상자·별조각·채집·이야기 칸 TREE_KEEP_M 안엔 안 심는다(keep_spots.gd).
