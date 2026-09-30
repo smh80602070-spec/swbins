@@ -159,6 +159,9 @@ static func walk(meters: float) -> Array:
 			PartyState.add_exp(DUP_EXP)
 		out.append({"tier": String(e.tier), "pet": pet, "dup": dup})
 	if String(s.buddy) != "":
+		if not s.has("friend"):
+			s["friend"] = {}
+		(s.friend as Dictionary)[String(s.buddy)] = float((s.friend as Dictionary).get(String(s.buddy), 0.0)) + meters
 		s.buddy_m = float(s.buddy_m) + meters
 		while float(s.buddy_m) >= BUDDY_M:
 			s.buddy_m = float(s.buddy_m) - BUDDY_M
@@ -172,7 +175,17 @@ static func set_buddy(pet_id: String) -> String:
 	var s := state()
 	s.buddy = pet_id
 	s.buddy_m = 0.0
+	PartyState.refresh_power()
 	return ""
+
+
+## 동행했을 때 받는 것 — "공격력 최대 +14%" (친밀 10 에서. 갈래 표는 PartyState.BUDDY_STAT).
+static func bonus_label(pet_id: String) -> String:
+	var p: Variant = Pets.find(pet_id)
+	if p == null:
+		return ""
+	var what: String = {"atk": "공격력", "exp": "경험치", "def": "방어력"}.get(String(PartyState.BUDDY_STAT.get(String(p.bonus.stat), "")), "")
+	return "%s 최대 +%d%%" % [what, int(p.bonus.value)]
 
 
 static func pet_name(id: String) -> String:

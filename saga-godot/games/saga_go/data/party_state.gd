@@ -257,7 +257,7 @@ func recruit(id: String) -> void:
 func add_exp(amount: float) -> void:
 	if amount <= 0.0:
 		return
-	exp += amount * Weather.exp_bonus_mul() * (1.0 + _support_bonus())
+	exp += amount * Weather.exp_bonus_mul() * (1.0 + _support_bonus()) * (1.0 + buddy_bonus("exp"))
 	var old_level := level
 	_recompute()
 	power_changed.emit(atk, def)
@@ -335,10 +335,36 @@ func _perk_mul(axis: String) -> float:
 	return mul
 
 func atk_mul() -> float:
-	return _perk_mul("attack")
+	return _perk_mul("attack") * (1.0 + buddy_bonus("atk"))
 
 func def_mul() -> float:
-	return _perk_mul("defense")
+	return _perk_mul("defense") * (1.0 + buddy_bonus("def"))
+
+## 2026-09-30 동행 신수 친밀 — 함께 걸은 거리(eggs.friend[신수])가 500m 마다 친밀 1(최대 10). 신수 도감 bonus.stat 을
+## 힘(might)→공격력 · 지혜(wisdom)→경험치 · 통솔(command)→방어력 으로 옮겨, 친밀 10 에서 도감 value % 가 붙는다(친밀 × value/10 %).
+const BUDDY_LEVEL_M := 500.0
+const BUDDY_STAT := {"might": "atk", "wisdom": "exp", "command": "def"}
+
+func buddy_level() -> int:
+	var id := String(eggs.get("buddy", ""))
+	if id == "":
+		return 0
+	return mini(10, int(float((eggs.get("friend", {}) as Dictionary).get(id, 0.0)) / BUDDY_LEVEL_M))
+
+## kind: "atk" | "exp" | "def" — 동행 신수가 그 갈래를 주면 비율(0.05 = +5%), 아니면 0.
+func buddy_bonus(kind: String) -> float:
+	var id := String(eggs.get("buddy", ""))
+	if id == "":
+		return 0.0
+	var pet: Variant = preload("res://saga_core/data/pets.gd").find(id)
+	if pet == null or String(BUDDY_STAT.get(String(pet.bonus.stat), "")) != kind:
+		return 0.0
+	return float(pet.bonus.value) * float(buddy_level()) / 10.0 / 100.0
+
+## 동행·친밀이 바뀌면 공격·방어를 다시 계산해 알린다.
+func refresh_power() -> void:
+	_recompute()
+	power_changed.emit(atk, def)
 
 func _recompute() -> void:
 	level = int(exp / EXP_PER_LEVEL)

@@ -8,6 +8,7 @@ extends Node
 ## ⑤ 걸으면 차서 부화(299m 는 아직, 1m 더 = 부화) · 새 신수는 도감 도장, 다 가지면 냥·경험 ⑥ 안 가진 신수 우선
 ## ⑦ award(의뢰 = 작은 알 확정 · 보스 = 빛나는 알) · 가득 차면 냥 ⑧ 세이브 JSON 을 거쳐도 그대로
 ## ⑨ 실제 움직임만 센다(1틱 3m 넘는 순간이동은 안 센다) ⑩ 동행: 모르는 신수 거절 · 몸이 붙어 따라옴 · 400m 마다 냥
+## ⑫ 친밀: 500m 마다 +1(최대 10) · 힘=공격력/지혜=경험치/통솔=방어력 배율이 친밀×value/10 %
 ## ⑪ 화면: 열면 얼림·닫으면 풀림. 도감·가방·경험·알 상태·지점은 끝에 되돌린다. 저장은 안 한다.
 
 const Eggs := preload("res://games/saga_go/data/eggs.gd")
@@ -190,6 +191,38 @@ func _run() -> void:
 	await _frames(2)
 	_p.global_position = _saved.pos
 	await _frames(2)
+
+	# ⑫ 친밀 → 힘 = 공격력 · 지혜 = 경험치 · 통솔 = 방어력 (500m 마다 친밀 +1, 최대 10)
+	PartyState.eggs = {}
+	CodexState.discover("pet", "pt_baekho")   # might 13
+	CodexState.discover("pet", "pt_gumiho")   # wisdom 9
+	CodexState.discover("pet", "pt_bulgasari") # command 9
+	var atk0 := PartyState.atk_mul()
+	var def0 := PartyState.def_mul()
+	Eggs.set_buddy("pt_baekho")
+	var lv_a := PartyState.buddy_level()
+	Eggs.walk(499.0)
+	var lv_b := PartyState.buddy_level()
+	Eggs.walk(1.0)
+	var lv_c := PartyState.buddy_level()
+	Eggs.walk(9000.0)
+	var lv_d := PartyState.buddy_level()
+	var atk_b := PartyState.atk_mul() / atk0
+	PartyState.refresh_power()
+	var exp_none := PartyState.buddy_bonus("exp")
+	Eggs.set_buddy("pt_gumiho")
+	Eggs.walk(9000.0)
+	var e0 := PartyState.exp
+	PartyState.add_exp(100.0)
+	var gained := PartyState.exp - e0
+	var base_gain := 100.0 * Weather.exp_bonus_mul() * (1.0 + PartyState._support_bonus())
+	Eggs.set_buddy("pt_bulgasari")
+	Eggs.walk(9000.0)
+	var def_b := PartyState.def_mul() / def0
+	Eggs.set_buddy("")
+	_check("friend", lv_a == 0 and lv_b == 0 and lv_c == 1 and lv_d == 10 and absf(atk_b - 1.13) < 0.001 and exp_none == 0.0
+		and absf(gained / base_gain - 1.09) < 0.001 and absf(def_b - 1.09) < 0.001 and PartyState.atk_mul() / atk0 < 1.0001 and Eggs.bonus_label("pt_baekho").contains("공격력"),
+		"lv=%d %d %d %d atk×%.3f exp×%.3f def×%.3f label=%s" % [lv_a, lv_b, lv_c, lv_d, atk_b, gained / base_gain, def_b, Eggs.bonus_label("pt_gumiho")])
 
 	# ⑪ 화면
 	var pre := "frozen=%s modal=%d duel=%d" % [_p.get("frozen"), get_tree().get_nodes_in_group("ui_modal").size(), get_tree().get_nodes_in_group("duel_active").size()]

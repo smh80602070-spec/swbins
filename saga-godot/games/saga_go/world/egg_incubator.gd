@@ -95,7 +95,15 @@ func _physics_process(delta: float) -> void:
 
 
 func _walk(meters: float) -> void:
+	var lv0 := PartyState.buddy_level()
 	var out := Eggs.walk(meters)
+	var lv1 := PartyState.buddy_level()
+	if lv1 != lv0:
+		PartyState.refresh_power()
+		Toast.show(self, "🐾 %s 와(과) 친밀 Lv %d/10 — %s (지금 +%.1f%%)" % [Eggs.pet_name(String(Eggs.state().buddy)), lv1, Eggs.bonus_label(String(Eggs.state().buddy)), 100.0 * maxf(PartyState.buddy_bonus("atk"), maxf(PartyState.buddy_bonus("exp"), PartyState.buddy_bonus("def")))], 3.5)
+		changed.emit()
+		if is_open:
+			_refresh()
 	for h in out:
 		announced_hatch += 1
 		var pname := Eggs.pet_name(String(h.pet))
@@ -310,7 +318,11 @@ func _refresh() -> void:
 		var bi := i
 		b2.pressed.connect(func() -> void: _do(Eggs.start(bi, Adventure.ar())))
 		_body.add_child(b2)
-	_label("동행 신수 — 함께 %dm 걸을 때마다 냥 %d" % [int(Eggs.BUDDY_M), Eggs.BUDDY_MORA], 17, Color(1.0, 0.9, 0.6))
+	_label("동행 신수 — 함께 %dm 걸을 때마다 냥 %d · %dm 마다 친밀 +1(최대 10)" % [int(Eggs.BUDDY_M), Eggs.BUDDY_MORA, int(PartyState.BUDDY_LEVEL_M)], 17, Color(1.0, 0.9, 0.6))
+	var cur := String(s.buddy)
+	if cur != "":
+		var fm := float((s.get("friend", {}) as Dictionary).get(cur, 0.0))
+		_label("지금 %s — 친밀 Lv %d/10 (%dm) · %s" % [Eggs.pet_name(cur), PartyState.buddy_level(), int(fm), Eggs.bonus_label(cur)], 15, Color(0.7, 0.95, 0.75))
 	var grid := GridContainer.new()
 	grid.columns = 4
 	_body.add_child(grid)
@@ -322,7 +334,8 @@ func _refresh() -> void:
 		if not CodexState.has("pet", String(p.id)):
 			continue
 		var pb := Button.new()
-		pb.text = "%s %s%s" % [p.emoji, p.name, " ✔" if String(s.buddy) == String(p.id) else ""]
+		pb.text = "%s %s%s
+%s" % [p.emoji, p.name, " ✔" if String(s.buddy) == String(p.id) else "", Eggs.bonus_label(String(p.id))]
 		var pid: String = p.id
 		pb.pressed.connect(func() -> void: _do(Eggs.set_buddy(pid)))
 		grid.add_child(pb)
