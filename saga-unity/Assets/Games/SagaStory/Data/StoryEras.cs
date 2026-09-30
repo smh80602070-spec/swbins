@@ -138,6 +138,58 @@ namespace Saga.Story.Data
                 } },
         };
 
+        // ---- 곁가지 side_guests(웹 사가스토리 data-side.js NPC_TALK story) — 들판 시대 손님의 사연 ----
+        /// <summary>손님이 X 로 가까워질 때마다 사연 네 토막을 차례로, 끝 토막에 경험치 한 번(웹 금 4000 · 공적 20 → 이 판엔 돈이 없어 경험치). 다 들었으면 예전 대사로.</summary>
+        public const float StoryExp = 400f;
+        private static readonly System.Collections.Generic.Dictionary<string, string[]> StoryKo = new System.Collections.Generic.Dictionary<string, string[]>
+        {
+            ["photographer"] = new[] {
+                "제 첫 사진은 흐릿한 새벽 풍경이었어요. 잘 안 찍혔다고 버리려 했죠.",
+                "옆에서 누가 \"그 흐릿함이 좋다\"고 하더라고요. 그때 처음 사진이 잘 찍는 게 아니란 걸 알았어요.",
+                "여기 오니 흐릿한 게 더 많아요. 안개, 연기, 옛 성벽… 다 제 취향이에요.",
+                "어제 기와 위 아침 안개를 찍었는데 그 안에 낯선 그림자들이 겹쳐 찍혔어요. 누구였을까요?",
+            },
+            ["chrononaut"] = new[] {
+                "제 귀환 일정은 원래 사흘이었어요. 이 시대를 관찰하고 돌아가는 일이죠.",
+                "그런데 관찰이란 게 이상해요. 제가 보면 보는 대로 이 마을이 조금씩 바뀌더라고요.",
+                "그래서 일정을 미뤘어요. 바뀌는 걸 끝까지 보고 싶어서요.",
+                "어제 촌로께서 \"자네가 온 뒤로 마을이 밝아졌네\" 하셨어요. 제 일정표에 없는 말이라 한참 웃었어요.",
+            },
+        };
+        private static readonly System.Collections.Generic.Dictionary<string, int> StoryHeard = new System.Collections.Generic.Dictionary<string, int>();
+
+        public static bool HasStory(string folkId) => StoryKo.ContainsKey(folkId);
+        public static int StoryLength(string folkId) => StoryKo.TryGetValue(folkId, out var a) ? a.Length : 0;
+        public static int StoryHeardCount(string folkId) => StoryHeard.TryGetValue(folkId, out var n) ? n : 0;
+        public static string StoryLine(string folkId, int i) => StoryLocalization.T($"era_folk.{folkId}.story.{i}", StoryKo[folkId][i]);
+
+        /// <summary>다음 사연 토막을 돌려주고 차례를 넘긴다. 사연이 없거나 다 들었으면 null. 마지막 토막이면 <paramref name="exp"/> 에 경험치.</summary>
+        public static string NextStory(string folkId, out float exp)
+        {
+            exp = 0f;
+            if (!StoryKo.ContainsKey(folkId)) return null;
+            int n = StoryHeardCount(folkId);
+            if (n >= StoryKo[folkId].Length) return null;
+            StoryHeard[folkId] = n + 1;
+            if (n + 1 == StoryKo[folkId].Length) exp = StoryExp;
+            return StoryLine(folkId, n) + $" ({StoryLocalization.T("era_folk.story_of", "사연")} {n + 1}/{StoryKo[folkId].Length})";
+        }
+
+        public static void SnapshotStories(out string[] ids, out int[] counts)
+        {
+            var i = new System.Collections.Generic.List<string>(); var c = new System.Collections.Generic.List<int>();
+            foreach (var kv in StoryHeard) { i.Add(kv.Key); c.Add(kv.Value); }
+            ids = i.ToArray(); counts = c.ToArray();
+        }
+
+        public static void RestoreStories(string[] ids, int[] counts)
+        {
+            StoryHeard.Clear();
+            if (ids == null || counts == null) return;
+            for (int i = 0; i < ids.Length && i < counts.Length; i++)
+                if (StoryKo.ContainsKey(ids[i])) StoryHeard[ids[i]] = System.Math.Min(counts[i], StoryKo[ids[i]].Length);
+        }
+
         public static string FolkName(Folk f) => StoryLocalization.T(f.NameKey, f.NameKo);
 
         public static string FolkLine(Folk f, int i)

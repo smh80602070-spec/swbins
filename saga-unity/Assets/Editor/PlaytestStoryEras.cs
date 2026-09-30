@@ -32,12 +32,19 @@ namespace Saga.EditorTools
             float mp0 = StoryCombat.Mp;
             var before = new HashSet<GameObject>(UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects());
             string m = "";
+            StoryEras.SnapshotStories(out var storyIds0, out var storyCounts0);
             try
             {
+                m += CheckFolkStory(); // 사연은 처음 상태에서 — 뒤 대사 진단은 사연을 다 들은 것으로 시작한다
+                var ids = new string[StoryEras.FolkList.Length];
+                var counts = new int[ids.Length];
+                for (int i = 0; i < ids.Length; i++) { ids[i] = StoryEras.FolkList[i].Id; counts[i] = 99; }
+                StoryEras.RestoreStories(ids, counts);
                 m += CheckTable() + CheckField(playerGo.transform) + CheckShares() + CheckLabyrinth() + CheckFolk();
             }
             finally
             {
+                StoryEras.RestoreStories(storyIds0, storyCounts0);
                 StoryLabyrinthState.ResetForTest();
                 StoryLabyrinthState.Restore(0, 0);
                 StoryEnemy.ResetAnnouncements();
@@ -54,6 +61,40 @@ namespace Saga.EditorTools
             }
             if (_ok) Debug.Log($"{T} OK - 표(몸 여덟·옛 몸과 안 겹침)·들판 넷(이름·몸·키)·두목 그대로·시간 틈 알림·비경 몫·단계별 실제 전투 방·정예 그대로·손님 둘(몸·자리·대사 돌림) |{m}");
             return _ok;
+        }
+
+        /// <summary>PLAN.md 109-16 곁가지 side_guests — 사연 넷 토막 차례로·끝 토막에 경험치 한 번·다 들으면 예전 대사·세이브 왕복.</summary>
+        private static string CheckFolkStory()
+        {
+            StoryEras.RestoreStories(null, null);
+            var folks = Object.FindObjectsByType<StoryEraFolk>(FindObjectsSortMode.None);
+            if (folks.Length != StoryEras.FolkList.Length) Fail($"들판 손님 {folks.Length}");
+            foreach (var f in folks)
+            {
+                var d = f.Data;
+                if (!StoryEras.HasStory(d.Id)) { Fail($"{d.Id} 사연 없음"); continue; }
+                int n = StoryEras.StoryLength(d.Id);
+                if (n != 4) Fail($"{d.Id} 사연 {n}토막");
+                float exp = StoryJobState.Exp; int lv = StoryJobState.Level;
+                for (int i = 0; i < n; i++)
+                {
+                    string line = f.Speak();
+                    if (!line.Contains(StoryEras.StoryLine(d.Id, i)) || !line.Contains($"{i + 1}/{n}")) Fail($"{d.Id} 사연 {i + 1}토막 {line}");
+                    bool gained = StoryJobState.Level != lv || StoryJobState.Exp > exp;
+                    if (i < n - 1 && gained) Fail($"{d.Id} 끝 토막 전에 경험치가 들어옴");
+                    if (i == n - 1 && !gained) Fail($"{d.Id} 끝 토막에 경험치가 없음");
+                }
+                float exp2 = StoryJobState.Exp; int lv2 = StoryJobState.Level;
+                string after = f.Speak();
+                if (after.Contains("/4") || StoryJobState.Level != lv2 || StoryJobState.Exp != exp2) Fail($"{d.Id} 사연 뒤엔 예전 대사여야(경험치 다시 없음) {after}");
+                f.ResetSaid();
+            }
+            string json = StorySaveState.ToJson();
+            if (!json.Contains("folkStoryIds")) Fail("세이브 필드");
+            StoryEras.RestoreStories(null, null);
+            StorySaveState.ApplyJson(json);
+            if (StoryEras.StoryHeardCount("photographer") != 4) Fail("사연 세이브 왕복");
+            return "손님 사연(둘·넷 토막 차례·끝 토막 경험치 한 번·다 들으면 예전 대사·세이브 왕복) · ";
         }
 
         private static string CheckTable()

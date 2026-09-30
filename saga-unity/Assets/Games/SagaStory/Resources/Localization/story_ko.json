@@ -487,6 +487,16 @@
     { "key": "sscen.reward.exp", "value": "경험치 {0}" },
     { "key": "sscen.reward.shard", "value": "기억 조각 {0}" },
     { "key": "sscen.reward.title", "value": "🏷️ 칭호 「{0}」" },
-    { "key": "sscen.title.nameless_job", "value": "이름 없는 {0}" }
+    { "key": "sscen.title.nameless_job", "value": "이름 없는 {0}" },
+    { "key": "era_folk.story_of", "value": "사연" },
+    { "key": "era_folk.story_reward", "value": "경험치 +{0}" },
+    { "key": "era_folk.photographer.story.0", "value": "제 첫 사진은 흐릿한 새벽 풍경이었어요. 잘 안 찍혔다고 버리려 했죠." },
+    { "key": "era_folk.photographer.story.1", "value": "옆에서 누가 \"그 흐릿함이 좋다\"고 하더라고요. 그때 처음 사진이 잘 찍는 게 아니란 걸 알았어요." },
+    { "key": "era_folk.photographer.story.2", "value": "여기 오니 흐릿한 게 더 많아요. 안개, 연기, 옛 성벽… 다 제 취향이에요." },
+    { "key": "era_folk.photographer.story.3", "value": "어제 기와 위 아침 안개를 찍었는데 그 안에 낯선 그림자들이 겹쳐 찍혔어요. 누구였을까요?" },
+    { "key": "era_folk.chrononaut.story.0", "value": "제 귀환 일정은 원래 사흘이었어요. 이 시대를 관찰하고 돌아가는 일이죠." },
+    { "key": "era_folk.chrononaut.story.1", "value": "그런데 관찰이란 게 이상해요. 제가 보면 보는 대로 이 마을이 조금씩 바뀌더라고요." },
+    { "key": "era_folk.chrononaut.story.2", "value": "그래서 일정을 미뤘어요. 바뀌는 걸 끝까지 보고 싶어서요." },
+    { "key": "era_folk.chrononaut.story.3", "value": "어제 촌로께서 \"자네가 온 뒤로 마을이 밝아졌네\" 하셨어요. 제 일정표에 없는 말이라 한참 웃었어요." }
   ]
 }

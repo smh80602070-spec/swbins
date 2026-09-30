@@ -10931,3 +10931,7 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - 웹 `town.js` ERA_FOLK story 셋(택배 기사·출장 회사원·시간 여행자)의 넷 토막씩을 이 트랙 손님(courier·salaryman·chrononaut)에게: `EraFolk.Speak` 가 사연이 남았으면 그 토막(끝에 금 5000), 다 들었으면 예전 대사. 탐사 대원은 사연 없음(웹도 셋뿐). 세이브 `folkStoryIds/Counts`(버전 그대로).
 - 함정: 사연 진단이 `EraFolk` 의 말한 수를 밀어 옛 대사 진단이 어긋남 → `ResetSaid()`. 옛 대사 진단은 사연을 다 들은 것으로 시작.
 - 안 넣은 곁가지: side_names(지워진 이름 비석 — 칸마다 빈 자리를 헤드리스로 못 믿음, 실기에서 자리 확인 뒤) · side_vow(이 트랙에 결사 없음).
+
+### 2026-09-30 — saga-unity STORY 곁가지 side_guests 들판 시대 손님 사연 (웹 사가스토리 곁가지)
+- 웹 NPC_TALK story 넷 중 이 트랙 손님 둘(사진 찍는 여행자·시간 여행자)의 넷 토막씩. `StoryEraFolk.Speak` 가 사연이 남았으면 그 토막(끝에 경험치 400), 다 들었으면 예전 대사. 세이브 `folkStoryIds/Counts`(버전 그대로). 진단 `PlaytestStoryEras.CheckFolkStory`(옛 대사 진단은 사연을 다 들은 것으로 시작). 스토리 진단 3연속 OK.
+- 안 넣음: side_mentor(스승 사연 — 갈래별 처치 수·사제 유대가 이 트랙에 없다) · 웹 택배 기사·탐사 대원 사연(이 트랙 손님이 아님).

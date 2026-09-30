@@ -24,6 +24,8 @@ namespace Saga.Story.World
         public int FolkIndex => folkIndex;
         public StoryEras.Folk Data => StoryEras.FolkList[folkIndex];
         public int SaidCount => _said;
+        /// <summary>진단 — 말한 수를 처음으로(사연 진단이 대사 차례를 밀어 놓은 걸 되돌린다).</summary>
+        public void ResetSaid() => _said = 0;
 
         public void Init(int index, GameObject model)
         {
@@ -58,6 +60,19 @@ namespace Saga.Story.World
         public string Speak()
         {
             var data = Data;
+            // PLAN.md 109-16 곁가지 side_guests — 사연이 남았으면 그 토막이 먼저(끝 토막에 경험치 한 번), 다 들었으면 예전 대사.
+            string story = StoryEras.NextStory(data.Id, out float exp);
+            if (story != null)
+            {
+                string storyText = $"{StoryEras.FolkName(data)} — {story}";
+                if (exp > 0f)
+                {
+                    StoryJobState.GainExp(exp);
+                    storyText += $" · {string.Format(StoryLocalization.T("era_folk.story_reward", "경험치 +{0}"), Mathf.RoundToInt(exp))}";
+                }
+                DialogueLabel.Instance?.Show(storyText, LineSec);
+                return storyText;
+            }
             string text = $"{StoryEras.FolkName(data)} — {StoryEras.FolkLine(data, _said)}";
             _said++;
             DialogueLabel.Instance?.Show(text, LineSec);

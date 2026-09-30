@@ -487,6 +487,16 @@
     { "key": "sscen.reward.exp", "value": "EXP {0}" },
     { "key": "sscen.reward.shard", "value": "Memory shards {0}" },
     { "key": "sscen.reward.title", "value": "🏷️ Title 「{0}」" },
-    { "key": "sscen.title.nameless_job", "value": "Nameless {0}" }
+    { "key": "sscen.title.nameless_job", "value": "Nameless {0}" },
+    { "key": "era_folk.story_of", "value": "story" },
+    { "key": "era_folk.story_reward", "value": "EXP +{0}" },
+    { "key": "era_folk.photographer.story.0", "value": "My first photo was a blurry dawn landscape. I almost threw it away for not turning out well." },
+    { "key": "era_folk.photographer.story.1", "value": "Someone next to me said \"I like that blur.\" That was when I first learned photography isn't about shooting well." },
+    { "key": "era_folk.photographer.story.2", "value": "Here there's even more blur. Fog, smoke, old walls... all to my taste." },
+    { "key": "era_folk.photographer.story.3", "value": "Yesterday I shot the morning fog over the tiles, and strange shadows overlapped inside it. Who could they have been?" },
+    { "key": "era_folk.chrononaut.story.0", "value": "My return schedule was originally three days. I was to observe this age and go back." },
+    { "key": "era_folk.chrononaut.story.1", "value": "But observing is strange. This village changes bit by bit just as I look at it." },
+    { "key": "era_folk.chrononaut.story.2", "value": "So I postponed the schedule. I want to see the changes through." },
+    { "key": "era_folk.chrononaut.story.3", "value": "Yesterday an elder said \"the village has brightened since you came.\" It wasn't in my schedule, so I laughed a long while." }
   ]
 }

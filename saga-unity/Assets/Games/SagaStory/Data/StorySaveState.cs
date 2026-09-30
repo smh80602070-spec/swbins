@@ -94,6 +94,8 @@ namespace Saga.Story.Data
             public string mountSel;
             // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 레벨·전직으로 지나온 장을 끝낸 것으로(RestoreLegacy).
             public string scenarioJson;
+            public string[] folkStoryIds; // 곁가지 — 들판 시대 손님 사연을 들은 토막 수(버전 그대로: 옛 세이브는 null → 처음부터)
+            public int[] folkStoryCounts;
         }
 
         public static bool Save()
@@ -141,6 +143,7 @@ namespace Saga.Story.Data
                 mountSel = StoryMounts.Snapshot(),
                 scenarioJson = StoryScenario.Snapshot(),
             };
+            StoryEras.SnapshotStories(out data.folkStoryIds, out data.folkStoryCounts);
             return JsonUtility.ToJson(data);
         }
 
@@ -185,6 +188,7 @@ namespace Saga.Story.Data
             StoryPartyState.Restore(data.partyActiveIndex);
             StorySkillState.Restore(data.skillKeys, data.skillLevels, data.skillPins);
             StoryMounts.Restore(data.mountSel);
+            StoryEras.RestoreStories(data.folkStoryIds, data.folkStoryCounts);
             if (string.IsNullOrEmpty(data.scenarioJson)) StoryScenario.RestoreLegacy(StoryJobState.Level, StoryJobState.HasJob);
             else StoryScenario.Restore(data.scenarioJson);
 

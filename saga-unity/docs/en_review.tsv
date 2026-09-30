@@ -5286,16 +5286,26 @@
 3	forest	visitor.sailor.line	배가 뒤집혀 나침반이 산산이… 숲 어디에 조각이 떨어졌을 텐데	My ship capsized and my compass shattered… the pieces must be somewhere in the woods		
 3	forest	visitor.traveler.line	삐빗. 2387년에서 왔습니다. 화석 둘과 꽃 하나가 있으면 귀환 부품을 만들 수 있습니다	Beep. I come from the year 2387. With two fossils and one flower I can build a return part		
 3	forest	visitor.wisp.line	히잉… 놀라서 몸이 다섯 조각으로 흩어졌어. 숲에서 좀 찾아 줘	Eek… I got startled and burst into five pieces. Please find them in the woods		
+3	story	era_folk.chrononaut.story.0	제 귀환 일정은 원래 사흘이었어요. 이 시대를 관찰하고 돌아가는 일이죠.	My return schedule was originally three days. I was to observe this age and go back.		
+3	story	era_folk.chrononaut.story.1	그런데 관찰이란 게 이상해요. 제가 보면 보는 대로 이 마을이 조금씩 바뀌더라고요.	But observing is strange. This village changes bit by bit just as I look at it.		
+3	story	era_folk.chrononaut.story.2	그래서 일정을 미뤘어요. 바뀌는 걸 끝까지 보고 싶어서요.	So I postponed the schedule. I want to see the changes through.		
+3	story	era_folk.chrononaut.story.3	어제 촌로께서 "자네가 온 뒤로 마을이 밝아졌네" 하셨어요. 제 일정표에 없는 말이라 한참 웃었어요.	Yesterday an elder said "the village has brightened since you came." It wasn't in my schedule, so I laughed a long while.		
 3	story	era_folk.photographer	사진 찍는 여행자	Traveling Photographer		
 3	story	era_folk.photographer.0	황건 난리 한복판이라니, 이건 꼭 찍어 가야 해요. 저 두목 쪽으로 좀 비켜 주실래요?	Right in the middle of the Yellow Turban uprising? I have to get a shot. Could you step toward that chief a bit?		
 3	story	era_folk.photographer.1	휴대폰 배터리가 12% 남았어요. 이 시대엔 충전할 데가 없겠죠?	My phone's at 12%. I guess there's nowhere to charge it in this era.		
 3	story	era_folk.photographer.2	방금 지나간 헬멧 쓴 사람, 제 시대 폭주족이랑 똑같이 생겼어요.	That guy in the helmet who just passed looks exactly like a biker from my time.		
 3	story	era_folk.photographer.3	사진 속 하늘에 금이 가 있어요. 시간 틈이라는 게 저건가 봐요.	There's a crack in the sky in my photos. That must be the time rift.		
+3	story	era_folk.photographer.story.0	제 첫 사진은 흐릿한 새벽 풍경이었어요. 잘 안 찍혔다고 버리려 했죠.	My first photo was a blurry dawn landscape. I almost threw it away for not turning out well.		
+3	story	era_folk.photographer.story.1	옆에서 누가 "그 흐릿함이 좋다"고 하더라고요. 그때 처음 사진이 잘 찍는 게 아니란 걸 알았어요.	Someone next to me said "I like that blur." That was when I first learned photography isn't about shooting well.		
+3	story	era_folk.photographer.story.2	여기 오니 흐릿한 게 더 많아요. 안개, 연기, 옛 성벽… 다 제 취향이에요.	Here there's even more blur. Fog, smoke, old walls... all to my taste.		
+3	story	era_folk.photographer.story.3	어제 기와 위 아침 안개를 찍었는데 그 안에 낯선 그림자들이 겹쳐 찍혔어요. 누구였을까요?	Yesterday I shot the morning fog over the tiles, and strange shadows overlapped inside it. Who could they have been?		
 3	story	era_folk.story_chrononaut	시간 여행자	Time Traveler		
 3	story	era_folk.story_chrononaut.0	제 기록엔 이 들판이 '첫 사냥터'로만 남아 있어요. 이렇게 시끄러운 줄은 몰랐네요.	My records only call this field 'the first hunting ground'. I didn't know it was this noisy.		
 3	story	era_folk.story_chrononaut.1	비경 깊은 층일수록 틈이 넓어요. 강철 거신을 보면 무리하지 마세요.	The deeper the Labyrinth floor, the wider the rift. Don't push it if you meet the Steel Colossus.		
 3	story	era_folk.story_chrononaut.2	그 무예, 제 시대 교본에 그림으로만 남아 있던 거예요.	That martial art only survives as drawings in my era's manuals.		
 3	story	era_folk.story_chrononaut.3	돌아갈 좌표가 자꾸 흔들려요. 당분간은 여기서 구경이나 할게요.	My return coordinates keep drifting. I'll just watch from here for a while.		
+3	story	era_folk.story_of	사연	story		
+3	story	era_folk.story_reward	경험치 +{0}	EXP +{0}		
 3	story	labyrinth.blessing.atk_crit.desc	치명타 확률 +10%p	Crit chance +10%		
 3	story	labyrinth.blessing.atk_haste.desc	무예 재사용 대기 -20%	Skill cooldown -20%		
 3	story	labyrinth.blessing.atk_power.desc	공격력 +25%	ATK +25%		
