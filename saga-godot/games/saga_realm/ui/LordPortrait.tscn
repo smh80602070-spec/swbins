@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/saga_realm/ui/lord_portrait.gd" id="1"]
 [ext_resource type="PackedScene" path="res://assets/characters_cf/cmp_go_01.glb" id="2"]
-[ext_resource type="Script" path="res://games/saga_go/player/anim_library_loader.gd" id="3"]
+[ext_resource type="Script" path="res://saga_core/player/anim_library_loader.gd" id="3"]
 
 [node name="LordPortrait" type="Control" groups=["lord_portrait"]]
 visible = false

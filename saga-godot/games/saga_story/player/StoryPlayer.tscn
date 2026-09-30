@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/saga_story/player/story_player.gd" id="1"]
 [ext_resource type="PackedScene" path="res://assets/characters_cf/cmp_go_01.glb" id="2"]
-[ext_resource type="Script" path="res://games/saga_go/player/anim_library_loader.gd" id="3"]
+[ext_resource type="Script" path="res://saga_core/player/anim_library_loader.gd" id="3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape1"]
 radius = 0.6
