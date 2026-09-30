@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Saga.Dungeon.World
+namespace Saga.Core
 {
     /// <summary>
     /// PLAN.md 101-3 C "타격 VFX" — 히트마다 짧게 튀는 불꽃 파티클.

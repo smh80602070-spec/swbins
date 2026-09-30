@@ -5,6 +5,7 @@ using Saga.Story.Data;
 using Saga.Story.Audio;
 using Saga.Story.Cinematics;
 using Saga.Story.UI;
+using Saga.Core;
 
 namespace Saga.Story.World
 {

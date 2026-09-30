@@ -4,6 +4,7 @@ using UnityEngine;
 using Saga.Dungeon.Data;
 using Saga.Dungeon.Player;
 using Saga.Dungeon.UI;
+using Saga.Core;
 
 namespace Saga.Dungeon.World
 {
