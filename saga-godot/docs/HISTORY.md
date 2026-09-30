@@ -9659,3 +9659,7 @@ PROJECT_STATE.md` 참고. 요약:
 - dungeon_enemy 몸이 색 캡슐(황건 노랑)이었다 → GO creature_builder: 잡졸·정예·분신은 도깨비꼴(정예 색 유지), 보스는 곰. 키 1.7m × 기존 배율, 충돌 캡슐 그대로. 플레이어 쪽으로 돌고(lerp_angle) 걸으면 walk·서면 idle.
 - 스크래치 enemy_look.gd(SceneTree 로 씬 띄우고 캔버스층 숨기고 플레이어를 첫 적 옆에 세움 + --write-movie)로 TestRoom 확인 — 곤봉 든 도깨비 둘. REGRESS OK.
 - 실기 확인 전: 정예 접두 색 구분이 몸에서 읽히는지·보스 곰 크기·피격 번쩍임(dungeon_enemy 는 원래 재질을 안 건드림).
+
+## DUNGEON 인물 조우 몸을 VRoid 로 (2026-09-30, "묻지말고 이어해")
+
+- dungeon_hero_encounter 의 색 캡슐(별 등급 금빛)을 GO hero_encounter 와 같은 VroidBody.build(인물 id, 별 등급)로. 충돌 캡슐·설득 대화는 그대로. 스크래치 hero_look.gd 로 TestRoom 에 ★5 인물을 세워 확인(설득 창 뒤로 몸이 선다). 앞 절 정예(파랑)·잡졸 도깨비도 가까이서 확인. REGRESS OK.

@@ -23,6 +23,7 @@ extends Node3D
 
 const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+const VroidBody := preload("res://games/saga_go/world/vroid_body.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
 ## PersuadeRules는 class_name으로 전역 등록돼 있어(GO의 hero_encounter.gd와
 ## 같은 경계) 여기서 다시 preload하지 않는다 — 이름이 겹치면 파싱 오류가 난다.
@@ -63,18 +64,8 @@ func _ready() -> void:
 
 
 func _spawn_visual() -> void:
-	var mi := MeshInstance3D.new()
-	var mesh := CapsuleMesh.new()
-	mesh.radius = 0.425
-	mesh.height = 1.6
-	mi.mesh = mesh
-	mi.position = Vector3(0, 0.8, 0)
-	var mat := StandardMaterial3D.new()
-	## rarity 5=금빛, 낮을수록 은빛 쪽으로 — GO의 hero_encounter.gd와 같은 감각.
-	var t: float = clampf((int(_hero.rarity) - 1) / 4.0, 0.0, 1.0)
-	mat.albedo_color = Color(0.75, 0.7, 0.55).lerp(Color(0.95, 0.78, 0.25), t)
-	mi.material_override = mat
-	add_child(mi)
+	## 2026-09-30 — 캡슐 → GO hero_encounter 와 같은 VRoid 몸(인물 id 로 머리·옷 색 고정, ★5 는 금 테두리).
+	add_child(VroidBody.build(_hero_id, int(_hero.rarity)))
 
 	var cs := CollisionShape3D.new()
 	var shape := CapsuleShape3D.new()
