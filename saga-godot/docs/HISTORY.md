@@ -9643,3 +9643,7 @@ PROJECT_STATE.md` 참고. 요약:
 - **하늘·색**: env_pc/mobile.tres 는 GO 만 environment_profile 이 덮어 써 왔고 나머지 넷은 기준값 그대로(안개 0.012·하늘 85% 덮음·AgX)라 잿빛이었다. 기준값을 안개 0.004·하늘 30%·ACES·노출 .9·대비 1.08·채도 1.2 로(GO 는 제 값으로 덮어 그대로). STORY 하늘이 원래 설계색(사냥터별 크림색)으로, REALM 은 파란 하늘. STORY 발판 아래 반구는 story_sky 가 하늘 지평색으로 이어 줌.
 - 개발용 SAGA_QUICK_SHOT_DELAY=<초> 추가(기본 2.5). REGRESS OK.
 - 실기 확인 전: 의숲 땅 밝기·구면 투영에서 땅이 제대로 굽는지(폰), 던전 굴 분위기가 밝아져 어색한지, 사가국지 월드맵.
+
+## STORY 마을 다섯 필드에 배경 층 (2026-09-30, "묻지말고 이어해")
+
+- 신야·허도·강릉진·기산채·남정성 필드는 사냥터와 달리 Background(먼 나무·언덕 실루엣) 노드가 없어 빈 하늘에 발판만 떴다(창 모드 SinyaField). 다섯 tscn 에 story_background.gd 노드를 각자 지도(map_path)로 추가. 신야·허도 촬영으로 실루엣이 서는 것 확인. REGRESS OK.
