@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Saga.Core;
 
 namespace Saga.Realm.Data
 {
@@ -13,9 +14,8 @@ namespace Saga.Realm.Data
     /// **51장 "대규모 콘텐츠"(2026-09-14)로 정도가 둘째 목표로 붙으면서
     /// 고정 필드 다섯 개(xiaopeiWall 등)를 `RealmEnemyCity.AllIds` 전부를
     /// 도는 `List&lt;EnemySave&gt;`로 바꿨다** — `SaveVersion`을 3→4로 올렸다
-    /// (구조가 달라 옛 v3 세이브는 자동 무시되고 새 게임으로 시작한다 —
-    /// PLAN.md 28장 "Version 필드" 대비 그대로, 마이그레이션 경로는 안
-    /// 만든다).
+    /// (구조가 달라 옛 v3 세이브는 `RealmStep(3)` 이 소패 한 성만 든 `enemies` 로 바꿔 이어받는다 —
+    /// tasks U-0005, PLAN.md 28장 "Version 필드". 나머지 성은 기본값으로 시작한다).
     /// </summary>
     public static class RealmSaveState
     {
@@ -51,6 +51,9 @@ namespace Saga.Realm.Data
         private class SaveData
         {
             public int version;
+            // v3 옛 필드 — 마이그레이션 전용(RealmStep 이 enemies 로 옮긴다). 새로 쓰지 않는다.
+            public int xiaopeiWall, xiaopeiMaxWall, xiaopeiTroops, xiaopeiTrain, xiaopeiTech;
+            public bool xiaopeiCaptured;
             public int gold;
             public int year;
             public int month;
@@ -205,6 +208,22 @@ namespace Saga.Realm.Data
             return ApplyJson(json);
         }
 
+        /// <summary>v3→v4: 고정 필드 다섯 성(소패 하나)을 `enemies` 목록으로. 그 밖의 버전은 경로 없음(null).</summary>
+        private static SaveData RealmStep(int fromVersion, SaveData data)
+        {
+            if (fromVersion != 3) return null;
+            data.enemies = new List<EnemySave>
+            {
+                new EnemySave
+                {
+                    enemyId = RealmEnemyCity.XiaopeiId, wall = data.xiaopeiWall, maxWall = data.xiaopeiMaxWall,
+                    troops = data.xiaopeiTroops, train = data.xiaopeiTrain, tech = data.xiaopeiTech, captured = data.xiaopeiCaptured,
+                },
+            };
+            data.version = 4;
+            return data;
+        }
+
         /// <summary>PLAN.md 110 ② — 세이브 JSON 을 상태에 적용(파일 로드·"새로 시작" 기본값 둘 다). 자리가 없으면 플레이어는 안 옮긴다.</summary>
         public static bool ApplyJson(string json)
         {
@@ -218,7 +237,9 @@ namespace Saga.Realm.Data
                 Debug.LogWarning($"[RealmSaveState] 로드 실패: {e.Message}");
                 return false;
             }
-            if (data == null || data.version != SaveVersion) return false;
+            if (data == null) return false;
+            data = SaveMigrator.Run(data, SaveVersion, d => d.version, RealmStep);
+            if (data == null) return false;
 
             var cities = new List<RealmCityState.CitySnapshot>();
             if (data.cities != null)

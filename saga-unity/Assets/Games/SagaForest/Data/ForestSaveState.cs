@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using Saga.Core;
 
 namespace Saga.Forest.Data
 {
@@ -183,7 +184,7 @@ namespace Saga.Forest.Data
                 return false;
             }
             if (data == null) return false;
-            if (data.version > SaveVersion) return false;
+            if (SaveMigrator.IsFuture(data.version, SaveVersion)) return false;
 
             ForestState.Restore(data.fruitCount);
             if (data.version >= 2)

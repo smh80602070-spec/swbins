@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Saga.Core;
 
 namespace Saga.Story.Data
 {
@@ -180,7 +181,7 @@ namespace Saga.Story.Data
                 Debug.LogWarning($"[StorySaveState] 로드 실패: {e.Message}");
                 return false;
             }
-            if (data == null || data.version > SaveVersion) return false;
+            if (data == null || SaveMigrator.IsFuture(data.version, SaveVersion)) return false;
 
             StoryQuestState.Restore(data.kills, data.bossKills);
             StoryWorldEventState.Restore(data.triggeredEvents);

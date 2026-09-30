@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Saga.Core;
 
 namespace Saga.Go.Data
 {
@@ -364,18 +365,8 @@ namespace Saga.Go.Data
         /// 마이그레이션 경로가 없거나(MigrateStep이 null) 이 빌드보다 나중
         /// 버전(다운그레이드)이면 null — 데이터를 반쯤 바꾼 채로 적용하지
         /// 않는다.</summary>
-        private static SaveData Migrate(SaveData data)
-        {
-            int version = data.version;
-            while (version < SaveVersion)
-            {
-                SaveData stepped = MigrateStep(version, data);
-                if (stepped == null) return null;
-                data = stepped;
-                version = data.version;
-            }
-            return version > SaveVersion ? null : data;
-        }
+        private static SaveData Migrate(SaveData data) =>
+            SaveMigrator.Run(data, SaveVersion, d => d.version, MigrateStep);
 
         /// <summary>버전 fromVersion에서 온 data를 fromVersion+1 모양으로 바꿔
         /// 돌려준다. 등록된 경로가 없으면 null.</summary>
