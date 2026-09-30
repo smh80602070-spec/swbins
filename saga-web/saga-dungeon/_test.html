@@ -256,6 +256,50 @@ window.requestAnimationFrame = function () { return 0; };
       return '장 ' + D.CHAPTERS.length + ' · 장면 ' + Object.keys(D.SCENES).length + ' · 인물 ' + Object.keys(D.CAST).length;
     });
 
+    t('회귀(§5.21) — 이야기를 다 본 뒤에만 열리고, 회차마다 적 체력·공격이 세지고 보상이 늘며 금이 붙고, 연달아 못 누르며 9회차가 끝이다', function () {
+      var SC = DG.scenario, CDt = DG.scenarioData, DNx = DG.dungeon, bad = [];
+      if (!C.save.dungeon) { C.save.dungeon = { best: 0, runs: 0, kills: 0, clears: 0, mode: 'normal' }; }
+      var d = DNx.state(), keep = JSON.stringify({ round: d.round, base: d.roundBase, best: d.roundBest, kills: d.kills, clears: d.clears, gold: C.save.player.gold });
+      window.DG_NO_SCENARIO = false;
+      try {
+        d.round = undefined; d.roundBase = undefined; d.roundBest = undefined; d.kills = 0; d.clears = 0;
+        SC.reset(); SC.state();
+        CDt.CHAPTERS.forEach(function (c) { SC.state().done[c.id] = 1; });
+        delete SC.state().done[CDt.CHAPTERS[0].id];
+        if (!SC.roundWhy() || SC.roundWhy().indexOf('이야기') < 0 || SC.nextRound().ok) { bad.push('이야기 전에 열림'); }
+        SC.state().done[CDt.CHAPTERS[0].id] = 1;
+        if (SC.roundWhy() !== null || SC.roundNo() !== 1 || SC.roundFoe() !== 1 || SC.roundGain() !== 1) { bad.push('첫 회귀 조건 ' + SC.roundWhy()); }
+        var hp1 = DNx.enemyHp(10, false), dm1 = DNx.enemyDmg(10, false), bhp1 = DNx.enemyHp(10, true), g0 = C.save.player.gold;
+        var r2 = SC.nextRound();
+        if (!(r2.ok && r2.n === 2 && r2.foe === 1.25 && Math.abs(r2.gain - 1.2) < 1e-9 && r2.gold === 3000 && C.save.player.gold === g0 + 3000 && d.roundBest === 2)) { bad.push('둘째 ' + JSON.stringify(r2)); }
+        var w = SC.roundWhy();
+        if (!w || w.indexOf('600') < 0 || SC.nextRound().ok) { bad.push('연달아 열림 ' + w); }
+        var hp2 = DNx.enemyHp(10, false), dm2 = DNx.enemyDmg(10, false), bhp2 = DNx.enemyHp(10, true);
+        if (!(Math.abs(hp2 / hp1 - 1.25) < 0.01 && Math.abs(dm2 / dm1 - 1.25) < 0.1 && Math.abs(bhp2 / bhp1 - 1.25) < 0.01)) { bad.push('적 ×1.25 아님 ' + (hp2 / hp1).toFixed(3) + ' ' + (dm2 / dm1).toFixed(3)); }
+        d.kills += 599; d.clears += 10;
+        if (SC.roundWhy() === null) { bad.push('599 에서 열림'); }
+        d.kills += 1;
+        if (SC.roundWhy() !== null) { bad.push('600 + 10층에서 안 열림 ' + SC.roundWhy()); }
+        d.clears -= 1;
+        if (SC.roundWhy() === null) { bad.push('9층에서 열림'); }
+        d.clears += 1;
+        var r3 = SC.nextRound();
+        if (!(r3.ok && r3.n === 3 && r3.foe === 1.5 && r3.gold === 6000)) { bad.push('셋째 ' + JSON.stringify(r3)); }
+        if (Math.abs(DNx.enemyHp(10, false) / hp1 - 1.5) > 0.01) { bad.push('적 ×1.5 아님'); }
+        /* 이야기 시트 카드 */
+        var html = SC.roundHtml();
+        if (html.indexOf('3회차') < 0 || html.indexOf('적 ×1.50') < 0) { bad.push('카드 글'); }
+        d.round = SC.ROUND_MAX;
+        if (SC.roundWhy() === null || SC.roundFoe(9) !== 2.5 || SC.roundGain(9) > 2.6 || SC.roundHtml().indexOf('round-next') >= 0) { bad.push('끝 회차·상한'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '이야기 전 닫힘 · 2회차(적 체력·공격·보스 ×1.25 · 금 +3000) · 연달아 막힘(처치 600 + 층 10번) · 3회차 ×1.5 · 9회차가 끝(상한 ×2.5)';
+      } finally {
+        window.DG_NO_SCENARIO = true;
+        var k = JSON.parse(keep);
+        d.round = k.round; d.roundBase = k.base; d.roundBest = k.best; d.kills = k.kills; d.clears = k.clears; C.save.player.gold = k.gold; SC.reset();
+      }
+    });
+
     t('시나리오 1막 — 마을에서만 장면이 뜨고, 사냥·층·사슬·명소·구출로 세 장이 끝난다', function () {
       var SC = DG.scenario, T = DG.town, DN = DG.dungeon, bad = [];
       var keep = { sc: C.save.scenario ? JSON.stringify(C.save.scenario) : null, d: JSON.stringify(C.save.dungeon || null),

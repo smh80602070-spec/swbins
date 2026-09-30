@@ -225,6 +225,12 @@
         return;
       }
       if (act === 'quest-reroll') { global.DG.quest.reroll(); return; }
+      if (act === 'round-next') {
+        var rr = global.DG.scenario.nextRound();
+        core.emit('toast', rr.ok ? '🔁 ' + rr.n + '회차 — 굴이 거칠어졌다' : '⚠️ ' + rr.why);
+        renderSheet();
+        return;
+      }
       if (act === 'dex-era') { dexEra = b.getAttribute('data-era') || 'all'; renderSheet(); return; }
       if (act === 'town-wp') {
         var wf = parseInt(b.getAttribute('data-floor'), 10) || 1;
@@ -1326,7 +1332,7 @@
     var Q = global.DG.quest;
     if (!Q) { return '<div class="hint">퀘스트 모듈이 없습니다.</div>'; }
     var st = Q.status();
-    var html = global.DG.scenario ? global.DG.scenario.cardHtml() : '';
+    var html = global.DG.scenario ? global.DG.scenario.cardHtml() + global.DG.scenario.roundHtml() : '';
 
     html += '<div class="sec"><h4>🚩 메인</h4>';
     if (st.mainDone) {

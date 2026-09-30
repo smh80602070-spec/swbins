@@ -288,7 +288,69 @@
   }
 
   global.DG = global.DG || {};
+  /* ── 회귀(회차) — 이야기를 다 본 뒤 굴이 한 단 더 거칠어진다 (PLAN §5.21, SAGA-DESIGN §16) ─────────
+   * 인물·장비·층 기록은 **그대로**(한 캐릭터가 계속 크는 판). 회귀하면 `save.dungeon.round` 가 오르고
+   *   ① 적 체력·공격 ×(1+0.25×(N-1), 최대 2.5) — 난도·부적 티어 배율 **위에** 곱해진다  ② 금·경험치 ×(1+0.2×(N-1), 최대 2.6)  ③ 금 +3000×(N-1)(한 번)
+   * 처음은 지금 있는 이야기를 다 본 것, 다음 회귀는 이번 회차 처치 600 + 층 열 번 답파가 더 든다.
+   * 세이브: `save.dungeon.round`(없으면 1) · `roundBase = { kills, clears }` · `roundBest`. */
+  var ROUND_MAX = 9, ROUND_FOE_STEP = 0.25, ROUND_FOE_CAP = 2.5, ROUND_GAIN_STEP = 0.2, ROUND_GAIN_CAP = 2.6, ROUND_GOLD = 3000, ROUND_KILLS = 600, ROUND_CLEARS = 10;
+
+  function ds() { var D = global.DG.dungeon; return (D && D.state && D.state()) || core.save.dungeon || {}; }
+  function roundNo() { var n = Math.floor(ds().round); return n >= 1 ? Math.min(ROUND_MAX, n) : 1; }
+  function roundFoe(n) { return Math.min(ROUND_FOE_CAP, 1 + ROUND_FOE_STEP * ((n || roundNo()) - 1)); }
+  function roundGain(n) { return Math.min(ROUND_GAIN_CAP, 1 + ROUND_GAIN_STEP * ((n || roundNo()) - 1)); }
+  function roundGold(n) { return ROUND_GOLD * ((n || roundNo()) - 1); }
+
+  /** 이번 회차의 진척 — first 면 이야기만 보면 된다 */
+  function roundProgress() {
+    var d = ds(), b = d.roundBase, first = !b;
+    var k = first ? 0 : Math.max(0, (d.kills || 0) - (b.kills || 0)), c = first ? 0 : Math.max(0, (d.clears || 0) - (b.clears || 0));
+    return { first: first, kills: k, needKills: ROUND_KILLS, clears: c, needClears: ROUND_CLEARS, done: first ? true : (k >= ROUND_KILLS && c >= ROUND_CLEARS) };
+  }
+
+  /** 다음 회귀를 못 하는 까닭 — 할 수 있으면 null */
+  function roundWhy() {
+    if (!on()) { return '이야기가 꺼져 있습니다'; }
+    if (roundNo() >= ROUND_MAX) { return ROUND_MAX + '회차가 끝입니다'; }
+    if (current()) { return '지금 있는 이야기를 다 본 뒤에 열립니다'; }
+    var D = global.DG.dungeon;
+    if (D && D.active && D.active()) { return '굴 안에서는 못 합니다'; }
+    var p = roundProgress();
+    if (!p.done) { return '이번 회차에 처치 ' + p.needKills + '(지금 ' + p.kills + ')과 층 ' + p.needClears + '번 답파(지금 ' + p.clears + ')가 더 필요합니다'; }
+    return null;
+  }
+
+  /** 회귀 — 성공하면 { ok, n, foe, gain, gold } */
+  function nextRound() {
+    var why = roundWhy();
+    if (why) { return { ok: false, why: why }; }
+    var d = ds(), n = roundNo() + 1, gold = roundGold(n);
+    d.round = n;
+    d.roundBest = Math.max(d.roundBest || 0, n);
+    d.roundBase = { kills: d.kills || 0, clears: d.clears || 0 };
+    core.save.player.gold += gold;
+    core.log('🔁 ' + n + '회차 — 적 ×' + roundFoe(n).toFixed(2) + ' · 보상 ×' + roundGain(n).toFixed(1) + ' · 금 +' + core.fmt(gold), 'good');
+    core.emit('toast', '🔁 ' + n + '회차');
+    core.emit('changed');
+    core.persist();
+    return { ok: true, n: n, foe: roundFoe(n), gain: roundGain(n), gold: gold };
+  }
+
+  /** 이야기 시트 맨 아래 🔁 카드 */
+  function roundHtml() {
+    var rn = roundNo(), rp = roundProgress(), why = roundWhy(), open = rn < ROUND_MAX && !current();
+    return '<div class="sec"><h4>🔁 회귀</h4><div class="card' + (rn > 1 ? ' on' : '') + '"><div class="stat-row"><span><b>' + rn + '회차</b></span>' +
+      '<span class="muted">적 ×' + roundFoe().toFixed(2) + ' · 보상 ×' + roundGain().toFixed(1) + '</span></div>' +
+      (open
+        ? '<div class="stat-row"><span class="muted">' + (rp.first ? '이야기를 다 봤습니다' : '이번 회차 처치 ' + Math.min(rp.kills, rp.needKills) + '/' + rp.needKills + ' · 층 답파 ' + Math.min(rp.clears, rp.needClears) + '/' + rp.needClears) + '</span></div>' +
+          (why ? '' : '<button class="btn wide primary" data-act="round-next">🔁 ' + (rn + 1) + '회차로 회귀 (적 ×' + roundFoe(rn + 1).toFixed(2) + ' · 보상 ×' + roundGain(rn + 1).toFixed(1) + ' · 금 +' + roundGold(rn + 1) + ')</button>')
+        : '<div class="stat-row"><span class="muted">이야기를 다 본 뒤에 열립니다</span></div>') +
+      '</div></div>';
+  }
+
   global.DG.scenario = {
+    roundNo: roundNo, roundFoe: roundFoe, roundGain: roundGain, roundGold: roundGold, roundProgress: roundProgress, roundWhy: roundWhy, nextRound: nextRound, roundHtml: roundHtml,
+    ROUND_MAX: ROUND_MAX, ROUND_KILLS: ROUND_KILLS, ROUND_CLEARS: ROUND_CLEARS,
     init: init, check: check, current: current, hint: hint, list: list, cardHtml: cardHtml, on: on,
     state: raw, titles: function () { return raw().titles.slice(); }, isOpen: function () { return !!cur; }, currentScene: function () { return cur; },
     next: next, skip: skip, pick: pick, choice: function (id) { return raw().choices[id] || null; }, abort: function () { cur = null; paint(); },

@@ -206,11 +206,15 @@
 
   /* ── 적 ───────────────────────────────────────────────── */
 
+  /* 회귀(회차 — scenario.js roundFoe/roundGain, PLAN §5.21) 배율 — 1회차·옛 세이브는 1 */
+  function RF() { var S = global.DG.scenario; return S && S.roundFoe ? S.roundFoe() : 1; }
+  function RG() { var S = global.DG.scenario; return S && S.roundGain ? S.roundGain() : 1; }
+
   function enemyHp(floor, boss) {
-    return Math.round(24 * Math.pow(1.26, floor - 1) * (boss ? 7 : 1) * mode().hp * nmMul());
+    return Math.round(24 * Math.pow(1.26, floor - 1) * (boss ? 7 : 1) * mode().hp * nmMul() * RF());
   }
   function enemyDmg(floor, boss) {
-    return Math.round(5 * Math.pow(1.20, floor - 1) * (boss ? 2.2 : 1) * mode().dmg * nmMul());
+    return Math.round(5 * Math.pow(1.20, floor - 1) * (boss ? 2.2 : 1) * mode().dmg * nmMul() * RF());
   }
 
   /**
@@ -3874,7 +3878,7 @@
     if (Math.random() < (e.boss ? 0.8 : 0.07)) {
       run.room.drops.push({ kind: 'scroll', x: jitter(e.x), y: jitter(e.y) });
     }
-    core.gainExp(Math.round((1 + Math.floor(run.floor / 3)) * mode().exp));
+    core.gainExp(Math.round((1 + Math.floor(run.floor / 3)) * mode().exp * RG()));
     global.DG.hero.awardParty(1 + Math.floor(run.floor / 4));
     tryCatchPet(e);
     /* 세계 보스(§5.4) — 위 일반 처치 보상(run.floor=0 이라 미미하다)과
@@ -4200,7 +4204,7 @@
 
   function dropGold(room, x, y, mul) {
     var g = Math.round(5 * Math.pow(1.19, run.floor - 1) * mul * mode().gold *
-      (1 + boonVal('goldPct') / 100) * (1 + core.effect('goldPct') / 100) * nmLootMul());
+      (1 + boonVal('goldPct') / 100) * (1 + core.effect('goldPct') / 100) * nmLootMul() * RG());
     room.drops.push({ kind: 'gold', gold: g, x: jitter(x), y: jitter(y) });
   }
 
@@ -4836,7 +4840,7 @@
   global.DG.dungeon = {
     NM_DARK_R: NM_DARK_R, darkSight: darkSight,
     ELITES: ELITES, eliteOf: eliteOf, eliteChance: eliteChance, enemyName: enemyName,
-    MODES: MODES, modeOf: modeOf, modesOpen: modesOpen, mode: mode, setMode: setMode,
+    MODES: MODES, modeOf: modeOf, modesOpen: modesOpen, mode: mode, setMode: setMode, enemyHp: enemyHp, enemyDmg: enemyDmg,
     resistOf: resistOf, RESIST_CAP: RESIST_CAP,
     slotSkills: slotSkills,
     WAYPOINT_EVERY: WAYPOINT_EVERY, waypoint: waypoint, markWaypoint: markWaypoint,

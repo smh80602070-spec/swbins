@@ -4383,3 +4383,8 @@ VRoid 인물이 unlit(`MeshBasicMaterial`) 그대로라 명암 없이 평면이�
 - 5막 끝을 이야기 장면으로만 맺었던 자리("31층 전투는 아직 없다")에 실제 명소 층을 넣었다: `data-dungeon.js FIXED` 에 한 줄 — 31층 `nameless` **이름 없는 곳**(🌑), 층 주인 **이름을 삼키는 무명왕**(기반 대요술사, 고유 기술 *삼킨 이름들* = 원혼 셋 소환 — "세 시대 모습으로 번갈아" 를 있는 `summon` 틀로), 방 다섯(비석 숲·지워진 이름의 제단·도시 잔해 조각·빛 기둥 곁·이름 없는 곳). 새 시스템 없음 — 명소 층은 데이터만.
 - `a5_nameless` 장 단계가 [대사 → **명소 층 `nameless` 답파** → 결말 대사(문 고르기)] 로. 옛 세이브는 30층 legacy 로 앞 장만 건너뛰므로 이 장부터 31층 명소를 실제로 깨야 한다.
 - 확인: jsdom `_test.html` 429/431(실패 둘은 기준선) — 명소 층 진단 둘("늘 같다" 방 35·손잡이 끄기 31층은 명소)과 3~5막 걷기 진단(a5_nameless 가 걷기 목록에 듦)을 고침. sw dungeon-v0.179.0. **실기 확인 대기**: 무명왕 싸움 세기(30층 천장군 다음)·글.
+
+## 2026-09-30 — 회귀(회차) · 사가블로 (PLAN §5.21, SAGA-DESIGN §16)
+- `scenario.js`: roundNo/roundFoe/roundGain/roundGold/roundProgress/roundWhy/nextRound/roundHtml(퀘스트 시트 `viewQuest` 가 이야기 카드 뒤에 붙임) + `ui.js` `round-next` 단추. `dungeon.js`: RF()·RG() 를 `enemyHp/enemyDmg`(난도·부적 배율 위)와 `dropGold`·처치 경험치에 곱함, `DG.dungeon.enemyHp/enemyDmg` 내보냄(진단용). 세이브 `save.dungeon.round/roundBase/roundBest`.
+- 확인: jsdom 새 진단 1. sw dungeon-v0.180.0. **실기 확인 대기**: 적 ×1.25 체감·부적/난도와 곱해진 9회차 극단값.
+- 웹 회차는 사가국지·사가스토리·사가블로 셋으로 끝(사가고·사가의숲은 안 둠, SAGA-DESIGN §16). **다음**: 웹 새 시스템 후보 소진 — 실기 확인 모으기 또는 3D 두 트랙(각 PROJECT_STATE).
