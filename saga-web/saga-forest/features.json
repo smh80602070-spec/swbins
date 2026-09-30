@@ -1,0 +1,373 @@
+[
+ {
+  "id": "fs.village",
+  "name": "마을 생성·좌표 해시·숲 고리·바이옴",
+  "files": [
+   "js/village.js"
+  ],
+  "tests": [
+   "마을이 만들어졌다 — 땅·사물·주민"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.village-2",
+  "name": "고정 자리: 호수·강·다리·폭포·캠프 2·폐허·동굴·바위산·우주기지",
+  "files": [
+   "js/village.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.village-3",
+  "name": "채집(열매·견과·광석·꽃·약초·화석·조개)·낚시(입질 1.2~3.5s, 창 0.7s)·심기(사흘)",
+  "files": [
+   "js/village.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.bug",
+  "name": "곤충 채집",
+  "files": [
+   "js/bug.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.animal",
+  "name": "짐승 11종(사슴·여우·늑대·토끼·다람쥐·오리·새·개구리·뱀 + 포자괴물·성간충) idle/wander/flee",
+  "files": [
+   "js/animal.js",
+   "js/data-village.js"
+  ],
+  "tests": [
+   "짐승 — 등록된 자산이 있는 종(사슴·여우·늑대·토끼·다람쥐·오리·새·개구리·뱀·포자괴물·성간충)만 나고, 제 바이옴에만 선다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.data-village",
+  "name": "숲 NPC 7(숲지기·낚시꾼·상인·탐험가·약초꾼·나그네·배달원) + 부탁 `QUESTS` 6",
+  "files": [
+   "js/data-village.js",
+   "js/village.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.folk",
+  "name": "주민 5·성격 6·주민끼리 대화·걷기",
+  "files": [
+   "js/folk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.mail",
+  "name": "편지·이사·감사장·내가 쓰는 편지",
+  "files": [
+   "js/mail.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.home",
+  "name": "집 꾸미기(안방·사랑방·부엌·뜰)·벽지·장판",
+  "files": [
+   "js/home.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.museum",
+  "name": "사고(史庫, 박물관) 기증",
+  "files": [
+   "js/museum.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.town",
+  "name": "마을 이름·깃발·평가(`score = 100 − weeds×3 + min(flowers,30) + planted×2 + …`)·별똥별·소원",
+  "files": [
+   "js/town.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.turnip",
+  "name": "순무 장",
+  "files": [
+   "js/turnip.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.wear",
+  "name": "옷(침선방)",
+  "files": [
+   "js/wear.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.data-village-2",
+  "name": "계절 행사 8(설날·대보름·삼짇날·단오·칠석·백중·한가위·동지) — 그날 그 갈래 값 ×2, 하늘 태그만",
+  "files": [
+   "js/data-village.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.data-village-3",
+  "name": "날씨 4(맑음·흐림·비·눈, 날짜 해시)·시간대 4",
+  "files": [
+   "js/data-village.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.terrain",
+  "name": "지형 개조(공사, 덮개층, 삯, 3×3)",
+  "files": [
+   "js/terrain.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.village-4",
+  "name": "택배 아르바이트(접수대↔배달원, 🪙220, 무제한)",
+  "files": [
+   "js/village.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.village-view",
+  "name": "2D 구면 투영·집 안 평면·캔버스 그림(상자 등)",
+  "files": [
+   "js/village-view.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.village-view3d",
+  "name": "3D(three r169): 품질 3단 auto·InstancedMesh 8종·풀·시간대/날씨 하늘·안개 기본 꺼짐(near 30/far 320)·유성·물결·반딧불이",
+  "files": [
+   "js/village-view3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.asset3d",
+  "name": "GLB 등록표·hero 조합 해시(QRPG·MPFB)·monster/building 키·meshopt",
+  "files": [
+   "js/asset3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.ui",
+  "name": "전체지도(M키·🗺️)",
+  "files": [
+   "js/ui.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.ui-2",
+  "name": "설정 시트: 효과음·음악·그래픽 품질·안개",
+  "files": [
+   "js/ui.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.sfx",
+  "name": "절차 효과음 20·BGM 1트랙(CC0 forest.mp3)",
+  "files": [
+   "js/sfx.js",
+   "js/bgm.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.portrait3d",
+  "name": "인물 3D 초상",
+  "files": [
+   "js/portrait3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.auto",
+  "name": "자동 순행",
+  "files": [
+   "js/auto.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.admin",
+  "name": "어드민(때·손잡이·QA 프리셋)",
+  "files": [
+   "js/admin.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.account",
+  "name": "계정(브라우저 안 가입, 서버 없음)",
+  "files": [
+   "js/account.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "fs.core",
+  "name": "세이브 `v:1`, 손잡이 `core.tuned`",
+  "files": [
+   "js/core.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ }
+]

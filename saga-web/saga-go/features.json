@@ -1,0 +1,364 @@
+[
+ {
+  "id": "go.world",
+  "name": "지도·스폰·시점 3모드·구역 이름 30",
+  "files": [
+   "js/world.js"
+  ],
+  "tests": [
+   "지형 결정성(같은 좌표=같은 지형)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.geo",
+  "name": "실제 지형(OSM) / 손그림 땅 1km",
+  "files": [
+   "js/geo.js",
+   "js/land.js"
+  ],
+  "tests": [
+   "지형(geo) — world.terrainAt 레이어 순서: 손그림 땅 > 실제 지형 > 해시",
+   "땅 — 길이 하나로 이어진다 (다리를 길로 친다)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "go.land",
+  "name": "손으로 놓은 소품(land.js `deco`)",
+  "files": [
+   "js/land.js"
+  ],
+  "tests": [
+   "땅 — 손으로 놓은 소품(deco)이 제 칸에 서고 집은 벽이 된다",
+   "땅 — 마을 칸 밖에 놓은 deco 집도 벽이고, 들판엔 안 보이는 집이 없다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.world3d",
+  "name": "3D 렌더·배우·소품·높낮이·물·하늘·SSAO·후처리",
+  "files": [
+   "js/world3d.js",
+   "js/actor3d.js",
+   "js/prop3d.js",
+   "js/relief3d.js",
+   "js/water3d.js",
+   "js/sky3d.js",
+   "js/ssao3d.js",
+   "js/post3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "go.asset3d",
+  "name": "에셋 창고(HERO_RECIPES 27벌·UAL1 몸짓 41)",
+  "files": [
+   "js/asset3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "go.encounter",
+  "name": "등용(설득 3라운드)·포획(타이밍)·3D 무대",
+  "files": [
+   "js/encounter.js",
+   "js/encounter3d.js"
+  ],
+  "tests": [
+   "등용 성공 → 도감·동행·공적·동행 경험치·금",
+   "조우 무대 — 3D 가 없으면 잠들고 예전 카드 화면으로 간다",
+   "조우 무대 — 바늘이 나아갈수록 고리가 좁아진다",
+   "조우 무대 — 초록 테는 막대의 적중 구간을 그대로 옮긴 것이다",
+   "조우 무대 — 던진 것은 포물선을 그린다",
+   "조우 무대 — 무대가 없으면 결과가 곧바로 뜬다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.rogue-action",
+  "name": "실시간 전투(속공·필살·회피·스태거·패턴3·연타회심·차지) + 자동 전투 🤖(입력만 대신 — 반응 0.3초·저스트 회피 없음)",
+  "files": [
+   "js/rogue-action.js",
+   "js/duel.js"
+  ],
+  "tests": [
+   "전투 손맛 — 스태거: 맞을수록 게이지가 차고, 다 차면 적 공격이 잠깐 멎는다",
+   "전투 손맛 — 적 큰 공격은 두 번째부터 다른 패턴(반경·예고시간)으로 바뀐다",
+   "전투 손맛 — 다섯 번째 연타마다 회심이 터지고, 사거리 밖으로 물러나면 연타가 끊긴다",
+   "전투 손맛 — 차지 일격은 시간이 지나야 나가고, 너무 멀면 소모만 되고 헛친다",
+   "전투 손맛 — 원거리 견제기는 사거리를 안 보지만 쿨다운은 본다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미검증"
+ },
+ {
+  "id": "go.battle3d",
+  "name": "전투 연출(흔들림 0.5·hold 70~110ms·파티클)",
+  "files": [
+   "js/battle3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.field-combat",
+  "name": "들판 전투(원신식 — 무리·편성 4 교체·원소 반응·방패, §5 ⑨)",
+  "files": [
+   "js/field-combat.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "go.biome",
+  "name": "지역 지도(원신식 — 1.2km 지역·바이옴 6·랜드마크·순간이동·이름 띠, §5 ⑩)",
+  "files": [
+   "js/biome.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "go.raid",
+  "name": "토벌(45분 적장·격문) / 성채(수비대 셋·공물) / 역참(5분)",
+  "files": [
+   "js/raid.js",
+   "js/fort.js",
+   "js/station.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.quest",
+  "name": "사명(셋·인장 하루 1·일곱→명사) / 주간 사다리 5단",
+  "files": [
+   "js/quest.js",
+   "js/milestone.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.letter",
+  "name": "천거장(2·5·10km·9통) / 반려 / 연성·승화(영초·단사)",
+  "files": [
+   "js/letter.js",
+   "js/buddy.js",
+   "js/growth.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.rogue",
+  "name": "적도(역참 점거·암영·정화)",
+  "files": [
+   "js/rogue.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.weather",
+  "name": "천후(3시간 결정론 6종) / 계절",
+  "files": [
+   "js/weather.js",
+   "js/season.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.event",
+  "name": "사건 11종(300m·62%, 평균 484m) / 걷기 흥",
+  "files": [
+   "js/event.js",
+   "js/ambient.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.npc",
+  "name": "주민 10 / 짐승 5 / 말 걸기 / 땅 사람(탑마다 세 시대 셋, §5 ⑱)",
+  "files": [
+   "js/npc.js",
+   "js/animal.js",
+   "js/talk.js",
+   "js/folk.js"
+  ],
+  "tests": [
+   "땅 사람 ⑱ — 탑마다 셋(제 시대 + 나머지 둘)이 둘레에 서고 수호자 자리를 비킨다 · 오가는 자리는 시각의 순수 함수 · 말에 땅 이름(조사 맞음) · 시대 옷 · 고향·끄면 0"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "go.codex",
+  "name": "발견 도감 / 전체지도(M, 발자취 40m·400점 위경도) / 미니맵",
+  "files": [
+   "js/codex.js",
+   "js/overworld.js",
+   "js/minimap.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.auto",
+  "name": "자동 순행 / 성능 3단 자동 / 소리(CC0 mp3 5) / 설정 시트 / 목표 한 줄",
+  "files": [
+   "js/auto.js",
+   "js/perf.js",
+   "js/audio.js",
+   "js/ui.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.region",
+  "name": "권역·절차 인물(한 9·일 9·중 9, `genchar*`)",
+  "files": [
+   "js/region-*.js",
+   "js/genchar*.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "go.net",
+  "name": "온라인 사관(AI) / 가입 저장",
+  "files": [
+   "js/net.js",
+   "js/ai.js",
+   "server/",
+   "js/account.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "go.sprite",
+  "name": "2D 스프라이트(등신 3·양식 3)",
+  "files": [
+   "js/sprite.js"
+  ],
+  "tests": [
+   "스프라이트 스탬프 캐시 재사용"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "go.expansion",
+  "name": "방치 전투·환생",
+  "files": [
+   "js/_expansion/"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ }
+]

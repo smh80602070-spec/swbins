@@ -1,0 +1,427 @@
+[
+ {
+  "id": "rk.rtk",
+  "name": "달(月) 루프 — 무장 1인 1명령, ▶ 다음 달 `endMonth()`",
+  "files": [
+   "js/rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.rtk-2",
+  "name": "내정 10 명령(개간·상업·기술·치안·축성·징병·훈련·조선·수색·등용) + 지형 상한 `capOf`",
+  "files": [
+   "js/rtk.js",
+   "js/data-city.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.rtk-3",
+  "name": "금(세력)·군량(성, 6·10월)·시장 `trade()` 환율 0.35~0.7",
+  "files": [
+   "js/rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.rtk-4",
+  "name": "재해 5종 `DISASTERS`(달마다 성마다) + 풍년",
+  "files": [
+   "js/rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.officer",
+  "name": "무장 — 충성(인연 끌림·이탈)·경험·관직 5단·승진(공 20+20n·금 300+300n)",
+  "files": [
+   "js/officer.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.officer-2",
+  "name": "나이 — 결정적 생년(130~178)·60세 노쇠·65세 사망(연 60% 상한)·군주는 손잡이가 꺼져 있으면 제외",
+  "files": [
+   "js/officer.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.data-item",
+  "name": "보물 11종(`data-item.js`, +9 능력) — 원정 \"유물 발견\"·탐험·보스 보상으로만 획득, 장비창 없음",
+  "files": [
+   "js/data-item.js",
+   "js/officer.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.diplo",
+  "name": "외교 — 동맹·화친·조공(`envoy`), 맹약 소모, AI `tryEnvoy` 3종 상황별",
+  "files": [
+   "js/diplo.js",
+   "js/rtk-ai.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.diplo-2",
+  "name": "계략 — 이간·유언비어·매수·화계, 이탈 판정 `checkDefection`",
+  "files": [
+   "js/diplo.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.war",
+  "name": "출진 — 인접 성만, 일기토(`DUEL_GAP` 25·35% 발생)→야전/공성, 구원군 40%, 함락 `capture`",
+  "files": [
+   "js/war.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.war-2",
+  "name": "개입형 전투 — `marchInteractive` ⚔️돌격·🛡️수비·➡️정공·↩️퇴각(플레이어 출진만). 실시간 전장(2026-09-28, 실기 보고 Q9): 합은 시계(`battle.roundMs` 2600)로 저절로, 명령은 다음 합부터(퇴각만 바로)·⏸⏩⏭, 전체 화면 · 판정은 그대로 stepRound",
+  "files": [
+   "js/war.js",
+   "js/ui-rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.war-3",
+  "name": "진형 3(추행·학익·방원, 문턱 75, 자동) `armyPower` 한 곳",
+  "files": [
+   "js/war.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.war-4",
+  "name": "진영(camp) — 못 떨어뜨리면 성 밖 진, 치중 2달, 사기 ×0.94/달·0.60 이탈, 포위 효과",
+  "files": [
+   "js/war.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.war-5",
+  "name": "원정(journey) — 내 땅·빈 땅 육로 여러 달, 국경에서 `march()`. 플레이어 전용·회군 없음",
+  "files": [
+   "js/war.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.war-6",
+  "name": "원정 사건 7종 `JOURNEY_EVENTS`(16%/달, 시간 뒤틀림 -1달 포함)",
+  "files": [
+   "js/war.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.war-7",
+  "name": "수군 — 물길·배(성마다, 60→300)·조선·화공(지력 60+)·`NAVY` 배수",
+  "files": [
+   "js/war.js",
+   "js/data-force.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.war-8",
+  "name": "탐험(landmark 첫 함락 금 1000+유물)·보스(boss 수비 금 600+유물)·역사 분기(관도 1건)·세작 12%",
+  "files": [
+   "js/war.js",
+   "js/rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.data-force",
+  "name": "시나리오 6 — 194(13세력)/200(8)/208(6, 손·유 동맹) + ④ 백지·⑤ 균열의 왕·⑥ 군웅 무작위 `SCENARIOS`",
+  "files": [
+   "js/data-force.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.data-relation",
+  "name": "관계·사연 체인 — 관계 표 44쌍(의형제·원수·사제·호적수) `data-relation.js`, 사연 12 + 체인 4 `event.js`(세 갈래 카드, 세력마다 달 18%), 역사 분기 6",
+  "files": [
+   "js/data-relation.js",
+   "js/event.js",
+   "js/war.js",
+   "js/ui-rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.data-force-2",
+  "name": "이정표 5단(시나리오마다) — 조건+보상 표 `milestonesFor`, 판정·지급 `rtk.checkMilestones`, 상단 한 줄·카드",
+  "files": [
+   "js/data-force.js",
+   "js/rtk.js",
+   "js/ui-rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.data-city",
+  "name": "지도 — 성 135(중국 30 + 한국·일본·교주·남중·천축·막북·임읍·균열·폐허·묘역 각 6~7 + 서역 10 + 대진·선비·남해·실크로드 각 6~7 — 서역 보강·실크로드는 2026-09-23), `force:null` 정복 대상, 전부 낙양에서 BFS 로 도달 확인",
+  "files": [
+   "js/data-city.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.rtk-ai",
+  "name": "AI — `runForce`: 아쉬운 것부터 명령, `tryWar`(forecast·spare·gather)·`trySupply`·`tryTrade`·`tryPromote`(충성 최저)·`tryPlot`·`tryEnvoy`",
+  "files": [
+   "js/rtk-ai.js",
+   "js/ai.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.quiz",
+  "name": "학당 문답 — `BANK` 260(hist 50·world 30·idiom·proverb·sense·mz), 상금→금고, 학식→`revealFree`",
+  "files": [
+   "js/quiz.js",
+   "js/data-quiz.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.ui-rtk",
+  "name": "2D 지도 SVG — `MAP_VB`(-60 -30 300 180), 드래그·핀치·관성·조이스틱·키보드, 🏠 내 땅으로",
+  "files": [
+   "js/ui-rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.realm3d",
+  "name": "지도 위 배우 ① 원정군 — 🚩 대신 앞장 장수 3D(통솔 최고, 세력색)+병사 3~5(보·기 — 2026-09-25 부터 CC0 기사·짐말 기병 몸, 손잡이 `realm3d.troopModel`), 다음 달에 1.5초 길 따라 걷기(walk↔idle) · ② 태수 — 성문 앞, 이 달 명령 몸짓(`ORDER_GESTURES`)+그림문자, 기록은 세이브 밖 `rtk.monthOrders` · ③ 싸움 자리 — 이 달 싸움 난 성 진입로에서 두 지휘관 합 셋(`battleBeat`) → 진 쪽 쓰러짐·결과 깃발, 기록 `rtk.monthBattles`(세이브 밖) · ④ 재야 — 드러난 재야가 이웃 성 쪽 길을 흙빛으로 오가고, 이 달 세작이 물어 온 사람은 밤빛+🌙(`rtk.monthScouts`) · ⑤ 성을 누르면 그 태수 앞으로 줌(`zoomFor`, 손잡이 `realm3d.cityZoom`) · 원정 → 싸움(두 칸, 최대 6) → 카메라 가까운 태수 → 떠돌이(4칸 먼저 떼어 둠), 상한 24(사람 수)·LOD `realm3d.actorLod` 480·손잡이 `realm3d.actors`",
+  "files": [
+   "js/realm3d.js",
+   "js/rtk.js",
+   "js/ui-rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.realm3d-2",
+  "name": "3D 국토 지도 — 기본 ON, 궤도 카메라, heightmap `elevAt()`, 바다 `STRAITS` 5, 소품 ~1070, 성 3등급 탑(1등급 동양풍)",
+  "files": [
+   "js/realm3d.js",
+   "js/asset3d.js"
+  ],
+  "tests": [
+   "realm3d — elevAt·straitFactor·isSea 순수 함수 (SAGA-DESIGN §7-2 3D 진단 공백)",
+   "asset3d — mapClips 순수 함수 (SAGA-DESIGN §7-2 3D 진단 공백)"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.battle3d",
+  "name": "전투 3D — `frames` 재생, 일기토 실캐릭터(QRPG)·지휘관 `leadA/D`, HUD `.bhud`, `roundPulse`·`wallShake`·피격 플래시·카메라 컷 · 실시간 전장 `buildArmy`/`stepArmy`(병사마다 제 줄의 적에게 달려가 붙어 싸우고, war.js 병력 비율만큼 앞줄부터 쓰러짐, 병력 450에 하나 4~22 `battle3d.liveCap`)",
+  "files": [
+   "js/battle3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.city3d",
+  "name": "성 안 3D(`city3d.js`)·초상 3D(`portrait3d.js`, QRPG 6 + MPFB 20)",
+  "files": [
+   "js/city3d.js",
+   "js/portrait3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.sfx",
+  "name": "절차 사운드 24종(`sfx.js`, 이벤트 구독만·판정 파일 무접촉)·⚙️ 설정(음량·흔들림)",
+  "files": [
+   "js/sfx.js",
+   "js/ui-rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.core",
+  "name": "계정(`account.js`)·세이브 `saga-realm/save/<프로필>`·`save.rtk` 별도 칸·`migrateNewCities`",
+  "files": [
+   "js/core.js",
+   "js/rtk.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "rk.admin",
+  "name": "어드민 — 시나리오·성·무장·전쟁·외교·손잡이 19개·QA 프리셋",
+  "files": [
+   "js/admin.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ }
+]

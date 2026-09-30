@@ -1,0 +1,447 @@
+[
+ {
+  "id": "dg.game",
+  "name": "부대·인물 성장·합류(출사표 3, 보스층 합류, 중복→승급)",
+  "files": [
+   "js/game.js",
+   "js/hero.js"
+  ],
+  "tests": [
+   "보스 보상 — 층이 깊을수록 좋은 인물이 온다",
+   "도감 완성 — 인물 전원을 채우면 한 번만 큰 보상",
+   "도감 완성 — 지역 전부를 밟으면 한 번만 보상"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.dungeon",
+  "name": "던전 회차(층·방·문·은사·역참 5층·결사·난도)",
+  "files": [
+   "js/dungeon.js",
+   "js/data-dungeon.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.data-dungeon",
+  "name": "층 테마 6(고분 1·폐성 6·산채 11·수궁 16·지옥문 21·천계 26)",
+  "files": [
+   "js/data-dungeon.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.dungeon-2",
+  "name": "문별 통로(방-방 위장 전환)·계단 통로 테마",
+  "files": [
+   "js/dungeon.js",
+   "js/field3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.data-skill",
+  "name": "직업 5(궁장·무장·책사·도독·방사, 무기가 정함)·무예 8갈래×3=24/직업=120",
+  "files": [
+   "js/data-skill.js",
+   "js/skill.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.dungeon-3",
+  "name": "모양 10·원소 7(phys·fire·cold·lit·pois·chi·emp)",
+  "files": [
+   "js/dungeon.js",
+   "js/data-elem.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.data-hero-skill",
+  "name": "서명 무예 105/105(쿨다운만, MP 없음, F 슬롯과 별개 슬롯)",
+  "files": [
+   "js/data-hero-skill.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.data-set",
+  "name": "투장 10벌 + 투장 전용 무예(3점, F 키)",
+  "files": [
+   "js/data-set.js",
+   "js/item.js"
+  ],
+  "tests": [
+   "투장 무예 — 열 벌 모두 갖고 있고 모양이 다 구현돼 있다",
+   "투장 무예 — 두 점으로는 안 잡히고 세 점이어야 잡힌다",
+   "투장 무예 — 실제로 쓰면 쿨다운이 돌고 MP는 안 든다",
+   "투장 무예 — 세 점을 못 갖췄으면 눌러도 아무 일이 없다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.data-item",
+  "name": "고유 31·등급 5(상품~전설, mul 1.0~2.15)·접사·소켓·보석 6·부문·부문어·내구·감정·창고·요대 4×4·단약",
+  "files": [
+   "js/data-item.js",
+   "js/data-gem.js",
+   "js/data-unique.js",
+   "js/item.js",
+   "js/potion.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.vendor",
+  "name": "행상·투전·연단",
+  "files": [
+   "js/vendor.js",
+   "js/forge.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.dungeon-4",
+  "name": "강공격(2.6×, cd 1.3)·회피(0.22s 무적, cd 0.9)",
+  "files": [
+   "js/dungeon.js",
+   "js/dungeon-view.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.dungeon-5",
+  "name": "손맛 1차: hitstop(dt×0.08)·콤보(1.6s 창, 3/6/12)·크리 흔들림 3",
+  "files": [
+   "js/dungeon.js",
+   "js/fx3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.dungeon-6",
+  "name": "어그로(잡졸 230·원거리 300·무리 110, 보스 상시)",
+  "files": [
+   "js/dungeon.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.dungeon-7",
+  "name": "동행(부대 2번째, 배율 0.2~1.5×0.55, 적이 안 때림) 3D+2D",
+  "files": [
+   "js/dungeon.js",
+   "js/dungeon3d.js",
+   "js/dungeon-view.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.data-enemy",
+  "name": "보스 10·패턴 4종(무기별)",
+  "files": [
+   "js/data-enemy.js",
+   "js/dungeon.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.data-enemy-2",
+  "name": "몬스터 135(짐승 95 + 사람형 + 공룡 6 + 괴물 5), 티어 1~4",
+  "files": [
+   "js/data-enemy.js",
+   "js/asset3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.town",
+  "name": "오픈월드: 손 마을 4 + 절차 100, 세계 좌표, 활성 마을 자동 전환, 포그오브워",
+  "files": [
+   "js/town.js",
+   "js/dungeon.js"
+  ],
+  "tests": [
+   "세계 앵커(PLAN §28-8) — 마을 넷의 발판이 서로 안 겹친다",
+   "옛 세이브(town.current만 있음, pos 없음)를 불러오면 그 마을 스폰 자리로 마이그레이션한다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.town-2",
+  "name": "길(격자 이웃 전부)·길목 발견거리(45%, 금14·공적1)·유적 수집품(30%, 도감 relics, 금20·공적4)·탐험 문턱 [50,150,350,700,1200,2000](금25·공적2)·마을 첫 방문 보상",
+  "files": [
+   "js/town.js",
+   "js/ui.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.dungeon-8",
+  "name": "필드 이벤트: 정예가 지키는 보물·방랑 상인(60s)",
+  "files": [
+   "js/dungeon.js",
+   "js/town.js",
+   "js/ui.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.quest",
+  "name": "퀘스트: 메인·지역·이벤트(정적 1회) + 현상판(무작위 반복) + 지역 사연 사슬 아홉(§5.14)",
+  "files": [
+   "js/quest.js",
+   "js/data-quest.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.ui",
+  "name": "도감: 인물·펫·지역·유적, 완성 보상(1200금·50공적)",
+  "files": [
+   "js/ui.js",
+   "js/core.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.auto",
+  "name": "자동 순회(🤖)",
+  "files": [
+   "js/auto.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.minimap",
+  "name": "자동지도 M(지형+소품 점)·코너 미니맵(지형, 플레이어 중심)",
+  "files": [
+   "js/minimap.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.dungeon3d",
+  "name": "3D: 방·들판·인스턴싱 초목·가림 페이드·품질 AUTO(1.5s 쿨다운)·SSAO·후처리",
+  "files": [
+   "js/dungeon3d.js",
+   "js/field3d.js",
+   "js/field-instance.js",
+   "js/post3d.js",
+   "js/ssao3d.js",
+   "js/fx3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.dungeon3d-2",
+  "name": "장비→겉모습(무기·투구·갑주 GLB 2)·외모 커스텀(QRPG 6)",
+  "files": [
+   "js/dungeon3d.js",
+   "js/asset3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.sfx",
+  "name": "소리(WebAudio 절차 생성)·진동 7종",
+  "files": [
+   "js/sfx.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.ui-2",
+  "name": "설정 시트(효과음·음량·진동·그래픽 품질)",
+  "files": [
+   "js/ui.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.account",
+  "name": "계정(프로필별 세이브 키)",
+  "files": [
+   "js/account.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.admin",
+  "name": "어드민(3D 손잡이·QA 프리셋·서명 무예 시험 발동)",
+  "files": [
+   "js/admin.js",
+   "_admin.html"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.game-2",
+  "name": "부팅 예외 배너·프레임 예외 캐치·build 실패 복구",
+  "files": [
+   "js/game.js",
+   "js/town.js",
+   "js/dungeon3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "dg.x",
+  "name": "목표판·세션 카드·일일/주간·죽음 비용·월드 보스·낮밤",
+  "files": [],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ }
+]

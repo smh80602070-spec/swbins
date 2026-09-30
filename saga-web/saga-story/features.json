@@ -1,0 +1,266 @@
+[
+ {
+  "id": "st.side",
+  "name": "물리·조작(중력 1900·점프 760·달리기 270, 발판 위에서만, 줄 ↑↓, 문 ↑, ↓+점프 하강, 앉아 쉬기)",
+  "files": [
+   "js/side.js",
+   "js/data-side.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.data-side",
+  "name": "사냥터 사슬 9(마을 5 `town:true` + 사냥터 4, need 1/5/12/25), 전체 지도(M·🗺️)",
+  "files": [
+   "js/data-side.js",
+   "js/ui.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.side-2",
+  "name": "전투(급소 15%×1.6, 넉백 62, 흔들림, 숫자 팝 0.6s, 무적)",
+  "files": [
+   "js/side.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.data-enemy",
+  "name": "적 42(잡졸 32·보스 10, tier 1~4) + 현대·미래 8(§5-12, 잡졸 40%), 유형 5(근접·원거리·돌진·탱커·마법형 12%), 원거리=든 무기",
+  "files": [
+   "js/data-enemy.js",
+   "js/data-side.js",
+   "js/side.js"
+  ],
+  "tests": [
+   "세 시대 적(§5-12) — 2D 도 제 몸 시트(사가블로에서 구운 같은 GLB) · 옛 적은 늑대·코끼리·멧돼지 그대로",
+   "세 시대 적(§5-12) — 관문대마다 현대·미래가 있고 몸은 표에 있다 · 사냥터 잡졸 약 40% 가 시대 적 · 원거리·탱커는 무기로 · 손잡이 0 이면 옛 적만"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "st.data-side-2",
+  "name": "보스(오른쪽 끝, 12~17배, 쿨 15~30분) — 10종 중 4종만 사냥터에 물림",
+  "files": [
+   "js/data-side.js",
+   "js/side.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.side-3",
+  "name": "랜덤 이벤트 7(보물상자·희귀·채집 보너스·습격·미니보스·이동 상인·NPC 구조)",
+  "files": [
+   "js/side.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "st.data-job",
+  "name": "직업 21(무명+4갈래×5차), 무예 104(갈래당 6자리 사슬 + 5차 각성기 둘), 효과 9, `resetJob()`",
+  "files": [
+   "js/data-job.js",
+   "js/job.js",
+   "js/side.js"
+  ],
+  "tests": [
+   "여섯째 무예(2026-09-11)도 자기들끼리만 need 사슬을 잇는다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "st.data-gear",
+  "name": "장비 부위 10(7+장신구 3)×4단, 주문서 100/60/10, 고유 10, 가방 24, 저자 3할",
+  "files": [
+   "js/data-gear.js",
+   "js/data-unique.js",
+   "js/gear.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.data-quest",
+  "name": "사명 20(일일 2 포함), 업적 9",
+  "files": [
+   "js/data-quest.js",
+   "js/quest.js",
+   "js/data-achieve.js",
+   "js/achieve.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.auto",
+  "name": "자동 사냥(줄 타기·유형별 무예·탕약 35%·이탈 18%, 5분 108마리)",
+  "files": [
+   "js/auto.js"
+  ],
+  "tests": [
+   "자동 — 5분치를 굴리면 실제로 잡힌다"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.side-view3d",
+  "name": "3D 배경 렌더러(🧊), 지형지물·발밑 밀도·마을 정취(집4·우물·울타리), 바닥 도트 타일",
+  "files": [
+   "js/side-view3d.js",
+   "js/asset3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "st.asset3d",
+  "name": "사람 GLB(Quaternius QRPG 6종 색 물들임), 짐승 2크기, 몸짓 표(attack·dodge·interaction·run·death)",
+  "files": [
+   "js/asset3d.js",
+   "js/side-view3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 미확인"
+ },
+ {
+  "id": "st.post3d",
+  "name": "후처리 3단(HIGH/MEDIUM/LOW), SSAO",
+  "files": [
+   "js/post3d.js",
+   "js/ssao3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.portrait3d",
+  "name": "인물 초상 3D(손잡이 `portrait3d.on`), 펫 초상 3D 는 사슴·구미호만",
+  "files": [
+   "js/portrait3d.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30",
+  "note": "PLAN §3: 부분"
+ },
+ {
+  "id": "st.ui",
+  "name": "UI(사가고 tools-drawer 패턴 통일, 세로/가로, ⛶, 설정 시트: 효과음·진동·음량)",
+  "files": [
+   "js/ui.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.sfx",
+  "name": "소리(효과음 4묶음·BGM town/field), 절차 합성",
+  "files": [
+   "js/sfx.js",
+   "js/bgm.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.account",
+  "name": "계정·프로필·옛 세이브 이어받기",
+  "files": [
+   "js/account.js"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ },
+ {
+  "id": "st.admin",
+  "name": "어드민(세이브·균형 손잡이 `tuned()` 8개·QA 프리셋)",
+  "files": [
+   "js/admin.js",
+   "_admin.html"
+  ],
+  "tests": [],
+  "level": "D0",
+  "verified": null,
+  "fun": {},
+  "ticket": null,
+  "since": "2026-09-30"
+ }
+]
