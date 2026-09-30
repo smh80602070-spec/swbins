@@ -119,9 +119,32 @@ namespace Saga.EditorTools
                     foreach (var p in an.parameters) names.Add(p.name);
                     foreach (var need in new[] { "Speed", "Attack" }) if (!names.Contains(need)) Fail($"{r.Name} 컨트롤러에 {need} 없음");
                     if (e.BodyTop < 0.8f || e.BodyTop > 4f) Fail($"{r.Name} 동물 몸 높이 {e.BodyTop:F2}");
+                    // 컨트롤러가 실제로 도는지 — Speed 0.3 → 걷기, 공격 트리거 → 공격 상태(손으로 애니메이터를 굴린다)
+                    an.Rebind();
+                    an.Update(0f);
+                    an.SetFloat("Speed", 0.3f);
+                    Run(an, 1f);
+                    if (!an.GetCurrentAnimatorStateInfo(0).IsName("Walk")) Fail($"{r.Name} Speed 0.3 인데 걷기가 아님 ({StateNow(an)})");
+                    an.SetFloat("Speed", 0f);
+                    Run(an, 1f);
+                    an.SetTrigger("Attack");
+                    Run(an, 0.4f);
+                    if (!an.GetCurrentAnimatorStateInfo(0).IsName("Attack")) Fail($"{r.Name} 공격 트리거 뒤 공격 상태가 아님 ({StateNow(an)})");
                     parts.Add($"{r.Kind}=동물({an.runtimeAnimatorController.name})");
                 }
             }
+        }
+
+        /// <summary>애니메이터를 잘게 나눠 굴린다(한 번에 크게 굴리면 전이가 다음 갱신에서야 시작돼 상태가 한 박자 늦다).</summary>
+        private static void Run(Animator an, float sec)
+        {
+            for (int i = 0; i < 10; i++) an.Update(sec / 10f);
+        }
+
+        private static string StateNow(Animator an)
+        {
+            var clips = an.GetCurrentAnimatorClipInfo(0);
+            return clips.Length > 0 ? clips[0].clip.name : "(없음)";
         }
 
         private static void CheckStandIns(FieldSpawner sp, List<FieldEnemy> made)
