@@ -15,6 +15,7 @@ extends Node3D
 ## npc_key로 story_combat.gd NPC_TALK를 조회한다 — story_job_trainer.gd의
 ## Area3D 폴링(proximity + story_interact) 그대로.
 
+const StoryNpcBody := preload("res://games/saga_story/world/story_npc_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 
@@ -42,16 +43,8 @@ func _body_color() -> Color:
 
 
 func _spawn_visual() -> void:
-	var mi := MeshInstance3D.new()
-	var mesh := CapsuleMesh.new()
-	mesh.radius = 0.5
-	mesh.height = 1.7
-	mi.mesh = mesh
-	mi.position = Vector3(0, 0.85, 0)
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = _body_color()
-	mi.material_override = mat
-	add_child(mi)
+	## 2026-09-30 — 색 캡슐 대신 VRoid 몸(story_npc_body.gd).
+	add_child(StoryNpcBody.build(npc_key))
 
 
 func _spawn_area() -> void:

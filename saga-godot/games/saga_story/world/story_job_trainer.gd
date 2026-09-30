@@ -35,6 +35,7 @@ extends Node3D
 ## (StoryCombat.job_next()) 지금 job에서 갈 수 있는 다음 자리는 항상
 ## 최대 하나뿐이라 "어느 걸 고를지" UI가 필요 없다.
 
+const StoryNpcBody := preload("res://games/saga_story/world/story_npc_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
 
@@ -53,16 +54,8 @@ func _ready() -> void:
 
 
 func _spawn_visual() -> void:
-	var mi := MeshInstance3D.new()
-	var mesh := CapsuleMesh.new()
-	mesh.radius = 0.5
-	mesh.height = 1.7
-	mi.mesh = mesh
-	mi.position = Vector3(0, 0.85, 0)
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = BODY_COLOR
-	mi.material_override = mat
-	add_child(mi)
+	## 2026-09-30 — 색 캡슐 대신 VRoid 몸(story_npc_body.gd).
+	add_child(StoryNpcBody.build("job_trainer"))
 
 
 func _spawn_area() -> void:

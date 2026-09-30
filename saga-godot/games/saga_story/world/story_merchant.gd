@@ -26,6 +26,7 @@ extends Node3D
 ## 가격(price)·상품 목록은 story_combat.gd GEAR_ITEMS/SCROLLS를 그대로
 ## 읽는다 — 데이터를 새로 안 만든다(PLAN.md 7장).
 
+const StoryNpcBody := preload("res://games/saga_story/world/story_npc_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const ChoicePrompt := preload("res://games/saga_go/ui/choice_prompt.gd")
 const StoryCombat := preload("res://games/saga_story/data/story_combat.gd")
@@ -44,16 +45,8 @@ func _ready() -> void:
 
 
 func _spawn_visual() -> void:
-	var mi := MeshInstance3D.new()
-	var mesh := CapsuleMesh.new()
-	mesh.radius = 0.5
-	mesh.height = 1.7
-	mi.mesh = mesh
-	mi.position = Vector3(0, 0.85, 0)
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = BODY_COLOR
-	mi.material_override = mat
-	add_child(mi)
+	## 2026-09-30 — 색 캡슐 대신 VRoid 몸(story_npc_body.gd).
+	add_child(StoryNpcBody.build("merchant"))
 
 
 func _spawn_area() -> void:

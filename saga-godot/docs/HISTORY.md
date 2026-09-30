@@ -9663,3 +9663,8 @@ PROJECT_STATE.md` 참고. 요약:
 ## DUNGEON 인물 조우 몸을 VRoid 로 (2026-09-30, "묻지말고 이어해")
 
 - dungeon_hero_encounter 의 색 캡슐(별 등급 금빛)을 GO hero_encounter 와 같은 VroidBody.build(인물 id, 별 등급)로. 충돌 캡슐·설득 대화는 그대로. 스크래치 hero_look.gd 로 TestRoom 에 ★5 인물을 세워 확인(설득 창 뒤로 몸이 선다). 앞 절 정예(파랑)·잡졸 도깨비도 가까이서 확인. REGRESS OK.
+
+## STORY 마을 NPC 몸을 VRoid 로 (2026-09-30, "이어해")
+
+- story_talk_npc·story_merchant·story_job_trainer 의 색 캡슐을 새 `world/story_npc_body.gd`(도감 별 ≤3 인물에서 key 해시로 골라 GO VroidBody.build) 로. 같은 key 는 늘 같은 몸. 충돌·대화 범위 그대로. 스크래치 npc_look.gd 로 SinyaField 확인(붉은 옷 NPC). REGRESS OK.
+- 실기 확인 전: 상인·전직 스승이 역할 색(붉은·푸른 톤)을 잃어 구분이 약해졌다 — 필요하면 cloth_override 로 역할색을 얹을 것.
