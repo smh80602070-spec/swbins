@@ -53,6 +53,7 @@ const SessionCard := preload("res://saga_core/ui/session_card.gd")
 const LordPortrait := preload("res://games/saga_realm/ui/lord_portrait.gd")
 
 const SAVE_PATH := "user://save_realm.json"
+const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
 const SAVE_VERSION := 16  # 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
 const RNG_SEED := 20260824  # 루트 CLAUDE.md 진단 시드와 같은 값(우연 아님, 관례를 따름)
 
@@ -2139,21 +2140,12 @@ func save() -> bool:
 		"heir_id": heir_id,
 		"succession_shock_until": _succession_shock_until,
 	}
-	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if f == null:
-		return false
-	f.store_string(JSON.stringify(data))
-	return true
+	return SafeFile.write_text(SAVE_PATH, JSON.stringify(data))
 
 
 func try_load() -> bool:
-	if not FileAccess.file_exists(SAVE_PATH):
-		return false
-	var f := FileAccess.open(SAVE_PATH, FileAccess.READ)
-	if f == null:
-		return false
-	var parsed: Variant = JSON.parse_string(f.get_as_text())
-	if typeof(parsed) != TYPE_DICTIONARY:
+	var parsed: Variant = SafeFile.read_json(SAVE_PATH)
+	if parsed == null:
 		return false
 	var migrated: Variant = _migrate(parsed)
 	if migrated == null:

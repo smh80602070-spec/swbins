@@ -10,6 +10,14 @@ extends Node
 ## project.godot [autoload]에 SaveState로 등록된 싱글턴.
 
 const SAVE_PATH := "user://save.json"
+const SafeFile := preload("res://saga_core/data/safe_file.gd")
+
+## 점검이 임시 파일로 돌릴 때만 채운다(진짜 세이브를 건드리지 않게).
+var path_override := ""
+
+
+func save_path() -> String:
+	return path_override if path_override != "" else SAVE_PATH
 const SAVE_VERSION := 3
 const Growth := preload("res://games/saga_go/data/growth.gd")
 
@@ -58,24 +66,15 @@ func save() -> bool:
 		"resolved_events": EventState.resolved,
 		"codex_book": CodexState.book,
 	}
-	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if f == null:
-		return false
-	f.store_string(JSON.stringify(data))
-	return true
+	return SafeFile.write_text(save_path(), JSON.stringify(data))
 
 
 ## 저장 파일이 있으면 부대·플레이어 위치에 적용하고 true, 없거나
 ## 마이그레이션 경로가 없거나 깨져 있으면 아무것도 바꾸지 않고 false
 ## (새 게임 취급).
 func try_load() -> bool:
-	if not FileAccess.file_exists(SAVE_PATH):
-		return false
-	var f := FileAccess.open(SAVE_PATH, FileAccess.READ)
-	if f == null:
-		return false
-	var parsed: Variant = JSON.parse_string(f.get_as_text())
-	if typeof(parsed) != TYPE_DICTIONARY:
+	var parsed: Variant = SafeFile.read_json(save_path())
+	if parsed == null:
 		return false
 	var migrated: Variant = _migrate(parsed)
 	if migrated == null:

@@ -216,6 +216,11 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_archery.gd").new())
 
 	## PLAN 106장 ㊹ — 탐사 파견(마을 역참 곁 게시판).
+	var autosave := preload("res://games/saga_go/world/autosave.gd").new()
+	autosave.name = "Autosave"
+	add_child(autosave)
+	if OS.get_environment("SAGA_AUTOSAVE_PROBE") != "":
+		add_child(load("res://tools/probe_autosave.gd").new())
 	var cycle_screen := preload("res://games/saga_go/world/cycle_screen.gd").new()
 	cycle_screen.name = "CycleScreen"
 	add_child(cycle_screen)

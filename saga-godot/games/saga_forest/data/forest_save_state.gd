@@ -17,6 +17,7 @@ extends Node
 ## 처음으로 채웠다.
 
 const SAVE_PATH := "user://save_forest.json"
+const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
 const SAVE_VERSION := 2
 
 var items: Dictionary = {}  # item_label(String) -> count(int)
@@ -436,21 +437,12 @@ func save() -> bool:
 		"home_tier": home_tier,
 		"home_debt": home_debt,
 	}
-	var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if f == null:
-		return false
-	f.store_string(JSON.stringify(data))
-	return true
+	return SafeFile.write_text(SAVE_PATH, JSON.stringify(data))
 
 
 func try_load() -> bool:
-	if not FileAccess.file_exists(SAVE_PATH):
-		return false
-	var f := FileAccess.open(SAVE_PATH, FileAccess.READ)
-	if f == null:
-		return false
-	var parsed: Variant = JSON.parse_string(f.get_as_text())
-	if typeof(parsed) != TYPE_DICTIONARY:
+	var parsed: Variant = SafeFile.read_json(SAVE_PATH)
+	if parsed == null:
 		return false
 	var migrated: Variant = _migrate(parsed)
 	if migrated == null:
