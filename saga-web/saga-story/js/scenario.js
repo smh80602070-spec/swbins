@@ -247,6 +247,52 @@
     return false;
   }
 
+  /* ── 회귀(회차) — 이야기를 다 본 뒤 사냥터가 한 단 더 거칠어진다 (PLAN §5-14, SAGA-DESIGN §16) ─────────
+   * 레벨·전직·무예·장비는 **그대로**(이 판은 한 캐릭터가 계속 크는 판이라 이월이 곧 전부다). 회귀하면 `save.round` 가 오르고
+   *   ① 적 체력·공격 ×(1+0.25×(N-1), 최대 ×2.5)  ② 잡아서 얻는 금·경험치 ×(1+0.2×(N-1), 최대 ×2.6)  ③ 금 +3000×(N-1)(한 번)
+   * 처음 열리는 조건은 지금 있는 이야기를 다 본 것, 그 뒤 다음 회귀는 **이번 회차에 처치 400 + 비경 5층 한 번**이 더 든다(연달아 못 누르게).
+   * 이야기 장·사명은 다시 안 열린다(사명·관문 기록을 지우면 진행이 꼬인다). 세이브: `save.round`(없으면 1) · `save.roundBase = { kills, clears }` · `save.roundBest`. */
+  var ROUND_MAX = 9, ROUND_FOE_STEP = 0.25, ROUND_FOE_CAP = 2.5, ROUND_GAIN_STEP = 0.2, ROUND_GAIN_CAP = 2.6, ROUND_GOLD = 3000, ROUND_KILLS = 400;
+
+  function roundNo() { var n = Math.floor(core.save.round); return n >= 1 ? Math.min(ROUND_MAX, n) : 1; }
+  function roundFoe(n) { return Math.min(ROUND_FOE_CAP, 1 + ROUND_FOE_STEP * ((n || roundNo()) - 1)); }
+  function roundGain(n) { return Math.min(ROUND_GAIN_CAP, 1 + ROUND_GAIN_STEP * ((n || roundNo()) - 1)); }
+  function killsNow() { var s = global.DG.side && global.DG.side.state && global.DG.side.state(); return (s && s.kills) || 0; }
+
+  /** 이번 회차에서 다음 회귀까지의 진척 — { kills, need, rift, done } (첫 회귀는 이야기만 보므로 kills·rift 는 안 셈) */
+  function roundProgress() {
+    var b = core.save.roundBase, first = !b;
+    var k = first ? 0 : Math.max(0, killsNow() - (b.kills || 0)), r = first ? 0 : Math.max(0, clears() - (b.clears || 0));
+    return { first: first, kills: k, need: ROUND_KILLS, rift: r, done: first ? true : (k >= ROUND_KILLS && r >= 1) };
+  }
+
+  /** 다음 회귀를 못 하는 까닭 — 할 수 있으면 null */
+  function roundWhy() {
+    if (!on()) { return '이야기가 꺼져 있습니다'; }
+    if (roundNo() >= ROUND_MAX) { return ROUND_MAX + '회차가 끝입니다'; }
+    if (current()) { return '지금 있는 이야기를 다 본 뒤에 열립니다'; }
+    if (global.DG.side && global.DG.side.active && global.DG.side.active()) { return '사냥터 안에서는 못 합니다'; }
+    var p = roundProgress();
+    if (!p.done) { return '이번 회차에 처치 ' + p.need + '(지금 ' + p.kills + ')과 비경 5층 한 번(지금 ' + p.rift + ')이 더 필요합니다'; }
+    return null;
+  }
+
+  /** 회귀 — 성공하면 { ok, n, foe, gain, gold } */
+  function nextRound() {
+    var why = roundWhy();
+    if (why) { return { ok: false, why: why }; }
+    var n = roundNo() + 1, gold = ROUND_GOLD * (n - 1);
+    core.save.round = n;
+    core.save.roundBest = Math.max(core.save.roundBest || 0, n);
+    core.save.roundBase = { kills: killsNow(), clears: clears() };
+    core.save.player.gold += gold;
+    core.log('🔁 ' + n + '회차 — 적 ×' + roundFoe(n).toFixed(2) + ' · 보상 ×' + roundGain(n).toFixed(1) + ' · 금 +' + core.fmt(gold), 'good');
+    core.emit('toast', '🔁 ' + n + '회차');
+    core.emit('changed');
+    core.persist();
+    return { ok: true, n: n, foe: roundFoe(n), gain: roundGain(n), gold: gold };
+  }
+
   var listening = false;
   function init() {
     if (!listening) {
@@ -262,6 +308,8 @@
   global.DG.scenario = {
     init: init, check: check, current: current, hint: hint, list: list, owns: owns, on: on,
     state: raw, choice: function (id) { return raw().choices[id] || null; }, titles: function () { return raw().titles.slice(); },
+    roundNo: roundNo, roundGold: function (n) { return ROUND_GOLD * ((n || roundNo()) - 1); }, roundFoe: roundFoe, roundGain: roundGain, roundProgress: roundProgress, roundWhy: roundWhy, nextRound: nextRound,
+    ROUND_MAX: ROUND_MAX, ROUND_KILLS: ROUND_KILLS,
     /** 진단·어드민용 — 진행을 지운다(옛 세이브 판정도 다시 한다) */
     reset: function () { core.save.scenario = undefined; sceneOpen = false; }
   };

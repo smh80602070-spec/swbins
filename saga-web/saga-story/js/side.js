@@ -47,6 +47,9 @@
     return Math.max(curve, floor);
   }
   var E_DMG = core.tuned('enemy.dmgMul', 1);    // 적 공격 배수
+  /* 회귀(회차 — scenario.js roundFoe/roundGain) 배율. 이야기 모듈이 없거나 1회차면 1 */
+  function RF() { var S = global.DG.scenario; return S && S.roundFoe ? S.roundFoe() : 1; }
+  function RG() { var S = global.DG.scenario; return S && S.roundGain ? S.roundGain() : 1; }
   var GAIN_EXP = core.tuned('gain.expMul', 1);  // 경험치 배수
   var GAIN_GOLD = core.tuned('gain.goldMul', 1);// 금 배수
   var DROP_POTION = core.tuned('drop.potion', 0.14);  // 탕약이 떨어질 확률
@@ -645,12 +648,12 @@
     var ref = ed ? ed.bossByName(stg.boss.name) : { name: stg.boss.name, kind: 'human', color: '#7a3a3a' };
     var lv = stg.enemyLv;
     var baseHp = Math.round(baseHpOf(lv));
-    var hp = Math.max(1, Math.round(baseHp * stg.boss.hpMul * E_HP));
+    var hp = Math.max(1, Math.round(baseHp * stg.boss.hpMul * E_HP * RF()));
     var e = {
       ref: ref, boss: true,
       x: stg.width - 220, y: stg.floor - 52, w: 52, h: 52,
       hp: hp, hpMax: hp,
-      dmg: Math.round((4 + lv * 1.6) * stg.boss.dmgMul * E_DMG),
+      dmg: Math.round((4 + lv * 1.6) * stg.boss.dmgMul * E_DMG * RF()),
       dir: -1,
       spd: 38 + Math.min(40, lv * 2),
       phase: 0, hurt: 0, cd: 0, atkAnim: 0,
@@ -724,12 +727,12 @@
     var ref = ed ? ed.bossByName(stg.gateBoss.name) : { name: stg.gateBoss.name, kind: 'human', color: '#7a3a3a' };
     var lv = stg.enemyLv;
     var baseHp = Math.round(baseHpOf(lv));
-    var hp = Math.max(1, Math.round(baseHp * stg.gateBoss.hpMul * E_HP));
+    var hp = Math.max(1, Math.round(baseHp * stg.gateBoss.hpMul * E_HP * RF()));
     var e = {
       ref: ref, boss: true, gate: true, gateKey: key,
       x: stg.width - 220, y: stg.floor - 52, w: 52, h: 52,
       hp: hp, hpMax: hp,
-      dmg: Math.round((4 + lv * 1.6) * stg.gateBoss.dmgMul * E_DMG),
+      dmg: Math.round((4 + lv * 1.6) * stg.gateBoss.dmgMul * E_DMG * RF()),
       dir: -1,
       spd: 38 + Math.min(40, lv * 2),
       phase: 0, hurt: 0, cd: 0, atkAnim: 0,
@@ -836,7 +839,7 @@
       x = pl[0] + Math.random() * pl[2];
       y = pl[1];
     }
-    var hp = Math.max(1, Math.round(baseHpOf(lv) * E_HP));
+    var hp = Math.max(1, Math.round(baseHpOf(lv) * E_HP * RF()));
     var rw = SD.rangedOf(ref);              // 활·조총을 들었으면 멀리서 쏜다
     var role = enemyRole(ref);
     /* 마법형 굴림 — 근접형만 대상(원거리·돌진·탱커는 이미 제 역이 있다).
@@ -854,7 +857,7 @@
     if (boost) { hp = Math.round(hp * boost.hp); dmgMul *= boost.dmg; }
     var e = {
       ref: ref, x: x, y: y - 22, w: 34, h: 34,
-      hp: hp, hpMax: hp, dmg: Math.round((4 + lv * 1.6) * dmgMul * E_DMG),
+      hp: hp, hpMax: hp, dmg: Math.round((4 + lv * 1.6) * dmgMul * E_DMG * RF()),
       dir: Math.random() < 0.5 ? -1 : 1,
       spd: spd, phase: Math.random() * 6.28, hurt: 0, cd: 0,
       ranged: rw, shotCd: rw ? rw.cd * (0.4 + Math.random() * 0.8) : 0,
@@ -1177,7 +1180,7 @@
     var lv = run.stage.enemyLv;
     var mul = e.boss ? 12 : (e.rare ? RARE_GAIN_MUL : (e.mini ? MINI_GAIN_MUL : 1));
     var rmk = run.rm;   // 비경(§5-3) — 재물 축복·주간 변형자 보상 배수
-    var gold = Math.round((6 + lv * 3) * (0.8 + Math.random() * 0.6) * mul * GAIN_GOLD *
+    var gold = Math.round((6 + lv * 3) * (0.8 + Math.random() * 0.6) * mul * GAIN_GOLD * RG() *
       (rmk ? (1 + rmk.gold) * rmk.reward : 1));
     run.gold += gold;
     run.drops.push({ kind: 'gold', x: e.x + e.w / 2, y: e.y, vy: -180, n: gold });
@@ -1198,7 +1201,7 @@
                          x: e.x + e.w / 2 - 12, y: e.y, vy: -240, n: 1 });
       }
     }
-    var expAmt = Math.round((6 + lv * 4) * (e.boss ? 15 : (e.rare ? RARE_GAIN_MUL : (e.mini ? MINI_GAIN_MUL : 1))) * GAIN_EXP *
+    var expAmt = Math.round((6 + lv * 4) * (e.boss ? 15 : (e.rare ? RARE_GAIN_MUL : (e.mini ? MINI_GAIN_MUL : 1))) * GAIN_EXP * RG() *
       (rmk ? rmk.reward : 1));
     core.gainExp(expAmt);
     run.expGained += expAmt;   // 세션 카드(§5-6) — 이 판에서 잡아 얻은 경험치만 잰다(사명 보상 등은 안 잡는다)

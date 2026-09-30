@@ -3054,6 +3054,60 @@ window.DG_NO_TUNE = true;
       return at >= 0 && okOld && dealt > 0 && ('천멸격 ' + at + '번 자리 · 피해 ' + dealt + ' · 파멸격도 띠에 ' + at4 + '번');
     });
 
+    t('회귀(§5-14) — 이야기를 다 본 뒤에만 열리고, 회차마다 적이 세지고 보상이 늘며 금이 붙고, 연달아 못 누르며 9회차가 끝이다', function () {
+      var SC = DG.scenario, CDt = DG.scenarioData, bad = [];
+      var keep = { round: C.save.round, base: C.save.roundBase, best: C.save.roundBest, gold: C.save.player.gold, rs: C.save.riftStat, kills: S.state().kills, lv: C.save.player.level };
+      window.DG_NO_SCENARIO = false;
+      var realRand = Math.random;
+      try {
+        if (S.active()) { S.leave(); }
+        C.save.round = undefined; C.save.roundBase = undefined; C.save.roundBest = undefined;
+        C.save.riftStat = { runs: 0, clears: 0, best: 0 };
+        C.save.player.level = 90;
+        SC.state();
+        CDt.CHAPTERS.forEach(function (c) { SC.state().done[c.id] = 1; });
+        SC.state().done[CDt.CHAPTERS[0].id] = 0; delete SC.state().done[CDt.CHAPTERS[0].id];
+        if (!SC.roundWhy() || SC.roundWhy().indexOf('이야기') < 0 || SC.nextRound().ok) { bad.push('이야기 전에 열림'); }
+        SC.state().done[CDt.CHAPTERS[0].id] = 1;
+        if (SC.roundWhy() !== null || SC.roundNo() !== 1 || SC.roundFoe() !== 1 || SC.roundGain() !== 1) { bad.push('첫 회귀 조건 ' + SC.roundWhy()); }
+        /* 적 체력 — 1회차 기준 */
+        function foeHp() {
+          Math.random = function () { return 0.9; };
+          S.enter('field'); var run = S.raw(); run.enemies = []; S.spawnEnemy(300);
+          var e = run.enemies[0], out = { hp: e.hpMax, dmg: e.dmg };
+          S.leave(); Math.random = realRand;
+          return out;
+        }
+        var h1 = foeHp(), g0 = C.save.player.gold;
+        var r2 = SC.nextRound();
+        if (!(r2.ok && r2.n === 2 && r2.foe === 1.25 && Math.abs(r2.gain - 1.2) < 1e-9 && r2.gold === 3000 && C.save.player.gold === g0 + 3000 && C.save.roundBest === 2)) { bad.push('둘째 ' + JSON.stringify(r2)); }
+        var w = SC.roundWhy();
+        if (!w || w.indexOf('400') < 0 || SC.nextRound().ok) { bad.push('연달아 열림 ' + w); }
+        var h2 = foeHp();
+        if (!(Math.abs(h2.hp / h1.hp - 1.25) < 0.02 && Math.abs(h2.dmg / h1.dmg - 1.25) < 0.1)) { bad.push('적 ×1.25 아님 ' + (h2.hp / h1.hp).toFixed(3) + ' ' + (h2.dmg / h1.dmg).toFixed(3)); }
+        /* 처치 400 + 비경 한 번 → 셋째 */
+        S.state().kills = (S.state().kills || 0) + 399;
+        C.save.riftStat.clears += 1;
+        if (SC.roundWhy() === null) { bad.push('399 에서 열림'); }
+        S.state().kills += 1;
+        if (SC.roundWhy() !== null) { bad.push('400 + 비경에서 안 열림 ' + SC.roundWhy()); }
+        var r3 = SC.nextRound();
+        if (!(r3.ok && r3.n === 3 && r3.foe === 1.5 && r3.gold === 6000)) { bad.push('셋째 ' + JSON.stringify(r3)); }
+        var h3 = foeHp();
+        if (!(Math.abs(h3.hp / h1.hp - 1.5) < 0.02)) { bad.push('적 ×1.5 아님 ' + (h3.hp / h1.hp).toFixed(3)); }
+        /* 끝 회차 · 상한 */
+        C.save.round = SC.ROUND_MAX;
+        if (SC.roundWhy() === null || SC.roundFoe() !== 2.0 && SC.roundFoe() > 2.5) { bad.push('끝 회차'); }
+        if (SC.roundFoe(9) !== 2.5 || SC.roundGain(9) > 2.6) { bad.push('상한 ' + SC.roundFoe(9) + ' ' + SC.roundGain(9)); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '이야기 전 닫힘 · 2회차(적 체력·공격 ×1.25 · 금 +3000) · 연달아 막힘(처치 400 + 비경) · 3회차 ×1.5 · 9회차가 끝(상한 ×2.5)';
+      } finally {
+        Math.random = realRand; window.DG_NO_SCENARIO = true; if (S.active()) { S.leave(); }
+        C.save.round = keep.round; C.save.roundBase = keep.base; C.save.roundBest = keep.best; C.save.player.gold = keep.gold;
+        C.save.riftStat = keep.rs; S.state().kills = keep.kills; C.save.player.level = keep.lv; SC.reset();
+      }
+    });
+
     t('4차 무예도 실제로 적을 친다', function () {
       unlearn();
       if (S.active()) { S.leave(); }

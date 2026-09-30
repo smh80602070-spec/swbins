@@ -256,6 +256,9 @@
         var r = global.DG.gear.apply(parseInt(b.getAttribute('data-uid'), 10),
                                      b.getAttribute('data-scroll'));
         if (!r.ok) { toast('⚠️ ' + r.why); }
+      } else if (act === 'round-next') {
+        var rr = global.DG.scenario.nextRound();
+        toast(rr.ok ? '🔁 ' + rr.n + '회차 — 적이 거칠어졌다' : '⚠️ ' + rr.why);
       } else if (act === 'q-take') {
         global.DG.quest.take(b.getAttribute('data-q'));
       } else if (act === 'q-turn') {
@@ -382,6 +385,15 @@
         '</div>';
     }
     if (!SC.current()) { html += '<div class="hint">지금 있는 이야기는 여기까지입니다. 다음 부는 곧 이어집니다.</div>'; }
+    /* 회귀(§5-14) — 이야기를 다 본 뒤 사냥터가 한 단 더 거칠어진다 */
+    var rn = SC.roundNo(), rp = SC.roundProgress(), why = SC.roundWhy();
+    html += '<div class="card' + (rn > 1 ? ' on' : '') + '"><div class="stat-row"><span><b>🔁 회귀 — ' + rn + '회차</b></span>' +
+      '<span class="muted">적 ×' + SC.roundFoe().toFixed(2) + ' · 보상 ×' + SC.roundGain().toFixed(1) + '</span></div>' +
+      (rn < SC.ROUND_MAX && !SC.current()
+        ? '<div class="stat-row"><span class="muted">' + (rp.first ? '이야기를 다 봤습니다' : '이번 회차 처치 ' + Math.min(rp.kills, rp.need) + '/' + rp.need + ' · 비경 5층 ' + Math.min(rp.rift, 1) + '/1') + '</span></div>' +
+          (why ? '' : '<button class="btn wide primary" data-act="round-next">🔁 ' + (rn + 1) + '회차로 회귀 (적 ×' + SC.roundFoe(rn + 1).toFixed(2) + ' · 보상 ×' + SC.roundGain(rn + 1).toFixed(1) + ' · 금 +' + (SC.roundGold(rn + 1) || 0) + ')</button>')
+        : '<div class="stat-row"><span class="muted">이야기를 다 본 뒤에 열립니다</span></div>') +
+      '</div>';
     return html;
   }
 
