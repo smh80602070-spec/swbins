@@ -43,6 +43,17 @@ if (name === 'PreToolUse' && tool === 'Bash') {
 
 if (name === 'PreToolUse' && /^(Edit|Write|MultiEdit)$/.test(tool)) {
   const fp = String(inp.file_path || '');
+  if (/[\\/]tasks[\\/](?:[^\\/]+[\\/])*[WGUK]-\d+\.md$/.test(fp)) {
+    let size = null;
+    if (typeof inp.content === 'string') size = Buffer.byteLength(inp.content);
+    else if (typeof inp.new_string === 'string' && typeof inp.old_string === 'string') {
+      try {
+        const cur = fs.readFileSync(fp, 'utf8');
+        size = Buffer.byteLength(inp.replace_all ? cur.split(inp.old_string).join(inp.new_string) : cur.replace(inp.old_string, () => inp.new_string));
+      } catch (e) { /* 새 파일·못 읽음 — 커밋 전 precheck 가 다시 본다 */ }
+    }
+    if (size !== null && size > 4096) block('티켓은 4096B 를 넘기지 않는다(' + size + 'B) — 줄이거나 나눈다: ' + fp.split(/[\\/]/).pop());
+  }
   if (/PLAN\.md$/i.test(fp)) {
     let txt = '';
     if (typeof inp.new_string === 'string') txt = inp.new_string;
