@@ -311,6 +311,7 @@ Quaternius CC0 1.0, 사가블로에서 md5 그대로 복사(이미 Meshopt). `Kn
 | **파일** | `assets/portraits/hero/<id>_s.webp`(192×192)·`<id>_c.webp`(300×344) — 도감 105 인물 |
 | **만든 법** | swbins3 로컬 sd-webui + **Animagine XL 4.0 Opt**(CreativeML OpenRAIL++-M, 상업 사용 허용) — `tools/ai-art/gen.py` → `pack_web_portraits.py` |
 | **프롬프트** | 인물 이름 없이 문화·역할·성별·나이·머리·눈 묘사만 — `tools/ai-art/batches/web_heroes_105.json` |
+| **장수 194 초상** | 사가국지에만 있는 장수 194 명의 초상(`assets/portraits/hero/<id>_s.webp`·`_c.webp`)도 같은 모델·같은 방식(글 설명만으로 생성, 밑그림 없음) — `tools/ai-art/batches/web_realm_194.json`, `pack_web_portraits.py --src web_realm_194 --games saga-realm`, 출처는 같은 `_ai_provenance.json` |
 | **밑그림** | 도감 105 인물은 자체 공방 몸(`tools/char-forge`, CC0 재료+레시피) 가슴 위 렌더를 밑그림으로 한 이미지→이미지 생성(`render_busts.py`, `batches/web_heroes_105_i2i.json`, denoise 0.55) — 밑그림 = 공방 몸 렌더 |
 | **출처 기록** | `assets/portraits/hero/_ai_provenance.json`(모델·라이선스·씨앗) |
 | **주의** | AI 생성물은 저작권 보호가 약하다. 되돌리려면 git 에서 이전 webp 복구 |
