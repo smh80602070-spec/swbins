@@ -48,3 +48,4 @@ dist/
 # 웹 러너(tools/test-web.mjs) 전용 크롬 프로필·결과
 tools/_prof/
 tools/_out/
+saga-godot/tools/_out/
