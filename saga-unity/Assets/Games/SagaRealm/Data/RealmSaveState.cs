@@ -94,6 +94,8 @@ namespace Saga.Realm.Data
             public int scenarioT0, scenarioTurnSeen;
             public string[] scenarioIds, scenarioKs;
             public int[] scenarioTurns;
+            // PLAN.md 109-16b 회차 — 이번 판 회차(없으면 1). 버전 그대로.
+            public int round;
         }
 
         /// <summary>PlaytestRealmSlice.cs 전용 — GameBootstrap.Awake()가
@@ -179,6 +181,7 @@ namespace Saga.Realm.Data
                 officerAmbitionsDone = RealmOfficerTraits.SnapshotDone(),
                 victoryResult = RealmVictoryState.SnapshotResult(),
                 mountSel = RealmMounts.Snapshot(),
+                round = RealmRound.Round,
             };
             RealmMounts.SnapshotEq(out data.mountEqOfficers, out data.mountEqMounts);
             RealmScenario.Snapshot(out data.scenarioSeen, out data.scenarioT0, out data.scenarioTurnSeen, out data.scenarioIds, out data.scenarioKs, out data.scenarioTurns, out data.scenarioSideWho, out data.scenarioSideTurn);
@@ -243,6 +246,7 @@ namespace Saga.Realm.Data
                 data.quizTotal, data.quizCorrect, data.quizStreak, data.quizBestStreak);
             RealmOfficerTraits.Restore(data.officerAmbitionsDone);
             RealmVictoryState.Restore(data.victoryResult);
+            RealmRound.Restore(data.round); // 옛 세이브(필드 없음 = 0)는 1회차
             RealmMounts.Restore(data.mountSel, data.mountEqOfficers, data.mountEqMounts);
             RealmScenario.Restore(data.scenarioSeen, data.scenarioT0, data.scenarioTurnSeen, data.scenarioIds, data.scenarioKs, data.scenarioTurns, data.scenarioSideWho, data.scenarioSideTurn);
             return true;

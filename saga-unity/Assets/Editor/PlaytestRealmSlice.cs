@@ -1369,6 +1369,8 @@ namespace Saga.EditorTools
                     if (!PlaytestRealmMount.Run()) { Fail(); return; }
                     // PLAN.md 109-16 시나리오 「천하와 균열」 — 끝나면 세이브 JSON 으로 판 상태를 되돌린다.
                     if (!PlaytestRealmScenario.Run()) { Fail(); return; }
+                    // PLAN.md 109-16b 회차 — 끝나면 세이브 JSON·회차·최고 기록으로 되돌린다.
+                    if (!PlaytestRealmRound.Run()) { Fail(); return; }
                     // PLAN.md 109-13-2 지도 위 인물 — 전 성이 우리 것일 때 상한·태수 자리·재야·월드맵 배우 층.
                     if (!PlaytestRealmActors.Run()) { Fail(); return; }
                     _phase = Phase.QuizCorrect;

@@ -44,6 +44,16 @@ namespace Saga.EditorTools
         };
 
         [MenuItem("Saga/Playtest Saga Flow (Headless)")]
+        /// <summary>두 JSON 이 처음 달라지는 자리 앞뒤 글(진단 메시지용).</summary>
+        private static string FirstDiff(string a, string b)
+        {
+            a = a ?? ""; b = b ?? "";
+            int i = 0;
+            while (i < a.Length && i < b.Length && a[i] == b[i]) i++;
+            string Cut(string s) => s.Substring(System.Math.Max(0, i - 40), System.Math.Min(s.Length - System.Math.Max(0, i - 40), 120));
+            return $"처음 다른 자리 {i}: 지금 「{Cut(a)}」 / 기본 「{Cut(b)}」";
+        }
+
         public static void Run()
         {
             _ok = true;
@@ -202,7 +212,7 @@ namespace Saga.EditorTools
                 t.NewButtons[i].onClick.Invoke();
                 t.ConfirmYes.onClick.Invoke();
                 yield return WaitGame(g);
-                if (!TitleScreen.LastResetMatched.TryGetValue(g.Key, out bool matched) || !matched) Fail($"{g.Key} 기본값으로 안 돌아감");
+                if (!TitleScreen.LastResetMatched.TryGetValue(g.Key, out bool matched) || !matched) Fail($"{g.Key} 기본값으로 안 돌아감 — {(TitleScreen.LastResetDiff.TryGetValue(g.Key, out var diff) ? diff : "(차이 기록 없음)")}");
                 if (!g.ToJson().Contains($"\"{Probe[i]}\":{m.Groups[1].Value}")) Fail($"{g.Key} 판 안에서 {Probe[i]} 가 기본값({m.Groups[1].Value}) 아님");
                 SagaPauseMenu.Open();
                 SagaPauseMenu.Instance.TitleButton.onClick.Invoke();

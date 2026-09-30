@@ -499,6 +499,17 @@ namespace Saga.Realm.Data
 
             if (cities != null)
             {
+                // 109-16b 회차 — 스냅샷에 없는 함락 성은 다시 놓는다(예전엔 더하기만 해서, 전 성을 함락한 판에 "새로 시작"·다음 회차 기본값을 적용해도
+                // 함락한 성이 그대로 남아 이긴 기록이 곧장 되살아났다). 시작 셋(`RealmCityData.AllCityIds`)은 늘 남긴다.
+                var inSnapshot = new HashSet<string>();
+                foreach (var snap in cities) inSnapshot.Add(snap.CityId);
+                for (int i = _activeCityIds.Count - 1; i >= 0; i--)
+                {
+                    string id = _activeCityIds[i];
+                    if (inSnapshot.Contains(id) || System.Array.IndexOf(RealmCityData.AllCityIds, id) >= 0) continue;
+                    _activeCityIds.RemoveAt(i);
+                    _cities.Remove(id);
+                }
                 foreach (var snap in cities)
                 {
                     if (!_cities.TryGetValue(snap.CityId, out var r))

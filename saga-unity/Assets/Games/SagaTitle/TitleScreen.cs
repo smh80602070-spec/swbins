@@ -159,7 +159,23 @@ namespace Saga.Title
         public static void CaptureDefaults()
         {
             if (Defaults.Count > 0 || SagaFlow.EnteredThisRun.Count > 0) return;
-            foreach (var g in Games) Defaults[g.Key] = g.ToJson();
+            foreach (var g in Games) { Defaults[g.Key] = g.ToJson(); SagaFlow.Defaults[g.Key] = Defaults[g.Key]; }
+        }
+
+        /// <summary>"새로 시작" 기본값 복원이 안 맞았을 때 처음 달라진 자리(진단).</summary>
+        public static readonly Dictionary<string, string> LastResetDiff = new Dictionary<string, string>();
+
+        /// <summary>복원 비교에서 시간에 따라 저절로 변하는 필드(사가고 원석 충전 시각 `resinT` — 앱을 켠 뒤 지난 초)는 뺀다.</summary>
+        private static string StableJson(string json) =>
+            json == null ? null : System.Text.RegularExpressions.Regex.Replace(json, @"""resinT"":-?\d+", @"""resinT"":0");
+
+        private static string FirstDiff(string a, string b)
+        {
+            int i = 0;
+            while (i < a.Length && i < b.Length && a[i] == b[i]) i++;
+            int from = Mathf.Max(0, i - 50);
+            string Cut(string t) => t.Substring(from, Mathf.Min(t.Length - from, 140));
+            return $"자리 {i}: 지금 「{Cut(a)}」 / 기본 「{Cut(b)}」";
         }
 
         public static bool HasDefaults(string key) => Defaults.ContainsKey(key);
@@ -207,7 +223,10 @@ namespace Saga.Title
                 if (def != null)
                 {
                     g.ApplyJson(def);
-                    LastResetMatched[g.Key] = g.ToJson() == def;
+                    string now = g.ToJson();
+                    bool same = StableJson(now) == StableJson(def);
+                    LastResetMatched[g.Key] = same;
+                    if (!same) LastResetDiff[g.Key] = FirstDiff(StableJson(now), StableJson(def)); // 진단 — 어느 필드가 기본값으로 안 돌아갔나
                 }
                 else
                 {

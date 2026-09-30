@@ -932,11 +932,26 @@ namespace Saga.Realm.UI
         /// 판, `RealmVictoryState.cs` 클래스 주석) godot `realm_month_button.gd`
         /// 처럼 "다음 달"만 막는다. "공격"·"명령" 등은 계속해도 무해해(이미
         /// 정복했거나 더 얻을 것이 없을 뿐) 안 막는다.</summary>
+        private float _roundArmUntil;
+
         private void ExecuteNextMonth()
         {
             if (RealmVictoryState.IsOver)
             {
-                RealmToast.Instance?.Show(RealmLocalization.T("command.game_over", "이미 판이 끝났다."), 3f);
+                // 109-16b 회차 — 이긴 판의 "다음 달" 단추는 다음 회차 시작(한 번 눌러 조건을 보고, 6초 안에 한 번 더 누르면 시작)
+                if (!RealmRound.CanNext)
+                {
+                    RealmToast.Instance?.Show(RealmRound.ReadyLine(), 4f);
+                    return;
+                }
+                if (Time.unscaledTime < _roundArmUntil)
+                {
+                    _roundArmUntil = 0f;
+                    if (!RealmRound.StartNext(true, true, out string why)) RealmToast.Instance?.Show(why, 4f);
+                    return;
+                }
+                _roundArmUntil = Time.unscaledTime + RealmRound.ArmSeconds;
+                RealmToast.Instance?.Show(RealmRound.Preview() + RealmLocalization.T("round.confirm", " — 한 번 더 누르면 시작"), RealmRound.ArmSeconds);
                 return;
             }
             string summary = RealmCityState.NextMonth();

@@ -99,6 +99,7 @@ namespace Saga.Realm.UI
                 string.Format(RealmLocalization.T("victory.card_date", "{0}년 {1}월"), RealmCityState.Year, RealmCityState.Month),
                 string.Format(RealmLocalization.T("victory.card_captured", "함락 {0}/{1}성"), CapturedCount(), RealmEnemyCity.AllIds.Length),
                 string.Format(RealmLocalization.T("victory.card_roster", "로스터 {0}명"), RealmCityState.RosterIds.Count));
+            RealmToast.Instance?.Show(RealmRound.ReadyLine(), 7f); // 109-16b 회차 — 다음 달 단추가 다음 회차
         }
 
         private void ShowSummary()
@@ -116,7 +117,8 @@ namespace Saga.Realm.UI
         {
             var cityDef = RealmCityData.Get(RealmCityState.CurrentCity);
             string cityName = cityDef != null ? cityDef.Name : RealmCityState.CurrentCity;
-            return string.Format(RealmLocalization.T("goal.viewing", "{0} 조망 중 · 금 {1}"), cityName, RealmCityState.Gold);
+            string round = RealmRound.Round > 1 ? string.Format(RealmLocalization.T("round.hud", " · {0}회차"), RealmRound.Round) : "";
+            return string.Format(RealmLocalization.T("goal.viewing", "{0} 조망 중 · 금 {1}"), cityName, RealmCityState.Gold) + round;
         }
 
         public string GoalLineSession()
@@ -136,9 +138,10 @@ namespace Saga.Realm.UI
         {
             if (RealmVictoryState.IsOver)
             {
-                return RealmVictoryState.Result == RealmVictoryState.Kind.Conquest
+                return (RealmVictoryState.Result == RealmVictoryState.Kind.Conquest
                     ? RealmLocalization.T("victory.done_conquest", "정복 승리 — 판 끝")
-                    : RealmLocalization.T("victory.done_culture", "문화 승리 — 판 끝");
+                    : RealmLocalization.T("victory.done_culture", "문화 승리 — 판 끝"))
+                    + (RealmRound.CanNext ? RealmLocalization.T("round.goal_next", " · 다음 달 = 다음 회차") : "");
             }
             var (name, progress) = RealmVictoryState.ClosestProgress();
             return $"{name} {Mathf.RoundToInt(progress * 100f)}%";

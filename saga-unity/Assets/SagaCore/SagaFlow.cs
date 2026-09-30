@@ -22,6 +22,8 @@ namespace Saga.Core
         public static string CurrentGame { get; private set; }
         /// <summary>이번 실행에서 한 번이라도 들어간 판 — "새로 시작"이 메모리 상태를 되돌려야 하는지 가른다.</summary>
         public static readonly HashSet<string> EnteredThisRun = new HashSet<string>();
+        /// <summary>타이틀이 앱을 켤 때 떠 둔 판별 "새 게임 기본값" JSON — 타이틀 "새로 시작"과 판 안의 회차(`RealmRound`)가 같이 쓴다(판이 타이틀 어셈블리를 못 본다).</summary>
+        public static readonly Dictionary<string, string> Defaults = new Dictionary<string, string>();
         public static bool TitleAvailable => SceneUtility.GetBuildIndexByScenePath(TitleScenePath) >= 0;
         /// <summary>마지막 자동 저장이 된 까닭(진단).</summary>
         public static string LastAutoSaveReason { get; private set; }
