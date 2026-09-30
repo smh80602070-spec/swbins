@@ -765,6 +765,24 @@ window.requestAnimationFrame = function () { return 0; };
       return fallen && noGrave && ('결사 사망 · fallen ' + fallen + ' · 유품 없음 ' + noGrave);
     });
 
+    t('결사 서약자(정본 side_vow) — 결사로 10·20·30·36층을 처음 지나면 묵향 한 줄과 금·업적, 판마다 한 번 · 결사가 아니면 아무 일도 없다', function () {
+      var st = DN.state(), keep = JSON.stringify({ hc: st.hardcore || false, vow: st.vow || null, gold: C.save.player.gold }), bad = [];
+      try {
+        st.hardcore = false; st.vow = null;
+        var g0 = C.save.player.gold;
+        if (DN.vowMilestone(10) || C.save.player.gold !== g0) { bad.push('결사 아닌데 줌'); }
+        st.hardcore = true;
+        if (DN.vowMilestone(11)) { bad.push('11층에 줌'); }
+        [10, 20, 30, 36].forEach(function (f, i) {
+          var b = C.save.player.gold;
+          if (!DN.vowMilestone(f) || C.save.player.gold !== b + DN.VOW_GOLD || !st.vow[f]) { bad.push(f + '층'); }
+          if (DN.vowMilestone(f) || C.save.player.gold !== b + DN.VOW_GOLD) { bad.push(f + '층 두 번'); }
+        });
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '결사 아님 → 없음 · 10·20·30·36층 각 한 번 🪙 ' + DN.VOW_GOLD;
+      } finally { var k = JSON.parse(keep); st.hardcore = k.hc; st.vow = k.vow || undefined; C.save.player.gold = k.gold; }
+    });
+
     /* ── 난입(亂入) — 15분 생존 파도(PLAN §5.5, 2026-09-18) ──────────── */
 
     t('난입 — 파도 N 의 적 수는 6+2N 이고 40 을 넘지 않는다 (§5.5)', function () {

@@ -1419,6 +1419,28 @@
     return true;
   }
 
+  /* 결사 서약자(정본 side_vow) — 결사(하드코어)로 굴혈 깊이 10·20·30·36층을 처음 지나면 사관 묵향이 서약자 기록에 대사 한 줄을 적는다(판마다 한 번, 금·업적).
+     안 해도 되는 곁가지 — 결사가 아니면 아무 일도 없다 */
+  var VOW_LINES = {
+    10: '사관 묵향: 결사를 걸고 열 층을 내려오셨군요. 서약자의 이름은 기록에 따로 적어 두겠습니다.',
+    20: '사관 묵향: 스무 층… 되돌아갈 길을 지우고 내려온 분은 제 기록에 몇 안 됩니다. 이 줄만큼은 먹이 마르지 않게 적겠습니다.',
+    30: '사관 묵향: 서른 층입니다. 결사의 서약이 이렇게 오래 이어진 적은 기록에 없습니다. 지워진 이름보다 오래 남을 줄이 될 것입니다.',
+    36: '사관 묵향: 비석 너머까지 오셨군요. 이제 서약자가 아니라 이 굴혈의 증인이라 적겠습니다.'
+  };
+  var VOW_GOLD = 4000, VOW_FEAT = 25;
+  function vowMilestone(floor) {
+    if (!hardcore() || !VOW_LINES[floor]) { return false; }
+    var ds = dstate();
+    if (!ds.vow || typeof ds.vow !== 'object') { ds.vow = {}; }
+    if (ds.vow[floor]) { return false; }
+    ds.vow[floor] = true;
+    core.save.player.gold = (core.save.player.gold || 0) + VOW_GOLD;
+    core.gainFeat(VOW_FEAT, '결사 서약');
+    core.log('☠️ ' + VOW_LINES[floor] + ' · 금 +' + core.fmt(VOW_GOLD), 'good');
+    core.emit('toast', '☠️ ' + VOW_LINES[floor]);
+    return true;
+  }
+
   /** 층을 내려간다 — 노획물이 확정되고, 3층마다(보스층 주기와 같다)
    *  축복(§5.1)을 하나 고른다. 8스택 다 찼으면 더 안 뜬다. */
   function descend() {
@@ -1430,6 +1452,7 @@
     }
     core.gainFeat(2 + Math.floor(run.floor / 2), '던전 답파');
     run.floor += 1;
+    vowMilestone(run.floor);                       // 결사 서약자 곁가지(정본 side_vow)
     run.hpMax = hpMaxOf();
     run.choice = (DD.isBossFloor(run.floor) && (run.boonPicks || 0) < BOON_MAX_STACK)
       ? rollBoonChoice() : null;
@@ -4817,7 +4840,7 @@
     resistOf: resistOf, RESIST_CAP: RESIST_CAP,
     slotSkills: slotSkills,
     WAYPOINT_EVERY: WAYPOINT_EVERY, waypoint: waypoint, markWaypoint: markWaypoint,
-    hardcore: hardcore, setHardcore: setHardcore, fallen: fallen,
+    hardcore: hardcore, setHardcore: setHardcore, fallen: fallen, vowMilestone: vowMilestone, VOW_GOLD: VOW_GOLD,
     elemDmgOf: elemDmgOf, elemResOf: elemResOf,
     /** 자가진단용 — 한 대만 때려 본다 (저항이 결마다 다르게 깎는지) */
     _strike: strike, _addPacks: addPacks, _cleave: cleave, _applyShape: applyShapeSkill, _pullStep: pullStep,
