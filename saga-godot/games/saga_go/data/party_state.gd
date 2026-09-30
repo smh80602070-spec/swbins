@@ -112,6 +112,8 @@ var home: Dictionary = {}
 ## 2026-09-30 회차(별배 재출항) — 이야기를 끝낸 뒤 다시 연 횟수(0 = 첫 회차). 필드만 더해 SAVE_VERSION 그대로.
 ## data/cycle.gd 가 읽고 쓴다(공격력·경험치 +5%/회차, 세계 등급 상한 +2/회차).
 var cycle: int = 0
+## 2026-09-30 도움말 — 이미 띄운 첫 걸음 안내 id 들(data/help.gd TIPS). 필드만 더해 SAVE_VERSION 그대로.
+var tips: Array = []
 signal world_changed()
 
 var _session_start_exp: float = 0.0

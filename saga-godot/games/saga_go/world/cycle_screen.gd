@@ -97,10 +97,11 @@ func _build_screen() -> void:
 	add_child(_layer)
 	_prompt_btn = Button.new()
 	_prompt_btn.anchor_top = 0.0
-	_prompt_btn.offset_left = 130
-	_prompt_btn.offset_right = 290
-	_prompt_btn.offset_top = 46
-	_prompt_btn.offset_bottom = 84
+	## 화면 기준 크기(1920×1280) 좌표 — 왼쪽 위 단추 줄 바로 아래(미니맵과 안 겹치게).
+	_prompt_btn.offset_left = 222
+	_prompt_btn.offset_right = 400
+	_prompt_btn.offset_top = 70
+	_prompt_btn.offset_bottom = 108
 	_prompt_btn.visible = false
 	_prompt_btn.pressed.connect(func() -> void: open_screen())
 	_layer.add_child(_prompt_btn)

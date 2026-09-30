@@ -109,6 +109,7 @@ func respawn() -> void:
 
 
 func _on_opened(chest: Node3D) -> void:
+	get_tree().call_group("go_help", "tip", "first_chest")
 	var g: Dictionary = TreasureChest.GRADES[chest.get("grade")]
 	Toast.show(self, "✦ %s — 경험치 +%d  (보물 %d/%d)" % [g.name, int(g.exp), opened_count(), total()], TreasureChest.TOAST_SEC)
 
