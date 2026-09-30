@@ -1,0 +1,76 @@
+{
+ "id": "hero_jp_kazenari",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id jp_kazenari(가명 가제나리). 역할 strategist·jp·★3. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 4,
+  "build": 2,
+  "head": "cap",
+  "outfit": "robe_long"
+ },
+ "height_target_m": 1.92,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.547,
+  "muscle": 0.8,
+  "weight": 0.55,
+  "height": 0.7051,
+  "proportions": 0.7,
+  "race": {
+   "asian": 0.85,
+   "caucasian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_asian_male/young_asian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brownlight",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow010/eyebrow010.mhclo",
+ "eyelashes": "eyelashes03/eyelashes03.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.1,
+  "eye-corner1-up": 0.1,
+  "nose-point-up": 0.171,
+  "nose-scale-vert-decr": 0.262,
+  "chin-height-decr": 0.123,
+  "eye-trans-up": 0.214,
+  "eyebrows-trans-up": 0.206,
+  "head-invertedtriangular": 0.537
+ },
+ "_garments": [
+  "dallyeong@303d66,302a24",
+  "eboshi"
+ ],
+ "clothes": [
+  "cf_dallyeong_303d66_302a24/cf_dallyeong_303d66_302a24.mhclo",
+  "toigo_mj_cloth_shoes/toigo_mj_cloth_shoes.mhclo",
+  "cf_eboshi/cf_eboshi.mhclo"
+ ],
+ "anims": {
+  "idle": "Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Spell_Simple_Shoot",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

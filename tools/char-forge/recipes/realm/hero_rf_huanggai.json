@@ -1,0 +1,76 @@
+{
+ "id": "hero_rf_huanggai",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id rf_huanggai(가명 화신). 역할 general·rf·★4. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 1,
+  "build": 2,
+  "head": "cap",
+  "outfit": "robe_short"
+ },
+ "height_target_m": 1.68,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.532,
+  "muscle": 0.8,
+  "weight": 0.55,
+  "height": 0.541,
+  "proportions": 0.7,
+  "race": {
+   "asian": 0.85,
+   "caucasian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_asian_male/young_asian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brown",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow001/eyebrow001.mhclo",
+ "eyelashes": "eyelashes01/eyelashes01.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.35,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.35,
+  "eye-corner1-up": 0.1,
+  "eyebrows-trans-up": 0.194,
+  "nose-scale-vert-incr": 0.127,
+  "nose-point-down": 0.338,
+  "eye-trans-down": 0.292,
+  "mouth-scale-horiz-decr": 0.298,
+  "head-square": 0.429
+ },
+ "_garments": [
+  "baji_jeogori@e6dfcc,8f342c",
+  "boktu"
+ ],
+ "clothes": [
+  "cf_baji_jeogori_e6dfcc_8f342c/cf_baji_jeogori_e6dfcc_8f342c.mhclo",
+  "toigo_mj_cloth_shoes/toigo_mj_cloth_shoes.mhclo",
+  "cf_boktu/cf_boktu.mhclo"
+ ],
+ "anims": {
+  "idle": "CF_Guard_Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

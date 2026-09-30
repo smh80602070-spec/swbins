@@ -1,0 +1,96 @@
+{
+ "id": "hero_jp_taketsumi",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id jp_taketsumi(가명 다케쓰미). 역할 samurai·jp·★4. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 1,
+  "build": 1,
+  "head": "band",
+  "outfit": "samurai"
+ },
+ "height_target_m": 1.68,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.537,
+  "muscle": 0.5,
+  "weight": 0.5,
+  "height": 0.5332,
+  "proportions": 0.7,
+  "race": {
+   "asian": 0.85,
+   "caucasian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_asian_male/young_asian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brown",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow010/eyebrow010.mhclo",
+ "eyelashes": "eyelashes03/eyelashes03.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.35,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.35,
+  "eye-corner1-up": 0.1,
+  "mouth-scale-horiz-decr": 0.278,
+  "nose-scale-vert-decr": 0.241,
+  "nose-point-down": 0.216,
+  "eyebrows-trans-down": 0.224,
+  "mouth-upperlip-height-incr": 0.193,
+  "head-oval": 0.419
+ },
+ "hair": "short04/short04.mhclo",
+ "tints": {
+  "hair": "#211812"
+ },
+ "_garments": [
+  "gusoku@756e65,2a2522"
+ ],
+ "clothes": [
+  "cf_gusoku_756e65_2a2522/cf_gusoku_756e65_2a2522.mhclo",
+  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
+ ],
+ "kitbash": [
+  {
+   "part": "shell",
+   "slot": "cloth_band",
+   "color": "#2a2522",
+   "rough": 0.8,
+   "offset": 0.02,
+   "thick": 0.006,
+   "groups": [
+    "head"
+   ],
+   "z_eye": [
+    0.035,
+    0.085
+   ],
+   "minw": 0.5
+  }
+ ],
+ "anims": {
+  "idle": "CF_Guard_Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "id": "hero_rf_caohong",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id rf_caohong(가명 충보). 역할 warrior·rf·★3. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 1,
+  "build": 0,
+  "head": "short02",
+  "outfit": "leather"
+ },
+ "height_target_m": 1.68,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.526,
+  "muscle": 0.3,
+  "weight": 0.35,
+  "height": 0.541,
+  "proportions": 0.7,
+  "race": {
+   "asian": 0.85,
+   "caucasian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_asian_male/young_asian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brownlight",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow008/eyebrow008.mhclo",
+ "eyelashes": "eyelashes01/eyelashes01.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.35,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.35,
+  "eye-corner1-up": 0.1,
+  "mouth-scale-horiz-decr": 0.188,
+  "chin-height-incr": 0.279,
+  "nose-point-up": 0.269,
+  "nose-scale-vert-incr": 0.266,
+  "mouth-upperlip-height-decr": 0.244,
+  "head-oval": 0.385
+ },
+ "_garments": [
+  "warrior_robe@8a2f2a",
+  "sangtu_bun"
+ ],
+ "clothes": [
+  "cf_warrior_robe_8a2f2a/cf_warrior_robe_8a2f2a.mhclo",
+  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo",
+  "cf_sangtu_bun/cf_sangtu_bun.mhclo"
+ ],
+ "anims": {
+  "idle": "CF_Guard_Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

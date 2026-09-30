@@ -1,0 +1,96 @@
+{
+ "id": "hero_mb_hanam",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id mb_hanam(가명 하남). 역할 strategist·mb·★3. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 2,
+  "build": 2,
+  "head": "band",
+  "outfit": "robe_long"
+ },
+ "height_target_m": 1.76,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.539,
+  "muscle": 0.8,
+  "weight": 0.55,
+  "height": 0.5918,
+  "proportions": 0.7,
+  "race": {
+   "asian": 0.7,
+   "caucasian": 0.25,
+   "african": 0.05
+  }
+ },
+ "skin": "young_asian_male/young_asian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "grey",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow006/eyebrow006.mhclo",
+ "eyelashes": "eyelashes03/eyelashes03.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.1,
+  "eye-corner1-up": 0.1,
+  "eye-trans-down": 0.275,
+  "chin-height-incr": 0.162,
+  "forehead-scale-vert-decr": 0.272,
+  "mouth-scale-horiz-decr": 0.2,
+  "mouth-upperlip-height-incr": 0.251,
+  "head-oval": 0.305
+ },
+ "hair": "short04/short04.mhclo",
+ "tints": {
+  "hair": "=#8a6a48"
+ },
+ "_garments": [
+  "kaftan@6c462b,d8d0bc"
+ ],
+ "clothes": [
+  "cf_kaftan_6c462b_d8d0bc/cf_kaftan_6c462b_d8d0bc.mhclo",
+  "shoes02/shoes02.mhclo"
+ ],
+ "kitbash": [
+  {
+   "part": "shell",
+   "slot": "cloth_band",
+   "color": "#2a2522",
+   "rough": 0.8,
+   "offset": 0.02,
+   "thick": 0.006,
+   "groups": [
+    "head"
+   ],
+   "z_eye": [
+    0.035,
+    0.085
+   ],
+   "minw": 0.5
+  }
+ ],
+ "anims": {
+  "idle": "Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Spell_Simple_Shoot",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

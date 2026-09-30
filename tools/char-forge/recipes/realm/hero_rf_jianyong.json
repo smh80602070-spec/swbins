@@ -1,0 +1,78 @@
+{
+ "id": "hero_rf_jianyong",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id rf_jianyong(가명 언변). 역할 strategist·rf·★2. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 3,
+  "build": 2,
+  "head": "long01",
+  "outfit": "robe_short"
+ },
+ "height_target_m": 1.84,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.503,
+  "muscle": 0.8,
+  "weight": 0.55,
+  "height": 0.6426,
+  "proportions": 0.7,
+  "race": {
+   "asian": 0.85,
+   "caucasian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_asian_male/young_asian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brown",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow003/eyebrow003.mhclo",
+ "eyelashes": "eyelashes03/eyelashes03.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.1,
+  "eye-corner1-up": 0.1,
+  "eyebrows-trans-up": 0.285,
+  "nose-point-down": 0.304,
+  "mouth-upperlip-height-decr": 0.16,
+  "chin-height-decr": 0.289,
+  "eye-trans-down": 0.31,
+  "head-oval": 0.252
+ },
+ "hair": "elvs_french_braid_variation/elvs_french_braid_variation.mhclo",
+ "tints": {
+  "hair": "#211812"
+ },
+ "_garments": [
+  "baji_jeogori@e6dfcc,883e29"
+ ],
+ "clothes": [
+  "cf_baji_jeogori_e6dfcc_883e29/cf_baji_jeogori_e6dfcc_883e29.mhclo",
+  "toigo_mj_cloth_shoes/toigo_mj_cloth_shoes.mhclo"
+ ],
+ "anims": {
+  "idle": "Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Spell_Simple_Shoot",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

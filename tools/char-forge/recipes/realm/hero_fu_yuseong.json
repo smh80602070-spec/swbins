@@ -1,0 +1,75 @@
+{
+ "id": "hero_fu_yuseong",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id fu_yuseong(가명 유성). 역할 strategist·fu·★3. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 3,
+  "build": 0,
+  "head": "short01",
+  "outfit": "tunic"
+ },
+ "height_target_m": 1.84,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.521,
+  "muscle": 0.3,
+  "weight": 0.35,
+  "height": 0.5918,
+  "proportions": 0.7,
+  "race": {
+   "caucasian": 0.85,
+   "asian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_caucasian_male/young_caucasian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "blue",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow009/eyebrow009.mhclo",
+ "eyelashes": "eyelashes03/eyelashes03.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.1,
+  "eye-corner1-up": 0.1,
+  "chin-height-incr": 0.212,
+  "forehead-scale-vert-decr": 0.329,
+  "eyebrows-trans-down": 0.181,
+  "nose-point-down": 0.224,
+  "nose-scale-vert-decr": 0.208,
+  "head-diamond": 0.49
+ },
+ "hair": "short01/short01.mhclo",
+ "tints": {
+  "hair": "#6a4428"
+ },
+ "clothes": [
+  "wdg_mycenaean_tunic/wdg_mycenaean_tunic.mhclo",
+  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
+ ],
+ "anims": {
+  "idle": "Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Spell_Simple_Shoot",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "id": "hero_mb_hoja",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id mb_hoja(가명 호자). 역할 warrior_f·mb·★3. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 1,
+  "build": 1,
+  "head": "bob02",
+  "outfit": "lamellar"
+ },
+ "height_target_m": 1.56,
+ "macro": {
+  "gender": 0.0,
+  "age": 0.461,
+  "muscle": 0.375,
+  "weight": 0.5,
+  "height": 0.5566,
+  "proportions": 0.8,
+  "race": {
+   "asian": 0.7,
+   "caucasian": 0.25,
+   "african": 0.05
+  }
+ },
+ "skin": "young_asian_female/young_asian_female.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brown",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.75,
+  "blush": 0.7,
+  "lid": 0.4
+ },
+ "eyebrows": "eyebrow012/eyebrow012.mhclo",
+ "eyelashes": "eyelashes04/eyelashes04.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "mouth-lowerlip-volume-incr": 0.3,
+  "chin-width-decr": 0.25,
+  "chin-prominent-decr": 0.15,
+  "eye-corner1-up": 0.2,
+  "mouth-scale-horiz-decr": 0.211,
+  "nose-point-up": 0.299,
+  "chin-height-incr": 0.173,
+  "nose-scale-vert-incr": 0.314,
+  "mouth-upperlip-height-incr": 0.16,
+  "head-diamond": 0.378
+ },
+ "hair": "bob02/bob02.mhclo",
+ "tints": {
+  "hair": "#7a3a22"
+ },
+ "_garments": [
+  "hauberk@e8e2d0,775c2f"
+ ],
+ "clothes": [
+  "cf_hauberk_e8e2d0_775c2f/cf_hauberk_e8e2d0_775c2f.mhclo",
+  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
+ ],
+ "anims": {
+  "idle": "CF_Guard_Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

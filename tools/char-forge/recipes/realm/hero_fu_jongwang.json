@@ -1,0 +1,80 @@
+{
+ "id": "hero_fu_jongwang",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id fu_jongwang(가명 종왕). 역할 warrior_f·fu·★4. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 4,
+  "build": 0,
+  "head": "long01",
+  "outfit": "lamellar"
+ },
+ "height_target_m": 1.74,
+ "macro": {
+  "gender": 0.0,
+  "age": 0.429,
+  "muscle": 0.225,
+  "weight": 0.35,
+  "height": 0.6582,
+  "proportions": 0.8,
+  "race": {
+   "caucasian": 0.85,
+   "asian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_caucasian_female/young_caucasian_female.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "grey",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.75,
+  "blush": 0.7,
+  "lid": 0.4
+ },
+ "eyebrows": "eyebrow006/eyebrow006.mhclo",
+ "eyelashes": "eyelashes04/eyelashes04.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "mouth-lowerlip-volume-incr": 0.3,
+  "chin-width-decr": 0.25,
+  "chin-prominent-decr": 0.15,
+  "eye-corner1-up": 0.2,
+  "forehead-scale-vert-incr": 0.22,
+  "eye-trans-down": 0.179,
+  "eyebrows-trans-up": 0.143,
+  "nose-scale-vert-decr": 0.267,
+  "chin-height-decr": 0.347,
+  "head-oval": 0.445
+ },
+ "hair": "long01/long01.mhclo",
+ "tints": {
+  "hair": "=#b89868"
+ },
+ "_garments": [
+  "hauberk@e8e2d0,535bac"
+ ],
+ "clothes": [
+  "cf_hauberk_e8e2d0_535bac/cf_hauberk_e8e2d0_535bac.mhclo",
+  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
+ ],
+ "anims": {
+  "idle": "CF_Guard_Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Sword_Attack",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

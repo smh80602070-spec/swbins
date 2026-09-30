@@ -1,0 +1,78 @@
+{
+ "id": "hero_tb_saryeong",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id tb_saryeong(가명 사령). 역할 strategist·tb·★3. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 1,
+  "build": 1,
+  "head": "afro01",
+  "outfit": "robe_armored"
+ },
+ "height_target_m": 1.68,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.553,
+  "muscle": 0.5,
+  "weight": 0.5,
+  "height": 0.4004,
+  "proportions": 0.7,
+  "race": {
+   "caucasian": 0.85,
+   "asian": 0.1,
+   "african": 0.05
+  }
+ },
+ "skin": "young_caucasian_male/young_caucasian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "brownlight",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow007/eyebrow007.mhclo",
+ "eyelashes": "eyelashes01/eyelashes01.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.1,
+  "eye-corner1-up": 0.1,
+  "mouth-scale-horiz-decr": 0.239,
+  "mouth-upperlip-height-incr": 0.124,
+  "chin-height-incr": 0.155,
+  "nose-point-down": 0.14,
+  "forehead-scale-vert-incr": 0.12,
+  "head-oval": 0.472
+ },
+ "hair": "afro01/afro01.mhclo",
+ "tints": {
+  "hair": "#7a3a22"
+ },
+ "_garments": [
+  "hauberk@e8e2d0,4c5c6d"
+ ],
+ "clothes": [
+  "cf_hauberk_e8e2d0_4c5c6d/cf_hauberk_e8e2d0_4c5c6d.mhclo",
+  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
+ ],
+ "anims": {
+  "idle": "Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Spell_Simple_Shoot",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}

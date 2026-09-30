@@ -1,0 +1,75 @@
+{
+ "id": "hero_dj_seohae",
+ "_note": "단계 4-b 사가국지 장수 몸 — saga-web/saga-realm 장수 id dj_seohae(가명 서해). 역할 strategist·dj·★4. gen_realm_recipes.py 가 쓴다(손으로 고치지 말 것 — 생성기를 고친다).",
+ "axes": {
+  "height": 2,
+  "build": 0,
+  "head": "ponytail01",
+  "outfit": "tunic"
+ },
+ "height_target_m": 1.76,
+ "macro": {
+  "gender": 1.0,
+  "age": 0.508,
+  "muscle": 0.3,
+  "weight": 0.35,
+  "height": 0.5293,
+  "proportions": 0.7,
+  "race": {
+   "caucasian": 0.9,
+   "asian": 0.05,
+   "african": 0.05
+  }
+ },
+ "skin": "young_caucasian_male/young_caucasian_male.mhmat",
+ "eyes": "high-poly/high-poly.mhclo",
+ "eye_color": "grey",
+ "mouth_close": 0.003,
+ "makeup": {
+  "lip": 0.3,
+  "blush": 0.15,
+  "lid": 0.15
+ },
+ "eyebrows": "eyebrow001/eyebrow001.mhclo",
+ "eyelashes": "eyelashes01/eyelashes01.mhclo",
+ "teeth": "teeth_base/teeth_base.mhclo",
+ "targets": {
+  "eye-scale-incr": 0.3,
+  "eye-height2-incr": 0.12,
+  "eye-bag-decr": 0.4,
+  "nose-hump-decr": 0.35,
+  "nose-scale-horiz-decr": 0.25,
+  "nose-flaring-decr": 0.2,
+  "nose-volume-decr": 0.15,
+  "cheek-bones-incr": 0.15,
+  "cheek-volume-decr": 0.15,
+  "ear-scale-decr": 0.2,
+  "mouth-angles-up": 0.15,
+  "eyebrows-angle-up": 0.12,
+  "chin-width-incr": 0.1,
+  "eye-corner1-up": 0.1,
+  "nose-point-up": 0.328,
+  "eye-trans-down": 0.122,
+  "forehead-scale-vert-incr": 0.121,
+  "mouth-upperlip-height-incr": 0.169,
+  "chin-height-decr": 0.183,
+  "head-round": 0.354
+ },
+ "hair": "ponytail01/ponytail01.mhclo",
+ "tints": {
+  "hair": "#4a3322"
+ },
+ "clothes": [
+  "wdg_mycenaean_tunic/wdg_mycenaean_tunic.mhclo",
+  "rehmanpolanski_viking_boots/rehmanpolanski_viking_boots.mhclo"
+ ],
+ "anims": {
+  "idle": "Idle_Loop",
+  "walk": "Walk_Loop",
+  "run": "Jog_Fwd_Loop",
+  "attack": "Spell_Simple_Shoot",
+  "hit": "Hit_Chest",
+  "death": "Death01",
+  "kneel": "CF_Kneel_Loop"
+ }
+}
