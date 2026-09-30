@@ -102,6 +102,13 @@ namespace Saga.Forest.UI
         {
             if (_player == null) return "-";
 
+            // PLAN.md 109-16 — 시나리오가 열려 있으면 그 장·단계 한 줄이 먼저(소포를 들고 있을 땐 그 거리가 먼저).
+            if (!ForestDeliveryState.Carrying)
+            {
+                string story = ForestScenario.HudLine();
+                if (story.Length > 0) return story;
+            }
+
             // 101-2 5.7 "택배 사슬" — 소포를 들고 있으면 그 목적지까지 거리를 우선 보여준다.
             if (ForestDeliveryState.Carrying)
             {

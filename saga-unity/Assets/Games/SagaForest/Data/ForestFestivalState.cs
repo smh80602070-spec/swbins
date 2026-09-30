@@ -64,8 +64,12 @@ namespace Saga.Forest.Data
         public static void ForceDayForTest(int? day) => _forcedDayForTest = day;
         private static int CurrentDay => _forcedDayForTest ?? DateTime.Now.Day;
 
+        /// <summary>PLAN.md 109-16 시나리오 fest 단계 동안 그 행사를 오늘 열린 것으로 친다(기념 놀이 — 그날이 아니어도, 오늘 이미 치렀어도). `ForestScenario` 가 앉히고 걷는다.</summary>
+        public static Kind? MemorialKind;
+
         public static Kind? TodayKind()
         {
+            if (MemorialKind.HasValue) return MemorialKind;
             int day = CurrentDay;
             foreach (var d in Defs) if (d.Day == day) return d.Kind;
             return null;
@@ -87,9 +91,10 @@ namespace Saga.Forest.Data
         public static bool TryComplete(Kind kind, out int fruitReward)
         {
             fruitReward = 0;
-            if (TodayKind() != kind || IsDoneToday()) return false;
+            bool memorial = MemorialKind == kind;
+            if (TodayKind() != kind || (IsDoneToday() && !memorial)) return false;
 
-            _doneDate = DateTime.Now.ToString("yyyy-MM-dd");
+            if (!memorial) _doneDate = DateTime.Now.ToString("yyyy-MM-dd"); // 기념 놀이는 오늘 치른 것으로 안 적는다
             switch (kind)
             {
                 case Kind.Sebae:
@@ -104,6 +109,7 @@ namespace Saga.Forest.Data
                     _wishActiveUntilTicks = DateTime.Now.AddHours(WishHours).Ticks;
                     break;
             }
+            ForestScenario.OnFestival(kind); // PLAN.md 109-16 — 시나리오 fest 단계
             return true;
         }
 
@@ -115,7 +121,7 @@ namespace Saga.Forest.Data
         /// 시 벌칙" 없음).</summary>
         public static int ReportCollectSpotGather(ForestMuseumState.Category category)
         {
-            if (TodayKind() != Kind.FlowerHunt || IsDoneToday()) return 0;
+            if (TodayKind() != Kind.FlowerHunt || (IsDoneToday() && MemorialKind != Kind.FlowerHunt)) return 0;
 
             float now = UnityEngine.Time.time;
             if (now - _flowerHuntWindowStart > FlowerHuntWindowSec)

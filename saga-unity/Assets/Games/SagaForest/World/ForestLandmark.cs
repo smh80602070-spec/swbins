@@ -67,6 +67,7 @@ namespace Saga.Forest.World
             if (dist > NoticeRadius) return false;
             _inside = true;
             LastText = NoticeText(zoneIndex, Seen.Add(zoneIndex));
+            ForestScenario.OnLandmark(zoneIndex); // PLAN.md 109-16 — 시나리오 go 단계
             DialogueLabel.Instance?.Show(LastText, ToastSec);
             return true;
         }

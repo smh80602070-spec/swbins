@@ -2,9 +2,9 @@
 
 `node tools/loc-review.mjs` 가 쓴다(PLAN.md 110 ⑥c). 사람이 채우는 곳은 `docs/en_review.tsv` 의 **검수** 칸뿐 — `OK` 또는 고칠 말을 적고 다시 돌리면 진척이 여기 반영된다. 고친 영어는 번역 표(`xxx_en.json`)·코드에 넣는다(키는 안 바꾼다).
 
-- 짝 **5431** (표 5376 · 코드 55) — go 3078 · dungeon 740 · forest 272 · story 488 · realm 798
-- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **625**
-- 사람 검수 **0/5431** — 순위1 0/266 · 순위2 0/4297 · 순위3 0/868
+- 짝 **5682** (표 5627 · 코드 55) — go 3078 · dungeon 740 · forest 523 · story 488 · realm 798
+- 자동 오류 **0** · 경고 **1** · 용어 흔들림 **16** · 넘침 주의 **659**
+- 사람 검수 **0/5682** — 순위1 0/266 · 순위2 0/4408 · 순위3 0/1008
 
 ## 검수 순서
 
@@ -31,7 +31,7 @@
 - 「바꾸기」 → **Switch** (go:weapon.btn_swap, go:artifact.btn_swap) · **Trade** (go:fish.swap)
 - 「요리」 → **Cooking** (go:cook.button, go:cook.title) · **dishes cooked** (go:ach.unit.cook)
 - 「방패」 → **Shield Wall** (go:kit.noun.shield) · **Shield** (go:domain.hud_echo_shield)
-- 「끝」 → **Complete** (go:story.state_done, go:wq.state_done, dungeon:dscen.done_none 외 1) · **Done** (go:ach.end)
+- 「끝」 → **Complete** (go:story.state_done, go:wq.state_done, dungeon:dscen.done_none 외 2) · **Done** (go:ach.end)
 - 「청하 촌장에게 알리기」 → **Report to the Elder of Cheongha** (go:story.ch1.s8, go:story.ch2.s4, go:story.ch3.s9 외 4) · **Report to the elder of Cheongha** (go:story.ch8.s12, go:story.ch9.s12) · **Report to the Village Elder of Cheongha** (go:story.ch29.s9)
 - 「……」 → **……** (go:story.idle.wanderer, go:story.idle.haesol) · **…** (go:story.idle.gamyeon, go:story.idle.king)
 - 「가 볼게요.」 → **I'll go.** (go:wq.lighthouse.s1.p.a) · **I'll go take a look.** (go:story.ch10.s1.p.a)
@@ -41,7 +41,7 @@
 - 「여기서 끝내자.」 → **End it here.** (go:story.ch20.s9.p.b) · **Let's end this here.** (go:story.ch29.s4.p.b)
 - 「마루」 → **Maru** (go:story.short.maru) · **Wood Floor** (forest:finish.wood)
 
-## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 625)
+## 넘침 주의 — 순위 1·2 에서 영어가 한국어보다 1.6배 넘게 넓은 줄 (위 30 / 659)
 
 배치 점검(`UiLayoutCheck`)은 첫 화면·패널·상태 38 만 잰다 — 그 밖에서 뜨는 긴 줄은 실기에서 한 번 본다.
 
@@ -70,10 +70,10 @@
 | 19→37 | go | `story.ch34.s5` | Switch off the west power pylon in front of the vault with an elemental skill |
 | 19→37 | go | `story.ch34.s6` | Switch off the east power pylon in front of the vault with an elemental skill |
 | 3→12 | go | `cook.recipe.honey_cake` | Honey Blossom Rice Cake |
+| 24→44 | forest | `fscen.ch.au_harvest.blurb` | Neighbors and guests join in: a moonlit feast after growing close to someone in the village. |
 | 10→22 | go | `story.ch5` | Chapter 5 · The Old Road over the Western Pass |
 | 4→13 | dungeon | `item.wp_lm_cloud` | Cloud General's Gold Sword |
 | 11→23 | go | `story.ch23.s1.p.b` | The last word of the erased entry — 'lighthouse'… |
 | 6→15 | dungeon | `landmark.cloud` | Golden Palace Above the Clouds |
 | 7→17 | go | `mount.need_ground` | Mount while standing on the ground |
 | 7→17 | dungeon | `mount.need_ground` | Mount while standing on the ground |
-| 4→13 | realm | `scenario.r2_plains.title` | Showdown on the Great Road |

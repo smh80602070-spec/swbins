@@ -68,6 +68,7 @@ namespace Saga.Forest.Data
             public string[] visitGiftGot;
             public bool visitAskSettle;
             public string mountSel; // PLAN.md 109-15 — 고른 탈것(탄 채는 저장 안 함). 버전 그대로: 옛 세이브는 null → 안 고른 채.
+            public string scenarioJson; // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 처음부터.
         }
 
         /// <summary>Playtest*.cs 전용 — GameBootstrap이 매 Play 시작마다
@@ -145,6 +146,7 @@ namespace Saga.Forest.Data
             data.visitGiftGot = bonds.GiftGot;
             data.visitAskSettle = bonds.AskSettle;
             data.mountSel = ForestMounts.Snapshot();
+            data.scenarioJson = ForestScenario.Snapshot();
             return JsonUtility.ToJson(data);
         }
 
@@ -215,6 +217,7 @@ namespace Saga.Forest.Data
             else
                 ForestVisitors.RestoreBonds(null, null, null, int.MinValue, null, false); // v8 이하 — 단골 없음
             ForestMounts.Restore(data.mountSel);
+            ForestScenario.Restore(data.scenarioJson);
 
             Transform player = FindPlayer();
             if (player != null && data.playerPos != null && data.playerPos.Length == 3)

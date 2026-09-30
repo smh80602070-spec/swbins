@@ -76,6 +76,8 @@ namespace Saga.EditorTools
         private static void CountFrames()
         {
             _framesSeen++;
+            // PLAN.md 109-16 — 새 판 첫 장면(이사 오던 날)이 다른 진단 앞에서 상자를 열지 않게 끈다. 시나리오 진단이 스스로 켜고 되돌린다.
+            if (_framesSeen == 1) { ForestScenario.Enabled = false; ForestScenario.AbortScene(); ForestScenarioUi.Instance?.Hide(); }
             // PLAN.md 44~49장 디버그 화면(2026-09-14, GO/DUNGEON과 같은 결) —
             // 좌표 줄이 실제로 채워지는지 본다. 0.5초 FPS 타이머를 기다리는
             // 대신(배치 모드는 몇 프레임 안엔 절대 안 찬다) private
@@ -97,6 +99,7 @@ namespace Saga.EditorTools
                 if (!PlaytestForestEras.Run()) _hadError = true; // PLAN.md 109-4 세 시대 — 마을 사람 여섯·존 소품 시대 조각
                 if (!PlaytestForestVisitors.Run()) _hadError = true; // PLAN.md 109-12-1 떠돌이 방문객
                 if (!PlaytestForestMount.Run()) _hadError = true; // PLAN.md 109-15 탈것·비행 — 탈것·점수 손잡이·자리·세이브를 되돌린다.
+                if (!PlaytestForestScenario.Run()) _hadError = true; // PLAN.md 109-16 시나리오 — 과일·집·도감·손님·택배·행사를 되돌린다.
                 if (!PlaytestNpcModels.Forest()) _hadError = true; // PLAN.md 106-4 FOREST 몫 — 숲지기 사실 모델
             }
             if (_framesSeen >= FramesToRun)

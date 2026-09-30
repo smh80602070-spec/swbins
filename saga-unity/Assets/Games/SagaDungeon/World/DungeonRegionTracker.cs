@@ -99,7 +99,9 @@ namespace Saga.Dungeon.World
             }
             if (_blessing != null && _blessing.IsShowing) return true;
             var trial = Saga.Dungeon.UI.TrialCardUi.Instance;
-            return trial != null && trial.IsOpen;
+            if (trial != null && trial.IsOpen) return true;
+            var scene = Saga.Dungeon.UI.DungeonScenarioUi.Instance; // PLAN.md 109-16 — 시나리오 장면 상자도 모달이라 배너를 숨긴다
+            return scene != null && scene.IsOpen;
         }
 
         /// <summary>진단이 앞뒤로 부른다 — 머묾·배너를 비우고 "마지막으로 알린 지역"을 그 값으로.</summary>

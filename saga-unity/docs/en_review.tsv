@@ -3714,6 +3714,117 @@
 2	forest	finish.wood	마루	Wood Floor		
 2	forest	fruit.gather_toast	나무를 흔들었다 — {0}을(를) 주웠다 (보유 {1}개)	Shook the tree — picked up {0} (have {1})		
 2	forest	fruit.name	산딸기	wild berries		
+2	forest	fscen.cast.bandi	도깨비불 반디	Bandi the Wisp		
+2	forest	fscen.cast.chalna	사진작가 찰나	Photographer Chalna		
+2	forest	fscen.cast.dareum	택배 기사 달음	Courier Dal-eum		
+2	forest	fscen.cast.dudu	도깨비 대장 두두	Dudu the Dokkaebi Chief		
+2	forest	fscen.cast.explorer	탐험가	Explorer		
+2	forest	fscen.cast.hoyeon	여우 화상 호연	Hoyeon the Fox Peddler		
+2	forest	fscen.cast.k7	시간 여행자 K-7	K-7 the Time Traveler		
+2	forest	fscen.cast.keeper	숲지기 솔바람	Forest Keeper Solbaram		
+2	forest	fscen.cast.nabi	곤충 박사 나비	Dr. Nabi the Entomologist		
+2	forest	fscen.cast.pungnang	난파 선원 풍랑	Pungnang the Castaway		
+2	forest	fscen.cast.rumi	불시착 탐사원 루미	Crash-landed Surveyor Rumi		
+2	forest	fscen.ch.au_cave.blurb	숲지기 부탁 "동굴의 보물" — 동굴 끝에 금의 조각. K-7: "금은 우체통이 부르는 길".	The keeper's request, "Treasure of the Cave" - a shard of the crack lies at the end. K-7: "The crack is the road the postbox calls."		
+2	forest	fscen.ch.au_cave.title	북쪽 동굴의 조각	Shard in the Northern Cave		
+2	forest	fscen.ch.au_harvest.blurb	주민·손님 모두 두 편으로 — 줄다리기 뒤 달 아래 잔치.	Neighbors and guests join in: a moonlit feast after growing close to someone in the village.		
+2	forest	fscen.ch.au_harvest.title	한가위 줄다리기	Harvest Moon Feast		
+2	forest	fscen.ch.au_insect.blurb	곤충 박사 나비가 반딧불이가 줄어드는 까닭을 찾는다 — 금 너머 빛 공해.	Dr. Nabi the Entomologist searches for why fireflies are fading - light pollution leaking through the crack.		
+2	forest	fscen.ch.au_insect.title	반딧불이 정원	The Firefly Garden		
+2	forest	fscen.ch.au_rumi.blurb	탐사원 루미 — 구조 신호가 300년 뒤에 닿는다. 옛 우체통으로 신호를 "부치자".	Surveyor Rumi - her rescue signal takes 300 years to arrive. Let's "post" it through the old postbox.		
+2	forest	fscen.ch.au_rumi.title	우주기지의 불시착	Crash Landing at the Space Base		
+2	forest	fscen.ch.sp_fox.blurb	호연이 금으로 넘어와 "시대를 잃은 물건"을 판다. 삼짇날 꽃놀이로 장터를 연다.	Hoyeon slips through the crack and sells "things that lost their age". A flower-viewing festival opens the market.		
+2	forest	fscen.ch.sp_fox.title	여우 화상의 봄 장터	The Fox Monk's Spring Market		
+2	forest	fscen.ch.sp_move.blurb	짐을 풀던 밤, 하늘에 금이 가고 택배 기사 달음이 소포와 함께 떨어진다.	The night you unpack, the sky cracks and Courier Dal-eum falls out with a parcel.		
+2	forest	fscen.ch.sp_move.title	이사 오던 날	The Day We Moved In		
+2	forest	fscen.ch.sp_museum.blurb	K-7 이 떨어져 "사라진 숲" 기록을 보인다. 사고에 화석을 채우면 기록 한 줄이 흐려진다.	K-7 falls in and shows the record "The Vanished Forest". Filling the archive with fossils fades a line of it.		
+2	forest	fscen.ch.sp_museum.title	사고를 채우다	Filling the Archive		
+2	forest	fscen.ch.sp_postbox.blurb	빛 편지가 가리키는 곳 — 탑성 폐허의 옛 우체통. 안에 여러 시대 편지가 쌓여 있다.	Where the light letter points - the old postbox in the tower ruins, piled with letters from many ages.		
+2	forest	fscen.ch.sp_postbox.title	폐허의 옛 우체통	The Old Postbox in the Ruins		
+2	forest	fscen.ch.su_photo.blurb	찰나가 "사라지기 전에 찍어 두자"며 숲을 돈다. 반딧불 참나무숲 밤 사진이 마지막.	Chalna tours the forest to photograph it "before it vanishes". The last shot is the night of the firefly oak grove.		
+2	forest	fscen.ch.su_photo.title	숲 여덟의 사진	Photos of the Forest		
+2	forest	fscen.ch.su_star.blurb	도깨비불 반디와 두두 패가 칠석 밤에 몰려온다. 손님 하나를 마을에 살게 한다.	Bandi the Wisp and Dudu's gang crowd in on the Tanabata night. One guest is invited to settle in the village.		
+2	forest	fscen.ch.su_star.title	칠석, 별에 소원	Tanabata, Wishes on the Stars		
+2	forest	fscen.ch.su_waterfall.blurb	탐험가의 수수께끼 — 폭포 뒤 굴에 옛 편지 다발과 미래의 발자국.	The explorer's riddle - behind the falls, a cave with old letters and footprints from the future.		
+2	forest	fscen.ch.su_waterfall.title	폭포 너머	Beyond the Waterfall		
+2	forest	fscen.ch.wi_dongji.blurb	팥죽을 쑤어 손님·주민에게 — 살러 온 손님이 둘 이상이어야 잔치가 찬다.	Porridge for guests and residents - at least two guests must settle for the feast to be full.		
+2	forest	fscen.ch.wi_dongji.title	동지 팥죽 나눔	Sharing Red Bean Porridge		
+2	forest	fscen.ch.wi_letters.blurb	앞날의 주민들에게서 답장이 온다 — 고맙다는 편지를 주민마다 전한다.	Replies come from neighbors of the future - a thank-you letter for each resident.		
+2	forest	fscen.ch.wi_letters.title	편지가 쌓이는 겨울	The Winter of Piled Letters		
+2	forest	fscen.ch.wi_moon.blurb	달집을 태우는 밤, 하늘 금이 우체통 위로 내려와 별 우체통이 된다. "사라진 숲"이 "이어진 숲"으로.	On the night the moon house burns, the crack descends onto the postbox and it becomes the Star Postbox. "Vanished Forest" becomes "Connected Forest".		
+2	forest	fscen.ch.wi_moon.title	대보름, 별 우체통	The Full Moon, the Star Postbox		
+2	forest	fscen.ch.wi_newyear.blurb	주민·살러 온 손님 모두에게 세배.	Bow to every resident and settled guest.		
+2	forest	fscen.ch.wi_newyear.title	설날 세배 돌기	New Year Bows		
+2	forest	fscen.ch.y2_bloom.blurb	옛 우체통에 첫 돌이 놓인 날, 삼짇날 꽃놀이로 새 우체통을 알린다. 기록판 줄이 "이어 쌓는 중"으로.	The day the first stone is laid on the old postbox, a flower festival announces the new box. The archive line becomes "Stacking on".		
+2	forest	fscen.ch.y2_bloom.title	답장이 온 봄	Spring When the Reply Came		
+2	forest	fscen.ch.y2_cavebox.blurb	북쪽 동굴 끝의 마지막 답장 상자 — 앞날의 누군가가 보낸 편지 한 통.	The last reply box at the end of the northern cave - a letter from someone in the future.		
+2	forest	fscen.ch.y2_cavebox.title	동굴 끝의 답장 상자	The Reply Box at the Cave's End		
+2	forest	fscen.ch.y2_hoyeon.blurb	여우 화상 호연이 지난해 좌판의 답례로 옛 방울을 내놓는다. 이웃과 정이 쌓여야 방울이 운다.	Hoyeon the Fox Peddler offers the old bell in thanks for last year's stall. The bell rings only when neighbors grow close.		
+2	forest	fscen.ch.y2_hoyeon.title	호연의 답장	Hoyeon's Reply		
+2	forest	fscen.ch.y2_lens.blurb	찰나가 카메라를 빌려 준다. 조용한 두 숲의 여름을 찍는다.	Chalna lends you a camera. Photograph the summer of two quiet forests.		
+2	forest	fscen.ch.y2_lens.title	빌려 준 카메라	The Borrowed Camera		
+2	forest	fscen.ch.y2_moon.blurb	받은 답장에 답례하는 한가위 — 마을 사람과 마음을 깊이 나눈 뒤 잔치를 연다.	The harvest moon returns thanks for replies received - a feast after growing close to a neighbor.		
+2	forest	fscen.ch.y2_moon.title	한가위 답례	Harvest Moon Thanks		
+2	forest	fscen.ch.y2_night.blurb	오래 노출해서 찍은 반딧불 사진에 여러 시대가 보낸 답장 불빛이 줄지어 선다.	In a long-exposure firefly photo, reply lights from many ages line up.		
+2	forest	fscen.ch.y2_night.title	반딧불 야간 촬영	Firefly Night Shoot		
+2	forest	fscen.ch.y2_reply.blurb	눈 녹은 아침, 지난겨울 부친 편지에 세 시대의 답장이 한꺼번에 도착한다.	A thawed morning - replies from three ages arrive all at once to last winter's letters.		
+2	forest	fscen.ch.y2_reply.title	별 우체통의 첫 답장	First Reply to the Star Postbox		
+2	forest	fscen.ch.y2_ruin.blurb	기록판에 "옛 우체통 복원 미완" 줄이 생긴다. 폐허에서 옛사람과 앞날 사람이 함께 쌓은 흔적을 찾는다.	The archive gains a line "Old postbox restoration unfinished". At the ruins, find traces where the old and the future built together.		
+2	forest	fscen.ch.y2_ruin.title	다시 쌓는 옛 우체통	Rebuilding the Old Postbox		
+2	forest	fscen.ch.y2_rumi.blurb	우주기지 안테나에 닿은 답신 상자 — 광석으로 만든 열쇠로 열고, 한 통은 배달해야 뜯는다.	A reply box has reached the space base antenna - open it with an ore key, and deliver one letter before opening it.		
+2	forest	fscen.ch.y2_rumi.title	루미의 답신	Rumi's Reply		
+2	forest	fscen.ch.y2_star.blurb	칠석날 밤 등불 든 마을 사람들이 별 우체통 앞에서 함께 찍는 사진이 이 여름의 답장이 된다.	On Tanabata night villagers with lanterns pose before the Star Postbox - that photo is this summer's reply.		
+2	forest	fscen.ch.y2_star.title	칠석, 한여름의 답장	Tanabata, a Midsummer Reply		
+2	forest	fscen.ch.y2_wdongji.blurb	마음이 여덟 이상 깊어진 이웃과 동지 팥죽을 나눈다.	Share red bean porridge with neighbors who have grown close.		
+2	forest	fscen.ch.y2_wdongji.title	동지 답례	Winter Solstice in Return		
+2	forest	fscen.ch.y2_wletter.blurb	올해는 이쪽에서 먼저 편지를 돌린다. 배달 다섯.	This year we send letters first. Five deliveries.		
+2	forest	fscen.ch.y2_wletter.title	겨울 편지 답례	Winter Letters in Return		
+2	forest	fscen.ch.y2_wmoon.blurb	별 우체통과 옛 우체통이 나란히 선 밤, 기록판 "복원 미완" 줄이 "이어진 우체통"이 된다.	The night the Star Postbox and the old postbox stand side by side, the unfinished line becomes "Connected Postboxes".		
+2	forest	fscen.ch.y2_wmoon.title	두 번째 대보름	The Second Full Moon		
+2	forest	fscen.ch.y2_wyear.blurb	세배 돌이에 편지 한 통씩을 들고 간다.	A letter in hand for every New Year bow.		
+2	forest	fscen.ch.y2_wyear.title	설날, 새 편지	New Year, New Letters		
+2	forest	fscen.chapter_fmt	{0}장 · {1}	Ch. {0} · {1}		
+2	forest	fscen.choice.crack.open	금을 활짝 열어 둔다	Leave the crack wide open		
+2	forest	fscen.choice.crack.prompt	금을 어떻게 할 것인가	What will you do with the crack?		
+2	forest	fscen.choice.crack.quiet	조용히 해 달라 한다	Ask it to be quiet		
+2	forest	fscen.choice.name.prompt	K-7 에게 마을 이름을 알려 줄까	Shall we tell K-7 the village's name?		
+2	forest	fscen.choice.name.secret	비밀로 한다	Keep it secret		
+2	forest	fscen.choice.name.tell	알려 준다	Tell		
+2	forest	fscen.done_none	끝	Complete		
+2	forest	fscen.done_toast	📖 {0}장 · {1} 끝 — {2}	📖 Ch. {0} · {1} complete — {2}		
+2	forest	fscen.hint.cave	🗿 명소 「{0}」 곁에 {1}/{2}번 선다	🗿 Stand by the landmark 「{0}」 {1}/{2}		
+2	forest	fscen.hint.deliver	📦 택배를 {0}/{1}번 배달한다	📦 Deliver parcels {0}/{1}		
+2	forest	fscen.hint.donate	🏛️ 사고에 「{0}」 {1}점을 채운다 (지금 {2})	🏛️ Fill the archive with {1} 「{0}」 (now {2})		
+2	forest	fscen.hint.fest	🎉 「{0}」 기념 놀이를 치른다	🎉 Play the 「{0}」 memorial festival		
+2	forest	fscen.hint.finish	마무리	Wrapping up		
+2	forest	fscen.hint.forest	🌲 「{0}」 에 든다	🌲 Enter 「{0}」		
+2	forest	fscen.hint.gather	🧺 「{0}」 채집 {1}/{2}	🧺 Gather 「{0}」 {1}/{2}		
+2	forest	fscen.hint.go	🗿 명소 「{0}」 곁에 선다	🗿 Stand by the landmark 「{0}」		
+2	forest	fscen.hint.heart	💗 손님과 정 {0} 이상 (지금 {1})	💗 Bond {0}+ with a guest (now {1})		
+2	forest	fscen.hint.place	🛋️ 집에 가구를 {0}개 놓는다	🛋️ Place {0} furniture in your house		
+2	forest	fscen.hint.settle	🏠 손님 {0}명을 눌러앉힌다 (지금 {1})	🏠 Have {0} guests settle in (now {1})		
+2	forest	fscen.hint.talk	💬 이야기를 듣는다	💬 Listen to the story		
+2	forest	fscen.hud	📖 {0}장 · {1} — {2}	📖 Ch. {0} · {1} — {2}		
+2	forest	fscen.next	다음	Next		
+2	forest	fscen.page	{0} / {1}	{0} / {1}		
+2	forest	fscen.picked	📖 {0} — 골랐다	📖 {0} — chosen		
+2	forest	fscen.reward.fruit	과일 {0}	Fruit {0}		
+2	forest	fscen.reward.title	🏷️ 칭호 「{0}」	🏷️ Title 「{0}」		
+2	forest	fscen.season.autumn	가을 · 앞날의 기록	Autumn · Records of the Future		
+2	forest	fscen.season.autumn2	둘째 해 가을 · 앞날의 답장	Year 2 Autumn · Reply from the Future		
+2	forest	fscen.season.spring	봄 · 옛 우체통	Spring · The Old Postbox		
+2	forest	fscen.season.spring2	둘째 해 봄 · 우체통의 답장	Year 2 Spring · Reply from the Postbox		
+2	forest	fscen.season.summer	여름 · 금으로 온 손님들	Summer · Guests Who Came Through the Crack		
+2	forest	fscen.season.summer2	둘째 해 여름 · 사진첩의 답장	Year 2 Summer · Reply from the Album		
+2	forest	fscen.season.winter	겨울 · 이어진 숲	Winter · The Connected Forest		
+2	forest	fscen.season.winter2	둘째 해 겨울 · 이어 쓰는 숲	Year 2 Winter · The Forest We Keep Writing		
+2	forest	fscen.skip	건너뛰기	Skip		
+2	forest	fscen.title.wi_moon	이어진 숲의 이웃	Neighbor of the Connected Forest		
+2	forest	fscen.title.y2_bloom	답장을 받는 이웃	Neighbor Who Received a Reply		
+2	forest	fscen.title.y2_cavebox	앞날의 답장을 여는 이웃	Neighbor Who Opens the Reply of the Future		
+2	forest	fscen.title.y2_star	한여름의 사진 이웃	Neighbor of the Midsummer Photo		
+2	forest	fscen.title.y2_wmoon	두 해째의 이어진 숲의 이웃	Second-Year Neighbor of the Connected Forest		
+2	forest	fscen.you	나	Me		
 2	forest	furniture.badukpan	바둑판	Go Board		
 2	forest	furniture.bandaji	반닫이	Bandaji Chest		
 2	forest	furniture.bangseok	방석	Cushion		
@@ -4927,6 +5038,146 @@
 3	forest	era_folk.surveyor.1	바위 지대 선돌 곁에 제 탐조등이 떠 있더라고요. 아직 불이 들어와요.	My searchlight is hovering by the standing stone in the rocky fields. It still lights up.		
 3	forest	era_folk.surveyor.2	이 시대 공기는 달아요. 필터를 끄고 숨 쉬어도 되겠어요.	The air in this era is sweet. I think I can switch off my filter and breathe.		
 3	forest	era_folk.surveyor.3	구조 신호는 보냈어요. 도착은… 삼백 년 뒤래요.	I sent a rescue signal. Estimated arrival… three hundred years from now.		
+3	forest	fscen.scene.ans1.0	옛 우체통에 첫 돌이 놓였소. 이제 삼짇날 꽃놀이를 열어 새 우체통을 알리면 좋겠구려.	The first stone is laid on the old postbox. Now we should hold a Samjinnal flower festival to announce the new postbox.		
+3	forest	fscen.scene.ans1.1	방울을 꽃가지에 달고 나가겠소. 이번 꽃전은 내가 빚소.	I'll hang the bell on a flower branch and go out. I'll make the flower cakes this time.		
+3	forest	fscen.scene.ans1.2	저는 답장 엽서를 한 장씩 돌리겠습니다. 이 마을 소인이 찍힌 엽서예요!	I'll hand out reply postcards one by one. They're stamped with this village's postmark!		
+3	forest	fscen.scene.ans2.0	꽃놀이가 끝났군요. 기록판 새 줄이 바뀌었어요 — "복원 미완"이 "이어 쌓는 중"으로요.	The festival is over. The new line on the record board has changed - "unfinished restoration" became "stacking on".		
+3	forest	fscen.scene.ans2.1	이 마을은 이제 편지를 받기만 하는 곳이 아니라 답장을 보내는 곳이오. 그대는 답장을 받는 이웃이오.	This village is no longer a place that only receives letters, but one that sends replies. You are a neighbor who receives replies.		
+3	forest	fscen.scene.ans2.2	내년에도, 그다음에도 이 마을에서 편지를 부치겠습니다.	Next year, and the year after, I'll post letters from this village.		
+3	forest	fscen.scene.cave1.0	북쪽 동굴 끝까지 가 보시오. 벽화가 있고 그 끝에 빛나는 결정이 박혀 있다 하오.	Go to the end of the northern cave. They say there are murals, and at the very end a glowing crystal is embedded.		
+3	forest	fscen.scene.cave1.1	밧줄은 내가 걸어 두었지. 조심해서 들어가 봐.	I hung a rope for you. Be careful going in.		
+3	forest	fscen.scene.cave2.0	이 결정은 금의 조각입니다. 금은 우체통이 부르는 길이었어요. 결정을 만지면 금이 더 벌어질 수도, 잠잠해질 수도 있습니다.	This crystal is a shard of the crack. The crack was the road the postbox calls. If you touch the crystal, the crack may widen or grow quiet.		
+3	forest	fscen.scene.cave2.1	금을 활짝 열어 두면 여러 시대 손님이 더 올 것이고, 조용히 해 달라면 밤이 고요해지겠지요.	If I leave the crack wide open, guests of many ages will come more. If I ask for quiet, the nights will be calm.		
+3	forest	fscen.scene.ccv1.0	마지막 답장 상자는 북쪽 동굴 끝에 있다고 기록에 나옵니다. 지난해 금 조각을 찾은 그 자리 뒤쪽이에요.	The record says the last reply box lies at the end of the northern cave. Behind the place where you found the crack shard last year.		
+3	forest	fscen.scene.ccv1.1	동굴에 다시 들어가 보겠습니다.	I'll go back into the cave.		
+3	forest	fscen.scene.ccv2.0	답장 상자가 열렸어요. 안에 편지 한 통 — "이 숲을 잊지 않겠다. 앞날에서." 서명은 없는데 글씨는 이 마을 주민 글씨를 닮았어요.	The reply box is open. Inside a single letter - "I will not forget this forest. From the future." It isn't signed, but the handwriting resembles a village resident's.		
+3	forest	fscen.scene.ccv2.1	앞날의 우리가 보낸 편지인지도 모르겠소. 그대는 앞날의 답장을 여는 이웃이오.	Maybe it is a letter sent by our future selves. You are a neighbor who opens the reply of the future.		
+3	forest	fscen.scene.dong1.0	동지 팥죽을 쑬 때가 되었소. 팥죽 솥 곁에 주민과 손님이 모이면 잔치가 차오르오.	It's time to cook the winter solstice porridge. When residents and guests gather at the pot, the feast fills up.		
+3	forest	fscen.scene.dong1.1	온열 장치도 가져왔어요! 팥죽이 식지 않게요.	I brought a warming device too! So the porridge won't go cold!		
+3	forest	fscen.scene.dong2.0	살러 온 손님이 둘이 되니 잔치가 찼구려. 이 마을이 참 따뜻해졌소.	With two guests settled, the feast is full. This village has grown so warm.		
+3	forest	fscen.scene.end1.0	칠석날 밤에는 견우직녀가 하늘 금을 건넌다고들 하오. 사진첩을 별 우체통 앞에 펼쳐 놓읍시다.	They say on Tanabata night the herdsman and weaver cross the crack in the sky. Let's spread the album out before the Star Postbox.		
+3	forest	fscen.scene.end1.1	답장 사진첩 마지막 장은 마을 사람 모두가 등불을 들고 서는 사진이에요. 함께 찍어요!	The last page of the reply album is a photo of everyone in the village standing with lanterns. Let's take it together!		
+3	forest	fscen.scene.end2.0	찍었어요! 등불 든 사람들 사이에 옛 화공도, 앞날 사람도 서 있는 것 같지 않나요? 이 사진이 이 여름의 답장이에요.	Got it! Among the people holding lanterns, don't you feel an old painter and a person of the future are standing too? This photo is this summer's reply.		
+3	forest	fscen.scene.end2.1	기록판이 갱신됐어요. "사진으로 남은 숲" — 앞날 기록에 사진 한 줄이 새로 생겼습니다.	The record board was updated. "The Forest Kept in Photos" - a new photo line has appeared in the future record.		
+3	forest	fscen.scene.end2.2	그대는 이 마을의 사진 이웃이오. 사진첩은 마을 서고에 꽂아 두겠소.	You are this village's photo neighbor. We'll slot the album onto the village library shelf.		
+3	forest	fscen.scene.fall1.0	폭포 너머엔 뭐가 있는지 아무도 몰라. 이 폭포 뒤엔 굴이 있고 굴 벽에는 옛 글씨가, 바닥에는 미래의 발자국이 있다는 소문이 있지.	No one knows what lies beyond the waterfall. Rumor says there's a cave behind it, old writing on its walls and footprints from the future on its floor.		
+3	forest	fscen.scene.fall1.1	손전등은 제가 준비하겠습니다. 폭포 곁부터 가 보지요.	I'll prepare the flashlight. Let's start beside the falls.		
+3	forest	fscen.scene.fall2.0	굴 벽에 옛 글씨가 가득이더군. 발자국 옆에는 빛 표식까지. 여러 시대 사람이 같은 굴을 지나갔다는 뜻이야.	The cave walls were full of old writing. Beside the footprints, even a light mark. It means people of many ages passed through the same cave.		
+3	forest	fscen.scene.fall2.1	편지 다발도 벽 틈에 꽂혀 있었습니다. 옛 우체통과 이어진 길일지도 모르겠어요.	There was a bundle of letters stuck in a crack of the wall, too. It might connect to the old postbox.		
+3	forest	fscen.scene.fall2.2	도감에 "폭포 뒤 굴"을 적어 두자고. 또 새 수수께끼를 찾아 떠나야겠군.	Let's note "the cave behind the waterfall" in the journal. Time to go find a new riddle.		
+3	forest	fscen.scene.fox1.0	어이쿠, 금 사이로 넘어와 버렸군. 여우 화상 호연이오. 시대를 잃은 물건을 파는 장사꾼이지. 이 빛 부채는 앞날 것이고, 저 옛 방울은 이 땅 것이오.	Well, I've slipped through the crack. I'm Hoyeon the Fox Peddler, a peddler of things that lost their age. This light fan is from the future, and that old bell is from this land.		
+3	forest	fscen.scene.fox1.1	삼짇날 꽃놀이를 연다는 소문이 있던데요, 장터를 그날 맞춰 열 수 있을까요?	I heard a Samjinnal flower festival is coming. Could the market open on that day?		
+3	forest	fscen.scene.fox1.2	꽃 다섯 송이만 모아 오시오. 꽃놀이에 쓸 꽃 좌판을 내가 펼치겠소.	Gather just five flowers. I'll spread out a flower stall for the festival.		
+3	forest	fscen.scene.fox2.0	꽃놀이 안내판 곁에 좌판을 폈소. 확성기가 딸린 장터라 소리가 멀리 가지. 꽃놀이를 마치면 이 마을에서 장사를 해도 되겠소?	I set up the stall beside the festival signboard. A market with a loudspeaker - the sound carries far. After the festival, may I trade in this village?		
+3	forest	fscen.scene.fox2.1	이 마을에는 새 이웃이 반갑소. 호연 좌판은 마을 상점 칸에 내주지.	New neighbors are welcome here. We'll give Hoyeon's stall a place in the village shop row.		
+3	forest	fscen.scene.fox3.0	꽃놀이가 끝났구려. 빛 부채가 한 자루 남았소, 선물로 받아 두시오.	The festival is over. One light fan is left, please take it as a gift.		
+3	forest	fscen.scene.fox3.1	한 주민과 마음이 통했습니다. 이 마을이 좋아지고 있어요.	I felt a resident's heart connect with mine. This village is getting better.		
+3	forest	fscen.scene.har1.0	한가위에는 받은 답장에 답례하는 법이오. 마을 사람 하나와 마음을 깊이 나눈 뒤에 잔치를 엽시다.	At harvest we return thanks for the replies we got. Let's hold the feast after you share deep feelings with one villager.		
+3	forest	fscen.scene.har1.1	저는 송편 배달을 맡을게요. 시대마다 송편 모양이 다르다는 걸 알았어요!	I'll handle delivering songpyeon! I learned that songpyeon are shaped differently in each age!		
+3	forest	fscen.scene.har2.0	보름달이 이렇게 큰 줄 몰랐어요. 모선에서 본 달은 작았는데요.	I never knew the full moon was this big. The moon I saw from the mothership was small.		
+3	forest	fscen.scene.har2.1	달은 보는 자리에 따라 커지는 법이오. 그대가 이 마을에 뿌리를 내렸다는 뜻이기도 하고.	The moon grows depending on where you watch it. It also means you've put down roots in this village.		
+3	forest	fscen.scene.hoy1.0	답장은 우체통에 넣기 전에 얼굴 보고 전하는 게 장사꾼 예의요. 지난해 좌판을 내주어 고마웠소. 올해는 내가 대접하겠소.	It's a merchant's manners to hand over a reply face to face before putting it in a postbox. Thank you for giving up the stall last year. This year I'll treat you.		
+3	forest	fscen.scene.hoy1.1	대접이라니요. 저야 꽃 몇 송이 모았을 뿐인데요.	A treat? I only gathered a few flowers.		
+3	forest	fscen.scene.hoy1.2	꽃 다섯 송이만 더 모아 오시오. 시대를 잃은 물건 중에 이 마을에 어울리는 걸 하나 골라 두었소.	Gather five more flowers. I've picked out something among the things that lost their age that suits this village.		
+3	forest	fscen.scene.hoy2.0	꽃이 곱구려. 이 옛 방울에 꽃잎을 달아 두면 봄바람에 절로 울지. 마을 이웃 마음이 이만큼 통하면 방울도 제 소리를 낸다오.	Lovely flowers. Hang petals on this old bell and it rings by itself in the spring breeze. When the hearts of neighbors connect this much, the bell makes its own sound.		
+3	forest	fscen.scene.hoy2.1	마을 사람과 정이 여섯 하트쯤 쌓이면 방울이 제 목소리를 낼 게요.	Once your bond with a villager builds to about six hearts, the bell will find its voice.		
+3	forest	fscen.scene.hoy3.0	방울이 우는구려! 옛 땅 방울 소리와 앞날 빛 부채 바람이 한자리에서 섞였소. 이게 답장이오. 이 마을은 시대가 오가는 길목이 되었소.	The bell is ringing! The old land's bell and the future light fan's wind have mixed in one place. That is the reply. This village has become a crossing between ages.		
+3	forest	fscen.scene.hoy3.1	아직 모자란 이웃인데도 답장을 이렇게 받아도 되나요?	May I receive a reply like this when I'm still lacking as a neighbor?		
+3	forest	fscen.scene.hoy3.2	답장은 받는 이가 아니라 부친 이가 정하는 법이오. 부친 이는 그대였소.	The reply is decided not by the receiver but by the sender. The sender was you.		
+3	forest	fscen.scene.ins1.0	곤충 박사 나비예요! 반딧불이가 해마다 줄어드는 까닭을 찾고 있어요. 금 너머에서 새는 빛이 밤을 밝혀서 짝짓기를 방해하는 것 같아요.	I'm Dr. Nabi the Entomologist! I'm looking for why the fireflies decline every year. Light leaking through the crack seems to brighten the night and disturb mating.		
+3	forest	fscen.scene.ins1.1	채집망을 빌려 주시면 곤충을 다섯 마리 잡아 보겠습니다.	If you lend me a net, I'll catch five insects.		
+3	forest	fscen.scene.ins1.2	기록용으로 사고에도 기증해 주세요. 옛 정원 돌담 곁에서 반딧불이 정원을 다시 만들어 볼게요.	Please donate them to the archive for the record. Beside the old garden wall I'll try rebuilding a firefly garden.		
+3	forest	fscen.scene.ins2.0	기증하신 곤충 덕에 빛 공해의 가설이 맞는지 확인했어요. 금에서 새는 빛이 문제였네요.	Thanks to the insects you donated, I confirmed the light pollution hypothesis. It was the light leaking from the crack.		
+3	forest	fscen.scene.ins2.1	금을 닫을 수는 없어도 빛이 덜 새게 할 수는 있겠군요.	We can't close the crack, but we can make less light leak out.		
+3	forest	fscen.scene.lens1.0	제 카메라를 잠깐 빌려 드릴게요. 솔숲과 요정골, 두 숲의 여름을 찍어 오시면 답장 사진첩이 완성돼요.	I'll lend you my camera for a while. If you photograph the summer of two forests, the pine forest and the fairy valley, the reply album is complete.		
+3	forest	fscen.scene.lens1.1	카메라는 처음인데요. 어디를 찍으면 좋을까요?	It's my first time with a camera. Where should I shoot?		
+3	forest	fscen.scene.lens1.2	눈에 띄는 것 말고, 제일 조용한 곳을 찍으세요. 조용한 곳에 시대가 겹쳐 보여요.	Not the eye-catching spots - the quietest place. In quiet places the ages seem to overlap.		
+3	forest	fscen.scene.lens2.0	솔숲의 그늘, 요정골의 버섯 불빛… 잘 찍으셨네요! 이 그늘 속에 옛 나무꾼이 지나가고, 저 불빛 속에 앞날 사람의 손전등이 겹쳐 있어요.	The shade of the pines, the mushroom lights of the fairy valley... well shot! In that shade an old woodcutter passes, and in that light a future person's flashlight overlaps.		
+3	forest	fscen.scene.lens2.1	허허, 내 젊은 날 뱃전에서 보던 등대불도 사진 한 장으로 남을 수 있소? 다음엔 나도 찍어 주오.	Hah, could even the lighthouse fire I watched from the deck in my youth remain in a photo? Take one of me next time.		
+3	forest	fscen.scene.let1.0	옛 우체통에 앞날의 답장이 쌓였다오. 고맙다는 편지를 주민마다 전해 주시겠소?	Replies from the future have piled up in the old postbox. Would you deliver a thank-you letter to each resident?		
+3	forest	fscen.scene.let1.1	붓글씨 편지에 택배 상자에 빛 편지까지, 한 상자에 세 시대가 담겼어요! 제가 나눠 실을게요.	Brush letters, courier boxes and light letters - three ages in one box! I'll load them for you.		
+3	forest	fscen.scene.let2.0	주민들이 편지를 읽고 웃었소. 편지꽂이 하나를 마련해 드리리다.	The residents read the letters and laughed. I'll prepare a letter rack for you.		
+3	forest	fscen.scene.let2.1	앞날의 이웃이 이 마을을 기억하고 있다는 편지였습니다.	They were letters saying neighbors of the future remember this village.		
+3	forest	fscen.scene.moon1.0	대보름이오. 달집에 불을 놓으면 하늘 금이 옛 우체통 위로 내려온다는 말이 있소.	It's the full moon of the first month. They say when the moon house is lit, the crack in the sky descends over the old postbox.		
+3	forest	fscen.scene.moon1.1	마지막 사진을 찍을게요. 달집 불빛이 금에 닿는 순간이요!	I'll take the last photo! The instant the moon house firelight touches the crack!		
+3	forest	fscen.scene.moon1.2	기록판이 바뀌고 있습니다… "사라진 숲" 글자가 흐려지고 있어요.	The record board is changing... the words "Vanished Forest" are fading.		
+3	forest	fscen.scene.moon2_open.0	"이어진 숲"! 기록판 글자가 바뀌었습니다. 금이 열려 있어서 여러 시대 손님이 모두 모였고, 별 우체통이 되어 하늘에 걸렸어요.	"The Connected Forest"! The record board words have changed. Because the crack stayed open, guests of every age gathered, and it became the Star Postbox hung in the sky.		
+3	forest	fscen.scene.moon2_open.1	이제 이 마을은 잊히지 않소. 별 우체통을 마을 명소로 삼읍시다. 그대는 이어진 숲의 이웃이오.	Now this village will not be forgotten. Let's make the Star Postbox a village landmark. You are a neighbor of the Connected Forest.		
+3	forest	fscen.scene.moon2_quiet.0	"이어진 숲"! 기록판 글자가 바뀌었습니다. 금이 조용히 내려앉아 별 우체통이 고요한 밤에 걸렸어요.	"The Connected Forest"! The record board words have changed. The crack settled quietly, and the Star Postbox hangs in the calm night.		
+3	forest	fscen.scene.moon2_quiet.1	조용한 밤이 이 마을에 어울리오. 별 우체통은 마을 명소요. 그대는 이어진 숲의 이웃이오.	A calm night suits this village. The Star Postbox is a village landmark. You are a neighbor of the Connected Forest.		
+3	forest	fscen.scene.move1.0	이사 온 첫 밤이 저물었구려. 짐은 다 풀었소? 이 숲은 초가 지붕 사이로 별이 잘 들어오는 곳이라오.	Your first night here is ending. Have you unpacked? Stars slip in nicely between the thatched roofs of this forest.		
+3	forest	fscen.scene.move1.1	짐을 풀다 보니 저 하늘에 가느다란 금이 하나 보입니다. 별똥별이 지나간 자국인가요?	While unpacking I noticed a thin crack in the sky. Is it the trail of a shooting star?		
+3	forest	fscen.scene.move1.2	금이라니… 이 늙은이는 처음 보오. 우선 집에 가구 하나라도 놓고 보시오. 집이 서야 마음이 놓이지.	A crack... this old man has never seen one. First put at least one piece of furniture in your house. Once the house stands, the heart settles.		
+3	forest	fscen.scene.move2.0	으아아! 여기가 어디죠? 택배 기사 달음입니다! 금이 쫙 갈라지더니 이 소포와 함께 떨어졌어요.	Aaah! Where am I? I'm Courier Dal-eum! The sky split open and I fell down with this parcel!		
+3	forest	fscen.scene.move2.1	받는 이가 "이 마을 새 이웃"인데, 보낸 날짜가 먼 앞날이에요. 상자 속에서 빛 편지가 새어 나오고요.	The addressee is "the new neighbor of this village", but the sent date is far in the future. Light letters are leaking out of the box.		
+3	forest	fscen.scene.move2.2	먼 앞날에서 온 소포라니. 접수대에 알려 배달 일부터 해 보시오. 그 길에 뭔가 보일 게요.	A parcel from the far future. Tell the counter and start with a delivery. You may see something along the way.		
+3	forest	fscen.scene.mus1.0	…착륙 성공. 시간 여행자 K-7, 기록원입니다. 저는 앞날의 기록을 들고 왔어요. 이 숲의 기록 칸은 "사라진 숲"입니다.	…Landing successful. Time traveler K-7, archivist. I carry records of the future. This forest's record column reads "The Vanished Forest".		
+3	forest	fscen.scene.mus1.1	사라진 숲이라니요? 이 마을이 없어진다는 뜻입니까?	The Vanished Forest? Does that mean this village disappears?		
+3	forest	fscen.scene.mus1.2	잊힌 곳은 앞날에서 지워집니다. 사고에 화석을 채우면 그 줄이 흐려지는 걸 확인했어요. 화석 세 점만 넣어 보시겠습니까?	Forgotten places are erased from the future. I confirmed that filling the archive with fossils fades that line. Would you put in three fossils?		
+3	forest	fscen.scene.mus2.0	기록판의 "사라진 숲"이 한 줄 흐려졌습니다! 이 마을이 기억되기 시작했다는 뜻이에요. 그런데 부탁이 하나 있습니다.	The record board's "Vanished Forest" has faded by one line! It means this village has begun to be remembered. But I have a request.		
+3	forest	fscen.scene.mus2.1	앞날 기록에 이 마을 이름을 적어 두고 싶습니다. 알려 주시겠어요?	I want to write this village's name in the future record. Will you tell me?		
+3	forest	fscen.scene.mus2.2	마을 이름을 알려 주는 건 이 마을의 미래를 맡기는 일이지요. 정하겠습니다.	Telling the village's name is entrusting its future. I will decide.		
+3	forest	fscen.scene.night1.0	여름 사진의 마지막은 밤이에요. 반딧불 참나무숲의 불빛은 오래 노출해야 찍혀요. 반딧불이 세 마리만 앞에 앉히면 돼요.	The last of the summer photos is the night. The lights of the firefly oak grove only show with a long exposure. Just seat three fireflies in front.		
+3	forest	fscen.scene.night1.1	저는 삼각대를 들게요! 배달 짐 중에 가장 가벼운 짐이 제일 든든하지요.	I'll carry the tripod! The lightest parcel of all is the most reliable!		
+3	forest	fscen.scene.night2.0	한 장 찍는 데 밤이 다 갔네요. 그런데 인화해 보니 반딧불 사이에 낯선 작은 불빛들이 줄지어 있어요 — 여러 시대가 보낸 답장 불빛 같아요.	One shot took the whole night. But when I developed it, strange little lights lined up between the fireflies - they look like reply lights sent by many ages.		
+3	forest	fscen.scene.night2.1	반딧불과 답장이 한 장에 담겼군요.	The fireflies and the replies were caught in one photo.		
+3	forest	fscen.scene.ny1.0	설날이오. 한복 입은 주민마다 세배를 돌아 새해 인사를 나누시오. 복주머니를 드리겠소.	It's New Year's Day. Go round bowing to every resident in hanbok and exchange new year greetings. I'll give you a lucky pouch.		
+3	forest	fscen.scene.ny1.1	새해 기록도 남기겠습니다. 이 마을의 새해 인사가 앞날 기록에 들어가요.	I'll record the new year too. This village's new year greeting will go into the future record.		
+3	forest	fscen.scene.photo1.0	안녕하세요! 사진작가 찰나예요. 앞날 기록에서 이 숲은 "사라진 숲"이라고 하더라고요. 사라지기 전에 찍어 두려고요.	Hello! I'm photographer Chalna. In the future record this forest is called "the Vanished Forest". I want to photograph it before it vanishes.		
+3	forest	fscen.scene.photo1.1	숲 여덟을 다 돌 순 없으니 네 곳만요 — 푸른 솔숲, 버섯 요정골, 거인 바위 고개, 마지막으로 반딧불 참나무숲의 밤 사진이요.	I can't tour all eight forests, so just four - the blue pine forest, the mushroom fairy valley, the giant rock pass, and last, the night of the firefly oak grove.		
+3	forest	fscen.scene.photo1.2	거인 바위 고개의 선돌은 아주 오래된 것이라 들었습니다. 같이 가 봅시다.	I hear the standing stone on Giant Rock Pass is very old. Let's go together.		
+3	forest	fscen.scene.photo2.0	반딧불 사이에서 작은 드론이 떠다니는 게 찍혔어요! 다른 시대 것이 이 숲을 기록하고 있나 봐요.	A little drone floated among the fireflies in my shot! Something from another age must be recording this forest.		
+3	forest	fscen.scene.photo2.1	찰나 씨의 사진기와 드론이 같은 곳을 찍고 있었군요. 이 숲이 기억되고 있다는 뜻일지도요.	Your camera and the drone were photographing the same place. Maybe it means this forest is being remembered.		
+3	forest	fscen.scene.photo2.2	사진 액자를 넷 만들어 드릴게요. 마을 벽에 걸어 두면 숲이 사라지지 않을 거예요.	I'll make four photo frames for you. Hang them on the village wall and the forest won't vanish.		
+3	forest	fscen.scene.post1.0	빛 편지가 가리키는 곳이 있소 — 탑성 폐허의 옛 우체통이오. 오래전 이곳을 오가던 편지가 지금도 쌓여 있다 하오.	There is a place the light letter points to - the old postbox in the tower ruins. They say letters that passed here long ago are still piled up.		
+3	forest	fscen.scene.post1.1	억새 바람벌을 지나서 폐허까지 가면 된대요! 폐허 옆에는 오래된 공중전화가 서 있다던데, 우체통이 왜 전화 곁에 있을까요.	Past the silver-grass windfield to the ruins! They say an old public phone stands beside the ruins. Why is the postbox next to a phone?		
+3	forest	fscen.scene.post2.0	우체통이 정말 있었습니다. 안에는 붓글씨 편지, 택배 송장, 빛나는 홀로그램 도장이 찍힌 편지까지 섞여 있어요.	The postbox was really there. Inside are brush-written letters, courier slips and letters stamped with glowing hologram seals, all mixed.		
+3	forest	fscen.scene.post2.1	여러 시대의 편지가 한 통에 쌓였구려. 이 우체통이 버려진 채 오래 되어 시대 사이 우체통이 된 모양이오.	Letters of many ages piled in a single box. Left abandoned for so long, it must have become a postbox between ages.		
+3	forest	fscen.scene.post2.2	그럼 하늘의 금은 이 우체통이 부른 길이에요? 이 편지들을 마을로 배달해 봐요!	Then is the crack in the sky the road this postbox called? Let's deliver these letters to the village!		
+3	forest	fscen.scene.reb1.0	기록판이 갱신됐어요. "이어진 숲" 밑에 새 줄이 생겼는데 — "옛 우체통 복원 미완".	The record board was updated. A new line appeared under "Connected Forest" - "Old postbox restoration unfinished".		
+3	forest	fscen.scene.reb1.1	탑성 폐허의 옛 우체통은 별 우체통과 한 쌍이오. 한쪽만 서 있으면 답장이 길을 잃는다오.	The old postbox in the tower ruins is a pair with the Star Postbox. If only one stands, replies lose their way.		
+3	forest	fscen.scene.reb1.2	폐허에 가서 무너진 자리를 살펴보겠습니다.	I'll go to the ruins and look at the collapsed spot.		
+3	forest	fscen.scene.reb2.0	폐허 돌 위에 안전모 하나가 놓여 있었죠? 현대 공사장 물건이에요. 누군가 이미 쌓기 시작했다는 뜻이에요.	Did you see a hard hat lying on the ruin stones? That's a modern construction site item. It means someone already started stacking.		
+3	forest	fscen.scene.reb2.1	설계도 홀로그램 조각도 나왔어요. 앞날 사람과 옛사람이 함께 쌓는 우체통이라니, 기록에 없던 일입니다.	A hologram piece of the blueprint came out too. A postbox built together by people of the future and the old - that's not in the records.		
+3	forest	fscen.scene.reb2.2	편지 한 통만 더 배달하면 첫 돌을 놓을 수 있겠어요.	One more letter delivered and we can lay the first stone.		
+3	forest	fscen.scene.rep1.0	눈 녹은 아침에 별 우체통이 저 혼자 덜컹거렸소. 지난겨울 부친 편지에 답이 온 모양이오.	This thawed morning the Star Postbox rattled by itself. Replies must have come to last winter's letters.		
+3	forest	fscen.scene.rep1.1	배달 왔습니다! 소인이 찍힌 데가 한 곳이 아니에요. 붓글씨 봉투, 택배 영수증 도장, 빛 도장까지 세 시대 답장이 한꺼번에요.	Delivery! The postmarks aren't from one place. Brush envelopes, courier receipt stamps, light seals - replies from three ages all at once!		
+3	forest	fscen.scene.rep1.2	이걸 마을 사람들에게 하나씩 전해 드리면 되겠군요.	Then I just hand these to the villagers one by one.		
+3	forest	fscen.scene.rep2.0	전해 주셔서 고맙습니다. 받은 분들 얼굴이 봄꽃 같더군요. 아직 우체통 안쪽에 답장이 한 통 더 남았는데 — 겉에 여우 그림이 그려져 있어요.	Thank you for delivering them. The faces of the recipients were like spring flowers. There is still one more reply inside the postbox - with a fox drawn on the outside.		
+3	forest	fscen.scene.rep2.1	여우 그림이라면 호연이오. 그 사람 답장은 직접 받으러 가는 게 예의라오.	A fox drawing means Hoyeon. It's polite to go and receive that reply in person.		
+3	forest	fscen.scene.rum1.0	모선 교신이 다시 잡혔어요! 지난가을 부친 편지가 우주기지 안테나에 닿았대요. 답신 상자 열쇠는 광석 세 덩이로 만든 열쇠래요.	The mothership link is caught again! They say the letter you posted last autumn reached the space base antenna. The key to the reply box is made from three lumps of ore.		
+3	forest	fscen.scene.rum1.1	광석이라면 이끼 돌너덜과 동굴에 넉넉하오.	Ore is plentiful among the mossy rubble and the caves.		
+3	forest	fscen.scene.rum1.2	광석 세 덩이를 모아 오겠습니다.	I'll gather three lumps of ore.		
+3	forest	fscen.scene.rum2.0	열쇠가 맞아요! 답신 상자에서 옛 붓 편지, 도하의 사진 편지, 빛 편지 세 통이 함께 나왔어요. 한 통은 배달해야 뜯을 수 있다고 적혀 있고요.	The key fits! Out of the reply box came an old brush letter, Doha's photo letter, and a light letter - three letters. It says one must be delivered before it can be opened.		
+3	forest	fscen.scene.rum2.1	배달이라면 제 일이죠! 받는 이가 이 마을이라 소인을 마을 걸로 찍어 줄게요.	Delivery is my job! Since the addressee is this village, I'll stamp you as the village's own.		
+3	forest	fscen.scene.rumi1.0	탐사원 루미예요. 우주기지에 불시착했는데, 구조 신호가 닿으려면 300년이 걸린대요. 무전기는 이 땅 것이라 옛 봉투에 넣어야 신호가 가고.	I'm surveyor Rumi. I crash-landed at the space base and my rescue signal takes 300 years to arrive. My radio is of this land, so the signal only goes if it's put in an old envelope.		
+3	forest	fscen.scene.rumi1.1	봉투에 신호를? 옛 우체통이 신호를 앞날로 부치는 길이라는 말씀이지요?	A signal in an envelope? You mean the old postbox is the road that posts signals to the future?		
+3	forest	fscen.scene.rumi1.2	네! 우선 기지 광석 세 개로 송신기를 고치고 싶어요. 도와주실 수 있어요?	Yes! First I want to fix the transmitter with three base ores. Can you help?		
+3	forest	fscen.scene.rumi2.0	신호가 우체통으로 들어갔어요! 옛 봉투에 담긴 신호가 300년 뒤에 닿는다니… 이제 기다릴 수 있어요.	The signal went into the postbox! A signal in an old envelope arrives 300 years later... Now I can wait.		
+3	forest	fscen.scene.rumi2.1	탐사차 택배는 앞당겨서 오게 하겠습니다. 편지로 소식을 전해 주세요.	I'll have the survey car's parcel brought forward. Please send news by letter.		
+3	forest	fscen.scene.star1.0	칠석이라고 별에 소원 빌러 몰려왔어! 나는 도깨비불 반디야. 밤길 안내는 내가 할게.	It's Tanabata, so we came to wish on the stars! I'm Bandi the Wisp. I'll guide you on the night road.		
+3	forest	fscen.scene.star1.1	도깨비 대장 두두다! 오작교 등도 달고 주운 손전등도 켜 놓았지. 꼬마들아 줄 서라!	Dudu the Dokkaebi Chief here! I hung magpie-bridge lanterns and switched on a found flashlight, too. Line up, kids!		
+3	forest	fscen.scene.star1.2	이 밤에 별에 소원을 빌고 나면 그 소원이 금으로 올라간다지요. 저도 빌어 보겠습니다.	They say a wish made tonight rises through the crack. I'll wish too.		
+3	forest	fscen.scene.star2.0	소원이 하늘 금으로 스르르 올라갔어! 재밌다! 이 마을 정말 살아 볼 만하겠는데?	The wish slid up into the crack in the sky! Fun! Might be worth living in this village!		
+3	forest	fscen.scene.star2.1	두두는 말썽만 피워서 걱정이야. 대신 내가 잘 이끌게. 이 마을에 살아도 될까?	Dudu only causes trouble, so I worry. I'll lead him well instead. May I live in this village?		
+3	forest	fscen.scene.star2.2	함께 지낼 손님이 있으면 마을이 더 밝아지겠지요.	With guests to share it, the village will be brighter.		
+3	forest	fscen.scene.wd1.0	동지 팥죽을 쑤어 지난해 잔치에 못 온 이웃도 부릅시다. 주민과 마음이 여덟은 깊어져야 잔치가 참 잔치요.	Let's cook solstice porridge and call the neighbors who couldn't come to last year's feast. The feast is a real feast only when a bond with a resident has deepened to eight.		
+3	forest	fscen.scene.wd1.1	저는 팥죽 김이 오르는 사진을 찍을게요. 김 속에 시대가 겹쳐 보이거든요.	I'll photograph the steam rising from the porridge. The ages seem to overlap inside the steam.		
+3	forest	fscen.scene.wd2.0	팥죽 한 그릇에 옛 방울 소리가 은은하게 어울리는구려. 이웃이 이만큼 모였으니 이 마을은 이제 가게 열 만하오.	A bowl of porridge with the faint sound of the old bell - how well it goes. With this many neighbors gathered, this village could open a shop now.		
+3	forest	fscen.scene.wd2.1	뱃사람의 동지는 배를 묶어 두고 팥죽을 나누는 날이라오. 오늘은 마을에 배를 묶겠소.	For sailors, the solstice is the day to tie up the boat and share porridge. Today I'll moor my boat in this village.		
+3	forest	fscen.scene.wl1.0	겨울이 왔소. 올해는 편지를 받기만 하지 말고 이쪽에서 먼저 돌립시다. 배달 다섯을 마쳐 주시오.	Winter has come. This year let's not only receive letters but send them first. Please finish five deliveries.		
+3	forest	fscen.scene.wl1.1	눈길 배달은 발자국이 남아서 좋아요. 발자국이 길이 되니까요.	Snow-road deliveries leave footprints, which I like. The footprints become a road.		
+3	forest	fscen.scene.wl2.0	다 돌렸네요! 받은 사람 얼굴이 하나같이 밝아서 제 배달 가방도 가벼워졌어요.	All delivered! Every recipient's face was bright, so my delivery bag got lighter.		
+3	forest	fscen.scene.wl2.1	먼저 부친 편지에는 답장이 세 시대에서 다시 올 것이오.	To a letter sent first, replies will come again from three ages.		
+3	forest	fscen.scene.wm1.0	대보름달이 다시 떴소. 별 우체통과 옛 우체통이 나란히 섰으니 달집을 두 곳에 짓읍시다.	The full moon has risen again. With the Star Postbox and the old postbox standing side by side, let's build moon houses in both places.		
+3	forest	fscen.scene.wm1.1	기록판에 미완이던 줄이 하나 남았어요. "옛 우체통 복원". 오늘 밤 마무리하면 됩니다.	One line on the record board is left unfinished - "Old postbox restoration". Finish it tonight.		
+3	forest	fscen.scene.wm2.0	"이어 쌓는 중"이 "이어진 우체통"으로 바뀌었어요! 기록판에 더 쓸 줄이 없습니다 — 이 숲은 이제 기록이 아니라 이야기가 되었어요.	"Stacking on" became "Connected Postboxes"! There are no more lines to write on the record board - this forest is no longer a record but a story.		
+3	forest	fscen.scene.wm2.1	두 해를 함께 살았구려. 그대는 두 해째의 이어진 숲의 이웃이오. 내년에도 우체통은 열려 있을 것이오.	You lived two years with us. You are a second-year neighbor of the Connected Forest. The postbox will be open next year too.		
+3	forest	fscen.scene.wm2.2	내년에도, 그다음에도 이 마을에서 편지를 부치겠습니다.	Next year, and the year after, I'll post letters from this village.		
+3	forest	fscen.scene.wy1.0	설날 세배는 지난해와 같소. 다만 올해는 세배 돌이에 편지 한 통씩을 들고 갑시다.	New Year bows are the same as last year. But this year let's each carry a letter on the bowing round.		
+3	forest	fscen.scene.wy1.1	새해 첫 배달! 소인은 이 마을 우체통 도장으로 찍겠습니다.	First delivery of the new year! I'll stamp with this village's postbox seal.		
+3	forest	fscen.scene.wy2.0	설날 편지가 여러 시대로 나갔어요. 기록판에 처음 보는 이름들이 답장을 쓰기 시작했습니다.	The New Year letters have gone out to many ages. Names I've never seen on the record board have begun writing replies.		
+3	forest	fscen.scene.wy2.1	모선에서도 새해 편지가 온다고 했어요. 이 숲의 소인이 인기래요!	They said new year letters come from the mothership too. This forest's postmark is popular!		
 3	forest	landmark.dark_forest.lore	누가 쌓았는지 모르는 돌제단. 등불은 한 번도 꺼진 적이 없다고 한다.	No one knows who stacked this altar. They say its lanterns have never gone out.		
 3	forest	landmark.flower_field.lore	무너진 정자의 기둥 넷. 기둥마다 꽃덩굴이 감겼다.	Four pillars of a fallen pavilion, each wrapped in flowering vines.		
 3	forest	landmark.mushroom_forest.lore	달 밝은 밤이면 버섯정령이 이 돌고리 안에서 춤춘다.	On bright moonlit nights the mushroom spirits dance inside this ring.		
