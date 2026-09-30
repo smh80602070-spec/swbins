@@ -114,6 +114,7 @@
   function allBundlesDone() {
     var list = byCat();
     for (var i = 0; i < list.length; i++) {
+      if (list[i].cat.bonus) { continue; }       // 덤 갈래(탑성 조각)는 상한에 안 든다
       if (list[i].total <= 0 || list[i].done < list[i].total) { return false; }
     }
     return list.length > 0;
@@ -148,6 +149,6 @@
   global.DG.museum = {
     donated: donated, near: near, canDonate: canDonate, donate: donate,
     byCat: byCat, count: count, grade: grade, offerable: offerable, status: status,
-    allBundlesDone: allBundlesDone
+    allBundlesDone: allBundlesDone, catStatus: catStatus
   };
 })(window);

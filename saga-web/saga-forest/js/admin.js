@@ -171,7 +171,7 @@
 
   function renderBag() {
     var cats = [['fruit', '열매'], ['nut', '씨앗'], ['ore', '광물'], ['flower', '꽃'], ['herb', '약초'],
-                ['fish', '물고기'], ['bug', '곤충'], ['fossil', '화석'], ['shell', '조개']];
+                ['fish', '물고기'], ['bug', '곤충'], ['fossil', '화석'], ['shell', '조개'], ['ruin', '탑성 조각']];
     var host = $('bagcats');
     host.innerHTML = '';
     cats.forEach(function (c) {

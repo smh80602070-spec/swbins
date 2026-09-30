@@ -141,6 +141,9 @@
     oldpost: { name: '옛 우체통', emoji: '📮', gather: null, reset: 0, hint: '소포를 넣는다' },
     /* 별 우체통(정본 트랙 메모 "별 우체통 장식 하나") — 대보름(wi_moon) 장을 마치면 마을 광장 곁에 선다 */
     starpost: { name: '별 우체통', emoji: '🌠', gather: null, reset: 0, hint: '읽는다' },
+    /* 탑성 조각 번들(다섯째 사고 갈래 ruin) — 폐허 곁 돌무더기를 하루 한 번 뒤진다. 갈래를 다 채우면 마을에 다시 쌓은 정자가 선다 */
+    rubble: { name: '무너진 돌무더기', emoji: '🧱', gather: 'ruin', reset: 1, hint: '뒤져 본다' },
+    rebuilt: { name: '다시 쌓은 정자', emoji: '🏯', gather: null, reset: 0, hint: '읽는다' },
     /* 폐허 확장(PLAN 46-2절, 2026-09-11) — §45가 냈던 "과거" 목적지를
        아치 하나뿐이던 폐허(ruinSpot)에 실제로 채웠다. ruinTower는 진짜
        13~14세기 탑성 폐허 사진측량 스캔(saga-go에서 하드링크, 새로 안
@@ -697,7 +700,9 @@
     { key: 'bug',    name: '곤충',   icon: '🦋' },
     { key: 'fish',   name: '물고기', icon: '🐟' },
     { key: 'fossil', name: '화석',   icon: '🦴' },
-    { key: 'shell',  name: '조개',   icon: '🐚' }
+    { key: 'shell',  name: '조개',   icon: '🐚' },
+    /* 다섯째 — 폐허 돌무더기에서만 나오는 탑성 조각. bonus 라 마을 평가 상한(allBundlesDone)은 옛 넷만 본다 */
+    { key: 'ruin',   name: '탑성 조각', icon: '🧱', bonus: true }
   ];
 
   /**
@@ -714,7 +719,8 @@
     fossil: { facility: 'stele',       name: '화석 갈래 완결 — 석비' },
     bug:    { facility: 'fireflyplot', name: '곤충 갈래 완결 — 반딧불이 정원' },
     fish:   { facility: 'bench',       name: '물고기 갈래 완결 — 호숫가 평상' },
-    shell:  { facility: 'shell',       name: '조개 갈래 완결 — 강가 조개 길' }
+    shell:  { facility: 'shell',       name: '조개 갈래 완결 — 강가 조개 길' },
+    ruin:   { facility: 'rebuilt',     name: '탑성 조각 갈래 완결 — 다시 쌓은 정자' }
   };
 
   /** 집 평가 등급 — 점수가 오르면 이름이 바뀐다 (원작의 그 평가서) */
@@ -849,6 +855,15 @@
       { key: 'urchin', name: '성게 껍질',  emoji: '🦔', price: 140, w: 18 },
       { key: 'abalone', name: '전복 껍데기', emoji: '🪞', price: 260, w: 10 },
       { key: 'pearl',  name: '진주',       emoji: '🤍', price: 900, w: 3 }
+    ],
+    /** 탑성 조각 — **폐허 곁 돌무더기(rubble)를 뒤진다**. 도구도 계절도 안 탄다. 이야기의 '다시 쌓는 옛 우체통'을 마을에서 잇는 갈래 */
+    ruin: [
+      { key: 'rooftile', name: '옛 기와 조각',   emoji: '🧱', price: 70,  w: 40 },
+      { key: 'wallstone', name: '성돌',          emoji: '🪨', price: 100, w: 34 },
+      { key: 'rafter',   name: '서까래 토막',    emoji: '🪵', price: 150, w: 26 },
+      { key: 'bignail',  name: '대못',           emoji: '📌', price: 210, w: 18 },
+      { key: 'doorring', name: '문고리',         emoji: '🔔', price: 320, w: 10 },
+      { key: 'postkey',  name: '옛 우체통 열쇠', emoji: '🗝️', price: 800, w: 3 }
     ],
     fish: [
       { key: 'crucian', name: '붕어',  emoji: '🐟', price: 50,  w: 45 },

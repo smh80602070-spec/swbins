@@ -826,6 +826,10 @@
       props.push({ id: 'ruinRockR', kind: 'mossyRock', x: rx + TILE * 1.4, y: ry + TILE * 0.3, deco: true });
       props.push({ id: 'ruinTower', kind: 'ruinTower', x: rx - TILE * 0.3, y: ry - TILE * 0.9, deco: true });
       props.push({ id: 'ruinGazebo', kind: 'gazebo', x: rx + TILE * 0.5, y: ry + TILE * 0.8, deco: true });
+      /* 돌무더기 여섯 — 탑성 조각(사고 갈래 ruin)이 나오는 손이 닿는 자리. 위 장식과 안 겹치게 잡았고 하루 한 번씩 뒤진다 */
+      [[-2.6, -0.4], [-0.6, 1.7], [2.5, 0.9], [1.9, -0.9], [-1.2, -1.6], [0.6, -1.7]].forEach(function (o, i) {
+        props.push({ id: 'ruinRubble' + i, kind: 'rubble', x: rx + o[0] * TILE, y: ry + o[1] * TILE });
+      });
     }
 
     /* 숨겨진 동굴(PLAN 40절 PHASE 3 마지막 칸 + PHASE 4 "Treasure") — 바위산·
@@ -921,6 +925,21 @@
       }
       if (!spBest) { spBest = { x: (cx + 3) * TILE + 20, y: (cy - 3) * TILE + 20 }; }
       props.push({ id: 'starpost', kind: 'starpost', x: spBest.x, y: spBest.y });
+    }
+    /* 다시 쌓은 정자(다섯째 번들 ruin) — 탑성 조각 갈래를 다 채우면 광장 곁 빈자리에 선다. 별 우체통과 같은 결의 세이브 조건부 고정 자리 */
+    var MU_RB = global.DG.museum;
+    if (MU_RB && MU_RB.catStatus) {
+      var rbSt = MU_RB.catStatus('ruin');
+      if (rbSt.total > 0 && rbSt.done >= rbSt.total) {
+        var rbOff = [[-3, 3], [-4, -3], [5, -3], [-5, 1], [3, 4], [-2, -4], [5, 3], [-6, -1]], rbBest = null, rbi, rbj;
+        for (rbi = 0; rbi < rbOff.length && !rbBest; rbi++) {
+          var rbx = (cx + rbOff[rbi][0]) * TILE + 20, rby = (cy + rbOff[rbi][1]) * TILE + 20, rbOk = true;
+          for (rbj = 0; rbj < props.length; rbj++) { if (Math.hypot(props[rbj].x - rbx, props[rbj].y - rby) < TILE * 1.6) { rbOk = false; break; } }
+          if (rbOk) { rbBest = { x: rbx, y: rby }; }
+        }
+        if (!rbBest) { rbBest = { x: (cx - 3) * TILE + 20, y: (cy + 3) * TILE + 20 }; }
+        props.push({ id: 'bundle_ruin', kind: 'rebuilt', x: rbBest.x, y: rbBest.y });
+      }
     }
   }
 
@@ -1963,6 +1982,9 @@
        없는 이름이라 엉뚱하게 "기록" 시트가 열린다) */
     if (prop.kind === 'stele') {
       return { kind: 'empty', text: '🪧 화석을 모두 갖춘 사고를 기려 세운 비석입니다' };
+    }
+    if (prop.kind === 'rebuilt') {
+      return { kind: 'empty', text: '🏯 흩어진 탑성 조각을 다 모아 쌓은 정자입니다 — 폐허의 옛 우체통이 이쪽으로도 편지를 부친다고 합니다' };
     }
     if (prop.kind === 'starpost') {
       var sd = (st().scenario && st().scenario.done) || {};

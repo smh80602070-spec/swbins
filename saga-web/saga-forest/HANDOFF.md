@@ -2057,3 +2057,10 @@ jsdom 355/356 ×3(남은 하나는 캔버스 그림 — 깃발 그림, jsdom 한
 ## 2026-09-30 (이어서 6) — 별 우체통 장식 (정본 트랙 메모 "별 우체통 장식 하나")
 - 정본이 "새로 필요한 것은 폭포 뒤 굴 작은 명소 하나와 별 우체통 장식 하나뿐"이라 적었는데 별 우체통은 그동안 이름뿐이었다. 이제 이야기 겨울 대보름(`wi_moon`)을 마치면 마을 광장 곁에 **🌠 별 우체통** 소품이 선다(`village.js buildProps` 맨 끝 — 다른 소품에서 1.4칸 이상 떨어진 첫 자리를 후보 여덟 곳에서 고르므로 나무·집과 안 겹침, 세이브 조건부 고정). `PROPS.starpost`·3D 는 기존 `lantern` 몸을 빌려 2배로(`village-view3d`), 읽으면 글(둘째 해 `y2_bloom` 뒤엔 "옛 우체통과 한 쌍이 되어 이어 쌓는 중"). 장이 끝나는 순간 `scenario.finish` 가 `buildProps` 를 다시 돌린다.
 - 확인: jsdom 384/391(실패 7 은 HEAD 와 같은 기준선), 새 진단 1. `playcheck/fs-starpost.mjs`(새 프로필 둘) — 자리가 걸을 수 있는 칸·겹침 0·3D 예외 없음. sw village-v0.118.0. 폭포 뒤 굴 작은 명소는 기존 동굴로 대신해 둔 채(정본 트랙 메모대로).
+
+## 2026-09-30 (이어서) — 새 시스템 둘째: 탑성 조각 번들(다섯째 사고 갈래)
+- 정본 둘째 해 "탑성 폐허를 다시 쌓는 마을 번들(새 갈래)". `data-village.js`: PROPS `rubble`(무너진 돌무더기, gather 'ruin', reset 1)·`rebuilt`(다시 쌓은 정자), ITEMS `ruin` 여섯(w 40·34·26·18·10·3), MUSEUM_CATS `ruin`(`bonus: true`), BUNDLES `ruin`(facility 'rebuilt').
+- `village.js buildProps`: 폐허 장식 뒤에 돌무더기 여섯(폐허 중심 ±2.6칸 안, deco 아님) · 끝에서 사고 ruin 갈래가 다 차면 광장 곁 빈자리 후보 여덟 곳 중 1.6칸 떨어진 첫 자리에 `bundle_ruin` 정자(안내 글 한 줄). `museum.js`: `catStatus` 내보냄 · `allBundlesDone` 이 `cat.bonus` 를 건너뜀(마을 평가 상한·사고비 깃발 문양은 옛 넷만 — 옛 세이브의 잠금 해제가 되돌아가지 않게). `ui.js`·`admin.js` 갈래 이름, `village-view3d.js` rubble→rock:moss·rebuilt→gazebo.
+- 확인: jsdom 새 진단 1(돌무더기 여섯·하루 한 번 조각·옛 넷만으로 상한·마지막 기증에 정자·겹침 없음·읽기). sw village-v0.119.0. **실기 확인 대기**: 폐허에서 돌무더기가 눈에 띄는지·정자 자리.
+- 함정: 뒤지기는 한 번에 ×2 가 나올 수 있다(수확 배수) — 시험은 "늘었다"로 본다. "깃발 문양 — 사고비" 진단은 HEAD 에서도 jsdom 에서 실패(기준선).
+- **다음**: 웹 새 시스템 남은 후보 — 사가스토리 5차 전직(PLAN §10 결정 항목, 사용자 확인 필요).

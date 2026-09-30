@@ -1139,7 +1139,7 @@
    * 안 읽은 것이 위에 오도록 굳이 다시 정렬하지 않는다 — 온 순서가 곧 이야기다.
    */
   var CAT_NAME = { fruit: '열매', nut: '씨앗', ore: '광물', flower: '꽃', herb: '약초',
-                   fish: '물고기', bug: '곤충', shell: '조개', fossil: '화석' };
+                   fish: '물고기', bug: '곤충', shell: '조개', fossil: '화석', ruin: '탑성 조각' };
 
   var MAIL_ICON = { thanks: '🎁', hello: '🏡', bye: '🍂', notice: '💭',
                     warm: '✉️', hha: '📐', shop: '🏪', giftback: '🎀',
@@ -1732,7 +1732,7 @@
     }
     html += '</div>';
 
-    /* 전시실 넷 — 갈래를 다 채우면 마을에 시설이 서는 번들(PLAN §5.3, 2026-09-17) */
+    /* 전시실 — 갈래를 다 채우면 마을에 시설이 서는 번들(PLAN §5.3, 2026-09-17) */
     var bundles = VD.BUNDLES || {};
     for (i = 0; i < stt.cats.length; i++) {
       var c = stt.cats[i], rows = '', bd = bundles[c.cat.key];

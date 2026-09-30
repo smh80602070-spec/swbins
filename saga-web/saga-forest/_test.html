@@ -5580,6 +5580,55 @@ window.DG_NO_TUNE = true;
       } finally { s0.scenario = keep ? JSON.parse(keep) : undefined; V.buildProps(); }
     });
 
+    t('탑성 조각 번들(다섯째 사고 갈래) — 폐허 곁 돌무더기 여섯을 하루 한 번 뒤져 조각이 나오고, 여섯 종을 다 들이면 마을에 정자가 서며, 마을 평가 상한은 옛 넷만 본다', function () {
+      var s0 = V.state(), VD = DG.villageData, MU = DG.museum, bad = [], keepDon = s0.donated, keepUsed = s0.used, keepBag = JSON.stringify(s0.bag);
+      var pl = V.raw().player, px0 = pl.x, py0 = pl.y;
+      try {
+        s0.donated = {}; s0.used = {};
+        V.buildProps();
+        var rub = V.raw().props.filter(function (p) { return p.kind === 'rubble'; }), rs = V.ruinSpot();
+        if (rub.length !== 6 || !rs) { bad.push('돌무더기 ' + rub.length); }
+        else {
+          rub.forEach(function (p) { if (p.deco || Math.hypot(p.x - (rs.tx * V.TILE + V.TILE * 0.5), p.y - (rs.ty * V.TILE + V.TILE * 0.5)) > V.TILE * 3.5) { bad.push('돌무더기 자리 ' + p.id); } });
+        }
+        if (V.raw().props.some(function (p) { return p.id === 'bundle_ruin'; })) { bad.push('채우기 전에 정자'); }
+        if (!VD.MUSEUM_CATS.some(function (c) { return c.key === 'ruin' && c.bonus; }) || VD.ITEMS.ruin.length !== 6 || !VD.BUNDLES.ruin || !VD.PROPS.rubble || !VD.PROPS.rebuilt) { bad.push('표'); }
+        VD.ITEMS.ruin.forEach(function (it) { if (it.cat !== 'ruin' || VD.item(it.key) !== it) { bad.push('물건 ' + it.key); } });
+        /* 뒤지기 — 하루 한 번 */
+        if (rub.length) {
+          var before = 0, after = 0, r1, r2;
+          function ruinCount() { var n = 0; VD.ITEMS.ruin.forEach(function (it) { n += V.bagCount(it.key); }); return n; }
+          pl.x = rub[0].x; pl.y = rub[0].y + 6;
+          before = ruinCount(); r1 = V.interact(); after = ruinCount();
+          if (!(after > before)) { bad.push('뒤져도 조각이 안 나옴 ' + JSON.stringify(r1)); }
+          r2 = V.interact();
+          if (ruinCount() !== after) { bad.push('같은 날 또 나옴'); }
+        }
+        /* 마을 평가 상한 — 옛 넷을 다 채우면 조각 없이도 열린다 */
+        ['fossil', 'bug', 'fish', 'shell'].forEach(function (c) { VD.ITEMS[c].forEach(function (it) { s0.donated[it.key] = true; }); });
+        if (!MU.allBundlesDone()) { bad.push('옛 넷만으로 상한이 안 열림'); }
+        /* 기증 — 다섯 종은 미리, 마지막 하나는 사고 앞에서 */
+        VD.ITEMS.ruin.slice(0, 5).forEach(function (it) { s0.donated[it.key] = true; });
+        V.buildProps();
+        if (V.raw().props.some(function (p) { return p.id === 'bundle_ruin'; })) { bad.push('다섯 종에 정자'); }
+        var last = VD.ITEMS.ruin[5], mu = V.raw().props.filter(function (p) { return p.id === 'museum'; })[0];
+        s0.bag = s0.bag || {}; s0.bag[last.key] = 1;
+        pl.x = mu.x; pl.y = mu.y + 6;
+        var dn = MU.donate(last.key);
+        if (dn.kind !== 'donate' || dn.bundleCompleted !== 'ruin' || dn.text.indexOf('다시 쌓은 정자') < 0) { bad.push('마지막 기증 ' + JSON.stringify(dn)); }
+        var rb = V.raw().props.filter(function (p) { return p.id === 'bundle_ruin'; })[0];
+        if (!rb || rb.kind !== 'rebuilt' || !isFinite(rb.x) || !isFinite(rb.y)) { bad.push('정자 없음'); }
+        else {
+          V.raw().props.forEach(function (p) { if (p !== rb && Math.hypot(p.x - rb.x, p.y - rb.y) < V.TILE * 0.9) { bad.push('정자가 겹침 ' + p.id); } });
+          pl.x = rb.x; pl.y = rb.y + 6;
+          var t1 = V.interact();
+          if (!t1 || t1.text.indexOf('탑성 조각') < 0) { bad.push('정자 읽기 ' + (t1 && t1.text)); }
+        }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '돌무더기 6(폐허 곁) · 하루 한 번 조각 · 여섯 종을 다 들이면 정자 · 평가 상한은 옛 넷만';
+      } finally { s0.donated = keepDon; s0.used = keepUsed; s0.bag = JSON.parse(keepBag); pl.x = px0; pl.y = py0; V.buildProps(); }
+    });
+
     t('택배 — 시간제한 소포: 시한 안이면 ×1.5, 넘기면 ×0.7 이고 사슬이 끊긴다', function () {
       var undo = parcelKeep(), out = false, P = DG.parcel, dest = P.dests()[0].key, lim = P.limitSec(P.dests()[0].dist);
       try {
