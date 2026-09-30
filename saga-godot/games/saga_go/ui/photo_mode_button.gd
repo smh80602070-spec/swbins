@@ -60,6 +60,8 @@ func _on_capture_pressed() -> void:
 	if img == null:
 		Toast.show(self, "사진 저장 실패 — 화면을 읽을 수 없다.", 2.5)
 		return
+	## 사진 도감(world/photo_album.gd) — 화면 안 적·신수·인물을 담아 점수·보상.
+	get_tree().call_group("go_album", "shoot", img)
 	var dir_path := "user://photos"
 	DirAccess.make_dir_recursive_absolute(dir_path)
 	var fname := "%s/photo_%d.png" % [dir_path, Time.get_unix_time_from_system()]

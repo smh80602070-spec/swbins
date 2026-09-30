@@ -120,6 +120,9 @@ var hunt: Dictionary = {}
 ## 2026-09-30 주간 도전 — {"week", "base": {셈: 주 시작 값}, "claimed": [도전 id], "bonus": 완주 보상 받음}. 필드만 더해 SAVE_VERSION 그대로.
 ## world/weekly_goals.gd 가 읽고 쓴다(규칙은 data/weekly_goals.gd).
 var weekly_goals: Dictionary = {}
+## 2026-09-30 사진 도감 — {"shots": {대상 id: {n, best, name, kind}}, "claimed": [받은 마일스톤 종 수]}. 필드만 더해 SAVE_VERSION 그대로.
+## world/photo_album.gd 가 읽고 쓴다(규칙은 data/album.gd).
+var album: Dictionary = {}
 signal world_changed()
 
 var _session_start_exp: float = 0.0

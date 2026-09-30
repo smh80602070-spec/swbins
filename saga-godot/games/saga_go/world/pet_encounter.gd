@@ -41,6 +41,7 @@ var _triggered := false
 var _layer: CanvasLayer
 
 func _ready() -> void:
+	add_to_group("go_pets") # 사진 도감(photo_album.gd)이 화면 안 신수를 찾는다
 	var found: Variant = Pets.find(pet_id)
 	if found == null:
 		push_warning("pet_encounter: unknown pet_id " + pet_id)

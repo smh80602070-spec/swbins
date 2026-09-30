@@ -52,6 +52,7 @@ var _revealed := false
 var _layer: CanvasLayer
 
 func _ready() -> void:
+	add_to_group("go_heroes") # 사진 도감(photo_album.gd)이 화면 안 인물을 찾는다
 	var found: Variant = Characters.find(hero_id)
 	if found == null:
 		push_warning("hero_encounter: unknown hero_id " + hero_id)

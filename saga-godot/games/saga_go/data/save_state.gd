@@ -61,6 +61,7 @@ func save() -> bool:
 		"tips": PartyState.tips,
 		"hunt": PartyState.hunt,
 		"weekly_goals": PartyState.weekly_goals,
+		"album": PartyState.album,
 		"drops": DropState.drops,
 		"quest_active_id": QuestState.active_id,
 		"quest_active_name": QuestState.active_name,
@@ -161,6 +162,9 @@ func try_load() -> bool:
 	## weekly_goals(2026-09-30 주간 도전) — 없으면 빈 사전(이번 주를 새로 짠다).
 	var wg: Variant = data.get("weekly_goals", {})
 	PartyState.weekly_goals = (wg as Dictionary).duplicate(true) if typeof(wg) == TYPE_DICTIONARY else {}
+	## album(2026-09-30 사진 도감) — 없으면 빈 사전(담은 것 없음).
+	var al: Variant = data.get("album", {})
+	PartyState.album = (al as Dictionary).duplicate(true) if typeof(al) == TYPE_DICTIONARY else {}
 
 	var pos: Array = data.get("player_pos", [])
 	var player := _find_player()
