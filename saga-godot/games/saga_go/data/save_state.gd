@@ -48,6 +48,7 @@ func save() -> bool:
 		"dispatch": PartyState.dispatch,
 		"night_echo": PartyState.night_echo,
 		"eggs": PartyState.eggs,
+		"home": PartyState.home,
 		"drops": DropState.drops,
 		"quest_active_id": QuestState.active_id,
 		"quest_active_name": QuestState.active_name,
@@ -143,6 +144,9 @@ func try_load() -> bool:
 	## eggs(2026-09-30 신수 알·동행) — 없으면 빈 사전(알·동행 없음).
 	var eg: Variant = data.get("eggs", {})
 	PartyState.eggs = (eg as Dictionary).duplicate(true) if typeof(eg) == TYPE_DICTIONARY else {}
+	## home(2026-09-30 쉼터 마당) — 없으면 빈 사전(빈 마당).
+	var hm: Variant = data.get("home", {})
+	PartyState.home = (hm as Dictionary).duplicate(true) if typeof(hm) == TYPE_DICTIONARY else {}
 
 	var pos: Array = data.get("player_pos", [])
 	var player := _find_player()

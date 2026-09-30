@@ -106,6 +106,9 @@ var night_echo: Dictionary = {}
 ## 2026-09-30 신수 알·동행 — {"bag": [알 종류…], "inc": [{"tier","walked"}…], "hatched", "walk", "buddy", "buddy_m"}. 필드만 더해 SAVE_VERSION 그대로.
 ## world/egg_incubator.gd 가 읽고 쓴다(규칙은 data/eggs.gd).
 var eggs: Dictionary = {}
+## 2026-09-30 쉼터 마당 — {"items": [{"id","x","z","r"}…], "t": 정산 시각, "acc": 은행 냥, "spent": 총 쓴 냥}. 필드만 더해 SAVE_VERSION 그대로.
+## world/homestead.gd 가 읽고 쓴다(규칙은 data/homestead.gd).
+var home: Dictionary = {}
 signal world_changed()
 
 var _session_start_exp: float = 0.0
