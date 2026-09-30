@@ -5,6 +5,7 @@
  *   node tools/status.mjs          표를 찍고 saga-web/STATE.md 를 덮어쓰고 README.md "현재" 절의 표 블록을 갱신
  *   node tools/status.mjs --big    js 1,500줄 초과 파일 목록(줄 수 내림차순)만
  *   node tools/status.mjs --json   같은 내용을 tools/_out/status.json 에도
+ *   node tools/status.mjs --sheet <판>  D1·D2(+조작이 써진 D0) 기능 10개의 확인 시트 → tasks/sheets/<판>-<날짜>.md
  *
  * 완성도 % = D3 이상 기능 ÷ 전체. WIP = D0+D1, 10 을 넘으면 `초과`. 등급 규칙은 SAGA-ARCH §3.1.
  * 의존 없는 node 한 파일. features.json·게임 코드는 쓰지 않는다.
@@ -39,6 +40,35 @@ function bigFiles() {
 
 if (argv.includes('--big')) {
   bigFiles().forEach(x => console.log(`${String(x.lines).padStart(6)}  ${x.file}`));
+  process.exit(0);
+}
+
+/* ── 확인 시트(SAGA-ARCH §3.2) — 사람이 폰에서 ○/× 만 적는다 ───────────────── */
+const si = argv.indexOf('--sheet');
+if (si >= 0) {
+  const game = argv[si + 1];
+  if (!GAMES.includes(game)) { console.error('판 이름이 필요하다: ' + GAMES.join(' ')); process.exit(1); }
+  const a = readJson(path.join(WEB, game, 'features.json'), []);
+  /* 후보: D1·D2 + 조작(sheet)이 써진 D0. 조작 있는 것을 앞에, 그 안에서 since 오래된 순(같으면 파일 순서) */
+  const cand = a.map((x, i) => ({ x, i })).filter(({ x }) => x.level === 'D1' || x.level === 'D2' || (x.level === 'D0' && x.sheet));
+  cand.sort((u, v) => (!!v.x.sheet - !!u.x.sheet) || String(u.x.since).localeCompare(String(v.x.since)) || (u.i - v.i));
+  const pick = cand.slice(0, 10).map(c => c.x);
+  const base = 'https://smh8627-jpg.github.io/swbins/saga-web/' + game + '/';
+  const d = new Date(); const ymd = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const cell = s => String(s).replace(/\|/g, '/').replace(/\s+/g, ' ');
+  const L = [`# 확인 시트 — ${game}`, `${ymd} · 판 ${game} · 기능 ${pick.length}개`, '○/× 만 적어 주세요. 10개 넘게 보지 않아도 됩니다.', '',
+    '| n | 기능 | 여는 법 | 조작 | 기대 | ○/× | 메모 |', '|---|---|---|---|---|---|---|'];
+  pick.forEach((x, n) => {
+    const s = x.sheet;
+    const open = s ? `[열기](${base}index.html${s.open || ''})` + (s.preset ? ` · [관리](${base}_admin.html) "${s.preset}"` : '') : '-';
+    const steps = s ? s.steps.map((t, k) => (k + 1) + ') ' + t).join(' ') : '조작 미작성';
+    L.push(`| ${n + 1} | ${cell(x.name.slice(0, 22))} | ${open} | ${cell(steps)} | ${s ? cell(s.expect) : '-'} | | |`);
+  });
+  const file = path.join(ROOT, 'tasks', 'sheets', game + '-' + ymd.replace(/-/g, '') + '.md');
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  const body = L.join('\n') + '\n';
+  fs.writeFileSync(file, body);
+  console.log(path.relative(ROOT, file).replace(/\\/g, '/') + ' (' + Buffer.byteLength(body) + 'B, 기능 ' + pick.length + ', 조작 ' + pick.filter(x => x.sheet).length + ')');
   process.exit(0);
 }
 

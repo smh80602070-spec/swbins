@@ -7,7 +7,7 @@
     "required": ["id", "name", "files", "tests", "level", "verified", "fun", "ticket", "since"],
     "additionalProperties": false,
     "properties": {
-      "id": { "type": "string", "pattern": "^(go|dg|fs|st|rk)\.[a-z0-9][a-z0-9-]*$" },
+      "id": { "type": "string", "pattern": "^(go|dg|fs|st|rk)\\.[a-z0-9][a-z0-9-]*$" },
       "name": { "type": "string", "minLength": 1 },
       "files": { "type": "array", "items": { "type": "string" } },
       "tests": { "type": "array", "items": { "type": "string" } },
@@ -15,8 +15,19 @@
       "verified": { "type": ["string", "null"] },
       "fun": { "type": "object" },
       "ticket": { "type": ["string", "null"] },
-      "since": { "type": "string", "pattern": "^\d{4}-\d{2}-\d{2}$" },
-      "note": { "type": "string" }
+      "since": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+      "note": { "type": "string" },
+      "sheet": {
+        "type": "object",
+        "required": ["steps", "expect"],
+        "additionalProperties": false,
+        "properties": {
+          "open": { "type": "string" },
+          "preset": { "type": "string" },
+          "steps": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "string" } },
+          "expect": { "type": "string" }
+        }
+      }
     }
   }
 }
