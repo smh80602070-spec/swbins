@@ -9653,3 +9653,9 @@ PROJECT_STATE.md` 참고. 요약:
 - story_enemy 몸이 색 캡슐이었다. GO creature_builder(코드 짐승 공방)를 재사용: KIND_BY_STAGE {field 도깨비꼴 · forest 늑대 · cave 네발짐승 · gorge 곰}, 없으면(비경) 도깨비꼴. 색은 사냥터가 넘긴 enemy_color 에서 어두운·밝은 변형 둘, opts enemy(사나운 눈·송곳니). 키 1.6m × 보스·대장 배율. 충돌은 캡슐 그대로. 매 틱 플레이어 쪽(±X)으로 돌고 idle 애니.
 - 스크래치 스크립트 enemy_look.gd(SceneTree 로 씬을 띄워 플레이어를 첫 적 앞에 세움 + --write-movie)로 TestField 확인 — 황건적이 곤봉 든 노란 도깨비로. REGRESS OK.
 - 실기 확인 전: 사냥터별 몸 모양 어울림·피격 번쩍임(재질이 정점색 공방 재질이라 combat_feel 이 스토리 적엔 안 걸릴 수 있음)·보스 크기.
+
+## DUNGEON 적 몸을 짐승 공방으로 (2026-09-30, "묻지말고 이어해")
+
+- dungeon_enemy 몸이 색 캡슐(황건 노랑)이었다 → GO creature_builder: 잡졸·정예·분신은 도깨비꼴(정예 색 유지), 보스는 곰. 키 1.7m × 기존 배율, 충돌 캡슐 그대로. 플레이어 쪽으로 돌고(lerp_angle) 걸으면 walk·서면 idle.
+- 스크래치 enemy_look.gd(SceneTree 로 씬 띄우고 캔버스층 숨기고 플레이어를 첫 적 옆에 세움 + --write-movie)로 TestRoom 확인 — 곤봉 든 도깨비 둘. REGRESS OK.
+- 실기 확인 전: 정예 접두 색 구분이 몸에서 읽히는지·보스 곰 크기·피격 번쩍임(dungeon_enemy 는 원래 재질을 안 건드림).

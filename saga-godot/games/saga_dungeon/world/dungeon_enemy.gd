@@ -61,6 +61,7 @@ const BOSS_SCALE := 22.0 / 13.0  # dungeon.js spawnEnemy()의 r = boss?22:13 그
 const ELITE_SCALE := 16.0 / 13.0  # spawnEnemy()의 정예 r=16 그대로
 const SHADE_SCALE := 10.0 / 13.0  # spawnEnemy()의 그림자 분신 r=10 그대로
 const LootPickup := preload("res://games/saga_dungeon/world/loot_pickup.gd")
+const CreatureBuilder := preload("res://games/saga_go/world/creature_builder.gd")  # 색 캡슐 대신 GO 짐승 공방 몸(2026-09-30)
 const Toast := preload("res://saga_core/ui/toast.gd")  # "그림자가 갈라졌다" 토스트용
 
 ## dungeon.js ELITES 그대로(8종, 색까지 원작 값) — hp/dmg 배율 없는 항목은
@@ -100,6 +101,8 @@ var hp: float
 var _floor_num: int = 1
 var is_boss: bool = false
 var _scale_mul: float = 1.0
+var _creature: Node3D
+var _anim := ""
 var _attack_cd_left := 0.0
 var _player: Node3D
 var _dead := false
@@ -172,17 +175,13 @@ func _ready() -> void:
 
 
 func _spawn_visual() -> void:
-	var mi := MeshInstance3D.new()
-	var mesh := CapsuleMesh.new()
-	mesh.radius = 0.7 * _scale_mul
-	mesh.height = 1.7 * _scale_mul
-	mi.mesh = mesh
-	mi.position = Vector3(0, 0.85 * _scale_mul, 0)
-	var mat := StandardMaterial3D.new()
-	## enemyName()의 정예 접두처럼, 시각도 정예 색이 잡졸 색을 덮는다.
-	mat.albedo_color = Color(String(_elite_def.color)) if not _elite_def.is_empty() else COLOR
-	mi.material_override = mat
-	add_child(mi)
+	## enemyName()의 정예 접두처럼, 시각도 정예 색이 잡졸 색을 덮는다. 보스는 곰, 나머지는 도깨비꼴.
+	var col: Color = Color(String(_elite_def.color)) if not _elite_def.is_empty() else COLOR
+	var kind := "bear" if is_boss else "goblin"
+	_creature = CreatureBuilder.build(kind, [col, col.darkened(0.4), col.lightened(0.45)], {"enemy": true})
+	CreatureBuilder._fit(_creature, kind, 1.7 * _scale_mul)
+	add_child(_creature)
+	_play_anim("idle")
 
 	var cs := CollisionShape3D.new()
 	var shape := CapsuleShape3D.new()
@@ -223,6 +222,25 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity = Vector3.ZERO
 	move_and_slide()
+	_face_and_animate(to_player)
+
+
+## 몸을 플레이어 쪽으로 돌리고(걷는 중이면 walk, 아니면 idle).
+func _face_and_animate(to_player: Vector3) -> void:
+	if _creature == null:
+		return
+	if to_player.length_squared() > 0.01:
+		_creature.rotation.y = lerp_angle(_creature.rotation.y, atan2(to_player.x, to_player.z), 0.25)
+	_play_anim("walk" if velocity.length_squared() > 0.05 else "idle")
+
+
+func _play_anim(anim: String) -> void:
+	if anim == _anim or _creature == null:
+		return
+	var ap := _creature.get_node_or_null("AnimationPlayer") as AnimationPlayer
+	if ap != null and ap.has_animation(anim):
+		ap.play(anim)
+		_anim = anim
 
 
 ## dungeon.js applyElem()의 독(pois) dot과 같은 모양 — dps*t로 몇 초에
