@@ -72,7 +72,7 @@ namespace Saga.Story.Data
             {
                 case "talk": return Said.Contains(step.Scene);
                 case "mission": return step.Key == "q_field" ? StoryQuestState.QuestDone : step.Key == "q_boss1" ? StoryQuestState.QuestBossDone : true;
-                case "job": return StoryJobState.HasJob;
+                case "job": return step.N <= 1 ? StoryJobState.HasJob : StoryJobState.Tier >= step.N;
                 case "rift": return _riftBase >= 0 && _rifts - _riftBase >= 1;
             }
             return true;
@@ -188,7 +188,7 @@ namespace Saga.Story.Data
             {
                 case "talk": text = StoryLocalization.T("sscen.hint.talk", "💬 이야기를 듣는다"); break;
                 case "mission": text = step.Key == "q_field" ? StoryLocalization.T("sscen.hint.kill", "🗡️ 「첫 사냥」을 마친다") : StoryLocalization.T("sscen.hint.boss", "👺 「두목의 목」을 벤다"); break;
-                case "job": text = StoryLocalization.T("sscen.hint.job", "🥋 전직관에게 첫 전직을 배운다"); break;
+                case "job": text = step.N <= 1 ? StoryLocalization.T("sscen.hint.job", "🥋 전직관에게 첫 전직을 배운다") : string.Format(StoryLocalization.T("sscen.hint.job_n", "🥋 전직관에게 {0}차 전직을 배운다"), step.N); break;
                 case "rift": text = StoryLocalization.T("sscen.hint.rift", "🌀 비경을 한 번 끝까지 깬다"); break;
                 default: text = StoryLocalization.T("sscen.hint.finish", "마무리"); break;
             }

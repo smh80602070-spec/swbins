@@ -25,7 +25,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 0-1. **남은 것**: 사람 영어 검수(tsv 순위 1부터). GO 동료 몸 Maria.controller 리타깃.
 1. STORY 판수(15→20 약 11판·20→25 약 28판)가 무거우면 `JobPromoteLevel3/4`만.
 2. **101-2·104-1 잔여(보류)** — GO⑤·Kenney 폴백·헤어카드.
-3. **시나리오**(`../scenario/`) — **REALM 19·DUNGEON 19·STORY 3·FOREST 29 끝(109-16, 표 16행)** + 곁가지 넷 = 웹 이식 끝. STORY 나머지 16장은 사냥터 뒤.
+3. **시나리오**(`../scenario/`) — **REALM 19·DUNGEON 19·STORY 5·FOREST 29 끝(109-16, 표 16행)** + 곁가지 넷. STORY 나머지 14장은 사냥터·사명 표가 생긴 뒤(웹 stage·mission 단계).
 
 
 ## 알려진 오류

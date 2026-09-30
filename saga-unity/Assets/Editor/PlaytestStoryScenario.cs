@@ -77,10 +77,11 @@ namespace Saga.EditorTools
         private static void CheckTable(List<string> parts)
         {
             var ch = StoryScenarioData.Chapters;
-            if (ch.Length != 3 || ch[0].Id != "p1_field" || ch[1].Id != "p1_job" || ch[2].Id != "p3_labyrinth") Fail("장 셋");
-            if (ch[0].Need != 1 || ch[1].Need != 10 || ch[2].Need != 30) Fail("문턱 레벨");
-            if (ch[0].After != null || ch[1].After != "p1_field" || ch[2].After != "p1_job") Fail("잇는 순서");
-            if (StoryScenarioData.Scenes.Length != 6) Fail($"장면 {StoryScenarioData.Scenes.Length}");
+            if (ch.Length != 5 || ch[0].Id != "p1_field" || ch[1].Id != "p1_job" || ch[2].Id != "p2_cave" || ch[3].Id != "p3_labyrinth" || ch[4].Id != "p3_job") Fail("장 다섯");
+            if (ch[0].Need != 1 || ch[1].Need != 10 || ch[2].Need != 15 || ch[3].Need != 30 || ch[4].Need != 30) Fail("문턱 레벨");
+            if (ch[0].After != null || ch[1].After != "p1_field" || ch[2].After != "p1_job" || ch[3].After != "p2_cave" || ch[4].After != "p3_labyrinth") Fail("잇는 순서");
+            if (StoryScenarioData.Scenes.Length != 10) Fail($"장면 {StoryScenarioData.Scenes.Length}");
+            if (ch[2].Steps[1].T != "job" || ch[2].Steps[1].N != 2 || ch[4].Steps[1].N != 3) Fail("전직 차수 단계");
             for (int i = 0; i < ch.Length; i++)
             {
                 if (ch[i].No != i + 1) Fail($"{ch[i].Id} 번호");
@@ -95,8 +96,8 @@ namespace Saga.EditorTools
                 if (StoryScenarioData.ChapterOf(s.ChapterId) == null) Fail($"장면 {s.Id} 장");
                 foreach (var l in s.Lines) if (l.Who != "me" && StoryScenarioData.CastOf(l.Who) == null) Fail($"장면 {s.Id} 말하는 이 {l.Who}");
             }
-            if (!ch[1].JobTitle || ch[2].Shards != 3 || ch[0].Exp != 400) Fail("보상");
-            parts.Add("표(셋·문턱 1/10/30·잇는 순서·장면 여섯·보상)");
+            if (!ch[1].JobTitle || !ch[2].JobTitle || !ch[4].JobTitle || ch[3].Shards != 3 || ch[0].Exp != 400 || ch[2].Exp != 4000 || ch[4].Exp != 40000) Fail("보상");
+            parts.Add("표(다섯·문턱 1/10/15/30/30·잇는 순서·장면 열·전직 2·3차 단계·보상)");
         }
 
         private static void CheckTexts(List<string> parts)
@@ -179,9 +180,19 @@ namespace Saga.EditorTools
                 if (!StoryScenario.IsDone("p1_job")) Fail("2장이 전직 뒤 안 끝남");
                 if (!Requests.Any(r => r.Scene.Id == "job2")) Fail("job2 안 뜸");
                 if (StoryScenario.AwardedTitles.Count != 1 || !StoryScenario.AwardedTitles[0].Contains("무사")) Fail("칭호 " + string.Join(",", StoryScenario.AwardedTitles));
-                // 3장은 레벨 30 부터
+                // 3장(2차 전직)은 레벨 15 부터 — 이름 없는 채로 둘째 자리
+                if (Requests.Any(r => r.Scene.Id == "cave1")) Fail("문턱 전에 cave1");
+                StoryJobState.Restore(15, 0f, "warrior");
+                StoryScenario.Check(); Drain();
+                if (!Requests.Any(r => r.Scene.Id == "cave1") || StoryScenario.StepIndex != 1 || !StoryScenario.HudLine().Contains("2차")) Fail("2차 전직 단계 " + StoryScenario.StepIndex + " / " + StoryScenario.HudLine());
+                if (StoryScenario.IsDone("p2_cave")) Fail("전직 전에 3장이 끝남");
+                StoryJobState.Restore(15, 0f, "general");
+                StoryScenario.Check(); Drain();
+                if (!StoryScenario.IsDone("p2_cave") || !Requests.Any(r => r.Scene.Id == "cave2")) Fail("3장이 2차 전직 뒤 안 끝남");
+                if (StoryScenario.AwardedTitles.Count != 2 || !StoryScenario.AwardedTitles[1].Contains("장군")) Fail("칭호 둘째 " + string.Join(",", StoryScenario.AwardedTitles));
+                // 4장은 레벨 30 부터
                 if (Requests.Any(r => r.Scene.Id == "lab1")) Fail("문턱 전에 lab1");
-                StoryJobState.Restore(30, 0f, "warrior");
+                StoryJobState.Restore(30, 0f, "general");
                 int shards = StoryLabyrinthState.MemoryShards;
                 StoryScenario.Check(); Drain();
                 if (!Requests.Any(r => r.Scene.Id == "lab1") || StoryScenario.StepIndex != 1 || !StoryScenario.HudLine().Contains("비경")) Fail("비경 단계 " + StoryScenario.StepIndex);
@@ -190,16 +201,23 @@ namespace Saga.EditorTools
                 StoryScenario.OnRiftCleared(); Drain();
                 if (!StoryScenario.IsDone("p3_labyrinth") || !Requests.Any(r => r.Scene.Id == "lab2")) Fail("3장이 비경 뒤 안 끝남");
                 if (StoryLabyrinthState.MemoryShards != shards + 3) Fail($"기억 조각 +3 ({StoryLabyrinthState.MemoryShards - shards})");
+                // 5장 = 3차 전직 (비경 뒤, 레벨 30 — 셋째 자리는 3차 전직을 해야 끝)
+                if (!Requests.Any(r => r.Scene.Id == "job31") || StoryScenario.StepIndex != 1 || !StoryScenario.HudLine().Contains("3차")) Fail("3차 전직 단계 " + StoryScenario.StepIndex + " / " + StoryScenario.HudLine());
+                if (StoryScenario.IsDone("p3_job")) Fail("3차 전직 전에 5장이 끝남");
+                StoryJobState.Restore(30, 0f, "marshal");
+                StoryScenario.Check(); Drain();
+                if (!StoryScenario.IsDone("p3_job") || !Requests.Any(r => r.Scene.Id == "job32")) Fail("5장이 3차 전직 뒤 안 끝남");
+                if (StoryScenario.AwardedTitles.Count != 3 || !StoryScenario.AwardedTitles[2].Contains("원수")) Fail("칭호 셋째 " + string.Join(",", StoryScenario.AwardedTitles));
                 if (StoryScenario.Current() != null || StoryScenario.HudLine().Length != 0) Fail("다 끝난 뒤 줄");
                 // 비경을 시작 전에 깬 것은 안 센다
                 Fresh();
                 StoryQuestState.Restore(StoryQuestState.KillGoal, StoryQuestState.BossGoal);
                 StoryJobState.Restore(30, 0f, "warrior");
-                StoryScenario.RestoreLegacy(10, true);
+                StoryScenario.RestoreLegacy(25, true);
                 StoryScenario.OnRiftCleared();
                 StoryScenario.Check(); Drain();
                 if (StoryScenario.IsDone("p3_labyrinth")) Fail("비경 단계 시작 전 완주가 셈에 들어감");
-                parts.Add("진행(들판 밖 안 뜸·첫 사냥→두목→1장 끝·레벨 10 문턱·전직→칭호·레벨 30 문턱·비경 완주→기억 조각 +3·시작 전 완주는 안 셈)");
+                parts.Add("진행(들판 밖 안 뜸·첫 사냥→두목→1장 끝·레벨 10 문턱·전직→칭호·레벨 15 문턱·2차 전직→칭호·레벨 30 문턱·비경 완주→기억 조각 +3·3차 전직→칭호·시작 전 완주는 안 셈)");
             }
             finally { PlayField.SetValue(null, saved); Pending.Clear(); }
         }
@@ -212,9 +230,11 @@ namespace Saga.EditorTools
             if (!StoryScenario.IsDone("p1_field") || !StoryScenario.IsDone("p1_job") || StoryScenario.IsDone("p3_labyrinth")) Fail("레벨 10 옛 세이브");
             StoryScenario.RestoreLegacy(5, true);
             if (StoryScenario.DoneCount != 2) Fail("전직한 옛 세이브");
+            StoryScenario.RestoreLegacy(25, false);
+            if (StoryScenario.DoneCount != 3 || !StoryScenario.IsDone("p2_cave") || StoryScenario.IsDone("p3_labyrinth")) Fail("레벨 25 옛 세이브");
             StoryScenario.RestoreLegacy(45, true);
-            if (StoryScenario.DoneCount != 3) Fail("레벨 45 옛 세이브");
-            parts.Add("옛 세이브(레벨 5=없음·10=둘·전직=둘·45=셋 — 보상 없이)");
+            if (StoryScenario.DoneCount != 5) Fail("레벨 45 옛 세이브");
+            parts.Add("옛 세이브(레벨 5=없음·10=둘·전직=둘·25=셋·45=다섯 — 보상 없이)");
         }
 
         private static void CheckSave(List<string> parts)

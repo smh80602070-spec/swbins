@@ -61,6 +61,17 @@ namespace Saga.Story.Data
                     new Line("mentor", "골랐구나. 이제 너는 이름 없는 채로 한 갈래를 얻었다."),
                     new Line("mentor", "동쪽 강릉진 부두에 쇠로 된 배가 걸려 있다더라. 그 배의 사진을 찍는 여행자가 있다지 — 만나 보아라."),
                     new Line("me", "가겠습니다. 이름은 가는 길에서 찾지요.") } },
+            new Scene { Id = "cave1", ChapterId = "p2_cave",
+                Lines = new[] {
+                    new Line("ieum", "살았다… 도독 진 깊은 곳에 묶여 있었습니다. 저는 탐사 대원 이음, 먼 시대에서 문을 쫓아 왔습니다."),
+                    new Line("ieum", "이 땅의 전쟁에 다른 시대 병기가 섞이는 건 새어 든 것입니다. 동쪽 끝에 난세의 문이 있어요."),
+                    new Line("me", "문이라. 그렇다면 이름 없는 제 손에도 할 일이 있겠군요."),
+                    new Line("ieum", "마을마다 서 있겠습니다. 소식이 닿으면 어디서든 말을 거세요. 우선 둘째 스승부터 찾으세요.") } },
+            new Scene { Id = "cave2", ChapterId = "p2_cave",
+                Lines = new[] {
+                    new Line("mentor", "이름 없는 채로 둘째 자리에 올랐구나. 이름이 없으니 남의 시대 기술도 그대로 배우는군."),
+                    new Line("mentor", "더 큰 불길이 기산채 쪽에서 오른다 한다. 다음 길은 스스로 정하되, 잿빛 자를 조심하라."),
+                    new Line("me", "명심하겠습니다. 이름을 얻을 때까지 걷겠습니다.") } },
             new Scene { Id = "lab1", ChapterId = "p3_labyrinth",
                 Lines = new[] {
                     new Line("ieum", "제 탐사 등으로 비경을 엽니다. 이 층들은 문이 남긴 기억의 껍질이에요. 돌 발판에 박힌 표지판이 보이면 다른 시대의 흔적입니다."),
@@ -71,6 +82,16 @@ namespace Saga.Story.Data
                     new Line("me", "…기억났습니다. 저는 문 너머에서 왔어요. 문이 열릴 때 떨어져 이 땅에 나왔습니다."),
                     new Line("ieum", "그래서 이름이 없었던 거군요. 문 너머에 두고 온 이름이 있을 겁니다."),
                     new Line("me", "그 이름을 찾으러 문까지 가겠습니다. 잿빛 사자보다 먼저요.") } },
+            new Scene { Id = "job31", ChapterId = "p3_job",
+                Lines = new[] {
+                    new Line("mentor", "네 이름은 문 너머에 두고 왔구나. 내 방 벽의 이 오래된 사진을 보아라 — 이 땅에서 찍을 수 없는 색이다."),
+                    new Line("mentor", "내 칼날에 비친 것이 무엇이냐. 나도 오래 전에 문을 본 적이 있다. 이제 셋째 자리를 열어 주마."),
+                    new Line("mentor", "🥋 무예창에서 3차 전직을 하여라.") } },
+            new Scene { Id = "job32", ChapterId = "p3_job",
+                Lines = new[] {
+                    new Line("mentor", "셋째 자리에 올랐다. 이제 네 손은 이름 없는 채로도 이 땅에서 가장 빠르다."),
+                    new Line("mentor", "잿빛 사자가 옛 도읍 낙양으로 갔다는 소문이다. 도포를 벗게 될 것이다 — 가서 확인하여라."),
+                    new Line("me", "다녀오겠습니다. 이름을 찾는 길이 그쪽에 있습니다.") } },
         };
 
         public static readonly Chapter[] Chapters =
@@ -94,14 +115,32 @@ namespace Saga.Story.Data
                     new Step { T = "job", N = 1 },
                     new Step { T = "talk", Scene = "job2" },
                 } },
-            new Chapter { Id = "p3_labyrinth", No = 3, TitleKo = "비경의 기억", StageKo = "비경", BlurbKo = "이음이 여는 5층 비경. 관문 수호장을 치면 잃은 기억 조각이 나온다 — 떠돌이도 문에서 떨어졌다.",
-                Need = 30, After = "p1_job", Exp = 30000, Shards = 3, JobTitle = false,
+            new Chapter { Id = "p2_cave", No = 3, TitleKo = "한중 굴혈", StageKo = "한중 굴혈", BlurbKo = "위군 도독의 진 깊은 곳에서 탐사 대원 이음을 구한다. 둘째 스승에게 2차 전직을 배운다.",
+                Need = 15, After = "p1_job", Exp = 4000, Shards = 0, JobTitle = true,
+                LegacyLevel = 25, LegacyTier = 2,
+                Steps = new[]
+                {
+                    new Step { T = "talk", Scene = "cave1" },
+                    new Step { T = "job", N = 2 },
+                    new Step { T = "talk", Scene = "cave2" },
+                } },
+            new Chapter { Id = "p3_labyrinth", No = 4, TitleKo = "비경의 기억", StageKo = "비경", BlurbKo = "이음이 여는 5층 비경. 관문 수호장을 치면 잃은 기억 조각이 나온다 — 떠돌이도 문에서 떨어졌다.",
+                Need = 30, After = "p2_cave", Exp = 30000, Shards = 3, JobTitle = false,
                 LegacyLevel = 45, LegacyTier = 3,
                 Steps = new[]
                 {
                     new Step { T = "talk", Scene = "lab1" },
                     new Step { T = "rift" },
                     new Step { T = "talk", Scene = "lab2" },
+                } },
+            new Chapter { Id = "p3_job", No = 5, TitleKo = "셋째 스승", StageKo = "허도", BlurbKo = "허도의 스승이 \"네 이름은 문 너머에 두고 왔구나\" 하며 3차 전직을 준다.",
+                Need = 30, After = "p3_labyrinth", Exp = 40000, Shards = 0, JobTitle = true,
+                LegacyLevel = 45, LegacyTier = 3,
+                Steps = new[]
+                {
+                    new Step { T = "talk", Scene = "job31" },
+                    new Step { T = "job", N = 3 },
+                    new Step { T = "talk", Scene = "job32" },
                 } },
         };
 
