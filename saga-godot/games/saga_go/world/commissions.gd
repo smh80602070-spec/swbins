@@ -141,6 +141,7 @@ func claim_bonus() -> bool:
 	PartyState.commissions.bonus = true
 	PartyState.add_items(Commissions.BONUS)
 	PartyState.add_exp(Commissions.BONUS_EXP)
+	get_tree().call_group("go_eggs", "award", "commission", str(int(Time.get_unix_time_from_system() / 86400.0)))
 	Toast.show(self, "오늘 의뢰를 다 마쳤다 — 냥 %d·견문록 %d·강화석 %d·연마석 %d" % [Commissions.BONUS.mora,
 		Commissions.BONUS.book_m, Commissions.BONUS.ore_m, Commissions.BONUS.polish], 3.5)
 	CombatFeel.ui()

@@ -216,6 +216,11 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_archery.gd").new())
 
 	## PLAN 106장 ㊹ — 탐사 파견(마을 역참 곁 게시판).
+	var eggs := preload("res://games/saga_go/world/egg_incubator.gd").new()
+	eggs.name = "EggIncubator"
+	add_child(eggs)
+	if OS.get_environment("SAGA_EGGS_PROBE") != "":
+		add_child(load("res://tools/probe_eggs.gd").new())
 	var dispatch := preload("res://games/saga_go/world/dispatch.gd").new()
 	dispatch.name = "Dispatch"
 	add_child(dispatch)

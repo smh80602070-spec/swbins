@@ -151,6 +151,8 @@ func open() -> float:
 	EventState.mark_resolved("chest_" + chest_id)
 	var reward: float = g.exp
 	PartyState.add_exp(reward)
+	## 신수 알(data/eggs.gd) — 상자 등급마다 알이 나올 수 있다.
+	get_tree().call_group("go_eggs", "award", "chest:" + grade, chest_id)
 	## 106장 ⑩ — 육성 재료(냥·견문록·원소 결정, growth.gd CHEST_LOOT).
 	PartyState.add_items(Growth.CHEST_LOOT.get(grade, {}))
 	## 106장 ⑰ — 성유물(정교 ★4 하나·진귀 ★5 하나·화려 ★5 둘).

@@ -104,6 +104,7 @@ func claim(id: String) -> bool:
 	PartyState.add_items(FB.reward_of(id, wl))
 	PartyState.add_artifact(4)
 	PartyState.add_exp(FB.REWARD_EXP)
+	get_tree().call_group("go_eggs", "award", "bloom", "%s|%d" % [id, int(Time.get_unix_time_from_system() / 86400.0)])
 	var bloom: Node3D = _blooms[id]
 	CombatFeel.pickup(bloom, "보상")
 	bloom.queue_free()

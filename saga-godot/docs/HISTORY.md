@@ -9684,3 +9684,11 @@ PROJECT_STATE.md` 참고. 요약:
 - 밭: 초록 판 → 흙빛 판 위 밀 포기 3×2(assets/vegetation/crops_wheatStageB.glb 0.75배). 곳간: 통나무 → 작은 곳간채(house_s2_02 0.15배) 군량만큼 줄지어. 창 모드 촬영 확인, REGRESS OK.
 - 담장을 assets/buildings/wall-block.glb 로 바꿔 봤으나 흰 바탕에 주황 테두리 텍스처라 성 분위기와 안 맞아 원래 상자로 되돌림(그 GLB 는 임시 조립 부품용 색).
 - 밀 포기가 희끗해 갈대처럼 보인다 — 다음에 재질 색을 황금빛으로 얹을 것.
+
+## GO 새 시스템 — 신수 알·동행 (2026-09-30, "그래픽 말고 새로운 시스템 부터 먼저해")
+
+- 포켓몬GO 의 알 부화·파트너를 이 판 문법으로. 신수는 지금까지 지도 위 정해진 열한 자리에서 확률 포획으로만 얻었다 → 걸어서 얻는 두 번째 길.
+- 새 `data/eggs.gd`(규칙·수치): 알 셋(작은 300m·큰 800m·빛나는 1500m, 후보 신수 풀), 주머니 9, 부화기 칸 1·4·8(모험 등급), 곳별 굴림 표(상자 등급·의뢰 4개 완수·비경·주간 보스·보스 꽃 — (곳,열쇠) 해시라 결정적), 부화 신수는 안 가진 것 우선(다 가졌으면 냥 1500·경험 30), 동행 신수와 400m 걸을 때마다 냥 800. `PartyState.eggs`(+save_state 저장·불러오기, 옛 세이브는 빈 사전 — 버전 그대로).
+- 새 `world/egg_incubator.gd`(test_village 가 붙임): 플레이어 실제 움직임(1틱 3m 넘는 순간이동 제외)을 부화기에 줌, 그룹 "go_eggs" award(곳,열쇠) 로 상자·의뢰·비경·보스 꽃이 알을 준다(treasure_chest·commissions·domains·field_bosses 에 한 줄씩), I 화면(부화기 진행 막대·주머니 넣기/빼기·동행 고르기), 동행 신수는 CreatureBuilder.build_pet 몸이 뒤따라 걷고(걷기/서기 애니, 탈것 타면 숨김) 지형 높이에 붙는다.
+- 새 점검 `tools/probe_eggs.gd`(SAGA_EGGS_PROBE=1, 11항목) fails=0. COMMISSION·DOMAIN·TREASURE·FIELD_BOSS fails=0, REGRESS OK. 창 모드 촬영으로 화면 확인(HOW_TO_PLAYTEST 에 I 키 추가).
+- 실기 확인 전: 알 수치(300/800/1500m — 마을~고원 왕복 1km 기준)가 너무 짜거나 후한지, 동행 신수가 좁은 길에서 끼는지, I 화면 폰 배치(가로), 알 얻는 확률(상자 12~100%).

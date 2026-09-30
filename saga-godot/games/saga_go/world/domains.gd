@@ -217,6 +217,7 @@ func claim() -> bool:
 		Domains.add_weekly_claim()
 	PartyState.add_items(d.reward[level])
 	PartyState.add_exp(Domains.REWARD_EXP[level])
+	get_tree().call_group("go_eggs", "award", "weekly" if d.get("boss", false) else "domain", "%s|%d|%d" % [current, level, int(Time.get_unix_time_from_system() / 86400.0)])
 	if d.has("artifacts"):
 		var a: Array = d.artifacts[level]
 		for r in [4, 5]:
