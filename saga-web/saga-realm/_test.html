@@ -3379,7 +3379,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         }
         if (SC.lines().some(function (x) { return x.state !== 'done' && x.state !== 'legacy'; })) { bad.push('기록 줄'); }
         st.turn += 12; E.tick();
-        if (E.view() && SD.card(E.view().id)) { bad.push('끝난 뒤 또 뜸'); }
+        if (E.view() && SD.card(E.view().id) && E.view().id.indexOf('sd_') !== 0) { bad.push('끝난 뒤 또 뜸'); }      // 곁가지(sd_)는 아홉이 다 모였으니 열두 달 뒤 따로 뜬다
         E.view() && E.choose('def');
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '7막 셋 — 아홉이 모여야 열림 · 틈 답(길로 쓴다)이 뒤 두 카드 글을 가름 · 끝나면 조용';
@@ -3425,6 +3425,35 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         if (v) { E.choose('def'); }
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '열전 셋×셋 · 사람 판에는 안 뜸 · 균열의 왕 6·18·36달에 셋 다 · 폐허는 역병 글 · 기록 줄 셋';
+      } finally { window.DG_NO_SCENARIO = true; evDone(); }
+    });
+
+
+    t('시나리오 곁가지 — 시간 틈 사람이 우리 사람이 된 지 열두 달이 지나면 그 사람 고향 이야기 카드가 뜨고, 충성이 그 사람에게 간다', function () {
+      var SC = DG.scenario, SD = DG.scenarioData, bad = [], st = evFresh();
+      window.DG_NO_SCENARIO = false;
+      try {
+        var me = R.myForce(); me.gold = 20000;
+        if (SD.SIDE.length !== 9 || SD.SIDE.some(function (c) { return !c.who || !DG.off.has(c.who) || !c.mix || !c.mix.past || !c.mix.now || !c.mix.future || c.choices.map(function (x) { return x.k; }).join('') !== 'atkdefutil'; })) { bad.push('표'); }
+        st.turn = 0; SC.state();
+        SD.CARDS.forEach(function (c) { SC.state().done[c.id] = { k: 'def', turn: 1 }; });
+        st.turn = 10; var cap = R.citiesOf('cao')[0];
+        E.tick();
+        if (E.view() && SD.card(E.view().id)) { bad.push('아무도 안 모은 판에 뜸 ' + E.view().id); E.choose('def'); }
+        if (E.h.isFree('tm_doha')) { E.h.hire('tm_doha', cap, 'cao', 0); }
+        E.tick();                                                     // 처음 본 달 — 세어 두기만
+        if (E.view() && SD.card(E.view().id)) { bad.push('등용한 달에 뜸'); E.choose('def'); }
+        st.turn = 21; E.tick();
+        if (E.view() && SD.card(E.view().id)) { bad.push('열한 달째에 뜸'); E.choose('def'); }
+        st.turn = 22; E.tick();
+        var v = E.view();
+        if (!(v && v.id === 'sd_tm_doha' && v.text.indexOf('{') < 0 && v.tag.indexOf('곁가지') >= 0 && v.choices.length === 3)) { bad.push('열두 달 뒤 카드 ' + (v && v.id)); }
+        var l0 = E.h.loyalOf ? E.h.loyalOf('tm_doha') : null, r = v ? E.choose('def') : null;
+        if (!r || !r.ok || !SC.state().done.sd_tm_doha) { bad.push('고르기·기록'); }
+        E.tick();
+        if (E.view() && SD.card(E.view().id)) { bad.push('끝난 카드가 또 뜸 ' + E.view().id); E.choose('def'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '곁가지 아홉 · 아무도 없으면 조용 · 등용 열두 달 뒤(도하) 카드 · 끝나면 조용';
       } finally { window.DG_NO_SCENARIO = true; evDone(); }
     });
 

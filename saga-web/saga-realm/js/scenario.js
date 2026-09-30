@@ -80,7 +80,7 @@
   }
 
   function register() {
-    CD().CARDS.concat(CD().LORD).forEach(function (cd) {
+    CD().CARDS.concat(CD().LORD, CD().SIDE).forEach(function (cd) {
       E().addDef({
         id: cd.id, name: cd.title, emoji: cd.emoji, tag: cd.tag, chain: true,
         valid: function () { return null; },
@@ -128,7 +128,24 @@
     if (!on()) { return null; }
     var st = R().state();
     if (F !== st.me || !st.started || st.result) { return null; }
-    return nextIn(CD().CARDS, F, false) || nextIn(CD().LORD, F, true);
+    return nextIn(CD().CARDS, F, false) || nextIn(CD().LORD, F, true) || nextSide(F);
+  }
+
+  /** 곁가지 — 시간 틈 사람이 우리 사람이 된 지 열두 달이 지났으면 그 사람 고향 이야기(세이브 `scenario.seen[id]` = 처음 본 달) */
+  var SIDE_MONTHS = 12;
+  function nextSide(F) {
+    var st = R().state(), s = save(), list = CD().SIDE, i, out = null;
+    if (!s.seen || typeof s.seen !== 'object') { s.seen = {}; }
+    for (i = 0; i < list.length; i++) {
+      var who = list[i].who;
+      if (!E().h.mineOf(who, F)) { continue; }
+      if (s.seen[who] === undefined) { s.seen[who] = st.turn || 0; }
+      if (!out && !s.done[list[i].id] && (st.turn || 0) - s.seen[who] >= SIDE_MONTHS) {
+        var cap = R().citiesOf(F)[0] || '', nb = neighbourLord(F);
+        out = { id: list[i].id, step: 1, ctx: { a: who, b: nb && nb.lord ? nb.lord : '', city: cap, force: F } };
+      }
+    }
+    return out;
   }
 
   function onDone(e) {
