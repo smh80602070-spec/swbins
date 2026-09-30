@@ -1,0 +1,1160 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "web_pets_105_i2i",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 896,
+  "steps": 28,
+  "cfg": 5.0,
+  "sampler": "Euler a",
+  "negative": "",
+  "denoise": 0.62
+ },
+ "items": [
+  {
+   "id": "pt_samjogo",
+   "seed": 3585762704,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a majestic black crow with three legs and a glowing golden sun disc behind it, spread wings, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Birb.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Birb.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_haetae",
+   "seed": 3013616022,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a mythical stone guardian lion-like beast with a single horn, scaled armored body, flame mane, ornate, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Goleling.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Goleling.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_cheongryong",
+   "seed": 1420186719,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, an eastern azure dragon with a long serpentine body, antlers, flowing whiskers, blue scales, among clouds, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Dragon_Evolved.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Dragon_Evolved.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_baekho",
+   "seed": 2967005194,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a white tiger with dark stripes, majestic, glowing pale blue eyes, snowy mist, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Tiger.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Tiger.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_jujak",
+   "seed": 707679603,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a vermilion phoenix bird with long fiery tail feathers, wings of flame, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Hywirl.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Hywirl.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_hyeonmu",
+   "seed": 545666323,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a giant black tortoise with a large domed shell carrying a snake coiled around it, ancient shell with glowing patterns, turtle body and legs clearly visible, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Snake.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Snake.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_gumiho",
+   "seed": 4219386861,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a nine tailed fox with white and gold fur, elegant, glowing blue fox fire, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Fox.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Fox.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_dokkaebi",
+   "seed": 2677690342,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a friendly mischievous horned goblin creature holding a magic club, tiger skin loincloth, one horn, no human face, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Orc.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Orc.gltf",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_jeoktoma",
+   "seed": 2458096690,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a legendary crimson red horse with a flowing flame mane, powerful and swift, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Horse.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Horse.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_jeolyeong",
+   "seed": 2810138344,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a swift pale silver horse galloping, wind lines, noble, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Horse_White.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Horse_White.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_jindo",
+   "seed": 2369227994,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a golden fawn jindo dog, loyal expression, fluffy",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__ShibaInu.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/ShibaInu.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_sapsal",
+   "seed": 2675136806,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a shaggy long haired sapsal dog with fur covering its eyes, fluffy grey and white",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Husky.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Husky.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_tiger",
+   "seed": 1685627085,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a large siberian tiger in a snowy mountain, majestic, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Tiger.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Tiger.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_bear",
+   "seed": 332282064,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, an asiatic black bear with a white crescent mark on its chest",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Bear.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Bear.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_magpie",
+   "seed": 985417473,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a magpie bird with black white and blue iridescent feathers",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Pigeon.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Pigeon.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_crane",
+   "seed": 3207117103,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a red crowned crane with white feathers and black tail, elegant pose",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Crane.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Crane.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_toad",
+   "seed": 634083322,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a plump warty toad, golden eyes, sitting on a lotus leaf",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Frog.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Frog.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_carp",
+   "seed": 1186337484,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a golden carp jumping up a waterfall",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Koi.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Koi.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_panda",
+   "seed": 163855250,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a giant panda sitting and eating bamboo, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Panda.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Panda.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_monkey",
+   "seed": 1776157087,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a clever macaque monkey with an alert expression",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Monkey.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Monkey.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_deer",
+   "seed": 3149348862,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a sika deer with white spots and small antlers, forest",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Deer.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Deer.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_boar",
+   "seed": 2647041946,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a wild boar with tusks and bristly fur, charging",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Boar.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Boar.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_owl",
+   "seed": 222707788,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a large eagle owl with big amber eyes, moonlit night",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Owl.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Owl.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_cat",
+   "seed": 3683356366,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a calico cat sitting elegantly",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Cat.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Cat.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_fox",
+   "seed": 361834523,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a red fox with a bushy tail, alert",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Fox.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Fox.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_dolphin",
+   "seed": 1955762586,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a bottlenose dolphin leaping through sea water",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Dolphin.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Dolphin.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_shark",
+   "seed": 2261151039,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a great white shark",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Shark.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Shark.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_whale",
+   "seed": 26330919,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a huge blue whale with a small calf, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Whale.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Whale.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_manta_ray",
+   "seed": 3546685250,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a giant manta ray gliding with wide wings",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Manta_ray.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Manta_ray.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_fish_1",
+   "seed": 927127320,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a colorful tropical reef fish",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Fish1.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Fish1.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_fish_2",
+   "seed": 977460177,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a silvery striped sea fish",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Fish2.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Fish2.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_fish_3",
+   "seed": 960682558,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a small shimmering blue freshwater fish",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Fish3.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Fish3.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_stag",
+   "seed": 3164927961,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a majestic red deer stag with huge branching antlers",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Stag.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Stag.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_white_horse",
+   "seed": 823670381,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a graceful white horse with a long mane",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Horse_White.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Horse_White.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_horse",
+   "seed": 2128329175,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a chestnut brown horse standing proudly",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Horse.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Horse.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_llama",
+   "seed": 415336943,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a fluffy cream llama with a curious face",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Llama.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Llama.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_pig",
+   "seed": 2039893206,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a plump pink pig, cheerful",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Pig.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Pig.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_pug",
+   "seed": 2038024898,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a small pug dog with a wrinkled face, cute",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Pug.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Pug.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_sheep",
+   "seed": 1047144169,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a fluffy white sheep with curly wool",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Sheep.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Sheep.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_horse_farm",
+   "seed": 595233356,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a sturdy farm draft horse with feathered hooves",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Horse_Farm.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Horse_Farm.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_cow_farm",
+   "seed": 734601742,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a black and white dairy cow, gentle eyes",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Cow_Farm.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Cow_Farm.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_zebra",
+   "seed": 3655461226,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a zebra with bold black and white stripes on savanna",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra__Zebra.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra/Zebra.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_cow",
+   "seed": 3665593009,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a brown highland cow with long horns and shaggy fur",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Cow.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Cow.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_donkey",
+   "seed": 3908058346,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a grey donkey with big ears, gentle",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Donkey.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Donkey.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_alpaca",
+   "seed": 3150788308,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a fluffy alpaca with a shaggy fringe, cute",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Alpaca.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Alpaca.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_bull",
+   "seed": 4286698663,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a powerful bull with large horns, snorting",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Bull.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Bull.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_anglerfish",
+   "seed": 1394545559,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a deep sea anglerfish with a glowing lure, sharp teeth, dark abyss",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Anglerfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Anglerfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_apatosaurus",
+   "seed": 2608878908,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a giant long necked sauropod dinosaur in a prehistoric swamp, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Apatosaurus.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Apatosaurus.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_armored_catfish",
+   "seed": 3211505549,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, an armored plated catfish with bony scutes on river bed",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Armored_Catfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Armored_Catfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_betta",
+   "seed": 3578021826,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a betta fish with long flowing fins, red and blue",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Betta.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Betta.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_black_lion_fish",
+   "seed": 1405216323,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a black lionfish with long venomous spines",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Black_Lion_Fish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Black_Lion_Fish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_blobfish",
+   "seed": 2754742695,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a pink blobfish, droopy face, deep sea",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Blobfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Blobfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_blue_goldfish",
+   "seed": 1457760187,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a blue fancy goldfish with a flowing tail",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Blue_Goldfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Blue_Goldfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_blue_tang",
+   "seed": 3741867879,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a bright blue tang reef fish with a black pattern",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Blue_Tang.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Blue_Tang.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_butterfly_fish",
+   "seed": 1060436720,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a yellow and white butterflyfish with a black eye stripe",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Butterfly_Fish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Butterfly_Fish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_cardinal_fish",
+   "seed": 1834021229,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a small silver cardinalfish with dark stripes",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Cardinal_Fish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Cardinal_Fish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_clownfish",
+   "seed": 152582469,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, an orange clownfish with white stripes in a sea anemone",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Clownfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Clownfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_coral_grouper",
+   "seed": 2159911720,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a spotted coral grouper among coral",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Coral_Grouper.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Coral_Grouper.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_cowfish",
+   "seed": 1879388983,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a boxy yellow cowfish with tiny horns and white spots",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Cowfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Cowfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_flatfish",
+   "seed": 1836929963,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a flat brown flounder lying on the sand",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Flatfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Flatfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_flower_horn",
+   "seed": 46978655,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a flowerhorn cichlid fish with a big forehead hump, colorful",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Flower_Horn.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Flower_Horn.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_goblin_shark",
+   "seed": 3567213591,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a pink goblin shark with a long snout, deep sea, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Goblin_Shark.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Goblin_Shark.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_goldfish",
+   "seed": 3676393346,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a round orange goldfish with flowing fins",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Goldfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Goldfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_humphead",
+   "seed": 272882678,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a huge humphead wrasse with a bulging forehead, teal-blue",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Humphead.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Humphead.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_koi_2",
+   "seed": 3337630494,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a red and white koi carp in a pond",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Koi.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Koi.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_lionfish",
+   "seed": 1367851390,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a red striped lionfish with fan-like fins",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Lionfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Lionfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_mandarin_fish",
+   "seed": 3771830561,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a psychedelic mandarin dragonet fish with swirling blue orange patterns",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Mandarin_Fish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Mandarin_Fish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_moorish_idol",
+   "seed": 1162039024,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a moorish idol with a tall dorsal fin, black white yellow bands",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Moorish_Idol.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Moorish_Idol.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_parasaurolophus",
+   "seed": 3223508689,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a parasaurolophus dinosaur with a long curved head crest, prehistoric forest, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Parasaurolophus.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Parasaurolophus.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_parrot_fish",
+   "seed": 3405488473,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a colorful parrotfish with a beak-like mouth, teal and pink",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Parrot_Fish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Parrot_Fish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_piranha",
+   "seed": 2713962673,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a piranha with sharp teeth, silver and red belly",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Piranha.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Piranha.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_puffer",
+   "seed": 2130741250,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a round pufferfish, puffed up, spotted",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Puffer.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Puffer.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_red_snapper",
+   "seed": 1308431093,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a red snapper fish, shiny scales",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Red_Snapper.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Red_Snapper.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_royal_gramma",
+   "seed": 2663689635,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a royal gramma fish, purple front and yellow back",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Royal_Gramma.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Royal_Gramma.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_shark_2",
+   "seed": 3829565014,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a hammerhead shark, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Shark.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Shark.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_stegosaurus",
+   "seed": 325638465,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a stegosaurus with plates on its back and a spiked tail, prehistoric, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Stegosaurus.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Stegosaurus.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_sunfish",
+   "seed": 1819367966,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a giant ocean sunfish, round flat body",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Sunfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Sunfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_swordfish",
+   "seed": 4180848621,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a swordfish with a long bill, leaping through waves",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Swordfish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Swordfish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_t_rex",
+   "seed": 34677146,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a tyrannosaurus rex roaring, prehistoric, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Trex.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Trex.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_tang",
+   "seed": 2455259166,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a blue and yellow surgeonfish",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Tang.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Tang.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_tetra",
+   "seed": 3169561550,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a neon tetra school with glowing blue stripe",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Tetra.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Tetra.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_triceratops",
+   "seed": 4013047858,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a triceratops with three horns and a bony frill, prehistoric, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Triceratops.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Triceratops.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_tuna",
+   "seed": 774060040,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a large bluefin tuna, sleek and metallic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Tuna.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Tuna.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_turbot",
+   "seed": 101350534,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a camouflaged turbot flatfish on the seabed",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Turbot.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Turbot.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_velociraptor",
+   "seed": 140385054,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a feathered velociraptor with sharp claws, prehistoric, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Velociraptor.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Velociraptor.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_worm",
+   "seed": 634259481,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a cute pink earthworm coming out of soil, small flowers, garden",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Worm.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Worm.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_yellow_tang",
+   "seed": 1824379351,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, a bright yellow tang reef fish",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Yellow_Tang.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Yellow_Tang.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pt_zebra_clown_fish",
+   "seed": 3300643523,
+   "prompt": "no humans, animal focus, solo, full body, side view, centered, soft dramatic lighting, underwater, simple painterly blue gradient background, fantasy illustration, an orange clownfish with three white stripes",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals_extra2__Zebra_Clown_Fish.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals_extra2/Zebra_Clown_Fish.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_bulbasaur",
+   "seed": 863482338,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a small quadruped creature with a giant green conical sedge hat on its back like a mushroom cap, leaf-like ears, gentle eyes, forest after rain",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Mushnub.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Mushnub.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_charmander",
+   "seed": 266524838,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a small lizard-like creature with one horn on its forehead, orange scales, a flame at the tail tip, rocky ground",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Dino.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Dino.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_squirtle",
+   "seed": 2499375082,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a small blue octopus-squid creature with long tentacle arms, standing on rocks on the coast, cute",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Squidle.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Squidle.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_magikarp",
+   "seed": 3374767337,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a small round blue bag-shaped creature with tiny wings, floating gently, night dew drops",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Glub.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Glub.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_pikachu",
+   "seed": 1331290252,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a white moon rabbit holding a wooden mallet for pounding rice cake, long ears, moonlight",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Bunny.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Bunny.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_eevee",
+   "seed": 3473046865,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a relaxed brown monkey with moss growing on its back, sleepy smile, forest",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Monkroose.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Monkroose.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_slowbro",
+   "seed": 729327853,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a soft round jelly-like translucent blob creature, pale purple, bouncy, wrapping around a small stone",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Pink_Slime.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Pink_Slime.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_gengar",
+   "seed": 2783823225,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a shadowy dark purple ghost creature with two horns holding a paper lantern, mischievous grin, night path",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Ghost.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Ghost.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_snorlax",
+   "seed": 951764666,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a huge round white furry snow creature sitting on a mountain ridge, big cheerful laugh, blizzard, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Yeti.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Yeti.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_lapras",
+   "seed": 2415382820,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, two soft floating bag-shaped creatures fused into one body, wings, drifting over distant mountains, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Glub_Evolved.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Glub_Evolved.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_alakazam",
+   "seed": 549694613,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a small wise fox-like creature wearing a tall pointed hood, reciting stars, holding a star chart, night sky, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Wizard.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Wizard.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_dragonite",
+   "seed": 3113456366,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a plump yellow dragon-chick creature wearing a rough hood, flying low over fields, small wings, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Alpaking.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Alpaking.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_charizard",
+   "seed": 1779600211,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a fiery orange dragon with big wings glowing like embers in the sunset, scales shining like fire, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Dragon.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Dragon.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_gyarados",
+   "seed": 19201613,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a huge blue serpent water dragon-like creature without legs, whiskers, rising from a deep river pool, waiting to become a dragon, rare, sparkling aura",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\animals__Snake_angry.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/animals/Snake_angry.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_mewtwo",
+   "seed": 874374798,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a mysterious tall pale lavender creature with a long tail looking up at a meteor shower, cosmic aura, no clothes, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Alien_2.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Alien_2.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  },
+  {
+   "id": "pk_mew",
+   "seed": 3321378740,
+   "prompt": "no humans, animal focus, solo, full body, centered, looking at viewer, soft dramatic lighting, simple painterly gradient background, fantasy illustration, a lucky white cat with a raised paw sitting at a gate doorway, gold coin charm, gentle smile, divine aura, glowing, mythical, majestic",
+   "negative": "lowres, bad anatomy, bad hands, text, error, cropped, worst quality, low quality, low score, bad score, average score, signature, watermark, username, blurry, human, 1girl, 1boy, multiple views, cut off, out of frame",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\pets_v3\\standin__Cat_Monster.png",
+   "meta": {
+    "base_model": "saga-web/saga-go/assets/models/standin/Cat_Monster.glb",
+    "base_license": "CC0-1.0 (Quaternius 계열 — saga-go ASSET_LICENSES 참조)"
+   }
+  }
+ ]
+}

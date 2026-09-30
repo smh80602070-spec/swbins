@@ -163,8 +163,12 @@ def main():
                'seconds': round(secs, 1), 'date': datetime.date.today().isoformat(),
                'note': 'AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.'}
         if body.get('init_images'):
-            from i2i_meta import base_meta
-            lic.update(base_meta(it['init_image'], body['denoising_strength']))
+            if it.get('meta'):        # 펫 등 공방 몸이 아닌 밑그림 — 배치가 출처(meta)를 직접 준다
+                lic.update({'mode': 'img2img', 'init_image': os.path.basename(it['init_image']), 'denoise': body['denoising_strength']})
+                lic.update(it['meta'])
+            else:
+                from i2i_meta import base_meta
+                lic.update(base_meta(it['init_image'], body['denoising_strength']))
         json.dump(lic, open(os.path.splitext(p)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         print(f'ok {it["id"]} {secs:.0f}s seed {lic["seed"]}')
         if n < len(items) - 1:
