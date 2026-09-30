@@ -3347,6 +3347,32 @@ window.DG_NO_TUNE = true;
       }
     });
 
+    t('사제 유대(정본 side_mentor_*) — 그 갈래로 벤 적 200·500·1000마리(유대 20·50·100)에 스승이 사연 한 줄과 금, 갈래마다 한 번 · 무명이면 안 쌓인다', function () {
+      var J = DG.job, p = C.save.player, keep = JSON.stringify({ b: p.mentorBond || null, s: p.mentorSaid || null, gold: p.gold, job: C.save.job }), bad = [];
+      try {
+        p.mentorBond = {}; p.mentorSaid = {};
+        C.save.job = 'none';
+        if (J.bondGain(50) !== null || Object.keys(p.mentorBond).length) { bad.push('무명에 쌓임'); }
+        C.save.job = 'warrior';
+        var g0 = p.gold;
+        var r1 = J.bondGain(199);
+        if (r1 !== null || p.gold !== g0) { bad.push('199마리에 줌'); }
+        var r2 = J.bondGain(1);
+        if (!r2 || r2.at !== 20 || p.gold <= g0 || !p.mentorSaid['warrior:20']) { bad.push('200마리 ' + JSON.stringify(r2)); }
+        var g1 = p.gold;
+        if (J.bondGain(10) !== null || p.gold !== g1) { bad.push('두 번 줌'); }
+        var r3 = J.bondGain(300);
+        if (!r3 || r3.at !== 50) { bad.push('500마리'); }
+        var r4 = J.bondGain(500);
+        if (!r4 || r4.at !== 100) { bad.push('1000마리'); }
+        C.save.job = 'mage';
+        if (J.bondOf('mage') !== 0 || J.bondGain(200) === null) { bad.push('다른 갈래는 따로'); }
+        if (J.BOND_AT.join() !== '20,50,100' || ['warrior', 'archer', 'rogue', 'mage'].some(function (k) { return J.BOND_LINES[k].length !== 3; })) { bad.push('표'); }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '유대 20·50·100 = 200·500·1000마리 · 한 번씩 🪙 · 갈래마다 따로 · 무명은 안 쌓임';
+      } finally { var k = JSON.parse(keep); p.mentorBond = k.b || undefined; p.mentorSaid = k.s || undefined; p.gold = k.gold; C.save.job = k.job; }
+    });
+
     t('시대 손님 사연(정본 side_guests) — 택배 기사·여행자·시간 여행자·탐사 대원은 말 걸 때마다 사연 한 토막씩, 끝까지 들으면 금 · 그 뒤엔 예전 대사', function () {
       var st = S.state(), keys = ['courier', 'tourist', 'timetraveler', 'explorer'], bad = [], before = S.raw().stage.key;
       var keep = JSON.stringify(st.guestStory || null), gold0 = C.save.player.gold;

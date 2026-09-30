@@ -328,8 +328,46 @@
     return out;
   }
 
+  /* ── 사제 유대(정본 곁가지 side_mentor_*) ────────────────────────────
+     이 판에는 스승과 나누는 별도 유대 게이지가 없어, **그 갈래로 사냥터에서 벤 적 수**를 유대로 삼는다(열 마리에 유대 1).
+     유대 20·50·100(= 200·500·1000 마리)에 이르면 그 갈래 스승이 사연 한 줄을 들려준다(갈래 넷 × 문턱 셋, 판마다 한 번). 전직을 되돌려
+     다른 갈래로 가면 그 갈래의 유대가 따로 쌓인다. 스승 이름은 지금 차수의 도감 가명(mentors()). */
+  var BOND_PER = 10, BOND_AT = [20, 50, 100], BOND_GOLD = [3000, 8000, 20000];
+  var BOND_LINES = {
+    warrior: ['칼은 벨 때보다 거둘 때가 어렵다. 너는 벌써 거두는 법을 알아 가는구나.', '내 첫 상처가 아직 아프다. 그 아픔이 나를 여기까지 데려왔지. 너도 그러하리라.', '이제 내가 가르칠 것은 없다. 다만 네 등 뒤가 든든하다는 것만 기억하거라.'],
+    archer: ['활은 시위를 놓는 순간보다 놓기 직전의 숨이 전부다. 네 숨이 고요해졌구나.', '멀리 쏘는 이는 멀리 본다. 네 눈에 이제 이 땅 끝이 보이느냐.', '화살 하나가 천 리를 간다는 말은 거짓이 아니다. 네가 그 증거다.'],
+    rogue: ['그림자는 발소리를 남기지 않는다. 너도 이제 소리 없이 이기는구나.', '빠른 칼보다 빠른 판단이 살린다. 네 판단이 벌써 칼보다 앞선다.', '이름을 지우고 다니던 시절이 있었지. 너는 이름을 얻으며 이겼구나. 부럽다.'],
+    mage: ['도술은 힘이 아니라 이치다. 네가 이치를 보기 시작했구나.', '기력이 깊어지면 말수가 줄어든다. 네가 요즘 말이 적은 까닭이다.', '하늘과 땅의 이치를 다 읽은 이는 없다. 그래서 너와 나는 아직 배우는 중이다.']
+  };
+  function bondOf(root) { var b = core.save.player.mentorBond; return (b && b[root]) || 0; }
+  function bondGain(kills) {
+    st();
+    var root = rootOf(core.save.job);
+    if (!root) { return null; }
+    var p = core.save.player;
+    if (!p.mentorBond) { p.mentorBond = {}; }
+    if (!p.mentorSaid) { p.mentorSaid = {}; }
+    p.mentorBond[root] = (p.mentorBond[root] || 0) + (kills || 1);
+    var bond = Math.floor(p.mentorBond[root] / BOND_PER), i, out = null;
+    for (i = 0; i < BOND_AT.length; i++) {
+      var key = root + ':' + BOND_AT[i];
+      if (bond >= BOND_AT[i] && !p.mentorSaid[key]) {
+        p.mentorSaid[key] = true;
+        var list = JD.mentorsOf(root), m = list[Math.min(list.length - 1, i)], h = m && global.DG.data ? global.DG.data.find(m) : null;
+        p.gold = (p.gold || 0) + BOND_GOLD[i];
+        core.log('🎓 사제 유대 ' + BOND_AT[i] + ' — ' + (h ? h.name + ': ' : '') + BOND_LINES[root][i] + ' · 금 +' + core.fmt(BOND_GOLD[i]), 'good');
+        core.emit('toast', '🎓 ' + (h ? h.name + ' — ' : '스승 — ') + '"' + BOND_LINES[root][i] + '" (🪙 +' + core.fmt(BOND_GOLD[i]) + ')');
+        core.persist();
+        out = { root: root, at: BOND_AT[i] };
+      }
+    }
+    return out;
+  }
+  core.on('side:kill', function (e) { if (e && !e.boss) { bondGain(1); } else if (e) { bondGain(5); } });
+
   global.DG = global.DG || {};
   global.DG.job = {
+    BOND_AT: BOND_AT, BOND_PER: BOND_PER, BOND_LINES: BOND_LINES, bondOf: bondOf, bondGain: bondGain,
     BAR: BAR,
     state: st, cur: cur, levelOf: levelOf,
     spTotal: spTotal, spSpent: spSpent, spLeft: spLeft,
