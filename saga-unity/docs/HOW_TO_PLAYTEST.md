@@ -540,3 +540,11 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 장이 끝나면 과일(금 ÷ 50 + 공적)·칭호 토스트. 낚시·조개 장은 없다(물 없는 숲). 2장 「폐허의 옛 우체통」은 꽃밭의 옛 돌기둥터, 「폭포 너머」는 어둑숲의 이끼 돌제단, 동굴 장은 바위 지대의 거인 선돌 곁. 북쪽 동굴 결정에서 금을 열어 둘지 조용히 할지 고르면 대보름 결말이 갈린다.
 곁가지: 눌러앉은 손님에게 눌러앉은 뒤 **처음** 다가서면 그 손님의 사연을 한 번 들려준다(과일 +40), 그다음부터는 하루 선물.
 자동 확인은 `PlaytestForestHeadless`(안에 `PlaytestForestScenario`)와 `UiLayoutCheck`("시나리오 장면"·"시나리오 고르기").
+
+## 13. Playtest 쓰는 법 — `PlaytestKit` (tasks U-0001)
+
+`Assets/Editor/PlaytestKit.cs` 가 Playtest 마다 따로 하던 세 가지를 맡는다. 본보기 = `PlaytestDungeonHeadless.Run()`.
+
+- `PlaytestKit.Begin("[이름표]")` — 실패 수를 0 으로. `Check(cond, msg)`·`Fail(msg)` 로 세고 `Summary(name)` 이 `[name] OK`/`FAIL n` 한 줄을 남긴다.
+- `using var s = PlaytestKit.IsolatedSaves("save_dungeon.json")` — 실제 세이브를 잠깐 치웠다 Dispose 에서 되돌린다(이름 없으면 `save*.json` 전부). 플레이 모드로 여러 프레임 도는 진단은 객체를 들고 있다가 끝날 때 Dispose. 프로세스가 죽어 남은 백업(`_playtest_saves_backup`)은 다음 호출이 먼저 되돌린다.
+- `using var e = PlaytestKit.ErrorCounter()` — Error·Exception 로그를 `Fails` 에 센다(`Fail` 이 남긴 로그·에디터 검색 색인 로그는 제외).

@@ -4,7 +4,7 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 1 | [U-0001](U-0001.md) `Editor/PlaytestKit.cs` — 세이브 격리·Check·오류 카운트, DUNGEON 에 적용 | 닫기 | 작성됨 |
+| 1 | [U-0001](U-0001.md) `Editor/PlaytestKit.cs` — 세이브 격리·Check·오류 카운트, DUNGEON 에 적용 | 닫기 | 완료 |
 | 2 | [U-0002](U-0002.md) asmdef 셋(SagaStory·SagaRealm·SagaTitle) | 통합 | 작성됨 |
 | 3 | [U-0003](U-0003.md) 5곳 동일 복제 → SagaCore(`PlatformVolumeProfile`·`DebugHud`) | 통합 | 작성됨 |
 | 4 | [U-0004](U-0004.md) `docs/STATE.md`(생성) + `features.json` + CLAUDE.md 95KB 정정 | 측정 | 작성됨 |

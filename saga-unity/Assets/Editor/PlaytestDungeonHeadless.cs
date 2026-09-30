@@ -41,7 +41,14 @@ namespace Saga.EditorTools
         private static bool _cutProbeStarted;
 
         private static int _framesSeen;
-        private static bool _hadError;
+        // 실패 집계는 PlaytestKit 이 든다(U-0001) — 기존 `_hadError = true` 자리는 그대로 두고 여기서 센다.
+        private static bool _hadError
+        {
+            get => PlaytestKit.Fails > 0;
+            set { if (value) PlaytestKit.Mark(); }
+        }
+        private static System.IDisposable _saveIsolation;
+        private static System.IDisposable _errorCounter;
         private static bool _whirlChecked;
         private static bool _origEnterPlayModeOptionsEnabled;
         private static EnterPlayModeOptions _origEnterPlayModeOptions;
@@ -49,6 +56,9 @@ namespace Saga.EditorTools
         [MenuItem("Saga/Playtest TestDungeon (Headless)")]
         public static void Run()
         {
+            PlaytestKit.Begin("[PlaytestDungeonHeadless]");
+            _saveIsolation = PlaytestKit.IsolatedSaves(SaveState.FileName); // 실제 세이브가 있어도 진단이 갈리지 않게
+            _errorCounter = PlaytestKit.ErrorCounter();
             _origEnterPlayModeOptionsEnabled = EditorSettings.enterPlayModeOptionsEnabled;
             _origEnterPlayModeOptions = EditorSettings.enterPlayModeOptions;
             EditorSettings.enterPlayModeOptionsEnabled = true;
@@ -57,21 +67,10 @@ namespace Saga.EditorTools
 
             EditorSceneManager.OpenScene(ScenePath);
             _framesSeen = 0;
-            _hadError = false;
             _whirlChecked = false;
             _cutProbeStarted = false;
-            Application.logMessageReceived += OnLog;
             EditorApplication.playModeStateChanged += OnStateChanged;
             EditorApplication.isPlaying = true;
-        }
-
-        private static void OnLog(string condition, string stackTrace, LogType type)
-        {
-            if (type != LogType.Error && type != LogType.Exception) return;
-            if (stackTrace.Contains("UnityEditor.Search.SearchInit.IndexationOnStartup")) return;
-
-            _hadError = true;
-            Debug.LogError($"[PlaytestDungeonHeadless] runtime error: {condition}\n{stackTrace}");
         }
 
         private static void OnStateChanged(PlayModeStateChange state)
@@ -82,8 +81,9 @@ namespace Saga.EditorTools
             }
             else if (state == PlayModeStateChange.EnteredEditMode)
             {
-                Application.logMessageReceived -= OnLog;
                 EditorApplication.playModeStateChanged -= OnStateChanged;
+                _errorCounter?.Dispose();
+                _saveIsolation?.Dispose();
                 EditorSettings.enterPlayModeOptionsEnabled = _origEnterPlayModeOptionsEnabled;
                 EditorSettings.enterPlayModeOptions = _origEnterPlayModeOptions;
                 Debug.Log(_hadError
