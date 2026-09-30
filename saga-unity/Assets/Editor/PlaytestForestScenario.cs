@@ -35,6 +35,7 @@ namespace Saga.EditorTools
             var bonds0 = ForestVisitors.SnapshotBonds();
             string json0 = ForestSaveState.ToJson();
             string festDone0 = ForestFestivalState.SnapshotDoneDate();
+            var stories0 = ForestVisitors.SnapshotStories();
             long wish0 = ForestFestivalState.SnapshotWishUntilTicks();
             var parts = new List<string>();
             try
@@ -48,6 +49,7 @@ namespace Saga.EditorTools
                 CheckSave(parts);
                 CheckUi(parts);
                 CheckRunner(parts);
+                CheckGuestStory(parts);
             }
             catch (Exception e) { Fail("예외 " + e); }
             finally
@@ -57,6 +59,7 @@ namespace Saga.EditorTools
                 ForestScenarioUi.Instance?.Hide();
                 ForestFestivalState.MemorialKind = null;
                 ForestFestivalState.Restore(festDone0, wish0);
+                ForestVisitors.RestoreStories(stories0);
                 ForestState.Restore(fruit0);
                 ForestHomeState.RestorePlacements(placements0.X, placements0.Y, placements0.Ids);
                 ForestDeliveryState.Restore(delivered0);
@@ -401,6 +404,33 @@ namespace Saga.EditorTools
             ui.Pick(1);
             if (ui.IsOpen || ForestScenario.Choice("name") != "secret") Fail("ui: 고른 답 " + ForestScenario.Choice("name"));
             parts.Add("장면 상자(열림·글·다음·닫히면 본 장면·고르기 단추/건너뛰기 멈춤/고른 답)");
+        }
+
+        // ---- 곁가지 side_guest_* — 눌러앉은 손님 각자 사연 -------------------------------------------------------
+
+        private static void CheckGuestStory(List<string> parts)
+        {
+            ForestVisitors.RestoreStories(null);
+            ForestState.Restore(0);
+            foreach (var v in ForestVisitors.List)
+                if (!ForestVisitors.HasStory(v.Key) || ForestVisitors.Story(v.Key).Length < 40) Fail("사연이 없는 손님 " + v.Key);
+            string line = ForestVisitors.TalkSettled("fox");
+            if (line == null || !line.Contains("방울") || ForestState.FruitCount != ForestVisitors.StoryFruit || !ForestVisitors.StoryHeard("fox")) Fail($"첫 말에 사연 · 과일 +{ForestVisitors.StoryFruit} ({line} / {ForestState.FruitCount})");
+            string again = ForestVisitors.TalkSettled("fox");
+            if (again == null || again.Contains("방울") || ForestState.FruitCount > ForestVisitors.StoryFruit + 3) Fail("두 번째 말은 사연이 아니라 하루 선물이어야 " + again);
+            string other = ForestVisitors.TalkSettled("sailor");
+            if (other == null || !other.Contains("돛대")) Fail("다른 손님은 자기 사연 " + other);
+            var snap = ForestVisitors.SnapshotStories();
+            ForestVisitors.RestoreStories(null);
+            if (ForestVisitors.StoryHeard("fox")) Fail("되돌리기");
+            ForestVisitors.RestoreStories(snap);
+            if (!ForestVisitors.StoryHeard("fox") || !ForestVisitors.StoryHeard("sailor") || ForestVisitors.StoryHeard("wisp")) Fail("사연 왕복");
+            string sj = ForestSaveState.ToJson();
+            if (!sj.Contains("visitStoryDone")) Fail("세이브 필드");
+            ForestVisitors.RestoreStories(null);
+            ForestSaveState.ApplyJson(sj);
+            if (!ForestVisitors.StoryHeard("fox")) Fail("ForestSaveState 왕복");
+            parts.Add("손님 사연(여덟 다 있음·눌러앉은 뒤 첫 말에 한 번 과일 +40·다음 말은 하루 선물·손님마다 제 사연·세이브 왕복)");
         }
 
         private static void CheckRunner(List<string> parts)

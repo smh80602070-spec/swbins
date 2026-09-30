@@ -125,6 +125,31 @@ namespace Saga.Forest.Data
             ["dokkaebi"] = "크하하, 그 정도는 장난도 아니지", ["alien"] = "제 별에선 그걸 \"우정\" 이라고 불러요",
         };
 
+        // ── 곁가지 side_guest_*(웹 사가의숲 visitor.js STORY) — 눌러앉은 손님이 눌러앉은 뒤 처음 말에 각자 사연을 한 번 들려준다 ──
+        /// <summary>사연 보상 — 웹 금 1500 ÷ 50 + 공적 10 = 과일 40(이 트랙 규칙: 금 ÷ 50, 공적 그대로).</summary>
+        public const int StoryFruit = 40;
+        private static readonly Dictionary<string, string> StoryKo = new Dictionary<string, string>
+        {
+            ["fox"] = "실은 내가 시대를 넘나드는 장사꾼이 된 까닭이 있소. 젊을 적 아끼던 옛 방울 하나를 어느 시대 시장에선가 잃어버렸다오. 그걸 찾으려 물건을 사고팔며 떠돌았지. 이 마을 좌판에서 그 방울 소리를 들은 것 같은 날이 있소.",
+            ["sailor"] = "내 옛 항구는 바다가 물러나며 뭍이 되었다오. 배 없는 뱃사람이 되고 나서야 배가 나를 태운 게 아니라 내가 배를 아꼈다는 걸 알았소. 이 호수에 박힌 배가 내 고향의 마지막 돛대라오.",
+            ["wisp"] = "히히, 나는 옛날 이 숲 길 잃은 나그네를 밝혀 주던 등불이었어. 나그네가 다 떠나고 나서도 불이 안 꺼져서 도깨비불이 됐지. 마을 등불 옆이 제일 따뜻해서 눌러앉았어!",
+            ["angler"] = "낚싯대를 처음 잡은 건 일곱 살, 할아버지 곁이었소. 못 가장자리에서 한나절 아무것도 못 잡고도 할아버지는 웃으셨지. 낚시란 물고기가 아니라 기다림을 잡는 일이라 하셨소. 그 말뜻을 이제야 알겠구려.",
+            ["bugdoc"] = "제가 곤충 박사가 된 건 어릴 적 나비 한 마리 때문이에요. 날개 무늬가 어느 도감에도 없었거든요. 그 나비를 찾아 이 숲까지 왔는데, 도감을 새로 쓰다 보니 어쩌면 제가 그 나비의 이름을 짓게 될지도 몰라요.",
+            ["traveler"] = "삐빗. 기록: 저의 귀환 일정은 원래 사흘이었습니다. 그런데 이 숲의 기록판에서 처음으로 ‘사라진 숲’ 이 ‘이어진 숲’ 으로 바뀌는 것을 보았습니다. 관측자가 결과를 바꾸는 사례는 흔치 않아 일정을 무기한 미뤘습니다.",
+            ["dokkaebi"] = "허허, 내 꼬마들이 원래는 쓸쓸한 폐허의 도깨비불이었다네. 이 마을 아이들이 겁내지 않고 놀아 주니 꼬마들이 처음으로 웃는 걸 보았지. 대장으로서 이보다 더한 선물은 없네.",
+            ["alien"] = "제 모선은 별을 세는 배예요. 그런데 이 별에서 밥을 하루 세 번 먹는 사람들을 보고 처음으로 별을 세는 것보다 이웃을 세고 싶어졌어요. 모선에는 정착지 등록 신호를 이미 보냈답니다.",
+        };
+        private static readonly HashSet<string> StoryDone = new HashSet<string>();
+        public static bool StoryHeard(string key) => StoryDone.Contains(key);
+        public static bool HasStory(string key) => StoryKo.ContainsKey(key);
+        public static string Story(string key) => StoryKo.TryGetValue(key, out var t) ? ForestLocalization.T("visitor." + key + ".story", t) : "";
+        public static string[] SnapshotStories() { var a = new string[StoryDone.Count]; StoryDone.CopyTo(a); return a; }
+        public static void RestoreStories(string[] keys)
+        {
+            StoryDone.Clear();
+            if (keys != null) foreach (var k in keys) if (IndexOf(k) >= 0) StoryDone.Add(k);
+        }
+
         public static string SettleLine(string key) => SettleLineKo.TryGetValue(key, out var t) ? ForestLocalization.T("visitor." + key + ".settled", t) : "";
         public static string ChatOpen(string key) => ChatOpenKo.TryGetValue(key, out var t) ? ForestLocalization.T("visitor." + key + ".chat_open", t) : "…";
         public static string ChatReply(string key) => ChatReplyKo.TryGetValue(key, out var t) ? ForestLocalization.T("visitor." + key + ".chat_reply", t) : "…";
@@ -168,6 +193,12 @@ namespace Saga.Forest.Data
             var v = List[i];
             string who = $"{v.Emoji} {Name(v)}";
             if (_giftDay != Today) { _giftDay = Today; GiftGot.Clear(); }
+            if (StoryKo.ContainsKey(key) && StoryDone.Add(key))
+            {
+                ForestState.AddFruit(StoryFruit);
+                Touch();
+                return who + " — " + Story(key) + " " + string.Format(ForestLocalization.T("visitor.story_reward", "(과일 +{0})"), StoryFruit);
+            }
             if (GiftGot.Contains(key))
                 return chat != null ? $"{who} — " + string.Format(ForestLocalization.T("visitor.chatting", "(수다 중) {0}"), chat) : $"{who} — {SettleLine(key)}";
             GiftGot.Add(key);

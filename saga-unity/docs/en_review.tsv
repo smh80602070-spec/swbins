@@ -3914,16 +3914,19 @@
 2	forest	visitor.alien.name	불시착 탐사원 루미	Crash-Landed Surveyor Rumi		
 2	forest	visitor.alien.piece	🔩 탐사선 부품	🔩 Lander part		
 2	forest	visitor.alien.settled	이 별, 정착지로 등록했어요	I've registered this planet as my settlement		
+2	forest	visitor.alien.story	제 모선은 별을 세는 배예요. 그런데 이 별에서 밥을 하루 세 번 먹는 사람들을 보고 처음으로 별을 세는 것보다 이웃을 세고 싶어졌어요. 모선에는 정착지 등록 신호를 이미 보냈답니다.	My mothership is a star-counting ship. But seeing people on this planet eat three meals a day, for the first time I wanted to count neighbors instead of stars. I've already sent a settlement registration signal to the mothership.		
 2	forest	visitor.angler.chat_open	버섯 미끼로 못 낚을 고기는 없다네	There's no fish a mushroom bait can't catch		
 2	forest	visitor.angler.chat_reply	기다리는 게 반이지, 서두르지 말게	Waiting is half of it — don't rush		
 2	forest	visitor.angler.name	낚시 명인 청파	Cheongpa the Master Angler		
 2	forest	visitor.angler.settled	물은 없어도 기다리는 맛은 여기도 있네	No water, but the joy of waiting is here too		
+2	forest	visitor.angler.story	낚싯대를 처음 잡은 건 일곱 살, 할아버지 곁이었소. 못 가장자리에서 한나절 아무것도 못 잡고도 할아버지는 웃으셨지. 낚시란 물고기가 아니라 기다림을 잡는 일이라 하셨소. 그 말뜻을 이제야 알겠구려.	I first held a fishing rod at seven, beside my grandfather. Even after a half day at the pond's edge catching nothing, he smiled. Fishing isn't catching fish but catching waiting, he said. Only now do I understand those words.		
 2	forest	visitor.bring_hint	(지금부터 채집한 것만 보여 줄 수 있다)	(only what you gather from now on counts)		
 2	forest	visitor.bring_ready	{0} {1}에게 보여 줄 것을 다 모았다 — 광장으로!	{0} You have everything to show {1} — to the square!		
 2	forest	visitor.bugdoc.chat_open	이 숲 나비 날개 무늬가 도감이랑 달라요	The butterfly wing patterns here don't match the guide		
 2	forest	visitor.bugdoc.chat_reply	어머, 그거 새 종일지도 몰라요!	Oh my, that might be a new species!		
 2	forest	visitor.bugdoc.name	곤충 박사 나비	Dr. Nabi the Entomologist		
 2	forest	visitor.bugdoc.settled	이 숲의 곤충 도감을 새로 쓰는 중이에요	I'm rewriting the insect guide for this forest		
+2	forest	visitor.bugdoc.story	제가 곤충 박사가 된 건 어릴 적 나비 한 마리 때문이에요. 날개 무늬가 어느 도감에도 없었거든요. 그 나비를 찾아 이 숲까지 왔는데, 도감을 새로 쓰다 보니 어쩌면 제가 그 나비의 이름을 짓게 될지도 몰라요.	I became an insect doctor because of one butterfly in my childhood. Its wing pattern wasn't in any field guide. I came to this forest looking for it, and while rewriting the guide I might end up naming that butterfly myself.		
 2	forest	visitor.chatting	(수다 중) {0}	(chatting) {0}		
 2	forest	visitor.dir.e	동	east		
 2	forest	visitor.dir.n	북	north		
@@ -3939,10 +3942,12 @@
 2	forest	visitor.dokkaebi.name	도깨비 대장 두두	Dudu the Dokkaebi Chief		
 2	forest	visitor.dokkaebi.piece	🧒 도깨비 꼬마	🧒 Dokkaebi kid		
 2	forest	visitor.dokkaebi.settled	꼬마들이 마을 아이들이랑 잘 논다	My little ones get along well with the village kids		
+2	forest	visitor.dokkaebi.story	허허, 내 꼬마들이 원래는 쓸쓸한 폐허의 도깨비불이었다네. 이 마을 아이들이 겁내지 않고 놀아 주니 꼬마들이 처음으로 웃는 걸 보았지. 대장으로서 이보다 더한 선물은 없네.	Heh heh, my little ones were originally lonely wisps of the ruins. When this village's kids played with them without fear, I saw the little ones smile for the first time. As chief, no gift is greater than that.		
 2	forest	visitor.fox.chat_open	요즘 바다 건너 물건값이 부쩍 올랐다오	Goods from across the sea have gotten pricey lately		
 2	forest	visitor.fox.chat_reply	그런 건 내가 싸게 구해 주리다, 수수료만 조금	I'll get it for you cheap — just a small fee		
 2	forest	visitor.fox.name	여우 화상 호연	Hoyeon the Fox Peddler		
 2	forest	visitor.fox.settled	이 마을 손님들 눈이 밝아 장사할 맛이 나오	The folk here have sharp eyes — business is a joy		
+2	forest	visitor.fox.story	실은 내가 시대를 넘나드는 장사꾼이 된 까닭이 있소. 젊을 적 아끼던 옛 방울 하나를 어느 시대 시장에선가 잃어버렸다오. 그걸 찾으려 물건을 사고팔며 떠돌았지. 이 마을 좌판에서 그 방울 소리를 들은 것 같은 날이 있소.	There's a reason I became a peddler crossing ages. In my youth I lost an old bell I treasured in some age's market, and I've wandered buying and selling to find it. There were days at this village stall when I thought I heard that bell.		
 2	forest	visitor.fox_offer	오늘의 물건은 「{0}」 — 과일 {1}개. 마음에 들면 물러났다 다시 오시오	Today's item is "{0}" — {1} fruit. If you like it, step away and come back		
 2	forest	visitor.fox_short	과일 {0}개가 있어야 하오(지금 {1}개) — 오늘 해 지기 전에 다시 오시오	You need {0} fruit (you have {1}) — come back before the day is out		
 2	forest	visitor.fox_sold	좋은 눈이시오 — 「{0}」은(는) 집 창고에 넣어 두었소	You have a good eye — I put "{0}" in your storage		
@@ -3957,18 +3962,22 @@
 2	forest	visitor.sailor.name	난파 선원 풍랑	Pungnang the Castaway		
 2	forest	visitor.sailor.piece	🧭 나침반 조각	🧭 Compass piece		
 2	forest	visitor.sailor.settled	바다는 멀어도 여기 바람이 좋구려	The sea is far, but the wind here is good		
+2	forest	visitor.sailor.story	내 옛 항구는 바다가 물러나며 뭍이 되었다오. 배 없는 뱃사람이 되고 나서야 배가 나를 태운 게 아니라 내가 배를 아꼈다는 걸 알았소. 이 호수에 박힌 배가 내 고향의 마지막 돛대라오.	My old harbor turned to land when the sea withdrew. Only after becoming a sailor without a ship did I learn it wasn't the ship that carried me - I cherished the ship. The boat stuck in this lake is the last mast of my hometown.		
 2	forest	visitor.settle_ask	벌써 {0}번째로구려… 이 마을에 눌러앉아도 되겠소? (물러났다 다시 오면 허락)	You've helped me {0} times now… may I settle in this village? (step away and come back to agree)		
 2	forest	visitor.settled_now	고맙소! 내일부터는 광장 곁에서 지내겠소 — 들르면 작은 선물을 드리리다	Thank you! From tomorrow I'll live by the square — drop by for a small gift		
+2	forest	visitor.story_reward	(과일 +{0})	(Fruit +{0})		
 2	forest	visitor.thanks	오늘 고마웠소 — 또 들르리다	Thank you for today — I will drop by again		
 2	forest	visitor.traveler.chat_open	삐빗. 이 시대 달력은 계산이 어렵습니다	Beep. This era's calendar is hard to compute		
 2	forest	visitor.traveler.chat_reply	삐빗. 기록해 두겠습니다	Beep. Logging that		
 2	forest	visitor.traveler.name	시간 여행자 K-7	K-7 the Time Traveler		
 2	forest	visitor.traveler.settled	삐빗. 귀환 일정을 무기한 미뤘습니다	Beep. Return schedule postponed indefinitely		
+2	forest	visitor.traveler.story	삐빗. 기록: 저의 귀환 일정은 원래 사흘이었습니다. 그런데 이 숲의 기록판에서 처음으로 ‘사라진 숲’ 이 ‘이어진 숲’ 으로 바뀌는 것을 보았습니다. 관측자가 결과를 바꾸는 사례는 흔치 않아 일정을 무기한 미뤘습니다.	Beep. Record: my return schedule was originally three days. But on this forest's record board I saw "The Vanished Forest" change to "The Connected Forest" for the first time. Cases of an observer changing the result are rare, so I postponed the schedule indefinitely.		
 2	forest	visitor.wisp.chat_open	히히, 어제 등불 셋을 몰래 껐다 켰어	Hehe, yesterday I secretly flicked three lanterns off and on		
 2	forest	visitor.wisp.chat_reply	헤에, 그럼 오늘 밤에 같이 보러 가자	Ooh, then let's go see it together tonight		
 2	forest	visitor.wisp.name	도깨비불 반디	Bandi the Wisp		
 2	forest	visitor.wisp.piece	👻 도깨비불 조각	👻 Wisp piece		
 2	forest	visitor.wisp.settled	히히, 밤마다 마을 등불 옆에서 놀아	Hehe, I play by the village lanterns every night		
+2	forest	visitor.wisp.story	히히, 나는 옛날 이 숲 길 잃은 나그네를 밝혀 주던 등불이었어. 나그네가 다 떠나고 나서도 불이 안 꺼져서 도깨비불이 됐지. 마을 등불 옆이 제일 따뜻해서 눌러앉았어!	Hehe, I used to be the lamp that lit lost travelers on this forest's road. Even after every traveler left the light didn't go out, and I became a wisp. Beside the village lamps is the warmest, so I settled here!		
 2	forest	zone.enter	— {0} {1} —	— {0} {1} —		
 2	forest	zone.enter_village	— 마을 —	— Village —		
 2	forest	zone.roster	사는 것: {0}	Lives here: {0}		

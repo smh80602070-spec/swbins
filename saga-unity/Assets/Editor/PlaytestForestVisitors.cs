@@ -35,6 +35,11 @@ namespace Saga.EditorTools
             var rec0 = ForestVisitors.Snapshot();
             var bonds0 = ForestVisitors.SnapshotBonds();
             ForestVisitors.RestoreBonds(null, null, null, int.MinValue, null, false);
+            // PLAN.md 109-16 곁가지 — 눌러앉은 손님은 눌러앉은 뒤 첫 말에 사연을 들려준다. 이 진단은 하루 선물을 보니 사연은 다 들은 것으로 시작한다(사연 자체는 PlaytestForestScenario).
+            var stories0 = ForestVisitors.SnapshotStories();
+            var allKeys = new string[ForestVisitors.List.Length];
+            for (int i = 0; i < allKeys.Length; i++) allKeys[i] = ForestVisitors.List[i].Key;
+            ForestVisitors.RestoreStories(allKeys);
             string m = "";
             try
             {
@@ -51,6 +56,7 @@ namespace Saga.EditorTools
                 ForestVisitors.ForceDayForTest(null);
                 ForestVisitors.Restore(rec0.Day, rec0.Key, rec0.Got, rec0.Done, rec0.Offered, rec0.Met, rec0.B1, rec0.B2);
                 ForestVisitors.RestoreBonds(bonds0.BondKeys, bonds0.BondCounts, bonds0.Settled, bonds0.GiftDay, bonds0.GiftGot, bonds0.AskSettle);
+                ForestVisitors.RestoreStories(stories0);
                 ForestState.Restore(fruit0);
                 ForestHomeState.RestoreStock(stock0.Keys, stock0.Counts);
                 ForestHomeState.RestorePlacements(place0.X, place0.Y, place0.Ids);

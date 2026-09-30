@@ -10921,3 +10921,8 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 ### 2026-09-30 — saga-unity REALM 곁가지 side_time_* 시간 틈 사람 두 번째 카드 아홉 (웹 사가국지 곁가지)
 - 웹 `data-scenario.js` SIDE 아홉을 스크립트로 옮겨 `RealmScenarioSideData`. `RealmScenario.DueCardId` 는 본 사슬에 받을 카드가 없을 때 `DueSideId` — 시간 틈 사람이 우리 사람인 걸 처음 본 달(`_sideSeen`, 세이브 `scenarioSideWho/Turn`)부터 12달 뒤. 카드 속 {책사} 는 그 사람(`_who`), 효과 훈련 +6/치안 +8/금 +600 에 충성 +5 → 수도 기술 +10.
 - 진단은 `SideEnabled=false` 로 시작(`ResetForTest`)해 본 사슬 진단이 곁가지에 흔들리지 않는다. `PlaytestRealmScenario.CheckSide` 추가, 3연속 OK.
+
+### 2026-09-30 — saga-unity FOREST 곁가지 side_guest_* 눌러앉은 손님 각자 사연 (웹 사가의숲 곁가지)
+- 웹 `visitor.js` STORY 중 이 트랙 손님 여덟(호연·풍랑·반디·청파·나비·K-7·두두·루미)의 글을 그대로. `ForestVisitors.TalkSettled` 가 눌러앉은 뒤 첫 말에 사연을 한 번 들려주고 과일 40(웹 금 1500 ÷ 50 + 공적 10) — 그날 선물은 그다음 말부터. 세이브 `visitStoryDone`(버전 그대로).
+- 기존 `PlaytestForestVisitors` 는 하루 선물을 보니 사연을 다 들은 것으로 시작하게 고쳤고, 사연은 `PlaytestForestScenario.CheckGuestStory` 가 본다. 숲 진단 3연속 OK · loc-review 기준선.
+- 안 넣은 곁가지: side_parcel(택배 등급 — 이 트랙에 등급이 없다) · side_resident(주민 하트 10 — 이 트랙 주민은 숲지기 하나).

@@ -67,6 +67,7 @@ namespace Saga.Forest.Data
             public int visitGiftDay;
             public string[] visitGiftGot;
             public bool visitAskSettle;
+            public string[] visitStoryDone; // 곁가지 — 눌러앉은 손님 사연을 들은 손님(버전 그대로: 옛 세이브는 null → 아직 안 들음)
             public string mountSel; // PLAN.md 109-15 — 고른 탈것(탄 채는 저장 안 함). 버전 그대로: 옛 세이브는 null → 안 고른 채.
             public string scenarioJson; // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 처음부터.
         }
@@ -145,6 +146,7 @@ namespace Saga.Forest.Data
             data.visitGiftDay = bonds.GiftDay;
             data.visitGiftGot = bonds.GiftGot;
             data.visitAskSettle = bonds.AskSettle;
+            data.visitStoryDone = ForestVisitors.SnapshotStories();
             data.mountSel = ForestMounts.Snapshot();
             data.scenarioJson = ForestScenario.Snapshot();
             return JsonUtility.ToJson(data);
@@ -216,6 +218,7 @@ namespace Saga.Forest.Data
                 ForestVisitors.RestoreBonds(data.visitBondKeys, data.visitBondCounts, data.visitSettled, data.visitGiftDay, data.visitGiftGot, data.visitAskSettle);
             else
                 ForestVisitors.RestoreBonds(null, null, null, int.MinValue, null, false); // v8 이하 — 단골 없음
+            ForestVisitors.RestoreStories(data.visitStoryDone);
             ForestMounts.Restore(data.mountSel);
             ForestScenario.Restore(data.scenarioJson);
 

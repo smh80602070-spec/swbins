@@ -522,6 +522,15 @@
     { "key": "fscen.done_none", "value": "Complete" },
     { "key": "fscen.reward.fruit", "value": "Fruit {0}" },
     { "key": "fscen.reward.title", "value": "🏷️ Title 「{0}」" },
-    { "key": "fscen.picked", "value": "📖 {0} — chosen" }
+    { "key": "fscen.picked", "value": "📖 {0} — chosen" },
+    { "key": "visitor.story_reward", "value": "(Fruit +{0})" },
+    { "key": "visitor.fox.story", "value": "There's a reason I became a peddler crossing ages. In my youth I lost an old bell I treasured in some age's market, and I've wandered buying and selling to find it. There were days at this village stall when I thought I heard that bell." },
+    { "key": "visitor.sailor.story", "value": "My old harbor turned to land when the sea withdrew. Only after becoming a sailor without a ship did I learn it wasn't the ship that carried me - I cherished the ship. The boat stuck in this lake is the last mast of my hometown." },
+    { "key": "visitor.wisp.story", "value": "Hehe, I used to be the lamp that lit lost travelers on this forest's road. Even after every traveler left the light didn't go out, and I became a wisp. Beside the village lamps is the warmest, so I settled here!" },
+    { "key": "visitor.angler.story", "value": "I first held a fishing rod at seven, beside my grandfather. Even after a half day at the pond's edge catching nothing, he smiled. Fishing isn't catching fish but catching waiting, he said. Only now do I understand those words." },
+    { "key": "visitor.bugdoc.story", "value": "I became an insect doctor because of one butterfly in my childhood. Its wing pattern wasn't in any field guide. I came to this forest looking for it, and while rewriting the guide I might end up naming that butterfly myself." },
+    { "key": "visitor.traveler.story", "value": "Beep. Record: my return schedule was originally three days. But on this forest's record board I saw \"The Vanished Forest\" change to \"The Connected Forest\" for the first time. Cases of an observer changing the result are rare, so I postponed the schedule indefinitely." },
+    { "key": "visitor.dokkaebi.story", "value": "Heh heh, my little ones were originally lonely wisps of the ruins. When this village's kids played with them without fear, I saw the little ones smile for the first time. As chief, no gift is greater than that." },
+    { "key": "visitor.alien.story", "value": "My mothership is a star-counting ship. But seeing people on this planet eat three meals a day, for the first time I wanted to count neighbors instead of stars. I've already sent a settlement registration signal to the mothership." }
   ]
 }
