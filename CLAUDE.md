@@ -2,7 +2,7 @@
 
 개인 취미 저장소. 회사 일은 `C:\link`, 개인 도구는 `C:\swbins2` 세션. 이 파일은 **길잡이**다.
 
-- **다음 일 = `tasks/QUEUE.md` 맨 위 티켓**(절차 `tasks/README.md` · 체제 `SAGA-ARCH.md`). "이어해"는 이 뜻이다
+- **다음 일 = `tasks/QUEUE.md` 의 갈래(웹·고돗·유니티·자체툴) 큐 맨 위 티켓**(절차 `tasks/README.md` · 체제 `SAGA-ARCH.md`). "<갈래> 이어해" = 이것
 - 공통 설계: `SAGA-DESIGN.md`(일곱 PLAN 의 상위) · 다섯 판 이야기 정본: `scenario/`
 - 웹 다섯 판: `saga-web/<폴더>/PLAN.md` 가 정본, 이력은 각 폴더 `HANDOFF.md`
 - 3D 두 트랙(코드 공유 없음): `saga-godot/`(Godot 4)·`saga-unity/`(Unity 6) — 각 폴더 `CLAUDE.md` 부터
