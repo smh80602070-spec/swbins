@@ -351,6 +351,13 @@
     var am = off.stats(aId).might * off.traitMul(aId, 'duelMight'), dm = off.stats(dId).might * off.traitMul(dId, 'duelMight');
     if (Math.abs(am - dm) > DUEL_GAP) { return null; }
     if (Math.random() > Math.min(0.9, 0.35 * off.traitMul(aId, 'duelRate') * off.traitMul(dId, 'duelRate'))) { return null; }
+    return duelSet(aId, dId);
+  }
+
+  /** 문턱 없이 판을 세운다 — 시나리오가 정한 일기토(무력 차·확률을 안 본다). duelBegin 의 뒷부분과 같다 */
+  function duelSet(aId, dId) {
+    var off = global.DG.off;
+    var am = off.stats(aId).might * off.traitMul(aId, 'duelMight'), dm = off.stats(dId).might * off.traitMul(dId, 'duelMight');
     return { a: aId, d: dId, am: am, dm: dm, ah: 100, dh: 100, n: 0, rounds: [], hits: [], bouts: [], foeHabit: null };
   }
 
@@ -425,6 +432,30 @@
   /** 남은 합을 맡긴다(배율 없이) — 손으로 치다 그만둘 때 */
   function duelAuto(st) {
     while (duelAlive(st)) { duelRound(st, null); }
+  }
+
+  /** 손 싸움 한 판을 끝까지 돌린다 — 수마다 onDuel(view, 답) 을 부르고, 끝 카드가 닫히면 after(결과).
+   *  출진 일기토와 시나리오 일기토(scenario.js)가 같이 쓴다. cont = 끝 카드 단추 글(없으면 화면 기본) */
+  function duelDrive(st, onDuel, after, cont) {
+    function view(done, result) {
+      return { a: st.a, d: st.d, ah: Math.max(0, st.ah), dh: Math.max(0, st.dh), n: st.n,
+        bouts: st.bouts.slice(), habit: st.foeHabit, stances: STANCES, done: !!done, result: result || null, cont: cont || '' };
+    }
+    function prompt() {
+      onDuel(view(false), function (pick) {
+        if (pick === 'auto') { duelAuto(st); }
+        else if (!duelBout(st, pick)) { prompt(); return; }
+        if (duelAlive(st)) { prompt(); return; }
+        var res = duelEnd(st);
+        onDuel(view(true, res), function () { after(res); });
+      });
+    }
+    prompt();
+  }
+
+  /** 시나리오 일기토 — aId(치는 쪽)가 손으로 dId 와 겨룬다. 승부가 나면 after(결과) */
+  function duelHand(aId, dId, onDuel, after, cont) {
+    duelDrive(duelSet(aId, dId), onDuel, after, cont);
   }
 
   /* ── 출진 ─────────────────────────────────────────────── */
@@ -616,19 +647,7 @@
     else { duelPrompt(); }
     return { ok: true, pending: true };
 
-    function duelView(done, result) {
-      return { a: duelSt.a, d: duelSt.d, ah: Math.max(0, duelSt.ah), dh: Math.max(0, duelSt.dh), n: duelSt.n,
-        bouts: duelSt.bouts.slice(), habit: duelSt.foeHabit, stances: STANCES, done: !!done, result: result || null };
-    }
-    function duelPrompt() {
-      hooks.onDuel(duelView(false), function (pick) {
-        if (pick === 'auto') { duelAuto(duelSt); }
-        else if (!duelBout(duelSt, pick)) { duelPrompt(); return; }
-        if (duelAlive(duelSt)) { duelPrompt(); return; }
-        var res = duelEnd(duelSt);
-        hooks.onDuel(duelView(true, res), function () { begin(res); });
-      });
-    }
+    function duelPrompt() { duelDrive(duelSt, hooks.onDuel, begin); }
 
     /* 몸통은 들여쓰기를 그대로 둔 채 감쌌다(diff 를 작게) */
     function begin(preDuel) {
@@ -1742,7 +1761,7 @@
     ROUNDS: ROUNDS, ROUT: ROUT, DUEL_GAP: DUEL_GAP, SHIP_CREW: SHIP_CREW,
     CAMP_DECAY: CAMP_DECAY, CAMP_QUIT: CAMP_QUIT, CAMP_MIN: CAMP_MIN,
     armyPower: armyPower, troopMixOf: troopMixOf, topBy: topBy, duel: duel, fireRoll: fireRoll,
-    duelBegin: duelBegin, duelAlive: duelAlive, duelRound: duelRound, duelEnd: duelEnd, duelBout: duelBout, duelAuto: duelAuto,
+    duelBegin: duelBegin, duelSet: duelSet, duelHand: duelHand, duelAlive: duelAlive, duelRound: duelRound, duelEnd: duelEnd, duelBout: duelBout, duelAuto: duelAuto,
     STANCES: STANCES, BOUT_ROUNDS: BOUT_ROUNDS, BOUT_MUL: BOUT_MUL,
     FORMATIONS: FORMATIONS, formationOf: formationOf, TACTICS: TACTICS, tacticFor: tacticFor, stepRound: stepRound,
     HISTORY_BRANCHES: HISTORY_BRANCHES, checkHistoryBranch: checkHistoryBranch,

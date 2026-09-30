@@ -3,7 +3,8 @@
  * ---------------------------------------------------------------
  * 1막 · 군웅(과거) 셋 · 2막 · 대전(현대) 셋 · 3막 · 강 위(미래) 셋 · 4막 · 삼계 균열(이계) 셋 · 5막 · 먼 길 셋 · 6막 · 천하(결말) 하나 — 열여섯 카드,
  * 뒤에 결말 뒤 곁가지 7막 · 틈의 끝 셋(시간 틈 사람 아홉이 다 모이면 열림) — 모두 열아홉 카드가 있다.
- * 카드의 own(성 차지)·debate(설전)·duel1(일기토)은 사가국지 전략 판정을 새로 만들어야 해서, 그 자리는 세 갈래 고르기(같은 뜻의 이미 있는 손잡이)로 줄였다(정본 트랙 메모).
+ * 카드의 own(성 차지)·debate(설전)·duel1(일기토)은 아래 STAGES 가 채운다 — 카드를 고르고 나면 그 카드의 단계가 열리고(성 차지는 목표 성을 정해 열 달, 설전은 세 문답, 일기토는 손 싸움 한 판),
+ * 끝나면 결과 카드(<id>_end)가 한 장 뜬다. 단계가 열려 있는 동안은 본 사슬의 다음 카드가 쉰다(열전·곁가지는 그대로 흐른다).
  * 사가국지의 이야기는 "줄로 가는 퀘스트"가 아니라 **때가 되면 터지는 사건 카드**다 — 그래서 사가스토리처럼 단계를 밟지 않고,
  * `event.js` 의 사연 카드(세 갈래 고르기)를 그대로 쓴다. 카드는 사람 세력에게만, 정해진 때에, 표 순서대로 하나씩 뜬다.
  *
@@ -108,9 +109,9 @@
       mix: { past: '{맹장}', now: '구경꾼의 휴대폰 불빛', future: '영점의 의체' },
       text: '의체 무사 영점이 성 앞 공터에 서서 "나보다 강한 장수 밑에만 서겠다" 한다. 구경꾼들이 휴대폰 불빛을 켜 들고 모여들었다. 영점의 팔이 기계 소리를 낸다. 누가 이 일기토를 받겠는가.',
       choices: [
-        { k: 'atk', label: '{맹장}이 직접 받아 친다', hint: '금 300 · 무사 영점 합류 · 훈련 +5', cost: 300, fx: [{ t: 'recruit', id: 'tm_yeongjeom', bonus: 10 }, { t: 'train', n: 5 }], text: '일기토 끝에 영점이 무기를 내리고 절했다' },
-        { k: 'def', label: '구경꾼을 물리고 정중히 청한다', hint: '수도 치안 +5', fx: [{ t: 'sec', n: 5 }], text: '구경꾼을 물리니 영점이 한 걸음 물러섰다' },
-        { k: 'util', label: '예물과 술로 마음을 산다', hint: '금 400 · 무사 영점 합류', cost: 400, fx: [{ t: 'recruit', id: 'tm_yeongjeom', bonus: 0 }], text: '술잔 앞에서 영점이 기계 팔을 내려놓았다' }
+        { k: 'atk', label: '{맹장}이 직접 받아 친다', hint: '수도 훈련 +5 · 일기토가 이어진다', fx: [{ t: 'train', n: 5 }], text: '{맹장} 이(가) 창을 들고 나서자 함성이 일었다' },
+        { k: 'def', label: '구경꾼을 물리고 정중히 청한다', hint: '수도 치안 +5 · 일기토가 이어진다', fx: [{ t: 'sec', n: 5 }], text: '구경꾼을 물리니 영점이 한 걸음 물러섰다' },
+        { k: 'util', label: '예물과 술로 마음을 산다', hint: '금 400 · 무사 영점 합류(일기토는 없다)', cost: 400, fx: [{ t: 'recruit', id: 'tm_yeongjeom', bonus: 0 }], text: '술잔 앞에서 영점이 기계 팔을 내려놓았다' }
       ] },
 
     { id: 'r4_rift', no: 10, act: 4, title: '균열의 왕', emoji: '🌌', tag: T4, when: { minTurn: 108, orCities: 25 },
@@ -349,6 +350,34 @@
       ['무예 마당에서 직접 병사를 상대해 준다', '{책사} 이(가) 병사들과 겨루자 마당 가득 함성이 울렸다', '무예 마당에 쉼터를 세운다', '쉼터가 서자 다친 병사가 쉬어 갈 수 있게 되었다', '기동 기록을 서고에 남긴다', '기동 기록이 서고에 꽂혀 무예서의 옆자리를 차지했다'])
   ];
 
+  /**
+   * 단계 표 — 카드 id 마다 { kind, title, win, lose, ... }
+   *   kind   own(목표 성을 months 달 안에 차지 — near 는 어울리는 땅 plain·river, 없으면 아무 이웃 성) · debate(세 문답, 둘 이상 맞히면 이김) · duel(손 싸움 — {맹장} 대 foe)
+   *   intro  (debate·duel) 앞 단 카드에 뜨는 도입 글
+   *   win·lose  { text, hint, fx } — fx 는 카드 갈래와 같은 종류에 더해
+   *            loyalId({id,n} 그 사람이 우리 사람이면 충성) · recruitFree(재야 중 지력 으뜸 하나를 등용) · lend(foe 가 {이웃}에게 간다) · quiz(문답 정답 수 +n, 문화 승리)
+   */
+  var STAGES = {
+    r1_first_ally: { kind: 'debate', title: '화친의 설전',
+      intro: '{이웃} 의 사신 앞에 재야 논객이 서서 설전을 청한다. 문답 세 개 — 두 개 이상 맞히면 화친 조건을 더 얻어 낸다.',
+      win: { text: '{책사} 이(가) 지켜보는 가운데 설전에서 이겨 화친 조건을 더 얻어 냈다', hint: '이웃 우호 +15 · 금 +300', fx: [{ t: 'rel', n: 15 }, { t: 'gold', n: 300 }] },
+      lose: { text: '말문이 막혀 조건을 못 얻었다 — 사신이 어색하게 돌아갔다', hint: '이웃 우호 -5', fx: [{ t: 'rel', n: -5 }] } },
+    r2_plains: { kind: 'own', near: 'plain', months: 10, title: '관도 결전 · 들판의 성',
+      win: { text: '들판의 성을 손에 넣었다 — 강서의 특공대가 야습을 해냈다는 소문이 돈다', hint: '수도 훈련 +8 · 강서 충성 +5 · 금 +500', fx: [{ t: 'train', n: 8 }, { t: 'loyalId', id: 'tm_gangseo', n: 5 }, { t: 'gold', n: 500 }] },
+      lose: { text: '열 달이 지나도록 들판을 얻지 못했다 — 대군을 먹인 군량만 줄었다', hint: '수도 군량 -800', fx: [{ t: 'food', n: -800 }] } },
+    r2_debate: { kind: 'debate', title: '논객의 설전 · 재야 학자',
+      intro: '명변이 이름난 재야 학자를 마주 앉혔다. 문답 세 개 — 두 개 이상 맞히면 학자가 스스로 곁으로 온다.',
+      win: { text: '학자가 설전에 무릎을 꿇고 스스로 곁에 섰다 — 서당에 문답 소리가 커졌다', hint: '재야 학자 합류 · 문화 문답 +20', fx: [{ t: 'recruitFree', bonus: 5 }, { t: 'quiz', n: 20 }] },
+      lose: { text: '학자가 웃으며 돌아섰다 — 그래도 서당엔 토론 소리가 남았다', hint: '문화 문답 +5', fx: [{ t: 'quiz', n: 5 }] } },
+    r3_river: { kind: 'own', near: 'river', months: 10, title: '적벽 강 위 · 강가의 성',
+      win: { text: '강가의 성을 얻었다 — 성연의 바람 기록이 그날 밤 정확히 들어맞았다', hint: '성연 충성 +8 · 금 +600 · 수도 치안 +5', fx: [{ t: 'loyalId', id: 'tm_seongyeon', n: 8 }, { t: 'gold', n: 600 }, { t: 'sec', n: 5 }] },
+      lose: { text: '강 위의 싸움을 끝내 못 이겼다 — 성연이 조용히 기록을 접었다', hint: '성연 충성 -4', fx: [{ t: 'loyalId', id: 'tm_seongyeon', n: -4 }] } },
+    r3_duel: { kind: 'duel', foe: 'tm_yeongjeom', title: '의체 무사의 일기토',
+      intro: '영점이 의체 팔로 창을 세웠다. "나보다 강한 장수 밑에만 선다." {맹장} 이(가) 마당에 나선다 — 세 수 가운데 하나씩, 승부가 날 때까지.',
+      win: { text: '{맹장} 이(가) 영점을 꺾었다 — 영점이 창을 거두고 무릎을 꿇었다', hint: '영점 합류', fx: [{ t: 'recruit', id: 'tm_yeongjeom', bonus: 10 }] },
+      lose: { text: '{맹장} 이(가) 밀렸다 — 영점이 코웃음 치며 {이웃} 에게로 떠났다', hint: '영점이 이웃 세력으로', fx: [{ t: 'lend', id: 'tm_yeongjeom' }] } }
+  };
+
   function card(id) {
     var i;
     for (i = 0; i < CARDS.length; i++) { if (CARDS[i].id === id) { return CARDS[i]; } }
@@ -358,5 +387,5 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.scenarioData = { CARDS: CARDS, LORD: LORD, SIDE: SIDE, ACTS: ACTS, TIME_FOLK: TIME_FOLK, card: card };
+  global.DG.scenarioData = { CARDS: CARDS, LORD: LORD, SIDE: SIDE, ACTS: ACTS, TIME_FOLK: TIME_FOLK, STAGES: STAGES, card: card };
 })(window);

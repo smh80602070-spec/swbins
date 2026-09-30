@@ -3192,10 +3192,13 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         ('짝 ' + all.length + '쌍(손으로 ' + RD.PAIRS.length + ' + 지역 ' + auto + ') · 결 ' + Object.keys(kinds).length + '/4 · 결정적');
     });
 
+    function isStageEnd(k) { return /_end$/.test(k) && !!DG.scenarioData && !!DG.scenarioData.STAGES[k.slice(0, -4)]; }
+
     t('사연 표 — 열다섯 사연 + 체인 일곱(퓨전 셋·둘째 단 셋 포함), 모두 세 갈래(공세·신중·수단, 중복 0)이고 신중은 값이 안 든다', function () {
-      var chains = Object.keys(E.DEFS).filter(function (k) { return E.DEFS[k].chain && !(DG.scenarioData && DG.scenarioData.card(k)); });   // 시나리오 카드는 따로(시나리오 표 진단)
+      var chains = Object.keys(E.DEFS).filter(function (k) { return E.DEFS[k].chain && !(DG.scenarioData && (DG.scenarioData.card(k) || isStageEnd(k))); });   // 시나리오 카드·단계 결과 카드는 따로(시나리오 표·단계 진단)
       var bad = [];
       Object.keys(E.DEFS).forEach(function (k) {
+        if (isStageEnd(k)) { return; }         // 결과 카드는 단추 하나(확인)
         var d = E.DEFS[k], ks = d.choices.map(function (c) { return c.k; }).sort().join(',');
         if (ks !== 'atk,def,util') { bad.push(k + ':axes'); }
         d.choices.forEach(function (c) { if (c.k === 'def' && c.cost) { bad.push(k + ':defcost'); } if (!c.label || !c.hint) { bad.push(k + ':text'); } });
@@ -3235,6 +3238,19 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var poorOk = !poor.r.ok && poor.a === 60 && poor.b === 60 && poor.gold === 100 && poor.act.length === 0;
       return atkOk && defOk && utilOk && poorOk && ('벌 → 48/64 · 갈라놓기 → 58/58 · 술자리 → 66/66 · 금 -400 · 체인 예약 · 금 100 이면 거절');
     });
+
+    /* 시나리오 단계(own·debate·duel) 하나를 이긴 쪽으로 닫는다 — 열려 있지 않으면 false */
+    function settleStage(id) {
+      var g = DG.scenario.state().stage, st = R.state();
+      if (!g || g.id !== id) { return false; }
+      if (g.kind === 'own') { R.city(g.target).force = 'cao'; }
+      st.turn += 1; E.tick();
+      var v = E.view();
+      if (!(v && v.id === id + '_end')) { throw new Error(id + ' 결과 카드 ' + (v && v.id)); }
+      if (v.pre && !v.pre.done) { E.setPre(g.kind === 'duel' ? { won: true } : { ok: 3 }); }
+      E.choose('def');
+      return true;
+    }
 
     t('시나리오 표 — 카드·갈래·효과가 서로 맞고, 카드마다 과거·현대·미래가 셋 다 있다', function () {
       var SD = DG.scenarioData, bad = [], ids = {}, FXT = ['gold', 'food', 'sec', 'train', 'loyal', 'rel', 'recruit'];
@@ -3288,6 +3304,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         rel0 = D.relation('cao', nbF);
         E.choose('def');
         if (!SC.state().done.r1_first_ally) { bad.push('셋째 카드 기록'); }
+        if (!(SC.state().stage && SC.state().stage.kind === 'debate')) { bad.push('설전 단계 열림'); }
+        if (!settleStage('r1_first_ally') || SC.state().stage) { bad.push('설전 단계 닫힘'); }
         var lines = SC.lines();
         if (!lines.slice(0, 3).every(function (x) { return x.state === 'done'; })) { bad.push('기록 줄 ' + JSON.stringify(lines.map(function (x) { return x.state; }))); }
         // 다 끝나면 더는 안 뜬다
@@ -3334,6 +3352,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
             if (rr.force !== 'cao') { bad.push(cd.id + ' 등용 안 됨 ' + rec.id); } else { recruited[rec.id] = 1; }
           }
           if (!SC.state().done[cd.id]) { bad.push(cd.id + ' 기록'); }
+          try { settleStage(cd.id); } catch (e) { bad.push(e.message); }
+          if (SC.state().stage) { bad.push(cd.id + ' 단계가 안 닫힘'); }
         });
         if (order.length !== 13) { bad.push('뜬 카드 ' + order.length); }
         if (SC.lines().slice(0, 16).some(function (x) { return x.state !== 'done'; })) { bad.push('기록 줄'); }
@@ -3344,6 +3364,159 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         E.view() && E.choose('def');
         if (bad.length) { throw new Error(bad.join(', ')); }
         return '2~6막 열세 카드 차례로 뜸 · 시간 틈 사람 ' + n + '명 등용 · 결말 카드(승리 글) · 끝나면 조용';
+      } finally { window.DG_NO_SCENARIO = true; evDone(); }
+    });
+
+    t('시나리오 단계 — 성 차지는 목표 성을 열 달 안에 얻으면 이기고, 설전은 둘 이상 맞히면 이기며, 일기토는 손 싸움 결과로 영점이 갈리고, 열려 있는 동안 본 사슬이 쉰다', function () {
+      var SC = DG.scenario, SD = DG.scenarioData, bad = [], st = evFresh();
+      window.DG_NO_SCENARIO = false;
+      try {
+        var me = R.myForce(); me.gold = 20000;
+        var FXS = ['gold', 'food', 'sec', 'train', 'loyal', 'rel', 'recruit', 'loyalId', 'recruitFree', 'lend', 'quiz'];
+        if (Object.keys(SD.STAGES).join() !== 'r1_first_ally,r2_plains,r2_debate,r3_river,r3_duel') { bad.push('단계 표 ' + Object.keys(SD.STAGES).join()); }
+        Object.keys(SD.STAGES).forEach(function (id) {
+          var sd = SD.STAGES[id];
+          if (['own', 'debate', 'duel'].indexOf(sd.kind) < 0) { bad.push(id + ' 종류'); }
+          if (sd.kind !== 'own' && !sd.intro) { bad.push(id + ' 도입'); }
+          if (sd.kind === 'own' && !(sd.months > 0)) { bad.push(id + ' 달'); }
+          if (!DG.event.DEFS[id + '_end'] || DG.event.ORDER.indexOf(id + '_end') >= 0) { bad.push(id + ' 결과 정의'); }
+          ['win', 'lose'].forEach(function (b) {
+            var br = sd[b];
+            if (!br || !br.text || !br.hint || !br.fx || !br.fx.length) { bad.push(id + '.' + b + ' 빈 칸'); return; }
+            br.fx.forEach(function (f) { if (FXS.indexOf(f.t) < 0) { bad.push(id + ' 효과 ' + f.t); } });
+          });
+        });
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        var cap = R.citiesOf('cao')[0], q0, v, g, food0, n0, i;
+        function done(ids) { ids.forEach(function (k) { SC.state().done[k] = { k: 'def', turn: 1 }; }); }
+        /* 성 차지 — 관도(들판) */
+        st.turn = 0; SC.state(); st.turn = 60;
+        done(['r1_start', 'r1_rift_sign', 'r1_first_ally', 'r2_fallen']);
+        E.tick(); v = E.view();
+        if (!(v && v.id === 'r2_plains' && !v.pre)) { throw new Error('관도 카드 ' + (v && v.id)); }
+        E.choose('def');
+        g = SC.state().stage;
+        if (!(g && g.kind === 'own' && g.target && R.city(g.target).force !== 'cao' && R.citiesOf('cao').some(function (id) { return DG.cityData.find(id).adj.indexOf(g.target) >= 0; }))) { bad.push('목표 성 ' + JSON.stringify(g)); }
+        if (g && g.target && !R.citiesOf('cao').some(function (id) { return DG.cityData.find(id).adj.some(function (a) { return R.city(a).force !== 'cao' && DG.cityData.find(a).land === 'plain'; }); })) { bad.push('들판 이웃이 없는 판(시험 전제)'); }
+        else if (g && DG.cityData.find(g.target).land !== 'plain') { bad.push('들판을 먼저 골라야 ' + DG.cityData.find(g.target).land); }
+        st.turn += 3; E.tick();
+        if (E.view()) { bad.push('열려 있는 동안 카드가 뜸 ' + E.view().id); E.choose('def'); }
+        var goal = SC.lines().filter(function (x) { return x.state === 'goal'; });
+        if (goal.length !== 1 || !goal[0].note || goal[0].note.indexOf('달 남음') < 0 || SC.lines().some(function (x) { return x.state === 'next'; })) { bad.push('기록 줄 ' + JSON.stringify(goal)); }
+        st.turn += 8; E.tick(); v = E.view();      // 열한 달째 — 못 얻은 채 기한이 지났다
+        if (!(v && v.id === 'r2_plains_end' && !v.pre && v.text.indexOf('군량 -800') >= 0 && v.text.indexOf('{') < 0)) { bad.push('진 결과 ' + (v && v.id) + ' ' + (v && v.text)); }
+        food0 = R.city(cap).food; E.choose('def');
+        if (R.city(cap).food !== food0 - 800 || SC.state().stage) { bad.push('진 결과 값·닫힘 ' + (R.city(cap).food - food0)); }
+        /* 성 차지 — 이긴 쪽 */
+        SC.state().done.r2_plains = undefined; delete SC.state().done.r2_plains;
+        E.tick(); v = E.view();
+        if (!(v && v.id === 'r2_plains')) { bad.push('관도 다시 ' + (v && v.id)); } else { E.choose('def'); }
+        g = SC.state().stage; var tcity = g && g.target, t0 = me.gold;
+        st.turn += 2; if (tcity) { R.city(tcity).force = 'cao'; } E.tick(); v = E.view();
+        if (!(v && v.id === 'r2_plains_end' && v.text.indexOf('금 +500') >= 0)) { bad.push('이긴 결과 ' + (v && v.id)); }
+        E.choose('def');
+        if (me.gold !== t0 + 500) { bad.push('이긴 결과 금 ' + (me.gold - t0)); }
+        /* 설전 */
+        E.tick(); v = E.view();
+        if (!(v && v.id === 'r2_debate')) { bad.push('설전 카드 ' + (v && v.id)); }
+        else {
+          E.choose('def');
+          st.turn += 1; E.tick(); v = E.view();
+          if (!(v && v.id === 'r2_debate_end' && v.pre && v.pre.kind === 'debate' && !v.pre.done && v.pre.intro.indexOf('{') < 0 && v.pre.by)) { bad.push('설전 앞 단 ' + JSON.stringify(v && v.pre)); }
+          if (v && !E.setPre({ ok: 1 })) { bad.push('setPre'); }
+          v = E.view(); q0 = (C.save.quiz && C.save.quiz.correct) || 0;
+          if (!(v && v.pre && v.pre.done && v.text.indexOf('문화 문답 +5') >= 0)) { bad.push('진 설전 글 ' + (v && v.text)); }
+          E.choose('def');
+          if (((C.save.quiz && C.save.quiz.correct) || 0) !== q0 + 5) { bad.push('진 설전 문답'); }
+          /* 이긴 설전 — 같은 카드를 다시 열어 둘 맞힘 */
+          delete SC.state().done.r2_debate;
+          E.tick(); v = E.view();
+          if (v && v.id === 'r2_debate') { E.choose('def'); }
+          n0 = off.ofForce('cao').length; q0 = (C.save.quiz && C.save.quiz.correct) || 0;
+          st.turn += 1; E.tick(); E.setPre({ ok: 2 }); v = E.view();
+          if (!(v && v.id === 'r2_debate_end' && v.text.indexOf('스스로 곁에 섰다') >= 0)) { bad.push('이긴 설전 글 ' + (v && v.id)); }
+          E.choose('def');
+          if (off.ofForce('cao').length !== n0 + 1 || ((C.save.quiz && C.save.quiz.correct) || 0) !== q0 + 20) { bad.push('이긴 설전 값 ' + (off.ofForce('cao').length - n0)); }
+        }
+        /* 일기토 */
+        SD.CARDS.slice(0, 8).forEach(function (c) { SC.state().done[c.id] = { k: 'def', turn: 1 }; });
+        st.turn = Math.max(st.turn, 100); E.tick(); v = E.view();
+        if (!(v && v.id === 'r3_duel')) { bad.push('일기토 카드 ' + (v && v.id)); }
+        else {
+          put('tm_yeongjeom', null, cap);
+          E.choose('def');
+          if (!(SC.state().stage && SC.state().stage.kind === 'duel')) { bad.push('일기토 단계 열림'); }
+          st.turn += 1; E.tick(); v = E.view();
+          var duelA = v && v.pre && v.pre.a;
+          if (!(v && v.id === 'r3_duel_end' && v.pre.kind === 'duel' && !v.pre.done && duelA && v.pre.d === 'tm_yeongjeom' && v.pre.intro.indexOf('{') < 0)) { bad.push('일기토 앞 단 ' + JSON.stringify(v && v.pre)); }
+          var best = off.ofForce('cao').reduce(function (m, h) { return !m || off.stats(h.id).might > off.stats(m.id).might ? h : m; }, null);
+          if (best && duelA !== best.id) { bad.push('맹장이 아님 ' + duelA); }
+          var res = null, calls = 0;
+          DG.war.duelHand(duelA, 'tm_yeongjeom', function (view, cb) { calls++; cb(view.done ? undefined : (calls % 2 ? 'slash' : 'auto')); }, function (r) { res = r; }, '▶ 결과로');
+          if (!res || (res.winner !== duelA && res.winner !== 'tm_yeongjeom') || calls < 2) { bad.push('손 싸움 ' + JSON.stringify(res && res.winner) + calls); }
+          else {
+            E.setPre({ won: res.winner === duelA });
+            E.choose('def');
+            var nbF = R.liveForces().filter(function (f) { return f !== 'cao'; })[0];
+            if (res.winner === duelA ? !E.h.mineOf('tm_yeongjeom', 'cao') : off.rec('tm_yeongjeom').force !== nbF) { bad.push('영점 갈림 ' + off.rec('tm_yeongjeom').force + ' 이김=' + (res.winner === duelA)); }
+          }
+          /* 반대 결과도 — 이웃으로 가는 쪽 / 합류하는 쪽 */
+          delete SC.state().done.r3_duel; put('tm_yeongjeom', null, cap);
+          E.tick(); v = E.view();
+          if (v && v.id === 'r3_duel') { E.choose('def'); st.turn += 1; E.tick(); E.setPre({ won: false }); E.choose('def'); }
+          var nbF2 = R.liveForces().filter(function (f) { return f !== 'cao'; })[0];
+          if (off.rec('tm_yeongjeom').force !== nbF2) { bad.push('진 일기토 — 이웃으로 ' + off.rec('tm_yeongjeom').force); }
+          delete SC.state().done.r3_duel; put('tm_yeongjeom', null, cap);
+          E.tick(); v = E.view();
+          if (v && v.id === 'r3_duel') { E.choose('util'); }
+          if (!E.h.mineOf('tm_yeongjeom', 'cao') || SC.state().stage) { bad.push('예물로 합류하면 일기토 없음'); }
+        }
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '단계 다섯(성 차지 둘·설전 둘·일기토 하나) · 목표 성 들판 우선 · 열 달 뒤 진 결과 · 설전 ok<2 진/≥2 이김 · 일기토 손 싸움→영점 합류/이웃 · 열려 있는 동안 본 사슬 쉼';
+      } finally { window.DG_NO_SCENARIO = true; evDone(); }
+    });
+
+    t('시나리오 단계 — 화면: 설전·일기토 카드는 도입 → 문답·손 싸움 → 결과 카드 순이고(설전은 그만·건너뛰기 없음), 성 차지 결과 카드는 앞 단 없이 뜬다', function () {
+      var SC = DG.scenario, bad = [], st = evFresh(), enc = document.querySelector('#encounter'), g = 0, cap = R.citiesOf('cao')[0], v, me = R.myForce();
+      window.DG_NO_SCENARIO = false;
+      try {
+        while (enc.classList.contains('show') && g++ < 10) { DG.ui.closeEnc(); }
+        st.turn = 0; SC.state();
+        /* 설전 */
+        SC.state().stage = { id: 'r1_first_ally', kind: 'debate', target: '', since: 0 };
+        st.turn = 5; E.tick(); DG.ui.showEvent();
+        if (!(encHtml().indexOf('data-act="ev-pre"') >= 0 && encHtml().indexOf('data-act="ev-pick"') < 0 && /설전/.test(enc.textContent))) { bad.push('설전 도입 카드'); }
+        DG.ui._act('ev-pre', uiBtn({}));
+        if (document.querySelectorAll('#encounter [data-act="deb-answer"]').length !== 4 || document.querySelector('#encounter [data-act="deb-quit"]') || document.querySelector('#encounter [data-act="deb-skip"]')) { bad.push('설전 카드 단추'); }
+        runDebate(true);                                                   // 3/3 → 결과 카드가 이어서 뜬다
+        v = E.view();
+        if (!(v && v.pre && v.pre.done && encHtml().indexOf('data-act="ev-pick"') >= 0 && enc.textContent.indexOf('화친 조건을 더 얻어') >= 0)) { bad.push('설전 결과 카드 ' + (v && JSON.stringify(v.pre))); }
+        DG.ui._act('ev-pick', uiBtn({ 'data-k': 'def' }));
+        if (E.view() !== null || SC.state().stage) { bad.push('설전 끝 뒤 닫힘'); }
+        DG.ui.closeEnc();
+        /* 일기토 */
+        put('tm_yeongjeom', null, cap);
+        SC.state().stage = { id: 'r3_duel', kind: 'duel', target: '', since: 5 };
+        st.turn = 7; E.tick(); DG.ui.showEvent();
+        if (!(encHtml().indexOf('data-act="ev-pre"') >= 0 && /일기토/.test(enc.textContent))) { bad.push('일기토 도입 카드'); }
+        DG.ui._act('ev-pre', uiBtn({}));
+        if (document.querySelectorAll('#encounter [data-act="duel-pick"]').length !== 4) { bad.push('손 싸움 단추'); }
+        for (g = 0; document.querySelector('#encounter [data-act="duel-pick"]') && g < 8; g++) { DG.ui._act('duel-pick', uiBtn({ 'data-pick': 'auto' })); }
+        if (!(document.querySelector('#encounter [data-act="duel-go"]') && enc.textContent.indexOf('결과로') >= 0)) { bad.push('손 싸움 끝 카드'); }
+        DG.ui._act('duel-go', uiBtn({}));
+        v = E.view();
+        if (!(v && v.pre && v.pre.done && encHtml().indexOf('data-act="ev-pick"') >= 0)) { bad.push('일기토 결과 카드 ' + (v && JSON.stringify(v.pre))); }
+        DG.ui._act('ev-pick', uiBtn({ 'data-k': 'def' }));
+        if (E.view() !== null || SC.state().stage) { bad.push('일기토 끝 뒤 닫힘'); }
+        DG.ui.closeEnc();
+        /* 성 차지 — 앞 단 없이 바로 결과 */
+        SC.state().stage = { id: 'r2_plains', kind: 'own', target: R.citiesOf('cao').map(function (id) { return DG.cityData.find(id).adj.filter(function (a) { return R.city(a).force !== 'cao'; })[0]; }).filter(Boolean)[0], since: 0 };
+        st.turn = 11; E.tick(); DG.ui.showEvent();
+        if (!(encHtml().indexOf('data-act="ev-pre"') < 0 && encHtml().indexOf('data-act="ev-pick"') >= 0)) { bad.push('성 차지 결과 카드'); }
+        DG.ui._act('ev-pick', uiBtn({ 'data-k': 'def' }));
+        DG.ui.closeEnc();
+        if (bad.length) { throw new Error(bad.join(', ')); }
+        return '설전: 도입 → 문답 네 보기(그만·건너뛰기 없음) → 결과 카드 · 일기토: 도입 → 손 싸움 → "결과로" → 결과 카드 · 성 차지: 앞 단 없이 결과';
       } finally { window.DG_NO_SCENARIO = true; evDone(); }
     });
 

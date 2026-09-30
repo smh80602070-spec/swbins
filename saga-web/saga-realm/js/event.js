@@ -723,6 +723,7 @@
     if (!d) { ev.pending = null; return null; }
     return {
       id: p.id, step: p.step, tag: d.tag || '', name: d.name, emoji: d.emoji, text: d.text(p.ctx, p.step),
+      pre: d.pre && d.pre(p.ctx) ? Object.assign({ done: p.ctx.pre !== undefined }, d.pre(p.ctx)) : null,
       a: p.ctx.a, b: p.ctx.b, kind: p.ctx.b ? kindOf(p.ctx.a, p.ctx.b) : null,
       choices: d.choices.map(function (ch) {
         return { k: ch.k, label: labelOf(ch, p.ctx), hint: ch.hint || '', cost: ch.cost || 0, ok: choiceOk(ch, p.ctx, p.ctx.force) };
@@ -737,6 +738,15 @@
     var res = resolve(p, k);
     if (res.ok) { ev.pending = null; core.persist(); }
     return res;
+  }
+
+  /** 떠 있는 사연의 앞 단(설전·일기토)을 치른 결과를 적는다 — 카드의 go 가 ctx.pre 를 읽는다. 세이브에 남는다 */
+  function setPre(res) {
+    var p = S().events.pending;
+    if (!p) { return false; }
+    p.ctx.pre = res;
+    core.persist();
+    return true;
   }
 
   /** 기록 시트용 — 진행 중인 사연 줄들 */
@@ -906,7 +916,7 @@
     relLv: relLv, relAdd: relAdd, kindOf: kindOf, pairsOf: pairsOf,
     tick: tick, view: view, choose: choose, resolve: resolve, autoPick: autoPick, pref: pref,
     pickNew: pickNew, activeView: activeView, roll: roll,
-    addDef: add, addSource: addSource,
+    addDef: add, addSource: addSource, setPre: setPre,
     /** 시나리오가 쓰는 손잡이 — 새 판정을 안 만들고 있는 것만 만진다 */
     h: { nm: nm, wisest: wisest, gold: gold, goldOf: goldOf, adjust: adjust, loyal: loyal, cityRec: cityRec, hire: hire, isFree: isFree, mineOf: mineOf }
   };

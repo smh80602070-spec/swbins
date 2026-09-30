@@ -1833,3 +1833,11 @@ VRoid 장수가 unlit(`MeshBasicMaterial`) 그대로라 명암 없이 평면이�
 - `data-scenario.js SIDE`(29~37번, `ACTS[9]`): 시간 틈 사람 아홉(강서·공석·금담·명변·도하·성연·궤도·은하·영점) 각자 고향 이야기 한 장. **우리 사람이 된 지 열두 달** 뒤에 뜨고(`scenario.js nextSide`, 세이브 `scenario.seen[id]` = 처음 우리 사람으로 본 달), 카드 속 {책사} 가 그 사람이며 충성 +5 도 그 사람에게 간다. 본 사슬·열전과 **따로** 흐르는 셋째 곁 사슬. 세 갈래(훈련+6 / 치안+8 / 금+600)는 같은 틀, 글은 사람마다.
 - 확인: jsdom `_test.html` 258/258 — 새 진단 1(아무도 없으면 조용 · 등용한 달·열한 달째엔 안 뜸 · 열두 달째 도하 카드 · 끝나면 조용) + 7막 진단의 "끝난 뒤 또 뜸" 이 곁가지를 제외하도록. sw realm-v1.69.0. **실기 확인 대기**: 아홉을 모으는 판에서 곁가지 아홉이 한꺼번에 몰려 뜨는지(한 번에 하나씩 뜨는 게 맞는지).
 - 정본 곁가지 셋 가운데 `side_time_*` 는 끝, `side_bond_*`(기존 사연)·`side_trait_*` 는 트랙 것 그대로.
+
+## 2026-09-30 (이어서 3) — 시나리오 단계: own·debate·duel1 가운데 단 (PLAN §5-13)
+- 새 시스템 넷 가운데 첫째. 정본 뼈대 "event · own/debate/duel1 · event" 의 가운데 단이 세 갈래 고르기로 줄어 있던 다섯 카드(r1_first_ally·r2_plains·r2_debate·r3_river·r3_duel)에 실제 단계를 넣었다. 카드를 고르면 `scenario.stage` 가 열리고, 끝나면 결과 카드 `<id>_end`.
+  own = 목표 성(우리 성에 맞닿은 남의 성, plain·river 우선) 열 달 · debate = 설전 세 문답 ≥2 · duel = {맹장} 대 영점 손 싸움.
+- 코드: `war.js` duelDrive/duelSet/duelHand(출진 일기토 `duelPrompt` 를 이걸로 갈아 끼움, 문턱 판정·난수 순서는 그대로) · `event.js` def.pre·setPre·view().pre · `ui-rtk.js` showEventPre/runEventPre(`ev-pre`)·설전 must·`deb-go` 가 정답 수를 둘째 인자로·일기토 끝 단추 글 view.cont · `scenario.js` stageFire·pickTarget·beginStage·lines 🎯 · `data-scenario.js` STAGES + r3_duel 갈래(atk 는 영점을 안 들이고 일기토가 이어지며 util 예물만 바로 합류).
+- 확인: jsdom `_test.html` 새 진단 둘(단계 로직·화면) + 1막·2~6막 진단이 단계를 닫도록 손봄. sw realm-v1.70.0. **실기 확인 대기**: 설전·일기토 카드 흐름, 목표 성 안내(로그·기록 시트 🎯).
+- 함정: 일기토 끝 카드(`duel-go`)는 닫지 않고 다음 카드를 띄우면 `showEncQueued` 에 갇힌다 — `closeEnc()` 먼저.
+- **다음**: 웹 새 시스템 남은 후보 — 사가의숲 새 번들 갈래 → 사가스토리 5차 전직(PLAN §10 결정, 사용자 확인 필요). 4·5막 own 카드(균열 문 성·실크로드·남해)도 같은 STAGES 로 붙일 수 있다.

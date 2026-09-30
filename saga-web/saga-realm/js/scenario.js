@@ -7,7 +7,9 @@
  *   ③ 고른 뒤(`rtk:eventDone`) 끝낸 카드를 세이브에 적는다.
  * AI 세력에게는 안 뜬다(원천이 사람 세력만 본다). 새 판정은 없다 — 금·성 값·충성·우호 손잡이만 만진다.
  *
- * 세이브: `rtk.state().scenario = { t0, done:{카드id:{k,turn}} }` — 없으면 빈 것. **옛 세이브**(시작 24달 뒤에 처음 만난 판)는
+ * 단계(data-scenario.js STAGES) — own·debate·duel 카드는 고른 뒤 `scenario.stage = { id, kind, target, since }` 가 열리고, 끝나면 결과 카드 `<id>_end` 가 뜬다.
+ *   성 차지는 목표 성(우리 성에 맞닿은 남의 성)을 얻거나 열 달이 지나면, 설전·일기토는 다음 달에 뜬다. 열려 있는 동안 본 사슬의 다음 카드가 쉰다.
+ * 세이브: `rtk.state().scenario = { t0, done:{카드id:{k,turn}}, stage? }` — 없으면 빈 것. **옛 세이브**(시작 24달 뒤에 처음 만난 판)는
  *   지나온 길로 보고 1막을 건너뛴다. 끄는 법: `window.DG_NO_SCENARIO = true`(진단이 기본으로 켠다).
  */
 (function (global) {
@@ -50,6 +52,14 @@
     return best ? E().h.nm(best.id) : '맹장';
   }
 
+  function bravestId(F) {
+    var list = F ? OFF().ofForce(F) : [], best = null, i;
+    for (i = 0; i < list.length; i++) {
+      if (!best || global.DG.hero.stats(list[i].id).might > global.DG.hero.stats(best.id).might) { best = list[i]; }
+    }
+    return best ? best.id : '';
+  }
+
   function fill(text, c) {
     var b = c.b ? E().h.nm(c.b) : '이웃 군주';
     return String(text).replace(/\{책사\}/g, c.a ? E().h.nm(c.a) : '책사').replace(/\{이웃\}/g, b).replace(/\{맹장\}/g, c.force ? bravest(c.force) : '맹장');
@@ -73,13 +83,58 @@
       if (h.isFree(fx.id)) { h.hire(fx.id, cy, F, fx.bonus || 0); }
       else if (h.mineOf(fx.id, F)) { h.loyal(fx.id, 5); }
     }
+    else if (fx.t === 'loyalId') { if (E().h.mineOf(fx.id, F)) { h.loyal(fx.id, fx.n); } }
+    else if (fx.t === 'quiz') {
+      var q = core.save.quiz || (core.save.quiz = { learned: {}, wrongs: {}, total: 0, correct: 0, streak: 0, bestStreak: 0 });
+      q.correct = (q.correct || 0) + fx.n;
+    }
+    else if (fx.t === 'recruitFree') {
+      var pick = null;
+      OFF().all().forEach(function (o) {
+        if (!h.isFree(o.id) || CD().TIME_FOLK.indexOf(o.id) >= 0) { return; }
+        if (!pick || OFF().stats(o.id).wisdom > OFF().stats(pick).wisdom) { pick = o.id; }
+      });
+      if (pick) { h.hire(pick, cy, F, fx.bonus || 0); }
+    }
+    else if (fx.t === 'lend' && c.b) {
+      var nrec = OFF().rec(c.b), ncity = nrec && nrec.force ? R().citiesOf(nrec.force)[0] : '';
+      if (ncity && h.isFree(fx.id)) { h.hire(fx.id, ncity, nrec.force, 0); }
+    }
     else if (fx.t === 'rel' && c.b) {
       var rec = OFF().rec(c.b), DIP = global.DG.diplo;
       if (rec && rec.force && DIP && DIP.addRelation) { DIP.addRelation(F, rec.force, fx.n); }
     }
   }
 
+  /** 결과 카드가 이겼는가 — 성 차지는 원천이 정해 넣고(ctx.won), 설전·일기토는 앞 단이 적은 결과(ctx.pre)를 본다 */
+  function wonOf(sd, c) {
+    if (sd.kind === 'own') { return !!c.won; }
+    if (sd.kind === 'debate') { return !!c.pre && c.pre.ok >= 2; }
+    return !!(c.pre && c.pre.won);
+  }
+
+  function registerStage(id, sd) {
+    var cd = CD().card(id);
+    E().addDef({
+      id: id + '_end', name: sd.title, emoji: cd.emoji, tag: cd.tag, chain: true,
+      valid: function () { return null; },
+      pre: sd.kind === 'own' ? null : function (c) {
+        return { kind: sd.kind, intro: fill(sd.intro, c), by: c.a, a: sd.kind === 'duel' ? bravestId(c.force) : '', d: sd.foe || '' };
+      },
+      text: function (c) { var br = wonOf(sd, c) ? sd.win : sd.lose; return fill(br.text, c) + ' (' + br.hint + ')'; },
+      choices: [{
+        k: 'def', label: '확인', hint: '', cost: 0,
+        go: function (c, F) {
+          var br = wonOf(sd, c) ? sd.win : sd.lose;
+          br.fx.forEach(function (fx) { apply(fx, c, F); });
+          return { text: fill(br.text, c) };
+        }
+      }]
+    });
+  }
+
   function register() {
+    Object.keys(CD().STAGES).forEach(function (id) { registerStage(id, CD().STAGES[id]); });
     CD().CARDS.concat(CD().LORD, CD().SIDE).forEach(function (cd) {
       E().addDef({
         id: cd.id, name: cd.title, emoji: cd.emoji, tag: cd.tag, chain: true,
@@ -110,6 +165,50 @@
     return !!(cd.when.orCities && R().citiesOf(F).length >= cd.when.orCities);
   }
 
+  /** 단계가 열려 있으면 결과 카드 — 때가 안 됐으면 null */
+  function stageFire(F) {
+    var st = R().state(), s = save(), g = s.stage, sd = g && CD().STAGES[g.id], won = false;
+    if (!sd) { delete s.stage; return null; }
+    if (g.kind === 'own') {
+      var cy = R().city(g.target);
+      won = !!cy && cy.force === F;
+      if (!won && (st.turn || 0) - g.since < sd.months) { return null; }
+    }
+    var cap = R().citiesOf(F)[0] || '', by = cap ? E().h.wisest(cap, F) : null, nb = neighbourLord(F);
+    return { id: g.id + '_end', step: 1, ctx: { a: by ? by.id : '', b: nb && nb.lord ? nb.lord : '', city: cap, force: F, won: won } };
+  }
+
+  /** 성 차지 목표 — 우리 성에 맞닿은 남의 성 하나(어울리는 땅 먼저, 병력 적은 성 먼저). 없으면 '' */
+  function pickTarget(F, near) {
+    var mine = R().citiesOf(F), seen = {}, list = [];
+    mine.forEach(function (id) {
+      var cd = global.DG.cityData.find(id);
+      (cd ? cd.adj : []).forEach(function (a) {
+        var c = R().city(a);
+        if (seen[a] || !c || c.force === F) { return; }
+        seen[a] = 1;
+        list.push({ id: a, fit: near && global.DG.cityData.find(a).land === near ? 0 : 1, troops: c.troops || 0 });
+      });
+    });
+    list.sort(function (x, y) { return x.fit - y.fit || x.troops - y.troops || (x.id < y.id ? -1 : 1); });
+    return list.length ? list[0].id : '';
+  }
+
+  function beginStage(id, sd, F) {
+    var s = save(), st = R().state(), target = '';
+    if (sd.kind === 'own') {
+      target = pickTarget(F, sd.near);
+      if (!target) { return; }
+    }
+    if (sd.kind === 'duel' && E().h.mineOf(sd.foe, F)) { return; }
+    s.stage = { id: id, kind: sd.kind, target: target, since: st.turn || 0 };
+    if (target) {
+      var nm = global.DG.cityData.find(target).name;
+      core.log('🎯 ' + sd.title + ' — ' + nm + ' 을(를) ' + sd.months + '달 안에 차지하라', 'info');
+      core.emit('toast', '🎯 목표 — ' + nm + ' 차지');
+    }
+  }
+
   /** 표(list)에서 다음 카드 하나 — 표 순서대로, 앞 카드가 끝나야 다음이 온다. 열전(lord)은 제 시나리오 카드만 본다 */
   function nextIn(list, F, lord) {
     var st = R().state(), s = save(), i;
@@ -128,6 +227,7 @@
     if (!on()) { return null; }
     var st = R().state();
     if (F !== st.me || !st.started || st.result) { return null; }
+    if (save().stage) { return stageFire(F) || nextIn(CD().LORD, F, true) || nextSide(F); }       // 단계가 열려 있는 동안 본 사슬은 쉰다
     return nextIn(CD().CARDS, F, false) || nextIn(CD().LORD, F, true) || nextSide(F);
   }
 
@@ -149,10 +249,13 @@
   }
 
   function onDone(e) {
-    if (!on() || !e || !CD().card(e.id)) { return; }
-    var st = R().state();
+    if (!on() || !e) { return; }
+    var st = R().state(), sd = CD().STAGES, s;
     if (e.force !== st.me) { return; }
+    if (/_end$/.test(e.id) && sd[e.id.slice(0, -4)]) { s = save(); delete s.stage; core.persist(); return; }      // 결과 카드 — 단계를 닫는다
+    if (!CD().card(e.id)) { return; }
     save().done[e.id] = { k: e.k, turn: st.turn };
+    if (sd[e.id]) { beginStage(e.id, sd[e.id], e.force); }
     core.persist();
   }
 
@@ -166,6 +269,13 @@
       if (!d && !next) { next = true; }
     }
     CD().CARDS.forEach(add);
+    if (s.stage && CD().STAGES[s.stage.id]) {
+      var gd = CD().STAGES[s.stage.id], gc = CD().card(s.stage.id), tc = s.stage.target && global.DG.cityData.find(s.stage.target);
+      out.forEach(function (o) {
+        if (o.id === s.stage.id) { o.state = 'goal'; o.note = gd.title + (tc ? ' — ' + tc.name + ' 차지 (' + Math.max(0, gd.months - ((R().state().turn || 0) - s.stage.since)) + '달 남음)' : ' — 곧'); }
+        else if (o.state === 'next') { o.state = 'wait'; }
+      });
+    }
     next = false;
     CD().LORD.forEach(function (c) { if (c.only === scen) { add(c); } });      // 열전은 제 군주의 것만 — 곁 사슬이라 다음 표시도 따로
     return out;

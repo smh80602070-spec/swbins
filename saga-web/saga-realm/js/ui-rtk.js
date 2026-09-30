@@ -638,6 +638,7 @@
       return;
     }
     if (a === 'ask-no') { askCb = null; closeEnc(); return; }
+    if (a === 'ev-pre') { runEventPre(); return; }
     if (a === 'duel-pick' || a === 'duel-go') {
       var ds = duelStep; duelStep = null;
       if (ds) { ds(a === 'duel-pick' ? g('data-pick') : undefined); }
@@ -655,7 +656,7 @@
     if (a === 'deb-quit') { debCur = null; closeEnc(); return; }
     if (a === 'deb-go' || a === 'deb-skip') {
       var dd = debCur; debCur = null; closeEnc();
-      if (dd) { dd.done(a === 'deb-go' ? global.DG.quiz.debateMul(dd.ok) : 1); }
+      if (dd) { dd.done(a === 'deb-go' ? global.DG.quiz.debateMul(dd.ok) : 1, a === 'deb-go' ? dd.ok : 0); }
       return;
     }
     if (a === 'open-city') { openCity(g('data-city')); return; }
@@ -1020,7 +1021,7 @@
       var res = view.result, won = res.winner === view.a;
       html += '<div class="qresult ' + (won ? 'good' : 'bad') + '">' + (won ? '🏆 ' : '💢 ') + esc(res.text) +
         (res.hurt ? ' — ' + esc(off().find(res.loser).name) + ' 이(가) 다쳤다' : '') + '</div>' +
-        '<button class="btn primary wide" data-act="duel-go">▶ 전황으로</button>';
+        '<button class="btn primary wide" data-act="duel-go">' + esc(view.cont || '▶ 전황으로') + '</button>';
     } else {
       if (view.habit) {
         html += '<div class="enc-hist">' + S[view.habit].emoji + ' 적은 방금 이긴 <b>' + esc(S[view.habit].name) + '</b> 을(를) 되풀이할 낌새다.</div>';
@@ -1041,7 +1042,7 @@
   function startDebate(opt) {
     var qs = global.DG.quiz.debateDraw(off().stats(opt.by).wisdom);
     if (!qs.length) { opt.done(1); return; }
-    debCur = { title: opt.title, qs: qs, i: 0, ok: 0, last: null, done: opt.done };
+    debCur = { title: opt.title, qs: qs, i: 0, ok: 0, last: null, done: opt.done, must: !!opt.must };
     renderDebate();
   }
 
@@ -1065,8 +1066,8 @@
           html += '<button class="qchoice" data-act="deb-answer" data-i="' + j + '"><b>' + (j + 1) + '</b> ' + esc(p.choices[j]) + '</button>';
         }
         html += '</div>';
-        if (d.i === 0) { html += '<button class="btn tiny ghost" data-act="deb-skip">설전 없이 청한다 (×1)</button> '; }
-        html += '<button class="btn tiny ghost" data-act="deb-quit">그만</button>';
+        if (d.i === 0 && !d.must) { html += '<button class="btn tiny ghost" data-act="deb-skip">설전 없이 청한다 (×1)</button> '; }
+        if (!d.must) { html += '<button class="btn tiny ghost" data-act="deb-quit">그만</button>'; }
       } else {
         html += '<div class="qresult ' + (d.last.ok ? 'good' : 'bad') + '">' + (d.last.ok ? '✅ 정답 ' : '❌ 오답 ') +
           '<b>' + esc(d.last.answerText) + '</b></div><p class="qwhy">' + esc(d.last.why) + '</p>' +
@@ -2126,7 +2127,7 @@
       for (var si = 0; si < scn.length; si++) {
         var sl = scn[si];
         if (sl.act !== lastAct) { lastAct = sl.act; out += '<div class="lrow info"><small class="muted">' + esc(global.DG.scenarioData.ACTS[sl.act] || (sl.act + '막')) + '</small></div>'; }
-        out += '<div class="lrow ' + (sl.state === 'done' ? 'good' : 'info') + '">' + sl.emoji + ' ' + esc(sl.title) + ' — ' + (sl.state === 'done' ? '✅ 끝' : sl.state === 'legacy' ? '지나온 길' : sl.state === 'next' ? '▶ 다음 사건' : '·') + '</div>';
+        out += '<div class="lrow ' + (sl.state === 'done' ? 'good' : 'info') + '">' + sl.emoji + ' ' + esc(sl.title) + ' — ' + (sl.state === 'done' ? '✅ 끝' : sl.state === 'legacy' ? '지나온 길' : sl.state === 'next' ? '▶ 다음 사건' : sl.state === 'goal' ? '🎯 ' + esc(sl.note) : '·') + '</div>';
       }
       out += '</div>';
     }
@@ -2241,6 +2242,7 @@
   function showEvent() {
     var E = global.DG.event, v = E && E.view();
     if (!v) { return; }
+    if (v.pre && !v.pre.done) { showEventPre(v); return; }
     var kd = v.kind ? global.DG.relData.KINDS[v.kind] : null, html, i;
     html = '<div style="text-align:center"><div class="enc-big">' + v.emoji + '</div>' +
       '<h3 style="margin:6px 0 2px;font-size:19px;color:var(--gold)">' + esc(v.name) + '</h3>' +
@@ -2252,6 +2254,30 @@
         EV_AXIS[c.k] + ' ' + esc(c.label) + '<br><small>' + esc(c.hint) + (c.ok || !c.cost ? '' : ' (금이 모자랍니다)') + '</small></button>';
     }
     showEncQueued(html);
+  }
+
+  /** 사연 앞 단 — 시나리오 카드가 설전·일기토를 먼저 치르게 한다. 카드는 도입 글과 단추 하나, 치른 뒤 결과 카드가 열린다 */
+  function showEventPre(v) {
+    var duel = v.pre.kind === 'duel';
+    showEncQueued('<div style="text-align:center"><div class="enc-big">' + v.emoji + '</div>' +
+      '<h3 style="margin:6px 0 2px;font-size:19px;color:var(--gold)">' + esc(v.name) + '</h3>' +
+      '<small class="muted">' + esc(v.tag || '') + '</small></div>' +
+      '<div class="enc-hist">' + esc(v.pre.intro) + '</div>' +
+      '<button class="btn wide primary" data-act="ev-pre">' + (duel ? '🤺 일기토에 나선다' : '🗣️ 설전에 나선다') + '</button>');
+  }
+
+  function runEventPre() {
+    var E = global.DG.event, v = E && E.view();
+    if (!v || !v.pre || v.pre.done) { showEvent(); return; }
+    if (v.pre.kind === 'duel') {
+      global.DG.war.duelHand(v.pre.a, v.pre.d, showDuelCard, function (res) {
+        E.setPre({ won: res.winner === v.pre.a });
+        closeEnc();
+        showEvent();
+      }, '▶ 결과로');
+    } else {
+      startDebate({ title: v.name, by: v.pre.by, must: true, done: function (mul, ok) { E.setPre({ ok: ok || 0 }); showEvent(); } });
+    }
   }
 
   /** 이정표를 깬 달의 카드 — 보상(금·소문·보물)과 다음 이정표 */
