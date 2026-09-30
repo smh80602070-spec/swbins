@@ -10956,3 +10956,9 @@ PROJECT_STATE에 코딩으로 더 갈 수 있는 항목이 없어(101-2·104-1 �
 - **순서**: 웹 이야기 순서(2차 전직 → 비경에서 기억 → 3차 전직)를 지켜 field→job→cave(레벨 15)→labyrinth(레벨 30)→job3(레벨 30). 그래서 비경이 3장 → 4장이 되고 `After` 도 cave 뒤로. 옛 시나리오 세이브 중 비경을 끝낸 채 cave 가 안 끝난 것은 cave 가 다음 장으로 다시 뜬다(레벨 15 이상이면 전직 단계는 이미 채워져 두 장면만 보임). 옛 세이브(시나리오 필드 없음)는 레벨 25 이상이면 cave, 45 이상이면 다섯 장 전부 지나온 길.
 - 안 한 것: p2_port(관문 대장)·p2_forest·p2_namjeong·p3_gisan·p3_gorge·p4_* — 웹 사냥터·사명·고르기가 이 트랙에 없다.
 - 진단 `PlaytestStoryScenario` 다섯 장으로 고침(표·차수 단계·2차/3차 칭호·레벨 문턱·옛 세이브 25/45). `PlaytestStorySlice` 3연속 OK(남은 `save_story.json` 이 있으면 PartySwapTest 가 파티 활성 역할 2 로 실패 — 세이브를 치우고 돌려야 한다, 진단 뒤 백업 복원).
+
+### 2026-09-30 — saga-unity STORY 시나리오 p2_port 「강릉진 부두」 (웹 사가스토리 제5장, gate 단계) — "이어해"
+- 웹 `gate` 단계("그 마을 관문 대장을 이긴다, 이긴 적이 있으면 그것으로 됨") = 이 트랙 관문 대장(5-4, 주 1회 들판 두목 승격)을 한 번이라도 이겼다 — `StorySaveState.ChampionEverClaimed`(`_championWeek != 0`). 첫 두목의 목이 이미 이번 주 관문 대장이라 보통 2장 뒤 바로 통과한다(진단은 `ResetChampionForTest` 로 처음엔 안 채워 둔 뒤 `ClaimChampion`).
+- 장면 port1·port2(웹 표를 node 로 옮김 + 영어 새로) · 등장인물 여행자 한컷 · 글 `sscen.hint.gate`. 웹 `stage` 단계는 뺌, 보상은 경험치 1200(돈·두루마리 없음).
+- 순서 field→job→port(Lv10)→cave→labyrinth→job3, 번호 3~6 으로 밀림. 옛 세이브(시나리오 필드 없음) 레벨 25 이상이면 port 도 지나온 길.
+- 진단 `PlaytestStoryScenario` 여섯 장으로. `PlaytestStorySlice` 3연속 OK(세이브 치운 채, 복원 확인).

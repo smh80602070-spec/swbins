@@ -47,6 +47,9 @@ namespace Saga.Story.Data
 
         public static void ClaimChampion() => _championWeek = CurrentWeekIndex();
 
+        /// <summary>109-16 시나리오 `gate` 단계 — 관문 대장을 한 번이라도 이겼다(주 번호가 0 이 아니다).</summary>
+        public static bool ChampionEverClaimed => _championWeek != 0;
+
         /// <summary>PlaytestStorySlice.cs 전용 — 세이브 round-trip 진단이
         /// TryLoad() 전에 상태를 실제로 흩트리려고 쓴다(다른 XxxState류의
         /// Restore(기본값)과 같은 자리). 실제 게임 코드 경로에선 안 쓴다.</summary>

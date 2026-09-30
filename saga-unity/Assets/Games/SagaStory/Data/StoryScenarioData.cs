@@ -19,7 +19,7 @@ namespace Saga.Story.Data
 
         public sealed class Scene { public string Id, ChapterId; public Line[] Lines; }
 
-        /// <summary>talk · mission(q_field 첫 사냥 · q_boss1 두목의 목) · job(n차 전직) · rift(비경을 이 단계가 시작된 뒤 한 번 끝까지).</summary>
+        /// <summary>talk · mission(q_field 첫 사냥 · q_boss1 두목의 목) · job(n차 전직) · gate(관문 대장을 한 번이라도 이겼다) · rift(비경을 이 단계가 시작된 뒤 한 번 끝까지).</summary>
         public sealed class Step { public string T, Scene, Key; public int N; }
 
         public sealed class Chapter
@@ -36,6 +36,7 @@ namespace Saga.Story.Data
             new Cast { Id = "sori", NameKo = "척후병 소리", Emoji = "🐎" },
             new Cast { Id = "mentor", NameKo = "스승", Emoji = "🥋" },
             new Cast { Id = "ieum", NameKo = "탐사 대원 이음", Emoji = "🧭" },
+            new Cast { Id = "hankeot", NameKo = "여행자 한컷", Emoji = "📷" },
         };
 
         public static readonly Scene[] Scenes =
@@ -61,6 +62,17 @@ namespace Saga.Story.Data
                     new Line("mentor", "골랐구나. 이제 너는 이름 없는 채로 한 갈래를 얻었다."),
                     new Line("mentor", "동쪽 강릉진 부두에 쇠로 된 배가 걸려 있다더라. 그 배의 사진을 찍는 여행자가 있다지 — 만나 보아라."),
                     new Line("me", "가겠습니다. 이름은 가는 길에서 찾지요.") } },
+            new Scene { Id = "port1", ChapterId = "p2_port",
+                Lines = new[] {
+                    new Line("hankeot", "아, 마침 잘 오셨어요! 이 사진 좀 보세요. 부두에 쇠 화물선이 걸려 있는데, 배 뒤로 바다가 안 찍혀요. 텅 빈 하늘만요."),
+                    new Line("me", "옛 나루에 쇠로 된 배라니… 실물은 더 기이하겠군요."),
+                    new Line("hankeot", "조종실엔 푸른 빛 판이 깜박여요. 그 배를 차지한 게 왜구 선장인데, 부두 문지기 노릇을 하죠."),
+                    new Line("me", "선장부터 만나 보겠습니다. 문이 그 사람 손에 있다면요.") } },
+            new Scene { Id = "port2", ChapterId = "p2_port",
+                Lines = new[] {
+                    new Line("hankeot", "선장이 쓰러졌어요! 쇠배 조종실 판에서 지도 같은 게 나왔는데요."),
+                    new Line("me", "이 나루도, 이 바다도 아닌 물길이 그려져 있습니다. 없는 바다의 지도군요."),
+                    new Line("hankeot", "지도 끝이 오림 숲 쪽을 가리켜요. 거기서 발소리가 자기 것만 들리지 않는다는 말이 돌고요.") } },
             new Scene { Id = "cave1", ChapterId = "p2_cave",
                 Lines = new[] {
                     new Line("ieum", "살았다… 도독 진 깊은 곳에 묶여 있었습니다. 저는 탐사 대원 이음, 먼 시대에서 문을 쫓아 왔습니다."),
@@ -115,8 +127,17 @@ namespace Saga.Story.Data
                     new Step { T = "job", N = 1 },
                     new Step { T = "talk", Scene = "job2" },
                 } },
-            new Chapter { Id = "p2_cave", No = 3, TitleKo = "한중 굴혈", StageKo = "한중 굴혈", BlurbKo = "위군 도독의 진 깊은 곳에서 탐사 대원 이음을 구한다. 둘째 스승에게 2차 전직을 배운다.",
-                Need = 15, After = "p1_job", Exp = 4000, Shards = 0, JobTitle = true,
+            new Chapter { Id = "p2_port", No = 3, TitleKo = "강릉진 부두", StageKo = "강릉진", BlurbKo = "부두에 쇠 화물선이 걸려 있다. 여행자 한컷의 사진 속 배는 \"없는 바다\"에 떠 있다.",
+                Need = 10, After = "p1_job", Exp = 1200, Shards = 0, JobTitle = false,
+                LegacyLevel = 25, LegacyTier = 2,
+                Steps = new[]
+                {
+                    new Step { T = "talk", Scene = "port1" },
+                    new Step { T = "gate" },
+                    new Step { T = "talk", Scene = "port2" },
+                } },
+            new Chapter { Id = "p2_cave", No = 4, TitleKo = "한중 굴혈", StageKo = "한중 굴혈", BlurbKo = "위군 도독의 진 깊은 곳에서 탐사 대원 이음을 구한다. 둘째 스승에게 2차 전직을 배운다.",
+                Need = 15, After = "p2_port", Exp = 4000, Shards = 0, JobTitle = true,
                 LegacyLevel = 25, LegacyTier = 2,
                 Steps = new[]
                 {
@@ -124,7 +145,7 @@ namespace Saga.Story.Data
                     new Step { T = "job", N = 2 },
                     new Step { T = "talk", Scene = "cave2" },
                 } },
-            new Chapter { Id = "p3_labyrinth", No = 4, TitleKo = "비경의 기억", StageKo = "비경", BlurbKo = "이음이 여는 5층 비경. 관문 수호장을 치면 잃은 기억 조각이 나온다 — 떠돌이도 문에서 떨어졌다.",
+            new Chapter { Id = "p3_labyrinth", No = 5, TitleKo = "비경의 기억", StageKo = "비경", BlurbKo = "이음이 여는 5층 비경. 관문 수호장을 치면 잃은 기억 조각이 나온다 — 떠돌이도 문에서 떨어졌다.",
                 Need = 30, After = "p2_cave", Exp = 30000, Shards = 3, JobTitle = false,
                 LegacyLevel = 45, LegacyTier = 3,
                 Steps = new[]
@@ -133,7 +154,7 @@ namespace Saga.Story.Data
                     new Step { T = "rift" },
                     new Step { T = "talk", Scene = "lab2" },
                 } },
-            new Chapter { Id = "p3_job", No = 5, TitleKo = "셋째 스승", StageKo = "허도", BlurbKo = "허도의 스승이 \"네 이름은 문 너머에 두고 왔구나\" 하며 3차 전직을 준다.",
+            new Chapter { Id = "p3_job", No = 6, TitleKo = "셋째 스승", StageKo = "허도", BlurbKo = "허도의 스승이 \"네 이름은 문 너머에 두고 왔구나\" 하며 3차 전직을 준다.",
                 Need = 30, After = "p3_labyrinth", Exp = 40000, Shards = 0, JobTitle = true,
                 LegacyLevel = 45, LegacyTier = 3,
                 Steps = new[]
