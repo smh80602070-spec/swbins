@@ -584,8 +584,10 @@
   "files": [
    "js/battle3d.js"
   ],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "싸움터 땅(SAGA-DESIGN §12) — 성의 땅·주가 싸움터를 정한다: 늘 같고, 사막·균열 같은 주는 제 결, 물 싸움은 물빛"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -598,8 +600,11 @@
    "js/city3d.js",
    "js/portrait3d.js"
   ],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "초상 자리표시(SAGA-DESIGN §11 Phase 0) — 3D 로 갈아 끼울 자리는 코드 스프라이트 대신 자리표시로 시작하고, 굽기를 포기하면 옛 그림으로 되돌리며, 갈아 끼워지지 않을 자리는 옛 그림 그대로다",
+   "디스크 초상(SAGA-DESIGN §11 Phase 1) — 구워 둔 파일이 목록에 있으면 of() 가 굽기 없이 파일 주소를 주고 warm() 이 다시 안 굽는다, 목록에 없거나 꼴이 안 맞으면 파일로 안 간다, sweep() 이 이름표 <img> 를 그 파일로 갈아 끼운다"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
