@@ -1,0 +1,51 @@
+{
+ "note": "생성: py tools/char-forge/vroid_samples.py - VRM 안 메타 그대로. 게임에 넣기 전 모델별 이용 조건을 사람이 확인(K-0022).",
+ "models": {
+  "avatarsample_a_vrm10": {
+   "source_file": "AvatarSample_A.vrm",
+   "vrm": "1.0",
+   "size_mb": 17.6,
+   "meta": {
+    "name": "AvatarSample_A",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModification",
+    "avatarPermission": "everyone",
+    "creditNotation": "required"
+   }
+  },
+  "dungeon_hero_01": {
+   "source_file": "dungeon_hero_01.vrm",
+   "vrm": "1.0",
+   "size_mb": 14.3,
+   "meta": {
+    "name": "dungeon_hero_01",
+    "authors": [
+     "saga-godot"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModification",
+    "avatarPermission": "everyone",
+    "creditNotation": "required"
+   }
+  },
+  "saga_forest_avatar_01": {
+   "source_file": "saga_forest_avatar_01.vrm",
+   "vrm": "0.x",
+   "size_mb": 17.7,
+   "meta": {
+    "title": "saga_forest_avatar_01",
+    "author": "saga-forest test session",
+    "licenseName": "CC_BY",
+    "commercialUssageName": "Allow",
+    "violentUssageName": "Disallow",
+    "sexualUssageName": "Disallow",
+    "allowedUserName": "OnlyAuthor"
+   }
+  }
+ }
+}
