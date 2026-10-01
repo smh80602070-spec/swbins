@@ -1363,8 +1363,10 @@
   "id": "gd.dg.goal-board",
   "name": "101-4 ①목표판+세션 카드",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "goal_boards"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1587,8 +1589,10 @@
   "id": "gd.fs.goal-board",
   "name": "101-4 ①목표판+세션 카드",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "goal_boards"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1878,8 +1882,10 @@
   "id": "gd.st.goal-board",
   "name": "101-4 ①목표판+세션 카드",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "goal_boards"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2124,8 +2130,10 @@
   "id": "gd.rk.goal-board",
   "name": "101-4 ①목표판+월간 요약 카드",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "goal_boards"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
