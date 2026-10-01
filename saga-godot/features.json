@@ -1057,8 +1057,10 @@
   "id": "gd.dg.gear-affix",
   "name": "장비 등급+접사",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_gear"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1068,8 +1070,10 @@
   "id": "gd.dg.sockets",
   "name": "소켓",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_gear"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1079,8 +1083,10 @@
   "id": "gd.dg.runewords",
   "name": "룬워드",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_gear"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1090,8 +1096,10 @@
   "id": "gd.dg.sets",
   "name": "세트",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_gear"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1101,8 +1109,10 @@
   "id": "gd.dg.durability",
   "name": "내구",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_gear"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1145,8 +1155,10 @@
   "id": "gd.dg.elements",
   "name": "원소 6",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_gear"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1211,8 +1223,10 @@
   "id": "gd.dg.armor-slots",
   "name": "갑주 등 부위 6",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_gear"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
