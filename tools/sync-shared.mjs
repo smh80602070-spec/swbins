@@ -7,7 +7,7 @@
  *
  * 정본을 고쳤으면: 이 명령으로 퍼뜨리고, 다섯 판 `sw.js` VERSION 을 올린다(saga-web/RULES.md).
  * 판별 사본을 직접 고치면 다음 복사에서 덮인다 — 고치는 곳은 shared/ 하나다.
- * 표에 없는 파일(data.js·account.js·core.js·ui.js·sprite.js·perf.js …)은 여기 안 넣는다.
+ * 표에 없는 파일(data.js·core.js·ui.js·sprite.js·perf.js …)은 여기 안 넣는다.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -21,6 +21,7 @@ const FILES = [
   ['js/net.js', 'js/net.js'],
   ['js/anim-own.js', 'js/anim-own.js'],
   ['js/vroid-variant.js', 'js/vroid-variant.js'],
+  ['js/account.js', 'js/account.js'],
   ['build/build-single.mjs', 'build/build-single.mjs'],
 ];
 const check = process.argv.includes('--check');

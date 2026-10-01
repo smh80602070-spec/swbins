@@ -370,3 +370,28 @@
     hash2: hash2, pick: pick, clamp: clamp, fmt: fmt, fmtTime: fmtTime
   };
 })(window);
+
+/* 판별 계정 설정 — saga-web/shared/js/account.js 가 읽는다(이 판만 다른 것) */
+(function (global) {
+  'use strict';
+  /* 이 판의 진행 한 조각 — 플레이어 레벨은 이 판에서 안 오른다(경험치는 무장만 받는다,
+     2026-09-23 점검). 그래서 늘 "Lv.1" 이던 자리를 지금 몇 년 몇 월·가진 성 수로 바꾼다.
+     (account.js 가 `DG.account.realmBit` 로도 내준다 — ai.js 가 쓴다) */
+  function realmBit(s) {
+    var r = s && s.rtk;
+    if (!r || !r.started) { return '시작 전'; }
+    var mine = 0, k;
+    for (k in (r.cities || {})) {
+      if (Object.prototype.hasOwnProperty.call(r.cities, k) && r.me && r.cities[k].force === r.me) { mine++; }
+    }
+    return r.year + '년 ' + r.month + '월 · 성 ' + mine;
+  }
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.account = {
+    name: '사가국지',
+    emoji: '🏯',
+    tag: '역사 인물로 여는 천하 정복 시뮬레이션',
+    bit: realmBit
+  };
+})(window);

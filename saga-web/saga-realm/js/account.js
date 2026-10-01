@@ -21,16 +21,26 @@
  * start() 를 먼저 돌려 게임을 밑에서 켠 채로 타이틀 화면(showTitle)을
  * 덮는다 — "이어하기"는 화면만 걷어 낸다.
  *
- * 이 파일은 다섯 게임에 **복사본**으로 들어간다(완전 별개 프로젝트 원칙).
- * 게임 이름만 GAME_NAME 으로 다르다.
+ * 이 파일은 다섯 게임에 **복사본**으로 들어간다(완전 별개 프로젝트 원칙) — 정본은 saga-web/shared/js/.
+ * 게임마다 다른 것(이름·타이틀 그림·진행 조각·설정 단추·서랍)은 `DG.cfg.account` 로 받는다.
  */
 (function (global) {
   'use strict';
 
   var core = global.DG.core;
 
+  /** 판별 차이는 각 판 core.js 끝의 `DG.cfg.account` 한 덩이다(name·emoji·tag·bit·settings·drawer).
+   *  이 파일은 saga-web/shared/js/account.js 정본의 복사본이다 — 직접 고치지 않는다(tools/sync-shared.mjs). */
+  var CFG = (global.DG.cfg && global.DG.cfg.account) || {};
+
   /** 이 게임의 표시 이름 — 가입 화면 제목에 쓴다 (게임마다 다르다) */
-  var GAME_NAME = '사가국지';
+  var GAME_NAME = CFG.name || '게임';
+
+  /** 진행 한 조각("Lv.3" 식) — 판이 `CFG.bit(세이브)` 를 주면 그걸로(사가국지: 몇 년 몇 월·성 수) */
+  function bit(s) {
+    if (CFG.bit) { return CFG.bit(s); }
+    return 'Lv.' + (((s && s.player) || {}).level || 1);
+  }
 
   var STORE = core.SAVE_BASE + '/accounts';     // 프로필 목록이 사는 곳
   var LEGACY = core.SAVE_BASE + '/v1';          // 가입 개념이 없던 시절의 세이브
@@ -140,18 +150,6 @@
     return o.cur;
   }
 
-  /** 이 판의 진행 한 조각 — 플레이어 레벨은 이 판에서 안 오른다(경험치는 무장만 받는다,
-   *  2026-09-23 점검). 그래서 늘 "Lv.1" 이던 자리를 지금 몇 년 몇 월·가진 성 수로 바꾼다 */
-  function realmBit(s) {
-    var r = s && s.rtk;
-    if (!r || !r.started) { return '시작 전'; }
-    var mine = 0, k;
-    for (k in (r.cities || {})) {
-      if (Object.prototype.hasOwnProperty.call(r.cities, k) && r.me && r.cities[k].force === r.me) { mine++; }
-    }
-    return r.year + '년 ' + r.month + '월 · 성 ' + mine;
-  }
-
   /** 그 프로필의 진행이 얼마나 되나 (전환 화면에 한 줄로 보여 준다) */
   function summaryOf(id) {
     try {
@@ -159,7 +157,7 @@
       if (!raw) { return '새 판'; }
       var s = JSON.parse(raw);
       var p = s.player || {};
-      var bits = [realmBit(s)];
+      var bits = [bit(s)];
       var hero = s.dex && s.dex.heroes ? Object.keys(s.dex.heroes).length : 0;
       if (hero) { bits.push('인물 ' + hero); }
       if (s.quiz && s.quiz.learned) {
@@ -274,9 +272,9 @@
 
   /** 로고·캐릭터 — 가입 화면과 타이틀 화면(showTitle)이 같이 쓴다 */
   function titleHero() {
-    return '<div class="title-wrap"><div class="title-char">🏯</div>' +
+    return '<div class="title-wrap"><div class="title-char">' + esc(CFG.emoji || '🎮') + '</div>' +
       '<div class="title-logo">' + esc(GAME_NAME) + '</div>' +
-      '<div class="title-tag">역사 인물로 여는 천하 정복 시뮬레이션</div></div>';
+      '<div class="title-tag">' + esc(CFG.tag || '') + '</div></div>';
   }
 
   /** 가입 화면 — 프로필이 하나도 없을 때. 이 화면 자체가 타이틀 화면을 겸한다 */
@@ -321,7 +319,7 @@
       var s = JSON.parse(localStorage.getItem(LEGACY));
       var p = s.player || {};
       var hero = s.dex && s.dex.heroes ? Object.keys(s.dex.heroes).length : 0;
-      return realmBit(s) + ' · 인물 ' + hero + ' · 공적 ' + (p.featTotal || 0);
+      return bit(s) + ' · 인물 ' + hero + ' · 공적 ' + (p.featTotal || 0);
     } catch (e) {
       return '이전 진행';
     }
@@ -338,11 +336,18 @@
         '<p class="sub"><b>' + esc(acc.name) + '</b> 님 — ' + esc(summaryOf(acc.id)) + '</p>' +
         '<button class="acc-btn primary wide" id="title-continue">이어하기</button>' +
         '<button class="acc-btn wide" id="title-switch">👤 다른 이름으로</button>' +
+        (CFG.settings ? '<button class="acc-btn wide" id="title-settings">⚙️ 설정</button>' : '') +
       '</div></div>';
     h.classList.add('show');
 
     document.getElementById('title-continue').addEventListener('click', close);
     document.getElementById('title-switch').addEventListener('click', showSwitch);
+    if (CFG.settings) {   // 게임은 이미 밑에서 돈다 — 실제 설정 시트를 곧장 연다
+      document.getElementById('title-settings').addEventListener('click', function () {
+        close();
+        if (global.DG.ui) { global.DG.ui.openSheet('settings'); }
+      });
+    }
   }
 
   /** 프로필 전환·관리 화면 — 상단 👤 */
@@ -423,13 +428,17 @@
     b.title = (acc ? acc.name : '프로필') + ' — 이름 바꾸기 · 다른 이름으로 놀기';
     b.textContent = '👤';
     b.addEventListener('click', showSwitch);
-    tools.insertBefore(b, tools.firstChild);
+    /* 폰에서는 도구가 ⋯ 서랍으로 접힌다 — 👤 도 그 안에 들어가야 한다.
+       서랍이 없는 판(옛 index.html)이면 예전처럼 도구줄 맨 앞에 선다 */
+    var drawer = CFG.drawer ? document.getElementById('tools-drawer') : null;
+    if (drawer) { drawer.insertBefore(b, drawer.firstChild); }
+    else { tools.insertBefore(b, tools.firstChild); }
   }
 
   global.DG = global.DG || {};
   global.DG.account = {
     GAME_NAME: GAME_NAME, MAX: MAX,
-    list: list, current: current, keyOf: keyOf, summaryOf: summaryOf, realmBit: realmBit,
+    list: list, current: current, keyOf: keyOf, summaryOf: summaryOf, realmBit: CFG.bit,
     hasLegacy: hasLegacy, create: create, use: use, rename: rename, remove: remove,
     gate: gate, showSignup: showSignup, showSwitch: showSwitch, showTitle: showTitle,
     injectButton: injectButton,

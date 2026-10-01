@@ -8,8 +8,9 @@
  *   저장    그 프로필의 키(`<게임>/save/<프로필id>`)로 세이브가 들어간다
  *   전환    프로필이 여럿이면 골라서 들어간다 (형제·가족이 같은 PC 를 쓸 때)
  *   이어받기 옛 세이브(`…/save/v1`)가 있으면 첫 가입 때 그 진행을 옮겨 준다
- *   타이틀  이미 있는 프로필이라도 매번 한 번 덮는다(PLAN 29절 "메인 화면" —
- *           로고·캐릭터·이어하기·설정, 온라인 게임의 로그인 화면처럼)
+ *   타이틀  이미 있는 프로필이라도 매번 한 번 덮는다(로고·캐릭터·이어하기,
+ *           온라인 게임의 로그인 화면처럼 — saga-story PLAN 29절과 통일. 이 판엔
+ *           아직 설정 시트가 없어 '설정' 버튼은 넣지 않았다)
  *
  * 게임 코드는 이 파일을 **한 곳에서만** 부른다:
  *
@@ -18,20 +19,28 @@
  * gate() 가 프로필을 정해 core.setSaveKey() 를 부른 뒤 start() 를 돌린다.
  * 프로필이 없으면 가입 화면(그 자체가 타이틀 화면을 겸한다)을, 있으면
  * start() 를 먼저 돌려 게임을 밑에서 켠 채로 타이틀 화면(showTitle)을
- * 덮는다 — "이어하기"는 화면만 걷고, "설정"은 이미 켜진 ui.js 의 설정
- * 시트를 곧장 연다. 그래서 게임 쪽은 "언제 세이브 키가 정해지는지" 를
- * 신경 쓸 필요가 없다.
+ * 덮는다 — "이어하기"는 화면만 걷어 낸다.
  *
- * 이 파일은 다섯 게임에 **복사본**으로 들어간다(완전 별개 프로젝트 원칙).
- * 게임 이름만 GAME_NAME 으로 다르다.
+ * 이 파일은 다섯 게임에 **복사본**으로 들어간다(완전 별개 프로젝트 원칙) — 정본은 saga-web/shared/js/.
+ * 게임마다 다른 것(이름·타이틀 그림·진행 조각·설정 단추·서랍)은 `DG.cfg.account` 로 받는다.
  */
 (function (global) {
   'use strict';
 
   var core = global.DG.core;
 
+  /** 판별 차이는 각 판 core.js 끝의 `DG.cfg.account` 한 덩이다(name·emoji·tag·bit·settings·drawer).
+   *  이 파일은 saga-web/shared/js/account.js 정본의 복사본이다 — 직접 고치지 않는다(tools/sync-shared.mjs). */
+  var CFG = (global.DG.cfg && global.DG.cfg.account) || {};
+
   /** 이 게임의 표시 이름 — 가입 화면 제목에 쓴다 (게임마다 다르다) */
-  var GAME_NAME = '사가스토리';
+  var GAME_NAME = CFG.name || '게임';
+
+  /** 진행 한 조각("Lv.3" 식) — 판이 `CFG.bit(세이브)` 를 주면 그걸로(사가국지: 몇 년 몇 월·성 수) */
+  function bit(s) {
+    if (CFG.bit) { return CFG.bit(s); }
+    return 'Lv.' + (((s && s.player) || {}).level || 1);
+  }
 
   var STORE = core.SAVE_BASE + '/accounts';     // 프로필 목록이 사는 곳
   var LEGACY = core.SAVE_BASE + '/v1';          // 가입 개념이 없던 시절의 세이브
@@ -148,7 +157,7 @@
       if (!raw) { return '새 판'; }
       var s = JSON.parse(raw);
       var p = s.player || {};
-      var bits = ['Lv.' + (p.level || 1)];
+      var bits = [bit(s)];
       var hero = s.dex && s.dex.heroes ? Object.keys(s.dex.heroes).length : 0;
       if (hero) { bits.push('인물 ' + hero); }
       if (s.quiz && s.quiz.learned) {
@@ -182,9 +191,8 @@
       use(acc.id);
       start();
       injectButton();
-      /* 이미 있는 이름이라도 매번 타이틀 화면을 한 번 덮는다(PLAN 29절,
-         "온라인 게임처럼" — 사용자 요청 2026-09-09) — 예전엔 여기서 곧장
-         게임으로 들어가 타이틀이랄 게 아예 없었다. 게임은 이미 밑에서 돈다 */
+      /* 이미 있는 이름이라도 매번 타이틀 화면을 한 번 덮는다("온라인 게임처럼") —
+         게임은 이미 밑에서 돈다 */
       showTitle(acc);
       return acc;
     }
@@ -204,8 +212,6 @@
     var st = document.createElement('style');
     st.id = 'acc-style';
     st.textContent = [
-      /* PLAN 29절(메인 화면) — 예전엔 rgba 단색이었다. 로고·캐릭터를 얹을 자리라
-         은은한 그라디언트로 깊이를 준다(그림 에셋은 안 쓴다, CSS 한 겹뿐) */
       '#acc-host{position:fixed;inset:0;z-index:60;display:none;place-items:center;',
       'background:radial-gradient(ellipse at 50% -10%,#2b3c58 0%,#141824 55%,#0a0b0f 100%);',
       'backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);overflow:auto;padding:24px 0}',
@@ -215,11 +221,6 @@
       '.title-logo{font:800 28px "Malgun Gothic",system-ui;color:#f5b445;letter-spacing:1px;',
       'text-shadow:0 2px 14px rgba(245,180,69,.35)}',
       '.title-tag{font-size:12px;color:#aab2c2;margin-top:-8px}',
-      /* #acc-host 는 grid 라 자식이 둘(제목+카드)이면 나란히 놓인다 — 하나로 감싸
-         세로로 쌓는다. 폭 상한은 **여기, shell 에서만** 잰다(100vw 대신 100%) —
-         100vw 는 세로 스크롤바 몫까지 넣어 재는 값이라, 내용이 길어져 스크롤이
-         생기면 카드가 그만큼 오른쪽으로 밀려 잘린다. #acc-host 는 inset:0 라
-         실제 뷰포트 크기 그대로이므로 그 안에서는 100% 가 정확하다 */
       '.acc-shell{display:flex;flex-direction:column;align-items:center;gap:18px;',
       'width:min(400px,calc(100% - 28px))}',
       '.acc-card{width:100%;padding:20px;border-radius:22px;',
@@ -269,15 +270,14 @@
     if (host) { host.classList.remove('show'); host.innerHTML = ''; }
   }
 
-  /** 로고·캐릭터 — 가입 화면과 타이틀 화면(showTitle)이 같이 쓴다(PLAN 29절) */
+  /** 로고·캐릭터 — 가입 화면과 타이틀 화면(showTitle)이 같이 쓴다 */
   function titleHero() {
-    return '<div class="title-wrap"><div class="title-char">🏃</div>' +
+    return '<div class="title-wrap"><div class="title-char">' + esc(CFG.emoji || '🎮') + '</div>' +
       '<div class="title-logo">' + esc(GAME_NAME) + '</div>' +
-      '<div class="title-tag">역사 인물로 노는 옆으로 걷는 액션</div></div>';
+      '<div class="title-tag">' + esc(CFG.tag || '') + '</div></div>';
   }
 
-  /** 가입 화면 — 프로필이 하나도 없을 때. 온라인 게임의 첫 회원가입처럼,
-   *  이 화면 자체가 타이틀 화면을 겸한다(로고·캐릭터 먼저, 그 아래 가입 카드) */
+  /** 가입 화면 — 프로필이 하나도 없을 때. 이 화면 자체가 타이틀 화면을 겸한다 */
   function showSignup(done) {
     var h = mount();
     var legacy = hasLegacy();
@@ -314,12 +314,20 @@
     }
   }
 
-  /**
-   * 타이틀 화면(PLAN 29절) — 프로필이 이미 있을 때 게임 위에 한 번 덮는다.
-   * **게임은 이미 켜진 채로 밑에서 돈다**(gate() 가 start() 를 먼저 부른다) —
-   * 그래서 "설정"을 눌러도 곧바로 실제 설정 시트를 열 수 있다(ui.js 가 이미
-   * 준비돼 있으니까). "이어하기"는 그냥 이 화면만 걷어 낸다.
-   */
+  function summaryLegacy() {
+    try {
+      var s = JSON.parse(localStorage.getItem(LEGACY));
+      var p = s.player || {};
+      var hero = s.dex && s.dex.heroes ? Object.keys(s.dex.heroes).length : 0;
+      return bit(s) + ' · 인물 ' + hero + ' · 공적 ' + (p.featTotal || 0);
+    } catch (e) {
+      return '이전 진행';
+    }
+  }
+
+  /** 타이틀 화면 — 프로필이 이미 있을 때 게임 위에 한 번 덮는다. 게임은 이미
+   *  켜진 채로 밑에서 돈다(gate() 가 start() 를 먼저 부른다) — "이어하기"는
+   *  화면만 걷어 낸다. (이 판엔 아직 설정 시트가 없어 버튼을 넣지 않았다) */
   function showTitle(acc) {
     var h = mount();
     h.innerHTML = '<div class="acc-shell">' + titleHero() +
@@ -328,26 +336,17 @@
         '<p class="sub"><b>' + esc(acc.name) + '</b> 님 — ' + esc(summaryOf(acc.id)) + '</p>' +
         '<button class="acc-btn primary wide" id="title-continue">이어하기</button>' +
         '<button class="acc-btn wide" id="title-switch">👤 다른 이름으로</button>' +
-        '<button class="acc-btn wide" id="title-settings">⚙️ 설정</button>' +
+        (CFG.settings ? '<button class="acc-btn wide" id="title-settings">⚙️ 설정</button>' : '') +
       '</div></div>';
     h.classList.add('show');
 
     document.getElementById('title-continue').addEventListener('click', close);
     document.getElementById('title-switch').addEventListener('click', showSwitch);
-    document.getElementById('title-settings').addEventListener('click', function () {
-      close();
-      if (global.DG.ui) { global.DG.ui.openSheet('settings'); }
-    });
-  }
-
-  function summaryLegacy() {
-    try {
-      var s = JSON.parse(localStorage.getItem(LEGACY));
-      var p = s.player || {};
-      var hero = s.dex && s.dex.heroes ? Object.keys(s.dex.heroes).length : 0;
-      return 'Lv.' + (p.level || 1) + ' · 인물 ' + hero + ' · 공적 ' + (p.featTotal || 0);
-    } catch (e) {
-      return '이전 진행';
+    if (CFG.settings) {   // 게임은 이미 밑에서 돈다 — 실제 설정 시트를 곧장 연다
+      document.getElementById('title-settings').addEventListener('click', function () {
+        close();
+        if (global.DG.ui) { global.DG.ui.openSheet('settings'); }
+      });
     }
   }
 
@@ -431,7 +430,7 @@
     b.addEventListener('click', showSwitch);
     /* 폰에서는 도구가 ⋯ 서랍으로 접힌다 — 👤 도 그 안에 들어가야 한다.
        서랍이 없는 판(옛 index.html)이면 예전처럼 도구줄 맨 앞에 선다 */
-    var drawer = document.getElementById('tools-drawer');
+    var drawer = CFG.drawer ? document.getElementById('tools-drawer') : null;
     if (drawer) { drawer.insertBefore(b, drawer.firstChild); }
     else { tools.insertBefore(b, tools.firstChild); }
   }
@@ -439,7 +438,7 @@
   global.DG = global.DG || {};
   global.DG.account = {
     GAME_NAME: GAME_NAME, MAX: MAX,
-    list: list, current: current, keyOf: keyOf, summaryOf: summaryOf,
+    list: list, current: current, keyOf: keyOf, summaryOf: summaryOf, realmBit: CFG.bit,
     hasLegacy: hasLegacy, create: create, use: use, rename: rename, remove: remove,
     gate: gate, showSignup: showSignup, showSwitch: showSwitch, showTitle: showTitle,
     injectButton: injectButton,

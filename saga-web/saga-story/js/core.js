@@ -415,3 +415,16 @@
     touchOnly: touchOnly, actHint: actHint, upHint: upHint, downHint: downHint
   };
 })(window);
+
+/* 판별 계정 설정 — saga-web/shared/js/account.js 가 읽는다(이 판만 다른 것) */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.account = {
+    name: '사가스토리',
+    emoji: '🏃',
+    tag: '역사 인물로 노는 옆으로 걷는 액션',
+    settings: true   // 타이틀에 ⚙️ 설정 단추(ui 설정 시트를 곧장 연다)
+  };
+})(window);
