@@ -1187,8 +1187,10 @@
   "id": "un.rk.quiz",
   "name": "문답 36",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestRealmQuiz"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
