@@ -559,8 +559,10 @@
   "id": "gd.go.g26-branch-skills",
   "name": "106장 ㉖~㊹ 갈래 스킬",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "kit"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -605,8 +607,10 @@
   "id": "gd.go.g26-party",
   "name": "106장 ㉖~㊹ 편성",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "party"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
