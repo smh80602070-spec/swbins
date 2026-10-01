@@ -1,5 +1,9 @@
 /**
  * SSAO — 맞닿은 자리에 그늘이 앉는다 (그래픽 보강 17절 6번)
+ *
+ * **정본은 saga-web/shared/js/ssao3d.js** — 판별 복사본은 tools/sync-shared.mjs 가 만든다(직접 고치지 않는다).
+ * 판마다 다른 것은 MEDIUM 등급을 켜느냐뿐이다 — 기본은 끈다(사가블로·사가스토리: LOW→MEDIUM 문턱 비용),
+ * 켜는 판은 `core.js` 끝에서 `DG.cfg.ssao = { medium: { on: true, samples: 8, scale: 0.5 } }` 로 준다(사가고).
  * ---------------------------------------------------------------
  * 후처리 여섯 가지 중 마지막으로 남은 것이다. 앞의 다섯은 `post3d.js` 가 한다.
  *
@@ -36,14 +40,22 @@
   'use strict';
 
   var core = global.DG.core;
+  var CFG = (global.DG.cfg && global.DG.cfg.ssao) || {};
 
   /* 등급마다 — 표본 수와 재는 해상도 배율.
-     절반 해상도로 재고 흐린다: 그늘은 원래 부드러운 것이라 눈에 안 띈다 */
+     절반 해상도로 재고 흐린다: 그늘은 원래 부드러운 것이라 눈에 안 띈다.
+     2026-09-08 — 실기기 로그: LOW(post 통째로 꺼짐, ema~17ms 안정)에서
+     MEDIUM(post 켜짐)으로 한 단계만 올라가도 끊겼다("뿌옇게 되면
+     느려져" 제보). SSAO는 깊이 텍스처를 읽어 표본마다 가려짐을 재고
+     흐리는 화면 전체 패스라 이 셋 중 가장 무겁다 — MEDIUM은 꺼서
+     LOW→MEDIUM 문턱의 비용을 줄인다. HIGH만 킨다(이 기기가 애초에
+     HIGH까지 갈 일은 드물다 — LEVEL_COOLDOWN_UP_MS 참고). */
   var TIER_AO = {
     HIGH:   { on: true,  samples: 12, scale: 0.5 },
-    MEDIUM: { on: true,  samples: 8,  scale: 0.5 },
+    MEDIUM: { on: false, samples: 0,  scale: 0 },
     LOW:    { on: false, samples: 0,  scale: 0 }
   };
+  if (CFG.medium) { TIER_AO.MEDIUM = CFG.medium; }   // 판별 설정(사가고 — MEDIUM 도 켠다)
 
   function ON() { return core.tuned('ssao3d.on', 1) ? true : false; }
   function RADIUS() { return core.tuned('ssao3d.radius', 2.4); }

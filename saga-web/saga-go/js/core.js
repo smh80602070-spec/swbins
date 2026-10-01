@@ -429,3 +429,11 @@
     drawer: true   // 👤 단추를 도구 서랍(#tools-drawer) 안으로
   };
 })(window);
+
+/* 판별 SSAO 설정 — saga-web/shared/js/ssao3d.js 가 읽는다(이 판만 MEDIUM 등급에서도 켠다) */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.ssao = { medium: { on: true, samples: 8, scale: 0.5 } };
+})(window);

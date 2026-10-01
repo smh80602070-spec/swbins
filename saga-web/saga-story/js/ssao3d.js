@@ -1,5 +1,9 @@
 /**
- * SSAO — 맞닿은 자리에 그늘이 앉는다 (PLAN.md 24절, saga-dungeon/js/ssao3d.js 이식)
+ * SSAO — 맞닿은 자리에 그늘이 앉는다 (그래픽 보강 17절 6번)
+ *
+ * **정본은 saga-web/shared/js/ssao3d.js** — 판별 복사본은 tools/sync-shared.mjs 가 만든다(직접 고치지 않는다).
+ * 판마다 다른 것은 MEDIUM 등급을 켜느냐뿐이다 — 기본은 끈다(사가블로·사가스토리: LOW→MEDIUM 문턱 비용),
+ * 켜는 판은 `core.js` 끝에서 `DG.cfg.ssao = { medium: { on: true, samples: 8, scale: 0.5 } }` 로 준다(사가고).
  * ---------------------------------------------------------------
  * 후처리 여섯 가지 중 마지막으로 남은 것이다. 앞의 다섯은 `post3d.js` 가 한다.
  *
@@ -16,7 +20,7 @@
  * 그래서 이 파일은 **그리기를 한 번도 더 안 한다** — 그 깊이만 읽는다.
  *
  * (three r169 는 표본이 여럿인 타깃도 깊이를 풀어 준다 — `resolveDepthBuffer`.
- *  그래서 MSAA 를 끄지 않아도 된다. "안티에일리어싱은 지킨다" 원칙과 안 부딪힌다)
+ *  그래서 MSAA 를 끄지 않아도 된다. 17절 5번 "안티에일리어싱은 지킨다" 와 안 부딪힌다)
  *
  * ── 어떻게 재나 ───────────────────────────────────────────
  *
@@ -36,6 +40,7 @@
   'use strict';
 
   var core = global.DG.core;
+  var CFG = (global.DG.cfg && global.DG.cfg.ssao) || {};
 
   /* 등급마다 — 표본 수와 재는 해상도 배율.
      절반 해상도로 재고 흐린다: 그늘은 원래 부드러운 것이라 눈에 안 띈다.
@@ -50,6 +55,7 @@
     MEDIUM: { on: false, samples: 0,  scale: 0 },
     LOW:    { on: false, samples: 0,  scale: 0 }
   };
+  if (CFG.medium) { TIER_AO.MEDIUM = CFG.medium; }   // 판별 설정(사가고 — MEDIUM 도 켠다)
 
   function ON() { return core.tuned('ssao3d.on', 1) ? true : false; }
   function RADIUS() { return core.tuned('ssao3d.radius', 2.4); }
