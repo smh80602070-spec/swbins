@@ -1931,3 +1931,7 @@ Orc·Demon 은 Ultimate Monsters). 사용자 결정("사가고처럼 대역 입�
 | `saga-dungeon-town.ogg` | dark gothic hub camp, low cello, distant choir, ember crackle, ominous but calm, slow 60 bpm, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 2101) | 사용자가 후보 a 선택 |
 | `saga-dungeon-field.ogg` | dark dungeon ambience, deep drones, slow building tension, metallic scrapes, sparse minimal percussion, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 2201) | 사용자가 후보 a 선택 |
 | `saga-dungeon-battle.ogg` | heavy dark action theme, low distorted guitar riffs, war drums, choir hits, relentless 140 bpm, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 2301) | 사용자가 후보 a 선택 |
+
+## 2D 스프라이트 시트 (`assets/sprites2d_sheets/`)
+
+2026-10-01 자체 제작 — 공방(`tools/char-forge/gear_sprites.py`)이 CC0 VRoid 몸(`tools/char-forge/_src/cc0_vroid`) 위에 절차 생성 장비를 입혀 Blender 로 굽는다(128px·8프레임·방향 3·동작 idle/walk/attack/hit/death, WebP). 적 4벌: `pool_basem_demon_104`, `pool_e_orc_125`, `pool_d_goblin_118`, `pool_g_undead_143`. 벌마다 `manifest.json` 에 몸·종류·규격·출처 문구. 원작 에셋 없음. 이 판은 아직 안 읽는다(W 티켓 — 인물·괴물 id 연결과 `sprite.js` 배선).

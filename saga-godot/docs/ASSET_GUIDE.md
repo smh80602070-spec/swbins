@@ -634,3 +634,8 @@ clutter와 같은 결). 폐허 지도가 7×7이라 "R" 칸이 21개뿐 — clut
 - 출처: Quaternius Universal Base Characters(머리)·Modular Character Outfits - Fantasy(옷)·Universal Animation Library(동작) — 전부 CC0-1.0, 받기·sha256 은 `../tools/char-forge/sources.json`. 파일마다 옆에 `*.license.json`(쓴 입력 목록).
 - `cmp_go_01`(순찰자 여·긴 머리) · `cmp_forest_01`(농부 여·올린 머리) · `cmp_dungeon_01`(순찰자 남·가르마) — 레시피 `../tools/char-forge/recipes/_cmp_*.json`. 추출 텍스처(`cmp_*_T_*.png`)는 Godot 임포트가 만든 것.
 - 쓰는 곳: `tools/compare/CharCompare.tscn`(지금 VRoid 와 나란히). 사람이 "못하지 않다"고 판정한 짝만 게임 몸을 바꾼다.
+
+## 2026-10-01 — 옷 무늬 타일 64종(`assets/wardrobe/patterns/`) · 배경음 15곡(`assets/audio/bgm/`)
+
+- 무늬: 로컬 AI(`sd_xl_base_1.0`, CreativeML OpenRAIL++-M — 상업 사용 허용)로 만든 640px 천·무늬 → 256px 이음매 타일 webp 64장(과거 20·현대 20·미래 20·문장 4). 사람·원작·작가 이름 없이 천·무늬 묘사만. 출처 `_provenance.json`, 표 `patterns.json`, 만드는 법 `../tools/ai-art/pack_patterns64.py`. 읽는 쪽(`world/wardrobe.gd`)은 아직 안 읽는다(G 티켓), `.import` 는 Godot 에서 한 번 열어 만든다.
+- 배경음: 로컬 ACE-Step 1.5(코드·가중치 MIT, 상업 허용)로 만든 곡 15개(판 5 × 마을·들판·전투), 곡 키 = 파일 이름(`go-town` 등, `saga_core/audio/bgm.gd` 규약). 곡마다 `<키>.license.json`(프롬프트·씨앗·`edited_by_human`). 원작 곡명·아티스트 이름은 프롬프트에 안 썼다. 지금 `go-town`·`go-field` 만 연결돼 있다(`world/go_bgm.gd`), 나머지는 G 티켓.

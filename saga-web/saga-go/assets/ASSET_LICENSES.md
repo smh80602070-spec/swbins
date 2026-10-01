@@ -1494,3 +1494,7 @@ Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quatern
 |---|---|---|---|
 | `saga-go-field.ogg` | open world exploration, hopeful orchestral theme with erhu and light electronic arpeggio, adventurous mid tempo, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 1201) | 사용자가 후보 a 선택 |
 | `saga-go-battle.ogg` | energetic battle theme, taiko drums, brass stabs, fast driving strings, electronic pulse, 150 bpm, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 1301) | 사용자가 후보 a 선택 |
+
+## 2D 스프라이트 시트 (`assets/sprites2d_sheets/`)
+
+2026-10-01 자체 제작 — 공방(`tools/char-forge/gear_sprites.py`)이 CC0 VRoid 몸(`tools/char-forge/_src/cc0_vroid`) 위에 절차 생성 장비를 입혀 Blender 로 굽는다(128px·8프레임·방향 3·동작 idle/walk/attack/hit/death, WebP). 인물·적 4벌: `pool_f_human_139`, `pool_g_human_147`, `pool_e_demon_128`, `pool_e_undead_127`. 벌마다 `manifest.json` 에 몸·종류·규격·출처 문구. 원작 에셋 없음. 이 판은 아직 안 읽는다(W 티켓 — 인물·괴물 id 연결과 `sprite.js` 배선).

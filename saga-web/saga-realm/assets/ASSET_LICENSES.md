@@ -326,3 +326,7 @@ Quaternius CC0 1.0, 사가블로에서 md5 그대로 복사(이미 Meshopt). `Kn
 | `saga-realm-town.ogg` | stately imperial court music, guzheng, bamboo flute, slow dignified 66 bpm, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 5101) | 사용자가 후보 a 선택 |
 | `saga-realm-field.ogg` | grand strategy map theme, epic slow march, low drums, bowed strings, determined and calm 84 bpm, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 5201) | 사용자가 후보 a 선택 |
 | `saga-realm-battle.ogg` | war march intensifying, large drums, horns, fast heroic strings, battlefield 140 bpm, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 5301) | 사용자가 후보 a 선택 |
+
+## 2D 스프라이트 시트 (`assets/sprites2d_sheets/`)
+
+2026-10-01 자체 제작 — 공방(`tools/char-forge/gear_sprites.py`)이 CC0 VRoid 몸(`tools/char-forge/_src/cc0_vroid`) 위에 절차 생성 장비를 입혀 Blender 로 굽는다(128px·8프레임·방향 3·동작 idle/walk/attack/hit/death, WebP). 병사·장수 4벌: `pool_basem_human_107`, `pool_e_human_131`, `pool_d_human_123`, `pool_basef_human_115`. 벌마다 `manifest.json` 에 몸·종류·규격·출처 문구. 원작 에셋 없음. 이 판은 아직 안 읽는다(W 티켓 — 인물·괴물 id 연결과 `sprite.js` 배선).
