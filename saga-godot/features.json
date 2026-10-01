@@ -1271,8 +1271,10 @@
   "id": "gd.dg.blessing",
   "name": "101-2 ①축복 3택",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_boons"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1282,8 +1284,11 @@
   "id": "gd.dg.relic",
   "name": "101-2 ②유품",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_world",
+   "dungeon_run"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1306,8 +1311,10 @@
   "id": "gd.dg.charm-dungeon",
   "name": "101-2 ④부적 던전",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_run"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1317,8 +1324,10 @@
   "id": "gd.dg.raid",
   "name": "101-2 ⑤난입",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_run"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1328,8 +1337,10 @@
   "id": "gd.dg.world-boss",
   "name": "101-2 ⑥월드 보스",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_run"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
