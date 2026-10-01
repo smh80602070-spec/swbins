@@ -253,6 +253,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_animals.gd").new())
 	if OS.get_environment("SAGA_POSTS_PROBE") != "":
 		add_child(load("res://tools/probe_posts.gd").new())
+	if OS.get_environment("SAGA_DAYCARD_PROBE") != "":
+		add_child(load("res://tools/probe_daycard.gd").new())
 	if OS.get_environment("SAGA_EVENTS_PROBE") != "":
 		add_child(load("res://tools/probe_events.gd").new())
 	if OS.get_environment("SAGA_HELP_PROBE") != "":
