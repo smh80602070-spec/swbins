@@ -1076,8 +1076,10 @@
    "Assets/Games/SagaStory/Data/StorySkillData.cs",
    "Assets/Games/SagaStory/Data/StorySkillState.cs"
   ],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestStorySkills"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
