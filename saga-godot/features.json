@@ -81,8 +81,10 @@
   "id": "gd.go.regions",
   "name": "지역 3(REGIONS 레지스트리)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "regions"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
