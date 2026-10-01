@@ -1010,8 +1010,10 @@
   "id": "un.st.rift",
   "name": "5-3 비경",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestStoryRift"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
