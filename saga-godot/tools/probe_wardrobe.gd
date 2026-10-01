@@ -66,5 +66,23 @@ func _init() -> void:
 	get_root().add_child(body2)
 	CelShaderApply.apply_to(body2)
 	check(slot_tex(body2, "tops") == before_top or slot_tex(body2, "tops") != want_top, "둘째 몸은 원래 옷(번짐 없음)")
+	# 무늬 타일 64종(patterns.json, G-0013) — 시대 20/20/20/4, 고르기는 같은 열쇠면 늘 같은 무늬, 타일이 열림
+	check(Wardrobe.patterns().size() == 64, "무늬 64종 — 실제 %d" % Wardrobe.patterns().size())
+	for pair in [["past", 20], ["modern", 20], ["future", 20], ["crest", 4]]:
+		check(Wardrobe.patterns_for_era(pair[0]).size() == pair[1], "시대 %s 무늬 %d" % [pair[0], pair[1]])
+	var pk := Wardrobe.pick_pattern("past", "hero_x")
+	check(pk != "" and pk == Wardrobe.pick_pattern("past", "hero_x") and Wardrobe.patterns_for_era("past").has(pk), "시대 안에서 같은 열쇠 = 같은 무늬(%s)" % pk)
+	check(Wardrobe.pick_pattern("nowhere", "x") == "", "없는 시대는 빈 무늬")
+	var missing := 0
+	for id in Wardrobe.patterns():
+		if Wardrobe.pattern_texture(id) == null:
+			missing += 1
+	check(missing == 0, "무늬 타일 64장 모두 열림(못 연 것 %d)" % missing)
+	var body3 := packed.instantiate()
+	get_root().add_child(body3)
+	CelShaderApply.apply_to(body3)
+	var np := Wardrobe.apply_patterns(body3, {"top": pk})
+	check(np >= 1 and slot_tex(body3, "tops") == Wardrobe.pattern_texture(pk), "apply_patterns — 상의에 무늬 %s (표면 %d)" % [pk, np])
+	check(slot_tex(body3, "shoes") == before_shoes, "무늬를 안 준 신발은 그대로")
 	print("PROBE wardrobe ", "OK" if fails == 0 else "FAIL %d" % fails)
 	quit(1 if fails > 0 else 0)

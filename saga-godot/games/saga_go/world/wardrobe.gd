@@ -12,7 +12,44 @@ const ROOT := "res://assets/wardrobe/"
 const SLOT_KEYS := {"top": "tops", "bottom": "bottoms", "shoes": "shoes"} # VRoid 재질 이름(…_Tops_01_CLOTH)에 들어 있는 글자
 const SLOTS := ["top", "bottom", "shoes"]
 
+const PATTERN_DIR := "res://assets/wardrobe/patterns/"
+const ERAS := ["past", "modern", "future", "crest"] # 무늬 시대 — 20/20/20/4 (patterns.json)
+
 static var _cache: Dictionary = {} # base → {id: item}
+static var _patterns: Dictionary = {} # 무늬 id → {era, file, …} (patterns.json, G-0013)
+
+## 무늬 타일 64종 표 — patterns/patterns.json 을 읽는다(K-0006). 없으면 빈 표(옷은 지금 그대로).
+static func patterns() -> Dictionary:
+	if not _patterns.is_empty():
+		return _patterns
+	var path := PATTERN_DIR + "patterns.json"
+	if FileAccess.file_exists(path):
+		var parsed = JSON.parse_string(FileAccess.get_file_as_string(path))
+		if parsed is Dictionary:
+			for p in parsed.get("patterns", []):
+				_patterns[String(p.id)] = p
+	return _patterns
+
+## 시대(past·modern·future·crest)의 무늬 id 목록, id 순.
+static func patterns_for_era(era: String) -> Array:
+	var r: Array = []
+	for id in patterns():
+		if String(patterns()[id].get("era", "")) == era:
+			r.append(String(id))
+	r.sort()
+	return r
+
+## 시대 안에서 seed_key(예: 인물 id)로 늘 같은 무늬 하나를 고른다. 시대에 무늬가 없으면 "".
+static func pick_pattern(era: String, seed_key: String) -> String:
+	var list := patterns_for_era(era)
+	return "" if list.is_empty() else String(list[absi(seed_key.hash()) % list.size()])
+
+static func pattern_texture(pattern_id: String) -> Texture2D:
+	var p: Dictionary = patterns().get(pattern_id, {})
+	if p.is_empty():
+		return null
+	var path := PATTERN_DIR + String(p.get("file", ""))
+	return load(path) as Texture2D if ResourceLoader.exists(path) else null
 
 ## base = "AvatarSample_A" 처럼 assets/wardrobe/ 아래 폴더 이름.
 static func items(base: String) -> Dictionary:
@@ -52,11 +89,30 @@ static func texture_of(base: String, item_id: String) -> Texture2D:
 	if it.is_empty():
 		return null
 	var path := "%s%s/%s/%s.webp" % [ROOT, base, it.slot, it.pattern]
-	return load(path) as Texture2D if ResourceLoader.exists(path) else null
+	if ResourceLoader.exists(path):
+		return load(path) as Texture2D
+	return pattern_texture(String(it.pattern)) # 슬롯별 사본이 없는 무늬는 공용 타일을 쓴다
 
 ## 몸(Node3D, 셀 셰이더가 이미 입혀진 것)에 look({슬롯: 아이템 id}) 을 입힌다. 바뀐 표면 수를 돌려준다.
 ## look 에 없는 슬롯은 건드리지 않는다(원래 옷 유지). 재질은 표면마다 새로 만든 것이라 다른 몸에 번지지 않는다.
 static func apply(body: Node, base: String, look: Dictionary) -> int:
+	var texs := {}
+	for slot in look:
+		var t := texture_of(base, look[slot])
+		if t != null:
+			texs[slot] = t
+	return _paint(body, texs)
+
+## 같은 일을 무늬 id 로 — {슬롯: 무늬 id} 를 옷 슬롯에 입힌다(아이템 표 없이, 시대별 무늬 고르기용).
+static func apply_patterns(body: Node, slot_patterns: Dictionary) -> int:
+	var texs := {}
+	for slot in slot_patterns:
+		var t := pattern_texture(String(slot_patterns[slot]))
+		if t != null:
+			texs[slot] = t
+	return _paint(body, texs)
+
+static func _paint(body: Node, texs: Dictionary) -> int:
 	var changed := 0
 	for mi in body.find_children("*", "MeshInstance3D", true, false):
 		var m := mi as MeshInstance3D
@@ -65,12 +121,10 @@ static func apply(body: Node, base: String, look: Dictionary) -> int:
 		for si in m.mesh.get_surface_count():
 			var src := m.mesh.surface_get_material(si)
 			var nm := (src.resource_name if src else "").to_lower()
-			for slot in look:
-				if not nm.contains(SLOT_KEYS[slot]):
+			for slot in texs:
+				if not SLOT_KEYS.has(slot) or not nm.contains(SLOT_KEYS[slot]):
 					continue
-				var tex := texture_of(base, look[slot])
-				if tex == null:
-					continue
+				var tex: Texture2D = texs[slot]
 				var mat := m.get_active_material(si)
 				if mat is ShaderMaterial:
 					(mat as ShaderMaterial).set_shader_parameter("albedo_texture", tex)

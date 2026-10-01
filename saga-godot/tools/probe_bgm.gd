@@ -51,6 +51,16 @@ func _wait(sec: float) -> void:
 	await process_frame
 
 
+func _gd_files(dir: String) -> Array:
+	var out := []
+	for d in DirAccess.get_directories_at(dir):
+		out.append_array(_gd_files(dir.path_join(d)))
+	for f in DirAccess.get_files_at(dir):
+		if f.ends_with(".gd"):
+			out.append(dir.path_join(f))
+	return out
+
+
 func _initialize() -> void:
 	await process_frame
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(DIR))
@@ -95,7 +105,33 @@ func _initialize() -> void:
 	var n2 := root.get_node_or_null("SagaBgm")
 	check(n2 != null and n2.enabled == false and absf(float(n2.volume) - 0.5) < 0.001, "다시 만들어도 끔·음량 0.5 유지")
 
-	# ⑤ 정리
+	# ⑤ 진짜 곡 — 다섯 판 × 세 장면 15곡이 키 = 파일 이름으로 있고, 코드가 거는 키 문자열이 전부 그 15곡 안에 있다(G-0013)
+	var games := ["go", "dungeon", "forest", "story", "realm"]
+	var scenes := ["town", "field", "battle"]
+	var real := {}
+	for g in games:
+		for sc in scenes:
+			var key: String = "%s-%s" % [g, sc]
+			real[key] = true
+			check(FileAccess.file_exists("res://assets/audio/bgm/%s.ogg" % key), "곡 파일 %s.ogg" % key)
+	var rx := RegEx.new()
+	rx.compile('"((?:go|dungeon|forest|story|realm)-(?:town|field|battle|[a-z]+))"')
+	var found := {}
+	for f in _gd_files("res://games/") + _gd_files("res://saga_core/"):
+		var txt := FileAccess.get_file_as_string(f)
+		for m in rx.search_all(txt):
+			found[m.get_string(1)] = f
+	check(found.size() >= 8, "코드가 거는 곡 키 %d개를 찾음(8 이상)" % found.size())
+	for k in found:
+		check(real.has(k), "코드의 곡 키 \"%s\" 가 15곡 안에 있다(%s)" % [k, String(found[k]).get_file()])
+	for old in ["dg-", "fs-", "st-", "rk-"]:
+		var bad := false
+		for f in _gd_files("res://games/"):
+			if FileAccess.get_file_as_string(f).contains("play(self, \"" + old):
+				bad = true
+		check(not bad, "옛 짧은 키 \"%s…\" 가 안 남아 있다" % old)
+
+	# ⑥ 정리
 	Bgm.reset_for_test()
 	await _wait(0.1)
 	for f in ["a.wav", "b.wav", "audio.cfg"]:

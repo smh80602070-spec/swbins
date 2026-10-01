@@ -163,6 +163,9 @@ func _find(key: String) -> AudioStream:
 func _load_file(path: String, ext: String) -> AudioStream:
 	var s: AudioStream = null
 	if path.begins_with("res://"):
+		## 헤드리스(소리 없는 진단·godot_regress)에선 진짜 곡을 안 연다 — 재생 중인 .ogg 가 종료 때 "쓰이는 자원"으로 남아 점검이 막힌다(G-0013).
+		if DisplayServer.get_name() == "headless":
+			return null
 		if ResourceLoader.exists(path):
 			s = load(path) as AudioStream
 	elif FileAccess.file_exists(path):

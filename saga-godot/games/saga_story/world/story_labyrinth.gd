@@ -49,6 +49,7 @@ var _finished := false
 
 
 func _ready() -> void:
+	preload("res://saga_core/audio/bgm.gd").play(self, "story-battle")
 	if not StoryLabyrinthState.in_run:
 		StoryLabyrinthState.start_run()  # 씬을 직접 열었을 때(진단 등)도 스스로 돈다
 	_build_floor(StoryLabyrinthState.floor_index)

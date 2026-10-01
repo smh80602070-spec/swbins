@@ -14,7 +14,7 @@ extends Node3D
 ## 정해 준 자리에만 세운다. story_town.gd(허도 쪽)와 같은 규칙.
 
 func _ready() -> void:
-	preload("res://saga_core/audio/bgm.gd").play(self, "st-field")  # 배경음(G-0011) — 곡 없으면 조용
+	preload("res://saga_core/audio/bgm.gd").play(self, "story-field")  # 배경음(G-0011) — 곡 없으면 조용
 	## 자동 저장(saga_core/world/autosave_timer.gd) — 60초마다·앱 멈춤 때.
 	preload("res://saga_core/world/autosave_timer.gd").attach(self, StorySaveState.save, func() -> bool: return get_tree().get_first_node_in_group("player") != null)
 	if StorySaveState.has_pending_spawn:

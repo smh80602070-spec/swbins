@@ -23,7 +23,7 @@ var _player: Node3D = null
 func _ready() -> void:
 	## 가로 화면이면 UI 기준 크기를 바꿔 글자가 깨알만 하지 않게(saga_core/ui/orientation_scale.gd).
 	add_child(preload("res://saga_core/ui/orientation_scale.gd").new())
-	preload("res://saga_core/audio/bgm.gd").play(self, "fs-town")  # 배경음(G-0011) — 곡 없으면 조용
+	preload("res://saga_core/audio/bgm.gd").play(self, "forest-town")  # 배경음(G-0011) — 곡 없으면 조용
 	WorldCurveMaterial.ensure_global_registered()
 	ForestSaveState.try_load()
 	ForestSaveState.begin_session()
