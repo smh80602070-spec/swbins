@@ -675,10 +675,11 @@
    "js/admin.js"
   ],
   "tests": [],
-  "level": "D0",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-admin-selftest.mjs(Playwright) — _admin.html?selftest ADMIN 12/12, results/pw-admin-selftest.json. 어드민 화면 기계 확인(사람 눈 D3 는 아직)"
  }
 ]

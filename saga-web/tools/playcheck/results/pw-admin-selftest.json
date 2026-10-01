@@ -1,0 +1,32 @@
+{
+ "script": "pw-admin-selftest.mjs",
+ "games": [
+  {
+   "game": "saga-story",
+   "title": "ADMIN 10/10",
+   "hasSelfOut": true,
+   "pass": 10,
+   "total": 10,
+   "ok": true,
+   "pageErrors": []
+  },
+  {
+   "game": "saga-dungeon",
+   "title": "ADMIN 12/12",
+   "hasSelfOut": true,
+   "pass": 12,
+   "total": 12,
+   "ok": true,
+   "pageErrors": []
+  },
+  {
+   "game": "saga-realm",
+   "title": "ADMIN 12/12",
+   "hasSelfOut": true,
+   "pass": 12,
+   "total": 12,
+   "ok": true,
+   "pageErrors": []
+  }
+ ]
+}

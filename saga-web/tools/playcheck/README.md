@@ -10,6 +10,7 @@ node pw-dg-sheet.mjs                            # 사가블로 확인 시트 다
 node pw-go-sheet.mjs                            # 사가고 확인 시트(들판 전투 J·E·␣·🤖·자동 순행·지역 발견·M 전체지도) 10개(+동행 교체 SKIP) + results/pw-go-sheet.json
 node pw-rk-sheet.mjs                            # 사가국지 확인 시트: 실제 단추로 시나리오·세력 고르고 ▶ 다음 달 + 명령·외교 조공·출진·개입형 전투(합마다 돌격·수비 명령)·승진 7개 + results/pw-rk-sheet.json
 node pw-st-sheet.mjs                            # 사가스토리 확인 시트: ←→·␣·↑↓·↓+␣·1·M 과 레벨 문턱·무적·자동 사냥 13개 + results/pw-st-sheet.json (첫 발 장면은 DG.story 라 Esc 로 넘김. 헤드리스 포커스는 pw.mjs 가 켬 — 사가스토리는 포커스 없으면 루프가 쉰다)
+node pw-admin-selftest.mjs [판…]                # 어드민 화면 자가진단(_admin.html?selftest → 제목 ADMIN n/m)을 돌려 results/pw-admin-selftest.json 에 남긴다 — 사가블로 12/12·사가국지 12/12·사가스토리 10/10(사가고·사가의숲 어드민은 selftest 가 없어 NONE)
 # pw-*.mjs 요령(겪은 것): ① 새 계정은 오프닝 장면(DG.scenario/DG.story)이 키를 먹는다 → Esc 로 넘긴 뒤 시작. ② 소프트웨어 렌더링이라 Playwright 왕복이 수백 ms — 입질 창(0.7초)·쿨다운처럼 짧은 타이밍은 페이지 안에서 keydown 을 보내고 같은 틱에 읽는다. ③ 프레임이 느리면 게임 시간이 실제보다 느리게 흘러(dt 상한) 속도·오르기는 DG.side.update(1/60) 을 직접 돌려 센다. ④ 시험용으로 적 체력을 키울 땐 객체에 표시를 달아 따라간다(죽은 적이 빠지면 배열 인덱스가 밀린다). 각 스크립트는 3~5회 반복해 안정을 확인했다.
 node rk-stage.mjs [shot]                        # 사가국지 §5-13·5-14: 설전·성 차지·일기토 단계 카드 흐름(도입→문답/손 싸움→결과)·회차 카드 단추→2회차·예외 없나(shot 을 줄 때만 shots/rk_stage_*, 새 프로필로)
 node fs-ruin.mjs [shot]                         # 사가의숲 탑성 조각 번들: 돌무더기 여섯 자리·뒤지기(하루 한 번)·정자 서기·3D 예외 없나(shot 을 줄 때만 shots/fs_ruin_*)

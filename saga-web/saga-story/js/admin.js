@@ -802,7 +802,7 @@
       /* 점수는 (레벨-1)×3 에서 찍은 합을 뺀 **파생값**이라 세이브에 담지 않는다.
          담았다면 옛 세이브에 그 칸이 없어 어긋났을 것이다 — 이 항목이 그 못이다 */
       ok('무예 점수는 레벨에서 나온다 (세이브에 없다)',
-        J.spTotal() === 27 && J.spLeft() === 27 && !('sp' in C.save),
+        J.spTotal() === 9 * DG.jobData.SP_PER_LEVEL && J.spLeft() === 9 * DG.jobData.SP_PER_LEVEL && !('sp' in C.save),   // (레벨-1)×레벨당 점수 — 수치는 상수에서(PLAN §5-2 에서 3→2 로 바뀐 적이 있다)
         'Lv.10 → ' + J.spTotal() + '점 · 남은 ' + J.spLeft());
       C.save.player.level = lv;
 
