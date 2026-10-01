@@ -1,4 +1,4 @@
-USED:own,mixamo,charforge,kenney,polyhaven,quaternius,quaternius_animals,bgm,noto,liberation,sss,unity
+USED:own,mixamo,charforge,kenney,polyhaven,quaternius,quaternius_animals,bgm,bgm_ace,noto,liberation,sss,unity
 THIRD-PARTY LICENSES AND NOTICES
 
 ==== Fonts — NotoSansKR ====

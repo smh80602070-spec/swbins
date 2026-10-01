@@ -582,8 +582,9 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 ## 18. 배경음 — `Saga.Core.Bgm` (tasks U-0014)
 
 - 다섯 판의 `*Audio.PlayBgm`·`RefreshBgmVolume`(PlayerPrefs `…_vol_bgm`·설정 BGM 켜기/끄기)는 그대로 두고 재생만 `Bgm` 이 맡는다. 곡 찾기 = `Resources/Audio/Bgm/<판>-<장면>`(판 id `go·dungeon·forest·story·realm`, 장면 `main·field·battle`) → 없으면 부트스트랩이 준 곡(`Assets/Art/Audio/CC0_BGM/`) → 없으면 무음(오류 0). 곡이 바뀌면 1.5초 교차 페이드.
-- 새 곡 넣는 법: `Assets/SagaCore/Resources/Audio/Bgm/<판>-<장면>.ogg` 로 두고 **같은 커밋에서 `SagaCredits` 표에 줄 추가**. GO 는 `GoBgmScene` 이 싸움 중이면 `go-battle`, 아니면 `go-main`. 다른 판의 장면 전환은 `Bgm.SetScene("battle")` 을 부르는 폴러를 붙이면 된다.
+- 새 곡 넣는 법: `Assets/SagaCore/Resources/Audio/Bgm/<판>-<장면>.ogg` 로 두고 **같은 커밋에서 `SagaCredits` 표에 줄 추가**. 장면 전환은 판별 `<판>BgmScene` 이 맡는다(아래).
 - 진단 `PlaytestBgm.Run` → `[PlaytestBgm] OK`(가짜 곡·주입 `Bgm.Loader`로 페이드·폴백·끄기·소리원 재생성·무곡 오류 0).
+- **장면별 곡(tasks U-0021)**: 자체 곡 15(`Assets/SagaCore/Resources/Audio/Bgm/<판>-<town|field|battle>.ogg`, ACE-Step·상업 OK, Vorbis·스트리밍 — `Editor/BgmImportSettings` 가 가져올 때 강제). 각 판 부트스트랩이 `<판>BgmScene.Attach` → `BgmSceneDriver`(0.5초마다 판정, 전투는 4초 붙들기). 장면: GO 전투=`FieldCombat.InCombat`·마을=`village` 지역 · DUNGEON 전투=적이 달려듦·마을=땅 위 지역·들판=지역 밖(던전 층) · FOREST 전투=적대 조우 창·마을=존 −1 · REALM 전투=싸움터·들판=천하 지도·마을=성 디오라마 · STORY 전투=12m 안 적·나머지 들판(`story-town` 은 장면이 없어 아직 안 쓴다). 사용자 확인: 장면이 바뀌면 곡이 바뀌는지, 기본 음량은 그대로.
 
 ## 19. 게임패드 — `Saga.Core.SagaPad` (tasks U-0017)
 

@@ -244,6 +244,8 @@ namespace Saga.Dungeon.World
         public bool IsBoss => isBoss;
         public float VisualScale => visualScale;
         public bool IsWindingUp => _state == State.Windup;
+        /// <summary>달려들거나 전조 중 — 배경음이 전투 곡으로 바뀌는 기준(tasks U-0021).</summary>
+        public bool IsEngaged => _state == State.Chase || _state == State.Windup;
         public float StrikeReach => attackRange * StrikeReachMul;
         public bool IsTaunted => _tauntLeft > 0f && _taunter != null && _taunter.IsUp;
 

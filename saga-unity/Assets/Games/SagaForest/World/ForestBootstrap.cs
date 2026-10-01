@@ -27,6 +27,7 @@ namespace Saga.Forest.World
             ForestSettingsState.ApplyToAllScalers();
             ForestSettingsState.ApplyGraphicsQuality();
             ForestAudio.PlayBgm(bgmClip);
+            ForestBgmScene.Attach(gameObject); // tasks U-0021 — 장면별 곡(town·field·battle, 파일 없으면 폴백)
             if (GetComponent<ForestZoneTracker>() == null) gameObject.AddComponent<ForestZoneTracker>(); // PLAN.md 108 ② 존 자막
             ForestVisitorRunner.Install(visitorBodyNames, visitorBodyModels); // PLAN.md 109-12-1 떠돌이 방문객(세이브 뒤라 오늘 기록을 읽는다)
             ForestScenarioRunner.Install(); // PLAN.md 109-16 시나리오 — 장면 상자·목표 한 줄(Play 때, 씬 재빌드 없이)

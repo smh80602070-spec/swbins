@@ -63,7 +63,7 @@ namespace Saga.Story.Audio
 
         /// <summary>BGM 재생은 `Saga.Core.Bgm` 이 맡는다(tasks U-0014) — 곡 하나 반복이던 판별 복사본을 합쳤다. 곡 파일(`Resources/Audio/Bgm/story-<장면>`)이
         /// 없으면 부트스트랩이 준 곡 그대로 돈다. 음량 = Master×Bgm(PlayerPrefs 키는 그대로).</summary>
-        public static void PlayBgm(AudioClip clip) => Bgm.Play("story", "main", clip, () => MasterVolume * BgmVolume);
+        public static void PlayBgm(AudioClip clip) => Bgm.Play("story", "field", clip, () => MasterVolume * BgmVolume);
 
         /// <summary>설정에서 BGM On/Off 를 누를 때마다 불러 이미 도는 곡의 음량에 바로 반영한다.</summary>
         public static void RefreshBgmVolume() => Bgm.RefreshVolume();

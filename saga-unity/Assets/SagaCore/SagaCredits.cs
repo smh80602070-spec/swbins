@@ -71,6 +71,11 @@ namespace Saga.Core
                 BodyKo = "\"Town Theme (RPG)\" cynicmusic · \"Dungeon Ambience\" yd · \"Peaceful Town\" aroachifoundonmypillow · \"It's time for a… Fight, run, breath deeply\" Komiku · \"War Theme\" spring-spring — OpenGameArt.org, CC0",
                 BodyEn = "\"Town Theme (RPG)\" by cynicmusic · \"Dungeon Ambience\" by yd · \"Peaceful Town\" by aroachifoundonmypillow · \"It's time for a… Fight, run, breath deeply\" by Komiku · \"War Theme\" by spring-spring — OpenGameArt.org, CC0" },
 
+            new Entry { Id = "bgm_ace", Paths = new[] { "Assets/SagaCore/Resources/Audio/Bgm/" },
+                TitleKo = "배경음악(자체 생성)", TitleEn = "Music (generated)",
+                BodyKo = "마을·들판·전투 곡 15곡 — ACE-Step 1.5 로 만들었습니다(코드·모델 가중치 MIT 라이선스)",
+                BodyEn = "15 town, field and battle tracks — generated with ACE-Step 1.5 (code and model weights under the MIT license)" },
+
             new Entry { Id = "noto", Paths = new[] { "Assets/Art/Fonts/NotoSansKR/", "Assets/Art/Fonts/NotoEmoji/" },
                 TitleKo = "글꼴", TitleEn = "Fonts",
                 BodyKo = "Noto Sans KR · Noto Emoji — SIL Open Font License 1.1 (전문은 아래)",

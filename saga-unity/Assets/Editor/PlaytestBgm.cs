@@ -17,7 +17,7 @@ namespace Saga.EditorTools
             PlaytestKit.Begin("[PlaytestBgm]");
             using (PlaytestKit.ErrorCounter())
             {
-                try { Checks(); }
+                try { Checks(); ChecksSongs(); ChecksDriver(); }
                 finally { Bgm.ResetForTest(); }
             }
             PlaytestKit.Summary("PlaytestBgm");
@@ -80,6 +80,62 @@ namespace Saga.EditorTools
             Bgm.Play("empty", "main", null, null);
             Bgm.SetScene("battle");
             PlaytestKit.Check(Bgm.CurrentClip == null, "곡이 없는데 CurrentClip 이 null 이 아님");
+        }
+
+        // ── tasks U-0021 — 자체 곡 15 + 판별 장면 판정 + 전투 곡 붙들기 ──
+        private static readonly string[] Games = { "go", "dungeon", "forest", "story", "realm" };
+        private static readonly string[] Scenes = { "town", "field", "battle" };
+
+        private static void ChecksSongs()
+        {
+            Bgm.ResetForTest(); // 기본 Loader(Resources) 로 되돌린다
+            foreach (var g in Games)
+                foreach (var s in Scenes)
+                {
+                    string key = g + "-" + s;
+                    var clip = Bgm.Loader(key);
+                    PlaytestKit.Check(clip != null && clip.length > 10f, $"곡 {key} 을 Resources 에서 못 찾았거나 너무 짧음");
+                    var imp = AssetImporter.GetAtPath(BgmImportSettings.Folder + key + ".ogg") as AudioImporter;
+                    PlaytestKit.Check(imp != null && imp.defaultSampleSettings.loadType == AudioClipLoadType.Streaming, $"곡 {key} 가 스트리밍 임포트가 아님");
+                }
+        }
+
+        private static void ChecksDriver()
+        {
+            Bgm.ResetForTest();
+            // 판별 장면 판정 — 월드가 없을 때의 기본값(사가고·사가스토리는 플레이어가 없어 판정 보류 = null)
+            PlaytestKit.Check(Saga.Go.World.GoBgmScene.Pick() == null, "GO: 플레이어 없는데 장면이 나옴");
+            PlaytestKit.Check(Saga.Dungeon.World.DungeonBgmScene.Pick() == "field", "DUNGEON: 지역 추적기 없으면 field");
+            PlaytestKit.Check(Saga.Forest.World.ForestBgmScene.Pick() == "town", "FOREST: 존 추적기 없으면 town");
+            PlaytestKit.Check(Saga.Realm.World.RealmBgmScene.Pick() == "town", "REALM: 디오라마(지도 안 봄)는 town");
+            PlaytestKit.Check(Saga.Story.World.StoryBgmScene.Pick() == null, "STORY: 플레이어 없는데 장면이 나옴");
+
+            // 드라이버 — 전투 곡 붙들기(4초)와 곡 없는 장면
+            var a = AudioClip.Create("bgmA", 4410, 1, 44100, false);
+            var t = AudioClip.Create("bgmT", 4410, 1, 44100, false);
+            var f = AudioClip.Create("bgmF", 4410, 1, 44100, false);
+            var bt = AudioClip.Create("bgmB", 4410, 1, 44100, false);
+            Bgm.Loader = key => key == "drv-town" ? t : key == "drv-field" ? f : key == "drv-battle" ? bt : null;
+            Bgm.Play("drv", "town", a, () => 1f);
+            string scene = "town";
+            var go = new GameObject("BgmDriverTest");
+            try
+            {
+                var d = BgmSceneDriver.Attach(go, () => scene);
+                d.Step(0f);
+                PlaytestKit.Check(Bgm.CurrentKey == "drv-town" && Bgm.CurrentClip == t, $"마을 곡 key={Bgm.CurrentKey}");
+                scene = "battle"; d.Step(1f);
+                PlaytestKit.Check(Bgm.CurrentKey == "drv-battle" && Bgm.CurrentClip == bt, $"전투 곡 key={Bgm.CurrentKey}");
+                scene = "field"; d.Step(2f);
+                PlaytestKit.Check(Bgm.CurrentKey == "drv-battle", $"전투가 끝난 직후 곡이 바로 바뀜 key={Bgm.CurrentKey}");
+                d.Step(1f + BgmSceneDriver.BattleHoldSeconds + 0.1f);
+                PlaytestKit.Check(Bgm.CurrentKey == "drv-field" && Bgm.CurrentClip == f, $"붙들기가 끝났는데 들판 곡이 아님 key={Bgm.CurrentKey}");
+                scene = null; d.Step(20f);
+                PlaytestKit.Check(Bgm.CurrentKey == "drv-field", "판정이 null 인데 장면이 바뀜");
+                Bgm.Loader = key => null; scene = "town"; d.Step(30f);
+                PlaytestKit.Check(Bgm.CurrentKey == "drv-town" && Bgm.CurrentClip == a, $"곡 없는 장면은 폴백이어야 함 clip={Bgm.CurrentClip}");
+            }
+            finally { Object.DestroyImmediate(go); Bgm.ResetForTest(); }
         }
     }
 }

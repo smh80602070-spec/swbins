@@ -27,6 +27,7 @@ namespace Saga.Story.World
             StorySettingsState.ApplyToAllScalers();
             StorySettingsState.ApplyGraphicsQuality();
             StoryAudio.PlayBgm(bgmClip);
+            StoryBgmScene.Attach(gameObject); // tasks U-0021 — 장면별 곡(field·battle, 파일 없으면 폴백)
             StoryJobState.LeveledUp += OnLeveledUp; // PLAN.md 101-3 G "성장 연출"(DUNGEON/GO와 같은 결, 이번에 처음 연결).
             _cameraFollow = StoryCameraFollow.Instance;
             StoryScenarioRunner.Install(); // PLAN.md 109-16 시나리오 — 장면 상자·목표 한 줄(Play 때, 씬 재빌드 없이)

@@ -1,0 +1,31 @@
+{
+ "tool": "music-gen",
+ "model": "ACE-Step/Ace-Step1.5 (acestep-v15-turbo)",
+ "license": "MIT (code and model weights)",
+ "license_url": "https://huggingface.co/ACE-Step/Ace-Step1.5",
+ "commercial_use": true,
+ "note": "사용자가 후보 a 를 고름(2026-10-01) — 배선은 W-0016·G-0011·U-0014",
+ "created_at": "2026-10-01T18:01:15+0900",
+ "slot": "go-battle",
+ "candidate": "a",
+ "params": {
+  "prompt": "energetic battle theme, taiko drums, brass stabs, fast driving strings, electronic pulse, 150 bpm, instrumental",
+  "lyrics": "[Instrumental]",
+  "duration": 75,
+  "seed_hint": 1301
+ },
+ "result": {
+  "metas": {
+   "bpm": 107,
+   "duration": 75.0,
+   "genres": "N/A",
+   "keyscale": "E minor",
+   "timesignature": "4"
+  },
+  "seed_value": null,
+  "dit_model": null,
+  "lm_model": null
+ },
+ "edited_by_human": true,
+ "picked": "a"
+}

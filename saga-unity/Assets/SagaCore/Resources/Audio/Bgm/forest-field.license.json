@@ -1,0 +1,31 @@
+{
+ "tool": "music-gen",
+ "model": "ACE-Step/Ace-Step1.5 (acestep-v15-turbo)",
+ "license": "MIT (code and model weights)",
+ "license_url": "https://huggingface.co/ACE-Step/Ace-Step1.5",
+ "commercial_use": true,
+ "note": "사용자가 후보 a 를 고름(2026-10-01) — 배선은 W-0016·G-0011·U-0014",
+ "created_at": "2026-10-01T18:07:03+0900",
+ "slot": "forest-field",
+ "candidate": "a",
+ "params": {
+  "prompt": "peaceful forest walk, soft piano, airy flute melody, gentle strings, slow dreamy 70 bpm, instrumental",
+  "lyrics": "[Instrumental]",
+  "duration": 75,
+  "seed_hint": 3201
+ },
+ "result": {
+  "metas": {
+   "bpm": 104,
+   "duration": 75.0,
+   "genres": "N/A",
+   "keyscale": "F major",
+   "timesignature": "3"
+  },
+  "seed_value": null,
+  "dit_model": null,
+  "lm_model": null
+ },
+ "edited_by_human": true,
+ "picked": "a"
+}
