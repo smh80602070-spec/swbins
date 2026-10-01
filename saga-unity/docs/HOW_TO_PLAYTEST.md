@@ -591,3 +591,9 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 - 게임 코드는 `Keyboard.current` 를 직접 읽던 자리에 `SagaPad.Pressed(SagaPad.Btn.X, kb?.jKey)`·`Held(…)`·`Stick(Side.Right)` 로 키와 패드를 함께 읽는다(키보드가 없어도 패드만으로 되고, 패드가 없으면 키 동작 그대로). 이동·메뉴 탐색은 `InputSystem_Actions` 의 Move/UI 액션이 이미 패드를 읽는다.
 - 버튼표: 공격 X · 상호작용 Y · 스킬 LB · 폭발·강공격 RT · 조준 RB · 회피 B · 점프 A · 지도 Select · 메뉴 Start · 십자키 위/오른쪽/아래/왼쪽 = 칸 1~4(GO 파티 교대·STORY 직업 무예) · 대화 A 다음·B 건너뛰기·X/Y 선택 · 줌 LB/RB · 오른쪽 스틱 = 시점. 배선: GO(`FieldCombat`·`CameraRig`·`StoryUi`)·DUNGEON(`PlayerCombat`·`PlayerController`·시나리오 대화)·STORY(`StoryPlayerController`·시나리오 대화)·FOREST(시나리오 대화; 이동은 액션 에셋)·REALM(`RealmOrbitCamera`·`RealmWorldMapCamera`).
 - 진단 `PlaytestGamepad.Run` → `[PlaytestGamepad] OK`: 가짜 패드(`InputSystem.AddDevice`)로 버튼·스틱을 눌러 본다. 편집기에선 `wasPressedThisFrame` 의 프레임이 안 돌아 테스트 설정(수동 업데이트 + `RUN_PLAYER_UPDATES_IN_EDIT_MODE` 플래그)을 잠깐 쓰고 끝에 되돌린다. 실제 패드 확인은 사람 몫.
+
+## 20. 툰 셰이더 — `Saga/CelToon` (tasks U-0022)
+
+- 셰이더 `Assets/Shaders/CelToon.shader`(URP, HLSL 직접) — Godot `cel_toon`·`cel_vertex_color`·`cel_outline` 과 같은 명암 3단·림·정점색·외곽선. 기본 재질 `Assets/Shaders/CelToon.mat`. 외곽선은 `_OutlineWidth`>0 일 때만 그려진다(기본 꺼짐).
+- **Godot 과 나란히 보기**: 에디터에서 `Assets/Scenes/TestVillage.unity`(사가고 마을)를 열고 메뉴 `Saga/Cel Toon/Preview Open Scene (do not save)` → Play. 씬을 **저장하지 말 것**(재질은 메모리에만 만든다). 되돌리기 = 씬 다시 열기. 판정은 "Godot 사가고 마을과 같아 보이는가" 한 줄.
+- 진단 `PlaytestCelToon.Run` → `[PlaytestCelToon] OK`(셰이더 컴파일 오류·경고 0·속성·기본값·변환·GO 마을 씬 변환). `-nographics` 배치에서는 재질 패스가 모두 이름 없는 한 개로 보여서 패스 이름은 원본 글로 확인한다.
