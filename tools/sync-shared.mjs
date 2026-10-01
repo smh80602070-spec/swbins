@@ -25,6 +25,7 @@ const FILES = [
   ['build/build-single.mjs', 'build/build-single.mjs'],
   ['js/errlog.js', 'js/errlog.js'],
   ['js/bgm.js', 'js/bgm.js'],
+  ['js/mode2d.js', 'js/mode2d.js', ['saga-story']],   // W-0019 — 2D 시트 부품(사가스토리부터, 다른 판은 배선하며 판 목록에 추가)
   ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/post3d.js', 'js/post3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/toon3d-core.js', 'js/toon3d-core.js'],

@@ -460,3 +460,25 @@
      막으려 MEDIUM 의 몫을 LOW 에 가깝게 낮춘다. */
   global.DG.cfg.post = { medium: { post: 1, mips: 2, msaa: 0, scale: 0.65 } };
 })(window);
+
+/* 판별 2D 모드 설정 — saga-web/shared/js/mode2d.js 가 읽는다(이 판만 다른 것).
+   시트 풀(assets/sprites2d_sheets/)은 K-0015 가 만든다 — 없으면 기존 코드 스탬프 그대로, 오류 없음. 적 단계(tier 1~4)마다 풀을 나눠 쓴다 */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.mode2d = {
+    base: 'assets/sprites2d_sheets/',
+    targetH: 62,                                 // 화면에 보일 보통 적 몸 높이(px) — 코드 스탬프 s 0.8 과 비슷하게
+    foot: 0.87,                                  // 시트에서 발 위치(프레임 높이 비율)
+    poolH: { pool_e_goblin_126: 50, pool_g_orc_141: 102, pool_basef_undead_111: 85, pool_f_demon_136: 97 },   // 프레임 안 몸 높이(px, 옆모습 알파 범위로 잼)
+    /** 2D 모드인가 — 3D 바탕이 안 서 있을 때(= 2D 그림) */
+    on: function () { var V = global.DG.sideView3d; return !(V && V.ready && V.ready()); },
+    pools: {
+      t1: ['pool_e_goblin_126'],
+      t2: ['pool_g_orc_141', 'pool_e_goblin_126'],
+      t3: ['pool_basef_undead_111', 'pool_g_orc_141'],
+      t4: ['pool_f_demon_136', 'pool_basef_undead_111']
+    }
+  };
+})(window);

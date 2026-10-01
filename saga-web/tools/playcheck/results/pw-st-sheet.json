@@ -1,15 +1,15 @@
 {
  "script": "pw-st-sheet.mjs",
  "game": "saga-story",
- "pass": 13,
- "total": 13,
+ "pass": 14,
+ "total": 14,
  "pageErrors": [],
  "notFound": [],
  "checks": [
   {
    "name": "준비 — 새 계정이 허창 들판 사냥터에 들어간다",
    "ok": true,
-   "detail": "party sg_ganning"
+   "detail": "party sg_menghuo"
   },
   {
    "name": "물리·조작 — → 를 누르면 오른쪽으로 달린다(기본 속도 270px/s × 인물·직업 보정, 게임 시간 0.7초)",
@@ -44,12 +44,12 @@
   {
    "name": "전투 — 1번 무예를 쓰면 무예가 쿨다운에 들고 적 체력이 줄고 맞은 적이 밀려난다",
    "ok": true,
-   "detail": "무예 준비 true→false · 체력 99999→99547 · x 432→318"
+   "detail": "무예 준비 true→false · 체력 99999→99911 · x 493→484"
   },
   {
    "name": "전투 — 적에게 맞으면 피해를 입고 잠깐 무적이 선다",
    "ok": true,
-   "detail": "{\"lost\":11,\"maxInvuln\":0.65}"
+   "detail": "{\"lost\":16,\"maxInvuln\":0.65}"
   },
   {
    "name": "사냥터 사슬 — 레벨 1 에선 문턱(레벨 1/5/12/25…)이 안 넘은 곳이 잠겨 있다",
@@ -69,7 +69,12 @@
   {
    "name": "자동 사냥 — 켜면 스스로 돌아다니며 적을 잡는다",
    "ok": true,
-   "detail": "{\"켜짐\":true,\"처치\":[2,5],\"금\":[20,173],\"x\":[1411,1917]}"
+   "detail": "{\"켜짐\":true,\"처치\":[1,5],\"금\":[11,81],\"x\":[665,543]}"
+  },
+  {
+   "name": "2D 모드 시트 — 3D 바탕을 끄면 사람형 적이 시트로 그려진다(walk 이미지를 받아 둠, 실패 0)",
+   "ok": true,
+   "detail": "{\"on\":true,\"humans\":5,\"loaded\":5,\"failed\":0}"
   }
  ]
 }

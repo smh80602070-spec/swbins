@@ -140,6 +140,19 @@ try {
   const au = await ev(() => ({ on: DG.auto.active ? DG.auto.active() : null, kills: DG.side.status().kills, gold: DG.side.raw().gold, x: Math.round(DG.side.raw().player.x) }));
   await ev(() => { DG.auto.setOn ? DG.auto.setOn(false) : DG.auto.toggle(); });
   check('자동 사냥 — 켜면 스스로 돌아다니며 적을 잡는다', au.kills > k0 || au.gold > g0 || Math.abs(au.x - x0) > 50, JSON.stringify({ 켜짐: au.on, 처치: [k0, au.kills], 금: [g0, au.gold], x: [Math.round(x0), au.x] }));
+
+  /* 5) 2D 모드 시트(W-0019) — 3D 바탕을 끄면 사람형 적이 새 시트로 그려진다(짐승·드론은 기존 스탬프) */
+  await ev(() => { DG.side.leave && DG.side.leave(); });
+  await sleep(500);
+  await ev(() => { DG.side.enter('field'); });
+  await sleep(1500);
+  await ev(() => { if (DG.sideView3d.active()) { DG.sideView3d.toggle(); } var R = DG.side.raw(); R.hp = R.hpMax = 99999; R.player.invuln = 99; });
+  await sleep(3000);
+  const m2 = await ev(() => {
+    var R = DG.side.raw(), hs = R.enemies.filter((e) => e.ref.kind === 'human'), pools = hs.map((e) => DG.mode2d.pick('t' + (e.ref.tier || 1), e.ref.name));
+    return { on: DG.mode2d.isOn(), humans: hs.length, loaded: pools.filter((p) => p && DG.mode2d.loaded(p, 'walk') === true).length, failed: pools.filter((p) => p && DG.mode2d.failed(p, 'walk') === true).length };
+  });
+  check('2D 모드 시트 — 3D 바탕을 끄면 사람형 적이 시트로 그려진다(walk 이미지를 받아 둠, 실패 0)', m2.on && m2.humans > 0 && m2.loaded > 0 && m2.failed === 0, JSON.stringify(m2));
 } catch (e) { console.log('ERR', e.message); results.push(false); }
 
 const ext = r.errors.filter((e) => /ERR_CONNECTION_TIMED_OUT|ERR_NAME_NOT_RESOLVED|ERR_INTERNET_DISCONNECTED/.test(e)).length;
