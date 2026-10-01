@@ -142,8 +142,10 @@
   "id": "gd.go.promotion",
   "name": "101-2 ②승급 3택",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "promotion"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
