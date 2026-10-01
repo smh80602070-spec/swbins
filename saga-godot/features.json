@@ -585,8 +585,10 @@
   "id": "gd.go.g26-gestures",
   "name": "106장 ㉖~㊹ 몸짓",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "gestures"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
