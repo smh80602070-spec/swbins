@@ -2,7 +2,7 @@
 
 **지위**: 일곱 `PLAN.md`(웹 다섯 + saga-godot + saga-unity)가 공통으로 가리키는 상위 문서다.
 재미·그래픽·에셋·버그·문서 규칙의 **공통분모**만 여기 두고, 판별 세부는 각 PLAN 이 든다.
-여기에 이력·날짜 세션 기록을 쓰지 않는다(그건 `SAGA-HISTORY.md`·각 판 `HANDOFF.md`·3D `docs/HISTORY.md`).
+여기에 이력·날짜 세션 기록을 쓰지 않는다(그건 `archive/SAGA-HISTORY.md`·`archive/web/*-HANDOFF.md`·`archive/{godot,unity}/HISTORY.md`).
 
 **읽는 법**: 40KB 안쪽으로 유지한다. 필요한 절만 `grep -n "^## "` 로 찾아 `sed -n` 으로 읽는다.
 §10(열린 질문)은 사용자 결정이 나면 그 답을 해당 PLAN 으로 내려보내고 여기서 지운다.
@@ -152,7 +152,7 @@
 
 ## 7. 에셋 창조 — 무엇이 가능한가(정직하게)
 
-### 7.1 환경 도구 표(2026-09-16)는 낡아 이력으로 옮겼다 → `SAGA-HISTORY.md` "2026-09-30 SAGA-DESIGN §7.1·§11-3 이동". 세션이 직접 만드는 것: 스크립트와 그 산출물·셰이더·파티클·SVG 아이콘·절차 지형. 못 하는 것: 손그림 2D 일러스트, 처음부터 리깅한 인간형 애니 캐릭터.
+### 7.1 환경 도구 표(2026-09-16)는 낡아 이력으로 옮겼다 → `archive/SAGA-HISTORY.md` "2026-09-30 SAGA-DESIGN §7.1·§11-3 이동". 세션이 직접 만드는 것: 스크립트와 그 산출물·셰이더·파티클·SVG 아이콘·절차 지형. 못 하는 것: 손그림 2D 일러스트, 처음부터 리깅한 인간형 애니 캐릭터.
 
 ### 7.2 변형 배가 파이프라인(가장 싸고 즉시 가능) — `tools/asset-forge/`(아래 스크립트가 있다, 사용법은 `tools/README.md`)
 현재 웹 GLB 767개·godot `assets/`·unity `Assets/Art/` 가 있다. 새로 그리지 않고 **조합으로 수천 변형**을 만든다.
@@ -199,7 +199,7 @@
 | 1 규칙 | `CLAUDE.md`(루트·폴더) | 불변 규칙·경로·금지 | 6KB | 이력·"이전엔" 문장 금지 |
 | 1 규칙(긴 것) | `SAGA-HANDOFF.md` | 시리즈 공통 규칙·방향·함정 | 80KB | 규칙·방향이 바뀔 때만 고친다 |
 | 2 설계 | `PLAN.md`, `SAGA-DESIGN.md` | 정체성·규칙·설계·로드맵·열린 질문 | PLAN 70KB(사가블로 90KB) | 날짜 세션 기록 금지. 완료된 Phase 는 한 줄로 접는다 |
-| 3 이력 | `SAGA-HISTORY.md`, 각 판 `HANDOFF.md`, 3D `docs/HISTORY.md` | 날짜별 세션 기록, 실기 확인 대기 | 없음(append-only) | grep 으로만 읽는다. 머리말에 그 규칙 |
+| 3 이력 | `archive/SAGA-HISTORY.md`, `archive/web/*-HANDOFF.md`, `archive/{godot,unity}/HISTORY.md` | 날짜별 세션 기록, 실기 확인 대기 | 없음(append-only) | grep 으로만 읽는다. 머리말에 그 규칙 |
 | 상태 | 3D `docs/PROJECT_STATE.md`, 루트 `README.md` "현재" 절 | 지금 상태만 | 15KB | 세션이 끝나면 **덮어쓴다**, 덧붙이지 않는다 |
 
 - 새 세션 시작 절차: 루트 CLAUDE.md(자동) → 해당 폴더 CLAUDE.md(자동) → PLAN 목차 grep → 상태 파일 → 필요 시 HANDOFF grep. 이 순서로 첫 턴 입력 30KB 이내.
@@ -244,9 +244,9 @@
 **계기**: 도감에서 3D 초상이 구워지기 전에 코드 그림이 먼저 보인다 — `portrait3d.img()`/`p3src()` 가 구워 둔 그림이 없으면 `S.portrait()`(코드 그림)로 시작했다가 `sweep()` 이 3D 로 갈아 끼우는 구조라서다(사가고·사가스토리·사가국지 ui 가 같은 요령).
 원칙은 그대로 — **원작사의 실제 에셋 금지**, 라이선스는 CC0(또는 표시 의무를 `ASSET_LICENSES.md` 에 적은 CC-BY)만, 공개 저장소라 재배포 허용 확인 필수.
 
-### 11-1. 2026-09-20 현황 조사 표는 이력으로 옮겼다 → `SAGA-HISTORY.md` "2026-09-30 SAGA-DESIGN §11-1 이동". 현황은 11-2 의 Phase 0~4 완료 상태.
+### 11-1. 2026-09-20 현황 조사 표는 이력으로 옮겼다 → `archive/SAGA-HISTORY.md` "2026-09-30 SAGA-DESIGN §11-1 이동". 현황은 11-2 의 Phase 0~4 완료 상태.
 
-### 11-2. 단계 — 다섯 판 코드분 모두 끝(경위·함정은 각 판 `HANDOFF.md` 같은 날, 사가고 「이어서 4·8·9」)
+### 11-2. 단계 — 다섯 판 코드분 모두 끝(경위·함정은 `archive/web/*-HANDOFF.md` 같은 날, 사가고 「이어서 4·8·9」)
 
 | Phase | 한 일 | 상태 |
 |---|---|---|

@@ -4,9 +4,9 @@
 
 - **다음 일 = `tasks/QUEUE.md` 의 갈래(웹·고돗·유니티·자체툴) 큐 맨 위 티켓**(절차 `tasks/README.md` · 체제 `SAGA-ARCH.md`). "<갈래> 이어해" = 이것
 - 공통 설계: `SAGA-DESIGN.md`(일곱 PLAN 의 상위) · 다섯 판 이야기 정본: `scenario/`
-- 웹 다섯 판: `saga-web/<폴더>/PLAN.md` 가 정본, 이력은 각 폴더 `HANDOFF.md`
+- 웹 다섯 판: `saga-web/<폴더>/PLAN.md` 가 정본, 이력은 `archive/web/`
 - 3D 두 트랙(코드 공유 없음): `saga-godot/`(Godot 4)·`saga-unity/`(Unity 6) — 각 폴더 `CLAUDE.md` 부터
-- 규칙·방향·함정: `SAGA-HANDOFF.md`(≤80KB) · 이력: `SAGA-HISTORY.md`(grep 으로만, 아래 "토큰" 절)
+- 규칙·방향·함정: `SAGA-HANDOFF.md`(≤80KB) · 이력: `archive/SAGA-HISTORY.md`(grep 으로만, "토큰" 절)
 - 도구: `tools/README.md` · `git commit` 때 훅이 `tools/precheck.sh` 를 돌린다(막히면 원인을 고친다)
 
 ## 다섯 판 — 완전히 별개인 프로젝트
@@ -73,7 +73,7 @@
 
 ## 토큰
 
-- **`SAGA-HISTORY.md`(400KB+)·각 `HANDOFF.md`·판별 `README.md` 는 통째로 읽지 않는다** —
+- **`archive/` 이력(SAGA-HISTORY 400KB+·판 HANDOFF)·판별 `README.md` 는 통째로 읽지 않는다** —
   목차(`grep -n "^## \|^### "`)·날짜·게임명 grep 으로 필요한 절만 `sed -n`.
 - `sprite.js`(100KB)·`data.js`(75KB) 도 전체 Read 금지 — 심볼·id 로 grep 해 그 자리만 읽는다.
 - 진단 출력은 `grep -o "RESULT [0-9/]*"`·실패 줄만(`--dump-dom` 통째 금지).

@@ -2,10 +2,10 @@
 
 **지위**: 다섯 웹 판·두 3D 트랙이 공유하는 **규칙·방향·함정**만 둔다. 80KB 안쪽으로 유지한다.
 
-- 이력(날짜 세션 기록·커밋 목록·옛 한눈에 표): `SAGA-HISTORY.md` — append-only, `grep` 으로만 읽는다
+- 이력(날짜 세션 기록·커밋 목록·옛 한눈에 표): `archive/SAGA-HISTORY.md` — append-only, `grep` 으로만 읽는다
 - 개편 설계(재미 표준 8·참고 게임·그래픽·에셋·문서 3층): `SAGA-DESIGN.md`
-- 각 판 정본 `saga-web/<판>/PLAN.md`, 각 판 이력 `saga-web/<판>/HANDOFF.md`. 3D 트랙은 `saga-godot/`·`saga-unity/` 의 `PLAN.md`·`docs/PROJECT_STATE.md`·`docs/HISTORY.md`
-- **여기에 세션 기록을 덧붙이지 않는다.** 시리즈 공통 이력은 `SAGA-HISTORY.md` 끝에 append 한다. 이 파일은 규칙·방향이 바뀔 때만 고친다.
+- 각 판 정본 `saga-web/<판>/PLAN.md`, 각 판 이력 `archive/web/<판>-HANDOFF.md`. 3D 트랙은 `saga-godot/`·`saga-unity/` 의 `PLAN.md`·`docs/PROJECT_STATE.md`·`archive/{godot,unity}/HISTORY.md`
+- **여기에 세션 기록을 덧붙이지 않는다.** 시리즈 공통 이력은 `archive/SAGA-HISTORY.md` 끝에 append 한다. 이 파일은 규칙·방향이 바뀔 때만 고친다.
 
 목차: 게임성 방향 · 창작 방향 · 한눈에 · 다섯 게임 · 이 구조를 만든 사용자 지시 · 절대 바꾸면 안 되는 것 · 가입해서 저장 · 검증 · 밟아 본 함정 · 이어서 하면 좋은 것 · 하지 말 것
 
@@ -26,7 +26,7 @@
 > "떠오르는 아무 게임이나, 좋은 아이디어면"으로 넓히라는 것** — 예를 들어
 > 사가고(포켓몬GO 오마주)가 몬스터헌터 나우의 실시간 위치전투 손맛을
 > 가져다 쓴 것(같은 회사·다른 원작이어도 상관없다고 사용자가 직접 확인,
-> `saga-go/HANDOFF.md` 2026-09-06 참고)처럼, 다른 판도 "이 장면엔 어느
+> `archive/web/saga-go-HANDOFF.md` 2026-09-06 참고)처럼, 다른 판도 "이 장면엔 어느
 > 게임이 이걸 잘 만들었더라"를 먼저 떠올려 보고 그 결을 코드로 옮기는 식으로
 > 접근한다. 실명·에셋을 그대로 베끼는 게 아니라 **메커니즘의 "왜 재밌는지"를
 > 훔쳐서 이 판의 문법(가명 인물·CC0 에셋·코드 그림)으로 다시 그리는 것**.
@@ -89,20 +89,20 @@
 
 | 판 | 설계·로드맵(정본) | 현재 시스템 | 이력 |
 |---|---|---|---|
-| 사가고 | `saga-web/saga-go/PLAN.md` §8 | 같은 파일 §3 | `saga-web/saga-go/HANDOFF.md` |
-| 사가블로 | `saga-web/saga-dungeon/PLAN.md` §8 | 같은 파일 §3 | `saga-web/saga-dungeon/HANDOFF.md` |
-| 사가의숲 | `saga-web/saga-forest/PLAN.md` §8 | 같은 파일 §3 | `saga-web/saga-forest/HANDOFF.md` |
-| 사가스토리 | `saga-web/saga-story/PLAN.md` §8 | 같은 파일 §3 | `saga-web/saga-story/HANDOFF.md` |
-| 사가국지 | `saga-web/saga-realm/PLAN.md` §8 | 같은 파일 §3 | `saga-web/saga-realm/HANDOFF.md` |
-| saga-godot | `saga-godot/PLAN.md` | `saga-godot/docs/PROJECT_STATE.md` | `saga-godot/docs/HISTORY.md` |
-| saga-unity | `saga-unity/PLAN.md` | `saga-unity/docs/PROJECT_STATE.md` | `saga-unity/docs/HISTORY.md` |
+| 사가고 | `saga-web/saga-go/PLAN.md` §8 | 같은 파일 §3 | `archive/web/saga-go-HANDOFF.md` |
+| 사가블로 | `saga-web/saga-dungeon/PLAN.md` §8 | 같은 파일 §3 | `archive/web/saga-dungeon-HANDOFF.md` |
+| 사가의숲 | `saga-web/saga-forest/PLAN.md` §8 | 같은 파일 §3 | `archive/web/saga-forest-HANDOFF.md` |
+| 사가스토리 | `saga-web/saga-story/PLAN.md` §8 | 같은 파일 §3 | `archive/web/saga-story-HANDOFF.md` |
+| 사가국지 | `saga-web/saga-realm/PLAN.md` §8 | 같은 파일 §3 | `archive/web/saga-realm-HANDOFF.md` |
+| saga-godot | `saga-godot/PLAN.md` | `saga-godot/docs/PROJECT_STATE.md` | `archive/godot/HISTORY.md` |
+| saga-unity | `saga-unity/PLAN.md` | `saga-unity/docs/PROJECT_STATE.md` | `archive/unity/HISTORY.md` |
 
 **도구**(편집기·생성기·점검·에셋 파이프라인)는 `tools/README.md` 한 장에 위치가 모여 있다.
 
 **3D 트랙 기준**(사용자 결정, `SAGA-DESIGN.md` §10): 3D 사가고는 Godot·Unity 둘 다 **원신 기준**(saga-godot PLAN 106장),
 saga-unity 전체는 **파이널 판타지·젤다 기준**. 이 둘은 "웹에서 검증된 것부터 옮긴다"의 예외다.
 
-옛 한눈에 표(판마다 8KB 짜리 이력 행)와 2026-08~09 세션 기록 89절은 `SAGA-HISTORY.md` ① 에 그대로 있다.
+옛 한눈에 표(판마다 8KB 짜리 이력 행)와 2026-08~09 세션 기록 89절은 `archive/SAGA-HISTORY.md` ① 에 그대로 있다.
 
 ## 다섯 게임 — 완전히 별개인 프로젝트
 
@@ -243,7 +243,7 @@ PC 묶음   각 폴더 build-pc.bat → dist/<게임>.html (다섯 판 공용 �
 ### 폰 화면을 헤드리스로 보는 법 — 옮김
 
 2026-08-26 에 알아낸 기법(뷰포트 500px 하한·터치 분기용 `--user-agent`·`_sfxcheck.html` 등)은
-`SAGA-HISTORY.md` ② 로 옮겼다. 2026-09-09 이후 **개발 중 헤드리스로 화면을 찍지 않는다**(루트 `CLAUDE.md`
+`archive/SAGA-HISTORY.md` ② 로 옮겼다. 2026-09-09 이후 **개발 중 헤드리스로 화면을 찍지 않는다**(루트 `CLAUDE.md`
 검증 절)는 규칙이 우선이라 여기서는 기법을 되풀이하지 않는다. `_test.html` `--dump-dom` 진단 한 번만 돈다.
 
 ## 밟아 본 함정 (되돌리면 그대로 재발한다)
@@ -368,7 +368,7 @@ PC 묶음   각 폴더 build-pc.bat → dist/<게임>.html (다섯 판 공용 �
 
 ## 이어서 하면 좋은 것 (열린 것만 — 2026-09-16 재편)
 
-세션별 서술과 완료 항목 원문은 전부 `SAGA-HISTORY.md` ④ 에 그대로 있다. 판별 상세 로드맵은 각 `PLAN.md` §8 이
+세션별 서술과 완료 항목 원문은 전부 `archive/SAGA-HISTORY.md` ④ 에 그대로 있다. 판별 상세 로드맵은 각 `PLAN.md` §8 이
 정본이고, 여기는 **판을 가로지르는 열린 항목**만 둔다.
 
 - **다섯 판 시나리오 구현(2026-09-26 사용자 "모든 프로젝트 이어할 항목에")** — 정본 `scenario/`(README + 판별 다섯, 과거·현대·미래 퓨전 필수). **웹은 다섯 판 모두 구현(2026-09-30 기준)** — 사가고 ⑲ 1~71(12부·2차/3차 결말 뒤까지)·사가블로 6막 19장·사가의숲 사계절+둘째 해 32장·사가스토리 5부 19장·사가국지 7막+열전·곁가지. 곁가지(정본 "곁가지 자리")도 판별로 구현. 3D 두 트랙은 `scenario/README.md` §7 진행표 참고(유니티가 웹 표를 스크립트로 옮기는 중). 남은 것은 새 시스템이 필요한 항목뿐 — 사가스토리 5차 전직·사가의숲 새 번들 갈래·사가국지 성 차지/설전/일기토 단계. 구현하면 `scenario/README.md` §7 진행표를 고친다.
@@ -445,5 +445,5 @@ PC 묶음   각 폴더 build-pc.bat → dist/<게임>.html (다섯 판 공용 �
 - `git add -A tools` (다른 세션 작업분을 삼킨다)
 - 업무 연동(Jira·커밋·QC → 공적) 먼저 제안하기 — "나중에 정하겠다"고 했다
 - 새 인물·괴물·무기 이름에 실명 쓰기(루트 `CLAUDE.md` 이름 정책) — `_test.html` 실명 블랙리스트 회귀 진단이
-  있지만 새 이름을 넣을 때는 사람이 한 번 더 훑는다(경위 `SAGA-HISTORY.md` ⑤)
+  있지만 새 이름을 넣을 때는 사람이 한 번 더 훑는다(경위 `archive/SAGA-HISTORY.md` ⑤)
 

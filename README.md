@@ -52,7 +52,7 @@
 | saga-realm | 31 | 3 | 28 | 0 | 0 | 0% | 31 | 초과 | 261/261 | - |
 <!-- status:end -->
 
-트랙마다 상세 상태는 `saga-godot/docs/PROJECT_STATE.md`·`saga-unity/docs/PROJECT_STATE.md`·판별 `HANDOFF.md` 에 있습니다.
+트랙마다 상세 상태는 `saga-godot/docs/PROJECT_STATE.md`·`saga-unity/docs/PROJECT_STATE.md`·`archive/web/<판>-HANDOFF.md` 에 있습니다.
 
 ## 앞으로
 
@@ -137,8 +137,8 @@ python -m http.server 8791      # Windows 에서 python 이 안 되면 py -m htt
 |---|---|
 | [`SAGA-DESIGN.md`](SAGA-DESIGN.md) | 다섯 판·세 트랙 공통 설계 — 재미 기준·참고 게임·그래픽·에셋·문서 규칙 |
 | [`SAGA-HANDOFF.md`](SAGA-HANDOFF.md) | 규칙·방향·함정(이어 받는 사람용) |
-| `SAGA-HISTORY.md` | 지난 경위(큰 문서 — 날짜·게임명으로 찾아 읽기) |
-| `saga-web/<판>/PLAN.md`·`README.md`·`HANDOFF.md` | 판별 계획 · 만든 것 · 이력 |
+| `archive/SAGA-HISTORY.md` | 지난 경위(큰 문서 — 날짜·게임명으로 찾아 읽기) |
+| `saga-web/<판>/PLAN.md`·`README.md` · `archive/web/<판>-HANDOFF.md` | 판별 계획 · 만든 것 · 이력 |
 | `saga-godot/`·`saga-unity/` 의 `PLAN.md`·`docs/` | 3D 트랙 계획 · 상태 · 이력 |
 | [`tools/README.md`](tools/README.md) | 저장소 전체 도구 목록 |
 

@@ -3,9 +3,9 @@
 다섯 게임을 Godot 4.x 3D 로 재구축하는 **완전히 새 프로젝트**. 정본은 이 폴더 `PLAN.md`.
 `saga-web/*`(웹 판)·`saga-unity/`(병행 트랙)는 건드리지 않는다.
 
-- 현재 상태 `docs/PROJECT_STATE.md`(≤15KB, 세션 끝에 **덮어쓴다**) · 세션 이력 `docs/HISTORY.md`(600KB+, append-only, **grep 으로만**) · 구조 `docs/ARCHITECTURE.md` · 실기 조작법 `docs/HOW_TO_PLAYTEST.md`
-- **`PLAN.md`(장은 `# N.` H1)·`HISTORY.md`·`VERTICAL_SLICE_*.md` 는 통째로 읽지 않는다.** 목차 grep 후 필요한 장·날짜만 `sed -n` 으로 읽는다. PLAN 0장(읽는 법)부터.
-- 세션 기록은 `docs/HISTORY.md` 에만 append 한다(항목 15줄 이내). `PLAN.md` 는 결정이 바뀔 때만 고치고 날짜 세션 기록을 넣지 않는다. 상위 문서 `../SAGA-DESIGN.md`.
+- 현재 상태 `docs/PROJECT_STATE.md`(≤15KB, 세션 끝에 **덮어쓴다**) · 세션 이력 `archive/godot/HISTORY.md`(600KB+, 보관·**grep 으로만**) · 구조 `docs/ARCHITECTURE.md` · 실기 조작법 `docs/HOW_TO_PLAYTEST.md`
+- **`PLAN.md`(장은 `# N.` H1)·`archive/godot/` 의 `HISTORY.md`·`VERTICAL_SLICE_*.md` 는 통째로 읽지 않는다.** 목차 grep 후 필요한 장·날짜만 `sed -n` 으로 읽는다. PLAN 0장(읽는 법)부터.
+- 세션 기록은 티켓 메모·커밋 메시지에 남긴다(`archive/godot/HISTORY.md` 는 append 하지 않는다). `PLAN.md` 는 결정이 바뀔 때만 고치고 날짜 세션 기록을 넣지 않는다. 상위 문서 `../SAGA-DESIGN.md`.
 - 사용자가 실기 테스트 방법을 물으면 `HOW_TO_PLAYTEST.md` 를 가리키고, 새 입력 액션이 생기면 거기에 반영한다.
 
 ## Godot 실행 파일 — PC 마다 다르다

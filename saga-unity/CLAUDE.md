@@ -4,8 +4,8 @@
 `saga-godot/` 과 나란히 가는 **병행 트랙**이다 — 대체가 아니고, saga-godot 의 "Godot 유지" 결정을 뒤집는 것도 아니다(관계는 `PLAN.md` 0장).
 `saga-web/*`(웹 판)·`saga-godot/` 은 건드리지 않는다. 코드 공유 없음.
 
-- 현재 상태 `docs/PROJECT_STATE.md`(≤15KB, 세션 끝에 **덮어쓴다**) · 세션 이력 `docs/HISTORY.md`(append-only, 날짜·게임명 grep 으로만) · 실기 조작법 `docs/HOW_TO_PLAYTEST.md`(saga-godot 의 같은 이름 문서와 짝, 내용은 안 섞는다)
-- **`PLAN.md`(≈82KB, 긴 스펙은 `docs/spec/`)·`HISTORY.md`·`ASSET_GUIDE.md`·`VERTICAL_SLICE_*.md` 는 통째로 읽지 않는다.** 목차 grep 후 필요한 장·날짜만 `sed -n` 으로 읽는다. PLAN 은 0장(읽는 법)부터. 장 번호는 바꾸지 않는다.
+- 현재 상태 `docs/PROJECT_STATE.md`(≤15KB, 세션 끝에 **덮어쓴다**) · 세션 이력 `archive/unity/HISTORY.md`(보관, 날짜·게임명 grep 으로만) · 실기 조작법 `docs/HOW_TO_PLAYTEST.md`(saga-godot 의 같은 이름 문서와 짝, 내용은 안 섞는다)
+- **`PLAN.md`(≈82KB, 긴 스펙은 `docs/spec/`)·`archive/unity/HISTORY.md`·`ASSET_GUIDE.md`·`VERTICAL_SLICE_*.md` 는 통째로 읽지 않는다.** 목차 grep 후 필요한 장·날짜만 `sed -n` 으로 읽는다. PLAN 은 0장(읽는 법)부터. 장 번호는 바꾸지 않는다.
 - 세션 기록은 `HISTORY.md` 에만 append, `PROJECT_STATE.md` 는 덮어쓰기, `PLAN.md` 는 결정이 바뀔 때만. 아트 방향은 **사실적 PBR**(PLAN 66-2·102장) — 공통 문서 `../SAGA-DESIGN.md` §6 의 툰 항목은 이 트랙에 적용하지 않는다.
 - 레거시 기획 감사는 새로 하지 않는다 — `saga-godot/docs/LEGACY_FEATURE_AUDIT.md` 를 그대로 참고(`PLAN.md` 4장).
 - 사용자가 실기 테스트 방법을 물으면 `HOW_TO_PLAYTEST.md` 를 가리키고, 새 키 배선이 생기면 거기에 반영한다.
