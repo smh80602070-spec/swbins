@@ -1,0 +1,140 @@
+{
+ "note": "정본 saga-assets/ → 트랙 폴더 배포 표. 웹·고돗·유니티 갈래는 에셋을 안 고친다(K-0019). 규칙은 tools/asset-place/place.py 머리말.",
+ "items": [
+  {
+   "id": "bgm",
+   "src": "saga-assets/bgm",
+   "include": [
+    "*.ogg",
+    "*.license.json"
+   ],
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/audio/bgm"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/audio/bgm",
+     "sidecar": [
+      ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Audio/Bgm",
+     "sidecar": [
+      ".meta"
+     ]
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-go/assets/audio/bgm",
+     "rename": {
+      "go-field.ogg": "saga-go-field.ogg",
+      "go-battle.ogg": "saga-go-battle.ogg"
+     }
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/audio/bgm",
+     "rename": {
+      "dungeon-town.ogg": "saga-dungeon-town.ogg",
+      "dungeon-field.ogg": "saga-dungeon-field.ogg",
+      "dungeon-battle.ogg": "saga-dungeon-battle.ogg"
+     }
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/audio/bgm",
+     "rename": {
+      "realm-town.ogg": "saga-realm-town.ogg",
+      "realm-field.ogg": "saga-realm-field.ogg",
+      "realm-battle.ogg": "saga-realm-battle.ogg"
+     }
+    }
+   ]
+  },
+  {
+   "id": "patterns",
+   "src": "saga-assets/patterns",
+   "include": [
+    "*"
+   ],
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/patterns"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/wardrobe/patterns",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sprites2d",
+   "src": "saga-assets/sprites2d",
+   "include": [
+    "*.webp",
+    "manifest.json"
+   ],
+   "recursive": true,
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-go/assets/sprites2d_sheets",
+     "only": [
+      "pool_f_human_139",
+      "pool_g_human_147",
+      "pool_e_demon_128",
+      "pool_e_undead_127"
+     ]
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-dungeon/assets/sprites2d_sheets",
+     "only": [
+      "pool_basem_demon_104",
+      "pool_e_orc_125",
+      "pool_d_goblin_118",
+      "pool_g_undead_143"
+     ]
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-forest/assets/sprites2d_sheets",
+     "only": [
+      "pool_f_elder_137",
+      "pool_basem_elder_105",
+      "pool_f_teen_138",
+      "pool_basef_child_116"
+     ]
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-story/assets/sprites2d_sheets",
+     "only": [
+      "pool_f_demon_136",
+      "pool_g_orc_141",
+      "pool_e_goblin_126",
+      "pool_basef_undead_111"
+     ]
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/sprites2d_sheets",
+     "only": [
+      "pool_basem_human_107",
+      "pool_e_human_131",
+      "pool_d_human_123",
+      "pool_basef_human_115"
+     ]
+    }
+   ]
+  }
+ ]
+}

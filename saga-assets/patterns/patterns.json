@@ -1,0 +1,646 @@
+{
+ "note": "K-0006 옷 무늬 타일 64종. 표시 이름은 가명·일반명사. 기존 32종의 한국어 이름은 tools/char-forge/make_wardrobe_textures.py KO.",
+ "count": 64,
+ "patterns": [
+  {
+   "id": "bamboo_green",
+   "era": "past",
+   "name": "bamboo_green",
+   "file": "bamboo_green.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.32,
+   "kb": 15
+  },
+  {
+   "id": "batik_indigo",
+   "era": "past",
+   "name": "batik_indigo",
+   "file": "batik_indigo.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.18,
+   "kb": 26
+  },
+  {
+   "id": "brocade_gold",
+   "era": "past",
+   "name": "brocade_gold",
+   "file": "brocade_gold.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.29,
+   "kb": 34
+  },
+  {
+   "id": "buffalo_plaid",
+   "era": "modern",
+   "name": "buffalo_plaid",
+   "file": "buffalo_plaid.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 0.51,
+   "kb": 17
+  },
+  {
+   "id": "camo_green",
+   "era": "modern",
+   "name": "camo_green",
+   "file": "camo_green.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 0.98,
+   "kb": 22
+  },
+  {
+   "id": "canvas_beige",
+   "era": "past",
+   "name": "canvas_beige",
+   "file": "canvas_beige.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.29,
+   "kb": 5
+  },
+  {
+   "id": "carbon_weave",
+   "era": "future",
+   "name": "carbon_weave",
+   "file": "carbon_weave.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.05,
+   "kb": 13
+  },
+  {
+   "id": "checker_bw",
+   "era": "modern",
+   "name": "checker_bw",
+   "file": "checker_bw.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.21,
+   "kb": 19
+  },
+  {
+   "id": "circuit_neon",
+   "era": "future",
+   "name": "circuit_neon",
+   "file": "circuit_neon.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 27
+  },
+  {
+   "id": "coins_maroon",
+   "era": "past",
+   "name": "coins_maroon",
+   "file": "coins_maroon.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 0.52,
+   "kb": 25
+  },
+  {
+   "id": "cyber_gradient",
+   "era": "future",
+   "name": "cyber_gradient",
+   "file": "cyber_gradient.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.31,
+   "kb": 9
+  },
+  {
+   "id": "damask_crimson",
+   "era": "past",
+   "name": "damask_crimson",
+   "file": "damask_crimson.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.19,
+   "kb": 18
+  },
+  {
+   "id": "denim_worn",
+   "era": "modern",
+   "name": "denim_worn",
+   "file": "denim_worn.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.11,
+   "kb": 11
+  },
+  {
+   "id": "ethnic_geo",
+   "era": "modern",
+   "name": "ethnic_geo",
+   "file": "ethnic_geo.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.25,
+   "kb": 38
+  },
+  {
+   "id": "floral_blue",
+   "era": "modern",
+   "name": "floral_blue",
+   "file": "floral_blue.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.04,
+   "kb": 30
+  },
+  {
+   "id": "heraldic_blue_gold",
+   "era": "past",
+   "name": "heraldic_blue_gold",
+   "file": "heraldic_blue_gold.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 29
+  },
+  {
+   "id": "herringbone_camel",
+   "era": "past",
+   "name": "herringbone_camel",
+   "file": "herringbone_camel.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.13,
+   "kb": 15
+  },
+  {
+   "id": "holo_iridescent",
+   "era": "future",
+   "name": "holo_iridescent",
+   "file": "holo_iridescent.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.1,
+   "kb": 7
+  },
+  {
+   "id": "lace_white",
+   "era": "past",
+   "name": "lace_white",
+   "file": "lace_white.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.24,
+   "kb": 14
+  },
+  {
+   "id": "leather_brown",
+   "era": "past",
+   "name": "leather_brown",
+   "file": "leather_brown.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.19,
+   "kb": 10
+  },
+  {
+   "id": "leather_studs",
+   "era": "modern",
+   "name": "leather_studs",
+   "file": "leather_studs.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.1,
+   "kb": 14
+  },
+  {
+   "id": "linen_stripes",
+   "era": "past",
+   "name": "linen_stripes",
+   "file": "linen_stripes.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.05,
+   "kb": 6
+  },
+  {
+   "id": "sakura_pink",
+   "era": "past",
+   "name": "sakura_pink",
+   "file": "sakura_pink.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.06,
+   "kb": 4
+  },
+  {
+   "id": "scale_silver",
+   "era": "past",
+   "name": "scale_silver",
+   "file": "scale_silver.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.41,
+   "kb": 25
+  },
+  {
+   "id": "silk_red_gold",
+   "era": "past",
+   "name": "silk_red_gold",
+   "file": "silk_red_gold.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.19,
+   "kb": 30
+  },
+  {
+   "id": "starry_night",
+   "era": "modern",
+   "name": "starry_night",
+   "file": "starry_night.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.04,
+   "kb": 26
+  },
+  {
+   "id": "stripes_pastel",
+   "era": "modern",
+   "name": "stripes_pastel",
+   "file": "stripes_pastel.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 4
+  },
+  {
+   "id": "sunflower",
+   "era": "modern",
+   "name": "sunflower",
+   "file": "sunflower.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.03,
+   "kb": 24
+  },
+  {
+   "id": "tartan_green",
+   "era": "past",
+   "name": "tartan_green",
+   "file": "tartan_green.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 0.43,
+   "kb": 16
+  },
+  {
+   "id": "tweed_grey",
+   "era": "modern",
+   "name": "tweed_grey",
+   "file": "tweed_grey.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.22,
+   "kb": 9
+  },
+  {
+   "id": "velvet_purple",
+   "era": "past",
+   "name": "velvet_purple",
+   "file": "velvet_purple.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 24
+  },
+  {
+   "id": "waves_teal",
+   "era": "modern",
+   "name": "waves_teal",
+   "file": "waves_teal.webp",
+   "model": "animagine-xl-4.0-opt",
+   "seam": "offset",
+   "edge_ratio": 1.14,
+   "kb": 18
+  },
+  {
+   "id": "argyle_green",
+   "era": "modern",
+   "name": "초록 아가일",
+   "file": "argyle_green.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.19,
+   "kb": 30
+  },
+  {
+   "id": "aurora_gradient",
+   "era": "future",
+   "name": "오로라 그라데이션",
+   "file": "aurora_gradient.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.14,
+   "kb": 6
+  },
+  {
+   "id": "bio_mesh_green",
+   "era": "future",
+   "name": "녹색 생체 그물",
+   "file": "bio_mesh_green.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 0.94,
+   "kb": 24
+  },
+  {
+   "id": "ceramic_armor_white",
+   "era": "future",
+   "name": "흰 도자 갑옷",
+   "file": "ceramic_armor_white.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 0.17,
+   "kb": 14
+  },
+  {
+   "id": "corduroy_brown",
+   "era": "modern",
+   "name": "갈색 코듀로이",
+   "file": "corduroy_brown.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.22,
+   "kb": 3
+  },
+  {
+   "id": "crest_crane_gold",
+   "era": "crest",
+   "name": "금 학 문장",
+   "file": "crest_crane_gold.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 22
+  },
+  {
+   "id": "crest_moon_silver",
+   "era": "crest",
+   "name": "은빛 달별 문장",
+   "file": "crest_moon_silver.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 25
+  },
+  {
+   "id": "crest_sun_red",
+   "era": "crest",
+   "name": "붉은 해 문장",
+   "file": "crest_sun_red.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 37
+  },
+  {
+   "id": "crest_wave_blue",
+   "era": "crest",
+   "name": "푸른 물결 문장",
+   "file": "crest_wave_blue.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.28,
+   "kb": 23
+  },
+  {
+   "id": "crimson_felt",
+   "era": "past",
+   "name": "진홍 펠트",
+   "file": "crimson_felt.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.2,
+   "kb": 2
+  },
+  {
+   "id": "data_stream_blue",
+   "era": "future",
+   "name": "푸른 데이터 흐름",
+   "file": "data_stream_blue.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 0.97,
+   "kb": 18
+  },
+  {
+   "id": "fiber_optic_weave",
+   "era": "future",
+   "name": "광섬유 직조",
+   "file": "fiber_optic_weave.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 0.94,
+   "kb": 21
+  },
+  {
+   "id": "graphene_black",
+   "era": "future",
+   "name": "검은 그래핀",
+   "file": "graphene_black.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 0.53,
+   "kb": 16
+  },
+  {
+   "id": "hex_plate_white",
+   "era": "future",
+   "name": "흰 육각 판",
+   "file": "hex_plate_white.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 18
+  },
+  {
+   "id": "hologram_scanlines",
+   "era": "future",
+   "name": "홀로 주사선",
+   "file": "hologram_scanlines.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 10
+  },
+  {
+   "id": "houndstooth_grey",
+   "era": "modern",
+   "name": "회색 하운드투스",
+   "file": "houndstooth_grey.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 30
+  },
+  {
+   "id": "indigo_ikat",
+   "era": "past",
+   "name": "쪽빛 이캇",
+   "file": "indigo_ikat.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 0.82,
+   "kb": 30
+  },
+  {
+   "id": "ion_glow_orange",
+   "era": "future",
+   "name": "주황 이온 줄기",
+   "file": "ion_glow_orange.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 4
+  },
+  {
+   "id": "jade_peony_silk",
+   "era": "past",
+   "name": "옥빛 모란 비단",
+   "file": "jade_peony_silk.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.56,
+   "kb": 22
+  },
+  {
+   "id": "knit_cream",
+   "era": "modern",
+   "name": "크림 꽈배기 뜨개",
+   "file": "knit_cream.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.13,
+   "kb": 16
+  },
+  {
+   "id": "liquid_metal_chrome",
+   "era": "future",
+   "name": "액체 금속",
+   "file": "liquid_metal_chrome.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 28
+  },
+  {
+   "id": "nano_scale_blue",
+   "era": "future",
+   "name": "푸른 나노 비늘",
+   "file": "nano_scale_blue.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.46,
+   "kb": 27
+  },
+  {
+   "id": "neon_grid_pink",
+   "era": "future",
+   "name": "분홍 네온 격자",
+   "file": "neon_grid_pink.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 7
+  },
+  {
+   "id": "ochre_hemp",
+   "era": "past",
+   "name": "황토 삼베",
+   "file": "ochre_hemp.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.1,
+   "kb": 17
+  },
+  {
+   "id": "paisley_teal",
+   "era": "modern",
+   "name": "청록 페이즐리",
+   "file": "paisley_teal.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.26,
+   "kb": 29
+  },
+  {
+   "id": "pinstripe_charcoal",
+   "era": "modern",
+   "name": "숯빛 세로줄",
+   "file": "pinstripe_charcoal.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 2
+  },
+  {
+   "id": "plasma_veins_violet",
+   "era": "future",
+   "name": "보랏빛 플라즈마",
+   "file": "plasma_veins_violet.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 31
+  },
+  {
+   "id": "polka_navy",
+   "era": "modern",
+   "name": "남색 물방울",
+   "file": "polka_navy.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 38
+  },
+  {
+   "id": "quantum_dots_gold",
+   "era": "future",
+   "name": "금빛 양자점",
+   "file": "quantum_dots_gold.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 0.48,
+   "kb": 29
+  },
+  {
+   "id": "sequin_black",
+   "era": "modern",
+   "name": "검은 스팽글",
+   "file": "sequin_black.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.18,
+   "kb": 26
+  },
+  {
+   "id": "smart_fabric_ripple",
+   "era": "future",
+   "name": "은빛 물결 스마트 천",
+   "file": "smart_fabric_ripple.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "offset",
+   "edge_ratio": 1.41,
+   "kb": 12
+  },
+  {
+   "id": "solar_panel_dark",
+   "era": "future",
+   "name": "태양 전지판",
+   "file": "solar_panel_dark.webp",
+   "model": "sd_xl_base_1.0",
+   "seam": "mirror",
+   "edge_ratio": 0.0,
+   "kb": 23
+  }
+ ]
+}
