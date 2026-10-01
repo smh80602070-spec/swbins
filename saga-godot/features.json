@@ -155,8 +155,10 @@
   "id": "gd.go.defeat-cost",
   "name": "101-2 ③패배 비용·회수",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "defeat"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
