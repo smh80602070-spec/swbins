@@ -1200,8 +1200,10 @@
   "id": "un.rk.library",
   "name": "서고",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestRealmLibrary"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
