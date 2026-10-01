@@ -175,6 +175,7 @@ namespace Saga.EditorTools
                     StorySkillState.Restore(null, null); // 101-2 5-2 1단계 — 위와 같은 이유.
                     // PLAN.md 109-16 — 새 판 첫 장면(허창 들판의 두목)이 다른 진단 앞에서 상자를 열지 않게 끈다. 시나리오 진단이 스스로 켜고 되돌린다.
                     StoryScenario.Enabled = false; StoryScenario.AbortScene(); StoryScenarioUi.Instance?.Hide();
+                    Saga.Story.Data.StoryTutorial.Enabled = false; // tasks U-0020 — 목표판 진단이 첫 줄을 "지금 —" 로 기대한다
                     if (!CheckButtonWiring()) { Fail(); return; }
                     if (!CheckSettingsPanel()) { Fail(); return; }
                     if (!CheckPlayerHudLocalization()) { Fail(); return; }

@@ -100,6 +100,9 @@ namespace Saga.Story.Data
             public string scenarioJson;
             public string[] folkStoryIds; // 곁가지 — 들판 시대 손님 사연을 들은 토막 수(버전 그대로: 옛 세이브는 null → 처음부터)
             public int[] folkStoryCounts;
+            // tasks U-0020 첫걸음 — 버전 그대로. JsonUtility 는 없는 List 를 null 이 아닌 빈 목록으로 읽으므로 `tutV`(0=없는 세이브)로 옛 세이브를 가른다.
+            public int tutV;
+            public List<string> tutDone;
         }
 
         public static bool Save()
@@ -148,6 +151,8 @@ namespace Saga.Story.Data
                 scenarioJson = StoryScenario.Snapshot(),
             };
             StoryEras.SnapshotStories(out data.folkStoryIds, out data.folkStoryCounts);
+            data.tutV = 1;
+            data.tutDone = StoryTutorial.Ids();
             return JsonUtility.ToJson(data);
         }
 
@@ -192,6 +197,7 @@ namespace Saga.Story.Data
             StoryPartyState.Restore(data.partyActiveIndex);
             StorySkillState.Restore(data.skillKeys, data.skillLevels, data.skillPins);
             StoryMounts.Restore(data.mountSel);
+            StoryTutorial.Restore(data.tutV == 0 ? StoryTutorial.AllIds() : data.tutDone); // tasks U-0020 — 없는 세이브는 옛 세이브라 전부 끝난 것으로
             StoryEras.RestoreStories(data.folkStoryIds, data.folkStoryCounts);
             if (string.IsNullOrEmpty(data.scenarioJson)) StoryScenario.RestoreLegacy(StoryJobState.Level, StoryJobState.HasJob);
             else StoryScenario.Restore(data.scenarioJson);

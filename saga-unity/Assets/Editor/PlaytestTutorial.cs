@@ -6,11 +6,13 @@ using GoTut = Saga.Go.Data.GoTutorial;
 using DungeonTut = Saga.Dungeon.Data.DungeonTutorial;
 using GoSave = Saga.Go.Data.SaveState;
 using DungeonSave = Saga.Dungeon.Data.SaveState;
+using StoryTut = Saga.Story.Data.StoryTutorial;
+using StorySave = Saga.Story.Data.StorySaveState;
 
 namespace Saga.EditorTools
 {
     /// <summary>
-    /// 첫 10분 사명 진단(tasks U-0013) — ① `TutorialSteps` 순서·건너뛰기·끄기·세이브 왕복(가짜 판정) ② GO·DUNGEON 단계 표(다섯·id 중복 0)
+    /// 첫 10분 사명 진단(tasks U-0013) — ① `TutorialSteps` 순서·건너뛰기·끄기·세이브 왕복(가짜 판정) ② GO·DUNGEON·STORY 단계 표(다섯·id 중복 0)
     /// ③ 옛 세이브(v28/v14)는 `Line()==null`, 새 게임 기본값은 `Line()!=null`.
     /// `-executeMethod Saga.EditorTools.PlaytestTutorial.Run` → "[PlaytestTutorial] OK/FAIL".
     /// </summary>
@@ -20,7 +22,7 @@ namespace Saga.EditorTools
         public static void Run()
         {
             PlaytestKit.Begin("[PlaytestTutorial]");
-            bool goOn = GoTut.Enabled, dgOn = DungeonTut.Enabled;
+            bool goOn = GoTut.Enabled, dgOn = DungeonTut.Enabled, stOn = StoryTut.Enabled;
             using (PlaytestKit.IsolatedSaves())
             using (PlaytestKit.ErrorCounter())
             {
@@ -28,14 +30,15 @@ namespace Saga.EditorTools
                 {
                     CheckEngine();
                     CheckTables();
-                    GoTut.Enabled = true; DungeonTut.Enabled = true;
+                    GoTut.Enabled = true; DungeonTut.Enabled = true; StoryTut.Enabled = true;
                     CheckVersions("GO", GoSave.ToJson(), GoSave.ApplyJson, () => GoTut.Line());
                     CheckVersions("DUNGEON", DungeonSave.ToJson(), DungeonSave.ApplyJson, () => DungeonTut.Line());
+                    CheckStorySave();
                 }
                 finally
                 {
-                    GoTut.Restore(null); DungeonTut.Restore(null);
-                    GoTut.Enabled = goOn; DungeonTut.Enabled = dgOn;
+                    GoTut.Restore(null); DungeonTut.Restore(null); StoryTut.Restore(null);
+                    GoTut.Enabled = goOn; DungeonTut.Enabled = dgOn; StoryTut.Enabled = stOn;
                 }
             }
             PlaytestKit.Summary("PlaytestTutorial");
@@ -75,6 +78,7 @@ namespace Saga.EditorTools
         {
             CheckIds("GO", GoTut.AllIds());
             CheckIds("DUNGEON", DungeonTut.AllIds());
+            CheckIds("STORY", StoryTut.AllIds());
         }
 
         private static void CheckIds(string tag, List<string> ids)
@@ -93,6 +97,21 @@ namespace Saga.EditorTools
             PlaytestKit.Check(line() == null, $"{tag} 옛 세이브인데 첫걸음 줄이 남음 '{line()}'");
             PlaytestKit.Check(apply(cur), $"{tag} 새 게임 기본값이 다시 안 읽힘");
             PlaytestKit.Check(line() != null, $"{tag} 새 게임으로 되돌렸는데 첫걸음 줄이 없음");
+        }
+
+        // STORY 는 세이브 버전을 안 올린다(새 칸 `tutV` — 0(없는 세이브)이 옛 세이브). 칸을 지워 옛 세이브를 흉내 낸다.
+        private static void CheckStorySave()
+        {
+            string cur = StorySave.ToJson();
+            PlaytestKit.Check(cur.Contains("\"tutV\":1"), "STORY 새 게임 기본값에 tutV 가 없음");
+            PlaytestKit.Check(StorySave.ApplyJson(cur), "STORY 새 게임 기본값이 안 읽힘");
+            PlaytestKit.Check(StoryTut.Line() != null, "STORY 새 게임인데 첫걸음 줄이 없음");
+            string old = System.Text.RegularExpressions.Regex.Replace(cur, @",""tutV"":1", "");
+            PlaytestKit.Check(old != cur, "STORY 옛 세이브 흉내(tutV 제거)가 안 됨");
+            PlaytestKit.Check(StorySave.ApplyJson(old), "STORY tutDone 없는 세이브가 안 읽힘");
+            PlaytestKit.Check(StoryTut.Line() == null, $"STORY 옛 세이브인데 첫걸음 줄이 남음 '{StoryTut.Line()}'");
+            PlaytestKit.Check(StorySave.ApplyJson(cur), "STORY 새 게임 기본값이 다시 안 읽힘");
+            PlaytestKit.Check(StoryTut.Line() != null, "STORY 새 게임으로 되돌렸는데 첫걸음 줄이 없음");
         }
 
         private static int ReadVersion(string json)

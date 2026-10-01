@@ -97,6 +97,8 @@ namespace Saga.Story.UI
 
         public string GoalLineNow()
         {
+            var tut = StoryTutorial.Line(); // tasks U-0020 — 첫걸음 사명이 첫 줄을 쓴다(끝나면 null)
+            if (tut != null) return tut;
             if (_player == null) return "-";
 
             StoryEnemy nearest = null;
