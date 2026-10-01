@@ -450,3 +450,13 @@
     }
   };
 })(window);
+
+/* 판별 후처리 설정 — saga-web/shared/js/post3d.js 가 읽는다(이 판만 MEDIUM 등급을 LOW 쪽으로 낮춘다) */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  /* 사가블로가 폰 실기기 재신고로 맞춘 값을 그대로 물려받는다 — AUTO 등급이 MEDIUM 으로 오갈 때 렌더 타깃 재생성으로 프레임이 멎는 것을
+     막으려 MEDIUM 의 몫을 LOW 에 가깝게 낮춘다. */
+  global.DG.cfg.post = { medium: { post: 1, mips: 2, msaa: 0, scale: 0.65 } };
+})(window);

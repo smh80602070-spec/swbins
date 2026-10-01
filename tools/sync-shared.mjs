@@ -25,7 +25,8 @@ const FILES = [
   ['build/build-single.mjs', 'build/build-single.mjs'],
   ['js/errlog.js', 'js/errlog.js'],
   ['js/bgm.js', 'js/bgm.js', ['saga-forest', 'saga-story']],
-  ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
+  ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
+  ['js/post3d.js', 'js/post3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
 ];
 const check = process.argv.includes('--check');
 /** 줄바꿈(CRLF/LF)은 git autocrlf 가 판마다 따로 바꾸므로 정규화해서 비교한다 */

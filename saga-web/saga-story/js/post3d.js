@@ -1,21 +1,27 @@
 /**
- * 후처리 — 톤매핑 · 블룸 · 색보정 (PLAN.md 24절)
+ * 후처리 — 톤매핑 · 블룸 · 색보정 (그래픽 보강 16~18절)
+ *
+ * **정본은 saga-web/shared/js/post3d.js** — 판별 복사본은 tools/sync-shared.mjs 가 만든다(직접 고치지 않는다).
+ * 판마다 다른 것은 MEDIUM 등급의 몫뿐이다 — 기본은 사가고 값이고, 더 낮게 잡은 판(사가블로·사가스토리)은
+ * `core.js` 끝에서 `DG.cfg.post = { medium: { post, mips, msaa, scale } }` 로 준다. 판마다 달랐던 머리 설명(사가블로·사가스토리 판의
+ * 이식 사정·카메라 사정)은 git 이력의 옛 판별 post3d.js 에 있다.
  * ---------------------------------------------------------------
- * `saga-dungeon/js/post3d.js`(그 앞선 사가고)를 그대로 옮겨 온 것이다 — 렌더
- * 타깃 순서·톤매핑 곡선 선택 등 여기 적힌 교훈은 three.js 자체의 사정이라
- * 판이 달라도 그대로 유효하다. 이 판(옆에서 보는 사냥터, 무드는 해 고도가
- * 아니라 `mood`(forest·cave·fire·sky) 하나로 정해진다)에 맞춰 바뀐 자리는
- * 아래 "이 판에 맞춘 자리" 절만 참고하면 된다.
+ * 3D 는 PHASE 1~13 으로 다 섰는데, 화면에 **마지막 한 겹**이 없었다. 그린 그림을
+ * 그대로 캔버스에 낸다 — 밝은 것이 번지지 않고, 밝기 곡선이 없어 한낮은 들뜨고
+ * 밤은 뭉갠다. 등롱 전구가 밤에 **1픽셀짜리 노란 점**으로만 찍히던 것이 그 탓이다.
+ *
+ * `saga-go 3D graphics up.md` 17절이 준 순서가 과녁이다:
  *
  *   1 Tone Mapping   ← 여기 (**ACES 가 아니다.** 아래 '어느 곡선인가')
  *   2 Bloom          ← 여기
- *   3 Vignette       ← 안 넣는다 — 이 판에는 아직 CSS 비네트가 없다(넣게 되면
- *                       셰이더 쪽엔 손대지 말 것, 두 겹이 되면 화면 네 귀가 새까매진다)
+ *   3 Vignette       ← **이미 있다**(`css/style.css` 의 `#vignette`). 셰이더에 또
+ *                       넣으면 두 겹이 되어 화면 네 귀가 새까매진다. 손대지 않았다
  *   4 Color Grading  ← 여기 (채도 · 색온도 · 검은 자리 들기)
  *   5 Anti Aliasing  ← **지키는 쪽**이다. 아래 'MSAA' 참고
  *   6 SSAO           ← 다음 단계. 씬을 한 번 더 그려야 해서 따로 뗀다
- *   7 Depth of Field ← 안 넣는다. 횡스크롤 카메라라 원근이 얕고, 사람·몹이
- *                       늘 화면 앞쪽 초점 안에 있다 — 넣으면 흐린 것만 늘어난다
+ *   7 Depth of Field ← 안 넣는다. 이 판의 카메라는 45~60° 로 멀리서 내려다보므로
+ *                       초점 밖이 없다 — 넣으면 흐린 것만 늘고 17절의 "게임 화면이
+ *                       선명해야 한다" 와 부딪힌다
  *
  * ── three 코어만 쓴다 ────────────────────────────────────
  *
@@ -43,18 +49,17 @@
  * 끄면 그때마다 씬의 모든 셰이더가 다시 컴파일돼 화면이 한 박자 멎는다
  * (`syncShadow` 가 경계에서 한 번만 갈아 끼우는 그 이유와 같다).
  * 후처리를 끈 자리(LOW 등급 · 손잡이 0)에서도 톤매핑은 그대로 걸린다 —
- * 캔버스에 바로 그리는 길이라 three 가 알아서 건다. **톤매핑은 후처리 on/off 와 무관하게 늘 켜져 있다.**
+ * 캔버스에 바로 그리는 길이라 three 가 알아서 건다. **17절 1번은 늘 켜져 있다.**
  *
  * ── 어느 곡선인가 — ACES 로 갔다가 물러섰다 ──────────────
  *
- * 처음에 `ACESFilmicToneMapping` 으로 걸었다(사가블로에서 겪은 그대로다).
- * **어두운 무드(cave·fire)가 망가졌다.** 하늘이 옅은 파랑으로 들려 올라가고
- * 그 앞은 그대로 검어서 화면이 통째로 흐려졌다.
+ * 처음에 `ACESFilmicToneMapping` 으로 걸었다. **밤 화면이 망가졌다.** 하늘이
+ * 옅은 파랑으로 들려 올라가고 그 앞의 지붕은 그대로 검어서, 마을이 통째로
+ * 사라졌다. 등롱의 노란 불은 흰 점이 됐다. 둘을 나란히 찍어 보고서야 알았다.
  *
- * 까닭은 분명하다 — **이 판의 색도 이미 화면색으로 손으로 맞춰 둔 것**이다.
- * `side-view3d.js` 의 `moodLight()` 가 내는 `sky`·`dirCol`(사냥터 무드별 하늘·
- * 직사광 색)은 앞선 세션들이 캔버스에 바로 그린 그림을 눈으로 보며 고른 값이다.
- * ACES 는 밝은 실사 장면(1.0 을 훌쩍 넘는 값이 흔한
+ * 까닭은 분명하다 — **이 판의 색은 이미 화면색으로 손으로 맞춰 둔 것**이다.
+ * `lightingAt` 의 `bg`·`hemi`·`sun` 은 앞선 세션들이 캔버스에 바로 그린 그림을
+ * 눈으로 보며 고른 값이다. ACES 는 밝은 실사 장면(1.0 을 훌쩍 넘는 값이 흔한
  * 곳)을 화면에 맞추려고 중간 아래를 눌러 놓는 곡선이라, 이미 맞아 있는 그림에
  * 한 번 더 걸면 대비가 뒤집힌다. 게다가 `/0.6` 이 안에 박혀 있어 노출을 1 로
  * 두어도 실제로는 1.67 배다.
@@ -77,7 +82,7 @@
  *
  * `WebGLRenderer({ antialias: true })` 는 **캔버스의** 기본 프레임버퍼에만 걸린다.
  * 렌더 타깃으로 우회하는 순간 그 혜택이 사라져 지붕 모서리가 톱니가 된다.
- * `rt.samples` 로 되살린다(등급마다 4 · 2 · 0). 안티앨리어싱은 새로 얻는 것이 아니라
+ * `rt.samples` 로 되살린다(등급마다 4 · 2 · 0). 17절 5번은 새로 얻는 것이 아니라
  * **잃지 않는 것**이다.
  *
  * ── 블룸은 어떻게 흐리나 ─────────────────────────────────
@@ -92,13 +97,12 @@
  * 문턱은 **무릎(knee)을 둔 부드러운 문턱**이다. 딱 잘라내면 밝기가 조금 흔들릴 때
  * 화소가 문턱을 넘나들며 블룸이 껌뻑인다(걷는 화면에서 바로 보인다).
  *
- * ── PLAN 24절 "강한 빛에만" ───────────────────────────────
+ * ── 18절 "강한 빛에만" ───────────────────────────────────
  *
- * 문턱을 선형 0.9 근처에 둔다. 이 판에서 그 위로 올라가는 것은 **횃불 머리
- * (PLAN 22절, `side-view3d.js` 의 `torch()`) · 불타는 골짜기의 `flame()`
- * 원뿔**뿐이다(둘 다 unlit `MeshBasicMaterial` 이라 조명과 무관하게 밝다).
- * 햇빛 받은 풀밭·흙길은 0.5~0.8 에 머물러 안 번진다 — 재질 값을 한 줄도
- * 안 고치고 "강한 빛에만" 이 지켜졌다.
+ * 문턱을 선형 0.9 근처에 둔다. 이 판에서 그 위로 올라가는 것은
+ * **등롱 전구 · 사당 구슬 · 후광 · 빛기둥 · 가산 혼합으로 그린 검기**뿐이다
+ * (`pmat(hex,'glow')` 와 `battle3d` 의 `AdditiveBlending`). 햇빛 받은 지붕·흙길은
+ * 0.5~0.8 에 머물러 안 번진다 — 재질 값을 한 줄도 안 고치고 18절이 지켜졌다.
  *
  * ── 판정에는 한 줄도 안 닿는다 ───────────────────────────
  *
@@ -117,6 +121,7 @@
   'use strict';
 
   var core = global.DG.core;
+  var CFG = (global.DG.cfg && global.DG.cfg.post) || {};
 
   /* ══ 값 층 — three 없이 돈다 ═══════════════════════════════ */
 
@@ -134,6 +139,12 @@
   function TONE() { return core.tuned('post3d.tone', 'neutral'); }
   /** 색보정 세기 0~1. 0 이면 톤매핑만 걸고 색은 안 만진다 */
   function GRADE() { return core.tuned('post3d.grade', 1); }
+  /** 카툰(셀셰이딩) 밝기 단수 — 0 이면 끔(기본). 3~6 정도면 만화풍으로 계단진다.
+   *  2026-09-06, 사용자 요청("카툰렌더링으로 변경도 되나?") — 재질을 다 바꾸는
+   *  대신 이미 있는 합성 셰이더(FRAG_OUT) 맨 끝, 색보정 다음(화면색)에 밝기를
+   *  N단으로 양자화하는 한 줄을 얹었다. 손잡이 하나로 켜고 끌 수 있어 기존
+   *  사실적인 그림을 그대로 두고 고를 수 있다(그림자·물·후처리는 안 바꿨다). */
+  function TOON() { return core.tuned('post3d.toon', 0); }
   /** 렌더 타깃 배율 — 등급이 정한 값에 곱한다(29절의 resolution scale) */
   function SCALE() { return core.tuned('post3d.scale', 1); }
 
@@ -144,26 +155,21 @@
    *   msaa   렌더 타깃 표본 수
    *   scale  렌더 타깃 배율
    */
-  /* saga-dungeon 이 폰 실기기 재신고("품질을 낮춰줘 + 하얀 안개")로 맞춰 둔
-     값을 그대로 물려받는다 — 후처리(블룸·SSAO)는 가장 비싸면서, AUTO 등급이
-     잠깐 MEDIUM으로 오갈 때마다 syncTargets가 렌더 타깃을 다시 만들어 그
-     프레임이 통째로 멎을 수 있어, MEDIUM의 몫을 LOW에 가깝게 낮춰 뒀다. */
   var TIER_POST = {
     HIGH: { post: 1, mips: 4, msaa: 4, scale: 1 },
-    MEDIUM: { post: 1, mips: 2, msaa: 0, scale: 0.65 },
+    MEDIUM: { post: 1, mips: 3, msaa: 2, scale: 0.85 },
     LOW: { post: 0, mips: 0, msaa: 0, scale: 1 }
   };
+  if (CFG.medium) { TIER_POST.MEDIUM = CFG.medium; }   // 판별 설정(사가블로·사가스토리 — MEDIUM 을 LOW 쪽으로 낮춘다)
 
   function clamp01(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
 
   /**
    * 시각과 날씨의 결 — **순수 함수다.**
    *
-   * 원래는 해 고도(`alt`, -1~1)를 받는 자리다. 이 판엔 해가 없어(옆에서 보는
-   * 사냥터, 낮/밤 없음) `side-view3d.js`의 `postAlt(mood, town)`가 무드별로
-   * 대신 값을 지어 넣는다(cave→어둡게, fire→노을처럼, forest/field/town→맑은
-   * 대낮). 시각대 이름이 아니라 연속값(고도)으로 가르는 까닭은 그대로 유효하다
-   * — 이름으로 가르면 무드가 바뀌는 경계에서 화면이 **한 프레임에 툭 바뀐다**.
+   * `world3d.lightingAt` 이 내는 해 고도(`alt`, -1~1)를 그대로 받는다. 시각대
+   * 이름(`phase`)이 아니라 고도로 가르는 까닭: 이름으로 가르면 `day`→`dusk`
+   * 경계에서 화면이 **한 프레임에 툭 바뀐다**. 고도는 이어져 있다.
    *
    * @param alt   해 고도 (-1 ~ 1)
    * @param wkey  천후 키 (clear·cloud·rain·wind·fog·snow)
@@ -280,6 +286,7 @@
         amount: clamp01(GRADE()),
         sat: look.sat, temp: look.temp, lift: look.lift
       },
+      toon: Math.max(0, TOON()),
       msaa: live ? tp.msaa : 0,
       /* 맞닿은 자리의 그늘 — `ssao3d.js` 가 잰다. 여기서는 **켤지 말지**만 안다
          (씬을 그린 타깃에 깊이를 붙여 둬야 하므로 처방에 들어와야 한다) */
@@ -406,6 +413,7 @@
     'uniform float temp;',
     'uniform float lift;',
     'uniform float hasBloom;',
+    'uniform float toon;',
     'varying vec2 vUv;',
     LUM,
     'void main() {',
@@ -424,7 +432,16 @@
     /* 색온도 — 따뜻하면 붉은 쪽을 올리고 푸른 쪽을 내린다 */
     '  done += vec3(temp, temp * 0.10, -temp) * 0.055;',
     '  done = done * (1.0 - lift) + lift;',
-    '  gl_FragColor.rgb = clamp(mix(g, done, gradeAmt), 0.0, 1.0);',
+    '  vec3 graded = clamp(mix(g, done, gradeAmt), 0.0, 1.0);',
+    /* 카툰 — 밝기를 N단으로 계단지게 양자화한다(색상비는 그대로 두어 색은
+       안 바뀌고 명암만 판판해진다). toon<=0.5 면 그대로(끔) */
+    '  if (toon > 0.5) {',
+    '    float gl = max(lum(graded), 0.0001);',
+    '    float steps = toon;',
+    '    float qgl = floor(gl * steps + 0.5) / steps;',
+    '    graded *= qgl / gl;',
+    '  }',
+    '  gl_FragColor.rgb = clamp(graded, 0.0, 1.0);',
     '}'
   ].join('\n');
 
@@ -470,8 +487,8 @@
   }
 
   /**
-   * 켠다. `side-view3d.js` 가 렌더러를 만든 직후 부른다.
-   * @param three  THREE (side-view3d.js 가 들고 있는 그것 — 여기서 또 찾지 않는다)
+   * 켠다. `world3d` 가 렌더러를 만든 직후 부른다.
+   * @param three  THREE (world3d 가 들고 있는 그것 — 여기서 또 찾지 않는다)
    * @param renderer  WebGLRenderer
    */
   function init(three, renderer) {
@@ -507,7 +524,7 @@
         tAO: { value: null }, hasAO: { value: 0 },
         strength: { value: 0.26 }, gradeAmt: { value: 1 },
         sat: { value: 1 }, temp: { value: 0 }, lift: { value: 0 },
-        hasBloom: { value: 1 }
+        hasBloom: { value: 1 }, toon: { value: 0 }
       });
     } catch (e) {
       failed = true;
@@ -652,6 +669,7 @@
     matOut.uniforms.sat.value = p.grade.sat;
     matOut.uniforms.temp.value = p.grade.temp;
     matOut.uniforms.lift.value = p.grade.lift;
+    matOut.uniforms.toon.value = p.toon;
     blit(matOut, null);
 
     drawn++;

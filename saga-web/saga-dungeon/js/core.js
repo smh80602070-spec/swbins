@@ -436,3 +436,13 @@
     tag: '역사 인물로 여는 핵앤슬래시 던전 크롤러'
   };
 })(window);
+
+/* 판별 후처리 설정 — saga-web/shared/js/post3d.js 가 읽는다(이 판만 MEDIUM 등급을 LOW 쪽으로 낮춘다) */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  /* 2026-09-09 폰 실기기 "품질을 낮춰줘 + 하얀 안개" 재신고 — 후처리(블룸·SSAO)는 가장 비싸고, AUTO 가 MEDIUM 으로 오갈 때마다
+     syncTargets 가 렌더 타깃을 다시 만들어 그 프레임이 멎었다(§28-8 되먹임). MEDIUM 의 몫을 줄여 왕복 비용을 낮춘다. */
+  global.DG.cfg.post = { medium: { post: 1, mips: 2, msaa: 0, scale: 0.65 } };
+})(window);
