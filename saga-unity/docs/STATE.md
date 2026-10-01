@@ -1,4 +1,4 @@
-<!-- 생성: tools/status.mjs · 2026-10-01 12:46Z — 손으로 고치지 않는다(덮어쓴다) -->
+<!-- 생성: tools/status.mjs · 2026-10-01 16:00Z — 손으로 고치지 않는다(덮어쓴다) -->
 # saga-unity 상태
 
 완성도 = D3+ ÷ 전체 · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1 · 기능 목록 `saga-unity/features.json`
