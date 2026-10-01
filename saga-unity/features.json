@@ -864,8 +864,10 @@
   "id": "un.fs.push-combat",
   "name": "밀어내기 전투",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestForestCreatures"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
