@@ -1484,3 +1484,13 @@ Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quatern
 | **프롬프트** | 원작·펫 이름 없이 종·생김새 묘사만 — `tools/ai-art/batches/web_pets_105.json` (`make_pet_batch.py` 가 만든다) |
 | **출처 기록** | `assets/portraits/pet/_ai_provenance.json`(모델·라이선스·씨앗) |
 | **주의** | AI 생성물은 저작권 보호가 약하다. 되돌리려면 git 에서 이전 webp 복구 |
+
+
+## 배경음 (`assets/audio/bgm/`)
+
+2026-10-01 자체 생성 — `swbins3/music-gen`(로컬 ACE-Step 1.5, 코드·가중치 MIT, 상업 사용 허용). 원작 곡명·아티스트 이름은 프롬프트에 쓰지 않았다. 출처 기록 정본: `saga-web/shared/audio/bgm/<판>-<장면>.license.json`.
+
+| 파일 | 만든 말(프롬프트) | 만든 법 | 비고 |
+|---|---|---|---|
+| `saga-go-field.ogg` | open world exploration, hopeful orchestral theme with erhu and light electronic arpeggio, adventurous mid tempo, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 1201) | 사용자가 후보 a 선택 |
+| `saga-go-battle.ogg` | energetic battle theme, taiko drums, brass stabs, fast driving strings, electronic pulse, 150 bpm, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 1301) | 사용자가 후보 a 선택 |

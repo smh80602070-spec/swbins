@@ -315,3 +315,14 @@ Quaternius CC0 1.0, 사가블로에서 md5 그대로 복사(이미 Meshopt). `Kn
 | **밑그림** | 도감 105 인물은 자체 공방 몸(`tools/char-forge`, CC0 재료+레시피) 가슴 위 렌더를 밑그림으로 한 이미지→이미지 생성(`render_busts.py`, `batches/web_heroes_105_i2i.json`, denoise 0.55) — 밑그림 = 공방 몸 렌더 |
 | **출처 기록** | `assets/portraits/hero/_ai_provenance.json`(모델·라이선스·씨앗) |
 | **주의** | AI 생성물은 저작권 보호가 약하다. 되돌리려면 git 에서 이전 webp 복구 |
+
+
+## 배경음 (`assets/audio/bgm/`)
+
+2026-10-01 자체 생성 — `swbins3/music-gen`(로컬 ACE-Step 1.5, 코드·가중치 MIT, 상업 사용 허용). 원작 곡명·아티스트 이름은 프롬프트에 쓰지 않았다. 출처 기록 정본: `saga-web/shared/audio/bgm/<판>-<장면>.license.json`.
+
+| 파일 | 만든 말(프롬프트) | 만든 법 | 비고 |
+|---|---|---|---|
+| `saga-realm-town.ogg` | stately imperial court music, guzheng, bamboo flute, slow dignified 66 bpm, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 5101) | 사용자가 후보 a 선택 |
+| `saga-realm-field.ogg` | grand strategy map theme, epic slow march, low drums, bowed strings, determined and calm 84 bpm, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 5201) | 사용자가 후보 a 선택 |
+| `saga-realm-battle.ogg` | war march intensifying, large drums, horns, fast heroic strings, battlefield 140 bpm, instrumental | 로컬 AI 생성(ACE-Step 1.5, MIT·상업 허용, 씨앗 5301) | 사용자가 후보 a 선택 |
