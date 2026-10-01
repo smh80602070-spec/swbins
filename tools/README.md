@@ -36,6 +36,7 @@
 | 도구 | 하는 일 |
 |---|---|
 | `tools/precheck.sh` | 커밋 전 점검(커밋 훅이 자동 실행) — js 구문 · 도감 md5 · sw.js 버전 · **바뀐 에셋 🔴** · 문서 크기(CLAUDE 6KB·PLAN·ARCH·BACKLOG·STATE 8KB·티켓 4KB, Godot·Unity PLAN·char-forge README 는 WARN) · `features.json` 스키마 · **js/gd/cs 1,500줄 새로 넘김**(기존 큰 파일 목록 `tools/big-files.txt` 보다 늘어도 FAIL) · 진단 수 감소 WARN(`tools/_out/testcount.json`) · Godot 참조 방향(`check_refs.sh`) · `--full` 이면 웹 진단 러너까지 |
+| `tools/gen-index.mjs` | 판별 `js/manifest.json`(index·test 의 `<script src>` 연속 줄 묶음)과 `index.html`·`_test.html` 을 맞춘다 — 기본은 html 다시 쓰기, `--check` 는 비교만(precheck 가 부름), 새 js 는 `--add <판> <js> --after <앞.js>` 한 줄(sw.js SHELL·VERSION 은 직접) |
 | `tools/sync-shared.mjs` | `saga-web/shared/`(정본: `net.js`·`anim-own.js`·`vroid-variant.js`·`build/build-single.mjs`)를 다섯 판에 복사 · `--check` 는 md5 비교만(precheck 가 부름). 정본을 고치면 이걸 돌리고 다섯 판 sw.js VERSION 을 올린다 |
 | `tools/status.mjs` | 웹 다섯 판 `features.json`·러너 결과로 판별 완성도(D3+÷전체)·D0/D1·WIP 초과·1,500줄 넘는 js 를 표로 — `saga-web/STATE.md` 와 README "현재" 표 블록을 덮어쓴다. `--big`(큰 파일만) · `--json` · `--sheet <판>`(사람 확인 시트 → `tasks/sheets/`) |
 | `tools/test-web.mjs` | 웹 판 `_test.html` 헤드리스 러너 — 빈 포트 서버 + 전용 프로필 크롬으로 `RESULT n/m`·실패 이름을 찍고 종료 코드 0/1. `node tools/test-web.mjs [판…] [--runs=N] [--budget=ms]` · 결과 `tools/_out/test-web.json` · `precheck.sh --full` 이 다섯 판 전부 돌린다 |
