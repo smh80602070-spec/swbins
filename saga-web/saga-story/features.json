@@ -6,10 +6,17 @@
    "js/side.js",
    "js/data-side.js"
   ],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "흔들림의 세기는 화면 층이 정한다 (판정은 한 줄만 남긴다)",
+   "손맛 — 타격 하나가 hitstop·플래시·흔들림·숫자·소리 다섯 요소를 모두 낸다",
+   "손맛 — hitstop 동안은 실제 시간으로 줄고, 그 프레임의 움직임만 크게 느려진다",
+   "손맛 — 타격음이 hit·hit2·hit3 셋을 라운드로빈으로 돈다"
+  ],
+  "level": "D1",
   "verified": null,
-  "fun": {},
+  "fun": {
+   "C": "△"
+  },
   "ticket": null,
   "since": "2026-09-30"
  },
@@ -229,8 +236,12 @@
    "js/sfx.js",
    "js/bgm.js"
   ],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "손맛 — 타격음이 hit·hit2·hit3 셋을 라운드로빈으로 돈다",
+   "소리는 요청을 다 적는다 — 꺼져 있어도 남는다",
+   "적을 잡으면 타격과 죽음이 소리로 남는다"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
