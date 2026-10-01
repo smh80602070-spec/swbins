@@ -1089,8 +1089,10 @@
   "id": "un.st.job-tiers",
   "name": "5-2 전직 1~4차(Lv.10/15/20/25)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestStoryJobTiers"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
