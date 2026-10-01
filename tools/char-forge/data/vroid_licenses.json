@@ -17,6 +17,310 @@
     "creditNotation": "required"
    }
   },
+  "avatarsample_b_vrm10": {
+   "source_file": "AvatarSample_B.vrm",
+   "vrm": "1.0",
+   "size_mb": 18.5,
+   "meta": {
+    "name": "AvatarSample_B",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_c_vrm10": {
+   "source_file": "AvatarSample_C.vrm",
+   "vrm": "1.0",
+   "size_mb": 14.3,
+   "meta": {
+    "name": "AvatarSample_C",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_d_vrm10": {
+   "source_file": "AvatarSample_D.vrm",
+   "vrm": "1.0",
+   "size_mb": 21.2,
+   "meta": {
+    "name": "AvatarSample_D",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_e_vrm10": {
+   "source_file": "AvatarSample_E.vrm",
+   "vrm": "1.0",
+   "size_mb": 18.9,
+   "meta": {
+    "name": "AvatarSample_E",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_f_vrm10": {
+   "source_file": "AvatarSample_F.vrm",
+   "vrm": "1.0",
+   "size_mb": 19.8,
+   "meta": {
+    "name": "AvatarSample_F",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_g_vrm10": {
+   "source_file": "AvatarSample_G.vrm",
+   "vrm": "1.0",
+   "size_mb": 16.1,
+   "meta": {
+    "name": "AvatarSample_G",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_h_vrm10": {
+   "source_file": "AvatarSample_H.vrm",
+   "vrm": "1.0",
+   "size_mb": 18.6,
+   "meta": {
+    "name": "AvatarSample_H",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_i_vrm10": {
+   "source_file": "AvatarSample_I.vrm",
+   "vrm": "1.0",
+   "size_mb": 17.2,
+   "meta": {
+    "name": "AvatarSample_I",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_j_vrm10": {
+   "source_file": "AvatarSample_J.vrm",
+   "vrm": "1.0",
+   "size_mb": 20.5,
+   "meta": {
+    "name": "AvatarSample_J",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_k_vrm10": {
+   "source_file": "AvatarSample_K.vrm",
+   "vrm": "1.0",
+   "size_mb": 17.7,
+   "meta": {
+    "name": "AvatarSample_K",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_p_vrm10": {
+   "source_file": "AvatarSample_P.vrm",
+   "vrm": "1.0",
+   "size_mb": 15.8,
+   "meta": {
+    "name": "AvatarSample_P",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_q_vrm10": {
+   "source_file": "AvatarSample_Q.vrm",
+   "vrm": "1.0",
+   "size_mb": 20.7,
+   "meta": {
+    "name": "AvatarSample_Q",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_r_vrm10": {
+   "source_file": "AvatarSample_R.vrm",
+   "vrm": "1.0",
+   "size_mb": 18.6,
+   "meta": {
+    "name": "AvatarSample_R",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_t_vrm10": {
+   "source_file": "AvatarSample_T.vrm",
+   "vrm": "1.0",
+   "size_mb": 16.2,
+   "meta": {
+    "name": "AvatarSample_T",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_u_vrm10": {
+   "source_file": "AvatarSample_U.vrm",
+   "vrm": "1.0",
+   "size_mb": 18.2,
+   "meta": {
+    "name": "AvatarSample_U",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_v_vrm10": {
+   "source_file": "AvatarSample_V.vrm",
+   "vrm": "1.0",
+   "size_mb": 17.1,
+   "meta": {
+    "name": "AvatarSample_V",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_x_vrm10": {
+   "source_file": "AvatarSample_X.vrm",
+   "vrm": "1.0",
+   "size_mb": 15.0,
+   "meta": {
+    "name": "AvatarSample_X",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_y_vrm10": {
+   "source_file": "AvatarSample_Y.vrm",
+   "vrm": "1.0",
+   "size_mb": 17.2,
+   "meta": {
+    "name": "AvatarSample_Y",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
+  "avatarsample_z_vrm10": {
+   "source_file": "AvatarSample_Z.vrm",
+   "vrm": "1.0",
+   "size_mb": 16.6,
+   "meta": {
+    "name": "AvatarSample_Z",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "personalNonProfit",
+    "allowRedistribution": false,
+    "modification": "prohibited",
+    "avatarPermission": "onlyAuthor",
+    "creditNotation": "required"
+   }
+  },
   "dungeon_hero_01": {
    "source_file": "dungeon_hero_01.vrm",
    "vrm": "1.0",
