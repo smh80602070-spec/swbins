@@ -1248,8 +1248,10 @@
   "id": "un.rk.enemy-castles",
   "name": "적국 55·성 58",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestRealmEnemyCastles"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1259,8 +1261,11 @@
   "id": "un.rk.r101-2",
   "name": "101-2 REALM 5-1·5-6·5-2·5-8·5-3·5-5(5-4 제외 확정)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestRealmSlice",
+   "PlaytestRealmTraitsVictory"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
