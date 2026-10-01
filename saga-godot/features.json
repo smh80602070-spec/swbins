@@ -598,8 +598,10 @@
   "id": "gd.go.g26-companions",
   "name": "106장 ㉖~㊹ 동료 다섯",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_members"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -873,8 +875,10 @@
   "id": "gd.go.part37-companions",
   "name": "이야기 3~7부 동료 달음·도담·한별·물새·하늬",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_members"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
