@@ -457,3 +457,20 @@
     }
   };
 })(window);
+
+/* 판별 2D 모드 설정 — saga-web/shared/js/mode2d.js 가 읽는다(이 판만 다른 것).
+   시트 풀(assets/sprites2d_sheets/)은 K-0015 가 만든다 — 없으면 기존 코드 스탬프 그대로, 오류 없음. 사람 풀 둘을 인물 id 해시로 나눠 쓴다 */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.mode2d = {
+    base: 'assets/sprites2d_sheets/',
+    targetH: 40,                                 // 스탬프 s=1 일 때 몸 높이(px) — actor2d 가 s 를 배수로 곱한다
+    foot: 0.87,
+    /** 2D 모드인가 — 3D 장면이 안 서 있을 때(평면·2.5D 캔버스) */
+    on: function () { var W3 = global.DG.world3d; return !(W3 && W3.active && W3.active()); },
+    poolH: { pool_f_human_139: 91, pool_g_human_147: 89, pool_e_demon_128: 86, pool_e_undead_127: 79 },   // 프레임 안 몸 높이(px, pw-sheet-bbox.mjs 로 잼)
+    pools: { human: ['pool_f_human_139', 'pool_g_human_147'] }
+  };
+})(window);
