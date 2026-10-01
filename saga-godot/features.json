@@ -68,8 +68,10 @@
   "id": "gd.go.posts",
   "name": "역참·사진 모드·소문",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "posts"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
