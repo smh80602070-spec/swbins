@@ -10,15 +10,12 @@
 2604 saga-web/saga-forest/js/village.js
 2528 saga-web/saga-go/js/field-combat.js
 2461 saga-web/saga-realm/js/ui-rtk.js
-2324 saga-godot/games/saga_story/player/story_player.gd
 2246 saga-web/saga-story/js/side.js
-2230 saga-godot/games/saga_realm/data/realm_save_state.gd
 2175 saga-web/saga-forest/js/ui.js
 2139 saga-web/saga-forest/js/village-view3d.js
 2117 saga-web/saga-dungeon/js/dungeon-view.js
 2114 saga-web/saga-go/js/world.js
 2003 saga-web/saga-realm/js/realm3d.js
-1971 saga-godot/games/saga_go/data/story.gd
 1960 saga-web/saga-go/js/ui.js
 1905 saga-web/saga-dungeon/js/town.js
 1896 saga-unity/Assets/Editor/BuildTestDungeonScene.cs
