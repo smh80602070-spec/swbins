@@ -45,7 +45,7 @@
 ## 업로드 키 만들기(사람, 한 번)
 
 ```bat
-"C:\Program Files\Unity\Hub\Editor\6000.3.23f1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK\bin\keytool.exe" -genkeypair -keystore saga-upload.jks -alias saga -keyalg RSA -keysize 2048 -validity 10000
+"C:\Program Files\Unity\Hub\Editor\6000.3.24f1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK\bin\keytool.exe" -genkeypair -keystore saga-upload.jks -alias saga -keyalg RSA -keysize 2048 -validity 10000
 ```
 
 - 파일은 **저장소 밖**에 두고 두 곳 이상 백업(저장소 `.gitignore` 가 `*.jks`·`*.keystore` 를 막지만 애초에 안 넣는다). 암호는 따로 적어 둔다.

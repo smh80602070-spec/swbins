@@ -12,7 +12,7 @@
 
 ## Unity 에디터 — PC 마다 다르다
 
-기록상 이 PC 에는 Unity Hub 경유 **6000.3.23f1** 이 있다(`C:\Program Files\Unity\Hub\Editor\6000.3.23f1`). 다른 PC 일 수 있으니 새 세션은 먼저 확인한다:
+기록상 이 PC 에는 Unity Hub 경유 **6000.3.24f1** 이 있고 프로젝트도 같은 버전이다(`C:\Program Files\Unity\Hub\Editor\6000.3.24f1`, tasks U-0012). 다른 PC 일 수 있으니 새 세션은 먼저 확인한다:
 
 ```bash
 find "/c/Program Files/Unity/Hub/Editor" -maxdepth 1 2>/dev/null

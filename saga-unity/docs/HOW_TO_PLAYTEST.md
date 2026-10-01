@@ -12,11 +12,11 @@ HOW_TO_PLAYTEST.md`와 짝을 이룬다 — 두 프로젝트는 병행 트랙이
 
 ## 1. Unity 에디터 준비
 
-이 PC에는 이미 **Unity 6000.3.23f1**이 Unity Hub 경유로 설치돼 있다
-(`C:\Program Files\Unity\Hub\Editor\6000.3.23f1`). 다른 PC에서 이
+이 PC에는 이미 **Unity 6000.3.24f1**이 Unity Hub 경유로 설치돼 있다
+(`C:\Program Files\Unity\Hub\Editor\6000.3.24f1`). 다른 PC에서 이
 문서를 보고 있다면 버전이 다르거나 없을 수 있다 — 없으면 [Unity
 Hub](https://unity.com/download)를 먼저 설치하고, Hub의 **Installs**
-탭에서 이 프로젝트와 같은 버전(6000.3.23f1, 없으면 6000.3.x 최신)을
+탭에서 이 프로젝트와 같은 버전(6000.3.24f1, 없으면 6000.3.x 최신)을
 받는다.
 
 설치 확인만 하고 싶으면:

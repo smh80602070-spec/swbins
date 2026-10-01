@@ -37,7 +37,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 - 영속 리스너 메서드 이름을 바꾸면 **씬 재빌드** 필요 — 안 하면 먹통(`ButtonWiringCheck`가 대상 메서드 존재까지 보니 진단이 잡는다).
 - **`Destroy()`로 자식을 지우고 같은 프레임에 다시 그리면 쌓인다** — onClick 중이면 `DestroyImmediate` 말고 떼어 내고(`SetParent(null)`)·끄고 `Destroy`(`StoryLabyrinthMapUi.ClearChildren`).
 - **씬 재빌드가 컷 타임라인(`*.playable`)을 새 트랙 ID 로 다시 쓴다 — 되돌리지 말고 씬과 같이 커밋한다.** 씬의 PlayableDirector 바인딩이 그 ID 를 가리켜, 타임라인만 되돌리면 컷이 빈 트랙을 튼다(DUNGEON 이름표·레터박스·컷 카메라 진단이 깨진다).
-- **함정**: Unity 6000.3.24f1 > 프로젝트 6000.3.23f1 → 배치/GUI 실행이 ProjectSettings/Packages를 조용히 고친다. `tools/unity-batch.sh --`로 부르면 자동 원복(`*_RPAsset` v13·GUI 실행은 수동 checkout).
+- **함정**: 프로젝트 = 설치판 6000.3.24f1(U-0012 승격 — 배치가 설정을 안 고친다). 폰트 SDF 3개는 Playtest 가 동적 아틀라스를 부풀려 `tools/unity-batch.sh --` 가 원복(GUI 실행은 수동 checkout).
 - `GetBoneTransform()`은 `isHuman` 먼저. Mixamo 몸 일부는 휴머노이드 실패(Prisoner·Survivor·의족 Pirate) — 다른 카드로.
 - 정적 상태 `Restore()` 는 관련 이벤트를 쏴야 UI 가 안 낡는다.
 - URP 런타임 타입엔 asmdef에 `Unity.RenderPipelines.Universal.Runtime`(SagaDungeon·SagaGo, Story 는 asmdef 없음).
