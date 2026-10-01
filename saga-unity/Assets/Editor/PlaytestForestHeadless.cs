@@ -77,7 +77,7 @@ namespace Saga.EditorTools
         {
             _framesSeen++;
             // PLAN.md 109-16 — 새 판 첫 장면(이사 오던 날)이 다른 진단 앞에서 상자를 열지 않게 끈다. 시나리오 진단이 스스로 켜고 되돌린다.
-            if (_framesSeen == 1) { ForestScenario.Enabled = false; ForestScenario.AbortScene(); ForestScenarioUi.Instance?.Hide(); }
+            if (_framesSeen == 1) { Saga.Forest.Data.ForestTutorial.Enabled = false; ForestScenario.Enabled = false; ForestScenario.AbortScene(); ForestScenarioUi.Instance?.Hide(); }
             // PLAN.md 44~49장 디버그 화면(2026-09-14, GO/DUNGEON과 같은 결) —
             // 좌표 줄이 실제로 채워지는지 본다. 0.5초 FPS 타이머를 기다리는
             // 대신(배치 모드는 몇 프레임 안엔 절대 안 찬다) private

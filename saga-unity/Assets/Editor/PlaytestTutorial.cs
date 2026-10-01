@@ -8,6 +8,8 @@ using GoSave = Saga.Go.Data.SaveState;
 using DungeonSave = Saga.Dungeon.Data.SaveState;
 using StoryTut = Saga.Story.Data.StoryTutorial;
 using StorySave = Saga.Story.Data.StorySaveState;
+using ForestTut = Saga.Forest.Data.ForestTutorial;
+using ForestSave = Saga.Forest.Data.ForestSaveState;
 
 namespace Saga.EditorTools
 {
@@ -22,7 +24,7 @@ namespace Saga.EditorTools
         public static void Run()
         {
             PlaytestKit.Begin("[PlaytestTutorial]");
-            bool goOn = GoTut.Enabled, dgOn = DungeonTut.Enabled, stOn = StoryTut.Enabled;
+            bool goOn = GoTut.Enabled, dgOn = DungeonTut.Enabled, stOn = StoryTut.Enabled, foOn = ForestTut.Enabled;
             using (PlaytestKit.IsolatedSaves())
             using (PlaytestKit.ErrorCounter())
             {
@@ -30,15 +32,16 @@ namespace Saga.EditorTools
                 {
                     CheckEngine();
                     CheckTables();
-                    GoTut.Enabled = true; DungeonTut.Enabled = true; StoryTut.Enabled = true;
+                    GoTut.Enabled = true; DungeonTut.Enabled = true; StoryTut.Enabled = true; ForestTut.Enabled = true;
                     CheckVersions("GO", GoSave.ToJson(), GoSave.ApplyJson, () => GoTut.Line());
                     CheckVersions("DUNGEON", DungeonSave.ToJson(), DungeonSave.ApplyJson, () => DungeonTut.Line());
                     CheckStorySave();
+                    CheckForestSave();
                 }
                 finally
                 {
-                    GoTut.Restore(null); DungeonTut.Restore(null); StoryTut.Restore(null);
-                    GoTut.Enabled = goOn; DungeonTut.Enabled = dgOn; StoryTut.Enabled = stOn;
+                    GoTut.Restore(null); DungeonTut.Restore(null); StoryTut.Restore(null); ForestTut.Restore(null);
+                    GoTut.Enabled = goOn; DungeonTut.Enabled = dgOn; StoryTut.Enabled = stOn; ForestTut.Enabled = foOn;
                 }
             }
             PlaytestKit.Summary("PlaytestTutorial");
@@ -79,6 +82,7 @@ namespace Saga.EditorTools
             CheckIds("GO", GoTut.AllIds());
             CheckIds("DUNGEON", DungeonTut.AllIds());
             CheckIds("STORY", StoryTut.AllIds());
+            CheckIds("FOREST", ForestTut.AllIds());
         }
 
         private static void CheckIds(string tag, List<string> ids)
@@ -112,6 +116,21 @@ namespace Saga.EditorTools
             PlaytestKit.Check(StoryTut.Line() == null, $"STORY 옛 세이브인데 첫걸음 줄이 남음 '{StoryTut.Line()}'");
             PlaytestKit.Check(StorySave.ApplyJson(cur), "STORY 새 게임 기본값이 다시 안 읽힘");
             PlaytestKit.Check(StoryTut.Line() != null, "STORY 새 게임으로 되돌렸는데 첫걸음 줄이 없음");
+        }
+
+        // FOREST 도 세이브 버전을 안 올린다(`tutV` 0 = 없는 세이브 = 옛 세이브) — STORY 와 같은 방식.
+        private static void CheckForestSave()
+        {
+            string cur = ForestSave.ToJson();
+            PlaytestKit.Check(cur.Contains("\"tutV\":1"), "FOREST 새 게임 기본값에 tutV 가 없음");
+            PlaytestKit.Check(ForestSave.ApplyJson(cur), "FOREST 새 게임 기본값이 안 읽힘");
+            PlaytestKit.Check(ForestTut.Line() != null, "FOREST 새 게임인데 첫걸음 줄이 없음");
+            string old = System.Text.RegularExpressions.Regex.Replace(cur, @",""tutV"":1", "");
+            PlaytestKit.Check(old != cur, "FOREST 옛 세이브 흉내(tutV 제거)가 안 됨");
+            PlaytestKit.Check(ForestSave.ApplyJson(old), "FOREST tutV 없는 세이브가 안 읽힘");
+            PlaytestKit.Check(ForestTut.Line() == null, $"FOREST 옛 세이브인데 첫걸음 줄이 남음 '{ForestTut.Line()}'");
+            PlaytestKit.Check(ForestSave.ApplyJson(cur), "FOREST 새 게임 기본값이 다시 안 읽힘");
+            PlaytestKit.Check(ForestTut.Line() != null, "FOREST 새 게임으로 되돌렸는데 첫걸음 줄이 없음");
         }
 
         private static int ReadVersion(string json)

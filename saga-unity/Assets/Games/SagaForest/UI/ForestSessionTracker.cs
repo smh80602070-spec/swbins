@@ -100,6 +100,8 @@ namespace Saga.Forest.UI
 
         public string GoalLineNow()
         {
+            var tut = ForestTutorial.Line(); // tasks U-0023 — 첫걸음 사명이 첫 줄을 쓴다(끝나면 null)
+            if (tut != null) return tut;
             if (_player == null) return "-";
 
             // PLAN.md 109-16 — 시나리오가 열려 있으면 그 장·단계 한 줄이 먼저(소포를 들고 있을 땐 그 거리가 먼저).
