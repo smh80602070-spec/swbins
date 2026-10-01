@@ -5,6 +5,8 @@
  *   node tools/build-parts.mjs           조각(`dir/*.js`, 이름순)을 바이트 그대로 이어 `out` 에 쓴다
  *   node tools/build-parts.mjs --check   쓰지 않고 이어 붙인 것과 `out` 이 같은지만 본다. 다르면 종료 1 (precheck 가 부른다)
  *
+ * 제외: 도구가 파일을 직접 고치는 js — 사가블로 `town.js`(맵 편집기 마을 어댑터·콘텐츠 편집기)·판별 `asset3d.js`(콘텐츠 편집기 DEFAULTS 표).
+ *
  * 왜 이어 붙이나: `world3d.js`(사가고)·`dungeon.js`(사가블로)는 `(function(global){…})(window)` 하나의 클로저라 절끼리 쓰는 심볼이 많다
  * (world3d 는 232개 중 137개). 조각을 따로 <script> 로 실으면 공유 상태를 전부 객체로 바꿔야 해서, 소스만 나누고
  * 실행 파일은 한 덩이로 둔다. 조각은 단독으로는 문법이 안 맞는 토막이다 — 고치는 곳은 조각이고,
@@ -20,6 +22,21 @@ const TARGETS = [
   { out: 'saga-web/saga-dungeon/js/dungeon.js', dir: 'saga-web/saga-dungeon/src/dungeon' },
   { out: 'saga-web/saga-go/js/story.js', dir: 'saga-web/saga-go/src/story' },
   { out: 'saga-web/saga-dungeon/js/dungeon3d.js', dir: 'saga-web/saga-dungeon/src/dungeon3d' },
+  { out: 'saga-web/saga-forest/js/village-view.js', dir: 'saga-web/saga-forest/src/village-view' },
+  { out: 'saga-web/saga-dungeon/js/ui.js', dir: 'saga-web/saga-dungeon/src/ui' },
+  { out: 'saga-web/saga-forest/js/village.js', dir: 'saga-web/saga-forest/src/village' },
+  { out: 'saga-web/saga-go/js/field-combat.js', dir: 'saga-web/saga-go/src/field-combat' },
+  { out: 'saga-web/saga-realm/js/ui-rtk.js', dir: 'saga-web/saga-realm/src/ui-rtk' },
+  { out: 'saga-web/saga-story/js/side.js', dir: 'saga-web/saga-story/src/side' },
+  { out: 'saga-web/saga-forest/js/ui.js', dir: 'saga-web/saga-forest/src/ui' },
+  { out: 'saga-web/saga-forest/js/village-view3d.js', dir: 'saga-web/saga-forest/src/village-view3d' },
+  { out: 'saga-web/saga-dungeon/js/dungeon-view.js', dir: 'saga-web/saga-dungeon/src/dungeon-view' },
+  { out: 'saga-web/saga-go/js/world.js', dir: 'saga-web/saga-go/src/world' },
+  { out: 'saga-web/saga-realm/js/realm3d.js', dir: 'saga-web/saga-realm/src/realm3d' },
+  { out: 'saga-web/saga-go/js/ui.js', dir: 'saga-web/saga-go/src/ui' },
+  { out: 'saga-web/saga-story/js/ui.js', dir: 'saga-web/saga-story/src/ui' },
+  { out: 'saga-web/saga-realm/js/war.js', dir: 'saga-web/saga-realm/src/war' },
+  { out: 'saga-web/saga-realm/js/rtk.js', dir: 'saga-web/saga-realm/src/rtk' },
 ];
 const check = process.argv.includes('--check');
 
