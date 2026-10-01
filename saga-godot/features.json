@@ -29,8 +29,10 @@
   "id": "gd.go.codex",
   "name": "도감 5갈래+신수 11 배치(place 43개)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "codex"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,

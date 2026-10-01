@@ -247,6 +247,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_tutorial.gd").new())
 	if OS.get_environment("SAGA_HEROES_PROBE") != "":
 		add_child(load("res://tools/probe_heroes.gd").new())
+	if OS.get_environment("SAGA_CODEX_PROBE") != "":
+		add_child(load("res://tools/probe_codex.gd").new())
 	if OS.get_environment("SAGA_EVENTS_PROBE") != "":
 		add_child(load("res://tools/probe_events.gd").new())
 	if OS.get_environment("SAGA_HELP_PROBE") != "":
