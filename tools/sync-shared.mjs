@@ -16,22 +16,25 @@ import { fileURLToPath } from 'node:url';
 
 const WEB = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'saga-web');
 const GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
-/** 정본 경로(shared/ 기준) → 판 폴더 안 경로 */
+/** 정본 경로(shared/ 기준) → 판 폴더 안 경로 [→ 복사할 판들, 없으면 다섯] */
 const FILES = [
   ['js/net.js', 'js/net.js'],
   ['js/anim-own.js', 'js/anim-own.js'],
   ['js/vroid-variant.js', 'js/vroid-variant.js'],
   ['js/account.js', 'js/account.js'],
   ['build/build-single.mjs', 'build/build-single.mjs'],
+  ['js/bgm.js', 'js/bgm.js', ['saga-forest', 'saga-story']],   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
 ];
 const check = process.argv.includes('--check');
 const md5 = p => (fs.existsSync(p) ? crypto.createHash('md5').update(fs.readFileSync(p)).digest('hex') : null);
 
 let bad = 0, copied = 0;
-for (const [src, dst] of FILES) {
+let total = 0;
+for (const [src, dst, only] of FILES) {
   const from = path.join(WEB, 'shared', src), want = md5(from);
   if (!want) { console.log('FAIL 정본 없음 shared/' + src); bad++; continue; }
-  for (const g of GAMES) {
+  for (const g of (only || GAMES)) {
+    total++;
     const to = path.join(WEB, g, dst);
     if (md5(to) === want) continue;
     if (check) { console.log(`DIFF ${g}/${dst} ≠ shared/${src}`); bad++; continue; }
@@ -41,6 +44,6 @@ for (const [src, dst] of FILES) {
     console.log(`복사 shared/${src} → ${g}/${dst}`);
   }
 }
-if (check) console.log(bad ? `FAIL shared 정본과 다른 사본 ${bad}개 — node tools/sync-shared.mjs` : `OK ${FILES.length}×${GAMES.length}`);
-else console.log(`복사 ${copied}개 · 이미 같은 것 ${FILES.length * GAMES.length - copied}개`);
+if (check) console.log(bad ? `FAIL shared 정본과 다른 사본 ${bad}개 — node tools/sync-shared.mjs` : `OK ${total}개 사본`);
+else console.log(`복사 ${copied}개 · 이미 같은 것 ${total - copied}개`);
 process.exit(bad ? 1 : 0);

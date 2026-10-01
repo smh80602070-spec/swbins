@@ -414,3 +414,15 @@
     tag: '역사 인물과 함께하는 마을 생활 게임'
   };
 })(window);
+
+/* 판별 배경음 설정 — saga-web/shared/js/bgm.js 가 읽는다(이 판만 다른 것) */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.bgm = {
+    tracks: { forest: 'forest.mp3' },   // 마을 하나·전투 없음 — 늘 같은 트랙
+    vol: 0.35,
+    first: 'forest'
+  };
+})(window);

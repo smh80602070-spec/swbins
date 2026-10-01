@@ -14,23 +14,30 @@
  * `<audio loop>` 셋을 만들어 두고 필요한 하나만 재생한다(나머지는 pause).
  * 크로스페이드는 안 한다 — 즉시 전환, 과하면 다음에 손질(PLAN 35절 "과도하게
  * 사용하지 않는다"와 같은 결로 일단 단순하게 시작한다).
+ *
+ * **정본은 saga-web/shared/js/bgm.js** — 판별 복사본은 tools/sync-shared.mjs 가 만든다(직접 고치지 않는다).
+ * 판마다 다른 것(트랙 표·기본 음량·장면 → 트랙 고르기)은 각 판 core.js 끝의 `DG.cfg.bgm` 가 준다.
  */
 (function (global) {
   'use strict';
 
   var core = global.DG.core;
 
-  var BASE = 'assets/audio/bgm/';
-  var TRACKS = { town: 'town.mp3', forest: 'forest.mp3', battle: 'battle.mp3' };
+  /* 판별 설정 — `DG.cfg.bgm = { base, tracks:{키:파일}, vol, first, desired() }`. 없으면 소리 없는 모듈이다 */
+  var CFG = (global.DG.cfg && global.DG.cfg.bgm) || {};
+  var BASE = CFG.base || 'assets/audio/bgm/';
+  var TRACKS = CFG.tracks || {};
+  var FIRST = CFG.first || Object.keys(TRACKS)[0] || null;   // 재생 전·장면을 모를 때 틀 트랙
 
   var els = {};        // key → <audio>
   var current = null;  // 지금 골라 놓은 트랙 키 (재생 안 됐어도 남는다)
   var unlocked = false;
+  var made = false;    // <audio> 를 만들었나(처음 켤 때 한 번)
 
   function settings() {
     var s = core.save.settings || (core.save.settings = {});
     if (typeof s.music !== 'boolean') { s.music = true; }
-    if (typeof s.musicVol !== 'number') { s.musicVol = 0.4; }
+    if (typeof s.musicVol !== 'number') { s.musicVol = typeof CFG.vol === 'number' ? CFG.vol : 0.4; }
     return s;
   }
 
@@ -40,7 +47,8 @@
   /** 처음 부를 때만 <audio> 를 만든다 — `_test.html`(document 없음일 수 있는
    *  환경은 아니지만, 그래도 재생 전엔 굳이 만들지 않는다) 배려 */
   function ensureEls() {
-    if (!global.document || els.town) { return; }
+    if (!global.document || made) { return; }
+    made = true;
     var k;
     for (k in TRACKS) {
       if (!Object.prototype.hasOwnProperty.call(TRACKS, k)) { continue; }
@@ -56,7 +64,7 @@
   function setEnabled(v) {
     settings().music = !!v;
     core.persist();
-    if (!v) { stopAll(); } else if (unlocked) { play(current || 'town'); }
+    if (!v) { stopAll(); } else if (unlocked) { play(current || FIRST); }
     return settings().music;
   }
 
@@ -99,13 +107,7 @@
   /** 지금 상태로 어느 트랙이 맞는지 — **순수 함수**(DOM 없이도 돈다, 자가진단이 부른다).
    *  마을(또는 사냥 중이 아닐 때) → town, 보스 등장 중 → battle, 그 밖의 사냥터 → forest */
   function desiredTrack() {
-    var side = global.DG.side;
-    if (!side) { return 'town'; }
-    var st = side.status();
-    if (!st.active) { return 'town'; }
-    if (st.boss) { return 'battle'; }
-    if (st.stage && st.stage.town) { return 'town'; }
-    return 'forest';
+    return CFG.desired ? CFG.desired() : FIRST;
   }
 
   function tick() {
@@ -144,6 +146,7 @@
     volume: volume, setVolume: setVolume,
     desiredTrack: desiredTrack,
     current: function () { return current; },
-    unlocked: function () { return unlocked; }
+    unlocked: function () { return unlocked; },
+    hasEl: function () { return made; }
   };
 })(typeof window !== 'undefined' ? window : this);

@@ -428,3 +428,25 @@
     settings: true   // 타이틀에 ⚙️ 설정 단추(ui 설정 시트를 곧장 연다)
   };
 })(window);
+
+/* 판별 배경음 설정 — saga-web/shared/js/bgm.js 가 읽는다(이 판만 다른 것) */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.bgm = {
+    tracks: { town: 'town.mp3', forest: 'forest.mp3', battle: 'battle.mp3' },
+    vol: 0.4,
+    first: 'town',
+    /** 지금 틀 트랙 — 사냥 중이 아니면 마을, 보스면 전투, 마을 사냥터면 마을, 아니면 숲 */
+    desired: function () {
+      var side = global.DG.side;
+      if (!side) { return 'town'; }
+      var st = side.status();
+      if (!st.active) { return 'town'; }
+      if (st.boss) { return 'battle'; }
+      if (st.stage && st.stage.town) { return 'town'; }
+      return 'forest';
+    }
+  };
+})(window);
