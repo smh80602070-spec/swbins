@@ -271,6 +271,20 @@ namespace Saga.EditorTools
             hp = e1.Hp; e1.Tick(GoElements.BurningTickSec + 0.01f);
             if (Mathf.Abs(hp - e1.Hp - Atk * GoElements.BurningAtkMul) > 0.5f) Fail($"들불 틱 {hp - e1.Hp}");
 
+            // tasks U-0015 — 죽인 일격이 불붙음·감전을 다시 세우지 않고, 부활한 적에게 반응 상태가 안 남는다(적을 죽이면 경험치·의뢰·업적이 쌓여 뒤 진단이 흔들리므로 세이브 스냅샷으로 되돌린다)
+            string snapU15 = Saga.Go.Data.SaveState.ToJson();
+            Fresh(e1, at);
+            e1.TakeHit(1f, P, Atk, out _); e1.TakeHit(1e6f, D, Atk, out var rkb);
+            if (rkb != GoReaction.Burning || e1.Alive || e1.BurningLeft != 0) Fail($"죽인 일격이 불붙음을 다시 세움 {rkb} 산 채 {e1.Alive} 틱 {e1.BurningLeft}");
+            e1.ReviveNow();
+            if (e1.BurningLeft != 0 || e1.Charged || e1.QuickenLeft > 0f) Fail($"부활한 적에 반응 상태 잔존 틱 {e1.BurningLeft} 감전 {e1.Charged} 가속 {e1.QuickenLeft}");
+            Fresh(e1, at);
+            e1.TakeHit(1f, H, Atk, out _); e1.TakeHit(1e6f, El, Atk, out var rkc);
+            if (rkc != GoReaction.ElectroCharged || e1.Alive || e1.Charged) Fail($"죽인 일격이 감전을 다시 세움 {rkc} 산 채 {e1.Alive} 감전 {e1.Charged}");
+            e1.ReviveNow();
+            if (e1.Charged) Fail("부활한 적에 감전 잔존");
+            if (!Saga.Go.Data.SaveState.ApplyJson(snapU15)) Fail("진단 스냅샷 복원 실패");
+
             // 싹틈 → 번개싹·덩굴뻗음 ×1.25
             Fresh(e1, at);
             e1.TakeHit(1f, El, Atk, out _); e1.TakeHit(1f, D, Atk, out var rq);

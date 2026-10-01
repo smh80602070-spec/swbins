@@ -805,7 +805,7 @@ namespace Saga.Go.Combat
                         BeginTelegraph();
                         break;
                     }
-                    MoveToward(fc.transform.position, ChaseSpeed, dt, EngageReach * 0.9f);
+                    if (fc != null) MoveToward(fc.transform.position, ChaseSpeed, dt, EngageReach * 0.9f); // tasks U-0015 — DomainFoe 는 위 포기 분기를 건너뛰어 fc 가 null 일 수 있다
                     break;
 
                 case State.Telegraph:
@@ -835,6 +835,7 @@ namespace Saga.Go.Combat
                     {
                         Hp = MaxHp;
                         ResetShields();
+                        ClearLingeringState(); // tasks U-0015
                         CurrentState = State.Wander;
                         _timer = 1f;
                         if (IsHero)
@@ -1064,6 +1065,7 @@ namespace Saga.Go.Combat
             CancelInvoke(nameof(HideBody));
             Hp = MaxHp;
             ResetShields();
+            ClearLingeringState(); // tasks U-0015
             _slideLeft = 0f; // 109-14-17
             transform.position = Grounded(Home);
             CurrentState = State.Wander;
@@ -1252,7 +1254,7 @@ namespace Saga.Go.Combat
             if (_shieldBar != null)
             {
                 _shieldBar.SetActive(Shielded);
-                _shieldFill.localScale = new Vector3(1.94f * Mathf.Clamp01(ShieldHp / ShieldMax), 0.1f, 1f);
+                _shieldFill.localScale = new Vector3(1.94f * (ShieldMax > 0f ? Mathf.Clamp01(ShieldHp / ShieldMax) : 0f), 0.1f, 1f);
             }
             bool aura = AuraLeft > 0f && Aura != GoElement.Physical;
             _auraDot.enabled = aura;

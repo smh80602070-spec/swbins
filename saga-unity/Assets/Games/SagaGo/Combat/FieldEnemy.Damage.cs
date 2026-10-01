@@ -80,13 +80,13 @@ namespace Saga.Go.Combat
                     Vector3 d = Flat(other.transform.position - transform.position);
                     if (d.magnitude > GoElements.OverloadRadius) continue;
                     other.ApplyDamage(blast, GoElements.ColorOf(GoReaction.Overload), 1f);
-                    other._knock = (d.sqrMagnitude > 0.01f ? d.normalized : -transform.forward) * GoElements.OverloadKnockback;
+                    if (other.Alive) other._knock = (d.sqrMagnitude > 0.01f ? d.normalized : -transform.forward) * GoElements.OverloadKnockback;
                     other.Aggro();
                 }
             }
             else if (reaction == GoReaction.ElectroCharged)
             {
-                StartCharged(atk);
+                if (Alive) StartCharged(atk); // 죽였으면 감전을 다시 세우지 않는다(tasks U-0015)
                 foreach (var other in _all)
                 {
                     if (other == this || !other.Alive || other.Aura != GoElement.Hydro || other.AuraLeft <= 0f) continue;
@@ -135,13 +135,13 @@ namespace Saga.Go.Combat
             {
                 FieldCombat.Instance?.AddBloomSeed(transform.position, atk * GoElements.BloomAtkMul);
             }
-            else if (reaction == GoReaction.Burning)
+            else if (reaction == GoReaction.Burning && Alive) // 죽였으면 불붙음을 다시 세우지 않는다(tasks U-0015)
             {
                 BurningLeft = GoElements.BurningTicks;
                 _burningTick = GoElements.BurningTickSec;
                 _burningDmg = atk * GoElements.BurningAtkMul * setRx;
             }
-            else if (reaction == GoReaction.Quicken)
+            else if (reaction == GoReaction.Quicken && Alive)
             {
                 QuickenLeft = GoElements.QuickenSec;
             }
@@ -158,6 +158,8 @@ namespace Saga.Go.Combat
             {
                 CurrentState = State.Chase;
                 _warnRing.enabled = false;
+                _alertText.gameObject.SetActive(false); // tasks U-0015
+                _siegeStrike = false;
             }
             TintVisual(GoElements.ColorOf(GoElement.Cryo), true);
         }
@@ -168,6 +170,15 @@ namespace Saga.Go.Combat
             if (!Alive) return 0f;
             Aggro();
             return ApplyDamage(amount, color, 1f);
+        }
+
+        /// <summary>부활·귀가 때 남아 있으면 안 되는 상태 — 반응(불붙음·가속·얼음·초전도)·감전·밀림·공성 일격 표시(tasks U-0015).</summary>
+        private void ClearLingeringState()
+        {
+            ClearReactionStates();
+            _chargedLeft = 0f;
+            _knock = Vector3.zero;
+            _siegeStrike = false;
         }
 
         private void ClearReactionStates()
