@@ -1310,8 +1310,11 @@
   "files": [
    "saga_core/combat_feel.gd"
   ],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "combat_feel",
+   "dungeon_melee"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1899,8 +1902,10 @@
   "id": "gd.st.move-feel",
   "name": "101-2 ②이동 손맛",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_player"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1910,8 +1915,10 @@
   "id": "gd.st.job-identity",
   "name": "101-2 ③직업 정체성",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_player"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
