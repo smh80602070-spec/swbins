@@ -124,7 +124,7 @@ tools/gen/
 5. **`?perf` 다섯 판**: 사가고 `perf.js` 를 shared 로 올리고 나머지 넷에 붙인다(SAGA-DESIGN §6.1-B ①).
 6. ES 모듈 전환·번들러 도입은 **안 한다**(위험 대비 이득 없음).
 
-**웹 진행 상태(2026-10-01)** — 위 1~5 는 끝났다. 1 러너 `tools/test-web.mjs` · 2 정본 `saga-web/shared/`(net·anim-own·vroid-variant·account·errlog·bgm·ssao3d·post3d·toon3d·build-single, `tools/sync-shared.mjs` 가 복사·`--check`, 판별 차이는 `core.js` 끝 `DG.cfg.<모듈>`) · 3 `js/manifest.json`+`tools/gen-index.mjs`(index·_test 의 script 묶음) · 4 큰 파일은 **소스 분할**(`tools/build-parts.mjs` TARGETS 19개: `src/<이름>/NN.js` → `js/<이름>.js` 바이트 동일, 하나의 클로저라 실행 파일은 한 덩이) · 5 `?perf` 는 사가고 `perf.js`(자동 등급 포함)와 나머지 넷의 `DG.perfHud`(재기 표시만, `DG.perf` 다리를 가리지 않으려 따로). 남은 것: `toon3d`(사가의숲·스토리·국지)·`portrait3d`·`asset3d` 는 판별 구현이 갈라져 합치려면 설계가 먼저, 클로저를 실제로 갈라 싣는 "진짜 분리"는 공유 상태 객체화가 필요해 별도 결정.
+**웹 진행 상태(2026-10-01)** — 위 1~5 는 끝났다. 1 러너 `tools/test-web.mjs` · 2 정본 `saga-web/shared/`(net·anim-own·vroid-variant·account·errlog·bgm·ssao3d·post3d·toon3d·build-single, `tools/sync-shared.mjs` 가 복사·`--check`, 판별 차이는 `core.js` 끝 `DG.cfg.<모듈>`) · 3 `js/manifest.json`+`tools/gen-index.mjs`(index·_test 의 script 묶음) · 4 큰 파일은 **소스 분할**(`tools/build-parts.mjs` TARGETS 19개: `src/<이름>/NN.js` → `js/<이름>.js` 바이트 동일, 하나의 클로저라 실행 파일은 한 덩이) · 5 `?perf` 는 사가고 `perf.js`(자동 등급 포함)와 나머지 넷의 `DG.perfHud`(재기 표시만, `DG.perf` 다리를 가리지 않으려 따로). 남은 것: `toon3d` 는 글자까지 같은 네 함수만 `toon3d-core.js` 로 뺐고(W-0019), 갈라진 `toonify`·외곽선은 화면 확인 몫이라 보류. `portrait3d`(같은 함수 18개가 클로저 상태에 얽힘)·`asset3d`(92개 중 다섯 판 같은 것 2개)는 **합치지 않는다**(조사 W-0020). 클로저를 실제로 갈라 싣는 "진짜 분리"는 공유 상태 객체화가 필요해 별도 결정.
 
 ### 4.3 Godot
 
