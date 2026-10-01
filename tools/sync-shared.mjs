@@ -27,7 +27,8 @@ const FILES = [
   ['js/bgm.js', 'js/bgm.js', ['saga-forest', 'saga-story']],   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
 ];
 const check = process.argv.includes('--check');
-const md5 = p => (fs.existsSync(p) ? crypto.createHash('md5').update(fs.readFileSync(p)).digest('hex') : null);
+/** 줄바꿈(CRLF/LF)은 git autocrlf 가 판마다 따로 바꾸므로 정규화해서 비교한다 */
+const md5 = p => (fs.existsSync(p) ? crypto.createHash('md5').update(fs.readFileSync(p, 'utf8').replace(/\r\n/g, '\n')).digest('hex') : null);
 
 let bad = 0, copied = 0;
 let total = 0;
