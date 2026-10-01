@@ -205,8 +205,10 @@
   "id": "gd.go.companion-sil",
   "name": "101-3 G 동행 실루엣",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "companions"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
