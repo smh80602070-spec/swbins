@@ -17,6 +17,9 @@ GODOT=<콘솔 exe> bash saga-godot/tools/probe_all.sh --only=save_dungeon,save_f
 
 끝 줄 `PROBE_ALL fails=N probes=M`(N=0 이면 통과) · 표는 `tools/_out/probe_all.json`. 이 문서의 나머지는 손으로 하는 실기 테스트다.
 
+그래픽 기준 촬영(**사용자가 "기준 촬영" 을 요청할 때만** — 창이 잠깐 뜬다): `GODOT=<콘솔 exe> bash saga-godot/tools/shot_baseline.sh <출력 절대 폴더>` → GO 네 컷 PNG.
+승인한 PNG 는 `saga-godot/graphics/baseline/go/` 에 두고, 이후 촬영은 `node saga-godot/tools/shot_diff.mjs saga-godot/graphics/baseline/go <새 폴더>` 로 SSIM·히스토그램 차이를 본다(`--selftest` 로 도구 점검).
+
 ---
 
 ## 1. Godot 에디터 준비
