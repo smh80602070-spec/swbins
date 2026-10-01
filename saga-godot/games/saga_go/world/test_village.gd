@@ -259,6 +259,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_promotion.gd").new())
 	if OS.get_environment("SAGA_SHRINE_PROBE") != "":
 		add_child(load("res://tools/probe_shrine.gd").new())
+	if OS.get_environment("SAGA_BEACON_PROBE") != "":
+		add_child(load("res://tools/probe_beacon.gd").new())
 	if OS.get_environment("SAGA_EVENTS_PROBE") != "":
 		add_child(load("res://tools/probe_events.gd").new())
 	if OS.get_environment("SAGA_HELP_PROBE") != "":
