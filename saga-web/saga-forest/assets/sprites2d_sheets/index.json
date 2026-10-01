@@ -1,0 +1,12 @@
+{
+ "role": "주민",
+ "spec": "128px·8프레임·방향 3(0 정면·1 옆·2 뒤, 반대 옆은 뒤집기)·동작 idle/walk/attack/hit/death",
+ "source": "tools/char-forge/gear_sprites.py (K-0015, CC0 VRoid 몸 + 절차 생성 장비)",
+ "note": "도감·괴물 id 와의 연결과 배선은 W 티켓",
+ "sheets": [
+  "pool_f_elder_137",
+  "pool_basem_elder_105",
+  "pool_f_teen_138",
+  "pool_basef_child_116"
+ ]
+}
