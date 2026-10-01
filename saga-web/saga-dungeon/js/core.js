@@ -468,3 +468,25 @@
     }
   };
 })(window);
+
+/* 판별 2D 모드 설정 — saga-web/shared/js/mode2d.js 가 읽는다(이 판만 다른 것).
+   시트 풀(assets/sprites2d_sheets/)은 K-0015 가 만든다 — 없으면 기존 코드 스탬프 그대로, 오류 없음. 관문 구간(tier 1~4)마다 풀을 나눠 쓴다 */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.mode2d = {
+    base: 'assets/sprites2d_sheets/',
+    targetH: 40,                                 // 던전 2D 의 사람형 몸 높이 기준(px, dungeon-view bodyH 40·s 와 같은 단위 — 호출이 배수를 곱한다)
+    foot: 0.87,
+    /** 2D 모드인가 — 3D 가 안 서 있을 때(= 아이소 2D 그림) */
+    on: function () { var T = global.DG.dungeon3d; return !(T && T.active && T.active()); },
+    poolH: { pool_d_goblin_118: 61, pool_e_orc_125: 90, pool_g_undead_143: 91, pool_basem_demon_104: 106 },   // 프레임 안 몸 높이(px, pw-sheet-bbox.mjs 로 잼)
+    pools: {
+      t1: ['pool_d_goblin_118'],
+      t2: ['pool_e_orc_125', 'pool_d_goblin_118'],
+      t3: ['pool_g_undead_143', 'pool_e_orc_125'],
+      t4: ['pool_basem_demon_104', 'pool_g_undead_143']
+    }
+  };
+})(window);

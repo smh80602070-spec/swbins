@@ -102,6 +102,8 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/data-quest.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/sprite.js"></script>
+<script src="js/mode2d.js"></script>
+<script src="js/foe2d.js"></script>
 <script src="js/core.js"></script>
 <script src="js/sfx.js"></script>
 <script src="js/bgm.js"></script>
@@ -7689,6 +7691,36 @@ window.requestAnimationFrame = function () { return 0; };
     t('BGM — 곡 파일이 없어도(재생 전·headless) 모듈이 오류 없이 선다', function () {
       return typeof DG.bgm.current === 'function' && DG.bgm.unlocked() === false && DG.bgm.hasEl() === false &&
         ('재생 전엔 <audio> 도 안 만든다');
+    });
+
+    /* ── 2D 모드 시트(W-0019, shared/js/mode2d.js) — 순수 함수만. 이미지는 안 받는다(진단은 파일을 못 믿는다) ─── */
+
+    t('2D 시트 — 프레임 계산: 반복 동작(idle·walk)은 돌고, 한 번 동작(attack·hit·death)은 마지막 프레임에 머문다', function () {
+      var M = DG.mode2d;
+      var loop = M.frameAt('walk', 0) === 0 && M.frameAt('walk', 1000 / M.FPS.walk) === 1 && M.frameAt('walk', 1000 / M.FPS.walk * M.FRAMES) === 0;
+      var once = M.frameAt('death', 99999) === M.FRAMES - 1 && M.frameAt('attack', 99999) === M.FRAMES - 1 && M.frameAt('hit', -50) === 0;
+      return loop && once && '반복 ' + loop + ' · 한 번 ' + once;
+    });
+
+    t('2D 시트 — 풀 고르기: 같은 이름은 늘 같은 풀, 표에 없는 종류는 null(기존 그림)', function () {
+      var M = DG.mode2d, a = M.pick('t2', '황건적'), b = M.pick('t2', '황건적'), none = M.pick('beast', '들개');
+      var pools = DG.cfg.mode2d.pools, all = [];
+      Object.keys(pools).forEach(function (k) { pools[k].forEach(function (p) { all.push(p); }); });
+      var known = all.every(function (p) { return DG.cfg.mode2d.poolH[p] > 0; });   // 쓰는 풀마다 몸 높이가 적혀 있다
+      return a === b && !!a && none === null && known && ('황건적 → ' + a + ' · 풀 ' + all.length + '칸 몸 높이 적힘');
+    });
+
+    t('2D 시트 — 방향: 옆모습은 오른쪽이 기준이고 왼쪽은 좌우 뒤집기, 정면·뒤는 뒤집지 않는다', function () {
+      var M = DG.mode2d, r = M.dirOf(1), l = M.dirOf(-1), f = M.dirOf('front'), b = M.dirOf('back');
+      return r.row === 1 && !r.flip && l.row === 1 && l.flip && f.row === 0 && !f.flip && b.row === 2 && !b.flip;
+    });
+
+    t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {
+      var M = DG.mode2d, calls = 0;
+      var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, translate: function () {}, scale: function () {} };
+      var noPool = M.draw(fake, { clip: 'walk', x: 10, y: 10 });
+      var missing = M.draw(fake, { pool: 'pool_없는풀_000', clip: 'walk', facing: 1, ms: 0, x: 10, y: 10 });   // 파일이 없다 → 아직 받는 중이거나 영영 실패
+      return noPool === false && missing === false && calls === 0 && '풀 없음·파일 없음 → 둘 다 false, 그리기 호출 0';
     });
 
     t('런타임 에러 없음', function () {

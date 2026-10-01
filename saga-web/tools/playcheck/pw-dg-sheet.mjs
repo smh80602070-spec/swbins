@@ -127,6 +127,19 @@ try {
   await page.keyboard.press('g'); await sleep(300);
   const sg2 = await ev(() => { var R = DG.dungeon.raw(); return { mp: R.mp, cd: R.player.sigSkCd }; });
   check('서명 무예 — G 를 누르면 나가고 MP 는 안 쓰며 쿨다운만 돈다', sg2.cd > 0 && sg2.mp >= sg.mp - 0.01, JSON.stringify({ 전: sg, 후: sg2 }));
+
+  /* 6) 2D 모드 시트(W-0019) — 3D 를 끄면(dg3d.on=0) 아이소 2D 그림에서 사람형 적이 새 시트로 그려진다(짐승은 기존 스탬프) */
+  await ev(() => { DG.dungeon.leave(); });
+  await sleep(500);
+  await ev(() => { DG.core.setTune('dg3d.on', 0); });
+  await enter();
+  await ev(() => { var R = DG.dungeon.raw(); R.hp = R.hpMax = 99999; R.player.invuln = 99; var hs = R.room.enemies.filter((e) => e.ref.kind !== 'beast'); hs.slice(0, 3).forEach((e, i) => { e.hp = e.hpMax = 99999; e.x = R.player.x + 90 + i * 70; e.y = R.player.y + (i - 1) * 40; e.aggro = true; }); });
+  await sleep(2500);
+  const m2 = await ev(() => {
+    var R = DG.dungeon.raw(), hs = R.room.enemies.filter((e) => e.ref.kind !== 'beast'), pools = hs.map((e) => DG.mode2d.pick('t' + (e.ref.tier || 1), e.ref.name));
+    return { on: DG.mode2d.isOn(), humans: hs.length, loaded: pools.filter((q) => q && DG.mode2d.loaded(q, 'walk') === true).length, failed: pools.filter((q) => q && DG.mode2d.failed(q, 'walk') === true).length };
+  });
+  check('2D 모드 시트 — 3D 를 끄면 사람형 적이 시트로 그려진다(walk 이미지를 받아 둠, 실패 0)', m2.on && m2.humans > 0 && m2.loaded > 0 && m2.failed === 0, JSON.stringify(m2));
 } catch (e) { console.log('ERR', e.message); results.push(false); }
 
 const real = r.errors.filter((e) => !/status of 404/.test(e) && !/WebGL|Shader|GL_/i.test(e));

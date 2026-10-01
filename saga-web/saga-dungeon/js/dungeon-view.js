@@ -1725,7 +1725,7 @@
       ctx.stroke();
       ctx.restore();
     }
-    global.DG.sprite.stamp(ctx, {
+    if (!(isHuman && global.DG.foe2d && global.DG.foe2d.draw(ctx, e, p, bodyH, now))) global.DG.sprite.stamp(ctx, {
       kind: isHuman ? 'human' : 'beast',
       ref: ref, key: ref.name,
       x: p.x, y: p.y, s: s, facing: -1,
