@@ -19,7 +19,6 @@
 1905 saga-web/saga-dungeon/js/town.js
 1896 saga-unity/Assets/Editor/BuildTestDungeonScene.cs
 1877 saga-web/saga-story/js/ui.js
-1796 saga-godot/games/saga_go/world/story_quest.gd
 1780 saga-web/saga-realm/js/war.js
 1733 saga-web/saga-dungeon/js/asset3d.js
 1640 saga-web/saga-go/js/asset3d.js
