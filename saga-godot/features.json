@@ -42,8 +42,10 @@
   "id": "gd.go.animals",
   "name": "동물 6",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "animals"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
