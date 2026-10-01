@@ -576,3 +576,10 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 - 새 세이브의 목표판 첫 줄(`GoalLineNow`)에 `첫걸음 n/5: …` 가 차례로 뜬다. GO = 걷기 30m → 등용 → 상자 → 원소 반응 → 저장, DUNGEON = 걷기 → 첫 처치 → 레벨 2 → 사명 한 단계 → 저장. 판정은 기존 상태를 읽는 폴링이라 순서 밖으로 먼저 한 일은 건너뛴다. 코드: `SagaCore/TutorialSteps.cs` · `GoTutorial`·`DungeonTutorial`.
 - 세이브 칸 `tutDone`(GO v29·DUNGEON v15). 옛 세이브는 전부 끝난 것으로 읽는다(GO `MigrateStep(28)`·DUNGEON `version >= 15 ?`). **세이브 버전을 올리면 Playtest 가 하드코딩한 `"version":N` 도 같이 올려야 한다**(`grep -l 'version.*:29' Assets/Editor/*.cs`).
 - 목표판 첫 줄을 검사하는 진단은 첫 프레임에 `Enabled = false` 로 끈다(`PlaytestHeadless`·`PlaytestDungeonHeadless`). 진단 `PlaytestTutorial.Run` → `[PlaytestTutorial] OK`.
+
+
+## 18. 배경음 — `Saga.Core.Bgm` (tasks U-0014)
+
+- 다섯 판의 `*Audio.PlayBgm`·`RefreshBgmVolume`(PlayerPrefs `…_vol_bgm`·설정 BGM 켜기/끄기)는 그대로 두고 재생만 `Bgm` 이 맡는다. 곡 찾기 = `Resources/Audio/Bgm/<판>-<장면>`(판 id `go·dungeon·forest·story·realm`, 장면 `main·field·battle`) → 없으면 부트스트랩이 준 곡(`Assets/Art/Audio/CC0_BGM/`) → 없으면 무음(오류 0). 곡이 바뀌면 1.5초 교차 페이드.
+- 새 곡 넣는 법: `Assets/SagaCore/Resources/Audio/Bgm/<판>-<장면>.ogg` 로 두고 **같은 커밋에서 `SagaCredits` 표에 줄 추가**. GO 는 `GoBgmScene` 이 싸움 중이면 `go-battle`, 아니면 `go-main`. 다른 판의 장면 전환은 `Bgm.SetScene("battle")` 을 부르는 폴러를 붙이면 된다.
+- 진단 `PlaytestBgm.Run` → `[PlaytestBgm] OK`(가짜 곡·주입 `Bgm.Loader`로 페이드·폴백·끄기·소리원 재생성·무곡 오류 0).
