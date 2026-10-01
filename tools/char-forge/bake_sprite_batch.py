@@ -102,7 +102,7 @@ def main():
         kb = sum(sizes.values()) / 1024
         total += kb
         print(f'ok {e["id"]} {time.time() - t0:.0f}s {kb:.0f}KB ({len(todo)}동작)')
-    print(f'끝 — 합계 {total:.0f}KB')
+    print(f'끝 - 합계 {total:.0f}KB')
 
 
 if __name__ == '__main__':
