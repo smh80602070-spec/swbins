@@ -1,0 +1,175 @@
+{
+ "model": "sd_xl_base_1.0",
+ "out": "web_patterns_64",
+ "defaults": {
+  "prompt_prefix": "seamless tileable fabric swatch",
+  "width": 640,
+  "height": 640,
+  "steps": 30,
+  "cfg": 6.5,
+  "sampler": "Euler a",
+  "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, folds, wrinkles, shadow, 3d render, blurry, lowres, worst quality"
+ },
+ "items": [
+  {
+   "id": "pat_jade_peony_silk",
+   "seed": 4115193431,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, jade green silk with subtle woven peony flower pattern, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_indigo_ikat",
+   "seed": 2942677721,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, indigo ikat woven fabric with feathered edge geometric patterns, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_crimson_felt",
+   "seed": 1104956086,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, thick crimson felt wool with fine visible fibers, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_ochre_hemp",
+   "seed": 1011941523,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, ochre hemp cloth with coarse weave and irregular slubs, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_houndstooth_grey",
+   "seed": 83476858,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, grey and black houndstooth wool fabric, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_polka_navy",
+   "seed": 520188861,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, navy cotton fabric with small white polka dots, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_argyle_green",
+   "seed": 1271370105,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, green and cream argyle diamond knit pattern, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_corduroy_brown",
+   "seed": 3380839129,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, brown corduroy fabric with vertical ribs, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_knit_cream",
+   "seed": 2998466244,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, chunky cream cable knit wool texture, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_sequin_black",
+   "seed": 4257642980,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, black fabric covered in tiny shiny sequins, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_pinstripe_charcoal",
+   "seed": 3533645697,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, charcoal suiting fabric with thin white pinstripes, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_paisley_teal",
+   "seed": 4138402855,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, teal and gold paisley printed cotton, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_nano_scale_blue",
+   "seed": 463344723,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, blue nanoscale armor plating pattern with tiny overlapping scales, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_hex_plate_white",
+   "seed": 1608500383,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, white hexagonal ceramic plate pattern with thin gray seams, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_solar_panel_dark",
+   "seed": 1248513880,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, dark blue solar panel cells grid with silver lines, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_neon_grid_pink",
+   "seed": 127525227,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, black fabric with thin glowing pink grid lines, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_plasma_veins_violet",
+   "seed": 3594345867,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, dark fabric with glowing violet plasma veins, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_liquid_metal_chrome",
+   "seed": 4041024076,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, liquid chrome metal surface with soft ripples, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_fiber_optic_weave",
+   "seed": 1590964270,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, woven fiber optic strands with glowing cyan tips, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_bio_mesh_green",
+   "seed": 1780122479,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, organic green bio mesh lattice with soft glow, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_hologram_scanlines",
+   "seed": 253334789,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, translucent teal hologram fabric with fine scanlines, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_ceramic_armor_white",
+   "seed": 264244989,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, white ceramic armor panels with gold trim lines, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_aurora_gradient",
+   "seed": 3741224174,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, smooth aurora gradient fabric in green and violet, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_graphene_black",
+   "seed": 1752766347,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, black graphene carbon fabric with subtle hexagon sheen, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_quantum_dots_gold",
+   "seed": 3498820314,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, dark fabric scattered with tiny glowing gold dots, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_smart_fabric_ripple",
+   "seed": 135417321,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, silver smart fabric with concentric ripple pattern, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_data_stream_blue",
+   "seed": 957359031,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, dark blue fabric with flowing columns of tiny glowing characters, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_ion_glow_orange",
+   "seed": 4221785502,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, charcoal fabric with soft glowing orange ion streaks, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_crest_crane_gold",
+   "seed": 3215755617,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, repeating abstract crane silhouette emblem in gold on dark green, flat textile design, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_crest_wave_blue",
+   "seed": 1270753993,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, repeating stylized wave emblem in white on deep blue, flat textile design, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_crest_sun_red",
+   "seed": 474846273,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, repeating stylized sun burst emblem in gold on crimson, flat textile design, even lighting, high detail fabric texture"
+  },
+  {
+   "id": "pat_crest_moon_silver",
+   "seed": 318657632,
+   "prompt": "flat lay, seamless tileable textile pattern, top-down close up, repeating crescent moon and star emblem in silver on indigo, flat textile design, even lighting, high detail fabric texture"
+  }
+ ]
+}

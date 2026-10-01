@@ -1,6 +1,6 @@
 """옷 조각 질감 × AI 무늬 타일 → 옷 변형(외형 아이템) 질감을 대량으로 만든다.
 
-    py tools/char-forge/make_wardrobe_textures.py [--patterns 32] [--max-size 1024]
+    py tools/char-forge/make_wardrobe_textures.py [--max-size 1024]  (무늬는 web_patterns_32 + web_patterns_64 의 pat_*.png 전부) [--max-size 1024]
 
 입력  · `_out/vrm_parts/<vrm>/tex/<조각>.png` (vrm_piece_tex.py — 옷 조각의 바탕색 질감 펼침도)
       · `tools/ai-art/_out/web_patterns_32/pat_*.png` (make_pattern_batch.py → gen.py 로 만든 천 무늬 타일)
@@ -20,7 +20,7 @@ from PIL import Image
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PARTS = os.path.join(ROOT, '_out', 'vrm_parts')
-PATS = os.path.join(ROOT, '..', 'ai-art', '_out', 'web_patterns_32')
+PATS_DIRS = [os.path.join(ROOT, '..', 'ai-art', '_out', d) for d in ('web_patterns_32', 'web_patterns_64')]   # 32종(Animagine) + 새 32종(SDXL, K-0006)
 OUT = os.path.join(ROOT, '_out', 'wardrobe')
 MAX = int(sys.argv[sys.argv.index('--max-size') + 1]) if '--max-size' in sys.argv else 1024
 
@@ -34,6 +34,16 @@ KO = {
     'buffalo_plaid': '붉은 체크 플란넬', 'bamboo_green': '대나무 비단', 'tweed_grey': '회색 트위드', 'cyber_gradient': '사이버 그라데이션',
     'canvas_beige': '베이지 캔버스', 'heraldic_blue_gold': '푸른 금문장', 'coins_maroon': '엽전무늬', 'stripes_pastel': '파스텔 줄무늬',
 }
+KO.update({
+    'jade_peony_silk': '옥빛 모란 비단', 'indigo_ikat': '쪽빛 이캇', 'crimson_felt': '진홍 펠트', 'ochre_hemp': '황토 삼베',
+    'houndstooth_grey': '회색 하운드투스', 'polka_navy': '남색 물방울', 'argyle_green': '초록 아가일', 'corduroy_brown': '갈색 코듀로이',
+    'knit_cream': '크림 꽈배기 뜨개', 'sequin_black': '검은 스팽글', 'pinstripe_charcoal': '숯빛 세로줄', 'paisley_teal': '청록 페이즐리',
+    'nano_scale_blue': '푸른 나노 비늘', 'hex_plate_white': '흰 육각 판', 'solar_panel_dark': '태양 전지판', 'neon_grid_pink': '분홍 네온 격자',
+    'plasma_veins_violet': '보랏빛 플라즈마', 'liquid_metal_chrome': '액체 금속', 'fiber_optic_weave': '광섬유 직조', 'bio_mesh_green': '녹색 생체 그물',
+    'hologram_scanlines': '홀로 주사선', 'ceramic_armor_white': '흰 도자 갑옷', 'aurora_gradient': '오로라 그라데이션', 'graphene_black': '검은 그래핀',
+    'quantum_dots_gold': '금빛 양자점', 'smart_fabric_ripple': '은빛 물결 스마트 천', 'data_stream_blue': '푸른 데이터 흐름', 'ion_glow_orange': '주황 이온 줄기',
+    'crest_crane_gold': '금 학 문장', 'crest_wave_blue': '푸른 물결 문장', 'crest_sun_red': '붉은 해 문장', 'crest_moon_silver': '은빛 달별 문장',
+})   # K-0006 새 32종
 SLOT_KO = {'top': '상의', 'bottom': '하의', 'shoes': '신발'}
 
 
@@ -63,7 +73,7 @@ def compose(tex, pat):
 
 
 def main():
-    pats = sorted(glob.glob(os.path.join(PATS, 'pat_*.png')))
+    pats = sorted(p for d in PATS_DIRS for p in glob.glob(os.path.join(d, 'pat_*.png')))
     if not pats:
         sys.exit('무늬 타일이 없다 — make_pattern_batch.py 와 gen.py(run_chain.sh) 를 먼저')
     items = []
