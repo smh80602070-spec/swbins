@@ -796,8 +796,10 @@
   "id": "un.dg.common",
   "name": "공통 66-2 라이팅·67~69 사운드/설정/Localization·목표판/세션카드·101-3 C·F·G",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestCommonSettingsLoc"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -961,8 +963,10 @@
   "id": "un.fs.common",
   "name": "공통 66-2 라이팅·67~69 사운드/설정/Localization·목표판/세션카드",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestCommonSettingsLoc"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1338,8 +1342,10 @@
   "id": "un.rk.common",
   "name": "공통 66-2 라이팅·67~69 사운드/설정/Localization·목표판/세션카드",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestCommonSettingsLoc"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
