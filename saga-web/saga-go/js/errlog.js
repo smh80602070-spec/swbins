@@ -13,12 +13,21 @@
  *   list()          지금 쌓인 것(오래된 것부터)
  *   clear()         비운다
  *   push(arr, e)    **순수 함수** — 50건 넘으면 오래된 것부터 미는 셈만 한다
+ *
+ * **정본은 saga-web/shared/js/errlog.js** — 판별 복사본은 tools/sync-shared.mjs 가 만든다(직접 고치지 않는다).
+ * 저장 키는 판마다 다르다(`<SAVE_BASE 앞쪽>/errlog`, 예 `deungyong-go/errlog`) — `core.js` 가 `SAVE_BASE` 를 내놓기 전에
+ * 난 오류는 메모리에 담아 뒀다가 키가 생기면(다음 기록·목록·load 때) 한꺼번에 저장한다.
  */
 (function (global) {
   'use strict';
 
   var MAX = 50;
-  function storageKey() { return 'deungyong-go/errlog'; }
+  /** 판의 저장 키 — `core.SAVE_BASE`('deungyong-go/save' 꼴)의 `/save` 를 `/errlog` 로. core 가 아직 없으면 null */
+  function storageKey() {
+    var core = global.DG && global.DG.core, base = core && core.SAVE_BASE;
+    return base ? String(base).replace(/\/save$/, '') + '/errlog' : null;
+  }
+  var pending = [];   // 키가 생기기 전에 난 오류(메모리)
 
   function ON() {
     var core = global.DG && global.DG.core;
@@ -26,14 +35,18 @@
   }
 
   function load() {
+    var key = storageKey();
+    if (!key) { return pending.slice(); }
     try {
-      var raw = global.localStorage ? global.localStorage.getItem(storageKey()) : null;
+      var raw = global.localStorage ? global.localStorage.getItem(key) : null;
       var arr = raw ? JSON.parse(raw) : [];
       return Array.isArray(arr) ? arr : [];
     } catch (e) { return []; }
   }
   function persist(arr) {
-    try { if (global.localStorage) { global.localStorage.setItem(storageKey(), JSON.stringify(arr)); } }
+    var key = storageKey();
+    if (!key) { pending = arr.slice(); return; }
+    try { if (global.localStorage) { global.localStorage.setItem(key, JSON.stringify(arr)); } }
     catch (e) { /* 저장소 꽉 참 등 — 조용히 넘어간다, 오류 수집이 또 오류를 내면 안 된다 */ }
   }
 
@@ -44,7 +57,17 @@
     return out;
   }
 
+  /** 키가 생겼으면 메모리에 담아 둔 것을 저장소 앞쪽에 합친다 */
+  function flush() {
+    if (!pending.length || !storageKey()) { return; }
+    var held = pending; pending = [];
+    var arr = load();
+    held.forEach(function (e) { arr = push(arr, e); });
+    persist(arr);
+  }
+
   function record(entry) {
+    flush();
     entry = entry || {};
     if (!entry.t) { entry.t = Date.now(); }
     var arr = push(load(), entry);
@@ -52,7 +75,7 @@
     return arr;
   }
 
-  function list() { return load(); }
+  function list() { flush(); return load(); }
   function clear() { persist([]); return []; }
 
   function fromErrorEvent(ev) {
@@ -84,6 +107,7 @@
     global.addEventListener('unhandledrejection', function (ev) {
       if (ON()) { record(fromRejectionEvent(ev)); }
     });
+    global.addEventListener('load', flush);
   }
 
   global.DG = global.DG || {};
@@ -91,7 +115,7 @@
     MAX: MAX, ON: ON,
     record: record, list: list, clear: clear, push: push,
     fromErrorEvent: fromErrorEvent, fromRejectionEvent: fromRejectionEvent,
-    install: install
+    install: install, storageKey: storageKey, flush: flush
   };
   install();
 })(window);

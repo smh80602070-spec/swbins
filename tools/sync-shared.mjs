@@ -23,6 +23,7 @@ const FILES = [
   ['js/vroid-variant.js', 'js/vroid-variant.js'],
   ['js/account.js', 'js/account.js'],
   ['build/build-single.mjs', 'build/build-single.mjs'],
+  ['js/errlog.js', 'js/errlog.js'],
   ['js/bgm.js', 'js/bgm.js', ['saga-forest', 'saga-story']],   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
 ];
 const check = process.argv.includes('--check');

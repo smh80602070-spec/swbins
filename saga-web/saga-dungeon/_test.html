@@ -7643,6 +7643,17 @@ window.requestAnimationFrame = function () { return 0; };
       return '통과 ' + Object.keys(r).join(',');
     });
 
+    t('오류 기록 저장 키는 이 판 것 그대로다 (yeoksa-dungeon/errlog) · core 없을 땐 메모리에 담았다 합친다', function () {
+      var E = DG.errlog, key = E && E.storageKey ? E.storageKey() : null;
+      if (key !== 'yeoksa-dungeon/errlog') { return false; }
+      var had = localStorage.getItem(key), before = E.list().length;
+      E.record({ kind: 'test', msg: 'W-errlog' });
+      var after = E.list();
+      var ok = after.length === Math.min(E.MAX, before + 1) && after[after.length - 1].msg === 'W-errlog';
+      if (had === null) { localStorage.removeItem(key); } else { localStorage.setItem(key, had); }
+      return ok && ('키 ' + key + ' · 한 건 기록');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
