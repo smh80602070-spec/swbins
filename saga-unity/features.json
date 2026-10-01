@@ -1102,8 +1102,10 @@
   "id": "un.st.school-sets",
   "name": "5-2 유파 세트·옷 빛깔(차수×12%)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestStorySchoolSets"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
