@@ -999,8 +999,10 @@
   "id": "un.st.gate-captain",
   "name": "5-4 관문 대장",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestStoryGateCaptain"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
