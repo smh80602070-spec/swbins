@@ -569,6 +569,7 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 - 네 판 시나리오 표는 `Games/Saga<판>/Resources/scenario_<판>.json`(REALM 은 본 사슬+곁가지 한 파일)이 정본이고 `*ScenarioData.cs` 는 `ScenarioJson.Load` 로더다. `JsonUtility` 한계 때문에 읽은 뒤 `Normalize` 가 `""`→null·빈 객체→null 로 되돌린다(첫 장 `After == null` 처럼 null 이 뜻을 갖는 곳). REALM 사전은 `Kv[]`+`Finish()`.
 - 표를 고치려면 JSON 을 고치거나, 웹 표에서 다시 만들어 `Saga.EditorTools.ScenarioJsonExport.<판>`(`-executeMethod`)로 쓴다 — 저장된 파일과 읽은 표가 의미상 같은지(`DeepEqual`) 확인하고 `[ScenarioJsonExport] <판> OK n장 m씬` 을 찍는다.
 - 진단 `PlaytestScenarioJson.Run` → `[PlaytestScenarioJson] OK`: 개수(상수)·id 중복·첫 장 After·사전 채움. 표 장 수를 일부러 바꿀 땐 그 상수도 고친다.
+- GO 이야기 표(`GoStory.Chapters`, 41장)는 `Games/SagaGo/Resources/story_go.json`(tasks U-0016, `ScenarioJsonExport.Go`). `Step.Arena`(`Vector2?`)·`Waves`(`Foe[][]`)는 `JsonUtility` 가 못 담아 `ArenaV`·`HasArena`·`WaveRows` 병렬 필드로 쓰고, 읽은 뒤 `Step.Link()` 가 되살린다.
 
 
 ## 17. 첫 10분 사명 — `TutorialSteps` (tasks U-0013)

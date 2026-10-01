@@ -41,6 +41,7 @@ namespace Saga.Core
         // struct(Line·Fx·Kv) 의 문자열 필드 ""→null — 박싱한 복사본을 고쳐 돌려준다.
         private static object NullEmptyStrings(object boxed)
         {
+            if (boxed == null) return null; // `Vector2?` 같은 null 값 형식(tasks U-0016)
             foreach (var f in boxed.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance))
                 if (f.FieldType == typeof(string) && (string)f.GetValue(boxed) == "") f.SetValue(boxed, null);
             return boxed;

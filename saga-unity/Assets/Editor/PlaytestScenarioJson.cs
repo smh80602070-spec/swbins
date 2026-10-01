@@ -20,6 +20,7 @@ namespace Saga.EditorTools
         private const int StoryChapters = 17, StoryScenes = 29, StoryCasts = 11;
         private const int DungeonChapters = 19, DungeonScenes = 41, DungeonCasts = 14;
         private const int RealmCards = 19, RealmSide = 9;
+        private const int GoChapters = 41, GoSteps = 341, GoLines = 815, GoWaveSteps = 13, GoArenaSteps = 99; // tasks U-0016 — GO 이야기 표(story_go.json)
 
         [MenuItem("Saga/Playtest Scenario JSON")]
         public static void Run()
@@ -50,6 +51,8 @@ namespace Saga.EditorTools
                 PlaytestKit.Check(noChoice > 0 && withChoice > 0, $"FOREST Choice null {noChoice} · 있음 {withChoice} — Normalize 확인");
                 foreach (var s in ForestData.Scenes) if (s.Choice != null) PlaytestKit.Check(!string.IsNullOrEmpty(s.Choice.Id) && s.Choice.Options != null && s.Choice.Options.Length > 0, $"FOREST 선택 {s.Id} 가 비어 있음");
 
+                CheckGoStory();
+
                 PlaytestKit.Check(RealmScenarioData.Cards.Length == RealmCards, $"REALM 카드 {RealmScenarioData.Cards.Length} ≠ {RealmCards}");
                 PlaytestKit.Check(RealmScenarioSideData.Side.Length == RealmSide, $"REALM 곁가지 {RealmScenarioSideData.Side.Length} ≠ {RealmSide}");
                 var rids = new HashSet<string>();
@@ -63,6 +66,34 @@ namespace Saga.EditorTools
             }
             PlaytestKit.Summary("PlaytestScenarioJson");
             if (Application.isBatchMode) EditorApplication.Exit(PlaytestKit.Fails == 0 ? 0 : 1);
+        }
+
+        private static void CheckGoStory()
+        {
+            var chs = Saga.Go.Data.GoStory.Chapters;
+            PlaytestKit.Check(chs.Length == GoChapters, $"GO 장 {chs.Length} ≠ {GoChapters}");
+            var ids = new HashSet<string>();
+            int steps = 0, lines = 0, waves = 0, arenas = 0;
+            foreach (var c in chs)
+            {
+                PlaytestKit.Check(!string.IsNullOrEmpty(c.Id) && ids.Add(c.Id), $"GO 장 id 비었거나 중복 {c.Id}");
+                PlaytestKit.Check(c.Steps != null && c.Steps.Length > 0, $"GO 장 {c.Id} 에 단계가 없음");
+                foreach (var s in c.Steps)
+                {
+                    steps++;
+                    if (s.Lines != null) lines += s.Lines.Length;
+                    // JsonUtility 는 null 배열을 빈 배열로 읽는다 — `Link()` 가 null 로 되돌려야 `s.Order ?? SealOrder` 같은 기본값이 산다.
+                    foreach (var f in typeof(Saga.Go.Data.GoStory.Step).GetFields())
+                        if (f.FieldType.IsArray && f.GetValue(s) is System.Array arr && arr.Length == 0) PlaytestKit.Fail($"GO {c.Id} 단계의 {f.Name} 가 빈 배열(null 이어야 함)");
+                    // `Link()` — 병렬 필드에서 `Arena`·`Waves` 가 되살아났는지.
+                    PlaytestKit.Check(s.Arena.HasValue == s.HasArena, $"GO {c.Id} Arena ≠ HasArena");
+                    if (s.Arena.HasValue) { arenas++; PlaytestKit.Check(s.Arena.Value == s.ArenaV, $"GO {c.Id} Arena 값이 ArenaV 와 다름"); }
+                    PlaytestKit.Check((s.Waves != null) == (s.WaveRows != null && s.WaveRows.Length > 0), $"GO {c.Id} Waves ≠ WaveRows");
+                    if (s.Waves != null) { waves++; PlaytestKit.Check(s.Waves.Length == s.WaveRows.Length && s.Waves[0].Length > 0, $"GO {c.Id} 파도 모양 이상"); }
+                }
+            }
+            PlaytestKit.Check(steps == GoSteps && lines == GoLines && waves == GoWaveSteps && arenas == GoArenaSteps, $"GO 단계 {steps}/{GoSteps} 대사 {lines}/{GoLines} 파도 {waves}/{GoWaveSteps} 무대 {arenas}/{GoArenaSteps}");
+            PlaytestKit.Check(chs[0].Id == "ch1" && chs[chs.Length - 1].Id == "ch41", "GO 첫/끝 장 id 가 ch1/ch41 이 아님");
         }
 
         private static void Counts(string tag, int ch, int wantCh, int sc, int wantSc, int ca, int wantCa)

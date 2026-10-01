@@ -86,6 +86,7 @@ namespace Saga.Go.Data
         };
 
         /// <summary>파도 한 자리 — 종류 + 덧씌울 원소(물리 = 그 종류 원소 그대로).</summary>
+        [System.Serializable]
         public struct Foe { public FieldEnemy.Kind Kind; public GoElement Over; public Foe(FieldEnemy.Kind k, GoElement o = GoElement.Physical) { Kind = k; Over = o; } }
 
         private static readonly Foe Gh = new Foe(FieldEnemy.Kind.DrownedGhost), Im = new Foe(FieldEnemy.Kind.EmberImp), Wr = new Foe(FieldEnemy.Kind.StormWraith),

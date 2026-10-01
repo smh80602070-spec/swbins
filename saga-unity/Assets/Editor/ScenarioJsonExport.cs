@@ -30,10 +30,14 @@ namespace Saga.EditorTools
         public static void Realm() => Run("Realm", Saga.Realm.Data.RealmScenarioData.Snapshot(),
             s => $"{s.cards.Length}카드 {s.side.Length}곁가지");
 
-        private static void Run<T>(string game, T snapshot, System.Func<T, string> counts) where T : class, new()
+        [MenuItem("Saga/Scenario JSON/Export Go")]
+        public static void Go() => Run("Go", Saga.Go.Data.GoStory.Snapshot(),
+            s => $"{s.chapters.Length}장 {System.Linq.Enumerable.Sum(s.chapters, c => c.Steps.Length)}단계", "story_go");
+
+        private static void Run<T>(string game, T snapshot, System.Func<T, string> counts, string resource = null) where T : class, new()
         {
             PlaytestKit.Begin("[ScenarioJsonExport]");
-            string res = "scenario_" + game.ToLowerInvariant();
+            string res = resource ?? "scenario_" + game.ToLowerInvariant();
             string dir = $"Assets/Games/Saga{game}/Resources";
             Directory.CreateDirectory(dir);
             string path = $"{dir}/{res}.json";
