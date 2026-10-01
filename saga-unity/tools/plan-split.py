@@ -85,12 +85,14 @@ def cmd_chapter(a):
     print(f"chapter: {len(block)}줄 {sum(blen(l) + 1 for l in block)}B → {len(names)}개 spec")
 
 
-def cell_split(line):
-    """표 줄 → (앞부분(마지막 ' | ' 까지 포함), 마지막 칸, 끝맺음)."""
+def cell_split(line, k=0):
+    """표 줄 → (앞부분(그 칸 앞 ' | ' 까지 포함), 뒤에서 k번째 칸(0=마지막), 그 뒤 끝맺음)."""
     assert line.rstrip().endswith("|"), "표 줄이 아님"
-    body = line.rstrip()[:-1].rstrip()          # 끝 '|' 제거
-    i = body.rfind(" | ")
-    return body[:i + 3], body[i + 3:], " |"
+    toks = line.rstrip()[:-1].rstrip().split(" | ")   # 끝 '|' 제거
+    n = len(toks) - 1 - k
+    head = " | ".join(toks[:n]) + " | "
+    tail = "".join(" | " + t for t in toks[n + 1:]) + " |"
+    return head, toks[n], tail
 
 
 def cmd_cell(a):
@@ -99,7 +101,7 @@ def cmd_cell(a):
     if len(idx) != 1:
         sys.exit(f"표 줄이 {len(idx)}개 맞음(1개여야 함): {a.line}")
     i = idx[0]
-    head, cell, tail = cell_split(lines[i])
+    head, cell, tail = cell_split(lines[i], a.from_end)
     # 쪼개기 — ' · ' 경계(구분자 포함해서 앞 조각에 둔다), 이어 붙이면 cell 과 정확히 같다
     parts, pos = [], 0
     while pos < len(cell):
@@ -157,11 +159,11 @@ def cmd_verify(a):
         if b in corpus:
             continue
         ok = False
-        if b.rstrip().endswith("|"):
-            hb, cb, _ = cell_split(b)
+        for k in range(4) if b.rstrip().endswith("|") else []:
+            hb, cb, tb = cell_split(b, k)
             for n in cur_cells:
-                hn, cn, _ = cell_split(n)
-                if hn != hb:
+                hn, cn, tn = cell_split(n, k)
+                if hn != hb or tn != tb:
                     continue
                 m = re.search(r"docs/spec/([\w.\-]+?)-1\.md", cn)
                 if not m:
@@ -187,7 +189,7 @@ def main():
     ap.add_argument("--plan", default="PLAN.md")
     sub = ap.add_subparsers(dest="cmd", required=True)
     c = sub.add_parser("chapter"); c.add_argument("start"); c.add_argument("end"); c.add_argument("name")
-    d = sub.add_parser("cell"); d.add_argument("line"); d.add_argument("prefix"); d.add_argument("--marker", default="다음 =")
+    d = sub.add_parser("cell"); d.add_argument("line"); d.add_argument("prefix"); d.add_argument("--marker", default="다음 ="); d.add_argument("--from-end", type=int, default=0, help="뒤에서 몇 번째 칸(0=마지막)")
     v = sub.add_parser("verify"); v.add_argument("base")
     a = ap.parse_args()
     {"chapter": cmd_chapter, "cell": cmd_cell, "verify": cmd_verify}[a.cmd](a)
