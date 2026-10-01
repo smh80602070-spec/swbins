@@ -4,7 +4,7 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 8 | [G-0008](G-0008.md) `assets/generated/variants` 참조 조사 보고(삭제 후보 목록만) | 측정 | 초안 |
+| 8 | [G-0008](G-0008.md) `assets/generated/variants` 참조 조사 보고(삭제 후보 목록만) | 측정 | 작성됨 |
 | 9 | [G-0009](G-0009.md) 그래픽 기준 촬영 폴더 + 차이 수치(`probe_shots`) | 측정 | 초안 |
 | 10 | [G-0010](G-0010.md) 판별 autoload → `GameBoot` 지연 로드 | 통합 | 초안 |
 | 11 | [G-0011](G-0011.md) 배경음 `saga_core/audio/bgm.gd`(곡은 K-0004) | 새기능(P0) | 초안 |
