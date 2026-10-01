@@ -168,8 +168,10 @@
   "id": "gd.go.shrine-trial",
   "name": "101-2 ④사당 시련",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "shrine"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
