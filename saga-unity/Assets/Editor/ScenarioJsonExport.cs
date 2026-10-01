@@ -18,6 +18,10 @@ namespace Saga.EditorTools
         public static void Forest() => Run("Forest", Saga.Forest.Data.ForestScenarioData.Snapshot(),
             s => $"{s.chapters.Length}장 {s.scenes.Length}씬 {s.casts.Length}인물");
 
+        [MenuItem("Saga/Scenario JSON/Export Story")]
+        public static void Story() => Run("Story", Saga.Story.Data.StoryScenarioData.Snapshot(),
+            s => $"{s.chapters.Length}장 {s.scenes.Length}씬 {s.casts.Length}인물");
+
         private static void Run<T>(string game, T snapshot, System.Func<T, string> counts) where T : class, new()
         {
             PlaytestKit.Begin("[ScenarioJsonExport]");
