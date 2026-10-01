@@ -60,19 +60,20 @@
    "계절은 달로 정해진다 (넷이 빠짐없이 덮는다)",
    "철 지난 것은 나오지 않는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
   "sheet": {
    "steps": [
-    "마을 밖 숲으로 걸어 나간다(WASD·방향키, 또는 화면을 눌러 걷기)",
+    "새 판이면 오프닝 장면을 Esc 로 넘기고 마을 밖 숲으로 걸어 나간다(WASD·방향키, 또는 화면을 눌러 걷기)",
     "열매·풀·광석 앞에서 ␣ 로 줍는다",
-    "물가에서 ␣ 로 낚시를 던지고 입질이 올 때 다시 ␣"
+    "낚시터(🎣)에서 ␣ 로 줄을 던지고 입질이 올 때 다시 ␣"
    ],
    "expect": "줍기·낚시가 되고 입질 순간 반응이 보이며 가방에 쌓인다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-fs-sheet.mjs(Playwright) 17/17 — results/pw-fs-sheet.json. 기계 확인이며 D3(사람 ○)은 아직"
  },
  {
   "id": "fs.bug",
@@ -178,7 +179,7 @@
    "편지 — 부친 다음 날 답장이 온다",
    "편지 — 부치는 것과 답장은 다른 칸이다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -186,12 +187,13 @@
   "sheet": {
    "preset": "📮 편지 가득",
    "steps": [
-    "하단 독에서 📮 편지를 연다",
+    "하단 독의 ⋯ 더보기에서 📮 편지를 연다",
     "편지를 하나씩 읽는다(선물이 든 것도)",
     "답장을 써 본다"
    ],
    "expect": "여섯 종류 편지가 보이고 선물 수령·답장이 된다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-fs-sheet.mjs(Playwright) 17/17 — results/pw-fs-sheet.json. 기계 확인이며 D3(사람 ○)은 아직"
  },
  {
   "id": "fs.home",
@@ -210,7 +212,7 @@
    "벽지·장판 — 오늘 들어온 것만 사고, 가진 것만 바른다",
    "벽지·장판 — 갈아 끼우면 집 평가가 오른다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -218,12 +220,13 @@
   "sheet": {
    "preset": "🪑 가구 · 벽지 전부",
    "steps": [
-    "하단 독에서 🏠 집을 연다",
-    "창고의 가구를 방에 놓아 본다",
+    "하단 독의 ⋯ 더보기에서 🏠 집을 연다",
+    "집 문 앞에서 ␣ 로 들어가 창고의 가구를 방에 놓아 본다",
     "벽지·장판을 바꿔 본다"
    ],
    "expect": "가구가 놓이고 벽지·장판이 바로 바뀐다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-fs-sheet.mjs(Playwright) 17/17 — results/pw-fs-sheet.json. 기계 확인이며 D3(사람 ○)은 아직"
  },
  {
   "id": "fs.museum",
@@ -245,7 +248,7 @@
    "도감과 사고는 다른 자리다 (팔아도 도감은 남는다)",
    "탑성 조각 번들(다섯째 사고 갈래) — 폐허 곁 돌무더기 여섯을 하루 한 번 뒤져 조각이 나오고, 여섯 종을 다 들이면 마을에 정자가 서며, 마을 평가 상한은 옛 넷만 본다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -253,12 +256,13 @@
   "sheet": {
    "preset": "🏛️ 사고 코앞",
    "steps": [
-    "하단 독에서 🏛️ 사고(史庫)를 연다",
+    "사고(🏛️) 건물 앞으로 걸어가 ␣ 를 누른다",
     "가진 것을 기증해 본다",
     "기증한 칸이 채워지는지 본다"
    ],
    "expect": "기증하면 칸이 채워지고 완성 보상이 뜬다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-fs-sheet.mjs(Playwright) 17/17 — results/pw-fs-sheet.json. 기계 확인이며 D3(사람 ○)은 아직"
  },
  {
   "id": "fs.town",
@@ -302,7 +306,7 @@
    "순무 — 다음 주가 오면 썩어 개당 10 에 나간다",
    "순무 — 이번 주 시세표는 지나간 칸만 보여 준다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -315,7 +319,8 @@
     "다음 날로 넘겨 시세를 확인하고 팔아 본다"
    ],
    "expect": "장이 선 날 시세가 보이고 사고팔 수 있으며 금이 맞게 오간다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-fs-sheet.mjs(Playwright) 17/17 — results/pw-fs-sheet.json. 기계 확인이며 D3(사람 ○)은 아직"
  },
  {
   "id": "fs.wear",
@@ -330,7 +335,7 @@
    "옷 — 옷 빛을 고르면 세력색을 덮고, 그대로면 안 덮는다",
    "옷 — 차림표가 바뀌어야 그림이 다시 구워진다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -343,7 +348,8 @@
     "인물 모습이 바뀌는지 본다"
    ],
    "expect": "옷 시트가 열리고 입은 옷이 인물에 반영된다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-fs-sheet.mjs(Playwright) 17/17 — results/pw-fs-sheet.json. 기계 확인이며 D3(사람 ○)은 아직"
  },
  {
   "id": "fs.data-village-2",

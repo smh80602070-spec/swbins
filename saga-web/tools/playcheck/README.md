@@ -4,6 +4,8 @@
 
 ```
 node serve.mjs C:/swbins/saga-web 8871        # 정적 서버(백그라운드로)
+npm install                                    # Playwright 쓰는 pw-*.mjs 용(playwright-core 만 — 브라우저 내려받기 없음, 이 PC 크롬을 쓴다). node_modules 는 git 이 무시
+node pw-fs-sheet.mjs [shot]                     # 사가의숲 확인 시트 여섯 기능(채집·낚시·순무 장·편지·집·사고·침선방)을 어드민 프리셋부터 실제 키·시트로 돌려 PASS/FAIL 17개 + results/pw-fs-sheet.json(D2 기록 — 사람 ○ 은 아님). pw.mjs = 공용(open(판) → page·errors·notFound)
 node rk-stage.mjs [shot]                        # 사가국지 §5-13·5-14: 설전·성 차지·일기토 단계 카드 흐름(도입→문답/손 싸움→결과)·회차 카드 단추→2회차·예외 없나(shot 을 줄 때만 shots/rk_stage_*, 새 프로필로)
 node fs-ruin.mjs [shot]                         # 사가의숲 탑성 조각 번들: 돌무더기 여섯 자리·뒤지기(하루 한 번)·정자 서기·3D 예외 없나(shot 을 줄 때만 shots/fs_ruin_*)
 node st-tier5.mjs [shot]                        # 사가스토리 5차 전직·회귀: 무예창 5차·띠 첫 자리·천멸격 실전·이야기 시트 회귀 단추(마을에서만)·적 체력 ×1.25(shot 을 줄 때만 shots/st_tier5_*)

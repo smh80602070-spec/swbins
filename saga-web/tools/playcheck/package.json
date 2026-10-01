@@ -1,0 +1,8 @@
+{
+  "name": "saga-playcheck",
+  "private": true,
+  "description": "사가 판을 직접 띄워 확인하는 스크립트 모음 — pw-*.mjs 는 Playwright(playwright-core + 설치된 크롬), 나머지는 cdp.mjs",
+  "dependencies": {
+    "playwright-core": "^1.63.0"
+  }
+}
