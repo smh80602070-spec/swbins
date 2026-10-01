@@ -1407,8 +1407,10 @@
   "id": "gd.fs.gather",
   "name": "채집",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1440,8 +1442,10 @@
   "id": "gd.fs.museum",
   "name": "곤충/화석/조개+박물관",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1451,8 +1455,10 @@
   "id": "gd.fs.turnip",
   "name": "순무 시세",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1462,8 +1468,10 @@
   "id": "gd.fs.wallpaper",
   "name": "벽지/장판",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1484,8 +1492,10 @@
   "id": "gd.fs.seasons",
   "name": "계절행사 8",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1495,8 +1505,10 @@
   "id": "gd.fs.wear",
   "name": "옷",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1506,8 +1518,10 @@
   "id": "gd.fs.biomes",
   "name": "바이옴 지형",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1517,8 +1531,10 @@
   "id": "gd.fs.furniture",
   "name": "가구·집 증축",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1561,8 +1577,10 @@
   "id": "gd.fs.hearts",
   "name": "101-2 ②관계 하트",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1572,8 +1590,10 @@
   "id": "gd.fs.bundles",
   "name": "101-2 ③마을 번들",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
