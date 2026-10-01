@@ -1,8 +1,8 @@
 {
  "script": "pw-fs-sheet.mjs",
  "game": "saga-forest",
- "pass": 17,
- "total": 17,
+ "pass": 18,
+ "total": 18,
  "pageErrors": [],
  "notFound": [],
  "checks": [
@@ -14,12 +14,12 @@
   {
    "name": "낚시 — 낚시터에서 ␣ 로 줄을 던진다",
    "ok": true,
-   "detail": "focus prop:spot · {\"wait\":2415.466796875,\"win\":700}"
+   "detail": "focus prop:spot · {\"wait\":1568.155029296875,\"win\":700}"
   },
   {
    "name": "낚시 — 입질 창은 0.7초(1.2~3.5초 기다린 뒤)",
    "ok": true,
-   "detail": "창 700ms · 남은 대기 2415ms"
+   "detail": "창 700ms · 남은 대기 1568ms"
   },
   {
    "name": "낚시 — 입질 창 안에 ␣ 를 다시 누르면 물고기가 가방에 든다",
@@ -39,12 +39,12 @@
   {
    "name": "순무 장 — 월요일에 팔면 금이 오르고 순무가 사라진다",
    "ok": true,
-   "detail": "요일 1 · {\"kind\":\"sell\",\"profit\":-180,\"text\":\"🥬 개당 🪙 90 — 밑짐 -180\"} 금 198920→199820"
+   "detail": "요일 1 · {\"kind\":\"sell\",\"profit\":-150,\"text\":\"🥬 개당 🪙 93 — 밑짐 -150\"} 금 198920→199850"
   },
   {
    "name": "편지 — 📮 시트가 열리고 여섯 통이 보인다",
    "ok": true,
-   "detail": "편지 6 안 읽음 6 선물 4 시트 글자 567"
+   "detail": "편지 6 안 읽음 6 선물 4 시트 글자 568"
   },
   {
    "name": "편지 — 선물이 든 편지를 받으면 선물이 비워진다",
@@ -90,6 +90,11 @@
    "name": "침선방 — 다른 옷을 입으면 입은 옷이 바뀐다",
    "ok": true,
    "detail": "{\"part\":\"coat\",\"from\":\"leather\",\"to\":\"robe\",\"r\":{\"kind\":\"wear\",\"text\":\"🧵 도포 으로 갈아입었다\"}}"
+  },
+  {
+   "name": "2D 모드 시트 — 3D 마을을 끄면 주민·나가 시트로 그려진다(풀 이미지를 받아 둠, 실패 0)",
+   "ok": true,
+   "detail": "{\"on\":true,\"w3\":false,\"residents\":5,\"pools\":3,\"loaded\":3,\"failed\":0}"
   }
  ]
 }

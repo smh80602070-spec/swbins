@@ -158,6 +158,17 @@ try {
   check('침선방 — 프리셋 뒤 옷장의 옷이 전부 내 것이다', wr.own === wr.tot && wr.tot > 3, wr.own + '/' + wr.tot);
   const sw = await ev(() => { var st = DG.wear.status(), part = st.parts[0], cur = DG.wear.wearing(part.part.key), other = part.list.find((x) => x.own && x.it.key !== cur); if (!other) { return null; } var r = DG.wear.set(part.part.key, other.it.key); return { part: part.part.key, from: cur, to: DG.wear.wearing(part.part.key), r: r }; });
   check('침선방 — 다른 옷을 입으면 입은 옷이 바뀐다', !!sw && sw.to !== sw.from, JSON.stringify(sw).slice(0, 110));
+
+  /* 7) 2D 모드 시트(W-0019) — 3D 마을을 끄면 구면 투영 2D 그림에서 주민·방문객·나가 새 시트로 그려진다 */
+  await boot(true);
+  await ev(() => { if (DG.villageView3d.active()) { DG.villageView3d.toggle(); } var R = DG.village.raw(), n = R.residents[0]; if (n) { R.player.x = n.x - 40; R.player.y = n.y + 10; } });
+  await sleep(4000);
+  const m2 = await ev(() => {
+    var pools = [].concat(DG.cfg.mode2d.pools.adult, DG.cfg.mode2d.pools.me), uniq = pools.filter((p, i) => pools.indexOf(p) === i);
+    var ok = uniq.filter((p) => DG.mode2d.loaded(p, 'idle') === true || DG.mode2d.loaded(p, 'walk') === true).length, bad = uniq.filter((p) => DG.mode2d.failed(p, 'idle') === true || DG.mode2d.failed(p, 'walk') === true).length;
+    return { on: DG.mode2d.isOn(), w3: DG.villageView3d.active(), residents: DG.village.raw().residents.length, pools: uniq.length, loaded: ok, failed: bad };
+  });
+  check('2D 모드 시트 — 3D 마을을 끄면 주민·나가 시트로 그려진다(풀 이미지를 받아 둠, 실패 0)', m2.on && !m2.w3 && m2.residents > 0 && m2.loaded > 0 && m2.failed === 0, JSON.stringify(m2));
 } catch (e) { console.log('ERR', e.message); results.push(false); }
 
 const real = r.errors.filter((e) => !/status of 404/.test(e));

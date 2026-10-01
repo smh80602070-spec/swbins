@@ -426,3 +426,24 @@
     first: 'forest'
   };
 })(window);
+
+/* 판별 2D 모드 설정 — saga-web/shared/js/mode2d.js 가 읽는다(이 판만 다른 것).
+   시트 풀(assets/sprites2d_sheets/)은 K-0015 가 만든다 — 없으면 기존 코드 스탬프 그대로, 오류 없음. 역할별로 풀을 나눠 쓴다(어른·아이·나) */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.mode2d = {
+    base: 'assets/sprites2d_sheets/',
+    targetH: 40,                                 // 스탬프 s=1 일 때 몸 높이(px) — actor2d 가 s 를 배수로 곱한다
+    foot: 0.87,
+    /** 2D 모드인가 — 3D 마을이 안 서 있을 때(구면 투영 2D 그림) */
+    on: function () { var V3 = global.DG.villageView3d; return !(V3 && V3.active && V3.active()); },
+    poolH: { pool_f_elder_137: 86, pool_basem_elder_105: 84, pool_f_teen_138: 75, pool_basef_child_116: 51 },   // 프레임 안 몸 높이(px, pw-sheet-bbox.mjs 로 잼)
+    pools: {
+      adult: ['pool_f_elder_137', 'pool_basem_elder_105', 'pool_f_teen_138'],
+      kid: ['pool_basef_child_116'],
+      me: ['pool_f_teen_138']
+    }
+  };
+})(window);
