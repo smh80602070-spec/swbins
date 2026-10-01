@@ -53,8 +53,10 @@
   "id": "un.go.gather",
   "name": "채집",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestGoGather"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -90,8 +92,10 @@
   "id": "un.go.shrine-trial",
   "name": "101-2 사당 시련(파도 3·인장 조각)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestGoShrineTrial"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
