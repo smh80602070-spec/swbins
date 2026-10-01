@@ -569,3 +569,10 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 - 네 판 시나리오 표는 `Games/Saga<판>/Resources/scenario_<판>.json`(REALM 은 본 사슬+곁가지 한 파일)이 정본이고 `*ScenarioData.cs` 는 `ScenarioJson.Load` 로더다. `JsonUtility` 한계 때문에 읽은 뒤 `Normalize` 가 `""`→null·빈 객체→null 로 되돌린다(첫 장 `After == null` 처럼 null 이 뜻을 갖는 곳). REALM 사전은 `Kv[]`+`Finish()`.
 - 표를 고치려면 JSON 을 고치거나, 웹 표에서 다시 만들어 `Saga.EditorTools.ScenarioJsonExport.<판>`(`-executeMethod`)로 쓴다 — 저장된 파일과 읽은 표가 의미상 같은지(`DeepEqual`) 확인하고 `[ScenarioJsonExport] <판> OK n장 m씬` 을 찍는다.
 - 진단 `PlaytestScenarioJson.Run` → `[PlaytestScenarioJson] OK`: 개수(상수)·id 중복·첫 장 After·사전 채움. 표 장 수를 일부러 바꿀 땐 그 상수도 고친다.
+
+
+## 17. 첫 10분 사명 — `TutorialSteps` (tasks U-0013)
+
+- 새 세이브의 목표판 첫 줄(`GoalLineNow`)에 `첫걸음 n/5: …` 가 차례로 뜬다. GO = 걷기 30m → 등용 → 상자 → 원소 반응 → 저장, DUNGEON = 걷기 → 첫 처치 → 레벨 2 → 사명 한 단계 → 저장. 판정은 기존 상태를 읽는 폴링이라 순서 밖으로 먼저 한 일은 건너뛴다. 코드: `SagaCore/TutorialSteps.cs` · `GoTutorial`·`DungeonTutorial`.
+- 세이브 칸 `tutDone`(GO v29·DUNGEON v15). 옛 세이브는 전부 끝난 것으로 읽는다(GO `MigrateStep(28)`·DUNGEON `version >= 15 ?`). **세이브 버전을 올리면 Playtest 가 하드코딩한 `"version":N` 도 같이 올려야 한다**(`grep -l 'version.*:29' Assets/Editor/*.cs`).
+- 목표판 첫 줄을 검사하는 진단은 첫 프레임에 `Enabled = false` 로 끈다(`PlaytestHeadless`·`PlaytestDungeonHeadless`). 진단 `PlaytestTutorial.Run` → `[PlaytestTutorial] OK`.
