@@ -229,7 +229,7 @@ JS 판들의 `_admin.html` 같은 치트/디버그 도구가 없다 — 대신 �
 5. **`"version": 7`은 반드시 그대로 둔다** — 다르면 세이브 전체를
    무시하고 새로 시작한다(`story_save_state.gd` `try_load()`가 버전이
    안 맞으면 마이그레이션 없이 그냥 포기한다).
-6. job 키·무예 key 철자는 `games/saga_story/data/story_combat.gd`의
+6. job 키·무예 key 철자는 `games/saga_story/data/story_combat_base.gd`의
    `JOBS_TIER1~4`·`JOB_SKILL_KEYS` 주석에서 그대로 확인할 수 있다
    (예: `general`·`marshal`·`warlord`, `w_cut`·`g_smash`·`n_heaven`·`o_ruin`).
 

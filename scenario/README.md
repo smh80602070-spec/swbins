@@ -154,7 +154,7 @@
 | 사가고 | `saga-go/js/story.js`(단계 엔진·1~9장) · `worldquest.js` | `games/saga_go/data/story.gd`(표) · `world/story_quest.gd`(엔진) — **정본 구현** | 없음. `Data/QuestState.cs` 한 건뿐 → 새 `Data/ScenarioData.cs`(표)·`ScenarioState.cs`(진행) |
 | 사가블로 | 퀘스트 `js/data-quest.js`·`quest.js` 에 MAIN·CHAINS | 없음. 방 일곱 슬라이스 | `Data/QuestState.cs` 3단계 |
 | 사가의숲 | 부탁 `js/data-village.js` QUESTS · `mail.js` · `visitor.js` | 부탁·하트(`world/villager_builder.gd`) | 택배·축제만 |
-| 사가스토리 | 사명 `js/data-quest.js` · 첫 발 장면 `js/story.js`+`data-side.js` STORY | 사명 `data/story_combat.gd` QUESTS | 목표 둘 `Data/StoryQuestState.cs` |
+| 사가스토리 | 사명 `js/data-quest.js` · 첫 발 장면 `js/story.js`+`data-side.js` STORY | 사명 `data/story_combat_base.gd` QUESTS | 목표 둘 `Data/StoryQuestState.cs` |
 | 사가국지 | 사연 `js/event.js` · 시나리오 `data-force.js` SCENARIOS | 특성 사연 `data/realm_events.gd` | 서사 카드 `Data/RealmEventState.cs` |
 
 **트랙별로 넣는 자리(권장)**
