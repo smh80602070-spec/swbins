@@ -851,8 +851,10 @@
   "id": "un.fs.fruit-gather",
   "name": "과일나무·채집·좌판",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestForestFruitGather"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
