@@ -155,7 +155,7 @@
       '<div class="key-row"><b>음량</b>' +
         '<input type="range" min="0" max="100" value="' + vol + '" data-act="snd-vol"' +
         (on ? '' : ' disabled') + '>' +
-        '<span class="key-cur">' + vol + '%</span></div>' +
+        '<span class="key-cur">' + vol + '%</span></div>' + (global.DG.bgm ? global.DG.bgm.settingsHtml() : '') +
       /* 2026-09-10 — 전투 화면에 성벽 붕괴 카메라 흔들림(wallShake)을 더하면서
          같이 둔다. 부드러운 것(라운드 충격 거리·일기토 근접 컷)은 안 가리고
          진짜 화면이 떨리는 것만 끌 수 있다 */

@@ -446,3 +446,25 @@
      syncTargets 가 렌더 타깃을 다시 만들어 그 프레임이 멎었다(§28-8 되먹임). MEDIUM 의 몫을 줄여 왕복 비용을 낮춘다. */
   global.DG.cfg.post = { medium: { post: 1, mips: 2, msaa: 0, scale: 0.65 } };
 })(window);
+
+/* 판별 배경음 설정 — saga-web/shared/js/bgm.js 가 읽는다(이 판만 다른 것).
+   곡 파일(assets/audio/bgm/)은 K-0004 가 만든다 — 아직 없어도 오류 없이 조용하다 */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.bgm = {
+    tracks: { town: 'saga-dungeon-town.ogg', field: 'saga-dungeon-field.ogg', battle: 'saga-dungeon-battle.ogg' },
+    vol: 0.35,
+    first: 'town',
+    poll: 1000,
+    /** 지금 틀 트랙 — 굴혈(회차) 밖이면 마을, 보스·소보스·난입이면 전투, 그 밖의 굴혈은 던전 곡 */
+    desired: function () {
+      var DN = global.DG.dungeon;
+      if (!DN || !DN.active()) { return 'town'; }
+      var st = DN.status();
+      if (st.horde || st.kind === 'boss' || st.kind === 'miniboss') { return 'battle'; }
+      return 'field';
+    }
+  };
+})(window);

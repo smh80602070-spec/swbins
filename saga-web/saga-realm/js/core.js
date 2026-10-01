@@ -395,3 +395,27 @@
     bit: realmBit
   };
 })(window);
+
+/* 판별 배경음 설정 — saga-web/shared/js/bgm.js 가 읽는다(이 판만 다른 것).
+   곡 파일(assets/audio/bgm/)은 K-0004 가 만든다 — 아직 없어도 오류 없이 조용하다 */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.bgm = {
+    tracks: { town: 'saga-realm-town.ogg', field: 'saga-realm-field.ogg', battle: 'saga-realm-battle.ogg' },
+    vol: 0.35,
+    first: 'field',
+    poll: 1000,
+    /** 지금 틀 트랙 — 전황 카드가 떠 있으면 전투, 성 시트가 열려 있으면 마을(성 안), 아니면 국토 지도 */
+    desired: function () {
+      var d = global.document;
+      if (!d) { return 'field'; }
+      var enc = d.getElementById('encounter');
+      if (enc && enc.classList.contains('battle')) { return 'battle'; }
+      var sh = d.getElementById('sheet');
+      if (sh && sh.classList.contains('show')) { return 'town'; }
+      return 'field';
+    }
+  };
+})(window);

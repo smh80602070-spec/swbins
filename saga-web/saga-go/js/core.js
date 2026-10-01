@@ -437,3 +437,23 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.ssao = { medium: { on: true, samples: 8, scale: 0.5 } };
 })(window);
+
+/* 판별 배경음 설정 — saga-web/shared/js/bgm.js 가 읽는다(이 판만 다른 것).
+   곡 파일(assets/audio/bgm/)은 K-0004 가 만든다 — 아직 없어도 오류 없이 조용하다 */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.bgm = {
+    tracks: { field: 'saga-go-field.ogg', battle: 'saga-go-battle.ogg' },   // 마을이 따로 없는 걷기 판 — 들판과 교전
+    vol: 0.35,
+    first: 'field',
+    poll: 1000,
+    /** 지금 틀 트랙 — 들판 전투에 끌려들었으면 전투, 아니면 들판 */
+    desired: function () {
+      var fc = global.DG.fieldCombat;
+      var S = fc && fc.state && fc.state();
+      return S && fc.engaged(S) ? 'battle' : 'field';
+    }
+  };
+})(window);

@@ -137,14 +137,47 @@
     document.addEventListener('touchstart', once, true);
   }
 
+  /** ⚙️ 설정 시트에 끼우는 두 줄(켜기/끄기·음량) — 판의 ui.js 는 이 문자열을 시트에 이어 붙이기만 한다.
+   *  단추는 data-act 가 아니라 data-bgm 을 쓴다(판 ui.js 의 클릭 처리와 안 겹치게) — 이벤트는 아래에서 문서에 건다 */
+  function rowsHtml() {
+    var on = enabled(), vol = Math.round(volume() * 100);
+    return '<div class="key-row"><b>배경음악</b>' +
+      '<button data-bgm="toggle">' + (on ? '켜짐' : '꺼짐') + '</button></div>' +
+      '<div class="key-row"><b>BGM 음량</b>' +
+      '<input type="range" min="0" max="100" value="' + vol + '" data-bgm="vol"' + (on ? '' : ' disabled') + '>' +
+      '<span class="key-cur">' + vol + '%</span></div>';
+  }
+  function settingsHtml() { return '<div data-bgm-box>' + rowsHtml() + '</div>'; }
+
+  function bindSettings() {
+    if (!global.document || !document.addEventListener) { return; }
+    document.addEventListener('click', function (e) {
+      var b = e.target && e.target.closest && e.target.closest('[data-bgm="toggle"]');
+      if (!b) { return; }
+      setEnabled(!enabled());
+      var box = b.closest('[data-bgm-box]');
+      if (box) { box.innerHTML = rowsHtml(); }
+    }, true);
+    document.addEventListener('input', function (e) {
+      var r = e.target && e.target.matches && e.target.matches('[data-bgm="vol"]') ? e.target : null;
+      if (!r) { return; }
+      var v = setVolume((parseInt(r.value, 10) || 0) / 100);
+      var lbl = r.nextElementSibling;
+      if (lbl) { lbl.textContent = Math.round(v * 100) + '%'; }
+    }, true);
+  }
+
   bindUnlock();
+  bindSettings();
   if (core && core.on) { core.on('changed', tick); }
+  /* 장면이 'changed' 를 안 쏘고 바뀌는 판(전투·성 시트가 DOM 으로만 열리는 곳)은 판 설정의 poll(ms)로 가끔 본다 */
+  if (CFG.poll && global.setInterval) { global.setInterval(tick, CFG.poll); }
 
   global.DG = global.DG || {};
   global.DG.bgm = {
     enabled: enabled, setEnabled: setEnabled,
     volume: volume, setVolume: setVolume,
-    desiredTrack: desiredTrack,
+    desiredTrack: desiredTrack, settingsHtml: settingsHtml,
     current: function () { return current; },
     unlocked: function () { return unlocked; },
     hasEl: function () { return made; }

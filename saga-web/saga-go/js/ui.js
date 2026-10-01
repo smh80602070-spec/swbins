@@ -355,7 +355,7 @@
         '<input type="range" min="0" max="100" value="' + vol + '" data-act="snd-vol"' +
         (on ? '' : ' disabled') + '>' +
         '<span class="key-cur">' + vol + '%</span></div>' +
-      gq;
+      (global.DG.bgm ? global.DG.bgm.settingsHtml() : '') + gq;
   }
 
   /** 2026-09-09 — 이동 키 다시 지정(키보드 모의 이동 모드용). WASD·방향키는

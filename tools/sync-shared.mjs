@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url';
 
 const WEB = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'saga-web');
 const GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
-/** 정본 경로(shared/ 기준) → 판 폴더 안 경로 [→ 복사할 판들, 없으면 다섯] */
+/** 정본 경로(shared/ 기준) → 판 폴더 안 경로 [→ 복사할 판들, 없으면 다섯 — 일부 판에만 줄 때 3째 칸] */
 const FILES = [
   ['js/net.js', 'js/net.js'],
   ['js/anim-own.js', 'js/anim-own.js'],
@@ -24,7 +24,7 @@ const FILES = [
   ['js/account.js', 'js/account.js'],
   ['build/build-single.mjs', 'build/build-single.mjs'],
   ['js/errlog.js', 'js/errlog.js'],
-  ['js/bgm.js', 'js/bgm.js', ['saga-forest', 'saga-story']],
+  ['js/bgm.js', 'js/bgm.js'],
   ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/post3d.js', 'js/post3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/toon3d.js', 'js/toon3d.js', ['saga-go', 'saga-dungeon']],   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)

@@ -104,6 +104,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/sprite.js"></script>
 <script src="js/core.js"></script>
 <script src="js/sfx.js"></script>
+<script src="js/bgm.js"></script>
 <script src="js/account.js"></script>
 <script src="js/starter.js"></script>
 <script src="js/item.js"></script>
@@ -7652,6 +7653,41 @@ window.requestAnimationFrame = function () { return 0; };
       var ok = after.length === Math.min(E.MAX, before + 1) && after[after.length - 1].msg === 'W-errlog';
       if (had === null) { localStorage.removeItem(key); } else { localStorage.setItem(key, had); }
       return ok && ('키 ' + key + ' · 한 건 기록');
+    });
+
+    /* ── 배경음악(BGM, W-0017) — 공용 shared/js/bgm.js + 이 판 DG.cfg.bgm ─────────
+     * 곡 파일(assets/audio/bgm/saga-dungeon-*.ogg)은 K-0004 가 만든다 — 없어도 오류가 없어야 하니
+     * 여기선 파일이 아니라 **장면 → 트랙 키**(순수 함수)와 설정만 본다. */
+
+    t('BGM — 트랙 표가 saga-dungeon-<장면>.ogg 꼴이고 장면 판별이 그 표 안의 키만 낸다', function () {
+      var cfg = DG.cfg.bgm, ks = Object.keys(cfg.tracks);
+      var namesOk = ks.every(function (k) { return cfg.tracks[k] === 'saga-dungeon-' + k + '.ogg'; });
+      var want = ["town","field","battle"];
+      return namesOk && ks.slice().sort().join() === want.slice().sort().join() &&
+        !!cfg.tracks[DG.bgm.desiredTrack()] && ('트랙 ' + ks.join('·'));
+    });
+
+    t('BGM — 굴혈 밖이면 town', function () {
+      var DN = DG.dungeon;
+      if (DN.active()) { DN.leave(); }
+      return DG.bgm.desiredTrack() === 'town' && '회차 없음 → town';
+    });
+
+    t('BGM — 켜기/끄기·음량이 세이브에 남고 설정 두 줄이 data-bgm 단추를 낸다', function () {
+      var BG = DG.bgm, had = BG.enabled(), hadVol = BG.volume();
+      BG.setEnabled(false);
+      var offSaved = DG.core.save.settings.music === false && BG.settingsHtml().indexOf('꺼짐') >= 0;
+      BG.setVolume(0.77);
+      var volSaved = Math.abs(DG.core.save.settings.musicVol - 0.77) < 0.001;
+      var html = BG.settingsHtml();
+      var shape = html.indexOf('data-bgm="toggle"') >= 0 && html.indexOf('data-bgm="vol"') >= 0 && html.indexOf('77%') >= 0;
+      BG.setEnabled(had); BG.setVolume(hadVol);
+      return offSaved && volSaved && shape && '꺼짐·음량 세이브 + 두 줄 HTML';
+    });
+
+    t('BGM — 곡 파일이 없어도(재생 전·headless) 모듈이 오류 없이 선다', function () {
+      return typeof DG.bgm.current === 'function' && DG.bgm.unlocked() === false && DG.bgm.hasEl() === false &&
+        ('재생 전엔 <audio> 도 안 만든다');
     });
 
     t('런타임 에러 없음', function () {

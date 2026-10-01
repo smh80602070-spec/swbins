@@ -639,7 +639,7 @@
         '<input type="range" min="0" max="100" value="' + vol + '" data-act="snd-vol"' +
         (on ? '' : ' disabled') + '>' +
         '<span class="key-cur">' + vol + '%</span></div>' +
-      vibRow + gq +
+      vibRow + (global.DG.bgm ? global.DG.bgm.settingsHtml() : '') + gq +
       '<div class="key-row"><b>화면 흔들림</b>' +
         '<input type="range" min="0" max="2" step="0.5" value="' + shakeV + '" data-act="shake-set">' +
         '<span class="key-cur">×' + shakeV + '</span></div>' +
