@@ -5,8 +5,6 @@
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
 | 1 | [K-0015](K-0015.md) 2D 모드 에셋 굽기 — 걷기·전투·배경 전체(3D 원본 → 2D 스프라이트 + AI 배경) · 사용자 지시 "다음 할일" | 새기능·에셋 | 단계 1~6 끝(풀 48벌 330시트 검증 OK) — 사용자 판정 한 줄 대기, 배선은 W-0017 |
-| 2 | [K-0001](K-0001.md) char-forge 정리 — 몸 생성 동결 표시·README 16KB·세션 일지 archive·tools/README 색인 3줄 | 통합 | 작성됨 |
-| 3 | [K-0002](K-0002.md) `archive/` 이동 — SAGA-HISTORY·판 HANDOFF·3D HISTORY·VERTICAL_SLICE·긴 README 절 | 통합 | 작성됨 |
 | 4 | [K-0003](K-0003.md) `data/heroes.json` + `tools/gen/gen-web.mjs`(바이트 일치) | 통합 | 작성됨 |
 | 5 | [K-0004](K-0004.md) 배경음 파이프라인(swbins3 ACE-Step) — 판별 지역·전투·마을 3곡 × 5 + 모델 기록 | 새기능(P0) | 작성됨 |
 | 6 | [K-0005](K-0005.md) `gen-godot.mjs`·`gen-unity.mjs`(heroes.json → characters.gd·Resources) | 통합 | 초안 |
@@ -17,5 +15,4 @@
 | 11 | [K-0010](K-0010.md) Godot variants 1GB 압축·정리(G-0008 보고 뒤) | 통합 | 초안 |
 | 12 | [K-0011](K-0011.md) 음성 Supertonic 한국어 판정(사람이 듣는 시트) | 측정 | 초안 |
 | 13 | [K-0012](K-0012.md) 그래픽 게이트 공통 도구(기준 촬영 폴더·SSIM·시트 연동, 세 트랙) | 통합 | 초안 |
-| 14 | [K-0013](K-0013.md) 2D 모델 점검 — Illustrious·NoobAI vs Animagine(비상업 전환 판정) | 측정 | **사용자 판정 대기** — 12장 생성 끝 |
 | 15 | [K-0014](K-0014.md) 3D 애니풍 몸 에셋 조사 — 생성 모델 말고 기존 VRM 풀(CC0 D~G·Hub 조건) + 들이기 시험 | 측정·에셋 | CC0 6개 받음·Blender 파이프라인 통과(D·Base_Female) — Godot 임포트·렌더 시트·판정 대기 |
