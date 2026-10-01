@@ -512,8 +512,10 @@
   "id": "un.dg.rescue-riddle",
   "name": "구출·수수께끼·은닉 창고",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestDungeonQuestRescue"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -523,8 +525,10 @@
   "id": "un.dg.build-dex",
   "name": "빌드·도감·보석/영웅 상태",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "PlaytestDungeonBuildDex"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
