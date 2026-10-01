@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Saga.Forest.Data;
 using Saga.Forest.Player;
 using Saga.Forest.UI;
+using Saga.Core;
 
 namespace Saga.Forest.World
 {
@@ -19,24 +20,19 @@ namespace Saga.Forest.World
     {
         public static MountField Instance { get; private set; }
 
+        private MountRig _rig;
+
         private Button _ride;
         private TextMeshProUGUI _rideText;
         private float _refreshWait;
         private string _lastLang;
-        private GameObject _body;
-        private string _bodyId = "";
         private PlayerController _pc;
-        private Transform _visual;
-        private Vector3 _visualBase;
-        private bool _lifted;
-        private Transform _wingL, _wingR;
-        private float _wingT;
 
         public Button RideButton => _ride;
         public string RideLabel => _rideText != null ? _rideText.text : "";
-        public bool BodyShown => _body != null && _body.activeSelf;
-        public string BodyId => _body != null ? _bodyId : "";
-        public float RiderLiftNow { get; private set; }
+        public bool BodyShown => _rig != null && _rig.BodyShown;
+        public string BodyId => _rig != null ? _rig.BodyId : "";
+        public float RiderLiftNow => _rig != null ? _rig.RiderLiftNow : 0f;
 
         public static MountField Install()
         {
@@ -46,6 +42,7 @@ namespace Saga.Forest.World
 
         private void Awake()
         {
+            _rig = gameObject.AddComponent<MountRig>();
             Instance = this;
             BuildUi();
             ForestMounts.Changed += OnChanged;
@@ -162,153 +159,11 @@ namespace Saga.Forest.World
             var pc = Pc;
             if (pc == null) return;
             var m = ForestMounts.Riding;
-            if (pc.Visual != _visual) { RestoreRider(); _visual = pc.Visual; _visualBase = _visual != null ? _visual.localPosition : Vector3.zero; }
-            if (m == null)
-            {
-                RestoreRider();
-                if (_body != null && _body.activeSelf) _body.SetActive(false);
-                RiderLiftNow = 0f;
-                return;
-            }
-            if (_body == null || _bodyId != m.Id) RebuildBody(m);
-            if (!_body.activeSelf) _body.SetActive(true);
-            float lift = LiftOf(m);
-            RiderLiftNow = lift;
-            if (_visual != null)
-            {
-                if (!_lifted) { _visualBase = _visual.localPosition; _lifted = true; }
-                _visual.localPosition = _visualBase + Vector3.up * lift;
-                _body.transform.rotation = Quaternion.Euler(0f, _visual.eulerAngles.y, 0f);
-            }
-            _body.transform.position = pc.transform.position;
-            if (m.IsFly && _wingL != null)
-            {
-                bool air = pc.Flying;
-                _wingT += Time.deltaTime * (air ? 6f : 1.2f);
-                float a = air ? Mathf.Sin(_wingT) * 28f : 8f;
-                _wingL.localRotation = Quaternion.Euler(0f, 0f, a);
-                _wingR.localRotation = Quaternion.Euler(0f, 0f, -a);
-            }
-        }
-
-        private void RestoreRider()
-        {
-            if (_lifted && _visual != null) _visual.localPosition = _visualBase;
-            _lifted = false;
+            _rig.Tick(pc.transform, pc.Visual, m?.Id, m != null && m.IsFly, pc.Flying);
         }
 
         /// <summary>나를 등 높이로 올리는 값(m) — 말은 낮게, 학·용은 높게.</summary>
-        public static float LiftOf(ForestMounts.Mount m) => m == null ? 0f : m.Id == "mt_dragon" ? 1.45f : m.IsFly ? 1.25f : 0.85f;
+        public static float LiftOf(ForestMounts.Mount m) => MountRig.LiftOf(m?.Id, m != null && m.IsFly);
 
-        private static Material Mat(Color c, float smooth = 0.25f)
-        {
-            var mat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = c };
-            mat.SetFloat("_Smoothness", smooth);
-            return mat;
-        }
-
-        private static GameObject Part(Transform parent, PrimitiveType t, string name, Vector3 local, Vector3 scale, Material mat, Vector3 euler = default)
-        {
-            var g = GameObject.CreatePrimitive(t);
-            g.name = name;
-            var col = g.GetComponent<Collider>();
-            if (col != null) Destroy(col); // 나(CharacterController)와 부딪히지 않게 — 모양만
-            g.transform.SetParent(parent, false);
-            g.transform.localPosition = local;
-            g.transform.localRotation = Quaternion.Euler(euler);
-            g.transform.localScale = scale;
-            g.GetComponent<MeshRenderer>().sharedMaterial = mat;
-            return g;
-        }
-
-        private void RebuildBody(ForestMounts.Mount m)
-        {
-            if (_body != null) Destroy(_body);
-            _bodyId = m.Id;
-            _body = new GameObject("Mount_" + m.Id);
-            var t = _body.transform;
-            _wingL = _wingR = null;
-            switch (m.Id)
-            {
-                case "mt_crane": BuildCrane(t); break;
-                case "mt_dragon": BuildDragon(t); break;
-                case "mt_deer": BuildHorse(t, new Color(0.66f, 0.5f, 0.3f)); BuildAntlers(t); break;
-                default: BuildHorse(t, m.Id == "mt_white" ? new Color(0.93f, 0.93f, 0.95f) : new Color(0.45f, 0.28f, 0.16f)); break;
-            }
-        }
-
-        /// <summary>말 — 몸통·목·머리·다리 넷·꼬리·갈기(앞이 +z).</summary>
-        private static void BuildHorse(Transform t, Color coat)
-        {
-            var body = Mat(coat);
-            var dark = Mat(coat * 0.55f);
-            Part(t, PrimitiveType.Cube, "Body", new Vector3(0f, 1.0f, 0f), new Vector3(0.7f, 0.7f, 1.5f), body);
-            Part(t, PrimitiveType.Cube, "Neck", new Vector3(0f, 1.5f, 0.85f), new Vector3(0.3f, 0.75f, 0.35f), body, new Vector3(28f, 0f, 0f));
-            Part(t, PrimitiveType.Cube, "Head", new Vector3(0f, 1.8f, 1.25f), new Vector3(0.3f, 0.35f, 0.62f), body, new Vector3(-10f, 0f, 0f));
-            Part(t, PrimitiveType.Cube, "Mane", new Vector3(0f, 1.62f, 0.7f), new Vector3(0.1f, 0.7f, 0.2f), dark, new Vector3(28f, 0f, 0f));
-            foreach (float x in new[] { -0.25f, 0.25f })
-                foreach (float z in new[] { -0.55f, 0.55f })
-                    Part(t, PrimitiveType.Cylinder, "Leg", new Vector3(x, 0.4f, z), new Vector3(0.14f, 0.4f, 0.14f), dark);
-            Part(t, PrimitiveType.Cube, "Tail", new Vector3(0f, 1.05f, -0.9f), new Vector3(0.12f, 0.6f, 0.15f), dark, new Vector3(-25f, 0f, 0f));
-            Part(t, PrimitiveType.Cube, "Saddle", new Vector3(0f, 1.4f, -0.05f), new Vector3(0.6f, 0.08f, 0.5f), Mat(new Color(0.35f, 0.15f, 0.1f)));
-        }
-
-        /// <summary>사슴 뿔 — 머리 위 가지 둘.</summary>
-        private static void BuildAntlers(Transform t)
-        {
-            var bone = Mat(new Color(0.82f, 0.74f, 0.58f));
-            foreach (float x in new[] { -0.12f, 0.12f })
-            {
-                Part(t, PrimitiveType.Cube, "Antler", new Vector3(x, 2.15f, 1.15f), new Vector3(0.05f, 0.5f, 0.05f), bone, new Vector3(-15f, 0f, x * 200f));
-                Part(t, PrimitiveType.Cube, "AntlerTip", new Vector3(x * 1.8f, 2.4f, 1.1f), new Vector3(0.05f, 0.3f, 0.05f), bone, new Vector3(-10f, 0f, x * 260f));
-            }
-        }
-
-        /// <summary>학 — 가는 몸통·긴 목과 다리·큰 날개 둘(날갯짓).</summary>
-        private void BuildCrane(Transform t)
-        {
-            var white = Mat(new Color(0.96f, 0.96f, 0.94f));
-            var black = Mat(new Color(0.1f, 0.1f, 0.12f));
-            var red = Mat(new Color(0.85f, 0.15f, 0.1f));
-            Part(t, PrimitiveType.Sphere, "Body", new Vector3(0f, 1.15f, 0f), new Vector3(0.75f, 0.6f, 1.5f), white);
-            Part(t, PrimitiveType.Cylinder, "Neck", new Vector3(0f, 1.75f, 0.85f), new Vector3(0.14f, 0.55f, 0.14f), white, new Vector3(25f, 0f, 0f));
-            Part(t, PrimitiveType.Sphere, "Head", new Vector3(0f, 2.3f, 1.15f), new Vector3(0.25f, 0.25f, 0.35f), white);
-            Part(t, PrimitiveType.Cube, "Beak", new Vector3(0f, 2.28f, 1.5f), new Vector3(0.06f, 0.06f, 0.45f), black);
-            Part(t, PrimitiveType.Cube, "Crest", new Vector3(0f, 2.45f, 1.1f), new Vector3(0.12f, 0.05f, 0.12f), red);
-            foreach (float x in new[] { -0.15f, 0.15f }) Part(t, PrimitiveType.Cylinder, "Leg", new Vector3(x, 0.55f, -0.1f), new Vector3(0.05f, 0.55f, 0.05f), black);
-            Part(t, PrimitiveType.Cube, "Tail", new Vector3(0f, 1.2f, -0.95f), new Vector3(0.3f, 0.06f, 0.7f), black);
-            _wingL = WingRoot(t, "WingL", new Vector3(-0.35f, 1.4f, 0.05f)); _wingR = WingRoot(t, "WingR", new Vector3(0.35f, 1.4f, 0.05f));
-            Part(_wingL, PrimitiveType.Cube, "Wing", new Vector3(-1.1f, 0f, 0f), new Vector3(2.2f, 0.06f, 1.1f), white);
-            Part(_wingR, PrimitiveType.Cube, "Wing", new Vector3(1.1f, 0f, 0f), new Vector3(2.2f, 0.06f, 1.1f), white);
-            Part(_wingL, PrimitiveType.Cube, "Tip", new Vector3(-2.15f, 0f, 0f), new Vector3(0.5f, 0.07f, 1.0f), black);
-            Part(_wingR, PrimitiveType.Cube, "Tip", new Vector3(2.15f, 0f, 0f), new Vector3(0.5f, 0.07f, 1.0f), black);
-        }
-
-        /// <summary>푸른 용 — 긴 몸통·머리와 뿔·꼬리·큰 날개 둘·발톱.</summary>
-        private void BuildDragon(Transform t)
-        {
-            var azure = Mat(new Color(0.15f, 0.45f, 0.75f), 0.4f);
-            var deep = Mat(new Color(0.08f, 0.22f, 0.45f), 0.4f);
-            var gold = Mat(new Color(0.95f, 0.8f, 0.25f), 0.5f);
-            Part(t, PrimitiveType.Cube, "Body", new Vector3(0f, 1.2f, 0f), new Vector3(0.95f, 0.85f, 2.6f), azure);
-            Part(t, PrimitiveType.Cube, "Neck", new Vector3(0f, 1.6f, 1.5f), new Vector3(0.45f, 0.5f, 0.9f), azure, new Vector3(-20f, 0f, 0f));
-            Part(t, PrimitiveType.Cube, "Head", new Vector3(0f, 1.85f, 2.2f), new Vector3(0.6f, 0.5f, 0.95f), azure);
-            foreach (float x in new[] { -0.2f, 0.2f }) Part(t, PrimitiveType.Cube, "Horn", new Vector3(x, 2.25f, 2.0f), new Vector3(0.08f, 0.5f, 0.08f), gold, new Vector3(-30f, 0f, x * 60f));
-            Part(t, PrimitiveType.Cube, "Tail1", new Vector3(0f, 1.1f, -1.8f), new Vector3(0.6f, 0.5f, 1.4f), azure);
-            Part(t, PrimitiveType.Cube, "Tail2", new Vector3(0f, 1.0f, -2.9f), new Vector3(0.35f, 0.3f, 1.2f), deep);
-            foreach (float x in new[] { -0.4f, 0.4f })
-                foreach (float z in new[] { -0.7f, 0.8f }) Part(t, PrimitiveType.Cube, "Claw", new Vector3(x, 0.55f, z), new Vector3(0.2f, 0.5f, 0.3f), deep);
-            _wingL = WingRoot(t, "WingL", new Vector3(-0.5f, 1.6f, 0.2f)); _wingR = WingRoot(t, "WingR", new Vector3(0.5f, 1.6f, 0.2f));
-            Part(_wingL, PrimitiveType.Cube, "Wing", new Vector3(-1.5f, 0f, 0f), new Vector3(3f, 0.06f, 1.7f), deep);
-            Part(_wingR, PrimitiveType.Cube, "Wing", new Vector3(1.5f, 0f, 0f), new Vector3(3f, 0.06f, 1.7f), deep);
-        }
-
-        private static Transform WingRoot(Transform parent, string name, Vector3 local)
-        {
-            var g = new GameObject(name);
-            g.transform.SetParent(parent, false);
-            g.transform.localPosition = local;
-            return g.transform;
-        }
     }
 }
