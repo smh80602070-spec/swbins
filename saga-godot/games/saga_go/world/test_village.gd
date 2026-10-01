@@ -238,6 +238,13 @@ func _ready() -> void:
 	var help := preload("res://games/saga_go/world/help_guide.gd").new()
 	help.name = "HelpGuide"
 	add_child(help)
+	## 첫걸음 사명(G-0012) — 새 세이브 목표판 첫 줄. 판정은 world/tutorial.gd.
+	var tut := preload("res://games/saga_go/world/tutorial.gd").new()
+	tut.name = "Tutorial"
+	add_child(tut)
+	tut.changed.connect(_refresh_goal_board)
+	if OS.get_environment("SAGA_TUTORIAL_PROBE") != "":
+		add_child(load("res://tools/probe_tutorial.gd").new())
 	if OS.get_environment("SAGA_HELP_PROBE") != "":
 		add_child(load("res://tools/probe_help.gd").new())
 	var autosave := preload("res://games/saga_go/world/autosave.gd").new()
@@ -349,7 +356,10 @@ func _refresh_goal_board() -> void:
 	if board == null:
 		return
 	var now: String
-	if QuestState.active_id != "" and not QuestState.done:
+	var tut := get_tree().get_first_node_in_group("go_tutorial")
+	if tut != null and bool(tut.call("active")):
+		now = String(tut.call("line"))
+	elif QuestState.active_id != "" and not QuestState.done:
 		now = "사명: " + QuestState.active_name
 	else:
 		now = "도감 채우기 (%d/%d)" % [CodexState.count(), CodexState.total()]

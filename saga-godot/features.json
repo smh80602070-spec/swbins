@@ -2005,5 +2005,21 @@
   "fun": {},
   "ticket": null,
   "since": "2026-10-01"
+ },
+ {
+  "id": "gd.go.tutorial",
+  "name": "첫걸음 사명 5개(목표판 첫 줄·세이브 tut)",
+  "files": [
+   "games/saga_go/data/tutorial.gd",
+   "games/saga_go/world/tutorial.gd"
+  ],
+  "tests": [
+   "tutorial"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0012",
+  "since": "2026-10-01"
  }
 ]
