@@ -55,8 +55,10 @@
   "id": "gd.go.weather",
   "name": "날씨·계절·TimeOfDay",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "weather"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
