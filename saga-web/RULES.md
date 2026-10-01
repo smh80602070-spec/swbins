@@ -17,6 +17,7 @@
 - 숨은 자리는 가 보기 전까지 지도에 안 뜬다. 발견은 연출+도감에 남는다. NPC 는 서 있기만 하지 않는다.
 - 로더는 공통 `asset3d`, 같은 GLB 를 두 번 받지 않고 clone/`InstancedMesh`. LOD 3단·품질 3단 자동(모바일 첫 MEDIUM).
 - 필수 에셋(플레이어·기본 맵·시작 마을) 먼저, 지역별 lazy. 3D 값을 고치면 sw.js VERSION.
+- `js/world3d.js` 는 생성물 — 고치는 곳은 `src/world3d/` 조각이고, 고친 뒤 `node tools/build-parts.mjs`(precheck 가 어긋나면 막는다).
 - `core.hash2` 는 이 판만 옛 식(0~0.5 반환) — 문턱이 맞춰져 있어 그대로 둔다.
 
 ## 사가블로
