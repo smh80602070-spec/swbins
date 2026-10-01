@@ -4,4 +4,4 @@
 
 | 순서 | 티켓 | 종류 | 상태 |
 |---|---|---|---|
-| 16 | [U-0016](U-0016.md) GO `GoStory.Chapters` 표(2,600줄) → `Resources/story_go.json` + 로더(U-0009 방식) | 통합 | 작성됨 |
+| 16 | [U-0016](U-0016.md) GO `GoStory.Chapters` 표(2,600줄) → `Resources/story_go.json` + 로더(U-0009 방식) | 통합 | 진행중 |
