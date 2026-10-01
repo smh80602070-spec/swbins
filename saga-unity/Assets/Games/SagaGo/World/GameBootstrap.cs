@@ -47,6 +47,7 @@ namespace Saga.Go.World
             GoSettingsState.ApplyToAllScalers();
             GoSettingsState.ApplyGraphicsQuality();
             GoAudio.PlayBgm(bgmClip);
+            if (GetComponent<GoBgmScene>() == null) gameObject.AddComponent<GoBgmScene>(); // tasks U-0014 — 싸움이 붙으면 go-battle 곡(파일이 없으면 그대로)
             PlayerStats.LeveledUp += OnLeveledUp;
             _cameraRig = Object.FindFirstObjectByType<CameraRig>();
             _perkChoiceUi = Object.FindFirstObjectByType<PerkChoiceUi>();

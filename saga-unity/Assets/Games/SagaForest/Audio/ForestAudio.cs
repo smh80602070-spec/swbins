@@ -1,5 +1,6 @@
 using UnityEngine;
 using Saga.Forest.Data;
+using Saga.Core;
 
 namespace Saga.Forest.Audio
 {
@@ -69,34 +70,11 @@ namespace Saga.Forest.Audio
 #endif
         }
 
-        private static AudioSource _bgmSource;
+        /// <summary>BGM 재생은 `Saga.Core.Bgm` 이 맡는다(tasks U-0014) — 곡 하나 반복이던 판별 복사본을 합쳤다. 곡 파일(`Resources/Audio/Bgm/forest-<장면>`)이
+        /// 없으면 부트스트랩이 준 곡 그대로 돈다. 음량 = Master×Bgm(PlayerPrefs 키는 그대로).</summary>
+        public static void PlayBgm(AudioClip clip) => Bgm.Play("forest", "main", clip, () => MasterVolume * BgmVolume);
 
-        private static AudioSource EnsureBgmSource()
-        {
-            if (_bgmSource != null) return _bgmSource;
-            var go = new GameObject("ForestAudio_BgmSource");
-            _bgmSource = go.AddComponent<AudioSource>();
-            _bgmSource.playOnAwake = false;
-            _bgmSource.loop = true;
-            return _bgmSource;
-        }
-
-        /// <summary>2026-09-15 — docs/ASSET_GUIDE.md 해당 날짜 항목 참고.
-        /// 상시 배경 루프 한 곡(승패 구분 없음)이라 오디오를 직접 들어야
-        /// 하는 제약에 안 걸린다.</summary>
-        public static void PlayBgm(AudioClip clip)
-        {
-            if (clip == null) return;
-            var src = EnsureBgmSource();
-            if (src.clip == clip && src.isPlaying) return;
-            src.clip = clip;
-            src.volume = MasterVolume * BgmVolume;
-            src.Play();
-        }
-
-        public static void RefreshBgmVolume()
-        {
-            if (_bgmSource != null) _bgmSource.volume = MasterVolume * BgmVolume;
-        }
+        /// <summary>설정에서 BGM On/Off 를 누를 때마다 불러 이미 도는 곡의 음량에 바로 반영한다.</summary>
+        public static void RefreshBgmVolume() => Bgm.RefreshVolume();
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Saga.Go.Data;
+using Saga.Core;
 
 namespace Saga.Go.Audio
 {
@@ -61,38 +62,11 @@ namespace Saga.Go.Audio
 #endif
         }
 
-        private static AudioSource _bgmSource;
+        /// <summary>BGM 재생은 `Saga.Core.Bgm` 이 맡는다(tasks U-0014) — 곡 하나 반복이던 판별 복사본을 합쳤다. 곡 파일(`Resources/Audio/Bgm/go-<장면>`)이
+        /// 없으면 부트스트랩이 준 곡 그대로 돈다. 음량 = Master×Bgm(PlayerPrefs 키는 그대로).</summary>
+        public static void PlayBgm(AudioClip clip) => Bgm.Play("go", "main", clip, () => MasterVolume * BgmVolume);
 
-        private static AudioSource EnsureBgmSource()
-        {
-            if (_bgmSource != null) return _bgmSource;
-            var go = new GameObject("GoAudio_BgmSource");
-            _bgmSource = go.AddComponent<AudioSource>();
-            _bgmSource.playOnAwake = false;
-            _bgmSource.loop = true;
-            return _bgmSource;
-        }
-
-        /// <summary>2026-09-15 — 위 클래스 주석이 보류했던 건 "승리/패배처럼
-        /// 어느 쪽인지 들어야 아는 곡"이었지, 상시 배경 루프 한 곡은 그
-        /// 제약에 안 걸린다(docs/ASSET_GUIDE.md 해당 날짜 항목 참고). 단일
-        /// 트랙을 계속 반복 재생한다 — 승패 갈림 음악은 여전히 손 안 댄다.</summary>
-        public static void PlayBgm(AudioClip clip)
-        {
-            if (clip == null) return;
-            var src = EnsureBgmSource();
-            if (src.clip == clip && src.isPlaying) return;
-            src.clip = clip;
-            src.volume = MasterVolume * BgmVolume;
-            src.Play();
-        }
-
-        /// <summary>설정에서 BGM On/Off를 누를 때마다 불러 이미 도는 트랙의
-        /// 음량에도 바로 반영한다(PlaySfx는 호출마다 새로 곱하니 필요 없지만,
-        /// BGM은 한 번 틀어 놓고 계속 도는 루프라 따로 갱신해야 한다).</summary>
-        public static void RefreshBgmVolume()
-        {
-            if (_bgmSource != null) _bgmSource.volume = MasterVolume * BgmVolume;
-        }
+        /// <summary>설정에서 BGM On/Off 를 누를 때마다 불러 이미 도는 곡의 음량에 바로 반영한다.</summary>
+        public static void RefreshBgmVolume() => Bgm.RefreshVolume();
     }
 }
