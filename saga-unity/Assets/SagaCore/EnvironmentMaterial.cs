@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Saga.Dungeon.World
+namespace Saga.Core
 {
     /// <summary>
     /// 44장 "Environment" 교체 — 방/복도 바닥·벽에 실제 PBR 재질(Poly Haven,

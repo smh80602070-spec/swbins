@@ -1,3 +1,4 @@
+using Saga.Core;
 using UnityEngine;
 using Saga.Story.Data;
 
