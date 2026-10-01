@@ -120,7 +120,9 @@
   ],
   "level": "D1",
   "verified": null,
-  "fun": {},
+  "fun": {
+   "C": "△"
+  },
   "ticket": null,
   "since": "2026-09-30",
   "note": "PLAN §3: 미검증",
@@ -217,7 +219,9 @@
   "tests": [],
   "level": "D0",
   "verified": null,
-  "fun": {},
+  "fun": {
+   "H": "○"
+  },
   "ticket": null,
   "since": "2026-09-30"
  },
@@ -232,7 +236,9 @@
   "tests": [],
   "level": "D0",
   "verified": null,
-  "fun": {},
+  "fun": {
+   "D": "○"
+  },
   "ticket": null,
   "since": "2026-09-30"
  },
@@ -245,7 +251,9 @@
   "tests": [],
   "level": "D0",
   "verified": null,
-  "fun": {},
+  "fun": {
+   "F": "△"
+  },
   "ticket": null,
   "since": "2026-09-30"
  },
@@ -273,7 +281,9 @@
   "tests": [],
   "level": "D0",
   "verified": null,
-  "fun": {},
+  "fun": {
+   "E": "×"
+  },
   "ticket": null,
   "since": "2026-09-30"
  },
@@ -331,7 +341,10 @@
   "tests": [],
   "level": "D0",
   "verified": null,
-  "fun": {},
+  "fun": {
+   "A": "○",
+   "B": "○"
+  },
   "ticket": null,
   "since": "2026-09-30",
   "sheet": {
@@ -386,7 +399,9 @@
   ],
   "level": "D1",
   "verified": null,
-  "fun": {},
+  "fun": {
+   "G": "△"
+  },
   "ticket": null,
   "since": "2026-09-30"
  },
