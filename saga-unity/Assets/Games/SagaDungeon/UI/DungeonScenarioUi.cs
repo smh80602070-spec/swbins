@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Saga.Core;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -62,11 +63,11 @@ namespace Saga.Dungeon.UI
         {
             if (!IsOpen) return;
             var kb = Keyboard.current;
-            if (kb == null) return;
-            if (kb.spaceKey.wasPressedThisFrame || kb.enterKey.wasPressedThisFrame) Next();
-            else if (kb.escapeKey.wasPressedThisFrame) Skip();
-            else if (_picking && kb.digit1Key.wasPressedThisFrame) Pick(0);
-            else if (_picking && kb.digit2Key.wasPressedThisFrame) Pick(1);
+            if (kb == null && !SagaPad.Connected) return; // tasks U-0018 — 패드 A 다음 · B 건너뛰기
+            if (SagaPad.Pressed(SagaPad.Btn.Confirm, kb?.spaceKey) || (kb != null && kb.enterKey.wasPressedThisFrame)) Next();
+            else if (SagaPad.Pressed(SagaPad.Btn.Cancel, kb?.escapeKey)) Skip();
+            else if (_picking && SagaPad.Pressed(SagaPad.Btn.Attack, kb?.digit1Key)) Pick(0); // 패드 X
+            else if (_picking && SagaPad.Pressed(SagaPad.Btn.Interact, kb?.digit2Key)) Pick(1); // 패드 Y
         }
 
         public void Play(DungeonScenario.SceneRequest request)

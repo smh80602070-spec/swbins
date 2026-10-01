@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Saga.Core;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Saga.Go.Combat;
@@ -134,15 +135,15 @@ namespace Saga.Go.UI
         private void Update()
         {
             var kb = Keyboard.current;
-            if (kb != null)
+            if (kb != null || SagaPad.Connected) // tasks U-0018 — 패드 Y 다음·대화, Start 목록, B 닫기
             {
                 if (TalkOpen)
                 {
-                    if (kb.fKey.wasPressedThisFrame) Next(IsPickLine && !Revealing && _mine == null ? 0 : -1);
+                    if (SagaPad.Pressed(SagaPad.Btn.Interact, kb?.fKey)) Next(IsPickLine && !Revealing && _mine == null ? 0 : -1);
                 }
-                else if (kb.fKey.wasPressedThisFrame && TalkShown && !Saga.Go.World.FishingField.Busy) StartTalk(); // 109-14-24 낚시 중 F 는 낚싯대(웹 story F 양보)
-                else if (kb.oKey.wasPressedThisFrame) ToggleList();
-                else if (kb.escapeKey.wasPressedThisFrame && ListOpen) ToggleList(false);
+                else if (SagaPad.Pressed(SagaPad.Btn.Interact, kb?.fKey) && TalkShown && !Saga.Go.World.FishingField.Busy) StartTalk(); // 109-14-24 낚시 중 F 는 낚싯대(웹 story F 양보)
+                else if (SagaPad.Pressed(SagaPad.Btn.Menu, kb?.oKey)) ToggleList();
+                else if (SagaPad.Pressed(SagaPad.Btn.Cancel, kb?.escapeKey) && ListOpen) ToggleList(false);
             }
             if (TalkOpen && Revealing)
             {

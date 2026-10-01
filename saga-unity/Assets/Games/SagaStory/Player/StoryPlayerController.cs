@@ -1,4 +1,5 @@
 using UnityEngine;
+using Saga.Core;
 using UnityEngine.InputSystem;
 using Saga.Story.Data;
 using Saga.Story.UI;
@@ -603,6 +604,7 @@ namespace Saga.Story.Player
                 if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) v -= 1f;
                 if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) v += 1f;
             }
+            v += SagaPad.Stick(SagaPad.Side.Left).x; // tasks U-0018 — 왼쪽 스틱
             if (leftButton != null && leftButton.IsHeld) v -= 1f;
             if (rightButton != null && rightButton.IsHeld) v += 1f;
             return Mathf.Clamp(v, -1f, 1f);
@@ -617,6 +619,7 @@ namespace Saga.Story.Player
                 if (kb.sKey.isPressed || kb.downArrowKey.isPressed) v -= 1f;
                 if (kb.wKey.isPressed || kb.upArrowKey.isPressed) v += 1f;
             }
+            v += SagaPad.Stick(SagaPad.Side.Left).y;
             if (climbDownButton != null && climbDownButton.IsHeld) v -= 1f;
             if (climbUpButton != null && climbUpButton.IsHeld) v += 1f;
             return Mathf.Clamp(v, -1f, 1f);
@@ -625,13 +628,13 @@ namespace Saga.Story.Player
         private bool WantsJump()
         {
             var kb = Keyboard.current;
-            return kb != null && kb.spaceKey.wasPressedThisFrame;
+            return SagaPad.Pressed(SagaPad.Btn.Jump, kb?.spaceKey);
         }
 
         private bool WantsAttack()
         {
             var kb = Keyboard.current;
-            return kb != null && kb.jKey.wasPressedThisFrame;
+            return SagaPad.Pressed(SagaPad.Btn.Attack, kb?.jKey);
         }
 
         // 무예 넷 중 연참(J)만 기존 배선 — 나머지 셋은 숫자키로(모바일은
@@ -639,32 +642,31 @@ namespace Saga.Story.Player
         private bool WantsSweep()
         {
             var kb = Keyboard.current;
-            return kb != null && kb.digit2Key.wasPressedThisFrame;
+            return SagaPad.Pressed(SagaPad.Btn.Skill, kb?.digit2Key);
         }
 
         private bool WantsBolt()
         {
             var kb = Keyboard.current;
-            return kb != null && kb.digit3Key.wasPressedThisFrame;
+            return SagaPad.Pressed(SagaPad.Btn.Burst, kb?.digit3Key);
         }
 
         private bool WantsBrace()
         {
             var kb = Keyboard.current;
-            return kb != null && kb.digit4Key.wasPressedThisFrame;
+            return SagaPad.Pressed(SagaPad.Btn.Aim, kb?.digit4Key);
         }
 
         // 직업 무예 칸 넷 — 공통 무예(1~4) 바로 다음 숫자 5~8.
         private bool WantsJobSkill(int slot)
         {
             var kb = Keyboard.current;
-            if (kb == null) return false;
             switch (slot)
             {
-                case 0: return kb.digit5Key.wasPressedThisFrame;
-                case 1: return kb.digit6Key.wasPressedThisFrame;
-                case 2: return kb.digit7Key.wasPressedThisFrame;
-                case 3: return kb.digit8Key.wasPressedThisFrame;
+                case 0: return SagaPad.Pressed(SagaPad.Btn.Slot1, kb?.digit5Key);
+                case 1: return SagaPad.Pressed(SagaPad.Btn.Slot2, kb?.digit6Key);
+                case 2: return SagaPad.Pressed(SagaPad.Btn.Slot3, kb?.digit7Key);
+                case 3: return SagaPad.Pressed(SagaPad.Btn.Slot4, kb?.digit8Key);
                 default: return false;
             }
         }

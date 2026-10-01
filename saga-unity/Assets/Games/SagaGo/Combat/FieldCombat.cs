@@ -355,13 +355,10 @@ namespace Saga.Go.Combat
             if (SagaPad.Pressed(SagaPad.Btn.Skill, kb?.eKey)) Skill();
             if (SagaPad.Pressed(SagaPad.Btn.Burst, kb?.qKey)) Burst();
             if (SagaPad.Pressed(SagaPad.Btn.Dodge, kb?.lKey) || (kb != null && kb.leftCtrlKey.wasPressedThisFrame)) Dodge();
-            if (kb != null)
-            {
-                if (kb.digit1Key.wasPressedThisFrame) Swap(0);
-                if (kb.digit2Key.wasPressedThisFrame) Swap(1);
-                if (kb.digit3Key.wasPressedThisFrame) Swap(2);
-                if (kb.digit4Key.wasPressedThisFrame) Swap(3);
-            }
+            if (SagaPad.Pressed(SagaPad.Btn.Slot1, kb?.digit1Key)) Swap(0); // tasks U-0018 — 십자키 위·오른쪽·아래·왼쪽
+            if (SagaPad.Pressed(SagaPad.Btn.Slot2, kb?.digit2Key)) Swap(1);
+            if (SagaPad.Pressed(SagaPad.Btn.Slot3, kb?.digit3Key)) Swap(2);
+            if (SagaPad.Pressed(SagaPad.Btn.Slot4, kb?.digit4Key)) Swap(3);
         }
 
         /// <summary>진단이 시간을 건너뛰려고 직접 부른다.</summary>

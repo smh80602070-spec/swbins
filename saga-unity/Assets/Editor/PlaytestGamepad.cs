@@ -18,6 +18,8 @@ namespace Saga.EditorTools
             (SagaPad.Btn.Attack, GamepadButton.West), (SagaPad.Btn.Interact, GamepadButton.North), (SagaPad.Btn.Skill, GamepadButton.LeftShoulder),
             (SagaPad.Btn.Burst, GamepadButton.RightTrigger), (SagaPad.Btn.Heavy, GamepadButton.RightTrigger), (SagaPad.Btn.Aim, GamepadButton.RightShoulder),
             (SagaPad.Btn.Dodge, GamepadButton.East), (SagaPad.Btn.Jump, GamepadButton.South), (SagaPad.Btn.Map, GamepadButton.Select), (SagaPad.Btn.Menu, GamepadButton.Start),
+            (SagaPad.Btn.Confirm, GamepadButton.South), (SagaPad.Btn.Cancel, GamepadButton.East), (SagaPad.Btn.ZoomIn, GamepadButton.LeftShoulder), (SagaPad.Btn.ZoomOut, GamepadButton.RightShoulder),
+            (SagaPad.Btn.Slot1, GamepadButton.DpadUp), (SagaPad.Btn.Slot2, GamepadButton.DpadRight), (SagaPad.Btn.Slot3, GamepadButton.DpadDown), (SagaPad.Btn.Slot4, GamepadButton.DpadLeft),
         };
 
         [MenuItem("Saga/Playtest Gamepad")]
@@ -63,7 +65,7 @@ namespace Saga.EditorTools
         private static GamepadState Press(GamepadButton b)
         {
             var s = new GamepadState();
-            s.buttons = 1u << (int)b;
+            if ((int)b < 32) s.buttons = 1u << (int)b; // 트리거(32·33)는 축 값으로만 — 시프트하면 십자키 비트와 겹친다
             if (b == GamepadButton.RightTrigger) s.rightTrigger = 1f;
             if (b == GamepadButton.LeftTrigger) s.leftTrigger = 1f;
             return s;

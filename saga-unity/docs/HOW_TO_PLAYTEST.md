@@ -588,5 +588,5 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 ## 19. 게임패드 — `Saga.Core.SagaPad` (tasks U-0017)
 
 - 게임 코드는 `Keyboard.current` 를 직접 읽던 자리에 `SagaPad.Pressed(SagaPad.Btn.X, kb?.jKey)`·`Held(…)`·`Stick(Side.Right)` 로 키와 패드를 함께 읽는다(키보드가 없어도 패드만으로 되고, 패드가 없으면 키 동작 그대로). 이동·메뉴 탐색은 `InputSystem_Actions` 의 Move/UI 액션이 이미 패드를 읽는다.
-- 버튼표: 공격 X · 상호작용 Y · 스킬 LB · 폭발·강공격 RT · 조준 RB · 회피 B · 점프 A · 지도 Select · 메뉴 Start · 오른쪽 스틱 = 시점. 지금 배선: GO `FieldCombat`·`CameraRig`, DUNGEON `PlayerCombat`·`PlayerController`(나머지 세 판은 아직).
+- 버튼표: 공격 X · 상호작용 Y · 스킬 LB · 폭발·강공격 RT · 조준 RB · 회피 B · 점프 A · 지도 Select · 메뉴 Start · 십자키 위/오른쪽/아래/왼쪽 = 칸 1~4(GO 파티 교대·STORY 직업 무예) · 대화 A 다음·B 건너뛰기·X/Y 선택 · 줌 LB/RB · 오른쪽 스틱 = 시점. 배선: GO(`FieldCombat`·`CameraRig`·`StoryUi`)·DUNGEON(`PlayerCombat`·`PlayerController`·시나리오 대화)·STORY(`StoryPlayerController`·시나리오 대화)·FOREST(시나리오 대화; 이동은 액션 에셋)·REALM(`RealmOrbitCamera`·`RealmWorldMapCamera`).
 - 진단 `PlaytestGamepad.Run` → `[PlaytestGamepad] OK`: 가짜 패드(`InputSystem.AddDevice`)로 버튼·스틱을 눌러 본다. 편집기에선 `wasPressedThisFrame` 의 프레임이 안 돌아 테스트 설정(수동 업데이트 + `RUN_PLAYER_UPDATES_IN_EDIT_MODE` 플래그)을 잠깐 쓰고 끝에 되돌린다. 실제 패드 확인은 사람 몫.

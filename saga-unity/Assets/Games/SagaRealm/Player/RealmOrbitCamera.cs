@@ -1,4 +1,5 @@
 using UnityEngine;
+using Saga.Core;
 using UnityEngine.InputSystem;
 
 namespace Saga.Realm.Player
@@ -58,6 +59,13 @@ namespace Saga.Realm.Player
                 if (kb.qKey.isPressed) Zoom(-ZoomSpeed * dt);
                 if (kb.eKey.isPressed) Zoom(ZoomSpeed * dt);
             }
+
+            // tasks U-0018 — 오른쪽 스틱 회전·LB/RB 줌(키 A/D/W/S/Q/E 와 같은 방향)
+            Vector2 padLook = SagaPad.Stick(SagaPad.Side.Right);
+            _yawDeg += padLook.x * RotateSpeedDeg * dt;
+            _pitchDeg = Mathf.Clamp(_pitchDeg - padLook.y * RotateSpeedDeg * dt, MinPitchDeg, MaxPitchDeg);
+            if (SagaPad.Held(SagaPad.Btn.ZoomIn)) Zoom(-ZoomSpeed * dt);
+            if (SagaPad.Held(SagaPad.Btn.ZoomOut)) Zoom(ZoomSpeed * dt);
 
             var mouse = Mouse.current;
             if (mouse != null)

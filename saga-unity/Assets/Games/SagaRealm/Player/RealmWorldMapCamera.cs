@@ -1,4 +1,5 @@
 using UnityEngine;
+using Saga.Core;
 using UnityEngine.InputSystem;
 using Saga.Realm.Data;
 using Saga.Realm.World;
@@ -87,6 +88,7 @@ namespace Saga.Realm.Player
                     if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) turn -= FlyKeyYawRad;
                     if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) turn += FlyKeyYawRad;
                 }
+                turn += SagaPad.Stick(SagaPad.Side.Left).x * FlyKeyYawRad; // tasks U-0018 — 왼쪽 스틱 선회
                 _yawRad += turn * pan * dt;
             }
             else if (_wasFlying)

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Saga.Core;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -59,9 +60,9 @@ namespace Saga.Story.UI
         {
             if (!IsOpen) return;
             var kb = Keyboard.current;
-            if (kb == null) return;
-            if (kb.spaceKey.wasPressedThisFrame || kb.enterKey.wasPressedThisFrame) Next();
-            else if (kb.escapeKey.wasPressedThisFrame) Skip();
+            if (kb == null && !SagaPad.Connected) return; // tasks U-0018 — 패드 A 다음 · B 건너뛰기
+            if (SagaPad.Pressed(SagaPad.Btn.Confirm, kb?.spaceKey) || (kb != null && kb.enterKey.wasPressedThisFrame)) Next();
+            else if (SagaPad.Pressed(SagaPad.Btn.Cancel, kb?.escapeKey)) Skip();
         }
 
         public void Play(StoryScenario.SceneRequest request)
