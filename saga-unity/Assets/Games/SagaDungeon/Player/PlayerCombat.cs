@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Saga.Core;
 using UnityEngine.InputSystem;
 using Saga.Dungeon.Audio;
 using Saga.Dungeon.Cinematics;
@@ -147,17 +148,17 @@ namespace Saga.Dungeon.Player
             if (_whirlCooldownLeft > 0f) _whirlCooldownLeft -= Time.deltaTime;
 
             var kb = Keyboard.current;
-            if (kb == null) return;
+            if (kb == null && !SagaPad.Connected) return; // tasks U-0017 — 패드만 있어도 싸운다
 
-            if (kb.spaceKey.wasPressedThisFrame)
+            if (SagaPad.Pressed(SagaPad.Btn.Attack, kb?.spaceKey))
             {
                 TryAttack();
             }
-            if (kb.leftAltKey.wasPressedThisFrame)
+            if (SagaPad.Pressed(SagaPad.Btn.Heavy, kb?.leftAltKey))
             {
                 TryHeavyAttack();
             }
-            if (kb.eKey.wasPressedThisFrame)
+            if (SagaPad.Pressed(SagaPad.Btn.Skill, kb?.eKey))
             {
                 TryWhirl();
             }

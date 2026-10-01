@@ -584,3 +584,9 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 - 다섯 판의 `*Audio.PlayBgm`·`RefreshBgmVolume`(PlayerPrefs `…_vol_bgm`·설정 BGM 켜기/끄기)는 그대로 두고 재생만 `Bgm` 이 맡는다. 곡 찾기 = `Resources/Audio/Bgm/<판>-<장면>`(판 id `go·dungeon·forest·story·realm`, 장면 `main·field·battle`) → 없으면 부트스트랩이 준 곡(`Assets/Art/Audio/CC0_BGM/`) → 없으면 무음(오류 0). 곡이 바뀌면 1.5초 교차 페이드.
 - 새 곡 넣는 법: `Assets/SagaCore/Resources/Audio/Bgm/<판>-<장면>.ogg` 로 두고 **같은 커밋에서 `SagaCredits` 표에 줄 추가**. GO 는 `GoBgmScene` 이 싸움 중이면 `go-battle`, 아니면 `go-main`. 다른 판의 장면 전환은 `Bgm.SetScene("battle")` 을 부르는 폴러를 붙이면 된다.
 - 진단 `PlaytestBgm.Run` → `[PlaytestBgm] OK`(가짜 곡·주입 `Bgm.Loader`로 페이드·폴백·끄기·소리원 재생성·무곡 오류 0).
+
+## 19. 게임패드 — `Saga.Core.SagaPad` (tasks U-0017)
+
+- 게임 코드는 `Keyboard.current` 를 직접 읽던 자리에 `SagaPad.Pressed(SagaPad.Btn.X, kb?.jKey)`·`Held(…)`·`Stick(Side.Right)` 로 키와 패드를 함께 읽는다(키보드가 없어도 패드만으로 되고, 패드가 없으면 키 동작 그대로). 이동·메뉴 탐색은 `InputSystem_Actions` 의 Move/UI 액션이 이미 패드를 읽는다.
+- 버튼표: 공격 X · 상호작용 Y · 스킬 LB · 폭발·강공격 RT · 조준 RB · 회피 B · 점프 A · 지도 Select · 메뉴 Start · 오른쪽 스틱 = 시점. 지금 배선: GO `FieldCombat`·`CameraRig`, DUNGEON `PlayerCombat`·`PlayerController`(나머지 세 판은 아직).
+- 진단 `PlaytestGamepad.Run` → `[PlaytestGamepad] OK`: 가짜 패드(`InputSystem.AddDevice`)로 버튼·스틱을 눌러 본다. 편집기에선 `wasPressedThisFrame` 의 프레임이 안 돌아 테스트 설정(수동 업데이트 + `RUN_PLAYER_UPDATES_IN_EDIT_MODE` 플래그)을 잠깐 쓰고 끝에 되돌린다. 실제 패드 확인은 사람 몫.

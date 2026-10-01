@@ -285,11 +285,11 @@ namespace Saga.Dungeon.Player
             }
 
             var kb = Keyboard.current;
-            if (kb != null && !_testInput && kb.leftCtrlKey.wasPressedThisFrame)
+            if (!_testInput && SagaPad.Pressed(SagaPad.Btn.Dodge, kb?.leftCtrlKey)) // tasks U-0017 — 패드 B
             {
                 TryDodge();
             }
-            bool jumpPressed = _jumpQueued || (kb != null && !_testInput && kb.fKey.wasPressedThisFrame);
+            bool jumpPressed = _jumpQueued || (!_testInput && SagaPad.Pressed(SagaPad.Btn.Jump, kb?.fKey));
             _jumpQueued = false;
 
             Vector2 inputDir = MovementInput();

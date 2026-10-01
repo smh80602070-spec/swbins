@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Saga.Core;
 using UnityEngine.InputSystem;
 
 namespace Saga.Go.Player
@@ -25,6 +26,7 @@ namespace Saga.Go.Player
     public class CameraRig : MonoBehaviour
     {
         private const float RotateSpeedDeg = 0.006f * Mathf.Rad2Deg; // Godot 0.006 rad/px와 같은 값
+        private const float PadLookDegPerSec = 140f; // tasks U-0017 — 오른쪽 스틱 한껏 밀었을 때 초당 도
         private const float MinZoom = 4f;
         private const float MaxZoom = 16f;
         private const float ZoomStep = 1f;
@@ -178,6 +180,15 @@ namespace Saga.Go.Player
                 {
                     EndDrag();
                 }
+            }
+
+            // tasks U-0017 — 오른쪽 스틱 시점(드래그와 같은 yaw/pitch 에 더한다, 패드 없으면 0)
+            Vector2 look = SagaPad.Stick(SagaPad.Side.Right);
+            if (look != Vector2.zero)
+            {
+                _yawDeg += look.x * PadLookDegPerSec * Time.deltaTime;
+                _pitchDeg = Mathf.Clamp(_pitchDeg + look.y * PadLookDegPerSec * Time.deltaTime, MinPitchDeg, MaxPitchDeg);
+                transform.localRotation = Quaternion.Euler(_pitchDeg, _yawDeg, 0f);
             }
         }
 

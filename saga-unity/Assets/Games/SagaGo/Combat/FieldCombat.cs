@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Saga.Core;
 using UnityEngine.InputSystem;
 using Saga.Go.Data;
 using Saga.Go.Player;
@@ -346,18 +347,21 @@ namespace Saga.Go.Combat
             if (DuelGate.Active || Active == null || Saga.Go.Cinematics.GoCutscenes.Playing || StoryState.Talking) return; // 106-9 등장 컷 동안 입력 안 받음 · 109-14-12 이야기 대화 중도
 
             var kb = Keyboard.current;
-            if (kb == null) return;
-            if (kb.rKey.wasPressedThisFrame) ToggleAim(); // 109-14-22 활 조준
+            if (kb == null && !SagaPad.Connected) return; // tasks U-0017 — 패드만 있어도 싸운다
+            if (SagaPad.Pressed(SagaPad.Btn.Aim, kb?.rKey)) ToggleAim(); // 109-14-22 활 조준
             TickAim(dt, player != null ? player.AimInput.x : 0f);
-            if (kb.jKey.wasPressedThisFrame) AttackPress();
-            TickHold(kb.jKey.isPressed || AttackHeldByUi, dt);
-            if (kb.eKey.wasPressedThisFrame) Skill();
-            if (kb.qKey.wasPressedThisFrame) Burst();
-            if (kb.lKey.wasPressedThisFrame || kb.leftCtrlKey.wasPressedThisFrame) Dodge();
-            if (kb.digit1Key.wasPressedThisFrame) Swap(0);
-            if (kb.digit2Key.wasPressedThisFrame) Swap(1);
-            if (kb.digit3Key.wasPressedThisFrame) Swap(2);
-            if (kb.digit4Key.wasPressedThisFrame) Swap(3);
+            if (SagaPad.Pressed(SagaPad.Btn.Attack, kb?.jKey)) AttackPress();
+            TickHold(SagaPad.Held(SagaPad.Btn.Attack, kb?.jKey) || AttackHeldByUi, dt);
+            if (SagaPad.Pressed(SagaPad.Btn.Skill, kb?.eKey)) Skill();
+            if (SagaPad.Pressed(SagaPad.Btn.Burst, kb?.qKey)) Burst();
+            if (SagaPad.Pressed(SagaPad.Btn.Dodge, kb?.lKey) || (kb != null && kb.leftCtrlKey.wasPressedThisFrame)) Dodge();
+            if (kb != null)
+            {
+                if (kb.digit1Key.wasPressedThisFrame) Swap(0);
+                if (kb.digit2Key.wasPressedThisFrame) Swap(1);
+                if (kb.digit3Key.wasPressedThisFrame) Swap(2);
+                if (kb.digit4Key.wasPressedThisFrame) Swap(3);
+            }
         }
 
         /// <summary>진단이 시간을 건너뛰려고 직접 부른다.</summary>
