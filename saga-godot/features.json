@@ -107,8 +107,10 @@
   "id": "gd.go.density",
   "name": "101-1 E 발견 밀도",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "duel"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -118,8 +120,10 @@
   "id": "gd.go.odds",
   "name": "승산 표시",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "duel"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -194,8 +198,10 @@
   "id": "gd.go.just-dodge",
   "name": "101-2 ⑥저스트 회피+75초 토벌+부위 파괴",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "duel"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -290,8 +296,10 @@
   "id": "gd.go.g1-regions-walk",
   "name": "106장 ①~⑥ 포구·폐허를 마을 옆에 붙여 고개로 걸어서",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "regions"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -418,8 +426,10 @@
   "id": "gd.go.g15-elem-monsters",
   "name": "106장 ⑮ 새 원소 괴물",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "element"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
