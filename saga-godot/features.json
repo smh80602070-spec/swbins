@@ -1209,8 +1209,10 @@
   "id": "gd.dg.jobs",
   "name": "직업 5",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_skills"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1220,8 +1222,10 @@
   "id": "gd.dg.martial",
   "name": "무예 9모양×6갈래×3단",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_skills"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
