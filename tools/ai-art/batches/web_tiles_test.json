@@ -1,0 +1,55 @@
+{
+ "model": "sd_xl_base_1.0",
+ "out": "web_tiles_test",
+ "defaults": {
+  "prompt_prefix": "seamless tileable ground texture swatch, flat orthographic material, hand painted game texture, even lighting, no objects",
+  "width": 640,
+  "height": 640,
+  "steps": 30,
+  "cfg": 6.5,
+  "sampler": "Euler a",
+  "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality"
+ },
+ "items": [
+  {
+   "id": "tile_grass",
+   "seed": 20261002,
+   "prompt": "lush green grass ground, small clover leaves, even lighting"
+  },
+  {
+   "id": "tile_dirt_road",
+   "seed": 20261040,
+   "prompt": "packed brown dirt ground texture with small pebbles and fine cracks"
+  },
+  {
+   "id": "tile_cobble",
+   "seed": 20261064,
+   "prompt": "old grey cobblestone pavement, mossy gaps between stones"
+  },
+  {
+   "id": "tile_sand",
+   "seed": 20261095,
+   "prompt": "warm desert sand ground with soft wind ripples"
+  },
+  {
+   "id": "tile_snow",
+   "seed": 20261133,
+   "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles"
+  },
+  {
+   "id": "tile_ice",
+   "seed": 20261157,
+   "prompt": "frozen ice floor with fine cracks, pale blue"
+  },
+  {
+   "id": "tile_lava_rock",
+   "seed": 20261188,
+   "prompt": "dark volcanic rock ground with thin glowing orange cracks"
+  },
+  {
+   "id": "tile_shallow_water",
+   "seed": 20261226,
+   "prompt": "calm turquoise water surface texture, soft ripples and light caustics, seen from above"
+  }
+ ]
+}

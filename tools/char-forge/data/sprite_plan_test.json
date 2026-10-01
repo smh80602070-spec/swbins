@@ -1,0 +1,18 @@
+{
+ "px": 128, "frames": 8, "ortho": 2.5, "cam_z": 0.95,
+ "clips": ["idle", "walk", "attack", "hit", "death"],
+ "dirs": [0, 1, 2],
+ "bodies": {
+  "basem": "tools/char-forge/_src/cc0_vroid/test/cc0_basem.glb",
+  "basef": "tools/char-forge/_src/cc0_vroid/test/cc0_basef.glb",
+  "d": "tools/char-forge/_src/cc0_vroid/test/cc0_d.glb"
+ },
+ "entries": [
+  {"id": "m_orc_warlord", "body": "basem", "kind": "orc_warlord"},
+  {"id": "m_goblin_scrapper", "body": "basem", "kind": "goblin_scrapper"},
+  {"id": "m_undead_knight", "body": "basem", "kind": "undead_knight"},
+  {"id": "f_goblin_r11", "body": "basef", "kind": "rand:goblin:11"},
+  {"id": "f_demon_r12", "body": "basef", "kind": "rand:demon:12"},
+  {"id": "d_undead_r13", "body": "d", "kind": "rand:undead:13"}
+ ]
+}

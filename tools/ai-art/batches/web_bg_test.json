@@ -1,0 +1,55 @@
+{
+ "model": "Illustrious-XL-v2.0",
+ "out": "web_bg_test",
+ "defaults": {
+  "prompt_prefix": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game background",
+  "width": 1024,
+  "height": 576,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up"
+ },
+ "items": [
+  {
+   "id": "bg_east_fortress_1",
+   "seed": 20261031,
+   "prompt": "ancient east asian fortress town at dawn, tiled roofs, stone walls, misty green mountains, floating paper lanterns, glowing holographic banners"
+  },
+  {
+   "id": "bg_east_fortress_2",
+   "seed": 20261048,
+   "prompt": "ancient east asian fortress town at dawn, tiled roofs, stone walls, misty green mountains, floating paper lanterns, glowing holographic banners"
+  },
+  {
+   "id": "bg_silk_oasis_1",
+   "seed": 20261028,
+   "prompt": "desert silk road oasis, ruined sandstone temple, palm trees, caravan tents, futuristic glowing signal towers on dunes, warm golden light"
+  },
+  {
+   "id": "bg_silk_oasis_2",
+   "seed": 20261045,
+   "prompt": "desert silk road oasis, ruined sandstone temple, palm trees, caravan tents, futuristic glowing signal towers on dunes, warm golden light"
+  },
+  {
+   "id": "bg_frost_plateau_1",
+   "seed": 20261031,
+   "prompt": "frozen highland plateau, snow covered stone keep, ice blue crystal pylons, aurora in the sky, pine forest, cold mist"
+  },
+  {
+   "id": "bg_frost_plateau_2",
+   "seed": 20261048,
+   "prompt": "frozen highland plateau, snow covered stone keep, ice blue crystal pylons, aurora in the sky, pine forest, cold mist"
+  },
+  {
+   "id": "bg_harbor_dusk_1",
+   "seed": 20261029,
+   "prompt": "harbor town at dusk, wooden sailing ships beside a tall space elevator, lanterns on piers, purple orange sunset sky, calm sea"
+  },
+  {
+   "id": "bg_harbor_dusk_2",
+   "seed": 20261046,
+   "prompt": "harbor town at dusk, wooden sailing ships beside a tall space elevator, lanterns on piers, purple orange sunset sky, calm sea"
+  }
+ ]
+}

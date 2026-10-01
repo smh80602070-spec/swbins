@@ -1,0 +1,70 @@
+{
+ "px": 128,
+ "frames": 8,
+ "ortho": 2.5,
+ "cam_z": 0.95,
+ "clips": [
+  "idle",
+  "walk",
+  "attack",
+  "hit",
+  "death"
+ ],
+ "dirs": [
+  0,
+  1,
+  2
+ ],
+ "bodies": {
+  "e": "tools/char-forge/_src/cc0_vroid/test/cc0_e.glb",
+  "f": "tools/char-forge/_src/cc0_vroid/test/cc0_f.glb",
+  "g": "tools/char-forge/_src/cc0_vroid/test/cc0_g.glb"
+ },
+ "entries": [
+  {
+   "id": "fancy_e_demon_201",
+   "body": "e",
+   "kind": "rand:demon_fancy:201"
+  },
+  {
+   "id": "fancy_e_undead_202",
+   "body": "e",
+   "kind": "rand:undead_fancy:202"
+  },
+  {
+   "id": "fancy_e_goblin_203",
+   "body": "e",
+   "kind": "rand:goblin_fancy:203"
+  },
+  {
+   "id": "fancy_f_demon_204",
+   "body": "f",
+   "kind": "rand:demon_fancy:204"
+  },
+  {
+   "id": "fancy_f_undead_205",
+   "body": "f",
+   "kind": "rand:undead_fancy:205"
+  },
+  {
+   "id": "fancy_f_goblin_206",
+   "body": "f",
+   "kind": "rand:goblin_fancy:206"
+  },
+  {
+   "id": "fancy_g_demon_207",
+   "body": "g",
+   "kind": "rand:demon_fancy:207"
+  },
+  {
+   "id": "fancy_g_undead_208",
+   "body": "g",
+   "kind": "rand:undead_fancy:208"
+  },
+  {
+   "id": "fancy_g_goblin_209",
+   "body": "g",
+   "kind": "rand:goblin_fancy:209"
+  }
+ ]
+}

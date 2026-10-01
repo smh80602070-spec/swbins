@@ -1,0 +1,268 @@
+{
+ "px": 128,
+ "frames": 8,
+ "ortho": 2.5,
+ "cam_z": 0.95,
+ "clips": [
+  "idle",
+  "walk",
+  "attack",
+  "hit",
+  "death"
+ ],
+ "dirs": [
+  0,
+  1,
+  2
+ ],
+ "bodies": {
+  "basem": "tools/char-forge/_src/cc0_vroid/test/cc0_basem.glb",
+  "basef": "tools/char-forge/_src/cc0_vroid/test/cc0_basef.glb",
+  "d": "tools/char-forge/_src/cc0_vroid/test/cc0_d.glb",
+  "e": "tools/char-forge/_src/cc0_vroid/test/cc0_e.glb",
+  "f": "tools/char-forge/_src/cc0_vroid/test/cc0_f.glb",
+  "g": "tools/char-forge/_src/cc0_vroid/test/cc0_g.glb"
+ },
+ "entries": [
+  {
+   "id": "pool_basem_orc_101",
+   "body": "basem",
+   "kind": "rand:orc:101"
+  },
+  {
+   "id": "pool_basem_goblin_102",
+   "body": "basem",
+   "kind": "rand:goblin:102"
+  },
+  {
+   "id": "pool_basem_undead_103",
+   "body": "basem",
+   "kind": "rand:undead:103"
+  },
+  {
+   "id": "pool_basem_demon_104",
+   "body": "basem",
+   "kind": "rand:demon:104"
+  },
+  {
+   "id": "pool_basem_elder_105",
+   "body": "basem",
+   "kind": "rand:elder:105"
+  },
+  {
+   "id": "pool_basem_teen_106",
+   "body": "basem",
+   "kind": "rand:teen:106"
+  },
+  {
+   "id": "pool_basem_human_107",
+   "body": "basem",
+   "kind": "rand:human:107"
+  },
+  {
+   "id": "pool_basem_child_108",
+   "body": "basem",
+   "kind": "rand:child:108"
+  },
+  {
+   "id": "pool_basef_orc_109",
+   "body": "basef",
+   "kind": "rand:orc:109"
+  },
+  {
+   "id": "pool_basef_goblin_110",
+   "body": "basef",
+   "kind": "rand:goblin:110"
+  },
+  {
+   "id": "pool_basef_undead_111",
+   "body": "basef",
+   "kind": "rand:undead:111"
+  },
+  {
+   "id": "pool_basef_demon_112",
+   "body": "basef",
+   "kind": "rand:demon:112"
+  },
+  {
+   "id": "pool_basef_elder_113",
+   "body": "basef",
+   "kind": "rand:elder:113"
+  },
+  {
+   "id": "pool_basef_teen_114",
+   "body": "basef",
+   "kind": "rand:teen:114"
+  },
+  {
+   "id": "pool_basef_human_115",
+   "body": "basef",
+   "kind": "rand:human:115"
+  },
+  {
+   "id": "pool_basef_child_116",
+   "body": "basef",
+   "kind": "rand:child:116"
+  },
+  {
+   "id": "pool_d_orc_117",
+   "body": "d",
+   "kind": "rand:orc:117"
+  },
+  {
+   "id": "pool_d_goblin_118",
+   "body": "d",
+   "kind": "rand:goblin:118"
+  },
+  {
+   "id": "pool_d_undead_119",
+   "body": "d",
+   "kind": "rand:undead:119"
+  },
+  {
+   "id": "pool_d_demon_120",
+   "body": "d",
+   "kind": "rand:demon:120"
+  },
+  {
+   "id": "pool_d_elder_121",
+   "body": "d",
+   "kind": "rand:elder:121"
+  },
+  {
+   "id": "pool_d_teen_122",
+   "body": "d",
+   "kind": "rand:teen:122"
+  },
+  {
+   "id": "pool_d_human_123",
+   "body": "d",
+   "kind": "rand:human:123"
+  },
+  {
+   "id": "pool_d_child_124",
+   "body": "d",
+   "kind": "rand:child:124"
+  },
+  {
+   "id": "pool_e_orc_125",
+   "body": "e",
+   "kind": "rand:orc:125"
+  },
+  {
+   "id": "pool_e_goblin_126",
+   "body": "e",
+   "kind": "rand:goblin:126"
+  },
+  {
+   "id": "pool_e_undead_127",
+   "body": "e",
+   "kind": "rand:undead:127"
+  },
+  {
+   "id": "pool_e_demon_128",
+   "body": "e",
+   "kind": "rand:demon:128"
+  },
+  {
+   "id": "pool_e_elder_129",
+   "body": "e",
+   "kind": "rand:elder:129"
+  },
+  {
+   "id": "pool_e_teen_130",
+   "body": "e",
+   "kind": "rand:teen:130"
+  },
+  {
+   "id": "pool_e_human_131",
+   "body": "e",
+   "kind": "rand:human:131"
+  },
+  {
+   "id": "pool_e_child_132",
+   "body": "e",
+   "kind": "rand:child:132"
+  },
+  {
+   "id": "pool_f_orc_133",
+   "body": "f",
+   "kind": "rand:orc:133"
+  },
+  {
+   "id": "pool_f_goblin_134",
+   "body": "f",
+   "kind": "rand:goblin:134"
+  },
+  {
+   "id": "pool_f_undead_135",
+   "body": "f",
+   "kind": "rand:undead:135"
+  },
+  {
+   "id": "pool_f_demon_136",
+   "body": "f",
+   "kind": "rand:demon:136"
+  },
+  {
+   "id": "pool_f_elder_137",
+   "body": "f",
+   "kind": "rand:elder:137"
+  },
+  {
+   "id": "pool_f_teen_138",
+   "body": "f",
+   "kind": "rand:teen:138"
+  },
+  {
+   "id": "pool_f_human_139",
+   "body": "f",
+   "kind": "rand:human:139"
+  },
+  {
+   "id": "pool_f_child_140",
+   "body": "f",
+   "kind": "rand:child:140"
+  },
+  {
+   "id": "pool_g_orc_141",
+   "body": "g",
+   "kind": "rand:orc:141"
+  },
+  {
+   "id": "pool_g_goblin_142",
+   "body": "g",
+   "kind": "rand:goblin:142"
+  },
+  {
+   "id": "pool_g_undead_143",
+   "body": "g",
+   "kind": "rand:undead:143"
+  },
+  {
+   "id": "pool_g_demon_144",
+   "body": "g",
+   "kind": "rand:demon:144"
+  },
+  {
+   "id": "pool_g_elder_145",
+   "body": "g",
+   "kind": "rand:elder:145"
+  },
+  {
+   "id": "pool_g_teen_146",
+   "body": "g",
+   "kind": "rand:teen:146"
+  },
+  {
+   "id": "pool_g_human_147",
+   "body": "g",
+   "kind": "rand:human:147"
+  },
+  {
+   "id": "pool_g_child_148",
+   "body": "g",
+   "kind": "rand:child:148"
+  }
+ ]
+}

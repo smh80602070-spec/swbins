@@ -1,0 +1,38 @@
+{
+ "px": 128,
+ "frames": 8,
+ "ortho": 2.5,
+ "cam_z": 0.95,
+ "clips": [
+  "idle",
+  "walk",
+  "attack",
+  "hit",
+  "death"
+ ],
+ "dirs": [
+  0,
+  1,
+  2
+ ],
+ "bodies": {
+  "g": "tools/char-forge/_src/cc0_vroid/test/cc0_g.glb"
+ },
+ "entries": [
+  {
+   "id": "gm_g_demon_301",
+   "body": "g",
+   "kind": "rand:demon_fancy_gm:301"
+  },
+  {
+   "id": "gm_g_undead_302",
+   "body": "g",
+   "kind": "rand:undead_fancy_gm:302"
+  },
+  {
+   "id": "gm_g_goblin_303",
+   "body": "g",
+   "kind": "rand:goblin_fancy_gm:303"
+  }
+ ]
+}
