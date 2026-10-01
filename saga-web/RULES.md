@@ -24,6 +24,7 @@
 - 판정(`dungeon.js`)과 화면(`dungeon-view.js`·`dungeon3d.js`)은 갈라져 있다. 판정에 three.js 금지, WebGL 없으면 조용히 2D.
 - 모든 피해는 `strike()` 한 통로. 무예 모양(shape)은 열 가지 고정 — 늘리지 않는다. curse·heal·buff·summon 은 `el` 을 안 읽는다.
 - 던전은 방 단위 로그라이크(`run.room`, `seedOf`). 마을↔필드↔마을은 하나의 세계 좌표계(`world-map.js`), 칸 내용은 세계 칸 좌표만의 함수이고 마을 간 순간이동은 없다.
+- `js/dungeon.js` 는 생성물 — 고치는 곳은 `src/dungeon/` 조각(01-core~06-skill)이고, 고친 뒤 `node tools/build-parts.mjs`(어긋나면 precheck 가 막는다).
 - 그림·판정·자동지도가 같은 배열을 읽는다(`WM.pieces/clutter/info`). `run` 은 세이브에 안 남고 `save.dungeon` 은 메타만.
 - 수치 불변식(`ANCHOR_DIST` 6400·`TOWN_SAFE_R` 1300·`WORLD_LIMIT` 60000·`CHUNK` 200·`DESK_SCALE` 2.0 등)은 PLAN §2.2 표, 바꾸면 진단이 깨진다. 3인칭·등신·양식 토글은 되살리지 않는다(`diablo` 고정).
 - 새 무작위는 `core.hash2`. `_test.html` 은 `DG_NO_DRAW`(3D 안 켬) — 화면 층은 실기 항목으로. 옛 "PLAN §28-8·§60" 류 절 번호는 `HANDOFF.md` 의 같은 번호.
