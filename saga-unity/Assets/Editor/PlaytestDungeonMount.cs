@@ -357,7 +357,7 @@ namespace Saga.EditorTools
             SetLevel(34);
             DungeonMounts.Restore("mt_crane");
             string json = SaveState.ToJson();
-            if (!json.Contains("\"mountSel\":\"mt_crane\"") || !json.Contains("\"version\":14")) Fail("세이브에 탈것이 없다(버전은 14 그대로)");
+            if (!json.Contains("\"mountSel\":\"mt_crane\"") || !json.Contains("\"version\":15")) Fail("세이브에 탈것이 없다(버전은 14 그대로)");
             DungeonMounts.Restore("");
             if (!SaveState.ApplyJson(json) || DungeonMounts.Sel != "mt_crane" || DungeonMounts.Riding != null) Fail("왕복 뒤 고른 탈것이 달라짐·탄 채 불러옴");
             string old = Regex.Replace(json, ",\"mountSel\":\"[^\"]*\"", "");

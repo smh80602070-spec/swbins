@@ -38,7 +38,8 @@ namespace Saga.Dungeon.Data
         // v12 — PLAN.md 109-10-3 시련(TrialState, 웹 §5.11 `trial = {best, open, runs, board}`). v11 이하는 0/0/0/null → 열린 단계 1.
         // v13 — PLAN.md 109-10-5 지역 우두머리(RegionBossState, 웹 §5.13 `regionBoss = {지역: {kills, firstAt, lastAt}}`). v12 이하는 null → 전부 0.
         // v14 — PLAN.md 109-10-6 지역 사연(RegionSagaState, 웹 §5.14 `quest.chain`·`chainAll`). v13 이하는 null/false → 전부 닫힘.
-        private const int SaveVersion = 14;
+        // v15 — tasks U-0013 첫 10분 사명(`tutDone`). v14 이하는 전부 끝난 것으로 읽는다.
+        private const int SaveVersion = 15;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save_dungeon.json";
@@ -92,6 +93,7 @@ namespace Saga.Dungeon.Data
             public string mountSel; // PLAN.md 109-15 — 고른 탈것(탄 채는 저장 안 함). 버전 그대로: 옛 세이브는 null → 안 고른 채.
             public string[] folkStoryIds; // 곁가지 — 마을 시대 손님 사연을 들은 토막 수(버전 그대로: 옛 세이브는 null → 처음부터)
             public int[] folkStoryCounts;
+            public string[] tutDone; // v15
             public string scenarioJson; // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 저장된 층으로 지나온 장을 끝낸 것으로(RestoreLegacy).
         }
 
@@ -152,6 +154,7 @@ namespace Saga.Dungeon.Data
                 regionSagaAll = RegionSagaState.AllDone,
                 mountSel = DungeonMounts.Snapshot(),
                 scenarioJson = DungeonScenario.Snapshot(),
+                tutDone = DungeonTutorial.Ids().ToArray(),
             };
             DungeonEras.SnapshotStories(out data.folkStoryIds, out data.folkStoryCounts);
             return JsonUtility.ToJson(data);
@@ -202,6 +205,7 @@ namespace Saga.Dungeon.Data
             RegionSagaState.Restore(data.version >= 14 ? data.regionSaga : null, data.version >= 14 && data.regionSagaAll);
             DungeonMounts.Restore(data.mountSel);
             DungeonEras.RestoreStories(data.folkStoryIds, data.folkStoryCounts);
+            DungeonTutorial.Restore(data.version >= 15 ? data.tutDone : DungeonTutorial.AllIds()); // tasks U-0013
             if (string.IsNullOrEmpty(data.scenarioJson)) DungeonScenario.RestoreLegacy(data.dungeonFloor);
             else DungeonScenario.Restore(data.scenarioJson);
             BestiaryState.Restore(data.discovered);

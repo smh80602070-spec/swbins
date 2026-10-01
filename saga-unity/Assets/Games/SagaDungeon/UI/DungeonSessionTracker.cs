@@ -105,6 +105,8 @@ namespace Saga.Dungeon.UI
 
         public string GoalLineNow()
         {
+            var tut = DungeonTutorial.Line(); // tasks U-0013 — 첫걸음 사명이 첫 줄을 쓴다(끝나면 null)
+            if (tut != null) return tut;
             if (_player == null) return "-";
             var nearest = DungeonEnemy.FindNearest(_player.position, float.MaxValue);
             return nearest == null ? DungeonLocalization.T("goal.no_enemy", "가까운 적 없음")

@@ -98,7 +98,7 @@ namespace Saga.EditorTools
             _framesSeen++;
 
             // PLAN.md 109-16 — 새 판 첫 장면(모루골 부임)이 다른 진단 앞에서 상자를 열지 않게 끈다. 시나리오 진단이 스스로 켜고 되돌린다.
-            if (_framesSeen == 1) { DungeonScenario.Enabled = false; DungeonScenario.AbortScene(); DungeonScenarioUi.Instance?.Hide(); }
+            if (_framesSeen == 1) { DungeonTutorial.Enabled = false; DungeonScenario.Enabled = false; DungeonScenario.AbortScene(); DungeonScenarioUi.Instance?.Hide(); }
 
             if (_framesSeen == WhirlCheckFrame && !_whirlChecked)
             {

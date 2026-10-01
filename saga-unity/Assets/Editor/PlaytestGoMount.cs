@@ -317,7 +317,7 @@ namespace Saga.EditorTools
             GoMounts.Restore("mt_crane");
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"mountSel\":\"mt_crane\"") || !json.Contains("\"version\":28")) Fail("세이브에 탈것이 없다(버전은 28 그대로)");
+            if (!json.Contains("\"mountSel\":\"mt_crane\"") || !json.Contains("\"version\":29")) Fail("세이브에 탈것이 없다(버전은 28 그대로)");
             GoMounts.Restore("");
             if (!SaveState.TryLoad() || GoMounts.Sel != "mt_crane" || GoMounts.Riding != null) Fail("왕복 뒤 고른 탈것이 달라짐·탄 채 불러옴");
             string old = Regex.Replace(json, ",\"mountSel\":\"[^\"]*\"", "");

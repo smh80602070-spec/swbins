@@ -1121,10 +1121,10 @@ namespace Saga.EditorTools
             StoryState.Restore(1, 2);
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":28") || !json.Contains("\"storyCh\":1,\"storyStep\":2")) Fail("세이브 v28 에 이야기가 없다");
+            if (!json.Contains("\"version\":29") || !json.Contains("\"storyCh\":1,\"storyStep\":2")) Fail("세이브 v28 에 이야기가 없다");
             StoryState.Restore(0, 0);
             if (!SaveState.TryLoad() || StoryState.Ch != 1 || StoryState.StepIndex != 2) Fail("v28 왕복 뒤 이야기가 달라짐");
-            string v27 = Regex.Replace(json.Replace("\"version\":28", "\"version\":27"), ",\"storyCh\":\\d+,\"storyStep\":\\d+", "");
+            string v27 = Regex.Replace(json.Replace("\"version\":29", "\"version\":27"), ",\"storyCh\":\\d+,\"storyStep\":\\d+", "");
             if (v27.Contains("storyCh")) { Fail("v27 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v27);
             StoryState.Restore(1, 2);

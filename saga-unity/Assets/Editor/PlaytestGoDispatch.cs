@@ -246,7 +246,7 @@ namespace Saga.EditorTools
             DispatchState.Send("forest_edge", cand[1], 4, true);
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"dispOut\":[") || !json.Contains("old_road") || !json.Contains("\"version\":28")) Fail("세이브에 탐사가 없다(버전은 28 그대로)");
+            if (!json.Contains("\"dispOut\":[") || !json.Contains("old_road") || !json.Contains("\"version\":29")) Fail("세이브에 탐사가 없다(버전은 28 그대로)");
             DispatchState.ResetForTest();
             if (!SaveState.TryLoad() || DispatchState.Used != 2 || DispatchState.Away(cand[0]) != "old_road" || DispatchState.Left("old_road") != 12 * 3600) Fail("왕복 뒤 탐사가 달라짐");
             string old = Regex.Replace(json, ",\"dispOut\":\\[[^\\]]*\\],\"dispDone\":\\d+", "");

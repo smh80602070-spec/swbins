@@ -106,6 +106,7 @@ namespace Saga.EditorTools
         private static void CountFrames()
         {
             _framesSeen++;
+            if (_framesSeen == 1) Saga.Go.Data.GoTutorial.Enabled = false; // tasks U-0013 — 목표판 진단이 첫 줄을 검사한다
             // 67장 "사운드"(2026-09-14) — GoAudio.PlaySfx가 헤드리스(-nographics,
             // 오디오 장치 없을 수 있음)에서도 예외 없이 도는지 한 번 확인한다.
             // BanditEncounter.cs가 실제로 쓰는 것과 같은 클립.

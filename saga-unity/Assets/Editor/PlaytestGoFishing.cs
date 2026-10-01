@@ -292,7 +292,7 @@ namespace Saga.EditorTools
             if (FishState.SnapshotGone().Count != 1 || FishState.Present("river_w", 0) || !FishState.Present("dock", 1)) Fail("잡은 자리 시각(30분 지난 것은 안 적음)");
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"fishBag\":[") || !json.Contains("\"fishGone\":[") || !json.Contains("river_w_0") || !json.Contains("\"version\":28")) Fail("세이브에 낚시가 없다(버전은 28 그대로)");
+            if (!json.Contains("\"fishBag\":[") || !json.Contains("\"fishGone\":[") || !json.Contains("river_w_0") || !json.Contains("\"version\":29")) Fail("세이브에 낚시가 없다(버전은 28 그대로)");
             FishState.ResetForTest();
             if (!SaveState.TryLoad() || FishState.Count("crucian") != 2 || FishState.LogOf("crucian") != 5 || FishState.Present("river_w", 0)) Fail("왕복 뒤 낚시가 달라짐");
             string old = Regex.Replace(json, ",\"fishBag\":\\[[^\\]]*\\],\"fishLog\":\\[[^\\]]*\\],\"fishGone\":\\[[^\\]]*\\]", "");

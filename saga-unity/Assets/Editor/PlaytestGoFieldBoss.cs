@@ -124,10 +124,10 @@ namespace Saga.EditorTools
             GuardianState.Restore(true, true, 0);
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"version\":28") || !json.Contains("\"guardianBloom\":true")) Fail("세이브 v27 에 꽃이 없다");
+            if (!json.Contains("\"version\":29") || !json.Contains("\"guardianBloom\":true")) Fail("세이브 v27 에 꽃이 없다");
             GuardianState.Restore(true, false, 123);
             if (!SaveState.TryLoad() || !GuardianState.Bloom || GuardianState.PaidAt != 0) Fail("v27 왕복 뒤 꽃이 달라짐");
-            string v26 = Regex.Replace(json.Replace("\"version\":28", "\"version\":26"), ",\"guardianBloom\":(true|false),\"guardianPaidAt\":\\d+", "");
+            string v26 = Regex.Replace(json.Replace("\"version\":29", "\"version\":26"), ",\"guardianBloom\":(true|false),\"guardianPaidAt\":\\d+", "");
             if (v26.Contains("guardianBloom")) { Fail("v26 가짜 파일 만들기 실패"); return; }
             System.IO.File.WriteAllText(savePath, v26);
             GuardianState.Restore(false);

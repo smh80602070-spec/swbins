@@ -195,10 +195,10 @@ namespace Saga.EditorTools
             if (seen.Count != 1) { Fail($"만남 기록 {seen.Count} ≠ 1"); return; }
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(path);
-            if (!json.Contains("\"version\":28") || !json.Contains($"\"heroesSeen\":[\"{seen[0]}\"]")) Fail("세이브 v18 에 만남이 없다");
+            if (!json.Contains("\"version\":29") || !json.Contains($"\"heroesSeen\":[\"{seen[0]}\"]")) Fail("세이브 v18 에 만남이 없다");
             HeroDexState.Restore(null);
             if (!SaveState.TryLoad() || !HeroDexState.IsSeen(seen[0])) Fail("v18 왕복 뒤 만남이 사라졌다");
-            string v16 = Regex.Replace(json.Replace("\"version\":28", "\"version\":16"), ",\"heroesSeen\":\\[[^\\]]*\\]", "");
+            string v16 = Regex.Replace(json.Replace("\"version\":29", "\"version\":16"), ",\"heroesSeen\":\\[[^\\]]*\\]", "");
             if (v16.Contains("heroesSeen")) { Fail("v16 모양 만들기 실패"); return; }
             System.IO.File.WriteAllText(path, v16);
             if (!SaveState.TryLoad()) { Fail("v16 파일 TryLoad 실패"); return; }

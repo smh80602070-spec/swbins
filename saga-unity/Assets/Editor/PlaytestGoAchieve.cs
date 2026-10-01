@@ -247,7 +247,7 @@ namespace Saga.EditorTools
             if (AchieveState.StatusOf(Get("boss")).Got > Get("boss").Tiers.Length) Fail("받은 단계가 단계 수를 넘음");
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"achStats\":[") || !json.Contains("\"achGot\":[") || !json.Contains("\"version\":28")) Fail("세이브에 업적이 없다(버전은 28 그대로)");
+            if (!json.Contains("\"achStats\":[") || !json.Contains("\"achGot\":[") || !json.Contains("\"version\":29")) Fail("세이브에 업적이 없다(버전은 28 그대로)");
             AchieveState.ResetForTest();
             if (!SaveState.TryLoad() || AchieveState.Stat("kills") != 42 || AchieveState.Stat("weak") != 3 || AchieveState.KindCount("shatter") != 5 || AchieveState.StatusOf(Get("kill")).Got != 1) Fail("왕복 뒤 업적이 달라짐");
             string old = Regex.Replace(json, ",\"achStats\":\\[[^\\]]*\\],\"achKinds\":\\[[^\\]]*\\],\"achGot\":\\[[^\\]]*\\]", "");

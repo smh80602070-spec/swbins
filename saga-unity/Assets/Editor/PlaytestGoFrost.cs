@@ -366,7 +366,7 @@ namespace Saga.EditorTools
                 FrostBossState.Restore(true, true, 0);
                 if (!SaveState.Save()) { Fail("SaveState.Save 실패(곰왕)"); return; }
                 string json = System.IO.File.ReadAllText(savePath);
-                if (!json.Contains("\"frostBossBloom\":true") || !json.Contains("\"version\":28")) Fail("세이브에 곰왕 꽃이 없다(버전은 28 그대로)");
+                if (!json.Contains("\"frostBossBloom\":true") || !json.Contains("\"version\":29")) Fail("세이브에 곰왕 꽃이 없다(버전은 28 그대로)");
                 FrostBossState.Restore(true, false, 123);
                 if (!SaveState.TryLoad() || !FrostBossState.Bloom || FrostBossState.PaidAt != 0) Fail("곰왕 세이브 왕복 뒤 꽃이 달라짐");
                 string old = Regex.Replace(json, ",\"frostBossDown\":(true|false),\"frostBossBloom\":(true|false),\"frostBossPaidAt\":\\d+", "");
@@ -401,7 +401,7 @@ namespace Saga.EditorTools
             if (FrostState.Count != 2) Fail("없는 id 가 복원됨");
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"frostFound\":[") || !json.Contains("fort") || !json.Contains("\"version\":28")) Fail("세이브에 고원이 없다(버전은 28 그대로)");
+            if (!json.Contains("\"frostFound\":[") || !json.Contains("fort") || !json.Contains("\"version\":29")) Fail("세이브에 고원이 없다(버전은 28 그대로)");
             FrostState.ResetForTest();
             if (!SaveState.TryLoad() || !FrostState.Found("fort") || !FrostState.Found("hut") || FrostState.Count != 2) Fail("왕복 뒤 발견이 달라짐");
             string old = Regex.Replace(json, ",\"frostFound\":\\[[^\\]]*\\]", "");

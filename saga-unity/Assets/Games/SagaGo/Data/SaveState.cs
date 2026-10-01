@@ -15,7 +15,7 @@ namespace Saga.Go.Data
     /// </summary>
     public static class SaveState
     {
-        private const int SaveVersion = 28;
+        private const int SaveVersion = 29;
 
         /// <summary>PLAN.md 110 ② — 타이틀이 "이어하기/새로 시작"을 가른다.</summary>
         public const string FileName = "save.json";
@@ -133,6 +133,8 @@ namespace Saga.Go.Data
             // v28 — PLAN.md 109-14-12 이야기 임무 장·단계(임무 적·제단 불은 저장 안 함 — 불러오면 그 단계 처음).
             public int storyCh;
             public int storyStep;
+            // v29 — tasks U-0013 첫 10분 사명 — 끝난 단계 id(옛 세이브는 마이그레이션이 전부 끝남으로 채운다).
+            public List<string> tutDone;
             // PLAN.md 109-14-18 편성 1~4(칸마다 들판 셋 id 를 쉼표로)·지금 칸 — 버전 그대로(옛 세이브엔 없어 빈 칸 넷·1번 = 지금 들판, 웹 partyPresets 와 같은 결).
             public List<string> partyPresets;
             public int partyPreset;
@@ -269,6 +271,7 @@ namespace Saga.Go.Data
                 weeklyN = dom.weekN,
                 storyCh = StoryState.Ch,
                 storyStep = StoryState.StepIndex,
+                tutDone = GoTutorial.Ids(),
             };
             return JsonUtility.ToJson(data);
         }
@@ -338,6 +341,7 @@ namespace Saga.Go.Data
             DomainState.Restore(data.resin, data.resinT, data.domainClaims, data.weeklyWeek, data.weeklyN);
             AdventureState.RestoreSave(data.advLowered, data.advPaid); // 레벨 뒤 — 천하 등급이 바뀌면 들판 적이 다시 잰다
             StoryState.Restore(data.storyCh, data.storyStep);
+            GoTutorial.Restore(data.tutDone); // tasks U-0013
             StoryState.CatchUpJoins(); // 109-14-15 — 합류가 생기기 전에 끝낸 장의 이야기 동료
             PartyState.RestorePresets(data.partyPresets, data.partyPreset); // 109-14-18 — 합류 뒤(지금 칸 = 지금 들판)
             WorldQuestState.Restore(data.wqSteps, data.wqDone); // 109-14-21 — 이야기 자리(StoryState.Restore) 뒤
@@ -610,6 +614,13 @@ namespace Saga.Go.Data
                 data.version = 28;
                 data.storyCh = 0;
                 data.storyStep = 0;
+                return data;
+            }
+            if (fromVersion == 28)
+            {
+                // v28엔 첫걸음 사명이 없었다 — 옛 세이브는 이미 해 본 사람이라 전부 끝난 것으로.
+                data.version = 29;
+                data.tutDone = GoTutorial.AllIds();
                 return data;
             }
             return null;

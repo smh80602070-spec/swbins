@@ -130,6 +130,8 @@ namespace Saga.Go.UI
         /// "목표판이 그 역할을 대신한다"로 재해석한 것.</summary>
         public string GoalLineNow()
         {
+            var tut = GoTutorial.Line(); // tasks U-0013 — 첫걸음 사명이 첫 줄을 쓴다(끝나면 null)
+            if (tut != null) return tut;
             if (_player == null) return "-";
 
             float nearestDist = float.MaxValue;

@@ -506,7 +506,7 @@ namespace Saga.EditorTools
             if (AreaState.Count != 3) Fail("없는 열쇠가 복원됨");
             if (!SaveState.Save()) { Fail("SaveState.Save 실패"); return; }
             string json = System.IO.File.ReadAllText(savePath);
-            if (!json.Contains("\"areaFound\":[") || !json.Contains("skyport:port") || !json.Contains("crossing:clock") || !json.Contains("\"version\":28")) Fail("세이브에 땅이 없다(버전은 28 그대로)");
+            if (!json.Contains("\"areaFound\":[") || !json.Contains("skyport:port") || !json.Contains("crossing:clock") || !json.Contains("\"version\":29")) Fail("세이브에 땅이 없다(버전은 28 그대로)");
             AreaState.ResetForTest();
             if (!SaveState.TryLoad() || !AreaState.Found("skyport:port") || !AreaState.Found("skyport:jar") || !AreaState.Found("crossing:clock") || AreaState.Count != 3) Fail("왕복 뒤 발견이 달라짐");
             string old = Regex.Replace(json, ",\"areaFound\":\\[[^\\]]*\\]", "");

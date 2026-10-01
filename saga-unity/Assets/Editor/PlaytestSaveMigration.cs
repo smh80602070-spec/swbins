@@ -70,8 +70,10 @@ namespace Saga.EditorTools
         private static void CheckGo()
         {
             string cur = GoSave.ToJson();
-            PlaytestKit.Check(GoSave.ApplyJson(Ver(cur, 28, 27)), "GO v27 세이브가 안 읽힘");
-            PlaytestKit.Check(!GoSave.ApplyJson(Ver(cur, 28, 99)), "GO 미래 버전(99)이 받아들여짐");
+            int v = ReadVersion(cur);
+            PlaytestKit.Check(GoSave.ApplyJson(Ver(cur, v, v - 1)), $"GO v{v - 1} 세이브가 안 읽힘");
+            PlaytestKit.Check(GoSave.ApplyJson(Ver(cur, v, 27)), "GO v27 세이브가 안 읽힘");
+            PlaytestKit.Check(!GoSave.ApplyJson(Ver(cur, v, 99)), "GO 미래 버전(99)이 받아들여짐");
             PlaytestKit.Check(GoSave.ApplyJson(cur), "GO 현재 세이브가 안 읽힘");
         }
 
