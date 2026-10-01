@@ -1662,8 +1662,10 @@
   "id": "gd.st.stages",
   "name": "사냥터 9 완주",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1673,8 +1675,10 @@
   "id": "gd.st.martial",
   "name": "무예",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1684,8 +1688,10 @@
   "id": "gd.st.mp",
   "name": "MP",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1695,8 +1701,10 @@
   "id": "gd.st.ladder",
   "name": "사다리",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1706,8 +1714,10 @@
   "id": "gd.st.gather",
   "name": "채집",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1717,8 +1727,10 @@
   "id": "gd.st.boss",
   "name": "보스",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1739,8 +1751,10 @@
   "id": "gd.st.gear",
   "name": "장비 10부위 tier1~4·고유·주문서",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1750,8 +1764,10 @@
   "id": "gd.st.ranged",
   "name": "원거리 적",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1761,8 +1777,10 @@
   "id": "gd.st.achievements",
   "name": "업적",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1772,8 +1790,10 @@
   "id": "gd.st.shop",
   "name": "상점",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1783,8 +1803,10 @@
   "id": "gd.st.quests",
   "name": "사명 20/20(본편 13+반복/일일 7)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1794,8 +1816,10 @@
   "id": "gd.st.jobs",
   "name": "전직 4단(tier1~4 무예 완주)·SP 투자·칭호 라벨",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1805,8 +1829,10 @@
   "id": "gd.st.npc-talk",
   "name": "NPC_TALK 밀도",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1871,8 +1897,10 @@
   "id": "gd.st.gate-champion",
   "name": "101-2 ④관문 대장",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1893,8 +1921,10 @@
   "id": "gd.st.mentor-bond",
   "name": "51장 \"관계\" 축 — 사제 유대",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_rules"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
