@@ -26,6 +26,10 @@ namespace Saga.EditorTools
         public static void Dungeon() => Run("Dungeon", Saga.Dungeon.Data.DungeonScenarioData.Snapshot(),
             s => $"{s.chapters.Length}장 {s.scenes.Length}씬 {s.casts.Length}인물");
 
+        [MenuItem("Saga/Scenario JSON/Export Realm")]
+        public static void Realm() => Run("Realm", Saga.Realm.Data.RealmScenarioData.Snapshot(),
+            s => $"{s.cards.Length}카드 {s.side.Length}곁가지");
+
         private static void Run<T>(string game, T snapshot, System.Func<T, string> counts) where T : class, new()
         {
             PlaytestKit.Begin("[ScenarioJsonExport]");

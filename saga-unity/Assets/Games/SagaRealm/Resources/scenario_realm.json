@@ -1,0 +1,1905 @@
+{
+    "timeFolk": [
+        "tm_gangseo",
+        "tm_gongseok",
+        "tm_geumdam",
+        "tm_myeongbyeon",
+        "tm_doha",
+        "tm_seongyeon",
+        "tm_gwedo",
+        "tm_eunha",
+        "tm_yeongjeom"
+    ],
+    "cards": [
+        {
+            "Id": "r1_start",
+            "Emoji": "🗺️",
+            "TitleKo": "첫 성의 밤",
+            "TextKo": "{책사} 이(가) 천하 지도를 펴고 첫 목표를 묻는다. 지도 끝에는 어제까지 없던 땅이 희미하게 그려져 있다. 지도 위에는 이 시대 것이 아닌 볼펜 한 자루가 떨어져 있고, 가장자리로 빛 얼룩이 번져 간다.",
+            "FromId": "",
+            "Who": "",
+            "No": 1,
+            "Act": 1,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "이웃 땅으로 넓히자",
+                    "ResultKo": "{책사} 이(가) 첫 출정 길을 그었다 — 곳간이 든든해졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "food",
+                            "N": 1500,
+                            "Id": ""
+                        },
+                        {
+                            "T": "train",
+                            "N": 5,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "성부터 다지자",
+                    "ResultKo": "성문과 곳간을 손보았다 — {책사} 이(가) 믿음을 얻었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 6,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "빛 얼룩부터 살핀다",
+                    "ResultKo": "얼룩 근처에서 옛 주화 꾸러미가 나왔다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 500,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r1_rift_sign",
+            "Emoji": "🌌",
+            "TitleKo": "균열의 울림",
+            "TextKo": "북쪽 하늘에 가느다란 금이 갔다. 봉화대 병사가 금 아래에서 낯선 수레를 보았다 — 쇠 껍질에 바퀴가 달렸고 안은 비어 있다. 금에서는 옅은 빛이 새어 나오며, 바람이 그쪽으로 빨려 든다.",
+            "FromId": "",
+            "Who": "",
+            "No": 2,
+            "Act": 1,
+            "MinTurn": 12,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "봉화를 올려 널리 알린다",
+                    "ResultKo": "봉화가 이어 오르자 군사의 기세가 올랐다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 8,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "성문을 닫고 살핀다",
+                    "ResultKo": "성문을 닫고 지켜보니 백성이 안심했다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "척후를 금 아래로 보낸다",
+                    "ResultKo": "척후가 수레 안에서 쓸 만한 것을 가져왔다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 300,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 6,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r1_first_ally",
+            "Emoji": "🕊️",
+            "TitleKo": "첫 화친",
+            "TextKo": "{이웃} 의 사신이 예물을 들고 왔다. 예물 속에는 빛나는 부적이 섞여 있고, 재야의 한 논객이 끼어들어 \"손잡는 편이 덜 잃는다\" 며 설전을 청한다. 싸울지 손잡을지 정해야 한다.",
+            "FromId": "",
+            "Who": "",
+            "No": 3,
+            "Act": 1,
+            "MinTurn": 24,
+            "OrCities": 5,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "선전 포고로 답한다",
+                    "ResultKo": "예물을 돌려보냈다 — 국경에 긴장이 돈다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 8,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "화친을 받아들인다",
+                    "ResultKo": "설전 끝에 화친 조건을 더 얻어 냈다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "예물을 더해 우호를 산다",
+                    "ResultKo": "예물을 더해 보내니 사신이 웃었다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 5,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r2_fallen",
+            "Emoji": "🪂",
+            "TitleKo": "하늘에서 떨어진 사람들",
+            "TextKo": "재야를 탐색하던 척후가 이상한 소문을 물어 왔다. 현대 옷차림의 사람 다섯이 하늘에서 떨어졌다는 것이다. 그중 강서라는 이는 특공대장이었다고 하고, 노트북을 든 도하의 화면에는 아직 그려지지 않은 앞날의 지도가 떠 있다 한다. {책사} 이(가) 한 사람부터 찾자고 한다.",
+            "FromId": "",
+            "Who": "",
+            "No": 4,
+            "Act": 2,
+            "MinTurn": 36,
+            "OrCities": 8,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "강서를 직접 찾아 등용한다",
+                    "ResultKo": "강서가 특공대 제복 그대로 찾아와 절도 있게 인사했다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "recruit",
+                            "N": 0,
+                            "Id": "tm_gangseo"
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "소문을 더 모은다",
+                    "ResultKo": "소문을 모아 지도에 표시하니 성 안이 술렁임을 그쳤다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 5,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 6,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "도하의 노트북부터 산다",
+                    "ResultKo": "도하가 값을 치른 노트북 앞에서 앞날 지도를 펼쳐 보였다",
+                    "Cost": 400,
+                    "Fx": [
+                        {
+                            "T": "recruit",
+                            "N": 0,
+                            "Id": "tm_doha"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r2_plains",
+            "Emoji": "⚔️",
+            "TitleKo": "관도 결전",
+            "TextKo": "{이웃} 의 대군이 큰 들판에 진을 쳤다. 강서가 특공대를 이끌고 밤에 야습하자고 제안하고, 금담은 태양광 등을 내밀며 \"밤을 낮처럼 쓰자\" 한다. 대군과 군량을 두고 한 판을 정해야 한다.",
+            "FromId": "",
+            "Who": "",
+            "No": 5,
+            "Act": 2,
+            "MinTurn": 48,
+            "OrCities": 10,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "강서의 야습을 허락한다",
+                    "ResultKo": "야습이 적진의 곳간을 태우자 군사의 기세가 하늘을 찔렀다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "성 안에서 버틴다",
+                    "ResultKo": "태양광 등이 성벽 위를 환히 밝히니 적이 다가오지 못했다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "food",
+                            "N": 1000,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "금담의 등을 큰 값에 산다",
+                    "ResultKo": "등불로 밤 수레길이 열려 군량이 넉넉히 들어왔다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "food",
+                            "N": 2000,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r2_debate",
+            "Emoji": "🎙️",
+            "TitleKo": "논객의 설전",
+            "TextKo": "논객 명변이 확성기를 들고 찾아왔다. \"이름난 재야 학자를 설전으로 불러 옵시다. 서당에 사람이 모이면 성이 밝아집니다.\" 퀴즈 판이 빛 판으로 바뀐 서고 앞에서 {책사} 도 고개를 끄덕인다.",
+            "FromId": "",
+            "Who": "",
+            "No": 6,
+            "Act": 2,
+            "MinTurn": 60,
+            "OrCities": 12,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "명변을 군사로 등용한다",
+                    "ResultKo": "명변이 확성기를 들고 서당 앞에서 큰 설전을 벌였다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "recruit",
+                            "N": 0,
+                            "Id": "tm_myeongbyeon"
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "서고를 정비한다",
+                    "ResultKo": "서고가 정돈되니 배우러 오는 이가 늘었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "학자에게 예물을 보낸다",
+                    "ResultKo": "학자가 예물에 감복해 서고에 이름을 올렸다",
+                    "Cost": 200,
+                    "Fx": [
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r3_navigator",
+            "Emoji": "🧭",
+            "TitleKo": "항법사가 본 강",
+            "TextKo": "항법사 성연이 항법 판을 들고 찾아왔다. \"이 강의 바람이 사흘 뒤에 바뀝니다. 미래 기록에 그렇게 남아 있습니다.\" 도하가 기록을 해독해 보니 정말로 같은 말이 적혀 있었다. 강가 수채화 같은 풍경 위에 항법 판의 빛이 겹친다.",
+            "FromId": "",
+            "Who": "",
+            "No": 7,
+            "Act": 3,
+            "MinTurn": 72,
+            "OrCities": 15,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "성연을 군사로 삼는다",
+                    "ResultKo": "성연이 항법 판을 펴 강의 바람을 손가락으로 짚었다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "recruit",
+                            "N": 0,
+                            "Id": "tm_seongyeon"
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "기록을 고이 간직한다",
+                    "ResultKo": "기록을 서고에 넣어 두고 바람이 바뀌길 기다렸다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 5,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 6,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "궤도에게도 사람을 보낸다",
+                    "ResultKo": "궤도가 탐사 장비를 메고 성 문을 두드렸다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "recruit",
+                            "N": 0,
+                            "Id": "tm_gwedo"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r3_river",
+            "Emoji": "🌊",
+            "TitleKo": "적벽 강 위",
+            "TextKo": "강 위에서 큰 싸움이 다가온다. 성연이 \"사흘 뒤 바람이 바뀌니 그때 불을 쓰라\" 하고, 공석은 구조선을 끌어와 강가를 지키자 한다. 바람 예보를 믿을지, 수군과 화공으로 정면을 택할지 정해야 한다.",
+            "FromId": "",
+            "Who": "",
+            "No": 8,
+            "Act": 3,
+            "MinTurn": 84,
+            "OrCities": 18,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "바람 예보를 믿고 화공을 쓴다",
+                    "ResultKo": "바람이 예보대로 바뀌어 불길이 적선을 삼켰다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 10,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 6,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "구조선으로 강가를 지킨다",
+                    "ResultKo": "구조선이 강가 백성을 실어 나르니 성 안이 든든해졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "수군을 늘려 정면으로 간다",
+                    "ResultKo": "수군을 늘려 정면에서 맞서니 적이 물러갔다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r3_duel",
+            "Emoji": "🦾",
+            "TitleKo": "의체 무사의 일기토",
+            "TextKo": "의체 무사 영점이 성 앞 공터에 서서 \"나보다 강한 장수 밑에만 서겠다\" 한다. 구경꾼들이 휴대폰 불빛을 켜 들고 모여들었다. 영점의 팔이 기계 소리를 낸다. 누가 이 일기토를 받겠는가.",
+            "FromId": "",
+            "Who": "",
+            "No": 9,
+            "Act": 3,
+            "MinTurn": 96,
+            "OrCities": 20,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "{맹장}이 직접 받아 친다",
+                    "ResultKo": "일기토 끝에 영점이 무기를 내리고 절했다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "recruit",
+                            "N": 0,
+                            "Id": "tm_yeongjeom"
+                        },
+                        {
+                            "T": "train",
+                            "N": 5,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "구경꾼을 물리고 정중히 청한다",
+                    "ResultKo": "구경꾼을 물리니 영점이 한 걸음 물러섰다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 5,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "예물과 술로 마음을 산다",
+                    "ResultKo": "술잔 앞에서 영점이 기계 팔을 내려놓았다",
+                    "Cost": 400,
+                    "Fx": [
+                        {
+                            "T": "recruit",
+                            "N": 0,
+                            "Id": "tm_yeongjeom"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r4_rift",
+            "Emoji": "🌌",
+            "TitleKo": "균열의 왕",
+            "TextKo": "균열의 문이 활짝 열렸다. 종왕이 성혼과 유성 무리를 이끌고 내려온다. 성벽 위에는 강서의 특공대가 서 있고, 궤도의 탐사 장비가 이계 성혼의 정체를 알아낸다. 세 시대가 한 성벽에 모였다.",
+            "FromId": "",
+            "Who": "",
+            "No": 10,
+            "Act": 4,
+            "MinTurn": 108,
+            "OrCities": 25,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "성문 밖에서 맞받는다",
+                    "ResultKo": "성문 밖에서 맞받으니 성혼의 기세가 꺾였다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 12,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "성벽을 걸고 지킨다",
+                    "ResultKo": "성벽이 버티니 유성 무리가 흩어졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 10,
+                            "Id": ""
+                        },
+                        {
+                            "T": "food",
+                            "N": 1500,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "궤도의 장비로 성혼을 읽는다",
+                    "ResultKo": "장비가 성혼의 약한 자리를 짚어 주었다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r4_plague",
+            "Emoji": "🧫",
+            "TitleKo": "역병의 근원",
+            "TextKo": "폐허에서 번지는 역병의 근원이 드러났다. 금담이 백신 공장을 세우자 하고, 의원들은 약재를 모아 왔다. 은하가 방호복을 입고 이계 부생의 정체를 확인했다. 성 안 백성이 기다리고 있다.",
+            "FromId": "",
+            "Who": "",
+            "No": 11,
+            "Act": 4,
+            "MinTurn": 120,
+            "OrCities": 27,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "거해의 근원을 직접 친다",
+                    "ResultKo": "방호복 부대가 근원을 봉쇄하니 역병이 잦아들었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "sec",
+                            "N": 4,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "백신 공장을 세운다",
+                    "ResultKo": "공장이 백신을 쏟아내 성 안이 나았다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "은하에게 방호를 맡긴다",
+                    "ResultKo": "은하가 방호복을 입고 성 문 앞에 섰다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "recruit",
+                            "N": 0,
+                            "Id": "tm_eunha"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r4_tomb",
+            "Emoji": "🔔",
+            "TitleKo": "망자의 맹세",
+            "TextKo": "묘역의 종소리가 멎지 않는다. 백기가 이계 군세를 걸고 일기토를 청했다. 공석은 망자 명부를 정리해 이름을 대조하고, 영점의 의체는 망자 기운에 반응해 삐걱댄다. 이긴 뒤 이계 장수를 어떻게 할지도 정해야 한다.",
+            "FromId": "",
+            "Who": "",
+            "No": 12,
+            "Act": 4,
+            "MinTurn": 132,
+            "OrCities": 30,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "{맹장}이 일기토를 받는다",
+                    "ResultKo": "{맹장} 의 칼이 종소리를 갈랐다 — 백기가 물러났다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "망자를 봉인한다",
+                    "ResultKo": "봉인비가 세워지니 종소리가 그쳤다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "이계 장수를 등용한다",
+                    "ResultKo": "이질의 장수가 무릎을 꿇었다(충성은 낮다)",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "tech",
+                            "N": 6,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r5_silk",
+            "Emoji": "🐫",
+            "TitleKo": "실크로드 대상",
+            "TextKo": "서쪽에서 대상 행렬이 길을 열어 달라 청한다. 사막 트럭이 낙타 곁을 달리고, 궤도의 탐사 드론이 모래 밑 옛 도시를 찾고 있다. 길을 열면 교역이 들어오지만 관문을 지킬 병사가 든다.",
+            "FromId": "",
+            "Who": "",
+            "No": 13,
+            "Act": 5,
+            "MinTurn": 144,
+            "OrCities": 32,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "관문을 열고 병사를 보낸다",
+                    "ResultKo": "병사가 관문을 지키니 대상이 줄을 이었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        },
+                        {
+                            "T": "gold",
+                            "N": 400,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "길을 열되 통행세를 받는다",
+                    "ResultKo": "통행세가 곳간을 채웠다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 600,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "드론에게 길 안내를 맡긴다",
+                    "ResultKo": "드론이 길을 비추니 짐이 하나도 잃지 않고 닿았다",
+                    "Cost": 200,
+                    "Fx": [
+                        {
+                            "T": "food",
+                            "N": 1500,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r5_west",
+            "Emoji": "📜",
+            "TitleKo": "대진의 사신",
+            "TextKo": "서쪽 끝 나라의 사신이 이르렀다. 도하가 번역기를 들어 말을 옮기고, 은하가 본 별 지도에 그 나라가 표시되어 있다. 화친할지, 싸울지, 교역할지 정해야 한다.",
+            "FromId": "",
+            "Who": "",
+            "No": 14,
+            "Act": 5,
+            "MinTurn": 156,
+            "OrCities": 34,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "군세를 보여 위세를 세운다",
+                    "ResultKo": "위세에 눌린 사신이 조용해졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 8,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "화친을 청한다",
+                    "ResultKo": "화친 조약이 맺어졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "교역을 튼다",
+                    "ResultKo": "별 지도를 따라 교역이 열렸다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 900,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r5_south",
+            "Emoji": "⛵",
+            "TitleKo": "남해의 배",
+            "TextKo": "남해의 섬들이 이어 보인다. 목선이 늘어선 포구에서 공석이 구조선을 띄우고, 성연이 항법으로 항로를 연다. 섬마다 다른 시대의 것들이 표류해 왔다는 소문이 있다.",
+            "FromId": "",
+            "Who": "",
+            "No": 15,
+            "Act": 5,
+            "MinTurn": 168,
+            "OrCities": 36,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "수군을 보내 섬을 살핀다",
+                    "ResultKo": "수군이 섬을 살피니 표류물에서 병기가 나왔다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 8,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "포구를 다진다",
+                    "ResultKo": "포구가 다져져 배가 안전히 드나들었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "항로를 열어 교역한다",
+                    "ResultKo": "성연의 항법으로 남해 교역이 열렸다",
+                    "Cost": 300,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 800,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r6_end",
+            "Emoji": "🎆",
+            "TitleKo": "천하의 끝",
+            "TextKo": "천하의 끝이 다가왔다. 잔치의 등불 아래 도하가 기록 영상을 찍고, 성연이 귀환 항로를 펼쳐 보인다. 시간 틈 사람들은 제 시대로 돌아갈지 남을지 저마다 고민한다. 이 판의 이야기는 여기서 매듭짓는다.",
+            "FromId": "",
+            "Who": "",
+            "No": 16,
+            "Act": 6,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": true,
+            "AllTime": false,
+            "TextByKoList": [
+                {
+                    "K": "conquest",
+                    "V": "천하가 하나가 되었다. 통일 잔치의 등불 아래 도하가 기록 영상을 찍고, 성연이 귀환 항로를 펼쳐 보인다. 시간 틈 사람들은 제 시대로 돌아갈지 남을지 저마다 고민한다."
+                },
+                {
+                    "K": "hegemony",
+                    "V": "패권의 문턱을 넘었다. 잔치 등불 아래 시간 틈 사람들이 도하의 기록 영상 앞에 모였다. 성연이 귀환 항로를 펼치며 돌아갈 이는 돌아가라 한다."
+                },
+                {
+                    "K": "culture",
+                    "V": "서고에 세 시대의 책이 나란히 꽂혔다. 도하가 기록 영상을 찍고 성연이 귀환 항로를 그려 넣었다. 시간 틈 사람들은 책 곁에 남을지 고민한다."
+                },
+                {
+                    "K": "diplomacy",
+                    "V": "화친의 잔치가 열렸다. 도하가 기록 영상을 찍고 성연이 귀환 항로를 펼친다. 이웃 나라 사신과 시간 틈 사람들이 한 자리에 앉았다."
+                },
+                {
+                    "K": "survival",
+                    "V": "이백마흔 달을 버텨 낸 성이 등불을 밝혔다. 도하가 기록 영상을 찍고 성연이 귀환 항로를 펼친다. 시간 틈 사람들은 이 성에 남기로 마음이 기운다."
+                }
+            ],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "돌아가는 이를 배웅한다",
+                    "ResultKo": "귀환 항로에 등불이 켜졌고 시간 틈 사람들이 손을 흔들었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 2000,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "남는 이와 함께 지낸다",
+                    "ResultKo": "남은 이들이 성 안에 눌러앉아 이 시대의 이웃이 되었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 15,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "기록 영상을 서고에 남긴다",
+                    "ResultKo": "기록 영상은 서고에서 세 시대를 잇는 책이 되었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 1000,
+                            "Id": ""
+                        },
+                        {
+                            "T": "food",
+                            "N": 3000,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r7_gather",
+            "Emoji": "🌀",
+            "TitleKo": "틈 아래 모인 아홉",
+            "TextKo": "결말의 잔치가 끝난 뒤, 시간 틈 사람 아홉이 성 앞 옛 성터에 모였다. 하늘의 금은 아직 아물지 않았다. {책사} 이(가) 시간 기둥의 그림자를 재고, 도하는 관측 기록을 펼치고, 성연은 귀환 항로의 마지막 눈금을 짚는다. 틈을 닫을지, 그대로 둘지, 길로 쓸지 — 이 성의 주인이 정할 차례다.",
+            "FromId": "",
+            "Who": "",
+            "No": 17,
+            "Act": 7,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": true,
+            "AllTime": true,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "틈을 닫는다",
+                    "ResultKo": "시간 기둥에 마지막 쐐기를 박았다 — 하늘의 금이 소리 없이 아물기 시작한다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 10,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "틈을 그대로 둔다",
+                    "ResultKo": "틈은 그대로 두기로 했다 — 아홉이 번갈아 지켜보기로 약속했다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 800,
+                            "Id": ""
+                        },
+                        {
+                            "T": "food",
+                            "N": 2000,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "틈을 길로 쓴다",
+                    "ResultKo": "성연이 항로에 첫 등불을 걸었다 — 틈이 세 시대를 잇는 길이 되었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 1500,
+                            "Id": ""
+                        },
+                        {
+                            "T": "train",
+                            "N": 5,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r7_after",
+            "Emoji": "🌠",
+            "TitleKo": "틈이 남긴 것",
+            "TextKo": "틈이 남긴 것을 살필 때가 왔다. {책사} 이(가) 성터에서 소식을 모아 왔다.",
+            "FromId": "r7_gather",
+            "Who": "",
+            "No": 18,
+            "Act": 7,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": true,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [
+                {
+                    "K": "atk",
+                    "V": "틈이 닫히고 열두 달이 지났다. 하늘의 금은 흔적도 없고 귀환 항로는 사라졌다. 아홉은 이 시대에 남기로 했고, 도하는 새 관측 기록에 \"이곳의 하늘\" 이라 적었다. 성연은 항로 대신 성벽 위 별자리를 그린다. {책사} 이(가) 성터에 비석을 세우자고 한다."
+                },
+                {
+                    "K": "def",
+                    "V": "틈을 두고 열두 달이 지났다. 하늘의 금은 조금 넓어졌다 줄었다를 되풀이한다. 아홉은 번갈아 성터를 지키고, 도하의 관측 기록은 벌써 한 권을 채웠다. 성연은 흔들리는 항로를 손보며 \"이대로 두어도 좋겠다\" 고 웃는다."
+                },
+                {
+                    "K": "util",
+                    "V": "틈을 길로 쓰고 열두 달이 지났다. 세 시대의 물자와 소식이 성터를 오간다. 도하는 새 관측 기록에 오가는 이를 세고, 성연은 항로에 등불을 하나씩 더 건다. {책사} 이(가) 오가는 것들을 어떻게 다스릴지 묻는다."
+                }
+            ],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "아홉을 장수로 세워 나아간다",
+                    "ResultKo": "아홉이 각자 제 시대의 솜씨로 군사를 가르쳤다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 10,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "성터를 성벽으로 둘러 지킨다",
+                    "ResultKo": "성터 둘레에 낮은 성벽이 올라 백성이 마음을 놓았다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 12,
+                            "Id": ""
+                        },
+                        {
+                            "T": "food",
+                            "N": 2000,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "틈에서 나온 것을 거둔다",
+                    "ResultKo": "성터에서 세 시대의 쓸 만한 것들이 나왔다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 1200,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "r7_end",
+            "Emoji": "🌅",
+            "TitleKo": "틈의 끝",
+            "TextKo": "틈의 이야기가 매듭지어질 때가 왔다. 성터에 잔치가 차려진다.",
+            "FromId": "r7_gather",
+            "Who": "",
+            "No": 19,
+            "Act": 7,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": true,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [
+                {
+                    "K": "atk",
+                    "V": "닫힌 하늘 아래 마지막 잔치가 열렸다. 성터 비석 옆에서 아홉이 잔을 든다. 도하가 마지막 영상을 찍고, 성연이 항로 대신 별자리를 새겼다. 돌아갈 길은 없어도 갈 곳은 이곳이라고, {책사} 이(가) 비문에 적었다. 틈의 이야기는 여기서 끝난다."
+                },
+                {
+                    "K": "def",
+                    "V": "틈이 흔들리는 하늘 아래 마지막 잔치가 열렸다. 번갈아 지키던 아홉이 오랜만에 한자리에 앉았다. 도하가 마지막 영상을 찍고, 성연이 흔들리는 항로를 잔에 비춘다. 열린 채로 두는 것도 하나의 끝이라고, {책사} 이(가) 붓을 든다. 틈의 이야기는 여기서 끝난다."
+                },
+                {
+                    "K": "util",
+                    "V": "길이 된 하늘 아래 마지막 잔치가 열렸다. 세 시대의 손님이 성터에 모였다. 도하가 마지막 영상을 찍고, 성연이 항로 끝에 마지막 등불을 걸었다. 오가는 길이 곧 이 성의 이름이라고, {책사} 이(가) 붓을 든다. 틈의 이야기는 여기서 끝난다."
+                }
+            ],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "아홉과 함께 잔을 든다",
+                    "ResultKo": "아홉과 이 성의 사람들이 함께 잔을 들었다 — 웃음이 성터를 채웠다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 2500,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 16,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "이 성을 모두의 고향으로 삼는다",
+                    "ResultKo": "아홉이 이 성을 고향이라 불렀다 — 성 안 골목마다 등불이 켜졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 20,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 16,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "틈의 기록을 서고에 남긴다",
+                    "ResultKo": "마지막 기록이 서고에 꽂혔다 — 세 시대가 한 책장에서 만난다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 1200,
+                            "Id": ""
+                        },
+                        {
+                            "T": "food",
+                            "N": 4000,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "side": [
+        {
+            "Id": "sd_tm_gangseo",
+            "Emoji": "🛡️",
+            "TitleKo": "강서의 옛 부대",
+            "TextKo": "{책사} 이(가) 성벽 위에서 오래 서 있다. 낡은 군번줄을 만지작거리며 옛 부대 이야기를 꺼낸다. 마지막 훈련 날 함께 웃던 이들의 얼굴이 이 시대 병사들의 얼굴과 겹친다고 한다.",
+            "FromId": "",
+            "Who": "tm_gangseo",
+            "No": 29,
+            "Act": 9,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "옛 부대의 훈련을 이 성 병사들에게 가르쳐 달라 청한다",
+                    "ResultKo": "{책사} 이(가) 옛 부대식으로 병사를 가르치자 대열이 눈에 띄게 반듯해졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "군번줄을 성문에 걸어 부대를 기린다",
+                    "ResultKo": "군번줄이 성문에서 반짝이자 병사들이 옷깃을 여몄다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "옛 부대 이야기를 기록으로 남긴다",
+                    "ResultKo": "이야기가 기록으로 남자 서고에 새 책이 꽂혔다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 600,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "sd_tm_gongseok",
+            "Emoji": "🦺",
+            "TitleKo": "공석의 안전 수칙",
+            "TextKo": "{책사} 이(가) 성벽 공사장 한쪽에 안전 수칙을 적어 붙이고 있다. 공사판에서 동료를 잃은 뒤 생긴 버릇이라 한다. 수칙 한 줄마다 누군가의 이름이 있다고.",
+            "FromId": "",
+            "Who": "tm_gongseok",
+            "No": 30,
+            "Act": 9,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "수칙대로 성벽 훈련장을 정비한다",
+                    "ResultKo": "수칙을 따르자 훈련 중 다치는 병사가 눈에 띄게 줄었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "수칙을 성 곳곳에 붙인다",
+                    "ResultKo": "성 곳곳에 수칙이 붙자 골목의 사고가 줄고 마음이 놓였다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "수칙을 공사 기록으로 묶는다",
+                    "ResultKo": "수칙 기록이 서고에서 성 안 공사의 기준이 되었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 600,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "sd_tm_geumdam",
+            "Emoji": "💼",
+            "TitleKo": "금담의 첫 가게",
+            "TextKo": "{책사} 이(가) 장터 한구석을 오래 바라본다. 처음 차린 가게가 망했던 날이 떠오른다고 한다. 그날 배운 것이 지금 이 성의 장부에 다 들어 있다며 웃는다.",
+            "FromId": "",
+            "Who": "tm_geumdam",
+            "No": 31,
+            "Act": 9,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "가게를 다시 열 사람을 군수품 조달로 세운다",
+                    "ResultKo": "{책사} 이(가) 장부를 다듬자 군수품이 제때 도착하기 시작했다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "장터 자릿세를 낮춰 작은 가게를 돕는다",
+                    "ResultKo": "작은 가게들이 늘자 장터에 사람이 북적였다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "첫 가게 자리에 새 가게를 낸다",
+                    "ResultKo": "새 가게가 문을 열자 금이 돌기 시작했다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 600,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "sd_tm_myeongbyeon",
+            "Emoji": "⚖️",
+            "TitleKo": "명변의 첫 변론",
+            "TextKo": "{책사} 이(가) 재판 마당에서 조용히 서류를 정리한다. 처음 맡았던 사건에서 졌던 기억을 꺼낸다. 진 뒤에야 말을 아끼는 법을 배웠다고 한다.",
+            "FromId": "",
+            "Who": "tm_myeongbyeon",
+            "No": 32,
+            "Act": 9,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "재판을 병사 규율에도 세운다",
+                    "ResultKo": "{책사} 이(가) 규율 조항을 세우자 병영의 다툼이 조용히 가라앉았다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "재판 마당을 백성에게 연다",
+                    "ResultKo": "재판 마당이 열리자 억울하다는 소리가 줄었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "변론 기록을 서고에 묶는다",
+                    "ResultKo": "변론 기록이 서고에 꽂혔다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 600,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "sd_tm_doha",
+            "Emoji": "💻",
+            "TitleKo": "도하의 첫 프로그램",
+            "TextKo": "{책사} 이(가) 서고에서 필사본을 넘기다 웃는다. 처음 짠 프로그램은 화면에 안녕이라는 글자만 띄웠다고 한다. 그 글자가 이 시대 붓글씨와 닮아 신기하다는 것이다.",
+            "FromId": "",
+            "Who": "tm_doha",
+            "No": 33,
+            "Act": 9,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "서고 필사본 정리를 군 문서에 넓힌다",
+                    "ResultKo": "{책사} 이(가) 문서를 정리하자 명령이 어긋나는 일이 줄었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "서고를 백성에게 잠시 연다",
+                    "ResultKo": "서고에 사람들이 드나들자 성 안에 글 읽는 소리가 났다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "첫 프로그램 이야기를 기록으로 남긴다",
+                    "ResultKo": "이야기가 기록으로 남아 서고에 새 줄이 생겼다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 600,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "sd_tm_seongyeon",
+            "Emoji": "🧭",
+            "TitleKo": "성연의 첫 항로",
+            "TextKo": "{책사} 이(가) 나루에서 강물을 오래 바라본다. 첫 항로를 그렸던 날, 지도에 없는 길을 그어서 야단맞았다고 한다. 그 길이 결국 맞았다는 얘기를 하며 웃는다.",
+            "FromId": "",
+            "Who": "tm_seongyeon",
+            "No": 34,
+            "Act": 9,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "항로를 군 이동 길에 접목한다",
+                    "ResultKo": "{책사} 이(가) 길을 손보자 행군이 하루 빨라졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "나루에 등불을 세운다",
+                    "ResultKo": "나루 등불이 서자 밤 뱃길이 안전해졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "첫 항로 그림을 서고에 남긴다",
+                    "ResultKo": "항로 그림이 서고에서 길 찾는 이의 안내가 되었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 600,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "sd_tm_gwedo",
+            "Emoji": "🧑‍🚀",
+            "TitleKo": "궤도의 첫 비행",
+            "TextKo": "{책사} 이(가) 성루 위에서 밤하늘을 올려다본다. 처음 궤도에 오른 날 밑을 내려다보며 이 세상이 얼마나 작고 따뜻한지 알았다고 한다. 지금은 그 마음으로 이 성을 본다는 것이다.",
+            "FromId": "",
+            "Who": "tm_gwedo",
+            "No": 35,
+            "Act": 9,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "성루의 감시를 궤도식으로 바꾼다",
+                    "ResultKo": "{책사} 이(가) 성루 경계를 손보자 밤 경계가 한결 빈틈없어졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "성루에 별 보는 자리를 만든다",
+                    "ResultKo": "성루 별 자리에 사람들이 모이자 밤 골목이 평온해졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "하늘 사진을 서고에 남긴다",
+                    "ResultKo": "하늘 사진이 서고 한 벽을 채웠다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 600,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "sd_tm_eunha",
+            "Emoji": "🚀",
+            "TitleKo": "은하의 첫 조종간",
+            "TextKo": "{책사} 이(가) 마구간 앞에서 말의 갈기를 쓸어 준다. 처음 조종간을 잡았을 때 손이 떨렸다고 한다. 말도 조종간도 손을 믿어 줄 때 가장 잘 따른다며 웃는다.",
+            "FromId": "",
+            "Who": "tm_eunha",
+            "No": 36,
+            "Act": 9,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "기병 훈련에 조종의 요령을 보탠다",
+                    "ResultKo": "{책사} 이(가) 요령을 가르치자 기병 대열의 돌격이 매끄러워졌다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "마구간을 새로 고친다",
+                    "ResultKo": "마구간이 새로워지자 말도 사람도 마음이 놓였다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "비행 궤적을 서고에 남긴다",
+                    "ResultKo": "궤적 그림이 서고에 걸려 볼거리가 되었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 600,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Id": "sd_tm_yeongjeom",
+            "Emoji": "🦾",
+            "TitleKo": "영점의 옛 훈련장",
+            "TextKo": "{책사} 이(가) 무예 마당 한가운데 서서 말없이 의체를 살핀다. 처음 의체를 입던 날 아팠다는 얘기는 안 했다. 대신 이 마당이 옛 훈련장을 닮았다고만 한다.",
+            "FromId": "",
+            "Who": "tm_yeongjeom",
+            "No": 37,
+            "Act": 9,
+            "MinTurn": 0,
+            "OrCities": 0,
+            "Victory": false,
+            "AllTime": false,
+            "TextByKoList": [],
+            "TextByKKoList": [],
+            "Choices": [
+                {
+                    "K": "atk",
+                    "LabelKo": "무예 마당에서 직접 병사를 상대해 준다",
+                    "ResultKo": "{책사} 이(가) 병사들과 겨루자 마당 가득 함성이 울렸다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "train",
+                            "N": 6,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "def",
+                    "LabelKo": "무예 마당에 쉼터를 세운다",
+                    "ResultKo": "쉼터가 서자 다친 병사가 쉬어 갈 수 있게 되었다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "sec",
+                            "N": 8,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                },
+                {
+                    "K": "util",
+                    "LabelKo": "기동 기록을 서고에 남긴다",
+                    "ResultKo": "기동 기록이 서고에 꽂혀 무예서의 옆자리를 차지했다",
+                    "Cost": 0,
+                    "Fx": [
+                        {
+                            "T": "gold",
+                            "N": 600,
+                            "Id": ""
+                        },
+                        {
+                            "T": "tech",
+                            "N": 10,
+                            "Id": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
