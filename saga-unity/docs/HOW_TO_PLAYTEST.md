@@ -563,3 +563,9 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 - `Assets/SagaCore/SaveMigrator.cs` — `Run(data, current, getVersion, step)` 가 버전이 낮으면 `step(from, data)` 를 한 단계씩 적용하고, 경로가 없거나 미래 버전이면 null. GO·REALM 이 쓰고, DUNGEON·FOREST·STORY 는 `IsFuture` 로 미래 버전만 거른다(조건부 읽기는 그대로).
 - REALM 은 옛 v3(소패 고정 필드)를 `RealmStep(3)` 이 `enemies` 목록으로 옮겨 이어받는다. 새 단계가 필요하면 그 판의 `*Step` 에 `from == N` 분기를 더하고 `SaveVersion` 을 올린다(버전 값·JSON 필드 이름은 지우지 않는다).
 - 진단 `Saga.EditorTools.PlaytestSaveMigration.Run` → `[PlaytestSaveMigration] OK`: 다섯 판의 옛 버전 fixture 가 읽히고 미래 버전(99)은 거절되는지 본다. 실제 세이브는 `PlaytestKit.IsolatedSaves` 로 격리.
+
+## 16. 시나리오 표 JSON — `ScenarioJson` (tasks U-0009)
+
+- 네 판 시나리오 표는 `Games/Saga<판>/Resources/scenario_<판>.json`(REALM 은 본 사슬+곁가지 한 파일)이 정본이고 `*ScenarioData.cs` 는 `ScenarioJson.Load` 로더다. `JsonUtility` 한계 때문에 읽은 뒤 `Normalize` 가 `""`→null·빈 객체→null 로 되돌린다(첫 장 `After == null` 처럼 null 이 뜻을 갖는 곳). REALM 사전은 `Kv[]`+`Finish()`.
+- 표를 고치려면 JSON 을 고치거나, 웹 표에서 다시 만들어 `Saga.EditorTools.ScenarioJsonExport.<판>`(`-executeMethod`)로 쓴다 — 저장된 파일과 읽은 표가 의미상 같은지(`DeepEqual`) 확인하고 `[ScenarioJsonExport] <판> OK n장 m씬` 을 찍는다.
+- 진단 `PlaytestScenarioJson.Run` → `[PlaytestScenarioJson] OK`: 개수(상수)·id 중복·첫 장 After·사전 채움. 표 장 수를 일부러 바꿀 땐 그 상수도 고친다.
