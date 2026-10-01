@@ -1947,8 +1947,10 @@
   "id": "gd.rk.cities",
   "name": "성 107",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_data"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1969,8 +1971,10 @@
   "id": "gd.rk.world-map",
   "name": "월드맵",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_data"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
