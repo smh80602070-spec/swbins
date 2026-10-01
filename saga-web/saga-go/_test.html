@@ -42,7 +42,7 @@
 <div id="report">진단 중…</div>
 
 <script>
-window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
+window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
 /* 무작위 고정 — 진단이 굴릴 때마다 달라지면 판정이 흔들린다.
    게임 스크립트보다 **먼저** 갈아 둬야 부트에서 쓰는 난수까지 잡힌다.
@@ -78,6 +78,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/season.js"></script>
 <script src="js/weather.js"></script>
 <script src="js/quest.js"></script>
+<script src="js/tutorial.js"></script>
 <script src="js/daily.js"></script>
 <script src="js/growth.js"></script>
 <script src="js/buddy.js"></script>
@@ -15808,6 +15809,44 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       }
       var kinds = Object.keys(sets).length, per = DG.daily.PER_DAY;
       return funMark(kinds >= 2 && per >= 1, per >= 1) + '일일 ' + per + '개 · 30일 동안 서로 다른 조합 ' + kinds + '가지 · 인장 하루 1(quest.js) · 주간 사다리(milestone.js)';
+    });
+
+    /* ── 첫 10분 안내(tutorial.js, W-0015) ──────────────────────────────── */
+    t('첫 10분 — 새 세이브면 목표판 첫 줄이 1단계 문구다', function () {
+      var T = DG.tut, sv = C.save, had = Object.prototype.hasOwnProperty.call(sv, 'tut'), old = sv.tut;
+      window.DG_NO_TUT = false;
+      try {
+        sv.tut = { done: [], d0: sv.player.distance || 0 };
+        var first = DG.ui.goalNowText(), want = T.STEPS[0].text;
+        sv.tut = { done: T.STEPS.map(function (s) { return s.key; }), d0: 0 };   // 다 끝낸 세이브는 문구가 없다
+        var fin = T.line();
+        return first.indexOf(want) === 0 && fin === '' && ('첫 줄 "' + want + '" · 끝난 세이브는 빈 문구');
+      } finally { window.DG_NO_TUT = true; if (had) { sv.tut = old; } else { delete sv.tut; } }
+    });
+
+    t('첫 10분 — 다섯 단계가 순서대로만 나아가고 끝나면 done 이 5 다', function () {
+      var T = DG.tut, sv = C.save, had = Object.prototype.hasOwnProperty.call(sv, 'tut'), old = sv.tut;
+      var gold0 = sv.player.gold, dist0 = sv.player.distance;
+      window.DG_NO_TUT = false;
+      try {
+        sv.tut = { done: [], d0: null };
+        T._walkCheck();                                                  // 기준 거리를 잡는다
+        var skipped = T._feed('treasure:open', { id: 'x' }) === false && T.step() === 0;   // 걷기 전에 온 상자는 무시
+        sv.player.distance = (dist0 || 0) + 60; T._walkCheck();          // 1 걷기
+        var s1 = T.step() === 1;
+        var wrong = T._feed('dex:new', { cat: 'pets', id: 'p' }) === false;   // 2 는 인물이어야 한다
+        T._feed('dex:new', { cat: 'heroes', id: 'h' });                  // 2 등용
+        T._feed('dex:new', { cat: 'pets', id: 'p' });                    // 3 포획
+        T._feed('treasure:open', { id: 'c', grade: 1 });                 // 4 상자
+        var before = T.done();
+        T._feed('sheet:open', { name: 'quest' });                        // 5 사명 창
+        var ok = skipped && s1 && wrong && !before && T.done() && sv.tut.done.length === 5 && T.line() === '' &&
+          sv.player.gold === gold0 + 30 * 4 + 100;
+        return ok && ('done ' + sv.tut.done.join('>') + ' · 금 +' + (sv.player.gold - gold0));
+      } finally {
+        window.DG_NO_TUT = true; sv.player.gold = gold0; sv.player.distance = dist0;
+        if (had) { sv.tut = old; } else { delete sv.tut; }
+      }
     });
 
     t('런타임 에러 없음', function () {

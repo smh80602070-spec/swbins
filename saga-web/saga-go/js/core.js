@@ -81,7 +81,8 @@
         mode: 'offline',                  // 'offline' | 'online' (net.js)
         aiBase: ''                        // 온라인 서버 주소 (빈 값 = 같은 출처)
       },
-      log: []
+      log: [],
+      tut: { done: [], d0: null }         // 첫 10분 안내(tutorial.js) — 새 세이브만 갖는다, 옛 세이브는 칸이 없어 끝난 것으로 본다
     };
   }
 

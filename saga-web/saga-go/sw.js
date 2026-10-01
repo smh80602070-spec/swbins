@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'go-v6.56.0';
+var VERSION = 'go-v6.57.0';
 var APP_CACHE = 'dg-app-' + VERSION;
 var TILE_CACHE = 'dg-tiles-v1';
 var TILE_MAX = 500;
@@ -49,6 +49,7 @@ var SHELL = [
   './js/season.js',
   './js/weather.js',
   './js/quest.js',
+  './js/tutorial.js',
   './js/daily.js',
   './js/growth.js',
   './js/buddy.js',
