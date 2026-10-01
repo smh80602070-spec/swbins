@@ -1960,8 +1960,11 @@
   "id": "gd.rk.orders",
   "name": "명령 7·전임",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_data",
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1984,8 +1987,11 @@
   "id": "gd.rk.war-diplomacy",
   "name": "전쟁·외교(조공·화친)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_data",
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1995,8 +2001,10 @@
   "id": "gd.rk.annex",
   "name": "정복 편입",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2006,8 +2014,10 @@
   "id": "gd.rk.loyalty-plots",
   "name": "충성·계략·이간·매수",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2017,8 +2027,10 @@
   "id": "gd.rk.quiz",
   "name": "문답 260·서고",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2028,8 +2040,11 @@
   "id": "gd.rk.population",
   "name": "인구·재해·성벽·승진 5단·정복 후 관리",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_data",
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2039,8 +2054,10 @@
   "id": "gd.rk.enemy-ai",
   "name": "타 세력 AI(creed)·멸망 판정·경제 AI",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2050,8 +2067,10 @@
   "id": "gd.rk.scenarios",
   "name": "시나리오 3+새 게임 UI",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2083,8 +2102,10 @@
   "id": "gd.rk.victory",
   "name": "101-2 ②승리 조건",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2094,8 +2115,11 @@
   "id": "gd.rk.ambition",
   "name": "101-2 ③인물 특성·야망",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_data",
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2105,8 +2129,11 @@
   "id": "gd.rk.duel-debate",
   "name": "101-2 ④일기토·설전",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_data",
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2116,8 +2143,11 @@
   "id": "gd.rk.event-chain",
   "name": "101-2 ⑤이벤트 체인",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_data",
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -2127,8 +2157,10 @@
   "id": "gd.rk.succession",
   "name": "101-2 ⑥계승",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "realm_state"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
