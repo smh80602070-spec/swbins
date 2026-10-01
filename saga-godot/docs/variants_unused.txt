@@ -1,0 +1,549 @@
+참조됨   glb 94개 + import  188파일 · 97.3MB   (코드가 부르는 glb)
+안 됨    glb 223개 + png 묶음 346개 + import · 817.9MB   (A+B — 삭제 후보, 결정은 K-0010)
+참조 없는 png(C)  부르는 glb 의 png 123개 · 90.2MB   (glb 안에 질감이 내장돼 코드 참조 0 — 가부는 K-0010)
+주인 없는 png(D)  0개 · 0.0MB
+합계 확인  1005.4MB / 폴더 1005.4MB
+생성: tools/variants_audit.sh — 손으로 고치지 않는다(덮어쓴다). 삭제·이동은 하지 않았다.
+
+## A 안 부르는 glb (바이트, glb+import)
+    147285  assets/generated/variants/Bush_Common__forest_green.glb
+    147273  assets/generated/variants/Bush_Common__go_coast.glb
+    147273  assets/generated/variants/Bush_Common__go_ruins.glb
+    147279  assets/generated/variants/Bush_Common__go_village.glb
+    347944  assets/generated/variants/Bush_Common_Flowers__forest_green.glb
+    356520  assets/generated/variants/Bush_Common_Flowers__go_coast.glb
+    349421  assets/generated/variants/Bush_Common_Flowers__go_ruins.glb
+    410844  assets/generated/variants/Clover_1__forest_green.glb
+    325824  assets/generated/variants/Clover_1__go_ruins.glb
+    419660  assets/generated/variants/Clover_2__forest_green.glb
+    377724  assets/generated/variants/Clover_2__go_coast.glb
+    334640  assets/generated/variants/Clover_2__go_ruins.glb
+   5448884  assets/generated/variants/CommonTree_1__forest_green.glb
+   5603272  assets/generated/variants/CommonTree_1__go_coast.glb
+   5799548  assets/generated/variants/CommonTree_1__go_ruins.glb
+   5392840  assets/generated/variants/CommonTree_2__forest_green.glb
+   5547228  assets/generated/variants/CommonTree_2__go_coast.glb
+   5743504  assets/generated/variants/CommonTree_2__go_ruins.glb
+   5282231  assets/generated/variants/CommonTree_3__forest_green.glb
+   5436620  assets/generated/variants/CommonTree_3__go_coast.glb
+   5632896  assets/generated/variants/CommonTree_3__go_ruins.glb
+   5294404  assets/generated/variants/CommonTree_4__forest_green.glb
+   5448791  assets/generated/variants/CommonTree_4__go_coast.glb
+   5645068  assets/generated/variants/CommonTree_4__go_ruins.glb
+   5246819  assets/generated/variants/CommonTree_5__forest_green.glb
+   5401208  assets/generated/variants/CommonTree_5__go_coast.glb
+   5597484  assets/generated/variants/CommonTree_5__go_ruins.glb
+   6756766  assets/generated/variants/DeadTree_1__forest_green.glb
+   6752853  assets/generated/variants/DeadTree_1__go_coast.glb
+   6749964  assets/generated/variants/DeadTree_1__go_village.glb
+   6782989  assets/generated/variants/DeadTree_2__forest_green.glb
+   6779078  assets/generated/variants/DeadTree_2__go_coast.glb
+   6776188  assets/generated/variants/DeadTree_2__go_village.glb
+   6748762  assets/generated/variants/DeadTree_3__forest_green.glb
+   6744849  assets/generated/variants/DeadTree_3__go_coast.glb
+   6741960  assets/generated/variants/DeadTree_3__go_village.glb
+   6737373  assets/generated/variants/DeadTree_4__forest_green.glb
+   6733462  assets/generated/variants/DeadTree_4__go_coast.glb
+   6730572  assets/generated/variants/DeadTree_4__go_village.glb
+   6731185  assets/generated/variants/DeadTree_5__forest_green.glb
+   6727273  assets/generated/variants/DeadTree_5__go_coast.glb
+   6724383  assets/generated/variants/DeadTree_5__go_village.glb
+    408874  assets/generated/variants/Fern_1__forest_green.glb
+    366937  assets/generated/variants/Fern_1__go_coast.glb
+    323852  assets/generated/variants/Fern_1__go_ruins.glb
+    512769  assets/generated/variants/Flower_3_Group__forest_green.glb
+    479425  assets/generated/variants/Flower_3_Group__go_coast.glb
+    429242  assets/generated/variants/Flower_3_Group__go_ruins.glb
+    435244  assets/generated/variants/Flower_3_Group__go_village.glb
+    494393  assets/generated/variants/Flower_3_Single__forest_green.glb
+    461049  assets/generated/variants/Flower_3_Single__go_coast.glb
+    410865  assets/generated/variants/Flower_3_Single__go_ruins.glb
+    549958  assets/generated/variants/Flower_4_Group__forest_green.glb
+    516614  assets/generated/variants/Flower_4_Group__go_coast.glb
+    466430  assets/generated/variants/Flower_4_Group__go_ruins.glb
+    508465  assets/generated/variants/Flower_4_Single__forest_green.glb
+    475121  assets/generated/variants/Flower_4_Single__go_coast.glb
+    424937  assets/generated/variants/Flower_4_Single__go_ruins.glb
+     28499  assets/generated/variants/gate-rock__dungeon_dirt.glb
+     28566  assets/generated/variants/gate-rock__dungeon_lava.glb
+     28582  assets/generated/variants/gate-rock__dungeon_limestone.glb
+     13838  assets/generated/variants/Grass_Common_Short__forest_green.glb
+     14049  assets/generated/variants/Grass_Common_Short__go_coast.glb
+     13210  assets/generated/variants/Grass_Common_Short__go_ruins.glb
+     21290  assets/generated/variants/Grass_Common_Tall__forest_green.glb
+     21503  assets/generated/variants/Grass_Common_Tall__go_coast.glb
+     20663  assets/generated/variants/Grass_Common_Tall__go_ruins.glb
+     32531  assets/generated/variants/Grass_Wispy_Short__forest_green.glb
+     32743  assets/generated/variants/Grass_Wispy_Short__go_coast.glb
+     32537  assets/generated/variants/Grass_Wispy_Short__go_village.glb
+     37124  assets/generated/variants/Grass_Wispy_Tall__forest_green.glb
+     37335  assets/generated/variants/Grass_Wispy_Tall__go_coast.glb
+     36496  assets/generated/variants/Grass_Wispy_Tall__go_ruins.glb
+    199821  assets/generated/variants/Mushroom_Common__forest_green.glb
+    286705  assets/generated/variants/Mushroom_Common__go_coast.glb
+    260993  assets/generated/variants/Mushroom_Common__go_ruins.glb
+    267900  assets/generated/variants/Mushroom_Laetiporus__forest_green.glb
+    354785  assets/generated/variants/Mushroom_Laetiporus__go_coast.glb
+    329073  assets/generated/variants/Mushroom_Laetiporus__go_ruins.glb
+    135353  assets/generated/variants/Pebble_Round_1__forest_green.glb
+    193270  assets/generated/variants/Pebble_Round_1__go_ruins.glb
+    161784  assets/generated/variants/Pebble_Round_1__go_village.glb
+    132530  assets/generated/variants/Pebble_Round_2__forest_green.glb
+    190446  assets/generated/variants/Pebble_Round_2__go_ruins.glb
+    158959  assets/generated/variants/Pebble_Round_2__go_village.glb
+    133705  assets/generated/variants/Pebble_Round_3__forest_green.glb
+    191622  assets/generated/variants/Pebble_Round_3__go_ruins.glb
+    160136  assets/generated/variants/Pebble_Round_3__go_village.glb
+    134402  assets/generated/variants/Pebble_Round_4__forest_green.glb
+    192318  assets/generated/variants/Pebble_Round_4__go_ruins.glb
+    160831  assets/generated/variants/Pebble_Round_4__go_village.glb
+    133989  assets/generated/variants/Pebble_Round_5__forest_green.glb
+    191906  assets/generated/variants/Pebble_Round_5__go_ruins.glb
+    160420  assets/generated/variants/Pebble_Round_5__go_village.glb
+    132529  assets/generated/variants/Pebble_Square_1__forest_green.glb
+    150885  assets/generated/variants/Pebble_Square_1__go_coast.glb
+    190445  assets/generated/variants/Pebble_Square_1__go_ruins.glb
+    130481  assets/generated/variants/Pebble_Square_2__forest_green.glb
+    148836  assets/generated/variants/Pebble_Square_2__go_coast.glb
+    188396  assets/generated/variants/Pebble_Square_2__go_ruins.glb
+    128465  assets/generated/variants/Pebble_Square_3__forest_green.glb
+    146821  assets/generated/variants/Pebble_Square_3__go_coast.glb
+    186381  assets/generated/variants/Pebble_Square_3__go_ruins.glb
+    128008  assets/generated/variants/Pebble_Square_4__forest_green.glb
+    146363  assets/generated/variants/Pebble_Square_4__go_coast.glb
+    185924  assets/generated/variants/Pebble_Square_4__go_ruins.glb
+    130225  assets/generated/variants/Pebble_Square_5__forest_green.glb
+    148581  assets/generated/variants/Pebble_Square_5__go_coast.glb
+    188141  assets/generated/variants/Pebble_Square_5__go_ruins.glb
+    129609  assets/generated/variants/Pebble_Square_6__forest_green.glb
+    147964  assets/generated/variants/Pebble_Square_6__go_coast.glb
+    187525  assets/generated/variants/Pebble_Square_6__go_ruins.glb
+     87921  assets/generated/variants/Petal_1__forest_green.glb
+     96501  assets/generated/variants/Petal_1__go_coast.glb
+     89401  assets/generated/variants/Petal_1__go_ruins.glb
+     87996  assets/generated/variants/Petal_2__forest_green.glb
+     96577  assets/generated/variants/Petal_2__go_coast.glb
+     89477  assets/generated/variants/Petal_2__go_ruins.glb
+     88017  assets/generated/variants/Petal_3__forest_green.glb
+     96597  assets/generated/variants/Petal_3__go_coast.glb
+     89497  assets/generated/variants/Petal_3__go_ruins.glb
+     88485  assets/generated/variants/Petal_4__forest_green.glb
+     97065  assets/generated/variants/Petal_4__go_coast.glb
+     89965  assets/generated/variants/Petal_4__go_ruins.glb
+     88013  assets/generated/variants/Petal_5__forest_green.glb
+     96593  assets/generated/variants/Petal_5__go_coast.glb
+     89492  assets/generated/variants/Petal_5__go_ruins.glb
+     13102  assets/generated/variants/pillar-stone__go_village.glb
+   5185898  assets/generated/variants/Pine_1__forest_green.glb
+   5340066  assets/generated/variants/Pine_1__go_coast.glb
+   5536553  assets/generated/variants/Pine_1__go_ruins.glb
+   5170786  assets/generated/variants/Pine_2__forest_green.glb
+   5324954  assets/generated/variants/Pine_2__go_coast.glb
+   5521441  assets/generated/variants/Pine_2__go_ruins.glb
+   5245865  assets/generated/variants/Pine_3__forest_green.glb
+   5400034  assets/generated/variants/Pine_3__go_coast.glb
+   5596522  assets/generated/variants/Pine_3__go_ruins.glb
+   5166081  assets/generated/variants/Pine_4__forest_green.glb
+   5320250  assets/generated/variants/Pine_4__go_coast.glb
+   5516738  assets/generated/variants/Pine_4__go_ruins.glb
+   5052750  assets/generated/variants/Pine_5__forest_green.glb
+   5206918  assets/generated/variants/Pine_5__go_coast.glb
+   5403406  assets/generated/variants/Pine_5__go_ruins.glb
+     12663  assets/generated/variants/planks__go_village.glb
+    402428  assets/generated/variants/Plant_1__forest_green.glb
+    360493  assets/generated/variants/Plant_1__go_coast.glb
+    317409  assets/generated/variants/Plant_1__go_ruins.glb
+    413969  assets/generated/variants/Plant_1_Big__forest_green.glb
+    372033  assets/generated/variants/Plant_1_Big__go_coast.glb
+    328949  assets/generated/variants/Plant_1_Big__go_ruins.glb
+    398769  assets/generated/variants/Plant_7__forest_green.glb
+    356833  assets/generated/variants/Plant_7__go_coast.glb
+    313747  assets/generated/variants/Plant_7__go_ruins.glb
+    401861  assets/generated/variants/Plant_7_Big__forest_green.glb
+    359925  assets/generated/variants/Plant_7_Big__go_coast.glb
+    316841  assets/generated/variants/Plant_7_Big__go_ruins.glb
+      9072  assets/generated/variants/rock_largeA__go_coast.glb
+      9061  assets/generated/variants/rock_largeA__go_ruins.glb
+      9083  assets/generated/variants/rock_largeA__go_village.glb
+    375455  assets/generated/variants/Rock_Medium_1__forest_green.glb
+    370999  assets/generated/variants/Rock_Medium_2__forest_green.glb
+    383371  assets/generated/variants/Rock_Medium_3__forest_green.glb
+    405611  assets/generated/variants/Rock_Medium_3__go_coast.glb
+    552923  assets/generated/variants/Rock_Medium_3__go_ruins.glb
+    449601  assets/generated/variants/Rock_Medium_3__go_village.glb
+      4592  assets/generated/variants/rock_smallA__go_coast.glb
+      4576  assets/generated/variants/rock_smallA__go_ruins.glb
+      4599  assets/generated/variants/rock_smallA__go_village.glb
+    201537  assets/generated/variants/RockPath_Round_Small_1__forest_green.glb
+    219894  assets/generated/variants/RockPath_Round_Small_1__go_coast.glb
+    259454  assets/generated/variants/RockPath_Round_Small_1__go_ruins.glb
+    210354  assets/generated/variants/RockPath_Round_Small_2__forest_green.glb
+    228709  assets/generated/variants/RockPath_Round_Small_2__go_coast.glb
+    268270  assets/generated/variants/RockPath_Round_Small_2__go_ruins.glb
+    201249  assets/generated/variants/RockPath_Round_Small_3__forest_green.glb
+    219606  assets/generated/variants/RockPath_Round_Small_3__go_coast.glb
+    259166  assets/generated/variants/RockPath_Round_Small_3__go_ruins.glb
+    297221  assets/generated/variants/RockPath_Round_Thin__forest_green.glb
+    315577  assets/generated/variants/RockPath_Round_Thin__go_coast.glb
+    355137  assets/generated/variants/RockPath_Round_Thin__go_ruins.glb
+    393069  assets/generated/variants/RockPath_Round_Wide__forest_green.glb
+    411425  assets/generated/variants/RockPath_Round_Wide__go_coast.glb
+    450985  assets/generated/variants/RockPath_Round_Wide__go_ruins.glb
+    419499  assets/generated/variants/RockPath_Round_Wide__go_village.glb
+    186041  assets/generated/variants/RockPath_Square_Small_1__forest_green.glb
+    204397  assets/generated/variants/RockPath_Square_Small_1__go_coast.glb
+    243957  assets/generated/variants/RockPath_Square_Small_1__go_ruins.glb
+    168392  assets/generated/variants/RockPath_Square_Small_2__forest_green.glb
+    186749  assets/generated/variants/RockPath_Square_Small_2__go_coast.glb
+    226309  assets/generated/variants/RockPath_Square_Small_2__go_ruins.glb
+    168844  assets/generated/variants/RockPath_Square_Small_3__forest_green.glb
+    187200  assets/generated/variants/RockPath_Square_Small_3__go_coast.glb
+    226761  assets/generated/variants/RockPath_Square_Small_3__go_ruins.glb
+    265160  assets/generated/variants/RockPath_Square_Thin__forest_green.glb
+    283516  assets/generated/variants/RockPath_Square_Thin__go_coast.glb
+    323074  assets/generated/variants/RockPath_Square_Thin__go_ruins.glb
+    302236  assets/generated/variants/RockPath_Square_Wide__forest_green.glb
+    320592  assets/generated/variants/RockPath_Square_Wide__go_coast.glb
+    360152  assets/generated/variants/RockPath_Square_Wide__go_ruins.glb
+     10120  assets/generated/variants/roof-gable__go_village.glb
+     16147  assets/generated/variants/tree_oak__go_ruins.glb
+     16170  assets/generated/variants/tree_oak__go_village.glb
+   7239639  assets/generated/variants/TwistedTree_1__forest_green.glb
+   7295515  assets/generated/variants/TwistedTree_1__go_coast.glb
+   7575702  assets/generated/variants/TwistedTree_1__go_ruins.glb
+   7110477  assets/generated/variants/TwistedTree_1__go_village.glb
+   7210826  assets/generated/variants/TwistedTree_2__forest_green.glb
+   7266703  assets/generated/variants/TwistedTree_2__go_coast.glb
+   7546887  assets/generated/variants/TwistedTree_2__go_ruins.glb
+   7081665  assets/generated/variants/TwistedTree_2__go_village.glb
+   7272615  assets/generated/variants/TwistedTree_3__forest_green.glb
+   7328490  assets/generated/variants/TwistedTree_3__go_coast.glb
+   7608679  assets/generated/variants/TwistedTree_3__go_ruins.glb
+   7143453  assets/generated/variants/TwistedTree_3__go_village.glb
+   7258503  assets/generated/variants/TwistedTree_4__forest_green.glb
+   7314379  assets/generated/variants/TwistedTree_4__go_coast.glb
+   7594567  assets/generated/variants/TwistedTree_4__go_ruins.glb
+   7129341  assets/generated/variants/TwistedTree_4__go_village.glb
+   7303114  assets/generated/variants/TwistedTree_5__forest_green.glb
+   7358991  assets/generated/variants/TwistedTree_5__go_coast.glb
+   7639175  assets/generated/variants/TwistedTree_5__go_ruins.glb
+   7173953  assets/generated/variants/TwistedTree_5__go_village.glb
+     10648  assets/generated/variants/wall-block__go_village.glb
+
+## B A 의 png 묶음 (바이트, png+import)
+     69746  assets/generated/variants/Bush_Common__forest_green_*.png (1개)
+     69734  assets/generated/variants/Bush_Common__go_coast_*.png (1개)
+     69734  assets/generated/variants/Bush_Common__go_ruins_*.png (1개)
+     69740  assets/generated/variants/Bush_Common__go_village_*.png (1개)
+    238602  assets/generated/variants/Bush_Common_Flowers__forest_green_*.png (2개)
+    247168  assets/generated/variants/Bush_Common_Flowers__go_coast_*.png (2개)
+    240068  assets/generated/variants/Bush_Common_Flowers__go_ruins_*.png (2개)
+    394760  assets/generated/variants/Clover_1__forest_green_*.png (1개)
+    309741  assets/generated/variants/Clover_1__go_ruins_*.png (1개)
+    394761  assets/generated/variants/Clover_2__forest_green_*.png (1개)
+    352824  assets/generated/variants/Clover_2__go_coast_*.png (1개)
+    309740  assets/generated/variants/Clover_2__go_ruins_*.png (1개)
+   5031831  assets/generated/variants/CommonTree_1__forest_green_*.png (3개)
+   5186194  assets/generated/variants/CommonTree_1__go_coast_*.png (3개)
+   5382471  assets/generated/variants/CommonTree_1__go_ruins_*.png (3개)
+   5031829  assets/generated/variants/CommonTree_2__forest_green_*.png (3개)
+   5186195  assets/generated/variants/CommonTree_2__go_coast_*.png (3개)
+   5382470  assets/generated/variants/CommonTree_2__go_ruins_*.png (3개)
+   5031831  assets/generated/variants/CommonTree_3__forest_green_*.png (3개)
+   5186194  assets/generated/variants/CommonTree_3__go_coast_*.png (3개)
+   5382471  assets/generated/variants/CommonTree_3__go_ruins_*.png (3개)
+   5031830  assets/generated/variants/CommonTree_4__forest_green_*.png (3개)
+   5186193  assets/generated/variants/CommonTree_4__go_coast_*.png (3개)
+   5382471  assets/generated/variants/CommonTree_4__go_ruins_*.png (3개)
+   5031828  assets/generated/variants/CommonTree_5__forest_green_*.png (3개)
+   5186193  assets/generated/variants/CommonTree_5__go_coast_*.png (3개)
+   5382471  assets/generated/variants/CommonTree_5__go_ruins_*.png (3개)
+   6392594  assets/generated/variants/DeadTree_1__forest_green_*.png (2개)
+   6388669  assets/generated/variants/DeadTree_1__go_coast_*.png (2개)
+   6385786  assets/generated/variants/DeadTree_1__go_village_*.png (2개)
+   6392593  assets/generated/variants/DeadTree_2__forest_green_*.png (2개)
+   6388670  assets/generated/variants/DeadTree_2__go_coast_*.png (2개)
+   6385786  assets/generated/variants/DeadTree_2__go_village_*.png (2개)
+   6392593  assets/generated/variants/DeadTree_3__forest_green_*.png (2개)
+   6388670  assets/generated/variants/DeadTree_3__go_coast_*.png (2개)
+   6385786  assets/generated/variants/DeadTree_3__go_village_*.png (2개)
+   6392593  assets/generated/variants/DeadTree_4__forest_green_*.png (2개)
+   6388670  assets/generated/variants/DeadTree_4__go_coast_*.png (2개)
+   6385784  assets/generated/variants/DeadTree_4__go_village_*.png (2개)
+   6392594  assets/generated/variants/DeadTree_5__forest_green_*.png (2개)
+   6388670  assets/generated/variants/DeadTree_5__go_coast_*.png (2개)
+   6385786  assets/generated/variants/DeadTree_5__go_village_*.png (2개)
+    394755  assets/generated/variants/Fern_1__forest_green_*.png (1개)
+    352819  assets/generated/variants/Fern_1__go_coast_*.png (1개)
+    309734  assets/generated/variants/Fern_1__go_ruins_*.png (1개)
+    480413  assets/generated/variants/Flower_3_Group__forest_green_*.png (2개)
+    447057  assets/generated/variants/Flower_3_Group__go_coast_*.png (2개)
+    396873  assets/generated/variants/Flower_3_Group__go_ruins_*.png (2개)
+    402882  assets/generated/variants/Flower_3_Group__go_village_*.png (2개)
+    480420  assets/generated/variants/Flower_3_Single__forest_green_*.png (2개)
+    447064  assets/generated/variants/Flower_3_Single__go_coast_*.png (2개)
+    396880  assets/generated/variants/Flower_3_Single__go_ruins_*.png (2개)
+    480414  assets/generated/variants/Flower_4_Group__forest_green_*.png (2개)
+    447056  assets/generated/variants/Flower_4_Group__go_coast_*.png (2개)
+    396874  assets/generated/variants/Flower_4_Group__go_ruins_*.png (2개)
+    480419  assets/generated/variants/Flower_4_Single__forest_green_*.png (2개)
+    447064  assets/generated/variants/Flower_4_Single__go_coast_*.png (2개)
+    396879  assets/generated/variants/Flower_4_Single__go_ruins_*.png (2개)
+      4116  assets/generated/variants/gate-rock__dungeon_dirt_*.png (1개)
+      4184  assets/generated/variants/gate-rock__dungeon_lava_*.png (1개)
+      4199  assets/generated/variants/gate-rock__dungeon_limestone_*.png (1개)
+      4611  assets/generated/variants/Grass_Common_Short__forest_green_*.png (1개)
+      4822  assets/generated/variants/Grass_Common_Short__go_coast_*.png (1개)
+      3982  assets/generated/variants/Grass_Common_Short__go_ruins_*.png (1개)
+      4608  assets/generated/variants/Grass_Common_Tall__forest_green_*.png (1개)
+      4819  assets/generated/variants/Grass_Common_Tall__go_coast_*.png (1개)
+      3980  assets/generated/variants/Grass_Common_Tall__go_ruins_*.png (1개)
+      4608  assets/generated/variants/Grass_Wispy_Short__forest_green_*.png (1개)
+      4820  assets/generated/variants/Grass_Wispy_Short__go_coast_*.png (1개)
+      4614  assets/generated/variants/Grass_Wispy_Short__go_village_*.png (1개)
+      4605  assets/generated/variants/Grass_Wispy_Tall__forest_green_*.png (1개)
+      4817  assets/generated/variants/Grass_Wispy_Tall__go_coast_*.png (1개)
+      3976  assets/generated/variants/Grass_Wispy_Tall__go_ruins_*.png (1개)
+    169826  assets/generated/variants/Mushroom_Common__forest_green_*.png (1개)
+    256709  assets/generated/variants/Mushroom_Common__go_coast_*.png (1개)
+    230998  assets/generated/variants/Mushroom_Common__go_ruins_*.png (1개)
+    169838  assets/generated/variants/Mushroom_Laetiporus__forest_green_*.png (1개)
+    256722  assets/generated/variants/Mushroom_Laetiporus__go_coast_*.png (1개)
+    231010  assets/generated/variants/Mushroom_Laetiporus__go_ruins_*.png (1개)
+    122690  assets/generated/variants/Pebble_Round_1__forest_green_*.png (1개)
+    180607  assets/generated/variants/Pebble_Round_1__go_ruins_*.png (1개)
+    149121  assets/generated/variants/Pebble_Round_1__go_village_*.png (1개)
+    122691  assets/generated/variants/Pebble_Round_2__forest_green_*.png (1개)
+    180607  assets/generated/variants/Pebble_Round_2__go_ruins_*.png (1개)
+    149121  assets/generated/variants/Pebble_Round_2__go_village_*.png (1개)
+    122690  assets/generated/variants/Pebble_Round_3__forest_green_*.png (1개)
+    180607  assets/generated/variants/Pebble_Round_3__go_ruins_*.png (1개)
+    149121  assets/generated/variants/Pebble_Round_3__go_village_*.png (1개)
+    122691  assets/generated/variants/Pebble_Round_4__forest_green_*.png (1개)
+    180607  assets/generated/variants/Pebble_Round_4__go_ruins_*.png (1개)
+    149121  assets/generated/variants/Pebble_Round_4__go_village_*.png (1개)
+    122691  assets/generated/variants/Pebble_Round_5__forest_green_*.png (1개)
+    180607  assets/generated/variants/Pebble_Round_5__go_ruins_*.png (1개)
+    149121  assets/generated/variants/Pebble_Round_5__go_village_*.png (1개)
+    122694  assets/generated/variants/Pebble_Square_1__forest_green_*.png (1개)
+    141050  assets/generated/variants/Pebble_Square_1__go_coast_*.png (1개)
+    180609  assets/generated/variants/Pebble_Square_1__go_ruins_*.png (1개)
+    122693  assets/generated/variants/Pebble_Square_2__forest_green_*.png (1개)
+    141050  assets/generated/variants/Pebble_Square_2__go_coast_*.png (1개)
+    180610  assets/generated/variants/Pebble_Square_2__go_ruins_*.png (1개)
+    122693  assets/generated/variants/Pebble_Square_3__forest_green_*.png (1개)
+    141050  assets/generated/variants/Pebble_Square_3__go_coast_*.png (1개)
+    180609  assets/generated/variants/Pebble_Square_3__go_ruins_*.png (1개)
+    122693  assets/generated/variants/Pebble_Square_4__forest_green_*.png (1개)
+    141050  assets/generated/variants/Pebble_Square_4__go_coast_*.png (1개)
+    180610  assets/generated/variants/Pebble_Square_4__go_ruins_*.png (1개)
+    122694  assets/generated/variants/Pebble_Square_5__forest_green_*.png (1개)
+    141049  assets/generated/variants/Pebble_Square_5__go_coast_*.png (1개)
+    180610  assets/generated/variants/Pebble_Square_5__go_ruins_*.png (1개)
+    122692  assets/generated/variants/Pebble_Square_6__forest_green_*.png (1개)
+    141050  assets/generated/variants/Pebble_Square_6__go_coast_*.png (1개)
+    180610  assets/generated/variants/Pebble_Square_6__go_ruins_*.png (1개)
+     85614  assets/generated/variants/Petal_1__forest_green_*.png (1개)
+     94194  assets/generated/variants/Petal_1__go_coast_*.png (1개)
+     87094  assets/generated/variants/Petal_1__go_ruins_*.png (1개)
+     85614  assets/generated/variants/Petal_2__forest_green_*.png (1개)
+     94194  assets/generated/variants/Petal_2__go_coast_*.png (1개)
+     87093  assets/generated/variants/Petal_2__go_ruins_*.png (1개)
+     85614  assets/generated/variants/Petal_3__forest_green_*.png (1개)
+     94194  assets/generated/variants/Petal_3__go_coast_*.png (1개)
+     87094  assets/generated/variants/Petal_3__go_ruins_*.png (1개)
+     85614  assets/generated/variants/Petal_4__forest_green_*.png (1개)
+     94194  assets/generated/variants/Petal_4__go_coast_*.png (1개)
+     87093  assets/generated/variants/Petal_4__go_ruins_*.png (1개)
+     85614  assets/generated/variants/Petal_5__forest_green_*.png (1개)
+     94194  assets/generated/variants/Petal_5__go_coast_*.png (1개)
+     87093  assets/generated/variants/Petal_5__go_ruins_*.png (1개)
+      3922  assets/generated/variants/pillar-stone__go_village_*.png (1개)
+   4948287  assets/generated/variants/Pine_1__forest_green_*.png (3개)
+   5102433  assets/generated/variants/Pine_1__go_coast_*.png (3개)
+   5298920  assets/generated/variants/Pine_1__go_ruins_*.png (3개)
+   4948287  assets/generated/variants/Pine_2__forest_green_*.png (3개)
+   5102430  assets/generated/variants/Pine_2__go_coast_*.png (3개)
+   5298920  assets/generated/variants/Pine_2__go_ruins_*.png (3개)
+   4948288  assets/generated/variants/Pine_3__forest_green_*.png (3개)
+   5102433  assets/generated/variants/Pine_3__go_coast_*.png (3개)
+   5298919  assets/generated/variants/Pine_3__go_ruins_*.png (3개)
+   4948289  assets/generated/variants/Pine_4__forest_green_*.png (3개)
+   5102431  assets/generated/variants/Pine_4__go_coast_*.png (3개)
+   5298921  assets/generated/variants/Pine_4__go_ruins_*.png (3개)
+   4948289  assets/generated/variants/Pine_5__forest_green_*.png (3개)
+   5102431  assets/generated/variants/Pine_5__go_coast_*.png (3개)
+   5298920  assets/generated/variants/Pine_5__go_ruins_*.png (3개)
+      3905  assets/generated/variants/planks__go_village_*.png (1개)
+    394758  assets/generated/variants/Plant_1__forest_green_*.png (1개)
+    352822  assets/generated/variants/Plant_1__go_coast_*.png (1개)
+    309738  assets/generated/variants/Plant_1__go_ruins_*.png (1개)
+    394770  assets/generated/variants/Plant_1_Big__forest_green_*.png (1개)
+    352834  assets/generated/variants/Plant_1_Big__go_coast_*.png (1개)
+    309749  assets/generated/variants/Plant_1_Big__go_ruins_*.png (1개)
+    394758  assets/generated/variants/Plant_7__forest_green_*.png (1개)
+    352822  assets/generated/variants/Plant_7__go_coast_*.png (1개)
+    309738  assets/generated/variants/Plant_7__go_ruins_*.png (1개)
+    394770  assets/generated/variants/Plant_7_Big__forest_green_*.png (1개)
+    352834  assets/generated/variants/Plant_7_Big__go_coast_*.png (1개)
+    309750  assets/generated/variants/Plant_7_Big__go_ruins_*.png (1개)
+    358435  assets/generated/variants/Rock_Medium_1__forest_green_*.png (1개)
+    358436  assets/generated/variants/Rock_Medium_2__forest_green_*.png (1개)
+    358436  assets/generated/variants/Rock_Medium_3__forest_green_*.png (1개)
+    380676  assets/generated/variants/Rock_Medium_3__go_coast_*.png (1개)
+    527987  assets/generated/variants/Rock_Medium_3__go_ruins_*.png (1개)
+    424666  assets/generated/variants/Rock_Medium_3__go_village_*.png (1개)
+    122715  assets/generated/variants/RockPath_Round_Small_1__forest_green_*.png (1개)
+    141071  assets/generated/variants/RockPath_Round_Small_1__go_coast_*.png (1개)
+    180630  assets/generated/variants/RockPath_Round_Small_1__go_ruins_*.png (1개)
+    122715  assets/generated/variants/RockPath_Round_Small_2__forest_green_*.png (1개)
+    141070  assets/generated/variants/RockPath_Round_Small_2__go_coast_*.png (1개)
+    180631  assets/generated/variants/RockPath_Round_Small_2__go_ruins_*.png (1개)
+    122715  assets/generated/variants/RockPath_Round_Small_3__forest_green_*.png (1개)
+    141071  assets/generated/variants/RockPath_Round_Small_3__go_coast_*.png (1개)
+    180631  assets/generated/variants/RockPath_Round_Small_3__go_ruins_*.png (1개)
+    122705  assets/generated/variants/RockPath_Round_Thin__forest_green_*.png (1개)
+    141062  assets/generated/variants/RockPath_Round_Thin__go_coast_*.png (1개)
+    180622  assets/generated/variants/RockPath_Round_Thin__go_ruins_*.png (1개)
+    122706  assets/generated/variants/RockPath_Round_Wide__forest_green_*.png (1개)
+    141062  assets/generated/variants/RockPath_Round_Wide__go_coast_*.png (1개)
+    180621  assets/generated/variants/RockPath_Round_Wide__go_ruins_*.png (1개)
+    149136  assets/generated/variants/RockPath_Round_Wide__go_village_*.png (1개)
+    122718  assets/generated/variants/RockPath_Square_Small_1__forest_green_*.png (1개)
+    141074  assets/generated/variants/RockPath_Square_Small_1__go_coast_*.png (1개)
+    180634  assets/generated/variants/RockPath_Square_Small_1__go_ruins_*.png (1개)
+    122718  assets/generated/variants/RockPath_Square_Small_2__forest_green_*.png (1개)
+    141073  assets/generated/variants/RockPath_Square_Small_2__go_coast_*.png (1개)
+    180634  assets/generated/variants/RockPath_Square_Small_2__go_ruins_*.png (1개)
+    122718  assets/generated/variants/RockPath_Square_Small_3__forest_green_*.png (1개)
+    141074  assets/generated/variants/RockPath_Square_Small_3__go_coast_*.png (1개)
+    180634  assets/generated/variants/RockPath_Square_Small_3__go_ruins_*.png (1개)
+    122709  assets/generated/variants/RockPath_Square_Thin__forest_green_*.png (1개)
+    141064  assets/generated/variants/RockPath_Square_Thin__go_coast_*.png (1개)
+    180625  assets/generated/variants/RockPath_Square_Thin__go_ruins_*.png (1개)
+    122709  assets/generated/variants/RockPath_Square_Wide__forest_green_*.png (1개)
+    141065  assets/generated/variants/RockPath_Square_Wide__go_coast_*.png (1개)
+    180625  assets/generated/variants/RockPath_Square_Wide__go_ruins_*.png (1개)
+      3917  assets/generated/variants/roof-gable__go_village_*.png (1개)
+   6617240  assets/generated/variants/TwistedTree_1__forest_green_*.png (3개)
+   6673090  assets/generated/variants/TwistedTree_1__go_coast_*.png (3개)
+   6953276  assets/generated/variants/TwistedTree_1__go_ruins_*.png (3개)
+   6488065  assets/generated/variants/TwistedTree_1__go_village_*.png (3개)
+   6617240  assets/generated/variants/TwistedTree_2__forest_green_*.png (3개)
+   6673091  assets/generated/variants/TwistedTree_2__go_coast_*.png (3개)
+   6953276  assets/generated/variants/TwistedTree_2__go_ruins_*.png (3개)
+   6488066  assets/generated/variants/TwistedTree_2__go_village_*.png (3개)
+   6617239  assets/generated/variants/TwistedTree_3__forest_green_*.png (3개)
+   6673092  assets/generated/variants/TwistedTree_3__go_coast_*.png (3개)
+   6953275  assets/generated/variants/TwistedTree_3__go_ruins_*.png (3개)
+   6488064  assets/generated/variants/TwistedTree_3__go_village_*.png (3개)
+   6617239  assets/generated/variants/TwistedTree_4__forest_green_*.png (3개)
+   6673091  assets/generated/variants/TwistedTree_4__go_coast_*.png (3개)
+   6953276  assets/generated/variants/TwistedTree_4__go_ruins_*.png (3개)
+   6488065  assets/generated/variants/TwistedTree_4__go_village_*.png (3개)
+   6617239  assets/generated/variants/TwistedTree_5__forest_green_*.png (3개)
+   6673091  assets/generated/variants/TwistedTree_5__go_coast_*.png (3개)
+   6953274  assets/generated/variants/TwistedTree_5__go_ruins_*.png (3개)
+   6488066  assets/generated/variants/TwistedTree_5__go_village_*.png (3개)
+      3917  assets/generated/variants/wall-block__go_village_*.png (1개)
+
+## C 부르는 glb 의 png 묶음 (바이트)
+     13236  assets/generated/variants/axe_1handed__g0 (png 1개)
+     13191  assets/generated/variants/axe_1handed__g1 (png 1개)
+     13187  assets/generated/variants/axe_1handed__g2 (png 1개)
+     12564  assets/generated/variants/axe_1handed__g3 (png 1개)
+     13464  assets/generated/variants/axe_1handed__g4 (png 1개)
+    247231  assets/generated/variants/Bush_Common_Flowers__go_village (png 2개)
+    352825  assets/generated/variants/Clover_1__go_coast (png 1개)
+    308591  assets/generated/variants/Clover_1__go_village (png 1개)
+    308590  assets/generated/variants/Clover_2__go_village (png 1개)
+   5057777  assets/generated/variants/CommonTree_1__go_village (png 3개)
+   5057775  assets/generated/variants/CommonTree_2__go_village (png 3개)
+   5057775  assets/generated/variants/CommonTree_3__go_village (png 3개)
+   5057776  assets/generated/variants/CommonTree_4__go_village (png 3개)
+   5057776  assets/generated/variants/CommonTree_5__go_village (png 3개)
+      4113  assets/generated/variants/corridor__dungeon_dirt (png 1개)
+      4181  assets/generated/variants/corridor__dungeon_lava (png 1개)
+      4196  assets/generated/variants/corridor__dungeon_limestone (png 1개)
+     13817  assets/generated/variants/dagger__g0 (png 1개)
+     13817  assets/generated/variants/dagger__g1 (png 1개)
+     13833  assets/generated/variants/dagger__g2 (png 1개)
+     13121  assets/generated/variants/dagger__g3 (png 1개)
+     14088  assets/generated/variants/dagger__g4 (png 1개)
+   6711853  assets/generated/variants/DeadTree_1__go_ruins (png 2개)
+   6711854  assets/generated/variants/DeadTree_2__go_ruins (png 2개)
+   6711853  assets/generated/variants/DeadTree_3__go_ruins (png 2개)
+   6711854  assets/generated/variants/DeadTree_4__go_ruins (png 2개)
+   6711854  assets/generated/variants/DeadTree_5__go_ruins (png 2개)
+    308585  assets/generated/variants/Fern_1__go_village (png 1개)
+    402888  assets/generated/variants/Flower_3_Single__go_village (png 2개)
+    402881  assets/generated/variants/Flower_4_Group__go_village (png 2개)
+    402888  assets/generated/variants/Flower_4_Single__go_village (png 2개)
+      4101  assets/generated/variants/gate__dungeon_dirt (png 1개)
+      4169  assets/generated/variants/gate__dungeon_lava (png 1개)
+      4184  assets/generated/variants/gate__dungeon_limestone (png 1개)
+      4616  assets/generated/variants/Grass_Common_Short__go_village (png 1개)
+      4614  assets/generated/variants/Grass_Common_Tall__go_village (png 1개)
+      3980  assets/generated/variants/Grass_Wispy_Short__go_ruins (png 1개)
+      4611  assets/generated/variants/Grass_Wispy_Tall__go_village (png 1개)
+    226263  assets/generated/variants/Mushroom_Common__go_village (png 1개)
+    226276  assets/generated/variants/Mushroom_Laetiporus__go_village (png 1개)
+    141046  assets/generated/variants/Pebble_Round_1__go_coast (png 1개)
+    141047  assets/generated/variants/Pebble_Round_2__go_coast (png 1개)
+    141047  assets/generated/variants/Pebble_Round_3__go_coast (png 1개)
+    141047  assets/generated/variants/Pebble_Round_4__go_coast (png 1개)
+    141046  assets/generated/variants/Pebble_Round_5__go_coast (png 1개)
+    149123  assets/generated/variants/Pebble_Square_1__go_village (png 1개)
+    149123  assets/generated/variants/Pebble_Square_2__go_village (png 1개)
+    149123  assets/generated/variants/Pebble_Square_3__go_village (png 1개)
+    149123  assets/generated/variants/Pebble_Square_4__go_village (png 1개)
+    149124  assets/generated/variants/Pebble_Square_5__go_village (png 1개)
+    149124  assets/generated/variants/Pebble_Square_6__go_village (png 1개)
+     94251  assets/generated/variants/Petal_1__go_village (png 1개)
+     94252  assets/generated/variants/Petal_2__go_village (png 1개)
+     94251  assets/generated/variants/Petal_3__go_village (png 1개)
+     94252  assets/generated/variants/Petal_4__go_village (png 1개)
+     94252  assets/generated/variants/Petal_5__go_village (png 1개)
+      3881  assets/generated/variants/pillar-stone__go_ruins (png 1개)
+   4974314  assets/generated/variants/Pine_1__go_village (png 3개)
+   4974315  assets/generated/variants/Pine_2__go_village (png 3개)
+   4974314  assets/generated/variants/Pine_3__go_village (png 3개)
+   4974313  assets/generated/variants/Pine_4__go_village (png 3개)
+   4974314  assets/generated/variants/Pine_5__go_village (png 3개)
+    308588  assets/generated/variants/Plant_1__go_village (png 1개)
+    308600  assets/generated/variants/Plant_1_Big__go_village (png 1개)
+    308588  assets/generated/variants/Plant_7__go_village (png 1개)
+    308599  assets/generated/variants/Plant_7_Big__go_village (png 1개)
+    380675  assets/generated/variants/Rock_Medium_1__go_coast (png 1개)
+    527988  assets/generated/variants/Rock_Medium_1__go_ruins (png 1개)
+    424666  assets/generated/variants/Rock_Medium_1__go_village (png 1개)
+    380676  assets/generated/variants/Rock_Medium_2__go_coast (png 1개)
+    527987  assets/generated/variants/Rock_Medium_2__go_ruins (png 1개)
+    424665  assets/generated/variants/Rock_Medium_2__go_village (png 1개)
+    149144  assets/generated/variants/RockPath_Round_Small_1__go_village (png 1개)
+    149145  assets/generated/variants/RockPath_Round_Small_2__go_village (png 1개)
+    149145  assets/generated/variants/RockPath_Round_Small_3__go_village (png 1개)
+    149136  assets/generated/variants/RockPath_Round_Thin__go_village (png 1개)
+    149147  assets/generated/variants/RockPath_Square_Small_1__go_village (png 1개)
+    149148  assets/generated/variants/RockPath_Square_Small_2__go_village (png 1개)
+    149147  assets/generated/variants/RockPath_Square_Small_3__go_village (png 1개)
+    149138  assets/generated/variants/RockPath_Square_Thin__go_village (png 1개)
+    149139  assets/generated/variants/RockPath_Square_Wide__go_village (png 1개)
+      4119  assets/generated/variants/room-small__dungeon_dirt (png 1개)
+      4186  assets/generated/variants/room-small__dungeon_lava (png 1개)
+      4202  assets/generated/variants/room-small__dungeon_limestone (png 1개)
+     13570  assets/generated/variants/staff__g0 (png 1개)
+     13497  assets/generated/variants/staff__g1 (png 1개)
+     13514  assets/generated/variants/staff__g2 (png 1개)
+     12874  assets/generated/variants/staff__g3 (png 1개)
+     13802  assets/generated/variants/staff__g4 (png 1개)
+     12369  assets/generated/variants/sword_1handed__g0 (png 1개)
+     12302  assets/generated/variants/sword_1handed__g1 (png 1개)
+     12305  assets/generated/variants/sword_1handed__g2 (png 1개)
+     11749  assets/generated/variants/sword_1handed__g3 (png 1개)
+     12581  assets/generated/variants/sword_1handed__g4 (png 1개)
+
+## D 주인 없는 png (바이트)
+
+## 깨진 참조 (코드는 부르는데 파일 없음)
+  없음
