@@ -26,6 +26,9 @@
 | `saga-unity/tools/dedupe_forge_textures.py` | 공방 몸 텍스처 중복 합치기 — 내용·가져오기 설정이 같은 그림을 하나로(화질 변화 0, 드라이런 기본, Unity 끄고, `--apply`) |
 | `tools/mixamo_automation/` | Mixamo 모션 받기(`fetch.mjs --dest`) — 원본은 로컬 전용(.gitignore) |
 | `tools/char-forge/` | 자체 인물 공방(Blender 헤드리스 + CC0) — 레시피 → `.glb`/`.fbx`(`build.py`)·파일 검증(`verify.py`)·팩 받기(`fetch_sources.py`)·기존 뼈대에 동작 굽기(`bake_for_rig.py`)·**VRoid 주역 들이기 `vroid_intake.sh <vrm> <id>`** |
+| `tools/world-forge/` | 파이썬+Blender 헤드리스 지형·지물·건물·탈것 에셋 만들기(트랙별 결과 한 레시피에서) — 3D 세계 자산 |
+| `tools/ai-art/` | 로컬 SD(swbins3, 상업 허용 모델)로 초상·배경·바닥 타일·무늬 그림 만들기 — `gen.py` 배치 + `.license.json`, 2D 모드 배경 층 분리·이음매 타일 포함 |
+| `saga-web/tools/playcheck/` | 웹 판을 헤드리스 크롬(CDP)으로 실제 조작해 보는 플레이 점검 |
 | `saga-web/tools/bake-portraits/` | 도감·카드 초상을 webp 로 미리 굽기 |
 | `saga-web/saga-go/tools/bake-icons/` | 짐승·건물 2D 지도 아이콘 굽기 |
 | `saga-godot/tools/mixamo_retarget.gd` | (옛) Mixamo 모션 → VRM 뼈대 리타겟 — 이제 어느 씬도 결과를 안 부른다 |
