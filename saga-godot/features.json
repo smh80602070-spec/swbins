@@ -1013,8 +1013,10 @@
   "id": "gd.dg.rooms",
   "name": "방 6(보스 2)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_world"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1024,8 +1026,10 @@
   "id": "gd.dg.room-kinds",
   "name": "방 종류 5(상자·우물·정예 소굴·미니보스·채광)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_world"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1035,8 +1039,10 @@
   "id": "gd.dg.elites",
   "name": "엘리트 8",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_world"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1176,8 +1182,10 @@
   "id": "gd.dg.recruit",
   "name": "인물 등용",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_world"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1187,8 +1195,10 @@
   "id": "gd.dg.guild",
   "name": "결사",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_world"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1198,8 +1208,10 @@
   "id": "gd.dg.boss-floor",
   "name": "보스층",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_world"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
