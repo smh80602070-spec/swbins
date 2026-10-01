@@ -3,8 +3,10 @@
   "id": "gd.go.events",
   "name": "사건 7·밤 2·굴·여울·폭포",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "events"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,

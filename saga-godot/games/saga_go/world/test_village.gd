@@ -245,6 +245,8 @@ func _ready() -> void:
 	tut.changed.connect(_refresh_goal_board)
 	if OS.get_environment("SAGA_TUTORIAL_PROBE") != "":
 		add_child(load("res://tools/probe_tutorial.gd").new())
+	if OS.get_environment("SAGA_EVENTS_PROBE") != "":
+		add_child(load("res://tools/probe_events.gd").new())
 	if OS.get_environment("SAGA_HELP_PROBE") != "":
 		add_child(load("res://tools/probe_help.gd").new())
 	var autosave := preload("res://games/saga_go/world/autosave.gd").new()
