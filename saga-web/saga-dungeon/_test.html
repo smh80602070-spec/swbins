@@ -7723,6 +7723,47 @@ window.requestAnimationFrame = function () { return 0; };
       return noPool === false && missing === false && calls === 0 && '풀 없음·파일 없음 → 둘 다 false, 그리기 호출 0';
     });
 
+    /* ── 옷 무늬(W-0020, shared/js/vroid-variant.js) — 표·이미지 없이 순수 함수와 가짜 재질로 ─── */
+
+    t('옷 무늬 — 표가 없으면 고르지 않고(null), 있으면 같은 인물은 늘 같은 무늬를 시대 안에서 고른다', function () {
+      var V = DG.vroidVariant;
+      var list = [{ id: 'a1', era: 'past', file: 'a1.webp' }, { id: 'a2', era: 'past', file: 'a2.webp' }, { id: 'm1', era: 'modern', file: 'm1.webp' }, { id: 'f1', era: 'future', file: 'f1.webp' }];
+      var none = V.patPick('x', null, null) === null;
+      var same = V.patPick('hero_1', 'past', list).id === V.patPick('hero_1', 'past', list).id;
+      var inEra = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].every(function (id) { return V.patPick(id, 'past', list).era === 'past'; });
+      var fallback = V.patPick('h1', 'crest', list) !== null;   // 그 시대 줄이 없으면 전체에서
+      return none && same && inEra && fallback && '표 없음→null · 같은 인물 같은 무늬 · 시대 안에서 · 없는 시대는 전체에서';
+    });
+
+    t('옷 무늬 — 켜짐(DG.cfg.vroidPattern)+표가 있으면 옷(_CLOTH) 재질에만 무늬가 붙고 머리·눈엔 안 붙으며 같은 사본을 다시 쓴다', function () {
+      var V = DG.vroidVariant, P = V._pat, saveList = P.list, saveLoader = P.loader, saveTried = P.tried, saveTex = P.tex;
+      var made = 0;
+      function mat(name) { var m = { name: name, uuid: 'u_' + name + '_' + Math.random(), color: { r: 1, g: 1, b: 1, setRGB: function () {} }, userData: {}, clone: function () { var c = {}; for (var k in this) { c[k] = this[k]; } c.uuid = 'c_' + Math.random(); c.userData = {}; c.color = { r: 1, g: 1, b: 1, setRGB: function () {} }; return c; } }; return m; }
+      function body() { var meshes = [{ isMesh: true, material: mat('Tops_CLOTH') }, { isMesh: true, material: mat('N00_000_Hair_HAIR') }, { isMesh: true, material: mat('Skin_BODY') }]; return { meshes: meshes, traverse: function (fn) { meshes.forEach(fn); } }; }
+      try {
+        P.list = [{ id: 'p1', era: 'past', file: 'p1.webp' }, { id: 'p2', era: 'past', file: 'p2.webp' }]; P.tried = true; P.tex = {};
+        P.loader = function (rec) { made++; return { fake: rec.id }; };
+        var m1 = body(), m2 = body();
+        V.apply(m1, 'hero_a'); V.apply(m2, 'hero_a');
+        var cloth = m1.meshes[0].material, hair = m1.meshes[1].material, skin = m1.meshes[2].material;
+        var clothHas = !!cloth.map && cloth.userData.vroidPattern, hairNo = !hair.map, skinNo = !skin.map;
+        var reuse = made === 1;   // 같은 인물 → 같은 무늬 → 텍스처는 한 번만
+        return clothHas && hairNo && skinNo && reuse && ('옷 ' + cloth.userData.vroidPattern + ' · 머리·몸 무늬 없음 · 텍스처 ' + made + '번');
+      } finally { P.list = saveList; P.loader = saveLoader; P.tried = saveTried; P.tex = saveTex; }
+    });
+
+    t('옷 무늬 — 설정이 없으면(DG.cfg.vroidPattern 없음) 표가 있어도 옷 재질을 안 건드린다', function () {
+      var V = DG.vroidVariant, P = V._pat, saveCfg = DG.cfg.vroidPattern, saveList = P.list, saveLoader = P.loader;
+      try {
+        delete DG.cfg.vroidPattern;
+        P.list = [{ id: 'p1', era: 'past', file: 'p1.webp' }]; P.loader = function () { return { fake: 1 }; };
+        var m = { name: 'Tops_CLOTH', uuid: 'u_off', color: { r: 1, g: 1, b: 1, setRGB: function () {} }, userData: {}, clone: function () { return { name: this.name, uuid: 'c_off', color: { r: 1, g: 1, b: 1, setRGB: function () {} }, userData: {}, clone: this.clone }; } };
+        var model = { meshes: [{ isMesh: true, material: m }], traverse: function (fn) { this.meshes.forEach(fn); } };
+        V.apply(model, 'hero_a');
+        return !model.meshes[0].material.map && '설정 없음 → 무늬 없음(기존 옷)';
+      } finally { DG.cfg.vroidPattern = saveCfg; P.list = saveList; P.loader = saveLoader; }
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

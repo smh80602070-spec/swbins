@@ -131,14 +131,83 @@
         var src = mats[i], name = (src && src.name) || '', kind = kindOf(name);
         if (!kind || !src.clone) { out.push(src); continue; }
         var slot = kind === 'hair' ? p.hair : kind === 'eye' ? p.eye : clothSlot(name, p.cloth);
-        out.push(variantOf(baseOf[src.uuid] || src, kind, slot));
+        var vm = variantOf(baseOf[src.uuid] || src, kind, slot);
+        out.push(kind === 'cloth' ? patWear(vm, id) : vm);
         changed = true;
       }
       if (changed) { o.material = isArr ? out : out[0]; }
     });
     model.userData = model.userData || {};
     model.userData.vroidVariant = p;
+    if (patCfg() && !PAT.list && PAT.tried && !PAT.dead && PAT.pending.length < 300) { PAT.pending.push({ model: model, id: id }); }
     return p;
+  }
+
+
+  /* ── 옷 무늬(W-0020) — 켜져 있고(`DG.cfg.vroidPattern`) 무늬 표(`<base>/patterns.json`)를 받았으면 옷 재질에 무늬 타일을 입힌다 ───────
+   * 판 설정: `DG.cfg.vroidPattern = { base: 'assets/patterns/', eraOf: function (id) → 'past'|'modern'|'future'|'crest'|null, repeat: 3 }`.
+   * 설정이 없거나 표·이미지가 없으면 **아무 것도 안 한다**(기존 옷 그대로, 오류 0). 무늬 파일 64종은 자체툴(K-0006·K-0019)이 `<판>/assets/patterns/` 에 놓는다.
+   * 같은 인물은 늘 같은 무늬를 입는다(id 해시). 무늬는 옷 색(변형 칸)에 곱해져 색조가 따라온다. 머리·눈·몸에는 안 건다. */
+  var PAT = { list: null, tried: false, dead: false, tex: {}, pending: [], loader: null };
+  function patCfg() { return (global.DG && global.DG.cfg && global.DG.cfg.vroidPattern) || null; }
+
+  /** 순수 함수 — 표에서 이 인물의 무늬 한 줄을 고른다. era 가 있으면 그 시대 안에서(없으면 전체). 표가 없으면 null */
+  function patPick(id, era, list) {
+    list = list || PAT.list;
+    if (!list || !list.length) { return null; }
+    var pool = era ? list.filter(function (p) { return p.era === era; }) : list;
+    if (!pool.length) { pool = list; }
+    return pool[hash('pat:' + id) % pool.length];
+  }
+
+  /** 무늬 표를 한 번 받아 둔다 — 받는 동안 이미 입힌 몸이 있으면 받은 뒤 다시 입힌다 */
+  function patLoad() {
+    var c = patCfg();
+    if (!c || PAT.list || PAT.tried || !global.fetch) { return; }
+    PAT.tried = true;
+    global.fetch((c.base || 'assets/patterns/') + 'patterns.json').then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (j && j.patterns && j.patterns.length) { PAT.list = j.patterns; } else { PAT.dead = true; }
+        var q = PAT.pending; PAT.pending = [];
+        if (PAT.list) { q.forEach(function (e) { apply(e.model, e.id); }); }
+      })['catch'](function () { PAT.dead = true; PAT.pending = []; /* 표가 없으면 무늬 없는 옷 그대로(대기 목록도 비운다) */ });
+  }
+
+  /** 무늬 한 줄의 텍스처 — three 가 있을 때만(자가진단 환경은 `PAT.loader` 를 갈아 끼운다). 반복 타일, 색 공간 sRGB */
+  function patTex(rec) {
+    if (PAT.tex[rec.id]) { return PAT.tex[rec.id]; }
+    var t = global.THREE, c = patCfg(), tex = null;
+    if (PAT.loader) { tex = PAT.loader(rec, c); }
+    else if (t && t.TextureLoader) {
+      tex = new t.TextureLoader().load((c.base || 'assets/patterns/') + rec.file);
+      tex.wrapS = tex.wrapT = t.RepeatWrapping;
+      tex.repeat.set(c.repeat || 3, c.repeat || 3);
+      if (t.SRGBColorSpace) { tex.colorSpace = t.SRGBColorSpace; }
+    }
+    if (tex) { PAT.tex[rec.id] = tex; }
+    return tex;
+  }
+
+  var patCache = {};   // '변형 재질 uuid|무늬 id' → 무늬 입힌 사본
+  /** 옷 재질(이미 색을 입힌 변형) 하나에 이 인물의 무늬를 입힌 사본을 돌려준다 — 못 입히면 그대로 */
+  function patWear(mat, id) {
+    var c = patCfg();
+    if (!c || !mat || !mat.clone) { return mat; }
+    if (!PAT.list) { patLoad(); return mat; }
+    var rec = patPick(id, c.eraOf ? c.eraOf(id) : null);
+    if (!rec) { return mat; }
+    var key = mat.uuid + '|' + rec.id;
+    if (!patCache[key]) {
+      var tex = patTex(rec);
+      if (!tex) { return mat; }
+      var m = carryShader(mat, mat.clone());
+      m.map = tex; m.needsUpdate = true;
+      m.userData = m.userData || {};
+      m.userData.vroidPattern = rec.id;
+      baseOf[m.uuid] = baseOf[mat.uuid] || mat;
+      patCache[key] = m;
+    }
+    return patCache[key];
   }
 
   /** 이 몸이 VRoid(경로에 /people/anime/) 인가 — 다른 몸(QRPG·MPFB)에는 안 건다 */
@@ -540,5 +609,8 @@
   }
 
   global.DG.vroidVariant = { N: N, HAIR: HAIR, CLOTH: CLOTH, EYE: EYE, pick: pick, rawPick: rawPick, apply: apply, isVroid: isVroid, faceFront: faceFront, hash: hash,
-    shade: shade, faceFrame: faceFrame, FACE_RE: FACE_RE };
+    shade: shade, faceFrame: faceFrame, FACE_RE: FACE_RE,
+    /* 옷 무늬(W-0020) — 순수 함수·진단용 갈아 끼우는 자리 */
+    patPick: patPick, patWear: patWear, patLoad: patLoad,
+    _pat: PAT };
 })(window);

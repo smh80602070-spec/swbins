@@ -490,3 +490,12 @@
     }
   };
 })(window);
+
+/* 옷 무늬 설정 — saga-web/shared/js/vroid-variant.js 가 읽는다(W-0020). 무늬 64종(webp + patterns.json)은 자체툴이 assets/patterns/ 에 놓는다 —
+   없으면 기존 옷 그대로(표를 못 받으면 아무 것도 안 한다) */
+(function (global) {
+  'use strict';
+  global.DG = global.DG || {};
+  global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.vroidPattern = { base: 'assets/patterns/', repeat: 3 };
+})(window);
