@@ -197,12 +197,12 @@
    "들판 전투 ⑲-1 — 서리번개(3m ×0.5 + 8초 물리 ×1.4) · 회오리(4m 옆 적에 원소를 옮기고 ×0.6, 풍·암은 안 붙음)",
    "들판 전투 ⑲-1 — 굳힘 보호막: 지금 인물 최대 체력 20%·15초, 피해를 먼저 막고 다 막으면 원소 효과(화상)도 없다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인",
+  "note": "D2: saga-web/tools/playcheck/pw-go-sheet.mjs(Playwright) 10/10 — results/pw-go-sheet.json. 기계 확인. 못 잰 것: 동행 교체(새 계정 편성 1명)·성능 3단·소리",
   "sheet": {
    "preset": "⚔️ 교전 확인",
    "steps": [
@@ -228,12 +228,12 @@
    "지역 — 무리 꼴이 지역을 따른다(늪엔 물, 협곡엔 불)",
    "지역 — 탑에 다가가면 발견·보상 한 번, 발견한 곳으로 순간이동(키보드 모드)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인",
+  "note": "D2: saga-web/tools/playcheck/pw-go-sheet.mjs(Playwright) 10/10 — results/pw-go-sheet.json. 기계 확인. 못 잰 것: 동행 교체(새 계정 편성 1명)·성능 3단·소리",
   "sheet": {
    "steps": [
     "걸어서 지역 한가운데 빛기둥 랜드마크(탑) 쪽으로 간다",
@@ -446,7 +446,7 @@
    "발견 — 옛 세이브에 칸이 없어도 열린다",
    "발견 — 사건을 겪으면 사건과 기록이 함께 남는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -458,7 +458,8 @@
     "닫고 구석 미니맵·발자취를 본다"
    ],
    "expect": "발견 지점으로 순간이동(GPS 모드는 안 됨), 미니맵이 따라온다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-go-sheet.mjs(Playwright) 10/10 — results/pw-go-sheet.json. 기계 확인. 못 잰 것: 동행 교체(새 계정 편성 1명)·성능 3단·소리"
  },
  {
   "id": "go.auto",
@@ -483,7 +484,7 @@
    "자동 📖 — 이야기: 인물 곁이면 말을 걸고 대화를 끝까지 넘겨 다음 단계로 · 멀면 그쪽으로 걷는다",
    "자동 📖 — 원소 신호는 돌진·찌르기의 지나간 선으로 닿는다(끝점만 보면 제단을 가로질러도 안 켜졌다)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "A": "○",
@@ -498,7 +499,8 @@
     "붉은 예고 원이 떨어질 때 스스로 비키는지 본다"
    ],
    "expect": "자동 중에도 무리를 처치하고 예고 공격을 기력으로 피한다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-go-sheet.mjs(Playwright) 10/10 — results/pw-go-sheet.json. 기계 확인. 못 잰 것: 동행 교체(새 계정 편성 1명)·성능 3단·소리"
  },
  {
   "id": "go.region",
