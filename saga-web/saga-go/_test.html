@@ -15740,10 +15740,25 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var holds = [], m, re = /\.hold\((\d+)\)/g;
       while ((m = re.exec(b))) { holds.push(+m[1]); }
       var hs = holds.length && holds.every(function (v) { return v >= 60 && v <= 120; });
-      var files = ['hit', 'hit2', 'hit3'].filter(function (n) { return funExists('assets/audio/sfx/' + n + '.mp3'); });
-      var sfx3 = files.length >= 3;
+      /* 타격음 3종은 mp3 를 늘리지 않고 같은 클립의 음높이 셋(audio.js HIT_RATES)으로 돌린다(원작 에셋 금지) */
+      var rates = DG.audio && DG.audio.HIT_RATES ? DG.audio.HIT_RATES : [], seen = {};
+      rates.forEach(function (r) { seen[r] = 1; });
+      var kinds = Object.keys(seen).length, sfx3 = kinds >= 3;
       return funMark(hs && sfx3, hs || sfx3) + 'hitstop ' + (holds.length ? Math.min.apply(null, holds) + '~' + Math.max.apply(null, holds) + 'ms' : '없음') +
-        '(규격 60~120) · 타격음 ' + files.length + '종(규격 3종 라운드로빈) · 흔들림 손잡이 ' + DG.core.tuned('battle3d.shake', 0.5);
+        '(규격 60~120) · 타격음 ' + kinds + '종(음높이 ' + rates.join('/') + ', 규격 3종 라운드로빈) · 흔들림 손잡이 ' + DG.core.tuned('battle3d.shake', 0.5);
+    });
+
+    t('재미표준 C 회피 여유(측정)', function () {
+      if (!DG.rogueAction || !DG.rogueAction.foeMoves) { return '× — rogueAction.foeMoves 없음'; }
+      var RA = DG.rogueAction, reach = RA.MY_REACH(), speed = 8;   // 걷기 8m/s(world.js speed)
+      var moves = RA.foeMoves(), min = Infinity, max = -Infinity, parts = moves.map(function (mv) {
+        var slack = mv.tellSec - Math.max(0, mv.range - reach) / speed;
+        if (slack < min) { min = slack; }
+        if (slack > max) { max = slack; }
+        return mv.key + ' ' + slack.toFixed(2) + 's';
+      });
+      var verdict = min < 0 ? '× — 못 피함' : (min > 0.6 ? '× — 거저' : (min >= 0.25 ? '○ — 적정' : '△ — 미리 움직여야 함'));
+      return verdict + ' — 여유 = 예고초 − (반경 − 사거리 ' + reach + 'm)/8m/s: ' + parts.join(' · ') + ' (사람 반응 ≈0.25s, 저스트 창 ' + RA.JUST_WINDOW() + 's)';
     });
 
     t('재미표준 D 선택 3택(측정)', function () {
