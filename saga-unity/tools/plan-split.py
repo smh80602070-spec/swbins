@@ -124,8 +124,13 @@ def cmd_cell(a):
     keep_tail = ""
     k = cell.rfind(a.marker)
     if k >= 0:
-        o = cell.rfind("**", 0, k)
-        if o >= 0 and (not mh or o >= len(mh.group(0))):
+        if cell[:k].count("**") % 2 == 1:          # 굵은 글씨 안 — 그 열린 `**` 부터(짝이 맞게)
+            o = cell.rfind("**", 0, k)
+        else:                                      # 굵은 글씨 밖 — 마지막 문장 머리부터
+            o = max(cell.rfind(" · ", 0, k) + 3, cell.rfind(". ", 0, k) + 2, 0)
+        if blen(cell[o:]) > 600:
+            o = k
+        if not mh or o >= len(mh.group(0)):
             keep_tail = cell[o:]
     files = " · ".join(f"`docs/spec/{n}.md`" for n in names)
     newcell = " ".join(x for x in [headline, f"→ {files} (원문 그대로 — 이어 붙이면 원래 칸, tasks U-0008)", keep_tail] if x)
