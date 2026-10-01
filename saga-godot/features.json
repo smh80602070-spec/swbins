@@ -1046,8 +1046,10 @@
   "id": "gd.dg.boons",
   "name": "은사",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_boons"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1122,8 +1124,10 @@
   "id": "gd.dg.merchant",
   "name": "행상",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_shop"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1133,8 +1137,10 @@
   "id": "gd.dg.gamble",
   "name": "투전",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_shop"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1144,8 +1150,10 @@
   "id": "gd.dg.forge",
   "name": "연단",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "dungeon_shop"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
