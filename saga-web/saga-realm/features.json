@@ -12,7 +12,7 @@
    "싸우면 더 크게 붙는다",
    "열두 달을 굴려도 판이 성립한다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -25,7 +25,8 @@
     "달·금·군량이 바뀌는지 본다"
    ],
    "expect": "무장 1인 1명령이 한 달에 처리되고 월·금·군량이 갱신된다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-rk-sheet.mjs(Playwright) 7/7 — results/pw-rk-sheet.json. 기계 확인(지도·전투 그림은 D3 사람 몫). 못 잰 것: 재야 등용·충성 이탈"
  },
  {
   "id": "rk.rtk-2",
@@ -97,7 +98,7 @@
    "재야는 승진시킬 수 없다",
    "AI 도 공이 쌓인 사람을 올린다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -110,7 +111,8 @@
     "공을 쌓은 무장을 승진시킨다"
    ],
    "expect": "등용되고 충성·관직이 보이며 승진 비용(금)이 빠진다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-rk-sheet.mjs(Playwright) 7/7 — results/pw-rk-sheet.json. 기계 확인(지도·전투 그림은 D3 사람 몫). 못 잰 것: 재야 등용·충성 이탈"
  },
  {
   "id": "rk.officer-2",
@@ -164,7 +166,7 @@
    "맹약은 달마다 닳아 없어진다",
    "조공은 우호를 올린다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -177,7 +179,8 @@
     "▶ 다음 달을 눌러 결과를 본다"
    ],
    "expect": "사절 결과(수락·거절)가 나오고 동맹이면 맹약이 소모·기록된다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-rk-sheet.mjs(Playwright) 7/7 — results/pw-rk-sheet.json. 기계 확인(지도·전투 그림은 D3 사람 몫). 못 잰 것: 재야 등용·충성 이탈"
  },
  {
   "id": "rk.diplo-2",
@@ -216,7 +219,7 @@
    "진 쪽 장수는 달아나거나 사로잡힌다 (사라지지 않는다)",
    "일기토는 무력이 엇비슷할 때만 붙는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -229,7 +232,8 @@
     "야전·공성 결과를 본다"
    ],
    "expect": "인접 성만 출진되고 도착하면 전투가 열려 승패에 따라 성이 넘어간다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-rk-sheet.mjs(Playwright) 7/7 — results/pw-rk-sheet.json. 기계 확인(지도·전투 그림은 D3 사람 몫). 못 잰 것: 재야 등용·충성 이탈"
  },
  {
   "id": "rk.war-2",
@@ -248,7 +252,7 @@
    "설전 카드 — 등용·화친·동맹은 세 문답을 거쳐 정답 수 배율이 넘어가고(3개 ×1.3 · 0개 ×0.8), 설전 없이 ×1, 그만이면 호출 없음, 조공은 카드 없이",
    "실시간 전장(Q9) — 전체 화면·시계, 명령 단추는 합을 넘기지 않고(다음 합부터·불 켜짐), ⏭ 은 한 합, 도중에 닫으면 남은 합을 끝까지 굴려 결과가 뜬다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -261,7 +265,8 @@
     "퇴각도 한 번 눌러 본다"
    ],
    "expect": "고른 선택에 따라 전황이 달라지고 퇴각하면 군대가 돌아온다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-rk-sheet.mjs(Playwright) 7/7 — results/pw-rk-sheet.json. 기계 확인(지도·전투 그림은 D3 사람 몫). 못 잰 것: 재야 등용·충성 이탈"
  },
  {
   "id": "rk.war-3",

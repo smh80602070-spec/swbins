@@ -12,7 +12,7 @@
    "손맛 — hitstop 동안은 실제 시간으로 줄고, 그 프레임의 움직임만 크게 느려진다",
    "손맛 — 타격음이 hit·hit2·hit3 셋을 라운드로빈으로 돈다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "C": "△"
@@ -26,7 +26,8 @@
     "↓+␣ 로 발판 아래로 내려온다"
    ],
    "expect": "발판 위에서만 뛰어지고 줄을 타며 아래로 내려오는 동작이 자연스럽다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)"
  },
  {
   "id": "st.data-side",
@@ -49,7 +50,7 @@
    "낙양 옛터·검각 암굴 — 3차·4차 전직 레벨에 열리고, 정예가 호로곡보다 단단하다",
    "모든 사냥터의 mood 는 화면이 아는 이름이다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -61,7 +62,8 @@
     "다음 사냥터가 잠겼는지(레벨 1/5/12/25) 본다"
    ],
    "expect": "마을 5·사냥터 4가 이어지고 레벨이 모자라면 잠겨 있다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)"
  },
  {
   "id": "st.side-2",
@@ -83,7 +85,7 @@
    "화살은 사거리 끝이나 수명이 다하면 사라진다",
    "쓰러지면 판이 끝나고 금은 절반만 남는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -95,7 +97,8 @@
     "적에게 맞아 본다"
    ],
    "expect": "맞는 순간 숫자가 뜨고 적이 밀려나며 내가 맞은 직후엔 잠깐 무적이다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)"
  },
  {
   "id": "st.data-enemy",
@@ -252,7 +255,7 @@
   "tests": [
    "자동 — 5분치를 굴리면 실제로 잡힌다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -264,7 +267,8 @@
     "탕약(Q)이 스스로 쓰이는지·적을 잡는지 본다"
    ],
    "expect": "줄을 타며 적을 찾아 잡고 체력이 모자라면 탕약을 마신다"
-  }
+  },
+  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)"
  },
  {
   "id": "st.side-view3d",

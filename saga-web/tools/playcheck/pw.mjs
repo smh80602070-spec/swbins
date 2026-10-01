@@ -19,6 +19,8 @@ export async function open(game, { w = 1280, h = 720, mobile = false } = {}) {
     ...(mobile ? { isMobile: true, hasTouch: true, deviceScaleFactor: 2 } : {})
   });
   const page = await ctx.newPage();
+  /* 헤드리스는 document.hasFocus() 가 거짓이라, 포커스가 없으면 루프를 쉬는 판(사가스토리)이 멎는다 — 포커스를 켜 둔다 */
+  try { const cdp = await ctx.newCDPSession(page); await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true }); } catch (e) { /* 없어도 대부분 판은 돈다 */ }
   const errors = [], notFound = [];
   page.on('response', (res) => { if (res.status() === 404) { notFound.push(res.url().replace(BASE, '')); } });
   page.on('pageerror', (e) => errors.push('EXC ' + e.message));

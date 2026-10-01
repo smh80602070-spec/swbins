@@ -66,10 +66,19 @@ try {
     check('낚시 — 낚시터에서 ␣ 로 줄을 던진다', !!cast && f0 === 'prop:spot', 'focus ' + f0 + ' · ' + JSON.stringify(cast));
     if (cast) {
       check('낚시 — 입질 창은 0.7초(1.2~3.5초 기다린 뒤)', cast.win === 700, '창 ' + cast.win + 'ms · 남은 대기 ' + Math.round(cast.wait) + 'ms');
-      await sleep(Math.max(0, cast.wait) + 120);
-      const bt = await ev(() => { var f = DG.village.raw().fishing, n = Date.now(); return !!(f && n >= f.biteAt && n <= f.ends); });
+      /* 입질 창은 0.7초 — 소프트웨어 렌더링 부하로 Playwright 왕복이 수백 ms 걸려 바깥에서 타이밍을 맞출 수 없다.
+         페이지 안에서 biteAt+150ms 에 ␣ keydown 을 직접 보낸다(게임의 키 처리 그대로 탄다) */
       const t0 = await total();
-      await page.keyboard.press('Space'); await sleep(900);
+      const bt = await ev(() => new Promise((res) => {
+        var f = DG.village.raw().fishing;
+        if (!f) { res(false); return; }
+        setTimeout(() => {
+          var n = Date.now(), inWin = n >= f.biteAt && n <= f.ends;
+          window.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', code: 'Space' }));
+          res(inWin);
+        }, Math.max(0, f.biteAt + 150 - Date.now()));
+      }));
+      await sleep(900);
       const t1 = await total();
       check('낚시 — 입질 창 안에 ␣ 를 다시 누르면 물고기가 가방에 든다', bt && t1 > t0, '창 안 ' + bt + ' · ' + t0 + '→' + t1);
     }
@@ -111,10 +120,15 @@ try {
   await page.keyboard.press('Escape'); await sleep(300);
   const hs = await ev(() => ({ n: DG.home.stockList().length, first: DG.home.stockList()[0] && DG.home.stockList()[0].furn.key, items0: DG.home.state().items.length }));
   const homeProp = await ev(() => { var p = DG.village.raw().props.find((p) => p.kind === 'home'); return p ? { id: p.id, x: p.x, y: p.y } : null; });
-  await ev((a) => { var pl = DG.village.raw().player; pl.x = a.x; pl.y = a.y + 12; }, homeProp);
-  await sleep(300);
-  await page.keyboard.press('Space'); await sleep(1200);
-  const inside = await ev(() => DG.village.indoors());
+  let inside = false;
+  for (let t = 0; t < 3 && !inside; t++) {
+    await ev((a) => { var pl = DG.village.raw().player; pl.x = a.x; pl.y = a.y + 12; }, homeProp);
+    await sleep(500);
+    const f = await ev(() => { var f = DG.village.focus(); return f && f.obj && f.obj.kind; });
+    if (f !== 'home') { continue; }
+    await page.keyboard.press('Space'); await sleep(1200);
+    inside = await ev(() => DG.village.indoors());
+  }
   check('집 — 집 문 앞에서 ␣ 를 누르면 집 안으로 들어간다', inside, 'indoors ' + inside);
   if (inside) {
     await ev(() => { var T = DG.village.TILE, r = DG.home.room(), pl = DG.village.raw().player; pl.x = Math.floor(r.tw / 2) * T + T * 0.5; pl.y = Math.floor(r.th / 2) * T + T * 0.5; });

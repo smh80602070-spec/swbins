@@ -88,6 +88,8 @@ try {
     check('실시간 전투 — 🤖 자동 전투를 켜면 키 없이도 무리 체력이 준다', (fa1.hp + fa1.shield) < (fa0.hp + fa0.shield) || fa1.alive < fa0.alive, '체력+방패 ' + (fa0.hp + fa0.shield) + '→' + (fa1.hp + fa1.shield) + ' · 살아 있는 적 ' + fa0.alive + '→' + fa1.alive);
 
     /* 5) 자동 순행 — 켜면 스스로 움직이고 싸운다 */
+    await ev((key) => { var S = DG.fieldCombat.state(), p = DG.core.save.player.pos, best = null, bd = 1e9; for (var k in S.camps) { if (k === key) { continue; } var cp = S.camps[k]; if (cp.kind === 'guard' || cp.sky) { continue; } var alive = cp.uids.filter((u) => S.foes[u] && S.foes[u].hp > 0).length; if (!alive) { continue; } var d = Math.hypot(cp.x - p.x, cp.y - p.y); if (d < bd) { bd = d; best = cp; } } if (best) { p.x = best.x - 25; p.y = best.y; } }, camp.key);
+    await sleep(1500);
     const ap0 = await ev(() => { var p = DG.core.save.player.pos, S = DG.fieldCombat.state(); return { x: p.x, y: p.y, kills: S.kills || 0 }; });
     await ev(() => { DG.auto.setOn(true); });
     await sleep(12000);

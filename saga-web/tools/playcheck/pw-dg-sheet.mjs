@@ -94,20 +94,24 @@ try {
   await ev(() => { DG.dungeon.leave(); });
   await sleep(500);
   const ent2 = await enter();
-  const far = await ev(() => {
+  /* 같은 적 하나(자는 근접형)만 본다 — 다른 적·무리가 대신 깨우지 않게 나머지는 멀리 치워 둔다 */
+  const tgt = await ev(() => {
     var R = DG.dungeon.raw(), p = R.player;
-    var e = R.room.enemies.find((e) => !e.dead && e.hp > 0 && !e.aggro && !e.ranged && !e.boss);
-    if (!e) { return null; }
-    p.invuln = 99; p.x = e.x - 330; p.y = e.y; return { before: e.aggro, ref: e.ref || e.key || e.id };
+    var i = R.room.enemies.findIndex((e) => !e.dead && e.hp > 0 && !e.aggro && !e.ranged && !e.boss);
+    if (i < 0) { return null; }
+    var e = R.room.enemies[i];
+    R.room.enemies.forEach((o, j) => { if (j !== i) { o.x += 4000; } });
+    p.invuln = 99; p.x = e.x - 330; p.y = e.y;
+    return { i: i, aggro: e.aggro };
   });
-  if (far) {
-    await sleep(700);
-    const a1 = await ev(() => { var e = DG.dungeon.raw().room.enemies.find((e) => !e.dead && e.hp > 0 && !e.boss && !e.ranged); return e ? e.aggro : null; });
-    await ev(() => { var R = DG.dungeon.raw(), p = R.player; var e = R.room.enemies.filter((e) => !e.dead && e.hp > 0 && !e.aggro && !e.ranged && !e.boss)[0]; if (e) { p.x = e.x - 190; p.y = e.y; } });
-    await sleep(700);
-    const a2 = await ev(() => { var R = DG.dungeon.raw(); return R.room.enemies.some((e) => !e.dead && e.hp > 0 && e.aggro); });
-    check('어그로 — 멀리(330)선 안 깨고 가까이(190) 가면 깬다', a1 === false && a2 === true, '멀리 ' + a1 + ' · 가까이 ' + a2);
-  } else { check('어그로 — 자는 적을 찾는다', false, 'ent2 ' + ent2); }
+  if (tgt) {
+    await sleep(900);
+    const a1 = await ev((i) => DG.dungeon.raw().room.enemies[i].aggro, tgt.i);
+    await ev((i) => { var R = DG.dungeon.raw(), e = R.room.enemies[i]; R.player.x = e.x - 190; R.player.y = e.y; }, tgt.i);
+    await sleep(900);
+    const a2 = await ev((i) => DG.dungeon.raw().room.enemies[i].aggro, tgt.i);
+    check('어그로 — 같은 자는 적이 멀리(330)선 안 깨고 가까이(190) 가면 깬다', tgt.aggro === false && a1 === false && a2 === true, '처음 ' + tgt.aggro + ' · 멀리 ' + a1 + ' · 가까이 ' + a2);
+  } else { check('어그로 — 자는 근접형 적을 찾는다', false, 'ent2 ' + ent2); }
 
   /* 4) 동행 */
   const comp = await ev(() => { var R = DG.dungeon.raw(); return R ? { has: !!R.companion, id: R.companion && R.companion.id, mul: DG.dungeon._companionMul() } : null; });

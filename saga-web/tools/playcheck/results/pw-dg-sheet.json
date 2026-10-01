@@ -14,7 +14,7 @@
   {
    "name": "준비 — 첫 방에 적이 있다",
    "ok": true,
-   "detail": "{\"hp\":99999,\"id\":{\"name\":\"동합귀\",\"emoji\":\"👹\",\"kind\":\"beast\",\"color\":\"#b87333\",\"form\":\"ogre\",\"body\":\"demon_green\",\"tier\":1,\"resist\":{\"emp\":30}},\"x\":327,\"y\":49}"
+   "detail": "{\"hp\":99999,\"id\":{\"name\":\"청개구리\",\"emoji\":\"🐸\",\"kind\":\"beast\",\"color\":\"#5a9a5a\",\"form\":\"toad\",\"body\":\"frog\",\"tier\":1,\"biome\":\"swamp\"},\"x\":318,\"y\":128}"
   },
   {
    "name": "강공격 — Shift 를 누르면 강공격이 나가고 쿨다운(≈1.3초)이 돈다",
@@ -24,37 +24,37 @@
   {
    "name": "회피 — ␣ 를 누르면 회피 동작(≈0.22초)이 서고 쿨다운이 돈다",
    "ok": true,
-   "detail": "{\"dodge\":0.06,\"cd\":0.7999999999999999}"
+   "detail": "{\"dodge\":0.106,\"cd\":0.846}"
   },
   {
    "name": "회피 — 회피 중 맞아도 피해가 안 들어온다(무적)",
    "ok": true,
-   "detail": "{\"h0\":903,\"h1\":903,\"invuln\":0.22,\"dodge\":true}"
+   "detail": "{\"h0\":897,\"h1\":897,\"invuln\":0.22,\"dodge\":true}"
   },
   {
    "name": "손맛 — 적 곁에서 싸우면 콤보가 쌓이고 타격 정지(hitstop)가 걸린다",
    "ok": true,
-   "detail": "{\"maxCombo\":15,\"hitstopFrames\":3,\"samples\":13,\"kills\":9}"
+   "detail": "{\"maxCombo\":14,\"hitstopFrames\":7,\"samples\":15,\"kills\":7}"
   },
   {
-   "name": "어그로 — 멀리(330)선 안 깨고 가까이(190) 가면 깬다",
+   "name": "어그로 — 같은 자는 적이 멀리(330)선 안 깨고 가까이(190) 가면 깬다",
    "ok": true,
-   "detail": "멀리 false · 가까이 true"
+   "detail": "처음 false · 멀리 false · 가까이 true"
   },
   {
    "name": "동행 — 부대 2번째 인물이 따라붙고 때림 배율(0.1~1.0)이 있다",
    "ok": true,
-   "detail": "{\"has\":true,\"id\":\"sg_zhangfei\",\"mul\":0.1761520737327189}"
+   "detail": "{\"has\":true,\"id\":\"sg_zhangfei\",\"mul\":0.18333333333333335}"
   },
   {
    "name": "동행 — 내가 움직이면 동행이 따라온다",
    "ok": true,
-   "detail": "간격 210→184"
+   "detail": "간격 364→347"
   },
   {
    "name": "서명 무예 — G 를 누르면 나가고 MP 는 안 쓰며 쿨다운만 돈다",
    "ok": true,
-   "detail": "{\"전\":{\"mp\":100,\"cd\":0},\"후\":{\"mp\":100,\"cd\":19.991999999999997}}"
+   "detail": "{\"전\":{\"mp\":100,\"cd\":0},\"후\":{\"mp\":100,\"cd\":19.95}}"
   }
  ]
 }
