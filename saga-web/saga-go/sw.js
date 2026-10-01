@@ -53,6 +53,7 @@ var SHELL = [
   './js/daily.js',
   './js/growth.js',
   './js/buddy.js',
+  './js/toon3d-core.js',
   './js/toon3d.js',
   './js/anim-own.js',
   './js/vroid-variant.js',

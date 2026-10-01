@@ -26,68 +26,13 @@
   var T = null;
   function three() { if (!T) { T = global.THREE || null; } return T; }
 
-  var rampTex = null;
-  function ramp() {
-    if (rampTex) { return rampTex; }
-    var t = three();
-    if (!t) { return null; }
-    var data = new Uint8Array([80, 80, 80, 255, 170, 170, 170, 255, 255, 255, 255, 255]);
-    rampTex = new t.DataTexture(data, 3, 1, t.RGBAFormat);
-    rampTex.magFilter = t.NearestFilter;
-    rampTex.minFilter = t.NearestFilter;
-    rampTex.needsUpdate = true;
-    return rampTex;
-  }
+  /* 램프·툰/림 손잡이·림 라이트는 shared/js/toon3d-core.js (W-0019) */
+  var K = global.DG.toon3dCore;
+  var ramp = K.ramp, TOON_ON = K.TOON_ON, RIM_ON = K.RIM_ON, applyRimLight = K.applyRimLight;
 
-  /** 툰 손잡이 — 0 이면 예전 재질 그대로(되돌림용) */
-  function TOON_ON() {
-    var core = global.DG && global.DG.core;
-    return core && core.tuned ? (core.tuned('world3d.toon', 1) ? true : false) : true;
-  }
 
-  /** 림 라이트 손잡이 — 툰이 꺼지면 같이 꺼진다 */
-  function RIM_ON() {
-    var core = global.DG && global.DG.core;
-    if (!TOON_ON()) { return false; }
-    return core && core.tuned ? (core.tuned('world3d.rim', 1) ? true : false) : true;
-  }
 
-  /**
-   * 프레넬 림 라이트 — 2026-09-19 에 이 판에서 처음 넣었고(땅·소품·배우 전부, 따뜻한 흰빛을 **더하기**),
-   * 2026-09-23 스크린샷으로 보고 다섯 판 규격으로 바꿨다: (1) **배우(사람·짐승)에만** 건다 — 땅·건물에 거니
-   * 먼 지면이 스치는 각도라 지평선이 연두 띠로 뜨고, 역광에 선 먼 집이 뿌옇게 떴다. `toonify`·`lambertLike`
-   * 는 더 이상 자동으로 안 건다(VRoid 는 `vroidVariant.shade`, 짐승은 `asset3d.js` 가 부른다). (2) 더하기가
-   * 아니라 **그 자리 밝기에 비례**해 밝힌다 — 어두운 곳에서 가장자리가 형광처럼 뜨지 않게. 안개·톤매핑 전
-   * (`opaque_fragment` 뒤), 스키닝된 `objectNormal`. 이미 다른 셰이더 덧대기가 있는 재질은 건너뛴다.
-   */
-  function applyRimLight(mat) {
-    var t = three();
-    if (!t || !mat || !RIM_ON() || (mat.userData && mat.userData.rimApplied)) { return mat; }
-    if (!mat.isMeshToonMaterial && !mat.isMeshLambertMaterial) { return mat; }
-    if (Object.prototype.hasOwnProperty.call(mat, 'onBeforeCompile')) { return mat; }
-    mat.userData = mat.userData || {};
-    mat.userData.rimApplied = true;
-    mat.onBeforeCompile = function (shader) {
-      shader.uniforms.rimColor = { value: new t.Color(0xfff0d8) };
-      shader.uniforms.rimPower = { value: 2.4 };
-      shader.uniforms.rimIntensity = { value: 0.9 };
-      shader.vertexShader = shader.vertexShader.replace(
-        '#include <common>',
-        '#include <common>\nvarying vec3 vRimN;\nvarying vec3 vRimV;'
-      ).replace(
-        '#include <worldpos_vertex>',
-        '#include <worldpos_vertex>\nvRimN = normalize( normalMatrix * objectNormal );\nvRimV = normalize( -mvPosition.xyz );'
-      );
-      shader.fragmentShader = shader.fragmentShader.replace(
-        '#include <common>',
-        '#include <common>\nuniform vec3 rimColor;\nuniform float rimPower;\nuniform float rimIntensity;\nvarying vec3 vRimN;\nvarying vec3 vRimV;'
-      ).replace(
-        '#include <opaque_fragment>',
-        '#include <opaque_fragment>\nfloat rimF = pow( 1.0 - clamp( abs( dot( normalize( vRimN ), normalize( vRimV ) ) ), 0.0, 1.0 ), rimPower );\ngl_FragColor.rgb += gl_FragColor.rgb * rimColor * ( rimIntensity * rimF );'
-      );
-    };
-    return mat;
-  }
+
 
   /** 배우 하나(root) 안의 툰·Lambert 재질 전부에 림 — `asset3d.js` 가 외곽선을 두르는 자리(사람·짐승)에서 같이 부른다 */
   function rimActor(root) {

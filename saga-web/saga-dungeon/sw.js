@@ -60,6 +60,7 @@ var SHELL = [
   './js/ssao3d.js',
   './js/post3d.js',
   './js/field3d.js',
+  './js/toon3d-core.js',
   './js/toon3d.js',
   './js/anim-own.js',
   './js/vroid-variant.js',

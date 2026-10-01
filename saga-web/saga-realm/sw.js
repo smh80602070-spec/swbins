@@ -39,6 +39,7 @@ var SHELL = [
   './js/sfx.js',
   './js/bgm.js',
   './js/vendor/three.iife.js',
+  './js/toon3d-core.js',
   './js/toon3d.js',
   './js/anim-own.js',
   './js/vroid-variant.js',
