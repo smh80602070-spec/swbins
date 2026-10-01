@@ -9,6 +9,7 @@
 - 새 진단은 `_test.html` 맨 끝에, 앞 항목 상태에 기대지 않게. 무작위는 `core.hash2` 순수 해시, 씨앗 mulberry32(20260824) 순번을 밀지 않는다.
 - 세로·가로 둘 다, safe-area·orientation·터치 44px. `prompt()` 금지. 성능은 안정성 > FPS > 로딩 > 그래픽 순(폰 DPR ≤1.5, 4K 텍스처·고해상 전면 그림자 금지).
 - 전체 재작성·불필요한 리팩토링·무거운 라이브러리 금지. 기존 UI·기능을 깨지 않는다. 단계별로 고치고 변경 파일·결과만 보고.
+- **생성물 js**: `tools/build-parts.mjs` 의 TARGETS 에 든 큰 js(`world3d`·`story`·`dungeon`·`dungeon3d` …)는 직접 고치지 않는다 — `src/<이름>/` 조각을 고치고 `node tools/build-parts.mjs` 로 조립(어긋나면 precheck 가 막는다).
 - 헤드리스 크롬은 PID 로만 끈다. 실기 확인은 묶어서 한 번.
 
 ## 사가고
@@ -17,14 +18,12 @@
 - 숨은 자리는 가 보기 전까지 지도에 안 뜬다. 발견은 연출+도감에 남는다. NPC 는 서 있기만 하지 않는다.
 - 로더는 공통 `asset3d`, 같은 GLB 를 두 번 받지 않고 clone/`InstancedMesh`. LOD 3단·품질 3단 자동(모바일 첫 MEDIUM).
 - 필수 에셋(플레이어·기본 맵·시작 마을) 먼저, 지역별 lazy. 3D 값을 고치면 sw.js VERSION.
-- `js/world3d.js` 는 생성물 — 고치는 곳은 `src/world3d/` 조각이고, 고친 뒤 `node tools/build-parts.mjs`(precheck 가 어긋나면 막는다).
 - `core.hash2` 는 이 판만 옛 식(0~0.5 반환) — 문턱이 맞춰져 있어 그대로 둔다.
 
 ## 사가블로
 - 판정(`dungeon.js`)과 화면(`dungeon-view.js`·`dungeon3d.js`)은 갈라져 있다. 판정에 three.js 금지, WebGL 없으면 조용히 2D.
 - 모든 피해는 `strike()` 한 통로. 무예 모양(shape)은 열 가지 고정 — 늘리지 않는다. curse·heal·buff·summon 은 `el` 을 안 읽는다.
 - 던전은 방 단위 로그라이크(`run.room`, `seedOf`). 마을↔필드↔마을은 하나의 세계 좌표계(`world-map.js`), 칸 내용은 세계 칸 좌표만의 함수이고 마을 간 순간이동은 없다.
-- `js/dungeon.js` 는 생성물 — 고치는 곳은 `src/dungeon/` 조각(01-core~06-skill)이고, 고친 뒤 `node tools/build-parts.mjs`(어긋나면 precheck 가 막는다).
 - 그림·판정·자동지도가 같은 배열을 읽는다(`WM.pieces/clutter/info`). `run` 은 세이브에 안 남고 `save.dungeon` 은 메타만.
 - 수치 불변식(`ANCHOR_DIST` 6400·`TOWN_SAFE_R` 1300·`WORLD_LIMIT` 60000·`CHUNK` 200·`DESK_SCALE` 2.0 등)은 PLAN §2.2 표, 바꾸면 진단이 깨진다. 3인칭·등신·양식 토글은 되살리지 않는다(`diablo` 고정).
 - 새 무작위는 `core.hash2`. `_test.html` 은 `DG_NO_DRAW`(3D 안 켬) — 화면 층은 실기 항목으로. 옛 "PLAN §28-8·§60" 류 절 번호는 `HANDOFF.md` 의 같은 번호.

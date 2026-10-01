@@ -18,6 +18,8 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TARGETS = [
   { out: 'saga-web/saga-go/js/world3d.js', dir: 'saga-web/saga-go/src/world3d' },
   { out: 'saga-web/saga-dungeon/js/dungeon.js', dir: 'saga-web/saga-dungeon/src/dungeon' },
+  { out: 'saga-web/saga-go/js/story.js', dir: 'saga-web/saga-go/src/story' },
+  { out: 'saga-web/saga-dungeon/js/dungeon3d.js', dir: 'saga-web/saga-dungeon/src/dungeon3d' },
 ];
 const check = process.argv.includes('--check');
 
