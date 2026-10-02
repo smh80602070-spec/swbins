@@ -1,0 +1,542 @@
+{
+ "note": "tools/asset-audit/credits.py 가 자동 생성 — 손으로 고치지 않는다. 게임 크레딧 화면은 attributions(필수 표기)·groups 를 읽는다.",
+ "attributions": [
+  {
+   "author": "Poly by Google",
+   "license": "CC-BY 3.0",
+   "url": "https://creativecommons.org/licenses/by/3.0/",
+   "titles": [
+    "Bear.glb(\"Black bear\")",
+    "Boar.glb",
+    "Crane.glb(\"Sandhill crane\")",
+    "Elephant",
+    "Elephant (`models/standin/Elephant.glb`)",
+    "Elephant.glb",
+    "Mesh_Crow.gltf+.bin, Tex_Crow.webp",
+    "Monkey.glb",
+    "Owl.glb",
+    "Paint Brush",
+    "Panda.glb",
+    "Pond",
+    "Tiger.glb",
+    "fan · brush(공유)",
+    "rabbit.png · duck.png"
+   ],
+   "where": [
+    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "saga-web/saga-forest/assets/ASSET_LICENSES.md",
+    "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "saga-web/saga-realm/assets/ASSET_LICENSES.md",
+    "saga-web/saga-story/assets/ASSET_LICENSES.md"
+   ]
+  },
+  {
+   "author": "CreativeTechLab",
+   "license": "CC-BY 3.0",
+   "url": "",
+   "titles": [
+    "Helmet",
+    "helmet"
+   ],
+   "where": [
+    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md"
+   ]
+  },
+  {
+   "author": "Michael Fuchs",
+   "license": "CC-BY 3.0",
+   "url": "",
+   "titles": [
+    "Viking Helmet",
+    "gapju(대역: Viking Helmet)"
+   ],
+   "where": [
+    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md"
+   ]
+  },
+  {
+   "author": "(개인 업로더, poly.pizza)",
+   "license": "CC-BY 3.0",
+   "url": "",
+   "titles": [
+    "cape"
+   ],
+   "where": [
+    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md"
+   ]
+  },
+  {
+   "author": "Charlie",
+   "license": "CC-BY",
+   "url": "",
+   "titles": [
+    "Slime Enemy",
+    "community/SlimeEnemy.glb"
+   ],
+   "where": [
+    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "saga-web/saga-realm/assets/ASSET_LICENSES.md"
+   ]
+  },
+  {
+   "author": "Quaternius",
+   "license": "CC-BY 3.0",
+   "url": "",
+   "titles": [
+    "Animated Wizard",
+    "Soldier(2번째 개체)"
+   ],
+   "where": [
+    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md"
+   ]
+  },
+  {
+   "author": "Charlie",
+   "license": "CC-BY 3.0",
+   "url": "",
+   "titles": [
+    "Hazmat Man"
+   ],
+   "where": [
+    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md"
+   ]
+  }
+ ],
+ "attributions_review": [
+  {
+   "text": "| **라이선스** | **CC-BY 3.0** — 저작자 표시 필요 |",
+   "where": [
+    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "saga-web/saga-forest/assets/ASSET_LICENSES.md"
+   ]
+  },
+  {
+   "text": "© Quaternius. 한 번들 안에 CC0 5종·CC-BY 5종이 섞여 있다(페이지에서",
+   "where": [
+    "saga-web/saga-dungeon/assets/ASSET_LICENSES.md"
+   ]
+  },
+  {
+   "text": "| `models/weapons/brush.glb` | **CC-BY 3.0**(Poly by Google) | `assets/models/weapons/brush.glb` |",
+   "where": [
+    "saga-web/saga-realm/assets/ASSET_LICENSES.md"
+   ]
+  },
+  {
+   "text": "| `models/gear/viking_helmet.glb`(`gapju` 대역) | **CC-BY 3.0**(Michael Fuchs) | `assets/models/gear/viking_helmet.glb` |",
+   "where": [
+    "saga-web/saga-realm/assets/ASSET_LICENSES.md"
+   ]
+  },
+  {
+   "text": "Slime Enemy — © Charlie, CC-BY(`poly.pizza/m/6O6XUMssAW`). 이",
+   "where": [
+    "saga-web/saga-realm/assets/ASSET_LICENSES.md"
+   ]
+  }
+ ],
+ "vroid": {
+  "models": [
+   "a1",
+   "a10",
+   "a2",
+   "a3",
+   "a4",
+   "a5",
+   "a6",
+   "a7",
+   "a8",
+   "a9",
+   "avatarsample_a_vrm10",
+   "avatarsample_b_vrm10",
+   "avatarsample_c_vrm10",
+   "avatarsample_d_vrm10",
+   "avatarsample_e_vrm10",
+   "avatarsample_f_vrm10",
+   "avatarsample_g_vrm10",
+   "avatarsample_h_vrm10",
+   "avatarsample_i_vrm10",
+   "avatarsample_j_vrm10",
+   "avatarsample_k_vrm10",
+   "avatarsample_l_vrm10",
+   "avatarsample_m_vrm10",
+   "avatarsample_n_vrm10",
+   "avatarsample_o_vrm10",
+   "avatarsample_p_vrm10",
+   "avatarsample_q_vrm10",
+   "avatarsample_r_vrm10",
+   "avatarsample_s_vrm10",
+   "avatarsample_u_vrm10",
+   "avatarsample_v_vrm10",
+   "avatarsample_w_vrm10",
+   "avatarsample_x_vrm10",
+   "avatarsample_y_vrm10",
+   "avatarsample_z_vrm10"
+  ],
+  "credit_required": [],
+  "note": "VRM 이용 조건상 상업·개작본 재배포 허용인 샘플(대부분 pixiv VRoid Project). 직접 만든 모델은 표에 있어도 만든 이 본인 것."
+ },
+ "groups": [
+  {
+   "tool": "music-gen",
+   "model": "ACE-Step/Ace-Step1.5 (acestep-v15-turbo)",
+   "license": "MIT (code and model weights)",
+   "count": 60,
+   "where": [
+    "saga-assets/bgm",
+    "saga-godot/assets/audio/bgm",
+    "saga-unity/Assets/SagaCore/Resources/Audio/Bgm",
+    "saga-web/shared/audio/bgm"
+   ]
+  },
+  {
+   "tool": "gen.py",
+   "model": "Illustrious-XL-v2.0",
+   "license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+   "count": 120,
+   "where": [
+    "saga-assets/web2d/bg",
+    "saga-web/shared/assets/web2d/bg"
+   ]
+  },
+  {
+   "tool": "gen.py",
+   "model": "sd_xl_base_1.0",
+   "license": "CreativeML OpenRAIL++-M",
+   "count": 60,
+   "where": [
+    "saga-assets/web2d/tile",
+    "saga-web/shared/assets/web2d/tile"
+   ]
+  },
+  {
+   "tool": "build_prop.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 105,
+   "where": [
+    "saga-assets/world/sprite",
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world2d"
+   ]
+  },
+  {
+   "tool": "build_building.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0)",
+   "count": 84,
+   "where": [
+    "saga-assets/world/sprite",
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world2d"
+   ]
+  },
+  {
+   "tool": "build_vehicle.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 35,
+   "where": [
+    "saga-assets/world/sprite",
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world2d"
+   ]
+  },
+  {
+   "tool": "build_terrain.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식)",
+   "count": 70,
+   "where": [
+    "saga-assets/world/sprite",
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world2d"
+   ]
+  },
+  {
+   "tool": "build.py",
+   "model": "",
+   "license": "CC0-1.0 (입력 전부 CC0)",
+   "count": 9,
+   "where": [
+    "saga-godot/assets/characters_cf"
+   ]
+  },
+  {
+   "tool": "build_real.py",
+   "model": "",
+   "license": "CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다)",
+   "count": 166,
+   "where": [
+    "saga-unity/Assets/Art/CharactersForge"
+   ]
+  }
+ ],
+ "doc_sections": {
+  "total": 261,
+  "by_license": {
+   "CC0": 190,
+   "MIT": 8,
+   "CC-BY": 29,
+   "Kenney(CC0)": 39,
+   "Mixamo": 11,
+   "GPL": 2,
+   "OpenRAIL": 10,
+   "OFL": 1
+  },
+  "unknown": [
+   {
+    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "section": "넣은 파일 — **텍스처는 BaseColor 만** 골라 넣었다",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "section": "Lucide — UI 아이콘 (`js/icon.js` 안에 적혀 있다)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "section": "2026-09-05 세션이 마저 잡은 버그 둘",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "section": "버그 4 (같은 날 이어서 고침) — 옷을 입히면 걷는 동안 손·발이 소매·바지 끝에서 떨어진다",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "section": "재현 스크립트 (`assets/models/_mpfb_test/build_character.py`, 커밋 안 함 — 여기 전문을 남긴다)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "section": "2026-09-05(이어서) — 마을 사람 다양성 늘리기(3벌 추가, 4벌 중 하나는 새 버그로 뺌)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "section": "2026-09-05(또 이어서) — 남은 MPFB 스킨 열두 종을 예방적 마스킹으로 마저 뽑음",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "section": "밟은 함정 (다시 겪지 않도록)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "section": "VRM 애니메 아바타 가공 (2026-09-20)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-go/assets/ASSET_LICENSES.md",
+    "section": "VRM 애니메 아바타 d~z (`assets/models/people/anime/avatar_sample_d~z.glb`, 2026-10-02)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "section": "넣은 파일 — `js/asset3d.js` 의 `dg:` 로 묶은 표에 적혀 있다",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "section": "초·병 (2026-09-04, 계단 바로 다음)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "section": "진짜 버그 하나 잡음 — 초상 카메라가 모델 몸통 한복판에 있었다",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "section": "Lucide — UI 아이콘 (2026-09-08, `js/icon.js`)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "section": "캐릭터 13차분 — Ultimate Animated Character Pack 나머지 27벌 마저 (2026-09-09, 같은 세션 이어서)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "section": "같이 잡은 진짜 버그 — `monster:` 네임스페이스가 통째로 안 이어져 있었다",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-dungeon/assets/ASSET_LICENSES.md",
+    "section": "VRM 애니메 아바타 가공 (2026-09-20)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-forest/assets/ASSET_LICENSES.md",
+    "section": "VRM 애니메 아바타 가공 (2026-09-20)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-story/assets/ASSET_LICENSES.md",
+    "section": "넣은 파일 — PLAN 36절 Phase 2 (지형지물)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-story/assets/ASSET_LICENSES.md",
+    "section": "Lucide — UI 아이콘 (2026-09-08, `js/icon.js`)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-story/assets/ASSET_LICENSES.md",
+    "section": "VRM 애니메 아바타 가공 (2026-09-20)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-realm/assets/ASSET_LICENSES.md",
+    "section": "Quaternius — 지형·자연물 (`models/nature/`)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-web/saga-realm/assets/ASSET_LICENSES.md",
+    "section": "VRM 애니메 아바타 가공 (2026-09-20)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "폴더 매핑 (master.md 8장 구조와 다른 점만)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "텍스처 임포트 설정 (2026-09-11⑨, Mobile Performance Pass)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "쓴 파일과 실측값",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "마을집 — 처음엔 비균등 스케일, 지금은 실제 모듈 조립",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "새 GLB 하나를 더 추가할 때",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "검증",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "2026-09-13 — VRoid Studio 첫 캐릭터, 파이프라인 검증용 임시 에셋",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "2026-09-19 — Modular Cave 굴혈 mood 3(흙·석회·용암), 103-3 표",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "2026-09-20 — Quaternius 나무 5종 × GO/FOREST 팔레트 4종 스냅(103-5 3~4단계)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "2026-09-20 — Quaternius 나무 22종 전부 팔레트 스냅 완료(103-5 3~4단계 마무리)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "2026-09-20 — Quaternius 나머지 46종(잔디·꽃·이끼·바위) 확보(Standard 68/68 전부)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "2026-09-20 — Quaternius 바위 계열 대표 5종 팔레트 스냅(103-5 3~4단계)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "2026-09-20 — Quaternius 잔디·꽃·이끼 계열 대표 5종 팔레트 스냅(시험, 용도 미확정)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "2026-09-20 — Quaternius 바위 24종 전부 팔레트 스냅 완료",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "2026-09-20 — Quaternius 잔디·꽃 22종 전부 팔레트 스냅 완료 + 용도 판단",
+    "licenses": []
+   },
+   {
+    "doc": "saga-godot/docs/ASSET_GUIDE.md",
+    "section": "2026-09-22 — procgen 비석(stele)을 GO 폐허에 실제 배선(§8-1 재override)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-unity/docs/ASSET_GUIDE.md",
+    "section": "Unity에 GLB를 불러오려면 패키지가 하나 더 필요하다",
+    "licenses": []
+   },
+   {
+    "doc": "saga-unity/docs/ASSET_GUIDE.md",
+    "section": "실측값 (MeasureCharacterGlb.cs로 확인 후 삭제 — 일회성 도구)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-unity/docs/ASSET_GUIDE.md",
+    "section": "스케일·배치 — `CharacterVisual.cs`(공용 로직)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-unity/docs/ASSET_GUIDE.md",
+    "section": "GLB 에셋이 없을 때의 대비 — 폴백",
+    "licenses": []
+   },
+   {
+    "doc": "saga-unity/docs/ASSET_GUIDE.md",
+    "section": "산신당 재설계 (2026-09-12, 환경/건물 GLB 다음 후속 조각)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-unity/docs/ASSET_GUIDE.md",
+    "section": "DUNGEON 환경/건물 GLB (2026-09-12, 여섯 번째 세션)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-unity/docs/ASSET_GUIDE.md",
+    "section": "DUNGEON 방 셸 GLB (2026-09-12, 여덟 번째 세션 — 위 절 뒤이음)",
+    "licenses": []
+   },
+   {
+    "doc": "saga-unity/docs/ASSET_GUIDE.md",
+    "section": "이번에 발견해 같이 고친 것 — Awake() 중복 생성",
+    "licenses": []
+   },
+   {
+    "doc": "saga-unity/docs/ASSET_GUIDE.md",
+    "section": "정정(2026-09-13, 같은 날 다시) — saga-unity는 원신이 아니라 사실적 방향",
+    "licenses": []
+   }
+  ]
+ }
+}
