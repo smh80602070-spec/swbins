@@ -303,6 +303,82 @@ def trees(n, zmin, zmax, ymin, ymax, avoid=()):
             break
 
 
+def mat_simple(name, color, rough=0.8, emit=None, strength=0.0):
+    m = bpy.data.materials.get(name)
+    if m is None:
+        m = bpy.data.materials.new(name)
+        m.use_nodes = True
+        bs = next(n for n in m.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
+        bs.inputs['Base Color'].default_value = color
+        bs.inputs['Roughness'].default_value = rough
+        if emit:
+            bs.inputs['Emission Color'].default_value = emit
+            bs.inputs['Emission Strength'].default_value = strength
+    return m
+
+
+def rock(x, y, z, s):
+    import bmesh
+    me = bpy.data.meshes.new('rock')
+    o = bpy.data.objects.new('rock', me)
+    sc.collection.objects.link(o)
+    bm = bmesh.new()
+    bmesh.ops.create_icosphere(bm, subdivisions=2, radius=1.0)
+    for v in bm.verts:
+        v.co *= rng.uniform(0.75, 1.15)
+    bm.to_mesh(me)
+    bm.free()
+    o.scale = (s * rng.uniform(1.0, 1.6), s * rng.uniform(0.8, 1.3), s * rng.uniform(0.5, 0.9))
+    o.location = (x, y, z + s * 0.1)
+    o.rotation_euler = (0, 0, rng.uniform(0, 6.28))
+    for p_ in me.polygons:
+        p_.use_smooth = True
+    o.data.materials.append(mat_simple('rockm', (0.045, 0.05, 0.055, 1), 0.85))
+
+
+def reeds(n, xmin, xmax, ymin, ymax):
+    m = mat_simple('reed', (0.03, 0.07, 0.04, 1), 0.9)
+    c = 0
+    for _ in range(3000):
+        x, y = rng.uniform(xmin, xmax), rng.uniform(ymin, ymax)
+        z = ground_z(x, y)
+        if z is None or not (-0.35 <= z <= 0.9):
+            continue
+        for k in range(rng.randint(6, 11)):
+            h = rng.uniform(1.0, 2.2)
+            ox, oy = rng.uniform(-0.35, 0.35), rng.uniform(-0.35, 0.35)
+            bpy.ops.mesh.primitive_cone_add(vertices=4, radius1=0.035, radius2=0.0, depth=h, location=(x + ox, y + oy, z + h / 2 - 0.05))
+            o = bpy.context.object
+            o.rotation_euler = (rng.uniform(-0.25, 0.25), rng.uniform(-0.25, 0.25), 0)
+            o.data.materials.append(m)
+        c += 1
+        if c >= n:
+            break
+
+
+def fireflies(n):
+    m = mat_simple('firefly', (1, 0.9, 0.5, 1), 0.5, (0.85, 1.0, 0.35, 1), 14.0)
+    for _ in range(n):
+        x, y = rng.uniform(-24, 14), rng.uniform(-14, 4)
+        z = rng.uniform(0.7, 3.8)
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=rng.uniform(0.018, 0.04), segments=8, ring_count=6, location=(x, y, z))
+        bpy.context.object.data.materials.append(m)
+
+
+def pier(x0, y0, length, z):
+    wood = mat_simple('wood', (0.09, 0.05, 0.03, 1), 0.85)
+    for i in range(int(length / 0.45)):
+        bpy.ops.mesh.primitive_cube_add(size=1, location=(x0, y0 + 0.45 * i, z))
+        o = bpy.context.object
+        o.scale = (1.4, 0.2, 0.05)
+        o.data.materials.append(wood)
+    for i in range(0, int(length / 0.45), 4):
+        for sx in (-0.65, 0.65):
+            bpy.ops.mesh.primitive_cylinder_add(vertices=6, radius=0.07, depth=1.6, location=(x0 + sx, y0 + 0.45 * i, z - 0.55))
+            bpy.context.object.data.materials.append(wood)
+    return y0 + 0.45 * int(length / 0.45)
+
+
 def galaxy_ferry():
     sky_world()
     lake_terrain()
@@ -311,11 +387,11 @@ def galaxy_ferry():
     w = water(220, wz)
     w.name = 'water_plane'
     bpy.context.view_layer.update()
-    houses = spots(6, 1.0, 5.0, 24, 42, 8)
+    houses = spots(9, 1.0, 5.5, 23, 46, 6.5)
     trees(170, 0.8, 9.0, 22, 60, avoid=[(x, y) for x, y, _ in houses])
     # 건너편 언덕 위 한옥 마을
     for x, y, z in houses:
-        h, objs = place('hanok_01', (x, y, z - 0.15), rot=rng.uniform(-0.5, 0.5), scale=rng.uniform(0.9, 1.4))
+        h, objs = place(rng.choice(['hanok_01', 'hanok_01', 'forest_cottage_01', 'jp_minka_01']), (x, y, z - 0.15), rot=rng.uniform(-0.5, 0.5), scale=rng.uniform(0.9, 1.4))
         emissive(objs, (1.0, 0.6, 0.28, 1), 0.35)
         point((x, y - 1.5, z + 2.4), (1.0, 0.6, 0.28), 160, 0.7)
     # 가까운 둑 가장자리의 돌등롱 줄 — 따뜻한 빛, 물 위로 번진다
@@ -328,8 +404,20 @@ def galaxy_ferry():
         h, objs = place('stone_lantern_01', (x, y, z), rot=rng.uniform(0, 6.28), scale=1.0)
         emissive(objs, (1.0, 0.5, 0.18, 1), 1.3)
         point((x, y - 0.3, z + 1.6), (1.0, 0.62, 0.28), 80, 0.2)
+    reeds(26, -30, 24, -7, 0.5)
+    for _ in range(9):
+        x, y = rng.uniform(-26, 22), rng.uniform(-12, -4)
+        z = ground_z(x, y)
+        if z is not None:
+            rock(x, y, z, rng.uniform(0.35, 1.0))
+    ye = pier(7.0, -2.5, 9.0, 0.35)
+    h, objs = place('stone_lantern_01', (7.0, ye - 0.2, 0.4), rot=0.0, scale=1.0)
+    emissive(objs, (1.0, 0.5, 0.18, 1), 1.3)
+    point((7.0, ye - 0.2, 2.0), (1.0, 0.62, 0.3), 90, 0.2)
+    fireflies(45)
     # 물 위의 배와 뗏목
-    place('sail_boat_01', (4.5, 11.0, wz - 0.1), rot=0.6, scale=1.1)
+    place('sail_boat_01', (9.2, 5.0, wz - 0.1), rot=1.2, scale=1.0)
+    place('sail_boat_01', (4.5, 14.0, wz - 0.1), rot=0.6, scale=1.1)
     place('raft_01', (-8.0, 7.0, wz - 0.1), rot=-0.4, scale=1.1)
     place('sail_boat_01', (-14.0, 17.0, wz - 0.1), rot=2.3, scale=0.9)
     sun = bpy.data.lights.new('moon', 'SUN')
@@ -357,7 +445,7 @@ def galaxy_ferry():
     mb = next(x for x in mm.node_tree.nodes if x.type == 'BSDF_PRINCIPLED')
     mb.inputs['Base Color'].default_value = (0.9, 0.95, 1.0, 1)
     mb.inputs['Emission Color'].default_value = (0.85, 0.92, 1.0, 1)
-    mb.inputs['Emission Strength'].default_value = 6.0
+    mb.inputs['Emission Strength'].default_value = 14.0
     mo.data.materials.append(mm)
     camera((-19.0, -13.0, 2.6), (5.0, 24, 6.0), lens=24)
 
