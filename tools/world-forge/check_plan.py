@@ -1,0 +1,67 @@
+"""world-forge 판별 세트표 점검 (K-0017) — data/set_plan.json 이 규칙을 지키는지, 만든 산출이 표와 맞는지 센다.
+
+  py tools/world-forge/check_plan.py            표만 점검(칸 수·id·기존 레시피 존재·이름 규칙)
+  py tools/world-forge/check_plan.py --out DIR  + 산출 폴더(기본 _out/set)에 id 별 .glb·.license.json 이 있는지 센다
+끝 줄 `PLAN_OK slots=N assets=M new=K` 또는 `PLAN_FAIL …`. 종료 0/1.
+"""
+import json
+import os
+import re
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+KINDS = {'building': 3, 'prop': 3, 'terrain': 2, 'vehicle': 1}
+ERAS = {'past', 'present', 'future'}
+FAIL = []
+
+
+def bad(msg):
+    FAIL.append(msg)
+
+
+def main():
+    plan = json.load(open(os.path.join(HERE, 'data', 'set_plan.json'), encoding='utf-8'))
+    games = plan['games']
+    if sorted(games) != ['dungeon', 'forest', 'go', 'realm', 'story']:
+        bad(f'판이 다섯이 아니다: {sorted(games)}')
+    slots, seen = 0, {}
+    for g, spec in games.items():
+        for kind, want in KINDS.items():
+            items = spec.get(kind, [])
+            if len(items) != want:
+                bad(f'{g}.{kind}: {len(items)}개 (규칙 {want})')
+            for it in items:
+                slots += 1
+                i = it['id']
+                if not re.fullmatch(r'[a-z0-9_]+', i):
+                    bad(f'{g}.{kind}.{i}: id 는 영문 소문자·숫자·_')
+                if kind in ('building', 'prop') and it.get('era') not in ERAS:
+                    bad(f'{g}.{kind}.{i}: era 가 past/present/future 가 아니다')
+                if it.get('state') not in ('exists', 'new'):
+                    bad(f'{g}.{kind}.{i}: state 는 exists/new')
+                if i in seen and seen[i][0] != kind:
+                    bad(f'{i}: 종류가 둘({seen[i][0]}·{kind})')
+                if i in seen and seen[i][1] != it.get('state'):
+                    bad(f'{i}: 같은 id 의 state 가 다르다')
+                seen.setdefault(i, (kind, it.get('state')))
+                has = os.path.exists(os.path.join(HERE, 'recipes', i + '.json'))
+                if kind == 'building' and it.get('state') == 'exists' and not has:
+                    bad(f'{g}.building.{i}: exists 인데 recipes/{i}.json 이 없다')
+                if it.get('state') == 'new' and kind == 'building' and has:
+                    bad(f'{g}.building.{i}: new 인데 이미 recipes/ 에 있다')
+    new = sum(1 for k, s in seen.values() if s == 'new')
+    if '--out' in sys.argv:
+        out = sys.argv[sys.argv.index('--out') + 1]
+        out = out if os.path.isabs(out) else os.path.join(HERE, out)
+        miss = [i for i in seen if not (os.path.exists(os.path.join(out, i + '.glb')) and os.path.exists(os.path.join(out, i + '.license.json')))]
+        print(f'산출 {len(seen) - len(miss)}/{len(seen)} (glb+license.json), 없는 것 {len(miss)}')
+        if miss and '--strict' in sys.argv:
+            bad(f'산출 없음 {len(miss)}: {", ".join(miss[:8])}...')
+    for m in FAIL:
+        print('FAIL', m)
+    print(f'{"PLAN_FAIL" if FAIL else "PLAN_OK"} slots={slots} assets={len(seen)} new={new}')
+    sys.exit(1 if FAIL else 0)
+
+
+if __name__ == '__main__':
+    main()

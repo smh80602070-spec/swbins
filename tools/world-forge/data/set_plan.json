@@ -1,0 +1,98 @@
+{
+ "version": 1,
+ "note": "K-0017 단계 1 — 판 5 × (건물 3 · 지물 3 · 지형 2 · 탈것 1) = 45칸. 같은 id 는 한 번만 만든다(건물은 기존 레시피 재사용). 이름 정책: 원작 이름 없음, id 는 일반 명사. exists = recipes/ 에 이미 있음, new = 만들 것.",
+ "budget": {"toon_glb_mb": 0.5, "toon_tris": 5000, "sprite_px": [128, 256], "tex_px": 256},
+ "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py"},
+ "games": {
+  "go": {
+   "theme": "시대 혼합 마을(과거·현대·미래 한 자리)",
+   "building": [
+    {"id": "eu_house_01", "era": "past", "state": "exists"},
+    {"id": "modern_block_01", "era": "present", "state": "exists"},
+    {"id": "future_dome_01", "era": "future", "state": "new", "hint": "반구 지붕 + 띠창 주거동"}
+   ],
+   "prop": [
+    {"id": "well_01", "era": "past", "state": "new", "hint": "돌 우물 + 두레박 지붕"},
+    {"id": "street_lamp_01", "era": "present", "state": "new", "hint": "가로등"},
+    {"id": "signal_pylon_01", "era": "future", "state": "new", "hint": "빛나는 안내 기둥"}
+   ],
+   "terrain": [
+    {"id": "river_bend_01", "state": "new", "hint": "굽이 강 조각(높이맵+침식)"},
+    {"id": "ridge_01", "state": "new", "hint": "능선 조각"}
+   ],
+   "vehicle": [{"id": "sail_boat_01", "state": "new", "hint": "돛단배"}]
+  },
+  "dungeon": {
+   "theme": "성채·신전·던전 입구",
+   "building": [
+    {"id": "stone_tower_01", "era": "past", "state": "exists"},
+    {"id": "chinese_hall_01", "era": "past", "state": "exists", "hint": "신전 전각으로 재사용"},
+    {"id": "dungeon_gate_01", "era": "past", "state": "new", "hint": "바위 아치 + 계단 입구"}
+   ],
+   "prop": [
+    {"id": "torch_stand_01", "era": "past", "state": "new", "hint": "횃불 기둥"},
+    {"id": "altar_01", "era": "past", "state": "new", "hint": "돌 제단"},
+    {"id": "iron_fence_01", "era": "past", "state": "new", "hint": "쇠창살 울타리"}
+   ],
+   "terrain": [
+    {"id": "cave_floor_01", "state": "new", "hint": "동굴 바닥 조각"},
+    {"id": "rock_outcrop_01", "state": "new", "hint": "바위 노두 조각"}
+   ],
+   "vehicle": [{"id": "mine_cart_01", "state": "new", "hint": "광차"}]
+  },
+  "forest": {
+   "theme": "마을 집·가게·오두막",
+   "building": [
+    {"id": "forest_cottage_01", "era": "past", "state": "exists"},
+    {"id": "inn_01", "era": "past", "state": "exists", "hint": "가게로 재사용"},
+    {"id": "barn_01", "era": "past", "state": "exists"}
+   ],
+   "prop": [
+    {"id": "wood_fence_01", "era": "past", "state": "new", "hint": "나무 울타리 한 칸"},
+    {"id": "mailbox_01", "era": "past", "state": "new", "hint": "우체통"},
+    {"id": "haystack_01", "era": "past", "state": "new", "hint": "건초 더미"}
+   ],
+   "terrain": [
+    {"id": "meadow_01", "state": "new", "hint": "풀밭 조각"},
+    {"id": "pond_01", "state": "new", "hint": "연못 조각"}
+   ],
+   "vehicle": [{"id": "raft_01", "state": "new", "hint": "뗏목"}]
+  },
+  "story": {
+   "theme": "횡스크롤 배경 건물(시대 혼합)",
+   "building": [
+    {"id": "hanok_01", "era": "past", "state": "exists"},
+    {"id": "jp_minka_01", "era": "past", "state": "exists"},
+    {"id": "modern_block_01", "era": "present", "state": "exists", "hint": "사가고와 같은 파일"}
+   ],
+   "prop": [
+    {"id": "bamboo_clump_01", "era": "past", "state": "new", "hint": "대나무 무리"},
+    {"id": "stele_01", "era": "past", "state": "new", "hint": "비석"},
+    {"id": "stone_lantern_01", "era": "past", "state": "new", "hint": "돌 등롱"}
+   ],
+   "terrain": [
+    {"id": "cliff_ledge_01", "state": "new", "hint": "절벽 턱 조각"},
+    {"id": "hill_slope_01", "state": "new", "hint": "언덕 비탈 조각"}
+   ],
+   "vehicle": [{"id": "ox_cart_01", "state": "new", "hint": "소달구지"}]
+  },
+  "realm": {
+   "theme": "성벽·성문·궁·서역 도시",
+   "building": [
+    {"id": "chinese_hall_01", "era": "past", "state": "exists", "hint": "궁 전각, 사가블로와 같은 파일"},
+    {"id": "stone_tower_01", "era": "past", "state": "exists", "hint": "성문 망루, 사가블로와 같은 파일"},
+    {"id": "silkroad_house_01", "era": "past", "state": "new", "hint": "서역 흙벽 평지붕 집"}
+   ],
+   "prop": [
+    {"id": "banner_pole_01", "era": "past", "state": "new", "hint": "깃발 기둥(무늬 없는 천)"},
+    {"id": "city_wall_segment_01", "era": "past", "state": "new", "hint": "성벽 한 토막 + 총안"},
+    {"id": "brazier_01", "era": "past", "state": "new", "hint": "화로"}
+   ],
+   "terrain": [
+    {"id": "dune_01", "state": "new", "hint": "모래 언덕 조각"},
+    {"id": "road_plain_01", "state": "new", "hint": "평원 길 조각"}
+   ],
+   "vehicle": [{"id": "caravan_wagon_01", "state": "new", "hint": "대상 수레"}]
+  }
+ }
+}
