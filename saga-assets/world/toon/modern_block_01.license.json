@@ -1,0 +1,19 @@
+{
+ "id": "modern_block_01",
+ "generator": "tools/world-forge/build_building.py",
+ "blender": "5.2.1 LTS",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0)",
+ "inputs": [
+  "polyhaven: door",
+  "polyhaven: glass",
+  "polyhaven: roof",
+  "polyhaven: trim",
+  "polyhaven: wall"
+ ],
+ "size_m": [
+  12.0,
+  9.0,
+  10.15
+ ],
+ "tris": 2900
+}

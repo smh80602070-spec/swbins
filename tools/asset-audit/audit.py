@@ -41,6 +41,7 @@ GENERIC = {'assets', 'models', 'textures', 'texture', 'audio', 'sfx', 'bgm', 'sp
 # 우리 도구가 구운 것 — 출처 문서 대조에서 뺀다(asset-forge → generated/, bake-portraits → portraits/)
 SELF_MADE = ['/generated/', '/portraits/']
 BUDGET = {'glb_mb': 5, 'tris': 50000, 'tex_px': 2048}
+PEOPLE_TRIS = 65000   # 뼈 있는 사람 몸(VRoid 등 `/people/`·characters_vroid)은 줄이면 관절이 틀어져 예외 허용치(사용자 2026-10-02, K-0016 A)
 # 인물·동작 출처(char-forge README §7 단계 5 "상용 문턱") — Mixamo 는 재배포 금지·Adobe 약관 의존이라 게임이 쓰면 🔴.
 # VRoid 는 D4(09-25)로 godot 몸 정본이라 VRM 메타의 상업·재배포 허가로 판정한다. 공방(char-forge) 몸은 옆에 *.license.json(CC0) 필수.
 MIXAMO = RESTRICTED
@@ -460,8 +461,9 @@ def audit(sel, game, want_md5=True, quick=None):
                         issue('decoder', rp, f"{', '.join(miss)} 로 압축됐는데 이 판 js 에 디코더 배선이 없다", tid)
                     if size > BUDGET['glb_mb'] << 20:
                         issue('heavy', rp, f"{size / 2**20:.1f}MB > {BUDGET['glb_mb']}MB (폰 첫 로드) — tools/glb-compress", tid)
-                    if gi.get('tris', 0) > BUDGET['tris']:
-                        issue('heavy', rp, f"삼각형 {gi['tris']:,} > {BUDGET['tris']:,}", tid)
+                    tri_cap = PEOPLE_TRIS if ('/people/' in rp or '/characters_vroid/' in rp) else BUDGET['tris']
+                    if gi.get('tris', 0) > tri_cap:
+                        issue('heavy', rp, f"삼각형 {gi['tris']:,} > {tri_cap:,}", tid)
                     if gi.get('maxpx', 0) > BUDGET['tex_px']:
                         issue('heavy', rp, f"내장 텍스처 {gi['maxpx']}px > {BUDGET['tex_px']}px", tid)
             elif ext in IMAGE:

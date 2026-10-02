@@ -1,0 +1,20 @@
+{
+ "id": "dungeon_gate_01",
+ "generator": "tools/world-forge/build_building.py",
+ "blender": "5.2.1 LTS",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0)",
+ "inputs": [
+  "polyhaven: base",
+  "polyhaven: door",
+  "polyhaven: glass",
+  "polyhaven: roof",
+  "polyhaven: trim",
+  "polyhaven: wall"
+ ],
+ "size_m": [
+  10.0,
+  6.0,
+  8.3
+ ],
+ "tris": 1636
+}

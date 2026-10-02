@@ -135,6 +135,58 @@
      ]
     }
    ]
+  },
+  {
+   "id": "world-toon",
+   "src": "saga-assets/world/toon",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/world",
+     "sidecar": [
+      ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/World",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "world-web",
+   "src": "saga-assets/world/web",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/world3d"
+    }
+   ]
+  },
+  {
+   "id": "world-sprite",
+   "src": "saga-assets/world/sprite",
+   "include": [
+    "*.webp",
+    "*.license.json"
+   ],
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/world2d"
+    }
+   ]
   }
  ]
 }
