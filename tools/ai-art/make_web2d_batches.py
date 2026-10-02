@@ -16,6 +16,8 @@ PLAN = json.load(open(os.path.join(HERE, 'data', 'web2d_plan.json'), encoding='u
 def batch(kind, model, out, style, items):
     defaults = {'prompt_prefix': style['prefix'], 'width': style['width'], 'height': style['height'], 'steps': style['steps'],
                 'cfg': style['cfg'], 'sampler': style['sampler'], 'negative': style['negative']}
+    if style.get('tiling'):
+        defaults['tiling'] = True
     path = os.path.join(HERE, 'batches', out + '.json')
     json.dump({'model': model, 'out': out, 'defaults': defaults, 'items': items}, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('BATCH', out, len(items))
@@ -31,7 +33,11 @@ def main():
                 bg.append({'id': f'bg_{g}_{r["id"]}_{k}', 'seed': 20261002 + 29 * n, 'prompt': r['prompt']})
         for t in spec['tiles']:
             n += 1
-            tiles.append({'id': f'tile_{g}_{t["id"]}', 'seed': 20261002 + 29 * n, 'prompt': t['prompt']})
+            it = {'id': f'tile_{g}_{t["id"]}', 'seed': 20261002 + 29 * n, 'prompt': t['prompt']}
+            ts = PLAN['tile_style']
+            if t['id'] in ts.get('nogrid_kinds', []):
+                it['negative'] = ts['negative'] + ', ' + ts['negative_nogrid']
+            tiles.append(it)
     batch('bg', PLAN['models']['bg'], 'web2d_bg', PLAN['bg_style'], bg)
     batch('tile', PLAN['models']['tile'], 'web2d_tiles', PLAN['tile_style'], tiles)
 

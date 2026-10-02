@@ -24,15 +24,22 @@ def bad(m):
 
 
 def edge_diff(path, vertical=False):
+    """이음매 판정값 → (이음매 평균차, 허용값). 허용 = max(한도, 1.35 × 그 그림의 자연 이웃 열·행 평균차).
+    모래·돌처럼 알갱이가 거친 그림은 이음매가 없어도 이웃 열 차이가 크다(절대값 8 은 매끈한 그림에만 맞는다, 2026-10-02 실측)."""
     im = Image.open(path).convert('RGBA')
     a = np.asarray(im).astype(np.float32)
-    pairs = [(a[:, 0], a[:, -1])] + ([(a[0], a[-1])] if vertical else [])
-    worst = 0.0
-    for x, y in pairs:
+    pairs = [(a[:, 0], a[:, -1], np.abs(np.diff(a[:, :, :3], axis=1)).mean())]
+    if vertical:
+        pairs.append((a[0], a[-1], np.abs(np.diff(a[:, :, :3], axis=0)).mean()))
+    worst, allow = 0.0, 0.0
+    for x, y, nat in pairs:
         m = (x[:, 3] > 8) & (y[:, 3] > 8)
         if m.any():
-            worst = max(worst, float(np.abs(x[m, :3] - y[m, :3]).mean()))
-    return worst
+            s = float(np.abs(x[m, :3] - y[m, :3]).mean())
+            lim = max(float(PLAN['budget']['seam_max_diff']), 1.35 * float(nat))
+            if s - lim > worst - allow:
+                worst, allow = s, lim
+    return worst, allow
 
 
 def main():
@@ -62,7 +69,6 @@ def main():
 
     if '--final' in sys.argv:
         root = sys.argv[sys.argv.index('--final') + 1]
-        lim = PLAN['budget']['seam_max_diff']
         want_bg = [f'{g}_{r}_{l}' for g, r in regions for l in layers]
         want_tile = [f'{g}_{t}' for g, t in tiles]
         per_game, total = {}, 0
@@ -77,15 +83,15 @@ def main():
                 sz = os.path.getsize(p)
                 per_game[i.split('_')[0]] = per_game.get(i.split('_')[0], 0) + sz
                 total += sz
-                d = edge_diff(p, vertical=vert)
+                d, allow = edge_diff(p, vertical=vert)
                 worst = max(worst, d)
-                if d > lim:
-                    bad(f'이음매 {sub}/{i}: 평균차 {d:.1f} > {lim}')
+                if d > allow:
+                    bad(f'이음매 {sub}/{i}: 평균차 {d:.1f} > 허용 {allow:.1f}')
             print(f'final {sub}: {have}/{len(want)}')
             if have != len(want):
                 bad(f'{sub} 최종 {len(want) - have}장 빠짐')
         mb = {g: round(v / 1048576, 2) for g, v in per_game.items()}
-        print(f'용량 판별 MB {mb} · 합계 {total / 1048576:.1f}MB · 이음매 최대 평균차 {worst:.1f}/255')
+        print(f'용량 판별 MB {mb} · 합계 {total / 1048576:.1f}MB · 이음매 최대 평균차 {worst:.1f}/255(허용은 그림마다 max(8, 1.35×자연 이웃차))')
         for g, v in per_game.items():
             if v / 1048576 > PLAN['budget']['per_game_mb']:
                 bad(f'{g} {v / 1048576:.1f}MB > {PLAN["budget"]["per_game_mb"]}MB')

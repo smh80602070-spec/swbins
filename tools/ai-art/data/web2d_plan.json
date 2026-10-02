@@ -1,103 +1,282 @@
 {
  "version": 1,
- "note": "K-0020 단계 1 — 웹 2D 모드 전체 에셋 판별 세트표. 판 5 × (배경 지역 4 × 층 3겹 + 바닥 타일 6) = 배경 20지역(후보 2장씩 40장 → 고른 20 × 3겹 = 60장) + 타일 30장. 시대 혼합(과거·현대·미래 한 자리), 사람·원작 이름 없음.",
- "models": {"bg": "Illustrious-XL-v2.0", "tile": "sd_xl_base_1.0"},
- "layers": ["far", "mid", "near"],
- "budget": {"per_game_mb": 6, "total_mb": 30, "seam_max_diff": 8, "bg_candidates": 2},
+ "note": "K-0020 단계 1 — 웹 2D 모드 전체 에셋 판별 세트표. 판 5 × (배경 지역 4 × 층 3겹 + 바닥 타일 6) = 배경 20지역(후보 2장씩 40장 → 고른 20 × 3겹 = 60장) + 타일 30장. 시대 혼합(과거·현대·미래 한 자리), 사람·원작 이름 없음. 타일: SD tiling 옵션은 이 PC(ROCm)에서 알 수 없는 무늬의 쓰레기 그림을 만들어 폐기(2026-10-02). 일반 생성 + 이음매는 크로스페이드, 실패하면 거울 반복(이음매 차이 0). 모래·눈 일부가 네모 칸 격자로 나와 격자 방지 부정 프롬프트(negative_nogrid)로 다시 만들었다.",
+ "models": {
+  "bg": "Illustrious-XL-v2.0",
+  "tile": "sd_xl_base_1.0"
+ },
+ "layers": [
+  "far",
+  "mid",
+  "near"
+ ],
+ "budget": {
+  "per_game_mb": 6,
+  "total_mb": 30,
+  "seam_max_diff": 8,
+  "bg_candidates": 2
+ },
  "bg_style": {
   "prefix": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game background",
   "negative": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up",
-  "width": 1024, "height": 576, "steps": 28, "cfg": 5.5, "sampler": "Euler a"
+  "width": 1024,
+  "height": 576,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a"
  },
  "tile_style": {
   "prefix": "seamless tileable ground texture swatch, flat orthographic material, hand painted game texture, even lighting, no objects",
   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality",
-  "width": 640, "height": 640, "steps": 30, "cfg": 6.5, "sampler": "Euler a"
+  "width": 640,
+  "height": 640,
+  "steps": 30,
+  "cfg": 6.5,
+  "sampler": "Euler a",
+  "tiling": false,
+  "negative_nogrid": "grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines",
+  "nogrid_kinds": [
+   "grass",
+   "dirt",
+   "sand",
+   "snow",
+   "water"
+  ]
  },
  "games": {
   "go": {
    "theme": "시대 혼합 마을·포구·폐허·고원(들판 지도 바이옴)",
    "bg": [
-    {"id": "village_plaza", "prompt": "mixed era village plaza at morning, old timber houses beside modern glass shops and small glowing hover pods, stone well, banners, warm sunlight, distant hills"},
-    {"id": "coast_harbor", "prompt": "harbor town at dusk, wooden sailing ships beside a tall space elevator, lanterns on piers, purple orange sunset sky, calm sea"},
-    {"id": "ruin_fields", "prompt": "overgrown ancient ruins in a wide field, broken stone arches, rusted futuristic machine fragments, wildflowers, soft mist, golden hour"},
-    {"id": "highland_plateau", "prompt": "windy highland plateau, stone watchtower, wind turbines and ancient standing stones, wide sky with drifting clouds, far snowy peaks"}
+    {
+     "id": "village_plaza",
+     "prompt": "mixed era village plaza at morning, old timber houses beside modern glass shops and small glowing hover pods, stone well, banners, warm sunlight, distant hills"
+    },
+    {
+     "id": "coast_harbor",
+     "prompt": "harbor town at dusk, wooden sailing ships beside a tall space elevator, lanterns on piers, purple orange sunset sky, calm sea"
+    },
+    {
+     "id": "ruin_fields",
+     "prompt": "overgrown ancient ruins in a wide field, broken stone arches, rusted futuristic machine fragments, wildflowers, soft mist, golden hour"
+    },
+    {
+     "id": "highland_plateau",
+     "prompt": "windy highland plateau, stone watchtower, wind turbines and ancient standing stones, wide sky with drifting clouds, far snowy peaks"
+    }
    ],
    "tiles": [
-    {"id": "grass", "prompt": "lush green grass ground, small clover leaves, even lighting"},
-    {"id": "dirt", "prompt": "packed brown dirt road ground with small pebbles and wheel ruts"},
-    {"id": "stone", "prompt": "old grey cobblestone plaza pavement mixed with a few smooth concrete slabs"},
-    {"id": "sand", "prompt": "pale coast sand ground with tiny shells and soft ripples"},
-    {"id": "snow", "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles"},
-    {"id": "water", "prompt": "calm turquoise shallow river water surface texture, soft ripples and light caustics, seen from above"}
+    {
+     "id": "grass",
+     "prompt": "lush green grass ground, small clover leaves, even lighting"
+    },
+    {
+     "id": "dirt",
+     "prompt": "packed brown dirt road ground with small pebbles and wheel ruts"
+    },
+    {
+     "id": "stone",
+     "prompt": "old grey cobblestone plaza pavement mixed with a few smooth concrete slabs"
+    },
+    {
+     "id": "sand",
+     "prompt": "pale coast sand ground with tiny shells and soft ripples"
+    },
+    {
+     "id": "snow",
+     "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles"
+    },
+    {
+     "id": "water",
+     "prompt": "calm turquoise shallow river water surface texture, soft ripples and light caustics, seen from above"
+    }
    ]
   },
   "dungeon": {
    "theme": "층 테마: 능묘·성채 석실·암흑가 골목·기계 금고",
    "bg": [
-    {"id": "catacomb_hall", "prompt": "vast underground catacomb hall, rows of stone sarcophagi, blue ghost flames in iron braziers, cracked pillars, deep fog"},
-    {"id": "stone_keep", "prompt": "grand stone keep interior hall, torches along massive walls, red banners without symbols, high vaulted ceiling, dust in light beams"},
-    {"id": "neon_alley", "prompt": "narrow back alley at night after rain, neon signs without letters, steam vents, wet pavement reflections, brick walls, distant skyline"},
-    {"id": "machine_vault", "prompt": "enormous underground machine vault, giant gears and cooling pipes, cyan indicator lights, metal catwalks, hazy blue light"}
+    {
+     "id": "catacomb_hall",
+     "prompt": "vast underground catacomb hall, rows of stone sarcophagi, blue ghost flames in iron braziers, cracked pillars, deep fog"
+    },
+    {
+     "id": "stone_keep",
+     "prompt": "grand stone keep interior hall, torches along massive walls, red banners without symbols, high vaulted ceiling, dust in light beams"
+    },
+    {
+     "id": "neon_alley",
+     "prompt": "narrow back alley at night after rain, neon signs without letters, steam vents, wet pavement reflections, brick walls, distant skyline"
+    },
+    {
+     "id": "machine_vault",
+     "prompt": "enormous underground machine vault, giant gears and cooling pipes, cyan indicator lights, metal catwalks, hazy blue light"
+    }
    ],
    "tiles": [
-    {"id": "grass", "prompt": "dark damp cave moss ground, short green moss over wet stone, even lighting"},
-    {"id": "dirt", "prompt": "dry crypt dust floor, grey brown dust with small bone fragments and cracks"},
-    {"id": "stone", "prompt": "large dark flagstone hall floor, worn carved edges, faint cracks"},
-    {"id": "sand", "prompt": "pale bone-white gravel sand floor with small pebbles"},
-    {"id": "snow", "prompt": "frozen ice floor with fine cracks, pale blue, tiny frost crystals"},
-    {"id": "water", "prompt": "dark still underground pool water surface texture, faint teal glow, soft ripples, seen from above"}
+    {
+     "id": "grass",
+     "prompt": "dark damp cave moss ground, short green moss over wet stone, even lighting"
+    },
+    {
+     "id": "dirt",
+     "prompt": "dry crypt dust floor, grey brown dust with small bone fragments and cracks"
+    },
+    {
+     "id": "stone",
+     "prompt": "large dark flagstone hall floor, worn carved edges, faint cracks"
+    },
+    {
+     "id": "sand",
+     "prompt": "pale bone-white gravel sand floor with small pebbles"
+    },
+    {
+     "id": "snow",
+     "prompt": "frozen ice floor with fine cracks, pale blue, tiny frost crystals"
+    },
+    {
+     "id": "water",
+     "prompt": "dark still underground pool water surface texture, faint teal glow, soft ripples, seen from above"
+    }
    ]
   },
   "forest": {
    "theme": "계절 마을: 봄 마을·여름 숲·가을 과수원·겨울 호수",
    "bg": [
-    {"id": "spring_village", "prompt": "spring countryside village, thatched cottages and a small solar windmill, cherry blossom trees, flower meadow, soft pastel sky"},
-    {"id": "summer_grove", "prompt": "lush summer forest grove, sunbeams through tall trees, mushroom ring, old stone bridge over a stream, fireflies, vivid greens"},
-    {"id": "autumn_orchard", "prompt": "autumn orchard hillside, red and gold leaves, wooden crates of apples, scarecrow, wind chimes, low warm sun"},
-    {"id": "winter_lake", "prompt": "frozen winter lake at dusk, snow covered cabins, glowing lantern posts, frosted pines, aurora faintly in the sky"}
+    {
+     "id": "spring_village",
+     "prompt": "spring countryside village, thatched cottages and a small solar windmill, cherry blossom trees, flower meadow, soft pastel sky"
+    },
+    {
+     "id": "summer_grove",
+     "prompt": "lush summer forest grove, sunbeams through tall trees, mushroom ring, old stone bridge over a stream, fireflies, vivid greens"
+    },
+    {
+     "id": "autumn_orchard",
+     "prompt": "autumn orchard hillside, red and gold leaves, wooden crates of apples, scarecrow, wind chimes, low warm sun"
+    },
+    {
+     "id": "winter_lake",
+     "prompt": "frozen winter lake at dusk, snow covered cabins, glowing lantern posts, frosted pines, aurora faintly in the sky"
+    }
    ],
    "tiles": [
-    {"id": "grass", "prompt": "fresh spring meadow grass ground with tiny white flowers, even lighting"},
-    {"id": "dirt", "prompt": "soft brown forest path dirt with fallen leaves and small roots"},
-    {"id": "stone", "prompt": "mossy stepping stone path pavement with grass between stones"},
-    {"id": "sand", "prompt": "light riverbank sand and fine gravel ground"},
-    {"id": "snow", "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles"},
-    {"id": "water", "prompt": "clear green pond water surface texture, floating tiny leaves, soft ripples, seen from above"}
+    {
+     "id": "grass",
+     "prompt": "fresh spring meadow grass ground with tiny white flowers, even lighting"
+    },
+    {
+     "id": "dirt",
+     "prompt": "soft brown forest path dirt with fallen leaves and small roots"
+    },
+    {
+     "id": "stone",
+     "prompt": "mossy stepping stone path pavement with grass between stones"
+    },
+    {
+     "id": "sand",
+     "prompt": "light riverbank sand and fine gravel ground"
+    },
+    {
+     "id": "snow",
+     "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles"
+    },
+    {
+     "id": "water",
+     "prompt": "clear green pond water surface texture, floating tiny leaves, soft ripples, seen from above"
+    }
    ]
   },
   "story": {
    "theme": "횡스크롤 사냥터: 들판·동굴 어귀·산 사당·하늘 다리",
    "bg": [
-    {"id": "field_meadow", "prompt": "wide grassy battlefield meadow, old wooden fences, abandoned energy pylons, bright morning sky, rolling hills"},
-    {"id": "cave_mouth", "prompt": "huge cave mouth in a rocky cliff, glowing crystals inside, hanging vines, broken mine rails, cool light"},
-    {"id": "mountain_shrine", "prompt": "mountain shrine steps among pine trees, stone lanterns, red wooden gate without markings, drifting mist, far peaks"},
-    {"id": "sky_bridge", "prompt": "rope and stone bridge between floating rock islands, waterfalls falling into clouds, hovering platforms, golden sunset"}
+    {
+     "id": "field_meadow",
+     "prompt": "wide grassy battlefield meadow, old wooden fences, abandoned energy pylons, bright morning sky, rolling hills"
+    },
+    {
+     "id": "cave_mouth",
+     "prompt": "huge cave mouth in a rocky cliff, glowing crystals inside, hanging vines, broken mine rails, cool light"
+    },
+    {
+     "id": "mountain_shrine",
+     "prompt": "mountain shrine steps among pine trees, stone lanterns, red wooden gate without markings, drifting mist, far peaks"
+    },
+    {
+     "id": "sky_bridge",
+     "prompt": "rope and stone bridge between floating rock islands, waterfalls falling into clouds, hovering platforms, golden sunset"
+    }
    ],
    "tiles": [
-    {"id": "grass", "prompt": "windswept hillside grass ground, short dry grass, even lighting"},
-    {"id": "dirt", "prompt": "hard packed trail dirt with scattered gravel"},
-    {"id": "stone", "prompt": "cracked ancient stone ruin floor with faint carved lines"},
-    {"id": "sand", "prompt": "coarse mountain gravel and sand mix ground"},
-    {"id": "snow", "prompt": "packed mountain snow surface texture, faint pale blue tint, tiny sparkles"},
-    {"id": "water", "prompt": "fast mountain stream water surface texture, white foam ripples, seen from above"}
+    {
+     "id": "grass",
+     "prompt": "windswept hillside grass ground, short dry grass, even lighting"
+    },
+    {
+     "id": "dirt",
+     "prompt": "hard packed trail dirt with scattered gravel"
+    },
+    {
+     "id": "stone",
+     "prompt": "cracked ancient stone ruin floor with faint carved lines"
+    },
+    {
+     "id": "sand",
+     "prompt": "coarse mountain gravel and sand mix ground"
+    },
+    {
+     "id": "snow",
+     "prompt": "packed mountain snow surface texture, faint pale blue tint, tiny sparkles"
+    },
+    {
+     "id": "water",
+     "prompt": "fast mountain stream water surface texture, white foam ripples, seen from above"
+    }
    ]
   },
   "realm": {
    "theme": "지방: 중원 성도·서역 오아시스·북방 설원·강 하구 항구",
    "bg": [
-    {"id": "central_city", "prompt": "ancient east asian walled capital at dawn, tiled roofs, stone walls, misty green mountains, floating paper lanterns, glowing holographic banners"},
-    {"id": "silk_oasis", "prompt": "desert silk road oasis, ruined sandstone temple, palm trees, caravan tents, futuristic glowing signal towers on dunes, warm golden light"},
-    {"id": "frost_highland", "prompt": "frozen highland plateau, snow covered stone keep, ice blue crystal pylons, aurora in the sky, pine forest, cold mist"},
-    {"id": "river_harbor", "prompt": "wide river delta harbor city, junk boats with patched sails, stilt houses, cranes of a modern dock, evening haze, calm water"}
+    {
+     "id": "central_city",
+     "prompt": "ancient east asian walled capital at dawn, tiled roofs, stone walls, misty green mountains, floating paper lanterns, glowing holographic banners"
+    },
+    {
+     "id": "silk_oasis",
+     "prompt": "desert silk road oasis, ruined sandstone temple, palm trees, caravan tents, futuristic glowing signal towers on dunes, warm golden light"
+    },
+    {
+     "id": "frost_highland",
+     "prompt": "frozen highland plateau, snow covered stone keep, ice blue crystal pylons, aurora in the sky, pine forest, cold mist"
+    },
+    {
+     "id": "river_harbor",
+     "prompt": "wide river delta harbor city, junk boats with patched sails, stilt houses, cranes of a modern dock, evening haze, calm water"
+    }
    ],
    "tiles": [
-    {"id": "grass", "prompt": "wide green plain grass ground with fine blades, even lighting"},
-    {"id": "dirt", "prompt": "plowed farmland brown soil with shallow furrows"},
-    {"id": "stone", "prompt": "imperial courtyard grey stone pavement with fine joints"},
-    {"id": "sand", "prompt": "warm desert dune sand ground with soft wind ripples"},
-    {"id": "snow", "prompt": "deep snow field surface texture, faint pale blue tint, tiny sparkles"},
-    {"id": "water", "prompt": "broad river water surface texture, brownish green, gentle ripples, seen from above"}
+    {
+     "id": "grass",
+     "prompt": "wide green plain grass ground with fine blades, even lighting"
+    },
+    {
+     "id": "dirt",
+     "prompt": "plowed farmland brown soil with shallow furrows"
+    },
+    {
+     "id": "stone",
+     "prompt": "imperial courtyard grey stone pavement with fine joints"
+    },
+    {
+     "id": "sand",
+     "prompt": "warm desert dune sand ground with soft wind ripples"
+    },
+    {
+     "id": "snow",
+     "prompt": "deep snow field surface texture, faint pale blue tint, tiny sparkles"
+    },
+    {
+     "id": "water",
+     "prompt": "broad river water surface texture, brownish green, gentle ripples, seen from above"
+    }
    ]
   }
  }

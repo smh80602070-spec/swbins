@@ -14,12 +14,14 @@
   {
    "id": "tile_go_grass",
    "seed": 20261263,
-   "prompt": "lush green grass ground, small clover leaves, even lighting"
+   "prompt": "lush green grass ground, small clover leaves, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_go_dirt",
    "seed": 20261292,
-   "prompt": "packed brown dirt road ground with small pebbles and wheel ruts"
+   "prompt": "packed brown dirt road ground with small pebbles and wheel ruts",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_go_stone",
@@ -29,27 +31,32 @@
   {
    "id": "tile_go_sand",
    "seed": 20261350,
-   "prompt": "pale coast sand ground with tiny shells and soft ripples"
+   "prompt": "pale coast sand ground with tiny shells and soft ripples",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_go_snow",
    "seed": 20261379,
-   "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles"
+   "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_go_water",
    "seed": 20261408,
-   "prompt": "calm turquoise shallow river water surface texture, soft ripples and light caustics, seen from above"
+   "prompt": "calm turquoise shallow river water surface texture, soft ripples and light caustics, seen from above",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_dungeon_grass",
    "seed": 20261669,
-   "prompt": "dark damp cave moss ground, short green moss over wet stone, even lighting"
+   "prompt": "dark damp cave moss ground, short green moss over wet stone, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_dungeon_dirt",
    "seed": 20261698,
-   "prompt": "dry crypt dust floor, grey brown dust with small bone fragments and cracks"
+   "prompt": "dry crypt dust floor, grey brown dust with small bone fragments and cracks",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_dungeon_stone",
@@ -59,27 +66,32 @@
   {
    "id": "tile_dungeon_sand",
    "seed": 20261756,
-   "prompt": "pale bone-white gravel sand floor with small pebbles"
+   "prompt": "pale bone-white gravel sand floor with small pebbles",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_dungeon_snow",
    "seed": 20261785,
-   "prompt": "frozen ice floor with fine cracks, pale blue, tiny frost crystals"
+   "prompt": "frozen ice floor with fine cracks, pale blue, tiny frost crystals",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_dungeon_water",
    "seed": 20261814,
-   "prompt": "dark still underground pool water surface texture, faint teal glow, soft ripples, seen from above"
+   "prompt": "dark still underground pool water surface texture, faint teal glow, soft ripples, seen from above",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_forest_grass",
    "seed": 20262075,
-   "prompt": "fresh spring meadow grass ground with tiny white flowers, even lighting"
+   "prompt": "fresh spring meadow grass ground with tiny white flowers, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_forest_dirt",
    "seed": 20262104,
-   "prompt": "soft brown forest path dirt with fallen leaves and small roots"
+   "prompt": "soft brown forest path dirt with fallen leaves and small roots",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_forest_stone",
@@ -89,27 +101,32 @@
   {
    "id": "tile_forest_sand",
    "seed": 20262162,
-   "prompt": "light riverbank sand and fine gravel ground"
+   "prompt": "light riverbank sand and fine gravel ground",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_forest_snow",
    "seed": 20262191,
-   "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles"
+   "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_forest_water",
    "seed": 20262220,
-   "prompt": "clear green pond water surface texture, floating tiny leaves, soft ripples, seen from above"
+   "prompt": "clear green pond water surface texture, floating tiny leaves, soft ripples, seen from above",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_story_grass",
    "seed": 20262481,
-   "prompt": "windswept hillside grass ground, short dry grass, even lighting"
+   "prompt": "windswept hillside grass ground, short dry grass, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_story_dirt",
    "seed": 20262510,
-   "prompt": "hard packed trail dirt with scattered gravel"
+   "prompt": "hard packed trail dirt with scattered gravel",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_story_stone",
@@ -119,27 +136,32 @@
   {
    "id": "tile_story_sand",
    "seed": 20262568,
-   "prompt": "coarse mountain gravel and sand mix ground"
+   "prompt": "coarse mountain gravel and sand mix ground",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_story_snow",
    "seed": 20262597,
-   "prompt": "packed mountain snow surface texture, faint pale blue tint, tiny sparkles"
+   "prompt": "packed mountain snow surface texture, faint pale blue tint, tiny sparkles",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_story_water",
    "seed": 20262626,
-   "prompt": "fast mountain stream water surface texture, white foam ripples, seen from above"
+   "prompt": "fast mountain stream water surface texture, white foam ripples, seen from above",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_realm_grass",
    "seed": 20262887,
-   "prompt": "wide green plain grass ground with fine blades, even lighting"
+   "prompt": "wide green plain grass ground with fine blades, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_realm_dirt",
    "seed": 20262916,
-   "prompt": "plowed farmland brown soil with shallow furrows"
+   "prompt": "plowed farmland brown soil with shallow furrows",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_realm_stone",
@@ -149,17 +171,20 @@
   {
    "id": "tile_realm_sand",
    "seed": 20262974,
-   "prompt": "warm desert dune sand ground with soft wind ripples"
+   "prompt": "warm desert dune sand ground with soft wind ripples",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_realm_snow",
    "seed": 20263003,
-   "prompt": "deep snow field surface texture, faint pale blue tint, tiny sparkles"
+   "prompt": "deep snow field surface texture, faint pale blue tint, tiny sparkles",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   },
   {
    "id": "tile_realm_water",
    "seed": 20263032,
-   "prompt": "broad river water surface texture, brownish green, gentle ripples, seen from above"
+   "prompt": "broad river water surface texture, brownish green, gentle ripples, seen from above",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
   }
  ]
 }

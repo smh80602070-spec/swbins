@@ -83,6 +83,7 @@ def generate(item, model, d):
         'override_settings': {'sd_model_checkpoint': model},
         'override_settings_restore_afterwards': True,
         'send_images': True, 'save_images': False,
+        'tiling': bool(item.get('tiling', d.get('tiling', False))),   # 순환 패딩: 좌우·상하가 이어지는 그림(K-0020 바닥 타일)
     }
     result = {}
     ep = '/sdapi/v1/txt2img'
