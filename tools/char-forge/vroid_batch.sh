@@ -2,7 +2,7 @@
 # VRoid 대량 들이기 배치 (K-0022 단계 2) — _in/vroid/*.vrm 중 결과가 없는 것만 차례로 공통부를 돈다. 두 번째 실행은 아무것도 안 한다(멱등).
 #   bash tools/char-forge/vroid_batch.sh [--only id1,id2] [--dry]
 # 인물마다 단계(이미 된 건 건너뜀):
-#   1 glb   _out/vroid/<id>/<id>.glb            (.vrm 을 .glb 로 복사 — Godot·Unity·웹 3D 공통 원본)
+#   1 glb   _out/vroid/<id>/<id>.glb            (.vrm 또는 옷 이식 .glb(K-0024)를 복사 — Godot·Unity·웹 3D 공통 원본)
 #   2 anim  _out/vroid/<id>/<id>_anims.glb      (bake_for_rig 로 CC0 동작 8 굽기) + verify.ok (verify.py 뼈 방향 ≤5°·땅 ≤1cm)
 #   3 web   _out/vroid/<id>/web/<id>.glb        (vrm-slim 모프 제거 + Meshopt·WebP 1024px — 웹 3D 는 한 벌만 쓴다, K-0022 3b)
 #   4 2d    _out/sprites/<id>/…                 (bake_sprite_batch: 128px·8프레임·3방향·idle/walk/attack/hit/death)
@@ -47,7 +47,7 @@ stage() {
   echo $((n + 1)) > "$f"; echo "  [$st] 실패 $((n + 1))/3 — $O/log_$st.txt"; return 1
 }
 
-do_glb()  { cp "$IN/$1.vrm" "$OUTR/$1/$1.glb"; }
+do_glb()  { if [ -e "$IN/$1.vrm" ]; then cp "$IN/$1.vrm" "$OUTR/$1/$1.glb"; else cp "$IN/$1.glb" "$OUTR/$1/$1.glb"; fi; }
 do_anim() {
   local O="$OUTR/$1"
   blender_low -b --factory-startup -P tools/char-forge/bake_for_rig.py -- --target "$ABS/$O/$1.glb" --map vroid --clips "$CLIPS" --out "$ABS/$O/$1_anims.glb" --check || return 1
@@ -71,9 +71,9 @@ EOF
 }
 
 total=0; ok=0
-for vrm in "$IN"/*.vrm; do
-  [ -e "$vrm" ] || { echo "새 VRM 없음 ($IN)"; break; }
-  id=$(basename "$vrm" .vrm)
+for vrm in "$IN"/*.vrm "$IN"/*.glb; do
+  [ -e "$vrm" ] || continue
+  id=$(basename "$vrm"); id="${id%.*}"
   [ -f "$OUTR/STOP" ] && { echo "STOP 파일 — 멈춤"; break; }
   if [ -n "$ONLY" ] && ! echo ",$ONLY," | grep -q ",$id,"; then continue; fi
   [[ "$id" =~ ^[a-z0-9_]+$ ]] || { echo "$id: id 는 영문 소문자·숫자·_ — 건너뜀"; continue; }

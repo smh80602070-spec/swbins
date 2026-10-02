@@ -1,0 +1,2956 @@
+{
+ "note": "생성: py tools/char-forge/outfit_swap_plan.py — 손으로 고치지 않는다(K-0024)",
+ "entries": [
+  {
+   "id": "sg_guanyu",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "l",
+    "bottom": "z",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "sg_zhangfei",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "r",
+    "bottom": "c",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "sg_zhaoyun",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "top": "y",
+    "bottom": "k",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "sg_zhugeliang",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "x",
+    "bottom": "l",
+    "shoes": "p"
+   }
+  },
+  {
+   "id": "sg_liubei",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "n",
+    "bottom": "c",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "sg_machao",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "c",
+    "bottom": "l",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "sg_huangzhong",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "top": "o",
+    "bottom": "j",
+    "shoes": "j"
+   }
+  },
+  {
+   "id": "sg_caocao",
+   "gender": "F",
+   "body": "h",
+   "kit": {
+    "top": "s",
+    "bottom": "j",
+    "shoes": "h"
+   }
+  },
+  {
+   "id": "sg_simayi",
+   "gender": "F",
+   "body": "s",
+   "kit": {
+    "top": "i",
+    "bottom": "a",
+    "shoes": "j"
+   }
+  },
+  {
+   "id": "sg_xiahoudun",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "c",
+    "bottom": "p",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "sg_zhangliao",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "top": "b",
+    "bottom": "d",
+    "shoes": "i"
+   }
+  },
+  {
+   "id": "sg_xunyu",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "n",
+    "bottom": "p",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "sg_sunquan",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "p",
+    "bottom": "r",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "sg_zhouyu",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "l",
+    "bottom": "r",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "sg_luxun",
+   "gender": "F",
+   "body": "o",
+   "kit": {
+    "cloth": "u",
+    "shoes": "d"
+   }
+  },
+  {
+   "id": "sg_taishici",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "sg_ganning",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "sg_lubu",
+   "gender": "F",
+   "body": "b",
+   "kit": {
+    "top": "y",
+    "bottom": "b",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "sg_diaochan",
+   "gender": "F",
+   "body": "k",
+   "kit": {
+    "cloth": "m",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "sg_pangtong",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "sg_huatuo",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "z",
+    "bottom": "l",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "sg_menghuo",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "v",
+    "bottom": "p",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "kr_yisunsin",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "top": "u",
+    "bottom": "k",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "kr_euljimundeok",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "top": "s",
+    "bottom": "y",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "kr_ganggamchan",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "l",
+    "bottom": "z",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "kr_kimyusin",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "c",
+    "bottom": "p",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "kr_gyebaek",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "n",
+    "bottom": "c",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "kr_yeongaesomun",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "g",
+    "bottom": "r",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "kr_gwanggaeto",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "top": "f",
+    "bottom": "k",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "kr_sejong",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "x",
+    "bottom": "r",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "kr_jangyeongsil",
+   "gender": "F",
+   "body": "f",
+   "kit": {
+    "top": "q",
+    "bottom": "j",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "kr_choemuseon",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "v",
+    "bottom": "r",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "kr_daejoyeong",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "top": "b",
+    "bottom": "a",
+    "shoes": "h"
+   }
+  },
+  {
+   "id": "kr_wanggeon",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "r",
+    "bottom": "l",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "kr_jeongyakyong",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "p",
+    "bottom": "r",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "kr_heojun",
+   "gender": "F",
+   "body": "d",
+   "kit": {
+    "top": "o",
+    "bottom": "b",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "kr_sinsaimdang",
+   "gender": "F",
+   "body": "m",
+   "kit": {
+    "top": "k",
+    "bottom": "d",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "kr_ahnjunggeun",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "top": "f",
+    "bottom": "k",
+    "shoes": "m"
+   }
+  },
+  {
+   "id": "kr_yugwansun",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "top": "d",
+    "bottom": "d",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "kr_kimgu",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "cloth": "e",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "kr_wonhyo",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "r",
+    "bottom": "r",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "kr_kimjeongho",
+   "gender": "F",
+   "body": "h",
+   "kit": {
+    "top": "j",
+    "bottom": "k",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "kr_gwakjaeu",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "p",
+    "bottom": "p",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "kr_nongae",
+   "gender": "F",
+   "body": "s",
+   "kit": {
+    "cloth": "s",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "kr_yihwang",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "top": "k",
+    "bottom": "j",
+    "shoes": "m"
+   }
+  },
+  {
+   "id": "kr_yii",
+   "gender": "F",
+   "body": "o",
+   "kit": {
+    "top": "a",
+    "bottom": "k",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "kr_hwanghui",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "r",
+    "bottom": "r",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "kr_jeongmongju",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "x",
+    "bottom": "r",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "jp_himiko",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "r",
+    "bottom": "l",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "jp_taira",
+   "gender": "F",
+   "body": "b",
+   "kit": {
+    "top": "a",
+    "bottom": "d",
+    "shoes": "y"
+   }
+  },
+  {
+   "id": "jp_yoritomo",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "r",
+    "bottom": "l",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "jp_yoshitsune",
+   "gender": "F",
+   "body": "k",
+   "kit": {
+    "top": "a",
+    "bottom": "j",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "jp_murasaki",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "jp_seishonagon",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "cloth": "s",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "jp_tomoegozen",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "c",
+    "bottom": "p",
+    "shoes": "p"
+   }
+  },
+  {
+   "id": "jp_nobunaga",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "r",
+    "bottom": "c",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "jp_hideyoshi",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "cloth": "q",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "jp_ieyasu",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "r",
+    "bottom": "r",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "jp_shingen",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "x",
+    "bottom": "c",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "jp_kenshin",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "cloth": "k",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "jp_masamune",
+   "gender": "F",
+   "body": "f",
+   "kit": {
+    "top": "d",
+    "bottom": "j",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "jp_yukimura",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "top": "o",
+    "bottom": "k",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "jp_musashi",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "r",
+    "bottom": "c",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "jp_hanzo",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "z",
+    "bottom": "p",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "jp_mitsukuni",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "c",
+    "bottom": "p",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "jp_naosuke",
+   "gender": "F",
+   "body": "d",
+   "kit": {
+    "top": "i",
+    "bottom": "a",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "jp_saigo",
+   "gender": "F",
+   "body": "m",
+   "kit": {
+    "top": "y",
+    "bottom": "j",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "jp_ryoma",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "top": "u",
+    "bottom": "y",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "eu_caesar",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "g",
+    "bottom": "l",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "eu_alexander",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "eu_hannibal",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "top": "q",
+    "bottom": "b",
+    "shoes": "w"
+   }
+  },
+  {
+   "id": "eu_charlemagne",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "top": "y",
+    "bottom": "y",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "eu_joan",
+   "gender": "F",
+   "body": "h",
+   "kit": {
+    "top": "d",
+    "bottom": "a",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "eu_napoleon",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "r",
+    "bottom": "z",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "eu_davinci",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "g",
+    "bottom": "r",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "eu_augustus",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "n",
+    "bottom": "c",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "eu_scipio",
+   "gender": "F",
+   "body": "s",
+   "kit": {
+    "cloth": "s",
+    "shoes": "y"
+   }
+  },
+  {
+   "id": "eu_leonidas",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "l",
+    "bottom": "p",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "eu_aurelius",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "x",
+    "bottom": "z",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "eu_richard",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "top": "m",
+    "bottom": "y",
+    "shoes": "d"
+   }
+  },
+  {
+   "id": "eu_william",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "p",
+    "bottom": "r",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "eu_harald",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "eu_frederick",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "g",
+    "bottom": "r",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "eu_peter",
+   "gender": "F",
+   "body": "o",
+   "kit": {
+    "top": "h",
+    "bottom": "d",
+    "shoes": "j"
+   }
+  },
+  {
+   "id": "eu_elizabeth",
+   "gender": "F",
+   "body": "b",
+   "kit": {
+    "cloth": "e",
+    "shoes": "d"
+   }
+  },
+  {
+   "id": "eu_nelson",
+   "gender": "F",
+   "body": "k",
+   "kit": {
+    "top": "k",
+    "bottom": "j",
+    "shoes": "o"
+   }
+  },
+  {
+   "id": "eu_machiavelli",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "top": "b",
+    "bottom": "k",
+    "shoes": "w"
+   }
+  },
+  {
+   "id": "eu_newton",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "x",
+    "bottom": "l",
+    "shoes": "p"
+   }
+  },
+  {
+   "id": "eu_michelangelo",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "top": "b",
+    "bottom": "y",
+    "shoes": "y"
+   }
+  },
+  {
+   "id": "eu_eleanor",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "l",
+    "bottom": "p",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "wd_ashoka",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "n",
+    "bottom": "c",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "wd_akbar",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "x",
+    "bottom": "z",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "wd_saladin",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "cloth": "s",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "wd_suleiman",
+   "gender": "F",
+   "body": "f",
+   "kit": {
+    "top": "i",
+    "bottom": "a",
+    "shoes": "h"
+   }
+  },
+  {
+   "id": "wd_ibnsina",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "r",
+    "bottom": "l",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "wd_genghis",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "r",
+    "bottom": "l",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "wd_khubilai",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "x",
+    "bottom": "l",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "wd_mansamusa",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "z",
+    "bottom": "z",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "wd_shaka",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "cloth": "k",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "wd_cleopatra",
+   "gender": "F",
+   "body": "d",
+   "kit": {
+    "top": "i",
+    "bottom": "d",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "wd_pachacuti",
+   "gender": "F",
+   "body": "m",
+   "kit": {
+    "top": "w",
+    "bottom": "d",
+    "shoes": "f"
+   }
+  },
+  {
+   "id": "wd_moctezuma",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "g",
+    "bottom": "r",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "wd_ibnbattuta",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "top": "d",
+    "bottom": "y",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "wd_hammurabi",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "top": "y",
+    "bottom": "k",
+    "shoes": "m"
+   }
+  },
+  {
+   "id": "wd_attila",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "g",
+    "bottom": "c",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "dj_doseo",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "r",
+    "bottom": "p",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "dj_gapju",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "n",
+    "bottom": "z",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "dj_gijang",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "top": "i",
+    "bottom": "d",
+    "shoes": "j"
+   }
+  },
+  {
+   "id": "dj_haean",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "c",
+    "bottom": "l",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "dj_hopak",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "p",
+    "bottom": "p",
+    "shoes": "p"
+   }
+  },
+  {
+   "id": "dj_hwanggeum",
+   "gender": "F",
+   "body": "h",
+   "kit": {
+    "cloth": "s",
+    "shoes": "o"
+   }
+  },
+  {
+   "id": "dj_seohae",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "z",
+    "bottom": "l",
+    "shoes": "p"
+   }
+  },
+  {
+   "id": "dj_seoncheok",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "n",
+    "bottom": "z",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "dj_yuri",
+   "gender": "F",
+   "body": "s",
+   "kit": {
+    "top": "j",
+    "bottom": "a",
+    "shoes": "j"
+   }
+  },
+  {
+   "id": "fu_gangma",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "top": "u",
+    "bottom": "d",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "fu_hwanryeong",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "c",
+    "bottom": "l",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "fu_janhon",
+   "gender": "F",
+   "body": "o",
+   "kit": {
+    "cloth": "e",
+    "shoes": "e"
+   }
+  },
+  {
+   "id": "fu_jongwang",
+   "gender": "F",
+   "body": "b",
+   "kit": {
+    "top": "b",
+    "bottom": "a",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "fu_myeongje",
+   "gender": "F",
+   "body": "k",
+   "kit": {
+    "top": "k",
+    "bottom": "d",
+    "shoes": "y"
+   }
+  },
+  {
+   "id": "fu_noejang",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "top": "f",
+    "bottom": "y",
+    "shoes": "o"
+   }
+  },
+  {
+   "id": "fu_seonghon",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "l",
+    "bottom": "p",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "fu_yugwi",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "v",
+    "bottom": "r",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "fu_yuseong",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "n",
+    "bottom": "l",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "jiao_banrok",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "l",
+    "bottom": "p",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "jiao_botran",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "top": "a",
+    "bottom": "a",
+    "shoes": "w"
+   }
+  },
+  {
+   "id": "jiao_dinggo",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "top": "j",
+    "bottom": "d",
+    "shoes": "m"
+   }
+  },
+  {
+   "id": "jiao_hoangmi",
+   "gender": "F",
+   "body": "f",
+   "kit": {
+    "top": "h",
+    "bottom": "j",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "jiao_jinja",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "top": "y",
+    "bottom": "b",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "jiao_luyan",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "r",
+    "bottom": "c",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "jiao_madang",
+   "gender": "F",
+   "body": "d",
+   "kit": {
+    "top": "i",
+    "bottom": "a",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "jiao_muya",
+   "gender": "F",
+   "body": "m",
+   "kit": {
+    "top": "d",
+    "bottom": "j",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "jiao_riquan",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "r",
+    "bottom": "c",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "jp_asahime",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "z",
+    "bottom": "c",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "jp_hikoyama",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "top": "w",
+    "bottom": "b",
+    "shoes": "e"
+   }
+  },
+  {
+   "id": "jp_himetsu",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "r",
+    "bottom": "z",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "jp_kazenari",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "z",
+    "bottom": "l",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "jp_shioji",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "g",
+    "bottom": "c",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "jp_taketsumi",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "top": "k",
+    "bottom": "b",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "jp_tamakiri",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "top": "k",
+    "bottom": "j",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "jp_umihiko",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "r",
+    "bottom": "p",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "jp_wakahiko",
+   "gender": "F",
+   "body": "h",
+   "kit": {
+    "top": "b",
+    "bottom": "a",
+    "shoes": "f"
+   }
+  },
+  {
+   "id": "kr2_ajinsa",
+   "gender": "F",
+   "body": "s",
+   "kit": {
+    "top": "k",
+    "bottom": "d",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "kr2_dokgaru",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "n",
+    "bottom": "l",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "kr2_gokdol",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "p",
+    "bottom": "l",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "kr2_jimasol",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "p",
+    "bottom": "l",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "kr2_mokrihae",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "p",
+    "bottom": "l",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "kr2_pasodan",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "g",
+    "bottom": "l",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "kr2_seolharan",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "kr2_sogaram",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "top": "k",
+    "bottom": "y",
+    "shoes": "e"
+   }
+  },
+  {
+   "id": "kr2_umorin",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "g",
+    "bottom": "z",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "kr2_yeonuru",
+   "gender": "F",
+   "body": "o",
+   "kit": {
+    "top": "m",
+    "bottom": "j",
+    "shoes": "w"
+   }
+  },
+  {
+   "id": "kr2_yeoyul",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "ly_byeokjeon",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "z",
+    "bottom": "z",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "ly_heuksang",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "x",
+    "bottom": "r",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "ly_jeonchung",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "n",
+    "bottom": "r",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "ly_jinju",
+   "gender": "F",
+   "body": "b",
+   "kit": {
+    "top": "d",
+    "bottom": "d",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "ly_juoh",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "ly_nogyong",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "l",
+    "bottom": "c",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "ly_sanga",
+   "gender": "F",
+   "body": "k",
+   "kit": {
+    "top": "f",
+    "bottom": "y",
+    "shoes": "y"
+   }
+  },
+  {
+   "id": "ly_sangnim",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "top": "o",
+    "bottom": "a",
+    "shoes": "y"
+   }
+  },
+  {
+   "id": "ly_uhwa",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "top": "f",
+    "bottom": "j",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "mb_baekwoon",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "v",
+    "bottom": "z",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "mb_cheolgak",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "top": "b",
+    "bottom": "k",
+    "shoes": "y"
+   }
+  },
+  {
+   "id": "mb_gangho",
+   "gender": "F",
+   "body": "f",
+   "kit": {
+    "cloth": "e",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "mb_hanam",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "r",
+    "bottom": "l",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "mb_hanpung",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "n",
+    "bottom": "c",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "mb_hoja",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "z",
+    "bottom": "z",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "mb_hwangto",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "v",
+    "bottom": "c",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "mb_janggwang",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "r",
+    "bottom": "p",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "mb_seonwoo",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "v",
+    "bottom": "z",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "nh_bandoja",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "top": "i",
+    "bottom": "d",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "nh_daemo",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "n",
+    "bottom": "z",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "nh_jinju",
+   "gender": "F",
+   "body": "d",
+   "kit": {
+    "top": "h",
+    "bottom": "b",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "nh_metong",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "z",
+    "bottom": "c",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "nh_migyeon",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "g",
+    "bottom": "c",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "nh_sasin",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "c",
+    "bottom": "p",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "nh_torak",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "x",
+    "bottom": "c",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "nh_wion",
+   "gender": "F",
+   "body": "m",
+   "kit": {
+    "top": "w",
+    "bottom": "j",
+    "shoes": "j"
+   }
+  },
+  {
+   "id": "nh_yeombun",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "v",
+    "bottom": "p",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "nz_ahyang",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "top": "o",
+    "bottom": "y",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "nz_eunga",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "nz_geumsang",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "top": "o",
+    "bottom": "a",
+    "shoes": "j"
+   }
+  },
+  {
+   "id": "nz_heukwol",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "r",
+    "bottom": "c",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "nz_hyeoncheon",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "x",
+    "bottom": "r",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "nz_jeokpyo",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "cloth": "q",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "nz_mokro",
+   "gender": "F",
+   "body": "h",
+   "kit": {
+    "top": "k",
+    "bottom": "b",
+    "shoes": "y"
+   }
+  },
+  {
+   "id": "nz_soman",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "p",
+    "bottom": "p",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "nz_unhwa",
+   "gender": "F",
+   "body": "s",
+   "kit": {
+    "cloth": "m",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "rf_caimao",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "cloth": "k",
+    "shoes": "h"
+   }
+  },
+  {
+   "id": "rf_caohong",
+   "gender": "F",
+   "body": "o",
+   "kit": {
+    "top": "u",
+    "bottom": "y",
+    "shoes": "f"
+   }
+  },
+  {
+   "id": "rf_caoren",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "l",
+    "bottom": "l",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "rf_chengong",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "x",
+    "bottom": "p",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "rf_chengpu",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "rf_chengyu",
+   "gender": "F",
+   "body": "b",
+   "kit": {
+    "cloth": "e",
+    "shoes": "j"
+   }
+  },
+  {
+   "id": "rf_dianwei",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "p",
+    "bottom": "p",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "rf_fazheng",
+   "gender": "F",
+   "body": "k",
+   "kit": {
+    "top": "e",
+    "bottom": "y",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "rf_gaolan",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "r",
+    "bottom": "p",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "rf_gaoshun",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "top": "u",
+    "bottom": "d",
+    "shoes": "m"
+   }
+  },
+  {
+   "id": "rf_gongsunzan",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "l",
+    "bottom": "z",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "rf_guojia",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "rf_guosi",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "z",
+    "bottom": "c",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "rf_handang",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "x",
+    "bottom": "p",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "rf_hansui",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "rf_huanggai",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "x",
+    "bottom": "l",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "rf_huangzu",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "top": "e",
+    "bottom": "d",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "rf_jianyong",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "top": "y",
+    "bottom": "d",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "rf_jiaxu",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "n",
+    "bottom": "z",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "rf_jiling",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "g",
+    "bottom": "p",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "rf_jushou",
+   "gender": "F",
+   "body": "f",
+   "kit": {
+    "cloth": "u",
+    "shoes": "i"
+   }
+  },
+  {
+   "id": "rf_kongrong",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "p",
+    "bottom": "r",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "rf_kuailiang",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "p",
+    "bottom": "z",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "rf_lidian",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "top": "f",
+    "bottom": "j",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "rf_lijue",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "z",
+    "bottom": "p",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "rf_liubiao",
+   "gender": "F",
+   "body": "d",
+   "kit": {
+    "cloth": "m",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "rf_liuzhang",
+   "gender": "F",
+   "body": "m",
+   "kit": {
+    "top": "j",
+    "bottom": "a",
+    "shoes": "f"
+   }
+  },
+  {
+   "id": "rf_mateng",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "c",
+    "bottom": "z",
+    "shoes": "p"
+   }
+  },
+  {
+   "id": "rf_mizhu",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "top": "w",
+    "bottom": "d",
+    "shoes": "u"
+   }
+  },
+  {
+   "id": "rf_pangde",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "v",
+    "bottom": "p",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "rf_shenpei",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "l",
+    "bottom": "r",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "rf_sunce",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "v",
+    "bottom": "c",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "rf_tianfeng",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "top": "y",
+    "bottom": "j",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "rf_wenchou",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "cloth": "s",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "rf_wenpin",
+   "gender": "F",
+   "body": "h",
+   "kit": {
+    "cloth": "u",
+    "shoes": "m"
+   }
+  },
+  {
+   "id": "rf_wuanguo",
+   "gender": "F",
+   "body": "s",
+   "kit": {
+    "cloth": "m",
+    "shoes": "w"
+   }
+  },
+  {
+   "id": "rf_wuyi",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "top": "u",
+    "bottom": "y",
+    "shoes": "d"
+   }
+  },
+  {
+   "id": "rf_xiahouyuan",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "n",
+    "bottom": "p",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "rf_xuchu",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "c",
+    "bottom": "r",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "rf_yangang",
+   "gender": "F",
+   "body": "o",
+   "kit": {
+    "cloth": "k",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "rf_yanghong",
+   "gender": "F",
+   "body": "b",
+   "kit": {
+    "cloth": "e",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "rf_yangren",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "n",
+    "bottom": "l",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "rf_yangsong",
+   "gender": "F",
+   "body": "k",
+   "kit": {
+    "cloth": "u",
+    "shoes": "w"
+   }
+  },
+  {
+   "id": "rf_yanliang",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "p",
+    "bottom": "r",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "rf_yanyan",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "top": "u",
+    "bottom": "y",
+    "shoes": "f"
+   }
+  },
+  {
+   "id": "rf_yuanshao",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "cloth": "e",
+    "shoes": "m"
+   }
+  },
+  {
+   "id": "rf_yuanshu",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "cloth": "m",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "rf_yuejin",
+   "gender": "F",
+   "body": "f",
+   "kit": {
+    "top": "k",
+    "bottom": "b",
+    "shoes": "y"
+   }
+  },
+  {
+   "id": "rf_yujin",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "top": "j",
+    "bottom": "y",
+    "shoes": "o"
+   }
+  },
+  {
+   "id": "rf_zhanghe",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "z",
+    "bottom": "r",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "rf_zhangji",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "n",
+    "bottom": "c",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "rf_zhanglu",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "v",
+    "bottom": "r",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "rf_zhangren",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "l",
+    "bottom": "c",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "rf_zhoutai",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "x",
+    "bottom": "z",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "ru_busaeng",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "p",
+    "bottom": "p",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "ru_doksi",
+   "gender": "F",
+   "body": "d",
+   "kit": {
+    "cloth": "m",
+    "shoes": "f"
+   }
+  },
+  {
+   "id": "ru_geohae",
+   "gender": "F",
+   "body": "m",
+   "kit": {
+    "cloth": "u",
+    "shoes": "f"
+   }
+  },
+  {
+   "id": "ru_gogol",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "g",
+    "bottom": "c",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "ru_mangdok",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "top": "w",
+    "bottom": "b",
+    "shoes": "h"
+   }
+  },
+  {
+   "id": "ru_sanaek",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "n",
+    "bottom": "p",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "ru_sayeong",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "cloth": "e",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "ru_seogun",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "top": "y",
+    "bottom": "y",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "ru_wadok",
+   "gender": "F",
+   "body": "h",
+   "kit": {
+    "cloth": "e",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "sl_cheonsan",
+   "gender": "F",
+   "body": "s",
+   "kit": {
+    "top": "e",
+    "bottom": "d",
+    "shoes": "a"
+   }
+  },
+  {
+   "id": "sl_daetaek",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "top": "s",
+    "bottom": "y",
+    "shoes": "y"
+   }
+  },
+  {
+   "id": "sl_geumhwa",
+   "gender": "F",
+   "body": "o",
+   "kit": {
+    "top": "a",
+    "bottom": "d",
+    "shoes": "k"
+   }
+  },
+  {
+   "id": "sl_heupu",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "v",
+    "bottom": "c",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "sl_hosang",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "c",
+    "bottom": "p",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "sl_hwachin",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "z",
+    "bottom": "c",
+    "shoes": "v"
+   }
+  },
+  {
+   "id": "sl_josang",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "x",
+    "bottom": "c",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "sl_nakta",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "x",
+    "bottom": "l",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "sl_wangjeong",
+   "gender": "F",
+   "body": "b",
+   "kit": {
+    "cloth": "s",
+    "shoes": "w"
+   }
+  },
+  {
+   "id": "tb_amseup",
+   "gender": "F",
+   "body": "k",
+   "kit": {
+    "cloth": "q",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "tb_baekgi",
+   "gender": "F",
+   "body": "y",
+   "kit": {
+    "top": "b",
+    "bottom": "y",
+    "shoes": "j"
+   }
+  },
+  {
+   "id": "tb_ganghae",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "x",
+    "bottom": "r",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "tb_gojeon",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "x",
+    "bottom": "r",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "tb_heukju",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "n",
+    "bottom": "r",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "tb_jamhon",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "l",
+    "bottom": "r",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "tb_japgol",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "x",
+    "bottom": "z",
+    "shoes": "r"
+   }
+  },
+  {
+   "id": "tb_jongja",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "z",
+    "bottom": "c",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "tb_saryeong",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "g",
+    "bottom": "z",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "tz_beonwang",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "v",
+    "bottom": "z",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "tz_daehacheon",
+   "gender": "F",
+   "body": "i",
+   "kit": {
+    "top": "f",
+    "bottom": "d",
+    "shoes": "e"
+   }
+  },
+  {
+   "id": "tz_ganda",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "g",
+    "bottom": "c",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "tz_hangha",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "c",
+    "bottom": "l",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "tz_hyanggae",
+   "gender": "F",
+   "body": "u",
+   "kit": {
+    "top": "m",
+    "bottom": "d",
+    "shoes": "w"
+   }
+  },
+  {
+   "id": "tz_sanri",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "v",
+    "bottom": "r",
+    "shoes": "z"
+   }
+  },
+  {
+   "id": "tz_sawi",
+   "gender": "F",
+   "body": "f",
+   "kit": {
+    "cloth": "m",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "tz_seoksang",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "p",
+    "bottom": "r",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "tz_seolsan",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "l",
+    "bottom": "r",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "xb_bonghwa",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "n",
+    "bottom": "l",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "xb_daein",
+   "gender": "F",
+   "body": "q",
+   "kit": {
+    "cloth": "k",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "xb_eoryang",
+   "gender": "F",
+   "body": "d",
+   "kit": {
+    "top": "q",
+    "bottom": "d",
+    "shoes": "w"
+   }
+  },
+  {
+   "id": "xb_gaseul",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "c",
+    "bottom": "c",
+    "shoes": "n"
+   }
+  },
+  {
+   "id": "xb_gyeon",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "x",
+    "bottom": "c",
+    "shoes": "p"
+   }
+  },
+  {
+   "id": "xb_hoja",
+   "gender": "M",
+   "body": "z",
+   "kit": {
+    "top": "v",
+    "bottom": "p",
+    "shoes": "p"
+   }
+  },
+  {
+   "id": "xb_hondo",
+   "gender": "M",
+   "body": "v",
+   "kit": {
+    "top": "l",
+    "bottom": "p",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "xb_honin",
+   "gender": "M",
+   "body": "p",
+   "kit": {
+    "top": "g",
+    "bottom": "l",
+    "shoes": "x"
+   }
+  },
+  {
+   "id": "xb_yong",
+   "gender": "F",
+   "body": "m",
+   "kit": {
+    "top": "j",
+    "bottom": "j",
+    "shoes": "h"
+   }
+  },
+  {
+   "id": "xiyu_banwol",
+   "gender": "M",
+   "body": "l",
+   "kit": {
+    "top": "z",
+    "bottom": "r",
+    "shoes": "c"
+   }
+  },
+  {
+   "id": "xiyu_cheonma",
+   "gender": "F",
+   "body": "a",
+   "kit": {
+    "cloth": "q",
+    "shoes": "s"
+   }
+  },
+  {
+   "id": "xiyu_chongryeong",
+   "gender": "M",
+   "body": "c",
+   "kit": {
+    "top": "c",
+    "bottom": "l",
+    "shoes": "p"
+   }
+  },
+  {
+   "id": "xiyu_dansu",
+   "gender": "M",
+   "body": "x",
+   "kit": {
+    "top": "g",
+    "bottom": "z",
+    "shoes": "l"
+   }
+  },
+  {
+   "id": "xiyu_gumo",
+   "gender": "M",
+   "body": "r",
+   "kit": {
+    "top": "c",
+    "bottom": "r",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "xiyu_gyoha",
+   "gender": "F",
+   "body": "j",
+   "kit": {
+    "cloth": "q",
+    "shoes": "b"
+   }
+  },
+  {
+   "id": "xiyu_jeongcheon",
+   "gender": "F",
+   "body": "w",
+   "kit": {
+    "cloth": "q",
+    "shoes": "j"
+   }
+  },
+  {
+   "id": "xiyu_mokjil",
+   "gender": "F",
+   "body": "h",
+   "kit": {
+    "top": "u",
+    "bottom": "k",
+    "shoes": "q"
+   }
+  },
+  {
+   "id": "xiyu_ochi",
+   "gender": "F",
+   "body": "s",
+   "kit": {
+    "top": "s",
+    "bottom": "k",
+    "shoes": "m"
+   }
+  },
+  {
+   "id": "xiyu_sarim",
+   "gender": "M",
+   "body": "n",
+   "kit": {
+    "top": "x",
+    "bottom": "l",
+    "shoes": "g"
+   }
+  },
+  {
+   "id": "xiyu_talban",
+   "gender": "M",
+   "body": "g",
+   "kit": {
+    "top": "p",
+    "bottom": "c",
+    "shoes": "p"
+   }
+  },
+  {
+   "id": "xiyu_yeoje",
+   "gender": "F",
+   "body": "e",
+   "kit": {
+    "top": "i",
+    "bottom": "d",
+    "shoes": "s"
+   }
+  }
+ ]
+}

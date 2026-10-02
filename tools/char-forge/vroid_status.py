@@ -35,7 +35,7 @@ def exists(*p):
 def stages_of(i):
     o = os.path.join(OUT_DIR, i)
     g = {
-        'vrm': exists(IN_DIR, i + '.vrm') or exists(GODOT, i + '.vrm') or exists(GODOT, i + '.glb'),
+        'vrm': exists(IN_DIR, i + '.vrm') or exists(IN_DIR, i + '.glb') or exists(GODOT, i + '.vrm') or exists(GODOT, i + '.glb'),
         'glb': exists(o, i + '.glb') or exists(GODOT, i + '.glb'),
         'anim': (exists(o, i + '_anims.glb') and exists(o, 'verify.ok')) or exists(GODOT, 'anim_cc0', i + '_lib.res'),
         'web': exists(o, 'web', i + '.glb') or exists(ROOT, 'saga-web', 'saga-go', 'assets', 'models', 'people', 'anime', i.lower().replace('avatarsample', 'avatar_sample') + '.glb'),
@@ -50,7 +50,7 @@ def load_rows():
     for h in roster:
         rows.append({'id': h['id'], 'group': 'roster', 'name': h.get('name', ''), 'src': h.get('src', '')})
         seen.add(h['id'])
-    for p in sorted(glob.glob(os.path.join(IN_DIR, '*.vrm'))):
+    for p in sorted(glob.glob(os.path.join(IN_DIR, '*.vrm')) + glob.glob(os.path.join(IN_DIR, '*.glb'))):
         i = os.path.splitext(os.path.basename(p))[0]
         if i not in seen:
             rows.append({'id': i, 'group': 'new', 'name': '', 'src': '_in'})

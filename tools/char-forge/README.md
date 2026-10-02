@@ -143,3 +143,16 @@ py tools/char-forge/vroid_status.py [--all|--missing|--json]  # 인물 id × 단
 - 산출 `_out/vroid/<id>/{<id>.glb, <id>_anims.glb, verify.ok, web/<id>.glb, log_*.txt}` + `_out/sprites/<id>/`. 게임 폴더에 놓기는 K-0019(`asset-place`).
 - Godot 부(얼굴 데칼·`anim_cc0/<id>_lib.res`)는 분리: Godot 세션에서 `vroid_intake.sh`. 한 명 처리 약 5분(시험: 동작 굽기 <1분 · 웹 경량 · 2D 시트 렌더가 대부분).
 - 웹 경량 GLB 는 모프 제거+Meshopt·WebP 1024px 로 벌당 0.6~0.8MB. 웹 3D 는 한 판에만 둔다(Pages 한도). 사람 몸 삼각형은 줄이지 않는다(뼈 왜곡, 허용치 6.5만).
+
+### 11-b. 옷 이식으로 인물 299명 (K-0024, 2026-10-02)
+
+샘플 25벌(T 제외) 의 옷 조각을 다른 샘플 몸에 비율 맞춰 입혀 명단 인물마다 다른 GLB 를 만든다. 얼굴·머리는 25종이 반복된다(사용자 "약간 다르게만").
+
+```bash
+bash tools/char-forge/export_parts_all.sh                 # 샘플 VRM → _out/parts/<글자>/ (base + 조각)
+py tools/char-forge/outfit_swap_plan.py                   # data/outfit_swap_plan.json (299 조합, 겹침 0)
+blender -b --factory-startup -P tools/char-forge/outfit_swap.py -- --plan tools/char-forge/data/outfit_swap_plan.json tools/char-forge/_out/parts tools/char-forge/_out/outfit_swap --render
+cp tools/char-forge/_out/outfit_swap/*.glb tools/char-forge/_in/vroid/ && bash tools/char-forge/vroid_batch.sh   # glb 입력도 받는다
+```
+- 성별은 명단에 없어 id 해시로 정했다(남 55%) — 바꾸려면 plan 의 gender 를 고치고 다시 굽는다. 원피스 조합은 그 샘플의 상의·하의 조각까지 같이 입힌다(몸통 가림).
+- 알려진 흠: 일부 하의가 몸 살을 비치고 넓은 바지·긴 코트가 발목에서 퍼진다. 동작 중 뚫림은 정면 한 장 외에 확인 안 함.
