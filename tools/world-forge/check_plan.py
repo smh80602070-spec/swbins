@@ -1,7 +1,8 @@
 """world-forge 판별 세트표 점검 (K-0017) — data/set_plan.json 이 규칙을 지키는지, 만든 산출이 표와 맞는지 센다.
 
   py tools/world-forge/check_plan.py            표만 점검(칸 수·id·기존 레시피 존재·이름 규칙)
-  py tools/world-forge/check_plan.py --out DIR  + 산출 폴더(기본 _out/set)에 id 별 .glb·.license.json 이 있는지 센다
+  py tools/world-forge/check_plan.py --out DIR [--web DIR] [--sprites DIR] [--budget] [--strict]
+      산출 폴더에 id 별 .glb·.license.json(웹 압축본·스프라이트 .webp 도) 이 다 있는지 세고, --budget 은 툰 삼각형·용량 예산을 검사
 끝 줄 `PLAN_OK slots=N assets=M new=K` 또는 `PLAN_FAIL …`. 종료 0/1.
 """
 import json
@@ -50,13 +51,36 @@ def main():
                 if it.get('state') == 'new' and kind == 'building' and has:
                     bad(f'{g}.building.{i}: new 인데 이미 recipes/ 에 있다')
     new = sum(1 for k, s in seen.values() if s == 'new')
-    if '--out' in sys.argv:
-        out = sys.argv[sys.argv.index('--out') + 1]
-        out = out if os.path.isabs(out) else os.path.join(HERE, out)
-        miss = [i for i in seen if not (os.path.exists(os.path.join(out, i + '.glb')) and os.path.exists(os.path.join(out, i + '.license.json')))]
-        print(f'산출 {len(seen) - len(miss)}/{len(seen)} (glb+license.json), 없는 것 {len(miss)}')
+    def folder(flag):
+        v = sys.argv[sys.argv.index(flag) + 1]
+        return v if os.path.isabs(v) else os.path.join(HERE, v)
+
+    def count(flag, exts, label):
+        if flag not in sys.argv:
+            return
+        dirp = folder(flag)
+        miss = [i for i in seen if not all(os.path.exists(os.path.join(dirp, i + e)) for e in exts)]
+        print(f'{label} {len(seen) - len(miss)}/{len(seen)} ({"+".join(exts)}), missing {len(miss)}')
         if miss and '--strict' in sys.argv:
-            bad(f'산출 없음 {len(miss)}: {", ".join(miss[:8])}...')
+            bad(f'{label} missing {len(miss)}: {", ".join(miss[:8])}...')
+
+    count('--out', ('.glb', '.license.json'), 'toon')
+    count('--web', ('.glb', '.license.json'), 'web')
+    count('--sprites', ('.webp', '.license.json'), 'sprite')
+    if '--budget' in sys.argv and '--out' in sys.argv:
+        b = plan.get('budget', {})
+        over = []
+        for i in seen:
+            g, lic = os.path.join(folder('--out'), i + '.glb'), os.path.join(folder('--out'), i + '.license.json')
+            if not (os.path.exists(g) and os.path.exists(lic)):
+                continue
+            tris = json.load(open(lic, encoding='utf-8')).get('tris', 0)
+            kb = os.path.getsize(g) // 1024
+            if tris > b.get('toon_tris', 5000) or kb > b.get('toon_glb_mb', 0.5) * 1024:
+                over.append(f'{i}(tris {tris}, {kb}KB)')
+        print(f'budget over {len(over)}')
+        for o in over:
+            bad('budget ' + o)
     for m in FAIL:
         print('FAIL', m)
     print(f'{"PLAN_FAIL" if FAIL else "PLAN_OK"} slots={slots} assets={len(seen)} new={new}')
