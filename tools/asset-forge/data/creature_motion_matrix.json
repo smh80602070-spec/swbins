@@ -1,0 +1,8655 @@
+{
+ "note": "tools/asset-forge/creature_motion_matrix.py 가 파일 클립 이름에서 읽어 만든 표 — 손으로 고치지 않는다",
+ "slots": [
+  "idle",
+  "walk",
+  "run",
+  "attack",
+  "hit",
+  "death",
+  "special"
+ ],
+ "count": 178,
+ "by_family": {
+  "aquatic": 49,
+  "bird": 13,
+  "humanoid": 18,
+  "machine": 3,
+  "quadruped": 63,
+  "serpent": 4,
+  "spirit": 28
+ },
+ "with_slot": {
+  "idle": 116,
+  "walk": 92,
+  "run": 131,
+  "attack": 146,
+  "hit": 90,
+  "death": 146,
+  "special": 151
+ },
+ "no_clips": 14,
+ "rows": [
+  {
+   "species": "Anglerfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Anglerfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Armored_Catfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Armored_Catfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Betta",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Betta.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Black_Lion_Fish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Black_Lion_Fish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Blobfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Blobfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Blue_Goldfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Blue_Goldfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Blue_Tang",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Blue_Tang.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Butterfly_Fish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Butterfly_Fish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Cardinal_Fish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Cardinal_Fish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Clownfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Clownfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Coral_Grouper",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Coral_Grouper.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Cowfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Cowfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Crab",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius_cute/Crab.glb",
+   "skinned": true,
+   "clips": [
+    "MonsterArmature|Bite_Front",
+    "MonsterArmature|Bite_InPlace",
+    "MonsterArmature|Dance",
+    "MonsterArmature|Death",
+    "MonsterArmature|HitRecieve",
+    "MonsterArmature|Idle",
+    "MonsterArmature|Jump",
+    "MonsterArmature|No",
+    "MonsterArmature|Walk",
+    "MonsterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "MonsterArmature|Idle"
+    ],
+    "walk": [
+     "MonsterArmature|Walk"
+    ],
+    "attack": [
+     "MonsterArmature|Bite_Front",
+     "MonsterArmature|Bite_InPlace"
+    ],
+    "hit": [
+     "MonsterArmature|HitRecieve"
+    ],
+    "death": [
+     "MonsterArmature|Death"
+    ],
+    "special": [
+     "MonsterArmature|Dance",
+     "MonsterArmature|Jump",
+     "MonsterArmature|No",
+     "MonsterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Dolphin",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Dolphin.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Swim"
+   ],
+   "slots": {
+    "run": [
+     "Armature|Swim"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Dolphin",
+   "family": "aquatic",
+   "file": "saga-web/saga-go/assets/models/animals/Dolphin.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Swim"
+   ],
+   "slots": {
+    "run": [
+     "Armature|Swim"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Fish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Fish_6c98561f.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Fish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Fish_f7d91eb6.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Fish1",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Fish1.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Swim"
+   ],
+   "slots": {
+    "run": [
+     "Armature|Swim"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Fish2",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Fish2.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Swim"
+   ],
+   "slots": {
+    "run": [
+     "Armature|Swim"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Fish3",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Fish3.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Swim.001"
+   ],
+   "slots": {
+    "run": [
+     "Armature|Swim.001"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Flatfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Flatfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Flower_Horn",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Flower_Horn.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Goblin_Shark",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Goblin_Shark.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Goldfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Goldfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Humphead",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Humphead.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Koi",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Koi.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Koi",
+   "family": "aquatic",
+   "file": "saga-web/saga-go/assets/models/animals/Koi.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Lionfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Lionfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Mandarin_Fish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Mandarin_Fish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Manta_ray",
+   "family": "aquatic",
+   "file": "saga-web/saga-go/assets/models/animals/Manta_ray.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Swim"
+   ],
+   "slots": {
+    "run": [
+     "Armature|Swim"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "MantaRay",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/MantaRay.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Swim"
+   ],
+   "slots": {
+    "run": [
+     "Armature|Swim"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Moorish_Idol",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Moorish_Idol.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Parrot_Fish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Parrot_Fish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Piranha",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Piranha.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Puffer",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Puffer.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Red_Snapper",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Red_Snapper.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Shark",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Shark.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Swim"
+   ],
+   "slots": {
+    "run": [
+     "Armature|Swim"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Shark",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Shark.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Shark",
+   "family": "aquatic",
+   "file": "saga-web/saga-go/assets/models/animals/Shark.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Swim"
+   ],
+   "slots": {
+    "run": [
+     "Armature|Swim"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Squidle",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Squidle_cbe8419d.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Sunfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Sunfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Swordfish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Swordfish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Tang",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Tang.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Tetra",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Tetra.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Tuna",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Tuna.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Turbot",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Turbot.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Whale",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Whale.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Swim"
+   ],
+   "slots": {
+    "run": [
+     "Armature|Swim"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Yellow_Tang",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Yellow_Tang.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Zebra_Clown_Fish",
+   "family": "aquatic",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Zebra_Clown_Fish.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Birb",
+   "family": "bird",
+   "file": "saga-unity/Assets/Art/Creatures/Birb/Birb.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-go",
+    "unity"
+   ]
+  },
+  {
+   "species": "Birb",
+   "family": "bird",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Birb_05dac745.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Bird",
+   "family": "bird",
+   "file": "saga-web/saga-forest/assets/models/animals/Bird.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-forest"
+   ]
+  },
+  {
+   "species": "Chicken",
+   "family": "bird",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Chicken_a0001762.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Crane",
+   "family": "bird",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Crane.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Dragon",
+   "family": "bird",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Dragon_ae5b8510.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Dragon_Evolved",
+   "family": "bird",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Dragon_Evolved_90ed3740.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Duck",
+   "family": "bird",
+   "file": "saga-web/saga-forest/assets/models/animals/Duck.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-forest"
+   ]
+  },
+  {
+   "species": "Mesh_Crow",
+   "family": "bird",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Mesh_Crow.gltf",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Owl",
+   "family": "bird",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Owl.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Pigeon",
+   "family": "bird",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Pigeon_2ad33f9e.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Pigeon",
+   "family": "bird",
+   "file": "saga-web/saga-go/assets/models/animals/Pigeon.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Wasp",
+   "family": "bird",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius2/Wasp.glb",
+   "skinned": true,
+   "clips": [
+    "WaspArmature|Wasp_Attack",
+    "WaspArmature|Wasp_Death",
+    "WaspArmature|Wasp_Flying"
+   ],
+   "slots": {
+    "run": [
+     "WaspArmature|Wasp_Flying"
+    ],
+    "attack": [
+     "WaspArmature|Wasp_Attack"
+    ],
+    "death": [
+     "WaspArmature|Wasp_Death"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-go",
+    "saga-realm",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Cyclops",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius_cute/Cyclops.glb",
+   "skinned": true,
+   "clips": [
+    "MonsterArmature|Bite_Front",
+    "MonsterArmature|Bite_InPlace",
+    "MonsterArmature|Dance",
+    "MonsterArmature|Death",
+    "MonsterArmature|HitRecieve",
+    "MonsterArmature|Idle",
+    "MonsterArmature|Jump",
+    "MonsterArmature|No",
+    "MonsterArmature|Walk",
+    "MonsterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "MonsterArmature|Idle"
+    ],
+    "walk": [
+     "MonsterArmature|Walk"
+    ],
+    "attack": [
+     "MonsterArmature|Bite_Front",
+     "MonsterArmature|Bite_InPlace"
+    ],
+    "hit": [
+     "MonsterArmature|HitRecieve"
+    ],
+    "death": [
+     "MonsterArmature|Death"
+    ],
+    "special": [
+     "MonsterArmature|Dance",
+     "MonsterArmature|Jump",
+     "MonsterArmature|No",
+     "MonsterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "EnemySmall",
+   "family": "humanoid",
+   "file": "saga-web/saga-forest/assets/models/monsters/space/EnemySmall.glb",
+   "skinned": true,
+   "clips": [
+    "Death",
+    "Fast_Flying",
+    "Flying_Idle",
+    "Headbutt",
+    "HitReact",
+    "No",
+    "Punch",
+    "Yes"
+   ],
+   "slots": {
+    "idle": [
+     "Flying_Idle"
+    ],
+    "run": [
+     "Fast_Flying"
+    ],
+    "attack": [
+     "Headbutt",
+     "Punch"
+    ],
+    "hit": [
+     "HitReact"
+    ],
+    "death": [
+     "Death"
+    ],
+    "special": [
+     "No",
+     "Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-forest"
+   ]
+  },
+  {
+   "species": "Giant",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius2/Giant.glb",
+   "skinned": true,
+   "clips": [
+    "EnemyArmature|EnemyArmature|EnemyArmature|Attack",
+    "EnemyArmature|EnemyArmature|EnemyArmature|Death",
+    "EnemyArmature|EnemyArmature|EnemyArmature|HitRecieve",
+    "EnemyArmature|EnemyArmature|EnemyArmature|Idle",
+    "EnemyArmature|EnemyArmature|EnemyArmature|Jump",
+    "EnemyArmature|EnemyArmature|EnemyArmature|Run",
+    "EnemyArmature|EnemyArmature|EnemyArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Idle"
+    ],
+    "walk": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Walk"
+    ],
+    "run": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Run"
+    ],
+    "attack": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Attack"
+    ],
+    "hit": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|HitRecieve"
+    ],
+    "death": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Death"
+    ],
+    "special": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Jump"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Ninja",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Ninja_2ed11876.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Ninja",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Ninja_42162a27.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Orc",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Orc_52a479b3.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Orc",
+   "family": "humanoid",
+   "file": "saga-web/saga-go/assets/models/animals/Orc.gltf",
+   "skinned": true,
+   "clips": [
+    "Death",
+    "Duck",
+    "HitReact",
+    "Idle",
+    "Jump",
+    "Jump_Idle",
+    "Jump_Land",
+    "No",
+    "Punch",
+    "Run",
+    "Walk",
+    "Wave",
+    "Weapon",
+    "Yes"
+   ],
+   "slots": {
+    "idle": [
+     "Idle",
+     "Jump_Idle"
+    ],
+    "walk": [
+     "Walk"
+    ],
+    "run": [
+     "Run"
+    ],
+    "attack": [
+     "Punch"
+    ],
+    "hit": [
+     "HitReact"
+    ],
+    "death": [
+     "Death"
+    ],
+    "special": [
+     "Duck",
+     "Jump",
+     "Jump_Land",
+     "No",
+     "Wave",
+     "Weapon",
+     "Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Orc_Enemy",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Orc_Enemy_3076c5f7.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Skeleton_Mage",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/kaykit_skeletons/Skeleton_Mage.glb",
+   "skinned": true,
+   "clips": [
+    "1H_Melee_Attack_Chop",
+    "1H_Melee_Attack_Jump_Chop",
+    "1H_Melee_Attack_Slice_Diagonal",
+    "1H_Melee_Attack_Slice_Horizontal",
+    "1H_Melee_Attack_Stab",
+    "1H_Ranged_Aiming",
+    "1H_Ranged_Reload",
+    "1H_Ranged_Shoot",
+    "1H_Ranged_Shooting",
+    "2H_Melee_Attack_Chop",
+    "2H_Melee_Attack_Slice",
+    "2H_Melee_Attack_Spin",
+    "2H_Melee_Attack_Spinning",
+    "2H_Melee_Attack_Stab",
+    "2H_Melee_Idle",
+    "2H_Ranged_Aiming",
+    "2H_Ranged_Reload",
+    "2H_Ranged_Shoot",
+    "2H_Ranged_Shooting",
+    "Block",
+    "Block_Attack",
+    "Block_Hit",
+    "Blocking",
+    "Cheer",
+    "Death_A",
+    "Death_A_Pose",
+    "Death_B",
+    "Death_B_Pose",
+    "Death_C_Pose",
+    "Death_C_Skeletons",
+    "Death_C_Skeletons_Resurrect",
+    "Dodge_Backward",
+    "Dodge_Forward",
+    "Dodge_Left",
+    "Dodge_Right",
+    "Dualwield_Melee_Attack_Chop",
+    "Dualwield_Melee_Attack_Slice",
+    "Dualwield_Melee_Attack_Stab",
+    "Hit_A",
+    "Hit_B",
+    "Idle",
+    "Idle_B",
+    "Idle_Combat",
+    "Interact",
+    "Jump_Full_Long",
+    "Jump_Full_Short",
+    "Jump_Idle",
+    "Jump_Land",
+    "Jump_Start",
+    "Lie_Down",
+    "Lie_Idle",
+    "Lie_Pose",
+    "Lie_StandUp",
+    "PickUp",
+    "Running_A",
+    "Running_B",
+    "Running_C",
+    "Running_Strafe_Left",
+    "Running_Strafe_Right",
+    "Sit_Chair_Down",
+    "Sit_Chair_Idle",
+    "Sit_Chair_Pose",
+    "Sit_Chair_StandUp",
+    "Sit_Floor_Down",
+    "Sit_Floor_Idle",
+    "Sit_Floor_Pose",
+    "Sit_Floor_StandUp",
+    "Skeleton_Inactive_Standing_Pose",
+    "Skeletons_Awaken_Floor",
+    "Skeletons_Awaken_Floor_Long",
+    "Skeletons_Awaken_Standing",
+    "Skeletons_Inactive_Floor_Pose",
+    "Spawn_Air",
+    "Spawn_Ground",
+    "Spawn_Ground_Skeletons",
+    "Spellcast_Long",
+    "Spellcast_Raise",
+    "Spellcast_Shoot",
+    "Spellcast_Summon",
+    "Spellcasting",
+    "T-Pose",
+    "Taunt",
+    "Taunt_Longer",
+    "Throw",
+    "Unarmed_Idle",
+    "Unarmed_Melee_Attack_Kick",
+    "Unarmed_Melee_Attack_Punch_A",
+    "Unarmed_Melee_Attack_Punch_B",
+    "Unarmed_Pose",
+    "Use_Item",
+    "Walking_A",
+    "Walking_B",
+    "Walking_Backwards",
+    "Walking_C",
+    "Walking_D_Skeletons"
+   ],
+   "slots": {
+    "idle": [
+     "2H_Melee_Idle",
+     "Idle",
+     "Idle_B",
+     "Idle_Combat",
+     "Jump_Idle",
+     "Lie_Idle",
+     "Lie_StandUp",
+     "Sit_Chair_Idle",
+     "Sit_Chair_StandUp",
+     "Sit_Floor_Idle",
+     "Sit_Floor_StandUp",
+     "Skeleton_Inactive_Standing_Pose",
+     "Skeletons_Awaken_Standing",
+     "Unarmed_Idle"
+    ],
+    "walk": [
+     "Walking_A",
+     "Walking_B",
+     "Walking_Backwards",
+     "Walking_C",
+     "Walking_D_Skeletons"
+    ],
+    "run": [
+     "Running_A",
+     "Running_B",
+     "Running_C",
+     "Running_Strafe_Left",
+     "Running_Strafe_Right"
+    ],
+    "attack": [
+     "1H_Melee_Attack_Chop",
+     "1H_Melee_Attack_Jump_Chop",
+     "1H_Melee_Attack_Slice_Diagonal",
+     "1H_Melee_Attack_Slice_Horizontal",
+     "1H_Melee_Attack_Stab",
+     "1H_Ranged_Shoot",
+     "1H_Ranged_Shooting",
+     "2H_Melee_Attack_Chop",
+     "2H_Melee_Attack_Slice",
+     "2H_Melee_Attack_Spin",
+     "2H_Melee_Attack_Spinning",
+     "2H_Melee_Attack_Stab",
+     "2H_Ranged_Shoot",
+     "2H_Ranged_Shooting",
+     "Block_Attack",
+     "Dualwield_Melee_Attack_Chop",
+     "Dualwield_Melee_Attack_Slice",
+     "Dualwield_Melee_Attack_Stab",
+     "Spellcast_Shoot",
+     "Spellcasting",
+     "Unarmed_Melee_Attack_Kick",
+     "Unarmed_Melee_Attack_Punch_A",
+     "Unarmed_Melee_Attack_Punch_B"
+    ],
+    "hit": [
+     "Block_Hit",
+     "Hit_A",
+     "Hit_B"
+    ],
+    "death": [
+     "Death_A",
+     "Death_A_Pose",
+     "Death_B",
+     "Death_B_Pose",
+     "Death_C_Pose",
+     "Death_C_Skeletons",
+     "Death_C_Skeletons_Resurrect"
+    ],
+    "special": [
+     "1H_Ranged_Aiming",
+     "1H_Ranged_Reload",
+     "2H_Ranged_Aiming",
+     "2H_Ranged_Reload",
+     "Block",
+     "Blocking",
+     "Cheer",
+     "Dodge_Backward",
+     "Dodge_Forward",
+     "Dodge_Left",
+     "Dodge_Right",
+     "Interact",
+     "Jump_Full_Long",
+     "Jump_Full_Short",
+     "Jump_Land",
+     "Jump_Start",
+     "Lie_Down",
+     "Lie_Pose",
+     "PickUp",
+     "Sit_Chair_Down",
+     "Sit_Chair_Pose",
+     "Sit_Floor_Down",
+     "Sit_Floor_Pose",
+     "Skeletons_Awaken_Floor",
+     "Skeletons_Awaken_Floor_Long",
+     "Skeletons_Inactive_Floor_Pose",
+     "Spawn_Air",
+     "Spawn_Ground",
+     "Spawn_Ground_Skeletons",
+     "Spellcast_Long",
+     "Spellcast_Raise",
+     "Spellcast_Summon",
+     "T-Pose",
+     "Taunt",
+     "Taunt_Longer",
+     "Throw",
+     "Unarmed_Pose",
+     "Use_Item"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Skeleton_Minion",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/kaykit_skeletons/Skeleton_Minion.glb",
+   "skinned": true,
+   "clips": [
+    "1H_Melee_Attack_Chop",
+    "1H_Melee_Attack_Jump_Chop",
+    "1H_Melee_Attack_Slice_Diagonal",
+    "1H_Melee_Attack_Slice_Horizontal",
+    "1H_Melee_Attack_Stab",
+    "1H_Ranged_Aiming",
+    "1H_Ranged_Reload",
+    "1H_Ranged_Shoot",
+    "1H_Ranged_Shooting",
+    "2H_Melee_Attack_Chop",
+    "2H_Melee_Attack_Slice",
+    "2H_Melee_Attack_Spin",
+    "2H_Melee_Attack_Spinning",
+    "2H_Melee_Attack_Stab",
+    "2H_Melee_Idle",
+    "2H_Ranged_Aiming",
+    "2H_Ranged_Reload",
+    "2H_Ranged_Shoot",
+    "2H_Ranged_Shooting",
+    "Block",
+    "Block_Attack",
+    "Block_Hit",
+    "Blocking",
+    "Cheer",
+    "Death_A",
+    "Death_A_Pose",
+    "Death_B",
+    "Death_B_Pose",
+    "Death_C_Pose",
+    "Death_C_Skeletons",
+    "Death_C_Skeletons_Resurrect",
+    "Dodge_Backward",
+    "Dodge_Forward",
+    "Dodge_Left",
+    "Dodge_Right",
+    "Dualwield_Melee_Attack_Chop",
+    "Dualwield_Melee_Attack_Slice",
+    "Dualwield_Melee_Attack_Stab",
+    "Hit_A",
+    "Hit_B",
+    "Idle",
+    "Idle_B",
+    "Idle_Combat",
+    "Interact",
+    "Jump_Full_Long",
+    "Jump_Full_Short",
+    "Jump_Idle",
+    "Jump_Land",
+    "Jump_Start",
+    "Lie_Down",
+    "Lie_Idle",
+    "Lie_Pose",
+    "Lie_StandUp",
+    "PickUp",
+    "Running_A",
+    "Running_B",
+    "Running_C",
+    "Running_Strafe_Left",
+    "Running_Strafe_Right",
+    "Sit_Chair_Down",
+    "Sit_Chair_Idle",
+    "Sit_Chair_Pose",
+    "Sit_Chair_StandUp",
+    "Sit_Floor_Down",
+    "Sit_Floor_Idle",
+    "Sit_Floor_Pose",
+    "Sit_Floor_StandUp",
+    "Skeleton_Inactive_Standing_Pose",
+    "Skeletons_Awaken_Floor",
+    "Skeletons_Awaken_Floor_Long",
+    "Skeletons_Awaken_Standing",
+    "Skeletons_Inactive_Floor_Pose",
+    "Spawn_Air",
+    "Spawn_Ground",
+    "Spawn_Ground_Skeletons",
+    "Spellcast_Long",
+    "Spellcast_Raise",
+    "Spellcast_Shoot",
+    "Spellcast_Summon",
+    "Spellcasting",
+    "T-Pose",
+    "Taunt",
+    "Taunt_Longer",
+    "Throw",
+    "Unarmed_Idle",
+    "Unarmed_Melee_Attack_Kick",
+    "Unarmed_Melee_Attack_Punch_A",
+    "Unarmed_Melee_Attack_Punch_B",
+    "Unarmed_Pose",
+    "Use_Item",
+    "Walking_A",
+    "Walking_B",
+    "Walking_Backwards",
+    "Walking_C",
+    "Walking_D_Skeletons"
+   ],
+   "slots": {
+    "idle": [
+     "2H_Melee_Idle",
+     "Idle",
+     "Idle_B",
+     "Idle_Combat",
+     "Jump_Idle",
+     "Lie_Idle",
+     "Lie_StandUp",
+     "Sit_Chair_Idle",
+     "Sit_Chair_StandUp",
+     "Sit_Floor_Idle",
+     "Sit_Floor_StandUp",
+     "Skeleton_Inactive_Standing_Pose",
+     "Skeletons_Awaken_Standing",
+     "Unarmed_Idle"
+    ],
+    "walk": [
+     "Walking_A",
+     "Walking_B",
+     "Walking_Backwards",
+     "Walking_C",
+     "Walking_D_Skeletons"
+    ],
+    "run": [
+     "Running_A",
+     "Running_B",
+     "Running_C",
+     "Running_Strafe_Left",
+     "Running_Strafe_Right"
+    ],
+    "attack": [
+     "1H_Melee_Attack_Chop",
+     "1H_Melee_Attack_Jump_Chop",
+     "1H_Melee_Attack_Slice_Diagonal",
+     "1H_Melee_Attack_Slice_Horizontal",
+     "1H_Melee_Attack_Stab",
+     "1H_Ranged_Shoot",
+     "1H_Ranged_Shooting",
+     "2H_Melee_Attack_Chop",
+     "2H_Melee_Attack_Slice",
+     "2H_Melee_Attack_Spin",
+     "2H_Melee_Attack_Spinning",
+     "2H_Melee_Attack_Stab",
+     "2H_Ranged_Shoot",
+     "2H_Ranged_Shooting",
+     "Block_Attack",
+     "Dualwield_Melee_Attack_Chop",
+     "Dualwield_Melee_Attack_Slice",
+     "Dualwield_Melee_Attack_Stab",
+     "Spellcast_Shoot",
+     "Spellcasting",
+     "Unarmed_Melee_Attack_Kick",
+     "Unarmed_Melee_Attack_Punch_A",
+     "Unarmed_Melee_Attack_Punch_B"
+    ],
+    "hit": [
+     "Block_Hit",
+     "Hit_A",
+     "Hit_B"
+    ],
+    "death": [
+     "Death_A",
+     "Death_A_Pose",
+     "Death_B",
+     "Death_B_Pose",
+     "Death_C_Pose",
+     "Death_C_Skeletons",
+     "Death_C_Skeletons_Resurrect"
+    ],
+    "special": [
+     "1H_Ranged_Aiming",
+     "1H_Ranged_Reload",
+     "2H_Ranged_Aiming",
+     "2H_Ranged_Reload",
+     "Block",
+     "Blocking",
+     "Cheer",
+     "Dodge_Backward",
+     "Dodge_Forward",
+     "Dodge_Left",
+     "Dodge_Right",
+     "Interact",
+     "Jump_Full_Long",
+     "Jump_Full_Short",
+     "Jump_Land",
+     "Jump_Start",
+     "Lie_Down",
+     "Lie_Pose",
+     "PickUp",
+     "Sit_Chair_Down",
+     "Sit_Chair_Pose",
+     "Sit_Floor_Down",
+     "Sit_Floor_Pose",
+     "Skeletons_Awaken_Floor",
+     "Skeletons_Awaken_Floor_Long",
+     "Skeletons_Inactive_Floor_Pose",
+     "Spawn_Air",
+     "Spawn_Ground",
+     "Spawn_Ground_Skeletons",
+     "Spellcast_Long",
+     "Spellcast_Raise",
+     "Spellcast_Summon",
+     "T-Pose",
+     "Taunt",
+     "Taunt_Longer",
+     "Throw",
+     "Unarmed_Pose",
+     "Use_Item"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Skeleton_Rogue",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/kaykit_skeletons/Skeleton_Rogue.glb",
+   "skinned": true,
+   "clips": [
+    "1H_Melee_Attack_Chop",
+    "1H_Melee_Attack_Jump_Chop",
+    "1H_Melee_Attack_Slice_Diagonal",
+    "1H_Melee_Attack_Slice_Horizontal",
+    "1H_Melee_Attack_Stab",
+    "1H_Ranged_Aiming",
+    "1H_Ranged_Reload",
+    "1H_Ranged_Shoot",
+    "1H_Ranged_Shooting",
+    "2H_Melee_Attack_Chop",
+    "2H_Melee_Attack_Slice",
+    "2H_Melee_Attack_Spin",
+    "2H_Melee_Attack_Spinning",
+    "2H_Melee_Attack_Stab",
+    "2H_Melee_Idle",
+    "2H_Ranged_Aiming",
+    "2H_Ranged_Reload",
+    "2H_Ranged_Shoot",
+    "2H_Ranged_Shooting",
+    "Block",
+    "Block_Attack",
+    "Block_Hit",
+    "Blocking",
+    "Cheer",
+    "Death_A",
+    "Death_A_Pose",
+    "Death_B",
+    "Death_B_Pose",
+    "Death_C_Pose",
+    "Death_C_Skeletons",
+    "Death_C_Skeletons_Resurrect",
+    "Dodge_Backward",
+    "Dodge_Forward",
+    "Dodge_Left",
+    "Dodge_Right",
+    "Dualwield_Melee_Attack_Chop",
+    "Dualwield_Melee_Attack_Slice",
+    "Dualwield_Melee_Attack_Stab",
+    "Hit_A",
+    "Hit_B",
+    "Idle",
+    "Idle_B",
+    "Idle_Combat",
+    "Interact",
+    "Jump_Full_Long",
+    "Jump_Full_Short",
+    "Jump_Idle",
+    "Jump_Land",
+    "Jump_Start",
+    "Lie_Down",
+    "Lie_Idle",
+    "Lie_Pose",
+    "Lie_StandUp",
+    "PickUp",
+    "Running_A",
+    "Running_B",
+    "Running_C",
+    "Running_Strafe_Left",
+    "Running_Strafe_Right",
+    "Sit_Chair_Down",
+    "Sit_Chair_Idle",
+    "Sit_Chair_Pose",
+    "Sit_Chair_StandUp",
+    "Sit_Floor_Down",
+    "Sit_Floor_Idle",
+    "Sit_Floor_Pose",
+    "Sit_Floor_StandUp",
+    "Skeleton_Inactive_Standing_Pose",
+    "Skeletons_Awaken_Floor",
+    "Skeletons_Awaken_Floor_Long",
+    "Skeletons_Awaken_Standing",
+    "Skeletons_Inactive_Floor_Pose",
+    "Spawn_Air",
+    "Spawn_Ground",
+    "Spawn_Ground_Skeletons",
+    "Spellcast_Long",
+    "Spellcast_Raise",
+    "Spellcast_Shoot",
+    "Spellcast_Summon",
+    "Spellcasting",
+    "T-Pose",
+    "Taunt",
+    "Taunt_Longer",
+    "Throw",
+    "Unarmed_Idle",
+    "Unarmed_Melee_Attack_Kick",
+    "Unarmed_Melee_Attack_Punch_A",
+    "Unarmed_Melee_Attack_Punch_B",
+    "Unarmed_Pose",
+    "Use_Item",
+    "Walking_A",
+    "Walking_B",
+    "Walking_Backwards",
+    "Walking_C",
+    "Walking_D_Skeletons"
+   ],
+   "slots": {
+    "idle": [
+     "2H_Melee_Idle",
+     "Idle",
+     "Idle_B",
+     "Idle_Combat",
+     "Jump_Idle",
+     "Lie_Idle",
+     "Lie_StandUp",
+     "Sit_Chair_Idle",
+     "Sit_Chair_StandUp",
+     "Sit_Floor_Idle",
+     "Sit_Floor_StandUp",
+     "Skeleton_Inactive_Standing_Pose",
+     "Skeletons_Awaken_Standing",
+     "Unarmed_Idle"
+    ],
+    "walk": [
+     "Walking_A",
+     "Walking_B",
+     "Walking_Backwards",
+     "Walking_C",
+     "Walking_D_Skeletons"
+    ],
+    "run": [
+     "Running_A",
+     "Running_B",
+     "Running_C",
+     "Running_Strafe_Left",
+     "Running_Strafe_Right"
+    ],
+    "attack": [
+     "1H_Melee_Attack_Chop",
+     "1H_Melee_Attack_Jump_Chop",
+     "1H_Melee_Attack_Slice_Diagonal",
+     "1H_Melee_Attack_Slice_Horizontal",
+     "1H_Melee_Attack_Stab",
+     "1H_Ranged_Shoot",
+     "1H_Ranged_Shooting",
+     "2H_Melee_Attack_Chop",
+     "2H_Melee_Attack_Slice",
+     "2H_Melee_Attack_Spin",
+     "2H_Melee_Attack_Spinning",
+     "2H_Melee_Attack_Stab",
+     "2H_Ranged_Shoot",
+     "2H_Ranged_Shooting",
+     "Block_Attack",
+     "Dualwield_Melee_Attack_Chop",
+     "Dualwield_Melee_Attack_Slice",
+     "Dualwield_Melee_Attack_Stab",
+     "Spellcast_Shoot",
+     "Spellcasting",
+     "Unarmed_Melee_Attack_Kick",
+     "Unarmed_Melee_Attack_Punch_A",
+     "Unarmed_Melee_Attack_Punch_B"
+    ],
+    "hit": [
+     "Block_Hit",
+     "Hit_A",
+     "Hit_B"
+    ],
+    "death": [
+     "Death_A",
+     "Death_A_Pose",
+     "Death_B",
+     "Death_B_Pose",
+     "Death_C_Pose",
+     "Death_C_Skeletons",
+     "Death_C_Skeletons_Resurrect"
+    ],
+    "special": [
+     "1H_Ranged_Aiming",
+     "1H_Ranged_Reload",
+     "2H_Ranged_Aiming",
+     "2H_Ranged_Reload",
+     "Block",
+     "Blocking",
+     "Cheer",
+     "Dodge_Backward",
+     "Dodge_Forward",
+     "Dodge_Left",
+     "Dodge_Right",
+     "Interact",
+     "Jump_Full_Long",
+     "Jump_Full_Short",
+     "Jump_Land",
+     "Jump_Start",
+     "Lie_Down",
+     "Lie_Pose",
+     "PickUp",
+     "Sit_Chair_Down",
+     "Sit_Chair_Pose",
+     "Sit_Floor_Down",
+     "Sit_Floor_Pose",
+     "Skeletons_Awaken_Floor",
+     "Skeletons_Awaken_Floor_Long",
+     "Skeletons_Inactive_Floor_Pose",
+     "Spawn_Air",
+     "Spawn_Ground",
+     "Spawn_Ground_Skeletons",
+     "Spellcast_Long",
+     "Spellcast_Raise",
+     "Spellcast_Summon",
+     "T-Pose",
+     "Taunt",
+     "Taunt_Longer",
+     "Throw",
+     "Unarmed_Pose",
+     "Use_Item"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Skeleton_Warrior",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/kaykit_skeletons/Skeleton_Warrior.glb",
+   "skinned": true,
+   "clips": [
+    "1H_Melee_Attack_Chop",
+    "1H_Melee_Attack_Jump_Chop",
+    "1H_Melee_Attack_Slice_Diagonal",
+    "1H_Melee_Attack_Slice_Horizontal",
+    "1H_Melee_Attack_Stab",
+    "1H_Ranged_Aiming",
+    "1H_Ranged_Reload",
+    "1H_Ranged_Shoot",
+    "1H_Ranged_Shooting",
+    "2H_Melee_Attack_Chop",
+    "2H_Melee_Attack_Slice",
+    "2H_Melee_Attack_Spin",
+    "2H_Melee_Attack_Spinning",
+    "2H_Melee_Attack_Stab",
+    "2H_Melee_Idle",
+    "2H_Ranged_Aiming",
+    "2H_Ranged_Reload",
+    "2H_Ranged_Shoot",
+    "2H_Ranged_Shooting",
+    "Block",
+    "Block_Attack",
+    "Block_Hit",
+    "Blocking",
+    "Cheer",
+    "Death_A",
+    "Death_A_Pose",
+    "Death_B",
+    "Death_B_Pose",
+    "Death_C_Pose",
+    "Death_C_Skeletons",
+    "Death_C_Skeletons_Resurrect",
+    "Dodge_Backward",
+    "Dodge_Forward",
+    "Dodge_Left",
+    "Dodge_Right",
+    "Dualwield_Melee_Attack_Chop",
+    "Dualwield_Melee_Attack_Slice",
+    "Dualwield_Melee_Attack_Stab",
+    "Hit_A",
+    "Hit_B",
+    "Idle",
+    "Idle_B",
+    "Idle_Combat",
+    "Interact",
+    "Jump_Full_Long",
+    "Jump_Full_Short",
+    "Jump_Idle",
+    "Jump_Land",
+    "Jump_Start",
+    "Lie_Down",
+    "Lie_Idle",
+    "Lie_Pose",
+    "Lie_StandUp",
+    "PickUp",
+    "Running_A",
+    "Running_B",
+    "Running_C",
+    "Running_Strafe_Left",
+    "Running_Strafe_Right",
+    "Sit_Chair_Down",
+    "Sit_Chair_Idle",
+    "Sit_Chair_Pose",
+    "Sit_Chair_StandUp",
+    "Sit_Floor_Down",
+    "Sit_Floor_Idle",
+    "Sit_Floor_Pose",
+    "Sit_Floor_StandUp",
+    "Skeleton_Inactive_Standing_Pose",
+    "Skeletons_Awaken_Floor",
+    "Skeletons_Awaken_Floor_Long",
+    "Skeletons_Awaken_Standing",
+    "Skeletons_Inactive_Floor_Pose",
+    "Spawn_Air",
+    "Spawn_Ground",
+    "Spawn_Ground_Skeletons",
+    "Spellcast_Long",
+    "Spellcast_Raise",
+    "Spellcast_Shoot",
+    "Spellcast_Summon",
+    "Spellcasting",
+    "T-Pose",
+    "Taunt",
+    "Taunt_Longer",
+    "Throw",
+    "Unarmed_Idle",
+    "Unarmed_Melee_Attack_Kick",
+    "Unarmed_Melee_Attack_Punch_A",
+    "Unarmed_Melee_Attack_Punch_B",
+    "Unarmed_Pose",
+    "Use_Item",
+    "Walking_A",
+    "Walking_B",
+    "Walking_Backwards",
+    "Walking_C",
+    "Walking_D_Skeletons"
+   ],
+   "slots": {
+    "idle": [
+     "2H_Melee_Idle",
+     "Idle",
+     "Idle_B",
+     "Idle_Combat",
+     "Jump_Idle",
+     "Lie_Idle",
+     "Lie_StandUp",
+     "Sit_Chair_Idle",
+     "Sit_Chair_StandUp",
+     "Sit_Floor_Idle",
+     "Sit_Floor_StandUp",
+     "Skeleton_Inactive_Standing_Pose",
+     "Skeletons_Awaken_Standing",
+     "Unarmed_Idle"
+    ],
+    "walk": [
+     "Walking_A",
+     "Walking_B",
+     "Walking_Backwards",
+     "Walking_C",
+     "Walking_D_Skeletons"
+    ],
+    "run": [
+     "Running_A",
+     "Running_B",
+     "Running_C",
+     "Running_Strafe_Left",
+     "Running_Strafe_Right"
+    ],
+    "attack": [
+     "1H_Melee_Attack_Chop",
+     "1H_Melee_Attack_Jump_Chop",
+     "1H_Melee_Attack_Slice_Diagonal",
+     "1H_Melee_Attack_Slice_Horizontal",
+     "1H_Melee_Attack_Stab",
+     "1H_Ranged_Shoot",
+     "1H_Ranged_Shooting",
+     "2H_Melee_Attack_Chop",
+     "2H_Melee_Attack_Slice",
+     "2H_Melee_Attack_Spin",
+     "2H_Melee_Attack_Spinning",
+     "2H_Melee_Attack_Stab",
+     "2H_Ranged_Shoot",
+     "2H_Ranged_Shooting",
+     "Block_Attack",
+     "Dualwield_Melee_Attack_Chop",
+     "Dualwield_Melee_Attack_Slice",
+     "Dualwield_Melee_Attack_Stab",
+     "Spellcast_Shoot",
+     "Spellcasting",
+     "Unarmed_Melee_Attack_Kick",
+     "Unarmed_Melee_Attack_Punch_A",
+     "Unarmed_Melee_Attack_Punch_B"
+    ],
+    "hit": [
+     "Block_Hit",
+     "Hit_A",
+     "Hit_B"
+    ],
+    "death": [
+     "Death_A",
+     "Death_A_Pose",
+     "Death_B",
+     "Death_B_Pose",
+     "Death_C_Pose",
+     "Death_C_Skeletons",
+     "Death_C_Skeletons_Resurrect"
+    ],
+    "special": [
+     "1H_Ranged_Aiming",
+     "1H_Ranged_Reload",
+     "2H_Ranged_Aiming",
+     "2H_Ranged_Reload",
+     "Block",
+     "Blocking",
+     "Cheer",
+     "Dodge_Backward",
+     "Dodge_Forward",
+     "Dodge_Left",
+     "Dodge_Right",
+     "Interact",
+     "Jump_Full_Long",
+     "Jump_Full_Short",
+     "Jump_Land",
+     "Jump_Start",
+     "Lie_Down",
+     "Lie_Pose",
+     "PickUp",
+     "Sit_Chair_Down",
+     "Sit_Chair_Pose",
+     "Sit_Floor_Down",
+     "Sit_Floor_Pose",
+     "Skeletons_Awaken_Floor",
+     "Skeletons_Awaken_Floor_Long",
+     "Skeletons_Inactive_Floor_Pose",
+     "Spawn_Air",
+     "Spawn_Ground",
+     "Spawn_Ground_Skeletons",
+     "Spellcast_Long",
+     "Spellcast_Raise",
+     "Spellcast_Summon",
+     "T-Pose",
+     "Taunt",
+     "Taunt_Longer",
+     "Throw",
+     "Unarmed_Pose",
+     "Use_Item"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "SkeletonSolo",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius2/SkeletonSolo.glb",
+   "skinned": true,
+   "clips": [
+    "EnemyArmature|EnemyArmature|EnemyArmature|Attack",
+    "EnemyArmature|EnemyArmature|EnemyArmature|Death",
+    "EnemyArmature|EnemyArmature|EnemyArmature|HitRecieve",
+    "EnemyArmature|EnemyArmature|EnemyArmature|Idle",
+    "EnemyArmature|EnemyArmature|EnemyArmature|Jump",
+    "EnemyArmature|EnemyArmature|EnemyArmature|Run",
+    "EnemyArmature|EnemyArmature|EnemyArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Idle"
+    ],
+    "walk": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Walk"
+    ],
+    "run": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Run"
+    ],
+    "attack": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Attack"
+    ],
+    "hit": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|HitRecieve"
+    ],
+    "death": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Death"
+    ],
+    "special": [
+     "EnemyArmature|EnemyArmature|EnemyArmature|Jump"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Tribal",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Tribal_1b4759ca.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Wizard",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Wizard_d206c071.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Yeti",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Yeti_085b078d.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Yeti",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Yeti_40a831b3.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Zombie",
+   "family": "humanoid",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius2/Zombie.glb",
+   "skinned": true,
+   "clips": [
+    "Crawl",
+    "Death",
+    "HitReact",
+    "Idle",
+    "Idle_Attack",
+    "Jump",
+    "Jump_Idle",
+    "Jump_Land",
+    "No",
+    "Punch",
+    "Run",
+    "Run_Arms",
+    "Walk",
+    "Wave",
+    "Yes",
+    "Run_Attack",
+    "CharacterArmature|Crawl",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Idle_Attack",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Run_Arms",
+    "CharacterArmature|Run_Attack",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "Idle",
+     "Jump_Idle",
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "Crawl",
+     "Walk",
+     "CharacterArmature|Crawl",
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "Run",
+     "Run_Arms",
+     "CharacterArmature|Run",
+     "CharacterArmature|Run_Arms"
+    ],
+    "attack": [
+     "Idle_Attack",
+     "Punch",
+     "Run_Attack",
+     "CharacterArmature|Idle_Attack",
+     "CharacterArmature|Punch",
+     "CharacterArmature|Run_Attack"
+    ],
+    "hit": [
+     "HitReact",
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "Death",
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "Jump",
+     "Jump_Land",
+     "No",
+     "Wave",
+     "Yes",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-go",
+    "saga-realm",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Robot_Drone",
+   "family": "machine",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/robots/Robot_Drone.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Attack",
+    "CharacterArmature|Dead",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Run",
+    "CharacterArmature|Shoot",
+    "CharacterArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Attack",
+     "CharacterArmature|Shoot"
+    ],
+    "death": [
+     "CharacterArmature|Dead"
+    ]
+   },
+   "missing": [
+    "hit",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Robot_Large",
+   "family": "machine",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/robots/Robot_Large.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Attack",
+    "CharacterArmature|Attack.001",
+    "CharacterArmature|Death",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Run",
+    "CharacterArmature|Shoot",
+    "CharacterArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Attack",
+     "CharacterArmature|Attack.001",
+     "CharacterArmature|Shoot"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Robot_Walker",
+   "family": "machine",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/robots/Robot_Walker.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Attack",
+    "CharacterArmature|Death",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Run",
+    "CharacterArmature|Shoot",
+    "CharacterArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Attack",
+     "CharacterArmature|Shoot"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Alpaca",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Alpaca.glb",
+   "skinned": true,
+   "clips": [
+    "Attack_Headbutt",
+    "Attack_Kick",
+    "Death",
+    "Eating",
+    "Gallop",
+    "Gallop_Jump",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_toIdle",
+    "Walk",
+    "Idle_Headlow",
+    "Idle_2",
+    "Idle",
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_toIdle",
+     "Idle_Headlow",
+     "Idle_2",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop",
+     "Gallop_Jump",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack_Headbutt",
+     "Attack_Kick",
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Alpaca",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Alpaca.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Alpaking",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Alpaking_acb0f155.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Alpaking_Evolved",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Alpaking_Evolved_c50fd18d.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Apatosaurus",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Apatosaurus.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Apatosaurus_Attack",
+    "Armature|Apatosaurus_Idle",
+    "Armature|Apatosaurus_Jump",
+    "Armature|Apatosaurus_Run",
+    "Armature|Apatosaurus_Walk",
+    "Armature|Stegosaurus_Death"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Apatosaurus_Idle"
+    ],
+    "walk": [
+     "Armature|Apatosaurus_Walk"
+    ],
+    "run": [
+     "Armature|Apatosaurus_Run"
+    ],
+    "attack": [
+     "Armature|Apatosaurus_Attack"
+    ],
+    "death": [
+     "Armature|Stegosaurus_Death"
+    ],
+    "special": [
+     "Armature|Apatosaurus_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Bear",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Bear.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Boar",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Boar.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Bull",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Bull.glb",
+   "skinned": true,
+   "clips": [
+    "Attack_Headbutt",
+    "Attack_Kick",
+    "Death",
+    "Eating",
+    "Gallop",
+    "Gallop_Jump",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_toIdle",
+    "Walk",
+    "Idle_Headlow",
+    "Idle_2",
+    "Idle",
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_toIdle",
+     "Idle_Headlow",
+     "Idle_2",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop",
+     "Gallop_Jump",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack_Headbutt",
+     "Attack_Kick",
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Bull",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Bull.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Bunny",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Bunny_084b5ebe.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Cat",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Cat.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Cow",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Cow.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Cow",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Cow.glb",
+   "skinned": true,
+   "clips": [
+    "Attack_Headbutt",
+    "Attack_Kick",
+    "Death",
+    "Eating",
+    "Gallop",
+    "Gallop_Jump",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_toIdle",
+    "Walk",
+    "Idle_Headlow",
+    "Idle_2",
+    "Idle",
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_toIdle",
+     "Idle_Headlow",
+     "Idle_2",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop",
+     "Gallop_Jump",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack_Headbutt",
+     "Attack_Kick",
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Cow",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Cow.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Cow_Farm",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Cow_Farm.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Death",
+    "Armature|Idle",
+    "Armature|Jump",
+    "Armature|Run",
+    "Armature|Walk",
+    "Armature|WalkSlow"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Idle"
+    ],
+    "walk": [
+     "Armature|Walk",
+     "Armature|WalkSlow"
+    ],
+    "run": [
+     "Armature|Run"
+    ],
+    "death": [
+     "Armature|Death"
+    ],
+    "special": [
+     "Armature|Jump"
+    ]
+   },
+   "missing": [
+    "attack",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Deer",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Deer.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Deer",
+   "family": "quadruped",
+   "file": "saga-web/saga-forest/assets/models/animals/Deer.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Dino",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Dino_1c1ae302.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Donkey",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Donkey.glb",
+   "skinned": true,
+   "clips": [
+    "Attack_Headbutt",
+    "Attack_Kick",
+    "Death",
+    "Eating",
+    "Gallop",
+    "Gallop_Jump",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_toIdle",
+    "Walk",
+    "Idle_Headlow",
+    "Idle_2",
+    "Idle",
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_toIdle",
+     "Idle_Headlow",
+     "Idle_2",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop",
+     "Gallop_Jump",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack_Headbutt",
+     "Attack_Kick",
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Donkey",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Donkey.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Elephant",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Elephant.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Fox",
+   "family": "quadruped",
+   "file": "saga-unity/Assets/Art/Creatures/Fox/Fox.glb",
+   "skinned": true,
+   "clips": [
+    "Attack",
+    "Death",
+    "Eating",
+    "Gallop",
+    "Gallop_Jump",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_ToIdle",
+    "Walk",
+    "Idle_2_HeadLow",
+    "Idle_2",
+    "Idle",
+    "AnimalArmature|Attack",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_2_HeadLow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_ToIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_ToIdle",
+     "Idle_2_HeadLow",
+     "Idle_2",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_2_HeadLow",
+     "AnimalArmature|Jump_ToIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop",
+     "Gallop_Jump",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack",
+     "AnimalArmature|Attack"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "unity"
+   ]
+  },
+  {
+   "species": "Fox",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Fox.glb",
+   "skinned": true,
+   "clips": [
+    "Attack",
+    "Death",
+    "Eating",
+    "Gallop",
+    "Gallop_Jump",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_ToIdle",
+    "Walk",
+    "Idle_2_HeadLow",
+    "Idle_2",
+    "Idle",
+    "AnimalArmature|Attack",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_2_HeadLow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_ToIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_ToIdle",
+     "Idle_2_HeadLow",
+     "Idle_2",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_2_HeadLow",
+     "AnimalArmature|Jump_ToIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop",
+     "Gallop_Jump",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack",
+     "AnimalArmature|Attack"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Fox",
+   "family": "quadruped",
+   "file": "saga-web/saga-forest/assets/models/animals/Fox.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_2_HeadLow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_ToIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_2_HeadLow",
+     "AnimalArmature|Jump_ToIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Frog",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Frog.glb",
+   "skinned": true,
+   "clips": [
+    "FrogArmature|Frog_Attack",
+    "FrogArmature|Frog_Death",
+    "FrogArmature|Frog_Idle",
+    "FrogArmature|Frog_Jump"
+   ],
+   "slots": {
+    "idle": [
+     "FrogArmature|Frog_Idle"
+    ],
+    "attack": [
+     "FrogArmature|Frog_Attack"
+    ],
+    "death": [
+     "FrogArmature|Frog_Death"
+    ],
+    "special": [
+     "FrogArmature|Frog_Jump"
+    ]
+   },
+   "missing": [
+    "walk",
+    "run",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-realm",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Frog",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Frog_9018566d.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Frog",
+   "family": "quadruped",
+   "file": "saga-web/saga-forest/assets/models/animals/Frog.glb",
+   "skinned": true,
+   "clips": [
+    "FrogArmature|Frog_Attack",
+    "FrogArmature|Frog_Death",
+    "FrogArmature|Frog_Idle",
+    "FrogArmature|Frog_Jump"
+   ],
+   "slots": {
+    "idle": [
+     "FrogArmature|Frog_Idle"
+    ],
+    "attack": [
+     "FrogArmature|Frog_Attack"
+    ],
+    "death": [
+     "FrogArmature|Frog_Death"
+    ],
+    "special": [
+     "FrogArmature|Frog_Jump"
+    ]
+   },
+   "missing": [
+    "walk",
+    "run",
+    "hit"
+   ],
+   "games": [
+    "saga-forest",
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Horse",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Horse.glb",
+   "skinned": true,
+   "clips": [
+    "Attack_Headbutt",
+    "Attack_Kick",
+    "Death",
+    "Eating",
+    "Gallop_Jump",
+    "Gallop",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_toIdle",
+    "Walk",
+    "Idle_Headlow",
+    "Idle_2",
+    "Idle",
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_toIdle",
+     "Idle_Headlow",
+     "Idle_2",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop_Jump",
+     "Gallop",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack_Headbutt",
+     "Attack_Kick",
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Horse",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Horse.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Horse_Farm",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Horse_Farm.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Death",
+    "Armature|Idle",
+    "Armature|Jump",
+    "Armature|Run",
+    "Armature|Walk",
+    "Armature|WalkSlow"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Idle"
+    ],
+    "walk": [
+     "Armature|Walk",
+     "Armature|WalkSlow"
+    ],
+    "run": [
+     "Armature|Run"
+    ],
+    "death": [
+     "Armature|Death"
+    ],
+    "special": [
+     "Armature|Jump"
+    ]
+   },
+   "missing": [
+    "attack",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Horse_White",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Horse_White.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Husky",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Husky.glb",
+   "skinned": true,
+   "clips": [
+    "Attack",
+    "Death",
+    "Eating",
+    "Gallop",
+    "Gallop_Jump",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_ToIdle",
+    "Walk",
+    "Idle_2",
+    "Idle_2_HeadLow",
+    "Idle",
+    "AnimalArmature|Attack",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_2_HeadLow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_ToIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_ToIdle",
+     "Idle_2",
+     "Idle_2_HeadLow",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_2_HeadLow",
+     "AnimalArmature|Jump_ToIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop",
+     "Gallop_Jump",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack",
+     "AnimalArmature|Attack"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Husky",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Husky.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_2_HeadLow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_ToIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_2_HeadLow",
+     "AnimalArmature|Jump_ToIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Llama",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Llama.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Idle",
+    "Armature|Jump"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Idle"
+    ],
+    "special": [
+     "Armature|Jump"
+    ]
+   },
+   "missing": [
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Monkey",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Monkey.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Mushnub",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Mushnub_55c64684.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Mushnub_Evolved",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Mushnub_Evolved_84bc88a5.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Panda",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Panda.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Parasaurolophus",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Parasaurolophus.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Parasaurolophus_Attack",
+    "Armature|Parasaurolophus_Death",
+    "Armature|Parasaurolophus_Idle",
+    "Armature|Parasaurolophus_Jump",
+    "Armature|Parasaurolophus_Run",
+    "Armature|Parasaurolophus_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Parasaurolophus_Idle"
+    ],
+    "walk": [
+     "Armature|Parasaurolophus_Walk"
+    ],
+    "run": [
+     "Armature|Parasaurolophus_Run"
+    ],
+    "attack": [
+     "Armature|Parasaurolophus_Attack"
+    ],
+    "death": [
+     "Armature|Parasaurolophus_Death"
+    ],
+    "special": [
+     "Armature|Parasaurolophus_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Pig",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Pig.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Idle",
+    "Armature|Jump"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Idle"
+    ],
+    "special": [
+     "Armature|Jump"
+    ]
+   },
+   "missing": [
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Pug",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Pug.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Idle",
+    "Armature|Jump"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Idle"
+    ],
+    "special": [
+     "Armature|Jump"
+    ]
+   },
+   "missing": [
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Rabbit",
+   "family": "quadruped",
+   "file": "saga-web/saga-forest/assets/models/animals/Rabbit.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-forest"
+   ]
+  },
+  {
+   "species": "Rat",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius2/Rat.glb",
+   "skinned": true,
+   "clips": [
+    "RatArmature|Rat_Attack",
+    "RatArmature|Rat_Death",
+    "RatArmature|Rat_Idle",
+    "RatArmature|Rat_Jump",
+    "RatArmature|Rat_Run",
+    "RatArmature|Rat_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "RatArmature|Rat_Idle"
+    ],
+    "walk": [
+     "RatArmature|Rat_Walk"
+    ],
+    "run": [
+     "RatArmature|Rat_Run"
+    ],
+    "attack": [
+     "RatArmature|Rat_Attack"
+    ],
+    "death": [
+     "RatArmature|Rat_Death"
+    ],
+    "special": [
+     "RatArmature|Rat_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-go",
+    "saga-realm",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Royal_Gramma",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Royal_Gramma.glb",
+   "skinned": true,
+   "clips": [
+    "Fish_Armature|Attack",
+    "Fish_Armature|Death",
+    "Fish_Armature|Out_Of_Water",
+    "Fish_Armature|Swimming_Fast",
+    "Fish_Armature|Swimming_Impulse",
+    "Fish_Armature|Swimming_Normal"
+   ],
+   "slots": {
+    "run": [
+     "Fish_Armature|Swimming_Fast",
+     "Fish_Armature|Swimming_Impulse",
+     "Fish_Armature|Swimming_Normal"
+    ],
+    "attack": [
+     "Fish_Armature|Attack"
+    ],
+    "death": [
+     "Fish_Armature|Death"
+    ],
+    "special": [
+     "Fish_Armature|Out_Of_Water"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Sheep",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Sheep.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Idle",
+    "Armature|Jump"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Idle"
+    ],
+    "special": [
+     "Armature|Jump"
+    ]
+   },
+   "missing": [
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "ShibaInu",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/ShibaInu.glb",
+   "skinned": true,
+   "clips": [
+    "Attack",
+    "Death",
+    "Eating",
+    "Gallop",
+    "Gallop_Jump",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_ToIdle",
+    "Walk",
+    "Idle_2_HeadLow",
+    "Idle_2",
+    "Idle",
+    "AnimalArmature|Attack",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_2_HeadLow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_ToIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_ToIdle",
+     "Idle_2_HeadLow",
+     "Idle_2",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_2_HeadLow",
+     "AnimalArmature|Jump_ToIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop",
+     "Gallop_Jump",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack",
+     "AnimalArmature|Attack"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "ShibaInu",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/ShibaInu.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_2_HeadLow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_ToIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_2_HeadLow",
+     "AnimalArmature|Jump_ToIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Squirrel",
+   "family": "quadruped",
+   "file": "saga-web/saga-forest/assets/models/animals/Squirrel.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-forest"
+   ]
+  },
+  {
+   "species": "Stag",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Stag.glb",
+   "skinned": true,
+   "clips": [
+    "Attack_Headbutt",
+    "Attack_Kick",
+    "Death",
+    "Eating",
+    "Gallop",
+    "Gallop_Jump",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_toIdle",
+    "Walk",
+    "Idle_Headlow",
+    "Idle_2",
+    "Idle",
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_toIdle",
+     "Idle_Headlow",
+     "Idle_2",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop",
+     "Gallop_Jump",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack_Headbutt",
+     "Attack_Kick",
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Stag",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Stag.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Stegosaurus",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Stegosaurus.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Stegosaurus_Attack",
+    "Armature|Stegosaurus_Death",
+    "Armature|Stegosaurus_Idle",
+    "Armature|Stegosaurus_Jump",
+    "Armature|Stegosaurus_Run",
+    "Armature|Stegosaurus_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Stegosaurus_Idle"
+    ],
+    "walk": [
+     "Armature|Stegosaurus_Walk"
+    ],
+    "run": [
+     "Armature|Stegosaurus_Run"
+    ],
+    "attack": [
+     "Armature|Stegosaurus_Attack"
+    ],
+    "death": [
+     "Armature|Stegosaurus_Death"
+    ],
+    "special": [
+     "Armature|Stegosaurus_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Stegosaurus",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Stegosaurus.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Stegosaurus_Attack",
+    "Armature|Stegosaurus_Death",
+    "Armature|Stegosaurus_Idle",
+    "Armature|Stegosaurus_Jump",
+    "Armature|Stegosaurus_Run",
+    "Armature|Stegosaurus_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Stegosaurus_Idle"
+    ],
+    "walk": [
+     "Armature|Stegosaurus_Walk"
+    ],
+    "run": [
+     "Armature|Stegosaurus_Run"
+    ],
+    "attack": [
+     "Armature|Stegosaurus_Attack"
+    ],
+    "death": [
+     "Armature|Stegosaurus_Death"
+    ],
+    "special": [
+     "Armature|Stegosaurus_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "T_Rex",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/T_Rex.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|TRex_Attack",
+    "Armature|TRex_Death",
+    "Armature|TRex_Idle",
+    "Armature|TRex_Jump",
+    "Armature|TRex_Run",
+    "Armature|TRex_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|TRex_Idle"
+    ],
+    "walk": [
+     "Armature|TRex_Walk"
+    ],
+    "run": [
+     "Armature|TRex_Run"
+    ],
+    "attack": [
+     "Armature|TRex_Attack"
+    ],
+    "death": [
+     "Armature|TRex_Death"
+    ],
+    "special": [
+     "Armature|TRex_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Tiger",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Tiger.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Trex",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Trex.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|TRex_Attack",
+    "Armature|TRex_Death",
+    "Armature|TRex_Idle",
+    "Armature|TRex_Jump",
+    "Armature|TRex_Run",
+    "Armature|TRex_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|TRex_Idle"
+    ],
+    "walk": [
+     "Armature|TRex_Walk"
+    ],
+    "run": [
+     "Armature|TRex_Run"
+    ],
+    "attack": [
+     "Armature|TRex_Attack"
+    ],
+    "death": [
+     "Armature|TRex_Death"
+    ],
+    "special": [
+     "Armature|TRex_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Triceratops",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Triceratops.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Triceratops_Attack",
+    "Armature|Triceratops_Death",
+    "Armature|Triceratops_Idle",
+    "Armature|Triceratops_Jump",
+    "Armature|Triceratops_Run",
+    "Armature|Triceratops_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Triceratops_Idle"
+    ],
+    "walk": [
+     "Armature|Triceratops_Walk"
+    ],
+    "run": [
+     "Armature|Triceratops_Run"
+    ],
+    "attack": [
+     "Armature|Triceratops_Attack"
+    ],
+    "death": [
+     "Armature|Triceratops_Death"
+    ],
+    "special": [
+     "Armature|Triceratops_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Triceratops",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Triceratops.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Triceratops_Attack",
+    "Armature|Triceratops_Death",
+    "Armature|Triceratops_Idle",
+    "Armature|Triceratops_Jump",
+    "Armature|Triceratops_Run",
+    "Armature|Triceratops_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Triceratops_Idle"
+    ],
+    "walk": [
+     "Armature|Triceratops_Walk"
+    ],
+    "run": [
+     "Armature|Triceratops_Run"
+    ],
+    "attack": [
+     "Armature|Triceratops_Attack"
+    ],
+    "death": [
+     "Armature|Triceratops_Death"
+    ],
+    "special": [
+     "Armature|Triceratops_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Velociraptor",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Velociraptor.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Velociraptor_Attack",
+    "Armature|Velociraptor_Death",
+    "Armature|Velociraptor_Idle",
+    "Armature|Velociraptor_Jump",
+    "Armature|Velociraptor_Run",
+    "Armature|Velociraptor_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Velociraptor_Idle"
+    ],
+    "walk": [
+     "Armature|Velociraptor_Walk"
+    ],
+    "run": [
+     "Armature|Velociraptor_Run"
+    ],
+    "attack": [
+     "Armature|Velociraptor_Attack"
+    ],
+    "death": [
+     "Armature|Velociraptor_Death"
+    ],
+    "special": [
+     "Armature|Velociraptor_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Velociraptor",
+   "family": "quadruped",
+   "file": "saga-web/saga-go/assets/models/animals/Velociraptor.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Velociraptor_Attack",
+    "Armature|Velociraptor_Death",
+    "Armature|Velociraptor_Idle",
+    "Armature|Velociraptor_Jump",
+    "Armature|Velociraptor_Run",
+    "Armature|Velociraptor_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Velociraptor_Idle"
+    ],
+    "walk": [
+     "Armature|Velociraptor_Walk"
+    ],
+    "run": [
+     "Armature|Velociraptor_Run"
+    ],
+    "attack": [
+     "Armature|Velociraptor_Attack"
+    ],
+    "death": [
+     "Armature|Velociraptor_Death"
+    ],
+    "special": [
+     "Armature|Velociraptor_Jump"
+    ]
+   },
+   "missing": [
+    "hit"
+   ],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "White_Horse",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/White_Horse.glb",
+   "skinned": true,
+   "clips": [
+    "Attack_Headbutt",
+    "Attack_Kick",
+    "Death",
+    "Eating",
+    "Gallop_Jump",
+    "Gallop",
+    "Idle_HitReact_Left",
+    "Idle_HitReact_Right",
+    "Jump_toIdle",
+    "Walk",
+    "Idle_Headlow",
+    "Idle_2",
+    "Idle",
+    "AnimalArmature|Attack_Headbutt",
+    "AnimalArmature|Attack_Kick",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_Headlow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_toIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "Jump_toIdle",
+     "Idle_Headlow",
+     "Idle_2",
+     "Idle",
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_Headlow",
+     "AnimalArmature|Jump_toIdle"
+    ],
+    "walk": [
+     "Walk",
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "Gallop_Jump",
+     "Gallop",
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "Attack_Headbutt",
+     "Attack_Kick",
+     "AnimalArmature|Attack_Headbutt",
+     "AnimalArmature|Attack_Kick"
+    ],
+    "hit": [
+     "Idle_HitReact_Left",
+     "Idle_HitReact_Right",
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "Death",
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "Eating",
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Wolf",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals/Wolf.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_2_HeadLow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_ToIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_2_HeadLow",
+     "AnimalArmature|Jump_ToIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Wolf",
+   "family": "quadruped",
+   "file": "saga-web/saga-forest/assets/models/animals/Wolf.glb",
+   "skinned": true,
+   "clips": [
+    "AnimalArmature|Attack",
+    "AnimalArmature|Death",
+    "AnimalArmature|Eating",
+    "AnimalArmature|Gallop",
+    "AnimalArmature|Gallop_Jump",
+    "AnimalArmature|Idle",
+    "AnimalArmature|Idle_2",
+    "AnimalArmature|Idle_2_HeadLow",
+    "AnimalArmature|Idle_HitReact_Left",
+    "AnimalArmature|Idle_HitReact_Right",
+    "AnimalArmature|Jump_ToIdle",
+    "AnimalArmature|Walk"
+   ],
+   "slots": {
+    "idle": [
+     "AnimalArmature|Idle",
+     "AnimalArmature|Idle_2",
+     "AnimalArmature|Idle_2_HeadLow",
+     "AnimalArmature|Jump_ToIdle"
+    ],
+    "walk": [
+     "AnimalArmature|Walk"
+    ],
+    "run": [
+     "AnimalArmature|Gallop",
+     "AnimalArmature|Gallop_Jump"
+    ],
+    "attack": [
+     "AnimalArmature|Attack"
+    ],
+    "hit": [
+     "AnimalArmature|Idle_HitReact_Left",
+     "AnimalArmature|Idle_HitReact_Right"
+    ],
+    "death": [
+     "AnimalArmature|Death"
+    ],
+    "special": [
+     "AnimalArmature|Eating"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Zebra",
+   "family": "quadruped",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra/Zebra.glb",
+   "skinned": true,
+   "clips": [
+    "Armature|Death",
+    "Armature|Idle",
+    "Armature|Jump",
+    "Armature|Run",
+    "Armature|Walk",
+    "Armature|WalkSlow"
+   ],
+   "slots": {
+    "idle": [
+     "Armature|Idle"
+    ],
+    "walk": [
+     "Armature|Walk",
+     "Armature|WalkSlow"
+    ],
+    "run": [
+     "Armature|Run"
+    ],
+    "death": [
+     "Armature|Death"
+    ],
+    "special": [
+     "Armature|Jump"
+    ]
+   },
+   "missing": [
+    "attack",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Snake",
+   "family": "serpent",
+   "file": "saga-unity/Assets/Art/Creatures/Snake/Snake.glb",
+   "skinned": true,
+   "clips": [
+    "SnakeArmature|Snake_Attack",
+    "SnakeArmature|Snake_Idle",
+    "SnakeArmature|Snake_Jump",
+    "SnakeArmature|Snake_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "SnakeArmature|Snake_Idle"
+    ],
+    "walk": [
+     "SnakeArmature|Snake_Walk"
+    ],
+    "attack": [
+     "SnakeArmature|Snake_Attack"
+    ],
+    "special": [
+     "SnakeArmature|Snake_Jump"
+    ]
+   },
+   "missing": [
+    "run",
+    "hit",
+    "death"
+   ],
+   "games": [
+    "saga-forest",
+    "saga-go",
+    "unity"
+   ]
+  },
+  {
+   "species": "Snake",
+   "family": "serpent",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius2/Snake.glb",
+   "skinned": true,
+   "clips": [
+    "SnakeArmature|Snake_Attack",
+    "SnakeArmature|Snake_Idle",
+    "SnakeArmature|Snake_Jump",
+    "SnakeArmature|Snake_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "SnakeArmature|Snake_Idle"
+    ],
+    "walk": [
+     "SnakeArmature|Snake_Walk"
+    ],
+    "attack": [
+     "SnakeArmature|Snake_Attack"
+    ],
+    "special": [
+     "SnakeArmature|Snake_Jump"
+    ]
+   },
+   "missing": [
+    "run",
+    "hit",
+    "death"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Snake_angry",
+   "family": "serpent",
+   "file": "saga-web/saga-go/assets/models/animals/Snake_angry.glb",
+   "skinned": true,
+   "clips": [
+    "SnakeArmature|Snake_Attack",
+    "SnakeArmature|Snake_Idle",
+    "SnakeArmature|Snake_Jump",
+    "SnakeArmature|Snake_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "SnakeArmature|Snake_Idle"
+    ],
+    "walk": [
+     "SnakeArmature|Snake_Walk"
+    ],
+    "attack": [
+     "SnakeArmature|Snake_Attack"
+    ],
+    "special": [
+     "SnakeArmature|Snake_Jump"
+    ]
+   },
+   "missing": [
+    "run",
+    "hit",
+    "death"
+   ],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Worm",
+   "family": "serpent",
+   "file": "saga-web/saga-dungeon/assets/models/animals_extra2/Worm.glb",
+   "skinned": false,
+   "clips": [],
+   "slots": {},
+   "missing": [
+    "idle",
+    "walk",
+    "run",
+    "attack",
+    "hit",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-forest",
+    "saga-go",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Alien",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Alien_0bb74be9.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-go",
+    "saga-realm",
+    "saga-story"
+   ]
+  },
+  {
+   "species": "Alien",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Alien_b048d82a.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Armabee",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Armabee_de63aaf6.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Armabee_Evolved",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Armabee_Evolved_fb7d7a9e.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Blue_Demon",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Blue_Demon_6fbb8914.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Run2",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run",
+     "CharacterArmature|Run2"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "BlueDemon",
+   "family": "spirit",
+   "file": "saga-web/saga-go/assets/models/animals/BlueDemon.gltf",
+   "skinned": true,
+   "clips": [
+    "Death",
+    "Duck",
+    "HitReact",
+    "Idle",
+    "Jump",
+    "Jump_Idle",
+    "Jump_Land",
+    "No",
+    "Punch",
+    "Run",
+    "Walk",
+    "Wave",
+    "Weapon",
+    "Yes"
+   ],
+   "slots": {
+    "idle": [
+     "Idle",
+     "Jump_Idle"
+    ],
+    "walk": [
+     "Walk"
+    ],
+    "run": [
+     "Run"
+    ],
+    "attack": [
+     "Punch"
+    ],
+    "hit": [
+     "HitReact"
+    ],
+    "death": [
+     "Death"
+    ],
+    "special": [
+     "Duck",
+     "Jump",
+     "Jump_Land",
+     "No",
+     "Wave",
+     "Weapon",
+     "Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Cactoro",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Cactoro_625862f9.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Cactoro",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Cactoro_e88090e2.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Cthulhu",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius_cute/Cthulhu.glb",
+   "skinned": true,
+   "clips": [
+    "MonsterArmature|Flying",
+    "MonsterArmature|HitRecieve"
+   ],
+   "slots": {
+    "run": [
+     "MonsterArmature|Flying"
+    ],
+    "hit": [
+     "MonsterArmature|HitRecieve"
+    ]
+   },
+   "missing": [
+    "idle",
+    "walk",
+    "attack",
+    "death",
+    "special"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Demon",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Demon_46b52ba4.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Demon",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Demon_c2e39eb4.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Demon",
+   "family": "spirit",
+   "file": "saga-web/saga-go/assets/models/animals/Demon.gltf",
+   "skinned": true,
+   "clips": [
+    "Death",
+    "Duck",
+    "HitReact",
+    "Idle",
+    "Jump",
+    "Jump_Idle",
+    "Jump_Land",
+    "No",
+    "Punch",
+    "Run",
+    "Walk",
+    "Wave",
+    "Weapon",
+    "Yes"
+   ],
+   "slots": {
+    "idle": [
+     "Idle",
+     "Jump_Idle"
+    ],
+    "walk": [
+     "Walk"
+    ],
+    "run": [
+     "Run"
+    ],
+    "attack": [
+     "Punch"
+    ],
+    "hit": [
+     "HitReact"
+    ],
+    "death": [
+     "Death"
+    ],
+    "special": [
+     "Duck",
+     "Jump",
+     "Jump_Land",
+     "No",
+     "Wave",
+     "Weapon",
+     "Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-go"
+   ]
+  },
+  {
+   "species": "Ghost",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Ghost_810f60a2.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Ghost_Skull",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Ghost_Skull_0716bf8e.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Glub",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Glub_f64d32a9.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Glub_Evolved",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Glub_Evolved_27590c4e.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Goleling",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Goleling_51bf31d7.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Goleling_Evolved",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Goleling_Evolved_d6308fbf.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Green_Blob",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Green_Blob_64ab590e.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Green_Spiky_Blob",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Green_Spiky_Blob_cd25a048.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "GreenDemon",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius_cute/GreenDemon.glb",
+   "skinned": true,
+   "clips": [
+    "MonsterArmature|Bite_Front",
+    "MonsterArmature|Bite_InPlace",
+    "MonsterArmature|Dance",
+    "MonsterArmature|Death",
+    "MonsterArmature|HitRecieve",
+    "MonsterArmature|Idle",
+    "MonsterArmature|Jump",
+    "MonsterArmature|No",
+    "MonsterArmature|Walk",
+    "MonsterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "MonsterArmature|Idle"
+    ],
+    "walk": [
+     "MonsterArmature|Walk"
+    ],
+    "attack": [
+     "MonsterArmature|Bite_Front",
+     "MonsterArmature|Bite_InPlace"
+    ],
+    "hit": [
+     "MonsterArmature|HitRecieve"
+    ],
+    "death": [
+     "MonsterArmature|Death"
+    ],
+    "special": [
+     "MonsterArmature|Dance",
+     "MonsterArmature|Jump",
+     "MonsterArmature|No",
+     "MonsterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Hywirl",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Hywirl_6500a805.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Fast_Flying",
+    "CharacterArmature|Flying_Idle",
+    "CharacterArmature|Headbutt",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Flying_Idle"
+    ],
+    "run": [
+     "CharacterArmature|Fast_Flying"
+    ],
+    "attack": [
+     "CharacterArmature|Headbutt",
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "walk"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Monkroose",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Monkroose_54ca5c4d.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Mushroom_King",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Mushroom_King_798301fb.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Death",
+    "CharacterArmature|Duck",
+    "CharacterArmature|HitReact",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|Jump_Idle",
+    "CharacterArmature|Jump_Land",
+    "CharacterArmature|No",
+    "CharacterArmature|Punch",
+    "CharacterArmature|Run",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Wave",
+    "CharacterArmature|Weapon",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle",
+     "CharacterArmature|Jump_Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "run": [
+     "CharacterArmature|Run"
+    ],
+    "attack": [
+     "CharacterArmature|Punch"
+    ],
+    "hit": [
+     "CharacterArmature|HitReact"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Duck",
+     "CharacterArmature|Jump",
+     "CharacterArmature|Jump_Land",
+     "CharacterArmature|No",
+     "CharacterArmature|Wave",
+     "CharacterArmature|Weapon",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "Pink_Slime",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius/Pink_Slime_3ddbff73.glb",
+   "skinned": true,
+   "clips": [
+    "CharacterArmature|Bite_Front",
+    "CharacterArmature|Dance",
+    "CharacterArmature|Death",
+    "CharacterArmature|HitRecieve",
+    "CharacterArmature|Idle",
+    "CharacterArmature|Jump",
+    "CharacterArmature|No",
+    "CharacterArmature|Walk",
+    "CharacterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "CharacterArmature|Idle"
+    ],
+    "walk": [
+     "CharacterArmature|Walk"
+    ],
+    "attack": [
+     "CharacterArmature|Bite_Front"
+    ],
+    "hit": [
+     "CharacterArmature|HitRecieve"
+    ],
+    "death": [
+     "CharacterArmature|Death"
+    ],
+    "special": [
+     "CharacterArmature|Dance",
+     "CharacterArmature|Jump",
+     "CharacterArmature|No",
+     "CharacterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  },
+  {
+   "species": "SlimeEnemy",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/community/SlimeEnemy.glb",
+   "skinned": true,
+   "clips": [
+    "moving",
+    "hit",
+    "idle",
+    "attack",
+    "death",
+    "attack_ranged"
+   ],
+   "slots": {
+    "idle": [
+     "idle"
+    ],
+    "attack": [
+     "attack",
+     "attack_ranged"
+    ],
+    "hit": [
+     "hit"
+    ],
+    "death": [
+     "death"
+    ],
+    "special": [
+     "moving"
+    ]
+   },
+   "missing": [
+    "walk",
+    "run"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Spider",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius2/Spider.glb",
+   "skinned": true,
+   "clips": [
+    "SpiderArmature|Spider_Attack",
+    "SpiderArmature|Spider_Death",
+    "SpiderArmature|Spider_Idle",
+    "SpiderArmature|Spider_Jump",
+    "SpiderArmature|Spider_Walk"
+   ],
+   "slots": {
+    "idle": [
+     "SpiderArmature|Spider_Idle"
+    ],
+    "walk": [
+     "SpiderArmature|Spider_Walk"
+    ],
+    "attack": [
+     "SpiderArmature|Spider_Attack"
+    ],
+    "death": [
+     "SpiderArmature|Spider_Death"
+    ],
+    "special": [
+     "SpiderArmature|Spider_Jump"
+    ]
+   },
+   "missing": [
+    "run",
+    "hit"
+   ],
+   "games": [
+    "saga-dungeon",
+    "saga-realm"
+   ]
+  },
+  {
+   "species": "Tree",
+   "family": "spirit",
+   "file": "saga-web/saga-dungeon/assets/models/monsters/quaternius_cute/Tree.glb",
+   "skinned": true,
+   "clips": [
+    "MonsterArmature|Bite_Front",
+    "MonsterArmature|Bite_InPlace",
+    "MonsterArmature|Dance",
+    "MonsterArmature|Death",
+    "MonsterArmature|HitRecieve",
+    "MonsterArmature|Idle",
+    "MonsterArmature|Jump",
+    "MonsterArmature|No",
+    "MonsterArmature|Walk",
+    "MonsterArmature|Yes"
+   ],
+   "slots": {
+    "idle": [
+     "MonsterArmature|Idle"
+    ],
+    "walk": [
+     "MonsterArmature|Walk"
+    ],
+    "attack": [
+     "MonsterArmature|Bite_Front",
+     "MonsterArmature|Bite_InPlace"
+    ],
+    "hit": [
+     "MonsterArmature|HitRecieve"
+    ],
+    "death": [
+     "MonsterArmature|Death"
+    ],
+    "special": [
+     "MonsterArmature|Dance",
+     "MonsterArmature|Jump",
+     "MonsterArmature|No",
+     "MonsterArmature|Yes"
+    ]
+   },
+   "missing": [
+    "run"
+   ],
+   "games": [
+    "saga-dungeon"
+   ]
+  }
+ ]
+}
