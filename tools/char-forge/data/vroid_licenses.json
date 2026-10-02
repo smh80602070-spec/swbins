@@ -202,10 +202,13 @@
     ],
     "commercialUsage": "corporation",
     "allowRedistribution": true,
-    "modification": "allowModification",
+    "modification": "allowModificationRedistribution",
     "avatarPermission": "everyone",
-    "creditNotation": "required"
-   }
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_b_vrm10": {
    "source_file": "AvatarSample_B.vrm",
