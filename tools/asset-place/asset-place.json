@@ -207,6 +207,37 @@
      ]
     }
    ]
+  },
+  {
+   "id": "web2d-bg",
+   "src": "saga-assets/web2d/bg",
+   "include": [
+    "*.webp",
+    "*.license.json",
+    "*.layers.json"
+   ],
+   "note": "K-0020 웹 2D 모드 배경 20지역 × 층 3겹(far·mid·near, 좌우 왕복 이음)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/web2d/bg"
+    }
+   ]
+  },
+  {
+   "id": "web2d-tile",
+   "src": "saga-assets/web2d/tile",
+   "include": [
+    "*.webp",
+    "*.license.json"
+   ],
+   "note": "K-0020 웹 2D 모드 바닥 타일 30(256px, 이음매 없음)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/web2d/tile"
+    }
+   ]
   }
  ]
 }

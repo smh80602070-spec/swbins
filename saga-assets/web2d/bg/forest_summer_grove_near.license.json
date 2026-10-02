@@ -1,0 +1,22 @@
+{
+ "id": "forest_summer_grove_near",
+ "generator": "tools/ai-art/gen.py",
+ "model": "Illustrious-XL-v2.0",
+ "model_license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+ "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game background, lush summer forest grove, sunbeams through tall trees, mushroom ring, old stone bridge over a stream, fireflies, vivid greens",
+ "negative_prompt": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up",
+ "seed": 20261930,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  1024,
+  576
+ ],
+ "seconds": 24.6,
+ "date": "2026-10-02",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "picked_candidate": 2,
+ "layer": "near",
+ "derived": "tools/ai-art/split_bg_layers.py (좌우 왕복 이음)"
+}
