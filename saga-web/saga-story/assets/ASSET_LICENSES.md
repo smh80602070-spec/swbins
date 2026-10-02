@@ -371,3 +371,11 @@ Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quatern
 ## 2D 스프라이트 시트 (`assets/sprites2d_sheets/`)
 
 2026-10-01 자체 제작 — 공방(`tools/char-forge/gear_sprites.py`)이 CC0 VRoid 몸(`tools/char-forge/_src/cc0_vroid`) 위에 절차 생성 장비를 입혀 Blender 로 굽는다(128px·8프레임·방향 3·동작 idle/walk/attack/hit/death, WebP). 적·동료 4벌: `pool_f_demon_136`, `pool_g_orc_141`, `pool_e_goblin_126`, `pool_basef_undead_111`. 벌마다 `manifest.json` 에 몸·종류·규격·출처 문구. 원작 에셋 없음. 이 판은 아직 안 읽는다(W 티켓 — 인물·괴물 id 연결과 `sprite.js` 배선).
+
+## 몬스터 2D 시트 나머지 여덟 (`assets/sprites2d/mon_alien.webp`·`mon_era_drone.webp`·`mon_era_hulk.webp`·`mon_era_swat.webp`·`mon_era_walker.webp`·`mon_rat.webp`·`mon_wasp.webp`·`mon_zombie.webp`, K-0016 2026-10-02 보강)
+
+옆면 뷰의 2D 폴백이 쓰는 그림이다. `saga-dungeon/assets/sprites2d/` 의 같은 이름 파일과 **바이트가 같다**(여덟 장 모두 `cmp` 로 확인).
+사가블로 `tools/bake-portraits/bake.mjs --sprites=monsters` 가 3D 몸을 옆모습 걷기 시트로 구운 **파생물**이라 **원본 모델의 라이선스가 그대로 따른다** —
+`mon_rat`·`mon_wasp`·`mon_zombie` 는 Quaternius 의 CC0(poly.pizza 로 받음 — `saga-dungeon/assets/ASSET_LICENSES.md` "몬스터 2차분" 절 표), `mon_era_*`·`mon_alien` 은
+같은 문서의 "세 시대 적 로봇 셋"·"몬스터 2D 시트" 절과 사가고 문서 "세 시대 사람·적" 절이 정본이다(poly.pizza 몸이 섞여 있어 **표시 의무가 있는 항목은 그쪽 문구를 그대로 이행**).
+이 판에는 GLB 가 없고 그림만 들어와 있다. 그림을 다시 뽑거나 몸을 바꾸면 사가블로 문서의 해당 절을 같이 본다.

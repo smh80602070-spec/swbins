@@ -627,3 +627,15 @@ GO와 같은 procgen 나무로 바꿨다 — 단, GO의 12종 변종 풀과 달�
     6. 확인: `realistic-pack.sh push` 가 `4 matching files`·`OK 올림` 이고 `shared Google Drive client_id … being retired` 경고가 사라진다.
     7. 다른 PC 는 같은 값으로 처음부터: `rclone config create gdrive drive scope=drive client_id=<ID> client_secret=<비밀번호>`.
 - Mixamo 에서 처음부터 다시 받아야 할 때(보관함을 잃었을 때)는 `tools/mixamo_automation/README.md` 레시피 표 — 그 뒤 씬·컨트롤러를 다시 지어야 하고 빌드는 달라진다.
+
+## 2026-10-02 — 출처 문서 보강 (tasks K-0016, `audit.py` license 🟡 4건) — 확인된 사실만
+
+- **`Assets/Art/Icon/`** — `icon_full.png`·`icon_adaptive_bg.png`·`icon_adaptive_fg.png`. 자체 제작: `tools/app-icon/make_icon.py`(Blender 로 굽는 1024², 먹빛 그러데이션 바탕 + 금빛 테 + 금빛 "史").
+  글자는 Noto Sans KR Bold(`Assets/Art/Fonts/NotoSansKR/`, SIL OFL — 글꼴로 만든 그림은 글꼴 소프트웨어가 아니다). 적용은 `Assets/Editor/SagaAppIcon.cs`. 임시 아이콘이라 그림을 받으면 같은 세 파일을 바꿔 넣는다(PLAN 110 ⑥b).
+- **`Assets/Art/Vegetation/QuaterniusNature/`** — `Flower_3_Single.gltf`·`Flower_4_Single.gltf`·`Mushroom_Common.gltf`(+`.bin`)·`Flowers.png`·`Leaves.png`·`Mushrooms.png`. Quaternius **Stylized Nature MegaKit (Standard), CC0 1.0**
+  (폴더 안 `LICENSE.txt` 가 정본, 받은 경위는 `saga-godot/docs/ASSET_GUIDE.md` "2026-09-20 Stylized Nature MegaKit 실제 확보"). FOREST 정령 꾸밈(버섯 무리·꽃 화관)에만 쓴다.
+- **`Assets/SagaCore/Resources/Audio/Bgm/`** — 자체 곡 15: `<판>-<town|field|battle>.ogg`(판 = dungeon·forest·go·realm·story: `dungeon-battle.ogg` `dungeon-field.ogg` `dungeon-town.ogg` `forest-battle.ogg` `forest-field.ogg` `forest-town.ogg` `go-battle.ogg` `go-field.ogg` `go-town.ogg`
+  `realm-battle.ogg` `realm-field.ogg` `realm-town.ogg` `story-battle.ogg` `story-field.ogg` `story-town.ogg`). `music-gen`(swbins3)의 **ACE-Step 1.5 (acestep-v15-turbo) — 코드·가중치 MIT**, 상업 사용 가능. 슬롯마다 후보 둘 중 사용자가 고른 것(2026-10-01, K-0004).
+  곡마다 옆 `*.license.json` 이 모델·프롬프트·시드·길이를 기록한다. 게임 안 표기는 `SagaCredits` 표.
+- **`Assets/TextMesh Pro/Sprites/EmojiOne.png`**(+`EmojiOne.json`) — Unity **TextMesh Pro 패키지**가 기본 리소스로 딸려 오는 샘플. 같은 폴더 `EmojiOne Attribution.txt` 는 "EmojiOne 이 제공한 샘플, 전체 세트와 라이선스 조건은 EmojiOne 사이트(https://www.emojione.com/)에서 확인하라"고만 적는다.
+  **라이선스 조건: ?** (파일에 조건이 없고 EmojiOne 판마다 달라 추측하지 않는다). 우리 코드는 이 스프라이트를 직접 쓰지 않는다(grep 0건). 다만 TMP 의 `Resources/Sprite Assets/EmojiOne.asset` 이 이 PNG 를 가리키며, 기본 스프라이트 에셋으로 물려 있는지는 확인 전이다 — 상용 빌드 전에 조건을 확인하거나 뺀다.
