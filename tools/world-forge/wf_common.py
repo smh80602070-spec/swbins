@@ -224,11 +224,11 @@ def cap_textures(max_px=1024):
             im.scale(max(1, int(im.size[0] * k)), max(1, int(im.size[1] * k)))
 
 
-def export_glb(objs, path, max_px=1024):
+def export_glb(objs, path, max_px=1024, fmt='AUTO', jpeg_q=88):
     cap_textures(max_px)
     bpy.ops.object.select_all(action='DESELECT')
     for o in objs:
         o.select_set(True)
     bpy.context.view_layer.objects.active = objs[0]
     bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_apply=True,
-                              export_yup=True, export_image_format='AUTO')
+                              export_yup=True, export_image_format=fmt, export_jpeg_quality=jpeg_q)

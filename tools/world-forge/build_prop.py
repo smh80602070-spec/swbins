@@ -315,7 +315,7 @@ def build(pid, out, style):
     lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
     hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-    W.export_glb([ob], out, 256 if style == 'toon' else 1024)
+    W.export_glb([ob], out, 256 if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
     size = [round(hi[i] - lo[i], 2) for i in range(3)]
     lic = {'id': pid, 'generator': 'tools/world-forge/build_prop.py', 'blender': bpy.app.version_string, 'style': style,
            'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)',
