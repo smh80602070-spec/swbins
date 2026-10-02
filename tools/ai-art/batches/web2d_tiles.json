@@ -1,0 +1,165 @@
+{
+ "model": "sd_xl_base_1.0",
+ "out": "web2d_tiles",
+ "defaults": {
+  "prompt_prefix": "seamless tileable ground texture swatch, flat orthographic material, hand painted game texture, even lighting, no objects",
+  "width": 640,
+  "height": 640,
+  "steps": 30,
+  "cfg": 6.5,
+  "sampler": "Euler a",
+  "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality"
+ },
+ "items": [
+  {
+   "id": "tile_go_grass",
+   "seed": 20261263,
+   "prompt": "lush green grass ground, small clover leaves, even lighting"
+  },
+  {
+   "id": "tile_go_dirt",
+   "seed": 20261292,
+   "prompt": "packed brown dirt road ground with small pebbles and wheel ruts"
+  },
+  {
+   "id": "tile_go_stone",
+   "seed": 20261321,
+   "prompt": "old grey cobblestone plaza pavement mixed with a few smooth concrete slabs"
+  },
+  {
+   "id": "tile_go_sand",
+   "seed": 20261350,
+   "prompt": "pale coast sand ground with tiny shells and soft ripples"
+  },
+  {
+   "id": "tile_go_snow",
+   "seed": 20261379,
+   "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles"
+  },
+  {
+   "id": "tile_go_water",
+   "seed": 20261408,
+   "prompt": "calm turquoise shallow river water surface texture, soft ripples and light caustics, seen from above"
+  },
+  {
+   "id": "tile_dungeon_grass",
+   "seed": 20261669,
+   "prompt": "dark damp cave moss ground, short green moss over wet stone, even lighting"
+  },
+  {
+   "id": "tile_dungeon_dirt",
+   "seed": 20261698,
+   "prompt": "dry crypt dust floor, grey brown dust with small bone fragments and cracks"
+  },
+  {
+   "id": "tile_dungeon_stone",
+   "seed": 20261727,
+   "prompt": "large dark flagstone hall floor, worn carved edges, faint cracks"
+  },
+  {
+   "id": "tile_dungeon_sand",
+   "seed": 20261756,
+   "prompt": "pale bone-white gravel sand floor with small pebbles"
+  },
+  {
+   "id": "tile_dungeon_snow",
+   "seed": 20261785,
+   "prompt": "frozen ice floor with fine cracks, pale blue, tiny frost crystals"
+  },
+  {
+   "id": "tile_dungeon_water",
+   "seed": 20261814,
+   "prompt": "dark still underground pool water surface texture, faint teal glow, soft ripples, seen from above"
+  },
+  {
+   "id": "tile_forest_grass",
+   "seed": 20262075,
+   "prompt": "fresh spring meadow grass ground with tiny white flowers, even lighting"
+  },
+  {
+   "id": "tile_forest_dirt",
+   "seed": 20262104,
+   "prompt": "soft brown forest path dirt with fallen leaves and small roots"
+  },
+  {
+   "id": "tile_forest_stone",
+   "seed": 20262133,
+   "prompt": "mossy stepping stone path pavement with grass between stones"
+  },
+  {
+   "id": "tile_forest_sand",
+   "seed": 20262162,
+   "prompt": "light riverbank sand and fine gravel ground"
+  },
+  {
+   "id": "tile_forest_snow",
+   "seed": 20262191,
+   "prompt": "soft powdery white snow surface texture, faint pale blue tint, tiny sparkles"
+  },
+  {
+   "id": "tile_forest_water",
+   "seed": 20262220,
+   "prompt": "clear green pond water surface texture, floating tiny leaves, soft ripples, seen from above"
+  },
+  {
+   "id": "tile_story_grass",
+   "seed": 20262481,
+   "prompt": "windswept hillside grass ground, short dry grass, even lighting"
+  },
+  {
+   "id": "tile_story_dirt",
+   "seed": 20262510,
+   "prompt": "hard packed trail dirt with scattered gravel"
+  },
+  {
+   "id": "tile_story_stone",
+   "seed": 20262539,
+   "prompt": "cracked ancient stone ruin floor with faint carved lines"
+  },
+  {
+   "id": "tile_story_sand",
+   "seed": 20262568,
+   "prompt": "coarse mountain gravel and sand mix ground"
+  },
+  {
+   "id": "tile_story_snow",
+   "seed": 20262597,
+   "prompt": "packed mountain snow surface texture, faint pale blue tint, tiny sparkles"
+  },
+  {
+   "id": "tile_story_water",
+   "seed": 20262626,
+   "prompt": "fast mountain stream water surface texture, white foam ripples, seen from above"
+  },
+  {
+   "id": "tile_realm_grass",
+   "seed": 20262887,
+   "prompt": "wide green plain grass ground with fine blades, even lighting"
+  },
+  {
+   "id": "tile_realm_dirt",
+   "seed": 20262916,
+   "prompt": "plowed farmland brown soil with shallow furrows"
+  },
+  {
+   "id": "tile_realm_stone",
+   "seed": 20262945,
+   "prompt": "imperial courtyard grey stone pavement with fine joints"
+  },
+  {
+   "id": "tile_realm_sand",
+   "seed": 20262974,
+   "prompt": "warm desert dune sand ground with soft wind ripples"
+  },
+  {
+   "id": "tile_realm_snow",
+   "seed": 20263003,
+   "prompt": "deep snow field surface texture, faint pale blue tint, tiny sparkles"
+  },
+  {
+   "id": "tile_realm_water",
+   "seed": 20263032,
+   "prompt": "broad river water surface texture, brownish green, gentle ripples, seen from above"
+  }
+ ]
+}
