@@ -1,0 +1,117 @@
+{
+  "avatar_sample_d.glb": {
+    "size": 1194200,
+    "result": "ok",
+    "at": "2026-10-02T00:45:23.129Z"
+  },
+  "avatar_sample_e.glb": {
+    "size": 978152,
+    "result": "ok",
+    "at": "2026-10-02T00:45:24.674Z"
+  },
+  "avatar_sample_f.glb": {
+    "size": 894952,
+    "result": "ok",
+    "at": "2026-10-02T00:45:26.059Z"
+  },
+  "avatar_sample_g.glb": {
+    "size": 677024,
+    "result": "ok",
+    "at": "2026-10-02T00:45:27.312Z"
+  },
+  "avatar_sample_h.glb": {
+    "size": 843792,
+    "result": "ok",
+    "at": "2026-10-02T00:45:28.616Z"
+  },
+  "avatar_sample_i.glb": {
+    "size": 819860,
+    "result": "ok",
+    "at": "2026-10-02T00:45:29.914Z"
+  },
+  "avatar_sample_j.glb": {
+    "size": 1043624,
+    "result": "ok",
+    "at": "2026-10-02T00:45:31.249Z"
+  },
+  "avatar_sample_k.glb": {
+    "size": 839652,
+    "result": "ok",
+    "at": "2026-10-02T00:45:32.718Z"
+  },
+  "avatar_sample_l.glb": {
+    "size": 808512,
+    "result": "ok",
+    "at": "2026-10-02T00:45:34.375Z"
+  },
+  "avatar_sample_m.glb": {
+    "size": 832300,
+    "result": "ok",
+    "at": "2026-10-02T00:45:35.840Z"
+  },
+  "avatar_sample_n.glb": {
+    "size": 776828,
+    "result": "ok",
+    "at": "2026-10-02T00:45:37.177Z"
+  },
+  "avatar_sample_o.glb": {
+    "size": 718684,
+    "result": "ok",
+    "at": "2026-10-02T00:45:38.429Z"
+  },
+  "avatar_sample_p.glb": {
+    "size": 713412,
+    "result": "ok",
+    "at": "2026-10-02T00:45:39.638Z"
+  },
+  "avatar_sample_q.glb": {
+    "size": 831104,
+    "result": "ok",
+    "at": "2026-10-02T00:45:40.975Z"
+  },
+  "avatar_sample_r.glb": {
+    "size": 834412,
+    "result": "ok",
+    "at": "2026-10-02T00:45:42.297Z"
+  },
+  "avatar_sample_s.glb": {
+    "size": 845000,
+    "result": "ok",
+    "at": "2026-10-02T00:45:43.718Z"
+  },
+  "avatar_sample_t.glb": {
+    "size": 628100,
+    "result": "ok",
+    "at": "2026-10-02T00:45:44.817Z"
+  },
+  "avatar_sample_u.glb": {
+    "size": 917720,
+    "result": "ok",
+    "at": "2026-10-02T00:45:46.216Z"
+  },
+  "avatar_sample_v.glb": {
+    "size": 741172,
+    "result": "ok",
+    "at": "2026-10-02T00:45:47.603Z"
+  },
+  "avatar_sample_w.glb": {
+    "size": 799120,
+    "result": "ok",
+    "at": "2026-10-02T00:45:48.843Z"
+  },
+  "avatar_sample_x.glb": {
+    "size": 633036,
+    "result": "ok",
+    "at": "2026-10-02T00:45:50.030Z"
+  },
+  "avatar_sample_y.glb": {
+    "size": 881332,
+    "result": "ok",
+    "at": "2026-10-02T00:45:51.215Z"
+  },
+  "avatar_sample_z.glb": {
+    "size": 872912,
+    "result": "ok",
+    "at": "2026-10-02T00:45:52.408Z"
+  }
+}

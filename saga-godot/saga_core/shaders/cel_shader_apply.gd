@@ -49,6 +49,54 @@ const HIDE_KEYS := ["FaceBrow", "FaceEyeline", "FaceMouth"]
 ## (Player.tscn 등의 Visual 인스턴스)의 `scene_file_path`가 곧 이 GLB 경로다
 ## (`PackedScene.instantiate()`가 뿌리 노드에 그대로 남겨 준다 — 실측 확인).
 const FACE_BAKE_BY_GLB := {
+	"res://assets/characters_vroid/avatar_sample_z.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_z_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_y.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_y_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_x.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_x_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_w.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_w_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_v.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_v_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_u.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_u_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_t.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_t_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_s.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_s_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_r.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_r_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_q.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_q_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_p.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_p_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_o.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_o_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_n.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_n_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_m.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_m_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_l.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_l_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_k.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_k_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_j.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_j_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_i.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_i_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_h.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_h_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_g.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_g_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_f.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_f_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_e.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_e_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_d.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_d_Face_Baked.png"),
+	"res://assets/characters_vroid/avatar_sample_c.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_c_Face_Baked.png"),
 	"res://assets/characters_vroid/avatar_sample_b.glb":
 		preload("res://assets/characters_vroid/generated/avatar_sample_b_Face_Baked.png"),
 	"res://assets/characters_vroid/AvatarSample_A.glb":

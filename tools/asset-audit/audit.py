@@ -204,8 +204,10 @@ def origin(rp, p, ext, pathset, ref):
         if ref:  # D5(2026-09-26): Mixamo 는 게임에 넣어 팔기 OK·재배포 금지 → 로컬 전용이면 허용(공개 저장소에 오르면 'public' 🔴)
             return 'origin_local', 'Mixamo 로컬 전용(D5 허용 — 게임 판매 OK·재배포 금지) — 다른 PC 는 다시 받는다(tools/mixamo_automation)'
         return 'origin_left', 'Mixamo 출처 파일이 남아 있다(안 씀) — 교체가 끝났으면 지워도 된다'
-    if ext == '.vrm' or (ext == '.glb' and os.path.splitext(p)[0] + '.vrm' in pathset):
-        v = vrm_meta(p if ext == '.vrm' else os.path.splitext(p)[0] + '.vrm')
+    # 옆 .vrm 사본이 없어도(용량 때문에 새 몸은 .glb 만 커밋) characters_vroid 의 .glb 는 자기 안의 VRM 메타로 본다
+    sib = os.path.splitext(p)[0] + '.vrm'
+    if ext == '.vrm' or (ext == '.glb' and (sib in pathset or re.search(r'(^|/)characters_vroid/[^/]+\.glb$', rp))):
+        v = vrm_meta(p if ext == '.vrm' or sib not in pathset else sib)
         if v is None:
             return 'origin', 'VRoid 몸인데 VRM 라이선스 칸을 못 읽는다'
         com, red, cred, why = v
