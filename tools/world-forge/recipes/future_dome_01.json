@@ -1,0 +1,12 @@
+{
+ "id": "future_dome_01", "era": "future",
+ "footprint": [8.0, 8.0],
+ "floors": [{"h": 3.0}, {"h": 2.8}],
+ "walls": {"mat": "white_stucco", "tile_m": 2.5, "tint": "#cfd9e6"},
+ "trim": {"mat": "grey_plaster", "tile_m": 1.0, "tint": "#4a566a"},
+ "door": {"mat": "black_painted_planks", "tint": "#2b3a52", "w": 1.6, "h": 2.4, "wall": 0, "at": 0.5},
+ "windows": {"w": 2.0, "h": 1.5, "sill": 0.9, "gap": 2.8, "ribbon": true},
+ "glass": {"color": "#58d6ff"},
+ "roof": {"type": "dome", "overhang": 0.3, "height": 3.6, "strips": 6, "segments": 16, "mat": "white_stucco", "tile_m": 2.0, "tint": "#dfe8f2"},
+ "bands": true
+}

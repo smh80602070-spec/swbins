@@ -6,7 +6,7 @@
   id, era(past|present|future), footprint [폭 x, 깊이 y] m, floors [{"h": 층 높이}…], seed
   walls {mat, tile_m, tint}  base {mat, h}  trim {mat, tint}  door {mat, w, h}  glass {color}
   windows {w, h, sill, gap, cols?}  — 층마다 앞·뒤·옆 벽에 gap 간격으로 자동 배치(문 자리는 비움)
-  roof {type: gable|hip|flat, pitch_deg, overhang, mat, thick, curve(추녀 들림 m), ridge: "x"|"y", parapet(평지붕 난간 높이)}
+  roof {type: gable|hip|flat|dome(height·segments), pitch_deg, overhang, mat, thick, curve(추녀 들림 m), ridge: "x"|"y", parapet(평지붕 난간 높이)}
   posts {every m, w}   — 기둥(한옥·목골)  ·  bands true  — 층 사이 띠  ·  chimney {x, y, w, h}
 좌표: 바닥 중심이 원점이 아니라 (0,0)~(폭,깊이) 모서리 기준이고, 끝에 발 위치를 (0,0,0)로 옮겨 내보낸다(원점 = 바닥 앞 가운데).
 """
@@ -207,6 +207,25 @@ def build_roof(M, rc, w, d, z_eave, s_roof, s_trim, s_wall_gable):
             M.box(V(x0, y0 + pw, z), V(pw, 0, 0), V(0, 0, par), V(0, y1 - y0 - 2 * pw, 0), s_trim, 1.0)
             M.box(V(x1 - pw, y0 + pw, z), V(pw, 0, 0), V(0, 0, par), V(0, y1 - y0 - 2 * pw, 0), s_trim, 1.0)
         return z + par
+    if typ == 'dome':   # 타원 반구 지붕(미래 돔). height = 높이, strips = 고리 수, segments = 둘레 칸 수
+        oh = r.get('overhang', 0.0)
+        cx, cy = w / 2, d / 2
+        ea, eb = w / 2 + oh, d / 2 + oh
+        hh = r.get('height', min(ea, eb) * 0.9)
+        rings, seg = int(r.get('strips', 6)), int(r.get('segments', 16))
+        def dp(k, i):
+            ph, th = (math.pi / 2) * k / rings, 2 * math.pi * i / seg
+            return V(cx + ea * math.cos(ph) * math.cos(th), cy + eb * math.cos(ph) * math.sin(th), z_eave + hh * math.sin(ph))
+        for k in range(rings):
+            for i in range(seg):
+                i2 = (i + 1) % seg
+                u0, u1 = i * 2 * ea / seg / tile, (i + 1) * 2 * ea / seg / tile
+                if k == rings - 1:
+                    M.face([dp(k, i), dp(k, i2), dp(k + 1, 0)], [(u0, k / tile), (u1, k / tile), ((u0 + u1) / 2, (k + 1) / tile)], s_roof)
+                else:
+                    M.quad(dp(k, i), dp(k, i2), dp(k + 1, i2), dp(k + 1, i), s_roof, (u0, k / tile), (u1, k / tile), (u1, (k + 1) / tile), (u0, (k + 1) / tile))
+        M.face([dp(0, i) for i in range(seg - 1, -1, -1)], [((dp(0, i).x - cx) / tile, (dp(0, i).y - cy) / tile) for i in range(seg - 1, -1, -1)], s_trim)   # 밑면(닫음)
+        return z_eave + hh
     planes, ze, (x0, x1, y0, y1) = roof_planes(rc, w, d, z_eave)
     strips = int(r.get('strips', 6))
     curve = r.get('curve', 0.0)
@@ -345,7 +364,8 @@ def build(rc, out):
     bpy.ops.object.transform_apply(location=True, rotation=False, scale=False)
     tris = sum(len(p.vertices) - 2 for p in ob.data.polygons)
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-    W.export_glb([ob], out, 256 if arg('--style', 'real') == 'toon' else int(rc.get('tex_max', 1024)))
+    W.export_glb([ob], out, 256 if arg('--style', 'real') == 'toon' else int(rc.get('tex_max', 1024)),
+                 'JPEG' if arg('--style', 'real') == 'toon' else 'AUTO')
     lic = {'id': rc['id'], 'generator': 'tools/world-forge/build_building.py', 'blender': bpy.app.version_string,
            'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0)',
            'inputs': sorted({f'polyhaven: {m.name}' for m in ob.data.materials}),

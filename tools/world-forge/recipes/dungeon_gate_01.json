@@ -1,0 +1,13 @@
+{
+ "id": "dungeon_gate_01", "era": "past",
+ "footprint": [10.0, 6.0],
+ "floors": [{"h": 4.0}, {"h": 2.8}],
+ "walls": {"mat": "castle_wall_slates", "tile_m": 2.4, "tint": "#8d877d"},
+ "base": {"mat": "castle_wall_slates", "h": 0.6, "tile_m": 2.0, "tint": "#6e695f"},
+ "trim": {"mat": "castle_wall_slates", "tile_m": 1.6, "tint": "#5f5a52"},
+ "door": {"mat": "black_painted_planks", "tint": "#17130f", "w": 2.8, "h": 3.4, "wall": 0, "at": 0.5},
+ "windows": {"w": 0.45, "h": 1.1, "sill": 1.0, "gap": 3.0},
+ "glass": {"color": "#1d2430"},
+ "roof": {"type": "flat", "overhang": 0.3, "mat": "castle_wall_slates", "tile_m": 2.0, "thick": 0.4, "parapet": 0.9, "tint": "#7a746a"},
+ "bands": true
+}

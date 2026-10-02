@@ -23,6 +23,8 @@ Blender 헤드리스 — 사람 클릭 0회. 결과는 `tools/world-forge/_out/`
 - `data/set_plan.json`(K-0017, 판 5 × 건물3·지물3·지형2·탈것1 = 45칸·산출 42) + `check_plan.py`(점검 · `--out DIR --strict` 로 산출 수 대조)
 - `build_prop.py`(K-0017) — 지물 15종(우물·가로등·미래 기둥·횃불·제단·쇠울타리·나무울타리·우체통·건초·대나무·비석·돌등롱·깃대·성벽 토막·화로)을 코드로. `--all --out-dir DIR --style toon` 한 번에 15개, 산출마다 `.license.json`
 - `build_terrain.py`(K-0017) — 16×16m 높이맵 조각 10종(하천 굽이·능선·동굴 바닥·바위 노두·풀밭·연못·절벽 턱·언덕 비탈·모래 언덕·길 있는 평원). 값 잡음 + 모양 함수 + 간단한 침식, 32×32칸 = 삼각형 2430, 경사·높이·물로 재질을 나눈 닫힌 덩어리
+- `build_vehicle.py`(K-0017) — 탈것 5종(돛단배·광차·뗏목·소달구지·대상 수레). 선체는 단면 이어붙이기, 수레는 바퀴·살·테 조립. 새 건물 레시피 3(`future_dome_01` 은 새 지붕 `dome`)
+- 판별 세트 전체: `build_*.py --all --out-dir <절대경로> --style toon` 네 번 + 건물 레시피별 `build_building.py` → `check_plan.py --out <그 폴더> --strict` 가 42/42 를 센다
   (미리보기 주의: `preview.py` 의 출력 경로는 **절대 경로**로 — 상대 경로는 드라이브 루트 `C:	ools\…` 로 샌다)
 - `recipes/eu_house_01.json` — 서유럽 2층 집(삼각형 약 1900)
 - 종류 늘림(09-29): `chinese_hall_01`(전각·붉은 기둥·큰 처마) · `jp_minka_01`(초가 모임지붕) · `stone_tower_01`(4층 성탑) · `forest_cottage_01`(초가 오두막) · `barn_01`(헛간) · `inn_01`(3층 여관) — 재질 칸 `{mat, tile_m, tint, gain, sat}`: **원본 사진 재질은 어둡다**(회반죽 #72593b·초가 #544f49) — `tint`(곱하기)로는 못 밝히니 `gain`·`sat` 를 그림 픽셀에 구워 쓴다(glTF 는 1 보다 큰 배율을 못 싣는다).

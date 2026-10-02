@@ -1,0 +1,13 @@
+{
+ "id": "silkroad_house_01", "era": "past",
+ "footprint": [8.0, 7.0],
+ "floors": [{"h": 3.0}, {"h": 2.7}],
+ "walls": {"mat": "clay_plaster", "tile_m": 2.6, "tint": "#e0c08a"},
+ "base": {"mat": "clay_plaster", "h": 0.4, "tile_m": 2.0, "tint": "#c0a070"},
+ "trim": {"mat": "brown_planks_03", "tile_m": 1.0, "tint": "#5a3d28"},
+ "door": {"mat": "brown_planks_03", "tint": "#5a3d28", "w": 1.3, "h": 2.2, "wall": 0, "at": 0.5},
+ "windows": {"w": 0.7, "h": 1.0, "sill": 1.1, "gap": 2.4},
+ "glass": {"color": "#243c50"},
+ "roof": {"type": "flat", "overhang": 0.25, "mat": "clay_plaster", "tile_m": 2.0, "thick": 0.25, "parapet": 0.5, "tint": "#d0b07a"},
+ "bands": false
+}

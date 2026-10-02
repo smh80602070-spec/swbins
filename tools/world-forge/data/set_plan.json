@@ -9,7 +9,7 @@
    "building": [
     {"id": "eu_house_01", "era": "past", "state": "exists"},
     {"id": "modern_block_01", "era": "present", "state": "exists"},
-    {"id": "future_dome_01", "era": "future", "state": "new", "hint": "반구 지붕 + 띠창 주거동"}
+    {"id": "future_dome_01", "era": "future", "state": "exists", "hint": "반구 지붕 + 띠창 주거동"}
    ],
    "prop": [
     {"id": "well_01", "era": "past", "state": "new", "hint": "돌 우물 + 두레박 지붕"},
@@ -27,7 +27,7 @@
    "building": [
     {"id": "stone_tower_01", "era": "past", "state": "exists"},
     {"id": "chinese_hall_01", "era": "past", "state": "exists", "hint": "신전 전각으로 재사용"},
-    {"id": "dungeon_gate_01", "era": "past", "state": "new", "hint": "바위 아치 + 계단 입구"}
+    {"id": "dungeon_gate_01", "era": "past", "state": "exists", "hint": "바위 아치 + 계단 입구"}
    ],
    "prop": [
     {"id": "torch_stand_01", "era": "past", "state": "new", "hint": "횃불 기둥"},
@@ -81,7 +81,7 @@
    "building": [
     {"id": "chinese_hall_01", "era": "past", "state": "exists", "hint": "궁 전각, 사가블로와 같은 파일"},
     {"id": "stone_tower_01", "era": "past", "state": "exists", "hint": "성문 망루, 사가블로와 같은 파일"},
-    {"id": "silkroad_house_01", "era": "past", "state": "new", "hint": "서역 흙벽 평지붕 집"}
+    {"id": "silkroad_house_01", "era": "past", "state": "exists", "hint": "서역 흙벽 평지붕 집"}
    ],
    "prop": [
     {"id": "banner_pole_01", "era": "past", "state": "new", "hint": "깃발 기둥(무늬 없는 천)"},
