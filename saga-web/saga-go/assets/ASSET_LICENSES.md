@@ -1498,3 +1498,7 @@ Quaternius "Ultimate Monsters"(CC0, 사가블로 `assets/models/monsters/quatern
 ## 2D 스프라이트 시트 (`assets/sprites2d_sheets/`)
 
 2026-10-01 자체 제작 — 공방(`tools/char-forge/gear_sprites.py`)이 CC0 VRoid 몸(`tools/char-forge/_src/cc0_vroid`) 위에 절차 생성 장비를 입혀 Blender 로 굽는다(128px·8프레임·방향 3·동작 idle/walk/attack/hit/death, WebP). 인물·적 4벌: `pool_f_human_139`, `pool_g_human_147`, `pool_e_demon_128`, `pool_e_undead_127`. 벌마다 `manifest.json` 에 몸·종류·규격·출처 문구. 원작 에셋 없음. 이 판은 아직 안 읽는다(W 티켓 — 인물·괴물 id 연결과 `sprite.js` 배선).
+
+## VRM 애니메 아바타 d~z (`assets/models/people/anime/avatar_sample_d~z.glb`, 2026-10-02)
+
+VRoid 샘플(pixiv VRoid Project, VRM 1.0 — 상업·재배포·개작 허용, 크레딧 불필요) 중 `t` 를 뺀 22벌이다. `avatar_sample_t` 는 개작 허용·개작본 재배포 불가라 웹에 넣지 않았다. `tools/glb-compress/vrm-slim.mjs`(모프 제거·프리미티브 합침) 뒤 `compress.mjs`(Meshopt + 텍스처 WebP 1024px)로 줄인 파일이다 — 약 270MB → 17MB(벌당 약 0.8MB). 뼈·재질·메시 수는 그대로, VRMC_* 확장은 웹이 안 읽어 떨어졌다. 웹 3D 는 Pages 용량(1GB 한도) 때문에 이 한 판에만 둔다(K-0022 3b) — 다른 판에서 쓰려면 이 폴더 파일을 복사한다.
