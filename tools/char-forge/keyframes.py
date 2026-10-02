@@ -219,6 +219,141 @@ def _strafe_r():
     return loop, [(f, mirror(p)) for f, p in keys]
 
 
+# ---------- 전투 동작 추가 (K-0029) ----------
+# 좌표 = (왼쪽, 앞, 위) m, 오른손잡이. 몸을 오른쪽으로 틀면(yaw -) 왼발·왼어깨가 앞이다.
+def _spear_idle():
+    """창 들고 서기 — 몸을 옆으로 틀고 오른손은 허리 뒤에서 자루를, 왼손은 앞에서 받친다. 숨 쉬며 흔들린다."""
+    feet = {'foot_l': (0.16, 0.18, 0.104), 'foot_r': (-0.16, -0.16, 0.104)}
+
+    def k(b):
+        return P(base=('Idle_Loop', 0), yaw=-30, pelvis=(0, 0, -0.04 - b),
+                 dirs={'spine_03': (0, 0.05, 1), 'neck_01': (0, 0.05, 1)},
+                 pole={'hand_l': (0.6, -0.2, -1), 'hand_r': (-0.4, -1, -0.3)},
+                 ik={'hand_l': (0.12, 0.50, 1.18), 'hand_r': (-0.22, 0.14, 1.02), **feet})
+    return True, [(0, k(0)), (30, k(0.010)), (60, k(0))]
+
+
+def _spear_thrust():
+    """창 찌르기 — 두 손을 뒤로 당겨 무게를 뒷발에 싣고(준비), 앞발로 내딛으며 두 손을 곧게 앞으로 뻗어 찌른 뒤 되돌린다."""
+    feet = {'foot_l': (0.16, 0.18, 0.104), 'foot_r': (-0.16, -0.16, 0.104)}
+    pole = {'hand_l': (0.6, -0.2, -1), 'hand_r': (-0.4, -1, -0.3)}
+    ready = P(base=('Idle_Loop', 0), yaw=-30, pelvis=(0, -0.05, -0.04), pole=pole,
+              ik={'hand_l': (0.12, 0.50, 1.18), 'hand_r': (-0.22, 0.14, 1.02), **feet})
+    wind = P(base=('Idle_Loop', 0), yaw=-42, pelvis=(0, -0.12, -0.10),
+             dirs={'spine_01': (0, -0.08, 1), 'spine_02': (0, -0.10, 1), 'spine_03': (0, -0.10, 1)}, pole=pole,
+             ik={'hand_l': (0.08, 0.30, 1.14), 'hand_r': (-0.26, -0.12, 1.02),
+                 'foot_l': (0.16, 0.14, 0.104), 'foot_r': (-0.16, -0.22, 0.104)})
+    thrust = P(base=('Idle_Loop', 0), yaw=-18, pelvis=(0, 0.22, -0.14),
+               dirs={'spine_01': (0, 0.14, 1), 'spine_02': (0, 0.18, 1), 'spine_03': (0, 0.16, 1), 'neck_01': (0, 0.08, 1)}, pole=pole,
+               ik={'hand_l': (0.10, 0.84, 1.20), 'hand_r': (-0.12, 0.52, 1.16),
+                   'foot_l': (0.16, 0.42, 0.104), 'foot_r': (-0.16, -0.22, 0.104)})
+    return False, [(0, ready), (8, wind), (13, thrust), (18, thrust), (30, ready)]
+
+
+def _axe_chop():
+    """도끼 내려찍기 — 두 손을 머리 뒤로 높이 들고 몸을 뒤로 젖혔다가(준비), 체중을 실어 앞으로 쏟아지며 찍어 내리고 숙인 채 멈춘다."""
+    feet = {'foot_l': (0.15, 0.12, 0.104), 'foot_r': (-0.15, -0.14, 0.104)}
+    pole = {'hand_l': (0.8, -0.3, -0.2), 'hand_r': (-0.8, -0.3, -0.2)}
+    idle = P(base=('Idle_Loop', 0), pelvis=(0, 0, -0.03),
+             ik={'hand_l': (0.12, 0.30, 1.05), 'hand_r': (-0.18, 0.20, 1.00), **feet}, pole=pole)
+    up = P(base=('Idle_Loop', 0), pelvis=(0, -0.08, -0.04),
+           dirs={'spine_01': (0, -0.10, 1), 'spine_02': (0, -0.16, 1), 'spine_03': (0, -0.20, 1), 'neck_01': (0, -0.15, 1)}, pole=pole,
+           ik={'hand_l': (0.10, -0.02, 1.98), 'hand_r': (-0.12, -0.10, 1.90), **feet})
+    chop = P(base=('Idle_Loop', 0), pelvis=(0, 0.18, -0.20),
+             dirs={'spine_01': (0, 0.25, 1), 'spine_02': (0, 0.35, 1), 'spine_03': (0, 0.35, 1), 'neck_01': (0, 0.20, 1)}, pole=pole,
+             ik={'hand_l': (0.10, 0.58, 0.82), 'hand_r': (-0.12, 0.52, 0.80),
+                 'foot_l': (0.15, 0.30, 0.104), 'foot_r': (-0.15, -0.16, 0.104)})
+    return False, [(0, idle), (10, up), (14, up), (19, chop), (30, chop), (44, idle)]
+
+
+def _dagger_slash(flip=False):
+    """단검 베기 — 오른손이 어깨 높이 뒤에서 대각으로 빠르게 가로질러 내려가고, 왼손은 가슴 앞을 지킨다(B 는 반대 방향)."""
+    feet = {'foot_l': (0.14, 0.16, 0.104), 'foot_r': (-0.16, -0.10, 0.104)}
+    pole = {'hand_l': (0.6, -0.4, -0.5), 'hand_r': (-0.6, -0.5, -0.2)}
+    guard = {'hand_l': (0.16, 0.30, 1.22)}
+    idle = P(base=('Idle_Loop', 0), yaw=-20, pelvis=(0, 0, -0.07), pole=pole,
+             ik={'hand_r': (-0.22, 0.28, 1.12), **guard, **feet})
+    if not flip:
+        a = P(base=('Idle_Loop', 0), yaw=-50, pelvis=(0, -0.06, -0.10), pole=pole,
+              dirs={'spine_03': (-0.1, 0, 1)},
+              ik={'hand_r': (-0.42, 0.02, 1.62), **guard, **feet})
+        b = P(base=('Idle_Loop', 0), yaw=22, pelvis=(0, 0.14, -0.13), pole=pole,
+              dirs={'spine_01': (0, 0.10, 1), 'spine_02': (0, 0.14, 1), 'spine_03': (0.1, 0.14, 1)},
+              ik={'hand_r': (0.22, 0.52, 0.96), **guard,
+                  'foot_l': (0.14, 0.30, 0.104), 'foot_r': (-0.16, -0.10, 0.104)})
+    else:
+        a = P(base=('Idle_Loop', 0), yaw=30, pelvis=(0, -0.04, -0.10), pole=pole,
+              ik={'hand_r': (0.30, 0.20, 1.18), **guard, **feet})
+        b = P(base=('Idle_Loop', 0), yaw=-48, pelvis=(0, 0.14, -0.12), pole=pole,
+              dirs={'spine_01': (0, 0.10, 1), 'spine_02': (0, 0.12, 1), 'spine_03': (-0.1, 0.12, 1)},
+              ik={'hand_r': (-0.50, 0.42, 1.18), **guard,
+                  'foot_l': (0.14, 0.30, 0.104), 'foot_r': (-0.16, -0.10, 0.104)})
+    return False, [(0, idle), (6, a), (10, b), (14, b), (24, idle)]
+
+
+def _dagger_slash_a():
+    return _dagger_slash(False)
+
+
+def _dagger_slash_b():
+    return _dagger_slash(True)
+
+
+def _sword_slash_b():
+    """검 되베기 — 오른손 칼을 왼쪽 아래에서 어깨 높이로 뒤집어 올려 베며 오른쪽으로 쓸어 가고 몸이 따라 돈다."""
+    feet = {'foot_l': (0.15, 0.14, 0.104), 'foot_r': (-0.15, -0.14, 0.104)}
+    pole = {'hand_l': (0.6, -0.3, -0.5), 'hand_r': (-0.7, -0.5, -0.2)}
+    ready = P(base=('Sword_Idle', 0), pelvis=(0, 0, -0.04),
+              keep_world=('upperarm_l', 'lowerarm_l', 'hand_l', 'upperarm_r', 'lowerarm_r', 'hand_r'),
+              ik={'foot_l': (0.13, 0.05, 0.104), 'foot_r': (-0.13, -0.05, 0.104)})
+    back = P(base=('Idle_Loop', 0), yaw=38, pelvis=(0, -0.04, -0.09), pole=pole,
+             ik={'hand_r': (0.42, 0.30, 1.10), 'hand_l': (0.12, 0.28, 1.14), **feet})
+    cut = P(base=('Idle_Loop', 0), yaw=-52, pelvis=(0, 0.14, -0.12), pole=pole,
+            dirs={'spine_01': (0, 0.10, 1), 'spine_02': (0, 0.12, 1), 'spine_03': (-0.1, 0.12, 1)},
+            ik={'hand_r': (-0.55, 0.48, 1.22), 'hand_l': (0.02, 0.36, 1.18),
+                'foot_l': (0.15, 0.30, 0.104), 'foot_r': (-0.15, -0.14, 0.104)})
+    return False, [(0, ready), (7, back), (12, cut), (17, cut), (30, ready)]
+
+
+def _victory():
+    """승리 — 숨을 모은 뒤 두 팔을 V 로 번쩍 들며 가슴을 펴고 살짝 뛰어 오르듯 서 있다가 내려온다."""
+    feet = {'foot_l': (0.16, 0.04, 0.104), 'foot_r': (-0.16, 0.0, 0.104)}
+    pole = {'hand_l': (1, -0.1, -0.2), 'hand_r': (-1, -0.1, -0.2)}
+    idle = P(base=('Idle_Loop', 0), pelvis=(0, 0, -0.06),
+             ik={'hand_l': (0.28, 0.04, 0.92), 'hand_r': (-0.28, 0.04, 0.92), **feet})
+    up = P(base=('Idle_Loop', 0), pelvis=(0, 0, 0.0),
+           dirs={'spine_01': (0, -0.04, 1), 'spine_02': (0, -0.08, 1), 'spine_03': (0, -0.10, 1), 'neck_01': (0, -0.10, 1),
+                 'clavicle_l': (1, -0.2, 0.2), 'clavicle_r': (-1, -0.2, 0.2)}, pole=pole,
+           ik={'hand_l': (0.55, 0.10, 2.0), 'hand_r': (-0.55, 0.10, 2.0), **feet})
+    up2 = dict(up, pelvis=(0, 0, 0.03))
+    return False, [(0, idle), (10, up), (16, up2), (24, up), (50, up), (66, idle)]
+
+
+def _stun_loop():
+    """기절·비틀 — 무릎이 풀려 낮아지고 상체가 앞으로 처져 머리가 떨궈지며, 두 팔은 늘어져 좌우로 천천히 휘청인다."""
+    def k(sway, dip):
+        return P(base=('Idle_Loop', 0), pelvis=(sway * 0.05, 0.02, -0.14 - dip),
+                 dirs={'pelvis': (sway, 0.08, 1), 'spine_01': (sway * 1.5, 0.22, 1), 'spine_02': (sway * 2, 0.30, 1),
+                       'spine_03': (sway * 2, 0.28, 1), 'neck_01': (sway, 0.55, 1)},
+                 pole={'hand_l': (1, -0.5, 0), 'hand_r': (-1, -0.5, 0)},
+                 ik={'hand_l': (0.26 + sway * 0.05, 0.16, 0.62), 'hand_r': (-0.26 + sway * 0.05, 0.12, 0.62),
+                     'foot_l': (0.18, 0.04, 0.104), 'foot_r': (-0.18, -0.04, 0.104)})
+    return True, [(0, k(0.0, 0)), (20, k(0.12, 0.02)), (40, k(0.0, 0)), (60, k(-0.12, 0.02)), (80, k(0.0, 0))]
+
+
+def _hit_back():
+    """뒤에서 맞음 — 등을 맞아 가슴이 앞으로 튀어 나가고 머리가 젖혀지며 팔이 뒤로 휘둘린 뒤 비틀거리며 돌아온다."""
+    feet = {'foot_l': (0.14, 0.06, 0.104), 'foot_r': (-0.14, -0.04, 0.104)}
+    pole = {'hand_l': (1, -0.3, -0.3), 'hand_r': (-1, -0.3, -0.3)}
+    idle = P(base=('Idle_Loop', 0), ik={'hand_l': (0.26, 0.04, 0.90), 'hand_r': (-0.26, 0.04, 0.90), **feet}, pole=pole)
+    hit = P(base=('Idle_Loop', 0), pelvis=(0, 0.10, -0.06),
+            dirs={'pelvis': (0, -0.10, 1), 'spine_01': (0, -0.22, 1), 'spine_02': (0, -0.30, 1), 'spine_03': (0, -0.34, 1),
+                  'neck_01': (0, -0.45, 1)}, pole=pole,
+            ik={'hand_l': (0.34, -0.22, 1.00), 'hand_r': (-0.34, -0.22, 1.00),
+                'foot_l': (0.14, 0.18, 0.104), 'foot_r': (-0.14, -0.04, 0.104)})
+    return False, [(0, idle), (4, hit), (9, hit), (22, idle)]
+
+
 CLIPS = {
     'CF_Guard_Idle_Loop': _guard_idle,
     'CF_Climb_Loop': _climb,
@@ -231,6 +366,15 @@ CLIPS = {
     'CF_Heal': _heal,
     'CF_Strafe_L_Loop': _strafe_l,
     'CF_Strafe_R_Loop': _strafe_r,
+    'CF_Spear_Idle_Loop': _spear_idle,
+    'CF_Spear_Thrust': _spear_thrust,
+    'CF_Axe_Chop': _axe_chop,
+    'CF_Dagger_Slash_A': _dagger_slash_a,
+    'CF_Dagger_Slash_B': _dagger_slash_b,
+    'CF_Sword_Slash_B': _sword_slash_b,
+    'CF_Victory': _victory,
+    'CF_Stun_Loop': _stun_loop,
+    'CF_Hit_Back': _hit_back,
 }
 
 
