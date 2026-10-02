@@ -187,6 +187,26 @@
      "dir": "saga-web/shared/assets/world2d"
     }
    ]
+  },
+  {
+   "id": "vroid-bodies",
+   "src": "saga-godot/assets/characters_vroid",
+   "include": [
+    "AvatarSample_A.glb",
+    "avatar_sample_*.glb",
+    "dungeon_hero_01.glb",
+    "saga_forest_avatar_01.glb"
+   ],
+   "note": "K-0018(2026-10-02 사용자: Unity 사람 몸은 VRoid): Godot 쪽 VRoid GLB(내용 같은 사본 — git 은 한 번만 저장)를 Unity 에 둔다. 정본은 Godot 폴더(코드가 res:// 로 읽는다).",
+   "targets": [
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/Art/CharactersVroid",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
   }
  ]
 }

@@ -1,0 +1,861 @@
+{
+ "version": 1,
+ "decision": "2026-10-02 사용자: Unity 사람 몸은 VRoid 로 바꾸고 Mixamo 는 제거한다(K-0018). 사람 아닌 몸은 공방 몸 유지.",
+ "vroid_pool": {
+  "female": [
+   "a",
+   "b",
+   "d",
+   "e",
+   "f",
+   "h",
+   "i",
+   "j",
+   "k",
+   "m",
+   "o",
+   "q",
+   "s",
+   "u",
+   "w",
+   "y"
+  ],
+  "male": [
+   "c",
+   "g",
+   "l",
+   "n",
+   "p",
+   "r",
+   "t",
+   "v",
+   "x",
+   "z"
+  ],
+  "folder": "Assets/Art/CharactersVroid"
+ },
+ "counts": {
+  "total": 61,
+  "human": 42,
+  "non_human": 19,
+  "vroid_bodies_used": 24
+ },
+ "bodies": [
+  {
+   "recipe": "_cmp_real_aliensoldier_01",
+   "mixamo": "Alien Soldier",
+   "role": "DUNGEON 기계화 정찰병 fusionElite · GO 미래 적",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_t",
+    "file": "avatar_sample_t.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_archer_f_01",
+   "mixamo": "Archer",
+   "role": "STORY 유격 106-10",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_k",
+    "file": "avatar_sample_k.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_k.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_blackknight_01",
+   "mixamo": "Dreyar",
+   "role": "GO 인물 105 몸 '검은 판금 기사', 109-7",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_r",
+    "file": "avatar_sample_r.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_r.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_brawler_01",
+   "mixamo": "Abe",
+   "role": "DUNGEON·STORY 맨몸 잡졸 · GO 산적 동료",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_c",
+    "file": "avatar_sample_c.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_c.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_brute_01",
+   "mixamo": "두목 Brute",
+   "role": "",
+   "gender": "M",
+   "kind": "creature",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_brute_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_castaway_f_01",
+   "mixamo": "Jennifer",
+   "role": "FOREST 미래 '불시착 탐사원'",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_y",
+    "file": "avatar_sample_y.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_y.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_castleguard_02",
+   "mixamo": "Castle Guard 02",
+   "role": "GO '투구 쓴 성 경비', 109-7",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_t",
+    "file": "avatar_sample_t.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_chrononaut_02",
+   "mixamo": "Ely",
+   "role": "STORY 미래 '시간 여행자'",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_l",
+    "file": "avatar_sample_l.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_l.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_chrononaut_f_01",
+   "mixamo": "Crypto",
+   "role": "GO 미래 시간 여행자",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_s",
+    "file": "avatar_sample_s.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_s.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_colossus_01",
+   "mixamo": "Mannequin",
+   "role": "STORY 미래 '강철 거신', 비경 5층~, 키 1.3배",
+   "gender": "M",
+   "kind": "robot",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_colossus_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_copzombie_01",
+   "mixamo": "Copzombie",
+   "role": "GO 현대 '떠도는 망자'",
+   "gender": "M",
+   "kind": "undead",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_copzombie_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_courier_02",
+   "mixamo": "Pete",
+   "role": "FOREST 현대 '택배 기사 달음'",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_g",
+    "file": "avatar_sample_g.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_g.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_courier_f_01",
+   "mixamo": "Megan",
+   "role": "GO 현대 택배 기사",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_m",
+    "file": "avatar_sample_m.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_m.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_crashdummy_01",
+   "mixamo": "Dummy",
+   "role": "STORY 미래 '시험 인형', 비경 1~2층",
+   "gender": "M",
+   "kind": "robot",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_crashdummy_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_demon_01",
+   "mixamo": "Demon",
+   "role": "DUNGEON 층 주인 lord",
+   "gender": "M",
+   "kind": "creature",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_demon_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_enforcer_01",
+   "mixamo": "The Boss",
+   "role": "DUNGEON 현대 '암흑가 해결사', 층 50~",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_p",
+    "file": "avatar_sample_p.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_p.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_exored_01",
+   "mixamo": "Exo Red",
+   "role": "GO 미래 '강철 경비병'",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_t",
+    "file": "avatar_sample_t.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_fairy_01",
+   "mixamo": "Jolleen",
+   "role": "사가의숲 정령 셋 버섯·꽃·나비 = 한 몸을 작게 줄여 빛깔·꾸밈으로 가름 · 사가스토리 전직관",
+   "gender": "F",
+   "kind": "spirit",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_fairy_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_furchief_01",
+   "mixamo": "Heraklios",
+   "role": "GO '두건·가죽·털 대장', 109-7",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_x",
+    "file": "avatar_sample_x.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_x.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_ganfaul_01",
+   "mixamo": "Ganfaul",
+   "role": "DUNGEON 능묘지기 106-4",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_v",
+    "file": "avatar_sample_v.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_v.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_gasmask_01",
+   "mixamo": "Gas Mask",
+   "role": "GO 현대 '방독면 약탈자'",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_c",
+    "file": "avatar_sample_c.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_c.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_goblin_01",
+   "mixamo": "Goblin",
+   "role": "",
+   "gender": "M",
+   "kind": "creature",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_goblin_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_goldexo_f_01",
+   "mixamo": "Uriel",
+   "role": "FOREST 미래 '금빛 외골격 시간 여행자'",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_q",
+    "file": "avatar_sample_q.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_q.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_hero_f_01",
+   "mixamo": "주역",
+   "role": "",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_b",
+    "file": "avatar_sample_b.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_b.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_hoodedcloak_f_01",
+   "mixamo": "Arissa",
+   "role": "GO '두건 망토 — 무녀·여왕·궁정 문필', 109-7",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_j",
+    "file": "avatar_sample_j.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_j.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_junkpeddler_01",
+   "mixamo": "Leonard",
+   "role": "DUNGEON 현대 '고물 행상'",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_n",
+    "file": "avatar_sample_n.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_n.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_leatherknight_f_01",
+   "mixamo": "Eve",
+   "role": "GO '가죽 옷 — 성녀 기사·여왕', 109-7",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_d",
+    "file": "avatar_sample_d.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_d.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_mage_f_01",
+   "mixamo": "PeasantGirl",
+   "role": "DUNGEON 동행 술사 106-6 겸 마을 아낙·포로",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_o",
+    "file": "avatar_sample_o.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_o.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_martialist_01",
+   "mixamo": "Brady",
+   "role": "GO '무도복 수행자', 109-7",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_x",
+    "file": "avatar_sample_x.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_x.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_maw_01",
+   "mixamo": "Maw",
+   "role": "GO 망루 수호장 107-7",
+   "gender": "M",
+   "kind": "creature",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_maw_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_mechanic_01",
+   "mixamo": "Vanguard",
+   "role": "GO 미래 수리 기사",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_g",
+    "file": "avatar_sample_g.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_g.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_merc_01",
+   "mixamo": "Steve",
+   "role": "STORY 현대 '용병 돌격대', 비경 5층~",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_t",
+    "file": "avatar_sample_t.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_morak_01",
+   "mixamo": "Morak",
+   "role": "STORY 황건 두목, 들판·비경",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_x",
+    "file": "avatar_sample_x.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_x.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_nightshade_01",
+   "mixamo": "Nightshade",
+   "role": "사가의숲 안개유령, 게임은 반투명·떠 있음",
+   "gender": "F",
+   "kind": "spirit",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_nightshade_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_ninja_01",
+   "mixamo": "Ninja",
+   "role": "DUNGEON 황건 살수, 층 진행기 miniboss·방3 고정 살수",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_c",
+    "file": "avatar_sample_c.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_c.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_paladin_01",
+   "mixamo": "Paladin",
+   "role": "DUNGEON 동행 무사 106-6",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_r",
+    "file": "avatar_sample_r.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_r.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_parasite_01",
+   "mixamo": "Parasite",
+   "role": "사가의숲 포자괴물",
+   "gender": "M",
+   "kind": "creature",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_parasite_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_patrol_01",
+   "mixamo": "Swat Guy",
+   "role": "GO 현대 순찰 대원",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_t",
+    "file": "avatar_sample_t.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_photographer_f_02",
+   "mixamo": "Sophie",
+   "role": "FOREST 현대 '사진작가 찰나'",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_a",
+    "file": "AvatarSample_A.glb",
+    "unity": "Assets/Art/CharactersVroid/AvatarSample_A.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_phototourist_f_01",
+   "mixamo": "Olivia",
+   "role": "STORY 현대 '사진 찍는 여행자'",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_w",
+    "file": "avatar_sample_w.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_w.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_pilgrim_01",
+   "mixamo": "Pelegrini",
+   "role": "FOREST 옛 '붉은 두건 순례 기사'",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_p",
+    "file": "avatar_sample_p.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_p.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_plasma_01",
+   "mixamo": "Yaku",
+   "role": "STORY 미래 '플라즈마 변이체', 비경 5층~, 키 1.05배",
+   "gender": "M",
+   "kind": "alien",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_plasma_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_punk_f_01",
+   "mixamo": "Jody",
+   "role": "STORY 현대 '뒷골목 불량배', 비경 5층~",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_u",
+    "file": "avatar_sample_u.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_u.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_rider_01",
+   "mixamo": "Racer",
+   "role": "STORY 현대 '폭주 라이더', 비경 1~2층",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_c",
+    "file": "avatar_sample_c.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_c.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_rioter_01",
+   "mixamo": "Brian",
+   "role": "DUNGEON 현대 '폭주 청년', 층 2~9",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_g",
+    "file": "avatar_sample_g.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_g.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_riotswat_01",
+   "mixamo": "Swat",
+   "role": "DUNGEON 현대 '진압 특공대', 층 25~49",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_t",
+    "file": "avatar_sample_t.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_t.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_rockgiant_01",
+   "mixamo": "Hulk",
+   "role": "사가의숲 바위도깨비",
+   "gender": "M",
+   "kind": "creature",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_rockgiant_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_scout_01",
+   "mixamo": "PeasantMan",
+   "role": "STORY 들판 정찰병 NPC, 1.75m",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_x",
+    "file": "avatar_sample_x.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_x.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_sentry_01",
+   "mixamo": "CastleGuard",
+   "role": "FOREST 옛 '길 잃은 성 파수병'",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_p",
+    "file": "avatar_sample_p.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_p.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_skeleton_01",
+   "mixamo": "Skeleton",
+   "role": "사가고 들판 해골·던전·마을 무리",
+   "gender": "M",
+   "kind": "undead",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_skeleton_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_starguest_01",
+   "mixamo": "Mremireh",
+   "role": "STORY 미래 '별바다 손님', 비경 3~4층, 키 1.05배",
+   "gender": "M",
+   "kind": "alien",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_starguest_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_steelbot_01",
+   "mixamo": "Y Bot",
+   "role": "DUNGEON 미래 '강철 인형 병정', 층 25~49",
+   "gender": "M",
+   "kind": "robot",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_steelbot_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_suit_01",
+   "mixamo": "Joe",
+   "role": "GO '근대 양복', 109-7 — 근대 인물 몇만",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_p",
+    "file": "avatar_sample_p.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_p.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_surveyor_01",
+   "mixamo": "Exo Gray",
+   "role": "GO 미래 탐사 대원",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_l",
+    "file": "avatar_sample_l.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_l.glb"
+   },
+   "variant": true
+  },
+  {
+   "recipe": "_cmp_real_swordmaiden_f_01",
+   "mixamo": "Kachujin",
+   "role": "GO '무희·여무사', 109-7",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_i",
+    "file": "avatar_sample_i.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_i.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_testbot_01",
+   "mixamo": "X Bot",
+   "role": "DUNGEON 미래 '시험 기동 인형', 층 2~9",
+   "gender": "M",
+   "kind": "robot",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_testbot_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_timepeddler_f_01",
+   "mixamo": "Astra",
+   "role": "DUNGEON 미래 '시간 행상'",
+   "gender": "F",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_f",
+    "file": "avatar_sample_f.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_f.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_tourist_01",
+   "mixamo": "Remy",
+   "role": "GO 현대 여행자",
+   "gender": "M",
+   "kind": "human",
+   "replace": {
+    "type": "vroid",
+    "id": "avatar_sample_z",
+    "file": "avatar_sample_z.glb",
+    "unity": "Assets/Art/CharactersVroid/avatar_sample_z.glb"
+   },
+   "variant": false
+  },
+  {
+   "recipe": "_cmp_real_visitor_01",
+   "mixamo": "Zlorp",
+   "role": "DUNGEON 미래 '별 너머 방문자', 층 50~",
+   "gender": "M",
+   "kind": "alien",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_visitor_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_warrok_01",
+   "mixamo": "Warrok",
+   "role": "사가의숲 무쇠도깨비·사가스토리 소환 거구",
+   "gender": "M",
+   "kind": "creature",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_warrok_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  },
+  {
+   "recipe": "_cmp_real_warzombie_01",
+   "mixamo": "Warzombie",
+   "role": "STORY 현대 '떠도는 망자', 비경 3~4층",
+   "gender": "M",
+   "kind": "undead",
+   "replace": {
+    "type": "forge",
+    "id": "_cmp_real_warzombie_01",
+    "note": "사람 아닌 몸 — 공방 몸 유지(VRoid 는 사람꼴뿐)"
+   }
+  }
+ ]
+}
