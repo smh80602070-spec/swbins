@@ -128,3 +128,18 @@ bash tools/char-forge/vroid_intake.sh ~/Downloads/hero_go_02.vrm hero_go_02
 
 사본(.vrm+.glb) → 얼굴 데칼 굽기 → CC0 동작 여덟 굽기·파일 검증 → Godot 동작 묶음(`anim_cc0/<id>_lib.res`) → 셀 셰이더 얼굴 표 등록 → 실제 몸 점검(`probe_anim_cc0.gd`).
 VRM 메타의 라이선스 칸을 찍어 준다 — 상업·재배포가 허가가 아니면 들이지 않는다. 게임 씬에 물리는 건 자리가 정해진 뒤 따로 한다.
+
+## 11. VRoid 대량 들이기 (K-0022, 2026-10-02)
+
+인물 에셋은 전부 VRoid(사용자 결정). VRM 이 쌓이면 새 것만 골라 처리하고 진행표를 낸다.
+
+```bash
+py tools/char-forge/vroid_samples.py <VRM 폴더>           # 이용 조건 표(상업·개작+재배포 허용만 "사용 O"), --copy 면 O 인 것만 _in/vroid 로 복사
+bash tools/char-forge/vroid_batch.sh [--only id,…] [--dry]  # 새 VRM → GLB·CC0 동작 8·웹 경량 GLB·2D 시트(이어하기·멱등, 3회 실패면 건너뜀)
+py tools/char-forge/vroid_status.py [--all|--missing|--json]  # 인물 id × 단계(vrm·glb·anim·web·2d) 표
+```
+
+- id = 명단(`data/roster.json`) id 를 쓰면 진행표가 그 인물 줄을 채운다. VRM 원본·산출은 git 밖(`_in/`·`_out/`).
+- 산출 `_out/vroid/<id>/{<id>.glb, <id>_anims.glb, verify.ok, web/<id>.glb, log_*.txt}` + `_out/sprites/<id>/`. 게임 폴더에 놓기는 K-0019(`asset-place`).
+- Godot 부(얼굴 데칼·`anim_cc0/<id>_lib.res`)는 분리: Godot 세션에서 `vroid_intake.sh`. 한 명 처리 약 5분(시험: 동작 굽기 <1분 · 웹 경량 · 2D 시트 렌더가 대부분).
+- 웹 경량 GLB 는 모프 제거+Meshopt·WebP 1024px 로 벌당 0.6~0.8MB. 웹 3D 는 한 판에만 둔다(Pages 한도). 사람 몸 삼각형은 줄이지 않는다(뼈 왜곡, 허용치 6.5만).

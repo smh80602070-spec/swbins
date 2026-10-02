@@ -7,7 +7,7 @@
   - 각 .vrm 의 JSON 청크에서 VRM 0.x(`extensions.VRM.meta`) 또는 1.0(`VRMC_vrm.meta`)의 제목·제작자·이용 조건을 읽는다.
   - id 를 정한다: 파일 이름·모델 제목에 `AvatarSample_<글자>` 가 있으면 `avatarsample_<글자>`(1.0·0.x 변형이 같이 오면 `_vrm10` 접미사),
     아니면 파일 이름을 영문 소문자·숫자·`_` 로 줄인다(실명 금지 규칙은 표시 글자 한정 - id 는 사람이 정한 이름 그대로).
-  - `--copy` 면 `tools/char-forge/_in/vroid/<id>.vrm` 로 복사(이미 있으면 건너뜀). 원본은 안 건드린다.
+  - `--copy` 면 `tools/char-forge/_in/vroid/<id>.vrm` 로 복사(이미 있으면 건너뜀). **상업·개작+재배포 허용인 것만** 복사한다(`usable()` — 2026-10-02 판정 규칙). 원본은 안 건드린다.
   - 이용 조건 표를 `tools/char-forge/data/vroid_licenses.json` 에 쓴다(사람이 게임 반영 전 모델별 조건을 확인하는 근거).
 의존 없음(표준 라이브러리). VRM 은 GLB 와 같은 컨테이너다.
 """
@@ -41,6 +41,48 @@ def read_meta(path):
     else:
         ver, meta = '?', {}
     return ver, {k: meta.get(k) for k in META_KEYS if meta.get(k) is not None}
+
+
+def usable(ver, meta):
+    """우리가 쓸 수 있는 조건인가 → (가능, 이유 목록, 크레딧 필요). 우리는 몸을 가공(툰 GLB·동작·옷 조각)해 게임과 공개 저장소에 싣는다 =
+    개작본 재배포라서 "상업 허용 · 개작+재배포 허용 · 아무나 사용" 이어야 한다(개작만 허용이면 안 된다 — VRM 1.0 modification 이 allowModification 인 T 가 그 예).
+    VRM 0.x 는 licenseName 과 Hub 조건 문자열(otherLicenseUrl 의 쿼리)로 읽는다."""
+    why, credit = [], False
+    if ver == '1.0':
+        if meta.get('commercialUsage') not in ('personalProfit', 'corporation'):
+            why.append('상업 사용 불가(%s)' % meta.get('commercialUsage'))
+        if meta.get('modification') != 'allowModificationRedistribution':
+            why.append('개작본 재배포 불가(%s)' % meta.get('modification'))
+        if meta.get('allowRedistribution') is not True:
+            why.append('재배포 불가')
+        if meta.get('avatarPermission') not in ('everyone', None):
+            why.append('사용자 제한(%s)' % meta.get('avatarPermission'))
+        credit = meta.get('creditNotation') == 'required'
+    elif ver == '0.x':
+        lic = str(meta.get('licenseName') or '')
+        url = str(meta.get('otherLicenseUrl') or '')
+        if str(meta.get('commercialUssageName') or '') != 'Allow':
+            why.append('상업 사용 불가(%s)' % meta.get('commercialUssageName'))
+        if lic == 'Redistribution_Prohibited':
+            why.append('재배포 불가')
+        if 'hub.vroid.com/license?' in url:
+            q = dict(kv.split('=', 1) for kv in url.split('?', 1)[1].split('&') if '=' in kv)
+            if q.get('allowed_to_use_user') not in (None, 'everyone'):
+                why.append('사용자 제한(%s)' % q.get('allowed_to_use_user'))
+            if q.get('corporate_commercial_use') not in (None, 'allow'):
+                why.append('법인 상업 불가')
+            if q.get('modification') not in (None, 'allow'):
+                why.append('개작 불가(%s)' % q.get('modification'))
+            if q.get('redistribution') not in (None, 'allow'):
+                why.append('재배포 불가(%s)' % q.get('redistribution'))
+            credit = q.get('credit') == 'necessary'
+        elif lic not in ('CC0', 'CC_BY', 'CC_BY_SA'):
+            why.append('조건 불명(%s) — 사람이 확인' % (lic or '?'))
+        if lic.startswith('CC_BY'):
+            credit = True
+    else:
+        why.append('VRM 메타를 못 읽음')
+    return (not why), why, credit
 
 
 def make_id(path, meta, ver):
@@ -100,15 +142,23 @@ def main():
             continue
         seen[i] = p
         status = ''
+        ok, why, credit = usable(ver, meta)
         if do_copy:
             os.makedirs(IN_DIR, exist_ok=True)
             dst = os.path.join(IN_DIR, i + '.vrm')
-            if os.path.exists(dst):
+            if not ok:
+                status = '복사 안 함(' + '; '.join(why) + ')'
+            elif os.path.exists(dst):
                 status = '있음'
             else:
                 shutil.copyfile(p, dst)
                 status = '복사'
-        table[i] = {'source_file': os.path.basename(p), 'vrm': ver, 'size_mb': round(os.path.getsize(p) / 1048576, 1), 'meta': meta}
+        else:
+            status = ('사용 O' + (' · 크레딧 표기 필요' if credit else '')) if ok else '사용 X(' + '; '.join(why) + ')'
+        if ok and credit and do_copy:
+            status += ' · 크레딧 표기 필요'
+        table[i] = {'source_file': os.path.basename(p), 'vrm': ver, 'size_mb': round(os.path.getsize(p) / 1048576, 1), 'meta': meta,
+                    'usable': ok, 'why_not': why, 'credit_required': credit}
         print('%-24s VRM %-4s %5.1fMB  상업:%-6s 재배포:%-6s 개작:%-6s %s' % (
             i, ver, table[i]['size_mb'],
             meta.get('commercialUsage') or meta.get('commercialUssageName') or '?',

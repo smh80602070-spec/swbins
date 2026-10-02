@@ -2,3 +2,5 @@ _src/
 _out/
 __pycache__/
 _blender/
+# VRoid 원본(.vrm) 들이기 폴더 — 공개 저장소에 올리지 않는다(K-0022)
+_in/

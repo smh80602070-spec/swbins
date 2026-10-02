@@ -26,12 +26,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_c_vrm10": {
    "source_file": "AvatarSample_C.vrm",
@@ -42,12 +45,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_d_vrm10": {
    "source_file": "AvatarSample_D.vrm",
@@ -58,12 +64,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_e_vrm10": {
    "source_file": "AvatarSample_E.vrm",
@@ -74,12 +83,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_f_vrm10": {
    "source_file": "AvatarSample_F.vrm",
@@ -90,12 +102,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_g_vrm10": {
    "source_file": "AvatarSample_G.vrm",
@@ -106,12 +121,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_h_vrm10": {
    "source_file": "AvatarSample_H.vrm",
@@ -122,12 +140,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_i_vrm10": {
    "source_file": "AvatarSample_I.vrm",
@@ -138,12 +159,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_j_vrm10": {
    "source_file": "AvatarSample_J.vrm",
@@ -154,12 +178,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_k_vrm10": {
    "source_file": "AvatarSample_K.vrm",
@@ -170,12 +197,91 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "avatarsample_l_vrm10": {
+   "source_file": "AvatarSample_L.vrm",
+   "vrm": "1.0",
+   "size_mb": 17.4,
+   "meta": {
+    "name": "AvatarSample_L",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "avatarsample_m_vrm10": {
+   "source_file": "AvatarSample_M.vrm",
+   "vrm": "1.0",
+   "size_mb": 20.0,
+   "meta": {
+    "name": "AvatarSample_M",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "avatarsample_n_vrm10": {
+   "source_file": "AvatarSample_N.vrm",
+   "vrm": "1.0",
+   "size_mb": 18.0,
+   "meta": {
+    "name": "AvatarSample_N",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "avatarsample_o_vrm10": {
+   "source_file": "AvatarSample_O.vrm",
+   "vrm": "1.0",
+   "size_mb": 17.5,
+   "meta": {
+    "name": "AvatarSample_O",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_p_vrm10": {
    "source_file": "AvatarSample_P.vrm",
@@ -186,12 +292,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_q_vrm10": {
    "source_file": "AvatarSample_Q.vrm",
@@ -202,12 +311,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_r_vrm10": {
    "source_file": "AvatarSample_R.vrm",
@@ -218,12 +330,34 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "avatarsample_s_vrm10": {
+   "source_file": "AvatarSample_S.vrm",
+   "vrm": "1.0",
+   "size_mb": 18.2,
+   "meta": {
+    "name": "AvatarSample_S",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_t_vrm10": {
    "source_file": "AvatarSample_T.vrm",
@@ -234,12 +368,17 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModification",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": false,
+   "why_not": [
+    "개작본 재배포 불가(allowModification)"
+   ],
+   "credit_required": false
   },
   "avatarsample_u_vrm10": {
    "source_file": "AvatarSample_U.vrm",
@@ -250,12 +389,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_v_vrm10": {
    "source_file": "AvatarSample_V.vrm",
@@ -266,12 +408,34 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "avatarsample_w_vrm10": {
+   "source_file": "AvatarSample_W.vrm",
+   "vrm": "1.0",
+   "size_mb": 18.6,
+   "meta": {
+    "name": "AvatarSample_W",
+    "authors": [
+     "pixiv VRoid Project"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_x_vrm10": {
    "source_file": "AvatarSample_X.vrm",
@@ -282,12 +446,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_y_vrm10": {
    "source_file": "AvatarSample_Y.vrm",
@@ -298,12 +465,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "avatarsample_z_vrm10": {
    "source_file": "AvatarSample_Z.vrm",
@@ -314,12 +484,15 @@
     "authors": [
      "pixiv VRoid Project"
     ],
-    "commercialUsage": "personalNonProfit",
-    "allowRedistribution": false,
-    "modification": "prohibited",
-    "avatarPermission": "onlyAuthor",
-    "creditNotation": "required"
-   }
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
   },
   "dungeon_hero_01": {
    "source_file": "dungeon_hero_01.vrm",
