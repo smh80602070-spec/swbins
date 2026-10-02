@@ -49,6 +49,8 @@ const HIDE_KEYS := ["FaceBrow", "FaceEyeline", "FaceMouth"]
 ## (Player.tscn 등의 Visual 인스턴스)의 `scene_file_path`가 곧 이 GLB 경로다
 ## (`PackedScene.instantiate()`가 뿌리 노드에 그대로 남겨 준다 — 실측 확인).
 const FACE_BAKE_BY_GLB := {
+	"res://assets/characters_vroid/avatar_sample_b.glb":
+		preload("res://assets/characters_vroid/generated/avatar_sample_b_Face_Baked.png"),
 	"res://assets/characters_vroid/AvatarSample_A.glb":
 		preload("res://assets/characters_vroid/generated/AvatarSample_A_Face_Baked.png"),
 	"res://assets/characters_vroid/saga_forest_avatar_01.glb":
