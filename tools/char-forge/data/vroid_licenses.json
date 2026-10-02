@@ -1,6 +1,196 @@
 {
  "note": "생성: py tools/char-forge/vroid_samples.py - VRM 안 메타 그대로. 게임에 넣기 전 모델별 이용 조건을 사람이 확인(K-0022).",
  "models": {
+  "a1": {
+   "source_file": "a1.vrm",
+   "vrm": "1.0",
+   "size_mb": 13.9,
+   "meta": {
+    "name": "a1",
+    "authors": [
+     "a1"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "a10": {
+   "source_file": "a10.vrm",
+   "vrm": "1.0",
+   "size_mb": 14.8,
+   "meta": {
+    "name": "a10",
+    "authors": [
+     "a10"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "a2": {
+   "source_file": "a2.vrm",
+   "vrm": "1.0",
+   "size_mb": 17.2,
+   "meta": {
+    "name": "a2",
+    "authors": [
+     "a2"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "a3": {
+   "source_file": "a3.vrm",
+   "vrm": "1.0",
+   "size_mb": 14.4,
+   "meta": {
+    "name": "a3",
+    "authors": [
+     "a3"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "a4": {
+   "source_file": "a4.vrm",
+   "vrm": "1.0",
+   "size_mb": 16.0,
+   "meta": {
+    "name": "a4",
+    "authors": [
+     "a4"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "a5": {
+   "source_file": "a5.vrm",
+   "vrm": "1.0",
+   "size_mb": 15.2,
+   "meta": {
+    "name": "a5",
+    "authors": [
+     "a5"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "a6": {
+   "source_file": "a6.vrm",
+   "vrm": "1.0",
+   "size_mb": 14.6,
+   "meta": {
+    "name": "a6",
+    "authors": [
+     "a6"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "a7": {
+   "source_file": "a7.vrm",
+   "vrm": "1.0",
+   "size_mb": 15.5,
+   "meta": {
+    "name": "a7",
+    "authors": [
+     "a7"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "a8": {
+   "source_file": "a8.vrm",
+   "vrm": "1.0",
+   "size_mb": 14.0,
+   "meta": {
+    "name": "a8",
+    "authors": [
+     "a8"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
+  "a9": {
+   "source_file": "a9.vrm",
+   "vrm": "1.0",
+   "size_mb": 14.8,
+   "meta": {
+    "name": "a9",
+    "authors": [
+     "a9"
+    ],
+    "commercialUsage": "corporation",
+    "allowRedistribution": true,
+    "modification": "allowModificationRedistribution",
+    "avatarPermission": "everyone",
+    "creditNotation": "unnecessary"
+   },
+   "usable": true,
+   "why_not": [],
+   "credit_required": false
+  },
   "avatarsample_a_vrm10": {
    "source_file": "AvatarSample_A.vrm",
    "vrm": "1.0",
