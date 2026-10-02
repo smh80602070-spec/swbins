@@ -49,3 +49,6 @@ dist/
 tools/_prof/
 tools/_out/
 saga-godot/tools/_out/
+
+# 그래픽 게이트 새 촬영(tools/graphics-gate) — 기준(baseline)만 커밋한다
+graphics/latest/
