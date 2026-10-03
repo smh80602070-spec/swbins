@@ -97,6 +97,22 @@ for (const g of GAMES) {
     copied++;
   }
 }
+/** 움직이는 그림(K-0056 한 장 모드, W-0032) — 판이 쓰는 풀의 front·side·back.webp 만 `<판>/assets/web2d/moving/<풀>/` 로 복사한다. 판 → 풀 목록은 그 판 `cfg.mode2d.still` 과 맞춘다 */
+const MOVING_GAMES = { 'saga-forest': ['villager_a', 'villager_b', 'villager_c', 'hero_m', 'hero_f'], 'saga-go': ['villager_a', 'villager_b', 'villager_c'] };
+for (const g of Object.keys(MOVING_GAMES)) {
+  for (const pool of MOVING_GAMES[g]) {
+    for (const v of ['front', 'side', 'back']) {
+      const from = path.join(WEB, 'shared', 'assets', 'web2d', 'moving', pool, v + '.webp'), to = path.join(WEB, g, 'assets', 'web2d', 'moving', pool, v + '.webp');
+      total++;
+      if (!fs.existsSync(from)) { console.log(`FAIL 움직이는 그림 정본 없음 shared/assets/web2d/moving/${pool}/${v}.webp`); bad++; continue; }
+      if (fs.existsSync(to) && fs.readFileSync(to).equals(fs.readFileSync(from))) continue;
+      if (check) { console.log(`DIFF ${g}/assets/web2d/moving/${pool}/${v}.webp ≠ shared`); bad++; continue; }
+      fs.mkdirSync(path.dirname(to), { recursive: true });
+      fs.copyFileSync(from, to);
+      copied++;
+    }
+  }
+}
 if (check) console.log(bad ? `FAIL shared 정본과 다른 사본 ${bad}개 — node tools/sync-shared.mjs` : `OK ${total}개 사본`);
 else console.log(`복사 ${copied}개 · 이미 같은 것 ${total - copied}개`);
 process.exit(bad ? 1 : 0);

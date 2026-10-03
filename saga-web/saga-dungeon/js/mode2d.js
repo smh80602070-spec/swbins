@@ -78,6 +78,7 @@
    */
   function draw(ctx, o) {
     if (!ctx || !o || !o.pool || !isOn()) { return false; }
+    if (isStill(o.pool)) { return drawStill(ctx, o); }      // 한 장 모드 풀(W-0032)
     var e = getImg(o.pool, o.clip || 'idle');
     if (!e.ok) {
       /* 받는 동안 몸이 깜박이지 않게 같은 풀의 idle 이 이미 있으면 그걸로 */
@@ -92,6 +93,65 @@
     ctx.imageSmoothingEnabled = true;
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
     ctx.drawImage(e.img, f * PX, d.row * PX, PX, PX, o.x - w / 2, o.y - h * (cf.foot || 0.87), w, h);
+    ctx.restore();
+    return true;
+  }
+
+  /* ── 한 장 모드(W-0032) — K-0056 정면·옆·뒤 정지 그림 3장(256px 알파, 발 밑 y≈251, 몸 높이 ≈240)에 걸음·숨쉬기를 코드로 얹는다.
+     `cfg.still = { <풀id>: true }` 인 풀만 이 길로 온다. 그림 `<stillBase>/<풀>/<front|side|back>.webp`(기본 assets/web2d/moving/) — 면이 없으면 side 로 대신 */
+  var SPX = 256, SBODY = 240, SFOOT = 252 / 256, SVIEW = ['front', 'side', 'back'];
+  var stills = {};        // '풀/면' → { img, ok, fail }
+  function stillBase() { return C().stillBase || 'assets/web2d/moving/'; }
+  function isStill(pool) { var s = C().still; return !!(s && s[pool]); }
+  function getStill(pool, view) {
+    var key = pool + '/' + view, e = stills[key];
+    if (e) { return e; }
+    e = stills[key] = { img: null, ok: false, fail: false };
+    if (!global.Image) { e.fail = true; return e; }
+    var im = new global.Image();
+    im.onload = function () { e.ok = true; };
+    im.onerror = function () { e.fail = true; };
+    im.src = stillBase() + pool + '/' + view + '.webp';
+    e.img = im;
+    return e;
+  }
+  /** 동작·시각 → 몸짓 { dx(몸 높이 비율·앞으로), dy(위로 −), rot(라디안), sx, sy, alpha } — 순수 함수 */
+  function stillPose(clip, ms) {
+    var p = { dx: 0, dy: 0, rot: 0, sx: 1, sy: 1, alpha: 1 }, t = Math.max(0, ms || 0), a, k;
+    if (clip === 'walk') {
+      a = t / 1000 * Math.PI * 2 * 2.2; k = Math.abs(Math.sin(a));
+      p.dy = -0.035 * k; p.rot = Math.sin(a) * 0.05; p.sy = 1 + 0.02 * k; p.sx = 1 - 0.015 * k;
+    } else if (clip === 'attack') {
+      k = Math.sin(Math.min(1, t / 450) * Math.PI);
+      p.dx = 0.14 * k; p.rot = 0.12 * k; p.sx = 1 + 0.06 * k; p.sy = 1 - 0.05 * k;
+    } else if (clip === 'hit') {
+      k = Math.min(1, t / 400);
+      p.dx = Math.sin(k * 30) * 0.03 * (1 - k); p.alpha = 0.6 + 0.4 * Math.abs(Math.cos(k * 18));
+    } else if (clip === 'death') {
+      k = Math.min(1, t / 800);
+      p.rot = 1.45 * k; p.dy = 0.02 * k; p.alpha = 1 - 0.6 * k;
+    } else {
+      a = Math.sin(t / 1000 * Math.PI * 2 * 0.8);
+      p.sy = 1 + 0.015 * a; p.sx = 1 - 0.008 * a;
+    }
+    return p;
+  }
+  /** o = draw 와 같다({ pool, clip, facing, ms, x, y(발 밑 가운데), scale, alpha }). 몸 높이 = targetH × scale. 그림이 없으면 false */
+  function drawStill(ctx, o) {
+    var d = dirOf(o.facing), e = getStill(o.pool, SVIEW[d.row]);
+    if (e.fail && d.row !== 1) { e = getStill(o.pool, 'side'); }
+    if (!e.ok) { return false; }
+    var cf = C(), bodyH = (cf.targetH || 62) * (o.scale || 1), sc = bodyH / SBODY, w = SPX * sc, h = SPX * sc;
+    var ps = stillPose(o.clip || 'idle', o.ms || 0);
+    ctx.save();
+    ctx.globalAlpha = (o.alpha !== undefined ? o.alpha : 1) * ps.alpha;
+    ctx.imageSmoothingEnabled = true;
+    ctx.translate(o.x, o.y);                         // 발 밑 가운데가 원점
+    if (d.flip) { ctx.scale(-1, 1); }
+    ctx.translate(ps.dx * bodyH, ps.dy * bodyH);
+    ctx.rotate(ps.rot);
+    ctx.scale(ps.sx, ps.sy);
+    ctx.drawImage(e.img, -w / 2, -h * SFOOT, w, h);
     ctx.restore();
     return true;
   }
@@ -262,6 +322,8 @@
     FRAMES: FRAMES, PX: PX, FPS: FPS,
     isOn: isOn, pick: pick, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex,
+    drawStill: drawStill, stillPose: stillPose, isStill: isStill,
+    stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },
     /** 진단용 — 그 풀·동작 이미지를 받았나(true/false), 아직 안 불렀으면 null */
     loaded: function (pool, clip) { var e = imgs[pool + '/' + clip]; return e ? e.ok : null; },
     failed: function (pool, clip) { var e = imgs[pool + '/' + clip]; return e ? e.fail : null; }

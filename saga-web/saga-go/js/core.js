@@ -481,7 +481,8 @@
     /** 2D 모드인가 — 3D 장면이 안 서 있을 때(평면·2.5D 캔버스) */
     on: function () { var W3 = global.DG.world3d; return !(W3 && W3.active && W3.active()); },
     poolH: { pool_f_human_139: 91, pool_g_human_147: 89, pool_e_demon_128: 86, pool_e_undead_127: 79 },   // 프레임 안 몸 높이(px, pw-sheet-bbox.mjs 로 잼)
-    pools: { human: ['pool_f_human_139', 'pool_g_human_147'] }
+    still: { villager_a: 1, villager_b: 1, villager_c: 1 },   // 한 장 모드 풀(W-0032, K-0056 정면·옆·뒤 3장)
+    pools: { human: ['villager_a', 'villager_b', 'villager_c'] }
   };
 })(window);
 

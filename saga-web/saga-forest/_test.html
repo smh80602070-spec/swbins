@@ -6602,8 +6602,19 @@ window.DG_NO_TUNE = true;
       var M = DG.mode2d, a = M.pick('adult', 'npc_merchant'), b = M.pick('adult', 'npc_merchant'), none = M.pick('beast', '들개'), kid = M.pick('kid', 'npc_child');
       var pools = DG.cfg.mode2d.pools, all = [];
       Object.keys(pools).forEach(function (k) { pools[k].forEach(function (p) { all.push(p); }); });
-      var known = all.every(function (p) { return DG.cfg.mode2d.poolH[p] > 0; });   // 쓰는 풀마다 몸 높이가 적혀 있다
+      var known = all.every(function (p) { return DG.cfg.mode2d.poolH[p] > 0 || (DG.cfg.mode2d.still && DG.cfg.mode2d.still[p]); });   // 쓰는 풀마다 몸 높이(시트) 또는 한 장 모드 표시가 있다
       return a === b && !!a && none === null && !!kid && known && ('npc_merchant → ' + a + ' · 아이 → ' + kid + ' · 풀 ' + all.length + '칸 몸 높이 적힘');
+    });
+
+    t('2D 한 장 모드 — 몸짓(순수 함수): 숨쉬기는 부드럽고, 걸음은 위로 통통, 공격은 앞으로 내밀고, 쓰러짐은 눕고 옅어진다. 한 장 풀은 isStill, 없는 풀은 아니다(W-0032)', function () {
+      var M = DG.mode2d, i0 = M.stillPose('idle', 0), w = M.stillPose('walk', 1000 / 2.2 / 4), a = M.stillPose('attack', 225), d = M.stillPose('death', 99999), h = M.stillPose('hit', 100);
+      var okIdle = i0.dy === 0 && i0.sy === 1 && Math.abs(M.stillPose('idle', 300).sy - 1) < 0.02;
+      var okWalk = w.dy < 0 && Math.abs(w.rot) > 0.02;
+      var okAtk = a.dx > 0.1 && M.stillPose('attack', 0).dx === 0 && M.stillPose('attack', 99999).dx < 0.001;
+      var okDeath = d.rot > 1.4 && d.alpha < 0.5 && h.alpha < 1;
+      var cfg = DG.cfg.mode2d, st = Object.keys(cfg.still || {}), first = st[0];
+      var okPool = !!first && M.isStill(first) && !M.isStill('pool_none_000');
+      return okIdle && okWalk && okAtk && okDeath && okPool && ('숨쉬기 ' + okIdle + ' · 걸음 ' + okWalk + ' · 공격 ' + okAtk + ' · 쓰러짐 ' + okDeath + ' · 한 장 풀 ' + st.length + '개');
     });
 
     t('2D 시트 — 방향: 옆모습은 오른쪽이 기준이고 왼쪽은 좌우 뒤집기, 정면·뒤는 뒤집지 않는다', function () {
