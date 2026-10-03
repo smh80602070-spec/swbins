@@ -2,7 +2,7 @@
 
   blender -b --factory-startup -P tools/world-forge/region_hero.py -- <지역> <출력.png> [샘플=48]
 
-지역: galaxy_ferry(은하 나루: 별밤 물가·등롱·돛단배)
+지역: galaxy_ferry(은하 나루: 별밤 물가·등롱·돛단배) · frost_peak(서리봉 고원: 오로라·눈 소나무·횃불 길·제단)
 조각은 saga-assets/world/toon/*.glb(툰 GLB, K-0017)를 그대로 쓴다. 이 장면은 게임 장면이 아니라 방향을 정하는 시안 — 마음에 들면 각 트랙이 같은 구도·조명 값으로 엔진 안에서 다시 짠다.
 """
 import bpy
@@ -478,7 +478,205 @@ def galaxy_ferry():
     camera((-19.0, -13.0, 2.6), (5.0, 24, 6.0), lens=24)
 
 
-{'galaxy_ferry': galaxy_ferry}[REGION]()
+def aurora_sky():
+    w = bpy.data.worlds.new('aurora')
+    sc.world = w
+    w.use_nodes = True
+    nt = w.node_tree
+    nt.nodes.clear()
+    out = nt.nodes.new('ShaderNodeOutputWorld')
+    bg = nt.nodes.new('ShaderNodeBackground')
+    tc = nt.nodes.new('ShaderNodeTexCoord')
+    sep = nt.nodes.new('ShaderNodeSeparateXYZ')
+    nt.links.new(tc.outputs['Generated'], sep.inputs[0])
+    ramp = nt.nodes.new('ShaderNodeValToRGB')       # 지평선 장밋빛 -> 남색
+    ramp.color_ramp.elements[0].position, ramp.color_ramp.elements[1].position = 0.45, 0.9
+    ramp.color_ramp.elements[0].color = (0.17, 0.09, 0.2, 1)
+    ramp.color_ramp.elements[1].color = (0.006, 0.012, 0.05, 1)
+    nt.links.new(sep.outputs['Z'], ramp.inputs['Fac'])
+    vor = nt.nodes.new('ShaderNodeTexVoronoi')
+    vor.inputs['Scale'].default_value = 240
+    nt.links.new(tc.outputs['Generated'], vor.inputs['Vector'])
+    star = nt.nodes.new('ShaderNodeMath')
+    star.operation = 'LESS_THAN'
+    nt.links.new(vor.outputs['Distance'], star.inputs[0])
+    star.inputs[1].default_value = 0.03
+    sm = nt.nodes.new('ShaderNodeMath')
+    sm.operation = 'MULTIPLY'
+    sm.inputs[1].default_value = 5.0
+    nt.links.new(star.outputs[0], sm.inputs[0])
+    # 오로라 장막: 세로로 긴 잡음 줄기 x 높이 대역
+    mp = nt.nodes.new('ShaderNodeMapping')
+    mp.inputs['Scale'].default_value = (4.5, 1.6, 0.45)
+    nt.links.new(tc.outputs['Generated'], mp.inputs['Vector'])
+    noi = nt.nodes.new('ShaderNodeTexNoise')
+    noi.inputs['Detail'].default_value = 5.0
+    noi.inputs['Distortion'].default_value = 0.4
+    nt.links.new(mp.outputs[0], noi.inputs['Vector'])
+    st = nt.nodes.new('ShaderNodeMapRange')
+    st.inputs['From Min'].default_value, st.inputs['From Max'].default_value = 0.46, 0.72
+    st.clamp = True
+    nt.links.new(noi.outputs['Fac'], st.inputs['Value'])
+    band = nt.nodes.new('ShaderNodeMapRange')
+    band.inputs['From Min'].default_value, band.inputs['From Max'].default_value = 0.52, 0.62
+    band.clamp = True
+    nt.links.new(sep.outputs['Z'], band.inputs['Value'])
+    band2 = nt.nodes.new('ShaderNodeMapRange')
+    band2.inputs['From Min'].default_value, band2.inputs['From Max'].default_value = 0.92, 0.70
+    band2.clamp = True
+    nt.links.new(sep.outputs['Z'], band2.inputs['Value'])
+    m1 = nt.nodes.new('ShaderNodeMath')
+    m1.operation = 'MULTIPLY'
+    nt.links.new(band.outputs[0], m1.inputs[0])
+    nt.links.new(band2.outputs[0], m1.inputs[1])
+    m2 = nt.nodes.new('ShaderNodeMath')
+    m2.operation = 'MULTIPLY'
+    nt.links.new(m1.outputs[0], m2.inputs[0])
+    nt.links.new(st.outputs[0], m2.inputs[1])
+    col = nt.nodes.new('ShaderNodeValToRGB')        # 아래 초록 -> 위 자주
+    col.color_ramp.elements[0].position, col.color_ramp.elements[1].position = 0.55, 0.85
+    col.color_ramp.elements[0].color = (0.08, 0.9, 0.38, 1)
+    col.color_ramp.elements[1].color = (0.45, 0.2, 0.85, 1)
+    nt.links.new(sep.outputs['Z'], col.inputs['Fac'])
+    cm = nt.nodes.new('ShaderNodeMixRGB')
+    cm.blend_type = 'MULTIPLY'
+    cm.inputs['Fac'].default_value = 1.0
+    nt.links.new(col.outputs[0], cm.inputs['Color1'])
+    nt.links.new(m2.outputs[0], cm.inputs['Color2'])
+    a1 = nt.nodes.new('ShaderNodeMixRGB')
+    a1.blend_type = 'ADD'
+    a1.inputs['Fac'].default_value = 1.0
+    nt.links.new(ramp.outputs[0], a1.inputs['Color1'])
+    nt.links.new(cm.outputs[0], a1.inputs['Color2'])
+    a2 = nt.nodes.new('ShaderNodeMixRGB')
+    a2.blend_type = 'ADD'
+    a2.inputs['Fac'].default_value = 1.0
+    nt.links.new(a1.outputs[0], a2.inputs['Color1'])
+    nt.links.new(sm.outputs[0], a2.inputs['Color2'])
+    nt.links.new(a2.outputs[0], bg.inputs['Color'])
+    bg.inputs['Strength'].default_value = 1.0
+    nt.links.new(bg.outputs[0], out.inputs[0])
+
+
+def snow_terrain():
+    import bmesh
+    me = bpy.data.meshes.new('snowfield')
+    o = bpy.data.objects.new('snow_ground', me)
+    sc.collection.objects.link(o)
+    bm = bmesh.new()
+    n, size = 180, 220.0
+    ph = [rng.uniform(0, 6.28) for _ in range(6)]
+    vs = []
+    for j in range(n + 1):
+        row = []
+        for i in range(n + 1):
+            x, y = (i / n - 0.5) * size, (j / n - 0.22) * size
+            roll = 0.55 * math.sin(x * 0.08 + ph[0]) + 0.35 * math.sin(y * 0.11 + ph[1]) + 0.18 * math.sin(x * 0.31 + y * 0.17 + ph[2])
+            rise = max(0, y - 78) ** 1.2 * 0.17 * (1 + 0.55 * math.sin(x * 0.045 + ph[3]) + 0.35 * math.sin(x * 0.12 + ph[4]))
+            side = max(0, abs(x) - 38) * 0.22 * (1 + 0.4 * math.sin(y * 0.07 + ph[5]))
+            trail = -0.25 * math.exp(-((x - 0.8 * math.sin(y * 0.05)) / 3.0) ** 2) if y > 0 else 0
+            row.append(bm.verts.new((x, y, roll + rise + side + trail)))
+        vs.append(row)
+    for j in range(n):
+        for i in range(n):
+            bm.faces.new((vs[j][i], vs[j][i + 1], vs[j + 1][i + 1], vs[j + 1][i]))
+    bm.to_mesh(me)
+    bm.free()
+    for p_ in me.polygons:
+        p_.use_smooth = True
+    o.data.materials.append(mat_simple('snow', (0.42, 0.52, 0.72, 1), 0.55))
+    return o
+
+
+def snow_pine(x, y, z, s):
+    g = mat_simple('pine_g', (0.01, 0.045, 0.035, 1), 0.95)
+    w = mat_simple('snowcap', (0.78, 0.85, 0.97, 1), 0.6)
+    for r, h, dz in ((1.5, 2.6, 1.0), (1.15, 2.3, 2.3), (0.75, 2.0, 3.5)):
+        bpy.ops.mesh.primitive_cone_add(vertices=7, radius1=r * s, radius2=0.0, depth=h * s, location=(x, y, z + dz * s))
+        bpy.context.object.data.materials.append(g)
+        bpy.ops.mesh.primitive_cone_add(vertices=7, radius1=r * s * 1.04, radius2=0.0, depth=h * s * 0.62, location=(x, y, z + (dz + h * 0.22) * s))
+        bpy.context.object.data.materials.append(w)
+    bpy.ops.mesh.primitive_cylinder_add(vertices=6, radius=0.18 * s, depth=1.4 * s, location=(x, y, z + 0.5 * s))
+    bpy.context.object.data.materials.append(g)
+
+
+def snowfall(n):
+    m = mat_simple('flake', (1, 1, 1, 1), 0.5, (0.9, 0.95, 1.0, 1), 6.0)
+    for _ in range(n):
+        x, y, z = rng.uniform(-14, 14), rng.uniform(-10, 40), rng.uniform(0.3, 9)
+        bpy.ops.mesh.primitive_uv_sphere_add(radius=rng.uniform(0.012, 0.03) * (1 + y / 40), segments=6, ring_count=4, location=(x, y, z))
+        bpy.context.object.data.materials.append(m)
+
+
+def frost_peak():
+    aurora_sky()
+    snow_terrain()
+    bpy.context.view_layer.update()
+    for i in range(9):                                  # 횃불 길
+        y = -3 + i * 5.2
+        cx = 0.8 * math.sin(y * 0.05)
+        for sx in (-3.4, 3.4):
+            x = cx + sx
+            z = ground_z(x, y)
+            if z is None:
+                continue
+            h, objs = place('torch_stand_01', (x, y, z), rot=rng.uniform(0, 6.28), scale=1.3)
+            emissive(objs, (1.0, 0.4, 0.1, 1), 1.5)
+            point((x, y, z + 2.2), (1.0, 0.5, 0.2), 140, 0.3)
+    z = ground_z(1.2, 43)                               # 길 끝 제단·비석·깃발
+    h, objs = place('altar_01', (1.2, 43, z - 0.05), rot=0.0, scale=1.8)
+    emissive(objs, (0.55, 0.8, 1.0, 1), 1.2)
+    point((1.2, 41, z + 3.0), (0.55, 0.8, 1.0), 400, 0.6)
+    for sx in (-7, 8):
+        z = ground_z(sx, 40)
+        if z is not None:
+            place('stele_01', (sx, 40, z - 0.05), rot=rng.uniform(-0.3, 0.3), scale=1.6)
+    for sx in (-5.5, 6.0):
+        z = ground_z(sx, 36)
+        if z is not None:
+            place('banner_pole_01', (sx, 36, z - 0.05), rot=0.0, scale=1.5)
+    c = 0                                               # 눈 덮인 소나무 숲
+    for _ in range(9000):
+        x, y = rng.uniform(-48, 48), rng.uniform(8, 78)
+        if abs(x - 0.8 * math.sin(y * 0.05)) < 7.5:
+            continue
+        z = ground_z(x, y)
+        if z is None:
+            continue
+        snow_pine(x, y, z - 0.1, rng.uniform(1.0, 2.3))
+        c += 1
+        if c >= 150:
+            break
+    for _ in range(14):
+        x, y = rng.uniform(-20, 20), rng.uniform(-8, 24)
+        if abs(x - 0.8 * math.sin(y * 0.05)) < 4.5:
+            continue
+        z = ground_z(x, y)
+        if z is not None:
+            rock(x, y, z - 0.1, rng.uniform(0.5, 1.4))
+    snowfall(260)
+    sun = bpy.data.lights.new('moon', 'SUN')
+    sun.energy, sun.color, sun.angle = 2.2, (0.6, 0.75, 1.0), 0.04
+    so = bpy.data.objects.new('moon', sun)
+    so.rotation_euler = (math.radians(-60), 0, math.radians(35))
+    sc.collection.objects.link(so)
+    bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 35, 5.0))
+    v = bpy.context.object
+    v.scale = (110, 100, 10)
+    vm = bpy.data.materials.new('fog')
+    vm.use_nodes = True
+    nt = vm.node_tree
+    nt.nodes.clear()
+    ov = nt.nodes.new('ShaderNodeOutputMaterial')
+    vs = nt.nodes.new('ShaderNodeVolumePrincipled')
+    vs.inputs['Density'].default_value = 0.0035
+    vs.inputs['Color'].default_value = (0.6, 0.75, 1.0, 1)
+    nt.links.new(vs.outputs[0], ov.inputs['Volume'])
+    v.data.materials.append(vm)
+    camera((2.2, -11.0, 1.9), (0.5, 40, 21.0), lens=22)
+
+
+{'galaxy_ferry': galaxy_ferry, 'frost_peak': frost_peak}[REGION]()
 sc.render.filepath = OUT
 sc.render.image_settings.file_format = 'PNG'
 bpy.ops.render.render(write_still=True)
