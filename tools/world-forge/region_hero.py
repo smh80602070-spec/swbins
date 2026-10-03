@@ -2,7 +2,7 @@
 
   blender -b --factory-startup -P tools/world-forge/region_hero.py -- <지역> <출력.png> [샘플=48]
 
-지역: galaxy_ferry(은하 나루: 별밤 물가·등롱·돛단배) · frost_peak(서리봉 고원: 오로라·눈 소나무·횃불 길·제단)
+지역: galaxy_ferry(은하 나루: 별밤 물가·등롱·돛단배) · frost_peak(서리봉 고원: 오로라·눈 소나무·횃불 길·제단) · time_rift(시간 틈 관측소: 떠 있는 섬·시간 고리·하늘의 균열·구름바다)
 조각은 saga-assets/world/toon/*.glb(툰 GLB, K-0017)를 그대로 쓴다. 이 장면은 게임 장면이 아니라 방향을 정하는 시안 — 마음에 들면 각 트랙이 같은 구도·조명 값으로 엔진 안에서 다시 짠다.
 """
 import bpy
@@ -676,7 +676,160 @@ def frost_peak():
     camera((2.2, -11.0, 1.9), (0.5, 40, 21.0), lens=22)
 
 
-{'galaxy_ferry': galaxy_ferry, 'frost_peak': frost_peak}[REGION]()
+def rift_sky():
+    w = bpy.data.worlds.new('riftsky')
+    sc.world = w
+    w.use_nodes = True
+    nt = w.node_tree
+    nt.nodes.clear()
+    out = nt.nodes.new('ShaderNodeOutputWorld')
+    bg = nt.nodes.new('ShaderNodeBackground')
+    tc = nt.nodes.new('ShaderNodeTexCoord')
+    sep = nt.nodes.new('ShaderNodeSeparateXYZ')
+    nt.links.new(tc.outputs['Generated'], sep.inputs[0])
+    ramp = nt.nodes.new('ShaderNodeValToRGB')       # 지평선 황금 -> 청록 -> 짙은 보라
+    ramp.color_ramp.elements[0].position, ramp.color_ramp.elements[1].position = 0.40, 0.88
+    ramp.color_ramp.elements[0].color = (0.95, 0.42, 0.18, 1)
+    ramp.color_ramp.elements[1].color = (0.02, 0.015, 0.12, 1)
+    mid = ramp.color_ramp.elements.new(0.62)
+    mid.color = (0.06, 0.22, 0.4, 1)
+    nt.links.new(sep.outputs['Z'], ramp.inputs['Fac'])
+    vor = nt.nodes.new('ShaderNodeTexVoronoi')
+    vor.inputs['Scale'].default_value = 200
+    nt.links.new(tc.outputs['Generated'], vor.inputs['Vector'])
+    star = nt.nodes.new('ShaderNodeMath')
+    star.operation = 'LESS_THAN'
+    nt.links.new(vor.outputs['Distance'], star.inputs[0])
+    star.inputs[1].default_value = 0.025
+    sm = nt.nodes.new('ShaderNodeMath')
+    sm.operation = 'MULTIPLY'
+    sm.inputs[1].default_value = 3.0
+    nt.links.new(star.outputs[0], sm.inputs[0])
+    add = nt.nodes.new('ShaderNodeMixRGB')
+    add.blend_type = 'ADD'
+    add.inputs['Fac'].default_value = 1.0
+    nt.links.new(ramp.outputs[0], add.inputs['Color1'])
+    nt.links.new(sm.outputs[0], add.inputs['Color2'])
+    nt.links.new(add.outputs[0], bg.inputs['Color'])
+    bg.inputs['Strength'].default_value = 0.75
+    nt.links.new(bg.outputs[0], out.inputs[0])
+
+
+def floating_island(cx, cy, cz, R, depth, seed, top_mat, rock_mat):
+    import bmesh
+    r2 = random.Random(seed)
+    me = bpy.data.meshes.new('isl')
+    o = bpy.data.objects.new('isl', me)
+    sc.collection.objects.link(o)
+    bm = bmesh.new()
+    bmesh.ops.create_icosphere(bm, subdivisions=4, radius=1.0)
+    ph = [r2.uniform(0, 6.28) for _ in range(4)]
+    for v in bm.verts:
+        x, y, z = v.co
+        jag = 1 + 0.28 * math.sin(x * 4.1 + ph[0]) * math.sin(y * 3.7 + ph[1]) + 0.2 * math.sin(z * 5.3 + ph[2] + x * 2)
+        if z > 0.0:
+            v.co = (x * R, y * R, 0.0 + 0.06 * R * math.sin(x * 5 + ph[3]) * (1 - z))
+        else:
+            k = (1 + z)
+            v.co = (x * R * jag * (0.55 + 0.45 * k), y * R * jag * (0.55 + 0.45 * k), z * depth * jag)
+    bm.to_mesh(me)
+    bm.free()
+    for p_ in me.polygons:
+        p_.use_smooth = False
+    me.materials.append(rock_mat)
+    me.materials.append(top_mat)
+    for p_ in me.polygons:
+        if p_.normal.z > 0.8:
+            p_.material_index = 1
+    o.location = (cx, cy, cz)
+    return o
+
+
+def ring(loc, major, minor, rot, color, strength):
+    bpy.ops.mesh.primitive_torus_add(location=loc, major_radius=major, minor_radius=minor, major_segments=72, minor_segments=10)
+    t = bpy.context.object
+    t.rotation_euler = rot
+    t.data.materials.append(mat_simple('ring%d' % int(strength * 10), (0.05, 0.05, 0.05, 1), 0.4, color, strength))
+    return t
+
+
+def time_rift():
+    rift_sky()
+    rock_mat = mat_simple('isl_rock', (0.07, 0.06, 0.07, 1), 0.9)
+    top_mat = mat_simple('isl_top', (0.08, 0.16, 0.12, 1), 0.85)
+    plat_mat = mat_simple('plat', (0.18, 0.17, 0.2, 1), 0.7)
+    # 중앙 섬: 관측소 탑과 돔
+    floating_island(0, 0, 0, 16, 11, 3, top_mat, rock_mat)
+    bpy.ops.mesh.primitive_cylinder_add(vertices=40, radius=9.5, depth=0.5, location=(0, 0, 0.2))
+    bpy.context.object.data.materials.append(plat_mat)
+    h, objs = place('stone_tower_01', (0, 0, 0.4), rot=0.3, scale=1.1)
+    emissive(objs, (0.4, 0.9, 1.0, 1), 0.25)
+    h, objs = place('future_dome_01', (-9.5, 3.5, 0.4), rot=0.8, scale=0.9)
+    emissive(objs, (0.4, 0.9, 1.0, 1), 0.35)
+    # 시간 기둥: 빛나는 비석이 원을 이룬다
+    for i in range(8):
+        a = i / 8 * 6.2832 + 0.2
+        x, y = 12.2 * math.cos(a), 12.2 * math.sin(a)
+        h, objs = place('stele_01', (x, y, 0.0), rot=a, scale=1.7)
+        emissive(objs, (0.3, 0.85, 1.0, 1), 2.0)
+        point((x, y, 2.2), (0.3, 0.8, 1.0), 160, 0.4)
+    # 탑을 도는 시간 고리(자이로)
+    ring((0, 0, 14), 11.5, 0.16, (1.2, 0.2, 0.0), (1.0, 0.75, 0.3, 1), 2.2)
+    ring((0, 0, 14), 13.5, 0.12, (0.35, 1.1, 0.4), (0.4, 0.9, 1.0, 1), 2.2)
+    ring((0, 0, 14), 9.5, 0.1, (-0.6, 0.5, 1.0), (1.0, 0.75, 0.3, 1), 1.8)
+    # 떠다니는 섬과 돌조각
+    for k, (x, y, z, R) in enumerate(((-38, 30, 4, 7), (34, 40, 10, 9), (20, -30, -3, 5), (-22, -34, 6, 6), (55, 10, 14, 8))):
+        isl = floating_island(x, y, z, R, R * 0.8, 10 + k, top_mat, rock_mat)
+        point((x, y, z + 3), (1.0, 0.7, 0.4), 120, 0.5)
+        if k % 2 == 0:
+            place('stone_lantern_01', (x, y, z + 0.1), rot=0.4, scale=1.3)
+            point((x, y, z + 2.0), (1.0, 0.65, 0.3), 90, 0.2)
+    for _ in range(36):
+        a = rng.uniform(0, 6.28)
+        d = rng.uniform(18, 60)
+        rock(d * math.cos(a), d * math.sin(a), rng.uniform(-6, 24), rng.uniform(0.5, 1.8))
+    # 하늘의 균열: 먼 고리 두 겹과 빛
+    ring((-10, 220, 70), 52, 1.6, (1.45, 0.0, 0.25), (0.45, 0.95, 1.0, 1), 3.5)
+    ring((-10, 222, 70), 38, 0.9, (1.45, 0.0, 0.25), (1.0, 0.8, 0.45, 1), 2.5)
+    point((-10, 200, 70), (0.45, 0.9, 1.0), 4000, 20)
+    # 구름바다: 낮게 깔린 두꺼운 안개 + 황금빛 구름 층
+    bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 40, -22))
+    v = bpy.context.object
+    v.scale = (400, 400, 20)
+    vm = bpy.data.materials.new('clouds')
+    vm.use_nodes = True
+    nt = vm.node_tree
+    nt.nodes.clear()
+    ov = nt.nodes.new('ShaderNodeOutputMaterial')
+    vs = nt.nodes.new('ShaderNodeVolumePrincipled')
+    vs.inputs['Density'].default_value = 0.035
+    vs.inputs['Color'].default_value = (1.0, 0.78, 0.62, 1)
+    vs.inputs['Emission Strength'].default_value = 0.05
+    vs.inputs['Emission Color'].default_value = (1.0, 0.6, 0.4, 1)
+    nt.links.new(vs.outputs[0], ov.inputs['Volume'])
+    v.data.materials.append(vm)
+    bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 20, 10))
+    v2 = bpy.context.object
+    v2.scale = (200, 160, 40)
+    fm = bpy.data.materials.new('fog2')
+    fm.use_nodes = True
+    nt = fm.node_tree
+    nt.nodes.clear()
+    ov = nt.nodes.new('ShaderNodeOutputMaterial')
+    vs = nt.nodes.new('ShaderNodeVolumePrincipled')
+    vs.inputs["Density"].default_value = 0.0002
+    vs.inputs['Color'].default_value = (0.8, 0.85, 1.0, 1)
+    nt.links.new(vs.outputs[0], ov.inputs['Volume'])
+    v2.data.materials.append(fm)
+    sun = bpy.data.lights.new('sun', 'SUN')
+    sun.energy, sun.color, sun.angle = 2.6, (1.0, 0.68, 0.38), 0.03
+    so = bpy.data.objects.new('sun', sun)
+    so.rotation_euler = (math.radians(80), 0, math.radians(-55))
+    sc.collection.objects.link(so)
+    camera((-26.0, -62.0, 5.0), (0.0, 6.0, 19.0), lens=24)
+
+
+{'galaxy_ferry': galaxy_ferry, 'frost_peak': frost_peak, 'time_rift': time_rift}[REGION]()
 sc.render.filepath = OUT
 sc.render.image_settings.file_format = 'PNG'
 bpy.ops.render.render(write_still=True)
