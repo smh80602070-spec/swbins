@@ -1,29 +1,121 @@
 {
  "license": "CC0-1.0 (Poly Haven, https://polyhaven.com/license)",
  "items": {
-  "beam_wall_01": {"role": "wall_timber", "res": "2k"},
-  "beige_wall_001": {"role": "wall_plaster", "res": "2k"},
-  "white_stucco": {"role": "wall_plaster_white", "res": "2k"},
-  "clay_plaster": {"role": "wall_clay", "res": "2k"},
-  "castle_brick_02_red": {"role": "wall_brick_red", "res": "2k"},
-  "castle_wall_slates": {"role": "wall_stone", "res": "2k"},
-  "japanese_stone_wall": {"role": "wall_stone_east", "res": "2k"},
-  "concrete_wall_001": {"role": "wall_concrete", "res": "2k"},
-  "grey_plaster": {"role": "wall_plaster_grey", "res": "2k"},
-  "brown_planks_03": {"role": "wood_plank", "res": "2k"},
-  "black_painted_planks": {"role": "wood_dark", "res": "2k"},
-  "coated_pine": {"role": "wood_clean", "res": "2k"},
-  "clay_roof_tiles": {"role": "roof_tile_red", "res": "2k"},
-  "grey_roof_tiles": {"role": "roof_tile_grey", "res": "2k"},
-  "thatch_roof_angled": {"role": "roof_thatch", "res": "2k"},
-  "roof_slates_02": {"role": "roof_slate", "res": "2k"},
-  "corrugated_iron": {"role": "roof_metal", "res": "2k"},
-  "bitumen": {"role": "roof_flat", "res": "2k"},
-  "cobblestone_floor_01": {"role": "ground_cobble", "res": "2k"},
-  "brown_mud": {"role": "ground_mud", "res": "2k"},
-  "aerial_grass_rock": {"role": "terrain_grass_rock", "res": "2k"},
-  "coast_sand_03": {"role": "terrain_sand", "res": "2k"},
-  "dry_ground_01": {"role": "terrain_dry", "res": "2k"},
-  "forest_ground_04": {"role": "terrain_forest", "res": "2k"}
+  "beam_wall_01": {
+   "role": "wall_timber",
+   "res": "2k"
+  },
+  "beige_wall_001": {
+   "role": "wall_plaster",
+   "res": "2k"
+  },
+  "white_stucco": {
+   "role": "wall_plaster_white",
+   "res": "2k"
+  },
+  "clay_plaster": {
+   "role": "wall_clay",
+   "res": "2k"
+  },
+  "castle_brick_02_red": {
+   "role": "wall_brick_red",
+   "res": "2k"
+  },
+  "castle_wall_slates": {
+   "role": "wall_stone",
+   "res": "2k"
+  },
+  "japanese_stone_wall": {
+   "role": "wall_stone_east",
+   "res": "2k"
+  },
+  "concrete_wall_001": {
+   "role": "wall_concrete",
+   "res": "2k"
+  },
+  "grey_plaster": {
+   "role": "wall_plaster_grey",
+   "res": "2k"
+  },
+  "brown_planks_03": {
+   "role": "wood_plank",
+   "res": "2k"
+  },
+  "black_painted_planks": {
+   "role": "wood_dark",
+   "res": "2k"
+  },
+  "coated_pine": {
+   "role": "wood_clean",
+   "res": "2k"
+  },
+  "clay_roof_tiles": {
+   "role": "roof_tile_red",
+   "res": "2k"
+  },
+  "grey_roof_tiles": {
+   "role": "roof_tile_grey",
+   "res": "2k"
+  },
+  "thatch_roof_angled": {
+   "role": "roof_thatch",
+   "res": "2k"
+  },
+  "roof_slates_02": {
+   "role": "roof_slate",
+   "res": "2k"
+  },
+  "corrugated_iron": {
+   "role": "roof_metal",
+   "res": "2k"
+  },
+  "bitumen": {
+   "role": "roof_flat",
+   "res": "2k"
+  },
+  "cobblestone_floor_01": {
+   "role": "ground_cobble",
+   "res": "2k"
+  },
+  "brown_mud": {
+   "role": "ground_mud",
+   "res": "2k"
+  },
+  "aerial_grass_rock": {
+   "role": "terrain_grass_rock",
+   "res": "2k"
+  },
+  "coast_sand_03": {
+   "role": "terrain_sand",
+   "res": "2k"
+  },
+  "dry_ground_01": {
+   "role": "terrain_dry",
+   "res": "2k"
+  },
+  "forest_ground_04": {
+   "role": "terrain_forest",
+   "res": "2k"
+  },
+  "snow_02": {
+   "role": "ground_snow",
+   "res": "2k"
+  },
+  "cliff_side": {
+   "role": "mountain_rock",
+   "res": "2k"
+  },
+  "aerial_rocks_02": {
+   "role": "ground_rock",
+   "res": "2k"
+  },
+  "coast_sand_rocks_02": {
+   "role": "shore_sand_rock",
+   "res": "2k"
+  },
+  "clean_pebbles": {
+   "role": "road_pebbles",
+   "res": "2k"
+  }
  }
 }

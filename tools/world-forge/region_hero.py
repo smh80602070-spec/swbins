@@ -95,7 +95,8 @@ def pbr_mat(tid, tile=4.0, tint=None, rough_mul=1.0, name=None):
 
 def place(name, loc, rot=0.0, scale=1.0, real=False):
     before = set(bpy.data.objects.keys())
-    bpy.ops.import_scene.gltf(filepath=os.path.join(REAL if real else TOON, name + '.glb'))
+    src_dir = REAL if (real and os.path.exists(os.path.join(REAL, name + '.glb'))) else TOON
+    bpy.ops.import_scene.gltf(filepath=os.path.join(src_dir, name + '.glb'))
     new = [o for o in bpy.data.objects if o.name not in before]
     top = [o for o in new if o.parent is None]
     holder = bpy.data.objects.new(name + '_h', None)
@@ -311,6 +312,9 @@ def lake_terrain():
     bm.free()
     for p_ in me.polygons:
         p_.use_smooth = True
+    if PBR:
+        o.data.materials.append(pbr_blend('aerial_grass_rock', 'cliff_side', 3.0, 9.0, 0.30, 0.55, 5.0, 9.0, (0.45, 0.55, 0.75, 1), (0.55, 0.6, 0.8, 1), 'lake_ground'))
+        return o
     m = bpy.data.materials.new('ground')
     m.use_nodes = True
     nt = m.node_tree
@@ -371,6 +375,118 @@ def cone_mesh(name, specs, mat, sides=3):
     bm.to_mesh(me)
     bm.free()
     o = bpy.data.objects.new(name, me)
+    sc.collection.objects.link(o)
+    me.materials.append(mat)
+    return o
+
+
+def _bsdf_for(nt, tid, tile, tint, mapnode):
+    idx = _PHIDX[tid]
+    bs = nt.nodes.new('ShaderNodeBsdfPrincipled')
+    mp = nt.nodes.new('ShaderNodeMapping')
+    mp.inputs['Scale'].default_value = (1.0 / tile,) * 3
+    nt.links.new(mapnode, mp.inputs['Vector'])
+
+    def tex(kind, cs):
+        fn = idx.get(kind)
+        if not fn:
+            return None
+        n = nt.nodes.new('ShaderNodeTexImage')
+        n.image = bpy.data.images.load(os.path.join(PH, fn), check_existing=True)
+        n.image.colorspace_settings.name = cs
+        nt.links.new(mp.outputs[0], n.inputs['Vector'])
+        return n
+    d = tex('diff', 'sRGB')
+    if d is not None:
+        if tint:
+            mx = nt.nodes.new('ShaderNodeMix')
+            mx.data_type = 'RGBA'
+            mx.blend_type = 'MULTIPLY'
+            mx.inputs['Factor'].default_value = 1.0
+            mx.inputs['B'].default_value = tint
+            nt.links.new(d.outputs['Color'], mx.inputs['A'])
+            nt.links.new(mx.outputs['Result'], bs.inputs['Base Color'])
+        else:
+            nt.links.new(d.outputs['Color'], bs.inputs['Base Color'])
+    r = tex('rough', 'Non-Color')
+    if r is not None:
+        nt.links.new(r.outputs['Color'], bs.inputs['Roughness'])
+    nn = tex('nor', 'Non-Color')
+    if nn is not None:
+        nm = nt.nodes.new('ShaderNodeNormalMap')
+        nt.links.new(nn.outputs['Color'], nm.inputs['Color'])
+        nt.links.new(nm.outputs['Normal'], bs.inputs['Normal'])
+    return bs
+
+
+def pbr_blend(low, high, z0, z1, slope0=0.35, slope1=0.6, tile_lo=5.0, tile_hi=8.0, tint_lo=None, tint_hi=None, name='blend'):
+    """낮은 곳·평평한 곳 = low 재질, 높은 곳·가파른 곳 = high 재질. 높이(z0~z1)와 경사(slope0~slope1)가 섞음비를 정한다."""
+    global _PHIDX
+    if _PHIDX is None:
+        _PHIDX = _json.load(open(os.path.join(PH, 'index.json'), encoding='utf-8'))
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    nt = m.node_tree
+    nt.nodes.clear()
+    tc = nt.nodes.new('ShaderNodeTexCoord')
+    a = _bsdf_for(nt, low, tile_lo, tint_lo, tc.outputs['Object'])
+    c = _bsdf_for(nt, high, tile_hi, tint_hi, tc.outputs['Object'])
+    sep = nt.nodes.new('ShaderNodeSeparateXYZ')
+    nt.links.new(tc.outputs['Object'], sep.inputs[0])
+    hz = nt.nodes.new('ShaderNodeMapRange')
+    hz.inputs['From Min'].default_value, hz.inputs['From Max'].default_value = z0, z1
+    hz.clamp = True
+    nt.links.new(sep.outputs['Z'], hz.inputs['Value'])
+    geo = nt.nodes.new('ShaderNodeNewGeometry')
+    sepn = nt.nodes.new('ShaderNodeSeparateXYZ')
+    nt.links.new(geo.outputs['Normal'], sepn.inputs[0])
+    inv = nt.nodes.new('ShaderNodeMath')
+    inv.operation = 'SUBTRACT'
+    inv.inputs[0].default_value = 1.0
+    nt.links.new(sepn.outputs['Z'], inv.inputs[1])
+    sl = nt.nodes.new('ShaderNodeMapRange')
+    sl.inputs['From Min'].default_value, sl.inputs['From Max'].default_value = slope0, slope1
+    sl.clamp = True
+    nt.links.new(inv.outputs[0], sl.inputs['Value'])
+    mxf = nt.nodes.new('ShaderNodeMath')
+    mxf.operation = 'MAXIMUM'
+    nt.links.new(hz.outputs[0], mxf.inputs[0])
+    nt.links.new(sl.outputs[0], mxf.inputs[1])
+    ms = nt.nodes.new('ShaderNodeMixShader')
+    nt.links.new(mxf.outputs[0], ms.inputs[0])
+    nt.links.new(a.outputs[0], ms.inputs[1])
+    nt.links.new(c.outputs[0], ms.inputs[2])
+    out = nt.nodes.new('ShaderNodeOutputMaterial')
+    nt.links.new(ms.outputs[0], out.inputs['Surface'])
+    return m
+
+
+def road_mesh(p0, p1, width, mat, lift=0.05, step=1.5):
+    """지형을 따라 눕는 길 띠(직선 상자는 구불구불한 땅에서 둔덕처럼 뜬다)."""
+    import bmesh
+    dx, dy = p1[0] - p0[0], p1[1] - p0[1]
+    ln = math.hypot(dx, dy)
+    ux, uy = dx / ln, dy / ln
+    nx, ny = -uy, ux
+    me = bpy.data.meshes.new('road')
+    bm = bmesh.new()
+    prev = None
+    n = max(2, int(ln / step))
+    for i in range(n + 1):
+        t = ln * i / n
+        row = []
+        for s in (-width / 2, width / 2):
+            x, y = p0[0] + ux * t + nx * s, p0[1] + uy * t + ny * s
+            z = ground_z(x, y)
+            row.append(bm.verts.new((x, y, (z if z is not None else 0.0) + lift)))
+        if prev:
+            bm.faces.new((prev[0], prev[1], row[1], row[0]))
+        prev = row
+    bm.to_mesh(me)
+    bm.free()
+    for p_ in me.polygons:
+        p_.use_smooth = True
+    o = bpy.data.objects.new('road', me)
     sc.collection.objects.link(o)
     me.materials.append(mat)
     return o
@@ -464,7 +580,7 @@ def galaxy_ferry():
     trees(170, 0.8, 9.0, 22, 60, avoid=[(x, y) for x, y, _ in houses])
     # 건너편 언덕 위 한옥 마을
     for x, y, z in houses:
-        h, objs = place(rng.choice(['hanok_01', 'hanok_01', 'forest_cottage_01', 'jp_minka_01']), (x, y, z - 0.15), rot=rng.uniform(-0.5, 0.5), scale=rng.uniform(1.2, 1.7))
+        h, objs = place(rng.choice(['hanok_01', 'hanok_01', 'forest_cottage_01', 'jp_minka_01']), (x, y, z - 0.15), rot=rng.uniform(-0.5, 0.5), scale=rng.uniform(1.2, 1.7), real=PBR)
         emissive(objs, (1.0, 0.6, 0.28, 1), 0.6)
         point((x, y - 1.5, z + 2.4), (1.0, 0.6, 0.28), 260, 0.7)
     # 가까운 둑 가장자리의 돌등롱 줄 — 따뜻한 빛, 물 위로 번진다
@@ -657,7 +773,7 @@ def snow_terrain():
     bm.free()
     for p_ in me.polygons:
         p_.use_smooth = True
-    o.data.materials.append(mat_simple('snow', (0.42, 0.52, 0.72, 1), 0.55))
+    o.data.materials.append(pbr_blend('snow_02', 'cliff_side', 18.0, 40.0, 0.25, 0.5, 4.0, 10.0, (0.75, 0.85, 1.0, 1), (0.5, 0.55, 0.7, 1), 'snowfield') if PBR else mat_simple('snow', (0.42, 0.52, 0.72, 1), 0.55))
     return o
 
 
@@ -708,6 +824,7 @@ def frost_peak():
         z = ground_z(sx, 36)
         if z is not None:
             place('banner_pole_01', (sx, 36, z - 0.05), rot=0.0, scale=1.5)
+    pine_g, pine_w = [], []
     c = 0                                               # 눈 덮인 소나무 숲
     for _ in range(9000):
         x, y = rng.uniform(-48, 48), rng.uniform(8, 78)
@@ -716,10 +833,17 @@ def frost_peak():
         z = ground_z(x, y)
         if z is None:
             continue
-        snow_pine(x, y, z - 0.1, rng.uniform(1.0, 2.3))
+        s_ = rng.uniform(1.0, 2.3)
+        zz = z - 0.1
+        for r_, h_, dz_ in ((1.5, 2.6, 1.0), (1.15, 2.3, 2.3), (0.75, 2.0, 3.5)):
+            pine_g.append((x, y, zz + dz_ * s_ - h_ * s_ / 2, r_ * s_, h_ * s_, 0.0, 0.0))
+            pine_w.append((x, y, zz + (dz_ + h_ * 0.22) * s_ - h_ * s_ * 0.31, r_ * s_ * 1.04, h_ * s_ * 0.62, 0.0, 0.0))
+        pine_g.append((x, y, zz + 0.5 * s_ - 0.7 * s_, 0.18 * s_, 1.4 * s_, 0.0, 0.0))
         c += 1
         if c >= 150:
             break
+    cone_mesh('pines_g', pine_g, mat_simple('pine_g', (0.01, 0.045, 0.035, 1), 0.95), sides=7)
+    cone_mesh('pines_w', pine_w, mat_simple('snowcap', (0.78, 0.85, 0.97, 1), 0.6), sides=7)
     for _ in range(14):
         x, y = rng.uniform(-20, 20), rng.uniform(-8, 24)
         if abs(x - 0.8 * math.sin(y * 0.05)) < 4.5:
@@ -828,14 +952,15 @@ def ring(loc, major, minor, rot, color, strength):
 
 def time_rift():
     rift_sky()
-    rock_mat = mat_simple('isl_rock', (0.07, 0.06, 0.07, 1), 0.9)
-    top_mat = mat_simple('isl_top', (0.08, 0.16, 0.12, 1), 0.85)
+    _ph = _json.load(open(os.path.join(PH, 'index.json'), encoding='utf-8')) if PBR else None
+    rock_mat = pbr_mat('cliff_side', 6.0, tint=(0.6, 0.55, 0.6, 1), name='isl_rock') if PBR else mat_simple('isl_rock', (0.07, 0.06, 0.07, 1), 0.9)
+    top_mat = pbr_mat('aerial_grass_rock', 4.0, tint=(0.7, 0.8, 0.6, 1), name='isl_top') if PBR else mat_simple('isl_top', (0.08, 0.16, 0.12, 1), 0.85)
     plat_mat = mat_simple('plat', (0.18, 0.17, 0.2, 1), 0.7)
     # 중앙 섬: 관측소 탑과 돔
     floating_island(0, 0, 0, 16, 11, 3, top_mat, rock_mat)
     bpy.ops.mesh.primitive_cylinder_add(vertices=40, radius=9.5, depth=0.5, location=(0, 0, 0.2))
     bpy.context.object.data.materials.append(plat_mat)
-    h, objs = place('stone_tower_01', (0, 0, 0.4), rot=0.3, scale=1.1)
+    h, objs = place('stone_tower_01', (0, 0, 0.4), rot=0.3, scale=1.1, real=PBR)
     emissive(objs, (0.4, 0.9, 1.0, 1), 0.25)
     h, objs = place('future_dome_01', (-9.5, 3.5, 0.4), rot=0.8, scale=0.9)
     emissive(objs, (0.4, 0.9, 1.0, 1), 0.35)
@@ -916,7 +1041,7 @@ def plain_terrain():
         for i in range(n + 1):
             x, y = (i / n - 0.5) * size, (j / n - 0.15) * size
             d = math.hypot(x, y - 40)
-            flat = min(1.0, max(0.12, (d - 20) / 40))
+            flat = min(1.0, max(0.0, (d - 26) / 34))
             roll = (0.9 * math.sin(x * 0.06 + ph[0]) + 0.6 * math.sin(y * 0.07 + ph[1]) + 0.3 * math.sin(x * 0.2 + y * 0.13 + ph[2])) * flat
             hills = max(0, d - 60) * 0.18 * (1 + 0.5 * math.sin(x * 0.04 + ph[3]) + 0.3 * math.sin(y * 0.06 + ph[4]))
             row.append(bm.verts.new((x, y, roll + hills)))
@@ -928,7 +1053,7 @@ def plain_terrain():
     bm.free()
     for p_ in me.polygons:
         p_.use_smooth = True
-    o.data.materials.append(pbr_mat('aerial_grass_rock', 5.0, tint=(0.55, 0.62, 0.7, 1)) if PBR else mat_simple('meadow', (0.035, 0.07, 0.05, 1), 0.9))
+    o.data.materials.append(pbr_mat('aerial_grass_rock', 5.0, tint=(0.8, 0.85, 1.0, 1)) if PBR else mat_simple('meadow', (0.035, 0.07, 0.05, 1), 0.9))
     return o
 
 
@@ -970,16 +1095,16 @@ def crossroads():
     wn['Background'].inputs['Strength'].default_value = 0.9
     plain_terrain()
     bpy.context.view_layer.update()
-    dirt = pbr_mat('brown_mud', 3.0, tint=(0.8, 0.75, 0.75, 1)) if PBR else mat_simple('dirt', (0.09, 0.06, 0.04, 1), 0.95)
-    asph = pbr_mat('bitumen', 3.0, tint=(0.7, 0.72, 0.8, 1)) if PBR else mat_simple('asphalt', (0.03, 0.03, 0.035, 1), 0.55)
+    dirt = pbr_mat('brown_mud', 3.0, tint=(1.0, 0.95, 0.95, 1)) if PBR else mat_simple('dirt', (0.09, 0.06, 0.04, 1), 0.95)
+    asph = pbr_mat('bitumen', 3.0, tint=(0.95, 0.97, 1.0, 1)) if PBR else mat_simple('asphalt', (0.03, 0.03, 0.035, 1), 0.55)
     neon = mat_simple('neonroad', (0.01, 0.02, 0.03, 1), 0.3, (0.1, 0.9, 1.0, 1), 1.2)
     edge = mat_simple('neonedge', (0.01, 0.01, 0.01, 1), 0.3, (1.0, 0.2, 0.8, 1), 7.0)
     J = (0.0, 40.0)
     # 오는 길(과거 흙길) -> 갈림길, 세 갈래: 왼쪽 과거(흙+등롱+한옥), 가운데 현재(아스팔트+가로등+건물), 오른쪽 미래(네온+기둥+돔)
-    road((0, -14), J, 6.0, dirt)
-    road(J, (-52, 78), 6.0, dirt)
-    road(J, (0, 105), 6.5, asph)
-    road(J, (52, 78), 6.0, neon)
+    road_mesh((0, -14), J, 6.0, dirt)
+    road_mesh(J, (-52, 78), 6.0, dirt)
+    road_mesh(J, (0, 105), 6.5, asph)
+    road_mesh(J, (52, 78), 6.0, neon)
     for sx in (-1, 1):                                  # 미래 길 가장자리 선
         dxn = 52 / math.hypot(52, 38)
         dyn = 38 / math.hypot(52, 38)
