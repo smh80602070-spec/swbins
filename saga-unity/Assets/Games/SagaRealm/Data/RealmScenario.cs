@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Saga.Realm.Data
@@ -34,6 +35,13 @@ namespace Saga.Realm.Data
 
         private static bool _seen;
         private static int _t0, _turnSeen;
+        // 단계(tasks U-0026) — 성 차지 카드를 고르면 열린다. `_stageId` 는 단계를 연 카드 id(없으면 null).
+        private static string _stageId, _stageTarget;
+        private static int _stageSince;
+        /// <summary>진단 — 정해 두면 그 성을 차지한 것으로 본다(실제 함락 대신).</summary>
+        public static System.Func<string, bool> CapturedForTest;
+        /// <summary>끄는 손잡이 — 진단이 기본으로 끈다(성 차지 단계가 열려 본 사슬이 쉬면 앞선 진단이 흔들린다). 단계 진단만 켠다.</summary>
+        public static bool StagesEnabled = true;
         private static readonly Dictionary<string, (string k, int turn)> _done = new Dictionary<string, (string, int)>();
         /// <summary>곁가지 — 시간 틈 사람이 우리 사람인 걸 처음 본 달(웹 `scenario.seen[id]`). 열두 달 뒤 그 사람 카드가 온다.</summary>
         private static readonly Dictionary<string, int> _sideSeen = new Dictionary<string, int>();
@@ -89,6 +97,12 @@ namespace Saga.Realm.Data
         {
             if (!Enabled || RealmCityState.ActiveCityIds.Count == 0) return null;
             Sync();
+            // 단계가 열려 있는 동안 본 사슬은 쉰다(곁가지는 흐른다) — 때가 되면 결과 카드
+            if (_stageId != null)
+            {
+                string end = StageFire();
+                return end ?? (SideEnabled ? DueSideId() : null);
+            }
             foreach (var c in RealmScenarioData.Cards)
             {
                 if (_done.ContainsKey(c.Id)) continue;
@@ -160,19 +174,24 @@ namespace Saga.Realm.Data
         /// <summary>이룬 승리 종류 — 이 트랙 승리는 정복·문화 둘.</summary>
         public static string VictoryKind() => VictoryKindForTest ?? (RealmVictoryState.Result == RealmVictoryState.Kind.Culture ? "culture" : "conquest");
 
-        public static string Hint(RealmScenarioData.Choice ch)
+        public static string Hint(RealmScenarioData.Choice ch) => HintOf(ch.Fx, ch.Cost);
+
+        /// <summary>효과 목록의 한 줄 힌트 — 음수(진 결과)는 "-" 글, 양수는 "+" 글(고르기 카드는 늘 양수).</summary>
+        public static string HintOf(RealmScenarioData.Fx[] fxs, int cost = 0)
         {
             var parts = new List<string>();
-            if (ch.Cost > 0) parts.Add(string.Format(RealmLocalization.T("scenario.hint.cost", "금 {0} 든다"), ch.Cost));
-            foreach (var f in ch.Fx)
+            if (cost > 0) parts.Add(string.Format(RealmLocalization.T("scenario.hint.cost", "금 {0} 든다"), cost));
+            foreach (var f in fxs)
             {
+                bool neg = f.N < 0;
+                int n = Mathf.Abs(f.N);
                 switch (f.T)
                 {
-                    case "gold": parts.Add(string.Format(RealmLocalization.T("scenario.hint.gold", "금 +{0}"), f.N)); break;
-                    case "food": parts.Add(string.Format(RealmLocalization.T("scenario.hint.food", "수도 군량 +{0}"), f.N)); break;
-                    case "sec": parts.Add(string.Format(RealmLocalization.T("scenario.hint.sec", "수도 치안 +{0}"), f.N)); break;
-                    case "train": parts.Add(string.Format(RealmLocalization.T("scenario.hint.train", "수도 훈련 +{0}"), f.N)); break;
-                    case "tech": parts.Add(string.Format(RealmLocalization.T("scenario.hint.tech", "수도 기술 +{0}"), f.N)); break;
+                    case "gold": parts.Add(string.Format(neg ? RealmLocalization.T("scenario.hint.gold_minus", "금 -{0}") : RealmLocalization.T("scenario.hint.gold", "금 +{0}"), n)); break;
+                    case "food": parts.Add(string.Format(neg ? RealmLocalization.T("scenario.hint.food_minus", "수도 군량 -{0}") : RealmLocalization.T("scenario.hint.food", "수도 군량 +{0}"), n)); break;
+                    case "sec": parts.Add(string.Format(neg ? RealmLocalization.T("scenario.hint.sec_minus", "수도 치안 -{0}") : RealmLocalization.T("scenario.hint.sec", "수도 치안 +{0}"), n)); break;
+                    case "train": parts.Add(string.Format(neg ? RealmLocalization.T("scenario.hint.train_minus", "수도 훈련 -{0}") : RealmLocalization.T("scenario.hint.train", "수도 훈련 +{0}"), n)); break;
+                    case "tech": parts.Add(string.Format(neg ? RealmLocalization.T("scenario.hint.tech_minus", "수도 기술 -{0}") : RealmLocalization.T("scenario.hint.tech", "수도 기술 +{0}"), n)); break;
                     case "recruit": parts.Add(string.Format(RealmLocalization.T("scenario.hint.recruit", "{0} 합류"), NameOf(f.Id))); break;
                 }
             }
@@ -199,6 +218,7 @@ namespace Saga.Realm.Data
         /// <summary>카드 하나의 제목·본문·선택지 셋 글(<see cref="RealmEventState.Describe"/> 가 부른다).</summary>
         public static (string title, string body, string a, string b, string c) Describe(string id)
         {
+            if (IsStageEnd(id, out var sg)) return DescribeEnd(sg);
             var c = CardOf(id);
             if (c == null) return (id, "", "", "", "");
             _who = c.Who;
@@ -225,6 +245,7 @@ namespace Saga.Realm.Data
         /// <summary>선택 효과 — 금이 모자라면 카드를 안 끝내고(다음 달 다시) 실패 글. 성공하면 카드를 끝낸 것으로 적는다.</summary>
         public static (string message, bool ok) Resolve(string id, int choiceIndex)
         {
+            if (IsStageEnd(id, out var sg)) return ResolveEnd(sg);
             var c = CardOf(id);
             if (c == null || choiceIndex < 0 || choiceIndex > 2) return (RealmLocalization.T("scenario.no_card", "없는 카드"), false);
             Sync();
@@ -241,7 +262,139 @@ namespace Saga.Realm.Data
             string cap = Capital;
             foreach (var f in ch.Fx) Apply(f, cap);
             _done[id] = (ch.K, TurnNow);
-            return (Fill(RealmLocalization.T($"scenario.{id}.{ch.K}.result", ch.ResultKo)), true);
+            string text = Fill(RealmLocalization.T($"scenario.{id}.{ch.K}.result", ch.ResultKo));
+            string goal = BeginStage(id);
+            return (goal == null ? text : text + "\n" + goal, true);
+        }
+
+        // ---- 단계(tasks U-0026) — 성 차지 -------------------------------------------------------------------------
+
+        public static string StageId => _stageId;
+        public static string StageTarget => _stageTarget;
+        public static int StageSince => _stageSince;
+
+        /// <summary>끝나는 달까지 남은 달(열린 단계가 없으면 0).</summary>
+        public static int StageMonthsLeft
+        {
+            get
+            {
+                var st = _stageId == null ? null : RealmScenarioData.StageOf(_stageId);
+                return st == null ? 0 : Mathf.Max(0, st.Months - (TurnNow - _stageSince));
+            }
+        }
+
+        public static bool IsStageEnd(string id, out RealmScenarioData.Stage stage)
+        {
+            stage = null;
+            if (id == null || !id.EndsWith("_end")) return false;
+            stage = RealmScenarioData.StageOf(id.Substring(0, id.Length - 4));
+            return stage != null;
+        }
+
+        private static bool IsCaptured(string enemyId)
+        {
+            if (CapturedForTest != null) return CapturedForTest(enemyId);
+            if (RealmCityState.ActiveCityIds.Contains(enemyId)) return true;
+            var rec = RealmWarState.Get(enemyId);
+            return rec != null && rec.Captured;
+        }
+
+        private static string LandKey(RealmLand land) => land == RealmLand.River ? "river" : "plain";
+
+        /// <summary>성 차지 목표 — 우리 성에서 칠 수 있는 안 차지된 적 성 하나. 어울리는 지역(prov) → 어울리는 땅(near) → 병력 적은 성 → id 순. 없으면 null.</summary>
+        public static string PickTarget(string near, string prov)
+        {
+            string best = null; int bestFit = 0, bestTroops = 0;
+            var seen = new HashSet<string>();
+            foreach (var ours in RealmCityState.ActiveCityIds)
+            {
+                foreach (var eid in RealmEnemyCity.TargetsFrom(ours))
+                {
+                    if (!seen.Add(eid) || IsCaptured(eid)) continue;
+                    var def = RealmEnemyCity.Get(eid);
+                    if (def == null) continue;
+                    int fit = !string.IsNullOrEmpty(prov) && RealmEnemyCity.ProvOf(eid) == prov ? 0
+                        : !string.IsNullOrEmpty(near) && LandKey(def.Land) == near ? 1 : 2;
+                    int troops = RealmWarState.Get(eid)?.Troops ?? def.BaseTroops;
+                    bool better = best == null || fit < bestFit || (fit == bestFit && (troops < bestTroops || (troops == bestTroops && string.CompareOrdinal(eid, best) < 0)));
+                    if (better) { best = eid; bestFit = fit; bestTroops = troops; }
+                }
+            }
+            return best;
+        }
+
+        /// <summary>성 차지 카드를 고른 직후 단계를 연다 — 열었으면 안내 한 줄, 아니면 null(목표 성이 없거나 단계 없는 카드).</summary>
+        private static string BeginStage(string cardId)
+        {
+            var st = RealmScenarioData.StageOf(cardId);
+            if (!StagesEnabled || st == null || st.Kind != "own") return null;
+            string target = PickTarget(st.Near, st.Prov);
+            if (string.IsNullOrEmpty(target)) return null;
+            _stageId = cardId; _stageTarget = target; _stageSince = TurnNow;
+            return string.Format(RealmLocalization.T("scenario.stage.goal", "🎯 {0} — {1} 을(를) {2}달 안에 차지하라"),
+                RealmLocalization.T($"scenario.stage.{st.Id}.title", st.TitleKo), CityName(target), st.Months);
+        }
+
+        private static string CityName(string enemyId) => RealmEnemyCity.Get(enemyId)?.Name ?? enemyId;
+
+        /// <summary>HUD 한 줄 — 열린 단계의 목표·남은 달(없으면 null).</summary>
+        public static string StageLine()
+        {
+            var st = _stageId == null ? null : RealmScenarioData.StageOf(_stageId);
+            if (st == null) return null;
+            return string.Format(RealmLocalization.T("scenario.stage.line", "🎯 {0} 차지 — {1}달 남음"), CityName(_stageTarget), StageMonthsLeft);
+        }
+
+        private static void ClearStage() { _stageId = null; _stageTarget = null; _stageSince = 0; }
+
+        /// <summary>단계가 열려 있을 때 결과 카드 id — 목표를 차지했거나 달 수가 다 됐을 때만(아니면 null).</summary>
+        private static string StageFire()
+        {
+            var st = RealmScenarioData.StageOf(_stageId);
+            if (st == null) { ClearStage(); return null; }
+            if (!IsCaptured(_stageTarget) && TurnNow - _stageSince < st.Months) return null;
+            return _stageId + "_end";
+        }
+
+        private static (string title, string body, string a, string b, string c) DescribeEnd(RealmScenarioData.Stage sg)
+        {
+            var c = CardOf(sg.Id);
+            bool won = IsCaptured(_stageTarget);
+            var br = won ? sg.Win : sg.Lose;
+            string title = (c != null ? c.Emoji + " " : "") + RealmLocalization.T($"scenario.stage.{sg.Id}.title", sg.TitleKo);
+            string act = c != null ? RealmLocalization.T($"scenario.act.{c.Act}", ActKo[c.Act]) : "";
+            string text = Fill(RealmLocalization.T($"scenario.stage.{sg.Id}.{(won ? "win" : "lose")}", br.TextKo));
+            string body = (act.Length > 0 ? "<size=70%>" + act + "</size>\n" : "") + text + "\n<size=70%>" + HintOf(br.Fx) + "</size>";
+            return (title, body, RealmLocalization.T("scenario.stage.confirm", "확인"), "", "");
+        }
+
+        private static (string message, bool ok) ResolveEnd(RealmScenarioData.Stage sg)
+        {
+            bool won = IsCaptured(_stageTarget);
+            var br = won ? sg.Win : sg.Lose;
+            string cap = Capital;
+            foreach (var f in br.Fx) ApplyStage(f, cap);
+            ClearStage();
+            return (Fill(RealmLocalization.T($"scenario.stage.{sg.Id}.{(won ? "win" : "lose")}", br.TextKo)), true);
+        }
+
+        // 결과 효과 — 음수 금은 가진 만큼만 뺀다(모자라면 0 까지). 나머지는 카드 효과와 같다.
+        private static void ApplyStage(RealmScenarioData.Fx f, string cap)
+        {
+            if (f.T == "gold" && f.N < 0) { RealmCityState.TrySpendGold(Mathf.Min(-f.N, RealmCityState.Gold)); return; }
+            Apply(f, cap);
+        }
+
+        /// <summary>세이브용 — 열린 단계(없으면 null·null·0).</summary>
+        public static void SnapshotStage(out string id, out string target, out int since) { id = _stageId; target = _stageTarget; since = _stageSince; }
+
+        /// <summary>불러오기 — 모르는 단계·성은 버린다(옛 세이브는 필드가 없어 단계 없음).</summary>
+        public static void RestoreStage(string id, string target, int since)
+        {
+            ClearStage();
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(target)) return;
+            if (RealmScenarioData.StageOf(id) == null || RealmEnemyCity.Get(target) == null) return;
+            _stageId = id; _stageTarget = target; _stageSince = since;
         }
 
         private static void Apply(RealmScenarioData.Fx f, string cap)
@@ -280,6 +433,7 @@ namespace Saga.Realm.Data
         /// <summary>불러오기·새 게임 — 없으면(옛 세이브) 안 본 것으로(다음에 Sync 가 처음 본 달을 적는다). 모르는 카드는 버린다.</summary>
         public static void Restore(bool seen, int t0, int turnSeen, string[] ids, string[] ks, int[] turns, string[] sideWho = null, int[] sideTurn = null)
         {
+            ClearStage();
             _done.Clear();
             _sideSeen.Clear();
             if (seen && sideWho != null && sideTurn != null)
@@ -299,6 +453,8 @@ namespace Saga.Realm.Data
             MineForTest = null;
             VictoryForTest = null;
             VictoryKindForTest = null;
+            CapturedForTest = null;
+            StagesEnabled = false;
             SideEnabled = false;
             Restore(false, 0, 0, null, null, null);
         }

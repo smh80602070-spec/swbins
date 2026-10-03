@@ -1170,6 +1170,7 @@ namespace Saga.Realm.UI
             float y = -380f;
             for (int i = 0; i < labels.Length; i++)
             {
+                if (string.IsNullOrEmpty(labels[i])) continue; // 시나리오 결과 카드(tasks U-0026)는 단추 하나뿐
                 var choice = choices[i];
                 RealmUiKit.NewButton(_eventButtonsRoot, labels[i], new Vector2(0.5f, 1f), new Vector2(0f, y),
                     new Vector2(660f, 84f), () => ChooseEvent(card, choice));
