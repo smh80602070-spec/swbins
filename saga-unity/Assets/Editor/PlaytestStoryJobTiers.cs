@@ -29,6 +29,7 @@ namespace Saga.EditorTools
                 CheckChoose();
                 foreach (string root in StoryCombat.JobOrder) CheckPromotion(root);
                 CheckChainBonus();
+                CheckAwakening();
                 CheckRestoreAndEvent();
             }
             StoryJobState.Restore(lv0, exp0, job0);
@@ -43,7 +44,7 @@ namespace Saga.EditorTools
             var seenNames = new HashSet<string>();
             var tables = new List<Dictionary<string, StoryCombat.JobInfo>> { StoryCombat.JobsTier1 };
             tables.AddRange(StoryCombat.UpperJobTables);
-            PlaytestKit.Check(tables.Count == 4, $"un.st.job-tiers: 차수 표 {tables.Count}개 (기대 4)");
+            PlaytestKit.Check(tables.Count == 5, $"un.st.job-tiers: 차수 표 {tables.Count}개 (기대 5)");
             for (int t = 0; t < tables.Count; t++)
             {
                 PlaytestKit.Check(tables[t].Count == 4, $"un.st.job-tiers: {t + 1}차 {tables[t].Count}자리 (기대 4)");
@@ -74,9 +75,9 @@ namespace Saga.EditorTools
 
         private static void CheckThresholds()
         {
-            int[] lv = { 10, 15, 20, 25 };
-            int[] sk = { 0, 5, 8, 10 };
-            for (int tier = 1; tier <= 4; tier++)
+            int[] lv = { 10, 15, 20, 25, 30 };
+            int[] sk = { 0, 5, 8, 10, 10 };
+            for (int tier = 1; tier <= 5; tier++)
             {
                 PlaytestKit.Check(StoryCombat.PromoteLevelFor(tier) == lv[tier - 1], $"un.st.job-tiers: {tier}차 요구 레벨 {StoryCombat.PromoteLevelFor(tier)} (기대 {lv[tier - 1]})");
                 PlaytestKit.Check(StoryCombat.PromoteSkillLevelFor(tier) == sk[tier - 1], $"un.st.job-tiers: {tier}차 요구 무예 {StoryCombat.PromoteSkillLevelFor(tier)} (기대 {sk[tier - 1]})");
@@ -117,7 +118,7 @@ namespace Saga.EditorTools
             PlaytestKit.Check(StoryJobState.ChooseJob(root), $"un.st.job-tiers: {root} 1차 고르기 실패");
             string cur = root;
             string lowerSkillJob = null;
-            for (int tier = 2; tier <= 4; tier++)
+            for (int tier = 2; tier <= 5; tier++)
             {
                 string next = StoryJobState.NextJob;
                 PlaytestKit.Check(next != null && StoryCombat.TryGetJob(next, out var ni) && ni.Tier == tier && ni.From == cur, $"un.st.job-tiers: {root} {tier - 1}차 {cur} 의 다음 자리 {next} 이상");
@@ -148,7 +149,35 @@ namespace Saga.EditorTools
                 lowerSkillJob = cur;
                 cur = next;
             }
-            PlaytestKit.Check(StoryJobState.NextJob == null && StoryJobState.PromoteBlock() == "job.why_no_next" && !StoryJobState.Promote(), $"un.st.job-tiers: {root} 4차 뒤에도 승급이 열림");
+            PlaytestKit.Check(StoryJobState.NextJob == null && StoryJobState.PromoteBlock() == "job.why_no_next" && !StoryJobState.Promote(), $"un.st.job-tiers: {root} 5차 뒤에도 승급이 열림");
+        }
+
+        // 5차 각성기(tasks U-0025): 갈래마다 둘(태허는 회복 하나를 뺀 하나), 4차 무예 하나가 선행(NeedLv 5)이고 같은 유파·효과가 회복이 아니다.
+        // 자리를 5차로 두고 각성기 하나를 찍으면 무예 칸 맨 앞에 놓인다(윗자리 무예부터 채운다).
+        private static void CheckAwakening()
+        {
+            var expect = new Dictionary<string, int> { ["godwar"] = 2, ["skybow"] = 2, ["noshadow"] = 2, ["voidsage"] = 1 };
+            foreach (var kv in StoryCombat.JobsTier5)
+            {
+                var skills = StorySkillData.OfJob(kv.Key);
+                PlaytestKit.Check(skills.Count == expect[kv.Key], $"un.st.job-tiers: {kv.Key} 각성기 {skills.Count}개 (기대 {expect[kv.Key]})");
+                foreach (var sk in skills)
+                {
+                    PlaytestKit.Check(sk.Tier == 5 && sk.Need != null && sk.NeedLv == 5, $"un.st.job-tiers: {sk.Key} 차수·선행이 이상");
+                    var need = StorySkillData.Get(sk.Need);
+                    PlaytestKit.Check(need != null && need.Job == kv.Value.From && need.School == sk.School, $"un.st.job-tiers: {sk.Key} 선행 {sk.Need} 가 4차 {kv.Value.From} 의 같은 유파가 아님");
+                    var school = StorySkillData.GetSchool(sk.School);
+                    PlaytestKit.Check(school != null && school.Kind != StorySkillData.SchoolKind.Heal, $"un.st.job-tiers: {sk.Key} 유파가 회복(이 트랙엔 없음)");
+                }
+                StorySkillState.Restore(null, null);
+                StoryJobState.Restore(99, 0f, kv.Key);
+                if (skills.Count > 0)
+                {
+                    RaiseTo(skills[0], 1);
+                    var slots = StorySkillState.SlotSkills();
+                    PlaytestKit.Check(slots.Count > 0 && slots[0].Key == skills[0].Key, $"un.st.job-tiers: {kv.Key} 각성기가 무예 칸 맨 앞이 아님({(slots.Count > 0 ? slots[0].Key : "빈 칸")})");
+                }
+            }
         }
 
         private static void CheckChainBonus()

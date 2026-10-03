@@ -126,8 +126,7 @@ namespace Saga.Story.UI
         public string GoalLineWeek()
         {
             int tier = StoryJobState.Tier;
-            int next = tier <= 0 ? StoryCombat.JobChangeLevel : tier == 1 ? StoryCombat.JobPromoteLevel
-                : tier == 2 ? StoryCombat.JobPromoteLevel3 : tier == 3 ? StoryCombat.JobPromoteLevel4 : 0;
+            int next = tier <= 0 ? StoryCombat.JobChangeLevel : tier >= 5 ? 0 : StoryCombat.PromoteLevelFor(tier + 1); // 1→2차 15 … 4→5차 30(U-0025)
             if (next == 0) return StoryLocalization.T("goal.job_max", "마지막 차수 — 무예를 끝까지");
             return string.Format(StoryLocalization.T("goal.next_job", "다음 전직 Lv.{0} (지금 Lv.{1})"), next, StoryJobState.Level);
         }

@@ -208,13 +208,18 @@ namespace Saga.Story.Data
         public const int JobPromoteSkillLevel3 = 8;
         public const int JobPromoteSkillLevel4 = 10;
 
+        /// <summary>tasks U-0025 5차 전직 — 웹판 Lv.80(4차 70)을 이 트랙은 판수 규칙(5레벨 간격)으로 **Lv.30**에 둔다(25→30 은 4차 구간보다 훨씬 무겁다 —
+        /// 값 한 줄만 고치면 된다). 아랫자리 무예 하나 10(웹판 canJoin() 4차와 같은 10).</summary>
+        public const int JobPromoteLevel5 = 30;
+        public const int JobPromoteSkillLevel5 = 10;
+
         /// <summary>그 차수로 오르는 레벨(1차는 <see cref="JobChangeLevel"/>).</summary>
         public static int PromoteLevelFor(int tier) =>
-            tier >= 4 ? JobPromoteLevel4 : tier == 3 ? JobPromoteLevel3 : tier == 2 ? JobPromoteLevel : JobChangeLevel;
+            tier >= 5 ? JobPromoteLevel5 : tier == 4 ? JobPromoteLevel4 : tier == 3 ? JobPromoteLevel3 : tier == 2 ? JobPromoteLevel : JobChangeLevel;
 
         /// <summary>그 차수로 오를 때 아랫자리 무예 하나에 요구하는 레벨(1차는 0).</summary>
         public static int PromoteSkillLevelFor(int tier) =>
-            tier >= 4 ? JobPromoteSkillLevel4 : tier == 3 ? JobPromoteSkillLevel3 : tier == 2 ? JobPromoteSkillLevel : 0;
+            tier >= 5 ? JobPromoteSkillLevel5 : tier == 4 ? JobPromoteSkillLevel4 : tier == 3 ? JobPromoteSkillLevel3 : tier == 2 ? JobPromoteSkillLevel : 0;
 
         public struct JobInfo
         {
@@ -266,8 +271,18 @@ namespace Saga.Story.Data
                 ["ascendant"] = new JobInfo { Name = "천존(天尊)", Hp = 130f, Atk = 26f, Mp = 260f, Tier = 4, From = "immortal" },
             };
 
-        /// <summary>윗자리 표(2~4차) — 다음 자리 찾기가 훑는다.</summary>
-        public static readonly System.Collections.Generic.Dictionary<string, JobInfo>[] UpperJobTables = { JobsTier2, JobsTier3, JobsTier4 };
+        /// <summary>5차 넷 — data-job.js JOBS tier:5 grow 그대로(2026-09-30 확정 Q7, 범용 칭호 — 실존 인물 아님).</summary>
+        public static readonly System.Collections.Generic.Dictionary<string, JobInfo> JobsTier5 =
+            new System.Collections.Generic.Dictionary<string, JobInfo>
+            {
+                ["godwar"] = new JobInfo { Name = "군신(軍神)", Hp = 420f, Atk = 27f, Mp = 0f, Tier = 5, From = "warlord" },
+                ["skybow"] = new JobInfo { Name = "천궁(天弓)", Hp = 160f, Atk = 52f, Mp = 0f, Tier = 5, From = "falcon" },
+                ["noshadow"] = new JobInfo { Name = "무영(無影)", Hp = 210f, Atk = 40f, Mp = 0f, Tier = 5, From = "reaper" },
+                ["voidsage"] = new JobInfo { Name = "태허(太虛)", Hp = 175f, Atk = 35f, Mp = 360f, Tier = 5, From = "ascendant" },
+            };
+
+        /// <summary>윗자리 표(2~5차) — 다음 자리 찾기가 훑는다.</summary>
+        public static readonly System.Collections.Generic.Dictionary<string, JobInfo>[] UpperJobTables = { JobsTier2, JobsTier3, JobsTier4, JobsTier5 };
 
         public static bool TryGetJob(string key, out JobInfo info)
         {
