@@ -354,6 +354,54 @@ def _hit_back():
     return False, [(0, idle), (4, hit), (9, hit), (22, idle)]
 
 
+def _mantle():
+    """턱 넘어 오르기(0.4s) — 두 손이 턱 위(앞 0.30m·높이 1.78m)를 잡고 매달린 데서 몸을 끌어올려 팔을 펴 밀고, 한 발씩 올라서 선다.
+    몸 위치는 게임(CharacterController)이 옮긴다 — 클립은 몸 안 자세만."""
+    lean = {'pelvis': (0, 0.14, 1), 'spine_01': (0, 0.14, 1), 'spine_02': (0, 0.10, 1), 'spine_03': (0, 0.06, 1), 'neck_01': (0, 0.0, 1),
+            'foot_l': (0, 1, -0.3), 'foot_r': (0, 1, -0.3)}
+    pole = {'hand_l': (1, -0.5, -0.6), 'hand_r': (-1, -0.5, -0.6), 'foot_l': (0.4, 1, 0), 'foot_r': (-0.4, 1, 0)}
+    hang = P(base=('Idle_Loop', 0), pelvis=(0, 0.10, 0.0), dirs=lean, pole=pole,
+             ik={'hand_l': (0.22, 0.30, 1.78), 'hand_r': (-0.22, 0.30, 1.78), 'foot_l': (0.12, 0.16, 0.34), 'foot_r': (-0.12, 0.14, 0.30)})
+    pull_dirs = dict(lean, spine_01=(0, 0.32, 1), spine_02=(0, 0.34, 1), spine_03=(0, 0.28, 1), neck_01=(0, 0.1, 1))
+    pull = P(base=('Idle_Loop', 0), pelvis=(0, 0.20, 0.28), dirs=pull_dirs, pole=pole,
+             ik={'hand_l': (0.24, 0.34, 1.50), 'hand_r': (-0.24, 0.34, 1.50), 'foot_l': (0.12, 0.12, 0.56), 'foot_r': (-0.12, 0.10, 0.62)})
+    push = P(base=('Idle_Loop', 0), pelvis=(0, 0.26, 0.46), dirs=dict(pull_dirs, spine_01=(0, 0.40, 1), spine_02=(0, 0.40, 1)), pole=pole,
+             ik={'hand_l': (0.26, 0.30, 1.08), 'hand_r': (-0.26, 0.30, 1.08), 'foot_l': (0.12, 0.04, 0.70), 'foot_r': (-0.12, 0.18, 0.78)})
+    stand = P(base=('Idle_Loop', 0), pelvis=(0, 0.10, 0.0),
+              ik={'hand_l': (0.26, 0.04, 0.90), 'hand_r': (-0.26, 0.04, 0.90), **STAND_FEET})
+    return False, [(0, hang), (4, pull), (8, push), (12, stand)]
+
+
+def _burst():
+    """폭발 시전(0.8s) — 무릎을 굽혀 두 손을 가슴 앞에 모아 기운을 죄고, 몸을 활처럼 펴며 두 팔을 양옆 위로 활짝 벌려 터뜨린 뒤 숨을 고른다."""
+    feet = {'foot_l': (0.20, 0.04, 0.104), 'foot_r': (-0.20, 0.04, 0.104)}
+    fdir = {'foot_l': (0.10, 1, -0.6), 'foot_r': (-0.10, 1, -0.6), 'clavicle_l': (1, -0.3, 0), 'clavicle_r': (-1, -0.3, 0)}
+    idle = P(base=('Idle_Loop', 0), pelvis=(0, 0, -0.02), dirs=dict(fdir, hand_l=(0.05, 0.3, -1), hand_r=(-0.05, 0.3, -1)),
+             ik={'hand_l': (0.28, 0.02, 0.90), 'hand_r': (-0.28, 0.02, 0.90), **feet})
+    crouch = P(base=('Idle_Loop', 0), pelvis=(0, 0.04, -0.16),
+               dirs=dict(fdir, spine_01=(0, 0.20, 1), spine_02=(0, 0.22, 1), spine_03=(0, 0.20, 1), neck_01=(0, 0.20, 1), hand_l=(-0.5, 0.6, 0.5), hand_r=(0.5, 0.6, 0.5)),
+               pole={'hand_l': (1, -0.2, -0.6), 'hand_r': (-1, -0.2, -0.6)},
+               ik={'hand_l': (0.06, 0.28, 1.02), 'hand_r': (-0.06, 0.28, 1.02), **feet})
+    burst = P(base=('Idle_Loop', 0), pelvis=(0, -0.02, 0.03),
+              dirs=dict(fdir, spine_01=(0, -0.10, 1), spine_02=(0, -0.16, 1), spine_03=(0, -0.20, 1), neck_01=(0, -0.30, 1), hand_l=(1, 0.1, 0.7), hand_r=(-1, 0.1, 0.7)),
+              pole={'hand_l': (0.3, -0.5, -1), 'hand_r': (-0.3, -0.5, -1)},
+              ik={'hand_l': (0.82, 0.05, 1.82), 'hand_r': (-0.82, 0.05, 1.82), **feet})
+    hold = dict(burst, ik={'hand_l': (0.86, 0.04, 1.86), 'hand_r': (-0.86, 0.04, 1.86), **feet})
+    return False, [(0, idle), (8, crouch), (14, burst), (22, hold), (34, idle)]
+
+
+def _plunge():
+    """낙하 공격 자세(루프) — 몸이 앞으로 기울고 두 손을 머리 위에 모아 무기를 아래로 겨누고, 다리는 곧게 모아 늘어뜨린다. 바람에 약간 떤다."""
+    d = {'pelvis': (0, 0.35, 1), 'spine_01': (0, 0.30, 1), 'spine_02': (0, 0.25, 1), 'spine_03': (0, 0.18, 1), 'neck_01': (0, 0.20, 1),
+         'hand_l': (0.05, 0.2, 1), 'hand_r': (-0.05, 0.2, 1), 'foot_l': (0.02, 0.1, -1), 'foot_r': (-0.02, 0.1, -1)}
+    pole = {'hand_l': (1, -0.2, -0.3), 'hand_r': (-1, -0.2, -0.3), 'foot_l': (0.1, 1, 0), 'foot_r': (-0.1, 1, 0)}
+    a = P(base=('Jump_Loop', 0), dirs=d, pole=pole,
+          ik={'hand_l': (0.10, 0.22, 1.98), 'hand_r': (-0.10, 0.22, 1.98), 'foot_l': (0.08, -0.04, 0.16), 'foot_r': (-0.08, -0.06, 0.12)})
+    b = P(base=('Jump_Loop', 30), dirs=d, pole=pole, pelvis=(0, 0, 0.02),
+          ik={'hand_l': (0.12, 0.20, 2.00), 'hand_r': (-0.12, 0.20, 2.00), 'foot_l': (0.08, -0.07, 0.13), 'foot_r': (-0.08, -0.03, 0.17)})
+    return True, [(0, a), (14, b), (28, a)]
+
+
 CLIPS = {
     'CF_Guard_Idle_Loop': _guard_idle,
     'CF_Climb_Loop': _climb,
@@ -375,6 +423,9 @@ CLIPS = {
     'CF_Victory': _victory,
     'CF_Stun_Loop': _stun_loop,
     'CF_Hit_Back': _hit_back,
+    'CF_Mantle': _mantle,
+    'CF_Burst': _burst,
+    'CF_Plunge_Loop': _plunge,
 }
 
 
