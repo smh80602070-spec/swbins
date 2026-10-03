@@ -7,11 +7,21 @@
 """
 import json
 import os
+import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 inv = json.load(open(os.path.join(HERE, 'data', 'icon_inventory.json'), encoding='utf-8'))
 trial = {i['id']: i for i in json.load(open(os.path.join(HERE, 'data', 'icon_trial30.json'), encoding='utf-8'))['items']}
+
+# 룬 글자·등급(사가블로 data-gem.js) · 염색 색(사가의숲 data-village.js) — 코드 생성이라 게임 데이터를 그대로 읽는다
+ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
+RUNE_SRC = {m.group(1): (m.group(2), int(m.group(3))) for m in re.finditer(
+    r"key: '(\w+)', glyph: '(.)', name: '[^']*', tier: (\d)", open(os.path.join(ROOT, 'saga-web', 'saga-dungeon', 'js', 'data-gem.js'), encoding='utf-8').read())}
+_vil = open(os.path.join(ROOT, 'saga-web', 'saga-forest', 'js', 'data-village.js'), encoding='utf-8').read()
+_dyes = _vil[_vil.index('var WEAR_DYES'):]
+_dyes = _dyes[:_dyes.index('];')]
+DYE_SRC = {m.group(1): m.group(2) for m in re.finditer(r"key: '(\w+)',\s+name: '[^']*',\s+c: '(#[0-9a-f]{6})'", _dyes)}
 
 # ── 키 → 태그 (시험 30 에서 가져오되 아쉬웠던 넷은 고침) ─────────────────────────────────────────────
 T = {k: v['tags'] for k, v in trial.items()}
@@ -421,10 +431,11 @@ def main():
                 entries.append({'game': game, 'id': iid, 'kind': kind, 'name': name, 'mode': 'skip'})
                 continue
             if game == 'saga-dungeon' and iid in RUNES:
-                entries.append({'game': game, 'id': iid, 'kind': kind, 'name': name, 'mode': 'glyph', 'key': 'rune_' + iid})
+                entries.append({'game': game, 'id': iid, 'kind': kind, 'name': name, 'mode': 'glyph', 'key': 'rune_' + iid,
+                            'glyph': RUNE_SRC[iid][0], 'grade': min(4, RUNE_SRC[iid][1])})
                 continue
             if game == 'saga-forest' and kind == 'wear' and iid in DYE:
-                entries.append({'game': game, 'id': iid, 'kind': kind, 'name': name, 'mode': 'color', 'key': 'dye_' + iid})
+                entries.append({'game': game, 'id': iid, 'kind': kind, 'name': name, 'mode': 'color', 'key': 'dye_' + iid, 'color': DYE_SRC[iid]})
                 continue
             k = key_of(game, iid, kind)
             if not k or k not in T:

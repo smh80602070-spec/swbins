@@ -103,6 +103,40 @@ def shadow(content):
     return sh.filter(ImageFilter.GaussianBlur(3))
 
 
+def glyph_content(ch, grade):
+    """룬 — 한자 한 글자를 새긴 돌 조각(코드). 등급 색은 틀이 맡고, 글자·돌은 한 장."""
+    fnt = ImageFont.truetype('C:/Windows/Fonts/batang.ttc', 70)
+    stone = Image.new('RGBA', (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(stone)
+    d.rounded_rectangle((22, 14, S - 23, S - 15), 16, fill=(108, 112, 120, 255), outline=(60, 62, 70, 255), width=3)
+    d.rounded_rectangle((28, 20, S - 29, S - 21), 12, outline=(160, 164, 172, 160), width=1)
+    tint = GRADES[grade]['edge']
+    txt = Image.new('RGBA', (S, S), (0, 0, 0, 0))
+    td = ImageDraw.Draw(txt)
+    td.text((S // 2, S // 2 - 2), ch, font=fnt, anchor='mm', fill=tint + (255,), stroke_width=2, stroke_fill=(30, 30, 36, 255))
+    glow = txt.filter(ImageFilter.GaussianBlur(5))
+    stone.alpha_composite(glow)
+    stone.alpha_composite(txt)
+    return stone
+
+
+def dye_content(hexcolor):
+    """염색 — 접은 천 견본(코드)."""
+    col = tuple(int(hexcolor[i:i + 2], 16) for i in (1, 3, 5))
+    dark = tuple(int(c * 0.72) for c in col)
+    light = tuple(min(255, int(c * 1.18) + 12) for c in col)
+    im = Image.new('RGBA', (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle((20, 24, S - 21, S - 22), 9, fill=dark + (255,), outline=(20, 20, 24, 255), width=2)
+    d.rounded_rectangle((20, 24, S - 21, 64), 9, fill=col + (255,))
+    d.rectangle((20, 40, S - 21, 64), fill=col + (255,))
+    d.polygon([(20, 62), (S - 21, 50), (S - 21, 66), (20, 78)], fill=light + (255,))
+    d.rounded_rectangle((20, 24, S - 21, S - 22), 9, outline=(20, 20, 24, 255), width=2)
+    for x in range(30, S - 24, 12):     # 올 무늬
+        d.line([(x, 28), (x, S - 26)], fill=(255, 255, 255, 26), width=1)
+    return im
+
+
 def check(content):
     a = np.asarray(content.getchannel('A')).astype(float) / 255
     cover = float((a > 0.1).mean())
@@ -155,6 +189,21 @@ def main():
         rep = check(c)
         report[iid] = rep
         g = it.get('grade', 0)
+        comp = fr[g].copy()
+        comp.alpha_composite(shadow(c))
+        comp.alpha_composite(c)
+        comp.save(os.path.join(out, 'icon', '%s_g%d.png' % (iid, g)))
+        comp.resize((64, 64), Image.LANCZOS).save(os.path.join(out, 'icon64', '%s_g%d.png' % (iid, g)))
+        cells.append((iid, comp, rep['ok']))
+    # 코드로 만드는 것(룬 글리프·염색 견본) — 계획표 entries 의 mode 가 glyph·color 인 것
+    for e in json.load(open(spec_path, encoding='utf-8')).get('entries', []):
+        if e.get('mode') not in ('glyph', 'color'):
+            continue
+        iid, g = e['key'], e.get('grade', 0)
+        c = glyph_content(e['glyph'], g) if e['mode'] == 'glyph' else dye_content(e['color'])
+        c.save(os.path.join(out, 'content', iid + '.png'))
+        rep = check(c)
+        report[iid] = rep
         comp = fr[g].copy()
         comp.alpha_composite(shadow(c))
         comp.alpha_composite(c)

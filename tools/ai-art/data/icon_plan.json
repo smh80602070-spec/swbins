@@ -2581,7 +2581,9 @@
    "kind": "gem",
    "name": "천",
    "mode": "glyph",
-   "key": "rune_cheon"
+   "key": "rune_cheon",
+   "glyph": "天",
+   "grade": 1
   },
   {
    "game": "saga-dungeon",
@@ -2589,7 +2591,9 @@
    "kind": "gem",
    "name": "지",
    "mode": "glyph",
-   "key": "rune_ji"
+   "key": "rune_ji",
+   "glyph": "地",
+   "grade": 1
   },
   {
    "game": "saga-dungeon",
@@ -2597,7 +2601,9 @@
    "kind": "gem",
    "name": "인",
    "mode": "glyph",
-   "key": "rune_in"
+   "key": "rune_in",
+   "glyph": "人",
+   "grade": 1
   },
   {
    "game": "saga-dungeon",
@@ -2605,7 +2611,9 @@
    "kind": "gem",
    "name": "무",
    "mode": "glyph",
-   "key": "rune_mu"
+   "key": "rune_mu",
+   "glyph": "武",
+   "grade": 2
   },
   {
    "game": "saga-dungeon",
@@ -2613,7 +2621,9 @@
    "kind": "gem",
    "name": "문",
    "mode": "glyph",
-   "key": "rune_mun"
+   "key": "rune_mun",
+   "glyph": "文",
+   "grade": 2
   },
   {
    "game": "saga-dungeon",
@@ -2621,7 +2631,9 @@
    "kind": "gem",
    "name": "충",
    "mode": "glyph",
-   "key": "rune_chung"
+   "key": "rune_chung",
+   "glyph": "忠",
+   "grade": 2
   },
   {
    "game": "saga-dungeon",
@@ -2629,7 +2641,9 @@
    "kind": "gem",
    "name": "의",
    "mode": "glyph",
-   "key": "rune_ui"
+   "key": "rune_ui",
+   "glyph": "義",
+   "grade": 3
   },
   {
    "game": "saga-dungeon",
@@ -2637,7 +2651,9 @@
    "kind": "gem",
    "name": "용",
    "mode": "glyph",
-   "key": "rune_yong"
+   "key": "rune_yong",
+   "glyph": "勇",
+   "grade": 3
   },
   {
    "game": "saga-dungeon",
@@ -2645,7 +2661,9 @@
    "kind": "gem",
    "name": "지(智)",
    "mode": "glyph",
-   "key": "rune_ji2"
+   "key": "rune_ji2",
+   "glyph": "智",
+   "grade": 3
   },
   {
    "game": "saga-dungeon",
@@ -2653,7 +2671,9 @@
    "kind": "gem",
    "name": "신",
    "mode": "glyph",
-   "key": "rune_sin"
+   "key": "rune_sin",
+   "glyph": "信",
+   "grade": 4
   },
   {
    "game": "saga-dungeon",
@@ -2661,7 +2681,9 @@
    "kind": "gem",
    "name": "용(龍)",
    "mode": "glyph",
-   "key": "rune_ryong"
+   "key": "rune_ryong",
+   "glyph": "龍",
+   "grade": 4
   },
   {
    "game": "saga-dungeon",
@@ -2669,7 +2691,9 @@
    "kind": "gem",
    "name": "왕",
    "mode": "glyph",
-   "key": "rune_wang"
+   "key": "rune_wang",
+   "glyph": "王",
+   "grade": 4
   },
   {
    "game": "saga-story",
@@ -4644,7 +4668,8 @@
    "kind": "wear",
    "name": "소색",
    "mode": "color",
-   "key": "dye_white"
+   "key": "dye_white",
+   "color": "#e4ddcc"
   },
   {
    "game": "saga-forest",
@@ -4652,7 +4677,8 @@
    "kind": "wear",
    "name": "먹빛",
    "mode": "color",
-   "key": "dye_ink"
+   "key": "dye_ink",
+   "color": "#3a3f48"
   },
   {
    "game": "saga-forest",
@@ -4660,7 +4686,8 @@
    "kind": "wear",
    "name": "풀빛",
    "mode": "color",
-   "key": "dye_forest"
+   "key": "dye_forest",
+   "color": "#3f7f4a"
   },
   {
    "game": "saga-forest",
@@ -4668,7 +4695,8 @@
    "kind": "wear",
    "name": "쪽빛",
    "mode": "color",
-   "key": "dye_indigo"
+   "key": "dye_indigo",
+   "color": "#3a6a9a"
   },
   {
    "game": "saga-forest",
@@ -4676,7 +4704,8 @@
    "kind": "wear",
    "name": "다홍",
    "mode": "color",
-   "key": "dye_crimson"
+   "key": "dye_crimson",
+   "color": "#c0453a"
   },
   {
    "game": "saga-forest",
@@ -4684,7 +4713,8 @@
    "kind": "wear",
    "name": "치자빛",
    "mode": "color",
-   "key": "dye_gold"
+   "key": "dye_gold",
+   "color": "#d8a63c"
   },
   {
    "game": "saga-forest",
@@ -4692,7 +4722,8 @@
    "kind": "wear",
    "name": "자주",
    "mode": "color",
-   "key": "dye_plum"
+   "key": "dye_plum",
+   "color": "#7a4a8a"
   },
   {
    "game": "saga-forest",
