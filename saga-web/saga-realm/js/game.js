@@ -94,6 +94,7 @@
       btn3d.addEventListener('click', function () {
         var on = R3.toggle();
         btn3d.classList.toggle('on', on);
+        if (!on) { core.emit('changed'); }   /* 3D 로 서 있는 동안 그린 지도엔 2D 지형·성 그림이 없다 — 2D 로 돌아오면 다시 그린다(W-0023) */
         core.persist();
       });
     }

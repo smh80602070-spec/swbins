@@ -121,6 +121,7 @@ function __sagaMeasure(opt) {
     }
     if (ownText(el)) {
       var fs = parseFloat(getComputedStyle(el).fontSize);
+      if (el instanceof SVGElement && el.getScreenCTM) { var ctm = el.getScreenCTM(); if (ctm) { fs *= Math.hypot(ctm.a, ctm.b); } }   /* SVG 글자는 좌표 단위 — 화면에 그려진 크기로 잰다 */
       if (fs < MIN_FONT - 0.01) {
         var kf = name(el);
         if (!seen.font[kf]) { seen.font[kf] = 1; font.push({ el: kf, text: text(el), px: Math.round(fs * 10) / 10 }); }
