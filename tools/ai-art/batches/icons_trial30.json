@@ -1,0 +1,195 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "icons_trial30",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+ },
+ "items": [
+  {
+   "id": "w_hwando",
+   "seed": 1247071122,
+   "prompt": "curved sword, saber, single-edged blade, red tassel, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "w_pyeongon",
+   "seed": 859203340,
+   "prompt": "flail, spiked ball, chain, wooden handle, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "w_changj",
+   "seed": 3161461631,
+   "prompt": "spear, polearm, steel spearhead, red tassel, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "w_wolto",
+   "seed": 2909877651,
+   "prompt": "glaive, polearm, crescent blade, long pole, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "w_gakgung",
+   "seed": 113290141,
+   "prompt": "bow (weapon), recurve bow, bowstring, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "w_seonchae",
+   "seed": 2807967415,
+   "prompt": "hand fan, folding fan, white feathers, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "w_jukjang",
+   "seed": 1551049332,
+   "prompt": "staff, bamboo, walking stick, gourd, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "w_byeongseo",
+   "seed": 620881040,
+   "prompt": "closed book, old book, scroll, string tie, cloth cover, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "a_dujeong",
+   "seed": 490207488,
+   "prompt": "armor, breastplate, plate armor, rivets, chest armor, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "h_tumo",
+   "seed": 962283323,
+   "prompt": "helmet, steel helmet, round helmet, plume, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "b_jipsin",
+   "seed": 2107012656,
+   "prompt": "sandals, straw sandals, woven, footwear, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "c_okgae",
+   "seed": 2356984646,
+   "prompt": "ring, jade ring, jewelry, green gemstone, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "u_ssanggeom",
+   "seed": 944093967,
+   "prompt": "ornate sword, gold dragon, dragon, glowing, curved blade, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "agate",
+   "seed": 2019119759,
+   "prompt": "gem, red gemstone, faceted gem, jewel, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "pearl",
+   "seed": 932610897,
+   "prompt": "pearl, white pearl, round, shiny, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "jade",
+   "seed": 3206014312,
+   "prompt": "jade, green gemstone, carved gem, translucent, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "treat",
+   "seed": 364846649,
+   "prompt": "jar, honey, clay pot, spoon, golden liquid, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "incense",
+   "seed": 2632552531,
+   "prompt": "incense burner, bronze, censer, smoke, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "prayer",
+   "seed": 635003306,
+   "prompt": "paper talisman, yellow paper, red symbols, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "atk100",
+   "seed": 4167683795,
+   "prompt": "scroll, rolled paper, red wax seal, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "apple",
+   "seed": 523792574,
+   "prompt": "apple, red apple, fruit, green leaf, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "iron",
+   "seed": 3167951985,
+   "prompt": "ingot, iron ingot, metal bar, rough metal, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "stardust",
+   "seed": 1597797363,
+   "prompt": "pouch, sparkles, blue glow, bag, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "mushroom",
+   "seed": 1308779831,
+   "prompt": "mushroom, brown mushroom, cluster, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "honey_flower",
+   "seed": 2748888010,
+   "prompt": "flower, yellow flower, honeycomb, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "bangseok",
+   "seed": 4202117210,
+   "prompt": "cushion, silk cushion, embroidery, square pillow, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "soban",
+   "seed": 4084492343,
+   "prompt": "low table, wooden tray, tea set, teapot, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "byeongpung",
+   "seed": 2946691482,
+   "prompt": "folding screen, mountain painting, crane (bird), no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "net",
+   "seed": 1090155465,
+   "prompt": "bug net, butterfly net, long pole, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  },
+  {
+   "id": "spade",
+   "seed": 2870579636,
+   "prompt": "shovel, spade, iron shovel, wooden handle, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality"
+  }
+ ]
+}

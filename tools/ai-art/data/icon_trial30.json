@@ -1,0 +1,215 @@
+{
+ "note": "K-0035 시험 30 — 인벤토리(icon_inventory.json) 아이디에서 갈래마다 골랐다. subject 는 원작 이름 없이 생김새만(영문). grade 는 틀 시험용(0 보통·1 마법·2 희귀·3 세트·4 유니크). (프롬프트는 태그형 — 애니메이진 계열은 문장형을 추상 그림으로 풀어버렸다, 10-03 시험)",
+ "items": [
+  {
+   "id": "w_hwando",
+   "kind": "weapon",
+   "grade": 1,
+   "subject": "curved single-edged saber with ring pommel and leather wrapped grip",
+   "tags": "curved sword, saber, single-edged blade, red tassel"
+  },
+  {
+   "id": "w_pyeongon",
+   "kind": "weapon",
+   "grade": 0,
+   "subject": "spiked iron flail with a short wooden handle and a chain",
+   "tags": "flail, spiked ball, chain, wooden handle"
+  },
+  {
+   "id": "w_changj",
+   "kind": "weapon",
+   "grade": 2,
+   "subject": "long spear with a leaf-shaped steel head and a red tassel",
+   "tags": "spear, polearm, steel spearhead, red tassel"
+  },
+  {
+   "id": "w_wolto",
+   "kind": "weapon",
+   "grade": 2,
+   "subject": "crescent-bladed polearm with a long dark wooden shaft",
+   "tags": "glaive, polearm, crescent blade, long pole"
+  },
+  {
+   "id": "w_gakgung",
+   "kind": "weapon",
+   "grade": 1,
+   "subject": "recurved horn composite bow with a silk string",
+   "tags": "bow (weapon), recurve bow, bowstring"
+  },
+  {
+   "id": "w_seonchae",
+   "kind": "weapon",
+   "grade": 3,
+   "subject": "folding hand fan made of white feathers on a slender handle",
+   "tags": "hand fan, folding fan, white feathers"
+  },
+  {
+   "id": "w_jukjang",
+   "kind": "weapon",
+   "grade": 0,
+   "subject": "bamboo walking staff with a gourd tied near the top",
+   "tags": "staff, bamboo, walking stick, gourd"
+  },
+  {
+   "id": "w_byeongseo",
+   "kind": "weapon",
+   "grade": 1,
+   "subject": "old bound scroll book with a cloth cover and a string tie",
+   "tags": "closed book, old book, scroll, string tie, cloth cover"
+  },
+  {
+   "id": "a_dujeong",
+   "kind": "armor",
+   "grade": 2,
+   "subject": "studded plate armor chest piece with riveted metal plates",
+   "tags": "armor, breastplate, plate armor, rivets, chest armor"
+  },
+  {
+   "id": "h_tumo",
+   "kind": "armor",
+   "grade": 1,
+   "subject": "round steel helmet with a small plume",
+   "tags": "helmet, steel helmet, round helmet, plume"
+  },
+  {
+   "id": "b_jipsin",
+   "kind": "armor",
+   "grade": 0,
+   "subject": "pair of woven straw sandals",
+   "tags": "sandals, straw sandals, woven, footwear"
+  },
+  {
+   "id": "c_okgae",
+   "kind": "accessory",
+   "grade": 3,
+   "subject": "polished green jade ring",
+   "tags": "ring, jade ring, jewelry, green gemstone"
+  },
+  {
+   "id": "u_ssanggeom",
+   "kind": "unique",
+   "grade": 4,
+   "subject": "ornate saber with two golden dragons coiled around the blade, glowing faintly",
+   "tags": "ornate sword, gold dragon, dragon, glowing, curved blade"
+  },
+  {
+   "id": "agate",
+   "kind": "gem",
+   "grade": 1,
+   "subject": "faceted red agate gemstone",
+   "tags": "gem, red gemstone, faceted gem, jewel"
+  },
+  {
+   "id": "pearl",
+   "kind": "gem",
+   "grade": 2,
+   "subject": "large lustrous white pearl",
+   "tags": "pearl, white pearl, round, shiny"
+  },
+  {
+   "id": "jade",
+   "kind": "gem",
+   "grade": 3,
+   "subject": "carved translucent green jade stone",
+   "tags": "jade, green gemstone, carved gem, translucent"
+  },
+  {
+   "id": "treat",
+   "kind": "consumable",
+   "grade": 0,
+   "subject": "small clay jar of golden honey with a wooden spoon",
+   "tags": "jar, honey, clay pot, spoon, golden liquid"
+  },
+  {
+   "id": "incense",
+   "kind": "consumable",
+   "grade": 1,
+   "subject": "bronze incense burner with curling smoke",
+   "tags": "incense burner, bronze, censer, smoke"
+  },
+  {
+   "id": "prayer",
+   "kind": "consumable",
+   "grade": 1,
+   "subject": "yellow paper talisman with red brush marks",
+   "tags": "paper talisman, yellow paper, red symbols"
+  },
+  {
+   "id": "atk100",
+   "kind": "consumable",
+   "grade": 2,
+   "subject": "rolled paper scroll with a red wax seal",
+   "tags": "scroll, rolled paper, red wax seal"
+  },
+  {
+   "id": "apple",
+   "kind": "material",
+   "grade": 0,
+   "subject": "shiny red apple with a green leaf",
+   "tags": "apple, red apple, fruit, green leaf"
+  },
+  {
+   "id": "iron",
+   "kind": "material",
+   "grade": 0,
+   "subject": "rough iron ingot bar",
+   "tags": "ingot, iron ingot, metal bar, rough metal"
+  },
+  {
+   "id": "stardust",
+   "kind": "material",
+   "grade": 3,
+   "subject": "small glowing pouch of blue star dust sparkles",
+   "tags": "pouch, sparkles, blue glow, bag"
+  },
+  {
+   "id": "mushroom",
+   "kind": "material",
+   "grade": 0,
+   "subject": "brown forest mushroom cluster",
+   "tags": "mushroom, brown mushroom, cluster"
+  },
+  {
+   "id": "honey_flower",
+   "kind": "material",
+   "grade": 1,
+   "subject": "yellow flower with a honeycomb center",
+   "tags": "flower, yellow flower, honeycomb"
+  },
+  {
+   "id": "bangseok",
+   "kind": "furniture",
+   "grade": 0,
+   "subject": "square silk floor cushion with embroidery",
+   "tags": "cushion, silk cushion, embroidery, square pillow"
+  },
+  {
+   "id": "soban",
+   "kind": "furniture",
+   "grade": 1,
+   "subject": "small low wooden tray table with a tea set",
+   "tags": "low table, wooden tray, tea set, teapot"
+  },
+  {
+   "id": "byeongpung",
+   "kind": "furniture",
+   "grade": 2,
+   "subject": "folding screen painted with mountains and cranes",
+   "tags": "folding screen, mountain painting, crane (bird)"
+  },
+  {
+   "id": "net",
+   "kind": "tool",
+   "grade": 0,
+   "subject": "bug catching net with a long wooden pole",
+   "tags": "bug net, butterfly net, long pole"
+  },
+  {
+   "id": "spade",
+   "kind": "tool",
+   "grade": 0,
+   "subject": "iron digging spade with a wooden handle",
+   "tags": "shovel, spade, iron shovel, wooden handle"
+  }
+ ]
+}
