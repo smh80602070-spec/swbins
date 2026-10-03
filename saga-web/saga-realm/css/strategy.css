@@ -70,3 +70,28 @@ body.sheet-open #minimap { display: none; }
 
 /* 프로필 카드 안 <small>(목표 진행 "(1/5)")이 브라우저 기본 0.8배로 9px 대로 떨어졌다 — 바닥 11px */
 :where(#profile) small { font-size: max(11px, .8em); }
+
+/* ── 틀·색·글꼴 (W-0027 단계 4) — 먹칠 옻칠 바탕에 금 테두리 두 겹. 넓은 화면에서만 입힌다(폰은 그대로).
+   그림 에셋(양피지·목재)이 오기 전까지 CSS 만으로 만든 임시 틀 — 에셋이 오면 border-image 로 갈아 끼운다. */
+@media (min-width: 781px) and (min-height: 501px) {
+  :root {
+    --sg-lacquer: linear-gradient(180deg, rgba(38, 29, 20, .93), rgba(17, 13, 10, .93));
+    --sg-trim: rgba(216, 181, 106, .55);
+    --sg-trim-soft: rgba(216, 181, 106, .22);
+    --sg-serif: "Noto Serif KR", "Nanum Myeongjo", "Batang", "AppleMyungjo", serif;
+  }
+  #cpanel, #banner, #minimap, #profile, #wallet, #dock button {
+    background: var(--sg-lacquer); border-color: var(--sg-trim);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .45), inset 0 0 0 3px rgba(0, 0, 0, .4), inset 0 0 0 4px var(--sg-trim-soft);
+  }
+  #cpanel, #banner, #profile, #wallet { border-radius: 8px; }
+  #dock button { border-radius: 8px; }
+  #dock button:hover { border-color: var(--gold); }
+  #dock button.on { background: linear-gradient(180deg, #e8c46a, #b98f3c); border-color: #f1d98f; }
+  .cp-name b, .bn-date, #profile .p-title { font-family: var(--sg-serif); letter-spacing: .04em; }
+  .cp-head { border-bottom: 1px solid var(--sg-trim); padding-bottom: 8px; }
+  .cp-force { border-radius: 4px; }
+  .cp-grid > div { border-radius: 4px; border: 1px solid var(--sg-trim-soft); background: rgba(0, 0, 0, .28); }
+  .cp-open { border-radius: 6px; background: linear-gradient(180deg, #e8c46a, #b98f3c); border-color: #f1d98f; }
+  #realm .rmap { background: radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, .55) 100%); }
+}
