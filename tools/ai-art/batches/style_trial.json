@@ -1,0 +1,115 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "style_trial",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+ },
+ "items": [
+  {
+   "id": "A_building",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 3588314008,
+   "prompt": "wooden village house, tiled roof, small cottage, isometric view, no humans, game asset, cel shading, thick clean outline, saturated flat colors, hand-painted, sticker style, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "A_tree",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 4280459308,
+   "prompt": "big leafy tree, green crown, brown trunk, isometric view, no humans, game asset, cel shading, thick clean outline, saturated flat colors, hand-painted, sticker style, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "A_animal",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 2109160436,
+   "prompt": "red fox, standing, side view, full body, no humans, game asset, cel shading, thick clean outline, saturated flat colors, hand-painted, sticker style, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "A_person",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 2245004320,
+   "prompt": "1boy, villager, plain tunic, standing, full body, front view, game asset, cel shading, thick clean outline, saturated flat colors, hand-painted, sticker style, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "B_building",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 3303971564,
+   "prompt": "wooden village house, tiled roof, small cottage, isometric view, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "B_tree",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 2653233137,
+   "prompt": "big leafy tree, green crown, brown trunk, isometric view, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "B_animal",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 983835992,
+   "prompt": "red fox, standing, side view, full body, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "B_person",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 1592987846,
+   "prompt": "1boy, villager, plain tunic, standing, full body, front view, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "C_building",
+   "model": "Illustrious-XL-v2.0",
+   "seed": 1911960134,
+   "prompt": "wooden village house, tiled roof, small cottage, isometric view, no humans, game asset, clean lineart, vibrant colors, soft cel shading, stylized fantasy, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "C_tree",
+   "model": "Illustrious-XL-v2.0",
+   "seed": 3684936227,
+   "prompt": "big leafy tree, green crown, brown trunk, isometric view, no humans, game asset, clean lineart, vibrant colors, soft cel shading, stylized fantasy, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "C_animal",
+   "model": "Illustrious-XL-v2.0",
+   "seed": 3427690715,
+   "prompt": "red fox, standing, side view, full body, no humans, game asset, clean lineart, vibrant colors, soft cel shading, stylized fantasy, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "C_person",
+   "model": "Illustrious-XL-v2.0",
+   "seed": 1021957693,
+   "prompt": "1boy, villager, plain tunic, standing, full body, front view, game asset, clean lineart, vibrant colors, soft cel shading, stylized fantasy, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame"
+  },
+  {
+   "id": "A_building_hr",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 3588314008,
+   "prompt": "wooden village house, tiled roof, small cottage, isometric view, no humans, game asset, cel shading, thick clean outline, saturated flat colors, hand-painted, sticker style, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame",
+   "hr": 1.33
+  },
+  {
+   "id": "A_animal_hr",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 2109160436,
+   "prompt": "red fox, standing, side view, full body, no humans, game asset, cel shading, thick clean outline, saturated flat colors, hand-painted, sticker style, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame",
+   "hr": 1.33
+  }
+ ]
+}

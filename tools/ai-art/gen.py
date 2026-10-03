@@ -69,6 +69,9 @@ def up():
 
 
 def generate(item, model, d):
+    model = item.get('model', model)      # 항목마다 모델을 바꿀 수 있다(그림체 시험 — 상업 허용 목록 MODELS 안에서만)
+    if model not in MODELS or MODELS[model].get('nc'):
+        raise ValueError(f'{item["id"]}: 모델 {model} 은 허용 목록 밖이거나 비상업')
     w, h = item.get('width', d.get('width', 768)), item.get('height', d.get('height', 1024))
     if w * h > MAX_PIXELS and MODELS[model]['sdxl']:
         raise ValueError(f'{item["id"]}: {w}x{h} 는 SDXL 안전 한도({MAX_PIXELS}px) 초과')
@@ -85,6 +88,11 @@ def generate(item, model, d):
         'send_images': True, 'save_images': False,
         'tiling': bool(item.get('tiling', d.get('tiling', False))),   # 순환 패딩: 좌우·상하가 이어지는 그림(K-0020 바닥 타일)
     }
+    hr = float(item.get('hr', d.get('hr', 0)) or 0)       # hires 배율(예: 1.33 → 768 이 1024) — 첫 단은 한도 안, 둘째 단에서 디테일을 더한다
+    if hr > 1.0 and not item.get('init_image'):
+        body.update({'enable_hr': True, 'hr_scale': hr, 'hr_upscaler': item.get('hr_upscaler', d.get('hr_upscaler', 'Latent')),
+                     'hr_second_pass_steps': int(item.get('hr_steps', d.get('hr_steps', 14))),
+                     'denoising_strength': float(item.get('hr_denoise', d.get('hr_denoise', 0.45)))})
     result = {}
     ep = '/sdapi/v1/txt2img'
     if item.get('init_image'):       # 이미지→이미지: 모델 렌더(_out/busts)의 머리색·옷·실루엣을 남기고 그림체만 바꾼다
@@ -163,7 +171,7 @@ def main():
             continue
         fails = 0
         open(p, 'wb').write(png)
-        lic = {'id': it['id'], 'generator': 'tools/ai-art/gen.py', 'model': model, 'model_license': MODELS[model]['license'],
+        lic = {'id': it['id'], 'generator': 'tools/ai-art/gen.py', 'model': it.get('model', model), 'model_license': MODELS[it.get('model', model)]['license'],
                'prompt': body['prompt'], 'negative_prompt': body['negative_prompt'], 'seed': info.get('seed', body['seed']),
                'steps': body['steps'], 'cfg_scale': body['cfg_scale'], 'sampler': body['sampler_name'], 'size': [body['width'], body['height']],
                'seconds': round(secs, 1), 'date': datetime.date.today().isoformat(),

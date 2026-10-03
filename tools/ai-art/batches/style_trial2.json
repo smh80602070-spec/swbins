@@ -1,0 +1,79 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "style_trial2",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet"
+ },
+ "items": [
+  {
+   "id": "B_building",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 3303971564,
+   "prompt": "single wooden village house, tiled roof, small cottage, three-quarter view from above, no humans, isolated object, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "B_tree",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 2653233137,
+   "prompt": "single big leafy tree, round green crown, brown trunk, visible roots, three-quarter view, no humans, isolated object, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "B_animal",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 983835992,
+   "prompt": "red fox, standing, side view, full body, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "B_person",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 1592987846,
+   "prompt": "1boy, villager, plain tunic, standing, full body, front view, simple background, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "D_building",
+   "model": "Illustrious-XL-v2.0",
+   "seed": 4077192534,
+   "prompt": "single wooden village house, tiled roof, small cottage, three-quarter view from above, no humans, isolated object, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "D_tree",
+   "model": "Illustrious-XL-v2.0",
+   "seed": 3654927238,
+   "prompt": "single big leafy tree, round green crown, brown trunk, visible roots, three-quarter view, no humans, isolated object, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "D_animal",
+   "model": "Illustrious-XL-v2.0",
+   "seed": 2145776766,
+   "prompt": "red fox, standing, side view, full body, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "D_person",
+   "model": "Illustrious-XL-v2.0",
+   "seed": 587222362,
+   "prompt": "1boy, villager, plain tunic, standing, full body, front view, simple background, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  }
+ ]
+}
