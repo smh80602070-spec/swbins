@@ -238,6 +238,34 @@
      "dir": "saga-web/shared/assets/web2d/tile"
     }
    ]
+  },
+  {
+   "id": "region-village",
+   "src": "saga-assets/regions/village",
+   "recursive": true,
+   "include": [
+    "*.glb",
+    "*.jpg",
+    "layout.json",
+    "*.license.json"
+   ],
+   "note": "K-0051 지역 마을 — 조각 16(툰 GLB, 바탕색 1024px)·땅 재질 3(1024px JPEG)·배치표 layout.json(조각 위치·길·나무·꽃·지형 높이). 엔진은 이 배치표로 같은 장면을 짠다",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/regions/village",
+     "sidecar": [
+      ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Regions/Village",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
   }
  ]
 }

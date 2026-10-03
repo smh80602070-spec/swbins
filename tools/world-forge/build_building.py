@@ -364,7 +364,7 @@ def build(rc, out):
     bpy.ops.object.transform_apply(location=True, rotation=False, scale=False)
     tris = sum(len(p.vertices) - 2 for p in ob.data.polygons)
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-    W.export_glb([ob], out, 256 if arg('--style', 'real') == 'toon' else int(rc.get('tex_max', 1024)),
+    W.export_glb([ob], out, int(os.environ.get('WF_TOON_PX', '256')) if arg('--style', 'real') == 'toon' else int(rc.get('tex_max', 1024)),
                  'JPEG' if arg('--style', 'real') == 'toon' else 'AUTO')
     lic = {'id': rc['id'], 'generator': 'tools/world-forge/build_building.py', 'blender': bpy.app.version_string,
            'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0)',

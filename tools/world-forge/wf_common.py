@@ -116,8 +116,9 @@ def _toon_material(mat, nt, bsdf, tid, tint, key, gain=1.0, sat=1.0):
     fn = idx.get('diff')
     if fn:
         im = bpy.data.images.load(os.path.join(SRC, fn), check_existing=False)
-        im.scale(256, 256)
-        px = np.array(im.pixels[:], np.float32).reshape(256, 256, 4)
+        N = int(os.environ.get("WF_TOON_PX", "256"))      # 기본 256 — 지역 세트처럼 질감이 중요한 곳은 WF_TOON_PX=1024
+        im.scale(N, N)
+        px = np.array(im.pixels[:], np.float32).reshape(N, N, 4)
         rgb = px[..., :3]
         lum = rgb.mean(axis=2, keepdims=True)
         rgb = np.clip(lum + (rgb - lum) * 1.18 * sat, 0, 1)
@@ -125,7 +126,7 @@ def _toon_material(mat, nt, bsdf, tid, tint, key, gain=1.0, sat=1.0):
         if tint:
             rgb = rgb * np.array(hex_rgba(tint)[:3], np.float32) ** (1 / 2.2)
         px[..., :3] = rgb
-        out = bpy.data.images.new(f'{tid}_toon', 256, 256, alpha=False)
+        out = bpy.data.images.new(f'{tid}_toon', N, N, alpha=False)
         out.pixels.foreach_set(px.ravel())
         out.pack()
         n = nt.nodes.new('ShaderNodeTexImage')

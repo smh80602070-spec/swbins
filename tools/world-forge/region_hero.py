@@ -100,6 +100,7 @@ def pbr_mat(tid, tile=4.0, tint=None, rough_mul=1.0, name=None, sat=1.0):
 
 
 _TMPL = {}
+LAYOUT = {'pieces': [], 'roads': [], 'trees': [], 'flowers': [], 'plaza': None}   # 엔진이 같은 장면을 다시 짜는 배치표(HERO_LAYOUT 환경변수가 있으면 파일로 씀)
 
 
 def place(name, loc, rot=0.0, scale=1.0, real=None):
@@ -127,6 +128,7 @@ def place(name, loc, rot=0.0, scale=1.0, real=None):
         mp[o].parent = mp.get(o.parent, holder)
         mp[o].matrix_parent_inverse = o.matrix_parent_inverse.copy()
     holder.location, holder.rotation_euler, holder.scale = loc, (0, 0, rot), (scale,) * 3
+    LAYOUT['pieces'].append({'piece': name, 'pos': [round(loc[0], 3), round(loc[1], 3), round(loc[2], 3)], 'rot': round(rot, 4), 'scale': round(scale, 3)})
     return holder, list(mp.values())
 
 
@@ -536,6 +538,7 @@ def road_mesh(p0, p1, width, mat, lift=0.05, step=1.5):
     o = bpy.data.objects.new('road', me)
     sc.collection.objects.link(o)
     me.materials.append(mat)
+    LAYOUT['roads'].append({'from': [round(p0[0], 2), round(p0[1], 2)], 'to': [round(p1[0], 2), round(p1[1], 2)], 'width': width, 'mat': mat.name})
     return o
 
 
@@ -1372,6 +1375,7 @@ def trees_round(specs, trunk_mat, leaf_mats):
     for (x, y, z, s, ci) in specs:
         trunks.append((x, y, z, 0.28 * s, 2.4 * s, 0.0, 0.0))
         groups[ci].append((x, y, z + 2.0 * s, s))
+    LAYOUT['trees'] = [[round(x, 2), round(y, 2), round(z, 2), round(s, 3), ci] for (x, y, z, s, ci) in specs]
     cone_mesh('trunks', trunks, trunk_mat, sides=6)
     for gi, gl in enumerate(groups):
         if not gl:
@@ -1405,6 +1409,7 @@ def flowers(n, colors, xr, yr, avoid=None):
             z = ground_z(x, y)
             if z is None:
                 continue
+            LAYOUT['flowers'].append([ci, round(x, 2), round(y, 2)])
             for k in range(rng.randint(3, 6)):
                 specs.append((x + rng.uniform(-0.15, 0.15), y + rng.uniform(-0.15, 0.15), z, 0.025, rng.uniform(0.14, 0.28), rng.uniform(-0.2, 0.2), rng.uniform(-0.2, 0.2)))
         cone_mesh('flowers%d' % ci, specs, mat_simple('flower%d' % ci, col, 0.6), sides=5)
@@ -1500,6 +1505,18 @@ def village():
     vs.inputs['Color'].default_value = (1.0, 0.9, 0.8, 1)
     nt.links.new(vs.outputs[0], ov.inputs['Volume'])
     v.data.materials.append(vm)
+    if os.environ.get('HERO_LAYOUT'):
+        step, xs, ys = 1.5, (-60.0, 60.0), (-14.0, 100.0)
+        nx, ny = int((xs[1] - xs[0]) / step) + 1, int((ys[1] - ys[0]) / step) + 1
+        hs = []
+        for j in range(ny):
+            for i in range(nx):
+                z = ground_z(xs[0] + i * step, ys[0] + j * step)
+                hs.append(None if z is None else round(z, 2))
+        LAYOUT['terrain'] = {'x0': xs[0], 'y0': ys[0], 'step': step, 'nx': nx, 'ny': ny, 'heights': hs}
+        LAYOUT['plaza'] = {'center': [J[0], J[1]], 'radius': 9.0}
+        LAYOUT['note'] = 'region_hero.py village 가 만든 배치표 — 손으로 고치지 않는다. 좌표는 Blender 기준(x 오른쪽·y 안쪽·z 위, 미터). 엔진은 변환해서 쓴다.'
+        _json.dump(LAYOUT, open(os.environ['HERO_LAYOUT'], 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     camera((2.5, -9.0, 2.0), (-1.0, 42, 9.5), lens=24)
 
 

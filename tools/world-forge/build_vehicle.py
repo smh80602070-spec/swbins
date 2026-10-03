@@ -175,7 +175,7 @@ def build(pid, out, style):
     pts = [Vector(c) for c in ob.bound_box]
     size = [round(max(p[i] for p in pts) - min(p[i] for p in pts), 2) for i in range(3)]
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
-    W.export_glb([ob], out, 256 if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
+    W.export_glb([ob], out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
     lic = {'id': pid, 'generator': 'tools/world-forge/build_vehicle.py', 'blender': bpy.app.version_string, 'style': style,
            'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)',
            'inputs': sorted(f'polyhaven: {m}' for m in C.mats), 'size_m': size, 'tris': tris}
