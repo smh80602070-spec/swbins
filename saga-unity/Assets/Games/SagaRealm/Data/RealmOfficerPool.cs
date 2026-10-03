@@ -51,6 +51,12 @@ namespace Saga.Realm.Data
 
         public static IEnumerable<string> AllIds => Catalog.Keys;
 
+        /// <summary>성마다 수색으로 찾을 재야 전부(시간 틈 아홉 포함 — tasks U-0027 `recruitFree` 가 훑는다).</summary>
+        public static IEnumerable<string> AllHiddenIds
+        {
+            get { foreach (var kv in HiddenByCity) foreach (var id in kv.Value) yield return id; }
+        }
+
         public static string[] HiddenAt(string cityId) => HiddenByCity.TryGetValue(cityId, out var ids) ? ids : System.Array.Empty<string>();
     }
 }

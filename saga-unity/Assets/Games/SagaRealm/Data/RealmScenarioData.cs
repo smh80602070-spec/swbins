@@ -76,12 +76,15 @@ namespace Saga.Realm.Data
             public Fx[] Fx;
         }
 
-        /// <summary>단계 — 카드 id 마다 하나. Kind `own` = 목표 성을 <see cref="Months"/> 달 안에 차지(Prov = 어울리는 지역, Near = 어울리는 땅 plain·river).
+        /// <summary>단계 — 카드 id 마다 하나. Kind `own` = 목표 성을 <see cref="Months"/> 달 안에 차지(Prov = 어울리는 지역, Near = 어울리는 땅 plain·river) ·
+        /// `debate` = 설전 세 문답(정답 2 이상이면 이김) · `duel` = 일기토(이긴 합이 더 많으면 이김, tasks U-0027).
         /// 웹 `loyalId`(충성)는 이 트랙에 충성 축이 없어 기존 카드 표처럼 수도 기술 +2n 으로 옮겼다.</summary>
         [System.Serializable]
         public sealed class Stage
         {
             public string Id, Kind, Near, Prov, TitleKo;
+            /// <summary>debate·duel — 도입 카드 글, 일기토 상대 무장 id(이미 우리 사람이면 단계를 안 연다).</summary>
+            public string IntroKo, Foe;
             public int Months;
             public StageBranch Win, Lose;
         }

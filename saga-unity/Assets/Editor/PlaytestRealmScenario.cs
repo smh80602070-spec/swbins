@@ -41,6 +41,7 @@ namespace Saga.EditorTools
                 CheckSave(parts);
                 CheckSide(parts);
                 CheckStages(parts);
+                CheckPre(parts);
             }
             finally
             {
@@ -464,7 +465,8 @@ namespace Saga.EditorTools
 
         private static void CheckStages(List<string> parts)
         {
-            var stages = RealmScenarioData.Stages;
+            if (RealmScenarioData.Stages.Length != 11) Fail($"단계 표가 열하나가 아님({RealmScenarioData.Stages.Length})");
+            var stages = RealmScenarioData.Stages.Where(s => s.Kind == "own").ToArray();   // 성 차지 여섯(앞 단 다섯은 CheckPre)
             var months = new[] { 10, 10, 12, 12, 12, 12 };
             var ids = new[] { "r2_plains", "r3_river", "r4_rift", "r4_plague", "r5_silk", "r5_south" };
             if (stages.Length != 6 || !stages.Select(s => s.Id).SequenceEqual(ids) || !stages.Select(s => s.Months).SequenceEqual(months)) Fail("단계 표가 여섯(10·10·12·12·12·12)이 아님");
@@ -552,9 +554,9 @@ namespace Saga.EditorTools
                 RealmSaveState.ApplyJson(old);
                 if (RealmScenario.StageId != null) Fail("옛 세이브(필드 없음)인데 단계가 남음");
 
-                // ⑤ 불변 — 설전·일기토 카드는 단계를 안 열고, 고르기 카드 모양은 그대로
+                // ⑤ 불변 — 설전 카드는 성 차지(목표 성) 단계가 아니라 앞 단 단계를 열고(U-0027), 고르기 카드 모양은 그대로
                 RealmScenario.Resolve("r1_first_ally", 0);
-                if (RealmScenario.StageId != null) Fail("설전 카드가 성 차지 단계를 열었다");
+                if (RealmScenario.StageId != "r1_first_ally" || RealmScenario.StageTarget != "") Fail($"설전 카드가 목표 성 있는 단계를 열었다 id={RealmScenario.StageId} target='{RealmScenario.StageTarget}'");
                 var dd = RealmScenario.Describe("r2_plains");
                 if (string.IsNullOrEmpty(dd.a) || string.IsNullOrEmpty(dd.b) || string.IsNullOrEmpty(dd.c)) Fail("고르기 카드 단추 셋이 아님");
                 parts.Add($"단계 성 차지 여섯 (목표 {target} → 이김 +500 · r5_silk 12달 → 진 −300 · 세이브 왕복·옛 세이브 · 본 사슬 쉼)");
@@ -564,6 +566,154 @@ namespace Saga.EditorTools
                 RealmScenario.CapturedForTest = null;
                 RealmScenario.StagesEnabled = false;
                 RealmScenario.TurnForTest = null;
+            }
+        }
+
+        // ---- 단계(2) — 설전 셋·일기토 둘(tasks U-0027) ----------------------------------------------------------
+
+        private static BindingFlags Priv => BindingFlags.NonPublic | BindingFlags.Instance;
+
+        private static void CheckPre(List<string> parts)
+        {
+            var pre = RealmScenarioData.Stages.Where(s => s.Kind != "own").ToArray();
+            var ids = new[] { "r1_first_ally", "r2_debate", "r4_tomb", "r5_west", "r3_duel" };
+            var kinds = new[] { "debate", "debate", "duel", "debate", "duel" };
+            if (!pre.Select(s => s.Id).SequenceEqual(ids) || !pre.Select(s => s.Kind).SequenceEqual(kinds)) Fail("앞 단 다섯 종류가 다름");
+            foreach (var s in pre)
+            {
+                if (string.IsNullOrEmpty(s.IntroKo) || string.IsNullOrEmpty(s.TitleKo) || s.Win.Fx.Length == 0 || s.Lose.Fx.Length == 0 || RealmScenarioData.Get(s.Id) == null) Fail($"{s.Id} 앞 단 글·효과·카드");
+                if (s.Kind == "duel" && string.IsNullOrEmpty(s.Foe)) Fail($"{s.Id} 일기토 상대가 없다");
+                foreach (var f in s.Win.Fx.Concat(s.Lose.Fx))
+                    if (!new[] { "gold", "sec", "train", "tech", "recruit", "recruitFree", "quiz", "lend" }.Contains(f.T)) Fail($"{s.Id} 모르는 효과 {f.T}");
+            }
+            // 일기토 판정 — 이긴 합이 더 많으면 이김, 같으면 승부 안 남
+            var w = new List<string> { "win", "win", "lose" }; var l = new List<string> { "lose", "lose", "win" };
+            var t = new List<string> { "win", "lose", "tie" }; var tt = new List<string> { "tie", "tie", "tie" };
+            if (RealmDuelState.Decide(w) != true || RealmDuelState.Decide(l) != false || RealmDuelState.Decide(t) != null || RealmDuelState.Decide(tt) != null || RealmDuelState.Decide(null) != null) Fail("일기토 판정(Decide)");
+            if (RealmDuelState.MaxRounds != 6) Fail("일기토 연장 상한");
+
+            RealmScenario.StagesEnabled = true;
+            RealmScenario.Enabled = true;
+            RealmCityState.AddGold(9000);
+            try
+            {
+                RealmScenario.ResetForTest(); RealmScenario.StagesEnabled = true; RealmScenario.Enabled = true;
+                RealmScenario.TurnForTest = 300;
+                var rec = RealmCityState.CityRecord(Cap);
+
+                // 설전 — 열림(목표 성 없음)·곧 결과 카드·도입 카드·앞 단 전엔 못 끝냄·짐/이김 효과
+                RealmScenario.Resolve("r2_debate", 0);
+                if (RealmScenario.StageId != "r2_debate" || RealmScenario.StageTarget != "" || RealmScenario.StageLine() != null) Fail($"설전 단계 열림 id={RealmScenario.StageId} target='{RealmScenario.StageTarget}'");
+                if (RealmScenario.DueCardId() != "r2_debate_end") Fail($"설전 결과 카드가 곧 안 옴({RealmScenario.DueCardId()})");
+                if (!RealmScenario.NeedsPre("r2_debate_end") || RealmScenario.PreKind("r2_debate_end") != "debate") Fail("NeedsPre/PreKind(설전)");
+                var intro = RealmScenario.Describe("r2_debate_end");
+                if (!intro.body.Contains(RealmScenarioData.StageOf("r2_debate").IntroKo.Substring(0, 6)) || string.IsNullOrEmpty(intro.a) || intro.b != "" || intro.c != "") Fail("도입 카드 모양");
+                var early = RealmScenario.Resolve("r2_debate_end", 0);
+                if (early.ok || RealmScenario.StageId != "r2_debate") Fail("앞 단 전에 결과가 나옴");
+                int correct0 = RealmQuizState.GetProgress().Correct;
+                RealmScenario.SetPre(false);
+                if (RealmScenario.NeedsPre("r2_debate_end") || !RealmScenario.Describe("r2_debate_end").body.Contains(RealmScenarioData.StageOf("r2_debate").Lose.TextKo.Substring(0, 6))) Fail("진 결과 카드 글");
+                var lose = RealmScenario.Resolve("r2_debate_end", 0);
+                if (!lose.ok || RealmQuizState.GetProgress().Correct != correct0 + 5 || RealmScenario.StageId != null) Fail($"설전 짐 효과(문답 +5) {RealmQuizState.GetProgress().Correct - correct0}");
+
+                // 이김 — 문답 +20 · 재야 지력 으뜸 합류(없으면 기술 +10)
+                string expectPick = null; int bw = -1;
+                foreach (var hid in RealmOfficerPool.AllHiddenIds)
+                {
+                    if (RealmCityState.RosterIds.Contains(hid) || RealmScenarioData.TimeFolk.Contains(hid)) continue;
+                    var ho = RealmOfficerPool.Get(hid);
+                    if (ho != null && ho.Wisdom > bw) { bw = ho.Wisdom; expectPick = hid; }
+                }
+                correct0 = RealmQuizState.GetProgress().Correct;
+                RealmScenario.Resolve("r2_debate", 0);   // 카드 선택 효과를 먼저 받고 — 결과 카드의 변화만 잰다
+                int tech0 = rec.Tech;
+                RealmScenario.SetPre(true);
+                RealmScenario.Resolve("r2_debate_end", 0);
+                if (RealmQuizState.GetProgress().Correct != correct0 + 20) Fail("설전 이김 효과(문답 +20)");
+                if (expectPick != null ? !RealmCityState.RosterIds.Contains(expectPick) : (rec.Tech != tech0 + 10 && tech0 + 10 <= 900)) Fail($"재야 합류 {expectPick}");
+
+                // 화친 설전 — 이김: 금 +300
+                RealmScenario.Resolve("r1_first_ally", 0);   // 카드 선택 효과(금 등)는 먼저 받고 — 결과 카드의 변화만 잰다
+                int gold0 = RealmCityState.Gold;
+                RealmScenario.SetPre(true);
+                RealmScenario.Resolve("r1_first_ally_end", 0);
+                if (RealmCityState.Gold != gold0 + 300 || RealmScenario.StageId != null) Fail($"화친 설전 이김 금 {RealmCityState.Gold - gold0}");
+
+                // 일기토 — 상대가 이미 우리 사람이면 안 열림 · 아니면 열려 이기면 합류, 지면 글만
+                RealmScenario.MineForTest = id => id == "tm_yeongjeom";
+                RealmScenario.Resolve("r3_duel", 0);
+                if (RealmScenario.StageId != null) Fail("상대가 우리 사람인데 일기토가 열림");
+                RealmScenario.MineForTest = null;
+                bool already = RealmCityState.RosterIds.Contains("tm_yeongjeom");
+                RealmScenario.Resolve("r3_duel", 0);
+                if (already) { if (RealmScenario.StageId != null) Fail("영점이 이미 합류했는데 일기토가 열림"); }
+                else
+                {
+                    if (RealmScenario.StageId != "r3_duel" || RealmScenario.PreKind("r3_duel_end") != "duel") Fail("일기토 단계가 안 열림");
+                    RealmScenario.SetPre(false);
+                    RealmScenario.Resolve("r3_duel_end", 0);
+                    if (RealmCityState.RosterIds.Contains("tm_yeongjeom") || RealmScenario.StageId != null) Fail("일기토 졌는데 영점이 합류함");
+                    RealmScenario.Resolve("r3_duel", 0);
+                    RealmScenario.SetPre(true);
+                    RealmScenario.Resolve("r3_duel_end", 0);
+                    if (!RealmCityState.RosterIds.Contains("tm_yeongjeom")) Fail("일기토 이겼는데 영점이 합류 안 함");
+                }
+                // 묘문 일기토 지면 — 훈련·치안 내려감(상대 백기는 무장 표에 없어도 된다)
+                RealmScenario.Resolve("r4_tomb", 0);
+                int train0 = rec.Train, sec0 = rec.Sec;
+                RealmScenario.SetPre(false);
+                RealmScenario.Resolve("r4_tomb_end", 0);
+                if (rec.Train > train0 || rec.Sec > sec0 || RealmScenario.StageId != null) Fail($"묘문 일기토 짐 효과 train {rec.Train - train0} sec {rec.Sec - sec0}");
+
+                // 세이브 — 앞 단 단계는 목표 성 없이 왕복, 앞 단 결과는 안 담는다(불러오면 도입부터)
+                RealmScenario.Resolve("r5_west", 0);
+                RealmScenario.SetPre(true);
+                string json = RealmSaveState.ToJson();
+                if (!json.Contains("\"scenarioStageId\":\"r5_west\"")) Fail("설전 단계가 세이브에 없다");
+                RealmScenario.RestoreStage("r5_west", "", 305);
+                if (RealmScenario.StageId != "r5_west" || RealmScenario.StageTarget != "" || !RealmScenario.NeedsPre("r5_west_end")) Fail("설전 단계 복원(앞 단 결과는 비워야 한다)");
+                RealmScenario.RestoreStage("r5_west", "nope", 305);
+                if (RealmScenario.StageId != "r5_west" || RealmScenario.StageTarget != "") Fail("설전 단계는 모르는 성 값을 무시해야 한다");
+                RealmScenario.RestoreStage(null, null, 0);
+
+                // UI — 결과 카드 단추를 누르면 설전 패널이 열리고, 세 문답을 맞히면 이긴 결과가 난다(헤드리스 슬라이스에만 UI 가 있다)
+                var ui = Object.FindFirstObjectByType<RealmCommandUi>();
+                if (ui != null)
+                {
+                    RealmEventState.ClearForTest();
+                    RealmScenario.TurnForTest = 400;
+                    RealmScenario.Resolve("r2_debate", 0);
+                    RealmEventState.RollForMonth();
+                    if (!RealmEventState.Current.HasValue || RealmEventState.Current.Value.OfficerId != "r2_debate_end") Fail("UI 시험 준비: 결과 카드가 안 뜸");
+                    else
+                    {
+                        var card = RealmEventState.Current.Value;
+                        var f = typeof(RealmCommandUi);
+                        var debatePanel = f.GetField("_debatePanel", Priv).GetValue(ui) as GameObject;
+                        var ev = f.GetMethod("ChooseEvent", Priv);
+                        int c0 = RealmQuizState.GetProgress().Correct;
+                        ev.Invoke(ui, new object[] { card, RealmEventState.Choice.A });
+                        if (!debatePanel.activeSelf || !RealmScenario.NeedsPre("r2_debate_end") || !RealmEventState.Current.HasValue) Fail("도입 카드 단추가 설전 패널을 안 엶");
+                        else
+                        {
+                            var qs = f.GetField("_debateQuestions", Priv).GetValue(ui) as List<RealmQuizState.Presented>;
+                            var answer = f.GetMethod("ChooseDebateAnswer", Priv);
+                            int n = qs.Count;
+                            for (int k = 0; k < n; k++) answer.Invoke(ui, new object[] { qs[k].CorrectIndex });
+                            if (debatePanel.activeSelf || RealmScenario.StageId != null || RealmEventState.Current.HasValue) Fail("설전을 마쳤는데 결과가 안 났다");
+                            if (RealmQuizState.GetProgress().Correct < c0 + 20) Fail($"UI 설전 이김 효과 {RealmQuizState.GetProgress().Correct - c0}");
+                        }
+                    }
+                    RealmEventState.ClearForTest();
+                }
+                parts.Add("단계 설전 셋·일기토 둘 (도입 카드→앞 단→결과 · 설전 이김 문답 +20·재야 합류/짐 +5 · 일기토 합류/짐 · 상대가 우리 사람이면 안 열림 · 세이브 왕복 · UI 패널 콜백)");
+            }
+            finally
+            {
+                RealmScenario.MineForTest = null;
+                RealmScenario.StagesEnabled = false;
+                RealmScenario.TurnForTest = null;
+                RealmEventState.ClearForTest();
             }
         }
 

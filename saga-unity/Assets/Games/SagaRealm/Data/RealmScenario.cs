@@ -38,6 +38,8 @@ namespace Saga.Realm.Data
         // 단계(tasks U-0026) — 성 차지 카드를 고르면 열린다. `_stageId` 는 단계를 연 카드 id(없으면 null).
         private static string _stageId, _stageTarget;
         private static int _stageSince;
+        /// <summary>설전·일기토 단계의 앞 단 결과(이김/짐) — 앞 단이 아직이면 null. 세이브엔 안 담는다(도입 카드가 뜬 채 저장·불러오면 처음부터 다시 묻는다).</summary>
+        private static bool? _preWon;
         /// <summary>진단 — 정해 두면 그 성을 차지한 것으로 본다(실제 함락 대신).</summary>
         public static System.Func<string, bool> CapturedForTest;
         /// <summary>끄는 손잡이 — 진단이 기본으로 끈다(성 차지 단계가 열려 본 사슬이 쉬면 앞선 진단이 흔들린다). 단계 진단만 켠다.</summary>
@@ -193,6 +195,8 @@ namespace Saga.Realm.Data
                     case "train": parts.Add(string.Format(neg ? RealmLocalization.T("scenario.hint.train_minus", "수도 훈련 -{0}") : RealmLocalization.T("scenario.hint.train", "수도 훈련 +{0}"), n)); break;
                     case "tech": parts.Add(string.Format(neg ? RealmLocalization.T("scenario.hint.tech_minus", "수도 기술 -{0}") : RealmLocalization.T("scenario.hint.tech", "수도 기술 +{0}"), n)); break;
                     case "recruit": parts.Add(string.Format(RealmLocalization.T("scenario.hint.recruit", "{0} 합류"), NameOf(f.Id))); break;
+                    case "recruitFree": parts.Add(RealmLocalization.T("scenario.hint.recruit_free", "재야 인재 합류")); break;
+                    case "quiz": parts.Add(string.Format(RealmLocalization.T("scenario.hint.quiz", "문답 정답 +{0}"), n)); break;
                 }
             }
             return string.Join(" · ", parts);
@@ -327,7 +331,15 @@ namespace Saga.Realm.Data
         private static string BeginStage(string cardId)
         {
             var st = RealmScenarioData.StageOf(cardId);
-            if (!StagesEnabled || st == null || st.Kind != "own") return null;
+            if (!StagesEnabled || st == null) return null;
+            if (st.Kind == "debate" || st.Kind == "duel")
+            {
+                // 설전·일기토 — 목표 성 없이 열고 곧(다음 달) 결과 카드가 와서 앞 단을 치른다. 일기토 상대가 이미 우리 사람이면 열지 않는다.
+                if (st.Kind == "duel" && !string.IsNullOrEmpty(st.Foe) && Mine(st.Foe)) return null;
+                _stageId = cardId; _stageTarget = ""; _stageSince = TurnNow; _preWon = null;
+                return null;
+            }
+            if (st.Kind != "own") return null;
             string target = PickTarget(st.Near, st.Prov);
             if (string.IsNullOrEmpty(target)) return null;
             _stageId = cardId; _stageTarget = target; _stageSince = TurnNow;
@@ -341,17 +353,39 @@ namespace Saga.Realm.Data
         public static string StageLine()
         {
             var st = _stageId == null ? null : RealmScenarioData.StageOf(_stageId);
-            if (st == null) return null;
+            if (st == null || st.Kind != "own") return null;
             return string.Format(RealmLocalization.T("scenario.stage.line", "🎯 {0} 차지 — {1}달 남음"), CityName(_stageTarget), StageMonthsLeft);
         }
 
-        private static void ClearStage() { _stageId = null; _stageTarget = null; _stageSince = 0; }
+        private static void ClearStage() { _stageId = null; _stageTarget = null; _stageSince = 0; _preWon = null; }
+
+        /// <summary>결과 카드가 앞 단(설전·일기토)을 먼저 치러야 하는가 — UI 가 단추를 눌렀을 때 묻는다.</summary>
+        public static bool NeedsPre(string id) => IsStageEnd(id, out var sg) && sg.Kind != "own" && _preWon == null;
+
+        /// <summary>앞 단 종류 — "debate" · "duel"(그 밖은 null).</summary>
+        public static string PreKind(string id) => IsStageEnd(id, out var sg) && sg.Kind != "own" ? sg.Kind : null;
+
+        /// <summary>UI 가 앞 단 결과를 넘긴다 — 이김이면 true.</summary>
+        public static void SetPre(bool won) { _preWon = won; }
+
+        /// <summary>설전 난도를 정하는 책사 지력 — 로스터에서 가장 높은 지력.</summary>
+        public static int AdviserWisdom()
+        {
+            int best = 0;
+            foreach (var id in RealmCityState.RosterIds)
+            {
+                var o = RealmOfficerPool.Get(id);
+                if (o != null && o.Wisdom > best) best = o.Wisdom;
+            }
+            return best;
+        }
 
         /// <summary>단계가 열려 있을 때 결과 카드 id — 목표를 차지했거나 달 수가 다 됐을 때만(아니면 null).</summary>
         private static string StageFire()
         {
             var st = RealmScenarioData.StageOf(_stageId);
             if (st == null) { ClearStage(); return null; }
+            if (st.Kind != "own") return _stageId + "_end";   // 설전·일기토는 때를 안 기다린다
             if (!IsCaptured(_stageTarget) && TurnNow - _stageSince < st.Months) return null;
             return _stageId + "_end";
         }
@@ -359,10 +393,16 @@ namespace Saga.Realm.Data
         private static (string title, string body, string a, string b, string c) DescribeEnd(RealmScenarioData.Stage sg)
         {
             var c = CardOf(sg.Id);
-            bool won = IsCaptured(_stageTarget);
-            var br = won ? sg.Win : sg.Lose;
             string title = (c != null ? c.Emoji + " " : "") + RealmLocalization.T($"scenario.stage.{sg.Id}.title", sg.TitleKo);
             string act = c != null ? RealmLocalization.T($"scenario.act.{c.Act}", ActKo[c.Act]) : "";
+            if (sg.Kind != "own" && _preWon == null)
+            {
+                // 도입 카드 — 단추를 누르면 UI 가 설전·일기토를 연다
+                string intro = Fill(RealmLocalization.T($"scenario.stage.{sg.Id}.intro", sg.IntroKo));
+                return (title, (act.Length > 0 ? "<size=70%>" + act + "</size>\n" : "") + intro, RealmLocalization.T("scenario.stage.start", "시작"), "", "");
+            }
+            bool won = sg.Kind == "own" ? IsCaptured(_stageTarget) : _preWon == true;
+            var br = won ? sg.Win : sg.Lose;
             string text = Fill(RealmLocalization.T($"scenario.stage.{sg.Id}.{(won ? "win" : "lose")}", br.TextKo));
             string body = (act.Length > 0 ? "<size=70%>" + act + "</size>\n" : "") + text + "\n<size=70%>" + HintOf(br.Fx) + "</size>";
             return (title, body, RealmLocalization.T("scenario.stage.confirm", "확인"), "", "");
@@ -370,7 +410,8 @@ namespace Saga.Realm.Data
 
         private static (string message, bool ok) ResolveEnd(RealmScenarioData.Stage sg)
         {
-            bool won = IsCaptured(_stageTarget);
+            if (sg.Kind != "own" && _preWon == null) return (RealmLocalization.T("scenario.stage.not_yet", "먼저 겨뤄야 한다"), false);
+            bool won = sg.Kind == "own" ? IsCaptured(_stageTarget) : _preWon == true;
             var br = won ? sg.Win : sg.Lose;
             string cap = Capital;
             foreach (var f in br.Fx) ApplyStage(f, cap);
@@ -382,7 +423,31 @@ namespace Saga.Realm.Data
         private static void ApplyStage(RealmScenarioData.Fx f, string cap)
         {
             if (f.T == "gold" && f.N < 0) { RealmCityState.TrySpendGold(Mathf.Min(-f.N, RealmCityState.Gold)); return; }
+            switch (f.T)
+            {
+                case "quiz": RealmQuizState.AddBonusCorrect(f.N); return;       // 문답 정답 수 가산(문화 승리 기준에 합쳐진다)
+                case "lend": return;                                             // 이웃 세력으로 떠난다 — 이 트랙엔 이웃 군주가 없어 글만
+                case "recruitFree":
+                    if (cap == null) return;
+                    string pick = PickFreeOfficer();
+                    if (pick != null) RealmCityState.JoinOfficer(pick, cap);
+                    else RealmCityState.AdjustCity(cap, tech: 10);               // 재야가 없으면 기존 등용 규칙처럼 기술 +10
+                    return;
+            }
             Apply(f, cap);
+        }
+
+        /// <summary>재야 중 지력 으뜸 하나(시간 틈 아홉·이미 우리 사람은 뺀다) — 없으면 null.</summary>
+        private static string PickFreeOfficer()
+        {
+            string best = null; int bw = -1;
+            foreach (var id in RealmOfficerPool.AllHiddenIds)
+            {
+                if (RealmCityState.RosterIds.Contains(id) || System.Array.IndexOf(RealmScenarioData.TimeFolk, id) >= 0) continue;
+                var o = RealmOfficerPool.Get(id);
+                if (o != null && o.Wisdom > bw) { bw = o.Wisdom; best = id; }
+            }
+            return best;
         }
 
         /// <summary>세이브용 — 열린 단계(없으면 null·null·0).</summary>
@@ -392,9 +457,10 @@ namespace Saga.Realm.Data
         public static void RestoreStage(string id, string target, int since)
         {
             ClearStage();
-            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(target)) return;
-            if (RealmScenarioData.StageOf(id) == null || RealmEnemyCity.Get(target) == null) return;
-            _stageId = id; _stageTarget = target; _stageSince = since;
+            var st = string.IsNullOrEmpty(id) ? null : RealmScenarioData.StageOf(id);
+            if (st == null) return;
+            if (st.Kind == "own" && (string.IsNullOrEmpty(target) || RealmEnemyCity.Get(target) == null)) return;
+            _stageId = id; _stageTarget = st.Kind == "own" ? target : ""; _stageSince = since;
         }
 
         private static void Apply(RealmScenarioData.Fx f, string cap)
