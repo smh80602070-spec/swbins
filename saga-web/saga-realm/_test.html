@@ -101,6 +101,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/ai.js"></script>
 <script src="js/realm3d.js"></script>
 <script src="js/ui-rtk.js"></script>
+<script src="js/cpanel.js"></script>
 <script src="js/game.js"></script>
 <script>
 (function () {
@@ -222,6 +223,19 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var off = M.territory(link, st(link, 'x', 'x'), col); DG.cfg.mode2d.on = keep;
       return lines(same) === 2 && same.indexOf('#112233') >= 0 && same.indexOf('rtedge') >= 0 && lines(diff) === 0 && diff.indexOf('#112233') >= 0 && diff.indexOf('#445566') >= 0 &&
         none === '' && off === '' && wetOk && ('같은 세력 이음 · 다른 세력·물길 안 이음 · 주인 없음/2D 아님 빈 문자열');
+    });
+
+    t('성 정보 패널(W-0027) — 내 성·남의 성 모두 이름·세력·수치·태수가 찍히고, 성 id 가 틀리면 빈 문자열, 클릭 좌표로 성 요소를 찾는다', function () {
+      fresh('cao');
+      var P = DG.cpanel, me = DG.rtk.me(), mine = DG.rtk.citiesOf(me)[0], other = DG.cityData.CITIES.filter(function (x) { return DG.rtk.city(x.id).force !== me; })[0];
+      var hm = P.html(mine.id || mine), ho = P.html(other.id);
+      var mid = mine.id || mine, nm = DG.cityData.find(mid).name;
+      var bad = P.html('__없는_성__') === '' && P.html(null) === '';
+      var host = document.createElement('div'); host.innerHTML = '<svg><g class="rcity" data-city="' + mid + '"><circle r="5"></circle></g></svg>'; document.body.appendChild(host);
+      var saveFn = document.elementsFromPoint; document.elementsFromPoint = function () { return [host.querySelector('circle')]; };
+      var found = P.at({ clientX: 1, clientY: 1 }); document.elementsFromPoint = function () { return []; }; var none = P.at({ clientX: 1, clientY: 1 }); document.elementsFromPoint = saveFn; document.body.removeChild(host);
+      return hm.indexOf(nm) >= 0 && hm.indexOf('내 성') >= 0 && hm.indexOf('data-cp="open"') >= 0 && hm.indexOf('인구') >= 0 && ho.indexOf('내 성') < 0 && ho.indexOf(DG.cityData.find(other.id).name) >= 0 &&
+        bad && found && found.getAttribute('data-city') === mid && none === null && ('내 성·남의 성 패널 · 없는 성 빈 문자열 · 좌표로 성 찾기');
     });
 
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {

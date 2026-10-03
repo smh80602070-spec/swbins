@@ -1,0 +1,46 @@
+/* 전략 시뮬 화면 (W-0027) — 성 정보 패널·커맨드 바. style.css 가 1500줄 상한 근처라 따로 둔다.
+   색은 style.css 의 변수(--glass·--ink·--gold)를 그대로 쓴다. */
+
+/* ── 성 정보 패널 — 지도 오른쪽 위에 붙는다(시트가 열리면 시트가 대신한다) ── */
+#cpanel {
+  display: none; position: fixed; z-index: 11;
+  right: 14px; top: 76px; width: 300px; max-height: calc(100% - 190px); overflow: auto;
+  padding: 12px 14px 14px; border-radius: 14px;
+  background: var(--glass); border: 1px solid var(--glass-br);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow); color: var(--ink);
+}
+#cpanel.show { display: flex; flex-direction: column; gap: 8px; }
+body.sheet-open #cpanel { display: none; }
+.cp-head { display: flex; align-items: center; gap: 8px; }
+.cp-name { flex: 1; min-width: 0; font-size: 17px; }
+.cp-name small { color: var(--ink-dim); font-size: 12px; }
+.cp-force { border: 1px solid; border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.cp-x { background: none; border: 0; color: var(--ink-dim); font-size: 15px; cursor: pointer; padding: 4px; min-width: 32px; min-height: 32px; }
+.cp-sub { color: var(--ink-dim); font-size: 12px; margin-top: -4px; }
+.cp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.cp-grid > div { background: rgba(255, 255, 255, .06); border-radius: 8px; padding: 6px 8px; display: flex; flex-direction: column; }
+.cp-grid small { color: var(--ink-dim); font-size: 11px; }
+.cp-grid b { font-size: 15px; font-variant-numeric: tabular-nums; }
+.cp-bar { display: grid; grid-template-columns: 34px 1fr 52px; align-items: center; gap: 8px; font-size: 12px; }
+.cp-bar span { color: var(--ink-dim); }
+.cp-bar i { display: block; height: 7px; border-radius: 4px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+.cp-bar i b { display: block; height: 100%; background: var(--gold); }
+.cp-bar em { font-style: normal; text-align: right; font-variant-numeric: tabular-nums; }
+.cp-gov { font-size: 13px; }
+.cp-gov small { color: var(--ink-dim); font-size: 11px; margin-right: 4px; }
+.cp-open {
+  min-height: 40px; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 14px;
+  background: var(--gold); border: 1px solid var(--gold); color: #22190a;
+}
+.cp-x:focus-visible, .cp-open:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* 고른 성 — 점 둘레를 밝힌다 */
+.rcity.sel { filter: drop-shadow(0 0 2.2px #ffe9a8); }
+.rcity.sel circle:not(.rhit):not(.ring) { stroke: #fff; stroke-width: .55; }
+
+/* ── 커맨드 바 — 넓은 화면에서 독을 가로로 눕혀 아래 가운데에 둔다 ── */
+@media (min-width: 781px) and (min-height: 501px) {
+  #dock { right: auto; left: 50%; transform: translateX(-50%); flex-direction: row; gap: 10px; }
+  #dock button { width: 72px; }
+}

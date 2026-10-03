@@ -44,6 +44,7 @@
    "js/city3d.js",
    "js/battle3d.js",
    "js/ui-rtk.js",
+   "js/cpanel.js",
    "js/perf.js",
    "js/game.js"
   ]
@@ -90,6 +91,7 @@
    "js/ai.js",
    "js/realm3d.js",
    "js/ui-rtk.js",
+   "js/cpanel.js",
    "js/game.js"
   ]
  ]

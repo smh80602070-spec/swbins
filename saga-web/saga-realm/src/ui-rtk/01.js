@@ -487,8 +487,8 @@
 
     els.realm.addEventListener('click', function (e) {
       if (mapDragMoved) { mapDragMoved = false; return; }
-      var n = e.target.closest('[data-city]');
-      if (n) { openCity(n.getAttribute('data-city')); return; }
+      var n = e.target.closest('[data-city]') || (global.DG.cpanel && global.DG.cpanel.at(e));   /* 지도 포인터 캡처 때문에 마우스 클릭은 #realm 으로 온다 — 좌표로 성을 찾는다(W-0027) */
+      if (n) { if (global.DG.cpanel && global.DG.cpanel.pick(n.getAttribute('data-city'))) { return; } openCity(n.getAttribute('data-city')); return; }
       if (e.target.closest('[data-act="center-mine"]')) { centerOnMine(); }
     });
     bindMapDrag();
