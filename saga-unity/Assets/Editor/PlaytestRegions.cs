@@ -70,6 +70,7 @@ namespace Saga.EditorTools
                 ChecksJson();
                 ChecksCoordinates();
                 ChecksVillageGround();
+                ChecksFogLid();
                 ChecksMeshes();
                 foreach (var id in RegionLoader.Ids) ChecksRegion(id);
                 ChecksDeterministic();
@@ -113,6 +114,29 @@ namespace Saga.EditorTools
             Debug.Log($"[Regions] 마을 땅-조각 높이 오차 평균 {mean:0.00}m 최대 {max:0.0}m (n={n})");
             var f = RegionLoader.LoadLayout("FrostPeak");
             PlaytestKit.Check(f != null && f.terrain != null && f.terrain.tintLow == Color.white, "재질 칸이 있는 지역(서리봉)에 마을 풀 색 보정이 새어 들어감");
+        }
+
+        // 재질 칸이 있는 지역(서리봉·사거리·은하 나루)의 높이는 안개 상자 윗면(10·8·5m)으로 덮여 있어 카메라·조각이 땅 아래에 묻혔다 —
+        // 뚜껑을 걷은 뒤 카메라와 모든 조각이 땅 위에 있어야 한다.
+        private static void ChecksFogLid()
+        {
+            foreach (var id in new[] { "FrostPeak", "Crossroads", "GalaxyFerry" })
+            {
+                var L = RegionLoader.LoadLayout(id);
+                PlaytestKit.Check(L != null && L.terrain != null && L.terrain.hasMaterials && L.hasFogBox, id + " 새 모양 배치표(재질 칸·안개 상자) 아님");
+                if (L == null || L.terrain == null) continue;
+                int below = 0, n = 0; float worst = 0f;
+                foreach (var p in L.pieces)
+                {
+                    if (!L.terrain.SampleHeight(p.pos.x, p.pos.z, out float h)) continue;
+                    n++;
+                    if (h > p.pos.y + 1.5f) { below++; worst = Mathf.Max(worst, h - p.pos.y); }
+                }
+                PlaytestKit.Check(n >= 10 && below == 0, $"{id} 조각 {below}/{n} 개가 땅({worst:0.0}m)에 묻힘 — 안개 상자 뚜껑 제거 확인");
+                if (L.hasCamera && L.terrain.SampleHeight(L.cameraPos.x, L.cameraPos.z, out float ch))
+                    PlaytestKit.Check(ch < L.cameraPos.y, $"{id} 카메라가 땅 아래: 땅 {ch:0.0}m ≥ 카메라 {L.cameraPos.y:0.0}m");
+                Debug.Log($"[Regions] {id} 뚜껑 제거 뒤 묻힌 조각 {below}/{n}");
+            }
         }
 
         private static void ChecksJson()
