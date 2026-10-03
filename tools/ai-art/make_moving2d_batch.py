@@ -46,6 +46,15 @@ BEASTS = {   # id: (설명, 시점 목록)
 }
 
 
+# 주인공 후보(10-03 화면 점검): 씨앗 3개씩 뽑아 방향 셋이 같이 잘 나온 세트를 골라 hero_m·hero_f 로 쓴다
+for _h in ('hero_m', 'hero_f'):
+    for _n in (1, 2, 3):
+        PEOPLE[f'{_h}_s{_n}'] = PEOPLE[_h]
+        SALT[f'{_h}_s{_n}'] = f'mv6{_n}:'
+        EXTRA[f'{_h}_s{_n}'] = EXTRA.get(_h, ', cloak close to the body, short ponytail, no wind, standing straight, head up') + ', full body from head to toe, wide shot, empty space around'
+        EXTRA_NEG[f'{_h}_s{_n}'] = ', ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up'
+
+
 def init_png(pool, row, out):
     sh = Image.open(os.path.join(ROOT, 'saga-assets', 'sprites2d', pool, 'idle.webp')).convert('RGBA')
     fr = sh.crop((0, row * 128, 128, row * 128 + 128))

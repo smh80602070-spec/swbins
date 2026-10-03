@@ -156,6 +156,114 @@
    "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, faceless, black face, hidden face, shadowed face"
   },
   {
+   "id": "hero_m_s1_front",
+   "seed": 3135724625,
+   "prompt": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, full body from head to toe, wide shot, empty space around, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_m_s1_side",
+   "seed": 3135724625,
+   "prompt": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, full body from head to toe, wide shot, empty space around, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_m_s1_back",
+   "seed": 3135724625,
+   "prompt": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, full body from head to toe, wide shot, empty space around, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_m_s2_front",
+   "seed": 3493338411,
+   "prompt": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, full body from head to toe, wide shot, empty space around, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_m_s2_side",
+   "seed": 3493338411,
+   "prompt": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, full body from head to toe, wide shot, empty space around, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_m_s2_back",
+   "seed": 3493338411,
+   "prompt": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, full body from head to toe, wide shot, empty space around, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_m_s3_front",
+   "seed": 2296625527,
+   "prompt": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, full body from head to toe, wide shot, empty space around, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_m_s3_side",
+   "seed": 2296625527,
+   "prompt": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, full body from head to toe, wide shot, empty space around, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_m_s3_back",
+   "seed": 2296625527,
+   "prompt": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, full body from head to toe, wide shot, empty space around, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_f_s1_front",
+   "seed": 2286074429,
+   "prompt": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, cloak close to the body, short ponytail, no wind, standing straight, head up, full body from head to toe, wide shot, empty space around, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_f_s1_side",
+   "seed": 2286074429,
+   "prompt": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, cloak close to the body, short ponytail, no wind, standing straight, head up, full body from head to toe, wide shot, empty space around, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_f_s1_back",
+   "seed": 2286074429,
+   "prompt": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, cloak close to the body, short ponytail, no wind, standing straight, head up, full body from head to toe, wide shot, empty space around, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_f_s2_front",
+   "seed": 1664482350,
+   "prompt": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, cloak close to the body, short ponytail, no wind, standing straight, head up, full body from head to toe, wide shot, empty space around, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_f_s2_side",
+   "seed": 1664482350,
+   "prompt": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, cloak close to the body, short ponytail, no wind, standing straight, head up, full body from head to toe, wide shot, empty space around, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_f_s2_back",
+   "seed": 1664482350,
+   "prompt": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, cloak close to the body, short ponytail, no wind, standing straight, head up, full body from head to toe, wide shot, empty space around, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_f_s3_front",
+   "seed": 3521150363,
+   "prompt": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, cloak close to the body, short ponytail, no wind, standing straight, head up, full body from head to toe, wide shot, empty space around, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_f_s3_side",
+   "seed": 3521150363,
+   "prompt": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, cloak close to the body, short ponytail, no wind, standing straight, head up, full body from head to toe, wide shot, empty space around, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
+   "id": "hero_f_s3_back",
+   "seed": 3521150363,
+   "prompt": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, cloak close to the body, short ponytail, no wind, standing straight, head up, full body from head to toe, wide shot, empty space around, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, petals, leaves, debris, particles, ground, puddle, floating objects, color change, ground line, floor line, stripe, horizontal line, platform, head down, bowing, billowing cloak, wind, cropped, close-up"
+  },
+  {
    "id": "beast_dog_front",
    "seed": 3814681556,
    "prompt": "friendly medium dog, short brown fur, floppy ears, four legs, front view, facing the viewer, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
