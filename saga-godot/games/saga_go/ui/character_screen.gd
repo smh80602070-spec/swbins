@@ -15,6 +15,7 @@ const Characters := preload("res://saga_core/data/characters.gd")
 const Story := preload("res://games/saga_go/data/story.gd")
 const Weapons := preload("res://games/saga_go/data/weapons.gd")
 const Artifacts := preload("res://games/saga_go/data/artifacts.gd")
+const ItemIcons := preload("res://games/saga_go/data/item_icons.gd")
 const Kits := preload("res://games/saga_go/data/kits.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 
@@ -35,6 +36,8 @@ var _once_button: Button = null
 var _bag_label: Label = null
 var _talent_title: Label = null
 var _weapon_label: Label = null
+var _weapon_icon: TextureRect = null # G-0016 K-0035 아이콘 — 그림이 없으면 숨김, 글자만
+var _art_icons: Dictionary = {}
 var _weapon_level_btn: Button = null
 var _weapon_asc_btn: Button = null
 var _weapon_swap_btn: Button = null
@@ -203,7 +206,13 @@ func _build() -> void:
 	_asc_button.pressed.connect(func() -> void: PartyState.ascend(selected))
 	mid.add_child(_asc_button)
 
-	_weapon_label = _label(mid, 16)
+	var wl_row := HBoxContainer.new()
+	wl_row.add_theme_constant_override("separation", 10)
+	mid.add_child(wl_row)
+	_weapon_icon = ItemIcons.blank_rect(64)
+	wl_row.add_child(_weapon_icon)
+	_weapon_label = _label(wl_row, 16)
+	_weapon_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var wrow := HBoxContainer.new()
 	wrow.add_theme_constant_override("separation", 8)
 	mid.add_child(wrow)
@@ -229,6 +238,8 @@ func _build() -> void:
 		l.add_theme_font_size_override("font_size", 14)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		var ic := ItemIcons.blank_rect(40)
+		row.add_child(ic)
 		row.add_child(l)
 		var s: String = slot
 		var sw := Button.new()
@@ -242,6 +253,7 @@ func _build() -> void:
 		up.pressed.connect(func() -> void: PartyState.artifact_level_once(PartyState.artifact_of(selected, s)))
 		row.add_child(up)
 		_art_labels[slot] = l
+		_art_icons[slot] = ic
 		_art_swap[slot] = sw
 		_art_up[slot] = up
 	_salvage_btn = Button.new()
@@ -424,6 +436,7 @@ func _refresh() -> void:
 
 func _refresh_weapon(id: String) -> void:
 	var wid := PartyState.weapon_of(id)
+	ItemIcons.apply(_weapon_icon, "weapon", wid)
 	var w: Dictionary = Weapons.info(wid)
 	var ws := PartyState.weapon_state(wid)
 	var cap := PartyState.weapon_cap(wid)
@@ -470,6 +483,7 @@ func _refresh_artifacts(id: String) -> void:
 	for slot in Artifacts.SLOTS:
 		var l: Label = _art_labels[slot]
 		var uid := PartyState.artifact_of(id, slot)
+		ItemIcons.apply(_art_icons[slot], "artifact_set", String(PartyState.artifacts[uid].set) if uid != "" else "")
 		var choices := PartyState.artifacts_for_slot(slot)
 		(_art_swap[slot] as Button).disabled = choices.is_empty()
 		if uid == "":

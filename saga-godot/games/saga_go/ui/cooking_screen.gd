@@ -9,6 +9,7 @@ extends CanvasLayer
 
 const Cooking := preload("res://games/saga_go/data/cooking.gd")
 const Growth := preload("res://games/saga_go/data/growth.gd")
+const ItemIcons := preload("res://games/saga_go/data/item_icons.gd")
 
 const BAR_W := 420.0
 const BAR_H := 30.0
@@ -25,6 +26,7 @@ var _root: Control = null
 var _recipe_buttons: Dictionary = {}
 var _title: Label = null
 var _detail: Label = null
+var _ing_box: HBoxContainer = null # G-0016 재료 아이콘 줄 — 그림이 없는 재료는 글자만
 var _bar: Control = null
 var _zone_normal: ColorRect = null
 var _zone_perfect: ColorRect = null
@@ -126,6 +128,9 @@ func _build() -> void:
 	cols.add_child(mid)
 	_title = _label(mid, 26)
 	_detail = _label(mid, 16)
+	_ing_box = HBoxContainer.new()
+	_ing_box.add_theme_constant_override("separation", 14)
+	mid.add_child(_ing_box)
 	_bar = Control.new()
 	_bar.custom_minimum_size = Vector2(BAR_W, BAR_H)
 	mid.add_child(_bar)
@@ -304,6 +309,7 @@ func _refresh() -> void:
 	for item in r.ing:
 		ing.append("%s %d/%d" % [Growth.item_name(item), PartyState.count(item), int(r.ing[item])])
 	lines.append("재료: " + " · ".join(ing))
+	_refresh_ingredients(r)
 	var pr := int(PartyState.cook_prof.get(selected, 0))
 	lines.append("숙련 %d/%d%s" % [pr, Cooking.PROF_MAX, "  — 자동 조리 가능" if pr >= Cooking.PROF_MAX else ""])
 	_detail.text = "\n".join(lines)
@@ -342,6 +348,26 @@ func _refresh_status() -> void:
 			var b: Dictionary = PartyState.food_buffs[cat]
 			lines.append("%s: %s (%d초)" % [Cooking.CAT_NAMES[cat], Cooking.dish_name(b.recipe, int(b.q)), int(ceil(float(b.left)))])
 	_status.text = "\n".join(lines)
+
+## 재료마다 아이콘(40px) + 가진 수/필요 수. 아이콘이 없는 재료는 글자만 — 위 "재료:" 줄과 같은 정보라 빠져도 비는 정보가 없다.
+func _refresh_ingredients(r: Dictionary) -> void:
+	for c in _ing_box.get_children():
+		c.queue_free()
+	for item in r.ing:
+		var cell := HBoxContainer.new()
+		cell.add_theme_constant_override("separation", 4)
+		var ic := ItemIcons.make_rect("material", String(item), 40)
+		if ic != null:
+			cell.add_child(ic)
+		var l := Label.new()
+		l.add_theme_font_size_override("font_size", 15)
+		var have := PartyState.count(item)
+		var need := int(r.ing[item])
+		l.text = "%s %d/%d" % [Growth.item_name(item), have, need]
+		l.modulate = Color(1, 1, 1) if have >= need else Color(1, 0.6, 0.55)
+		cell.add_child(l)
+		_ing_box.add_child(cell)
+
 
 func _refresh_food() -> void:
 	for c in _food_box.get_children():

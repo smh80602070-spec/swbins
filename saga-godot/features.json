@@ -2271,5 +2271,23 @@
   "fun": {},
   "ticket": "G-0015",
   "since": "2026-10-03"
+ },
+ {
+  "id": "gd.go.item_icons",
+  "name": "무기·재료·성유물 아이콘(K-0035) — 캐릭터 화면 무기·성유물 칸, 요리 화면 재료 줄에 그림(없으면 글자)",
+  "files": [
+   "games/saga_go/data/item_icons.gd",
+   "games/saga_go/ui/character_screen.gd",
+   "games/saga_go/ui/cooking_screen.gd",
+   "tools/gen_item_icons.mjs"
+  ],
+  "tests": [
+   "item_icons"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0016",
+  "since": "2026-10-03"
  }
 ]
