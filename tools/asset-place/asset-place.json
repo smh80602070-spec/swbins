@@ -453,6 +453,79 @@
      "dir": "saga-web/shared/assets/characters2d"
     }
    ]
+  },
+  {
+   "id": "icons-web",
+   "src": "saga-assets/icons",
+   "recursive": true,
+   "include": [
+    "*.png",
+    "*.json"
+   ],
+   "note": "K-0035 아이템 아이콘 — 웹은 64px 합성본(icon64)·map.json·출처만(판당 3MB 안)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/icons",
+     "only": [
+      ".",
+      "icon64",
+      "license"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "icons-godot",
+   "src": "saga-assets/icons",
+   "recursive": true,
+   "include": [
+    "*.png",
+    "*.json"
+   ],
+   "note": "K-0035 아이템 아이콘 — 고돗은 128px 합성본·알맹이·틀·map.json",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/icons",
+     "only": [
+      ".",
+      "icon128",
+      "content",
+      "frames",
+      "license"
+     ],
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "icons-unity",
+   "src": "saga-assets/icons",
+   "recursive": true,
+   "include": [
+    "*.png",
+    "*.json"
+   ],
+   "note": "K-0035 아이템 아이콘 — 유니티는 128px 합성본·알맹이·틀·map.json(Resources.Load 경로 Icons/icon128/<키>_g<등급>)",
+   "targets": [
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Icons",
+     "only": [
+      ".",
+      "icon128",
+      "content",
+      "frames",
+      "license"
+     ],
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
   }
  ]
 }
