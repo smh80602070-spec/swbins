@@ -1,0 +1,20 @@
+{
+ "id": "wear_coat",
+ "generator": "tools/ai-art/gen.py",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, long overcoat, hanbok durumagi, teal coat, ribbon ties, wide sleeves, clothing laid flat, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+ "negative_prompt": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin",
+ "seed": 2560750566,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 28.0,
+ "date": "2026-10-03",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안. (옷·머리 11 재뽑기 후보 b 선택, 10-03)",
+ "placed_by": "tools/ai-art/place_icons.py"
+}

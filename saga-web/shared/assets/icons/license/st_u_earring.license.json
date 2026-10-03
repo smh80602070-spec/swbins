@@ -1,0 +1,20 @@
+{
+ "id": "st_u_earring",
+ "generator": "tools/ai-art/gen.py",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, earring, crescent moon, silver, glowing, ornate, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+ "negative_prompt": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality",
+ "seed": 2060687098,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  768,
+  768
+ ],
+ "seconds": 26.1,
+ "date": "2026-10-03",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "placed_by": "tools/ai-art/place_icons.py"
+}
