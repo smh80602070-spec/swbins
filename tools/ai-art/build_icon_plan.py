@@ -360,6 +360,21 @@ REROLL = {k: 1 for k in (
     'st_top2 st_scroll_hp fo_seoan st_neck1 st_neck3 st_ring1 st_glv1 wear_braid wear_coat wear_leather wear_robe wear_scholar wear_spacesuit '
     'wear_topknot u_hopae u_unmun u_yusu w_gakgung w_wolto fo_jokja fo_firefly fo_bignail fo_geomungo gw_polearm_0 gw_bow_0 st_u_cape c_hopae'.split())}
 
+# 사가의숲 옷·머리 11 은 make_wear_batch.py 로 후보 3장씩 뽑아 골랐다(10-03) — 아래 태그가 실제로 쓰인 것
+T.update({
+    'wear_leather': 'tunic, brown leather jerkin, laced front, short sleeves, clothing laid flat, torso garment',
+    'wear_robe': 'hanbok, long white robe, blue collar, wide sleeves, clothing laid flat, garment',
+    'wear_coat': 'long overcoat, hanbok durumagi, teal coat, ribbon ties, wide sleeves, clothing laid flat',
+    'wear_plate': 'armor, steel breastplate, shoulder pauldrons, torso armor, chest plate, no head',
+    'wear_spacesuit': 'spacesuit, astronaut suit, white jumpsuit, orange accents, sci-fi clothing laid flat',
+    'wear_topknot': 'hairpin, binyeo, gold hairpin, long ornamental hair stick, hair ornament',
+    'wear_braid': 'hair ribbon, red ribbon, daenggi, long ribbon tied in a bow, hair accessory',
+    'wear_scholar': 'black hat, scholar hat, square cloth cap, headwear, ribbon strings',
+    'wear_gat': 'gat, black horsehair hat, wide brim, tall crown, tied chin cord, headwear',
+    'wear_hairpin': 'bridal crown, jeweled coronet, headdress, beads and tassels, headwear',
+    'wear_helmet': 'felt war hat, military hat, red plume, officer hat, headwear',
+})
+
 # ── (판, id) → 키 ──────────────────────────────────────────────────────────────────────────────
 ALIAS = {
     # 시험 30 키를 그대로 쓰는 물건과, 다른 판에서 같은 물건이라 합치는 것

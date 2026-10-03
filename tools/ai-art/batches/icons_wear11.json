@@ -1,0 +1,213 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "icons_wear11",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+ },
+ "items": [
+  {
+   "id": "wear_leather_a",
+   "seed": 810256423,
+   "prompt": "tunic, brown leather jerkin, laced front, short sleeves, clothing laid flat, torso garment, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_leather_b",
+   "seed": 914005759,
+   "prompt": "tunic, brown leather jerkin, laced front, short sleeves, clothing laid flat, torso garment, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_leather_c",
+   "seed": 2484295677,
+   "prompt": "tunic, brown leather jerkin, laced front, short sleeves, clothing laid flat, torso garment, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_robe_a",
+   "seed": 3438799106,
+   "prompt": "hanbok, long white robe, blue collar, wide sleeves, clothing laid flat, garment, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_robe_b",
+   "seed": 1145306056,
+   "prompt": "hanbok, long white robe, blue collar, wide sleeves, clothing laid flat, garment, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_robe_c",
+   "seed": 545238929,
+   "prompt": "hanbok, long white robe, blue collar, wide sleeves, clothing laid flat, garment, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_coat_a",
+   "seed": 3097406767,
+   "prompt": "long overcoat, hanbok durumagi, teal coat, ribbon ties, wide sleeves, clothing laid flat, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_coat_b",
+   "seed": 2560750566,
+   "prompt": "long overcoat, hanbok durumagi, teal coat, ribbon ties, wide sleeves, clothing laid flat, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_coat_c",
+   "seed": 3799548342,
+   "prompt": "long overcoat, hanbok durumagi, teal coat, ribbon ties, wide sleeves, clothing laid flat, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_plate_a",
+   "seed": 2785496960,
+   "prompt": "armor, steel breastplate, shoulder pauldrons, torso armor, chest plate, no head, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_plate_b",
+   "seed": 2184973421,
+   "prompt": "armor, steel breastplate, shoulder pauldrons, torso armor, chest plate, no head, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_plate_c",
+   "seed": 1450576792,
+   "prompt": "armor, steel breastplate, shoulder pauldrons, torso armor, chest plate, no head, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_spacesuit_a",
+   "seed": 3511308147,
+   "prompt": "spacesuit, astronaut suit, white jumpsuit, orange accents, sci-fi clothing laid flat, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_spacesuit_b",
+   "seed": 3850143611,
+   "prompt": "spacesuit, astronaut suit, white jumpsuit, orange accents, sci-fi clothing laid flat, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_spacesuit_c",
+   "seed": 3904013210,
+   "prompt": "spacesuit, astronaut suit, white jumpsuit, orange accents, sci-fi clothing laid flat, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_topknot_a",
+   "seed": 3747781722,
+   "prompt": "hairpin, binyeo, gold hairpin, long ornamental hair stick, hair ornament, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_topknot_b",
+   "seed": 3866781839,
+   "prompt": "hairpin, binyeo, gold hairpin, long ornamental hair stick, hair ornament, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_topknot_c",
+   "seed": 765475912,
+   "prompt": "hairpin, binyeo, gold hairpin, long ornamental hair stick, hair ornament, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_braid_a",
+   "seed": 1520230401,
+   "prompt": "hair ribbon, red ribbon, daenggi, long ribbon tied in a bow, hair accessory, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_braid_b",
+   "seed": 1829891359,
+   "prompt": "hair ribbon, red ribbon, daenggi, long ribbon tied in a bow, hair accessory, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_braid_c",
+   "seed": 2324899311,
+   "prompt": "hair ribbon, red ribbon, daenggi, long ribbon tied in a bow, hair accessory, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_scholar_a",
+   "seed": 242739388,
+   "prompt": "black hat, scholar hat, square cloth cap, headwear, ribbon strings, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_scholar_b",
+   "seed": 801592010,
+   "prompt": "black hat, scholar hat, square cloth cap, headwear, ribbon strings, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_scholar_c",
+   "seed": 2293856539,
+   "prompt": "black hat, scholar hat, square cloth cap, headwear, ribbon strings, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_gat_a",
+   "seed": 1539245626,
+   "prompt": "gat, black horsehair hat, wide brim, tall crown, tied chin cord, headwear, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_gat_b",
+   "seed": 1982238432,
+   "prompt": "gat, black horsehair hat, wide brim, tall crown, tied chin cord, headwear, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_gat_c",
+   "seed": 119943222,
+   "prompt": "gat, black horsehair hat, wide brim, tall crown, tied chin cord, headwear, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_hairpin_a",
+   "seed": 1116343673,
+   "prompt": "bridal crown, jeweled coronet, headdress, beads and tassels, headwear, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_hairpin_b",
+   "seed": 1967970529,
+   "prompt": "bridal crown, jeweled coronet, headdress, beads and tassels, headwear, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_hairpin_c",
+   "seed": 2839170205,
+   "prompt": "bridal crown, jeweled coronet, headdress, beads and tassels, headwear, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_helmet_a",
+   "seed": 4172480397,
+   "prompt": "felt war hat, military hat, red plume, officer hat, headwear, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_helmet_b",
+   "seed": 110974073,
+   "prompt": "felt war hat, military hat, red plume, officer hat, headwear, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  },
+  {
+   "id": "wear_helmet_c",
+   "seed": 2357253317,
+   "prompt": "felt war hat, military hat, red plume, officer hat, headwear, no humans, still life, object focus, game icon, simple background, white background, centered, single object, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, picture frame, cube, book, medal, badge, coin"
+  }
+ ]
+}
