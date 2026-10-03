@@ -25,11 +25,11 @@
     "rock": { "h": 2, "scale": 1, "assets": ["res://assets/rocks/Rock_Medium_1.gltf", "res://assets/rocks/Rock_Medium_2.gltf", "res://assets/rocks/Rock_Medium_3.gltf"] },
     "grass": { "h": 1, "scale": 1, "assets": ["res://assets/generated/props/grass_s1_01.glb", "res://assets/generated/props/grass_s2_02.glb", "res://assets/generated/props/grass_s3_03.glb"] },
     "reed": { "h": 1.6, "scale": 1, "assets": ["res://assets/generated/props/reed_s1_01.glb", "res://assets/generated/props/reed_s2_02.glb"] },
-    "lamp": { "h": 3.4, "scale": 0.7, "assets": ["res://assets/generated/props/lamp_s1_01.glb", "res://assets/generated/props/lamp_s2_02.glb"] },
-    "well": { "h": 1.25, "scale": 0.8, "assets": ["res://assets/generated/props/well_s1_01.glb", "res://assets/generated/props/well_s2_02.glb"] },
+    "lamp": { "h": 3.4, "scale": 0.54, "assets": ["res://assets/world/street_lamp_01.glb"] },
+    "well": { "h": 1.25, "scale": 0.82, "assets": ["res://assets/world/well_01.glb"] },
     "market": { "h": 1.3, "scale": 0.8, "assets": ["res://assets/generated/props/market_s1_01.glb", "res://assets/generated/props/market_s2_02.glb", "res://assets/generated/props/market_s3_03.glb"] },
-    "house": { "h": 5, "scale": 0.6, "assets": ["res://assets/generated/props/house_s1_01.glb", "res://assets/generated/props/house_s2_02.glb", "res://assets/generated/props/house_s3_03.glb"] },
-    "tower": { "h": 18, "scale": 0.5, "assets": ["res://assets/generated/props/tower_s1_01.glb", "res://assets/generated/props/tower_s2_02.glb"] },
+    "house": { "h": 5, "scale": 0.36, "assets": ["res://assets/world/eu_house_01.glb"] },
+    "tower": { "h": 18, "scale": 0.56, "assets": ["res://assets/world/stone_tower_01.glb"] },
     "scare": { "h": 2.2, "scale": 1, "assets": ["res://assets/generated/props/scare_s1_01.glb", "res://assets/generated/props/scare_s2_02.glb"] }
   }
 }

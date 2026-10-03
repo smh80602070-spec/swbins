@@ -36,6 +36,7 @@ const SHOTS := [
 	["x_swing_late", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing8"],
 	["x_fxring", "ruins", "r_statue", Vector3(14, 0, -4), "r_statue", -32.0, 14.0, "fxring"],
 	["v_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, ""],
+	["h_homestead", "village", "v_statue", Vector3(-14, 0, 18), "v_statue", -10.0, 8.0, ""],   # G-0014 — 마당 표지(등롱·비석 둘레) 새 툰 GLB 확인
 	["v_station_boards", "village", "v_station", Vector3(0, 0, 9), "v_station", -22.0, 10.0, ""],
 	["o_village_field", "village", Vector2(2.3, 7.6), Vector3.ZERO, Vector2(3.6, 6.4), -3.0, 12.0, ""],
 	["o_crossing_field", "crossing", Vector2(6.6, 4.4), Vector3.ZERO, Vector2(5.6, 3.0), -2.0, 12.0, ""],

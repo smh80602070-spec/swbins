@@ -477,6 +477,9 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.mode2d = {
     base: 'assets/sprites2d_sheets/',
+    tileBase: 'assets/web2d/tile/',
+    /** 층 테마 이름(data-dungeon THEMES) → 2D 바닥 타일(K-0020 `dungeon_*`) — 층 색은 타일 위에 얹힌다 */
+    tile: { '고분(古墳)': 'dungeon_dirt', '폐성(廢城)': 'dungeon_stone', '산채(山寨)': 'dungeon_grass', '수궁(水宮)': 'dungeon_water', '지옥문(地獄門)': 'dungeon_stone', '천계(天界)': 'dungeon_snow' },
     targetH: 40,                                 // 던전 2D 의 사람형 몸 높이 기준(px, dungeon-view bodyH 40·s 와 같은 단위 — 호출이 배수를 곱한다)
     foot: 0.87,
     /** 2D 모드인가 — 3D 가 안 서 있을 때(= 아이소 2D 그림) */
@@ -497,5 +500,9 @@
   'use strict';
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.assets3d = {
+    /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 제단·횃불·동굴 입구(바위 아치)·종탑(석탑) */
+    reg: { 'altar': ['altar_01'], 'dg:torch': ['torch_stand_01'], 'cavemouth': ['dungeon_gate_01'], 'belltower': ['stone_tower_01'] }
+  };
   global.DG.cfg.vroidPattern = { base: 'assets/patterns/', repeat: 3 };
 })(window);

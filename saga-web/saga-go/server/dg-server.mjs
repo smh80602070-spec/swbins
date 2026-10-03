@@ -277,8 +277,10 @@ async function handleAsk(req, res) {
 function serveStatic(req, res, urlPath) {
   let rel = decodeURIComponent(urlPath);
   if (rel === '/' || rel === '') { rel = '/index.html'; }
-  const abs = path.join(ROOT, rel);
-  if (!abs.startsWith(ROOT)) { send(res, 403, '금지', 'text/plain; charset=utf-8'); return; }
+  /* `/_shared/…` → saga-web/shared (통일 3D 에셋 한 벌, W-0021) */
+  const base = rel.startsWith('/_shared/') ? path.resolve(ROOT, '..', 'shared') : ROOT;
+  const abs = path.join(base, rel.startsWith('/_shared/') ? rel.slice('/_shared'.length) : rel);
+  if (abs !== base && !abs.startsWith(base + path.sep)) { send(res, 403, '금지', 'text/plain; charset=utf-8'); return; }
   fs.readFile(abs, (err, buf) => {
     if (err) { send(res, 404, '없습니다: ' + rel, 'text/plain; charset=utf-8'); return; }
     send(res, 200, buf, MIME[path.extname(abs).toLowerCase()] || 'application/octet-stream');

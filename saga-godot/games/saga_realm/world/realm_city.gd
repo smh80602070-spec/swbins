@@ -225,11 +225,12 @@ func _build_base() -> void:
 
 ## 2026-09-30 — 원기둥+원뿔 대신 asset-forge 망루 GLB(폭 8.8·높이 18.8m → 0.36배).
 func _build_tower() -> void:
-	var ps := load("res://assets/generated/props/tower_s1_01.glb") as PackedScene
+	const OLD := "res://assets/generated/props/tower_s1_01.glb"
+	var ps := WorldAsset.load_scene(OLD)
 	if ps == null:
 		return
 	var n := ps.instantiate() as Node3D
-	n.scale = Vector3.ONE * 0.36
+	n.scale = Vector3.ONE * 0.36 * WorldAsset.k(OLD)
 	n.position = Vector3(0, 0.6, 0)
 	add_child(n)
 
@@ -338,11 +339,12 @@ func _build_markets(c: Dictionary) -> void:
 func _build_granary(c: Dictionary) -> void:
 	var n := clampi(roundi(float(c.get("food", 0)) / GRANARY_PER) + 1, 1, 4)
 	## 2026-09-30 — 통나무 대신 작은 곳간채(asset-forge house_s2_02, 폭 10m → 0.15배)가 군량만큼 늘어선다.
-	var ps := load("res://assets/generated/props/house_s2_02.glb") as PackedScene
+	const OLD := "res://assets/generated/props/house_s2_02.glb"
+	var ps := WorldAsset.load_scene(OLD)
 	for i in n:
 		var p := Vector3(-6.4, 0.0, -3.4 + float(i) * 2.0)
 		var h := ps.instantiate() as Node3D
-		h.scale = Vector3.ONE * 0.15
+		h.scale = Vector3.ONE * 0.15 * WorldAsset.k(OLD)
 		h.position = p
 		h.rotation.y = atan2(-p.x, -p.z)
 		_dyn.add_child(h)

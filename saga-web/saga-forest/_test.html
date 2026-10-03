@@ -78,6 +78,8 @@ window.DG_NO_TUNE = true;
 <script src="js/mode2d.js"></script>
 <script src="js/actor2d.js"></script>
 <script src="js/core.js"></script>
+<script src="js/assets3d-ids.js"></script>
+<script src="js/assets3d.js"></script>
 <script src="js/sfx.js"></script>
 <script src="js/bgm.js"></script>
 <script src="js/toon3d-core.js"></script>
@@ -6605,6 +6607,30 @@ window.DG_NO_TUNE = true;
     t('2D 시트 — 방향: 옆모습은 오른쪽이 기준이고 왼쪽은 좌우 뒤집기, 정면·뒤는 뒤집지 않는다', function () {
       var M = DG.mode2d, r = M.dirOf(1), l = M.dirOf(-1), f = M.dirOf('front'), b = M.dirOf('back');
       return r.row === 1 && !r.flip && l.row === 1 && l.flip && f.row === 0 && !f.flip && b.row === 2 && !b.flip;
+    });
+
+    t('2D 바닥 — 땅 종류(TILES 전부)와 겨울 눈이 forest_ 타일로 이어진다', function () {
+      var M = DG.mode2d, kinds = Object.keys(DG.villageData.TILES), bad = [];
+      kinds.forEach(function (k) { var u = M.tileUrl(k); if (!u || u.indexOf('assets/web2d/tile/forest_') !== 0) { bad.push(k); } });
+      var snow = M.tileUrl('snow');
+      return bad.length === 0 && !!snow && M.tileUrl('lava') === null && ('땅 ' + kinds.length + '종 + 눈 → ' + snow) || bad.join(',');
+    });
+
+    t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
+      var A = DG.assets3d, ids = DG.assets3dIds, bad = [], reg = DG.cfg.assets3d.reg;
+      Object.keys(reg).forEach(function (k) { reg[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });
+      A._reset();
+      var pre = A.heroRecipe('hero:sg_guanyu') === null && A.heroRecipe({ id: 'sg_guanyu' }) === null && A.heroRecipe(null) === null;
+      return bad.length === 0 && ids.hero.length === 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 등록 표 ' + Object.keys(reg).length + '칸') || bad.join(',') || '표/폴백 불일치';
+    });
+
+    t('2D 지물 — prop2d 표의 id 는 전부 world3d 지물이고, 못 받았으면(시험 전) drawKind 는 false(옛 도형)·그리기 호출 0', function () {
+      var M = DG.mode2d, t = DG.cfg.mode2d.prop2d, bad = [], calls = 0;
+      Object.keys(t).forEach(function (k) { if (!DG.assets3d.has('world', t[k].id)) { bad.push(k); } });
+      var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, beginPath: function () { calls++; }, ellipse: function () { calls++; }, fill: function () { calls++; } };
+      DG.assets3d._reset();
+      var r = M.drawKind(fake, 'home', 10, 10, 1), none = M.drawKind(fake, '없는종류', 10, 10, 1);
+      return bad.length === 0 && r === false && none === false && calls === 0 && ('지물 ' + Object.keys(t).length + '칸 연결 · 시험 전 false') || bad.join(',') || '표/폴백 불일치';
     });
 
     t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {

@@ -540,8 +540,8 @@
     floor: 'assets/sprites2d/tile_floor.png'
   };
   var tileImgCache = {};
-  function tileImg(kind) {
-    var src = TILE_IMG_SRC[kind] || TILE_IMG_SRC.grass;
+  function tileImg(kind, se) {
+    var M2 = global.DG.mode2d, src = (M2 && M2.tileUrl(se && se.key === 'winter' && kind.indexOf('grass') === 0 ? 'snow' : kind)) || TILE_IMG_SRC[kind] || TILE_IMG_SRC.grass;   // 2D 모드면 K-0020 타일(겨울엔 풀 → 눈)
     var im = tileImgCache[src];
     if (!im) { im = new Image(); im.src = src; tileImgCache[src] = im; }
     return im;
@@ -601,7 +601,7 @@
         batch[key].push(a0, a1, a2, a3);
         /* 그림은 가까운 칸에만 얹는다(step===1) — 먼 줄은 색만으로 충분하고
            칸이 작아 그림을 얹어도 안 보인다. 아핀 근사도 먼 칸일수록 어긋난다 */
-        if (step === 1) { texList.push({ img: tileImg(kind), a0: a0, a1: a1, a3: a3 }); }
+        if (step === 1) { texList.push({ img: tileImg(kind, se), a0: a0, a1: a1, a3: a3 }); }
 
         /* 잔디 술 · 물빛 — 가까운 칸에만 (멀면 지저분해진다) */
         if (midA > -0.75 && step === 1) {
@@ -692,7 +692,7 @@
 
     ctx.save();
     ctx.globalAlpha = spent && !big ? 0.62 : 1;
-    switch (prop.kind) {
+    if (!(global.DG.mode2d && global.DG.mode2d.drawKind(ctx, prop.kind, p.x, p.y, k))) switch (prop.kind) {   // 2D 모드 통일 스프라이트(W-0019) 먼저
       case 'tree':    drawTree(p.x, p.y, k, sway, se, !spent); break;
       case 'pine':    drawPine(p.x, p.y, k, sway, se); break;
       case 'rock':    drawRock(p.x, p.y, k, se); break;

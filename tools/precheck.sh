@@ -35,6 +35,7 @@ node tools/sync-shared.mjs --check || fail=1
 
 echo "== script 순서 manifest (판별 js/manifest.json ↔ index·_test 의 script 줄, tools/gen-index.mjs)"
 node tools/gen-index.mjs --check || fail=1
+node tools/gen-assets3d-ids.mjs --check || fail=1   # shared/assets GLB 이름 표(W-0021)
 
 echo "== world3d 조립 (saga-go/src/world3d 조각 → js/world3d.js, tools/build-parts.mjs)"
 node tools/build-parts.mjs --check || fail=1

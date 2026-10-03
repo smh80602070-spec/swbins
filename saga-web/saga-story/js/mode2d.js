@@ -159,6 +159,9 @@
     return any;
   }
 
+  /** 땅 종류 → 타일 주소(cfg.tile 표). 2D 모드가 아니거나 표에 없으면 null — 자기 텍스처 로더가 있는 판(사가고)이 주소만 빌린다 */
+  function tileUrl(kind) { var c = C(); return c.tile && c.tile[kind] && isOn() ? tileBase() + c.tile[kind] + '.webp' : null; }
+
   /** 바닥 타일 한 장(256px) — 아직 못 받았으면 null */
   function tile(id) {
     var t = tiles[id];
@@ -187,9 +190,69 @@
     return true;
   }
 
+  /**
+   * 아이소 바닥(마름모)을 타일로 채운다 — 사가블로. o = { id, a,b,c,d,e,f(방 좌표 → 화면 변환 행렬), W, H(방 크기), unit(타일 한 장이 덮는 방 좌표 폭, 기본 160), tint, tintAlpha }.
+   * 타일 위에 tint(테마 바닥색)를 얹어 층 분위기를 남긴다. 그렸으면 true — 부른 쪽은 칸 색칠을 건너뛴다. 못 받았으면 false.
+   */
+  function fillIso(ctx, o) {
+    if (!ctx || !o || !o.id || !isOn()) { return false; }
+    var pat = tilePattern(ctx, o.id);
+    if (!pat) { return false; }
+    var s = (o.unit || 160) / 256;
+    ctx.save();
+    ctx.transform(o.a, o.b, o.c, o.d, o.e, o.f);
+    ctx.fillStyle = pat; ctx.save(); ctx.scale(s, s); ctx.fillRect(0, 0, o.W / s, o.H / s); ctx.restore();
+    if (o.tint) { ctx.globalAlpha = o.tintAlpha === undefined ? 0.6 : o.tintAlpha; ctx.fillStyle = o.tint; ctx.fillRect(0, 0, o.W, o.H); }
+    ctx.restore();
+    return true;
+  }
+
+  /* ───── 건물·지물 스프라이트(K-0017 산출, `shared/assets/world2d/<id>.webp`) — 판 설정 `prop2d: { 종류: { id, h } }` ─────
+     h = 그 종류가 화면에서 보일 키(px, 확대 k=1 기준). 못 받았거나 표에 없으면 false → 부른 쪽이 옛 그림(코드 도형)을 그린다. */
+  var sprites = {};   // id → { img, ok, fail, box:{sx,sy,sw,sh} }
+  function spriteOf(id) {
+    var A = global.DG && global.DG.assets3d, u = A && A.spriteUrl && A.spriteUrl(id), e = sprites[id];
+    if (!u) { return null; }
+    if (!e) {
+      e = sprites[id] = loadImg(u);
+      var im = e.img, done = im.onload;
+      im.onload = function () {
+        try {   // 알파가 있는 범위만 잘라 쓴다(256px 칸에 여백이 있다)
+          var c = global.document.createElement('canvas'), x, y, d, w = im.naturalWidth, h = im.naturalHeight, x0 = w, y0 = h, x1 = -1, y1 = -1;
+          c.width = w; c.height = h; var g = c.getContext('2d'); g.drawImage(im, 0, 0); d = g.getImageData(0, 0, w, h).data;
+          for (y = 0; y < h; y++) { for (x = 0; x < w; x++) { if (d[(y * w + x) * 4 + 3] > 16) { if (x < x0) { x0 = x; } if (x > x1) { x1 = x; } if (y < y0) { y0 = y; } if (y > y1) { y1 = y; } } } }
+          e.box = x1 >= 0 ? { sx: x0, sy: y0, sw: x1 - x0 + 1, sh: y1 - y0 + 1 } : { sx: 0, sy: 0, sw: w, sh: h };
+        } catch (err) { e.box = { sx: 0, sy: 0, sw: im.naturalWidth, sh: im.naturalHeight }; }
+        e.ok = true;
+      };
+    }
+    return e.ok && e.box ? e : null;
+  }
+  /** 스프라이트 하나를 발 밑 가운데 (x, y) 에 키 h(px) 로 그린다. 그렸으면 true */
+  function drawSprite(ctx, o) {
+    if (!ctx || !o || !o.id || !isOn()) { return false; }
+    var e = spriteOf(o.id);
+    if (!e) { return false; }
+    var b = e.box, h = o.h, w = h * b.sw / b.sh;
+    ctx.save();
+    ctx.fillStyle = 'rgba(0,0,0,0.18)'; ctx.beginPath(); ctx.ellipse(o.x, o.y, w * 0.38, Math.max(2, h * 0.07), 0, 0, Math.PI * 2); ctx.fill();   // 발 밑 그림자
+    if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(e.img, b.sx, b.sy, b.sw, b.sh, o.x - w / 2, o.y - h, w, h);
+    ctx.restore();
+    return true;
+  }
+  /** 판 표(`DG.cfg.mode2d.prop2d`)의 종류 하나를 그린다 — k 는 확대 배율. 표에 없으면 false */
+  function drawKind(ctx, kind, x, y, k) {
+    var t = C().prop2d, p = t && t[kind];
+    return p ? drawSprite(ctx, { id: p.id, x: x, y: y, h: p.h * (k || 1) }) : false;
+  }
+
   global.DG = global.DG || {};
   global.DG.mode2d = {
-    drawBg: drawBg, tile: tile, tilePattern: tilePattern, fillTile: fillTile,
+    drawSprite: drawSprite, drawKind: drawKind, spriteReady: function (id) { return !!spriteOf(id); },
+    fillIso: fillIso,
+    drawBg: drawBg, tile: tile, tileUrl: tileUrl, tilePattern: tilePattern, fillTile: fillTile,
     bgReady: function (region) { var b = bgs[region]; return !!(b && b.meta && LAYERS.every(function (l) { return b.imgs[l].ok; })); },
     bgFailed: function (region) { var b = bgs[region]; return b ? b.fail || LAYERS.some(function (l) { return b.imgs[l].fail; }) : null; },
     preloadBg: function (region) { getBg(region); },

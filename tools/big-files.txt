@@ -22,6 +22,5 @@
 1780 saga-web/saga-realm/js/war.js
 1733 saga-web/saga-dungeon/js/asset3d.js
 1640 saga-web/saga-go/js/asset3d.js
-1633 saga-godot/games/saga_go/combat/field_combat.gd
 1607 saga-godot/tools/probe_story.gd
 1508 saga-web/saga-realm/js/rtk.js

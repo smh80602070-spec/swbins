@@ -33,13 +33,30 @@ const out = await page.evaluate(async () => {
     x.clearRect(0, 0, 1280, 720);
     const a = ok && M.fillTile(x, { id: t, x: 0, y: 560, w: 1280, h: 160, dx: 123 });
     res.tiles[t] = { ready: !!ok, drew: !!a, fill: solid(560, 720) };
+    if (M.fillIso) {   // 아이소 바닥(사가블로) — 마름모 한가운데 한 점이 불투명이어야 한다
+      x.clearRect(0, 0, 1280, 720);
+      const iso = M.fillIso(x, { id: t, a: 0.84, b: 0.46, c: -0.84, d: 0.46, e: 640, f: 100, W: 600, H: 600, tint: '#2a2620' });
+      const px = x.getImageData(640, 100 + 0.46 * 600, 1, 1).data[3];
+      res.tiles[t].iso = !!iso && px === 255;
+    }
+  }
+  /* 건물·지물 스프라이트(cfg.prop2d) — 받아지고 발 밑에 그려지나 */
+  res.props = {};
+  const pt = cfg.prop2d || {};
+  for (const kind of Object.keys(pt)) {
+    const ok = await wait(() => M.spriteReady(pt[kind].id));
+    x.clearRect(0, 0, 1280, 720);
+    const dr = ok && M.drawKind(x, kind, 640, 600, 1);
+    const d = x.getImageData(0, 0, 1280, 720).data; let n = 0; for (let i = 3; i < d.length; i += 4) { if (d[i] > 200) { n++; } }
+    res.props[kind] = { id: pt[kind].id, h: pt[kind].h, ready: !!ok, drew: !!dr, solidPx: n };
   }
   return res;
 });
 console.log(JSON.stringify(out, null, 1));
 const bad = [];
 Object.entries(out.regions).forEach(([k, v]) => { if (!v.ready || !v.drew || v.skyFill < 0.95 || v.scrolledFill < 0.95) { bad.push(k); } });
-Object.entries(out.tiles).forEach(([k, v]) => { if (!v.ready || !v.drew || v.fill < 0.99) { bad.push(k); } });
-console.log(bad.length ? 'FAIL ' + bad.join(',') : 'OK 지역 ' + Object.keys(out.regions).length + ' · 타일 ' + Object.keys(out.tiles).length);
+Object.entries(out.props || {}).forEach(([k, v]) => { if (!v.ready || !v.drew || v.solidPx < 0.04 * v.h * v.h) { bad.push('지물 ' + k); } });
+Object.entries(out.tiles).forEach(([k, v]) => { if (!v.ready || !v.drew || v.fill < 0.99 || v.iso === false) { bad.push(k); } });
+console.log(bad.length ? 'FAIL ' + bad.join(',') : 'OK 지역 ' + Object.keys(out.regions).length + ' · 타일 ' + Object.keys(out.tiles).length + ' · 지물 ' + Object.keys(out.props || {}).length);
 await r.close();
 process.exit(bad.length ? 1 : 0);
