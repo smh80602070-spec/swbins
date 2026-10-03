@@ -33,6 +33,7 @@ namespace Saga.Core.Region
         public bool skyApplied, fogApplied;
         public string skyUsed;
         public readonly List<string> warnings = new List<string>();
+        public RegionResources owner;       // 뿌리가 지워질 때 같이 지울 메시·재질·그림
 
         public int PiecePlacements => pieceObjects + pieceInstanced;
     }
@@ -63,6 +64,7 @@ namespace Saga.Core.Region
             var root = new GameObject("Region_" + id);
             if (parent != null) root.transform.SetParent(parent, false);
             res.root = root;
+            res.owner = root.AddComponent<RegionResources>();
             var matCache = new Dictionary<Material, Material>();
 
             BuildTerrain(layout, root.transform, res);
@@ -70,6 +72,7 @@ namespace Saga.Core.Region
             BuildTreesAndFlowers(layout, root.transform, res);
             BuildPieces(layout, root.transform, res, matCache);
             BuildScenery(layout, root.transform, res, matCache);
+            foreach (var kv in matCache) if (kv.Value != null && kv.Value != kv.Key) res.owner.Own(kv.Value);   // 바꿔 만든 재질만 — 원본은 에셋
             BuildWater(layout, root.transform, res);
             BuildGate(layout, root.transform, res);
             if (opt.fx) BuildFx(layout, root.transform, res);
@@ -164,6 +167,7 @@ namespace Saga.Core.Region
             var prefabs = new Dictionary<string, GameObject>();
             var parts = new Dictionary<string, List<Part>>();
             RegionInstancer instancer = null;
+            var cull = PieceBounds(L);
             var piecesRoot = new GameObject("Pieces").transform;
             piecesRoot.SetParent(parent, false);
 
@@ -179,12 +183,13 @@ namespace Saga.Core.Region
                 if (prefab == null) { res.pieceMissing++; continue; }
 
                 var rot = Quaternion.Euler(0f, p.yawDeg, 0f);
-                if (counts[p.piece] >= 2)
+                // 뼈대가 있는 조각은 인스턴싱으로 못 그린다(오브젝트 경로만 뼈를 움직인다)
+                if (counts[p.piece] >= 2 && prefab.GetComponentInChildren<SkinnedMeshRenderer>(true) == null)
                 {
                     if (instancer == null)
                     {
                         instancer = parent.gameObject.AddComponent<RegionInstancer>();
-                        instancer.SetBounds(new Bounds(new Vector3(0f, 20f, 40f), new Vector3(400f, 120f, 400f)));
+                        instancer.SetBounds(cull);
                     }
                     var place = Matrix4x4.TRS(p.pos, rot, Vector3.one * p.scale);
                     foreach (var part in parts[p.piece])
@@ -209,6 +214,17 @@ namespace Saga.Core.Region
             }
         }
 
+        // 조각 위치에서 구한 걸러내기 상자 — 가장자리에 여유(조각 크기·키)를 둔다.
+        private static Bounds PieceBounds(RegionLayout L)
+        {
+            if (L.pieces.Count == 0) return new Bounds(Vector3.zero, new Vector3(100f, 50f, 100f));
+            Vector3 lo = L.pieces[0].pos, hi = lo;
+            foreach (var p in L.pieces) { lo = Vector3.Min(lo, p.pos); hi = Vector3.Max(hi, p.pos); }
+            var b = new Bounds();
+            b.SetMinMax(lo - new Vector3(30f, 10f, 30f), hi + new Vector3(30f, 40f, 30f));
+            return b;
+        }
+
         private static List<Part> ReadParts(GameObject prefab, Dictionary<Material, Material> cache, RegionLoadResult res)
         {
             var list = new List<Part>();
@@ -221,10 +237,7 @@ namespace Saga.Core.Region
                 var src = mr.sharedMaterials;
                 var made = new Material[mesh.subMeshCount];
                 for (int s = 0; s < made.Length; s++)
-                {
-                    var m = FromGltfCounted(src[Mathf.Min(s, src.Length - 1)], cache, res);
-                    made[s] = m;
-                }
+                    made[s] = src.Length == 0 ? null : FromGltfCounted(src[Mathf.Min(s, src.Length - 1)], cache, res);
                 list.Add(new Part { mesh = mesh, local = inv * mf.transform.localToWorldMatrix, mats = made });
             }
             return list;
@@ -257,7 +270,9 @@ namespace Saga.Core.Region
             if (!L.hasGate) return;
             var mat = RegionMaterials.Make("SparkAdd");
             if (mat == null) return;
-            mat.SetTexture("_MainTex", RegionFx.Swirl(L.gateColor0, L.gateColor1));
+            var swirl = RegionFx.Swirl(L.gateColor0, L.gateColor1);
+            res.owner.Own(swirl);
+            mat.SetTexture("_MainTex", swirl);
             mat.SetColor("_Tint", new Color(1f, 1f, 1f, 0.45f));
             var go = AddMesh(parent, "Gate", RegionMeshes.Disc(L.gateRadius), mat, res);
             go.transform.localPosition = L.gateCenter;
@@ -265,8 +280,14 @@ namespace Saga.Core.Region
 
         private static void BuildFx(RegionLayout L, Transform parent, RegionLoadResult res)
         {
-            if (L.fireflies.on) { RegionFx.Fireflies(parent, L.fireflies); res.drawCallsEstimate++; }
-            if (L.snowfall.on) { RegionFx.Snow(parent, L.snowfall); res.drawCallsEstimate++; }
+            if (L.fireflies.on) { OwnFxMaterial(RegionFx.Fireflies(parent, L.fireflies), res); res.drawCallsEstimate++; }
+            if (L.snowfall.on) { OwnFxMaterial(RegionFx.Snow(parent, L.snowfall), res); res.drawCallsEstimate++; }
+        }
+
+        private static void OwnFxMaterial(GameObject fx, RegionLoadResult res)
+        {
+            var r = fx.GetComponent<ParticleSystemRenderer>();
+            if (r != null) res.owner.Own(r.sharedMaterial);
         }
 
         // ---------------------------------------------------------------- 빛
@@ -315,6 +336,7 @@ namespace Saga.Core.Region
         // ---------------------------------------------------------------- 하늘·안개·카메라
         private static void ApplySky(RegionLayout L, RegionLoadResult res, RegionLoadOptions opt)
         {
+            RenderSettings.skybox = null;     // 이 지역에 하늘 그림이 없으면 앞 지역 하늘을 물려받지 않는다
             bool mobile = opt.forceMobileSky || Application.isMobilePlatform;
             string file = mobile ? (L.skyMobile ?? L.skyFull) : (L.skyFull ?? L.skyMobile);
             if (string.IsNullOrEmpty(file)) return;
@@ -334,6 +356,7 @@ namespace Saga.Core.Region
         // 얇은 층(≤0.012)만 전역으로 근사하고, 짙은 층(시간 틈 구름바다 0.035)은 풍경 GLB 의 구름 메시에 맡긴다.
         private static void ApplyFog(RegionLayout L, RegionLoadResult res)
         {
+            RenderSettings.fog = false;       // 안개 없는 지역·건너뛴 지역이 앞 지역 안개를 물려받지 않는다
             if (!L.hasFog) return;
             if (L.fogDensity > 0.012f) { res.warnings.Add("안개 " + L.fogDensity + " 는 짙은 부피라 전역 안개를 건너뜀(구름 메시가 대신)"); return; }
             RenderSettings.fog = true;
@@ -362,6 +385,7 @@ namespace Saga.Core.Region
 
         private static GameObject AddMesh(Transform parent, string name, Mesh mesh, Material mat, RegionLoadResult res)
         {
+            res.owner.Own(mesh); res.owner.Own(mat);
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
             go.AddComponent<MeshFilter>().sharedMesh = mesh;

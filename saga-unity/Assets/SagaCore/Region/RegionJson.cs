@@ -12,10 +12,17 @@ namespace Saga.Core.Region
         public static object Parse(string text)
         {
             var p = new Reader(text);
-            object v = p.Value();
-            p.SkipWhite();
-            if (!p.AtEnd) throw new FormatException("JSON 끝에 남는 글자가 있다(" + p.Pos + "번째)");
-            return v;
+            try
+            {
+                object v = p.Value();
+                p.SkipWhite();
+                if (!p.AtEnd) throw new FormatException("JSON 끝에 남는 글자가 있다(" + p.Pos + "번째)");
+                return v;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                throw new FormatException("JSON 이 중간에 잘렸다(" + p.Pos + "번째)");
+            }
         }
 
         private sealed class Reader
@@ -44,6 +51,8 @@ namespace Saga.Core.Region
                     case 't': Expect("true"); return true;
                     case 'f': Expect("false"); return false;
                     case 'n': Expect("null"); return null;
+                    case 'N': Expect("NaN"); return double.NaN;                    // Python json.dump 기본값 — 지형 구멍이 NaN 으로 와도 읽는다
+                    case 'I': Expect("Infinity"); return double.PositiveInfinity;
                     default: return Num();
                 }
             }
@@ -121,6 +130,7 @@ namespace Saga.Core.Region
             private double Num()
             {
                 int start = _i;
+                if (string.CompareOrdinal(_s, _i, "-Infinity", 0, 9) == 0) { _i += 9; return double.NegativeInfinity; }
                 while (_i < _s.Length && "+-0123456789.eE".IndexOf(_s[_i]) >= 0) _i++;
                 if (start == _i) throw new FormatException(_i + "번째에 값이 와야 한다");
                 return double.Parse(_s.Substring(start, _i - start), NumberStyles.Float, CultureInfo.InvariantCulture);

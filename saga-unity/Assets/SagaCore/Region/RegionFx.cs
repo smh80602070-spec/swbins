@@ -64,13 +64,16 @@ namespace Saga.Core.Region
         public static GameObject Snow(Transform parent, FxSpec s)
         {
             var go = NewSystem(parent, "Snowfall", s, "SparkAlpha", out var ps);
-            const float life = 7f;
+            // 상자 윗면에서 태어나 바닥(상자 높이)에서 사라지게: 수명 = 높이 / 낙하 속도(땅 밑으로 계속 그리지 않는다)
+            const float fall = 1.3f;
+            float life = Mathf.Max(1f, s.size.y / fall);
+            var shape = ps.shape; shape.position = new Vector3(0f, s.size.y * 0.5f, 0f); shape.scale = new Vector3(s.size.x, 0.1f, s.size.z);
             var main = ps.main;
             main.startLifetime = life; main.startSpeed = 0f; main.startSize = new ParticleSystem.MinMaxCurve(0.05f, 0.1f);
             main.startColor = Color.white; main.maxParticles = s.count; main.prewarm = true;
             var em = ps.emission; em.rateOverTime = s.count / life;
             var vel = ps.velocityOverLifetime; vel.enabled = true; vel.space = ParticleSystemSimulationSpace.Local;
-            vel.x = new ParticleSystem.MinMaxCurve(-0.3f, 0.3f); vel.y = new ParticleSystem.MinMaxCurve(-1.3f, -1.3f); vel.z = new ParticleSystem.MinMaxCurve(-0.3f, 0.3f);
+            vel.x = new ParticleSystem.MinMaxCurve(-0.3f, 0.3f); vel.y = new ParticleSystem.MinMaxCurve(-fall, -fall); vel.z = new ParticleSystem.MinMaxCurve(-0.3f, 0.3f);
             ps.Play();
             return go;
         }
