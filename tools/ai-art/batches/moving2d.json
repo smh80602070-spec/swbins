@@ -1,0 +1,255 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "moving2d",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+ },
+ "items": [
+  {
+   "id": "hero_m_front",
+   "seed": 1075513489,
+   "prompt": "1boy, young adventurer hero, short brown hair, simple traveler cloak, leather vest, boots, solo, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "hero_m_side",
+   "seed": 1075513489,
+   "prompt": "1boy, young adventurer hero, short brown hair, simple traveler cloak, leather vest, boots, solo, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "hero_m_back",
+   "seed": 1075513489,
+   "prompt": "1boy, young adventurer hero, short brown hair, simple traveler cloak, leather vest, boots, solo, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "hero_f_front",
+   "seed": 2823979641,
+   "prompt": "1girl, young adventurer heroine, ponytail hair, simple traveler cloak, leather vest, boots, solo, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "hero_f_side",
+   "seed": 2823979641,
+   "prompt": "1girl, young adventurer heroine, ponytail hair, simple traveler cloak, leather vest, boots, solo, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "hero_f_back",
+   "seed": 2823979641,
+   "prompt": "1girl, young adventurer heroine, ponytail hair, simple traveler cloak, leather vest, boots, solo, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "villager_a_front",
+   "seed": 4020694475,
+   "prompt": "1boy, old village man, white beard, plain robe, walking stick, solo, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "villager_a_side",
+   "seed": 4020694475,
+   "prompt": "1boy, old village man, white beard, plain robe, walking stick, solo, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "villager_a_back",
+   "seed": 4020694475,
+   "prompt": "1boy, old village man, white beard, plain robe, walking stick, solo, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "villager_b_front",
+   "seed": 1934210647,
+   "prompt": "1boy, village teenager, short hair, plain tunic and trousers, solo, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "villager_b_side",
+   "seed": 1934210647,
+   "prompt": "1boy, village teenager, short hair, plain tunic and trousers, solo, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "villager_b_back",
+   "seed": 1934210647,
+   "prompt": "1boy, village teenager, short hair, plain tunic and trousers, solo, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "villager_c_front",
+   "seed": 3938695715,
+   "prompt": "1girl, small village child, simple dress, cheerful, solo, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "villager_c_side",
+   "seed": 3938695715,
+   "prompt": "1girl, small village child, simple dress, cheerful, solo, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "villager_c_back",
+   "seed": 3938695715,
+   "prompt": "1girl, small village child, simple dress, cheerful, solo, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "companion_warrior_front",
+   "seed": 2755305339,
+   "prompt": "1boy, armored warrior, steel armor, shield, sword at the belt, solo, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "companion_warrior_side",
+   "seed": 2755305339,
+   "prompt": "1boy, armored warrior, steel armor, shield, sword at the belt, solo, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "companion_warrior_back",
+   "seed": 2755305339,
+   "prompt": "1boy, armored warrior, steel armor, shield, sword at the belt, solo, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "companion_archer_front",
+   "seed": 1460679058,
+   "prompt": "1girl, archer, green hood and cloak, bow and quiver on the back, solo, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "companion_archer_side",
+   "seed": 1460679058,
+   "prompt": "1girl, archer, green hood and cloak, bow and quiver on the back, solo, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "companion_archer_back",
+   "seed": 1460679058,
+   "prompt": "1girl, archer, green hood and cloak, bow and quiver on the back, solo, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "companion_mage_front",
+   "seed": 708792390,
+   "prompt": "1girl, mage, long blue robe, pointed hat, wooden staff, solo, front view, facing the viewer, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "companion_mage_side",
+   "seed": 708792390,
+   "prompt": "1girl, mage, long blue robe, pointed hat, wooden staff, solo, side view, facing right, profile, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "companion_mage_back",
+   "seed": 708792390,
+   "prompt": "1girl, mage, long blue robe, pointed hat, wooden staff, solo, back view, seen from behind, standing, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people"
+  },
+  {
+   "id": "beast_dog_front",
+   "seed": 4131120194,
+   "prompt": "friendly medium dog, short brown fur, floppy ears, four legs, front view, facing the viewer, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_dog_side",
+   "seed": 4131120194,
+   "prompt": "friendly medium dog, short brown fur, floppy ears, four legs, side view, facing right, profile, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_dog_back",
+   "seed": 4131120194,
+   "prompt": "friendly medium dog, short brown fur, floppy ears, four legs, back view, seen from behind, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_wolf_front",
+   "seed": 3862310635,
+   "prompt": "gray wolf, thick fur, bushy tail, four legs, alert, front view, facing the viewer, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_wolf_side",
+   "seed": 3862310635,
+   "prompt": "gray wolf, thick fur, bushy tail, four legs, alert, side view, facing right, profile, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_wolf_back",
+   "seed": 3862310635,
+   "prompt": "gray wolf, thick fur, bushy tail, four legs, alert, back view, seen from behind, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_bird_front",
+   "seed": 1340566991,
+   "prompt": "small songbird, blue and white feathers, perched, front view, facing the viewer, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_bird_side",
+   "seed": 1340566991,
+   "prompt": "small songbird, blue and white feathers, perched, side view, facing right, profile, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_bird_back",
+   "seed": 1340566991,
+   "prompt": "small songbird, blue and white feathers, perched, back view, seen from behind, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_small_front",
+   "seed": 2880547606,
+   "prompt": "small wild rabbit, white fur, long ears, front view, facing the viewer, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_small_side",
+   "seed": 2880547606,
+   "prompt": "small wild rabbit, white fur, long ears, side view, facing right, profile, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_small_back",
+   "seed": 2880547606,
+   "prompt": "small wild rabbit, white fur, long ears, back view, seen from behind, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_fish_side",
+   "seed": 3379364720,
+   "prompt": "river fish, silver scales, orange fins, swimming, side view, facing right, profile, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_big_front",
+   "seed": 3492849366,
+   "prompt": "large brown bear, heavy body, four legs, front view, facing the viewer, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_big_side",
+   "seed": 3492849366,
+   "prompt": "large brown bear, heavy body, four legs, side view, facing right, profile, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  },
+  {
+   "id": "beast_big_back",
+   "seed": 3492849366,
+   "prompt": "large brown bear, heavy body, four legs, back view, seen from behind, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+   "negative": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals"
+  }
+ ]
+}

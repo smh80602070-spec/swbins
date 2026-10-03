@@ -38,8 +38,8 @@ def matte(im, tol=26):
     dist = np.abs(a - bg).max(axis=2)
     cand = dist <= tol
     seen = np.zeros((h, w), bool)
-    stack = [(0, 0), (0, w - 1), (h - 1, 0), (h - 1, w - 1)] + [(0, x) for x in range(0, w, 8)] + [(h - 1, x) for x in range(0, w, 8)] \
-        + [(y, 0) for y in range(0, h, 8)] + [(y, w - 1) for y in range(0, h, 8)]
+    stack = [(0, 0), (0, w - 1), (h - 1, 0), (h - 1, w - 1)] + [(0, x) for x in range(0, w, 1)] + [(h - 1, x) for x in range(0, w, 1)] \
+        + [(y, 0) for y in range(0, h, 1)] + [(y, w - 1) for y in range(0, h, 1)]
     while stack:
         y, x = stack.pop()
         if y < 0 or x < 0 or y >= h or x >= w or seen[y, x] or not cand[y, x]:
