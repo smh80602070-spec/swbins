@@ -243,7 +243,16 @@
     (listeners[evt] = listeners[evt] || []).push(fn);
   }
 
+  /** `changed` 묶기(W-0026) — 한 달을 넘기면 `changed` 가 ~60번 나가 매번 지도(성 135곳 SVG)를 다시 그렸다.
+   *  batch 안에서는 `changed` 를 모았다가 끝에 한 번만 보낸다. 다른 이벤트는 그대로 바로 나간다 */
+  var batchDepth = 0, batchedChanged = false;
+  function batch(fn) {
+    batchDepth++;
+    try { return fn(); } finally { if (--batchDepth === 0 && batchedChanged) { batchedChanged = false; emit('changed'); } }
+  }
+
   function emit(evt, payload) {
+    if (evt === 'changed' && batchDepth) { batchedChanged = true; return; }
     var fns = listeners[evt];
     if (!fns) { return; }
     for (var i = 0; i < fns.length; i++) {
@@ -361,7 +370,7 @@
     get save() { return save; },
     load: load, persist: persist, reset: reset,
     SAVE_VERSION: SAVE_VERSION, MIGRATIONS: MIGRATIONS, migrate: migrate,
-    on: on, emit: emit,
+    on: on, emit: emit, batch: batch,
     gainFeat: gainFeat, gainExp: gainExp, expNeed: expNeed,
     effect: effect,
     log: pushLog,

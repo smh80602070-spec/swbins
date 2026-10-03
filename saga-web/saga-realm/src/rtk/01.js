@@ -141,7 +141,7 @@
    * `state()` 가 부를 때마다 **없는 성만** 채운다(`setup()` 의 도시 초기화 +
    * `seedNeutral()` 과 같은 값) — 한 번 채우면 다음부터는 전부 있어 조용히 넘어간다.
    */
-  function migrateNewCities(st) {
+  var migratedCities = null, migratedLen = 0;   /* 다 채운 st.cities 와 성 수 — state() 가 부를 때마다 135성을 훑지 않게(W-0026) */  function migrateNewCities(st) { if (migratedCities === st.cities && migratedLen === CD.CITIES.length) { return false; }
     var off = global.DG.off;
     var changed = false;
     for (var i = 0; i < CD.CITIES.length; i++) {
@@ -183,7 +183,7 @@
         c.gov = gov;
       }
     }
-    if (changed) { core.persist(); }
+    migratedCities = st.cities; migratedLen = CD.CITIES.length; if (changed) { core.persist(); }
     return changed;
   }
 

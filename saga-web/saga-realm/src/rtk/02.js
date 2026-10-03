@@ -6,7 +6,7 @@
    *   2) 살림을 정산한다
    *   3) 달을 올리고 명령표를 비운다
    */
-  function endMonth() {
+  function endMonth() { return core.batch(endMonthRaw); }   /* changed 를 한 달에 한 번만(W-0026) */  function endMonthRaw() {
     var st = state();
     if (!st.started || st.result) { return null; }
     var snap = snapshot();
