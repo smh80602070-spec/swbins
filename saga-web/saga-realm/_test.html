@@ -210,6 +210,20 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return bad.length === 0 && t0 === '' && c0 === '' && ('land ' + Object.keys(lands).length + '종·성 3단 연결 · 시험 전 빈 문자열') || bad.join(',') || '표/폴백 불일치';
     });
 
+    t('2D 지도 — 영토 면(W-0027): 같은 세력은 이어 한 덩어리·다른 세력은 안 잇고, 물길은 안 잇고, 주인 없으면 비고, 2D 가 아니면 빈 문자열', function () {
+      var CD = DG.cityData, link = null, wet = null;
+      CD.CITIES.forEach(function (x) { x.adj.forEach(function (id) { if (!link && !CD.isWater(x.id, id)) { link = [x, CD.find(id)]; } if (!wet && CD.isWater(x.id, id)) { wet = [x, CD.find(id)]; } }); });
+      function st(pair, f1, f2) { var o = { cities: {} }; o.cities[pair[0].id] = { force: f1 }; o.cities[pair[1].id] = { force: f2 }; return o; }
+      function col(f) { return f === 'x' ? '#112233' : '#445566'; }
+      function lines(str) { return (str.match(/<line /g) || []).length; }
+      var M = DG.map2d, same = M.territory(link, st(link, 'x', 'x'), col), diff = M.territory(link, st(link, 'x', 'y'), col), none = M.territory(link, st(link, null, null), col);
+      var wetOk = !wet || lines(M.territory(wet, st(wet, 'x', 'x'), col)) === 0;
+      var keep = DG.cfg.mode2d.on; DG.cfg.mode2d.on = function () { return false; };
+      var off = M.territory(link, st(link, 'x', 'x'), col); DG.cfg.mode2d.on = keep;
+      return lines(same) === 2 && same.indexOf('#112233') >= 0 && same.indexOf('rtedge') >= 0 && lines(diff) === 0 && diff.indexOf('#112233') >= 0 && diff.indexOf('#445566') >= 0 &&
+        none === '' && off === '' && wetOk && ('같은 세력 이음 · 다른 세력·물길 안 이음 · 주인 없음/2D 아님 빈 문자열');
+    });
+
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
       var A = DG.assets3d, ids = DG.assets3dIds, bad = [], reg = DG.cfg.assets3d.reg;
       Object.keys(reg).forEach(function (k) { reg[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });
