@@ -1,0 +1,30 @@
+{
+ "id": "notice_board_01",
+ "generator": "tools/ai-art/gen.py",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, village notice board, wooden frame with small roof, paper notes pinned on, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+ "negative_prompt": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+ "seed": 2124378217,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  256,
+  256
+ ],
+ "seconds": 21.8,
+ "date": "2026-10-04",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "mode": "img2img",
+ "init_image": "notice_board_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+ "denoise": 0.65,
+ "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)",
+ "packed_by": "tools/ai-art/pack_static2d.py",
+ "check": {
+  "cover": 0.312,
+  "transparent": 0.686,
+  "white_edge": 0.165,
+  "ok": true
+ }
+}

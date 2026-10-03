@@ -1,0 +1,17 @@
+{
+ "id": "bars_door_01",
+ "generator": "tools/world-forge/build_village.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: castle_wall_slates",
+  "polyhaven: concrete_wall_001"
+ ],
+ "size_m": [
+  2.4,
+  0.55,
+  3.05
+ ],
+ "tris": 290
+}

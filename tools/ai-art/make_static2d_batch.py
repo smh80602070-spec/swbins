@@ -72,20 +72,41 @@ SUBJ = {
     'mushroom_01': f'cluster of three mushrooms, red cap with white spots and orange caps, {V}',
     'hill_01': f'small grassy hill mound, green grass, {V}',
     'mountain_01': f'rocky mountain peak with snow cap, {V}',
+    # 마을·장터 소품 12 + 던전 방 키트 6 (K-0053)
+    'market_stall_01': f'market stall, wooden counter with red and cream striped awning, fruit and crates on top, {V}',
+    'low_stone_wall_01': f'low stone wall section, rough stacked gray stones with flat cap stones, {V}',
+    'signpost_01': f'wooden signpost, dark pole with two pointed arrow boards, small stone base, {V}',
+    'notice_board_01': f'village notice board, wooden frame with small roof, paper notes pinned on, {V}',
+    'crate_stack_01': f'stack of four wooden crates with dark iron corners, {V}',
+    'barrel_01': f'wooden barrel with iron hoops, {V}',
+    'sack_pile_01': f'pile of five tied burlap grain sacks, beige cloth, {V}',
+    'tent_small_01': f'small beige canvas a-frame tent with ropes and pegs, {V}',
+    'tent_large_01': f'large round circus style tent, red and cream stripes, small red flag on top, {V}',
+    'campfire_logs_01': f'campfire pit, ring of stones, leaning firewood logs, no flames, {V}',
+    'bench_01': f'wooden park bench with backrest, dark iron legs, {V}',
+    'handcart_01': f'wooden hand cart with one spoked wheel pair, two long handles, {V}',
+    'dungeon_pillar_01': f'ancient stone pillar, square base and capital, weathered gray stone, {V}',
+    'wall_piece_01': f'tall dungeon stone brick wall section, rough stones, {V}',
+    'chest_01': f'dark wooden treasure chest with rounded lid, iron bands and small gold lock, {V}',
+    'jar_01': f'large brown clay jar with two handles, {V}',
+    'altar_base_01': f'round stepped stone altar base, glowing purple ring on top, four small stone posts, {V}',
+    'bars_door_01': f'dungeon iron bars gate in a stone doorframe, black vertical bars, {V}',
 }
 
 
 def main():
     only = sys.argv[sys.argv.index('--only') + 1].split(',') if '--only' in sys.argv else None
+    tag = sys.argv[sys.argv.index('--tag') + 1] if '--tag' in sys.argv else 'static2d'                    # 새 묶음은 따로 둔다(예: village)
+    sprite_dir = os.path.abspath(sys.argv[sys.argv.index('--init-src') + 1]) if '--init-src' in sys.argv else None   # 3D 렌더 밑그림 폴더(<id>.webp)
     from PIL import Image
-    init_dir = os.path.join(HERE, '_out', 'static2d_init')
+    init_dir = os.path.join(HERE, '_out', tag + '_init')
     os.makedirs(init_dir, exist_ok=True)
     root = os.path.abspath(os.path.join(HERE, '..', '..'))
     items = []
     for iid, subj in SUBJ.items():
         if only and iid not in only:
             continue
-        src = os.path.join(root, 'saga-assets', 'world', 'sprite', iid + '.webp')
+        src = os.path.join(sprite_dir or os.path.join(root, 'saga-assets', 'world', 'sprite'), iid + '.webp')
         if not os.path.exists(src):
             print('밑그림 없음', iid)
             continue
@@ -101,10 +122,10 @@ def main():
         items.append({'id': iid, 'seed': int(hashlib.md5(('2d:' + iid).encode()).hexdigest()[:8], 16), 'prompt': f'{subj}, {STYLE}'.replace('white background', 'plain pastel gray-green background') if iid in TINT_BG else f'{subj}, {STYLE}', 'negative': NEG,
                       'init_image': ip, 'denoise': 0.65,
                       'meta': {'mode': 'img2img', 'init_image': iid + '.webp (3D 툰 렌더 밑그림, tools/world-forge)', 'denoise': 0.65, 'init_license': 'CC0-1.0 (코드 형태 + Poly Haven CC0 재질)'}})
-    batch = {'model': 'animagine-xl-4.0-opt', 'out': 'static2d',
+    batch = {'model': 'animagine-xl-4.0-opt', 'out': tag,
              'defaults': {'prompt_prefix': 'masterpiece, high score, great score, absurdres', 'width': 768, 'height': 768, 'steps': 28, 'cfg': 5.5, 'sampler': 'Euler a', 'negative': NEG},
              'items': items}
-    out = os.path.join(HERE, 'batches', 'static2d.json')
+    out = os.path.join(HERE, 'batches', tag + '.json')
     json.dump(batch, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(len(items), '→', out)
 

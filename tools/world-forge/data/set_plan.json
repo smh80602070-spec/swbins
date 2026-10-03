@@ -2,7 +2,7 @@
  "version": 1,
  "note": "K-0017 단계 1 — 판 5 × (건물 3 · 지물 3 · 지형 2 · 탈것 1) = 45칸. 같은 id 는 한 번만 만든다(건물은 기존 레시피 재사용). 이름 정책: 원작 이름 없음, id 는 일반 명사. exists = recipes/ 에 이미 있음, new = 만들 것.",
  "budget": {"toon_glb_mb": 0.5, "toon_tris": 5000, "sprite_px": [128, 256], "tex_px": 256},
- "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py"},
+ "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py", "village": "build_village.py"},
  "games": {
   "go": {
    "theme": "시대 혼합 마을(과거·현대·미래 한 자리)",
@@ -99,5 +99,10 @@
   "note": "K-0052 — 판·시대와 상관없는 자연 소품(공용). build_nature.py. 삼각형 ≤1500(hill·mountain ≤2500).",
   "tris_max": 1500, "tris_max_big": 2500, "big": ["hill_01", "mountain_01"],
   "items": ["tree_broadleaf_01", "tree_broadleaf_02", "tree_pine_01", "tree_pine_01_snow", "tree_pine_02", "tree_dead_01", "tree_birch_01", "bush_01", "grass_tuft_01", "flower_patch_01", "rock_small_01", "rock_large_01", "rock_moss_01", "pebbles_01", "log_01", "stump_01", "mushroom_01", "hill_01", "mountain_01"]
+ },
+ "village": {
+  "note": "K-0053 — 마을·장터 소품 12 + 던전 방 키트 6(공용). build_village.py. 삼각형 ≤2500. 돌담·벽 토막은 양 끝 단면이 같다.",
+  "tris_max": 2500,
+  "items": ["market_stall_01", "low_stone_wall_01", "signpost_01", "notice_board_01", "crate_stack_01", "barrel_01", "sack_pile_01", "tent_small_01", "tent_large_01", "campfire_logs_01", "bench_01", "handcart_01", "dungeon_pillar_01", "wall_piece_01", "chest_01", "jar_01", "altar_base_01", "bars_door_01"]
  }
 }
