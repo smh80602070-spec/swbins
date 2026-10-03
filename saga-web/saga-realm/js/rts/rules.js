@@ -9,7 +9,7 @@
 
   var G = function () { return global.DG.rts.grid; };
 
-  /** 건물 표 — w×h 칸, cost(금), jobs(일자리), cap(수용 인구), food/gold(하루 생산, 일자리 채움 비율 곱), upkeep(유지비) */
+  /** 건물 표 — w×h 칸, cost(금), jobs(일자리), cap(수용 인구), food/gold(하루 생산, 일자리 채움 비율 곱), upkeep(유지비), free(도로 불필요), radius·happy(닿는 주거의 행복 +), defense */
   var DEFS = {
     castle:   { name: '거점', w: 3, h: 3, cost: 0, cap: 16, icon: '🏯', color: '#c9a24a', fixed: true },
     road:     { name: '도로', w: 1, h: 1, cost: 2, icon: '', color: '#8b8579', road: true },
@@ -17,9 +17,13 @@
     farm:     { name: '농지', w: 3, h: 3, cost: 40, jobs: 6, food: 8, icon: '🌾', color: '#9db04f' },
     market:   { name: '시장', w: 2, h: 2, cost: 60, jobs: 4, gold: 5, icon: '🏪', color: '#cf8f3e' },
     workshop: { name: '공방', w: 3, h: 2, cost: 80, jobs: 6, gold: 6, icon: '🔨', color: '#7f93a8' },
-    barracks: { name: '군영', w: 3, h: 2, cost: 100, jobs: 3, upkeep: 3, icon: '⚔️', color: '#a64b4b' }
+    barracks: { name: '군영', w: 3, h: 2, cost: 100, jobs: 3, upkeep: 3, icon: '⚔️', color: '#a64b4b' },
+    /* 시설 — 도로 없이도 선다(free). radius 안의 주거에 효과, 성벽은 지금은 방어 숫자만(전투 P3) */
+    well:     { name: '우물', w: 1, h: 1, cost: 25, free: true, radius: 6, happy: 20, icon: '💧', color: '#5aa7d6' },
+    tower:    { name: '망루', w: 1, h: 1, cost: 40, free: true, radius: 8, happy: 10, upkeep: 1, icon: '🗼', color: '#c9733a' },
+    wall:     { name: '성벽', w: 1, h: 1, cost: 4, free: true, defense: 5, icon: '', color: '#9a9488' }
   };
-  var BUILD_ORDER = ['road', 'house', 'farm', 'market', 'workshop', 'barracks'];
+  var BUILD_ORDER = ['road', 'house', 'farm', 'market', 'workshop', 'barracks', 'well', 'tower', 'wall'];
 
   /** 놓을 수 있나 — { ok, why } */
   function canPlace(s, type, x, y) {
@@ -105,6 +109,7 @@
       b = s.buildings[id]; d = DEFS[b.t];
       if (b.t === 'castle') { continue; }
       if (d.road) { b.conn = !!reach[g.idx(b.x, b.y)]; continue; }
+      if (d.free) { b.conn = true; continue; }   // 우물·망루·성벽은 도로가 필요 없다
       b.conn = touches(s, b, d, reach);
     }
   }

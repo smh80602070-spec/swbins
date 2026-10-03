@@ -27,3 +27,13 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0d1016; col
   #rts-tip { display: none; } #rts-mini { width: 120px; height: 75px; bottom: calc(84px + var(--rt-safe-b)); }
   #rts-tools button { min-width: 54px; }
 }
+#rts-opts { top: 62px; right: 12px; display: flex; gap: 4px; padding: 4px 6px; align-items: center; font-size: 12px; color: var(--rt-dim); }
+#rts-opts button { min-height: 30px; padding: 2px 8px; background: transparent; border: 1px solid rgba(216, 181, 106, .25); color: var(--rt-ink); border-radius: 6px; cursor: pointer; font-size: 12px; }
+#rts-opts button.on { background: linear-gradient(180deg, #e8c46a, #b98f3c); color: #22190a; font-weight: 700; }
+#rts-opts .vw { margin-left: 6px; }
+#rts-top b.neg { color: #ff8a7a; } #rts-top b.pos { color: #7be08a; }
+.rt-dem { display: inline-flex; gap: 4px; align-items: center; }
+.dm { position: relative; display: inline-block; width: 44px; height: 14px; border-radius: 3px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+.dm b { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, #5aa7d6, #e8c46a); }
+.dm u { position: absolute; inset: 0; z-index: 1; text-decoration: none; font-size: 10px; line-height: 14px; text-align: center; color: #fff; text-shadow: 0 0 2px #000; }
+@media (max-width: 780px) { #rts-opts { top: 104px; } .rt-dem { display: none; } }

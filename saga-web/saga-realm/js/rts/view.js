@@ -12,12 +12,13 @@
   var TILE = 20, TICK_MS = 100, ZMIN = 0.35, ZMAX = 4;
   var COLORS = { 0: ['#6f9b4f', '#689448'], 1: ['#3f6b2e', '#3a6529'], 2: ['#8a8378', '#827b70'], 3: ['#4f8fbf', '#4888b8'] };
   var TOOLS = [{ k: 'pan', n: '이동', i: '✋' }, { k: 'road', n: '도로', i: '🛣️' }, { k: 'house', n: '주거', i: '🏠' }, { k: 'farm', n: '농지', i: '🌾' },
-    { k: 'market', n: '시장', i: '🏪' }, { k: 'workshop', n: '공방', i: '🔨' }, { k: 'barracks', n: '군영', i: '⚔️' }, { k: 'erase', n: '철거', i: '🧹' }];
+    { k: 'market', n: '시장', i: '🏪' }, { k: 'workshop', n: '공방', i: '🔨' }, { k: 'barracks', n: '군영', i: '⚔️' }, { k: 'well', n: '우물', i: '💧' }, { k: 'tower', n: '망루', i: '🗼' }, { k: 'wall', n: '성벽', i: '🧱' }, { k: 'erase', n: '철거', i: '🧹' }];
 
   var R = function () { return global.DG.rts; };
   var S = null, cv, ctx, mini, mctx, miniBase = null, els = {};
   var cam = { x: 80, y: 50, z: 1.4 }, tool = 'pan', hover = null, ptrs = {}, pinch = 0, painting = false, panning = false, panLast = null;
-  var acc = 0, lastT = 0, lastHud = 0, lastSaveDay = 0, tipMsg = '', tipUntil = 0, dirty = true;
+  var acc = 0, lastT = 0, lastHud = 0, lastSaveDay = 0, tipMsg = '', tipUntil = 0, dirty = true, overlay = 0, lastStats = null;
+  var OVERLAYS = ['보기: 없음', '보기: 행복', '보기: 닿는 범위'];
 
   function $(id) { return global.document.getElementById(id); }
   function fmt(n) { return String(Math.round(n * 10) / 10).replace(/\.0$/, ''); }
@@ -66,8 +67,28 @@
         ctx.fillStyle = 'rgba(255,90,74,.35)'; ctx.fillRect(bp.x + 1, bp.y + 1, z - 2, z - 2);
       }
     }
+    if (overlay) { drawOverlay(); }
     if (hover && TOOLS.some(function (t) { return t.k === tool && t.k !== 'pan'; })) { drawGhost(); }
     drawMini(); dirty = false;
+  }
+
+  /** 보기 겹침 — 1 행복(주거 색: 빨강→초록) · 2 시설 닿는 범위(우물·망루 원, 닿은 주거 초록 테두리) */
+  function drawOverlay() {
+    var D = R().rules.DEFS, E = R().econ, z = px(), id, b, d, bp, h, cov, gl = lastStats ? lastStats.globalHappy : 0;
+    for (id in S.buildings) {
+      b = S.buildings[id]; d = D[b.t]; bp = toScreen(b.x, b.y);
+      if (overlay === 1 && b.t === 'house') {
+        h = E.houseHappy(S, b, gl); ctx.fillStyle = 'hsla(' + Math.round(h * 1.2) + ',85%,48%,.62)'; ctx.fillRect(bp.x + 1, bp.y + 1, d.w * z - 2, d.h * z - 2);
+        if (z >= 14) { ctx.font = Math.floor(z * 0.7) + 'px sans-serif'; ctx.fillStyle = '#000'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(Math.round(h), bp.x + d.w * z / 2, bp.y + d.h * z / 2); }
+      } else if (overlay === 2) {
+        if (d.radius && d.happy) {
+          ctx.beginPath(); ctx.arc(bp.x + d.w * z / 2, bp.y + d.h * z / 2, d.radius * z, 0, 6.2832);
+          ctx.fillStyle = b.t === 'well' ? 'rgba(90,167,214,.18)' : 'rgba(201,115,58,.18)'; ctx.fill(); ctx.strokeStyle = b.t === 'well' ? '#5aa7d6' : '#c9733a'; ctx.lineWidth = 1.5; ctx.stroke();
+        } else if (b.t === 'house') {
+          cov = E.coverage(S, b); ctx.strokeStyle = cov > 0 ? '#7be08a' : 'rgba(255,255,255,.35)'; ctx.lineWidth = 2; ctx.strokeRect(bp.x + 2, bp.y + 2, d.w * z - 4, d.h * z - 4);
+        }
+      }
+    }
   }
 
   function drawGhost() {
@@ -82,6 +103,7 @@
     p = toScreen(hover.x, hover.y);
     ctx.fillStyle = ok ? 'rgba(120,255,140,.45)' : 'rgba(255,90,74,.45)'; ctx.fillRect(p.x, p.y, w * z, h * z);
     ctx.strokeStyle = ok ? '#9dffae' : '#ff8a7a'; ctx.lineWidth = 2; ctx.strokeRect(p.x + 1, p.y + 1, w * z - 2, h * z - 2);
+    if (d.radius) { ctx.beginPath(); ctx.arc(p.x + w * z / 2, p.y + h * z / 2, d.radius * z, 0, 6.2832); ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.setLineDash([6, 5]); ctx.lineWidth = 1.5; ctx.stroke(); ctx.setLineDash([]); }
     void g;
   }
 
@@ -109,7 +131,10 @@
       '<span title="식량">🌾 <b>' + fmt(r.food) + '</b> <em class="' + (st.foodNet < 0 ? 'neg' : 'pos') + '">' + (st.foodNet >= 0 ? '+' : '') + fmt(st.foodNet) + '</em></span>' +
       '<span title="금">🪙 <b>' + fmt(r.gold) + '</b> <em class="' + (st.goldNet < 0 ? 'neg' : 'pos') + '">' + (st.goldNet >= 0 ? '+' : '') + fmt(st.goldNet) + '</em></span>' +
       '<span title="인구 / 수용">👥 <b>' + S.pop + '</b>/' + st.cap + '</span>' +
-      '<span title="일하는 사람 / 일자리">⚒️ <b>' + st.workers + '</b>/' + st.jobs + '</span>';
+      '<span title="일하는 사람 / 일자리">⚒️ <b>' + st.workers + '</b>/' + st.jobs + '</span>' +
+      '<span title="행복 — 우물·망루가 닿고 식량이 넉넉하고 세율이 낮을수록 높다. 25 미만이면 사람이 떠난다">😊 <b class="' + (st.happy < 25 ? 'neg' : st.happy >= 60 ? 'pos' : '') + '">' + Math.round(st.happy) + '</b></span>' +
+      '<span class="rt-dem" title="수요 — 막대가 길수록 그걸 더 지어야 한다">' + dem('주거', st.demand.housing) + dem('일터', st.demand.work) + dem('식량', st.demand.food) + '</span>';
+    lastStats = st;
     var btns = els.tools.querySelectorAll('button[data-tool]'), i, t, d;
     for (i = 0; i < btns.length; i++) {
       t = btns[i].getAttribute('data-tool'); d = R().rules.DEFS[t];
@@ -117,9 +142,12 @@
       btns[i].classList.toggle('poor', !!(d && d.cost > r.gold));
     }
     var sp = els.speed.querySelectorAll('button'); for (i = 0; i < sp.length; i++) { sp[i].classList.toggle('on', +sp[i].getAttribute('data-speed') === S.speed); }
+    var tx = els.opts.querySelectorAll('button[data-tax]'); for (i = 0; i < tx.length; i++) { tx[i].classList.toggle('on', +tx[i].getAttribute('data-tax') === S.tax); }
+    els.opts.querySelector('button[data-view]').textContent = OVERLAYS[overlay];
     els.tip.textContent = Date.now() < tipUntil ? tipMsg : tipFor();
     els.tip.classList.toggle('warn', Date.now() < tipUntil);
   }
+  function dem(label, v) { return '<i class="dm"><u>' + label + '</u><b style="width:' + Math.round(v * 100) + '%"></b></i>'; }
   function tipFor() {
     if (!hover) { return '도구를 고르고 칸을 누르세요 · 건물은 도로로 거점에 이어져야 돕니다'; }
     var b = R().rules.buildingAt(S, hover.x, hover.y), D = R().rules.DEFS;
@@ -183,7 +211,7 @@
       if (k === 'Escape') { tool = 'pan'; }
       else if (k === ' ') { S.speed = S.speed === 0 ? 1 : 0; e.preventDefault(); }
       else if (k === 'x' || k === 'X') { tool = 'erase'; }
-      else if (/^[1-6]$/.test(k)) { n = +k; tool = TOOLS[n].k; }
+      else if (/^[1-9]$/.test(k)) { n = +k; tool = TOOLS[n].k; }
       else if (k === 'ArrowLeft' || k === 'a') { cam.x -= step; } else if (k === 'ArrowRight' || k === 'd') { cam.x += step; }
       else if (k === 'ArrowUp' || k === 'w') { cam.y -= step; } else if (k === 'ArrowDown' || k === 's') { cam.y += step; }
       clampCam(); dirty = true;
@@ -194,6 +222,12 @@
     mini.addEventListener('pointermove', function (e) { if (md) { mini2cam(e); } });
     mini.addEventListener('pointerup', function () { md = false; });
     els.tools.addEventListener('click', function (e) { var b = e.target.closest('button[data-tool]'); if (b) { tool = b.getAttribute('data-tool'); dirty = true; } });
+    els.opts.addEventListener('click', function (e) {
+      var t = e.target.closest('button[data-tax]'), v = e.target.closest('button[data-view]');
+      if (t) { S.tax = +t.getAttribute('data-tax'); }
+      if (v) { overlay = (overlay + 1) % OVERLAYS.length; }
+      dirty = true; hud();
+    });
     els.speed.addEventListener('click', function (e) { var b = e.target.closest('button[data-speed]'); if (b) { S.speed = +b.getAttribute('data-speed'); } });
     global.addEventListener('beforeunload', save);
     global.document.addEventListener('visibilitychange', function () { if (global.document.hidden) { save(); } });
@@ -226,10 +260,10 @@
     doc.body.insertAdjacentHTML('beforeend',
       '<canvas id="rts-map"></canvas><div id="rts-top" class="rt-box"></div>' +
       '<div id="rts-speed" class="rt-box"><button data-speed="0" title="일시정지 (Space)">⏸</button><button data-speed="1">1×</button><button data-speed="2">2×</button><button data-speed="4">4×</button></div>' +
-      '<div id="rts-tools" class="rt-box">' + TOOLS.map(function (t, i) { var d = R().rules.DEFS[t.k]; return '<button data-tool="' + t.k + '" title="' + t.n + (i > 0 && i < 7 ? ' (' + i + ')' : '') + '"><span>' + t.i + '</span><small>' + t.n + (d && d.cost ? ' ' + d.cost : '') + '</small></button>'; }).join('') + '</div>' +
-      '<canvas id="rts-mini" class="rt-box" width="240" height="150"></canvas><div id="rts-tip" class="rt-box"></div><a id="rts-back" class="rt-box" href="./">턴제로</a>');
+      '<div id="rts-tools" class="rt-box">' + TOOLS.map(function (t, i) { var d = R().rules.DEFS[t.k]; return '<button data-tool="' + t.k + '" title="' + t.n + (i > 0 && i < 10 ? ' (' + i + ')' : '') + '"><span>' + t.i + '</span><small>' + t.n + (d && d.cost ? ' ' + d.cost : '') + '</small></button>'; }).join('') + '</div>' +
+      '<canvas id="rts-mini" class="rt-box" width="240" height="150"></canvas><div id="rts-tip" class="rt-box"></div><div id="rts-opts" class="rt-box"><span>세율</span><button data-tax="0">낮음</button><button data-tax="1">보통</button><button data-tax="2">높음</button><button data-view="1" class="vw">보기: 없음</button></div><a id="rts-back" class="rt-box" href="./">턴제로</a>');
     cv = $('rts-map'); ctx = cv.getContext('2d'); mini = $('rts-mini'); mctx = mini.getContext('2d');
-    els = { top: $('rts-top'), tools: $('rts-tools'), speed: $('rts-speed'), tip: $('rts-tip') };
+    els = { top: $('rts-top'), tools: $('rts-tools'), speed: $('rts-speed'), tip: $('rts-tip'), opts: $('rts-opts') };
     S = (c && c.save && c.save.rts ? R().state.restore(c.save.rts) : null) || R().state.create((Date.now() & 0xffff) + 1);
     lastSaveDay = S.day;
     var cs = R().grid.castleSite(); cam.x = cs.x + 1.5; cam.y = cs.y + 1.5;

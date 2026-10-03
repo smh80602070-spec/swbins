@@ -317,6 +317,44 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return same && tiles && bad && !!odd && Object.keys(odd.buildings).length === 1 && ('왕복 같음 · 빈 id 보존 · 깨진 저장 null · 모르는 건물 건너뜀');
     });
 
+    /* ── RTS P2(W-0030) — 시설·행복·세율·수요. 모두 순수 함수 ─── */
+
+    function rtsBase(extra) { var R = DG.rts, r = R.rules, g = R.grid, s = R.state.create(7), cs = g.castleSite(), i; s.res.gold = 99999; for (i = 0; i < 8; i++) { r.place(s, 'road', cs.x + 3 + i, cs.y + 1); } r.place(s, 'house', cs.x + 4, cs.y - 1); r.place(s, 'house', cs.x + 6, cs.y - 1); r.place(s, 'farm', cs.x + 4, cs.y + 2); r.place(s, 'market', cs.x + 7, cs.y + 2); if (extra) { extra(s, cs, r); } return s; }
+
+    t('RTS 시설 — 우물·망루·성벽은 도로 없이 서고, 반경 안의 주거만 행복이 오르며(우물 +20·망루 +10), 성벽은 방어 숫자만 올린다', function () {
+      var E = DG.rts.econ, b = rtsBase(), none = E.stats(b).happy;
+      var w = rtsBase(function (s, cs, r) { r.place(s, 'well', cs.x + 5, cs.y - 2); }), tw = rtsBase(function (s, cs, r) { r.place(s, 'tower', cs.x + 5, cs.y - 2); });
+      var far = rtsBase(function (s, cs, r) { r.place(s, 'well', cs.x + 40, cs.y - 20); }), wl = rtsBase(function (s, cs, r) { r.place(s, 'wall', cs.x - 8, cs.y + 8); r.place(s, 'wall', cs.x - 7, cs.y + 8); });
+      var free = rtsBase(function (s, cs, r) { var x = r.place(s, 'well', cs.x - 6, cs.y - 6); s.__w = x && x.conn; });
+      return E.stats(w).happy - none === 20 && E.stats(tw).happy - none === 10 && E.stats(far).happy === none && E.stats(wl).defense === 10 && E.stats(wl).happy === none && free.__w === true &&
+        ('우물 +20 · 망루 +10 · 먼 우물 0 · 성벽 방어 10 · 도로 없이 섬');
+    });
+
+    t('RTS 세율 — 낮음은 금이 적고 행복이 높으며 높음은 반대, 행복 25 미만이면 사람이 떠나고, 행복은 생산 배율(0.8~1.2)에 곱해진다', function () {
+      var E = DG.rts.econ, lo = rtsBase(), mid = rtsBase(), hi = rtsBase(); lo.tax = 0; hi.tax = 2;
+      var a = E.stats(lo), b = E.stats(mid), c = E.stats(hi);
+      var order = a.goldNet < b.goldNet && b.goldNet < c.goldNet && a.happy > b.happy && b.happy > c.happy && a.mul > b.mul && b.mul > c.mul;
+      var q = rtsBase(function (s) { s.tax = 2; s.pop = 20; s.res.food = 35; }), sq = E.stats(q), p0 = q.pop; E.dayTick(q);
+      var leave = sq.happy < 25 && q.res.food > 0 && q.pop < p0;
+      return order && a.mul >= 0.8 && c.mul <= 1.2 && leave && ('금 ' + a.goldNet.toFixed(1) + '<' + b.goldNet.toFixed(1) + '<' + c.goldNet.toFixed(1) + ' · 행복 ' + a.happy + '>' + b.happy + '>' + c.happy + ' · 불만(' + sq.happy + ')이면 ' + p0 + '→' + q.pop);
+    });
+
+    t('RTS 수요 — 일자리가 인구보다 많으면 주거 수요, 일할 사람이 남으면 일터 수요, 식량이 줄면 식량 수요(0~1)', function () {
+      var E = DG.rts.econ, bare = DG.rts.state.create(7); bare.pop = 40;
+      var idle = E.stats(bare).demand;
+      var jobs = rtsBase(function (s, cs, r) { r.place(s, 'workshop', cs.x + 8, cs.y - 3); r.place(s, 'workshop', cs.x + 8, cs.y - 6); s.pop = 5; }); var dj = E.stats(jobs).demand;
+      var hungry = rtsBase(function (s) { s.res.food = 0; s.pop = 60; }); var dh = E.stats(hungry).demand;
+      var all = [idle, dj, dh].every(function (d) { return ['housing', 'work', 'food'].every(function (k) { return d[k] >= 0 && d[k] <= 1; }); });
+      return all && idle.work > 0.5 && dj.housing > 0 && dh.food > 0.3 && ('일터 ' + idle.work.toFixed(2) + ' · 주거 ' + dj.housing.toFixed(2) + ' · 식량 ' + dh.food.toFixed(2));
+    });
+
+    t('RTS 저장 — 세율이 저장·복원되고 옛 저장(세율 칸 없음)은 보통으로 열린다', function () {
+      var R = DG.rts, s = rtsBase(function (s) { s.tax = 2; }), o = R.state.serialize(s), back = R.state.restore(JSON.parse(JSON.stringify(o)));
+      var old = JSON.parse(JSON.stringify(o)); delete old.tax; var legacy = R.state.restore(old);
+      var junk = JSON.parse(JSON.stringify(o)); junk.tax = 7; var weird = R.state.restore(junk);
+      return back.tax === 2 && legacy.tax === 1 && weird.tax === 1 && ('세율 왕복 · 옛 저장 보통 · 이상한 값 보통');
+    });
+
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
       var A = DG.assets3d, ids = DG.assets3dIds, bad = [], reg = DG.cfg.assets3d.reg;
       Object.keys(reg).forEach(function (k) { reg[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });
