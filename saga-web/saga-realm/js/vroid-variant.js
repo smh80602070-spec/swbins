@@ -160,12 +160,23 @@
     return pool[hash('pat:' + id) % pool.length];
   }
 
+  /** 무늬 파일 기준 주소 — 통일 3D 에셋 조회(`DG.assets3d`)가 shared/assets 를 찾았으면 그 `patterns/`, 아니면 판 설정의 base */
+  function patBase(c) {
+    var A = global.DG && global.DG.assets3d, r = A && A.root && A.root();
+    return r ? r + 'patterns/' : (c.base || 'assets/patterns/');
+  }
+
   /** 무늬 표를 한 번 받아 둔다 — 받는 동안 이미 입힌 몸이 있으면 받은 뒤 다시 입힌다 */
   function patLoad() {
     var c = patCfg();
     if (!c || PAT.list || PAT.tried || !global.fetch) { return; }
+    var A = global.DG && global.DG.assets3d;
+    if (A && A.state && A.state() !== 'ok' && A.state() !== 'fail') {   // 기준 주소 시험이 끝나길 기다렸다가 한 번 더(끝나면 ok·fail 이라 되풀이 없음)
+      if (!PAT.waiting) { PAT.waiting = true; A.whenSettled(function () { PAT.waiting = false; patLoad(); }); }
+      return;
+    }
     PAT.tried = true;
-    global.fetch((c.base || 'assets/patterns/') + 'patterns.json').then(function (r) { return r.ok ? r.json() : null; })
+    global.fetch(patBase(c) + 'patterns.json').then(function (r) { return r.ok ? r.json() : null; })
       .then(function (j) {
         if (j && j.patterns && j.patterns.length) { PAT.list = j.patterns; } else { PAT.dead = true; }
         var q = PAT.pending; PAT.pending = [];
@@ -179,7 +190,7 @@
     var t = global.THREE, c = patCfg(), tex = null;
     if (PAT.loader) { tex = PAT.loader(rec, c); }
     else if (t && t.TextureLoader) {
-      tex = new t.TextureLoader().load((c.base || 'assets/patterns/') + rec.file);
+      tex = new t.TextureLoader().load(patBase(c) + rec.file);
       tex.wrapS = tex.wrapT = t.RepeatWrapping;
       tex.repeat.set(c.repeat || 3, c.repeat || 3);
       if (t.SRGBColorSpace) { tex.colorSpace = t.SRGBColorSpace; }
