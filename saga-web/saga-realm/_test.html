@@ -72,6 +72,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/core.js"></script>
 <script src="js/assets3d-ids.js"></script>
 <script src="js/assets3d.js"></script>
+<script src="js/mode2d.js"></script>
+<script src="js/map2d.js"></script>
 <script src="js/sfx.js"></script>
 <script src="js/bgm.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -195,6 +197,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     }
 
     /* ── 골격 ────────────────────────────────────────── */
+
+    t('2D 지도 — 땅 종류(land) 전부가 realm_ 타일로, 성 그림 3단이 지물 GLB 로 이어지고, 시험 전엔 terrain·castle 이 빈 문자열(옛 지도)', function () {
+      var CITIES = DG.cityData.CITIES, c = DG.cfg.mode2d, bad = [], lands = {};
+      CITIES.forEach(function (x) { if (x.land) { lands[x.land] = 1; } });
+      Object.keys(lands).forEach(function (l) { if (!c.tile[l] || c.tile[l].indexOf('realm_') !== 0) { bad.push('land ' + l); } });
+      ['city:s', 'city:m', 'city:l'].forEach(function (k) { if (!c.prop2d[k] || !DG.assets3d.has('world', c.prop2d[k].id)) { bad.push(k); } });
+      DG.assets3d._reset();
+      var t0 = DG.map2d.terrain(CITIES), c0 = DG.map2d.castle(CITIES[0], 2);
+      return bad.length === 0 && t0 === '' && c0 === '' && ('land ' + Object.keys(lands).length + '종·성 3단 연결 · 시험 전 빈 문자열') || bad.join(',') || '표/폴백 불일치';
+    });
 
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
       var A = DG.assets3d, ids = DG.assets3dIds, bad = [], reg = DG.cfg.assets3d.reg;

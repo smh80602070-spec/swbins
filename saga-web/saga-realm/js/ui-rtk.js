@@ -1322,7 +1322,7 @@
      전체 범위 자체(MAP_VB, 위 "지도 이동·확대" 절)는 여기 -140/-55/380/205 와
      반드시 같아야 한다 — 보이는 창(viewBox)은 mapViewBox() 가 이동·확대
      상태에 따라 그 범위 **안의 일부**를 계산해 낸다(2026-09-10) */
-    s += '<svg class="rmap" viewBox="' + mapViewBox() + '" preserveAspectRatio="xMidYMid meet">';
+    s += '<svg class="rmap" viewBox="' + mapViewBox() + '" preserveAspectRatio="xMidYMid meet">' + (global.DG.map2d ? global.DG.map2d.terrain(CD.CITIES) : '');   // 2D 모드 지형 바닥(W-0023)
 
     /* 길 — 인접한 성끼리. 같은 편이면 밝게 */
     var drawn = {};
@@ -1353,7 +1353,7 @@
            보이지 않는 큰 원을 하나 깔아 둔다(그림은 그대로, 손만 커진다) */
         '<circle class="rhit" cx="' + d.x + '" cy="' + d.y + '" r="4.2"/>' +
         '<circle cx="' + d.x + '" cy="' + d.y + '" r="' + rad.toFixed(2) + '" fill="' +
-          forceColor(c.force) + '"/>' +
+          forceColor(c.force) + '"/>' + (global.DG.map2d ? global.DG.map2d.castle(d, rad) : '') +
         (mine ? '<circle cx="' + d.x + '" cy="' + d.y + '" r="' + (rad + 1.1).toFixed(2) +
           '" class="ring"/>' : '') +
         (c.disaster ? '<text class="rdis" x="' + (d.x + rad + 0.6) + '" y="' + (d.y - rad) +

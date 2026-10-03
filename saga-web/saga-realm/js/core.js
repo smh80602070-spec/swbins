@@ -430,5 +430,12 @@
     /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 사당·성벽·횃불(화로)·집 */
     reg: { 'temple': ['chinese_hall_01'], 'wall': ['city_wall_segment_01'], 'torch': ['brazier_01'], 'house': ['silkroad_house_01'] }
   };
+  global.DG.cfg.mode2d = {
+    /* 2D 국토 지도 꾸밈(W-0023) — 2D 모드 = 3D 지도가 안 서 있을 때. 땅 종류(land) → K-0020 `realm_*` 타일, 성 단계 → K-0017 `world2d` 스프라이트(map2d.js) */
+    on: function () { var R3 = global.DG.realm3d; return !(R3 && R3.active && R3.active()); },
+    tileBase: 'assets/web2d/tile/',
+    tile: { plain: 'realm_grass', hill: 'realm_dirt', mount: 'realm_stone', river: 'realm_water' },
+    prop2d: { 'city:s': { id: 'silkroad_house_01' }, 'city:m': { id: 'chinese_hall_01' }, 'city:l': { id: 'stone_tower_01' } }
+  };
   global.DG.cfg.vroidPattern = { base: 'assets/patterns/', repeat: 3 };
 })(window);

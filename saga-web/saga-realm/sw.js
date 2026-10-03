@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'realm-v1.81.0';
+var VERSION = 'realm-v1.82.0';
 var APP_CACHE = 'sr-app-' + VERSION;
 var TILE_CACHE = 'sr-tiles-v1';
 var TILE_MAX = 500;
@@ -38,6 +38,8 @@ var SHELL = [
   './js/core.js',
   './js/assets3d-ids.js',
   './js/assets3d.js',
+  './js/mode2d.js',
+  './js/map2d.js',
   './js/sfx.js',
   './js/bgm.js',
   './js/vendor/three.iife.js',
