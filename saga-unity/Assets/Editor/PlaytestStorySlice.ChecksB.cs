@@ -258,8 +258,9 @@ namespace Saga.EditorTools
             float atk4 = atk3 + StoryCombat.JobsTier4["warlord"].Atk;
             var weapon = Object.FindFirstObjectByType<StoryWeaponVisual>();
             if (StoryJobState.Job != "warlord" || StoryJobState.Tier != 4 || StoryJobState.Root != "warrior" ||
-                !Mathf.Approximately(StoryJobState.AtkBonus, atk4) || StoryJobState.NextJob != null ||
-                StoryJobState.PromoteBlock() != "job.why_no_next" || weapon == null || weapon.CurrentWeaponRoot == null || weapon.CurrentWeaponRoot.childCount < 2)
+                !Mathf.Approximately(StoryJobState.AtkBonus, atk4) || StoryJobState.NextJob != "godwar" ||
+                StoryJobState.PromoteBlock() != "job.why_level" || StoryJobState.PromoteLevelNeeded != 30 || // tasks U-0025 — 4차 뒤에 5차(군신 Lv.30)가 이어진다
+ weapon == null || weapon.CurrentWeaponRoot == null || weapon.CurrentWeaponRoot.childCount < 2)
             {
                 Debug.LogError($"{T} 4차 전직 뒤 — job={StoryJobState.Job} tier={StoryJobState.Tier} root={StoryJobState.Root} atk+={StoryJobState.AtkBonus}(기대={atk4}) next={StoryJobState.NextJob} why={StoryJobState.PromoteBlock()} 검={weapon != null && weapon.CurrentWeaponRoot != null && weapon.CurrentWeaponRoot.childCount >= 2}");
                 return false;

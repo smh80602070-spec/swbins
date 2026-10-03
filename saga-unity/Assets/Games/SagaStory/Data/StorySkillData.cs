@@ -324,6 +324,30 @@ namespace Saga.Story.Data
                 Cost = 62, Cooldown = 10f, Effect = Effect.Dash, MulBase = 4.2f, MulPerLevel = 0.36f, DistM = 400 * Px, Need = "i_step", NeedLv = 5 },
             new Skill { Key = "z_orb", Job = "ascendant", School = "m_tan", Name = "성라탄(星羅彈)", Desc = "별자리 여덟이 한꺼번에 쏟아진다 — 유성탄 5",
                 Cost = 56, Cooldown = 8f, Effect = Effect.Volley, MulBase = 2.4f, MulPerLevel = 0.2f, Shots = 8, Need = "i_orb", NeedLv = 5 },
+
+            // ── 5차 각성기(tasks U-0025, data-job.js 5차) — 갈래마다 둘, 4차 사슬 하나의 끝(Need 5)에 붙고 그 유파를 그대로 쓴다.
+            // 웹 8개 중 태허의 만상환생(heal)은 뺀다(회복 무예를 안 옮기는 규칙), 군신강림의 guard·유명문의 invuln 도 뺀다 — 4차와 같은 규칙. ──
+            // 군신(軍神)
+            new Skill { Key = "p_wrath", Job = "godwar", School = "w_jung", Name = "천멸격(天滅擊)", Desc = "앞을 다섯 번 내리쳐 하늘을 무너뜨린다 — 파멸격 5",
+                Cost = 74, Cooldown = 13f, Effect = Effect.Melee, MulBase = 8.4f, MulPerLevel = 0.76f, Hits = 5, Need = "o_ruin", NeedLv = 5 },
+            new Skill { Key = "p_banner", Job = "godwar", School = "w_su", Name = "군신강림(軍神降臨)", Desc = "20초간 전장의 이름을 몸에 둘렀다(공격 +120% · 기력이 빨리 찬다) — 패천기 5",
+                Cost = 72, Cooldown = 32f, Effect = Effect.Buff, BuffSec = 20f, BuffAtk = 2.2f, BuffRegen = 3.4f, Need = "o_conquer", NeedLv = 5 },
+
+            // 천궁(天弓)
+            new Skill { Key = "p_stars", Job = "skybow", School = "a_yeon", Name = "성궁만천(星弓滿天)", Desc = "화살 열여섯이 별처럼 흩어진다 — 십이시 5",
+                Cost = 68, Cooldown = 9f, Effect = Effect.Volley, MulBase = 2.9f, MulPerLevel = 0.24f, Shots = 16, Need = "h_swarm", NeedLv = 5 },
+            new Skill { Key = "p_sun", Job = "skybow", School = "a_gwan", Name = "일월시(日月矢)", Desc = "해와 달을 한 살에 꿴다 — 광시 5",
+                Cost = 72, Cooldown = 11f, Effect = Effect.Bolt, MulBase = 10.5f, MulPerLevel = 0.85f, Need = "h_ray", NeedLv = 5 },
+
+            // 무영(無影)
+            new Skill { Key = "p_afterimage", Job = "noshadow", School = "r_cham", Name = "무영참(無影斬)", Desc = "열두 번 그은 뒤에야 모습이 남는다 — 팔도 5",
+                Cost = 72, Cooldown = 10f, Effect = Effect.Melee, MulBase = 3.6f, MulPerLevel = 0.3f, Hits = 12, Need = "d_carve", NeedLv = 5 },
+            new Skill { Key = "p_gate", Job = "noshadow", School = "r_bo", Name = "유명문(幽冥門)", Desc = "문을 열고 닫는 사이에 건너간다 — 명계보 5",
+                Cost = 62, Cooldown = 9f, Effect = Effect.Dash, MulBase = 4.6f, MulPerLevel = 0.38f, DistM = 460 * Px, Need = "d_veil", NeedLv = 5 },
+
+            // 태허(太虛) — 만상환생(heal)은 뺐다
+            new Skill { Key = "p_void", Job = "voidsage", School = "m_jin", Name = "태허붕(太虛崩)", Desc = "비어 있던 자리가 한꺼번에 무너져 내린다 — 건곤붕 5",
+                Cost = 88, Cooldown = 16f, Effect = Effect.Aoe, MulBase = 8.2f, MulPerLevel = 0.68f, RadiusM = 380 * Px, Need = "z_collapse", NeedLv = 5 },
         };
 
         private static Dictionary<string, Skill> _byKey;
