@@ -117,6 +117,7 @@ func _build_terrain() -> void:
 	if _heights.size() != _nx * _ny:
 		push_error("RegionLoader: 지형 격자 크기가 안 맞는다 — %s" % region)
 		stats.errors += 1
+		_heights = PackedFloat32Array()   # height_at 이 범위 밖을 읽지 않게 비운다
 		return
 	var verts := PackedVector3Array()
 	var norms := PackedVector3Array()
@@ -291,8 +292,8 @@ func _build_roads() -> void:
 			norms.append(Vector3.UP)
 			if k < n:
 				var a := k * 2
-				# l(a) r(a+1) 다음 줄 l(a+2) r(a+3). 위에서 봤을 때 시계 방향이 되게.
-				idx.append_array([a, a + 2, a + 1, a + 1, a + 2, a + 3])
+				# side = (-dy, dx) 라 l 이 진행 방향의 오른쪽이다. l(a) r(a+1) 다음 줄 l(a+2) r(a+3) — 위에서 봤을 때 시계 방향.
+				idx.append_array([a, a + 1, a + 2, a + 1, a + 3, a + 2])
 		_add_surface("Road%d" % int(stats.roads), verts, norms, uvs, idx, _flat_material(rel))
 		stats.roads += 1
 

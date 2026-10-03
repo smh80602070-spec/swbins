@@ -73,7 +73,8 @@ func _setup_camera() -> void:
 	if cam is Dictionary:
 		_cam.position = RegionLoader.conv(cam.pos as Array)
 		_cam.look_at_from_position(_cam.position, RegionLoader.conv(cam.look as Array))
-		_cam.fov = rad_to_deg(2.0 * atan(18.0 / float(cam.get("lens", 35.0))))   # 렌즈(mm, 36mm 가로 센서) → 세로 fov 근사
+		_cam.keep_aspect = Camera3D.KEEP_WIDTH   # Blender 렌즈(mm, 36mm 센서)는 가로 시야각
+		_cam.fov = rad_to_deg(2.0 * atan(18.0 / float(cam.get("lens", 35.0))))
 	else:
 		# 배치표에 카메라가 없으면(village) 길 입구에서 광장을 바라본다.
 		var from := RegionLoader.conv([0.0, -8.0, _loader.height_at(0.0, -8.0) + 3.0])
@@ -114,6 +115,22 @@ func _count_layout(id: String) -> Dictionary:
 	return n
 
 
+## 지형·광장·길 삼각형 중 위에서 볼 때 앞면(시계 방향 = 위로 향한 면 법선이 -y 로 계산됨)이 아닌 것의 수.
+func _flipped_tris(ld: RegionLoader) -> int:
+	var n := 0
+	for c in ld.get_children():
+		if not (c is MeshInstance3D) or not (c.name == "Terrain" or c.name == "Plaza" or String(c.name).begins_with("Road")):
+			continue
+		var arrays := ((c as MeshInstance3D).mesh as ArrayMesh).surface_get_arrays(0)
+		var v: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		var idx: PackedInt32Array = arrays[Mesh.ARRAY_INDEX]
+		for i in range(0, idx.size(), 3):
+			var cr := (v[idx[i + 1]] - v[idx[i]]).cross(v[idx[i + 2]] - v[idx[i]])
+			if cr.y >= 0.0:
+				n += 1
+	return n
+
+
 func _run_probe() -> void:
 	var fails := 0
 	for id: String in RegionLoader.REGIONS:
@@ -137,6 +154,9 @@ func _run_probe() -> void:
 			bad.append("water")
 		if ld.layout.has("terrain") and int(ld.stats.terrain_tris) == 0:
 			bad.append("terrain 0")
+		var flipped := _flipped_tris(ld)
+		if flipped > 0:
+			bad.append("뒤집힌 삼각형 %d" % flipped)
 		var budget := RegionLoader.LIGHT_BUDGET_MOBILE if OS.has_feature("mobile") else RegionLoader.LIGHT_BUDGET_PC
 		if int(ld.stats.lights) > budget:
 			bad.append("lights %d>%d" % [int(ld.stats.lights), budget])
