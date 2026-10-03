@@ -40,12 +40,23 @@ const out = await page.evaluate(async () => {
       res.tiles[t].iso = !!iso && px === 255;
     }
   }
+  /* 건물·지물 스프라이트(cfg.prop2d) — 받아지고 발 밑에 그려지나 */
+  res.props = {};
+  const pt = cfg.prop2d || {};
+  for (const kind of Object.keys(pt)) {
+    const ok = await wait(() => M.spriteReady(pt[kind].id));
+    x.clearRect(0, 0, 1280, 720);
+    const dr = ok && M.drawKind(x, kind, 640, 600, 1);
+    const d = x.getImageData(0, 0, 1280, 720).data; let n = 0; for (let i = 3; i < d.length; i += 4) { if (d[i] > 200) { n++; } }
+    res.props[kind] = { id: pt[kind].id, ready: !!ok, drew: !!dr, solidPx: n };
+  }
   return res;
 });
 console.log(JSON.stringify(out, null, 1));
 const bad = [];
 Object.entries(out.regions).forEach(([k, v]) => { if (!v.ready || !v.drew || v.skyFill < 0.95 || v.scrolledFill < 0.95) { bad.push(k); } });
+Object.entries(out.props || {}).forEach(([k, v]) => { if (!v.ready || !v.drew || v.solidPx < 100) { bad.push('지물 ' + k); } });
 Object.entries(out.tiles).forEach(([k, v]) => { if (!v.ready || !v.drew || v.fill < 0.99 || v.iso === false) { bad.push(k); } });
-console.log(bad.length ? 'FAIL ' + bad.join(',') : 'OK 지역 ' + Object.keys(out.regions).length + ' · 타일 ' + Object.keys(out.tiles).length);
+console.log(bad.length ? 'FAIL ' + bad.join(',') : 'OK 지역 ' + Object.keys(out.regions).length + ' · 타일 ' + Object.keys(out.tiles).length + ' · 지물 ' + Object.keys(out.props || {}).length);
 await r.close();
 process.exit(bad.length ? 1 : 0);

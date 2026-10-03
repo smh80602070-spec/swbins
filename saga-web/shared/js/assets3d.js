@@ -100,6 +100,13 @@
   }
 
   global.DG = global.DG || {};
+  /** 통일 2D 스프라이트(`world2d/<id>.webp`, 256px 알파 한 장) 주소 — 3D 와 같은 id. 없으면 null */
+  function spriteUrl(id) {
+    if (state === 'init') { probe(); }
+    if (state !== 'ok' || !id || !tunedOn() || !set('world')[id]) { return null; }
+    return root + 'world2d/' + id + '.webp';
+  }
+
   /** 영웅 몸 레시피(asset3d `heroRecipe` 맨 앞) — 통일 GLB 가 있으면 `{key, body}`(몸짓은 몸에서 읽어 굽는다 = anim-own), 없으면 null */
   function heroRecipe(ref) {
     var id = ref && typeof ref === 'object' ? ref.id : String(ref || '').replace(/^hero:/, ''), u = url('hero', id);   // 사가블로는 'hero:<id>' 문자열 씨앗을 준다
@@ -107,7 +114,7 @@
   }
 
   global.DG.assets3d = {
-    url: url, probe: probe, heroRecipe: heroRecipe, applyProps: applyProps,
+    url: url, spriteUrl: spriteUrl, probe: probe, heroRecipe: heroRecipe, applyProps: applyProps,
     has: function (kind, id) { return !!set(kind)[id]; },
     /** 진단·점검용 — 'init' | 'probing' | 'ok' | 'fail' */
     state: function () { return state; },

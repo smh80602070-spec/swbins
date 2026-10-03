@@ -6624,6 +6624,15 @@ window.DG_NO_TUNE = true;
       return bad.length === 0 && ids.hero.length === 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 등록 표 ' + Object.keys(reg).length + '칸') || bad.join(',') || '표/폴백 불일치';
     });
 
+    t('2D 지물 — prop2d 표의 id 는 전부 world3d 지물이고, 못 받았으면(시험 전) drawKind 는 false(옛 도형)·그리기 호출 0', function () {
+      var M = DG.mode2d, t = DG.cfg.mode2d.prop2d, bad = [], calls = 0;
+      Object.keys(t).forEach(function (k) { if (!DG.assets3d.has('world', t[k].id)) { bad.push(k); } });
+      var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, beginPath: function () { calls++; }, ellipse: function () { calls++; }, fill: function () { calls++; } };
+      DG.assets3d._reset();
+      var r = M.drawKind(fake, 'home', 10, 10, 1), none = M.drawKind(fake, '없는종류', 10, 10, 1);
+      return bad.length === 0 && r === false && none === false && calls === 0 && ('지물 ' + Object.keys(t).length + '칸 연결 · 시험 전 false') || bad.join(',') || '표/폴백 불일치';
+    });
+
     t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {
       var M = DG.mode2d, calls = 0;
       var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, translate: function () {}, scale: function () {} };

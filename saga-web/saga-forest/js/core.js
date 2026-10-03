@@ -436,6 +436,8 @@
   global.DG.cfg.mode2d = {
     base: 'assets/sprites2d_sheets/',
     tileBase: 'assets/web2d/tile/',
+    /** 마을 건물·지물 2D 스프라이트(K-0017 `world2d`, 3D 와 같은 id) — 종류 → { id, h(px, 확대 1) }. 못 받으면 옛 도형 */
+    prop2d: { home: { id: 'forest_cottage_01', h: 74 }, shop: { id: 'inn_01', h: 90 }, mail: { id: 'mailbox_01', h: 30 } },
     /** 땅 종류(data-village TILES) → 2D 바닥 타일(K-0020 `forest_*`) — `snow` 는 겨울의 풀 칸 */
     tile: { grass: 'forest_grass', grass_meadow: 'forest_grass', grass_dark: 'forest_grass', grass_mush: 'forest_grass', grass_rocky: 'forest_stone', path: 'forest_dirt', sand: 'forest_sand', water: 'forest_water', stone: 'forest_stone', floor: 'forest_dirt', snow: 'forest_snow' },
     targetH: 40,                                 // 스탬프 s=1 일 때 몸 높이(px) — actor2d 가 s 를 배수로 곱한다

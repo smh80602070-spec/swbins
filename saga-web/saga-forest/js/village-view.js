@@ -692,7 +692,7 @@
 
     ctx.save();
     ctx.globalAlpha = spent && !big ? 0.62 : 1;
-    switch (prop.kind) {
+    if (!(global.DG.mode2d && global.DG.mode2d.drawKind(ctx, prop.kind, p.x, p.y, k))) switch (prop.kind) {   // 2D 모드 통일 스프라이트(W-0019) 먼저
       case 'tree':    drawTree(p.x, p.y, k, sway, se, !spent); break;
       case 'pine':    drawPine(p.x, p.y, k, sway, se); break;
       case 'rock':    drawRock(p.x, p.y, k, se); break;
