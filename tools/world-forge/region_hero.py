@@ -15,6 +15,7 @@ from mathutils import Vector
 a = sys.argv[sys.argv.index('--') + 1:]
 REGION, OUT = a[0], os.path.abspath(a[1])
 SAMPLES = int(a[2]) if len(a) > 2 else 48
+PBR = len(a) > 3 and a[3] == 'pbr'      # 사실 재질·사실 건물 모드(Poly Haven PBR 땅 + 공방 real GLB)
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 TOON = os.path.join(ROOT, 'saga-assets', 'world', 'toon')
 rng = random.Random(20261003)
@@ -39,9 +40,62 @@ except Exception:
 sc.view_settings.view_transform = 'AgX' if 'AgX' in [x.identifier for x in sc.view_settings.bl_rna.properties['view_transform'].enum_items] else 'Standard'
 
 
-def place(name, loc, rot=0.0, scale=1.0):
+import json as _json
+PH = os.path.join(ROOT, 'tools', 'world-forge', '_src', 'polyhaven')
+REAL = os.path.join(ROOT, 'tools', 'world-forge', '_out')
+_PHIDX = None
+
+
+def pbr_mat(tid, tile=4.0, tint=None, rough_mul=1.0, name=None):
+    """Poly Haven 재질 세트를 월드 위치 기준 평면 투영으로 깐다(땅·길용). tile = 그림 한 장이 덮는 미터."""
+    global _PHIDX
+    if _PHIDX is None:
+        _PHIDX = _json.load(open(os.path.join(PH, 'index.json'), encoding='utf-8'))
+    idx = _PHIDX[tid]
+    m = bpy.data.materials.new(name or tid)
+    m.use_nodes = True
+    nt = m.node_tree
+    bs = next(n for n in nt.nodes if n.type == 'BSDF_PRINCIPLED')
+    tc = nt.nodes.new('ShaderNodeTexCoord')
+    mp = nt.nodes.new('ShaderNodeMapping')
+    mp.inputs['Scale'].default_value = (1.0 / tile, 1.0 / tile, 1.0 / tile)
+    nt.links.new(tc.outputs['Object'], mp.inputs['Vector'])
+
+    def tex(kind, cs):
+        fn = idx.get(kind)
+        if not fn:
+            return None
+        n = nt.nodes.new('ShaderNodeTexImage')
+        n.image = bpy.data.images.load(os.path.join(PH, fn), check_existing=True)
+        n.image.colorspace_settings.name = cs
+        nt.links.new(mp.outputs[0], n.inputs['Vector'])
+        return n
+    d = tex('diff', 'sRGB')
+    if d is not None:
+        if tint:
+            mx = nt.nodes.new('ShaderNodeMix')
+            mx.data_type = 'RGBA'
+            mx.blend_type = 'MULTIPLY'
+            mx.inputs['Factor'].default_value = 1.0
+            mx.inputs['B'].default_value = tint
+            nt.links.new(d.outputs['Color'], mx.inputs['A'])
+            nt.links.new(mx.outputs['Result'], bs.inputs['Base Color'])
+        else:
+            nt.links.new(d.outputs['Color'], bs.inputs['Base Color'])
+    r = tex('rough', 'Non-Color')
+    if r is not None:
+        nt.links.new(r.outputs['Color'], bs.inputs['Roughness'])
+    nn = tex('nor', 'Non-Color')
+    if nn is not None:
+        nm = nt.nodes.new('ShaderNodeNormalMap')
+        nt.links.new(nn.outputs['Color'], nm.inputs['Color'])
+        nt.links.new(nm.outputs['Normal'], bs.inputs['Normal'])
+    return m
+
+
+def place(name, loc, rot=0.0, scale=1.0, real=False):
     before = set(bpy.data.objects.keys())
-    bpy.ops.import_scene.gltf(filepath=os.path.join(TOON, name + '.glb'))
+    bpy.ops.import_scene.gltf(filepath=os.path.join(REAL if real else TOON, name + '.glb'))
     new = [o for o in bpy.data.objects if o.name not in before]
     top = [o for o in new if o.parent is None]
     holder = bpy.data.objects.new(name + '_h', None)
@@ -301,6 +355,25 @@ def trees(n, zmin, zmax, ymin, ymax, avoid=()):
         c += 1
         if c >= n:
             break
+
+
+def cone_mesh(name, specs, mat, sides=3):
+    """뿔(풀잎·갈대) 수천 개를 메시 하나에 직접 만든다. bpy.ops 로 하나씩 더하면 장면이 커질수록 느려진다(520무더기에 9분)."""
+    import bmesh
+    me = bpy.data.meshes.new(name)
+    bm = bmesh.new()
+    for (x, y, z0, r, h, tx, ty) in specs:
+        base = [bm.verts.new((x + r * math.cos(k / sides * 6.2832), y + r * math.sin(k / sides * 6.2832), z0)) for k in range(sides)]
+        tip = bm.verts.new((x + h * math.sin(ty), y - h * math.sin(tx), z0 + h))
+        for k in range(sides):
+            bm.faces.new((base[k], base[(k + 1) % sides], tip))
+        bm.faces.new(base[::-1])
+    bm.to_mesh(me)
+    bm.free()
+    o = bpy.data.objects.new(name, me)
+    sc.collection.objects.link(o)
+    me.materials.append(mat)
+    return o
 
 
 def mat_simple(name, color, rough=0.8, emit=None, strength=0.0):
@@ -855,7 +928,7 @@ def plain_terrain():
     bm.free()
     for p_ in me.polygons:
         p_.use_smooth = True
-    o.data.materials.append(mat_simple('meadow', (0.035, 0.07, 0.05, 1), 0.9))
+    o.data.materials.append(pbr_mat('aerial_grass_rock', 5.0, tint=(0.55, 0.62, 0.7, 1)) if PBR else mat_simple('meadow', (0.035, 0.07, 0.05, 1), 0.9))
     return o
 
 
@@ -897,8 +970,8 @@ def crossroads():
     wn['Background'].inputs['Strength'].default_value = 0.9
     plain_terrain()
     bpy.context.view_layer.update()
-    dirt = mat_simple('dirt', (0.09, 0.06, 0.04, 1), 0.95)
-    asph = mat_simple('asphalt', (0.03, 0.03, 0.035, 1), 0.55)
+    dirt = pbr_mat('brown_mud', 3.0, tint=(0.8, 0.75, 0.75, 1)) if PBR else mat_simple('dirt', (0.09, 0.06, 0.04, 1), 0.95)
+    asph = pbr_mat('bitumen', 3.0, tint=(0.7, 0.72, 0.8, 1)) if PBR else mat_simple('asphalt', (0.03, 0.03, 0.035, 1), 0.55)
     neon = mat_simple('neonroad', (0.01, 0.02, 0.03, 1), 0.3, (0.1, 0.9, 1.0, 1), 1.2)
     edge = mat_simple('neonedge', (0.01, 0.01, 0.01, 1), 0.3, (1.0, 0.2, 0.8, 1), 7.0)
     J = (0.0, 40.0)
@@ -938,13 +1011,13 @@ def crossroads():
     for (x, y, nm, sc_) in ((-26, 66, 'hanok_01', 1.4), (-40, 52, 'hanok_01', 1.2), (-12, 82, 'jp_minka_01', 1.2)):
         z = ground_z(x, y)
         if z is not None:
-            h, objs = place(nm, (x, y, z), rot=rng.uniform(-0.6, 0.6), scale=sc_)
+            h, objs = place(nm, (x, y, z), rot=rng.uniform(-0.6, 0.6), scale=sc_, real=PBR)
             emissive(objs, (1.0, 0.6, 0.28, 1), 0.12)
             point((x, y - 1.5, z + 2.5), (1.0, 0.6, 0.28), 70, 0.7)
     for (x, y, nm, sc_) in ((9, 70, 'modern_block_01', 1.1), (-9, 92, 'modern_block_01', 1.3)):
         z = ground_z(x, y)
         if z is not None:
-            h, objs = place(nm, (x, y, z), rot=0.0, scale=sc_)
+            h, objs = place(nm, (x, y, z), rot=0.0, scale=sc_, real=PBR)
             emissive(objs, (0.85, 0.92, 1.0, 1), 0.12)
     for (x, y) in ((30, 66), (46, 84)):
         z = ground_z(x, y)
@@ -1002,6 +1075,20 @@ def crossroads():
         z = ground_z(x, y)
         if z is not None:
             rock(x, y, z, rng.uniform(0.4, 1.0))
+    if PBR:
+        blade = mat_simple('blade', (0.05, 0.14, 0.05, 1), 0.7)
+        specs = []
+        for _ in range(520):
+            x, y = rng.uniform(-22, 22), rng.uniform(-10, 34)
+            if abs(x) < 3.4 and y < 40:
+                continue
+            z = ground_z(x, y)
+            if z is None:
+                continue
+            for k in range(rng.randint(5, 9)):
+                specs.append((x + rng.uniform(-0.2, 0.2), y + rng.uniform(-0.2, 0.2), z, 0.035, rng.uniform(0.25, 0.7),
+                              rng.uniform(-0.35, 0.35), rng.uniform(-0.35, 0.35)))
+        cone_mesh('tufts', specs, blade)
     fireflies(30)
     sun = bpy.data.lights.new('moon', 'SUN')
     sun.energy, sun.color, sun.angle = 0.9, (0.6, 0.7, 1.0), 0.05
@@ -1024,8 +1111,28 @@ def crossroads():
     camera((0.0, -6.0, 2.4), (0.0, 40, 6.0), lens=24)
 
 
+def join_by_material(names):
+    """같은 재질의 낱개 메시(풀잎·나뭇잎 뿔·반딧불 등)를 하나로 합친다 — 오브젝트 수천 개가 렌더 준비를 수 분씩 잡아먹는다."""
+    for nm in names:
+        objs = [o for o in bpy.data.objects if o.type == 'MESH' and o.parent is None and len(o.material_slots) == 1
+                and o.material_slots[0].material and o.material_slots[0].material.name == nm]
+        if len(objs) < 2:
+            continue
+        bpy.ops.object.select_all(action='DESELECT')
+        for o in objs:
+            o.select_set(True)
+        bpy.context.view_layer.objects.active = objs[0]
+        bpy.ops.object.join()
+
+
+import time as _t
+_T0 = _t.time()
 {'galaxy_ferry': galaxy_ferry, 'frost_peak': frost_peak, 'time_rift': time_rift, 'crossroads': crossroads}[REGION]()
+print('TIME build %.1fs' % (_t.time() - _T0))
+join_by_material(['blade', 'reed', 'pine', 'pine_g', 'snowcap', 'firefly', 'flake', 'rockm', 'wood'])
 sc.render.filepath = OUT
 sc.render.image_settings.file_format = 'PNG'
+print('TIME join %.1fs' % (_t.time() - _T0))
 bpy.ops.render.render(write_still=True)
+print('TIME render done %.1fs' % (_t.time() - _T0))
 print('SAVED', OUT)
