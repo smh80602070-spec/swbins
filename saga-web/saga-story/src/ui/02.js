@@ -19,7 +19,7 @@
       var n = G.scrollCount(sc.key);
       if (n <= 0) { continue; }
       html += '<button class="btn tiny" data-act="g-scroll" data-uid="' + it.uid +
-        '" data-scroll="' + sc.key + '" title="' + esc(sc.name + ' — ' + sc.desc) + '">📜 ' +
+        '" data-scroll="' + sc.key + '" title="' + esc(sc.name + ' — ' + sc.desc) + '">' + ico('consumable', sc.key, 18, '📜') + ' ' +
         Math.round(sc.rate * 100) + '% ×' + n + '</button> ';
     }
     return html;
@@ -36,7 +36,7 @@
       var sl = GD.SLOTS[i], it = eq[sl.key];
       html += '<div class="stat-row"><span>' + sl.emoji + ' ' + esc(sl.name) + '</span>';
       if (it) {
-        html += '<span><b>' + esc(G.nameOf(it)) + '</b>' + gradeTag(GD, G.defOf(it)) + ' <small class="muted">' +
+        html += '<span>' + ico('equip', it.key, 24, '') + '<b>' + esc(G.nameOf(it)) + '</b>' + gradeTag(GD, G.defOf(it)) + ' <small class="muted">' +
           esc(optLine(G.statsOf(it))) + '</small> ' +
           '<button class="btn tiny ghost" data-act="g-unequip" data-slot="' + sl.key +
           '">벗기</button></span>';
@@ -63,7 +63,7 @@
       var g = inv[i], d = G.defOf(g), on = G.isEquipped(g.uid);
       var canWear = core.save.player.level >= d.need;
       html += '<div class="card' + (on ? ' on' : '') + '">' +
-        '<div class="stat-row"><span><b>' + esc(G.nameOf(g)) + '</b>' + gradeTag(GD, d) +
+        '<div class="stat-row"><span>' + ico('equip', g.key, 24, '') + '<b>' + esc(G.nameOf(g)) + '</b>' + gradeTag(GD, d) +
           (on ? ' <small class="muted">— 끼고 있음</small>' : '') + '</span>' +
           '<span class="muted">' + esc(GD.slot(d.slot).name) + ' · Lv.' + d.need + '</span></div>' +
         '<div class="stat-row"><span class="muted">' + esc(optLine(G.statsOf(g))) + '</span>' +
@@ -89,7 +89,7 @@
     } else {
       html += '<div class="card">';
       for (i = 0; i < sc.length; i++) {
-        html += '<div class="stat-row"><span>📜 ' + esc(sc[i].name) + '</span>' +
+        html += '<div class="stat-row"><span>' + ico('consumable', sc[i].key, 22, '📜') + ' ' + esc(sc[i].name) + '</span>' +
           '<b>×' + G.scrollCount(sc[i].key) + '</b></div>';
       }
       html += '<small class="muted">물건 아래의 📜 단추로 씁니다. 실패해도 물건은 남고 ' +

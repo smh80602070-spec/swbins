@@ -29,7 +29,7 @@
   function ai() { return global.DG.ai; }
 
   function $(id) { return document.getElementById(id); }
-  function esc(s) {
+  var ico = global.DG.itemicon ? global.DG.itemicon.fn('saga-dungeon') : function (k, i, s, f) { return f || ''; };   /* 아이템 아이콘(W-0025) */ function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c];
     });
@@ -1541,7 +1541,7 @@
   function gearIcon(g) {
     var it = global.DG.item, b = it.baseOf(g);
     if (!b) { return '?'; }
-    return (b.look && LOOK_ICON[b.look]) || SLOT_ICON[b.slot] || '?';
+    return ico('equip', g.uniq || g.base, '92%', (b.look && LOOK_ICON[b.look]) || SLOT_ICON[b.slot] || '?');
   }
 
   /** 효과 목록을 사람 말로 (투장·부문어가 같은 모양을 쓴다) */
@@ -2263,7 +2263,7 @@
                  (m.kind === 'rune' || craftMat.g === m.g);
         html += '<button class="btn tiny ' + (on ? 'primary' : '') + '" data-act="craft-pick"' +
           ' data-kind="' + m.kind + '" data-key="' + m.key + '" data-g="' + (m.g || 0) + '"' +
-          ' style="color:' + (on ? '' : col) + '">' + esc(lab) + ' ×' + m.n + '</button>';
+          ' style="color:' + (on ? '' : col) + '">' + (m.kind === 'gem' ? ico('gem', m.key, 18, '') : '') + esc(lab) + ' ×' + m.n + '</button>';
       }
       html += '</div>';
     }
@@ -2330,7 +2330,7 @@
         } else {
           var gd2 = GD.gemByKey(s0.key);
           cells += '<span class="sockcell" style="color:' + GD.grade(s0.g).color + '">' +
-            (gd2 ? gd2.emoji : '●') + '</span>';
+            (gd2 ? ico('gem', s0.key, 20, gd2.emoji) : '●') + '</span>';
         }
       }
       var word = it.wordOf(gitem);

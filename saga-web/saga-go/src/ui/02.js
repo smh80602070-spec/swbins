@@ -150,7 +150,7 @@
     var st = AR.statsOf(id);
     for (k = 0; k < st.sets.length; k++) {
       var S = AR.SETS[st.sets[k].id];
-      out += '<small style="display:block">◆ ' + esc(S.name) + ' ' + st.sets[k].n + '세트 — ' + esc(S.text2) + (st.sets[k].n >= 4 ? ' · ' + esc(S.text4) : '') + '</small>';
+      out += '<small style="display:block">' + ico('artifact', AR.SET_IDS.indexOf(st.sets[k].id), 18, '') + '◆ ' + esc(S.name) + ' ' + st.sets[k].n + '세트 — ' + esc(S.text2) + (st.sets[k].n >= 4 ? ' · ' + esc(S.text4) : '') + '</small>';
     }
     if (all.some(function (u) { return L[u].rarity === 4 && !L[u].owner; })) {
       out += '<button class="btn ghost wide" data-act="art-salvage4" data-id="' + id + '">🏺 안 낀 ★4 모두 분해 → 연마석</button>';
@@ -336,7 +336,7 @@
           (chk.ok ? '' : ' disabled') + ' data-act="rankup" data-id="' + h.id + '">' +
           '✨ 승급 ★' + (g.rank + 1) + ' · 중복 ' + hero().dupOf(h.id) + '/' + cost.dup +
           ' · 🪙 ' + core.fmt(cost.gold) +
-          (cost.sp ? ' · ' + cost.sp.icon + ' ' + cost.sp.have + '/' + cost.sp.n : '') +
+          (cost.sp ? ' · ' + ico('material', cost.sp.item, 18, cost.sp.icon) + ' ' + cost.sp.have + '/' + cost.sp.n : '') +
           (cost.boss ? ' · ' + cost.boss.icon + ' ' + cost.boss.have + '/' + cost.boss.n : '') + '</button>';   // ⑲-10 보스 재료
       }
       if (net().online()) {

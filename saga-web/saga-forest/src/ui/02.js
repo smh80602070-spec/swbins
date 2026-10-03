@@ -64,7 +64,7 @@
         var e = stt.stock[i];
         var set = VD.FURN_SETS[e.furn.set];
         html += '<div class="card gearcard">' +
-          '<div class="gearname">🪑 ' + esc(e.furn.name) + gradeTag('goods', e.furn.price) +
+          '<div class="gearname">' + ico('furniture', e.furn.key, 24, '🪑') + ' ' + esc(e.furn.name) + gradeTag('goods', e.furn.price) +
             ' <small class="muted">×' + e.n + ' · ' + esc(set ? set.name : '') +
             ' · 🪙 ' + core.fmt(e.furn.price) + '</small></div>' +
           '<div class="bagtools">' +
@@ -458,7 +458,7 @@
         var e = p.list[j];
         html += '<div class="card gearcard' + (e.on ? ' hi' : '') + '">' +
           '<div class="gearname">' +
-            (e.it.c ? '<span class="swatch" style="background:' + e.it.c + '"></span>' : '🧵 ') +
+            (e.it.c ? '<span class="swatch" style="background:' + e.it.c + '"></span>' : ico('wear', e.it.key, 24, '🧵') + ' ') +
             esc(e.it.name) + gradeTag('goods', e.it.price) +
             (e.on ? ' <small class="muted">— 입고 있음</small>' : '') + '</div>' +
           '<div class="bagtools">' +
@@ -504,7 +504,7 @@
       for (i = 0; i < stt.offer.length; i++) {
         var e = stt.offer[i];
         html += '<div class="card gearcard">' +
-          '<div class="gearname">' + e.item.emoji + ' ' + esc(e.item.name) +
+          '<div class="gearname">' + ico('material', e.item.key, 24, e.item.emoji) + ' ' + esc(e.item.name) +
             ' <small class="muted">×' + e.n + ' · 🎖️ +' +
             (20 + Math.floor(e.item.price / 10)) + '</small></div>' +
           '<div class="bagtools">' +
@@ -526,7 +526,7 @@
         var has = M.donated(it.key);
         rows += '<span class="biocell' + (has ? '' : ' off') + '" title="' +
           esc(it.name) + (has ? ' — 사고에 있음' : ' — 아직') + '">' +
-          (has ? it.emoji : '❔') + '</span>';
+          (has ? ico('material', it.key, 26, it.emoji) : '❔') + '</span>';
       }
       html += '<div class="sec"><h4>' + c.cat.icon + ' ' + c.cat.name + '</h4>' +
         dexBar(c.done, c.total) + '<div class="biogrid">' + rows + '</div>' +

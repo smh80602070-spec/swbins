@@ -19,7 +19,7 @@
   function ai() { return global.DG.ai; }
 
   function $(id) { return document.getElementById(id); }
-  function esc(s) {
+  var ico = global.DG.itemicon ? global.DG.itemicon.fn('saga-go') : function (k, i, s, f) { return f || ''; };   /* 아이템 아이콘(W-0025) */ function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c];
     });
@@ -806,7 +806,7 @@
     if (r.gold) { out.push('🪙 ' + r.gold); }
     if (r.exp) { out.push('경험치 ' + r.exp); }
     ['scroll', 'feed', 'treat', 'incense', 'prayer'].forEach(function (k) {
-      if (r[k]) { out.push(B.def(k).emoji + ' ' + r[k]); }
+      if (r[k]) { out.push(ico('consumable', k, 18, B.def(k).emoji) + ' ' + r[k]); }
     });
     if (r.party) { out.push('부대 경험 ' + r.party); }        // ⑲-8
     if (r.ore) { out.push('🪨 강화석 ' + r.ore); }
@@ -843,7 +843,7 @@
       var e = list[i], d = e.def;
       var canUse = d.kind === 'use' && e.n > 0;
       html += '<div class="card">' +
-        '<div class="stat-row"><span>' + d.emoji + ' <b>' + esc(d.name) + '</b></span>' +
+        '<div class="stat-row"><span>' + ico('consumable', d.key, 24, d.emoji) + ' <b>' + esc(d.name) + '</b></span>' +
           '<b>' + core.fmt(e.n) + '</b></div>' +
         '<small class="muted">' + esc(d.desc) + '</small>' +
         (d.kind === 'use'
@@ -1377,7 +1377,7 @@
     var st = AR.statsOf(id);
     for (k = 0; k < st.sets.length; k++) {
       var S = AR.SETS[st.sets[k].id];
-      out += '<small style="display:block">◆ ' + esc(S.name) + ' ' + st.sets[k].n + '세트 — ' + esc(S.text2) + (st.sets[k].n >= 4 ? ' · ' + esc(S.text4) : '') + '</small>';
+      out += '<small style="display:block">' + ico('artifact', AR.SET_IDS.indexOf(st.sets[k].id), 18, '') + '◆ ' + esc(S.name) + ' ' + st.sets[k].n + '세트 — ' + esc(S.text2) + (st.sets[k].n >= 4 ? ' · ' + esc(S.text4) : '') + '</small>';
     }
     if (all.some(function (u) { return L[u].rarity === 4 && !L[u].owner; })) {
       out += '<button class="btn ghost wide" data-act="art-salvage4" data-id="' + id + '">🏺 안 낀 ★4 모두 분해 → 연마석</button>';
@@ -1563,7 +1563,7 @@
           (chk.ok ? '' : ' disabled') + ' data-act="rankup" data-id="' + h.id + '">' +
           '✨ 승급 ★' + (g.rank + 1) + ' · 중복 ' + hero().dupOf(h.id) + '/' + cost.dup +
           ' · 🪙 ' + core.fmt(cost.gold) +
-          (cost.sp ? ' · ' + cost.sp.icon + ' ' + cost.sp.have + '/' + cost.sp.n : '') +
+          (cost.sp ? ' · ' + ico('material', cost.sp.item, 18, cost.sp.icon) + ' ' + cost.sp.have + '/' + cost.sp.n : '') +
           (cost.boss ? ' · ' + cost.boss.icon + ' ' + cost.boss.have + '/' + cost.boss.n : '') + '</button>';   // ⑲-10 보스 재료
       }
       if (net().online()) {

@@ -614,7 +614,7 @@
     var it = ID.itemById(itemId);
     if (!it) { return ''; }
     var gr = ID.gradeOf ? ID.gradeOf(it) : null;
-    return '<div class="stat-row"><span class="muted">보물</span><b>' + it.emoji + ' ' +
+    return '<div class="stat-row"><span class="muted">보물</span><b>' + ico('equip', it.id, 22, it.emoji) + ' ' +
       esc(it.name) + (gr && gr.name ? ' <small style="color:' + gr.color + '">' + esc(gr.name) + '</small>' : '') +
       ' <span class="muted">(' + (off().STAT_KOR[it.stat] || it.stat) +
       ' +' + it.bonus + ')</span></b></div>';

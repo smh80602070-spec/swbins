@@ -29,7 +29,7 @@
   function ai() { return global.DG.ai; }
 
   function $(id) { return document.getElementById(id); }
-  function esc(s) {
+  var ico = global.DG.itemicon ? global.DG.itemicon.fn('saga-dungeon') : function (k, i, s, f) { return f || ''; };   /* 아이템 아이콘(W-0025) */ function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c];
     });

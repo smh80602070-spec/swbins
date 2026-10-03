@@ -497,6 +497,8 @@
     ui.btn.classList.toggle('show', !busy && (atPot() || hasDish()));
     ui.btn.classList.toggle('pot', atPot());
   }
+  /** 요리 재료 아이콘(W-0025) — 그림이 있으면 <img>, 없으면 옛 이모지 */
+  function ico(k) { var I = global.DG.itemicon; return I ? I.or('saga-go', 'material', k, 18, ITEMS[k].icon) : ITEMS[k].icon; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function render() {
     if (!ui.sheet) { return; }
@@ -504,7 +506,7 @@
     out += '<div class="ck-head"><b>🍲 요리</b><span>' + (pot ? '🔥 솥 곁 — 조리할 수 있다' : '역참 곁 솥에서 조리 · 먹기는 어디서나') + '</span>' +
       '<button class="ck-x" data-ck="close" aria-label="닫기">✕</button></div>';
     var mats = [];
-    for (k in ITEMS) { if (ITEMS.hasOwnProperty(k)) { mats.push('<span' + (count(k) ? '' : ' class="dim"') + '>' + ITEMS[k].icon + ' ' + ITEMS[k].name + ' ' + count(k) + '</span>'); } }
+    for (k in ITEMS) { if (ITEMS.hasOwnProperty(k)) { mats.push('<span' + (count(k) ? '' : ' class="dim"') + '>' + ico(k) + ' ' + ITEMS[k].name + ' ' + count(k) + '</span>'); } }
     out += '<div class="ck-mats">' + mats.join('') + '</div>';
     if (ui.needle) {
       var R = RECIPES[ui.needle.recipe];
@@ -518,7 +520,7 @@
     out += '<div class="ck-list">';
     for (i = 0; i < ORDER.length; i++) {
       var id = ORDER[i], r = RECIPES[id], chk = cookCheck(id), ing = [];
-      for (k in r.ing) { if (r.ing.hasOwnProperty(k)) { ing.push(ITEMS[k].icon + ' ' + count(k) + '/' + r.ing[k]); } }
+      for (k in r.ing) { if (r.ing.hasOwnProperty(k)) { ing.push(ico(k) + ' ' + count(k) + '/' + r.ing[k]); } }
       out += '<div class="ck-row"><div class="ck-name">' + r.icon + ' <b>' + esc(r.name) + '</b> <small>' + ing.join(' ') + ' · 숙련 ' + Math.min(PROF_MAX, prof(id)) + '/' + PROF_MAX + '</small>' +
         '<small class="muted">' + esc(effectText(id, 1)) + '</small></div><div class="ck-acts">' +
         '<button class="btn ' + (chk.ok ? 'primary' : 'ghost') + '"' + (chk.ok && !ui.needle ? '' : ' disabled') + ' data-ck="cook" data-r="' + id + '">조리</button>' +

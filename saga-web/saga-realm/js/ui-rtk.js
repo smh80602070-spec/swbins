@@ -116,7 +116,7 @@
 
   function $(id) { return document.getElementById(id); }
 
-  function esc(s) {
+  var ico = global.DG.itemicon ? global.DG.itemicon.fn('saga-realm') : function (k, i, s, f) { return f || ''; };   /* 아이템 아이콘(W-0025) */ function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
@@ -1883,7 +1883,7 @@
     var it = ID.itemById(itemId);
     if (!it) { return ''; }
     var gr = ID.gradeOf ? ID.gradeOf(it) : null;
-    return '<div class="stat-row"><span class="muted">보물</span><b>' + it.emoji + ' ' +
+    return '<div class="stat-row"><span class="muted">보물</span><b>' + ico('equip', it.id, 22, it.emoji) + ' ' +
       esc(it.name) + (gr && gr.name ? ' <small style="color:' + gr.color + '">' + esc(gr.name) + '</small>' : '') +
       ' <span class="muted">(' + (off().STAT_KOR[it.stat] || it.stat) +
       ' +' + it.bonus + ')</span></b></div>';

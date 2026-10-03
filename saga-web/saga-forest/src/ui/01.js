@@ -37,7 +37,7 @@
     return g.name ? ' <small class="rar" style="color:' + g.color + '">' + esc(g.name) + '</small>' : '';
   }
 
-  function esc(s) {
+  var ico = global.DG.itemicon ? global.DG.itemicon.fn('saga-forest') : function (k, i, s, f) { return f || ''; };   /* 아이템 아이콘(W-0025) */ function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c];
     });
@@ -848,7 +848,7 @@
       var e = list[i];
       var sow = ['fruit', 'nut', 'flower'].indexOf(e.item.cat) >= 0;
       html += '<div class="card gearcard">' +
-        '<div class="gearname">' + e.item.emoji + ' ' + esc(e.item.name) + gradeTag('gather', e.item.price) +
+        '<div class="gearname">' + ico('material', e.item.key, 24, e.item.emoji) + ' ' + esc(e.item.name) + gradeTag('gather', e.item.price) +
           ' <small class="muted">×' + e.n + ' · 낱개 🪙 ' + core.fmt(e.item.price) + '</small></div>' +
         '<div class="bagtools">' +
           '<button class="btn tiny" data-act="v-sell" data-id="' + e.item.key + '" data-n="1">1개 판다</button>' +
@@ -892,7 +892,7 @@
       var t = VD.TOOLS[k];
       var got = V.hasTool(k);
       html += '<div class="card gearcard">' +
-        '<div class="gearname">' + t.emoji + ' ' + esc(t.name) +
+        '<div class="gearname">' + ico('tool', k, 24, t.emoji) + ' ' + esc(t.name) +
           ' <small class="muted">' + esc(t.desc) + '</small></div>' +
         '<div class="bagtools">' +
           (got
@@ -909,7 +909,7 @@
       var f = shop[i];
       var set = VD.FURN_SETS[f.set];
       html += '<div class="card gearcard">' +
-        '<div class="gearname">🪑 ' + esc(f.name) + gradeTag('goods', f.price) +
+        '<div class="gearname">' + ico('furniture', f.key, 24, '🪑') + ' ' + esc(f.name) + gradeTag('goods', f.price) +
           ' <small class="muted">' + esc(set ? set.name : '') + ' 계열 · 창고에 ' +
           Hm.stockCount(f.key) + '</small></div>' +
         '<div class="bagtools">' +

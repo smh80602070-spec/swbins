@@ -32,6 +32,8 @@ const FILES = [
   ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/post3d.js', 'js/post3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/toon3d-core.js', 'js/toon3d-core.js'],
+  ['js/itemicon-ids.js', 'js/itemicon-ids.js'],   // W-0025 — 아이템 아이콘 이름 표(생성물: tools/gen-itemicon-ids.mjs)
+  ['js/itemicon.js', 'js/itemicon.js'],
   ['js/toon3d.js', 'js/toon3d.js', ['saga-go', 'saga-dungeon']],   // 3째 칸 = 이 판들에만(없으면 다섯 판 전부)
 ];
 const check = process.argv.includes('--check');
@@ -40,6 +42,14 @@ const check = process.argv.includes('--check');
  *  정본 shared/assets/web2d/{bg,tile}/ · 접두어 = 판 이름(go_·dungeon_·forest_·story_·realm_) · 출처 .license.json 은 정본에만 둔다 */
 const PREFIX = { 'saga-go': 'go_', 'saga-dungeon': 'dungeon_', 'saga-forest': 'forest_', 'saga-story': 'story_', 'saga-realm': 'realm_' };
 const ASSET_GAMES = { 'saga-story': ['assets/web2d/bg', 'assets/web2d/tile'], 'saga-go': ['assets/web2d/tile'], 'saga-dungeon': ['assets/web2d/tile'], 'saga-forest': ['assets/web2d/tile'], 'saga-realm': ['assets/web2d/tile'] };   // 판 → 그 판이 쓰는 폴더만(사가고는 위에서 본 지도라 층 배경 없음)   // 배선이 끝난 판만(안 쓰는 판에 용량을 안 싣는다) — 판을 배선할 때마다 추가
+/** 아이템 아이콘(W-0025) — 이름 표 `itemicon-ids.js` 에 오른 그림 중 **그 판 것만** `<판>/assets/icons/icon64/` 로 복사한다(판 폴더 단독 서버가 `../shared` 를 못 읽는다).
+ *  정본 shared/assets/icons/icon64/ · 출처(license/)는 정본에만 둔다. 표는 gen-itemicon-ids.mjs 가 만든다 */
+function iconNames(g) {
+  const f = path.join(WEB, 'shared', 'js', 'itemicon-ids.js');
+  if (!fs.existsSync(f)) return [];
+  const m = /itemiconIds = ({.*});/.exec(fs.readFileSync(f, 'utf8'));
+  return m ? [...new Set(Object.values((JSON.parse(m[1])[g]) || {}))].sort() : [];
+}
 /** 줄바꿈(CRLF/LF)은 git autocrlf 가 판마다 따로 바꾸므로 정규화해서 비교한다 */
 const md5 = p => (fs.existsSync(p) ? crypto.createHash('md5').update(fs.readFileSync(p, 'utf8').replace(/\r\n/g, '\n')).digest('hex') : null);
 
@@ -73,6 +83,18 @@ for (const g of Object.keys(ASSET_GAMES)) {
       fs.copyFileSync(from, to);
       copied++;
     }
+  }
+}
+for (const g of GAMES) {
+  for (const n of iconNames(g)) {
+    const from = path.join(WEB, 'shared', 'assets', 'icons', 'icon64', n + '.png'), to = path.join(WEB, g, 'assets', 'icons', 'icon64', n + '.png');
+    total++;
+    if (!fs.existsSync(from)) { console.log(`FAIL 아이콘 정본 없음 shared/assets/icons/icon64/${n}.png`); bad++; continue; }
+    if (fs.existsSync(to) && fs.readFileSync(to).equals(fs.readFileSync(from))) continue;
+    if (check) { console.log(`DIFF ${g}/assets/icons/icon64/${n}.png ≠ shared`); bad++; continue; }
+    fs.mkdirSync(path.dirname(to), { recursive: true });
+    fs.copyFileSync(from, to);
+    copied++;
   }
 }
 if (check) console.log(bad ? `FAIL shared 정본과 다른 사본 ${bad}개 — node tools/sync-shared.mjs` : `OK ${total}개 사본`);

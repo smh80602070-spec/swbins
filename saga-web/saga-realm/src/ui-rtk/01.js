@@ -116,7 +116,7 @@
 
   function $(id) { return document.getElementById(id); }
 
-  function esc(s) {
+  var ico = global.DG.itemicon ? global.DG.itemicon.fn('saga-realm') : function (k, i, s, f) { return f || ''; };   /* 아이템 아이콘(W-0025) */ function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }

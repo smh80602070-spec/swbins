@@ -19,7 +19,7 @@
   function ai() { return global.DG.ai; }
 
   function $(id) { return document.getElementById(id); }
-  function esc(s) {
+  var ico = global.DG.itemicon ? global.DG.itemicon.fn('saga-go') : function (k, i, s, f) { return f || ''; };   /* 아이템 아이콘(W-0025) */ function esc(s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c];
     });
@@ -806,7 +806,7 @@
     if (r.gold) { out.push('🪙 ' + r.gold); }
     if (r.exp) { out.push('경험치 ' + r.exp); }
     ['scroll', 'feed', 'treat', 'incense', 'prayer'].forEach(function (k) {
-      if (r[k]) { out.push(B.def(k).emoji + ' ' + r[k]); }
+      if (r[k]) { out.push(ico('consumable', k, 18, B.def(k).emoji) + ' ' + r[k]); }
     });
     if (r.party) { out.push('부대 경험 ' + r.party); }        // ⑲-8
     if (r.ore) { out.push('🪨 강화석 ' + r.ore); }
@@ -843,7 +843,7 @@
       var e = list[i], d = e.def;
       var canUse = d.kind === 'use' && e.n > 0;
       html += '<div class="card">' +
-        '<div class="stat-row"><span>' + d.emoji + ' <b>' + esc(d.name) + '</b></span>' +
+        '<div class="stat-row"><span>' + ico('consumable', d.key, 24, d.emoji) + ' <b>' + esc(d.name) + '</b></span>' +
           '<b>' + core.fmt(e.n) + '</b></div>' +
         '<small class="muted">' + esc(d.desc) + '</small>' +
         (d.kind === 'use'
