@@ -1,0 +1,17 @@
+{
+ "id": "jp_hideyoshi",
+ "generator": "tools/char-forge/outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)",
+ "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
+ "commercial_use": true,
+ "source_samples": [
+  "AvatarSample_A",
+  "AvatarSample_I",
+  "AvatarSample_Q"
+ ],
+ "body": "AvatarSample_I",
+ "kit": {
+  "cloth": "q",
+  "shoes": "a"
+ },
+ "note": "옷·몸 조각을 샘플 25벌 사이에서 이식한 인물. 얼굴·머리는 샘플 그대로(약간 다르게만, 사용자 2026-10-02)."
+}

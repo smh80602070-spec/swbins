@@ -403,6 +403,40 @@
      ]
     }
    ]
+  },
+  {
+   "id": "characters-web3d",
+   "src": "saga-assets/characters/web3d",
+   "recursive": true,
+   "include": [
+    "*.glb",
+    "*.webp",
+    "*.license.json"
+   ],
+   "note": "K-0024 인물 299 웹 경량 3D(Meshopt·WebP, 텍스처는 tex/<해시>.webp 공용 450장, GLB 옆 tex/ 와 같이 놓을 것) — 3D 원본·동작 GLB 는 용량 정책으로 로컬 전용(_out/vroid, 조합표로 재생성)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/characters3d"
+    }
+   ]
+  },
+  {
+   "id": "characters-sprites2d",
+   "src": "saga-assets/characters/sprites2d",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "manifest.json",
+    "*.license.json"
+   ],
+   "note": "K-0024 인물 299 웹 2D 시트(128px·8프레임·3방향·idle/walk/attack/hit/death) — 판 폴더 복사 없이 shared 한 곳",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/characters2d"
+    }
+   ]
   }
  ]
 }

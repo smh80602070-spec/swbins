@@ -25,11 +25,17 @@
 | 도구 | 모델 | 라이선스 | 개수 |
 |---|---|---|---|
 | music-gen | ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT (code and model weights) | 60 |
+| outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 598 |
+| region_hero.py | - | CC0-1.0 (자체 생성 형태, 재질은 단색·CC0) | 12 |
+| region_hero.py | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 12 |
+| region_hero.py (HERO_SKY 파노라마 굽기) | - | CC0-1.0 (자체 생성) | 30 |
+| region_hero.py(자료 정리) | - | CC0-1.0 (Poly Haven, https://polyhaven.com/license) | 36 |
+| build_prop.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 138 |
+| build_building.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0) | 129 |
+| build_vehicle.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 44 |
+| region_hero.py village | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 3 |
 | gen.py | Illustrious-XL-v2.0 | CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요) | 120 |
 | gen.py | sd_xl_base_1.0 | CreativeML OpenRAIL++-M | 60 |
-| build_prop.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 105 |
-| build_building.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0) | 84 |
-| build_vehicle.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드) | 35 |
 | build_terrain.py | - | CC0-1.0 (재질 사진 전부 Poly Haven CC0, 높이맵은 전부 코드 — 값 잡음 fbm + 모양 함수 + 간단한 침식) | 70 |
 | build.py | - | CC0-1.0 (입력 전부 CC0) | 9 |
 | build_real.py | - | CC0-1.0 (입력 전부 CC0 — MPFB 코드는 GPL 이지만 만든 모델에는 걸리지 않는다) | 166 |

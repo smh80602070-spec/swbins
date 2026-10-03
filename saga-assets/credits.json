@@ -190,6 +190,129 @@
    ]
   },
   {
+   "tool": "outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)",
+   "model": "",
+   "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
+   "count": 598,
+   "where": [
+    "saga-assets/characters/sprites2d/dj_doseo",
+    "saga-assets/characters/sprites2d/dj_gapju",
+    "saga-assets/characters/sprites2d/dj_gijang",
+    "saga-assets/characters/sprites2d/dj_haean",
+    "saga-assets/characters/sprites2d/dj_hopak",
+    "saga-assets/characters/sprites2d/dj_hwanggeum"
+   ]
+  },
+  {
+   "tool": "region_hero.py",
+   "model": "",
+   "license": "CC0-1.0 (자체 생성 형태, 재질은 단색·CC0)",
+   "count": 12,
+   "where": [
+    "saga-assets/regions/crossroads",
+    "saga-assets/regions/frost_peak",
+    "saga-assets/regions/galaxy_ferry",
+    "saga-assets/regions/time_rift",
+    "saga-godot/assets/regions/crossroads",
+    "saga-godot/assets/regions/frost_peak"
+   ]
+  },
+  {
+   "tool": "region_hero.py",
+   "model": "",
+   "license": "CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0)",
+   "count": 12,
+   "where": [
+    "saga-assets/regions/crossroads",
+    "saga-assets/regions/frost_peak",
+    "saga-assets/regions/galaxy_ferry",
+    "saga-assets/regions/time_rift",
+    "saga-godot/assets/regions/crossroads",
+    "saga-godot/assets/regions/frost_peak"
+   ]
+  },
+  {
+   "tool": "region_hero.py (HERO_SKY 파노라마 굽기)",
+   "model": "",
+   "license": "CC0-1.0 (자체 생성)",
+   "count": 30,
+   "where": [
+    "saga-assets/regions/crossroads",
+    "saga-assets/regions/frost_peak",
+    "saga-assets/regions/galaxy_ferry",
+    "saga-assets/regions/time_rift",
+    "saga-assets/regions/village",
+    "saga-godot/assets/regions/crossroads"
+   ]
+  },
+  {
+   "tool": "region_hero.py(자료 정리)",
+   "model": "",
+   "license": "CC0-1.0 (Poly Haven, https://polyhaven.com/license)",
+   "count": 36,
+   "where": [
+    "saga-assets/regions/crossroads/tex",
+    "saga-assets/regions/frost_peak/tex",
+    "saga-assets/regions/galaxy_ferry/tex",
+    "saga-assets/regions/time_rift/tex",
+    "saga-assets/regions/village/tex",
+    "saga-godot/assets/regions/crossroads/tex"
+   ]
+  },
+  {
+   "tool": "build_prop.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 138,
+   "where": [
+    "saga-assets/regions/pieces",
+    "saga-assets/world/sprite",
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/regions/pieces",
+    "saga-godot/assets/world"
+   ]
+  },
+  {
+   "tool": "build_building.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0)",
+   "count": 129,
+   "where": [
+    "saga-assets/regions/pieces",
+    "saga-assets/world/sprite",
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/regions/pieces",
+    "saga-godot/assets/world"
+   ]
+  },
+  {
+   "tool": "build_vehicle.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 44,
+   "where": [
+    "saga-assets/regions/pieces",
+    "saga-assets/world/sprite",
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/regions/pieces",
+    "saga-godot/assets/world"
+   ]
+  },
+  {
+   "tool": "region_hero.py village",
+   "model": "",
+   "license": "CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0)",
+   "count": 3,
+   "where": [
+    "saga-assets/regions/village",
+    "saga-godot/assets/regions/village",
+    "saga-unity/Assets/SagaCore/Resources/Regions/Village"
+   ]
+  },
+  {
    "tool": "gen.py",
    "model": "Illustrious-XL-v2.0",
    "license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
@@ -207,48 +330,6 @@
    "where": [
     "saga-assets/web2d/tile",
     "saga-web/shared/assets/web2d/tile"
-   ]
-  },
-  {
-   "tool": "build_prop.py",
-   "model": "",
-   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 105,
-   "where": [
-    "saga-assets/world/sprite",
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
-    "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/World",
-    "saga-web/shared/assets/world2d"
-   ]
-  },
-  {
-   "tool": "build_building.py",
-   "model": "",
-   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0)",
-   "count": 84,
-   "where": [
-    "saga-assets/world/sprite",
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
-    "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/World",
-    "saga-web/shared/assets/world2d"
-   ]
-  },
-  {
-   "tool": "build_vehicle.py",
-   "model": "",
-   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 35,
-   "where": [
-    "saga-assets/world/sprite",
-    "saga-assets/world/toon",
-    "saga-assets/world/web",
-    "saga-godot/assets/world",
-    "saga-unity/Assets/SagaCore/Resources/World",
-    "saga-web/shared/assets/world2d"
    ]
   },
   {
