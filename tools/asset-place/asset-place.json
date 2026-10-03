@@ -232,7 +232,7 @@
     "*.license.json",
     "*.layers.json"
    ],
-   "note": "K-0020 웹 2D 모드 배경 20지역 × 층 3겹(far·mid·near, 좌우 왕복 이음)",
+   "note": "K-0020 웹 2D 모드 배경 20지역 + K-0055 사가스토리 6지역(26) × 층 3겹(far·mid·near, 좌우 왕복 이음)",
    "targets": [
     {
      "track": "web",
