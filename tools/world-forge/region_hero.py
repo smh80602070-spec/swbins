@@ -137,13 +137,14 @@ def place(name, loc, rot=0.0, scale=1.0, real=None):
     return holder, list(mp.values())
 
 
-def glow(x, y, z, color, r, strength=18.0):
+def glow(x, y, z, color, r, strength=18.0, stretch=1.0):
     m = mat_simple('glow%d_%d' % (int(color[0] * 9), int(color[2] * 9)), (0.05, 0.05, 0.05, 1), 0.5, color, strength)
     bpy.ops.mesh.primitive_uv_sphere_add(radius=r, segments=12, ring_count=8, location=(x, y, z))
+    bpy.context.object.scale = (1, 1, stretch)
     bpy.context.object.data.materials.append(m)
 
 
-def lit(h, objs, color, strength, local, r):
+def lit(h, objs, color, strength, local, r, fire=False):
     """불 켜는 소품: 툰은 통째로 발광, 사실 모드는 돌 질감이 보이게 약한 발광 + 불꽃 구슬(local = 소품 기준 불 자리)."""
     if not PBR:
         emissive(objs, color, strength)
@@ -152,7 +153,7 @@ def lit(h, objs, color, strength, local, r):
     rz, s = h.rotation_euler[2], h.scale[0]
     lx, ly, lz = local
     glow(h.location.x + (lx * math.cos(rz) - ly * math.sin(rz)) * s, h.location.y + (lx * math.sin(rz) + ly * math.cos(rz)) * s,
-         h.location.z + lz * s, color, r * s)
+         h.location.z + lz * s, color, r * s, 4.5 if fire else 18.0, 1.9 if fire else 1.0)
 
 
 def emissive(obj_list, color, strength):
@@ -734,7 +735,7 @@ def aurora_sky():
     sep = nt.nodes.new('ShaderNodeSeparateXYZ')
     nt.links.new(tc.outputs['Generated'], sep.inputs[0])
     ramp = nt.nodes.new('ShaderNodeValToRGB')       # 지평선 장밋빛 -> 남색
-    ramp.color_ramp.elements[0].position, ramp.color_ramp.elements[1].position = 0.45, 0.9
+    ramp.color_ramp.elements[0].position, ramp.color_ramp.elements[1].position = 0.0, 0.78
     ramp.color_ramp.elements[0].color = (0.17, 0.09, 0.2, 1)
     ramp.color_ramp.elements[1].color = (0.006, 0.012, 0.05, 1)
     nt.links.new(sep.outputs['Z'], ramp.inputs['Fac'])
@@ -762,11 +763,11 @@ def aurora_sky():
     st.clamp = True
     nt.links.new(noi.outputs['Fac'], st.inputs['Value'])
     band = nt.nodes.new('ShaderNodeMapRange')
-    band.inputs['From Min'].default_value, band.inputs['From Max'].default_value = 0.52, 0.62
+    band.inputs['From Min'].default_value, band.inputs['From Max'].default_value = 0.2, 0.42
     band.clamp = True
     nt.links.new(sep.outputs['Z'], band.inputs['Value'])
     band2 = nt.nodes.new('ShaderNodeMapRange')
-    band2.inputs['From Min'].default_value, band2.inputs['From Max'].default_value = 0.92, 0.70
+    band2.inputs['From Min'].default_value, band2.inputs['From Max'].default_value = 0.9, 0.52
     band2.clamp = True
     nt.links.new(sep.outputs['Z'], band2.inputs['Value'])
     m1 = nt.nodes.new('ShaderNodeMath')
@@ -778,7 +779,7 @@ def aurora_sky():
     nt.links.new(m1.outputs[0], m2.inputs[0])
     nt.links.new(st.outputs[0], m2.inputs[1])
     col = nt.nodes.new('ShaderNodeValToRGB')        # 아래 초록 -> 위 자주
-    col.color_ramp.elements[0].position, col.color_ramp.elements[1].position = 0.55, 0.85
+    col.color_ramp.elements[0].position, col.color_ramp.elements[1].position = 0.28, 0.7
     col.color_ramp.elements[0].color = (0.08, 0.9, 0.38, 1)
     col.color_ramp.elements[1].color = (0.45, 0.2, 0.85, 1)
     nt.links.new(sep.outputs['Z'], col.inputs['Fac'])
@@ -817,6 +818,7 @@ def snow_terrain():
             x, y = (i / n - 0.5) * size, (j / n - 0.22) * size
             roll = 0.55 * math.sin(x * 0.08 + ph[0]) + 0.35 * math.sin(y * 0.11 + ph[1]) + 0.18 * math.sin(x * 0.31 + y * 0.17 + ph[2])
             rise = max(0, y - 78) ** 1.2 * 0.17 * (1 + 0.55 * math.sin(x * 0.045 + ph[3]) + 0.35 * math.sin(x * 0.12 + ph[4]))
+            rise += max(0, y - 80) ** 1.1 * 0.24 * (1 - abs(math.sin(x * 0.07 + ph[3]))) ** 2.5
             side = max(0, abs(x) - 38) * 0.22 * (1 + 0.4 * math.sin(y * 0.07 + ph[5]))
             trail = -0.25 * math.exp(-((x - 0.8 * math.sin(y * 0.05)) / 3.0) ** 2) if y > 0 else 0
             row.append(bm.verts.new((x, y, roll + rise + side + trail)))
@@ -865,7 +867,7 @@ def frost_peak():
             if z is None:
                 continue
             h, objs = place('torch_stand_01', (x, y, z), rot=rng.uniform(0, 6.28), scale=1.3)
-            lit(h, objs, (1.0, 0.4, 0.1, 1), 1.5, (0, 0, 2.4), 0.14)
+            lit(h, objs, (1.0, 0.38, 0.06, 1), 1.5, (0, 0, 2.45), 0.15, fire=True)
             point((x, y, z + 2.2), (1.0, 0.5, 0.2), 140, 0.3)
     z = ground_z(1.2, 43)                               # 길 끝 제단·비석·깃발
     h, objs = place('altar_01', (1.2, 43, z - 0.05), rot=0.0, scale=1.8)
