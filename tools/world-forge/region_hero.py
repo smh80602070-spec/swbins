@@ -940,10 +940,10 @@ def rift_sky():
     sep = nt.nodes.new('ShaderNodeSeparateXYZ')
     nt.links.new(tc.outputs['Generated'], sep.inputs[0])
     ramp = nt.nodes.new('ShaderNodeValToRGB')       # 지평선 황금 -> 청록 -> 짙은 보라
-    ramp.color_ramp.elements[0].position, ramp.color_ramp.elements[1].position = 0.40, 0.88
+    ramp.color_ramp.elements[0].position, ramp.color_ramp.elements[1].position = 0.0, 0.8
     ramp.color_ramp.elements[0].color = (0.95, 0.42, 0.18, 1)
     ramp.color_ramp.elements[1].color = (0.02, 0.015, 0.12, 1)
-    mid = ramp.color_ramp.elements.new(0.62)
+    mid = ramp.color_ramp.elements.new(0.24)
     mid.color = (0.06, 0.22, 0.4, 1)
     nt.links.new(sep.outputs['Z'], ramp.inputs['Fac'])
     vor = nt.nodes.new('ShaderNodeTexVoronoi')
@@ -1003,6 +1003,26 @@ def ring(loc, major, minor, rot, color, strength):
     t.rotation_euler = rot
     t.data.materials.append(mat_simple('ring%d' % int(strength * 10), (0.05, 0.05, 0.05, 1), 0.4, color, strength))
     return t
+
+
+def cloud_sea():
+    """낮게 깔린 구름바다 — 납작한 구름 덩이 이백여 개를 메시 하나로(흰 띠 대신 덩어리 질감)."""
+    import bmesh
+    me = bpy.data.meshes.new('cloudsea')
+    bm = bmesh.new()
+    for _ in range(240):
+        x, y, z = rng.uniform(-240, 240), rng.uniform(-160, 340), rng.uniform(-30, -15)
+        r = rng.uniform(10, 28)
+        res = bmesh.ops.create_icosphere(bm, subdivisions=1, radius=1.0)
+        for v in res['verts']:
+            v.co = (v.co.x * r * 1.6 + x, v.co.y * r * 1.2 + y, v.co.z * r * 0.4 + z)
+    bm.to_mesh(me)
+    bm.free()
+    for p_ in me.polygons:
+        p_.use_smooth = True
+    o = bpy.data.objects.new('cloudsea', me)
+    sc.collection.objects.link(o)
+    me.materials.append(mat_simple('cloudpuff', (0.95, 0.85, 0.8, 1), 1.0, (1.0, 0.78, 0.62, 1), 0.35))
 
 
 def time_rift():
@@ -1074,6 +1094,7 @@ def time_rift():
     vs.inputs['Color'].default_value = (0.8, 0.85, 1.0, 1)
     nt.links.new(vs.outputs[0], ov.inputs['Volume'])
     v2.data.materials.append(fm)
+    cloud_sea()
     sun = bpy.data.lights.new('sun', 'SUN')
     sun.energy, sun.color, sun.angle = 2.6, (1.0, 0.68, 0.38), 0.03
     so = bpy.data.objects.new('sun', sun)
@@ -1147,9 +1168,9 @@ def crossroads():
     rift_sky()
     wn = sc.world.node_tree.nodes
     ce = wn['Color Ramp'].color_ramp.elements
-    ce[0].color = (0.30, 0.12, 0.28, 1)
-    ce[1].color = (0.01, 0.012, 0.09, 1)
-    ce[2].color = (0.04, 0.10, 0.26, 1)
+    ce[0].color = (0.55, 0.16, 0.38, 1)
+    ce[1].color = (0.16, 0.08, 0.34, 1)
+    ce[2].color = (0.01, 0.015, 0.10, 1)
     wn['Background'].inputs['Strength'].default_value = 0.9
     plain_terrain()
     bpy.context.view_layer.update()
@@ -1209,8 +1230,8 @@ def crossroads():
             emissive(objs, (0.3, 0.9, 1.0, 1), 0.3)
             point((x, y, z + 4), (0.3, 0.9, 1.0), 120, 1.0)
     # 갈림길 한복판: 균열 문(고리 + 안쪽 소용돌이 빛) + 갈래 표지석
-    ring((J[0], J[1], 7.0), 6.0, 0.28, (math.pi / 2, 0, 0), (0.4, 0.9, 1.0, 1), 3.0)
-    ring((J[0], J[1], 7.0), 4.4, 0.12, (math.pi / 2, 0, 0), (1.0, 0.35, 0.85, 1), 2.6)
+    ring((J[0], J[1], 7.0), 6.0, 0.28, (math.pi / 2, 0, 0), (0.15, 0.85, 1.0, 1), 1.1)
+    ring((J[0], J[1], 7.0), 4.4, 0.12, (math.pi / 2, 0, 0), (1.0, 0.2, 0.8, 1), 1.0)
     bpy.ops.mesh.primitive_circle_add(vertices=64, radius=5.7, fill_type='NGON', location=(J[0], J[1], 7.0), rotation=(math.pi / 2, 0, 0))
     gate = bpy.context.object
     gm = bpy.data.materials.new('gate')
@@ -1232,12 +1253,12 @@ def crossroads():
     cr.color_ramp.elements[1].color = (1.0, 0.3, 0.9, 1)
     nt.links.new(nz.outputs['Fac'], cr.inputs['Fac'])
     em = nt.nodes.new('ShaderNodeEmission')
-    em.inputs['Strength'].default_value = 1.0
+    em.inputs['Strength'].default_value = 1.5
     nt.links.new(cr.outputs[0], em.inputs['Color'])
     tr = nt.nodes.new('ShaderNodeBsdfTransparent')
     lw = nt.nodes.new('ShaderNodeLayerWeight')
     mx = nt.nodes.new('ShaderNodeMixShader')
-    mx.inputs[0].default_value = 0.6
+    mx.inputs[0].default_value = 0.25
     nt.links.new(tr.outputs[0], mx.inputs[1])
     nt.links.new(em.outputs[0], mx.inputs[2])
     ou = nt.nodes.new('ShaderNodeOutputMaterial')
