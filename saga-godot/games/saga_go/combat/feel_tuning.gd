@@ -16,12 +16,20 @@ const KINDS := {
 	"dot": {"stop_ms": 0, "shake_mul": 0.0, "pop_mul": 0.7, "quiet": true}, # 지속 피해 틱(연소·감전·중독) — 틱마다 멈추면 연타가 끊긴다
 }
 
+## 입력 선행(G-0018 단계 3) — 공격 후딜 중에 누른 단추를 이 시간(초) 안이면 기억했다가 후딜이 끝나는 즉시 낸다. 마지막 입력 하나만 보존. 0 이면 끔.
+const INPUT_BUFFER_SEC := 0.15
+
 ## 지금 처리 중인 피해의 종류. field_combat 가 공격을 시작할 때 정하고 매 물리 프레임 처음에 "normal" 로 되돌린다.
 static var kind := "normal"
 static var old_style := OS.get_environment("SAGA_FEEL_OLD") != ""
 
 
 ## CombatFeel.hit 의 마지막 인자. 옛 방식이면 {} (= 기본 상수).
+## 입력 선행 시간(초). 옛 방식(SAGA_FEEL_OLD)이면 0 = 후딜 중 입력은 버려진다.
+static func input_buffer_sec() -> float:
+	return 0.0 if old_style else INPUT_BUFFER_SEC
+
+
 static func tune() -> Dictionary:
 	if old_style:
 		return {}

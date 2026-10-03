@@ -169,6 +169,8 @@ signal party_wiped() # 106장 ⑳ 비경 — 명단이 다 쓰러지면 도전 �
 
 var _combo := 0
 var _combo_link := 0.0
+var _buf_action := "" # G-0018 입력 선행 — 후딜 중에 눌린 단추 하나
+var _buf_t := 0.0
 var _attack_t := 0.0
 var _charge_armed := false
 var _charge_hold := 0.0
@@ -419,7 +421,9 @@ func _act(action: String, pressed: bool) -> void:
 	match action:
 		"combat_quick":
 			if pressed:
-				press_attack()
+				if not press_attack() and _attack_t > 0.0 and FeelTuning.input_buffer_sec() > 0.0:
+					_buf_action = action # 후딜 때문에 못 나갔다 — 곧 끝나면 낸다
+					_buf_t = FeelTuning.input_buffer_sec()
 			else:
 				release_attack()
 		"combat_ult":
@@ -457,6 +461,21 @@ func _physics_process(delta: float) -> void:
 	FeelTuning.kind = "normal" # G-0018 — 이번 프레임에 시작하는 공격이 자기 종류로 바꾼다
 	_combo_link = maxf(_combo_link - delta, 0.0)
 	_attack_t = maxf(_attack_t - delta, 0.0)
+	if _buf_action != "":
+		_buf_t -= delta
+		if _attack_t <= 0.0:
+			var buffered := _buf_action
+			var fresh := _buf_t > -delta # 후딜이 끝나는 이 틱까지 창이 남아 있었나
+			_buf_action = ""
+			_buf_t = 0.0
+			if fresh and not _duel_open() and _player != null and not _player.get("frozen"):
+				## 이미 단추를 뗐으면 충전(강공격) 대기를 새로 걸지 않고 일반 공격만 낸다 — 안 그러면 뗀 단추가 영원히 눌린 채로 남아 강공격이 저절로 나간다.
+				if Input.is_action_pressed(buffered):
+					_act(buffered, true)
+				else:
+					attack()
+		elif _buf_t <= 0.0:
+			_buf_action = "" # 창이 지나도록 후딜이 안 끝났다 — 예전처럼 버린다
 	_switch_cd = maxf(_switch_cd - delta, 0.0)
 	## 106장 ㉔ 천기 뇌우(스킬 가속) 동안 재사용 대기가 두 배로 돈다.
 	var cd_step := delta * (2.0 if _haste_t > 0.0 else 1.0)

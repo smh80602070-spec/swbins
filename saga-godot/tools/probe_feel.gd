@@ -24,6 +24,12 @@ var _air := 0
 var _pos0 := Vector3.ZERO
 var _dodge_start := -1
 var _frozen := false
+var _t := 0.0
+var _t1 := 0.0
+var _prev_at := 0.0
+var _atk_count := 0
+var _late_ok := false
+var _phase := 0
 var _ki := 0
 var _kphase := 0
 var _last_stop := -1
@@ -78,7 +84,7 @@ func _place_facing(e: Node, dist := 1.6) -> void:
 	_p.velocity = Vector3.ZERO
 	_p.call("face_toward", ep)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	_frame += 1
 	if _fc == null:
 		_fc = get_tree().get_first_node_in_group("go_field_combat")
@@ -114,21 +120,65 @@ func _physics_process(_delta: float) -> void:
 					_next()
 			else:
 				_fail("연타가 6번 받아들여지지 않음")
-		1: # ③ 후딜 중 누른 입력은 쌓이나 버려지나 — 콤보 번호는 0.9초 뒤 저절로 리셋돼서 쓸 수 없다. 적 체력이 더 깎였는지로 본다.
+		1: # ③ 입력 선행 — 후딜 끝 0.12초 전에 누르면 나가고(0.15초 창 안), 0.27초 전에 누르면 버려져야 한다. 시간은 물리 delta 합(히트스톱 영향 없이 게임 시간).
+			_t += delta
 			if _frame == 1:
+				_t = 0.0
+				_phase = 0
 				_target = _enemy_near(TestMap.world_pos(1, 4))
 				_target.set("hp", 99999.0)
+				for en in get_tree().get_nodes_in_group("field_enemy"):
+					if en != _target:
+						en.process_mode = Node.PROCESS_MODE_DISABLED # 다른 적의 타격이 시간·체력 측정에 끼지 않게
+				_frozen = true
+			if _target != null:
 				_place_facing(_target)
-				_ok1 = bool(_fc.call("attack")) # 이 공격이 후딜을 연다
-				_hp_a = float(_target.get("hp"))
-			elif _frame == 3:
-				_rejected = not bool(_fc.call("attack")) # 후딜 중에 한 번만 누른다
-			elif _frame < 120:
-				_place_facing(_target) # 이후로는 안 누른다
-			elif _frame == 120: # 2초 뒤 — 입력이 쌓여 있었다면 그동안 한 번 더 때렸을 것
-				_m("input_during_recovery", "rejected" if _rejected else "accepted")
-				_m("input_buffered_attack", str(float(_target.get("hp")) < _hp_a)) # false = 후딜 중 누른 입력은 그냥 버려진다
-				_next()
+			var at_now := float(_fc.get("_attack_t"))
+			if at_now > _prev_at + 0.05:
+				_atk_count += 1 # 공격이 새로 시작됐다(후딜이 다시 0.3초대로 올라감)
+			_prev_at = at_now
+			match _phase:
+				0: # 콤보가 풀리도록 1.1초 쉰다
+					if _t >= 1.1 and Engine.time_scale > 0.99:
+						_fc.call("_act", "combat_quick", true) # 첫 공격 — 후딜 0.32초가 시작된다
+						_fc.call("_act", "combat_quick", false) # 탭: 바로 뗀다(안 떼면 강공격 충전이 저절로 완료돼 측정이 틀어진다)
+						_atk_count = 0
+						_prev_at = float(_fc.get("_attack_t")) # 방금 낸 첫 공격은 세지 않는다
+						_t1 = _t
+						_phase = 1
+				1:
+					if _t >= _t1 + 0.20: # 후딜 끝 0.12초 전
+						_fc.call("_act", "combat_quick", true)
+						_fc.call("_act", "combat_quick", false) # 탭: 바로 뗀다(안 떼면 강공격 충전이 저절로 완료돼 측정이 틀어진다)
+						_phase = 2
+				2:
+					if _t >= _t1 + 1.0:
+						_late_ok = _atk_count >= 1
+						_m("input_buffer_late_press", str(_late_ok)) # true = 후딜 끝 0.12초 전 입력이 후딜 직후 공격으로 나갔다 (첫 공격은 카운트 전)
+						_phase = 3
+						_t1 = _t
+				3: # 콤보가 풀리도록 다시 쉰다
+					if _t >= _t1 + 1.3 and Engine.time_scale > 0.99:
+						_fc.call("_act", "combat_quick", true)
+						_fc.call("_act", "combat_quick", false) # 탭: 바로 뗀다(안 떼면 강공격 충전이 저절로 완료돼 측정이 틀어진다)
+						_atk_count = 0
+						_prev_at = float(_fc.get("_attack_t")) # 방금 낸 첫 공격은 세지 않는다
+						_t1 = _t
+						_phase = 4
+				4:
+					if _t >= _t1 + 0.05: # 후딜 끝 0.27초 전
+						_fc.call("_act", "combat_quick", true)
+						_fc.call("_act", "combat_quick", false) # 탭: 바로 뗀다(안 떼면 강공격 충전이 저절로 완료돼 측정이 틀어진다)
+						_phase = 5
+				5:
+					if _t >= _t1 + 1.0:
+						_m("input_buffer_early_press_dropped", str(_atk_count == 0))
+						if not FeelTuning.old_style and not (_late_ok and _atk_count == 0):
+							_fails += 1 # 새 방식인데 입력 선행이 기대대로가 아니다(늦은 입력 나감 + 이른 입력 버려짐) # true = 너무 이른 입력은 버려졌다
+						for en in get_tree().get_nodes_in_group("field_enemy"):
+							en.process_mode = Node.PROCESS_MODE_INHERIT
+						_frozen = false
+						_next()
 		2: # ④ 적을 때리면 CombatFeel 5요소가 나가나
 			if _frame == 1:
 				_target = _enemy_near(TestMap.world_pos(1, 4))
