@@ -2,7 +2,7 @@
  "version": 1,
  "note": "K-0017 단계 1 — 판 5 × (건물 3 · 지물 3 · 지형 2 · 탈것 1) = 45칸. 같은 id 는 한 번만 만든다(건물은 기존 레시피 재사용). 이름 정책: 원작 이름 없음, id 는 일반 명사. exists = recipes/ 에 이미 있음, new = 만들 것.",
  "budget": {"toon_glb_mb": 0.5, "toon_tris": 5000, "sprite_px": [128, 256], "tex_px": 256},
- "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py"},
+ "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py"},
  "games": {
   "go": {
    "theme": "시대 혼합 마을(과거·현대·미래 한 자리)",
@@ -94,5 +94,10 @@
    ],
    "vehicle": [{"id": "caravan_wagon_01", "state": "new", "hint": "대상 수레"}]
   }
+ },
+ "nature": {
+  "note": "K-0052 — 판·시대와 상관없는 자연 소품(공용). build_nature.py. 삼각형 ≤1500(hill·mountain ≤2500).",
+  "tris_max": 1500, "tris_max_big": 2500, "big": ["hill_01", "mountain_01"],
+  "items": ["tree_broadleaf_01", "tree_broadleaf_02", "tree_pine_01", "tree_pine_01_snow", "tree_pine_02", "tree_dead_01", "tree_birch_01", "bush_01", "grass_tuft_01", "flower_patch_01", "rock_small_01", "rock_large_01", "rock_moss_01", "pebbles_01", "log_01", "stump_01", "mushroom_01", "hill_01", "mountain_01"]
  }
 }

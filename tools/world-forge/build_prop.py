@@ -317,7 +317,7 @@ def build(pid, out, style):
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     W.export_glb([ob], out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
     size = [round(hi[i] - lo[i], 2) for i in range(3)]
-    lic = {'id': pid, 'generator': 'tools/world-forge/build_prop.py', 'blender': bpy.app.version_string, 'style': style,
+    lic = {'id': pid, 'generator': GENERATOR, 'blender': bpy.app.version_string, 'style': style,
            'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)',
            'inputs': sorted(f'polyhaven: {m}' for m in C.mats), 'size_m': size, 'tris': tris}
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

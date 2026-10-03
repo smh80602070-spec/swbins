@@ -1,0 +1,16 @@
+{
+ "id": "tree_dead_01",
+ "generator": "tools/world-forge/build_prop.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: black_painted_planks"
+ ],
+ "size_m": [
+  3.77,
+  2.34,
+  4.61
+ ],
+ "tris": 100
+}

@@ -50,6 +50,11 @@ def main():
                     bad(f'{g}.building.{i}: exists 인데 recipes/{i}.json 이 없다')
                 if it.get('state') == 'new' and kind == 'building' and has:
                     bad(f'{g}.building.{i}: new 인데 이미 recipes/ 에 있다')
+    nat = plan.get('nature', {})
+    for i in nat.get('items', []):
+        if not re.fullmatch(r'[a-z0-9_]+', i):
+            bad(f'nature.{i}: id 는 영문 소문자·숫자·_')
+        seen.setdefault(i, ('nature', 'new'))
     new = sum(1 for k, s in seen.values() if s == 'new')
     def folder(flag):
         v = sys.argv[sys.argv.index(flag) + 1]
@@ -76,7 +81,8 @@ def main():
                 continue
             tris = json.load(open(lic, encoding='utf-8')).get('tris', 0)
             kb = os.path.getsize(g) // 1024
-            if tris > b.get('toon_tris', 5000) or kb > b.get('toon_glb_mb', 0.5) * 1024:
+            lim = (nat.get('tris_max_big', 2500) if i in nat.get('big', []) else nat.get('tris_max', 1500)) if i in nat.get('items', []) else b.get('toon_tris', 5000)
+            if tris > lim or kb > b.get('toon_glb_mb', 0.5) * 1024:
                 over.append(f'{i}(tris {tris}, {kb}KB)')
         print(f'budget over {len(over)}')
         for o in over:
