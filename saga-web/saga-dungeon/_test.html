@@ -7715,6 +7715,14 @@ window.requestAnimationFrame = function () { return 0; };
       return r.row === 1 && !r.flip && l.row === 1 && l.flip && f.row === 0 && !f.flip && b.row === 2 && !b.flip;
     });
 
+    t('2D 바닥 — 층 테마 여섯 전부 dungeon_ 타일로 이어지고, 타일이 없으면 false(칸 색칠 그대로·그리기 호출 0)', function () {
+      var M = DG.mode2d, T = DG.dungeonData.THEMES, tile = DG.cfg.mode2d.tile, bad = [], calls = 0;
+      T.forEach(function (th) { if (!tile[th.name] || tile[th.name].indexOf('dungeon_') !== 0) { bad.push(th.name); } });
+      var fake = { save: function () { calls++; }, restore: function () { calls++; }, transform: function () { calls++; }, scale: function () { calls++; }, fillRect: function () { calls++; }, createPattern: function () { return {}; } };
+      var none = M.fillIso(fake, { id: 'dungeon_없는타일', a: 1, b: 0, c: 0, d: 1, e: 0, f: 0, W: 10, H: 10 }), noId = M.fillIso(fake, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0, W: 10, H: 10 });
+      return bad.length === 0 && none === false && noId === false && calls === 0 && ('테마 ' + T.length + '개 연결 · 타일 없음 → false') || bad.join(',');
+    });
+
     t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {
       var M = DG.mode2d, calls = 0;
       var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, translate: function () {}, scale: function () {} };

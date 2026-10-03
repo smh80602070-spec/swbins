@@ -190,8 +190,26 @@
     return true;
   }
 
+  /**
+   * 아이소 바닥(마름모)을 타일로 채운다 — 사가블로. o = { id, a,b,c,d,e,f(방 좌표 → 화면 변환 행렬), W, H(방 크기), unit(타일 한 장이 덮는 방 좌표 폭, 기본 160), tint, tintAlpha }.
+   * 타일 위에 tint(테마 바닥색)를 얹어 층 분위기를 남긴다. 그렸으면 true — 부른 쪽은 칸 색칠을 건너뛴다. 못 받았으면 false.
+   */
+  function fillIso(ctx, o) {
+    if (!ctx || !o || !o.id || !isOn()) { return false; }
+    var pat = tilePattern(ctx, o.id);
+    if (!pat) { return false; }
+    var s = (o.unit || 160) / 256;
+    ctx.save();
+    ctx.transform(o.a, o.b, o.c, o.d, o.e, o.f);
+    ctx.fillStyle = pat; ctx.save(); ctx.scale(s, s); ctx.fillRect(0, 0, o.W / s, o.H / s); ctx.restore();
+    if (o.tint) { ctx.globalAlpha = o.tintAlpha === undefined ? 0.6 : o.tintAlpha; ctx.fillStyle = o.tint; ctx.fillRect(0, 0, o.W, o.H); }
+    ctx.restore();
+    return true;
+  }
+
   global.DG = global.DG || {};
   global.DG.mode2d = {
+    fillIso: fillIso,
     drawBg: drawBg, tile: tile, tileUrl: tileUrl, tilePattern: tilePattern, fillTile: fillTile,
     bgReady: function (region) { var b = bgs[region]; return !!(b && b.meta && LAYERS.every(function (l) { return b.imgs[l].ok; })); },
     bgFailed: function (region) { var b = bgs[region]; return b ? b.fail || LAYERS.some(function (l) { return b.imgs[l].fail; }) : null; },

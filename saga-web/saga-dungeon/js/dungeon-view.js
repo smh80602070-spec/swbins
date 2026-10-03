@@ -1092,7 +1092,7 @@
     fg.addColorStop(0.5, theme.floor);
     fg.addColorStop(1, shade(theme.floor, 0.06));
     ctx.fillStyle = fg;
-    ctx.fill();
+    ctx.fill(); var tex = global.DG.mode2d.fillIso(ctx, { id: (global.DG.cfg.mode2d.tile || {})[theme.name], a: IX * m.s, b: IY * m.s, c: -IX * m.s, d: IY * m.s, e: m.ox, f: m.oy, W: W, H: H, tint: theme.floor });   // 2D 바닥 타일(K-0020)
 
     /* 바닥 판석(板石) — 원작의 바닥은 매끈한 면이 아니라 **낱장 돌**이다.
        칸마다 밝기를 조금씩 흔들고 이음선을 어둡게 파면, 그림 한 장 없이도
@@ -1113,7 +1113,7 @@
            맞물려 바닥이 체크무늬가 된다(실제로 그렇게 나왔다). */
         v = (core.hash2(gx / TS * 13 + gy / TS * 7, gy / TS * 29 + run.floor) - 0.5) * 0.09;
         ctx.fillStyle = shade(theme.floor, v);
-        ctx.fill();
+        if (!tex) { ctx.fill(); }
         /* 이음선 — 아래로 파인 쪽만 밝게 하면 돌이 솟아 보인다 */
         ctx.strokeStyle = 'rgba(0,0,0,0.34)';
         ctx.stroke();
