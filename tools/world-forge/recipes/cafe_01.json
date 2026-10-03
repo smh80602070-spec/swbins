@@ -1,0 +1,12 @@
+{
+ "id": "cafe_01", "era": "present",
+ "footprint": [8.0, 6.0],
+ "floors": [{"h": 3.2}],
+ "walls": {"mat": "beige_wall_001", "tile_m": 2.4, "tint": "#f1e4cf"},
+ "trim": {"mat": "grey_plaster", "tile_m": 1.0, "tint": "#3a3f48"},
+ "door": {"mat": "black_painted_planks", "tint": "#2c313a", "w": 1.6, "h": 2.4, "wall": 0, "at": 0.5},
+ "windows": {"w": 2.2, "h": 1.8, "sill": 0.6, "gap": 3.2, "ribbon": true},
+ "glass": {"color": "#aee6ff"},
+ "roof": {"type": "flat", "overhang": 0.5, "mat": "bitumen", "tile_m": 2.0, "parapet": 0.5},
+ "bands": true
+}

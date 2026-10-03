@@ -1,0 +1,13 @@
+{
+ "id": "observatory_01", "era": "future",
+ "footprint": [7.0, 7.0],
+ "floors": [{"h": 3.4}, {"h": 3.0}, {"h": 3.0}],
+ "walls": {"mat": "grey_plaster", "tile_m": 2.2, "tint": "#aeb9c9"},
+ "base": {"mat": "castle_wall_slates", "h": 0.8, "tile_m": 1.8},
+ "trim": {"mat": "black_painted_planks", "tile_m": 1.0, "tint": "#27323f"},
+ "door": {"mat": "black_painted_planks", "tint": "#223040", "w": 1.4, "h": 2.4, "wall": 0, "at": 0.5},
+ "windows": {"w": 0.9, "h": 1.5, "sill": 1.0, "gap": 2.6},
+ "glass": {"color": "#6fe0ff"},
+ "roof": {"type": "dome", "overhang": 0.4, "height": 3.8, "strips": 8, "segments": 20, "mat": "corrugated_iron", "tile_m": 2.0, "tint": "#5fb7c7"},
+ "bands": true
+}

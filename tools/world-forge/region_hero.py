@@ -109,7 +109,13 @@ def place(name, loc, rot=0.0, scale=1.0, real=None):
     """공방 조각 하나를 놓는다. 같은 조각은 처음 한 번만 읽고 나머지는 메시·재질을 공유하는 복사본 — 사실 모드 소품 GLB 는 8~30MB 라
     스무 번 읽으면 메모리·시간이 폭발한다. real=None 이면 사실 모드(PBR)일 때 real GLB(없으면 툰)를 쓴다."""
     use_real = PBR if real is None else real
-    src_dir = REAL if (use_real and os.path.exists(os.path.join(REAL, name + '.glb'))) else TOON
+    PIECES = os.path.join(ROOT, 'saga-assets', 'regions', 'pieces')
+    if use_real and os.path.exists(os.path.join(REAL, name + '.glb')):
+        src_dir = REAL
+    elif os.path.exists(os.path.join(PIECES, name + '.glb')):
+        src_dir = PIECES         # 지역 조각(툰 GLB 1024px) 먼저, 없으면 옛 월드 세트
+    else:
+        src_dir = TOON
     key = (name, src_dir)
     if key not in _TMPL:
         before = set(bpy.data.objects.keys())
@@ -636,7 +642,7 @@ def galaxy_ferry():
     trees(170, 0.8, 9.0, 22, 60, avoid=[(x, y) for x, y, _ in houses])
     # 건너편 언덕 위 한옥 마을
     for x, y, z in houses:
-        h, objs = place(rng.choice(['hanok_01', 'hanok_01', 'forest_cottage_01', 'jp_minka_01']), (x, y, z - 0.15), rot=rng.uniform(-0.5, 0.5), scale=rng.uniform(1.2, 1.7), real=PBR)
+        h, objs = place(rng.choice(['ferry_house_01', 'ferry_house_01', 'hanok_01', 'forest_cottage_01']), (x, y, z - 0.15), rot=rng.uniform(-0.5, 0.5), scale=rng.uniform(1.2, 1.7), real=PBR)
         emissive(objs, (1.0, 0.6, 0.28, 1), 0.6)
         point((x, y - 1.5, z + 2.4), (1.0, 0.6, 0.28), 260, 0.7)
     # 가까운 둑 가장자리의 돌등롱 줄 — 따뜻한 빛, 물 위로 번진다
@@ -873,6 +879,15 @@ def frost_peak():
     h, objs = place('altar_01', (1.2, 43, z - 0.05), rot=0.0, scale=1.8)
     emissive(objs, (0.55, 0.8, 1.0, 1), 1.2)
     point((1.2, 41, z + 3.0), (0.55, 0.8, 1.0), 400, 0.6)
+    zs = ground_z(1.2, 52)
+    if zs is not None:
+        h2, o2 = place('frost_shrine_01', (1.2, 52, zs - 0.05), rot=0.0, scale=1.6)
+        point((1.2, 49, zs + 2.2), (1.0, 0.7, 0.4), 220, 0.6)
+    for (lx, ly, lr) in ((-15.0, 30.0, 0.25), (16.0, 34.0, -0.2)):
+        zl = ground_z(lx, ly)
+        if zl is not None:
+            h3, o3 = place('frost_lodge_01', (lx, ly, zl - 0.05), rot=lr, scale=1.3)
+            point((lx, ly - 2.0, zl + 2.0), (1.0, 0.75, 0.4), 260, 0.8)
     for sx in (-7, 8):
         z = ground_z(sx, 40)
         if z is not None:
@@ -1037,7 +1052,7 @@ def time_rift():
     floating_island(0, 0, 0, 16, 11, 3, top_mat, rock_mat)
     bpy.ops.mesh.primitive_cylinder_add(vertices=40, radius=9.5, depth=0.5, location=(0, 0, 0.2))
     bpy.context.object.data.materials.append(plat_mat)
-    h, objs = place('stone_tower_01', (0, 0, 0.4), rot=0.3, scale=1.1, real=PBR)
+    h, objs = place('observatory_01', (0, 0, 0.4), rot=0.3, scale=1.15, real=PBR)
     emissive(objs, (0.4, 0.9, 1.0, 1), 0.25)
     h, objs = place('future_dome_01', (-9.5, 3.5, 0.4), rot=0.8, scale=0.9)
     emissive(objs, (0.4, 0.9, 1.0, 1), 0.35)
@@ -1220,7 +1235,7 @@ def crossroads():
             h, objs = place(nm, (x, y, z), rot=rng.uniform(-0.6, 0.6), scale=sc_, real=PBR)
             emissive(objs, (1.0, 0.6, 0.28, 1), 0.12)
             point((x, y - 1.5, z + 2.5), (1.0, 0.6, 0.28), 70, 0.7)
-    for (x, y, nm, sc_) in ((9, 70, 'modern_block_01', 1.1), (-9, 92, 'modern_block_01', 1.3)):
+    for (x, y, nm, sc_) in ((9, 70, 'modern_block_01', 1.1), (-9, 92, 'modern_block_01', 1.3), (-12, 60, 'cafe_01', 1.2)):
         z = ground_z(x, y)
         if z is not None:
             h, objs = place(nm, (x, y, z), rot=0.0, scale=sc_, real=PBR)
@@ -1467,7 +1482,8 @@ def village():
     spots_ = (
         ('hanok_01', -16, 34, 0.0, 1.3), ('hanok_01', -26, 46, 0.4, 1.2), ('jp_minka_01', -12, 52, 0.2, 1.2),
         ('forest_cottage_01', -34, 60, 0.6, 1.2), ('inn_01', 16, 36, 3.0, 1.2), ('modern_block_01', 22, 52, 3.3, 1.3),
-        ('future_dome_01', 36, 62, 3.6, 1.4), ('barn_01', -6, 70, 0.0, 1.3), ('chinese_hall_01', 8, 74, 3.2, 1.0))
+        ('future_dome_01', 36, 62, 3.6, 1.4), ('barn_01', -6, 70, 0.0, 1.3), ('chinese_hall_01', 8, 74, 3.2, 1.0),
+        ('smithy_01', -30, 38, 0.3, 1.2), ('cafe_01', 28, 42, 3.3, 1.2))
     for (nm, x, y, r, s) in spots_:
         z = ground_z(x, y)
         if z is None:
