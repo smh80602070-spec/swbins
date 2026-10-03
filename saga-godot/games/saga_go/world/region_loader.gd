@@ -18,6 +18,13 @@ const TREE_GLBS := [
 const FLOWER_GLB := "res://assets/generated/variants/Flower_3_Single__go_village.glb"
 const FLOWER_SCALE := 0.218
 
+## village 의 terrain.heights 는 땅이 아니라 "위에서 쏜 광선이 처음 맞은 면"(집·나무 꼭대기 포함)이다 — 조각 z 와 비교해 실측.
+## materials 가 없는 옛 모양 배치표는 이 반경(m)으로 열림(침식→팽창)해 집·나무만큼 좁은 돌기를 걷어내고 넓은 언덕만 남긴다(조각 z 와의 평균 오차 3.6m → 0.8m).
+const GROUND_OPEN_RADIUS_M := 8.0
+
+## materials 가 없는 village 풀 한 장의 색 보정 — 시안(region_hero.py plain_terrain green)이 풀을 초록으로 틴트했고 `ground_grass.jpg` 는 올리브색이다(눈대중).
+const VILLAGE_GRASS_TINT := Color(0.78, 1.0, 0.74)
+
 ## 빛 예산(G-0015 R-0): 점광원은 구경 카메라에서 가까운 순으로 이만큼만 켠다. 그림자는 해·달(SUN)만.
 const LIGHT_BUDGET_MOBILE := 8
 const LIGHT_BUDGET_PC := 16
@@ -114,6 +121,8 @@ func _build_terrain() -> void:
 	_heights = PackedFloat32Array()
 	for h in t.heights as Array:
 		_heights.append(NAN if h == null else float(h))   # null = 땅 없음(물·허공) — 풍경 메시가 덮는다
+	if _heights.size() == _nx * _ny and not (t.get("materials") is Dictionary):
+		_heights = _opened(_heights, _nx, _ny, int(round(GROUND_OPEN_RADIUS_M / _step)))
 	if _heights.size() != _nx * _ny:
 		push_error("RegionLoader: 지형 격자 크기가 안 맞는다 — %s" % region)
 		stats.errors += 1
@@ -165,6 +174,34 @@ func _build_terrain() -> void:
 	stats.terrain_tris = idx.size() / 3
 
 
+## 열림(최소 필터 → 최대 필터). NAN(땅 없음)은 건너뛰고 NAN 칸은 NAN 으로 남긴다.
+static func _opened(src: PackedFloat32Array, nx: int, ny: int, k: int) -> PackedFloat32Array:
+	if k <= 0:
+		return src
+	var eroded := _window(src, nx, ny, k, true)
+	return _window(eroded, nx, ny, k, false)
+
+
+static func _window(src: PackedFloat32Array, nx: int, ny: int, k: int, want_min: bool) -> PackedFloat32Array:
+	var out := PackedFloat32Array()
+	out.resize(src.size())
+	for j in ny:
+		for i in nx:
+			if is_nan(src[j * nx + i]):
+				out[j * nx + i] = NAN
+				continue
+			var best := INF if want_min else -INF
+			for dj in range(maxi(j - k, 0), mini(j + k, ny - 1) + 1):
+				for di in range(maxi(i - k, 0), mini(i + k, nx - 1) + 1):
+					var v := src[dj * nx + di]
+					if is_nan(v):
+						continue
+					if (want_min and v < best) or (not want_min and v > best):
+						best = v
+			out[j * nx + i] = best
+	return out
+
+
 func _h_or(i: int, fallback: float) -> float:
 	var h := _heights[i]
 	return fallback if is_nan(h) else h
@@ -206,6 +243,7 @@ func _ground_material(m: Variant) -> ShaderMaterial:
 		sm.set_shader_parameter("high_tex", grass)
 		sm.set_shader_parameter("use_high", 0.0)
 		sm.set_shader_parameter("tile_low", 5.0)
+		sm.set_shader_parameter("tint_low", VILLAGE_GRASS_TINT)
 	return sm
 
 
@@ -367,7 +405,8 @@ func _build_trees() -> void:
 		var s := float(TREE_GLBS[k][1]) * float(t[3])
 		var yaw := fposmod(float(t[0]) * 12.9898 + float(t[1]) * 78.233, 1.0) * TAU
 		var basis := Basis(Vector3.UP, yaw).scaled(Vector3.ONE * s)
-		(by_kind[k] as Array[Transform3D]).append(Transform3D(basis, conv([t[0], t[1], t[2]])))
+		# 배치표 z 는 땅 위 오프셋(약 ±0.5m)이다 — 땅 높이는 열림 처리한 격자에서.
+		(by_kind[k] as Array[Transform3D]).append(Transform3D(basis, conv([t[0], t[1], height_at(float(t[0]), float(t[1])) + float(t[2])])))
 		stats.trees += 1
 	for k: int in by_kind:
 		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(String(TREE_GLBS[k][0])))
@@ -384,7 +423,7 @@ func _build_flowers() -> void:
 	var xforms: Array[Transform3D] = []
 	for f: Array in flowers:
 		var yaw := fposmod(float(f[0]) * 37.719 + float(f[1]) * 11.131, 1.0) * TAU
-		xforms.append(Transform3D(Basis(Vector3.UP, yaw).scaled(Vector3.ONE * FLOWER_SCALE), conv(f)))
+		xforms.append(Transform3D(Basis(Vector3.UP, yaw).scaled(Vector3.ONE * FLOWER_SCALE), conv([f[0], f[1], height_at(float(f[0]), float(f[1]))])))   # f[2] 는 높이가 아니다(0~26 흩어진 값)
 		stats.flowers += 1
 	var mesh := GLBUtils.extract_mesh(FLOWER_GLB)
 	if mesh == null:
@@ -508,11 +547,13 @@ func _particles(node_name: String, d: Dictionary, size: float, velocity: Vector3
 	p.gravity = Vector3.ZERO
 	p.position = center
 	var col := _color3(d.get("color"), Color(0.95, 0.97, 1.0))
-	var quad := QuadMesh.new()
-	quad.size = Vector2.ONE * size
+	var quad := SphereMesh.new()   # 사각 빌보드는 가까이서 네모로 보인다
+	quad.radius = size * 0.5
+	quad.height = size
+	quad.radial_segments = 6
+	quad.rings = 3
 	var mat := StandardMaterial3D.new()
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
 	mat.albedo_color = col
 	mat.emission_enabled = true
 	mat.emission = col

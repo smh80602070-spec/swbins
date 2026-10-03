@@ -28,8 +28,11 @@ void vertex() {
 
 void fragment() {
 	vec2 p = vec2(world_pos.x, -world_pos.z);
-	vec3 lo = texture(low_tex, p / tile_low).rgb * tint_low;
-	vec3 hi = texture(high_tex, p / tile_high).rgb * tint_high;
+	// 가파른 면은 위에서 내리 투영하면 줄무늬로 늘어진다 — 옆면은 (수평 이동, 높이) 평면으로 한 번 더 읽어 섞는다.
+	float steep = smoothstep(0.25, 0.6, 1.0 - world_nrm.y);
+	vec2 side = vec2(world_pos.x + world_pos.z, world_pos.y);
+	vec3 lo = mix(texture(low_tex, p / tile_low).rgb, texture(low_tex, side / tile_low).rgb, steep) * tint_low;
+	vec3 hi = mix(texture(high_tex, p / tile_high).rgb, texture(high_tex, side / tile_high).rgb, steep) * tint_high;
 	float h_t = clamp((world_pos.y - z0) / max(z1 - z0, 0.001), 0.0, 1.0);
 	float s_t = clamp(((1.0 - world_nrm.y) - slope0) / max(slope1 - slope0, 0.001), 0.0, 1.0);
 	float t = max(h_t, s_t) * use_high;

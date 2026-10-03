@@ -17,6 +17,18 @@ func _ready() -> void:
 	if id == "" or not RegionLoader.has_layout(id):
 		id = "village"
 	_open(id)
+	if OS.get_environment("SAGA_REGION_SHOT") != "":
+		_shot(id)
+
+
+## `SAGA_REGION_SHOT=<절대 폴더>` — 사용자가 촬영을 요청한 세션에서만. 몇 프레임 기다렸다 <지역>.png 를 저장하고 끝낸다.
+func _shot(id: String) -> void:
+	for i in 30:
+		await get_tree().process_frame
+	var img := get_viewport().get_texture().get_image()
+	var path := "%s/%s.png" % [OS.get_environment("SAGA_REGION_SHOT"), id]
+	print("REGION_SHOT ", path, " ", img.save_png(path))
+	get_tree().quit()
 
 
 func _open(id: String) -> void:
