@@ -199,6 +199,9 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_traversal.gd").new())
 	if OS.get_environment("SAGA_COMBAT_PROBE") != "":
 		add_child(load("res://tools/probe_field_combat.gd").new())
+	## G-0018 전투·이동 손맛 기준선 측정 — 측정할 때만 붙인다.
+	if OS.get_environment("SAGA_FEEL_PROBE") != "":
+		add_child(load("res://tools/probe_feel.gd").new())
 	if OS.get_environment("SAGA_PERF_PROBE") != "":
 		add_child(load("res://tools/probe_perf.gd").new())
 	if OS.get_environment("SAGA_SHOT_PROBE") != "":
