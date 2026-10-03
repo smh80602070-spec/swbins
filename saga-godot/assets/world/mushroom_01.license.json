@@ -1,6 +1,6 @@
 {
  "id": "mushroom_01",
- "generator": "tools/world-forge/build_prop.py",
+ "generator": "tools/world-forge/build_nature.py",
  "blender": "5.2.1 LTS",
  "style": "toon",
  "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
@@ -8,9 +8,9 @@
   "polyhaven: white_stucco"
  ],
  "size_m": [
-  0.68,
-  0.45,
-  0.54
+  0.81,
+  0.7,
+  0.5
  ],
- "tris": 166
+ "tris": 540
 }

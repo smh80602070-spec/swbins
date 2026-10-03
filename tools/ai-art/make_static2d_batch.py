@@ -72,6 +72,12 @@ SUBJ = {
     'mushroom_01': f'cluster of three mushrooms, red cap with white spots and orange caps, {V}',
     'hill_01': f'small grassy hill mound, green grass, {V}',
     'mountain_01': f'rocky mountain peak with snow cap, {V}',
+    # 자연 소품 변형 5 (K-0058)
+    'tree_broadleaf_03': f'tall slim broadleaf tree, oval yellow-green leafy crown, thin brown trunk, {V}',
+    'tree_pine_03': f'wide dark green spruce tree, big drooping layered branches, {V}',
+    'bush_02': f'round green flowering bush with small pink and white flowers, {V}',
+    'grass_tuft_02': f'tall thin grass with golden seed heads, {V}',
+    'rock_large_02': f'tall standing gray rock pillar with small boulders at the base, {V}',
     # 마을·장터 소품 12 + 던전 방 키트 6 (K-0053)
     'market_stall_01': f'market stall, wooden counter with red and cream striped awning, fruit and crates on top, {V}',
     'low_stone_wall_01': f'low stone wall section, rough stacked gray stones with flat cap stones, {V}',

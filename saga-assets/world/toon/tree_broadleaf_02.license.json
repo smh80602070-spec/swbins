@@ -1,6 +1,6 @@
 {
  "id": "tree_broadleaf_02",
- "generator": "tools/world-forge/build_prop.py",
+ "generator": "tools/world-forge/build_nature.py",
  "blender": "5.2.1 LTS",
  "style": "toon",
  "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
@@ -9,9 +9,9 @@
   "polyhaven: white_stucco"
  ],
  "size_m": [
-  5.29,
-  4.35,
-  4.81
+  6.74,
+  5.61,
+  5.58
  ],
- "tris": 166
+ "tris": 1200
 }

@@ -98,7 +98,7 @@
  "nature": {
   "note": "K-0052 — 판·시대와 상관없는 자연 소품(공용). build_nature.py. 삼각형 ≤1500(hill·mountain ≤2500).",
   "tris_max": 1500, "tris_max_big": 2500, "big": ["hill_01", "mountain_01"],
-  "items": ["tree_broadleaf_01", "tree_broadleaf_02", "tree_pine_01", "tree_pine_01_snow", "tree_pine_02", "tree_dead_01", "tree_birch_01", "bush_01", "grass_tuft_01", "flower_patch_01", "rock_small_01", "rock_large_01", "rock_moss_01", "pebbles_01", "log_01", "stump_01", "mushroom_01", "hill_01", "mountain_01"]
+  "items": ["tree_broadleaf_01", "tree_broadleaf_02", "tree_pine_01", "tree_pine_01_snow", "tree_pine_02", "tree_dead_01", "tree_birch_01", "bush_01", "grass_tuft_01", "flower_patch_01", "rock_small_01", "rock_large_01", "rock_moss_01", "pebbles_01", "log_01", "stump_01", "mushroom_01", "hill_01", "mountain_01", "tree_broadleaf_03", "tree_pine_03", "bush_02", "grass_tuft_02", "rock_large_02"]
  },
  "village": {
   "note": "K-0053 — 마을·장터 소품 12 + 던전 방 키트 6(공용). build_village.py. 삼각형 ≤2500. 돌담·벽 토막은 양 끝 단면이 같다.",

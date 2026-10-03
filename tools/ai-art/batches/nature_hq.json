@@ -1,0 +1,85 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "nature_hq",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people"
+ },
+ "items": [
+  {
+   "id": "tree_broadleaf_03",
+   "seed": 3042229661,
+   "prompt": "tall slim broadleaf tree, oval yellow-green leafy crown, thin brown trunk, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\tree_broadleaf_03.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tree_broadleaf_03.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tree_pine_03",
+   "seed": 4120307746,
+   "prompt": "wide dark green spruce tree, big drooping layered branches, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\tree_pine_03.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tree_pine_03.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "bush_02",
+   "seed": 3761954548,
+   "prompt": "round green flowering bush with small pink and white flowers, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\bush_02.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "bush_02.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "grass_tuft_02",
+   "seed": 1391880853,
+   "prompt": "tall thin grass with golden seed heads, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\grass_tuft_02.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "grass_tuft_02.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rock_large_02",
+   "seed": 3924615795,
+   "prompt": "tall standing gray rock pillar with small boulders at the base, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\rock_large_02.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rock_large_02.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  }
+ ]
+}

@@ -1,6 +1,6 @@
 {
  "id": "tree_pine_01_snow",
- "generator": "tools/world-forge/build_prop.py",
+ "generator": "tools/world-forge/build_nature.py",
  "blender": "5.2.1 LTS",
  "style": "toon",
  "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
@@ -9,9 +9,9 @@
   "polyhaven: snow_02"
  ],
  "size_m": [
-  3.2,
-  3.2,
-  5.9
+  3.34,
+  3.44,
+  8.33
  ],
- "tris": 90
+ "tris": 520
 }
