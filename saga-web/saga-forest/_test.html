@@ -6607,6 +6607,13 @@ window.DG_NO_TUNE = true;
       return r.row === 1 && !r.flip && l.row === 1 && l.flip && f.row === 0 && !f.flip && b.row === 2 && !b.flip;
     });
 
+    t('2D 바닥 — 땅 종류(TILES 전부)와 겨울 눈이 forest_ 타일로 이어진다', function () {
+      var M = DG.mode2d, kinds = Object.keys(DG.villageData.TILES), bad = [];
+      kinds.forEach(function (k) { var u = M.tileUrl(k); if (!u || u.indexOf('assets/web2d/tile/forest_') !== 0) { bad.push(k); } });
+      var snow = M.tileUrl('snow');
+      return bad.length === 0 && !!snow && M.tileUrl('lava') === null && ('땅 ' + kinds.length + '종 + 눈 → ' + snow) || bad.join(',');
+    });
+
     t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {
       var M = DG.mode2d, calls = 0;
       var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, translate: function () {}, scale: function () {} };

@@ -435,6 +435,9 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.mode2d = {
     base: 'assets/sprites2d_sheets/',
+    tileBase: 'assets/web2d/tile/',
+    /** 땅 종류(data-village TILES) → 2D 바닥 타일(K-0020 `forest_*`) — `snow` 는 겨울의 풀 칸 */
+    tile: { grass: 'forest_grass', grass_meadow: 'forest_grass', grass_dark: 'forest_grass', grass_mush: 'forest_grass', grass_rocky: 'forest_stone', path: 'forest_dirt', sand: 'forest_sand', water: 'forest_water', stone: 'forest_stone', floor: 'forest_dirt', snow: 'forest_snow' },
     targetH: 40,                                 // 스탬프 s=1 일 때 몸 높이(px) — actor2d 가 s 를 배수로 곱한다
     foot: 0.87,
     /** 2D 모드인가 — 3D 마을이 안 서 있을 때(구면 투영 2D 그림) */
