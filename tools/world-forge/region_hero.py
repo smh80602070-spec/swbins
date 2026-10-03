@@ -2,7 +2,7 @@
 
   blender -b --factory-startup -P tools/world-forge/region_hero.py -- <지역> <출력.png> [샘플=48]
 
-지역: galaxy_ferry(은하 나루: 별밤 물가·등롱·돛단배) · frost_peak(서리봉 고원: 오로라·눈 소나무·횃불 길·제단) · time_rift(시간 틈 관측소: 떠 있는 섬·시간 고리·하늘의 균열·구름바다) · crossroads(틈새 갈림길: 과거·현재·미래 세 갈래와 균열 문)
+지역: galaxy_ferry(은하 나루: 별밤 물가·등롱·돛단배) · frost_peak(서리봉 고원: 오로라·눈 소나무·횃불 길·제단) · time_rift(시간 틈 관측소: 떠 있는 섬·시간 고리·하늘의 균열·구름바다) · crossroads(틈새 갈림길: 과거·현재·미래 세 갈래와 균열 문) · village(마을: 시대가 섞인 해질녘 낮 마을)
 조각은 saga-assets/world/toon/*.glb(툰 GLB, K-0017)를 그대로 쓴다. 이 장면은 게임 장면이 아니라 방향을 정하는 시안 — 마음에 들면 각 트랙이 같은 구도·조명 값으로 엔진 안에서 다시 짠다.
 """
 import bpy
@@ -1074,7 +1074,7 @@ def time_rift():
     camera((-26.0, -62.0, 5.0), (0.0, 6.0, 19.0), lens=24)
 
 
-def plain_terrain():
+def plain_terrain(green=False):
     import bmesh
     me = bpy.data.meshes.new('plain')
     o = bpy.data.objects.new('plain_ground', me)
@@ -1100,7 +1100,10 @@ def plain_terrain():
     bm.free()
     for p_ in me.polygons:
         p_.use_smooth = True
-    o.data.materials.append(pbr_mat('aerial_grass_rock', 5.0, tint=(0.8, 0.85, 1.0, 1)) if PBR else mat_simple('meadow', (0.035, 0.07, 0.05, 1), 0.9))
+    if green:
+        o.data.materials.append(pbr_mat('aerial_grass_rock', 5.0, tint=(1.1, 1.25, 0.9, 1)) if PBR else mat_simple('meadow', (0.16, 0.3, 0.1, 1), 0.9))
+    else:
+        o.data.materials.append(pbr_mat('aerial_grass_rock', 5.0, tint=(0.8, 0.85, 1.0, 1)) if PBR else mat_simple('meadow', (0.035, 0.07, 0.05, 1), 0.9))
     return o
 
 
@@ -1297,9 +1300,212 @@ def join_by_material(names):
         bpy.ops.object.join()
 
 
+def day_sky():
+    w = bpy.data.worlds.new('daysky')
+    sc.world = w
+    w.use_nodes = True
+    nt = w.node_tree
+    nt.nodes.clear()
+    out = nt.nodes.new('ShaderNodeOutputWorld')
+    bg = nt.nodes.new('ShaderNodeBackground')
+    tc = nt.nodes.new('ShaderNodeTexCoord')
+    sep = nt.nodes.new('ShaderNodeSeparateXYZ')
+    nt.links.new(tc.outputs['Generated'], sep.inputs[0])
+    def stage(a, b_, lo, hi, ca, cb):
+        mr = nt.nodes.new('ShaderNodeMapRange')
+        mr.inputs['From Min'].default_value, mr.inputs['From Max'].default_value = lo, hi
+        mr.clamp = True
+        nt.links.new(sep.outputs['Z'], mr.inputs['Value'])
+        mx = nt.nodes.new('ShaderNodeMixRGB')
+        nt.links.new(mr.outputs[0], mx.inputs['Fac'])
+        if a is None:
+            mx.inputs['Color1'].default_value = ca
+        else:
+            nt.links.new(a, mx.inputs['Color1'])
+        mx.inputs['Color2'].default_value = cb
+        return mx.outputs[0]
+    # 지평선 복숭아빛 -> 맑은 하늘 -> 짙은 하늘(램프 노드가 이 월드에서 한 색으로 눌어 단계별 혼합으로 대체)
+    s1 = stage(None, None, 0.0, 0.22, (1.0, 0.72, 0.5, 1), (0.32, 0.6, 0.92, 1))
+    sky_out = stage(s1, None, 0.22, 0.85, None, (0.05, 0.2, 0.62, 1))
+
+    class _R:
+        outputs = [sky_out]
+    ramp = _R()
+    # 구름: 늘어진 잡음 문턱 -> 흰 덩이, 아랫면은 노을빛
+    mp = nt.nodes.new('ShaderNodeMapping')
+    mp.inputs['Scale'].default_value = (2.4, 2.4, 6.0)
+    nt.links.new(tc.outputs['Generated'], mp.inputs['Vector'])
+    noi = nt.nodes.new('ShaderNodeTexNoise')
+    noi.inputs['Detail'].default_value = 6.0
+    noi.inputs['Roughness'].default_value = 0.55
+    nt.links.new(mp.outputs[0], noi.inputs['Vector'])
+    cl = nt.nodes.new('ShaderNodeMapRange')
+    cl.inputs['From Min'].default_value, cl.inputs['From Max'].default_value = 0.5, 0.68
+    cl.clamp = True
+    nt.links.new(noi.outputs['Fac'], cl.inputs['Value'])
+    hz = nt.nodes.new('ShaderNodeMapRange')          # 지평선 근처·너무 높은 곳은 구름 약하게
+    hz.inputs['From Min'].default_value, hz.inputs['From Max'].default_value = 0.03, 0.2
+    hz.clamp = True
+    nt.links.new(sep.outputs['Z'], hz.inputs['Value'])
+    cm = nt.nodes.new('ShaderNodeMath')
+    cm.operation = 'MULTIPLY'
+    nt.links.new(cl.outputs[0], cm.inputs[0])
+    nt.links.new(hz.outputs[0], cm.inputs[1])
+    cmix = nt.nodes.new('ShaderNodeMixRGB')
+    cmix.inputs['Color1'].default_value = (1.0, 0.82, 0.7, 1)
+    cmix.inputs['Color2'].default_value = (1.0, 1.0, 1.0, 1)
+    nt.links.new(sep.outputs['Z'], cmix.inputs['Fac'])
+    fin = nt.nodes.new('ShaderNodeMixRGB')
+    nt.links.new(cm.outputs[0], fin.inputs['Fac'])
+    nt.links.new(sky_out, fin.inputs['Color1'])
+    nt.links.new(cmix.outputs[0], fin.inputs['Color2'])
+    nt.links.new(fin.outputs[0], bg.inputs['Color'])
+    bg.inputs['Strength'].default_value = 1.15
+    nt.links.new(bg.outputs[0], out.inputs[0])
+
+
+def trees_round(specs, trunk_mat, leaf_mats):
+    """둥근 활엽수(줄기 뿔 + 잎덩이 어긋난 구 셋)를 메시 둘(줄기·잎 색별)로 한꺼번에 만든다."""
+    import bmesh
+    trunks = []
+    groups = [[] for _ in leaf_mats]
+    for (x, y, z, s, ci) in specs:
+        trunks.append((x, y, z, 0.28 * s, 2.4 * s, 0.0, 0.0))
+        groups[ci].append((x, y, z + 2.0 * s, s))
+    cone_mesh('trunks', trunks, trunk_mat, sides=6)
+    for gi, gl in enumerate(groups):
+        if not gl:
+            continue
+        me = bpy.data.meshes.new('leaves%d' % gi)
+        bm = bmesh.new()
+        for (x, y, z, s) in gl:
+            for (ox, oy, oz, rr) in ((0, 0, 1.2, 1.7), (0.9, 0.3, 0.7, 1.3), (-0.8, -0.4, 0.8, 1.4)):
+                mat = bmesh.ops.create_icosphere(bm, subdivisions=2, radius=rr * s)
+                for v in mat['verts']:
+                    v.co.x += x + ox * s
+                    v.co.y += y + oy * s
+                    v.co.z += z + oz * s
+                    v.co += Vector((rng.uniform(-0.12, 0.12), rng.uniform(-0.12, 0.12), rng.uniform(-0.1, 0.1))) * s
+        bm.to_mesh(me)
+        bm.free()
+        for p_ in me.polygons:
+            p_.use_smooth = True
+        o = bpy.data.objects.new('leaves%d' % gi, me)
+        sc.collection.objects.link(o)
+        me.materials.append(leaf_mats[gi])
+
+
+def flowers(n, colors, xr, yr, avoid=None):
+    for ci, col in enumerate(colors):
+        specs = []
+        for _ in range(n):
+            x, y = rng.uniform(*xr), rng.uniform(*yr)
+            if avoid and avoid(x, y):
+                continue
+            z = ground_z(x, y)
+            if z is None:
+                continue
+            for k in range(rng.randint(3, 6)):
+                specs.append((x + rng.uniform(-0.15, 0.15), y + rng.uniform(-0.15, 0.15), z, 0.025, rng.uniform(0.14, 0.28), rng.uniform(-0.2, 0.2), rng.uniform(-0.2, 0.2)))
+        cone_mesh('flowers%d' % ci, specs, mat_simple('flower%d' % ci, col, 0.6), sides=5)
+
+
+def village():
+    day_sky()
+    plain_terrain(green=True)
+    bpy.context.view_layer.update()
+    J = (0.0, 40.0)
+    dirt = pbr_mat('brown_mud', 3.0, tint=(1.1, 1.0, 0.9, 1)) if PBR else mat_simple('dirt', (0.35, 0.25, 0.15, 1), 0.95)
+    stone = pbr_mat('cobblestone_floor_01', 3.0, tint=(1.0, 1.0, 1.0, 1)) if PBR else mat_simple('cobble', (0.4, 0.38, 0.35, 1), 0.9)
+    road_mesh((0, -14), (0, 33), 5.5, dirt)
+    road_mesh((-6, 40), (-50, 52), 4.0, dirt)
+    road_mesh((6, 40), (50, 56), 4.0, dirt)
+    # 광장(둥근 돌바닥) — 우물과 깃발
+    bpy.ops.mesh.primitive_cylinder_add(vertices=48, radius=9.0, depth=0.12, location=(J[0], J[1], (ground_z(J[0], J[1]) or 0.0) + 0.03))
+    bpy.context.object.data.materials.append(stone)
+    zc = ground_z(J[0], J[1]) or 0.0
+    h, objs = place('well_01', (J[0], J[1], zc), rot=0.0, scale=1.5)
+    for ang in (0.9, 2.3, 3.9, 5.4):
+        x, y = J[0] + 6.5 * math.cos(ang), J[1] + 6.5 * math.sin(ang)
+        z = ground_z(x, y)
+        if z is not None:
+            place('banner_pole_01', (x, y, z), rot=ang, scale=1.4)
+    # 시대가 섞인 집들: 왼쪽 과거(한옥·초가), 오른쪽 현재·미래(여관·현대 블록·돔), 뒤쪽 헛간
+    spots_ = (
+        ('hanok_01', -16, 34, 0.0, 1.3), ('hanok_01', -26, 46, 0.4, 1.2), ('jp_minka_01', -12, 52, 0.2, 1.2),
+        ('forest_cottage_01', -34, 60, 0.6, 1.2), ('inn_01', 16, 36, 3.0, 1.2), ('modern_block_01', 22, 52, 3.3, 1.3),
+        ('future_dome_01', 36, 62, 3.6, 1.4), ('barn_01', -6, 70, 0.0, 1.3), ('chinese_hall_01', 8, 74, 3.2, 1.0))
+    for (nm, x, y, r, s) in spots_:
+        z = ground_z(x, y)
+        if z is None:
+            continue
+        h, objs = place(nm, (x, y, z - 0.05), rot=r, scale=s)
+        point((x, y - 2.0, z + 2.5), (1.0, 0.8, 0.5), 60, 1.0)
+    for (nm, x, y, r, s) in (('haystack_01', -22, 66, 0.5, 1.2), ('haystack_01', -3, 80, 1.0, 1.1), ('ox_cart_01', -10, 18, 0.7, 1.1),
+                             ('mailbox_01', 5, 6, 0.0, 1.2), ('street_lamp_01', 12, 44, 0.0, 1.2), ('wood_fence_01', -9, 22, 1.57, 1.0)):
+        z = ground_z(x, y)
+        if z is not None:
+            place(nm, (x, y, z), rot=r, scale=s)
+    # 나무: 길가·집 뒤 숲(잎 색 셋: 초록·연두·단풍)
+    leaf = [mat_simple('leaf0', (0.08, 0.2, 0.06, 1), 0.8), mat_simple('leaf1', (0.16, 0.3, 0.08, 1), 0.8), mat_simple('leaf2', (0.45, 0.2, 0.05, 1), 0.8)]
+    trunk = mat_simple('trunkm', (0.12, 0.07, 0.04, 1), 0.9)
+    specs = []
+    for _ in range(4000):
+        x, y = rng.uniform(-60, 60), rng.uniform(-6, 96)
+        if y < 20 and abs(x) < 34:
+            continue
+        if abs(x) < 7 and y < 38:
+            continue
+        if math.hypot(x - J[0], y - J[1]) < 13:
+            continue
+        if any(math.hypot(x - s[1], y - s[2]) < 9 for s in spots_):
+            continue
+        z = ground_z(x, y)
+        if z is None:
+            continue
+        specs.append((x, y, z - 0.1, rng.uniform(0.7, 1.35), rng.choice((0, 0, 1, 1, 2))))
+        if len(specs) >= 130:
+            break
+    trees_round(specs, trunk, leaf)
+    flowers(70, ((1.0, 0.85, 0.2, 1), (0.95, 0.4, 0.55, 1), (0.95, 0.95, 1.0, 1), (0.6, 0.5, 1.0, 1)), (-24, 24), (-8, 34), avoid=lambda x, y: abs(x) < 3.4 and y < 36)
+    if PBR:
+        blade = mat_simple('blade', (0.2, 0.42, 0.15, 1), 0.7)
+        specs2 = []
+        for _ in range(500):
+            x, y = rng.uniform(-24, 24), rng.uniform(-8, 40)
+            if abs(x) < 3.4 and y < 38:
+                continue
+            z = ground_z(x, y)
+            if z is None:
+                continue
+            for k in range(rng.randint(5, 9)):
+                specs2.append((x + rng.uniform(-0.2, 0.2), y + rng.uniform(-0.2, 0.2), z, 0.035, rng.uniform(0.25, 0.6), rng.uniform(-0.3, 0.3), rng.uniform(-0.3, 0.3)))
+        cone_mesh('tufts', specs2, blade)
+    # 햇빛: 낮게 깔린 따뜻한 오후 해, 먼지 낀 공기(빛줄기)
+    sun = bpy.data.lights.new('sun', 'SUN')
+    sun.energy, sun.color, sun.angle = 4.2, (1.0, 0.82, 0.58), 0.02
+    so = bpy.data.objects.new('sun', sun)
+    so.rotation_euler = (math.radians(62), 0, math.radians(-38))
+    sc.collection.objects.link(so)
+    bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 40, 12))
+    v = bpy.context.object
+    v.scale = (160, 140, 24)
+    vm = bpy.data.materials.new('haze')
+    vm.use_nodes = True
+    nt = vm.node_tree
+    nt.nodes.clear()
+    ov = nt.nodes.new('ShaderNodeOutputMaterial')
+    vs = nt.nodes.new('ShaderNodeVolumePrincipled')
+    vs.inputs['Density'].default_value = 0.0008
+    vs.inputs['Color'].default_value = (1.0, 0.9, 0.8, 1)
+    nt.links.new(vs.outputs[0], ov.inputs['Volume'])
+    v.data.materials.append(vm)
+    camera((2.5, -9.0, 2.0), (-1.0, 42, 9.5), lens=24)
+
+
 import time as _t
 _T0 = _t.time()
-{'galaxy_ferry': galaxy_ferry, 'frost_peak': frost_peak, 'time_rift': time_rift, 'crossroads': crossroads}[REGION]()
+{'galaxy_ferry': galaxy_ferry, 'frost_peak': frost_peak, 'time_rift': time_rift, 'crossroads': crossroads, 'village': village}[REGION]()
 print('TIME build %.1fs' % (_t.time() - _T0))
 join_by_material(['blade', 'reed', 'pine', 'pine_g', 'snowcap', 'firefly', 'flake', 'rockm', 'wood'])
 sc.render.filepath = OUT
