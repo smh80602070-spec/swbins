@@ -103,6 +103,10 @@ namespace Saga.Story.Data
             // tasks U-0020 첫걸음 — 버전 그대로. JsonUtility 는 없는 List 를 null 이 아닌 빈 목록으로 읽으므로 `tutV`(0=없는 세이브)로 옛 세이브를 가른다.
             public int tutV;
             public List<string> tutDone;
+            // tasks U-0024 회차 — 버전 그대로. 옛 세이브(필드 없음)는 round 0 = 1회차·기준점 없음.
+            public int round;
+            public int roundKills;
+            public int roundRifts;
         }
 
         public static bool Save()
@@ -153,6 +157,9 @@ namespace Saga.Story.Data
             StoryEras.SnapshotStories(out data.folkStoryIds, out data.folkStoryCounts);
             data.tutV = 1;
             data.tutDone = StoryTutorial.Ids();
+            data.round = StoryRound.Round;
+            data.roundKills = Mathf.Max(0, StoryRound.BaseKills);
+            data.roundRifts = Mathf.Max(0, StoryRound.BaseRifts);
             return JsonUtility.ToJson(data);
         }
 
@@ -201,6 +208,7 @@ namespace Saga.Story.Data
             StoryEras.RestoreStories(data.folkStoryIds, data.folkStoryCounts);
             if (string.IsNullOrEmpty(data.scenarioJson)) StoryScenario.RestoreLegacy(StoryJobState.Level, StoryJobState.HasJob);
             else StoryScenario.Restore(data.scenarioJson);
+            StoryRound.Restore(data.round, data.roundKills, data.roundRifts, data.round >= 2); // 기준점은 첫 회귀 뒤(2회차부터)에만 있다
 
             Transform player = FindPlayer();
             if (player != null && data.playerPos != null && data.playerPos.Length == 3)

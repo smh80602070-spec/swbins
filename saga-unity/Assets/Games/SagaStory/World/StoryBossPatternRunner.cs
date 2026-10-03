@@ -168,6 +168,7 @@ namespace Saga.Story.World
 
         public void Hurt(float amount, StoryBossPattern.Kind kind)
         {
+            amount *= StoryRound.FoeMul(); // tasks U-0024 회차 — 두목 공격 ×(1회차는 1)
             if (!StoryPlayerHp.Hurt(amount)) return;
             DamageDealt += Mathf.Max(1f, StoryBossPattern.JsRound(amount));
             Hits++;
