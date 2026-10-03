@@ -15925,6 +15925,12 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return r.row === 1 && !r.flip && l.row === 1 && l.flip && f.row === 0 && !f.flip && b.row === 2 && !b.flip;
     });
 
+    t('2D 바닥 — 땅 종류(물·풀·숲·길·마을·산·논밭) 전부 go_ 타일로 이어지고, 모르는 종류는 null(옛 땅 사진)', function () {
+      var M = DG.mode2d, kinds = ['water', 'grass', 'forest', 'road', 'town', 'mount', 'farm'], bad = [];
+      kinds.forEach(function (k) { var u = M.tileUrl(k); if (!u || u.indexOf('assets/web2d/tile/go_') !== 0) { bad.push(k); } });
+      return bad.length === 0 && M.tileUrl('lava') === null && ('땅 ' + kinds.length + '종 → ' + M.tileUrl('grass')) || bad.join(',');
+    });
+
     t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {
       var M = DG.mode2d, calls = 0;
       var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, translate: function () {}, scale: function () {} };

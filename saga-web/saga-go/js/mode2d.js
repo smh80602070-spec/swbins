@@ -159,6 +159,9 @@
     return any;
   }
 
+  /** 땅 종류 → 타일 주소(cfg.tile 표). 2D 모드가 아니거나 표에 없으면 null — 자기 텍스처 로더가 있는 판(사가고)이 주소만 빌린다 */
+  function tileUrl(kind) { var c = C(); return c.tile && c.tile[kind] && isOn() ? tileBase() + c.tile[kind] + '.webp' : null; }
+
   /** 바닥 타일 한 장(256px) — 아직 못 받았으면 null */
   function tile(id) {
     var t = tiles[id];
@@ -189,7 +192,7 @@
 
   global.DG = global.DG || {};
   global.DG.mode2d = {
-    drawBg: drawBg, tile: tile, tilePattern: tilePattern, fillTile: fillTile,
+    drawBg: drawBg, tile: tile, tileUrl: tileUrl, tilePattern: tilePattern, fillTile: fillTile,
     bgReady: function (region) { var b = bgs[region]; return !!(b && b.meta && LAYERS.every(function (l) { return b.imgs[l].ok; })); },
     bgFailed: function (region) { var b = bgs[region]; return b ? b.fail || LAYERS.some(function (l) { return b.imgs[l].fail; }) : null; },
     preloadBg: function (region) { getBg(region); },

@@ -694,7 +694,7 @@
     if (landTexImg2D[kind]) { return landTexImg2D[kind]; }
     var img = new Image();
     landTexImg2D[kind] = img;
-    var urls = LAND_TEX_VARIANTS[kind];
+    var tl = global.DG.mode2d && global.DG.mode2d.tileUrl(kind), urls = tl ? [tl] : LAND_TEX_VARIANTS[kind];
     if (urls && urls[0]) {
       img.onload = function () { img.ready = true; };
       img.src = urls[0];
@@ -728,7 +728,7 @@
         var kind = terrainAt(tx, ty);
         var sx = (tx * 48 - camX) * sc, sy = (ty * 48 - camY) * sc;
         if (!(kind in patCache)) {
-          patCache[kind] = LAND_TEX_VARIANTS[kind] ? landPattern2D(ctx, kind, camX, camY, sc) : null;
+          patCache[kind] = (LAND_TEX_VARIANTS[kind] || global.DG.mode2d.tileUrl(kind)) ? landPattern2D(ctx, kind, camX, camY, sc) : null;
         }
         var pat = patCache[kind];
         if (pat) {

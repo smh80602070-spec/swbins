@@ -468,6 +468,9 @@
     base: 'assets/sprites2d_sheets/',
     targetH: 40,                                 // 스탬프 s=1 일 때 몸 높이(px) — actor2d 가 s 를 배수로 곱한다
     foot: 0.87,
+    tileBase: 'assets/web2d/tile/',
+    /** 땅 종류(world.js terrainAt) → 2D 바닥 타일(K-0020 `go_*`) — 없는 종류는 옛 사진·색 */
+    tile: { grass: 'go_grass', forest: 'go_dirt', mount: 'go_stone', road: 'go_sand', town: 'go_stone', farm: 'go_dirt', water: 'go_water' },
     /** 2D 모드인가 — 3D 장면이 안 서 있을 때(평면·2.5D 캔버스) */
     on: function () { var W3 = global.DG.world3d; return !(W3 && W3.active && W3.active()); },
     poolH: { pool_f_human_139: 91, pool_g_human_147: 89, pool_e_demon_128: 86, pool_e_undead_127: 79 },   // 프레임 안 몸 높이(px, pw-sheet-bbox.mjs 로 잼)
