@@ -58,6 +58,7 @@ namespace Saga.Go.World
             if (GetComponent<NightEchoField>() == null) gameObject.AddComponent<NightEchoField>(); // 109-14-56b 결말 뒤 밤의 잔불
             if (GetComponent<MountField>() == null) gameObject.AddComponent<MountField>(); // 109-15 탈것·비행
             if (GetComponent<Saga.Go.UI.AchieveUi>() == null) gameObject.AddComponent<Saga.Go.UI.AchieveUi>(); // 109-14-25 업적 창(Y)·알림
+            if (GetComponent<Saga.Go.UI.HuntLogUi>() == null) gameObject.AddComponent<Saga.Go.UI.HuntLogUi>(); // U-0031 사냥 기록 창(K)·알림
         }
     }
 }

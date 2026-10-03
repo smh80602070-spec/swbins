@@ -184,6 +184,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoMapMarks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-23 map marks
                 if (!PlaytestGoFishing.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-24 낚시(낚시터·흐름·조합·세이브·화면 — 가방·무기·돈·시각·세이브 되돌림)
                 if (!PlaytestGoAchieve.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-25 업적(표·보상·신호·받기·알림·세이브·화면 — 업적·돈·재료·구슬·이야기·레벨·세이브 되돌림)
+                if (!PlaytestGoHunt.Run("PlaytestHeadless")) _hadError = true; // tasks U-0031 사냥 기록(실제 처치·화면·세이브 — 기록·돈·재료·강화석·연마석 되돌림)
                 if (!PlaytestGoDispatch.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-26 탐사 파견(표·흐름·알림·세이브·화면 — 동행·탐사·돈·재료·레벨·지도·세이브 되돌림)
                 if (!PlaytestGoFrost.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-27a 서리봉 고원(표·지역·땅·발견·드나드는 길·세이브 — 발견·돈·연마석·경험·자리·세이브 되돌림)
                 if (!PlaytestGoBeasts.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-1b 새 원소 괴물 넷(표·제 괴물로 옮김·몸·인물 졸개·고원 무리)
