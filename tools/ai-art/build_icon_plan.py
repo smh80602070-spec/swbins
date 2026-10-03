@@ -333,6 +333,33 @@ T.update({
     'gw_polearm_catch': 'harpoon, fishing spear, barbed tip, rope, blue ornament',
 })
 
+
+# ── 재뽑기(10-03 첫 판 점검) — 흰 모서리·상자로 나온 옷·엉뚱한 그림. 키 → 씨앗 소금(올리면 다시 뽑음). 아래 T 는 고친 태그.
+T.update({
+    'wear_leather': 'jeogori, short jacket, brown cloth shirt, long sleeves, ties',
+    'wear_robe': 'long overcoat, durumagi, wide sleeves, white and blue, robe, ribbon ties',
+    'wear_coat': 'long coat, overcoat, teal, ribbon ties, long sleeves',
+    'wear_braid': 'long red ribbon, hair ribbon, braided cord, tassel',
+    'wear_scholar': 'black cloth hat, scholar cap, hat with ribbons, head wear',
+    'wear_spacesuit': 'astronaut suit, white spacesuit, sci-fi, orange accents, jumpsuit',
+    'wear_topknot': 'hair bun, black topknot, wooden hairpin, hair ornament',
+    'u_unmun': 'traditional shoes, silk slippers, curved toe, cloud embroidery, glowing',
+    'u_hopae': 'wooden plaque, official tablet, rectangular wood, engraved characters, hanging cord, glowing',
+    'c_hopae': 'wooden plaque, name tag, small rectangular wood tablet, hanging cord, engraved',
+    'w_gakgung': 'bow (weapon), horn bow, curved bow, full bow shape, bowstring, arrows',
+    'w_wolto': 'glaive, long polearm, big crescent blade, red tassel, full weapon',
+    'gw_polearm_0': 'wooden staff, long plain stick, training pole',
+    'fo_jokja': 'hanging scroll, mountain ink painting, wooden rollers',
+    'fo_geomungo': 'zither, gayageum, long wooden zither, strings, bridges',
+    'fo_bignail': 'iron nail, large spike, rusty nail, metal',
+    'fo_firefly': 'firefly, glowing insect, beetle, yellow light',
+    'st_u_cape': 'cape, cloak, flowing blue cloak, gold trim, collar, clasp',
+})
+REROLL = {k: 1 for k in (
+    'af_emblem st_cap2 u_cheollip fo_snail floor_jangpan floor_mat floor_ondol floor_stone floor_wood st_hat3 st_u_hat u_dopo u_dujeong '
+    'st_top2 st_scroll_hp fo_seoan st_neck1 st_neck3 st_ring1 st_glv1 wear_braid wear_coat wear_leather wear_robe wear_scholar wear_spacesuit '
+    'wear_topknot u_hopae u_unmun u_yusu w_gakgung w_wolto fo_jokja fo_firefly fo_bignail fo_geomungo gw_polearm_0 gw_bow_0 st_u_cape c_hopae'.split())}
+
 # ── (판, id) → 키 ──────────────────────────────────────────────────────────────────────────────
 ALIAS = {
     # 시험 30 키를 그대로 쓰는 물건과, 다른 판에서 같은 물건이라 합치는 것
@@ -447,11 +474,15 @@ def main():
                 keys[k]['grade'] = max(keys[k]['grade'], g)
             else:
                 keys[k] = {'id': k, 'kind': kind, 'grade': g, 'tags': T[k]}
+                if k in REROLL:
+                    keys[k]['salt'] = REROLL[k]
     # godot·unity 무기 열여섯
     for k in [x for x in T if x.startswith('gw_')]:
         rar = int(k.split('_')[-1]) if k.split('_')[-1].isdigit() else 4
         g = {0: 0, 3: 1, 4: 2}.get(rar, 2)
         keys[k] = {'id': k, 'kind': 'equip', 'grade': g, 'tags': T[k]}
+        if k in REROLL:
+            keys[k]['salt'] = REROLL[k]
         wid = 'w_' + k[3:]
         for game in ('saga_go-godot', 'SagaGo-unity'):
             entries.append({'game': game, 'id': wid, 'kind': 'equip', 'name': '', 'mode': 'ai', 'key': k, 'grade': g})
