@@ -33,7 +33,7 @@ var _asc_label: Label = null
 var _asc_button: Button = null
 var _book_buttons: Dictionary = {}
 var _once_button: Button = null
-var _bag_label: Label = null
+var _bag_box: VBoxContainer = null # 가방 줄 — 재료는 아이콘 + 글자(G-0016)
 var _talent_title: Label = null
 var _weapon_label: Label = null
 var _weapon_icon: TextureRect = null # G-0016 K-0035 아이콘 — 그림이 없으면 숨김, 글자만
@@ -238,7 +238,7 @@ func _build() -> void:
 		l.add_theme_font_size_override("font_size", 14)
 		l.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		var ic := ItemIcons.blank_rect(40)
+		var ic := ItemIcons.blank_rect(32) # 성유물 줄 글자가 빽빽해서 40→32
 		row.add_child(ic)
 		row.add_child(l)
 		var s: String = slot
@@ -281,7 +281,9 @@ func _build() -> void:
 	cols.add_child(right)
 	var bag_title := _label(right, 22)
 	bag_title.text = "가방"
-	_bag_label = _label(right, 16)
+	_bag_box = VBoxContainer.new()
+	_bag_box.add_theme_constant_override("separation", 2)
+	right.add_child(_bag_box)
 
 	var close := Button.new()
 	close.text = "닫기"
@@ -427,12 +429,25 @@ func _refresh() -> void:
 		_con_button.text = "%d번째 자리 열기  |  %s %d/%d" % [con + 1, Growth.item_name("fate_knot"), PartyState.count("fate_knot"), int(Growth.CONSTELLATION_COST.fate_knot)]
 		_con_button.disabled = not PartyState.can_unlock_constellation(id)
 
-	var lines: Array[String] = []
+	for c in _bag_box.get_children():
+		c.queue_free()
 	for item in Growth.ITEMS:
 		var n := PartyState.count(item)
-		if n > 0 or item == "mora":
-			lines.append("%s  %d" % [Growth.item_name(item), n])
-	_bag_label.text = "\n".join(lines)
+		if n <= 0 and item != "mora":
+			continue
+		var brow := HBoxContainer.new()
+		brow.add_theme_constant_override("separation", 6)
+		var bic := ItemIcons.make_rect("material", String(item), 24)
+		if bic == null:
+			bic = ItemIcons.blank_rect(24) # 그림 없는 줄도 글자 위치가 맞게 자리만
+			bic.visible = true
+			bic.modulate = Color(1, 1, 1, 0)
+		brow.add_child(bic)
+		var bl := Label.new()
+		bl.add_theme_font_size_override("font_size", 16)
+		bl.text = "%s  %d" % [Growth.item_name(item), n]
+		brow.add_child(bl)
+		_bag_box.add_child(brow)
 
 func _refresh_weapon(id: String) -> void:
 	var wid := PartyState.weapon_of(id)
