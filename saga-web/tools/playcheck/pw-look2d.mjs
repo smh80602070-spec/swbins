@@ -37,9 +37,10 @@ try {
     await ev(() => { [...document.querySelectorAll('.stc-cell')].slice(0, 3).forEach((c) => c.click()); const b = document.querySelector('.stc-btn'); if (b) { b.click(); } });   // 출사표
     await sleep(3000);
     if (await ev(() => DG.dungeon3d && DG.dungeon3d.wanted())) { await ev(() => document.getElementById('btn-3d').click()); await sleep(2500); }
-    await sleep(1500);
+    for (let i = 0; i < 4; i++) { await ev(() => { document.querySelectorAll('button').forEach((b) => { if (/건너뛰기/.test(b.textContent)) { b.click(); } }); const c = document.getElementById('sheet-close'); if (c && c.offsetParent) { c.click(); } }); await sleep(400); }
+    await sleep(1200);
   } else if (game === 'saga-go') {
-    for (let i = 0; i < 3; i++) { const m = await ev(() => ({ w3: !!(DG.world3d && DG.world3d.active && DG.world3d.active()), mode: DG.world.tiltMode })); if (!m.w3) { break; } await ev(() => document.getElementById('btn-tilt').click()); await sleep(1200); }
+    for (let i = 0; i < 3 && await ev(() => DG.core.save.settings.tilt !== 0); i++) { await ev(() => document.getElementById('btn-tilt').click()); await sleep(1500); }   // 시점 2D = 2D 캔버스 판
     await sleep(2000);
   }
   const info = await ev(() => ({ w: innerWidth, h: innerHeight }));
