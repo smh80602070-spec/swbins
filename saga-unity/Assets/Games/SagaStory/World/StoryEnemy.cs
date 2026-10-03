@@ -248,7 +248,7 @@ namespace Saga.Story.World
         private void Awake()
         {
             AllList.Add(this);
-            _hp = isBoss ? StoryCombat.BossHp : StoryCombat.EnemyHp;
+            _hp = (isBoss ? StoryCombat.BossHp : StoryCombat.EnemyHp) * StoryRound.FoeMul(); // tasks U-0024 회차 — 1회차는 ×1
             _maxHp = _hp;
             if (transform.Find("Visual") == null) BuildVisual();
             // PLAN.md 109-11-1 보스 패턴전 — 두목(들판·비경)마다 실행기 하나. Play 때 붙어 씬 재빌드가 필요 없다.
@@ -429,7 +429,7 @@ namespace Saga.Story.World
                 StoryQuestState.AddKill();
                 if (isBoss) StoryQuestState.AddBossKill();
                 float expMul = _isChampion ? ChampionExpMul : 1f;
-                StoryJobState.GainExp((isBoss ? StoryCombat.BossExp : StoryCombat.GruntExp) * expMul);
+                StoryJobState.GainExp((isBoss ? StoryCombat.BossExp : StoryCombat.GruntExp) * expMul * StoryRound.GainMul());
                 if (_isChampion)
                 {
                     StorySaveState.ClaimChampion();

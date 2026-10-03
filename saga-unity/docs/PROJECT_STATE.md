@@ -23,7 +23,7 @@ Maria·Abe·Brute + Skeleton·Paladin·PeasantMan·PeasantGirl·Archer·두목 M
 
 ## 다음 작업 (우선순위, 상세는 PLAN 해당 장)
 
-0. **다음 = 웹·고돗 새 추가분 이식(HISTORY 09-30 "REALM 회차" 대조표 순서: STORY 회차 → 5차 전직 → REALM 4·5막 → DUNGEON 31층·비석·결사 → FOREST 탑성·우체통 → 고돗 새 시스템)**, 그다음 실기 확인(14-1b 동물 임시 몸 `BeastBodyCandidates`). 회차 요령은 `RealmRound`(타이틀 기본값 `SagaFlow.Defaults`). 110 은 사람 칸만(`docs/STORE_CHECKLIST.md`·`docs/store/`)+묶음 PC `BuildAndroidAab` 실측, ③b 폰 결과 대기. 영어 검수 `node tools/loc-review.mjs`. 정체성 `SagaPlayerBuild.AppId`. 크레딧 `SagaCredits`(새 에셋은 표 한 줄부터)·`SagaCrashLog`·버전 = bundleVersion 한 곳. HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`·`HangulWatch`, 재빌드 `SagaRebuildScenes`.
+0. **다음 = 웹·고돗 새 추가분 이식(HISTORY 09-30 "REALM 회차" 대조표 순서: 5차 전직 → REALM 4·5막 → DUNGEON 31층·비석·결사 → FOREST 탑성·우체통 → 고돗 새 시스템)**, 그다음 실기 확인(14-1b 동물 임시 몸 `BeastBodyCandidates`). 회차 요령은 `RealmRound`(타이틀 기본값 `SagaFlow.Defaults`). 110 은 사람 칸만(`docs/STORE_CHECKLIST.md`·`docs/store/`)+묶음 PC `BuildAndroidAab` 실측, ③b 폰 결과 대기. 영어 검수 `node tools/loc-review.mjs`. 정체성 `SagaPlayerBuild.AppId`. 크레딧 `SagaCredits`(새 에셋은 표 한 줄부터)·`SagaCrashLog`·버전 = bundleVersion 한 곳. HUD `SagaUi.ApplyGameScaler`(1600×900 Expand, 가로 고정)·Ⅱ `SagaPauseButton`·언어 `SagaUi.Lang`·구운 글 `XxxLocalization.RelocalizeScene`, 점검 `UiLayoutCheck`·`HangulWatch`, 재빌드 `SagaRebuildScenes`.
 0-1. **남은 것**: 사람 영어 검수(tsv 순위 1부터). GO 동료 몸 Maria.controller 리타깃.
 1. STORY 판수(15→20 약 11판·20→25 약 28판)가 무거우면 `JobPromoteLevel3/4`만.
 2. **101-2·104-1 잔여(보류)** — GO⑤·Kenney 폴백·헤어카드.

@@ -111,7 +111,7 @@ namespace Saga.Story.UI
         private void ChooseLanguage() { StoryLocalization.CycleLanguage(); StoryLocalization.RelocalizeScene(); Refresh(); }
 
         /// <summary>110 ⑤c-2c — 씬에 구운 글(빌더 = 한국어)을 지금 언어로, 이 창의 글도 한 번 새로(예전엔 값을 바꿀 때만).</summary>
-        private void Start() { StoryLocalization.RelocalizeScene(); Refresh(); }
+        private void Start() { EnsureRoundRow(); StoryLocalization.RelocalizeScene(); Refresh(); }
         private void ChooseBgm() { StorySettingsState.BgmOn = !StorySettingsState.BgmOn; Refresh(); }
 
         private void TogglePanel() => _panel.SetActive(!_panel.activeSelf);
@@ -136,7 +136,56 @@ namespace Saga.Story.UI
             _qualityValueLabel.text = StorySettingsState.GraphicsQualityLabel();
             _languageValueLabel.text = StoryLocalization.LanguageLabel();
             _bgmValueLabel.text = StoryLocalization.T(StorySettingsState.BgmOn ? "state.on" : "state.off");
+            RefreshRound();
         }
+
+        // ── tasks U-0024 회차 — 일곱째 줄 "🔁 회귀". 씬에 구운 패널이라 줄을 더하면 씬을 다시 지어야 하므로, 켜질 때(Play) 코드로 줄 하나를
+        // 붙이고 창을 그만큼 늘린다(구운 줄·닫기 단추는 그대로). 한 번 눌러 조건·미리보기를 보고, 6초 안에 한 번 더 누르면 시작.
+        private Button _roundButton;
+        private TextMeshProUGUI _roundNameLabel, _roundValueLabel;
+        private float _roundArmUntil;
+
+        private void EnsureRoundRow()
+        {
+            if (!Application.isPlaying || _panel == null || _roundButton != null) return;
+            var rect = (RectTransform)_panel.transform;
+            rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + 95f);
+            const float y = -710f;
+            _roundNameLabel = NewText(_panel.transform, StoryLocalization.T("round.title", "🔁 회귀"), new Vector2(0f, 1f),
+                new Vector2(60f, y), new Vector2(260f, 70f), 26);
+            _roundNameLabel.alignment = TextAlignmentOptions.Left;
+            _roundButton = NewButton(_panel.transform, "", new Vector2(1f, 1f), new Vector2(-60f, y), new Vector2(260f, 70f));
+            _roundValueLabel = _roundButton.GetComponentInChildren<TextMeshProUGUI>();
+            _roundButton.onClick.AddListener(ChooseRound);
+        }
+
+        private void RefreshRound()
+        {
+            if (_roundButton == null) return;
+            _roundNameLabel.text = StoryLocalization.T("round.title", "🔁 회귀");
+            _roundValueLabel.text = StoryRound.StateLabel();
+        }
+
+        private void ChooseRound()
+        {
+            string why = StoryRound.Why();
+            if (why != null) { RoundToast(why, 4f); return; }
+            if (Time.unscaledTime < _roundArmUntil)
+            {
+                _roundArmUntil = 0f;
+                if (StoryRound.StartNext(true, out string startWhy))
+                    RoundToast(string.Format(StoryLocalization.T("round.started", "🔁 {0}회차 — 적 ×{1:0.0#} · 경험치 ×{2:0.0#}"), StoryRound.Round, StoryRound.FoeMul(), StoryRound.GainMul()), 4f);
+                else RoundToast(startWhy, 4f);
+            }
+            else
+            {
+                _roundArmUntil = Time.unscaledTime + StoryRound.ArmSeconds;
+                RoundToast(StoryRound.Preview() + StoryLocalization.T("round.confirm", " — 한 번 더 누르면 시작"), StoryRound.ArmSeconds);
+            }
+            RefreshRound();
+        }
+
+        private static void RoundToast(string text, float seconds) => DialogueLabel.Instance?.Show(text, seconds);
 
         private static Canvas NewCanvas(string name)
         {

@@ -194,7 +194,7 @@ namespace Saga.Story.World
         {
             int shards = Mathf.RoundToInt(1 * StoryLabyrinthState.ShardRewardMul);
             StoryLabyrinthState.AddShards(shards);
-            StoryJobState.GainExp(StoryCombat.GruntExp);
+            StoryJobState.GainExp(StoryCombat.GruntExp * StoryRound.GainMul());
             DialogueLabel.Instance?.Show(
                 string.Format(StoryLocalization.T("labyrinth.treasure", "💰 보물 노드 — 기억 조각 +{0}"), shards), 3f);
             InvokeCleared();
@@ -212,7 +212,7 @@ namespace Saga.Story.World
             bool success = Random.value < 0.5f;
             if (success)
             {
-                StoryJobState.GainExp(StoryCombat.GruntExp * 1.5f);
+                StoryJobState.GainExp(StoryCombat.GruntExp * 1.5f * StoryRound.GainMul());
                 DialogueLabel.Instance?.Show(StoryLocalization.T("labyrinth.event_good", "📜 사건 노드 — 뜻밖의 도움을 받아 경험을 얻었다"), 3f);
             }
             else
@@ -341,7 +341,7 @@ namespace Saga.Story.World
                 StoryLabyrinthData.NodeType.Boss => StoryCombat.EnemyExp(lv, true),
                 _ => 0f,
             };
-            if (exp > 0f) StoryJobState.GainExp(exp);
+            if (exp > 0f) StoryJobState.GainExp(exp * StoryRound.GainMul());
 
             var player = GameObject.FindWithTag("Player");
             if (player != null) TeleportPlayer(player, _returnPosition);

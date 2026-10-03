@@ -194,6 +194,7 @@ namespace Saga.EditorTools
                     if (!PlaytestStoryBossPattern.Run()) { Fail(); return; } // PLAN.md 109-11-1 보스 패턴전 — 두목 등장 진단 뒤(컷을 튼 두목만 문다), 자리·체력·두목을 되돌린다.
                     if (!PlaytestStoryMount.Run()) { Fail(); return; } // PLAN.md 109-15 탈것·비행 — 레벨·직업·체력·탈것·자리를 되돌린다.
                     if (!PlaytestStoryScenario.Run()) { Fail(); return; } // PLAN.md 109-16 시나리오 — 레벨·직업·사명·비경 조각·자리를 되돌린다.
+                    if (!PlaytestStoryRound.Run()) { Fail(); return; } // tasks U-0024 회차 — 회차·세이브·최고 기록을 되돌린다.
                     _enemyIndex = 0;
                     _phase = Phase.TalkNpc;
                     break;
