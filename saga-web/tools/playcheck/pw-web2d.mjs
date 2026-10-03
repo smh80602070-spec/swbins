@@ -43,7 +43,7 @@ const out = await page.evaluate(async () => {
   /* 건물·지물 스프라이트(cfg.prop2d) — 받아지고 발 밑에 그려지나 */
   res.props = {};
   const pt = cfg.prop2d || {};
-  for (const kind of Object.keys(pt)) {
+  for (const kind of Object.keys(pt).filter((k) => pt[k].h)) {
     const ok = await wait(() => M.spriteReady(pt[kind].id));
     x.clearRect(0, 0, 1280, 720);
     const dr = ok && M.drawKind(x, kind, 640, 600, 1);
