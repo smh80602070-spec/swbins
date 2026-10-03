@@ -1486,5 +1486,7 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
 #mt-ride.show { display: grid; }
 #mt-ride.riding { box-shadow: 0 0 0 2px var(--gold) inset; }
 #mt-ride span { font-size: 20px; line-height: 1; }
-#mt-ride em { font-size: 10px; font-style: normal; opacity: .7; }
+#mt-ride em { font-size: 11px; font-style: normal; opacity: .7; }
+/* 가로(높이 ~390): 조이스틱 위 52px 단추가 상단 프로필 카드와 맞물린다 — 44px 로 줄여 조이스틱 바로 위에 붙인다 */
+@media (max-height: 500px) { #mt-ride { width: 44px; height: 44px; bottom: calc(206px + var(--safe-b)); } }
 #mt-ride:active { transform: scale(.94); }
