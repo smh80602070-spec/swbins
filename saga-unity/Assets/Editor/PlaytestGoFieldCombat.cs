@@ -376,9 +376,10 @@ namespace Saga.EditorTools
             Place(e2, origin + new Vector3(12f, 0f, 0f));
             hp1 = e1.Hp; hp2 = e2.Hp;
             pc.Teleport(origin + Vector3.up * 20f);
+            pc.Step(0.02f); // 순간이동 직후 CharacterController.isGrounded 가 낡은 true 로 남아 점프 가지를 타므로, 공중에서 한 걸음 먼저 내디뎌 땅 판정을 갱신한다
             pc.RequestJump();
             pc.Step(0.02f);
-            if (pc.Mode != PlayerController.MoveMode.Glide) { Fail($"20m 에서 활공이 안 열림({pc.Mode})"); return; }
+            if (pc.Mode != PlayerController.MoveMode.Glide) { Fail($"20m 에서 활공이 안 열림({pc.Mode}) — 땅 위 높이 {pc.HeightAboveGround():0.0}m·순회 {pc.Traversal}·스태미나 {GoStamina.Value:0.0}·위치 {pc.transform.position}"); return; }
             if (fc.AttackPress() != 0 || !pc.Plunging) { Fail("활공 중 공격이 내리꽂기가 아님"); return; }
             for (int i = 0; i < 300 && pc.Plunging; i++) pc.Step(0.02f);
             if (pc.Plunging || pc.Mode != PlayerController.MoveMode.Ground) Fail($"내리꽂기가 땅에 안 닿음({pc.Mode})");
