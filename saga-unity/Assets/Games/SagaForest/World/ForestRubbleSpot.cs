@@ -14,7 +14,8 @@ namespace Saga.Forest.World
     /// </summary>
     public class ForestRubbleSpot : MonoBehaviour
     {
-        public const float GatherRadius = 2.5f;
+        /// <summary>돌무더기 둘(오프셋 (1.9,-0.9)·(0.6,-1.7))이 2.3m 쯤 떨어져 있어, 그 사이에 서도 둘이 한 프레임에 같이 안 줍히게 반경 절반(1.15m)보다 작게 잡았다.</summary>
+        public const float GatherRadius = 1.1f;
         public const float ToastSec = 3f;
         /// <summary>웹 한 칸(TILE) ≈ 이 미터 — 명소 기둥(`ForestLandmark`)과 안 겹치게 잡은 값.</summary>
         public const float TileM = 1.5f;
@@ -76,8 +77,7 @@ namespace Saga.Forest.World
         private void Awake()
         {
             BuildVisual();
-            var playerGo = GameObject.FindWithTag("Player");
-            _player = playerGo != null ? playerGo.transform : null;
+            ResolvePlayer();
             Refresh();
         }
 
@@ -113,8 +113,16 @@ namespace Saga.Forest.World
                 : new Color(0.52f, 0.5f, 0.46f);
         }
 
+        // 플레이어가 아직 없거나 다시 만들어져도 따라가도록 비면 다시 찾는다.
+        private void ResolvePlayer()
+        {
+            var playerGo = GameObject.FindWithTag("Player");
+            _player = playerGo != null ? playerGo.transform : null;
+        }
+
         private void LateUpdate()
         {
+            if (_player == null) ResolvePlayer();
             if (_player == null || _visual == null) return;
             Vector3 p = transform.position, q = _player.position;
             float dx = p.x - q.x, dz = p.z - q.z;
@@ -123,6 +131,7 @@ namespace Saga.Forest.World
 
         private void Update()
         {
+            if (_player == null) ResolvePlayer();
             if (_player == null) return;
             if (Vector3.Distance(transform.position, _player.position) > GatherRadius) { _emptyShown = false; return; }
             TryPick();
