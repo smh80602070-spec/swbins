@@ -421,7 +421,7 @@
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.bgm = {
-    tracks: { forest: 'forest.mp3' },   // 마을 하나·전투 없음 — 늘 같은 트랙
+    tracks: { forest: 'saga-forest-town.ogg' },   // 마을 하나·전투 없음 — 늘 같은 트랙. 자체 곡(W-0020 2부) — 옛 mp3 되돌림: 'forest.mp3'
     vol: 0.35,
     first: 'forest'
   };

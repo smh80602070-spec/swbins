@@ -46,6 +46,22 @@
     },
     {
      "track": "web",
+     "dir": "saga-web/saga-story/assets/audio/bgm",
+     "rename": {
+      "story-town.ogg": "saga-story-town.ogg",
+      "story-field.ogg": "saga-story-field.ogg",
+      "story-battle.ogg": "saga-story-battle.ogg"
+     }
+    },
+    {
+     "track": "web",
+     "dir": "saga-web/saga-forest/assets/audio/bgm",
+     "rename": {
+      "forest-town.ogg": "saga-forest-town.ogg"
+     }
+    },
+    {
+     "track": "web",
      "dir": "saga-web/saga-realm/assets/audio/bgm",
      "rename": {
       "realm-town.ogg": "saga-realm-town.ogg",
