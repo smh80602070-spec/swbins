@@ -7733,6 +7733,15 @@ window.requestAnimationFrame = function () { return 0; };
       return bad.length === 0 && ids.hero.length === 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 등록 표 ' + Object.keys(reg).length + '칸') || bad.join(',') || '표/폴백 불일치';
     });
 
+    t('2D 마을 건물 — 집·우물·여관·종탑이 prop2d 에 이어지고 id 는 전부 지물 GLB, 시험 전엔 hasKind 가 거짓이 아니어도 drawKind 는 false(옛 방), 짝 없는 대장간·마구간·방앗간은 표에 없다', function () {
+      var M = DG.mode2d, t = DG.cfg.mode2d.prop2d, bad = [], calls = 0;
+      ['house', 'well', 'inn', 'belltower'].forEach(function (k) { var ids = t[k] && (t[k].ids || [t[k].id]); if (!ids || !ids.every(function (id) { return DG.assets3d.has('world', id); })) { bad.push(k); } });
+      var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, beginPath: function () { calls++; }, ellipse: function () { calls++; }, fill: function () { calls++; } };
+      DG.assets3d._reset();
+      var r = M.drawKind(fake, 'house', 10, 10, 100, 's1'), none = ['blacksmith', 'stable', 'mill'].some(function (k) { return M.hasKind(k); });
+      return bad.length === 0 && r === false && !none && calls === 0 && M.hasKind('house') && ('건물 4종 연결 · 시험 전 false · 짝 없는 3종 안 그림') || bad.join(',') || '표/폴백 불일치';
+    });
+
     t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {
       var M = DG.mode2d, calls = 0;
       var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, translate: function () {}, scale: function () {} };

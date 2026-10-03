@@ -10,7 +10,7 @@
   'use strict';
 
   var VB = { x: -140, y: -55, w: 380, h: 205 };   // renderMap 의 전체 지도 범위(MAP_VB)와 같다
-  var TILE = 46;                                   // 타일 한 장이 덮는 지도 단위 폭
+  var TILE = 80;                                   // 타일 한 장이 덮는 지도 단위 폭
   var settled = false;
 
   function M() { return global.DG && global.DG.mode2d; }
@@ -45,7 +45,7 @@
     s += '<filter id="rtblur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5"/></filter></defs>';
     var base = urls.plain ? 'plain' : kinds.filter(function (k) { return urls[k]; })[0];
     s += '<g class="rterrain" pointer-events="none"><rect x="' + VB.x + '" y="' + VB.y + '" width="' + VB.w + '" height="' + VB.h +
-      '" fill="url(#rtp-' + base + ')" opacity="0.55"/><g filter="url(#rtblur)" opacity="0.8">';
+      '" fill="url(#rtp-' + base + ')" opacity="0.45"/><g filter="url(#rtblur)" opacity="0.7">';
     for (i = 0; i < cities.length; i++) {
       if (cities[i].land && urls[cities[i].land]) {
         s += '<circle cx="' + cities[i].x + '" cy="' + cities[i].y + '" r="11" fill="url(#rtp-' + cities[i].land + ')"/>';
@@ -60,7 +60,7 @@
     if (!m || !A || !t || !m.isOn()) { return ''; }
     var p = t[rad < 2.4 ? 'city:s' : rad < 3.2 ? 'city:m' : 'city:l'], u = p && A.spriteUrl(p.id);
     if (!u) { return ''; }
-    var hh = 6 + rad * 2.6;
+    var hh = 3.2 + rad * 1.5;
     return '<image class="rcastle" pointer-events="none" href="' + u + '" x="' + (d.x - hh / 2).toFixed(2) + '" y="' + (d.y - hh * 0.92).toFixed(2) +
       '" width="' + hh.toFixed(2) + '" height="' + hh.toFixed(2) + '"/>';
   }

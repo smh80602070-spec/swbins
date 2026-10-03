@@ -2235,5 +2235,41 @@
   "fun": {},
   "ticket": "G-0012",
   "since": "2026-10-01"
+ },
+ {
+  "id": "gd.go.world_asset",
+  "name": "통일 툰 GLB 대응표(우물·등롱·비석·집·돌탑을 assets/world 로, 크기 배율 실측·없으면 옛 경로)",
+  "files": [
+   "saga_core/world/world_asset.gd",
+   "games/saga_go/world/homestead.gd",
+   "games/saga_realm/world/realm_city.gd",
+   "tools/layout/kinds.json"
+  ],
+  "tests": [
+   "world_asset"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0014",
+  "since": "2026-10-03"
+ },
+ {
+  "id": "gd.go.region_showcase",
+  "name": "지역 구경 장면 — 배치표(layout.json)로 지역 다섯(마을·나루·서리봉·시간 틈·갈림길) 짜기",
+  "files": [
+   "games/saga_go/world/region_loader.gd",
+   "games/saga_go/world/region_showcase.gd",
+   "saga_core/shaders/region_ground.gdshader",
+   "games/saga_go/world/RegionShowcase.tscn"
+  ],
+  "tests": [
+   "region_showcase"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0015",
+  "since": "2026-10-03"
  }
 ]
