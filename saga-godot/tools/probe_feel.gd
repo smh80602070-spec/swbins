@@ -238,6 +238,13 @@ func _physics_process(delta: float) -> void:
 				_p.set("stamina", 100.0)
 				_p.global_position = TestMap.world_pos(1, 4) + Vector3(0, 0.3, 6.0)
 				_p.velocity = Vector3.ZERO
+				for _i in 10: # 이동 느낌(SAGA_MOVE) — 0.1초 동안 걷기 목표 6m/s 로 가속한 뒤, 0.1초 동안 멈추려 할 때 남는 속도
+					_p.call("_steer", Vector3(6, 0, 0), 0.01, "accel")
+				_m("move_speed_after_0.1s_accel", "%.1f" % _p.velocity.x)
+				for _i in 10:
+					_p.call("_steer", Vector3.ZERO, 0.01, "decel")
+				_m("move_speed_after_0.1s_decel", "%.1f" % _p.velocity.x)
+				_p.velocity = Vector3.ZERO
 			elif _dodge_start < 0 and _frame >= 30 and Engine.time_scale > 0.99:
 				_pos0 = _p.global_position
 				_dodge_start = _frame

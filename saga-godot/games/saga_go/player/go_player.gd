@@ -16,6 +16,7 @@ extends "res://saga_core/player/player.gd"
 
 const Toast := preload("res://saga_core/ui/toast.gd")
 const FieldCombat := preload("res://games/saga_go/combat/field_combat.gd")
+const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 
 enum Mode { GROUND, AIR, GLIDE, CLIMB, SWIM, MANTLE, FLY }
@@ -84,6 +85,7 @@ var stamina_cost_mul := 1.0
 var _exhausted := false
 var _regen_wait := 0.0
 var _coyote := 0.0
+var _land_t := 0.0 # 높은 착지 뒤 주춤 남은 시간(G-0018 SAGA_MOVE)
 var _jump_buffer := 0.0
 var _grab_t := 0.0
 var _regrab_wait := 0.0
@@ -183,6 +185,18 @@ func _physics_process(delta: float) -> void:
 
 # ---------------------------------------------------------------- 상태별
 
+## 땅·공중 수평 속도를 목표(target, m/s)로 보낸다. 프리셋 0(옛 방식)이거나 해당 키가 없으면 즉시 그 값(옛 동작과 같다).
+## 땅은 키 "accel"(가속)·"decel"(입력을 뗐을 때), 공중은 "air". 단위 m/s². G-0018 단계 4.
+func _steer(target: Vector3, delta: float, key: String) -> void:
+	var rate := float(FeelTuning.move_preset.get(key, 0.0))
+	if rate <= 0.0:
+		velocity.x = target.x
+		velocity.z = target.z
+		return
+	var v := Vector2(velocity.x, velocity.z).move_toward(Vector2(target.x, target.z), rate * delta)
+	velocity.x = v.x
+	velocity.z = v.y
+
 func _tick_ground(delta: float, move_dir: Vector3) -> void:
 	if _in_deep_water():
 		_set_mode(Mode.SWIM)
@@ -193,6 +207,9 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 		velocity.z = _dodge_dir.z * _dodge_speed
 		velocity.y = -1.0 if is_on_floor() else velocity.y - GRAVITY * delta
 		move_and_slide()
+		if _dodge_t <= 0.0: # 회피 속도가 가속 곡선으로 미끄러져 나가지 않게 끊는다(회피 거리 불변)
+			velocity.x = 0.0
+			velocity.z = 0.0
 		return
 	## 106장 ⑧ — 원신처럼 Shift 를 누르는 순간 한 번 대시(회피와 같은 무적·스태미나),
 	## 계속 누르고 있으면 그대로 달리기.
@@ -206,8 +223,10 @@ func _tick_ground(delta: float, move_dir: Vector3) -> void:
 	if _action_t > 0.0:
 		speed *= _action_move
 		running = false
-	velocity.x = move_dir.x * speed
-	velocity.z = move_dir.z * speed
+	if _land_t > 0.0:
+		_land_t -= delta
+		speed *= float(FeelTuning.move_preset.get("land_mul", 1.0))
+	_steer(move_dir * speed, delta, "accel" if move_dir.length() > 0.05 else "decel")
 	if running and not mounted:
 		_spend(COST_SPRINT * delta)
 
@@ -267,8 +286,8 @@ func _tick_air(delta: float, move_dir: Vector3) -> void:
 	var hv := Vector2(velocity.x, velocity.z)
 	if hv.length() > speed:
 		speed = hv.length() # 달리다 뛰면 그 속도를 이어 간다
-	velocity.x = move_dir.x * speed
-	velocity.z = move_dir.z * speed
+	_steer(move_dir * speed, delta, "air")
+	var fall_vy := velocity.y
 	velocity.y = maxf(velocity.y - GRAVITY * delta, -MAX_FALL_SPEED)
 	if move_dir.length() > 0.05:
 		_face(move_dir, delta)
@@ -277,6 +296,8 @@ func _tick_air(delta: float, move_dir: Vector3) -> void:
 	_play_anim("idle")
 	move_and_slide()
 	if is_on_floor():
+		if fall_vy < -FeelTuning.HARD_LAND_VY:
+			_land_t = float(FeelTuning.move_preset.get("land_sec", 0.0))
 		_set_mode(Mode.GROUND)
 
 func _tick_glide(delta: float, move_dir: Vector3) -> void:
