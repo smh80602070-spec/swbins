@@ -271,6 +271,19 @@
       });
     }
 
+    /* 3D ↔ 2D — 다른 판(사가스토리·사가의숲·사가국지의 btn-3d, 사가고의 시점 2D)과 같은 자리. 2D 는 W-0019 의 2D 그림 판(시트·타일·건물)이다.
+       손잡이 `dg3d.on`(어드민에도 있다)을 뒤집을 뿐 — 못 켜는 기기(WebGL 없음)는 어차피 2D */
+    var btn3d = document.getElementById('btn-3d'), D3 = global.DG.dungeon3d;
+    if (btn3d && D3) {
+      btn3d.classList.toggle('on', D3.wanted());
+      btn3d.addEventListener('click', function () {
+        var on = !D3.wanted();
+        core.setTune('dg3d.on', on ? 1 : 0);
+        btn3d.classList.toggle('on', on);
+        ui.toast(on ? '🧊 3D 화면' : '🖼️ 2D 화면 — 그림으로 봅니다');
+      });
+    }
+
     document.getElementById('btn-help').addEventListener('click', showHelp);
   }
 

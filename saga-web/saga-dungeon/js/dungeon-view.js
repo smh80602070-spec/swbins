@@ -1229,8 +1229,8 @@
       o = dec[di];
       if (o.t === 'pillar') {
         items.push({ z: o.x + o.y, kind: 'pillar', o: o });
-      } else if (o.t === 'jar') {
-        items.push({ z: o.x + o.y, kind: 'jar', o: o });
+      } else if (o.t === 'jar' || (run.town && global.DG.mode2d && global.DG.mode2d.hasKind(o.t))) {   // 마을 건물 2D 스프라이트(W-0024)
+        items.push({ z: o.x + o.y, kind: o.t === 'jar' ? 'jar' : 'prop2d', o: o });
       }
     }
     thingItem(items, run.room.grave, '💀');
@@ -1367,7 +1367,7 @@
     for (i = 0; i < items.length; i++) {
       var it = items[i];
       if (it.kind === 'jar') { drawJar(m, it.o, now); }
-      else if (it.kind === 'pillar') { drawPillar(m, it.o, theme, wh); }
+      else if (it.kind === 'pillar') { drawPillar(m, it.o, theme, wh); } else if (it.kind === 'prop2d') { var bp = proj(m, it.o.x, it.o.y); global.DG.mode2d.drawKind(ctx, it.o.t, bp.x, bp.y, it.o.h * m.s, it.o.seed || (it.o.x + ',' + it.o.y)); }
       else if (it.kind === 'thing') { drawThing(m, it.o, it.icon, now); }
       else if (it.kind === 'foe') { drawFoe(m, it.o, now, bars); }
       else if (it.kind === 'npc') { drawNpc(m, it.o, now, plates, it.near); }

@@ -243,14 +243,16 @@
     return true;
   }
   /** 판 표(`DG.cfg.mode2d.prop2d`)의 종류 하나를 그린다 — k 는 확대 배율. 표에 없으면 false */
-  function drawKind(ctx, kind, x, y, k) {
-    var t = C().prop2d, p = t && t[kind];
-    return p ? drawSprite(ctx, { id: p.id, x: x, y: y, h: p.h * (k || 1) }) : false;
+  function drawKind(ctx, kind, x, y, k, seed) {
+    var t = C().prop2d, p = t && t[kind], id = p && (p.ids ? p.ids[hashOf(seed) % p.ids.length] : p.id);   // ids = 여러 모양 중 씨앗 해시로 하나
+    return p ? drawSprite(ctx, { id: id, x: x, y: y, h: p.h * (k || 1) }) : false;
   }
+  /** 표에 이 종류가 있고 2D 모드인가 — 부르는 쪽이 정렬 목록에 넣을지 정할 때 */
+  function hasKind(kind) { var t = C().prop2d; return !!(t && t[kind]) && isOn(); }
 
   global.DG = global.DG || {};
   global.DG.mode2d = {
-    drawSprite: drawSprite, drawKind: drawKind, spriteReady: function (id) { return !!spriteOf(id); },
+    drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },
     fillIso: fillIso,
     drawBg: drawBg, tile: tile, tileUrl: tileUrl, tilePattern: tilePattern, fillTile: fillTile,
     bgReady: function (region) { var b = bgs[region]; return !!(b && b.meta && LAYERS.every(function (l) { return b.imgs[l].ok; })); },

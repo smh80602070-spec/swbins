@@ -478,6 +478,8 @@
   global.DG.cfg.mode2d = {
     base: 'assets/sprites2d_sheets/',
     tileBase: 'assets/web2d/tile/',
+    /** 마을 건물 2D 스프라이트(K-0017 `world2d`, W-0024) — 장식 종류(town.js) → { id|ids, h:1 }. 키는 장식의 h(방 좌표)×확대로 정해져 h 는 1. 짝 없는 종류(대장간·마구간·방앗간)는 안 그림 */
+    prop2d: { house: { ids: ['eu_house_01', 'hanok_01', 'chinese_hall_01'], h: 1 }, well: { id: 'well_01', h: 1 }, inn: { id: 'inn_01', h: 1 }, belltower: { id: 'stone_tower_01', h: 1 } },
     /** 층 테마 이름(data-dungeon THEMES) → 2D 바닥 타일(K-0020 `dungeon_*`) — 층 색은 타일 위에 얹힌다 */
     tile: { '고분(古墳)': 'dungeon_dirt', '폐성(廢城)': 'dungeon_stone', '산채(山寨)': 'dungeon_grass', '수궁(水宮)': 'dungeon_water', '지옥문(地獄門)': 'dungeon_stone', '천계(天界)': 'dungeon_snow' },
     targetH: 40,                                 // 던전 2D 의 사람형 몸 높이 기준(px, dungeon-view bodyH 40·s 와 같은 단위 — 호출이 배수를 곱한다)
