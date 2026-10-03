@@ -35,7 +35,7 @@
   /** 2026-09-20 — VRM(`/people/anime/`) 몸은 남의 몸짓(UAL1)을 뼈 이름표로 다시 굽는 대신 `anim-own.js` 가 코드로 짠
    *  자체 몸짓을 입는다(Mixamo 는 약관상 공개 저장소에 못 올린다). 기본 켜짐, `world3d.ownAnim`=0 이면 예전 길(UAL1) */
   function wantsOwnAnim(url) {
-    return !!(global.DG.ownAnim && typeof url === 'string' && url.indexOf('/people/anime/') >= 0 && core().tuned('world3d.ownAnim', 1));
+    return !!(global.DG.ownAnim && typeof url === 'string' && (url.indexOf('/people/anime/') >= 0 || url.indexOf('characters3d/') >= 0) && core().tuned('world3d.ownAnim', 1));
   }
   function core() { return global.DG.core; }
 
@@ -626,7 +626,7 @@
   }
 
   function heroRecipe(ref) {
-    var frec = fixedRecipe(ref);
+    var frec = (global.DG.assets3d && global.DG.assets3d.heroRecipe(ref)) || fixedRecipe(ref);   // 통일 GLB(W-0021) 먼저
     if (frec) { return frec; }
     /* ⑱ 땅 사람(`folk.js`)은 시대 옷이 곧 그 사람이라 애니메 몸으로 바꾸지 않는다 */
     if (wantsAnimeAvatar() && !(ref && /^folk_/.test(String(ref.era || '')))) {

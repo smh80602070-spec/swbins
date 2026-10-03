@@ -74,6 +74,8 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/mode2d.js"></script>
 <script src="js/actor2d.js"></script>
 <script src="js/core.js"></script>
+<script src="js/assets3d-ids.js"></script>
+<script src="js/assets3d.js"></script>
 <script src="js/perf.js"></script>
 <script src="js/account.js"></script>
 <script src="js/bag.js"></script>
@@ -15929,6 +15931,14 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var M = DG.mode2d, kinds = ['water', 'grass', 'forest', 'road', 'town', 'mount', 'farm'], bad = [];
       kinds.forEach(function (k) { var u = M.tileUrl(k); if (!u || u.indexOf('assets/web2d/tile/go_') !== 0) { bad.push(k); } });
       return bad.length === 0 && M.tileUrl('lava') === null && ('땅 ' + kinds.length + '종 → ' + M.tileUrl('grass')) || bad.join(',');
+    });
+
+    t('통일 3D 에셋 — 표(영웅 299·지물 42)가 있고, 소품 표의 id 는 전부 지물 GLB 이며, 시험 전·실패 때 url·heroRecipe 는 null(옛 모델)', function () {
+      var A = DG.assets3d, ids = DG.assets3dIds, bad = [], props = DG.cfg.assets3d.prop;
+      Object.keys(props).forEach(function (k) { props[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });
+      A._reset();   // 시험 전 상태로 — 이 서버엔 통일 에셋이 없으니 null 이어야 한다
+      var pre = A.url('hero', 'sg_guanyu') === null && A.heroRecipe({ id: 'sg_guanyu' }) === null && A.heroRecipe(null) === null;
+      return bad.length === 0 && ids.hero.length === 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && !A.has('hero', 'folk_x') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 소품 표 ' + Object.keys(props).length + '칸') || bad.join(',') || '표/폴백 불일치';
     });
 
     t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {
