@@ -213,10 +213,10 @@ def ground_z(x, y):
     return loc.z if hit and obj and not obj.name.startswith('water') else None
 
 
-def spots(n, zmin, zmax, ymin, ymax, mind, tries=4000):
+def spots(n, zmin, zmax, ymin, ymax, mind, tries=4000, xr=(-22, 22)):
     got = []
     for _ in range(tries):
-        x, y = rng.uniform(-22, 22), rng.uniform(ymin, ymax)
+        x, y = rng.uniform(*xr), rng.uniform(ymin, ymax)
         z = ground_z(x, y)
         if z is None or not (zmin <= z <= zmax):
             continue
@@ -347,7 +347,7 @@ def reeds(n, xmin, xmax, ymin, ymax):
         for k in range(rng.randint(6, 11)):
             h = rng.uniform(1.0, 2.2)
             ox, oy = rng.uniform(-0.35, 0.35), rng.uniform(-0.35, 0.35)
-            bpy.ops.mesh.primitive_cone_add(vertices=4, radius1=0.035, radius2=0.0, depth=h, location=(x + ox, y + oy, z + h / 2 - 0.05))
+            bpy.ops.mesh.primitive_cone_add(vertices=4, radius1=0.065, radius2=0.0, depth=h, location=(x + ox, y + oy, z + h / 2 - 0.05))
             o = bpy.context.object
             o.rotation_euler = (rng.uniform(-0.25, 0.25), rng.uniform(-0.25, 0.25), 0)
             o.data.materials.append(m)
@@ -359,8 +359,8 @@ def reeds(n, xmin, xmax, ymin, ymax):
 def fireflies(n):
     m = mat_simple('firefly', (1, 0.9, 0.5, 1), 0.5, (0.85, 1.0, 0.35, 1), 14.0)
     for _ in range(n):
-        x, y = rng.uniform(-24, 14), rng.uniform(-14, 4)
-        z = rng.uniform(0.7, 3.8)
+        x, y = rng.uniform(-24, 14), rng.uniform(-8, 6)
+        z = rng.uniform(0.9, 3.8)
         bpy.ops.mesh.primitive_uv_sphere_add(radius=rng.uniform(0.018, 0.04), segments=8, ring_count=6, location=(x, y, z))
         bpy.context.object.data.materials.append(m)
 
@@ -387,13 +387,13 @@ def galaxy_ferry():
     w = water(220, wz)
     w.name = 'water_plane'
     bpy.context.view_layer.update()
-    houses = spots(9, 1.0, 5.5, 23, 46, 6.5)
+    houses = spots(8, 1.0, 5.5, 23, 38, 6.0, xr=(-14, 18))
     trees(170, 0.8, 9.0, 22, 60, avoid=[(x, y) for x, y, _ in houses])
     # 건너편 언덕 위 한옥 마을
     for x, y, z in houses:
-        h, objs = place(rng.choice(['hanok_01', 'hanok_01', 'forest_cottage_01', 'jp_minka_01']), (x, y, z - 0.15), rot=rng.uniform(-0.5, 0.5), scale=rng.uniform(0.9, 1.4))
-        emissive(objs, (1.0, 0.6, 0.28, 1), 0.35)
-        point((x, y - 1.5, z + 2.4), (1.0, 0.6, 0.28), 160, 0.7)
+        h, objs = place(rng.choice(['hanok_01', 'hanok_01', 'forest_cottage_01', 'jp_minka_01']), (x, y, z - 0.15), rot=rng.uniform(-0.5, 0.5), scale=rng.uniform(1.2, 1.7))
+        emissive(objs, (1.0, 0.6, 0.28, 1), 0.6)
+        point((x, y - 1.5, z + 2.4), (1.0, 0.6, 0.28), 260, 0.7)
     # 가까운 둑 가장자리의 돌등롱 줄 — 따뜻한 빛, 물 위로 번진다
     for i in range(15):
         x = -24 + i * 3.4
@@ -404,7 +404,7 @@ def galaxy_ferry():
         h, objs = place('stone_lantern_01', (x, y, z), rot=rng.uniform(0, 6.28), scale=1.0)
         emissive(objs, (1.0, 0.5, 0.18, 1), 1.3)
         point((x, y - 0.3, z + 1.6), (1.0, 0.62, 0.28), 80, 0.2)
-    reeds(26, -30, 24, -7, 0.5)
+    reeds(42, -30, 24, -8, 0.8)
     for _ in range(9):
         x, y = rng.uniform(-26, 22), rng.uniform(-12, -4)
         z = ground_z(x, y)
@@ -423,7 +423,7 @@ def galaxy_ferry():
     sun = bpy.data.lights.new('moon', 'SUN')
     sun.energy, sun.color, sun.angle = 1.4, (0.55, 0.7, 1.0), 0.05
     so = bpy.data.objects.new('moon', sun)
-    so.rotation_euler = (math.radians(58), 0, math.radians(200))
+    so.rotation_euler = (math.radians(-77), 0, math.radians(8))
     sc.collection.objects.link(so)
     bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 14, 2.5))
     v = bpy.context.object
@@ -447,6 +447,34 @@ def galaxy_ferry():
     mb.inputs['Emission Color'].default_value = (0.85, 0.92, 1.0, 1)
     mb.inputs['Emission Strength'].default_value = 14.0
     mo.data.materials.append(mm)
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=24, location=(-30, 160, 62))
+    ho = bpy.context.object
+    hm = bpy.data.materials.new('halo')
+    hm.use_nodes = True
+    try:
+        hm.surface_render_method = 'BLENDED'
+    except Exception:
+        pass
+    nt = hm.node_tree
+    nt.nodes.clear()
+    e_ = nt.nodes.new('ShaderNodeEmission')
+    e_.inputs['Color'].default_value = (0.65, 0.8, 1.0, 1)
+    e_.inputs['Strength'].default_value = 0.9
+    t_ = nt.nodes.new('ShaderNodeBsdfTransparent')
+    lw = nt.nodes.new('ShaderNodeLayerWeight')
+    lw.inputs['Blend'].default_value = 0.5
+    pw = nt.nodes.new('ShaderNodeMath')
+    pw.operation = 'POWER'
+    pw.inputs[1].default_value = 0.45
+    nt.links.new(lw.outputs['Facing'], pw.inputs[0])
+    mx = nt.nodes.new('ShaderNodeMixShader')
+    nt.links.new(pw.outputs[0], mx.inputs[0])
+    nt.links.new(e_.outputs[0], mx.inputs[1])
+    nt.links.new(t_.outputs[0], mx.inputs[2])
+    o_ = nt.nodes.new('ShaderNodeOutputMaterial')
+    nt.links.new(mx.outputs[0], o_.inputs['Surface'])
+    ho.data.materials.append(hm)
+    ho.visible_shadow = False
     camera((-19.0, -13.0, 2.6), (5.0, 24, 6.0), lens=24)
 
 
