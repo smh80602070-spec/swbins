@@ -71,6 +71,7 @@ namespace Saga.EditorTools
                 ChecksCoordinates();
                 ChecksVillageGround();
                 ChecksFogLid();
+                ChecksSceneryFacing();
                 ChecksMeshes();
                 foreach (var id in RegionLoader.Ids) ChecksRegion(id);
                 ChecksDeterministic();
@@ -135,6 +136,15 @@ namespace Saga.EditorTools
                 PlaytestKit.Check(n >= 10 && below == 0, $"{id} 조각 {below}/{n} 개가 땅({worst:0.0}m)에 묻힘 — 안개 상자 뚜껑 제거 확인");
                 if (L.hasCamera && L.terrain.SampleHeight(L.cameraPos.x, L.cameraPos.z, out float ch))
                     PlaytestKit.Check(ch < L.cameraPos.y, $"{id} 카메라가 땅 아래: 땅 {ch:0.0}m ≥ 카메라 {L.cameraPos.y:0.0}m");
+                if (id == "FrostPeak")
+                {
+                    // 소나무 구역(풍경 GLB 소나무 밑동 y≈-1.5~0m, 길에서 먼 x≈±30)의 땅이 소나무 밑동 위로 솟아 소나무를 묻으면 안 된다
+                    foreach (var pt in new[] { new Vector2(-30f, 40f), new Vector2(30f, 60f), new Vector2(-40f, 25f) })
+                    {
+                        bool ok = L.terrain.SampleHeight(pt.x, pt.y, out float gh);
+                        PlaytestKit.Check(ok && gh < 2f, $"서리봉 소나무 구역 {pt} 땅이 {gh:0.0}m — 소나무 밑동(≈0m)을 묻음");
+                    }
+                }
                 if (L.hasWater)
                 {
                     // 물에 뜬 조각(배·뗏목) 밑은 물 아래여야 물이 보인다
@@ -166,6 +176,38 @@ namespace Saga.EditorTools
                     if (built.root != null) Object.DestroyImmediate(built.root);
                 }
                 Debug.Log($"[Regions] {id} 뚜껑 제거 뒤 묻힌 조각 {below}/{n}");
+            }
+        }
+
+        // 풍경 GLB 방향 — glTF z = -Blender y 라 그대로 들이면 z 가 뒤집혀 카메라 뒤에 선다. Y축 180° 로 바로잡은 뒤, 배치표 좌표(조각·하늘 고리)와
+        // 같은 쪽(+z)에 서야 한다. 시간 틈은 큰 흰 고리(Torus.003/.004 = sky.rift_rings)와 구름바다(cloudpuff: 밝은 기본색+약한 발광)도 본다.
+        private static void ChecksSceneryFacing()
+        {
+            // (지역, 풍경 안 노드 이름, 이 노드의 중심 z 가 이쪽 부호여야 함)
+            var table = new[] { ("FrostPeak", "pines_g", 1f), ("Crossroads", "Torus", 1f), ("TimeRift", "Torus.003", 1f), ("GalaxyFerry", "Cone", 1f) };
+            foreach (var (id, node, sign) in table)
+            {
+                var built = RegionLoader.Build(id, null, new RegionLoadOptions());
+                PlaytestKit.Check(built.root != null, id + " 을 못 짬");
+                if (built.root == null) continue;
+                Renderer hit = null;
+                foreach (var r in built.root.GetComponentsInChildren<Renderer>(true)) if (r.gameObject.name == node && r.transform.parent != null && r.transform.parent.name == "Scenery") hit = r;
+                PlaytestKit.Check(hit != null, $"{id} 풍경에 {node} 없음");
+                if (hit != null) PlaytestKit.Check(hit.bounds.center.z * sign > 5f, $"{id} 풍경 {node} 이 카메라 뒤(z {hit.bounds.center.z:0.0}) — 풍경 방향 뒤집힘");
+                if (id == "TimeRift")
+                {
+                    PlaytestKit.Check(built.root.transform.Find("RiftRing0") == null, "시간 틈 큰 고리가 GLB 와 코드로 두 번 섬");
+                    Renderer cloud = null;
+                    foreach (var r in built.root.GetComponentsInChildren<Renderer>(true)) if (r.gameObject.name == "cloudsea") cloud = r;
+                    PlaytestKit.Check(cloud != null, "시간 틈 구름바다(cloudsea) 못 찾음");
+                    if (cloud != null)
+                    {
+                        var c = cloud.sharedMaterial.GetColor("_BaseColor");
+                        float lum = (c.r + c.g + c.b) / 3f;
+                        PlaytestKit.Check(lum >= 0.6f, $"구름바다가 어둡다(발광색 단색 갈색?): 평균 {lum:0.00}");
+                    }
+                }
+                Object.DestroyImmediate(built.root);
             }
         }
 

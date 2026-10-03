@@ -253,7 +253,9 @@ namespace Saga.Core.Region
             if (prefab == null) { res.warnings.Add("풍경 에셋 없음: " + L.scenery); return; }
             var go = Object.Instantiate(prefab, parent);
             go.name = "Scenery";
-            go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.identity; go.transform.localScale = Vector3.one;
+            // 풍경 GLB 는 Blender 에서 glTF(Y-up, z = -Blender y)로 내보냈고 glTFast 가 x 만 뒤집어 들여온다 — 배치표 쪽(조각·지형·빛)은 x = Blender x, z = +Blender y 라
+            // 그대로 두면 풍경이 z 방향으로 뒤집혀 서리봉 소나무·사거리 고리 문·시간 틈 큰 고리·은하 나루 큰 산이 카메라 뒤에 선다. Y축 180° 로 x·z 를 함께 바로잡는다.
+            go.transform.localPosition = Vector3.zero; go.transform.localRotation = Quaternion.Euler(0f, 180f, 0f); go.transform.localScale = Vector3.one;
             foreach (var r in go.GetComponentsInChildren<Renderer>(true)) { SwapMaterials(r, matCache, res); res.sceneryRenderers++; }
             CountRenderer(go, res);
         }

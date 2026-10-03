@@ -116,30 +116,31 @@ namespace Saga.Core.Region
                     }
             if (px.Count == 0) return 0;   // 근거가 없으면 그대로 둔다
 
+            // 근거에서 BankReachM 밖은 "바닥 높이"로 돌아간다 — 물이 있으면 호수 바닥, 없으면 상자 안 조각 높이의 중앙값(조각은 평평한 땅 위에 선다;
+            // 서리봉 소나무 밑동·사거리 길이 0m 근처인 것과 맞는다). 먼 가장자리 언덕이 안쪽 땅을 끌어올려 소나무·건물이 묻히는 것을 막는다.
+            bool lake = !float.IsNaN(waterZ);
+            float baseVal = lake ? waterZ - LakeBedDepth : 0f;
+            if (!lake && anchors != null)
+            {
+                var ys = new List<float>();
+                foreach (var a in anchors)
+                    if (Mathf.Abs(a.x - boxCenter.x) <= hx && Mathf.Abs(a.z - boxCenter.y) <= hz) ys.Add(a.y);
+                if (ys.Count > 0) { ys.Sort(); baseVal = ys[ys.Count / 2]; }
+            }
             var filled = (float[])heights.Clone();
             for (int j = 0; j < nz; j++)
                 for (int i = 0; i < nx; i++)
                 {
                     if (!lid[j * nx + i]) continue;
-                    float x = x0 + i * step, z = z0 + j * step, sw = 0f, sh = 0f;
-                    bool lake = !float.IsNaN(waterZ);
-                    if (lake)
-                    {
-                        // 물이 있는 지역 — 기슭 근거는 BankReachM 안에서만 땅을 끌고(안쪽일수록 세게), 그 밖은 호수 바닥으로 돌아간다
-                        const float wl = 0.02f;
-                        sw += wl; sh += wl * (waterZ - LakeBedDepth);
-                    }
+                    float x = x0 + i * step, z = z0 + j * step;
+                    const float wl = 0.02f;
+                    float sw = wl, sh = wl * baseVal;
                     for (int k = 0; k < px.Count; k++)
                     {
                         float dx = x - px[k], dz = z - pz[k];
-                        float w;
-                        if (lake)
-                        {
-                            float t = 1f - Mathf.Sqrt(dx * dx + dz * dz) / BankReachM;
-                            if (t <= 0f) continue;
-                            w = t * t;
-                        }
-                        else w = 1f / (dx * dx + dz * dz + 1f);
+                        float t = 1f - Mathf.Sqrt(dx * dx + dz * dz) / BankReachM;
+                        if (t <= 0f) continue;
+                        float w = t * t;
                         sw += w; sh += w * ph[k];
                     }
                     filled[j * nx + i] = sh / sw;

@@ -81,6 +81,9 @@ namespace Saga.Core.Region
             return m.HasProperty("_Surface") && m.GetFloat("_Surface") > 0.5f;
         }
 
+        /// <summary>이 이하 발광은 "약한 발광", 이 이상 기본색은 "밝은 기본색" — 둘이 겹치면 발광색 단색으로 바꾸지 않는다.</summary>
+        public const float WeakGlowMax = 0.5f, BrightBaseMin = 0.5f;
+
         public static bool IsEmissive(Material m, out Color emissive)
         {
             emissive = ReadColor(m, Color.black, "emissiveFactor", "_EmissionColor");
@@ -107,6 +110,11 @@ namespace Saga.Core.Region
                 if (result != null)
                 {
                     if (TryTexture(src, out var etex, out var est, "emissiveTexture")) { result.SetTexture("_BaseMap", etex); SetST(result, est); }
+                    // 약한 발광(≤0.5) + 밝은 기본색(≥0.5)은 "빛나는 것"이 아니라 밝은 물체에 은은한 발광이 얹힌 것(TimeRift 구름바다 `cloudpuff`) —
+                    // 발광색만 쓰면 갈색이 된다. 기본색을 어둡게(조명 몫 0.65) 더해 밝은 분홍 흰색으로 둔다. 강한 발광(고리·석등 불)은 그대로.
+                    var baseCol = ReadColor(src, Color.white, "baseColorFactor", "_BaseColor", "_Color");
+                    if (emissive.maxColorComponent <= WeakGlowMax && baseCol.maxColorComponent >= BrightBaseMin && !TryTexture(src, out _, out _, "emissiveTexture"))
+                        emissive = new Color(Mathf.Min(1f, baseCol.r * 0.65f + emissive.r), Mathf.Min(1f, baseCol.g * 0.65f + emissive.g), Mathf.Min(1f, baseCol.b * 0.65f + emissive.b), 1f);
                     result.SetColor("_BaseColor", emissive);
                 }
             }
