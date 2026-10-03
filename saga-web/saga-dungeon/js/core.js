@@ -500,5 +500,9 @@
   'use strict';
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.assets3d = {
+    /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 제단·횃불·동굴 입구(바위 아치)·종탑(석탑) */
+    reg: { 'altar': ['altar_01'], 'dg:torch': ['torch_stand_01'], 'cavemouth': ['dungeon_gate_01'], 'belltower': ['stone_tower_01'] }
+  };
   global.DG.cfg.vroidPattern = { base: 'assets/patterns/', repeat: 3 };
 })(window);

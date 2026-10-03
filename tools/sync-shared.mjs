@@ -25,8 +25,8 @@ const FILES = [
   ['build/build-single.mjs', 'build/build-single.mjs'],
   ['js/errlog.js', 'js/errlog.js'],
   ['js/bgm.js', 'js/bgm.js'],
-  ['js/assets3d-ids.js', 'js/assets3d-ids.js', ['saga-go']],   // W-0021 — 통일 3D 에셋 조회(판을 배선하며 판 목록에 추가). ids 는 tools/gen-assets3d-ids.mjs 생성물
-  ['js/assets3d.js', 'js/assets3d.js', ['saga-go']],
+  ['js/assets3d-ids.js', 'js/assets3d-ids.js', ['saga-go', 'saga-dungeon']],   // W-0021 — 통일 3D 에셋 조회(판을 배선하며 판 목록에 추가). ids 는 tools/gen-assets3d-ids.mjs 생성물
+  ['js/assets3d.js', 'js/assets3d.js', ['saga-go', 'saga-dungeon']],
   ['js/ai.js', 'js/ai.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story']],   // R-4 — 네 판이 글자까지 같다(사가국지는 따로 갈라짐)
   ['js/mode2d.js', 'js/mode2d.js', ['saga-story', 'saga-dungeon', 'saga-go', 'saga-forest']],   // W-0019 — 2D 시트 부품(사가스토리부터, 다른 판은 배선하며 판 목록에 추가)
   ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],

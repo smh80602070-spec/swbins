@@ -105,6 +105,8 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/mode2d.js"></script>
 <script src="js/foe2d.js"></script>
 <script src="js/core.js"></script>
+<script src="js/assets3d-ids.js"></script>
+<script src="js/assets3d.js"></script>
 <script src="js/sfx.js"></script>
 <script src="js/bgm.js"></script>
 <script src="js/account.js"></script>
@@ -7721,6 +7723,14 @@ window.requestAnimationFrame = function () { return 0; };
       var fake = { save: function () { calls++; }, restore: function () { calls++; }, transform: function () { calls++; }, scale: function () { calls++; }, fillRect: function () { calls++; }, createPattern: function () { return {}; } };
       var none = M.fillIso(fake, { id: 'dungeon_없는타일', a: 1, b: 0, c: 0, d: 1, e: 0, f: 0, W: 10, H: 10 }), noId = M.fillIso(fake, { a: 1, b: 0, c: 0, d: 1, e: 0, f: 0, W: 10, H: 10 });
       return bad.length === 0 && none === false && noId === false && calls === 0 && ('테마 ' + T.length + '개 연결 · 타일 없음 → false') || bad.join(',');
+    });
+
+    t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
+      var A = DG.assets3d, ids = DG.assets3dIds, bad = [], reg = DG.cfg.assets3d.reg;
+      Object.keys(reg).forEach(function (k) { reg[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });
+      A._reset();
+      var pre = A.heroRecipe('hero:sg_guanyu') === null && A.heroRecipe({ id: 'sg_guanyu' }) === null && A.heroRecipe(null) === null;
+      return bad.length === 0 && ids.hero.length === 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 등록 표 ' + Object.keys(reg).length + '칸') || bad.join(',') || '표/폴백 불일치';
     });
 
     t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {

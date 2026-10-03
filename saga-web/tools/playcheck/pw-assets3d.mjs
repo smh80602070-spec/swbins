@@ -10,7 +10,7 @@ if (!game) { console.log('사용: node pw-assets3d.mjs saga-go'); process.exit(1
 const r = await open(game);
 const { page } = r;
 await page.goto(r.url('index.html')); await sleep(1500);
-const out = await page.evaluate(async () => {
+const out = await page.evaluate(async (game) => {
   const A = window.DG.assets3d, res = { state: null, root: null, heroes: [], world: [] };
   if (!A) { return { error: 'DG.assets3d 없음' }; }
   await new Promise((ok) => A.whenSettled(ok));
@@ -18,15 +18,18 @@ const out = await page.evaluate(async () => {
   if (res.state !== 'ok') { return res; }
   const heroes = (window.DG.data.heroes || []).filter((h) => A.has('hero', h.id)).slice(0, 3);
   for (const h of heroes) {
-    const shell = window.DG.asset3d.build('hero', h, null);
+    const A3 = window.DG.asset3d;
+    const shell = game === 'saga-dungeon' ? A3.buildHero('hero:' + h.id, 42, null, null) : A3.build('hero', h, null);   // 사가블로는 'hero:<id>' 씨앗
     let st = null;
-    for (let i = 0; i < 120 && st !== 'glb' && st !== 'fail'; i++) { await new Promise((ok) => setTimeout(ok, 250)); st = shell && shell.userData && shell.userData.assetState; }
+    for (let i = 0; i < 120 && st !== 'glb' && st !== 'fail'; i++) { await new Promise((ok) => setTimeout(ok, 250)); if (A3.tick) { A3.tick(); } st = shell && shell.userData && shell.userData.assetState; }
     res.heroes.push({ id: h.id, state: st, own: !!(shell && shell.userData.ownAnim), clips: shell && shell.userData.actions ? Object.keys(shell.userData.actions).length : 0 });
   }
   const T = window.THREE || (window.DG.three && window.DG.three());
   const loader = new T.GLTFLoader();
   if (T.MeshoptDecoder) { loader.setMeshoptDecoder(T.MeshoptDecoder); }
-  for (const id of ['eu_house_01', 'street_lamp_01', 'sail_boat_01']) {
+  const cfgA = window.DG.cfg.assets3d || {}, want = new Set();
+  Object.values(cfgA.prop || {}).concat(Object.values(cfgA.reg || {})).forEach((l) => l.forEach((id) => want.add(id)));
+  for (const id of (want.size ? [...want] : ['eu_house_01', 'street_lamp_01', 'sail_boat_01'])) {
     const u = A.url('world', id);
     const row = { id, url: u && u.replace(/^.*shared\//, ''), ok: false, meshes: 0 };
     if (u) {
@@ -46,14 +49,21 @@ const out = await page.evaluate(async () => {
       res.props.push({ name, url: u && u.replace(/^.*shared\//, ''), unified: !!u && u.indexOf('world3d/') >= 0, ready: rd });
     }
   }
+  /* asset3d 등록 표(cfg.assets3d.reg) — 키마다 통일 GLB 로 바뀌었나 */
+  res.reg = [];
+  const A3 = window.DG.asset3d, REG = A3 && A3.register ? A3.register() : null;
+  if (REG) {
+    for (const key of Object.keys(cfgA.reg || {})) { const v = [].concat(REG[key] || []); res.reg.push({ key, unified: v.length > 0 && v.every((u) => String(u).indexOf('world3d/') >= 0) }); }
+  }
   return res;
-});
+}, game);
 console.log(JSON.stringify(out, null, 1));
 const bad = [];
 if (out.error || out.state !== 'ok') { bad.push('조회 ' + (out.error || out.state)); }
 (out.heroes || []).forEach((h) => { if (h.state !== 'glb' || !h.own || h.clips < 1) { bad.push('영웅 ' + h.id); } });
 if (out.heroes && !out.heroes.length) { bad.push('영웅 표본 0'); }
 (out.world || []).forEach((w) => { if (!w.ok) { bad.push('지물 ' + w.id); } });
+(out.reg || []).forEach((q) => { if (!q.unified) { bad.push('등록 ' + q.key); } });
 (out.props || []).forEach((q) => { if (!q.unified || !q.ready) { bad.push('소품 ' + q.name); } });
 console.log(bad.length ? 'FAIL ' + bad.join(' · ') : 'OK 영웅 ' + out.heroes.length + ' · 지물 ' + out.world.length + ' · 소품 ' + (out.props || []).length);
 await r.close();

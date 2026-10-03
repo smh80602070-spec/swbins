@@ -58,6 +58,23 @@
    * (집·등롱·우물…). 시험이 ok 일 때만, 표에 있는 id 가 실제 GLB 일 때만. 안 되면 옛 표 그대로. 얹은 뒤 미리 받기를 한 번 더 부른다.
    */
   function applyProps() {
+    return applyProp3d() + applyReg();
+  }
+
+  /** 판별 배우·소품 표(`DG.cfg.assets3d.reg` = { asset3d 키: [world3d id…] })를 `asset3d.register` 로 얹는다(사가블로 — 키마다 한 줄 표). 같은 규칙: 되는 id 만 */
+  function applyReg() {
+    var A3 = global.DG && global.DG.asset3d, t = cfg().reg, key, list, i, urls, n = 0;
+    if (!A3 || !A3.register || !t || !tunedOn()) { return 0; }
+    for (key in t) {
+      if (!t.hasOwnProperty(key)) { continue; }
+      list = t[key]; urls = [];
+      for (i = 0; i < list.length; i++) { var u = url('world', list[i]); if (u) { urls.push(u); } }
+      if (urls.length) { A3.register(key, urls); n++; }
+    }
+    return n;
+  }
+
+  function applyProp3d() {
     var P3 = global.DG && global.DG.prop3d, t = cfg().prop, name, list, i, urls, n = 0;
     if (!P3 || !P3.register || !t || !tunedOn()) { return 0; }
     for (name in t) {
@@ -85,7 +102,7 @@
   global.DG = global.DG || {};
   /** 영웅 몸 레시피(asset3d `heroRecipe` 맨 앞) — 통일 GLB 가 있으면 `{key, body}`(몸짓은 몸에서 읽어 굽는다 = anim-own), 없으면 null */
   function heroRecipe(ref) {
-    var id = ref && ref.id, u = url('hero', id);
+    var id = ref && typeof ref === 'object' ? ref.id : String(ref || '').replace(/^hero:/, ''), u = url('hero', id);   // 사가블로는 'hero:<id>' 문자열 씨앗을 준다
     return u ? { key: 'uni:' + id, body: u } : null;
   }
 
