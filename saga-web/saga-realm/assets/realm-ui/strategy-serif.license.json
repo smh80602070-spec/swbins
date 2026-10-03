@@ -1,0 +1,8 @@
+{
+ "id": "strategy-serif",
+ "generator": "tools/ai-art/make_realm_ui.py woff2",
+ "font": "Noto Serif KR (Google Fonts) wght 600 부분 서브셋",
+ "license": "SIL Open Font License 1.1 (OFL-NotoSerif.txt)",
+ "glyph_chars": 910,
+ "kb": 150.2
+}

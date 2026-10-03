@@ -1,0 +1,10 @@
+{
+ "generator": "tools/ai-art/make_realm_ui.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "note": "코드(PIL)로 그린 UI 그림. 색은 먹·금 팔레트.",
+ "nine_slice": {
+  "corner_px": 24
+ },
+ "state": "pressed",
+ "id": "ui_btn_frame_pressed"
+}

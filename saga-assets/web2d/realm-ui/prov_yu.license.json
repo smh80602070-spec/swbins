@@ -1,0 +1,11 @@
+{
+ "generator": "tools/ai-art/make_realm_ui.py",
+ "license": "CC0-1.0 코드 배치 + 글꼴 SIL OFL-1.1 (Nanum Brush Script·Noto Serif KR)",
+ "note": "코드(PIL)로 그린 UI 그림. 색은 먹·금 팔레트.",
+ "text": "예주",
+ "fonts": [
+  "Nanum Brush Script (NHN, OFL)",
+  "Noto Serif KR (Google, OFL)"
+ ],
+ "id": "prov_yu"
+}

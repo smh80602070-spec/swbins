@@ -455,6 +455,24 @@
    ]
   },
   {
+   "id": "realm-ui",
+   "src": "saga-assets/web2d/realm-ui",
+   "include": [
+    "*.png",
+    "*.webp",
+    "*.woff2",
+    "*.license.json",
+    "OFL-*.txt"
+   ],
+   "note": "K-0060 사가국지 전략 화면 에셋 — UI 틀 9-slice·배너·버튼·구분선·깃발·성 아이콘 3등급·지방 이름 붓글씨 28·서체 서브셋 woff2(OFL). 사가국지 폴더 전용",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/saga-realm/assets/realm-ui"
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,
