@@ -7,6 +7,10 @@ var _cam: Camera3D
 var _loader: RegionLoader
 var _yaw := 0.0
 var _pitch := 0.0
+var _spawned: Array[Node] = []   # 지역을 바꿀 때 치울 것(해·환경·카메라)
+var _hint: Label = null
+
+const NAMES := {"village": "마을", "galaxy_ferry": "은하 나루", "frost_peak": "서리봉 고원", "time_rift": "시간 틈", "crossroads": "갈림길"}
 
 
 func _ready() -> void:
@@ -67,11 +71,33 @@ func _image_stats(img: Image) -> Dictionary:
 func _open(id: String) -> void:
 	if _loader != null:
 		_loader.queue_free()
+	for n in _spawned:
+		n.queue_free()
+	_spawned.clear()
 	_loader = RegionLoader.new()
 	add_child(_loader)
 	_loader.build(id)
 	_setup_light_and_sky()
 	_setup_camera()
+	_show_hint(id)
+
+
+func _show_hint(id: String) -> void:
+	if _hint == null:
+		var layer := CanvasLayer.new()
+		layer.name = "Hint"
+		add_child(layer)
+		_hint = Label.new()
+		_hint.position = Vector2(16, 12)
+		_hint.add_theme_font_size_override("font_size", 18)
+		_hint.add_theme_constant_override("outline_size", 6)
+		_hint.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.85))
+		layer.add_child(_hint)
+	var keys: Array[String] = []
+	for i in RegionLoader.REGIONS.size():
+		var r: String = RegionLoader.REGIONS[i]
+		keys.append("%s%d %s" % ["▶" if r == id else "", i + 1, NAMES.get(r, r)])
+	_hint.text = "  ".join(keys) + "\nWASD·QE 이동 (Shift 빠르게) · 우클릭 드래그 시선 · 1~5 지역 바꾸기"
 
 
 func _setup_light_and_sky() -> void:
@@ -83,6 +109,7 @@ func _setup_light_and_sky() -> void:
 		sun.light_energy = 1.2
 		sun.shadow_enabled = true
 		add_child(sun)
+		_spawned.append(sun)
 	var env := Environment.new()
 	var fog: Variant = _loader.layout.get("fog")
 	if fog is Dictionary:
@@ -107,6 +134,7 @@ func _setup_light_and_sky() -> void:
 	we.name = "WorldEnvironment"
 	we.environment = env
 	add_child(we)
+	_spawned.append(we)
 
 
 func _setup_camera() -> void:
@@ -114,6 +142,7 @@ func _setup_camera() -> void:
 	_cam.name = "Camera"
 	_cam.far = 600.0
 	add_child(_cam)
+	_spawned.append(_cam)
 	var cam: Variant = _loader.layout.get("camera")
 	if cam is Dictionary:
 		_cam.position = RegionLoader.conv(cam.pos as Array)
@@ -143,6 +172,11 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(ev: InputEvent) -> void:
+	if ev is InputEventKey and (ev as InputEventKey).pressed and not (ev as InputEventKey).echo:
+		var k := (ev as InputEventKey).keycode - KEY_1
+		if k >= 0 and k < RegionLoader.REGIONS.size():
+			_open(RegionLoader.REGIONS[k])
+			return
 	if _cam != null and ev is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
 		_yaw -= (ev as InputEventMouseMotion).relative.x * 0.004
 		_pitch = clampf(_pitch - (ev as InputEventMouseMotion).relative.y * 0.004, -1.5, 1.5)
