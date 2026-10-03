@@ -252,6 +252,7 @@ var _hit_siege := false
 var _name_label: Label3D = null
 
 var _t := 0.0
+var _strafe_sign := 1.0 # 쉬는 동안 도는 방향(공격마다 무작위)
 var _wander_target := Vector3.ZERO
 var _knock := Vector3.ZERO
 var _dots: Array = [] # [{left, every, t, amount}]
@@ -365,7 +366,7 @@ func _physics_process(delta: float) -> void:
 				to_s.y = 0.0
 				if to_s.length() <= def.reach + float(siege.call("siege_radius")):
 					ai = AI.WINDUP
-					_t = def.tell
+					_t = def.tell * FeelTuning.enemy_tell_mul
 					_hit_siege = true
 					_set_tell(true)
 				else:
@@ -374,7 +375,7 @@ func _physics_process(delta: float) -> void:
 				ai = AI.RETURN
 			elif dist <= def.reach:
 				ai = AI.WINDUP
-				_t = def.tell
+				_t = def.tell * FeelTuning.enemy_tell_mul
 				_hit_siege = false
 				_set_tell(true)
 			else:
@@ -397,7 +398,14 @@ func _physics_process(delta: float) -> void:
 			if _t <= 0.0:
 				ai = AI.RECOVER
 				_t = def.cd
+				_strafe_sign = 1.0 if _rng.randf() < 0.5 else -1.0
 		AI.RECOVER:
+			if FeelTuning.enemy_strafe and player and not _hit_siege and dist > 0.1 and dist < def.reach + 1.5:
+				## 쉬는 동안 제자리 말뚝이 되지 않는다 — 플레이어 둘레를 옆으로 돌고, 너무 붙으면 한 걸음 물러난다.
+				var dir := to_player / dist
+				var side := Vector3(-dir.z, 0.0, dir.x) * _strafe_sign
+				move = (side - (dir if dist < FeelTuning.STRAFE_KEEP_M else Vector3.ZERO)).normalized() * def.speed * FeelTuning.STRAFE_SPEED_MUL
+				_face(to_player, delta * 3.0)
 			if _t <= 0.0:
 				ai = AI.CHASE
 		AI.RETURN:

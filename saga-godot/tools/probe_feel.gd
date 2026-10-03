@@ -287,6 +287,23 @@ func _physics_process(delta: float) -> void:
 					_fail("점프가 끝나지 않음")
 			elif _frame > 80:
 				_fail("점프 시작 못 함(바닥에 안 섬)")
+		6: # ⑦ 적 쉬는 동안 옆걸음(G-0018 단계 5) — 1.8m 앞에서 RECOVER 로 0.5초 두면 플레이어 둘레를 돈다(옛 방식이면 제자리)
+			if _frame == 1:
+				_p.global_position = TestMap.world_pos(1, 4) + Vector3(0, 0.3, 9.0)
+				_p.velocity = Vector3.ZERO
+				_target.set("hp", float(_target.get("max_hp")))
+				_target.set("ai", 4) # AI.RECOVER
+				_target.set("_t", 5.0)
+				_target.set("_hit_siege", false)
+				(_target as Node3D).global_position = _p.global_position + Vector3(1.8, 0.0, 0.0)
+				_target.set("velocity", Vector3.ZERO)
+				_pos0 = (_target as Node3D).global_position
+			elif _frame == 40:
+				var d := (_target as Node3D).global_position - _pos0
+				_m("enemy_recover_move_m", "%.2f" % Vector2(d.x, d.z).length()) # 옛 방식 0.00
+				_m("enemy_dmg_mul", "%.2f" % FeelTuning.enemy_dmg_mul)
+				_m("enemy_tell_mul", "%.2f" % FeelTuning.enemy_tell_mul)
+				_next()
 		_:
 			print("FEEL_PROBE_DONE fails=", _fails)
 			get_tree().quit()

@@ -1300,7 +1300,7 @@ func take_damage(amount: float, source: Node) -> void:
 	if _player.call("is_invulnerable"):
 		return
 	var d := PartyState.char_def(active_id())
-	var dmg := amount * (1.0 - d / (d + 120.0))
+	var dmg := amount * FeelTuning.enemy_dmg_mul * (1.0 - d / (d + 120.0))
 	if _guard_t > 0.0:
 		dmg *= _guard_mul # 106장 ㉔ 오천의 맹세
 	## 보호막이 먼저 받는다 — 다 막으면 원소 효과(화상·젖음·감전)도 안 든다.

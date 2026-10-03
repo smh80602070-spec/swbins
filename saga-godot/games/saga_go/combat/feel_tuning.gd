@@ -28,6 +28,21 @@ const MOVE_PRESETS := [
 ]
 const HARD_LAND_VY := 9.0 # 착지 직전 낙하 속도(m/s)가 이보다 빠르면 "높은 착지"(점프 정점에서 내려오는 속도는 약 7.5)
 
+## 적 행동·난이도(G-0018 단계 5) — 기본 1.0 = 옛 밸런스 그대로. 환경변수로 바꿔 해 본다(결정은 사용자).
+##   SAGA_ENEMY_DMG: 적이 플레이어에게 주는 피해 배율(보스 기술 포함) · SAGA_ENEMY_TELL: 일반 적 공격 예고 시간 배율(1.5 = 더 길게 보여 줌)
+##   SAGA_ENEMY_STRAFE=0: 적이 공격 뒤 쉬는 동안 옆으로 돌며 간격을 지키는 동작 끔(옛 방식은 제자리). SAGA_FEEL_OLD=1 이면 이 셋 다 옛 방식.
+static var enemy_dmg_mul := _env_mul("SAGA_ENEMY_DMG")
+static var enemy_tell_mul := _env_mul("SAGA_ENEMY_TELL")
+static var enemy_strafe := OS.get_environment("SAGA_FEEL_OLD") == "" and OS.get_environment("SAGA_ENEMY_STRAFE") != "0"
+const STRAFE_SPEED_MUL := 0.45 # 쉬는 동안 옆걸음 속도(적 속도 배)
+const STRAFE_KEEP_M := 1.4     # 이보다 가까우면 뒤로 물러난다
+
+static func _env_mul(name: String) -> float:
+	var v := OS.get_environment(name)
+	if v == "" or OS.get_environment("SAGA_FEEL_OLD") != "":
+		return 1.0
+	return clampf(v.to_float(), 0.25, 4.0) if v.is_valid_float() else 1.0
+
 ## 지금 처리 중인 피해의 종류. field_combat 가 공격을 시작할 때 정하고 매 물리 프레임 처음에 "normal" 로 되돌린다.
 static var kind := "normal"
 static var move_preset: Dictionary = {} if OS.get_environment("SAGA_FEEL_OLD") != "" else MOVE_PRESETS[clampi(int(OS.get_environment("SAGA_MOVE")), 0, MOVE_PRESETS.size() - 1)]
