@@ -66,7 +66,8 @@
    "id": "af_emblem",
    "kind": "artifact",
    "grade": 3,
-   "tags": "emblem, golden crest, ornate badge, shield, gold trim"
+   "tags": "emblem, golden crest, ornate badge, shield, gold trim",
+   "salt": 1
   },
   {
    "id": "af_gladiator",
@@ -150,7 +151,8 @@
    "id": "c_hopae",
    "kind": "equip",
    "grade": 0,
-   "tags": "wooden tag, name tag, rectangular wooden tablet, cord"
+   "tags": "wooden plaque, name tag, small rectangular wood tablet, hanging cord, engraved",
+   "salt": 1
   },
   {
    "id": "c_okgae",
@@ -234,31 +236,36 @@
    "id": "floor_jangpan",
    "kind": "furniture",
    "grade": 0,
-   "tags": "floor sample board, yellow oiled paper flooring, square sample, glossy"
+   "tags": "floor sample board, yellow oiled paper flooring, square sample, glossy",
+   "salt": 1
   },
   {
    "id": "floor_mat",
    "kind": "furniture",
    "grade": 0,
-   "tags": "floor sample board, woven straw mat, square sample, braided"
+   "tags": "floor sample board, woven straw mat, square sample, braided",
+   "salt": 1
   },
   {
    "id": "floor_ondol",
    "kind": "furniture",
    "grade": 0,
-   "tags": "floor sample board, heated stone floor, square sample, warm slate"
+   "tags": "floor sample board, heated stone floor, square sample, warm slate",
+   "salt": 1
   },
   {
    "id": "floor_stone",
    "kind": "furniture",
    "grade": 0,
-   "tags": "floor sample board, flat stone slabs, square sample, grey"
+   "tags": "floor sample board, flat stone slabs, square sample, grey",
+   "salt": 1
   },
   {
    "id": "floor_wood",
    "kind": "furniture",
    "grade": 0,
-   "tags": "floor sample board, wooden planks, square sample, polished wood"
+   "tags": "floor sample board, wooden planks, square sample, polished wood",
+   "salt": 1
   },
   {
    "id": "fo_abalone",
@@ -300,7 +307,8 @@
    "id": "fo_bignail",
    "kind": "material",
    "grade": 0,
-   "tags": "large iron nail, old rusty spike, big nail"
+   "tags": "iron nail, large spike, rusty nail, metal",
+   "salt": 1
   },
   {
    "id": "fo_bone",
@@ -408,7 +416,8 @@
    "id": "fo_firefly",
    "kind": "material",
    "grade": 0,
-   "tags": "firefly, glowing abdomen, yellow glow, beetle, insect, night"
+   "tags": "firefly, glowing insect, beetle, yellow light",
+   "salt": 1
   },
   {
    "id": "fo_fishf",
@@ -420,7 +429,8 @@
    "id": "fo_geomungo",
    "kind": "furniture",
    "grade": 0,
-   "tags": "zither, long stringed instrument, wooden, six strings, korean zither"
+   "tags": "zither, gayageum, long wooden zither, strings, bridges",
+   "salt": 1
   },
   {
    "id": "fo_geumnang",
@@ -474,7 +484,8 @@
    "id": "fo_jokja",
    "kind": "furniture",
    "grade": 0,
-   "tags": "hanging scroll, painting scroll, rolled ends, ink landscape, wooden rod"
+   "tags": "hanging scroll, mountain ink painting, wooden rollers",
+   "salt": 1
   },
   {
    "id": "fo_ladybug",
@@ -600,7 +611,8 @@
    "id": "fo_seoan",
    "kind": "furniture",
    "grade": 0,
-   "tags": "writing desk, low desk, wooden desk, brush rest, scroll"
+   "tags": "writing desk, low desk, wooden desk, brush rest, scroll",
+   "salt": 1
   },
   {
    "id": "fo_shard",
@@ -624,7 +636,8 @@
    "id": "fo_snail",
    "kind": "material",
    "grade": 0,
-   "tags": "snail, spiral shell, garden snail, brown shell"
+   "tags": "snail, spiral shell, garden snail, brown shell",
+   "salt": 1
   },
   {
    "id": "fo_sora",
@@ -750,7 +763,8 @@
    "id": "gw_bow_0",
    "kind": "equip",
    "grade": 0,
-   "tags": "short bow, simple wooden bow, bowstring, plain"
+   "tags": "short bow, simple wooden bow, bowstring, plain",
+   "salt": 1
   },
   {
    "id": "gw_bow_3",
@@ -804,7 +818,8 @@
    "id": "gw_polearm_0",
    "kind": "equip",
    "grade": 0,
-   "tags": "wooden pole, plain long stick, training spear, no blade"
+   "tags": "wooden staff, long plain stick, training pole",
+   "salt": 1
   },
   {
    "id": "gw_polearm_3",
@@ -1122,7 +1137,8 @@
    "id": "st_cap2",
    "kind": "equip",
    "grade": 1,
-   "tags": "cape, leather cape, brown, fur edge"
+   "tags": "cape, leather cape, brown, fur edge",
+   "salt": 1
   },
   {
    "id": "st_cap3",
@@ -1164,7 +1180,8 @@
    "id": "st_glv1",
    "kind": "equip",
    "grade": 0,
-   "tags": "bracelet, cloth wristband, simple wrap"
+   "tags": "bracelet, cloth wristband, simple wrap",
+   "salt": 1
   },
   {
    "id": "st_glv2",
@@ -1200,7 +1217,8 @@
    "id": "st_hat3",
    "kind": "equip",
    "grade": 2,
-   "tags": "helmet, phoenix crest helmet, steel, red plume, wings"
+   "tags": "helmet, phoenix crest helmet, steel, red plume, wings",
+   "salt": 1
   },
   {
    "id": "st_hat4",
@@ -1212,7 +1230,8 @@
    "id": "st_neck1",
    "kind": "equip",
    "grade": 0,
-   "tags": "necklace, wooden bead necklace, string"
+   "tags": "necklace, wooden bead necklace, string",
+   "salt": 1
   },
   {
    "id": "st_neck2",
@@ -1224,7 +1243,8 @@
    "id": "st_neck3",
    "kind": "equip",
    "grade": 2,
-   "tags": "necklace, jade necklace, green beads, jewelry"
+   "tags": "necklace, jade necklace, green beads, jewelry",
+   "salt": 1
   },
   {
    "id": "st_neck4",
@@ -1236,7 +1256,8 @@
    "id": "st_ring1",
    "kind": "equip",
    "grade": 0,
-   "tags": "ring, simple cloth ring, wooden band"
+   "tags": "ring, simple cloth ring, wooden band",
+   "salt": 1
   },
   {
    "id": "st_ring2",
@@ -1272,7 +1293,8 @@
    "id": "st_scroll_hp",
    "kind": "consumable",
    "grade": 0,
-   "tags": "scroll, rolled paper, green wax seal, green ribbon, magic scroll"
+   "tags": "scroll, rolled paper, green wax seal, green ribbon, magic scroll",
+   "salt": 1
   },
   {
    "id": "st_shoe1",
@@ -1332,7 +1354,8 @@
    "id": "st_top2",
    "kind": "equip",
    "grade": 1,
-   "tags": "armor, leather armor, brown chest armor, buckles"
+   "tags": "armor, leather armor, brown chest armor, buckles",
+   "salt": 1
   },
   {
    "id": "st_top3",
@@ -1356,7 +1379,8 @@
    "id": "st_u_cape",
    "kind": "equip",
    "grade": 4,
-   "tags": "cape, ornate flowing cape, blue and gold, immortal mountain pattern, glowing"
+   "tags": "cape, cloak, flowing blue cloak, gold trim, collar, clasp",
+   "salt": 1
   },
   {
    "id": "st_u_earring",
@@ -1374,7 +1398,8 @@
    "id": "st_u_hat",
    "kind": "equip",
    "grade": 4,
-   "tags": "crown, phoenix crown, golden feathers, ornate, red gems"
+   "tags": "crown, phoenix crown, golden feathers, ornate, red gems",
+   "salt": 1
   },
   {
    "id": "st_u_necklace",
@@ -1452,7 +1477,8 @@
    "id": "u_cheollip",
    "kind": "equip",
    "grade": 4,
-   "tags": "wide brimmed hat, black iron hat, ornate, glowing"
+   "tags": "wide brimmed hat, black iron hat, ornate, glowing",
+   "salt": 1
   },
   {
    "id": "u_cheongeun",
@@ -1488,13 +1514,15 @@
    "id": "u_dopo",
    "kind": "equip",
    "grade": 4,
-   "tags": "robe, white robe, crane embroidery, flowing, glowing"
+   "tags": "robe, white robe, crane embroidery, flowing, glowing",
+   "salt": 1
   },
   {
    "id": "u_dujeong",
    "kind": "equip",
    "grade": 4,
-   "tags": "armor, black scale armor, studded plate armor, ornate, glowing rivets"
+   "tags": "armor, black scale armor, studded plate armor, ornate, glowing rivets",
+   "salt": 1
   },
   {
    "id": "u_eunwol",
@@ -1524,7 +1552,8 @@
    "id": "u_hopae",
    "kind": "equip",
    "grade": 4,
-   "tags": "wooden tag, official tablet, horse engraved, rectangular, glowing"
+   "tags": "wooden plaque, official tablet, rectangular wood, engraved characters, hanging cord, glowing",
+   "salt": 1
   },
   {
    "id": "u_iljabul",
@@ -1578,7 +1607,8 @@
    "id": "u_unmun",
    "kind": "equip",
    "grade": 4,
-   "tags": "shoes, cloth shoes, cloud pattern, embroidered shoes, glowing"
+   "tags": "traditional shoes, silk slippers, curved toe, cloud embroidery, glowing",
+   "salt": 1
   },
   {
    "id": "u_yongmun",
@@ -1596,7 +1626,8 @@
    "id": "u_yusu",
    "kind": "equip",
    "grade": 4,
-   "tags": "cloth wrist wrap, flowing blue ribbon bracer, water pattern, glowing"
+   "tags": "cloth wrist wrap, flowing blue ribbon bracer, water pattern, glowing",
+   "salt": 1
   },
   {
    "id": "visit_alien",
@@ -1692,7 +1723,8 @@
    "id": "w_gakgung",
    "kind": "equip",
    "grade": 1,
-   "tags": "bow (weapon), recurve bow, bowstring"
+   "tags": "bow (weapon), horn bow, curved bow, full bow shape, bowstring, arrows",
+   "salt": 1
   },
   {
    "id": "w_gauntlet",
@@ -1740,7 +1772,8 @@
    "id": "w_wolto",
    "kind": "equip",
    "grade": 0,
-   "tags": "glaive, polearm, crescent blade, long pole"
+   "tags": "glaive, long polearm, big crescent blade, red tassel, full weapon",
+   "salt": 1
   },
   {
    "id": "wall_dan",
@@ -1776,13 +1809,15 @@
    "id": "wear_braid",
    "kind": "wear",
    "grade": 0,
-   "tags": "hair braid ribbon, long braided hair, red ribbon, hair tie"
+   "tags": "long red ribbon, hair ribbon, braided cord, tassel",
+   "salt": 1
   },
   {
    "id": "wear_coat",
    "kind": "wear",
    "grade": 0,
-   "tags": "coat, long overcoat, teal, sash, folded"
+   "tags": "long coat, overcoat, teal, ribbon ties, long sleeves",
+   "salt": 1
   },
   {
    "id": "wear_gat",
@@ -1806,7 +1841,8 @@
    "id": "wear_leather",
    "kind": "wear",
    "grade": 0,
-   "tags": "clothing, plain jacket, brown tunic, everyday clothes, folded"
+   "tags": "jeogori, short jacket, brown cloth shirt, long sleeves, ties",
+   "salt": 1
   },
   {
    "id": "wear_plate",
@@ -1818,25 +1854,29 @@
    "id": "wear_robe",
    "kind": "wear",
    "grade": 0,
-   "tags": "robe, long scholar robe, white and blue, wide sleeves, folded"
+   "tags": "long overcoat, durumagi, wide sleeves, white and blue, robe, ribbon ties",
+   "salt": 1
   },
   {
    "id": "wear_scholar",
    "kind": "wear",
    "grade": 0,
-   "tags": "scholar hat, black cloth hat, square-topped, tied strings"
+   "tags": "black cloth hat, scholar cap, hat with ribbons, head wear",
+   "salt": 1
   },
   {
    "id": "wear_spacesuit",
    "kind": "wear",
    "grade": 0,
-   "tags": "spacesuit, sci-fi suit, white astronaut suit, delivery logo, folded"
+   "tags": "astronaut suit, white spacesuit, sci-fi, orange accents, jumpsuit",
+   "salt": 1
   },
   {
    "id": "wear_topknot",
    "kind": "wear",
    "grade": 0,
-   "tags": "topknot, hair bun, black hair tied up, hair ornament"
+   "tags": "hair bun, black topknot, wooden hairpin, hair ornament",
+   "salt": 1
   },
   {
    "id": "yo",

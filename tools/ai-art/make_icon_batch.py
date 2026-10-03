@@ -18,8 +18,9 @@ NEG = ('1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, w
        'ground shadow, gradient background, background scenery, cropped, worst quality, low quality')
 items = []
 for it in spec['items']:
-    seed = int(hashlib.md5(it['id'].encode()).hexdigest()[:8], 16)
-    items.append({'id': it['id'], 'seed': seed, 'prompt': TEMPLATE.format(tags=it['tags']), 'negative': NEG})
+    salt = it.get('salt', 0)   # 재뽑기: 소금을 올리면 다른 씨앗(1 이상은 상자·틀 부정어도 더한다)
+    seed = int(hashlib.md5((it['id'] + ('#%d' % salt if salt else '')).encode()).hexdigest()[:8], 16)
+    items.append({'id': it['id'], 'seed': seed, 'prompt': TEMPLATE.format(tags=it['tags']), 'negative': NEG + (', box, gift box, case, package, frame, picture frame, border, cube' if salt else '')})
 batch = {'model': 'animagine-xl-4.0-opt', 'out': SPEC[1],
          'defaults': {'prompt_prefix': 'masterpiece, high score, great score, absurdres', 'width': 768, 'height': 768, 'steps': 28, 'cfg': 5.5,
                       'sampler': 'Euler a', 'negative': NEG},
