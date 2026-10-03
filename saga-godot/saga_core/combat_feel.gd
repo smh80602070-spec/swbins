@@ -89,13 +89,16 @@ var _pick_sound_idx := 0
 var _ui_sound_idx := 0
 
 
-func hit(target: Node3D, amount: float, crit: bool) -> void:
-	_do_hitstop(crit)
-	_do_shake()
+## tune(선택, G-0018): {stop_ms 히트스톱 길이(치명이면 +50), shake_mul 흔들림 배율(0=없음), pop_mul 숫자 크기 배율, quiet 타격음 끔}.
+## 비우면 위 기본 상수 그대로 — 사가블로·스토리·다른 호출은 동작이 안 바뀐다.
+func hit(target: Node3D, amount: float, crit: bool, tune: Dictionary = {}) -> void:
+	_do_hitstop(crit, int(tune.get("stop_ms", -1)))
+	_do_shake(float(tune.get("shake_mul", 1.0)))
 	if is_instance_valid(target):
 		_do_flash(target)
-		_do_popup(target, amount, crit)
-	_do_sound("hit")
+		_do_popup(target, amount, crit, float(tune.get("pop_mul", 1.0)))
+	if not bool(tune.get("quiet", false)):
+		_do_sound("hit")
 
 
 ## PLAN 101-4 순서 2(FOREST 연결), 2026-09-18. 웹 §5 "채집 손맛" 후보용 —
@@ -123,8 +126,12 @@ func ui() -> void:
 	_play_one_shot(UI_SOUNDS[_ui_sound_idx])
 
 
-func _do_hitstop(crit: bool) -> void:
+func _do_hitstop(crit: bool, stop_ms: int = -1) -> void:
 	var dur := HITSTOP_CRIT_MS if crit else HITSTOP_MS
+	if stop_ms >= 0:
+		dur = stop_ms + (HITSTOP_CRIT_MS - HITSTOP_MS if crit else 0)
+	if dur <= 0:
+		return # 지속 피해 틱 같은 것 — 멈추지 않는다
 	var until := Time.get_ticks_msec() + dur
 	_hitstop_until_msec = maxi(_hitstop_until_msec, until)
 	Engine.time_scale = HITSTOP_SCALE
@@ -138,11 +145,13 @@ func _process(_delta: float) -> void:
 	_tick_flash()
 
 
-func _do_shake() -> void:
+func _do_shake(mul: float = 1.0) -> void:
+	if mul <= 0.0:
+		return
 	var rig := get_tree().get_first_node_in_group("camera_rig")
 	if rig != null and rig.has_method("shake"):
-		rig.shake(SHAKE_AMP_M, SHAKE_MS / 1000.0)
-	shake_triggered.emit(SHAKE_AMP_M, SHAKE_MS)
+		rig.shake(SHAKE_AMP_M * mul, SHAKE_MS / 1000.0)
+	shake_triggered.emit(SHAKE_AMP_M * mul, SHAKE_MS)
 
 
 func _do_flash(target: Node3D) -> void:
@@ -214,7 +223,7 @@ func _first_mesh(target: Node) -> MeshInstance3D:
 	return null
 
 
-func _do_popup(target: Node3D, amount: float, crit: bool) -> void:
+func _do_popup(target: Node3D, amount: float, crit: bool, pop_mul: float = 1.0) -> void:
 	var scene := get_tree().current_scene
 	if scene == null:
 		popup_triggered.emit(amount, crit)
@@ -223,7 +232,7 @@ func _do_popup(target: Node3D, amount: float, crit: bool) -> void:
 	label.text = str(int(roundf(amount)))
 	label.modulate = Color(1.0, 0.55, 0.1) if crit else Color(1.0, 1.0, 1.0)
 	label.font_size = 48
-	label.pixel_size = 0.01 * (POPUP_CRIT_SCALE if crit else 1.0)
+	label.pixel_size = 0.01 * (POPUP_CRIT_SCALE if crit else 1.0) * pop_mul
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.no_depth_test = true
 	## 2026-09-18 고침 — 트리 밖 노드의 global_position 대입은 Godot 4가

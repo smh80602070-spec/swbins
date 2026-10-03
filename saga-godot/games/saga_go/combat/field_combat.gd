@@ -31,6 +31,7 @@ const Weapons := preload("res://games/saga_go/data/weapons.gd")
 const Kits := preload("res://games/saga_go/data/kits.gd")
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const AimedShot := preload("res://games/saga_go/combat/aimed_shot.gd")
+const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 
 const COMBO_MUL := [0.35, 0.4, 0.6]
 const COMBO_SEC := [0.32, 0.32, 0.45]
@@ -453,6 +454,7 @@ func release_attack() -> bool:
 	return aim.release()
 
 func _physics_process(delta: float) -> void:
+	FeelTuning.kind = "normal" # G-0018 — 이번 프레임에 시작하는 공격이 자기 종류로 바꾼다
 	_combo_link = maxf(_combo_link - delta, 0.0)
 	_attack_t = maxf(_attack_t - delta, 0.0)
 	_switch_cd = maxf(_switch_cd - delta, 0.0)
@@ -520,6 +522,7 @@ func attack() -> bool:
 	_combo = (_combo + 1) % (kit.mul as Array).size()
 	_combo_link = COMBO_LINK_SEC
 	_attack_t = kit.sec[step]
+	FeelTuning.kind = "finisher" if step > 0 and step == (kit.mul as Array).size() - 1 else "normal"
 	_aim_at_nearest()
 	_player.call("play_action", "attack", kit.sec[step], 0.25)
 	var amount: float = _normal_atk() * float(kit.mul[step])
@@ -558,6 +561,7 @@ func attack() -> bool:
 
 ## 강공격 — 기본 공격 단추를 CHARGE_SEC 넘게 누르고 있으면. 앞쪽 넓게 한 번, 스태미나를 쓴다.
 func charged_attack() -> bool:
+	FeelTuning.kind = "heavy"
 	if not _grounded_ok() or float(_player.get("stamina")) < CHARGE_COST:
 		return false
 	_player.call("_spend", CHARGE_COST)
@@ -580,6 +584,7 @@ func charged_attack() -> bool:
 
 ## 낙하 공격이 땅에 닿았을 때 go_player.gd 가 부른다 — 높이 떨어질수록 세다.
 func plunge_land(fell_m: float) -> int:
+	FeelTuning.kind = "plunge"
 	var mul := PLUNGE_MUL + PLUNGE_MUL_PER_M * clampf(fell_m, 0.0, PLUNGE_MAX_M)
 	var center := _player.global_position
 	_ring_fx(center, PLUNGE_RADIUS, Color(0.95, 0.9, 0.75), 0.4)
@@ -618,6 +623,7 @@ func infusion_of(id: String) -> String:
 	return String(inf.el) if float(inf.get("left", 0.0)) > 0.0 else ""
 
 func skill() -> bool:
+	FeelTuning.kind = "skill"
 	var id := active_id()
 	if _skill_cd.get(id, 0.0) > 0.0 or not _grounded_ok():
 		return false
@@ -680,6 +686,7 @@ func skill() -> bool:
 	return true
 
 func burst() -> bool:
+	FeelTuning.kind = "burst"
 	if energy < ENERGY_MAX or not _grounded_ok():
 		return false
 	energy = 0.0
@@ -947,6 +954,8 @@ func lore_mul() -> float:
 	return _lore_mul if _lore_t > 0.0 else 1.0
 
 func _tick_effects(delta: float) -> void:
+	var prev_kind: String = FeelTuning.kind
+	FeelTuning.kind = "skill" # 스킬·폭발이 늦게 터뜨리는 후속 타격(개화 씨앗은 따로 "reaction"). 끝나면 원래 종류로
 	_crit_id = active_id()
 	for fx in _effects:
 		fx.left -= delta
@@ -987,7 +996,9 @@ func _tick_effects(delta: float) -> void:
 				_ring_fx(fx.center, BLOOM_RADIUS, info.color, 0.4)
 				for e in _enemies_near(fx.center, BLOOM_RADIUS):
 					var push: Vector3 = (e as Node3D).global_position - fx.center
+					FeelTuning.kind = "reaction"
 					e.call("apply_damage", fx.base * BLOOM_MUL * _reaction_mul("bloom"), true, push, "grass")
+					FeelTuning.kind = "skill"
 			## 106장 ㉔ 고유 스킬 — 진(가까운 적 몇에 낙뢰, 맞히면 명단 기력) · 포탄(늦게 떨어짐) · 소용돌이(빨아들임).
 			"kit_zone":
 				var col_z := Elements.color_of(String(fx.el))
@@ -1031,6 +1042,14 @@ func _tick_effects(delta: float) -> void:
 					e.call("knockback", -to_v, float(fx.pull))
 	_crit_id = ""
 	_effects = _effects.filter(func(fx: Dictionary) -> bool: return fx.left > 0.0)
+	FeelTuning.kind = prev_kind
+
+## 반응이 둘레 적에게 옮겨 입히는 피해 — 주 타격보다 약한 손맛(종류 "reaction")으로, 끝나면 원래 종류로 되돌린다.
+func _splash_damage(other: Node, amount: float, push: Vector3, element: String = "") -> void:
+	var prev: String = FeelTuning.kind
+	FeelTuning.kind = "reaction"
+	other.call("apply_damage", amount, false, push, element)
+	FeelTuning.kind = prev
 
 func _hit_front(reach: float, arc_dot: float, amount: float, element: String) -> int:
 	var fwd: Vector3 = _player.call("facing")
@@ -1186,7 +1205,7 @@ func _deal(enemy: Node, base: float, element: String, dir: Vector3) -> float:
 					var push: Vector3 = (other as Node3D).global_position - center
 					other.call("knockback", push if push.length() > 0.1 else dir, 7.0)
 					if other != enemy:
-						other.call("apply_damage", base, false, push)
+						_splash_damage(other, base, push)
 			"electro":
 				enemy.call("add_dot", 4, 0.5, base * 0.3)
 				for other in _enemies_near((enemy as Node3D).global_position, ELECTRO_SPREAD):
@@ -1200,7 +1219,7 @@ func _deal(enemy: Node, base: float, element: String, dir: Vector3) -> float:
 				for other in _enemies_near(sc_center, SUPERCONDUCT_RADIUS):
 					other.set("phys_vuln_t", PHYS_VULN_SEC)
 					if other != enemy:
-						other.call("apply_damage", base * SUPERCONDUCT_MUL, false, (other as Node3D).global_position - sc_center, "ice")
+						_splash_damage(other, base * SUPERCONDUCT_MUL, (other as Node3D).global_position - sc_center, "ice")
 			"swirl":
 				## 확산 — 둘레 적에게 빨아올린 원소를 옮겨 붙이고 그 원소로 조금 친다(옮겨 붙은 원소로 또 반응은 안 한다).
 				var sw_center: Vector3 = (enemy as Node3D).global_position
@@ -1210,7 +1229,7 @@ func _deal(enemy: Node, base: float, element: String, dir: Vector3) -> float:
 						continue
 					if not other.call("is_shielded") and other.get("aura") == "":
 						other.call("set_aura", aura)
-					other.call("apply_damage", base * SWIRL_MUL * _reaction_mul("swirl"), false, (other as Node3D).global_position - sw_center, aura)
+					_splash_damage(other, base * SWIRL_MUL * _reaction_mul("swirl"), (other as Node3D).global_position - sw_center, aura)
 			"crystallize":
 				grant_shield(max_hp * CRYSTAL_SHIELD, aura)
 			"bloom":

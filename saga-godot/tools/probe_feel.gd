@@ -8,6 +8,7 @@ extends Node
 ## fails 는 "측정을 못 했다"(적/플레이어 못 찾음 등)일 때만 센다. 값이 좋고 나쁨은 사람이 보고 정한다(티켓 메모 기준선 표).
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
+const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 
 var _p: CharacterBody3D
 var _fc: Node
@@ -22,6 +23,12 @@ var _ymax := 0.0
 var _air := 0
 var _pos0 := Vector3.ZERO
 var _dodge_start := -1
+var _frozen := false
+var _ki := 0
+var _kphase := 0
+var _last_stop := -1
+var _last_amp := -1.0
+var _kind_rows: Array[String] = []
 var _ok1 := false
 var _hp_a := 0.0
 var _rejected := false
@@ -31,8 +38,12 @@ func _ready() -> void:
 	Weather.force("clear")
 	_p = get_tree().get_first_node_in_group("player")
 	_dt = 1.0 / float(Engine.physics_ticks_per_second)
-	CombatFeel.hitstop_triggered.connect(func(_d: int) -> void: _sig.hitstop += 1)
-	CombatFeel.shake_triggered.connect(func(_a: float, _d: int) -> void: _sig.shake += 1)
+	CombatFeel.hitstop_triggered.connect(func(d: int) -> void:
+		_sig.hitstop += 1
+		_last_stop = d)
+	CombatFeel.shake_triggered.connect(func(a: float, _d: int) -> void:
+		_sig.shake += 1
+		_last_amp = a)
 	CombatFeel.flash_triggered.connect(func(_t: Node) -> void: _sig.flash += 1)
 	CombatFeel.popup_triggered.connect(func(_a: float, _c: bool) -> void: _sig.popup += 1)
 	CombatFeel.sound_triggered.connect(func(_i: int) -> void: _sig.sound += 1)
@@ -129,7 +140,46 @@ func _physics_process(_delta: float) -> void:
 				_m("enemy_hit_feel_signals", JSON.stringify(_sig)) # 0 이면 사가고는 적 타격에 손맛 5요소를 안 쓴다
 				_m("time_scale_after_hit", "%.2f" % Engine.time_scale)
 				_next()
-		3: # ⑤ 회피 — 직전 타격의 히트스톱(time_scale 0.05)이 풀린 뒤에 누른다
+		3: # ④b 공격 종류별 타격감 — 표(FeelTuning.KINDS)대로 히트스톱·흔들림이 나가는지
+			var kinds: Array = FeelTuning.KINDS.keys()
+			if not _frozen:
+				for en in get_tree().get_nodes_in_group("field_enemy"):
+					en.process_mode = Node.PROCESS_MODE_DISABLED # 적이 플레이어를 때리는 타격(70ms)이 측정 창에 끼지 않게 격리
+				_frozen = true
+			if _ki >= kinds.size():
+				for en in get_tree().get_nodes_in_group("field_enemy"):
+					en.process_mode = Node.PROCESS_MODE_INHERIT
+				_frozen = false
+				for row in _kind_rows:
+					print(row)
+				_next()
+				return
+			if Engine.time_scale < 0.99:
+				return # 직전 히트스톱이 풀릴 때까지 기다린다
+			var kd: String = kinds[_ki]
+			if _kphase == 0:
+				_target = _enemy_near(TestMap.world_pos(1, 4))
+				_target.set("hp", 99999.0)
+				_last_stop = 0
+				_last_amp = 0.0
+				for k in _sig:
+					_sig[k] = 0
+				FeelTuning.kind = kd
+				_fc.call("_deal", _target, 20.0, "", Vector3.FORWARD)
+				_kphase = 1
+			else:
+				var want: Dictionary = FeelTuning.KINDS[kd]
+				var ok := _last_stop == int(want.stop_ms) and is_equal_approx(_last_amp, 0.06 * float(want.shake_mul))
+				if int(want.stop_ms) == 0:
+					ok = _sig.hitstop == 0 and _sig.shake == 0
+				if kd == "normal" and _last_stop != 70: # 기준선은 옛 값(70ms)과 같아야 한다
+					ok = false
+				if not ok:
+					_fails += 1
+				_kind_rows.append("FEEL hit_kind %s stop_ms=%d shake_amp=%.3f popup=%d sound=%d %s" % [kd, _last_stop, _last_amp, _sig.popup, _sig.sound, "OK" if ok else "어긋남"])
+				_ki += 1
+				_kphase = 0
+		4: # ⑤ 회피 — 직전 타격의 히트스톱(time_scale 0.05)이 풀린 뒤에 누른다
 			if _frame == 1:
 				_dodge_start = -1
 				_p.set("stamina", 100.0)
@@ -147,7 +197,7 @@ func _physics_process(_delta: float) -> void:
 					_next()
 			elif _frame > 400:
 				_fail("회피 시작 못 함")
-		4: # ⑥ 점프
+		5: # ⑥ 점프
 			if _frame == 1:
 				_p.global_position = TestMap.world_pos(1, 4) + Vector3(0, 0.3, 9.0)
 				_p.velocity = Vector3.ZERO

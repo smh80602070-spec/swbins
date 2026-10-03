@@ -7,6 +7,7 @@ extends CharacterBody3D
 ## 여기는 몸·체력·AI·머리 위 표시만.
 
 const Elements := preload("res://games/saga_go/combat/elements.gd")
+const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 const Growth := preload("res://games/saga_go/data/growth.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
@@ -485,7 +486,7 @@ func apply_damage(amount: float, crit: bool, from_dir: Vector3 = Vector3.ZERO, i
 		var dealt := amount * Elements.shield_mul(element, incoming_element)
 		shield = maxf(shield - dealt, 0.0)
 		if dealt > 0.0:
-			CombatFeel.hit(_visual, dealt, false)
+			CombatFeel.hit(_visual, dealt, false, FeelTuning.tune())
 		if ai == AI.IDLE or ai == AI.RETURN:
 			ai = AI.CHASE
 		if shield <= 0.0:
@@ -493,7 +494,7 @@ func apply_damage(amount: float, crit: bool, from_dir: Vector3 = Vector3.ZERO, i
 		_refresh_bar()
 		return dealt
 	hp -= amount
-	CombatFeel.hit(_visual, amount, crit)
+	CombatFeel.hit(_visual, amount, crit, FeelTuning.tune())
 	if from_dir.length() > 0.01:
 		_knock = from_dir.normalized() * 4.0
 	if ai == AI.IDLE or ai == AI.RETURN:
@@ -569,7 +570,10 @@ func _tick_status(delta: float) -> void:
 		if d.t <= 0.0:
 			d.t = d.every
 			d.left -= 1
+			var prev_kind: String = FeelTuning.kind
+			FeelTuning.kind = "dot" # 틱마다 멈추거나 소리 내지 않는다
 			apply_damage(d.amount, false)
+			FeelTuning.kind = prev_kind
 			if d.left <= 0:
 				_dots.erase(d)
 		if ai == AI.DEAD:
