@@ -13,8 +13,8 @@ B="${BLENDER:-/c/Program Files/Blender Foundation/Blender 5.2/blender.exe}"
 [ -x "$B" ] || { echo "Blender 없음: $B (BLENDER=경로)"; exit 1; }
 WF=tools/world-forge
 
-echo "== 1) 툰 GLB: 지물 15 · 지형 10 · 탈것 5 · 자연 소품 19(K-0052) · 마을 소품 18(K-0053)"
-for k in prop terrain vehicle nature village; do
+echo "== 1) 툰 GLB: 지물 15 · 지형 10 · 탈것 5 · 자연 소품 19(K-0052) · 마을 소품 18(K-0053) · 고돗 빈 자리 48(K-0057)"
+for k in prop terrain vehicle nature village field; do
   "$B" -b --factory-startup -P $WF/build_$k.py -- --all --out-dir "$OUT/toon" --style toon </dev/null 2>&1 | grep -E "WORLDFORGE|Traceback|Error" | grep -v '"ok": true' || true
 done
 echo "== 2) 툰 GLB: 건물 12(레시피 전부 중 계획표에 있는 것)"

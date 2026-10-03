@@ -2,7 +2,7 @@
  "version": 1,
  "note": "K-0017 단계 1 — 판 5 × (건물 3 · 지물 3 · 지형 2 · 탈것 1) = 45칸. 같은 id 는 한 번만 만든다(건물은 기존 레시피 재사용). 이름 정책: 원작 이름 없음, id 는 일반 명사. exists = recipes/ 에 이미 있음, new = 만들 것.",
  "budget": {"toon_glb_mb": 0.5, "toon_tris": 5000, "sprite_px": [128, 256], "tex_px": 256},
- "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py", "village": "build_village.py"},
+ "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py", "village": "build_village.py", "field": "build_field.py", "dkit": "build_field.py", "loot": "build_field.py"},
  "games": {
   "go": {
    "theme": "시대 혼합 마을(과거·현대·미래 한 자리)",
@@ -104,5 +104,20 @@
   "note": "K-0053 — 마을·장터 소품 12 + 던전 방 키트 6(공용). build_village.py. 삼각형 ≤2500. 돌담·벽 토막은 양 끝 단면이 같다.",
   "tris_max": 2500,
   "items": ["market_stall_01", "low_stone_wall_01", "signpost_01", "notice_board_01", "crate_stack_01", "barrel_01", "sack_pile_01", "tent_small_01", "tent_large_01", "campfire_logs_01", "bench_01", "handcart_01", "dungeon_pillar_01", "wall_piece_01", "chest_01", "jar_01", "altar_base_01", "bars_door_01"]
+ },
+ "field": {
+  "note": "K-0057 — 고돗 빈 자리: 밭 작물·갈대·허수아비·디딤돌·폐허. build_field.py. 3D 전용(2D 스프라이트 없음). 삼각형 ≤1500(지붕·다리 ≤2500).",
+  "tris_max": 1500, "no_sprite": true,
+  "items": ["wheat_sprout_01", "wheat_growing_01", "wheat_ripe_01", "vegetable_row_01", "reed_clump_01", "scarecrow_01", "stepping_stone_01", "stepping_stone_02", "rubble_pillar_01", "rubble_wall_01", "wall_block_01", "plank_bridge_01", "temple_roof_01"]
+ },
+ "dkit": {
+  "note": "K-0057 — 사가블로 굴혈 방 키트 5모듈 × 재질 3. 한 변 4m·문 폭 2m·벽 3m. 3D 전용. 삼각형 ≤2500.",
+  "tris_max": 2500, "no_sprite": true,
+  "items": ["cave_room_01_dirt", "cave_room_01_limestone", "cave_room_01_lava", "cave_gate_01_dirt", "cave_gate_01_limestone", "cave_gate_01_lava", "cave_corridor_01_dirt", "cave_corridor_01_limestone", "cave_corridor_01_lava", "cave_corner_01_dirt", "cave_corner_01_limestone", "cave_corner_01_lava", "cave_stairs_01_dirt", "cave_stairs_01_limestone", "cave_stairs_01_lava"]
+ },
+ "loot": {
+  "note": "K-0057 — 바닥 노획물 4종 × 등급 g0~g4(색+빛 줄). 3D 전용. 삼각형 ≤2500.",
+  "tris_max": 2500, "no_sprite": true,
+  "items": ["loot_sword_g0", "loot_sword_g1", "loot_sword_g2", "loot_sword_g3", "loot_sword_g4", "loot_axe_g0", "loot_axe_g1", "loot_axe_g2", "loot_axe_g3", "loot_axe_g4", "loot_dagger_g0", "loot_dagger_g1", "loot_dagger_g2", "loot_dagger_g3", "loot_dagger_g4", "loot_staff_g0", "loot_staff_g1", "loot_staff_g2", "loot_staff_g3", "loot_staff_g4"]
  }
 }

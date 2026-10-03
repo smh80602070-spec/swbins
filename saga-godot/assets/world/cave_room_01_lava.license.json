@@ -1,0 +1,18 @@
+{
+ "id": "cave_room_01_lava",
+ "generator": "tools/world-forge/build_field.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: cliff_side",
+  "polyhaven: concrete_wall_001",
+  "polyhaven: white_stucco"
+ ],
+ "size_m": [
+  4.56,
+  4.5,
+  3.39
+ ],
+ "tris": 476
+}

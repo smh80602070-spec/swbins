@@ -50,7 +50,7 @@ def main():
                     bad(f'{g}.building.{i}: exists 인데 recipes/{i}.json 이 없다')
                 if it.get('state') == 'new' and kind == 'building' and has:
                     bad(f'{g}.building.{i}: new 인데 이미 recipes/ 에 있다')
-    for grp in ('nature', 'village'):
+    for grp in ('nature', 'village', 'field', 'dkit', 'loot'):
         for i in plan.get(grp, {}).get('items', []):
             if not re.fullmatch(r'[a-z0-9_]+', i):
                 bad(f'{grp}.{i}: id 는 영문 소문자·숫자·_')
@@ -66,8 +66,10 @@ def main():
         if flag not in sys.argv:
             return
         dirp = folder(flag)
-        miss = [i for i in seen if not all(os.path.exists(os.path.join(dirp, i + e)) for e in exts)]
-        print(f'{label} {len(seen) - len(miss)}/{len(seen)} ({"+".join(exts)}), missing {len(miss)}')
+        no2d = {i for g in plan.values() if isinstance(g, dict) and g.get('no_sprite') for i in g.get('items', [])}      # no_sprite 묶음(K-0057 3D 전용)은 2D 스프라이트 대상이 아니다
+        ids = [i for i in seen if not (flag == '--sprites' and i in no2d)]
+        miss = [i for i in ids if not all(os.path.exists(os.path.join(dirp, i + e)) for e in exts)]
+        print(f'{label} {len(ids) - len(miss)}/{len(ids)} ({"+".join(exts)}), missing {len(miss)}')
         if miss and '--strict' in sys.argv:
             bad(f'{label} missing {len(miss)}: {", ".join(miss[:8])}...')
 
@@ -83,8 +85,11 @@ def main():
                 continue
             tris = json.load(open(lic, encoding='utf-8')).get('tris', 0)
             kb = os.path.getsize(g) // 1024
-            nat, vil = plan.get('nature', {}), plan.get('village', {})
-            lim = (nat.get('tris_max_big', 2500) if i in nat.get('big', []) else nat.get('tris_max', 1500)) if i in nat.get('items', []) else (vil.get('tris_max', 2500) if i in vil.get('items', []) else b.get('toon_tris', 5000))
+            nat = plan.get('nature', {})
+            grp = next((g for g in ('village', 'field', 'dkit', 'loot') if i in plan.get(g, {}).get('items', [])), None)
+            lim = (nat.get('tris_max_big', 2500) if i in nat.get('big', []) else nat.get('tris_max', 1500)) if i in nat.get('items', []) else (plan[grp].get('tris_max', 2500) if grp else b.get('toon_tris', 5000))
+            if i in ('temple_roof_01', 'plank_bridge_01'):
+                lim = 2500
             if tris > lim or kb > b.get('toon_glb_mb', 0.5) * 1024:
                 over.append(f'{i}(tris {tris}, {kb}KB)')
         print(f'budget over {len(over)}')
