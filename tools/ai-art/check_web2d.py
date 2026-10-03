@@ -51,8 +51,8 @@ def main():
     if len(games) != 5:
         bad('판이 다섯이 아니다')
     for g, s in games.items():
-        if len(s['bg']) != 4 or len(s['tiles']) != 6:
-            bad(f'{g}: 배경 {len(s["bg"])}(규칙 4) · 타일 {len(s["tiles"])}(규칙 6)')
+        if sum(1 for r in s['bg'] if not r.get('extra')) != 4 or len(s['tiles']) != 6:      # extra(K-0055 이후 더한 지역)는 4 에 안 센다
+            bad(f'{g}: 배경 {sum(1 for r in s["bg"] if not r.get("extra"))}(규칙 4, extra 제외) · 타일 {len(s["tiles"])}(규칙 6)')
     ids = [f'{g}_{r}' for g, r in regions] + [f'{g}_{t}' for g, t in tiles]
     if len(set(ids)) != len(ids):
         bad('id 중복')

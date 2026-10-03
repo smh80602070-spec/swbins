@@ -28,6 +28,8 @@ def main():
     cands = PLAN['budget']['bg_candidates']
     for g, spec in PLAN['games'].items():
         for r in spec['bg']:
+            if r.get('extra'):
+                continue
             for k in range(1, cands + 1):
                 n += 1
                 bg.append({'id': f'bg_{g}_{r["id"]}_{k}', 'seed': 20261002 + 29 * n, 'prompt': r['prompt']})
@@ -38,6 +40,13 @@ def main():
             if t['id'] in ts.get('nogrid_kinds', []):
                 it['negative'] = ts['negative'] + ', ' + ts['negative_nogrid']
             tiles.append(it)
+    m = 0
+    for g, spec in PLAN['games'].items():                                   # extra(K-0055 이후 더한 지역)는 맨 뒤 — 옛 씨앗이 안 바뀐다
+        for r in spec['bg']:
+            if r.get('extra'):
+                for k in range(1, cands + 1):
+                    m += 1
+                    bg.append({'id': f'bg_{g}_{r["id"]}_{k}', 'seed': 20271004 + 29 * m, 'prompt': r['prompt']})
     batch('bg', PLAN['models']['bg'], 'web2d_bg', PLAN['bg_style'], bg)
     batch('tile', PLAN['models']['tile'], 'web2d_tiles', PLAN['tile_style'], tiles)
 

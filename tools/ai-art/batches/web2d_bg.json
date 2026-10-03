@@ -210,6 +210,66 @@
    "id": "bg_realm_river_harbor_2",
    "seed": 20262858,
    "prompt": "wide river delta harbor city, junk boats with patched sails, stilt houses, cranes of a modern dock, evening haze, calm water"
+  },
+  {
+   "id": "bg_story_forest_1",
+   "seed": 20271033,
+   "prompt": "dense ancient forest, rows of tall dark green trees, sunbeams through the canopy, mossy roots and ferns, soft haze, side view stage backdrop"
+  },
+  {
+   "id": "bg_story_forest_2",
+   "seed": 20271062,
+   "prompt": "dense ancient forest, rows of tall dark green trees, sunbeams through the canopy, mossy roots and ferns, soft haze, side view stage backdrop"
+  },
+  {
+   "id": "bg_story_fire_gorge_1",
+   "seed": 20271091,
+   "prompt": "burning canyon gorge at dusk, red smoky sky, drifting embers, collapsed stone walls, charred pillars, lava glow in the depths"
+  },
+  {
+   "id": "bg_story_fire_gorge_2",
+   "seed": 20271120,
+   "prompt": "burning canyon gorge at dusk, red smoky sky, drifting embers, collapsed stone walls, charred pillars, lava glow in the depths"
+  },
+  {
+   "id": "bg_story_old_battlefield_1",
+   "seed": 20271149,
+   "prompt": "ancient empty battlefield plain, torn banners on poles, broken spears and wagon wheels in the grass, overcast golden sky, distant fortress silhouettes"
+  },
+  {
+   "id": "bg_story_old_battlefield_2",
+   "seed": 20271178,
+   "prompt": "ancient empty battlefield plain, torn banners on poles, broken spears and wagon wheels in the grass, overcast golden sky, distant fortress silhouettes"
+  },
+  {
+   "id": "bg_story_ruined_city_1",
+   "seed": 20271207,
+   "prompt": "ruined modern downtown, collapsed skyscrapers, cracked asphalt road, vines on glass towers, rusted cars, hazy dusk sky"
+  },
+  {
+   "id": "bg_story_ruined_city_2",
+   "seed": 20271236,
+   "prompt": "ruined modern downtown, collapsed skyscrapers, cracked asphalt road, vines on glass towers, rusted cars, hazy dusk sky"
+  },
+  {
+   "id": "bg_story_orbital_base_1",
+   "seed": 20271265,
+   "prompt": "orbital space station deck, huge viewport with starfield and a distant planet, metal truss structures, glowing blue panels, empty walkway"
+  },
+  {
+   "id": "bg_story_orbital_base_2",
+   "seed": 20271294,
+   "prompt": "orbital space station deck, huge viewport with starfield and a distant planet, metal truss structures, glowing blue panels, empty walkway"
+  },
+  {
+   "id": "bg_story_deep_cave_1",
+   "seed": 20271323,
+   "prompt": "deep dark underground cavern, huge stalactites, faint glowing mushrooms and blue crystals, still underground lake, near darkness"
+  },
+  {
+   "id": "bg_story_deep_cave_2",
+   "seed": 20271352,
+   "prompt": "deep dark underground cavern, huge stalactites, faint glowing mushrooms and blue crystals, still underground lake, near darkness"
   }
  ]
 }

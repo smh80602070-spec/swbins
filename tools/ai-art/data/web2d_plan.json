@@ -203,6 +203,36 @@
     {
      "id": "sky_bridge",
      "prompt": "rope and stone bridge between floating rock islands, waterfalls falling into clouds, hovering platforms, golden sunset"
+    },
+    {
+     "id": "forest",
+     "extra": true,
+     "prompt": "dense ancient forest, rows of tall dark green trees, sunbeams through the canopy, mossy roots and ferns, soft haze, side view stage backdrop"
+    },
+    {
+     "id": "fire_gorge",
+     "extra": true,
+     "prompt": "burning canyon gorge at dusk, red smoky sky, drifting embers, collapsed stone walls, charred pillars, lava glow in the depths"
+    },
+    {
+     "id": "old_battlefield",
+     "extra": true,
+     "prompt": "ancient empty battlefield plain, torn banners on poles, broken spears and wagon wheels in the grass, overcast golden sky, distant fortress silhouettes"
+    },
+    {
+     "id": "ruined_city",
+     "extra": true,
+     "prompt": "ruined modern downtown, collapsed skyscrapers, cracked asphalt road, vines on glass towers, rusted cars, hazy dusk sky"
+    },
+    {
+     "id": "orbital_base",
+     "extra": true,
+     "prompt": "orbital space station deck, huge viewport with starfield and a distant planet, metal truss structures, glowing blue panels, empty walkway"
+    },
+    {
+     "id": "deep_cave",
+     "extra": true,
+     "prompt": "deep dark underground cavern, huge stalactites, faint glowing mushrooms and blue crystals, still underground lake, near darkness"
     }
    ],
    "tiles": [
