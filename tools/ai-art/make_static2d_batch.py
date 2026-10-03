@@ -14,6 +14,8 @@ STYLE = 'game sprite, soft painterly shading, thin dark outline, rich colors, de
 NEG = ('lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, '
        'gradient background, background scenery, multiple views, border, frame, human, person, people')
 V = 'three-quarter view from above'
+# 흰색에 가까운 물체는 흰 배경에서 분리가 모호해 연한 녹회색 배경에 그린다(포장이 배경색을 모서리에서 읽어 지운다)
+TINT_BG = {'future_dome_01': (176, 204, 188), 'tree_birch_01': (182, 200, 214), 'tree_pine_01_snow': (176, 204, 188)}
 SUBJ = {
     # 건물 12
     'eu_house_01': f'two-storey half-timbered house, steep tiled roof, chimney, small windows, {V}',
@@ -92,11 +94,11 @@ def main():
         sp = sp.crop(bb)
         k = 600 / max(sp.size)                                     # 768 안에 여백을 두고 키운다
         sp = sp.resize((max(1, round(sp.width * k)), max(1, round(sp.height * k))), Image.LANCZOS)
-        cv = Image.new('RGB', (768, 768), (255, 255, 255))
+        cv = Image.new('RGB', (768, 768), TINT_BG.get(iid, (255, 255, 255)))
         cv.paste(sp, ((768 - sp.width) // 2, (768 - sp.height) // 2 + 20), sp)
         ip = os.path.join(init_dir, iid + '.png')
         cv.save(ip)
-        items.append({'id': iid, 'seed': int(hashlib.md5(('2d:' + iid).encode()).hexdigest()[:8], 16), 'prompt': f'{subj}, {STYLE}', 'negative': NEG,
+        items.append({'id': iid, 'seed': int(hashlib.md5(('2d:' + iid).encode()).hexdigest()[:8], 16), 'prompt': f'{subj}, {STYLE}'.replace('white background', 'plain pastel gray-green background') if iid in TINT_BG else f'{subj}, {STYLE}', 'negative': NEG,
                       'init_image': ip, 'denoise': 0.65,
                       'meta': {'mode': 'img2img', 'init_image': iid + '.webp (3D 툰 렌더 밑그림, tools/world-forge)', 'denoise': 0.65, 'init_license': 'CC0-1.0 (코드 형태 + Poly Haven CC0 재질)'}})
     batch = {'model': 'animagine-xl-4.0-opt', 'out': 'static2d',
