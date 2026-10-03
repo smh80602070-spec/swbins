@@ -1,0 +1,267 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "village",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people"
+ },
+ "items": [
+  {
+   "id": "market_stall_01",
+   "seed": 1630530697,
+   "prompt": "market stall, wooden counter with red and cream striped awning, fruit and crates on top, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\market_stall_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "market_stall_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "low_stone_wall_01",
+   "seed": 2937702491,
+   "prompt": "low stone wall section, rough stacked gray stones with flat cap stones, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\low_stone_wall_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "low_stone_wall_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "signpost_01",
+   "seed": 2023310612,
+   "prompt": "wooden signpost, dark pole with two pointed arrow boards, small stone base, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\signpost_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "signpost_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "notice_board_01",
+   "seed": 2124378217,
+   "prompt": "village notice board, wooden frame with small roof, paper notes pinned on, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\notice_board_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "notice_board_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "crate_stack_01",
+   "seed": 281203212,
+   "prompt": "stack of four wooden crates with dark iron corners, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\crate_stack_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "crate_stack_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "barrel_01",
+   "seed": 2908325917,
+   "prompt": "wooden barrel with iron hoops, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\barrel_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "barrel_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "sack_pile_01",
+   "seed": 2294506005,
+   "prompt": "pile of five tied burlap grain sacks, beige cloth, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\sack_pile_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "sack_pile_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tent_small_01",
+   "seed": 1417355437,
+   "prompt": "small beige canvas a-frame tent with ropes and pegs, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\tent_small_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tent_small_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tent_large_01",
+   "seed": 2394968455,
+   "prompt": "large round circus style tent, red and cream stripes, small red flag on top, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\tent_large_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tent_large_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "campfire_logs_01",
+   "seed": 1366691636,
+   "prompt": "campfire pit, ring of stones, leaning firewood logs, no flames, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\campfire_logs_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "campfire_logs_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "bench_01",
+   "seed": 4049753145,
+   "prompt": "wooden park bench with backrest, dark iron legs, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\bench_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "bench_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "handcart_01",
+   "seed": 1617810149,
+   "prompt": "wooden hand cart with one spoked wheel pair, two long handles, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\handcart_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "handcart_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "dungeon_pillar_01",
+   "seed": 1944361742,
+   "prompt": "ancient stone pillar, square base and capital, weathered gray stone, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\dungeon_pillar_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "dungeon_pillar_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "wall_piece_01",
+   "seed": 1195675141,
+   "prompt": "tall dungeon stone brick wall section, rough stones, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\wall_piece_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "wall_piece_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "chest_01",
+   "seed": 2697369026,
+   "prompt": "dark wooden treasure chest with rounded lid, iron bands and small gold lock, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\chest_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "chest_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "jar_01",
+   "seed": 2658215861,
+   "prompt": "large brown clay jar with two handles, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\jar_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "jar_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "altar_base_01",
+   "seed": 1872077268,
+   "prompt": "round stepped stone altar base, glowing purple ring on top, four small stone posts, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\altar_base_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "altar_base_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "bars_door_01",
+   "seed": 3295470609,
+   "prompt": "dungeon iron bars gate in a stone doorframe, black vertical bars, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\bars_door_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "bars_door_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  }
+ ]
+}
