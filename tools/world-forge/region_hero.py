@@ -2,7 +2,7 @@
 
   blender -b --factory-startup -P tools/world-forge/region_hero.py -- <지역> <출력.png> [샘플=48]
 
-지역: galaxy_ferry(은하 나루: 별밤 물가·등롱·돛단배) · frost_peak(서리봉 고원: 오로라·눈 소나무·횃불 길·제단) · time_rift(시간 틈 관측소: 떠 있는 섬·시간 고리·하늘의 균열·구름바다)
+지역: galaxy_ferry(은하 나루: 별밤 물가·등롱·돛단배) · frost_peak(서리봉 고원: 오로라·눈 소나무·횃불 길·제단) · time_rift(시간 틈 관측소: 떠 있는 섬·시간 고리·하늘의 균열·구름바다) · crossroads(틈새 갈림길: 과거·현재·미래 세 갈래와 균열 문)
 조각은 saga-assets/world/toon/*.glb(툰 GLB, K-0017)를 그대로 쓴다. 이 장면은 게임 장면이 아니라 방향을 정하는 시안 — 마음에 들면 각 트랙이 같은 구도·조명 값으로 엔진 안에서 다시 짠다.
 """
 import bpy
@@ -829,7 +829,202 @@ def time_rift():
     camera((-26.0, -62.0, 5.0), (0.0, 6.0, 19.0), lens=24)
 
 
-{'galaxy_ferry': galaxy_ferry, 'frost_peak': frost_peak, 'time_rift': time_rift}[REGION]()
+def plain_terrain():
+    import bmesh
+    me = bpy.data.meshes.new('plain')
+    o = bpy.data.objects.new('plain_ground', me)
+    sc.collection.objects.link(o)
+    bm = bmesh.new()
+    n, size = 170, 260.0
+    ph = [rng.uniform(0, 6.28) for _ in range(5)]
+    vs = []
+    for j in range(n + 1):
+        row = []
+        for i in range(n + 1):
+            x, y = (i / n - 0.5) * size, (j / n - 0.15) * size
+            d = math.hypot(x, y - 40)
+            flat = min(1.0, max(0.12, (d - 20) / 40))
+            roll = (0.9 * math.sin(x * 0.06 + ph[0]) + 0.6 * math.sin(y * 0.07 + ph[1]) + 0.3 * math.sin(x * 0.2 + y * 0.13 + ph[2])) * flat
+            hills = max(0, d - 60) * 0.18 * (1 + 0.5 * math.sin(x * 0.04 + ph[3]) + 0.3 * math.sin(y * 0.06 + ph[4]))
+            row.append(bm.verts.new((x, y, roll + hills)))
+        vs.append(row)
+    for j in range(n):
+        for i in range(n):
+            bm.faces.new((vs[j][i], vs[j][i + 1], vs[j + 1][i + 1], vs[j + 1][i]))
+    bm.to_mesh(me)
+    bm.free()
+    for p_ in me.polygons:
+        p_.use_smooth = True
+    o.data.materials.append(mat_simple('meadow', (0.035, 0.07, 0.05, 1), 0.9))
+    return o
+
+
+def road(p0, p1, width, mat, z=0.06):
+    dx, dy = p1[0] - p0[0], p1[1] - p0[1]
+    ln = math.hypot(dx, dy)
+    bpy.ops.mesh.primitive_cube_add(size=1, location=((p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2, z))
+    o = bpy.context.object
+    o.scale = (ln, width, 0.05)
+    o.rotation_euler = (0, 0, math.atan2(dy, dx))
+    o.data.materials.append(mat)
+    return o
+
+
+def line_along(p0, p1, spacing, side, fn):
+    dx, dy = p1[0] - p0[0], p1[1] - p0[1]
+    ln = math.hypot(dx, dy)
+    ux, uy = dx / ln, dy / ln
+    nx, ny = -uy, ux
+    k = 0
+    t = spacing
+    while t < ln:
+        for s in (-side, side):
+            x, y = p0[0] + ux * t + nx * s, p0[1] + uy * t + ny * s
+            z = ground_z(x, y)
+            if z is not None:
+                fn(x, y, z, k)
+        t += spacing
+        k += 1
+
+
+def crossroads():
+    rift_sky()
+    wn = sc.world.node_tree.nodes
+    ce = wn['Color Ramp'].color_ramp.elements
+    ce[0].color = (0.30, 0.12, 0.28, 1)
+    ce[1].color = (0.01, 0.012, 0.09, 1)
+    ce[2].color = (0.04, 0.10, 0.26, 1)
+    wn['Background'].inputs['Strength'].default_value = 0.9
+    plain_terrain()
+    bpy.context.view_layer.update()
+    dirt = mat_simple('dirt', (0.09, 0.06, 0.04, 1), 0.95)
+    asph = mat_simple('asphalt', (0.03, 0.03, 0.035, 1), 0.55)
+    neon = mat_simple('neonroad', (0.01, 0.02, 0.03, 1), 0.3, (0.1, 0.9, 1.0, 1), 1.2)
+    edge = mat_simple('neonedge', (0.01, 0.01, 0.01, 1), 0.3, (1.0, 0.2, 0.8, 1), 7.0)
+    J = (0.0, 40.0)
+    # 오는 길(과거 흙길) -> 갈림길, 세 갈래: 왼쪽 과거(흙+등롱+한옥), 가운데 현재(아스팔트+가로등+건물), 오른쪽 미래(네온+기둥+돔)
+    road((0, -14), J, 6.0, dirt)
+    road(J, (-52, 78), 6.0, dirt)
+    road(J, (0, 105), 6.5, asph)
+    road(J, (52, 78), 6.0, neon)
+    for sx in (-1, 1):                                  # 미래 길 가장자리 선
+        dxn = 52 / math.hypot(52, 38)
+        dyn = 38 / math.hypot(52, 38)
+        road((J[0] + sx * 3.0 * dyn, J[1] - sx * 3.0 * dxn + 0.0), (52 + sx * 3.0 * dyn, 78 - sx * 3.0 * dxn), 0.18, edge, z=0.1) if sx == 1 else None
+    # 길 중앙 노면선(현재 길)
+    road((0, 44), (0, 105), 0.18, mat_simple('stripe', (0.9, 0.8, 0.3, 1), 0.5), z=0.1)
+
+    def lantern(x, y, z, k):
+        h, objs = place('stone_lantern_01', (x, y, z), rot=rng.uniform(0, 6.28), scale=1.0)
+        emissive(objs, (1.0, 0.5, 0.18, 1), 1.4)
+        point((x, y, z + 1.5), (1.0, 0.6, 0.28), 70, 0.2)
+
+    def lamp(x, y, z, k):
+        h, objs = place('street_lamp_01', (x, y, z), rot=0.0, scale=1.3)
+        emissive(objs, (0.85, 0.92, 1.0, 1), 1.2)
+        point((x, y, z + 4.6), (0.85, 0.92, 1.0), 150, 0.3)
+
+    def pylon(x, y, z, k):
+        h, objs = place('signal_pylon_01', (x, y, z), rot=rng.uniform(0, 6.28), scale=1.0)
+        c = (1.0, 0.25, 0.85, 1) if k % 2 else (0.2, 0.95, 1.0, 1)
+        emissive(objs, c, 2.6)
+        point((x, y, z + 4.0), c[:3], 200, 0.3)
+
+    line_along((0, -14), J, 7.0, 4.0, lantern)
+    line_along(J, (-52, 78), 7.5, 4.2, lantern)
+    line_along(J, (0, 105), 11.0, 4.6, lamp)
+    line_along(J, (52, 78), 9.0, 4.2, pylon)
+    # 시대별 건물
+    for (x, y, nm, sc_) in ((-26, 66, 'hanok_01', 1.4), (-40, 52, 'hanok_01', 1.2), (-12, 82, 'jp_minka_01', 1.2)):
+        z = ground_z(x, y)
+        if z is not None:
+            h, objs = place(nm, (x, y, z), rot=rng.uniform(-0.6, 0.6), scale=sc_)
+            emissive(objs, (1.0, 0.6, 0.28, 1), 0.12)
+            point((x, y - 1.5, z + 2.5), (1.0, 0.6, 0.28), 70, 0.7)
+    for (x, y, nm, sc_) in ((9, 70, 'modern_block_01', 1.1), (-9, 92, 'modern_block_01', 1.3)):
+        z = ground_z(x, y)
+        if z is not None:
+            h, objs = place(nm, (x, y, z), rot=0.0, scale=sc_)
+            emissive(objs, (0.85, 0.92, 1.0, 1), 0.12)
+    for (x, y) in ((30, 66), (46, 84)):
+        z = ground_z(x, y)
+        if z is not None:
+            h, objs = place('future_dome_01', (x, y, z), rot=rng.uniform(0, 6), scale=1.3)
+            emissive(objs, (0.3, 0.9, 1.0, 1), 0.3)
+            point((x, y, z + 4), (0.3, 0.9, 1.0), 120, 1.0)
+    # 갈림길 한복판: 균열 문(고리 + 안쪽 소용돌이 빛) + 갈래 표지석
+    ring((J[0], J[1], 7.0), 6.0, 0.28, (math.pi / 2, 0, 0), (0.4, 0.9, 1.0, 1), 3.0)
+    ring((J[0], J[1], 7.0), 4.4, 0.12, (math.pi / 2, 0, 0), (1.0, 0.35, 0.85, 1), 2.6)
+    bpy.ops.mesh.primitive_circle_add(vertices=64, radius=5.7, fill_type='NGON', location=(J[0], J[1], 7.0), rotation=(math.pi / 2, 0, 0))
+    gate = bpy.context.object
+    gm = bpy.data.materials.new('gate')
+    gm.use_nodes = True
+    try:
+        gm.surface_render_method = 'BLENDED'
+    except Exception:
+        pass
+    nt = gm.node_tree
+    nt.nodes.clear()
+    tcg = nt.nodes.new('ShaderNodeTexCoord')
+    nz = nt.nodes.new('ShaderNodeTexNoise')
+    nz.inputs['Scale'].default_value = 3.0
+    nz.inputs['Detail'].default_value = 4.0
+    nz.inputs['Distortion'].default_value = 1.6
+    nt.links.new(tcg.outputs['Object'], nz.inputs['Vector'])
+    cr = nt.nodes.new('ShaderNodeValToRGB')
+    cr.color_ramp.elements[0].color = (0.1, 0.9, 1.0, 1)
+    cr.color_ramp.elements[1].color = (1.0, 0.3, 0.9, 1)
+    nt.links.new(nz.outputs['Fac'], cr.inputs['Fac'])
+    em = nt.nodes.new('ShaderNodeEmission')
+    em.inputs['Strength'].default_value = 1.0
+    nt.links.new(cr.outputs[0], em.inputs['Color'])
+    tr = nt.nodes.new('ShaderNodeBsdfTransparent')
+    lw = nt.nodes.new('ShaderNodeLayerWeight')
+    mx = nt.nodes.new('ShaderNodeMixShader')
+    mx.inputs[0].default_value = 0.6
+    nt.links.new(tr.outputs[0], mx.inputs[1])
+    nt.links.new(em.outputs[0], mx.inputs[2])
+    ou = nt.nodes.new('ShaderNodeOutputMaterial')
+    nt.links.new(mx.outputs[0], ou.inputs['Surface'])
+    gate.data.materials.append(gm)
+    point((J[0], J[1] - 3, 7.0), (0.5, 0.8, 1.0), 450, 2.0)
+    for ang, col in ((2.6, (1.0, 0.6, 0.25, 1)), (1.57, (0.85, 0.92, 1.0, 1)), (0.55, (0.3, 0.95, 1.0, 1))):
+        x, y = J[0] + 9.0 * math.cos(ang), J[1] - 7 + 3.5 * math.sin(ang)
+        z = ground_z(x, y)
+        if z is not None:
+            h, objs = place('stele_01', (x, y, z), rot=ang, scale=1.4)
+            emissive(objs, col, 3.0)
+            point((x, y, z + 2.2), col[:3], 90, 0.3)
+    for _ in range(12):
+        x, y = rng.uniform(-18, 18), rng.uniform(6, 34)
+        if abs(x) < 4.5:
+            continue
+        z = ground_z(x, y)
+        if z is not None:
+            rock(x, y, z, rng.uniform(0.4, 1.0))
+    fireflies(30)
+    sun = bpy.data.lights.new('moon', 'SUN')
+    sun.energy, sun.color, sun.angle = 0.9, (0.6, 0.7, 1.0), 0.05
+    so = bpy.data.objects.new('moon', sun)
+    so.rotation_euler = (math.radians(-70), 0, math.radians(20))
+    sc.collection.objects.link(so)
+    bpy.ops.mesh.primitive_cube_add(size=1, location=(0, 40, 4))
+    v = bpy.context.object
+    v.scale = (200, 160, 8)
+    vm = bpy.data.materials.new('fog')
+    vm.use_nodes = True
+    nt = vm.node_tree
+    nt.nodes.clear()
+    ov = nt.nodes.new('ShaderNodeOutputMaterial')
+    vs = nt.nodes.new('ShaderNodeVolumePrincipled')
+    vs.inputs['Density'].default_value = 0.003
+    vs.inputs['Color'].default_value = (0.7, 0.75, 1.0, 1)
+    nt.links.new(vs.outputs[0], ov.inputs['Volume'])
+    v.data.materials.append(vm)
+    camera((0.0, -6.0, 2.4), (0.0, 40, 6.0), lens=24)
+
+
+{'galaxy_ferry': galaxy_ferry, 'frost_peak': frost_peak, 'time_rift': time_rift, 'crossroads': crossroads}[REGION]()
 sc.render.filepath = OUT
 sc.render.image_settings.file_format = 'PNG'
 bpy.ops.render.render(write_still=True)
