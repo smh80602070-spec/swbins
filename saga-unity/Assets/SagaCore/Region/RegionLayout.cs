@@ -62,8 +62,67 @@ namespace Saga.Core.Region
         public float heightZ0 = 999f, heightZ1 = 1000f, slope0 = 0.35f, slope1 = 0.6f;
         public float satLow = 1f, satHigh = 1f;
         public Color tintLow = Color.white, tintHigh = Color.white;
+        public bool hasMaterials;                    // 재질 칸이 있는 새 모양 배치표(서리봉·사거리·은하 나루)
 
         public float H(int i, int j) => heights[j * nx + i];
+
+        /// <summary>새 모양 배치표의 높이는 안개 상자 안쪽에서 "위에서 쏜 광선이 상자 윗면을 먼저 맞은" 값(상자 윗면 높이 그대로의 평평한 고원)으로 덮여 있다 —
+        /// 서리봉 10m·사거리 8m·은하 나루 5m 가 각 `fog.box` 윗면과 정확히 같다. 이대로 땅으로 쓰면 카메라와 조각(z≈0)이 땅 아래에 묻혀
+        /// 땅 뒷면이 컬링돼 하늘이 보인다. 상자 발자국 안에서 높이가 윗면과 같은 칸을 땅이 아닌 값(윗면 이상 = 상자 윗면 또는 그 안에 선 조각 윗면)으로 보고, 가장자리 바로 바깥의 진짜 땅 칸과
+        /// 조각 자리(조각은 땅 위에 서 있다)에서 역거리 가중(제곱)으로 메운다. 상자 발자국 밖의 언덕은 그대로 둔다.</summary>
+        public int RemoveFogLid(Vector2 boxCenter, Vector2 boxSize, float top, IList<Vector3> anchors)
+        {
+            const float Eps = 0.02f;
+            float hx = boxSize.x * 0.5f + step * 0.5f, hz = boxSize.y * 0.5f + step * 0.5f;
+            var lid = new bool[heights.Length];
+            int count = 0;
+            for (int j = 0; j < nz; j++)
+                for (int i = 0; i < nx; i++)
+                {
+                    float x = x0 + i * step, z = z0 + j * step, h = heights[j * nx + i];
+                    if (float.IsNaN(h) || Mathf.Abs(x - boxCenter.x) > hx || Mathf.Abs(z - boxCenter.y) > hz) continue;
+                    if (h >= top - Eps) { lid[j * nx + i] = true; count++; }   // 윗면 그대로이거나 그보다 높은 칸 = 상자 안에 선 조각(숙소·비석)의 윗면
+                }
+            if (count == 0) return 0;
+
+            // 근거 점: 뚜껑 칸과 맞닿은 진짜 땅 칸 + 상자 안의 조각 자리
+            var px = new List<float>(); var pz = new List<float>(); var ph = new List<float>();
+            for (int j = 0; j < nz; j++)
+                for (int i = 0; i < nx; i++)
+                {
+                    int k = j * nx + i;
+                    if (lid[k] || float.IsNaN(heights[k])) continue;
+                    bool edge = false;
+                    for (int dj = -1; dj <= 1 && !edge; dj++)
+                        for (int di = -1; di <= 1; di++)
+                        {
+                            int ii = i + di, jj = j + dj;
+                            if (ii >= 0 && jj >= 0 && ii < nx && jj < nz && lid[jj * nx + ii]) { edge = true; break; }
+                        }
+                    if (edge) { px.Add(x0 + i * step); pz.Add(z0 + j * step); ph.Add(heights[k]); }
+                }
+            if (anchors != null)
+                foreach (var a in anchors)
+                    if (Mathf.Abs(a.x - boxCenter.x) <= hx && Mathf.Abs(a.z - boxCenter.y) <= hz) { px.Add(a.x); pz.Add(a.z); ph.Add(a.y); }
+            if (px.Count == 0) return 0;   // 근거가 없으면 그대로 둔다
+
+            var filled = (float[])heights.Clone();
+            for (int j = 0; j < nz; j++)
+                for (int i = 0; i < nx; i++)
+                {
+                    if (!lid[j * nx + i]) continue;
+                    float x = x0 + i * step, z = z0 + j * step, sw = 0f, sh = 0f;
+                    for (int k = 0; k < px.Count; k++)
+                    {
+                        float dx = x - px[k], dz = z - pz[k];
+                        float w = 1f / (dx * dx + dz * dz + 1f);
+                        sw += w; sh += w * ph[k];
+                    }
+                    filled[j * nx + i] = sh / sw;
+                }
+            heights = filled;
+            return count;
+        }
 
         /// <summary>`materials` 가 없는 옛 모양 배치표(마을)의 높이는 땅이 아니라 "위에서 쏜 광선이 처음 맞은 면"(집·나무 꼭대기 포함)이다.
         /// 이 반경(m)으로 열림(침식 → 팽창)해 집·나무만큼 좁은 돌기를 걷어내고 넓은 언덕만 남긴다 — Godot `region_loader.gd`
@@ -134,6 +193,7 @@ namespace Saga.Core.Region
         public bool hasPlaza; public Vector2 plazaCenter; public float plazaRadius;
         public string skyKind, skyFull, skyMobile;
         public bool hasFog; public float fogDensity; public Color fogColor; public float fogBoxHeight;
+        public bool hasFogBox; public float fogBoxTop; public Vector2 fogBoxCenter, fogBoxSize;   // Blender (x, y) → Unity (x, z), 크기는 x·y 칸수
         public bool hasWater; public float waterY, waterSize; public Color waterColor;
         public FxSpec fireflies, snowfall;
         public bool hasGate; public Vector3 gateCenter; public float gateRadius; public Color gateColor0, gateColor1;
@@ -227,7 +287,17 @@ namespace Saga.Core.Region
             {
                 var c = Floats(Get(fog, "color"));
                 L.hasFog = true; L.fogDensity = Num(Get(fog, "density")); L.fogColor = new Color(c[0], c[1], c[2]);
-                if (Get(fog, "box") is List<object> box && box.Count >= 3) L.fogBoxHeight = Num(box[2]);
+                if (Get(fog, "box") is List<object> box && box.Count >= 3)
+                {
+                    L.fogBoxHeight = Num(box[2]);
+                    if (box.Count >= 6)
+                    {
+                        L.hasFogBox = true;
+                        L.fogBoxSize = new Vector2(Num(box[0]), Num(box[1]));
+                        L.fogBoxCenter = new Vector2(Num(box[3]), Num(box[4]));
+                        L.fogBoxTop = Num(box[5]) + Num(box[2]) * 0.5f;
+                    }
+                }
             }
 
             if (Get(root, "water") is Dictionary<string, object> wt)
@@ -255,6 +325,13 @@ namespace Saga.Core.Region
                 var p = Floats(Get(cam, "pos")); var lk = Floats(Get(cam, "look"));
                 L.hasCamera = true; L.cameraPos = BlenderToUnity(p[0], p[1], p[2]); L.cameraLook = BlenderToUnity(lk[0], lk[1], lk[2]);
                 L.cameraLens = Num(Get(cam, "lens"));
+            }
+            // 새 모양 배치표(재질 칸 있음)의 지형 높이에서 안개 상자 윗면 오염을 걷어낸다(마을은 위 열림 처리가 맡는다)
+            if (L.terrain != null && L.terrain.hasMaterials && L.hasFogBox)
+            {
+                var anchors = new List<Vector3>();
+                foreach (var pc in L.pieces) anchors.Add(pc.pos);
+                L.terrain.RemoveFogLid(L.fogBoxCenter, L.fogBoxSize, L.fogBoxTop, anchors);
             }
             return L;
         }
@@ -294,6 +371,7 @@ namespace Saga.Core.Region
             T.lowTex = "tex/ground_grass.jpg";   // 마을은 재질 칸이 없다 — 풀 한 장
             if (Get(d, "materials") is Dictionary<string, object> m)
             {
+                T.hasMaterials = true;
                 T.lowTex = Str(Get(m, "low")) ?? T.lowTex;
                 T.highTex = Str(Get(m, "high"));
                 T.tileLow = Opt(m, "tile_low", T.tileLow); T.tileHigh = Opt(m, "tile_high", T.tileHigh);
