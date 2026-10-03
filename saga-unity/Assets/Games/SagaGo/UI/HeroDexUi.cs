@@ -65,6 +65,8 @@ namespace Saga.Go.UI
         public Button WeaponButton(int i) => _weaponButtons[i];
         public string WeaponText => _weaponText.text;
         private TextMeshProUGUI _weaponText;
+        private Image _weaponIcon;                             // U-0030 무기 그림(그림 없는 id 는 숨김 — 글자만)
+        private readonly Image[] _artIcons = new Image[5];     // U-0030 보패 칸마다 세트 그림
         private readonly Button[] _weaponButtons = new Button[3];
         // 109-14-5b 보패 칸(아래) — 부위 다섯 + 바꾸기·강화·빼기·★4 분해
         public Button ArtifactSlotButton(int i) => _artSlots[i];
@@ -187,6 +189,29 @@ namespace Saga.Go.UI
             CloseButton.onClick.AddListener(Close);
         }
 
+        /// <summary>U-0030 아이템 그림 자리 — 눌림을 가로채지 않고 비율을 지킨다. 그림이 없으면 SetIcon 이 숨긴다.</summary>
+        private static Image NewIcon(Transform parent, Vector2 anchor, Vector2 pos, float size)
+        {
+            var go = new GameObject("Icon", typeof(RectTransform));
+            go.transform.SetParent(parent, false);
+            var r = (RectTransform)go.transform;
+            r.anchorMin = r.anchorMax = r.pivot = anchor;
+            r.anchoredPosition = pos;
+            r.sizeDelta = new Vector2(size, size);
+            var img = go.AddComponent<Image>();
+            img.raycastTarget = false;
+            img.preserveAspect = true;
+            img.enabled = false;
+            return img;
+        }
+
+        private static void SetIcon(Image img, Sprite sprite)
+        {
+            if (img == null) return;
+            img.sprite = sprite;
+            img.enabled = sprite != null;
+        }
+
         private static void Center(RectTransform r) => r.pivot = new Vector2(0.5f, 0.5f);
 
         /// <summary>109-14-4 — 격자 오른쪽(x 655) 무예 칸: 재료 한 줄 · 무예 셋(글 + 올리기 단추) · 깨달음(글 + 열기 단추).</summary>
@@ -225,9 +250,10 @@ namespace Saga.Go.UI
         private void BuildWeaponPanel(Vector2 mid)
         {
             const float X = -655f, W = 270f;
-            var head = EncounterUiKit.NewText(_talentRoot.transform, GoLocalization.T("weapon.title", "무기"), mid, new Vector2(X, 180f), new Vector2(W, 34f), 22);
+            var head = EncounterUiKit.NewText(_talentRoot.transform, GoLocalization.T("weapon.title", "무기"), mid, new Vector2(X + 30f, 190f), new Vector2(W - 60f, 34f), 22);
             head.fontStyle = FontStyles.Bold;
             Center(head.rectTransform);
+            _weaponIcon = NewIcon(_talentRoot.transform, mid, new Vector2(X - 100f, 185f), 60f);
             _weaponText = EncounterUiKit.NewText(_talentRoot.transform, "", mid, new Vector2(X, 70f), new Vector2(W, 170f), 16);
             Center(_weaponText.rectTransform);
             string[] names = { GoLocalization.T("weapon.btn_up", "강화"), GoLocalization.T("weapon.btn_asc", "벼림"), GoLocalization.T("weapon.btn_swap", "바꾸기") };
@@ -265,6 +291,7 @@ namespace Saga.Go.UI
             var w = md.Weapon;
             string sub = w.Sub != null ? $"{GoWeapons.StatName(w.Sub)} +{GoWeapons.SubAt(w, md.Lv) * 100f:0.#}%" : "";
             string pas = w.Pas != null ? $"{GoWeapons.PassiveName(w.Pas)} +{md.PasV * 100f:0.#}%" : "";
+            SetIcon(_weaponIcon, GoItemIcons.Weapon(w.Id, w.Rarity));
             _weaponText.text = string.Format(GoLocalization.T("weapon.panel", "{0} · ★{1} {2}\nLv {3}/{4} · 벼림 {5} · 울림 {6}\n공격 {7:0}{8}{9}\n강화석 {10} · 가진 {0} {11}자루"),
                 GoWeapons.TypeName(w.Type), w.Rarity, w.Name, md.Lv, GoWeapons.Cap(md.Asc), md.Asc, md.Ref, md.Atk,
                 sub.Length > 0 ? "\n" + sub : "", pas.Length > 0 ? "\n" + pas : "", WeaponState.Ore, WeaponState.ChoicesFor(_selected).Count);
@@ -291,6 +318,9 @@ namespace Saga.Go.UI
                 var l = b.GetComponentInChildren<TextMeshProUGUI>();
                 l.fontSize = 14;
                 l.lineSpacing = -8f;
+                l.rectTransform.sizeDelta = new Vector2(196f, 54f); // 왼쪽 그림 자리(54px)를 비운다
+                l.rectTransform.anchoredPosition = new Vector2(27f, 0f);
+                _artIcons[i] = NewIcon(b.transform, mid, new Vector2(-98f, 0f), 46f);
                 int k = i;
                 b.onClick.AddListener(() => SelectArtifactSlot(k));
                 _artSlots[i] = b;
@@ -365,6 +395,7 @@ namespace Saga.Go.UI
             {
                 string s = GoArtifacts.Slots[i];
                 eq.TryGetValue(s, out var a);
+                SetIcon(_artIcons[i], a != null ? GoItemIcons.Artifact(a.set) : null);
                 _artSlots[i].GetComponentInChildren<TextMeshProUGUI>().text = (i == _artSlot ? "▶ " : "") + GoArtifacts.SlotName(s)
                     + (a != null ? $" ★{a.rarity} +{a.lv}\n{GoArtifacts.SetOf(a.set).Name}" : "\n—");
             }

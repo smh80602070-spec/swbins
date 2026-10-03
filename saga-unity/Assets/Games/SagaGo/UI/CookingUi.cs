@@ -23,7 +23,11 @@ namespace Saga.Go.UI
         private const float RowTop = 238f, RowStep = 62f, BarW = 800f;
 
         private GameObject _panel;
-        private TextMeshProUGUI _title, _mats, _buffs;
+        private TextMeshProUGUI _title, _buffs;
+        // U-0030 재료 줄 — 재료마다 그림 + "이름 개수" 글자(그림 없는 재료는 글자만). 옛 한 줄 글은 MatsText 로 이어 준다.
+        private readonly Image[] _matIcons = new Image[GoCooking.Items.Length];
+        private readonly TextMeshProUGUI[] _matTexts = new TextMeshProUGUI[GoCooking.Items.Length];
+        private string _matsLine = "";
         private readonly TextMeshProUGUI[] _rows = new TextMeshProUGUI[8];
         private readonly Button[] _cook = new Button[8], _auto = new Button[8], _eat = new Button[8];
         private GameObject _needleRoot;
@@ -39,7 +43,7 @@ namespace Saga.Go.UI
         public Button AutoButton(int i) => _auto[i];
         public Button EatButton(int i) => _eat[i];
         public string RowText(int i) => _rows[i].text;
-        public string MatsText => _mats.text;
+        public string MatsText => _matsLine;
         public string BuffText => _buffs.text;
         public bool IsOpen => _panel != null && _panel.activeSelf;
         public int Cooking => _cooking;
@@ -85,8 +89,28 @@ namespace Saga.Go.UI
             _title = EncounterUiKit.NewText(_panel.transform, "", mid, new Vector2(0f, 390f), new Vector2(1200f, 40f), 26);
             _title.fontStyle = FontStyles.Bold;
             Center(_title.rectTransform);
-            _mats = EncounterUiKit.NewText(_panel.transform, "", mid, new Vector2(0f, 342f), new Vector2(1400f, 34f), 17);
-            Center(_mats.rectTransform);
+            const float MatCell = 138f, MatIcon = 34f;
+            for (int i = 0; i < _matTexts.Length; i++)
+            {
+                float cx = (i - (_matTexts.Length - 1) * 0.5f) * MatCell;
+                var ig = new GameObject("MatIcon", typeof(RectTransform));
+                ig.transform.SetParent(_panel.transform, false);
+                var ir = (RectTransform)ig.transform;
+                ir.anchorMin = ir.anchorMax = ir.pivot = mid;
+                ir.anchoredPosition = new Vector2(cx - 45f, 342f);
+                ir.sizeDelta = new Vector2(MatIcon, MatIcon);
+                _matIcons[i] = ig.AddComponent<Image>();
+                _matIcons[i].raycastTarget = false;
+                _matIcons[i].preserveAspect = true;
+                _matIcons[i].enabled = false;
+                _matTexts[i] = EncounterUiKit.NewText(_panel.transform, "", mid, new Vector2(cx + 17f, 342f), new Vector2(MatCell - 38f, 34f), 15);
+                _matTexts[i].enableAutoSizing = true;
+                _matTexts[i].fontSizeMin = 11f;
+                _matTexts[i].fontSizeMax = 15f;
+                _matTexts[i].textWrappingMode = TextWrappingModes.NoWrap;
+                _matTexts[i].alignment = TextAlignmentOptions.MidlineLeft;
+                Center(_matTexts[i].rectTransform);
+            }
             _buffs = EncounterUiKit.NewText(_panel.transform, "", mid, new Vector2(0f, 302f), new Vector2(1400f, 30f), 16);
             Center(_buffs.rectTransform);
 
@@ -215,8 +239,17 @@ namespace Saga.Go.UI
             bool pot = CookField.PlayerAtPot();
             _title.text = GoLocalization.T("cook.title", "요리") + " — " + (pot ? GoLocalization.T("cook.at_pot", "솥 곁 — 조리할 수 있다") : GoLocalization.T("cook.away", "역참 곁 솥에서 조리 · 먹기는 어디서나"));
             var mats = new List<string>();
-            foreach (var it in GoCooking.Items) mats.Add($"{it.Name} {CookState.Count(it.Id)}");
-            _mats.text = string.Join(" · ", mats);
+            for (int i = 0; i < GoCooking.Items.Length; i++)
+            {
+                var it = GoCooking.Items[i];
+                string cell = $"{it.Name} {CookState.Count(it.Id)}";
+                mats.Add(cell);
+                _matTexts[i].text = cell;
+                var icon = GoItemIcons.Material(it.Id);
+                _matIcons[i].sprite = icon;
+                _matIcons[i].enabled = icon != null;
+            }
+            _matsLine = string.Join(" · ", mats);
             var buffs = new List<string>();
             foreach (var (cat, ri, q, left) in CookState.Buffs())
                 buffs.Add(string.Format(GoLocalization.T("cook.buff_left", "{0} {1} {2}초"), GoCooking.CatName(cat), GoCooking.DishName(GoCooking.Recipes[ri].Id, q), Mathf.CeilToInt(left)));
