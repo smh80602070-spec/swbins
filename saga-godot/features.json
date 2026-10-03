@@ -2264,7 +2264,7 @@
    "games/saga_go/world/RegionShowcase.tscn"
   ],
   "tests": [
-   "regions"
+   "region_showcase"
   ],
   "level": "D1",
   "verified": null,
