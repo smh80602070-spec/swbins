@@ -1,0 +1,729 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "static2d",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people"
+ },
+ "items": [
+  {
+   "id": "eu_house_01",
+   "seed": 1427223181,
+   "prompt": "two-storey half-timbered house, steep tiled roof, chimney, small windows, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\eu_house_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "eu_house_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "modern_block_01",
+   "seed": 1024609804,
+   "prompt": "modern three-storey apartment block, flat roof, ribbon windows, concrete walls, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\modern_block_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "modern_block_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "future_dome_01",
+   "seed": 3435909872,
+   "prompt": "futuristic dome house, round white dome roof, ring windows, sci-fi dwelling, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\future_dome_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "future_dome_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "stone_tower_01",
+   "seed": 2001134543,
+   "prompt": "tall stone watchtower, four storeys, crenellated top, small arrow slits, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stone_tower_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "stone_tower_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "chinese_hall_01",
+   "seed": 2202156943,
+   "prompt": "grand hall, red pillars, wide curved tiled eaves, wooden palace building, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\chinese_hall_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "chinese_hall_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "dungeon_gate_01",
+   "seed": 234711095,
+   "prompt": "rocky arch entrance to a dungeon, stone stairs going down, dark opening, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\dungeon_gate_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "dungeon_gate_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "forest_cottage_01",
+   "seed": 134599397,
+   "prompt": "small thatched cottage, round wooden door, tiny chimney, cozy hut, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\forest_cottage_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "forest_cottage_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "inn_01",
+   "seed": 797095018,
+   "prompt": "two-storey village inn, hanging sign board, tiled roof, wooden balcony, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\inn_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "inn_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "barn_01",
+   "seed": 493657278,
+   "prompt": "large red wooden barn, gabled roof, big double doors, hay loft, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\barn_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "barn_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "hanok_01",
+   "seed": 2266526361,
+   "prompt": "traditional korean house, gray curved tile roof, wooden pillars, paper doors, stone base, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\hanok_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "hanok_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "jp_minka_01",
+   "seed": 3712253962,
+   "prompt": "traditional japanese farmhouse, thick thatched hip roof, wooden walls, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\jp_minka_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "jp_minka_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "silkroad_house_01",
+   "seed": 1034386172,
+   "prompt": "desert clay-brick house, flat roof, arched door, small windows, sand colored walls, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\silkroad_house_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "silkroad_house_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "well_01",
+   "seed": 2293493061,
+   "prompt": "stone water well with small wooden roof, bucket and rope, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\well_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "well_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "street_lamp_01",
+   "seed": 2464676573,
+   "prompt": "iron street lamp post, glowing lantern, curved arm, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\street_lamp_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "street_lamp_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "signal_pylon_01",
+   "seed": 2578915250,
+   "prompt": "futuristic guide pylon, glowing cyan crystal top, white tapered pillar, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\signal_pylon_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "signal_pylon_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "torch_stand_01",
+   "seed": 102835209,
+   "prompt": "wooden torch stand, burning flame in a bowl, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\torch_stand_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "torch_stand_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "altar_01",
+   "seed": 908310950,
+   "prompt": "stone altar, stepped platform, two small pillars, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\altar_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "altar_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "iron_fence_01",
+   "seed": 2476938935,
+   "prompt": "black iron spear fence section with posts, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\iron_fence_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "iron_fence_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "wood_fence_01",
+   "seed": 3356587374,
+   "prompt": "wooden picket fence section, rails and posts, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\wood_fence_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "wood_fence_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "mailbox_01",
+   "seed": 1529224770,
+   "prompt": "red wooden mailbox on a post, small flag, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mailbox_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "mailbox_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "haystack_01",
+   "seed": 1225991914,
+   "prompt": "round haystack, golden hay cone, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\haystack_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "haystack_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "bamboo_clump_01",
+   "seed": 1555428618,
+   "prompt": "clump of green bamboo stalks with leaves, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\bamboo_clump_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "bamboo_clump_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "stele_01",
+   "seed": 1954197596,
+   "prompt": "stone stele monument with carved top roof, on a stone base, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stele_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "stele_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "stone_lantern_01",
+   "seed": 1088142484,
+   "prompt": "stone garden lantern, tiered roof, glowing window, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stone_lantern_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "stone_lantern_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "banner_pole_01",
+   "seed": 2640148273,
+   "prompt": "tall wooden banner pole with a plain red cloth banner, stone base, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\banner_pole_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "banner_pole_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "city_wall_segment_01",
+   "seed": 3235715046,
+   "prompt": "stone city wall section with battlements, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\city_wall_segment_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "city_wall_segment_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "brazier_01",
+   "seed": 2167183508,
+   "prompt": "iron fire brazier on three legs, glowing coals and flames, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\brazier_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "brazier_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "sail_boat_01",
+   "seed": 197375023,
+   "prompt": "small wooden sailboat with a white sail, side view three-quarter, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\sail_boat_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "sail_boat_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "mine_cart_01",
+   "seed": 2142821538,
+   "prompt": "wooden mine cart with iron wheels, filled with ore, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mine_cart_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "mine_cart_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "raft_01",
+   "seed": 2855561265,
+   "prompt": "simple wooden log raft with a pole, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\raft_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "raft_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "ox_cart_01",
+   "seed": 831291320,
+   "prompt": "wooden ox cart with two big wheels, hay load, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\ox_cart_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "ox_cart_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "caravan_wagon_01",
+   "seed": 2385051283,
+   "prompt": "covered caravan wagon, canvas roof, four wheels, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\caravan_wagon_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "caravan_wagon_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tree_broadleaf_01",
+   "seed": 3054309005,
+   "prompt": "tall broadleaf tree, round leafy green crown, brown trunk, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_broadleaf_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tree_broadleaf_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tree_broadleaf_02",
+   "seed": 2593708749,
+   "prompt": "wide low broadleaf tree, thick trunk, spreading green crown, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_broadleaf_02.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tree_broadleaf_02.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tree_pine_01",
+   "seed": 2509183840,
+   "prompt": "green pine fir tree, layered cone shape, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_pine_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tree_pine_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tree_pine_01_snow",
+   "seed": 3722531798,
+   "prompt": "snow covered pine fir tree, white snow on layered branches, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_pine_01_snow.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tree_pine_01_snow.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tree_pine_02",
+   "seed": 3197372027,
+   "prompt": "tall pine tree, bare trunk, tufts of green needles on top, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_pine_02.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tree_pine_02.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tree_dead_01",
+   "seed": 2206744976,
+   "prompt": "dead bare tree, twisted dark branches, no leaves, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_dead_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tree_dead_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tree_birch_01",
+   "seed": 978439116,
+   "prompt": "white birch tree, white trunk with black marks, light green leaves, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_birch_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tree_birch_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "bush_01",
+   "seed": 2334240003,
+   "prompt": "round green bush, leafy shrub, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\bush_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "bush_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "grass_tuft_01",
+   "seed": 84083295,
+   "prompt": "tuft of green grass blades, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\grass_tuft_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "grass_tuft_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "flower_patch_01",
+   "seed": 3698521914,
+   "prompt": "patch of colorful wildflowers, yellow pink white purple, green stems, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\flower_patch_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "flower_patch_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rock_small_01",
+   "seed": 1744589267,
+   "prompt": "small gray rock with a pebble, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\rock_small_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rock_small_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rock_large_01",
+   "seed": 603925122,
+   "prompt": "large gray boulder with two smaller rocks, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\rock_large_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rock_large_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rock_moss_01",
+   "seed": 140736097,
+   "prompt": "gray rock covered with green moss, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\rock_moss_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rock_moss_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "pebbles_01",
+   "seed": 3402522768,
+   "prompt": "handful of small gray pebbles on the ground, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\pebbles_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "pebbles_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "log_01",
+   "seed": 2723359676,
+   "prompt": "fallen tree log with cut end, small twig, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\log_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "log_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "stump_01",
+   "seed": 3606418611,
+   "prompt": "tree stump with roots and cut top rings, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stump_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "stump_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "mushroom_01",
+   "seed": 240806477,
+   "prompt": "cluster of three mushrooms, red cap with white spots and orange caps, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mushroom_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "mushroom_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "hill_01",
+   "seed": 2991820863,
+   "prompt": "small grassy hill mound, green grass, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\hill_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "hill_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "mountain_01",
+   "seed": 1607940902,
+   "prompt": "rocky mountain peak with snow cap, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mountain_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "mountain_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  }
+ ]
+}
