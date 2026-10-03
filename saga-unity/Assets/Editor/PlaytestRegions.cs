@@ -69,6 +69,7 @@ namespace Saga.EditorTools
                 ChecksShaders();
                 ChecksJson();
                 ChecksCoordinates();
+                ChecksVillageGround();
                 ChecksMeshes();
                 foreach (var id in RegionLoader.Ids) ChecksRegion(id);
                 ChecksDeterministic();
@@ -90,6 +91,28 @@ namespace Saga.EditorTools
             }
             foreach (var (name, _) in RegionMaterials.Sources)
                 PlaytestKit.Check(Resources.Load<Material>(RegionMaterials.Dir + name) != null, "재질 원본 없음: " + name);
+        }
+
+        // 마을 높이는 "위에서 쏜 광선이 처음 맞은 면"(집·나무 꼭대기 포함)이라 그대로 땅으로 쓰면 집이 언덕에 묻힌다 — 열림으로 걷어낸 뒤
+        // 땅 높이가 조각 높이와 가까워야 한다(Godot `region_loader.gd` 실측 평균 오차 3.6m → 0.8m). 재질 칸이 있는 지역은 높이를 안 건드린다.
+        private static void ChecksVillageGround()
+        {
+            var v = RegionLoader.LoadLayout("Village");
+            PlaytestKit.Check(v != null && v.terrain != null, "마을 배치표·지형 없음");
+            if (v == null || v.terrain == null) return;
+            float sum = 0f, max = 0f; int n = 0;
+            foreach (var p in v.pieces)
+            {
+                if (!v.terrain.SampleHeight(p.pos.x, p.pos.z, out float h)) continue;
+                float d = Mathf.Abs(h - p.pos.y);
+                sum += d; if (d > max) max = d; n++;
+            }
+            PlaytestKit.Check(n >= 15, $"마을 조각 중 땅 위에 선 것이 {n}개뿐");
+            float mean = n > 0 ? sum / n : 99f;
+            PlaytestKit.Check(mean < 1.5f, $"마을 땅 높이가 조각 높이와 평균 {mean:0.0}m 어긋남(열림 처리 확인 — 1.5m 미만이어야 함)");
+            Debug.Log($"[Regions] 마을 땅-조각 높이 오차 평균 {mean:0.00}m 최대 {max:0.0}m (n={n})");
+            var f = RegionLoader.LoadLayout("FrostPeak");
+            PlaytestKit.Check(f != null && f.terrain != null && f.terrain.tintLow == Color.white, "재질 칸이 있는 지역(서리봉)에 마을 풀 색 보정이 새어 들어감");
         }
 
         private static void ChecksJson()

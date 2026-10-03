@@ -65,6 +65,45 @@ namespace Saga.Core.Region
 
         public float H(int i, int j) => heights[j * nx + i];
 
+        /// <summary>`materials` 가 없는 옛 모양 배치표(마을)의 높이는 땅이 아니라 "위에서 쏜 광선이 처음 맞은 면"(집·나무 꼭대기 포함)이다.
+        /// 이 반경(m)으로 열림(침식 → 팽창)해 집·나무만큼 좁은 돌기를 걷어내고 넓은 언덕만 남긴다 — Godot `region_loader.gd`
+        /// `GROUND_OPEN_RADIUS_M`(조각 z 와의 평균 오차 3.6m → 0.8m)와 같은 값.</summary>
+        public const float GroundOpenRadiusM = 8f;
+
+        /// <summary>마을 풀 한 장의 색 보정 — 시안이 풀을 초록으로 틴트했고 `ground_grass.jpg` 는 올리브색이다(Godot `VILLAGE_GRASS_TINT` 와 같은 값).</summary>
+        public static readonly Color VillageGrassTint = new Color(0.78f, 1f, 0.74f);
+
+        /// <summary>열림(최소 필터 → 최대 필터). NaN(땅 없음)은 건너뛰고 NaN 칸은 NaN 으로 남긴다.</summary>
+        public void Open(float radiusM)
+        {
+            int k = Mathf.RoundToInt(radiusM / step);
+            if (k <= 0) return;
+            heights = Window(Window(heights, k, true), k, false);
+        }
+
+        private float[] Window(float[] src, int k, bool wantMin)
+        {
+            var o = new float[src.Length];
+            for (int j = 0; j < nz; j++)
+            {
+                for (int i = 0; i < nx; i++)
+                {
+                    if (float.IsNaN(src[j * nx + i])) { o[j * nx + i] = float.NaN; continue; }
+                    float best = wantMin ? float.PositiveInfinity : float.NegativeInfinity;
+                    int j0 = Mathf.Max(j - k, 0), j1 = Mathf.Min(j + k, nz - 1), i0 = Mathf.Max(i - k, 0), i1 = Mathf.Min(i + k, nx - 1);
+                    for (int dj = j0; dj <= j1; dj++)
+                        for (int di = i0; di <= i1; di++)
+                        {
+                            float v = src[dj * nx + di];
+                            if (float.IsNaN(v)) continue;
+                            if (wantMin ? v < best : v > best) best = v;
+                        }
+                    o[j * nx + i] = best;
+                }
+            }
+            return o;
+        }
+
         /// <summary>격자를 이중선형으로 읽는다. 네 모서리 중 하나라도 구멍이면 false(Blender 의 ground_z 가 None 인 곳).</summary>
         public bool SampleHeight(float x, float z, out float h)
         {
@@ -263,6 +302,11 @@ namespace Saga.Core.Region
                 T.satLow = Opt(m, "sat_low", 1f); T.satHigh = Opt(m, "sat_high", 1f);
                 if (Get(m, "tint_low") != null) { var c = Floats(Get(m, "tint_low")); T.tintLow = new Color(c[0], c[1], c[2]); }
                 if (Get(m, "tint_high") != null) { var c = Floats(Get(m, "tint_high")); T.tintHigh = new Color(c[0], c[1], c[2]); }
+            }
+            else
+            {
+                T.Open(TerrainSpec.GroundOpenRadiusM);   // 마을 — 집·나무가 구워진 높이에서 땅만 남긴다
+                T.tintLow = TerrainSpec.VillageGrassTint;
             }
             return T;
         }
