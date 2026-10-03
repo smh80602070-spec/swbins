@@ -36,8 +36,7 @@ const check = process.argv.includes('--check');
 /** 판 폴더 단독 서버(run.bat)는 `../shared` 를 못 읽는다 — 2D 모드 배경·타일(K-0020)은 그 판 접두어 파일만 판 폴더로 복사한다(W-0019).
  *  정본 shared/assets/web2d/{bg,tile}/ · 접두어 = 판 이름(go_·dungeon_·forest_·story_·realm_) · 출처 .license.json 은 정본에만 둔다 */
 const PREFIX = { 'saga-go': 'go_', 'saga-dungeon': 'dungeon_', 'saga-forest': 'forest_', 'saga-story': 'story_', 'saga-realm': 'realm_' };
-const ASSET_DIRS = ['assets/web2d/bg', 'assets/web2d/tile'];
-const ASSET_GAMES = ['saga-story', 'saga-go'];   // 배선이 끝난 판만(안 쓰는 판에 용량을 안 싣는다) — 판을 배선할 때마다 추가
+const ASSET_GAMES = { 'saga-story': ['assets/web2d/bg', 'assets/web2d/tile'], 'saga-go': ['assets/web2d/tile'] };   // 판 → 그 판이 쓰는 폴더만(사가고는 위에서 본 지도라 층 배경 없음)   // 배선이 끝난 판만(안 쓰는 판에 용량을 안 싣는다) — 판을 배선할 때마다 추가
 /** 줄바꿈(CRLF/LF)은 git autocrlf 가 판마다 따로 바꾸므로 정규화해서 비교한다 */
 const md5 = p => (fs.existsSync(p) ? crypto.createHash('md5').update(fs.readFileSync(p, 'utf8').replace(/\r\n/g, '\n')).digest('hex') : null);
 
@@ -57,8 +56,8 @@ for (const [src, dst, only] of FILES) {
     console.log(`복사 shared/${src} → ${g}/${dst}`);
   }
 }
-for (const g of ASSET_GAMES) {
-  for (const d of ASSET_DIRS) {
+for (const g of Object.keys(ASSET_GAMES)) {
+  for (const d of ASSET_GAMES[g]) {
     const dir = path.join(WEB, 'shared', d);
     if (!fs.existsSync(dir)) continue;
     for (const f of fs.readdirSync(dir)) {
