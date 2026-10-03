@@ -99,18 +99,53 @@ def pbr_mat(tid, tile=4.0, tint=None, rough_mul=1.0, name=None, sat=1.0):
     return m
 
 
-def place(name, loc, rot=0.0, scale=1.0, real=False):
-    before = set(bpy.data.objects.keys())
-    src_dir = REAL if (real and os.path.exists(os.path.join(REAL, name + '.glb'))) else TOON
-    bpy.ops.import_scene.gltf(filepath=os.path.join(src_dir, name + '.glb'))
-    new = [o for o in bpy.data.objects if o.name not in before]
-    top = [o for o in new if o.parent is None]
+_TMPL = {}
+
+
+def place(name, loc, rot=0.0, scale=1.0, real=None):
+    """공방 조각 하나를 놓는다. 같은 조각은 처음 한 번만 읽고 나머지는 메시·재질을 공유하는 복사본 — 사실 모드 소품 GLB 는 8~30MB 라
+    스무 번 읽으면 메모리·시간이 폭발한다. real=None 이면 사실 모드(PBR)일 때 real GLB(없으면 툰)를 쓴다."""
+    use_real = PBR if real is None else real
+    src_dir = REAL if (use_real and os.path.exists(os.path.join(REAL, name + '.glb'))) else TOON
+    key = (name, src_dir)
+    if key not in _TMPL:
+        before = set(bpy.data.objects.keys())
+        bpy.ops.import_scene.gltf(filepath=os.path.join(src_dir, name + '.glb'))
+        objs = [o for o in bpy.data.objects if o.name not in before]
+        for o in objs:
+            for c in list(o.users_collection):
+                c.objects.unlink(o)
+        _TMPL[key] = objs
+    tmpl = _TMPL[key]
     holder = bpy.data.objects.new(name + '_h', None)
     sc.collection.objects.link(holder)
-    for o in top:
-        o.parent = holder
+    mp = {}
+    for o in tmpl:
+        mp[o] = o.copy()
+        sc.collection.objects.link(mp[o])
+    for o in tmpl:
+        mp[o].parent = mp.get(o.parent, holder)
+        mp[o].matrix_parent_inverse = o.matrix_parent_inverse.copy()
     holder.location, holder.rotation_euler, holder.scale = loc, (0, 0, rot), (scale,) * 3
-    return holder, new
+    return holder, list(mp.values())
+
+
+def glow(x, y, z, color, r, strength=18.0):
+    m = mat_simple('glow%d_%d' % (int(color[0] * 9), int(color[2] * 9)), (0.05, 0.05, 0.05, 1), 0.5, color, strength)
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=r, segments=12, ring_count=8, location=(x, y, z))
+    bpy.context.object.data.materials.append(m)
+
+
+def lit(h, objs, color, strength, local, r):
+    """불 켜는 소품: 툰은 통째로 발광, 사실 모드는 돌 질감이 보이게 약한 발광 + 불꽃 구슬(local = 소품 기준 불 자리)."""
+    if not PBR:
+        emissive(objs, color, strength)
+        return
+    emissive(objs, color, 0.12)
+    rz, s = h.rotation_euler[2], h.scale[0]
+    lx, ly, lz = local
+    glow(h.location.x + (lx * math.cos(rz) - ly * math.sin(rz)) * s, h.location.y + (lx * math.sin(rz) + ly * math.cos(rz)) * s,
+         h.location.z + lz * s, color, r * s)
 
 
 def emissive(obj_list, color, strength):
@@ -603,7 +638,7 @@ def galaxy_ferry():
         if z is None:
             continue
         h, objs = place('stone_lantern_01', (x, y, z), rot=rng.uniform(0, 6.28), scale=1.0)
-        emissive(objs, (1.0, 0.5, 0.18, 1), 1.3)
+        lit(h, objs, (1.0, 0.5, 0.18, 1), 1.3, (0, 0, 1.65), 0.2)
         point((x, y - 0.3, z + 1.6), (1.0, 0.62, 0.28), 80, 0.2)
     reeds(42, -30, 24, -8, 0.8)
     for _ in range(9):
@@ -613,7 +648,7 @@ def galaxy_ferry():
             rock(x, y, z, rng.uniform(0.35, 1.0))
     ye = pier(7.0, -2.5, 9.0, 0.35)
     h, objs = place('stone_lantern_01', (7.0, ye - 0.2, 0.4), rot=0.0, scale=1.0)
-    emissive(objs, (1.0, 0.5, 0.18, 1), 1.3)
+    lit(h, objs, (1.0, 0.5, 0.18, 1), 1.3, (0, 0, 1.65), 0.2)
     point((7.0, ye - 0.2, 2.0), (1.0, 0.62, 0.3), 90, 0.2)
     fireflies(45)
     # 물 위의 배와 뗏목
@@ -822,7 +857,7 @@ def frost_peak():
             if z is None:
                 continue
             h, objs = place('torch_stand_01', (x, y, z), rot=rng.uniform(0, 6.28), scale=1.3)
-            emissive(objs, (1.0, 0.4, 0.1, 1), 1.5)
+            lit(h, objs, (1.0, 0.4, 0.1, 1), 1.5, (0, 0, 2.4), 0.14)
             point((x, y, z + 2.2), (1.0, 0.5, 0.2), 140, 0.3)
     z = ground_z(1.2, 43)                               # 길 끝 제단·비석·깃발
     h, objs = place('altar_01', (1.2, 43, z - 0.05), rot=0.0, scale=1.8)
@@ -1126,18 +1161,18 @@ def crossroads():
 
     def lantern(x, y, z, k):
         h, objs = place('stone_lantern_01', (x, y, z), rot=rng.uniform(0, 6.28), scale=1.0)
-        emissive(objs, (1.0, 0.5, 0.18, 1), 1.4)
+        lit(h, objs, (1.0, 0.5, 0.18, 1), 1.4, (0, 0, 1.65), 0.2)
         point((x, y, z + 1.5), (1.0, 0.6, 0.28), 70, 0.2)
 
     def lamp(x, y, z, k):
         h, objs = place('street_lamp_01', (x, y, z), rot=0.0, scale=1.3)
-        emissive(objs, (0.85, 0.92, 1.0, 1), 1.2)
+        lit(h, objs, (0.85, 0.92, 1.0, 1), 1.2, (0.95, 0, 4.2), 0.2)
         point((x, y, z + 4.6), (0.85, 0.92, 1.0), 150, 0.3)
 
     def pylon(x, y, z, k):
         h, objs = place('signal_pylon_01', (x, y, z), rot=rng.uniform(0, 6.28), scale=1.0)
         c = (1.0, 0.25, 0.85, 1) if k % 2 else (0.2, 0.95, 1.0, 1)
-        emissive(objs, c, 2.6)
+        lit(h, objs, c, 2.6, (0, 0, 3.45), 0.24)
         point((x, y, z + 4.0), c[:3], 200, 0.3)
 
     line_along((0, -14), J, 7.0, 4.0, lantern)
