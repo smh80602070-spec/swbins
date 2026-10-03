@@ -25,7 +25,9 @@
 | 도구 | 모델 | 라이선스 | 개수 |
 |---|---|---|---|
 | music-gen | ACE-Step/Ace-Step1.5 (acestep-v15-turbo) | MIT (code and model weights) | 60 |
-| outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 598 |
+| outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024) | - | VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인) | 1196 |
+| gen.py | animagine-xl-4.0-opt | CreativeML OpenRAIL++-M | 306 |
+| icon_pack.py | none | CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음) | 19 |
 | region_hero.py | - | CC0-1.0 (자체 생성 형태, 재질은 단색·CC0) | 12 |
 | region_hero.py | - | CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0) | 12 |
 | region_hero.py (HERO_SKY 파노라마 굽기) | - | CC0-1.0 (자체 생성) | 30 |

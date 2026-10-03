@@ -1,0 +1,8 @@
+{
+ "id": "rune_ryong",
+ "generator": "tools/ai-art/icon_pack.py",
+ "model": "none",
+ "license": "CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음)",
+ "date": "2026-10-03",
+ "note": "룬은 한자 글자(Batang)를 돌 조각에 얹은 것, 염색은 게임 데이터 색(#rrggbb)으로 그린 천 견본."
+}

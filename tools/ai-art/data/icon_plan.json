@@ -1809,73 +1809,73 @@
    "id": "wear_braid",
    "kind": "wear",
    "grade": 0,
-   "tags": "long red ribbon, hair ribbon, braided cord, tassel",
+   "tags": "hair ribbon, red ribbon, daenggi, long ribbon tied in a bow, hair accessory",
    "salt": 1
   },
   {
    "id": "wear_coat",
    "kind": "wear",
    "grade": 0,
-   "tags": "long coat, overcoat, teal, ribbon ties, long sleeves",
+   "tags": "long overcoat, hanbok durumagi, teal coat, ribbon ties, wide sleeves, clothing laid flat",
    "salt": 1
   },
   {
    "id": "wear_gat",
    "kind": "wear",
    "grade": 0,
-   "tags": "gat hat, black horsehair hat, wide brim, high crown, tied cord"
+   "tags": "gat, black horsehair hat, wide brim, tall crown, tied chin cord, headwear"
   },
   {
    "id": "wear_hairpin",
    "kind": "wear",
    "grade": 0,
-   "tags": "bridal crown, jeweled headpiece, ornate coronet, beads, tassels"
+   "tags": "bridal crown, jeweled coronet, headdress, beads and tassels, headwear"
   },
   {
    "id": "wear_helmet",
    "kind": "wear",
    "grade": 0,
-   "tags": "war hat, felt hat with plume, red tassel, officer hat"
+   "tags": "felt war hat, military hat, red plume, officer hat, headwear"
   },
   {
    "id": "wear_leather",
    "kind": "wear",
    "grade": 0,
-   "tags": "jeogori, short jacket, brown cloth shirt, long sleeves, ties",
+   "tags": "tunic, brown leather jerkin, laced front, short sleeves, clothing laid flat, torso garment",
    "salt": 1
   },
   {
    "id": "wear_plate",
    "kind": "wear",
    "grade": 0,
-   "tags": "armor, plate armor, steel breastplate, shoulder guards"
+   "tags": "armor, steel breastplate, shoulder pauldrons, torso armor, chest plate, no head"
   },
   {
    "id": "wear_robe",
    "kind": "wear",
    "grade": 0,
-   "tags": "long overcoat, durumagi, wide sleeves, white and blue, robe, ribbon ties",
+   "tags": "hanbok, long white robe, blue collar, wide sleeves, clothing laid flat, garment",
    "salt": 1
   },
   {
    "id": "wear_scholar",
    "kind": "wear",
    "grade": 0,
-   "tags": "black cloth hat, scholar cap, hat with ribbons, head wear",
+   "tags": "black hat, scholar hat, square cloth cap, headwear, ribbon strings",
    "salt": 1
   },
   {
    "id": "wear_spacesuit",
    "kind": "wear",
    "grade": 0,
-   "tags": "astronaut suit, white spacesuit, sci-fi, orange accents, jumpsuit",
+   "tags": "spacesuit, astronaut suit, white jumpsuit, orange accents, sci-fi clothing laid flat",
    "salt": 1
   },
   {
    "id": "wear_topknot",
    "kind": "wear",
    "grade": 0,
-   "tags": "hair bun, black topknot, wooden hairpin, hair ornament",
+   "tags": "hairpin, binyeo, gold hairpin, long ornamental hair stick, hair ornament",
    "salt": 1
   },
   {

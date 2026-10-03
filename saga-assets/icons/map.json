@@ -1,0 +1,2132 @@
+{
+ "note": "tools/ai-art/place_icons.py 가 만든 표 — 손으로 고치지 않는다. K-0035. 키 = 그림 한 장(같은 물건은 한 키를 함께 쓴다), skip = 상태 값이라 그림 없음.",
+ "date": "2026-10-03",
+ "size": {
+  "icon128": 128,
+  "icon64": 64
+ },
+ "grades": {
+  "0": "보통",
+  "1": "마법",
+  "2": "희귀",
+  "3": "세트",
+  "4": "유니크"
+ },
+ "counts": {
+  "entries": 353,
+  "keys": 325,
+  "skip": 4
+ },
+ "entries": {
+  "saga-dungeon:equip:w_hwando": {
+   "key": "w_hwando",
+   "grade": 1,
+   "mode": "ai",
+   "name": "환도"
+  },
+  "saga-dungeon:equip:w_pyeongon": {
+   "key": "w_pyeongon",
+   "grade": 0,
+   "mode": "ai",
+   "name": "편곤"
+  },
+  "saga-dungeon:equip:w_changj": {
+   "key": "w_changj",
+   "grade": 0,
+   "mode": "ai",
+   "name": "장창"
+  },
+  "saga-dungeon:equip:w_wolto": {
+   "key": "w_wolto",
+   "grade": 0,
+   "mode": "ai",
+   "name": "월도"
+  },
+  "saga-dungeon:equip:w_gakgung": {
+   "key": "w_gakgung",
+   "grade": 1,
+   "mode": "ai",
+   "name": "각궁"
+  },
+  "saga-dungeon:equip:w_cheoltae": {
+   "key": "w_cheoltae",
+   "grade": 0,
+   "mode": "ai",
+   "name": "철태궁"
+  },
+  "saga-dungeon:equip:w_bugae": {
+   "key": "w_bugae",
+   "grade": 0,
+   "mode": "ai",
+   "name": "부월"
+  },
+  "saga-dungeon:equip:w_geukchang": {
+   "key": "w_geukchang",
+   "grade": 0,
+   "mode": "ai",
+   "name": "극창"
+  },
+  "saga-dungeon:equip:w_seonchae": {
+   "key": "w_seonchae",
+   "grade": 0,
+   "mode": "ai",
+   "name": "선채"
+  },
+  "saga-dungeon:equip:w_jukjang": {
+   "key": "w_jukjang",
+   "grade": 0,
+   "mode": "ai",
+   "name": "죽장"
+  },
+  "saga-dungeon:equip:w_bilbut": {
+   "key": "w_bilbut",
+   "grade": 0,
+   "mode": "ai",
+   "name": "필묵"
+  },
+  "saga-dungeon:equip:w_byeongseo": {
+   "key": "w_byeongseo",
+   "grade": 0,
+   "mode": "ai",
+   "name": "병서"
+  },
+  "saga-dungeon:equip:w_lance_e": {
+   "key": "w_lance_e",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전자창"
+  },
+  "saga-dungeon:equip:w_gauntlet": {
+   "key": "w_gauntlet",
+   "grade": 0,
+   "mode": "ai",
+   "name": "동력장갑"
+  },
+  "saga-dungeon:equip:a_jichap": {
+   "key": "a_jichap",
+   "grade": 0,
+   "mode": "ai",
+   "name": "지갑"
+  },
+  "saga-dungeon:equip:a_pigap": {
+   "key": "a_pigap",
+   "grade": 0,
+   "mode": "ai",
+   "name": "피갑"
+  },
+  "saga-dungeon:equip:a_chalgap": {
+   "key": "a_chalgap",
+   "grade": 0,
+   "mode": "ai",
+   "name": "찰갑"
+  },
+  "saga-dungeon:equip:a_dujeong": {
+   "key": "a_dujeong",
+   "grade": 0,
+   "mode": "ai",
+   "name": "두정갑"
+  },
+  "saga-dungeon:equip:a_dopo": {
+   "key": "a_dopo",
+   "grade": 0,
+   "mode": "ai",
+   "name": "도포"
+  },
+  "saga-dungeon:equip:a_myeongap": {
+   "key": "a_myeongap",
+   "grade": 0,
+   "mode": "ai",
+   "name": "면갑"
+  },
+  "saga-dungeon:equip:a_cheollip": {
+   "key": "a_cheollip",
+   "grade": 0,
+   "mode": "ai",
+   "name": "철립"
+  },
+  "saga-dungeon:equip:h_tumo": {
+   "key": "h_tumo",
+   "grade": 0,
+   "mode": "ai",
+   "name": "투구"
+  },
+  "saga-dungeon:equip:g_wangap": {
+   "key": "g_wangap",
+   "grade": 0,
+   "mode": "ai",
+   "name": "완갑"
+  },
+  "saga-dungeon:equip:g_wandae": {
+   "key": "g_wandae",
+   "grade": 0,
+   "mode": "ai",
+   "name": "완대"
+  },
+  "saga-dungeon:equip:b_hwaje": {
+   "key": "b_hwaje",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화자"
+  },
+  "saga-dungeon:equip:b_jipsin": {
+   "key": "b_jipsin",
+   "grade": 0,
+   "mode": "ai",
+   "name": "짚신"
+  },
+  "saga-dungeon:equip:n_okpae": {
+   "key": "n_okpae",
+   "grade": 0,
+   "mode": "ai",
+   "name": "옥패"
+  },
+  "saga-dungeon:equip:n_geumpae": {
+   "key": "n_geumpae",
+   "grade": 0,
+   "mode": "ai",
+   "name": "금패"
+  },
+  "saga-dungeon:equip:c_hopae": {
+   "key": "c_hopae",
+   "grade": 0,
+   "mode": "ai",
+   "name": "호패"
+  },
+  "saga-dungeon:equip:c_yeombul": {
+   "key": "c_yeombul",
+   "grade": 0,
+   "mode": "ai",
+   "name": "염주"
+  },
+  "saga-dungeon:equip:c_hobu": {
+   "key": "c_hobu",
+   "grade": 0,
+   "mode": "ai",
+   "name": "호부"
+  },
+  "saga-dungeon:equip:c_dokkaebi": {
+   "key": "c_dokkaebi",
+   "grade": 0,
+   "mode": "ai",
+   "name": "도깨비방울"
+  },
+  "saga-dungeon:equip:c_gyeong": {
+   "key": "c_gyeong",
+   "grade": 0,
+   "mode": "ai",
+   "name": "청동경"
+  },
+  "saga-dungeon:equip:c_okgae": {
+   "key": "c_okgae",
+   "grade": 0,
+   "mode": "ai",
+   "name": "옥가락지"
+  },
+  "saga-dungeon:equip:r_geumji": {
+   "key": "r_geumji",
+   "grade": 0,
+   "mode": "ai",
+   "name": "금지환"
+  },
+  "saga-dungeon:equip:u_ssanggeom": {
+   "key": "u_ssanggeom",
+   "grade": 4,
+   "mode": "ai",
+   "name": "쌍룡도(雙龍刀)"
+  },
+  "saga-dungeon:equip:u_byeoksan": {
+   "key": "u_byeoksan",
+   "grade": 4,
+   "mode": "ai",
+   "name": "벽산편(劈山鞭)"
+  },
+  "saga-dungeon:equip:u_cheonjigang": {
+   "key": "u_cheonjigang",
+   "grade": 4,
+   "mode": "ai",
+   "name": "천지창(天地槍)"
+  },
+  "saga-dungeon:equip:u_cheongryong": {
+   "key": "u_cheongryong",
+   "grade": 4,
+   "mode": "ai",
+   "name": "청룡언월도(靑龍偃月刀)"
+  },
+  "saga-dungeon:equip:u_manbal": {
+   "key": "u_manbal",
+   "grade": 4,
+   "mode": "ai",
+   "name": "만발궁(萬發弓)"
+  },
+  "saga-dungeon:equip:u_gwiseon": {
+   "key": "u_gwiseon",
+   "grade": 4,
+   "mode": "ai",
+   "name": "귀선부(鬼仙斧)"
+  },
+  "saga-dungeon:equip:u_baekhak": {
+   "key": "u_baekhak",
+   "grade": 4,
+   "mode": "ai",
+   "name": "백학선(白鶴扇)"
+  },
+  "saga-dungeon:equip:u_jukjang": {
+   "key": "u_jukjang",
+   "grade": 4,
+   "mode": "ai",
+   "name": "녹죽장(綠竹杖)"
+  },
+  "saga-dungeon:equip:u_iljabul": {
+   "key": "u_iljabul",
+   "grade": 4,
+   "mode": "ai",
+   "name": "일자필(一字筆)"
+  },
+  "saga-dungeon:equip:u_yukdo": {
+   "key": "u_yukdo",
+   "grade": 4,
+   "mode": "ai",
+   "name": "육도삼략(六韜三略)"
+  },
+  "saga-dungeon:equip:u_danryeong": {
+   "key": "u_danryeong",
+   "grade": 4,
+   "mode": "ai",
+   "name": "단령피갑(丹領皮甲)"
+  },
+  "saga-dungeon:equip:u_dujeong": {
+   "key": "u_dujeong",
+   "grade": 4,
+   "mode": "ai",
+   "name": "흑린두정(黑鱗頭釘)"
+  },
+  "saga-dungeon:equip:u_chalgap": {
+   "key": "u_chalgap",
+   "grade": 4,
+   "mode": "ai",
+   "name": "만인갑(萬人甲)"
+  },
+  "saga-dungeon:equip:u_dopo": {
+   "key": "u_dopo",
+   "grade": 4,
+   "mode": "ai",
+   "name": "학창의(鶴氅衣)"
+  },
+  "saga-dungeon:equip:u_cheollip": {
+   "key": "u_cheollip",
+   "grade": 4,
+   "mode": "ai",
+   "name": "흑철립(黑鐵笠)"
+  },
+  "saga-dungeon:equip:u_okro": {
+   "key": "u_okro",
+   "grade": 4,
+   "mode": "ai",
+   "name": "옥로관(玉鷺冠)"
+  },
+  "saga-dungeon:equip:u_eunwol": {
+   "key": "u_eunwol",
+   "grade": 4,
+   "mode": "ai",
+   "name": "은월투구(銀月兜)"
+  },
+  "saga-dungeon:equip:u_cheongeun": {
+   "key": "u_cheongeun",
+   "grade": 4,
+   "mode": "ai",
+   "name": "천근완갑(千斤腕甲)"
+  },
+  "saga-dungeon:equip:u_yusu": {
+   "key": "u_yusu",
+   "grade": 4,
+   "mode": "ai",
+   "name": "유수완대(流水腕帶)"
+  },
+  "saga-dungeon:equip:u_cheolli": {
+   "key": "u_cheolli",
+   "grade": 4,
+   "mode": "ai",
+   "name": "천리화(千里靴)"
+  },
+  "saga-dungeon:equip:u_unmun": {
+   "key": "u_unmun",
+   "grade": 4,
+   "mode": "ai",
+   "name": "운문리(雲紋履)"
+  },
+  "saga-dungeon:equip:u_taeeul": {
+   "key": "u_taeeul",
+   "grade": 4,
+   "mode": "ai",
+   "name": "태을옥패(太乙玉佩)"
+  },
+  "saga-dungeon:equip:u_geumin": {
+   "key": "u_geumin",
+   "grade": 4,
+   "mode": "ai",
+   "name": "금인패(金印牌)"
+  },
+  "saga-dungeon:equip:u_yongmun": {
+   "key": "u_yongmun",
+   "grade": 4,
+   "mode": "ai",
+   "name": "용문지환(龍紋指環)"
+  },
+  "saga-dungeon:equip:u_hopae": {
+   "key": "u_hopae",
+   "grade": 4,
+   "mode": "ai",
+   "name": "어사호패(御史號牌)"
+  },
+  "saga-dungeon:equip:u_okgae": {
+   "key": "u_okgae",
+   "grade": 4,
+   "mode": "ai",
+   "name": "월하옥지(月下玉指)"
+  },
+  "saga-dungeon:equip:u_dokkaebi": {
+   "key": "u_dokkaebi",
+   "grade": 4,
+   "mode": "ai",
+   "name": "도깨비방울(鬼鈴)"
+  },
+  "saga-dungeon:equip:u_gyeong": {
+   "key": "u_gyeong",
+   "grade": 4,
+   "mode": "ai",
+   "name": "조요경(照妖鏡)"
+  },
+  "saga-dungeon:equip:u_mandara": {
+   "key": "u_mandara",
+   "grade": 4,
+   "mode": "ai",
+   "name": "만다라주(曼陀羅珠)"
+  },
+  "saga-dungeon:equip:u_byeoksa": {
+   "key": "u_byeoksa",
+   "grade": 4,
+   "mode": "ai",
+   "name": "벽사호부(辟邪護符)"
+  },
+  "saga-dungeon:set:chungmu": {
+   "key": "set_chungmu",
+   "grade": 3,
+   "mode": "ai",
+   "name": "충무(忠武)"
+  },
+  "saga-dungeon:set:waryong": {
+   "key": "set_waryong",
+   "grade": 3,
+   "mode": "ai",
+   "name": "와룡(臥龍)"
+  },
+  "saga-dungeon:set:horang": {
+   "key": "set_horang",
+   "grade": 3,
+   "mode": "ai",
+   "name": "호랑(虎狼)"
+  },
+  "saga-dungeon:set:cheongnang": {
+   "key": "set_cheongnang",
+   "grade": 3,
+   "mode": "ai",
+   "name": "청낭(靑囊)"
+  },
+  "saga-dungeon:set:cheolong": {
+   "key": "set_cheolong",
+   "grade": 3,
+   "mode": "ai",
+   "name": "철옹(鐵甕)"
+  },
+  "saga-dungeon:set:eunha": {
+   "key": "set_eunha",
+   "grade": 3,
+   "mode": "ai",
+   "name": "은하(銀河)"
+  },
+  "saga-dungeon:set:maenghon": {
+   "key": "set_maenghon",
+   "grade": 3,
+   "mode": "ai",
+   "name": "맹혼(猛魂)"
+  },
+  "saga-dungeon:set:biyeong": {
+   "key": "set_biyeong",
+   "grade": 3,
+   "mode": "ai",
+   "name": "비영(飛影)"
+  },
+  "saga-dungeon:set:paewang": {
+   "key": "set_paewang",
+   "grade": 3,
+   "mode": "ai",
+   "name": "패왕(霸王)"
+  },
+  "saga-dungeon:set:hyeonhak": {
+   "key": "set_hyeonhak",
+   "grade": 3,
+   "mode": "ai",
+   "name": "현학(玄鶴)"
+  },
+  "saga-dungeon:gem:agate": {
+   "key": "agate",
+   "grade": 2,
+   "mode": "ai",
+   "name": "마노(瑪瑙)"
+  },
+  "saga-dungeon:gem:pearl": {
+   "key": "pearl",
+   "grade": 2,
+   "mode": "ai",
+   "name": "진주(眞珠)"
+  },
+  "saga-dungeon:gem:amber": {
+   "key": "amber",
+   "grade": 2,
+   "mode": "ai",
+   "name": "호박(琥珀)"
+  },
+  "saga-dungeon:gem:jade": {
+   "key": "jade",
+   "grade": 2,
+   "mode": "ai",
+   "name": "옥(玉)"
+  },
+  "saga-dungeon:gem:onyx": {
+   "key": "onyx",
+   "grade": 2,
+   "mode": "ai",
+   "name": "흑요(黑曜)"
+  },
+  "saga-dungeon:gem:voidstone": {
+   "key": "voidstone",
+   "grade": 2,
+   "mode": "ai",
+   "name": "전자석(電磁石)"
+  },
+  "saga-dungeon:gem:cheon": {
+   "key": "rune_cheon",
+   "grade": 1,
+   "mode": "glyph",
+   "name": "천"
+  },
+  "saga-dungeon:gem:ji": {
+   "key": "rune_ji",
+   "grade": 1,
+   "mode": "glyph",
+   "name": "지"
+  },
+  "saga-dungeon:gem:in": {
+   "key": "rune_in",
+   "grade": 1,
+   "mode": "glyph",
+   "name": "인"
+  },
+  "saga-dungeon:gem:mu": {
+   "key": "rune_mu",
+   "grade": 2,
+   "mode": "glyph",
+   "name": "무"
+  },
+  "saga-dungeon:gem:mun": {
+   "key": "rune_mun",
+   "grade": 2,
+   "mode": "glyph",
+   "name": "문"
+  },
+  "saga-dungeon:gem:chung": {
+   "key": "rune_chung",
+   "grade": 2,
+   "mode": "glyph",
+   "name": "충"
+  },
+  "saga-dungeon:gem:ui": {
+   "key": "rune_ui",
+   "grade": 3,
+   "mode": "glyph",
+   "name": "의"
+  },
+  "saga-dungeon:gem:yong": {
+   "key": "rune_yong",
+   "grade": 3,
+   "mode": "glyph",
+   "name": "용"
+  },
+  "saga-dungeon:gem:ji2": {
+   "key": "rune_ji2",
+   "grade": 3,
+   "mode": "glyph",
+   "name": "지(智)"
+  },
+  "saga-dungeon:gem:sin": {
+   "key": "rune_sin",
+   "grade": 4,
+   "mode": "glyph",
+   "name": "신"
+  },
+  "saga-dungeon:gem:ryong": {
+   "key": "rune_ryong",
+   "grade": 4,
+   "mode": "glyph",
+   "name": "용(龍)"
+  },
+  "saga-dungeon:gem:wang": {
+   "key": "rune_wang",
+   "grade": 4,
+   "mode": "glyph",
+   "name": "왕"
+  },
+  "saga-story:equip:sword1": {
+   "key": "st_sword1",
+   "grade": 0,
+   "mode": "ai",
+   "name": "목검(木劍)"
+  },
+  "saga-story:equip:sword2": {
+   "key": "st_sword2",
+   "grade": 1,
+   "mode": "ai",
+   "name": "환도(環刀)"
+  },
+  "saga-story:equip:sword3": {
+   "key": "st_sword3",
+   "grade": 2,
+   "mode": "ai",
+   "name": "청강검(靑鋼劍)"
+  },
+  "saga-story:equip:sword4": {
+   "key": "st_sword4",
+   "grade": 3,
+   "mode": "ai",
+   "name": "용린도(龍鱗刀)"
+  },
+  "saga-story:equip:hat1": {
+   "key": "st_hat1",
+   "grade": 0,
+   "mode": "ai",
+   "name": "가죽 두건"
+  },
+  "saga-story:equip:hat2": {
+   "key": "st_hat2",
+   "grade": 1,
+   "mode": "ai",
+   "name": "철투구"
+  },
+  "saga-story:equip:hat3": {
+   "key": "st_hat3",
+   "grade": 2,
+   "mode": "ai",
+   "name": "봉시투구"
+  },
+  "saga-story:equip:hat4": {
+   "key": "st_hat4",
+   "grade": 3,
+   "mode": "ai",
+   "name": "금장 갑주투"
+  },
+  "saga-story:equip:top1": {
+   "key": "st_top1",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무명 저고리"
+  },
+  "saga-story:equip:top2": {
+   "key": "st_top2",
+   "grade": 1,
+   "mode": "ai",
+   "name": "가죽 갑옷"
+  },
+  "saga-story:equip:top3": {
+   "key": "st_top3",
+   "grade": 2,
+   "mode": "ai",
+   "name": "찰갑(札甲)"
+  },
+  "saga-story:equip:top4": {
+   "key": "st_top4",
+   "grade": 3,
+   "mode": "ai",
+   "name": "두정갑"
+  },
+  "saga-story:equip:bot1": {
+   "key": "st_bot1",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무명 바지"
+  },
+  "saga-story:equip:bot2": {
+   "key": "st_bot2",
+   "grade": 1,
+   "mode": "ai",
+   "name": "가죽 전군"
+  },
+  "saga-story:equip:bot3": {
+   "key": "st_bot3",
+   "grade": 2,
+   "mode": "ai",
+   "name": "철엽 전군"
+  },
+  "saga-story:equip:bot4": {
+   "key": "st_bot4",
+   "grade": 3,
+   "mode": "ai",
+   "name": "용문 전군"
+  },
+  "saga-story:equip:shoe1": {
+   "key": "st_shoe1",
+   "grade": 0,
+   "mode": "ai",
+   "name": "짚신"
+  },
+  "saga-story:equip:shoe2": {
+   "key": "st_shoe2",
+   "grade": 1,
+   "mode": "ai",
+   "name": "가죽 전화"
+  },
+  "saga-story:equip:shoe3": {
+   "key": "st_shoe3",
+   "grade": 2,
+   "mode": "ai",
+   "name": "철갑 전화"
+  },
+  "saga-story:equip:shoe4": {
+   "key": "st_shoe4",
+   "grade": 3,
+   "mode": "ai",
+   "name": "비룡화"
+  },
+  "saga-story:equip:glv1": {
+   "key": "st_glv1",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무명 팔찌"
+  },
+  "saga-story:equip:glv2": {
+   "key": "st_glv2",
+   "grade": 1,
+   "mode": "ai",
+   "name": "가죽 수갑"
+  },
+  "saga-story:equip:glv3": {
+   "key": "st_glv3",
+   "grade": 2,
+   "mode": "ai",
+   "name": "철갑 수갑"
+  },
+  "saga-story:equip:glv4": {
+   "key": "st_glv4",
+   "grade": 3,
+   "mode": "ai",
+   "name": "용조 수갑"
+  },
+  "saga-story:equip:cap1": {
+   "key": "st_cap1",
+   "grade": 0,
+   "mode": "ai",
+   "name": "베 망토"
+  },
+  "saga-story:equip:cap2": {
+   "key": "st_cap2",
+   "grade": 1,
+   "mode": "ai",
+   "name": "가죽 망토"
+  },
+  "saga-story:equip:cap3": {
+   "key": "st_cap3",
+   "grade": 2,
+   "mode": "ai",
+   "name": "수달피 망토"
+  },
+  "saga-story:equip:cap4": {
+   "key": "st_cap4",
+   "grade": 3,
+   "mode": "ai",
+   "name": "흑룡 망토"
+  },
+  "saga-story:equip:ring1": {
+   "key": "st_ring1",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무명 지환"
+  },
+  "saga-story:equip:ring2": {
+   "key": "st_ring2",
+   "grade": 1,
+   "mode": "ai",
+   "name": "은지환"
+  },
+  "saga-story:equip:ring3": {
+   "key": "st_ring3",
+   "grade": 2,
+   "mode": "ai",
+   "name": "옥지환"
+  },
+  "saga-story:equip:ring4": {
+   "key": "st_ring4",
+   "grade": 3,
+   "mode": "ai",
+   "name": "금룡지환"
+  },
+  "saga-story:equip:neck1": {
+   "key": "st_neck1",
+   "grade": 0,
+   "mode": "ai",
+   "name": "나무 목걸이"
+  },
+  "saga-story:equip:neck2": {
+   "key": "st_neck2",
+   "grade": 1,
+   "mode": "ai",
+   "name": "은 목걸이"
+  },
+  "saga-story:equip:neck3": {
+   "key": "st_neck3",
+   "grade": 2,
+   "mode": "ai",
+   "name": "옥 목걸이"
+  },
+  "saga-story:equip:neck4": {
+   "key": "st_neck4",
+   "grade": 3,
+   "mode": "ai",
+   "name": "금 목걸이"
+  },
+  "saga-story:equip:ear1": {
+   "key": "st_ear1",
+   "grade": 0,
+   "mode": "ai",
+   "name": "나무 귀걸이"
+  },
+  "saga-story:equip:ear2": {
+   "key": "st_ear2",
+   "grade": 1,
+   "mode": "ai",
+   "name": "은 귀걸이"
+  },
+  "saga-story:equip:ear3": {
+   "key": "st_ear3",
+   "grade": 2,
+   "mode": "ai",
+   "name": "옥 귀걸이"
+  },
+  "saga-story:equip:ear4": {
+   "key": "st_ear4",
+   "grade": 3,
+   "mode": "ai",
+   "name": "금 귀걸이"
+  },
+  "saga-story:consumable:atk100": {
+   "key": "st_scroll_atk",
+   "grade": 0,
+   "mode": "ai",
+   "name": "공격력 주문서 100%"
+  },
+  "saga-story:consumable:atk60": {
+   "key": "st_scroll_atk",
+   "grade": 0,
+   "mode": "ai",
+   "name": "공격력 주문서 60%"
+  },
+  "saga-story:consumable:atk10": {
+   "key": "st_scroll_atk",
+   "grade": 0,
+   "mode": "ai",
+   "name": "공격력 주문서 10%"
+  },
+  "saga-story:consumable:def100": {
+   "key": "st_scroll_def",
+   "grade": 0,
+   "mode": "ai",
+   "name": "물리방어 주문서 100%"
+  },
+  "saga-story:consumable:def60": {
+   "key": "st_scroll_def",
+   "grade": 0,
+   "mode": "ai",
+   "name": "물리방어 주문서 60%"
+  },
+  "saga-story:consumable:hp60": {
+   "key": "st_scroll_hp",
+   "grade": 0,
+   "mode": "ai",
+   "name": "체력 주문서 60%"
+  },
+  "saga-story:consumable:hp10": {
+   "key": "st_scroll_hp",
+   "grade": 0,
+   "mode": "ai",
+   "name": "체력 주문서 10%"
+  },
+  "saga-story:equip:u_sword": {
+   "key": "st_u_sword",
+   "grade": 4,
+   "mode": "ai",
+   "name": "진룡도(震龍刀)"
+  },
+  "saga-story:equip:u_hat": {
+   "key": "st_u_hat",
+   "grade": 4,
+   "mode": "ai",
+   "name": "봉황관(鳳凰冠)"
+  },
+  "saga-story:equip:u_top": {
+   "key": "st_u_top",
+   "grade": 4,
+   "mode": "ai",
+   "name": "현무갑(玄武甲)"
+  },
+  "saga-story:equip:u_bottom": {
+   "key": "st_u_bottom",
+   "grade": 4,
+   "mode": "ai",
+   "name": "천리군(千里裙)"
+  },
+  "saga-story:equip:u_shoes": {
+   "key": "st_u_shoes",
+   "grade": 4,
+   "mode": "ai",
+   "name": "분마화(奔馬靴)"
+  },
+  "saga-story:equip:u_glove": {
+   "key": "st_u_glove",
+   "grade": 4,
+   "mode": "ai",
+   "name": "호랑수갑(虎狼手甲)"
+  },
+  "saga-story:equip:u_cape": {
+   "key": "st_u_cape",
+   "grade": 4,
+   "mode": "ai",
+   "name": "봉래포(蓬萊袍)"
+  },
+  "saga-story:equip:u_ring": {
+   "key": "st_u_ring",
+   "grade": 4,
+   "mode": "ai",
+   "name": "구룡지환(九龍指環)"
+  },
+  "saga-story:equip:u_necklace": {
+   "key": "st_u_necklace",
+   "grade": 4,
+   "mode": "ai",
+   "name": "영롱주(玲瓏珠)"
+  },
+  "saga-story:equip:u_earring": {
+   "key": "st_u_earring",
+   "grade": 4,
+   "mode": "ai",
+   "name": "월아환(月牙環)"
+  },
+  "saga-realm:equip:itm_ironblade": {
+   "key": "rl_itm_ironblade",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무쇠검"
+  },
+  "saga-realm:equip:itm_warhorse": {
+   "key": "rl_itm_warhorse",
+   "grade": 0,
+   "mode": "ai",
+   "name": "준마"
+  },
+  "saga-realm:equip:itm_armor": {
+   "key": "rl_itm_armor",
+   "grade": 0,
+   "mode": "ai",
+   "name": "보갑"
+  },
+  "saga-realm:equip:itm_scroll": {
+   "key": "rl_itm_scroll",
+   "grade": 0,
+   "mode": "ai",
+   "name": "병서"
+  },
+  "saga-realm:equip:itm_compass": {
+   "key": "rl_itm_compass",
+   "grade": 0,
+   "mode": "ai",
+   "name": "나침반"
+  },
+  "saga-realm:equip:itm_jade": {
+   "key": "rl_itm_jade",
+   "grade": 0,
+   "mode": "ai",
+   "name": "옥패"
+  },
+  "saga-realm:equip:itm_seal": {
+   "key": "rl_itm_seal",
+   "grade": 2,
+   "mode": "ai",
+   "name": "인수"
+  },
+  "saga-realm:equip:itm_drum": {
+   "key": "rl_itm_drum",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전고"
+  },
+  "saga-realm:equip:itm_timeshard": {
+   "key": "rl_itm_timeshard",
+   "grade": 2,
+   "mode": "ai",
+   "name": "시간의 파편"
+  },
+  "saga-realm:equip:itm_purifier": {
+   "key": "rl_itm_purifier",
+   "grade": 0,
+   "mode": "ai",
+   "name": "정화 장치"
+  },
+  "saga-realm:equip:itm_boneseal": {
+   "key": "rl_itm_boneseal",
+   "grade": 2,
+   "mode": "ai",
+   "name": "해골의 인장"
+  },
+  "saga-go:consumable:scroll": {
+   "key": "go_scroll",
+   "grade": 0,
+   "mode": "ai",
+   "name": "등용서"
+  },
+  "saga-go:consumable:feed": {
+   "key": "feed",
+   "grade": 0,
+   "mode": "ai",
+   "name": "사료"
+  },
+  "saga-go:consumable:shard": {
+   "key": "shard",
+   "grade": 0,
+   "mode": "ai",
+   "name": "인장 조각"
+  },
+  "saga-go:consumable:seal": {
+   "key": "seal",
+   "grade": 0,
+   "mode": "ai",
+   "name": "사당 인장"
+  },
+  "saga-go:consumable:treat": {
+   "key": "treat",
+   "grade": 0,
+   "mode": "ai",
+   "name": "별미"
+  },
+  "saga-go:consumable:incense": {
+   "key": "incense",
+   "grade": 0,
+   "mode": "ai",
+   "name": "향(香)"
+  },
+  "saga-go:consumable:prayer": {
+   "key": "prayer",
+   "grade": 0,
+   "mode": "ai",
+   "name": "축문"
+  },
+  "saga-go:material:mint": {
+   "key": "mint",
+   "grade": 0,
+   "mode": "ai",
+   "name": "박하"
+  },
+  "saga-go:material:honey_flower": {
+   "key": "honey_flower",
+   "grade": 0,
+   "mode": "ai",
+   "name": "꿀꽃"
+  },
+  "saga-go:material:apple": {
+   "key": "go_apple",
+   "grade": 0,
+   "mode": "ai",
+   "name": "산사과"
+  },
+  "saga-go:material:mushroom": {
+   "key": "mushroom",
+   "grade": 0,
+   "mode": "ai",
+   "name": "송이버섯"
+  },
+  "saga-go:material:clam": {
+   "key": "clam",
+   "grade": 0,
+   "mode": "ai",
+   "name": "바지락"
+  },
+  "saga-go:material:orchid": {
+   "key": "go_orchid",
+   "grade": 0,
+   "mode": "ai",
+   "name": "청하란"
+  },
+  "saga-go:material:conch": {
+   "key": "conch",
+   "grade": 0,
+   "mode": "ai",
+   "name": "갯소라"
+  },
+  "saga-go:material:ash_flower": {
+   "key": "ash_flower",
+   "grade": 0,
+   "mode": "ai",
+   "name": "재꽃"
+  },
+  "saga-go:material:snow_bloom": {
+   "key": "snow_bloom",
+   "grade": 0,
+   "mode": "ai",
+   "name": "눈꽃"
+  },
+  "saga-go:material:meat": {
+   "key": "meat",
+   "grade": 0,
+   "mode": "ai",
+   "name": "짐승 고기"
+  },
+  "saga-go:material:0": {
+   "key": "go_orchid",
+   "grade": 0,
+   "mode": "ai",
+   "name": "orchid"
+  },
+  "saga-go:material:1": {
+   "key": "conch",
+   "grade": 0,
+   "mode": "ai",
+   "name": "conch"
+  },
+  "saga-go:material:2": {
+   "key": "ash_flower",
+   "grade": 0,
+   "mode": "ai",
+   "name": "ash_flower"
+  },
+  "saga-go:artifact:0": {
+   "key": "af_gladiator",
+   "grade": 3,
+   "mode": "ai",
+   "name": "gladiator"
+  },
+  "saga-go:artifact:1": {
+   "key": "af_crimson",
+   "grade": 3,
+   "mode": "ai",
+   "name": "crimson"
+  },
+  "saga-go:artifact:2": {
+   "key": "af_viridescent",
+   "grade": 3,
+   "mode": "ai",
+   "name": "viridescent"
+  },
+  "saga-go:artifact:3": {
+   "key": "af_emblem",
+   "grade": 3,
+   "mode": "ai",
+   "name": "emblem"
+  },
+  "saga-go:artifact:4": {
+   "key": "af_depth",
+   "grade": 3,
+   "mode": "ai",
+   "name": "depth"
+  },
+  "saga-forest:material:apple": {
+   "key": "apple",
+   "grade": 0,
+   "mode": "ai",
+   "name": "능금"
+  },
+  "saga-forest:material:peach": {
+   "key": "fo_peach",
+   "grade": 0,
+   "mode": "ai",
+   "name": "복숭아"
+  },
+  "saga-forest:material:persim": {
+   "key": "fo_persim",
+   "grade": 0,
+   "mode": "ai",
+   "name": "홍시"
+  },
+  "saga-forest:material:plum": {
+   "key": "fo_plum",
+   "grade": 0,
+   "mode": "ai",
+   "name": "매실"
+  },
+  "saga-forest:material:citron": {
+   "key": "fo_citron",
+   "grade": 0,
+   "mode": "ai",
+   "name": "유자"
+  },
+  "saga-forest:material:chest": {
+   "key": "fo_chest",
+   "grade": 0,
+   "mode": "ai",
+   "name": "밤"
+  },
+  "saga-forest:material:pine": {
+   "key": "fo_pine",
+   "grade": 0,
+   "mode": "ai",
+   "name": "잣"
+  },
+  "saga-forest:material:sprout": {
+   "key": "fo_sprout",
+   "grade": 0,
+   "mode": "ai",
+   "name": "두릅"
+  },
+  "saga-forest:material:iron": {
+   "key": "iron",
+   "grade": 0,
+   "mode": "ai",
+   "name": "철석"
+  },
+  "saga-forest:material:copper": {
+   "key": "fo_copper",
+   "grade": 0,
+   "mode": "ai",
+   "name": "구리"
+  },
+  "saga-forest:material:silver": {
+   "key": "fo_silver",
+   "grade": 0,
+   "mode": "ai",
+   "name": "은괴"
+  },
+  "saga-forest:material:stardust": {
+   "key": "stardust",
+   "grade": 0,
+   "mode": "ai",
+   "name": "별조각"
+  },
+  "saga-forest:material:azalea": {
+   "key": "fo_azalea",
+   "grade": 0,
+   "mode": "ai",
+   "name": "진달래"
+  },
+  "saga-forest:material:mugung": {
+   "key": "fo_mugung",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무궁화"
+  },
+  "saga-forest:material:orchid": {
+   "key": "fo_orchid",
+   "grade": 0,
+   "mode": "ai",
+   "name": "난초"
+  },
+  "saga-forest:material:maple": {
+   "key": "fo_maple",
+   "grade": 0,
+   "mode": "ai",
+   "name": "단풍"
+  },
+  "saga-forest:material:sulwha": {
+   "key": "fo_sulwha",
+   "grade": 0,
+   "mode": "ai",
+   "name": "설중매"
+  },
+  "saga-forest:material:geumnang": {
+   "key": "fo_geumnang",
+   "grade": 0,
+   "mode": "ai",
+   "name": "금낭화"
+  },
+  "saga-forest:material:jaran": {
+   "key": "fo_jaran",
+   "grade": 0,
+   "mode": "ai",
+   "name": "자란"
+  },
+  "saga-forest:material:hongmae": {
+   "key": "fo_hongmae",
+   "grade": 0,
+   "mode": "ai",
+   "name": "홍매"
+  },
+  "saga-forest:material:mugwort": {
+   "key": "fo_mugwort",
+   "grade": 0,
+   "mode": "ai",
+   "name": "쑥"
+  },
+  "saga-forest:material:bellroot": {
+   "key": "fo_bellroot",
+   "grade": 0,
+   "mode": "ai",
+   "name": "도라지"
+  },
+  "saga-forest:material:reishi": {
+   "key": "fo_reishi",
+   "grade": 0,
+   "mode": "ai",
+   "name": "영지버섯"
+  },
+  "saga-forest:material:ginseng": {
+   "key": "fo_ginseng",
+   "grade": 0,
+   "mode": "ai",
+   "name": "산삼"
+  },
+  "saga-forest:material:cabbage": {
+   "key": "fo_cabbage",
+   "grade": 0,
+   "mode": "ai",
+   "name": "배추흰나비"
+  },
+  "saga-forest:material:ladybug": {
+   "key": "fo_ladybug",
+   "grade": 0,
+   "mode": "ai",
+   "name": "무당벌레"
+  },
+  "saga-forest:material:swallow": {
+   "key": "fo_swallow",
+   "grade": 0,
+   "mode": "ai",
+   "name": "호랑나비"
+  },
+  "saga-forest:material:hopper": {
+   "key": "fo_hopper",
+   "grade": 0,
+   "mode": "ai",
+   "name": "방아깨비"
+  },
+  "saga-forest:material:dragon": {
+   "key": "fo_dragon",
+   "grade": 0,
+   "mode": "ai",
+   "name": "잠자리"
+  },
+  "saga-forest:material:cicada": {
+   "key": "fo_cicada",
+   "grade": 0,
+   "mode": "ai",
+   "name": "참매미"
+  },
+  "saga-forest:material:longhorn": {
+   "key": "fo_longhorn",
+   "grade": 0,
+   "mode": "ai",
+   "name": "하늘소"
+  },
+  "saga-forest:material:mantis": {
+   "key": "fo_mantis",
+   "grade": 0,
+   "mode": "ai",
+   "name": "사마귀"
+  },
+  "saga-forest:material:cricket": {
+   "key": "fo_cricket",
+   "grade": 0,
+   "mode": "ai",
+   "name": "귀뚜라미"
+  },
+  "saga-forest:material:firefly": {
+   "key": "fo_firefly",
+   "grade": 0,
+   "mode": "ai",
+   "name": "반딧불이"
+  },
+  "saga-forest:material:rhino": {
+   "key": "fo_rhino",
+   "grade": 0,
+   "mode": "ai",
+   "name": "장수풍뎅이"
+  },
+  "saga-forest:material:stag": {
+   "key": "fo_stag",
+   "grade": 0,
+   "mode": "ai",
+   "name": "사슴벌레"
+  },
+  "saga-forest:material:snail": {
+   "key": "fo_snail",
+   "grade": 0,
+   "mode": "ai",
+   "name": "달팽이"
+  },
+  "saga-forest:material:spider": {
+   "key": "fo_spider",
+   "grade": 0,
+   "mode": "ai",
+   "name": "거미"
+  },
+  "saga-forest:material:wasp": {
+   "key": "fo_wasp",
+   "grade": 0,
+   "mode": "ai",
+   "name": "말벌"
+  },
+  "saga-forest:material:shard": {
+   "key": "fo_shard",
+   "grade": 0,
+   "mode": "ai",
+   "name": "토기 조각"
+  },
+  "saga-forest:material:oldcoin": {
+   "key": "fo_oldcoin",
+   "grade": 0,
+   "mode": "ai",
+   "name": "옛 동전"
+  },
+  "saga-forest:material:fern": {
+   "key": "fo_fern",
+   "grade": 0,
+   "mode": "ai",
+   "name": "고사리 화석"
+  },
+  "saga-forest:material:fishf": {
+   "key": "fo_fishf",
+   "grade": 0,
+   "mode": "ai",
+   "name": "물고기 화석"
+  },
+  "saga-forest:material:trilo": {
+   "key": "fo_trilo",
+   "grade": 0,
+   "mode": "ai",
+   "name": "삼엽충 화석"
+  },
+  "saga-forest:material:ammon": {
+   "key": "fo_ammon",
+   "grade": 0,
+   "mode": "ai",
+   "name": "암모나이트"
+  },
+  "saga-forest:material:track": {
+   "key": "fo_track",
+   "grade": 0,
+   "mode": "ai",
+   "name": "새 발자국"
+  },
+  "saga-forest:material:tooth": {
+   "key": "fo_tooth",
+   "grade": 0,
+   "mode": "ai",
+   "name": "공룡 이빨"
+  },
+  "saga-forest:material:bone": {
+   "key": "fo_bone",
+   "grade": 0,
+   "mode": "ai",
+   "name": "공룡 뼈"
+  },
+  "saga-forest:material:tusk": {
+   "key": "fo_tusk",
+   "grade": 0,
+   "mode": "ai",
+   "name": "매머드 엄니"
+  },
+  "saga-forest:material:godung": {
+   "key": "fo_godung",
+   "grade": 0,
+   "mode": "ai",
+   "name": "고둥"
+  },
+  "saga-forest:material:sora": {
+   "key": "fo_sora",
+   "grade": 0,
+   "mode": "ai",
+   "name": "소라"
+  },
+  "saga-forest:material:daehap": {
+   "key": "fo_daehap",
+   "grade": 0,
+   "mode": "ai",
+   "name": "대합"
+  },
+  "saga-forest:material:urchin": {
+   "key": "fo_urchin",
+   "grade": 0,
+   "mode": "ai",
+   "name": "성게 껍질"
+  },
+  "saga-forest:material:abalone": {
+   "key": "fo_abalone",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전복 껍데기"
+  },
+  "saga-forest:material:pearl": {
+   "key": "pearl",
+   "grade": 2,
+   "mode": "ai",
+   "name": "진주"
+  },
+  "saga-forest:material:rooftile": {
+   "key": "fo_rooftile",
+   "grade": 0,
+   "mode": "ai",
+   "name": "옛 기와 조각"
+  },
+  "saga-forest:material:wallstone": {
+   "key": "fo_wallstone",
+   "grade": 0,
+   "mode": "ai",
+   "name": "성돌"
+  },
+  "saga-forest:material:rafter": {
+   "key": "fo_rafter",
+   "grade": 0,
+   "mode": "ai",
+   "name": "서까래 토막"
+  },
+  "saga-forest:material:bignail": {
+   "key": "fo_bignail",
+   "grade": 0,
+   "mode": "ai",
+   "name": "대못"
+  },
+  "saga-forest:material:doorring": {
+   "key": "fo_doorring",
+   "grade": 0,
+   "mode": "ai",
+   "name": "문고리"
+  },
+  "saga-forest:material:postkey": {
+   "key": "fo_postkey",
+   "grade": 0,
+   "mode": "ai",
+   "name": "옛 우체통 열쇠"
+  },
+  "saga-forest:material:crucian": {
+   "key": "fo_crucian",
+   "grade": 0,
+   "mode": "ai",
+   "name": "붕어"
+  },
+  "saga-forest:material:carp": {
+   "key": "fo_carp",
+   "grade": 0,
+   "mode": "ai",
+   "name": "잉어"
+  },
+  "saga-forest:material:catfish": {
+   "key": "fo_catfish",
+   "grade": 0,
+   "mode": "ai",
+   "name": "메기"
+  },
+  "saga-forest:material:sturgeon": {
+   "key": "fo_sturgeon",
+   "grade": 0,
+   "mode": "ai",
+   "name": "철갑상어"
+  },
+  "saga-forest:material:trout": {
+   "key": "fo_trout",
+   "grade": 0,
+   "mode": "ai",
+   "name": "송어"
+  },
+  "saga-forest:material:smelt": {
+   "key": "fo_smelt",
+   "grade": 0,
+   "mode": "ai",
+   "name": "빙어"
+  },
+  "saga-forest:material:loach": {
+   "key": "fo_loach",
+   "grade": 0,
+   "mode": "ai",
+   "name": "미꾸라지"
+  },
+  "saga-forest:furniture:bangseok": {
+   "key": "bangseok",
+   "grade": 0,
+   "mode": "ai",
+   "name": "방석"
+  },
+  "saga-forest:furniture:yo": {
+   "key": "yo",
+   "grade": 0,
+   "mode": "ai",
+   "name": "요"
+  },
+  "saga-forest:furniture:hwabun": {
+   "key": "fo_hwabun",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화분"
+  },
+  "saga-forest:furniture:deungjan": {
+   "key": "fo_deungjan",
+   "grade": 0,
+   "mode": "ai",
+   "name": "등잔"
+  },
+  "saga-forest:furniture:soban": {
+   "key": "soban",
+   "grade": 0,
+   "mode": "ai",
+   "name": "소반"
+  },
+  "saga-forest:furniture:mulhang": {
+   "key": "fo_mulhang",
+   "grade": 0,
+   "mode": "ai",
+   "name": "물항아리"
+  },
+  "saga-forest:furniture:jokja": {
+   "key": "fo_jokja",
+   "grade": 0,
+   "mode": "ai",
+   "name": "족자"
+  },
+  "saga-forest:furniture:seoan": {
+   "key": "fo_seoan",
+   "grade": 0,
+   "mode": "ai",
+   "name": "서안"
+  },
+  "saga-forest:furniture:hwaro": {
+   "key": "fo_hwaro",
+   "grade": 0,
+   "mode": "ai",
+   "name": "화로"
+  },
+  "saga-forest:furniture:mungab": {
+   "key": "fo_mungab",
+   "grade": 0,
+   "mode": "ai",
+   "name": "문갑"
+  },
+  "saga-forest:furniture:bandaji": {
+   "key": "fo_bandaji",
+   "grade": 0,
+   "mode": "ai",
+   "name": "반닫이"
+  },
+  "saga-forest:furniture:dokja": {
+   "key": "fo_dokja",
+   "grade": 0,
+   "mode": "ai",
+   "name": "도자기"
+  },
+  "saga-forest:furniture:badukpan": {
+   "key": "fo_badukpan",
+   "grade": 0,
+   "mode": "ai",
+   "name": "바둑판"
+  },
+  "saga-forest:furniture:byeongpung": {
+   "key": "byeongpung",
+   "grade": 0,
+   "mode": "ai",
+   "name": "병풍"
+  },
+  "saga-forest:furniture:geomungo": {
+   "key": "fo_geomungo",
+   "grade": 0,
+   "mode": "ai",
+   "name": "거문고"
+  },
+  "saga-forest:furniture:fest_seollal": {
+   "key": "fest_seollal",
+   "grade": 2,
+   "mode": "ai",
+   "name": "복조리"
+  },
+  "saga-forest:furniture:fest_daeborum": {
+   "key": "fest_daeborum",
+   "grade": 2,
+   "mode": "ai",
+   "name": "달집 화로"
+  },
+  "saga-forest:furniture:fest_samjin": {
+   "key": "fest_samjin",
+   "grade": 2,
+   "mode": "ai",
+   "name": "꽃전 소반"
+  },
+  "saga-forest:furniture:fest_dano": {
+   "key": "fest_dano",
+   "grade": 2,
+   "mode": "ai",
+   "name": "창포 화분"
+  },
+  "saga-forest:furniture:fest_chilseok": {
+   "key": "fest_chilseok",
+   "grade": 2,
+   "mode": "ai",
+   "name": "오작교 족자"
+  },
+  "saga-forest:furniture:fest_baekjung": {
+   "key": "fest_baekjung",
+   "grade": 2,
+   "mode": "ai",
+   "name": "연등"
+  },
+  "saga-forest:furniture:fest_chuseok": {
+   "key": "fest_chuseok",
+   "grade": 2,
+   "mode": "ai",
+   "name": "송편 상"
+  },
+  "saga-forest:furniture:fest_dongji": {
+   "key": "fest_dongji",
+   "grade": 2,
+   "mode": "ai",
+   "name": "팥죽 화로"
+  },
+  "saga-forest:furniture:visit_sailor": {
+   "key": "visit_sailor",
+   "grade": 2,
+   "mode": "ai",
+   "name": "선장의 궤짝"
+  },
+  "saga-forest:furniture:visit_wisp": {
+   "key": "visit_wisp",
+   "grade": 2,
+   "mode": "ai",
+   "name": "도깨비 등롱"
+  },
+  "saga-forest:furniture:visit_angler": {
+   "key": "visit_angler",
+   "grade": 2,
+   "mode": "ai",
+   "name": "명인의 어탁"
+  },
+  "saga-forest:furniture:visit_bug": {
+   "key": "visit_bug",
+   "grade": 2,
+   "mode": "ai",
+   "name": "나비 표본 액자"
+  },
+  "saga-forest:furniture:visit_future": {
+   "key": "visit_future",
+   "grade": 2,
+   "mode": "ai",
+   "name": "시간의 탁상시계"
+  },
+  "saga-forest:furniture:visit_dokkaebi": {
+   "key": "visit_dokkaebi",
+   "grade": 2,
+   "mode": "ai",
+   "name": "도깨비 방망이 탁자"
+  },
+  "saga-forest:furniture:visit_alien": {
+   "key": "visit_alien",
+   "grade": 2,
+   "mode": "ai",
+   "name": "별 지도 액자"
+  },
+  "saga-forest:furniture:visit_parcel": {
+   "key": "visit_parcel",
+   "grade": 2,
+   "mode": "ai",
+   "name": "소포 상자 탑"
+  },
+  "saga-forest:furniture:visit_photo": {
+   "key": "visit_photo",
+   "grade": 2,
+   "mode": "ai",
+   "name": "숲 사진첩 병풍"
+  },
+  "saga-forest:tool:net": {
+   "key": "net",
+   "grade": 0,
+   "mode": "ai",
+   "name": "잠자리채"
+  },
+  "saga-forest:tool:spade": {
+   "key": "spade",
+   "grade": 0,
+   "mode": "ai",
+   "name": "삽"
+  },
+  "saga-forest:tool:deed": {
+   "key": "fo_deed",
+   "grade": 0,
+   "mode": "ai",
+   "name": "개토패(開土牌)"
+  },
+  "saga-forest:furniture:earth": {
+   "key": "wall_earth",
+   "grade": 0,
+   "mode": "ai",
+   "name": "흙벽"
+  },
+  "saga-forest:furniture:hanji": {
+   "key": "wall_hanji",
+   "grade": 0,
+   "mode": "ai",
+   "name": "한지벽"
+  },
+  "saga-forest:furniture:sol": {
+   "key": "wall_sol",
+   "grade": 0,
+   "mode": "ai",
+   "name": "솔빛벽"
+  },
+  "saga-forest:furniture:muk": {
+   "key": "wall_muk",
+   "grade": 0,
+   "mode": "ai",
+   "name": "먹빛벽"
+  },
+  "saga-forest:furniture:dan": {
+   "key": "wall_dan",
+   "grade": 0,
+   "mode": "ai",
+   "name": "단청벽"
+  },
+  "saga-forest:furniture:wood": {
+   "key": "floor_wood",
+   "grade": 0,
+   "mode": "ai",
+   "name": "마루"
+  },
+  "saga-forest:furniture:mat": {
+   "key": "floor_mat",
+   "grade": 0,
+   "mode": "ai",
+   "name": "돗자리"
+  },
+  "saga-forest:furniture:jangpan": {
+   "key": "floor_jangpan",
+   "grade": 0,
+   "mode": "ai",
+   "name": "장판"
+  },
+  "saga-forest:furniture:stone": {
+   "key": "floor_stone",
+   "grade": 0,
+   "mode": "ai",
+   "name": "박석"
+  },
+  "saga-forest:furniture:ondol": {
+   "key": "floor_ondol",
+   "grade": 0,
+   "mode": "ai",
+   "name": "구들장"
+  },
+  "saga-forest:wear:leather": {
+   "key": "wear_leather",
+   "grade": 0,
+   "mode": "ai",
+   "name": "평상복"
+  },
+  "saga-forest:wear:robe": {
+   "key": "wear_robe",
+   "grade": 0,
+   "mode": "ai",
+   "name": "도포"
+  },
+  "saga-forest:wear:coat": {
+   "key": "wear_coat",
+   "grade": 0,
+   "mode": "ai",
+   "name": "두루마기"
+  },
+  "saga-forest:wear:plate": {
+   "key": "wear_plate",
+   "grade": 0,
+   "mode": "ai",
+   "name": "갑옷"
+  },
+  "saga-forest:wear:spacesuit": {
+   "key": "wear_spacesuit",
+   "grade": 0,
+   "mode": "ai",
+   "name": "배달원 우주복"
+  },
+  "saga-forest:wear:none": {
+   "mode": "skip",
+   "name": "맨머리"
+  },
+  "saga-forest:wear:topknot": {
+   "key": "wear_topknot",
+   "grade": 0,
+   "mode": "ai",
+   "name": "상투"
+  },
+  "saga-forest:wear:braid": {
+   "key": "wear_braid",
+   "grade": 0,
+   "mode": "ai",
+   "name": "댕기"
+  },
+  "saga-forest:wear:scholar": {
+   "key": "wear_scholar",
+   "grade": 0,
+   "mode": "ai",
+   "name": "유건"
+  },
+  "saga-forest:wear:gat": {
+   "key": "wear_gat",
+   "grade": 0,
+   "mode": "ai",
+   "name": "갓"
+  },
+  "saga-forest:wear:hairpin": {
+   "key": "wear_hairpin",
+   "grade": 0,
+   "mode": "ai",
+   "name": "족두리"
+  },
+  "saga-forest:wear:helmet": {
+   "key": "wear_helmet",
+   "grade": 0,
+   "mode": "ai",
+   "name": "전립"
+  },
+  "saga-forest:wear:none#2": {
+   "mode": "skip",
+   "name": "그대로"
+  },
+  "saga-forest:wear:white": {
+   "key": "dye_white",
+   "grade": 0,
+   "mode": "color",
+   "name": "소색"
+  },
+  "saga-forest:wear:ink": {
+   "key": "dye_ink",
+   "grade": 0,
+   "mode": "color",
+   "name": "먹빛"
+  },
+  "saga-forest:wear:forest": {
+   "key": "dye_forest",
+   "grade": 0,
+   "mode": "color",
+   "name": "풀빛"
+  },
+  "saga-forest:wear:indigo": {
+   "key": "dye_indigo",
+   "grade": 0,
+   "mode": "color",
+   "name": "쪽빛"
+  },
+  "saga-forest:wear:crimson": {
+   "key": "dye_crimson",
+   "grade": 0,
+   "mode": "color",
+   "name": "다홍"
+  },
+  "saga-forest:wear:gold": {
+   "key": "dye_gold",
+   "grade": 0,
+   "mode": "color",
+   "name": "치자빛"
+  },
+  "saga-forest:wear:plum": {
+   "key": "dye_plum",
+   "grade": 0,
+   "mode": "color",
+   "name": "자주"
+  },
+  "saga-forest:wear:off": {
+   "mode": "skip",
+   "name": "없음"
+  },
+  "saga-forest:wear:on": {
+   "mode": "skip",
+   "name": "덧옷"
+  },
+  "saga_go-godot:equip:w_sword_0": {
+   "key": "gw_sword_0",
+   "grade": 0,
+   "mode": "ai",
+   "name": "수련용 목검"
+  },
+  "SagaGo-unity:equip:w_sword_0": {
+   "key": "gw_sword_0",
+   "grade": 0,
+   "mode": "ai",
+   "name": "수련용 목검"
+  },
+  "saga_go-godot:equip:w_claymore_0": {
+   "key": "gw_claymore_0",
+   "grade": 0,
+   "mode": "ai",
+   "name": "수련용 목도"
+  },
+  "SagaGo-unity:equip:w_claymore_0": {
+   "key": "gw_claymore_0",
+   "grade": 0,
+   "mode": "ai",
+   "name": "수련용 목도"
+  },
+  "saga_go-godot:equip:w_polearm_0": {
+   "key": "gw_polearm_0",
+   "grade": 0,
+   "mode": "ai",
+   "name": "수련용 장대"
+  },
+  "SagaGo-unity:equip:w_polearm_0": {
+   "key": "gw_polearm_0",
+   "grade": 0,
+   "mode": "ai",
+   "name": "수련용 장대"
+  },
+  "saga_go-godot:equip:w_catalyst_0": {
+   "key": "gw_catalyst_0",
+   "grade": 0,
+   "mode": "ai",
+   "name": "수련용 서첩"
+  },
+  "SagaGo-unity:equip:w_catalyst_0": {
+   "key": "gw_catalyst_0",
+   "grade": 0,
+   "mode": "ai",
+   "name": "수련용 서첩"
+  },
+  "saga_go-godot:equip:w_bow_0": {
+   "key": "gw_bow_0",
+   "grade": 0,
+   "mode": "ai",
+   "name": "수련용 단궁"
+  },
+  "SagaGo-unity:equip:w_bow_0": {
+   "key": "gw_bow_0",
+   "grade": 0,
+   "mode": "ai",
+   "name": "수련용 단궁"
+  },
+  "saga_go-godot:equip:w_sword_3": {
+   "key": "gw_sword_3",
+   "grade": 1,
+   "mode": "ai",
+   "name": "청동 환도"
+  },
+  "SagaGo-unity:equip:w_sword_3": {
+   "key": "gw_sword_3",
+   "grade": 1,
+   "mode": "ai",
+   "name": "청동 환도"
+  },
+  "saga_go-godot:equip:w_claymore_3": {
+   "key": "gw_claymore_3",
+   "grade": 1,
+   "mode": "ai",
+   "name": "나무꾼 큰도끼"
+  },
+  "SagaGo-unity:equip:w_claymore_3": {
+   "key": "gw_claymore_3",
+   "grade": 1,
+   "mode": "ai",
+   "name": "나무꾼 큰도끼"
+  },
+  "saga_go-godot:equip:w_polearm_3": {
+   "key": "gw_polearm_3",
+   "grade": 1,
+   "mode": "ai",
+   "name": "대나무 창"
+  },
+  "SagaGo-unity:equip:w_polearm_3": {
+   "key": "gw_polearm_3",
+   "grade": 1,
+   "mode": "ai",
+   "name": "대나무 창"
+  },
+  "saga_go-godot:equip:w_catalyst_3": {
+   "key": "gw_catalyst_3",
+   "grade": 1,
+   "mode": "ai",
+   "name": "해진 서책"
+  },
+  "SagaGo-unity:equip:w_catalyst_3": {
+   "key": "gw_catalyst_3",
+   "grade": 1,
+   "mode": "ai",
+   "name": "해진 서책"
+  },
+  "saga_go-godot:equip:w_bow_3": {
+   "key": "gw_bow_3",
+   "grade": 1,
+   "mode": "ai",
+   "name": "사냥꾼 활"
+  },
+  "SagaGo-unity:equip:w_bow_3": {
+   "key": "gw_bow_3",
+   "grade": 1,
+   "mode": "ai",
+   "name": "사냥꾼 활"
+  },
+  "saga_go-godot:equip:w_sword_4": {
+   "key": "gw_sword_4",
+   "grade": 2,
+   "mode": "ai",
+   "name": "청하 보검"
+  },
+  "SagaGo-unity:equip:w_sword_4": {
+   "key": "gw_sword_4",
+   "grade": 2,
+   "mode": "ai",
+   "name": "청하 보검"
+  },
+  "saga_go-godot:equip:w_claymore_4": {
+   "key": "gw_claymore_4",
+   "grade": 2,
+   "mode": "ai",
+   "name": "파도 참마도"
+  },
+  "SagaGo-unity:equip:w_claymore_4": {
+   "key": "gw_claymore_4",
+   "grade": 2,
+   "mode": "ai",
+   "name": "파도 참마도"
+  },
+  "saga_go-godot:equip:w_polearm_4": {
+   "key": "gw_polearm_4",
+   "grade": 2,
+   "mode": "ai",
+   "name": "봉수 월도"
+  },
+  "SagaGo-unity:equip:w_polearm_4": {
+   "key": "gw_polearm_4",
+   "grade": 2,
+   "mode": "ai",
+   "name": "봉수 월도"
+  },
+  "saga_go-godot:equip:w_catalyst_4": {
+   "key": "gw_catalyst_4",
+   "grade": 2,
+   "mode": "ai",
+   "name": "별자리 두루마리"
+  },
+  "SagaGo-unity:equip:w_catalyst_4": {
+   "key": "gw_catalyst_4",
+   "grade": 2,
+   "mode": "ai",
+   "name": "별자리 두루마리"
+  },
+  "saga_go-godot:equip:w_bow_4": {
+   "key": "gw_bow_4",
+   "grade": 2,
+   "mode": "ai",
+   "name": "갯바람 각궁"
+  },
+  "SagaGo-unity:equip:w_bow_4": {
+   "key": "gw_bow_4",
+   "grade": 2,
+   "mode": "ai",
+   "name": "갯바람 각궁"
+  },
+  "saga_go-godot:equip:w_polearm_catch": {
+   "key": "gw_polearm_catch",
+   "grade": 2,
+   "mode": "ai",
+   "name": "갯바람 작살"
+  },
+  "SagaGo-unity:equip:w_polearm_catch": {
+   "key": "gw_polearm_catch",
+   "grade": 2,
+   "mode": "ai",
+   "name": "갯바람 작살"
+  }
+ }
+}

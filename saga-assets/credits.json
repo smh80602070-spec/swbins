@@ -193,7 +193,7 @@
    "tool": "outfit_swap.py + vroid_batch.sh + web_share_textures.py (K-0024)",
    "model": "",
    "license": "VRoid Studio 공식 샘플 이용 조건: 상업 사용·개작본 재배포 허용, 크레딧 불필요(VRM 메타 확인)",
-   "count": 598,
+   "count": 1196,
    "where": [
     "saga-assets/characters/sprites2d/dj_doseo",
     "saga-assets/characters/sprites2d/dj_gapju",
@@ -201,6 +201,24 @@
     "saga-assets/characters/sprites2d/dj_haean",
     "saga-assets/characters/sprites2d/dj_hopak",
     "saga-assets/characters/sprites2d/dj_hwanggeum"
+   ]
+  },
+  {
+   "tool": "gen.py",
+   "model": "animagine-xl-4.0-opt",
+   "license": "CreativeML OpenRAIL++-M",
+   "count": 306,
+   "where": [
+    "saga-assets/icons/license"
+   ]
+  },
+  {
+   "tool": "icon_pack.py",
+   "model": "none",
+   "license": "CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음)",
+   "count": 19,
+   "where": [
+    "saga-assets/icons/license"
    ]
   },
   {
