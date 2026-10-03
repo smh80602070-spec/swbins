@@ -870,8 +870,12 @@ namespace Saga.Realm.UI
         /// <summary>사자의 지력으로 난도를 정해 3문을 뽑고 첫 문제부터
         /// 보여준다 — 명령 패널은 결과가 나올 때까지 안 필요해 미리 닫는다
         /// (다른 아홉 명령과 달리, 성공/실패가 갈리기 전에 이미 닫힌다).</summary>
-        private void StartDebate(int wisdom)
+        private System.Action<int> _debateDone;   // 시나리오 설전(tasks U-0027) — 끝나면 정답 수를 넘긴다(없으면 등용 명령으로 간다)
+        private System.Action<bool> _duelDone;    // 시나리오 일기토 — 끝나면 이겼는지를 넘긴다(없으면 출진으로 간다)
+
+        private void StartDebate(int wisdom, System.Action<int> done = null)
         {
+            _debateDone = done;
             _debateQuestions = RealmDebateState.Draw(wisdom);
             _debateAnswers = new List<int>();
             CloseAllPanels();
@@ -879,6 +883,7 @@ namespace Saga.Realm.UI
             {
                 // 문제은행이 통째로 비는 일은 없지만(RealmQuizData.Bank 36문항
                 // 고정), 방어적으로 설전 없이 바로 실행한다.
+                if (_debateDone != null) { var cb0 = _debateDone; _debateDone = null; cb0(0); return; }
                 RunOrder("hire", 1f, -1);
                 return;
             }
@@ -918,6 +923,7 @@ namespace Saga.Realm.UI
 
             _debatePanel.SetActive(false);
             var (correct, mul) = RealmDebateState.Result(_debateQuestions, _debateAnswers);
+            if (_debateDone != null) { var cb = _debateDone; _debateDone = null; cb(correct); return; }
             RunOrder("hire", mul, correct);
         }
 
@@ -1027,8 +1033,9 @@ namespace Saga.Realm.UI
             PlayOutcomeSfx(result.Won);
         }
 
-        private void StartDuel()
+        private void StartDuel(System.Action<bool> done = null)
         {
+            _duelDone = done;
             _duelResults.Clear();
             _duelRoundIndex = 0;
             CloseAllPanels();
@@ -1038,7 +1045,9 @@ namespace Saga.Realm.UI
 
         private void RefreshDuelPanel()
         {
-            _duelRoundText.text = string.Format(RealmLocalization.T("duel.round", "일기토 {0}/{1} — 무엇을 낼까?"), _duelRoundIndex + 1, RealmDuelState.Rounds);
+            _duelRoundText.text = _duelRoundIndex >= RealmDuelState.Rounds
+                ? string.Format(RealmLocalization.T("duel.extra", "일기토 {0}합 — 승부가 안 났다, 한 합 더"), _duelRoundIndex + 1)
+                : string.Format(RealmLocalization.T("duel.round", "일기토 {0}/{1} — 무엇을 낼까?"), _duelRoundIndex + 1, RealmDuelState.Rounds);
         }
 
         private void ChooseDuelMove(string move)
@@ -1047,6 +1056,21 @@ namespace Saga.Realm.UI
             string result = RealmDuelState.RoundResult(move, enemyMove);
             _duelResults.Add(result);
             _duelRoundIndex++;
+
+            if (_duelDone != null)
+            {
+                // 시나리오 일기토 — 세 합 뒤 이긴 합이 더 많으면 이김, 같으면 승부가 날 때까지 한 합씩 더(최대 MaxRounds, 그래도 같으면 짐)
+                bool? decided = _duelRoundIndex >= RealmDuelState.Rounds ? RealmDuelState.Decide(_duelResults) : (bool?)null;
+                if (_duelRoundIndex < RealmDuelState.Rounds || (decided == null && _duelRoundIndex < RealmDuelState.MaxRounds))
+                {
+                    RefreshDuelPanel();
+                    return;
+                }
+                _duelPanel.SetActive(false);
+                var cb = _duelDone; _duelDone = null;
+                cb(decided == true);
+                return;
+            }
 
             if (_duelRoundIndex < RealmDuelState.Rounds)
             {
@@ -1180,6 +1204,16 @@ namespace Saga.Realm.UI
 
         private void ChooseEvent(RealmEventState.Card card, RealmEventState.Choice choice)
         {
+            // 시나리오 단계 결과 카드(tasks U-0027) — 설전·일기토면 먼저 치르고, 끝나면 이 함수로 돌아와 결과를 낸다
+            if (card.Kind == RealmEventState.Kind.Scenario && RealmScenario.NeedsPre(card.OfficerId))
+            {
+                _eventPanel.SetActive(false);
+                if (RealmScenario.PreKind(card.OfficerId) == "debate")
+                    StartDebate(RealmScenario.AdviserWisdom(), correct => { RealmScenario.SetPre(correct >= 2); ChooseEvent(card, choice); });
+                else
+                    StartDuel(won => { RealmScenario.SetPre(won); ChooseEvent(card, choice); });
+                return;
+            }
             var result = RealmEventState.Resolve(card, choice);
             RealmToast.Instance?.Show(result.Message, 6f);
             PlayOutcomeSfx(result.Ok);

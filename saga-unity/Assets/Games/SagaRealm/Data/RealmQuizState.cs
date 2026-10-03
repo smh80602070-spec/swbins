@@ -160,6 +160,12 @@ namespace Saga.Realm.Data
             }
         }
 
+        /// <summary>시나리오 설전이 주는 문답 정답 수 가산(tasks U-0027, 웹 `quiz` 효과) — 문화 승리 기준에 합쳐진다. 세이브엔 이미 있는 정답 수로 담긴다.</summary>
+        public static void AddBonusCorrect(int n)
+        {
+            if (n > 0) _correct += n;
+        }
+
         public static Progress GetProgress() =>
             new Progress(_learned.Count, RealmQuizData.Bank.Count, _total, _correct, _streak, _bestStreak);
 

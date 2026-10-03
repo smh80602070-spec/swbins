@@ -53,6 +53,18 @@ namespace Saga.Realm.Data
             _ => TieMul,
         };
 
+        /// <summary>시나리오 일기토(tasks U-0027) — 세 합이 넘어가도 승부가 안 나면 한 합씩 더, 이 합 수까지.</summary>
+        public const int MaxRounds = 6;
+
+        /// <summary>이긴 합이 더 많으면 true, 적으면 false, 같으면 null(승부 안 남).</summary>
+        public static bool? Decide(List<string> results)
+        {
+            if (results == null) return null;
+            int wins = 0, losses = 0;
+            foreach (var r in results) { if (r == "win") wins++; else if (r == "lose") losses++; }
+            return wins > losses ? true : wins < losses ? (bool?)false : null;
+        }
+
         public static string AiMove() => Moves[Random.Range(0, Moves.Length)];
 
         /// <summary>3합 결과를 평균 배율 하나로 뭉친다(godot REALM 참고 설계와
