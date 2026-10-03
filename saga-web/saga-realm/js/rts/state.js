@@ -11,7 +11,7 @@
   /** 새 판 — seed 같으면 지도 같다 */
   function create(seed) {
     var s = { v: V, seed: seed >>> 0, tiles: R().grid.generate(seed), occ: new Int32Array(R().grid.W * R().grid.H),
-      buildings: {}, nextId: 2, res: { food: 100, gold: 300 }, pop: 12, day: 1, tick: 0, speed: 1, tax: 1 };
+      buildings: {}, nextId: 2, res: { food: 100, gold: 300 }, pop: 12, day: 1, tick: 0, speed: 1, tax: 1, units: {}, queues: {}, nextUid: 1 };
     R().rules.placeCastle(s);
     R().rules.recompute(s);
     return s;
@@ -22,8 +22,12 @@
     var list = [], id, b;
     for (id in s.buildings) { b = s.buildings[id]; if (b.t !== 'castle') { list.push({ id: b.id, t: b.t, x: b.x, y: b.y }); } }
     list.sort(function (a, c) { return a.id - c.id; });
-    return { v: V, seed: s.seed, res: { food: s.res.food, gold: s.res.gold }, pop: s.pop, day: s.day, tick: s.tick, speed: s.speed, tax: s.tax, nextId: s.nextId, buildings: list };
+    return { v: V, seed: s.seed, res: { food: s.res.food, gold: s.res.gold }, pop: s.pop, day: s.day, tick: s.tick, speed: s.speed, tax: s.tax, nextId: s.nextId, buildings: list,
+      units: serUnits(s), queues: serQueues(s), nextUid: s.nextUid };
   }
+
+  function serUnits(s) { var out = [], id, u; for (id in s.units) { u = s.units[id]; out.push({ id: u.id, t: u.t, team: u.team, x: Math.round(u.x * 100) / 100, y: Math.round(u.y * 100) / 100, hp: Math.round(u.hp * 10) / 10 }); } out.sort(function (a, b) { return a.id - b.id; }); return out; }
+  function serQueues(s) { var out = [], id, i; for (id in s.queues) { for (i = 0; i < s.queues[id].length; i++) { out.push({ b: +id, t: s.queues[id][i].t, left: s.queues[id][i].left }); } } return out; }
 
   /** 저장 꼴에서 판을 되살린다 — 모르는 건물은 건너뛴다(옛·깨진 저장에도 안 터진다) */
   function restore(o) {
@@ -42,8 +46,27 @@
     }
     for (i in s.buildings) { s.nextId = Math.max(s.nextId, s.buildings[i].id + 1); }
     s.nextId = Math.max(s.nextId, o.nextId | 0);
+    restoreUnits(s, o);
     R().rules.recompute(s);
     return s;
+  }
+
+  /** 유닛·큐 복원 — 모르는 종류·없는 군영은 건너뛴다 */
+  function restoreUnits(s, o) {
+    var UD = R().units ? R().units.UDEF : null, i, u, q;
+    if (!UD) { return; }
+    for (i = 0; i < (o.units || []).length; i++) {
+      u = o.units[i];
+      if (!UD[u.t] || !(u.id > 0)) { continue; }
+      s.units[u.id | 0] = { id: u.id | 0, t: u.t, team: u.team | 0, x: +u.x || 0, y: +u.y || 0, hp: +u.hp > 0 ? +u.hp : UD[u.t].hp, path: [], goal: null };
+      s.nextUid = Math.max(s.nextUid, (u.id | 0) + 1);
+    }
+    for (i = 0; i < (o.queues || []).length; i++) {
+      q = o.queues[i];
+      if (!s.buildings[q.b] || !UD[q.t]) { continue; }
+      (s.queues[q.b] = s.queues[q.b] || []).push({ t: q.t, left: Math.max(1, q.left | 0) });
+    }
+    s.nextUid = Math.max(s.nextUid, o.nextUid | 0);
   }
 
   global.DG = global.DG || {};

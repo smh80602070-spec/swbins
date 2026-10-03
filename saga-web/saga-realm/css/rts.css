@@ -37,3 +37,15 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0d1016; col
 .dm b { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, #5aa7d6, #e8c46a); }
 .dm u { position: absolute; inset: 0; z-index: 1; text-decoration: none; font-size: 10px; line-height: 14px; text-align: center; color: #fff; text-shadow: 0 0 2px #000; }
 @media (max-width: 780px) { #rts-opts { top: 104px; } .rt-dem { display: none; } }
+/* P3a — 선택 상자(군영 생산·유닛 수) */
+#rts-sel { display: none; left: 12px; bottom: calc(76px + var(--rt-safe-b)); padding: 8px 10px; min-width: 190px; max-width: 280px; font-size: 13px; }
+#rts-sel.show { display: block; }
+.sl-h { margin-bottom: 6px; } .sl-h small { color: #ff9a8a; }
+.sl-btns { display: flex; gap: 6px; }
+.sl-btns button { display: grid; place-items: center; min-width: 58px; min-height: 52px; padding: 3px 6px; background: rgba(0, 0, 0, .3); border: 1px solid rgba(216, 181, 106, .3); color: var(--rt-ink); border-radius: 6px; cursor: pointer; }
+.sl-btns button span { font-size: 20px; line-height: 1; } .sl-btns button small { font-size: 10px; color: var(--rt-dim); text-align: center; line-height: 1.2; }
+.sl-q { display: flex; gap: 4px; margin-top: 8px; }
+.sl-q i { position: relative; width: 34px; height: 30px; display: grid; place-items: center; background: rgba(255, 255, 255, .08); border: 1px solid rgba(216, 181, 106, .3); border-radius: 4px; font-style: normal; overflow: hidden; }
+.sl-q i.e { opacity: .35; } .sl-q i u { position: absolute; left: 0; bottom: 0; height: 3px; background: #e8c46a; text-decoration: none; }
+.sl-u { margin-bottom: 4px; color: var(--rt-dim); }
+@media (max-width: 780px) { #rts-sel { bottom: calc(84px + var(--rt-safe-b)); left: 8px; } }

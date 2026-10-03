@@ -106,6 +106,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rts/grid.js"></script>
 <script src="js/rts/rules.js"></script>
 <script src="js/rts/econ.js"></script>
+<script src="js/rts/units.js"></script>
 <script src="js/rts/state.js"></script>
 <script src="js/game.js"></script>
 <script>
@@ -353,6 +354,69 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var old = JSON.parse(JSON.stringify(o)); delete old.tax; var legacy = R.state.restore(old);
       var junk = JSON.parse(JSON.stringify(o)); junk.tax = 7; var weird = R.state.restore(junk);
       return back.tax === 2 && legacy.tax === 1 && weird.tax === 1 && ('세율 왕복 · 옛 저장 보통 · 이상한 값 보통');
+    });
+
+    /* ── RTS P3a(W-0031, js/rts/units.js) — 길찾기·생산 큐·이동·유지비·저장 ─── */
+
+    function rtsArmy(extra) { var R = DG.rts, r = R.rules, g = R.grid, s = R.state.create(7), cs = g.castleSite(), i; s.res.gold = 99999; s.res.food = 99999; for (i = 0; i < 8; i++) { r.place(s, 'road', cs.x + 3 + i, cs.y + 1); } s.__b = r.place(s, 'barracks', cs.x + 5, cs.y + 2); s.__cs = cs; if (extra) { extra(s, cs, r); } return s; }
+
+    t('RTS 길찾기 — 열린 땅은 곧게, 건물·물은 돌아가고, 도로는 지나며, 막힌 목표는 가까운 칸으로, 시작=목표는 빈 길', function () {
+      var R = DG.rts, U = R.units, g = R.grid, s = R.state.create(7), cs = g.castleSite(), sx = cs.x + 6, sy = cs.y - 9, gy = cs.y + 11, i;
+      function geo(p, x, y) { var d = 0, k; for (k = 0; k < p.length; k++) { d += Math.hypot(p[k].x - x, p[k].y - y); x = p[k].x; y = p[k].y; } return d; }
+      var open = U.findPath(s, sx, sy, sx, gy), straight = open.length === 20 && open[19].x === sx + 0.5 && open[19].y === gy + 0.5;
+      s.res.gold = 99999; for (i = cs.x + 3; i <= cs.x + 10; i++) { R.rules.place(s, 'wall', i, cs.y + 1); }
+      var around = U.findPath(s, sx, sy, sx, gy), detour = geo(around, sx + 0.5, sy + 0.5) > 21 && around.every(function (q) { return U.walkable(s, Math.floor(q.x), Math.floor(q.y)); });
+      var wall = U.walkable(s, sx, cs.y + 1) === false && U.walkable(s, cs.x, cs.y) === false;
+      R.rules.place(s, 'road', cs.x + 3, cs.y + 3); var road = U.walkable(s, cs.x + 3, cs.y + 3) === true;
+      var inWall = U.findPath(s, sx, sy, sx, cs.y + 1), nearGoal = inWall.length > 0 && U.walkable(s, Math.floor(inWall[inWall.length - 1].x), Math.floor(inWall[inWall.length - 1].y));
+      var same = U.findPath(s, sx, sy, sx, sy).length === 0, outside = U.findPath(s, sx, sy, -5, -5).length === 0;
+      return straight && detour && wall && road && nearGoal && same && outside && ('곧은 길 20칸 · 벽 우회 ' + geo(around, sx + 0.5, sy + 0.5).toFixed(1) + '칸 · 막힌 목표는 가까운 칸 · 지도 밖 빈 길');
+    });
+
+    t('RTS 생산 — 비용은 넣을 때 내고, 이어진 군영만, 큐는 다섯까지 차례로, 시간이 차면 군영 곁에 나온다', function () {
+      var R = DG.rts, U = R.units, s = rtsArmy(), id = s.__b.id, g0 = s.res.gold, f0 = s.res.food;
+      var ok = U.train(s, id, 'soldier'), paid = s.res.gold === g0 - 20 && s.res.food === f0 - 10 && ok.ok;
+      var i, last; for (i = 0; i < 6; i++) { last = U.train(s, id, i % 2 ? 'archer' : 'cavalry'); }
+      var full = last.ok === false && s.queues[id].length === 5;
+      var t0 = 0; while (U.count(s, 0) === 0 && t0 < 1000) { U.tick(s); t0++; }
+      var first = Object.keys(s.units).map(function (k) { return s.units[k]; })[0], timed = t0 === 80 && first.t === 'soldier' && s.queues[id].length === 4 && first.team === 0 && U.walkable(s, Math.floor(first.x), Math.floor(first.y));
+      var poor = rtsArmy(function (q) { q.res.gold = 10; }), noGold = U.train(poor, poor.__b.id, 'soldier').ok === false;
+      var cut = rtsArmy(function (q, cs, r) { r.remove(q, q.buildings[q.__b.id].id + 0); }), cutOk = U.train(cut, 999, 'soldier').ok === false;
+      var far = DG.rts.state.create(7); far.res.gold = 9999; far.res.food = 9999; var fb = R.rules.place(far, 'barracks', R.grid.castleSite().x + 20, R.grid.castleSite().y + 10), notConn = fb && U.train(far, fb.id, 'soldier').ok === false;
+      return paid && full && timed && noGold && cutOk && notConn && ('비용 20금·10식량 · 큐 5 · ' + t0 + '틱에 나옴 · 금·연결 부족 거절');
+    });
+
+    t('RTS 이동 — 유닛은 길을 따라 속도만큼 가고(기병 > 보병), 무리는 목적지 둘레에 흩어져 서며, 도착하면 길이 비는다', function () {
+      var R = DG.rts, U = R.units, s = R.state.create(7), cs = R.grid.castleSite(), a = U.spawn(s, 'soldier', 0, cs.x + 6.5, cs.y - 8.5), b = U.spawn(s, 'cavalry', 0, cs.x + 7.5, cs.y - 8.5);
+      U.moveTo(s, a, cs.x + 6, cs.y + 11); U.moveTo(s, b, cs.x + 7, cs.y + 11);
+      var i; for (i = 0; i < 50; i++) { U.tick(s); }
+      var da = a.y - (cs.y - 8.5), db = b.y - (cs.y - 8.5), speed = db > da && da > 10 && da < 12 && db > 15;
+      for (i = 0; i < 200; i++) { U.tick(s); }
+      var arrived = Math.abs(a.y - (cs.y + 11.5)) < 0.01 && a.path.length === 0 && b.path.length === 0;
+      var g = [U.spawn(s, 'soldier', 0, cs.x + 6.5, cs.y - 8.5), U.spawn(s, 'archer', 0, cs.x + 6.5, cs.y - 8.5), U.spawn(s, 'cavalry', 0, cs.x + 6.5, cs.y - 8.5), U.spawn(s, 'soldier', 0, cs.x + 6.5, cs.y - 8.5)];
+      U.moveGroup(s, g.map(function (u) { return u.id; }), cs.x + 8, cs.y - 7); for (i = 0; i < 250; i++) { U.tick(s); }
+      var spots = {}; g.forEach(function (u) { spots[Math.floor(u.x) + ',' + Math.floor(u.y)] = 1; });
+      var spread = Object.keys(spots).length === 4 && g.every(function (u) { return Math.abs(u.x - (cs.x + 8.5)) <= 2.6 && Math.abs(u.y - (cs.y - 6.5)) <= 2.6; });
+      return speed && arrived && spread && ('기병 ' + db.toFixed(1) + '칸 > 보병 ' + da.toFixed(1) + '칸 / 5초 · 도착 · 무리 4기 서로 다른 칸');
+    });
+
+    t('RTS 군 유지비 — 유닛 1기당 식량이 하루 0.2 더 든다(통계 army)', function () {
+      var R = DG.rts, U = R.units, E = R.econ, s = rtsArmy(), base = E.stats(s), i;
+      for (i = 0; i < 5; i++) { U.spawn(s, 'soldier', 0, s.__cs.x + 4.5, s.__cs.y - 5.5); }
+      var with5 = E.stats(s), foe = U.spawn(s, 'soldier', 1, s.__cs.x + 6.5, s.__cs.y - 5.5), withFoe = E.stats(s);
+      return base.army === 0 && with5.army === 5 && Math.abs((base.foodNet - with5.foodNet) - 1.0) < 1e-9 && withFoe.army === 5 && foe && ('5기 = 하루 식량 -1.0 · 적(팀 1)은 안 센다');
+    });
+
+    t('RTS 저장 — 유닛·생산 큐가 왕복에서 같고, 모르는 종류·없는 군영은 건너뛰며, 유닛 id 가 이어진다', function () {
+      var R = DG.rts, U = R.units, s = rtsArmy(function (q) { U.train(q, q.__b.id, 'soldier'); U.train(q, q.__b.id, 'archer'); });
+      var i; for (i = 0; i < 90; i++) { U.tick(s); }
+      U.spawn(s, 'cavalry', 0, s.__cs.x + 6.25, s.__cs.y - 5.5).hp = 33;
+      var o = R.state.serialize(s), json = JSON.stringify(o), back = R.state.restore(JSON.parse(json));
+      var same = !!back && JSON.stringify(R.state.serialize(back)) === json, nextOk = back.nextUid > Math.max.apply(null, Object.keys(back.units).map(Number));
+      var junk = JSON.parse(json); junk.units.push({ id: 77, t: '없는유닛', team: 0, x: 1, y: 1, hp: 5 }); junk.queues.push({ b: 9999, t: 'soldier', left: 5 }); junk.queues.push({ b: junk.queues[0].b, t: '없는유닛', left: 5 });
+      var back2 = R.state.restore(junk), skipped = !!back2 && !back2.units[77] && Object.keys(back2.units).length === Object.keys(back.units).length && !back2.queues[9999];
+      var hp = Object.keys(back.units).map(function (k) { return back.units[k]; }).filter(function (u) { return u.t === 'cavalry'; })[0].hp === 33;
+      return same && nextOk && skipped && hp && ('유닛 ' + Object.keys(back.units).length + '기·큐 왕복 같음 · 깨진 항목 건너뜀 · 체력 보존');
     });
 
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {

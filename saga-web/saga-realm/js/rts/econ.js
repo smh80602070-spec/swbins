@@ -62,14 +62,15 @@
       if (d.food) { food += d.food * fill * mul; }
       if (d.gold) { gold += d.gold * fill * mul; }
     }
-    food -= s.pop * EAT;
+    var army = global.DG.rts.units ? global.DG.rts.units.count(s, 0) : 0;
+    food -= s.pop * EAT + army * 0.2;
     /* 수요(심시티의 R·I·F) — 0~1. 클수록 그 건물을 더 지어야 한다 */
     var demand = {
       housing: clamp((s.pop >= cap ? 0.5 : 0) + (jobs > able ? (jobs - able) / Math.max(jobs, 1) : 0), 0, 1),
       work: clamp(able > jobs ? (able - jobs) / Math.max(able, 1) : 0, 0, 1),
       food: clamp(food < 0 ? -food / Math.max(s.pop * EAT, 1) + 0.2 : (comfy ? 0 : 0.1), 0, 1)
     };
-    return { cap: cap, jobs: jobs, workers: workers, fill: fill, foodNet: food, goldNet: gold, upkeep: upkeep, happy: happy, mul: mul, tax: tax, defense: defense, demand: demand, localHappy: local, globalHappy: mods };
+    return { cap: cap, jobs: jobs, workers: workers, fill: fill, foodNet: food, goldNet: gold, upkeep: upkeep, happy: happy, mul: mul, tax: tax, army: army, defense: defense, demand: demand, localHappy: local, globalHappy: mods };
   }
 
   /** 하루가 지났다 — s 를 고친다 */

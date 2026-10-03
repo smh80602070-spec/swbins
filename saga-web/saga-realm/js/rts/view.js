@@ -11,12 +11,13 @@
 
   var TILE = 20, TICK_MS = 100, ZMIN = 0.35, ZMAX = 4;
   var COLORS = { 0: ['#6f9b4f', '#689448'], 1: ['#3f6b2e', '#3a6529'], 2: ['#8a8378', '#827b70'], 3: ['#4f8fbf', '#4888b8'] };
-  var TOOLS = [{ k: 'pan', n: '이동', i: '✋' }, { k: 'road', n: '도로', i: '🛣️' }, { k: 'house', n: '주거', i: '🏠' }, { k: 'farm', n: '농지', i: '🌾' },
+  var TOOLS = [{ k: 'select', n: '선택', i: '🖱️' }, { k: 'pan', n: '이동', i: '✋' }, { k: 'road', n: '도로', i: '🛣️' }, { k: 'house', n: '주거', i: '🏠' }, { k: 'farm', n: '농지', i: '🌾' },
     { k: 'market', n: '시장', i: '🏪' }, { k: 'workshop', n: '공방', i: '🔨' }, { k: 'barracks', n: '군영', i: '⚔️' }, { k: 'well', n: '우물', i: '💧' }, { k: 'tower', n: '망루', i: '🗼' }, { k: 'wall', n: '성벽', i: '🧱' }, { k: 'erase', n: '철거', i: '🧹' }];
 
   var R = function () { return global.DG.rts; };
   var S = null, cv, ctx, mini, mctx, miniBase = null, els = {};
-  var cam = { x: 80, y: 50, z: 1.4 }, tool = 'pan', hover = null, ptrs = {}, pinch = 0, painting = false, panning = false, panLast = null;
+  var cam = { x: 80, y: 50, z: 1.4 }, tool = 'select', hover = null, ptrs = {}, pinch = 0, painting = false, panning = false, panLast = null;
+  var sel = {}, selB = 0, box = null, down = null;   // 고른 유닛 id 모음 · 고른 군영 id · 끌고 있는 선택 상자 · 눌린 자리
   var acc = 0, lastT = 0, lastHud = 0, lastSaveDay = 0, tipMsg = '', tipUntil = 0, dirty = true, overlay = 0, lastStats = null;
   var OVERLAYS = ['보기: 없음', '보기: 행복', '보기: 닿는 범위'];
 
@@ -68,7 +69,9 @@
       }
     }
     if (overlay) { drawOverlay(); }
-    if (hover && TOOLS.some(function (t) { return t.k === tool && t.k !== 'pan'; })) { drawGhost(); }
+    drawUnits();
+    if (hover && isBuildTool(tool)) { drawGhost(); }
+    if (box) { ctx.fillStyle = 'rgba(120,220,255,.14)'; ctx.strokeStyle = '#7fdcff'; ctx.lineWidth = 1; ctx.fillRect(box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0); ctx.strokeRect(box.x0 + .5, box.y0 + .5, box.x1 - box.x0, box.y1 - box.y0); }
     drawMini(); dirty = false;
   }
 
@@ -89,6 +92,25 @@
         }
       }
     }
+  }
+
+  function isBuildTool(k) { return !!R().rules.DEFS[k] || k === 'erase'; }
+
+  /** 유닛 — 색 원+글자, 고른 유닛은 금빛 고리와 목적지 선, 다친 유닛은 체력 막대 */
+  function drawUnits() {
+    var U = R().units, id, u, p, z = px(), r = z * 0.34, d, gp;
+    for (id in S.units) {
+      u = S.units[id]; d = U.UDEF[u.t]; p = toScreen(u.x, u.y);
+      if (p.x < -20 || p.y < -20 || p.x > size().w + 20 || p.y > size().h + 20) { continue; }
+      if (sel[id]) {
+        if (u.path && u.path.length && u.goal) { gp = toScreen(u.goal.x + .5, u.goal.y + .5); ctx.strokeStyle = 'rgba(255,230,120,.55)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(gp.x, gp.y); ctx.stroke(); ctx.setLineDash([]); }
+        ctx.beginPath(); ctx.arc(p.x, p.y, r + 3, 0, 6.2832); ctx.strokeStyle = '#ffd36a'; ctx.lineWidth = 2; ctx.stroke();
+      }
+      ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.2832); ctx.fillStyle = d.color; ctx.fill(); ctx.strokeStyle = u.team === 0 ? '#2b6fb8' : '#b83a2b'; ctx.lineWidth = 2; ctx.stroke();
+      if (z >= 14) { ctx.font = Math.floor(r * 1.3) + 'px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#000'; ctx.fillText(d.icon, p.x, p.y + 1); }
+      if (u.hp < d.hp) { ctx.fillStyle = '#300'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2, 4); ctx.fillStyle = '#6fe07a'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2 * u.hp / d.hp, 4); }
+    }
+    if (selB && S.buildings[selB]) { var b = S.buildings[selB], D = R().rules.DEFS[b.t], bp = toScreen(b.x, b.y); ctx.strokeStyle = '#ffd36a'; ctx.lineWidth = 2.5; ctx.strokeRect(bp.x - 1, bp.y - 1, D.w * z + 2, D.h * z + 2); }
   }
 
   function drawGhost() {
@@ -133,6 +155,7 @@
       '<span title="인구 / 수용">👥 <b>' + S.pop + '</b>/' + st.cap + '</span>' +
       '<span title="일하는 사람 / 일자리">⚒️ <b>' + st.workers + '</b>/' + st.jobs + '</span>' +
       '<span title="행복 — 우물·망루가 닿고 식량이 넉넉하고 세율이 낮을수록 높다. 25 미만이면 사람이 떠난다">😊 <b class="' + (st.happy < 25 ? 'neg' : st.happy >= 60 ? 'pos' : '') + '">' + Math.round(st.happy) + '</b></span>' +
+      '<span title="병력 — 유닛 1기당 식량 0.2/일">🛡️ <b>' + st.army + '</b></span>' +
       '<span class="rt-dem" title="수요 — 막대가 길수록 그걸 더 지어야 한다">' + dem('주거', st.demand.housing) + dem('일터', st.demand.work) + dem('식량', st.demand.food) + '</span>';
     lastStats = st;
     var btns = els.tools.querySelectorAll('button[data-tool]'), i, t, d;
@@ -144,15 +167,34 @@
     var sp = els.speed.querySelectorAll('button'); for (i = 0; i < sp.length; i++) { sp[i].classList.toggle('on', +sp[i].getAttribute('data-speed') === S.speed); }
     var tx = els.opts.querySelectorAll('button[data-tax]'); for (i = 0; i < tx.length; i++) { tx[i].classList.toggle('on', +tx[i].getAttribute('data-tax') === S.tax); }
     els.opts.querySelector('button[data-view]').textContent = OVERLAYS[overlay];
+    selPanel();
     els.tip.textContent = Date.now() < tipUntil ? tipMsg : tipFor();
     els.tip.classList.toggle('warn', Date.now() < tipUntil);
   }
+  /** 고른 군영(생산 단추·큐)이나 고른 유닛 수 — 왼쪽 아래 상자 */
+  function selPanel() {
+    var U = R().units, h = '', n = 0, id, kinds = {}, b = selB ? S.buildings[selB] : null, q, i;
+    if (b && b.t === 'barracks') {
+      q = S.queues[selB] || [];
+      h += '<div class="sl-h"><b>군영</b> <small>' + (b.conn ? '' : '— 도로로 이어지지 않았습니다') + '</small></div><div class="sl-btns">';
+      U.UNIT_ORDER.forEach(function (t) { var d = U.UDEF[t]; h += '<button data-train="' + t + '" title="' + d.name + ' ' + d.gold + '금 ' + d.food + '식량"><span>' + d.icon + '</span><small>' + d.name + '<br>' + d.gold + '금 ' + d.food + '식</small></button>'; });
+      h += '</div><div class="sl-q">';
+      for (i = 0; i < U.QUEUE_MAX; i++) { h += q[i] ? '<i title="' + U.UDEF[q[i].t].name + '">' + U.UDEF[q[i].t].icon + (i === 0 ? '<u style="width:' + Math.round(100 - q[0].left / U.UDEF[q[0].t].train * 100) + '%"></u>' : '') + '</i>' : '<i class="e"></i>'; }
+      h += '</div>';
+    } else {
+      for (id in sel) { if (S.units[id]) { n++; kinds[S.units[id].t] = (kinds[S.units[id].t] || 0) + 1; } }
+      if (n) { h += '<div class="sl-h"><b>선택 ' + n + '기</b></div><div class="sl-u">' + Object.keys(kinds).map(function (t) { return U.UDEF[t].icon + ' ' + U.UDEF[t].name + ' ' + kinds[t]; }).join(' · ') + '</div><small>우클릭으로 이동</small>'; }
+    }
+    if (h !== els.sel.__h) { els.sel.innerHTML = h; els.sel.__h = h; }
+    els.sel.classList.toggle('show', !!h);
+  }
+
   function dem(label, v) { return '<i class="dm"><u>' + label + '</u><b style="width:' + Math.round(v * 100) + '%"></b></i>'; }
   function tipFor() {
     if (!hover) { return '도구를 고르고 칸을 누르세요 · 건물은 도로로 거점에 이어져야 돕니다'; }
     var b = R().rules.buildingAt(S, hover.x, hover.y), D = R().rules.DEFS;
     if (b) { return D[b.t].name + (b.t === 'castle' ? '' : (b.conn ? ' · 돌고 있음' : ' · 도로로 이어지지 않았습니다')); }
-    if (tool !== 'pan' && tool !== 'erase') { var c = R().rules.canPlace(S, tool, hover.x, hover.y); return D[tool].name + ' ' + D[tool].cost + '금' + (c.ok ? '' : ' — ' + c.why); }
+    if (isBuildTool(tool) && tool !== 'erase') { var c = R().rules.canPlace(S, tool, hover.x, hover.y); return D[tool].name + ' ' + D[tool].cost + '금' + (c.ok ? '' : ' — ' + c.why); }
     return '(' + hover.x + ', ' + hover.y + ')';
   }
   function say(msg) { tipMsg = msg; tipUntil = Date.now() + 1800; }
@@ -163,13 +205,38 @@
     var rules = R().rules, D = rules.DEFS;
     if (tool === 'erase') {
       var b = rules.buildingAt(S, t.x, t.y);
-      if (b && !D[b.t].fixed) { rules.remove(S, b.id); dirty = true; }
+      if (b && !D[b.t].fixed) { rules.remove(S, b.id); if (selB === b.id) { selB = 0; } dirty = true; }
       return;
     }
-    if (tool === 'pan') { return; }
+    if (!isBuildTool(tool)) { return; }
     var c = rules.canPlace(S, tool, t.x, t.y);
     if (!c.ok) { say(c.why); return; }
     rules.place(S, tool, t.x, t.y); dirty = true;
+  }
+
+  /** 상자(작게 끌면 클릭) 선택 — 유닛 먼저, 없으면 군영·건물 */
+  function finishBox(p) {
+    var b = box, U = R().units, id, u, sp; box = null; dirty = true;
+    if (!down || !down.moved) {
+      var t = toTile(p.x, p.y), best = null, bd = 0.8, dd;
+      for (id in S.units) { u = S.units[id]; if (u.team !== 0) { continue; } dd = Math.hypot(u.x - (p.x - size().w / 2) / px() - cam.x, u.y - (p.y - size().h / 2) / px() - cam.y); if (dd < bd) { bd = dd; best = u; } }
+      sel = {}; selB = 0;
+      if (best) { sel[best.id] = true; return; }
+      var bb = R().rules.buildingAt(S, t.x, t.y); if (bb && bb.t === 'barracks') { selB = bb.id; }
+      return;
+    }
+    var x0 = Math.min(b.x0, b.x1), x1 = Math.max(b.x0, b.x1), y0 = Math.min(b.y0, b.y1), y1 = Math.max(b.y0, b.y1);
+    sel = {}; selB = 0;
+    for (id in S.units) { u = S.units[id]; if (u.team !== 0) { continue; } sp = toScreen(u.x, u.y); if (sp.x >= x0 && sp.x <= x1 && sp.y >= y0 && sp.y <= y1) { sel[id] = true; } }
+    void U;
+  }
+
+  /** 우클릭(끌지 않음) — 고른 유닛을 그 칸으로 보낸다(둘레에 흩어서) */
+  function commandMove(p) {
+    var ids = Object.keys(sel).filter(function (id) { return S.units[id]; }), t = toTile(p.x, p.y);
+    if (!ids.length) { return; }
+    if (!R().grid.inBounds(t.x, t.y)) { return; }
+    R().units.moveGroup(S, ids.map(Number), t.x, t.y); dirty = true;
   }
 
   function pointerPos(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
@@ -180,7 +247,9 @@
     cv.addEventListener('pointerdown', function (e) {
       var p = pointerPos(e); ptrs[e.pointerId] = p; try { cv.setPointerCapture(e.pointerId); } catch (x) { /* noop */ }
       if (Object.keys(ptrs).length === 2) { pinch = dist2(); painting = false; panning = false; return; }
+      down = { btn: e.button, x: p.x, y: p.y, moved: false };
       if (e.button === 1 || e.button === 2 || e.shiftKey || tool === 'pan') { panning = true; panLast = p; return; }
+      if (tool === 'select') { box = { x0: p.x, y0: p.y, x1: p.x, y1: p.y }; return; }
       painting = true; applyAt(toTile(p.x, p.y));
     });
     cv.addEventListener('pointermove', function (e) {
@@ -192,10 +261,18 @@
         pinch = d; return;
       }
       if (ptrs[e.pointerId]) { ptrs[e.pointerId] = p; }
+      if (down && Math.abs(p.x - down.x) + Math.abs(p.y - down.y) > 5) { down.moved = true; }
+      if (box) { box.x1 = p.x; box.y1 = p.y; return; }
       if (panning && panLast) { cam.x -= (p.x - panLast.x) / px(); cam.y -= (p.y - panLast.y) / px(); panLast = p; clampCam(); return; }
       if (painting && (tool === 'road' || tool === 'erase')) { applyAt(hover); }
     });
-    function up(e) { delete ptrs[e.pointerId]; if (!Object.keys(ptrs).length) { painting = false; panning = false; panLast = null; pinch = 0; } }
+    function up(e) {
+      var p = pointerPos(e);
+      if (down && down.btn === 2 && !down.moved) { commandMove(p); }
+      if (box) { finishBox(p); }
+      down = null; delete ptrs[e.pointerId];
+      if (!Object.keys(ptrs).length) { painting = false; panning = false; panLast = null; pinch = 0; }
+    }
     cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
     cv.addEventListener('pointerleave', function () { hover = null; dirty = true; });
     cv.addEventListener('wheel', function (e) {
@@ -208,10 +285,10 @@
     global.addEventListener('resize', resize);
     global.addEventListener('keydown', function (e) {
       var k = e.key, step = 3 / cam.z * 2, n;
-      if (k === 'Escape') { tool = 'pan'; }
+      if (k === 'Escape') { tool = 'select'; sel = {}; selB = 0; }
       else if (k === ' ') { S.speed = S.speed === 0 ? 1 : 0; e.preventDefault(); }
       else if (k === 'x' || k === 'X') { tool = 'erase'; }
-      else if (/^[1-9]$/.test(k)) { n = +k; tool = TOOLS[n].k; }
+      else if (/^[1-9]$/.test(k)) { n = +k; tool = TOOLS.filter(function (t) { return !!R().rules.DEFS[t.k]; })[n - 1].k; }
       else if (k === 'ArrowLeft' || k === 'a') { cam.x -= step; } else if (k === 'ArrowRight' || k === 'd') { cam.x += step; }
       else if (k === 'ArrowUp' || k === 'w') { cam.y -= step; } else if (k === 'ArrowDown' || k === 's') { cam.y += step; }
       clampCam(); dirty = true;
@@ -222,6 +299,11 @@
     mini.addEventListener('pointermove', function (e) { if (md) { mini2cam(e); } });
     mini.addEventListener('pointerup', function () { md = false; });
     els.tools.addEventListener('click', function (e) { var b = e.target.closest('button[data-tool]'); if (b) { tool = b.getAttribute('data-tool'); dirty = true; } });
+    els.sel.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-train]'); if (!b || !selB) { return; }
+      var r = R().units.train(S, selB, b.getAttribute('data-train'));
+      if (!r.ok) { say(r.why); } hud();
+    });
     els.opts.addEventListener('click', function (e) {
       var t = e.target.closest('button[data-tax]'), v = e.target.closest('button[data-view]');
       if (t) { S.tax = +t.getAttribute('data-tax'); }
@@ -245,7 +327,7 @@
     if (S.speed > 0) {
       acc += dt * S.speed; var n = 0;
       while (acc >= TICK_MS && n < 40) {
-        acc -= TICK_MS; n++; S.tick++;
+        acc -= TICK_MS; n++; S.tick++; R().units.tick(S); dirty = true;
         if (S.tick % R().econ.TICKS_PER_DAY === 0) { R().econ.dayTick(S); dirty = true; if (S.day - lastSaveDay >= 10) { save(); } }
       }
     }
@@ -260,10 +342,10 @@
     doc.body.insertAdjacentHTML('beforeend',
       '<canvas id="rts-map"></canvas><div id="rts-top" class="rt-box"></div>' +
       '<div id="rts-speed" class="rt-box"><button data-speed="0" title="일시정지 (Space)">⏸</button><button data-speed="1">1×</button><button data-speed="2">2×</button><button data-speed="4">4×</button></div>' +
-      '<div id="rts-tools" class="rt-box">' + TOOLS.map(function (t, i) { var d = R().rules.DEFS[t.k]; return '<button data-tool="' + t.k + '" title="' + t.n + (i > 0 && i < 10 ? ' (' + i + ')' : '') + '"><span>' + t.i + '</span><small>' + t.n + (d && d.cost ? ' ' + d.cost : '') + '</small></button>'; }).join('') + '</div>' +
-      '<canvas id="rts-mini" class="rt-box" width="240" height="150"></canvas><div id="rts-tip" class="rt-box"></div><div id="rts-opts" class="rt-box"><span>세율</span><button data-tax="0">낮음</button><button data-tax="1">보통</button><button data-tax="2">높음</button><button data-view="1" class="vw">보기: 없음</button></div><a id="rts-back" class="rt-box" href="./">턴제로</a>');
+      '<div id="rts-tools" class="rt-box">' + TOOLS.map(function (t, i) { var d = R().rules.DEFS[t.k]; return '<button data-tool="' + t.k + '" title="' + t.n + (R().rules.DEFS[t.k] ? ' (' + (i - 1) + ')' : '') + '"><span>' + t.i + '</span><small>' + t.n + (d && d.cost ? ' ' + d.cost : '') + '</small></button>'; }).join('') + '</div>' +
+      '<canvas id="rts-mini" class="rt-box" width="240" height="150"></canvas><div id="rts-tip" class="rt-box"></div><div id="rts-sel" class="rt-box"></div><div id="rts-opts" class="rt-box"><span>세율</span><button data-tax="0">낮음</button><button data-tax="1">보통</button><button data-tax="2">높음</button><button data-view="1" class="vw">보기: 없음</button></div><a id="rts-back" class="rt-box" href="./">턴제로</a>');
     cv = $('rts-map'); ctx = cv.getContext('2d'); mini = $('rts-mini'); mctx = mini.getContext('2d');
-    els = { top: $('rts-top'), tools: $('rts-tools'), speed: $('rts-speed'), tip: $('rts-tip'), opts: $('rts-opts') };
+    els = { top: $('rts-top'), tools: $('rts-tools'), speed: $('rts-speed'), tip: $('rts-tip'), opts: $('rts-opts'), sel: $('rts-sel') };
     S = (c && c.save && c.save.rts ? R().state.restore(c.save.rts) : null) || R().state.create((Date.now() & 0xffff) + 1);
     lastSaveDay = S.day;
     var cs = R().grid.castleSite(); cam.x = cs.x + 1.5; cam.y = cs.y + 1.5;

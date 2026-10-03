@@ -97,6 +97,7 @@
    "js/rts/grid.js",
    "js/rts/rules.js",
    "js/rts/econ.js",
+   "js/rts/units.js",
    "js/rts/state.js",
    "js/game.js"
   ]
