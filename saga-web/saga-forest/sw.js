@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'village-v0.130.0';
+var VERSION = 'village-v0.131.0';
 var APP_CACHE = 'yv-app-' + VERSION;
 var TILE_CACHE = 'yv-tiles-v1';
 var TILE_MAX = 500;
@@ -29,6 +29,8 @@ var SHELL = [
   './js/data-village.js',
   './js/sprite.js',
   './js/mode2d.js',
+  './js/assets3d-ids.js',
+  './js/assets3d.js',
   './js/actor2d.js',
   './js/core.js',
   './js/account.js',

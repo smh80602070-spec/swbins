@@ -774,7 +774,7 @@
    *  자체를 고치지 않고 이 경로 전용 함수를 따로 둔 것은 `MeshBasicMaterial`
    *  이 이 프로젝트 다른 자리(외곽선 등)에서 "일부러 조명 무시" 용도로도
    *  쓰이기 때문 — 전역으로 바꾸면 그쪽까지 건드릴 위험이 있다. */
-  function looksAnime(url) { return typeof url === 'string' && url.indexOf('/people/anime/') >= 0; }
+  function looksAnime(url) { return typeof url === 'string' && (url.indexOf('/people/anime/') >= 0 || url.indexOf('characters3d/') >= 0); }
   /* 2026-09-23 — 이 판 전용 몸통을 다섯 판 공용 `vroidVariant.shade()` 로 옮겼다: 옛 몸통은 새 재질에
      이름을 안 옮겨 인물 색 변형(`vroid-variant.js` apply — 재질 이름으로 머리·옷·눈을 고른다)이 한 칸도
      안 먹었다. 공용 쪽은 이름·깊이쓰기를 지키고 오픈월드 RPG식 얼굴 그림자까지 건다(툰이 꺼지면 예전처럼 Lambert) */
@@ -1069,9 +1069,12 @@
     }
     buildHeroPlain(ref, cb);
   }
-  function buildHeroPlain(ref, cb) {
+  function buildHeroPlain(ref, cb, skipUni) {
     var t = three();
     if (!t) { cb(null); return; }
+    /* 통일 3D 에셋(W-0021) — 영웅 id 로 shared/assets/characters3d 에 몸이 있으면 그것 먼저, 못 실리면 아래 옛 길 */
+    var urec = !skipUni && global.DG.assets3d && global.DG.assets3d.heroRecipe(ref);
+    if (urec) { loadHeroRecipe(urec, function (model) { if (model) { cb(model); return; } buildHeroPlain(ref, cb, true); }); return; }
     if (wantsMixamoReal()) {
       var mrec = oneOf(HERO_RECIPES_MIXAMO, ref);
       if (mrec) {

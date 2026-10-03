@@ -19,9 +19,14 @@ const out = await page.evaluate(async (game) => {
   const heroes = (window.DG.data.heroes || []).filter((h) => A.has('hero', h.id)).slice(0, 3);
   for (const h of heroes) {
     const A3 = window.DG.asset3d;
-    const shell = game === 'saga-dungeon' ? A3.buildHero('hero:' + h.id, 42, null, null) : A3.build('hero', h, null);   // 사가블로는 'hero:<id>' 씨앗
-    let st = null;
-    for (let i = 0; i < 120 && st !== 'glb' && st !== 'fail'; i++) { await new Promise((ok) => setTimeout(ok, 250)); if (A3.tick) { A3.tick(); } st = shell && shell.userData && shell.userData.assetState; }
+    let shell = null, st = null;
+    if (game === 'saga-forest') {   // 사가의숲은 콜백 방식 — 모델이 오면 glb
+      const model = await Promise.race([new Promise((ok) => A3.build('hero', h, ok)), new Promise((ok) => setTimeout(() => ok(null), 30000))]);
+      shell = model; st = model ? 'glb' : 'fail';
+    } else {
+      shell = game === 'saga-dungeon' ? A3.buildHero('hero:' + h.id, 42, null, null) : A3.build('hero', h, null);   // 사가블로는 'hero:<id>' 씨앗
+      for (let i = 0; i < 120 && st !== 'glb' && st !== 'fail'; i++) { await new Promise((ok) => setTimeout(ok, 250)); if (A3.tick) { A3.tick(); } st = shell && shell.userData && shell.userData.assetState; }
+    }
     res.heroes.push({ id: h.id, state: st, own: !!(shell && shell.userData.ownAnim), clips: shell && shell.userData.actions ? Object.keys(shell.userData.actions).length : 0 });
   }
   const T = window.THREE || (window.DG.three && window.DG.three());

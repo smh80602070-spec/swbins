@@ -457,5 +457,9 @@
   'use strict';
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.assets3d = {
+    /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 집·우편함·울타리 */
+    reg: { 'building:home': ['forest_cottage_01'], 'building:mail': ['mailbox_01'], 'fence': ['wood_fence_01'] }
+  };
   global.DG.cfg.vroidPattern = { base: 'assets/patterns/', repeat: 3 };
 })(window);
