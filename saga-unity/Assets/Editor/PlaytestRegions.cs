@@ -72,6 +72,7 @@ namespace Saga.EditorTools
                 ChecksMeshes();
                 foreach (var id in RegionLoader.Ids) ChecksRegion(id);
                 ChecksDeterministic();
+                ChecksReview();
             }
             PlaytestKit.Summary("PlaytestRegions");
             if (Application.isBatchMode) EditorApplication.Exit(PlaytestKit.Fails == 0 ? 0 : 1);
@@ -102,6 +103,11 @@ namespace Saga.EditorTools
             bool threw = false;
             try { RegionJson.Parse("{\"a\":[1,2}"); } catch (System.FormatException) { threw = true; }
             PlaytestKit.Check(threw, "깨진 JSON 을 받아들임");
+            threw = false;
+            try { RegionJson.Parse("{\"a\":[1,2"); } catch (System.FormatException) { threw = true; }
+            PlaytestKit.Check(threw, "잘린 JSON 이 FormatException 이 아님");
+            var nan = RegionJson.Parse("[NaN,-Infinity,Infinity]") as List<object>;
+            PlaytestKit.Check(nan != null && double.IsNaN((double)nan[0]) && double.IsNegativeInfinity((double)nan[1]) && double.IsPositiveInfinity((double)nan[2]), "NaN·Infinity 를 못 읽음");
         }
 
         private static void ChecksCoordinates()
@@ -255,6 +261,39 @@ namespace Saga.EditorTools
             Debug.Log(line);
             if (id == "Village") _lastSummary = line;
             Object.DestroyImmediate(res.root);
+            RenderSettings.skybox = null; RenderSettings.fog = false;
+        }
+
+        // R-5 코드 리뷰 지적 고침 확인 — 인스턴싱 꺼진 재질·안개 되돌리기·소유 자원 정리.
+        private static void ChecksReview()
+        {
+            var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            var lit = Shader.Find("Universal Render Pipeline/Lit");
+            if (lit != null)
+            {
+                var go = new GameObject("inst");
+                var inst = go.AddComponent<RegionInstancer>();
+                var mat = new Material(lit) { enableInstancing = false };
+                var mesh = RegionMeshes.WaterPlane(1f);
+                inst.Add(mesh, 0, mat, Matrix4x4.identity);
+                inst.Add(mesh, 0, mat, Matrix4x4.Translate(Vector3.one));
+                PlaytestKit.Check(inst.BatchCount == 1 && inst.InstanceCount == 2, "인스턴싱 꺼진 재질 묶음이 하나가 아님");
+                PlaytestKit.Check(!mat.enableInstancing, "원본 재질을 고쳐 버림");
+                Object.DestroyImmediate(go); Object.DestroyImmediate(mat); Object.DestroyImmediate(mesh);
+            }
+
+            // 안개가 있는 지역 다음에 없는 지역 — 안개가 남으면 안 된다
+            var a = RegionLoader.Build("Crossroads");
+            PlaytestKit.Check(RenderSettings.fog, "갈림길 안개가 안 켜짐");
+            var groundMat = a.root.transform.Find("Terrain").GetComponent<MeshRenderer>().sharedMaterial;
+            PlaytestKit.Check(a.owner != null && a.owner.Count > 0, "소유 자원이 비었다");
+            Object.DestroyImmediate(a.root);
+            PlaytestKit.Check(groundMat == null, "뿌리를 지워도 땅 재질이 남았다(새는 자원)");
+            var b = RegionLoader.Build("Village");
+            PlaytestKit.Check(!RenderSettings.fog, "마을이 앞 지역 안개를 물려받았다");
+            var c = RegionLoader.Build("TimeRift");
+            PlaytestKit.Check(!RenderSettings.fog, "시간 틈(짙은 안개 건너뜀)이 앞 지역 안개를 물려받았다");
+            Object.DestroyImmediate(b.root); Object.DestroyImmediate(c.root);
             RenderSettings.skybox = null; RenderSettings.fog = false;
         }
 

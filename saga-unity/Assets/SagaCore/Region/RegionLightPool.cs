@@ -44,7 +44,8 @@ namespace Saga.Core.Region
             for (int i = 0; i < n; i++)
             {
                 _order[i] = i;
-                _dist[i] = t == null ? i : (t.position - _lights[i].transform.position).sqrMagnitude;
+                // 없어진 광원은 맨 뒤로 보낸다(예외를 내면 풀 전체가 멈춘다)
+                _dist[i] = _lights[i] == null ? float.MaxValue : t == null ? i : (t.position - _lights[i].transform.position).sqrMagnitude;
             }
             Array.Sort(_order, (a, b) => _dist[a].CompareTo(_dist[b]));
             ActiveCount = 0;

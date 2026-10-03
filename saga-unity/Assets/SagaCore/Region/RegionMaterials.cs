@@ -117,9 +117,11 @@ namespace Saga.Core.Region
                 {
                     if (TryTexture(src, out var tex, out var st, "baseColorTexture", "_BaseMap", "_MainTex")) { result.SetTexture("_BaseMap", tex); SetST(result, st); }
                     result.SetColor("_BaseColor", ReadColor(src, Color.white, "baseColorFactor", "_BaseColor", "_Color"));
-                    if (src.HasProperty("cutoff") && src.IsKeywordEnabled("_ALPHATEST_ON"))
+                    // glTFast 는 alphaMode MASK 를 _ALPHATEST_ON 키워드 + alphaCutoff 속성으로 싣는다
+                    if (src.IsKeywordEnabled("_ALPHATEST_ON"))
                     {
-                        result.SetFloat("_AlphaClip", 1f); result.EnableKeyword("_ALPHATEST_ON"); result.SetFloat("_Cutoff", src.GetFloat("cutoff"));
+                        result.SetFloat("_AlphaClip", 1f); result.EnableKeyword("_ALPHATEST_ON");
+                        result.SetFloat("_Cutoff", src.HasProperty("alphaCutoff") ? src.GetFloat("alphaCutoff") : 0.5f);
                     }
                 }
             }
