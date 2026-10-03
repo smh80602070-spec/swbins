@@ -1,0 +1,7 @@
+{
+ "id": "frost_peak_scenery",
+ "generator": "tools/world-forge/region_hero.py",
+ "source": "코드로 만든 자잘한 풍경 메시(소나무·바위·갈대·부두·섬·고리 등)",
+ "license": "CC0-1.0 (자체 생성 형태, 재질은 단색·CC0)",
+ "commercial_use": true
+}

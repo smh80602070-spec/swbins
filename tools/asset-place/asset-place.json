@@ -240,6 +240,31 @@
    ]
   },
   {
+   "id": "region-pieces",
+   "src": "saga-assets/regions/pieces",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "note": "K-0051 지역 조각 23(툰 GLB, 바탕색 1024px) — 지역 배치표(layout.json)의 pieces 가 이름으로 부른다",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/regions/pieces",
+     "sidecar": [
+      ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Regions/Pieces",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
+  },
+  {
    "id": "region-village",
    "src": "saga-assets/regions/village",
    "recursive": true,
@@ -249,7 +274,7 @@
     "layout.json",
     "*.license.json"
    ],
-   "note": "K-0051 지역 마을 — 조각 16(툰 GLB, 바탕색 1024px)·땅 재질 3(1024px JPEG)·배치표 layout.json(조각 위치·길·나무·꽃·지형 높이). 엔진은 이 배치표로 같은 장면을 짠다",
+   "note": "K-0051 지역 village: 배치표 layout.json(조각 위치·빛·지형 높이·길·하늘 값) + 땅 재질 1024px + 풍경 메시(있으면)",
    "targets": [
     {
      "track": "godot",
@@ -261,6 +286,118 @@
     {
      "track": "unity",
      "dir": "saga-unity/Assets/SagaCore/Resources/Regions/Village",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "region-galaxy_ferry",
+   "src": "saga-assets/regions/galaxy_ferry",
+   "recursive": true,
+   "include": [
+    "*.glb",
+    "*.jpg",
+    "layout.json",
+    "*.license.json"
+   ],
+   "note": "K-0051 지역 galaxy_ferry: 배치표 layout.json(조각 위치·빛·지형 높이·길·하늘 값) + 땅 재질 1024px + 풍경 메시(있으면)",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/regions/galaxy_ferry",
+     "sidecar": [
+      ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Regions/GalaxyFerry",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "region-frost_peak",
+   "src": "saga-assets/regions/frost_peak",
+   "recursive": true,
+   "include": [
+    "*.glb",
+    "*.jpg",
+    "layout.json",
+    "*.license.json"
+   ],
+   "note": "K-0051 지역 frost_peak: 배치표 layout.json(조각 위치·빛·지형 높이·길·하늘 값) + 땅 재질 1024px + 풍경 메시(있으면)",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/regions/frost_peak",
+     "sidecar": [
+      ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Regions/FrostPeak",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "region-time_rift",
+   "src": "saga-assets/regions/time_rift",
+   "recursive": true,
+   "include": [
+    "*.glb",
+    "*.jpg",
+    "layout.json",
+    "*.license.json"
+   ],
+   "note": "K-0051 지역 time_rift: 배치표 layout.json(조각 위치·빛·지형 높이·길·하늘 값) + 땅 재질 1024px + 풍경 메시(있으면)",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/regions/time_rift",
+     "sidecar": [
+      ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Regions/TimeRift",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "region-crossroads",
+   "src": "saga-assets/regions/crossroads",
+   "recursive": true,
+   "include": [
+    "*.glb",
+    "*.jpg",
+    "layout.json",
+    "*.license.json"
+   ],
+   "note": "K-0051 지역 crossroads: 배치표 layout.json(조각 위치·빛·지형 높이·길·하늘 값) + 땅 재질 1024px + 풍경 메시(있으면)",
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/regions/crossroads",
+     "sidecar": [
+      ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Regions/Crossroads",
      "sidecar": [
       ".meta"
      ]

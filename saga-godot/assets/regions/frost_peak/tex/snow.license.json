@@ -1,0 +1,7 @@
+{
+ "id": "snow",
+ "generator": "tools/world-forge/region_hero.py(자료 정리)",
+ "source": "Poly Haven snow_02 (diff 2k → 1024px, 채도 +18%)",
+ "license": "CC0-1.0 (Poly Haven, https://polyhaven.com/license)",
+ "commercial_use": true
+}

@@ -41,6 +41,7 @@ sc.view_settings.view_transform = 'AgX' if 'AgX' in [x.identifier for x in sc.vi
 
 
 import json as _json
+from collections import OrderedDict
 PH = os.path.join(ROOT, 'tools', 'world-forge', '_src', 'polyhaven')
 REAL = os.path.join(ROOT, 'tools', 'world-forge', '_out')
 _PHIDX = None
@@ -100,6 +101,7 @@ def pbr_mat(tid, tile=4.0, tint=None, rough_mul=1.0, name=None, sat=1.0):
 
 
 _TMPL = {}
+PIECE_OBJS = set()      # place() 로 놓은 조각 오브젝트 이름 — 내보낼 때 자잘한 코드 메시에서 뺀다
 LAYOUT = {'pieces': [], 'roads': [], 'trees': [], 'flowers': [], 'plaza': None}   # 엔진이 같은 장면을 다시 짜는 배치표(HERO_LAYOUT 환경변수가 있으면 파일로 씀)
 
 
@@ -127,6 +129,9 @@ def place(name, loc, rot=0.0, scale=1.0, real=None):
     for o in tmpl:
         mp[o].parent = mp.get(o.parent, holder)
         mp[o].matrix_parent_inverse = o.matrix_parent_inverse.copy()
+    for o in mp.values():
+        PIECE_OBJS.add(o.name)
+    PIECE_OBJS.add(holder.name)
     holder.location, holder.rotation_euler, holder.scale = loc, (0, 0, rot), (scale,) * 3
     LAYOUT['pieces'].append({'piece': name, 'pos': [round(loc[0], 3), round(loc[1], 3), round(loc[2], 3)], 'rot': round(rot, 4), 'scale': round(scale, 3)})
     return holder, list(mp.values())
@@ -1520,11 +1525,159 @@ def village():
     camera((2.5, -9.0, 2.0), (-1.0, 42, 9.5), lens=24)
 
 
+EXPORT_CFG = {
+    # 지형 높이 격자(Blender 좌표, 미터) · 땅 재질 섞기 규칙 · 눈·물·하늘 같은 지역 값
+    'galaxy_ferry': {
+        'terrain': {'obj': 'lake_ground', 'x': (-75.0, 75.0), 'y': (-45.0, 105.0), 'step': 2.0,
+                    'materials': {'low': 'tex/ground_grass.jpg', 'high': 'tex/rock_cliff.jpg', 'z0': 3.0, 'z1': 9.0, 'slope0': 0.30, 'slope1': 0.55,
+                                  'tile_low': 5.0, 'tile_high': 9.0, 'tint_low': [0.45, 0.55, 0.75], 'tint_high': [0.55, 0.6, 0.8]}},
+        'water': {'z': 0.0, 'size': 220, 'color': [0.01, 0.05, 0.10], 'roughness': 0.04},
+        'sky': {'kind': 'night_stars_milkyway', 'moon': {'pos': [-30, 160, 62], 'radius': 7, 'halo_radius': 24}},
+        'fog': {'density': 0.010, 'color': [0.5, 0.65, 0.95], 'box': [90, 60, 5, 0, 14, 2.5]},
+        'fx': {'fireflies': {'count': 45, 'area': [-24, 14, -8, 6, 0.9, 3.8], 'color': [0.85, 1.0, 0.35]}},
+        'camera': {'pos': [-19.0, -13.0, 2.6], 'look': [5.0, 24, 6.0], 'lens': 24}},
+    'frost_peak': {
+        'terrain': {'obj': 'snow_ground', 'x': (-110.0, 110.0), 'y': (-48.0, 172.0), 'step': 2.5,
+                    'materials': {'low': 'tex/snow.jpg', 'high': 'tex/rock_cliff.jpg', 'z0': 999.0, 'z1': 1000.0, 'slope0': 0.42, 'slope1': 0.70,
+                                  'tile_low': 4.0, 'tile_high': 10.0, 'tint_low': [1.0, 1.0, 1.0], 'tint_high': [0.55, 0.6, 0.75], 'sat_high': 0.25}},
+        'sky': {'kind': 'aurora_dusk'},
+        'fog': {'density': 0.0035, 'color': [0.6, 0.75, 1.0], 'box': [110, 100, 10, 0, 35, 5]},
+        'fx': {'snowfall': {'count': 260, 'area': [-14, 14, -10, 40, 0.3, 9.0]}},
+        'camera': {'pos': [2.2, -11.0, 1.9], 'look': [0.5, 40, 21.0], 'lens': 22}},
+    'time_rift': {
+        'sky': {'kind': 'sunset_rift', 'rift_rings': [{'pos': [-10, 220, 70], 'major': 52, 'minor': 1.6}, {'pos': [-10, 222, 70], 'major': 38, 'minor': 0.9}]},
+        'fog': {'density': 0.035, 'color': [1.0, 0.78, 0.62], 'box': [400, 400, 20, 0, 40, -22], 'note': '구름바다(낮게 깔린 두꺼운 안개)'},
+        'islands_material': {'rock': 'tex/rock_cliff.jpg', 'top': 'tex/ground_grass.jpg', 'tile_rock': 6.0, 'tile_top': 4.0, 'rock_tint': [0.62, 0.62, 0.7], 'rock_sat': 0.3},
+        'camera': {'pos': [-26.0, -62.0, 5.0], 'look': [0.0, 6.0, 19.0], 'lens': 24}},
+    'crossroads': {
+        'terrain': {'obj': 'plain_ground', 'x': (-130.0, 130.0), 'y': (-39.0, 221.0), 'step': 3.0,
+                    'materials': {'low': 'tex/ground_grass.jpg', 'high': None, 'tint_low': [0.8, 0.85, 1.0], 'tile_low': 5.0}},
+        'sky': {'kind': 'dusk_magenta'},
+        'fog': {'density': 0.003, 'color': [0.7, 0.75, 1.0], 'box': [200, 160, 8, 0, 40, 4]},
+        'gate': {'center': [0.0, 40.0, 7.0], 'radius': 5.7, 'rot': [1.5708, 0, 0], 'colors': [[0.1, 0.9, 1.0], [1.0, 0.3, 0.9]]},
+        'fx': {'fireflies': {'count': 30, 'area': [-24, 14, -8, 6, 0.9, 3.8], 'color': [0.85, 1.0, 0.35]}},
+        'camera': {'pos': [0.0, -6.0, 2.4], 'look': [0.0, 40, 6.0], 'lens': 24}},
+}
+SCENERY_SKIP_MAT = ('firefly', 'flake', 'moon', 'halo', 'gate', 'fog', 'haze', 'clouds', 'fog2', 'water')
+SCENERY_SKIP_OBJ = ('lake_ground', 'snow_ground', 'plain_ground', 'water_plane')
+
+
+def _box_uv(obj, tile):
+    import bmesh
+    me = obj.data
+    bm = bmesh.new()
+    bm.from_mesh(me)
+    uvl = bm.loops.layers.uv.verify()
+    mw = obj.matrix_world
+    for f in bm.faces:
+        n = f.normal
+        ax, ay, az = abs(n.x), abs(n.y), abs(n.z)
+        for lp in f.loops:
+            w = mw @ lp.vert.co
+            if az >= ax and az >= ay:
+                u, v = w.x, w.y
+            elif ax >= ay:
+                u, v = w.y, w.z
+            else:
+                u, v = w.x, w.z
+            lp[uvl].uv = (u / tile, v / tile)
+    bm.to_mesh(me)
+    bm.free()
+
+
+def _tex_mat_blender(name, jpg_abs, tint=None):
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    nt = m.node_tree
+    bs = next(n for n in nt.nodes if n.type == 'BSDF_PRINCIPLED')
+    t = nt.nodes.new('ShaderNodeTexImage')
+    t.image = bpy.data.images.load(jpg_abs, check_existing=True)
+    t.image.pack()
+    if tint:
+        mx = nt.nodes.new('ShaderNodeMix')
+        mx.data_type = 'RGBA'
+        mx.blend_type = 'MULTIPLY'
+        mx.inputs['Factor'].default_value = 1.0
+        mx.inputs['B'].default_value = (tint[0], tint[1], tint[2], 1)
+        nt.links.new(t.outputs['Color'], mx.inputs['A'])
+        nt.links.new(mx.outputs['Result'], bs.inputs['Base Color'])
+    else:
+        nt.links.new(t.outputs['Color'], bs.inputs['Base Color'])
+    bs.inputs['Roughness'].default_value = 1.0
+    return m
+
+
+def export_region(rid, outdir):
+    cfg = EXPORT_CFG[rid]
+    os.makedirs(outdir, exist_ok=True)
+    lay = OrderedDict()
+    lay['region'] = rid
+    lay['schema'] = 1
+    lay['note'] = 'tools/world-forge/region_hero.py 가 만든 배치표 — 손으로 고치지 않는다. 좌표는 Blender 기준(x 오른쪽·y 안쪽·z 위, 미터). glb 안은 glTF(y 위)라 엔진 기본 임포트가 그대로 맞고, 이 표의 좌표는 (x, z, -y) 로 바꿔 쓴다.'
+    lay['pieces'] = LAYOUT['pieces']
+    lights = []
+    for o in sc.objects:
+        if o.type == 'LIGHT':
+            d = o.data
+            row = {'type': d.type, 'color': [round(c, 3) for c in d.color], 'energy': round(d.energy, 2),
+                   'pos': [round(v, 2) for v in o.location], 'radius': round(getattr(d, 'shadow_soft_size', 0.0), 2)}
+            if d.type == 'SUN':
+                row['rot'] = [round(v, 4) for v in o.rotation_euler]
+            lights.append(row)
+    lay['lights'] = lights
+    for k in ('sky', 'water', 'fog', 'fx', 'gate', 'islands_material', 'camera'):
+        if k in cfg:
+            lay[k] = cfg[k]
+    t = cfg.get('terrain')
+    if t:
+        step = t['step']
+        nx, ny = int((t['x'][1] - t['x'][0]) / step) + 1, int((t['y'][1] - t['y'][0]) / step) + 1
+        hs = []
+        for j in range(ny):
+            for i in range(nx):
+                z = ground_z(t['x'][0] + i * step, t['y'][0] + j * step)
+                hs.append(None if z is None else round(z, 2))
+        lay['terrain'] = {'x0': t['x'][0], 'y0': t['y'][0], 'step': step, 'nx': nx, 'ny': ny, 'heights': hs, 'materials': t['materials']}
+    lay['roads'] = LAYOUT['roads']
+    # 자잘한 코드 메시(소나무·바위·갈대·부두·섬·고리·길)를 한 GLB 로 굽는다 — 조각(GLB)·지형·물·효과(반딧불·눈발)는 뺀다
+    keep = []
+    for o in sc.objects:
+        if o.type != 'MESH' or o.name in PIECE_OBJS or o.name in SCENERY_SKIP_OBJ or o.parent is not None:
+            continue
+        mats = [s.material.name for s in o.material_slots if s.material]
+        if any(any(m.startswith(sk) for sk in SCENERY_SKIP_MAT) for m in mats):
+            continue
+        keep.append(o)
+    # 섬·길은 상자 투영 UV + 그림 재질(사실 재질은 노드 좌표라 GLB 에 못 싣는다)
+    im = cfg.get('islands_material')
+    base = os.path.abspath(outdir)
+    for o in keep:
+        nm = o.name
+        if nm.startswith('isl') and im:
+            _box_uv(o, im['tile_rock'])
+            o.data.materials.clear()
+            o.data.materials.append(_tex_mat_blender('isl_rock', os.path.join(base, im['rock']), im.get('rock_tint')))
+        elif nm.startswith('road'):
+            _box_uv(o, 3.0)
+    bpy.ops.object.select_all(action='DESELECT')
+    for o in keep:
+        o.select_set(True)
+    if keep:
+        bpy.context.view_layer.objects.active = keep[0]
+        bpy.ops.export_scene.gltf(filepath=os.path.join(base, rid + '_scenery.glb'), export_format='GLB', use_selection=True,
+                                  export_image_format='JPEG', export_apply=True)
+        lay['scenery'] = rid + '_scenery.glb'
+    _json.dump(lay, open(os.path.join(base, 'layout.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+    print('EXPORT', rid, 'pieces', len(lay['pieces']), 'lights', len(lights), 'scenery_objs', len(keep))
+
+
 import time as _t
 _T0 = _t.time()
 {'galaxy_ferry': galaxy_ferry, 'frost_peak': frost_peak, 'time_rift': time_rift, 'crossroads': crossroads, 'village': village}[REGION]()
 print('TIME build %.1fs' % (_t.time() - _T0))
 join_by_material(['blade', 'reed', 'pine', 'pine_g', 'snowcap', 'firefly', 'flake', 'rockm', 'wood'])
+if os.environ.get('HERO_EXPORT'):
+    export_region(REGION, os.environ['HERO_EXPORT'])
 sc.render.filepath = OUT
 sc.render.image_settings.file_format = 'PNG'
 print('TIME join %.1fs' % (_t.time() - _T0))

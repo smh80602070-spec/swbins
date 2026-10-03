@@ -1,0 +1,6 @@
+{
+ "id": "crossroads_layout",
+ "generator": "tools/world-forge/region_hero.py",
+ "license": "CC0-1.0 (배치표 — 자체 생성 데이터, 조각·재질은 각각 CC0)",
+ "commercial_use": true
+}
