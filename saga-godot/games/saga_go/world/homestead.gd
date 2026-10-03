@@ -77,18 +77,20 @@ func _build_marker() -> void:
 	var root := Node3D.new()
 	root.name = "Marker"
 	add_child(root)
-	var stele := load("res://assets/generated/props/stele_s2_02.glb") as PackedScene
-	var lamp := load("res://assets/generated/props/lamp_s2_02.glb") as PackedScene
+	const STELE_OLD := "res://assets/generated/props/stele_s2_02.glb"
+	const LAMP_OLD := "res://assets/generated/props/lamp_s2_02.glb"
+	var stele := WorldAsset.load_scene(STELE_OLD)
+	var lamp := WorldAsset.load_scene(LAMP_OLD)
 	if lamp != null:
 		var l := lamp.instantiate() as Node3D
-		l.scale = Vector3.ONE * 0.8
+		l.scale = Vector3.ONE * 0.8 * WorldAsset.k(LAMP_OLD)
 		l.position = _center
 		root.add_child(l)
 	if stele != null:
 		for i in 8:
 			var a := TAU * float(i) / 8.0
 			var s := stele.instantiate() as Node3D
-			s.scale = Vector3.ONE * 0.9
+			s.scale = Vector3.ONE * 0.9 * WorldAsset.k(STELE_OLD)
 			var p := _center + Vector3(cos(a), 0, sin(a)) * Homestead.RADIUS
 			p.y = TerrainBuilder.height_at(Homestead.REGION, p)
 			s.position = p
@@ -99,7 +101,7 @@ func _build_marker() -> void:
 
 func _item_scene(id: String) -> PackedScene:
 	if not _cache.has(id):
-		_cache[id] = load(String(Homestead.item(id).glb))
+		_cache[id] = WorldAsset.load_scene(String(Homestead.item(id).glb))
 	return _cache[id]
 
 
@@ -112,7 +114,7 @@ func _rebuild() -> void:
 		if it.is_empty() or ps == null:
 			continue
 		var n := ps.instantiate() as Node3D
-		n.scale = Vector3.ONE * float(it.scale)
+		n.scale = Vector3.ONE * float(it.scale) * WorldAsset.k(String(it.glb))
 		var p := Vector3(float(e.x), 0, float(e.z))
 		p.y = TerrainBuilder.height_at(Homestead.REGION, p)
 		n.position = p
