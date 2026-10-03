@@ -21,6 +21,20 @@ namespace Saga.Dungeon.World
         private readonly Dictionary<Material, Material> _charred = new Dictionary<Material, Material>();
         private readonly Dictionary<Material, Material> _rift = new Dictionary<Material, Material>();
 
+        // tasks U-0028 — 씬이 옛 여섯 벌만 굽고 있으면(씬 재빌드 전) 모자란 명소 꾸밈(31층 …)을 Play 때 채운다. 다시 구운 씬은 이미 다 있어 아무 일도 안 한다.
+        private void Awake()
+        {
+            if (landmarkRoots.Length == 0 || landmarkRoots.Length >= DungeonEraDecor.Landmarks.Length) return;
+            var roots = new List<GameObject>(landmarkRoots);
+            for (int i = roots.Count; i < DungeonEraDecor.Landmarks.Length; i++)
+            {
+                var root = BuildSet(DungeonEraDecor.Landmarks[i], transform, transform.position);
+                root.SetActive(false);
+                roots.Add(root);
+            }
+            landmarkRoots = roots.ToArray();
+        }
+
         public int LandmarkRootCount => landmarkRoots.Length;
         public GameObject LandmarkRoot(int i) => i >= 0 && i < landmarkRoots.Length ? landmarkRoots[i] : null;
 

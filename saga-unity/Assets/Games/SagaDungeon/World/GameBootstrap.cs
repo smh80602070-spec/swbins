@@ -39,6 +39,7 @@ namespace Saga.Dungeon.World
             SaveState.TryLoad();
             Saga.Core.SagaFlow.Enter("dungeon", SaveState.Save); // PLAN.md 110 ② — 자동 저장·일시정지 메뉴·타이틀로.
             CombineStaticBatches();
+            NameStoneSpawner.SpawnAll(); // tasks U-0028 — 마을마다 지워진 이름의 비석(씬 재빌드 없이 Play 때 짓는다)
             DungeonSettingsState.ApplyToAllScalers();
             DungeonSettingsState.ApplyGraphicsQuality();
             QuestState.StageCompleted += OnQuestStageCompleted;

@@ -65,7 +65,7 @@ namespace Saga.EditorTools
         private static void CheckTable()
         {
             var all = DungeonLandmarkData.All;
-            if (all.Length != 6) Fail($"명소 층 {all.Length} ≠ 6");
+            if (all.Length != 7) Fail($"명소 층 {all.Length} ≠ 7");
             var floors = new HashSet<int>();
             var hanja = new HashSet<string>();
             var kinds = new HashSet<string>();
@@ -171,7 +171,7 @@ namespace Saga.EditorTools
             var data = saveType.GetNestedType("SaveData", BindingFlags.NonPublic);
             if (data == null || data.GetField("landmarkClears") == null) Fail("SaveData.landmarkClears 없음");
             LandmarkState.Restore(new[] { 3, 0, 1 });
-            if (LandmarkState.Clears(0) != 3 || LandmarkState.Clears(2) != 1 || LandmarkState.Snapshot().Length != 6) Fail("짧은 배열 복원");
+            if (LandmarkState.Clears(0) != 3 || LandmarkState.Clears(2) != 1 || LandmarkState.Snapshot().Length != 7) Fail("짧은 배열 복원");
             LandmarkState.Restore(null);
             if (LandmarkState.IsCleared(0)) Fail("옛 세이브(null) 복원 뒤 토벌이 남음");
         }

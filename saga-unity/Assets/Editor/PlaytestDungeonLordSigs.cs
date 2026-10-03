@@ -65,7 +65,7 @@ namespace Saga.EditorTools
         private static string CheckTable()
         {
             var all = DungeonLordSigs.All;
-            if (all.Length != 6) Fail($"고유 수 {all.Length} ≠ 6");
+            if (all.Length != 7) Fail($"고유 수 {all.Length} ≠ 7");
             var kinds = new HashSet<DungeonLordSigs.Kind>();
             for (int i = 0; i < DungeonLandmarkData.All.Length; i++)
             {
@@ -74,7 +74,7 @@ namespace Saga.EditorTools
                 if (s.Kind != DungeonLordSigs.Kind.Summon && (s.Cd <= 0f || s.Warn <= 0f || s.R <= 0f || s.Mul <= 0f)) Fail($"{s.Key} 수치 빔");
             }
             if (kinds.Count != 6) Fail($"갈래 {kinds.Count} ≠ 6");
-            if (DungeonLordSigs.TryFor(-1, out _) || DungeonLordSigs.TryFor(6, out _)) Fail("명소 밖에 수");
+            if (DungeonLordSigs.TryFor(-1, out _) || DungeonLordSigs.TryFor(7, out _)) Fail("명소 밖에 수");
             DungeonLordSigs.TryFor(1, out var rain);
             if (Mathf.Abs(rain.R - 1.75f) > 0.001f || Mathf.Abs(rain.Spread - 55f / 24f) > 0.001f) Fail($"화살비 px→m {rain.R}·{rain.Spread}");
             // 모양 — 순수·크기 고정
@@ -224,15 +224,16 @@ namespace Saga.EditorTools
                     lord.TakeDamage(lord.CurrentHp - lord.MaxHp * 0.6f);
                     sig.Tick(0.01f, true, pt);
                     sig.Tick(0.01f, true, pt);
-                    if (sig.Adds != 2 || sig.Phase != 1) Fail($"⅔ 호령 {sig.Adds}");
+                    int n = Mathf.Max(1, sig.Sig.N);   // tomb = 2, nameless(31층) = 3
+                    if (sig.Adds != n || sig.Phase != 1) Fail($"⅔ 호령 {sig.Adds}(기대 {n})");
                     if (!sig.LastToast.Contains(DungeonLordSigs.Line(sig.Sig))) Fail("호령 알림");
                     lord.TakeDamage(lord.CurrentHp - lord.MaxHp * 0.3f);
                     sig.Tick(0.01f, true, pt);
                     int room1 = DungeonEnemy.CountAliveInRoom(ProcRoomId);
-                    if (sig.Adds != 4 || sig.Phase != 2 || room1 - room0 != 4) Fail($"⅓ 호령 {sig.Adds}·방 적 +{room1 - room0}");
+                    if (sig.Adds != 2 * n || sig.Phase != 2 || room1 - room0 != 2 * n) Fail($"⅓ 호령 {sig.Adds}·방 적 +{room1 - room0}(기대 {2 * n})");
                     lord.TakeDamage(lord.CurrentHp - 1f);
                     sig.Tick(0.01f, true, pt);
-                    if (sig.Adds != 4) Fail("문턱 셋째에 또 호령");
+                    if (sig.Adds != 2 * n) Fail("문턱 셋째에 또 호령");
                     return $" 호령 {sig.Adds}";
                 }
             }

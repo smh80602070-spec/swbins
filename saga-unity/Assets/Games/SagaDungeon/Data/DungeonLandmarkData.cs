@@ -4,10 +4,10 @@ namespace Saga.Dungeon.Data
 {
     /// <summary>
     /// PLAN.md 108 ③ "고정 특색 지역 — 던전 명소 층"(2026-09-24) — 웹 사가블로 PLAN §5.15 결(코드 공유 없음).
-    /// 무작위 문 갈림길 층 사이에 손으로 짠 고정 층 여섯을 박는다: 5·10·15·20·25·30층. 그 층은 방 다섯이 늘 같은 순서로
+    /// 무작위 문 갈림길 층 사이에 손으로 짠 고정 층 일곱을 박는다: 5·10·15·20·25·30·31층(31층 = 5막 끝 무명왕, tasks U-0028). 그 층은 방 다섯이 늘 같은 순서로
     /// 나오고(문 하나, 문 표지에 다음 방 이름), 잡졸 이름이 그 층 것으로 바뀌고, 마지막 방에 층 주인이 선다.
     /// 층 주인 첫 토벌에만 그 층 고유 무기 + 금(층 × <see cref="FirstClearGoldPerFloor"/>). 이름·한자·무기는 전부 지어낸 것.
-    /// 나머지 층(2~4·6~9…·31~100)은 예전 갈림길 그대로 — 전부 고정하면 로그라이트 반복이 죽는다.
+    /// 나머지 층(2~4·6~9…·32~100)은 예전 갈림길 그대로 — 전부 고정하면 로그라이트 반복이 죽는다.
     /// </summary>
     public static class DungeonLandmarkData
     {
@@ -64,6 +64,12 @@ namespace Saga.Dungeon.Data
                 GruntKo = "금궐 호위", LordKo = "구름 천장", LordColor = new Color(0.85f, 0.7f, 0.25f), RewardItemId = "wp_lm_cloud",
                 Kinds = new[] { "fight", "merchant", "trove", "miniboss", LordKind },
                 RoomsKo = new[] { "구름 계단", "선녀 좌판", "금빛 보고", "천병 진영", "금궐 옥좌" } },
+            // 31층(tasks U-0028, 웹 `FIXED` 31층) — 5막 끝 무명왕이 서는 곳. 웹 방 종류 fight·shrine·elite·trove·boss.
+            new Landmark { Floor = 31, Key = "nameless", NameKo = "이름 없는 곳", Hanja = "無名處",
+                LoreKo = "글자가 다 지워진 비석들이 빛 기둥처럼 서 있다. 삼켜진 이름들이 저마다 다른 모습으로 일어난다.",
+                GruntKo = "삼켜진 이름", LordKo = "이름을 삼키는 무명왕", LordColor = new Color(0.23f, 0.23f, 0.29f), RewardItemId = "wp_lm_nameless",
+                Kinds = new[] { "fight", "shrine", "elite", "trove", LordKind },
+                RoomsKo = new[] { "비석 숲", "지워진 이름의 제단", "도시 잔해 조각", "빛 기둥 곁", "이름 없는 곳" } },
         };
 
         /// <summary>그 층이 명소 층이면 번호, 아니면 -1.</summary>
