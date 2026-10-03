@@ -27,8 +27,41 @@ func _shot(id: String) -> void:
 		await get_tree().process_frame
 	var img := get_viewport().get_texture().get_image()
 	var path := "%s/%s.png" % [OS.get_environment("SAGA_REGION_SHOT"), id]
-	print("REGION_SHOT ", path, " ", img.save_png(path))
-	get_tree().quit()
+	var err := img.save_png(path)
+	var st := _image_stats(img)
+	# 자동 판정: 거의 검거나(렌더 실패) 한 색으로 칠해진(그릴 게 없음) 화면이면 실패. 값은 맑은 마을~밤 지역을 다 통과하는 느슨한 한계.
+	var bad: Array[String] = []
+	if err != OK:
+		bad.append("저장 실패")
+	if float(st.mean) < 0.04:
+		bad.append("너무 어둡다")
+	if float(st.mean) > 0.97:
+		bad.append("너무 밝다")
+	if float(st.spread) < 0.03:
+		bad.append("한 색에 가깝다")
+	if float(st.distinct) < 8.0:
+		bad.append("색 종류가 너무 적다")
+	print("REGION_SHOT ", id, " ", JSON.stringify(st), " 나쁜것=", bad)
+	print("REGION_SHOT_RESULT ", id, " ", "FAIL" if not bad.is_empty() else "OK")
+	get_tree().quit(0 if bad.is_empty() else 1)
+
+
+## 64×36 격자로 뽑은 밝기 평균·표준편차·서로 다른 색(양자화) 수.
+func _image_stats(img: Image) -> Dictionary:
+	var n := 0
+	var sum := 0.0
+	var sum2 := 0.0
+	var seen := {}
+	for y in 36:
+		for x in 64:
+			var c := img.get_pixel(int((x + 0.5) / 64.0 * img.get_width()), int((y + 0.5) / 36.0 * img.get_height()))
+			var l := c.get_luminance()
+			sum += l
+			sum2 += l * l
+			n += 1
+			seen[Vector3i(int(c.r * 8.0), int(c.g * 8.0), int(c.b * 8.0))] = true
+	var mean := sum / float(n)
+	return {"mean": snappedf(mean, 0.001), "spread": snappedf(sqrt(maxf(sum2 / float(n) - mean * mean, 0.0)), 0.001), "distinct": seen.size()}
 
 
 func _open(id: String) -> void:
