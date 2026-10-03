@@ -97,6 +97,9 @@ namespace Saga.Realm.Data
             public int scenarioT0, scenarioTurnSeen;
             public string[] scenarioIds, scenarioKs;
             public int[] scenarioTurns;
+            // tasks U-0026 시나리오 단계 — 버전 그대로. 옛 세이브(필드 없음)는 단계 없음.
+            public string scenarioStageId, scenarioStageTarget;
+            public int scenarioStageSince;
             // PLAN.md 109-16b 회차 — 이번 판 회차(없으면 1). 버전 그대로.
             public int round;
         }
@@ -188,6 +191,7 @@ namespace Saga.Realm.Data
             };
             RealmMounts.SnapshotEq(out data.mountEqOfficers, out data.mountEqMounts);
             RealmScenario.Snapshot(out data.scenarioSeen, out data.scenarioT0, out data.scenarioTurnSeen, out data.scenarioIds, out data.scenarioKs, out data.scenarioTurns, out data.scenarioSideWho, out data.scenarioSideTurn);
+            RealmScenario.SnapshotStage(out data.scenarioStageId, out data.scenarioStageTarget, out data.scenarioStageSince);
             return JsonUtility.ToJson(data);
         }
 
@@ -270,6 +274,7 @@ namespace Saga.Realm.Data
             RealmRound.Restore(data.round); // 옛 세이브(필드 없음 = 0)는 1회차
             RealmMounts.Restore(data.mountSel, data.mountEqOfficers, data.mountEqMounts);
             RealmScenario.Restore(data.scenarioSeen, data.scenarioT0, data.scenarioTurnSeen, data.scenarioIds, data.scenarioKs, data.scenarioTurns, data.scenarioSideWho, data.scenarioSideTurn);
+            RealmScenario.RestoreStage(data.scenarioStageId, data.scenarioStageTarget, data.scenarioStageSince); // 옛 세이브(필드 없음)는 단계 없음
             return true;
         }
 

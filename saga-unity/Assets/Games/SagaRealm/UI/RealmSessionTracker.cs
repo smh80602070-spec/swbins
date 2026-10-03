@@ -143,6 +143,8 @@ namespace Saga.Realm.UI
                     : RealmLocalization.T("victory.done_culture", "문화 승리 — 판 끝"))
                     + (RealmRound.CanNext ? RealmLocalization.T("round.goal_next", " · 다음 달 = 다음 회차") : "");
             }
+            string stage = RealmScenario.StageLine(); // tasks U-0026 — 열린 성 차지 단계가 있으면 그 목표가 먼저
+            if (stage != null) return stage;
             var (name, progress) = RealmVictoryState.ClosestProgress();
             return $"{name} {Mathf.RoundToInt(progress * 100f)}%";
         }

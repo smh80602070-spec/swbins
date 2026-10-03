@@ -68,6 +68,24 @@ namespace Saga.Realm.Data
         [System.Serializable]
         public struct Kv { public string K, V; }
 
+        /// <summary>단계(웹 `STAGES`, tasks U-0026) 한쪽 결과 — 글과 효과(힌트는 효과에서 만든다).</summary>
+        [System.Serializable]
+        public sealed class StageBranch
+        {
+            public string TextKo;
+            public Fx[] Fx;
+        }
+
+        /// <summary>단계 — 카드 id 마다 하나. Kind `own` = 목표 성을 <see cref="Months"/> 달 안에 차지(Prov = 어울리는 지역, Near = 어울리는 땅 plain·river).
+        /// 웹 `loyalId`(충성)는 이 트랙에 충성 축이 없어 기존 카드 표처럼 수도 기술 +2n 으로 옮겼다.</summary>
+        [System.Serializable]
+        public sealed class Stage
+        {
+            public string Id, Kind, Near, Prov, TitleKo;
+            public int Months;
+            public StageBranch Win, Lose;
+        }
+
         /// <summary>JSON 한 파일 모양(tasks U-0009) — `Resources/scenario_realm.json`(본 사슬 카드 + 곁가지).</summary>
         [System.Serializable]
         public sealed class ScenarioFile : IScenarioFile
@@ -75,6 +93,7 @@ namespace Saga.Realm.Data
             public string[] timeFolk;
             public Card[] cards;
             public Card[] side;
+            public Stage[] stages;
 
             public void Finish()
             {
@@ -87,7 +106,7 @@ namespace Saga.Realm.Data
         {
             foreach (var c in Cards) c.SyncKv();
             foreach (var c in RealmScenarioSideData.Side) c.SyncKv();
-            return new ScenarioFile { timeFolk = TimeFolk, cards = Cards, side = RealmScenarioSideData.Side };
+            return new ScenarioFile { timeFolk = TimeFolk, cards = Cards, side = RealmScenarioSideData.Side, stages = Stages };
         }
 
         /// <summary>시간 틈 사람 아홉 — 7막이 열리는 조건.</summary>
@@ -99,6 +118,15 @@ namespace Saga.Realm.Data
 
         /// <summary>곁가지 카드(<see cref="RealmScenarioSideData"/>) — 같은 JSON 의 side.</summary>
         public static readonly Card[] SideCards = _file.side ?? new Card[0];
+
+        /// <summary>단계 표(tasks U-0026) — 같은 JSON 의 stages.</summary>
+        public static readonly Stage[] Stages = _file.stages ?? new Stage[0];
+
+        public static Stage StageOf(string cardId)
+        {
+            foreach (var s in Stages) if (s.Id == cardId) return s;
+            return null;
+        }
 
         public static Card Get(string id)
         {

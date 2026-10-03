@@ -659,6 +659,68 @@ namespace Saga.Realm.Data
             return list.Count > 0 ? list[0] : null;
         }
 
+        /// <summary>적국 성의 웹 지역(`data-city.js` prov — fu 균열·pf 폐허·xi 서역·jiao 교주 …, tasks U-0026 목표 성 고르기가 쓴다). 웹 표에 없는 성(정도)은 "".
+        /// 이 트랙 성 55 가운데 균열·폐허·서역 성은 없어 그 지역 우선은 교주(남해)만 걸린다.</summary>
+        public static string ProvOf(string id) => ProvTable.TryGetValue(id ?? "", out var p) ? p : "";
+
+        private static readonly Dictionary<string, string> ProvTable = new Dictionary<string, string>
+        {
+            ["xiaopei"] = "xu",
+            ["luoyang"] = "si",
+            ["xiapi"] = "xu",
+            ["ye"] = "ji",
+            ["changan"] = "si",
+            ["shouchun"] = "yang",
+            ["jinyang"] = "bing",
+            ["hanzhong"] = "yi",
+            ["runan"] = "yu",
+            ["chengdu"] = "yi",
+            ["jiangxia"] = "jing",
+            ["jiangzhou"] = "yi",
+            ["xiangyang"] = "jing",
+            ["yongan"] = "yi",
+            ["jiangling"] = "jing",
+            ["changsha"] = "jing",
+            ["chaisang"] = "yang",
+            ["jianye"] = "yang",
+            ["kuaiji"] = "yang",
+            ["yunzhong"] = "mb",
+            ["shangjun"] = "mb",
+            ["shuofang"] = "mb",
+            ["wuyuan"] = "mb",
+            ["tianshui"] = "yong",
+            ["nanhai"] = "jiao",
+            ["zhuti"] = "nz",
+            ["cangwu"] = "jiao",
+            ["jianning"] = "nz",
+            ["yulin"] = "jiao",
+            ["yuexi"] = "nz",
+            ["jiaozhi"] = "jiao",
+            ["zangke"] = "nz",
+            ["jiuzhen"] = "jiao",
+            ["hepu"] = "jiao",
+            ["rinan"] = "jiao",
+            ["yunnan"] = "nz",
+            ["xianglin"] = "cp",
+            ["yongchang"] = "nz",
+            ["dianchong"] = "cp",
+            ["shendu"] = "tz",
+            ["bijing"] = "cp",
+            ["jiantuoluo"] = "tz",
+            ["luorong"] = "cp",
+            ["jibin"] = "tz",
+            ["daxia"] = "tz",
+            ["wuyishanli"] = "tz",
+            ["moqietuo"] = "tz",
+            ["sheyi"] = "tz",
+            ["zhuwu"] = "cp",
+            ["xiquan"] = "cp",
+            ["quzu"] = "cp",
+            ["beidi"] = "mb",
+            ["yanmen"] = "mb",
+            ["dingxiang"] = "mb",
+        };
+
         public static RealmEnemyRecord NewRecord(string id)
         {
             var d = Get(id);

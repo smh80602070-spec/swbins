@@ -40,6 +40,7 @@ namespace Saga.EditorTools
                 CheckEventLink(parts);
                 CheckSave(parts);
                 CheckSide(parts);
+                CheckStages(parts);
             }
             finally
             {
@@ -428,6 +429,8 @@ namespace Saga.EditorTools
             if (RealmScenario.DueCardId() != "r1_first_ally") Fail("왕복 뒤 셋째 카드 때");
             // 옛 세이브(시나리오 칸 없음) — 24달을 넘긴 판이면 앞 카드를 다 건너뛴 것으로, 갓 시작한 판이면 처음부터
             string old = System.Text.RegularExpressions.Regex.Replace(json, ",\"scenarioSeen\":(true|false),\"scenarioSideWho\":\\[[^\\]]*\\],\"scenarioSideTurn\":\\[[^\\]]*\\],\"scenarioT0\":-?\\d+,\"scenarioTurnSeen\":-?\\d+,\"scenarioIds\":\\[[^\\]]*\\],\"scenarioKs\":\\[[^\\]]*\\],\"scenarioTurns\":\\[[^\\]]*\\]", "");
+            // tasks U-0026 — 단계 세 필드도 옛 세이브엔 없다
+            old = System.Text.RegularExpressions.Regex.Replace(old, ",\"scenarioStageId\":\"[^\"]*\",\"scenarioStageTarget\":\"[^\"]*\",\"scenarioStageSince\":-?[0-9]+", "");
             if (old.Contains("scenario")) { Fail("옛 세이브 가짜 만들기 실패"); return; }
             RealmScenario.TurnForTest = 30;
             if (!RealmSaveState.ApplyJson(old)) Fail("옛 세이브를 못 읽음");
@@ -445,6 +448,123 @@ namespace Saga.EditorTools
             RealmScenario.TurnForTest = 0;
             if (RealmScenario.DoneCount != 1 || !RealmScenario.IsDone("r1_start")) Fail("모르는 카드를 못 거름");
             parts.Add("세이브(끝낸 카드·답 왕복·버전 4 그대로·옛 세이브 24달 넘으면 앞 카드 건너뜀·갓 시작하면 처음부터·달이 되돌아가면 새 판·모르는 카드는 버림)");
+        }
+
+        // ---- 단계(tasks U-0026) — 성 차지 여섯 ------------------------------------------------------------------
+
+        // 우리 성에서 칠 수 있는 안 차지된 적 성 전부(표 밖에서 따로 센다).
+        private static List<string> Candidates(System.Func<string, bool> captured)
+        {
+            var list = new List<string>();
+            foreach (var ours in RealmCityState.ActiveCityIds)
+                foreach (var eid in RealmEnemyCity.TargetsFrom(ours))
+                    if (!list.Contains(eid) && !captured(eid)) list.Add(eid);
+            return list;
+        }
+
+        private static void CheckStages(List<string> parts)
+        {
+            var stages = RealmScenarioData.Stages;
+            var months = new[] { 10, 10, 12, 12, 12, 12 };
+            var ids = new[] { "r2_plains", "r3_river", "r4_rift", "r4_plague", "r5_silk", "r5_south" };
+            if (stages.Length != 6 || !stages.Select(s => s.Id).SequenceEqual(ids) || !stages.Select(s => s.Months).SequenceEqual(months)) Fail("단계 표가 여섯(10·10·12·12·12·12)이 아님");
+            foreach (var s in stages)
+            {
+                if (s.Kind != "own" || RealmScenarioData.Get(s.Id) == null) Fail($"{s.Id} 단계 종류·카드");
+                if (s.Win == null || s.Lose == null || s.Win.Fx.Length == 0 || s.Lose.Fx.Length == 0 || string.IsNullOrEmpty(s.Win.TextKo) || string.IsNullOrEmpty(s.Lose.TextKo) || string.IsNullOrEmpty(s.TitleKo)) Fail($"{s.Id} 단계 글·효과 빠짐");
+                foreach (var f in s.Win.Fx.Concat(s.Lose.Fx))
+                    if (!new[] { "gold", "food", "sec", "train", "tech" }.Contains(f.T) || f.N == 0) Fail($"{s.Id} 단계 효과 {f.T} {f.N}");
+                if (s.Win.Fx.Any(f => f.N < 0) || !s.Lose.Fx.Any(f => f.N < 0)) Fail($"{s.Id} 이긴 쪽은 +만, 진 쪽엔 − 가 있어야 한다");
+            }
+            if (RealmEnemyCity.ProvOf("nanhai") != "jiao" || RealmEnemyCity.ProvOf("nope") != "") Fail("성 지역 표(ProvOf)");
+
+            RealmScenario.StagesEnabled = true;
+            RealmScenario.Enabled = true;
+            RealmCityState.AddGold(5000);
+            try
+            {
+                // ② 목표 성 고르기 — 표 밖에서 센 후보와 같은 성이 뽑혀야 한다(prov → 땅 → 병력 → id)
+                RealmScenario.CapturedForTest = _ => false;
+                var cand = Candidates(RealmScenario.CapturedForTest);
+                if (cand.Count == 0) { Fail("목표 후보가 하나도 없다(진단 준비)"); return; }
+                foreach (var s in stages)
+                {
+                    string want = cand.OrderBy(id =>
+                    {
+                        var def = RealmEnemyCity.Get(id);
+                        bool provHit = !string.IsNullOrEmpty(s.Prov) && RealmEnemyCity.ProvOf(id) == s.Prov;
+                        bool landHit = !string.IsNullOrEmpty(s.Near) && (def.Land == RealmLand.River ? "river" : "plain") == s.Near;
+                        return provHit ? 0 : landHit ? 1 : 2;
+                    }).ThenBy(id => RealmWarState.Get(id)?.Troops ?? RealmEnemyCity.Get(id).BaseTroops).ThenBy(id => id, System.StringComparer.Ordinal).First();
+                    string got = RealmScenario.PickTarget(s.Near, s.Prov);
+                    if (got != want) Fail($"{s.Id} 목표 성 {got} (기대 {want})");
+                }
+                if (cand.Any(id => RealmEnemyCity.ProvOf(id) == "jiao") && !RealmEnemyCity.ProvOf(RealmScenario.PickTarget("", "jiao")).Equals("jiao")) Fail("교주 우선이 안 먹음");
+                RealmScenario.CapturedForTest = _ => true;
+                if (RealmScenario.PickTarget("plain", "") != null) Fail("차지된 성뿐인데 목표가 뽑힘");
+                RealmScenario.CapturedForTest = _ => false;
+
+                // ③ 흐름 — 이긴 쪽
+                RealmScenario.ResetForTest(); RealmScenario.StagesEnabled = true; RealmScenario.Enabled = true; RealmScenario.CapturedForTest = _ => false;
+                RealmScenario.TurnForTest = 100;
+                var (msg0, ok0) = RealmScenario.Resolve("r2_plains", 0);
+                string target = RealmScenario.StageTarget;
+                if (!ok0 || RealmScenario.StageId != "r2_plains" || string.IsNullOrEmpty(target) || !msg0.Contains("🎯")) Fail($"단계가 안 열림 id={RealmScenario.StageId} target={target} ok={ok0}");
+                if (RealmScenario.StageLine() == null || RealmScenario.StageMonthsLeft != 10) Fail($"단계 한 줄·남은 달 {RealmScenario.StageMonthsLeft}");
+                RealmScenario.TurnForTest = 104;
+                if (RealmScenario.DueCardId() != null || RealmScenario.StageMonthsLeft != 6) Fail($"열린 동안 본 사슬이 안 쉼 due={RealmScenario.DueCardId()}");
+                RealmScenario.CapturedForTest = id => id == target;
+                if (RealmScenario.DueCardId() != "r2_plains_end") Fail($"차지했는데 결과 카드가 안 옴({RealmScenario.DueCardId()})");
+                var d = RealmScenario.Describe("r2_plains_end");
+                if (string.IsNullOrEmpty(d.title) || !d.body.Contains(RealmScenarioData.StageOf("r2_plains").Win.TextKo.Substring(0, 6)) || string.IsNullOrEmpty(d.a) || d.b != "" || d.c != "") Fail($"결과 카드 모양 b='{d.b}' c='{d.c}'");
+                int gold0 = RealmCityState.Gold;
+                var (msgW, okW) = RealmScenario.Resolve("r2_plains_end", 0);
+                if (!okW || RealmCityState.Gold != gold0 + 500 || RealmScenario.StageId != null) Fail($"이긴 결과 금 {RealmCityState.Gold - gold0}(기대 +500)·단계 {RealmScenario.StageId}");
+
+                // 진 쪽 — 달 수가 다 되면(r5_silk: 금 -300)
+                RealmScenario.CapturedForTest = _ => false;
+                RealmScenario.TurnForTest = 200;
+                RealmScenario.Resolve("r5_silk", 0);
+                if (RealmScenario.StageId != "r5_silk") Fail("r5_silk 단계가 안 열림");
+                RealmScenario.TurnForTest = 211;
+                if (RealmScenario.DueCardId() != null) Fail("열한 달째에 결과 카드가 옴");
+                RealmScenario.TurnForTest = 212;
+                if (RealmScenario.DueCardId() != "r5_silk_end") Fail($"열두 달째에 결과 카드가 안 옴({RealmScenario.DueCardId()})");
+                gold0 = RealmCityState.Gold;
+                RealmScenario.Resolve("r5_silk_end", 0);
+                if (RealmCityState.Gold != gold0 - 300 || RealmScenario.StageId != null) Fail($"진 결과 금 {RealmCityState.Gold - gold0}(기대 -300)");
+
+                // ④ 세이브 — 단계 중 왕복·모르는 값 버림·옛 세이브
+                RealmScenario.Resolve("r3_river", 0);
+                string sid = RealmScenario.StageId, stg = RealmScenario.StageTarget; int ssince = RealmScenario.StageSince;
+                string json = RealmSaveState.ToJson();
+                if (sid != "r3_river" || !json.Contains("\"scenarioStageId\":\"r3_river\"")) Fail("세이브 JSON 에 단계가 없다");
+                RealmScenario.RestoreStage(null, null, 0);
+                RealmScenario.RestoreStage("r3_river", stg, ssince);
+                if (RealmScenario.StageId != "r3_river" || RealmScenario.StageTarget != stg || RealmScenario.StageSince != ssince) Fail("단계 복원");
+                RealmScenario.RestoreStage("nope", stg, 0);
+                if (RealmScenario.StageId != null) Fail("모르는 단계를 받아들임");
+                RealmScenario.RestoreStage("r3_river", "nope", 0);
+                if (RealmScenario.StageId != null) Fail("모르는 성을 받아들임");
+                RealmScenario.RestoreStage("r3_river", stg, ssince);
+                string old = System.Text.RegularExpressions.Regex.Replace(json, ",\"scenarioStageId\":\"[^\"]*\",\"scenarioStageTarget\":\"[^\"]*\",\"scenarioStageSince\":-?[0-9]+", "");
+                if (old == json) Fail("진단 준비: 옛 세이브 JSON 을 못 만듦");
+                RealmSaveState.ApplyJson(old);
+                if (RealmScenario.StageId != null) Fail("옛 세이브(필드 없음)인데 단계가 남음");
+
+                // ⑤ 불변 — 설전·일기토 카드는 단계를 안 열고, 고르기 카드 모양은 그대로
+                RealmScenario.Resolve("r1_first_ally", 0);
+                if (RealmScenario.StageId != null) Fail("설전 카드가 성 차지 단계를 열었다");
+                var dd = RealmScenario.Describe("r2_plains");
+                if (string.IsNullOrEmpty(dd.a) || string.IsNullOrEmpty(dd.b) || string.IsNullOrEmpty(dd.c)) Fail("고르기 카드 단추 셋이 아님");
+                parts.Add($"단계 성 차지 여섯 (목표 {target} → 이김 +500 · r5_silk 12달 → 진 −300 · 세이브 왕복·옛 세이브 · 본 사슬 쉼)");
+            }
+            finally
+            {
+                RealmScenario.CapturedForTest = null;
+                RealmScenario.StagesEnabled = false;
+                RealmScenario.TurnForTest = null;
+            }
         }
 
         private static void Fail(string msg)
