@@ -15965,7 +15965,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 
     t('아이템 아이콘 — 이 판 자료의 id 마다 이름 표에 그림이 있고, 없는 id 는 null(옛 이모지), 꺼 두면 늘 null', function () {
       var I = DG.itemicon, G = 'saga-go', T = (DG.itemiconIds || {})[G] || {}, bad = [], n = Object.keys(T).length, calls = 0;
-      function L(x) { return Array.isArray(x) ? x.map(function (e) { return e && typeof e === 'object' ? (e.key !== undefined ? e.key : e.id) : e; }) : Object.keys(x || {}); }
+      function L(x) { var out = []; function key(e) { return e && typeof e === 'object' ? (e.key !== undefined ? e.key : e.id) : e; } if (Array.isArray(x)) { return x.map(key); } Object.keys(x || {}).forEach(function (k) { var v = x[k]; if (Array.isArray(v)) { v.forEach(function (e) { out.push(key(e)); }); } else { out.push(k); } }); return out; }
       [
       ["material", L(DG.cooking.ITEMS)],
       ["artifact", DG.artifact.SET_IDS.map(function (s, i) { return i; })]
@@ -15975,8 +15975,9 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       var k0 = Object.keys(T)[0], first = k0.split(":"), h = I.html(G, first[0], first.slice(1).join(":"), 24, "🙂");
       var none = I.html(G, 'equip', '__없는_id__', 24, '🙂') === null && I.or(G, 'equip', '__없는_id__', 24, '🙂') === '🙂';
       I.enabled = false; var off = I.html(G, first[0], first.slice(1).join(':')) === null; I.enabled = true;
+      if (bad.length) { throw new Error('그림 없는 id ' + bad.length + '개: ' + bad.slice(0, 8).join(',')); }
       return bad.length === 0 && calls > 0 && n > 0 && /<img [^>]*src="assets\/icons\/icon64\/[^"]+\.png"/.test(h) && none && off &&
-        ('표 ' + n + '개 · 자료 id ' + calls + '개 전부 그림 있음 · 없는 id 폴백 · 끄면 null') || ('그림 없는 id: ' + bad.slice(0, 8).join(','));
+        ('표 ' + n + '개 · 자료 id ' + calls + '개 전부 그림 있음 · 없는 id 폴백 · 끄면 null');
     });
     /* ── 옷 무늬(W-0020, shared/js/vroid-variant.js) — 표·이미지 없이 순수 함수와 가짜 재질로 ─── */
 
