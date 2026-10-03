@@ -20,8 +20,9 @@ const out = await page.evaluate(async (game) => {
   for (const h of heroes) {
     const A3 = window.DG.asset3d;
     let shell = null, st = null;
-    if (game === 'saga-forest') {   // 사가의숲은 콜백 방식 — 모델이 오면 glb
-      const model = await Promise.race([new Promise((ok) => A3.build('hero', h, ok)), new Promise((ok) => setTimeout(() => ok(null), 30000))]);
+    if (game === 'saga-forest' || game === 'saga-story' || game === 'saga-realm') {   // 숲·스토리·국지는 콜백 방식 — 모델이 오면 glb
+      const mk = (cb) => (game === 'saga-forest' ? A3.build('hero', h, cb) : game === 'saga-story' ? A3.buildHero(h.id, 42, null, cb) : A3.buildHero(h, null, cb));
+      const model = await Promise.race([new Promise((ok) => mk(ok)), new Promise((ok) => setTimeout(() => ok(null), 30000))]);
       shell = model; st = model ? 'glb' : 'fail';
     } else {
       shell = game === 'saga-dungeon' ? A3.buildHero('hero:' + h.id, 42, null, null) : A3.build('hero', h, null);   // 사가블로는 'hero:<id>' 씨앗

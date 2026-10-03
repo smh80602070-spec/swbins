@@ -70,6 +70,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/data-quiz.js"></script>
 <script src="js/sprite.js"></script>
 <script src="js/core.js"></script>
+<script src="js/assets3d-ids.js"></script>
+<script src="js/assets3d.js"></script>
 <script src="js/sfx.js"></script>
 <script src="js/bgm.js"></script>
 <script src="js/vendor/three.iife.js"></script>
@@ -193,6 +195,14 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     }
 
     /* ── 골격 ────────────────────────────────────────── */
+
+    t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
+      var A = DG.assets3d, ids = DG.assets3dIds, bad = [], reg = DG.cfg.assets3d.reg;
+      Object.keys(reg).forEach(function (k) { reg[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });
+      A._reset();
+      var pre = A.heroRecipe('hero:sg_guanyu') === null && A.heroRecipe({ id: 'sg_guanyu' }) === null && A.heroRecipe(null) === null;
+      return bad.length === 0 && ids.hero.length === 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 등록 표 ' + Object.keys(reg).length + '칸') || bad.join(',') || '표/폴백 불일치';
+    });
 
     t('옛 경영 모듈은 걷어냈다', function () {
       var gone = ['land', 'territory', 'build', 'buildData', 'incident', 'auto'];

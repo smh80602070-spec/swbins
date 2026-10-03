@@ -69,7 +69,7 @@
       if (!t.hasOwnProperty(key)) { continue; }
       list = t[key]; urls = [];
       for (i = 0; i < list.length; i++) { var u = url('world', list[i]); if (u) { urls.push(u); } }
-      if (urls.length) { A3.register(key, urls); n++; }
+      if (urls.length) { A3.register(key, urls.length === 1 ? urls[0] : urls); n++; }   // 한 칸이면 문자열 그대로(옛 표기와 같은 꼴)
     }
     return n;
   }
