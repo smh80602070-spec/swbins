@@ -2455,7 +2455,7 @@
     closeEnc: closeEnc,
     /** 자가진단용 */
     _act: act, _tab: function () { return openTab; }, _city: function () { return openCityId; },
-    _setOrder: function (k) { pickOrder = k; },
+    centerAt: function (x, y) { mapCx = x; mapCy = y; applyMapViewNow(); }, _setOrder: function (k) { pickOrder = k; },
     _quiz: function () { return quizCur; }
   };
 })(window);

@@ -157,6 +157,7 @@ function __sagaMeasure(opt) {
     var cs = getComputedStyle(el);
     if (cs.position !== 'fixed' && cs.position !== 'absolute' && cs.position !== 'sticky') { return false; }
     if (cs.pointerEvents === 'none' && !(el.innerText || '').trim()) { return false; }
+    if (el.id === 'realm' || el.id === 'realm3d') { return false; }   /* 지도 바탕층 — 전략 화면에서는 UI 가 지도 위에 얹히는 게 설계다(W-0027) */
     var r = el.getBoundingClientRect();
     if (r.width * r.height > area * 0.6) { return false; }
     if (r.right <= 0 || r.left >= vw || r.bottom <= 0 || r.top >= vh) { return false; }

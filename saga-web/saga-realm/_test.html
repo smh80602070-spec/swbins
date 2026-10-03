@@ -102,6 +102,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/realm3d.js"></script>
 <script src="js/ui-rtk.js"></script>
 <script src="js/cpanel.js"></script>
+<script src="js/hud.js"></script>
 <script src="js/game.js"></script>
 <script>
 (function () {
@@ -236,6 +237,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var found = P.at({ clientX: 1, clientY: 1 }); document.elementsFromPoint = function () { return []; }; var none = P.at({ clientX: 1, clientY: 1 }); document.elementsFromPoint = saveFn; document.body.removeChild(host);
       return hm.indexOf(nm) >= 0 && hm.indexOf('내 성') >= 0 && hm.indexOf('data-cp="open"') >= 0 && hm.indexOf('인구') >= 0 && ho.indexOf('내 성') < 0 && ho.indexOf(DG.cityData.find(other.id).name) >= 0 &&
         bad && found && found.getAttribute('data-city') === mid && none === null && ('내 성·남의 성 패널 · 없는 성 빈 문자열 · 좌표로 성 찾기');
+    });
+
+    t('머리판(W-0027) — 배너에 연·월·계절이, 미니맵에 성 점 전부와 내 성 강조·보이는 창 사각형이 있고, 판이 안 열렸으면 빈 문자열', function () {
+      var H = DG.hud, pre = (function () { var keep = DG.rtk.state().started; return keep; })();
+      fresh('cao');
+      var st = DG.rtk.state(), b = H.bannerHtml(), n = DG.cityData.CITIES.length, svg = H.miniSvg('1 2 30 40'), me = DG.rtk.me();
+      var dots = (svg.match(/<circle /g) || []).length, mineDots = (svg.match(/stroke="#fff"/g) || []).length;
+      var rect = svg.indexOf('class="mm-view" x="1" y="2" width="30" height="40"') >= 0, noRect = H.miniSvg('').indexOf('mm-view') < 0;
+      return b.indexOf(st.year + '년 ' + st.month + '월') >= 0 && b.indexOf('초봄') >= 0 && dots === n && mineDots === DG.rtk.citiesOf(me).length && rect && noRect &&
+        ('배너 ' + st.year + '년 ' + st.month + '월 · 점 ' + dots + ' · 내 성 ' + mineDots + ' · 창 사각형');
     });
 
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {

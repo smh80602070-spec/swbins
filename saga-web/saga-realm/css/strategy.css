@@ -44,3 +44,29 @@ body.sheet-open #cpanel { display: none; }
   #dock { right: auto; left: 50%; transform: translateX(-50%); flex-direction: row; gap: 10px; }
   #dock button { width: 72px; }
 }
+
+/* ── 날짜 배너(위 가운데)·미니맵(오른쪽 아래) — 넓은 화면의 2D 지도에서만 ── */
+#banner, #minimap { display: none; position: fixed; z-index: 10; }
+#banner.show { display: flex; }
+#banner {
+  top: 14px; left: 50%; transform: translateX(-50%); align-items: baseline; gap: 10px;
+  padding: 8px 22px 9px; border-radius: 12px; pointer-events: none;
+  background: var(--glass); border: 1px solid var(--glass-br);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: var(--shadow); color: var(--ink);
+  font-family: "Noto Serif KR", "Nanum Myeongjo", "Batang", serif;
+}
+.bn-date { font-size: 24px; letter-spacing: .06em; color: var(--gold); font-variant-numeric: tabular-nums; }
+.bn-season { font-size: 15px; letter-spacing: .12em; }
+.bn-scen { color: var(--ink-dim); font-size: 12px; font-family: inherit; }
+#minimap {
+  right: 14px; bottom: 14px; width: 224px; height: 121px; touch-action: none; cursor: crosshair;
+  border-radius: 10px; overflow: hidden; background: rgba(8, 10, 14, .72);
+  border: 1px solid var(--glass-br); box-shadow: var(--shadow);
+}
+#minimap.show { display: block; }
+#minimap svg { display: block; width: 100%; height: 100%; }
+body.sheet-open #minimap { display: none; }
+@media (max-width: 780px), (max-height: 500px) { #banner, #minimap, #minimap.show, #banner.show, #cpanel.show { display: none; } }
+
+/* 프로필 카드 안 <small>(목표 진행 "(1/5)")이 브라우저 기본 0.8배로 9px 대로 떨어졌다 — 바닥 11px */
+:where(#profile) small { font-size: max(11px, .8em); }

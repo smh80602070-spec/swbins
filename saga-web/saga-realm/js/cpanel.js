@@ -85,7 +85,7 @@
 
   /** 지도에서 성을 눌렀을 때 — 이 판이 맡으면 true, 아니면 false(부르는 쪽이 예전처럼 시트를 연다) */
   function pick(id) {
-    var D = DGx(), wide = global.innerWidth > 780, r3 = D.realm3d && D.realm3d.active && D.realm3d.active();
+    var D = DGx(), wide = global.innerWidth > 780 && global.innerHeight > 500, r3 = D.realm3d && D.realm3d.active && D.realm3d.active();
     if (!wide || r3 || !D.rtk || !D.rtk.state().started || !html(id)) { return false; }
     sel = id;
     if (!wired && D.core && D.core.on) { wired = true; D.core.on('changed', function () { if (sel) { render(); } }); }

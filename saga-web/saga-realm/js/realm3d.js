@@ -37,7 +37,7 @@
   /** 손잡이 — 2026-09-11부터 기본으로 켠다("아직도 2D 지도가 남아있다"는
    *  신고 — svg 지도는 이제 🧊 버튼으로 되돌아갈 때만 쓰는 대체 화면이다).
    *  세이브에 값이 있으면(사용자가 직접 껐던 적이 있으면) 그 값을 존중한다 */
-  function ON() { return C().tuned('realm3d.on', 1) ? true : false; }
+  function ON() { return C().tuned('realm3d.on', 0) ? true : false; }   /* 기본은 2D 전략 지도 — 3D 는 🧊 단추로 켠다(W-0027, 2026-10-03) */
   function WORLD_SCALE() { return C().tuned('realm3d.worldScale', 4.5); }
   function FOV() { return C().tuned('realm3d.fov', 50); }
   function PITCH_MIN() { return C().tuned('realm3d.pitchMin', 0.35); }

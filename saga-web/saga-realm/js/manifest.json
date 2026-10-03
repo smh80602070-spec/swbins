@@ -45,6 +45,7 @@
    "js/battle3d.js",
    "js/ui-rtk.js",
    "js/cpanel.js",
+   "js/hud.js",
    "js/perf.js",
    "js/game.js"
   ]
@@ -92,6 +93,7 @@
    "js/realm3d.js",
    "js/ui-rtk.js",
    "js/cpanel.js",
+   "js/hud.js",
    "js/game.js"
   ]
  ]
