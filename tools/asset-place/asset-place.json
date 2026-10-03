@@ -438,6 +438,23 @@
    ]
   },
   {
+   "id": "web2d-moving",
+   "src": "saga-assets/web2d/moving",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "manifest.json",
+    "*.license.json"
+   ],
+   "note": "K-0056 웹 2D 움직이는 것 14종(사람 8·짐승 6) — 정면·옆·뒤 한 장씩(kind:still3, 걸음·숨쉬기는 웹 코드). 웹 한 장 모드(mode2d.draw)가 읽는다 — 웹 후속 티켓 전에는 읽는 코드 없음",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/web2d/moving"
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,

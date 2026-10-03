@@ -1,0 +1,20 @@
+{
+ "id": "beast_small_front",
+ "generator": "tools/ai-art/gen.py",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, small wild rabbit, white fur with gray patches, long ears, sitting, front view, facing the viewer, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+ "negative_prompt": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals, blue fur, muscular human-like body, standing upright, grass, flowers, debris, ground, puddle, color change, wooden plank, floor, platform, shelf, table, stand",
+ "seed": 614050660,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  256,
+  256
+ ],
+ "seconds": 26.0,
+ "date": "2026-10-03",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "packed_by": "tools/ai-art/pack_moving2d.py"
+}

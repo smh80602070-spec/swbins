@@ -1,0 +1,20 @@
+{
+ "id": "beast_big_back",
+ "generator": "tools/ai-art/gen.py",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, large brown bear, brown fur, standing on all fours, four legs on the ground, natural bear anatomy, rear view from directly behind, head facing away, tail visible, no face visible, walking away, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, back view, seen from behind, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
+ "negative_prompt": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals, blue fur, muscular human-like body, standing upright, grass, flowers, debris, ground, puddle, color change, face, facing the viewer, close-up, cropped, zoomed",
+ "seed": 940892919,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  256,
+  256
+ ],
+ "seconds": 26.2,
+ "date": "2026-10-03",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "packed_by": "tools/ai-art/pack_moving2d.py"
+}
