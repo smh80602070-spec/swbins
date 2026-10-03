@@ -72,6 +72,13 @@ Assets/Animators/CharForge.meta
 Assets/Scenes/CharCompareReal.unity
 Assets/Scenes/CharCompareReal.unity.meta
 
+# 지역 자산(Resources/Regions)은 Resources.Load 경로로만 부르고 .meta guid 를 가리키는 곳이 없다 —
+# 임포트가 대신 만든 .meta 는 배포 대상이 아니라 커밋하지 않는다(원본 glb·json·jpg 만 추적, 2026-10-04).
+Assets/SagaCore/Resources/Regions.meta
+Assets/SagaCore/Resources/Regions/**/*.meta
+# World 도 같다 — 원본은 추적하고 임포트가 새로 만든 .meta 만 제외(이미 추적 중인 .meta 는 그대로).
+Assets/SagaCore/Resources/World/**/*.meta
+
 # Crash reports
 sysinfo.txt
 
