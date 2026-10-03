@@ -1,0 +1,10 @@
+{
+ "id": "sky_crossroads",
+ "generator": "tools/world-forge/region_hero.py (HERO_SKY 파노라마 굽기)",
+ "source": "코드로 만든 월드 셰이더(그라데이션·별·구름·오로라)+달·균열 고리, Cycles 정거원통 파노라마",
+ "license": "CC0-1.0 (자체 생성)",
+ "commercial_use": true,
+ "projection": "equirectangular",
+ "forward": "+y(Blender) = 그림 한가운데",
+ "size": "4096x2048"
+}

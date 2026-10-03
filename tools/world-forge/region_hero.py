@@ -1694,10 +1694,48 @@ def export_region(rid, outdir):
     print('EXPORT', rid, 'pieces', len(lay['pieces']), 'lights', len(lights), 'scenery_objs', len(keep))
 
 
+def render_pano(path, w=4096, h=2048, samples=16):
+    """하늘 파노라마(정距 원통 4096x2048): 월드 셰이더 + 달·달무리·먼 균열 고리만 남기고 나머지를 지운 뒤 Cycles 파노라마 카메라로 한 장.
+    카메라는 원점, 정면(+y)이 그림 한가운데. 엔진은 이 그림을 하늘상자(스카이박스/파노라마 하늘)로 쓴다."""
+    for o in list(bpy.data.objects):
+        mats = [s.material.name for s in o.material_slots if s.material] if o.type == 'MESH' else []
+        keep = o.type == 'MESH' and (any(m in ('moon', 'halo') for m in mats) or (any(m.startswith('ring') for m in mats) and o.location.y > 100))
+        if not keep and o.type in ('MESH', 'LIGHT', 'EMPTY', 'CAMERA'):
+            bpy.data.objects.remove(o, do_unlink=True)
+    cd = bpy.data.cameras.new('pano')
+    cd.type = 'PANO'
+    try:
+        cd.panorama_type = 'EQUIRECTANGULAR'
+    except Exception:
+        cd.cycles.panorama_type = 'EQUIRECTANGULAR'
+    co = bpy.data.objects.new('pano', cd)
+    sc.collection.objects.link(co)
+    co.location = (0, 0, 0)
+    co.rotation_euler = (math.pi / 2, 0, 0)
+    sc.camera = co
+    sc.render.engine = 'CYCLES'
+    sc.cycles.samples = samples
+    sc.cycles.device = 'CPU'
+    try:
+        sc.cycles.use_denoising = False
+    except Exception:
+        pass
+    sc.render.resolution_x, sc.render.resolution_y = w, h
+    sc.render.resolution_percentage = 100
+    sc.view_settings.view_transform = 'Standard'
+    sc.render.filepath = path
+    sc.render.image_settings.file_format = 'PNG'
+    bpy.ops.render.render(write_still=True)
+    print('PANO', path)
+
+
 import time as _t
 _T0 = _t.time()
 {'galaxy_ferry': galaxy_ferry, 'frost_peak': frost_peak, 'time_rift': time_rift, 'crossroads': crossroads, 'village': village}[REGION]()
 print('TIME build %.1fs' % (_t.time() - _T0))
+if os.environ.get('HERO_SKY'):
+    render_pano(os.environ['HERO_SKY'])
+    raise SystemExit(0)
 join_by_material(['blade', 'reed', 'pine', 'pine_g', 'snowcap', 'firefly', 'flake', 'rockm', 'wood'])
 if os.environ.get('HERO_EXPORT'):
     export_region(REGION, os.environ['HERO_EXPORT'])
