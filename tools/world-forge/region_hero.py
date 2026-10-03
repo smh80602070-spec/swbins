@@ -46,7 +46,7 @@ REAL = os.path.join(ROOT, 'tools', 'world-forge', '_out')
 _PHIDX = None
 
 
-def pbr_mat(tid, tile=4.0, tint=None, rough_mul=1.0, name=None):
+def pbr_mat(tid, tile=4.0, tint=None, rough_mul=1.0, name=None, sat=1.0):
     """Poly Haven 재질 세트를 월드 위치 기준 평면 투영으로 깐다(땅·길용). tile = 그림 한 장이 덮는 미터."""
     global _PHIDX
     if _PHIDX is None:
@@ -72,16 +72,22 @@ def pbr_mat(tid, tile=4.0, tint=None, rough_mul=1.0, name=None):
         return n
     d = tex('diff', 'sRGB')
     if d is not None:
+        col_out = d.outputs['Color']
+        if sat != 1.0:
+            hs = nt.nodes.new('ShaderNodeHueSaturation')
+            hs.inputs['Saturation'].default_value = sat
+            nt.links.new(col_out, hs.inputs['Color'])
+            col_out = hs.outputs['Color']
         if tint:
             mx = nt.nodes.new('ShaderNodeMix')
             mx.data_type = 'RGBA'
             mx.blend_type = 'MULTIPLY'
             mx.inputs['Factor'].default_value = 1.0
             mx.inputs['B'].default_value = tint
-            nt.links.new(d.outputs['Color'], mx.inputs['A'])
+            nt.links.new(col_out, mx.inputs['A'])
             nt.links.new(mx.outputs['Result'], bs.inputs['Base Color'])
         else:
-            nt.links.new(d.outputs['Color'], bs.inputs['Base Color'])
+            nt.links.new(col_out, bs.inputs['Base Color'])
     r = tex('rough', 'Non-Color')
     if r is not None:
         nt.links.new(r.outputs['Color'], bs.inputs['Roughness'])
@@ -380,7 +386,7 @@ def cone_mesh(name, specs, mat, sides=3):
     return o
 
 
-def _bsdf_for(nt, tid, tile, tint, mapnode):
+def _bsdf_for(nt, tid, tile, tint, mapnode, sat=1.0):
     idx = _PHIDX[tid]
     bs = nt.nodes.new('ShaderNodeBsdfPrincipled')
     mp = nt.nodes.new('ShaderNodeMapping')
@@ -398,16 +404,22 @@ def _bsdf_for(nt, tid, tile, tint, mapnode):
         return n
     d = tex('diff', 'sRGB')
     if d is not None:
+        col_out = d.outputs['Color']
+        if sat != 1.0:
+            hs = nt.nodes.new('ShaderNodeHueSaturation')
+            hs.inputs['Saturation'].default_value = sat
+            nt.links.new(col_out, hs.inputs['Color'])
+            col_out = hs.outputs['Color']
         if tint:
             mx = nt.nodes.new('ShaderNodeMix')
             mx.data_type = 'RGBA'
             mx.blend_type = 'MULTIPLY'
             mx.inputs['Factor'].default_value = 1.0
             mx.inputs['B'].default_value = tint
-            nt.links.new(d.outputs['Color'], mx.inputs['A'])
+            nt.links.new(col_out, mx.inputs['A'])
             nt.links.new(mx.outputs['Result'], bs.inputs['Base Color'])
         else:
-            nt.links.new(d.outputs['Color'], bs.inputs['Base Color'])
+            nt.links.new(col_out, bs.inputs['Base Color'])
     r = tex('rough', 'Non-Color')
     if r is not None:
         nt.links.new(r.outputs['Color'], bs.inputs['Roughness'])
@@ -419,7 +431,7 @@ def _bsdf_for(nt, tid, tile, tint, mapnode):
     return bs
 
 
-def pbr_blend(low, high, z0, z1, slope0=0.35, slope1=0.6, tile_lo=5.0, tile_hi=8.0, tint_lo=None, tint_hi=None, name='blend'):
+def pbr_blend(low, high, z0, z1, slope0=0.35, slope1=0.6, tile_lo=5.0, tile_hi=8.0, tint_lo=None, tint_hi=None, name='blend', sat_lo=1.0, sat_hi=1.0):
     """낮은 곳·평평한 곳 = low 재질, 높은 곳·가파른 곳 = high 재질. 높이(z0~z1)와 경사(slope0~slope1)가 섞음비를 정한다."""
     global _PHIDX
     if _PHIDX is None:
@@ -429,8 +441,8 @@ def pbr_blend(low, high, z0, z1, slope0=0.35, slope1=0.6, tile_lo=5.0, tile_hi=8
     nt = m.node_tree
     nt.nodes.clear()
     tc = nt.nodes.new('ShaderNodeTexCoord')
-    a = _bsdf_for(nt, low, tile_lo, tint_lo, tc.outputs['Object'])
-    c = _bsdf_for(nt, high, tile_hi, tint_hi, tc.outputs['Object'])
+    a = _bsdf_for(nt, low, tile_lo, tint_lo, tc.outputs['Object'], sat_lo)
+    c = _bsdf_for(nt, high, tile_hi, tint_hi, tc.outputs['Object'], sat_hi)
     sep = nt.nodes.new('ShaderNodeSeparateXYZ')
     nt.links.new(tc.outputs['Object'], sep.inputs[0])
     hz = nt.nodes.new('ShaderNodeMapRange')
@@ -773,7 +785,7 @@ def snow_terrain():
     bm.free()
     for p_ in me.polygons:
         p_.use_smooth = True
-    o.data.materials.append(pbr_blend('snow_02', 'cliff_side', 18.0, 40.0, 0.25, 0.5, 4.0, 10.0, (0.75, 0.85, 1.0, 1), (0.5, 0.55, 0.7, 1), 'snowfield') if PBR else mat_simple('snow', (0.42, 0.52, 0.72, 1), 0.55))
+    o.data.materials.append(pbr_blend('snow_02', 'cliff_side', 999.0, 1000.0, 0.42, 0.7, 4.0, 10.0, (1.0, 1.0, 1.0, 1), (0.55, 0.6, 0.75, 1), 'snowfield', 1.0, 0.25) if PBR else mat_simple('snow', (0.42, 0.52, 0.72, 1), 0.55))
     return o
 
 
@@ -853,7 +865,7 @@ def frost_peak():
             rock(x, y, z - 0.1, rng.uniform(0.5, 1.4))
     snowfall(260)
     sun = bpy.data.lights.new('moon', 'SUN')
-    sun.energy, sun.color, sun.angle = 2.2, (0.6, 0.75, 1.0), 0.04
+    sun.energy, sun.color, sun.angle = 3.2, (0.6, 0.75, 1.0), 0.04
     so = bpy.data.objects.new('moon', sun)
     so.rotation_euler = (math.radians(-60), 0, math.radians(35))
     sc.collection.objects.link(so)
@@ -953,8 +965,8 @@ def ring(loc, major, minor, rot, color, strength):
 def time_rift():
     rift_sky()
     _ph = _json.load(open(os.path.join(PH, 'index.json'), encoding='utf-8')) if PBR else None
-    rock_mat = pbr_mat('cliff_side', 6.0, tint=(0.6, 0.55, 0.6, 1), name='isl_rock') if PBR else mat_simple('isl_rock', (0.07, 0.06, 0.07, 1), 0.9)
-    top_mat = pbr_mat('aerial_grass_rock', 4.0, tint=(0.7, 0.8, 0.6, 1), name='isl_top') if PBR else mat_simple('isl_top', (0.08, 0.16, 0.12, 1), 0.85)
+    rock_mat = pbr_mat('cliff_side', 6.0, tint=(0.62, 0.62, 0.7, 1), name='isl_rock', sat=0.3) if PBR else mat_simple('isl_rock', (0.07, 0.06, 0.07, 1), 0.9)
+    top_mat = pbr_mat('aerial_grass_rock', 4.0, tint=(0.7, 0.85, 0.65, 1), name='isl_top', sat=0.8) if PBR else mat_simple('isl_top', (0.08, 0.16, 0.12, 1), 0.85)
     plat_mat = mat_simple('plat', (0.18, 0.17, 0.2, 1), 0.7)
     # 중앙 섬: 관측소 탑과 돔
     floating_island(0, 0, 0, 16, 11, 3, top_mat, rock_mat)
