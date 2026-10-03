@@ -14,6 +14,7 @@ var _p: CharacterBody3D
 var _fc: Node
 var _frame := 0
 var _step := 0
+var _fov0 := 0.0
 var _fails := 0
 var _target: Node
 var _accept: Array[int] = []
@@ -298,7 +299,16 @@ func _physics_process(delta: float) -> void:
 				(_target as Node3D).global_position = _p.global_position + Vector3(1.8, 0.0, 0.0)
 				_target.set("velocity", Vector3.ZERO)
 				_pos0 = (_target as Node3D).global_position
+			elif _frame == 2:
+				var rig := get_tree().get_first_node_in_group("camera_rig")
+				_fov0 = (rig.get_node("SpringArm3D/Camera3D") as Camera3D).fov
+				rig.call("shake", 0.12, 0.1) # 강공격급 흔들림
+			elif _frame == 4:
+				var cam := get_tree().get_first_node_in_group("camera_rig").get_node("SpringArm3D/Camera3D") as Camera3D
+				_m("cam_punch_deg_after_hit", "%.2f" % (_fov0 - cam.fov)) # 옛 방식·SAGA_CAM_PUNCH=0 이면 0.00, 강공격급 0.12m 은 두 프레임 뒤 약 1.3~1.5
 			elif _frame == 40:
+				var cam2 := get_tree().get_first_node_in_group("camera_rig").get_node("SpringArm3D/Camera3D") as Camera3D
+				_m("cam_punch_deg_recovered", "%.2f" % (_fov0 - cam2.fov)) # 0.00 으로 돌아와야 한다
 				var d := (_target as Node3D).global_position - _pos0
 				_m("enemy_recover_move_m", "%.2f" % Vector2(d.x, d.z).length()) # 옛 방식 0.00
 				_m("enemy_dmg_mul", "%.2f" % FeelTuning.enemy_dmg_mul)

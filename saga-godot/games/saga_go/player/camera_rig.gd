@@ -8,6 +8,7 @@ extends Node3D
 @onready var spring_arm: SpringArm3D = $SpringArm3D
 
 const CameraNearFade := preload("res://saga_core/world/camera_near_fade.gd")
+const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 var _visual_meshes: Array[GeometryInstance3D] = []
 
 const ROTATE_SPEED := 0.006
@@ -141,7 +142,21 @@ func _exclude_enemies(delta: float) -> void:
 				_excluded[rid] = true
 				spring_arm.add_excluded_object(rid)
 
+## 타격 당김(G-0018 단계 4) — 흔들림이 날 때마다 시야각(FOV)을 잠깐 좁혔다 되돌려 화면이 살짝 다가오는 느낌을 준다. 겨누기·대화 중엔 안 쓴다.
+## 이미 적용한 만큼(_punch_applied)만 되돌리며 더하고 빼서, 다른 FOV 처리(겨누기 lerp)와 부딪치지 않게 한다.
+var _punch := 0.0
+var _punch_applied := 0.0
+
+func _apply_punch(delta: float) -> void:
+	var cam := spring_arm.get_node("Camera3D") as Camera3D
+	_punch = move_toward(_punch, 0.0, FeelTuning.CAM_PUNCH_RECOVER_DEG_PER_SEC * delta)
+	var want := _punch if (not aiming and not _talk_on and _return_left <= 0.0) else 0.0
+	if not is_equal_approx(want, _punch_applied):
+		cam.fov += _punch_applied - want
+		_punch_applied = want
+
 func _process(delta: float) -> void:
+	_apply_punch(delta)
 	_exclude_enemies(delta)
 	if mouse_look:
 		_update_capture()
@@ -221,6 +236,7 @@ func _process_talk(delta: float) -> void:
 			spring_arm.remove_excluded_object(body.get_rid())
 
 func shake(amp_m: float, dur_sec: float) -> void:
+	_punch = maxf(_punch, minf(amp_m * FeelTuning.CAM_PUNCH_DEG_PER_M, FeelTuning.CAM_PUNCH_MAX_DEG) * FeelTuning.cam_punch_mul)
 	var until := Time.get_ticks_msec() + int(dur_sec * 1000.0)
 	_shake_until_msec = maxi(_shake_until_msec, until)
 	_shake_amp_m = maxf(_shake_amp_m, amp_m)

@@ -43,6 +43,13 @@ static func _env_mul(name: String) -> float:
 		return 1.0
 	return clampf(v.to_float(), 0.25, 4.0) if v.is_valid_float() else 1.0
 
+## 카메라 타격 당김(G-0018 단계 4) — camera_rig.shake(흔들림 m)마다 시야각을 흔들림 × CAM_PUNCH_DEG_PER_M 도(최대 CAM_PUNCH_MAX_DEG) 좁혔다가 초당 CAM_PUNCH_RECOVER_DEG_PER_SEC 도로 되돌린다.
+## 기본 공격(0.06m)은 약 0.9°, 강공격(0.12m)은 1.8°, 낙하·폭발(0.15m)은 2.25°. SAGA_CAM_PUNCH=0 이면 끔(배율, 기본 1), SAGA_FEEL_OLD=1 이면 끔.
+const CAM_PUNCH_DEG_PER_M := 15.0
+const CAM_PUNCH_MAX_DEG := 3.0
+const CAM_PUNCH_RECOVER_DEG_PER_SEC := 14.0
+static var cam_punch_mul := 0.0 if OS.get_environment("SAGA_FEEL_OLD") != "" else (OS.get_environment("SAGA_CAM_PUNCH").to_float() if OS.get_environment("SAGA_CAM_PUNCH").is_valid_float() else 1.0)
+
 ## 지금 처리 중인 피해의 종류. field_combat 가 공격을 시작할 때 정하고 매 물리 프레임 처음에 "normal" 로 되돌린다.
 static var kind := "normal"
 static var move_preset: Dictionary = {} if OS.get_environment("SAGA_FEEL_OLD") != "" else MOVE_PRESETS[clampi(int(OS.get_environment("SAGA_MOVE")), 0, MOVE_PRESETS.size() - 1)]
