@@ -1,0 +1,5000 @@
+{
+ "note": "tools/ai-art/build_icon_plan.py 가 만든 표 — 손으로 고치지 않는다(태그는 그 스크립트의 T)",
+ "counts": {
+  "entries": 353,
+  "ai_keys": 306,
+  "glyph": 12,
+  "color": 7,
+  "skip": 4
+ },
+ "items": [
+  {
+   "id": "a_chalgap",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "armor, scale armor, small metal plates, laced armor, chest armor"
+  },
+  {
+   "id": "a_cheollip",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "wide brimmed hat, iron hat, conical hat, steel"
+  },
+  {
+   "id": "a_dopo",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "robe, long robe, cloth coat, wide sleeves, sash"
+  },
+  {
+   "id": "a_dujeong",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "armor, breastplate, plate armor, rivets, chest armor"
+  },
+  {
+   "id": "a_jichap",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "armor, leather armor, brown leather, chest armor, straps"
+  },
+  {
+   "id": "a_myeongap",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "cloth helmet, padded hood, quilted cap, head armor"
+  },
+  {
+   "id": "a_pigap",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "armor, hide armor, fur trim, thick leather, chest armor"
+  },
+  {
+   "id": "af_crimson",
+   "kind": "artifact",
+   "grade": 3,
+   "tags": "crimson flower, red petals, red crystal, ornate feather, gem"
+  },
+  {
+   "id": "af_depth",
+   "kind": "artifact",
+   "grade": 3,
+   "tags": "blue crystal, deep sea pearl, ocean charm, coral, shell"
+  },
+  {
+   "id": "af_emblem",
+   "kind": "artifact",
+   "grade": 3,
+   "tags": "emblem, golden crest, ornate badge, shield, gold trim"
+  },
+  {
+   "id": "af_gladiator",
+   "kind": "artifact",
+   "grade": 3,
+   "tags": "trophy, gladiator crest, bronze cup, laurel, shield badge"
+  },
+  {
+   "id": "af_viridescent",
+   "kind": "artifact",
+   "grade": 3,
+   "tags": "green feather, wind charm, green crystal, leaf ornament"
+  },
+  {
+   "id": "agate",
+   "kind": "gem",
+   "grade": 2,
+   "tags": "gem, red gemstone, faceted gem, jewel"
+  },
+  {
+   "id": "amber",
+   "kind": "gem",
+   "grade": 2,
+   "tags": "amber, orange gemstone, translucent, faceted gem, insect inside"
+  },
+  {
+   "id": "apple",
+   "kind": "material",
+   "grade": 0,
+   "tags": "apple, red apple, fruit, green leaf"
+  },
+  {
+   "id": "ash_flower",
+   "kind": "material",
+   "grade": 0,
+   "tags": "flower, grey flower, ash petals, ember, wilting bloom"
+  },
+  {
+   "id": "b_hwaje",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "boots, leather boots, cloth boots, long boots"
+  },
+  {
+   "id": "b_jipsin",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "sandals, straw sandals, woven, footwear"
+  },
+  {
+   "id": "bangseok",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "cushion, silk cushion, embroidery, square pillow"
+  },
+  {
+   "id": "byeongpung",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "folding screen, mountain painting, crane (bird)"
+  },
+  {
+   "id": "c_dokkaebi",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "bell, small bronze bell, ringing bell, red cord, charm"
+  },
+  {
+   "id": "c_gyeong",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "bronze mirror, round hand mirror, ancient mirror, ornate back"
+  },
+  {
+   "id": "c_hobu",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "bronze tally, tiger shaped talisman, half tablet, metal"
+  },
+  {
+   "id": "c_hopae",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "wooden tag, name tag, rectangular wooden tablet, cord"
+  },
+  {
+   "id": "c_okgae",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "ring, jade ring, jewelry, green gemstone"
+  },
+  {
+   "id": "c_yeombul",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "prayer beads, wooden beads, string of beads, tassel"
+  },
+  {
+   "id": "clam",
+   "kind": "material",
+   "grade": 0,
+   "tags": "clam, shellfish, shell, ribbed shell, seafood"
+  },
+  {
+   "id": "conch",
+   "kind": "material",
+   "grade": 0,
+   "tags": "conch shell, spiral seashell, pink, sea snail shell"
+  },
+  {
+   "id": "feed",
+   "kind": "consumable",
+   "grade": 0,
+   "tags": "pet food, small sack, grain bag, wooden bowl, seeds"
+  },
+  {
+   "id": "fest_baekjung",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "paper lantern, lotus lantern, pink, glowing, hanging, string"
+  },
+  {
+   "id": "fest_chilseok",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "magpie bridge hanging scroll, bridge of birds, stars, scroll, blue"
+  },
+  {
+   "id": "fest_chuseok",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "rice cake table, crescent rice cakes, tray, pine needles, low table"
+  },
+  {
+   "id": "fest_daeborum",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "moon house bonfire stove, large brazier, orange flames, straw"
+  },
+  {
+   "id": "fest_dano",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "iris pot, calamus plant, long green leaves, flower pot, red ribbon"
+  },
+  {
+   "id": "fest_dongji",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "red bean porridge brazier, stove with pot, steaming, red stew"
+  },
+  {
+   "id": "fest_samjin",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "flower rice cake table, low table, pink flower cakes, tray"
+  },
+  {
+   "id": "fest_seollal",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "good luck sieve, woven bamboo scoop, hanging, red ribbon, rice"
+  },
+  {
+   "id": "floor_jangpan",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "floor sample board, yellow oiled paper flooring, square sample, glossy"
+  },
+  {
+   "id": "floor_mat",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "floor sample board, woven straw mat, square sample, braided"
+  },
+  {
+   "id": "floor_ondol",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "floor sample board, heated stone floor, square sample, warm slate"
+  },
+  {
+   "id": "floor_stone",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "floor sample board, flat stone slabs, square sample, grey"
+  },
+  {
+   "id": "floor_wood",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "floor sample board, wooden planks, square sample, polished wood"
+  },
+  {
+   "id": "fo_abalone",
+   "kind": "material",
+   "grade": 0,
+   "tags": "abalone shell, ear-shaped shell, mother of pearl, iridescent"
+  },
+  {
+   "id": "fo_ammon",
+   "kind": "material",
+   "grade": 0,
+   "tags": "ammonite fossil, spiral shell, stone, brown"
+  },
+  {
+   "id": "fo_azalea",
+   "kind": "material",
+   "grade": 0,
+   "tags": "azalea, pink flower, blossoms, green leaves"
+  },
+  {
+   "id": "fo_badukpan",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "game board, go board, wooden board, black and white stones, grid"
+  },
+  {
+   "id": "fo_bandaji",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "chest, front-opening chest, wooden trunk, brass fittings, drawers"
+  },
+  {
+   "id": "fo_bellroot",
+   "kind": "material",
+   "grade": 0,
+   "tags": "bellflower root, balloon flower, white roots, purple flower"
+  },
+  {
+   "id": "fo_bignail",
+   "kind": "material",
+   "grade": 0,
+   "tags": "large iron nail, old rusty spike, big nail"
+  },
+  {
+   "id": "fo_bone",
+   "kind": "material",
+   "grade": 0,
+   "tags": "dinosaur bone fossil, big bone, ivory, rough"
+  },
+  {
+   "id": "fo_cabbage",
+   "kind": "material",
+   "grade": 0,
+   "tags": "butterfly, small white butterfly, wings spread"
+  },
+  {
+   "id": "fo_carp",
+   "kind": "material",
+   "grade": 0,
+   "tags": "carp, big koi fish, orange fish, whiskers, side view"
+  },
+  {
+   "id": "fo_catfish",
+   "kind": "material",
+   "grade": 0,
+   "tags": "catfish, long whiskers, dark grey fish, side view"
+  },
+  {
+   "id": "fo_chest",
+   "kind": "material",
+   "grade": 0,
+   "tags": "chestnut, brown nut, spiky husk, glossy"
+  },
+  {
+   "id": "fo_cicada",
+   "kind": "material",
+   "grade": 0,
+   "tags": "cicada, big eyes, clear wings, insect, brown"
+  },
+  {
+   "id": "fo_citron",
+   "kind": "material",
+   "grade": 0,
+   "tags": "citron, yellow citrus fruit, bumpy skin, leaf"
+  },
+  {
+   "id": "fo_copper",
+   "kind": "material",
+   "grade": 0,
+   "tags": "copper ingot, orange metal, copper ore, rough"
+  },
+  {
+   "id": "fo_cricket",
+   "kind": "material",
+   "grade": 0,
+   "tags": "cricket, brown insect, long antennae, hind legs"
+  },
+  {
+   "id": "fo_crucian",
+   "kind": "material",
+   "grade": 0,
+   "tags": "crucian carp, fish, silver gold fish, side view"
+  },
+  {
+   "id": "fo_daehap",
+   "kind": "material",
+   "grade": 0,
+   "tags": "clam shell, large bivalve, fan-shaped seashell, cream"
+  },
+  {
+   "id": "fo_deed",
+   "kind": "tool",
+   "grade": 0,
+   "tags": "wooden tablet, land deed plaque, carved shovel mark, rectangular token, cord"
+  },
+  {
+   "id": "fo_deungjan",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "oil lamp, small lamp, ceramic cup lamp, tiny flame, stand"
+  },
+  {
+   "id": "fo_dokja",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "porcelain vase, ceramic jar, blue and white, celadon, elegant"
+  },
+  {
+   "id": "fo_doorring",
+   "kind": "material",
+   "grade": 0,
+   "tags": "door ring, iron door handle, round knocker, brass ring"
+  },
+  {
+   "id": "fo_dragon",
+   "kind": "material",
+   "grade": 0,
+   "tags": "dragonfly, wings spread, slender body, insect"
+  },
+  {
+   "id": "fo_fern",
+   "kind": "material",
+   "grade": 0,
+   "tags": "fern fossil, stone slab, leaf imprint, grey rock"
+  },
+  {
+   "id": "fo_firefly",
+   "kind": "material",
+   "grade": 0,
+   "tags": "firefly, glowing abdomen, yellow glow, beetle, insect, night"
+  },
+  {
+   "id": "fo_fishf",
+   "kind": "material",
+   "grade": 0,
+   "tags": "fish fossil, stone slab, fish skeleton imprint, grey rock"
+  },
+  {
+   "id": "fo_geomungo",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "zither, long stringed instrument, wooden, six strings, korean zither"
+  },
+  {
+   "id": "fo_geumnang",
+   "kind": "material",
+   "grade": 0,
+   "tags": "bleeding heart flower, pink heart shaped flowers, arching stem"
+  },
+  {
+   "id": "fo_ginseng",
+   "kind": "material",
+   "grade": 0,
+   "tags": "ginseng root, human shaped root, brown, leaves"
+  },
+  {
+   "id": "fo_godung",
+   "kind": "material",
+   "grade": 0,
+   "tags": "whelk shell, small spiral seashell, cone shell, brown"
+  },
+  {
+   "id": "fo_hongmae",
+   "kind": "material",
+   "grade": 0,
+   "tags": "red plum blossoms, branch, deep red flowers"
+  },
+  {
+   "id": "fo_hopper",
+   "kind": "material",
+   "grade": 0,
+   "tags": "grasshopper, long legs, green insect"
+  },
+  {
+   "id": "fo_hwabun",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "flower pot, ceramic pot, small plant, green leaves, pottery"
+  },
+  {
+   "id": "fo_hwaro",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "brazier, charcoal stove, brass stove, glowing embers"
+  },
+  {
+   "id": "fo_jaran",
+   "kind": "material",
+   "grade": 0,
+   "tags": "purple orchid, bletilla, magenta flowers, stem"
+  },
+  {
+   "id": "fo_jokja",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "hanging scroll, painting scroll, rolled ends, ink landscape, wooden rod"
+  },
+  {
+   "id": "fo_ladybug",
+   "kind": "material",
+   "grade": 0,
+   "tags": "ladybug, red beetle, black spots, insect"
+  },
+  {
+   "id": "fo_loach",
+   "kind": "material",
+   "grade": 0,
+   "tags": "loach, eel-like fish, slender, brown mud fish, whiskers"
+  },
+  {
+   "id": "fo_longhorn",
+   "kind": "material",
+   "grade": 0,
+   "tags": "longhorn beetle, long antennae, spotted beetle, insect"
+  },
+  {
+   "id": "fo_mantis",
+   "kind": "material",
+   "grade": 0,
+   "tags": "praying mantis, green, scythe arms, insect"
+  },
+  {
+   "id": "fo_maple",
+   "kind": "material",
+   "grade": 0,
+   "tags": "maple leaf, red maple leaf, autumn leaf, branch"
+  },
+  {
+   "id": "fo_mugung",
+   "kind": "material",
+   "grade": 0,
+   "tags": "hibiscus, rose of sharon, purple flower, petals, stamen"
+  },
+  {
+   "id": "fo_mugwort",
+   "kind": "material",
+   "grade": 0,
+   "tags": "mugwort, herb, green leaves, bundle, silvery leaves"
+  },
+  {
+   "id": "fo_mulhang",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "water jar, big ceramic jar, brown earthenware, wide jar"
+  },
+  {
+   "id": "fo_mungab",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "wooden cabinet, low chest, drawers, metal handles, wood grain"
+  },
+  {
+   "id": "fo_oldcoin",
+   "kind": "material",
+   "grade": 0,
+   "tags": "old coin, ancient bronze coin, square hole, round, green patina"
+  },
+  {
+   "id": "fo_orchid",
+   "kind": "material",
+   "grade": 0,
+   "tags": "orchid, white orchid, elegant, long leaves"
+  },
+  {
+   "id": "fo_peach",
+   "kind": "material",
+   "grade": 0,
+   "tags": "peach, pink fruit, green leaf"
+  },
+  {
+   "id": "fo_persim",
+   "kind": "material",
+   "grade": 0,
+   "tags": "persimmon, orange fruit, soft fruit, calyx"
+  },
+  {
+   "id": "fo_pine",
+   "kind": "material",
+   "grade": 0,
+   "tags": "pine nuts, pinecone, seeds, brown cone"
+  },
+  {
+   "id": "fo_plum",
+   "kind": "material",
+   "grade": 0,
+   "tags": "plum, small plum fruit, green and red, plum blossom twig"
+  },
+  {
+   "id": "fo_postkey",
+   "kind": "material",
+   "grade": 0,
+   "tags": "old key, brass key, ornate old key, mailbox key, tag"
+  },
+  {
+   "id": "fo_rafter",
+   "kind": "material",
+   "grade": 0,
+   "tags": "wooden beam, old wood log piece, rafter, cracked"
+  },
+  {
+   "id": "fo_reishi",
+   "kind": "material",
+   "grade": 0,
+   "tags": "reishi mushroom, glossy red fan shaped mushroom, shelf mushroom"
+  },
+  {
+   "id": "fo_rhino",
+   "kind": "material",
+   "grade": 0,
+   "tags": "rhinoceros beetle, horned beetle, big horn, glossy black, insect"
+  },
+  {
+   "id": "fo_rooftile",
+   "kind": "material",
+   "grade": 0,
+   "tags": "roof tile, curved clay tile, old grey tile, ancient"
+  },
+  {
+   "id": "fo_seoan",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "writing desk, low desk, wooden desk, brush rest, scroll"
+  },
+  {
+   "id": "fo_shard",
+   "kind": "material",
+   "grade": 0,
+   "tags": "pottery shard, broken clay pot piece, ancient ceramic, patterned"
+  },
+  {
+   "id": "fo_silver",
+   "kind": "material",
+   "grade": 0,
+   "tags": "silver ingot, bar, shiny metal, polished"
+  },
+  {
+   "id": "fo_smelt",
+   "kind": "material",
+   "grade": 0,
+   "tags": "smelt, small slender fish, translucent silver, side view"
+  },
+  {
+   "id": "fo_snail",
+   "kind": "material",
+   "grade": 0,
+   "tags": "snail, spiral shell, garden snail, brown shell"
+  },
+  {
+   "id": "fo_sora",
+   "kind": "material",
+   "grade": 0,
+   "tags": "turban shell, spiral shell with spikes, seashell, green"
+  },
+  {
+   "id": "fo_spider",
+   "kind": "material",
+   "grade": 0,
+   "tags": "spider, eight legs, hairy spider, web, arachnid"
+  },
+  {
+   "id": "fo_sprout",
+   "kind": "material",
+   "grade": 0,
+   "tags": "spring sprouts, shoots, fresh green buds, wild vegetable"
+  },
+  {
+   "id": "fo_stag",
+   "kind": "material",
+   "grade": 0,
+   "tags": "stag beetle, big mandibles, brown beetle, insect"
+  },
+  {
+   "id": "fo_sturgeon",
+   "kind": "material",
+   "grade": 0,
+   "tags": "sturgeon, bony plates, long snout, dark fish, side view"
+  },
+  {
+   "id": "fo_sulwha",
+   "kind": "material",
+   "grade": 0,
+   "tags": "plum blossoms on snowy branch, white flowers, winter"
+  },
+  {
+   "id": "fo_swallow",
+   "kind": "material",
+   "grade": 0,
+   "tags": "swallowtail butterfly, yellow black wings, tail, insect"
+  },
+  {
+   "id": "fo_tooth",
+   "kind": "material",
+   "grade": 0,
+   "tags": "dinosaur tooth fossil, large sharp tooth, ivory, serrated"
+  },
+  {
+   "id": "fo_track",
+   "kind": "material",
+   "grade": 0,
+   "tags": "bird footprint fossil, stone slab, three-toed prints, grey rock"
+  },
+  {
+   "id": "fo_trilo",
+   "kind": "material",
+   "grade": 0,
+   "tags": "trilobite fossil, segmented shell, stone, grey rock"
+  },
+  {
+   "id": "fo_trout",
+   "kind": "material",
+   "grade": 0,
+   "tags": "trout, spotted fish, silver and pink stripe, side view"
+  },
+  {
+   "id": "fo_tusk",
+   "kind": "material",
+   "grade": 0,
+   "tags": "mammoth tusk, curved ivory tusk, huge, cream"
+  },
+  {
+   "id": "fo_urchin",
+   "kind": "material",
+   "grade": 0,
+   "tags": "sea urchin shell, round spiny shell, purple, empty test"
+  },
+  {
+   "id": "fo_wallstone",
+   "kind": "material",
+   "grade": 0,
+   "tags": "castle stone block, square cut stone, mossy, grey"
+  },
+  {
+   "id": "fo_wasp",
+   "kind": "material",
+   "grade": 0,
+   "tags": "wasp, yellow and black stripes, wings, stinger, insect"
+  },
+  {
+   "id": "g_wandae",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "cloth wrist wrap, bracer, fabric bands, wrapped forearm guard"
+  },
+  {
+   "id": "g_wangap",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "bracer, arm guard, leather vambrace, metal studs"
+  },
+  {
+   "id": "go_apple",
+   "kind": "material",
+   "grade": 0,
+   "tags": "hawthorn berries, red berries, small fruit, green leaves"
+  },
+  {
+   "id": "go_orchid",
+   "kind": "material",
+   "grade": 0,
+   "tags": "orchid, blue orchid, flower, elegant petals, stem"
+  },
+  {
+   "id": "go_scroll",
+   "kind": "consumable",
+   "grade": 0,
+   "tags": "scroll, recruitment letter, rolled paper, red ribbon, seal"
+  },
+  {
+   "id": "gw_bow_0",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "short bow, simple wooden bow, bowstring, plain"
+  },
+  {
+   "id": "gw_bow_3",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "hunting bow, leather wrapped wooden bow, bowstring, arrows"
+  },
+  {
+   "id": "gw_bow_4",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "ornate bow, sea breeze bow, light blue, feathers, wave pattern, bowstring"
+  },
+  {
+   "id": "gw_catalyst_0",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "notebook, blank book, plain cover, simple paper, string tie"
+  },
+  {
+   "id": "gw_catalyst_3",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "worn book, torn old book, tattered cover, loose pages"
+  },
+  {
+   "id": "gw_catalyst_4",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "constellation scroll, glowing star map, rolled scroll, stars, sparkles"
+  },
+  {
+   "id": "gw_claymore_0",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "wooden greatsword, practice big blade, plain wood, wide plank sword"
+  },
+  {
+   "id": "gw_claymore_3",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "woodcutter axe, large axe, heavy iron head, long wooden handle"
+  },
+  {
+   "id": "gw_claymore_4",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "greatsword, wave pattern, huge blade, blue water engravings, heavy"
+  },
+  {
+   "id": "gw_polearm_0",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "wooden pole, plain long stick, training spear, no blade"
+  },
+  {
+   "id": "gw_polearm_3",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "bamboo spear, green bamboo pole, sharpened tip, tassel"
+  },
+  {
+   "id": "gw_polearm_4",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "glaive, polearm, beacon fire, red flame ornament, crescent blade"
+  },
+  {
+   "id": "gw_polearm_catch",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "harpoon, fishing spear, barbed tip, rope, blue ornament"
+  },
+  {
+   "id": "gw_sword_0",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "wooden sword, practice sword, plain wood, training"
+  },
+  {
+   "id": "gw_sword_3",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "sword, bronze sword, green patina, straight blade, simple hilt"
+  },
+  {
+   "id": "gw_sword_4",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "sword, clear blue blade, jeweled hilt, glowing blue, elegant sword"
+  },
+  {
+   "id": "h_tumo",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "helmet, steel helmet, round helmet, plume"
+  },
+  {
+   "id": "honey_flower",
+   "kind": "material",
+   "grade": 0,
+   "tags": "flower, yellow flower, petals, bloom, green stem"
+  },
+  {
+   "id": "incense",
+   "kind": "consumable",
+   "grade": 0,
+   "tags": "incense burner, bronze, censer, smoke"
+  },
+  {
+   "id": "iron",
+   "kind": "material",
+   "grade": 0,
+   "tags": "ingot, iron ingot, metal bar, rough metal"
+  },
+  {
+   "id": "jade",
+   "kind": "gem",
+   "grade": 2,
+   "tags": "jade, green gemstone, carved gem, translucent"
+  },
+  {
+   "id": "meat",
+   "kind": "material",
+   "grade": 0,
+   "tags": "meat, raw meat, bone, steak on bone, red meat"
+  },
+  {
+   "id": "mint",
+   "kind": "material",
+   "grade": 0,
+   "tags": "mint leaves, green herb, sprig, leaves"
+  },
+  {
+   "id": "mushroom",
+   "kind": "material",
+   "grade": 0,
+   "tags": "mushroom, brown mushroom, cluster"
+  },
+  {
+   "id": "n_geumpae",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "gold pendant, necklace, gold plate, chain"
+  },
+  {
+   "id": "n_okpae",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "jade pendant, necklace, green stone, silk cord"
+  },
+  {
+   "id": "net",
+   "kind": "tool",
+   "grade": 0,
+   "tags": "bug net, butterfly net, long pole"
+  },
+  {
+   "id": "onyx",
+   "kind": "gem",
+   "grade": 2,
+   "tags": "onyx, black gemstone, polished, glossy, faceted gem"
+  },
+  {
+   "id": "pearl",
+   "kind": "gem",
+   "grade": 2,
+   "tags": "pearl, white pearl, round, shiny"
+  },
+  {
+   "id": "prayer",
+   "kind": "consumable",
+   "grade": 0,
+   "tags": "paper talisman, yellow paper, red symbols"
+  },
+  {
+   "id": "r_geumji",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "ring, gold ring, jewelry, thick band"
+  },
+  {
+   "id": "rl_itm_armor",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "armor, treasure armor, ornate chest armor, gold trim"
+  },
+  {
+   "id": "rl_itm_boneseal",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "bone seal, skull stamp, bone token, dark purple glow, ornate"
+  },
+  {
+   "id": "rl_itm_compass",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "compass, brass compass, round, needle, ancient"
+  },
+  {
+   "id": "rl_itm_drum",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "drum, war drum, red drum, wooden frame, drumsticks"
+  },
+  {
+   "id": "rl_itm_ironblade",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "sword, iron sword, plain steel blade, simple"
+  },
+  {
+   "id": "rl_itm_jade",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "jade pendant, round disc, green stone, carved, tassel"
+  },
+  {
+   "id": "rl_itm_purifier",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "sci-fi device, purifier machine, glowing green core, metal canister"
+  },
+  {
+   "id": "rl_itm_scroll",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "closed book, military book, bamboo slips, scroll, string tie"
+  },
+  {
+   "id": "rl_itm_seal",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "seal stamp, imperial seal, square jade stamp, dragon knob, red ink"
+  },
+  {
+   "id": "rl_itm_timeshard",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "crystal shard, glowing broken clock, blue time crystal, sparks, sci-fi"
+  },
+  {
+   "id": "rl_itm_warhorse",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "horse head statue, saddle, bridle, brown horse figurine"
+  },
+  {
+   "id": "seal",
+   "kind": "consumable",
+   "grade": 0,
+   "tags": "shrine seal, stamp, wooden seal, carved, red ink"
+  },
+  {
+   "id": "set_biyeong",
+   "kind": "set",
+   "grade": 3,
+   "tags": "emblem, shadow crest, feather, swift bird, dark badge"
+  },
+  {
+   "id": "set_cheolong",
+   "kind": "set",
+   "grade": 3,
+   "tags": "emblem, iron jar crest, round iron badge, rivets, shield"
+  },
+  {
+   "id": "set_cheongnang",
+   "kind": "set",
+   "grade": 3,
+   "tags": "emblem, medicine pouch crest, herb leaf, green badge, cloth bag"
+  },
+  {
+   "id": "set_chungmu",
+   "kind": "set",
+   "grade": 3,
+   "tags": "emblem, loyalty crest, red banner badge, sword and shield, gold trim"
+  },
+  {
+   "id": "set_eunha",
+   "kind": "set",
+   "grade": 3,
+   "tags": "emblem, galaxy crest, silver stars, dark blue badge, swirl"
+  },
+  {
+   "id": "set_horang",
+   "kind": "set",
+   "grade": 3,
+   "tags": "emblem, tiger crest, tiger head, orange badge, claws"
+  },
+  {
+   "id": "set_hyeonhak",
+   "kind": "set",
+   "grade": 3,
+   "tags": "emblem, black crane crest, crane, dark badge, white feathers"
+  },
+  {
+   "id": "set_maenghon",
+   "kind": "set",
+   "grade": 3,
+   "tags": "emblem, fierce spirit crest, flame, purple badge, skull ornament"
+  },
+  {
+   "id": "set_paewang",
+   "kind": "set",
+   "grade": 3,
+   "tags": "emblem, overlord crest, crown, gold badge, black"
+  },
+  {
+   "id": "set_waryong",
+   "kind": "set",
+   "grade": 3,
+   "tags": "emblem, dragon crest, coiled dragon, blue badge, gold trim"
+  },
+  {
+   "id": "shard",
+   "kind": "consumable",
+   "grade": 0,
+   "tags": "crystal shard, seal fragment, broken stone tablet, glowing"
+  },
+  {
+   "id": "snow_bloom",
+   "kind": "material",
+   "grade": 0,
+   "tags": "flower, white snowflower, frost, ice petals, bloom"
+  },
+  {
+   "id": "soban",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "low table, wooden tray, tea set, teapot"
+  },
+  {
+   "id": "spade",
+   "kind": "tool",
+   "grade": 0,
+   "tags": "single shovel, one spade, iron shovel head, wooden handle"
+  },
+  {
+   "id": "st_bot1",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "cotton pants, plain baggy trousers, white cloth"
+  },
+  {
+   "id": "st_bot2",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "leather skirt armor, brown leather tassets, armored skirt, straps"
+  },
+  {
+   "id": "st_bot3",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "iron skirt armor, steel leaf plates, armored skirt"
+  },
+  {
+   "id": "st_bot4",
+   "kind": "equip",
+   "grade": 3,
+   "tags": "ornate skirt armor, dragon pattern, gold trim, armored skirt"
+  },
+  {
+   "id": "st_cap1",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "cape, plain cloth cape, beige, short"
+  },
+  {
+   "id": "st_cap2",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "cape, leather cape, brown, fur edge"
+  },
+  {
+   "id": "st_cap3",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "cape, otter fur cape, brown fur collar, warm"
+  },
+  {
+   "id": "st_cap4",
+   "kind": "equip",
+   "grade": 3,
+   "tags": "cape, black dragon cape, dark flowing, gold dragon embroidery"
+  },
+  {
+   "id": "st_ear1",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "earring, wooden earring, simple"
+  },
+  {
+   "id": "st_ear2",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "earring, silver earring, drop, jewelry"
+  },
+  {
+   "id": "st_ear3",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "earring, jade earring, green stone, jewelry"
+  },
+  {
+   "id": "st_ear4",
+   "kind": "equip",
+   "grade": 3,
+   "tags": "earring, golden earring, gold, jewel"
+  },
+  {
+   "id": "st_glv1",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "bracelet, cloth wristband, simple wrap"
+  },
+  {
+   "id": "st_glv2",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "gloves, leather gloves, brown, straps"
+  },
+  {
+   "id": "st_glv3",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "gauntlets, iron gauntlets, steel plates"
+  },
+  {
+   "id": "st_glv4",
+   "kind": "equip",
+   "grade": 3,
+   "tags": "gauntlets, dragon claw gauntlets, ornate, golden claws"
+  },
+  {
+   "id": "st_hat1",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "leather cap, simple leather hood, brown cap"
+  },
+  {
+   "id": "st_hat2",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "helmet, iron helmet, round steel, plain"
+  },
+  {
+   "id": "st_hat3",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "helmet, phoenix crest helmet, steel, red plume, wings"
+  },
+  {
+   "id": "st_hat4",
+   "kind": "equip",
+   "grade": 3,
+   "tags": "helmet, golden helmet, ornate gold crown helmet, gem"
+  },
+  {
+   "id": "st_neck1",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "necklace, wooden bead necklace, string"
+  },
+  {
+   "id": "st_neck2",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "necklace, silver necklace, chain, pendant"
+  },
+  {
+   "id": "st_neck3",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "necklace, jade necklace, green beads, jewelry"
+  },
+  {
+   "id": "st_neck4",
+   "kind": "equip",
+   "grade": 3,
+   "tags": "necklace, golden necklace, gold chain, jewel pendant"
+  },
+  {
+   "id": "st_ring1",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "ring, simple cloth ring, wooden band"
+  },
+  {
+   "id": "st_ring2",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "ring, silver ring, plain band, jewelry"
+  },
+  {
+   "id": "st_ring3",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "ring, jade ring, green stone, jewelry"
+  },
+  {
+   "id": "st_ring4",
+   "kind": "equip",
+   "grade": 3,
+   "tags": "ring, golden dragon ring, gold band, ruby"
+  },
+  {
+   "id": "st_scroll_atk",
+   "kind": "consumable",
+   "grade": 0,
+   "tags": "scroll, rolled paper, red wax seal, red ribbon, magic scroll"
+  },
+  {
+   "id": "st_scroll_def",
+   "kind": "consumable",
+   "grade": 0,
+   "tags": "scroll, rolled paper, blue wax seal, blue ribbon, magic scroll"
+  },
+  {
+   "id": "st_scroll_hp",
+   "kind": "consumable",
+   "grade": 0,
+   "tags": "scroll, rolled paper, green wax seal, green ribbon, magic scroll"
+  },
+  {
+   "id": "st_shoe1",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "sandals, straw sandals, woven, footwear"
+  },
+  {
+   "id": "st_shoe2",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "boots, leather boots, simple, brown"
+  },
+  {
+   "id": "st_shoe3",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "boots, iron boots, steel plated boots, studs"
+  },
+  {
+   "id": "st_shoe4",
+   "kind": "equip",
+   "grade": 3,
+   "tags": "boots, winged dragon boots, ornate, flying, gold trim"
+  },
+  {
+   "id": "st_sword1",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "wooden sword, practice sword, plain wood, training"
+  },
+  {
+   "id": "st_sword2",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "sword, curved sword, iron blade, ring pommel, plain hilt"
+  },
+  {
+   "id": "st_sword3",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "sword, blue steel blade, straight sword, fine hilt, blue tassel"
+  },
+  {
+   "id": "st_sword4",
+   "kind": "equip",
+   "grade": 3,
+   "tags": "sword, dragon scale blade, ornate sword, green scales, golden hilt"
+  },
+  {
+   "id": "st_top1",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "cotton jacket, plain cloth jacket, white tunic, simple"
+  },
+  {
+   "id": "st_top2",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "armor, leather armor, brown chest armor, buckles"
+  },
+  {
+   "id": "st_top3",
+   "kind": "equip",
+   "grade": 2,
+   "tags": "armor, scale armor, small metal plates, laced chest armor"
+  },
+  {
+   "id": "st_top4",
+   "kind": "equip",
+   "grade": 3,
+   "tags": "armor, studded armor, rivets, steel plate, red trim"
+  },
+  {
+   "id": "st_u_bottom",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "armored skirt, ornate, blue clouds, glowing, gold trim"
+  },
+  {
+   "id": "st_u_cape",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "cape, ornate flowing cape, blue and gold, immortal mountain pattern, glowing"
+  },
+  {
+   "id": "st_u_earring",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "earring, crescent moon, silver, glowing, ornate"
+  },
+  {
+   "id": "st_u_glove",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "gauntlets, tiger fur gauntlets, claws, ornate, glowing"
+  },
+  {
+   "id": "st_u_hat",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "crown, phoenix crown, golden feathers, ornate, red gems"
+  },
+  {
+   "id": "st_u_necklace",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "necklace, glowing pearl pendant, ornate, gold chain, shiny"
+  },
+  {
+   "id": "st_u_ring",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "ring, nine dragon ring, gold, jewels, glowing"
+  },
+  {
+   "id": "st_u_shoes",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "boots, galloping horse boots, ornate, glowing, gold wings"
+  },
+  {
+   "id": "st_u_sword",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "sword, ornate sword, glowing, thunder, silver dragon blade, gold hilt"
+  },
+  {
+   "id": "st_u_top",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "armor, ornate armor, turtle shell pattern, dark teal, gold trim, glowing"
+  },
+  {
+   "id": "stardust",
+   "kind": "material",
+   "grade": 0,
+   "tags": "small cloth pouch, drawstring bag, sparkles, blue glow"
+  },
+  {
+   "id": "treat",
+   "kind": "consumable",
+   "grade": 0,
+   "tags": "jar, honey, clay pot, spoon, golden liquid"
+  },
+  {
+   "id": "u_baekhak",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "hand fan, folding fan, white crane feathers, ornate, glowing"
+  },
+  {
+   "id": "u_byeoksa",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "paper talisman, red talisman, glowing symbols, yellow paper, charm"
+  },
+  {
+   "id": "u_byeoksan",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "flail, ornate chain flail, spiked ball, glowing, gold ornament"
+  },
+  {
+   "id": "u_chalgap",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "armor, ornate scale armor, many small plates, silver, chest armor"
+  },
+  {
+   "id": "u_cheolli",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "boots, winged boots, fast, ornate leather boots, glowing"
+  },
+  {
+   "id": "u_cheollip",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "wide brimmed hat, black iron hat, ornate, glowing"
+  },
+  {
+   "id": "u_cheongeun",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "bracer, heavy iron arm guard, massive vambrace, ornate"
+  },
+  {
+   "id": "u_cheongryong",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "glaive, polearm, green blade, crescent blade, dragon engraving, ornate"
+  },
+  {
+   "id": "u_cheonjigang",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "spear, ornate spear, long gold-trimmed polearm, glowing tip, red tassel"
+  },
+  {
+   "id": "u_danryeong",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "armor, ornate leather armor, red collar, gold trim, chest armor"
+  },
+  {
+   "id": "u_dokkaebi",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "bell, ornate bell, horned bell, gold, glowing"
+  },
+  {
+   "id": "u_dopo",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "robe, white robe, crane embroidery, flowing, glowing"
+  },
+  {
+   "id": "u_dujeong",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "armor, black scale armor, studded plate armor, ornate, glowing rivets"
+  },
+  {
+   "id": "u_eunwol",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "helmet, silver helmet, crescent moon ornament, plume"
+  },
+  {
+   "id": "u_geumin",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "gold seal plate, ornate pendant, engraved gold tablet, chain"
+  },
+  {
+   "id": "u_gwiseon",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "axe, ornate axe, double blade axe, glowing purple, spirit"
+  },
+  {
+   "id": "u_gyeong",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "bronze mirror, ornate round mirror, glowing glass, jeweled frame"
+  },
+  {
+   "id": "u_hopae",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "wooden tag, official tablet, horse engraved, rectangular, glowing"
+  },
+  {
+   "id": "u_iljabul",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "calligraphy brush, ornate brush, glowing ink, gold tip"
+  },
+  {
+   "id": "u_jukjang",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "staff, green bamboo staff, glowing leaf, magic staff"
+  },
+  {
+   "id": "u_manbal",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "bow (weapon), ornate bow, golden recurve bow, glowing string, engraved"
+  },
+  {
+   "id": "u_mandara",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "prayer beads, large glowing beads, necklace, lotus, tassel"
+  },
+  {
+   "id": "u_okgae",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "ring, jade ring, moonstone, silver band, glowing"
+  },
+  {
+   "id": "u_okro",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "ornate crown, jade crown, heron ornament, silk ribbon"
+  },
+  {
+   "id": "u_ssanggeom",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "sword, blade, twin swords, curved blade, ornate hilt, gold dragon engraving on blade"
+  },
+  {
+   "id": "u_taeeul",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "jade pendant, ornate necklace, carved green jade, glowing, silk tassel"
+  },
+  {
+   "id": "u_unmun",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "shoes, cloth shoes, cloud pattern, embroidered shoes, glowing"
+  },
+  {
+   "id": "u_yongmun",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "ring, dragon ring, gold ring, jade stone, glowing"
+  },
+  {
+   "id": "u_yukdo",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "closed book, ornate ancient book, glowing, gold clasp, tied scroll"
+  },
+  {
+   "id": "u_yusu",
+   "kind": "equip",
+   "grade": 4,
+   "tags": "cloth wrist wrap, flowing blue ribbon bracer, water pattern, glowing"
+  },
+  {
+   "id": "visit_alien",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "star map frame, constellation chart, glowing dots, framed, dark blue"
+  },
+  {
+   "id": "visit_angler",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "fish print, ink print of fish, framed fish impression, rubbing"
+  },
+  {
+   "id": "visit_bug",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "butterfly specimen frame, pinned butterflies, wooden frame, glass"
+  },
+  {
+   "id": "visit_dokkaebi",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "spiked club, dokkaebi club, studded wooden club, small table"
+  },
+  {
+   "id": "visit_future",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "desk clock, sci-fi table clock, glowing blue numbers, metal base"
+  },
+  {
+   "id": "visit_parcel",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "stack of parcels, cardboard boxes, tied with string, tower of boxes"
+  },
+  {
+   "id": "visit_photo",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "photo screen, folding screen with photographs, forest pictures, wooden frame"
+  },
+  {
+   "id": "visit_sailor",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "treasure chest, captain chest, wooden trunk, anchor, rope, brass lock"
+  },
+  {
+   "id": "visit_wisp",
+   "kind": "furniture",
+   "grade": 2,
+   "tags": "lantern, spirit lantern, blue flame, glowing ghost light, paper"
+  },
+  {
+   "id": "voidstone",
+   "kind": "gem",
+   "grade": 2,
+   "tags": "magnetic crystal, sci-fi gem, glowing purple crystal, blue sparks, metal cage"
+  },
+  {
+   "id": "w_bilbut",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "calligraphy brush, ink brush, long wooden handle, ink"
+  },
+  {
+   "id": "w_bugae",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "axe, battle axe, single blade, wooden handle, steel axe head"
+  },
+  {
+   "id": "w_byeongseo",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "closed book, old book, scroll, string tie, cloth cover"
+  },
+  {
+   "id": "w_changj",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "spear, polearm, steel spearhead, red tassel"
+  },
+  {
+   "id": "w_cheoltae",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "bow (weapon), iron bow, heavy bow, metal limbs, bowstring"
+  },
+  {
+   "id": "w_gakgung",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "bow (weapon), recurve bow, bowstring"
+  },
+  {
+   "id": "w_gauntlet",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "powered gauntlet, mechanical glove, metal fist, sci-fi, glowing lines"
+  },
+  {
+   "id": "w_geukchang",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "halberd, polearm, axe blade, spear tip, long pole"
+  },
+  {
+   "id": "w_hwando",
+   "kind": "equip",
+   "grade": 1,
+   "tags": "curved sword, saber, single-edged blade, red tassel"
+  },
+  {
+   "id": "w_jukjang",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "staff, bamboo, walking stick, gourd"
+  },
+  {
+   "id": "w_lance_e",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "futuristic spear, energy lance, glowing blue tip, metallic pole, sci-fi"
+  },
+  {
+   "id": "w_pyeongon",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "flail, spiked ball, chain, wooden handle"
+  },
+  {
+   "id": "w_seonchae",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "hand fan, folding fan, white feathers"
+  },
+  {
+   "id": "w_wolto",
+   "kind": "equip",
+   "grade": 0,
+   "tags": "glaive, polearm, crescent blade, long pole"
+  },
+  {
+   "id": "wall_dan",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "wall sample board, colorful dancheong pattern, red green blue, square sample"
+  },
+  {
+   "id": "wall_earth",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "wall sample board, brown clay plaster, square sample, rough texture"
+  },
+  {
+   "id": "wall_hanji",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "wall sample board, cream hanji paper, square sample, subtle fibers"
+  },
+  {
+   "id": "wall_muk",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "wall sample board, black ink panel, square sample, brush strokes"
+  },
+  {
+   "id": "wall_sol",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "wall sample board, pine green panel, square sample, pine needle pattern"
+  },
+  {
+   "id": "wear_braid",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "hair braid ribbon, long braided hair, red ribbon, hair tie"
+  },
+  {
+   "id": "wear_coat",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "coat, long overcoat, teal, sash, folded"
+  },
+  {
+   "id": "wear_gat",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "gat hat, black horsehair hat, wide brim, high crown, tied cord"
+  },
+  {
+   "id": "wear_hairpin",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "bridal crown, jeweled headpiece, ornate coronet, beads, tassels"
+  },
+  {
+   "id": "wear_helmet",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "war hat, felt hat with plume, red tassel, officer hat"
+  },
+  {
+   "id": "wear_leather",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "clothing, plain jacket, brown tunic, everyday clothes, folded"
+  },
+  {
+   "id": "wear_plate",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "armor, plate armor, steel breastplate, shoulder guards"
+  },
+  {
+   "id": "wear_robe",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "robe, long scholar robe, white and blue, wide sleeves, folded"
+  },
+  {
+   "id": "wear_scholar",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "scholar hat, black cloth hat, square-topped, tied strings"
+  },
+  {
+   "id": "wear_spacesuit",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "spacesuit, sci-fi suit, white astronaut suit, delivery logo, folded"
+  },
+  {
+   "id": "wear_topknot",
+   "kind": "wear",
+   "grade": 0,
+   "tags": "topknot, hair bun, black hair tied up, hair ornament"
+  },
+  {
+   "id": "yo",
+   "kind": "furniture",
+   "grade": 0,
+   "tags": "bedding, folded futon, quilted mattress, soft blanket, floral pattern"
+  }
+ ],
+ "entries": [
+  {
+   "game": "saga-dungeon",
+   "id": "w_hwando",
+   "kind": "equip",
+   "name": "환도",
+   "mode": "ai",
+   "key": "w_hwando",
+   "grade": 1
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_pyeongon",
+   "kind": "equip",
+   "name": "편곤",
+   "mode": "ai",
+   "key": "w_pyeongon",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_changj",
+   "kind": "equip",
+   "name": "장창",
+   "mode": "ai",
+   "key": "w_changj",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_wolto",
+   "kind": "equip",
+   "name": "월도",
+   "mode": "ai",
+   "key": "w_wolto",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_gakgung",
+   "kind": "equip",
+   "name": "각궁",
+   "mode": "ai",
+   "key": "w_gakgung",
+   "grade": 1
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_cheoltae",
+   "kind": "equip",
+   "name": "철태궁",
+   "mode": "ai",
+   "key": "w_cheoltae",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_bugae",
+   "kind": "equip",
+   "name": "부월",
+   "mode": "ai",
+   "key": "w_bugae",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_geukchang",
+   "kind": "equip",
+   "name": "극창",
+   "mode": "ai",
+   "key": "w_geukchang",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_seonchae",
+   "kind": "equip",
+   "name": "선채",
+   "mode": "ai",
+   "key": "w_seonchae",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_jukjang",
+   "kind": "equip",
+   "name": "죽장",
+   "mode": "ai",
+   "key": "w_jukjang",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_bilbut",
+   "kind": "equip",
+   "name": "필묵",
+   "mode": "ai",
+   "key": "w_bilbut",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_byeongseo",
+   "kind": "equip",
+   "name": "병서",
+   "mode": "ai",
+   "key": "w_byeongseo",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_lance_e",
+   "kind": "equip",
+   "name": "전자창",
+   "mode": "ai",
+   "key": "w_lance_e",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "w_gauntlet",
+   "kind": "equip",
+   "name": "동력장갑",
+   "mode": "ai",
+   "key": "w_gauntlet",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "a_jichap",
+   "kind": "equip",
+   "name": "지갑",
+   "mode": "ai",
+   "key": "a_jichap",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "a_pigap",
+   "kind": "equip",
+   "name": "피갑",
+   "mode": "ai",
+   "key": "a_pigap",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "a_chalgap",
+   "kind": "equip",
+   "name": "찰갑",
+   "mode": "ai",
+   "key": "a_chalgap",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "a_dujeong",
+   "kind": "equip",
+   "name": "두정갑",
+   "mode": "ai",
+   "key": "a_dujeong",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "a_dopo",
+   "kind": "equip",
+   "name": "도포",
+   "mode": "ai",
+   "key": "a_dopo",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "a_myeongap",
+   "kind": "equip",
+   "name": "면갑",
+   "mode": "ai",
+   "key": "a_myeongap",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "a_cheollip",
+   "kind": "equip",
+   "name": "철립",
+   "mode": "ai",
+   "key": "a_cheollip",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "h_tumo",
+   "kind": "equip",
+   "name": "투구",
+   "mode": "ai",
+   "key": "h_tumo",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "g_wangap",
+   "kind": "equip",
+   "name": "완갑",
+   "mode": "ai",
+   "key": "g_wangap",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "g_wandae",
+   "kind": "equip",
+   "name": "완대",
+   "mode": "ai",
+   "key": "g_wandae",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "b_hwaje",
+   "kind": "equip",
+   "name": "화자",
+   "mode": "ai",
+   "key": "b_hwaje",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "b_jipsin",
+   "kind": "equip",
+   "name": "짚신",
+   "mode": "ai",
+   "key": "b_jipsin",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "n_okpae",
+   "kind": "equip",
+   "name": "옥패",
+   "mode": "ai",
+   "key": "n_okpae",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "n_geumpae",
+   "kind": "equip",
+   "name": "금패",
+   "mode": "ai",
+   "key": "n_geumpae",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "c_hopae",
+   "kind": "equip",
+   "name": "호패",
+   "mode": "ai",
+   "key": "c_hopae",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "c_yeombul",
+   "kind": "equip",
+   "name": "염주",
+   "mode": "ai",
+   "key": "c_yeombul",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "c_hobu",
+   "kind": "equip",
+   "name": "호부",
+   "mode": "ai",
+   "key": "c_hobu",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "c_dokkaebi",
+   "kind": "equip",
+   "name": "도깨비방울",
+   "mode": "ai",
+   "key": "c_dokkaebi",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "c_gyeong",
+   "kind": "equip",
+   "name": "청동경",
+   "mode": "ai",
+   "key": "c_gyeong",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "c_okgae",
+   "kind": "equip",
+   "name": "옥가락지",
+   "mode": "ai",
+   "key": "c_okgae",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "r_geumji",
+   "kind": "equip",
+   "name": "금지환",
+   "mode": "ai",
+   "key": "r_geumji",
+   "grade": 0
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_ssanggeom",
+   "kind": "equip",
+   "name": "쌍룡도(雙龍刀)",
+   "mode": "ai",
+   "key": "u_ssanggeom",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_byeoksan",
+   "kind": "equip",
+   "name": "벽산편(劈山鞭)",
+   "mode": "ai",
+   "key": "u_byeoksan",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_cheonjigang",
+   "kind": "equip",
+   "name": "천지창(天地槍)",
+   "mode": "ai",
+   "key": "u_cheonjigang",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_cheongryong",
+   "kind": "equip",
+   "name": "청룡언월도(靑龍偃月刀)",
+   "mode": "ai",
+   "key": "u_cheongryong",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_manbal",
+   "kind": "equip",
+   "name": "만발궁(萬發弓)",
+   "mode": "ai",
+   "key": "u_manbal",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_gwiseon",
+   "kind": "equip",
+   "name": "귀선부(鬼仙斧)",
+   "mode": "ai",
+   "key": "u_gwiseon",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_baekhak",
+   "kind": "equip",
+   "name": "백학선(白鶴扇)",
+   "mode": "ai",
+   "key": "u_baekhak",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_jukjang",
+   "kind": "equip",
+   "name": "녹죽장(綠竹杖)",
+   "mode": "ai",
+   "key": "u_jukjang",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_iljabul",
+   "kind": "equip",
+   "name": "일자필(一字筆)",
+   "mode": "ai",
+   "key": "u_iljabul",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_yukdo",
+   "kind": "equip",
+   "name": "육도삼략(六韜三略)",
+   "mode": "ai",
+   "key": "u_yukdo",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_danryeong",
+   "kind": "equip",
+   "name": "단령피갑(丹領皮甲)",
+   "mode": "ai",
+   "key": "u_danryeong",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_dujeong",
+   "kind": "equip",
+   "name": "흑린두정(黑鱗頭釘)",
+   "mode": "ai",
+   "key": "u_dujeong",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_chalgap",
+   "kind": "equip",
+   "name": "만인갑(萬人甲)",
+   "mode": "ai",
+   "key": "u_chalgap",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_dopo",
+   "kind": "equip",
+   "name": "학창의(鶴氅衣)",
+   "mode": "ai",
+   "key": "u_dopo",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_cheollip",
+   "kind": "equip",
+   "name": "흑철립(黑鐵笠)",
+   "mode": "ai",
+   "key": "u_cheollip",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_okro",
+   "kind": "equip",
+   "name": "옥로관(玉鷺冠)",
+   "mode": "ai",
+   "key": "u_okro",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_eunwol",
+   "kind": "equip",
+   "name": "은월투구(銀月兜)",
+   "mode": "ai",
+   "key": "u_eunwol",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_cheongeun",
+   "kind": "equip",
+   "name": "천근완갑(千斤腕甲)",
+   "mode": "ai",
+   "key": "u_cheongeun",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_yusu",
+   "kind": "equip",
+   "name": "유수완대(流水腕帶)",
+   "mode": "ai",
+   "key": "u_yusu",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_cheolli",
+   "kind": "equip",
+   "name": "천리화(千里靴)",
+   "mode": "ai",
+   "key": "u_cheolli",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_unmun",
+   "kind": "equip",
+   "name": "운문리(雲紋履)",
+   "mode": "ai",
+   "key": "u_unmun",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_taeeul",
+   "kind": "equip",
+   "name": "태을옥패(太乙玉佩)",
+   "mode": "ai",
+   "key": "u_taeeul",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_geumin",
+   "kind": "equip",
+   "name": "금인패(金印牌)",
+   "mode": "ai",
+   "key": "u_geumin",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_yongmun",
+   "kind": "equip",
+   "name": "용문지환(龍紋指環)",
+   "mode": "ai",
+   "key": "u_yongmun",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_hopae",
+   "kind": "equip",
+   "name": "어사호패(御史號牌)",
+   "mode": "ai",
+   "key": "u_hopae",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_okgae",
+   "kind": "equip",
+   "name": "월하옥지(月下玉指)",
+   "mode": "ai",
+   "key": "u_okgae",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_dokkaebi",
+   "kind": "equip",
+   "name": "도깨비방울(鬼鈴)",
+   "mode": "ai",
+   "key": "u_dokkaebi",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_gyeong",
+   "kind": "equip",
+   "name": "조요경(照妖鏡)",
+   "mode": "ai",
+   "key": "u_gyeong",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_mandara",
+   "kind": "equip",
+   "name": "만다라주(曼陀羅珠)",
+   "mode": "ai",
+   "key": "u_mandara",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "u_byeoksa",
+   "kind": "equip",
+   "name": "벽사호부(辟邪護符)",
+   "mode": "ai",
+   "key": "u_byeoksa",
+   "grade": 4
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "chungmu",
+   "kind": "set",
+   "name": "충무(忠武)",
+   "mode": "ai",
+   "key": "set_chungmu",
+   "grade": 3
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "waryong",
+   "kind": "set",
+   "name": "와룡(臥龍)",
+   "mode": "ai",
+   "key": "set_waryong",
+   "grade": 3
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "horang",
+   "kind": "set",
+   "name": "호랑(虎狼)",
+   "mode": "ai",
+   "key": "set_horang",
+   "grade": 3
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "cheongnang",
+   "kind": "set",
+   "name": "청낭(靑囊)",
+   "mode": "ai",
+   "key": "set_cheongnang",
+   "grade": 3
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "cheolong",
+   "kind": "set",
+   "name": "철옹(鐵甕)",
+   "mode": "ai",
+   "key": "set_cheolong",
+   "grade": 3
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "eunha",
+   "kind": "set",
+   "name": "은하(銀河)",
+   "mode": "ai",
+   "key": "set_eunha",
+   "grade": 3
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "maenghon",
+   "kind": "set",
+   "name": "맹혼(猛魂)",
+   "mode": "ai",
+   "key": "set_maenghon",
+   "grade": 3
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "biyeong",
+   "kind": "set",
+   "name": "비영(飛影)",
+   "mode": "ai",
+   "key": "set_biyeong",
+   "grade": 3
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "paewang",
+   "kind": "set",
+   "name": "패왕(霸王)",
+   "mode": "ai",
+   "key": "set_paewang",
+   "grade": 3
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "hyeonhak",
+   "kind": "set",
+   "name": "현학(玄鶴)",
+   "mode": "ai",
+   "key": "set_hyeonhak",
+   "grade": 3
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "agate",
+   "kind": "gem",
+   "name": "마노(瑪瑙)",
+   "mode": "ai",
+   "key": "agate",
+   "grade": 2
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "pearl",
+   "kind": "gem",
+   "name": "진주(眞珠)",
+   "mode": "ai",
+   "key": "pearl",
+   "grade": 2
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "amber",
+   "kind": "gem",
+   "name": "호박(琥珀)",
+   "mode": "ai",
+   "key": "amber",
+   "grade": 2
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "jade",
+   "kind": "gem",
+   "name": "옥(玉)",
+   "mode": "ai",
+   "key": "jade",
+   "grade": 2
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "onyx",
+   "kind": "gem",
+   "name": "흑요(黑曜)",
+   "mode": "ai",
+   "key": "onyx",
+   "grade": 2
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "voidstone",
+   "kind": "gem",
+   "name": "전자석(電磁石)",
+   "mode": "ai",
+   "key": "voidstone",
+   "grade": 2
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "cheon",
+   "kind": "gem",
+   "name": "천",
+   "mode": "glyph",
+   "key": "rune_cheon"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "ji",
+   "kind": "gem",
+   "name": "지",
+   "mode": "glyph",
+   "key": "rune_ji"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "in",
+   "kind": "gem",
+   "name": "인",
+   "mode": "glyph",
+   "key": "rune_in"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "mu",
+   "kind": "gem",
+   "name": "무",
+   "mode": "glyph",
+   "key": "rune_mu"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "mun",
+   "kind": "gem",
+   "name": "문",
+   "mode": "glyph",
+   "key": "rune_mun"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "chung",
+   "kind": "gem",
+   "name": "충",
+   "mode": "glyph",
+   "key": "rune_chung"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "ui",
+   "kind": "gem",
+   "name": "의",
+   "mode": "glyph",
+   "key": "rune_ui"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "yong",
+   "kind": "gem",
+   "name": "용",
+   "mode": "glyph",
+   "key": "rune_yong"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "ji2",
+   "kind": "gem",
+   "name": "지(智)",
+   "mode": "glyph",
+   "key": "rune_ji2"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "sin",
+   "kind": "gem",
+   "name": "신",
+   "mode": "glyph",
+   "key": "rune_sin"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "ryong",
+   "kind": "gem",
+   "name": "용(龍)",
+   "mode": "glyph",
+   "key": "rune_ryong"
+  },
+  {
+   "game": "saga-dungeon",
+   "id": "wang",
+   "kind": "gem",
+   "name": "왕",
+   "mode": "glyph",
+   "key": "rune_wang"
+  },
+  {
+   "game": "saga-story",
+   "id": "sword1",
+   "kind": "equip",
+   "name": "목검(木劍)",
+   "mode": "ai",
+   "key": "st_sword1",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "sword2",
+   "kind": "equip",
+   "name": "환도(環刀)",
+   "mode": "ai",
+   "key": "st_sword2",
+   "grade": 1
+  },
+  {
+   "game": "saga-story",
+   "id": "sword3",
+   "kind": "equip",
+   "name": "청강검(靑鋼劍)",
+   "mode": "ai",
+   "key": "st_sword3",
+   "grade": 2
+  },
+  {
+   "game": "saga-story",
+   "id": "sword4",
+   "kind": "equip",
+   "name": "용린도(龍鱗刀)",
+   "mode": "ai",
+   "key": "st_sword4",
+   "grade": 3
+  },
+  {
+   "game": "saga-story",
+   "id": "hat1",
+   "kind": "equip",
+   "name": "가죽 두건",
+   "mode": "ai",
+   "key": "st_hat1",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "hat2",
+   "kind": "equip",
+   "name": "철투구",
+   "mode": "ai",
+   "key": "st_hat2",
+   "grade": 1
+  },
+  {
+   "game": "saga-story",
+   "id": "hat3",
+   "kind": "equip",
+   "name": "봉시투구",
+   "mode": "ai",
+   "key": "st_hat3",
+   "grade": 2
+  },
+  {
+   "game": "saga-story",
+   "id": "hat4",
+   "kind": "equip",
+   "name": "금장 갑주투",
+   "mode": "ai",
+   "key": "st_hat4",
+   "grade": 3
+  },
+  {
+   "game": "saga-story",
+   "id": "top1",
+   "kind": "equip",
+   "name": "무명 저고리",
+   "mode": "ai",
+   "key": "st_top1",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "top2",
+   "kind": "equip",
+   "name": "가죽 갑옷",
+   "mode": "ai",
+   "key": "st_top2",
+   "grade": 1
+  },
+  {
+   "game": "saga-story",
+   "id": "top3",
+   "kind": "equip",
+   "name": "찰갑(札甲)",
+   "mode": "ai",
+   "key": "st_top3",
+   "grade": 2
+  },
+  {
+   "game": "saga-story",
+   "id": "top4",
+   "kind": "equip",
+   "name": "두정갑",
+   "mode": "ai",
+   "key": "st_top4",
+   "grade": 3
+  },
+  {
+   "game": "saga-story",
+   "id": "bot1",
+   "kind": "equip",
+   "name": "무명 바지",
+   "mode": "ai",
+   "key": "st_bot1",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "bot2",
+   "kind": "equip",
+   "name": "가죽 전군",
+   "mode": "ai",
+   "key": "st_bot2",
+   "grade": 1
+  },
+  {
+   "game": "saga-story",
+   "id": "bot3",
+   "kind": "equip",
+   "name": "철엽 전군",
+   "mode": "ai",
+   "key": "st_bot3",
+   "grade": 2
+  },
+  {
+   "game": "saga-story",
+   "id": "bot4",
+   "kind": "equip",
+   "name": "용문 전군",
+   "mode": "ai",
+   "key": "st_bot4",
+   "grade": 3
+  },
+  {
+   "game": "saga-story",
+   "id": "shoe1",
+   "kind": "equip",
+   "name": "짚신",
+   "mode": "ai",
+   "key": "st_shoe1",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "shoe2",
+   "kind": "equip",
+   "name": "가죽 전화",
+   "mode": "ai",
+   "key": "st_shoe2",
+   "grade": 1
+  },
+  {
+   "game": "saga-story",
+   "id": "shoe3",
+   "kind": "equip",
+   "name": "철갑 전화",
+   "mode": "ai",
+   "key": "st_shoe3",
+   "grade": 2
+  },
+  {
+   "game": "saga-story",
+   "id": "shoe4",
+   "kind": "equip",
+   "name": "비룡화",
+   "mode": "ai",
+   "key": "st_shoe4",
+   "grade": 3
+  },
+  {
+   "game": "saga-story",
+   "id": "glv1",
+   "kind": "equip",
+   "name": "무명 팔찌",
+   "mode": "ai",
+   "key": "st_glv1",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "glv2",
+   "kind": "equip",
+   "name": "가죽 수갑",
+   "mode": "ai",
+   "key": "st_glv2",
+   "grade": 1
+  },
+  {
+   "game": "saga-story",
+   "id": "glv3",
+   "kind": "equip",
+   "name": "철갑 수갑",
+   "mode": "ai",
+   "key": "st_glv3",
+   "grade": 2
+  },
+  {
+   "game": "saga-story",
+   "id": "glv4",
+   "kind": "equip",
+   "name": "용조 수갑",
+   "mode": "ai",
+   "key": "st_glv4",
+   "grade": 3
+  },
+  {
+   "game": "saga-story",
+   "id": "cap1",
+   "kind": "equip",
+   "name": "베 망토",
+   "mode": "ai",
+   "key": "st_cap1",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "cap2",
+   "kind": "equip",
+   "name": "가죽 망토",
+   "mode": "ai",
+   "key": "st_cap2",
+   "grade": 1
+  },
+  {
+   "game": "saga-story",
+   "id": "cap3",
+   "kind": "equip",
+   "name": "수달피 망토",
+   "mode": "ai",
+   "key": "st_cap3",
+   "grade": 2
+  },
+  {
+   "game": "saga-story",
+   "id": "cap4",
+   "kind": "equip",
+   "name": "흑룡 망토",
+   "mode": "ai",
+   "key": "st_cap4",
+   "grade": 3
+  },
+  {
+   "game": "saga-story",
+   "id": "ring1",
+   "kind": "equip",
+   "name": "무명 지환",
+   "mode": "ai",
+   "key": "st_ring1",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "ring2",
+   "kind": "equip",
+   "name": "은지환",
+   "mode": "ai",
+   "key": "st_ring2",
+   "grade": 1
+  },
+  {
+   "game": "saga-story",
+   "id": "ring3",
+   "kind": "equip",
+   "name": "옥지환",
+   "mode": "ai",
+   "key": "st_ring3",
+   "grade": 2
+  },
+  {
+   "game": "saga-story",
+   "id": "ring4",
+   "kind": "equip",
+   "name": "금룡지환",
+   "mode": "ai",
+   "key": "st_ring4",
+   "grade": 3
+  },
+  {
+   "game": "saga-story",
+   "id": "neck1",
+   "kind": "equip",
+   "name": "나무 목걸이",
+   "mode": "ai",
+   "key": "st_neck1",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "neck2",
+   "kind": "equip",
+   "name": "은 목걸이",
+   "mode": "ai",
+   "key": "st_neck2",
+   "grade": 1
+  },
+  {
+   "game": "saga-story",
+   "id": "neck3",
+   "kind": "equip",
+   "name": "옥 목걸이",
+   "mode": "ai",
+   "key": "st_neck3",
+   "grade": 2
+  },
+  {
+   "game": "saga-story",
+   "id": "neck4",
+   "kind": "equip",
+   "name": "금 목걸이",
+   "mode": "ai",
+   "key": "st_neck4",
+   "grade": 3
+  },
+  {
+   "game": "saga-story",
+   "id": "ear1",
+   "kind": "equip",
+   "name": "나무 귀걸이",
+   "mode": "ai",
+   "key": "st_ear1",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "ear2",
+   "kind": "equip",
+   "name": "은 귀걸이",
+   "mode": "ai",
+   "key": "st_ear2",
+   "grade": 1
+  },
+  {
+   "game": "saga-story",
+   "id": "ear3",
+   "kind": "equip",
+   "name": "옥 귀걸이",
+   "mode": "ai",
+   "key": "st_ear3",
+   "grade": 2
+  },
+  {
+   "game": "saga-story",
+   "id": "ear4",
+   "kind": "equip",
+   "name": "금 귀걸이",
+   "mode": "ai",
+   "key": "st_ear4",
+   "grade": 3
+  },
+  {
+   "game": "saga-story",
+   "id": "atk100",
+   "kind": "consumable",
+   "name": "공격력 주문서 100%",
+   "mode": "ai",
+   "key": "st_scroll_atk",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "atk60",
+   "kind": "consumable",
+   "name": "공격력 주문서 60%",
+   "mode": "ai",
+   "key": "st_scroll_atk",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "atk10",
+   "kind": "consumable",
+   "name": "공격력 주문서 10%",
+   "mode": "ai",
+   "key": "st_scroll_atk",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "def100",
+   "kind": "consumable",
+   "name": "물리방어 주문서 100%",
+   "mode": "ai",
+   "key": "st_scroll_def",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "def60",
+   "kind": "consumable",
+   "name": "물리방어 주문서 60%",
+   "mode": "ai",
+   "key": "st_scroll_def",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "hp60",
+   "kind": "consumable",
+   "name": "체력 주문서 60%",
+   "mode": "ai",
+   "key": "st_scroll_hp",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "hp10",
+   "kind": "consumable",
+   "name": "체력 주문서 10%",
+   "mode": "ai",
+   "key": "st_scroll_hp",
+   "grade": 0
+  },
+  {
+   "game": "saga-story",
+   "id": "u_sword",
+   "kind": "equip",
+   "name": "진룡도(震龍刀)",
+   "mode": "ai",
+   "key": "st_u_sword",
+   "grade": 4
+  },
+  {
+   "game": "saga-story",
+   "id": "u_hat",
+   "kind": "equip",
+   "name": "봉황관(鳳凰冠)",
+   "mode": "ai",
+   "key": "st_u_hat",
+   "grade": 4
+  },
+  {
+   "game": "saga-story",
+   "id": "u_top",
+   "kind": "equip",
+   "name": "현무갑(玄武甲)",
+   "mode": "ai",
+   "key": "st_u_top",
+   "grade": 4
+  },
+  {
+   "game": "saga-story",
+   "id": "u_bottom",
+   "kind": "equip",
+   "name": "천리군(千里裙)",
+   "mode": "ai",
+   "key": "st_u_bottom",
+   "grade": 4
+  },
+  {
+   "game": "saga-story",
+   "id": "u_shoes",
+   "kind": "equip",
+   "name": "분마화(奔馬靴)",
+   "mode": "ai",
+   "key": "st_u_shoes",
+   "grade": 4
+  },
+  {
+   "game": "saga-story",
+   "id": "u_glove",
+   "kind": "equip",
+   "name": "호랑수갑(虎狼手甲)",
+   "mode": "ai",
+   "key": "st_u_glove",
+   "grade": 4
+  },
+  {
+   "game": "saga-story",
+   "id": "u_cape",
+   "kind": "equip",
+   "name": "봉래포(蓬萊袍)",
+   "mode": "ai",
+   "key": "st_u_cape",
+   "grade": 4
+  },
+  {
+   "game": "saga-story",
+   "id": "u_ring",
+   "kind": "equip",
+   "name": "구룡지환(九龍指環)",
+   "mode": "ai",
+   "key": "st_u_ring",
+   "grade": 4
+  },
+  {
+   "game": "saga-story",
+   "id": "u_necklace",
+   "kind": "equip",
+   "name": "영롱주(玲瓏珠)",
+   "mode": "ai",
+   "key": "st_u_necklace",
+   "grade": 4
+  },
+  {
+   "game": "saga-story",
+   "id": "u_earring",
+   "kind": "equip",
+   "name": "월아환(月牙環)",
+   "mode": "ai",
+   "key": "st_u_earring",
+   "grade": 4
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_ironblade",
+   "kind": "equip",
+   "name": "무쇠검",
+   "mode": "ai",
+   "key": "rl_itm_ironblade",
+   "grade": 0
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_warhorse",
+   "kind": "equip",
+   "name": "준마",
+   "mode": "ai",
+   "key": "rl_itm_warhorse",
+   "grade": 0
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_armor",
+   "kind": "equip",
+   "name": "보갑",
+   "mode": "ai",
+   "key": "rl_itm_armor",
+   "grade": 0
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_scroll",
+   "kind": "equip",
+   "name": "병서",
+   "mode": "ai",
+   "key": "rl_itm_scroll",
+   "grade": 0
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_compass",
+   "kind": "equip",
+   "name": "나침반",
+   "mode": "ai",
+   "key": "rl_itm_compass",
+   "grade": 0
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_jade",
+   "kind": "equip",
+   "name": "옥패",
+   "mode": "ai",
+   "key": "rl_itm_jade",
+   "grade": 0
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_seal",
+   "kind": "equip",
+   "name": "인수",
+   "mode": "ai",
+   "key": "rl_itm_seal",
+   "grade": 2
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_drum",
+   "kind": "equip",
+   "name": "전고",
+   "mode": "ai",
+   "key": "rl_itm_drum",
+   "grade": 0
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_timeshard",
+   "kind": "equip",
+   "name": "시간의 파편",
+   "mode": "ai",
+   "key": "rl_itm_timeshard",
+   "grade": 2
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_purifier",
+   "kind": "equip",
+   "name": "정화 장치",
+   "mode": "ai",
+   "key": "rl_itm_purifier",
+   "grade": 0
+  },
+  {
+   "game": "saga-realm",
+   "id": "itm_boneseal",
+   "kind": "equip",
+   "name": "해골의 인장",
+   "mode": "ai",
+   "key": "rl_itm_boneseal",
+   "grade": 2
+  },
+  {
+   "game": "saga-go",
+   "id": "scroll",
+   "kind": "consumable",
+   "name": "등용서",
+   "mode": "ai",
+   "key": "go_scroll",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "feed",
+   "kind": "consumable",
+   "name": "사료",
+   "mode": "ai",
+   "key": "feed",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "shard",
+   "kind": "consumable",
+   "name": "인장 조각",
+   "mode": "ai",
+   "key": "shard",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "seal",
+   "kind": "consumable",
+   "name": "사당 인장",
+   "mode": "ai",
+   "key": "seal",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "treat",
+   "kind": "consumable",
+   "name": "별미",
+   "mode": "ai",
+   "key": "treat",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "incense",
+   "kind": "consumable",
+   "name": "향(香)",
+   "mode": "ai",
+   "key": "incense",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "prayer",
+   "kind": "consumable",
+   "name": "축문",
+   "mode": "ai",
+   "key": "prayer",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "mint",
+   "kind": "material",
+   "name": "박하",
+   "mode": "ai",
+   "key": "mint",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "honey_flower",
+   "kind": "material",
+   "name": "꿀꽃",
+   "mode": "ai",
+   "key": "honey_flower",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "apple",
+   "kind": "material",
+   "name": "산사과",
+   "mode": "ai",
+   "key": "go_apple",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "mushroom",
+   "kind": "material",
+   "name": "송이버섯",
+   "mode": "ai",
+   "key": "mushroom",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "clam",
+   "kind": "material",
+   "name": "바지락",
+   "mode": "ai",
+   "key": "clam",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "orchid",
+   "kind": "material",
+   "name": "청하란",
+   "mode": "ai",
+   "key": "go_orchid",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "conch",
+   "kind": "material",
+   "name": "갯소라",
+   "mode": "ai",
+   "key": "conch",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "ash_flower",
+   "kind": "material",
+   "name": "재꽃",
+   "mode": "ai",
+   "key": "ash_flower",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "snow_bloom",
+   "kind": "material",
+   "name": "눈꽃",
+   "mode": "ai",
+   "key": "snow_bloom",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "meat",
+   "kind": "material",
+   "name": "짐승 고기",
+   "mode": "ai",
+   "key": "meat",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "0",
+   "kind": "material",
+   "name": "orchid",
+   "mode": "ai",
+   "key": "go_orchid",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "1",
+   "kind": "material",
+   "name": "conch",
+   "mode": "ai",
+   "key": "conch",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "2",
+   "kind": "material",
+   "name": "ash_flower",
+   "mode": "ai",
+   "key": "ash_flower",
+   "grade": 0
+  },
+  {
+   "game": "saga-go",
+   "id": "0",
+   "kind": "artifact",
+   "name": "gladiator",
+   "mode": "ai",
+   "key": "af_gladiator",
+   "grade": 3
+  },
+  {
+   "game": "saga-go",
+   "id": "1",
+   "kind": "artifact",
+   "name": "crimson",
+   "mode": "ai",
+   "key": "af_crimson",
+   "grade": 3
+  },
+  {
+   "game": "saga-go",
+   "id": "2",
+   "kind": "artifact",
+   "name": "viridescent",
+   "mode": "ai",
+   "key": "af_viridescent",
+   "grade": 3
+  },
+  {
+   "game": "saga-go",
+   "id": "3",
+   "kind": "artifact",
+   "name": "emblem",
+   "mode": "ai",
+   "key": "af_emblem",
+   "grade": 3
+  },
+  {
+   "game": "saga-go",
+   "id": "4",
+   "kind": "artifact",
+   "name": "depth",
+   "mode": "ai",
+   "key": "af_depth",
+   "grade": 3
+  },
+  {
+   "game": "saga-forest",
+   "id": "apple",
+   "kind": "material",
+   "name": "능금",
+   "mode": "ai",
+   "key": "apple",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "peach",
+   "kind": "material",
+   "name": "복숭아",
+   "mode": "ai",
+   "key": "fo_peach",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "persim",
+   "kind": "material",
+   "name": "홍시",
+   "mode": "ai",
+   "key": "fo_persim",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "plum",
+   "kind": "material",
+   "name": "매실",
+   "mode": "ai",
+   "key": "fo_plum",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "citron",
+   "kind": "material",
+   "name": "유자",
+   "mode": "ai",
+   "key": "fo_citron",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "chest",
+   "kind": "material",
+   "name": "밤",
+   "mode": "ai",
+   "key": "fo_chest",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "pine",
+   "kind": "material",
+   "name": "잣",
+   "mode": "ai",
+   "key": "fo_pine",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "sprout",
+   "kind": "material",
+   "name": "두릅",
+   "mode": "ai",
+   "key": "fo_sprout",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "iron",
+   "kind": "material",
+   "name": "철석",
+   "mode": "ai",
+   "key": "iron",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "copper",
+   "kind": "material",
+   "name": "구리",
+   "mode": "ai",
+   "key": "fo_copper",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "silver",
+   "kind": "material",
+   "name": "은괴",
+   "mode": "ai",
+   "key": "fo_silver",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "stardust",
+   "kind": "material",
+   "name": "별조각",
+   "mode": "ai",
+   "key": "stardust",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "azalea",
+   "kind": "material",
+   "name": "진달래",
+   "mode": "ai",
+   "key": "fo_azalea",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "mugung",
+   "kind": "material",
+   "name": "무궁화",
+   "mode": "ai",
+   "key": "fo_mugung",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "orchid",
+   "kind": "material",
+   "name": "난초",
+   "mode": "ai",
+   "key": "fo_orchid",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "maple",
+   "kind": "material",
+   "name": "단풍",
+   "mode": "ai",
+   "key": "fo_maple",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "sulwha",
+   "kind": "material",
+   "name": "설중매",
+   "mode": "ai",
+   "key": "fo_sulwha",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "geumnang",
+   "kind": "material",
+   "name": "금낭화",
+   "mode": "ai",
+   "key": "fo_geumnang",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "jaran",
+   "kind": "material",
+   "name": "자란",
+   "mode": "ai",
+   "key": "fo_jaran",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "hongmae",
+   "kind": "material",
+   "name": "홍매",
+   "mode": "ai",
+   "key": "fo_hongmae",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "mugwort",
+   "kind": "material",
+   "name": "쑥",
+   "mode": "ai",
+   "key": "fo_mugwort",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "bellroot",
+   "kind": "material",
+   "name": "도라지",
+   "mode": "ai",
+   "key": "fo_bellroot",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "reishi",
+   "kind": "material",
+   "name": "영지버섯",
+   "mode": "ai",
+   "key": "fo_reishi",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "ginseng",
+   "kind": "material",
+   "name": "산삼",
+   "mode": "ai",
+   "key": "fo_ginseng",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "cabbage",
+   "kind": "material",
+   "name": "배추흰나비",
+   "mode": "ai",
+   "key": "fo_cabbage",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "ladybug",
+   "kind": "material",
+   "name": "무당벌레",
+   "mode": "ai",
+   "key": "fo_ladybug",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "swallow",
+   "kind": "material",
+   "name": "호랑나비",
+   "mode": "ai",
+   "key": "fo_swallow",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "hopper",
+   "kind": "material",
+   "name": "방아깨비",
+   "mode": "ai",
+   "key": "fo_hopper",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "dragon",
+   "kind": "material",
+   "name": "잠자리",
+   "mode": "ai",
+   "key": "fo_dragon",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "cicada",
+   "kind": "material",
+   "name": "참매미",
+   "mode": "ai",
+   "key": "fo_cicada",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "longhorn",
+   "kind": "material",
+   "name": "하늘소",
+   "mode": "ai",
+   "key": "fo_longhorn",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "mantis",
+   "kind": "material",
+   "name": "사마귀",
+   "mode": "ai",
+   "key": "fo_mantis",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "cricket",
+   "kind": "material",
+   "name": "귀뚜라미",
+   "mode": "ai",
+   "key": "fo_cricket",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "firefly",
+   "kind": "material",
+   "name": "반딧불이",
+   "mode": "ai",
+   "key": "fo_firefly",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "rhino",
+   "kind": "material",
+   "name": "장수풍뎅이",
+   "mode": "ai",
+   "key": "fo_rhino",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "stag",
+   "kind": "material",
+   "name": "사슴벌레",
+   "mode": "ai",
+   "key": "fo_stag",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "snail",
+   "kind": "material",
+   "name": "달팽이",
+   "mode": "ai",
+   "key": "fo_snail",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "spider",
+   "kind": "material",
+   "name": "거미",
+   "mode": "ai",
+   "key": "fo_spider",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "wasp",
+   "kind": "material",
+   "name": "말벌",
+   "mode": "ai",
+   "key": "fo_wasp",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "shard",
+   "kind": "material",
+   "name": "토기 조각",
+   "mode": "ai",
+   "key": "fo_shard",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "oldcoin",
+   "kind": "material",
+   "name": "옛 동전",
+   "mode": "ai",
+   "key": "fo_oldcoin",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "fern",
+   "kind": "material",
+   "name": "고사리 화석",
+   "mode": "ai",
+   "key": "fo_fern",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "fishf",
+   "kind": "material",
+   "name": "물고기 화석",
+   "mode": "ai",
+   "key": "fo_fishf",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "trilo",
+   "kind": "material",
+   "name": "삼엽충 화석",
+   "mode": "ai",
+   "key": "fo_trilo",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "ammon",
+   "kind": "material",
+   "name": "암모나이트",
+   "mode": "ai",
+   "key": "fo_ammon",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "track",
+   "kind": "material",
+   "name": "새 발자국",
+   "mode": "ai",
+   "key": "fo_track",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "tooth",
+   "kind": "material",
+   "name": "공룡 이빨",
+   "mode": "ai",
+   "key": "fo_tooth",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "bone",
+   "kind": "material",
+   "name": "공룡 뼈",
+   "mode": "ai",
+   "key": "fo_bone",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "tusk",
+   "kind": "material",
+   "name": "매머드 엄니",
+   "mode": "ai",
+   "key": "fo_tusk",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "godung",
+   "kind": "material",
+   "name": "고둥",
+   "mode": "ai",
+   "key": "fo_godung",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "sora",
+   "kind": "material",
+   "name": "소라",
+   "mode": "ai",
+   "key": "fo_sora",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "daehap",
+   "kind": "material",
+   "name": "대합",
+   "mode": "ai",
+   "key": "fo_daehap",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "urchin",
+   "kind": "material",
+   "name": "성게 껍질",
+   "mode": "ai",
+   "key": "fo_urchin",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "abalone",
+   "kind": "material",
+   "name": "전복 껍데기",
+   "mode": "ai",
+   "key": "fo_abalone",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "pearl",
+   "kind": "material",
+   "name": "진주",
+   "mode": "ai",
+   "key": "pearl",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "rooftile",
+   "kind": "material",
+   "name": "옛 기와 조각",
+   "mode": "ai",
+   "key": "fo_rooftile",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "wallstone",
+   "kind": "material",
+   "name": "성돌",
+   "mode": "ai",
+   "key": "fo_wallstone",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "rafter",
+   "kind": "material",
+   "name": "서까래 토막",
+   "mode": "ai",
+   "key": "fo_rafter",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "bignail",
+   "kind": "material",
+   "name": "대못",
+   "mode": "ai",
+   "key": "fo_bignail",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "doorring",
+   "kind": "material",
+   "name": "문고리",
+   "mode": "ai",
+   "key": "fo_doorring",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "postkey",
+   "kind": "material",
+   "name": "옛 우체통 열쇠",
+   "mode": "ai",
+   "key": "fo_postkey",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "crucian",
+   "kind": "material",
+   "name": "붕어",
+   "mode": "ai",
+   "key": "fo_crucian",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "carp",
+   "kind": "material",
+   "name": "잉어",
+   "mode": "ai",
+   "key": "fo_carp",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "catfish",
+   "kind": "material",
+   "name": "메기",
+   "mode": "ai",
+   "key": "fo_catfish",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "sturgeon",
+   "kind": "material",
+   "name": "철갑상어",
+   "mode": "ai",
+   "key": "fo_sturgeon",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "trout",
+   "kind": "material",
+   "name": "송어",
+   "mode": "ai",
+   "key": "fo_trout",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "smelt",
+   "kind": "material",
+   "name": "빙어",
+   "mode": "ai",
+   "key": "fo_smelt",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "loach",
+   "kind": "material",
+   "name": "미꾸라지",
+   "mode": "ai",
+   "key": "fo_loach",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "bangseok",
+   "kind": "furniture",
+   "name": "방석",
+   "mode": "ai",
+   "key": "bangseok",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "yo",
+   "kind": "furniture",
+   "name": "요",
+   "mode": "ai",
+   "key": "yo",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "hwabun",
+   "kind": "furniture",
+   "name": "화분",
+   "mode": "ai",
+   "key": "fo_hwabun",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "deungjan",
+   "kind": "furniture",
+   "name": "등잔",
+   "mode": "ai",
+   "key": "fo_deungjan",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "soban",
+   "kind": "furniture",
+   "name": "소반",
+   "mode": "ai",
+   "key": "soban",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "mulhang",
+   "kind": "furniture",
+   "name": "물항아리",
+   "mode": "ai",
+   "key": "fo_mulhang",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "jokja",
+   "kind": "furniture",
+   "name": "족자",
+   "mode": "ai",
+   "key": "fo_jokja",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "seoan",
+   "kind": "furniture",
+   "name": "서안",
+   "mode": "ai",
+   "key": "fo_seoan",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "hwaro",
+   "kind": "furniture",
+   "name": "화로",
+   "mode": "ai",
+   "key": "fo_hwaro",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "mungab",
+   "kind": "furniture",
+   "name": "문갑",
+   "mode": "ai",
+   "key": "fo_mungab",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "bandaji",
+   "kind": "furniture",
+   "name": "반닫이",
+   "mode": "ai",
+   "key": "fo_bandaji",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "dokja",
+   "kind": "furniture",
+   "name": "도자기",
+   "mode": "ai",
+   "key": "fo_dokja",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "badukpan",
+   "kind": "furniture",
+   "name": "바둑판",
+   "mode": "ai",
+   "key": "fo_badukpan",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "byeongpung",
+   "kind": "furniture",
+   "name": "병풍",
+   "mode": "ai",
+   "key": "byeongpung",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "geomungo",
+   "kind": "furniture",
+   "name": "거문고",
+   "mode": "ai",
+   "key": "fo_geomungo",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "fest_seollal",
+   "kind": "furniture",
+   "name": "복조리",
+   "mode": "ai",
+   "key": "fest_seollal",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "fest_daeborum",
+   "kind": "furniture",
+   "name": "달집 화로",
+   "mode": "ai",
+   "key": "fest_daeborum",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "fest_samjin",
+   "kind": "furniture",
+   "name": "꽃전 소반",
+   "mode": "ai",
+   "key": "fest_samjin",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "fest_dano",
+   "kind": "furniture",
+   "name": "창포 화분",
+   "mode": "ai",
+   "key": "fest_dano",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "fest_chilseok",
+   "kind": "furniture",
+   "name": "오작교 족자",
+   "mode": "ai",
+   "key": "fest_chilseok",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "fest_baekjung",
+   "kind": "furniture",
+   "name": "연등",
+   "mode": "ai",
+   "key": "fest_baekjung",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "fest_chuseok",
+   "kind": "furniture",
+   "name": "송편 상",
+   "mode": "ai",
+   "key": "fest_chuseok",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "fest_dongji",
+   "kind": "furniture",
+   "name": "팥죽 화로",
+   "mode": "ai",
+   "key": "fest_dongji",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "visit_sailor",
+   "kind": "furniture",
+   "name": "선장의 궤짝",
+   "mode": "ai",
+   "key": "visit_sailor",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "visit_wisp",
+   "kind": "furniture",
+   "name": "도깨비 등롱",
+   "mode": "ai",
+   "key": "visit_wisp",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "visit_angler",
+   "kind": "furniture",
+   "name": "명인의 어탁",
+   "mode": "ai",
+   "key": "visit_angler",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "visit_bug",
+   "kind": "furniture",
+   "name": "나비 표본 액자",
+   "mode": "ai",
+   "key": "visit_bug",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "visit_future",
+   "kind": "furniture",
+   "name": "시간의 탁상시계",
+   "mode": "ai",
+   "key": "visit_future",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "visit_dokkaebi",
+   "kind": "furniture",
+   "name": "도깨비 방망이 탁자",
+   "mode": "ai",
+   "key": "visit_dokkaebi",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "visit_alien",
+   "kind": "furniture",
+   "name": "별 지도 액자",
+   "mode": "ai",
+   "key": "visit_alien",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "visit_parcel",
+   "kind": "furniture",
+   "name": "소포 상자 탑",
+   "mode": "ai",
+   "key": "visit_parcel",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "visit_photo",
+   "kind": "furniture",
+   "name": "숲 사진첩 병풍",
+   "mode": "ai",
+   "key": "visit_photo",
+   "grade": 2
+  },
+  {
+   "game": "saga-forest",
+   "id": "net",
+   "kind": "tool",
+   "name": "잠자리채",
+   "mode": "ai",
+   "key": "net",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "spade",
+   "kind": "tool",
+   "name": "삽",
+   "mode": "ai",
+   "key": "spade",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "deed",
+   "kind": "tool",
+   "name": "개토패(開土牌)",
+   "mode": "ai",
+   "key": "fo_deed",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "earth",
+   "kind": "furniture",
+   "name": "흙벽",
+   "mode": "ai",
+   "key": "wall_earth",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "hanji",
+   "kind": "furniture",
+   "name": "한지벽",
+   "mode": "ai",
+   "key": "wall_hanji",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "sol",
+   "kind": "furniture",
+   "name": "솔빛벽",
+   "mode": "ai",
+   "key": "wall_sol",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "muk",
+   "kind": "furniture",
+   "name": "먹빛벽",
+   "mode": "ai",
+   "key": "wall_muk",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "dan",
+   "kind": "furniture",
+   "name": "단청벽",
+   "mode": "ai",
+   "key": "wall_dan",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "wood",
+   "kind": "furniture",
+   "name": "마루",
+   "mode": "ai",
+   "key": "floor_wood",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "mat",
+   "kind": "furniture",
+   "name": "돗자리",
+   "mode": "ai",
+   "key": "floor_mat",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "jangpan",
+   "kind": "furniture",
+   "name": "장판",
+   "mode": "ai",
+   "key": "floor_jangpan",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "stone",
+   "kind": "furniture",
+   "name": "박석",
+   "mode": "ai",
+   "key": "floor_stone",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "ondol",
+   "kind": "furniture",
+   "name": "구들장",
+   "mode": "ai",
+   "key": "floor_ondol",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "leather",
+   "kind": "wear",
+   "name": "평상복",
+   "mode": "ai",
+   "key": "wear_leather",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "robe",
+   "kind": "wear",
+   "name": "도포",
+   "mode": "ai",
+   "key": "wear_robe",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "coat",
+   "kind": "wear",
+   "name": "두루마기",
+   "mode": "ai",
+   "key": "wear_coat",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "plate",
+   "kind": "wear",
+   "name": "갑옷",
+   "mode": "ai",
+   "key": "wear_plate",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "spacesuit",
+   "kind": "wear",
+   "name": "배달원 우주복",
+   "mode": "ai",
+   "key": "wear_spacesuit",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "none",
+   "kind": "wear",
+   "name": "맨머리",
+   "mode": "skip"
+  },
+  {
+   "game": "saga-forest",
+   "id": "topknot",
+   "kind": "wear",
+   "name": "상투",
+   "mode": "ai",
+   "key": "wear_topknot",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "braid",
+   "kind": "wear",
+   "name": "댕기",
+   "mode": "ai",
+   "key": "wear_braid",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "scholar",
+   "kind": "wear",
+   "name": "유건",
+   "mode": "ai",
+   "key": "wear_scholar",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "gat",
+   "kind": "wear",
+   "name": "갓",
+   "mode": "ai",
+   "key": "wear_gat",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "hairpin",
+   "kind": "wear",
+   "name": "족두리",
+   "mode": "ai",
+   "key": "wear_hairpin",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "helmet",
+   "kind": "wear",
+   "name": "전립",
+   "mode": "ai",
+   "key": "wear_helmet",
+   "grade": 0
+  },
+  {
+   "game": "saga-forest",
+   "id": "none",
+   "kind": "wear",
+   "name": "그대로",
+   "mode": "skip"
+  },
+  {
+   "game": "saga-forest",
+   "id": "white",
+   "kind": "wear",
+   "name": "소색",
+   "mode": "color",
+   "key": "dye_white"
+  },
+  {
+   "game": "saga-forest",
+   "id": "ink",
+   "kind": "wear",
+   "name": "먹빛",
+   "mode": "color",
+   "key": "dye_ink"
+  },
+  {
+   "game": "saga-forest",
+   "id": "forest",
+   "kind": "wear",
+   "name": "풀빛",
+   "mode": "color",
+   "key": "dye_forest"
+  },
+  {
+   "game": "saga-forest",
+   "id": "indigo",
+   "kind": "wear",
+   "name": "쪽빛",
+   "mode": "color",
+   "key": "dye_indigo"
+  },
+  {
+   "game": "saga-forest",
+   "id": "crimson",
+   "kind": "wear",
+   "name": "다홍",
+   "mode": "color",
+   "key": "dye_crimson"
+  },
+  {
+   "game": "saga-forest",
+   "id": "gold",
+   "kind": "wear",
+   "name": "치자빛",
+   "mode": "color",
+   "key": "dye_gold"
+  },
+  {
+   "game": "saga-forest",
+   "id": "plum",
+   "kind": "wear",
+   "name": "자주",
+   "mode": "color",
+   "key": "dye_plum"
+  },
+  {
+   "game": "saga-forest",
+   "id": "off",
+   "kind": "wear",
+   "name": "없음",
+   "mode": "skip"
+  },
+  {
+   "game": "saga-forest",
+   "id": "on",
+   "kind": "wear",
+   "name": "덧옷",
+   "mode": "skip"
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_sword_0",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_sword_0",
+   "grade": 0
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_sword_0",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_sword_0",
+   "grade": 0
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_claymore_0",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_claymore_0",
+   "grade": 0
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_claymore_0",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_claymore_0",
+   "grade": 0
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_polearm_0",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_polearm_0",
+   "grade": 0
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_polearm_0",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_polearm_0",
+   "grade": 0
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_catalyst_0",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_catalyst_0",
+   "grade": 0
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_catalyst_0",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_catalyst_0",
+   "grade": 0
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_bow_0",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_bow_0",
+   "grade": 0
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_bow_0",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_bow_0",
+   "grade": 0
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_sword_3",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_sword_3",
+   "grade": 1
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_sword_3",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_sword_3",
+   "grade": 1
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_claymore_3",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_claymore_3",
+   "grade": 1
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_claymore_3",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_claymore_3",
+   "grade": 1
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_polearm_3",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_polearm_3",
+   "grade": 1
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_polearm_3",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_polearm_3",
+   "grade": 1
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_catalyst_3",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_catalyst_3",
+   "grade": 1
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_catalyst_3",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_catalyst_3",
+   "grade": 1
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_bow_3",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_bow_3",
+   "grade": 1
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_bow_3",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_bow_3",
+   "grade": 1
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_sword_4",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_sword_4",
+   "grade": 2
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_sword_4",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_sword_4",
+   "grade": 2
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_claymore_4",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_claymore_4",
+   "grade": 2
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_claymore_4",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_claymore_4",
+   "grade": 2
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_polearm_4",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_polearm_4",
+   "grade": 2
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_polearm_4",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_polearm_4",
+   "grade": 2
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_catalyst_4",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_catalyst_4",
+   "grade": 2
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_catalyst_4",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_catalyst_4",
+   "grade": 2
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_bow_4",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_bow_4",
+   "grade": 2
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_bow_4",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_bow_4",
+   "grade": 2
+  },
+  {
+   "game": "saga_go-godot",
+   "id": "w_polearm_catch",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_polearm_catch",
+   "grade": 2
+  },
+  {
+   "game": "SagaGo-unity",
+   "id": "w_polearm_catch",
+   "kind": "equip",
+   "name": "",
+   "mode": "ai",
+   "key": "gw_polearm_catch",
+   "grade": 2
+  }
+ ]
+}

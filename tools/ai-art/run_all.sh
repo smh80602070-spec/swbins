@@ -13,7 +13,7 @@ WAS_UP=0; up && WAS_UP=1
 sd_rss_gb() {   # sd-webui 파이썬(launch.py)의 작업 집합, GB (정수)
   powershell -NoProfile -Command "\$m=0; Get-CimInstance Win32_Process -Filter \"name='python.exe'\" | Where-Object { \$_.CommandLine -like '*launch.py*' } | ForEach-Object { \$w=(Get-Process -Id \$_.ProcessId -ErrorAction SilentlyContinue).WorkingSet64; if (\$w -gt \$m) { \$m=\$w } }; [math]::Floor(\$m/1GB)" 2>/dev/null | tr -d '\r'
 }
-for i in $(seq 1 16); do
+for i in $(seq 1 48); do
   [ -f tools/ai-art/_out/STOP ] && { echo "STOP 파일 — 멈춤" >> "$S"; break; }
   if ! up; then
     powershell -NoProfile -ExecutionPolicy Bypass -File tools/ai-art/start_sd.ps1 >> "$S" 2>&1
