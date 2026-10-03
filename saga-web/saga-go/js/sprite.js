@@ -436,6 +436,7 @@
   }
 
   function building(ctx, o) {
+    if (o.kind2d && global.DG.mode2d && global.DG.mode2d.drawKind(ctx, o.kind2d, o.x, o.y, o.s || 1)) { return; }   // 2D 모드 통일 스프라이트(W-0022) — 없으면 아래 옛 그림
     if (o.img && o.img.complete && o.img.naturalWidth) {
       var H0 = 46 * (o.s || 1), bw = H0 * 1.3, bh = H0 * 1.3;
       ctx.save();

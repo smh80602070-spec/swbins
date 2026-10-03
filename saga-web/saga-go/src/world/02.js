@@ -723,7 +723,7 @@
       : null;
     sp.building(ctx, {
       x: p.x, y: p.y, s: z * 1.15, form: 'wall', color: mine ? '#7a6234' : undefined,
-      t: now / 1000, img: fortImg
+      t: now / 1000, img: fortImg, kind2d: fortTier ? 'fort:t' + fortTier : 'fort'
     });
 
     /* 깃발 — 지키는 세력의 표식 */
@@ -806,7 +806,7 @@
     ctx.globalAlpha = held ? 0.72 : (ready ? 1 : 0.55);
     global.DG.sprite.building(ctx, {
       x: p.x, y: p.y, s: z * 0.88, form: 'stable', t: now / 1000,
-      img: global.DG.sprite.buildingImg('tower_ruin')     // 3D 역참과 같은 실사 폐허 탑을 구운 그림(tools/bake-icons, 2026-09-23 — 전엔 굽기가 멎어 옛 여관 그림)
+      kind2d: 'station', img: global.DG.sprite.buildingImg('tower_ruin')     // 3D 역참과 같은 실사 폐허 탑을 구운 그림(tools/bake-icons, 2026-09-23 — 전엔 굽기가 멎어 옛 여관 그림)
     });
 
     // 채워진 역참에는 등롱 하나, 점거된 역참에는 검은 깃발 — 멀리서도 눈에 든다
@@ -933,7 +933,7 @@
     var p = project(u, v);
     if (p.s < 0.2 || p.y < -160 || p.y > geom.H + 80) { return; }
     var z = core.clamp(p.s, 0.5, 1.8), BMd = global.DG.biome;
-    global.DG.sprite.building(ctx, { img: global.DG.sprite.buildingImg('Watchtower'), x: p.x, y: p.y, s: z * 2.2 });
+    global.DG.sprite.building(ctx, { img: global.DG.sprite.buildingImg('Watchtower'), x: p.x, y: p.y, s: z * 2.2, kind2d: 'landmark:' + lm.biome });
     label(ctx, (BMd.found(lm.key) ? '🌀 ' : '🗼 ') + lm.name, p.x, p.y - 46 * z * 2.2 * 1.3 - 6,
       BMd.BIOMES[lm.biome].color, 'center', z);
   }

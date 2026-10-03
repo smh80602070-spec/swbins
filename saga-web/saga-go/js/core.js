@@ -469,6 +469,13 @@
     targetH: 40,                                 // 스탬프 s=1 일 때 몸 높이(px) — actor2d 가 s 를 배수로 곱한다
     foot: 0.87,
     tileBase: 'assets/web2d/tile/',
+    /** 역참·성채·랜드마크 2D 스프라이트(K-0017 `world2d`) — 종류 → { id, h(px, 그리는 쪽 배율 s=1 기준) }. 없거나 못 받으면 옛 그림 */
+    prop2d: {
+      station: { id: 'inn_01', h: 68 },
+      'fort:t1': { id: 'stone_tower_01', h: 58 }, 'fort:t2': { id: 'chinese_hall_01', h: 56 }, 'fort:t3': { id: 'dungeon_gate_01', h: 58 }, fort: { id: 'stone_tower_01', h: 58 },
+      'landmark:plain': { id: 'stone_tower_01', h: 57 }, 'landmark:bamboo': { id: 'bamboo_clump_01', h: 41 }, 'landmark:canyon': { id: 'rock_outcrop_01', h: 36 },
+      'landmark:marsh': { id: 'pond_01', h: 32 }, 'landmark:ruins': { id: 'stele_01', h: 45 }, 'landmark:home': { id: 'stone_tower_01', h: 57 }
+    },
     /** 땅 종류(world.js terrainAt) → 2D 바닥 타일(K-0020 `go_*`) — 없는 종류는 옛 사진·색 */
     tile: { grass: 'go_grass', forest: 'go_dirt', mount: 'go_stone', road: 'go_sand', town: 'go_stone', farm: 'go_dirt', water: 'go_water' },
     /** 2D 모드인가 — 3D 장면이 안 서 있을 때(평면·2.5D 캔버스) */

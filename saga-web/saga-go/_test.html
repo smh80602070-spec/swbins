@@ -15941,6 +15941,16 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return bad.length === 0 && ids.hero.length === 299 && ids.world.length === 42 && A.has('hero', 'sg_guanyu') && !A.has('hero', 'folk_x') && pre && ('영웅 ' + ids.hero.length + ' · 지물 ' + ids.world.length + ' · 소품 표 ' + Object.keys(props).length + '칸') || bad.join(',') || '표/폴백 불일치';
     });
 
+    t('2D 지물 — 역참·성채 세 등급·랜드마크 여섯 바이옴이 prop2d 에 이어지고 id 는 전부 지물 GLB, 시험 전엔 drawKind false(옛 그림)', function () {
+      var M = DG.mode2d, t = DG.cfg.mode2d.prop2d, bad = [], calls = 0, need = ['station', 'fort:t1', 'fort:t2', 'fort:t3', 'fort'];
+      Object.keys(DG.biome.BIOMES).forEach(function (b) { need.push('landmark:' + b); });
+      need.forEach(function (k) { if (!t[k] || !DG.assets3d.has('world', t[k].id)) { bad.push(k); } });
+      var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, beginPath: function () { calls++; }, ellipse: function () { calls++; }, fill: function () { calls++; } };
+      DG.assets3d._reset();
+      var r = M.drawKind(fake, 'station', 10, 10, 1);
+      return bad.length === 0 && r === false && calls === 0 && ('지물 ' + need.length + '칸 연결 · 시험 전 false') || bad.join(',') || '표/폴백 불일치';
+    });
+
     t('2D 시트 — 풀이 없거나 2D 모드가 아니면 false 를 돌려주고(부른 쪽이 기존 그림) 아무 것도 안 그린다', function () {
       var M = DG.mode2d, calls = 0;
       var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, translate: function () {}, scale: function () {} };
