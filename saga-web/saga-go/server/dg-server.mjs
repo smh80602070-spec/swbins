@@ -280,7 +280,7 @@ function serveStatic(req, res, urlPath) {
   /* `/_shared/…` → saga-web/shared (통일 3D 에셋 한 벌, W-0021) */
   const base = rel.startsWith('/_shared/') ? path.resolve(ROOT, '..', 'shared') : ROOT;
   const abs = path.join(base, rel.startsWith('/_shared/') ? rel.slice('/_shared'.length) : rel);
-  if (!abs.startsWith(base)) { send(res, 403, '금지', 'text/plain; charset=utf-8'); return; }
+  if (abs !== base && !abs.startsWith(base + path.sep)) { send(res, 403, '금지', 'text/plain; charset=utf-8'); return; }
   fs.readFile(abs, (err, buf) => {
     if (err) { send(res, 404, '없습니다: ' + rel, 'text/plain; charset=utf-8'); return; }
     send(res, 200, buf, MIME[path.extname(abs).toLowerCase()] || 'application/octet-stream');

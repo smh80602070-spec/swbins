@@ -31,7 +31,7 @@ http.createServer((req, res) => {
   let base = root, sub = rel;
   if (rel.startsWith('/_shared/')) { base = SHARED; sub = rel.slice('/_shared'.length); }
   const abs = path.join(base, sub);
-  if (!abs.startsWith(base)) { res.writeHead(403); res.end(); return; }
+  if (abs !== base && !abs.startsWith(base + path.sep)) { res.writeHead(403); res.end(); return; }   // 형제 폴더(saga-forest-old 등)로 새지 않게 구분자까지 본다
   fs.readFile(abs, (err, buf) => {
     if (err) { res.writeHead(404, { 'content-type': 'text/plain; charset=utf-8' }); res.end('없습니다: ' + rel); return; }
     res.writeHead(200, { 'content-type': MIME[path.extname(abs).toLowerCase()] || 'application/octet-stream' });
