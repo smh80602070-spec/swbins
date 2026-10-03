@@ -154,6 +154,8 @@ namespace Saga.EditorTools
                 PlaytestKit.Check(ForestBiomeData.ZoneAt(p.x, p.z) == 3, $"{s.name} 이 꽃밭 존 밖");
                 PlaytestKit.Check(keys.Add(s.PieceKey), $"{s.name} 조각 키 겹침 {s.PieceKey}");
                 foreach (var o in list) PlaytestKit.Check(Vector3.Distance(o, p) >= 1.5f, $"{s.name} 이 다른 돌무더기에 1.5m 안으로 붙었다");
+                // 둘 사이에 서도 한 프레임에 둘이 같이 줍히지 않아야 한다(반경 두 배보다 멀다)
+                foreach (var o in list) PlaytestKit.Check(Vector3.Distance(o, p) > 2f * ForestRubbleSpot.GatherRadius, $"{s.name} 과 다른 돌무더기가 줍기 반경 두 배 안(둘이 한꺼번에 줍힘)");
                 list.Add(p);
             }
             PlaytestKit.Check(keys.Count == 6, "돌무더기가 여섯 조각을 하나씩 안 맡음");
