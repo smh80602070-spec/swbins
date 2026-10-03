@@ -80,7 +80,8 @@ for (const [game, files, expr, name, kind] of WEB) {
   const withIcon = iconField ? list.filter((x) => x[iconField]).length : 0;
   const ids = list.map((x) => x.key || x.id || x._k || x.name).filter(Boolean);
   rows.push({ track: 'web', game: 'saga-' + game, name, kind, expr, count: list.length, icon_field: iconField, with_icon: withIcon,
-    icon_kind: iconField ? 'emoji/글리프(그림 파일 아님)' : '없음', ids, note: note || undefined });
+    icon_kind: iconField ? 'emoji/글리프(그림 파일 아님)' : '없음', ids, note: note || undefined,
+    items: list.map((x) => ({ id: x.key || x.id || x._k || x.name, name: x.name || x._v || undefined, look: x.look, slot: x.slot, form: x.form, cat: x.cat, base: x.base, desc: x.desc ? String(x.desc).slice(0, 60) : undefined })) });
 }
 const read = (p) => fs.readFileSync(path.join(ROOT, p), 'utf8');
 for (const [track, file, name, how, kind] of SRC) {
@@ -95,7 +96,7 @@ for (const [track, file, name, how, kind] of SRC) {
       count = m ? (m[1].match(/W\("/g) || []).length : 0;
     }
   } catch (e) { note = String(e).slice(0, 60); }
-  rows.push({ track, game: track === 'godot' ? 'saga_go' : 'SagaGo', name, kind, 방식: 'regex(개수만, 대략)', count, icon_field: null, with_icon: 0, icon_kind: '확인 안 함', note });
+  rows.push({ track, game: track === 'godot' ? 'saga_go' : 'SagaGo', name, kind, 방식: 'regex(개수만, 대략)', count, icon_field: null, with_icon: 0, icon_kind: '확인 안 함', note, items: [] });
 }
 const bykind = {};
 for (const r of rows) bykind[r.kind] = (bykind[r.kind] || 0) + r.count;

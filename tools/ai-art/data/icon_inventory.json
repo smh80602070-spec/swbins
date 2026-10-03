@@ -59,6 +59,240 @@
     "c_gyeong",
     "c_okgae",
     "r_geumji"
+   ],
+   "items": [
+    {
+     "id": "w_hwando",
+     "name": "환도",
+     "look": "sword",
+     "slot": "weapon",
+     "base": 9
+    },
+    {
+     "id": "w_pyeongon",
+     "name": "편곤",
+     "look": "club",
+     "slot": "weapon",
+     "base": 10
+    },
+    {
+     "id": "w_changj",
+     "name": "장창",
+     "look": "spear",
+     "slot": "weapon",
+     "base": 11
+    },
+    {
+     "id": "w_wolto",
+     "name": "월도",
+     "look": "guandao",
+     "slot": "weapon",
+     "base": 12
+    },
+    {
+     "id": "w_gakgung",
+     "name": "각궁",
+     "look": "bow",
+     "slot": "weapon",
+     "base": 8
+    },
+    {
+     "id": "w_cheoltae",
+     "name": "철태궁",
+     "look": "bow",
+     "slot": "weapon",
+     "base": 10
+    },
+    {
+     "id": "w_bugae",
+     "name": "부월",
+     "look": "axe",
+     "slot": "weapon",
+     "base": 11
+    },
+    {
+     "id": "w_geukchang",
+     "name": "극창",
+     "look": "halberd",
+     "slot": "weapon",
+     "base": 13
+    },
+    {
+     "id": "w_seonchae",
+     "name": "선채",
+     "look": "fan",
+     "slot": "weapon",
+     "base": 9
+    },
+    {
+     "id": "w_jukjang",
+     "name": "죽장",
+     "look": "staff",
+     "slot": "weapon",
+     "base": 8
+    },
+    {
+     "id": "w_bilbut",
+     "name": "필묵",
+     "look": "brush",
+     "slot": "weapon",
+     "base": 7
+    },
+    {
+     "id": "w_byeongseo",
+     "name": "병서",
+     "look": "scroll",
+     "slot": "weapon",
+     "base": 8
+    },
+    {
+     "id": "w_lance_e",
+     "name": "전자창",
+     "look": "lance_e",
+     "slot": "weapon",
+     "base": 13
+    },
+    {
+     "id": "w_gauntlet",
+     "name": "동력장갑",
+     "look": "gauntlet",
+     "slot": "weapon",
+     "base": 12
+    },
+    {
+     "id": "a_jichap",
+     "name": "지갑",
+     "look": "leather",
+     "slot": "armor",
+     "base": 8
+    },
+    {
+     "id": "a_pigap",
+     "name": "피갑",
+     "look": "leather",
+     "slot": "armor",
+     "base": 9
+    },
+    {
+     "id": "a_chalgap",
+     "name": "찰갑",
+     "look": "plate",
+     "slot": "armor",
+     "base": 11
+    },
+    {
+     "id": "a_dujeong",
+     "name": "두정갑",
+     "look": "plate",
+     "slot": "armor",
+     "base": 12
+    },
+    {
+     "id": "a_dopo",
+     "name": "도포",
+     "look": "leather",
+     "slot": "armor",
+     "base": 9
+    },
+    {
+     "id": "a_myeongap",
+     "name": "면갑",
+     "look": "helmet",
+     "slot": "helm",
+     "base": 8
+    },
+    {
+     "id": "a_cheollip",
+     "name": "철립",
+     "look": "helmet",
+     "slot": "helm",
+     "base": 7
+    },
+    {
+     "id": "h_tumo",
+     "name": "투구",
+     "look": "helmet",
+     "slot": "helm",
+     "base": 7
+    },
+    {
+     "id": "g_wangap",
+     "name": "완갑",
+     "slot": "glove",
+     "base": 5
+    },
+    {
+     "id": "g_wandae",
+     "name": "완대",
+     "slot": "glove",
+     "base": 5
+    },
+    {
+     "id": "b_hwaje",
+     "name": "화자",
+     "slot": "boot",
+     "base": 5
+    },
+    {
+     "id": "b_jipsin",
+     "name": "짚신",
+     "slot": "boot",
+     "base": 4
+    },
+    {
+     "id": "n_okpae",
+     "name": "옥패",
+     "slot": "neck",
+     "base": 5
+    },
+    {
+     "id": "n_geumpae",
+     "name": "금패",
+     "slot": "neck",
+     "base": 6
+    },
+    {
+     "id": "c_hopae",
+     "name": "호패",
+     "slot": "charm",
+     "base": 5
+    },
+    {
+     "id": "c_yeombul",
+     "name": "염주",
+     "slot": "charm",
+     "base": 6
+    },
+    {
+     "id": "c_hobu",
+     "name": "호부",
+     "slot": "charm",
+     "base": 6
+    },
+    {
+     "id": "c_dokkaebi",
+     "name": "도깨비방울",
+     "slot": "charm",
+     "base": 7
+    },
+    {
+     "id": "c_gyeong",
+     "name": "청동경",
+     "slot": "charm",
+     "base": 7
+    },
+    {
+     "id": "c_okgae",
+     "name": "옥가락지",
+     "slot": "ring",
+     "base": 7
+    },
+    {
+     "id": "r_geumji",
+     "name": "금지환",
+     "slot": "ring",
+     "base": 5
+    }
    ]
   },
   {
@@ -102,6 +336,188 @@
     "u_gyeong",
     "u_mandara",
     "u_byeoksa"
+   ],
+   "items": [
+    {
+     "id": "u_ssanggeom",
+     "name": "쌍룡도(雙龍刀)",
+     "base": "w_hwando",
+     "desc": "두 마리 용이 새겨진 환도. 쥔 손이 뜨거워진다."
+    },
+    {
+     "id": "u_byeoksan",
+     "name": "벽산편(劈山鞭)",
+     "base": "w_pyeongon",
+     "desc": "산을 쪼갠다는 편곤. 무겁고, 무겁게 든다."
+    },
+    {
+     "id": "u_cheonjigang",
+     "name": "천지창(天地槍)",
+     "base": "w_changj",
+     "desc": "하늘과 땅을 꿰는 창. 끝이 보이지 않는다."
+    },
+    {
+     "id": "u_cheongryong",
+     "name": "청룡언월도(靑龍偃月刀)",
+     "base": "w_wolto",
+     "desc": "이름만으로 무게가 실리는 월도."
+    },
+    {
+     "id": "u_manbal",
+     "name": "만발궁(萬發弓)",
+     "base": "w_gakgung",
+     "desc": "쏘아도 쏘아도 화살이 남는다는 각궁."
+    },
+    {
+     "id": "u_gwiseon",
+     "name": "귀선부(鬼仙斧)",
+     "base": "w_bugae",
+     "desc": "귀신이 벼렸다는 부월. 날이 검다."
+    },
+    {
+     "id": "u_baekhak",
+     "name": "백학선(白鶴扇)",
+     "base": "w_seonchae",
+     "desc": "흰 학이 그려진 부채. 부치면 바람이 차다."
+    },
+    {
+     "id": "u_jukjang",
+     "name": "녹죽장(綠竹杖)",
+     "base": "w_jukjang",
+     "desc": "푸른 대로 만든 지팡이. 짚으면 기가 돈다."
+    },
+    {
+     "id": "u_iljabul",
+     "name": "일자필(一字筆)",
+     "base": "w_bilbut",
+     "desc": "한 글자로 사람을 움직였다는 붓."
+    },
+    {
+     "id": "u_yukdo",
+     "name": "육도삼략(六韜三略)",
+     "base": "w_byeongseo",
+     "desc": "병법의 뿌리. 읽은 자가 곧 장수가 된다."
+    },
+    {
+     "id": "u_danryeong",
+     "name": "단령피갑(丹領皮甲)",
+     "base": "a_pigap",
+     "desc": "붉은 깃을 댄 피갑. 갖춰 입으면 위엄이 선다."
+    },
+    {
+     "id": "u_dujeong",
+     "name": "흑린두정(黑鱗頭釘)",
+     "base": "a_dujeong",
+     "desc": "검은 비늘을 박은 두정갑. 화살이 튕긴다."
+    },
+    {
+     "id": "u_chalgap",
+     "name": "만인갑(萬人甲)",
+     "base": "a_chalgap",
+     "desc": "만 사람을 막아 냈다는 찰갑."
+    },
+    {
+     "id": "u_dopo",
+     "name": "학창의(鶴氅衣)",
+     "base": "a_dopo",
+     "desc": "학의 깃으로 지은 도포. 걸치면 걸음이 가볍다."
+    },
+    {
+     "id": "u_cheollip",
+     "name": "흑철립(黑鐵笠)",
+     "base": "a_cheollip",
+     "desc": "검은 무쇠로 만든 삿갓. 그늘이 짙다."
+    },
+    {
+     "id": "u_okro",
+     "name": "옥로관(玉鷺冠)",
+     "base": "a_myeongap",
+     "desc": "백로 깃을 꽂은 관. 먼 곳이 눈에 들어온다."
+    },
+    {
+     "id": "u_eunwol",
+     "name": "은월투구(銀月兜)",
+     "base": "h_tumo",
+     "desc": "달빛을 두른 투구. 부딪는 소리가 맑다."
+    },
+    {
+     "id": "u_cheongeun",
+     "name": "천근완갑(千斤腕甲)",
+     "base": "g_wangap",
+     "desc": "천 근을 든다는 팔찌. 손끝이 저릿하다."
+    },
+    {
+     "id": "u_yusu",
+     "name": "유수완대(流水腕帶)",
+     "base": "g_wandae",
+     "desc": "흐르는 물처럼 부드러운 완대. 손이 빨라진다."
+    },
+    {
+     "id": "u_cheolli",
+     "name": "천리화(千里靴)",
+     "base": "b_hwaje",
+     "desc": "천 리를 간다는 신. 걸음이 가벼워진다."
+    },
+    {
+     "id": "u_unmun",
+     "name": "운문리(雲紋履)",
+     "base": "b_jipsin",
+     "desc": "구름 무늬를 놓은 짚신. 딛는 곳마다 인연이 닿는다."
+    },
+    {
+     "id": "u_taeeul",
+     "name": "태을옥패(太乙玉佩)",
+     "base": "n_okpae",
+     "desc": "태을성의 기운을 담은 옥패."
+    },
+    {
+     "id": "u_geumin",
+     "name": "금인패(金印牌)",
+     "base": "n_geumpae",
+     "desc": "금인이 새겨진 패. 지니면 사람이 따른다."
+    },
+    {
+     "id": "u_yongmun",
+     "name": "용문지환(龍紋指環)",
+     "base": "r_geumji",
+     "desc": "용무늬를 새긴 가락지. 낀 손이 든든하다."
+    },
+    {
+     "id": "u_hopae",
+     "name": "어사호패(御史號牌)",
+     "base": "c_hopae",
+     "desc": "암행어사의 호패. 내보이면 길이 열린다."
+    },
+    {
+     "id": "u_okgae",
+     "name": "월하옥지(月下玉指)",
+     "base": "c_okgae",
+     "desc": "달빛에 비추면 속이 비치는 옥가락지."
+    },
+    {
+     "id": "u_dokkaebi",
+     "name": "도깨비방울(鬼鈴)",
+     "base": "c_dokkaebi",
+     "desc": "흔들면 도깨비가 웃는다. 웃을 때마다 뭔가 떨어진다."
+    },
+    {
+     "id": "u_gyeong",
+     "name": "조요경(照妖鏡)",
+     "base": "c_gyeong",
+     "desc": "요괴를 비추는 청동경. 비친 것은 숨지 못한다."
+    },
+    {
+     "id": "u_mandara",
+     "name": "만다라주(曼陀羅珠)",
+     "base": "c_yeombul",
+     "desc": "천 번을 굴렸다는 염주. 마음이 가라앉는다."
+    },
+    {
+     "id": "u_byeoksa",
+     "name": "벽사호부(辟邪護符)",
+     "base": "c_hobu",
+     "desc": "삿된 것을 물린다는 부적. 태우면 재가 남지 않는다."
+    }
    ]
   },
   {
@@ -125,6 +541,58 @@
     "biyeong",
     "paewang",
     "hyeonhak"
+   ],
+   "items": [
+    {
+     "id": "chungmu",
+     "name": "충무(忠武)",
+     "desc": "바다를 지킨 이의 채비."
+    },
+    {
+     "id": "waryong",
+     "name": "와룡(臥龍)",
+     "desc": "누운 용의 채비. 붓이 칼보다 앞선다."
+    },
+    {
+     "id": "horang",
+     "name": "호랑(虎狼)",
+     "desc": "범과 이리의 채비. 앞장서는 자의 것."
+    },
+    {
+     "id": "cheongnang",
+     "name": "청낭(靑囊)",
+     "desc": "푸른 주머니의 채비. 셈이 밝은 이의 것."
+    },
+    {
+     "id": "cheolong",
+     "name": "철옹(鐵甕)",
+     "desc": "무너지지 않는 성벽의 채비."
+    },
+    {
+     "id": "eunha",
+     "name": "은하(銀河)",
+     "desc": "밤하늘의 지혜를 두른 채비."
+    },
+    {
+     "id": "maenghon",
+     "name": "맹혼(猛魂)",
+     "desc": "사나운 범의 발톱을 한 채비."
+    },
+    {
+     "id": "biyeong",
+     "name": "비영(飛影)",
+     "desc": "그림자처럼 빠른 이의 채비."
+    },
+    {
+     "id": "paewang",
+     "name": "패왕(霸王)",
+     "desc": "천하를 노리는 자의 채비."
+    },
+    {
+     "id": "hyeonhak",
+     "name": "현학(玄鶴)",
+     "desc": "학처럼 초연한 이의 채비."
+    }
    ]
   },
   {
@@ -144,6 +612,38 @@
     "jade",
     "onyx",
     "voidstone"
+   ],
+   "items": [
+    {
+     "id": "agate",
+     "name": "마노(瑪瑙)",
+     "desc": "붉은 마노. 박으면 불이 붙는다."
+    },
+    {
+     "id": "pearl",
+     "name": "진주(眞珠)",
+     "desc": "바다에서 온 구슬. 맞은 것이 굼떠진다."
+    },
+    {
+     "id": "amber",
+     "name": "호박(琥珀)",
+     "desc": "송진이 굳은 돌. 번개를 머금는다."
+    },
+    {
+     "id": "jade",
+     "name": "옥(玉)",
+     "desc": "맑은 옥. 스미면 오래 간다."
+    },
+    {
+     "id": "onyx",
+     "name": "흑요(黑曜)",
+     "desc": "검게 빛나는 돌. 기(氣)가 곧게 뻗는다."
+    },
+    {
+     "id": "voidstone",
+     "name": "전자석(電磁石)",
+     "desc": "2026-09-10 신설 — 출처를 알 수 없는 돌. 미래의 힘이 깃들었다."
+    }
    ]
   },
   {
@@ -169,6 +669,68 @@
     "sin",
     "ryong",
     "wang"
+   ],
+   "items": [
+    {
+     "id": "cheon",
+     "name": "천",
+     "desc": "하늘 천."
+    },
+    {
+     "id": "ji",
+     "name": "지",
+     "desc": "땅 지."
+    },
+    {
+     "id": "in",
+     "name": "인",
+     "desc": "사람 인."
+    },
+    {
+     "id": "mu",
+     "name": "무",
+     "desc": "굳셀 무."
+    },
+    {
+     "id": "mun",
+     "name": "문",
+     "desc": "글월 문."
+    },
+    {
+     "id": "chung",
+     "name": "충",
+     "desc": "충성 충."
+    },
+    {
+     "id": "ui",
+     "name": "의",
+     "desc": "옳을 의."
+    },
+    {
+     "id": "yong",
+     "name": "용",
+     "desc": "날랠 용."
+    },
+    {
+     "id": "ji2",
+     "name": "지(智)",
+     "desc": "슬기 지."
+    },
+    {
+     "id": "sin",
+     "name": "신",
+     "desc": "믿을 신."
+    },
+    {
+     "id": "ryong",
+     "name": "용(龍)",
+     "desc": "용 룡. 드물다."
+    },
+    {
+     "id": "wang",
+     "name": "왕",
+     "desc": "임금 왕. 아주 드물다."
+    }
    ]
   },
   {
@@ -222,6 +784,208 @@
     "ear2",
     "ear3",
     "ear4"
+   ],
+   "items": [
+    {
+     "id": "sword1",
+     "name": "목검(木劍)",
+     "slot": "weapon"
+    },
+    {
+     "id": "sword2",
+     "name": "환도(環刀)",
+     "slot": "weapon"
+    },
+    {
+     "id": "sword3",
+     "name": "청강검(靑鋼劍)",
+     "slot": "weapon"
+    },
+    {
+     "id": "sword4",
+     "name": "용린도(龍鱗刀)",
+     "slot": "weapon"
+    },
+    {
+     "id": "hat1",
+     "name": "가죽 두건",
+     "slot": "hat"
+    },
+    {
+     "id": "hat2",
+     "name": "철투구",
+     "slot": "hat"
+    },
+    {
+     "id": "hat3",
+     "name": "봉시투구",
+     "slot": "hat"
+    },
+    {
+     "id": "hat4",
+     "name": "금장 갑주투",
+     "slot": "hat"
+    },
+    {
+     "id": "top1",
+     "name": "무명 저고리",
+     "slot": "top"
+    },
+    {
+     "id": "top2",
+     "name": "가죽 갑옷",
+     "slot": "top"
+    },
+    {
+     "id": "top3",
+     "name": "찰갑(札甲)",
+     "slot": "top"
+    },
+    {
+     "id": "top4",
+     "name": "두정갑",
+     "slot": "top"
+    },
+    {
+     "id": "bot1",
+     "name": "무명 바지",
+     "slot": "bottom"
+    },
+    {
+     "id": "bot2",
+     "name": "가죽 전군",
+     "slot": "bottom"
+    },
+    {
+     "id": "bot3",
+     "name": "철엽 전군",
+     "slot": "bottom"
+    },
+    {
+     "id": "bot4",
+     "name": "용문 전군",
+     "slot": "bottom"
+    },
+    {
+     "id": "shoe1",
+     "name": "짚신",
+     "slot": "shoes"
+    },
+    {
+     "id": "shoe2",
+     "name": "가죽 전화",
+     "slot": "shoes"
+    },
+    {
+     "id": "shoe3",
+     "name": "철갑 전화",
+     "slot": "shoes"
+    },
+    {
+     "id": "shoe4",
+     "name": "비룡화",
+     "slot": "shoes"
+    },
+    {
+     "id": "glv1",
+     "name": "무명 팔찌",
+     "slot": "glove"
+    },
+    {
+     "id": "glv2",
+     "name": "가죽 수갑",
+     "slot": "glove"
+    },
+    {
+     "id": "glv3",
+     "name": "철갑 수갑",
+     "slot": "glove"
+    },
+    {
+     "id": "glv4",
+     "name": "용조 수갑",
+     "slot": "glove"
+    },
+    {
+     "id": "cap1",
+     "name": "베 망토",
+     "slot": "cape"
+    },
+    {
+     "id": "cap2",
+     "name": "가죽 망토",
+     "slot": "cape"
+    },
+    {
+     "id": "cap3",
+     "name": "수달피 망토",
+     "slot": "cape"
+    },
+    {
+     "id": "cap4",
+     "name": "흑룡 망토",
+     "slot": "cape"
+    },
+    {
+     "id": "ring1",
+     "name": "무명 지환",
+     "slot": "ring"
+    },
+    {
+     "id": "ring2",
+     "name": "은지환",
+     "slot": "ring"
+    },
+    {
+     "id": "ring3",
+     "name": "옥지환",
+     "slot": "ring"
+    },
+    {
+     "id": "ring4",
+     "name": "금룡지환",
+     "slot": "ring"
+    },
+    {
+     "id": "neck1",
+     "name": "나무 목걸이",
+     "slot": "necklace"
+    },
+    {
+     "id": "neck2",
+     "name": "은 목걸이",
+     "slot": "necklace"
+    },
+    {
+     "id": "neck3",
+     "name": "옥 목걸이",
+     "slot": "necklace"
+    },
+    {
+     "id": "neck4",
+     "name": "금 목걸이",
+     "slot": "necklace"
+    },
+    {
+     "id": "ear1",
+     "name": "나무 귀걸이",
+     "slot": "earring"
+    },
+    {
+     "id": "ear2",
+     "name": "은 귀걸이",
+     "slot": "earring"
+    },
+    {
+     "id": "ear3",
+     "name": "옥 귀걸이",
+     "slot": "earring"
+    },
+    {
+     "id": "ear4",
+     "name": "금 귀걸이",
+     "slot": "earring"
+    }
    ]
   },
   {
@@ -242,6 +1006,43 @@
     "def60",
     "hp60",
     "hp10"
+   ],
+   "items": [
+    {
+     "id": "atk100",
+     "name": "공격력 주문서 100%",
+     "desc": "반드시 붙지만 조금 붙는다"
+    },
+    {
+     "id": "atk60",
+     "name": "공격력 주문서 60%",
+     "desc": "열에 여섯"
+    },
+    {
+     "id": "atk10",
+     "name": "공격력 주문서 10%",
+     "desc": "열에 하나 — 붙으면 크다"
+    },
+    {
+     "id": "def100",
+     "name": "물리방어 주문서 100%",
+     "desc": "반드시 붙는다"
+    },
+    {
+     "id": "def60",
+     "name": "물리방어 주문서 60%",
+     "desc": "열에 여섯"
+    },
+    {
+     "id": "hp60",
+     "name": "체력 주문서 60%",
+     "desc": "체력을 올린다"
+    },
+    {
+     "id": "hp10",
+     "name": "체력 주문서 10%",
+     "desc": "열에 하나 — 붙으면 크다"
+    }
    ]
   },
   {
@@ -265,6 +1066,78 @@
     "u_ring",
     "u_necklace",
     "u_earring"
+   ],
+   "items": [
+    {
+     "id": "u_sword",
+     "name": "진룡도(震龍刀)",
+     "slot": "weapon",
+     "base": "sword4",
+     "desc": "용이 잠에서 깨어난다는 검. 휘두르면 울림이 남는다."
+    },
+    {
+     "id": "u_hat",
+     "name": "봉황관(鳳凰冠)",
+     "slot": "hat",
+     "base": "hat4",
+     "desc": "봉황 깃을 세운 투구. 쓰면 눈이 밝아진다."
+    },
+    {
+     "id": "u_top",
+     "name": "현무갑(玄武甲)",
+     "slot": "top",
+     "base": "top4",
+     "desc": "검은 거북 무늬를 두른 갑옷. 웬만한 타격은 튕겨 낸다."
+    },
+    {
+     "id": "u_bottom",
+     "name": "천리군(千里裙)",
+     "slot": "bottom",
+     "base": "bot4",
+     "desc": "천 리를 걸어도 해지지 않는다는 전군(戰裙)."
+    },
+    {
+     "id": "u_shoes",
+     "name": "분마화(奔馬靴)",
+     "slot": "shoes",
+     "base": "shoe4",
+     "desc": "달리는 말처럼 가볍다는 신. 딛는 곳마다 먼지가 인다."
+    },
+    {
+     "id": "u_glove",
+     "name": "호랑수갑(虎狼手甲)",
+     "slot": "glove",
+     "base": "glv4",
+     "desc": "범과 이리를 맨손으로 잡았다는 수갑. 쥔 손에 힘이 붙는다."
+    },
+    {
+     "id": "u_cape",
+     "name": "봉래포(蓬萊袍)",
+     "slot": "cape",
+     "base": "cap4",
+     "desc": "봉래산 구름을 짜 넣었다는 망토. 걸치면 등이 든든하다."
+    },
+    {
+     "id": "u_ring",
+     "name": "구룡지환(九龍指環)",
+     "slot": "ring",
+     "base": "ring4",
+     "desc": "아홉 마리 용이 서로를 물고 도는 반지. 낀 손에 기운이 감돈다."
+    },
+    {
+     "id": "u_necklace",
+     "name": "영롱주(玲瓏珠)",
+     "slot": "necklace",
+     "base": "neck4",
+     "desc": "속이 비칠 듯 맑은 구슬을 꿴 목걸이. 지니면 숨이 고르다."
+    },
+    {
+     "id": "u_earring",
+     "name": "월아환(月牙環)",
+     "slot": "earring",
+     "base": "ear4",
+     "desc": "초승달 모양의 귀걸이. 걸치면 밤에도 눈이 밝다."
+    }
    ]
   },
   {
@@ -289,6 +1162,63 @@
     "itm_timeshard",
     "itm_purifier",
     "itm_boneseal"
+   ],
+   "items": [
+    {
+     "id": "itm_ironblade",
+     "name": "무쇠검",
+     "desc": "날이 벼려진 채로 전해 내려온 검."
+    },
+    {
+     "id": "itm_warhorse",
+     "name": "준마",
+     "desc": "하루에 천 리를 달린다는 말."
+    },
+    {
+     "id": "itm_armor",
+     "name": "보갑",
+     "desc": "화살도 뚫지 못하는 갑옷."
+    },
+    {
+     "id": "itm_scroll",
+     "name": "병서",
+     "desc": "옛 병가의 계책이 적힌 두루마리."
+    },
+    {
+     "id": "itm_compass",
+     "name": "나침반",
+     "desc": "산길에서도 방향을 잃지 않게 해 준다."
+    },
+    {
+     "id": "itm_jade",
+     "name": "옥패",
+     "desc": "몸에 지니면 마음이 가라앉는다는 옥."
+    },
+    {
+     "id": "itm_seal",
+     "name": "인수",
+     "desc": "위엄을 세우는 관인."
+    },
+    {
+     "id": "itm_drum",
+     "name": "전고",
+     "desc": "북소리 하나로 군세를 다잡는다."
+    },
+    {
+     "id": "itm_timeshard",
+     "name": "시간의 파편",
+     "desc": "균열에서 흘러나온 조각. 지니면 앞일이 어렴풋이 보인다."
+    },
+    {
+     "id": "itm_purifier",
+     "name": "정화 장치",
+     "desc": "오염을 씻어내는 장치. 몸에 지니면 숨쉬기가 한결 낫다."
+    },
+    {
+     "id": "itm_boneseal",
+     "name": "해골의 인장",
+     "desc": "주인 없는 인장. 지니면 죽은 자도 따른다는 말이 있다."
+    }
    ]
   },
   {
@@ -309,6 +1239,43 @@
     "treat",
     "incense",
     "prayer"
+   ],
+   "items": [
+    {
+     "id": "scroll",
+     "name": "등용서",
+     "desc": "인물을 등용할 때 한 장씩 든다."
+    },
+    {
+     "id": "feed",
+     "name": "사료",
+     "desc": "짐승을 포획할 때 한 줌씩 든다."
+    },
+    {
+     "id": "shard",
+     "name": "인장 조각",
+     "desc": "사당 시련의 증표. 셋이 모이면 인장이 된다."
+    },
+    {
+     "id": "seal",
+     "name": "사당 인장",
+     "desc": "사당 인장 조각 셋을 합친 증표."
+    },
+    {
+     "id": "treat",
+     "name": "별미",
+     "desc": "2분간 포획이 눈에 띄게 쉬워진다."
+    },
+    {
+     "id": "incense",
+     "name": "향(香)",
+     "desc": "15분간 근처에 더 많이, 더 귀한 것이 나타난다."
+    },
+    {
+     "id": "prayer",
+     "name": "축문",
+     "desc": "30분간 얻는 경험치가 두 배가 된다."
+    }
    ]
   },
   {
@@ -332,6 +1299,48 @@
     "ash_flower",
     "snow_bloom",
     "meat"
+   ],
+   "items": [
+    {
+     "id": "mint",
+     "name": "박하"
+    },
+    {
+     "id": "honey_flower",
+     "name": "꿀꽃"
+    },
+    {
+     "id": "apple",
+     "name": "산사과"
+    },
+    {
+     "id": "mushroom",
+     "name": "송이버섯"
+    },
+    {
+     "id": "clam",
+     "name": "바지락"
+    },
+    {
+     "id": "orchid",
+     "name": "청하란"
+    },
+    {
+     "id": "conch",
+     "name": "갯소라"
+    },
+    {
+     "id": "ash_flower",
+     "name": "재꽃"
+    },
+    {
+     "id": "snow_bloom",
+     "name": "눈꽃"
+    },
+    {
+     "id": "meat",
+     "name": "짐승 고기"
+    }
    ]
   },
   {
@@ -348,6 +1357,20 @@
     "0",
     "1",
     "2"
+   ],
+   "items": [
+    {
+     "id": "0",
+     "name": "orchid"
+    },
+    {
+     "id": "1",
+     "name": "conch"
+    },
+    {
+     "id": "2",
+     "name": "ash_flower"
+    }
    ]
   },
   {
@@ -366,6 +1389,28 @@
     "2",
     "3",
     "4"
+   ],
+   "items": [
+    {
+     "id": "0",
+     "name": "gladiator"
+    },
+    {
+     "id": "1",
+     "name": "crimson"
+    },
+    {
+     "id": "2",
+     "name": "viridescent"
+    },
+    {
+     "id": "3",
+     "name": "emblem"
+    },
+    {
+     "id": "4",
+     "name": "depth"
+    }
    ]
   },
   {
@@ -447,6 +1492,363 @@
     "trout",
     "smelt",
     "loach"
+   ],
+   "items": [
+    {
+     "id": "apple",
+     "name": "능금",
+     "cat": "fruit"
+    },
+    {
+     "id": "peach",
+     "name": "복숭아",
+     "cat": "fruit"
+    },
+    {
+     "id": "persim",
+     "name": "홍시",
+     "cat": "fruit"
+    },
+    {
+     "id": "plum",
+     "name": "매실",
+     "cat": "fruit"
+    },
+    {
+     "id": "citron",
+     "name": "유자",
+     "cat": "fruit"
+    },
+    {
+     "id": "chest",
+     "name": "밤",
+     "cat": "nut"
+    },
+    {
+     "id": "pine",
+     "name": "잣",
+     "cat": "nut"
+    },
+    {
+     "id": "sprout",
+     "name": "두릅",
+     "cat": "nut"
+    },
+    {
+     "id": "iron",
+     "name": "철석",
+     "cat": "ore"
+    },
+    {
+     "id": "copper",
+     "name": "구리",
+     "cat": "ore"
+    },
+    {
+     "id": "silver",
+     "name": "은괴",
+     "cat": "ore"
+    },
+    {
+     "id": "stardust",
+     "name": "별조각",
+     "cat": "ore"
+    },
+    {
+     "id": "azalea",
+     "name": "진달래",
+     "cat": "flower"
+    },
+    {
+     "id": "mugung",
+     "name": "무궁화",
+     "cat": "flower"
+    },
+    {
+     "id": "orchid",
+     "name": "난초",
+     "cat": "flower"
+    },
+    {
+     "id": "maple",
+     "name": "단풍",
+     "cat": "flower"
+    },
+    {
+     "id": "sulwha",
+     "name": "설중매",
+     "cat": "flower"
+    },
+    {
+     "id": "geumnang",
+     "name": "금낭화",
+     "cat": "flower"
+    },
+    {
+     "id": "jaran",
+     "name": "자란",
+     "cat": "flower"
+    },
+    {
+     "id": "hongmae",
+     "name": "홍매",
+     "cat": "flower"
+    },
+    {
+     "id": "mugwort",
+     "name": "쑥",
+     "cat": "herb"
+    },
+    {
+     "id": "bellroot",
+     "name": "도라지",
+     "cat": "herb"
+    },
+    {
+     "id": "reishi",
+     "name": "영지버섯",
+     "cat": "herb"
+    },
+    {
+     "id": "ginseng",
+     "name": "산삼",
+     "cat": "herb"
+    },
+    {
+     "id": "cabbage",
+     "name": "배추흰나비",
+     "form": "butterfly",
+     "cat": "bug"
+    },
+    {
+     "id": "ladybug",
+     "name": "무당벌레",
+     "form": "ladybug",
+     "cat": "bug"
+    },
+    {
+     "id": "swallow",
+     "name": "호랑나비",
+     "form": "butterfly",
+     "cat": "bug"
+    },
+    {
+     "id": "hopper",
+     "name": "방아깨비",
+     "form": "hopper",
+     "cat": "bug"
+    },
+    {
+     "id": "dragon",
+     "name": "잠자리",
+     "form": "dragonfly",
+     "cat": "bug"
+    },
+    {
+     "id": "cicada",
+     "name": "참매미",
+     "form": "cicada",
+     "cat": "bug"
+    },
+    {
+     "id": "longhorn",
+     "name": "하늘소",
+     "form": "beetle",
+     "cat": "bug"
+    },
+    {
+     "id": "mantis",
+     "name": "사마귀",
+     "form": "hopper",
+     "cat": "bug"
+    },
+    {
+     "id": "cricket",
+     "name": "귀뚜라미",
+     "form": "hopper",
+     "cat": "bug"
+    },
+    {
+     "id": "firefly",
+     "name": "반딧불이",
+     "form": "firefly",
+     "cat": "bug"
+    },
+    {
+     "id": "rhino",
+     "name": "장수풍뎅이",
+     "form": "beetle",
+     "cat": "bug"
+    },
+    {
+     "id": "stag",
+     "name": "사슴벌레",
+     "form": "beetle",
+     "cat": "bug"
+    },
+    {
+     "id": "snail",
+     "name": "달팽이",
+     "form": "snail",
+     "cat": "bug"
+    },
+    {
+     "id": "spider",
+     "name": "거미",
+     "form": "spider",
+     "cat": "bug"
+    },
+    {
+     "id": "wasp",
+     "name": "말벌",
+     "form": "wasp",
+     "cat": "bug"
+    },
+    {
+     "id": "shard",
+     "name": "토기 조각",
+     "cat": "fossil"
+    },
+    {
+     "id": "oldcoin",
+     "name": "옛 동전",
+     "cat": "fossil"
+    },
+    {
+     "id": "fern",
+     "name": "고사리 화석",
+     "cat": "fossil"
+    },
+    {
+     "id": "fishf",
+     "name": "물고기 화석",
+     "cat": "fossil"
+    },
+    {
+     "id": "trilo",
+     "name": "삼엽충 화석",
+     "cat": "fossil"
+    },
+    {
+     "id": "ammon",
+     "name": "암모나이트",
+     "cat": "fossil"
+    },
+    {
+     "id": "track",
+     "name": "새 발자국",
+     "cat": "fossil"
+    },
+    {
+     "id": "tooth",
+     "name": "공룡 이빨",
+     "cat": "fossil"
+    },
+    {
+     "id": "bone",
+     "name": "공룡 뼈",
+     "cat": "fossil"
+    },
+    {
+     "id": "tusk",
+     "name": "매머드 엄니",
+     "cat": "fossil"
+    },
+    {
+     "id": "godung",
+     "name": "고둥",
+     "cat": "shell"
+    },
+    {
+     "id": "sora",
+     "name": "소라",
+     "cat": "shell"
+    },
+    {
+     "id": "daehap",
+     "name": "대합",
+     "cat": "shell"
+    },
+    {
+     "id": "urchin",
+     "name": "성게 껍질",
+     "cat": "shell"
+    },
+    {
+     "id": "abalone",
+     "name": "전복 껍데기",
+     "cat": "shell"
+    },
+    {
+     "id": "pearl",
+     "name": "진주",
+     "cat": "shell"
+    },
+    {
+     "id": "rooftile",
+     "name": "옛 기와 조각",
+     "cat": "ruin"
+    },
+    {
+     "id": "wallstone",
+     "name": "성돌",
+     "cat": "ruin"
+    },
+    {
+     "id": "rafter",
+     "name": "서까래 토막",
+     "cat": "ruin"
+    },
+    {
+     "id": "bignail",
+     "name": "대못",
+     "cat": "ruin"
+    },
+    {
+     "id": "doorring",
+     "name": "문고리",
+     "cat": "ruin"
+    },
+    {
+     "id": "postkey",
+     "name": "옛 우체통 열쇠",
+     "cat": "ruin"
+    },
+    {
+     "id": "crucian",
+     "name": "붕어",
+     "cat": "fish"
+    },
+    {
+     "id": "carp",
+     "name": "잉어",
+     "cat": "fish"
+    },
+    {
+     "id": "catfish",
+     "name": "메기",
+     "cat": "fish"
+    },
+    {
+     "id": "sturgeon",
+     "name": "철갑상어",
+     "cat": "fish"
+    },
+    {
+     "id": "trout",
+     "name": "송어",
+     "cat": "fish"
+    },
+    {
+     "id": "smelt",
+     "name": "빙어",
+     "cat": "fish"
+    },
+    {
+     "id": "loach",
+     "name": "미꾸라지",
+     "cat": "fish"
+    }
    ]
   },
   {
@@ -492,6 +1894,168 @@
     "visit_alien",
     "visit_parcel",
     "visit_photo"
+   ],
+   "items": [
+    {
+     "id": "bangseok",
+     "name": "방석",
+     "form": "cushion"
+    },
+    {
+     "id": "yo",
+     "name": "요",
+     "form": "bedding"
+    },
+    {
+     "id": "hwabun",
+     "name": "화분",
+     "form": "plant"
+    },
+    {
+     "id": "deungjan",
+     "name": "등잔",
+     "form": "lamp"
+    },
+    {
+     "id": "soban",
+     "name": "소반",
+     "form": "table"
+    },
+    {
+     "id": "mulhang",
+     "name": "물항아리",
+     "form": "vase"
+    },
+    {
+     "id": "jokja",
+     "name": "족자",
+     "form": "scroll"
+    },
+    {
+     "id": "seoan",
+     "name": "서안",
+     "form": "table"
+    },
+    {
+     "id": "hwaro",
+     "name": "화로",
+     "form": "brazier"
+    },
+    {
+     "id": "mungab",
+     "name": "문갑",
+     "form": "chest"
+    },
+    {
+     "id": "bandaji",
+     "name": "반닫이",
+     "form": "chest"
+    },
+    {
+     "id": "dokja",
+     "name": "도자기",
+     "form": "vase"
+    },
+    {
+     "id": "badukpan",
+     "name": "바둑판",
+     "form": "table"
+    },
+    {
+     "id": "byeongpung",
+     "name": "병풍",
+     "form": "screen"
+    },
+    {
+     "id": "geomungo",
+     "name": "거문고",
+     "form": "gayageum"
+    },
+    {
+     "id": "fest_seollal",
+     "name": "복조리",
+     "form": "vase"
+    },
+    {
+     "id": "fest_daeborum",
+     "name": "달집 화로",
+     "form": "brazier"
+    },
+    {
+     "id": "fest_samjin",
+     "name": "꽃전 소반",
+     "form": "table"
+    },
+    {
+     "id": "fest_dano",
+     "name": "창포 화분",
+     "form": "plant"
+    },
+    {
+     "id": "fest_chilseok",
+     "name": "오작교 족자",
+     "form": "scroll"
+    },
+    {
+     "id": "fest_baekjung",
+     "name": "연등",
+     "form": "lamp"
+    },
+    {
+     "id": "fest_chuseok",
+     "name": "송편 상",
+     "form": "table"
+    },
+    {
+     "id": "fest_dongji",
+     "name": "팥죽 화로",
+     "form": "brazier"
+    },
+    {
+     "id": "visit_sailor",
+     "name": "선장의 궤짝",
+     "form": "chest"
+    },
+    {
+     "id": "visit_wisp",
+     "name": "도깨비 등롱",
+     "form": "lamp"
+    },
+    {
+     "id": "visit_angler",
+     "name": "명인의 어탁",
+     "form": "scroll"
+    },
+    {
+     "id": "visit_bug",
+     "name": "나비 표본 액자",
+     "form": "screen"
+    },
+    {
+     "id": "visit_future",
+     "name": "시간의 탁상시계",
+     "form": "vase"
+    },
+    {
+     "id": "visit_dokkaebi",
+     "name": "도깨비 방망이 탁자",
+     "form": "table"
+    },
+    {
+     "id": "visit_alien",
+     "name": "별 지도 액자",
+     "form": "scroll"
+    },
+    {
+     "id": "visit_parcel",
+     "name": "소포 상자 탑",
+     "form": "chest"
+    },
+    {
+     "id": "visit_photo",
+     "name": "숲 사진첩 병풍",
+     "form": "screen"
+    }
    ]
   },
   {
@@ -508,6 +2072,23 @@
     "net",
     "spade",
     "deed"
+   ],
+   "items": [
+    {
+     "id": "net",
+     "name": "잠자리채",
+     "desc": "곤충을 잡을 수 있게 됩니다"
+    },
+    {
+     "id": "spade",
+     "name": "삽",
+     "desc": "갈라진 자리를 파낼 수 있게 됩니다"
+    },
+    {
+     "id": "deed",
+     "name": "개토패(開土牌)",
+     "desc": "땅을 고쳐 길과 물길을 낼 수 있게 됩니다"
+    }
    ]
   },
   {
@@ -526,6 +2107,28 @@
     "sol",
     "muk",
     "dan"
+   ],
+   "items": [
+    {
+     "id": "earth",
+     "name": "흙벽"
+    },
+    {
+     "id": "hanji",
+     "name": "한지벽"
+    },
+    {
+     "id": "sol",
+     "name": "솔빛벽"
+    },
+    {
+     "id": "muk",
+     "name": "먹빛벽"
+    },
+    {
+     "id": "dan",
+     "name": "단청벽"
+    }
    ]
   },
   {
@@ -544,6 +2147,28 @@
     "jangpan",
     "stone",
     "ondol"
+   ],
+   "items": [
+    {
+     "id": "wood",
+     "name": "마루"
+    },
+    {
+     "id": "mat",
+     "name": "돗자리"
+    },
+    {
+     "id": "jangpan",
+     "name": "장판"
+    },
+    {
+     "id": "stone",
+     "name": "박석"
+    },
+    {
+     "id": "ondol",
+     "name": "구들장"
+    }
    ]
   },
   {
@@ -579,6 +2204,97 @@
     "plum",
     "off",
     "on"
+   ],
+   "items": [
+    {
+     "id": "leather",
+     "name": "평상복"
+    },
+    {
+     "id": "robe",
+     "name": "도포"
+    },
+    {
+     "id": "coat",
+     "name": "두루마기"
+    },
+    {
+     "id": "plate",
+     "name": "갑옷"
+    },
+    {
+     "id": "spacesuit",
+     "name": "배달원 우주복",
+     "look": "plate"
+    },
+    {
+     "id": "none",
+     "name": "맨머리"
+    },
+    {
+     "id": "topknot",
+     "name": "상투"
+    },
+    {
+     "id": "braid",
+     "name": "댕기"
+    },
+    {
+     "id": "scholar",
+     "name": "유건"
+    },
+    {
+     "id": "gat",
+     "name": "갓"
+    },
+    {
+     "id": "hairpin",
+     "name": "족두리"
+    },
+    {
+     "id": "helmet",
+     "name": "전립"
+    },
+    {
+     "id": "none",
+     "name": "그대로"
+    },
+    {
+     "id": "white",
+     "name": "소색"
+    },
+    {
+     "id": "ink",
+     "name": "먹빛"
+    },
+    {
+     "id": "forest",
+     "name": "풀빛"
+    },
+    {
+     "id": "indigo",
+     "name": "쪽빛"
+    },
+    {
+     "id": "crimson",
+     "name": "다홍"
+    },
+    {
+     "id": "gold",
+     "name": "치자빛"
+    },
+    {
+     "id": "plum",
+     "name": "자주"
+    },
+    {
+     "id": "off",
+     "name": "없음"
+    },
+    {
+     "id": "on",
+     "name": "덧옷"
+    }
    ]
   },
   {
@@ -590,7 +2306,8 @@
    "count": 16,
    "icon_field": null,
    "with_icon": 0,
-   "icon_kind": "확인 안 함"
+   "icon_kind": "확인 안 함",
+   "items": []
   },
   {
    "track": "unity",
@@ -601,7 +2318,8 @@
    "count": 16,
    "icon_field": null,
    "with_icon": 0,
-   "icon_kind": "확인 안 함"
+   "icon_kind": "확인 안 함",
+   "items": []
   }
  ]
 }
