@@ -210,6 +210,19 @@ func _flipped_tris(ld: RegionLoader) -> int:
 	return n
 
 
+## 조각 자리에서 (땅 높이 − 조각 z) 평균 절댓값 — 조각은 땅 위에 서니 작아야 한다(오염된 격자는 4~10m).
+func _ground_error(ld: RegionLoader) -> float:
+	if not ld.layout.has("terrain") or not (ld.layout.get("pieces") is Array):
+		return 0.0
+	var sum := 0.0
+	var n := 0
+	for p: Dictionary in ld.layout.pieces:
+		var pp := p.pos as Array
+		sum += absf(ld.height_at(float(pp[0]), float(pp[1])) - float(pp[2]))
+		n += 1
+	return sum / float(maxi(n, 1))
+
+
 func _run_probe() -> void:
 	var fails := 0
 	for id: String in RegionLoader.REGIONS:
@@ -233,6 +246,11 @@ func _run_probe() -> void:
 			bad.append("water")
 		if ld.layout.has("terrain") and int(ld.stats.terrain_tris) == 0:
 			bad.append("terrain 0")
+		var gerr := _ground_error(ld)
+		if gerr > 1.5:
+			bad.append("땅 높이가 조각 z 와 평균 %.1fm 어긋남" % gerr)
+		if ld.layout.has("terrain") and (ld.layout.terrain as Dictionary).get("materials") is Dictionary and (ld.layout.get("fog") is Dictionary) and int(ld.stats.lid_cells) == 0:
+			bad.append("안개 뚜껑 칸 0 (걷어낼 게 없음?)")
 		var flipped := _flipped_tris(ld)
 		if flipped > 0:
 			bad.append("뒤집힌 삼각형 %d" % flipped)

@@ -21,6 +21,10 @@ const FLOWER_SCALE := 0.218
 ## village 의 terrain.heights 는 땅이 아니라 "위에서 쏜 광선이 처음 맞은 면"(집·나무 꼭대기 포함)이다 — 조각 z 와 비교해 실측.
 ## materials 가 없는 옛 모양 배치표는 이 반경(m)으로 열림(침식→팽창)해 집·나무만큼 좁은 돌기를 걷어내고 넓은 언덕만 남긴다(조각 z 와의 평균 오차 3.6m → 0.8m).
 const GROUND_OPEN_RADIUS_M := 8.0
+## 안개 상자 뚜껑 판정 여유(m) — 칸 높이가 윗면 − 이 값 이상이면 뚜껑.
+const LID_EPS := 0.02
+## 길 띠를 땅 위로 띄우는 높이(m) — 땅 격자가 3m 간격이면 삼각형 보간이 쌍선형 표본보다 높아 0.05 에서는 땅이 길을 뚫고 올라온다.
+const ROAD_LIFT := 0.22
 
 ## materials 가 없는 village 풀 한 장의 색 보정 — 시안(region_hero.py plain_terrain green)이 풀을 초록으로 틴트했고 `ground_grass.jpg` 는 올리브색이다(눈대중).
 const VILLAGE_GRASS_TINT := Color(0.78, 1.0, 0.74)
@@ -36,7 +40,7 @@ var region := ""
 var layout: Dictionary = {}
 var dir := ""
 ## 진단이 읽는 계수 — 짠 것의 수.
-var stats := {"pieces": 0, "piece_kinds": 0, "multimeshes": 0, "trees": 0, "flowers": 0, "roads": 0, "terrain_tris": 0, "scenery": 0, "water": 0, "lights": 0, "suns": 0, "particles": 0, "errors": 0}
+var stats := {"pieces": 0, "piece_kinds": 0, "multimeshes": 0, "trees": 0, "flowers": 0, "roads": 0, "terrain_tris": 0, "scenery": 0, "lid_cells": 0, "water": 0, "lights": 0, "suns": 0, "particles": 0, "errors": 0}
 
 var _heights := PackedFloat32Array()
 var _t0 := Vector2.ZERO   # 격자 시작(Blender x, y)
@@ -123,6 +127,8 @@ func _build_terrain() -> void:
 		_heights.append(NAN if h == null else float(h))   # null = 땅 없음(물·허공) — 풍경 메시가 덮는다
 	if _heights.size() == _nx * _ny and not (t.get("materials") is Dictionary):
 		_heights = _opened(_heights, _nx, _ny, int(round(GROUND_OPEN_RADIUS_M / _step)))
+	if _heights.size() == _nx * _ny and t.get("materials") is Dictionary:
+		stats.lid_cells = _remove_fog_lid()
 	if _heights.size() != _nx * _ny:
 		push_error("RegionLoader: 지형 격자 크기가 안 맞는다 — %s" % region)
 		stats.errors += 1
@@ -172,6 +178,79 @@ func _build_terrain() -> void:
 	mi.mesh = mesh
 	add_child(mi)
 	stats.terrain_tris = idx.size() / 3
+
+
+## G-0018 — 재질 칸이 있는 새 모양 배치표(나루·서리봉·갈림길)의 terrain.heights 는 안개 상자(fog.box) 안쪽에서 "위에서 쏜 광선이 상자 윗면을
+## 먼저 맞은" 값(윗면 높이 그대로의 평평한 고원 5·8·10m)이라, 그대로 땅으로 쓰면 카메라와 조각(z≈0)이 땅 아래에 묻혀 땅 뒷면이 컬링된다.
+## 유니티 U-0023 RemoveFogLid 와 같은 방식: 상자 발자국 안에서 높이가 윗면 이상인 칸을 뚜껑으로 보고, 뚜껑 가장자리의 진짜 땅 칸 + 상자 안
+## 조각 자리(조각은 땅 위에 선다)에서 역거리 제곱 가중으로 메운다. 상자 밖 언덕은 그대로. 메운 칸 수를 돌려준다.
+func _remove_fog_lid() -> int:
+	var fog: Variant = layout.get("fog")
+	var box: Variant = (fog as Dictionary).get("box") if fog is Dictionary else null
+	if not (box is Array) or (box as Array).size() < 6:
+		return 0
+	var b := box as Array
+	var top := float(b[5]) + float(b[2]) * 0.5
+	var hx := float(b[0]) * 0.5 + _step * 0.5
+	var hy := float(b[1]) * 0.5 + _step * 0.5
+	var lid := PackedByteArray()
+	lid.resize(_nx * _ny)
+	var count := 0
+	for j in _ny:
+		for i in _nx:
+			var h := _heights[j * _nx + i]
+			if is_nan(h) or absf(_t0.x + float(i) * _step - float(b[3])) > hx or absf(_t0.y + float(j) * _step - float(b[4])) > hy:
+				continue
+			if h >= top - LID_EPS:
+				lid[j * _nx + i] = 1
+				count += 1
+	if count == 0:
+		return 0
+	var ax := PackedFloat32Array()
+	var ay := PackedFloat32Array()
+	var ah := PackedFloat32Array()
+	for j in _ny:
+		for i in _nx:
+			var k := j * _nx + i
+			if lid[k] == 1 or is_nan(_heights[k]):
+				continue
+			var edge := false
+			for dj in range(maxi(j - 1, 0), mini(j + 1, _ny - 1) + 1):
+				for di in range(maxi(i - 1, 0), mini(i + 1, _nx - 1) + 1):
+					if lid[dj * _nx + di] == 1:
+						edge = true
+			if edge:
+				ax.append(_t0.x + float(i) * _step)
+				ay.append(_t0.y + float(j) * _step)
+				ah.append(_heights[k])
+	var pcs: Variant = layout.get("pieces")
+	if pcs is Array:
+		for p: Dictionary in pcs:
+			var pp := p.pos as Array
+			if absf(float(pp[0]) - float(b[3])) <= hx and absf(float(pp[1]) - float(b[4])) <= hy:
+				ax.append(float(pp[0]))
+				ay.append(float(pp[1]))
+				ah.append(float(pp[2]))
+	if ax.is_empty():
+		return 0   # 근거가 없으면 그대로 둔다
+	var filled := _heights.duplicate()
+	for j in _ny:
+		for i in _nx:
+			if lid[j * _nx + i] == 0:
+				continue
+			var x := _t0.x + float(i) * _step
+			var y := _t0.y + float(j) * _step
+			var sw := 0.0
+			var sh := 0.0
+			for a in ax.size():
+				var dx := x - ax[a]
+				var dy := y - ay[a]
+				var w := 1.0 / (dx * dx + dy * dy + 1.0)
+				sw += w
+				sh += w * ah[a]
+			filled[j * _nx + i] = sh / sw
+	_heights = filled
+	return count
 
 
 ## 열림(최소 필터 → 최대 필터). NAN(땅 없음)은 건너뛰고 NAN 칸은 NAN 으로 남긴다.
@@ -321,8 +400,8 @@ func _build_roads() -> void:
 			var c := p0.lerp(p1, float(k) / float(n))
 			var l := c - side
 			var rr := c + side
-			verts.append(_lifted(l.x, l.y, 0.05))
-			verts.append(_lifted(rr.x, rr.y, 0.05))
+			verts.append(_lifted(l.x, l.y, ROAD_LIFT))
+			verts.append(_lifted(rr.x, rr.y, ROAD_LIFT))
 			var v := float(k) / float(n) * seg_len / 4.0
 			uvs.append(Vector2(0.0, v))
 			uvs.append(Vector2(w / 4.0, v))
