@@ -1,0 +1,29 @@
+/* 사가국지 RTS 입구 (W-0029) — 캔버스 지도 위에 얹는 HUD. 색은 strategy.css 의 먹칠·금 테두리 결을 따른다. */
+:root {
+  --rt-lacquer: linear-gradient(180deg, rgba(38, 29, 20, .93), rgba(17, 13, 10, .93));
+  --rt-trim: rgba(216, 181, 106, .55); --rt-ink: #eef1f6; --rt-dim: #9aa3b2; --rt-gold: #e8c46a;
+  --rt-safe-b: env(safe-area-inset-bottom, 0px);
+}
+html, body { margin: 0; height: 100%; overflow: hidden; background: #0d1016; color: var(--rt-ink); font-family: "Pretendard Variable", Pretendard, -apple-system, "Segoe UI", "Noto Sans KR", sans-serif; }
+#rts-map { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: crosshair; }
+.rt-box { position: fixed; z-index: 5; background: var(--rt-lacquer); border: 1px solid var(--rt-trim); border-radius: 8px; box-shadow: 0 6px 18px rgba(0, 0, 0, .45), inset 0 0 0 3px rgba(0, 0, 0, .4); }
+#rts-top { top: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 18px; align-items: baseline; padding: 8px 18px; font-size: 15px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.rt-day { font-family: "Noto Serif KR", "Nanum Myeongjo", "Batang", serif; color: var(--rt-gold); font-size: 20px; letter-spacing: .05em; }
+#rts-top em { font-style: normal; font-size: 12px; } #rts-top em.pos { color: #7be08a; } #rts-top em.neg { color: #ff8a7a; }
+#rts-speed { top: 12px; right: 12px; display: flex; gap: 4px; padding: 4px; }
+#rts-speed button { min-width: 40px; min-height: 36px; background: transparent; border: 1px solid transparent; color: var(--rt-ink); border-radius: 6px; cursor: pointer; font-size: 14px; }
+#rts-speed button.on { background: linear-gradient(180deg, #e8c46a, #b98f3c); color: #22190a; font-weight: 700; }
+#rts-tools { left: 50%; bottom: calc(12px + var(--rt-safe-b)); transform: translateX(-50%); display: flex; gap: 6px; padding: 6px; max-width: calc(100% - 24px); overflow-x: auto; }
+#rts-tools button { display: grid; place-items: center; gap: 0; min-width: 64px; min-height: 54px; padding: 4px 6px; background: rgba(0, 0, 0, .3); border: 1px solid rgba(216, 181, 106, .25); color: var(--rt-ink); border-radius: 6px; cursor: pointer; }
+#rts-tools button span { font-size: 20px; line-height: 1; } #rts-tools button small { font-size: 11px; color: var(--rt-dim); white-space: nowrap; }
+#rts-tools button.on { background: linear-gradient(180deg, #e8c46a, #b98f3c); border-color: #f1d98f; } #rts-tools button.on small { color: #22190a; }
+#rts-tools button.poor { opacity: .5; }
+#rts-mini { right: 12px; bottom: calc(12px + var(--rt-safe-b)); width: 192px; height: 120px; cursor: crosshair; touch-action: none; }
+#rts-tip { left: 12px; top: 56px; padding: 7px 12px; font-size: 13px; max-width: 30vw; color: var(--rt-dim); }
+#rts-tip.warn { color: #ffb4a8; }
+#rts-back { left: 12px; top: 12px; padding: 7px 12px; font-size: 13px; color: var(--rt-dim); text-decoration: none; }
+@media (max-width: 780px) {
+  #rts-top { gap: 10px; padding: 6px 10px; font-size: 13px; top: 56px; } .rt-day { font-size: 16px; }
+  #rts-tip { display: none; } #rts-mini { width: 120px; height: 75px; bottom: calc(84px + var(--rt-safe-b)); }
+  #rts-tools button { min-width: 54px; }
+}

@@ -94,6 +94,10 @@
    "js/ui-rtk.js",
    "js/cpanel.js",
    "js/hud.js",
+   "js/rts/grid.js",
+   "js/rts/rules.js",
+   "js/rts/econ.js",
+   "js/rts/state.js",
    "js/game.js"
   ]
  ]

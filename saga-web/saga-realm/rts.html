@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0d1016">
+<title>사가국지 RTS — 짓고 키우고 싸운다</title>
+<link rel="stylesheet" href="css/rts.css">
+</head>
+<body>
+<script src="js/errlog.js"></script>
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/account.js"></script>
+<script src="js/rts/grid.js"></script>
+<script src="js/rts/rules.js"></script>
+<script src="js/rts/econ.js"></script>
+<script src="js/rts/state.js"></script>
+<script src="js/rts/view.js"></script>
+<script>
+/* 사가국지 RTS(W-0029) — 계정 문(턴제와 같은 프로필)을 지나면 저장(`save.rts`)을 읽어 화면을 켠다 */
+DG.account.gate(function () { DG.core.load(); DG.rts.view.init(); });
+</script>
+</body>
+</html>

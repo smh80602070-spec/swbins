@@ -103,6 +103,10 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/ui-rtk.js"></script>
 <script src="js/cpanel.js"></script>
 <script src="js/hud.js"></script>
+<script src="js/rts/grid.js"></script>
+<script src="js/rts/rules.js"></script>
+<script src="js/rts/econ.js"></script>
+<script src="js/rts/state.js"></script>
 <script src="js/game.js"></script>
 <script>
 (function () {
@@ -247,6 +251,70 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var rect = svg.indexOf('class="mm-view" x="1" y="2" width="30" height="40"') >= 0, noRect = H.miniSvg('').indexOf('mm-view') < 0;
       return b.indexOf(st.year + '년 ' + st.month + '월') >= 0 && b.indexOf('초봄') >= 0 && dots === n && mineDots === DG.rtk.citiesOf(me).length && rect && noRect &&
         ('배너 ' + st.year + '년 ' + st.month + '월 · 점 ' + dots + ' · 내 성 ' + mineDots + ' · 창 사각형');
+    });
+
+    /* ── RTS 샌드박스(W-0029, js/rts/*) — 순수 모델만. 화면은 playcheck 로 본다 ─── */
+
+    t('RTS 격자 — 160×100·같은 시드는 같은 지형·거점 둘레는 풀·물과 숲이 실제로 섞인다', function () {
+      var g = DG.rts.grid, a = g.generate(7), b = g.generate(7), c = g.generate(8), same = true, diff = false, i, cnt = [0, 0, 0, 0];
+      for (i = 0; i < a.length; i++) { if (a[i] !== b[i]) { same = false; } if (a[i] !== c[i]) { diff = true; } cnt[a[i]]++; }
+      var cs = g.castleSite(), ring = true, x, y;
+      for (y = cs.y - 6; y < cs.y + cs.h + 6; y++) { for (x = cs.x - 6; x < cs.x + cs.w + 6; x++) { if (a[g.idx(x, y)] !== g.T.GRASS) { ring = false; } } }
+      return g.W === 160 && g.H === 100 && a.length === 16000 && same && diff && ring && cnt[0] > 6000 && cnt[1] > 100 && cnt[3] > 100 &&
+        ('풀 ' + cnt[0] + '·숲 ' + cnt[1] + '·언덕 ' + cnt[2] + '·물 ' + cnt[3]);
+    });
+
+    t('RTS 놓기 — 밖·물·겹침·금 부족은 거절하고, 놓으면 금을 내며, 철거는 절반을 돌려주고 거점은 못 부순다', function () {
+      var R = DG.rts, g = R.grid, r = R.rules, s = R.state.create(7), cs = g.castleSite(), water = -1, i;
+      for (i = 0; i < s.tiles.length; i++) { if (s.tiles[i] === g.T.WATER) { water = i; break; } }
+      var wx = water % g.W, wy = Math.floor(water / g.W);
+      var out = !r.canPlace(s, 'house', -1, 5).ok && !r.canPlace(s, 'house', g.W - 1, 5).ok, wet = !r.canPlace(s, 'house', wx, wy).ok;
+      var over = !r.canPlace(s, 'road', cs.x, cs.y).ok, gold0 = s.res.gold;
+      var h = r.place(s, 'house', cs.x + 5, cs.y + 5), paid = !!h && s.res.gold === gold0 - r.DEFS.house.cost;
+      var dup = !r.canPlace(s, 'road', cs.x + 5, cs.y + 5).ok;
+      s.res.gold = 10; var poor = !r.canPlace(s, 'farm', cs.x + 12, cs.y + 5).ok && r.place(s, 'farm', cs.x + 12, cs.y + 5) === null;
+      s.res.gold = 0; var refund = r.remove(s, h.id) && s.res.gold === Math.floor(r.DEFS.house.cost / 2) && !r.buildingAt(s, cs.x + 5, cs.y + 5);
+      var castle = r.remove(s, 1) === false && !!s.buildings[1];
+      return out && wet && over && paid && dup && poor && refund && castle && ('밖·물·겹침·금 거절 · 금 차감 · 철거 절반 · 거점 불가');
+    });
+
+    t('RTS 도로 연결 — 도로 없이는 안 돌고, 거점에서 도로로 이어지면 돌며, 도로를 끊으면 다시 멈춘다(거점에 바로 붙은 건물은 돈다)', function () {
+      var R = DG.rts, r = R.rules, g = R.grid, s = R.state.create(7), cs = g.castleSite(), i, ids = [];
+      s.res.gold = 9999;
+      var far = r.place(s, 'house', cs.x + 6, cs.y - 3), lone = far.conn === false;
+      for (i = 0; i < 4; i++) { ids.push(r.place(s, 'road', cs.x + 3 + i, cs.y + 1).id); }
+      var h = r.place(s, 'house', cs.x + 4, cs.y - 1), linked = h.conn === true && s.buildings[ids[3]].conn === true;
+      var farStill = far.conn === false;
+      r.remove(s, ids[0]); var cut = s.buildings[h.id].conn === false && s.buildings[ids[3]].conn === false;
+      var near = r.place(s, 'house', cs.x - 2, cs.y), adj = near.conn === true;
+      return lone && linked && farStill && cut && adj && ('도로 없음 멈춤 · 이어짐 돔 · 끊김 멈춤 · 거점 접촉 돔');
+    });
+
+    t('RTS 경제 — 이어진 주거·농지·시장이 수용·일자리·식량·금을 바꾸고, 식량이 바닥이면 인구가 줄며, 같은 상태는 같은 결과(난수 없음)', function () {
+      var R = DG.rts, r = R.rules, e = R.econ, g = R.grid;
+      function build() { var s = R.state.create(7), cs = g.castleSite(), i; s.res.gold = 9999; for (i = 0; i < 6; i++) { r.place(s, 'road', cs.x + 3 + i, cs.y + 1); } r.place(s, 'house', cs.x + 4, cs.y - 1); r.place(s, 'house', cs.x + 6, cs.y - 1); r.place(s, 'farm', cs.x + 4, cs.y + 2); r.place(s, 'market', cs.x + 7, cs.y + 2); return s; }
+      var s = build(), t = build(), st0 = e.stats(s);
+      var capOk = st0.cap === 16 + 8 + 8 && st0.jobs === 6 + 4;
+      var i; for (i = 0; i < 20; i++) { e.dayTick(s); e.dayTick(t); }
+      var det = s.pop === t.pop && s.res.food === t.res.food && s.res.gold === t.res.gold && s.day === 21;
+      var grew = s.pop > 12 && s.pop <= 32 && s.res.gold > 300;
+      var k = build(); k.res.food = 0; k.pop = 30; for (i = 0; i < 3; i++) { e.dayTick(k); }
+      var starve = k.pop < 30 && k.res.food >= 0;
+      var idle = R.state.create(7); idle.pop = 12; e.dayTick(idle);
+      return capOk && det && grew && starve && idle.res.food < 100 && ('수용 32·일자리 10 · 20일 뒤 인구 ' + s.pop + '·금 ' + Math.round(s.res.gold) + ' · 굶으면 ' + k.pop);
+    });
+
+    t('RTS 저장 — 직렬화→JSON→복원이 같고(id 빈 틈 포함), 깨진·모르는 저장은 null, 지도는 시드로 다시 만든다', function () {
+      var R = DG.rts, r = R.rules, g = R.grid, s = R.state.create(11), cs = g.castleSite(), i;
+      s.res.gold = 9999; for (i = 0; i < 4; i++) { r.place(s, 'road', cs.x + 3 + i, cs.y + 1); }
+      var h = r.place(s, 'house', cs.x + 4, cs.y - 1); r.place(s, 'farm', cs.x + 4, cs.y + 2); r.remove(s, h.id); r.place(s, 'house', cs.x + 7, cs.y - 1);
+      for (i = 0; i < 12; i++) { R.econ.dayTick(s); } s.speed = 4; s.tick = 123;
+      var o = R.state.serialize(s), json = JSON.stringify(o), back = R.state.restore(JSON.parse(json));
+      var same = !!back && JSON.stringify(R.state.serialize(back)) === json;
+      var tiles = !!back && back.tiles.length === s.tiles.length && back.tiles[1234] === s.tiles[1234];
+      var bad = R.state.restore(null) === null && R.state.restore({ v: 99, seed: 1 }) === null && R.state.restore({ v: 1 }) === null;
+      var odd = R.state.restore({ v: 1, seed: 5, res: { food: 1, gold: 2 }, pop: 3, day: 4, buildings: [{ id: 9, t: '없는건물', x: 1, y: 1 }] });
+      return same && tiles && bad && !!odd && Object.keys(odd.buildings).length === 1 && ('왕복 같음 · 빈 id 보존 · 깨진 저장 null · 모르는 건물 건너뜀');
     });
 
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
