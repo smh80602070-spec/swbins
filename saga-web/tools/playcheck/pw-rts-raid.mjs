@@ -1,0 +1,25 @@
+// 사가국지 RTS 습격 확인(W-0033) — 습격을 앞당겨 파도가 나오고 HUD·루프가 오류 없이 도는지 본다. 화면 촬영 없음.
+//   node pw-rts-raid.mjs        서버 :8871 (돌리는 쪽이 띄우고 끈다)
+import { open, sleep } from './pw.mjs';
+
+const r = await open('saga-realm');
+const { page } = r;
+await page.addInitScript(() => { window.DG_NO_ACCOUNT = true; });   // 가입 화면 없이 진단 키로 시작
+await page.goto(r.url('rts.html')); await sleep(1500);
+const out = await page.evaluate(async () => {
+  const V = DG.rts.view, S = V.state(), res = {};
+  S.speed = 4; S.raid.next = S.tick + 5;
+  await new Promise((ok) => setTimeout(ok, 1500));
+  res.raiders = Object.values(S.units).filter((u) => u.team === 1).length;
+  res.raidN = S.raid.n;
+  res.hud = document.getElementById('rts-top').textContent.replace(/\s+/g, ' ').slice(0, 160);
+  S.cHp = 1; S.raid.next = S.tick + 1;
+  Object.values(S.units).filter((u) => u.team === 1).forEach((u) => { u.x = S.buildings[1].x + 3.4; u.y = S.buildings[1].y + 1.5; u.path = []; });
+  await new Promise((ok) => setTimeout(ok, 1500));
+  res.over = S.over; res.tip = document.getElementById('rts-tip') ? document.getElementById('rts-tip').textContent : '';
+  return res;
+});
+console.log(JSON.stringify(out));
+console.log('오류', r.errors.length, r.errors.slice(0, 3).join(' | '), '· 404', r.notFound.length);
+await r.close();
+process.exit(0);

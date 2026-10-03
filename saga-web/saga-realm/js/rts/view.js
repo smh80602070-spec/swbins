@@ -18,7 +18,7 @@
   var S = null, cv, ctx, mini, mctx, miniBase = null, els = {};
   var cam = { x: 80, y: 50, z: 1.4 }, tool = 'select', hover = null, ptrs = {}, pinch = 0, painting = false, panning = false, panLast = null;
   var sel = {}, selB = 0, box = null, down = null;   // 고른 유닛 id 모음 · 고른 군영 id · 끌고 있는 선택 상자 · 눌린 자리
-  var acc = 0, lastT = 0, lastHud = 0, lastSaveDay = 0, tipMsg = '', tipUntil = 0, dirty = true, overlay = 0, lastStats = null;
+  var acc = 0, lastT = 0, lastHud = 0, lastSaveDay = 0, tipMsg = '', tipUntil = 0, dirty = true, overlay = 0, lastStats = null, overSeen = false;
   var OVERLAYS = ['보기: 없음', '보기: 행복', '보기: 닿는 범위'];
 
   function $(id) { return global.document.getElementById(id); }
@@ -156,6 +156,8 @@
       '<span title="일하는 사람 / 일자리">⚒️ <b>' + st.workers + '</b>/' + st.jobs + '</span>' +
       '<span title="행복 — 우물·망루가 닿고 식량이 넉넉하고 세율이 낮을수록 높다. 25 미만이면 사람이 떠난다">😊 <b class="' + (st.happy < 25 ? 'neg' : st.happy >= 60 ? 'pos' : '') + '">' + Math.round(st.happy) + '</b></span>' +
       '<span title="병력 — 유닛 1기당 식량 0.2/일">🛡️ <b>' + st.army + '</b></span>' +
+      '<span title="거점 체력 — 0 이 되면 진다">🏯 <b class="' + (S.cHp < 150 ? 'neg' : '') + '">' + Math.ceil(S.cHp) + '</b></span>' +
+      '<span class="rt-raid" title="다음 습격까지 남은 날 · 쓰러뜨린 적">⚔️ <b class="' + (R().combat.daysToRaid(S) <= 1 ? 'neg' : '') + '">' + R().combat.daysToRaid(S) + '일</b> · ' + (S.kills || 0) + '승</span>' +
       '<span class="rt-dem" title="수요 — 막대가 길수록 그걸 더 지어야 한다">' + dem('주거', st.demand.housing) + dem('일터', st.demand.work) + dem('식량', st.demand.food) + '</span>';
     lastStats = st;
     var btns = els.tools.querySelectorAll('button[data-tool]'), i, t, d;
@@ -168,8 +170,8 @@
     var tx = els.opts.querySelectorAll('button[data-tax]'); for (i = 0; i < tx.length; i++) { tx[i].classList.toggle('on', +tx[i].getAttribute('data-tax') === S.tax); }
     els.opts.querySelector('button[data-view]').textContent = OVERLAYS[overlay];
     selPanel();
-    els.tip.textContent = Date.now() < tipUntil ? tipMsg : tipFor();
-    els.tip.classList.toggle('warn', Date.now() < tipUntil);
+    els.tip.textContent = S.over ? '거점이 무너졌다 — 새로고침하면 새 판이 열린다' : Date.now() < tipUntil ? tipMsg : tipFor();
+    els.tip.classList.toggle('warn', S.over || Date.now() < tipUntil);
   }
   /** 고른 군영(생산 단추·큐)이나 고른 유닛 수 — 왼쪽 아래 상자 */
   function selPanel() {
@@ -318,7 +320,7 @@
   /* ── 저장·시간 ─────────────────────────────────────── */
 
   function save() {
-    var c = global.DG.core; if (!S || !c || !c.save) { return; }
+    var c = global.DG.core; if (!S || !c || !c.save || S.over) { return; }
     c.save.rts = R().state.serialize(S); c.persist(); lastSaveDay = S.day;
   }
 
@@ -327,7 +329,8 @@
     if (S.speed > 0) {
       acc += dt * S.speed; var n = 0;
       while (acc >= TICK_MS && n < 40) {
-        acc -= TICK_MS; n++; S.tick++; R().units.tick(S); dirty = true;
+        acc -= TICK_MS; n++; S.tick++; R().units.tick(S); R().combat.tick(S); dirty = true;
+        if (S.over && !overSeen) { overSeen = true; var cc = global.DG.core; if (cc && cc.save) { cc.save.rts = null; cc.persist(); } }   // 거점 함락 — 저장을 비워 새로고침하면 새 판
         if (S.tick % R().econ.TICKS_PER_DAY === 0) { R().econ.dayTick(S); dirty = true; if (S.day - lastSaveDay >= 10) { save(); } }
       }
     }

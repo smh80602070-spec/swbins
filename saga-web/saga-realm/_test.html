@@ -107,6 +107,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rts/rules.js"></script>
 <script src="js/rts/econ.js"></script>
 <script src="js/rts/units.js"></script>
+<script src="js/rts/combat.js"></script>
 <script src="js/rts/state.js"></script>
 <script src="js/game.js"></script>
 <script>
@@ -417,6 +418,85 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var back2 = R.state.restore(junk), skipped = !!back2 && !back2.units[77] && Object.keys(back2.units).length === Object.keys(back.units).length && !back2.queues[9999];
       var hp = Object.keys(back.units).map(function (k) { return back.units[k]; }).filter(function (u) { return u.t === 'cavalry'; })[0].hp === 33;
       return same && nextOk && skipped && hp && ('유닛 ' + Object.keys(back.units).length + '기·큐 왕복 같음 · 깨진 항목 건너뜀 · 체력 보존');
+    });
+
+    /* ── RTS P3b(W-0033, js/rts/combat.js) — 교전·상성·망루·습격·거점·성벽·저장 ─── */
+
+    function rtsField() { var R = DG.rts, s = R.state.create(7), cs = R.grid.castleSite(); s.__cs = cs; s.raid.next = 1e9; return s; }
+
+    t('RTS 교전 — 상성은 ×1.5(보병이 기병에게), 사거리 안에서만 치고, 쿨다운 10틱마다 한 번, 죽이면 적 현상금 8금', function () {
+      var R = DG.rts, U = R.units, C = R.combat, s = rtsField(), cs = s.__cs;
+      var a = U.spawn(s, 'soldier', 0, cs.x + 6.5, cs.y - 8.5), b = U.spawn(s, 'cavalry', 1, cs.x + 7.5, cs.y - 8.5);
+      C.tick(s);
+      var beat = b.hp === 80 - 8 * 1.5, plain = a.hp === 60 - 11;                // 보병→기병 ×1.5, 기병→보병은 ×1
+      var cd = a.cd === 10; var hp1 = b.hp; for (var i = 0; i < 8; i++) { C.tick(s); }
+      var wait = b.hp === hp1;                                                   // 쿨다운 중엔 안 친다
+      var far = U.spawn(s, 'soldier', 0, cs.x + 6.5, cs.y - 14.5), fb = U.spawn(s, 'cavalry', 1, cs.x + 6.5, cs.y - 9.5), hf = fb.hp; C.tick(s);
+      var out = fb.hp === hf && far.hp === 60;                                   // 사거리(1.2) 밖
+      var g0 = s.res.gold; b.hp = 1; a.cd = 0; C.tick(s);
+      var dead = !s.units[b.id] && s.res.gold === g0 + C.BOUNTY && s.kills === 1;
+      return beat && plain && cd && wait && out && dead && ('상성 ×1.5 · 쿨다운 · 사거리 밖 · 현상금 +' + C.BOUNTY);
+    });
+
+    t('RTS 궁병·접근 — 궁병은 5.5칸 밖에서 쏘고, 가만히 선 유닛은 시야(8칸) 안 적에게 다가가며, 이동 명령 중엔 쫓지 않는다', function () {
+      var R = DG.rts, U = R.units, C = R.combat, s = rtsField(), cs = s.__cs;
+      var ar = U.spawn(s, 'archer', 0, cs.x + 6.5, cs.y - 8.5), foe = U.spawn(s, 'soldier', 1, cs.x + 11.5, cs.y - 8.5); C.tick(s);
+      var shot = foe.hp === 60 - 7 * 1.5;
+      var s2 = rtsField(), c2 = s2.__cs, idle = U.spawn(s2, 'soldier', 0, c2.x + 6.5, c2.y - 8.5); U.spawn(s2, 'soldier', 1, c2.x + 12.5, c2.y - 8.5); C.tick(s2);
+      var chase = idle.path.length > 0;
+      var s3 = rtsField(), c3 = s3.__cs, mover = U.spawn(s3, 'soldier', 0, c3.x + 6.5, c3.y - 8.5); U.spawn(s3, 'soldier', 1, c3.x + 12.5, c3.y - 8.5); U.moveTo(s3, mover, c3.x + 6, c3.y - 14); var g0 = mover.goal.y; C.tick(s3);
+      var keep = mover.goal.y === g0;
+      return shot && chase && keep && ('궁병 사거리 · 가만히면 접근 · 명령 중 유지');
+    });
+
+    t('RTS 망루·거점 발사 — 망루는 7칸 안의 적을 10틱마다 6, 거점은 6칸 안을 5로 쏜다', function () {
+      var R = DG.rts, C = R.combat, U = R.units, s = rtsField(), cs = s.__cs; s.res.gold = 9999;
+      var tw = R.rules.place(s, 'tower', cs.x + 8, cs.y - 3); var foe = U.spawn(s, 'cavalry', 1, cs.x + 11.5, cs.y - 2.5), h0 = foe.hp; C.tick(s);
+      var shot = !!tw && foe.hp === h0 - 6; C.tick(s); var wait = foe.hp === h0 - 6; for (var i = 0; i < 10; i++) { C.tick(s); } var again = foe.hp <= h0 - 12;
+      var s2 = rtsField(), c2 = s2.__cs, f2 = U.spawn(s2, 'cavalry', 1, c2.x + 1.5, c2.y + 5.5), h2 = f2.hp; C.tick(s2);
+      var cas = f2.hp === h2 - 5;
+      return shot && wait && again && cas && ('망루 6 · 쿨다운 · 거점 5');
+    });
+
+    t('RTS 습격 — 정한 틱에 가장자리에서 파도가 나오고(2+n 기·종류 순환·체력 +10%/파도), 다음은 200틱 뒤, 거점으로 길을 구한다', function () {
+      var R = DG.rts, C = R.combat, s = R.state.create(7);
+      var none = (function () { var q = R.state.create(7); q.tick = 249; C.tick(q); return Object.keys(q.units).length === 0; })();
+      s.tick = 250; C.tick(s);
+      var ids = Object.keys(s.units), u0 = s.units[ids[0]], g = R.grid;
+      var edge = ids.every(function (k) { var u = s.units[k]; return u.x < 10 || u.y < 10 || u.x > g.W - 10 || u.y > g.H - 10; });
+      var w0 = ids.length === 2 && s.raid.n === 1 && s.raid.next === 450 && ids.every(function (k) { return s.units[k].team === 1; });
+      s.tick = 450; C.tick(s); var w1 = Object.keys(s.units).length === 5 && C.waveOf(1).length === 3 && C.waveOf(1)[0] === 'archer';
+      var hp = s.units[Object.keys(s.units).slice(-1)[0]].hp > R.units.UDEF.soldier.hp * 0.99;
+      return none && edge && w0 && w1 && hp && !!(u0.path.length || u0.goal) && C.daysToRaid(s) === 4 && ('파도 0: 2기 · 파도 1: +3기 · 다음 4일 뒤');
+    });
+
+    t('RTS 거점 — 적이 닿으면 거점 체력이 깎이고 0 이 되면 함락(over·멈춤), 함락 뒤엔 틱이 아무 것도 안 한다', function () {
+      var R = DG.rts, U = R.units, C = R.combat, s = rtsField(), c = s.buildings[1];
+      var r = U.spawn(s, 'soldier', 1, c.x + 3.6, c.y + 1.5); C.tick(s);
+      var hit = s.cHp === C.CASTLE_HP - 8 && !s.over;
+      s.cHp = 5; r.cd = 0; C.tick(s);
+      var lost = s.over === true && s.cHp === 0 && s.speed === 0;
+      var k = Object.keys(s.units).length; C.tick(s); U.spawn(s, 'soldier', 0, 1, 1); C.tick(s);
+      return hit && lost && k === 1 && ('닿으면 -8 · 함락 over · 이후 멈춤');
+    });
+
+    t('RTS 성벽 — 길이 막힌 적은 가까운 성벽을 부수고(체력 40), 거점 근처가 아니면 거점을 안 친다', function () {
+      var R = DG.rts, U = R.units, C = R.combat, s = rtsField(), cs = s.__cs; s.res.gold = 9999;
+      var w = R.rules.place(s, 'wall', cs.x + 8, cs.y - 3), g0 = s.res.gold;
+      var r = U.spawn(s, 'soldier', 1, cs.x + 7.5, cs.y - 2.5); r.path = []; r.rp = 1000; var i;
+      for (i = 0; i < 30; i++) { C.tick(s); } var partial = !!w && !!s.buildings[w.id] && s.buildings[w.id].hp === 40 - 8 * 3;
+      for (i = 0; i < 30; i++) { C.tick(s); } var gone = !s.buildings[w.id] && s.res.gold === g0 && s.cHp === C.CASTLE_HP;
+      return partial && gone && ('벽 40 → 8씩 · 부서지면 제거(환급 없음)');
+    });
+
+    t('RTS 저장 — 거점 체력·습격 일정·승수·함락이 왕복에서 같고, 옛 저장(전투 칸 없음)은 온전한 거점·첫 습격 250틱 뒤로 열린다', function () {
+      var R = DG.rts, s = rtsField(); s.cHp = 123.4; s.raid = { n: 3, next: 777 }; s.kills = 9;
+      var o = R.state.serialize(s), json = JSON.stringify(o), back = R.state.restore(JSON.parse(json));
+      var same = !!back && back.cHp === 123.4 && back.raid.n === 3 && back.raid.next === 777 && back.kills === 9 && !back.over;
+      var old = JSON.parse(json); delete old.cHp; delete old.raid; delete old.kills; delete old.over; old.tick = 100;
+      var b2 = R.state.restore(old), compat = !!b2 && b2.cHp === 400 && b2.raid.n === 0 && b2.raid.next === 350 && b2.kills === 0 && !b2.over;
+      var dead = R.state.restore(JSON.parse(JSON.stringify(Object.assign(JSON.parse(json), { over: true, cHp: 0 })))), lost = !!dead && dead.over === true && dead.cHp === 0;
+      return same && compat && lost && ('왕복 같음 · 옛 저장 열림 · 함락 보존');
     });
 
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
