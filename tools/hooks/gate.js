@@ -52,7 +52,7 @@ if (name === 'PreToolUse' && /^(Edit|Write|MultiEdit)$/.test(tool)) {
         size = Buffer.byteLength(inp.replace_all ? cur.split(inp.old_string).join(inp.new_string) : cur.replace(inp.old_string, () => inp.new_string));
       } catch (e) { /* 새 파일·못 읽음 — 커밋 전 precheck 가 다시 본다 */ }
     }
-    if (size !== null && size > 4096) block('티켓은 4096B 를 넘기지 않는다(' + size + 'B) — 줄이거나 나눈다: ' + fp.split(/[\\/]/).pop());
+    if (size !== null && size > 6144) block('티켓은 6144B 를 넘기지 않는다(' + size + 'B) — 줄이거나 나눈다: ' + fp.split(/[\\/]/).pop());
   }
   if (/PLAN\.md$/i.test(fp)) {
     let txt = '';

@@ -268,18 +268,22 @@
     if (use3d) {
       ctx.clearRect(0, 0, W, H);
     } else {
-      /* 하늘 */
-      var g = ctx.createLinearGradient(0, 0, 0, H);
-      g.addColorStop(0, stg.sky[0]);
-      g.addColorStop(1, stg.sky[1]);
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, W, H);
+      /* 하늘·뒷배경 — 2D 층 그림(K-0020)이 있으면 그것, 없으면(받는 중·자료 없음) 옛 도형 */
+      var M2 = global.DG.mode2d, M2c = (global.DG.cfg && global.DG.cfg.mode2d) || {}, rg = (M2c.region || {})[stg.key], tl = (M2c.tile || {})[stg.mood || 'sky'];
+      if (!(M2 && rg && M2.drawBg(ctx, { region: rg, camX: camX, W: W, H: H, base: stg.floor, only: null }))) {
+        var g = ctx.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, stg.sky[0]);
+        g.addColorStop(1, stg.sky[1]);
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
 
-      drawBackdrop(stg);
+        drawBackdrop(stg);
+      }
 
-      /* 바닥 */
+      /* 바닥 — 타일이 있으면 타일 */
       ctx.fillStyle = stg.ground;
       ctx.fillRect(0, stg.floor, W, H - stg.floor);
+      if (M2 && tl) { M2.fillTile(ctx, { id: tl, x: 0, y: stg.floor, w: W, h: H - stg.floor, dx: camX, scale: 0.25 }); }
       ctx.fillStyle = 'rgba(255,255,255,0.30)';
       ctx.fillRect(0, stg.floor, W, 5);
       ctx.fillStyle = 'rgba(40,32,24,0.35)';

@@ -469,6 +469,13 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.mode2d = {
     base: 'assets/sprites2d_sheets/',
+    bgBase: 'assets/web2d/bg/', tileBase: 'assets/web2d/tile/',
+    /** 사냥터 key → 배경 지역(K-0020 `story_*`)·바닥 타일 — 없는 key 는 기존 하늘·바닥색 */
+    region: { sinya: 'story_field_meadow', heodo: 'story_field_meadow', field: 'story_field_meadow', gangneungjin: 'story_field_meadow', forest: 'story_field_meadow',
+      namjeongseong: 'story_mountain_shrine', gisanchae: 'story_mountain_shrine',
+      cave: 'story_cave_mouth', deepcave: 'story_cave_mouth', gorge: 'story_cave_mouth', ruin: 'story_cave_mouth',
+      beyond_past: 'story_sky_bridge', beyond_now: 'story_sky_bridge', beyond_future: 'story_sky_bridge' },
+    tile: { sky: 'story_grass', forest: 'story_dirt', cave: 'story_stone', fire: 'story_stone' },
     targetH: 62,                                 // 화면에 보일 보통 적 몸 높이(px) — 코드 스탬프 s 0.8 과 비슷하게
     foot: 0.87,                                  // 시트에서 발 위치(프레임 높이 비율)
     poolH: { pool_e_goblin_126: 50, pool_g_orc_141: 102, pool_basef_undead_111: 85, pool_f_demon_136: 97 },   // 프레임 안 몸 높이(px, 옆모습 알파 범위로 잼)

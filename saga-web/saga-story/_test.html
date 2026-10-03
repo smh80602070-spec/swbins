@@ -5673,6 +5673,25 @@ window.DG_NO_TUNE = true;
       return noPool === false && missing === false && calls === 0 && '풀 없음·파일 없음 → 둘 다 false, 그리기 호출 0';
     });
 
+    t('2D 배경 — 없는 지역·없는 타일은 false(기존 하늘·바닥색), 그리기 호출 0', function () {
+      var M = DG.mode2d, calls = 0;
+      var fake = { save: function () { calls++; }, restore: function () { calls++; }, drawImage: function () { calls++; }, translate: function () { calls++; }, scale: function () { calls++; }, beginPath: function () {}, rect: function () {}, clip: function () {}, fillRect: function () { calls++; }, createPattern: function () { return {}; } };
+      var bg = M.drawBg(fake, { region: 'story_없는지역', camX: 0, W: 800, H: 600, base: 560 });
+      var tl = M.fillTile(fake, { id: 'story_없는타일', x: 0, y: 560, w: 800, h: 40 });
+      return bg === false && tl === false && calls === 0 && '지역 없음·타일 없음 → 둘 다 false, 호출 0';
+    });
+
+    t('2D 배경 — 사냥터마다 배경 지역과 바닥 타일이 이어져 있다(표 빠짐·오타 없음)', function () {
+      var cfg = DG.cfg.mode2d, SD = DG.sideData, regions = {}, bad = [];
+      SD.STAGES.forEach(function (s) {
+        var r = cfg.region[s.key], tl = cfg.tile[s.mood || 'sky'];
+        if (!r || r.indexOf('story_') !== 0) { bad.push('지역 ' + s.key); }
+        if (!tl || tl.indexOf('story_') !== 0) { bad.push('타일 ' + s.key); }
+        regions[r] = 1;
+      });
+      return bad.length === 0 && Object.keys(regions).length + '지역 · 사냥터 ' + SD.STAGES.length + '곳 전부 연결' || bad.join(',');
+    });
+
     /* ── 옷 무늬(W-0020, shared/js/vroid-variant.js) — 표·이미지 없이 순수 함수와 가짜 재질로 ─── */
 
     t('옷 무늬 — 표가 없으면 고르지 않고(null), 있으면 같은 인물은 늘 같은 무늬를 시대 안에서 고른다', function () {

@@ -104,8 +104,96 @@
       .then(function (j) { index = j; if (cb) { cb(j); } })['catch'](function () { if (cb) { cb(null); } });
   }
 
+  /* ───── 배경 층·바닥 타일 (K-0020 산출, 판별 `assets/web2d/{bg,tile}/`) ─────
+     cfg: { bgBase: 'assets/web2d/bg/', tileBase: 'assets/web2d/tile/' }. 층 규격은 `<지역>.layers.json`
+     = { far|mid|near: { y, h, speed, w } } (기준 높이 540 — 그릴 때 화면 높이에 맞춰 비율 환산). 이미지는 `<지역>_<층>.webp`, 좌우 왕복 이음. */
+  var LAYERS = ['far', 'mid', 'near'];
+  var bgs = {}, tiles = {};          // 지역 → { meta, imgs:{층:{img,ok,fail}}, fail }  /  타일id → { img, ok, fail, pat }
+  function bgBase() { return C().bgBase || 'assets/web2d/bg/'; }
+  function tileBase() { return C().tileBase || 'assets/web2d/tile/'; }
+  function loadImg(url) {
+    var e = { img: null, ok: false, fail: false };
+    if (!global.Image) { e.fail = true; return e; }
+    var im = new global.Image();
+    im.onload = function () { e.ok = true; };
+    im.onerror = function () { e.fail = true; };
+    im.src = url; e.img = im;
+    return e;
+  }
+  function getBg(region) {
+    var b = bgs[region];
+    if (b) { return b; }
+    b = bgs[region] = { meta: null, imgs: {}, fail: false };
+    if (!global.fetch) { b.fail = true; return b; }
+    LAYERS.forEach(function (l) { b.imgs[l] = loadImg(bgBase() + region + '_' + l + '.webp'); });
+    global.fetch(bgBase() + region + '.layers.json').then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (j) { b.meta = j; } else { b.fail = true; } })['catch'](function () { b.fail = true; });
+    return b;
+  }
+  /** 층 이미지 하나를 가로로 이어 그린다(홀수 칸은 좌우 뒤집어 왕복 — 이음매가 안 보인다). dx = 가로 이동(px) */
+  function strip(ctx, img, y, dw, dh, W, dx) {
+    var n = Math.floor(dx / dw), off = dx - n * dw, i, x;
+    for (i = 0; i * dw - off < W; i++) {
+      x = i * dw - off;
+      if ((n + i) % 2 !== 0) { ctx.save(); ctx.translate(x + dw, 0); ctx.scale(-1, 1); ctx.drawImage(img, 0, y, dw, dh); ctx.restore(); }
+      else { ctx.drawImage(img, x, y, dw, dh); }
+    }
+  }
+  /**
+   * 층 배경을 그린다 — o = { region, camX, W, H, base(땅 선 y, 기본 H), only: 'near'(그 층만, 없으면 셋 다) }.
+   * far 는 하늘(0~base), mid·near 는 땅 선 위로 쌓이는 띠(아래 가장자리가 base). 받는 중이거나 없으면 false(→ 부른 쪽이 기존 하늘·뒷배경을 그린다).
+   */
+  function drawBg(ctx, o) {
+    if (!ctx || !o || !o.region || !isOn()) { return false; }
+    var b = getBg(o.region), m = b.meta;
+    if (b.fail || !m) { return false; }
+    var names = o.only ? [o.only] : LAYERS, base = o.base || o.H || 540, k = base / 540, any = false, i, L, e, dh, dw, y;
+    for (i = 0; i < names.length; i++) {
+      L = m[names[i]]; e = b.imgs[names[i]];
+      if (!L || !e || !e.ok) { continue; }
+      dh = L.h * k; y = base - (540 - L.y) * k; dw = L.w * k;
+      if (names[i] === 'far') { dh = base; y = 0; }
+      strip(ctx, e.img, y, dw, dh, o.W, (o.camX || 0) * (L.speed || 0));
+      any = true;
+    }
+    return any;
+  }
+
+  /** 바닥 타일 한 장(256px) — 아직 못 받았으면 null */
+  function tile(id) {
+    var t = tiles[id];
+    if (!t) { t = tiles[id] = loadImg(tileBase() + id + '.webp'); t.pat = null; }
+    return t.ok ? t.img : null;
+  }
+  function tilePattern(ctx, id) {
+    var im = tile(id), t = tiles[id];
+    if (!im) { return null; }
+    if (!t.pat && ctx && ctx.createPattern) { t.pat = ctx.createPattern(im, 'repeat'); }
+    return t.pat;
+  }
+  /** 사각형을 타일로 채운다 — o = { id, x, y, w, h, dx, dy(스크롤), scale(기본 0.25 = 64px) }. 받는 중·없음 → false */
+  function fillTile(ctx, o) {
+    if (!ctx || !o || !isOn()) { return false; }
+    var pat = tilePattern(ctx, o.id);
+    if (!pat) { return false; }
+    var s = o.scale || 0.25, dx = o.dx || 0, dy = o.dy || 0;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(o.x, o.y, o.w, o.h); ctx.clip();
+    ctx.translate(o.x - dx, o.y - dy);
+    ctx.scale(s, s);
+    ctx.fillStyle = pat;
+    ctx.fillRect(dx / s, dy / s, o.w / s, o.h / s);
+    ctx.restore();
+    return true;
+  }
+
   global.DG = global.DG || {};
   global.DG.mode2d = {
+    drawBg: drawBg, tile: tile, tilePattern: tilePattern, fillTile: fillTile,
+    bgReady: function (region) { var b = bgs[region]; return !!(b && b.meta && LAYERS.every(function (l) { return b.imgs[l].ok; })); },
+    bgFailed: function (region) { var b = bgs[region]; return b ? b.fail || LAYERS.some(function (l) { return b.imgs[l].fail; }) : null; },
+    preloadBg: function (region) { getBg(region); },
+    tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS,
     isOn: isOn, pick: pick, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex,

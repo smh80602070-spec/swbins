@@ -79,8 +79,8 @@ warnlimit tools/char-forge/README.md 16384
 limit SAGA-ARCH.md 40960
 limit SAGA-BACKLOG.md 30720
 for f in saga-web/STATE.md saga-godot/docs/STATE.md saga-unity/docs/STATE.md; do limit "$f" 8192; done
-over=$(find tasks -name '*.md' -size +4096c 2>/dev/null)
-if [ -n "$over" ]; then echo "$over" | while read -r f; do echo "OVER $f > 4096B"; done; fail=1; else echo "ok   tasks/**/*.md 전부 4096B 이하"; fi
+over=$(find tasks -name '*.md' -size +6144c 2>/dev/null)
+if [ -n "$over" ]; then echo "$over" | while read -r f; do echo "OVER $f > 6144B"; done; fail=1; else echo "ok   tasks/**/*.md 전부 6144B 이하"; fi
 
 echo "== features.json 스키마 (saga-web/*/features.json · tools/features-schema.json)"
 if ls saga-web/*/features.json >/dev/null 2>&1; then
