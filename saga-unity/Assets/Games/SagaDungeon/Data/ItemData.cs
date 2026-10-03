@@ -80,6 +80,7 @@ namespace Saga.Dungeon.Data
             ["wp_lm_palace"] = new ItemData("wp_lm_palace", "비늘 삼지창", 37f, 2, WeaponShape.Lance, Secret.Frost), // 빙혼 — 가라앉은 물
             ["wp_lm_hellgate"] = new ItemData("wp_lm_hellgate", "업화 철퇴", 41f, 2, lore: Secret.Rage),   // 노화 — 업화
             ["wp_lm_cloud"] = new ItemData("wp_lm_cloud", "천장 금검", 46f, 2, lore: Secret.Swift),        // 섬광 — 구름 번개
+            ["wp_lm_nameless"] = new ItemData("wp_lm_nameless", "무명 묵검", 51f, 2, lore: Secret.Leech),  // 혈해 — 삼킨 이름(31층, tasks U-0028)
         };
 
         public static ItemData Get(string id) => id != null && Catalog.TryGetValue(id, out var d) ? d : null;

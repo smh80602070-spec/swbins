@@ -94,6 +94,7 @@ namespace Saga.Dungeon.Data
             public string[] folkStoryIds; // 곁가지 — 마을 시대 손님 사연을 들은 토막 수(버전 그대로: 옛 세이브는 null → 처음부터)
             public int[] folkStoryCounts;
             public string[] tutDone; // v15
+            public string[] nameStoneTowns, nameStoneNames; // tasks U-0028 지워진 이름의 비석 — 마을 id → 이름. 버전 그대로: 옛 세이브는 null → 아직 못 찾은 것.
             public string scenarioJson; // PLAN.md 109-16 시나리오 진행. 버전 그대로: 없는 세이브(null)는 저장된 층으로 지나온 장을 끝낸 것으로(RestoreLegacy).
         }
 
@@ -157,6 +158,7 @@ namespace Saga.Dungeon.Data
                 tutDone = DungeonTutorial.Ids().ToArray(),
             };
             DungeonEras.SnapshotStories(out data.folkStoryIds, out data.folkStoryCounts);
+            DungeonNameStones.Snapshot(out data.nameStoneTowns, out data.nameStoneNames);
             return JsonUtility.ToJson(data);
         }
 
@@ -239,6 +241,7 @@ namespace Saga.Dungeon.Data
                 TempleState.Restore(data.templeKeys, data.templeFlags);
             }
 
+            DungeonNameStones.Restore(data.nameStoneTowns, data.nameStoneNames); // 없는 세이브는 전부 못 찾은 것
             Transform player = FindPlayer();
             if (player != null && data.playerPos != null && data.playerPos.Length == 3)
             {

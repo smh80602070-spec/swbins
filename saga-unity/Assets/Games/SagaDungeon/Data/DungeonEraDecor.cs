@@ -95,7 +95,7 @@ namespace Saga.Dungeon.Data
         };
 
         /// <summary>
-        /// 명소 층 여섯 — `DungeonLandmarkData.All` 순. 방(20×20) 안에서 잡졸 넷·두목/호위·볼일 자리·문 표지·들어오는 자리·남쪽 문길·
+        /// 명소 층 일곱 — `DungeonLandmarkData.All` 순. 방(20×20) 안에서 잡졸 넷·두목/호위·볼일 자리·문 표지·들어오는 자리·남쪽 문길·
         /// 바이옴 꾸밈(−8, 5)을 비킨 벽 가 띠(|x| 6.4~8.6)와 모서리에만 선다(`PlaytestDungeonEraDecor`).
         /// </summary>
         public static readonly Set[] Landmarks =
@@ -163,6 +163,16 @@ namespace Saga.Dungeon.Data
                 M(P(UtilityBox, 8.1f, 3.4f, 1f, 270f)),
                 Rift(P(Probe, 7.0f, 0.6f, 2.4f, 70f), 2.0f),
                 Rift(P(Generator, 7.0f, 7.0f, 2.0f, 200f), 1.9f),
+            } },
+            // 無名處 — 글자 지워진 비석 돌·제등·바구니 / 도시 잔해 방호벽·배전함 / 뜬 탐조등(순장 왕릉과 같은 자리 — tasks U-0028)
+            new Set { Id = "nameless", NameKo = "이름 없는 곳", Pieces = new[] {
+                P(RockB, -7.6f, -4.2f, 1.0f, 200f),
+                P(RockE, -7.4f, -1.2f, 0.9f, 20f),
+                P(Lantern, -6.6f, -2.7f, 1f, 0f, false),
+                P(Basket, 7.4f, -6.6f, 1f, 30f, false),
+                M(P(Barrier, 6.8f, -8.2f, 1f, 0f)),
+                M(P(UtilityBox, 8.1f, 1.5f, 1f, 270f)),
+                Rift(P(Searchlight, 7.2f, 6.9f, 3.2f, 200f), 1.9f),
             } },
         };
 

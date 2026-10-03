@@ -55,6 +55,9 @@ namespace Saga.Dungeon.Data
                 Cd = 9f, Warn = 1.2f, R = M(95f), Pull = M(60f), Mul = 1.4f, Color = new Color(0.35f, 0.7f, 1f) },
             new Sig { Key = "hellgate", Kind = Kind.Pool, NameKo = "업화 장판",
                 Cd = 6f, Warn = 0.8f, R = M(46f), Mul = 0.6f, Last = 6f, PoolMul = 0.2f, MaxPools = 4, Color = new Color(1f, 0.42f, 0.16f) },
+            // 31층(tasks U-0028) — 웹 `summon` at [0.66, 0.33] n 3. 부르는 졸개는 층 졸개 그대로(세 시대 모습은 졸개 쪽 규칙을 따른다).
+            new Sig { Key = "nameless", Kind = Kind.Summon, NameKo = "삼킨 이름들", LineKo = "삼킨 이름들이 세 시대의 모습으로 일어난다",
+                At = new[] { 0.66f, 0.33f }, N = 3, Color = new Color(0.55f, 0.55f, 0.7f) },
             new Sig { Key = "cloud", Kind = Kind.Cross, NameKo = "천뢰 십자",
                 Cd = 8f, Warn = 1.0f, R = M(22f), Arms = 4, Count = 5, Gap = M(48f), Mul = 1.3f, Color = new Color(0.79f, 0.72f, 1f) },
         };
