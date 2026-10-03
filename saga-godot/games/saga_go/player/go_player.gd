@@ -603,18 +603,34 @@ func face_toward(pos: Vector3) -> void:
 
 ## 공격·피격 같은 한 번짜리 동작. dur 동안 걷기/서기 애니가 덮어쓰지 않고,
 ## 이동 속도는 move_scale 배.
+## 한 번짜리 동작 클립은 길다(공격 1.57초·회피 1.5초) — 후딜(0.3초대)만큼만 틀면 앞부분(준비 동작)만 반복돼 휘두르는 동작이 한 번도 안 나온다(G-0018).
+## 그래서 클립에서 "실제 동작이 있는 구간"(창 [시작, 끝] 초)만 dur 에 맞춰 재생한다. 창은 클립을 시간대별로 찍어 눈으로 정했다:
+##   attack 0.30~0.95초 = 몸을 낮춰 찌르는 동작 · dodge 0.05~0.85초 = 웅크림→도약→공중 구르기→착지. 창이 없는 클립은 처음부터 원래 속도.
+const CLIP_WINDOW := {"attack": [0.30, 0.95], "dodge": [0.05, 0.85]}
+var _action_scaled := false # 동작이 재생 속도를 바꿨으면, 끝나고 1.0 으로 되돌린다
+
 func play_action(anim_name: String, dur: float, move_scale: float) -> void:
 	_action_t = dur
 	_action_move = move_scale
 	if _anim and _anim.has_animation(anim_name):
+		var start := 0.0
 		_anim.speed_scale = 1.0
+		_action_scaled = false
+		if CLIP_WINDOW.has(anim_name) and dur > 0.0:
+			var w: Array = CLIP_WINDOW[anim_name]
+			start = float(w[0])
+			_anim.speed_scale = (float(w[1]) - float(w[0])) / dur
+			_action_scaled = true
 		_anim.play(anim_name)
-		_anim.seek(0.0, true)
+		_anim.seek(start, true)
 		_current_anim = anim_name
 
 func _play_anim(anim_name: String) -> void:
 	if _action_t > 0.0:
 		return
+	if _action_scaled and _anim:
+		_anim.speed_scale = 1.0
+		_action_scaled = false
 	super._play_anim(anim_name)
 
 # ---------------------------------------------------------------- 스태미나

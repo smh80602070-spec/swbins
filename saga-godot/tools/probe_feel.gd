@@ -102,6 +102,9 @@ func _physics_process(delta: float) -> void:
 				var hp0 := float(_target.get("hp"))
 				var ok: bool = _fc.call("attack")
 				var changed := float(_target.get("hp")) < hp0
+				var an: AnimationPlayer = _p.find_child("AnimationPlayer", true, false)
+				_m("attack_anim_speed_scale", "%.2f" % an.speed_scale) # 클립 창 0.30~0.95s 를 후딜 0.32s 에 맞춤 → 약 2.03
+				_m("attack_anim_start_pos", "%.2f" % an.current_animation_position)
 				_m("attack_accepted_first", str(ok))
 				_m("attack_damage_same_frame", str(changed)) # true = 입력 프레임에 바로 피해(선딜 0)
 				_m("attack_recovery_first_sec", "%.2f" % float(_fc.get("_attack_t")))
@@ -243,6 +246,7 @@ func _physics_process(delta: float) -> void:
 				if _frame == _dodge_start + 1:
 					_m("dodge_speed_next_frame", "%.1f" % Vector2(_p.velocity.x, _p.velocity.z).length())
 				elif _frame == _dodge_start + 30: # 0.3초 + 여유
+					_m("anim_speed_after_dodge", "%.2f" % (_p.find_child("AnimationPlayer", true, false) as AnimationPlayer).speed_scale) # 동작이 끝나면 1.00 으로 돌아와야 한다
 					_m("dodge_distance_m", "%.1f" % Vector2(_p.global_position.x - _pos0.x, _p.global_position.z - _pos0.z).length())
 					_next()
 			elif _frame > 400:
