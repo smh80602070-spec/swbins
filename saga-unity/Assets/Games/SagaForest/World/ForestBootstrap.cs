@@ -50,10 +50,26 @@ namespace Saga.Forest.World
             {
                 ForestMuseumDecorator.SpawnFlag(Vector3.zero);
             }
+
+            // tasks U-0029 탑성 조각(보너스 갈래) — 돌무더기 여섯은 Play 때 짓고(씬 재빌드 없이), 완성은 같은 방식으로 이벤트 + 로드 직후 직접 훑기.
+            ForestRubbleSpot.Install();
+            ForestRuinBundle.Completed += OnRuinCompleted;
+            if (ForestRuinBundle.IsCompleted)
+            {
+                ForestMuseumDecorator.SpawnRebuiltGazebo(ForestMuseumDecorator.RebuiltGazeboPos);
+            }
+        }
+
+        private void OnRuinCompleted()
+        {
+            ForestMuseumDecorator.SpawnRebuiltGazebo(ForestMuseumDecorator.RebuiltGazeboPos);
+            DialogueLabel.Instance?.Show(
+                ForestLocalization.T("ruin.done_toast", "🏛️ 탑성 조각을 다 모았다 — 마을 광장 곁에 정자를 다시 쌓았다!"), 4f);
         }
 
         private void OnDestroy()
         {
+            ForestRuinBundle.Completed -= OnRuinCompleted;
             ForestMuseumState.BundleCompleted -= OnBundleCompleted;
             ForestMuseumState.AllBundlesCompleted -= OnAllBundlesCompleted;
         }

@@ -52,6 +52,7 @@ namespace Saga.Forest.Data
             public string homeCurWall;
             public string homeCurFloor;
             public string[] museumDiscovered;
+            public string[] ruinPieces; // tasks U-0029 탑성 조각 — 버전 그대로: 옛 세이브는 null → 빈 채(Restore 가 조용히 비운다)
             public int deliveredCount;
             public string festivalDoneDate;
             public long festivalWishUntilTicks;
@@ -131,6 +132,7 @@ namespace Saga.Forest.Data
                 homeCurWall = finishes.CurWall,
                 homeCurFloor = finishes.CurFloor,
                 museumDiscovered = ForestMuseumState.Snapshot(),
+                ruinPieces = ForestRuinBundle.Snapshot(),
                 deliveredCount = ForestDeliveryState.Snapshot(),
                 festivalDoneDate = ForestFestivalState.SnapshotDoneDate(),
                 festivalWishUntilTicks = ForestFestivalState.SnapshotWishUntilTicks(),
@@ -212,6 +214,7 @@ namespace Saga.Forest.Data
             {
                 ForestMuseumState.Restore(data.museumDiscovered);
             }
+            ForestRuinBundle.Restore(data.ruinPieces); // 없는 세이브(null)는 빈 채 — 버전 가르지 않는다
             ForestDeliveryState.Restore(data.version >= 6 ? data.deliveredCount : 0);
             if (data.version >= 7)
             {

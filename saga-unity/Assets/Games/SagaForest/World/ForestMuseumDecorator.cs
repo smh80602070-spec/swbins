@@ -46,6 +46,54 @@ namespace Saga.Forest.World
             Object.Destroy(flag.GetComponent<Collider>());
         }
 
+        /// <summary>tasks U-0029 — 탑성 조각 여섯을 다 모으면 마을 광장 곁(북쪽 빈자리)에 서는 다시 쌓은 정자.
+        /// 기둥 넷 + 지붕 판 primitive. 이미 서 있으면 다시 짓지 않는다(진단·로드 직후 재건이 겹쳐도 하나).</summary>
+        public static readonly Vector3 RebuiltGazeboPos = new Vector3(0f, 0f, 9f);
+        public const string RebuiltGazeboName = "Decor_RebuiltGazebo";
+
+        public static GameObject SpawnRebuiltGazebo(Vector3 pos)
+        {
+            var existing = GameObject.Find(RebuiltGazeboName);
+            if (existing != null) return existing;
+            var root = new GameObject(RebuiltGazeboName);
+            root.transform.position = pos;
+            var stone = MakeMat(new Color(0.62f, 0.58f, 0.5f));
+            var wood = MakeMat(new Color(0.45f, 0.3f, 0.18f));
+            for (int i = 0; i < 4; i++)
+            {
+                var post = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                post.name = "Post" + i;
+                post.transform.SetParent(root.transform, false);
+                post.transform.localPosition = new Vector3(i % 2 == 0 ? -1.3f : 1.3f, 1.2f, i < 2 ? -1.3f : 1.3f);
+                post.transform.localScale = new Vector3(0.28f, 1.2f, 0.28f);
+                post.GetComponent<MeshRenderer>().sharedMaterial = stone;
+                DropCollider(post);
+            }
+            var roof = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            roof.name = "Roof";
+            roof.transform.SetParent(root.transform, false);
+            roof.transform.localPosition = new Vector3(0f, 2.55f, 0f);
+            roof.transform.localScale = new Vector3(3.6f, 0.22f, 3.6f);
+            roof.GetComponent<MeshRenderer>().sharedMaterial = wood;
+            DropCollider(roof);
+            var top = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            top.name = "RoofTop";
+            top.transform.SetParent(root.transform, false);
+            top.transform.localPosition = new Vector3(0f, 2.85f, 0f);
+            top.transform.localScale = new Vector3(2.2f, 0.4f, 2.2f);
+            top.GetComponent<MeshRenderer>().sharedMaterial = wood;
+            DropCollider(top);
+            return root;
+        }
+
+        // 진단이 편집 모드(Destroy 불가)에서도 부르므로 모드를 가려 지운다.
+        private static void DropCollider(GameObject go)
+        {
+            var c = go.GetComponent<Collider>();
+            if (c == null) return;
+            if (Application.isPlaying) Object.Destroy(c); else Object.DestroyImmediate(c);
+        }
+
         private static void BuildFireflyJar(Vector3 pos)
         {
             var jar = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
