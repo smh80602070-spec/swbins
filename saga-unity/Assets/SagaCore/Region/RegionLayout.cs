@@ -66,11 +66,16 @@ namespace Saga.Core.Region
 
         public float H(int i, int j) => heights[j * nx + i];
 
+        /// <summary>물에 뜬 조각 밑 호수 바닥이 물 높이보다 얼마나 깊은지(m) — 은하 나루 배·뗏목 자리.</summary>
+        public const float LakeBedDepth = 2f;
+        /// <summary>물이 있는 지역에서 기슭 근거가 땅 높이를 끌고 가는 거리(m) — 이보다 멀면 호수 바닥.</summary>
+        public const float BankReachM = 8f;
+
         /// <summary>새 모양 배치표의 높이는 안개 상자 안쪽에서 "위에서 쏜 광선이 상자 윗면을 먼저 맞은" 값(상자 윗면 높이 그대로의 평평한 고원)으로 덮여 있다 —
         /// 서리봉 10m·사거리 8m·은하 나루 5m 가 각 `fog.box` 윗면과 정확히 같다. 이대로 땅으로 쓰면 카메라와 조각(z≈0)이 땅 아래에 묻혀
         /// 땅 뒷면이 컬링돼 하늘이 보인다. 상자 발자국 안에서 높이가 윗면과 같은 칸을 땅이 아닌 값(윗면 이상 = 상자 윗면 또는 그 안에 선 조각 윗면)으로 보고, 가장자리 바로 바깥의 진짜 땅 칸과
         /// 조각 자리(조각은 땅 위에 서 있다)에서 역거리 가중(제곱)으로 메운다. 상자 발자국 밖의 언덕은 그대로 둔다.</summary>
-        public int RemoveFogLid(Vector2 boxCenter, Vector2 boxSize, float top, IList<Vector3> anchors)
+        public int RemoveFogLid(Vector2 boxCenter, Vector2 boxSize, float top, IList<Vector3> anchors, float waterZ = float.NaN)
         {
             const float Eps = 0.02f;
             float hx = boxSize.x * 0.5f + step * 0.5f, hz = boxSize.y * 0.5f + step * 0.5f;
@@ -103,7 +108,12 @@ namespace Saga.Core.Region
                 }
             if (anchors != null)
                 foreach (var a in anchors)
-                    if (Mathf.Abs(a.x - boxCenter.x) <= hx && Mathf.Abs(a.z - boxCenter.y) <= hz) { px.Add(a.x); pz.Add(a.z); ph.Add(a.y); }
+                    if (Mathf.Abs(a.x - boxCenter.x) <= hx && Mathf.Abs(a.z - boxCenter.y) <= hz)
+                    {
+                        // 물에 뜬 조각(배·뗏목, 물 높이 이하)은 호수 위에 있다 — 그 밑 땅은 물 아래 바닥이어야 물이 보인다
+                        bool floating = !float.IsNaN(waterZ) && a.y <= waterZ + 0.05f;
+                        px.Add(a.x); pz.Add(a.z); ph.Add(floating ? waterZ - LakeBedDepth : a.y);
+                    }
             if (px.Count == 0) return 0;   // 근거가 없으면 그대로 둔다
 
             var filled = (float[])heights.Clone();
@@ -112,10 +122,24 @@ namespace Saga.Core.Region
                 {
                     if (!lid[j * nx + i]) continue;
                     float x = x0 + i * step, z = z0 + j * step, sw = 0f, sh = 0f;
+                    bool lake = !float.IsNaN(waterZ);
+                    if (lake)
+                    {
+                        // 물이 있는 지역 — 기슭 근거는 BankReachM 안에서만 땅을 끌고(안쪽일수록 세게), 그 밖은 호수 바닥으로 돌아간다
+                        const float wl = 0.02f;
+                        sw += wl; sh += wl * (waterZ - LakeBedDepth);
+                    }
                     for (int k = 0; k < px.Count; k++)
                     {
                         float dx = x - px[k], dz = z - pz[k];
-                        float w = 1f / (dx * dx + dz * dz + 1f);
+                        float w;
+                        if (lake)
+                        {
+                            float t = 1f - Mathf.Sqrt(dx * dx + dz * dz) / BankReachM;
+                            if (t <= 0f) continue;
+                            w = t * t;
+                        }
+                        else w = 1f / (dx * dx + dz * dz + 1f);
                         sw += w; sh += w * ph[k];
                     }
                     filled[j * nx + i] = sh / sw;
@@ -192,6 +216,7 @@ namespace Saga.Core.Region
         public TerrainSpec terrain;
         public bool hasPlaza; public Vector2 plazaCenter; public float plazaRadius;
         public string skyKind, skyFull, skyMobile;
+        public bool hasMoon; public Vector3 moonPos; public float moonRadius, moonHalo;   // 달: 하늘 그림에 없는 별도 원판 + 후광(Blender 좌표 → Unity)
         public bool hasFog; public float fogDensity; public Color fogColor; public float fogBoxHeight;
         public bool hasFogBox; public float fogBoxTop; public Vector2 fogBoxCenter, fogBoxSize;   // Blender (x, y) → Unity (x, z), 크기는 x·y 칸수
         public bool hasWater; public float waterY, waterSize; public Color waterColor;
@@ -276,6 +301,12 @@ namespace Saga.Core.Region
             if (Get(root, "sky") is Dictionary<string, object> sky)
             {
                 L.skyKind = Str(Get(sky, "kind"));
+                if (Get(sky, "moon") is Dictionary<string, object> moon)
+                {
+                    var mp = Floats(Get(moon, "pos"));
+                    L.hasMoon = true; L.moonPos = BlenderToUnity(mp[0], mp[1], mp[2]);
+                    L.moonRadius = Num(Get(moon, "radius")); L.moonHalo = Num(Get(moon, "halo_radius"));
+                }
                 if (Get(sky, "panorama") is Dictionary<string, object> pano)
                 {
                     L.skyFull = Str(Get(pano, "full"));
@@ -331,7 +362,7 @@ namespace Saga.Core.Region
             {
                 var anchors = new List<Vector3>();
                 foreach (var pc in L.pieces) anchors.Add(pc.pos);
-                L.terrain.RemoveFogLid(L.fogBoxCenter, L.fogBoxSize, L.fogBoxTop, anchors);
+                L.terrain.RemoveFogLid(L.fogBoxCenter, L.fogBoxSize, L.fogBoxTop, anchors, L.hasWater ? L.waterY : float.NaN);
             }
             return L;
         }

@@ -26,6 +26,29 @@ namespace Saga.Core.Region
             return _dot = t;
         }
 
+        private static Texture2D _moon;
+
+        /// <summary>달 원판 — 가장자리가 부드러운 옅은 푸른 흰색 원, 안쪽에 옅은 얼룩(바다)을 얹은 그림. 더하기 섞기용.</summary>
+        public static Texture2D MoonDisc()
+        {
+            if (_moon != null) return _moon;
+            const int n = 128;
+            var t = new Texture2D(n, n, TextureFormat.RGBA32, false, true) { name = "RegionMoonDisc", wrapMode = TextureWrapMode.Clamp, hideFlags = HideFlags.DontSave };
+            var px = new Color[n * n];
+            for (int y = 0; y < n; y++)
+                for (int x = 0; x < n; x++)
+                {
+                    float u = (x + 0.5f) / n * 2f - 1f, v = (y + 0.5f) / n * 2f - 1f;
+                    float r = Mathf.Sqrt(u * u + v * v);
+                    float edge = Mathf.Clamp01((1f - r) / 0.06f);                       // 가장자리 부드럽게
+                    float maria = Mathf.PerlinNoise(x * 0.07f + 3.1f, y * 0.07f + 7.7f);   // 옅은 얼룩
+                    float shade = 0.82f + 0.18f * (1f - maria * 0.9f);
+                    px[y * n + x] = new Color(0.93f * shade, 0.95f * shade, 1f * shade, edge);
+                }
+            t.SetPixels(px); t.Apply(false, true);
+            return _moon = t;
+        }
+
         /// <summary>두 색을 잡음으로 섞은 그림 — region_hero.py 의 균열 문(노이즈 → 색 램프) 재료.</summary>
         public static Texture2D Swirl(Color c0, Color c1, int n = 128)
         {

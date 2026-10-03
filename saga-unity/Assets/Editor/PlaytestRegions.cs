@@ -135,6 +135,36 @@ namespace Saga.EditorTools
                 PlaytestKit.Check(n >= 10 && below == 0, $"{id} 조각 {below}/{n} 개가 땅({worst:0.0}m)에 묻힘 — 안개 상자 뚜껑 제거 확인");
                 if (L.hasCamera && L.terrain.SampleHeight(L.cameraPos.x, L.cameraPos.z, out float ch))
                     PlaytestKit.Check(ch < L.cameraPos.y, $"{id} 카메라가 땅 아래: 땅 {ch:0.0}m ≥ 카메라 {L.cameraPos.y:0.0}m");
+                if (L.hasWater)
+                {
+                    // 물에 뜬 조각(배·뗏목) 밑은 물 아래여야 물이 보인다
+                    int floating = 0, dry = 0;
+                    foreach (var p in L.pieces)
+                    {
+                        if (p.pos.y > L.waterY + 0.05f || !L.terrain.SampleHeight(p.pos.x, p.pos.z, out float h)) continue;
+                        floating++; if (h >= L.waterY) dry++;
+                    }
+                    PlaytestKit.Check(floating >= 3 && dry == 0, $"{id} 물에 뜬 조각 {floating}개 중 {dry}개 밑이 물 위 땅");
+                    // 호수가 한 줄기 길이 아니라 넓게 있어야 한다 — 상자 안 격자 칸 중 물 아래 칸이 일정 비율 이상
+                    int inBox = 0, under = 0;
+                    var T = L.terrain;
+                    for (int j = 0; j < T.nz; j++)
+                        for (int i = 0; i < T.nx; i++)
+                        {
+                            float x = T.x0 + i * T.step, z = T.z0 + j * T.step, h = T.H(i, j);
+                            if (float.IsNaN(h) || Mathf.Abs(x - L.fogBoxCenter.x) > L.fogBoxSize.x * 0.5f || Mathf.Abs(z - L.fogBoxCenter.y) > L.fogBoxSize.y * 0.5f) continue;
+                            inBox++; if (h < L.waterY) under++;
+                        }
+                    PlaytestKit.Check(inBox > 0 && under >= inBox * 0.3f, $"{id} 호수가 좁다: 상자 안 {inBox}칸 중 물 아래 {under}칸(30% 이상이어야 함)");
+                    Debug.Log($"[Regions] {id} 상자 안 호수 칸 {under}/{inBox}");
+                }
+                if (id == "GalaxyFerry")
+                {
+                    PlaytestKit.Check(L.hasMoon && L.moonRadius > 0f && L.moonHalo > L.moonRadius, "은하 나루 달(sky.moon) 못 읽음");
+                    var built = RegionLoader.Build(id, null, new RegionLoadOptions());
+                    PlaytestKit.Check(built.root != null && built.root.transform.Find("Moon") != null && built.root.transform.Find("MoonHalo") != null, "은하 나루에 달·후광이 안 섬");
+                    if (built.root != null) Object.DestroyImmediate(built.root);
+                }
                 Debug.Log($"[Regions] {id} 뚜껑 제거 뒤 묻힌 조각 {below}/{n}");
             }
         }

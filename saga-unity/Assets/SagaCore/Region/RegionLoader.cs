@@ -75,6 +75,7 @@ namespace Saga.Core.Region
             foreach (var kv in matCache) if (kv.Value != null && kv.Value != kv.Key) res.owner.Own(kv.Value);   // 바꿔 만든 재질만 — 원본은 에셋
             BuildWater(layout, root.transform, res);
             BuildGate(layout, root.transform, res);
+            BuildMoon(layout, root.transform, res);
             if (opt.fx) BuildFx(layout, root.transform, res);
             if (opt.lights) BuildLights(layout, root.transform, res, opt);
             if (opt.applySky) ApplySky(layout, res, opt);
@@ -263,6 +264,34 @@ namespace Saga.Core.Region
             if (!L.hasWater) return;
             var go = AddMesh(parent, "Water", RegionMeshes.WaterPlane(L.waterSize), RegionMaterials.Toon(null, L.waterColor), res);
             go.transform.localPosition = new Vector3(0f, L.waterY, 0f);
+        }
+
+        // 달 — 하늘 그림(panorama)에 달이 없어서 배치표 sky.moon(위치·반지름·후광 반지름)으로 원판 한 장 + 후광 한 장을 보는 쪽으로 향해 세운다.
+        private static void BuildMoon(RegionLayout L, Transform parent, RegionLoadResult res)
+        {
+            if (!L.hasMoon) return;
+            Vector3 view = L.hasCamera ? L.cameraPos : new Vector3(0f, 2f, 0f);
+            var rot = Quaternion.LookRotation(L.moonPos - view);
+            var halo = RegionMaterials.Make("SparkAdd");
+            var disc = RegionMaterials.Make("SparkAdd");
+            if (halo == null || disc == null) return;
+            halo.SetTexture("_MainTex", RegionFx.SoftDot()); halo.SetColor("_Tint", new Color(0.55f, 0.65f, 0.95f, 0.5f));
+            disc.SetTexture("_MainTex", RegionFx.MoonDisc()); disc.SetColor("_Tint", Color.white);
+            var h = AddMesh(parent, "MoonHalo", Quad(L.moonHalo * 2f), halo, res);
+            h.transform.localPosition = L.moonPos; h.transform.localRotation = rot;
+            var d = AddMesh(parent, "Moon", Quad(L.moonRadius * 2f), disc, res);
+            d.transform.localPosition = L.moonPos - (L.moonPos - view).normalized * 0.5f; d.transform.localRotation = rot;   // 후광 앞
+        }
+
+        private static Mesh Quad(float size)
+        {
+            float h = size * 0.5f;
+            var m = new Mesh { name = "RegionQuad" };
+            m.SetVertices(new[] { new Vector3(-h, -h, 0f), new Vector3(h, -h, 0f), new Vector3(-h, h, 0f), new Vector3(h, h, 0f) });
+            m.SetUVs(0, new[] { new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(0f, 1f), new Vector2(1f, 1f) });
+            m.SetTriangles(new[] { 0, 2, 1, 2, 3, 1 }, 0);
+            m.RecalculateNormals(); m.RecalculateBounds();
+            return m;
         }
 
         private static void BuildGate(RegionLayout L, Transform parent, RegionLoadResult res)
