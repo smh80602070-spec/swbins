@@ -597,3 +597,11 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 - 셰이더 `Assets/Shaders/CelToon.shader`(URP, HLSL 직접) — Godot `cel_toon`·`cel_vertex_color`·`cel_outline` 과 같은 명암 3단·림·정점색·외곽선. 기본 재질 `Assets/Shaders/CelToon.mat`. 외곽선은 `_OutlineWidth`>0 일 때만 그려진다(기본 꺼짐).
 - **Godot 과 나란히 보기**: 에디터에서 `Assets/Scenes/TestVillage.unity`(사가고 마을)를 열고 메뉴 `Saga/Cel Toon/Preview Open Scene (do not save)` → Play. 씬을 **저장하지 말 것**(재질은 메모리에만 만든다). 되돌리기 = 씬 다시 열기. 판정은 "Godot 사가고 마을과 같아 보이는가" 한 줄.
 - 진단 `PlaytestCelToon.Run` → `[PlaytestCelToon] OK`(셰이더 컴파일 오류·경고 0·속성·기본값·변환·GO 마을 씬 변환). `-nographics` 배치에서는 재질 패스가 모두 이름 없는 한 개로 보여서 패스 이름은 원본 글로 확인한다.
+
+## 21. 지역 배치표 로더 — `Saga.Core.Region.RegionLoader` (tasks U-0023)
+
+- `RegionLoader.Build("Village"|"GalaxyFerry"|"FrostPeak"|"TimeRift"|"Crossroads", parent, options)` 가 `Resources/Regions/<지역>/layout.json` 로 지형(높이 격자 → 메시, 땅 셰이더 `Saga/RegionGround` 가 낮은·평평=low/높거나 가파름=high 로 섞음)·조각(두 번 이상 나오는 종류는 GPU 인스턴싱 `RegionInstancer`, 한 번이면 오브젝트)·풍경 GLB·마을 길/광장/나무/꽃(코드 메시)·물·균열 문·반딧불/눈발·점광원·하늘·안개를 짠다. 좌표는 Blender (x,y,z)→Unity (x,z,y), 회전 -yaw. 풍경 GLB 가 있는 지역은 길이 그 안에 구워져 있어 길 메시를 또 만들지 않는다.
+- 점광원은 `RegionLightPool` 이 가까운 `maxLights`(기본 12)개만 켠다(모바일 발열). 값(와트→세기·범위, 하늘 회전 270°, 안개 ≤0.012 만 전역)은 **시작점** — 시안과 눈으로 대조해 손본다.
+- **시안과 나란히 보기**: 메뉴 `Saga/Regions/Preview <지역> (do not save)` — 새 장면에 지역을 짜고 카메라를 배치표 구도에 놓는다(편집 모드에서도 그려진다). 시안 = `tools/world-forge/_out/hero_<지역>_pbr.png`. 장면을 저장하지 말 것.
+- 재질 원본 `Resources/RegionMaterials/*.mat`(셰이더가 빌드에서 안 빠지게) 은 메뉴 `Saga/Regions/Create Materials`(진단이 먼저 만든다).
+- 진단 `PlaytestRegions.Run` → `[PlaytestRegions] OK` + 지역마다 `[Regions] 지역 …` 한 줄(조각 수=배치표 수·드로우콜 추정·삼각형). 지형 면 수·감는 방향·좌표·JSON(null 구멍)·재질 규칙 포함. 드로우콜은 SRP Batcher 가 묶기 전 추정이며 실제 발열·프레임은 실기에서만 안다.
