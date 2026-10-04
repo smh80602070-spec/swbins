@@ -483,7 +483,9 @@
     poolH: { pool_e_goblin_126: 50, pool_g_orc_141: 102, pool_basef_undead_111: 85, pool_f_demon_136: 97 },   // 프레임 안 몸 높이(px, 옆모습 알파 범위로 잼)
     /** 2D 모드인가 — 3D 바탕이 안 서 있을 때(= 2D 그림) */
     on: function () { var V = global.DG.sideView3d; return !(V && V.ready && V.ready()); },
+    still: { hero_m: 1, hero_f: 1 },             // 한 장 모드 풀(W-0041, K-0056 정면·옆·뒤 3장) — 주인공
     pools: {
+      me: ['hero_m', 'hero_f'],
       t1: ['pool_e_goblin_126'],
       t2: ['pool_g_orc_141', 'pool_e_goblin_126'],
       t3: ['pool_basef_undead_111', 'pool_g_orc_141'],

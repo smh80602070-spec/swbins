@@ -80,6 +80,7 @@ window.DG_NO_TUNE = true;
 <script src="js/data-achieve.js"></script>
 <script src="js/sprite.js"></script>
 <script src="js/mode2d.js"></script>
+<script src="js/actor2d.js"></script>
 <script src="assets/sprites2d/mon-manifest.js"></script>
 <script src="js/core.js"></script>
 <script src="js/assets3d-ids.js"></script>
@@ -5661,7 +5662,7 @@ window.DG_NO_TUNE = true;
       var M = DG.mode2d, a = M.pick('t2', '황건적'), b = M.pick('t2', '황건적'), none = M.pick('beast', '들개');
       var pools = DG.cfg.mode2d.pools, all = [];
       Object.keys(pools).forEach(function (k) { pools[k].forEach(function (p) { all.push(p); }); });
-      var known = all.every(function (p) { return DG.cfg.mode2d.poolH[p] > 0; });   // 쓰는 풀마다 몸 높이가 적혀 있다
+      var known = all.every(function (p) { return DG.cfg.mode2d.poolH[p] > 0 || (DG.cfg.mode2d.still && DG.cfg.mode2d.still[p]); });   // 쓰는 풀마다 몸 높이(시트) 또는 한 장 모드 표시가 있다
       return a === b && !!a && none === null && known && ('황건적 → ' + a + ' · 풀 ' + all.length + '칸 몸 높이 적힘');
     });
 
