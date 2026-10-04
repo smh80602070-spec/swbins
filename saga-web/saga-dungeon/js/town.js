@@ -1369,12 +1369,12 @@
       p = scalePt(nsSpot.x, nsSpot.y);
       room.marks.push({ key: 'namestone:' + cfg.id, nameStone: true, townId: cfg.id, name: '지워진 이름의 비석', emoji: '🪦', x: anchor.x + p.x, y: anchor.y + p.y });
     }
+    if (global.DG.building) { global.DG.building.addMarks(room, cfg, anchor, scalePt, TALK_R); }   // W-0045 여관·마방·방앗간 입구 표식
     /* 굴혈(던전 입구) — cfg.exits 중 목적지가 'dungeon'인 것만 실제 발동
        표식으로 세운다. **다른 마을로의 exits는 더는 표식을 안 세운다** —
-       §28-8부터 마을 사이는 걸어서 자연히 건너간다(활성 마을이 세계
-       좌표로 저절로 갈린다, pickActiveTown 참고) — 옛 "들길을 밟으면
-       travel()" 트리거는 필요가 없어져 은퇴했다(Phase 2 자동지도가 이웃
-       마을 방향을 대신 그릴 것이다). */
+       §28-8부터 마을 사이는 걸어서 자연히 건너간다(활성 마을이 세계 좌표로
+       저절로 갈린다, pickActiveTown 참고) — 옛 "들길을 밟으면 travel()" 트리거는
+       필요가 없어져 은퇴했다(Phase 2 자동지도가 이웃 마을 방향을 대신 그릴 것이다). */
     for (i = 0; i < cfg.exits.length; i++) {
       var ex = cfg.exits[i];
       if (ex.to !== 'dungeon') { continue; }

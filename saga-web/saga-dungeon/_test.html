@@ -123,6 +123,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/dungeon.js"></script>
 <script src="js/mount.js"></script>
 <script src="js/town.js"></script>
+<script src="js/building.js"></script>
 <script src="js/ssao3d.js"></script>
 <script src="js/post3d.js"></script>
 <script src="js/field3d.js"></script>
@@ -3654,6 +3655,36 @@ window.requestAnimationFrame = function () { return 0; };
       }
       return close.length === 0 &&
         ('가장 가까운 둘도 ' + Math.round(min) + ' (문턱 ' + (T.TALK_R * 2) + ') 떨어짐');
+    });
+
+    t('건물 입구(W-0045) — 갈대나루 여관·자작재 마방·소금벌 방앗간에만 표식이 서고, 밟으면 안쪽 창(2D 는 실내 그림 · 3D 는 글만)이 뜬다', function () {
+      var T = DG.town, M2 = DG.cfg.mode2d, on0 = M2.on, want = { galdae: 'inn', jajak: 'stable', sogeum: 'mill' };
+      var room = { inn: 'inn_hall', stable: 'barn_hayloft', mill: 'jp_minka_irori' }, out = [], ok = true;
+      try {
+        T._reset('moru');
+        if (T.raw().room.marks.some(function (m) { return m.building; })) { return false; }   // 모루골엔 없다
+        Object.keys(want).forEach(function (tid) {
+          T._reset(tid);
+          var rm = T.raw().room, bs = rm.marks.filter(function (m) { return m.building; });
+          if (bs.length !== 1 || bs[0].building !== want[tid]) { ok = false; out.push(tid + ' 표식 ' + bs.length); return; }
+          var near = rm.npcs.concat(rm.marks).filter(function (o) { return o !== bs[0]; }).reduce(function (mn, o) { return Math.min(mn, Math.hypot(o.x - bs[0].x, o.y - bs[0].y)); }, 1e9);
+          if (near < T.TALK_R * 2) { ok = false; out.push(tid + ' 이웃 ' + Math.round(near)); }
+          /* 2D — 밟으면 창이 뜨고 방 그림 + 앞가림 층 두 장 */
+          M2.on = function () { return true; };
+          DG.ui.closeSheet(); T._put(bs[0].x, bs[0].y); T.update(0.05);
+          var el = document.getElementById('encounter'), imgs = el ? el.querySelectorAll('.interior img') : [];
+          if (!el || !el.classList.contains('show') || imgs.length !== 2 || imgs[0].getAttribute('src').indexOf('interior/' + room[want[tid]] + '.webp') < 0 ||
+              imgs[1].getAttribute('src').indexOf(room[want[tid]] + '_front.webp') < 0) { ok = false; out.push(tid + ' 2D 창'); }
+          /* 3D — 그림 없이 글만 */
+          T._put(10, 10); T.update(0.05);
+          M2.on = function () { return false; };
+          T._put(bs[0].x, bs[0].y); T.update(0.05);
+          el = document.getElementById('encounter');
+          if (!el || !el.classList.contains('show') || el.querySelector('.interior') || !/enc-close/.test(el.innerHTML)) { ok = false; out.push(tid + ' 3D 창'); }
+          el.classList.remove('show'); el.innerHTML = '';
+        });
+      } finally { M2.on = on0; T._reset(); }
+      return ok && ('세 마을 각 한 곳 · 2D 그림 두 장 · 3D 글만');
     });
 
     t('다가서면 말이 걸리고, 벗어나야 다시 걸린다', function () {

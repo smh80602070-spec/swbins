@@ -147,6 +147,22 @@ for (const g of Object.keys(MOVING_GAMES)) {
     }
   }
 }
+/** 건물 실내 그림(K-0025, W-0045) — 판이 쓰는 방 그림과 앞가림 층(_front)만 `<판>/assets/web2d/interior/` 로 복사한다. 판 → 방 id */
+const INTERIOR_GAMES = { 'saga-dungeon': ['inn_hall', 'barn_hayloft', 'jp_minka_irori'] };
+for (const g of Object.keys(INTERIOR_GAMES)) {
+  for (const id of INTERIOR_GAMES[g]) {
+    for (const suf of ['', '_front']) {
+      const from = path.join(WEB, 'shared', 'assets', 'web2d', 'interior', id + suf + '.webp'), to = path.join(WEB, g, 'assets', 'web2d', 'interior', id + suf + '.webp');
+      total++;
+      if (!fs.existsSync(from)) { console.log(`FAIL 실내 그림 정본 없음 shared/assets/web2d/interior/${id}${suf}.webp`); bad++; continue; }
+      if (fs.existsSync(to) && fs.readFileSync(to).equals(fs.readFileSync(from))) continue;
+      if (check) { console.log(`DIFF ${g}/assets/web2d/interior/${id}${suf}.webp ≠ shared`); bad++; continue; }
+      fs.mkdirSync(path.dirname(to), { recursive: true });
+      fs.copyFileSync(from, to);
+      copied++;
+    }
+  }
+}
 if (check) console.log(bad ? `FAIL shared 정본과 다른 사본 ${bad}개 — node tools/sync-shared.mjs` : `OK ${total}개 사본`);
 else console.log(`복사 ${copied}개 · 이미 같은 것 ${total - copied}개`);
 process.exit(bad ? 1 : 0);

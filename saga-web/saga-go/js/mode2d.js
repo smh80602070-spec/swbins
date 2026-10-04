@@ -219,6 +219,13 @@
     return any;
   }
 
+  /** 건물 실내 그림(K-0025, W-0045) — 방 그림과 앞가림 층(투명) 주소. 2D 모드가 아니면 null(3D 는 그림 없이 글만). cfg.interiorBase 로 폴더를 바꾼다 */
+  function interiorUrls(id) {
+    if (!id || !isOn()) { return null; }
+    var b = C().interiorBase || 'assets/web2d/interior/';
+    return { back: b + id + '.webp', front: b + id + '_front.webp' };
+  }
+
   /** 땅 종류 → 타일 주소(cfg.tile 표). 2D 모드가 아니거나 표에 없으면 null — 자기 텍스처 로더가 있는 판(사가고)이 주소만 빌린다 */
   function tileUrl(kind) { var c = C(); return c.tile && c.tile[kind] && isOn() ? tileBase() + c.tile[kind] + '.webp' : null; }
 
@@ -314,6 +321,7 @@
   global.DG.mode2d = {
     drawSprite: drawSprite, drawKind: drawKind, hasKind: hasKind, spriteReady: function (id) { return !!spriteOf(id); },
     fillIso: fillIso,
+    interiorUrls: interiorUrls,
     drawBg: drawBg, tile: tile, tileUrl: tileUrl, tilePattern: tilePattern, fillTile: fillTile,
     bgReady: function (region) { var b = bgs[region]; return !!(b && b.meta && LAYERS.every(function (l) { return b.imgs[l].ok; })); },
     bgFailed: function (region) { var b = bgs[region]; return b ? b.fail || LAYERS.some(function (l) { return b.imgs[l].fail; }) : null; },

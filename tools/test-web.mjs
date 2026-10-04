@@ -42,7 +42,7 @@ const server = http.createServer((req, res) => {
   if (!gameserve.handle(req, res, u, ROOT, ALL)) { res.writeHead(404); res.end(); }
 });
 
-let chrome = null;
+let chrome = null, dumpN = 0;
 function killChrome() {
   if (chrome && chrome.pid) {
     try { execFileSync('taskkill', ['/T', '/F', '/PID', String(chrome.pid)], { stdio: 'ignore' }); } catch (e) { /* 이미 끝남 */ }
@@ -67,7 +67,7 @@ function runOnce(game, port) {
     chrome.stdout.on('data', d => { out += d; });
     chrome.on('error', e => finish({ error: '크롬 실행 실패 ' + e.message }));
     chrome.on('close', () => {
-      if (opt.dump) { fs.writeFileSync(path.join(HERE, '_out', 'last-' + game + '.html'), out); }
+      if (opt.dump) { fs.writeFileSync(path.join(HERE, '_out', 'last-' + game + (opt.runs > 1 ? '-' + (dumpN++) : '') + '.html'), out); }
       const m = /<title>RESULT (\d+)\/(\d+)<\/title>/.exec(out);
       if (!m) return finish({ error: 'RESULT 없음(출력 ' + out.length + 'B)' });
       const names = [];
