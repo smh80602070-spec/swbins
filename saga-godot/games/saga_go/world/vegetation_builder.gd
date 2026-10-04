@@ -54,28 +54,20 @@ const CROP_SCALE := 2.5
 ## 거목이라 계열이 달라 이번엔 안 섞는다.
 const REGION_TREE_VARIANTS := {
 	"village": [
-		{"glb": "res://assets/generated/variants/CommonTree_1__go_village.glb", "scale": 0.759830},
-		{"glb": "res://assets/generated/variants/CommonTree_2__go_village.glb", "scale": 0.722230},
-		{"glb": "res://assets/generated/variants/CommonTree_3__go_village.glb", "scale": 0.585665},
-		{"glb": "res://assets/generated/variants/CommonTree_4__go_village.glb", "scale": 0.584846},
-		{"glb": "res://assets/generated/variants/CommonTree_5__go_village.glb", "scale": 0.787869},
+		{"glb": "res://assets/world/tree_broadleaf_01.glb", "scale": 0.8371},
+		{"glb": "res://assets/world/tree_broadleaf_02.glb", "scale": 0.9},
+		{"glb": "res://assets/world/tree_broadleaf_03.glb", "scale": 0.7051},
+		{"glb": "res://assets/world/tree_birch_01.glb", "scale": 0.8513},
 	],
-	## 106장 ㊺ 서리봉 고원 — 침엽수(Pine, 스냅 완비 5종). 에셋은 마을 팔레트 변형 그대로, 눈은 셰이더가 얹는다
-	## (㊻-4 REGION_TREE_SNOW — 새 GLB 없이 위를 보는 잎에 눈·잎빛 서늘하게).
-	## 높이는 CommonTree 와 같은 5.52m 로 역산(Pine 실측고 7.32·7.38·7.39·10.24·8.72m, trimesh bounds).
+	## G-0017(2026-10-04) 나무는 K-0052/K-0058 통일 툰 GLB(`assets/world/`). 높이는 옛과 같은 5.52m 로 역산(AABB 실측: 활엽 6.594·5.575·7.829·자작 6.484 /
+	## 소나무 8.334·7.941·8.026 / 고목 6.024; 활엽02 는 수관이 넓어 0.9). 눈은 여전히 셰이더(REGION_TREE_SNOW) — 새 재질도 표면마다 albedo_texture 라 바람 셰이더가 그대로 받는다.
 	"frost": [
-		{"glb": "res://assets/generated/variants/Pine_1__go_village.glb", "scale": 0.754416},
-		{"glb": "res://assets/generated/variants/Pine_2__go_village.glb", "scale": 0.748349},
-		{"glb": "res://assets/generated/variants/Pine_3__go_village.glb", "scale": 0.746733},
-		{"glb": "res://assets/generated/variants/Pine_4__go_village.glb", "scale": 0.539250},
-		{"glb": "res://assets/generated/variants/Pine_5__go_village.glb", "scale": 0.632751},
+		{"glb": "res://assets/world/tree_pine_01.glb", "scale": 0.6623},
+		{"glb": "res://assets/world/tree_pine_02.glb", "scale": 0.6951},
+		{"glb": "res://assets/world/tree_pine_03.glb", "scale": 0.6878},
 	],
 	"ruins": [
-		{"glb": "res://assets/generated/variants/DeadTree_1__go_ruins.glb", "scale": 0.581329},
-		{"glb": "res://assets/generated/variants/DeadTree_2__go_ruins.glb", "scale": 0.480492},
-		{"glb": "res://assets/generated/variants/DeadTree_3__go_ruins.glb", "scale": 0.415651},
-		{"glb": "res://assets/generated/variants/DeadTree_4__go_ruins.glb", "scale": 0.432230},
-		{"glb": "res://assets/generated/variants/DeadTree_5__go_ruins.glb", "scale": 0.335820},
+		{"glb": "res://assets/world/tree_dead_01.glb", "scale": 0.9163},
 	],
 }
 ## 106장 ㊻-4 지역마다 나무에 얹는 눈(vegetation_wind.gdshader snow_amount). 없는 지역은 0.
@@ -85,19 +77,19 @@ const REGION_TREE_SNOW := {"frost": 0.7}
 ## 못박아 뒀으니(HISTORY 09-20⑰) 산 바위 자리엔 안 쓴다. 옛 최종 높이
 ## (rock_largeA 0.675m·rock_smallA 0.669m)에 맞춰 역산.
 const REGION_ROCK_LARGE_GLB := {
-	"village": "res://assets/generated/variants/Rock_Medium_1__go_village.glb",
-	"coast": "res://assets/generated/variants/Rock_Medium_1__go_coast.glb",
-	"ruins": "res://assets/generated/variants/Rock_Medium_1__go_ruins.glb",
-	"frost": "res://assets/generated/variants/Rock_Medium_1__go_ruins.glb",
+	"village": "res://assets/world/rock_large_01.glb",
+	"coast": "res://assets/world/rock_large_01.glb",
+	"ruins": "res://assets/world/rock_large_01.glb",
+	"frost": "res://assets/world/rock_large_01.glb",
 }
 const REGION_ROCK_SMALL_GLB := {
-	"village": "res://assets/generated/variants/Rock_Medium_2__go_village.glb",
-	"coast": "res://assets/generated/variants/Rock_Medium_2__go_coast.glb",
-	"ruins": "res://assets/generated/variants/Rock_Medium_2__go_ruins.glb",
-	"frost": "res://assets/generated/variants/Rock_Medium_2__go_ruins.glb",
+	"village": "res://assets/world/rock_moss_01.glb",
+	"coast": "res://assets/world/rock_moss_01.glb",
+	"ruins": "res://assets/world/rock_moss_01.glb",
+	"frost": "res://assets/world/rock_moss_01.glb",
 }
-const ROCK_LARGE_SCALE := 0.299  # Rock_Medium_1 실측고 2.260 → 0.675/2.260
-const ROCK_SMALL_SCALE := 0.352  # Rock_Medium_2 실측고 1.899 → 0.669/1.899
+const ROCK_LARGE_SCALE := 0.370  # rock_large_01 실측고 1.823 → 0.675/1.823 (G-0017)
+const ROCK_SMALL_SCALE := 0.674  # rock_moss_01 실측고 0.993 → 0.669/0.993 (G-0017)
 const CROP_GLB := "res://assets/vegetation/crops_wheatStageB.glb"
 
 ## PLAN.md 102-5 "초목·지형·애니" — 나무 수관 흔들림(2026-09-21, 순수
@@ -110,14 +102,14 @@ const WIND_SHADER := preload("res://saga_core/shaders/vegetation_wind.gdshader")
 ## scatter.gd DENSITY 방식과 같은 결). 옛 참조 크기가 없어(신규 장식) 실측
 ## 30cm 안팎(사람 발목 높이)을 목표로 새로 잡았다.
 const REGION_CLUTTER_GLB := {
-	"village": "res://assets/generated/variants/Clover_1__go_village.glb",
-	"coast": "res://assets/generated/variants/Clover_1__go_coast.glb",
-	"ruins": "res://assets/generated/variants/Grass_Wispy_Short__go_ruins.glb",
+	"village": "res://assets/world/grass_tuft_01.glb",
+	"coast": "res://assets/world/grass_tuft_01.glb",
+	"ruins": "res://assets/world/grass_tuft_02.glb",
 }
 const REGION_CLUTTER_SCALE := {
-	"village": 0.262,  # Clover_1 실측고 1.145 → 0.3/1.145
-	"coast": 0.262,
-	"ruins": 0.28,     # Grass_Wispy_Short 실측고 1.072 → 0.3/1.072
+	"village": 0.414,  # grass_tuft_01 실측고 0.724 → 0.3/0.724 (G-0017)
+	"coast": 0.414,
+	"ruins": 0.274,    # grass_tuft_02 실측고 1.095 → 0.3/1.095
 }
 const CLUTTER_DENSITY := 6  # 평지 칸 6개 중 1개꼴에만 놓는다(FOREST DENSITY=10과 같은 결)
 
@@ -224,11 +216,11 @@ const COAST_PEBBLE_DENSITY := 10  # "D" 칸 1/10
 ## (Plant_1/1_Big/7/7_Big·Flower_4_Group)은 실측 1~2.5m로 이 층("발목~
 ## 무릎")보다 커서 관목급 새 배치가 필요해 안 건드림(PROJECT_STATE).
 const UNDERSTORY := [
-	{"glb": "res://assets/generated/variants/Fern_1__go_village.glb", "scale": 1.0, "chance": 0.5},
-	{"glb": "res://assets/generated/variants/Mushroom_Common__go_village.glb", "scale": 0.65, "chance": 0.25},
-	{"glb": "res://assets/generated/variants/Grass_Common_Tall__go_village.glb", "scale": 0.448551, "chance": 0.3},
-	{"glb": "res://assets/generated/variants/Grass_Wispy_Tall__go_village.glb", "scale": 0.502452, "chance": 0.3},
-	{"glb": "res://assets/generated/variants/Mushroom_Laetiporus__go_village.glb", "scale": 0.391156, "chance": 0.15},
+	{"glb": "res://assets/generated/variants/Fern_1__go_village.glb", "scale": 1.0, "chance": 0.5},   # 짝 없음(고사리) — 옛 그대로
+	{"glb": "res://assets/world/mushroom_01.glb", "scale": 0.6, "chance": 0.25},        # 0.5m → 0.3m
+	{"glb": "res://assets/world/grass_tuft_02.glb", "scale": 0.767, "chance": 0.3},     # 1.095m → 0.84m
+	{"glb": "res://assets/world/grass_tuft_01.glb", "scale": 1.16, "chance": 0.3},      # 0.724m → 0.84m
+	{"glb": "res://assets/world/mushroom_01.glb", "scale": 0.5, "chance": 0.15},        # 0.5m → 0.25m (작은 버섯)
 ]
 
 ## 같은 5단계, 마을 평지 들꽃. 이 판 칸은 48m라 clutter(칸 6개에 하나)는
@@ -244,15 +236,11 @@ const UNDERSTORY := [
 ## `UNDERSTORY`(무릎~발목 범주)로, Plant_1/1_Big/7/7_Big·Flower_4_Group
 ## 5종은 아래 새 `SHRUBS`(관목 범주)로 나눠 마저 배치했다.
 const WILDFLOWERS := [
-	{"glb": "res://assets/generated/variants/Clover_2__go_village.glb", "scale": 0.237},           # 1.264m
-	{"glb": "res://assets/generated/variants/Grass_Common_Short__go_village.glb", "scale": 0.225}, # 1.334m
-	{"glb": "res://assets/generated/variants/Flower_3_Single__go_village.glb", "scale": 0.218},    # 2.068m
-	{"glb": "res://assets/generated/variants/Flower_4_Single__go_village.glb", "scale": 0.186},    # 2.419m
-	{"glb": "res://assets/generated/variants/Petal_1__go_village.glb", "scale": 1.846735},
-	{"glb": "res://assets/generated/variants/Petal_2__go_village.glb", "scale": 1.906289},
-	{"glb": "res://assets/generated/variants/Petal_3__go_village.glb", "scale": 2.374858},
-	{"glb": "res://assets/generated/variants/Petal_4__go_village.glb", "scale": 1.785315},
-	{"glb": "res://assets/generated/variants/Petal_5__go_village.glb", "scale": 1.558324},
+	{"glb": "res://assets/world/grass_tuft_01.glb", "scale": 0.414},     # 0.3m
+	{"glb": "res://assets/world/grass_tuft_02.glb", "scale": 0.274},     # 0.3m
+	{"glb": "res://assets/world/flower_patch_01.glb", "scale": 0.8},     # 0.45m
+	{"glb": "res://assets/world/flower_patch_01.glb", "scale": 0.65},    # 0.36m
+	{"glb": "res://assets/world/flower_patch_01.glb", "scale": 0.95},    # 0.53m
 ]
 const WILDFLOWERS_PER_TILE := 4
 
@@ -269,11 +257,11 @@ const WILDFLOWERS_PER_TILE := 4
 ## 같음), salt 대역(1030번대)만 분리했다. 순수 시각(충돌 없음 — 나무만
 ## 충돌을 가진다는 기존 원칙 그대로).
 const SHRUBS := [
-	{"glb": "res://assets/generated/variants/Plant_1__go_village.glb", "scale": 0.986612},
-	{"glb": "res://assets/generated/variants/Plant_1_Big__go_village.glb", "scale": 0.681499},
-	{"glb": "res://assets/generated/variants/Plant_7__go_village.glb", "scale": 1.603111},
-	{"glb": "res://assets/generated/variants/Plant_7_Big__go_village.glb", "scale": 1.775620},
-	{"glb": "res://assets/generated/variants/Flower_4_Group__go_village.glb", "scale": 0.482554},
+	{"glb": "res://assets/world/bush_01.glb", "scale": 0.84},            # 1.0m
+	{"glb": "res://assets/world/bush_02.glb", "scale": 1.2},             # 1.28m
+	{"glb": "res://assets/world/bush_01.glb", "scale": 1.1},             # 1.31m
+	{"glb": "res://assets/world/bush_02.glb", "scale": 0.7},             # 0.75m
+	{"glb": "res://assets/world/flower_patch_01.glb", "scale": 2.1},     # 1.17m 꽃덤불
 ]
 const SHRUB_CHANCE := 0.4  # "." 칸당 1개 상한, 40% 확률
 

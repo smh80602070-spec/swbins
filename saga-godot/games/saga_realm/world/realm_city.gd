@@ -174,13 +174,14 @@ func _rebuild_if_changed() -> void:
 
 ## 2026-09-30 — 성 둘레가 하늘 아래 반구(빈 안개)였다(창 모드 TestCity). 풀밭 원반 + GO 마을 나무·바위 고리로 자리를 깐다.
 const SCENERY_TREES := [
-	"res://assets/generated/variants/CommonTree_1__go_village.glb",
-	"res://assets/generated/variants/CommonTree_2__go_village.glb",
-	"res://assets/generated/variants/CommonTree_3__go_village.glb",
-	"res://assets/generated/variants/Pine_1__go_village.glb",
-	"res://assets/generated/variants/Pine_2__go_village.glb",
+	"res://assets/world/tree_broadleaf_01.glb",
+	"res://assets/world/tree_broadleaf_02.glb",
+	"res://assets/world/tree_birch_01.glb",
+	"res://assets/world/tree_pine_01.glb",
+	"res://assets/world/tree_pine_02.glb",
 ]
-const SCENERY_ROCK := "res://assets/generated/variants/Rock_Medium_1__go_village.glb"
+## G-0017(10-04) 통일 툰 GLB — 배율은 옛과 비슷한 높이(나무 약 1.5m·바위 약 1m)로 그대로 둔다(활엽 6.6·소나무 8.3m 실측 ≈ 옛 7.3m).
+const SCENERY_ROCK := "res://assets/world/rock_large_01.glb"
 
 
 func _build_scenery() -> void:

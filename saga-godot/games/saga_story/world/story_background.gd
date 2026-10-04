@@ -21,15 +21,15 @@ extends Node3D
 
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 
-const TREE_GLB := "res://assets/vegetation/tree_oak.glb"
-const HILL_GLB := "res://assets/rocks/rock_largeA.glb"
+const TREE_GLB := "res://assets/world/tree_broadleaf_01.glb"
+const HILL_GLB := "res://assets/world/hill_01.glb"
 
 const TREE_Z := -30.0
 const HILL_Z := -45.0  # 나무보다 더 뒤 — 대기 원근(더 멀수록 흐리고 파르스름)
 const TREE_COUNT := 14
 const HILL_COUNT := 5
-const TREE_SCALE := 9.0
-const HILL_SCALE := 16.0
+const TREE_SCALE := 1.64   # G-0017: 옛 oak 1.2m×9 = 10.8m 와 같게(broadleaf_01 실측 6.594m)
+const HILL_SCALE := 2.5    # hill_01 은 12m 폭·3.2m 높이 → 단색 실루엣 언덕 약 30m×8m
 const TREE_COLOR := Color(0.36, 0.44, 0.4)
 const HILL_COLOR := Color(0.3, 0.36, 0.42)
 
