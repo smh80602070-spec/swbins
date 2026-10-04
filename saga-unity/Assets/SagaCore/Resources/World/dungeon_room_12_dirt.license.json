@@ -1,0 +1,20 @@
+{
+ "id": "dungeon_room_12_dirt",
+ "generator": "tools/world-forge/build_kit.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: brown_mud",
+  "polyhaven: cliff_side"
+ ],
+ "size_m": [
+  12.07,
+  12.07,
+  4.42
+ ],
+ "tris": 1920,
+ "nodes": [
+  "col_room"
+ ]
+}

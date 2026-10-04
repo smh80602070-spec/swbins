@@ -1,0 +1,20 @@
+{
+ "id": "dungeon_corridor_4_dirt",
+ "generator": "tools/world-forge/build_kit.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: brown_mud",
+  "polyhaven: cliff_side"
+ ],
+ "size_m": [
+  4.04,
+  4.01,
+  4.07
+ ],
+ "tris": 348,
+ "nodes": [
+  "col_corridor"
+ ]
+}
