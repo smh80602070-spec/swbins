@@ -4303,8 +4303,9 @@ window.DG_NO_TUNE = true;
       while ((!found || !common) && tries < 200) {
         S.enter('forest');
         run = S.raw();
-        found = run.enemies.filter(function (e) { return e.role === 'tank'; })[0];
-        common = run.enemies.filter(function (e) { return e.role !== 'tank'; })[0];
+        /* 희귀형(체력 ×3.2)·미니보스·마법형은 배수가 얹혀 잡졸 기준이 못 된다 — 맨몸 근접형만 비교한다 */
+        found = run.enemies.filter(function (e) { return e.role === 'tank' && !e.rare && !e.mini; })[0];
+        common = run.enemies.filter(function (e) { return e.role === 'melee' && !e.rare && !e.mini; })[0];
         if (!found || !common) { S.leave(); }
         tries++;
       }
