@@ -1669,8 +1669,10 @@
   "id": "gd.fs.triplanar",
   "name": "지형 트라이플레이너",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_terrain"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
