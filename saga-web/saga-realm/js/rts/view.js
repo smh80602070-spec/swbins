@@ -51,8 +51,8 @@
         }
       }
     }
-    if (z >= 14) {
-      ctx.strokeStyle = 'rgba(0,0,0,.12)'; ctx.lineWidth = 1; ctx.beginPath();
+    if (z >= 14 && isBuildTool(tool) && tool !== 'erase') {   // 격자선은 짓는 중에만(실시간이라 평소엔 안 보인다)
+      ctx.strokeStyle = 'rgba(0,0,0,.22)'; ctx.lineWidth = 1; ctx.beginPath();
       for (x = x0; x <= x1 + 1; x++) { p = toScreen(x, y0); ctx.moveTo(p.x + .5, p.y); ctx.lineTo(p.x + .5, p.y + (y1 - y0 + 1) * z); }
       for (y = y0; y <= y1 + 1; y++) { p = toScreen(x0, y); ctx.moveTo(p.x, p.y + .5); ctx.lineTo(p.x + (x1 - x0 + 1) * z, p.y + .5); }
       ctx.stroke();
