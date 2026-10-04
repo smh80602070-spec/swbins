@@ -121,6 +121,7 @@ namespace Saga.Go.World
                         st.transform.SetParent(t, false);
                         st.transform.localPosition = new Vector3(Mathf.Cos(a), 0f, Mathf.Sin(a)) * 2.6f;
                         st.transform.localRotation = Quaternion.Euler(0f, -a * Mathf.Rad2Deg, 0f);
+                        if (Saga.Core.WorldModels.Spawn("market_stall_01", st.transform, 2.4f) != null) continue; // U-0037 A — 자체툴 좌판(없으면 아래 도형)
                         P(PrimitiveType.Cube, st.transform, "Stall_table", new Vector3(0f, 0.4f, 0f), new Vector3(1.8f, 0.8f, 1f), wood, false);
                         P(PrimitiveType.Cube, st.transform, "Stall_tent", new Vector3(0f, 2.1f, 0f), new Vector3(2f, 0.08f, 1.2f), cloth, false);
                         foreach (float x in new[] { -0.85f, 0.85f }) P(PrimitiveType.Cylinder, st.transform, "Stall_post", new Vector3(x, 1.05f, 0.5f), new Vector3(0.08f, 1.05f, 0.08f), wood, false);
