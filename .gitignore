@@ -49,6 +49,8 @@ dist/
 tools/_prof/
 tools/_out/
 saga-godot/tools/_out/
+# 에셋 공방(tools/asset-forge) 생성물 — 다시 만들 수 있는 출력, 커밋 대상 아님
+tools/asset-forge/_out/
 
 # 그래픽 게이트 새 촬영(tools/graphics-gate) — 기준(baseline)만 커밋한다
 graphics/latest/
