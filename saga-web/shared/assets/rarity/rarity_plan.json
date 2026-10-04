@@ -1,0 +1,60 @@
+{
+ "note": "K-0048 — 등급표는 data.js RARITY 를 읽은 것(외형만)",
+ "rarity": {
+  "1": {
+   "label": "★",
+   "color": "#9aa4b2",
+   "name": "기본",
+   "bg_mean": [
+    32,
+    34,
+    37
+   ],
+   "white_text_contrast": 15.9
+  },
+  "2": {
+   "label": "★★",
+   "color": "#5ec26a",
+   "name": "상급",
+   "bg_mean": [
+    22,
+    44,
+    25
+   ],
+   "white_text_contrast": 15.0
+  },
+  "3": {
+   "label": "★★★",
+   "color": "#4aa3f0",
+   "name": "희귀",
+   "bg_mean": [
+    19,
+    40,
+    58
+   ],
+   "white_text_contrast": 15.1
+  },
+  "4": {
+   "label": "★★★★",
+   "color": "#b06bf0",
+   "name": "영웅",
+   "bg_mean": [
+    51,
+    32,
+    69
+   ],
+   "white_text_contrast": 14.7
+  },
+  "5": {
+   "label": "★★★★★",
+   "color": "#f0a53a",
+   "name": "전설",
+   "bg_mean": [
+    73,
+    51,
+    19
+   ],
+   "white_text_contrast": 11.9
+  }
+ }
+}

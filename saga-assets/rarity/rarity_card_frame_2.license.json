@@ -1,0 +1,12 @@
+{
+ "id": "rarity_card_frame_2",
+ "generator": "tools/asset-forge/raritygen.py",
+ "license": "CC0-1.0 (코드 생성 — 외부 입력 없음)",
+ "rarity": 2,
+ "rarity_name": "상급",
+ "size": [
+  160,
+  224
+ ],
+ "nine_slice": 28
+}

@@ -1,0 +1,11 @@
+{
+ "id": "rarity_card_bg_4",
+ "generator": "tools/asset-forge/raritygen.py",
+ "license": "CC0-1.0 (코드 생성 — 외부 입력 없음)",
+ "rarity": 4,
+ "rarity_name": "영웅",
+ "size": [
+  160,
+  224
+ ]
+}

@@ -556,6 +556,29 @@
    ]
   },
   {
+   "id": "rarity",
+   "src": "saga-assets/rarity",
+   "include": [
+    "*.png",
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0048 등급 5 × (카드 틀 9분할·카드 배경·오라 시트·획득 연출 시트) + rarity_plan.json. 외형만, RARITY id 불변",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/rarity"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/rarity",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,
