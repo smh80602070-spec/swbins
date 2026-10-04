@@ -150,7 +150,7 @@ for (const g of Object.keys(MOVING_GAMES)) {
   }
 }
 /** 전투 이펙트 시트(K-0039, W-0052) — 판이 쓰는 이펙트의 가산 합성용 `vfx_<이름>_k.webp` 만 `<판>/assets/vfx/` 로 복사한다. 판 → 이름 목록 */
-const VFX_GAMES = { 'saga-story': ['spark_hit', 'crit_flash', 'death_smoke'], 'saga-dungeon': ['spark_hit', 'crit_flash', 'death_smoke'] };
+const VFX_GAMES = { 'saga-story': ['spark_hit', 'crit_flash', 'death_smoke'], 'saga-dungeon': ['spark_hit', 'crit_flash', 'death_smoke', 'fire_hit', 'ice_hit', 'lightning_hit', 'wind_hit', 'light_hit', 'water_hit'] };
 for (const g of Object.keys(VFX_GAMES)) {
   for (const n of VFX_GAMES[g]) {
     const f = 'vfx_' + n + '_k.webp', from = path.join(WEB, 'shared', 'assets', 'vfx', f), to = path.join(WEB, g, 'assets', 'vfx', f);

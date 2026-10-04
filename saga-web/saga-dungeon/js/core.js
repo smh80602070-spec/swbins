@@ -478,6 +478,7 @@
   'use strict';
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
+  global.DG.cfg.vfx = { preload: ['fire_hit', 'ice_hit', 'lightning_hit', 'wind_hit', 'light_hit', 'water_hit'] };   // 원소 타격 이펙트 시트(W-0054) — 첫 타격 전에 받아 둔다
   global.DG.cfg.mode2d = {
     base: 'assets/sprites2d_sheets/',
     tileBase: 'assets/web2d/tile/',

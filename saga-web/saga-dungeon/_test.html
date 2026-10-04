@@ -7935,6 +7935,14 @@ window.requestAnimationFrame = function () { return 0; };
         V.fxLayer(c, { t: 'ring', life: 0.5 }, 0, 0) === false && V.fxLayer(c, null, 0, 0) === false && (V.fxLayer(c, fx, 10, 10), fx.l0 === 0.6) && ('프레임 · 타격/처치만');
     });
 
+    t('원소 타격 이펙트(W-0054) — 사가블로 원소 키마다 시트가 짝지어지고(물리 제외) 그 시트는 표에 있다, 독 지속피해(dot)·물리·모르는 원소는 안 터뜨린다', function () {
+      var V = DG.vfx2d, c = document.createElement('canvas').getContext('2d'), keys = DG.elemData ? DG.elemData.ELEMENTS.map(function (e) { return e.key; }) : [], bad = [];
+      keys.forEach(function (k) { if (k !== 'phys' && !V.ELEM_HIT[k]) { bad.push('빠짐 ' + k); } });
+      Object.keys(V.ELEM_HIT).forEach(function (k) { if (keys.indexOf(k) < 0) { bad.push('없는 원소 ' + k); } if (!V.SHEETS[V.ELEM_HIT[k]]) { bad.push('시트 ' + k); } });
+      return bad.length === 0 && keys.length >= 7 && V.fxLayer(c, { t: 'elem', el: 'fire', dot: true, life: 0.6 }, 0, 0) === false && V.fxLayer(c, { t: 'elem', el: 'phys', life: 0.6 }, 0, 0) === false &&
+        V.fxLayer(c, { t: 'elem', el: 'zzz', life: 0.6 }, 0, 0) === false && ('원소 ' + Object.keys(V.ELEM_HIT).length + '종 짝지음');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });
