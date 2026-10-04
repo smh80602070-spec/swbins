@@ -16031,6 +16031,11 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       } finally { DG.cfg.vroidPattern = saveCfg; P.list = saveList; P.loader = saveLoader; }
     });
 
+    t('지도 타일 주소(W-0059) — 키가 필요한 CARTO 가 아니라 키 없는 OSM 표준 타일 주소가 나오고, 한 장은 z/x/y 로 정확히 채워진다', function () {
+      var u = DG.world.tileUrl(111812, 50833, 17);
+      return u === 'https://tile.openstreetmap.org/17/111812/50833.png' && u.indexOf('cartocdn') < 0 && u.indexOf('{') < 0 && ('OSM z/x/y 주소');
+    });
+
     t('타이틀 키 아트(W-0050) — 계정 화면이 가로·세로 키 아트 주소를 받고, 스타일에 두 장이 들어간다', function () {
       var art = DG.cfg.account && DG.cfg.account.art, st = document.getElementById('acc-style');
       if (!st) { DG.account.showSignup && void 0; }

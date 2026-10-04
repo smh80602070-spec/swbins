@@ -470,26 +470,13 @@
 
   var tiles = {};              // "z/x/y" → Image
   var tileFail = 0, tileOk = 0;
-  /* 지도 스타일은 이제 하나뿐이다 — **밝은 지도(voyager)**. 예전엔 CARTO의
-     dark_all·light_all 도 골라 쓸 수 있었지만(스타일 버튼으로 순환), CARTO가
-     API 키를 요구하게 바뀌어 화면에는 실제로 안 쓰인 지 오래고(2026-09-04,
-     `terrainTexture`가 대신함), 버튼이 있어 봤자 고를 이유가 없어 통째로
-     뺐다(2026-09-09). CARTO 는 스타일마다 경로가 다른데 voyager 만
-     `rastertiles/` 아래다 — 이 경로를 놓치면 404 가 오고 3D 지면에 지도가
-     통째로 안 깔린다(2026-08-26 에 그 상태였다). */
-  var TILE_PATH = 'rastertiles/voyager';
-  /* 고해상 타일(@2x) — 화면이 촘촘한 기기에서 쓴다. **3D 에서는 늘 쓴다**:
-     타일 한 장(256px)이 지면 242m 로 펼쳐져 1m 가 한 픽셀이라, 낮게 깔린 카메라
-     앞에서는 지도가 뭉개진다. 파일은 8KB → 10KB 남짓이라 값이 싸다 */
-  function useRetina() {
-    if ((global.devicePixelRatio || 1) > 1.3) { return true; }
-    var w3 = global.DG.world3d;
-    return !!(w3 && w3.active && w3.active());
-  }
+  /* 지도 타일 주소 한 곳(W-0059) — 2026-10 CARTO 가 키 없는 공개 타일을 막아 "API KEY REQUIRED" 자리표시 그림(2049B)만 준다.
+     키 없이 실제 지도를 주는 OpenStreetMap 표준 타일로 옮겼다(@2x 는 없다 — 256px 한 종류). 다른 서버로 바꿀 땐 이 줄만:
+     {z}{x}{y}. 과하게 받으면 막힐 수 있다(OSM 이용 정책) — 화면 둘레 몇십 장만 받고 sw.js 가 캐시한다. */
+  var TILE_URL = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
   function tileUrl(x, y, z) {
-    return 'https://basemaps.cartocdn.com/' + TILE_PATH +
-           '/' + z + '/' + x + '/' + y + (useRetina() ? '@2x' : '') + '.png';
+    return TILE_URL.replace('{z}', z).replace('{x}', x).replace('{y}', y);
   }
 
   function getTile(x, y, z) {
@@ -2053,7 +2040,7 @@
     /* 3D 렌더러(world3d.js)가 지면을 스스로 깔 수 있게 내보낸다 */
     ZOOM: ZOOM, TILE_PX: TILE_PX, TERRAIN: TERRAIN,
     metersPerPixel: metersPerPixel, scale: scale,
-    getTile: getTile, tilesUsable: tilesUsable,
+    getTile: getTile, tileUrl: tileUrl, tilesUsable: tilesUsable,
     latLngToPixel: latLngToPixel, worldToLatLng: worldToLatLng,
     /* `geo.js`(실제 지형)가 Overpass 응답을 세계 좌표로 바꿀 때 쓴다 —
        2026-09-05, 여태 여기 빠져 있어 실제 fetch가 매번 "toWorld is not a

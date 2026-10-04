@@ -1065,7 +1065,7 @@
     /* 3D 렌더러(world3d.js)가 지면을 스스로 깔 수 있게 내보낸다 */
     ZOOM: ZOOM, TILE_PX: TILE_PX, TERRAIN: TERRAIN,
     metersPerPixel: metersPerPixel, scale: scale,
-    getTile: getTile, tilesUsable: tilesUsable,
+    getTile: getTile, tileUrl: tileUrl, tilesUsable: tilesUsable,
     latLngToPixel: latLngToPixel, worldToLatLng: worldToLatLng,
     /* `geo.js`(실제 지형)가 Overpass 응답을 세계 좌표로 바꿀 때 쓴다 —
        2026-09-05, 여태 여기 빠져 있어 실제 fetch가 매번 "toWorld is not a
