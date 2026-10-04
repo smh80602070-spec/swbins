@@ -1,0 +1,27 @@
+{
+ "id": "eu_house_hearth_front",
+ "generator": "tools/ai-art/gen.py",
+ "model": "Illustrious-XL-v2.0",
+ "model_license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+ "prompt": "masterpiece, best quality, amazing quality, absurdres, interior scenery, no humans, wide shot, painterly game background, room interior, side view, cozy timber house living room, stone fireplace with embers, wooden beams, woven rug, bookshelf, a small glowing hover lamp floating over the table, warm candlelight",
+ "negative_prompt": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up, outdoors, exterior",
+ "seed": 20271045,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  1536,
+  153
+ ],
+ "seconds": 64.2,
+ "date": "2026-10-04",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "building": "eu_house_01",
+ "layer": "front",
+ "picked_candidate": 1,
+ "derived": "tools/ai-art/make_interior.py pack",
+ "upscaled_from": [
+  1216,
+  608
+ ]
+}

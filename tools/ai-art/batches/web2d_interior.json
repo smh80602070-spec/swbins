@@ -1,0 +1,145 @@
+{
+ "model": "Illustrious-XL-v2.0",
+ "out": "web2d_interior",
+ "defaults": {
+  "prompt_prefix": "masterpiece, best quality, amazing quality, absurdres, interior scenery, no humans, wide shot, painterly game background, room interior, side view",
+  "width": 1216,
+  "height": 608,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up, outdoors, exterior"
+ },
+ "items": [
+  {
+   "id": "int_eu_house_hearth_1",
+   "seed": 20271045,
+   "prompt": "cozy timber house living room, stone fireplace with embers, wooden beams, woven rug, bookshelf, a small glowing hover lamp floating over the table, warm candlelight"
+  },
+  {
+   "id": "int_eu_house_hearth_2",
+   "seed": 20271086,
+   "prompt": "cozy timber house living room, stone fireplace with embers, wooden beams, woven rug, bookshelf, a small glowing hover lamp floating over the table, warm candlelight"
+  },
+  {
+   "id": "int_modern_block_flat_1",
+   "seed": 20271127,
+   "prompt": "modern apartment living room, large window with city skyline, sofa, bookshelves, plants, an old bronze sword hung on the wall, soft evening light"
+  },
+  {
+   "id": "int_modern_block_flat_2",
+   "seed": 20271168,
+   "prompt": "modern apartment living room, large window with city skyline, sofa, bookshelves, plants, an old bronze sword hung on the wall, soft evening light"
+  },
+  {
+   "id": "int_future_dome_lounge_1",
+   "seed": 20271209,
+   "prompt": "futuristic dome house lounge, curved white walls, ring windows showing stars, floating holographic table, a wooden spinning wheel in the corner, cool blue light"
+  },
+  {
+   "id": "int_future_dome_lounge_2",
+   "seed": 20271250,
+   "prompt": "futuristic dome house lounge, curved white walls, ring windows showing stars, floating holographic table, a wooden spinning wheel in the corner, cool blue light"
+  },
+  {
+   "id": "int_stone_tower_chamber_1",
+   "seed": 20271291,
+   "prompt": "upper chamber of a stone watchtower, arrow slit windows, spiral stair, wooden desk with maps, a small glowing hologram globe, torch light"
+  },
+  {
+   "id": "int_stone_tower_chamber_2",
+   "seed": 20271332,
+   "prompt": "upper chamber of a stone watchtower, arrow slit windows, spiral stair, wooden desk with maps, a small glowing hologram globe, torch light"
+  },
+  {
+   "id": "int_chinese_hall_throne_1",
+   "seed": 20271373,
+   "prompt": "grand wooden palace hall interior, red lacquered pillars, carved ceiling, silk banners without markings, low platform, a tiny drone lantern floating near the roof, golden light"
+  },
+  {
+   "id": "int_chinese_hall_throne_2",
+   "seed": 20271414,
+   "prompt": "grand wooden palace hall interior, red lacquered pillars, carved ceiling, silk banners without markings, low platform, a tiny drone lantern floating near the roof, golden light"
+  },
+  {
+   "id": "int_dungeon_gate_antechamber_1",
+   "seed": 20271455,
+   "prompt": "dungeon antechamber, rough stone walls, iron torches, cracked floor, rusted chains, a glowing sci-fi terminal embedded in the wall, dim light"
+  },
+  {
+   "id": "int_dungeon_gate_antechamber_2",
+   "seed": 20271496,
+   "prompt": "dungeon antechamber, rough stone walls, iron torches, cracked floor, rusted chains, a glowing sci-fi terminal embedded in the wall, dim light"
+  },
+  {
+   "id": "int_forest_cottage_room_1",
+   "seed": 20271537,
+   "prompt": "small thatched cottage room, round window, wooden table, clay pots, hanging herbs, bed with patchwork quilt, a tiny glowing solar lantern on the shelf, soft daylight"
+  },
+  {
+   "id": "int_forest_cottage_room_2",
+   "seed": 20271578,
+   "prompt": "small thatched cottage room, round window, wooden table, clay pots, hanging herbs, bed with patchwork quilt, a tiny glowing solar lantern on the shelf, soft daylight"
+  },
+  {
+   "id": "int_inn_hall_1",
+   "seed": 20271619,
+   "prompt": "busy village inn common hall, long wooden tables, barrels, hanging lanterns, big hearth, a neon drink sign on the wall, warm light"
+  },
+  {
+   "id": "int_inn_hall_2",
+   "seed": 20271660,
+   "prompt": "busy village inn common hall, long wooden tables, barrels, hanging lanterns, big hearth, a neon drink sign on the wall, warm light"
+  },
+  {
+   "id": "int_inn_guestroom_1",
+   "seed": 20271701,
+   "prompt": "inn guest room, two wooden beds, small desk, window with curtains, candle, a charging pad glowing on the nightstand, quiet evening"
+  },
+  {
+   "id": "int_inn_guestroom_2",
+   "seed": 20271742,
+   "prompt": "inn guest room, two wooden beds, small desk, window with curtains, candle, a charging pad glowing on the nightstand, quiet evening"
+  },
+  {
+   "id": "int_barn_hayloft_1",
+   "seed": 20271783,
+   "prompt": "large red barn interior, hay bales stacked, wooden beams, farm tools on the wall, light shafts through planks, a small robot milking arm in a stall corner"
+  },
+  {
+   "id": "int_barn_hayloft_2",
+   "seed": 20271824,
+   "prompt": "large red barn interior, hay bales stacked, wooden beams, farm tools on the wall, light shafts through planks, a small robot milking arm in a stall corner"
+  },
+  {
+   "id": "int_hanok_sarangbang_1",
+   "seed": 20271865,
+   "prompt": "traditional korean room, paper sliding doors, wooden floor, low desk, folded blankets, ceramic jars, a glowing holographic scroll hovering above the desk, soft daylight"
+  },
+  {
+   "id": "int_hanok_sarangbang_2",
+   "seed": 20271906,
+   "prompt": "traditional korean room, paper sliding doors, wooden floor, low desk, folded blankets, ceramic jars, a glowing holographic scroll hovering above the desk, soft daylight"
+  },
+  {
+   "id": "int_jp_minka_irori_1",
+   "seed": 20271947,
+   "prompt": "traditional farmhouse room with sunken hearth, thatched ceiling beams, tatami mats, hanging pot, a small floating drone lantern, warm firelight"
+  },
+  {
+   "id": "int_jp_minka_irori_2",
+   "seed": 20271988,
+   "prompt": "traditional farmhouse room with sunken hearth, thatched ceiling beams, tatami mats, hanging pot, a small floating drone lantern, warm firelight"
+  },
+  {
+   "id": "int_silkroad_house_room_1",
+   "seed": 20272029,
+   "prompt": "desert clay-brick house interior, arched doorways, woven carpets, cushions, brass lamps, a small floating crystal lamp, warm sandy light"
+  },
+  {
+   "id": "int_silkroad_house_room_2",
+   "seed": 20272070,
+   "prompt": "desert clay-brick house interior, arched doorways, woven carpets, cushions, brass lamps, a small floating crystal lamp, warm sandy light"
+  }
+ ]
+}

@@ -473,6 +473,21 @@
    ]
   },
   {
+   "id": "web2d-interior",
+   "src": "saga-assets/web2d/interior",
+   "include": [
+    "*.webp",
+    "*.license.json"
+   ],
+   "note": "K-0025 건물 실내 배경 2D — 방 13 × (방 그림 1536×768 + 앞가림 층). 입장 때 장면 교체용",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/web2d/interior"
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,
