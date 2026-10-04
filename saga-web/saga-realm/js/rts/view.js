@@ -18,7 +18,7 @@
   var S = null, cv, ctx, mini, mctx, miniBase = null, els = {};
   var cam = { x: 80, y: 50, z: 1.4 }, tool = 'select', hover = null, ptrs = {}, pinch = 0, painting = false, panning = false, panLast = null;
   var sel = {}, selB = 0, box = null, down = null;   // 고른 유닛 id 모음 · 고른 군영 id · 끌고 있는 선택 상자 · 눌린 자리
-  var acc = 0, lastT = 0, lastHud = 0, lastSaveDay = 0, tipMsg = '', tipUntil = 0, dirty = true, overlay = 0, lastStats = null, overSeen = false;
+  var acc = 0, lastT = 0, lastHud = 0, lastSaveDay = 0, tipMsg = '', tipUntil = 0, dirty = true, overlay = 0, lastStats = null, overSeen = false, pokeUntil = 0;
   var OVERLAYS = ['보기: 없음', '보기: 행복', '보기: 닿는 범위'];
 
   function $(id) { return global.document.getElementById(id); }
@@ -41,11 +41,14 @@
     var g = R().grid, D = R().rules.DEFS, s = size(), z = px(), x0 = Math.max(0, Math.floor(cam.x - s.w / 2 / z)), x1 = Math.min(g.W - 1, Math.ceil(cam.x + s.w / 2 / z));
     var y0 = Math.max(0, Math.floor(cam.y - s.h / 2 / z)), y1 = Math.min(g.H - 1, Math.ceil(cam.y + s.h / 2 / z)), x, y, p, id, b, d, bp;
     ctx.fillStyle = '#0d1016'; ctx.fillRect(0, 0, s.w, s.h);
-    for (y = y0; y <= y1; y++) {
-      for (x = x0; x <= x1; x++) {
-        p = toScreen(x, y);
-        ctx.fillStyle = COLORS[S.tiles[g.idx(x, y)]][(x + y) & 1];
-        ctx.fillRect(p.x, p.y, Math.ceil(z), Math.ceil(z));
+    var art = R().art, p00 = toScreen(0, 0), roadRects = [], roadBad = [], spr = [];
+    if (!art.terrain(ctx, S.tiles, g, x0, x1, y0, y1, p00.x, p00.y, z)) {   // 새 타일 그림(art.js) — 못 받았으면 옛 색 칸
+      for (y = y0; y <= y1; y++) {
+        for (x = x0; x <= x1; x++) {
+          p = toScreen(x, y);
+          ctx.fillStyle = COLORS[S.tiles[g.idx(x, y)]][(x + y) & 1];
+          ctx.fillRect(p.x, p.y, Math.ceil(z), Math.ceil(z));
+        }
       }
     }
     if (z >= 14) {
@@ -58,16 +61,27 @@
       b = S.buildings[id]; d = D[b.t];
       if (b.x + d.w < x0 || b.x > x1 + 1 || b.y + d.h < y0 || b.y > y1 + 1) { continue; }
       bp = toScreen(b.x, b.y);
+      if (d.road) { roadRects.push([b.x, b.y]); if (!b.conn) { roadBad.push(bp); } continue; }   // 길은 아래에서 흙길 타일로 한꺼번에
+      if (art.spriteReady(b.t)) { spr.push({ b: b, d: d, x: bp.x, y: bp.y }); ctx.fillStyle = 'rgba(0,0,0,.14)'; ctx.fillRect(bp.x + 1, bp.y + 1, d.w * z - 2, d.h * z - 2); continue; }   // 그림이 있으면 그림으로
       ctx.fillStyle = d.color; ctx.fillRect(bp.x + 1, bp.y + 1, d.w * z - 2, d.h * z - 2);
       if (!d.road) {
         ctx.strokeStyle = b.conn ? 'rgba(255,255,255,.55)' : '#ff5a4a'; ctx.lineWidth = b.conn ? 1 : 2;
         ctx.strokeRect(bp.x + 1.5, bp.y + 1.5, d.w * z - 3, d.h * z - 3);
         if (z >= 12 && d.icon) { ctx.font = Math.floor(Math.min(d.w, d.h) * z * 0.55) + 'px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#000'; ctx.fillText(d.icon, bp.x + d.w * z / 2, bp.y + d.h * z / 2); }
         if (!b.conn && z >= 12) { ctx.font = Math.floor(z * 0.7) + 'px sans-serif'; ctx.fillStyle = '#ff5a4a'; ctx.textAlign = 'left'; ctx.fillText('⚠', bp.x + 2, bp.y + z * 0.5); }
-      } else if (!b.conn) {
-        ctx.fillStyle = 'rgba(255,90,74,.35)'; ctx.fillRect(bp.x + 1, bp.y + 1, z - 2, z - 2);
       }
     }
+    if (!art.roads(ctx, roadRects, p00.x, p00.y, z)) {   // 흙길 타일 — 못 받았으면 옛 회색 칸
+      ctx.fillStyle = D.road.color;
+      roadRects.forEach(function (r) { var q = toScreen(r[0], r[1]); ctx.fillRect(q.x + 1, q.y + 1, z - 2, z - 2); });
+    }
+    roadBad.forEach(function (q) { ctx.fillStyle = 'rgba(255,90,74,.35)'; ctx.fillRect(q.x + 1, q.y + 1, z - 2, z - 2); });
+    art.sprites(ctx, spr, z);   // 건물 그림(y 순)
+    spr.forEach(function (e) {
+      if (e.b.conn) { return; }
+      ctx.strokeStyle = '#ff5a4a'; ctx.lineWidth = 2; ctx.strokeRect(e.x + 1.5, e.y + 1.5, e.d.w * z - 3, e.d.h * z - 3);
+      if (z >= 12) { ctx.font = Math.floor(z * 0.7) + 'px sans-serif'; ctx.fillStyle = '#ff5a4a'; ctx.textAlign = 'left'; ctx.fillText('⚠', e.x + 2, e.y + z * 0.5); }
+    });
     if (overlay) { drawOverlay(); }
     drawUnits();
     if (hover && isBuildTool(tool)) { drawGhost(); }
@@ -106,8 +120,12 @@
         if (u.path && u.path.length && u.goal) { gp = toScreen(u.goal.x + .5, u.goal.y + .5); ctx.strokeStyle = 'rgba(255,230,120,.55)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(gp.x, gp.y); ctx.stroke(); ctx.setLineDash([]); }
         ctx.beginPath(); ctx.arc(p.x, p.y, r + 3, 0, 6.2832); ctx.strokeStyle = '#ffd36a'; ctx.lineWidth = 2; ctx.stroke();
       }
+      if (R().art.unit(ctx, u, p, z, Date.now())) {   // 새 몸 그림(art.js) — 발 밑에 팀색 고리
+        ctx.beginPath(); ctx.ellipse(p.x, p.y + z * 0.32, r * 0.95, r * 0.38, 0, 0, 6.2832); ctx.strokeStyle = u.team === 0 ? '#2b8fe8' : '#e8402b'; ctx.lineWidth = 2; ctx.stroke();
+      } else {
       ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.2832); ctx.fillStyle = d.color; ctx.fill(); ctx.strokeStyle = u.team === 0 ? '#2b6fb8' : '#b83a2b'; ctx.lineWidth = 2; ctx.stroke();
       if (z >= 14) { ctx.font = Math.floor(r * 1.3) + 'px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#000'; ctx.fillText(d.icon, p.x, p.y + 1); }
+      }
       var mh = u.mhp || d.hp; if (u.hp < mh) { ctx.fillStyle = '#300'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2, 4); ctx.fillStyle = '#6fe07a'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2 * u.hp / mh, 4); }
     }
     if (selB && S.buildings[selB]) { var b = S.buildings[selB], D = R().rules.DEFS[b.t], bp = toScreen(b.x, b.y); ctx.strokeStyle = '#ffd36a'; ctx.lineWidth = 2.5; ctx.strokeRect(bp.x - 1, bp.y - 1, D.w * z + 2, D.h * z + 2); }
@@ -372,6 +390,8 @@
 
   function loop(t) {
     var dt = Math.min(250, t - (lastT || t)); lastT = t;
+    if (!pokeUntil) { pokeUntil = t + 10000; }
+    if (t < pokeUntil) { dirty = true; }   // 새 그림(타일·건물·몸)이 받아지는 동안
     if (S.speed > 0) {
       acc += dt * S.speed; var n = 0;
       while (acc >= TICK_MS && n < 40) {

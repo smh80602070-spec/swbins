@@ -154,6 +154,7 @@
       step = d.speed * TICK_S;
       while (step > 0 && u.path.length) {
         target = u.path[0]; dx = target.x - u.x; dy = target.y - u.y; dist = Math.hypot(dx, dy);
+        if (dx) { u.face = dx > 0 ? 1 : -1; }   // 그림이 가는 쪽을 보게
         if (dist <= step) { u.x = target.x; u.y = target.y; step -= dist; u.path.shift(); }
         else { u.x += dx / dist * step; u.y += dy / dist * step; step = 0; }
       }

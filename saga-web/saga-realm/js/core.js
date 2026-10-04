@@ -443,6 +443,7 @@
     /* 2D 국토 지도 꾸밈(W-0023) — 2D 모드 = 3D 지도가 안 서 있을 때. 땅 종류(land) → K-0020 `realm_*` 타일, 성 단계 → K-0017 `world2d` 스프라이트(map2d.js) */
     on: function () { var R3 = global.DG.realm3d; return !(R3 && R3.active && R3.active()); },
     tileBase: 'assets/web2d/tile/',
+    still: { companion_warrior: 1, companion_archer: 1, hero_m: 1, hero_f: 1 },   // 한 장 모드 풀(W-0043) — RTS 유닛 몸
     tile: { plain: 'realm_grass', hill: 'realm_dirt', mount: 'realm_stone', river: 'realm_water' },
     prop2d: { 'city:s': { id: 'silkroad_house_01' }, 'city:m': { id: 'chinese_hall_01' }, 'city:l': { id: 'stone_tower_01' } }
   };

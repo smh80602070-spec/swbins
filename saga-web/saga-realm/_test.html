@@ -110,6 +110,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rts/combat.js"></script>
 <script src="js/rts/heroes.js"></script>
 <script src="js/rts/guide.js"></script>
+<script src="js/rts/art.js"></script>
 <script src="js/rts/state.js"></script>
 <script src="js/game.js"></script>
 <script>
@@ -666,6 +667,16 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     t('RTS 시험 프리셋 — qaPreset 은 금 5000·식량 2000 을 주고 첫 습격을 60틱 뒤로 당기며, 판의 다른 것(지도·거점·기지)은 그대로다', function () {
       var R = DG.rts, a = R.state.create(7), b = R.state.qaPreset(R.state.create(7));
       return b.res.gold === 5000 && b.res.food === 2000 && b.raid.next === b.tick + 60 && a.res.gold === 300 && JSON.stringify(Array.from(a.tiles)) === JSON.stringify(Array.from(b.tiles)) && b.buildings[-1].hp === a.buildings[-1].hp && ('프리셋 5000/2000 · 습격 60틱');
+    });
+
+    t('RTS 그림 연결 — 건물 그림 id 는 전부 있는 지물이고, 건물 표의 모든 건물(길 제외)이 그림 칸을 갖고, 유닛 몸은 한 장 모드 풀이며 영웅은 장수 id 로 늘 같은 몸을 받는다(W-0043)', function () {
+      var R = DG.rts, A = R.art, world = (DG.assets3dIds && DG.assets3dIds.world) || [], bad = [], k;
+      for (k in A.BUILDINGS) { if (world.indexOf(A.BUILDINGS[k].id) < 0) { bad.push(k + ':' + A.BUILDINGS[k].id); } }
+      var missing = Object.keys(R.rules.DEFS).filter(function (d) { return !R.rules.DEFS[d].road && !A.BUILDINGS[d]; });
+      var still = DG.cfg.mode2d.still || {}, pools = Object.keys(A.UNIT_POOL).map(function (u) { return A.UNIT_POOL[u]; }).concat(A.HERO_POOLS);
+      var allStill = pools.every(function (p) { return !!still[p]; });
+      var h1 = A.poolOf({ t: 'hero', hid: 'sg_guanyu', id: 1 }), h2 = A.poolOf({ t: 'hero', hid: 'sg_guanyu', id: 9 });
+      return bad.length === 0 && missing.length === 0 && allStill && h1 === h2 && A.HERO_POOLS.indexOf(h1) >= 0 && A.poolOf({ t: 'soldier' }) === 'companion_warrior' && ('건물 ' + Object.keys(A.BUILDINGS).length + '종 그림 · 유닛 몸 ' + pools.length + '칸 한 장 모드');
     });
 
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {

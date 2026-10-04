@@ -37,6 +37,7 @@ var SHELL = [
   './js/rts/combat.js',
   './js/rts/heroes.js',
   './js/rts/guide.js',
+  './js/rts/art.js',
   './js/rts/state.js',
   './js/rts/view.js',
   './js/errlog.js',
