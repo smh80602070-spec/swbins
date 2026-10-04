@@ -144,6 +144,10 @@ func set_hero_body(id: String) -> void:
 	_body_id = id
 	swap_body(body, [_glider])
 	_yaw = visual.rotation.y
+	if mounted:   # 탈것을 탄 채 바뀌면 새 몸도 안장 자세로(옛 몸의 SeatPose 는 같이 사라진다)
+		var mt := get_node_or_null("Mount")
+		if mt != null and mt.has_method("_seat"):
+			mt.call("_seat", true)
 
 
 func _ready() -> void:
