@@ -1,0 +1,135 @@
+{
+ "model": "Illustrious-XL-v2.0",
+ "out": "sky",
+ "defaults": {
+  "prompt_prefix": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide panorama, sky dome, painterly game background, sky only",
+  "width": 1216,
+  "height": 608,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up, frame, border"
+ },
+ "items": [
+  {
+   "id": "sky_dawn_past_1",
+   "seed": 20271057,
+   "prompt": "dawn, pink and orange glow on the horizon, soft pastel sky, a few thin clouds, over an open grassland plain and distant hills, ancient feeling, no buildings"
+  },
+  {
+   "id": "sky_dawn_past_2",
+   "seed": 20271110,
+   "prompt": "dawn, pink and orange glow on the horizon, soft pastel sky, a few thin clouds, over an open grassland plain and distant hills, ancient feeling, no buildings"
+  },
+  {
+   "id": "sky_dawn_present_1",
+   "seed": 20271163,
+   "prompt": "dawn, pink and orange glow on the horizon, soft pastel sky, a few thin clouds, above a distant modern city skyline silhouette at the horizon, jet contrail"
+  },
+  {
+   "id": "sky_dawn_present_2",
+   "seed": 20271216,
+   "prompt": "dawn, pink and orange glow on the horizon, soft pastel sky, a few thin clouds, above a distant modern city skyline silhouette at the horizon, jet contrail"
+  },
+  {
+   "id": "sky_dawn_future_1",
+   "seed": 20271269,
+   "prompt": "dawn, pink and orange glow on the horizon, soft pastel sky, a few thin clouds, with a huge ringed planet and a second small moon, faint aurora ribbons, tiny distant floating platforms"
+  },
+  {
+   "id": "sky_dawn_future_2",
+   "seed": 20271322,
+   "prompt": "dawn, pink and orange glow on the horizon, soft pastel sky, a few thin clouds, with a huge ringed planet and a second small moon, faint aurora ribbons, tiny distant floating platforms"
+  },
+  {
+   "id": "sky_noon_past_1",
+   "seed": 20271375,
+   "prompt": "bright midday, deep blue sky, big white cumulus clouds, strong sunlight, over an open grassland plain and distant hills, ancient feeling, no buildings"
+  },
+  {
+   "id": "sky_noon_past_2",
+   "seed": 20271428,
+   "prompt": "bright midday, deep blue sky, big white cumulus clouds, strong sunlight, over an open grassland plain and distant hills, ancient feeling, no buildings"
+  },
+  {
+   "id": "sky_noon_present_1",
+   "seed": 20271481,
+   "prompt": "bright midday, deep blue sky, big white cumulus clouds, strong sunlight, above a distant modern city skyline silhouette at the horizon, jet contrail"
+  },
+  {
+   "id": "sky_noon_present_2",
+   "seed": 20271534,
+   "prompt": "bright midday, deep blue sky, big white cumulus clouds, strong sunlight, above a distant modern city skyline silhouette at the horizon, jet contrail"
+  },
+  {
+   "id": "sky_noon_future_1",
+   "seed": 20271587,
+   "prompt": "bright midday, deep blue sky, big white cumulus clouds, strong sunlight, with a huge ringed planet and a second small moon, faint aurora ribbons, tiny distant floating platforms"
+  },
+  {
+   "id": "sky_noon_future_2",
+   "seed": 20271640,
+   "prompt": "bright midday, deep blue sky, big white cumulus clouds, strong sunlight, with a huge ringed planet and a second small moon, faint aurora ribbons, tiny distant floating platforms"
+  },
+  {
+   "id": "sky_sunset_past_1",
+   "seed": 20271693,
+   "prompt": "sunset, golden and crimson sky, long glowing clouds, warm light, over an open grassland plain and distant hills, ancient feeling, no buildings"
+  },
+  {
+   "id": "sky_sunset_past_2",
+   "seed": 20271746,
+   "prompt": "sunset, golden and crimson sky, long glowing clouds, warm light, over an open grassland plain and distant hills, ancient feeling, no buildings"
+  },
+  {
+   "id": "sky_sunset_present_1",
+   "seed": 20271799,
+   "prompt": "sunset, golden and crimson sky, long glowing clouds, warm light, above a distant modern city skyline silhouette at the horizon, jet contrail"
+  },
+  {
+   "id": "sky_sunset_present_2",
+   "seed": 20271852,
+   "prompt": "sunset, golden and crimson sky, long glowing clouds, warm light, above a distant modern city skyline silhouette at the horizon, jet contrail"
+  },
+  {
+   "id": "sky_sunset_future_1",
+   "seed": 20271905,
+   "prompt": "sunset, golden and crimson sky, long glowing clouds, warm light, with a huge ringed planet and a second small moon, faint aurora ribbons, tiny distant floating platforms"
+  },
+  {
+   "id": "sky_sunset_future_2",
+   "seed": 20271958,
+   "prompt": "sunset, golden and crimson sky, long glowing clouds, warm light, with a huge ringed planet and a second small moon, faint aurora ribbons, tiny distant floating platforms"
+  },
+  {
+   "id": "sky_night_past_1",
+   "seed": 20272011,
+   "prompt": "night sky, deep indigo, many stars, soft moonlight, thin clouds, over an open grassland plain and distant hills, ancient feeling, no buildings"
+  },
+  {
+   "id": "sky_night_past_2",
+   "seed": 20272064,
+   "prompt": "night sky, deep indigo, many stars, soft moonlight, thin clouds, over an open grassland plain and distant hills, ancient feeling, no buildings"
+  },
+  {
+   "id": "sky_night_present_1",
+   "seed": 20272117,
+   "prompt": "night sky, deep indigo, many stars, soft moonlight, thin clouds, above a distant modern city skyline silhouette at the horizon, jet contrail"
+  },
+  {
+   "id": "sky_night_present_2",
+   "seed": 20272170,
+   "prompt": "night sky, deep indigo, many stars, soft moonlight, thin clouds, above a distant modern city skyline silhouette at the horizon, jet contrail"
+  },
+  {
+   "id": "sky_night_future_1",
+   "seed": 20272223,
+   "prompt": "night sky, deep indigo, many stars, soft moonlight, thin clouds, with a huge ringed planet and a second small moon, faint aurora ribbons, tiny distant floating platforms"
+  },
+  {
+   "id": "sky_night_future_2",
+   "seed": 20272276,
+   "prompt": "night sky, deep indigo, many stars, soft moonlight, thin clouds, with a huge ringed planet and a second small moon, faint aurora ribbons, tiny distant floating platforms"
+  }
+ ]
+}

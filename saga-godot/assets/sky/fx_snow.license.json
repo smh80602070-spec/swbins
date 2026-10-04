@@ -1,0 +1,10 @@
+{
+ "id": "fx_snow",
+ "generator": "tools/ai-art/make_sky.py",
+ "license": "CC0-1.0 (코드 생성 — 외부 입력 없음)",
+ "size": [
+  64,
+  64
+ ],
+ "use": "타일링·천천히 낙하"
+}

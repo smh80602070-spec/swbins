@@ -488,6 +488,29 @@
    ]
   },
   {
+   "id": "sky",
+   "src": "saga-assets/sky",
+   "include": [
+    "*.webp",
+    "*.png",
+    "*.json"
+   ],
+   "note": "K-0034 하늘 파노라마 12(2048×1024 + 1k 경량본)·구름 층 3·날씨 입자 3·해달 표식 sky_markers.json. Unity 큐브맵 변환은 U 갈래 배선",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/sky"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/sky",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,

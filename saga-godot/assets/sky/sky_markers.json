@@ -1,0 +1,77 @@
+{
+ "note": "해·달 위치 표식(방위각 0=북 90=동 180=남 270=서, 고도 0=지평선) — 조명 방향을 맞춘다",
+ "skies": {
+  "dawn_past": {
+   "sun_az": 95,
+   "sun_el": 7,
+   "moons": 0,
+   "candidate": 1
+  },
+  "dawn_present": {
+   "sun_az": 95,
+   "sun_el": 7,
+   "moons": 0,
+   "candidate": 1
+  },
+  "dawn_future": {
+   "sun_az": 95,
+   "sun_el": 7,
+   "moons": 0,
+   "candidate": 2
+  },
+  "noon_past": {
+   "sun_az": 180,
+   "sun_el": 68,
+   "moons": 0,
+   "candidate": 1
+  },
+  "noon_present": {
+   "sun_az": 180,
+   "sun_el": 68,
+   "moons": 0,
+   "candidate": 2
+  },
+  "noon_future": {
+   "sun_az": 180,
+   "sun_el": 68,
+   "moons": 0,
+   "candidate": 1
+  },
+  "sunset_past": {
+   "sun_az": 265,
+   "sun_el": 6,
+   "moons": 0,
+   "candidate": 2
+  },
+  "sunset_present": {
+   "sun_az": 265,
+   "sun_el": 6,
+   "moons": 0,
+   "candidate": 1
+  },
+  "sunset_future": {
+   "sun_az": 265,
+   "sun_el": 6,
+   "moons": 0,
+   "candidate": 2
+  },
+  "night_past": {
+   "sun_az": 205,
+   "sun_el": 42,
+   "moons": 1,
+   "candidate": 2
+  },
+  "night_present": {
+   "sun_az": 205,
+   "sun_el": 42,
+   "moons": 1,
+   "candidate": 2
+  },
+  "night_future": {
+   "sun_az": 205,
+   "sun_el": 42,
+   "moons": 2,
+   "candidate": 2
+  }
+ }
+}

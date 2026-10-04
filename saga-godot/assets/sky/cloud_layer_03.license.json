@@ -1,0 +1,10 @@
+{
+ "id": "cloud_layer_03",
+ "generator": "tools/ai-art/make_sky.py",
+ "license": "CC0-1.0 (코드 생성 — 외부 입력 없음)",
+ "size": [
+  2048,
+  512
+ ],
+ "tint": "웹·엔진이 시간대 색으로 곱한다(흰색 한 겹)"
+}
