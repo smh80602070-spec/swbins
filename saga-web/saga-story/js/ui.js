@@ -752,7 +752,7 @@
     var t = Q.trackedInfo();
     var s = Q.sessionGoalInfo();
     var n = Q.nextInfo();
-    els.goalboard.innerHTML =
+    els.goalboard.innerHTML = (global.DG.tut && global.DG.tut.line() ? '<div class="goal-row goal-tut">' + global.DG.tut.line() + '</div>' : '') +   // 첫 10분 안내(tutorial.js)
       (sh ? '<div class="goal-row goal-scn">' + esc(sh.title) + ' — <b>' + esc(sh.text) + '</b></div>' : '') +
       '<div class="goal-row">📋 ' +
         (t ? esc(t.name) + ' <b>' + t.n + '/' + t.goal + '</b>' : '추적 중인 사명이 없습니다') +

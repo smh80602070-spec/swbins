@@ -214,6 +214,7 @@
       // 누락 필드 보정 — 버전이 맞든 안 맞든 `freshSave()` 위에 덧씌워 빈 자리를 채운다
       var base = freshSave();
       save = mergeDeep(base, parsed);
+      if (parsed.tut === undefined) { delete save.tut; }   // 안내가 생기기 전 세이브 — 이미 끝난 것으로(새로 보이지 않게)
       return true;
     } catch (e) {
       console.warn('세이브 불러오기 실패, 새로 시작합니다.', e);

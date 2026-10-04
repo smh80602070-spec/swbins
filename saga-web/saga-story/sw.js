@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'side-v0.118.6';
+var VERSION = 'side-v0.118.7';
 var APP_CACHE = 'ys-app-' + VERSION;
 var TILE_CACHE = 'ys-tiles-v1';
 var TILE_MAX = 500;
@@ -53,6 +53,7 @@ var SHELL = [
   './js/gear.js',
   './js/job.js',
   './js/quest.js',
+  './js/tutorial.js',
   './js/rift.js',
   './js/story.js',
   './js/scenario.js',

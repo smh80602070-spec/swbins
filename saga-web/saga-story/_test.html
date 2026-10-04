@@ -46,7 +46,7 @@
 <div id="report">진단 중…</div>
 
 <script>
-window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;   // 첫 발 장면은 제 진단에서만 켠다
+window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; window.DG_NO_STORY = true; window.DG_NO_SCENARIO = true;   // 첫 발 장면은 제 진단에서만 켠다
 /* 어드민의 균형 손잡이를 읽지 않는다 — 손잡이를 잡아 둔 기기에서
    판정이 흔들리면 안 된다 (씨앗을 고정한 것과 같은 이유다) */
 window.DG_NO_TUNE = true;
@@ -102,6 +102,7 @@ window.DG_NO_TUNE = true;
 <script src="js/gear.js"></script>
 <script src="js/job.js"></script>
 <script src="js/quest.js"></script>
+<script src="js/tutorial.js"></script>
 <script src="js/rift.js"></script>
 <script src="js/story.js"></script>
 <script src="js/scenario.js"></script>
@@ -5762,6 +5763,48 @@ window.DG_NO_TUNE = true;
         V.apply(model, 'hero_a');
         return !model.meshes[0].material.map && '설정 없음 → 무늬 없음(기존 옷)';
       } finally { DG.cfg.vroidPattern = saveCfg; P.list = saveList; P.loader = saveLoader; }
+    });
+
+    /* ── 첫 10분 안내(tutorial.js, W-0037) ──────────────────────────────── */
+    function tutWith(fn) {
+      var T = DG.tut, sv = C.save, had = Object.prototype.hasOwnProperty.call(sv, 'tut'), old = sv.tut, gold0 = sv.player.gold;
+      window.DG_NO_TUT = false;
+      try { return fn(T, sv); } finally { window.DG_NO_TUT = true; sv.player.gold = gold0; if (had) { sv.tut = old; } else { delete sv.tut; } }
+    }
+
+    t('첫 10분 — 새 세이브면 첫 줄이 1단계 문구이고, 다 끝냈거나 안내 칸이 없으면 빈 문구다', function () {
+      return tutWith(function (T, sv) {
+        sv.tut = { done: [] };
+        var first = T.line(), want = T.STEPS[0].text;
+        sv.tut = { done: T.STEPS.map(function (x) { return x.key; }) }; var fin = T.line();
+        delete sv.tut; var none = T.line() === '' && T.done() === true;
+        return first.indexOf(want) === 0 && fin === '' && none && ('첫 줄 "' + want + '" · 끝난·옛 세이브는 빈 문구');
+      });
+    });
+
+    t('첫 10분 — 다섯 단계가 순서대로만 나아가고(앞 단계 전의 이벤트는 무시), 레벨은 2 이상일 때만, 보상은 합 240금, 끝나면 done 이 5 다', function () {
+      return tutWith(function (T, sv) {
+        sv.tut = { done: [] }; var g0 = sv.player.gold;
+        var skipped = T._feed('side:kill', {}) === false && T.step() === 0;         // 입장 전의 처치는 무시
+        C.emit('side:enter', {}); var s1 = T.step() === 1 && sv.player.gold === g0 + 30;   // 이벤트가 배선돼 있다
+        C.emit('side:kill', { ref: 'x' }); C.emit('side:skill', 'sig:x'); var s3 = T.step() === 3;
+        var lv1 = T._feed('levelup', 1) === false && T.step() === 3;                // 레벨 1 은 아니다
+        C.emit('levelup', 2); var s4 = T.step() === 4;
+        C.emit('side:talk', { npc: 'x' });
+        return skipped && s1 && s3 && lv1 && s4 && T.done() && sv.tut.done.length === 5 && sv.player.gold === g0 + 240 && T.line() === '' && ('순서·레벨 조건·보상 240금');
+      });
+    });
+
+    t('첫 10분 — 안내가 생기기 전 세이브를 불러오면 안내 칸이 없다(이미 끝난 것), 안내 칸이 있는 세이브는 그대로다', function () {
+      var key = C.SAVE_KEY, had = localStorage.getItem(key), raw0 = JSON.stringify(C.save), r;
+      try {
+        var old = JSON.parse(raw0); delete old.tut; localStorage.setItem(key, JSON.stringify(old)); C.load();
+        var gone = C.save.tut === undefined;
+        var fresh = JSON.parse(raw0); fresh.tut = { done: ['enter'] }; localStorage.setItem(key, JSON.stringify(fresh)); C.load();
+        var kept = !!C.save.tut && C.save.tut.done.length === 1;
+        r = gone && kept;
+      } finally { localStorage.setItem(key, raw0); C.load(); if (had === null) { localStorage.removeItem(key); } else { localStorage.setItem(key, had); } }
+      return r === true && ('옛 세이브 안내 칸 없음 · 새 세이브 칸 유지');
     });
 
     t('런타임 에러 없음', function () {
