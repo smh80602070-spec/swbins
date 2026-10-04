@@ -6028,6 +6028,17 @@ window.requestAnimationFrame = function () { return 0; };
         ('금 +' + r.gold);
     });
 
+    t('카드 — 패퇴 카드는 "죽어도 남는 것"(도감·인물·공적)을 말해 주고, 탈출 카드엔 그 말이 없다 (표준 F)', function () {
+      var el = document.getElementById('encounter'), made = false;
+      if (!el) { el = document.createElement('div'); el.id = 'encounter'; document.body.appendChild(el); made = true; }
+      var html = {}, base = { floor: 2, gold: 0, items: 0, feat: 1, dexPct: 5, next: '다음 할 것', lostGold: 0, lostItems: 0 };
+      try {
+        C.emit('goals:card', Object.assign({}, base, { reason: 'dead' })); html.dead = el.innerHTML;
+        C.emit('goals:card', Object.assign({}, base, { reason: 'leave' })); html.leave = el.innerHTML;
+      } finally { el.innerHTML = ''; el.classList.remove('show'); if (made) { el.parentNode.removeChild(el); } }
+      return html.dead.indexOf('죽어도 도감·인물·공적은 그대로') > 0 && html.leave.indexOf('죽어도') < 0 && html.leave.indexOf('도감 5%') > 0 && ('패퇴 카드만 남는 것 안내');
+    });
+
     t('카드 — 탈출 카드에 next 필드가 있다 (PLAN §5.6)', function () {
       /* 이 자리(맨 끝)는 위쪽 "reset" 항목이 부대를 이미 비워 둔 뒤다 —
          DN.enter()는 부대가 없으면 거절한다("던전 문을 지나면..." 항목과

@@ -828,7 +828,7 @@
         (card.lostItems || 0) + '점</div>';
     }
     html += '<div>🏅 공적 +' + (card.feat || 0) + '</div>' +
-      '<div>📖 도감 ' + card.dexPct + '%</div>' +
+      '<div>📖 도감 ' + card.dexPct + '%' + (card.reason === 'dead' ? ' · 죽어도 도감·인물·공적은 그대로' : '') + '</div>' +   // 표준 F: 죽어도 남는 것을 말해 준다
       '</div>' +
       '<div class="sec"><h4>다음 할 것</h4><div>' + esc(card.next) + '</div></div>' +
       '<button class="btn primary wide" data-act="goals-card-close">확인</button></div>';
