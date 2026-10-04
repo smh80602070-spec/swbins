@@ -47,8 +47,8 @@ QUALITY_NEG = ['a blurry, messy, low quality, deformed image',
 NEG_FLAGS = ['blur', 'text', 'cropped', 'clutter']
 
 SPEC = {  # 축 가중치(quality, fidelity, style, tech) · 치명 문턱
-    'icon':     dict(w=(0.35, 0.30, 0.15, 0.20), touch=0.12, fringe=0.30, residue=0.12, text=0.45),
-    'sprite':   dict(w=(0.30, 0.30, 0.20, 0.20), touch=0.12, fringe=0.30, residue=0.12, text=0.45),
+    'icon':     dict(w=(0.35, 0.30, 0.15, 0.20), touch=0.12, fringe=0.20, residue=0.12, text=0.45),   # fringe 0.30→0.20: K-0058 사람 × 공지판(0.23) 대조(10-05)
+    'sprite':   dict(w=(0.30, 0.30, 0.20, 0.20), touch=0.12, fringe=0.20, residue=0.12, text=0.45),
     'portrait': dict(w=(0.40, 0.25, 0.20, 0.15), touch=0.60, fringe=0.50, residue=0.30, text=0.45),
     'bg':       dict(w=(0.40, 0.30, 0.20, 0.10), touch=1.10, fringe=1.10, residue=1.10, text=0.40),
     'tile':     dict(w=(0.35, 0.25, 0.30, 0.10), touch=1.10, fringe=1.10, residue=1.10, text=0.40),

@@ -41,4 +41,5 @@ icon(아이콘·장비) · sprite(2D 지물·움직이는 것, 알파) · portra
 - 제로샷 quality 만으로는 초상에서 흔들렸다(0.02~0.9). 미적 예측기(LAION, <https://github.com/christophschuhmann/improved-aesthetic-predictor> 의 `sac+logos+ava1-l14-linearMSE.pth`, 3.7MB)를 `C:\swbins3\judge-models\` 에 두면 quality 에 절반 섞인다 — 10-05 설치됨(이 PC). 다른 PC 는 같은 자리에 두면 된다. 원본 state_dict 키가 `layers.N` 이라 접두를 벗겨 읽는다.
 - HF 캐시에 `preprocessor_config.json` 이 없어 전처리 상수를 코드에 직접 적었다(ViT-L/14 224·CLIP 평균/표준편차).
 - 3D(GLB) 는 그림이 아니라 못 잰다 — 렌더(`tools/char-forge/render`·`world-forge`)로 찍은 PNG 를 넘긴다.
+- **사람 판정 대조(K-0069 단계 4, 10-05)**: ① K-0058 흰 스티커 테 4장(`bush_02`·`notice_board_01`·`map_table_01`·`desk_01`, 사람 ×) → 판정기 3/4 탈락, 공지판은 테 0.23 으로 문턱 0.30 아래 통과 = **다른 장 1** → icon·sprite `fringe` 문턱 0.30→0.20(통과 묶음 정적 51·아이콘 306·초상 105 의 테 최대 0.124 라 부수 피해 0) → 4/4 탈락, 다른 장 0. ② K-0043 몬스터 렌더 64(사람 "허접") → quality 평균 0.29·중앙 0.29(정적 51 은 0.67, 키트 P 시험 0.84), 0.5 아래 56/64 — 낮은 quality 로 일치. 치명 문턱이 아니라 탈락은 2(배경·중복)뿐이다: 판정기는 고르기라 묶음 전체가 나쁘면 `--min-score` 로만 거른다(묶음 평균 quality < 0.45 면 시트 머리에 경고가 맞다 — 축 추가 아님, 후속). ③ K-0056 정적 51(사람 통과) → 51/51 통과, 다른 장 0.
 - 판정은 **고르기**다. 그림체가 나쁘면 100장 중 1등도 나쁘다. 그림체는 K-0068, 프롬프트는 `tools/ai-art/prompt_kit.py`.
