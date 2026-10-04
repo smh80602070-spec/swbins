@@ -14,6 +14,7 @@
   var cv = null, ctx = null, cv3d = null;
   var W = 0, H = 0, dpr = 1;
   var camX = 0;
+  var vfxWarm = false;          // 이펙트 시트를 처음 그릴 때 한 번만 미리 받는다(W-0052)
 
   /** 화면 확대 — #stage(2D 조작·오버레이) 와 #stage3d(세계) 를 **똑같이** CSS
    *  transform 으로 키우고 줄인다. 두 캔버스는 같은 픽셀 좌표(camX)로 그려지므로
@@ -1012,11 +1013,27 @@
     }
   }
 
+  /** 전투 이펙트 시트(W-0052, K-0039) — 타격은 불꽃(급소는 번쩍임 더), 처치는 연기를 숫자·옛 그림 아래에 가산 합성으로 얹는다. 시트를 못 받았으면 아무것도 안 그린다 */
+  function vfxLayer(f, x) {
+    var V = global.DG.vfx2d;
+    if (!V || (f.t !== 'hit' && f.t !== 'pop')) { return; }
+    if (f.l0 === undefined) { f.l0 = f.life; }
+    var age = f.l0 - f.life;
+    if (f.t === 'hit') {
+      V.draw(ctx, 'spark_hit', x, f.y + 22, f.crit ? 78 : 58, age, { speed: 1.9 });
+      if (f.crit) { V.draw(ctx, 'crit_flash', x, f.y + 22, 120, age, { speed: 1.6 }); }
+    } else {
+      V.draw(ctx, 'death_smoke', x, f.y + 18, f.l0 > 0.6 ? 190 : 104, age, { speed: f.l0 > 0.6 ? 1.1 : 1.6 });
+    }
+  }
+
   function drawFx() {
     var list = S.fx(), i;
+    if (global.DG.vfx2d && !vfxWarm) { vfxWarm = true; global.DG.vfx2d.preload(['spark_hit', 'crit_flash', 'death_smoke']); }
     for (i = 0; i < list.length; i++) {
       var f = list[i];
       var x = f.x - camX;
+      vfxLayer(f, x);
       if (f.t === 'hit') {
         /* 데미지 숫자 — 원작처럼 **굵고 크게, 검은 테를 둘러** 위로 튄다.
            **급소는 한눈에 갈린다** — 더 크고, 붉은 금빛이고, 뒤에 느낌표가 붙고,

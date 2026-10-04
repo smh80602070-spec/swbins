@@ -80,6 +80,7 @@ window.DG_NO_TUNE = true;
 <script src="js/data-achieve.js"></script>
 <script src="js/sprite.js"></script>
 <script src="js/mode2d.js"></script>
+<script src="js/vfx2d.js"></script>
 <script src="js/actor2d.js"></script>
 <script src="assets/sprites2d/mon-manifest.js"></script>
 <script src="js/core.js"></script>
@@ -5849,6 +5850,12 @@ window.DG_NO_TUNE = true;
       names.forEach(function (n) { var e = (E.byName && E.byName(n)) || (E.enemies || []).filter(function (x) { return x.name === n; })[0]; if (e && (e.kind === 'beast' || (e.ref && e.ref.kind === 'beast'))) { known[n] = 1; } });
       names.forEach(function (n) { if (!st[tb[n][0]]) { bad.push('풀 ' + n); } if (!known[n]) { bad.push('적 아님 ' + n); } var z = M.beastOf(n); if (!z || z.pool !== tb[n][0] || !(z.k > 0)) { bad.push('beastOf ' + n); } });
       return bad.length === 0 && names.length >= 3 && M.beastOf('없는 짐승') === null && M.beastOf('') === null && (names.length + '종 몸 배정 · 표 밖은 옛 스탬프');
+    });
+
+    t('전투 이펙트 시트(W-0052) — 프레임 번호가 시각에 맞게 돌고(한 번 도는 것은 끝나면 -1, 반복은 계속), 모르는 이름은 안 그린다', function () {
+      var V = DG.vfx2d, F = V.frameAt, c = document.createElement('canvas').getContext('2d');
+      return F('spark_hit', 0) === 0 && F('spark_hit', 0.5) === 6 && F('spark_hit', 0.7) === -1 && F('spark_hit', 0.3, 2) === 7 && F('spark_hit', 0.35, 2) === -1 && F('heal_ring', 2.0) === 0 && F('heal_ring', 0.5) === 6 && F('nope', 0) === -1 && F('spark_hit', -1) === -1 &&
+        V.draw(c, 'nope', 0, 0, 10, 0) === false && V.SHEETS.spark_hit[0] === 8 && V.SHEETS.death_smoke[0] === 10 && ('프레임 계산 · 모르는 이름은 false');
     });
 
     t('런타임 에러 없음', function () {
