@@ -5,7 +5,7 @@
 
 sfxgen.py 의 합성 겹(tone·noise·chime, 같은 지수 엔벨로프)을 그대로 쓰고, 대역 소리는 두 로우패스의 차(밴드패스)로 만든다.
 출력은 모노 44.1kHz Vorbis OGG(`soundfile`) — 카테고리마다 RMS 를 같은 값으로 맞추고 피크는 0.95 로 막는다.
-BGM(보스·이벤트·엔딩·스팅어 25슬롯)은 이 도구가 아니라 `C:\swbins3\music-gen\batch_saga.py`(ACE-Step 1.5, MIT 상업 허용)로 `data/bgm-plan2.json` 을 생성한다(K-0045 메모).
+BGM(보스·이벤트·엔딩·스팅어 25슬롯)은 이 도구가 아니라 `C:/swbins3/music-gen/batch_saga.py`(ACE-Step 1.5, MIT 상업 허용)로 `data/bgm-plan2.json` 을 생성한다(K-0045 메모).
 """
 import json
 import os
