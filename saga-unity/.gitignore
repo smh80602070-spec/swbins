@@ -98,3 +98,7 @@ Assets/SagaCore/Resources/CrowdBodyList.asset.meta
 # U-0034 VRoid 시험 굽기(`PlaytestVroidSwap`)가 만드는 컨트롤러 — 진단이 다시 만든다(진짜 자리 컨트롤러 `<이름>.controller` 는 대상 아님)
 Assets/Animators/*Vroid.controller
 Assets/Animators/*Vroid.controller.meta
+
+# Unity 가 비정상 종료 뒤 자동으로 만드는 복구 씬 — 배포 대상 아님·에디터가 쓰는 로컬 파일
+Assets/_Recovery/
+Assets/_Recovery.meta

@@ -1,0 +1,87 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "rts_units2",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground"
+ },
+ "items": [
+  {
+   "id": "rts_arc_ally_side_c4",
+   "seed": 3720333634,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, archer, hooded, longbow, quiver of arrows on the back, light leather armor, blue and white clothing, blue cloth, standing, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_arc_ally_side_c5",
+   "seed": 3737101317,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, archer, hooded, longbow, quiver of arrows on the back, light leather armor, blue and white clothing, blue cloth, standing, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_arc_ally_side_c6",
+   "seed": 1685472407,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, archer, hooded, longbow, quiver of arrows on the back, light leather armor, blue and white clothing, blue cloth, standing, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_arc_ally_side_c7",
+   "seed": 3833013904,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, archer, hooded, longbow, quiver of arrows on the back, light leather armor, blue and white clothing, blue cloth, standing, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_cav_ally_side_c4",
+   "seed": 2476002900,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_cav_ally_side_c5",
+   "seed": 2221387990,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_cav_ally_side_c6",
+   "seed": 2680344668,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_cav_ally_side_c7",
+   "seed": 2260735053,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, cavalry rider sitting on a brown horse, steel helmet, long lance, blue and white clothing, blue cloth horse cloth, full horse and rider visible, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_cav_enemy_side_c4",
+   "seed": 3366928584,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_cav_enemy_side_c5",
+   "seed": 3588584594,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_cav_enemy_side_c6",
+   "seed": 647972451,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  },
+  {
+   "id": "rts_cav_enemy_side_c7",
+   "seed": 1949239391,
+   "negative": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+   "prompt": "1boy, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, solo, side view, facing right, profile, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body"
+  }
+ ]
+}
