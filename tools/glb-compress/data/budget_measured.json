@@ -1,0 +1,4301 @@
+{
+ "note": "K-0046 단계 1 — 웹 압축 GLB 실측. tex_mb = 고유 텍스처 GPU 메모리 추정(가로×세로×4B×1.33). 트랙·기기 등급별 목표는 이 분포를 보고 정한다.",
+ "measured_at": "2026-10-04",
+ "groups": {
+  "characters": {
+   "count": 299,
+   "errors": 0,
+   "tris": {
+    "min": 29413,
+    "median": 42457,
+    "p95": 54666,
+    "max": 61321
+   },
+   "prims": {
+    "min": 12,
+    "median": 18,
+    "p95": 21,
+    "max": 24
+   },
+   "tex_mb": {
+    "min": 37.2,
+    "median": 61.2,
+    "p95": 79.8,
+    "max": 86.4
+   },
+   "textures": {
+    "min": 12,
+    "median": 18,
+    "p95": 21,
+    "max": 24
+   },
+   "joints": {
+    "min": 91,
+    "median": 149,
+    "p95": 250,
+    "max": 272
+   },
+   "heaviest_tris": [
+    {
+     "id": "nh_jinju",
+     "tris": 61321
+    },
+    {
+     "id": "rf_caimao",
+     "tris": 61219
+    },
+    {
+     "id": "jp_naosuke",
+     "tris": 60267
+    },
+    {
+     "id": "jiao_madang",
+     "tris": 60139
+    },
+    {
+     "id": "wd_cleopatra",
+     "tris": 60016
+    }
+   ],
+   "per_model": {
+    "dj_doseo": {
+     "tris": 44715,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 62.5,
+     "joints": 155
+    },
+    "dj_gapju": {
+     "tris": 34643,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "dj_gijang": {
+     "tris": 37647,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 71.8,
+     "joints": 135
+    },
+    "dj_haean": {
+     "tris": 40440,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 50.5,
+     "joints": 144
+    },
+    "dj_hopak": {
+     "tris": 35226,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 60.5,
+     "joints": 173
+    },
+    "dj_hwanggeum": {
+     "tris": 44397,
+     "prims": 22,
+     "textures": 22,
+     "tex_mb": 82.5,
+     "joints": 181
+    },
+    "dj_seohae": {
+     "tris": 44623,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 146
+    },
+    "dj_seoncheok": {
+     "tris": 42319,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 53.2,
+     "joints": 149
+    },
+    "dj_yuri": {
+     "tris": 42995,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 66.5,
+     "joints": 180
+    },
+    "eu_alexander": {
+     "tris": 43994,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 49.2,
+     "joints": 169
+    },
+    "eu_augustus": {
+     "tris": 40471,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 144
+    },
+    "eu_aurelius": {
+     "tris": 44904,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 146
+    },
+    "eu_caesar": {
+     "tris": 41406,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 63.8,
+     "joints": 134
+    },
+    "eu_charlemagne": {
+     "tris": 38005,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 57.2,
+     "joints": 135
+    },
+    "eu_davinci": {
+     "tris": 34733,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "eu_eleanor": {
+     "tris": 43474,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 59.9,
+     "joints": 155
+    },
+    "eu_elizabeth": {
+     "tris": 32270,
+     "prims": 23,
+     "textures": 23,
+     "tex_mb": 83.8,
+     "joints": 113
+    },
+    "eu_frederick": {
+     "tris": 41016,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 134
+    },
+    "eu_hannibal": {
+     "tris": 48199,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 58.5,
+     "joints": 221
+    },
+    "eu_harald": {
+     "tris": 30823,
+     "prims": 12,
+     "textures": 12,
+     "tex_mb": 37.2,
+     "joints": 113
+    },
+    "eu_joan": {
+     "tris": 42705,
+     "prims": 22,
+     "textures": 22,
+     "tex_mb": 82.5,
+     "joints": 181
+    },
+    "eu_leonidas": {
+     "tris": 36307,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 65.8,
+     "joints": 173
+    },
+    "eu_machiavelli": {
+     "tris": 49299,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 53.2,
+     "joints": 143
+    },
+    "eu_michelangelo": {
+     "tris": 41321,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 42.6,
+     "joints": 195
+    },
+    "eu_napoleon": {
+     "tris": 43691,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 58.5,
+     "joints": 155
+    },
+    "eu_nelson": {
+     "tris": 41911,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 61.2,
+     "joints": 149
+    },
+    "eu_newton": {
+     "tris": 43821,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 62.5,
+     "joints": 169
+    },
+    "eu_peter": {
+     "tris": 39808,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 62.5,
+     "joints": 211
+    },
+    "eu_richard": {
+     "tris": 54666,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 62.5,
+     "joints": 203
+    },
+    "eu_scipio": {
+     "tris": 45160,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 75.8,
+     "joints": 180
+    },
+    "eu_william": {
+     "tris": 43373,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 57.2,
+     "joints": 149
+    },
+    "fu_gangma": {
+     "tris": 53505,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 74.5,
+     "joints": 203
+    },
+    "fu_hwanryeong": {
+     "tris": 29931,
+     "prims": 13,
+     "textures": 13,
+     "tex_mb": 42.6,
+     "joints": 113
+    },
+    "fu_janhon": {
+     "tris": 37321,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 81.1,
+     "joints": 211
+    },
+    "fu_jongwang": {
+     "tris": 32529,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 50.5,
+     "joints": 113
+    },
+    "fu_myeongje": {
+     "tris": 41611,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 57.2,
+     "joints": 149
+    },
+    "fu_noejang": {
+     "tris": 49945,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 69.2,
+     "joints": 143
+    },
+    "fu_seonghon": {
+     "tris": 42831,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 63.8,
+     "joints": 134
+    },
+    "fu_yugwi": {
+     "tris": 45132,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 66.5,
+     "joints": 169
+    },
+    "fu_yuseong": {
+     "tris": 41763,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 59.9,
+     "joints": 155
+    },
+    "jiao_banrok": {
+     "tris": 36764,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 70.5,
+     "joints": 134
+    },
+    "jiao_botran": {
+     "tris": 40480,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 46.5,
+     "joints": 195
+    },
+    "jiao_dinggo": {
+     "tris": 54494,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 69.2,
+     "joints": 272
+    },
+    "jiao_hoangmi": {
+     "tris": 46051,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 64.5,
+     "joints": 211
+    },
+    "jiao_jinja": {
+     "tris": 44648,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 187
+    },
+    "jiao_luyan": {
+     "tris": 42451,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 59.9,
+     "joints": 144
+    },
+    "jiao_madang": {
+     "tris": 60139,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 70.5,
+     "joints": 250
+    },
+    "jiao_muya": {
+     "tris": 46158,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 77.1,
+     "joints": 191
+    },
+    "jiao_riquan": {
+     "tris": 36586,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 64.5,
+     "joints": 173
+    },
+    "jp_asahime": {
+     "tris": 44823,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 146
+    },
+    "jp_hanzo": {
+     "tris": 44250,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 57.2,
+     "joints": 149
+    },
+    "jp_hideyoshi": {
+     "tris": 40752,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 66.5,
+     "joints": 195
+    },
+    "jp_hikoyama": {
+     "tris": 32289,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 62.5,
+     "joints": 91
+    },
+    "jp_himetsu": {
+     "tris": 43841,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 58.5,
+     "joints": 149
+    },
+    "jp_himiko": {
+     "tris": 32102,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 58.5,
+     "joints": 113
+    },
+    "jp_ieyasu": {
+     "tris": 42907,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 144
+    },
+    "jp_kazenari": {
+     "tris": 31581,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 54.5,
+     "joints": 113
+    },
+    "jp_kenshin": {
+     "tris": 58010,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 75.8,
+     "joints": 272
+    },
+    "jp_masamune": {
+     "tris": 45489,
+     "prims": 22,
+     "textures": 22,
+     "tex_mb": 79.1,
+     "joints": 211
+    },
+    "jp_mitsukuni": {
+     "tris": 30721,
+     "prims": 12,
+     "textures": 12,
+     "tex_mb": 38.6,
+     "joints": 113
+    },
+    "jp_murasaki": {
+     "tris": 43150,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 45.2,
+     "joints": 169
+    },
+    "jp_musashi": {
+     "tris": 45438,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 146
+    },
+    "jp_naosuke": {
+     "tris": 60267,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 70.5,
+     "joints": 250
+    },
+    "jp_nobunaga": {
+     "tris": 35993,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 67.8,
+     "joints": 134
+    },
+    "jp_ryoma": {
+     "tris": 29413,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 70.5,
+     "joints": 91
+    },
+    "jp_saigo": {
+     "tris": 45837,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 57.2,
+     "joints": 191
+    },
+    "jp_seishonagon": {
+     "tris": 54362,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 79.8,
+     "joints": 143
+    },
+    "jp_shingen": {
+     "tris": 35898,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 59.2,
+     "joints": 173
+    },
+    "jp_shioji": {
+     "tris": 41592,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 58.5,
+     "joints": 134
+    },
+    "jp_taira": {
+     "tris": 31714,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 50.5,
+     "joints": 113
+    },
+    "jp_taketsumi": {
+     "tris": 49805,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 55.9,
+     "joints": 221
+    },
+    "jp_tamakiri": {
+     "tris": 36762,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 63.8,
+     "joints": 135
+    },
+    "jp_tomoegozen": {
+     "tris": 41862,
+     "prims": 13,
+     "textures": 13,
+     "tex_mb": 43.9,
+     "joints": 155
+    },
+    "jp_umihiko": {
+     "tris": 44949,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 62.5,
+     "joints": 169
+    },
+    "jp_wakahiko": {
+     "tris": 40564,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 50.5,
+     "joints": 181
+    },
+    "jp_yoritomo": {
+     "tris": 42830,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 69.2,
+     "joints": 134
+    },
+    "jp_yoshitsune": {
+     "tris": 41652,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 47.9,
+     "joints": 149
+    },
+    "jp_yukimura": {
+     "tris": 43860,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 75.8,
+     "joints": 187
+    },
+    "kr2_ajinsa": {
+     "tris": 40045,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 180
+    },
+    "kr2_dokgaru": {
+     "tris": 41277,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 58.5,
+     "joints": 155
+    },
+    "kr2_gokdol": {
+     "tris": 34239,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 66.5,
+     "joints": 134
+    },
+    "kr2_jimasol": {
+     "tris": 40867,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 144
+    },
+    "kr2_mokrihae": {
+     "tris": 34720,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 64.5,
+     "joints": 173
+    },
+    "kr2_pasodan": {
+     "tris": 43734,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 59.9,
+     "joints": 146
+    },
+    "kr2_seolharan": {
+     "tris": 42156,
+     "prims": 13,
+     "textures": 13,
+     "tex_mb": 43.9,
+     "joints": 149
+    },
+    "kr2_sogaram": {
+     "tris": 54742,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 59.8,
+     "joints": 203
+    },
+    "kr2_umorin": {
+     "tris": 31112,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 47.9,
+     "joints": 113
+    },
+    "kr2_yeonuru": {
+     "tris": 36612,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 62.5,
+     "joints": 211
+    },
+    "kr2_yeoyul": {
+     "tris": 40519,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 43.9,
+     "joints": 134
+    },
+    "kr_ahnjunggeun": {
+     "tris": 30645,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 75.8,
+     "joints": 91
+    },
+    "kr_choemuseon": {
+     "tris": 44674,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 66.5,
+     "joints": 169
+    },
+    "kr_daejoyeong": {
+     "tris": 43515,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 51.9,
+     "joints": 187
+    },
+    "kr_euljimundeok": {
+     "tris": 45594,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 69.2,
+     "joints": 195
+    },
+    "kr_ganggamchan": {
+     "tris": 35951,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 64.5,
+     "joints": 173
+    },
+    "kr_gwakjaeu": {
+     "tris": 34876,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 59.2,
+     "joints": 173
+    },
+    "kr_gwanggaeto": {
+     "tris": 52314,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 70.5,
+     "joints": 272
+    },
+    "kr_gyebaek": {
+     "tris": 42099,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 54.5,
+     "joints": 149
+    },
+    "kr_heojun": {
+     "tris": 58453,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 69.2,
+     "joints": 250
+    },
+    "kr_hwanghui": {
+     "tris": 46616,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 63.8,
+     "joints": 146
+    },
+    "kr_jangyeongsil": {
+     "tris": 43943,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 67.2,
+     "joints": 211
+    },
+    "kr_jeongmongju": {
+     "tris": 42875,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 53.2,
+     "joints": 149
+    },
+    "kr_jeongyakyong": {
+     "tris": 34395,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "kr_kimgu": {
+     "tris": 36391,
+     "prims": 22,
+     "textures": 22,
+     "tex_mb": 82.5,
+     "joints": 135
+    },
+    "kr_kimjeongho": {
+     "tris": 42058,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 74.5,
+     "joints": 181
+    },
+    "kr_kimyusin": {
+     "tris": 43777,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 45.2,
+     "joints": 146
+    },
+    "kr_nongae": {
+     "tris": 45160,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 75.8,
+     "joints": 180
+    },
+    "kr_sejong": {
+     "tris": 41724,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 134
+    },
+    "kr_sinsaimdang": {
+     "tris": 43780,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 57.2,
+     "joints": 191
+    },
+    "kr_wanggeon": {
+     "tris": 43333,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 65.2,
+     "joints": 155
+    },
+    "kr_wonhyo": {
+     "tris": 42767,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 144
+    },
+    "kr_yeongaesomun": {
+     "tris": 31104,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 47.9,
+     "joints": 113
+    },
+    "kr_yihwang": {
+     "tris": 54512,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 62.5,
+     "joints": 203
+    },
+    "kr_yii": {
+     "tris": 37496,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 51.9,
+     "joints": 211
+    },
+    "kr_yisunsin": {
+     "tris": 48817,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 79.8,
+     "joints": 143
+    },
+    "kr_yugwansun": {
+     "tris": 50563,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 75.8,
+     "joints": 221
+    },
+    "ly_byeokjeon": {
+     "tris": 44436,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 169
+    },
+    "ly_heuksang": {
+     "tris": 43211,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 54.5,
+     "joints": 155
+    },
+    "ly_jeonchung": {
+     "tris": 34447,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "ly_jinju": {
+     "tris": 34673,
+     "prims": 23,
+     "textures": 23,
+     "tex_mb": 83.8,
+     "joints": 113
+    },
+    "ly_juoh": {
+     "tris": 40986,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 43.9,
+     "joints": 144
+    },
+    "ly_nogyong": {
+     "tris": 36067,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 65.8,
+     "joints": 173
+    },
+    "ly_sanga": {
+     "tris": 42457,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 65.2,
+     "joints": 149
+    },
+    "ly_sangnim": {
+     "tris": 49188,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 67.8,
+     "joints": 143
+    },
+    "ly_uhwa": {
+     "tris": 41330,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 67.8,
+     "joints": 195
+    },
+    "mb_baekwoon": {
+     "tris": 45869,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 65.2,
+     "joints": 146
+    },
+    "mb_cheolgak": {
+     "tris": 52245,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 49.2,
+     "joints": 272
+    },
+    "mb_gangho": {
+     "tris": 44470,
+     "prims": 23,
+     "textures": 23,
+     "tex_mb": 83.1,
+     "joints": 211
+    },
+    "mb_hanam": {
+     "tris": 43595,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 63.8,
+     "joints": 149
+    },
+    "mb_hanpung": {
+     "tris": 30672,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 49.2,
+     "joints": 113
+    },
+    "mb_hoja": {
+     "tris": 41711,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 134
+    },
+    "mb_hwangto": {
+     "tris": 44892,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 66.5,
+     "joints": 169
+    },
+    "mb_janggwang": {
+     "tris": 43899,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 59.9,
+     "joints": 155
+    },
+    "mb_seonwoo": {
+     "tris": 36442,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 71.8,
+     "joints": 134
+    },
+    "nh_bandoja": {
+     "tris": 44210,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 67.8,
+     "joints": 187
+    },
+    "nh_daemo": {
+     "tris": 40719,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 144
+    },
+    "nh_jinju": {
+     "tris": 61321,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 62.5,
+     "joints": 250
+    },
+    "nh_metong": {
+     "tris": 35971,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 59.2,
+     "joints": 173
+    },
+    "nh_migyeon": {
+     "tris": 43650,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 146
+    },
+    "nh_sasin": {
+     "tris": 42120,
+     "prims": 13,
+     "textures": 13,
+     "tex_mb": 42.6,
+     "joints": 149
+    },
+    "nh_torak": {
+     "tris": 31788,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 47.9,
+     "joints": 113
+    },
+    "nh_wion": {
+     "tris": 46027,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 62.5,
+     "joints": 191
+    },
+    "nh_yeombun": {
+     "tris": 42501,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 65.2,
+     "joints": 134
+    },
+    "nz_ahyang": {
+     "tris": 29958,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 65.2,
+     "joints": 91
+    },
+    "nz_eunga": {
+     "tris": 43217,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 57.2,
+     "joints": 169
+    },
+    "nz_geumsang": {
+     "tris": 48688,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 66.5,
+     "joints": 221
+    },
+    "nz_heukwol": {
+     "tris": 43659,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 59.9,
+     "joints": 155
+    },
+    "nz_hyeoncheon": {
+     "tris": 35657,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "nz_jeokpyo": {
+     "tris": 35968,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 71.8,
+     "joints": 135
+    },
+    "nz_mokro": {
+     "tris": 39456,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 54.5,
+     "joints": 181
+    },
+    "nz_soman": {
+     "tris": 41387,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 144
+    },
+    "nz_unhwa": {
+     "tris": 40978,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 66.5,
+     "joints": 180
+    },
+    "rf_caimao": {
+     "tris": 61219,
+     "prims": 23,
+     "textures": 23,
+     "tex_mb": 86.4,
+     "joints": 203
+    },
+    "rf_caohong": {
+     "tris": 37725,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 73.1,
+     "joints": 211
+    },
+    "rf_caoren": {
+     "tris": 36003,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 71.2,
+     "joints": 173
+    },
+    "rf_chengong": {
+     "tris": 44990,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 146
+    },
+    "rf_chengpu": {
+     "tris": 42177,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 54.5,
+     "joints": 149
+    },
+    "rf_chengyu": {
+     "tris": 32142,
+     "prims": 23,
+     "textures": 23,
+     "tex_mb": 83.8,
+     "joints": 113
+    },
+    "rf_dianwei": {
+     "tris": 31036,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 47.9,
+     "joints": 113
+    },
+    "rf_fazheng": {
+     "tris": 43085,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 69.2,
+     "joints": 149
+    },
+    "rf_gaolan": {
+     "tris": 42300,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "rf_gaoshun": {
+     "tris": 48540,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 77.1,
+     "joints": 143
+    },
+    "rf_gongsunzan": {
+     "tris": 44514,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 62.5,
+     "joints": 169
+    },
+    "rf_guojia": {
+     "tris": 41884,
+     "prims": 13,
+     "textures": 13,
+     "tex_mb": 43.9,
+     "joints": 155
+    },
+    "rf_guosi": {
+     "tris": 35032,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "rf_handang": {
+     "tris": 41733,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 144
+    },
+    "rf_hansui": {
+     "tris": 35000,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 60.5,
+     "joints": 173
+    },
+    "rf_huanggai": {
+     "tris": 44470,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 59.9,
+     "joints": 146
+    },
+    "rf_huangzu": {
+     "tris": 40574,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 66.5,
+     "joints": 195
+    },
+    "rf_jianyong": {
+     "tris": 53268,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 272
+    },
+    "rf_jiaxu": {
+     "tris": 42131,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 53.2,
+     "joints": 149
+    },
+    "rf_jiling": {
+     "tris": 32136,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 51.9,
+     "joints": 113
+    },
+    "rf_jushou": {
+     "tris": 42886,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 75.1,
+     "joints": 211
+    },
+    "rf_kongrong": {
+     "tris": 40920,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 134
+    },
+    "rf_kuailiang": {
+     "tris": 43587,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 57.2,
+     "joints": 169
+    },
+    "rf_lidian": {
+     "tris": 43649,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 70.5,
+     "joints": 187
+    },
+    "rf_lijue": {
+     "tris": 43068,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 53.2,
+     "joints": 155
+    },
+    "rf_liubiao": {
+     "tris": 58808,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 71.8,
+     "joints": 250
+    },
+    "rf_liuzhang": {
+     "tris": 47618,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 70.5,
+     "joints": 191
+    },
+    "rf_mateng": {
+     "tris": 34344,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 51.9,
+     "joints": 134
+    },
+    "rf_mizhu": {
+     "tris": 31685,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 62.5,
+     "joints": 91
+    },
+    "rf_pangde": {
+     "tris": 42510,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 65.2,
+     "joints": 144
+    },
+    "rf_shenpei": {
+     "tris": 36429,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 65.8,
+     "joints": 173
+    },
+    "rf_sunce": {
+     "tris": 45163,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 65.2,
+     "joints": 146
+    },
+    "rf_tianfeng": {
+     "tris": 50354,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 221
+    },
+    "rf_wenchou": {
+     "tris": 40957,
+     "prims": 22,
+     "textures": 22,
+     "tex_mb": 81.1,
+     "joints": 135
+    },
+    "rf_wenpin": {
+     "tris": 38981,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 77.1,
+     "joints": 181
+    },
+    "rf_wuanguo": {
+     "tris": 40688,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 66.5,
+     "joints": 180
+    },
+    "rf_wuyi": {
+     "tris": 54045,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 73.1,
+     "joints": 203
+    },
+    "rf_xiahouyuan": {
+     "tris": 42339,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 54.5,
+     "joints": 149
+    },
+    "rf_xuchu": {
+     "tris": 30815,
+     "prims": 12,
+     "textures": 12,
+     "tex_mb": 37.2,
+     "joints": 113
+    },
+    "rf_yangang": {
+     "tris": 43601,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 77.1,
+     "joints": 211
+    },
+    "rf_yanghong": {
+     "tris": 33174,
+     "prims": 24,
+     "textures": 24,
+     "tex_mb": 86.4,
+     "joints": 113
+    },
+    "rf_yangren": {
+     "tris": 40304,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "rf_yangsong": {
+     "tris": 40928,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 74.5,
+     "joints": 149
+    },
+    "rf_yanliang": {
+     "tris": 43551,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 169
+    },
+    "rf_yanyan": {
+     "tris": 49560,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 74.5,
+     "joints": 143
+    },
+    "rf_yuanshao": {
+     "tris": 41211,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 81.1,
+     "joints": 195
+    },
+    "rf_yuanshu": {
+     "tris": 52372,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 65.2,
+     "joints": 272
+    },
+    "rf_yuejin": {
+     "tris": 43683,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 55.2,
+     "joints": 211
+    },
+    "rf_yujin": {
+     "tris": 45642,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 67.8,
+     "joints": 187
+    },
+    "rf_zhanghe": {
+     "tris": 43068,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 53.2,
+     "joints": 155
+    },
+    "rf_zhangji": {
+     "tris": 34395,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "rf_zhanglu": {
+     "tris": 43812,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 69.2,
+     "joints": 144
+    },
+    "rf_zhangren": {
+     "tris": 37005,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 68.5,
+     "joints": 173
+    },
+    "rf_zhoutai": {
+     "tris": 44980,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 146
+    },
+    "ru_busaeng": {
+     "tris": 43373,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 57.2,
+     "joints": 149
+    },
+    "ru_doksi": {
+     "tris": 59728,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 74.5,
+     "joints": 250
+    },
+    "ru_geohae": {
+     "tris": 44261,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 75.8,
+     "joints": 191
+    },
+    "ru_gogol": {
+     "tris": 30940,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 49.2,
+     "joints": 113
+    },
+    "ru_mangdok": {
+     "tris": 32749,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 65.2,
+     "joints": 91
+    },
+    "ru_sanaek": {
+     "tris": 40244,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 134
+    },
+    "ru_sayeong": {
+     "tris": 48704,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 77.1,
+     "joints": 221
+    },
+    "ru_seogun": {
+     "tris": 38941,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 61.2,
+     "joints": 135
+    },
+    "ru_wadok": {
+     "tris": 39643,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 79.8,
+     "joints": 181
+    },
+    "sg_caocao": {
+     "tris": 44112,
+     "prims": 22,
+     "textures": 22,
+     "tex_mb": 79.8,
+     "joints": 181
+    },
+    "sg_diaochan": {
+     "tris": 42962,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 69.2,
+     "joints": 149
+    },
+    "sg_ganning": {
+     "tris": 43150,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 45.2,
+     "joints": 169
+    },
+    "sg_guanyu": {
+     "tris": 41883,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "sg_huangzhong": {
+     "tris": 35772,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 71.8,
+     "joints": 135
+    },
+    "sg_huatuo": {
+     "tris": 36148,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 70.5,
+     "joints": 134
+    },
+    "sg_liubei": {
+     "tris": 34423,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 62.5,
+     "joints": 134
+    },
+    "sg_lubu": {
+     "tris": 34506,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 59.8,
+     "joints": 113
+    },
+    "sg_luxun": {
+     "tris": 36669,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 73.1,
+     "joints": 211
+    },
+    "sg_machao": {
+     "tris": 40094,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 49.2,
+     "joints": 144
+    },
+    "sg_menghuo": {
+     "tris": 43812,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 69.2,
+     "joints": 144
+    },
+    "sg_pangtong": {
+     "tris": 42983,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 57.2,
+     "joints": 155
+    },
+    "sg_simayi": {
+     "tris": 42341,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 66.5,
+     "joints": 180
+    },
+    "sg_sunquan": {
+     "tris": 42071,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 53.2,
+     "joints": 149
+    },
+    "sg_taishici": {
+     "tris": 40331,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 43.9,
+     "joints": 134
+    },
+    "sg_xiahoudun": {
+     "tris": 34953,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 49.9,
+     "joints": 173
+    },
+    "sg_xunyu": {
+     "tris": 43950,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 146
+    },
+    "sg_zhangfei": {
+     "tris": 44345,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 169
+    },
+    "sg_zhangliao": {
+     "tris": 54475,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 49.2,
+     "joints": 203
+    },
+    "sg_zhaoyun": {
+     "tris": 51461,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 63.8,
+     "joints": 221
+    },
+    "sg_zhouyu": {
+     "tris": 31833,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 53.2,
+     "joints": 113
+    },
+    "sg_zhugeliang": {
+     "tris": 42649,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 59.9,
+     "joints": 155
+    },
+    "sl_cheonsan": {
+     "tris": 39947,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 65.2,
+     "joints": 180
+    },
+    "sl_daetaek": {
+     "tris": 59124,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 71.8,
+     "joints": 203
+    },
+    "sl_geumhwa": {
+     "tris": 37829,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 49.2,
+     "joints": 211
+    },
+    "sl_heupu": {
+     "tris": 44780,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 67.8,
+     "joints": 169
+    },
+    "sl_hosang": {
+     "tris": 42814,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 46.6,
+     "joints": 155
+    },
+    "sl_hwachin": {
+     "tris": 36334,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 65.2,
+     "joints": 134
+    },
+    "sl_josang": {
+     "tris": 41839,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 144
+    },
+    "sl_nakta": {
+     "tris": 35712,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 64.5,
+     "joints": 173
+    },
+    "sl_wangjeong": {
+     "tris": 36768,
+     "prims": 24,
+     "textures": 24,
+     "tex_mb": 83.8,
+     "joints": 113
+    },
+    "tb_amseup": {
+     "tris": 41947,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 67.8,
+     "joints": 149
+    },
+    "tb_baekgi": {
+     "tris": 49592,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 45.2,
+     "joints": 143
+    },
+    "tb_ganghae": {
+     "tris": 45084,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 146
+    },
+    "tb_gojeon": {
+     "tris": 43333,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 53.2,
+     "joints": 149
+    },
+    "tb_heukju": {
+     "tris": 30912,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 49.2,
+     "joints": 113
+    },
+    "tb_jamhon": {
+     "tris": 42015,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "tb_japgol": {
+     "tris": 44251,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 57.2,
+     "joints": 169
+    },
+    "tb_jongja": {
+     "tris": 43044,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 54.5,
+     "joints": 155
+    },
+    "tb_saryeong": {
+     "tris": 34929,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "tz_beonwang": {
+     "tris": 42518,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 65.2,
+     "joints": 144
+    },
+    "tz_daehacheon": {
+     "tris": 41042,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 70.5,
+     "joints": 195
+    },
+    "tz_ganda": {
+     "tris": 34974,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 59.2,
+     "joints": 173
+    },
+    "tz_hangha": {
+     "tris": 43351,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 50.5,
+     "joints": 146
+    },
+    "tz_hyanggae": {
+     "tris": 51165,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 61.2,
+     "joints": 272
+    },
+    "tz_sanri": {
+     "tris": 44110,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 63.8,
+     "joints": 149
+    },
+    "tz_sawi": {
+     "tris": 44320,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 69.8,
+     "joints": 211
+    },
+    "tz_seoksang": {
+     "tris": 30766,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 47.9,
+     "joints": 113
+    },
+    "tz_seolsan": {
+     "tris": 41893,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 134
+    },
+    "wd_akbar": {
+     "tris": 43043,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 58.5,
+     "joints": 144
+    },
+    "wd_ashoka": {
+     "tris": 34283,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 62.5,
+     "joints": 134
+    },
+    "wd_attila": {
+     "tris": 44223,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 59.8,
+     "joints": 169
+    },
+    "wd_cleopatra": {
+     "tris": 60016,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 71.8,
+     "joints": 250
+    },
+    "wd_genghis": {
+     "tris": 45346,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 65.2,
+     "joints": 146
+    },
+    "wd_hammurabi": {
+     "tris": 50851,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 63.8,
+     "joints": 221
+    },
+    "wd_ibnbattuta": {
+     "tris": 32228,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 75.8,
+     "joints": 91
+    },
+    "wd_ibnsina": {
+     "tris": 36306,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 71.2,
+     "joints": 173
+    },
+    "wd_khubilai": {
+     "tris": 42795,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 59.9,
+     "joints": 149
+    },
+    "wd_mansamusa": {
+     "tris": 32109,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 47.9,
+     "joints": 113
+    },
+    "wd_moctezuma": {
+     "tris": 40800,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 54.5,
+     "joints": 134
+    },
+    "wd_pachacuti": {
+     "tris": 46977,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 65.2,
+     "joints": 191
+    },
+    "wd_saladin": {
+     "tris": 56840,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 77.1,
+     "joints": 272
+    },
+    "wd_shaka": {
+     "tris": 49252,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 78.5,
+     "joints": 187
+    },
+    "wd_suleiman": {
+     "tris": 46077,
+     "prims": 22,
+     "textures": 22,
+     "tex_mb": 75.1,
+     "joints": 211
+    },
+    "xb_bonghwa": {
+     "tris": 42907,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 61.2,
+     "joints": 169
+    },
+    "xb_daein": {
+     "tris": 49028,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 78.5,
+     "joints": 187
+    },
+    "xb_eoryang": {
+     "tris": 57333,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 66.5,
+     "joints": 250
+    },
+    "xb_gaseul": {
+     "tris": 41636,
+     "prims": 13,
+     "textures": 13,
+     "tex_mb": 43.9,
+     "joints": 155
+    },
+    "xb_gyeon": {
+     "tris": 35309,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 62.5,
+     "joints": 134
+    },
+    "xb_hoja": {
+     "tris": 42860,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 66.5,
+     "joints": 144
+    },
+    "xb_hondo": {
+     "tris": 35943,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 64.5,
+     "joints": 173
+    },
+    "xb_honin": {
+     "tris": 43464,
+     "prims": 17,
+     "textures": 17,
+     "tex_mb": 59.9,
+     "joints": 146
+    },
+    "xb_yong": {
+     "tris": 46893,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 73.1,
+     "joints": 191
+    },
+    "xiyu_banwol": {
+     "tris": 43218,
+     "prims": 15,
+     "textures": 15,
+     "tex_mb": 53.2,
+     "joints": 149
+    },
+    "xiyu_cheonma": {
+     "tris": 30034,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 67.8,
+     "joints": 91
+    },
+    "xiyu_chongryeong": {
+     "tris": 30281,
+     "prims": 13,
+     "textures": 13,
+     "tex_mb": 43.9,
+     "joints": 113
+    },
+    "xiyu_dansu": {
+     "tris": 41024,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 55.9,
+     "joints": 134
+    },
+    "xiyu_gumo": {
+     "tris": 43142,
+     "prims": 14,
+     "textures": 14,
+     "tex_mb": 45.2,
+     "joints": 169
+    },
+    "xiyu_gyoha": {
+     "tris": 48587,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 65.2,
+     "joints": 221
+    },
+    "xiyu_jeongcheon": {
+     "tris": 35954,
+     "prims": 20,
+     "textures": 20,
+     "tex_mb": 71.8,
+     "joints": 135
+    },
+    "xiyu_mokjil": {
+     "tris": 39000,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 79.8,
+     "joints": 181
+    },
+    "xiyu_ochi": {
+     "tris": 45532,
+     "prims": 21,
+     "textures": 21,
+     "tex_mb": 79.8,
+     "joints": 180
+    },
+    "xiyu_sarim": {
+     "tris": 42757,
+     "prims": 16,
+     "textures": 16,
+     "tex_mb": 58.5,
+     "joints": 155
+    },
+    "xiyu_talban": {
+     "tris": 34505,
+     "prims": 18,
+     "textures": 18,
+     "tex_mb": 62.5,
+     "joints": 134
+    },
+    "xiyu_yeoje": {
+     "tris": 56439,
+     "prims": 19,
+     "textures": 19,
+     "tex_mb": 70.5,
+     "joints": 203
+    }
+   }
+  },
+  "world": {
+   "count": 298,
+   "errors": 0,
+   "tris": {
+    "min": 12,
+    "median": 130,
+    "p95": 1816,
+    "max": 3964
+   },
+   "prims": {
+    "min": 1,
+    "median": 3,
+    "p95": 6,
+    "max": 7
+   },
+   "tex_mb": {
+    "min": 0,
+    "median": 0.7,
+    "p95": 1.7,
+    "max": 1.7
+   },
+   "textures": {
+    "min": 0,
+    "median": 2,
+    "p95": 5,
+    "max": 5
+   },
+   "joints": {
+    "min": 0,
+    "median": 0,
+    "p95": 0,
+    "max": 0
+   },
+   "heaviest_tris": [
+    {
+     "id": "inn_01",
+     "tris": 3964
+    },
+    {
+     "id": "modern_block_01",
+     "tris": 2900
+    },
+    {
+     "id": "cave_floor_01",
+     "tris": 2430
+    },
+    {
+     "id": "cliff_ledge_01",
+     "tris": 2430
+    },
+    {
+     "id": "dune_01",
+     "tris": 2430
+    }
+   ],
+   "per_model": {
+    "acc_antenna": {
+     "tris": 52,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_backpack": {
+     "tris": 84,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_belt_pouch": {
+     "tris": 48,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_cap": {
+     "tris": 84,
+     "prims": 2,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "acc_cape_long": {
+     "tris": 24,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_cape_short": {
+     "tris": 40,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_crown": {
+     "tris": 100,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_ear_cat": {
+     "tris": 24,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_ear_elf": {
+     "tris": 12,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_earring": {
+     "tris": 26,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_eyepatch": {
+     "tris": 36,
+     "prims": 1,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "acc_glasses_round": {
+     "tris": 148,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "acc_goggles": {
+     "tris": 168,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_halo": {
+     "tris": 64,
+     "prims": 1,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "acc_hat_pointed": {
+     "tris": 82,
+     "prims": 2,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "acc_hat_wide": {
+     "tris": 108,
+     "prims": 2,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "acc_headband": {
+     "tris": 36,
+     "prims": 1,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "acc_holo_visor": {
+     "tris": 36,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_horns": {
+     "tris": 60,
+     "prims": 1,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "acc_jetpack_small": {
+     "tris": 124,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "acc_mask_half": {
+     "tris": 36,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_necklace": {
+     "tris": 34,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_pauldron_spike": {
+     "tris": 52,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_quiver": {
+     "tris": 124,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_ribbon": {
+     "tris": 44,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_sash": {
+     "tris": 48,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_scarf": {
+     "tris": 68,
+     "prims": 2,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "acc_shoulder_fur": {
+     "tris": 124,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_shoulder_gem": {
+     "tris": 38,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_tail_cat": {
+     "tris": 90,
+     "prims": 1,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "acc_tail_fox": {
+     "tris": 126,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_wings_small": {
+     "tris": 72,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "acc_wrist_band": {
+     "tris": 32,
+     "prims": 2,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "altar_01": {
+     "tris": 116,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "altar_base_01": {
+     "tris": 340,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "armor_stand_01": {
+     "tris": 112,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "bamboo_clump_01": {
+     "tris": 378,
+     "prims": 2,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "banner_pole_01": {
+     "tris": 64,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "barn_01": {
+     "tris": 908,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "barrel_01": {
+     "tris": 228,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "bars_door_01": {
+     "tris": 290,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "bed_futon_01": {
+     "tris": 36,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "bed_wood_01": {
+     "tris": 72,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "bench_01": {
+     "tris": 108,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "bookshelf_01": {
+     "tris": 348,
+     "prims": 7,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "brazier_01": {
+     "tris": 130,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "bush_01": {
+     "tris": 480,
+     "prims": 3,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "bush_02": {
+     "tris": 544,
+     "prims": 6,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cabinet_low_01": {
+     "tris": 48,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "campfire_logs_01": {
+     "tris": 304,
+     "prims": 4,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "candlestick_01": {
+     "tris": 104,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "caravan_wagon_01": {
+     "tris": 1816,
+     "prims": 4,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "cave_corner_01_dirt": {
+     "tris": 516,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_corner_01_lava": {
+     "tris": 532,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_corner_01_limestone": {
+     "tris": 516,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_corridor_01_dirt": {
+     "tris": 348,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_corridor_01_lava": {
+     "tris": 372,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_corridor_01_limestone": {
+     "tris": 348,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_floor_01": {
+     "tris": 2430,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "cave_gate_01_dirt": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_gate_01_lava": {
+     "tris": 104,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_gate_01_limestone": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_room_01_dirt": {
+     "tris": 444,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_room_01_lava": {
+     "tris": 476,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_room_01_limestone": {
+     "tris": 444,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_stairs_01_dirt": {
+     "tris": 432,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_stairs_01_lava": {
+     "tris": 440,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cave_stairs_01_limestone": {
+     "tris": 432,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "chair_wood_01": {
+     "tris": 72,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "chest_01": {
+     "tris": 132,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "chinese_hall_01": {
+     "tris": 1288,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "city_wall_segment_01": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cliff_ledge_01": {
+     "tris": 2430,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "counter_01": {
+     "tris": 36,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "crate_small_01": {
+     "tris": 60,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "crate_stack_01": {
+     "tris": 336,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "cushion_01": {
+     "tris": 72,
+     "prims": 1,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "desk_01": {
+     "tris": 60,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "display_stand_01": {
+     "tris": 84,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "dune_01": {
+     "tris": 2430,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "dungeon_gate_01": {
+     "tris": 1636,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "dungeon_pillar_01": {
+     "tris": 132,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_1_arm": {
+     "tris": 84,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_1_boot": {
+     "tris": 80,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "eq_future_1_chest": {
+     "tris": 64,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_1_head": {
+     "tris": 114,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_1_leg": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_1_shoulder": {
+     "tris": 108,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_future_2_arm": {
+     "tris": 100,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_2_boot": {
+     "tris": 92,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "eq_future_2_chest": {
+     "tris": 64,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_2_head": {
+     "tris": 114,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_2_leg": {
+     "tris": 108,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_2_shoulder": {
+     "tris": 120,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_future_3_arm": {
+     "tris": 112,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_3_boot": {
+     "tris": 92,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "eq_future_3_chest": {
+     "tris": 64,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_3_head": {
+     "tris": 134,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_3_leg": {
+     "tris": 108,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_future_3_shoulder": {
+     "tris": 120,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_past_1_arm": {
+     "tris": 84,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_1_boot": {
+     "tris": 80,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "eq_past_1_chest": {
+     "tris": 60,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_1_head": {
+     "tris": 102,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_1_leg": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_1_shoulder": {
+     "tris": 108,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_past_2_arm": {
+     "tris": 100,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_2_boot": {
+     "tris": 80,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "eq_past_2_chest": {
+     "tris": 60,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_2_head": {
+     "tris": 130,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_2_leg": {
+     "tris": 108,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_2_shoulder": {
+     "tris": 114,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_3_arm": {
+     "tris": 112,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_3_boot": {
+     "tris": 80,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "eq_past_3_chest": {
+     "tris": 80,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_3_head": {
+     "tris": 150,
+     "prims": 4,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_3_leg": {
+     "tris": 108,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_past_3_shoulder": {
+     "tris": 114,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_present_1_arm": {
+     "tris": 84,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_present_1_boot": {
+     "tris": 80,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_present_1_chest": {
+     "tris": 72,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_present_1_head": {
+     "tris": 126,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_present_1_leg": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_present_1_shoulder": {
+     "tris": 120,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_present_2_arm": {
+     "tris": 84,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_present_2_boot": {
+     "tris": 80,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_present_2_chest": {
+     "tris": 72,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_present_2_head": {
+     "tris": 126,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_present_2_leg": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_present_2_shoulder": {
+     "tris": 120,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_present_3_arm": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_present_3_boot": {
+     "tris": 80,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_present_3_chest": {
+     "tris": 92,
+     "prims": 4,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_present_3_head": {
+     "tris": 146,
+     "prims": 4,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "eq_present_3_leg": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eq_present_3_shoulder": {
+     "tris": 120,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "eu_house_01": {
+     "tris": 1888,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "flower_patch_01": {
+     "tris": 558,
+     "prims": 7,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "forest_cottage_01": {
+     "tris": 656,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "future_dome_01": {
+     "tris": 1646,
+     "prims": 5,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "globe_stand_01": {
+     "tris": 216,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "grass_tuft_01": {
+     "tris": 120,
+     "prims": 3,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "grass_tuft_02": {
+     "tris": 160,
+     "prims": 4,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "handcart_01": {
+     "tris": 488,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "hanging_lantern_01": {
+     "tris": 64,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "hanok_01": {
+     "tris": 1268,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "haystack_01": {
+     "tris": 54,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "hearth_stone_01": {
+     "tris": 118,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "hill_01": {
+     "tris": 660,
+     "prims": 6,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "hill_slope_01": {
+     "tris": 2430,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "holo_panel_01": {
+     "tris": 72,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "hologram_globe_01": {
+     "tris": 152,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "inn_01": {
+     "tris": 3964,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "int_barn_01": {
+     "tris": 456,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "int_chinese_hall_01": {
+     "tris": 588,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "int_dungeon_gate_01": {
+     "tris": 252,
+     "prims": 5,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "int_eu_house_01": {
+     "tris": 300,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "int_forest_cottage_01": {
+     "tris": 288,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "int_future_dome_01": {
+     "tris": 264,
+     "prims": 6,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "int_hanok_01": {
+     "tris": 324,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "int_inn_01": {
+     "tris": 408,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "int_jp_minka_01": {
+     "tris": 300,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "int_modern_block_01": {
+     "tris": 264,
+     "prims": 6,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "int_silkroad_house_01": {
+     "tris": 308,
+     "prims": 5,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "int_stone_tower_01": {
+     "tris": 300,
+     "prims": 5,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "iron_fence_01": {
+     "tris": 294,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "jar_01": {
+     "tris": 264,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "jp_minka_01": {
+     "tris": 1552,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "keg_01": {
+     "tris": 128,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "kitchen_pot_01": {
+     "tris": 164,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "log_01": {
+     "tris": 84,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_axe_g0": {
+     "tris": 48,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_axe_g1": {
+     "tris": 188,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_axe_g2": {
+     "tris": 188,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_axe_g3": {
+     "tris": 200,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_axe_g4": {
+     "tris": 200,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_dagger_g0": {
+     "tris": 50,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_dagger_g1": {
+     "tris": 190,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_dagger_g2": {
+     "tris": 190,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_dagger_g3": {
+     "tris": 190,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_dagger_g4": {
+     "tris": 190,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_staff_g0": {
+     "tris": 92,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_staff_g1": {
+     "tris": 220,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_staff_g2": {
+     "tris": 220,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_staff_g3": {
+     "tris": 220,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_staff_g4": {
+     "tris": 220,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_sword_g0": {
+     "tris": 70,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_sword_g1": {
+     "tris": 210,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_sword_g2": {
+     "tris": 210,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_sword_g3": {
+     "tris": 210,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "loot_sword_g4": {
+     "tris": 210,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "low_stone_wall_01": {
+     "tris": 132,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "low_table_01": {
+     "tris": 60,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "mailbox_01": {
+     "tris": 44,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "map_table_01": {
+     "tris": 84,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "market_stall_01": {
+     "tris": 396,
+     "prims": 6,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "meadow_01": {
+     "tris": 2430,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "mine_cart_01": {
+     "tris": 336,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "mirror_stand_01": {
+     "tris": 48,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "modern_block_01": {
+     "tris": 2900,
+     "prims": 5,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "mountain_01": {
+     "tris": 398,
+     "prims": 5,
+     "textures": 5,
+     "tex_mb": 1.7,
+     "joints": 0
+    },
+    "mushroom_01": {
+     "tris": 540,
+     "prims": 4,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "notice_board_01": {
+     "tris": 128,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "oil_lamp_01": {
+     "tris": 104,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "ox_cart_01": {
+     "tris": 732,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "pebbles_01": {
+     "tris": 280,
+     "prims": 4,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "plank_bridge_01": {
+     "tris": 316,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "pond_01": {
+     "tris": 2430,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "raft_01": {
+     "tris": 280,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "reed_clump_01": {
+     "tris": 116,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "ridge_01": {
+     "tris": 2430,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "river_bend_01": {
+     "tris": 2430,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "road_plain_01": {
+     "tris": 2430,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "rock_large_01": {
+     "tris": 292,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "rock_large_02": {
+     "tris": 252,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "rock_moss_01": {
+     "tris": 334,
+     "prims": 6,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "rock_outcrop_01": {
+     "tris": 2430,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "rock_small_01": {
+     "tris": 138,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "rubble_pillar_01": {
+     "tris": 132,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "rubble_wall_01": {
+     "tris": 180,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "rug_rect_01": {
+     "tris": 36,
+     "prims": 3,
+     "textures": 0,
+     "tex_mb": 0,
+     "joints": 0
+    },
+    "rug_round_01": {
+     "tris": 180,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "sack_pile_01": {
+     "tris": 380,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "sail_boat_01": {
+     "tris": 112,
+     "prims": 4,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "scarecrow_01": {
+     "tris": 364,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "screen_folding_01": {
+     "tris": 144,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "shelf_wall_01": {
+     "tris": 120,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "signal_pylon_01": {
+     "tris": 86,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "signpost_01": {
+     "tris": 82,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "silkroad_house_01": {
+     "tris": 1992,
+     "prims": 6,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "sofa_01": {
+     "tris": 84,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "spinning_wheel_01": {
+     "tris": 196,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "stele_01": {
+     "tris": 32,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "stepping_stone_01": {
+     "tris": 144,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "stepping_stone_02": {
+     "tris": 48,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "stone_lantern_01": {
+     "tris": 110,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "stone_tower_01": {
+     "tris": 1656,
+     "prims": 5,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "stool_01": {
+     "tris": 76,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "stove_iron_01": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "street_lamp_01": {
+     "tris": 120,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "stump_01": {
+     "tris": 72,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "table_lamp_01": {
+     "tris": 84,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "table_round_01": {
+     "tris": 108,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "table_wood_01": {
+     "tris": 60,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "tatami_mat_01": {
+     "tris": 36,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "temple_roof_01": {
+     "tris": 180,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "tent_large_01": {
+     "tris": 204,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "tent_small_01": {
+     "tris": 148,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "terminal_01": {
+     "tris": 48,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "torch_stand_01": {
+     "tris": 70,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "tree_birch_01": {
+     "tris": 858,
+     "prims": 6,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "tree_broadleaf_01": {
+     "tris": 1020,
+     "prims": 5,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "tree_broadleaf_02": {
+     "tris": 1200,
+     "prims": 5,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "tree_broadleaf_03": {
+     "tris": 984,
+     "prims": 5,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "tree_dead_01": {
+     "tris": 940,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "tree_pine_01": {
+     "tris": 520,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "tree_pine_01_snow": {
+     "tris": 520,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "tree_pine_02": {
+     "tris": 596,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "tree_pine_03": {
+     "tris": 468,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "trunk_01": {
+     "tris": 76,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "vase_tall_01": {
+     "tris": 112,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "vegetable_row_01": {
+     "tris": 384,
+     "prims": 3,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "wall_block_01": {
+     "tris": 36,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "wall_piece_01": {
+     "tris": 240,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "wardrobe_01": {
+     "tris": 48,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "weapon_rack_01": {
+     "tris": 96,
+     "prims": 2,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "well_01": {
+     "tris": 200,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wheat_growing_01": {
+     "tris": 72,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "wheat_ripe_01": {
+     "tris": 428,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "wheat_sprout_01": {
+     "tris": 64,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "wood_fence_01": {
+     "tris": 192,
+     "prims": 1,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "wpn_axe_common": {
+     "tris": 138,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_axe_legend": {
+     "tris": 218,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_axe_rare": {
+     "tris": 192,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_bow_common": {
+     "tris": 286,
+     "prims": 2,
+     "textures": 1,
+     "tex_mb": 0.3,
+     "joints": 0
+    },
+    "wpn_bow_legend": {
+     "tris": 358,
+     "prims": 5,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_bow_rare": {
+     "tris": 358,
+     "prims": 5,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_dagger_common": {
+     "tris": 78,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_dagger_legend": {
+     "tris": 130,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_dagger_rare": {
+     "tris": 130,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_gauntlet_common": {
+     "tris": 192,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "wpn_gauntlet_legend": {
+     "tris": 244,
+     "prims": 4,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "wpn_gauntlet_rare": {
+     "tris": 244,
+     "prims": 4,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "wpn_gun_common": {
+     "tris": 108,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_gun_legend": {
+     "tris": 172,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_gun_rare": {
+     "tris": 172,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_shield_common": {
+     "tris": 152,
+     "prims": 4,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "wpn_shield_legend": {
+     "tris": 408,
+     "prims": 5,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "wpn_shield_rare": {
+     "tris": 312,
+     "prims": 5,
+     "textures": 4,
+     "tex_mb": 1.3,
+     "joints": 0
+    },
+    "wpn_spear_common": {
+     "tris": 108,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_spear_legend": {
+     "tris": 256,
+     "prims": 5,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_spear_rare": {
+     "tris": 228,
+     "prims": 5,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_staff_common": {
+     "tris": 232,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_staff_legend": {
+     "tris": 312,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "wpn_staff_rare": {
+     "tris": 272,
+     "prims": 3,
+     "textures": 2,
+     "tex_mb": 0.7,
+     "joints": 0
+    },
+    "wpn_sword_common": {
+     "tris": 146,
+     "prims": 3,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_sword_legend": {
+     "tris": 278,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    },
+    "wpn_sword_rare": {
+     "tris": 240,
+     "prims": 4,
+     "textures": 3,
+     "tex_mb": 1,
+     "joints": 0
+    }
+   }
+  }
+ }
+}

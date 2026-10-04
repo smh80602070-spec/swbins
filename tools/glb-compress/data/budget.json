@@ -1,0 +1,121 @@
+{
+ "note": "K-0046 예산표 — measured 는 tools/glb-compress/measure.mjs 실측(10-04), lod 는 lod.mjs 시험 3몸·건물 4개 실측, targets 는 측정 분포를 보고 정한 **제안**(기기별 실측 프레임 시간은 실기 확인 몫). 화질을 낮추는 항목 없음 — 낭비 제거(LOD·GPU 압축 텍스처)만.",
+ "measured": {
+  "characters": {
+   "count": 299,
+   "tris": {
+    "min": 29413,
+    "median": 42457,
+    "p95": 54666,
+    "max": 61321
+   },
+   "drawcalls": {
+    "min": 12,
+    "median": 18,
+    "p95": 21,
+    "max": 24
+   },
+   "gpu_tex_mb_uncompressed": {
+    "min": 37.2,
+    "median": 61.2,
+    "p95": 79.8,
+    "max": 86.4
+   },
+   "unique_textures_per_body": {
+    "min": 12,
+    "median": 18,
+    "p95": 21,
+    "max": 24
+   },
+   "joints": {
+    "min": 91,
+    "median": 149,
+    "p95": 250,
+    "max": 272
+   }
+  },
+  "world": {
+   "count": 298,
+   "tris": {
+    "min": 12,
+    "median": 130,
+    "p95": 1816,
+    "max": 3964
+   },
+   "drawcalls": {
+    "min": 1,
+    "median": 3,
+    "p95": 6,
+    "max": 7
+   },
+   "gpu_tex_mb_uncompressed": {
+    "min": 0,
+    "median": 0.7,
+    "p95": 1.7,
+    "max": 1.7
+   }
+  }
+ },
+ "lod": {
+  "tool": "tools/glb-compress/lod.mjs (meshopt simplify, lockBorder, error 0.001/0.004)",
+  "characters_3_bodies": {
+   "lod1_tris_ratio": "0.56~0.67",
+   "lod2_tris_ratio": "0.25~0.32",
+   "note": "dj_doseo·jp_yukimura·xiyu_yeoje 실측 — 화질 판정은 graphics-gate 로"
+  },
+  "buildings_props": {
+   "ratio": "0.96~1.00",
+   "note": "eu_house·hanok·inn·tree_broadleaf — 이미 저폴리·각진 면이라 줄지 않는다. LOD 불필요(삼각형 최대 3,964)"
+  }
+ },
+ "findings": [
+  "인물 1명 = 삼각형 중앙값 42k(최대 61k)·드로콜 18(최대 24)·압축 안 한 GPU 텍스처 61MB(최대 86MB) — 군중이 서면 텍스처 메모리가 먼저 터진다",
+  "건물·소품은 가볍다(삼각형 중앙값 130·p95 1.8k, 텍스처 ≤1.7MB) — 최적화 대상은 인물",
+  "웹 GLB 는 이미 공용 텍스처 450장으로 중복을 합쳤다(K-0024). 남은 낭비: ① 엔진 GPU 압축 텍스처 미사용 ② 먼 인물도 4만 삼각형"
+ ],
+ "recommendations": [
+  {
+   "id": "gpu_texture_compression",
+   "what": "엔진 임포트 설정으로 GPU 압축 텍스처(ASTC 6x6 또는 ETC2 / Godot VRAM 압축·Unity ASTC) — 화질 거의 같고 메모리 약 1/4~1/8",
+   "expected": "인물당 61MB → 8~15MB(추정, 엔진 임포트 뒤 실측 필요)",
+   "owner": "엔진 세션(G·U)"
+  },
+  {
+   "id": "char_lod",
+   "what": "인물에 LOD1(≈0.6배)·LOD2(≈0.3배) — 화면에서 작을 때만 바꾼다",
+   "expected": "멀리 선 인물 삼각형 4.2만 → 1.3만",
+   "owner": "엔진 세션이 lod.mjs 산출을 거리별로 교체"
+  },
+  {
+   "id": "crowd_cap",
+   "what": "화면에 동시에 선 서로 다른 인물 수 상한(같은 몸 인스턴스는 텍스처 공유)",
+   "owner": "각 갈래"
+  }
+ ],
+ "targets_proposed": {
+  "low_phone": {
+   "tris_per_screen": 400000,
+   "gpu_tex_mb": 300,
+   "drawcalls": 150,
+   "distinct_characters_full_quality": 4
+  },
+  "mid_phone": {
+   "tris_per_screen": 800000,
+   "gpu_tex_mb": 600,
+   "drawcalls": 300,
+   "distinct_characters_full_quality": 8
+  },
+  "high_phone_pc": {
+   "tris_per_screen": 1500000,
+   "gpu_tex_mb": 1200,
+   "drawcalls": 600,
+   "distinct_characters_full_quality": 16
+  },
+  "basis": "인물 1명 풀 품질 ≈ 4.2만 삼각형·18 드로콜(측정) × 동시 수 + 나머지 장면 여유 — 기기 실측은 실기 확인 때 고친다"
+ },
+ "pending": [
+  "graphics-gate 화질 비교(LOD 인물 3몸) — 브라우저 렌더 필요",
+  "GPU 압축 텍스처 실측(엔진 세션)",
+  "용량 감소율 일괄 보고는 LOD 가 엔진 쪽에서 채택된 뒤"
+ ]
+}
