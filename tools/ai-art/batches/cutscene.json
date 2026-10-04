@@ -3,8 +3,8 @@
  "out": "cutscene",
  "defaults": {
   "prompt_prefix": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game cutscene background, cinematic lighting",
-  "width": 1344,
-  "height": 768,
+  "width": 1152,
+  "height": 648,
   "steps": 28,
   "cfg": 5.5,
   "sampler": "Euler a",
@@ -184,7 +184,7 @@
   {
    "id": "cut_forest_11_giant_boulders",
    "seed": 20274399,
-   "prompt": "a mountain pass blocked by enormous mossy boulders under morning mist"
+   "prompt": "a mountain pass blocked with enormous mossy boulders under morning mist"
   },
   {
    "id": "cut_forest_12_year_after",

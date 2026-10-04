@@ -1,0 +1,25 @@
+{
+ "generator": "tools/ai-art/gen.py",
+ "id": "icon_512",
+ "model": "Illustrious-XL-v2.0",
+ "model_license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+ "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game key art, cinematic composition, epic key art, a luminous portal gate standing in a mixed-era town square at golden hour, old timber houses beside glass towers, floating lanterns, a winding road leading to distant mountains, warm hopeful light",
+ "negative_prompt": "lowres, bad anatomy, text, letters, logo, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border",
+ "seed": 20271336,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  512,
+  512
+ ],
+ "seconds": 31.6,
+ "date": "2026-10-04",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "game": "go",
+ "picked_candidate": 4,
+ "upscaled_from": [
+  1152,
+  648
+ ]
+}

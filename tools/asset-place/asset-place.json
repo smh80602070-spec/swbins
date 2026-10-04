@@ -530,6 +530,18 @@
    ]
   },
   {
+   "id": "store",
+   "src": "saga-assets/store",
+   "recursive": true,
+   "include": [
+    "*.png",
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0041 스토어·타이틀·로딩 일러스트 + 앱 아이콘 — 판 5 × 45(키 가로·세로·아이콘 1024/512/192·적응형 전경·로딩 3). 정본 보관용 — 앱 쪽 연결은 빌드 티켓(상용화)에서 정한다",
+   "targets": []
+  },
+  {
    "id": "ui-skin",
    "src": "saga-assets/ui",
    "recursive": true,
