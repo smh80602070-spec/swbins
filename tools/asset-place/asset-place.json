@@ -534,6 +534,28 @@
    ]
   },
   {
+   "id": "vfx",
+   "src": "saga-assets/vfx",
+   "include": [
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0039 전투 이펙트 — 원소 7 × 동작 4 + 공용 12 = 40종(시트 가로 한 줄 128px 프레임, _k 검은 바탕 가산·_a 알파) + vfx_presets.json(3D 파티클 프리셋)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/vfx"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/vfx",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,

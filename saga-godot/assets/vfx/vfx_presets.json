@@ -1,0 +1,765 @@
+{
+ "note": "K-0039 3D 파티클 프리셋 — 엔진별 파티클 노드 설정(Godot GPUParticles3D·Unity ParticleSystem)은 갈래 몫. 시트 = 프레임 가로 한 줄 128px, 가산 합성.",
+ "presets": {
+  "vfx_fire_proj": {
+   "sheet": "vfx_fire_proj_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.5,
+   "blend": "additive",
+   "color_curve": [
+    "#fff0aa",
+    "#ff9628",
+    "#c83214"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_fire_hit": {
+   "sheet": "vfx_fire_hit_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": false,
+   "particles": 60,
+   "lifetime_s": 0.6,
+   "blend": "additive",
+   "color_curve": [
+    "#fff0aa",
+    "#ff9628",
+    "#c83214"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_fire_area": {
+   "sheet": "vfx_fire_area_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": true,
+   "particles": 80,
+   "lifetime_s": 1.2,
+   "blend": "additive",
+   "color_curve": [
+    "#fff0aa",
+    "#ff9628",
+    "#c83214"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_fire_status": {
+   "sheet": "vfx_fire_status_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 30,
+   "lifetime_s": 1.0,
+   "blend": "additive",
+   "color_curve": [
+    "#fff0aa",
+    "#ff9628",
+    "#c83214"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_water_proj": {
+   "sheet": "vfx_water_proj_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.5,
+   "blend": "additive",
+   "color_curve": [
+    "#dcf5ff",
+    "#50aaf0",
+    "#1e5abe"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_water_hit": {
+   "sheet": "vfx_water_hit_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": false,
+   "particles": 60,
+   "lifetime_s": 0.6,
+   "blend": "additive",
+   "color_curve": [
+    "#dcf5ff",
+    "#50aaf0",
+    "#1e5abe"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_water_area": {
+   "sheet": "vfx_water_area_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": true,
+   "particles": 80,
+   "lifetime_s": 1.2,
+   "blend": "additive",
+   "color_curve": [
+    "#dcf5ff",
+    "#50aaf0",
+    "#1e5abe"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_water_status": {
+   "sheet": "vfx_water_status_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 30,
+   "lifetime_s": 1.0,
+   "blend": "additive",
+   "color_curve": [
+    "#dcf5ff",
+    "#50aaf0",
+    "#1e5abe"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_lightning_proj": {
+   "sheet": "vfx_lightning_proj_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.5,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#aae6ff",
+    "#5a78ff"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_lightning_hit": {
+   "sheet": "vfx_lightning_hit_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": false,
+   "particles": 60,
+   "lifetime_s": 0.6,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#aae6ff",
+    "#5a78ff"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_lightning_area": {
+   "sheet": "vfx_lightning_area_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": true,
+   "particles": 80,
+   "lifetime_s": 1.2,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#aae6ff",
+    "#5a78ff"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_lightning_status": {
+   "sheet": "vfx_lightning_status_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 30,
+   "lifetime_s": 1.0,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#aae6ff",
+    "#5a78ff"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_ice_proj": {
+   "sheet": "vfx_ice_proj_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.5,
+   "blend": "additive",
+   "color_curve": [
+    "#f0fcff",
+    "#96dcfa",
+    "#5a96dc"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_ice_hit": {
+   "sheet": "vfx_ice_hit_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": false,
+   "particles": 60,
+   "lifetime_s": 0.6,
+   "blend": "additive",
+   "color_curve": [
+    "#f0fcff",
+    "#96dcfa",
+    "#5a96dc"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_ice_area": {
+   "sheet": "vfx_ice_area_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": true,
+   "particles": 80,
+   "lifetime_s": 1.2,
+   "blend": "additive",
+   "color_curve": [
+    "#f0fcff",
+    "#96dcfa",
+    "#5a96dc"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_ice_status": {
+   "sheet": "vfx_ice_status_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 30,
+   "lifetime_s": 1.0,
+   "blend": "additive",
+   "color_curve": [
+    "#f0fcff",
+    "#96dcfa",
+    "#5a96dc"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_wind_proj": {
+   "sheet": "vfx_wind_proj_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.5,
+   "blend": "additive",
+   "color_curve": [
+    "#f0fff5",
+    "#96ebbe",
+    "#50aa8c"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_wind_hit": {
+   "sheet": "vfx_wind_hit_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": false,
+   "particles": 60,
+   "lifetime_s": 0.6,
+   "blend": "additive",
+   "color_curve": [
+    "#f0fff5",
+    "#96ebbe",
+    "#50aa8c"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_wind_area": {
+   "sheet": "vfx_wind_area_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": true,
+   "particles": 80,
+   "lifetime_s": 1.2,
+   "blend": "additive",
+   "color_curve": [
+    "#f0fff5",
+    "#96ebbe",
+    "#50aa8c"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_wind_status": {
+   "sheet": "vfx_wind_status_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 30,
+   "lifetime_s": 1.0,
+   "blend": "additive",
+   "color_curve": [
+    "#f0fff5",
+    "#96ebbe",
+    "#50aa8c"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_earth_proj": {
+   "sheet": "vfx_earth_proj_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.5,
+   "blend": "additive",
+   "color_curve": [
+    "#ebd2a0",
+    "#aa7846",
+    "#5f4128"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_earth_hit": {
+   "sheet": "vfx_earth_hit_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": false,
+   "particles": 60,
+   "lifetime_s": 0.6,
+   "blend": "additive",
+   "color_curve": [
+    "#ebd2a0",
+    "#aa7846",
+    "#5f4128"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_earth_area": {
+   "sheet": "vfx_earth_area_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": true,
+   "particles": 80,
+   "lifetime_s": 1.2,
+   "blend": "additive",
+   "color_curve": [
+    "#ebd2a0",
+    "#aa7846",
+    "#5f4128"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_earth_status": {
+   "sheet": "vfx_earth_status_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 30,
+   "lifetime_s": 1.0,
+   "blend": "additive",
+   "color_curve": [
+    "#ebd2a0",
+    "#aa7846",
+    "#5f4128"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_light_proj": {
+   "sheet": "vfx_light_proj_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.5,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffeb",
+    "#ffe178",
+    "#f0aa3c"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_light_hit": {
+   "sheet": "vfx_light_hit_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": false,
+   "particles": 60,
+   "lifetime_s": 0.6,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffeb",
+    "#ffe178",
+    "#f0aa3c"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_light_area": {
+   "sheet": "vfx_light_area_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": true,
+   "particles": 80,
+   "lifetime_s": 1.2,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffeb",
+    "#ffe178",
+    "#f0aa3c"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_light_status": {
+   "sheet": "vfx_light_status_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": true,
+   "particles": 30,
+   "lifetime_s": 1.0,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffeb",
+    "#ffe178",
+    "#f0aa3c"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_spark_hit": {
+   "sheet": "vfx_spark_hit_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_slash_arc": {
+   "sheet": "vfx_slash_arc_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_heal_ring": {
+   "sheet": "vfx_heal_ring_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_heal_cross": {
+   "sheet": "vfx_heal_cross_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_buff_up": {
+   "sheet": "vfx_buff_up_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_debuff_down": {
+   "sheet": "vfx_debuff_down_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_shield_bubble": {
+   "sheet": "vfx_shield_bubble_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": true,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_death_smoke": {
+   "sheet": "vfx_death_smoke_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": false,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_levelup_burst": {
+   "sheet": "vfx_levelup_burst_k.webp",
+   "frames": 12,
+   "fps": 12,
+   "loop": false,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_coin_pop": {
+   "sheet": "vfx_coin_pop_k.webp",
+   "frames": 10,
+   "fps": 12,
+   "loop": false,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_dust_step": {
+   "sheet": "vfx_dust_step_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  },
+  "vfx_crit_flash": {
+   "sheet": "vfx_crit_flash_k.webp",
+   "frames": 8,
+   "fps": 12,
+   "loop": false,
+   "particles": 40,
+   "lifetime_s": 0.8,
+   "blend": "additive",
+   "color_curve": [
+    "#ffffff",
+    "#ffe696",
+    "#c8a050"
+   ],
+   "size_curve": [
+    0.4,
+    1.0,
+    0.2
+   ]
+  }
+ }
+}

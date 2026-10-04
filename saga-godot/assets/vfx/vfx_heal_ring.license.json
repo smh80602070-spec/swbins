@@ -1,0 +1,13 @@
+{
+ "id": "vfx_heal_ring",
+ "generator": "tools/asset-forge/vfxgen.py",
+ "license": "CC0-1.0 (코드 생성 — 외부 입력 없음)",
+ "element": "common",
+ "kind": "heal_ring",
+ "frames": 12,
+ "frame_px": 128,
+ "fps": 12,
+ "loop": true,
+ "blend": "additive (_k = 검은 바탕 가산 합성용 · _a = 알파)",
+ "pulse_hz": 0.0
+}
