@@ -11,7 +11,7 @@
   /** 땅 종류 → 타일(0 풀·1 숲·2 언덕·3 물). 숲은 풀 위에 어두운 초록을 얹는다 */
   var TERRAIN = { 0: 'forest_grass', 1: 'forest_grass', 2: 'forest_dirt', 3: 'go_water' };   // 풀은 위에서 본 사가의숲 풀(realm_grass 는 옆보기 줄무늬)
   var ROAD = 'forest_dirt';
-  var PER = { forest_grass: 1.6, forest_dirt: 2.2, go_water: 3 };   // 타일 이미지(64px) 한 장이 덮는 칸 수 — 작을수록 또렷하다(돌은 판처럼 보여 크게 늘린다)
+  var PER = { forest_grass: 1.6, forest_dirt: 2.2, go_water: 3, water: 4 };   // 타일 이미지(64px) 한 장이 덮는 칸 수 — 작을수록 또렷하다(돌은 판처럼 보여 크게 늘린다)
 
   /** 건물 → { id: world2d 스프라이트, k: 그리는 높이 = k × 긴 변(타일) } */
   var BUILDINGS = {
@@ -65,6 +65,81 @@
      카메라·확대·화면 크기가 같으면 만든 그림을 그대로 쓴다(틱마다 다시 그리지 않는다). */
   var cache = { c: null, key: '', tiles: null }, noise = null, layers = {};
 
+  /* ── K-0061 그림(`assets/web2d/rts/rts_*.webp`) — 길 조각·물 2프레임·이펙트 시트. 못 받았으면 null → 옛 그림 ─── */
+  var RBASE = 'assets/web2d/rts/', rimgs = {};
+  function rimg(name) {
+    var e = rimgs[name];
+    if (!e) {
+      e = rimgs[name] = { img: null, ok: false };
+      if (global.Image) { var im = new global.Image(); im.onload = function () { e.ok = true; }; im.src = RBASE + 'rts_' + name + '.webp'; e.img = im; }
+    }
+    return e.ok ? e.img : null;
+  }
+  /** UI 아이콘 <img> — 없으면 글자(이모지)가 대신 보인다 */
+  function icon(name, fallback) { return '<img class="ic" src="' + RBASE + 'rts_icon_' + name + '.png" alt="' + (fallback || '') + '">'; }
+
+  /** 길 조각 고르기 — 이웃(북·동·남·서)이 이어졌는지 → { name, rot(시계 방향 90° 수) }. 기준 그림: straight E·W · corner N·E · tee E·S·W(북 닫힘) · end W · cross · dot. 순수 함수 */
+  function roadPiece(n, e, s, w) {
+    var open = [!!n, !!e, !!s, !!w], c = open.filter(Boolean).length, i, r, a, b;
+    if (c === 0) { return { name: 'dot', rot: 0 }; }
+    if (c === 4) { return { name: 'cross', rot: 0 }; }
+    if (c === 1) { i = open.indexOf(true); return { name: 'end', rot: (i - 3 + 4) % 4 }; }
+    if (c === 3) { i = open.indexOf(false); return { name: 'tee', rot: i }; }
+    if (open[0] && open[2]) { return { name: 'straight', rot: 1 }; }
+    if (open[1] && open[3]) { return { name: 'straight', rot: 0 }; }
+    a = open.indexOf(true); b = open.lastIndexOf(true);
+    for (r = 0; r < 4; r++) { if (((0 + r) % 4 === a && (1 + r) % 4 === b) || ((1 + r) % 4 === a && (0 + r) % 4 === b)) { return { name: 'corner', rot: r }; } }
+    return { name: 'dot', rot: 0 };
+  }
+
+  var ROAD_PIECES = ['dot', 'end', 'straight', 'corner', 'tee', 'cross'];
+
+  /** 길 칸들을 조각으로 — 이웃이 길이거나 건물이면 열린 쪽(건물 문으로 이어지게). 조각이 다 안 받아졌으면 false(→ 흙 타일) */
+  function roadsAuto(ctx, S, g, rects, ox, oy, z) {
+    var i, imgs = {}, x, y, p, cx, cy;
+    for (i = 0; i < ROAD_PIECES.length; i++) { imgs[ROAD_PIECES[i]] = rimg('road_' + ROAD_PIECES[i]); if (!imgs[ROAD_PIECES[i]]) { return false; } }
+    function occ(xx, yy) { return g.inBounds(xx, yy) && !!S.occ[g.idx(xx, yy)]; }
+    for (i = 0; i < rects.length; i++) {
+      x = rects[i][0]; y = rects[i][1];
+      p = roadPiece(occ(x, y - 1), occ(x + 1, y), occ(x, y + 1), occ(x - 1, y));
+      cx = ox + (x + 0.5) * z; cy = oy + (y + 0.5) * z;
+      ctx.save(); ctx.translate(cx, cy); ctx.rotate(p.rot * Math.PI / 2);
+      ctx.drawImage(imgs[p.name], -z * 0.53, -z * 0.53, z * 1.06, z * 1.06);
+      ctx.restore();
+    }
+    return true;
+  }
+
+  function shMax(S) { var Rr = global.DG.rts.rules; return Math.round(Rr.DEFS.stronghold.hp * Rr.DIFF.hp[S.diff === 0 || S.diff === 2 ? S.diff : 1]); }
+
+  /** 전투 이펙트 — S.fx(타격 불꽃·화살, 전투 모델이 쌓는다)와 낮은 체력의 불(거점·적 기지). toScreen(x,y) → {x,y} */
+  function fxs(ctx, S, toScreen, z, now) {
+    var list = S.fx || [], i, f, age, im, p, q, t, sz, fr, ang;
+    for (i = 0; i < list.length; i++) {
+      f = list[i]; age = S.tick - f.t; if (age < 0) { continue; }
+      if (f.k === 'hit') {
+        im = rimg('fx_hitspark_a'); if (!im || age > 6) { continue; }
+        fr = Math.min(5, Math.floor(age * 1.3)); p = toScreen(f.x, f.y); sz = z * 1.5;
+        ctx.drawImage(im, fr * 128, 0, 128, 128, p.x - sz / 2, p.y - sz * 0.7, sz, sz);
+      } else if (f.k === 'arrow') {
+        im = rimg('fx_arrow_a'); if (!im || age > 3) { continue; }
+        t = Math.min(1, age / 3); p = toScreen(f.x + (f.x2 - f.x) * t, f.y + (f.y2 - f.y) * t); q = toScreen(f.x2, f.y2);
+        ang = Math.atan2(f.y2 - f.y, f.x2 - f.x); sz = z * 1.7;
+        ctx.save(); ctx.translate(p.x, p.y - z * 0.5); ctx.rotate(ang); ctx.drawImage(im, 3 * 128, 0, 128, 128, -sz / 2, -sz / 2, sz, sz); ctx.restore();
+      }
+    }
+    // 불 — 거점·적 기지 체력이 35% 아래면 지붕에서 불길
+    im = rimg('fx_fire_a');
+    if (im) {
+      fr = Math.floor(now / 83) % 12;
+      [[S.buildings[1], S.cHp / 400, 3], [S.buildings[-1], S.buildings[-1] ? S.buildings[-1].hp / shMax(S) : 1, 3]].forEach(function (e) {
+        var b = e[0]; if (!b || e[1] >= 0.35 || e[1] <= 0) { return; }
+        var c = toScreen(b.x + 1.5, b.y + 1.0), s2 = z * 2.4;
+        ctx.drawImage(im, fr * 128, 0, 128, 128, c.x - s2 / 2, c.y - s2 * 0.8, s2, s2);
+      });
+    }
+  }
+
   function mk(w, h) { var c = global.document.createElement('canvas'); c.width = w; c.height = h; return c; }
 
   /** 큰 얼룩 — 값 노이즈 한 장(128px), 한 번만 만든다. 늘 같다(시드 고정) */
@@ -108,6 +183,13 @@
     return lc;
   }
 
+  /** 물 두 번째 프레임을 천천히 비춘다(3.6초 주기) — 땅 그림 캐시 위에 얹는다 */
+  function waterShimmer(ctx, W, H) {
+    if (!cache.water2 || !layers[4]) { return false; }
+    ctx.save(); ctx.globalAlpha = 0.5 + 0.5 * Math.sin(Date.now() / 1150); ctx.drawImage(layers[4], 0, 0, W, H); ctx.restore();
+    return true;
+  }
+
   /** 보이는 칸의 땅을 그린다 — 네 종류 타일이 모두 받아졌을 때만(하나라도 없으면 false → 옛 색 칸). W,H = 화면 크기(CSS px), dpr = 화면 배율 */
   function terrain(ctx, tiles, g, x0, x1, y0, y1, ox, oy, z, W, H, dpr) {
     var m = M(), t, x, y, groups = { 1: [], 2: [], 3: [] }, pg, ps, pw;
@@ -116,7 +198,7 @@
     if (!pg || !ps || !pw) { return false; }
     dpr = dpr || 1;
     var key = [Math.round(ox * 2), Math.round(oy * 2), Math.round(z * 100), W, H, dpr].join();
-    if (cache.c && cache.key === key && cache.tiles === tiles) { ctx.drawImage(cache.c, 0, 0, W, H); return true; }
+    if (cache.c && cache.key === key && cache.tiles === tiles) { ctx.drawImage(cache.c, 0, 0, W, H); waterShimmer(ctx, W, H); return true; }
     for (y = y0; y <= y1; y++) { for (x = x0; x <= x1; x++) { t = tiles[g.idx(x, y)]; if (t > 0) { groups[t].push([x, y]); } } }
     var c = cache.c || (cache.c = mk(1, 1)), cx;
     c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); cx = c.getContext('2d'); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -133,11 +215,23 @@
         lx.globalCompositeOperation = 'source-atop'; lx.fillStyle = 'rgba(96,96,104,.5)'; lx.fillRect(0, 0, W, H);
       }), 0, 0, W, H);
     }
-    if (groups[3].length) {                                                                      // 물 = 파란 바탕 + 물결
-      cx.drawImage(layer(3, groups[3], W, H, dpr, ox, oy, z, function (lx) {
-        lx.globalCompositeOperation = 'source-in'; lx.fillStyle = '#3a82b6'; lx.fillRect(0, 0, W, H);
-        lx.globalCompositeOperation = 'source-atop'; lx.globalAlpha = 0.34; fillWorld(lx, pw, PER.go_water, x0, y0, x1 - x0 + 1, y1 - y0 + 1, ox, oy, z); lx.globalAlpha = 1;
-      }), 0, 0, W, H);
+    cache.water2 = false;
+    if (groups[3].length) {                                                                      // 물 = K-0061 물 2프레임(없으면 파란 바탕 + 물결)
+      var w1 = rimg('water_1'), w2 = rimg('water_2'), p1 = w1 ? cx.createPattern(w1, 'repeat') : null, p2 = w2 ? cx.createPattern(w2, 'repeat') : null;
+      if (p1 && p2) {
+        cx.drawImage(layer(3, groups[3], W, H, dpr, ox, oy, z, function (lx) {
+          lx.globalCompositeOperation = 'source-in'; fillWorld(lx, p1, PER.water, x0, y0, x1 - x0 + 1, y1 - y0 + 1, ox, oy, z);
+        }), 0, 0, W, H);
+        layer(4, groups[3], W, H, dpr, ox, oy, z, function (lx) {   // 두 번째 프레임 — 그릴 때 번갈아 비친다
+          lx.globalCompositeOperation = 'source-in'; fillWorld(lx, p2, PER.water, x0, y0, x1 - x0 + 1, y1 - y0 + 1, ox, oy, z);
+        });
+        cache.water2 = true;
+      } else {
+        cx.drawImage(layer(3, groups[3], W, H, dpr, ox, oy, z, function (lx) {
+          lx.globalCompositeOperation = 'source-in'; lx.fillStyle = '#3a82b6'; lx.fillRect(0, 0, W, H);
+          lx.globalCompositeOperation = 'source-atop'; lx.globalAlpha = 0.34; fillWorld(lx, pw, PER.go_water, x0, y0, x1 - x0 + 1, y1 - y0 + 1, ox, oy, z); lx.globalAlpha = 1;
+        }), 0, 0, W, H);
+      }
     }
     // 큰 얼룩 — 타일 반복이 눈에 안 띄게(14칸마다 한 번 돌아오는 밝고 어두운 무늬)
     var nt = noiseTex(), np = cx.createPattern(nt, 'repeat');
@@ -147,7 +241,7 @@
     }
     cache.key = key; cache.tiles = tiles;
     ctx.drawImage(c, 0, 0, W, H);
-    return true;
+    return waterShimmer(ctx, W, H) || true;
   }
 
   /** 땅 장식(이미 있는 나무·바위·덤불 지물) — 숲 칸엔 나무, 언덕 칸엔 바위, 풀 칸엔 가끔 덤불. 칸 좌표 해시로 정해 늘 같은 자리·같은 종류.
@@ -204,5 +298,5 @@
 
   global.DG = global.DG || {};
   global.DG.rts = global.DG.rts || {};
-  global.DG.rts.art = { TERRAIN: TERRAIN, BUILDINGS: BUILDINGS, UNIT_POOL: UNIT_POOL, HERO_POOLS: HERO_POOLS, poolOf: poolOf, terrain: terrain, decor: decor, DECOR: DECOR, roads: roads, spriteReady: spriteReady, sprites: sprites, unit: unit };
+  global.DG.rts.art = { TERRAIN: TERRAIN, BUILDINGS: BUILDINGS, UNIT_POOL: UNIT_POOL, HERO_POOLS: HERO_POOLS, poolOf: poolOf, terrain: terrain, decor: decor, DECOR: DECOR, roads: roads, roadsAuto: roadsAuto, roadPiece: roadPiece, fxs: fxs, icon: icon, rimg: rimg, spriteReady: spriteReady, sprites: sprites, unit: unit };
 })(typeof window !== 'undefined' ? window : this);

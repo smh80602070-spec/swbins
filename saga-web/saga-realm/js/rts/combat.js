@@ -34,7 +34,9 @@
     delete s.units[v.id];
     if (v.team === 1 && killerTeam === 0) { s.res.gold += BOUNTY; s.kills = (s.kills || 0) + 1; }
   }
-  function hit(s, v, dmg, killerTeam) { v.hp -= dmg; if (v.hp <= 0) { kill(s, v, killerTeam); return true; } return false; }
+  /** 눈에 보이는 효과 기록(저장 안 함) — 타격 불꽃·화살. 화면이 쓰고 20틱 뒤 지운다 */
+  function fx(s, k, x, y, x2, y2) { if (!s.fx) { return; } s.fx.push({ k: k, x: x, y: y, x2: x2, y2: y2, t: s.tick }); if (s.fx.length > 90) { s.fx.shift(); } }
+  function hit(s, v, dmg, killerTeam, from) { fx(s, 'hit', v.x, v.y); if (from) { fx(s, 'arrow', from.x, from.y, v.x, v.y); } v.hp -= dmg; if (v.hp <= 0) { kill(s, v, killerTeam); return true; } return false; }
 
   /** 건물 직사각형까지의 거리(안이면 0) */
   function rectDist(b, x, y) {
@@ -92,7 +94,7 @@
     var foe = nearestFoe(s, u, (u.path.length || u.want) ? d.range : SIGHT);
     if (!foe) { baseAI(s, u, d); return; }
     if (dist(u, foe) <= d.range) {
-      if (u.cd <= 0) { hit(s, foe, d.atk * mult(u.t, foe.t), 0); u.cd = CD; }
+      if (u.cd <= 0) { hit(s, foe, d.atk * mult(u.t, foe.t), 0, d.range > 2 ? u : null); u.cd = CD; }
       if (!u.path.length) { u.goal = null; }
     } else if (!u.path.length && !u.want) {
       approach(s, u, Math.floor(foe.x), Math.floor(foe.y));
@@ -102,7 +104,7 @@
   /** 적 유닛 — 사거리의 내 유닛을 먼저, 거점에 닿으면 거점, 길이 막히면 성벽을 부순다. 아니면 거점으로 간다 */
   function raiderAI(s, u, d) {
     var foe = nearestFoe(s, u, d.range), c = s.buildings[1], cd = castleDist(s, u.x, u.y), w;
-    if (foe) { if (u.cd <= 0) { hit(s, foe, d.atk * mult(u.t, foe.t), 1); u.cd = CD; } return; }
+    if (foe) { if (u.cd <= 0) { hit(s, foe, d.atk * mult(u.t, foe.t), 1, d.range > 2 ? u : null); u.cd = CD; } return; }
     if (cd <= d.range + 0.6) {
       if (u.cd <= 0) { s.cHp -= d.atk; u.cd = CD; if (s.cHp <= 0) { s.cHp = 0; s.over = true; s.speed = 0; } }
       return;
@@ -126,7 +128,7 @@
       if (b.cd > 0) { b.cd--; continue; }
       if (b.t === 'tower') { foe = nearestFoe(s, { team: 0 }, TOWER_RANGE, b.x + 0.5, b.y + 0.5); }
       else { foe = nearestFoe(s, { team: b.t === 'castle' ? 0 : 1 }, CASTLE_RANGE, b.x + 1.5, b.y + 1.5); }
-      if (foe) { hit(s, foe, b.t === 'tower' ? TOWER_DMG : CASTLE_DMG, b.t === 'stronghold' ? 1 : 0); b.cd = CD; }
+      if (foe) { hit(s, foe, b.t === 'tower' ? TOWER_DMG : CASTLE_DMG, b.t === 'stronghold' ? 1 : 0, { x: b.x + (b.t === 'tower' ? 0.5 : 1.5), y: b.y + (b.t === 'tower' ? 0.5 : 1.5) }); b.cd = CD; }
     }
   }
 
@@ -153,6 +155,7 @@
 
   /** 한 틱 — 쿨다운, 교전, 망루·거점 발사, 습격 시각 */
   function tick(s) {
+    if (s.fx) { while (s.fx.length && s.tick - s.fx[0].t > 20) { s.fx.shift(); } }
     if (s.over || s.won) { return; }
     pathLeft = 10;
     var id, u, d;

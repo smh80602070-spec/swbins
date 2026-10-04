@@ -65,15 +65,16 @@
     return { ok: true, why: '' };
   }
 
+  function ico(n, e) { var A = global.DG.rts.art; return A && A.icon ? A.icon(n, e) : e; }
   function recruitBtn(s) {
     var h = pickFor(s), nm = h ? h.name : '';
-    return '<button data-hero="1" title="영웅 모집 ' + COST.gold + '금 ' + COST.food + '식량 — 장수 한 명(능력치가 체력·공격이 되고 Q 로 일격). ' + (nm ? '다음: ' + nm : '') + '"><span>⭐</span><small>영웅<br>' + COST.gold + '금 ' + COST.food + '식</small></button>';
+    return '<button data-hero="1" title="영웅 모집 ' + COST.gold + '금 ' + COST.food + '식량 — 장수 한 명(능력치가 체력·공격이 되고 Q 로 일격). ' + (nm ? '다음: ' + nm : '') + '"><span>' + ico('hero', '⭐') + '</span><small>영웅<br>' + COST.gold + '금 ' + COST.food + '식</small></button>';
   }
   function skillBtn(s, sel) {
     var id, n = 0, cd = 0, u;
     for (id in sel) { u = s.units[id]; if (u && u.t === 'hero') { n++; cd = Math.max(cd, u.skillCd | 0); } }
     if (!n) { return ''; }
-    return '<div class="sl-btns"><button data-skill="1" title="일격 — 둘레 2.5칸 적에게 큰 피해(쿨다운 15초) · Q"><span>💥</span><small>일격 Q<br>' + (cd > 0 ? Math.ceil(cd / 10) + '초' : '준비') + '</small></button></div>';
+    return '<div class="sl-btns"><button data-skill="1" title="일격 — 둘레 2.5칸 적에게 큰 피해(쿨다운 15초) · Q"><span>' + ico('strike', '💥') + '</span><small>일격 Q<br>' + (cd > 0 ? Math.ceil(cd / 10) + '초' : '준비') + '</small></button></div>';
   }
 
   global.DG = global.DG || {};

@@ -13,7 +13,7 @@
     var s = { v: V, seed: seed >>> 0, tiles: R().grid.generate(seed), occ: new Int32Array(R().grid.W * R().grid.H),
       buildings: {}, nextId: 2, res: { food: 100, gold: 300 }, pop: 12, day: 1, tick: 0, speed: 1, tax: 1, units: {}, queues: {}, nextUid: 1,
       cHp: 400, raid: { n: 0, next: 250 }, kills: 0, over: false, won: false,
-      diff: diff === 0 || diff === 2 ? diff : 1, heroN: 0 };
+      diff: diff === 0 || diff === 2 ? diff : 1, heroN: 0, fx: [] };
     R().rules.placeCastle(s);
     R().rules.placeStronghold(s);
     R().rules.recompute(s);

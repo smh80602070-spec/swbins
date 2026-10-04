@@ -11,6 +11,7 @@
 
   var TILE = 20, TICK_MS = 100, ZMIN = 0.35, ZMAX = 4;
   var COLORS = { 0: ['#6f9b4f', '#689448'], 1: ['#3f6b2e', '#3a6529'], 2: ['#8a8378', '#827b70'], 3: ['#4f8fbf', '#4888b8'] };
+  var ICONS = { tower: 'tower', wall: 'wall' };   // K-0061 아이콘이 있는 도구(없으면 이모지)
   var TOOLS = [{ k: 'select', n: '선택', i: '🖱️' }, { k: 'pan', n: '이동', i: '✋' }, { k: 'road', n: '도로', i: '🛣️' }, { k: 'house', n: '주거', i: '🏠' }, { k: 'farm', n: '농지', i: '🌾' },
     { k: 'market', n: '시장', i: '🏪' }, { k: 'workshop', n: '공방', i: '🔨' }, { k: 'barracks', n: '군영', i: '⚔️' }, { k: 'well', n: '우물', i: '💧' }, { k: 'tower', n: '망루', i: '🗼' }, { k: 'wall', n: '성벽', i: '🧱' }, { k: 'erase', n: '철거', i: '🧹' }];
 
@@ -23,6 +24,7 @@
 
   function $(id) { return global.document.getElementById(id); }
   function fmt(n) { return String(Math.round(n * 10) / 10).replace(/\.0$/, ''); }
+  function ic(n, e) { return R().art.icon(n, e); }
   function size() { return { w: cv.clientWidth, h: cv.clientHeight }; }
   function px() { return TILE * cam.z; }
   function toScreen(x, y) { var z = px(), s = size(); return { x: (x - cam.x) * z + s.w / 2, y: (y - cam.y) * z + s.h / 2 }; }
@@ -71,7 +73,7 @@
         if (!b.conn && z >= 12) { ctx.font = Math.floor(z * 0.7) + 'px sans-serif'; ctx.fillStyle = '#ff5a4a'; ctx.textAlign = 'left'; ctx.fillText('⚠', bp.x + 2, bp.y + z * 0.5); }
       }
     }
-    if (!art.roads(ctx, roadRects, p00.x, p00.y, z)) {   // 흙길 타일 — 못 받았으면 옛 회색 칸
+    if (!art.roadsAuto(ctx, S, g, roadRects, p00.x, p00.y, z) && !art.roads(ctx, roadRects, p00.x, p00.y, z)) {   // 길 조각(K-0061) → 흙 타일 → 옛 회색 칸
       ctx.fillStyle = D.road.color;
       roadRects.forEach(function (r) { var q = toScreen(r[0], r[1]); ctx.fillRect(q.x + 1, q.y + 1, z - 2, z - 2); });
     }
@@ -85,6 +87,7 @@
     });
     if (overlay) { drawOverlay(); }
     drawUnits();
+    art.fxs(ctx, S, toScreen, z, Date.now());   // 타격 불꽃·화살·불
     if (hover && isBuildTool(tool)) { drawGhost(); }
     if (box) { ctx.fillStyle = 'rgba(120,220,255,.14)'; ctx.strokeStyle = '#7fdcff'; ctx.lineWidth = 1; ctx.fillRect(box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0); ctx.strokeRect(box.x0 + .5, box.y0 + .5, box.x1 - box.x0, box.y1 - box.y0); }
     drawMini(); dirty = false;
@@ -169,12 +172,12 @@
   function hud() {
     var st = R().econ.stats(S), r = S.res;
     els.top.innerHTML = '<b class="rt-day">' + S.day + '일</b>' +
-      '<span title="식량">🌾 <b>' + fmt(r.food) + '</b> <em class="' + (st.foodNet < 0 ? 'neg' : 'pos') + '">' + (st.foodNet >= 0 ? '+' : '') + fmt(st.foodNet) + '</em></span>' +
-      '<span title="금">🪙 <b>' + fmt(r.gold) + '</b> <em class="' + (st.goldNet < 0 ? 'neg' : 'pos') + '">' + (st.goldNet >= 0 ? '+' : '') + fmt(st.goldNet) + '</em></span>' +
-      '<span title="인구 / 수용">👥 <b>' + S.pop + '</b>/' + st.cap + '</span>' +
-      '<span title="일하는 사람 / 일자리">⚒️ <b>' + st.workers + '</b>/' + st.jobs + '</span>' +
-      '<span title="행복 — 우물·망루가 닿고 식량이 넉넉하고 세율이 낮을수록 높다. 25 미만이면 사람이 떠난다">😊 <b class="' + (st.happy < 25 ? 'neg' : st.happy >= 60 ? 'pos' : '') + '">' + Math.round(st.happy) + '</b></span>' +
-      '<span title="병력 — 유닛 1기당 식량 0.2/일">🛡️ <b>' + st.army + '</b></span>' +
+      '<span title="식량">' + ic('food', '🌾') + ' <b>' + fmt(r.food) + '</b> <em class="' + (st.foodNet < 0 ? 'neg' : 'pos') + '">' + (st.foodNet >= 0 ? '+' : '') + fmt(st.foodNet) + '</em></span>' +
+      '<span title="금">' + ic('gold', '🪙') + ' <b>' + fmt(r.gold) + '</b> <em class="' + (st.goldNet < 0 ? 'neg' : 'pos') + '">' + (st.goldNet >= 0 ? '+' : '') + fmt(st.goldNet) + '</em></span>' +
+      '<span title="인구 / 수용">' + ic('pop', '👥') + ' <b>' + S.pop + '</b>/' + st.cap + '</span>' +
+      '<span title="일하는 사람 / 일자리">' + ic('work', '⚒️') + ' <b>' + st.workers + '</b>/' + st.jobs + '</span>' +
+      '<span title="행복 — 우물·망루가 닿고 식량이 넉넉하고 세율이 낮을수록 높다. 25 미만이면 사람이 떠난다">' + ic('happy', '😊') + ' <b class="' + (st.happy < 25 ? 'neg' : st.happy >= 60 ? 'pos' : '') + '">' + Math.round(st.happy) + '</b></span>' +
+      '<span title="병력 — 유닛 1기당 식량 0.2/일">' + ic('troop', '🛡️') + ' <b>' + st.army + '</b></span>' +
       '<span title="거점 체력 — 0 이 되면 진다">🏯 <b class="' + (S.cHp < 150 ? 'neg' : '') + '">' + Math.ceil(S.cHp) + '</b></span>' +
       '<span class="rt-raid" title="다음 습격까지 남은 날 · 쓰러뜨린 적">⚔️ <b class="' + (R().combat.daysToRaid(S) <= 1 ? 'neg' : '') + '">' + (S.won ? '끝' : R().combat.daysToRaid(S) + '일') + '</b> · ' + (S.kills || 0) + '승</span>' +
       (S.buildings[-1] ? '<span title="적 기지 체력 — 쓰러뜨리면 이긴다(거점에서 ' + (S.buildings[-1].x > R().grid.castleSite().x ? '동쪽' : '서쪽') + ' 멀리)">🏴 <b>' + Math.ceil(S.buildings[-1].hp) + '</b> ' + (S.buildings[-1].x > R().grid.castleSite().x ? '→' : '←') + '</span>' : '') +
@@ -412,7 +415,7 @@
     doc.body.insertAdjacentHTML('beforeend',
       '<canvas id="rts-map"></canvas><div id="rts-top" class="rt-box"></div>' +
       '<div id="rts-speed" class="rt-box"><button data-speed="0" title="일시정지 (Space)">⏸</button><button data-speed="1">1×</button><button data-speed="2">2×</button><button data-speed="4">4×</button></div>' +
-      '<div id="rts-tools" class="rt-box">' + TOOLS.map(function (t, i) { var d = R().rules.DEFS[t.k]; return '<button data-tool="' + t.k + '" title="' + t.n + (R().rules.DEFS[t.k] ? ' (' + (i - 1) + ')' : '') + '"><span>' + t.i + '</span><small>' + t.n + (d && d.cost ? ' ' + d.cost : '') + '</small></button>'; }).join('') + '</div>' +
+      '<div id="rts-tools" class="rt-box">' + TOOLS.map(function (t, i) { var d = R().rules.DEFS[t.k]; return '<button data-tool="' + t.k + '" title="' + t.n + (R().rules.DEFS[t.k] ? ' (' + (i - 1) + ')' : '') + '"><span>' + (ICONS[t.k] ? ic(ICONS[t.k], t.i) : t.i) + '</span><small>' + t.n + (d && d.cost ? ' ' + d.cost : '') + '</small></button>'; }).join('') + '</div>' +
       '<canvas id="rts-mini" class="rt-box" width="240" height="150"></canvas><div id="rts-tip" class="rt-box"></div><div id="rts-sel" class="rt-box"></div><div id="rts-opts" class="rt-box"><span>세율</span><button data-tax="0">낮음</button><button data-tax="1">보통</button><button data-tax="2">높음</button><button data-view="1" class="vw">보기: 없음</button></div><a id="rts-back" class="rt-box" href="./">턴제로</a>');
     cv = $('rts-map'); ctx = cv.getContext('2d'); mini = $('rts-mini'); mctx = mini.getContext('2d');
     els = { top: $('rts-top'), tools: $('rts-tools'), speed: $('rts-speed'), tip: $('rts-tip'), opts: $('rts-opts'), sel: $('rts-sel') };

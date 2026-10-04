@@ -72,6 +72,24 @@ for (const [src, dst, only] of FILES) {
 }
 /** 다른 판 접두어의 타일을 이 판이 빌려 쓴다(RTS 격자는 위에서 본 풀·흙이 필요한데 사가국지 `realm_*` 풀·흙은 옆보기 줄무늬) — 판 → 타일 이름(webp) */
 const EXTRA_TILES = { 'saga-realm': ['forest_grass', 'forest_dirt', 'go_water'] };
+/** 판이 쓰는 K-0061 폴더 통째(출처 .license.json 은 정본에만) — 판 → 폴더(shared/ 아래) */
+const EXTRA_DIRS = { 'saga-realm': ['assets/web2d/rts'] };
+for (const g of Object.keys(EXTRA_DIRS)) {
+  for (const d of EXTRA_DIRS[g]) {
+    const dir = path.join(WEB, 'shared', d);
+    if (!fs.existsSync(dir)) continue;
+    for (const f of fs.readdirSync(dir)) {
+      if (f.endsWith('.license.json')) continue;
+      total++;
+      const from = path.join(dir, f), to = path.join(WEB, g, d, f);
+      if (fs.existsSync(to) && fs.readFileSync(to).equals(fs.readFileSync(from))) continue;
+      if (check) { console.log(`DIFF ${g}/${d}/${f} ≠ shared/${d}/${f}`); bad++; continue; }
+      fs.mkdirSync(path.dirname(to), { recursive: true });
+      fs.copyFileSync(from, to);
+      copied++;
+    }
+  }
+}
 for (const g of Object.keys(EXTRA_TILES)) {
   for (const n of EXTRA_TILES[g]) {
     const from = path.join(WEB, 'shared', 'assets/web2d/tile', n + '.webp'), to = path.join(WEB, g, 'assets/web2d/tile', n + '.webp');

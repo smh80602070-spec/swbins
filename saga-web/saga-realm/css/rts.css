@@ -48,6 +48,9 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0d1016; col
 .sl-q i { position: relative; width: 34px; height: 30px; display: grid; place-items: center; background: rgba(255, 255, 255, .08); border: 1px solid rgba(216, 181, 106, .3); border-radius: 4px; font-style: normal; overflow: hidden; }
 .sl-q i.e { opacity: .35; } .sl-q i u { position: absolute; left: 0; bottom: 0; height: 3px; background: #e8c46a; text-decoration: none; }
 .sl-u { margin-bottom: 4px; color: var(--rt-dim); }
+/* K-0061 아이콘 — 상단 숫자 줄은 글자 높이, 도구·단추는 크게 */
+.ic { width: 20px; height: 20px; vertical-align: -5px; object-fit: contain; }
+#rts-tools .ic, .sl-btns .ic { width: 28px; height: 28px; vertical-align: middle; }
 /* P5 — 난이도 고르기 */
 #rts-diff { top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 18px 22px; text-align: center; max-width: min(340px, 88vw); z-index: 5; }
 #rts-diff h3 { margin: 0 0 6px; font-size: 18px; } #rts-diff p { margin: 0 0 12px; font-size: 13px; color: var(--rt-dim); }
