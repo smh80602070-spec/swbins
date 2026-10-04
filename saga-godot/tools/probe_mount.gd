@@ -49,7 +49,7 @@ func _physics_process(_delta: float) -> void:
 				_teleport(TestMap.world_pos(5, 4) + Vector3(0, 1.0, 0))
 				_m.call("mount", "pt_jeolyeong")
 			if _frame == 20:
-				_check("mounted", bool(_p.mounted) and _m.call("is_riding") and _p.ride_height > 0.5, "ride=%.2f" % _p.ride_height)
+				_check("mounted", bool(_p.mounted) and _m.call("is_riding") and _p.ride_height > 0.2, "ride=%.2f" % _p.ride_height)   # G-0024 후속: 안장 방식이라 엉덩이가 등에 닿는 높이(말 0.35)
 				Input.action_press("move_right")
 				_x0 = _p.global_position.x
 			if _frame == 50:
