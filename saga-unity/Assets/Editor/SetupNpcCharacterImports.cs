@@ -326,6 +326,101 @@ namespace Saga.EditorTools
             return ok;
         }
 
+        // ---- U-0034 VRoid 몸으로 굽기 ----------------------------------------------------------------------------------
+        /// <summary>공용 동작 한 벌(자체툴 `<id>_anims.glb` 18종 — 로컬 설치, K-0059). 없으면 VRoid 로 못 굽고 호출부가 기존 몸으로 굽는다.</summary>
+        public const string VroidAnimsPath = "Assets/Art/CharactersDex/anims/crowd_anims.glb";
+
+        /// <summary>
+        /// VRoid GLB(`Assets/Art/CharactersVroid/*.glb`)로 프리팹을 굽는다. 동작 클립(공용 한 벌)의 뼈 경로가 `Armature/Root/J_Bip_*` 라서 몸 최상위를
+        /// `Armature` 로 부르고 빈 루트(= 프리팹 루트, Animator 자리) 밑에 둔다. 상태 → 클립: idle·walk·run→sprint·attack·hit·death·(나머지 소문자 이름).
+        /// 클립이 없는 상태는 뺀다(대기가 없으면 실패). 반환 false 면 아무것도 안 건드린다.
+        /// </summary>
+        private static bool SetupVroid(Spec spec, string glbPath, string prefabPath)
+        {
+            var body = AssetDatabase.LoadAssetAtPath<GameObject>(glbPath);
+            if (body == null) { Debug.LogWarning($"[SetupNpcCharacterImports] {glbPath} 없음 — VRoid 로 못 굽는다"); return false; }
+            if (!File.Exists(VroidAnimsPath)) { Debug.LogWarning($"[SetupNpcCharacterImports] {VroidAnimsPath} 없음 — 공용 동작 설치가 필요하다(U-0040 메모)"); return false; }
+            var clips = AssetDatabase.LoadAllAssetsAtPath(VroidAnimsPath).OfType<AnimationClip>()
+                .Where(c => !c.name.StartsWith("__preview")).GroupBy(c => c.name).ToDictionary(g => g.Key, g => g.First());
+            if (!clips.ContainsKey("idle")) { Debug.LogWarning("[SetupNpcCharacterImports] 공용 동작에 idle 이 없다"); return false; }
+            var controller = BuildController(spec, state =>
+            {
+                string n = state.name.ToLowerInvariant();
+                if (n == "run") n = "sprint";
+                return clips.TryGetValue(n, out var c) ? c : null;
+            });
+            if (controller == null) return false;
+            var root = new GameObject(spec.Name);
+            var inst = (GameObject)PrefabUtility.InstantiatePrefab(body, root.transform);
+            inst.name = "Armature";
+            var animator = root.AddComponent<Animator>();
+            animator.runtimeAnimatorController = controller;
+            animator.applyRootMotion = false;
+            animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+            string dir = Path.GetDirectoryName(prefabPath)?.Replace((char)92, (char)47);
+            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir)) Directory.CreateDirectory(dir);
+            PrefabUtility.SaveAsPrefabAsset(root, prefabPath);
+            UnityEngine.Object.DestroyImmediate(root);
+            Debug.Log($"[SetupNpcCharacterImports] {spec.Name} = VRoid 몸 {glbPath} → {prefabPath}");
+            return true;
+        }
+
+        [Serializable] private sealed class VroidReplace { public string type, id, file, unity; }
+        [Serializable] private sealed class VroidBody { public string recipe, mixamo, role, gender, kind; public VroidReplace replace; public bool variant; }
+        [Serializable] private sealed class VroidPlan { public VroidBody[] bodies; }
+        public const string VroidPlanPath = "../tools/char-forge/data/unity_bodies.json";
+
+        /// <summary>계획표(`unity_bodies.json`, K-0018)의 사람 자리 → (표의 몸 이름, VRoid GLB 경로). 표가 없으면 빈 목록.</summary>
+        public static List<(string name, string glb)> VroidHumanSlots(out List<string> notInSpecs)
+        {
+            notInSpecs = new List<string>();
+            var list = new List<(string, string)>();
+            if (!File.Exists(VroidPlanPath)) return list;
+            var plan = JsonUtility.FromJson<VroidPlan>(File.ReadAllText(VroidPlanPath));
+            if (plan?.bodies == null) return list;
+            foreach (var b in plan.bodies)
+            {
+                if (b.kind != "human" || b.replace == null || string.IsNullOrEmpty(b.replace.unity)) continue;
+                string name = (b.mixamo ?? "").Replace(" ", "");
+                if (!Specs.Any(x => x.Name == name)) { notInSpecs.Add(name); continue; }
+                list.Add((name, b.replace.unity));
+            }
+            return list;
+        }
+
+        /// <summary>
+        /// 사람 자리 전부를 VRoid 몸으로 굽는다. `outDir` 가 있으면 거기에 `<이름>.prefab`(시험 — 진짜 프리팹·컨트롤러는 안 건드리려고 이름 뒤에 `Vroid` 를 붙여
+        /// 컨트롤러도 따로), 없으면 진짜 자리(`PrefabPath`, GUID 그대로 — 씬 참조가 유지된다)에 굽는다. 반환 = (구운 수, 못 구운 이름들).
+        /// </summary>
+        public static (int baked, List<string> failed) BakeVroidHumans(string outDir)
+        {
+            var failed = new List<string>(); int baked = 0;
+            var slots = VroidHumanSlots(out var notInSpecs);
+            foreach (var (name, glb) in slots)
+            {
+                var src = Specs.First(x => x.Name == name);
+                var spec = outDir == null ? src : new Spec { Name = name + "Vroid", Idle = src.Idle, Walk = src.Walk, Run = src.Run, Attack = src.Attack, Hit = src.Hit, Death = src.Death, ExtraIdles = src.ExtraIdles, ExtraTriggers = src.ExtraTriggers };
+                string path = outDir == null ? PrefabPath(name) : outDir.TrimEnd((char)47) + "/" + spec.Name + ".prefab";
+                if (SetupVroid(spec, glb, path)) baked++; else failed.Add(name);
+            }
+            foreach (var n in notInSpecs) failed.Add(n + "(표에 없음)");
+            AssetDatabase.SaveAssets();
+            return (baked, failed);
+        }
+
+        [MenuItem("Saga/Char Forge/Bake VRoid Humans (test folder)")]
+        public static void BakeVroidHumansTest() { var r = BakeVroidHumans(Root + "_vroid_test"); Debug.Log($"VROID_SWAP_TEST baked={r.baked} failed={string.Join(",", r.failed)}"); }
+
+        /// <summary>시험 1벌(`Archer` → `avatar_sample_k`)을 `CharactersRealistic/_vroid_test/ArcherVroid.prefab` 에 굽는다(원래 몸·컨트롤러는 안 건드림).</summary>
+        public static bool BakeVroidTest()
+        {
+            var spec = Specs.First(x => x.Name == "Archer");
+            var copy = new Spec { Name = "ArcherVroid", Idle = spec.Idle, Walk = spec.Walk, Run = spec.Run, Attack = spec.Attack, Hit = "Hit", Death = "Death" };
+            bool ok = SetupVroid(copy, "Assets/Art/CharactersVroid/avatar_sample_k.glb", Root + "_vroid_test/ArcherVroid.prefab");
+            AssetDatabase.SaveAssets();
+            return ok;
+        }
+
         /// <summary>이 몸이 가진 상태(이름, Mixamo 접미사) — 빈 칸은 뺀다.</summary>
         private static IEnumerable<(string state, string suffix)> StateSlots(Spec spec)
         {

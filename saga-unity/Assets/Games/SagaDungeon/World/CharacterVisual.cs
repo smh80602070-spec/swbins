@@ -99,6 +99,10 @@ namespace Saga.Dungeon.World
                 if (hand != null) return hand;
             }
 
+            // U-0034 — VRoid 몸(일반 리그, `isHuman` 아님)은 손 본을 이름으로 찾는다(`J_Bip_R_Hand`).
+            var vroidHand = FindBone(visualRoot.transform, "J_Bip_R_Hand");
+            if (vroidHand != null) return vroidHand;
+
             var existing = visualRoot.transform.Find(FallbackSocketName);
             if (existing != null) return existing;
 
@@ -106,6 +110,13 @@ namespace Saga.Dungeon.World
             socket.SetParent(visualRoot.transform, false);
             socket.localPosition = new Vector3(0.35f, 1.1f, 0.15f);
             return socket;
+        }
+
+        private static Transform FindBone(Transform t, string name)
+        {
+            if (t.name == name) return t;
+            foreach (Transform c in t) { var f = FindBone(c, name); if (f != null) return f; }
+            return null;
         }
 
         /// <summary>GLB 모델을 못 찾았을 때(다른 PC에 아직 안 받아 둔 경우 등)
