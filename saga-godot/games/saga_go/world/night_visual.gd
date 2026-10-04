@@ -66,6 +66,13 @@ func _process(delta: float) -> void:
 		_apply(move_toward(_blend, _target, delta / FADE_SEC))
 
 
+## G-0028 — 낮 해 색(새벽·노을에 따라 sky_panorama.gd 가 바꾼다). 밤으로 섞는 출발색이 이 값이다.
+func set_day_sun_color(c: Color) -> void:
+	_day["sun_color"] = c
+	if _sun and _blend < 1.0:
+		_sun.light_color = c.lerp(NIGHT.sun_color, _blend)
+
+
 ## 밤낮을 지금 곧바로 맞춘다(시작·촬영 도구).
 func refresh_now() -> void:
 	_target = 1.0 if TimeOfDay.is_night() else 0.0

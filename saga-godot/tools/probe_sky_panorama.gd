@@ -55,6 +55,11 @@ func _init() -> void:
 				var m: Variant = sk.get("%s_%s" % [slot, era])
 				if not (m is Dictionary) or not (m as Dictionary).has("sun_az") or not (m as Dictionary).has("sun_el"):
 					_fail("④ 표식에 해 방향 없음 %s_%s" % [slot, era])
+	## ⑤ G-0028 해 색: 새벽 100%·낮 100%·노을 100%·반반
+	if SkyPanorama.sun_tint("noon", "sunset", 1.0) != SkyPanorama.SUN_TINT.sunset or SkyPanorama.sun_tint("night", "dawn", 1.0) != SkyPanorama.SUN_TINT.dawn:
+		_fail("⑤ 해 색 끝점이 슬롯 색이 아니다")
+	if not SkyPanorama.sun_tint("noon", "sunset", 0.5).is_equal_approx((SkyPanorama.SUN_TINT.noon as Color).lerp(SkyPanorama.SUN_TINT.sunset, 0.5)):
+		_fail("⑤ 해 색 보간이 어긋남")
 	for r in ["village", "coast", "ruins", "frost", "skyport", "crossing", "sunken", "amber", "vault", "fork"]:
 		if not SkyPanorama.REGION_ERA.has(r):
 			_fail("③ 지역→시대 표에 없음 " + r)

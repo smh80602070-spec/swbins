@@ -13,6 +13,10 @@ const MIX_STEPS := 20.0
 const SKY_DIR := "res://assets/sky/"
 ## G-0027 — 햇빛 고도 하한(도). 표식의 4~8° 해는 그림자가 땅에 붙고 땅이 너무 어두워(10° 로 해 보니 풀밭이 어둡다) 22° 로.
 const SUN_MIN_EL := 22.0
+## G-0028 — 슬롯별 해 색. 낮은 장면 원래 값. 밤 슬롯은 4~6시 밤→새벽 구간용(21시 뒤 실제 밤색은 night_visual 의 NIGHT 로 섞인다).
+const SUN_TINT := {
+	"dawn": Color(1.0, 0.80, 0.68), "noon": Color(1.0, 0.95, 0.86), "sunset": Color(1.0, 0.72, 0.50), "night": Color(1.0, 0.80, 0.68),
+}
 ## 키 시각(시) → 하늘. 밤은 TimeOfDay.is_night(21~4시)와 같은 경계. 양끝(1.5 이전·23 이후)은 밤 그대로.
 const KEYS := [[1.5, "night"], [6.0, "dawn"], [12.0, "noon"], [18.5, "sunset"], [23.0, "night"]]
 ## 지역 → 하늘 시대(past 과거·present 현대·future 미래). 취향대로 여기서 고친다.
@@ -30,6 +34,11 @@ var _mobile := false
 var _sun: DirectionalLight3D
 var _markers := {}
 var _follow := true
+
+
+## 순수 함수 — 두 하늘 슬롯 색을 섞기 값으로 보간한 해 색.
+static func sun_tint(a: String, b: String, mix: float) -> Color:
+	return (SUN_TINT.get(a, SUN_TINT.noon) as Color).lerp(SUN_TINT.get(b, SUN_TINT.noon) as Color, mix)
 
 
 ## 순수 함수 — 방위각(0=북 −Z·90=동 +X)·고도(도) → 해(달) 쪽 단위 벡터.
@@ -124,6 +133,13 @@ func _follow_sun(a: String, b: String, era: String, mix: float) -> void:
 	var db := dir_from(float(mb.sun_az), maxf(float(mb.sun_el), SUN_MIN_EL))
 	var d := da.slerp(db, mix) if da.dot(db) < 0.9999 else da
 	_sun.global_transform = Transform3D(Basis.looking_at(-d.normalized(), Vector3.UP), _sun.global_position)
+	## G-0028 — 해 색. night_visual 이 있으면 그쪽 낮 색을 바꿔 밤 섞기와 안 부딪히게, 없으면 직접.
+	var tint := sun_tint(a, b, mix)
+	var nv := get_tree().get_first_node_in_group("go_night_visual")
+	if nv != null and nv.has_method("set_day_sun_color"):
+		nv.call("set_day_sun_color", tint)
+	else:
+		_sun.light_color = tint
 
 
 func _tex(slot: String, era: String) -> Texture2D:
