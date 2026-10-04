@@ -489,7 +489,9 @@
     /** 2D 모드인가 — 3D 가 안 서 있을 때(= 아이소 2D 그림) */
     on: function () { var T = global.DG.dungeon3d; return !(T && T.active && T.active()); },
     poolH: { pool_d_goblin_118: 61, pool_e_orc_125: 90, pool_g_undead_143: 91, pool_basem_demon_104: 106 },   // 프레임 안 몸 높이(px, pw-sheet-bbox.mjs 로 잼)
+    still: { hero_m: 1, hero_f: 1, companion_warrior: 1, companion_archer: 1, companion_mage: 1, villager_a: 1, villager_b: 1, villager_c: 1 },   // 한 장 모드 풀(W-0042, K-0056 정면·옆·뒤 3장) — 사람
     pools: {
+      me: ['hero_m', 'hero_f'], ally: ['companion_warrior', 'companion_archer', 'companion_mage'], npc: ['villager_a', 'villager_b', 'villager_c'],
       t1: ['pool_d_goblin_118'],
       t2: ['pool_e_orc_125', 'pool_d_goblin_118'],
       t3: ['pool_g_undead_143', 'pool_e_orc_125'],
