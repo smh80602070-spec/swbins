@@ -2,7 +2,7 @@
  "version": 1,
  "note": "K-0017 단계 1 — 판 5 × (건물 3 · 지물 3 · 지형 2 · 탈것 1) = 45칸. 같은 id 는 한 번만 만든다(건물은 기존 레시피 재사용). 이름 정책: 원작 이름 없음, id 는 일반 명사. exists = recipes/ 에 이미 있음, new = 만들 것.",
  "budget": {"toon_glb_mb": 0.5, "toon_tris": 5000, "sprite_px": [128, 256], "tex_px": 256},
- "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py", "village": "build_village.py", "field": "build_field.py", "dkit": "build_field.py", "loot": "build_field.py", "interior": "build_interior.py", "furniture": "build_interior.py"},
+ "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py", "village": "build_village.py", "field": "build_field.py", "dkit": "build_field.py", "loot": "build_field.py", "interior": "build_interior.py", "furniture": "build_interior.py", "weapon": "build_weapon.py"},
  "games": {
   "go": {
    "theme": "시대 혼합 마을(과거·현대·미래 한 자리)",
@@ -129,5 +129,10 @@
   "note": "K-0026 단계 2b — 실내 물건 40종(가구·시대 혼합 소품). build_interior.py. 노드 use_point·col_box. 삼각형 ≤1500. 2D = AI 스프라이트.",
   "tris_max": 1500,
   "items": ["table_wood_01", "table_round_01", "chair_wood_01", "stool_01", "bed_wood_01", "bed_futon_01", "shelf_wall_01", "bookshelf_01", "hearth_stone_01", "stove_iron_01", "trunk_01", "crate_small_01", "counter_01", "display_stand_01", "mirror_stand_01", "vase_tall_01", "candlestick_01", "rug_rect_01", "rug_round_01", "oil_lamp_01", "table_lamp_01", "holo_panel_01", "sofa_01", "desk_01", "wardrobe_01", "cabinet_low_01", "kitchen_pot_01", "keg_01", "spinning_wheel_01", "cushion_01", "low_table_01", "screen_folding_01", "tatami_mat_01", "hanging_lantern_01", "weapon_rack_01", "armor_stand_01", "map_table_01", "globe_stand_01", "hologram_globe_01", "terminal_01"]
+ },
+ "weapon": {
+  "note": "K-0030 — 무기 9종 × 등급 3(보통·희귀·전설). build_weapon.py. 소켓 노드 grip·tip·up(활 nock·tip_low, 방패 face). 삼각형 ≤1500. 2D = AI 스프라이트.",
+  "tris_max": 1500,
+  "items": ["wpn_sword_common", "wpn_sword_rare", "wpn_sword_legend", "wpn_spear_common", "wpn_spear_rare", "wpn_spear_legend", "wpn_axe_common", "wpn_axe_rare", "wpn_axe_legend", "wpn_dagger_common", "wpn_dagger_rare", "wpn_dagger_legend", "wpn_bow_common", "wpn_bow_rare", "wpn_bow_legend", "wpn_staff_common", "wpn_staff_rare", "wpn_staff_legend", "wpn_gun_common", "wpn_gun_rare", "wpn_gun_legend", "wpn_shield_common", "wpn_shield_rare", "wpn_shield_legend", "wpn_gauntlet_common", "wpn_gauntlet_rare", "wpn_gauntlet_legend"]
  }
 }
