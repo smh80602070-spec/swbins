@@ -1,0 +1,38 @@
+{
+ "tool": "music-gen",
+ "model": "ACE-Step/Ace-Step1.5 (acestep-v15-turbo)",
+ "license": "MIT (code and model weights)",
+ "license_url": "https://huggingface.co/ACE-Step/Ace-Step1.5",
+ "commercial_use": true,
+ "note": "후보 — 사용자가 고르기 전엔 게임에 넣지 않는다",
+ "created_at": "2026-10-04T11:43:15+0900",
+ "slot": "event-mystery",
+ "candidate": "a",
+ "params": {
+  "prompt": "mysterious discovery, glassy celesta and soft pads, slow shimmering harp arpeggios, curious and quiet, instrumental",
+  "lyrics": "[Instrumental]",
+  "duration": 45,
+  "seed_hint": 2211
+ },
+ "result": {
+  "metas": {
+   "bpm": 106,
+   "duration": 45.0,
+   "genres": "N/A",
+   "keyscale": "G minor",
+   "timesignature": "3"
+  },
+  "seed_value": null,
+  "dit_model": null,
+  "lm_model": null
+ },
+ "edited_by_human": false,
+ "id": "event-mystery",
+ "picked": "a",
+ "picked_by": "세션 임시(사용자 \"작업 무조건 다 하고 푸시\")",
+ "scene": "event",
+ "game": "all",
+ "loop": false,
+ "seconds": 45,
+ "plan": "data/bgm-plan2.json"
+}

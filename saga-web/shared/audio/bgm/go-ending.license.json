@@ -1,0 +1,38 @@
+{
+ "tool": "music-gen",
+ "model": "ACE-Step/Ace-Step1.5 (acestep-v15-turbo)",
+ "license": "MIT (code and model weights)",
+ "license_url": "https://huggingface.co/ACE-Step/Ace-Step1.5",
+ "commercial_use": true,
+ "note": "후보 — 사용자가 고르기 전엔 게임에 넣지 않는다",
+ "created_at": "2026-10-04T11:47:58+0900",
+ "slot": "go-ending",
+ "candidate": "a",
+ "params": {
+  "prompt": "ending theme, nostalgic journey home, piano and strings over soft synth pad, emotional crescendo, instrumental",
+  "lyrics": "[Instrumental]",
+  "duration": 90,
+  "seed_hint": 2301
+ },
+ "result": {
+  "metas": {
+   "bpm": 108,
+   "duration": 90.0,
+   "genres": "N/A",
+   "keyscale": "E major",
+   "timesignature": "4"
+  },
+  "seed_value": null,
+  "dit_model": null,
+  "lm_model": null
+ },
+ "edited_by_human": false,
+ "id": "go-ending",
+ "picked": "a",
+ "picked_by": "세션 임시(사용자 \"작업 무조건 다 하고 푸시\")",
+ "scene": "ending",
+ "game": "saga-go",
+ "loop": false,
+ "seconds": 90,
+ "plan": "data/bgm-plan2.json"
+}
