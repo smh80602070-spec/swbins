@@ -106,6 +106,19 @@ static func build_hero(id: String, rarity: int = 3) -> Node3D:
 	return _build_dex(DEX_SELF_ID if id == "self" else id, rarity)
 
 
+## G-0023 — 눈·입·눈썹·속눈썹 같은 작은 얼굴 조각(재질 이름에 FACE·EYE, 피부 얼굴판 "Face_00_SKIN" 은 제외)은 그림자를 안 드리운다.
+## 몸마다 조각이 14~21개라 그림자 패스(분할마다)가 그 수만큼 draw 를 더 쓰는데, 이 조각들의 그림자는 눈에 안 보인다.
+static func _no_cast_small_parts(root: Node) -> void:
+	for mi in root.find_children("*", "MeshInstance3D", true, false):
+		var m := (mi as MeshInstance3D).mesh
+		if m == null or m.get_surface_count() == 0:
+			continue
+		var src := m.surface_get_material(0)
+		var n := src.resource_name.to_upper() if src != null else ""
+		if (n.contains("_FACE") or n.contains("_EYE")) and not n.contains("SKIN"):
+			(mi as MeshInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+
 ## 설치된 dex 몸 파일 이름(정렬 고정 — 같은 id 가 늘 같은 몸). 폴더가 없으면 빈 배열.
 static func dex_names() -> PackedStringArray:
 	if _dex_scanned:
@@ -176,6 +189,7 @@ static func _build_dex(id: String, rarity: int) -> Node3D:
 	CelShaderApply.apply_to(v)
 	tune_lod(v)
 	v.set_meta("cel_applied", true)
+	_no_cast_small_parts(v)
 	_tint(v, Color.WHITE, Color.WHITE, rarity >= 5)
 	var ap := AnimationPlayer.new()
 	ap.name = "AnimationPlayer"
