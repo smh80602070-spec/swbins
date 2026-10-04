@@ -16,6 +16,9 @@ const out = await page.evaluate(async () => {
   S.cHp = 1; S.raid.next = S.tick + 1;
   Object.values(S.units).filter((u) => u.team === 1).forEach((u) => { u.x = S.buildings[1].x + 3.4; u.y = S.buildings[1].y + 1.5; u.path = []; });
   await new Promise((ok) => setTimeout(ok, 1500));
+  res.ask = !!document.getElementById('rts-diff') && /무너졌다/.test(document.getElementById('rts-diff').textContent);
+  document.querySelector('#rts-diff button[data-diff="0"]').click(); const N = DG.rts.view.state();
+  res.restart = !N.over && N.diff === 0 && N.day === 1 && !document.getElementById('rts-diff');
   res.over = S.over; res.tip = document.getElementById('rts-tip') ? document.getElementById('rts-tip').textContent : '';
   return res;
 });

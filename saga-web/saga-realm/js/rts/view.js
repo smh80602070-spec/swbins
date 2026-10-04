@@ -171,7 +171,7 @@
     var tx = els.opts.querySelectorAll('button[data-tax]'); for (i = 0; i < tx.length; i++) { tx[i].classList.toggle('on', +tx[i].getAttribute('data-tax') === S.tax); }
     els.opts.querySelector('button[data-view]').textContent = OVERLAYS[overlay];
     selPanel();
-    els.tip.textContent = S.won ? '적 기지를 무너뜨렸다 — 평정! 새로고침하면 새 판이 열린다' : S.over ? '거점이 무너졌다 — 새로고침하면 새 판이 열린다' : Date.now() < tipUntil ? tipMsg : tipFor();
+    els.tip.textContent = S.won ? '적 기지를 무너뜨렸다 — 평정!' : S.over ? '거점이 무너졌다' : Date.now() < tipUntil ? tipMsg : tipFor();
     els.tip.classList.toggle('warn', S.over || S.won || Date.now() < tipUntil);
   }
   /** 고른 군영(생산 단추·큐)이나 고른 유닛 수 — 왼쪽 아래 상자 */
@@ -263,14 +263,16 @@
     dirty = true; hud();
   }
   /** 새 판을 열 때 난이도를 묻는다 — 고르기 전엔 멈춰 있다. 이어하기·주소의 ?diff= 가 있으면 안 묻는다 */
-  function askDiff() {
+  function askDiff(end) {
     var box2 = global.document.createElement('div'), names = R().rules.DIFF.names;
     box2.id = 'rts-diff'; box2.className = 'rt-box';
-    box2.innerHTML = '<h3>난이도</h3><p>적 기지가 멀리 서 있다. 군대를 키워 쳐부수거나, 거점이 먼저 무너지면 진다.</p>' + names.map(function (n, i) { return '<button data-diff="' + i + '"' + (i === 1 ? ' class="on"' : '') + '>' + n + '</button>'; }).join('');
+    box2.innerHTML = (end ? '<h3>' + (S.won ? '🏆 평정!' : '💀 거점이 무너졌다') + '</h3><p>' + S.day + '일 · 막아 낸 파도 ' + Math.max(0, S.raid.n - (S.over ? 1 : 0)) + ' · 쓰러뜨린 적 ' + (S.kills || 0) + ' — 난이도를 골라 새 판을 시작하세요.</p>'
+      : '<h3>난이도</h3><p>적 기지가 멀리 서 있다. 군대를 키워 쳐부수거나, 거점이 먼저 무너지면 진다.</p>') + names.map(function (n, i) { return '<button data-diff="' + i + '"' + (i === 1 ? ' class="on"' : '') + '>' + n + '</button>'; }).join('');
     global.document.body.appendChild(box2); S.speed = 0;
     box2.addEventListener('click', function (e) {
       var b = e.target.closest('button[data-diff]'); if (!b) { return; }
-      S = R().state.create(S.seed, +b.getAttribute('data-diff')); lastSaveDay = S.day;
+      S = R().state.create(end ? (Date.now() & 0xffff) + 1 : S.seed, +b.getAttribute('data-diff')); lastSaveDay = S.day; sel = {}; selB = 0; overSeen = false;
+      var cs2 = R().grid.castleSite(); cam.x = cs2.x + 1.5; cam.y = cs2.y + 1.5;
       box2.parentNode.removeChild(box2); dirty = true; hud();
     });
   }
@@ -373,7 +375,7 @@
       acc += dt * S.speed; var n = 0;
       while (acc >= TICK_MS && n < 40) {
         acc -= TICK_MS; n++; S.tick++; R().units.tick(S); R().combat.tick(S); dirty = true;
-        if ((S.over || S.won) && !overSeen) { overSeen = true; var cc = global.DG.core; if (cc && cc.save) { cc.save.rts = null; cc.persist(); } }   // 거점 함락 — 저장을 비워 새로고침하면 새 판
+        if ((S.over || S.won) && !overSeen) { overSeen = true; var cc = global.DG.core; if (cc && cc.save) { cc.save.rts = null; cc.persist(); } askDiff(true); }   // 판이 끝났다 — 저장을 비우고 결과 창에서 새 판을 고른다
         if (S.tick % R().econ.TICKS_PER_DAY === 0) { R().econ.dayTick(S); dirty = true; if (S.day - lastSaveDay >= 10) { save(); } }
       }
     }
