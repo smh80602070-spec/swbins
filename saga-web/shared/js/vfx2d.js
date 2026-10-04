@@ -51,8 +51,25 @@
     return true;
   }
 
+  /**
+   * 화면 층이 쌓는 fx 하나를 이펙트로 얹는다 — 타격(t:'hit')은 불꽃(급소 f.crit 는 번쩍임 더), 처치(t:'pop')는 연기(보스 f.boss 또는 오래 사는 fx 는 크게).
+   * f.life 는 남은 초, 처음 값을 f.l0 에 한 번 적어 나이를 센다. (x,y) = 화면 좌표(맞은 몸 가운데). 그린 게 없으면 false. 다른 fx 는 건드리지 않는다
+   */
+  function fxLayer(ctx, f, x, y) {
+    if (!f || (f.t !== 'hit' && f.t !== 'pop')) { return false; }
+    if (f.l0 === undefined) { f.l0 = f.life; }
+    var age = f.l0 - f.life, big = f.boss || f.l0 > 0.6;
+    if (f.t === 'hit') {
+      var a = draw(ctx, 'spark_hit', x, y, f.crit ? 78 : 58, age, { speed: 1.9 });
+      return (f.crit ? draw(ctx, 'crit_flash', x, y, 92, age, { speed: 1.6, alpha: 0.75 }) : false) || a;
+    }
+    return draw(ctx, 'death_smoke', x, y, big ? 190 : 104, age, { speed: big ? 1.1 : 1.6 });
+  }
+
   /** 미리 받아 둔다 — 첫 타격에 한 박자 늦지 않게 */
   function preload(names) { (names || Object.keys(SHEETS)).forEach(sheet); }
 
-  global.DG.vfx2d = { draw: draw, frameAt: frameAt, preload: preload, SHEETS: SHEETS, FRAME: FRAME };
+  preload(['spark_hit', 'crit_flash', 'death_smoke']);   // 첫 타격에 한 박자 늦지 않게 — 자주 쓰는 셋은 불러올 때 받아 둔다
+
+  global.DG.vfx2d = { draw: draw, fxLayer: fxLayer, frameAt: frameAt, preload: preload, SHEETS: SHEETS, FRAME: FRAME };
 })(typeof window !== 'undefined' ? window : this);

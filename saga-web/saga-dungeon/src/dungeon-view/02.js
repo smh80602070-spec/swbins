@@ -1000,7 +1000,7 @@
 
   /** 조명 위 — 숫자·획득 문구 (어두워도 읽혀야 한다) */
   function drawFxOver(m, f) {
-    var p;
+    var p; if (global.DG.vfx2d && (f.t === 'hit' || f.t === 'pop')) { p = proj(m, f.x, f.y); global.DG.vfx2d.fxLayer(ctx, f, p.x, p.y - 14); }   // W-0053 전투 이펙트 시트(K-0039) — 숫자 아래에 얹는다
     if (f.t === 'hit') {
       p = proj(m, f.x, f.y);
       var up = (0.6 - f.life) * 26;

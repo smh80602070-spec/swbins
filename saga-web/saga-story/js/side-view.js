@@ -1013,19 +1013,8 @@
     }
   }
 
-  /** 전투 이펙트 시트(W-0052, K-0039) — 타격은 불꽃(급소는 번쩍임 더), 처치는 연기를 숫자·옛 그림 아래에 가산 합성으로 얹는다. 시트를 못 받았으면 아무것도 안 그린다 */
-  function vfxLayer(f, x) {
-    var V = global.DG.vfx2d;
-    if (!V || (f.t !== 'hit' && f.t !== 'pop')) { return; }
-    if (f.l0 === undefined) { f.l0 = f.life; }
-    var age = f.l0 - f.life;
-    if (f.t === 'hit') {
-      V.draw(ctx, 'spark_hit', x, f.y + 22, f.crit ? 78 : 58, age, { speed: 1.9 });
-      if (f.crit) { V.draw(ctx, 'crit_flash', x, f.y + 22, 120, age, { speed: 1.6 }); }
-    } else {
-      V.draw(ctx, 'death_smoke', x, f.y + 18, f.l0 > 0.6 ? 190 : 104, age, { speed: f.l0 > 0.6 ? 1.1 : 1.6 });
-    }
-  }
+  /** 전투 이펙트 시트(W-0052, K-0039) — 타격·처치를 숫자·옛 그림 아래에 가산 합성으로 얹는다(규칙은 공용 vfx2d.js fxLayer). 시트를 못 받았으면 아무것도 안 그린다 */
+  function vfxLayer(f, x) { if (global.DG.vfx2d) { global.DG.vfx2d.fxLayer(ctx, f, x, f.y + 20); } }
 
   function drawFx() {
     var list = S.fx(), i;

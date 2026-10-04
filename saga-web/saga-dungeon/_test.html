@@ -103,6 +103,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/data-scenario.js"></script>
 <script src="js/sprite.js"></script>
 <script src="js/mode2d.js"></script>
+<script src="js/vfx2d.js"></script>
 <script src="js/foe2d.js"></script>
 <script src="js/actor2d.js"></script>
 <script src="js/core.js"></script>
@@ -7926,6 +7927,12 @@ window.requestAnimationFrame = function () { return 0; };
       names.forEach(function (n) { var e = (E.byName && E.byName(n)) || (E.enemies || []).filter(function (x) { return x.name === n; })[0]; if (e && (e.kind === 'beast' || (e.ref && e.ref.kind === 'beast'))) { known[n] = 1; } });
       names.forEach(function (n) { if (!st[tb[n][0]]) { bad.push('풀 ' + n); } if (!known[n]) { bad.push('적 아님 ' + n); } var z = M.beastOf(n); if (!z || z.pool !== tb[n][0] || !(z.k > 0)) { bad.push('beastOf ' + n); } });
       return bad.length === 0 && names.length >= 3 && M.beastOf('없는 짐승') === null && M.beastOf('') === null && (names.length + '종 몸 배정 · 표 밖은 옛 스탬프');
+    });
+
+    t('전투 이펙트 시트(W-0053) — 프레임 계산이 맞고, 타격·처치만 얹으며 나머지 fx 는 건드리지 않는다', function () {
+      var V = DG.vfx2d, F = V.frameAt, c = document.createElement('canvas').getContext('2d'), fx = { t: 'hit', life: 0.6 };
+      return F('spark_hit', 0) === 0 && F('spark_hit', 0.5) === 6 && F('spark_hit', 0.7) === -1 && F('heal_ring', 2.0) === 0 && F('nope', 0) === -1 &&
+        V.fxLayer(c, { t: 'ring', life: 0.5 }, 0, 0) === false && V.fxLayer(c, null, 0, 0) === false && (V.fxLayer(c, fx, 10, 10), fx.l0 === 0.6) && ('프레임 · 타격/처치만');
     });
 
     t('런타임 에러 없음', function () {
