@@ -17,9 +17,10 @@ const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 
-const PILLAR_GLB := "res://assets/buildings/pillar-stone.glb"
+## G-0020 — Kenney 원기둥 대신 통일 툰 돌기둥(1.3×3.55×1.3m, 바닥 중심 피벗)을 12m 로 키워 세운다(봉화대 — 석탑 건물은 문·창이 있어 안 맞았다).
+const PILLAR_GLB := "res://assets/world/dungeon_pillar_01.glb"
 const TOWER_HEIGHT := 12.0
-const TOWER_RADIUS := 2.0
+const TOWER_MODEL_HEIGHT := 3.55
 const TRIGGER_RADIUS := 9.0
 const LIGHT_EXP := 40.0 # 웹 "공적 40" 상당
 
@@ -48,7 +49,8 @@ func _spawn_visual() -> void:
 		var mi := MeshInstance3D.new()
 		mi.mesh = pillar_mesh
 		mi.name = "TowerPillar"
-		mi.transform = Transform3D(Basis().scaled(Vector3(TOWER_RADIUS, TOWER_HEIGHT, TOWER_RADIUS)), Vector3.ZERO)
+		var k := TOWER_HEIGHT / TOWER_MODEL_HEIGHT
+		mi.transform = Transform3D(Basis().scaled(Vector3.ONE * k), Vector3.ZERO)
 		add_child(mi)
 	## 밤엔 불빛이 멀리서 보인다(웹 §5-①) — 안 켰을 땐 꺼진 잿빛, 켜면
 	## 밝은 주황 이맛시브로 바뀐다(파티클 대신 primitive, 44장과 같은

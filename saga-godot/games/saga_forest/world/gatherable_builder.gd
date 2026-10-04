@@ -39,14 +39,14 @@ const TOOL_NAMES := {"spade": "삽"}
 
 const DEFS := [
 	{"id": "gather_tree", "name": "나무", "hint": "흔든다", "item_label": "과일",
-	 "grid": Vector2i(24, 3), "glb": "res://assets/vegetation/tree_oak.glb",
-	 "scale": 4.5, "tint": Color(1, 1, 1), "trunk_radius": 0.4, "trunk_height": 3.0, "tool": ""},
+	 "grid": Vector2i(24, 3), "glb": "res://assets/world/tree_broadleaf_01.glb",
+	 "scale": 0.837, "tint": Color(1, 1, 1), "trunk_radius": 0.4, "trunk_height": 3.0, "tool": ""},
 	{"id": "gather_pine", "name": "소나무", "hint": "흔든다", "item_label": "솔방울",
-	 "grid": Vector2i(9, 12), "glb": "res://assets/vegetation/tree_oak.glb",
-	 "scale": 3.6, "tint": Color(0.72, 0.84, 0.95), "trunk_radius": 0.4, "trunk_height": 3.0, "tool": ""},
+	 "grid": Vector2i(9, 12), "glb": "res://assets/world/tree_pine_01.glb",
+	 "scale": 0.53, "tint": Color(0.72, 0.84, 0.95), "trunk_radius": 0.4, "trunk_height": 3.0, "tool": ""},
 	{"id": "gather_rock", "name": "바위", "hint": "캔다", "item_label": "광석",
-	 "grid": Vector2i(22, 12), "glb": "res://assets/rocks/rock_largeA.glb",
-	 "scale": 3.0, "tint": Color(1, 1, 1), "trunk_radius": 0.0, "trunk_height": 0.0, "tool": ""},
+	 "grid": Vector2i(22, 12), "glb": "res://assets/world/rock_large_01.glb",
+	 "scale": 0.43, "tint": Color(1, 1, 1), "trunk_radius": 0.0, "trunk_height": 0.0, "tool": ""},
 	{"id": "gather_flower", "name": "꽃", "hint": "꺾는다", "item_label": "꽃",
 	 "grid": Vector2i(9, 5), "glb": "", "scale": 1.0,
 	 "tint": Color(1, 0.55, 0.72), "trunk_radius": 0.0, "trunk_height": 0.0, "tool": ""},
@@ -89,9 +89,9 @@ func _build(d: Dictionary) -> void:
 	var mi := MeshInstance3D.new()
 	mi.name = "Visual"
 	if mesh != null:
-		mi.mesh = mesh
+		## G-0020 — 통일 툰 GLB(표면별 텍스처)라 정점색 재질 대신 곡률 텍스처 재질에 tint 를 곱한다.
+		mi.mesh = WorldCurveMaterial.textured_surfaces(mesh, CURVE_AMOUNT, 0.95, d.tint)
 		mi.scale = Vector3.ONE * float(d.scale)
-		mi.material_override = WorldCurveMaterial.vertex_color_material(CURVE_AMOUNT, 0.95, d.tint)
 	else:
 		var sphere := SphereMesh.new()
 		sphere.radius = 0.5

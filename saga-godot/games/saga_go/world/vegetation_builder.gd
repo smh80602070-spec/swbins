@@ -35,7 +35,7 @@ const CROPS_PER_FARM_TILE := 6
 ## 반지름 1.4)에 맞춰 스케일을 역산했다 — ASSET_GUIDE.md에 실측값과 계산
 ## 근거를 남겨 둠. 밀은 그런 primitive 선례가 없어 인물 키(character-a
 ## ×1.25 ≈ 3.4m)의 1/3 정도(허리~가슴 높이)를 목표로 새로 잡았다.
-const CROP_SCALE := 2.5
+const CROP_SCALE := 1.1   # G-0020 — wheat_ripe_01(1.3m 폭·1.08m 높이 한 포기 무리) ×1.1 ≈ 옛 밀 1.3m
 
 ## 2026-09-20 — Kenney tree_oak/rock_largeA를 Quaternius(103-5 팔레트
 ## 스냅 68종 완비)로 교체. Quaternius는 실척(=실제 미터) 모델이라 Kenney
@@ -90,7 +90,7 @@ const REGION_ROCK_SMALL_GLB := {
 }
 const ROCK_LARGE_SCALE := 0.370  # rock_large_01 실측고 1.823 → 0.675/1.823 (G-0017)
 const ROCK_SMALL_SCALE := 0.674  # rock_moss_01 실측고 0.993 → 0.669/0.993 (G-0017)
-const CROP_GLB := "res://assets/vegetation/crops_wheatStageB.glb"
+const CROP_GLB := "res://assets/world/wheat_ripe_01.glb"
 
 ## PLAN.md 102-5 "초목·지형·애니" — 나무 수관 흔들림(2026-09-21, 순수
 ## 추가). 원본 StandardMaterial3D 값을 그대로 복사해 셰이더로 바꿔치기

@@ -302,7 +302,7 @@ func _build_sec_torch(c: Dictionary) -> void:
 ## 밭 — 개간(agri). city3d.js: clamp(round(agri/90), 2, 6).
 func _build_farms(c: Dictionary) -> void:
 	var n := clampi(roundi(float(c.get("agri", 0)) / FARM_PER), 2, 6)
-	var wheat := load("res://assets/vegetation/crops_wheatStageB.glb") as PackedScene
+	var wheat := load("res://assets/world/wheat_ripe_01.glb") as PackedScene
 	for p: Vector2 in _ring(n, 6.4, -2.0):
 		var mi := MeshInstance3D.new()
 		var mesh := BoxMesh.new()
@@ -311,14 +311,13 @@ func _build_farms(c: Dictionary) -> void:
 		mi.position = Vector3(p.x, 0.06, p.y)
 		mi.material_override = _mat(COLOR_FARM.darkened(0.45))
 		_dyn.add_child(mi)
-		## 2026-09-30 — 흙밭 위에 밀 포기(3×2).
+		## 2026-09-30 — 흙밭 위에 밀 포기. G-0020: 통일 툰 wheat_ripe_01(1.3m 폭 무리) 두 덩이를 0.42배로(폭 0.55m·높이 0.45m).
 		if wheat != null:
-			for ix in 3:
-				for iz in 2:
-					var w := wheat.instantiate() as Node3D
-					w.scale = Vector3.ONE * 0.75
-					w.position = Vector3(p.x + (float(ix) - 1.0) * 0.36, 0.12, p.y + (float(iz) - 0.5) * 0.36)
-					_dyn.add_child(w)
+			for ix in 2:
+				var w := wheat.instantiate() as Node3D
+				w.scale = Vector3.ONE * 0.42
+				w.position = Vector3(p.x + (float(ix) - 0.5) * 0.5, 0.12, p.y)
+				_dyn.add_child(w)
 
 
 ## 시장 — 상업(comm). city3d.js: clamp(round(comm/80), 1, 5).

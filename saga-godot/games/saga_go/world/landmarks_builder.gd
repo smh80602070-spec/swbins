@@ -22,30 +22,32 @@ const BeaconTower := preload("res://games/saga_go/world/beacon_tower.gd")
 ## 다리 널판(PLANK_GLB)은 마을·폐허 어느 쪽도 아니라(강 위 마을 시설)
 ## 원본 그대로 남겨뒀다. "시대 퓨전" 갈래는 아직 이 판에 실제 소품이
 ## 없어(전장 잔해 4종은 방패·투구·화살통·깃발) 보류.
-const PILLAR_GLB := "res://assets/generated/variants/pillar-stone__go_ruins.glb"
+const PILLAR_GLB := "res://assets/world/dungeon_pillar_01.glb"   # G-0020 — 옛 pillar-stone(Kenney 원기둥) 변형 대신(1.3×3.55×1.3m)
 const PLANK_GLB := "res://assets/buildings/planks.glb"
-const CAVE_GATE_GLB := "res://assets/dungeon/gate-rock.glb"
-const SHRINE_GLB := "res://assets/shrine/altar-stone.glb"
+const CAVE_GATE_GLB := "res://assets/world/cave_gate_01_dirt.glb"   # G-0020 — 옛 Kenney gate-rock 대신(4.01×3.2×0.8m, 바닥이 -0.2m 에 있어 CAVE_GATE_LIFT 만큼 올림)
+const SHRINE_GLB := "res://assets/world/altar_01.glb"   # G-0020 — 옛 Kenney altar-stone 대신(2.6×1.5×1.8m)
 
 ## 마을집 발자국(가로·벽 높이·세로, m) — 충돌 상자·코드 오두막 크기.
 const WALL_FOOTPRINT := Vector3(10, 4, 10)
 ## pillar-stone.glb(높이 1m 원기둥)의 지름 스케일 — 얇을수록 폐허답다.
-const RUIN_PILLAR_RADIUS_SCALE := 4.0
+const RUIN_PILLAR_RADIUS_SCALE := 4.0   # (옛 원기둥용 — G-0020 이후 안 씀, 새 기둥은 균일 배율)
+const PILLAR_NEW_HEIGHT := 3.55         # dungeon_pillar_01 실측 높이
 ## gate-rock.glb(4.0 x 4.05 x 2.454, 바닥 피벗)은 이미 아치 비율이 잡혀
 ## 있어 축을 고르게(균일) 키우기만 한다 — wall-block처럼 단순 색 아틀라스가
 ## 아니라 실제 바위 굴곡 노멀맵이 있는 조각이라, 비균등 스케일을 쓰면
 ## 그 결이 늘어나 이상해 보인다(ASSET_GUIDE.md "마을집이 늘어난 이유" 절
 ## 참고 — 거긴 색 아틀라스라 비균등이 통했지만 여긴 안 통한다). 원래
 ## primitive 높이(6)에 맞춰 스케일을 역산했다.
-const CAVE_GATE_SIZE := Vector3(4.0, 4.05, 2.454)
-const CAVE_GATE_SCALE := 6.0 / 4.05
+const CAVE_GATE_SIZE := Vector3(4.01, 3.2, 0.8)   # G-0020 cave_gate_01_dirt 실측
+const CAVE_GATE_SCALE := 6.0 / 3.2          # 옛 primitive 높이 6m 에 맞춤
+const CAVE_GATE_LIFT := 0.2                 # GLB 바닥이 원점 아래 0.2m(실측) — 올려서 땅에 맞춘다
 ## altar-stone.glb(CC0 Kenney Graveyard Kit, ASSET_GUIDE.md 참고, 실측
 ## 1.04 x 0.49 x 0.65m, 바닥 중앙 피벗)는 gate-rock.glb와 같은 이유로
 ## 균일 스케일만 쓴다(실제 돌 표면 굴곡이 있는 조각). 웃허리 높이 제단
 ## 하나가 목표라 primitive 선례 없이 새로 잡았다 — 최종 높이 약 1.2m,
 ## 너비 약 2.6m.
-const SHRINE_SIZE := Vector3(1.04, 0.49, 0.65)
-const SHRINE_SCALE := 2.5
+const SHRINE_SIZE := Vector3(2.6, 1.5, 1.8)   # G-0020 altar_01 실측(옛 altar-stone ×2.5 ≈ 2.6×1.2×1.6 와 같은 크기)
+const SHRINE_SCALE := 1.0
 
 ## VERTICAL_SLICE.md 26절 "제외" 목록의 "역참/성채 같은 건물 POI" 착수
 ## (2026-09-14). 성채(요새 하나만한 규모)는 범위가 커서 이번엔 역참
@@ -64,7 +66,7 @@ const WAYSTATION_FOOTPRINT := Vector3(6, 3, 6)
 ## 이 판에 맞는 GLB가 아예 없어(강물도 마찬가지였다) terrain_builder.gd의
 ## WaterSurface와 같은 색·투명도의 primitive 평면으로 낸다 — "primitive는
 ## 프로토타입에서만"의 예외가 아니라, 강물 표면도 이미 같은 방식이었다.
-const WATERFALL_ROCK_GLB := "res://assets/rocks/rock_largeA.glb"
+const WATERFALL_ROCK_GLB := "res://assets/world/rock_large_02.glb"   # G-0020 — 옛 Kenney rock_largeA 대신(2.66×2.51×1.99m, 바닥 -0.35m)
 const WATERFALL_ROCK_SCALE := Vector3(2.6, 5.0, 2.2)
 ## 2026-09-23 물줄기 폭·웅덩이 — 절벽 높이(tile_base_height)에 맞춰 커졌다.
 const WATERFALL_FALL_WIDTH := 7.0
@@ -277,7 +279,7 @@ func _add_cave() -> void:
 		mi.mesh = gate_mesh
 		## gate-rock.glb는 바닥이 원점이라 primitive 시절처럼 높이 절반만큼
 		## 띄울 필요가 없다(village/ruins와 같은 이유, ASSET_GUIDE.md 참고).
-		mi.transform = Transform3D(Basis().scaled(Vector3.ONE * CAVE_GATE_SCALE), base_pos)
+		mi.transform = Transform3D(Basis().scaled(Vector3.ONE * CAVE_GATE_SCALE), base_pos + Vector3(0, CAVE_GATE_LIFT * CAVE_GATE_SCALE, 0))
 		add_child(mi)
 	else:
 		## 못 받아 왔으면 예전 primitive로 대체 — bridge의 fallback과 같은 패턴.
@@ -345,8 +347,9 @@ func _add_waterfall() -> void:
 		var mi := MeshInstance3D.new()
 		mi.name = "WaterfallRock"
 		mi.mesh = rock_mesh
-		mi.transform = Transform3D(Basis().scaled(WATERFALL_ROCK_SCALE),
-			base_pos + rock_back_offset + Vector3(0, WATERFALL_ROCK_SCALE.y * 0.13, 0))
+		## G-0020 — rock_large_02 는 이미 2.66×2.51×1.99m 라 충돌 상자(WATERFALL_ROCK_SCALE 2.6×5.0×2.2 의 윗 절반 2.5)와 거의 같다: 균일 0.95배, 바닥 -0.35m 만큼 올림.
+		mi.transform = Transform3D(Basis().scaled(Vector3.ONE * 0.95),
+			base_pos + rock_back_offset + Vector3(0, 0.35 * 0.95, 0))
 		add_child(mi)
 	else:
 		var fallback := _box(WATERFALL_ROCK_SCALE, Color(0.4, 0.4, 0.42))
@@ -446,7 +449,8 @@ func _add_ruins() -> void:
 			mi.name = "RuinPillar_%d" % i
 			## 바닥 피벗이라 그대로 세우면 된다(primitive 때는 중앙 피벗이라
 			## height*0.5만큼 띄워야 했다).
-			mi.transform = Transform3D(Basis().scaled(Vector3(radius_scale, height, radius_scale)), pos)
+			var u := height / PILLAR_NEW_HEIGHT   # 균일 배율(툰 질감을 안 늘린다) — 5~6.5m 가 되도록
+			mi.transform = Transform3D(Basis().scaled(Vector3.ONE * u), pos)
 			add_child(mi)
 
 		var body := StaticBody3D.new()
@@ -454,7 +458,7 @@ func _add_ruins() -> void:
 		body.position = pos + Vector3(0, height * 0.5, 0)
 		var cs := CollisionShape3D.new()
 		var shape := CylinderShape3D.new()
-		shape.radius = 0.08 * radius_scale
+		shape.radius = 0.45 * height / PILLAR_NEW_HEIGHT   # 새 기둥 반폭 0.65m×배율의 7할 — 스치면 안 걸리게
 		shape.height = height
 		cs.shape = shape
 		body.add_child(cs)

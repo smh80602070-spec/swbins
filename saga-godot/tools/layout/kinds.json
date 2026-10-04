@@ -6,18 +6,18 @@
     "forest": { "per": 1.6, "jitter": 0.4, "scale": [0.85, 1.25], "assets": ["res://assets/world/tree_broadleaf_01.glb", "res://assets/world/tree_broadleaf_02.glb", "res://assets/world/tree_broadleaf_03.glb", "res://assets/world/tree_birch_01.glb", "res://assets/world/tree_pine_01.glb", "res://assets/world/tree_pine_02.glb", "res://assets/world/tree_pine_03.glb"] },
     "mount": { "per": 1.2, "jitter": 0.35, "scale": [1.2, 2.2], "assets": ["res://assets/world/rock_large_01.glb", "res://assets/world/rock_large_02.glb", "res://assets/world/rock_moss_01.glb", "res://assets/world/rock_small_01.glb"] },
     "grass": { "per": 0.7, "jitter": 0.45, "scale": [0.8, 1.2], "assets": ["res://assets/world/grass_tuft_01.glb", "res://assets/world/grass_tuft_02.glb", "res://assets/world/flower_patch_01.glb", "res://assets/world/bush_01.glb", "res://assets/world/bush_02.glb"] },
-    "farm": { "per": 2, "jitter": 0.35, "scale": [0.9, 1.1], "assets": ["res://assets/vegetation/crops_wheatStageB.glb"] },
-    "road": { "per": 0.35, "jitter": 0.3, "scale": [0.8, 1.1], "assets": ["res://assets/rocks/Pebble_Round_1.gltf", "res://assets/rocks/Pebble_Round_2.gltf", "res://assets/rocks/Pebble_Square_1.gltf"] },
-    "town": { "per": 0.25, "jitter": 0.2, "scale": [1, 1], "assets": ["res://assets/buildings/wall-block.glb", "res://assets/buildings/pillar-stone.glb"] },
+    "farm": { "per": 2, "jitter": 0.35, "scale": [0.9, 1.1], "assets": ["res://assets/world/wheat_ripe_01.glb"] },
+    "road": { "per": 0.35, "jitter": 0.3, "scale": [0.8, 1.1], "assets": ["res://assets/world/pebbles_01.glb"] },
+    "town": { "per": 0.25, "jitter": 0.2, "scale": [1, 1], "assets": ["res://assets/world/wall_block_01.glb", "res://assets/world/dungeon_pillar_01.glb"] },
     "water": { "per": 0 }
   },
   "marks": {
-    "bridge": { "asset": "res://assets/buildings/planks.glb", "scale": [2.5, 2.5] },
-    "cave": { "asset": "res://assets/rocks/rock_largeA.glb", "scale": [2.6, 2.6] },
+    "bridge": { "asset": "res://assets/world/plank_bridge_01.glb", "scale": [1.5, 1.5] },
+    "cave": { "asset": "res://assets/world/rock_large_02.glb", "scale": [0.8, 0.8] },
     "waterfall": { "asset": "res://assets/rocks/Rock_Medium_3.gltf", "scale": [2.4, 2.4] },
-    "shrine": { "asset": "res://assets/buildings/pillar-stone.glb", "scale": [1.4, 1.4] },
-    "ruin": { "assets": ["res://assets/buildings/pillar-stone.glb", "res://assets/buildings/wall-block.glb"], "per": 2, "jitter": 0.3, "rotate": true, "scale": [0.9, 1.3] },
-    "temple": { "asset": "res://assets/buildings/roof-gable.glb", "scale": [2, 2] }
+    "shrine": { "asset": "res://assets/world/dungeon_pillar_01.glb", "scale": [0.45, 0.45] },
+    "ruin": { "assets": ["res://assets/world/dungeon_pillar_01.glb", "res://assets/world/wall_block_01.glb"], "per": 2, "jitter": 0.3, "rotate": true, "scale": [0.9, 1.3] },
+    "temple": { "asset": "res://assets/world/temple_roof_01.glb", "scale": [1, 1] }
   },
   "_deco_doc": "land.js deco(맵 편집기 \"3D 배치\") 종류 → 에셋. h=웹 기준 키(m, 편집기 기본값) — 소품 키 h 가 이것의 몇 배냐로 scale(수 하나)을 곱한다. 표에 없는 종류는 건너뛰고 이름을 찍는다. 나무·바위 밖은 tools/asset-forge/procgen.py 가 웹 기본 치수(집 8×7m 키 5m, 탑 18m …)로 구운 것 — 배치표는 한 칸이 4m 로 줄어 있어 건물 scale 을 1 보다 작게 둔다.",
   "deco": {

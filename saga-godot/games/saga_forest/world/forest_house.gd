@@ -61,14 +61,12 @@ const DOOR_CLEAR := 1.5      # 문 앞은 비워 둔다(웹판 canPlaceHere()의
 const SHOP_CLEAR := 1.0      # 장(FinishShop) 자리도 비워 둔다
 const ITEM_CLEAR := 0.9      # 이미 놓인 것과 이만큼은 떨어져야 한다
 
-const WALL_GLB := "res://assets/buildings/wall-block.glb"
-const ROOF_GLB := "res://assets/buildings/roof-gable.glb"
-const BUILDING_TEXTURE := "res://assets/buildings/Textures/colormap.png"
+## G-0020 — 벽 블록·지붕 조각(Kenney) 대신 통일 툰 오두막 한 채. 문이 모델 +z 쪽이라 180° 돌려 남쪽(-z)에 맞춘다.
+const HOUSE_GLB := "res://assets/world/forest_cottage_01.glb"   # 6.8×6.6×7.6m, z -7.0~0.6
+const HOUSE_SCALE := 0.85
 const CURVE_AMOUNT := 0.004
 
-## wall-block.glb는 1x1x1(바닥 피벗) — GO landmarks_builder.gd와 같은 단위.
 const FOOTPRINT := Vector3(6, 4, 6)
-const ROOF_SCALE := Vector3(6, 6, 6)
 const DOOR_HALF_WIDTH := 1.0
 const HOUSE_GRID := Vector2i(15, 9)  # village_map.gd의 "H" 타일과 같은 자리
 
@@ -130,22 +128,14 @@ func _build_exterior() -> void:
 	house.add_to_group("codex_discoverable")
 	add_child(house)
 
-	var wall_mesh := GLBUtils.extract_mesh(WALL_GLB)
-	var roof_mesh := GLBUtils.extract_mesh(ROOF_GLB)
-	var wall_mat := WorldCurveMaterial.textured_material(BUILDING_TEXTURE, CURVE_AMOUNT)
-
-	if wall_mesh != null:
-		var mmi := _build_wall_perimeter_with_door(wall_mesh, FOOTPRINT)
-		mmi.material_override = wall_mat
-		house.add_child(mmi)
-
-	if roof_mesh != null:
-		var roof := MeshInstance3D.new()
-		roof.name = "Roof"
-		roof.mesh = roof_mesh
-		roof.material_override = wall_mat
-		roof.transform = Transform3D(Basis().scaled(ROOF_SCALE), Vector3(0, FOOTPRINT.y, 0))
-		house.add_child(roof)
+	var house_mesh := GLBUtils.extract_mesh(HOUSE_GLB)
+	if house_mesh != null:
+		var visual := MeshInstance3D.new()
+		visual.name = "Cottage"
+		visual.mesh = WorldCurveMaterial.textured_surfaces(house_mesh, CURVE_AMOUNT)
+		## 모델 중심 z=-3.2 → 180° 돌린 뒤 +3.2 → 배율 → 집 중심(0,0)에 오도록 옮긴다. 문 면은 z≈-3.2(남쪽 개구부 자리).
+		visual.transform = Transform3D(Basis(Vector3.UP, PI).scaled(Vector3.ONE * HOUSE_SCALE), Vector3(0, 0, -3.2 * HOUSE_SCALE))
+		house.add_child(visual)
 
 	_build_exterior_wall_collision(house)
 
@@ -163,42 +153,6 @@ func _build_exterior() -> void:
 	## 밖에서 다시 나왔을 때 서는 자리 — EnterTrigger(local z=-4, 범위
 	## -5..-3)보다 확실히 더 남쪽이라 도착하자마자 다시 안으로 빨려들지 않는다.
 	_exterior_spawn = base_pos + Vector3(0, 0.1, -6.0)
-
-
-## wall-block.glb 여러 장을 footprint 둘레에 이어 붙이되(GO
-## landmarks_builder.gd의 _build_wall_perimeter와 같은 방식), 남쪽
-## (iz=0) 가운데 DOOR_HALF_WIDTH*2 칸만큼 문 자리를 비운다.
-func _build_wall_perimeter_with_door(wall_mesh: Mesh, footprint: Vector3) -> MultiMeshInstance3D:
-	var cols_x := int(footprint.x)
-	var layers := int(footprint.y)
-	var cols_z := int(footprint.z)
-	var door_lo: int = cols_x / 2 - int(DOOR_HALF_WIDTH)
-	var door_hi: int = cols_x / 2 + int(DOOR_HALF_WIDTH) - 1
-
-	var cells: Array[Vector3] = []
-	for ix in cols_x:
-		for iz in cols_z:
-			var on_perimeter: bool = ix == 0 or ix == cols_x - 1 or iz == 0 or iz == cols_z - 1
-			if not on_perimeter:
-				continue
-			if iz == 0 and ix >= door_lo and ix <= door_hi:
-				continue  # 문 자리 — 전 층 다 비운다(단순 개구부, 프로토타입 수준)
-			cells.append(Vector3(ix - cols_x * 0.5 + 0.5, 0, iz - cols_z * 0.5 + 0.5))
-
-	var mm := MultiMesh.new()
-	mm.transform_format = MultiMesh.TRANSFORM_3D
-	mm.mesh = wall_mesh
-	mm.instance_count = cells.size() * layers
-	var idx := 0
-	for layer in layers:
-		for cell in cells:
-			mm.set_instance_transform(idx, Transform3D(Basis(), cell + Vector3(0, layer, 0)))
-			idx += 1
-
-	var mmi := MultiMeshInstance3D.new()
-	mmi.multimesh = mm
-	mmi.name = "Wall"
-	return mmi
 
 
 ## 시각 메시(MultiMesh)와 별도로 벽 넷을 충돌체로 놓는다 — 남쪽만 문
