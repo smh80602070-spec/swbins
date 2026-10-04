@@ -692,9 +692,18 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
  * 이 화면이 요즘 앱풍으로 남아 있으면, 게임을 켜자마자 첫인상이 어긋난다.
  */
 #acc-host {
+  /* 타이틀 키 아트(K-0041, W-0050) 위에 같은 어두운 비네팅 — 그림이 없으면 비네팅만 보인다 */
   background: radial-gradient(70% 60% at 50% 45%,
-    rgba(30, 16, 6, 0.78), rgba(0, 0, 0, 0.93)) !important;
+    rgba(30, 16, 6, 0.50), rgba(0, 0, 0, 0.90)),
+    url(../assets/store/dungeon_key_h.webp) center / cover no-repeat !important;
   backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+}
+@media (orientation: portrait) {
+  #acc-host {
+    background: radial-gradient(70% 60% at 50% 45%,
+      rgba(30, 16, 6, 0.50), rgba(0, 0, 0, 0.90)),
+      url(../assets/store/dungeon_key_v.webp) center / cover no-repeat !important;
+  }
 }
 .acc-card {
   border-radius: 2px !important;

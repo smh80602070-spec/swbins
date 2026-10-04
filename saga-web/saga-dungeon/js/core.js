@@ -433,6 +433,7 @@
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.account = {
+    art: 'assets/store/dungeon_key',   // 타이틀 키 아트(K-0041, W-0050)
     name: '사가블로',
     emoji: '⚔️',
     tag: '역사 인물로 여는 핵앤슬래시 던전 크롤러'

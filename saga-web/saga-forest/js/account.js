@@ -216,6 +216,9 @@
       'background:radial-gradient(ellipse at 50% -10%,#2b3c58 0%,#141824 55%,#0a0b0f 100%);',
       'backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);overflow:auto;padding:24px 0}',
       '#acc-host.show{display:grid}',
+      // 타이틀 키 아트(K-0041, W-0050) — 판이 cfg.art 로 "<경로>_key" 를 주면 가로(_h)·세로(_v) 그림을 배경으로, 어두운 막을 덮는다
+      CFG.art ? '#acc-host{background:linear-gradient(rgba(8,10,16,.40),rgba(8,10,16,.80)),url(' + CFG.art + '_h.webp) center/cover no-repeat}' +
+        '@media (orientation:portrait){#acc-host{background-image:linear-gradient(rgba(8,10,16,.40),rgba(8,10,16,.80)),url(' + CFG.art + '_v.webp)}}' : '',
       '.title-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}',
       '.title-char{font-size:56px;filter:drop-shadow(0 10px 16px rgba(0,0,0,.5))}',
       '.title-logo{font:800 28px "Malgun Gothic",system-ui;color:#f5b445;letter-spacing:1px;',

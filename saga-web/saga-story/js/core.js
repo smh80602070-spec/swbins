@@ -424,6 +424,7 @@
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.account = {
+    art: 'assets/store/story_key',   // 타이틀 키 아트(K-0041, W-0050)
     name: '사가스토리',
     emoji: '🏃',
     tag: '역사 인물로 노는 옆으로 걷는 액션',

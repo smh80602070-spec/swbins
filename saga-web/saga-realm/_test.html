@@ -5803,6 +5803,12 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         CU.banner('realm', 'nope') === '' && CU.banner('realm', ids[0]).indexOf('<img') === 0 && (ids.length + '장 모두 그림 · 모르는 장은 비어 있음');
     });
 
+    t('타이틀 키 아트(W-0050) — 계정 화면이 가로·세로 키 아트 주소를 받고, 스타일에 두 장이 들어간다', function () {
+      var art = DG.cfg.account && DG.cfg.account.art, st = document.getElementById('acc-style');
+      if (!st) { DG.account.showSignup && void 0; }
+      return art === 'assets/store/realm_key' && (!st || (st.textContent.indexOf(art + '_h.webp') > 0 && st.textContent.indexOf(art + '_v.webp') > 0)) && ('realm 키 아트 가로·세로');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

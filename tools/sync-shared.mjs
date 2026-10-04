@@ -148,6 +148,20 @@ for (const g of Object.keys(MOVING_GAMES)) {
     }
   }
 }
+/** 타이틀 키 아트(K-0041, W-0050) — 판마다 가로·세로 두 장(`<판>_key_h|v.webp`)을 `<판>/assets/store/` 로 복사한다. 판 → 이름 조각 */
+const STORE_GAMES = { 'saga-go': 'go', 'saga-dungeon': 'dungeon', 'saga-forest': 'forest', 'saga-story': 'story', 'saga-realm': 'realm' };
+for (const g of Object.keys(STORE_GAMES)) {
+  for (const v of ['h', 'v']) {
+    const f = STORE_GAMES[g] + '_key_' + v + '.webp', from = path.join(WEB, 'shared', 'assets', 'store', f), to = path.join(WEB, g, 'assets', 'store', f);
+    total++;
+    if (!fs.existsSync(from)) { console.log(`FAIL 키 아트 정본 없음 shared/assets/store/${f}`); bad++; continue; }
+    if (fs.existsSync(to) && fs.readFileSync(to).equals(fs.readFileSync(from))) continue;
+    if (check) { console.log(`DIFF ${g}/assets/store/${f} ≠ shared`); bad++; continue; }
+    fs.mkdirSync(path.dirname(to), { recursive: true });
+    fs.copyFileSync(from, to);
+    copied++;
+  }
+}
 /** 컷신 배경(K-0044, W-0048) — 판이 쓰는 접두어(cut_<판>_)의 12장만 `<판>/assets/cutscene/` 로 복사한다. 판 → 이름 조각 */
 const CUT_GAMES = { 'saga-dungeon': 'dungeon', 'saga-forest': 'forest', 'saga-story': 'story', 'saga-realm': 'realm' };
 for (const g of Object.keys(CUT_GAMES)) {

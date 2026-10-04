@@ -398,6 +398,7 @@
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.account = {
+    art: 'assets/store/realm_key',   // 타이틀 키 아트(K-0041, W-0050)
     name: '사가국지',
     emoji: '🏯',
     tag: '역사 인물로 여는 천하 정복 시뮬레이션',
