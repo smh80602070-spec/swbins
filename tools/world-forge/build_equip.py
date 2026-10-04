@@ -1,0 +1,548 @@
+"""world-forge 장비 외형 조각 — 갑옷 54(시대 3 × 등급 3 × 슬롯 6) + 악세사리 30 (K-0037). 재질만 Poly Haven CC0 사진.
+
+  blender -b --factory-startup -P tools/world-forge/build_equip.py -- --id eq_past_2_chest --out <절대>/eq_past_2_chest.glb [--style toon]
+  blender -b --factory-startup -P tools/world-forge/build_equip.py -- --all --out-dir <절대 폴더> [--style toon]
+  blender -b --factory-startup -P tools/world-forge/build_equip.py -- --list
+
+**좌표 규약(엔진이 읽는 규칙)**: 조각의 원점 = 붙일 뼈의 머리(head) 위치, 몸은 T-자세(VRM 쉼 자세), 인물이 보는 쪽 = Blender -Y(glTF +Z).
+단위 m, 기준 몸 = UAL 표준 몸(골반 0.92m·어깨 1.44m). 엔진은 조각을 그 뼈의 자식으로 붙이고, 몸마다 `ref_len` 대비 뼈 길이 비로 균등 배율을 곱한다(`data/equip_slots.json`).
+슬롯 6 = head(J_Bip_C_Head)·chest(J_Bip_C_Chest)·shoulder(L UpperArm)·arm(L LowerArm)·leg(L LowerLeg)·boot(L Foot). shoulder·arm·leg·boot 는 **왼쪽** 한 짝만 있고 오른쪽은 X 축 -1 배율로 거울.
+GLB 안 빈 노드: `attach`(원점, 뼈 머리). license.json 에 `bone`(J_Bip 이름)·`slot`·`mirror`·`era`·`grade`.
+시대 = past(가죽·강철) / present(전술복·플라스틱) / future(흰 장갑·발광 띠). 등급 1 민무늬 · 2 장식·발광 한 줄 · 3 금·보석·크기 +8%.
+삼각형 ≤ 600(조각), 악세사리 ≤ 500. 원작 장비 이름·모양 모사 금지(일반 이름).
+"""
+import json
+import math
+import os
+import sys
+
+import bpy
+from mathutils import Vector
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import build_prop as BP  # noqa: E402
+import wf_common as W  # noqa: E402
+from build_prop import tube, obox, A, arg  # noqa: E402
+
+BP.TRIS_MAX = 600
+BP.GENERATOR = 'tools/world-forge/build_equip.py'
+NODES = []
+ERAS = ('past', 'present', 'future')
+SLOTS = ('head', 'chest', 'shoulder', 'arm', 'leg', 'boot')
+BONE = {'head': 'J_Bip_C_Head', 'chest': 'J_Bip_C_Chest', 'shoulder': 'J_Bip_L_UpperArm', 'arm': 'J_Bip_L_LowerArm', 'leg': 'J_Bip_L_LowerLeg', 'boot': 'J_Bip_L_Foot'}
+MIRROR = {'head': False, 'chest': False, 'shoulder': True, 'arm': True, 'leg': True, 'boot': True}
+# 시대 × 등급 → (주 색, 보조 색, 발광 색 또는 None)
+PAL = {
+    ('past', 1): ('#7a5a3c', '#8d8f94', None), ('past', 2): ('#a9b4c2', '#b89a4a', '#ffd86a'), ('past', 3): ('#e6bc48', '#8a2a2a', '#ff7a30'),
+    ('present', 1): ('#5a6a4a', '#2c2e33', None), ('present', 2): ('#a08a62', '#3a3d44', '#ffe7a8'), ('present', 3): ('#1c1e22', '#4a4e58', '#ff4a3a'),
+    ('future', 1): ('#dfe6ee', '#8a94a2', None), ('future', 2): ('#dfe6ee', '#4a5a6a', '#58e3ff'), ('future', 3): ('#f2ead0', '#d8b56a', '#c06aff'),
+}
+
+
+def node(name, pos=(0, 0, 0)):
+    NODES.append((name, tuple(pos)))
+
+
+class Pal:
+    def __init__(self, C, era, g):
+        main, sec, glow = PAL[(era, g)]
+        self.era, self.g, self.k = era, g, 1.0 + 0.04 * (g - 1)
+        mat = {'past': ('brown_planks_03', 0.6), 'present': ('white_stucco', 0.6), 'future': ('white_stucco', 0.6)}[era]
+        metal_era = era == 'past' and g >= 2
+        self.main = C.s('concrete_wall_001', 0.8, main, gain=1.3, sat=1.1) if (metal_era or era == 'future') else C.s(mat[0], mat[1], main)
+        self.sec = C.s('concrete_wall_001', 0.8, sec, gain=1.2)
+        self.cloth = C.s('white_stucco', 0.6, sec if era != 'past' else '#6a3a30')
+        self.glow = C.s('white_stucco', 1.0, glow, gain=1.8) if glow else None
+        self.dark = C.s('black_painted_planks', 0.8)
+
+    def s(self, v):
+        return v * self.k
+
+
+# ---------------------------------------------------------------- 갑옷 슬롯 6 (뼈 기준 좌표, T-자세)
+
+def head(C, p):
+    M, s = C.M, p.s
+    r = s(0.125)
+    tube(M, (0, 0, 0.0), (0, 0, s(0.10)), r * 0.93, r, p.main, 0.6, 10)                       # 투구 몸통
+    tube(M, (0, 0, s(0.10)), (0, 0, s(0.2)), r, r * 0.55, p.main, 0.6, 10)                       # 윗면
+    tube(M, (0, 0, s(0.2)), (0, 0, s(0.235)), r * 0.55, 0.0, p.main, 0.6, 10)
+    if p.era == 'past':
+        obox(M, (0, -r * 0.96, s(0.03)), (0.03, 0.02, s(0.1)), 0, p.sec, 0.3)                    # 코 가리개
+        if p.g >= 2:
+            tube(M, (0, 0, s(0.23)), (0, 0.0, s(0.34)), 0.012, 0.012, p.sec, 0.3, 5)
+            obox(M, (0, 0, s(0.26)), (0.02, s(0.2), s(0.12)), 0, p.cloth, 0.3)                    # 깃 장식
+    elif p.era == 'present':
+        obox(M, (0, -r * 0.9, s(0.07)), (s(0.2), 0.03, 0.05), 0, p.dark, 0.3)                    # 얼굴 가림 띠
+        for sx in (-1, 1):
+            tube(M, (sx * r * 0.95, 0, s(0.02)), (sx * r * 0.9, -0.03, -s(0.07)), 0.012, 0.01, p.sec, 0.3, 4)   # 턱끈
+    else:
+        obox(M, (0, -r * 0.93, s(0.06)), (s(0.21), 0.03, 0.07), 0, p.glow or p.sec, 0.3)         # 발광 바이저
+        obox(M, (0, r * 0.2, s(0.08)), (0.03, s(0.12), s(0.2)), 0, p.sec, 0.3)                     # 뒤 지느러미
+    if p.g == 3 and p.glow is not None:
+        tube(M, (0, -r * 0.97, s(0.17)), (0, -r * 0.99, s(0.2)), 0.02, 0.01, p.glow, 0.3, 6)
+    node('attach')
+
+
+def chest(C, p):
+    M, s = C.M, p.s
+    obox(M, (0, 0, -s(0.1)), (s(0.38), s(0.22), s(0.44)), 0, p.main, 0.6)                       # 몸통판
+    obox(M, (0, -s(0.115), s(0.04)), (s(0.3), 0.03, s(0.26)), 0, p.sec, 0.3)                    # 가슴 겹판
+    obox(M, (0, 0, -s(0.13)), (s(0.4), s(0.24), 0.06), 0, p.sec, 0.3)                          # 허리띠
+    if p.era == 'past':
+        for sx in (-1, 1):
+            obox(M, (sx * s(0.12), 0, s(0.3)), (0.06, s(0.2), 0.05), 0, p.sec, 0.3)             # 어깨끈
+    elif p.era == 'present':
+        for sx in (-1, 0, 1):
+            obox(M, (sx * s(0.11), -s(0.14), -s(0.09)), (s(0.09), 0.04, s(0.1)), 0, p.dark, 0.3)  # 탄창 주머니
+    else:
+        tube(M, (0, -s(0.118), s(0.1)), (0, -s(0.135), s(0.1)), s(0.05), s(0.04), p.glow or p.sec, 0.3, 8)   # 가슴 동력핵
+    if p.g == 3 and p.glow is not None and p.era != 'future':
+        tube(M, (0, -s(0.118), s(0.1)), (0, -s(0.13), s(0.1)), 0.03, 0.02, p.glow, 0.3, 6)
+    node('attach')
+
+
+def shoulder(C, p):
+    M, s = C.M, p.s
+    r = s(0.115)
+    for dz, rr in ((0.0, r), (-0.045, r * 1.04)):                                              # 어깨 덮개(겹)
+        tube(M, (s(0.06), 0, 0.035 + dz), (s(0.06), 0, 0.075 + dz), rr * 0.95, rr, p.main, 0.6, 10)
+    tube(M, (s(0.06), 0, 0.075), (s(0.06), 0, 0.125), r, r * 0.5, p.main, 0.6, 10)
+    if p.era == 'past' and p.g >= 2:
+        tube(M, (s(0.06), 0, 0.125), (s(0.06), 0, 0.2), 0.015, 0.0, p.sec, 0.3, 4)               # 뾰족 장식
+    if p.era == 'future' and p.glow is not None:
+        obox(M, (s(0.06), 0, 0.01), (s(0.2), 0.02, 0.014), 0, p.glow, 0.3)
+    if p.era == 'present':
+        obox(M, (s(0.06), 0, 0.12), (s(0.14), s(0.1), 0.03), 0, p.dark, 0.3)
+    node('attach')
+
+
+def arm(C, p):
+    M, s = C.M, p.s
+    tube(M, (0.02, 0, 0), (s(0.24), 0, 0), s(0.048), s(0.04), p.main, 0.6, 8)                    # 팔뚝 보호대
+    tube(M, (s(0.02), 0, 0), (s(0.05), 0, 0), s(0.056), s(0.056), p.sec, 0.3, 8)
+    tube(M, (s(0.2), 0, 0), (s(0.23), 0, 0), s(0.046), s(0.046), p.sec, 0.3, 8)
+    if p.glow is not None and p.era != 'present':
+        tube(M, (s(0.11), 0, 0), (s(0.14), 0, 0), s(0.05), s(0.05), p.glow, 0.3, 8, caps=False)
+    if p.g == 3:
+        obox(M, (s(0.12), -s(0.04), s(0.03)), (s(0.1), 0.02, 0.03), 0, p.sec, 0.3)
+    node('attach')
+
+
+def leg(C, p):
+    M, s = C.M, p.s
+    tube(M, (0, 0, 0.03), (0, 0, -s(0.38)), s(0.06), s(0.045), p.main, 0.6, 8)                    # 정강이
+    tube(M, (0, 0, s(0.05)), (0, 0, -s(0.01)), s(0.068), s(0.062), p.sec, 0.3, 8)                 # 무릎
+    obox(M, (0, -s(0.058), -s(0.03)), (s(0.08), 0.03, s(0.07)), 0, p.sec, 0.3)                    # 무릎 덮개
+    tube(M, (0, 0, -s(0.34)), (0, 0, -s(0.38)), s(0.05), s(0.05), p.sec, 0.3, 8)
+    if p.glow is not None and p.era != 'present':
+        obox(M, (0, -s(0.05), -s(0.2)), (0.02, 0.014, s(0.14)), 0, p.glow, 0.3)
+    node('attach')
+
+
+def boot(C, p):
+    M, s = C.M, p.s
+    obox(M, (0, -s(0.07), s(0.02)), (s(0.1), s(0.27), s(0.1)), 0, p.main, 0.6)                    # 발등·앞코(앞 = -y)
+    tube(M, (0, 0, s(0.02)), (0, 0, s(0.2)), s(0.055), s(0.06), p.main, 0.6, 8)                   # 목
+    obox(M, (0, -s(0.07), -s(0.02)), (s(0.11), s(0.28), 0.04), 0, p.dark, 0.3)                     # 밑창
+    tube(M, (0, 0, s(0.18)), (0, 0, s(0.21)), s(0.064), s(0.064), p.sec, 0.3, 8)
+    if p.era == 'future' and p.glow is not None:
+        obox(M, (0, -s(0.2), -s(0.005)), (s(0.1), 0.01, 0.015), 0, p.glow, 0.3)
+    node('attach')
+
+
+SLOT_FN = {'head': head, 'chest': chest, 'shoulder': shoulder, 'arm': arm, 'leg': leg, 'boot': boot}
+
+
+# ---------------------------------------------------------------- 악세사리 30 (뼈, 거울 여부)
+
+def _m(C, tint, gain=1.2):
+    return C.s('concrete_wall_001', 0.8, tint, gain=gain)
+
+
+def _c(C, tint):
+    return C.s('white_stucco', 0.6, tint)
+
+
+def _g(C, tint, gain=1.8):
+    return C.s('white_stucco', 1.0, tint, gain=gain)
+
+
+ACC = {}
+
+
+def acc(name, bone, mirror=False):
+    def deco(f):
+        ACC[name] = (f, bone, mirror)
+        return f
+    return deco
+
+
+@acc('acc_cap', 'J_Bip_C_Head')
+def a_cap(C):
+    M = C.M
+    tube(M, (0, 0, 0.1), (0, 0, 0.17), 0.13, 0.11, _c(C, '#3a5a8a'), 0.6, 10)
+    tube(M, (0, 0, 0.17), (0, 0, 0.21), 0.11, 0.05, _c(C, '#3a5a8a'), 0.6, 10)
+    obox(M, (0, -0.13, 0.12), (0.16, 0.1, 0.015), 0, _c(C, '#2c4a70'), 0.3)
+    node('attach')
+
+
+@acc('acc_hat_wide', 'J_Bip_C_Head')
+def a_hat_wide(C):
+    M = C.M
+    tube(M, (0, 0, 0.11), (0, 0, 0.125), 0.3, 0.3, _c(C, '#b79a5a'), 0.6, 14)
+    tube(M, (0, 0, 0.125), (0, 0, 0.22), 0.13, 0.1, _c(C, '#b79a5a'), 0.6, 10)
+    tube(M, (0, 0, 0.14), (0, 0, 0.16), 0.135, 0.135, _c(C, '#6a3a30'), 0.3, 10, caps=False)
+    node('attach')
+
+
+@acc('acc_hat_pointed', 'J_Bip_C_Head')
+def a_hat_pointed(C):
+    M = C.M
+    tube(M, (0, 0, 0.11), (0, 0, 0.125), 0.23, 0.23, _c(C, '#4a3a7a'), 0.6, 12)
+    tube(M, (0, 0, 0.125), (0, 0.0, 0.4), 0.13, 0.0, _c(C, '#4a3a7a'), 0.6, 10)
+    tube(M, (0, 0, 0.14), (0, 0, 0.16), 0.133, 0.133, _g(C, '#ffd86a', 1.4), 0.3, 10, caps=False)
+    node('attach')
+
+
+@acc('acc_headband', 'J_Bip_C_Head')
+def a_headband(C):
+    tube(C.M, (0, 0, 0.1), (0, 0, 0.13), 0.125, 0.125, _c(C, '#a02a2a'), 0.3, 12, caps=False)
+    obox(C.M, (0.12, 0.09, 0.07), (0.02, 0.1, 0.1), 0, _c(C, '#a02a2a'), 0.3)
+    node('attach')
+
+
+@acc('acc_glasses_round', 'J_Bip_C_Head')
+def a_glasses(C):
+    M = C.M
+    m = _m(C, '#3a3d44')
+    for sx in (-1, 1):
+        tube(M, (sx * 0.045, -0.115, 0.075), (sx * 0.045, -0.125, 0.075), 0.032, 0.032, m, 0.3, 10, caps=False)
+        tube(M, (sx * 0.045, -0.118, 0.075), (sx * 0.045, -0.12, 0.075), 0.028, 0.028, _g(C, '#cfe6ff', 0.9), 0.3, 10)
+    obox(M, (0, -0.122, 0.078), (0.03, 0.01, 0.008), 0, m, 0.3)
+    for sx in (-1, 1):
+        obox(M, (sx * 0.095, -0.06, 0.078), (0.008, 0.11, 0.008), 0, m, 0.3)
+    node('attach')
+
+
+@acc('acc_goggles', 'J_Bip_C_Head')
+def a_goggles(C):
+    M = C.M
+    for sx in (-1, 1):
+        tube(M, (sx * 0.05, -0.1, 0.1), (sx * 0.05, -0.135, 0.1), 0.045, 0.04, _m(C, '#6a5a3a'), 0.3, 10)
+        tube(M, (sx * 0.05, -0.132, 0.1), (sx * 0.05, -0.138, 0.1), 0.034, 0.034, _g(C, '#58e3ff', 1.3), 0.3, 10)
+    tube(M, (0, 0, 0.1), (0, 0, 0.125), 0.128, 0.128, _c(C, '#3a2a20'), 0.3, 12, caps=False)
+    node('attach')
+
+
+@acc('acc_mask_half', 'J_Bip_C_Head')
+def a_mask(C):
+    M = C.M
+    obox(M, (0, -0.118, 0.02), (0.15, 0.03, 0.08), 0, _c(C, '#e8e0d0'), 0.3)
+    for sx in (-1, 1):
+        obox(M, (sx * 0.06, -0.133, 0.045), (0.035, 0.005, 0.012), 0, _c(C, '#2a2a2a'), 0.3)
+    node('attach')
+
+
+@acc('acc_eyepatch', 'J_Bip_C_Head')
+def a_eyepatch(C):
+    M = C.M
+    obox(M, (0.045, -0.12, 0.075), (0.06, 0.012, 0.05), 0, _c(C, '#1a1a1a'), 0.3)
+    tube(M, (0, 0, 0.1), (0, 0, 0.115), 0.127, 0.127, _c(C, '#1a1a1a'), 0.3, 12, caps=False)
+    node('attach')
+
+
+@acc('acc_ear_cat', 'J_Bip_C_Head')
+def a_ear_cat(C):
+    M = C.M
+    for sx in (-1, 1):
+        tube(M, (sx * 0.07, 0.0, 0.2), (sx * 0.08, 0.0, 0.31), 0.05, 0.0, _c(C, '#c8a070'), 0.3, 4)
+        tube(M, (sx * 0.07, -0.01, 0.205), (sx * 0.077, -0.01, 0.285), 0.03, 0.0, _c(C, '#e8a0a0'), 0.3, 4)
+    node('attach')
+
+
+@acc('acc_ear_elf', 'J_Bip_C_Head')
+def a_ear_elf(C):
+    M = C.M
+    for sx in (-1, 1):
+        tube(M, (sx * 0.12, 0.0, 0.07), (sx * 0.24, 0.02, 0.15), 0.025, 0.0, _c(C, '#e8c8a8'), 0.3, 4)
+    node('attach')
+
+
+@acc('acc_horns', 'J_Bip_C_Head')
+def a_horns(C):
+    M = C.M
+    for sx in (-1, 1):
+        tube(M, (sx * 0.08, 0.0, 0.19), (sx * 0.15, 0.01, 0.27), 0.03, 0.018, _c(C, '#3a2a2a'), 0.3, 6)
+        tube(M, (sx * 0.15, 0.01, 0.27), (sx * 0.17, 0.02, 0.36), 0.018, 0.0, _c(C, '#3a2a2a'), 0.3, 6)
+    node('attach')
+
+
+@acc('acc_halo', 'J_Bip_C_Head')
+def a_halo(C):
+    tube(C.M, (0, 0, 0.36), (0, 0, 0.375), 0.14, 0.14, _g(C, '#ffe07a', 1.8), 0.3, 16, caps=False)
+    tube(C.M, (0, 0, 0.365), (0, 0, 0.38), 0.12, 0.12, _g(C, '#ffe07a', 1.8), 0.3, 16, caps=False)
+    node('attach')
+
+
+@acc('acc_crown', 'J_Bip_C_Head')
+def a_crown(C):
+    M = C.M
+    gm = _m(C, '#e6bc48', 1.4)
+    tube(M, (0, 0, 0.17), (0, 0, 0.21), 0.125, 0.12, gm, 0.3, 12)
+    for k in range(6):
+        a = 2 * math.pi * k / 6
+        tube(M, (math.cos(a) * 0.12, math.sin(a) * 0.12, 0.21), (math.cos(a) * 0.12, math.sin(a) * 0.12, 0.27), 0.022, 0.0, gm, 0.3, 4)
+    tube(M, (0, -0.125, 0.185), (0, -0.13, 0.195), 0.018, 0.012, _g(C, '#ff4a6a', 1.5), 0.3, 6)
+    node('attach')
+
+
+@acc('acc_ribbon', 'J_Bip_C_Head')
+def a_ribbon(C):
+    M = C.M
+    c = _c(C, '#e85a8a')
+    for sx in (-1, 1):
+        obox(M, (sx * 0.055, 0.1, 0.19), (0.09, 0.025, 0.07), -sx * 25, c, 0.3)
+    tube(M, (0, 0.1, 0.19), (0, 0.105, 0.19), 0.018, 0.018, c, 0.3, 6)
+    node('attach')
+
+
+@acc('acc_antenna', 'J_Bip_C_Head')
+def a_antenna(C):
+    M = C.M
+    for sx in (-1, 1):
+        tube(M, (sx * 0.1, 0.02, 0.1), (sx * 0.12, 0.0, 0.3), 0.01, 0.008, _m(C, '#8a94a2'), 0.3, 5)
+        tube(M, (sx * 0.12, 0.0, 0.3), (sx * 0.12, 0.0, 0.33), 0.02, 0.0, _g(C, '#58e3ff', 1.8), 0.3, 6)
+    node('attach')
+
+
+@acc('acc_holo_visor', 'J_Bip_C_Head')
+def a_visor(C):
+    M = C.M
+    obox(M, (0, -0.14, 0.07), (0.2, 0.01, 0.07), 0, _g(C, '#58e3ff', 1.4), 0.3)
+    for sx in (-1, 1):
+        obox(M, (sx * 0.105, -0.07, 0.07), (0.01, 0.14, 0.02), 0, _m(C, '#4a5a6a'), 0.3)
+    node('attach')
+
+
+@acc('acc_necklace', 'J_Bip_C_Neck')
+def a_necklace(C):
+    M = C.M
+    tube(M, (0, -0.02, 0.02), (0, -0.02, 0.035), 0.075, 0.075, _m(C, '#e6bc48', 1.3), 0.3, 12, caps=False)
+    tube(M, (0, -0.1, -0.045), (0, -0.1, 0.0), 0.025, 0.0, _g(C, '#58b8ff', 1.4), 0.3, 6)
+    node('attach')
+
+
+@acc('acc_scarf', 'J_Bip_C_Neck')
+def a_scarf(C):
+    M = C.M
+    c = _c(C, '#a02a2a')
+    tube(M, (0, 0, -0.02), (0, 0, 0.05), 0.085, 0.085, c, 0.4, 12)
+    obox(M, (0.04, 0.06, -0.2), (0.07, 0.025, 0.22), 8, c, 0.3)
+    obox(M, (0.0, 0.065, -0.17), (0.07, 0.025, 0.18), -6, _c(C, '#c04a4a'), 0.3)
+    node('attach')
+
+
+@acc('acc_cape_short', 'J_Bip_C_UpperChest')
+def a_cape_short(C):
+    M = C.M
+    obox(M, (0, 0.13, -0.38), (0.34, 0.025, 0.46), 0, _c(C, '#6a2a3a'), 0.4)
+    tube(M, (0, 0.02, 0.06), (0, 0.13, 0.06), 0.012, 0.012, _m(C, '#e6bc48'), 0.3, 5)
+    obox(M, (0, 0.1, 0.05), (0.3, 0.04, 0.05), 0, _c(C, '#4a1a28'), 0.3)
+    node('attach')
+
+
+@acc('acc_cape_long', 'J_Bip_C_UpperChest')
+def a_cape_long(C):
+    M = C.M
+    obox(M, (0, 0.14, -0.78), (0.38, 0.025, 0.86), 0, _c(C, '#2a3a6a'), 0.4)
+    obox(M, (0, 0.11, 0.04), (0.34, 0.05, 0.06), 0, _c(C, '#e8e0d0'), 0.3)
+    node('attach')
+
+
+@acc('acc_backpack', 'J_Bip_C_UpperChest')
+def a_backpack(C):
+    M = C.M
+    obox(M, (0, 0.17, -0.26), (0.3, 0.14, 0.38), 0, _c(C, '#6a5a3a'), 0.6)
+    obox(M, (0, 0.25, -0.1), (0.26, 0.04, 0.14), 0, _c(C, '#4a3a22'), 0.4)
+    tube(M, (0, 0.24, -0.4), (0, 0.24, -0.46), 0.1, 0.1, _c(C, '#a0a8b0'), 0.4, 10)
+    for sx in (-1, 1):
+        obox(M, (sx * 0.1, 0.0, -0.05), (0.04, 0.2, 0.05), 0, _c(C, '#4a3a22'), 0.3)
+    node('attach')
+
+
+@acc('acc_quiver', 'J_Bip_C_UpperChest')
+def a_quiver(C):
+    M = C.M
+    tube(M, (0.06, 0.16, -0.3), (-0.04, 0.2, 0.0), 0.06, 0.06, _c(C, '#5a3a22'), 0.4, 8)
+    for k in range(4):
+        tube(M, (-0.04 + 0.025 * (k % 2), 0.2, -0.01), (-0.07 + 0.025 * (k % 2) - 0.02 * k, 0.22, 0.14), 0.008, 0.008, _m(C, '#c8b88a'), 0.3, 4)
+        obox(M, (-0.07 + 0.025 * (k % 2) - 0.02 * k, 0.22, 0.13), (0.03, 0.01, 0.04), 0, _c(C, '#a02a2a'), 0.3)
+    node('attach')
+
+
+@acc('acc_wings_small', 'J_Bip_C_UpperChest')
+def a_wings(C):
+    M = C.M
+    for sx in (-1, 1):
+        for k, (ln, ang) in enumerate(((0.5, 25), (0.42, 5), (0.34, -15))):
+            obox(M, (sx * (0.12 + 0.16 * math.cos(math.radians(ang))), 0.16, -0.05 + 0.2 * math.sin(math.radians(ang))), (0.04, 0.012, ln), sx * (60 - 20 * k), _c(C, '#f0f0f8'), 0.3)
+    node('attach')
+
+
+@acc('acc_tail_fox', 'J_Bip_C_Hips')
+def a_tail_fox(C):
+    M = C.M
+    for z, r, y in ((0.0, 0.05, 0.1), (0.1, 0.09, 0.2), (0.22, 0.12, 0.3), (0.36, 0.09, 0.36)):
+        tube(M, (0, y - 0.06, z - 0.05), (0, y + 0.03, z + 0.1), r, r * 0.9, _c(C, '#c8783a'), 0.3, 8)
+    tube(M, (0, 0.38, 0.4), (0, 0.42, 0.52), 0.07, 0.0, _c(C, '#f2ead8'), 0.3, 8)
+    node('attach')
+
+
+@acc('acc_tail_cat', 'J_Bip_C_Hips')
+def a_tail_cat(C):
+    M = C.M
+    pts = [(0, 0.08, -0.02), (0, 0.2, 0.05), (0, 0.3, 0.2), (0, 0.32, 0.38), (0, 0.28, 0.52)]
+    for i in range(4):
+        tube(M, pts[i], pts[i + 1], 0.035 - 0.004 * i, 0.03 - 0.004 * i, _c(C, '#4a4a52'), 0.3, 6)
+    tube(M, pts[4], (0, 0.26, 0.58), 0.02, 0.0, _c(C, '#4a4a52'), 0.3, 6)
+    node('attach')
+
+
+@acc('acc_belt_pouch', 'J_Bip_C_Hips')
+def a_belt_pouch(C):
+    M = C.M
+    tube(M, (0, 0, -0.04), (0, 0, 0.02), 0.19, 0.19, _c(C, '#4a3a22'), 0.4, 12, caps=False)
+    obox(M, (0.17, -0.05, -0.14), (0.1, 0.08, 0.12), 0, _c(C, '#6a5a3a'), 0.4)
+    obox(M, (0.17, -0.05, -0.04), (0.1, 0.085, 0.03), 0, _c(C, '#4a3a22'), 0.3)
+    node('attach')
+
+
+@acc('acc_sash', 'J_Bip_C_Hips')
+def a_sash(C):
+    M = C.M
+    c = _c(C, '#c04a3a')
+    tube(M, (0, 0, -0.04), (0, 0, 0.04), 0.195, 0.195, c, 0.4, 12, caps=False)
+    obox(M, (-0.12, -0.19, -0.3), (0.06, 0.02, 0.3), -10, c, 0.3)
+    obox(M, (-0.04, -0.19, -0.26), (0.06, 0.02, 0.26), 6, _c(C, '#a0302a'), 0.3)
+    node('attach')
+
+
+@acc('acc_shoulder_gem', 'J_Bip_L_UpperArm', True)
+def a_shoulder_gem(C):
+    M = C.M
+    tube(M, (0.06, 0, 0.08), (0.06, 0, 0.1), 0.06, 0.06, _m(C, '#e6bc48', 1.3), 0.3, 8)
+    tube(M, (0.06, 0, 0.1), (0.06, 0, 0.15), 0.04, 0.0, _g(C, '#ff4a6a', 1.6), 0.3, 6)
+    node('attach')
+
+
+@acc('acc_shoulder_fur', 'J_Bip_L_UpperArm', True)
+def a_shoulder_fur(C):
+    M = C.M
+    c = _c(C, '#d8d0c0')
+    for k in range(6):
+        a = 2 * math.pi * k / 6
+        tube(M, (0.06 + math.cos(a) * 0.07, math.sin(a) * 0.07, 0.07), (0.06 + math.cos(a) * 0.09, math.sin(a) * 0.09, 0.0), 0.04, 0.02, c, 0.3, 5)
+    tube(M, (0.06, 0, 0.06), (0.06, 0, 0.11), 0.09, 0.05, c, 0.3, 8)
+    node('attach')
+
+
+@acc('acc_earring', 'J_Bip_C_Head', True)
+def a_earring(C):
+    M = C.M
+    tube(M, (0.115, 0.0, 0.03), (0.115, 0.0, -0.03), 0.01, 0.01, _m(C, '#e6bc48', 1.3), 0.3, 5)
+    tube(M, (0.115, 0.0, -0.03), (0.115, 0.0, -0.07), 0.022, 0.0, _g(C, '#58b8ff', 1.4), 0.3, 6)
+    node('attach')
+
+
+@acc('acc_jetpack_small', 'J_Bip_C_UpperChest')
+def a_jetpack(C):
+    M = C.M
+    for sx in (-1, 1):
+        tube(M, (sx * 0.09, 0.18, -0.4), (sx * 0.09, 0.18, 0.0), 0.06, 0.055, _m(C, '#8a94a2'), 0.4, 8)
+        tube(M, (sx * 0.09, 0.18, -0.4), (sx * 0.09, 0.18, -0.46), 0.055, 0.04, _g(C, '#58e3ff', 1.8), 0.3, 8)
+    obox(M, (0, 0.12, -0.1), (0.3, 0.05, 0.2), 0, _m(C, '#4a5a6a'), 0.4)
+    node('attach')
+
+
+@acc('acc_pauldron_spike', 'J_Bip_L_UpperArm', True)
+def a_pauldron_spike(C):
+    M = C.M
+    for k in range(3):
+        tube(M, (0.06 + 0.04 * (k - 1), 0, 0.1), (0.06 + 0.07 * (k - 1), 0, 0.22), 0.03, 0.0, _m(C, '#6a6a72'), 0.3, 5)
+    tube(M, (0.06, 0, 0.07), (0.06, 0, 0.11), 0.07, 0.06, _m(C, '#6a6a72'), 0.3, 8)
+    node('attach')
+
+
+@acc('acc_wrist_band', 'J_Bip_L_LowerArm', True)
+def a_wrist_band(C):
+    M = C.M
+    tube(M, (0.18, 0, 0), (0.23, 0, 0), 0.04, 0.04, _c(C, '#3a3a42'), 0.3, 8, caps=False)
+    tube(M, (0.2, 0, 0), (0.21, 0, 0), 0.043, 0.043, _g(C, '#58e3ff', 1.5), 0.3, 8, caps=False)
+    node('attach')
+
+
+def acc_names():
+    return list(ACC)
+
+
+# ---------------------------------------------------------------- 만들기
+
+ARMOR_IDS = [f'eq_{e}_{g}_{s}' for e in ERAS for g in (1, 2, 3) for s in SLOTS]
+ALL_IDS = ARMOR_IDS + acc_names()
+
+
+def build_scene(pid, out, style):
+    del NODES[:]
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    W._mat_cache.clear()
+    W.set_style(style)
+    C = BP.Ctx(pid)
+    meta = {}
+    if pid.startswith('eq_'):
+        _, era, g, slot = pid.split('_')
+        SLOT_FN[slot](C, Pal(C, era, int(g)))
+        meta = {'kind': 'armor', 'era': era, 'grade': int(g), 'slot': slot, 'bone': BONE[slot], 'mirror': MIRROR[slot]}
+        lim = 600
+    else:
+        f, bone, mirror = ACC[pid]
+        f(C)
+        meta = {'kind': 'accessory', 'bone': bone, 'mirror': mirror}
+        lim = 500
+    ob = C.M.build()
+    tris = sum(len(p.vertices) - 2 for p in ob.data.polygons)
+    pts = [Vector(c) for c in ob.bound_box]
+    lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
+    hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
+    size = [round(hi[i] - lo[i], 2) for i in range(3)]
+    objs = [ob]
+    for name, pos in NODES:
+        e = bpy.data.objects.new(name, None)
+        e.empty_display_type = 'ARROWS'
+        e.empty_display_size = 0.05
+        e.location = Vector(pos)
+        bpy.context.scene.collection.objects.link(e)
+        objs.append(e)
+    bpy.context.view_layer.objects.active = ob
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    W.export_glb(objs, out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
+    lic = {'id': pid, 'generator': BP.GENERATOR, 'blender': bpy.app.version_string, 'style': style, 'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)',
+           'inputs': sorted(f'polyhaven: {m}' for m in C.mats), 'size_m': size, 'tris': tris, 'nodes': [n[0] for n in NODES],
+           'origin': '붙일 뼈의 머리(T-자세 기준 몸, 인물 앞 = Blender -Y)'}
+    lic.update(meta)
+    json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    kb = os.path.getsize(out) // 1024
+    print('WORLDFORGE', json.dumps({'id': pid, 'tris': tris, 'size_m': size, 'kb': kb, 'ok': tris <= lim and (style != 'toon' or kb <= 300)}))
+
+
+if __name__ == '__main__':
+    style = arg('--style', 'real')
+    if '--list' in A:
+        print('ARMOR', ' '.join(ARMOR_IDS))
+        print('ACCESSORY', ' '.join(acc_names()))
+    elif '--all' in A:
+        d = arg('--out-dir')
+        for pid in ALL_IDS:
+            build_scene(pid, os.path.join(d, pid + '.glb'), style)
+    else:
+        build_scene(arg('--id'), arg('--out'), style)

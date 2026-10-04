@@ -2,7 +2,7 @@
  "version": 1,
  "note": "K-0017 단계 1 — 판 5 × (건물 3 · 지물 3 · 지형 2 · 탈것 1) = 45칸. 같은 id 는 한 번만 만든다(건물은 기존 레시피 재사용). 이름 정책: 원작 이름 없음, id 는 일반 명사. exists = recipes/ 에 이미 있음, new = 만들 것.",
  "budget": {"toon_glb_mb": 0.5, "toon_tris": 5000, "sprite_px": [128, 256], "tex_px": 256},
- "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py", "village": "build_village.py", "field": "build_field.py", "dkit": "build_field.py", "loot": "build_field.py", "interior": "build_interior.py", "furniture": "build_interior.py", "weapon": "build_weapon.py"},
+ "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py", "village": "build_village.py", "field": "build_field.py", "dkit": "build_field.py", "loot": "build_field.py", "interior": "build_interior.py", "furniture": "build_interior.py", "weapon": "build_weapon.py", "equip": "build_equip.py", "accessory": "build_equip.py"},
  "games": {
   "go": {
    "theme": "시대 혼합 마을(과거·현대·미래 한 자리)",
@@ -134,5 +134,15 @@
   "note": "K-0030 — 무기 9종 × 등급 3(보통·희귀·전설). build_weapon.py. 소켓 노드 grip·tip·up(활 nock·tip_low, 방패 face). 삼각형 ≤1500. 2D = AI 스프라이트.",
   "tris_max": 1500,
   "items": ["wpn_sword_common", "wpn_sword_rare", "wpn_sword_legend", "wpn_spear_common", "wpn_spear_rare", "wpn_spear_legend", "wpn_axe_common", "wpn_axe_rare", "wpn_axe_legend", "wpn_dagger_common", "wpn_dagger_rare", "wpn_dagger_legend", "wpn_bow_common", "wpn_bow_rare", "wpn_bow_legend", "wpn_staff_common", "wpn_staff_rare", "wpn_staff_legend", "wpn_gun_common", "wpn_gun_rare", "wpn_gun_legend", "wpn_shield_common", "wpn_shield_rare", "wpn_shield_legend", "wpn_gauntlet_common", "wpn_gauntlet_rare", "wpn_gauntlet_legend"]
+ },
+ "equip": {
+  "note": "K-0037 — 갑옷 조각 54(시대 3×등급 3×슬롯 6). build_equip.py. 원점=뼈 머리, 노드 attach. 삼각형 ≤600. 3D 전용(2D 층별 스프라이트는 후속).",
+  "tris_max": 600, "no_sprite": true,
+  "items": ["eq_past_1_head", "eq_past_1_chest", "eq_past_1_shoulder", "eq_past_1_arm", "eq_past_1_leg", "eq_past_1_boot", "eq_past_2_head", "eq_past_2_chest", "eq_past_2_shoulder", "eq_past_2_arm", "eq_past_2_leg", "eq_past_2_boot", "eq_past_3_head", "eq_past_3_chest", "eq_past_3_shoulder", "eq_past_3_arm", "eq_past_3_leg", "eq_past_3_boot", "eq_present_1_head", "eq_present_1_chest", "eq_present_1_shoulder", "eq_present_1_arm", "eq_present_1_leg", "eq_present_1_boot", "eq_present_2_head", "eq_present_2_chest", "eq_present_2_shoulder", "eq_present_2_arm", "eq_present_2_leg", "eq_present_2_boot", "eq_present_3_head", "eq_present_3_chest", "eq_present_3_shoulder", "eq_present_3_arm", "eq_present_3_leg", "eq_present_3_boot", "eq_future_1_head", "eq_future_1_chest", "eq_future_1_shoulder", "eq_future_1_arm", "eq_future_1_leg", "eq_future_1_boot", "eq_future_2_head", "eq_future_2_chest", "eq_future_2_shoulder", "eq_future_2_arm", "eq_future_2_leg", "eq_future_2_boot", "eq_future_3_head", "eq_future_3_chest", "eq_future_3_shoulder", "eq_future_3_arm", "eq_future_3_leg", "eq_future_3_boot"]
+ },
+ "accessory": {
+  "note": "K-0037 — 악세사리 소품 33(모자·안경·귀·꼬리·어깨·망토 등). build_equip.py. 삼각형 ≤500. 3D 전용.",
+  "tris_max": 500, "no_sprite": true,
+  "items": ["acc_cap", "acc_hat_wide", "acc_hat_pointed", "acc_headband", "acc_glasses_round", "acc_goggles", "acc_mask_half", "acc_eyepatch", "acc_ear_cat", "acc_ear_elf", "acc_horns", "acc_halo", "acc_crown", "acc_ribbon", "acc_antenna", "acc_holo_visor", "acc_necklace", "acc_scarf", "acc_cape_short", "acc_cape_long", "acc_backpack", "acc_quiver", "acc_wings_small", "acc_tail_fox", "acc_tail_cat", "acc_belt_pouch", "acc_sash", "acc_shoulder_gem", "acc_shoulder_fur", "acc_earring", "acc_jetpack_small", "acc_pauldron_spike", "acc_wrist_band"]
  }
 }

@@ -1,0 +1,62 @@
+{
+ "note": "K-0037 장비 외형 규약 — 조각 원점 = 붙일 뼈의 머리(T-자세), 인물 앞 = Blender -Y(glTF +Z). 몸마다 균등 배율 = 몸 `J_Bip_C_Head` 뼈 높이 / ref_head_bone_height_m. 생성: tools/world-forge/build_equip.py",
+ "ref_head_bone_height_m": 1.5,
+ "scale_rule": "uniform = head_bone_world_z / 1.50",
+ "mirror_rule": "mirror:true 조각은 왼쪽 한 짝 — 오른쪽 뼈(J_Bip_R_*)에 X 배율 -1 로 붙인다(삼각형 감김이 뒤집히니 엔진은 뒷면 컬링 끔 또는 법선 반전)",
+ "node": "attach (원점)",
+ "armor_slots": {
+  "head": {
+   "bone": "J_Bip_C_Head",
+   "mirror": false,
+   "hides": [
+    "hair_top"
+   ]
+  },
+  "chest": {
+   "bone": "J_Bip_C_Chest",
+   "mirror": false,
+   "hides": [
+    "clothing_top"
+   ]
+  },
+  "shoulder": {
+   "bone": "J_Bip_L_UpperArm",
+   "mirror": true,
+   "hides": []
+  },
+  "arm": {
+   "bone": "J_Bip_L_LowerArm",
+   "mirror": true,
+   "hides": [
+    "clothing_sleeve"
+   ]
+  },
+  "leg": {
+   "bone": "J_Bip_L_LowerLeg",
+   "mirror": true,
+   "hides": [
+    "clothing_bottom_lower"
+   ]
+  },
+  "boot": {
+   "bone": "J_Bip_L_Foot",
+   "mirror": true,
+   "hides": [
+    "clothing_shoes"
+   ]
+  }
+ },
+ "accessory_bones": [
+  "J_Bip_C_Head",
+  "J_Bip_C_Neck",
+  "J_Bip_C_UpperChest",
+  "J_Bip_C_Hips",
+  "J_Bip_L_UpperArm",
+  "J_Bip_L_LowerArm"
+ ],
+ "layering": "위에서 아래로 갑옷 > 악세사리 > 옷. hides 는 그 슬롯을 입으면 숨길 옷 조각 분류(엔진 쪽 옷 분류 이름과 맞춘다).",
+ "ids": {
+  "armor": "eq_<past|present|future>_<1|2|3>_<슬롯>",
+  "accessory": "acc_<이름>"
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "id": "acc_sash",
+ "generator": "tools/world-forge/build_equip.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: white_stucco"
+ ],
+ "size_m": [
+  0.39,
+  0.4,
+  0.34
+ ],
+ "tris": 48,
+ "nodes": [
+  "attach"
+ ],
+ "origin": "붙일 뼈의 머리(T-자세 기준 몸, 인물 앞 = Blender -Y)",
+ "kind": "accessory",
+ "bone": "J_Bip_C_Hips",
+ "mirror": false
+}

@@ -1,0 +1,28 @@
+{
+ "id": "eq_present_3_head",
+ "generator": "tools/world-forge/build_equip.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: black_painted_planks",
+  "polyhaven: concrete_wall_001",
+  "polyhaven: white_stucco"
+ ],
+ "size_m": [
+  0.28,
+  0.29,
+  0.33
+ ],
+ "tris": 146,
+ "nodes": [
+  "attach"
+ ],
+ "origin": "붙일 뼈의 머리(T-자세 기준 몸, 인물 앞 = Blender -Y)",
+ "kind": "armor",
+ "era": "present",
+ "grade": 3,
+ "slot": "head",
+ "bone": "J_Bip_C_Head",
+ "mirror": false
+}
