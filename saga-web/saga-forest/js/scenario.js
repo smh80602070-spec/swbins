@@ -274,6 +274,7 @@
   function paint() {
     var e = boxEl();
     if (!e) { return; }
+    e.style.background = cur && global.DG.cutscene ? global.DG.cutscene.css('forest', cur.ch) : '';   // W-0048 장에 맞는 컷신 배경(없으면 지금 배경)
     if (!cur) { e.classList.remove('show'); e.innerHTML = ''; return; }
     var ln = cur.lines[cur.i], who = ln[0], npc = who === 'me' ? { name: leaderName(), emoji: '🧑' } : (CD().CAST[who] || { name: '?', emoji: '💬' });
     e.innerHTML = '<div class="scn-title">' + esc2(cur.title) + '</div>' +
@@ -289,7 +290,7 @@
 
   function play(id, title, lines, done, choice) {
     if (cur || !lines || !lines.length || global.DG_NO_DRAW && global.DG_NO_SCENE) { return false; }
-    cur = { id: id, title: title, lines: lines, i: 0, done: done, choice: choice || null, pick: false };
+    cur = { id: id, title: title, lines: lines, i: 0, done: done, choice: choice || null, pick: false, ch: (current() || {}).id };
     paint();
     return true;
   }

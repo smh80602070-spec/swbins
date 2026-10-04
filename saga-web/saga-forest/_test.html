@@ -104,6 +104,7 @@ window.DG_NO_TUNE = true;
 <script src="js/festival.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/scenario.js"></script>
+<script src="js/cutscene.js"></script>
 <script src="js/tutorial.js"></script>
 <script src="js/visitor.js"></script>
 <script src="js/town.js"></script>
@@ -6756,6 +6757,14 @@ window.DG_NO_TUNE = true;
         r = gone && kept;
       } finally { localStorage.setItem(key, raw0); C.load(); if (had === null) { localStorage.removeItem(key); } else { localStorage.setItem(key, had); } }
       return r === true && ('옛 세이브 안내 칸 없음 · 새 세이브 칸 유지');
+    });
+
+    t('컷신 배경(W-0048) — 표의 장 id 는 전부 실제 장이고 모든 장이 그림 주소를 갖는다, 모르는 장은 비어 있다', function () {
+      var CU = DG.cutscene, ids = DG.scenarioData.CHAPTERS.map(function (c) { return c.id; }), tbl = CU.CUTS['forest'], bad = [], pre = 'assets/cutscene/cut_forest_';
+      Object.keys(tbl).forEach(function (k) { if (ids.indexOf(k) < 0) { bad.push('표에만 ' + k); } });
+      ids.forEach(function (id) { var u = CU.url('forest', id); if (!u || u.indexOf(pre) !== 0 || u.slice(-5) !== '.webp') { bad.push('장 ' + id + ' ' + u); } });
+      return bad.length === 0 && CU.css('forest', 'nope') === '' && CU.css('forest', '') === '' && CU.url('other', ids[0]) === null && CU.css('forest', ids[0]).indexOf('url(assets/cutscene/') > 0 &&
+        (ids.length + '장 모두 그림 · 모르는 장·판은 비어 있음');
     });
 
     t('런타임 에러 없음', function () {

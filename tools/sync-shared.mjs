@@ -29,6 +29,7 @@ const FILES = [
   ['js/assets3d.js', 'js/assets3d.js'],
   ['js/ai.js', 'js/ai.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story']],   // R-4 — 네 판이 글자까지 같다(사가국지는 따로 갈라짐)
   ['js/mode2d.js', 'js/mode2d.js', ['saga-story', 'saga-dungeon', 'saga-go', 'saga-forest', 'saga-realm']],   // W-0019 — 2D 시트 부품(사가스토리부터, 다른 판은 배선하며 판 목록에 추가)
+  ['js/cutscene.js', 'js/cutscene.js', ['saga-dungeon', 'saga-forest']],   // W-0048 — 이야기 장면 컷신 배경(K-0044), 다른 판은 장면 상자를 잇는 티켓에서 판 목록에 추가
   ['js/perf-hud.js', 'js/perf.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // 재기 표시(?perf) — 네 벌이 글자까지 같다(사가고 perf.js 는 품질 자동조절이 든 다른 파일)
   ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/post3d.js', 'js/post3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
@@ -145,6 +146,22 @@ for (const g of Object.keys(MOVING_GAMES)) {
       fs.copyFileSync(from, to);
       copied++;
     }
+  }
+}
+/** 컷신 배경(K-0044, W-0048) — 판이 쓰는 접두어(cut_<판>_)의 12장만 `<판>/assets/cutscene/` 로 복사한다. 판 → 이름 조각 */
+const CUT_GAMES = { 'saga-dungeon': 'dungeon', 'saga-forest': 'forest' };
+for (const g of Object.keys(CUT_GAMES)) {
+  const dir = path.join(WEB, 'shared', 'assets', 'cutscene');
+  if (!fs.existsSync(dir)) continue;
+  for (const f of fs.readdirSync(dir)) {
+    if (!f.startsWith('cut_' + CUT_GAMES[g] + '_') || !f.endsWith('.webp')) continue;
+    total++;
+    const from = path.join(dir, f), to = path.join(WEB, g, 'assets', 'cutscene', f);
+    if (fs.existsSync(to) && fs.readFileSync(to).equals(fs.readFileSync(from))) continue;
+    if (check) { console.log(`DIFF ${g}/assets/cutscene/${f} ≠ shared`); bad++; continue; }
+    fs.mkdirSync(path.dirname(to), { recursive: true });
+    fs.copyFileSync(from, to);
+    copied++;
   }
 }
 /** 건물 실내 그림(K-0025, W-0045) — 판이 쓰는 방 그림과 앞가림 층(_front)만 `<판>/assets/web2d/interior/` 로 복사한다. 판 → 방 id */
