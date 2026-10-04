@@ -1,0 +1,12 @@
+{
+ "id": "dungeon/card",
+ "generator": "tools/asset-forge/uigen.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "theme": "dungeon",
+ "game": "saga-dungeon",
+ "part": "card",
+ "size": [
+  160,
+  224
+ ]
+}

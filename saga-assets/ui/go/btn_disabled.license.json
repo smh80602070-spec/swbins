@@ -1,0 +1,12 @@
+{
+ "id": "go/btn_disabled",
+ "generator": "tools/asset-forge/uigen.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "theme": "go",
+ "game": "saga-go",
+ "part": "btn_disabled",
+ "size": [
+  96,
+  96
+ ]
+}

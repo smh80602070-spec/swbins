@@ -511,6 +511,29 @@
    ]
   },
   {
+   "id": "ui-skin",
+   "src": "saga-assets/ui",
+   "recursive": true,
+   "include": [
+    "*.png",
+    "*.json"
+   ],
+   "note": "K-0040 UI 스킨 — 부품 19 × 테마 5(go·dungeon·forest·story·realm), 9분할 메타 ui_parts.json. Unity 스프라이트 설정은 U 갈래",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/ui"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/ui_skin",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,

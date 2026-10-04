@@ -1,0 +1,12 @@
+{
+ "id": "dungeon/gauge_fill_mp",
+ "generator": "tools/asset-forge/uigen.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "theme": "dungeon",
+ "game": "saga-dungeon",
+ "part": "gauge_fill_mp",
+ "size": [
+  256,
+  20
+ ]
+}

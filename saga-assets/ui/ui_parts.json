@@ -1,0 +1,171 @@
+{
+ "note": "K-0040 UI 부품 규격 — slice = 9분할 모서리 px(x14 = 가로 3분할 양 끝 14px). min_touch_px = 버튼 최소 한 변(폰 가로 48dp @2x)",
+ "min_touch_px": 96,
+ "parts": {
+  "window": {
+   "size": [
+    192,
+    192
+   ],
+   "slice": 32
+  },
+  "popup": {
+   "size": [
+    256,
+    192
+   ],
+   "slice": 36
+  },
+  "card": {
+   "size": [
+    160,
+    224
+   ],
+   "slice": 28
+  },
+  "tab_on": {
+   "size": [
+    120,
+    44
+   ],
+   "slice": 14
+  },
+  "tab_off": {
+   "size": [
+    120,
+    44
+   ],
+   "slice": 14
+  },
+  "btn_normal": {
+   "size": [
+    96,
+    96
+   ],
+   "slice": 24
+  },
+  "btn_hover": {
+   "size": [
+    96,
+    96
+   ],
+   "slice": 24
+  },
+  "btn_pressed": {
+   "size": [
+    96,
+    96
+   ],
+   "slice": 24
+  },
+  "btn_disabled": {
+   "size": [
+    96,
+    96
+   ],
+   "slice": 24
+  },
+  "grade_1": {
+   "size": [
+    128,
+    160
+   ],
+   "slice": 24
+  },
+  "grade_2": {
+   "size": [
+    128,
+    160
+   ],
+   "slice": 24
+  },
+  "grade_3": {
+   "size": [
+    128,
+    160
+   ],
+   "slice": 24
+  },
+  "grade_4": {
+   "size": [
+    128,
+    160
+   ],
+   "slice": 24
+  },
+  "grade_5": {
+   "size": [
+    128,
+    160
+   ],
+   "slice": 24
+  },
+  "gauge_frame": {
+   "size": [
+    256,
+    28
+   ],
+   "slice": "x14"
+  },
+  "gauge_fill_hp": {
+   "size": [
+    256,
+    20
+   ],
+   "slice": null
+  },
+  "gauge_fill_mp": {
+   "size": [
+    256,
+    20
+   ],
+   "slice": null
+  },
+  "gauge_fill_xp": {
+   "size": [
+    256,
+    20
+   ],
+   "slice": null
+  },
+  "bubble": {
+   "size": [
+    192,
+    112
+   ],
+   "slice": 28
+  }
+ },
+ "themes": {
+  "go": {
+   "game": "saga-go",
+   "trim": "#7fd8d0",
+   "panel_top": "#1c3a44",
+   "accent": "#ffd166"
+  },
+  "dungeon": {
+   "game": "saga-dungeon",
+   "trim": "#c0463a",
+   "panel_top": "#2a1214",
+   "accent": "#ff8a3a"
+  },
+  "forest": {
+   "game": "saga-forest",
+   "trim": "#e8d8a0",
+   "panel_top": "#2f4a2c",
+   "accent": "#9bd35a"
+  },
+  "story": {
+   "game": "saga-story",
+   "trim": "#7fb8ff",
+   "panel_top": "#1c2a4a",
+   "accent": "#ffb347"
+  },
+  "realm": {
+   "game": "saga-realm",
+   "trim": "#d8b56a",
+   "panel_top": "#261d14",
+   "accent": "#c04a3a"
+  }
+ }
+}
