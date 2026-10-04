@@ -17,3 +17,6 @@ Thumbs.db
 # CharactersRealistic 과 같은 이유로 로컬 전용(리타겟해도 모션 자체는 Mixamo 것)
 assets/_mixamo_src/
 assets/characters_vroid/anim/
+
+# 웹 인물 엔진판(로컬 산출물 — tools/char-forge/engine_characters.sh --install)
+assets/characters_dex/

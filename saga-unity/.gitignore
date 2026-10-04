@@ -85,3 +85,7 @@ sysinfo.txt
 # OS
 .DS_Store
 Thumbs.db
+
+# 웹 인물 엔진판(로컬 산출물 — tools/char-forge/engine_characters.sh --install)
+Assets/Art/CharactersDex/
+Assets/Art/CharactersDex.meta
