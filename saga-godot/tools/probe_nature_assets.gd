@@ -1,7 +1,7 @@
 extends SceneTree
 ## G-0017 자연 소품 교체 점검 — godot --headless --path saga-godot --script res://tools/probe_nature_assets.gd → "PROBE nature_assets OK" / "FAIL n"
 ## ① vegetation_builder 의 나무 표(마을·고원·폐허)가 전부 열리고 높이×배율 4.9~5.65m(옛 목표 5.52m, 활엽02 는 수관이 넓어 일부러 5.0m) ② 바위 둘이 열리고 높이×배율 ≈ 0.67m
-## ③ clutter·하층·들꽃·관목 표 전부 열리고 높이×배율이 0.2~1.7m 안 ④ 마을 나무 표에 옛 variants 경로가 없다
+## ③ clutter·하층·들꽃·관목 표 전부 열리고 높이×배율이 0.2~1.7m 안 ④ 마을 나무 표에 옛 variants 경로가 없다 ⑤ G-0021 폐허·마을 소품 표가 전부 새 world GLB(높이×배율 0.05~2.0m)
 
 const VB := preload("res://games/saga_go/world/vegetation_builder.gd")
 
@@ -60,5 +60,13 @@ func _init() -> void:
 	for tbl: Array in [VB.UNDERSTORY, VB.WILDFLOWERS, VB.SHRUBS]:
 		for v: Dictionary in tbl:
 			_check("하층·들꽃·관목", v.glb, v.scale, 0.2, 1.7)
+	## ⑤ G-0021 폐허·마을 표(비석·돌무더기·담·울타리·디딤돌)가 전부 새 world GLB 이고 열리며, 높이×배율이 0.05~2.0m 안
+	for tbl: Array in [[VB.STELE_GLB_A], [VB.STELE_GLB_B], VB.RUBBLE_ROCK_GLB, VB.WALL_FENCE_GLB, VB.VILLAGE_PATH_GLB]:
+		for e: Array in tbl:
+			if not String(e[0]).begins_with("res://assets/world/"):
+				fails += 1
+				print("  FAIL G-0021 표에 world 밖 경로 ", e[0])
+				continue
+			_check("G-0021 표", String(e[0]), float(e[1]), 0.05, 2.0)
 	print("PROBE nature_assets ", "OK" if fails == 0 else "FAIL %d" % fails)
 	quit(1 if fails > 0 else 0)

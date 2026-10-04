@@ -118,9 +118,10 @@ const CLUTTER_DENSITY := 6  # 평지 칸 6개 중 1개꼴에만 놓는다(FOREST
 ## 흩뿌린다. 나무·바위와 달리 별도 스케일 역산이 필요 없다 — make_stele()이
 ## 이미 실제 미터(기본 높이 1.6m)로 지어 102-1 "사람 1.7m" 세계에 그대로
 ## 맞는다. 두 씨앗(s1·s2)을 섞어 전부 똑같은 비석으로 안 보이게 한다.
-const STELE_GLB_A := "res://assets/generated/props/stele_s1_01.glb"
-const STELE_GLB_B := "res://assets/generated/props/stele_s2_02.glb"
-const STELE_COLOR := Color(0.55, 0.53, 0.5)  # rock 회색과 같은 톤(102-1 팔레트 확정 전 임시)
+## G-0021 — 옛 procgen 소품 대신 K-0053·K-0057 통일 툰 GLB(텍스처 있음 → 평평한 material_override 는 걷어냄).
+## 아래 `[GLB, 배율]` 배열의 배율은 옛 모델과 같은 크기로 보이게 하는 값(실측 AABB 높이 비, WorldAsset.MAP 과 같은 값).
+const STELE_GLB_A := ["res://assets/world/stele_01.glb", 0.566]
+const STELE_GLB_B := ["res://assets/world/stele_01.glb", 0.664]
 ## 폐허 바닥(R)은 지역 전체에 21칸뿐(7×7 지도, 실측)이라 clutter 1/6
 ## 비율로는(실측: 헤드리스로 직접 세어 봄) 겨우 1개만 나온다 — 표본이
 ## 작아 기대값 언저리에서도 쉽게 빈다. 1/3로 올려 실측 5개로 확인.
@@ -136,20 +137,20 @@ const RUINS_DEBRIS_DENSITY := 3
 ##    담장·울타리"로, 이미 있는 Rock_Medium(_scatter_rocks)과 섞여 서서
 ##    "폐허를 둘러싼 담이 무너져 바위처럼 나뒹군다"는 그림을 만든다.
 const RUBBLE_ROCK_GLB := [
-	"res://assets/generated/props/rock_s1_01.glb",
-	"res://assets/generated/props/rock_s2_02.glb",
-	"res://assets/generated/props/rock_s3_03.glb",
-	"res://assets/generated/props/rock_s4_04.glb",
+	["res://assets/world/rock_small_01.glb", 1.4],
+	["res://assets/world/rock_moss_01.glb", 0.6],
+	["res://assets/world/rock_large_01.glb", 0.4],
+	["res://assets/world/rock_small_01.glb", 1.3],
+	["res://assets/world/rubble_pillar_01.glb", 0.6],
 ]
 const RUBBLE_DENSITY := 4  # R 칸 1/4 — stele(1/3)보다 성기게, 화면이 안 빽빽하게
 const WALL_FENCE_GLB := [
-	"res://assets/generated/props/wall_s1_01.glb",
-	"res://assets/generated/props/wall_s2_02.glb",
-	"res://assets/generated/props/fence_s1_01.glb",
-	"res://assets/generated/props/fence_s2_02.glb",
+	["res://assets/world/rubble_wall_01.glb", 0.7],
+	["res://assets/world/low_stone_wall_01.glb", 1.15],
+	["res://assets/world/wood_fence_01.glb", 0.82],
+	["res://assets/world/iron_fence_01.glb", 0.43],
 ]
 const WALL_FENCE_DENSITY := 3  # ^ 테두리 1/3
-const RUBBLE_COLOR := Color(0.4, 0.37, 0.34)
 
 ## PLAN 105 Q-d 5단계 — 09-20⑮에서 "마을 정원길 후보로 쓸 만함"으로만
 ## 못박아 두고 안 물렸던 Pebble_Square_1·RockPath_Square_Wide(go_village
@@ -164,22 +165,11 @@ const RUBBLE_COLOR := Color(0.4, 0.37, 0.34)
 ## 중 "산책로" 계열(Pebble_Square·RockPath_*)을 마저 다 얹었다. 전부
 ## trimesh 재확인(0.28~2.09m 사방, 이미 같은 사람 스케일) — scale=1.0
 ## 그대로, 코드 변경 없이 배열만 늘렸다(선택 로직이 배열 크기에 안 묶임).
+## G-0021 — 옛 Quaternius RockPath·Pebble 15종 대신 통일 툰 디딤돌 둘 + 조약돌(크기는 옛 0.3~2m 대에 맞춤).
 const VILLAGE_PATH_GLB := [
-	"res://assets/generated/variants/RockPath_Square_Wide__go_village.glb",
-	"res://assets/generated/variants/Pebble_Square_1__go_village.glb",
-	"res://assets/generated/variants/Pebble_Square_2__go_village.glb",
-	"res://assets/generated/variants/Pebble_Square_3__go_village.glb",
-	"res://assets/generated/variants/Pebble_Square_4__go_village.glb",
-	"res://assets/generated/variants/Pebble_Square_5__go_village.glb",
-	"res://assets/generated/variants/Pebble_Square_6__go_village.glb",
-	"res://assets/generated/variants/RockPath_Round_Small_1__go_village.glb",
-	"res://assets/generated/variants/RockPath_Round_Small_2__go_village.glb",
-	"res://assets/generated/variants/RockPath_Round_Small_3__go_village.glb",
-	"res://assets/generated/variants/RockPath_Round_Thin__go_village.glb",
-	"res://assets/generated/variants/RockPath_Square_Small_1__go_village.glb",
-	"res://assets/generated/variants/RockPath_Square_Small_2__go_village.glb",
-	"res://assets/generated/variants/RockPath_Square_Small_3__go_village.glb",
-	"res://assets/generated/variants/RockPath_Square_Thin__go_village.glb",
+	["res://assets/world/stepping_stone_01.glb", 0.7],
+	["res://assets/world/stepping_stone_02.glb", 0.9],
+	["res://assets/world/pebbles_01.glb", 0.5],
 ]
 const VILLAGE_PATH_DENSITY := 12  # "." 칸 1/12
 
@@ -502,6 +492,11 @@ func _scatter_rocks() -> void:
 		add_child(_build_rock_multimesh(small_mesh, small_positions, "RocksSmall"))
 
 
+## `[GLB, 배율]` 항목의 방향(yaw) + 배율 기저.
+static func _yaw_scaled(yaw: float, ent: Array) -> Basis:
+	return Basis(Vector3.UP, yaw).scaled(Vector3.ONE * float(ent[1]))
+
+
 func _build_rock_multimesh(mesh: Mesh, transforms: Array[Transform3D], node_name: String) -> MultiMeshInstance3D:
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
@@ -580,13 +575,13 @@ func _scatter_village_path() -> void:
 			var pos := _on_ground(x, y, Vector3(jx, 0.0, jz))
 			var yaw := _hash(x, y, 953) * TAU
 			var variant := int(_hash(x, y, 954) * VILLAGE_PATH_GLB.size()) % VILLAGE_PATH_GLB.size()
-			(xf_by_variant[variant] as Array[Transform3D]).append(Transform3D(Basis(Vector3.UP, yaw), pos))
+			(xf_by_variant[variant] as Array[Transform3D]).append(Transform3D(_yaw_scaled(yaw, VILLAGE_PATH_GLB[variant]), pos))
 
 	for i in VILLAGE_PATH_GLB.size():
 		var xforms: Array[Transform3D] = xf_by_variant[i]
 		if xforms.is_empty():
 			continue
-		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(VILLAGE_PATH_GLB[i]))
+		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(String(VILLAGE_PATH_GLB[i][0])))
 		if mesh == null:
 			continue
 		add_child(_build_rock_multimesh(mesh, xforms, "VillagePath%d" % i))
@@ -837,29 +832,23 @@ func _scatter_ruins_debris() -> void:
 	if positions.is_empty():
 		return
 
-	var mesh_a := GLBUtils.with_lods(GLBUtils.extract_mesh(STELE_GLB_A))
-	var mesh_b := GLBUtils.with_lods(GLBUtils.extract_mesh(STELE_GLB_B))
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = STELE_COLOR
+	var mesh_a := GLBUtils.with_lods(GLBUtils.extract_mesh(String(STELE_GLB_A[0])))
+	var mesh_b := GLBUtils.with_lods(GLBUtils.extract_mesh(String(STELE_GLB_B[0])))
 
 	var xf_a: Array[Transform3D] = []
 	var xf_b: Array[Transform3D] = []
 	for i in positions.size():
-		var basis := Basis(Vector3.UP, yaws[i])
-		var xf := Transform3D(basis, positions[i])
+		var ent: Array = STELE_GLB_B if use_b[i] else STELE_GLB_A
+		var xf := Transform3D(_yaw_scaled(yaws[i], ent), positions[i])
 		if use_b[i]:
 			xf_b.append(xf)
 		else:
 			xf_a.append(xf)
 
 	if mesh_a != null and not xf_a.is_empty():
-		var mmi_a := _build_rock_multimesh(mesh_a, xf_a, "RuinsDebrisA")
-		mmi_a.material_override = mat
-		add_child(mmi_a)
+		add_child(_build_rock_multimesh(mesh_a, xf_a, "RuinsDebrisA"))
 	if mesh_b != null and not xf_b.is_empty():
-		var mmi_b := _build_rock_multimesh(mesh_b, xf_b, "RuinsDebrisB")
-		mmi_b.material_override = mat
-		add_child(mmi_b)
+		add_child(_build_rock_multimesh(mesh_b, xf_b, "RuinsDebrisB"))
 
 
 ## procgen.py make_rock() — 이코사구 노이즈 바위, 씨앗마다 정점색을 이미
@@ -887,20 +876,20 @@ func _scatter_ruins_rubble() -> void:
 			var pos := _on_ground(x, y, Vector3(jx, 0.0, jz))
 			var yaw := _hash(x, y, 723) * TAU
 			var variant := int(_hash(x, y, 724) * RUBBLE_ROCK_GLB.size()) % RUBBLE_ROCK_GLB.size()
-			(xf_by_variant[variant] as Array[Transform3D]).append(Transform3D(Basis(Vector3.UP, yaw), pos))
+			(xf_by_variant[variant] as Array[Transform3D]).append(Transform3D(_yaw_scaled(yaw, RUBBLE_ROCK_GLB[variant]), pos))
 
 	for i in RUBBLE_ROCK_GLB.size():
 		var xforms: Array[Transform3D] = xf_by_variant[i]
 		if xforms.is_empty():
 			continue
-		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(RUBBLE_ROCK_GLB[i]))
+		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(String(RUBBLE_ROCK_GLB[i][0])))
 		if mesh == null:
 			continue
 		add_child(_build_rock_multimesh(mesh, xforms, "RuinsRubble%d" % i))
 
 
 ## procgen.py make_wall()/make_fence() — 담장·울타리 한 칸씩(103-1 헤더
-## 참고), 정점색 없이 임포트되니 stele처럼 flat material_override가
+## 참고), G-0021 이후 텍스처 툰 GLB 라 재질을 덮지 않는다(옛 정점색 없는 GLB 는 flat material_override 가
 ## 필요하다. _scatter_rocks()가 이미 세우는 Rock_Medium과 같은 "^"
 ## 테두리 칸에 섞어 놓아 "폐허를 둘러싼 담이 무너져 바위 사이에 뒹군다"는
 ## 그림을 만든다 — stele·rubble(R 바닥)과는 자리가 겹치지 않는다.
@@ -925,17 +914,13 @@ func _scatter_ruins_wall_fence() -> void:
 			pos.y = TerrainBuilder.height_at(region_id, pos)
 			var yaw := _hash(x, y, 743) * TAU
 			var variant := int(_hash(x, y, 744) * WALL_FENCE_GLB.size()) % WALL_FENCE_GLB.size()
-			(xf_by_variant[variant] as Array[Transform3D]).append(Transform3D(Basis(Vector3.UP, yaw), pos))
+			(xf_by_variant[variant] as Array[Transform3D]).append(Transform3D(_yaw_scaled(yaw, WALL_FENCE_GLB[variant]), pos))
 
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = RUBBLE_COLOR
 	for i in WALL_FENCE_GLB.size():
 		var xforms: Array[Transform3D] = xf_by_variant[i]
 		if xforms.is_empty():
 			continue
-		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(WALL_FENCE_GLB[i]))
+		var mesh := GLBUtils.with_lods(GLBUtils.extract_mesh(String(WALL_FENCE_GLB[i][0])))
 		if mesh == null:
 			continue
-		var mmi := _build_rock_multimesh(mesh, xforms, "RuinsWallFence%d" % i)
-		mmi.material_override = mat
-		add_child(mmi)
+		add_child(_build_rock_multimesh(mesh, xforms, "RuinsWallFence%d" % i))

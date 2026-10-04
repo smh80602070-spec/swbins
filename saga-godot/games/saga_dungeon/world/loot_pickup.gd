@@ -47,7 +47,7 @@ const OUTLINE_SHADER := preload("res://saga_core/shaders/cel_outline.gdshader")
 const LEGENDARY_TIER_KEY := 4 # DungeonItems.TIERS[4] == "전설"
 
 ## 2026-09-20 — 101-3 G "성장 가시화". 무기 노획물은 등급색 박스 대신
-## KayKit 무기 GLB(103-3 킷배싱, ASSET_GUIDE 해당 날짜)를 쓴다. dungeon_
+## 무기 GLB 를 쓴다(G-0021 이후 K-0057 의 바닥에 눕는 `loot_*_g0~4` 통일 툰 모델 — 옛 KayKit 은 손에 쥐는 자세였다). dungeon_
 ## items.gd BASES의 `look` 값(sword/axe/club/spear/halberd/guandao/
 ## bow/fan/brush/scroll/staff)을 확보한 4종(sword_1handed·axe_1handed·
 ## dagger·staff)으로 근사 매핑한 첫 시안 — 정확한 1:1 대응은 아니고
@@ -62,32 +62,32 @@ const LEGENDARY_TIER_KEY := 4 # DungeonItems.TIERS[4] == "전설"
 ## (const로) 불릴 때 20개 전부 항상 같은 순서로 실리므로 로그가 결정적이다.
 const WEAPON_GLB_SCENES := {
 	"sword_1handed": [
-		preload("res://assets/generated/variants/sword_1handed__g0.glb"),
-		preload("res://assets/generated/variants/sword_1handed__g1.glb"),
-		preload("res://assets/generated/variants/sword_1handed__g2.glb"),
-		preload("res://assets/generated/variants/sword_1handed__g3.glb"),
-		preload("res://assets/generated/variants/sword_1handed__g4.glb"),
+		preload("res://assets/world/loot_sword_g0.glb"),
+		preload("res://assets/world/loot_sword_g1.glb"),
+		preload("res://assets/world/loot_sword_g2.glb"),
+		preload("res://assets/world/loot_sword_g3.glb"),
+		preload("res://assets/world/loot_sword_g4.glb"),
 	],
 	"axe_1handed": [
-		preload("res://assets/generated/variants/axe_1handed__g0.glb"),
-		preload("res://assets/generated/variants/axe_1handed__g1.glb"),
-		preload("res://assets/generated/variants/axe_1handed__g2.glb"),
-		preload("res://assets/generated/variants/axe_1handed__g3.glb"),
-		preload("res://assets/generated/variants/axe_1handed__g4.glb"),
+		preload("res://assets/world/loot_axe_g0.glb"),
+		preload("res://assets/world/loot_axe_g1.glb"),
+		preload("res://assets/world/loot_axe_g2.glb"),
+		preload("res://assets/world/loot_axe_g3.glb"),
+		preload("res://assets/world/loot_axe_g4.glb"),
 	],
 	"dagger": [
-		preload("res://assets/generated/variants/dagger__g0.glb"),
-		preload("res://assets/generated/variants/dagger__g1.glb"),
-		preload("res://assets/generated/variants/dagger__g2.glb"),
-		preload("res://assets/generated/variants/dagger__g3.glb"),
-		preload("res://assets/generated/variants/dagger__g4.glb"),
+		preload("res://assets/world/loot_dagger_g0.glb"),
+		preload("res://assets/world/loot_dagger_g1.glb"),
+		preload("res://assets/world/loot_dagger_g2.glb"),
+		preload("res://assets/world/loot_dagger_g3.glb"),
+		preload("res://assets/world/loot_dagger_g4.glb"),
 	],
 	"staff": [
-		preload("res://assets/generated/variants/staff__g0.glb"),
-		preload("res://assets/generated/variants/staff__g1.glb"),
-		preload("res://assets/generated/variants/staff__g2.glb"),
-		preload("res://assets/generated/variants/staff__g3.glb"),
-		preload("res://assets/generated/variants/staff__g4.glb"),
+		preload("res://assets/world/loot_staff_g0.glb"),
+		preload("res://assets/world/loot_staff_g1.glb"),
+		preload("res://assets/world/loot_staff_g2.glb"),
+		preload("res://assets/world/loot_staff_g3.glb"),
+		preload("res://assets/world/loot_staff_g4.glb"),
 	],
 }
 const WEAPON_LOOK_KIND := {
@@ -96,7 +96,7 @@ const WEAPON_LOOK_KIND := {
 	"halberd": "staff", "spear": "staff", "staff": "staff",
 	"bow": "dagger", "fan": "dagger", "brush": "dagger", "scroll": "dagger",
 }
-const WEAPON_PICKUP_LENGTH := 0.9 # 바닥에 눕혀 뜨는 목표 길이(m) — 원본 GLB는 손에 쥐는 비율(1.2~2.2m)이라 AABB 최장축 기준으로 역산해 맞춘다.
+const WEAPON_PICKUP_LENGTH := 0.9 # 바닥에 뜨는 목표 길이(m) — 새 GLB 는 길이 1.0~1.8m 라 AABB 최장축 기준으로 역산해 맞춘다.
 const TOAST_SEC := 4.0
 const TRIGGER_RADIUS := 1.4
 const MAT_DROP_CHANCE := 0.12 # dungeon.js "e.boss?0.9:0.12"(dropMat 호출 확률) 그대로
@@ -200,18 +200,23 @@ static func spawn_at(parent: Node, pos: Vector3, ilvl: int, is_boss: bool = fals
 		var weapon_mesh := GLBUtils.extract_mesh_from_scene(weapon_scene)
 		if weapon_mesh != null:
 			mi.mesh = weapon_mesh
-			var longest: float = maxf(weapon_mesh.get_aabb().size.x, maxf(weapon_mesh.get_aabb().size.y, weapon_mesh.get_aabb().size.z))
+			## 배율은 같은 종 g0(광륜 없는 기본형) 최장축 기준 — g4 는 바닥 광륜이 메시에 들어 있어
+			## 자기 AABB 로 맞추면 칼이 g0 의 절반으로 쪼그라든다.
+			var ref_aabb := GLBUtils.extract_mesh_from_scene(WEAPON_GLB_SCENES[weapon_kind][0]).get_aabb()
+			var longest: float = maxf(ref_aabb.size.x, maxf(ref_aabb.size.y, ref_aabb.size.z))
 			var s := WEAPON_PICKUP_LENGTH / longest
-			## 원본은 손에 쥐는 자세(Y축이 날 방향)라 눕혀서(X축 90도) 바닥에
-			## 뜬 노획물처럼 보이게 한다 — 다른 노획물과 같은 "hover" 자리.
-			mi.transform = Transform3D(Basis(Vector3.RIGHT, PI * 0.5).scaled(Vector3.ONE * s), Vector3(0, 0.4, 0))
+			## 새 GLB 는 이미 바닥에 누운 자세라 눕히지 않고 크기만 맞춘다 — 다른
+			## 노획물과 같은 "hover" 자리.
+			mi.transform = Transform3D(Basis.IDENTITY.scaled(Vector3.ONE * s), Vector3(0, 0.4, 0))
 			## 101-3 G — GLB 자체에 이미 구운 등급색(tint-glb) 재질을 그대로 두고
 			## 복제본에만 외곽선을 next_pass로 얹는다(공유 Mesh 리소스는 안 건드림).
-			var base_mat := mi.get_active_material(0)
-			if base_mat != null:
-				var outlined := base_mat.duplicate() as Material
-				outlined.next_pass = _outline_material(tier)
-				mi.set_surface_override_material(0, outlined)
+			## 새 GLB 는 표면이 여러 장이라 표면마다 얹는다.
+			for si in weapon_mesh.get_surface_count():
+				var base_mat := mi.get_active_material(si)
+				if base_mat != null:
+					var outlined := base_mat.duplicate() as Material
+					outlined.next_pass = _outline_material(tier)
+					mi.set_surface_override_material(si, outlined)
 	if mi.mesh == null:
 		var mesh := BoxMesh.new()
 		mesh.size = Vector3(0.5, 0.5, 0.5)

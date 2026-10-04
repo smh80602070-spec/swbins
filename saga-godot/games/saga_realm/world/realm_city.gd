@@ -323,13 +323,14 @@ func _build_farms(c: Dictionary) -> void:
 ## 시장 — 상업(comm). city3d.js: clamp(round(comm/80), 1, 5).
 func _build_markets(c: Dictionary) -> void:
 	var n := clampi(roundi(float(c.get("comm", 0)) / MARKET_PER), 1, 5)
-	var ps := load("res://assets/generated/props/market_s1_01.glb") as PackedScene
+	const OLD := "res://assets/generated/props/market_s1_01.glb"
+	var ps := WorldAsset.load_scene(OLD)
 	for p: Vector2 in _ring(n, 5.6, 1.1):
 		if ps == null:
 			continue
-		## asset-forge 장터 좌판 GLB(폭 4m → 0.3배), 정면이 성 쪽을 보게.
+		## K-0057 통일 툰 좌판 GLB(옛 폭 4m 기준 0.3배 × WorldAsset 배율), 정면이 성 쪽을 보게.
 		var stall := ps.instantiate() as Node3D
-		stall.scale = Vector3.ONE * 0.3
+		stall.scale = Vector3.ONE * 0.3 * WorldAsset.k(OLD)
 		stall.position = Vector3(p.x, 0.0, p.y)
 		stall.rotation.y = atan2(-p.x, -p.y)
 		_dyn.add_child(stall)

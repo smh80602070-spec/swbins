@@ -18,6 +18,18 @@ const MAP := {
 	"stele_s2_02.glb": ["stele_01", 0.664],
 	"house_s2_02.glb": ["eu_house_01", 0.6],
 	"tower_s1_01.glb": ["stone_tower_01", 1.12],
+	## G-0021 — K-0053·K-0057 통일 툰 GLB 로 나머지 procgen 소품(실측 AABB 높이 비로 맞춤).
+	"fence_s1_01.glb": ["wood_fence_01", 0.82],
+	"fence_s2_02.glb": ["iron_fence_01", 0.43],
+	"reed_s1_01.glb": ["reed_clump_01", 0.88],
+	"scare_s1_01.glb": ["scarecrow_01", 1.06],
+	"rock_s1_01.glb": ["rock_small_01", 1.4],
+	"rock_s2_02.glb": ["rock_moss_01", 0.6],
+	"rock_s3_03.glb": ["rock_large_01", 0.4],
+	"rock_s4_04.glb": ["rock_small_01", 1.3],
+	"market_s1_01.glb": ["market_stall_01", 1.04],
+	"wall_s1_01.glb": ["rubble_wall_01", 0.7],
+	"wall_s2_02.glb": ["low_stone_wall_01", 1.15],
 }
 
 
