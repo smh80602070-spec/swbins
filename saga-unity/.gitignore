@@ -95,3 +95,6 @@ Assets/Art/CharactersDex.meta
 # 299 몸·동작을 가리키는 런타임 목록(`Saga/Crowd/Build Body List`) — 로컬 전용(몸이 저장소 밖이라)
 Assets/SagaCore/Resources/CrowdBodyList.asset
 Assets/SagaCore/Resources/CrowdBodyList.asset.meta
+# U-0034 VRoid 시험 굽기(`PlaytestVroidSwap`)가 만드는 컨트롤러 — 진단이 다시 만든다(진짜 자리 컨트롤러 `<이름>.controller` 는 대상 아님)
+Assets/Animators/*Vroid.controller
+Assets/Animators/*Vroid.controller.meta
