@@ -55,6 +55,8 @@ func _init() -> void:
 		_check("작은 바위 " + region, VB.REGION_ROCK_SMALL_GLB[region], VB.ROCK_SMALL_SCALE, 0.6, 0.75)
 	for region: String in VB.REGION_CLUTTER_GLB:
 		_check("clutter " + region, VB.REGION_CLUTTER_GLB[region], VB.REGION_CLUTTER_SCALE[region], 0.2, 0.4)
+	for v: String in VB.COAST_PEBBLE_GLB:
+		_check("조약돌", v, 1.0, 0.05, 0.3)
 	for tbl: Array in [VB.UNDERSTORY, VB.WILDFLOWERS, VB.SHRUBS]:
 		for v: Dictionary in tbl:
 			_check("하층·들꽃·관목", v.glb, v.scale, 0.2, 1.7)

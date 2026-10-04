@@ -191,11 +191,7 @@ const VILLAGE_PATH_DENSITY := 12  # "." 칸 1/12
 ## — 사람 스케일이라 배율 역산 불필요. 2026-09-23 — 나머지 두 종(4·5)도
 ## 마저 얹음(0.41×0.10×0.45m·0.42×0.10×0.35m, 같은 스케일).
 const COAST_PEBBLE_GLB := [
-	"res://assets/generated/variants/Pebble_Round_1__go_coast.glb",
-	"res://assets/generated/variants/Pebble_Round_2__go_coast.glb",
-	"res://assets/generated/variants/Pebble_Round_3__go_coast.glb",
-	"res://assets/generated/variants/Pebble_Round_4__go_coast.glb",
-	"res://assets/generated/variants/Pebble_Round_5__go_coast.glb",
+	"res://assets/world/pebbles_01.glb",   # G-0017 후속 — 통일 툰 조약돌 무리(0.75m 폭·0.1m 높이), 변주는 회전만
 ]
 const COAST_PEBBLE_DENSITY := 10  # "D" 칸 1/10
 
@@ -221,6 +217,8 @@ const UNDERSTORY := [
 	{"glb": "res://assets/world/grass_tuft_02.glb", "scale": 0.767, "chance": 0.3},     # 1.095m → 0.84m
 	{"glb": "res://assets/world/grass_tuft_01.glb", "scale": 1.16, "chance": 0.3},      # 0.724m → 0.84m
 	{"glb": "res://assets/world/mushroom_01.glb", "scale": 0.5, "chance": 0.15},        # 0.5m → 0.25m (작은 버섯)
+	{"glb": "res://assets/world/log_01.glb", "scale": 0.8, "chance": 0.08},         # 쓰러진 통나무 1.6m×0.8 = 1.3m
+	{"glb": "res://assets/world/stump_01.glb", "scale": 0.8, "chance": 0.1},         # 그루터기 0.4m
 ]
 
 ## 같은 5단계, 마을 평지 들꽃. 이 판 칸은 48m라 clutter(칸 6개에 하나)는
