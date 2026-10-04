@@ -38,7 +38,7 @@ icon(아이콘·장비) · sprite(2D 지물·움직이는 것, 알파) · portra
 ## 보정 이력·함정
 
 - 첫판은 흰 바탕 아이콘의 꽃잎·반짝임을 "배경 조각"으로, 흰 바탕과 맞닿은 안티앨리어싱을 "흰 테"로 세어 306장 중 142장을 떨어뜨렸다 → 조각은 64px·4개·비율 셋 다, 흰 테는 알파 그림만. 보정 뒤 66장(진짜 틀에 잘린 것 45).
-- 제로샷 quality 는 초상에서 흔들린다(0.02~0.9). 미적 예측기 파일을 넣으면 안정된다 — 사용자가 직접 받아 둘 것(자동 모드가 외부 가중치 내려받기를 막는다): <https://github.com/christophschuhmann/improved-aesthetic-predictor> 의 `sac+logos+ava1-l14-linearMSE.pth` → `C:\swbins3\judge-models\`.
+- 제로샷 quality 만으로는 초상에서 흔들렸다(0.02~0.9). 미적 예측기(LAION, <https://github.com/christophschuhmann/improved-aesthetic-predictor> 의 `sac+logos+ava1-l14-linearMSE.pth`, 3.7MB)를 `C:\swbins3\judge-models\` 에 두면 quality 에 절반 섞인다 — 10-05 설치됨(이 PC). 다른 PC 는 같은 자리에 두면 된다. 원본 state_dict 키가 `layers.N` 이라 접두를 벗겨 읽는다.
 - HF 캐시에 `preprocessor_config.json` 이 없어 전처리 상수를 코드에 직접 적었다(ViT-L/14 224·CLIP 평균/표준편차).
 - 3D(GLB) 는 그림이 아니라 못 잰다 — 렌더(`tools/char-forge/render`·`world-forge`)로 찍은 PNG 를 넘긴다.
 - 판정은 **고르기**다. 그림체가 나쁘면 100장 중 1등도 나쁘다. 그림체는 K-0068, 프롬프트는 `tools/ai-art/prompt_kit.py`.

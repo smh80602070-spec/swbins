@@ -231,6 +231,7 @@ class Clip:
         if os.path.exists(AESTHETIC_PTH):
             try:
                 sd = torch.load(AESTHETIC_PTH, map_location='cpu')
+                sd = {k.split('layers.', 1)[1] if k.startswith('layers.') else k: v for k, v in sd.items()}   # 원본은 self.layers = Sequential
                 layers = [torch.nn.Linear(768, 1024), torch.nn.Dropout(0.2), torch.nn.Linear(1024, 128), torch.nn.Dropout(0.2),
                           torch.nn.Linear(128, 64), torch.nn.Dropout(0.1), torch.nn.Linear(64, 16), torch.nn.Linear(16, 1)]
                 self.aes = torch.nn.Sequential(*layers)
