@@ -1076,7 +1076,7 @@
           : '';
       }
       html += '<div class="card">' +
-        '<div class="stat-row"><span><b>' + (e.ref.town ? '🏘️ ' : '') + esc(e.ref.name) + '</b></span>' +
+        '<div class="stat-row"><span><b>' + (global.DG.regionIcon ? global.DG.regionIcon.html(e.ref.key) : (e.ref.town ? '🏘️ ' : '')) + esc(e.ref.name) + '</b></span>' +
           '<span class="muted">' + (e.ref.town ? '안전지대 · 쉼터'
             : '적 Lv.' + e.ref.enemyLv + ' · ' + e.ref.spawn + '마리') + '</span></div>' +
         bossLine + gateLine +

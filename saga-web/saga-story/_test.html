@@ -5830,6 +5830,28 @@ window.DG_NO_TUNE = true;
         (SD.STAGES.length + '곳 전부 주소 · 빈 키 빈 글 · 따옴표 걸러짐');
     });
 
+    t('사냥터 탭 지역 아이콘(W-0058) — 카드 열네 곳 모두 아이콘 <img> 와 이름이 있고, 도우미가 없으면 이모지로 돌아간다', function () {
+      var CH = DG.core.save.player.level, bad = [], n = 0;
+      DG.core.save.player.level = 99;
+      try {
+        DG.ui.openSheet('field');
+        var cards = document.getElementById('sheet-body').querySelectorAll('.card .stat-row b');
+        DG.sideData.STAGES.forEach(function (st) {
+          var hit = null;
+          for (var i = 0; i < cards.length; i++) { if (cards[i].textContent.indexOf(st.name) >= 0) { hit = cards[i]; } }
+          if (!hit) { bad.push('카드 없음 ' + st.key); return; }
+          var im = hit.querySelector('img.ri');
+          if (!im || (im.getAttribute('src') || '').indexOf('story_' + st.key + '.png') < 0) { bad.push('아이콘 ' + st.key); } else { n++; }
+        });
+        var RI = DG.regionIcon; DG.regionIcon = null;
+        DG.ui.openSheet('field');
+        var fb = document.getElementById('sheet-body').innerHTML.indexOf('🏘️') >= 0;
+        DG.regionIcon = RI;
+        DG.ui.closeSheet();
+        return bad.length === 0 && fb && (n + '곳 모두 아이콘 · 도우미 없으면 이모지');
+      } finally { DG.core.save.player.level = CH; DG.ui.closeSheet(); }
+    });
+
     t('컷신 배경(W-0049) — 표의 장 id 는 전부 실제 장이고 모든 장이 그림 주소를 갖는다, 모르는 장은 비어 있다', function () {
       var CU = DG.cutscene, ids = DG.scenarioData.CHAPTERS.map(function (c) { return c.id; }), tbl = CU.CUTS['story'], bad = [], pre = 'assets/cutscene/cut_story_';
       Object.keys(tbl).forEach(function (k) { if (ids.indexOf(k) < 0) { bad.push('표에만 ' + k); } });
