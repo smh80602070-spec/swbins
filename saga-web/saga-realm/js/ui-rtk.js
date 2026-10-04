@@ -2253,7 +2253,7 @@
     if (!v) { return; }
     if (v.pre && !v.pre.done) { showEventPre(v); return; }
     var kd = v.kind ? global.DG.relData.KINDS[v.kind] : null, html, i;
-    html = '<div style="text-align:center"><div class="enc-big">' + v.emoji + '</div>' +
+    html = '<div style="text-align:center">' + (global.DG.cutscene ? global.DG.cutscene.banner('realm', String(v.id).replace(/_end$/, '')) : '') + '<div class="enc-big">' + v.emoji + '</div>' +
       '<h3 style="margin:6px 0 2px;font-size:19px;color:var(--gold)">' + esc(v.name) + '</h3>' +
       '<small class="muted">' + (kd ? kd.emoji + ' ' + kd.name + ' · ' : '') + (v.tag || (v.step > 1 ? v.step + '번째 이야기' : '사연')) + '</small></div>' +
       '<div class="enc-hist">' + esc(v.text) + '</div>';
@@ -2268,7 +2268,7 @@
   /** 사연 앞 단 — 시나리오 카드가 설전·일기토를 먼저 치르게 한다. 카드는 도입 글과 단추 하나, 치른 뒤 결과 카드가 열린다 */
   function showEventPre(v) {
     var duel = v.pre.kind === 'duel';
-    showEncQueued('<div style="text-align:center"><div class="enc-big">' + v.emoji + '</div>' +
+    showEncQueued('<div style="text-align:center">' + (global.DG.cutscene ? global.DG.cutscene.banner('realm', String(v.id).replace(/_end$/, '')) : '') + '<div class="enc-big">' + v.emoji + '</div>' +
       '<h3 style="margin:6px 0 2px;font-size:19px;color:var(--gold)">' + esc(v.name) + '</h3>' +
       '<small class="muted">' + esc(v.tag || '') + '</small></div>' +
       '<div class="enc-hist">' + esc(v.pre.intro) + '</div>' +

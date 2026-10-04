@@ -96,6 +96,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/event.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/scenario.js"></script>
+<script src="js/cutscene.js"></script>
 <script src="js/quiz.js"></script>
 <script src="js/net.js"></script>
 <script src="js/ai.js"></script>
@@ -5792,6 +5793,14 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
         V.apply(model, 'hero_a');
         return !model.meshes[0].material.map && '설정 없음 → 무늬 없음(기존 옷)';
       } finally { DG.cfg.vroidPattern = saveCfg; P.list = saveList; P.loader = saveLoader; }
+    });
+
+    t('컷신 배경(W-0049) — 표의 장 id 는 전부 실제 장이고 모든 장이 그림 주소를 갖는다, 모르는 장은 비어 있다', function () {
+      var CU = DG.cutscene, ids = DG.scenarioData.CARDS.concat(DG.scenarioData.LORD, DG.scenarioData.SIDE).map(function (c) { return c.id; }), tbl = CU.CUTS['realm'], bad = [], pre = 'assets/cutscene/cut_realm_';
+      Object.keys(tbl).forEach(function (k) { if (ids.indexOf(k) < 0) { bad.push('표에만 ' + k); } });
+      ids.forEach(function (id) { var u = CU.url('realm', id); if (!u || u.indexOf(pre) !== 0 || u.slice(-5) !== '.webp') { bad.push('장 ' + id + ' ' + u); } });
+      return bad.length === 0 && CU.css('realm', 'nope') === '' && CU.css('realm', '') === '' && CU.css('realm', ids[0]).indexOf('url(assets/cutscene/') > 0 &&
+        CU.banner('realm', 'nope') === '' && CU.banner('realm', ids[0]).indexOf('<img') === 0 && (ids.length + '장 모두 그림 · 모르는 장은 비어 있음');
     });
 
     t('런타임 에러 없음', function () {

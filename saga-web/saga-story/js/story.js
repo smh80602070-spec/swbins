@@ -47,7 +47,8 @@
   /** 시나리오 장면(scenario.js) — 본 기록은 안 남기고, 닫히면 `done` 을 부른다. 못 띄우면 false */
   function play(key, title, lines, done, choice) {
     if (cur || blocked() || !lines || !lines.length) { return false; }
-    cur = { key: key, title: title, lines: lines, i: 0, scn: true, done: done, choice: choice || null, pick: false };
+    var SC = global.DG.scenario, ch = SC && SC.current ? SC.current() : null;
+    cur = { key: key, title: title, lines: lines, i: 0, scn: true, done: done, choice: choice || null, pick: false, ch: ch ? ch.id : null };
     core.emit('story:change', cur);
     return true;
   }

@@ -107,6 +107,7 @@ window.DG_NO_TUNE = true;
 <script src="js/rift.js"></script>
 <script src="js/story.js"></script>
 <script src="js/scenario.js"></script>
+<script src="js/cutscene.js"></script>
 <script src="js/party.js"></script>
 <script src="js/achieve.js"></script>
 <script src="js/sfx.js"></script>
@@ -5826,6 +5827,14 @@ window.DG_NO_TUNE = true;
       });
       return bad.length === 0 && RI.html('') === '' && RI.html('a"><b') .indexOf('"><b') < 0 &&
         (SD.STAGES.length + '곳 전부 주소 · 빈 키 빈 글 · 따옴표 걸러짐');
+    });
+
+    t('컷신 배경(W-0049) — 표의 장 id 는 전부 실제 장이고 모든 장이 그림 주소를 갖는다, 모르는 장은 비어 있다', function () {
+      var CU = DG.cutscene, ids = DG.scenarioData.CHAPTERS.map(function (c) { return c.id; }), tbl = CU.CUTS['story'], bad = [], pre = 'assets/cutscene/cut_story_';
+      Object.keys(tbl).forEach(function (k) { if (ids.indexOf(k) < 0) { bad.push('표에만 ' + k); } });
+      ids.forEach(function (id) { var u = CU.url('story', id); if (!u || u.indexOf(pre) !== 0 || u.slice(-5) !== '.webp') { bad.push('장 ' + id + ' ' + u); } });
+      return bad.length === 0 && CU.css('story', 'nope') === '' && CU.css('story', '') === '' && CU.css('story', ids[0]).indexOf('url(assets/cutscene/') > 0 &&
+        CU.banner('story', 'nope') === '' && CU.banner('story', ids[0]).indexOf('<img') === 0 && (ids.length + '장 모두 그림 · 모르는 장은 비어 있음');
     });
 
     t('런타임 에러 없음', function () {

@@ -997,8 +997,8 @@
     var ST = global.DG.story, el = storyHost();
     var c = ST && ST.current();
     document.body.classList.toggle('cine', !!c);
-    if (!c) { el.classList.remove('show'); el.innerHTML = ''; return; }
-    var SD = global.DG.sideData, ln = c.lines[c.i], who = ln[0];
+    if (!c) { el.classList.remove('show'); el.innerHTML = ''; el.style.background = ''; return; }
+    var SD = global.DG.sideData, ln = c.lines[c.i], who = ln[0]; el.style.background = global.DG.cutscene ? global.DG.cutscene.css('story', c.ch) : '';   // W-0049 장에 맞는 컷신 배경
     var emo = SD.EMOTES[ln[1]] || SD.EMOTES.calm;
     var face, name, SCD = global.DG.scenarioData;
     var mentor = null;
