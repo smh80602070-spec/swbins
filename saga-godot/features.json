@@ -1769,8 +1769,10 @@
   "id": "gd.st.background",
   "name": "배경",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "story_background"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
