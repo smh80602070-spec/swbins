@@ -13,7 +13,7 @@ MODE="run"
 for a in "$@"; do case "$a" in --bg) MODE="bg";; --check) MODE="check";; esac; done
 if [ "$MODE" = "bg" ]; then
   mkdir -p tools/char-forge/_out
-  nohup bash "$0" > tools/char-forge/_out/setup_local.log 2>&1 </dev/null &
+  nohup bash "$0" >> tools/char-forge/_out/setup_local.log 2>&1 </dev/null &
   echo "백그라운드로 시작 — 로그 tools/char-forge/_out/setup_local.log"
   exit 0
 fi
@@ -26,6 +26,13 @@ need=""
 if [ -z "$need" ]; then echo "SETUP_OK 인물 변환본 이미 있음(또는 엔진 프로젝트 없음)"; exit 0; fi
 echo "빠진 트랙:$need"
 [ "$MODE" = "check" ] && { echo "SETUP_MISSING$need"; exit 1; }
+
+# 겹쳐 돌지 않게 잠금(세션을 여러 번 열어도 한 번만) — 3시간 넘은 잠금은 죽은 것으로 보고 치운다
+LOCK=tools/char-forge/_out/setup_local.lock
+mkdir -p tools/char-forge/_out
+[ -d "$LOCK" ] && [ -n "$(find "$LOCK" -maxdepth 0 -mmin +180 2>/dev/null)" ] && rmdir "$LOCK" 2>/dev/null
+mkdir "$LOCK" 2>/dev/null || { echo "SETUP_BUSY 다른 설치가 돌고 있다"; exit 0; }
+trap 'rmdir "$LOCK" 2>/dev/null' EXIT
 
 command -v node >/dev/null 2>&1 || { echo "SETUP_FAIL node 가 없다 — Node.js 설치 뒤 다시"; exit 2; }
 if [ ! -d tools/glb-compress/node_modules ]; then

@@ -20,8 +20,20 @@ const inp = ev.tool_input || {};
 
 function block(msg) { process.stderr.write(msg + '\n'); process.exit(2); }
 
+// 인물 변환본(저장소 밖, .gitignore)이 이 PC 에 없으면 백그라운드로 만든다 — 다른 PC 에서 git pull 뒤 손으로 안 해도 되게(K-0065·G-0022).
+// setup_local.sh 는 이미 있으면 아무것도 안 하고 자기 잠금으로 겹쳐 돌지 않는다. 끄려면 환경변수 SAGA_NO_AUTOSETUP=1.
+function autoSetup() {
+  if (process.env.SAGA_NO_AUTOSETUP || !fs.existsSync('tools/char-forge/setup_local.sh')) return '';
+  const r = spawnSync('bash', ['tools/char-forge/setup_local.sh', '--check'], { encoding: 'utf8', timeout: 5000 });
+  if (r.error || r.status !== 1) return '';                                  // 1 = 빠진 트랙 있음 · 0 = 이미 있음 · 그 밖 = 건드리지 않는다
+  try {
+    require('child_process').spawn('bash', ['tools/char-forge/setup_local.sh', '--bg'], { detached: true, stdio: 'ignore' }).unref();
+  } catch (e) { return ''; }
+  return '이 PC 에 인물 변환본(' + String(r.stdout).trim().split('\n').pop() + ')이 없어 백그라운드로 설치를 시작했다 — 로그 tools/char-forge/_out/setup_local.log, 끝나면 엔진을 한 번 열어 .import/.meta 를 만든다. 끄려면 SAGA_NO_AUTOSETUP=1.\n';
+}
+
 if (name === 'SessionStart') {
-  process.stdout.write([
+  process.stdout.write(autoSetup() + [
     'saga 세션 절차(tasks/README.md, 체제 SAGA-ARCH.md): ① 다음 일 = tasks/QUEUE.md 의 갈래(웹·고돗·유니티·자체툴) 큐 맨 위 티켓. 큐 줄이 "진행중"이면 티켓 메모 체크포인트·git status 로 다음 단계부터. 티켓과 그 "파일" 칸만 읽는다(첫 턴 20KB). PLAN·HANDOFF·HISTORY 는 티켓이 시킬 때만 절만 sed -n.',
     '② 티켓의 목표·파일·단계·검증·완료 조건 중 빈 칸이면 멈추고 보고. 상태 "초안"이면 R-0 로 티켓만 완성·커밋하고 끝(실행은 다음 세션). 큐가 비면 tasks/RECURRING.md. 새 기능은 티켓 없이 만들지 않는다.',
     '③ 검증은 티켓 명령 그대로 한 번. 3회 실패면 되돌리고 멈춘다. ④ 커밋 전 bash tools/precheck.sh (훅이 자동 실행·차단), git commit -F <파일> -- <경로>. ⑤ 세션 기록은 티켓 메모·커밋 메시지뿐. 도감 data.js 는 다섯 벌 함께 + md5. 서버·크롬은 검증 명령이 스스로 띄우고 끈다.'
