@@ -20,10 +20,12 @@ const BeaconTower := preload("res://games/saga_go/world/beacon_tower.gd")
 ## 103-3 스냅(2026-09-19) — 마을집·역참(_add_village·_add_waystation)은
 ## go_village, 폐허 기둥(_add_ruins)은 go_ruins 팔레트 변형으로 바꿨다.
 ## 다리 널판(PLANK_GLB)은 마을·폐허 어느 쪽도 아니라(강 위 마을 시설)
-## 원본 그대로 남겨뒀다. "시대 퓨전" 갈래는 아직 이 판에 실제 소품이
+## 팔레트 변형 없이 K-0063 새 널판을 그대로 쓴다. "시대 퓨전" 갈래는 아직 이 판에 실제 소품이
 ## 없어(전장 잔해 4종은 방패·투구·화살통·깃발) 보류.
 const PILLAR_GLB := "res://assets/world/dungeon_pillar_01.glb"   # G-0020 — 옛 pillar-stone(Kenney 원기둥) 변형 대신(1.3×3.55×1.3m)
-const PLANK_GLB := "res://assets/buildings/planks.glb"
+const PLANK_GLB := "res://assets/world/plank_deck_01.glb"   # G-0020 — 옛 Kenney planks 대신(K-0063, 폭 6×길이 1×두께 0.12m 이어붙임 타일, 아랫면 y=0)
+const PLANK_DECK_WIDTH := 6.0   # plank_deck_01 한 장의 폭(m)
+const PLANK_DECK_THICK := 0.12   # 두께(m)
 const CAVE_GATE_GLB := "res://assets/world/cave_gate_01_dirt.glb"   # G-0020 — 옛 Kenney gate-rock 대신(4.01×3.2×0.8m, 바닥이 -0.2m 에 있어 CAVE_GATE_LIFT 만큼 올림)
 const SHRINE_GLB := "res://assets/world/altar_01.glb"   # G-0020 — 옛 Kenney altar-stone 대신(2.6×1.5×1.8m)
 
@@ -485,7 +487,7 @@ func _add_bridge() -> void:
 		_add_discovery_area("bridge", base_pos, self)
 		return
 
-	## planks.glb는 1x1x1칸짜리 널빤지 — primitive처럼 하나를 44배 길게
+	## plank_deck_01 은 폭 6m × 길이 1m 한 장 — primitive처럼 하나를 44배 길게
 	## 늘리면 나뭇결이 다 뭉개져 보이므로, 강을 따라 실제로 이어 붙인다
 	## (MultiMesh — 44개라도 draw call은 1회, master.md 35장 그대로).
 	var plank_count := int(ceil(bridge_length))
@@ -496,8 +498,8 @@ func _add_bridge() -> void:
 
 	var start_z := -bridge_length * 0.5 + 0.5
 	for i in plank_count:
-		var basis := Basis().scaled(Vector3(bridge_width, 2.0, 1.02))
-		var pos := base_pos + Vector3(0, 0, start_z + i)
+		var basis := Basis().scaled(Vector3(bridge_width / PLANK_DECK_WIDTH, 1.0, 1.0))   # 이음 타일이라 겹치지 않는다
+		var pos := base_pos + Vector3(0, -PLANK_DECK_THICK * 0.5, start_z + i)   # 옛 널판은 가운데 피벗 — 윗면 높이를 그대로 맞춘다
 		mm.set_instance_transform(i, Transform3D(basis, pos))
 
 	var mmi := MultiMeshInstance3D.new()

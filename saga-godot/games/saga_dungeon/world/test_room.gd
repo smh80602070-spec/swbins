@@ -1,8 +1,8 @@
 extends Node3D
 
-## VERTICAL_SLICE_DUNGEON.md 1·5절 — DUNGEON 첫 방(고분 테마). CC0 Kenney
-## Modular Cave Kit(assets/dungeon/, GO의 동굴 입구 gate-rock.glb와 같은
-## 킷 — 이미 받아 둔 것을 재사용, 새 킷 다운로드 없음)의 room-small.glb
+## VERTICAL_SLICE_DUNGEON.md 1·5절 — DUNGEON 첫 방(고분 테마).
+## 굴혈 방 킷(assets/world/dungeon_room_12_*·gate_44_*·corridor_4_*, K-0063 — 처음엔 Kenney
+## Modular Cave Kit 였다가 G-0020 에서 갈았다)의 방 조각
 ## (실측 12x4.4x12, 바닥 중앙 피벗 — 측정 스크립트로 직접 확인)를 쓴다.
 ## 이 GLB엔 충돌이 없어(단순 장식 메시라 Godot이 자동 생성 안 함) 벽·
 ## 바닥은 직접 만든다(GO의 terrain_builder.gd와 같은 방식) — 한쪽 벽에는
@@ -29,9 +29,11 @@ const Characters := preload("res://saga_core/data/characters.gd")
 const SessionCard := preload("res://saga_core/ui/session_card.gd")
 const CompanionFollow := preload("res://saga_core/world/companion_follow.gd")
 
-const ROOM_GLB := "res://assets/dungeon/room-small.glb"
-const GATE_GLB := "res://assets/dungeon/gate.glb"
-const CORRIDOR_GLB := "res://assets/dungeon/corridor.glb"
+## G-0020 — 옛 Kenney 방 킷(room-small·gate·corridor)과 그 팔레트 변형 대신 K-0063 의 dungeon_room_12·
+## dungeon_gate_44·dungeon_corridor_4 (mood 별 한 벌). 치수는 옛 킷과 같다(방 12×4.4×12, 문틀 폭 4.4, 복도 타일 4×4×4).
+const ROOM_GLB := "res://assets/world/dungeon_room_12_dirt.glb"
+const GATE_GLB := "res://assets/world/dungeon_gate_44_dirt.glb"
+const CORRIDOR_GLB := "res://assets/world/dungeon_corridor_4_dirt.glb"
 
 ## PLAN 103-3 "굴혈 mood 3(흙·석회·용암)" — 09-19 `palette.py`가 room-small·
 ## gate·corridor 셋 다 세 결로 스냅해 뒀는데(ASSET_GUIDE 해당 날짜) 그동안
@@ -40,19 +42,19 @@ const CORRIDOR_GLB := "res://assets/dungeon/corridor.glb"
 ## 3색으로 그냥 순환시킨다 — 결정적이라 헤드리스 회귀 md5는 그대로 안정.
 const ROOM_MOODS := ["dirt", "limestone", "lava"]
 const MOOD_ROOM_GLB := {
-	"dirt": "res://assets/generated/variants/room-small__dungeon_dirt.glb",
-	"limestone": "res://assets/generated/variants/room-small__dungeon_limestone.glb",
-	"lava": "res://assets/generated/variants/room-small__dungeon_lava.glb",
+	"dirt": "res://assets/world/dungeon_room_12_dirt.glb",
+	"limestone": "res://assets/world/dungeon_room_12_limestone.glb",
+	"lava": "res://assets/world/dungeon_room_12_lava.glb",
 }
 const MOOD_GATE_GLB := {
-	"dirt": "res://assets/generated/variants/gate__dungeon_dirt.glb",
-	"limestone": "res://assets/generated/variants/gate__dungeon_limestone.glb",
-	"lava": "res://assets/generated/variants/gate__dungeon_lava.glb",
+	"dirt": "res://assets/world/dungeon_gate_44_dirt.glb",
+	"limestone": "res://assets/world/dungeon_gate_44_limestone.glb",
+	"lava": "res://assets/world/dungeon_gate_44_lava.glb",
 }
 const MOOD_CORRIDOR_GLB := {
-	"dirt": "res://assets/generated/variants/corridor__dungeon_dirt.glb",
-	"limestone": "res://assets/generated/variants/corridor__dungeon_limestone.glb",
-	"lava": "res://assets/generated/variants/corridor__dungeon_lava.glb",
+	"dirt": "res://assets/world/dungeon_corridor_4_dirt.glb",
+	"limestone": "res://assets/world/dungeon_corridor_4_limestone.glb",
+	"lava": "res://assets/world/dungeon_corridor_4_lava.glb",
 }
 
 
@@ -113,7 +115,7 @@ const STARTER_RARITY_CAP := 3
 const ROOM_HALF := Vector3(6.0, 0.0, 6.0)
 const WALL_HEIGHT := 4.4
 const WALL_THICK := 1.0
-const GATE_HALF_WIDTH := 2.2 # gate.glb 실측 폭(4.4)의 절반
+const GATE_HALF_WIDTH := 2.2 # 문틀 바깥 폭(4.4)의 절반 — 방 개구부도 4.4
 
 const CORRIDOR_TILE_LEN := 4.0 # corridor.glb 실측 깊이(측정 스크립트로 확인)
 const CORRIDOR_TILES_PER_GAP := 2 # 방 사이 복도 길이 = 4.0 * 2 = 8.0
@@ -354,7 +356,7 @@ func _spawn_gate(origin_z: float, at_north: bool, room_index: int) -> void:
 
 ## from_z(앞 방의 출구 쪽, 더 큰 z)에서 to_z(다음 방의 입구, 더 작은 z)
 ## 까지 corridor.glb 타일을 이어 붙인다 + 옆벽·바닥 충돌(GLB 자체엔 충돌이
-## 없다 — room-small.glb·gate.glb와 같은 이유).
+## 없다 — 방·문틀 GLB 와 같은 이유).
 func _spawn_corridor(from_z: float, to_z: float, room_index: int) -> void:
 	var start_z: float = from_z - ROOM_HALF.z # 앞 방 북쪽 벽
 	var glb: String = MOOD_CORRIDOR_GLB.get(_mood_for_room(room_index), CORRIDOR_GLB)

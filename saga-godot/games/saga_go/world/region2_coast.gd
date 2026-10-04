@@ -35,7 +35,9 @@ const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const BeaconTower := preload("res://games/saga_go/world/beacon_tower.gd")
 const VegetationBuilder := preload("res://games/saga_go/world/vegetation_builder.gd")
 
-const PLANK_GLB := "res://assets/buildings/planks.glb"
+const PLANK_GLB := "res://assets/world/plank_deck_01.glb"   # G-0020 — 옛 Kenney planks 대신(K-0063, 폭 6×길이 1×두께 0.12m, 아랫면 y=0)
+const PLANK_DECK_WIDTH := 6.0
+const PLANK_DECK_THICK := 0.12
 
 ## test_map.gd REGIONS["coast"].origin과 반드시 같은 값이어야 한다(그
 ## 파일이 그리는 지형과 이 파일이 세우는 실체가 같은 자리에 있어야 하니) —
@@ -271,8 +273,8 @@ func _build_dock() -> void:
 		mm.instance_count = plank_count
 		var start_z := -dock_length * 0.5 + 0.5
 		for i in plank_count:
-			var basis := Basis().scaled(Vector3(dock_width, 2.0, 1.02))
-			var pos := base_pos + Vector3(0, 0, start_z + i)
+			var basis := Basis().scaled(Vector3(dock_width / PLANK_DECK_WIDTH, 1.0, 1.0))
+			var pos := base_pos + Vector3(0, -PLANK_DECK_THICK * 0.5, start_z + i)   # 옛 널판 가운데 피벗 → 윗면 높이 유지
 			mm.set_instance_transform(i, Transform3D(basis, pos))
 		var mmi := MultiMeshInstance3D.new()
 		mmi.multimesh = mm
