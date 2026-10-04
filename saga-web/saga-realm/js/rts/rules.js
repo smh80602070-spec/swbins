@@ -21,7 +21,9 @@
     /* 시설 — 도로 없이도 선다(free). radius 안의 주거에 효과, 성벽은 지금은 방어 숫자만(전투 P3) */
     well:     { name: '우물', w: 1, h: 1, cost: 25, free: true, radius: 6, happy: 20, icon: '💧', color: '#5aa7d6' },
     tower:    { name: '망루', w: 1, h: 1, cost: 40, free: true, radius: 8, happy: 10, upkeep: 1, icon: '🗼', color: '#c9733a' },
-    wall:     { name: '성벽', w: 1, h: 1, cost: 4, free: true, defense: 5, icon: '', color: '#9a9488' }
+    wall:     { name: '성벽', w: 1, h: 1, cost: 4, free: true, defense: 5, icon: '', color: '#9a9488' },
+    /* 적 기지(W-0034) — 짓지도 부수지도(철거) 못 한다. 유닛이 쳐서 hp 를 깎는다. id 는 -1 */
+    stronghold: { name: '적 기지', w: 3, h: 3, cost: 0, fixed: true, free: true, hp: 600, icon: '🏴', color: '#7a2e2e' }
   };
   var BUILD_ORDER = ['road', 'house', 'farm', 'market', 'workshop', 'barracks', 'well', 'tower', 'wall'];
 
@@ -51,6 +53,13 @@
     var c = G().castleSite(), b = { id: 1, t: 'castle', x: c.x, y: c.y, conn: true };
     s.buildings[1] = b; stamp(s, b, 1);
     if (!s.nextId || s.nextId < 2) { s.nextId = 2; }
+    return b;
+  }
+
+  /** 적 기지를 판에 올린다(새 판·복원 때) — id -1, 체력 가득 */
+  function placeStronghold(s) {
+    var c = G().enemySite(s.seed), b = { id: -1, t: 'stronghold', x: c.x, y: c.y, conn: true, hp: DEFS.stronghold.hp };
+    s.buildings[-1] = b; stamp(s, b, -1);
     return b;
   }
 
@@ -135,5 +144,5 @@
 
   global.DG = global.DG || {};
   global.DG.rts = global.DG.rts || {};
-  global.DG.rts.rules = { DEFS: DEFS, BUILD_ORDER: BUILD_ORDER, canPlace: canPlace, place: place, remove: remove, placeCastle: placeCastle, buildingAt: buildingAt, recompute: recompute };
+  global.DG.rts.rules = { DEFS: DEFS, BUILD_ORDER: BUILD_ORDER, canPlace: canPlace, place: place, remove: remove, placeCastle: placeCastle, placeStronghold: placeStronghold, buildingAt: buildingAt, recompute: recompute };
 })(typeof window !== 'undefined' ? window : this);

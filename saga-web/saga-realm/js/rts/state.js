@@ -12,8 +12,9 @@
   function create(seed) {
     var s = { v: V, seed: seed >>> 0, tiles: R().grid.generate(seed), occ: new Int32Array(R().grid.W * R().grid.H),
       buildings: {}, nextId: 2, res: { food: 100, gold: 300 }, pop: 12, day: 1, tick: 0, speed: 1, tax: 1, units: {}, queues: {}, nextUid: 1,
-      cHp: 400, raid: { n: 0, next: 250 }, kills: 0, over: false };
+      cHp: 400, raid: { n: 0, next: 250 }, kills: 0, over: false, won: false };
     R().rules.placeCastle(s);
+    R().rules.placeStronghold(s);
     R().rules.recompute(s);
     return s;
   }
@@ -21,11 +22,12 @@
   /** 저장 꼴 — 지형·점유 격자는 뺀다 */
   function serialize(s) {
     var list = [], id, b;
-    for (id in s.buildings) { b = s.buildings[id]; if (b.t !== 'castle') { list.push({ id: b.id, t: b.t, x: b.x, y: b.y }); } }
+    for (id in s.buildings) { b = s.buildings[id]; if (b.t !== 'castle' && b.t !== 'stronghold') { list.push({ id: b.id, t: b.t, x: b.x, y: b.y }); } }
     list.sort(function (a, c) { return a.id - c.id; });
     return { v: V, seed: s.seed, res: { food: s.res.food, gold: s.res.gold }, pop: s.pop, day: s.day, tick: s.tick, speed: s.speed, tax: s.tax, nextId: s.nextId, buildings: list,
       units: serUnits(s), queues: serQueues(s), nextUid: s.nextUid,
-      cHp: Math.round(s.cHp * 10) / 10, raid: { n: s.raid.n, next: s.raid.next }, kills: s.kills, over: !!s.over };
+      cHp: Math.round(s.cHp * 10) / 10, raid: { n: s.raid.n, next: s.raid.next }, kills: s.kills, over: !!s.over,
+      won: !!s.won, shp: s.buildings[-1] ? Math.round(s.buildings[-1].hp) : 0 };
   }
 
   function serUnits(s) { var out = [], id, u; for (id in s.units) { u = s.units[id]; out.push({ id: u.id, t: u.t, team: u.team, x: Math.round(u.x * 100) / 100, y: Math.round(u.y * 100) / 100, hp: Math.round(u.hp * 10) / 10 }); } out.sort(function (a, b) { return a.id - b.id; }); return out; }
@@ -39,6 +41,7 @@
     s.pop = o.pop | 0; s.day = o.day | 0 || 1; s.tick = o.tick | 0; s.speed = o.speed === 0 || o.speed === 2 || o.speed === 4 ? o.speed : 1;
     s.tax = o.tax === 0 || o.tax === 2 ? o.tax : 1;
     s.cHp = o.cHp > 0 ? +o.cHp : (o.over ? 0 : 400); s.kills = o.kills | 0; s.over = !!o.over;   // 옛 저장(전투 전)은 거점 온전·첫 습격 250틱 뒤
+    s.won = !!o.won; if (s.buildings[-1]) { s.buildings[-1].hp = s.won ? 0 : (o.shp > 0 ? +o.shp : s.buildings[-1].hp); }   // 옛 저장은 기지 온전
     s.raid = o.raid && o.raid.next > 0 ? { n: o.raid.n | 0, next: o.raid.next | 0 } : { n: 0, next: s.tick + 250 };
     s.nextId = Math.max(2, o.nextId | 0);
     for (i = 0; i < (o.buildings || []).length; i++) {

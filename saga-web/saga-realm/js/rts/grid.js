@@ -34,15 +34,18 @@
   /** 거점(성) 자리 — 가운데 3×3 의 왼쪽 위 */
   function castleSite() { return { x: Math.floor(W / 2) - 1, y: Math.floor(H / 2) - 1, w: 3, h: 3 }; }
 
+  /** 적 기지 자리 — 거점에서 가로로 56칸(시드가 홀수면 동쪽, 짝수면 서쪽), 같은 높이 3×3 */
+  function enemySite(seed) { var c = castleSite(), east = (seed >>> 0) % 2 === 1; return { x: c.x + (east ? 56 : -56), y: c.y, w: 3, h: 3 }; }
+
   function generate(seed) {
     var tiles = new Uint8Array(W * H), elev = noise(seed, 16), elev2 = noise(seed + 101, 6), moist = noise(seed + 202, 10);
-    var cx = W / 2, cy = H / 2, x, y, e, m, t, d;
+    var cx = W / 2, cy = H / 2, x, y, e, m, t, d, es = enemySite(seed), ex = es.x + 1.5, ey = es.y + 1.5;
     for (y = 0; y < H; y++) {
       for (x = 0; x < W; x++) {
         e = elev(x, y) * 0.75 + elev2(x, y) * 0.25;
         m = moist(x, y);
         d = Math.hypot(x - cx, y - cy);
-        if (d < 12) { t = T.GRASS; }                 // 거점 둘레는 반드시 풀
+        if (d < 12 || Math.hypot(x - ex, y - ey) < 8) { t = T.GRASS; }                 // 거점·적 기지 둘레는 반드시 풀
         else if (e < 0.30) { t = T.WATER; }
         else if (e > 0.72) { t = T.HILL; }
         else if (m > 0.62) { t = T.FOREST; }
@@ -60,5 +63,5 @@
 
   global.DG = global.DG || {};
   global.DG.rts = global.DG.rts || {};
-  global.DG.rts.grid = { W: W, H: H, T: T, rng: rng, generate: generate, castleSite: castleSite, inBounds: inBounds, idx: idx, buildable: buildable };
+  global.DG.rts.grid = { W: W, H: H, T: T, rng: rng, generate: generate, castleSite: castleSite, enemySite: enemySite, inBounds: inBounds, idx: idx, buildable: buildable };
 })(typeof window !== 'undefined' ? window : this);

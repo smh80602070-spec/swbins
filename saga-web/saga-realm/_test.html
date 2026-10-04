@@ -316,7 +316,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var tiles = !!back && back.tiles.length === s.tiles.length && back.tiles[1234] === s.tiles[1234];
       var bad = R.state.restore(null) === null && R.state.restore({ v: 99, seed: 1 }) === null && R.state.restore({ v: 1 }) === null;
       var odd = R.state.restore({ v: 1, seed: 5, res: { food: 1, gold: 2 }, pop: 3, day: 4, buildings: [{ id: 9, t: '없는건물', x: 1, y: 1 }] });
-      return same && tiles && bad && !!odd && Object.keys(odd.buildings).length === 1 && ('왕복 같음 · 빈 id 보존 · 깨진 저장 null · 모르는 건물 건너뜀');
+      return same && tiles && bad && !!odd && Object.keys(odd.buildings).length === 2 && ('왕복 같음 · 빈 id 보존 · 깨진 저장 null · 모르는 건물 건너뜀');
     });
 
     /* ── RTS P2(W-0030) — 시설·행복·세율·수요. 모두 순수 함수 ─── */
@@ -458,12 +458,12 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return shot && wait && again && cas && ('망루 6 · 쿨다운 · 거점 5');
     });
 
-    t('RTS 습격 — 정한 틱에 가장자리에서 파도가 나오고(2+n 기·종류 순환·체력 +10%/파도), 다음은 200틱 뒤, 거점으로 길을 구한다', function () {
+    t('RTS 습격 — 정한 틱에 적 기지 앞에서 파도가 나오고(2+n 기·종류 순환·체력 +10%/파도), 다음은 200틱 뒤, 거점으로 길을 구한다', function () {
       var R = DG.rts, C = R.combat, s = R.state.create(7);
       var none = (function () { var q = R.state.create(7); q.tick = 249; C.tick(q); return Object.keys(q.units).length === 0; })();
       s.tick = 250; C.tick(s);
       var ids = Object.keys(s.units), u0 = s.units[ids[0]], g = R.grid;
-      var edge = ids.every(function (k) { var u = s.units[k]; return u.x < 10 || u.y < 10 || u.x > g.W - 10 || u.y > g.H - 10; });
+      var sb = s.buildings[-1], edge = ids.every(function (k) { var u = s.units[k]; return Math.abs(u.x - (sb.x + 1.5)) < 9 && Math.abs(u.y - (sb.y + 4)) < 9; });
       var w0 = ids.length === 2 && s.raid.n === 1 && s.raid.next === 450 && ids.every(function (k) { return s.units[k].team === 1; });
       s.tick = 450; C.tick(s); var w1 = Object.keys(s.units).length === 5 && C.waveOf(1).length === 3 && C.waveOf(1)[0] === 'archer';
       var hp = s.units[Object.keys(s.units).slice(-1)[0]].hp > R.units.UDEF.soldier.hp * 0.99;
@@ -497,6 +497,48 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var b2 = R.state.restore(old), compat = !!b2 && b2.cHp === 400 && b2.raid.n === 0 && b2.raid.next === 350 && b2.kills === 0 && !b2.over;
       var dead = R.state.restore(JSON.parse(JSON.stringify(Object.assign(JSON.parse(json), { over: true, cHp: 0 })))), lost = !!dead && dead.over === true && dead.cHp === 0;
       return same && compat && lost && ('왕복 같음 · 옛 저장 열림 · 함락 보존');
+    });
+
+    /* ── RTS P4a(W-0034) — 적 기지·기지 공격·승리·저장 ─── */
+
+    t('RTS 적 기지 — 자리는 시드로 정해져(홀수 동쪽·짝수 서쪽, 거점에서 56칸) 둘레는 풀이고, 기지(id -1)는 새 판마다 체력 600 으로 서 있으며 짓기·철거가 안 된다', function () {
+      var R = DG.rts, g = R.grid, c = g.castleSite(), e7 = g.enemySite(7), e8 = g.enemySite(8), s = R.state.create(7);
+      var side = e7.x === c.x + 56 && e8.x === c.x - 56 && e7.y === c.y;
+      var tiles = g.generate(7), grass = true, x, y; for (y = e7.y - 2; y <= e7.y + 4; y++) { for (x = e7.x - 2; x <= e7.x + 4; x++) { if (tiles[g.idx(x, y)] !== g.T.GRASS) { grass = false; } } }
+      var sb = s.buildings[-1], stand = !!sb && sb.t === 'stronghold' && sb.hp === 600 && sb.x === e7.x && s.occ[g.idx(e7.x + 1, e7.y + 1)] === -1;
+      var noBuild = R.rules.canPlace(s, 'house', e7.x, e7.y).ok === false && R.rules.remove(s, -1) === false && R.units.walkable(s, e7.x + 1, e7.y + 1) === false;
+      var eco = R.econ.stats(s).cap === 16;       // 기지는 인구·일자리에 안 든다
+      return side && grass && stand && noBuild && eco && ('동 ' + e7.x + ' · 서 ' + e8.x + ' · 둘레 풀 · 체력 600 · 철거 불가');
+    });
+
+    t('RTS 기지 공격 — 내 유닛은 사거리 안에서 기지 체력을 깎고(상성 없음), 0 이 되면 승리: 멈추고 남은 적이 사라지며 파도가 끊긴다', function () {
+      var R = DG.rts, U = R.units, C = R.combat, s = R.state.create(7), sb = s.buildings[-1]; s.raid.next = 1e9;
+      var a = U.spawn(s, 'soldier', 0, sb.x - 0.5, sb.y + 1.5); C.tick(s);
+      var cut = sb.hp === 600 - 8 && !s.won;
+      var far = U.spawn(s, 'soldier', 0, sb.x - 6.5, sb.y + 1.5), hFar = sb.hp; far.cd = 0; C.tick(s);   // 사거리 밖은 못 친다(시야 안이면 다가갈 뿐)
+      var out = sb.hp === hFar - 0 || sb.hp === hFar;
+      var e = U.spawn(s, 'cavalry', 1, sb.x + 6.5, sb.y + 6.5); sb.hp = 5; a.cd = 0; C.tick(s);
+      var win = s.won === true && s.speed === 0 && sb.hp === 0 && !s.units[e.id] && C.daysToRaid(s) === -1;
+      var k = Object.keys(s.units).length; C.tick(s);
+      return cut && out && win && k === 2 && ('-8 · 사거리 밖 못 침 · 승리: 멈춤·적 소거·파도 끊김');
+    });
+
+    t('RTS 적 기지 방어 — 기지는 6칸 안 내 유닛에게 5 를 10틱마다 쏘고(현상금 없음), 파도는 기지 앞에서 거점으로 출발한다', function () {
+      var R = DG.rts, U = R.units, C = R.combat, s = R.state.create(7), sb = s.buildings[-1]; s.raid.next = 1e9;
+      var me = U.spawn(s, 'soldier', 0, sb.x - 2.5, sb.y + 1.5), h0 = me.hp, g0 = s.res.gold; C.tick(s);
+      var shot = me.hp === h0 - 5; me.hp = 3; for (var i = 0; i < 11; i++) { C.tick(s); } var dead = !s.units[me.id] && s.res.gold === g0 && !s.kills;
+      var q = R.state.create(7); q.tick = 250; C.tick(q);
+      var from = Object.keys(q.units).every(function (k) { var u = q.units[k]; return u.team === 1 && Math.hypot(u.x - (q.buildings[-1].x + 1.5), u.y - (q.buildings[-1].y + 1.5)) < 9 && u.goal; });
+      return shot && dead && from && ('기지 사격 5 · 현상금 없음 · 파도는 기지에서');
+    });
+
+    t('RTS 저장 — 기지 체력·승리가 왕복에서 같고, 옛 저장(기지 칸 없음)은 온전한 기지로 열리며, 승리한 판은 기지 hp 0 으로 열린다', function () {
+      var R = DG.rts, s = R.state.create(7); s.buildings[-1].hp = 321;
+      var o = R.state.serialize(s), json = JSON.stringify(o), back = R.state.restore(JSON.parse(json));
+      var same = !!back && back.buildings[-1].hp === 321 && !back.won && !JSON.parse(json).buildings.some(function (b) { return b.t === 'stronghold'; });
+      var old = JSON.parse(json); delete old.shp; delete old.won; var b2 = R.state.restore(old), compat = !!b2 && b2.buildings[-1].hp === 600 && !b2.won;
+      var w = R.state.restore(Object.assign(JSON.parse(json), { won: true })), won = !!w && w.won === true && w.buildings[-1].hp === 0;
+      return same && compat && won && ('왕복 같음 · 옛 저장 온전 · 승리 보존');
     });
 
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {

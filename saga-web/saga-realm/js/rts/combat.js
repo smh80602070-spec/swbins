@@ -35,10 +35,30 @@
   }
   function hit(s, v, dmg, killerTeam) { v.hp -= dmg; if (v.hp <= 0) { kill(s, v, killerTeam); return true; } return false; }
 
-  /** 거점 직사각형까지의 거리(안이면 0) */
-  function castleDist(s, x, y) {
-    var c = s.buildings[1], D = R().rules.DEFS.castle, dx = Math.max(c.x - x, 0, x - (c.x + D.w)), dy = Math.max(c.y - y, 0, y - (c.y + D.h));
+  /** 건물 직사각형까지의 거리(안이면 0) */
+  function rectDist(b, x, y) {
+    var D = R().rules.DEFS[b.t], dx = Math.max(b.x - x, 0, x - (b.x + D.w)), dy = Math.max(b.y - y, 0, y - (b.y + D.h));
     return Math.hypot(dx, dy);
+  }
+  function castleDist(s, x, y) { return rectDist(s.buildings[1], x, y); }
+
+  /** 적 기지를 무너뜨렸다 — 승리: 멈추고 남은 적을 지운다 */
+  function win(s) {
+    var id; s.won = true; s.speed = 0; s.raid.next = 1e12;
+    for (id in s.units) { if (s.units[id].team === 1) { delete s.units[id]; } }
+  }
+
+  /** 내 유닛이 적 기지를 친다 — 사거리 안이면 치고, 시야 안에서 가만히 있다면 다가간다 */
+  function baseAI(s, u, d) {
+    var sb = s.buildings[-1];
+    if (!sb || sb.hp <= 0) { return; }
+    var bd = rectDist(sb, u.x, u.y);
+    if (bd <= d.range + 0.3) {
+      if (u.cd <= 0) { sb.hp -= d.atk; u.cd = CD; if (sb.hp <= 0) { sb.hp = 0; win(s); } }
+      if (!u.path.length) { u.goal = null; }
+    } else if (!u.path.length && bd <= SIGHT) {
+      approach(s, u, sb.x + 1, sb.y + 1);
+    }
   }
 
   /** 가장 가까운 성벽(없으면 null) */
@@ -69,7 +89,7 @@
   /** 내 유닛 — 사거리에 적이 있으면 쏘고, 가만히 있다면 시야 안의 적에게 다가간다. 이동 명령 중이면 걸으며 쏜다 */
   function playerAI(s, u, d) {
     var foe = nearestFoe(s, u, u.path.length ? d.range : SIGHT);
-    if (!foe) { return; }
+    if (!foe) { baseAI(s, u, d); return; }
     if (dist(u, foe) <= d.range) {
       if (u.cd <= 0) { hit(s, foe, d.atk * mult(u.t, foe.t), 0); u.cd = CD; }
       if (!u.path.length) { u.goal = null; }
@@ -96,15 +116,16 @@
     if (foe && dist(u, foe) <= d.range + 1.5) { u.path = []; }
   }
 
-  /** 망루·거점이 사거리 안의 적을 쏜다 */
+  /** 망루·거점·적 기지가 사거리 안의 적을 쏜다(기지는 내 유닛을 쏜다) */
   function fortFire(s) {
-    var id, b, foe, cb = s.buildings[1];
+    var id, b, foe, mine;
     for (id in s.buildings) {
       b = s.buildings[id];
-      if (b.t !== 'tower' && b.t !== 'castle') { continue; }
+      if (b.t !== 'tower' && b.t !== 'castle' && b.t !== 'stronghold') { continue; }
       if (b.cd > 0) { b.cd--; continue; }
-      foe = b.t === 'tower' ? nearestFoe(s, { team: 0 }, TOWER_RANGE, b.x + 0.5, b.y + 0.5) : nearestFoe(s, { team: 0 }, CASTLE_RANGE, cb.x + 1.5, cb.y + 1.5);
-      if (foe) { hit(s, foe, b.t === 'tower' ? TOWER_DMG : CASTLE_DMG, 0); b.cd = CD; }
+      if (b.t === 'tower') { foe = nearestFoe(s, { team: 0 }, TOWER_RANGE, b.x + 0.5, b.y + 0.5); }
+      else { foe = nearestFoe(s, { team: b.t === 'castle' ? 0 : 1 }, CASTLE_RANGE, b.x + 1.5, b.y + 1.5); }
+      if (foe) { hit(s, foe, b.t === 'tower' ? TOWER_DMG : CASTLE_DMG, b.t === 'stronghold' ? 1 : 0); b.cd = CD; }
     }
   }
 
@@ -115,14 +136,12 @@
     return list;
   }
 
-  /** 파도를 지도 가장자리(북·동·남·서 차례)에 낸다 */
+  /** 파도를 적 기지 앞에 낸다(기지가 없으면 더는 안 온다) */
   function spawnWave(s) {
-    var g = R().grid, U = R().units, n = s.raid.n, list = waveOf(n), side = n % 4, i, x, y, p, u, mid;
+    var U = R().units, n = s.raid.n, list = waveOf(n), sb = s.buildings[-1], i, p, u;
+    if (!sb || sb.hp <= 0) { s.raid.next = 1e12; return; }
     for (i = 0; i < list.length; i++) {
-      mid = side % 2 === 0 ? g.W / 2 : g.H / 2;
-      x = side === 0 ? mid + (i - list.length / 2) * 1.5 : side === 2 ? mid + (i - list.length / 2) * 1.5 : side === 1 ? g.W - 2 : 1;
-      y = side === 1 ? mid + (i - list.length / 2) * 1.5 : side === 3 ? mid + (i - list.length / 2) * 1.5 : side === 0 ? 1 : g.H - 2;
-      p = U.nearestWalkable(s, Math.floor(x), Math.floor(y)) || { x: Math.floor(x), y: Math.floor(y) };
+      p = U.nearestWalkable(s, sb.x + (i % 4), sb.y + 3 + Math.floor(i / 4)) || { x: sb.x + (i % 4), y: sb.y + 3 };
       u = U.spawn(s, list[i], 1, p.x + 0.5, p.y + 0.5);
       u.hp = Math.round(u.hp * (1 + 0.1 * n) * 10) / 10;
       U.moveTo(s, u, s.buildings[1].x + 1, s.buildings[1].y + 1);
@@ -133,7 +152,7 @@
 
   /** 한 틱 — 쿨다운, 교전, 망루·거점 발사, 습격 시각 */
   function tick(s) {
-    if (s.over) { return; }
+    if (s.over || s.won) { return; }
     var id, u, d, UD = R().units.UDEF;
     if (s.raid && s.tick >= s.raid.next) { spawnWave(s); }
     for (id in s.units) {
@@ -143,16 +162,17 @@
       if (u.cd > 0) { u.cd--; } else { u.cd = 0; }
       if (u.rp > 0) { u.rp--; } else { u.rp = 0; }
       if (u.team === 1) { raiderAI(s, u, d); } else { playerAI(s, u, d); }
-      if (s.over) { return; }
+      if (s.over || s.won) { return; }
     }
     fortFire(s);
+    if (s.won) { return; }
   }
 
   /** 다음 습격까지 남은 날(올림), 습격이 없으면 -1 */
-  function daysToRaid(s) { return s.raid ? Math.max(0, Math.ceil((s.raid.next - s.tick) / TICKS_PER_DAY)) : -1; }
+  function daysToRaid(s) { return s.raid && !s.won ? Math.max(0, Math.ceil((s.raid.next - s.tick) / TICKS_PER_DAY)) : -1; }
 
   global.DG = global.DG || {};
   global.DG.rts = global.DG.rts || {};
   global.DG.rts.combat = { CASTLE_HP: CASTLE_HP, WALL_HP: WALL_HP, CD: CD, SIGHT: SIGHT, TOWER_RANGE: TOWER_RANGE, FIRST_RAID: FIRST_RAID, RAID_GAP: RAID_GAP, BOUNTY: BOUNTY,
-    mult: mult, nearestFoe: nearestFoe, waveOf: waveOf, spawnWave: spawnWave, castleDist: castleDist, hitWall: hitWall, tick: tick, daysToRaid: daysToRaid };
+    mult: mult, nearestFoe: nearestFoe, waveOf: waveOf, spawnWave: spawnWave, castleDist: castleDist, rectDist: rectDist, win: win, hitWall: hitWall, tick: tick, daysToRaid: daysToRaid };
 })(typeof window !== 'undefined' ? window : this);

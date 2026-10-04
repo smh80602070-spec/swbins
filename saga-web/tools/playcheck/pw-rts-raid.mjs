@@ -20,6 +20,15 @@ const out = await page.evaluate(async () => {
   return res;
 });
 console.log(JSON.stringify(out));
+// 둘째 판 — 적 기지를 쳐서 승리(W-0034)
+await page.goto(r.url('rts.html')); await sleep(1500);
+const win = await page.evaluate(async () => {
+  const S = DG.rts.view.state(), sb = S.buildings[-1], U = DG.rts.units; S.raid.next = 1e9; S.speed = 4; sb.hp = 3;
+  U.spawn(S, 'soldier', 0, sb.x - 0.5, sb.y + 1.5);
+  await new Promise((ok) => setTimeout(ok, 1200));
+  return { won: S.won, tip: document.getElementById('rts-tip').textContent, hud: document.getElementById('rts-top').textContent.replace(/s+/g, ' ').slice(-40) };
+});
+console.log(JSON.stringify(win));
 console.log('오류', r.errors.length, r.errors.slice(0, 3).join(' | '), '· 404', r.notFound.length);
 await r.close();
 process.exit(0);
