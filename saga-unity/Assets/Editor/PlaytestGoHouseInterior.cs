@@ -18,15 +18,21 @@ namespace Saga.EditorTools
         {
             _tag = tag;
             _ok = true;
-            var gi = GoHouseInterior.Instance;
-            if (gi == null)
+            string m = "";
+            int expected = 0;
+            foreach (var (house, room) in GoHouseInterior.Houses)
             {
-                bool shouldExist = GameObject.Find("House_2") != null && Resources.Load<GameObject>(GoHouseInterior.RoomPath) != null;
-                if (shouldExist) Fail("집과 방 GLB 가 있는데 방이 안 섰다");
-                else Debug.Log($"[{_tag}] house interior skip - House_2 또는 방 GLB 없음");
-                return _ok;
+                if (GameObject.Find(house) == null || Resources.Load<GameObject>(room) == null) continue;   // 집·방 GLB 없는 PC 는 그 집만 건너뛴다
+                expected++;
+                var gi = GoHouseInterior.All.Find(g => g.HouseName == house);
+                if (gi == null) { Fail($"{house} 집과 방 GLB({room})가 있는데 방이 안 섰다"); continue; }
+                m += $" [{house}]" + CheckShape(gi) + CheckPocket(gi) + CheckRoundTrip(gi);
             }
-            string m = CheckShape(gi) + CheckPocket(gi) + CheckRoundTrip(gi);
+            if (expected == 0) { Debug.Log($"[{_tag}] house interior skip - 집 또는 방 GLB 없음"); return _ok; }
+            if (GoHouseInterior.All.Count != expected) Fail($"방 {GoHouseInterior.All.Count}개 (기대 {expected})");
+            for (int i = 0; i < GoHouseInterior.All.Count; i++)
+                for (int j = i + 1; j < GoHouseInterior.All.Count; j++)
+                    if (GoHouseInterior.All[i].RoomBounds.Intersects(GoHouseInterior.All[j].RoomBounds)) Fail($"{GoHouseInterior.All[i].HouseName}·{GoHouseInterior.All[j].HouseName} 방이 겹친다");
             if (_ok) Debug.Log($"[{_tag}] house interior OK -{m}");
             return _ok;
         }

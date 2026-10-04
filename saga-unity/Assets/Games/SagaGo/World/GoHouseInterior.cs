@@ -6,7 +6,7 @@ using Saga.Go.Player;
 namespace Saga.Go.World
 {
     /// <summary>
-    /// U-0039 — GO 마을집(`House_2`) 한 채에 들어갈 수 있는 방. 숲 `ForestHouse` 의 "포켓 공간" 선례를 GO 에 맞춰 줄였다:
+    /// U-0039 — GO 마을집(`House_2`·`House_3`)에 들어갈 수 있는 방(집마다 다른 방 GLB — <see cref="Houses"/>). 숲 `ForestHouse` 의 "포켓 공간" 선례를 GO 에 맞춰 줄였다:
     /// 방(`Resources/World/int_hanok_01`, K-0026)을 마을과 안 겹치는 먼 자리에 세워 두고, 문 앞 근접 → 순간이동 / 방 안 출구 근접 → 복귀.
     /// 입력 키는 안 만든다(자동). 방 규약(K-0026): 문 = 남쪽 가운데, 빈 노드 `spawn_in`·`door_out`·`light_*`. 방 GLB 는 1.7m 사람 기준이라
     /// 이 판 사람 키(3.4m)에 맞춰 <see cref="RoomScale"/> 배. 충돌체는 GLB 에 없어 바닥·벽 박스를 덧붙인다(천장은 안 닫는다 — 카메라가 위에서 내려다본다).
@@ -14,12 +14,21 @@ namespace Saga.Go.World
     /// </summary>
     public class GoHouseInterior : MonoBehaviour
     {
-        public const string RoomPath = "World/int_hanok_01";
+        /// <summary>(마을집 이름, 방 GLB Resources 경로) — 집마다 포켓 자리가 달라(집 위치 +1000m) 서로 안 겹친다.</summary>
+        public static readonly (string house, string room)[] Houses =
+        {
+            ("House_2", "World/int_hanok_01"),
+            ("House_3", "World/int_inn_01"),
+        };
+        public const string RoomPath = "World/int_hanok_01";   // 첫 집(진단·하위 호환)
         public const float RoomScale = 2f;                       // 3.4 / 1.7
         public static readonly Vector3 PocketOffset = new Vector3(0f, 0f, 1000f);
         public const float EnterRadius = 1.8f, ExitRadius = 1.2f, MinLandingGap = 2.6f, Cooldown = 1.5f, LostDistance = 60f;
 
-        public static GoHouseInterior Instance { get; private set; }
+        public static readonly List<GoHouseInterior> All = new List<GoHouseInterior>();
+        /// <summary>첫 방(없으면 null).</summary>
+        public static GoHouseInterior Instance => All.Count > 0 ? All[0] : null;
+        public string HouseName { get; private set; }
 
         public bool Inside { get; private set; }
         public Vector3 DoorOutdoor { get; private set; }       // 문 앞 벽면(밖) — 여기 다가가면 들어간다
@@ -34,27 +43,35 @@ namespace Saga.Go.World
         private PlayerController _pc;
         private float _cooldown;
 
-        /// <summary>마을집이 서고 방 GLB 가 있으면 방을 세운다(없으면 아무것도 안 한다). `GameBootstrap.Start` 가 부른다.</summary>
+        /// <summary>마을집마다 집이 서고 방 GLB 가 있으면 방을 세운다(없는 집은 건너뛴다). 이미 세웠으면 그대로. `GameBootstrap.Start` 가 부른다. 반환 = 첫 방.</summary>
         public static GoHouseInterior Install()
         {
-            if (Instance != null) return Instance;
-            var house = GameObject.Find("House_2");
-            var room = Resources.Load<GameObject>(RoomPath);
-            if (house == null || room == null) return null;
-            var wall = house.transform.Find("Wall");
-            var col = wall != null ? wall.GetComponent<BoxCollider>() : null;
-            if (col == null) return null;
-            var go = new GameObject("HouseInterior");
-            var gi = go.AddComponent<GoHouseInterior>();
-            gi.Build(house.transform, col.bounds, room);
-            return gi;
+            if (All.Count > 0) return Instance;
+            foreach (var (houseName, roomPath) in Houses)
+            {
+                var house = GameObject.Find(houseName);
+                var room = Resources.Load<GameObject>(roomPath);
+                if (house == null || room == null) continue;
+                var wall = house.transform.Find("Wall");
+                var col = wall != null ? wall.GetComponent<BoxCollider>() : null;
+                if (col == null) continue;
+                var go = new GameObject("HouseInterior_" + houseName);
+                var gi = go.AddComponent<GoHouseInterior>();
+                gi.HouseName = houseName;
+                gi.Build(house.transform, col.bounds, room);
+            }
+            return Instance;
         }
 
-        /// <summary>저장할 플레이어 위치 — 방 안이면 밖 복귀 자리(불러오면 포켓 공간에 떨어지지 않게).</summary>
-        public static Vector3 SavePosition(Vector3 current) => Instance != null && Instance.Inside ? Instance.LandingOutdoor : current;
+        /// <summary>저장할 플레이어 위치 — 어느 방이든 안이면 그 방의 밖 복귀 자리(불러오면 포켓 공간에 떨어지지 않게).</summary>
+        public static Vector3 SavePosition(Vector3 current)
+        {
+            foreach (var gi in All) if (gi.Inside) return gi.LandingOutdoor;
+            return current;
+        }
 
-        private void Awake() { Instance = this; }
-        private void OnDestroy() { if (Instance == this) Instance = null; }
+        private void Awake() { All.Add(this); }
+        private void OnDestroy() { All.Remove(this); }
 
         private void Build(Transform house, Bounds wallBounds, GameObject roomPrefab)
         {

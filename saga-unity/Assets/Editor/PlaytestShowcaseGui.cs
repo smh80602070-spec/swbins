@@ -24,7 +24,7 @@ namespace Saga.EditorTools
         private static int _max = 2, _frame;
         private static bool _done;
         private static bool _stage1, _wantHouse;
-        private static int _stage2At;
+        private static int _stage2At, _houseIndex;
         private static bool _origEnterOpts;
         private static EnterPlayModeOptions _origOpts;
 
@@ -45,7 +45,7 @@ namespace Saga.EditorTools
             EditorSettings.enterPlayModeOptionsEnabled = true;
             EditorSettings.enterPlayModeOptions = EnterPlayModeOptions.DisableDomainReload | EnterPlayModeOptions.DisableSceneReload;
             EditorSceneManager.OpenScene(scene);
-            _frame = 0; _done = false; _stage1 = false; _wantHouse = _targets.Contains("house"); _stage2At = 0;
+            _frame = 0; _done = false; _stage1 = false; _wantHouse = _targets.Contains("house") || _targets.Contains("house2"); _houseIndex = _targets.Contains("house2") ? 1 : 0; _stage2At = 0;
             EditorApplication.playModeStateChanged += OnState;
             EditorApplication.isPlaying = true;
         }
@@ -85,7 +85,7 @@ namespace Saga.EditorTools
         /// <summary>`house` — GO 마을집 방(U-0039)에 들어간다. 방이 없으면 거짓.</summary>
         private static bool EnterHouse()
         {
-            var gi = Saga.Go.World.GoHouseInterior.Instance;
+            var gi = _houseIndex < Saga.Go.World.GoHouseInterior.All.Count ? Saga.Go.World.GoHouseInterior.All[_houseIndex] : null;
             if (gi == null) { Debug.LogError("[ShowcaseGui] house — 방이 안 섰다"); return false; }
             gi.Enter();
             Debug.Log($"[ShowcaseGui] house — 들어감 {gi.Inside}");
@@ -96,14 +96,15 @@ namespace Saga.EditorTools
         private static void ShootHouse()
         {
             var main = Camera.main;
-            var gi = Saga.Go.World.GoHouseInterior.Instance;
+            var gi = _houseIndex < Saga.Go.World.GoHouseInterior.All.Count ? Saga.Go.World.GoHouseInterior.All[_houseIndex] : null;
             if (main == null || gi == null) return;
-            Shoot(main, "house_gamecam", main.transform.position, main.transform.rotation);
+            string tag = _houseIndex == 0 ? "house" : "house2";
+            Shoot(main, tag + "_gamecam", main.transform.position, main.transform.rotation);
             var c = gi.RoomBounds.center;
             var over = c + new Vector3(0f, gi.RoomBounds.size.y * 2.2f, -gi.RoomBounds.size.z * 1.1f);
-            Shoot(main, "house_overview", over, Quaternion.LookRotation(c - over, Vector3.up));
+            Shoot(main, tag + "_overview", over, Quaternion.LookRotation(c - over, Vector3.up));
             var inside = gi.LandingIndoor + new Vector3(0f, 2.2f, -1.5f);
-            Shoot(main, "house_fromdoor", inside, Quaternion.LookRotation(gi.RoomBounds.center - inside + Vector3.up * 0.5f, Vector3.up));
+            Shoot(main, tag + "_fromdoor", inside, Quaternion.LookRotation(gi.RoomBounds.center - inside + Vector3.up * 0.5f, Vector3.up));
             Debug.Log($"[ShowcaseGui] house 촬영 — 플레이어 {GameObject.FindWithTag("Player")?.transform.position} 카메라 {main.transform.position}");
         }
 
