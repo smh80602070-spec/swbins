@@ -271,7 +271,8 @@
     global.document.body.appendChild(box2); S.speed = 0;
     box2.addEventListener('click', function (e) {
       var b = e.target.closest('button[data-diff]'); if (!b) { return; }
-      S = R().state.create(end ? (Date.now() & 0xffff) + 1 : S.seed, +b.getAttribute('data-diff')); lastSaveDay = S.day; sel = {}; selB = 0; overSeen = false;
+      S = R().state.create(end ? (Date.now() & 0xffff) + 1 : S.seed, +b.getAttribute('data-diff')); if (/[?&]qa=1/.test(global.location ? global.location.search : '')) { R().state.qaPreset(S); }
+      lastSaveDay = S.day; sel = {}; selB = 0; overSeen = false;
       var cs2 = R().grid.castleSite(); cam.x = cs2.x + 1.5; cam.y = cs2.y + 1.5;
       box2.parentNode.removeChild(box2); dirty = true; hud();
     });
@@ -396,6 +397,7 @@
     els = { top: $('rts-top'), tools: $('rts-tools'), speed: $('rts-speed'), tip: $('rts-tip'), opts: $('rts-opts'), sel: $('rts-sel') };
     var saved = c && c.save && c.save.rts ? R().state.restore(c.save.rts) : null;
     S = saved || R().state.create((Date.now() & 0xffff) + 1, diffFromUrl());
+    if (!saved && /[?&]qa=1/.test(global.location ? global.location.search : '')) { R().state.qaPreset(S); }   // 시험 프리셋(?qa=1)
     lastSaveDay = S.day;
     var cs = R().grid.castleSite(); cam.x = cs.x + 1.5; cam.y = cs.y + 1.5;
     resize(); bindInput(); hud(); global.requestAnimationFrame(loop);

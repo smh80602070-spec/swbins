@@ -663,6 +663,11 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return order && soon === 'raid-soon' && won === 'won' && over === 'over' && !!b && G.text(s) !== '' && ('순서 ' + k.join('→') + ' · 임박·승리·함락');
     });
 
+    t('RTS 시험 프리셋 — qaPreset 은 금 5000·식량 2000 을 주고 첫 습격을 60틱 뒤로 당기며, 판의 다른 것(지도·거점·기지)은 그대로다', function () {
+      var R = DG.rts, a = R.state.create(7), b = R.state.qaPreset(R.state.create(7));
+      return b.res.gold === 5000 && b.res.food === 2000 && b.raid.next === b.tick + 60 && a.res.gold === 300 && JSON.stringify(Array.from(a.tiles)) === JSON.stringify(Array.from(b.tiles)) && b.buildings[-1].hp === a.buildings[-1].hp && ('프리셋 5000/2000 · 습격 60틱');
+    });
+
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
       var A = DG.assets3d, ids = DG.assets3dIds, bad = [], reg = DG.cfg.assets3d.reg;
       Object.keys(reg).forEach(function (k) { reg[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });

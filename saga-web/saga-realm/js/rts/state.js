@@ -20,6 +20,9 @@
     return s;
   }
 
+  /** 시험 프리셋(주소 `?qa=1`, 새 판만) — 자원을 넉넉히 주고 첫 습격을 60틱(1일 남짓) 뒤로 당겨, 건설·생산·전투·영웅을 바로 볼 수 있게 한다 */
+  function qaPreset(s) { s.res.gold = 5000; s.res.food = 2000; s.raid.next = s.tick + 60; return s; }
+
   /** 저장 꼴 — 지형·점유 격자는 뺀다 */
   function serialize(s) {
     var list = [], id, b;
@@ -81,5 +84,5 @@
 
   global.DG = global.DG || {};
   global.DG.rts = global.DG.rts || {};
-  global.DG.rts.state = { V: V, create: create, serialize: serialize, restore: restore };
+  global.DG.rts.state = { V: V, create: create, serialize: serialize, restore: restore, qaPreset: qaPreset };
 })(typeof window !== 'undefined' ? window : this);
