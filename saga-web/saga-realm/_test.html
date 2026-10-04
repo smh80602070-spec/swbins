@@ -453,6 +453,17 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return shot && chase && keep && ('궁병 사거리 · 가만히면 접근 · 명령 중 유지');
     });
 
+    t('RTS 공격 이동(W-0061) — 이동 명령은 적을 안 쫓지만 공격 이동은 시야 안 적에게 맞서고, 적이 사라지면 목적지로 이어 가며, 도착하면 표시가 지워진다', function () {
+      var R = DG.rts, U = R.units, C = R.combat, s = rtsField(), cs = s.__cs;
+      var am = U.spawn(s, 'soldier', 0, cs.x + 6.5, cs.y - 8.5), foe = U.spawn(s, 'soldier', 1, cs.x + 12.5, cs.y - 8.5);
+      U.moveTo(s, am, cs.x + 6, cs.y - 14); am.amGoal = { x: cs.x + 6.5, y: cs.y - 14 }; C.tick(s);
+      var chase = !!am.goal && Math.abs(am.goal.x - Math.floor(foe.x)) <= 1;
+      delete s.units[foe.id]; am.path = []; am.goal = null; am.rp = 0; am.want = null; C.tick(s);
+      var resume = am.path.length > 0 && !!am.goal && Math.abs(am.goal.y - (cs.y - 14)) <= 2;
+      am.x = cs.x + 6.5; am.y = cs.y - 14; am.path = []; am.goal = null; C.tick(s);
+      return chase && resume && !am.amGoal && ('시야 안 적에게 · 이어 가기 · 도착 시 해제');
+    });
+
     t('RTS 망루·거점 발사 — 망루는 7칸 안의 적을 10틱마다 6, 거점은 6칸 안을 5로 쏜다', function () {
       var R = DG.rts, C = R.combat, U = R.units, s = rtsField(), cs = s.__cs; s.res.gold = 9999;
       var tw = R.rules.place(s, 'tower', cs.x + 8, cs.y - 3); var foe = U.spawn(s, 'cavalry', 1, cs.x + 11.5, cs.y - 2.5), h0 = foe.hp; C.tick(s);

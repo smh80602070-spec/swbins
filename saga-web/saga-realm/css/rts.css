@@ -57,3 +57,22 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0d1016; col
 #rts-diff button { min-width: 78px; min-height: 44px; margin: 0 4px; padding: 4px 10px; background: transparent; border: 1px solid rgba(216, 181, 106, .4); color: var(--rt-ink); border-radius: 8px; cursor: pointer; font-size: 15px; }
 #rts-diff button.on { background: linear-gradient(180deg, #e8c46a, #b98f3c); color: #22190a; font-weight: 700; }
 @media (max-width: 780px) { #rts-sel { bottom: calc(84px + var(--rt-safe-b)); left: 8px; } }
+
+/* W-0061 — 스타크래프트식 하단 콘솔(데스크톱, 폭 > 780). 폰은 위 배치 그대로.
+   왼쪽 미니맵 · 가운데 선택 정보 · 오른쪽 명령 카드(4×3), 자원 줄은 오른쪽 위로. 캔버스는 콘솔 위까지만 — 유닛이 띠 밑에 가리지 않는다 */
+@media (min-width: 781px) {
+  :root { --rt-con-h: 176px; }
+  #rts-map { height: calc(100% - var(--rt-con-h) - var(--rt-safe-b)); }
+  body::after { content: ""; position: fixed; left: 0; right: 0; bottom: 0; height: calc(var(--rt-con-h) + var(--rt-safe-b)); z-index: 4; pointer-events: none;
+    background: linear-gradient(180deg, rgba(30, 23, 16, .98), rgba(10, 8, 6, .99)); border-top: 2px solid var(--rt-trim); box-shadow: 0 -8px 24px rgba(0, 0, 0, .5); }
+  #rts-mini { left: 12px; right: auto; bottom: calc(12px + var(--rt-safe-b)); width: 224px; height: 140px; }
+  #rts-sel, #rts-sel.show { display: block; left: 252px; right: 332px; bottom: calc(12px + var(--rt-safe-b)); width: auto; min-width: 0; max-width: none; height: 152px; box-sizing: border-box; overflow: auto; font-size: 14px; }
+  #rts-sel:empty::before { content: "유닛이나 건물을 고르세요 — 왼쪽 끌기: 상자 선택 · 오른쪽 클릭: 이동 · A: 공격 이동 · S: 정지 · Shift+숫자: 부대 지정"; color: var(--rt-dim); font-size: 13px; }
+  #rts-tools { left: auto; right: 12px; bottom: calc(12px + var(--rt-safe-b)); transform: none; display: grid; grid-template-columns: repeat(4, 64px); gap: 4px; padding: 6px; max-width: none; overflow: visible; }
+  #rts-tools button { min-width: 0; min-height: 44px; padding: 2px 2px; }
+  #rts-tools button span { font-size: 16px; } #rts-tools button small { font-size: 10px; }
+  #rts-tools .ic, .sl-btns .ic { width: 22px; height: 22px; }
+  #rts-top { top: 12px; left: auto; right: 12px; transform: none; }
+  #rts-speed { top: 60px; right: 12px; }
+  #rts-opts { top: 108px; right: 12px; }
+}

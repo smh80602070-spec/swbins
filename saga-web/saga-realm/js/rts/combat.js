@@ -91,11 +91,20 @@
 
   /** 내 유닛 — 사거리에 적이 있으면 쏘고, 가만히 있다면 시야 안의 적에게 다가간다. 이동 명령 중이면 걸으며 쏜다 */
   function playerAI(s, u, d) {
-    var foe = nearestFoe(s, u, (u.path.length || u.want) ? d.range : SIGHT);
-    if (!foe) { baseAI(s, u, d); return; }
+    /* 공격 이동(u.amGoal, W-0061) — 가는 길에 시야(SIGHT) 안 적이 보이면 멈춰 맞서고, 적이 없으면 목적지로 이어 간다 */
+    var am = !!u.amGoal, foe = nearestFoe(s, u, am || !(u.path.length || u.want) ? SIGHT : d.range);
+    if (!foe) {
+      if (am && !u.path.length && !u.want) {
+        if (Math.hypot(u.x - u.amGoal.x, u.y - u.amGoal.y) < 1.2) { u.amGoal = null; } else { approach(s, u, u.amGoal.x, u.amGoal.y); }
+      }
+      baseAI(s, u, d); return;
+    }
     if (dist(u, foe) <= d.range) {
       if (u.cd <= 0) { hit(s, foe, d.atk * mult(u.t, foe.t), 0, d.range > 2 ? u : null); u.cd = CD; }
       if (!u.path.length) { u.goal = null; }
+    } else if (am) {
+      if (!u.goal || Math.hypot(u.goal.x - foe.x, u.goal.y - foe.y) > 2) { u.path = []; u.goal = null; u.rp = 0; }
+      approach(s, u, Math.floor(foe.x), Math.floor(foe.y));
     } else if (!u.path.length && !u.want) {
       approach(s, u, Math.floor(foe.x), Math.floor(foe.y));
     }

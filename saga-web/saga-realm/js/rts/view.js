@@ -18,6 +18,7 @@
   var R = function () { return global.DG.rts; };
   var S = null, cv, ctx, mini, mctx, miniBase = null, els = {};
   var cam = { x: 80, y: 50, z: 1.4 }, tool = 'select', hover = null, ptrs = {}, pinch = 0, painting = false, panning = false, panLast = null;
+  var amMode = false, edgeP = null, groups = {};   // 공격 이동 대기(A) · 마우스 위치(가장자리 스크롤) · 부대 번호 1~9 → 유닛 id 모음(W-0061, 저장 안 함)
   var sel = {}, selB = 0, box = null, down = null;   // 고른 유닛 id 모음 · 고른 군영 id · 끌고 있는 선택 상자 · 눌린 자리
   var acc = 0, lastT = 0, lastHud = 0, lastSaveDay = 0, tipMsg = '', tipUntil = 0, dirty = true, overlay = 0, lastStats = null, overSeen = false, pokeUntil = 0;
   var OVERLAYS = ['보기: 없음', '보기: 행복', '보기: 닿는 범위'];
@@ -208,7 +209,7 @@
       h += '</div>';
     } else {
       for (id in sel) { if (S.units[id]) { n++; kinds[S.units[id].t] = (kinds[S.units[id].t] || 0) + 1; } }
-      if (n) { h += '<div class="sl-h"><b>선택 ' + n + '기</b></div><div class="sl-u">' + Object.keys(kinds).map(function (t) { return U.UDEF[t].icon + ' ' + U.UDEF[t].name + ' ' + kinds[t]; }).join(' · ') + '</div><small>우클릭(폰은 땅을 눌러)으로 이동</small>' + R().heroes.skillBtn(S, sel); }
+      if (n) { h += '<div class="sl-h"><b>선택 ' + n + '기</b></div><div class="sl-u">' + Object.keys(kinds).map(function (t) { return U.UDEF[t].icon + ' ' + U.UDEF[t].name + ' ' + kinds[t]; }).join(' · ') + '</div><small>우클릭(폰은 땅을 눌러)으로 이동 · A 공격 이동 · S 정지</small>' + R().heroes.skillBtn(S, sel); }
       else if (U.count(S, 0)) { h += '<div class="sl-btns"><button data-all="1" title="내 군대 전부 고르기"><span>🛡️</span><small>전군<br>선택</small></button></div>'; }
     }
     if (h !== els.sel.__h) { els.sel.innerHTML = h; els.sel.__h = h; }
@@ -274,7 +275,42 @@
     var ids = Object.keys(sel).filter(function (id) { return S.units[id]; }), t = toTile(p.x, p.y);
     if (!ids.length) { return; }
     if (!R().grid.inBounds(t.x, t.y)) { return; }
+    ids.forEach(function (id) { S.units[id].amGoal = null; });
     R().units.moveGroup(S, ids.map(Number), t.x, t.y); dirty = true;
+  }
+
+  var EDGE = 12;   // px — 화면 가장자리 스크롤 띠
+  /** 마우스가 지도 가장자리에 붙어 있으면 지도를 민다(데스크톱, W-0061) */
+  function edgeScroll(dt) {
+    if (!edgeP || panning || pinch) { return; }
+    var r = cv.getBoundingClientRect(), dx = 0, dy = 0, v;
+    if (edgeP.x < r.left || edgeP.x > r.right || edgeP.y < r.top || edgeP.y > r.bottom) { return; }
+    if (edgeP.x < r.left + EDGE) { dx = -1; } else if (edgeP.x > r.right - EDGE) { dx = 1; }
+    if (edgeP.y < r.top + EDGE) { dy = -1; } else if (edgeP.y > r.bottom - EDGE) { dy = 1; }
+    if (!dx && !dy) { return; }
+    v = 14 / Math.sqrt(cam.z) * dt / 1000; cam.x += dx * v; cam.y += dy * v; clampCam(); dirty = true;
+  }
+
+  function liveIds() { return Object.keys(sel).filter(function (id) { return S.units[id]; }).map(Number); }
+  /** A 뒤 클릭 — 가다가 적이 보이면 맞서 싸우고, 끝나면 이어 간다 */
+  function attackMove(p) {
+    var ids = liveIds(), t = toTile(p.x, p.y);
+    if (!ids.length || !R().grid.inBounds(t.x, t.y)) { return; }
+    R().units.moveGroup(S, ids, t.x, t.y);
+    ids.forEach(function (id) { S.units[id].amGoal = { x: t.x + 0.5, y: t.y + 0.5 }; });
+    say('공격 이동'); dirty = true;
+  }
+  /** S — 멈춘다 */
+  function stopSel() {
+    liveIds().forEach(function (id) { var u = S.units[id]; u.path = []; u.want = null; u.goal = null; u.amGoal = null; });
+    dirty = true;
+  }
+  /** Shift·Ctrl + 1~9 부대 지정 / 1~9 호출(지정된 번호가 없으면 false → 건설 단축키) */
+  function setGroup(n) { var ids = liveIds(); if (!ids.length) { return; } groups[n] = ids; say(n + '번 부대 지정 · ' + ids.length + '명'); }
+  function recallGroup(n) {
+    var g = (groups[n] || []).filter(function (id) { return S.units[id]; });
+    if (!g.length) { return false; }
+    sel = {}; selB = 0; g.forEach(function (id) { sel[id] = true; }); dirty = true; return true;
   }
 
   /** 고른 영웅들이 일격(Q) — 맞힌 적이 없으면 안내 */
@@ -310,13 +346,16 @@
       var p = pointerPos(e); ptrs[e.pointerId] = p; try { cv.setPointerCapture(e.pointerId); } catch (x) { /* noop */ }
       if (Object.keys(ptrs).length === 2) { pinch = dist2(); painting = false; panning = false; return; }
       down = { btn: e.button, x: p.x, y: p.y, moved: false };
-      if (e.button === 1 || e.button === 2 || e.shiftKey || tool === 'pan') { panning = true; panLast = p; return; }
+      if (e.button === 2) { if (tool !== 'select') { tool = 'select'; hud(); } amMode = false; return; }   // 우클릭은 명령(up) — 끌어도 지도는 안 움직인다(W-0061)
+      if (amMode && e.button === 0) { amMode = false; attackMove(p); return; }
+      if (e.button === 1 || e.shiftKey || tool === 'pan') { panning = true; panLast = p; return; }
       if (tool === 'select' && e.pointerType === 'touch') { down.touch = true; panning = true; panLast = p; return; }   // 폰: 끌면 지도 이동, 짧게 누르면 고르기·명령
       if (tool === 'select') { box = { x0: p.x, y0: p.y, x1: p.x, y1: p.y }; return; }
       painting = true; applyAt(toTile(p.x, p.y));
     });
     cv.addEventListener('pointermove', function (e) {
       var p = pointerPos(e), n = Object.keys(ptrs).length;
+      edgeP = e.pointerType === 'mouse' ? { x: e.clientX, y: e.clientY } : null;
       hover = toTile(p.x, p.y); dirty = true;
       if (n === 2 && ptrs[e.pointerId]) {
         ptrs[e.pointerId] = p; var d = dist2();
@@ -331,14 +370,14 @@
     });
     function up(e) {
       var p = pointerPos(e);
-      if (down && down.btn === 2 && !down.moved) { commandMove(p); }
+      if (down && down.btn === 2) { commandMove(p); }
       else if (down && down.touch && !down.moved) { tapAt(p); dirty = true; }
       if (box) { finishBox(p); }
       down = null; delete ptrs[e.pointerId];
       if (!Object.keys(ptrs).length) { painting = false; panning = false; panLast = null; pinch = 0; }
     }
     cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
-    cv.addEventListener('pointerleave', function () { hover = null; dirty = true; });
+    cv.addEventListener('pointerleave', function () { hover = null; edgeP = null; dirty = true; });
     cv.addEventListener('wheel', function (e) {
       e.preventDefault();
       var p = pointerPos(e), before = toTile(p.x, p.y), f = e.deltaY < 0 ? 1.15 : 1 / 1.15;
@@ -348,14 +387,16 @@
     }, { passive: false });
     global.addEventListener('resize', resize);
     global.addEventListener('keydown', function (e) {
-      var k = e.key, step = 3 / cam.z * 2, n;
-      if (k === 'Escape') { tool = 'select'; sel = {}; selB = 0; }
+      var k = e.key, step = 3 / cam.z * 2, n, code = e.code || '', tl;
+      if (k === 'Escape') { tool = 'select'; sel = {}; selB = 0; amMode = false; }
       else if (k === ' ') { S.speed = S.speed === 0 ? 1 : 0; e.preventDefault(); }
       else if (k === 'x' || k === 'X') { tool = 'erase'; }
       else if (k === 'q' || k === 'Q') { castSel(); }
-      else if (/^[1-9]$/.test(k)) { n = +k; tool = TOOLS.filter(function (t) { return !!R().rules.DEFS[t.k]; })[n - 1].k; }
-      else if (k === 'ArrowLeft' || k === 'a') { cam.x -= step; } else if (k === 'ArrowRight' || k === 'd') { cam.x += step; }
-      else if (k === 'ArrowUp' || k === 'w') { cam.y -= step; } else if (k === 'ArrowDown' || k === 's') { cam.y += step; }
+      else if ((k === 'a' || k === 'A') && !e.ctrlKey && !e.metaKey) { if (liveIds().length) { amMode = true; say('공격 이동 — 갈 곳을 왼쪽 클릭 (우클릭·Esc 취소)'); } else { say('공격 이동 — 먼저 유닛을 고르세요'); } }
+      else if ((k === 's' || k === 'S') && !e.ctrlKey && !e.metaKey) { stopSel(); }
+      else if (/^Digit[1-9]$/.test(code)) { n = +code.slice(5); if (e.ctrlKey || e.shiftKey) { setGroup(n); e.preventDefault(); } else if (!recallGroup(n)) { tl = TOOLS.filter(function (t) { return !!R().rules.DEFS[t.k]; })[n - 1]; if (tl) { tool = tl.k; } } }
+      else if (k === 'ArrowLeft') { cam.x -= step; } else if (k === 'ArrowRight') { cam.x += step; }
+      else if (k === 'ArrowUp') { cam.y -= step; } else if (k === 'ArrowDown') { cam.y += step; }
       clampCam(); dirty = true;
     });
     function mini2cam(e) { var r = mini.getBoundingClientRect(), g = R().grid; cam.x = (e.clientX - r.left) / r.width * g.W; cam.y = (e.clientY - r.top) / r.height * g.H; clampCam(); dirty = true; }
@@ -404,6 +445,7 @@
         if (S.tick % R().econ.TICKS_PER_DAY === 0) { R().econ.dayTick(S); dirty = true; if (S.day - lastSaveDay >= 10) { save(); } }
       }
     }
+    edgeScroll(dt);
     if (dirty) { draw(); }
     if (t - lastHud > 250) { lastHud = t; hud(); }
     global.requestAnimationFrame(loop);
