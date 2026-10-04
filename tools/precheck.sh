@@ -89,6 +89,9 @@ for f in saga-web/STATE.md saga-godot/docs/STATE.md saga-unity/docs/STATE.md; do
 over=$(find tasks -name '*.md' -size +6144c 2>/dev/null)
 if [ -n "$over" ]; then echo "$over" | while read -r f; do echo "OVER $f > 6144B"; done; fail=1; else echo "ok   tasks/**/*.md 전부 6144B 이하"; fi
 
+echo "== 정본 범주 반영 (tools/asset-audit/reflect.py --categories · K-0073, WARN 만)"
+if [ -d saga-assets ]; then PYTHONIOENCODING=utf-8 py tools/asset-audit/reflect.py --categories 2>/dev/null || echo "WARN reflect.py --categories 실행 실패(py 없음?)"; fi
+
 echo "== features.json 스키마 (saga-web/*/features.json · tools/features-schema.json)"
 if ls saga-web/*/features.json >/dev/null 2>&1; then
   node - <<'NODE' || fail=1
