@@ -1,0 +1,25 @@
+{
+ "id": "map_dungeon",
+ "generator": "tools/ai-art/gen.py",
+ "model": "Illustrious-XL-v2.0",
+ "model_license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+ "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, world map, top-down map view, painterly game map, dark fantasy world map illustration seen from above, central grassland surrounded by 8 different regions: ruined gray city, salt marsh flats, glowing hell rift, shining new city, desert sand road, heavenly shrine in clouds, snowy north mountains, rusty machine wasteland, painted parchment map",
+ "negative_prompt": "lowres, bad anatomy, text, letters, writing, labels, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border, compass, legend",
+ "seed": 20271430,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  1536,
+  1024
+ ],
+ "seconds": 31.1,
+ "date": "2026-10-04",
+ "note": "글씨 없음 — 이름·좌표는 게임이 얹는다",
+ "game": "dungeon",
+ "picked_candidate": 3,
+ "upscaled_from": [
+  1056,
+  704
+ ]
+}

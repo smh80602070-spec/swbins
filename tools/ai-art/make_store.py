@@ -1,6 +1,6 @@
 """K-0041 — 스토어·타이틀·로딩 일러스트 + 앱 아이콘: 판 5 × (키 아트 후보 4 → 고른 1장을 규격별로 / 로딩 3장).
 
-  py tools/ai-art/make_store.py batch              # → batches/store_art.json (키 아트 20 = 판 5 × 후보 4, 로딩 15 = 판 5 × 3) — gen.py, Illustrious 1344×768
+  py tools/ai-art/make_store.py batch              # → batches/store_art.json (키 아트 20 = 판 5 × 후보 4, 로딩 15 = 판 5 × 3) — gen.py, Illustrious 1152×648
   py tools/ai-art/make_store.py sheet              # 고르기 시트 → _out/store_pick.jpg
   py tools/ai-art/make_store.py pack [picks]       # 규격별 포장 → _out/store/<판>/ (picks = _out/store_picks.json {"go":1,...}, 없으면 #1)
   py tools/ai-art/make_store.py check              # 규격 점검(크기·안전영역)·.license.json 100%
@@ -22,7 +22,7 @@ GAMES = {
     'go': ('사가고', 'epic key art, a luminous portal gate standing in a mixed-era town square at golden hour, old timber houses beside glass towers, floating lanterns, a winding road leading to distant mountains, warm hopeful light'),
     'dungeon': ('사가블로', 'epic dark fantasy key art, a colossal ancient gate carved into a cliff glowing red, stone stairs descending into darkness, torches, floating embers, ruined arches, ominous cinematic light'),
     'forest': ('사가의숲', 'cozy storybook key art, a tiny cottage village glowing with warm lanterns among giant trees and fireflies at dusk, mushrooms, winding stream, magical gentle light'),
-    'story': ('사가스토리', 'adventurous side-scrolling world key art, floating rock islands connected by rope bridges, waterfalls into clouds, a distant castle, a golden sunset sky with portals to different eras'),
+    'story': ('사가스토리', 'adventurous side-scrolling world key art, floating rock islands linked with rope bridges, waterfalls into clouds, a distant castle, a golden sunset sky with portals to different eras'),
     'realm': ('사가국지', 'grand strategy key art, a vast walled fortress city on a river plain at dawn, banners without markings, mist, mountains and ranks of tents in the distance, majestic sweeping composition'),
 }
 LOAD = {
@@ -35,7 +35,7 @@ LOAD = {
 PREFIX = 'masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game key art, cinematic composition'
 NEG = ('lowres, bad anatomy, text, letters, logo, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, '
        'frame, border')
-GW, GH = 1344, 768
+GW, GH = 1152, 648
 
 
 def batch():

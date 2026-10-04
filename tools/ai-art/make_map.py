@@ -1,7 +1,7 @@
 """K-0042 — 월드 지도·지역 아이콘: 판별 고정 지역의 이름·특색을 그림으로.
 
   py tools/ai-art/make_map.py icons        # 지역 아이콘 64px 알파(코드 그림 — 틀 + 상징) → _out/map/icons/<판>_<지역>.png
-  py tools/ai-art/make_map.py batch        # 월드 지도 일러스트 AI 배치 → batches/map.json (판마다 후보 3, Illustrious 1216×832, 글씨 없음)
+  py tools/ai-art/make_map.py batch        # 월드 지도 일러스트 AI 배치 → batches/map.json (판마다 후보 3, Illustrious 1056×704, 글씨 없음)
   py tools/ai-art/make_map.py pack [picks] # 고른 후보 → 1536×1024 webp (_out/map/map_<판>.webp) · picks = _out/map_picks.json({"go":1,..}, 없으면 #1)
   py tools/ai-art/make_map.py check        # 지역 수 = 아이콘 수 · 크기 · .license.json 100% · 지도 5장
 
@@ -223,10 +223,10 @@ def icons():
 
 MAP_PROMPT = {
     'go': 'fantasy world map illustration of a land where old wooden villages, glass-and-steel modern towns and floating futuristic platforms coexist, rivers, bamboo valley, red canyon, misty marsh, ruined plateau, painted parchment map seen from above',
-    'dungeon': 'dark fantasy world map illustration seen from above, central grassland surrounded by eight distinct regions: ruined gray city, salt marsh flats, glowing hell rift, shining new city, desert sand road, heavenly shrine in clouds, snowy north mountains, rusty machine wasteland, painted parchment map',
-    'forest': 'cozy storybook map illustration of a village surrounded by eight named-style forests: silver grass plain, glowing mushroom valley, blue pine forest, mossy boulder slope, dead tree twilight woods, flower petal hill, giant boulder pass, firefly oak forest, painted parchment map seen from above',
+    'dungeon': 'dark fantasy world map illustration seen from above, central grassland surrounded by 8 different regions: ruined gray city, salt marsh flats, glowing hell rift, shining new city, desert sand road, heavenly shrine in clouds, snowy north mountains, rusty machine wasteland, painted parchment map',
+    'forest': 'cozy storybook map illustration of a village surrounded by 8 themed forests: silver grass plain, glowing mushroom valley, blue pine forest, mossy boulder slope, dead tree twilight woods, flower petal hill, giant boulder pass, firefly oak forest, painted parchment map seen from above',
     'story': 'side-scrolling adventure world map illustration, a winding road connecting a starting town, a walled capital, meadow fields, a river port, a forest, a mountain fortress, caves, a fiery gorge, ancient ruins and three portals to past, present and future battlefields, painted parchment map',
-    'realm': 'grand strategy game map illustration of a vast continent with plains, great rivers, northern snow mountains, western deserts, southern jungle, eastern islands and coastline, many regions bordered by faint lines, painted parchment map seen from above',
+    'realm': 'grand strategy game map illustration of a vast continent with plains, great rivers, northern snow mountains, western deserts, southern jungle, eastern islands and coastline, many regions bordered with faint lines, painted parchment map seen from above',
 }
 
 
@@ -239,7 +239,7 @@ def batch():
             items.append({'id': f'map_{g}_{k}', 'seed': 20271004 + 71 * n, 'prompt': pr})
     b = {'model': 'Illustrious-XL-v2.0', 'out': 'map',
          'defaults': {'prompt_prefix': 'masterpiece, best quality, amazing quality, absurdres, scenery, no humans, world map, top-down map view, painterly game map',
-                      'width': 1216, 'height': 832, 'steps': 28, 'cfg': 5.5, 'sampler': 'Euler a',
+                      'width': 1056, 'height': 704, 'steps': 28, 'cfg': 5.5, 'sampler': 'Euler a',
                       'negative': 'lowres, bad anatomy, text, letters, writing, labels, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border, compass, legend'},
          'items': items}
     p = os.path.join(HERE, 'batches', 'map.json')
@@ -259,7 +259,7 @@ def pack(picks_path=None):
         im.save(dst, 'WEBP', quality=82, method=6)
         lp = os.path.join(src, f'map_{g}_{k}.license.json')
         lic = json.load(open(lp, encoding='utf-8')) if os.path.exists(lp) else {}
-        lic.update({'id': f'map_{g}', 'game': g, 'picked_candidate': k, 'size': [1536, 1024], 'upscaled_from': [1216, 832], 'note': '글씨 없음 — 이름·좌표는 게임이 얹는다'})
+        lic.update({'id': f'map_{g}', 'game': g, 'picked_candidate': k, 'size': [1536, 1024], 'upscaled_from': [1056, 704], 'note': '글씨 없음 — 이름·좌표는 게임이 얹는다'})
         json.dump(lic, open(os.path.splitext(dst)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('지도', len(MAP_PROMPT))
 

@@ -1,6 +1,6 @@
 """K-0044 — 시나리오 컷신 일러스트: `scenario/` 의 부·막·계절 흐름에 맞춘 **배경 전용 컷**(사람 없음) 판마다 12장 = 60장.
 
-  py tools/ai-art/make_cutscene.py batch          # 장면표 → data/cutscene_plan.json + batches/cutscene.json (Illustrious 1344×768, 후보 1)
+  py tools/ai-art/make_cutscene.py batch          # 장면표 → data/cutscene_plan.json + batches/cutscene.json (Illustrious 1152×648, 후보 1)
   py tools/ai-art/make_cutscene.py sheet          # 확인 시트 → _out/cutscene_sheet.jpg
   py tools/ai-art/make_cutscene.py pack           # 1920×1080 webp → _out/cutscene_final/<판>_<번호>_<id>.webp + .license.json
   py tools/ai-art/make_cutscene.py check          # 장면표 = 산출 수 · 크기 · 용량 · .license.json 100%
@@ -17,7 +17,7 @@ from PIL import Image, ImageDraw
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, '_out')
 FINAL = os.path.join(OUT, 'cutscene_final')
-GW, GH = 1344, 768
+GW, GH = 1152, 648
 PREFIX = 'masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game cutscene background, cinematic lighting'
 NEG = 'lowres, bad anatomy, text, letters, logo, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border'
 
@@ -61,7 +61,7 @@ PLAN = {
         ('winter_hearth', '겨울 난롯가', 'a warm cabin interior with a crackling fireplace and snow outside the window'),
         ('mushroom_valley', '버섯 요정골', 'a valley of giant glowing mushrooms at night with fairy lights'),
         ('firefly_oaks', '반딧불 참나무숲', 'an ancient oak forest alive with fireflies on a summer night'),
-        ('giant_boulders', '거인 바위 고개', 'a mountain pass blocked by enormous mossy boulders under morning mist'),
+        ('giant_boulders', '거인 바위 고개', 'a mountain pass blocked with enormous mossy boulders under morning mist'),
         ('year_after', '결말 · 다음 해', 'the village at dawn after the first snow melts, new green shoots everywhere'),
     ],
     'story': [  # 사가스토리 1~4부
