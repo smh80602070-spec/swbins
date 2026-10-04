@@ -1,0 +1,21 @@
+{
+ "id": "rts_forest_floor_1",
+ "generator": "tools/ai-art/gen.py",
+ "model": "sd_xl_base_1.0",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "seamless tileable ground texture swatch, flat orthographic material, hand painted game texture, even lighting, no objects, forest floor, dark brown soil with fallen leaves and green moss, scattered pine needles, even lighting",
+ "negative_prompt": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines",
+ "seed": 20271004,
+ "steps": 30,
+ "cfg_scale": 6.5,
+ "sampler": "Euler a",
+ "size": [
+  64,
+  64
+ ],
+ "seconds": 84.4,
+ "date": "2026-10-04",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "seamless": "make_seamless",
+ "packed_by": "tools/asset-forge/rtsai.py pack-tiles"
+}

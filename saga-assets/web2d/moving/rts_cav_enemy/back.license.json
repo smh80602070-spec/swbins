@@ -1,0 +1,20 @@
+{
+ "id": "rts_cav_enemy_back",
+ "generator": "tools/ai-art/gen.py",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, 1boy, cavalry rider sitting on a brown horse, steel helmet, long lance, dark crimson and black clothing, crimson cloth horse cloth, full horse and rider visible, solo, back view, seen from behind, whole body from head to feet, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body",
+ "negative_prompt": "lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner, close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground",
+ "seed": 1359473935,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  256,
+  256
+ ],
+ "seconds": 25.7,
+ "date": "2026-10-04",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "packed_by": "tools/ai-art/pack_moving2d.py"
+}

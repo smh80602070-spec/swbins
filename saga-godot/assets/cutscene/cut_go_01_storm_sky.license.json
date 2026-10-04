@@ -1,0 +1,25 @@
+{
+ "id": "cut_go_01_storm_sky",
+ "generator": "tools/ai-art/gen.py",
+ "model": "Illustrious-XL-v2.0",
+ "model_license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+ "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game cutscene background, cinematic lighting, ominous black storm clouds gathering over a peaceful mixed-era village, shafts of light breaking through",
+ "negative_prompt": "lowres, bad anatomy, text, letters, logo, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border",
+ "seed": 20271101,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "size": [
+  1920,
+  1080
+ ],
+ "seconds": 32.0,
+ "date": "2026-10-04",
+ "note": "사람 없음·글자 없음 — 배경 전용 컷",
+ "game": "go",
+ "scene_ref": "1부 먹구름",
+ "upscaled_from": [
+  1152,
+  648
+ ]
+}

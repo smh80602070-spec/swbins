@@ -152,7 +152,8 @@ def units_cands():
                 sid = f'rts_{ukey}_{team}_{v}'
                 if only and sid not in only:
                     continue
-                for k in range(4):
+                k0 = int(os.environ.get('UNITS2_ROUND', '0')) * 4                      # 다시 뽑을 때 UNITS2_ROUND=1,2.. — 후보 번호·씨앗이 새로 나온다
+                for k in range(k0, k0 + 4):
                     seed = int(hashlib.md5(f'rtsu2:{sid}:{k}'.encode()).hexdigest()[:8], 16)
                     uitems.append({'id': f'{sid}_c{k}', 'seed': seed, 'negative': NEG_U2,
                                    'prompt': f'{tmpl.format(team=tdesc)}, {vt}, whole body from head to feet, {STYLE}'})

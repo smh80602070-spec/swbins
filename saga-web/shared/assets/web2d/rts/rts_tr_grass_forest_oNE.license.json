@@ -1,0 +1,12 @@
+{
+ "id": "rts_tr_grass_forest_oNE",
+ "generator": "tools/asset-forge/rtsai.py transitions",
+ "license": "CC0-1.0 (코드 생성 + 고른 AI 타일 rts_forest_floor_1)",
+ "pair": "grass_forest",
+ "kind": "oNE",
+ "size": [
+  64,
+  64
+ ],
+ "draw": "아래 땅(풀) 위에 이 조각(위 땅 B)을 얹는다. 변 N·E·S·W = 그 쪽에 B, o* = 바깥 모서리(B 가 귀퉁이), i* = 안쪽 모서리(B 가 귀퉁이만 빼고)"
+}

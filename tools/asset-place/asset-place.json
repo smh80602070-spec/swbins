@@ -542,6 +542,28 @@
    "targets": []
   },
   {
+   "id": "cutscene",
+   "src": "saga-assets/cutscene",
+   "include": [
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0044 시나리오 컷신 배경 60(판 5 × 12, 1920x1080 webp, 사람·글씨 없음). Unity 는 WebP 를 못 읽어 jpg 변환(unity_sky.py 방식)이 필요 — 연결 티켓이 생길 때",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/cutscene"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/cutscene",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
    "id": "ui-skin",
    "src": "saga-assets/ui",
    "recursive": true,
