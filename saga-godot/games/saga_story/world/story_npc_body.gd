@@ -13,4 +13,4 @@ static func build(key: String, rarity_cap: int = 3) -> Node3D:
 		if int(h.rarity) <= rarity_cap:
 			pool.append(h)
 	var pick: Dictionary = pool[absi(key.hash()) % pool.size()]
-	return VroidBody.build(String(pick.id), int(pick.rarity))
+	return VroidBody.build(String(pick.id), int(pick.rarity), null, true)  # G-0022 — dex 있으면 그 몸

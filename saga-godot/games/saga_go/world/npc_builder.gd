@@ -108,7 +108,7 @@ func _spawn(v: Dictionary) -> void:
 ## 읽을 때만 예전 GLB·캡슐로.
 func _build_body(v: Dictionary) -> Node3D:
 	if ResourceLoader.exists(VroidBody.BODIES[0].glb):
-		return VroidBody.build(v.id, 2)
+		return VroidBody.build(v.id, 2, null, true)  # G-0022 — dex 299 설치돼 있으면 그 몸, 없으면 BODIES
 	var scene: PackedScene = load(v.glb)
 	if scene != null:
 		var inst := scene.instantiate()

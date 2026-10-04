@@ -36,9 +36,30 @@ const CLOTH_TINTS := [
 ]
 const GOLD_RIM := Color(1.0, 0.82, 0.35)
 
+## G-0022 — 웹과 같은 인물 299명(`tools/char-forge/engine_characters.sh --install godot` 가 만드는 `assets/characters_dex/dj_*.gltf`,
+## 저장소 밖이라 PC 마다 설치). 폴더가 없으면 `build(..., use_dex=true)` 도 위 BODIES 로 물러선다. 옷·머리가 텍스처로 입혀져 있어
+## 색 곱(`_tint`·boost)은 안 건다(금 테두리만). 동작은 같은 J_Bip 뼈 이름이라 VRoid 동작 라이브러리를 붙이되,
+## 뼈 트랙이 "Skeleton3D:뼈" 라 AnimationPlayer 기준 노드를 Armature 로 둔다(안 그러면 T포즈). 키는 몸마다 달라(머리뼈 y 1.22~1.64m)
+## 머리뼈 높이를 id 해시로 정한 목표(1.38~1.50m ≈ 키 1.57~1.70m)에 맞춰 배율을 구한다.
+const DEX_DIR := "res://assets/characters_dex/"
+const DEX_LIB := "res://assets/characters_vroid/anim_cc0/avatar_sample_b_lib.res"
+const DEX_HEAD_BASE := 1.38
+const DEX_HEAD_STEP := 0.03
+const DEX_SCALE_MIN := 0.85
+const DEX_SCALE_MAX := 1.25
+## 머리뼈 y 가 이보다 낮은 몸은 어린이 체형(299 중 약 12%) — 어른 역(촌장·상인)에 쓰지 않고 다음 후보로 넘긴다.
+const DEX_MIN_HEAD_Y := 1.15
+const DEX_TRIES := 8
+static var _dex_names: PackedStringArray = PackedStringArray()
+static var _dex_scanned := false
+
 ## 같은 id 는 늘 같은 몸·색. rarity 5 면 금 테두리. cloth_override 가 있으면 옷색을 그걸로
 ## (도적 = 검붉은 옷처럼 무리 전체를 한 색으로 묶을 때).
-static func build(id: String, rarity: int = 3, cloth_override: Variant = null) -> Node3D:
+static func build(id: String, rarity: int = 3, cloth_override: Variant = null, use_dex := false) -> Node3D:
+	if use_dex:
+		var dex := _build_dex(id, rarity)
+		if dex != null:
+			return dex
 	var h := _hash(id)
 	var body: Dictionary = BODIES[h % BODIES.size()]
 	var v := (load(body.glb) as PackedScene).instantiate() as Node3D
@@ -77,6 +98,90 @@ static func build(id: String, rarity: int = 3, cloth_override: Variant = null) -
 		## 무리가 박자 맞춰 숨쉬지 않게 시작점을 어긋낸다.
 		ap.seek(float(h % 100) / 100.0 * ap.current_animation_length, true)
 	return v
+
+## 설치된 dex 몸 파일 이름(정렬 고정 — 같은 id 가 늘 같은 몸). 폴더가 없으면 빈 배열.
+static func dex_names() -> PackedStringArray:
+	if _dex_scanned:
+		return _dex_names
+	_dex_scanned = true
+	var d := DirAccess.open(DEX_DIR)
+	if d == null:
+		return _dex_names
+	var list: Array = []
+	for f in d.get_files():
+		var n := String(f).trim_suffix(".remap")
+		if n.ends_with(".gltf") and ResourceLoader.exists(DEX_DIR + n):
+			list.append(n)
+	list.sort()
+	_dex_names = PackedStringArray(list)
+	return _dex_names
+
+
+static func dex_available() -> bool:
+	return not dex_names().is_empty()
+
+
+## dex 몸 한 벌 — 없거나 못 읽으면 null(부르는 쪽이 BODIES 로 물러선다).
+static func _build_dex(id: String, rarity: int) -> Node3D:
+	var names := dex_names()
+	if names.is_empty():
+		return null
+	var h := _hash(id)
+	var lib := load(DEX_LIB) as AnimationLibrary
+	if lib == null:
+		return null
+	var v: Node3D = null
+	var skel: Skeleton3D = null
+	var head := -1
+	var head_y := 0.0
+	for k in DEX_TRIES:
+		var ps := load(DEX_DIR + names[(h + k * 7919) % names.size()]) as PackedScene
+		if ps == null:
+			continue
+		var cand := ps.instantiate() as Node3D
+		var skels := cand.find_children("*", "Skeleton3D", true, false)
+		if skels.is_empty():
+			cand.free()
+			continue
+		var sk := skels[0] as Skeleton3D
+		var hb := find_bone_of(sk, HEAD_BONES)
+		var hy := sk.get_bone_global_rest(hb).origin.y if hb >= 0 else 0.0
+		if v != null:
+			v.free()
+		v = cand
+		skel = sk
+		head = hb
+		head_y = hy
+		if hb < 0 or hy >= DEX_MIN_HEAD_Y:
+			break
+	if v == null:
+		return null
+	if head >= 0 and head_y > 0.1:
+		var target := DEX_HEAD_BASE + float((h >> 5) % 5) * DEX_HEAD_STEP
+		v.scale = Vector3.ONE * clampf(target / head_y, DEX_SCALE_MIN, DEX_SCALE_MAX)
+	if front_sign(skel) < 0.0:
+		for c in v.get_children():
+			if c is Node3D:
+				(c as Node3D).transform = Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO) * (c as Node3D).transform
+	CelShaderApply.apply_to(v)
+	tune_lod(v)
+	v.set_meta("cel_applied", true)
+	_tint(v, Color.WHITE, Color.WHITE, rarity >= 5)
+	var ap := AnimationPlayer.new()
+	ap.name = "AnimationPlayer"
+	v.add_child(ap)
+	ap.add_animation_library("", lib)
+	var arm := skel.get_parent()
+	if arm != null and arm != v:
+		ap.root_node = ap.get_path_to(arm)
+	for c in LOOP_CLIPS:
+		if ap.has_animation(c):
+			ap.get_animation(c).loop_mode = Animation.LOOP_LINEAR
+	if ap.has_animation("idle"):
+		ap.play("idle")
+		ap.seek(float(h % 100) / 100.0 * ap.current_animation_length, true)
+	return v
+
 
 ## 뼈대 공간에서 몸 앞이 +Z 면 1, -Z 면 -1 — 오른발목 → 발끝 쉬는 자세 방향(뼈가 없으면 1).
 static func front_sign(skel: Skeleton3D) -> float:
