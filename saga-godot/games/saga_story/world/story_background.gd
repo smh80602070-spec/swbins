@@ -68,6 +68,7 @@ func _build_layer(glb_path: String, count: int, base_scale: float, z: float, col
 	var mmi := MultiMeshInstance3D.new()
 	mmi.multimesh = mm
 	mmi.name = node_name
+	mmi.set_meta("flat_silhouette", true)   # 대기 원근 단색 실루엣 — 재질 감사 flat-tint 예외(material_audit.gd)
 	var mat := StandardMaterial3D.new()
 	mat.albedo_color = color
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED

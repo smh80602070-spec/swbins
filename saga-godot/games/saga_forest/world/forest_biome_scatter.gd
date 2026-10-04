@@ -73,74 +73,50 @@ func _spawn(x: int, y: int) -> void:
 
 	match String(biome.key):
 		"meadow":
-			_spawn_cutout(FLOWER_GLB, pos, FLOWER_SCALE, _hash(x, y, 5) * TAU)
+			_spawn_prop(FLOWER_GLB, pos, FLOWER_SCALE, _hash(x, y, 5) * TAU)
 		"dark":
-			_spawn_cutout(FERN_GLB, pos, FERN_SCALE, _hash(x, y, 6) * TAU)
+			_spawn_prop(FERN_GLB, pos, FERN_SCALE, _hash(x, y, 6) * TAU)
 		"mush":
-			_spawn_mushroom(pos, _hash(x, y, 4) * TAU)
+			_spawn_prop(MUSHROOM_GLB, pos, MUSHROOM_SCALE, _hash(x, y, 4) * TAU)
 		"rocky":
 			## 2026-09-20 — Kenney rock_smallA 대신 Quaternius Rock_Medium_1.
 			## 옛 최종 크기(0.191×0.6≈0.115m)에 맞춰 스케일만 역산(2.260 실측고
 			## 기준 0.6→0.0508). 이 gltf엔 COLOR_0이 없어 vertex_color_material
 			## (정점색×tint)로는 흰 바위가 됐다(09-23 발견) — 버섯과 같이 원본
 			## 텍스처를 곡률째 그린다.
-			var mesh: Mesh = GLBUtils.extract_mesh("res://assets/rocks/Rock_Medium_1.gltf")
-			if mesh != null:
-				var mi := MeshInstance3D.new()
-				mi.mesh = mesh
-				mi.scale = Vector3.ONE * 0.0508
-				mi.position = pos
-				mi.material_override = WorldCurveMaterial.textured_material(
-					"res://assets/rocks/Rocks_Diffuse.png", CURVE_AMOUNT, 0.95)
-				add_child(mi)
+			## G-0019 — 통일 툰 rock_small_01(실측고 0.511m → 옛 0.115m 로 ×0.225), 표면별 텍스처를 곡률째.
+			_spawn_prop(ROCK_GLB, pos, ROCK_SCALE, _hash(x, y, 7) * TAU)
 
 
 ## Quaternius Mushroom_Common(버섯 무리)은 정점색이 없고 불투명 텍스처
 ## 한 장이라, vertex_color_material(정점색×tint — 정점색이 없으면 흰색)이
 ## 아니라 textured_material로 원본 텍스처를 곡률째 그린다. 옛 primitive
 ## 버섯 최종 높이(갓 꼭대기 0.32m)에 맞춰 실측고(0.463m)로 역산.
-const MUSHROOM_GLB := "res://assets/vegetation/Mushroom_Common.gltf"
-const MUSHROOM_TEX := "res://assets/vegetation/Mushrooms.png"
-const MUSHROOM_SCALE := 0.691
+const ROCK_GLB := "res://assets/world/rock_small_01.glb"
+const ROCK_SCALE := 0.225    # 0.115 / 0.511
+const MUSHROOM_GLB := "res://assets/world/mushroom_01.glb"
+const MUSHROOM_SCALE := 0.64 # 0.32 / 0.5
 
 ## meadow(옛 primitive 구 0.28m)·dark(옛 상자 0.4m) 자리. 둘 다 gltf
 ## alphaMode MASK(잎·꽃 카드)라 curved_textured_cutout(양면+알파 컷)으로
 ## 그리고, 표면마다 텍스처가 달라(Flower_3_Group: 잎·꽃 2장) 원본 재질에서
 ## 표면별로 텍스처·컷 값을 꺼내 surface override로 입힌다(공유 Mesh는 안
 ## 건드린다). 배율은 옛 높이 ÷ 실측고(trimesh).
-const FLOWER_GLB := "res://assets/vegetation/Flower_3_Group.gltf"
-const FLOWER_SCALE := 0.136  # 0.28 / 2.055
-const FERN_GLB := "res://assets/vegetation/Fern_1.gltf"
-const FERN_SCALE := 0.476    # 0.4 / 0.840
+const FLOWER_GLB := "res://assets/world/flower_patch_01.glb"
+const FLOWER_SCALE := 0.5    # 0.28 / 0.559
+const FERN_GLB := "res://assets/world/grass_tuft_01.glb"   # 고사리 자리 — 짝이 되는 풀 포기
+const FERN_SCALE := 0.552    # 0.4 / 0.724
 
-func _spawn_cutout(glb: String, pos: Vector3, s: float, yaw: float) -> void:
+## G-0019 — 통일 툰 GLB 한 개를 곡률 재질(표면별 텍스처)로 놓는다. 꽃·풀·버섯·바위 공용.
+func _spawn_prop(glb: String, pos: Vector3, s: float, yaw: float) -> void:
 	var mesh: Mesh = GLBUtils.extract_mesh(glb)
 	if mesh == null:
 		return
 	var mi := MeshInstance3D.new()
-	mi.mesh = mesh
+	mi.mesh = WorldCurveMaterial.textured_surfaces(mesh, CURVE_AMOUNT, 0.9)
 	mi.scale = Vector3.ONE * s
 	mi.rotation.y = yaw
 	mi.position = pos
-	for i in mesh.get_surface_count():
-		var orig := mesh.surface_get_material(i) as BaseMaterial3D
-		if orig == null:
-			continue
-		mi.set_surface_override_material(i, WorldCurveMaterial.cutout_material(
-			orig.albedo_texture, CURVE_AMOUNT, 0.9, orig.alpha_scissor_threshold))
-	add_child(mi)
-
-
-func _spawn_mushroom(pos: Vector3, yaw: float) -> void:
-	var mesh: Mesh = GLBUtils.extract_mesh(MUSHROOM_GLB)
-	if mesh == null:
-		return
-	var mi := MeshInstance3D.new()
-	mi.mesh = mesh
-	mi.scale = Vector3.ONE * MUSHROOM_SCALE
-	mi.rotation.y = yaw
-	mi.position = pos
-	mi.material_override = WorldCurveMaterial.textured_material(MUSHROOM_TEX, CURVE_AMOUNT, 0.8)
 	add_child(mi)
 
 

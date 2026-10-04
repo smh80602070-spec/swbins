@@ -52,6 +52,26 @@ static func vertex_color_material(curve_amount: float, roughness_value: float = 
 	return mat
 
 
+## G-0019 — 표면마다 텍스처가 다른 불투명 GLB(K-0052/K-0058 통일 툰 소품: 표면 3~5장)를 곡률 재질로. 원본 공유 Mesh 는 안 건드리고
+## 복제해 표면마다 `albedo_texture` 를 곡률 텍스처 셰이더로 바꾼다. 텍스처가 없는 표면은 정점색 재질(tint)로 물러선다. tint 는 색 곱.
+static func textured_surfaces(src: Mesh, curve_amount: float, roughness_value: float = 0.9, tint: Color = Color(1, 1, 1)) -> Mesh:
+	ensure_global_registered()
+	var mesh := src.duplicate() as Mesh
+	for i in mesh.get_surface_count():
+		var orig := src.surface_get_material(i) as BaseMaterial3D
+		if orig == null or orig.albedo_texture == null:
+			mesh.surface_set_material(i, vertex_color_material(curve_amount, roughness_value, tint))
+			continue
+		var mat := ShaderMaterial.new()
+		mat.shader = TEXTURED_SHADER
+		mat.set_shader_parameter("albedo_texture", orig.albedo_texture)
+		mat.set_shader_parameter("curve_amount", curve_amount)
+		mat.set_shader_parameter("roughness_value", roughness_value)
+		mat.set_shader_parameter("tint_color", tint)
+		mesh.surface_set_material(i, mat)
+	return mesh
+
+
 static func textured_material(texture_path: String, curve_amount: float, roughness_value: float = 0.9) -> ShaderMaterial:
 	ensure_global_registered()
 	var mat := ShaderMaterial.new()

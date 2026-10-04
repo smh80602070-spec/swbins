@@ -22,8 +22,8 @@ const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.
 ## 팔레트 스냅 텍스처가 어차피 안 보인다 — 그래서 스냅 변형이 아니라
 ## `assets/vegetation/` 원본 gltf를 바로 쓴다. 옛 최종 높이(1.226×4.5≈
 ## 5.52m) 그대로 맞추려 TREE_SCALE만 CommonTree_1 실측고(7.265)로 역산.
-const TREE_GLB := "res://assets/vegetation/CommonTree_1.gltf"
-const TREE_SCALE := 0.759
+const TREE_GLB := "res://assets/world/tree_broadleaf_01.glb"   # G-0019 통일 툰 GLB — 옛 CommonTree_1 대신
+const TREE_SCALE := 0.837   # 5.52 / 6.594(broadleaf_01 AABB 실측고)
 const TREES_PER_EDGE_TILE := 2
 const CURVE_AMOUNT := 0.004
 
@@ -64,15 +64,8 @@ static func _hash(gx: int, gy: int, salt: int) -> float:
 ## 머티리얼을 따로 못 받으므로(material_override뿐) 바이옴마다 메시를 복제해
 ## 표면(줄기·잎)마다 머티리얼을 박는다 — 원본 공유 Mesh는 안 건드린다.
 func _biome_tree_mesh(src: Mesh, tint: Color) -> Mesh:
-	var mesh := src.duplicate() as Mesh
-	for i in mesh.get_surface_count():
-		var orig := src.surface_get_material(i) as BaseMaterial3D
-		if orig == null or orig.albedo_texture == null:
-			mesh.surface_set_material(i, WorldCurveMaterial.vertex_color_material(CURVE_AMOUNT, 0.95, tint))
-			continue
-		mesh.surface_set_material(i, WorldCurveMaterial.vertex_color_cutout_material(
-			CURVE_AMOUNT, 0.95, tint, orig.albedo_texture, orig.alpha_scissor_threshold))
-	return mesh
+	## G-0019 — 새 GLB 는 불투명·표면별 텍스처라 컷아웃·정점색이 필요 없다(옛 CommonTree_1 의 알파 카드 설명은 위 주석 이력).
+	return WorldCurveMaterial.textured_surfaces(src, CURVE_AMOUNT, 0.95, tint)
 
 
 func _scatter_trees() -> void:
