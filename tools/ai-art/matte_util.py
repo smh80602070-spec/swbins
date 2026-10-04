@@ -65,3 +65,44 @@ def matte2(img, tol=22, holes_max=7000, strip=True):
     res = Image.fromarray(out.astype(np.uint8)).convert('RGBA')
     res.putalpha(Image.fromarray((al2 * 255).astype(np.uint8)))
     return res
+
+
+def white_ratio(im):
+    """(가장자리 띠의 흰 비율, 안쪽 흰 비율) — 띠 = 불투명 픽셀 중 투명에서 2px 안. 흰 테 판정용."""
+    a = np.asarray(im.getchannel('A')).astype(np.int16)
+    rgb = np.asarray(im.convert('RGB')).astype(np.int16)
+    solid = a > 128
+    clear = Image.fromarray(((a < 40) * 255).astype(np.uint8))
+    near = np.asarray(clear.filter(ImageFilter.MaxFilter(5))) > 0
+    ring, inner = solid & near, solid & ~near
+    if ring.sum() < 20 or inner.sum() < 20:
+        return 0.0, 0.0
+    white = rgb.min(axis=2) > 215
+    return float((white & ring).sum() / ring.sum()), float((white & inner).sum() / inner.sum())
+
+
+def defringe(im, rounds=4, thr=195):
+    """AI 가 물체 둘레에 그린 흰·크림 스티커 테두리를 바깥에서 한 겹씩 벗긴다(K-0058 후속, 사용자 "하얀 부분 있네").
+    매 겹: 투명에 닿은 불투명 픽셀 중 '희고 채도 낮은' 것(최솟값 > thr · 최대-최소 < 70)의 알파를 0 으로. 그 뒤 반투명 가장자리 색을 안쪽 색으로 덮는다."""
+    im = im.convert('RGBA')
+    px = np.asarray(im).copy()
+    for _ in range(rounds):
+        a = px[..., 3].astype(np.int16)
+        clear = Image.fromarray(((a < 40) * 255).astype(np.uint8))
+        edge = (a >= 40) & (np.asarray(clear.filter(ImageFilter.MaxFilter(3))) > 0)
+        rgb = px[..., :3].astype(np.int16)
+        whitish = (rgb.min(axis=2) > thr) & ((rgb.max(axis=2) - rgb.min(axis=2)) < 70)
+        kill = edge & whitish
+        if not kill.any():
+            break
+        px[kill, 3] = 0
+    # 남은 가장자리의 반투명 흰 번짐(안티앨리어싱 잔재): 알파 < 225 이고 밝으면 지운다 — 옅은 점선 자국 방지
+    a = px[..., 3].astype(np.int16)
+    rgb = px[..., :3].astype(np.int16)
+    soft_white = (a > 0) & (a < 225) & (rgb.min(axis=2) > 150) & ((rgb.max(axis=2) - rgb.min(axis=2)) < 80)
+    px[soft_white, 3] = 0
+    out = Image.fromarray(px, 'RGBA')
+    a = out.getchannel('A')
+    soft = a.filter(ImageFilter.GaussianBlur(0.6))                                   # 톱니 정리
+    out.putalpha(Image.fromarray(np.where(np.asarray(a) > 0, np.maximum(np.asarray(soft), 40), 0).astype(np.uint8)))
+    return out

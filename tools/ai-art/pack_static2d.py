@@ -17,7 +17,7 @@ import icon_pack as IP  # noqa: E402  (matte·check 재사용)
 S = 256
 
 
-from matte_util import matte2  # noqa: E402
+from matte_util import matte2, white_ratio, defringe  # noqa: E402
 
 TINT = {'future_dome_01', 'tree_birch_01', 'tree_pine_01_snow'}        # make_static2d_batch.TINT_BG — 색 배경(흰 물체)
 WIDE_HOLES = {'iron_fence_01': 9000, 'wood_fence_01': 9000}              # 큰 구멍을 지워야 하는 울타리류
@@ -33,6 +33,9 @@ for f in sorted(os.listdir(src)):
         continue
     iid = f[:-4]
     im = matte2(Image.open(os.path.join(src, f)), tol=26, holes_max=0, strip=False) if iid in TINT else matte2(Image.open(os.path.join(src, f)), tol=9, holes_max=WIDE_HOLES.get(iid, 7000))
+    r_w, i_w = white_ratio(im)                                                  # AI 가 둘레에 그린 흰 스티커 테(K-0058 후속) — 안쪽이 안 흰데 테만 흰 것만 벗긴다
+    if r_w >= 0.25 and i_w < 0.25:
+        im = defringe(im)
     bb = im.getchannel('A').point(lambda v: 255 if v > 24 else 0).getbbox()
     if not bb:
         report[iid] = {'ok': False, 'why': ['알맹이를 못 땄다']}
