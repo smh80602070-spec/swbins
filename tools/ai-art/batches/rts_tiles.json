@@ -1,0 +1,51 @@
+{
+ "model": "sd_xl_base_1.0",
+ "out": "rts_tiles",
+ "defaults": {
+  "prompt_prefix": "seamless tileable ground texture swatch, flat orthographic material, hand painted game texture, even lighting, no objects",
+  "width": 640,
+  "height": 640,
+  "steps": 30,
+  "cfg": 6.5,
+  "sampler": "Euler a",
+  "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality"
+ },
+ "items": [
+  {
+   "id": "rts_forest_floor_1",
+   "seed": 20271004,
+   "prompt": "forest floor, dark brown soil with fallen leaves and green moss, scattered pine needles, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
+  },
+  {
+   "id": "rts_forest_floor_2",
+   "seed": 20271041,
+   "prompt": "forest floor, damp soil with dry leaves, small ferns and roots, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
+  },
+  {
+   "id": "rts_hill_1",
+   "seed": 20271078,
+   "prompt": "rocky highland ground, gray and brown stones with sparse dry grass between them, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
+  },
+  {
+   "id": "rts_hill_2",
+   "seed": 20271115,
+   "prompt": "rocky hillside soil, cracked gray rock with tufts of yellow-green grass, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
+  },
+  {
+   "id": "rts_grass_flower_1",
+   "seed": 20271152,
+   "prompt": "lush green meadow grass with tiny white and yellow wildflowers, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
+  },
+  {
+   "id": "rts_grass_flower_2",
+   "seed": 20271189,
+   "prompt": "short green grass with small pink and white clover flowers, even lighting",
+   "negative": "person, people, human, body, skin, hands, feet, face, nude, naked, character, anime, girl, boy, animal, text, watermark, signature, border, frame, vignette, perspective, horizon, sky, shadow, building, large rock, tree, single object, flower, high contrast spots, blurry, lowres, worst quality, grid, tiles, tile pattern, squares, checkerboard, bricks, mosaic, geometric pattern, ceramic tile, repeating blocks, lines"
+  }
+ ]
+}

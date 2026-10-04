@@ -1,0 +1,315 @@
+{
+ "model": "Illustrious-XL-v2.0",
+ "out": "cutscene",
+ "defaults": {
+  "prompt_prefix": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game cutscene background, cinematic lighting",
+  "width": 1344,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, letters, logo, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, frame, border"
+ },
+ "items": [
+  {
+   "id": "cut_go_01_storm_sky",
+   "seed": 20271101,
+   "prompt": "ominous black storm clouds gathering over a peaceful mixed-era village, shafts of light breaking through"
+  },
+  {
+   "id": "cut_go_02_frost_plateau",
+   "seed": 20271198,
+   "prompt": "frozen highland plateau with a lone stone shrine, aurora over snowy peaks, cold blue light"
+  },
+  {
+   "id": "cut_go_03_scattered_wings",
+   "seed": 20271295,
+   "prompt": "old post road across golden plains, torn feathers drifting in the wind, a distant relay station"
+  },
+  {
+   "id": "cut_go_04_galaxy_ferry",
+   "seed": 20271392,
+   "prompt": "a ferry dock at the edge of a starry river, glowing galaxy water, floating lanterns, a time-worn pier"
+  },
+  {
+   "id": "cut_go_05_crossroads",
+   "seed": 20271489,
+   "prompt": "a surreal crossroads where signposts point to different eras, floating island shards, soft strange light"
+  },
+  {
+   "id": "cut_go_06_sunken_capital",
+   "seed": 20271586,
+   "prompt": "an ancient capital half sunken in dark water, drowned towers and gates, pale moonlight"
+  },
+  {
+   "id": "cut_go_07_cloud_route",
+   "seed": 20271683,
+   "prompt": "ships sailing above a sea of clouds between sky islands, golden sunrise"
+  },
+  {
+   "id": "cut_go_08_storm_origin",
+   "seed": 20271780,
+   "prompt": "a gigantic swirling black vortex above a ruined citadel, lightning, dramatic red sky"
+  },
+  {
+   "id": "cut_go_09_petrified_street",
+   "seed": 20271877,
+   "prompt": "a street of frozen petrified buildings and stone carts, eerie gray fog, a single warm lamp"
+  },
+  {
+   "id": "cut_go_10_home_village",
+   "seed": 20271974,
+   "prompt": "cozy hometown village at morning with smoke from chimneys, bamboo grove and a river"
+  },
+  {
+   "id": "cut_go_11_portal_gate",
+   "seed": 20272071,
+   "prompt": "a glowing portal gate between old timber houses and glass towers at dusk"
+  },
+  {
+   "id": "cut_go_12_epilogue_dawn",
+   "seed": 20272168,
+   "prompt": "peaceful dawn over a restored land, clear sky, birds, soft golden light"
+  },
+  {
+   "id": "cut_dungeon_01_act1_plain",
+   "seed": 20272265,
+   "prompt": "burning plain with broken war chariots and torn banners under a smoky sunset, distant fortress"
+  },
+  {
+   "id": "cut_dungeon_02_act1_pit",
+   "seed": 20272362,
+   "prompt": "a dark cave entrance at the foot of a cliff with iron gates and torches, ominous mist"
+  },
+  {
+   "id": "cut_dungeon_03_act2_ruincity",
+   "seed": 20272459,
+   "prompt": "ruined gray modern city with collapsed towers, rusted cars and drifting ash"
+  },
+  {
+   "id": "cut_dungeon_04_act2_saltflat",
+   "seed": 20272556,
+   "prompt": "vast white salt flats with rusted machines half buried and a pale pink sky"
+  },
+  {
+   "id": "cut_dungeon_05_act3_hellgate",
+   "seed": 20272653,
+   "prompt": "a gigantic glowing crack in the ground leaking fire and lava, floating rocks, red sky"
+  },
+  {
+   "id": "cut_dungeon_06_act3_solarcity",
+   "seed": 20272750,
+   "prompt": "a gleaming futuristic city of mirrored towers under a blinding sun, empty streets"
+  },
+  {
+   "id": "cut_dungeon_07_act4_desert",
+   "seed": 20272847,
+   "prompt": "a long sand road with half-buried statues under a hot orange sky"
+  },
+  {
+   "id": "cut_dungeon_08_act4_snow",
+   "seed": 20272944,
+   "prompt": "a frozen fortress on a snowy mountain, blizzard, blue shadows"
+  },
+  {
+   "id": "cut_dungeon_09_act4_scrap",
+   "seed": 20273041,
+   "prompt": "a wasteland of towering scrap heaps and dead machines under a smoggy sky"
+  },
+  {
+   "id": "cut_dungeon_10_act5_nameless",
+   "seed": 20273138,
+   "prompt": "a surreal blend of three eras: ancient columns, concrete slabs and neon holograms in a dark void"
+  },
+  {
+   "id": "cut_dungeon_11_boss_hall",
+   "seed": 20273235,
+   "prompt": "a vast stone throne hall with a huge glowing sigil on the floor and burning braziers"
+  },
+  {
+   "id": "cut_dungeon_12_epilogue_gate",
+   "seed": 20273332,
+   "prompt": "the great gate opening to a calm sunrise, light pouring over the stone stairs"
+  },
+  {
+   "id": "cut_forest_01_spring_postbox",
+   "seed": 20273429,
+   "prompt": "an old mossy mailbox at a forest path in spring, cherry blossoms falling, soft morning light"
+  },
+  {
+   "id": "cut_forest_02_spring_village",
+   "seed": 20273526,
+   "prompt": "a cozy village of thatched houses among blooming trees with a stream and a wooden bridge"
+  },
+  {
+   "id": "cut_forest_03_summer_guests",
+   "seed": 20273623,
+   "prompt": "a summer village square with colorful stalls and golden lanterns, warm evening glow, fireflies"
+  },
+  {
+   "id": "cut_forest_04_summer_modern",
+   "seed": 20273720,
+   "prompt": "a small parking spot at the forest edge with a parked old-fashioned delivery van, tall green trees"
+  },
+  {
+   "id": "cut_forest_05_autumn_records",
+   "seed": 20273817,
+   "prompt": "an autumn forest clearing with a glowing futuristic monolith covered in leaves, floating light motes"
+  },
+  {
+   "id": "cut_forest_06_autumn_harvest",
+   "seed": 20273914,
+   "prompt": "harvest festival field with pumpkins and hay bales under an orange sunset"
+  },
+  {
+   "id": "cut_forest_07_winter_linked",
+   "seed": 20274011,
+   "prompt": "a snowy forest where trails of light connect all the trees, deep blue night, glowing lanterns"
+  },
+  {
+   "id": "cut_forest_08_winter_hearth",
+   "seed": 20274108,
+   "prompt": "a warm cabin interior with a crackling fireplace and snow outside the window"
+  },
+  {
+   "id": "cut_forest_09_mushroom_valley",
+   "seed": 20274205,
+   "prompt": "a valley of giant glowing mushrooms at night with fairy lights"
+  },
+  {
+   "id": "cut_forest_10_firefly_oaks",
+   "seed": 20274302,
+   "prompt": "an ancient oak forest alive with fireflies on a summer night"
+  },
+  {
+   "id": "cut_forest_11_giant_boulders",
+   "seed": 20274399,
+   "prompt": "a mountain pass blocked by enormous mossy boulders under morning mist"
+  },
+  {
+   "id": "cut_forest_12_year_after",
+   "seed": 20274496,
+   "prompt": "the village at dawn after the first snow melts, new green shoots everywhere"
+  },
+  {
+   "id": "cut_story_01_part1_town",
+   "seed": 20274593,
+   "prompt": "a small walled town at dusk with lanterns and a road leading into dark hills"
+  },
+  {
+   "id": "cut_story_02_part1_forest",
+   "seed": 20274690,
+   "prompt": "a deep forest road with ancient trees and shafts of light"
+  },
+  {
+   "id": "cut_story_03_part2_river",
+   "seed": 20274787,
+   "prompt": "a river port with docked boats and lanterns at night under a full moon"
+  },
+  {
+   "id": "cut_story_04_part2_city",
+   "seed": 20274884,
+   "prompt": "a rainy modern city street with neon reflections and empty crosswalks"
+  },
+  {
+   "id": "cut_story_05_part3_gorge",
+   "seed": 20274981,
+   "prompt": "a gorge on fire with burning walls and rising embers, red sky"
+  },
+  {
+   "id": "cut_story_06_part3_orbital",
+   "seed": 20275078,
+   "prompt": "an orbital space station corridor with a window onto a vast planet"
+  },
+  {
+   "id": "cut_story_07_part4_gates",
+   "seed": 20275175,
+   "prompt": "three towering gates side by side, each leading to a different era, glowing"
+  },
+  {
+   "id": "cut_story_08_part4_battlefield",
+   "seed": 20275272,
+   "prompt": "an ancient battlefield with torn banners and broken spears under storm clouds"
+  },
+  {
+   "id": "cut_story_09_cave_crystal",
+   "seed": 20275369,
+   "prompt": "a cave with giant glowing blue crystals and an underground lake"
+  },
+  {
+   "id": "cut_story_10_fortress_mountain",
+   "seed": 20275466,
+   "prompt": "a mountain fortress with winding stairs above the clouds at sunrise"
+  },
+  {
+   "id": "cut_story_11_ruin_capital",
+   "seed": 20275563,
+   "prompt": "ruins of a vast ancient capital overgrown with vines at golden hour"
+  },
+  {
+   "id": "cut_story_12_epilogue_road",
+   "seed": 20275660,
+   "prompt": "a long open road toward a sunrise horizon with three trails branching"
+  },
+  {
+   "id": "cut_realm_01_act1_warlords",
+   "seed": 20275757,
+   "prompt": "many camp fires of rival armies across a dusk plain with distant walled towns"
+  },
+  {
+   "id": "cut_realm_02_act1_palace",
+   "seed": 20275854,
+   "prompt": "an empty palace hall with red pillars and a throne at dawn, dust in the light"
+  },
+  {
+   "id": "cut_realm_03_act2_great_battle",
+   "seed": 20275951,
+   "prompt": "a vast river plain with two armies' camps facing each other under a gray sky, smoke"
+  },
+  {
+   "id": "cut_realm_04_act2_modern",
+   "seed": 20276048,
+   "prompt": "a modern cityscape superimposed on an ancient battlefield, ghostly overlap"
+  },
+  {
+   "id": "cut_realm_05_act3_river",
+   "seed": 20276145,
+   "prompt": "a wide river with a long chain of war ships at night, fire arrows in the sky"
+  },
+  {
+   "id": "cut_realm_06_act3_future",
+   "seed": 20276242,
+   "prompt": "hovering war platforms above a river, glowing banners, cold blue light"
+  },
+  {
+   "id": "cut_realm_07_act4_rift",
+   "seed": 20276339,
+   "prompt": "a huge rift in the sky pulling storm clouds and shards of three eras, terrifying"
+  },
+  {
+   "id": "cut_realm_08_act5_silkroad",
+   "seed": 20276436,
+   "prompt": "a caravan trail through red dunes toward a distant oasis city at sunset"
+  },
+  {
+   "id": "cut_realm_09_act5_sea",
+   "seed": 20276533,
+   "prompt": "a harbor of tall-masted ships at dawn with a calm turquoise sea"
+  },
+  {
+   "id": "cut_realm_10_act6_throne",
+   "seed": 20276630,
+   "prompt": "a grand throne hall opening onto a view of a unified land at sunrise"
+  },
+  {
+   "id": "cut_realm_11_map_table",
+   "seed": 20276727,
+   "prompt": "a command tent with a large map table, candles and carved markers, warm light"
+  },
+  {
+   "id": "cut_realm_12_epilogue_peace",
+   "seed": 20276824,
+   "prompt": "peaceful rice fields and a quiet river with a white heron at dawn"
+  }
+ ]
+}

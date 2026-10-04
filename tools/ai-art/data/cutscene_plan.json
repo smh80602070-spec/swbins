@@ -1,0 +1,425 @@
+{
+ "note": "K-0044 컷신 장면표 — ref 는 시나리오 부·막·계절 제목(제목만 따른다)",
+ "scenes": [
+  {
+   "game": "go",
+   "no": 1,
+   "id": "storm_sky",
+   "ref": "1부 먹구름",
+   "prompt": "ominous black storm clouds gathering over a peaceful mixed-era village, shafts of light breaking through"
+  },
+  {
+   "game": "go",
+   "no": 2,
+   "id": "frost_plateau",
+   "ref": "2부 서리봉 고원",
+   "prompt": "frozen highland plateau with a lone stone shrine, aurora over snowy peaks, cold blue light"
+  },
+  {
+   "game": "go",
+   "no": 3,
+   "id": "scattered_wings",
+   "ref": "3부 흩어진 날개",
+   "prompt": "old post road across golden plains, torn feathers drifting in the wind, a distant relay station"
+  },
+  {
+   "game": "go",
+   "no": 4,
+   "id": "galaxy_ferry",
+   "ref": "4부 은하 나루",
+   "prompt": "a ferry dock at the edge of a starry river, glowing galaxy water, floating lanterns, a time-worn pier"
+  },
+  {
+   "game": "go",
+   "no": 5,
+   "id": "crossroads",
+   "ref": "5부 틈새 갈림길",
+   "prompt": "a surreal crossroads where signposts point to different eras, floating island shards, soft strange light"
+  },
+  {
+   "game": "go",
+   "no": 6,
+   "id": "sunken_capital",
+   "ref": "6부 가라앉은 옛 도읍",
+   "prompt": "an ancient capital half sunken in dark water, drowned towers and gates, pale moonlight"
+  },
+  {
+   "game": "go",
+   "no": 7,
+   "id": "cloud_route",
+   "ref": "7부 구름 위 항로",
+   "prompt": "ships sailing above a sea of clouds between sky islands, golden sunrise"
+  },
+  {
+   "game": "go",
+   "no": 8,
+   "id": "storm_origin",
+   "ref": "8부 먹구름의 근원",
+   "prompt": "a gigantic swirling black vortex above a ruined citadel, lightning, dramatic red sky"
+  },
+  {
+   "game": "go",
+   "no": 9,
+   "id": "petrified_street",
+   "ref": "9부 굳은 거리",
+   "prompt": "a street of frozen petrified buildings and stone carts, eerie gray fog, a single warm lamp"
+  },
+  {
+   "game": "go",
+   "no": 10,
+   "id": "home_village",
+   "ref": "개요 · 고향",
+   "prompt": "cozy hometown village at morning with smoke from chimneys, bamboo grove and a river"
+  },
+  {
+   "game": "go",
+   "no": 11,
+   "id": "portal_gate",
+   "ref": "개요 · 문",
+   "prompt": "a glowing portal gate between old timber houses and glass towers at dusk"
+  },
+  {
+   "game": "go",
+   "no": 12,
+   "id": "epilogue_dawn",
+   "ref": "결말",
+   "prompt": "peaceful dawn over a restored land, clear sky, birds, soft golden light"
+  },
+  {
+   "game": "dungeon",
+   "no": 1,
+   "id": "act1_plain",
+   "ref": "1막 중원의 난",
+   "prompt": "burning plain with broken war chariots and torn banners under a smoky sunset, distant fortress"
+  },
+  {
+   "game": "dungeon",
+   "no": 2,
+   "id": "act1_pit",
+   "ref": "1막 굴혈 입구",
+   "prompt": "a dark cave entrance at the foot of a cliff with iron gates and torches, ominous mist"
+  },
+  {
+   "game": "dungeon",
+   "no": 3,
+   "id": "act2_ruincity",
+   "ref": "2막 잿빛 폐도시",
+   "prompt": "ruined gray modern city with collapsed towers, rusted cars and drifting ash"
+  },
+  {
+   "game": "dungeon",
+   "no": 4,
+   "id": "act2_saltflat",
+   "ref": "2막 소금 개펄",
+   "prompt": "vast white salt flats with rusted machines half buried and a pale pink sky"
+  },
+  {
+   "game": "dungeon",
+   "no": 5,
+   "id": "act3_hellgate",
+   "ref": "3막 지옥 균열",
+   "prompt": "a gigantic glowing crack in the ground leaking fire and lava, floating rocks, red sky"
+  },
+  {
+   "game": "dungeon",
+   "no": 6,
+   "id": "act3_solarcity",
+   "ref": "3막 태양 신도시",
+   "prompt": "a gleaming futuristic city of mirrored towers under a blinding sun, empty streets"
+  },
+  {
+   "game": "dungeon",
+   "no": 7,
+   "id": "act4_desert",
+   "ref": "4막 모랫길",
+   "prompt": "a long sand road with half-buried statues under a hot orange sky"
+  },
+  {
+   "game": "dungeon",
+   "no": 8,
+   "id": "act4_snow",
+   "ref": "4막 북방 설산",
+   "prompt": "a frozen fortress on a snowy mountain, blizzard, blue shadows"
+  },
+  {
+   "game": "dungeon",
+   "no": 9,
+   "id": "act4_scrap",
+   "ref": "4막 고철 황무지",
+   "prompt": "a wasteland of towering scrap heaps and dead machines under a smoggy sky"
+  },
+  {
+   "game": "dungeon",
+   "no": 10,
+   "id": "act5_nameless",
+   "ref": "5막 이름 없는 곳",
+   "prompt": "a surreal blend of three eras: ancient columns, concrete slabs and neon holograms in a dark void"
+  },
+  {
+   "game": "dungeon",
+   "no": 11,
+   "id": "boss_hall",
+   "ref": "결전",
+   "prompt": "a vast stone throne hall with a huge glowing sigil on the floor and burning braziers"
+  },
+  {
+   "game": "dungeon",
+   "no": 12,
+   "id": "epilogue_gate",
+   "ref": "결말",
+   "prompt": "the great gate opening to a calm sunrise, light pouring over the stone stairs"
+  },
+  {
+   "game": "forest",
+   "no": 1,
+   "id": "spring_postbox",
+   "ref": "봄 옛 우체통",
+   "prompt": "an old mossy mailbox at a forest path in spring, cherry blossoms falling, soft morning light"
+  },
+  {
+   "game": "forest",
+   "no": 2,
+   "id": "spring_village",
+   "ref": "봄 마을",
+   "prompt": "a cozy village of thatched houses among blooming trees with a stream and a wooden bridge"
+  },
+  {
+   "game": "forest",
+   "no": 3,
+   "id": "summer_guests",
+   "ref": "여름 금으로 온 손님들",
+   "prompt": "a summer village square with colorful stalls and golden lanterns, warm evening glow, fireflies"
+  },
+  {
+   "game": "forest",
+   "no": 4,
+   "id": "summer_modern",
+   "ref": "여름 현대 손님",
+   "prompt": "a small parking spot at the forest edge with a parked old-fashioned delivery van, tall green trees"
+  },
+  {
+   "game": "forest",
+   "no": 5,
+   "id": "autumn_records",
+   "ref": "가을 앞날의 기록",
+   "prompt": "an autumn forest clearing with a glowing futuristic monolith covered in leaves, floating light motes"
+  },
+  {
+   "game": "forest",
+   "no": 6,
+   "id": "autumn_harvest",
+   "ref": "가을 수확",
+   "prompt": "harvest festival field with pumpkins and hay bales under an orange sunset"
+  },
+  {
+   "game": "forest",
+   "no": 7,
+   "id": "winter_linked",
+   "ref": "겨울 이어진 숲",
+   "prompt": "a snowy forest where trails of light connect all the trees, deep blue night, glowing lanterns"
+  },
+  {
+   "game": "forest",
+   "no": 8,
+   "id": "winter_hearth",
+   "ref": "겨울 난롯가",
+   "prompt": "a warm cabin interior with a crackling fireplace and snow outside the window"
+  },
+  {
+   "game": "forest",
+   "no": 9,
+   "id": "mushroom_valley",
+   "ref": "버섯 요정골",
+   "prompt": "a valley of giant glowing mushrooms at night with fairy lights"
+  },
+  {
+   "game": "forest",
+   "no": 10,
+   "id": "firefly_oaks",
+   "ref": "반딧불 참나무숲",
+   "prompt": "an ancient oak forest alive with fireflies on a summer night"
+  },
+  {
+   "game": "forest",
+   "no": 11,
+   "id": "giant_boulders",
+   "ref": "거인 바위 고개",
+   "prompt": "a mountain pass blocked by enormous mossy boulders under morning mist"
+  },
+  {
+   "game": "forest",
+   "no": 12,
+   "id": "year_after",
+   "ref": "결말 · 다음 해",
+   "prompt": "the village at dawn after the first snow melts, new green shoots everywhere"
+  },
+  {
+   "game": "story",
+   "no": 1,
+   "id": "part1_town",
+   "ref": "1부 무명",
+   "prompt": "a small walled town at dusk with lanterns and a road leading into dark hills"
+  },
+  {
+   "game": "story",
+   "no": 2,
+   "id": "part1_forest",
+   "ref": "1부 숲길",
+   "prompt": "a deep forest road with ancient trees and shafts of light"
+  },
+  {
+   "game": "story",
+   "no": 3,
+   "id": "part2_river",
+   "ref": "2부 갈래 · 강나루",
+   "prompt": "a river port with docked boats and lanterns at night under a full moon"
+  },
+  {
+   "game": "story",
+   "no": 4,
+   "id": "part2_city",
+   "ref": "2부 갈래 · 도심",
+   "prompt": "a rainy modern city street with neon reflections and empty crosswalks"
+  },
+  {
+   "game": "story",
+   "no": 5,
+   "id": "part3_gorge",
+   "ref": "3부 불길",
+   "prompt": "a gorge on fire with burning walls and rising embers, red sky"
+  },
+  {
+   "game": "story",
+   "no": 6,
+   "id": "part3_orbital",
+   "ref": "3부 궤도 기지",
+   "prompt": "an orbital space station corridor with a window onto a vast planet"
+  },
+  {
+   "game": "story",
+   "no": 7,
+   "id": "part4_gates",
+   "ref": "4부 난세의 문",
+   "prompt": "three towering gates side by side, each leading to a different era, glowing"
+  },
+  {
+   "game": "story",
+   "no": 8,
+   "id": "part4_battlefield",
+   "ref": "4부 옛 전장",
+   "prompt": "an ancient battlefield with torn banners and broken spears under storm clouds"
+  },
+  {
+   "game": "story",
+   "no": 9,
+   "id": "cave_crystal",
+   "ref": "굴혈",
+   "prompt": "a cave with giant glowing blue crystals and an underground lake"
+  },
+  {
+   "game": "story",
+   "no": 10,
+   "id": "fortress_mountain",
+   "ref": "산성",
+   "prompt": "a mountain fortress with winding stairs above the clouds at sunrise"
+  },
+  {
+   "game": "story",
+   "no": 11,
+   "id": "ruin_capital",
+   "ref": "옛터",
+   "prompt": "ruins of a vast ancient capital overgrown with vines at golden hour"
+  },
+  {
+   "game": "story",
+   "no": 12,
+   "id": "epilogue_road",
+   "ref": "결말 · 다음 부",
+   "prompt": "a long open road toward a sunrise horizon with three trails branching"
+  },
+  {
+   "game": "realm",
+   "no": 1,
+   "id": "act1_warlords",
+   "ref": "1막 군웅",
+   "prompt": "many camp fires of rival armies across a dusk plain with distant walled towns"
+  },
+  {
+   "game": "realm",
+   "no": 2,
+   "id": "act1_palace",
+   "ref": "1막 궁성",
+   "prompt": "an empty palace hall with red pillars and a throne at dawn, dust in the light"
+  },
+  {
+   "game": "realm",
+   "no": 3,
+   "id": "act2_great_battle",
+   "ref": "2막 대전",
+   "prompt": "a vast river plain with two armies' camps facing each other under a gray sky, smoke"
+  },
+  {
+   "game": "realm",
+   "no": 4,
+   "id": "act2_modern",
+   "ref": "2막 현대",
+   "prompt": "a modern cityscape superimposed on an ancient battlefield, ghostly overlap"
+  },
+  {
+   "game": "realm",
+   "no": 5,
+   "id": "act3_river",
+   "ref": "3막 강 위",
+   "prompt": "a wide river with a long chain of war ships at night, fire arrows in the sky"
+  },
+  {
+   "game": "realm",
+   "no": 6,
+   "id": "act3_future",
+   "ref": "3막 미래",
+   "prompt": "hovering war platforms above a river, glowing banners, cold blue light"
+  },
+  {
+   "game": "realm",
+   "no": 7,
+   "id": "act4_rift",
+   "ref": "4막 삼계 균열",
+   "prompt": "a huge rift in the sky pulling storm clouds and shards of three eras, terrifying"
+  },
+  {
+   "game": "realm",
+   "no": 8,
+   "id": "act5_silkroad",
+   "ref": "5막 실크로드",
+   "prompt": "a caravan trail through red dunes toward a distant oasis city at sunset"
+  },
+  {
+   "game": "realm",
+   "no": 9,
+   "id": "act5_sea",
+   "ref": "5막 남해",
+   "prompt": "a harbor of tall-masted ships at dawn with a calm turquoise sea"
+  },
+  {
+   "game": "realm",
+   "no": 10,
+   "id": "act6_throne",
+   "ref": "6막 천하",
+   "prompt": "a grand throne hall opening onto a view of a unified land at sunrise"
+  },
+  {
+   "game": "realm",
+   "no": 11,
+   "id": "map_table",
+   "ref": "지도 막사",
+   "prompt": "a command tent with a large map table, candles and carved markers, warm light"
+  },
+  {
+   "game": "realm",
+   "no": 12,
+   "id": "epilogue_peace",
+   "ref": "결말",
+   "prompt": "peaceful rice fields and a quiet river with a white heron at dawn"
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "rts_bld",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner"
+ },
+ "items": [
+  {
+   "id": "rts_workshop_01",
+   "seed": 1390533611,
+   "prompt": "village craftsman workshop, wooden hall with red tiled roof, chimney, anvil and stacked firewood in front, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init\\rts_workshop_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rts_workshop_01.png (3D 밑그림, tools/world-forge/build_rts.py)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rts_field_01",
+   "seed": 640596827,
+   "prompt": "fenced farm field with rows of golden wheat and green crops, wooden fence, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init\\rts_field_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rts_field_01.png (3D 밑그림, tools/world-forge/build_rts.py)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rts_wall_corner_01",
+   "seed": 1308191164,
+   "prompt": "stone fortress wall corner with round tower and battlements, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init\\rts_wall_corner_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rts_wall_corner_01.png (3D 밑그림, tools/world-forge/build_rts.py)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rts_fortress_01",
+   "seed": 1229779186,
+   "prompt": "stone castle keep, four corner towers with red roofs, central hall, wooden gate, no flags, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init\\rts_fortress_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rts_fortress_01.png (3D 밑그림, tools/world-forge/build_rts.py)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rts_enemy_base_a",
+   "seed": 3809157139,
+   "prompt": "dark black stone fortress, four spiked towers with black pointed roofs, red glowing braziers at the gate, menacing, no flags, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init\\rts_enemy_base_a.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rts_enemy_base_a.png (3D 밑그림, tools/world-forge/build_rts.py)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rts_enemy_base_b",
+   "seed": 3011367289,
+   "prompt": "dark black stone fortress, cracked walls, one broken tower, rubble and holes, damaged, no flags, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init\\rts_enemy_base_b.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rts_enemy_base_b.png (3D 밑그림, tools/world-forge/build_rts.py)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rts_enemy_base_c",
+   "seed": 320120268,
+   "prompt": "ruined burning black stone fortress, collapsed walls, orange fire and flames, smoke, no flags, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, flag, banner",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\rts_bld_init\\rts_enemy_base_c.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rts_enemy_base_c.png (3D 밑그림, tools/world-forge/build_rts.py)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  }
+ ]
+}
