@@ -129,6 +129,8 @@ def main():
     ap.add_argument('batch')
     ap.add_argument('--dry', action='store_true')
     ap.add_argument('--only', default='')
+    ap.add_argument('--variants', type=int, default=0, help='항목마다 후보 N장(id_v01…, 씨앗 +k). 0 이면 배치 defaults.variants(없으면 1)')
+    ap.add_argument('--judge', action='store_true', help='끝나면 판정기(tools/asset-audit/judge)로 묶음마다 1장만 남긴 보고를 만든다(K-0069)')
     a = ap.parse_args()
     b = json.load(open(a.batch, encoding='utf-8'))
     model = b['model']
@@ -138,7 +140,11 @@ def main():
         sys.exit(f'모델 {model} 은 비상업(NC) — 점검 배치(out 이 model_compare_ 로 시작) 밖에서는 쓰지 않는다(K-0013)')
     d = b.get('defaults', {})
     out_dir =os.path.join(OUT, b.get('out', os.path.splitext(os.path.basename(a.batch))[0]))
-    items = [i for i in b['items'] if (not a.only or i['id'] in a.only.split(',')) and not os.path.exists(os.path.join(out_dir, i['id'] + '.png'))][:MAX_ITEMS]   # 있는 그림은 셈에서 뺀다
+    nv = a.variants or int(d.get('variants', 1) or 1)
+    src = [i for i in b['items'] if not a.only or i['id'] in a.only.split(',')]
+    if nv > 1:    # 100장 뽑아 1장 고르기(K-0069): 후보 N장을 id_v01… 로, 씨앗은 +k. 판정기가 묶음(id) 안에서 1등만 남긴다
+        src = [dict(i, id=f"{i['id']}_v{k + 1:02d}", seed=(int(i['seed']) + k) if 'seed' in i else -1) for i in src for k in range(nv)]
+    items = [i for i in src if not os.path.exists(os.path.join(out_dir, i['id'] + '.png'))][:MAX_ITEMS]   # 있는 그림은 셈에서 뺀다
     for i in items:
         txt = i['prompt'] + ' ' + d.get('prompt_prefix', '')
         m = BLOCK.search(txt)
@@ -187,6 +193,11 @@ def main():
         print(f'ok {it["id"]} {secs:.0f}s seed {lic["seed"]}')
         if n < len(items) - 1:
             time.sleep(PAUSE)
+    if a.judge:
+        import subprocess
+        judge = os.path.join(HERE, '..', 'asset-audit', 'judge', 'judge.sh')
+        print('== 판정기', out)
+        subprocess.call(['bash', judge, 'score', out, '--per-group', '1'])
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@
 #   1) 웹 다섯 판 js 구문 (node -c, vendor 제외)
 #   2) 바뀐 에셋 🔴 점검(tools/asset-audit --quick)
 #   3) 문서 크기 상한 (CLAUDE.md 6KB · PLAN 70KB(사가블로 90KB) · PROJECT_STATE 15KB · ARCH·BACKLOG·STATE·티켓 4KB …)
-#   4) features.json 스키마 · js/gd/cs 1500줄 넘김(tools/big-files.txt 는 봐줌) · 진단 수 감소 WARN · Godot 참조 방향
+#   4) features.json 스키마 · WIP 상한(tools/wip.json, 새기능 티켓) · js/gd/cs 1500줄 넘김(tools/big-files.txt 는 봐줌) · 진단 수 감소 WARN · Godot 참조 방향
 #   (--full 이면 웹 다섯 판 _test.html 진단까지)
 # 서버·브라우저는 띄우지 않는다. _test.html 진단은 사용자가 실기 확인할 때 따로 돈다.
 set -u
@@ -112,6 +112,50 @@ for (const g of fs.readdirSync('saga-web')) {
 process.exit(bad ? 1 : 0);
 NODE
 fi
+
+echo "== WIP 상한 (tools/wip.json · SAGA-ARCH §8-2: 새기능 티켓은 그 판의 D0+D1 이 상한 아래일 때만)"
+node - <<'NODE' || fail=1
+const fs = require('fs'), { execSync } = require('child_process');
+const cfg = JSON.parse(fs.readFileSync('tools/wip.json', 'utf8'));
+const git = a => { try { return execSync('git ' + a, { encoding: 'utf8' }).split(/\r?\n/).filter(Boolean); } catch (e) { return []; } };
+const added = git('diff --cached --name-only --diff-filter=A').filter(f => /^tasks\/(web|godot|unity|tools)\/[WGUK]-\d+\.md$/.test(f));
+if (!added.length) { console.log('ok   새 티켓 없음'); process.exit(0); }
+const NAMES = { '사가고': 'go', '사가블로': 'dungeon', '사가의숲': 'forest', '사가스토리': 'story', '사가국지': 'realm', 'GO': 'go', 'DUNGEON': 'dungeon', 'FOREST': 'forest', 'STORY': 'story', 'REALM': 'realm' };
+const PRE = { go: 'go.', dungeon: 'dg.', forest: 'fs.', story: 'st.', realm: 'rk.' };
+const readJ = p => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return []; } };
+function wip(track, game) {
+  if (track === 'web') { const a = readJ(`saga-web/saga-${game}/features.json`); return a.filter(x => /^D[01]$/.test(x.level)).length; }
+  const a = readJ(track === 'godot' ? 'saga-godot/features.json' : 'saga-unity/features.json');
+  const pre = (track === 'godot' ? 'gd.' : 'un.') + PRE[game];
+  return a.filter(x => x.id.startsWith(pre) && /^D[01]$/.test(x.level)).length;
+}
+let bad = 0;
+const today = new Date().toISOString().slice(0, 10);
+const frozen = cfg.frozen_until && today <= cfg.frozen_until;
+for (const f of added) {
+  const txt = fs.readFileSync(f, 'utf8');
+  const head = txt.split(/\r?\n/).slice(0, 3).join(' ');
+  const kind = (/종류\s*[:：]\s*([^\n]*?)(상태|$)/.exec(head) || [])[1] || '';
+  const isNew = /새\s*기능/.test(kind) && !/닫기|통합|버그|측정|도구|설계|게이트/.test(kind);
+  const track = f.split('/')[1];
+  const exempt = /WIP 예외\s*[:：]/.test(txt);
+  if (!isNew) { console.log('ok   ' + f + ' (' + kind.trim().slice(0, 30) + ')'); continue; }
+  if (frozen && !exempt) { console.log(`FAIL ${f} 새기능 — 발행 동결 중(~${cfg.frozen_until}): ${cfg.frozen_note}`); bad++; continue; }
+  if (track === 'tools') {
+    const open = fs.readdirSync('tasks/tools').filter(x => /^K-\d+\.md$/.test(x)).length;
+    if (open > cfg.tools_open && !exempt) { console.log(`FAIL ${f} K 열린 티켓 ${open} > ${cfg.tools_open} — 판정·배치로 먼저 닫는다`); bad++; } else console.log('ok   ' + f + ` (K 열린 ${open})`);
+    continue;
+  }
+  const games = [...new Set(Object.keys(NAMES).filter(n => head.includes(n) || (txt.match(new RegExp(n, 'g')) || []).length >= 3).map(n => NAMES[n]))];
+  if (!games.length) { console.log(`FAIL ${f} 어느 판인지 둘째 줄에 없음 — '종류: 새기능 · 웹(사가국지)' 처럼 판 이름을 적는다`); bad++; continue; }
+  for (const g of games) {
+    const n = wip(track, g), lim = cfg.flagship.includes(`${track}:${g}`) ? cfg.limit_flagship : cfg.limit;
+    if (n > lim && !exempt) { console.log(`FAIL ${f} ${track}/${g} D0+D1 ${n} > ${lim} — 닫기(D1→D2→D3) 티켓이 먼저`); bad++; }
+    else console.log(`${exempt && n > lim ? 'WARN' : 'ok  '} ${f} ${track}/${g} D0+D1 ${n}/${lim}${exempt ? ' (WIP 예외 표기)' : ''}`);
+  }
+}
+process.exit(bad ? 1 : 0);
+NODE
 
 echo "== 파일 크기 (바뀐 js/gd/cs 가 새로 1500줄을 넘거나, 이미 넘던 목록 tools/big-files.txt 보다 늘면 FAIL)"
 node - "${targets[@]}" <<'NODE' || fail=1

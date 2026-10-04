@@ -1,0 +1,9 @@
+{
+ "_": "WIP 게이트(SAGA-ARCH §8-2). 판마다 features.json 의 D0+D1 이 limit 을 넘으면 새기능 티켓 파일을 커밋할 수 없다. flagship 은 limit_flagship. tools_open 은 K 갈래 열린 티켓 상한. 사용자만 고친다.",
+ "limit": 10,
+ "limit_flagship": 20,
+ "flagship": [],
+ "tools_open": 20,
+ "frozen_until": "2026-10-19",
+ "frozen_note": "새 기능 티켓 발행 동결(사용자 2026-10-05 '응 하려는 해줘'). 종류가 닫기·통합·버그·측정·도구·설계 인 티켓만 새로 만든다."
+}

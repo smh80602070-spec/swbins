@@ -2,7 +2,7 @@
 
 개인 취미 저장소. 회사 일은 `C:\link`, 개인 도구는 `C:\swbins2` 세션. 이 파일은 **길잡이**다.
 
-- **다음 일 = `tasks/QUEUE.md` 의 갈래(웹·고돗·유니티·자체툴) 큐 맨 위 티켓**(절차 `tasks/README.md` · 체제 `SAGA-ARCH.md`). "<갈래> 이어해" = 이것
+- **다음 일 = `tasks/QUEUE.md` 의 갈래(웹·고돗·유니티·자체툴) 큐 맨 위 티켓**(절차 `tasks/README.md` · 체제 `SAGA-ARCH.md` · 중간 지시 `tasks/INTAKE.md`). "<갈래> 이어해" = 이것
 - 공통 설계: `SAGA-DESIGN.md`(일곱 PLAN 의 상위) · 다섯 판 이야기 정본: `scenario/`
 - 웹 다섯 판: `saga-web/<폴더>/PLAN.md` 가 정본, 이력은 `archive/web/`
 - 3D 두 트랙(코드 공유 없음): `saga-godot/`(Godot 4)·`saga-unity/`(Unity 6) — 각 폴더 `CLAUDE.md` 부터
@@ -79,4 +79,4 @@
 - 진단 출력은 `grep -o "RESULT [0-9/]*"`·실패 줄만(`--dump-dom` 통째 금지).
 - **문서 3층**(`SAGA-DESIGN.md` §9): 규칙(CLAUDE.md ≤6KB) / 설계(PLAN ≤70KB, 날짜 세션 기록 금지) / 이력(HANDOFF·HISTORY, append-only, grep 으로만).
   상태(3D `docs/PROJECT_STATE.md`·루트 README "현재" 절)는 **덮어쓴다**. 세션 기록은 HANDOFF·HISTORY 에만.
-- 이 파일엔 **규칙만** — 이력·"이전엔 ~였다" 문장 금지.
+- 이 파일엔 **규칙만**(이력 문장 금지).
