@@ -78,6 +78,9 @@ Assets/SagaCore/Resources/Regions.meta
 Assets/SagaCore/Resources/Regions/**/*.meta
 # World 도 같다 — 원본은 추적하고 임포트가 새로 만든 .meta 만 제외(이미 추적 중인 .meta 는 그대로).
 Assets/SagaCore/Resources/World/**/*.meta
+# Sky(K-0064)도 같다 — 임포트가 만든 .meta 는 커밋하지 않는다(런타임이 Wrap Clamp 를 직접 건다).
+Assets/SagaCore/Resources/Sky.meta
+Assets/SagaCore/Resources/Sky/**/*.meta
 
 # Crash reports
 sysinfo.txt
