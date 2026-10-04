@@ -57,6 +57,11 @@ else
   echo "WARN 파이썬이 없어 에셋 빠른 점검을 건너뛴다"
 fi
 
+echo "== 크레딧 필수 표기 (tools/asset-audit/credits.py --check: 크레딧 필수 출처가 credits.json 에 한 줄이라도 빠지면 FAIL, K-0038)"
+if [ -n "$PY" ]; then
+  PYTHONIOENCODING=utf-8 $PY tools/asset-audit/credits.py --check || fail=1
+fi
+
 echo "== 문서 크기"
 limit() { # 파일 상한(바이트)
   local f=$1 max=$2; [ -f "$f" ] || return 0

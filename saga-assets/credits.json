@@ -207,18 +207,26 @@
    "tool": "gen.py",
    "model": "animagine-xl-4.0-opt",
    "license": "CreativeML OpenRAIL++-M",
-   "count": 306,
+   "count": 1586,
    "where": [
-    "saga-assets/icons/license"
+    "saga-assets/icons/license",
+    "saga-assets/web2d/moving/beast_big",
+    "saga-assets/web2d/moving/beast_bird",
+    "saga-assets/web2d/moving/beast_dog",
+    "saga-assets/web2d/moving/beast_fish",
+    "saga-assets/web2d/moving/beast_small"
    ]
   },
   {
    "tool": "icon_pack.py",
    "model": "none",
    "license": "CC0-1.0 (코드 생성 — 글꼴 글리프·색 견본, 외부 그림 없음)",
-   "count": 19,
+   "count": 76,
    "where": [
-    "saga-assets/icons/license"
+    "saga-assets/icons/license",
+    "saga-godot/assets/icons/license",
+    "saga-unity/Assets/SagaCore/Resources/Icons/license",
+    "saga-web/shared/assets/icons/license"
    ]
   },
   {
@@ -281,42 +289,42 @@
    "tool": "build_prop.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 138,
+   "count": 108,
    "where": [
     "saga-assets/regions/pieces",
-    "saga-assets/world/sprite",
     "saga-assets/world/toon",
     "saga-assets/world/web",
     "saga-godot/assets/regions/pieces",
-    "saga-godot/assets/world"
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/Regions/Pieces"
    ]
   },
   {
    "tool": "build_building.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0)",
-   "count": 129,
+   "count": 105,
    "where": [
     "saga-assets/regions/pieces",
-    "saga-assets/world/sprite",
     "saga-assets/world/toon",
     "saga-assets/world/web",
     "saga-godot/assets/regions/pieces",
-    "saga-godot/assets/world"
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/Regions/Pieces"
    ]
   },
   {
    "tool": "build_vehicle.py",
    "model": "",
    "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
-   "count": 44,
+   "count": 34,
    "where": [
     "saga-assets/regions/pieces",
-    "saga-assets/world/sprite",
     "saga-assets/world/toon",
     "saga-assets/world/web",
     "saga-godot/assets/regions/pieces",
-    "saga-godot/assets/world"
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/Regions/Pieces"
    ]
   },
   {
@@ -331,13 +339,68 @@
    ]
   },
   {
+   "tool": "make_sky.py",
+   "model": "",
+   "license": "CC0-1.0 (코드 생성 — 외부 입력 없음)",
+   "count": 18,
+   "where": [
+    "saga-assets/sky",
+    "saga-godot/assets/sky",
+    "saga-web/shared/assets/sky"
+   ]
+  },
+  {
    "tool": "gen.py",
    "model": "Illustrious-XL-v2.0",
    "license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
-   "count": 120,
+   "count": 280,
    "where": [
+    "saga-assets/sky",
     "saga-assets/web2d/bg",
+    "saga-assets/web2d/interior",
+    "saga-godot/assets/sky",
+    "saga-web/shared/assets/sky",
     "saga-web/shared/assets/web2d/bg"
+   ]
+  },
+  {
+   "tool": "make_realm_ui.py",
+   "model": "",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 12,
+   "where": [
+    "saga-assets/web2d/realm-ui",
+    "saga-web/saga-realm/assets/realm-ui"
+   ]
+  },
+  {
+   "tool": "gen.py",
+   "model": "animagine-xl-4.0-opt",
+   "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+   "count": 6,
+   "where": [
+    "saga-assets/web2d/realm-ui",
+    "saga-web/saga-realm/assets/realm-ui"
+   ]
+  },
+  {
+   "tool": "make_realm_ui.py",
+   "model": "",
+   "license": "CC0-1.0 코드 배치 + 글꼴 SIL OFL-1.1 (Nanum Brush Script·Noto Serif KR)",
+   "count": 56,
+   "where": [
+    "saga-assets/web2d/realm-ui",
+    "saga-web/saga-realm/assets/realm-ui"
+   ]
+  },
+  {
+   "tool": "make_realm_ui.py woff2",
+   "model": "",
+   "license": "SIL Open Font License 1.1 (OFL-NotoSerif.txt)",
+   "count": 2,
+   "where": [
+    "saga-assets/web2d/realm-ui",
+    "saga-web/saga-realm/assets/realm-ui"
    ]
   },
   {
@@ -362,6 +425,84 @@
     "saga-godot/assets/world",
     "saga-unity/Assets/SagaCore/Resources/World",
     "saga-web/shared/assets/world2d"
+   ]
+  },
+  {
+   "tool": "build_equip.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 435,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_village.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 90,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_interior.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 260,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_nature.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 120,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_field.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 240,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
+   ]
+  },
+  {
+   "tool": "build_weapon.py",
+   "model": "",
+   "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+   "count": 135,
+   "where": [
+    "saga-assets/world/toon",
+    "saga-assets/world/web",
+    "saga-godot/assets/world",
+    "saga-unity/Assets/SagaCore/Resources/World",
+    "saga-web/shared/assets/world3d"
    ]
   },
   {
