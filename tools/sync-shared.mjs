@@ -7,7 +7,7 @@
  *
  * 정본을 고쳤으면: 이 명령으로 퍼뜨리고, 다섯 판 `sw.js` VERSION 을 올린다(saga-web/RULES.md).
  * 판별 사본을 직접 고치면 다음 복사에서 덮인다 — 고치는 곳은 shared/ 하나다.
- * 표에 없는 파일(data.js·core.js·ui.js·sprite.js·perf.js …)은 여기 안 넣는다.
+ * 표에 없는 파일(data.js·core.js·ui.js·sprite.js·사가고 perf.js …)은 여기 안 넣는다.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -29,6 +29,7 @@ const FILES = [
   ['js/assets3d.js', 'js/assets3d.js'],
   ['js/ai.js', 'js/ai.js', ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story']],   // R-4 — 네 판이 글자까지 같다(사가국지는 따로 갈라짐)
   ['js/mode2d.js', 'js/mode2d.js', ['saga-story', 'saga-dungeon', 'saga-go', 'saga-forest', 'saga-realm']],   // W-0019 — 2D 시트 부품(사가스토리부터, 다른 판은 배선하며 판 목록에 추가)
+  ['js/perf-hud.js', 'js/perf.js', ['saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm']],   // 재기 표시(?perf) — 네 벌이 글자까지 같다(사가고 perf.js 는 품질 자동조절이 든 다른 파일)
   ['js/ssao3d.js', 'js/ssao3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/post3d.js', 'js/post3d.js', ['saga-go', 'saga-dungeon', 'saga-story']],
   ['js/toon3d-core.js', 'js/toon3d-core.js'],
