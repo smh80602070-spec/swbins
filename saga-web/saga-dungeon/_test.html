@@ -7940,7 +7940,7 @@ window.requestAnimationFrame = function () { return 0; };
       keys.forEach(function (k) { if (k !== 'phys' && !V.ELEM_HIT[k]) { bad.push('빠짐 ' + k); } });
       Object.keys(V.ELEM_HIT).forEach(function (k) { if (keys.indexOf(k) < 0) { bad.push('없는 원소 ' + k); } if (!V.SHEETS[V.ELEM_HIT[k]]) { bad.push('시트 ' + k); } });
       return bad.length === 0 && keys.length >= 7 && V.fxLayer(c, { t: 'elem', el: 'fire', dot: true, life: 0.6 }, 0, 0) === false && V.fxLayer(c, { t: 'elem', el: 'phys', life: 0.6 }, 0, 0) === false &&
-        V.fxLayer(c, { t: 'elem', el: 'zzz', life: 0.6 }, 0, 0) === false && ('원소 ' + Object.keys(V.ELEM_HIT).length + '종 짝지음');
+        V.fxLayer(c, { t: 'elem', el: 'zzz', life: 0.6 }, 0, 0) === false && typeof DG.cfg.vfx.levelup === 'function' && V.SHEETS.levelup_burst[0] === 12 && (function () { var lv = { t: 'lvl', life: 1.1 }; V.fxLayer(c, lv, 0, 0); return lv.l0 === 1.1; })() && ('원소 ' + Object.keys(V.ELEM_HIT).length + '종 짝지음 · 레벨업 버스트');
     });
 
     t('런타임 에러 없음', function () {

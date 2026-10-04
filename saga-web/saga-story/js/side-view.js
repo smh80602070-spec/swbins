@@ -1014,11 +1014,20 @@
   }
 
   /** 전투 이펙트 시트(W-0052, K-0039) — 타격·처치를 숫자·옛 그림 아래에 가산 합성으로 얹는다(규칙은 공용 vfx2d.js fxLayer). 시트를 못 받았으면 아무것도 안 그린다 */
-  function vfxLayer(f, x) { if (global.DG.vfx2d) { global.DG.vfx2d.fxLayer(ctx, f, x, f.y + 20); } }
+  function vfxLayer(f, x) {
+    var V = global.DG.vfx2d, run, p;
+    if (!V) { return; }
+    if (f.t === 'levelup') {   // 레벨업 배너 fx 에는 자리가 없다 — 플레이어 가슴께에 버스트(W-0055)
+      run = S.raw && S.raw(); p = run && run.player;
+      if (p) { if (f.l0 === undefined) { f.l0 = f.life; } V.draw(ctx, 'levelup_burst', p.x + S.P_W / 2 - camX, p.y + S.P_H * 0.5, 170, f.l0 - f.life, { speed: 1.1 }); }
+      return;
+    }
+    V.fxLayer(ctx, f, x, f.y + 20);
+  }
 
   function drawFx() {
     var list = S.fx(), i;
-    if (global.DG.vfx2d && !vfxWarm) { vfxWarm = true; global.DG.vfx2d.preload(['spark_hit', 'crit_flash', 'death_smoke']); }
+    if (global.DG.vfx2d && !vfxWarm) { vfxWarm = true; global.DG.vfx2d.preload(['spark_hit', 'crit_flash', 'death_smoke', 'levelup_burst']); }
     for (i = 0; i < list.length; i++) {
       var f = list[i];
       var x = f.x - camX;

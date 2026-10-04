@@ -58,9 +58,10 @@
    * f.life 는 남은 초, 처음 값을 f.l0 에 한 번 적어 나이를 센다. (x,y) = 화면 좌표(맞은 몸 가운데). 그린 게 없으면 false. 다른 fx 는 건드리지 않는다
    */
   function fxLayer(ctx, f, x, y) {
-    if (!f || (f.t !== 'hit' && f.t !== 'pop' && f.t !== 'elem')) { return false; }
+    if (!f || (f.t !== 'hit' && f.t !== 'pop' && f.t !== 'elem' && f.t !== 'lvl')) { return false; }
     if (f.l0 === undefined) { f.l0 = f.life; }
     var age = f.l0 - f.life, big = f.boss || f.l0 > 0.6;
+    if (f.t === 'lvl') { return draw(ctx, 'levelup_burst', x, y, 170, age, { speed: 1.1 }); }   // 레벨업 — 판이 cfg.vfx.levelup 으로 쌓는 fx
     if (f.t === 'elem') { return ELEM_HIT[f.el] && !f.dot ? draw(ctx, ELEM_HIT[f.el], x, y, 76, age, { speed: 1.5 }) : false; }   // 원소 피해 숫자 — 몇 초에 걸치는 독(dot)은 틱마다 안 터뜨린다
     if (f.t === 'hit') {
       var a = draw(ctx, 'spark_hit', x, y, f.crit ? 78 : 58, age, { speed: 1.9 });
@@ -71,6 +72,12 @@
 
   /** 미리 받아 둔다 — 첫 타격에 한 박자 늦지 않게 */
   function preload(names) { (names || Object.keys(SHEETS)).forEach(sheet); }
+
+  /** 판이 cfg.vfx.levelup 을 주면 레벨업 때 그 함수가 자기 fx 목록에 {t:'lvl'} 을 쌓는다 — 게임 규칙 코드를 안 건드리고 이 모듈이 'levelup' 알림을 듣는다 */
+  (function () {
+    var cv = global.DG.cfg && global.DG.cfg.vfx, core = global.DG.core;
+    if (cv && cv.levelup && core && core.on) { core.on('levelup', function () { try { cv.levelup(); } catch (e) { /* 그림일 뿐 */ } }); }
+  })();
 
   preload(((global.DG.cfg && global.DG.cfg.vfx && global.DG.cfg.vfx.preload) || []).concat(['spark_hit', 'crit_flash', 'death_smoke']));   // 첫 타격에 한 박자 늦지 않게 — 판이 cfg.vfx.preload 로 더 주면 같이
 
