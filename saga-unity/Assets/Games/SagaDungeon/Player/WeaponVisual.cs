@@ -52,6 +52,10 @@ namespace Saga.Dungeon.Player
         private PlayerController _controller;
         private Transform _blade;
         private MeshRenderer _bladeRenderer;
+        private MeshRenderer _handleRenderer;
+        private Transform _socket;
+        private GameObject _model;      // U-0038 A — 자체툴 무기 GLB(있으면 코드 칼날·손잡이는 숨기고 이것을 쥔다)
+        private string _modelName;
 
         private void Awake()
         {
@@ -77,6 +81,7 @@ namespace Saga.Dungeon.Player
             if (_controller.Visual == null) return;
             var socket = CharacterVisual.FindOrCreateWeaponSocket(_controller.Visual.gameObject, _controller.Animator);
 
+            _socket = socket;
             var handle = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             handle.name = "WeaponHandle (generated)";
             Object.Destroy(handle.GetComponent<Collider>());
@@ -86,6 +91,7 @@ namespace Saga.Dungeon.Player
             var handleMat = new Material(Shader.Find("Universal Render Pipeline/Lit")) { name = "WeaponHandle (generated)" };
             handleMat.color = HandleColor;
             handle.GetComponent<MeshRenderer>().sharedMaterial = handleMat;
+            _handleRenderer = handle.GetComponent<MeshRenderer>();
 
             var blade = GameObject.CreatePrimitive(PrimitiveType.Cube);
             blade.name = "WeaponBlade (generated)";
@@ -128,6 +134,56 @@ namespace Saga.Dungeon.Player
             }
             _blade.localPosition = new Vector3(0f, length * 0.5f, 0f);
             _bladeRenderer.sharedMaterial.SetColor("_EmissionColor", emission);
+            RefreshModel(shape, grade, length);
+        }
+
+        /// <summary>U-0038 A — 맞는 무기 GLB 가 있으면 소켓에 세우고 코드 칼날·손잡이는 숨긴다(오브젝트·크기 규칙은 그대로 둔다 — 진단이 읽는다).
+        /// 없으면 모델을 걷고 코드 칼날을 다시 보인다.</summary>
+        private void RefreshModel(ItemData.WeaponShape shape, int grade, float length)
+        {
+            string wanted = WeaponModels.ModelName(shape, grade);
+            if (_model != null && _modelName == wanted)
+            {
+                if (WeaponModels.Fit(_model, length, out var r0, out var p0, out var s0)) { /* 같은 모델 — 길이만 갱신 */ ApplyFit(r0, p0, s0); }
+                return;
+            }
+            if (_model != null) { Object.Destroy(_model); _model = null; _modelName = null; }
+            var prefab = _socket != null ? WeaponModels.Load(shape, grade) : null;
+            if (prefab == null) { SetGeneratedVisible(true); return; }
+
+            var inst = Object.Instantiate(prefab, _socket, false);
+            inst.name = "WeaponModel (" + wanted + ")";
+            foreach (var c in inst.GetComponentsInChildren<Collider>(true)) Object.Destroy(c);
+            var cache = new System.Collections.Generic.Dictionary<Material, Material>();
+            var mats = new System.Collections.Generic.List<Material>();
+            foreach (var rend in inst.GetComponentsInChildren<Renderer>(true))
+            {
+                rend.GetSharedMaterials(mats);
+                bool changed = false;
+                for (int i = 0; i < mats.Count; i++)
+                {
+                    var made = Saga.Core.Region.RegionMaterials.FromGltf(mats[i], cache, out _);
+                    if (made != null && made != mats[i]) { mats[i] = made; changed = true; }
+                }
+                if (changed) rend.SetSharedMaterials(mats);
+            }
+            if (!WeaponModels.Fit(inst, length, out var rot, out var pos, out var sc)) { Object.Destroy(inst); SetGeneratedVisible(true); return; }
+            _model = inst; _modelName = wanted;
+            ApplyFit(rot, pos, sc);
+            SetGeneratedVisible(false);
+        }
+
+        private void ApplyFit(Quaternion rot, Vector3 pos, float sc)
+        {
+            _model.transform.localRotation = rot;
+            _model.transform.localScale = Vector3.one * sc;
+            _model.transform.localPosition = pos;
+        }
+
+        private void SetGeneratedVisible(bool visible)
+        {
+            if (_bladeRenderer != null) _bladeRenderer.enabled = visible;
+            if (_handleRenderer != null) _handleRenderer.enabled = visible;
         }
     }
 }
