@@ -1,0 +1,19 @@
+{
+ "id": "mon_cons_02",
+ "generator": "tools/world-forge/build_monster.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: bitumen",
+  "polyhaven: corrugated_iron",
+  "polyhaven: white_stucco"
+ ],
+ "size_m": [
+  1.09,
+  0.66,
+  1.79
+ ],
+ "tris": 300,
+ "family": "cons"
+}
