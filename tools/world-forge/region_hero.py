@@ -323,6 +323,24 @@ def ground_z(x, y):
     return loc.z if hit and obj and not obj.name.startswith('water') else None
 
 
+GROUND_PREFIX = ('lake_ground', 'snow_ground', 'plain_ground', 'isl')      # 땅 오브젝트 이름(블렌더가 붙이는 .001 꼬리 무시)
+
+
+def ground_only_z(x, y):
+    """배치표 terrain.heights 용 — 광선이 집·나무·바위·소나무 같은 지물을 만나면 뚫고 내려가 **땅 오브젝트**의 윗면만 잰다(G-0015 ①).
+    ground_z 는 처음 맞은 면(지물 꼭대기)이라 조각 z 와 평균 3.6~10m 어긋났다."""
+    dg = bpy.context.evaluated_depsgraph_get()
+    o = Vector((x, y, 12.0))
+    for _ in range(40):
+        hit, loc, nor, idx, obj, mat = sc.ray_cast(dg, o, Vector((0, 0, -1)), distance=60)
+        if not hit:
+            return None
+        if obj and obj.name.startswith(GROUND_PREFIX):
+            return loc.z
+        o = Vector((x, y, loc.z - 0.002))
+    return None
+
+
 def spots(n, zmin, zmax, ymin, ymax, mind, tries=4000, xr=(-22, 22)):
     got = []
     for _ in range(tries):
@@ -1555,9 +1573,12 @@ def village():
         hs = []
         for j in range(ny):
             for i in range(nx):
-                z = ground_z(xs[0] + i * step, ys[0] + j * step)
+                z = ground_only_z(xs[0] + i * step, ys[0] + j * step)
                 hs.append(None if z is None else round(z, 2))
-        LAYOUT['terrain'] = {'x0': xs[0], 'y0': ys[0], 'step': step, 'nx': nx, 'ny': ny, 'heights': hs}
+        LAYOUT['terrain'] = {'x0': xs[0], 'y0': ys[0], 'step': step, 'nx': nx, 'ny': ny, 'heights': hs,
+                             'materials': {'low': 'tex/ground_grass.jpg', 'high': None, 'tint_low': [1.1, 1.25, 0.9], 'tile_low': 5.0}}   # 시안의 초록 틴트(G-0015 ③)
+        LAYOUT['tree_kinds'] = ['tree_broadleaf_01', 'tree_broadleaf_02', 'tree_birch_01']       # trees[i][4] = 종류 번호 → K-0052 통일 나무 GLB id (G-0015 ②)
+        LAYOUT['flower_glb'] = 'flower_patch_01'                                                    # flowers[i][0] 종류 무관 한 종(K-0052)
         LAYOUT['plaza'] = {'center': [J[0], J[1]], 'radius': 9.0}
         LAYOUT['note'] = 'region_hero.py village 가 만든 배치표 — 손으로 고치지 않는다. 좌표는 Blender 기준(x 오른쪽·y 안쪽·z 위, 미터). 엔진은 변환해서 쓴다.'
         _json.dump(LAYOUT, open(os.environ['HERO_LAYOUT'], 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
@@ -1674,7 +1695,7 @@ def export_region(rid, outdir):
         hs = []
         for j in range(ny):
             for i in range(nx):
-                z = ground_z(t['x'][0] + i * step, t['y'][0] + j * step)
+                z = ground_only_z(t['x'][0] + i * step, t['y'][0] + j * step)
                 hs.append(None if z is None else round(z, 2))
         lay['terrain'] = {'x0': t['x'][0], 'y0': t['y'][0], 'step': step, 'nx': nx, 'ny': ny, 'heights': hs, 'materials': t['materials']}
     lay['roads'] = LAYOUT['roads']
