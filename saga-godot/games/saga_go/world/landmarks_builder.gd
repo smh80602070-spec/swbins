@@ -29,8 +29,6 @@ const SHRINE_GLB := "res://assets/world/altar_01.glb"   # G-0020 — 옛 Kenney 
 
 ## 마을집 발자국(가로·벽 높이·세로, m) — 충돌 상자·코드 오두막 크기.
 const WALL_FOOTPRINT := Vector3(10, 4, 10)
-## pillar-stone.glb(높이 1m 원기둥)의 지름 스케일 — 얇을수록 폐허답다.
-const RUIN_PILLAR_RADIUS_SCALE := 4.0   # (옛 원기둥용 — G-0020 이후 안 씀, 새 기둥은 균일 배율)
 const PILLAR_NEW_HEIGHT := 3.55         # dungeon_pillar_01 실측 높이
 ## gate-rock.glb(4.0 x 4.05 x 2.454, 바닥 피벗)은 이미 아치 비율이 잡혀
 ## 있어 축을 고르게(균일) 키우기만 한다 — wall-block처럼 단순 색 아틀라스가
@@ -437,7 +435,6 @@ func _add_ruins() -> void:
 	## pillar-stone.glb는 높이 1m짜리 원기둥 — 스케일 값을 그대로 목표
 	## 높이(m)로 쓸 수 있다. 반지름은 얇게 두는 쪽이 폐허다워서 primitive
 	## 시절(반지름 최대 1.2)보다 가늘게 잡았다 — ASSET_GUIDE.md 참고.
-	var radius_scale := RUIN_PILLAR_RADIUS_SCALE
 	for i in offsets.size():
 		var off: Vector2 = offsets[i]
 		var height := 5.0 + float(i % 2) * 1.5
