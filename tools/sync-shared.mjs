@@ -131,7 +131,7 @@ for (const g of GAMES) {
   }
 }
 /** 움직이는 그림(K-0056 한 장 모드, W-0032) — 판이 쓰는 풀의 front·side·back.webp 만 `<판>/assets/web2d/moving/<풀>/` 로 복사한다. 판 → 풀 목록은 그 판 `cfg.mode2d.still` 과 맞춘다 */
-const MOVING_GAMES = { 'saga-forest': ['villager_a', 'villager_b', 'villager_c', 'hero_m', 'hero_f'], 'saga-go': ['villager_a', 'villager_b', 'villager_c', 'hero_m', 'hero_f'], 'saga-story': ['hero_m', 'hero_f'], 'saga-realm': ['companion_warrior', 'companion_archer', 'hero_m', 'hero_f'],
+const MOVING_GAMES = { 'saga-forest': ['villager_a', 'villager_b', 'villager_c', 'hero_m', 'hero_f'], 'saga-go': ['villager_a', 'villager_b', 'villager_c', 'hero_m', 'hero_f'], 'saga-story': ['hero_m', 'hero_f'], 'saga-realm': ['rts_inf_ally', 'rts_inf_enemy', 'rts_arc_ally', 'rts_arc_enemy', 'rts_cav_ally', 'rts_cav_enemy', 'hero_m', 'hero_f'],
   'saga-dungeon': ['hero_m', 'hero_f', 'companion_warrior', 'companion_archer', 'companion_mage', 'villager_a', 'villager_b', 'villager_c'] };
 for (const g of Object.keys(MOVING_GAMES)) {
   for (const pool of MOVING_GAMES[g]) {

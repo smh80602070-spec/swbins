@@ -673,10 +673,35 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var R = DG.rts, A = R.art, world = (DG.assets3dIds && DG.assets3dIds.world) || [], bad = [], k;
       for (k in A.BUILDINGS) { if (world.indexOf(A.BUILDINGS[k].id) < 0) { bad.push(k + ':' + A.BUILDINGS[k].id); } }
       var missing = Object.keys(R.rules.DEFS).filter(function (d) { return !R.rules.DEFS[d].road && !A.BUILDINGS[d]; });
-      var still = DG.cfg.mode2d.still || {}, pools = Object.keys(A.UNIT_POOL).map(function (u) { return A.UNIT_POOL[u]; }).concat(A.HERO_POOLS);
+      var still = DG.cfg.mode2d.still || {}, pools = []; Object.keys(A.UNIT_AI).forEach(function (u) { pools.push(A.UNIT_AI[u] + '_ally', A.UNIT_AI[u] + '_enemy'); }); pools = pools.concat(A.HERO_POOLS);
       var allStill = pools.every(function (p) { return !!still[p]; });
       var h1 = A.poolOf({ t: 'hero', hid: 'sg_guanyu', id: 1 }), h2 = A.poolOf({ t: 'hero', hid: 'sg_guanyu', id: 9 });
-      return bad.length === 0 && missing.length === 0 && allStill && h1 === h2 && A.HERO_POOLS.indexOf(h1) >= 0 && A.poolOf({ t: 'soldier' }) === 'companion_warrior' && ('건물 ' + Object.keys(A.BUILDINGS).length + '종 그림 · 유닛 몸 ' + pools.length + '칸 한 장 모드');
+      return bad.length === 0 && missing.length === 0 && allStill && h1 === h2 && A.HERO_POOLS.indexOf(h1) >= 0 && A.poolOf({ t: 'soldier', team: 0 }) === 'rts_inf_ally' && A.poolOf({ t: 'archer', team: 1 }) === 'rts_arc_enemy' && A.poolOf({ t: 'cavalry', team: 0 }) === 'rts_cav_ally' && ('건물 ' + Object.keys(A.BUILDINGS).length + '종 그림 · 유닛 몸 ' + pools.length + '칸 한 장 모드');
+    });
+
+    t('RTS 경계 조각(W-0047) — 풀 칸의 이웃에 따라 변·안쪽 구석·바깥 구석 조각을 고르고, 적 기지는 체력 단계별로 다른 그림이다', function () {
+      var A = DG.rts.art, T = A.transitionPieces, ok = true, why = [];
+      function map(rows, kk) { return function (x, y) { var r = rows[y]; return r === undefined || r[x] === undefined ? -1 : (r[x] === '#' ? kk : 0); }; }
+      function eq(got, want, name) { if (got.slice().sort().join() !== want.slice().sort().join()) { ok = false; why.push(name + ':' + got.join('/')); } }
+      eq(T(map(['.#.', '...', '...'], 1), 1, 1, 1), ['N'], 'N');
+      eq(T(map(['...', '...', '.#.'], 1), 1, 1, 1), ['S'], 'S');
+      eq(T(map(['...', '..#', '...'], 1), 1, 1, 1), ['E'], 'E');
+      eq(T(map(['...', '#..', '...'], 1), 1, 1, 1), ['W'], 'W');
+      eq(T(map(['...', '...', '#..'], 1), 1, 1, 1), ['oSW'], 'oSW');
+      eq(T(map(['..#', '...', '...'], 1), 1, 1, 1), ['oNE'], 'oNE');
+      eq(T(map(['...', '#..', '.#.'], 1), 1, 1, 1), ['iNE'], 'iNE(남·서)');
+      eq(T(map(['.#.', '#..', '...'], 1), 1, 1, 1), ['iSE'], 'iSE(북·서)');
+      eq(T(map(['.#.', '..#', '...'], 1), 1, 1, 1), ['iSW'], 'iSW(북·동)');
+      eq(T(map(['...', '..#', '.#.'], 1), 1, 1, 1), ['iNW'], 'iNW(남·동)');
+      eq(T(map(['.#.', '#.#', '.#.'], 1), 1, 1, 1), ['iNE', 'iNW', 'iSE', 'iSW'], '네 변');
+      eq(T(map(['...', '...', '...'], 1), 1, 1, 1), [], '없음');
+      eq(T(map(['.#.', '...', '...'], 2), 1, 1, 1), [], '다른 종류');
+      eq(T(map(['#..', '...', '...'], 1), 0, 0, 1), [], '범위 밖 이웃');
+      var S = DG.rts.state.create(7), b = S.buildings[-1], mx = DG.rts.rules.DEFS.stronghold.hp * DG.rts.rules.DIFF.hp[S.diff === 0 || S.diff === 2 ? S.diff : 1];
+      function nm(frac) { b.hp = mx * frac; return A.baseName(b, S); }
+      if (nm(1) !== 'enemy_base_a' || nm(0.7) !== 'enemy_base_a' || nm(0.5) !== 'enemy_base_b' || nm(0.34) !== 'enemy_base_b' || nm(0.2) !== 'enemy_base_c') { ok = false; why.push('기지 단계'); }
+      return ok && A.BUILDINGS.stronghold.rts === 'enemy_base_a' && A.BUILDINGS.castle.rts === 'fortress_01' && A.BUILDINGS.workshop.rts === 'workshop_01' && A.BUILDINGS.farm.rts === 'field_01' &&
+        ('조각 규칙 14가지 · 적 기지 세 단계 · 건물 그림 넷');
     });
 
     t('RTS 길 조각 — 이웃 16가지 조합이 알맞은 조각·회전을 고르고(끝·직선·모서리·갈래·사거리·점), 전투 모델이 타격 불꽃·화살을 쌓았다가 20틱 뒤 지운다(W-0044)', function () {
