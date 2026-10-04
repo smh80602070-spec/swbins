@@ -112,6 +112,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rts/heroes.js"></script>
 <script src="js/rts/guide.js"></script>
 <script src="js/rts/fog.js"></script>
+<script src="js/rts/ai.js"></script>
 <script src="js/rts/art.js"></script>
 <script src="js/rts/state.js"></script>
 <script src="js/game.js"></script>
@@ -427,7 +428,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 
     /* ── RTS P3b(W-0033, js/rts/combat.js) — 교전·상성·망루·습격·거점·성벽·저장 ─── */
 
-    function rtsField() { var R = DG.rts, s = R.state.create(7), cs = R.grid.castleSite(); s.__cs = cs; s.raid.next = 1e9; return s; }
+    function rtsField() { var R = DG.rts, s = R.state.create(7), cs = R.grid.castleSite(); s.__cs = cs; s.raid.next = 1e9; delete s.ai; return s; }   /* 옛 시험 상태 — 적 AI(W-0063) 없이 옛 파도·직행 방식 */
 
     t('RTS 교전 — 상성은 ×1.5(보병이 기병에게), 사거리 안에서만 치고, 쿨다운 10틱마다 한 번, 죽이면 적 현상금 8금', function () {
       var R = DG.rts, U = R.units, C = R.combat, s = rtsField(), cs = s.__cs;
@@ -478,6 +479,67 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return near && !far && hidden && opened && kept && foeHid && ('거점 둘레 보임 · 먼 땅 검음 · 기지 숨김 · 열림 · 봤던 곳 · 적 가림');
     });
 
+    /* ── RTS 적 AI(W-0063, js/rts/ai.js) — 새 판은 s.ai 가 있다. 옛 시험 상태(rtsField)는 s.ai 를 지워 옛 파도로 돈다 ─── */
+    function aiField() { var R = DG.rts, s = R.state.create(7), cs = R.grid.castleSite(); s.__cs = cs; s.raid.next = 1e9; return s; }
+    function aiPut(s, type, dx, dy) { var R = DG.rts, c = s.__cs, k, x, y; s.res.gold = 9999; for (k = 0; k < 60; k++) { x = c.x + dx + (k % 10); y = c.y + dy + (k / 10 | 0) * 2; if (R.rules.canPlace(s, type, x, y).ok) { return R.rules.place(s, type, x, y); } } return null; }
+    function aiRun(s, n) { for (var i = 0; i < n; i++) { s.tick++; DG.rts.units.tick(s); DG.rts.combat.tick(s); } }
+
+    t('RTS 적 AI 경제·생산 — 적도 금을 쌓아 병력을 뽑고(생산 줄 시간 따라 1→3), 내 병력 가장 많은 쪽을 이기는 병종을 고른다(기병→보병·보병→궁병·궁병→기병)', function () {
+      var R = DG.rts, A = R.ai, s = aiField(), g0 = s.ai.gold;
+      aiRun(s, 200);
+      var made = Object.values(s.units).filter(function (u) { return u.team === 1; }).length + s.ai.q.length;
+      var grown = made >= 2 && s.ai.made >= 1 && s.ai.gold < 200 + g0;
+      var lines = A.lines({ tick: 0 }) === 1 && A.lines({ tick: 400 }) === 2 && A.lines({ tick: 5000 }) === 3;
+      var s2 = aiField(), cs = s2.__cs; for (var i = 0; i < 3; i++) { R.units.spawn(s2, 'cavalry', 0, cs.x + 2 + i, cs.y + 5); }
+      var c1 = A.pickType(s2, s2.ai) === 'soldier';
+      var s3 = aiField(); R.units.spawn(s3, 'soldier', 0, s3.__cs.x + 2, s3.__cs.y + 5); var c2 = A.pickType(s3, s3.ai) === 'archer';
+      var s4 = aiField(); R.units.spawn(s4, 'archer', 0, s4.__cs.x + 2, s4.__cs.y + 5); var c3 = A.pickType(s4, s4.ai) === 'cavalry';
+      return grown && lines && c1 && c2 && c3 && ('금 소득·생산 · 줄 1→3 · 상성 반대 선택');
+    });
+
+    t('RTS 적 AI 출정 — 모이면(2 + 출정 수 × 난이도) 출정하고 병력이 적으면 가까운 바깥 건물을, 8기 이상이면 거점을 노리며, 시각이 되면 모자라도 나선다', function () {
+      var R = DG.rts, s = aiField(), cs = s.__cs, sb = s.buildings[-1]; s.res.gold = 9999;
+      var farm = aiPut(s, 'farm', 8, 2);
+      R.units.spawn(s, 'soldier', 1, sb.x + 1, sb.y + 4); aiRun(s, 1);
+      var wait = s.ai.mode === 'muster' && s.raid.n === 0;
+      R.units.spawn(s, 'soldier', 1, sb.x + 2, sb.y + 4); aiRun(s, 1);
+      var go = s.ai.mode === 'attack' && s.raid.n === 1 && s.ai.size >= 2 && s.ai.tgt === farm.id && s.raid.next > s.tick;
+      var s2 = aiField(), sb2 = s2.buildings[-1]; for (var i = 0; i < 8; i++) { R.units.spawn(s2, 'soldier', 1, sb2.x + i % 4, sb2.y + 4 + (i >> 2)); } aiRun(s2, 1);
+      var big = s2.ai.mode === 'attack' && s2.ai.tgt === 1;
+      var s3 = aiField(), sb3 = s3.buildings[-1]; R.units.spawn(s3, 'soldier', 1, sb3.x + 1, sb3.y + 4); s3.raid.next = 5; s3.tick = 6; R.combat.tick(s3);
+      var due = s3.ai.mode === 'attack' && s3.raid.n === 1;
+      return wait && go && big && due && ('모이면 출정 · 바깥 건물 · 8기 거점 · 시각 되면');
+    });
+
+    t('RTS 적 AI 건물 파괴 — 출정한 유닛이 노리는 건물에 닿으면 체력을 깎아 무너뜨리고(환급 없음), 다음 건물을 고르며, 절반 밑으로 줄면 후퇴해 다시 모은다', function () {
+      var R = DG.rts, s = aiField(), cs = s.__cs, sb = s.buildings[-1]; s.res.gold = 9999;
+      var house = aiPut(s, 'house', 8, 2), farm = aiPut(s, 'farm', 8, 8);
+      var u = R.units.spawn(s, 'soldier', 1, house.x + 2.6, house.y + 0.5), gold0 = s.res.gold;
+      s.ai.mode = 'attack'; s.ai.group = [u.id]; s.ai.size = 1; s.ai.tgt = house.id;
+      aiRun(s, 5); var hit = house.hp < 60;
+      aiRun(s, 90); var gone = !s.buildings[house.id] && s.res.gold <= gold0;   // 환급 없음(remove 의 절반 환급을 되돌린다)
+      var next = s.ai.mode === 'attack' ? s.ai.tgt : -1;
+      var s2 = aiField(), sb2 = s2.buildings[-1], us = []; for (var i = 0; i < 4; i++) { us.push(R.units.spawn(s2, 'soldier', 1, sb2.x + i, sb2.y + 4)); }
+      s2.ai.mode = 'attack'; s2.ai.group = us.map(function (x) { return x.id; }); s2.ai.size = 4; s2.ai.tgt = 1;
+      delete s2.units[us[0].id]; delete s2.units[us[1].id]; delete s2.units[us[2].id]; aiRun(s2, 1);
+      var retreat = s2.ai.mode === 'retreat'; s2.tick = s2.ai.rt; aiRun(s2, 1);
+      var again = s2.ai.mode === 'muster' && s2.ai.group.length === 0;
+      return hit && gone && (next === farm.id || next === 1) && retreat && again && ('건물 체력 · 무너짐 · 다음 건물 · 후퇴 · 다시 모음');
+    });
+
+    t('RTS 적 AI 수비·저장 — 기지 둘레에 내 유닛이 오면 집결 병력이 맞서 다가가고, 적 AI 상태가 저장·복원에서 같으며 옛 저장(AI 칸 없음)은 기본값으로 열린다', function () {
+      var R = DG.rts, s = aiField(), sb = s.buildings[-1];
+      var d = R.units.spawn(s, 'soldier', 1, sb.x + 1.5, sb.y + 4.5); d.path = []; d.goal = null;
+      R.units.spawn(s, 'soldier', 0, sb.x + 6.5, sb.y + 4.5); aiRun(s, 3);
+      var chase = (d.path && d.path.length > 0) || !!d.goal;
+      var s2 = aiField(); s2.ai.gold = 77.5; s2.ai.q = [{ t: 'archer', left: 33 }]; s2.ai.mode = 'attack'; s2.ai.group = [5, 6]; s2.ai.size = 4; s2.ai.tgt = 1; s2.ai.made = 9; s2.ai.rt = 123;
+      var o = JSON.parse(JSON.stringify(R.state.serialize(s2))), r = R.state.restore(o);
+      var same = r.ai.gold === 77.5 && r.ai.mode === 'attack' && r.ai.group.join() === '5,6' && r.ai.size === 4 && r.ai.tgt === 1 && r.ai.made === 9 && r.ai.rt === 123 && r.ai.q.length === 1 && r.ai.q[0].t === 'archer' && r.ai.q[0].left === 33;
+      delete o.ai; var old = R.state.restore(o);
+      var def = !!old && !!old.ai && old.ai.mode === 'muster' && old.ai.gold === 0 && old.ai.q.length === 0;
+      return chase && same && def && ('수비 · 저장 왕복 · 옛 저장 기본값');
+    });
+
     t('RTS 망루·거점 발사 — 망루는 7칸 안의 적을 10틱마다 6, 거점은 6칸 안을 5로 쏜다', function () {
       var R = DG.rts, C = R.combat, U = R.units, s = rtsField(), cs = s.__cs; s.res.gold = 9999;
       var tw = R.rules.place(s, 'tower', cs.x + 8, cs.y - 3); var foe = U.spawn(s, 'cavalry', 1, cs.x + 11.5, cs.y - 2.5), h0 = foe.hp; C.tick(s);
@@ -488,8 +550,8 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
     });
 
     t('RTS 습격 — 정한 틱에 적 기지 앞에서 파도가 나오고(2+n 기·종류 순환·체력 +10%/파도), 다음은 200틱 뒤, 거점으로 길을 구한다', function () {
-      var R = DG.rts, C = R.combat, s = R.state.create(7);
-      var none = (function () { var q = R.state.create(7); q.tick = 249; C.tick(q); return Object.keys(q.units).length === 0; })();
+      var R = DG.rts, C = R.combat, s = R.state.create(7); delete s.ai;   /* 옛 파도 방식 — s.ai 없는 상태 */
+      var none = (function () { var q = R.state.create(7); delete q.ai; q.tick = 249; C.tick(q); return Object.keys(q.units).length === 0; })();
       s.tick = 250; C.tick(s);
       var ids = Object.keys(s.units), u0 = s.units[ids[0]], g = R.grid;
       var sb = s.buildings[-1], edge = ids.every(function (k) { var u = s.units[k]; return Math.abs(u.x - (sb.x + 1.5)) < 9 && Math.abs(u.y - (sb.y + 4)) < 9; });

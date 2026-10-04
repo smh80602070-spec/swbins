@@ -13,7 +13,7 @@
     var s = { v: V, seed: seed >>> 0, tiles: R().grid.generate(seed), occ: new Int32Array(R().grid.W * R().grid.H),
       buildings: {}, nextId: 2, res: { food: 100, gold: 300 }, pop: 12, day: 1, tick: 0, speed: 1, tax: 1, units: {}, queues: {}, nextUid: 1,
       cHp: 400, raid: { n: 0, next: 250 }, kills: 0, over: false, won: false,
-      diff: diff === 0 || diff === 2 ? diff : 1, heroN: 0, fx: [] };
+      diff: diff === 0 || diff === 2 ? diff : 1, heroN: 0, fx: [], ai: R().ai.create() };
     R().rules.placeCastle(s);
     R().rules.placeStronghold(s);
     R().rules.recompute(s);
@@ -31,7 +31,13 @@
     return { v: V, seed: s.seed, res: { food: s.res.food, gold: s.res.gold }, pop: s.pop, day: s.day, tick: s.tick, speed: s.speed, tax: s.tax, nextId: s.nextId, buildings: list,
       units: serUnits(s), queues: serQueues(s), nextUid: s.nextUid,
       cHp: Math.round(s.cHp * 10) / 10, raid: { n: s.raid.n, next: s.raid.next }, kills: s.kills, over: !!s.over,
-      won: !!s.won, shp: s.buildings[-1] ? Math.round(s.buildings[-1].hp) : 0, diff: s.diff, heroN: s.heroN | 0 };
+      won: !!s.won, shp: s.buildings[-1] ? Math.round(s.buildings[-1].hp) : 0, diff: s.diff, heroN: s.heroN | 0, ai: serAi(s) };
+  }
+
+  /** 적 AI 저장 꼴(W-0063) — 없으면 null */
+  function serAi(s) {
+    var a = s.ai;
+    return a ? { gold: Math.round(a.gold * 10) / 10, q: a.q.map(function (x) { return { t: x.t, left: x.left }; }), mode: a.mode, group: a.group.slice(), size: a.size | 0, tgt: a.tgt | 0, made: a.made | 0, rt: a.rt | 0 } : null;
   }
 
   function serUnits(s) { var out = [], id, u, o; for (id in s.units) { u = s.units[id]; o = { id: u.id, t: u.t, team: u.team, x: Math.round(u.x * 100) / 100, y: Math.round(u.y * 100) / 100, hp: Math.round(u.hp * 10) / 10 }; if (u.hid) { o.hid = u.hid; o.mhp = u.mhp; } out.push(o); } out.sort(function (a, b) { return a.id - b.id; }); return out; }
@@ -48,6 +54,10 @@
     s.heroN = o.heroN | 0;
     s.won = !!o.won; if (s.buildings[-1]) { s.buildings[-1].hp = s.won ? 0 : (o.shp > 0 ? +o.shp : s.buildings[-1].hp); }   // 옛 저장은 기지 온전
     s.raid = o.raid && o.raid.next > 0 ? { n: o.raid.n | 0, next: o.raid.next | 0 } : { n: 0, next: s.tick + 250 };
+    if (o.ai && typeof o.ai === 'object') {   // 적 AI(W-0063) — 옛 저장은 칸이 없어 create 가 만든 기본값(모으기 · 금 0)으로 열린다
+      s.ai = { gold: +o.ai.gold || 0, q: (o.ai.q || []).filter(function (x) { return x && R().units.UDEF[x.t] && x.t !== 'hero'; }).map(function (x) { return { t: x.t, left: x.left | 0 }; }),
+        mode: o.ai.mode === 'attack' || o.ai.mode === 'retreat' ? o.ai.mode : 'muster', group: (o.ai.group || []).map(Number), size: o.ai.size | 0, tgt: o.ai.tgt | 0, made: o.ai.made | 0, rt: o.ai.rt | 0 };
+    }
     s.nextId = Math.max(2, o.nextId | 0);
     for (i = 0; i < (o.buildings || []).length; i++) {
       b = o.buildings[i];

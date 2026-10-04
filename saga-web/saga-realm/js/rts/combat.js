@@ -82,6 +82,15 @@
     return false;
   }
 
+  /* 적이 부수는 건물의 체력(W-0063) — 성벽은 WALL_HP, 나머지는 처음 맞을 때 이 표로 채운다. 저장은 안 한다 */
+  var B_HP = { house: 60, farm: 50, market: 70, workshop: 80, barracks: 100, well: 40, tower: 70 };
+  function hitBuilding(s, b, dmg) {
+    if (b.hp === undefined) { b.hp = B_HP[b.t] || 60; }
+    b.hp -= dmg;
+    if (b.hp <= 0) { var d = R().rules.DEFS[b.t]; (s.notes = s.notes || []).push('💥 ' + d.name + ' 이(가) 부서졌다'); R().rules.remove(s, b.id); s.res.gold -= Math.floor(d.cost / 2); return true; }   // 부서진 건물은 환급 없음(remove 의 환급을 되돌린다)
+    return false;
+  }
+
   /** 길을 너무 자주 구하지 않는다 — 목표가 2칸 넘게 달라졌거나 길이 비었을 때, 10틱에 한 번만 */
   function approach(s, u, tx, ty) {
     if (u.rp > 0 || pathLeft <= 0) { return; }
@@ -114,6 +123,7 @@
   function raiderAI(s, u, d) {
     var foe = nearestFoe(s, u, d.range), c = s.buildings[1], cd = castleDist(s, u.x, u.y), w;
     if (foe) { if (u.cd <= 0) { hit(s, foe, d.atk * mult(u.t, foe.t), 1, d.range > 2 ? u : null); u.cd = CD; } return; }
+    if (s.ai) { aiMove(s, u, d); return; }   // 새 적 AI(W-0063) — 집결·수비·출정 목표
     if (cd <= d.range + 0.6) {
       if (u.cd <= 0) { s.cHp -= d.atk; u.cd = CD; if (s.cHp <= 0) { s.cHp = 0; s.over = true; s.speed = 0; } }
       return;
@@ -126,6 +136,35 @@
     }
     foe = nearestFoe(s, u, 3);   // 가던 길에 사거리 밖이어도 코앞에 내 유닛이 있으면 멈춰 맞선다
     if (foe && dist(u, foe) <= d.range + 1.5) { u.path = []; }
+  }
+
+  /** 적 AI 유닛 한 기(W-0063) — 출정 중이면 노리는 건물로 가서 친다, 아니면 기지 앞에 모이고 기지 둘레의 내 유닛에는 맞선다 */
+  function aiMove(s, u, d) {
+    var a = s.ai, tgt = s.buildings[a.tgt], sb = s.buildings[-1], going = a.mode === 'attack' && a.group.indexOf(u.id) >= 0, w, r, foe, DD, bd;
+    if (going && tgt) {
+      DD = R().rules.DEFS[tgt.t]; bd = rectDist(tgt, u.x, u.y);
+      if (bd <= d.range + 0.6) {
+        if (u.cd <= 0) {
+          if (tgt.id === 1) { s.cHp -= d.atk; if (s.cHp <= 0) { s.cHp = 0; s.over = true; s.speed = 0; } } else { hitBuilding(s, tgt, d.atk); }
+          u.cd = CD;
+        }
+        return;
+      }
+      if (!u.path.length) {
+        w = nearestWall(s, u.x, u.y, 1.9);
+        if (w) { if (u.cd <= 0) { hitWall(s, w, d.atk); u.cd = CD; } return; }
+        approach(s, u, Math.floor(tgt.x + DD.w / 2), Math.floor(tgt.y + DD.h / 2));
+      } else {
+        foe = nearestFoe(s, u, 3);   // 가던 길에 코앞의 내 유닛에는 멈춰 맞선다
+        if (foe && dist(u, foe) <= d.range + 1.5) { u.path = []; }
+      }
+      return;
+    }
+    if (!sb) { return; }
+    foe = nearestFoe(s, u, SIGHT);   // 수비 — 기지 둘레 11칸 안의 내 유닛에 다가간다
+    if (foe && Math.hypot(foe.x - (sb.x + 1.5), foe.y - (sb.y + 1.5)) <= 11) { if (!u.path.length && !u.want) { approach(s, u, Math.floor(foe.x), Math.floor(foe.y)); } return; }
+    r = R().ai.rally(sb);
+    if (!u.path.length && Math.hypot(u.x - r.x, u.y - r.y) > 2.8) { approach(s, u, Math.floor(r.x), Math.floor(r.y)); }
   }
 
   /** 망루·거점·적 기지가 사거리 안의 적을 쏜다(기지는 내 유닛을 쏜다) */
@@ -168,7 +207,7 @@
     if (s.over || s.won) { return; }
     pathLeft = 10;
     var id, u, d;
-    if (s.raid && s.tick >= s.raid.next) { spawnWave(s); }
+    if (s.ai) { R().ai.tick(s); } else if (s.raid && s.tick >= s.raid.next) { spawnWave(s); }   // s.ai 없는 상태는 옛 파도(진단·옛 시험)
     for (id in s.units) {
       u = s.units[id];
       if (!u) { continue; }

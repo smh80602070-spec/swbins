@@ -176,6 +176,7 @@
   /* ── HUD ───────────────────────────────────────────── */
 
   function hud() {
+    if (S.notes && S.notes.length) { say(S.notes.shift()); }   // 적 출정·건물 파괴 알림(W-0063)
     var st = R().econ.stats(S), r = S.res;
     els.top.innerHTML = '<b class="rt-day">' + S.day + '일</b>' +
       '<span title="식량">' + ic('food', '🌾') + ' <b>' + fmt(r.food) + '</b> <em class="' + (st.foodNet < 0 ? 'neg' : 'pos') + '">' + (st.foodNet >= 0 ? '+' : '') + fmt(st.foodNet) + '</em></span>' +
