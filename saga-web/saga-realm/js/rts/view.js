@@ -197,6 +197,7 @@
   function tipFor() {
     if (!hover) { return '도구를 고르고 칸을 누르세요 · 건물은 도로로 거점에 이어져야 돕니다'; }
     var b = R().rules.buildingAt(S, hover.x, hover.y), D = R().rules.DEFS;
+    if (b && b.t === 'stronghold') { return D.stronghold.name + ' · 체력 ' + Math.ceil(b.hp) + ' — 유닛으로 쳐서 무너뜨리면 이긴다'; }
     if (b) { return D[b.t].name + (b.t === 'castle' ? '' : (b.conn ? ' · 돌고 있음' : ' · 도로로 이어지지 않았습니다')); }
     if (isBuildTool(tool) && tool !== 'erase') { var c = R().rules.canPlace(S, tool, hover.x, hover.y); return D[tool].name + ' ' + D[tool].cost + '금' + (c.ok ? '' : ' — ' + c.why); }
     return '(' + hover.x + ', ' + hover.y + ')';
