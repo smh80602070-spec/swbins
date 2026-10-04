@@ -32,6 +32,7 @@ namespace Saga.Forest.World
             ForestVisitorRunner.Install(visitorBodyNames, visitorBodyModels); // PLAN.md 109-12-1 떠돌이 방문객(세이브 뒤라 오늘 기록을 읽는다)
             ForestScenarioRunner.Install(); // PLAN.md 109-16 시나리오 — 장면 상자·목표 한 줄(Play 때, 씬 재빌드 없이)
             MountField.Install(); // PLAN.md 109-15 탈것·비행 — H 타기·Shift+H 고르기(Play 때, 씬 재빌드 없이)
+            ForestCrowd.Install(); // U-0042 이름 없는 군중 — 인물 299 행인 열(299 목록 없으면 0명, Play 때)
 
             // PLAN.md 101-2 5.3 "마을 번들" — 실시간 완성은 이벤트로,
             // 로드 직후 "이미 완성돼 있던 것"은 이벤트 없이 상태를 직접

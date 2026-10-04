@@ -43,14 +43,14 @@ namespace Saga.Go.World
         /// <summary>마을 칸('H' 둘 사이) 가운데 둘레 22m — 서 있을 수 있는 자리만.</summary>
         public static Vector3 CrowdCenter => TestMapData.WorldPos(3f, 3.5f);
 
-        private void SpawnCrowd()
+        private void SpawnCrowd() => Crowd = AnonymousCrowd.Spawn(transform, CrowdPlan());
+
+        /// <summary>군중 계획 — 진단이 같은 계획으로 한 번 더 세워 견준다.</summary>
+        public static AnonymousCrowd.Plan CrowdPlan() => new AnonymousCrowd.Plan
         {
-            Crowd = AnonymousCrowd.Spawn(transform, new AnonymousCrowd.Plan
-            {
-                Center = CrowdCenter, Radius = 22f, Standing = CrowdStanding, Walking = CrowdWalking,
-                Seed = CrowdSeed, Height = CharacterVisual.HumanHeight, CanStand = FieldEnemy.CanStandOn,
-            });
-        }
+            Center = CrowdCenter, Radius = 22f, Standing = CrowdStanding, Walking = CrowdWalking,
+            Seed = CrowdSeed, Height = CharacterVisual.HumanHeight, CanStand = FieldEnemy.CanStandOn,
+        };
 
         /// <summary>몸 이름 → 모델(109-14-19 이야기 인물 노 도둑·해솔도 빌린다).</summary>
         public GameObject BodyModel(string body)

@@ -19,6 +19,7 @@ namespace Saga.Core
             public uint Seed;
             public float Height;                       // 기준 키(그 판 사람 키) — 사람마다 ±6%
             public Func<Vector3, bool> CanStand;       // 서 있을 수 있는 자리인가(없으면 모두 가능)
+            public float CurveAmount;                  // 숲처럼 땅이 구면으로 휘는 판 — 플레이어와의 거리² × 이 값만큼 몸을 내린다(0 = 안 내림)
         }
 
         public const float WalkDistance = 8f;
@@ -54,7 +55,7 @@ namespace Saga.Core
                 var vis = CrowdBodies.Spawn(key, go.transform, plan.Height * (0.94f + rng.Next01() * 0.12f));
                 if (vis == null) { UnityEngine.Object.Destroy(go); continue; }
                 var w = go.AddComponent<CrowdWalker>();
-                w.Init(start, dir, rng.Next01() * CrowdWalker.Cycle, walker, vis.GetComponent<CrowdBodyAnimator>());
+                w.Init(start, dir, rng.Next01() * CrowdWalker.Cycle, walker, vis.GetComponent<CrowdBodyAnimator>(), vis.transform, plan.CurveAmount);
                 made.Add(go);
             }
             if (made.Count == 0) UnityEngine.Object.Destroy(root);
@@ -124,11 +125,31 @@ namespace Saga.Core
         private Vector3 _origin, _dir;
         private float _phase, _lastY;
         private CrowdBodyAnimator _anim;
+        private Transform _visual, _player;
+        private float _visualBaseY, _curve;
 
-        public void Init(Vector3 origin, Vector3 dir, float phase, bool walks, CrowdBodyAnimator anim)
+        public void Init(Vector3 origin, Vector3 dir, float phase, bool walks, CrowdBodyAnimator anim, Transform visual = null, float curveAmount = 0f)
         {
             _origin = origin; _dir = dir.normalized; _phase = phase; Walks = walks; _anim = anim;
             _lastY = transform.position.y;
+            _visual = visual; _curve = curveAmount;
+            if (_visual != null) _visualBaseY = _visual.localPosition.y;
+        }
+
+        /// <summary>땅 휨 따라 "Visual" 을 내린다(숲 `ForestEraFolk.FollowCurve` 와 같은 식 — 플레이어 기준). 진단도 부른다.</summary>
+        public void FollowCurve(Vector3 curveCenter)
+        {
+            if (_visual == null || _curve <= 0f) return;
+            float dx = transform.position.x - curveCenter.x, dz = transform.position.z - curveCenter.z;
+            var p = _visual.localPosition;
+            _visual.localPosition = new Vector3(p.x, _visualBaseY - (dx * dx + dz * dz) * _curve, p.z);
+        }
+
+        private void LateUpdate()
+        {
+            if (_curve <= 0f) return;
+            if (_player == null) { var g = GameObject.FindWithTag("Player"); if (g != null) _player = g.transform; }
+            if (_player != null) FollowCurve(_player.position);
         }
 
         /// <summary>시각 t 에 출발점에서 몇 m 나가 있나(0~`AnonymousCrowd.WalkDistance`)·걷는 중인가·어느 쪽으로(+1 나감, -1 돌아옴).</summary>
