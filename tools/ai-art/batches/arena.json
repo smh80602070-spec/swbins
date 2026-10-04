@@ -1,0 +1,65 @@
+{
+ "model": "Illustrious-XL-v2.0",
+ "out": "arena",
+ "defaults": {
+  "prompt_prefix": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game background, arena",
+  "width": 1216,
+  "height": 608,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up"
+ },
+ "items": [
+  {
+   "id": "arena_go_1",
+   "seed": 20271065,
+   "prompt": "open tournament arena in a mixed era town square, stone ring, banners without markings, hover lanterns, crowd seats, golden afternoon light"
+  },
+  {
+   "id": "arena_go_2",
+   "seed": 20271126,
+   "prompt": "open tournament arena in a mixed era town square, stone ring, banners without markings, hover lanterns, crowd seats, golden afternoon light"
+  },
+  {
+   "id": "arena_dungeon_1",
+   "seed": 20271187,
+   "prompt": "underground stone gladiator pit, iron gates, torches, sand floor, carved pillars, dramatic red light"
+  },
+  {
+   "id": "arena_dungeon_2",
+   "seed": 20271248,
+   "prompt": "underground stone gladiator pit, iron gates, torches, sand floor, carved pillars, dramatic red light"
+  },
+  {
+   "id": "arena_forest_1",
+   "seed": 20271309,
+   "prompt": "cozy village festival duel ring on a meadow, paper lanterns, wooden fence, bunting, soft sunset light"
+  },
+  {
+   "id": "arena_forest_2",
+   "seed": 20271370,
+   "prompt": "cozy village festival duel ring on a meadow, paper lanterns, wooden fence, bunting, soft sunset light"
+  },
+  {
+   "id": "arena_story_1",
+   "seed": 20271431,
+   "prompt": "side view floating battle platform arena with banners, glowing runes on the floor, sky background"
+  },
+  {
+   "id": "arena_story_2",
+   "seed": 20271492,
+   "prompt": "side view floating battle platform arena with banners, glowing runes on the floor, sky background"
+  },
+  {
+   "id": "arena_realm_1",
+   "seed": 20271553,
+   "prompt": "grand palace courtyard duel ground, stone tiles, tall flag poles without markings, pavilions, misty dawn"
+  },
+  {
+   "id": "arena_realm_2",
+   "seed": 20271614,
+   "prompt": "grand palace courtyard duel ground, stone tiles, tall flag poles without markings, pavilions, misty dawn"
+  }
+ ]
+}

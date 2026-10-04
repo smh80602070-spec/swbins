@@ -1,0 +1,10 @@
+{
+ "id": "rival_nameplate",
+ "generator": "tools/asset-forge/competitiongen.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "size": [
+  192,
+  40
+ ],
+ "nine_slice": 16
+}

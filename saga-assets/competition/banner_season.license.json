@@ -1,0 +1,11 @@
+{
+ "id": "banner_season",
+ "generator": "tools/asset-forge/competitiongen.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "size": [
+  256,
+  72
+ ],
+ "text": "시즌 도전",
+ "font": "Nanum Brush Script (OFL)"
+}

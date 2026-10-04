@@ -1,0 +1,12 @@
+{
+ "id": "rank_badge_2_silver",
+ "generator": "tools/asset-forge/competitiongen.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "size": [
+  128,
+  128
+ ],
+ "tier": 2,
+ "tier_key": "silver",
+ "note": "가명 랭크 — 문장 모양만(글자 없음)"
+}

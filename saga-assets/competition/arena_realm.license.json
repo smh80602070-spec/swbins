@@ -1,0 +1,26 @@
+{
+ "id": "arena_realm",
+ "generator": "tools/ai-art/gen.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "size": [
+  1216,
+  608
+ ],
+ "model": "Illustrious-XL-v2.0",
+ "model_license": "CreativeML OpenRAIL-M (HF 태그, 버전별 재확인 필요)",
+ "prompt": "masterpiece, best quality, amazing quality, absurdres, scenery, no humans, wide shot, painterly game background, arena, grand palace courtyard duel ground, stone tiles, tall flag poles without markings, pavilions, misty dawn",
+ "negative_prompt": "lowres, bad anatomy, text, watermark, signature, username, blurry, worst quality, low quality, 1girl, 1boy, solo, people, person, character, face, hands, close-up",
+ "seed": 20271553,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
+ "seconds": 32.0,
+ "date": "2026-10-04",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "game": "realm",
+ "picked_candidate": 1,
+ "upscaled_from": [
+  1216,
+  608
+ ]
+}

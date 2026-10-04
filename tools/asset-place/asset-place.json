@@ -579,6 +579,29 @@
    ]
   },
   {
+   "id": "competition",
+   "src": "saga-assets/competition",
+   "include": [
+    "*.png",
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0050 경쟁 에셋 — 랭크 뱃지 8·순위 메달 3·보상 아이콘 12·순위표 행 2·도전 배너 3·라이벌 틀·이름표·아레나 배경 5(AI)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/competition"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/competition",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,
