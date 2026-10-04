@@ -1378,8 +1378,10 @@
   "id": "gd.dg.loot-glow",
   "name": "101-3 G 노획물 등급색 외곽선+전설 잔광+동행 실루엣",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "loot_glow"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1402,8 +1404,10 @@
   "id": "gd.dg.cave-mood",
   "name": "굴혈 mood 3종+문 아치 버그 수정",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "cave_mood"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
