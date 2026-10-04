@@ -1,0 +1,10 @@
+{
+ "id": "sfx_ui_page",
+ "generator": "tools/asset-forge/sfxset.py",
+ "license": "CC0-1.0 (코드 합성 — 외부 입력 없음)",
+ "category": "ui",
+ "duration_ms": 160,
+ "rms_db": -25.0,
+ "sample_rate": 44100,
+ "channels": 1
+}

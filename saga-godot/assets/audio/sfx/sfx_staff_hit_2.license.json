@@ -1,0 +1,10 @@
+{
+ "id": "sfx_staff_hit_2",
+ "generator": "tools/asset-forge/sfxset.py",
+ "license": "CC0-1.0 (코드 합성 — 외부 입력 없음)",
+ "category": "combat",
+ "duration_ms": 330,
+ "rms_db": -22.0,
+ "sample_rate": 44100,
+ "channels": 1
+}

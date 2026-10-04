@@ -602,6 +602,28 @@
    ]
   },
   {
+   "id": "sfx",
+   "src": "saga-assets/sfx",
+   "include": [
+    "*.ogg",
+    "*.json"
+   ],
+   "note": "K-0045 효과음 92종(무기 9×타격·피격·방어, 발소리 6지면×2, UI 12, 획득·이벤트 31) — 모노 44.1kHz OGG, 카테고리 안 RMS 편차 ≤1dB",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/audio/sfx"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/audio/sfx",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,

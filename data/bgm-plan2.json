@@ -1,0 +1,231 @@
+{
+ "_note": "K-0045 — 보스 5·이벤트 5·엔딩 5·스팅어 10 = 25슬롯. 프롬프트는 영문 분위기, 원작 곡명·아티스트 금지. 슬롯마다 후보 2곡. batch_saga.py(swbins3)로 생성.",
+ "model": "ACE-Step 1.5 (acestep-v15-turbo + LM 0.6B), MIT",
+ "slots": [
+  {
+   "id": "go-boss",
+   "game": "saga-go",
+   "scene": "boss",
+   "seconds": 60,
+   "loop": true,
+   "seed": 2101,
+   "prompt": "intense boss fight, driving taiko drums and fast erhu runs with electronic bass pulses, epic mixed-era orchestra, 150 bpm, instrumental"
+  },
+  {
+   "id": "dungeon-boss",
+   "game": "saga-dungeon",
+   "scene": "boss",
+   "seconds": 60,
+   "loop": true,
+   "seed": 2111,
+   "prompt": "dark boss encounter, heavy low brass, pounding war drums, distorted organ and choir stabs, menacing slow-building 120 bpm, instrumental"
+  },
+  {
+   "id": "forest-boss",
+   "game": "saga-forest",
+   "scene": "boss",
+   "seconds": 60,
+   "loop": true,
+   "seed": 2121,
+   "prompt": "whimsical but urgent boss battle, bouncy bassoon and pizzicato strings, hand percussion and bells building tension, 140 bpm, instrumental"
+  },
+  {
+   "id": "story-boss",
+   "game": "saga-story",
+   "scene": "boss",
+   "seconds": 60,
+   "loop": true,
+   "seed": 2131,
+   "prompt": "heroic side-scrolling boss theme, fast chiptune-flavored synth lead over live drums and electric guitar, 160 bpm, instrumental"
+  },
+  {
+   "id": "realm-boss",
+   "game": "saga-realm",
+   "scene": "boss",
+   "seconds": 60,
+   "loop": true,
+   "seed": 2141,
+   "prompt": "grand warlord duel, massed war drums, bronze horns and guzheng ostinato, rising orchestral swells, 130 bpm, instrumental"
+  },
+  {
+   "id": "event-festival",
+   "game": "all",
+   "scene": "event",
+   "seconds": 45,
+   "loop": false,
+   "seed": 2201,
+   "prompt": "lively village festival, bright flutes, hand drums and accordion, dancing tempo 110 bpm, instrumental"
+  },
+  {
+   "id": "event-mystery",
+   "game": "all",
+   "scene": "event",
+   "seconds": 45,
+   "loop": false,
+   "seed": 2211,
+   "prompt": "mysterious discovery, glassy celesta and soft pads, slow shimmering harp arpeggios, curious and quiet, instrumental"
+  },
+  {
+   "id": "event-sad",
+   "game": "all",
+   "scene": "event",
+   "seconds": 45,
+   "loop": false,
+   "seed": 2221,
+   "prompt": "tender sorrowful scene, solo cello and piano, slow gentle melody, farewell mood, instrumental"
+  },
+  {
+   "id": "event-tension",
+   "game": "all",
+   "scene": "event",
+   "seconds": 45,
+   "loop": false,
+   "seed": 2231,
+   "prompt": "rising tension, low drones, tremolo strings and sparse percussion hits, uneasy slow build, instrumental"
+  },
+  {
+   "id": "event-triumph",
+   "game": "all",
+   "scene": "event",
+   "seconds": 45,
+   "loop": false,
+   "seed": 2241,
+   "prompt": "warm triumphant homecoming, full strings and horns, hopeful major key melody, steady march 100 bpm, instrumental"
+  },
+  {
+   "id": "go-ending",
+   "game": "saga-go",
+   "scene": "ending",
+   "seconds": 90,
+   "loop": false,
+   "seed": 2301,
+   "prompt": "ending theme, nostalgic journey home, piano and strings over soft synth pad, emotional crescendo, instrumental"
+  },
+  {
+   "id": "dungeon-ending",
+   "game": "saga-dungeon",
+   "scene": "ending",
+   "seconds": 90,
+   "loop": false,
+   "seed": 2311,
+   "prompt": "ending theme, quiet victory after darkness, solemn choir pad and cello slowly turning warm, instrumental"
+  },
+  {
+   "id": "forest-ending",
+   "game": "saga-forest",
+   "scene": "ending",
+   "seconds": 90,
+   "loop": false,
+   "seed": 2321,
+   "prompt": "ending theme, cozy sunset village, acoustic guitar and flute lullaby, gentle and content, instrumental"
+  },
+  {
+   "id": "story-ending",
+   "game": "saga-story",
+   "scene": "ending",
+   "seconds": 90,
+   "loop": false,
+   "seed": 2331,
+   "prompt": "ending theme, wistful adventure end, piano and soft electric guitar with strings, bittersweet then hopeful, instrumental"
+  },
+  {
+   "id": "realm-ending",
+   "game": "saga-realm",
+   "scene": "ending",
+   "seconds": 90,
+   "loop": false,
+   "seed": 2341,
+   "prompt": "ending theme, vast peaceful dawn over the land, guzheng and erhu with soft orchestra, majestic and calm, instrumental"
+  },
+  {
+   "id": "stinger-levelup",
+   "game": "all",
+   "scene": "stinger",
+   "seconds": 8,
+   "loop": false,
+   "seed": 2401,
+   "prompt": "short bright level up fanfare, rising brass and chimes, triumphant, 6 seconds, instrumental"
+  },
+  {
+   "id": "stinger-quest",
+   "game": "all",
+   "scene": "stinger",
+   "seconds": 8,
+   "loop": false,
+   "seed": 2411,
+   "prompt": "short quest accepted motif, plucked strings and soft horn, 5 seconds, instrumental"
+  },
+  {
+   "id": "stinger-discover",
+   "game": "all",
+   "scene": "stinger",
+   "seconds": 8,
+   "loop": false,
+   "seed": 2421,
+   "prompt": "short discovery sparkle, harp glissando and bells, magical, 5 seconds, instrumental"
+  },
+  {
+   "id": "stinger-danger",
+   "game": "all",
+   "scene": "stinger",
+   "seconds": 8,
+   "loop": false,
+   "seed": 2431,
+   "prompt": "short danger sting, low brass hit and sharp strings, ominous, 5 seconds, instrumental"
+  },
+  {
+   "id": "stinger-defeat",
+   "game": "all",
+   "scene": "stinger",
+   "seconds": 8,
+   "loop": false,
+   "seed": 2441,
+   "prompt": "short defeat sting, descending slow strings and low drum, somber, 6 seconds, instrumental"
+  },
+  {
+   "id": "stinger-victory",
+   "game": "all",
+   "scene": "stinger",
+   "seconds": 8,
+   "loop": false,
+   "seed": 2451,
+   "prompt": "short victory fanfare, bold brass and snare roll, cheerful, 7 seconds, instrumental"
+  },
+  {
+   "id": "stinger-gacha_rare",
+   "game": "all",
+   "scene": "stinger",
+   "seconds": 8,
+   "loop": false,
+   "seed": 2461,
+   "prompt": "short rare reward reveal, shimmering chimes rising to a bright chord, 6 seconds, instrumental"
+  },
+  {
+   "id": "stinger-gacha_legend",
+   "game": "all",
+   "scene": "stinger",
+   "seconds": 8,
+   "loop": false,
+   "seed": 2471,
+   "prompt": "short legendary reveal, choir swell, golden bells and timpani, grand, 8 seconds, instrumental"
+  },
+  {
+   "id": "stinger-boss_appear",
+   "game": "all",
+   "scene": "stinger",
+   "seconds": 8,
+   "loop": false,
+   "seed": 2481,
+   "prompt": "short boss appearance sting, deep drum hit and brass cluster, menacing, 6 seconds, instrumental"
+  },
+  {
+   "id": "stinger-secret",
+   "game": "all",
+   "scene": "stinger",
+   "seconds": 8,
+   "loop": false,
+   "seed": 2491,
+   "prompt": "short secret found jingle, playful pizzicato and glockenspiel, 5 seconds, instrumental"
+  }
+ ]
+}
