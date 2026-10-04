@@ -917,7 +917,7 @@ namespace Saga.EditorTools
                     return;
                 }
             }
-            bool Human(Animator a) => a != null && a.isHuman && a.runtimeAnimatorController != null;
+            bool Human(Animator a) => a != null && (a.isHuman || a.transform.Find("Armature") != null) && a.runtimeAnimatorController != null; // 사람 리그 또는 U-0034 VRoid(일반 리그)
             string fail = null;
 
             var ally = Object.FindFirstObjectByType<AllyFighter>();

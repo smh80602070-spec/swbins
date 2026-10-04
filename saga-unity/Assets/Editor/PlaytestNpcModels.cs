@@ -162,7 +162,9 @@ namespace Saga.EditorTools
             foreach (Transform t in root.transform) if (t.name == "Visual") visuals.Add(t);
             if (visuals.Count != 1) { Fail($"{rootName} Visual {visuals.Count} 개(Kenney 가 같이 섰나)"); return ""; }
             var animator = visuals[0].GetComponent<Animator>();
-            if (animator == null || !animator.isHuman || animator.runtimeAnimatorController == null) { Fail($"{rootName} 사실 모델 아님(Animator·Humanoid·컨트롤러)"); return ""; }
+            // 사람 리그(Mixamo·공방)이거나, U-0034 VRoid 몸(일반 리그 — 빈 루트 밑 `Armature` 스킨 몸)이면 사실 몸이다
+            bool vroid = animator != null && !animator.isHuman && animator.transform.Find("Armature") != null;
+            if (animator == null || !(animator.isHuman || vroid) || animator.runtimeAnimatorController == null) { Fail($"{rootName} 사실 모델 아님(Animator·Humanoid/VRoid·컨트롤러)"); return ""; }
             if (root.GetComponent<Saga.Core.BlobShadow>() == null) Fail($"{rootName} 접지 그림자 없음");
             if (root.GetComponent(idleType) == null) Fail($"{rootName} NpcIdle 없음");
             var rs = visuals[0].GetComponentsInChildren<Renderer>();

@@ -94,10 +94,12 @@ namespace Saga.Realm.World
             _anim = anim;
             _body = inst.transform;
             BodyName = prefab.name;
-            _hips = anim.GetBoneTransform(HumanBodyBones.Hips);
-            _head = anim.GetBoneTransform(HumanBodyBones.Head);
+            // 사람 리그가 아닌 몸(VRoid·일반 리그)은 `GetBoneTransform` 이 예외라 뼈 덧씌우기만 건너뛴다(U-0034)
+            bool human = anim.isHuman;
+            _hips = human ? anim.GetBoneTransform(HumanBodyBones.Hips) : null;
+            _head = human ? anim.GetBoneTransform(HumanBodyBones.Head) : null;
             _bones = new Transform[OverlayBones.Length];
-            for (int i = 0; i < OverlayBones.Length; i++) _bones[i] = anim.GetBoneTransform(OverlayBones[i]);
+            for (int i = 0; i < OverlayBones.Length; i++) _bones[i] = human ? anim.GetBoneTransform(OverlayBones[i]) : null;
             _lastSet = new Quaternion[_bones.Length];
             _lastBase = new Quaternion[_bones.Length];
             var hand = anim.GetBoneTransform(HumanBodyBones.RightHand);

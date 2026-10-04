@@ -164,6 +164,7 @@ namespace Saga.Go.Player
 
         private static Transform Bone(Animator a, params HumanBodyBones[] order)
         {
+            if (!a.isHuman) return a.transform; // 일반 리그 몸(VRoid)은 `GetBoneTransform` 이 예외(U-0034)
             foreach (var b in order)
             {
                 var t = a.GetBoneTransform(b);

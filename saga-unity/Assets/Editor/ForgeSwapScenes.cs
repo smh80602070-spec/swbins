@@ -19,8 +19,12 @@ namespace Saga.EditorTools
         [MenuItem("Saga/Char Forge/Refresh Swapped Bodies In Build Scenes")]
         public static bool Refresh()
         {
-            var swapped = SetupNpcCharacterImports.ForgeSwap.Keys
-                .ToDictionary(n => $"Assets/Art/CharactersRealistic/{n}/{n}.fbx", n => n);
+            // 공방 교체 자리 + U-0034 VRoid 사람 자리(계획표 `unity_bodies.json`) — 둘 다 씬에 풀어 박힌 옛 Mixamo 메시를 찾는다
+            var names = new HashSet<string>(SetupNpcCharacterImports.ForgeSwap.Keys);
+            foreach (var (slot, _) in SetupNpcCharacterImports.VroidHumanSlots(out _)) names.Add(slot);
+            var swapped = names.ToDictionary(n => $"Assets/Art/CharactersRealistic/{n}/{n}.fbx", n => n);
+            // 공방 몸으로 한 번 갈아 끼운 복사본(풀린 채 남은 것)도 VRoid 로 한 번 더 간다
+            foreach (var kv in SetupNpcCharacterImports.ForgeSwap) swapped[$"Assets/Art/CharactersForge/{kv.Value}.fbx"] = kv.Key;
             bool ok = true;
             foreach (var path in SagaPlayerBuild.Scenes)
             {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -33,12 +34,16 @@ namespace Saga.EditorTools
                 var (baked, failed) = SetupNpcCharacterImports.BakeVroidHumans(OutDir);
                 Debug.Log($"[PlaytestVroidSwap] 자리 {slots.Count} · 구움 {baked} · 실패 {failed.Count}({string.Join(",", failed)}) · 표에 없는 이름 {notInSpecs.Count}");
                 // 표(Specs)에 없는 이름(Abe·TheBoss·주역 등 별도 파이프라인)은 참고만 — 실패로 안 센다.
-                var realFailed = failed.FindAll(x => !x.EndsWith("(표에 없음)"));
-                PlaytestKit.Check(baked == slots.Count && realFailed.Count == 0, $"못 구운 자리 {realFailed.Count}: {string.Join(",", realFailed)}");
+                // 보류(공용 동작에 없는 Taunt·Kneel 등이 필요한 자리 — K-0066 대기)도 실패로 안 센다.
+                var realFailed = failed.FindAll(x => !x.EndsWith("(표에 없음)") && !x.EndsWith("(보류)"));
+                int held = failed.Count - realFailed.Count - notInSpecs.Count;
+                PlaytestKit.Check(baked + held == slots.Count && realFailed.Count == 0, $"못 구운 자리 {realFailed.Count}: {string.Join(",", realFailed)}");
+                int heldCount = slots.Count(s => SetupNpcCharacterImports.VroidMissingExtras(s.name).Count > 0);
                 int hand = 0, noIdle = 0, badH = 0, noBody = 0; float minH = 9f, maxH = 0f;
                 foreach (var (name, _) in slots)
                 {
                     var prefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{OutDir}/{name}Vroid.prefab");
+                    if (SetupNpcCharacterImports.VroidMissingExtras(name).Count > 0) continue; // 보류 자리 — 이번에 안 구웠다(옛 시험 파일이 남았어도 안 센다)
                     if (prefab == null) continue;
                     var animator = prefab.GetComponent<Animator>();
                     var ctrl = animator != null ? animator.runtimeAnimatorController as AnimatorController : null;
@@ -63,7 +68,7 @@ namespace Saga.EditorTools
                 PlaytestKit.Check(noIdle == 0, $"대기 상태가 없는 자리 {noIdle}");
                 PlaytestKit.Check(noBody == 0, $"Armature/스킨 몸이 없는 자리 {noBody}");
                 PlaytestKit.Check(badH == 0, $"키가 1.1~2.1m 밖 {badH}");
-                PlaytestKit.Check(hand == slots.Count, $"손 소켓을 못 찾은 자리 {slots.Count - hand}");
+                PlaytestKit.Check(hand == slots.Count - heldCount, $"손 소켓을 못 찾은 자리 {slots.Count - heldCount - hand}");
             }
             PlaytestKit.Summary("PlaytestVroidSwap");
             if (Application.isBatchMode) EditorApplication.Exit(PlaytestKit.Fails == 0 ? 0 : 1);

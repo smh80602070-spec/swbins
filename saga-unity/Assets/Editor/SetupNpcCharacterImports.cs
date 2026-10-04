@@ -389,6 +389,18 @@ namespace Saga.EditorTools
         }
 
         /// <summary>
+        /// 이 자리에 필요한 덧붙임 동작(Paladin Taunt·Blocked, PeasantGirl Kneel·Heal 등) 중 공용 동작 한 벌에 없는 것. 비어 있지 않으면
+        /// 그 자리는 자체툴(K-0066)이 동작을 채울 때까지 VRoid 로 안 굽고 기존 몸을 둔다(게임 코드가 그 동작을 기대함).
+        /// </summary>
+        public static List<string> VroidMissingExtras(string name)
+        {
+            var src = Specs.FirstOrDefault(x => x.Name == name);
+            if (src == null || !File.Exists(VroidAnimsPath)) return new List<string>();
+            var have = new HashSet<string>(AssetDatabase.LoadAllAssetsAtPath(VroidAnimsPath).OfType<AnimationClip>().Select(c => c.name.ToLowerInvariant()));
+            return src.ExtraIdles.Concat(src.ExtraTriggers).Where(e => !have.Contains(e.ToLowerInvariant())).ToList();
+        }
+
+        /// <summary>
         /// 사람 자리 전부를 VRoid 몸으로 굽는다. `outDir` 가 있으면 거기에 `<이름>.prefab`(시험 — 진짜 프리팹·컨트롤러는 안 건드리려고 이름 뒤에 `Vroid` 를 붙여
         /// 컨트롤러도 따로), 없으면 진짜 자리(`PrefabPath`, GUID 그대로 — 씬 참조가 유지된다)에 굽는다. 반환 = (구운 수, 못 구운 이름들).
         /// </summary>
@@ -399,6 +411,14 @@ namespace Saga.EditorTools
             foreach (var (name, glb) in slots)
             {
                 var src = Specs.First(x => x.Name == name);
+                var lack = VroidMissingExtras(name);
+                if (lack.Count > 0)
+                {
+                    // 보류 — 진짜 자리면 기존 몸(Mixamo/공방)으로 다시 굽는다. 반환의 failed 에는 "(보류)" 꼬리로 싣는다.
+                    if (outDir == null) SetupOne(name);
+                    failed.Add($"{name}:{string.Join("·", lack)}(보류)");
+                    continue;
+                }
                 var spec = outDir == null ? src : new Spec { Name = name + "Vroid", Idle = src.Idle, Walk = src.Walk, Run = src.Run, Attack = src.Attack, Hit = src.Hit, Death = src.Death, ExtraIdles = src.ExtraIdles, ExtraTriggers = src.ExtraTriggers };
                 string path = outDir == null ? PrefabPath(name) : outDir.TrimEnd((char)47) + "/" + spec.Name + ".prefab";
                 if (SetupVroid(spec, glb, path)) baked++; else failed.Add(name);
@@ -410,6 +430,17 @@ namespace Saga.EditorTools
 
         [MenuItem("Saga/Char Forge/Bake VRoid Humans (test folder)")]
         public static void BakeVroidHumansTest() { var r = BakeVroidHumans(Root + "_vroid_test"); Debug.Log($"VROID_SWAP_TEST baked={r.baked} failed={string.Join(",", r.failed)}"); }
+
+        /// <summary>
+        /// 실제 적용(배치 `-executeMethod Saga.EditorTools.SetupNpcCharacterImports.BakeVroidHumansReal`): 진짜 자리(`PrefabPath`)를 VRoid 몸으로 덮어쓴다.
+        /// 씬 참조는 GUID 그대로라 유지되고, 씬에 풀어 박힌 옛 몸은 `ForgeSwapScenes.RefreshBatch` 가 따로 갈아 끼운다. 하나라도 못 구우면 종료 코드 3.
+        /// </summary>
+        public static void BakeVroidHumansReal()
+        {
+            var r = BakeVroidHumans(null);
+            Debug.Log($"VROID_SWAP_REAL baked={r.baked} failed={string.Join(",", r.failed)}");
+            EditorApplication.Exit(r.baked > 0 && r.failed.All(f => f.EndsWith("(표에 없음)") || f.EndsWith("(보류)")) ? 0 : 3); // 표에 없는 자리는 이 티켓 밖·보류는 K-0066 대기
+        }
 
         /// <summary>시험 1벌(`Archer` → `avatar_sample_k`)을 `CharactersRealistic/_vroid_test/ArcherVroid.prefab` 에 굽는다(원래 몸·컨트롤러는 안 건드림).</summary>
         public static bool BakeVroidTest()

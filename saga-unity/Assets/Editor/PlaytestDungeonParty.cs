@@ -79,7 +79,9 @@ namespace Saga.EditorTools
                 if (!Near(PartyState.Summon - summonBefore, PartyState.SummonPerCommand)) Fail("명령이 소환 게이지를 안 보탰다");
                 if (!foe.IsTaunted) Fail("12m 안 적에 도발이 안 걸렸다");
                 bool clips = guard.UsesDeathClip; // 106-6 전용 클립을 받은 PC(Paladin@Taunt·Blocked·HitReaction·Dying)
-                if (guard.LastTrigger != (clips ? "Taunt" : "Attack")) Fail($"도발 동작 트리거 {guard.LastTrigger} (전용 클립 {clips})");
+                // U-0034 VRoid 몸은 Death 만 있고 Taunt·Blocked 가 없다(게임 코드가 Attack 으로 폴백) — 동작별로 파라미터 유무를 본다
+                bool hasTaunt = HasParam(guard.Animator, "Taunt"), hasBlocked = HasParam(guard.Animator, "Blocked");
+                if (guard.LastTrigger != (hasTaunt ? "Taunt" : "Attack")) Fail($"도발 동작 트리거 {guard.LastTrigger} (전용 클립 {clips})");
                 int heroHp = HeroState.Hp;
                 float gHp = guard.Hp;
                 for (int i = 0; i < 40; i++) foe.Tick(0.05f); // 2초 — 예비동작·판정 한 번 이상.
@@ -92,9 +94,10 @@ namespace Saga.EditorTools
                     if (!Near(hits, Mathf.Round(hits), 0.01f)) Fail($"무사가 받은 피해가 40% 가 아니다 ({taken})");
                 }
                 metrics += $" 도발 2초 무사 -{taken:0.0}";
-                if (clips && guard.LastTrigger != "Blocked") Fail($"도발 중 맞았는데 방패로 받는 동작이 아니다 ({guard.LastTrigger})");
+                if (hasBlocked && guard.LastTrigger != "Blocked") Fail($"도발 중 맞았는데 방패로 받는 동작이 아니다 ({guard.LastTrigger})");
 
                 // ── 쓰러짐
+                if (clips && !hasTaunt) guard.Animator.Update(0.3f); // 시간이 안 흘러 남은 Attack 트리거를 비운다(실제 게임은 프레임마다 소비)
                 guard.TakeHit(1000f);
                 if (guard.IsUp) Fail("체력이 다해도 무사가 안 쓰러졌다");
                 if (clips)
@@ -267,6 +270,7 @@ namespace Saga.EditorTools
             (float)typeof(DungeonEnemy).GetField("_curHp", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(e);
 
         private static bool Near(float a, float b, float eps = 0.05f) => Mathf.Abs(a - b) <= eps;
+        private static bool HasParam(Animator a, string name) { if (a == null || a.runtimeAnimatorController == null) return false; foreach (var p in a.parameters) if (p.name == name) return true; return false; }
 
         private static void SetPrivate(object target, string field, object value)
         {
