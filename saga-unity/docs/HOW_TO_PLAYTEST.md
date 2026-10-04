@@ -598,6 +598,7 @@ JSON 세이브와 달리 필드가 아직 자주 바뀌는 중이라 이 문서�
 
 - 셰이더 `Assets/Shaders/CelToon.shader`(URP, HLSL 직접) — Godot `cel_toon`·`cel_vertex_color`·`cel_outline` 과 같은 명암 3단·림·정점색·외곽선. 기본 재질 `Assets/Shaders/CelToon.mat`. 외곽선은 `_OutlineWidth`>0 일 때만 그려진다(기본 꺼짐).
 - **Godot 과 나란히 보기**: 에디터에서 `Assets/Scenes/TestVillage.unity`(사가고 마을)를 열고 메뉴 `Saga/Cel Toon/Preview Open Scene (do not save)` → Play. 씬을 **저장하지 말 것**(재질은 메모리에만 만든다). 되돌리기 = 씬 다시 열기. 판정은 "Godot 사가고 마을과 같아 보이는가" 한 줄.
+- **씬 자동 툰 변환(U-0022 단계 3)**: `Assets/SagaCore/ToonScenePass.cs` 가 씬이 켜진 뒤 GLB·표준 재질을 툰으로 갈아 끼운다(메모리만 — 씬·GLB 원본 불변). 에디터·실기 Play 는 기본으로 켜짐, 끄기 = 환경변수 `SAGA_NO_TOON=1`. 배치 모드(헤드리스 진단)는 기본 꺼짐, 켜려면 `SAGA_TOON=1`. 진단 `PlaytestToonScenePass.Run` → `[PlaytestToonScenePass] OK`(씬별 변환 칸 수·잔존 0·둘째 패스 0).
 - 진단 `PlaytestCelToon.Run` → `[PlaytestCelToon] OK`(셰이더 컴파일 오류·경고 0·속성·기본값·변환·GO 마을 씬 변환). `-nographics` 배치에서는 재질 패스가 모두 이름 없는 한 개로 보여서 패스 이름은 원본 글로 확인한다.
 
 ## 21. 지역 배치표 로더 — `Saga.Core.Region.RegionLoader` (tasks U-0023)
