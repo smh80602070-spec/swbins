@@ -1,0 +1,37 @@
+{
+ "name": "style_kit_C",
+ "spec": "sprite",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "items": [
+  {
+   "id": "building",
+   "spec": "sprite",
+   "subject": "wooden village house, tiled roof, small cottage, stone base",
+   "subject_ko": "기와 지붕 작은 나무 오두막",
+   "view": "three_quarter"
+  },
+  {
+   "id": "tree",
+   "spec": "sprite",
+   "subject": "big leafy tree, round green crown, brown trunk, visible roots",
+   "subject_ko": "둥근 잎 큰 나무, 뿌리 보임",
+   "view": "three_quarter"
+  },
+  {
+   "id": "animal",
+   "spec": "creature",
+   "subject": "wild boar, tusks, bristly fur",
+   "subject_ko": "서 있는 멧돼지",
+   "view": "side"
+  },
+  {
+   "id": "person",
+   "spec": "character",
+   "subject": "warrior, layered robes, holding sword",
+   "subject_ko": "겹옷 입고 칼 든 무사, 서 있음",
+   "view": "three_quarter"
+  }
+ ]
+}

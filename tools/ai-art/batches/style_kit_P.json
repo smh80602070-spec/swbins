@@ -1,0 +1,59 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "style_kit_P",
+ "kit": {
+  "spec": "sprite",
+  "style": "P",
+  "style_name": "굵은 먹선 회화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "building",
+   "seed": 3055182155,
+   "prompt": "(wooden village house:1.15), tiled roof, small cottage, stone base, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "subject_ko": "기와 지붕 작은 나무 오두막"
+  },
+  {
+   "id": "tree",
+   "seed": 257749988,
+   "prompt": "(big leafy tree:1.15), round green crown, brown trunk, visible roots, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "subject_ko": "둥근 잎 큰 나무, 뿌리 보임"
+  },
+  {
+   "id": "animal",
+   "seed": 1874333282,
+   "prompt": "(wild boar:1.15), tusks, bristly fur, side view, from side, full profile, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "subject_ko": "서 있는 멧돼지",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "person",
+   "seed": 2370449089,
+   "prompt": "(warrior:1.15), layered robes, holding sword, three-quarter view, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "subject_ko": "겹옷 입고 칼 든 무사, 서 있음",
+   "width": 640,
+   "height": 896,
+   "steps": 30,
+   "cfg": 6.0,
+   "spec": "character"
+  }
+ ]
+}

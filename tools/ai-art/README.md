@@ -9,6 +9,19 @@ py tools/ai-art/gen.py tools/ai-art/batches/<배치>.json                # 한 �
 powershell -ExecutionPolicy Bypass -File tools\ai-art\stop_sd.ps1      # 끝나면 반드시 끈다(VRAM·RAM 반환, 이 도구가 켠 프로세스만)
 ```
 
+## 새 배치는 키트로만 (K-0070, 2026-10-05)
+프롬프트는 손으로 쓰지 않는다. 소넷은 **주제(영어 태그 5~8개)** 만 적고 구도·배경·그림체·부정어·크기·씨앗은 `prompt_kit.py` 가 채운다. 입력은 `batches/_in/<이름>.json`:
+```json
+{"name": "icons_food", "spec": "icon", "style": "B", "model": "animagine-xl-4.0-opt", "variants": 4,
+ "items": [{"id": "fo_pine", "subject": "pine tree, snow on branches, wooden pot", "subject_ko": "눈 쌓인 소나무 분재"}]}
+```
+```bash
+py tools/ai-art/prompt_kit.py build tools/ai-art/batches/_in/<이름>.json      # → batches/<이름>.json (끝 줄 LINT_OK 여야)
+py tools/ai-art/gen.py tools/ai-art/batches/<이름>.json --variants 4 --judge  # 후보 4장씩 뽑고 판정기가 묶음마다 1등
+bash tools/asset-audit/judge/judge.sh pick tools/ai-art/_out/<이름>/_judge/report.json --dest <정본 후보 폴더>
+```
+`subject_ko → subject` 옮기기: 명사 태그로, 가장 중요한 것부터(첫 태그에만 가중치가 붙는다), 형용사 나열·문장 금지, 원작·작가·실존 인물 이름 금지(`BLOCK` 이 막는다), "no humans"·"scenery"·그림자 금지는 규격이 넣으니 쓰지 않는다. 항목에 `spec` 을 주면 그 항목만 다른 규격(건물 sprite·짐승 creature·사람 character 를 한 배치에). 규격·그림체(`SPECS`·`STYLES`) 추가·수정은 페이블 세션 — 그림체를 바꾸면 그 그림체 산출을 전부 다시 뽑는다.
+
 ## PC 가 멈추지 않게 (2026-09-29 사용자 지시)
 순차 1장 · 장당 8분 넘으면 interrupt · 시작 전 여유 RAM 6GB · SDXL 768×1024(0.8MP) 이내(1024px 은 공유 메모리로 넘쳐 한 장 5분 이상) · 장 사이 8초 쉼 · 연속 실패 2번이면 멈춤 · 한 번에 24장 ·
 Unity·Blender 배치와 동시에 돌리지 않는다. **끝나면 stop_sd.ps1**.

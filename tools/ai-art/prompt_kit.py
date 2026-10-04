@@ -9,6 +9,7 @@
   - subject: 영어 danbooru 식 태그 5~8개, 명사 위주, 가장 중요한 것부터. 문장·형용사 나열·작가/원작 이름 금지.
   - subject_ko: 사용자가 한국어로 말한 그대로(기록용). 소넷이 subject 로 옮긴다 — 키트는 번역하지 않는다.
   - view(선택): front|side|back|three_quarter|top  · palette(선택): 그림체 팔레트 대신 쓸 색 묶음 · extra(선택): 덧붙일 태그.
+  - spec(선택, 항목별): 파일의 spec 대신 쓸 규격 — 한 배치에 건물(sprite)·짐승(creature)·사람(character)을 섞을 때(그림체 시험).
 
 규칙(페이블 프롬프트 요령을 코드로 고정한 것)
   1 순서 = 품질 꼬리표 → 주제 → 세부 → 구도/배경 → 그림체 → 조명. 모델이 앞쪽 태그를 더 세게 본다.
@@ -63,6 +64,9 @@ SPECS = {  # 규격 블록 — 구도·배경·크기·샘플러·부정어. 크
     'creature': dict(block='game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow',
                      neg='text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs',
                      w=768, h=768, steps=28, cfg=5.5, view='side'),
+    'character': dict(block='1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow',
+                      neg='text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow',
+                      w=640, h=896, steps=30, cfg=6.0, view='three_quarter'),
     'portrait': dict(block='1other, solo, bust portrait, upper body, looking at viewer, simple background, plain dark background',
                      neg='text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, multiple views, full body',
                      w=640, h=896, steps=30, cfg=6.0, view='front'),
@@ -80,6 +84,9 @@ def seed_of(iid):
 
 
 def compose(item, spec, style, model):
+    spec = item.get('spec') or spec
+    if spec not in SPECS:
+        sys.exit(f"{item.get('id')}: 모르는 spec {spec}")
     sp, st = SPECS[spec], STYLES[style]
     subj = item['subject'].strip().rstrip(',')
     first, _, rest = subj.partition(',')
@@ -108,6 +115,9 @@ def build(args):
             row['subject_ko'] = it['subject_ko']
         if it.get('width') and it.get('height'):
             row['width'], row['height'] = it['width'], it['height']
+        elif it.get('spec') and it['spec'] != spec:   # 항목별 규격 — 크기·단계·cfg 도 그 규격을 따른다
+            isp = SPECS[it['spec']]
+            row.update(width=isp['w'], height=isp['h'], steps=isp['steps'], cfg=isp['cfg'], spec=it['spec'])
         items.append(row)
     batch = {'model': model, 'out': src.get('out', src.get('name', os.path.splitext(os.path.basename(args.src))[0])),
              'kit': {'spec': spec, 'style': style, 'style_name': STYLES[style]['name']},
@@ -175,6 +185,8 @@ def lint_batch(batch, label):
 
 def lint(args):
     b = json.load(open(args.src, encoding='utf-8'))
+    if not isinstance(b, dict) or 'items' not in b:
+        print(f'{args.src}: gen.py 배치가 아니다(items 없음) — 건너뜀'); print('LINT_OK'); return 0
     if 'items' in b and b['items'] and 'subject' in b['items'][0]:   # 입력 파일이면 조립해서 본다
         spec, style, model = b.get('spec', 'icon'), b.get('style', 'B'), b.get('model', 'animagine-xl-4.0-opt')
         items = []
