@@ -1,0 +1,79 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "style_trial3",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet"
+ },
+ "items": [
+  {
+   "id": "P_building",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 4410000,
+   "prompt": "single wooden village house, tiled roof, small cottage, three-quarter view from above, hand-painted 2d game art, thick dark ink outline, bold shapes, saturated rich palette, painterly brush texture, strong warm rim light, high contrast shading, no humans in background, no humans, isolated object, game sprite, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "P_tree",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 4410137,
+   "prompt": "single big leafy tree, round green crown, brown trunk, visible roots, three-quarter view, hand-painted 2d game art, thick dark ink outline, bold shapes, saturated rich palette, painterly brush texture, strong warm rim light, high contrast shading, no humans in background, no humans, isolated object, game sprite, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "P_animal",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 4410274,
+   "prompt": "single wild boar standing, side view, full body, hand-painted 2d game art, thick dark ink outline, bold shapes, saturated rich palette, painterly brush texture, strong warm rim light, high contrast shading, no humans in background, no humans, isolated object, game sprite, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "P_person",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 4410411,
+   "prompt": "single warrior in layered robes holding a sword, full body, standing, front three-quarter view, hand-painted 2d game art, thick dark ink outline, bold shapes, saturated rich palette, painterly brush texture, strong warm rim light, high contrast shading, no humans in background, isolated object, game sprite, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "C_building",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 4410548,
+   "prompt": "single wooden village house, tiled roof, small cottage, three-quarter view from above, storybook 2d game art, soft rounded shapes, flat cel colors with gentle gradients, thin colored outline, pastel warm palette, cozy, clean shading, no humans, isolated object, game sprite, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "C_tree",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 4410685,
+   "prompt": "single big leafy tree, round green crown, brown trunk, visible roots, three-quarter view, storybook 2d game art, soft rounded shapes, flat cel colors with gentle gradients, thin colored outline, pastel warm palette, cozy, clean shading, no humans, isolated object, game sprite, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "C_animal",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 4410822,
+   "prompt": "single wild boar standing, side view, full body, storybook 2d game art, soft rounded shapes, flat cel colors with gentle gradients, thin colored outline, pastel warm palette, cozy, clean shading, no humans, isolated object, game sprite, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  },
+  {
+   "id": "C_person",
+   "model": "animagine-xl-4.0-opt",
+   "seed": 4410959,
+   "prompt": "single warrior in layered robes holding a sword, full body, standing, front three-quarter view, storybook 2d game art, soft rounded shapes, flat cel colors with gentle gradients, thin colored outline, pastel warm palette, cozy, clean shading, isolated object, game sprite, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, base, platform, diorama, ground tile, floating island, scene, multiple objects, turntable, character sheet",
+   "hr": 1.33
+  }
+ ]
+}
