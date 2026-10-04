@@ -7920,6 +7920,14 @@ window.requestAnimationFrame = function () { return 0; };
       return art === 'assets/store/dungeon_key' && (!st || (st.textContent.indexOf(art + '_h.webp') > 0 && st.textContent.indexOf(art + '_v.webp') > 0)) && ('dungeon 키 아트 가로·세로');
     });
 
+    t('짐승 적 새 몸(W-0051) — 이름 표의 몸은 한 장 모드 풀이고 표 밖·사람형 이름은 비어 있으며, 표의 이름은 실제 짐승형 적이다', function () {
+      var M = DG.mode2d, tb = DG.cfg.mode2d.beast || {}, st = DG.cfg.mode2d.still || {}, bad = [], names = Object.keys(tb);
+      var E = DG.enemyData, known = {};
+      names.forEach(function (n) { var e = (E.byName && E.byName(n)) || (E.enemies || []).filter(function (x) { return x.name === n; })[0]; if (e && (e.kind === 'beast' || (e.ref && e.ref.kind === 'beast'))) { known[n] = 1; } });
+      names.forEach(function (n) { if (!st[tb[n][0]]) { bad.push('풀 ' + n); } if (!known[n]) { bad.push('적 아님 ' + n); } var z = M.beastOf(n); if (!z || z.pool !== tb[n][0] || !(z.k > 0)) { bad.push('beastOf ' + n); } });
+      return bad.length === 0 && names.length >= 3 && M.beastOf('없는 짐승') === null && M.beastOf('') === null && (names.length + '종 몸 배정 · 표 밖은 옛 스탬프');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

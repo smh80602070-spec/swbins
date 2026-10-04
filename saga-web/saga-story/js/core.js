@@ -484,7 +484,8 @@
     poolH: { pool_e_goblin_126: 50, pool_g_orc_141: 102, pool_basef_undead_111: 85, pool_f_demon_136: 97 },   // 프레임 안 몸 높이(px, 옆모습 알파 범위로 잼)
     /** 2D 모드인가 — 3D 바탕이 안 서 있을 때(= 2D 그림) */
     on: function () { var V = global.DG.sideView3d; return !(V && V.ready && V.ready()); },
-    still: { hero_m: 1, hero_f: 1 },             // 한 장 모드 풀(W-0041, K-0056 정면·옆·뒤 3장) — 주인공
+    still: { hero_m: 1, hero_f: 1, beast_dog: 1, beast_wolf: 1 },   // 한 장 모드 풀(W-0041, K-0056 정면·옆·뒤 3장) — 주인공 + 짐승 몸(W-0051)
+    beast: { '들개': ['beast_dog', 0.8], '굶주린 승냥이': ['beast_wolf', 0.9], '산짐승 무리': ['beast_wolf', 0.9] },   // 짐승형 적 → 몸·배수(어울리는 것만)
     pools: {
       me: ['hero_m', 'hero_f'],
       t1: ['pool_e_goblin_126'],

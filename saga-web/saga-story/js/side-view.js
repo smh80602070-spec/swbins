@@ -919,12 +919,13 @@
   /** 2D 시트(shared/js/mode2d.js)로 적을 그린다 — 풀이 없거나 아직 안 받았으면 false(→ 기존 스탬프). 적 단계(tier)로 풀을 고르고 이름으로 같은 적은 같은 몸을 받는다 */
   function drawSheetEnemy(e, x, y) {
     var M = global.DG.mode2d;
-    if (!M || e.ref.kind !== 'human') { return false; }      // 시트는 사람형 몸뿐 — 짐승·드론은 기존 스탬프
-    var pool = M.pick('t' + (e.ref.tier || 1), e.ref.name);
+    var bz = e.ref.kind === 'human' ? null : (M && M.beastOf ? M.beastOf(e.ref.name) : null);   // 짐승은 어울리는 몸이 표에 있을 때만(W-0051), 드론·나머지는 기존 스탬프
+    if (!M || (e.ref.kind !== 'human' && !bz)) { return false; }
+    var pool = bz ? bz.pool : M.pick('t' + (e.ref.tier || 1), e.ref.name);
     if (!pool) { return false; }
     var clip = e.hurt > 0 ? 'hit' : (e.atkAnim > 0 ? 'attack' : 'walk');
     var ms = clip === 'attack' ? (0.28 - e.atkAnim) * 1000 : (clip === 'hit' ? Math.max(0, 0.3 - e.hurt) * 1000 : Date.now() + (e.phase || 0) * 160);
-    return M.draw(ctx, { pool: pool, clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: e.boss ? 1.9 : (e.mini || e.rare ? 1.25 : 1) });
+    return M.draw(ctx, { pool: pool, clip: clip, facing: e.dir, ms: ms, x: x, y: y, scale: (bz ? bz.k : 1) * (e.boss ? 1.9 : (e.mini || e.rare ? 1.25 : 1)) });
   }
 
   /** 죽는 몸짓(run.dying) — 2D 시트의 death 동작. 끝날 무렵 흐려진다. 시트가 없으면 안 그린다(예전에도 안 그렸다) */
@@ -933,11 +934,12 @@
     if (!M || !run || !run.dying || !run.dying.length) { return; }
     for (var i = 0; i < run.dying.length; i++) {
       var d = run.dying[i], x = d.x + d.w / 2 - camX, y = d.y + d.h;
-      if (x < -80 || x > W + 80 || d.ref.kind !== 'human') { continue; }
-      var pool = M.pick('t' + (d.ref.tier || 1), d.ref.name);
+      var dz = d.ref.kind === 'human' ? null : (M.beastOf ? M.beastOf(d.ref.name) : null);
+      if (x < -80 || x > W + 80 || (d.ref.kind !== 'human' && !dz)) { continue; }
+      var pool = dz ? dz.pool : M.pick('t' + (d.ref.tier || 1), d.ref.name);
       if (!pool) { continue; }
       var f = d.dur > 0 ? d.t / d.dur : 1;
-      M.draw(ctx, { pool: pool, clip: 'death', facing: d.dir, ms: d.t * 1000, x: x, y: y, scale: d.boss ? 1.9 : (d.mini || d.rare ? 1.25 : 1), alpha: f > 0.7 ? Math.max(0, 1 - (f - 0.7) / 0.3) : 1 });
+      M.draw(ctx, { pool: pool, clip: 'death', facing: d.dir, ms: d.t * 1000, x: x, y: y, scale: (dz ? dz.k : 1) * (d.boss ? 1.9 : (d.mini || d.rare ? 1.25 : 1)), alpha: f > 0.7 ? Math.max(0, 1 - (f - 0.7) / 0.3) : 1 });
     }
   }
 

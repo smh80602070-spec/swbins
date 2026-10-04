@@ -34,6 +34,12 @@
     for (i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
     return (h >>> 0);
   }
+  /** 짐승형 적 → { pool, k } (W-0051) — 판 cfg.mode2d.beast = { 이름: ['beast_wolf', 몸 배수] } 에 든 어울리는 적만. 없으면 null(옛 스탬프) */
+  function beastOf(name) {
+    var t = (C().beast || {})[name];
+    return t && isStill(t[0]) ? { pool: t[0], k: t[1] || 1 } : null;
+  }
+
   function pick(kind, seed) {
     var list = (C().pools || {})[kind];
     if (!list || !list.length) { return null; }
@@ -328,7 +334,7 @@
     preloadBg: function (region) { getBg(region); },
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS,
-    isOn: isOn, pick: pick, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
+    isOn: isOn, pick: pick, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },
