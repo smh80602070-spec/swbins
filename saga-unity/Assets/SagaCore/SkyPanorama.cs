@@ -6,7 +6,7 @@ namespace Saga.Core
     /// U-0041 — 자체툴(K-0034) 하늘 파노라마 12장(`Resources/Sky/sky_&lt;새벽·낮·노을·밤&gt;_&lt;과거·현재·미래&gt;.jpg`)을 고르고 하늘로 입힌다.
     /// 순수 함수(시각·시대 → 이름)와 적용(`Skybox/Panoramic` 재질 + 카메라 하늘 배경)을 나눈다. 그림이 없으면 아무것도 안 바꾼다.
     /// 그림은 이 파일이 안 놓는다(K-0019 배치). 해·달 위치 표식(`sky_markers.json`, K-0067 이 그림에 실제로 그린 자리)으로 조명 방향을 맞춘다 —
-    /// `TrySun`(표식 → 월드 방향, 순수 함수)·`GoSkyPass` 가 `Sun` 에 적용.
+    /// `TrySun`(표식 → 월드 방향, 순수 함수)·`SkyPass` 가 주 조명에 적용.
     /// </summary>
     public static class SkyPanorama
     {

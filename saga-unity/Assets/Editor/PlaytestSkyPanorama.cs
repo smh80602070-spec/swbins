@@ -1,7 +1,6 @@
 using UnityEditor;
 using UnityEngine;
 using Saga.Core;
-using Saga.Go.World;
 
 namespace Saga.EditorTools
 {
@@ -31,21 +30,30 @@ namespace Saga.EditorTools
             PlaytestKit.Check((SkyPanorama.SunDirection(0.5f, 0f) - Vector3.up).magnitude < 1e-3f && (SkyPanorama.SunDirection(0.5f, 1f) - Vector3.down).magnitude < 1e-3f, "uv 맨 위·맨 아래 방향이 위·아래가 아님");
             PlaytestKit.Check(!SkyPanorama.TryMarker("sky_no_such", out _), "없는 하늘에 표식이 있다");
 
-            PlaytestKit.Check(!GoSkyPass.ApplyLight("sky_noon_present", out _) || GoSkyPass.FindSun() != null, "Sun 이 없는데 적용됨");
+            PlaytestKit.Check(!SkyPass.ApplyLight("sky_noon_present", out _) || SkyPass.FindSun() != null, "Sun 이 없는데 적용됨");
+            // 씬별 방식 — 마을·숲·스토리 = 하늘+조명, 사가국지 도시 = 조명만, 던전·그 밖 = 안 건드림
+            PlaytestKit.Check(SkyPass.ModeFor("TestVillage") == SkyPass.Mode.SkyAndLight && SkyPass.ModeFor("TestVillageForest") == SkyPass.Mode.SkyAndLight
+                && SkyPass.ModeFor("TestField") == SkyPass.Mode.SkyAndLight && SkyPass.ModeFor("TestCity") == SkyPass.Mode.LightOnly
+                && SkyPass.ModeFor("TestDungeon") == SkyPass.Mode.None && SkyPass.ModeFor("Title") == SkyPass.Mode.None, "씬별 하늘·조명 방식 표가 다름");
+            // 주 조명 찾기 — 숲·스토리·도시는 이름이 "Light"(그림자 있음)고 보조 `RimLight`(그림자 없음)가 따로 있다
+            var rimGo = new GameObject("RimLight"); var rim = rimGo.AddComponent<Light>(); rim.type = LightType.Directional; rim.shadows = LightShadows.None;
+            var mainGo = new GameObject("Light"); var mainL = mainGo.AddComponent<Light>(); mainL.type = LightType.Directional; mainL.shadows = LightShadows.Soft;
+            PlaytestKit.Check(SkyPass.FindSun() == mainL, "그림자 있는 'Light' 가 주 조명으로 안 잡힘(RimLight 가 잡혔나)");
+            Object.DestroyImmediate(mainGo); Object.DestroyImmediate(rimGo);
             var go = new GameObject("Sun");
             var sun = go.AddComponent<Light>();
             sun.type = LightType.Directional; sun.intensity = 2f; sun.color = Color.white;
-            bool ok = GoSkyPass.ApplyLight("sky_noon_present", out var noonDir);
+            bool ok = SkyPass.ApplyLight("sky_noon_present", out var noonDir);
             PlaytestKit.Check(ok && (go.transform.forward + noonDir).magnitude < 1e-3f, "낮: 조명이 해 반대쪽을 안 비춤");
             PlaytestKit.Check(Mathf.Abs(sun.intensity - 2f * 1.1f) < 1e-3f && sun.color.r > sun.color.b, "낮: 세기·색(따뜻한 흰빛)이 표와 다름");
-            ok = GoSkyPass.ApplyLight("sky_sunset_present", out var setDir);   // 표식 고도 4° → MinPitch 로 끌어올림
+            ok = SkyPass.ApplyLight("sky_sunset_present", out var setDir);   // 표식 고도 4° → MinPitch 로 끌어올림
             float setEl = Mathf.Asin(setDir.y) * Mathf.Rad2Deg;
-            PlaytestKit.Check(ok && Mathf.Abs(setEl - GoSkyPass.MinPitch) < 0.1f && (go.transform.forward + setDir).magnitude < 1e-3f, $"노을: 낮은 해 고도 보정 {setEl:0.0}° ≠ {GoSkyPass.MinPitch}°");
+            PlaytestKit.Check(ok && Mathf.Abs(setEl - SkyPass.MinPitch) < 0.1f && (go.transform.forward + setDir).magnitude < 1e-3f, $"노을: 낮은 해 고도 보정 {setEl:0.0}° ≠ {SkyPass.MinPitch}°");
             PlaytestKit.Check(Mathf.Abs(sun.intensity - 2f * 0.95f) < 1e-3f && sun.color.r > sun.color.g && sun.color.g > sun.color.b, "노을: 주황빛·세기가 표와 다름");
-            ok = GoSkyPass.ApplyLight("sky_night_present", out _);
+            ok = SkyPass.ApplyLight("sky_night_present", out _);
             PlaytestKit.Check(ok && Mathf.Abs(sun.intensity - 2f * 0.35f) < 1e-3f && sun.color.b > sun.color.r, "밤: 달빛(푸른빛·어둡게)이 표와 다름");
             float before = sun.intensity;
-            PlaytestKit.Check(!GoSkyPass.ApplyLight("sky_no_such", out _) && Mathf.Approximately(sun.intensity, before), "없는 하늘인데 조명이 바뀜");
+            PlaytestKit.Check(!SkyPass.ApplyLight("sky_no_such", out _) && Mathf.Approximately(sun.intensity, before), "없는 하늘인데 조명이 바뀜");
             Object.DestroyImmediate(go);
         }
 

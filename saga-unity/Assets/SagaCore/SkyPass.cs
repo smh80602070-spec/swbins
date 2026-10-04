@@ -2,26 +2,45 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Saga.Core;
 
-namespace Saga.Go.World
+namespace Saga.Core
 {
     /// <summary>
-    /// U-0041 — 사가고 마을 씬(`SkyFogBuilder` 가 있는 씬)이 켜지면 컴퓨터 시계 시각에 맞춰 K-0034 하늘 파노라마를 입힌다
-    /// (카메라 배경이 단색이던 것을 하늘로). 씬은 안 고친다. 끄기: 환경변수 `SAGA_NO_SKY=1`. 배치 모드(헤드리스 진단)는 기본 꺼짐(켜려면 `SAGA_SKY=1`).
+    /// U-0041 — 야외 씬이 켜지면 컴퓨터 시계 시각에 맞춰 K-0034 하늘 파노라마를 입히고(카메라 배경이 단색이던 것을 하늘로),
+    /// 씬의 주 조명(방향성·그림자 있는 "Sun"/"Light")을 하늘 속 해(밤엔 달) 자리(`sky_markers.json`, K-0067)로 돌린다. 씬 파일은 안 고친다(메모리만).
+    /// 씬마다 방식(<see cref="ModeFor"/>): 사가고 마을(`TestVillage`)·사가의숲(`TestVillageForest`)·사가스토리(`TestField`) = 하늘+조명 /
+    /// 사가국지 도시(`TestCity`, 위에서 내려다보는 전략 화면이라 하늘이 안 보임) = 조명만 / 던전(실내)·그 밖 = 안 건드림.
+    /// 끄기: 환경변수 `SAGA_NO_SKY=1`(전부) · `SAGA_NO_SKYLIGHT=1`(조명만). 배치 모드(헤드리스 진단)는 기본 꺼짐(켜려면 `SAGA_SKY=1`).
     /// 시각이 바뀌면(다음 시간대) 한 번 더 바꾼다. 시대는 현재(`present`) 고정 — 지역별 시대 연결은 후속.
-    /// 하늘을 입힐 때 씬의 `Sun`(방향성 조명) 방향을 하늘 그림 속 해(밤엔 달) 자리(`sky_markers.json`, K-0067)로 돌리고 시간대에 맞춰 색·세기를 바꾼다.
-    /// 해가 지평선에 너무 낮으면 고도 <see cref="MinPitch"/>° 로 끌어올린다(그림자가 끝없이 길어지지 않게). 방위·`RimLight`·앰비언트는 안 건드린다. 조명만 끄기: `SAGA_NO_SKYLIGHT=1`.
+    /// 해가 지평선에 너무 낮으면 조명 고도를 <see cref="MinPitch"/>° 로 끌어올린다(그림자가 끝없이 길어지지 않게). 방위·`RimLight`·앰비언트는 안 건드린다.
     /// </summary>
-    public static class GoSkyPass
+    public static class SkyPass
     {
+        public enum Mode { None, SkyAndLight, LightOnly }
+
         public static bool Enabled = true;
+        public static bool LightEnabled = true;
         public static Func<int> HourFn = () => DateTime.Now.Hour; // 진단·촬영이 시각을 붙든다
         public static string Era = "present";
-        public static bool LightEnabled = true;
         public const float MinPitch = 10f;
 
-        /// <summary>시간대별 조명 색·세기 배율(씬 기본 `Sun` 세기에 곱한다) — 새벽·노을은 주황, 낮은 밝게, 밤은 달빛으로 어둡게.</summary>
+        /// <summary>씬 이름 → 방식. 모르는 씬은 안 건드린다.</summary>
+        public static Mode ModeFor(string sceneName)
+        {
+            switch (sceneName)
+            {
+                case "TestVillage":        // 사가고
+                case "TestVillageForest":  // 사가의숲
+                case "TestField":          // 사가스토리
+                    return Mode.SkyAndLight;
+                case "TestCity":           // 사가국지(전략 화면 — 하늘 안 보임)
+                    return Mode.LightOnly;
+                default:
+                    return Mode.None;
+            }
+        }
+
+        /// <summary>시간대별 조명 색·세기 배율(씬 기본 주 조명 세기에 곱한다) — 새벽·노을은 주황, 낮은 밝게, 밤은 달빛으로 어둡게.</summary>
         public static void LookFor(string time, out Color color, out float intensityMul)
         {
             switch (time)
@@ -36,15 +55,20 @@ namespace Saga.Go.World
         private static Light _sun;
         private static float _baseIntensity;
 
-        /// <summary>씬의 `Sun`(이름 "Sun" 인 방향성 조명).</summary>
+        /// <summary>씬의 주 조명 — 방향성이고 그림자가 켜져 있으며 `RimLight` 가 아닌 것(없으면 이름이 "Sun" 인 방향성 조명).</summary>
         public static Light FindSun()
         {
+            Light named = null;
             foreach (var l in UnityEngine.Object.FindObjectsByType<Light>(FindObjectsSortMode.None))
-                if (l.type == LightType.Directional && l.name == "Sun") return l;
-            return null;
+            {
+                if (l.type != LightType.Directional || l.name == "RimLight") continue;
+                if (l.shadows != LightShadows.None) return l;
+                if (l.name == "Sun") named = l;
+            }
+            return named;
         }
 
-        /// <summary>하늘 이름(`sky_noon_present`)에 맞춰 `Sun` 을 돌리고 색·세기를 바꾼다. 표식·`Sun` 이 없으면 거짓이고 아무것도 안 바꾼다. 적용한 방향(해를 향한)을 `dir` 로.</summary>
+        /// <summary>하늘 이름(`sky_noon_present`)에 맞춰 주 조명을 돌리고 색·세기를 바꾼다. 표식·조명이 없으면 거짓이고 아무것도 안 바꾼다. 적용한 방향(해를 향한)을 `dir` 로.</summary>
         public static bool ApplyLight(string skyName, out Vector3 dir)
         {
             dir = Vector3.up;
@@ -81,7 +105,7 @@ namespace Saga.Go.World
         private static void Boot()
         {
             if (!ActiveByEnvironment()) return;
-            var go = new GameObject("GoSkyPass") { hideFlags = HideFlags.HideAndDontSave };
+            var go = new GameObject("SkyPass") { hideFlags = HideFlags.HideAndDontSave };
             UnityEngine.Object.DontDestroyOnLoad(go);
             var runner = go.AddComponent<Runner>();
             if (_handler != null) SceneManager.sceneLoaded -= _handler;
@@ -102,16 +126,21 @@ namespace Saga.Go.World
             private IEnumerator Loop()
             {
                 yield return null; yield return null; // 씬의 Awake/Start 가 끝난 뒤
-                if (UnityEngine.Object.FindFirstObjectByType<SkyFogBuilder>() == null) yield break; // 사가고 마을 씬만
+                var mode = ModeFor(SceneManager.GetActiveScene().name);
+                if (mode == Mode.None) yield break;
                 string applied = null;
                 var wait = new WaitForSeconds(60f);
                 while (true)
                 {
                     string want = SkyPanorama.NameFor(HourFn(), Era);
-                    if (want != applied && SkyPanorama.Apply(want, Camera.main))
+                    if (want != applied)
                     {
-                        applied = want;
-                        if (LightEnabled && Environment.GetEnvironmentVariable("SAGA_NO_SKYLIGHT") != "1") ApplyLight(want, out _);   // 하늘 속 해 자리로 Sun 맞춤(K-0067)
+                        bool done = mode == Mode.LightOnly ? SkyPanorama.TryMarker(want, out _) : SkyPanorama.Apply(want, Camera.main);
+                        if (done)
+                        {
+                            applied = want;
+                            if (LightEnabled && Environment.GetEnvironmentVariable("SAGA_NO_SKYLIGHT") != "1") ApplyLight(want, out _); // 하늘 속 해 자리로 주 조명 맞춤(K-0067)
+                        }
                     }
                     yield return wait;
                 }

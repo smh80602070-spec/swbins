@@ -45,8 +45,8 @@ namespace Saga.EditorTools
             EditorSettings.enterPlayModeOptionsEnabled = true;
             EditorSettings.enterPlayModeOptions = EnterPlayModeOptions.DisableDomainReload | EnterPlayModeOptions.DisableSceneReload;
             EditorSceneManager.OpenScene(scene);
-            // SAGA_SHOT_HOUR — GO 하늘·조명 시각을 붙든다(`GoSkyPass.HourFn`, 도메인 리로드를 꺼서 플레이까지 유지된다)
-            if (int.TryParse(System.Environment.GetEnvironmentVariable("SAGA_SHOT_HOUR"), out int hour)) Saga.Go.World.GoSkyPass.HourFn = () => hour;
+            // SAGA_SHOT_HOUR — 하늘·조명 시각을 붙든다(`SkyPass.HourFn`, 도메인 리로드를 꺼서 플레이까지 유지된다)
+            if (int.TryParse(System.Environment.GetEnvironmentVariable("SAGA_SHOT_HOUR"), out int hour)) Saga.Core.SkyPass.HourFn = () => hour;
             _frame = 0; _done = false; _stage1 = false; _wantHouse = _targets.Contains("house") || _targets.Contains("house2"); _houseIndex = _targets.Contains("house2") ? 1 : 0; _stage2At = 0;
             EditorApplication.playModeStateChanged += OnState;
             EditorApplication.isPlaying = true;
@@ -120,9 +120,9 @@ namespace Saga.EditorTools
                 if (spec == "sunsky")
                 {
                     // 하늘 속 해 자리로 카메라를 돌려 해 원반이 화면 가운데 오는지 + 게임 카메라 화면(조명·그림자)
-                    string skyName = Saga.Core.SkyPanorama.NameFor(Saga.Go.World.GoSkyPass.HourFn(), Saga.Go.World.GoSkyPass.Era);
+                    string skyName = Saga.Core.SkyPanorama.NameFor(Saga.Core.SkyPass.HourFn(), Saga.Core.SkyPass.Era);
                     bool hasSun = Saga.Core.SkyPanorama.TrySun(skyName, out var sd, out _);
-                    Debug.Log($"[ShowcaseGui] sunsky {skyName} 표식 {hasSun} 방향 {sd} 조명 {Saga.Go.World.GoSkyPass.FindSun()?.transform.forward}");
+                    Debug.Log($"[ShowcaseGui] sunsky {skyName} 표식 {hasSun} 방향 {sd} 조명 {Saga.Core.SkyPass.FindSun()?.transform.forward}");
                     if (hasSun) shots += Shoot(main, "sunsky_center", main.transform.position, Quaternion.LookRotation(sd)) ? 1 : 0;
                     shots += Shoot(main, "sunsky_gamecam", main.transform.position, main.transform.rotation) ? 1 : 0;
                     continue;
