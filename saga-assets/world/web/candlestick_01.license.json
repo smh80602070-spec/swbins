@@ -1,0 +1,21 @@
+{
+ "id": "candlestick_01",
+ "generator": "tools/world-forge/build_interior.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: concrete_wall_001",
+  "polyhaven: white_stucco"
+ ],
+ "size_m": [
+  0.2,
+  0.2,
+  0.88
+ ],
+ "tris": 104,
+ "nodes": [
+  "use_point",
+  "col_box"
+ ]
+}

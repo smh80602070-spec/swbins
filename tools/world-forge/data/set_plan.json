@@ -2,7 +2,7 @@
  "version": 1,
  "note": "K-0017 단계 1 — 판 5 × (건물 3 · 지물 3 · 지형 2 · 탈것 1) = 45칸. 같은 id 는 한 번만 만든다(건물은 기존 레시피 재사용). 이름 정책: 원작 이름 없음, id 는 일반 명사. exists = recipes/ 에 이미 있음, new = 만들 것.",
  "budget": {"toon_glb_mb": 0.5, "toon_tris": 5000, "sprite_px": [128, 256], "tex_px": 256},
- "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py", "village": "build_village.py", "field": "build_field.py", "dkit": "build_field.py", "loot": "build_field.py"},
+ "builders": {"building": "build_building.py", "prop": "build_prop.py", "terrain": "build_terrain.py", "vehicle": "build_vehicle.py", "nature": "build_nature.py", "village": "build_village.py", "field": "build_field.py", "dkit": "build_field.py", "loot": "build_field.py", "interior": "build_interior.py", "furniture": "build_interior.py"},
  "games": {
   "go": {
    "theme": "시대 혼합 마을(과거·현대·미래 한 자리)",
@@ -119,5 +119,15 @@
   "note": "K-0057 — 바닥 노획물 4종 × 등급 g0~g4(색+빛 줄). 3D 전용. 삼각형 ≤2500.",
   "tris_max": 2500, "no_sprite": true,
   "items": ["loot_sword_g0", "loot_sword_g1", "loot_sword_g2", "loot_sword_g3", "loot_sword_g4", "loot_axe_g0", "loot_axe_g1", "loot_axe_g2", "loot_axe_g3", "loot_axe_g4", "loot_dagger_g0", "loot_dagger_g1", "loot_dagger_g2", "loot_dagger_g3", "loot_dagger_g4", "loot_staff_g0", "loot_staff_g1", "loot_staff_g2", "loot_staff_g3", "loot_staff_g4"]
+ },
+ "interior": {
+  "note": "K-0026 — 건물 12종 실내 방 한 칸(3D 전용). build_interior.py. 방 크기 소 4×4·중 6×5·대 9×7, 노드 규약 spawn_in·door_out·light_*·col_room. 삼각형 ≤2500.",
+  "tris_max": 2500, "no_sprite": true,
+  "items": ["int_eu_house_01", "int_modern_block_01", "int_future_dome_01", "int_stone_tower_01", "int_chinese_hall_01", "int_dungeon_gate_01", "int_forest_cottage_01", "int_inn_01", "int_barn_01", "int_hanok_01", "int_jp_minka_01", "int_silkroad_house_01"]
+ },
+ "furniture": {
+  "note": "K-0026 단계 2b — 실내 물건 40종(가구·시대 혼합 소품). build_interior.py. 노드 use_point·col_box. 삼각형 ≤1500. 2D = AI 스프라이트.",
+  "tris_max": 1500,
+  "items": ["table_wood_01", "table_round_01", "chair_wood_01", "stool_01", "bed_wood_01", "bed_futon_01", "shelf_wall_01", "bookshelf_01", "hearth_stone_01", "stove_iron_01", "trunk_01", "crate_small_01", "counter_01", "display_stand_01", "mirror_stand_01", "vase_tall_01", "candlestick_01", "rug_rect_01", "rug_round_01", "oil_lamp_01", "table_lamp_01", "holo_panel_01", "sofa_01", "desk_01", "wardrobe_01", "cabinet_low_01", "kitchen_pot_01", "keg_01", "spinning_wheel_01", "cushion_01", "low_table_01", "screen_folding_01", "tatami_mat_01", "hanging_lantern_01", "weapon_rack_01", "armor_stand_01", "map_table_01", "globe_stand_01", "hologram_globe_01", "terminal_01"]
  }
 }

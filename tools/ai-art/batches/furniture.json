@@ -1,0 +1,575 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "furniture",
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people"
+ },
+ "items": [
+  {
+   "id": "table_wood_01",
+   "seed": 4150882815,
+   "prompt": "rectangular wooden dining table with dark legs, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\table_wood_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "table_wood_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "table_round_01",
+   "seed": 4287222915,
+   "prompt": "round wooden table on a single pedestal, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\table_round_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "table_round_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "chair_wood_01",
+   "seed": 4060758389,
+   "prompt": "simple wooden chair with high back, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\chair_wood_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "chair_wood_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "stool_01",
+   "seed": 1748425403,
+   "prompt": "small round wooden three legged stool, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\stool_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "stool_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "bed_wood_01",
+   "seed": 3203402196,
+   "prompt": "wooden bed with pillow and red blanket, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\bed_wood_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "bed_wood_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "bed_futon_01",
+   "seed": 1423256575,
+   "prompt": "folded futon bedding on floor with blue blanket and pillow, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\bed_futon_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "bed_futon_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "shelf_wall_01",
+   "seed": 3718197030,
+   "prompt": "wooden wall shelf with jars and boxes, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\shelf_wall_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "shelf_wall_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "bookshelf_01",
+   "seed": 3106393748,
+   "prompt": "tall wooden bookshelf full of colorful books, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\bookshelf_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "bookshelf_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "hearth_stone_01",
+   "seed": 819003292,
+   "prompt": "stone fireplace with logs and glowing embers, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\hearth_stone_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "hearth_stone_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "stove_iron_01",
+   "seed": 1929604429,
+   "prompt": "small black iron stove with a chimney pipe, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\stove_iron_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "stove_iron_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "trunk_01",
+   "seed": 2047209467,
+   "prompt": "old wooden travel trunk with iron straps and brass lock, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\trunk_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "trunk_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "crate_small_01",
+   "seed": 2423103190,
+   "prompt": "small wooden crate with dark corners, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\crate_small_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "crate_small_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "counter_01",
+   "seed": 251129422,
+   "prompt": "wooden shop counter with dark top and a brass bell, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\counter_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "counter_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "display_stand_01",
+   "seed": 2843466799,
+   "prompt": "merchant display stand with red cloth and golden trinkets, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\display_stand_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "display_stand_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "mirror_stand_01",
+   "seed": 2467559243,
+   "prompt": "tall standing mirror in a dark wooden frame, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\mirror_stand_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "mirror_stand_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "vase_tall_01",
+   "seed": 2202685514,
+   "prompt": "tall blue ceramic vase, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\vase_tall_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "vase_tall_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "candlestick_01",
+   "seed": 2915588921,
+   "prompt": "brass candlestick with a lit white candle, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\candlestick_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "candlestick_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rug_rect_01",
+   "seed": 3735522222,
+   "prompt": "rectangular woven rug, red border, gold and blue pattern, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\rug_rect_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rug_rect_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "rug_round_01",
+   "seed": 3456541110,
+   "prompt": "round woven rug in green, cream and red rings, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\rug_round_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "rug_round_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "oil_lamp_01",
+   "seed": 3035136555,
+   "prompt": "small brass oil lamp with a flame, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\oil_lamp_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "oil_lamp_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "table_lamp_01",
+   "seed": 3542620706,
+   "prompt": "modern table lamp with a warm glowing shade, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\table_lamp_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "table_lamp_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "holo_panel_01",
+   "seed": 4155667851,
+   "prompt": "futuristic standing holographic panel with glowing cyan screen, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\holo_panel_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "holo_panel_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "sofa_01",
+   "seed": 622475443,
+   "prompt": "brown cloth sofa with armrests, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\sofa_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "sofa_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "desk_01",
+   "seed": 2363760976,
+   "prompt": "wooden writing desk with drawers, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\desk_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "desk_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "wardrobe_01",
+   "seed": 1540644854,
+   "prompt": "tall wooden wardrobe with two doors, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\wardrobe_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "wardrobe_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "cabinet_low_01",
+   "seed": 3223331100,
+   "prompt": "low wooden cabinet with two doors, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\cabinet_low_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "cabinet_low_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "kitchen_pot_01",
+   "seed": 1536135358,
+   "prompt": "iron cooking pot hanging on a tripod over embers, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\kitchen_pot_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "kitchen_pot_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "keg_01",
+   "seed": 3167463241,
+   "prompt": "small wooden keg with iron hoops and a brass tap, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\keg_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "keg_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "spinning_wheel_01",
+   "seed": 1773356381,
+   "prompt": "wooden spinning wheel, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\spinning_wheel_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "spinning_wheel_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "cushion_01",
+   "seed": 4136623149,
+   "prompt": "round red floor cushion, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\cushion_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "cushion_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "low_table_01",
+   "seed": 1468180417,
+   "prompt": "low wooden table, traditional style, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\low_table_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "low_table_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "screen_folding_01",
+   "seed": 321437159,
+   "prompt": "four panel folding screen with cream paper panels, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\screen_folding_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "screen_folding_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "tatami_mat_01",
+   "seed": 36341818,
+   "prompt": "straw tatami mat with dark edges, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\tatami_mat_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "tatami_mat_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "hanging_lantern_01",
+   "seed": 1569632462,
+   "prompt": "hanging lantern with glowing window, short chain, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\hanging_lantern_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "hanging_lantern_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "weapon_rack_01",
+   "seed": 1707590773,
+   "prompt": "wooden weapon rack with swords and spears, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\weapon_rack_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "weapon_rack_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "armor_stand_01",
+   "seed": 1999217083,
+   "prompt": "metal armor stand with chest plate and helmet, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\armor_stand_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "armor_stand_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "map_table_01",
+   "seed": 970683762,
+   "prompt": "wooden map table with a parchment map and a red marker, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\map_table_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "map_table_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "globe_stand_01",
+   "seed": 2962530704,
+   "prompt": "blue world globe on a dark stand, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\globe_stand_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "globe_stand_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "hologram_globe_01",
+   "seed": 1330974579,
+   "prompt": "sci-fi hologram globe, glowing cyan, on a dark base, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\hologram_globe_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "hologram_globe_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  },
+  {
+   "id": "terminal_01",
+   "seed": 3875288923,
+   "prompt": "sci-fi computer terminal with glowing cyan screen, three-quarter view from above, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object",
+   "negative": "lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\terminal_01.png",
+   "denoise": 0.65,
+   "meta": {
+    "mode": "img2img",
+    "init_image": "terminal_01.webp (3D 툰 렌더 밑그림, tools/world-forge)",
+    "denoise": 0.65,
+    "init_license": "CC0-1.0 (코드 형태 + Poly Haven CC0 재질)"
+   }
+  }
+ ]
+}

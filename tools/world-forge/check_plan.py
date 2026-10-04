@@ -50,7 +50,7 @@ def main():
                     bad(f'{g}.building.{i}: exists 인데 recipes/{i}.json 이 없다')
                 if it.get('state') == 'new' and kind == 'building' and has:
                     bad(f'{g}.building.{i}: new 인데 이미 recipes/ 에 있다')
-    for grp in ('nature', 'village', 'field', 'dkit', 'loot'):
+    for grp in ('nature', 'village', 'field', 'dkit', 'loot', 'interior', 'furniture'):
         for i in plan.get(grp, {}).get('items', []):
             if not re.fullmatch(r'[a-z0-9_]+', i):
                 bad(f'{grp}.{i}: id 는 영문 소문자·숫자·_')
@@ -86,7 +86,7 @@ def main():
             tris = json.load(open(lic, encoding='utf-8')).get('tris', 0)
             kb = os.path.getsize(g) // 1024
             nat = plan.get('nature', {})
-            grp = next((g for g in ('village', 'field', 'dkit', 'loot') if i in plan.get(g, {}).get('items', [])), None)
+            grp = next((g for g in ('village', 'field', 'dkit', 'loot', 'interior', 'furniture') if i in plan.get(g, {}).get('items', [])), None)
             lim = (nat.get('tris_max_big', 2500) if i in nat.get('big', []) else nat.get('tris_max', 1500)) if i in nat.get('items', []) else (plan[grp].get('tris_max', 2500) if grp else b.get('toon_tris', 5000))
             if i in ('temple_roof_01', 'plank_bridge_01'):
                 lim = 2500
