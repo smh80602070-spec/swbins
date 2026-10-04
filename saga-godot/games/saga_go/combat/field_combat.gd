@@ -351,6 +351,8 @@ func switch_to(index: int, forced := false) -> bool:
 	if hp_of(r[index]) <= 0.0:
 		return false
 	active = index
+	if _player != null and _player.has_method("set_hero_body"):
+		_player.call("set_hero_body", r[index])   # G-0024 — 편성원 몸으로 교체(dex 설치 시)
 	_switch_cd = SWITCH_CD
 	_ring_fx(_player.global_position, 1.6, Elements.color_of(active_element()), 0.35)
 	CombatFeel.ui()

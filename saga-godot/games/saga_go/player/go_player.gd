@@ -15,6 +15,7 @@ extends "res://saga_core/player/player.gd"
 ## 있는 idle/walk 를 몸 기울기(_pose_pitch)와 재생 속도로 흉내 낸다.
 
 const Toast := preload("res://saga_core/ui/toast.gd")
+const Characters := preload("res://saga_core/data/characters.gd")
 const FieldCombat := preload("res://games/saga_go/combat/field_combat.gd")
 const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
@@ -127,6 +128,24 @@ var aiming := false # 106장 ㊵ 활 조준 중(combat/aimed_shot.gd 가 켜고 
 var _glider: MeshInstance3D = null
 var _ring: StaminaRing = null
 
+## G-0024 — 편성원 id("self" = 주인공)의 몸으로 교체. dex 몸이 설치돼 있을 때만(없으면 지금 몸 그대로).
+var _body_id := ""
+
+func set_hero_body(id: String) -> void:
+	if id == _body_id or not VroidBody.dex_available():
+		return
+	var rarity := 3
+	var found: Variant = Characters.find(id)
+	if found != null:
+		rarity = int((found as Dictionary).get("rarity", 3))
+	var body := VroidBody.build_hero(id, rarity)
+	if body == null:
+		return
+	_body_id = id
+	swap_body(body, [_glider])
+	_yaw = visual.rotation.y
+
+
 func _ready() -> void:
 	super._ready()
 	collision_mask = 1 | BORDER_LAYER
@@ -140,6 +159,7 @@ func _ready() -> void:
 	combat = FieldCombat.new()
 	combat.name = "FieldCombat"
 	add_child(combat)
+	set_hero_body("self")   # G-0024 — 주인공 몸(dex 설치 시)
 	if camera_rig:
 		camera_rig.set("mouse_look", true) # 106장 ⑧ 원신 PC 시점
 

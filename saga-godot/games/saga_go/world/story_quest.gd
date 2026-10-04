@@ -196,7 +196,7 @@ func face_of(id: String) -> Node:
 	return _player_face() if id == "me" else _faces.get(id)
 
 func _player_face() -> Node:
-	if _player_tf == null and _player:
+	if not is_instance_valid(_player_tf) and _player:   # G-0024 — 몸이 바뀌면 옛 표정 노드가 사라진다
 		var vis := _player.get_node_or_null("Visual")
 		if vis:
 			_player_tf = TalkFace.attach(vis)

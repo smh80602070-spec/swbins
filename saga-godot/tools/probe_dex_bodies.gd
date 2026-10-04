@@ -3,7 +3,7 @@ extends SceneTree
 ##   godot --headless --path saga-godot --script res://tools/probe_dex_bodies.gd   → "PROBE dex_bodies OK" / "FAIL n"
 ## 폴더가 없으면 ① 물러서기만 본다(build(use_dex=true) 가 BODIES 몸을 돌려주고 "SKIP dex 없음").
 ## 있으면 표본 24개 id: ② 스켈레톤 하나·idle 있음 ③ idle 트랙 전부가 AnimationPlayer 기준 노드에서 뼈에 닿음(T포즈 방지)
-## ④ 머리뼈 높이×배율이 1.30~1.60m(키 정규화) ⑤ 같은 id 두 번은 같은 몸·다른 id 는 여러 몸(8종 이상)
+## ④ 머리뼈 높이×배율이 1.30~1.60m(키 정규화) ⑤ 같은 id 두 번은 같은 몸·다른 id 는 여러 몸(8종 이상) ⑥ 인물 id·"self" 는 그 id 의 몸(build_hero)
 
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 
@@ -57,6 +57,18 @@ func _init() -> void:
 				_fail("④ 머리뼈 높이 %.2fm %s" % [hy, id])
 		v.free()
 		v2.free()
+	## ⑥ G-0024 도감 인물 id 와 같은 이름의 몸(어린이 체형이어도 그 몸)·주인공 몸
+	for hid in ["sg_zhugeliang", "jp_yukimura", "sg_liubei"]:
+		var hb := VroidBody.build_hero(hid, 5)
+		if hb == null or hb.name != hid:
+			_fail("⑥ 인물 id 몸이 아니다 " + hid)
+		if hb != null:
+			hb.free()
+	var sb := VroidBody.build_hero("self", 3)
+	if sb == null or sb.name != VroidBody.DEX_SELF_ID:
+		_fail("⑥ 주인공 몸이 DEX_SELF_ID 가 아니다")
+	if sb != null:
+		sb.free()
 	if seen.size() < 8:
 		_fail("⑤ 다른 id 24개가 %d 종 몸뿐" % seen.size())
 	print("PROBE dex_bodies ", "OK" if fails == 0 else "FAIL %d" % fails, " (몸 ", seen.size(), "종)")

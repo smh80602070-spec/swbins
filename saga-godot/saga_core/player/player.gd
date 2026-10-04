@@ -82,6 +82,29 @@ func _ready() -> void:
 	shadow.position = Vector3(0, 0.15, 0)
 	add_child(shadow)
 
+## G-0024 — Visual 을 새 몸으로 통째 바꾼다(편성원 전환·주인공 몸). 이름·위치·회전을 이어받고, 옛 몸에 얹힌 부속(글라이더 등)은
+## keep 으로 넘긴 것만 새 몸으로 옮긴다. 새 몸은 VroidBody 가 셀 셰이더·동작 라이브러리까지 입혀 준 것.
+func swap_body(body: Node3D, keep: Array = []) -> void:
+	if body == null or body == visual:
+		return
+	var old := visual
+	body.position = old.position
+	body.rotation = old.rotation
+	for k in keep:
+		if k is Node and is_instance_valid(k) and k.get_parent() == old:
+			old.remove_child(k)
+			body.add_child(k)
+	remove_child(old)
+	old.queue_free()
+	body.name = "Visual"
+	add_child(body)
+	move_child(body, 1)
+	visual = body
+	_anim = visual.find_child("AnimationPlayer", true, false)
+	_current_anim = ""
+	_play_anim("idle")
+
+
 func _physics_process(delta: float) -> void:
 	## 돌진 중엔 move_and_slide()를 안 쓴다 — CharacterBody3D끼리(플레이어
 	## vs 적) 충돌 판정에 걸려 옆으로 밀려나 버리는 걸 실측으로 확인했다

@@ -50,6 +50,8 @@ const DEX_SCALE_MAX := 1.25
 ## 머리뼈 y 가 이보다 낮은 몸은 어린이 체형(299 중 약 12%) — 어른 역(촌장·상인)에 쓰지 않고 다음 후보로 넘긴다.
 const DEX_MIN_HEAD_Y := 1.15
 const DEX_TRIES := 8
+## G-0024 — 주인공("self") 몸. 도감 인물이 아닌 dex 몸 하나(머리뼈 1.50m, 어린이 체형 아님). 바꾸려면 이 한 줄.
+const DEX_SELF_ID := "dj_haean"
 static var _dex_names: PackedStringArray = PackedStringArray()
 static var _dex_scanned := false
 
@@ -99,6 +101,11 @@ static func build(id: String, rarity: int = 3, cloth_override: Variant = null, u
 		ap.seek(float(h % 100) / 100.0 * ap.current_animation_length, true)
 	return v
 
+## 주인공("self")이면 DEX_SELF_ID, 아니면 id 그대로 — 편성원 id 로 부르는 쪽(플레이어 몸 교체)이 쓴다. dex 없으면 null.
+static func build_hero(id: String, rarity: int = 3) -> Node3D:
+	return _build_dex(DEX_SELF_ID if id == "self" else id, rarity)
+
+
 ## 설치된 dex 몸 파일 이름(정렬 고정 — 같은 id 가 늘 같은 몸). 폴더가 없으면 빈 배열.
 static func dex_names() -> PackedStringArray:
 	if _dex_scanned:
@@ -130,12 +137,15 @@ static func _build_dex(id: String, rarity: int) -> Node3D:
 	var lib := load(DEX_LIB) as AnimationLibrary
 	if lib == null:
 		return null
+	## G-0024 — 도감 인물 id 와 같은 이름의 몸이 있으면 그 몸(어린이 체형도 그 인물 그대로). 없을 때만 해시로 고른다.
+	var exact := DEX_DIR + id + ".gltf"
 	var v: Node3D = null
 	var skel: Skeleton3D = null
 	var head := -1
 	var head_y := 0.0
 	for k in DEX_TRIES:
-		var ps := load(DEX_DIR + names[(h + k * 7919) % names.size()]) as PackedScene
+		var path := exact if (k == 0 and ResourceLoader.exists(exact)) else DEX_DIR + names[(h + k * 7919) % names.size()]
+		var ps := load(path) as PackedScene
 		if ps == null:
 			continue
 		var cand := ps.instantiate() as Node3D
@@ -152,7 +162,7 @@ static func _build_dex(id: String, rarity: int) -> Node3D:
 		skel = sk
 		head = hb
 		head_y = hy
-		if hb < 0 or hy >= DEX_MIN_HEAD_Y:
+		if hb < 0 or hy >= DEX_MIN_HEAD_Y or path == exact:
 			break
 	if v == null:
 		return null

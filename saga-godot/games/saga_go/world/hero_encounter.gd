@@ -68,7 +68,7 @@ func _spawn_visual() -> void:
 	position = TestMap.world_pos(grid.x, grid.y, region_id) + Vector3(0, ground, 0)
 
 	## PLAN 106장 ④ — 캡슐 → VRoid 몸(인물 id 로 머리·옷 색 고정, ★5 는 금 테두리).
-	add_child(VroidBody.build(hero_id, int(_hero.rarity)))
+	add_child(VroidBody.build(hero_id, int(_hero.rarity), null, true))   # G-0024 — dex 설치 시 같은 id 의 몸
 
 func _spawn_area() -> void:
 	var area := Area3D.new()
