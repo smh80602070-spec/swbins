@@ -12,6 +12,8 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const SeatPose := preload("res://saga_core/player/seat_pose.gd")
 ## 앉으면 엉덩이가 내려온다 — 서 있을 때 발 높이(ride)에서 이만큼 뺀다.
 const SEAT_DROP := 0.5
+## 기수 엉덩이를 안장 윗면보다 이만큼 위에(엉덩이 두께).
+const SEAT_CLEAR := 0.06
 
 signal mounted_changed(id: String)
 
@@ -198,12 +200,38 @@ func _seat(on: bool) -> bool:
 			return true
 	return false
 
+## 기수 발 높이. 안장 자리(seat_y)가 있으면 엉덩이가 등 윗면에 닿게(몸마다 엉덩이 높이가 다르니 기수 몸에서 잰다), 없으면 예전 ride - SEAT_DROP.
+func _ride_height(seated: bool) -> float:
+	if seated and _def.has("seat_y"):
+		return float(_def.seat_y) + SEAT_CLEAR - _rider_hips_h()
+	return float(_def.get("ride", 0.0)) - (SEAT_DROP if seated else 0.0)
+
+## 기수 몸의 엉덩이 높이(발 기준, 몸 배율 포함). 뼈를 못 찾으면 0.92.
+func _rider_hips_h() -> float:
+	var vis := _player.get("visual") as Node3D
+	if vis == null:
+		return 0.92
+	for s in vis.find_children("*", "Skeleton3D", true, false):
+		var sk := s as Skeleton3D
+		for nm in ["J_Bip_C_Hips", "pelvis", "Hips"]:
+			var i := sk.find_bone(nm)
+			if i >= 0:
+				return sk.get_bone_global_rest(i).origin.y * vis.scale.y
+	return 0.92
+
+## 탄 채로 기수 몸이 바뀌었을 때 — 다시 앉히고 높이를 다시 잰다.
+func reseat() -> void:
+	if not is_riding() or _player == null:
+		return
+	var seated := _seat(true)
+	_player.set("ride_height", _ride_height(seated))
+
 func _apply_to_player(on: bool) -> void:
 	var seated := _seat(on)
 	_player.set("mounted", on)
 	_player.set("mount_speed_mul", float(_def.get("speed", 1.0)) if on else 1.0)
 	_player.set("mount_jump_mul", float(_def.get("jump", 1.0)) if on else 1.0)
-	_player.set("ride_height", (float(_def.get("ride", 0.0)) - (SEAT_DROP if seated else 0.0)) if on else 0.0)
+	_player.set("ride_height", _ride_height(seated) if on else 0.0)
 	_player.set("mount_fly_speed", float(_def.get("fly_speed", 0.0)) if on else 0.0)
 	if on and String(_def.get("kind", "")) == "fly":
 		_player.call("begin_fly")
@@ -226,7 +254,7 @@ func _physics_process(delta: float) -> void:
 	var speed_h := Vector2(_player.velocity.x, _player.velocity.z).length()
 	var bob := sin(_t * (6.0 + speed_h * 0.6)) * clampf(speed_h / 12.0, 0.0, 1.0) * 0.08
 	if _body != null:
-		_body.position = Vector3(0.0, bob, 0.0)
+		_body.position = Vector3(0.0, bob, -float(_def.get("seat_z", 0.0)))   # 안장이 기수 아래에 오게 몸을 앞뒤로
 		var fly_now: bool = _player.has_method("is_flying_now") and _player.call("is_flying_now")
 		if _anim != null:
 			## 나는 동안엔 늘 빠른 날갯짓(walk 클립), 땅에선 움직일 때만 다리 걸음.
