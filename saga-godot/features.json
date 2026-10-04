@@ -237,8 +237,10 @@
   "id": "gd.go.ruins-procgen",
   "name": "폐허 procgen 배선",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "ruins_procgen"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,
