@@ -76,6 +76,7 @@
       roadRects.forEach(function (r) { var q = toScreen(r[0], r[1]); ctx.fillRect(q.x + 1, q.y + 1, z - 2, z - 2); });
     }
     roadBad.forEach(function (q) { ctx.fillStyle = 'rgba(255,90,74,.35)'; ctx.fillRect(q.x + 1, q.y + 1, z - 2, z - 2); });
+    art.decor(ctx, S.tiles, g, x0, x1, y0, y1, p00.x, p00.y, z, S.occ);   // 숲 나무·언덕 바위(점유 칸은 건너뜀)
     art.sprites(ctx, spr, z);   // 건물 그림(y 순)
     spr.forEach(function (e) {
       if (e.b.conn) { return; }

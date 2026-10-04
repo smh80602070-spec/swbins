@@ -9,9 +9,9 @@
   function M() { return global.DG && global.DG.mode2d; }
 
   /** 땅 종류 → 타일(0 풀·1 숲·2 언덕·3 물). 숲은 풀 위에 어두운 초록을 얹는다 */
-  var TERRAIN = { 0: 'realm_grass', 1: 'realm_grass', 2: 'realm_stone', 3: 'realm_water' };
-  var ROAD = 'realm_dirt';
-  var PER = { realm_grass: 2, realm_water: 3, realm_stone: 5, realm_dirt: 2 };   // 타일 이미지(64px) 한 장이 덮는 칸 수 — 작을수록 또렷하다(돌은 판처럼 보여 크게 늘린다)
+  var TERRAIN = { 0: 'forest_grass', 1: 'forest_grass', 2: 'realm_stone', 3: 'go_water' };   // 풀은 위에서 본 사가의숲 풀(realm_grass 는 옆보기 줄무늬)
+  var ROAD = 'forest_dirt';
+  var PER = { forest_grass: 1.6, forest_dirt: 2, go_water: 3, realm_stone: 5 };   // 타일 이미지(64px) 한 장이 덮는 칸 수 — 작을수록 또렷하다(돌은 판처럼 보여 크게 늘린다)
 
   /** 건물 → { id: world2d 스프라이트, k: 그리는 높이 = k × 긴 변(타일) } */
   var BUILDINGS = {
@@ -66,10 +66,39 @@
     if (!m || !m.tilePattern) { return false; }
     for (t in TERRAIN) { if (!m.tilePattern(ctx, TERRAIN[t])) { return false; } }
     for (y = y0; y <= y1; y++) { for (x = x0; x <= x1; x++) { groups[tiles[g.idx(x, y)]].push([x, y]); } }
-    for (t in groups) { fillTiles(ctx, TERRAIN[t], groups[t], ox, oy, z); }
-    tint(ctx, groups[1], 'rgba(18,58,24,.42)', ox, oy, z);   // 숲 — 어두운 초록 덮개
+    for (t in groups) {
+      if (+t === 3 && groups[3].length) {   // 물 — 파란 바탕 위에 물결 타일을 옅게(기존 물 타일은 진짜 물처럼 안 보인다)
+        tint(ctx, groups[3], '#3a82b6', ox, oy, z);
+        ctx.save(); ctx.globalAlpha = 0.3; fillTiles(ctx, TERRAIN[3], groups[3], ox, oy, z); ctx.restore();
+      } else { fillTiles(ctx, TERRAIN[t], groups[t], ox, oy, z); }
+    }
+    tint(ctx, groups[1], 'rgba(18,58,24,.26)', ox, oy, z);   // 숲 — 어두운 초록 덮개
     tint(ctx, groups[2], 'rgba(70,62,52,.34)', ox, oy, z);   // 언덕 — 흙빛 덮개(돌 타일이 판처럼 보이는 것을 눌러 준다)
     return true;
+  }
+
+  /** 땅 장식(이미 있는 나무·바위·덤불 지물) — 숲 칸엔 나무, 언덕 칸엔 바위, 풀 칸엔 가끔 덤불. 칸 좌표 해시로 정해 늘 같은 자리·같은 종류.
+   *  확대가 너무 작으면(z < 9px) 그리지 않는다. 위에서 아래로(y 순) 그려 앞쪽이 위에 겹친다. 그린 수를 돌려준다 */
+  var DECOR = {
+    1: { odds: 0.72, ids: ['tree_broadleaf_01', 'tree_broadleaf_02', 'tree_pine_01', 'tree_pine_02', 'tree_birch_01'], k: [1.9, 2.4] },
+    2: { odds: 0.34, ids: ['rock_large_01', 'rock_small_01', 'rock_moss_01'], k: [0.8, 1.2] },
+    0: { odds: 0.035, ids: ['bush_01', 'stump_01'], k: [0.8, 1.0] }
+  };
+  function hash2(x, y) { var h = (Math.imul(x, 73856093) ^ Math.imul(y, 19349663)) >>> 0; h = Math.imul(h ^ (h >>> 13), 1274126177) >>> 0; return h; }
+  function decor(ctx, tiles, g, x0, x1, y0, y1, ox, oy, z, occ) {
+    var m = M(), n = 0, x, y, t, d, h, id, k;
+    if (!m || !m.drawSprite || z < 9) { return 0; }
+    for (y = y0; y <= y1; y++) {
+      for (x = x0; x <= x1; x++) {
+        t = tiles[g.idx(x, y)]; d = DECOR[t];
+        if (!d || (occ && occ[g.idx(x, y)])) { continue; }
+        h = hash2(x, y);
+        if ((h & 1023) / 1024 >= d.odds) { continue; }
+        id = d.ids[(h >>> 10) % d.ids.length]; k = d.k[0] + ((h >>> 16) & 255) / 255 * (d.k[1] - d.k[0]);
+        if (m.drawSprite(ctx, { id: id, x: ox + (x + 0.2 + ((h >>> 24) & 127) / 127 * 0.6) * z, y: oy + (y + 0.95) * z, h: k * z })) { n++; }
+      }
+    }
+    return n;
   }
 
   /** 도로 칸들을 흙길 타일로 — 못 그리면 false */
@@ -102,5 +131,5 @@
 
   global.DG = global.DG || {};
   global.DG.rts = global.DG.rts || {};
-  global.DG.rts.art = { TERRAIN: TERRAIN, BUILDINGS: BUILDINGS, UNIT_POOL: UNIT_POOL, HERO_POOLS: HERO_POOLS, poolOf: poolOf, terrain: terrain, roads: roads, spriteReady: spriteReady, sprites: sprites, unit: unit };
+  global.DG.rts.art = { TERRAIN: TERRAIN, BUILDINGS: BUILDINGS, UNIT_POOL: UNIT_POOL, HERO_POOLS: HERO_POOLS, poolOf: poolOf, terrain: terrain, decor: decor, DECOR: DECOR, roads: roads, spriteReady: spriteReady, sprites: sprites, unit: unit };
 })(typeof window !== 'undefined' ? window : this);
