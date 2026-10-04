@@ -32,6 +32,24 @@ namespace Saga.Go.World
             if (Folk.Count > 0) return;
             for (int w = 0; w < GoWorldMap.Waypoints.Length; w++)
                 for (int k = 0; k < PerWaypoint; k++) Spawn(w, k);
+            SpawnCrowd();
+        }
+
+        /// <summary>마을 군중(U-0042) — 인물 299 중 이름 없는 행인 열(서 있기 넷·걷기 여섯). 역할 인물과 별개, 299 목록이 없는 PC 는 0명.</summary>
+        public const int CrowdStanding = 4, CrowdWalking = 6;
+        public const uint CrowdSeed = 20261004u;
+        public List<GameObject> Crowd { get; private set; } = new List<GameObject>();
+
+        /// <summary>마을 칸('H' 둘 사이) 가운데 둘레 22m — 서 있을 수 있는 자리만.</summary>
+        public static Vector3 CrowdCenter => TestMapData.WorldPos(3f, 3.5f);
+
+        private void SpawnCrowd()
+        {
+            Crowd = AnonymousCrowd.Spawn(transform, new AnonymousCrowd.Plan
+            {
+                Center = CrowdCenter, Radius = 22f, Standing = CrowdStanding, Walking = CrowdWalking,
+                Seed = CrowdSeed, Height = CharacterVisual.HumanHeight, CanStand = FieldEnemy.CanStandOn,
+            });
         }
 
         /// <summary>몸 이름 → 모델(109-14-19 이야기 인물 노 도둑·해솔도 빌린다).</summary>
