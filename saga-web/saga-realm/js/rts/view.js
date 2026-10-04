@@ -18,6 +18,7 @@
   var R = function () { return global.DG.rts; };
   var S = null, cv, ctx, mini, mctx, miniBase = null, els = {};
   var cam = { x: 80, y: 50, z: 1.4 }, tool = 'select', hover = null, ptrs = {}, pinch = 0, painting = false, panning = false, panLast = null;
+  var fogSt = null, fogOn = true, lastFog = 0;   // 전장 안개(W-0062) — js/rts/fog.js
   var amMode = false, edgeP = null, groups = {};   // 공격 이동 대기(A) · 마우스 위치(가장자리 스크롤) · 부대 번호 1~9 → 유닛 id 모음(W-0061, 저장 안 함)
   var sel = {}, selB = 0, box = null, down = null;   // 고른 유닛 id 모음 · 고른 군영 id · 끌고 있는 선택 상자 · 눌린 자리
   var acc = 0, lastT = 0, lastHud = 0, lastSaveDay = 0, tipMsg = '', tipUntil = 0, dirty = true, overlay = 0, lastStats = null, overSeen = false, pokeUntil = 0;
@@ -63,6 +64,7 @@
     for (id in S.buildings) {
       b = S.buildings[id]; d = D[b.t];
       if (b.x + d.w < x0 || b.x > x1 + 1 || b.y + d.h < y0 || b.y > y1 + 1) { continue; }
+      if (fogOn && b.t === 'stronghold' && !R().fog.seenAt(fogSt, b.x + d.w / 2, b.y + d.h / 2)) { continue; }   // 못 본 적 기지(W-0062)
       bp = toScreen(b.x, b.y);
       if (d.road) { roadRects.push([b.x, b.y]); if (!b.conn) { roadBad.push(bp); } continue; }   // 길은 아래에서 흙길 타일로 한꺼번에
       if (art.spriteReady(b.t)) { spr.push({ b: b, d: d, x: bp.x, y: bp.y }); ctx.fillStyle = 'rgba(0,0,0,.14)'; ctx.fillRect(bp.x + 1, bp.y + 1, d.w * z - 2, d.h * z - 2); continue; }   // 그림이 있으면 그림으로
@@ -86,6 +88,7 @@
       ctx.strokeStyle = '#ff5a4a'; ctx.lineWidth = 2; ctx.strokeRect(e.x + 1.5, e.y + 1.5, e.d.w * z - 3, e.d.h * z - 3);
       if (z >= 12) { ctx.font = Math.floor(z * 0.7) + 'px sans-serif'; ctx.fillStyle = '#ff5a4a'; ctx.textAlign = 'left'; ctx.fillText('⚠', e.x + 2, e.y + z * 0.5); }
     });
+    if (fogOn && fogSt && fogSt.cv && !S.won && !S.over) { ctx.imageSmoothingEnabled = true; ctx.drawImage(fogSt.cv, p00.x, p00.y, g.W * z, g.H * z); }   // 전장 안개(W-0062) — 본 건물·유닛 밑, 유닛·표식 위
     if (overlay) { drawOverlay(); }
     drawUnits();
     art.fxs(ctx, S, toScreen, z, Date.now());   // 타격 불꽃·화살·불
@@ -120,6 +123,7 @@
     var U = R().units, id, u, p, z = px(), r = z * 0.34, d, gp;
     for (id in S.units) {
       u = S.units[id]; d = U.statOf(u); p = toScreen(u.x, u.y);
+      if (fogOn && u.team === 1 && !S.won && !S.over && !R().fog.visibleAt(fogSt, u.x, u.y)) { continue; }   // 안개 속 적(W-0062)
       if (p.x < -20 || p.y < -20 || p.x > size().w + 20 || p.y > size().h + 20) { continue; }
       if (sel[id]) {
         if (u.path && u.path.length && u.goal) { gp = toScreen(u.goal.x + .5, u.goal.y + .5); ctx.strokeStyle = 'rgba(255,230,120,.55)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(gp.x, gp.y); ctx.stroke(); ctx.setLineDash([]); }
@@ -163,7 +167,8 @@
     if (!miniBase) { bakeMini(); }
     var g = R().grid, D = R().rules.DEFS, sx = mini.width / g.W, sy = mini.height / g.H, id, b, s = size(), z = px();
     mctx.imageSmoothingEnabled = false; mctx.drawImage(miniBase, 0, 0, mini.width, mini.height);
-    for (id in S.buildings) { b = S.buildings[id]; mctx.fillStyle = b.t === 'castle' ? '#ffd36a' : D[b.t].color; mctx.fillRect(b.x * sx, b.y * sy, Math.max(1.5, D[b.t].w * sx), Math.max(1.5, D[b.t].h * sy)); }
+    for (id in S.buildings) { b = S.buildings[id]; if (fogOn && b.t === 'stronghold' && !R().fog.seenAt(fogSt, b.x + 1, b.y + 1)) { continue; } mctx.fillStyle = b.t === 'castle' ? '#ffd36a' : D[b.t].color; mctx.fillRect(b.x * sx, b.y * sy, Math.max(1.5, D[b.t].w * sx), Math.max(1.5, D[b.t].h * sy)); }
+    if (fogOn && fogSt && fogSt.cv && !S.won && !S.over) { mctx.imageSmoothingEnabled = true; mctx.drawImage(fogSt.cv, 0, 0, mini.width, mini.height); }
     mctx.strokeStyle = '#ffd36a'; mctx.lineWidth = 1.5;
     mctx.strokeRect((cam.x - s.w / 2 / z) * sx, (cam.y - s.h / 2 / z) * sy, s.w / z * sx, s.h / z * sy);
   }
@@ -220,6 +225,7 @@
   function tipFor() {
     if (!hover) { return R().guide.text(S) || '도구를 고르고 칸을 누르세요 · 건물은 도로로 거점에 이어져야 돕니다'; }   // 다음 할 일(guide.js)
     var b = R().rules.buildingAt(S, hover.x, hover.y), D = R().rules.DEFS;
+    if (b && b.t === 'stronghold' && fogOn && !R().fog.seenAt(fogSt, hover.x, hover.y)) { b = null; }
     if (b && b.t === 'stronghold') { return D.stronghold.name + ' · 체력 ' + Math.ceil(b.hp) + ' — 유닛으로 쳐서 무너뜨리면 이긴다'; }
     if (b) { return D[b.t].name + (b.t === 'castle' ? '' : (b.conn ? ' · 돌고 있음' : ' · 도로로 이어지지 않았습니다')); }
     if (isBuildTool(tool) && tool !== 'erase') { var c = R().rules.canPlace(S, tool, hover.x, hover.y); return D[tool].name + ' ' + D[tool].cost + '금' + (c.ok ? '' : ' — ' + c.why); }
@@ -334,7 +340,7 @@
     box2.addEventListener('click', function (e) {
       var b = e.target.closest('button[data-diff]'); if (!b) { return; }
       S = R().state.create(end ? (Date.now() & 0xffff) + 1 : S.seed, +b.getAttribute('data-diff')); if (/[?&]qa=1/.test(global.location ? global.location.search : '')) { R().state.qaPreset(S); }
-      lastSaveDay = S.day; sel = {}; selB = 0; overSeen = false;
+      lastSaveDay = S.day; sel = {}; selB = 0; overSeen = false; groups = {}; if (fogOn) { fogSt = R().fog.create(); R().fog.update(fogSt, S); }
       var cs2 = R().grid.castleSite(); cam.x = cs2.x + 1.5; cam.y = cs2.y + 1.5;
       box2.parentNode.removeChild(box2); dirty = true; hud();
     });
@@ -452,6 +458,7 @@
       }
     }
     edgeScroll(dt);
+    if (fogOn && t - lastFog > 200) { lastFog = t; if (R().fog.update(fogSt, S)) { dirty = true; } }
     if (dirty) { draw(); }
     if (t - lastHud > 250) { lastHud = t; hud(); }
     global.requestAnimationFrame(loop);
@@ -471,6 +478,7 @@
     S = saved || R().state.create((Date.now() & 0xffff) + 1, diffFromUrl());
     if (!saved && /[?&]qa=1/.test(global.location ? global.location.search : '')) { R().state.qaPreset(S); }   // 시험 프리셋(?qa=1)
     lastSaveDay = S.day;
+    fogOn = !/[?&]fog=0/.test(global.location ? global.location.search : ''); fogSt = R().fog.create(); R().fog.update(fogSt, S);
     var cs = R().grid.castleSite(); cam.x = cs.x + 1.5; cam.y = cs.y + 1.5;
     resize(); bindInput(); hud(); global.requestAnimationFrame(loop);
     if (!saved && !/[?&]diff=/.test(global.location ? global.location.search : '')) { askDiff(); }

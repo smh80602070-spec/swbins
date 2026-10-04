@@ -103,6 +103,7 @@
    "js/rts/combat.js",
    "js/rts/heroes.js",
    "js/rts/guide.js",
+   "js/rts/fog.js",
    "js/rts/art.js",
    "js/rts/state.js",
    "js/game.js"

@@ -111,6 +111,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rts/combat.js"></script>
 <script src="js/rts/heroes.js"></script>
 <script src="js/rts/guide.js"></script>
+<script src="js/rts/fog.js"></script>
 <script src="js/rts/art.js"></script>
 <script src="js/rts/state.js"></script>
 <script src="js/game.js"></script>
@@ -462,6 +463,19 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var resume = am.path.length > 0 && !!am.goal && Math.abs(am.goal.y - (cs.y - 14)) <= 2;
       am.x = cs.x + 6.5; am.y = cs.y - 14; am.path = []; am.goal = null; C.tick(s);
       return chase && resume && !am.amGoal && ('시야 안 적에게 · 이어 가기 · 도착 시 해제');
+    });
+
+    t('RTS 전장 안개(W-0062) — 거점 둘레만 보이고 먼 땅은 검으며, 유닛이 가면 열리고 떠나도 "봤던 곳"으로 남고, 적 기지는 본 뒤에야 그려진다', function () {
+      var R = DG.rts, F = R.fog, s = rtsField(), cs = s.__cs, f = F.create();
+      F.update(f, s);
+      var near = F.visibleAt(f, cs.x + 1.5, cs.y + 1.5 + 8), far = F.visibleAt(f, cs.x + 1.5 + 40, cs.y + 1.5) || F.seenAt(f, cs.x + 1.5 + 40, cs.y + 1.5);
+      var sb = s.buildings[-1], hidden = !F.seenAt(f, sb.x + 1, sb.y + 1);
+      var u = R.units.spawn(s, 'cavalry', 0, cs.x + 1.5 + 30, cs.y + 1.5); F.update(f, s);
+      var opened = F.visibleAt(f, cs.x + 1.5 + 34, cs.y + 1.5);
+      u.x = cs.x + 1.5; u.y = cs.y + 1.5; F.update(f, s);
+      var kept = !F.visibleAt(f, cs.x + 1.5 + 34, cs.y + 1.5) && F.seenAt(f, cs.x + 1.5 + 34, cs.y + 1.5);
+      var foe = R.units.spawn(s, 'soldier', 1, cs.x + 1.5 + 25, cs.y + 1.5), foeHid = !F.visibleAt(f, foe.x, foe.y);
+      return near && !far && hidden && opened && kept && foeHid && ('거점 둘레 보임 · 먼 땅 검음 · 기지 숨김 · 열림 · 봤던 곳 · 적 가림');
     });
 
     t('RTS 망루·거점 발사 — 망루는 7칸 안의 적을 10틱마다 6, 거점은 6칸 안을 5로 쏜다', function () {
