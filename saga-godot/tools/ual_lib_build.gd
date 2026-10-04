@@ -16,7 +16,7 @@ extends SceneTree
 
 const OUT_DIR := "res://assets/characters_vroid/anim_cc0"
 const FPS := 30.0
-const LOOP_CLIPS := ["idle", "walk", "sprint"]
+const LOOP_CLIPS := ["idle", "walk", "sprint", "fall", "climb", "glide", "swim", "plunge"]   # G-0025 — 이동 클립(K-0059) 중 루프인 것
 const HIPS := "J_Bip_C_Hips"
 ## 뼈 방향을 잴 기준 자식(tools/char-forge/rigmaps.py REF_CHILD 의 VRoid 이름판, 몸통·팔다리만)
 const REF := {

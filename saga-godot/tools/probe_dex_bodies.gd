@@ -3,7 +3,7 @@ extends SceneTree
 ##   godot --headless --path saga-godot --script res://tools/probe_dex_bodies.gd   → "PROBE dex_bodies OK" / "FAIL n"
 ## 폴더가 없으면 ① 물러서기만 본다(build(use_dex=true) 가 BODIES 몸을 돌려주고 "SKIP dex 없음").
 ## 있으면 표본 24개 id: ② 스켈레톤 하나·idle 있음 ③ idle 트랙 전부가 AnimationPlayer 기준 노드에서 뼈에 닿음(T포즈 방지)
-## ④ 머리뼈 높이×배율이 1.30~1.60m(키 정규화) ⑤ 같은 id 두 번은 같은 몸·다른 id 는 여러 몸(8종 이상) ⑥ 인물 id·"self" 는 그 id 의 몸(build_hero)
+## ④ 머리뼈 높이×배율이 1.30~1.60m(키 정규화) ⑤ 같은 id 두 번은 같은 몸·다른 id 는 여러 몸(8종 이상) ⑥ 인물 id·"self" 는 그 id 의 몸(build_hero) ⑦ 동작 라이브러리 18클립·루프
 
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 
@@ -64,6 +64,14 @@ func _init() -> void:
 			_fail("⑥ 인물 id 몸이 아니다 " + hid)
 		if hb != null:
 			hb.free()
+	## ⑦ G-0025 동작 라이브러리 18클립(기본 8 + 이동·시전 10)·반복 클립은 루프
+	var lib := load(VroidBody.DEX_LIB) as AnimationLibrary
+	for c in ["idle", "walk", "sprint", "attack", "hit", "dodge", "death", "pickup", "jump", "fall", "land", "climb", "glide", "swim", "mantle", "skill", "burst", "plunge"]:
+		if lib == null or not lib.has_animation(c):
+			_fail("⑦ 동작 라이브러리에 클립 없음 " + c)
+	for c in ["idle", "walk", "sprint", "fall", "climb", "glide", "swim", "plunge"]:
+		if lib != null and lib.has_animation(c) and lib.get_animation(c).loop_mode != Animation.LOOP_LINEAR:
+			_fail("⑦ 반복 클립이 루프가 아님 " + c)
 	var sb := VroidBody.build_hero("self", 3)
 	if sb == null or sb.name != VroidBody.DEX_SELF_ID:
 		_fail("⑥ 주인공 몸이 DEX_SELF_ID 가 아니다")

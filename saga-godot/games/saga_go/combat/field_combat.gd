@@ -651,7 +651,7 @@ func skill() -> bool:
 	_skill_cd[id] = skill_cd_of(id)
 	var el := active_element()
 	var atk := char_atk(id) * PartyState.talent_mul(id, "skill") * PartyState.passive_mul(id, "skill")
-	_player.call("play_action", "attack", 0.4, 0.0)
+	_player.call("play_action", "skill", 0.4, 0.0)   # G-0025 — 시전 클립(없는 몸은 attack 으로)
 	var hits := 0
 	_crit_id = id
 	## 106장 ㉔ — 고유·갈래 스킬이 있는 인물은 그것, 없으면(지략 인물) 원소마다 같은 스킬.
@@ -721,7 +721,7 @@ func burst() -> bool:
 		get_tree().call_group("element_receiver", "receive_element", _player.global_position, float(kb.radius), el)
 		return true
 	var center := _player.global_position
-	_player.call("play_action", "attack", 0.6, 0.0)
+	_player.call("play_action", "burst", 0.6, 0.0)   # G-0025
 	_ring_fx(center, BURST_RADIUS, Elements.color_of(el), 0.7)
 	var rig := get_tree().get_first_node_in_group("camera_rig")
 	if rig:
@@ -868,7 +868,7 @@ func _kit_burst(id: String, kb: Dictionary, atk: float, el: String) -> void:
 	var center := _player.global_position
 	var radius := float(kb.radius)
 	var sec := float(kb.get("sec", 0.0))
-	_player.call("play_action", "attack", 0.6, 0.0)
+	_player.call("play_action", "burst", 0.6, 0.0)   # G-0025
 	_ring_fx(center, radius, Elements.color_of(el), 0.7)
 	var rig := get_tree().get_first_node_in_group("camera_rig")
 	if rig:

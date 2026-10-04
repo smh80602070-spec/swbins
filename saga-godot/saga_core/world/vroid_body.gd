@@ -42,7 +42,7 @@ const GOLD_RIM := Color(1.0, 0.82, 0.35)
 ## 뼈 트랙이 "Skeleton3D:뼈" 라 AnimationPlayer 기준 노드를 Armature 로 둔다(안 그러면 T포즈). 키는 몸마다 달라(머리뼈 y 1.22~1.64m)
 ## 머리뼈 높이를 id 해시로 정한 목표(1.38~1.50m ≈ 키 1.57~1.70m)에 맞춰 배율을 구한다.
 const DEX_DIR := "res://assets/characters_dex/"
-const DEX_LIB := "res://assets/characters_vroid/anim_cc0/avatar_sample_b_lib.res"
+const DEX_LIB := "res://assets/characters_vroid/anim_cc0/dex_common_lib.res"   # G-0025 — 18클립(기본 8 + 이동·시전 10, K-0059). tools/ual_lib_build.gd 로 만든다
 const DEX_HEAD_BASE := 1.38
 const DEX_HEAD_STEP := 0.03
 const DEX_SCALE_MIN := 0.85

@@ -95,6 +95,9 @@ var _wall_normal := Vector3.BACK
 var _mantle_from := Vector3.ZERO
 var _mantle_to := Vector3.ZERO
 var _mantle_t := 0.0
+var _air_t := 0.0   # G-0025 — 공중에 뜬 뒤 흐른 시간(jump → fall 전환)
+const AIR_JUMP_SEC := 0.45
+const MANTLE_CLIP_SEC := 0.4   # mantle 클립 길이 — MANTLE_SEC 에 맞춰 빠르게
 var _water_y := NAN
 var _last_safe := Vector3.ZERO
 var _safe_t := 0.0
@@ -317,11 +320,14 @@ func _tick_air(delta: float, move_dir: Vector3) -> void:
 		_face(move_dir, delta)
 		if _try_wall(move_dir, delta, false):
 			return
-	_play_anim("idle")
+	_air_t += delta
+	_pose("jump" if (_air_t < AIR_JUMP_SEC and velocity.y > 0.5) else "fall", "idle")
 	move_and_slide()
 	if is_on_floor():
 		if fall_vy < -FeelTuning.HARD_LAND_VY:
 			_land_t = float(FeelTuning.move_preset.get("land_sec", 0.0))
+			if _anim != null and _anim.has_animation("land"):
+				play_action("land", maxf(_land_t, 0.35), 1.0)
 		_set_mode(Mode.GROUND)
 
 func _tick_glide(delta: float, move_dir: Vector3) -> void:
@@ -343,7 +349,7 @@ func _tick_glide(delta: float, move_dir: Vector3) -> void:
 	velocity.z = lerpf(velocity.z, dir.z * GLIDE_SPEED, 3.0 * delta)
 	velocity.y = lerpf(velocity.y, _updraft_vy if _updraft_t > 0.0 else -GLIDE_FALL, 5.0 * delta)
 	_spend(COST_GLIDE * delta)
-	_play_anim("idle")
+	_pose("glide", "idle")
 	var hit := _wall_ahead(fwd)
 	if not hit.is_empty() and stamina > 0.0:
 		_start_climb(hit)
@@ -439,7 +445,7 @@ func _tick_climb(delta: float, input_dir: Vector2) -> void:
 	global_position.z = lerpf(global_position.z, want.z, 10.0 * delta)
 
 	_anim_scale(1.0 if moving or _climb_jump_t > 0.0 else 0.0)
-	_play_anim("walk")
+	_pose("climb", "walk")
 	move_and_slide()
 	if up < -0.1 and is_on_floor():
 		_set_mode(Mode.GROUND)
@@ -468,7 +474,7 @@ func _tick_swim(delta: float, move_dir: Vector3) -> void:
 			return
 	_spend(cost * delta)
 	_anim_scale(1.6 if fast else (1.0 if move_dir.length() > 0.05 else 0.35))
-	_play_anim("walk")
+	_pose("swim", "walk")
 	move_and_slide()
 	## 얕은 곳(발이 닿음)으로 나오면 걷는다.
 	if not _in_deep_water() and is_on_floor():
@@ -486,7 +492,7 @@ func _tick_mantle(delta: float) -> void:
 	p.z = lerpf(_mantle_from.z, _mantle_to.z, fwd_t)
 	global_position = p
 	velocity = Vector3.ZERO
-	_play_anim("idle")
+	_pose("mantle", "idle")
 	if t >= 1.0:
 		_set_mode(Mode.GROUND)
 
@@ -499,6 +505,8 @@ func _set_mode(m: Mode) -> void:
 	_grab_t = 0.0
 	_climb_jump_t = 0.0
 	_anim_scale(1.0)
+	if m == Mode.AIR:
+		_air_t = 0.0
 	if _glider:
 		_glider.visible = m == Mode.GLIDE
 	if m == Mode.GROUND:
@@ -544,6 +552,7 @@ func _start_mantle(top: Vector3) -> void:
 	_mantle_to = top + Vector3.UP * 0.05
 	_mantle_t = 0.0
 	_set_mode(Mode.MANTLE)
+	_anim_scale(MANTLE_CLIP_SEC / MANTLE_SEC)
 
 ## 물에 빠져 기력이 다하면 마지막으로 딛은 땅으로(원신의 익수 복귀).
 func _drown() -> void:
@@ -626,6 +635,7 @@ func is_plunging() -> bool:
 	return _plunge
 
 func _tick_plunge() -> void:
+	_pose("plunge", "idle")
 	velocity = Vector3(0.0, -PLUNGE_SPEED, 0.0)
 	move_and_slide()
 	if is_on_floor():
@@ -651,10 +661,16 @@ func face_toward(pos: Vector3) -> void:
 ## 한 번짜리 동작 클립은 길다(공격 1.57초·회피 1.5초) — 후딜(0.3초대)만큼만 틀면 앞부분(준비 동작)만 반복돼 휘두르는 동작이 한 번도 안 나온다(G-0018).
 ## 그래서 클립에서 "실제 동작이 있는 구간"(창 [시작, 끝] 초)만 dur 에 맞춰 재생한다. 창은 클립을 시간대별로 찍어 눈으로 정했다:
 ##   attack 0.30~0.95초 = 몸을 낮춰 찌르는 동작 · dodge 0.05~0.85초 = 웅크림→도약→공중 구르기→착지. 창이 없는 클립은 처음부터 원래 속도.
-const CLIP_WINDOW := {"attack": [0.30, 0.95], "dodge": [0.05, 0.85]}
+const CLIP_WINDOW := {"attack": [0.30, 0.95], "dodge": [0.05, 0.85], "land": [0.0, 0.8], "skill": [0.0, 0.53], "burst": [0.0, 1.13]}   # G-0025 — land·skill·burst 는 클립 전체(속도만 맞춘다)
 var _action_scaled := false # 동작이 재생 속도를 바꿨으면, 끝나고 1.0 으로 되돌린다
 
+## G-0025 — 이동 상태별 동작(K-0059 클립, dex 동작 라이브러리). 클립이 없는 몸(옛 공방 몸·옛 VRoid 라이브러리)은 fallback.
+func _pose(anim_name: String, fallback: String) -> void:
+	_play_anim(anim_name if _anim != null and _anim.has_animation(anim_name) else fallback)
+
 func play_action(anim_name: String, dur: float, move_scale: float) -> void:
+	if (anim_name == "skill" or anim_name == "burst") and _anim != null and not _anim.has_animation(anim_name):
+		anim_name = "attack"   # 시전 클립이 없는 몸은 공격 동작으로
 	_action_t = dur
 	_action_move = move_scale
 	if _anim and _anim.has_animation(anim_name):
