@@ -14,10 +14,13 @@
     spark_hit: [8, 12, 0], crit_flash: [8, 12, 0], slash_arc: [8, 12, 0], death_smoke: [10, 12, 0], dust_step: [8, 12, 0],
     heal_ring: [12, 12, 1], heal_cross: [12, 12, 1], buff_up: [10, 12, 1], debuff_down: [10, 12, 1], shield_bubble: [12, 12, 1],
     levelup_burst: [12, 12, 0], coin_pop: [10, 12, 0],
+    fire_proj: [8, 12, 1], water_proj: [8, 12, 1], lightning_proj: [8, 12, 1], ice_proj: [8, 12, 1], wind_proj: [8, 12, 1], earth_proj: [8, 12, 1], light_proj: [8, 12, 1],
     fire_hit: [10, 12, 0], water_hit: [10, 12, 0], lightning_hit: [10, 12, 0], ice_hit: [10, 12, 0], wind_hit: [10, 12, 0], earth_hit: [10, 12, 0], light_hit: [10, 12, 0]
   };
   /** 사가블로 원소(`elem` fx 의 el) → 원소 타격 시트 — 화=불 · 빙=얼음 · 뇌=번개 · 독=바람(초록 호) · 기=빛 · 전자=물(푸른 고리). 물리는 없다(불꽃이 이미 있다) */
   var ELEM_HIT = { fire: 'fire_hit', cold: 'ice_hit', lit: 'lightning_hit', pois: 'wind_hit', chi: 'light_hit', emp: 'water_hit' };
+  /** 사가블로 원소 → 투사체 시트(날아가는 모양 — 오른쪽으로 난다고 보고 방향으로 돌려 그린다). 물리·기 = 지금의 하늘색 기공파 구슬(물), 독 = 바람, 전자 = 빛 */
+  var PROJ = { phys: 'water_proj', chi: 'water_proj', fire: 'fire_proj', cold: 'ice_proj', lit: 'lightning_proj', pois: 'wind_proj', emp: 'light_proj' };
   var imgs = {};
 
   function base() { var c = global.DG.cfg && global.DG.cfg.vfx; return (c && c.base) || 'assets/vfx/'; }
@@ -70,6 +73,20 @@
     return draw(ctx, 'death_smoke', x, y, big ? 190 : 104, age, { speed: big ? 1.1 : 1.6 });
   }
 
+  /**
+   * 투사체 하나 — el = 원소 키, (x,y) = 화면 위치, to = 진행 방향으로 조금 앞선 화면 점 {x,y}(회전각), size px, now ms. 그렸으면 true(아직 못 받았으면 false → 옛 구슬)
+   */
+  function proj(ctx, el, x, y, to, size, now) {
+    var name = PROJ[el] || PROJ.phys, im = sheet(name), f = frameAt(name, now / 1000);
+    if (!im || f < 0) { return false; }
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.translate(x, y); ctx.rotate(Math.atan2(to.y - y, to.x - x));
+    ctx.drawImage(im, f * FRAME, 0, FRAME, FRAME, -size / 2, -size / 2, size, size);
+    ctx.restore();
+    return true;
+  }
+
   /** 미리 받아 둔다 — 첫 타격에 한 박자 늦지 않게 */
   function preload(names) { (names || Object.keys(SHEETS)).forEach(sheet); }
 
@@ -81,5 +98,5 @@
 
   preload(((global.DG.cfg && global.DG.cfg.vfx && global.DG.cfg.vfx.preload) || []).concat(['spark_hit', 'crit_flash', 'death_smoke']));   // 첫 타격에 한 박자 늦지 않게 — 판이 cfg.vfx.preload 로 더 주면 같이
 
-  global.DG.vfx2d = { draw: draw, fxLayer: fxLayer, frameAt: frameAt, ELEM_HIT: ELEM_HIT, preload: preload, SHEETS: SHEETS, FRAME: FRAME };
+  global.DG.vfx2d = { draw: draw, fxLayer: fxLayer, proj: proj, PROJ: PROJ, frameAt: frameAt, ELEM_HIT: ELEM_HIT, preload: preload, SHEETS: SHEETS, FRAME: FRAME };
 })(typeof window !== 'undefined' ? window : this);

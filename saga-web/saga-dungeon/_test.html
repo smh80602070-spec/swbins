@@ -7943,6 +7943,13 @@ window.requestAnimationFrame = function () { return 0; };
         V.fxLayer(c, { t: 'elem', el: 'zzz', life: 0.6 }, 0, 0) === false && typeof DG.cfg.vfx.levelup === 'function' && V.SHEETS.levelup_burst[0] === 12 && (function () { var lv = { t: 'lvl', life: 1.1 }; V.fxLayer(c, lv, 0, 0); return lv.l0 === 1.1; })() && ('원소 ' + Object.keys(V.ELEM_HIT).length + '종 짝지음 · 레벨업 버스트');
     });
 
+    t('원소 투사체 이펙트(W-0056) — 모든 원소(물리 포함)가 투사체 시트와 짝지어지고 그 시트는 표에 있다, 못 받았으면 false(옛 구슬)', function () {
+      var V = DG.vfx2d, c = document.createElement('canvas').getContext('2d'), bad = [], keys = DG.elemData.ELEMENTS.map(function (e) { return e.key; });
+      keys.forEach(function (k) { if (!V.PROJ[k]) { bad.push('빠짐 ' + k); } else if (!V.SHEETS[V.PROJ[k]]) { bad.push('시트 ' + k); } });
+      var shot = DG.dungeon.raw && DG.dungeon.raw() ? 1 : 0;
+      return bad.length === 0 && keys.length >= 7 && V.proj(c, 'nope', 5, 5, { x: 9, y: 5 }, 40, 0) === (V.proj(c, 'phys', 5, 5, { x: 9, y: 5 }, 40, 0)) && ('원소 ' + keys.length + '종 투사체 짝');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

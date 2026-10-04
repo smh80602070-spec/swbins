@@ -478,7 +478,7 @@
   'use strict';
   global.DG = global.DG || {};
   global.DG.cfg = global.DG.cfg || {};
-  global.DG.cfg.vfx = { preload: ['fire_hit', 'ice_hit', 'lightning_hit', 'wind_hit', 'light_hit', 'water_hit', 'levelup_burst'],
+  global.DG.cfg.vfx = { preload: ['fire_hit', 'ice_hit', 'lightning_hit', 'wind_hit', 'light_hit', 'water_hit', 'levelup_burst', 'water_proj', 'fire_proj', 'ice_proj', 'lightning_proj', 'wind_proj', 'light_proj'],
     /** 레벨업 때 2D 아이소 화면이면 플레이어 가슴께에 터뜨린다(3D 는 파티클 몫) */
     levelup: function () { var D = global.DG.dungeon, T = global.DG.dungeon3d, r = D && D.raw && D.raw(); if (r && r.player && !(T && T.active && T.active())) { D.fx().push({ t: 'lvl', x: r.player.x, y: r.player.y - 8, life: 1.1 }); } } };   // 원소 타격 이펙트 시트(W-0054) — 첫 타격 전에 받아 둔다
   global.DG.cfg.mode2d = {

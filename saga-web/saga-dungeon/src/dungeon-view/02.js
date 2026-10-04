@@ -354,16 +354,11 @@
 
     /* 기공파 */
     for (i = 0; i < run.shots.length; i++) {
-      var sh = run.shots[i];
-      p = proj(m, sh.x, sh.y);
-      ctx.beginPath();
-      ctx.arc(p.x, p.y - 10, 7 * Math.max(0.7, m.s), 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(120,220,255,0.9)';
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(p.x - sh.dx * 10, p.y - 10 - sh.dy * 6, 4 * Math.max(0.7, m.s), 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(120,220,255,0.35)';
-      ctx.fill();
+      var sh = run.shots[i], pa;
+      p = proj(m, sh.x, sh.y); pa = proj(m, sh.x + sh.dx * 10, sh.y + sh.dy * 10);
+      if (global.DG.vfx2d && global.DG.vfx2d.proj(ctx, sh.el, p.x, p.y - 10, { x: pa.x, y: pa.y - 10 }, 58 * Math.max(0.8, m.s), Date.now())) { continue; }   // W-0056 원소 투사체 시트(K-0039) — 못 받았으면 아래 옛 구슬
+      ctx.beginPath(); ctx.arc(p.x, p.y - 10, 7 * Math.max(0.7, m.s), 0, Math.PI * 2); ctx.fillStyle = 'rgba(120,220,255,0.9)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(p.x - sh.dx * 10, p.y - 10 - sh.dy * 6, 4 * Math.max(0.7, m.s), 0, Math.PI * 2); ctx.fillStyle = 'rgba(120,220,255,0.35)'; ctx.fill();
     }
 
     /* 연출 (조명 아래층) — 같은 김에 **새로 터진 격파**에서 핏자국을 하나 받는다.
