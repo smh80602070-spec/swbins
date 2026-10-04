@@ -12,6 +12,11 @@ const CHUNK_M := 112.0
 ## (96m·전부 쪼갰을 때 포구에서 한 프레임 887).
 const MIN_TRIS := 50000
 const FAR_M := 1000.0
+## G-0023 ③ 그림자 패스 — 마을 신상 곁 삼각형의 약 72%·draw 80여 개가 해 그림자(4분할)가 물체를 다시 그리는 몫이다(측정, G-0023 메모).
+##   · 해 그림자 최대 거리 100 → SHADOW_MAX_M(페이드 시작 0.8 이라 56m 안 그림자는 그대로, 그 너머만 일찍 사라진다)
+##   · 눈에 안 띄는 작은 식물·바위(키 1m 안팎)는 그림자를 드리우지 않는다 — 땅 그림자는 그대로고 이 덩어리들의 그림자만 빠진다
+const SHADOW_MAX_M := 70.0
+const NO_CAST_PREFIX := ["Understory", "MeadowHeads", "MeadowStems", "Crops", "Shrub", "Clutter", "RocksSmall"]
 
 ## 쪼갠 MultiMesh 수를 돌려준다.
 static func apply(root: Node) -> int:
@@ -22,7 +27,21 @@ static func apply(root: Node) -> int:
 	for n in root.find_children("*", "MultiMeshInstance3D", true, false):
 		if _split(n as MultiMeshInstance3D):
 			split += 1
+	_tune_shadows(root)
 	return split
+
+
+static func _tune_shadows(root: Node) -> void:
+	for l in root.find_children("*", "DirectionalLight3D", true, false):
+		var dl := l as DirectionalLight3D
+		if dl.shadow_enabled and dl.directional_shadow_max_distance > SHADOW_MAX_M:
+			dl.directional_shadow_max_distance = SHADOW_MAX_M
+	for n in root.find_children("*", "MultiMeshInstance3D", true, false):
+		var nm := String(n.name)
+		for p: String in NO_CAST_PREFIX:
+			if nm.begins_with(p):
+				(n as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+				break
 
 static func _split(mmi: MultiMeshInstance3D) -> bool:
 	var mm := mmi.multimesh

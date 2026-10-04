@@ -5,6 +5,7 @@ extends Node
 ##   SAGA_PERF_PROBE=1 "$GODOT_CONSOLE" --path saga-godot --rendering-method mobile --position -4000,0 \
 ##       --resolution 540x960 res://games/saga_go/world/TestVillage.tscn
 ##
+## SAGA_PERF_TOP=N — 삼각형 몫 표를 상위 N개까지(기본 14). SAGA_PERF_HIDE=노드이름접두어,… — 그 노드를 숨기고 잰다.
 ## 세 지역 신상 곁에서 카메라를 한 바퀴(8방향) 돌며 프레임마다 draw call·그린 물체·삼각형 수를 재고 최댓값·평균을 찍는다.
 ## 기기와 상관없는 수(해상도·GPU 를 안 탐)라 폰 부담의 기준으로 쓴다. 저장은 안 한다.
 
@@ -154,7 +155,7 @@ func _summary() -> void:
 		by[key] = int(by.get(key, 0)) + tris
 	var keys := by.keys()
 	keys.sort_custom(func(x: Variant, y: Variant) -> bool: return int(by[x]) > int(by[y]))
-	for k in keys.slice(0, 14):
+	for k in keys.slice(0, maxi(int(OS.get_environment("SAGA_PERF_TOP")), 14)):
 		print("PERF tris %s = %d" % [k, by[k]])
 	var cam := get_viewport().get_camera_3d()
 	print("PERF scene lights=%d shadow_lights=%d multimesh_nodes=%d multimesh_instances=%d mesh_nodes=%d camera_far=%.0f renderer=%s" % [
@@ -176,7 +177,7 @@ func _key_of(n: Node, root: Node) -> String:
 		key += "/" + rx.sub(sub, "")
 	return key
 
-## 09-29 SAGA_PERF_HIDE=종류,… — 재기 전에 그 종류를 숨겨 삼각형·draw call 몫을 잰다(숨긴 판 − 안 숨긴 판).
+## 09-29 SAGA_PERF_HIDE=종류,…(noshadow·shadowsplit2 는 G-0023) — 재기 전에 그 종류를 숨겨 삼각형·draw call 몫을 잰다(숨긴 판 − 안 숨긴 판).
 ## people(사람 몸 — 플레이어 빼고) · player(플레이어 몸) · 그 밖은 노드 이름(모든 깊이, 이름이 그걸로 시작하면).
 func _hide_for_share() -> void:
 	var what := OS.get_environment("SAGA_PERF_HIDE")
@@ -184,7 +185,36 @@ func _hide_for_share() -> void:
 		return
 	var root := get_tree().current_scene
 	var n := 0
+	## noshadow — 해(방향광) 그림자 끄기, shadowsplit2 — 그림자 분할을 2단으로(그림자 패스가 삼각형을 몇 번 더 그리는지 재기).
+	for l in root.find_children("*", "DirectionalLight3D", true, false):
+		if what.contains("noshadow"):
+			(l as DirectionalLight3D).shadow_enabled = false
+			n += 1
+		## shadowdist:N — 그림자 최대 거리(m). 한 번 현재 값도 찍는다.
+		var dl := l as DirectionalLight3D
+		print("PERF light mode=%d max_dist=%.0f split1=%.2f split2=%.2f split3=%.2f fade_start=%.2f blur=%.2f bias=%.3f" % [dl.directional_shadow_mode, dl.directional_shadow_max_distance, dl.directional_shadow_split_1, dl.directional_shadow_split_2, dl.directional_shadow_split_3, dl.directional_shadow_fade_start, dl.shadow_blur, dl.shadow_bias])
+		for tok in what.split(","):
+			if tok.begins_with("shadowdist:"):
+				dl.directional_shadow_max_distance = float(tok.substr(11))
+				n += 1
+		if what.contains("shadowsplit2"):
+			(l as DirectionalLight3D).directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+			n += 1
+	## nocast:노드이름접두어 — 그 노드(와 아래 전부)가 그림자를 드리우지 않게(그 몫만 재기, 눈에 보이는 건 그대로).
 	for k in what.split(","):
+		if k.begins_with("nocast:"):
+			var pre := k.substr(7)
+			for c in root.find_children("*", "Node3D", true, false):
+				if String(c.name).begins_with(pre):
+					if c is GeometryInstance3D:
+						(c as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+						n += 1
+					for g in c.find_children("*", "GeometryInstance3D", true, false):
+						(g as GeometryInstance3D).cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+						n += 1
+	for k in what.split(","):
+		if k.begins_with("nocast:"):
+			continue
 		for c in root.find_children("*", "Node3D", true, false):
 			var node := c as Node3D
 			var hit := false
