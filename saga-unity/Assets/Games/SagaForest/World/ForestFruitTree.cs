@@ -45,6 +45,7 @@ namespace Saga.Forest.World
         {
             if (transform.childCount == 0) BuildVisual();
             _visual = transform.Find("Visual");
+            ReplaceWithUnifiedModel(); // U-0036 A — 통일 자연 소품 세트(씬에 구운 procgen 위에 런타임으로)
             var playerGo = GameObject.FindWithTag("Player");
             _player = playerGo != null ? playerGo.transform : null;
         }
@@ -87,6 +88,40 @@ namespace Saga.Forest.World
             canopyMat.color = new Color(0.25f, 0.5f, 0.2f);
             canopy.GetComponent<MeshRenderer>().sharedMaterial = canopyMat;
             Object.Destroy(canopy.GetComponent<Collider>());
+        }
+
+        /// <summary>U-0036 A — 통일 세트 나무(`World/tree_broadleaf_01`)가 있으면 구워진 Visual 을 그것으로 바꾼다.
+        /// 키는 옛 Visual 의 렌더러 높이에 맞춘다(세계 축척 불변). 없으면 그대로.</summary>
+        private void ReplaceWithUnifiedModel()
+        {
+            var prefab = ForestNatureModels.FruitTree();
+            if (prefab == null || _visual == null) return;
+            float oldHeight = 0f;
+            var rs = _visual.GetComponentsInChildren<Renderer>(true);
+            if (rs.Length > 0) { var b = rs[0].bounds; foreach (var r in rs) b.Encapsulate(r.bounds); oldHeight = b.size.y; }
+            var inst = Object.Instantiate(prefab, transform, false);
+            inst.name = "Visual";
+            inst.transform.localPosition = _visual.localPosition;
+            foreach (var c in inst.GetComponentsInChildren<Collider>(true)) Object.Destroy(c);
+            var cache = new System.Collections.Generic.Dictionary<Material, Material>();
+            var mats = new System.Collections.Generic.List<Material>();
+            Bounds nb = default; bool any = false;
+            foreach (var r in inst.GetComponentsInChildren<Renderer>(true))
+            {
+                r.GetSharedMaterials(mats);
+                bool changed = false;
+                for (int i = 0; i < mats.Count; i++)
+                {
+                    var made = Saga.Core.Region.RegionMaterials.FromGltf(mats[i], cache, out _);
+                    if (made != null && made != mats[i]) { mats[i] = made; changed = true; }
+                }
+                if (changed) r.SetSharedMaterials(mats);
+                if (!any) { nb = r.bounds; any = true; } else nb.Encapsulate(r.bounds);
+            }
+            if (!any || nb.size.y < 0.01f) { Object.Destroy(inst); return; }
+            if (oldHeight > 0.5f) inst.transform.localScale = Vector3.one * (oldHeight / nb.size.y);
+            Object.Destroy(_visual.gameObject);
+            _visual = inst.transform;
         }
 
         private void Update()
