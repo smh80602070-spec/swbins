@@ -92,3 +92,6 @@ Thumbs.db
 # 웹 인물 엔진판(로컬 산출물 — tools/char-forge/engine_characters.sh --install)
 Assets/Art/CharactersDex/
 Assets/Art/CharactersDex.meta
+# 299 몸·동작을 가리키는 런타임 목록(`Saga/Crowd/Build Body List`) — 로컬 전용(몸이 저장소 밖이라)
+Assets/SagaCore/Resources/CrowdBodyList.asset
+Assets/SagaCore/Resources/CrowdBodyList.asset.meta

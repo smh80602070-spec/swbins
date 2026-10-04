@@ -62,6 +62,7 @@ namespace Saga.Forest.World
             Kind = role;
             float h = BodyHeight;
             if (role != Role.Kid && string.IsNullOrEmpty(data.Body)) BuildOrb();
+            else if (CrowdBodies.Available && CrowdBodies.Spawn(data.Key, transform, h) != null) Rigged = true; // U-0040 — 자체툴 인물 299(로컬 설치가 있을 때), 없으면 아래 기존 몸
             else if (NpcIdle.SpawnRigged(model, transform, h) != null) Rigged = true;
             else CharacterVisual.SpawnFallbackCapsule(transform, h, role == Role.Kid ? new Color(0.85f, 0.3f, 0.25f) : new Color(0.75f, 0.55f, 0.3f));
             _visual = transform.Find("Visual");
