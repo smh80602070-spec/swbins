@@ -119,6 +119,7 @@ namespace Saga.Forest.World
         {
             var item = FurnitureItem.Get(itemId);
             if (item == null) return;
+            if (TrySpawnModel(cell, itemId)) return; // U-0033 — 자체툴 실내 물건 3D. 없으면 아래 도형.
 
             var visual = GameObject.CreatePrimitive(item.IsCylinder ? PrimitiveType.Cylinder : PrimitiveType.Cube);
             visual.name = $"Furniture_{cell.x}_{cell.y}";
@@ -135,6 +136,46 @@ namespace Saga.Forest.World
             mat.color = SetColor(item.Set);
             visual.GetComponent<MeshRenderer>().sharedMaterial = mat;
             Object.Destroy(visual.GetComponent<Collider>());
+        }
+
+        private const float ModelMaxSize = 0.9f; // 한 칸(1m) 안에 — 가장 넓은 변이 이를 넘으면 줄인다.
+
+        /// <summary>U-0033 — 가구 id 에 맞는 GLB 가 있으면 그것을(툰 재질·콜라이더 없음·바닥을 칸 높이에) 세운다. 없으면 false.</summary>
+        private bool TrySpawnModel(Vector2Int cell, string itemId)
+        {
+            var prefab = ForestFurnitureModels.Load(itemId);
+            if (prefab == null) return false;
+            var go = Object.Instantiate(prefab, _visualsRoot);
+            go.name = $"Furniture_{cell.x}_{cell.y}";
+            go.transform.localRotation = Quaternion.identity;
+            go.transform.localScale = Vector3.one;
+            foreach (var c in go.GetComponentsInChildren<Collider>(true)) Object.Destroy(c);
+
+            var cache = new System.Collections.Generic.Dictionary<Material, Material>();
+            var mats = new System.Collections.Generic.List<Material>();
+            Bounds b = default;
+            bool any = false;
+            foreach (var r in go.GetComponentsInChildren<Renderer>(true))
+            {
+                r.GetSharedMaterials(mats);
+                bool changed = false;
+                for (int i = 0; i < mats.Count; i++)
+                {
+                    var made = Saga.Core.Region.RegionMaterials.FromGltf(mats[i], cache, out _);
+                    if (made != null && made != mats[i]) { mats[i] = made; changed = true; }
+                }
+                if (changed) r.SetSharedMaterials(mats);
+                if (!any) { b = r.bounds; any = true; } else b.Encapsulate(r.bounds);
+            }
+            if (!any) { Object.Destroy(go); return false; }
+
+            float wide = Mathf.Max(b.size.x, b.size.z);
+            float k = wide > ModelMaxSize ? ModelMaxSize / wide : 1f;
+            go.transform.localScale = Vector3.one * k;
+            // 줄인 뒤 바닥(b.min.y 는 월드값 — 부모 변환 없이 지역으로 바꿔 계산)이 칸 높이에 닿도록.
+            float bottomLocal = (b.min.y - go.transform.position.y) * k;
+            go.transform.localPosition = ForestHomeState.CellToLocal(cell) + new Vector3(0f, -bottomLocal, 0f);
+            return true;
         }
 
         // 웹판 `data-village.js` FURN_SETS 색 그대로(안방·사랑방·부엌·뜰).
