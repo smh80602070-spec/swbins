@@ -329,6 +329,25 @@ def _victory():
     return False, [(0, idle), (10, up), (16, up2), (24, up), (50, up), (66, idle)]
 
 
+def _taunt():
+    """도발(K-0066) — 숨을 들이켜 몸을 젖히며 왼팔 방패를 머리 위로 치켜들었다가 가슴을 펴고 버틴 뒤 내린다. 오른손 칼은 허리 옆, 발은 그 자리(한 번 재생)."""
+    feet = {'foot_l': (0.18, 0.06, 0.104), 'foot_r': (-0.16, -0.04, 0.104)}
+    fdir = {'foot_l': (0.05, 1, -0.6), 'foot_r': (-0.05, 1, -0.6)}
+    idle = P(base=('Sword_Idle', 0), pelvis=(0, 0, -0.02),
+             dirs=dict(fdir, hand_l=(0.1, 0.3, -1), hand_r=(0, 1, 0.1)),
+             ik={'hand_l': (0.25, 0.08, 0.96), 'hand_r': (-0.25, 0.10, 0.99), **feet})
+    wind = P(base=('Sword_Idle', 0), pelvis=(0, 0.02, -0.07),
+             dirs=dict(fdir, spine_02=(0, 0.10, 1), spine_03=(0, 0.12, 1), neck_01=(0, 0.14, 1), hand_l=(0.2, 0.5, -0.6), hand_r=(0, 1, 0.1)),
+             ik={'hand_l': (0.30, 0.18, 0.88), 'hand_r': (-0.25, 0.10, 0.99), **feet})
+    up = P(base=('Sword_Idle', 0), pelvis=(0, -0.01, 0.0),
+           dirs=dict(fdir, spine_01=(0, -0.04, 1), spine_02=(0, -0.08, 1), spine_03=(0, -0.12, 1), neck_01=(0, -0.20, 1),
+                     clavicle_l=(1, -0.2, 0.2), hand_l=(0.25, 0.2, 1), hand_r=(0, 1, 0.1)),
+           pole={'hand_l': (1, -0.1, -0.2)},
+           ik={'hand_l': (0.42, 0.14, 1.98), 'hand_r': (-0.25, 0.10, 0.99), **feet})
+    up2 = dict(up, pelvis=(0, -0.01, 0.025), ik={'hand_l': (0.44, 0.14, 2.02), 'hand_r': (-0.25, 0.10, 0.99), **feet})
+    return False, [(0, idle), (8, wind), (16, up), (22, up2), (30, up), (44, up2), (58, idle)]
+
+
 def _stun_loop():
     """기절·비틀 — 무릎이 풀려 낮아지고 상체가 앞으로 처져 머리가 떨궈지며, 두 팔은 늘어져 좌우로 천천히 휘청인다."""
     def k(sway, dip):
@@ -421,6 +440,7 @@ CLIPS = {
     'CF_Dagger_Slash_B': _dagger_slash_b,
     'CF_Sword_Slash_B': _sword_slash_b,
     'CF_Victory': _victory,
+    'CF_Taunt': _taunt,
     'CF_Stun_Loop': _stun_loop,
     'CF_Hit_Back': _hit_back,
     'CF_Mantle': _mantle,

@@ -13,4 +13,10 @@ node tools/glb-compress/decode.mjs saga-web/shared/assets/characters3d "$OUT"
 if [ "${1:-}" = "--install" ]; then
   case "${2:-all}" in godot|all) mkdir -p saga-godot/assets/characters_dex && cp -r "$OUT"/. saga-godot/assets/characters_dex/ && echo "Godot 설치: saga-godot/assets/characters_dex";; esac
   case "${2:-all}" in unity|all) mkdir -p saga-unity/Assets/Art/CharactersDex && cp -r "$OUT"/. saga-unity/Assets/Art/CharactersDex/ && echo "Unity 설치: saga-unity/Assets/Art/CharactersDex";; esac
+  # Unity 는 공용 동작 한 벌(dj_doseo 의 _anims.glb, 22종 — K-0066 으로 kneel·heal·taunt·blocked 포함)을 anims/crowd_anims.glb 로 쓴다.
+  # 동작은 Blender 로 굽는 로컬 산출이라 없는 PC 는 `bash tools/char-forge/vroid_batch.sh --only dj_doseo`(몸 하나 약 3분, 입력 _in/vroid/dj_doseo.glb 필요) 뒤 다시.
+  case "${2:-all}" in unity|all)
+    if [ -e tools/char-forge/_out/vroid/dj_doseo/dj_doseo_anims.glb ]; then
+      mkdir -p saga-unity/Assets/Art/CharactersDex/anims && cp tools/char-forge/_out/vroid/dj_doseo/dj_doseo_anims.glb saga-unity/Assets/Art/CharactersDex/anims/crowd_anims.glb && echo "Unity 공용 동작: anims/crowd_anims.glb"
+    else echo "Unity 공용 동작 없음 — dj_doseo_anims.glb 를 먼저 굽는다(위 안내)"; fi;; esac
 fi

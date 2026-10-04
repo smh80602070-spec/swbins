@@ -20,7 +20,7 @@ B="${BLENDER:-/c/Program Files/Blender Foundation/Blender 5.2/blender.exe}"
 IN=tools/char-forge/_in/vroid
 OUTR=tools/char-forge/_out/vroid
 # 기본 8 + 이동·시전 10(K-0059): 클립 이름은 고돗 코드가 찾는 그대로(없으면 건너뜀). jump=도약 시작·fall=공중 루프·land=착지·climb/glide/swim=루프·mantle=턱 넘기(CF)·skill/burst=시전·plunge=낙하 공격 자세(CF)
-CLIPS="idle=Idle_Loop,walk=Walk_Loop,sprint=Sprint_Loop,attack=Sword_Attack,hit=Hit_Chest,dodge=Roll,death=Death01,pickup=PickUp_Table,jump=Jump_Start,fall=Jump_Loop,land=Jump_Land,climb=CF_Climb_Loop,glide=CF_Glide_Loop,swim=Swim_Fwd_Loop,mantle=CF_Mantle,skill=Spell_Simple_Shoot,burst=CF_Burst,plunge=CF_Plunge_Loop"
+CLIPS="idle=Idle_Loop,walk=Walk_Loop,sprint=Sprint_Loop,attack=Sword_Attack,hit=Hit_Chest,dodge=Roll,death=Death01,pickup=PickUp_Table,jump=Jump_Start,fall=Jump_Loop,land=Jump_Land,climb=CF_Climb_Loop,glide=CF_Glide_Loop,swim=Swim_Fwd_Loop,mantle=CF_Mantle,skill=Spell_Simple_Shoot,burst=CF_Burst,plunge=CF_Plunge_Loop,kneel=CF_Kneel_Loop,heal=CF_Heal,taunt=CF_Taunt,blocked=CF_Shield_Block"
 ABS="$(pwd -W 2>/dev/null || pwd)"
 mkdir -p "$OUTR"
 [ -x "$B" ] || { echo "Blender 없음: $B (BLENDER=경로)"; exit 1; }
@@ -51,10 +51,10 @@ stage() {
 do_glb()  { if [ -e "$IN/$1.vrm" ]; then cp "$IN/$1.vrm" "$OUTR/$1/$1.glb"; else cp "$IN/$1.glb" "$OUTR/$1/$1.glb"; fi; }
 do_anim() {
   local O="$OUTR/$1"
-  rm -f "$O/verify.ok" "$O/anims_move.ok"            # 다시 굽는 몸이 옛 통과 표시로 넘어가지 않게
+  rm -f "$O/verify.ok" "$O/anims_k66.ok"            # 다시 굽는 몸이 옛 통과 표시로 넘어가지 않게
   blender_low -b --factory-startup -P tools/char-forge/bake_for_rig.py -- --target "$ABS/$O/$1.glb" --map vroid --clips "$CLIPS" --out "$ABS/$O/$1_anims.glb" --check || return 1
   "$B" -b --factory-startup -P tools/char-forge/verify.py -- --glb "$ABS/$O/$1_anims.glb" --map vroid --clips "$CLIPS" </dev/null > "$O/verify.log" 2>&1
-  grep -a VERIFY_RESULT "$O/verify.log" | grep -q '"fails": \[\]' && touch "$O/verify.ok" "$O/anims_move.ok"
+  grep -a VERIFY_RESULT "$O/verify.log" | grep -q '"fails": \[\]' && touch "$O/verify.ok" "$O/anims_k66.ok"
   [ -e "$O/verify.ok" ] || { grep -a VERIFY "$O/verify.log" | tail -3; return 1; }
   rm -f "$O/$1_anims.glb.log"
 }
@@ -84,7 +84,7 @@ for vrm in "$IN"/*.vrm "$IN"/*.glb; do
   mkdir -p "$OUTR/$id"
   good=1
   stage "$id" glb  "$OUTR/$id/$id.glb"            do_glb  || good=0
-  [ $good = 1 ] && { stage "$id" anim "$OUTR/$id/anims_move.ok" do_anim || good=0; }
+  [ $good = 1 ] && { stage "$id" anim "$OUTR/$id/anims_k66.ok" do_anim || good=0; }
   [ $good = 1 ] && { stage "$id" web  "$OUTR/$id/web/$id.glb" do_web || good=0; }
   [ $good = 1 ] && { stage "$id" 2d   "tools/char-forge/_out/sprites/$id/manifest.json" do_2d || good=0; }
   [ $good = 1 ] && ok=$((ok + 1))
