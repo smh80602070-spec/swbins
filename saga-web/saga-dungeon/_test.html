@@ -7950,6 +7950,15 @@ window.requestAnimationFrame = function () { return 0; };
       return bad.length === 0 && keys.length >= 7 && V.proj(c, 'nope', 5, 5, { x: 9, y: 5 }, 40, 0) === (V.proj(c, 'phys', 5, 5, { x: 9, y: 5 }, 40, 0)) && ('원소 ' + keys.length + '종 투사체 짝');
     });
 
+    t('등급 연출(W-0057) — 등급 1~5 후광·획득 시트가 표에 있고, 줍는 글자 fx 는 등급 장비·금만 연출을 달며, 등급 장비 줍기 fx 가 등급을 싣는다', function () {
+      var V = DG.vfx2d, c = document.createElement('canvas').getContext('2d'), bad = [], n;
+      for (n = 1; n <= 5; n++) { if (!V.SHEETS['rarity_aura_' + n] || !V.SHEETS['rarity_acquire_' + n]) { bad.push('시트 ' + n); } }
+      var plain = { t: 'get', life: 1 }, gold = { t: 'get', k: 'gold', life: 0.8 }, rare = { t: 'get', rar: 4, life: 1.1 };
+      V.fxLayer(c, gold, 0, 0); V.fxLayer(c, rare, 0, 0); 
+      return bad.length === 0 && V.fxLayer(c, plain, 0, 0) === false && plain.l0 === undefined && gold.l0 === 0.8 && rare.l0 === 1.1 && V.aura(c, 9, 0, 0, 10, 0) !== undefined &&
+        DG.item.tierOf({ tier: 2 }).key === 2 && V.rarOfTier(0) === 0 && V.rarOfTier(1) === 0 && V.rarOfTier(2) === 5 && V.rarOfTier(3) === 2 && V.rarOfTier(4) === 5 && ('등급 1~5 시트 · 금/등급만 연출');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

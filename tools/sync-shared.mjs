@@ -150,14 +150,14 @@ for (const g of Object.keys(MOVING_GAMES)) {
   }
 }
 /** 전투 이펙트 시트(K-0039, W-0052) — 판이 쓰는 이펙트의 가산 합성용 `vfx_<이름>_k.webp` 만 `<판>/assets/vfx/` 로 복사한다. 판 → 이름 목록 */
-const VFX_GAMES = { 'saga-story': ['spark_hit', 'crit_flash', 'death_smoke', 'levelup_burst'], 'saga-dungeon': ['spark_hit', 'crit_flash', 'death_smoke', 'levelup_burst', 'water_proj', 'fire_proj', 'ice_proj', 'lightning_proj', 'wind_proj', 'light_proj', 'fire_hit', 'ice_hit', 'lightning_hit', 'wind_hit', 'light_hit', 'water_hit'] };
+const VFX_GAMES = { 'saga-story': ['spark_hit', 'crit_flash', 'death_smoke', 'levelup_burst'], 'saga-dungeon': ['spark_hit', 'crit_flash', 'death_smoke', 'levelup_burst', 'coin_pop', 'rarity_aura_2', 'rarity_aura_5', 'rarity_acquire_2', 'rarity_acquire_5', 'water_proj', 'fire_proj', 'ice_proj', 'lightning_proj', 'wind_proj', 'light_proj', 'fire_hit', 'ice_hit', 'lightning_hit', 'wind_hit', 'light_hit', 'water_hit'] };
 for (const g of Object.keys(VFX_GAMES)) {
   for (const n of VFX_GAMES[g]) {
-    const f = 'vfx_' + n + '_k.webp', from = path.join(WEB, 'shared', 'assets', 'vfx', f), to = path.join(WEB, g, 'assets', 'vfx', f);
+    const rr = n.indexOf('rarity_') === 0, f = rr ? n + '_k.webp' : 'vfx_' + n + '_k.webp', dd = rr ? 'rarity' : 'vfx', from = path.join(WEB, 'shared', 'assets', dd, f), to = path.join(WEB, g, 'assets', dd, f);
     total++;
-    if (!fs.existsSync(from)) { console.log(`FAIL 이펙트 정본 없음 shared/assets/vfx/${f}`); bad++; continue; }
+    if (!fs.existsSync(from)) { console.log(`FAIL 이펙트 정본 없음 shared/assets/${dd}/${f}`); bad++; continue; }
     if (fs.existsSync(to) && fs.readFileSync(to).equals(fs.readFileSync(from))) continue;
-    if (check) { console.log(`DIFF ${g}/assets/vfx/${f} ≠ shared`); bad++; continue; }
+    if (check) { console.log(`DIFF ${g}/assets/${dd}/${f} ≠ shared`); bad++; continue; }
     fs.mkdirSync(path.dirname(to), { recursive: true });
     fs.copyFileSync(from, to);
     copied++;

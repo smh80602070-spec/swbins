@@ -14,6 +14,8 @@
     spark_hit: [8, 12, 0], crit_flash: [8, 12, 0], slash_arc: [8, 12, 0], death_smoke: [10, 12, 0], dust_step: [8, 12, 0],
     heal_ring: [12, 12, 1], heal_cross: [12, 12, 1], buff_up: [10, 12, 1], debuff_down: [10, 12, 1], shield_bubble: [12, 12, 1],
     levelup_burst: [12, 12, 0], coin_pop: [10, 12, 0],
+    rarity_acquire_1: [12, 12, 0], rarity_acquire_2: [12, 12, 0], rarity_acquire_3: [12, 12, 0], rarity_acquire_4: [12, 12, 0], rarity_acquire_5: [12, 12, 0],
+    rarity_aura_1: [8, 12, 1], rarity_aura_2: [8, 12, 1], rarity_aura_3: [8, 12, 1], rarity_aura_4: [8, 12, 1], rarity_aura_5: [8, 12, 1],
     fire_proj: [8, 12, 1], water_proj: [8, 12, 1], lightning_proj: [8, 12, 1], ice_proj: [8, 12, 1], wind_proj: [8, 12, 1], earth_proj: [8, 12, 1], light_proj: [8, 12, 1],
     fire_hit: [10, 12, 0], water_hit: [10, 12, 0], lightning_hit: [10, 12, 0], ice_hit: [10, 12, 0], wind_hit: [10, 12, 0], earth_hit: [10, 12, 0], light_hit: [10, 12, 0]
   };
@@ -24,12 +26,14 @@
   var imgs = {};
 
   function base() { var c = global.DG.cfg && global.DG.cfg.vfx; return (c && c.base) || 'assets/vfx/'; }
+  /** 등급 시트(K-0048 `rarity_*`)는 다른 폴더·이름꼴(`rarity_aura_3_k.webp`) */
+  function urlOf(name) { return name.indexOf('rarity_') === 0 ? 'assets/rarity/' + name + '_k.webp' : base() + 'vfx_' + name + '_k.webp'; }
 
   function sheet(name) {
     var e = imgs[name];
     if (!e) {
       e = imgs[name] = { img: null, ok: false };
-      if (global.Image && SHEETS[name]) { var im = new global.Image(); im.onload = function () { e.ok = true; }; im.src = base() + 'vfx_' + name + '_k.webp'; e.img = im; }
+      if (global.Image && SHEETS[name]) { var im = new global.Image(); im.onload = function () { e.ok = true; }; im.src = urlOf(name); e.img = im; }
     }
     return e.ok ? e.img : null;
   }
@@ -61,9 +65,11 @@
    * f.life 는 남은 초, 처음 값을 f.l0 에 한 번 적어 나이를 센다. (x,y) = 화면 좌표(맞은 몸 가운데). 그린 게 없으면 false. 다른 fx 는 건드리지 않는다
    */
   function fxLayer(ctx, f, x, y) {
-    if (!f || (f.t !== 'hit' && f.t !== 'pop' && f.t !== 'elem' && f.t !== 'lvl')) { return false; }
+    if (!f || (f.t !== 'hit' && f.t !== 'pop' && f.t !== 'elem' && f.t !== 'lvl' && f.t !== 'get')) { return false; }
+    if (f.t === 'get' && !f.rar && f.k !== 'gold') { return false; }   // 줍는 글자 fx 중 등급 장비·금만 연출을 단다
     if (f.l0 === undefined) { f.l0 = f.life; }
     var age = f.l0 - f.life, big = f.boss || f.l0 > 0.6;
+    if (f.t === 'get') { return f.rar ? draw(ctx, 'rarity_acquire_' + Math.min(5, f.rar), x, y, 132, age, { speed: 1.3 }) : draw(ctx, 'coin_pop', x, y, 62, age, { speed: 1.4 }); }   // 장비 등급(rar 1~5) 획득 연출 · 금 동전
     if (f.t === 'lvl') { return draw(ctx, 'levelup_burst', x, y, 170, age, { speed: 1.1 }); }   // 레벨업 — 판이 cfg.vfx.levelup 으로 쌓는 fx
     if (f.t === 'elem') { return ELEM_HIT[f.el] && !f.dot ? draw(ctx, ELEM_HIT[f.el], x, y, 76, age, { speed: 1.5 }) : false; }   // 원소 피해 숫자 — 몇 초에 걸치는 독(dot)은 틱마다 안 터뜨린다
     if (f.t === 'hit') {
@@ -87,6 +93,12 @@
     return true;
   }
 
+  /** 사가블로 장비 등급(0 상품~4 전설) → 등급 시트 번호 — 이름표 색과 색상이 가까운 것: 명품(노랑)·전설(금)=5 주황금, 보물(초록)=2 초록. 상품·양품은 연출 없음(0) */
+  function rarOfTier(key) { return key === 3 ? 2 : (key >= 2 ? 5 : 0); }
+
+  /** 바닥에 놓인 등급 물건의 후광 — rar = 등급 1~5, now ms. 못 받았으면 false */
+  function aura(ctx, rar, x, y, size, now) { return draw(ctx, 'rarity_aura_' + Math.max(1, Math.min(5, rar)), x, y, size, now / 1000, { alpha: 0.85 }); }
+
   /** 미리 받아 둔다 — 첫 타격에 한 박자 늦지 않게 */
   function preload(names) { (names || Object.keys(SHEETS)).forEach(sheet); }
 
@@ -98,5 +110,5 @@
 
   preload(((global.DG.cfg && global.DG.cfg.vfx && global.DG.cfg.vfx.preload) || []).concat(['spark_hit', 'crit_flash', 'death_smoke']));   // 첫 타격에 한 박자 늦지 않게 — 판이 cfg.vfx.preload 로 더 주면 같이
 
-  global.DG.vfx2d = { draw: draw, fxLayer: fxLayer, proj: proj, PROJ: PROJ, frameAt: frameAt, ELEM_HIT: ELEM_HIT, preload: preload, SHEETS: SHEETS, FRAME: FRAME };
+  global.DG.vfx2d = { draw: draw, fxLayer: fxLayer, aura: aura, rarOfTier: rarOfTier, proj: proj, PROJ: PROJ, frameAt: frameAt, ELEM_HIT: ELEM_HIT, preload: preload, SHEETS: SHEETS, FRAME: FRAME };
 })(typeof window !== 'undefined' ? window : this);

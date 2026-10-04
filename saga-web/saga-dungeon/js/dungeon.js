@@ -4279,7 +4279,7 @@
          있으므로 주운 즉시 지갑으로 넣는다(재료·물약·감정서와 같은 대접) */
       if (run.town) { core.save.player.gold += dp.gold; }
       else { run.loot.gold += dp.gold; }
-      fx.push({ t: 'get', x: dp.x, y: dp.y, text: '+' + core.fmt(dp.gold), life: 0.8 });
+      fx.push({ t: 'get', x: dp.x, y: dp.y, text: '+' + core.fmt(dp.gold), life: 0.8, k: 'gold' });
       sfx('gold');
     } else if (dp.kind === 'scroll') {
       /* 감정서도 재료처럼 **바로 주머니로** — 노획물 정산을 타지 않는다 */
@@ -4321,7 +4321,7 @@
     } else {
       run.loot.items.push(dp.item);
       var t = global.DG.item.tierOf(dp.item);
-      fx.push({ t: 'get', x: dp.x, y: dp.y, text: global.DG.item.name(dp.item), color: t.color, life: 1.1 });
+      fx.push({ t: 'get', x: dp.x, y: dp.y, text: global.DG.item.name(dp.item), color: t.color, life: 1.1, rar: global.DG.vfx2d ? global.DG.vfx2d.rarOfTier(t.key) : 0 });
       /* 고유가 떨어지면 따로 알린다 — 원작에서 유니크는 **소리부터** 다르다.
          2026-08-26 부터 여기도 실제로 소리가 다르다(sfx.js 의 'uniq' — 그 종소리) */
       var uq2 = global.DG.item.uniqOf(dp.item);
