@@ -641,6 +641,30 @@
    ]
   },
   {
+   "id": "map",
+   "src": "saga-assets/map",
+   "recursive": true,
+   "include": [
+    "*.png",
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0042 월드 지도 일러스트 5(글씨 없음) + 지역 아이콘 65(64px, 판별 색·코드 상징) + regions.json(지역 목록)",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/map"
+    },
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/map",
+     "sidecar": [
+      ".import"
+     ]
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,

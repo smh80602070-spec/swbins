@@ -1,0 +1,12 @@
+{
+ "id": "story_beyond_future",
+ "generator": "tools/ai-art/make_map.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "game": "story",
+ "region_key": "beyond_future",
+ "symbol": "gear",
+ "size": [
+  64,
+  64
+ ]
+}

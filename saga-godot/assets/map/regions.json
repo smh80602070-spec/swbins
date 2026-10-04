@@ -1,0 +1,340 @@
+{
+ "note": "K-0042 지역 아이콘 목록 — 지역 이름은 판 데이터에서 읽은 것(그림에는 글씨 없음)",
+ "regions": {
+  "dungeon": [
+   {
+    "key": "jungwon",
+    "name": "중원 벌판",
+    "symbol": "wheat"
+   },
+   {
+    "key": "neon",
+    "name": "잿빛 폐도시",
+    "symbol": "city"
+   },
+   {
+    "key": "saltmarsh",
+    "name": "소금 개펄",
+    "symbol": "wave"
+   },
+   {
+    "key": "hellgate",
+    "name": "지옥 균열",
+    "symbol": "flame"
+   },
+   {
+    "key": "solar",
+    "name": "태양 신도시",
+    "symbol": "sun"
+   },
+   {
+    "key": "silkroad",
+    "name": "서역 모랫길",
+    "symbol": "dune"
+   },
+   {
+    "key": "heaven",
+    "name": "천계 사당",
+    "symbol": "cloud"
+   },
+   {
+    "key": "snowfort",
+    "name": "북방 설산",
+    "symbol": "snow"
+   },
+   {
+    "key": "scrap",
+    "name": "기계 황무지",
+    "symbol": "gear"
+   }
+  ],
+  "forest": [
+   {
+    "key": "eoksae",
+    "name": "억새 바람벌",
+    "symbol": "wheat"
+   },
+   {
+    "key": "yoseong",
+    "name": "버섯 요정골",
+    "symbol": "mushroom"
+   },
+   {
+    "key": "solsup",
+    "name": "푸른 솔숲",
+    "symbol": "pine"
+   },
+   {
+    "key": "neoldeol",
+    "name": "이끼 돌너덜",
+    "symbol": "rock"
+   },
+   {
+    "key": "eoseureum",
+    "name": "어스름 고목숲",
+    "symbol": "deadtree"
+   },
+   {
+    "key": "kkotip",
+    "name": "꽃잎 언덕",
+    "symbol": "flower"
+   },
+   {
+    "key": "georin",
+    "name": "거인 바위 고개",
+    "symbol": "mountain"
+   },
+   {
+    "key": "bandi",
+    "name": "반딧불 참나무숲",
+    "symbol": "firefly"
+   }
+  ],
+  "go": [
+   {
+    "key": "home",
+    "name": "고향 들녘",
+    "symbol": "house"
+   },
+   {
+    "key": "plain",
+    "name": "푸른 벌판",
+    "symbol": "wheat"
+   },
+   {
+    "key": "bamboo",
+    "name": "대숲 골짜기",
+    "symbol": "bamboo"
+   },
+   {
+    "key": "canyon",
+    "name": "붉은 협곡",
+    "symbol": "mountain"
+   },
+   {
+    "key": "marsh",
+    "name": "안개 늪",
+    "symbol": "wave"
+   },
+   {
+    "key": "ruins",
+    "name": "옛 성터 고원",
+    "symbol": "ruin"
+   }
+  ],
+  "story": [
+   {
+    "key": "sinya",
+    "name": "신야성",
+    "symbol": "house"
+   },
+   {
+    "key": "heodo",
+    "name": "허도",
+    "symbol": "castle"
+   },
+   {
+    "key": "field",
+    "name": "허창 들판",
+    "symbol": "wheat"
+   },
+   {
+    "key": "gangneungjin",
+    "name": "강릉진",
+    "symbol": "wave"
+   },
+   {
+    "key": "forest",
+    "name": "오림 숲",
+    "symbol": "pine"
+   },
+   {
+    "key": "namjeongseong",
+    "name": "남정성",
+    "symbol": "castle"
+   },
+   {
+    "key": "cave",
+    "name": "한중 굴혈",
+    "symbol": "cave"
+   },
+   {
+    "key": "gisanchae",
+    "name": "기산채",
+    "symbol": "mountain"
+   },
+   {
+    "key": "gorge",
+    "name": "호로곡(葫蘆谷)",
+    "symbol": "flame"
+   },
+   {
+    "key": "ruin",
+    "name": "낙양 옛터(洛陽 舊址)",
+    "symbol": "ruin"
+   },
+   {
+    "key": "deepcave",
+    "name": "검각 암굴(劍閣 巖窟)",
+    "symbol": "cave"
+   },
+   {
+    "key": "beyond_past",
+    "name": "문 너머 · 옛 전장(門外 古戰場)",
+    "symbol": "sword"
+   },
+   {
+    "key": "beyond_now",
+    "name": "문 너머 · 무너진 도심(門外 廢都心)",
+    "symbol": "city"
+   },
+   {
+    "key": "beyond_future",
+    "name": "문 너머 · 궤도 기지(門外 軌道基地)",
+    "symbol": "gear"
+   }
+  ],
+  "realm": [
+   {
+    "key": "you",
+    "name": "유주",
+    "symbol": "snow"
+   },
+   {
+    "key": "ji",
+    "name": "기주",
+    "symbol": "wheat"
+   },
+   {
+    "key": "bing",
+    "name": "병주",
+    "symbol": "mountain"
+   },
+   {
+    "key": "qing",
+    "name": "청주",
+    "symbol": "wave"
+   },
+   {
+    "key": "yan",
+    "name": "연주",
+    "symbol": "wheat"
+   },
+   {
+    "key": "xu",
+    "name": "서주",
+    "symbol": "wave"
+   },
+   {
+    "key": "yu",
+    "name": "예주",
+    "symbol": "wheat"
+   },
+   {
+    "key": "si",
+    "name": "사예",
+    "symbol": "castle"
+   },
+   {
+    "key": "yong",
+    "name": "옹주",
+    "symbol": "mountain"
+   },
+   {
+    "key": "liang",
+    "name": "양주(涼)",
+    "symbol": "dune"
+   },
+   {
+    "key": "jing",
+    "name": "형주",
+    "symbol": "wave"
+   },
+   {
+    "key": "yi",
+    "name": "익주",
+    "symbol": "pine"
+   },
+   {
+    "key": "yang",
+    "name": "양주(揚)",
+    "symbol": "wave"
+   },
+   {
+    "key": "kr",
+    "name": "한국",
+    "symbol": "pine"
+   },
+   {
+    "key": "jp",
+    "name": "일본",
+    "symbol": "wave"
+   },
+   {
+    "key": "jiao",
+    "name": "교주",
+    "symbol": "bamboo"
+   },
+   {
+    "key": "xi",
+    "name": "서역",
+    "symbol": "dune"
+   },
+   {
+    "key": "nz",
+    "name": "남중",
+    "symbol": "bamboo"
+   },
+   {
+    "key": "tz",
+    "name": "천축",
+    "symbol": "temple"
+   },
+   {
+    "key": "mb",
+    "name": "막북",
+    "symbol": "snow"
+   },
+   {
+    "key": "cp",
+    "name": "임읍",
+    "symbol": "wave"
+   },
+   {
+    "key": "fu",
+    "name": "균열",
+    "symbol": "flame"
+   },
+   {
+    "key": "pf",
+    "name": "폐허",
+    "symbol": "ruin"
+   },
+   {
+    "key": "my",
+    "name": "묘역",
+    "symbol": "tomb"
+   },
+   {
+    "key": "dj",
+    "name": "대진",
+    "symbol": "city"
+   },
+   {
+    "key": "xb",
+    "name": "선비",
+    "symbol": "dune"
+   },
+   {
+    "key": "nh",
+    "name": "남해",
+    "symbol": "wave"
+   },
+   {
+    "key": "sl",
+    "name": "실크로드",
+    "symbol": "dune"
+   }
+  ]
+ }
+}
