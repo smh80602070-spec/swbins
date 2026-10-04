@@ -5,7 +5,7 @@ import { open, sleep } from './pw.mjs';
 const r = await open('saga-realm');
 const { page } = r;
 await page.addInitScript(() => { window.DG_NO_ACCOUNT = true; });   // 가입 화면 없이 진단 키로 시작
-await page.goto(r.url('rts.html')); await sleep(1500);
+await page.goto(r.url('rts.html?diff=1')); await sleep(1500);
 const out = await page.evaluate(async () => {
   const V = DG.rts.view, S = V.state(), res = {};
   S.speed = 4; S.raid.next = S.tick + 5;
@@ -21,7 +21,7 @@ const out = await page.evaluate(async () => {
 });
 console.log(JSON.stringify(out));
 // 둘째 판 — 적 기지를 쳐서 승리(W-0034)
-await page.goto(r.url('rts.html')); await sleep(1500);
+await page.goto(r.url('rts.html?diff=1')); await sleep(1500);
 const win = await page.evaluate(async () => {
   const S = DG.rts.view.state(), sb = S.buildings[-1], U = DG.rts.units; S.raid.next = 1e9; S.speed = 4; sb.hp = 3;
   U.spawn(S, 'soldier', 0, sb.x - 0.5, sb.y + 1.5);

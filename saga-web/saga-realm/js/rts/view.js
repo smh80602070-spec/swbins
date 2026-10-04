@@ -186,7 +186,8 @@
       h += '</div>';
     } else {
       for (id in sel) { if (S.units[id]) { n++; kinds[S.units[id].t] = (kinds[S.units[id].t] || 0) + 1; } }
-      if (n) { h += '<div class="sl-h"><b>선택 ' + n + '기</b></div><div class="sl-u">' + Object.keys(kinds).map(function (t) { return U.UDEF[t].icon + ' ' + U.UDEF[t].name + ' ' + kinds[t]; }).join(' · ') + '</div><small>우클릭으로 이동</small>' + R().heroes.skillBtn(S, sel); }
+      if (n) { h += '<div class="sl-h"><b>선택 ' + n + '기</b></div><div class="sl-u">' + Object.keys(kinds).map(function (t) { return U.UDEF[t].icon + ' ' + U.UDEF[t].name + ' ' + kinds[t]; }).join(' · ') + '</div><small>우클릭(폰은 땅을 눌러)으로 이동</small>' + R().heroes.skillBtn(S, sel); }
+      else if (U.count(S, 0)) { h += '<div class="sl-btns"><button data-all="1" title="내 군대 전부 고르기"><span>🛡️</span><small>전군<br>선택</small></button></div>'; }
     }
     if (h !== els.sel.__h) { els.sel.innerHTML = h; els.sel.__h = h; }
     els.sel.classList.toggle('show', !!h);
@@ -234,6 +235,17 @@
     void U;
   }
 
+  /** 폰에서 짧게 누름 — 내 유닛이면 고르고, 군영이면 군영을 고르고, 아니면 고른 유닛이 있을 때 그 칸으로 보낸다 */
+  function tapAt(p) {
+    var id, u, best = null, bd = 0.8, dd, t = toTile(p.x, p.y), bb;
+    for (id in S.units) { u = S.units[id]; if (u.team !== 0) { continue; } dd = Math.hypot(u.x - (p.x - size().w / 2) / px() - cam.x, u.y - (p.y - size().h / 2) / px() - cam.y); if (dd < bd) { bd = dd; best = u; } }
+    if (best) { sel = {}; selB = 0; sel[best.id] = true; return; }
+    bb = R().rules.buildingAt(S, t.x, t.y);
+    if (bb && bb.t === 'barracks') { sel = {}; selB = bb.id; return; }
+    if (Object.keys(sel).some(function (k) { return S.units[k]; })) { commandMove(p); return; }
+    sel = {}; selB = 0;
+  }
+
   /** 우클릭(끌지 않음) — 고른 유닛을 그 칸으로 보낸다(둘레에 흩어서) */
   function commandMove(p) {
     var ids = Object.keys(sel).filter(function (id) { return S.units[id]; }), t = toTile(p.x, p.y);
@@ -249,6 +261,18 @@
     if (!n) { say('일격 — 2.5칸 안에 적이 없거나 쿨다운 중'); }
     dirty = true; hud();
   }
+  /** 새 판을 열 때 난이도를 묻는다 — 고르기 전엔 멈춰 있다. 이어하기·주소의 ?diff= 가 있으면 안 묻는다 */
+  function askDiff() {
+    var box2 = global.document.createElement('div'), names = R().rules.DIFF.names;
+    box2.id = 'rts-diff'; box2.className = 'rt-box';
+    box2.innerHTML = '<h3>난이도</h3><p>적 기지가 멀리 서 있다. 군대를 키워 쳐부수거나, 거점이 먼저 무너지면 진다.</p>' + names.map(function (n, i) { return '<button data-diff="' + i + '"' + (i === 1 ? ' class="on"' : '') + '>' + n + '</button>'; }).join('');
+    global.document.body.appendChild(box2); S.speed = 0;
+    box2.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-diff]'); if (!b) { return; }
+      S = R().state.create(S.seed, +b.getAttribute('data-diff')); lastSaveDay = S.day;
+      box2.parentNode.removeChild(box2); dirty = true; hud();
+    });
+  }
   function diffFromUrl() { var m = /[?&]diff=([012])/.exec(global.location ? global.location.search : ''); return m ? +m[1] : 1; }
 
   function pointerPos(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
@@ -261,6 +285,7 @@
       if (Object.keys(ptrs).length === 2) { pinch = dist2(); painting = false; panning = false; return; }
       down = { btn: e.button, x: p.x, y: p.y, moved: false };
       if (e.button === 1 || e.button === 2 || e.shiftKey || tool === 'pan') { panning = true; panLast = p; return; }
+      if (tool === 'select' && e.pointerType === 'touch') { down.touch = true; panning = true; panLast = p; return; }   // 폰: 끌면 지도 이동, 짧게 누르면 고르기·명령
       if (tool === 'select') { box = { x0: p.x, y0: p.y, x1: p.x, y1: p.y }; return; }
       painting = true; applyAt(toTile(p.x, p.y));
     });
@@ -281,6 +306,7 @@
     function up(e) {
       var p = pointerPos(e);
       if (down && down.btn === 2 && !down.moved) { commandMove(p); }
+      else if (down && down.touch && !down.moved) { tapAt(p); dirty = true; }
       if (box) { finishBox(p); }
       down = null; delete ptrs[e.pointerId];
       if (!Object.keys(ptrs).length) { painting = false; panning = false; panLast = null; pinch = 0; }
@@ -313,6 +339,8 @@
     mini.addEventListener('pointerup', function () { md = false; });
     els.tools.addEventListener('click', function (e) { var b = e.target.closest('button[data-tool]'); if (b) { tool = b.getAttribute('data-tool'); dirty = true; } });
     els.sel.addEventListener('click', function (e) {
+      var al = e.target.closest('button[data-all]');
+      if (al) { var k; sel = {}; selB = 0; for (k in S.units) { if (S.units[k].team === 0) { sel[k] = true; } } dirty = true; hud(); return; }
       var hb = e.target.closest('button[data-hero]'), sk = e.target.closest('button[data-skill]');
       if (hb && selB) { var hr = R().heroes.train(S, selB); if (!hr.ok) { say(hr.why); } hud(); return; }
       if (sk) { castSel(); return; }
@@ -363,10 +391,12 @@
       '<canvas id="rts-mini" class="rt-box" width="240" height="150"></canvas><div id="rts-tip" class="rt-box"></div><div id="rts-sel" class="rt-box"></div><div id="rts-opts" class="rt-box"><span>세율</span><button data-tax="0">낮음</button><button data-tax="1">보통</button><button data-tax="2">높음</button><button data-view="1" class="vw">보기: 없음</button></div><a id="rts-back" class="rt-box" href="./">턴제로</a>');
     cv = $('rts-map'); ctx = cv.getContext('2d'); mini = $('rts-mini'); mctx = mini.getContext('2d');
     els = { top: $('rts-top'), tools: $('rts-tools'), speed: $('rts-speed'), tip: $('rts-tip'), opts: $('rts-opts'), sel: $('rts-sel') };
-    S = (c && c.save && c.save.rts ? R().state.restore(c.save.rts) : null) || R().state.create((Date.now() & 0xffff) + 1, diffFromUrl());
+    var saved = c && c.save && c.save.rts ? R().state.restore(c.save.rts) : null;
+    S = saved || R().state.create((Date.now() & 0xffff) + 1, diffFromUrl());
     lastSaveDay = S.day;
     var cs = R().grid.castleSite(); cam.x = cs.x + 1.5; cam.y = cs.y + 1.5;
     resize(); bindInput(); hud(); global.requestAnimationFrame(loop);
+    if (!saved && !/[?&]diff=/.test(global.location ? global.location.search : '')) { askDiff(); }
   }
 
   global.DG = global.DG || {};

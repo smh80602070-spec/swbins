@@ -17,6 +17,7 @@
   };
   var UNIT_ORDER = ['soldier', 'archer', 'cavalry'];
   var QUEUE_MAX = 5, UPKEEP = 0.2, TICK_S = 0.1, MAX_EXPAND = 8000;
+  var IMMEDIATE = 24, PATH_BUDGET = 12;   // 큰 무리에 명령해도 한 틱에 길찾기를 몰아 하지 않는다(앞 24기는 바로, 나머지는 틱마다 12기씩)
 
   function R() { return global.DG.rts; }
 
@@ -128,13 +129,17 @@
       for (dy = -r; dy <= r; dy++) { for (dx = -r; dx <= r; dx++) { if (Math.max(Math.abs(dx), Math.abs(dy)) === r && walkable(s, tx + dx, ty + dy)) { spots.push({ x: tx + dx, y: ty + dy }); } } }
       r++;
     }
-    for (i = 0; i < ids.length; i++) { u = s.units[ids[i]]; if (u) { n += moveTo(s, u, spots[Math.min(i, spots.length - 1)].x, spots[Math.min(i, spots.length - 1)].y) ? 1 : 0; } }
+    for (i = 0; i < ids.length; i++) {
+      u = s.units[ids[i]]; if (!u) { continue; }
+      var sp = spots[Math.min(i, spots.length - 1)];
+      if (i < IMMEDIATE) { n += moveTo(s, u, sp.x, sp.y) ? 1 : 0; } else { u.goal = { x: sp.x, y: sp.y }; u.path = []; u.want = { x: sp.x, y: sp.y }; n++; }
+    }
     return n;
   }
 
   /** 한 틱(0.1초) — 생산 큐 진행과 유닛 이동 */
   function tick(s) {
-    var id, q, b, u, d, step, target, dx, dy, dist;
+    var id, q, b, u, d, step, target, dx, dy, dist, budget = PATH_BUDGET;
     for (id in s.queues) {
       q = s.queues[id]; b = s.buildings[id];
       if (!b) { delete s.queues[id]; continue; }
@@ -144,6 +149,7 @@
     }
     for (id in s.units) {
       u = s.units[id]; d = statOf(u);
+      if (u.want && budget > 0) { moveTo(s, u, u.want.x, u.want.y); u.want = null; budget--; }
       if (!u.path || !u.path.length) { continue; }
       step = d.speed * TICK_S;
       while (step > 0 && u.path.length) {

@@ -608,6 +608,41 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       return same && re && plain && qs && ('영웅 왕복 같음 · 능력 재부착 · 큐 hid 보존');
     });
 
+    /* ── RTS P5(W-0036) — 큰 무리 길찾기 분산·성능·전군 선택 규칙 ─── */
+
+    t('RTS 큰 무리 명령 — 앞 24기는 바로 길을 받고 나머지는 틱마다 12기씩 받으며, 기다리는 동안에도 목적지(goal)는 있다', function () {
+      var R = DG.rts, U = R.units, s = rtsField(), cs = s.__cs, ids = [], i;
+      for (i = 0; i < 60; i++) { ids.push(U.spawn(s, 'soldier', 0, cs.x + 6.5 + (i % 10) * 0.5, cs.y - 9.5 + Math.floor(i / 10) * 0.5).id); }
+      U.moveGroup(s, ids, cs.x + 6, cs.y - 20);
+      var now = ids.filter(function (id) { return s.units[id].path.length > 0; }).length, wait = ids.filter(function (id) { return !!s.units[id].want; }).length;
+      var goals = ids.every(function (id) { return !!s.units[id].goal; });
+      U.tick(s); var w1 = ids.filter(function (id) { return !!s.units[id].want; }).length;
+      U.tick(s); U.tick(s); var w3 = ids.filter(function (id) { return !!s.units[id].want; }).length;
+      var all = ids.every(function (id) { return s.units[id].path.length > 0 || s.units[id].goal; });
+      return now === 24 && wait === 36 && goals && w1 === 24 && w3 === 0 && all && ('즉시 24 · 대기 36 → 12씩 → 3틱에 모두');
+    });
+
+    t('RTS 이동 중 무리는 기다리는 동안 딴 길로 새지 않는다(want 가 있으면 자동 접근 안 함), 시야 안 적에게 다가가기는 틱마다 10번까지', function () {
+      var R = DG.rts, U = R.units, C = R.combat, s = rtsField(), cs = s.__cs, i, u;
+      var w = U.spawn(s, 'soldier', 0, cs.x + 6.5, cs.y - 9.5); w.want = { x: cs.x + 6, y: cs.y - 20 }; w.goal = { x: cs.x + 6, y: cs.y - 20 };
+      U.spawn(s, 'cavalry', 1, cs.x + 12.5, cs.y - 9.5); C.tick(s);
+      var kept = !!w.want && w.path.length === 0 && w.goal.y === cs.y - 20;
+      var s2 = rtsField(), c2 = s2.__cs, idle = [];
+      for (i = 0; i < 30; i++) { u = U.spawn(s2, 'soldier', 0, c2.x + 6.5 + (i % 10) * 0.3, c2.y - 9.5 - Math.floor(i / 10) * 0.3); idle.push(u); }
+      U.spawn(s2, 'cavalry', 1, c2.x + 12.5, c2.y - 9.5); C.tick(s2);
+      var first = idle.filter(function (x) { return x.path.length > 0 || x.rp > 0; }).length;
+      C.tick(s2); C.tick(s2); var later = idle.filter(function (x) { return x.path.length > 0 || x.rp > 0; }).length;
+      return kept && first <= 10 && later === 30 && ('대기 중 유지 · 한 틱 최대 10 · 3틱에 전부');
+    });
+
+    t('RTS 큰 전투 — 유닛 300기가 맞붙어도 열 틱이 느려지지 않고(3초 안) 한 틱마다 상태가 깨지지 않는다(체력 ≥ 0 이거나 사라짐)', function () {
+      var R = DG.rts, U = R.units, C = R.combat, s = rtsField(), cs = s.__cs, i, t0, ms, ok = true, id, u, types = ['soldier', 'archer', 'cavalry'];
+      for (i = 0; i < 150; i++) { U.spawn(s, types[i % 3], 0, cs.x + 6 + (i % 15) * 0.7, cs.y - 20 + Math.floor(i / 15) * 0.7); U.spawn(s, types[(i + 1) % 3], 1, cs.x + 6 + (i % 15) * 0.7, cs.y - 24 - Math.floor(i / 15) * 0.7); }
+      t0 = Date.now(); for (i = 0; i < 10; i++) { s.tick++; U.tick(s); C.tick(s); } ms = Date.now() - t0;
+      for (id in s.units) { u = s.units[id]; if (!(u.hp > 0) || !isFinite(u.x) || !isFinite(u.y)) { ok = false; } }
+      return ms < 3000 && ok && Object.keys(s.units).length > 0 && ('300기 열 틱 3초 안 · 상태 정상');
+    });
+
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
       var A = DG.assets3d, ids = DG.assets3dIds, bad = [], reg = DG.cfg.assets3d.reg;
       Object.keys(reg).forEach(function (k) { reg[k].forEach(function (id) { if (!A.has('world', id)) { bad.push(k + ':' + id); } }); });

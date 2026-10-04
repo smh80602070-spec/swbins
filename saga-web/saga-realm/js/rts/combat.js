@@ -10,6 +10,7 @@
   var CASTLE_HP = 400, WALL_HP = 40, CD = 10, SIGHT = 8, TOWER_RANGE = 7, TOWER_DMG = 6, CASTLE_RANGE = 6, CASTLE_DMG = 5, BEAT = 1.5, BOUNTY = 8;
   var FIRST_RAID = 250, RAID_GAP = 200, TICKS_PER_DAY = 50, SKILL_R = 2.5, SKILL_CD = 150;
   function R() { return global.DG.rts; }
+  var pathLeft = 0;   // 한 틱에 길찾기를 몇 번까지 받아 줄지(유닛이 많아도 틱이 안 튄다)
 
   /** 상성 배율 — 공격하는 쪽이 받는 쪽을 이기는 종류면 ×1.5 */
   function mult(att, def) { return R().units.UDEF[att].beats === def ? BEAT : 1; }
@@ -56,7 +57,7 @@
     if (bd <= d.range + 0.3) {
       if (u.cd <= 0) { sb.hp -= d.atk; u.cd = CD; if (sb.hp <= 0) { sb.hp = 0; win(s); } }
       if (!u.path.length) { u.goal = null; }
-    } else if (!u.path.length && bd <= SIGHT) {
+    } else if (!u.path.length && !u.want && bd <= SIGHT) {
       approach(s, u, sb.x + 1, sb.y + 1);
     }
   }
@@ -81,19 +82,19 @@
 
   /** 길을 너무 자주 구하지 않는다 — 목표가 2칸 넘게 달라졌거나 길이 비었을 때, 10틱에 한 번만 */
   function approach(s, u, tx, ty) {
-    if (u.rp > 0) { return; }
+    if (u.rp > 0 || pathLeft <= 0) { return; }
     var g = u.goal;
-    if (!u.path.length || !g || Math.hypot(g.x - tx, g.y - ty) > 2) { R().units.moveTo(s, u, tx, ty); u.rp = 10; }
+    if (!u.path.length || !g || Math.hypot(g.x - tx, g.y - ty) > 2) { R().units.moveTo(s, u, tx, ty); u.rp = 10; pathLeft--; }
   }
 
   /** 내 유닛 — 사거리에 적이 있으면 쏘고, 가만히 있다면 시야 안의 적에게 다가간다. 이동 명령 중이면 걸으며 쏜다 */
   function playerAI(s, u, d) {
-    var foe = nearestFoe(s, u, u.path.length ? d.range : SIGHT);
+    var foe = nearestFoe(s, u, (u.path.length || u.want) ? d.range : SIGHT);
     if (!foe) { baseAI(s, u, d); return; }
     if (dist(u, foe) <= d.range) {
       if (u.cd <= 0) { hit(s, foe, d.atk * mult(u.t, foe.t), 0); u.cd = CD; }
       if (!u.path.length) { u.goal = null; }
-    } else if (!u.path.length) {
+    } else if (!u.path.length && !u.want) {
       approach(s, u, Math.floor(foe.x), Math.floor(foe.y));
     }
   }
@@ -153,7 +154,8 @@
   /** 한 틱 — 쿨다운, 교전, 망루·거점 발사, 습격 시각 */
   function tick(s) {
     if (s.over || s.won) { return; }
-    var id, u, d, UD = R().units.UDEF;
+    pathLeft = 10;
+    var id, u, d;
     if (s.raid && s.tick >= s.raid.next) { spawnWave(s); }
     for (id in s.units) {
       u = s.units[id];
