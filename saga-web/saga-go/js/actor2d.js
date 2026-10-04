@@ -11,7 +11,7 @@
   function human(ctx, ref, key, x, y, s, o) {
     var M = global.DG.mode2d;
     if (!M) { return false; }
-    var pool = M.pick('human', (ref && (ref.id || ref.name)) || key);
+    var pool = M.pick(key === 'player' ? 'me' : 'human', (ref && (ref.id || ref.name)) || key);   // 나(player)는 주인공 몸(hero_m/f), 나머지 인물은 마을 사람 몸
     if (!pool) { return false; }
     o = o || {};
     var clip = o.moving ? 'walk' : 'idle';
