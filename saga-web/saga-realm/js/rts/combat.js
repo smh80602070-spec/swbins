@@ -8,7 +8,7 @@
   'use strict';
 
   var CASTLE_HP = 400, WALL_HP = 40, CD = 10, SIGHT = 8, TOWER_RANGE = 7, TOWER_DMG = 6, CASTLE_RANGE = 6, CASTLE_DMG = 5, BEAT = 1.5, BOUNTY = 8;
-  var FIRST_RAID = 250, RAID_GAP = 200, TICKS_PER_DAY = 50;
+  var FIRST_RAID = 250, RAID_GAP = 200, TICKS_PER_DAY = 50, SKILL_R = 2.5, SKILL_CD = 150;
   function R() { return global.DG.rts; }
 
   /** 상성 배율 — 공격하는 쪽이 받는 쪽을 이기는 종류면 ×1.5 */
@@ -129,16 +129,16 @@
     }
   }
 
-  /** 이 번째 파도의 편성 — 2 + n 기, 보병·궁병·기병 차례로, 파도마다 체력 +10% */
-  function waveOf(n) {
-    var list = [], total = 2 + n, i, order = ['soldier', 'archer', 'cavalry'];
+  /** 이 번째 파도의 편성 — (2 + n) × 난이도 배율 기, 보병·궁병·기병 차례로, 파도마다 체력 +10% */
+  function waveOf(n, diff) {
+    var list = [], total = Math.max(1, Math.round((2 + n) * R().rules.DIFF.wave[diff === 0 || diff === 2 ? diff : 1])), i, order = ['soldier', 'archer', 'cavalry'];
     for (i = 0; i < total; i++) { list.push(order[(i + n) % 3]); }
     return list;
   }
 
   /** 파도를 적 기지 앞에 낸다(기지가 없으면 더는 안 온다) */
   function spawnWave(s) {
-    var U = R().units, n = s.raid.n, list = waveOf(n), sb = s.buildings[-1], i, p, u;
+    var U = R().units, n = s.raid.n, list = waveOf(n, s.diff), sb = s.buildings[-1], i, p, u;
     if (!sb || sb.hp <= 0) { s.raid.next = 1e12; return; }
     for (i = 0; i < list.length; i++) {
       p = U.nearestWalkable(s, sb.x + (i % 4), sb.y + 3 + Math.floor(i / 4)) || { x: sb.x + (i % 4), y: sb.y + 3 };
@@ -158,7 +158,8 @@
     for (id in s.units) {
       u = s.units[id];
       if (!u) { continue; }
-      d = UD[u.t];
+      d = R().units.statOf(u);
+      if (u.skillCd > 0) { u.skillCd--; }
       if (u.cd > 0) { u.cd--; } else { u.cd = 0; }
       if (u.rp > 0) { u.rp--; } else { u.rp = 0; }
       if (u.team === 1) { raiderAI(s, u, d); } else { playerAI(s, u, d); }
@@ -168,11 +169,21 @@
     if (s.won) { return; }
   }
 
+  /** 영웅의 일격 — 둘레 2.5칸 적(과 기지)에 공격×(1+지력/100)×2. 맞힌 게 있을 때만 쿨다운 15초. 맞힌 수를 돌려준다 */
+  function cast(s, u) {
+    if (!u || u.t !== 'hero' || u.skillCd > 0 || s.over || s.won) { return 0; }
+    var st = R().units.statOf(u), dmg = Math.round(st.atk * (1 + (st.wis || 0) / 100) * 2 * 10) / 10, id, v, n = 0, sb = s.buildings[-1];
+    for (id in s.units) { v = s.units[id]; if (v && v.team !== u.team && dist(u, v) <= SKILL_R) { hit(s, v, dmg, u.team); n++; } }
+    if (sb && sb.hp > 0 && rectDist(sb, u.x, u.y) <= SKILL_R) { sb.hp -= dmg; n++; if (sb.hp <= 0) { sb.hp = 0; win(s); } }
+    if (n) { u.skillCd = SKILL_CD; }
+    return n;
+  }
+
   /** 다음 습격까지 남은 날(올림), 습격이 없으면 -1 */
   function daysToRaid(s) { return s.raid && !s.won ? Math.max(0, Math.ceil((s.raid.next - s.tick) / TICKS_PER_DAY)) : -1; }
 
   global.DG = global.DG || {};
   global.DG.rts = global.DG.rts || {};
   global.DG.rts.combat = { CASTLE_HP: CASTLE_HP, WALL_HP: WALL_HP, CD: CD, SIGHT: SIGHT, TOWER_RANGE: TOWER_RANGE, FIRST_RAID: FIRST_RAID, RAID_GAP: RAID_GAP, BOUNTY: BOUNTY,
-    mult: mult, nearestFoe: nearestFoe, waveOf: waveOf, spawnWave: spawnWave, castleDist: castleDist, rectDist: rectDist, win: win, hitWall: hitWall, tick: tick, daysToRaid: daysToRaid };
+    mult: mult, nearestFoe: nearestFoe, waveOf: waveOf, spawnWave: spawnWave, castleDist: castleDist, rectDist: rectDist, win: win, cast: cast, SKILL_R: SKILL_R, SKILL_CD: SKILL_CD, hitWall: hitWall, tick: tick, daysToRaid: daysToRaid };
 })(typeof window !== 'undefined' ? window : this);

@@ -11,12 +11,17 @@
   var UDEF = {
     soldier: { name: '보병', hp: 60, atk: 8, range: 1.2, speed: 2.2, gold: 20, food: 10, train: 80, icon: '🗡️', color: '#e6dfc8', beats: 'cavalry' },
     archer:  { name: '궁병', hp: 40, atk: 7, range: 5.5, speed: 2.0, gold: 30, food: 10, train: 100, icon: '🏹', color: '#8fd16f', beats: 'soldier' },
-    cavalry: { name: '기병', hp: 80, atk: 11, range: 1.2, speed: 3.4, gold: 50, food: 20, train: 140, icon: '🐎', color: '#e8a257', beats: 'archer' }
+    cavalry: { name: '기병', hp: 80, atk: 11, range: 1.2, speed: 3.4, gold: 50, food: 20, train: 140, icon: '🐎', color: '#e8a257', beats: 'archer' },
+    /* 영웅(W-0035) — 이 표는 바탕값, 실제 능력은 유닛마다 u.st(heroes.statsOf) */
+    hero:    { name: '영웅', hp: 100, atk: 10, range: 1.4, speed: 2.6, gold: 150, food: 50, train: 200, icon: '⭐', color: '#ffd36a', beats: null }
   };
   var UNIT_ORDER = ['soldier', 'archer', 'cavalry'];
   var QUEUE_MAX = 5, UPKEEP = 0.2, TICK_S = 0.1, MAX_EXPAND = 8000;
 
   function R() { return global.DG.rts; }
+
+  /** 유닛의 전투 능력 — 영웅은 장수 능력(u.st), 나머지는 표 */
+  function statOf(u) { return u.st || UDEF[u.t]; }
 
   /** 이 타일을 밟을 수 있나 — 물 불가·건물 불가(도로는 가능)·지도 밖 불가 */
   function walkable(s, x, y) {
@@ -96,14 +101,15 @@
   }
 
   /** 군영 아래쪽에서 가장 가까운 빈 땅에 유닛을 낸다 */
-  function spawn(s, type, team, x, y) {
+  function spawn(s, type, team, x, y, hid) {
     var u = { id: s.nextUid++, t: type, team: team, x: x, y: y, hp: UDEF[type].hp, path: [], goal: null };
+    if (type === 'hero' && hid && R().heroes) { u.hid = hid; u.st = R().heroes.statsOf(hid); u.hp = u.mhp = u.st.hp; }
     s.units[u.id] = u;
     return u;
   }
-  function spawnNear(s, b, type) {
+  function spawnNear(s, b, type, hid) {
     var D = R().rules.DEFS[b.t], p = nearestWalkable(s, b.x + Math.floor(D.w / 2), b.y + D.h) || { x: b.x, y: b.y + D.h };
-    return spawn(s, type, 0, p.x + 0.5, p.y + 0.5);
+    return spawn(s, type, 0, p.x + 0.5, p.y + 0.5, hid);
   }
 
   /* ── 이동 ─────────────────────────────────────────── */
@@ -134,10 +140,10 @@
       if (!b) { delete s.queues[id]; continue; }
       if (!q.length || !b.conn) { continue; }
       q[0].left -= 1;
-      if (q[0].left <= 0) { spawnNear(s, b, q[0].t); q.shift(); }
+      if (q[0].left <= 0) { spawnNear(s, b, q[0].t, q[0].hid); q.shift(); }
     }
     for (id in s.units) {
-      u = s.units[id]; d = UDEF[u.t];
+      u = s.units[id]; d = statOf(u);
       if (!u.path || !u.path.length) { continue; }
       step = d.speed * TICK_S;
       while (step > 0 && u.path.length) {
@@ -152,6 +158,6 @@
 
   global.DG = global.DG || {};
   global.DG.rts = global.DG.rts || {};
-  global.DG.rts.units = { UDEF: UDEF, UNIT_ORDER: UNIT_ORDER, QUEUE_MAX: QUEUE_MAX, UPKEEP: UPKEEP, walkable: walkable, findPath: findPath, nearestWalkable: nearestWalkable,
+  global.DG.rts.units = { UDEF: UDEF, statOf: statOf, UNIT_ORDER: UNIT_ORDER, QUEUE_MAX: QUEUE_MAX, UPKEEP: UPKEEP, walkable: walkable, findPath: findPath, nearestWalkable: nearestWalkable,
     train: train, spawn: spawn, moveTo: moveTo, moveGroup: moveGroup, tick: tick, count: count };
 })(typeof window !== 'undefined' ? window : this);

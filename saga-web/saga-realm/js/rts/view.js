@@ -100,7 +100,7 @@
   function drawUnits() {
     var U = R().units, id, u, p, z = px(), r = z * 0.34, d, gp;
     for (id in S.units) {
-      u = S.units[id]; d = U.UDEF[u.t]; p = toScreen(u.x, u.y);
+      u = S.units[id]; d = U.statOf(u); p = toScreen(u.x, u.y);
       if (p.x < -20 || p.y < -20 || p.x > size().w + 20 || p.y > size().h + 20) { continue; }
       if (sel[id]) {
         if (u.path && u.path.length && u.goal) { gp = toScreen(u.goal.x + .5, u.goal.y + .5); ctx.strokeStyle = 'rgba(255,230,120,.55)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(gp.x, gp.y); ctx.stroke(); ctx.setLineDash([]); }
@@ -108,7 +108,7 @@
       }
       ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.2832); ctx.fillStyle = d.color; ctx.fill(); ctx.strokeStyle = u.team === 0 ? '#2b6fb8' : '#b83a2b'; ctx.lineWidth = 2; ctx.stroke();
       if (z >= 14) { ctx.font = Math.floor(r * 1.3) + 'px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#000'; ctx.fillText(d.icon, p.x, p.y + 1); }
-      if (u.hp < d.hp) { ctx.fillStyle = '#300'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2, 4); ctx.fillStyle = '#6fe07a'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2 * u.hp / d.hp, 4); }
+      var mh = u.mhp || d.hp; if (u.hp < mh) { ctx.fillStyle = '#300'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2, 4); ctx.fillStyle = '#6fe07a'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2 * u.hp / mh, 4); }
     }
     if (selB && S.buildings[selB]) { var b = S.buildings[selB], D = R().rules.DEFS[b.t], bp = toScreen(b.x, b.y); ctx.strokeStyle = '#ffd36a'; ctx.lineWidth = 2.5; ctx.strokeRect(bp.x - 1, bp.y - 1, D.w * z + 2, D.h * z + 2); }
   }
@@ -181,12 +181,12 @@
       q = S.queues[selB] || [];
       h += '<div class="sl-h"><b>군영</b> <small>' + (b.conn ? '' : '— 도로로 이어지지 않았습니다') + '</small></div><div class="sl-btns">';
       U.UNIT_ORDER.forEach(function (t) { var d = U.UDEF[t]; h += '<button data-train="' + t + '" title="' + d.name + ' ' + d.gold + '금 ' + d.food + '식량"><span>' + d.icon + '</span><small>' + d.name + '<br>' + d.gold + '금 ' + d.food + '식</small></button>'; });
-      h += '</div><div class="sl-q">';
+      h += R().heroes.recruitBtn(S) + '</div><div class="sl-q">';
       for (i = 0; i < U.QUEUE_MAX; i++) { h += q[i] ? '<i title="' + U.UDEF[q[i].t].name + '">' + U.UDEF[q[i].t].icon + (i === 0 ? '<u style="width:' + Math.round(100 - q[0].left / U.UDEF[q[0].t].train * 100) + '%"></u>' : '') + '</i>' : '<i class="e"></i>'; }
       h += '</div>';
     } else {
       for (id in sel) { if (S.units[id]) { n++; kinds[S.units[id].t] = (kinds[S.units[id].t] || 0) + 1; } }
-      if (n) { h += '<div class="sl-h"><b>선택 ' + n + '기</b></div><div class="sl-u">' + Object.keys(kinds).map(function (t) { return U.UDEF[t].icon + ' ' + U.UDEF[t].name + ' ' + kinds[t]; }).join(' · ') + '</div><small>우클릭으로 이동</small>'; }
+      if (n) { h += '<div class="sl-h"><b>선택 ' + n + '기</b></div><div class="sl-u">' + Object.keys(kinds).map(function (t) { return U.UDEF[t].icon + ' ' + U.UDEF[t].name + ' ' + kinds[t]; }).join(' · ') + '</div><small>우클릭으로 이동</small>' + R().heroes.skillBtn(S, sel); }
     }
     if (h !== els.sel.__h) { els.sel.innerHTML = h; els.sel.__h = h; }
     els.sel.classList.toggle('show', !!h);
@@ -242,6 +242,15 @@
     R().units.moveGroup(S, ids.map(Number), t.x, t.y); dirty = true;
   }
 
+  /** 고른 영웅들이 일격(Q) — 맞힌 적이 없으면 안내 */
+  function castSel() {
+    var n = 0, id;
+    for (id in sel) { if (S.units[id]) { n += R().combat.cast(S, S.units[id]); } }
+    if (!n) { say('일격 — 2.5칸 안에 적이 없거나 쿨다운 중'); }
+    dirty = true; hud();
+  }
+  function diffFromUrl() { var m = /[?&]diff=([012])/.exec(global.location ? global.location.search : ''); return m ? +m[1] : 1; }
+
   function pointerPos(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
   function dist2() { var k = Object.keys(ptrs); return k.length === 2 ? Math.hypot(ptrs[k[0]].x - ptrs[k[1]].x, ptrs[k[0]].y - ptrs[k[1]].y) : 0; }
 
@@ -291,6 +300,7 @@
       if (k === 'Escape') { tool = 'select'; sel = {}; selB = 0; }
       else if (k === ' ') { S.speed = S.speed === 0 ? 1 : 0; e.preventDefault(); }
       else if (k === 'x' || k === 'X') { tool = 'erase'; }
+      else if (k === 'q' || k === 'Q') { castSel(); }
       else if (/^[1-9]$/.test(k)) { n = +k; tool = TOOLS.filter(function (t) { return !!R().rules.DEFS[t.k]; })[n - 1].k; }
       else if (k === 'ArrowLeft' || k === 'a') { cam.x -= step; } else if (k === 'ArrowRight' || k === 'd') { cam.x += step; }
       else if (k === 'ArrowUp' || k === 'w') { cam.y -= step; } else if (k === 'ArrowDown' || k === 's') { cam.y += step; }
@@ -303,6 +313,9 @@
     mini.addEventListener('pointerup', function () { md = false; });
     els.tools.addEventListener('click', function (e) { var b = e.target.closest('button[data-tool]'); if (b) { tool = b.getAttribute('data-tool'); dirty = true; } });
     els.sel.addEventListener('click', function (e) {
+      var hb = e.target.closest('button[data-hero]'), sk = e.target.closest('button[data-skill]');
+      if (hb && selB) { var hr = R().heroes.train(S, selB); if (!hr.ok) { say(hr.why); } hud(); return; }
+      if (sk) { castSel(); return; }
       var b = e.target.closest('button[data-train]'); if (!b || !selB) { return; }
       var r = R().units.train(S, selB, b.getAttribute('data-train'));
       if (!r.ok) { say(r.why); } hud();
@@ -350,7 +363,7 @@
       '<canvas id="rts-mini" class="rt-box" width="240" height="150"></canvas><div id="rts-tip" class="rt-box"></div><div id="rts-sel" class="rt-box"></div><div id="rts-opts" class="rt-box"><span>세율</span><button data-tax="0">낮음</button><button data-tax="1">보통</button><button data-tax="2">높음</button><button data-view="1" class="vw">보기: 없음</button></div><a id="rts-back" class="rt-box" href="./">턴제로</a>');
     cv = $('rts-map'); ctx = cv.getContext('2d'); mini = $('rts-mini'); mctx = mini.getContext('2d');
     els = { top: $('rts-top'), tools: $('rts-tools'), speed: $('rts-speed'), tip: $('rts-tip'), opts: $('rts-opts'), sel: $('rts-sel') };
-    S = (c && c.save && c.save.rts ? R().state.restore(c.save.rts) : null) || R().state.create((Date.now() & 0xffff) + 1);
+    S = (c && c.save && c.save.rts ? R().state.restore(c.save.rts) : null) || R().state.create((Date.now() & 0xffff) + 1, diffFromUrl());
     lastSaveDay = S.day;
     var cs = R().grid.castleSite(); cam.x = cs.x + 1.5; cam.y = cs.y + 1.5;
     resize(); bindInput(); hud(); global.requestAnimationFrame(loop);

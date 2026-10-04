@@ -108,6 +108,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rts/econ.js"></script>
 <script src="js/rts/units.js"></script>
 <script src="js/rts/combat.js"></script>
+<script src="js/rts/heroes.js"></script>
 <script src="js/rts/state.js"></script>
 <script src="js/game.js"></script>
 <script>
@@ -539,6 +540,72 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       var old = JSON.parse(json); delete old.shp; delete old.won; var b2 = R.state.restore(old), compat = !!b2 && b2.buildings[-1].hp === 600 && !b2.won;
       var w = R.state.restore(Object.assign(JSON.parse(json), { won: true })), won = !!w && w.won === true && w.buildings[-1].hp === 0;
       return same && compat && won && ('왕복 같음 · 옛 저장 온전 · 승리 보존');
+    });
+
+    /* ── RTS P4b(W-0035, js/rts/heroes.js) — 영웅 모집·능력·일격·난이도·저장 ─── */
+
+    t('RTS 영웅 능력 — 도감 장수(희귀도 4 이상)가 후보이고, 체력 70+통솔×1.3 · 공격 5+무력×0.13 · 사거리 1.4 · 속도 2.4+무력/200, 없는 id 는 평범한 영웅', function () {
+      var H = DG.rts.heroes, list = H.roster(), g = H.statsOf('sg_guanyu'), none = H.statsOf('없는장수');
+      var ok = list.length >= 10 && list.every(function (h) { return h.rarity >= 4; }) && H.find('sg_guanyu') !== null;
+      var calc = g.hp === Math.round(70 + 95 * 1.3) && g.atk === Math.round((5 + 97 * 0.13) * 10) / 10 && g.range === 1.4 && g.speed > 2.8 && g.speed < 2.95 && g.wis === 75 && g.name.length > 0;
+      var dflt = none.name === '영웅' && none.hp === Math.round(70 + 70 * 1.3);
+      return ok && calc && dflt && ('후보 ' + list.length + '명 · 관우급 체력 ' + g.hp + '·공격 ' + g.atk);
+    });
+
+    t('RTS 영웅 모집 — 군영 큐에 장수가 서고(150금·50식량), 같은 장수는 겹치지 않으며 3명까지, 200틱 뒤 군영 곁에 능력을 갖고 나온다', function () {
+      var R = DG.rts, U = R.units, H = R.heroes, s = rtsArmy(), id = s.__b.id, g0 = s.res.gold, f0 = s.res.food;
+      var a = H.train(s, id), q = s.queues[id];
+      var paid = a.ok && s.res.gold === g0 - 150 && s.res.food === f0 - 50 && q[0].t === 'hero' && !!q[0].hid && s.heroN === 1;
+      var b = H.train(s, id), c = H.train(s, id), d = H.train(s, id);
+      var uniq = b.ok && c.ok && d.ok === false && /3명/.test(d.why) && q[0].hid !== q[1].hid && q[1].hid !== q[2].hid && q[0].hid !== q[2].hid;
+      var poor = rtsArmy(function (p) { p.res.gold = 10; }), noGold = H.train(poor, poor.__b.id).ok === false;
+      var cut = rtsArmy(function (p, cs, r) { r.remove(p, p.__b.id + 0); }), none = H.train(cut, 999).ok === false;
+      var hid = q[0].hid, i; for (i = 0; i < 200; i++) { U.tick(s); }
+      var hero = Object.keys(s.units).map(function (k) { return s.units[k]; }).filter(function (u) { return u.t === 'hero'; })[0];
+      var out = !!hero && hero.hid === hid && hero.hp === hero.mhp && hero.hp === H.statsOf(hid).hp && U.statOf(hero) === hero.st && U.statOf(hero).atk === H.statsOf(hid).atk && s.queues[id].length === 2;
+      return paid && uniq && noGold && none && out && ('비용 · 중복 없음·3명 한도 · 능력 달고 등장');
+    });
+
+    t('RTS 영웅 전투 — 영웅은 자기 공격력·사거리(1.4)로 치고 상성이 없으며, 이동은 자기 속도로 간다', function () {
+      var R = DG.rts, U = R.units, C = R.combat, H = R.heroes, s = rtsField(), cs = s.__cs;
+      var h = U.spawn(s, 'hero', 0, cs.x + 6.5, cs.y - 8.5, 'sg_guanyu'), foe = U.spawn(s, 'soldier', 1, cs.x + 7.7, cs.y - 8.5); C.tick(s);
+      var hit = foe.hp === 60 - H.statsOf('sg_guanyu').atk;
+      var s2 = rtsField(), c2 = s2.__cs, h2 = U.spawn(s2, 'hero', 0, c2.x + 6.5, c2.y - 8.5, 'sg_guanyu'), sw = U.spawn(s2, 'soldier', 0, c2.x + 6.5, c2.y - 9.5);
+      var hx = h2.x, hy = h2.y, sx = sw.x, sy = sw.y; U.moveTo(s2, h2, c2.x + 6, c2.y - 14); U.moveTo(s2, sw, c2.x + 6, c2.y - 14); for (var i = 0; i < 20; i++) { U.tick(s2); }
+      var fast = Math.hypot(h2.x - hx, h2.y - hy) > Math.hypot(sw.x - sx, sw.y - sy);
+      return hit && fast && ('영웅 공격 ' + H.statsOf('sg_guanyu').atk + ' · 보병보다 빠름');
+    });
+
+    t('RTS 영웅 일격 — 2.5칸 안 적에게 공격×(1+지력/100)×2, 바깥은 안 맞고, 맞힌 게 있을 때만 쿨다운 15초(틱으로 풀림), 영웅이 아니면 못 쓴다, 기지도 맞는다', function () {
+      var R = DG.rts, U = R.units, C = R.combat, H = R.heroes, s = rtsField(), cs = s.__cs, st = H.statsOf('sg_guanyu');
+      var h = U.spawn(s, 'hero', 0, cs.x + 6.5, cs.y - 8.5, 'sg_guanyu'), near = U.spawn(s, 'cavalry', 1, cs.x + 8.5, cs.y - 8.5), far = U.spawn(s, 'cavalry', 1, cs.x + 10.5, cs.y - 8.5);
+      var dmg = Math.round(st.atk * (1 + st.wis / 100) * 2 * 10) / 10, n = C.cast(s, h);
+      var aoe = n === 1 && near.hp === 80 - dmg && far.hp === 80 && h.skillCd === C.SKILL_CD;
+      var again = C.cast(s, h) === 0; for (var i = 0; i < C.SKILL_CD; i++) { C.tick(s); } var ready = h.skillCd === 0;
+      var empty = U.spawn(s, 'hero', 0, 5, 5, 'sg_zhugeliang'); var idle = C.cast(s, empty) === 0 && !empty.skillCd;
+      var sol = U.spawn(s, 'soldier', 0, cs.x + 6.5, cs.y - 8.5), no = C.cast(s, sol) === 0;
+      var q = R.state.create(7), sb = q.buildings[-1], hb = U.spawn(q, 'hero', 0, sb.x - 0.5, sb.y + 1.5, 'sg_guanyu'), base = C.cast(q, hb) === 1 && q.buildings[-1].hp === 600 - dmg;
+      return aoe && again && ready && idle && no && base && ('범위 ' + dmg + ' · 바깥 무사 · 쿨다운 · 비영웅 불가 · 기지 명중');
+    });
+
+    t('RTS 난이도 — 쉬움·보통·어려움이 적 기지 체력(×0.7·1·1.5)과 파도 크기(×0.7·1·1.4)를 바꾸고, 저장되며, 모르는 값은 보통', function () {
+      var R = DG.rts, C = R.combat, e = R.state.create(7, 0), n = R.state.create(7), h = R.state.create(7, 2), odd = R.state.create(7, 9);
+      var hp = e.buildings[-1].hp === 420 && n.buildings[-1].hp === 600 && h.buildings[-1].hp === 900 && odd.diff === 1;
+      var wave = C.waveOf(0, 0).length === 1 && C.waveOf(0, 1).length === 2 && C.waveOf(0, 2).length === 3 && C.waveOf(5, 1).length === 7 && C.waveOf(5, 2).length === 10 && C.waveOf(0).length === 2;
+      var back = R.state.restore(JSON.parse(JSON.stringify(R.state.serialize(h)))), keep = !!back && back.diff === 2 && back.buildings[-1].hp === 900;
+      return hp && wave && keep && ('기지 420/600/900 · 파도 1/2/3(0 번째) · 저장');
+    });
+
+    t('RTS 저장 — 영웅(장수 id·최대 체력)과 영웅 큐·모집 횟수가 왕복에서 같고, 능력은 도감에서 다시 붙으며, 일반 유닛 저장 꼴은 그대로다', function () {
+      var R = DG.rts, U = R.units, H = R.heroes, s = rtsArmy(function (p) { H.train(p, p.__b.id); U.train(p, p.__b.id, 'soldier'); });
+      var hero = U.spawn(s, 'hero', 0, s.__cs.x + 6.5, s.__cs.y - 8.5, 'sg_zhugeliang'); hero.hp = 77;
+      var o = R.state.serialize(s), json = JSON.stringify(o), back = R.state.restore(JSON.parse(json));
+      var same = !!back && JSON.stringify(R.state.serialize(back)) === json;
+      var hu = Object.keys(back.units).map(function (k) { return back.units[k]; }).filter(function (u) { return u.t === 'hero'; })[0];
+      var re = !!hu && hu.hid === 'sg_zhugeliang' && hu.hp === 77 && hu.mhp === hero.mhp && !!hu.st && hu.st.atk === H.statsOf('sg_zhugeliang').atk && back.heroN === 1;
+      var plain = o.units.filter(function (u) { return u.t !== 'hero'; }).every(function (u) { return u.hid === undefined && u.mhp === undefined; });
+      var q = o.queues.filter(function (x) { return x.t === 'hero'; }), qs = q.length === 1 && !!q[0].hid;
+      return same && re && plain && qs && ('영웅 왕복 같음 · 능력 재부착 · 큐 hid 보존');
     });
 
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {

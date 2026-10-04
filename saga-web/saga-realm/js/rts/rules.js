@@ -25,6 +25,8 @@
     /* 적 기지(W-0034) — 짓지도 부수지도(철거) 못 한다. 유닛이 쳐서 hp 를 깎는다. id 는 -1 */
     stronghold: { name: '적 기지', w: 3, h: 3, cost: 0, fixed: true, free: true, hp: 600, icon: '🏴', color: '#7a2e2e' }
   };
+  /** 난이도 0 쉬움·1 보통·2 어려움 — 적 기지 체력과 파도 크기 배율(W-0035) */
+  var DIFF = { hp: [0.7, 1, 1.5], wave: [0.7, 1, 1.4], names: ['쉬움', '보통', '어려움'] };
   var BUILD_ORDER = ['road', 'house', 'farm', 'market', 'workshop', 'barracks', 'well', 'tower', 'wall'];
 
   /** 놓을 수 있나 — { ok, why } */
@@ -58,7 +60,7 @@
 
   /** 적 기지를 판에 올린다(새 판·복원 때) — id -1, 체력 가득 */
   function placeStronghold(s) {
-    var c = G().enemySite(s.seed), b = { id: -1, t: 'stronghold', x: c.x, y: c.y, conn: true, hp: DEFS.stronghold.hp };
+    var c = G().enemySite(s.seed), b = { id: -1, t: 'stronghold', x: c.x, y: c.y, conn: true, hp: Math.round(DEFS.stronghold.hp * DIFF.hp[s.diff === 0 || s.diff === 2 ? s.diff : 1]) };
     s.buildings[-1] = b; stamp(s, b, -1);
     return b;
   }
@@ -144,5 +146,5 @@
 
   global.DG = global.DG || {};
   global.DG.rts = global.DG.rts || {};
-  global.DG.rts.rules = { DEFS: DEFS, BUILD_ORDER: BUILD_ORDER, canPlace: canPlace, place: place, remove: remove, placeCastle: placeCastle, placeStronghold: placeStronghold, buildingAt: buildingAt, recompute: recompute };
+  global.DG.rts.rules = { DEFS: DEFS, DIFF: DIFF, BUILD_ORDER: BUILD_ORDER, canPlace: canPlace, place: place, remove: remove, placeCastle: placeCastle, placeStronghold: placeStronghold, buildingAt: buildingAt, recompute: recompute };
 })(typeof window !== 'undefined' ? window : this);
