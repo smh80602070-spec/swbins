@@ -209,7 +209,7 @@
       h += '</div>';
     } else {
       for (id in sel) { if (S.units[id]) { n++; kinds[S.units[id].t] = (kinds[S.units[id].t] || 0) + 1; } }
-      if (n) { h += '<div class="sl-h"><b>선택 ' + n + '기</b></div><div class="sl-u">' + Object.keys(kinds).map(function (t) { return U.UDEF[t].icon + ' ' + U.UDEF[t].name + ' ' + kinds[t]; }).join(' · ') + '</div><small>우클릭(폰은 땅을 눌러)으로 이동 · A 공격 이동 · S 정지</small>' + R().heroes.skillBtn(S, sel); }
+      if (n) { h += '<div class="sl-h"><b>선택 ' + n + '기</b></div><div class="sl-u">' + Object.keys(kinds).map(function (t) { return U.UDEF[t].icon + ' ' + U.UDEF[t].name + ' ' + kinds[t]; }).join(' · ') + '</div><small>우클릭(폰은 땅을 눌러)으로 이동</small><div class="sl-row"><div class="sl-btns"><button data-stop="1" title="정지 (S)"><span>✋</span><small>정지<br>S</small></button><button data-am="1" title="공격 이동 (A) — 갈 곳을 클릭"><span>⚔️</span><small>공격 이동<br>A</small></button></div>' + R().heroes.skillBtn(S, sel) + '</div>'; }
       else if (U.count(S, 0)) { h += '<div class="sl-btns"><button data-all="1" title="내 군대 전부 고르기"><span>🛡️</span><small>전군<br>선택</small></button></div>'; }
     }
     if (h !== els.sel.__h) { els.sel.innerHTML = h; els.sel.__h = h; }
@@ -299,6 +299,10 @@
     R().units.moveGroup(S, ids, t.x, t.y);
     ids.forEach(function (id) { S.units[id].amGoal = { x: t.x + 0.5, y: t.y + 0.5 }; });
     say('공격 이동'); dirty = true;
+  }
+  /** A 키·공격 이동 단추 — 다음 왼쪽 클릭을 공격 이동으로 받는다 */
+  function startAttackMove() {
+    if (liveIds().length) { amMode = true; say('공격 이동 — 갈 곳을 왼쪽 클릭 (우클릭·Esc 취소)'); } else { say('공격 이동 — 먼저 유닛을 고르세요'); }
   }
   /** S — 멈춘다 */
   function stopSel() {
@@ -392,7 +396,7 @@
       else if (k === ' ') { S.speed = S.speed === 0 ? 1 : 0; e.preventDefault(); }
       else if (k === 'x' || k === 'X') { tool = 'erase'; }
       else if (k === 'q' || k === 'Q') { castSel(); }
-      else if ((k === 'a' || k === 'A') && !e.ctrlKey && !e.metaKey) { if (liveIds().length) { amMode = true; say('공격 이동 — 갈 곳을 왼쪽 클릭 (우클릭·Esc 취소)'); } else { say('공격 이동 — 먼저 유닛을 고르세요'); } }
+      else if ((k === 'a' || k === 'A') && !e.ctrlKey && !e.metaKey) { startAttackMove(); }
       else if ((k === 's' || k === 'S') && !e.ctrlKey && !e.metaKey) { stopSel(); }
       else if (/^Digit[1-9]$/.test(code)) { n = +code.slice(5); if (e.ctrlKey || e.shiftKey) { setGroup(n); e.preventDefault(); } else if (!recallGroup(n)) { tl = TOOLS.filter(function (t) { return !!R().rules.DEFS[t.k]; })[n - 1]; if (tl) { tool = tl.k; } } }
       else if (k === 'ArrowLeft') { cam.x -= step; } else if (k === 'ArrowRight') { cam.x += step; }
@@ -408,6 +412,8 @@
     els.sel.addEventListener('click', function (e) {
       var al = e.target.closest('button[data-all]');
       if (al) { var k; sel = {}; selB = 0; for (k in S.units) { if (S.units[k].team === 0) { sel[k] = true; } } dirty = true; hud(); return; }
+      if (e.target.closest('button[data-stop]')) { stopSel(); hud(); return; }
+      if (e.target.closest('button[data-am]')) { startAttackMove(); return; }
       var hb = e.target.closest('button[data-hero]'), sk = e.target.closest('button[data-skill]');
       if (hb && selB) { var hr = R().heroes.train(S, selB); if (!hr.ok) { say(hr.why); } hud(); return; }
       if (sk) { castSel(); return; }

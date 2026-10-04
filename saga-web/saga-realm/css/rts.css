@@ -44,6 +44,7 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0d1016; col
 .sl-btns { display: flex; gap: 6px; }
 .sl-btns button { display: grid; place-items: center; min-width: 58px; min-height: 52px; padding: 3px 6px; background: rgba(0, 0, 0, .3); border: 1px solid rgba(216, 181, 106, .3); color: var(--rt-ink); border-radius: 6px; cursor: pointer; }
 .sl-btns button span { font-size: 20px; line-height: 1; } .sl-btns button small { font-size: 10px; color: var(--rt-dim); text-align: center; line-height: 1.2; }
+.sl-row { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
 .sl-q { display: flex; gap: 4px; margin-top: 8px; }
 .sl-q i { position: relative; width: 34px; height: 30px; display: grid; place-items: center; background: rgba(255, 255, 255, .08); border: 1px solid rgba(216, 181, 106, .3); border-radius: 4px; font-style: normal; overflow: hidden; }
 .sl-q i.e { opacity: .35; } .sl-q i u { position: absolute; left: 0; bottom: 0; height: 3px; background: #e8c46a; text-decoration: none; }
