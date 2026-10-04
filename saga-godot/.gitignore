@@ -20,3 +20,8 @@ assets/characters_vroid/anim/
 
 # 웹 인물 엔진판(로컬 산출물 — tools/char-forge/engine_characters.sh --install)
 assets/characters_dex/
+
+# 엔진이 임포트 때 만드는 산출물 — 새 파일은 추적하지 않는다(엔진을 열면 다시 생김, GLB 는 텍스처를 안에 품고 있어 추출 jpg 도 필수 아님).
+# 이미 올라간 파일은 그대로 추적된다. 꼭 올려야 하면 `git add -f`.
+*.import
+assets/world/*_toon*.jpg
