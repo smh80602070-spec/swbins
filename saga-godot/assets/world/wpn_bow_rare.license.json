@@ -1,0 +1,29 @@
+{
+ "id": "wpn_bow_rare",
+ "generator": "tools/world-forge/build_weapon.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "kind": "bow",
+ "grade": "rare",
+ "hand": "L",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: black_painted_planks",
+  "polyhaven: brown_planks_03",
+  "polyhaven: concrete_wall_001",
+  "polyhaven: white_stucco"
+ ],
+ "size_m": [
+  0.07,
+  0.24,
+  1.78
+ ],
+ "tris": 358,
+ "nodes": [
+  "grip",
+  "tip",
+  "tip_low",
+  "nock",
+  "up"
+ ]
+}

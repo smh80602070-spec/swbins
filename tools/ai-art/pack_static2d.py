@@ -43,6 +43,9 @@ for f in sorted(os.listdir(src)):
     cv = Image.new('RGBA', (S, S), (0, 0, 0, 0))
     cv.alpha_composite(c, ((S - c.width) // 2, S - 4 - c.height))        # 발 밑 = 아래 가운데
     rep = IP.check(cv)
+    if iid.startswith('wpn_') and not rep.get('ok', True):                                          # 길고 가는 무기(창·지팡이·활)는 알맹이 비율이 작은 게 정상
+        rep['why'] = [w for w in rep.get('why', []) if '너무 작음' not in w]
+        rep['ok'] = not rep['why']
     rep['fill'] = round(c.height / S, 2)
     report[iid] = rep
     cv.save(os.path.join(out, iid + '.webp'), 'WEBP', quality=88, method=6)

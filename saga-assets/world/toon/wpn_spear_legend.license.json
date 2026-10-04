@@ -1,0 +1,27 @@
+{
+ "id": "wpn_spear_legend",
+ "generator": "tools/world-forge/build_weapon.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "kind": "spear",
+ "grade": "legend",
+ "hand": "R",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: black_painted_planks",
+  "polyhaven: brown_planks_03",
+  "polyhaven: concrete_wall_001",
+  "polyhaven: white_stucco"
+ ],
+ "size_m": [
+  0.22,
+  0.1,
+  3.08
+ ],
+ "tris": 256,
+ "nodes": [
+  "grip",
+  "tip",
+  "up"
+ ]
+}
