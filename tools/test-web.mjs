@@ -64,6 +64,7 @@ function runOnce(game, port) {
       '--headless=new', '--disable-gpu', '--no-first-run', '--mute-audio', `--user-data-dir=${prof}`,
       `--virtual-time-budget=${budget}`, '--dump-dom', `http://127.0.0.1:${port}/play/${game}/_test.html`,
     ], { stdio: ['ignore', 'pipe', 'ignore'] });
+    chrome.stdout.setEncoding('utf8');   // 조각 경계에서 한글이 잘려 깨지면 결과 지문(md5)이 흔들린다
     chrome.stdout.on('data', d => { out += d; });
     chrome.on('error', e => finish({ error: '크롬 실행 실패 ' + e.message }));
     chrome.on('close', () => {
