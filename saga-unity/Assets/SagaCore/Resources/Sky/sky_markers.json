@@ -1,77 +1,154 @@
 {
- "note": "해·달 위치 표식(방위각 0=북 90=동 180=남 270=서, 고도 0=지평선) — 조명 방향을 맞춘다",
+ "note": "해·달 위치 표식 — 그림에 실제로 그려 넣은 자리(K-0067). 방위각 0=북 90=동 180=남 270=서, 고도 0=지평선, 등장방형 2:1 에서 az=u·360 · el=90−v·180. 밤은 달이 조명(light:moon). sun_uv 로 유니티가 자기 규약의 방위를 구한다.",
  "skies": {
   "dawn_past": {
    "sun_az": 95,
-   "sun_el": 7,
-   "moons": 0,
-   "candidate": 1
+   "sun_el": 8,
+   "sun_uv": [
+    0.2639,
+    0.4556
+   ],
+   "drawn": true,
+   "moons": 0
   },
   "dawn_present": {
-   "sun_az": 95,
-   "sun_el": 7,
-   "moons": 0,
-   "candidate": 1
+   "sun_az": 107,
+   "sun_el": 6,
+   "sun_uv": [
+    0.2972,
+    0.4667
+   ],
+   "drawn": true,
+   "moons": 0
   },
   "dawn_future": {
    "sun_az": 95,
-   "sun_el": 7,
-   "moons": 0,
-   "candidate": 2
+   "sun_el": 8,
+   "sun_uv": [
+    0.2639,
+    0.4556
+   ],
+   "drawn": true,
+   "moons": 0
   },
   "noon_past": {
-   "sun_az": 180,
-   "sun_el": 68,
-   "moons": 0,
-   "candidate": 1
+   "sun_az": 184,
+   "sun_el": 70,
+   "sun_uv": [
+    0.5111,
+    0.1111
+   ],
+   "drawn": true,
+   "moons": 0
   },
   "noon_present": {
    "sun_az": 180,
-   "sun_el": 68,
-   "moons": 0,
-   "candidate": 2
+   "sun_el": 62,
+   "sun_uv": [
+    0.5,
+    0.1556
+   ],
+   "drawn": true,
+   "moons": 0
   },
   "noon_future": {
-   "sun_az": 180,
-   "sun_el": 68,
-   "moons": 0,
-   "candidate": 1
+   "sun_az": 157,
+   "sun_el": 66,
+   "sun_uv": [
+    0.4361,
+    0.1333
+   ],
+   "drawn": true,
+   "moons": 0
   },
   "sunset_past": {
    "sun_az": 265,
-   "sun_el": 6,
-   "moons": 0,
-   "candidate": 2
+   "sun_el": 5,
+   "sun_uv": [
+    0.7361,
+    0.4722
+   ],
+   "drawn": true,
+   "moons": 0
   },
   "sunset_present": {
-   "sun_az": 265,
-   "sun_el": 6,
-   "moons": 0,
-   "candidate": 1
+   "sun_az": 259,
+   "sun_el": 4,
+   "sun_uv": [
+    0.7194,
+    0.4778
+   ],
+   "drawn": true,
+   "moons": 0
   },
   "sunset_future": {
    "sun_az": 265,
-   "sun_el": 6,
-   "moons": 0,
-   "candidate": 2
+   "sun_el": 4,
+   "sun_uv": [
+    0.7361,
+    0.4778
+   ],
+   "drawn": true,
+   "moons": 0
   },
   "night_past": {
-   "sun_az": 205,
-   "sun_el": 42,
-   "moons": 1,
-   "candidate": 2
+   "moon_az": 212,
+   "moon_el": 56,
+   "moon_uv": [
+    0.5889,
+    0.1889
+   ],
+   "drawn": true,
+   "sun_az": 212,
+   "sun_el": 56,
+   "sun_uv": [
+    0.5889,
+    0.1889
+   ],
+   "light": "moon",
+   "moons": 1
   },
   "night_present": {
+   "moon_az": 205,
+   "moon_el": 42,
+   "moon_uv": [
+    0.5694,
+    0.2667
+   ],
+   "drawn": true,
    "sun_az": 205,
    "sun_el": 42,
-   "moons": 1,
-   "candidate": 2
+   "sun_uv": [
+    0.5694,
+    0.2667
+   ],
+   "light": "moon",
+   "moons": 1
   },
   "night_future": {
+   "moon_az": 205,
+   "moon_el": 42,
+   "moon_uv": [
+    0.5694,
+    0.2667
+   ],
+   "drawn": true,
    "sun_az": 205,
    "sun_el": 42,
-   "moons": 2,
-   "candidate": 2
+   "sun_uv": [
+    0.5694,
+    0.2667
+   ],
+   "light": "moon",
+   "moon2": {
+    "az": 140,
+    "el": 27,
+    "uv": [
+     0.3889,
+     0.35
+    ]
+   },
+   "moons": 2
   }
  }
 }

@@ -18,6 +18,7 @@
  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
  "picked_candidate": 2,
  "derived": "tools/ai-art/make_sky.py pack (좌우 이음매·극점 보정)",
+ "sun_composite": "tools/ai-art/sky_sun.py apply (해·달 원반+빛무리 코드 합성, K-0067)",
  "converted_for": "unity",
  "converted_by": "tools/asset-forge/unity_sky.py",
  "unity_note": "equirect 2:1 · Skybox/Panoramic · Texture 2D sRGB · Wrap Clamp"
