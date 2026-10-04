@@ -9,9 +9,9 @@
   function M() { return global.DG && global.DG.mode2d; }
 
   /** 땅 종류 → 타일(0 풀·1 숲·2 언덕·3 물). 숲은 풀 위에 어두운 초록을 얹는다 */
-  var TERRAIN = { 0: 'forest_grass', 1: 'forest_grass', 2: 'realm_stone', 3: 'go_water' };   // 풀은 위에서 본 사가의숲 풀(realm_grass 는 옆보기 줄무늬)
+  var TERRAIN = { 0: 'forest_grass', 1: 'forest_grass', 2: 'forest_dirt', 3: 'go_water' };   // 풀은 위에서 본 사가의숲 풀(realm_grass 는 옆보기 줄무늬)
   var ROAD = 'forest_dirt';
-  var PER = { forest_grass: 1.6, forest_dirt: 2, go_water: 3, realm_stone: 5 };   // 타일 이미지(64px) 한 장이 덮는 칸 수 — 작을수록 또렷하다(돌은 판처럼 보여 크게 늘린다)
+  var PER = { forest_grass: 1.6, forest_dirt: 2.2, go_water: 3 };   // 타일 이미지(64px) 한 장이 덮는 칸 수 — 작을수록 또렷하다(돌은 판처럼 보여 크게 늘린다)
 
   /** 건물 → { id: world2d 스프라이트, k: 그리는 높이 = k × 긴 변(타일) } */
   var BUILDINGS = {
@@ -60,20 +60,93 @@
     ctx.fill(); ctx.restore();
   }
 
-  /** 보이는 칸의 땅을 그린다 — 네 종류 타일이 모두 받아졌을 때만(하나라도 없으면 false → 옛 색 칸) */
-  function terrain(ctx, tiles, g, x0, x1, y0, y1, ox, oy, z) {
-    var m = M(), t, x, y, groups = { 0: [], 1: [], 2: [], 3: [] };
-    if (!m || !m.tilePattern) { return false; }
-    for (t in TERRAIN) { if (!m.tilePattern(ctx, TERRAIN[t])) { return false; } }
-    for (y = y0; y <= y1; y++) { for (x = x0; x <= x1; x++) { groups[tiles[g.idx(x, y)]].push([x, y]); } }
-    for (t in groups) {
-      if (+t === 3 && groups[3].length) {   // 물 — 파란 바탕 위에 물결 타일을 옅게(기존 물 타일은 진짜 물처럼 안 보인다)
-        tint(ctx, groups[3], '#3a82b6', ox, oy, z);
-        ctx.save(); ctx.globalAlpha = 0.3; fillTiles(ctx, TERRAIN[3], groups[3], ox, oy, z); ctx.restore();
-      } else { fillTiles(ctx, TERRAIN[t], groups[t], ox, oy, z); }
+  /* ── 땅(부드러운 경계 + 반복 깨기, 화면 크기 캐시) ──────────────────────────────────────
+     풀을 바탕으로 깔고, 숲·언덕·물은 각자 **번진 가장자리**를 가진 층으로 얹는다(칸 모양 마스크를 흐려서 쓴다). 그 위에 큰 얼룩 무늬(soft-light)로 타일 반복을 깬다.
+     카메라·확대·화면 크기가 같으면 만든 그림을 그대로 쓴다(틱마다 다시 그리지 않는다). */
+  var cache = { c: null, key: '', tiles: null }, noise = null, layers = {};
+
+  function mk(w, h) { var c = global.document.createElement('canvas'); c.width = w; c.height = h; return c; }
+
+  /** 큰 얼룩 — 값 노이즈 한 장(128px), 한 번만 만든다. 늘 같다(시드 고정) */
+  function noiseTex() {
+    if (noise) { return noise; }
+    var c = mk(128, 128), x = c.getContext('2d'), im = x.createImageData(128, 128), g = [], i, j, u, v, a0, a1, a2, a3, n, k, N = 8;
+    var seed = 20260824; function r() { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; }
+    for (i = 0; i < N * N; i++) { g.push(r()); }
+    for (j = 0; j < 128; j++) {
+      for (i = 0; i < 128; i++) {
+        u = i / 128 * N; v = j / 128 * N;
+        var iu = Math.floor(u), iv = Math.floor(v), fu = u - iu, fv = v - iv;
+        fu = fu * fu * (3 - 2 * fu); fv = fv * fv * (3 - 2 * fv);
+        a0 = g[(iv % N) * N + (iu % N)]; a1 = g[(iv % N) * N + ((iu + 1) % N)]; a2 = g[((iv + 1) % N) * N + (iu % N)]; a3 = g[((iv + 1) % N) * N + ((iu + 1) % N)];
+        n = (a0 + (a1 - a0) * fu) * (1 - fv) + (a2 + (a3 - a2) * fu) * fv;
+        k = (j * 128 + i) * 4; im.data[k] = im.data[k + 1] = im.data[k + 2] = Math.round(70 + n * 130); im.data[k + 3] = 255;
+      }
     }
-    tint(ctx, groups[1], 'rgba(18,58,24,.26)', ox, oy, z);   // 숲 — 어두운 초록 덮개
-    tint(ctx, groups[2], 'rgba(70,62,52,.34)', ox, oy, z);   // 언덕 — 흙빛 덮개(돌 타일이 판처럼 보이는 것을 눌러 준다)
+    x.putImageData(im, 0, 0);
+    return (noise = c);
+  }
+
+  function fillWorld(cx, pat, per, x0, y0, w, h, ox, oy, z) {
+    var s = per / 64;
+    if (pat.setTransform && global.DOMMatrix) { pat.setTransform(new global.DOMMatrix([s, 0, 0, s, 0, 0])); }
+    cx.save(); cx.translate(ox, oy); cx.scale(z, z); cx.fillStyle = pat; cx.fillRect(x0, y0, w, h); cx.restore();
+  }
+
+  /** 한 종류(t)의 번진 층 — 칸 모양을 마스크로 흐려 만들고, 그 안을 알맹이(content)로 채운다 */
+  function layer(t, rects, W, H, dpr, ox, oy, z, content) {
+    var lc = layers[t] || (layers[t] = mk(1, 1)), lx, m, mx, i;
+    lc.width = Math.round(W * dpr); lc.height = Math.round(H * dpr);
+    m = mk(Math.max(1, Math.ceil(W / 2)), Math.max(1, Math.ceil(H / 2))); mx = m.getContext('2d');
+    mx.scale(0.5, 0.5); mx.translate(ox, oy); mx.scale(z, z); mx.fillStyle = '#fff'; mx.beginPath();
+    for (i = 0; i < rects.length; i++) { mx.rect(rects[i][0] - 0.2, rects[i][1] - 0.2, 1.4, 1.4); }   // 번지면서 줄어드는 만큼 살짝 키운다
+    mx.fill();
+    lx = lc.getContext('2d'); lx.setTransform(1, 0, 0, 1, 0, 0);
+    lx.filter = 'blur(' + Math.max(1, z * 0.3 * dpr).toFixed(1) + 'px)'; lx.drawImage(m, 0, 0, lc.width, lc.height); lx.filter = 'none';
+    lx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    content(lx);
+    return lc;
+  }
+
+  /** 보이는 칸의 땅을 그린다 — 네 종류 타일이 모두 받아졌을 때만(하나라도 없으면 false → 옛 색 칸). W,H = 화면 크기(CSS px), dpr = 화면 배율 */
+  function terrain(ctx, tiles, g, x0, x1, y0, y1, ox, oy, z, W, H, dpr) {
+    var m = M(), t, x, y, groups = { 1: [], 2: [], 3: [] }, pg, ps, pw;
+    if (!m || !m.tilePattern || !W || !H) { return false; }
+    pg = m.tilePattern(ctx, TERRAIN[0]); ps = m.tilePattern(ctx, TERRAIN[2]); pw = m.tilePattern(ctx, TERRAIN[3]);
+    if (!pg || !ps || !pw) { return false; }
+    dpr = dpr || 1;
+    var key = [Math.round(ox * 2), Math.round(oy * 2), Math.round(z * 100), W, H, dpr].join();
+    if (cache.c && cache.key === key && cache.tiles === tiles) { ctx.drawImage(cache.c, 0, 0, W, H); return true; }
+    for (y = y0; y <= y1; y++) { for (x = x0; x <= x1; x++) { t = tiles[g.idx(x, y)]; if (t > 0) { groups[t].push([x, y]); } } }
+    var c = cache.c || (cache.c = mk(1, 1)), cx;
+    c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); cx = c.getContext('2d'); cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    fillWorld(cx, pg, PER.forest_grass, x0, y0, x1 - x0 + 1, y1 - y0 + 1, ox, oy, z);          // 바탕 = 풀
+    if (groups[1].length) {                                                                      // 숲 = 풀 + 어두운 초록
+      cx.drawImage(layer(1, groups[1], W, H, dpr, ox, oy, z, function (lx) {
+        lx.globalCompositeOperation = 'source-in'; fillWorld(lx, pg, PER.forest_grass, x0, y0, x1 - x0 + 1, y1 - y0 + 1, ox, oy, z);
+        lx.globalCompositeOperation = 'source-atop'; lx.fillStyle = 'rgba(14,52,22,.38)'; lx.fillRect(0, 0, W, H);
+      }), 0, 0, W, H);
+    }
+    if (groups[2].length) {                                                                      // 언덕 = 낙엽 흙 + 회색빛(돌 타일은 금속판처럼 보여 안 쓴다)
+      cx.drawImage(layer(2, groups[2], W, H, dpr, ox, oy, z, function (lx) {
+        lx.globalCompositeOperation = 'source-in'; fillWorld(lx, ps, PER.forest_dirt, x0, y0, x1 - x0 + 1, y1 - y0 + 1, ox, oy, z);
+        lx.globalCompositeOperation = 'source-atop'; lx.fillStyle = 'rgba(96,96,104,.5)'; lx.fillRect(0, 0, W, H);
+      }), 0, 0, W, H);
+    }
+    if (groups[3].length) {                                                                      // 물 = 파란 바탕 + 물결
+      cx.drawImage(layer(3, groups[3], W, H, dpr, ox, oy, z, function (lx) {
+        lx.globalCompositeOperation = 'source-in'; lx.fillStyle = '#3a82b6'; lx.fillRect(0, 0, W, H);
+        lx.globalCompositeOperation = 'source-atop'; lx.globalAlpha = 0.34; fillWorld(lx, pw, PER.go_water, x0, y0, x1 - x0 + 1, y1 - y0 + 1, ox, oy, z); lx.globalAlpha = 1;
+      }), 0, 0, W, H);
+    }
+    // 큰 얼룩 — 타일 반복이 눈에 안 띄게(14칸마다 한 번 돌아오는 밝고 어두운 무늬)
+    var nt = noiseTex(), np = cx.createPattern(nt, 'repeat');
+    if (np) {
+      cx.save(); cx.globalCompositeOperation = 'soft-light'; cx.globalAlpha = 0.55;
+      fillWorld(cx, np, 14, x0, y0, x1 - x0 + 1, y1 - y0 + 1, ox, oy, z); cx.restore();
+    }
+    cache.key = key; cache.tiles = tiles;
+    ctx.drawImage(c, 0, 0, W, H);
     return true;
   }
 

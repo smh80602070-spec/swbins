@@ -42,7 +42,7 @@
     var y0 = Math.max(0, Math.floor(cam.y - s.h / 2 / z)), y1 = Math.min(g.H - 1, Math.ceil(cam.y + s.h / 2 / z)), x, y, p, id, b, d, bp;
     ctx.fillStyle = '#0d1016'; ctx.fillRect(0, 0, s.w, s.h);
     var art = R().art, p00 = toScreen(0, 0), roadRects = [], roadBad = [], spr = [];
-    if (!art.terrain(ctx, S.tiles, g, x0, x1, y0, y1, p00.x, p00.y, z)) {   // 새 타일 그림(art.js) — 못 받았으면 옛 색 칸
+    if (!art.terrain(ctx, S.tiles, g, x0, x1, y0, y1, p00.x, p00.y, z, s.w, s.h, global.devicePixelRatio || 1)) {   // 새 타일 그림(art.js) — 못 받았으면 옛 색 칸
       for (y = y0; y <= y1; y++) {
         for (x = x0; x <= x1; x++) {
           p = toScreen(x, y);
