@@ -780,7 +780,7 @@
     }
     els.goals.innerHTML =
       '<button class="goal-hide" data-goals="hide" title="목표판 숨기기">✕</button>' +
-      scnRow() + row('⏱️', L.now) + row('🎯', L.session) + row('📅', L.weekly);
+      (global.DG.tut ? global.DG.tut.rowHtml() : '') + scnRow() + row('⏱️', L.now) + row('🎯', L.session) + row('📅', L.weekly);
   }
 
   /** 세션 카드 — 탈출·사망·마을 귀환 대신 이 판은 dungeon:end 하나로 셋을

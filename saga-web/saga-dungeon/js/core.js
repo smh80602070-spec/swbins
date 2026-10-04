@@ -84,7 +84,8 @@
         shake: 1,                          // §5.8① 화면 흔들림 배율 0~2(2026-09-18, 멀미 배려)
         hitstop: true                      // §5.8① 타격 정지 on/off(2026-09-18)
       },
-      log: []
+      log: [],
+      tut: { done: [] }                   // 첫 10분 안내(tutorial.js) — 새 세이브만 갖는다, 옛 세이브는 load() 가 이 칸을 지워 끝난 것으로 본다
     };
   }
 
@@ -215,6 +216,7 @@
       // 누락 필드 보정 — 버전이 맞든 안 맞든 `freshSave()` 위에 덧씌워 빈 자리를 채운다
       var base = freshSave();
       save = mergeDeep(base, parsed);
+      if (parsed.tut === undefined) { delete save.tut; }   // 안내가 생기기 전 세이브 — 이미 끝난 것으로(새로 보이지 않게)
       return true;
     } catch (e) {
       console.warn('세이브 불러오기 실패, 새로 시작합니다.', e);

@@ -66,6 +66,7 @@
    "js/quest.js",
    "js/goals.js",
    "js/scenario.js",
+   "js/tutorial.js",
    "js/auto.js",
    "js/icon.js",
    "js/ui.js",
@@ -140,6 +141,7 @@
    "js/quest.js",
    "js/goals.js",
    "js/scenario.js",
+   "js/tutorial.js",
    "js/auto.js",
    "js/ui.js",
    "js/game.js"
