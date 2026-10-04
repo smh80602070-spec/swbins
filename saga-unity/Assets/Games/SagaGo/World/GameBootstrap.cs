@@ -44,6 +44,7 @@ namespace Saga.Go.World
             Object.FindFirstObjectByType<BeaconTower>()?.RefreshVisualFromState();
 
             CombineStaticBatches();
+            GoHouseInterior.Install(); // U-0039 — 마을집 House_2 에 들어갈 수 있는 방(포켓 공간, 방 GLB 없으면 안 세운다)
             GoSettingsState.ApplyToAllScalers();
             GoSettingsState.ApplyGraphicsQuality();
             GoAudio.PlayBgm(bgmClip);

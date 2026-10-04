@@ -23,6 +23,8 @@ namespace Saga.EditorTools
         private static string[] _targets;
         private static int _max = 2, _frame;
         private static bool _done;
+        private static bool _stage1, _wantHouse;
+        private static int _stage2At;
         private static bool _origEnterOpts;
         private static EnterPlayModeOptions _origOpts;
 
@@ -43,7 +45,7 @@ namespace Saga.EditorTools
             EditorSettings.enterPlayModeOptionsEnabled = true;
             EditorSettings.enterPlayModeOptions = EnterPlayModeOptions.DisableDomainReload | EnterPlayModeOptions.DisableSceneReload;
             EditorSceneManager.OpenScene(scene);
-            _frame = 0; _done = false;
+            _frame = 0; _done = false; _stage1 = false; _wantHouse = _targets.Contains("house"); _stage2At = 0;
             EditorApplication.playModeStateChanged += OnState;
             EditorApplication.isPlaying = true;
         }
@@ -63,11 +65,46 @@ namespace Saga.EditorTools
         private static void Tick()
         {
             if (_done || ++_frame < WarmupFrames) return;
+            try
+            {
+                if (!_stage1)
+                {
+                    _stage1 = true;
+                    ShootAll();
+                    if (_wantHouse && EnterHouse()) { _stage2At = _frame + 150; return; }   // 카메라가 방 안 플레이어를 따라올 시간
+                }
+                else if (_wantHouse && _frame < _stage2At) return;
+                else if (_wantHouse) ShootHouse();
+            }
+            catch (System.Exception e) { Debug.LogError("[ShowcaseGui] " + e); }
             _done = true;
             EditorApplication.update -= Tick;
-            try { ShootAll(); }
-            catch (System.Exception e) { Debug.LogError("[ShowcaseGui] " + e); }
             EditorApplication.isPlaying = false;
+        }
+
+        /// <summary>`house` — GO 마을집 방(U-0039)에 들어간다. 방이 없으면 거짓.</summary>
+        private static bool EnterHouse()
+        {
+            var gi = Saga.Go.World.GoHouseInterior.Instance;
+            if (gi == null) { Debug.LogError("[ShowcaseGui] house — 방이 안 섰다"); return false; }
+            gi.Enter();
+            Debug.Log($"[ShowcaseGui] house — 들어감 {gi.Inside}");
+            return true;
+        }
+
+        /// <summary>실제 게임 카메라가 방 안에서 보는 화면 + 천장 위에서 내려다본 전경.</summary>
+        private static void ShootHouse()
+        {
+            var main = Camera.main;
+            var gi = Saga.Go.World.GoHouseInterior.Instance;
+            if (main == null || gi == null) return;
+            Shoot(main, "house_gamecam", main.transform.position, main.transform.rotation);
+            var c = gi.RoomBounds.center;
+            var over = c + new Vector3(0f, gi.RoomBounds.size.y * 2.2f, -gi.RoomBounds.size.z * 1.1f);
+            Shoot(main, "house_overview", over, Quaternion.LookRotation(c - over, Vector3.up));
+            var inside = gi.LandingIndoor + new Vector3(0f, 2.2f, -1.5f);
+            Shoot(main, "house_fromdoor", inside, Quaternion.LookRotation(gi.RoomBounds.center - inside + Vector3.up * 0.5f, Vector3.up));
+            Debug.Log($"[ShowcaseGui] house 촬영 — 플레이어 {GameObject.FindWithTag("Player")?.transform.position} 카메라 {main.transform.position}");
         }
 
         private static void ShootAll()

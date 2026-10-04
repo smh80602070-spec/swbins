@@ -200,7 +200,7 @@ namespace Saga.Go.Data
             var data = new SaveData
             {
                 version = SaveVersion,
-                playerPos = player != null ? new[] { player.position.x, player.position.y, player.position.z } : null,
+                playerPos = player != null ? SavedPlayerPos(player.position) : null,
                 partyMembers = new List<string>(PartyState.MemberIds),
                 partyPresets = PartyState.SnapshotPresets(), // 109-14-18
                 fishBag = FishState.SnapshotBag(), // 109-14-24
@@ -640,6 +640,13 @@ namespace Saga.Go.Data
                 return data;
             }
             return null;
+        }
+
+        /// <summary>저장할 플레이어 위치 — 마을집 방 안이면 밖 복귀 자리(U-0039, 불러오면 포켓 공간에 떨어지지 않게).</summary>
+        private static float[] SavedPlayerPos(Vector3 current)
+        {
+            Vector3 p = World.GoHouseInterior.SavePosition(current);
+            return new[] { p.x, p.y, p.z };
         }
 
         private static Transform FindPlayer()
