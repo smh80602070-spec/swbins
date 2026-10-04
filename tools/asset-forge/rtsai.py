@@ -4,6 +4,7 @@
   py tools/asset-forge/rtsai.py pack-tiles     # 생성 타일(_out/rts_tiles) → 이음새 없는 64px webp (_out/rts/rts_<이름>.webp)
   py tools/asset-forge/rtsai.py pack-bld       # 건물(_out/rts_bld) → pack_static2d 로 256px 알파 (_out/rts/rts_<이름>.webp)
   py tools/asset-forge/rtsai.py pack-units     # 유닛(_out/rts_units) → pack_moving2d 로 정면·옆·뒤 (_out/rts_units_pack/<이름>/)
+  py tools/asset-forge/rtsai.py units2 [슬롯..]  # 유닛 후보 4씩 재뽑기 배치(rts_units2) · pick-units 슬롯=후보 ... 로 고른 뒤 pack-units
   py tools/asset-forge/rtsai.py transitions    # 땅 경계 전환 조각(풀↔숲·물·언덕 각 12) — 고른 타일로 코드 생성 (_out/rts/rts_tr_*.webp)
 
 글씨·한글은 그리지 않는다. 건물 밑그림 = `tools/world-forge/build_rts.py` 3D 렌더(`_out/rts/sprite`, `SIZE=512 EL=40 _render_dir.sh`), 유닛은 K-0056 방식 txt2img(같은 씨앗·시점 낱말만 변경).
@@ -48,6 +49,7 @@ UNITS = {
 STYLE = 'game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single character, full body'
 NEG_U = ('lowres, bad anatomy, bad hands, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, '
          'background scenery, multiple views, border, frame, multiple people, grass, flowers, ground, flag, banner')
+NEG_U2 = NEG_U + ', close-up, portrait, upper body, zoomed in, army, crowd, many soldiers, duplicate, tiled, repeated pattern, extra arms, lance in the foreground'
 VIEWS = {'front': 'front view, facing the viewer', 'side': 'side view, facing right, profile', 'back': 'back view, seen from behind'}
 BSTYLE = 'game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single object'
 BNEG = ('lowres, bad anatomy, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, '
@@ -139,6 +141,39 @@ def pack_units():
     subprocess.run([sys.executable, os.path.join(AI, 'pack_moving2d.py'), os.path.join(AI, '_out', 'rts_units'), os.path.join(AI, '_out', 'rts_units_pack')], check=True)
 
 
+def units_cands():
+    """유닛 재뽑기 — 슬롯(유닛×팀×방향)마다 씨앗 4개 후보 → tools/ai-art/batches/rts_units2.json (_out/rts_units2/<슬롯>_c<k>.png).
+    한 장씩 눈으로 보고 `pick-units <슬롯>=<k> ...` 로 _out/rts_units/<슬롯>.png 를 바꾼 뒤 pack-units."""
+    only = set(sys.argv[2:])
+    uitems = []
+    for ukey, tmpl in UNITS.items():
+        for team, tdesc in TEAMS.items():
+            for v, vt in VIEWS.items():
+                sid = f'rts_{ukey}_{team}_{v}'
+                if only and sid not in only:
+                    continue
+                for k in range(4):
+                    seed = int(hashlib.md5(f'rtsu2:{sid}:{k}'.encode()).hexdigest()[:8], 16)
+                    uitems.append({'id': f'{sid}_c{k}', 'seed': seed, 'negative': NEG_U2,
+                                   'prompt': f'{tmpl.format(team=tdesc)}, {vt}, whole body from head to feet, {STYLE}'})
+    json.dump({'model': 'animagine-xl-4.0-opt', 'out': 'rts_units2',
+               'defaults': {'prompt_prefix': 'masterpiece, high score, great score, absurdres', 'width': 768, 'height': 768, 'steps': 28, 'cfg': 5.5, 'sampler': 'Euler a', 'negative': NEG_U2},
+               'items': uitems}, open(os.path.join(AI, 'batches', 'rts_units2.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    print('BATCH rts_units2', len(uitems))
+
+
+def pick_units():
+    import shutil
+    src, dst = os.path.join(AI, '_out', 'rts_units2'), os.path.join(AI, '_out', 'rts_units')
+    for a in sys.argv[2:]:
+        slot, k = a.split('=')
+        for ext in ('.png', '.license.json'):
+            s = os.path.join(src, f'{slot}_c{k}{ext}')
+            if os.path.exists(s):
+                shutil.copyfile(s, os.path.join(dst, slot + ext))
+        print('고름', slot, '← 후보', k)
+
+
 # ---------------------------------------------------------------- 경계 전환 조각 (고른 타일로 코드 생성)
 def edge_mask(kind, T=64):
     """B(위에 얹는 땅) 가 차지하는 알파 마스크. kind: N·E·S·W(변) · oNE·oSE·oSW·oNW(바깥 모서리) · iNE·iSE·iSW·iNW(안쪽 모서리).
@@ -205,4 +240,4 @@ def transitions():
 
 if __name__ == '__main__':
     cmd = sys.argv[1] if len(sys.argv) > 1 else ''
-    {'batches': batches, 'pack-tiles': pack_tiles, 'pack-bld': pack_bld, 'pack-units': pack_units, 'transitions': transitions}.get(cmd, lambda: print(__doc__))()
+    {'batches': batches, 'pack-tiles': pack_tiles, 'pack-bld': pack_bld, 'pack-units': pack_units, 'units2': units_cands, 'pick-units': pick_units, 'transitions': transitions}.get(cmd, lambda: print(__doc__))()
