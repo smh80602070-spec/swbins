@@ -78,6 +78,7 @@ func _ready() -> void:
 	add_child(preload("res://games/saga_go/world/village_dressing.gd").new())
 	## 2026-09-28 밤 화면 — 달빛·별·창과 등롱 불(night_visual.gd).
 	add_child(preload("res://games/saga_go/world/night_visual.gd").new())
+	add_child(preload("res://games/saga_go/world/sky_panorama.gd").new())   # G-0026 — 하늘 파노라마(시각·지역 시대)
 	_remove_resolved_events()
 	if OS.get_environment("SAGA_DENSITY_REPORT") != "":
 		_print_density_report()

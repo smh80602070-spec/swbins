@@ -14,6 +14,28 @@ extends RefCounted
 ## "세 번 돌려 출력이 한 줄도 다르지 않은지" 습관이 깨진다.
 
 static var _forced: Variant = null # null = 강제 안 함(실제 시각), true/false = 강제
+## G-0026 — SAGA_SKY_HOUR=<시> 면 그 시각으로(촬영·확인용). 비어 있으면 실제 시각.
+static var _hour_env := -1.0
+static var _hour_env_read := false
+
+
+## 지금 시각(시, 소수). SAGA_SKY_HOUR 가 있으면 그 값, 강제(force)가 있으면 밤 23·낮 12, 아니면 실제 시계.
+static func hour_float() -> float:
+	var e := _env_hour()
+	if e >= 0.0:
+		return e   # 명시한 시각이 우선(촬영 도구는 시작 때 force(false) 를 건다)
+	if _forced != null:
+		return 23.0 if _forced else 12.0
+	var t := Time.get_time_dict_from_system()
+	return float(t["hour"]) + float(t["minute"]) / 60.0
+
+
+static func _env_hour() -> float:
+	if not _hour_env_read:
+		_hour_env_read = true
+		var v := OS.get_environment("SAGA_SKY_HOUR")
+		_hour_env = float(v) if v != "" else -1.0
+	return _hour_env
 
 static func force(is_night_value: Variant) -> void:
 	_forced = is_night_value
@@ -21,5 +43,8 @@ static func force(is_night_value: Variant) -> void:
 static func is_night() -> bool:
 	if _forced != null:
 		return _forced
+	var e := _env_hour()
+	if e >= 0.0:
+		return e >= 21.0 or e < 4.0
 	var h: int = Time.get_time_dict_from_system()["hour"]
 	return h >= 21 or h < 4

@@ -17,6 +17,12 @@ uniform float sun_size = 0.045;       // 라디안
 uniform float sun_strength = 3.0;
 // saga-godot 2026-09-28 — 밤 별(0 = 낮, 1 = 밤). games/saga_go/world/night_visual.gd 가 넣는다(uniform 이라 바뀔 때만 반사 맵을 다시 굽는다).
 uniform float stars : hint_range(0.0, 1.0) = 0.0;
+// G-0026 — 하늘 파노라마(등장방형 2:1, 방위각 0=북(-Z)·90=동(+X), 위가 v=0). pano_on 이 0 이면 아래 툰 하늘 그대로.
+// games/saga_go/world/sky_panorama.gd 가 시각·지역 시대에 맞춰 두 장(pano_a → pano_b)과 섞기(pano_mix)를 넣는다.
+uniform sampler2D pano_a : source_color, filter_linear, repeat_enable;
+uniform sampler2D pano_b : source_color, filter_linear, repeat_enable;
+uniform float pano_mix : hint_range(0.0, 1.0) = 0.0;
+uniform float pano_on : hint_range(0.0, 1.0) = 0.0;
 
 float hash21(vec2 p) {
 	return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
@@ -46,6 +52,10 @@ float fbm(vec2 p) {
 
 void sky() {
 	vec3 d = EYEDIR;
+	if (pano_on > 0.5) {
+		vec2 puv = vec2(fract(atan(d.x, -d.z) / 6.28318530718), acos(clamp(d.y, -1.0, 1.0)) / 3.14159265359);
+		COLOR = mix(textureLod(pano_a, puv, 0.0).rgb, textureLod(pano_b, puv, 0.0).rgb, pano_mix);
+	} else {
 	float h = d.y;
 	vec3 col;
 	if (h >= 0.0) {
@@ -81,4 +91,5 @@ void sky() {
 		col = mix(col, cc, mask * fade);
 	}
 	COLOR = col;
+	}
 }

@@ -277,6 +277,9 @@ func _act(a: String) -> void:
 			var nv := get_tree().get_first_node_in_group("go_night_visual")
 			if nv:
 				nv.call("refresh_now")
+			var sp := get_tree().get_first_node_in_group("go_sky_panorama")   # G-0026 — 하늘 파노라마도 곧바로
+			if sp:
+				sp.call("refresh_now")
 		"nofog":
 			var we := get_tree().current_scene.find_children("*", "WorldEnvironment", true, false)
 			if not we.is_empty():
@@ -329,6 +332,9 @@ func _undo() -> void:
 		var nv := get_tree().get_first_node_in_group("go_night_visual")
 		if nv:
 			nv.call("refresh_now")
+		var sp := get_tree().get_first_node_in_group("go_sky_panorama")
+		if sp:
+			sp.call("refresh_now")
 	var es := get_tree().get_first_node_in_group("go_elemental_sight")
 	if es and bool(es.get("active")):
 		es.call("set_active", false)
