@@ -195,7 +195,7 @@
 
   function dem(label, v) { return '<i class="dm"><u>' + label + '</u><b style="width:' + Math.round(v * 100) + '%"></b></i>'; }
   function tipFor() {
-    if (!hover) { return '도구를 고르고 칸을 누르세요 · 건물은 도로로 거점에 이어져야 돕니다'; }
+    if (!hover) { return R().guide.text(S) || '도구를 고르고 칸을 누르세요 · 건물은 도로로 거점에 이어져야 돕니다'; }   // 다음 할 일(guide.js)
     var b = R().rules.buildingAt(S, hover.x, hover.y), D = R().rules.DEFS;
     if (b && b.t === 'stronghold') { return D.stronghold.name + ' · 체력 ' + Math.ceil(b.hp) + ' — 유닛으로 쳐서 무너뜨리면 이긴다'; }
     if (b) { return D[b.t].name + (b.t === 'castle' ? '' : (b.conn ? ' · 돌고 있음' : ' · 도로로 이어지지 않았습니다')); }

@@ -109,6 +109,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rts/units.js"></script>
 <script src="js/rts/combat.js"></script>
 <script src="js/rts/heroes.js"></script>
+<script src="js/rts/guide.js"></script>
 <script src="js/rts/state.js"></script>
 <script src="js/game.js"></script>
 <script>
@@ -641,6 +642,25 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       t0 = Date.now(); for (i = 0; i < 10; i++) { s.tick++; U.tick(s); C.tick(s); } ms = Date.now() - t0;
       for (id in s.units) { u = s.units[id]; if (!(u.hp > 0) || !isFinite(u.x) || !isFinite(u.y)) { ok = false; } }
       return ms < 3000 && ok && Object.keys(s.units).length > 0 && ('300기 열 틱 3초 안 · 상태 정상');
+    });
+
+    /* ── RTS 다음 할 일 안내(W-0040, js/rts/guide.js) ─── */
+
+    t('RTS 안내 — 상태를 보고 다음 할 일 한 줄: 주거 → 농지 → 군영 → 병사 → 영웅 → 진격 순서, 습격 임박·승리·함락은 앞서 나온다', function () {
+      var R = DG.rts, G = R.guide, U = R.units, H = R.heroes, s = R.state.create(7), cs = R.grid.castleSite(), i; s.res.gold = 99999; s.res.food = 99999; s.raid.next = 1e9;
+      var k = [];
+      k.push(G.next(s).key);                                                        // house
+      for (i = 0; i < 4; i++) { R.rules.place(s, 'road', cs.x + 3 + i, cs.y + 1); }
+      R.rules.place(s, 'house', cs.x + 4, cs.y - 1); k.push(G.next(s).key);          // farm
+      R.rules.place(s, 'farm', cs.x + 8, cs.y - 3); k.push(G.next(s).key);           // barracks
+      var b = R.rules.place(s, 'barracks', cs.x + 5, cs.y + 2); k.push(G.next(s).key);   // train
+      for (i = 0; i < 3; i++) { U.spawn(s, 'soldier', 0, cs.x + 6.5, cs.y - 8.5); } k.push(G.next(s).key);   // hero
+      U.spawn(s, 'hero', 0, cs.x + 6.5, cs.y - 9.5, 'sg_guanyu'); k.push(G.next(s).key);                  // march
+      s.raid.next = s.tick + 20; k.push(G.next(s).key);                              // defend
+      var q = R.state.create(7); q.raid.next = q.tick + 20; var soon = G.next(q).key;   // 군영 없이 습격 임박
+      s.won = true; var won = G.next(s).key; s.won = false; s.over = true; var over = G.next(s).key;
+      var order = k.join(',') === 'house,farm,barracks,train,hero,march,defend';
+      return order && soon === 'raid-soon' && won === 'won' && over === 'over' && !!b && G.text(s) !== '' && ('순서 ' + k.join('→') + ' · 임박·승리·함락');
     });
 
     t('통일 3D 에셋 — 등록 표의 id 는 전부 지물 GLB 이고, 시험 전·실패 때 heroRecipe 는 null(옛 모델) — 씨앗은 hero:<id> 문자열도 받는다', function () {
