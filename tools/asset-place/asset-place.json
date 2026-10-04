@@ -624,6 +624,23 @@
    ]
   },
   {
+   "id": "web2d-rts",
+   "src": "saga-assets/web2d/rts",
+   "recursive": true,
+   "include": [
+    "*.png",
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0061 사가국지 RTS 화면 에셋 — rts_* (UI 아이콘·흙길 autotile·물·이펙트·지형·건물·유닛). 웹 shared/assets/web2d/rts",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/web2d/rts"
+    }
+   ]
+  },
+  {
    "id": "characters-sprites2d",
    "src": "saga-assets/characters/sprites2d",
    "recursive": true,

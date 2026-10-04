@@ -1,0 +1,13 @@
+{
+ "generator": "tools/asset-forge/rtsgen.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "id": "rts_water_1",
+ "size": [
+  64,
+  64
+ ],
+ "frame": 1,
+ "frames": 2,
+ "seamless": "periodic",
+ "note": "두 프레임을 0.6~0.8초마다 번갈아 그린다"
+}

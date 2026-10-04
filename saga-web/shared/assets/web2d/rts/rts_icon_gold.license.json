@@ -1,0 +1,10 @@
+{
+ "generator": "tools/asset-forge/rtsgen.py",
+ "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
+ "id": "rts_icon_gold",
+ "size": [
+  64,
+  64
+ ],
+ "kind": "gold"
+}
