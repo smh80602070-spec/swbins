@@ -511,6 +511,25 @@
    ]
   },
   {
+   "id": "sky-unity",
+   "src": "saga-assets/sky-unity",
+   "include": [
+    "*.jpg",
+    "*.png",
+    "*.json"
+   ],
+   "note": "K-0064 Unity 용 하늘·구름·입자 — K-0034 정본을 jpg(하늘 12 2048x1024)·png 로 변환(tools/asset-forge/unity_sky.py, Unity 는 WebP 불가). 배선은 U-0041",
+   "targets": [
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Sky",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
+  },
+  {
    "id": "ui-skin",
    "src": "saga-assets/ui",
    "recursive": true,

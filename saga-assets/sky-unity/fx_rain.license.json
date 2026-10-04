@@ -1,0 +1,13 @@
+{
+ "id": "fx_rain",
+ "generator": "tools/ai-art/make_sky.py",
+ "license": "CC0-1.0 (코드 생성 — 외부 입력 없음)",
+ "size": [
+  64,
+  256
+ ],
+ "use": "세로로 타일링·아래로 흐름",
+ "converted_for": "unity",
+ "converted_by": "tools/asset-forge/unity_sky.py",
+ "unity_note": "알파 포함 · Alpha Is Transparency"
+}
