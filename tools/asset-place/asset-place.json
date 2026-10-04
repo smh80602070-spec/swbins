@@ -564,6 +564,16 @@
    ]
   },
   {
+   "id": "portraits-monster",
+   "src": "saga-assets/portraits-monster",
+   "include": [
+    "*.webp",
+    "*.json"
+   ],
+   "note": "K-0032 몬스터 도감 초상 32(K-0043 몸 mon_* 20 + boss_* 12 × 정사각 192·카드 300x344). 도감(MONSTERS) 데이터가 아직 없어 정본 보관 — 연결은 웹이 항목을 만든 뒤 대상을 더한다",
+   "targets": []
+  },
+  {
    "id": "ui-skin",
    "src": "saga-assets/ui",
    "recursive": true,
