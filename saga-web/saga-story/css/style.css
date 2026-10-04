@@ -422,6 +422,7 @@ small.muted { display: block; margin-top: 7px; font-size: 11px; }
 .btn.ghost { background: transparent; }
 .btn.tiny { padding: 6px 10px; font-size: 11px; border-radius: 9px; }
 .btn.wide { width: 100%; margin-top: 8px; }
+.ri { width: 22px; height: 22px; vertical-align: -6px; margin-right: 6px; }   /* 지역 아이콘(W-0046) */
 
 /* ── 조우 모달 ────────────────────────────────────────── */
 #encounter {

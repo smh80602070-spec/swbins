@@ -163,6 +163,22 @@ for (const g of Object.keys(INTERIOR_GAMES)) {
     }
   }
 }
+/** 지역 아이콘(K-0042, W-0046) — 판이 쓰는 접두어의 64px 아이콘만 `<판>/assets/map/icons/` 로 복사한다. 판 → 파일 접두어 */
+const MAP_ICON_GAMES = { 'saga-story': 'story_' };
+for (const g of Object.keys(MAP_ICON_GAMES)) {
+  const dir = path.join(WEB, 'shared', 'assets', 'map', 'icons');
+  if (!fs.existsSync(dir)) continue;
+  for (const f of fs.readdirSync(dir)) {
+    if (!f.startsWith(MAP_ICON_GAMES[g]) || !f.endsWith('.png')) continue;
+    total++;
+    const from = path.join(dir, f), to = path.join(WEB, g, 'assets', 'map', 'icons', f);
+    if (fs.existsSync(to) && fs.readFileSync(to).equals(fs.readFileSync(from))) continue;
+    if (check) { console.log(`DIFF ${g}/assets/map/icons/${f} ≠ shared`); bad++; continue; }
+    fs.mkdirSync(path.dirname(to), { recursive: true });
+    fs.copyFileSync(from, to);
+    copied++;
+  }
+}
 if (check) console.log(bad ? `FAIL shared 정본과 다른 사본 ${bad}개 — node tools/sync-shared.mjs` : `OK ${total}개 사본`);
 else console.log(`복사 ${copied}개 · 이미 같은 것 ${total - copied}개`);
 process.exit(bad ? 1 : 0);

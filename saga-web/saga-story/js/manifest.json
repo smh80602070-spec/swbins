@@ -55,6 +55,7 @@
    "js/auto.js",
    "js/icon.js",
    "js/ui.js",
+   "js/region-icon.js",
    "js/perf.js",
    "js/game.js"
   ]
@@ -109,6 +110,7 @@
    "js/ai.js",
    "js/auto.js",
    "js/ui.js",
+   "js/region-icon.js",
    "js/game.js"
   ]
  ]

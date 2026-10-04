@@ -115,6 +115,7 @@ window.DG_NO_TUNE = true;
 <script src="js/ai.js"></script>
 <script src="js/auto.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/region-icon.js"></script>
 <script src="js/game.js"></script>
 <script>
 (function () {
@@ -5815,6 +5816,16 @@ window.DG_NO_TUNE = true;
         r = gone && kept;
       } finally { localStorage.setItem(key, raw0); C.load(); if (had === null) { localStorage.removeItem(key); } else { localStorage.setItem(key, had); } }
       return r === true && ('옛 세이브 안내 칸 없음 · 새 세이브 칸 유지');
+    });
+
+    t('지역 아이콘(W-0046) — 사냥터 열네 곳 모두 story_<키>.png 주소가 나오고, 키가 비면 빈 글·이상한 글자는 걸러진다', function () {
+      var SD = DG.sideData, RI = DG.regionIcon, bad = [];
+      SD.STAGES.forEach(function (st) {
+        var h = RI.html(st.key);
+        if (h.indexOf('src="assets/map/icons/story_' + st.key + '.png"') < 0 || h.indexOf('class="ri"') < 0) { bad.push(st.key); }
+      });
+      return bad.length === 0 && RI.html('') === '' && RI.html('a"><b') .indexOf('"><b') < 0 &&
+        (SD.STAGES.length + '곳 전부 주소 · 빈 키 빈 글 · 따옴표 걸러짐');
     });
 
     t('런타임 에러 없음', function () {
