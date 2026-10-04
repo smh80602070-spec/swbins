@@ -50,7 +50,7 @@
      아래 씨앗 고정 다음에 실린다 -->
 <script src="js/vendor/three.iife.js"></script>
 <script>
-window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_LOOP = true; window.DG_NO_SCENARIO = true;
+window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; window.DG_NO_LOOP = true; window.DG_NO_SCENARIO = true;
 /* 어드민의 균형 손잡이를 읽지 않는다 — 손잡이를 잡아 둔 기기에서
    판정이 흔들리면 안 된다 (씨앗을 고정한 것과 같은 이유다) */
 window.DG_NO_TUNE = true;
@@ -104,6 +104,7 @@ window.DG_NO_TUNE = true;
 <script src="js/festival.js"></script>
 <script src="js/data-scenario.js"></script>
 <script src="js/scenario.js"></script>
+<script src="js/tutorial.js"></script>
 <script src="js/visitor.js"></script>
 <script src="js/town.js"></script>
 <script src="js/folk.js"></script>
@@ -6712,6 +6713,49 @@ window.DG_NO_TUNE = true;
         V.apply(model, 'hero_a');
         return !model.meshes[0].material.map && '설정 없음 → 무늬 없음(기존 옷)';
       } finally { DG.cfg.vroidPattern = saveCfg; P.list = saveList; P.loader = saveLoader; }
+    });
+
+    /* ── 첫 10분 안내(tutorial.js, W-0038) ──────────────────────────────── */
+    function tutWith(fn) {
+      var T = DG.tut, sv = C.save, had = Object.prototype.hasOwnProperty.call(sv, 'tut'), old = sv.tut, gold0 = sv.player.gold;
+      window.DG_NO_TUT = false;
+      try { return fn(T, sv); } finally { window.DG_NO_TUT = true; sv.player.gold = gold0; if (had) { sv.tut = old; } else { delete sv.tut; } }
+    }
+
+    t('첫 10분 — 새 세이브면 프로필 카드 맨 위가 1단계 문구이고, 다 끝냈거나 안내 칸이 없으면 빈 문구다', function () {
+      return tutWith(function (T, sv) {
+        sv.tut = { done: [] };
+        var first = T.line(), want = T.STEPS[0].text, html = T.lineHtml();
+        sv.tut = { done: T.STEPS.map(function (x) { return x.key; }) }; var fin = T.line() === '' && T.lineHtml() === '';
+        delete sv.tut; var none = T.line() === '' && T.done() === true;
+        return first.indexOf(want) === 0 && html.indexOf('tut-goal') > 0 && fin && none && ('첫 줄 "' + want + '" · 끝난·옛 세이브는 빈 문구');
+      });
+    });
+
+    t('첫 10분 — 다섯 단계가 순서대로만 나아가고(앞 단계 전 이벤트·낚시 실패·집 나가기는 무시), 보상은 합 240금, 끝나면 done 이 5 다', function () {
+      return tutWith(function (T, sv) {
+        sv.tut = { done: [] }; var g0 = sv.player.gold;
+        var skipped = T._feed('village:delivered', {}) === false && T.step() === 0;          // 채집 전의 배달은 무시
+        C.emit('village:gather', { n: 1 }); var s1 = T.step() === 1 && sv.player.gold === g0 + 30;   // 이벤트가 배선돼 있다
+        var miss = T._feed('village:fish', { state: 'miss' }) === false && T.step() === 1;    // 낚시는 잡았을 때만
+        C.emit('village:fish', { state: 'catch', item: 'x' }); C.emit('village:bug', { state: 'flee' }); var s2 = T.step() === 2;
+        C.emit('village:bug', { state: 'catch', ref: 'x' }); C.emit('village:delivered', { dest: 'x' });
+        var out = T._feed('village:home', { inside: false }) === false && T.step() === 4;     // 집을 나가는 건 아니다
+        C.emit('village:home', { inside: true });
+        return skipped && s1 && miss && s2 && out && T.done() && sv.tut.done.length === 5 && sv.player.gold === g0 + 240 && T.line() === '' && ('순서·조건·보상 240금');
+      });
+    });
+
+    t('첫 10분 — 안내가 생기기 전 세이브를 불러오면 안내 칸이 없다(이미 끝난 것), 안내 칸이 있는 세이브는 그대로다', function () {
+      var key = C.SAVE_KEY, had = localStorage.getItem(key), raw0 = JSON.stringify(C.save), r;
+      try {
+        var old = JSON.parse(raw0); delete old.tut; localStorage.setItem(key, JSON.stringify(old)); C.load();
+        var gone = C.save.tut === undefined;
+        var fresh = JSON.parse(raw0); fresh.tut = { done: ['gather'] }; localStorage.setItem(key, JSON.stringify(fresh)); C.load();
+        var kept = !!C.save.tut && C.save.tut.done.length === 1;
+        r = gone && kept;
+      } finally { localStorage.setItem(key, raw0); C.load(); if (had === null) { localStorage.removeItem(key); } else { localStorage.setItem(key, had); } }
+      return r === true && ('옛 세이브 안내 칸 없음 · 새 세이브 칸 유지');
     });
 
     t('런타임 에러 없음', function () {

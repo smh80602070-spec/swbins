@@ -575,7 +575,7 @@
           ' · ' + st.phase.name + ' · 채집 <b>' + core.fmt(st.gathered) +
           '</b></div>' +
         (global.DG.scenario ? global.DG.scenario.lineHtml() : '') +
-        taskGoalLine() +
+        (global.DG.tut ? global.DG.tut.lineHtml() : '') + taskGoalLine() +   // 첫 10분 안내(tutorial.js)가 남았으면 맨 위
       '</div>';
 
     els.wallet.innerHTML =
