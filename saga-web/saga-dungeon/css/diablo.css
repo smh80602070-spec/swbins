@@ -668,6 +668,13 @@ b, strong, .p-sub, .coin, .dg-loot, .d2-gv { font-variant-numeric: tabular-nums;
   font-size: 12.5px; color: #d9cfb4; letter-spacing: 0.08em;
   text-shadow: 0 1px 3px #000, 0 0 10px #000; margin-bottom: 3px;
 }
+#d2-foe .d2-fname { display: flex; align-items: center; justify-content: center; gap: 8px; }
+#d2-foe .d2-fport {
+  width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;
+  background: #120c08; border: 1px solid #3d3120; box-shadow: 0 1px 4px #000;
+}
+#d2-foe.elite .d2-fport { border-color: #6f6fff; }
+#d2-foe.boss  .d2-fport { border-color: #ffff64; width: 48px; height: 48px; }
 #d2-foe.elite .d2-fname { color: #6f6fff; }
 #d2-foe.boss  .d2-fname { color: #ffff64; }
 #d2-foe .d2-fbar {

@@ -800,7 +800,7 @@
     if (rc >= 10) { res.push('기 −' + Math.round(rc) + '%'); }
 
     foeEl.innerHTML =
-      '<div class="d2-fname">' + (el ? el.name + ' ' : '') + best.ref.name + '</div>' +
+      '<div class="d2-fname">' + (global.DG.monsterPortrait ? global.DG.monsterPortrait.html(best.ref, !!best.boss, 40) : '') + '<span>' + (el ? el.name + ' ' : '') + best.ref.name + '</span></div>' +   // 몸 계열 초상(W-0072, 없으면 글자만)
       '<div class="d2-fbar"><i style="width:' +
         (core.clamp(best.hp / (best.hpMax || best.hp || 1), 0, 1) * 100) + '%"></i></div>' +
       (res.length ? '<div class="d2-fres">저항 ' + res.join(' · ') + '</div>' : '') +

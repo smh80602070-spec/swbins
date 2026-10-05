@@ -142,6 +142,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/dungeon3d.js"></script>
 <script src="js/fx3d.js"></script>
 <script src="js/dungeon-view.js"></script>
+<script src="js/monster-portrait.js"></script>
 <script src="js/minimap.js"></script>
 <script src="js/net.js"></script>
 <script src="js/ai.js"></script>
@@ -3675,6 +3676,30 @@ window.requestAnimationFrame = function () { return 0; };
       }
       return close.length === 0 &&
         ('가장 가까운 둘도 ' + Math.round(min) + ' (문턱 ' + (T.TALK_R * 2) + ') 떨어짐');
+    });
+
+    t('몬스터 초상(W-0072) — 보스는 boss_01~12·사람형은 초상 없음·형태별 계열(네발·넋·기계·뱀·날개)·같은 적은 늘 같은 초상·꺼 두면 null, 모든 적이 표 안의 id 이거나 null', function () {
+      var MP = DG.monsterPortrait, ED = DG.enemyData, ok = [], bad = [], i, e, p, nonHuman = 0, withP = 0, all = ED.enemies.concat(ED.eraEnemies);
+      function chk(n, v) { if (!v) { bad.push(n); } }
+      chk('보스', /^assets\/portraits-monster\/boss_(0[1-9]|1[0-2])_c\.webp$/.test(MP.src({ key: 'x' }, true)));
+      chk('사람형', MP.src({ kind: 'human', look: {}, key: 'a', name: '산적' }) === null && MP.src(null) === null);
+      chk('네발', MP.family({ form: 'quad', name: '들개' }) === 'quad');
+      chk('슬라임=넋', MP.family({ form: 'quad', name: '홍슬라임' }) === 'spir');
+      chk('넋', MP.family({ form: 'ogre', name: '원혼' }) === 'spir');
+      chk('기계', MP.family({ form: 'ogre', name: '경비 보행기' }) === 'cons' && MP.family({ form: 'quad', name: '철갑해' }) === 'cons');
+      chk('뱀', MP.family({ form: 'serpent', name: '독사' }) === 'serp' && MP.family({ form: 'dragon', name: '이무기' }) === 'serp');
+      chk('날개', MP.family({ form: 'bird', name: '말벌떼' }) === 'wing');
+      chk('같은 적 같은 초상', MP.src({ key: 'dog', form: 'quad', name: '들개' }) === MP.src({ key: 'dog', form: 'quad', name: '들개' }));
+      var all2 = [].concat(MP.IDS.cons, MP.IDS.quad, MP.IDS.serp, MP.IDS.spir, MP.IDS.wing, MP.IDS.boss);
+      chk('표 32', all2.length === 32);
+      for (i = 0; i < all.length; i++) {
+        e = all[i]; p = MP.idOf(e, false);
+        if (e.kind !== 'human' && !e.look) { nonHuman++; }
+        if (p) { withP++; if (all2.indexOf(p) < 0) { bad.push('표 밖 ' + e.name); } }
+        else if (e.kind !== 'human' && !e.look) { bad.push('초상 없음 ' + e.name); }
+      }
+      MP.enabled = false; chk('끈 뒤 null', MP.src({ key: 'x', form: 'quad', name: 'a' }) === null && MP.src({ key: 'x' }, true) === null); MP.enabled = true;
+      return bad.length === 0 ? ('사람형 아닌 적 ' + nonHuman + ' 전부 초상 · 사람형 ' + (all.length - withP) + ' 글자만') : ('실패 ' + bad.slice(0, 6).join(','));
     });
 
     t('건물 입구(W-0045) — 갈대나루 여관·자작재 마방·소금벌 방앗간에만 표식이 서고, 밟으면 안쪽 창(2D 는 실내 그림 · 3D 는 글만)이 뜬다', function () {
