@@ -24,3 +24,4 @@
 - [ ] 2026-10-05 · (K-0073 검사기 결과) · 웹 버그 후보 ①: 다섯 판 `_demo.html` 이 `index.html` 스크립트 절반(assets3d.js 등)을 안 실어 데모·진단에서 shared 3D·무늬가 안 보임 · 웹
 - [ ] 2026-10-05 · (K-0073 검사기 결과) · 웹 버그 후보 ②: 다섯 판 `<판>/assets/patterns/patterns.json` 404 — `vroid-variant.js` 가 assets3d 뿌리 확정 전에 받음(경주), 무늬는 `shared/assets/patterns` 에 있음 · 웹
 - [ ] 2026-10-05 · "자동화 기능은 다 만든거임?" · 답: 부품(판정기·키트·반영 검사기·게이트·INTAKE 표)은 있고 **무인 기동(스케줄러→claude -p)·그림체 고르기 뒤 전체 재생성·K-0072 실행·Haiku 기계 단계**는 안 됨 — 세션 보고 표 · 공통
+- [ ] 2026-10-05 · "C:\swbins2 여기로 붙지지 마 · 모든 회사용이지" · swbins2 는 회사용, saga 자동화·제어 페이지는 C:\swbins 안에 자체 내장 — 루트 CLAUDE.md 의 "개인 도구는 swbins2·허브 카드 services.json" 줄 낡음(웹 갈래가 고칠 것) · 공통/웹
