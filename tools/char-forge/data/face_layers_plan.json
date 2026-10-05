@@ -1,0 +1,785 @@
+{
+ "note": "K-0072 단계 3 — 얼굴 레이어 후보(사람마다 3). 얼굴은 만들지 않는다(샘플 표정 섞기·텍스처 색·코드 장식).",
+ "rows": [
+  {
+   "id": "vface_g_e_1_v1",
+   "src": "vmix_g_e_1",
+   "body": "g",
+   "spec": {
+    "eye": 0,
+    "brow": 0,
+    "mouth": 0,
+    "iris": 4,
+    "skin": 3,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_g_e_1_v2",
+   "src": "vmix_g_e_1",
+   "body": "g",
+   "spec": {
+    "eye": 1,
+    "brow": 2,
+    "mouth": 0,
+    "iris": 7,
+    "skin": 3,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_g_e_1_v3",
+   "src": "vmix_g_e_1",
+   "body": "g",
+   "spec": {
+    "eye": 3,
+    "brow": 1,
+    "mouth": 1,
+    "iris": 6,
+    "skin": 3,
+    "deco": 1
+   }
+  },
+  {
+   "id": "vface_g_d_1_v1",
+   "src": "vmix_g_d_1",
+   "body": "g",
+   "spec": {
+    "eye": 0,
+    "brow": 0,
+    "mouth": 1,
+    "iris": 3,
+    "skin": 0,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_g_d_1_v2",
+   "src": "vmix_g_d_1",
+   "body": "g",
+   "spec": {
+    "eye": 0,
+    "brow": 1,
+    "mouth": 1,
+    "iris": 7,
+    "skin": 4,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_g_d_1_v3",
+   "src": "vmix_g_d_1",
+   "body": "g",
+   "spec": {
+    "eye": 0,
+    "brow": 2,
+    "mouth": 1,
+    "iris": 6,
+    "skin": 4,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_d_e_1_v1",
+   "src": "vmix_d_e_1",
+   "body": "d",
+   "spec": {
+    "eye": 2,
+    "brow": 2,
+    "mouth": 2,
+    "iris": 2,
+    "skin": 1,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_d_e_1_v2",
+   "src": "vmix_d_e_1",
+   "body": "d",
+   "spec": {
+    "eye": 3,
+    "brow": 2,
+    "mouth": 2,
+    "iris": 8,
+    "skin": 1,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_d_e_1_v3",
+   "src": "vmix_d_e_1",
+   "body": "d",
+   "spec": {
+    "eye": 2,
+    "brow": 1,
+    "mouth": 0,
+    "iris": 7,
+    "skin": 0,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_bm_d_4_v1",
+   "src": "vmix_bm_d_4",
+   "body": "bm",
+   "spec": {
+    "eye": 2,
+    "brow": 1,
+    "mouth": 0,
+    "iris": 4,
+    "skin": 1,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_bm_d_4_v2",
+   "src": "vmix_bm_d_4",
+   "body": "bm",
+   "spec": {
+    "eye": 2,
+    "brow": 0,
+    "mouth": 0,
+    "iris": 5,
+    "skin": 2,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_bm_d_4_v3",
+   "src": "vmix_bm_d_4",
+   "body": "bm",
+   "spec": {
+    "eye": 1,
+    "brow": 2,
+    "mouth": 2,
+    "iris": 4,
+    "skin": 3,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_bm_d_1_v1",
+   "src": "vmix_bm_d_1",
+   "body": "bm",
+   "spec": {
+    "eye": 3,
+    "brow": 1,
+    "mouth": 2,
+    "iris": 7,
+    "skin": 4,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_bm_d_1_v2",
+   "src": "vmix_bm_d_1",
+   "body": "bm",
+   "spec": {
+    "eye": 2,
+    "brow": 0,
+    "mouth": 0,
+    "iris": 3,
+    "skin": 3,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_bm_d_1_v3",
+   "src": "vmix_bm_d_1",
+   "body": "bm",
+   "spec": {
+    "eye": 3,
+    "brow": 1,
+    "mouth": 0,
+    "iris": 5,
+    "skin": 4,
+    "deco": 1
+   }
+  },
+  {
+   "id": "vface_e_d_3_v1",
+   "src": "vmix_e_d_3",
+   "body": "e",
+   "spec": {
+    "eye": 3,
+    "brow": 0,
+    "mouth": 2,
+    "iris": 4,
+    "skin": 2,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_e_d_3_v2",
+   "src": "vmix_e_d_3",
+   "body": "e",
+   "spec": {
+    "eye": 0,
+    "brow": 2,
+    "mouth": 0,
+    "iris": 5,
+    "skin": 4,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_e_d_3_v3",
+   "src": "vmix_e_d_3",
+   "body": "e",
+   "spec": {
+    "eye": 0,
+    "brow": 1,
+    "mouth": 2,
+    "iris": 1,
+    "skin": 3,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_bm_g_3_v1",
+   "src": "vmix_bm_g_3",
+   "body": "bm",
+   "spec": {
+    "eye": 1,
+    "brow": 0,
+    "mouth": 1,
+    "iris": 4,
+    "skin": 0,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_bm_g_3_v2",
+   "src": "vmix_bm_g_3",
+   "body": "bm",
+   "spec": {
+    "eye": 3,
+    "brow": 2,
+    "mouth": 1,
+    "iris": 4,
+    "skin": 3,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_bm_g_3_v3",
+   "src": "vmix_bm_g_3",
+   "body": "bm",
+   "spec": {
+    "eye": 2,
+    "brow": 1,
+    "mouth": 0,
+    "iris": 1,
+    "skin": 4,
+    "deco": 1
+   }
+  },
+  {
+   "id": "vface_bm_e_4_v1",
+   "src": "vmix_bm_e_4",
+   "body": "bm",
+   "spec": {
+    "eye": 0,
+    "brow": 1,
+    "mouth": 2,
+    "iris": 3,
+    "skin": 1,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_bm_e_4_v2",
+   "src": "vmix_bm_e_4",
+   "body": "bm",
+   "spec": {
+    "eye": 2,
+    "brow": 0,
+    "mouth": 0,
+    "iris": 7,
+    "skin": 1,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_bm_e_4_v3",
+   "src": "vmix_bm_e_4",
+   "body": "bm",
+   "spec": {
+    "eye": 2,
+    "brow": 0,
+    "mouth": 1,
+    "iris": 8,
+    "skin": 2,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_f_d_1_v1",
+   "src": "vmix_f_d_1",
+   "body": "f",
+   "spec": {
+    "eye": 2,
+    "brow": 2,
+    "mouth": 0,
+    "iris": 5,
+    "skin": 4,
+    "deco": 1
+   }
+  },
+  {
+   "id": "vface_f_d_1_v2",
+   "src": "vmix_f_d_1",
+   "body": "f",
+   "spec": {
+    "eye": 1,
+    "brow": 2,
+    "mouth": 1,
+    "iris": 7,
+    "skin": 4,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_f_d_1_v3",
+   "src": "vmix_f_d_1",
+   "body": "f",
+   "spec": {
+    "eye": 1,
+    "brow": 0,
+    "mouth": 0,
+    "iris": 3,
+    "skin": 3,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_bm_f_1_v1",
+   "src": "vmix_bm_f_1",
+   "body": "bm",
+   "spec": {
+    "eye": 3,
+    "brow": 2,
+    "mouth": 1,
+    "iris": 3,
+    "skin": 2,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_bm_f_1_v2",
+   "src": "vmix_bm_f_1",
+   "body": "bm",
+   "spec": {
+    "eye": 0,
+    "brow": 0,
+    "mouth": 0,
+    "iris": 4,
+    "skin": 2,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_bm_f_1_v3",
+   "src": "vmix_bm_f_1",
+   "body": "bm",
+   "spec": {
+    "eye": 0,
+    "brow": 2,
+    "mouth": 0,
+    "iris": 5,
+    "skin": 3,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_f_e_3_v1",
+   "src": "vmix_f_e_3",
+   "body": "f",
+   "spec": {
+    "eye": 1,
+    "brow": 0,
+    "mouth": 2,
+    "iris": 1,
+    "skin": 1,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_f_e_3_v2",
+   "src": "vmix_f_e_3",
+   "body": "f",
+   "spec": {
+    "eye": 2,
+    "brow": 1,
+    "mouth": 1,
+    "iris": 4,
+    "skin": 1,
+    "deco": 1
+   }
+  },
+  {
+   "id": "vface_f_e_3_v3",
+   "src": "vmix_f_e_3",
+   "body": "f",
+   "spec": {
+    "eye": 3,
+    "brow": 0,
+    "mouth": 0,
+    "iris": 3,
+    "skin": 2,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_bm_f_3_v1",
+   "src": "vmix_bm_f_3",
+   "body": "bm",
+   "spec": {
+    "eye": 1,
+    "brow": 0,
+    "mouth": 1,
+    "iris": 2,
+    "skin": 1,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_bm_f_3_v2",
+   "src": "vmix_bm_f_3",
+   "body": "bm",
+   "spec": {
+    "eye": 1,
+    "brow": 0,
+    "mouth": 1,
+    "iris": 1,
+    "skin": 3,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_bm_f_3_v3",
+   "src": "vmix_bm_f_3",
+   "body": "bm",
+   "spec": {
+    "eye": 3,
+    "brow": 0,
+    "mouth": 1,
+    "iris": 6,
+    "skin": 3,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_d_f_3_v1",
+   "src": "vmix_d_f_3",
+   "body": "d",
+   "spec": {
+    "eye": 0,
+    "brow": 1,
+    "mouth": 0,
+    "iris": 2,
+    "skin": 2,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_d_f_3_v2",
+   "src": "vmix_d_f_3",
+   "body": "d",
+   "spec": {
+    "eye": 0,
+    "brow": 0,
+    "mouth": 0,
+    "iris": 7,
+    "skin": 4,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_d_f_3_v3",
+   "src": "vmix_d_f_3",
+   "body": "d",
+   "spec": {
+    "eye": 1,
+    "brow": 2,
+    "mouth": 0,
+    "iris": 8,
+    "skin": 3,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_e_d_4_v1",
+   "src": "vmix_e_d_4",
+   "body": "e",
+   "spec": {
+    "eye": 3,
+    "brow": 2,
+    "mouth": 1,
+    "iris": 8,
+    "skin": 3,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_e_d_4_v2",
+   "src": "vmix_e_d_4",
+   "body": "e",
+   "spec": {
+    "eye": 1,
+    "brow": 2,
+    "mouth": 0,
+    "iris": 4,
+    "skin": 3,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_e_d_4_v3",
+   "src": "vmix_e_d_4",
+   "body": "e",
+   "spec": {
+    "eye": 0,
+    "brow": 2,
+    "mouth": 1,
+    "iris": 1,
+    "skin": 4,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_bm_e_1_v1",
+   "src": "vmix_bm_e_1",
+   "body": "bm",
+   "spec": {
+    "eye": 1,
+    "brow": 2,
+    "mouth": 2,
+    "iris": 8,
+    "skin": 4,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_bm_e_1_v2",
+   "src": "vmix_bm_e_1",
+   "body": "bm",
+   "spec": {
+    "eye": 2,
+    "brow": 2,
+    "mouth": 0,
+    "iris": 1,
+    "skin": 3,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_bm_e_1_v3",
+   "src": "vmix_bm_e_1",
+   "body": "bm",
+   "spec": {
+    "eye": 0,
+    "brow": 1,
+    "mouth": 0,
+    "iris": 2,
+    "skin": 4,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_bm_g_4_v1",
+   "src": "vmix_bm_g_4",
+   "body": "bm",
+   "spec": {
+    "eye": 2,
+    "brow": 1,
+    "mouth": 2,
+    "iris": 1,
+    "skin": 0,
+    "deco": 1
+   }
+  },
+  {
+   "id": "vface_bm_g_4_v2",
+   "src": "vmix_bm_g_4",
+   "body": "bm",
+   "spec": {
+    "eye": 1,
+    "brow": 1,
+    "mouth": 2,
+    "iris": 7,
+    "skin": 1,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_bm_g_4_v3",
+   "src": "vmix_bm_g_4",
+   "body": "bm",
+   "spec": {
+    "eye": 2,
+    "brow": 1,
+    "mouth": 1,
+    "iris": 8,
+    "skin": 0,
+    "deco": 1
+   }
+  },
+  {
+   "id": "vface_f_d_3_v1",
+   "src": "vmix_f_d_3",
+   "body": "f",
+   "spec": {
+    "eye": 2,
+    "brow": 1,
+    "mouth": 0,
+    "iris": 7,
+    "skin": 2,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_f_d_3_v2",
+   "src": "vmix_f_d_3",
+   "body": "f",
+   "spec": {
+    "eye": 2,
+    "brow": 2,
+    "mouth": 1,
+    "iris": 7,
+    "skin": 1,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_f_d_3_v3",
+   "src": "vmix_f_d_3",
+   "body": "f",
+   "spec": {
+    "eye": 2,
+    "brow": 1,
+    "mouth": 2,
+    "iris": 1,
+    "skin": 1,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_d_f_4_v1",
+   "src": "vmix_d_f_4",
+   "body": "d",
+   "spec": {
+    "eye": 2,
+    "brow": 1,
+    "mouth": 2,
+    "iris": 5,
+    "skin": 4,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_d_f_4_v2",
+   "src": "vmix_d_f_4",
+   "body": "d",
+   "spec": {
+    "eye": 0,
+    "brow": 2,
+    "mouth": 0,
+    "iris": 2,
+    "skin": 4,
+    "deco": 3
+   }
+  },
+  {
+   "id": "vface_d_f_4_v3",
+   "src": "vmix_d_f_4",
+   "body": "d",
+   "spec": {
+    "eye": 3,
+    "brow": 1,
+    "mouth": 2,
+    "iris": 4,
+    "skin": 3,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_d_g_3_v1",
+   "src": "vmix_d_g_3",
+   "body": "d",
+   "spec": {
+    "eye": 2,
+    "brow": 0,
+    "mouth": 1,
+    "iris": 2,
+    "skin": 0,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_d_g_3_v2",
+   "src": "vmix_d_g_3",
+   "body": "d",
+   "spec": {
+    "eye": 1,
+    "brow": 0,
+    "mouth": 2,
+    "iris": 1,
+    "skin": 1,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_d_g_3_v3",
+   "src": "vmix_d_g_3",
+   "body": "d",
+   "spec": {
+    "eye": 0,
+    "brow": 1,
+    "mouth": 2,
+    "iris": 5,
+    "skin": 0,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_d_g_1_v1",
+   "src": "vmix_d_g_1",
+   "body": "d",
+   "spec": {
+    "eye": 2,
+    "brow": 0,
+    "mouth": 0,
+    "iris": 7,
+    "skin": 3,
+    "deco": 2
+   }
+  },
+  {
+   "id": "vface_d_g_1_v2",
+   "src": "vmix_d_g_1",
+   "body": "d",
+   "spec": {
+    "eye": 2,
+    "brow": 1,
+    "mouth": 1,
+    "iris": 3,
+    "skin": 4,
+    "deco": 0
+   }
+  },
+  {
+   "id": "vface_d_g_1_v3",
+   "src": "vmix_d_g_1",
+   "body": "d",
+   "spec": {
+    "eye": 0,
+    "brow": 2,
+    "mouth": 0,
+    "iris": 3,
+    "skin": 2,
+    "deco": 0
+   }
+  }
+ ]
+}
