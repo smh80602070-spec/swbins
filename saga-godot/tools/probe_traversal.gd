@@ -41,6 +41,8 @@ func _physics_process(_delta: float) -> void:
 				_y0 = _p.global_position.y
 				_peak = _y0
 				Input.action_press("jump")
+			if _frame == 8:
+				_check_pose("pose_jump", "jump", "idle")   # G-0025 — 상승 중
 			if _frame == 3:
 				Input.action_release("jump")
 			_peak = maxf(_peak, _p.global_position.y)
@@ -70,6 +72,7 @@ func _physics_process(_delta: float) -> void:
 				Input.action_press("move_left")
 			if _frame == 60:
 				_check("climb_grab", _p.mode == _p.Mode.CLIMB, "mode=%d %s" % [_p.mode, _pos()])
+				_check_pose("pose_climb", "climb", "walk")   # G-0025 — 붙은 동안 등반 동작
 				Input.action_release("move_left")
 				Input.action_press("move_forward")
 			if _frame > 60 and _p.mode == _p.Mode.GROUND and _p.is_on_floor():
@@ -94,6 +97,8 @@ func _physics_process(_delta: float) -> void:
 			if _frame > 300 and _p.mode == _p.Mode.GLIDE:
 				## 펼친 직후엔 떨어지던 속도가 남는다 — 0.5초 뒤 안정된 낙하 속도만 본다.
 				_glide_frames += 1
+				if _glide_frames == 10:
+					_check_pose("pose_glide", "glide", "idle")   # G-0025
 				if _glide_frames > 30:
 					_glide_vy = minf(_glide_vy, _p.velocity.y)
 			## 활공이 끝나면(땅·맞은편 절벽) 곧바로 판정 — 계속 밀면 맞은편 벽을 타고 옆으로 간다.
@@ -116,6 +121,7 @@ func _physics_process(_delta: float) -> void:
 				var y := _p.global_position.y
 				var want := TerrainBuilder.WATER_LEVEL - 1.25
 				_check("swim", _p.mode == _p.Mode.SWIM and absf(y - want) < 0.35, "mode=%d y=%.2f want=%.2f" % [_p.mode, y, want])
+				_check_pose("pose_swim", "swim", "walk")   # G-0025
 				Input.action_press("move_forward")
 				_next()
 		6: # ⑦ 북쪽 둑(3,6 들판)까지 헤엄쳐 넘어오른다
@@ -181,6 +187,12 @@ func _physics_process(_delta: float) -> void:
 		12:
 			print("TRAVERSAL_PROBE_DONE fails=%d" % _fails)
 			get_tree().quit()
+
+## G-0025 — 지금 틀고 있는 동작이 그 상태의 클립인지(클립이 없는 몸은 물러선 동작인지).
+func _check_pose(name: String, clip: String, fallback: String) -> void:
+	var has: bool = _p._anim != null and _p._anim.has_animation(clip)
+	var want := clip if has else fallback
+	_check(name, _p._current_anim == want, "now=%s want=%s has_clip=%s" % [_p._current_anim, want, str(has)])
 
 func _teleport(pos: Vector3) -> void:
 	_p.global_position = pos
