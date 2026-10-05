@@ -211,7 +211,16 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 122:
 				_check_pose("pose_burst", "burst", "attack")
 				_next()
-		15:
+		15: # ⑯ G-0024 — 낚시 중 몸을 바꿔도 낚싯대가 남는다
+			if _frame == 1:
+				var rod := Node3D.new()
+				rod.name = "FishingRod"
+				_p.visual.add_child(rod)
+				_p.set_hero_body("dj_doseo")
+			if _frame == 3:
+				_check("rod_keeps", _p.visual.get_node_or_null("FishingRod") != null, "body=%s" % str(_p._body_id))
+				_next()
+		16:
 			print("TRAVERSAL_PROBE_DONE fails=%d" % _fails)
 			get_tree().quit()
 
