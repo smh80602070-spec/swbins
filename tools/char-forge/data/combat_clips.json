@@ -1,189 +1,208 @@
 {
- "note": "K-0029 단계 1 — 무기 종류 × 동작 칸의 현황(2026-10-02). have = 이미 굽을 수 있는 클립(UAL = CC0 ual1_standard 46종, CF = tools/char-forge/keyframes.py 자체 키프레임 11종). missing = 만들 칸. 추측 없이 UAL 목록(glb 안 animations)·keyframes.py ACTIONS 에서 읽은 이름.",
+ "note": "K-0029 무기 종류 × 동작 칸(10-06 2차: 빈칸 0). game = vroid_batch.sh CLIPS 의 게임용 이름(_anims.glb 안 동작 이름), src = UAL(CC0 ual1_standard) 또는 CF(keyframes.py 자체 키프레임). 두 손 무기(창·도끼·지팡이)는 오른손 = 뒷손, 자루 축 = 오른손→왼손(엔진이 무기를 그 방향으로 겨눈다).",
  "sources": {
   "UAL": "ual1_standard (Quaternius, CC0) 46 클립",
   "CF": "keyframes.py ACTIONS 11 클립"
  },
  "universal": {
   "idle": {
-   "have": "Idle_Loop"
+   "game": "idle",
+   "src": "Idle_Loop"
   },
   "walk": {
-   "have": "Walk_Loop"
-  },
-  "run": {
-   "have": "Jog_Fwd_Loop"
+   "game": "walk",
+   "src": "Walk_Loop"
   },
   "sprint": {
-   "have": "Sprint_Loop"
+   "game": "sprint",
+   "src": "Sprint_Loop"
   },
   "hit_front": {
-   "have": [
-    "Hit_Chest",
-    "Hit_Head"
-   ]
+   "game": "hit",
+   "src": "Hit_Chest"
   },
   "hit_back": {
-   "missing": "뒤 피격"
+   "game": "hit_back",
+   "src": "CF_Hit_Back"
   },
   "knockdown": {
-   "missing": "넘어짐·일어서기"
+   "game": "knockdown",
+   "src": "CF_Knockdown"
   },
   "stun": {
-   "missing": "기절·비틀"
+   "game": "stun",
+   "src": "CF_Stun_Loop"
   },
   "death": {
-   "have": "Death01"
+   "game": "death",
+   "src": "Death01"
   },
   "dodge": {
-   "have": [
-    "Roll",
-    "CF_Strafe_L_Loop",
-    "CF_Strafe_R_Loop"
-   ]
+   "game": "dodge",
+   "src": "Roll"
   },
   "victory": {
-   "missing": "승리 포즈"
+   "game": "victory",
+   "src": "CF_Victory"
   },
   "heal": {
-   "have": "CF_Heal"
+   "game": "heal",
+   "src": "CF_Heal"
   },
   "kneel": {
-   "have": "CF_Kneel_Loop"
+   "game": "kneel",
+   "src": "CF_Kneel_Loop"
+  },
+  "taunt": {
+   "game": "taunt",
+   "src": "CF_Taunt"
   }
  },
  "weapons": {
   "sword": {
    "idle": {
-    "have": "Sword_Idle"
+    "game": "guard",
+    "src": "CF_Guard_Idle_Loop"
    },
    "attack1": {
-    "have": "Sword_Attack"
+    "game": "attack",
+    "src": "Sword_Attack"
    },
    "attack2": {
-    "missing": "되베기"
+    "game": "sword_2",
+    "src": "CF_Sword_Slash_B"
    },
    "attack3": {
-    "missing": "내려찍기 마무리"
+    "game": "sword_3",
+    "src": "CF_Sword_Slash_C"
    },
    "heavy": {
-    "missing": "강공격 모아 베기"
-   },
-   "guard": {
-    "have": "CF_Guard_Idle_Loop"
+    "game": "sword_heavy",
+    "src": "CF_Sword_Heavy"
    }
   },
   "spear": {
    "idle": {
-    "missing": "창 자세"
+    "game": "spear_idle",
+    "src": "CF_Spear_Idle_Loop"
    },
    "attack1": {
-    "missing": "찌르기"
+    "game": "spear_1",
+    "src": "CF_Spear_Thrust"
    },
    "attack2": {
-    "missing": "휘둘러 치기"
+    "game": "spear_2",
+    "src": "CF_Spear_Sweep"
    },
    "heavy": {
-    "missing": "돌진 찌르기"
+    "game": "spear_heavy",
+    "src": "CF_Spear_Heavy"
    }
   },
   "axe": {
    "idle": {
-    "missing": "도끼 자세"
+    "game": "axe_idle",
+    "src": "CF_Axe_Idle_Loop"
    },
    "attack1": {
-    "missing": "내려찍기"
+    "game": "axe_1",
+    "src": "CF_Axe_Chop"
    },
    "attack2": {
-    "missing": "가로 베기"
+    "game": "axe_2",
+    "src": "CF_Axe_Sweep"
    },
    "heavy": {
-    "missing": "회전 베기"
+    "game": "axe_heavy",
+    "src": "CF_Axe_Spin"
    }
   },
   "dagger": {
    "idle": {
-    "missing": "낮은 자세"
+    "game": "dagger_idle",
+    "src": "CF_Dagger_Idle_Loop"
    },
    "attack1": {
-    "missing": "빠른 베기 A"
+    "game": "dagger_1",
+    "src": "CF_Dagger_Slash_A"
    },
    "attack2": {
-    "missing": "빠른 베기 B"
+    "game": "dagger_2",
+    "src": "CF_Dagger_Slash_B"
    },
    "heavy": {
-    "missing": "찌르고 파고들기"
+    "game": "dagger_heavy",
+    "src": "CF_Dagger_Backstab"
    }
   },
   "bow": {
    "idle": {
-    "have": "CF_Bow_Idle_Loop"
+    "game": "bow_idle",
+    "src": "CF_Bow_Idle_Loop"
    },
    "attack1": {
-    "have": "CF_Bow_Shoot"
+    "game": "bow_1",
+    "src": "CF_Bow_Shoot"
    },
    "heavy": {
-    "missing": "모아 쏘기"
+    "game": "bow_heavy",
+    "src": "CF_Bow_Charged"
    }
   },
   "staff": {
    "idle": {
-    "have": "Spell_Simple_Idle_Loop"
-   },
-   "enter": {
-    "have": "Spell_Simple_Enter"
+    "game": "staff_idle",
+    "src": "Spell_Simple_Idle_Loop"
    },
    "attack1": {
-    "have": "Spell_Simple_Shoot"
-   },
-   "exit": {
-    "have": "Spell_Simple_Exit"
+    "game": "skill",
+    "src": "Spell_Simple_Shoot"
    },
    "heavy": {
-    "missing": "큰 시전(양손 올림)"
+    "game": "staff_heavy",
+    "src": "CF_Staff_Slam"
+   },
+   "burst": {
+    "game": "burst",
+    "src": "CF_Burst"
    }
   },
   "gun": {
    "idle": {
-    "have": "Pistol_Idle_Loop"
-   },
-   "aim": {
-    "have": [
-     "Pistol_Aim_Down",
-     "Pistol_Aim_Neutral",
-     "Pistol_Aim_Up"
-    ]
+    "game": "gun_idle",
+    "src": "Pistol_Idle_Loop"
    },
    "attack1": {
-    "have": "Pistol_Shoot"
-   },
-   "reload": {
-    "have": "Pistol_Reload"
+    "game": "gun_1",
+    "src": "Pistol_Shoot"
    }
   },
   "fist": {
-   "idle": {
-    "have": "Punch_Enter"
-   },
    "attack1": {
-    "have": "Punch_Jab"
+    "game": "fist_1",
+    "src": "Punch_Jab"
    },
    "attack2": {
-    "have": "Punch_Cross"
+    "game": "fist_2",
+    "src": "Punch_Cross"
    },
    "heavy": {
-    "missing": "발차기·어퍼"
+    "game": "fist_heavy",
+    "src": "CF_Fist_Uppercut"
    }
   },
   "shield": {
    "block": {
-    "have": "CF_Shield_Block"
+    "game": "blocked",
+    "src": "CF_Shield_Block"
    },
    "block_hit": {
-    "have": "CF_Shield_Block_Hit"
+    "game": "block_hit",
+    "src": "CF_Shield_Block_Hit"
    },
    "bash": {
-    "missing": "방패 밀치기"
+    "game": "shield_bash",
+    "src": "CF_Shield_Bash"
    }
   }
  },
