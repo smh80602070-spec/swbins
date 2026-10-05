@@ -188,12 +188,13 @@ namespace Saga.EditorTools
             Score(200);
             pc.Teleport(Open);
             pc.Step(0.1f);
+            float y0 = pc.transform.position.y; // 열린 자리 땅 높이 — 오름은 땅 기준 상대값으로 잰다
             ForestMounts.Restore("mt_dragon");
             if (!ForestMounts.TryRide(pc.transform.position, out _) || !ForestMounts.RidingFly || Mathf.Abs(ForestMounts.SpeedMul - 1.8f) > 0.001f) Fail("용을 못 탐");
             // 타면 떠오른다 — 6m/초, 2.8m 까지
             for (int i = 0; i < 10; i++) pc.Step(0.02f);
-            float y = pc.transform.position.y;
-            if (!pc.Flying || y < 0.9f || y > 1.9f) Fail($"0.2초 뒤 높이 {y:0.00} (6m/초 오름) Flying {pc.Flying}");
+            float y = pc.transform.position.y - y0;
+            if (!pc.Flying || y < 0.9f || y > 1.9f) Fail($"0.2초 뒤 오른 높이 {y:0.00} (6m/초 오름) Flying {pc.Flying}");
             for (int i = 0; i < 50; i++) pc.Step(0.02f);
             if (Mathf.Abs(pc.transform.position.y - ForestMounts.Hover) > 0.01f) Fail($"1.2초 뒤 높이 {pc.transform.position.y:0.00} ≠ {ForestMounts.Hover}");
             if (pc.GetComponent<CharacterController>().enabled) Fail("뜬 동안 충돌이 켜져 있다");

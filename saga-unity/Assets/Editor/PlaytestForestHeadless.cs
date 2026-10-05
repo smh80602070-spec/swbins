@@ -24,6 +24,7 @@ namespace Saga.EditorTools
 
         private static int _framesSeen;
         private static bool _hadError;
+        private static int _pinDay;
         private static bool _origEnterPlayModeOptionsEnabled;
         private static EnterPlayModeOptions _origEnterPlayModeOptions;
 
@@ -41,6 +42,9 @@ namespace Saga.EditorTools
             _framesSeen = 0;
             _hadError = false;
             Application.logMessageReceived += OnLog;
+            // 오늘의 방문 손님이 마을 사람(루미)이면 그 사람이 광장에 나가 씬에서 숨어 마을 사람·시대 진단이 날짜 따라 깨진다 — 마을 사람이 아닌 손님 날로 붙든다
+            _pinDay = 9001; while (!string.IsNullOrEmpty(Saga.Forest.Data.ForestVisitors.WhoOn(_pinDay).FolkId)) _pinDay++;
+            Saga.Forest.Data.ForestVisitors.ForceDayForTest(_pinDay);
             EditorApplication.playModeStateChanged += OnStateChanged;
             EditorApplication.isPlaying = true;
         }
@@ -62,6 +66,7 @@ namespace Saga.EditorTools
             }
             else if (state == PlayModeStateChange.EnteredEditMode)
             {
+                Saga.Forest.Data.ForestVisitors.ForceDayForTest(null);
                 Application.logMessageReceived -= OnLog;
                 EditorApplication.playModeStateChanged -= OnStateChanged;
                 EditorSettings.enterPlayModeOptionsEnabled = _origEnterPlayModeOptionsEnabled;
@@ -98,6 +103,8 @@ namespace Saga.EditorTools
                 if (!PlaytestForestZoneProps.Run()) _hadError = true; // PLAN.md 108 끝줄 존 전용 소품
                 if (!PlaytestForestEras.Run()) _hadError = true; // PLAN.md 109-4 세 시대 — 마을 사람 여섯·존 소품 시대 조각
                 if (!PlaytestForestVisitors.Run()) _hadError = true; // PLAN.md 109-12-1 떠돌이 방문객
+                Saga.Forest.Data.ForestVisitors.ForceDayForTest(_pinDay); // 방문객 진단이 날짜를 풀었으니 다시 붙든다
+                { var vr = Object.FindFirstObjectByType<Saga.Forest.World.ForestVisitorRunner>(); if (vr != null) vr.Rebuild(); } // 숨은 마을 사람 되살리기
                 if (!PlaytestAnonymousCrowd.RunForest("PlaytestForestHeadless")) _hadError = true; // U-0042 이름 없는 군중(299 목록 없으면 0명)
                 if (!PlaytestForestMount.Run()) _hadError = true; // PLAN.md 109-15 탈것·비행 — 탈것·점수 손잡이·자리·세이브를 되돌린다.
                 if (!PlaytestForestScenario.Run()) _hadError = true; // PLAN.md 109-16 시나리오 — 과일·집·도감·손님·택배·행사를 되돌린다.
