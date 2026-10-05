@@ -140,6 +140,35 @@ namespace Saga.EditorTools
                     if (ui.IsOpen) Fail("Toggle 로 안 닫힘");
                     parts.Add($"창 열고 닫기(단추·닫는다·Toggle)·칸 {ui.ColumnCount}·줄 {GoHelp.Sections.Sum(s => s.Lines.Length)}");
                 }
+                // 메뉴 허브 — 단추 하나로 합친 다섯 창(도움말·사냥 기록·주간 도전·재출항·신수 알)을 줄마다 열 수 있고, 원래 단추는 숨는다
+                var hub = MenuHubUi.Instance;
+                if (hub == null) Fail("MenuHubUi 없음(WorldMapBuilder 연결?)");
+                else
+                {
+                    hub.Refresh();
+                    hub.OpenButton.onClick.Invoke();
+                    if (!hub.IsOpen) Fail("메뉴 단추로 안 열림");
+                    if (hub.EntryCount != 5) Fail($"메뉴 줄 {hub.EntryCount} ≠ 5");
+                    else
+                    {
+                        System.Func<bool>[] opened = { () => HelpUi.Instance.IsOpen, () => HuntLogUi.Instance.IsOpen, () => WeeklyUi.Instance.IsOpen, () => CycleUi.Instance.IsOpen, () => EggUi.Instance.IsOpen };
+                        System.Action[] closers = { HelpUi.Instance.Close, HuntLogUi.Instance.Close, WeeklyUi.Instance.Close, CycleUi.Instance.Close, EggUi.Instance.Close };
+                        string[] hints = { "F1", "K", "U", "N", "I" };
+                        for (int i = 0; i < 5; i++)
+                        {
+                            hub.Open();
+                            if (!hub.EntryText(i).Contains("[" + hints[i] + "]")) Fail($"메뉴 줄 {i} 에 키 [{hints[i]}] 표기가 없음");
+                            hub.EntryButton(i).onClick.Invoke();
+                            if (hub.IsOpen) Fail($"메뉴 줄 {i} 을 눌렀는데 허브가 안 닫힘");
+                            if (!opened[i]()) Fail($"메뉴 줄 {i} 이 해당 창을 못 염");
+                            closers[i]();
+                        }
+                        if (HelpUi.Instance.OpenButton.gameObject.activeSelf || WeeklyUi.Instance.OpenButton.gameObject.activeSelf || CycleUi.Instance.OpenButton.gameObject.activeSelf || EggUi.Instance.OpenButton.gameObject.activeSelf || HuntLogUi.Instance.OpenButton.gameObject.activeSelf)
+                            Fail("허브가 있는데 각 창의 원래 단추가 안 숨음(오른쪽 가장자리 겹침 원인)");
+                    }
+                    hub.Close();
+                    parts.Add("메뉴 허브: 단추 하나·줄 5(F1·K·U·N·I)·줄마다 그 창이 열림·원래 단추 숨김");
+                }
                 var after = File.Exists(savePath) ? File.GetLastWriteTimeUtc(savePath) : System.DateTime.MinValue;
                 if (after != before) Fail("도움말이 세이브 파일을 건드림");
                 else parts.Add("세이브 불변");

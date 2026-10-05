@@ -59,7 +59,7 @@ namespace Saga.Go.UI
             var t = canvas.transform;
             var mid = new Vector2(0.5f, 0.5f);
 
-            OpenButton = EncounterUiKit.NewButton(t, GoLocalization.T("cycle.button", "재출항"), new Vector2(1f, 1f), new Vector2(-30f, -654f), new Vector2(160f, 50f), null); // 주간 도전(−594) 밑
+            OpenButton = EncounterUiKit.NewButton(t, GoLocalization.T("cycle.button", "재출항"), new Vector2(1f, 1f), new Vector2(-200f, -310f), new Vector2(160f, 50f), null); // 둘째 열, 주간 도전 밑
             OpenButton.onClick.AddListener(Toggle);
 
             _panel = new GameObject("CyclePanel", typeof(RectTransform));

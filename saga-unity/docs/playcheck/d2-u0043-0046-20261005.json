@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-05",
+  "tickets": [
+    "U-0043 도움말",
+    "U-0044 주간 도전",
+    "U-0045 별배 재출항",
+    "U-0046 신수 알·동행",
+    "메뉴 허브(단추 합치기)"
+  ],
+  "how": "bash saga-unity/tools/unity-batch.sh -- Unity.exe -batchmode -nographics -projectPath . -executeMethod Saga.EditorTools.<진단>.Run|RunBatch (6000.3.24f1), GO save.json 은 mv 로만 옮겼다 되돌림",
+  "scene_3x": "PlaytestHeadless 3연속 OK(help·weekly·cycle·eggs·adventure 전부 OK, 런타임 오류 0)",
+  "batch": {
+    "PlaytestGoHelp": "OK",
+    "PlaytestGoWeekly": "OK",
+    "PlaytestGoCycle": "OK",
+    "PlaytestGoEggs": "OK"
+  },
+  "real_paths": "신수 알: 진짜 플레이어 이동 + EggWalker.Update 로 2.9m/프레임 세어짐·3.1m 는 뺌 · 진짜 상자 Open() 귀한 상자 target_ledge 는 큰 알 1·평범 south_glade 는 0 · 일과 실제 완료 → 작은 알 · 주간 도전 완주 → 빛나는 알 1",
+  "layout": {
+    "tool": "UiLayoutCheck (다섯 판 × 화면비 셋 · 패널·속 패널·상태)",
+    "found": "메뉴류 단추 네 개가 오른쪽 아래 전투 단추·낚시 단추·대사 줄·저장 단추와 겹침(167건) + 도움말·알 창이 논리 폭 1600 을 넘고 닫기 단추가 아래로 나감",
+    "fixed": "단추 다섯(사냥 기록 포함)을 위 오른쪽 '메뉴' 허브 하나로 합침(일시정지·저장 단추 사이 빈 틈) · 도움말 열 폭 500·알 창 열 폭 480 · 닫기 단추 위치 · 긴 줄 자동 크기",
+    "result": "이 작업 몫 겹침·밖 0건. 전체 FAIL 28건은 이 작업 밖: 사가블로 지역 배너↔비결 패널 14(타이밍 따라 달라짐)·사가고 지도 창 글 겹침 14"
+  },
+  "not_covered": "창 모양·글 읽힘·동행 몸(K-0075)·걷는 손맛(사람) · 숨은 터/꽃에서 알 나오는 것은 코드 읽기만(실제 호출 시험 없음) · 경험치 곡선 레벨 58 int 넘침(사용자 결정)",
+  "fps_note": "3m/프레임 상한 → 최고 속도 m/s ÷ 3 = 최소 프레임. 달리기 10m/s 는 4fps, 탈것(최대 배율 약 2) 20m/s 는 7fps 미만에서만 걸음이 빠진다"
+}

@@ -152,10 +152,13 @@ namespace Saga.EditorTools
             PlaytestKit.Check(WeeklyState.Claim(picks[4]).Length > 0 && WeeklyState.AllClaimed && WeeklyState.BonusReady, "다섯을 다 받았는데 완주 준비가 안 됨");
             int knot = TalentState.Count(GoTalent.Mat.Knot), guide = TalentState.Count(GoTalent.Mat.Guide), polish = ArtifactState.Polish;
             int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            EggState.ResetForTest();
             string t = WeeklyState.ClaimBonus();
             PlaytestKit.Check(t.Length > 0 && TalentState.Count(GoTalent.Mat.Knot) == knot + GoWeekly.BonusKnot && TalentState.Count(GoTalent.Mat.Guide) == guide + GoWeekly.BonusGuide && ArtifactState.Polish == polish + GoWeekly.BonusPolish, "완주 지급(매듭·교본·연마석)이 다름");
             PlaytestKit.Check(PlayerStats.Level > lv || PlayerStats.Exp != exp, "완주 경험치가 안 들어감");
             PlaytestKit.Check(WeeklyState.BonusClaimed && !WeeklyState.BonusReady && WeeklyState.ClaimBonus() == "", "완주 보상이 한 번만이 아님");
+            PlaytestKit.Check(EggState.BagCount == 1 && EggState.BagAt(0) == "e_rare", "주간 도전 완주가 빛나는 알 하나를 안 줌(한 번만)"); // U-0046 완주 = 빛나는 알
+            EggState.ResetForTest();
         }
 
         private static void CheckNotice()

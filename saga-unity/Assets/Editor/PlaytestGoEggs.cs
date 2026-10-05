@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
@@ -230,6 +231,7 @@ namespace Saga.EditorTools
             {
                 EggState.ResetForTest(); PlayerStats.Restore(30, 0);
                 CheckUi(ui, walker, parts);
+                CheckRealPaths(walker, parts);
                 CheckFile(savePath, parts);
             }
             finally
@@ -288,6 +290,91 @@ namespace Saga.EditorTools
             ui.CloseButton.onClick.Invoke();
             if (ui.IsOpen) Fail("닫는다로 안 닫힘");
             parts.Add("창 열고 닫기·알 단추로 부화기에 넣기·실제 걸음 320m 로 부화·순간이동 안 셈·동행 단추·제목 도감 1/11");
+        }
+
+        /// <summary>D2 — 진단이 직접 부르던 함수 말고 **실제 경로**로: ① 걸음 세기를 진짜 플레이어 위치 + `EggWalker.Update`(리플렉션) ② 진짜 상자 `Open()` ③ 일과 완료 → 알.</summary>
+        private static void CheckRealPaths(EggWalker walker, List<string> parts)
+        {
+            var update = typeof(EggWalker).GetMethod("Update", BindingFlags.Instance | BindingFlags.NonPublic);
+            var player = GameObject.FindWithTag("Player");
+            if (update == null || player == null) { Fail("실제 경로 점검 준비 실패(Update/Player)"); return; }
+
+            // ① 진짜 플레이어를 움직여 Update 가 걸음을 센다 — 한 프레임 2.9m(세어짐)·3.1m(순간이동으로 뺌)
+            var cc = player.GetComponent<CharacterController>();
+            bool ccWas = cc != null && cc.enabled; if (cc != null) cc.enabled = false;
+            Vector3 home = player.transform.position;
+            try
+            {
+                EggState.ResetForTest(); PlayerStats.Restore(30, 0);
+                EggState.AddEgg("e_small"); EggState.Start(0);
+                update.Invoke(walker, null); // 첫 Update — 지난 자리와의 거리는 순간이동으로 버려진다
+                float before = EggState.WalkTotal;
+                for (int i = 0; i < 100; i++) { player.transform.position += new Vector3(2.9f, 0f, 0f); update.Invoke(walker, null); }
+                walker.Flush();
+                float counted = EggState.WalkTotal - before;
+                if (Mathf.Abs(counted - 290f) > 0.5f) Fail($"실제 이동 100프레임×2.9m 가 {counted:0.0}m 로 셈(≈290)");
+                if (EggState.Hatched != 0 && EggState.IncCount == 0 && EggState.OwnedCount != 1) Fail("부화 상태가 이상함");
+                player.transform.position += new Vector3(3.1f, 0f, 0f); update.Invoke(walker, null); walker.Flush();
+                if (Mathf.Abs((EggState.WalkTotal - before) - counted) > 0.01f) Fail("3.1m/프레임이 걸음으로 셈(순간이동으로 빠져야 함)");
+                for (int i = 0; i < 20; i++) { player.transform.position += new Vector3(2.9f, 0f, 0f); update.Invoke(walker, null); }
+                walker.Flush();
+                if (EggState.OwnedCount != 1 || EggState.IncCount != 0) Fail($"실제 이동 310m 로 작은 알이 안 부화함(칸 {EggState.IncCount}·신수 {EggState.OwnedCount})");
+                parts.Add("실제 플레이어 이동 + EggWalker.Update 로 2.9m/프레임 세어짐·3.1m 는 뺌·300m 부화");
+            }
+            finally { player.transform.position = home; if (cc != null) cc.enabled = ccWas; }
+
+            // ② 진짜 상자 열기 — target_ledge(정교 아닌 귀한 상자, 알 굴림 통과) 는 큰 알이 나오고 south_glade(평범, 굴림 실패)는 안 나온다
+            int gold = GoldState.Gold; var mats = TalentState.SnapshotMats(); var talent = TalentState.Snapshot();
+            var arts = ArtifactState.Snapshot(); int seq = ArtifactState.Seq, polish = ArtifactState.Polish;
+            int ore = WeaponState.Ore; var winv = WeaponState.SnapshotInv(); var weq = WeaponState.SnapshotEquip();
+            int lv = PlayerStats.Level, exp = PlayerStats.Exp;
+            var events = new List<string>(WorldEventState.TriggeredIds);
+            try
+            {
+                EggState.ResetForTest();
+                var open = typeof(TreasureChest).GetMethod("Open", BindingFlags.Instance | BindingFlags.NonPublic);
+                foreach (var pair in new[] { ("target_ledge", 1), ("south_glade", 0) })
+                {
+                    var chest = UnityEngine.Object.FindObjectsByType<TreasureChest>(FindObjectsSortMode.None).FirstOrDefault(c => c.Data.Id == pair.Item1);
+                    if (chest == null) { Fail($"씬에 상자 {pair.Item1} 없음"); continue; }
+                    WorldEventState.Restore(events.Where(e => e != GoTreasure.EventKey(chest.Data)));
+                    int bag = EggState.BagCount;
+                    bool ok = (bool)open.Invoke(chest, null);
+                    if (!ok) { Fail($"상자 {pair.Item1} 이 안 열림"); continue; }
+                    int got = EggState.BagCount - bag;
+                    if (got != pair.Item2) Fail($"상자 {pair.Item1} 에서 알 {got}개(기대 {pair.Item2})");
+                    if (pair.Item2 == 1 && (EggState.BagCount == 0 || EggState.BagAt(EggState.BagCount - 1) != "e_mid")) Fail("귀한 상자 알이 큰 알이 아님");
+                }
+                parts.Add("진짜 상자 Open(): 귀한 상자 target_ledge 는 큰 알 1·평범한 south_glade 는 0");
+            }
+            finally
+            {
+                WorldEventState.Restore(events);
+                GoldState.Restore(gold); TalentState.Restore(talent, mats); ArtifactState.Restore(arts, seq, polish);
+                WeaponState.Restore(winv, weq, ore); PlayerStats.Restore(lv, exp);
+            }
+
+            // ③ 일과 하나를 실제로 완료하면 작은 알
+            var dd = (DailyTaskState.CurrentDate, DailyTaskState.SnapshotProgress(), DailyTaskState.SnapshotDone(), DailyTaskState.SnapshotDayStampGranted(), DailyTaskState.Stamps, DailyTaskState.BonusClaimed);
+            gold = GoldState.Gold; lv = PlayerStats.Level; exp = PlayerStats.Exp;
+            bool dailyOff = DailyTaskState.OffForTest; DailyTaskState.OffForTest = false; // 헤드리스는 옛 진단 값을 지키려 일과 진행을 꺼 둔다 — 이 점검만 켠다
+            try
+            {
+                EggState.ResetForTest();
+                DailyTaskState.EnsureToday();
+                var kind = DailyTaskState.TaskKind(0);
+                int bag = EggState.BagCount;
+                DailyTaskState.ReportProgress(kind, 99999);
+                if (EggState.BagCount <= bag) Fail("일과 완료에서 알이 안 나옴");
+                else if (EggState.BagAt(EggState.BagCount - 1) != "e_small") Fail("일과 알이 작은 알이 아님");
+                else parts.Add("일과 실제 완료(ReportProgress) → 작은 알");
+            }
+            finally
+            {
+                DailyTaskState.OffForTest = dailyOff;
+                DailyTaskState.Restore(dd.CurrentDate, dd.Item2, dd.Item3, dd.Item4, dd.Stamps, dd.BonusClaimed);
+                GoldState.Restore(gold); PlayerStats.Restore(lv, exp);
+            }
         }
 
         private static void CheckFile(string savePath, List<string> parts)

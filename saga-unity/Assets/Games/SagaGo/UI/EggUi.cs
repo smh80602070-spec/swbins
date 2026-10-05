@@ -16,7 +16,7 @@ namespace Saga.Go.UI
     {
         public static EggUi Instance { get; private set; }
 
-        private const float ColX = 640f, RowTop = 270f, RowStep = 46f;
+        private const float ColX = 510f, RowTop = 270f, RowStep = 46f, ColW = 480f, Gap = 10f; // 열 폭 480 — 가운데 −510·0·510 → ±750 안(논리 폭 1600)
         private static readonly int IncRows = GoEggs.SlotRank.Length, BagRows = GoEggs.BagMax, PetRows = 11;
 
         private GameObject _panel;
@@ -66,9 +66,11 @@ namespace Saga.Go.UI
             var root = new GameObject(name, typeof(RectTransform));
             root.transform.SetParent(parent, false);
             var rr = (RectTransform)root.transform; rr.anchorMin = rr.anchorMax = mid; rr.sizeDelta = Vector2.zero;
-            var text = EncounterUiKit.NewText(root.transform, "", mid, new Vector2(x - btnW / 2f, y), new Vector2(textW, 42f), 17);
+            float left = x - ColW / 2f; // 열 왼쪽 끝
+            var text = EncounterUiKit.NewText(root.transform, "", mid, new Vector2(left + textW / 2f, y), new Vector2(textW, 42f), 17);
             text.alignment = TextAlignmentOptions.MidlineLeft; Center(text.rectTransform);
-            var btn = EncounterUiKit.NewButton(root.transform, btnLabel, mid, new Vector2(x + textW / 2f - btnW / 2f + 8f, y), new Vector2(btnW, 38f), null);
+            text.enableAutoSizing = true; text.fontSizeMin = 11f; text.fontSizeMax = 17f; // 긴 줄(신수 보너스·친밀)이 칸 밖으로 안 나가게
+            var btn = EncounterUiKit.NewButton(root.transform, btnLabel, mid, new Vector2(left + textW + Gap + btnW / 2f, y), new Vector2(btnW, 38f), null);
             Center((RectTransform)btn.transform);
             var bt = btn.GetComponentInChildren<TextMeshProUGUI>(); bt.fontSize = 15;
             btn.onClick.AddListener(onClick);
@@ -82,7 +84,7 @@ namespace Saga.Go.UI
             var t = canvas.transform;
             var mid = new Vector2(0.5f, 0.5f);
 
-            OpenButton = EncounterUiKit.NewButton(t, GoLocalization.T("egg.button", "신수 알"), new Vector2(1f, 1f), new Vector2(-30f, -714f), new Vector2(160f, 50f), null); // 재출항(−654) 밑
+            OpenButton = EncounterUiKit.NewButton(t, GoLocalization.T("egg.button", "신수 알"), new Vector2(1f, 1f), new Vector2(-200f, -370f), new Vector2(160f, 50f), null); // 둘째 열, 재출항 밑
             OpenButton.onClick.AddListener(Toggle);
 
             _panel = new GameObject("EggPanel", typeof(RectTransform));
@@ -99,18 +101,18 @@ namespace Saga.Go.UI
             Header(-ColX, GoLocalization.T("egg.h_inc", "부화기"));
             Header(0f, GoLocalization.T("egg.h_bag", "알 주머니"));
             Header(ColX, GoLocalization.T("egg.h_pets", "신수 도감"));
-            for (int i = 0; i < IncRows; i++) { int k = i; _inc[i] = NewRow(_panel.transform, "Inc" + i, -ColX, RowTop - i * RowStep, 420f, 120f, GoLocalization.T("egg.back", "되돌리기"), () => StopInc(k)); }
+            for (int i = 0; i < IncRows; i++) { int k = i; _inc[i] = NewRow(_panel.transform, "Inc" + i, -ColX, RowTop - i * RowStep, 340f, 130f, GoLocalization.T("egg.back", "되돌리기"), () => StopInc(k)); }
             for (int i = 0; i < BagRows; i++) { int k = i; _bag[i] = NewRow(_panel.transform, "Bag" + i, 0f, RowTop - i * RowStep, 320f, 150f, GoLocalization.T("egg.start", "부화기에 넣기"), () => StartBag(k)); }
-            for (int i = 0; i < PetRows; i++) { int k = i; _pet[i] = NewRow(_panel.transform, "Pet" + i, ColX, RowTop - i * RowStep, 470f, 100f, GoLocalization.T("egg.buddy", "동행"), () => PickBuddy(k)); }
+            for (int i = 0; i < PetRows; i++) { int k = i; _pet[i] = NewRow(_panel.transform, "Pet" + i, ColX, RowTop - i * RowStep, 360f, 110f, GoLocalization.T("egg.buddy", "동행"), () => PickBuddy(k)); }
 
-            CloseButton = EncounterUiKit.NewButton(_panel.transform, GoLocalization.T("dex.close", "닫는다"), mid, new Vector2(0f, -420f), new Vector2(200f, 44f), null);
+            CloseButton = EncounterUiKit.NewButton(_panel.transform, GoLocalization.T("dex.close", "닫는다"), mid, new Vector2(0f, -405f), new Vector2(200f, 44f), null);
             Center((RectTransform)CloseButton.transform);
             CloseButton.onClick.AddListener(Close);
         }
 
         private void Header(float x, string text)
         {
-            var h = EncounterUiKit.NewText(_panel.transform, text, new Vector2(0.5f, 0.5f), new Vector2(x, RowTop + 55f), new Vector2(560f, 36f), 22);
+            var h = EncounterUiKit.NewText(_panel.transform, text, new Vector2(0.5f, 0.5f), new Vector2(x, RowTop + 55f), new Vector2(ColW, 36f), 22);
             h.fontStyle = FontStyles.Bold; h.color = new Color(0.56f, 0.83f, 1f); Center(h.rectTransform);
         }
 

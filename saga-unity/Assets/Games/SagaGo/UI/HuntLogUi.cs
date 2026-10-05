@@ -68,7 +68,7 @@ namespace Saga.Go.UI
             var t = canvas.transform;
             var mid = new Vector2(0.5f, 0.5f);
 
-            OpenButton = EncounterUiKit.NewButton(t, GoLocalization.T("hunt.button", "사냥 기록"), new Vector2(1f, 1f), new Vector2(-30f, -474f), new Vector2(160f, 50f), null); // 업적(−414) 밑
+            OpenButton = EncounterUiKit.NewButton(t, GoLocalization.T("hunt.button", "사냥 기록"), new Vector2(1f, 1f), new Vector2(-200f, -130f), new Vector2(160f, 50f), null); // 둘째 열(설정·지도·도감·업적 왼쪽) — 오른쪽 아래 전투 단추와 안 겹치게
             OpenButton.onClick.AddListener(Toggle);
 
             _panel = new GameObject("HuntPanel", typeof(RectTransform));

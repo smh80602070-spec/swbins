@@ -67,7 +67,7 @@ namespace Saga.Go.UI
             var t = canvas.transform;
             var mid = new Vector2(0.5f, 0.5f);
 
-            OpenButton = EncounterUiKit.NewButton(t, GoLocalization.T("weekly.button", "주간 도전"), new Vector2(1f, 1f), new Vector2(-30f, -594f), new Vector2(160f, 50f), null); // 도움말(−534) 밑
+            OpenButton = EncounterUiKit.NewButton(t, GoLocalization.T("weekly.button", "주간 도전"), new Vector2(1f, 1f), new Vector2(-200f, -250f), new Vector2(160f, 50f), null); // 둘째 열, 도움말 밑
             OpenButton.onClick.AddListener(Toggle);
 
             _panel = new GameObject("WeeklyPanel", typeof(RectTransform));

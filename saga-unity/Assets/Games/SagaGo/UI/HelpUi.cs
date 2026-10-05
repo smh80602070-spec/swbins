@@ -16,7 +16,7 @@ namespace Saga.Go.UI
     {
         public static HelpUi Instance { get; private set; }
 
-        private const float ColW = 560f, ColX = 600f, ColTop = 330f;
+        private const float ColW = 500f, ColX = 520f, ColTop = 320f; // 논리 폭 1600 → 가운데 ±520·폭 500 이면 ±770 안
 
         private GameObject _panel;
         private TextMeshProUGUI _title;
@@ -28,6 +28,7 @@ namespace Saga.Go.UI
         public string TitleText => _title.text;
         public string ColumnText(int i) => _cols[i].text;
         public bool IsOpen => _panel != null && _panel.activeSelf;
+        public string OpenLabel => OpenButton != null ? OpenButton.GetComponentInChildren<TextMeshProUGUI>().text : "";
 
         private void Awake() => Instance = this;
 
@@ -48,7 +49,7 @@ namespace Saga.Go.UI
             var t = canvas.transform;
             var mid = new Vector2(0.5f, 0.5f);
 
-            OpenButton = EncounterUiKit.NewButton(t, GoLocalization.T("help.button", "도움말"), new Vector2(1f, 1f), new Vector2(-30f, -534f), new Vector2(160f, 50f), null); // 사냥 기록(−474) 밑
+            OpenButton = EncounterUiKit.NewButton(t, GoLocalization.T("help.button", "도움말"), new Vector2(1f, 1f), new Vector2(-200f, -190f), new Vector2(160f, 50f), null); // 둘째 열, 사냥 기록 밑
             OpenButton.onClick.AddListener(Toggle);
 
             _panel = new GameObject("HelpPanel", typeof(RectTransform));
@@ -67,13 +68,13 @@ namespace Saga.Go.UI
             for (int i = 0; i < n; i++)
             {
                 float x = (i - (n - 1) / 2f) * ColX;
-                _cols[i] = EncounterUiKit.NewText(_panel.transform, "", mid, new Vector2(x, ColTop - 380f), new Vector2(ColW, 760f), 19);
+                _cols[i] = EncounterUiKit.NewText(_panel.transform, "", mid, new Vector2(x, ColTop - 350f), new Vector2(ColW, 700f), 19);
                 _cols[i].alignment = TextAlignmentOptions.TopLeft;
                 _cols[i].enableAutoSizing = true; _cols[i].fontSizeMin = 13f; _cols[i].fontSizeMax = 19f; // 줄이 길어도 칸 안에 들어오게
                 Center(_cols[i].rectTransform);
             }
 
-            CloseButton = EncounterUiKit.NewButton(_panel.transform, GoLocalization.T("dex.close", "닫는다"), mid, new Vector2(0f, -440f), new Vector2(200f, 44f), null);
+            CloseButton = EncounterUiKit.NewButton(_panel.transform, GoLocalization.T("dex.close", "닫는다"), mid, new Vector2(0f, -405f), new Vector2(200f, 44f), null);
             Center((RectTransform)CloseButton.transform);
             CloseButton.onClick.AddListener(Close);
         }

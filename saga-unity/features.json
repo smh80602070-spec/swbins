@@ -1448,12 +1448,12 @@
   "tests": [
    "PlaytestGoHelp"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "U-0043",
   "since": "2026-10-05",
-  "note": "표 22줄·ko/en 번역·코드 키 25개가 소스에서 읽힘·창 열고 닫기·세이브 불변. 창 모양·글 읽힘은 눈"
+  "note": "D2(2026-10-05): saga-unity/docs/playcheck/d2-u0043-0046-20261005.json — 메뉴 허브 포함 표 25줄·열고 닫기·키 27개 소스 확인. UiLayoutCheck 로 단추·창 배치 점검(이 작업 몫 0건) · 창 모양·글 읽힘은 눈"
  },
  {
   "id": "un.go.weekly",
@@ -1465,12 +1465,12 @@
   "tests": [
    "PlaytestGoWeekly"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "U-0044",
   "since": "2026-10-05",
-  "note": "규칙 층(풀 10·뽑기·주 갈림 월 4시·진척·받기·완주·알림·세이브 왕복)+장면 층(진짜 셈으로 채워 받기 단추·세이브 파일·옛 세이브). 창 모양·글 읽힘은 눈"
+  "note": "D2(2026-10-05): saga-unity/docs/playcheck/d2-u0043-0046-20261005.json — 규칙+장면 3연속·완주 → 빛나는 알. UiLayoutCheck 로 단추·창 배치 점검(이 작업 몫 0건) · 창 모양·글 읽힘은 눈"
  },
  {
   "id": "un.go.cycle",
@@ -1482,12 +1482,12 @@
   "tests": [
    "PlaytestGoCycle"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "U-0045",
   "since": "2026-10-05",
-  "note": "규칙 층(막힘·Advance 효과 전부·보너스·천하 상한 회차 반영·세이브)+장면 층(두 번 눌러 재출항·상자 기록 되살림·세이브 파일·옛 세이브). 회차 0 천하 진단은 옛 값 그대로 통과. 창 모양·글 읽힘은 눈"
+  "note": "D2(2026-10-05): saga-unity/docs/playcheck/d2-u0043-0046-20261005.json — 규칙+장면 3연속·두 번 눌러 재출항. UiLayoutCheck 로 단추·창 배치 점검(이 작업 몫 0건) · 창 모양·글 읽힘은 눈"
  },
  {
   "id": "un.go.eggs",
@@ -1500,11 +1500,27 @@
   "tests": [
    "PlaytestGoEggs"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": "U-0046",
   "since": "2026-10-05",
-  "note": "규칙 층(표·굴림·주머니·부화기·걸음→부화·겹침·동행 친밀·보너스·경험치 곱·세이브)+장면 층(창·단추·실제 걸음 320m 부화·순간이동 안 셈·세이브 파일·옛 세이브). 동행 몸 3D 는 K-0075 요청(없으면 몸 없이). 창 모양·글 읽힘은 눈"
+  "note": "D2(2026-10-05): saga-unity/docs/playcheck/d2-u0043-0046-20261005.json — 규칙+장면 3연속 + 실제 이동·진짜 상자·일과 완료 경로. UiLayoutCheck 로 단추·창 배치 점검(이 작업 몫 0건) · 창 모양·글 읽힘은 눈 · 동행 몸 3D = K-0075"
+ },
+ {
+  "id": "un.go.menu-hub",
+  "name": "메뉴 허브 — 사냥 기록·도움말·주간 도전·재출항·신수 알 단추를 위 오른쪽 '메뉴' 하나로(겹침 해소)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/UI/MenuHubUi.cs"
+  ],
+  "tests": [
+   "PlaytestGoHelp"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0043",
+  "since": "2026-10-05",
+  "note": "D2(2026-10-05): saga-unity/docs/playcheck/d2-u0043-0046-20261005.json — 줄 5 마다 그 창이 열림·원래 단추 숨김(진단) + UiLayoutCheck 로 첫 화면 겹침 0·밖 0(세 화면비). 모양은 눈"
  }
 ]

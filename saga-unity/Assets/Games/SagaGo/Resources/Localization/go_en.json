@@ -3260,6 +3260,8 @@
     { "key": "pet.name.pt_jeoktoma", "value": "Crimson Flame Steed" },
     { "key": "pet.desc.pt_jeoktoma", "value": "A legendary steed said to run a thousand li a day." },
     { "key": "pet.name.pt_jeolyeong", "value": "Flashing Shadow Steed" },
-    { "key": "pet.desc.pt_jeolyeong", "value": "A steed that carried its endangered master to safety alone." }
+    { "key": "pet.desc.pt_jeolyeong", "value": "A steed that carried its endangered master to safety alone." },
+    { "key": "menu.button", "value": "Menu" },
+    { "key": "menu.title", "value": "Menu" }
   ]
 }
