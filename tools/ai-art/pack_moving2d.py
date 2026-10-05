@@ -54,6 +54,8 @@ for cid, views in chars.items():
             keep = [i + 1 for i, z in enumerate(sizes) if z >= float(os.environ.get('MATTE_MINCOMP', 0.02)) * sizes.max()]
             al = np.where(np.isin(lab, keep), al, 0).astype(np.uint8)
             im.putalpha(Image.fromarray(al))
+        if v == 'side' and cid in os.environ.get('FLIP_SIDE', '').split(','):   # side 는 오른쪽을 봐야 한다(mode2d dirOf 가 왼쪽일 때 뒤집음) — 왼쪽 보고 나온 그림만 좌우 반전
+            im = im.transpose(Image.FLIP_LEFT_RIGHT)
         bb = im.getchannel('A').point(lambda x: 255 if x > 24 else 0).getbbox()
         if bb:
             cut[v] = im.crop(bb)
