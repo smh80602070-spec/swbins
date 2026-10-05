@@ -37,11 +37,12 @@ QUALITY = {  # 모델별 품질 꼬리표(모델 카드 권장값)
     'v1-5-pruned-emaonly': 'masterpiece, best quality, highly detailed',
 }
 
+DEFAULT_STYLE = 'P'   # 10-05 판정기 추천(K-0070 단계 5: P 통과 4/16·84.7 > C 3/16·68.8) — 사용자 거부권 'C' 한 글자면 되돌린다
 STYLES = {  # 그림체 블록 — 선·명암·색·조명. K-0068 의 B(현재)·P(먹선)·C(동화풍)
-    'B': dict(name='부드러운 채색 + 얇은 윤곽(현재)',
+    'B': dict(name='부드러운 채색 + 얇은 윤곽(10-03~05 산출)',
               line='thin dark outline', shade='soft painterly shading', color='rich saturated colors, detailed texture',
               light='soft diffuse lighting', neg='sketch, monochrome, flat color, pixel art'),
-    'P': dict(name='굵은 먹선 회화풍',
+    'P': dict(name='굵은 먹선 회화풍(기본, 판정기 10-05)',
               line='bold black ink outlines, varied line weight, sumi-e inspired linework', shade='painterly flat shading, visible brush strokes',
               color='muted earth tones with one accent color', light='flat lighting, no gloss',
               neg='thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading'),
@@ -101,7 +102,7 @@ def compose(item, spec, style, model):
 
 def build(args):
     src = json.load(open(args.src, encoding='utf-8'))
-    spec, style, model = src.get('spec', 'icon'), src.get('style', 'B'), src.get('model', 'animagine-xl-4.0-opt')
+    spec, style, model = src.get('spec', 'icon'), src.get('style', DEFAULT_STYLE), src.get('model', 'animagine-xl-4.0-opt')
     if spec not in SPECS or style not in STYLES or model not in MODELS:
         sys.exit(f'spec {spec} / style {style} / model {model} 중 모르는 값')
     sp = SPECS[spec]
@@ -113,6 +114,9 @@ def build(args):
         row = {'id': it['id'], 'seed': it.get('seed', seed_of(it['id'])), 'prompt': prompt, 'negative': neg}
         if it.get('subject_ko'):
             row['subject_ko'] = it['subject_ko']
+        if it.get('init_image'):   # 이미지→이미지 밑그림(3D 렌더 등) — gen.py 가 그대로 받는다(K-0056 정적 지물 방식)
+            row['init_image'] = it['init_image']
+            row['denoise'] = float(it.get('denoise', 0.6))
         if it.get('width') and it.get('height'):
             row['width'], row['height'] = it['width'], it['height']
         elif it.get('spec') and it['spec'] != spec:   # 항목별 규격 — 크기·단계·cfg 도 그 규격을 따른다
@@ -209,7 +213,7 @@ def main():
     sub = ap.add_subparsers(dest='cmd', required=True)
     b = sub.add_parser('build'); b.add_argument('src'); b.add_argument('--out'); b.set_defaults(fn=build)
     l = sub.add_parser('lint'); l.add_argument('src'); l.set_defaults(fn=lint)
-    s = sub.add_parser('show'); s.add_argument('--style', default='B', choices=list(STYLES)); s.add_argument('--spec', default='icon', choices=list(SPECS)); s.set_defaults(fn=show)
+    s = sub.add_parser('show'); s.add_argument('--style', default=DEFAULT_STYLE, choices=list(STYLES)); s.add_argument('--spec', default='icon', choices=list(SPECS)); s.set_defaults(fn=show)
     a = ap.parse_args()
     sys.exit(a.fn(a))
 

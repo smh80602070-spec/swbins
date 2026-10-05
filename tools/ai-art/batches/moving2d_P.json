@@ -1,0 +1,341 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "moving2d_P",
+ "kit": {
+  "spec": "character",
+  "style": "P",
+  "style_name": "굵은 먹선 회화풍(기본, 판정기 10-05)"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 896,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "hero_m_front",
+   "seed": 2256253231,
+   "prompt": "(1boy:1.15), young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "hero_m_side",
+   "seed": 1447090508,
+   "prompt": "(1boy:1.15), young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, facing right, side view, from side, full profile, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "hero_m_back",
+   "seed": 3777571686,
+   "prompt": "(1boy:1.15), young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, from behind, back view, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "hero_f_front",
+   "seed": 3816703882,
+   "prompt": "(1girl:1.15), young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "hero_f_side",
+   "seed": 1435252139,
+   "prompt": "(1girl:1.15), young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, facing right, side view, from side, full profile, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "hero_f_back",
+   "seed": 3826603295,
+   "prompt": "(1girl:1.15), young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo, from behind, back view, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "villager_a_front",
+   "seed": 543099837,
+   "prompt": "(1boy:1.15), old village man, white hair, white beard, beige long robe, wooden walking stick, no backpack, solo, plain background, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "villager_a_side",
+   "seed": 3606371725,
+   "prompt": "(1boy:1.15), old village man, white hair, white beard, beige long robe, wooden walking stick, no backpack, solo, plain background, facing right, side view, from side, full profile, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "villager_a_back",
+   "seed": 3103288617,
+   "prompt": "(1boy:1.15), old village man, white hair, white beard, beige long robe, wooden walking stick, no backpack, solo, plain background, from behind, back view, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "villager_b_front",
+   "seed": 1886457762,
+   "prompt": "(1boy:1.15), village teenager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, solo, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "villager_b_side",
+   "seed": 2034867824,
+   "prompt": "(1boy:1.15), village teenager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, solo, facing right, side view, from side, full profile, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "villager_b_back",
+   "seed": 4221554499,
+   "prompt": "(1boy:1.15), village teenager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, solo, from behind, back view, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "villager_c_front",
+   "seed": 3277028582,
+   "prompt": "(1girl:1.15), small village child, short brown bob hair, straw hat, cream dress with red trim, brown shoes, solo, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "villager_c_side",
+   "seed": 2814432480,
+   "prompt": "(1girl:1.15), small village child, short brown bob hair, straw hat, cream dress with red trim, brown shoes, solo, facing right, side view, from side, full profile, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "villager_c_back",
+   "seed": 2909713509,
+   "prompt": "(1girl:1.15), small village child, short brown bob hair, straw hat, cream dress with red trim, brown shoes, solo, from behind, back view, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "companion_warrior_front",
+   "seed": 337788075,
+   "prompt": "(1boy:1.15), armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, solo, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "companion_warrior_side",
+   "seed": 250824846,
+   "prompt": "(1boy:1.15), armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, solo, facing right, side view, from side, full profile, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "companion_warrior_back",
+   "seed": 952574157,
+   "prompt": "(1boy:1.15), armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, solo, from behind, back view, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "companion_archer_front",
+   "seed": 306102049,
+   "prompt": "(1girl:1.15), archer, dark green hooded cloak, brown leather outfit, longbow, quiver of arrows on the back, solo, holding a small shortbow in one hand, bow smaller than the body, face visible, simple standing pose, colored clothes, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "companion_archer_side",
+   "seed": 1078334601,
+   "prompt": "(1girl:1.15), archer, dark green hooded cloak, brown leather outfit, longbow, quiver of arrows on the back, solo, holding a small shortbow in one hand, bow smaller than the body, face visible, simple standing pose, colored clothes, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, facing right, side view, from side, full profile, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "companion_archer_back",
+   "seed": 3670272786,
+   "prompt": "(1girl:1.15), archer, dark green hooded cloak, brown leather outfit, longbow, quiver of arrows on the back, solo, holding a small shortbow in one hand, bow smaller than the body, face visible, simple standing pose, colored clothes, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, from behind, back view, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "companion_mage_front",
+   "seed": 1176192910,
+   "prompt": "(1girl:1.15), mage, blue pointed wizard hat, long blue robe with gold trim, wooden staff, solo, face visible under the hat, anime face, front view, facing viewer, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "companion_mage_side",
+   "seed": 2453890454,
+   "prompt": "(1girl:1.15), mage, blue pointed wizard hat, long blue robe with gold trim, wooden staff, solo, face visible under the hat, anime face, facing right, side view, from side, full profile, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "companion_mage_back",
+   "seed": 1669708593,
+   "prompt": "(1girl:1.15), mage, blue pointed wizard hat, long blue robe with gold trim, wooden staff, solo, face visible under the hat, anime face, from behind, back view, 1other, solo, full body, standing, game character art, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading"
+  },
+  {
+   "id": "beast_dog_front",
+   "seed": 3219716147,
+   "prompt": "(friendly medium dog:1.15), short brown fur, floppy ears, four legs, front view, facing viewer, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_dog_side",
+   "seed": 1269874207,
+   "prompt": "(friendly medium dog:1.15), short brown fur, floppy ears, four legs, facing right, side view, from side, full profile, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_dog_back",
+   "seed": 1513666269,
+   "prompt": "(friendly medium dog:1.15), short brown fur, floppy ears, four legs, from behind, back view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_wolf_front",
+   "seed": 1223714635,
+   "prompt": "(gray wolf:1.15), gray and white fur, bushy gray tail, standing on four legs, natural colors, alert, front view, facing viewer, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_wolf_side",
+   "seed": 2810505014,
+   "prompt": "(gray wolf:1.15), gray and white fur, bushy gray tail, standing on four legs, natural colors, alert, facing right, side view, from side, full profile, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_wolf_back",
+   "seed": 3989216111,
+   "prompt": "(gray wolf:1.15), gray and white fur, bushy gray tail, standing on four legs, natural colors, alert, from behind, back view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_bird_front",
+   "seed": 1843414027,
+   "prompt": "(small songbird:1.15), blue and white feathers, perched, front view, facing viewer, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_bird_side",
+   "seed": 2199407120,
+   "prompt": "(small songbird:1.15), blue and white feathers, perched, facing right, side view, from side, full profile, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_bird_back",
+   "seed": 1795820178,
+   "prompt": "(small songbird:1.15), blue and white feathers, perched, from behind, back view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_small_front",
+   "seed": 901425133,
+   "prompt": "(small wild rabbit:1.15), white fur with gray patches, long ears, sitting, front view, facing viewer, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_small_side",
+   "seed": 1571088506,
+   "prompt": "(small wild rabbit:1.15), white fur with gray patches, long ears, sitting, facing right, side view, from side, full profile, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_small_back",
+   "seed": 629162655,
+   "prompt": "(small wild rabbit:1.15), white fur with gray patches, long ears, sitting, from behind, back view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_fish_side",
+   "seed": 1974276906,
+   "prompt": "(river fish:1.15), silver scales, orange fins, swimming, facing right, side view, from side, full profile, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_big_front",
+   "seed": 35984570,
+   "prompt": "(large brown bear:1.15), brown fur, standing on all fours, four legs on the ground, natural bear anatomy, front view, facing viewer, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_big_side",
+   "seed": 716210891,
+   "prompt": "(large brown bear:1.15), brown fur, standing on all fours, four legs on the ground, natural bear anatomy, facing right, side view, from side, full profile, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  },
+  {
+   "id": "beast_big_back",
+   "seed": 2659232625,
+   "prompt": "(large brown bear:1.15), brown fur, standing on all fours, four legs on the ground, natural bear anatomy, rear view from directly behind, head facing away, tail visible, no face visible, walking away, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around, from behind, back view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  }
+ ]
+}

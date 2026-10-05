@@ -1,0 +1,263 @@
+{
+ "name": "moving2d_P",
+ "spec": "character",
+ "style": "P",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "items": [
+  {
+   "id": "hero_m_front",
+   "subject": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around",
+   "view": "front",
+   "spec": "character"
+  },
+  {
+   "id": "hero_m_side",
+   "subject": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around",
+   "view": "side",
+   "spec": "character",
+   "extra": "facing right"
+  },
+  {
+   "id": "hero_m_back",
+   "subject": "1boy, young adventurer hero, short brown hair, beige hooded cloak, brown leather vest, gray trousers, brown boots, solo, hood down, face visible, brown hair, anime face, cloak hanging straight down close to the body, no wind, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around",
+   "view": "back",
+   "spec": "character"
+  },
+  {
+   "id": "hero_f_front",
+   "subject": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo",
+   "view": "front",
+   "spec": "character"
+  },
+  {
+   "id": "hero_f_side",
+   "subject": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo",
+   "view": "side",
+   "spec": "character",
+   "extra": "facing right"
+  },
+  {
+   "id": "hero_f_back",
+   "subject": "1girl, young adventurer heroine, long black hair in a high ponytail, white hooded cloak, dark vest, red trousers, black boots, solo",
+   "view": "back",
+   "spec": "character"
+  },
+  {
+   "id": "villager_a_front",
+   "subject": "1boy, old village man, white hair, white beard, beige long robe, wooden walking stick, no backpack, solo, plain background",
+   "view": "front",
+   "spec": "character"
+  },
+  {
+   "id": "villager_a_side",
+   "subject": "1boy, old village man, white hair, white beard, beige long robe, wooden walking stick, no backpack, solo, plain background",
+   "view": "side",
+   "spec": "character",
+   "extra": "facing right"
+  },
+  {
+   "id": "villager_a_back",
+   "subject": "1boy, old village man, white hair, white beard, beige long robe, wooden walking stick, no backpack, solo, plain background",
+   "view": "back",
+   "spec": "character"
+  },
+  {
+   "id": "villager_b_front",
+   "subject": "1boy, village teenager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, solo",
+   "view": "front",
+   "spec": "character"
+  },
+  {
+   "id": "villager_b_side",
+   "subject": "1boy, village teenager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, solo",
+   "view": "side",
+   "spec": "character",
+   "extra": "facing right"
+  },
+  {
+   "id": "villager_b_back",
+   "subject": "1boy, village teenager, short black hair, brown short-sleeve shirt, blue trousers, brown shoes, solo",
+   "view": "back",
+   "spec": "character"
+  },
+  {
+   "id": "villager_c_front",
+   "subject": "1girl, small village child, short brown bob hair, straw hat, cream dress with red trim, brown shoes, solo",
+   "view": "front",
+   "spec": "character"
+  },
+  {
+   "id": "villager_c_side",
+   "subject": "1girl, small village child, short brown bob hair, straw hat, cream dress with red trim, brown shoes, solo",
+   "view": "side",
+   "spec": "character",
+   "extra": "facing right"
+  },
+  {
+   "id": "villager_c_back",
+   "subject": "1girl, small village child, short brown bob hair, straw hat, cream dress with red trim, brown shoes, solo",
+   "view": "back",
+   "spec": "character"
+  },
+  {
+   "id": "companion_warrior_front",
+   "subject": "1boy, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, solo",
+   "view": "front",
+   "spec": "character"
+  },
+  {
+   "id": "companion_warrior_side",
+   "subject": "1boy, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, solo",
+   "view": "side",
+   "spec": "character",
+   "extra": "facing right"
+  },
+  {
+   "id": "companion_warrior_back",
+   "subject": "1boy, armored warrior, full blue steel plate armor with helmet, large blue shield, red cloth tabard, sword at the belt, solo",
+   "view": "back",
+   "spec": "character"
+  },
+  {
+   "id": "companion_archer_front",
+   "subject": "1girl, archer, dark green hooded cloak, brown leather outfit, longbow, quiver of arrows on the back, solo, holding a small shortbow in one hand, bow smaller than the body, face visible, simple standing pose, colored clothes, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around",
+   "view": "front",
+   "spec": "character"
+  },
+  {
+   "id": "companion_archer_side",
+   "subject": "1girl, archer, dark green hooded cloak, brown leather outfit, longbow, quiver of arrows on the back, solo, holding a small shortbow in one hand, bow smaller than the body, face visible, simple standing pose, colored clothes, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around",
+   "view": "side",
+   "spec": "character",
+   "extra": "facing right"
+  },
+  {
+   "id": "companion_archer_back",
+   "subject": "1girl, archer, dark green hooded cloak, brown leather outfit, longbow, quiver of arrows on the back, solo, holding a small shortbow in one hand, bow smaller than the body, face visible, simple standing pose, colored clothes, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around",
+   "view": "back",
+   "spec": "character"
+  },
+  {
+   "id": "companion_mage_front",
+   "subject": "1girl, mage, blue pointed wizard hat, long blue robe with gold trim, wooden staff, solo, face visible under the hat, anime face",
+   "view": "front",
+   "spec": "character"
+  },
+  {
+   "id": "companion_mage_side",
+   "subject": "1girl, mage, blue pointed wizard hat, long blue robe with gold trim, wooden staff, solo, face visible under the hat, anime face",
+   "view": "side",
+   "spec": "character",
+   "extra": "facing right"
+  },
+  {
+   "id": "companion_mage_back",
+   "subject": "1girl, mage, blue pointed wizard hat, long blue robe with gold trim, wooden staff, solo, face visible under the hat, anime face",
+   "view": "back",
+   "spec": "character"
+  },
+  {
+   "id": "beast_dog_front",
+   "subject": "friendly medium dog, short brown fur, floppy ears, four legs",
+   "view": "front",
+   "spec": "creature"
+  },
+  {
+   "id": "beast_dog_side",
+   "subject": "friendly medium dog, short brown fur, floppy ears, four legs",
+   "view": "side",
+   "spec": "creature",
+   "extra": "facing right"
+  },
+  {
+   "id": "beast_dog_back",
+   "subject": "friendly medium dog, short brown fur, floppy ears, four legs",
+   "view": "back",
+   "spec": "creature"
+  },
+  {
+   "id": "beast_wolf_front",
+   "subject": "gray wolf, gray and white fur, bushy gray tail, standing on four legs, natural colors, alert",
+   "view": "front",
+   "spec": "creature"
+  },
+  {
+   "id": "beast_wolf_side",
+   "subject": "gray wolf, gray and white fur, bushy gray tail, standing on four legs, natural colors, alert",
+   "view": "side",
+   "spec": "creature",
+   "extra": "facing right"
+  },
+  {
+   "id": "beast_wolf_back",
+   "subject": "gray wolf, gray and white fur, bushy gray tail, standing on four legs, natural colors, alert",
+   "view": "back",
+   "spec": "creature"
+  },
+  {
+   "id": "beast_bird_front",
+   "subject": "small songbird, blue and white feathers, perched",
+   "view": "front",
+   "spec": "creature"
+  },
+  {
+   "id": "beast_bird_side",
+   "subject": "small songbird, blue and white feathers, perched",
+   "view": "side",
+   "spec": "creature",
+   "extra": "facing right"
+  },
+  {
+   "id": "beast_bird_back",
+   "subject": "small songbird, blue and white feathers, perched",
+   "view": "back",
+   "spec": "creature"
+  },
+  {
+   "id": "beast_small_front",
+   "subject": "small wild rabbit, white fur with gray patches, long ears, sitting",
+   "view": "front",
+   "spec": "creature"
+  },
+  {
+   "id": "beast_small_side",
+   "subject": "small wild rabbit, white fur with gray patches, long ears, sitting",
+   "view": "side",
+   "spec": "creature",
+   "extra": "facing right"
+  },
+  {
+   "id": "beast_small_back",
+   "subject": "small wild rabbit, white fur with gray patches, long ears, sitting",
+   "view": "back",
+   "spec": "creature"
+  },
+  {
+   "id": "beast_fish_side",
+   "subject": "river fish, silver scales, orange fins, swimming",
+   "view": "side",
+   "spec": "creature",
+   "extra": "facing right"
+  },
+  {
+   "id": "beast_big_front",
+   "subject": "large brown bear, brown fur, standing on all fours, four legs on the ground, natural bear anatomy",
+   "view": "front",
+   "spec": "creature"
+  },
+  {
+   "id": "beast_big_side",
+   "subject": "large brown bear, brown fur, standing on all fours, four legs on the ground, natural bear anatomy",
+   "view": "side",
+   "spec": "creature",
+   "extra": "facing right"
+  },
+  {
+   "id": "beast_big_back",
+   "subject": "large brown bear, brown fur, standing on all fours, four legs on the ground, natural bear anatomy, rear view from directly behind, head facing away, tail visible, no face visible, walking away, full body from head to toe, wide shot, character occupies 60 percent of the image, empty space around",
+   "view": "back",
+   "spec": "creature"
+  }
+ ]
+}

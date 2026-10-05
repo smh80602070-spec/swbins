@@ -1,0 +1,429 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "static2d_P",
+ "kit": {
+  "spec": "sprite",
+  "style": "P",
+  "style_name": "굵은 먹선 회화풍(기본, 판정기 10-05)"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "eu_house_01",
+   "seed": 390560124,
+   "prompt": "(two-storey half-timbered house:1.15), steep tiled roof, chimney, small windows, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\eu_house_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "modern_block_01",
+   "seed": 4011599641,
+   "prompt": "(modern three-storey apartment block:1.15), flat roof, ribbon windows, concrete walls, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\modern_block_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "future_dome_01",
+   "seed": 2979256101,
+   "prompt": "(futuristic dome house:1.15), round white dome roof, ring windows, sci-fi dwelling, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, plain pastel gray-green background, centered, single object, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\future_dome_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "stone_tower_01",
+   "seed": 1177687043,
+   "prompt": "(tall stone watchtower:1.15), four storeys, crenellated top, small arrow slits, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stone_tower_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "chinese_hall_01",
+   "seed": 3594229450,
+   "prompt": "(grand hall:1.15), red pillars, wide curved tiled eaves, wooden palace building, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\chinese_hall_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "dungeon_gate_01",
+   "seed": 374245535,
+   "prompt": "(rocky arch entrance to a dungeon:1.15), stone stairs going down, dark opening, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\dungeon_gate_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "forest_cottage_01",
+   "seed": 2280631929,
+   "prompt": "(small thatched cottage:1.15), round wooden door, tiny chimney, cozy hut, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\forest_cottage_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "inn_01",
+   "seed": 3093817271,
+   "prompt": "(two-storey village inn:1.15), hanging sign board, tiled roof, wooden balcony, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\inn_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "barn_01",
+   "seed": 1526477891,
+   "prompt": "(large red wooden barn:1.15), gabled roof, big double doors, hay loft, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\barn_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "hanok_01",
+   "seed": 1607183345,
+   "prompt": "(traditional korean house:1.15), gray curved tile roof, wooden pillars, paper doors, stone base, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\hanok_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "jp_minka_01",
+   "seed": 2526981836,
+   "prompt": "(traditional japanese farmhouse:1.15), thick thatched hip roof, wooden walls, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\jp_minka_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "silkroad_house_01",
+   "seed": 1870475860,
+   "prompt": "(desert clay-brick house:1.15), flat roof, arched door, small windows, sand colored walls, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\silkroad_house_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "well_01",
+   "seed": 1321080161,
+   "prompt": "(stone water well with small wooden roof:1.15), bucket and rope, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\well_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "street_lamp_01",
+   "seed": 1955634141,
+   "prompt": "(iron street lamp post:1.15), glowing lantern, curved arm, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\street_lamp_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "signal_pylon_01",
+   "seed": 1114499126,
+   "prompt": "(futuristic guide pylon:1.15), glowing cyan crystal top, white tapered pillar, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\signal_pylon_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "torch_stand_01",
+   "seed": 3480487124,
+   "prompt": "(wooden torch stand:1.15), burning flame in a bowl, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\torch_stand_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "altar_01",
+   "seed": 950986018,
+   "prompt": "(stone altar:1.15), stepped platform, two small pillars, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\altar_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "iron_fence_01",
+   "seed": 1603725158,
+   "prompt": "(black iron spear fence section with posts:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\iron_fence_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wood_fence_01",
+   "seed": 1162158527,
+   "prompt": "(wooden picket fence section:1.15), rails and posts, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\wood_fence_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "mailbox_01",
+   "seed": 1937173045,
+   "prompt": "(red wooden mailbox on a post:1.15), small flag, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mailbox_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "haystack_01",
+   "seed": 770082553,
+   "prompt": "(round haystack:1.15), golden hay cone, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\haystack_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "bamboo_clump_01",
+   "seed": 3040758570,
+   "prompt": "(clump of green bamboo stalks with leaves:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\bamboo_clump_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "stele_01",
+   "seed": 933088306,
+   "prompt": "(stone stele monument with carved top roof:1.15), on a stone base, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stele_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "stone_lantern_01",
+   "seed": 1806607598,
+   "prompt": "(stone garden lantern:1.15), tiered roof, glowing window, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stone_lantern_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "banner_pole_01",
+   "seed": 1550298276,
+   "prompt": "(tall wooden banner pole with a plain red cloth banner:1.15), stone base, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\banner_pole_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "city_wall_segment_01",
+   "seed": 1203632258,
+   "prompt": "(stone city wall section with battlements:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\city_wall_segment_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "brazier_01",
+   "seed": 3068488936,
+   "prompt": "(iron fire brazier on three legs:1.15), glowing coals and flames, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\brazier_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "sail_boat_01",
+   "seed": 2510798228,
+   "prompt": "(small wooden sailboat with a white sail:1.15), side view three-quarter, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\sail_boat_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "mine_cart_01",
+   "seed": 3652594147,
+   "prompt": "(wooden mine cart with iron wheels:1.15), filled with ore, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mine_cart_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "raft_01",
+   "seed": 3962894752,
+   "prompt": "(simple wooden log raft with a pole:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\raft_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "ox_cart_01",
+   "seed": 48496940,
+   "prompt": "(wooden ox cart with two big wheels:1.15), hay load, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\ox_cart_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "caravan_wagon_01",
+   "seed": 3527193887,
+   "prompt": "(covered caravan wagon:1.15), canvas roof, four wheels, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\caravan_wagon_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_broadleaf_01",
+   "seed": 545693294,
+   "prompt": "(tall broadleaf tree:1.15), round leafy green crown, brown trunk, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_broadleaf_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_broadleaf_02",
+   "seed": 327436771,
+   "prompt": "(wide low broadleaf tree:1.15), thick trunk, spreading green crown, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_broadleaf_02.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_pine_01",
+   "seed": 3370603973,
+   "prompt": "(green pine fir tree:1.15), layered cone shape, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_pine_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_pine_01_snow",
+   "seed": 938110820,
+   "prompt": "(snow covered pine fir tree:1.15), white snow on layered branches, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, plain pastel gray-green background, centered, single object, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_pine_01_snow.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_pine_02",
+   "seed": 1334841941,
+   "prompt": "(tall pine tree:1.15), bare trunk, tufts of green needles on top, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_pine_02.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_dead_01",
+   "seed": 86110552,
+   "prompt": "(dead bare tree:1.15), twisted dark branches, no leaves, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_dead_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_birch_01",
+   "seed": 2268530905,
+   "prompt": "(white birch tree:1.15), white trunk with black marks, light green leaves, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, plain pastel gray-green background, centered, single object, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_birch_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "bush_01",
+   "seed": 1831528186,
+   "prompt": "(round green bush:1.15), leafy shrub, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\bush_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "grass_tuft_01",
+   "seed": 2981905849,
+   "prompt": "(tuft of green grass blades:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\grass_tuft_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "flower_patch_01",
+   "seed": 2207448203,
+   "prompt": "(patch of colorful wildflowers:1.15), yellow pink white purple, green stems, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\flower_patch_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "rock_small_01",
+   "seed": 1457883792,
+   "prompt": "(small gray rock with a pebble:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\rock_small_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "rock_large_01",
+   "seed": 2304865584,
+   "prompt": "(large gray boulder with two smaller rocks:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\rock_large_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "rock_moss_01",
+   "seed": 1020564567,
+   "prompt": "(gray rock covered with green moss:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\rock_moss_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "pebbles_01",
+   "seed": 1976049197,
+   "prompt": "(handful of small gray pebbles on the ground:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\pebbles_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "log_01",
+   "seed": 845151075,
+   "prompt": "(fallen tree log with cut end:1.15), small twig, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\log_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "stump_01",
+   "seed": 1028482025,
+   "prompt": "(tree stump with roots and cut top rings:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stump_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "mushroom_01",
+   "seed": 3635042466,
+   "prompt": "(cluster of three mushrooms:1.15), red cap with white spots and orange caps, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mushroom_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "hill_01",
+   "seed": 1382437617,
+   "prompt": "(small grassy hill mound:1.15), green grass, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\hill_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "mountain_01",
+   "seed": 2546420223,
+   "prompt": "(rocky mountain peak with snow cap:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mountain_01.png",
+   "denoise": 0.65
+  }
+ ]
+}
