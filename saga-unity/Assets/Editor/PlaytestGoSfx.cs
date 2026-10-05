@@ -177,7 +177,7 @@ namespace Saga.EditorTools
             if (e == null) { Fail("들판 적이 없음"); return; }
             SagaSfx.ResetForTest(); GoSfx.ResetForTest();
             e.TakeHit(1f, GoElement.Physical, 1f, out _);
-            Expect("sword_hit", "진짜 타격(FieldEnemy.TakeHit)");
+            Expect(GoSfx.HitName(GoWeaponModels.TypeFor(fc.Active.Id)), "진짜 타격(FieldEnemy.TakeHit, 활성 인물 무기 — U-0051)");
             SagaSfx.ResetForTest(); GoSfx.ResetForTest();
             bool took = fc.ReceiveStrike(1f, null);
             if (took) Expect("sword_hurt", "진짜 피격(FieldCombat.ReceiveStrike)");

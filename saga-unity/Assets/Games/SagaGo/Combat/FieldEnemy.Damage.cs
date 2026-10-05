@@ -9,11 +9,18 @@ namespace Saga.Go.Combat
     /// <summary>`FieldEnemy` 의 일부(partial) — tasks U-0010 분할.</summary>
     public partial class FieldEnemy
     {
+        /// <summary>U-0051 지금 편성 활성 인물이 쥔 무기 종류의 타격음 이름(편성이 없으면 검).</summary>
+        private static string HitSfxName()
+        {
+            var a = FieldCombat.Instance?.Active;
+            return a == null ? "sword_hit" : Saga.Go.Audio.GoSfx.HitName(GoWeaponModels.TypeFor(a.Id));
+        }
+
         /// <summary>플레이어 공격 한 번. 반응을 풀고 실제로 들어간 피해를 돌려준다.
         /// <paramref name="atk"/> 는 반응 피해를 셀 공격력. <paramref name="heavy"/> = 기본 공격 3타째(얼어붙은 적을 깨뜨린다, 109-14-1a).</summary>
         public float TakeHit(float amount, GoElement element, float atk, out GoReaction reaction, bool heavy = false, bool crit = false)
         {
-            Saga.Go.Audio.GoSfx.Play("sword_hit", 0.9f, 0.07f); // U-0048 — 무기별 소리는 후속
+            Saga.Go.Audio.GoSfx.Play(HitSfxName(), 0.9f, 0.07f); // U-0048·U-0051 활성 인물 무기 종류별
             reaction = GoReaction.None;
             if (!Alive) return 0f;
             FieldCombat.Instance?.MarkFought(); // 109-14-18 방금 싸움(편성 막기)

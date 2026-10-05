@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Saga.Core;
+using Saga.Go.Data;
 
 namespace Saga.Go.Audio
 {
@@ -16,7 +17,13 @@ namespace Saga.Go.Audio
         {
             "ui_click", "ui_open", "ui_close", "ui_confirm", "levelup", "quest_done", "item_pick", "gacha", "fish_bite",
             "sword_hit", "sword_hurt", "whoosh", "victory", "summon",
+            // U-0051 — 무기 종류별 타격(사가고 무기 다섯)·지면별 발소리·점프·착지·입수
+            "axe_hit", "spear_hit", "staff_hit", "bow_hit", "step_dirt", "step_grass", "step_sand", "step_snow", "step_stone", "step_wood",
+            "jump", "land", "splash",
         };
+
+        /// <summary>U-0051 무기 종류 → 타격음 이름(`GoWeaponModels.Kind` 와 같은 이름 + `_hit`).</summary>
+        public static string HitName(GoWeapons.Type t) => Saga.Go.Data.GoWeaponModels.Kind(t) + "_hit";
 
         private static readonly Dictionary<string, float> Last = new Dictionary<string, float>();
 

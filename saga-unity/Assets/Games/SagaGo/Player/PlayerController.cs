@@ -125,6 +125,8 @@ namespace Saga.Go.Player
 
         // PLAN.md 107 ② 이동 상태
         public MoveMode Mode { get; private set; } = MoveMode.Ground;
+        /// <summary>U-0051 걸음·착지·입수 소리 상태(진단이 읽는다).</summary>
+        public FootstepSfx Footsteps { get; } = new FootstepSfx();
         // PLAN.md 109-14-2 낙하 공격 — 활공 중 공격을 누르면 날개를 접고 곧게 내리꽂는다, 땅에 닿으면 떨어진 높이(m)를 알린다
         public bool Plunging => _plunging;
         public event System.Action<float> PlungeLanded;
@@ -348,6 +350,7 @@ namespace Saga.Go.Player
             }
             SetWings(Mode == MoveMode.Glide);
             SetModeParams();
+            Footsteps.Tick(transform.position, Mode, _controller.isGrounded, GoMounts.RidingGround || GoMounts.RidingFly, dt); // U-0051
         }
 
         // ---- 지상·공중 -----------------------------------------------------------
@@ -395,6 +398,7 @@ namespace Saga.Go.Player
                 {
                     _verticalVelocity = JumpVelocity;
                     grounded = false;
+                    Saga.Go.Audio.GoSfx.Play("jump", 0.8f, 0.2f); // U-0051
                     if (animator != null && _hasJumpParam) animator.SetTrigger("Jump");
                 }
                 else if (traversal && HeightAboveGround() >= GlideMinHeight && GoStamina.Value > 0f)

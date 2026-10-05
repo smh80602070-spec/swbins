@@ -41,6 +41,14 @@ namespace Saga.Go.Data
             }
         }
 
+        /// <summary>U-0051 그 인물이 든 무기의 종류 — 장착 무기가 있으면 그 종류, 없으면 제 종류(`ModelFor` 와 같은 순서).</summary>
+        public static GoWeapons.Type TypeFor(string memberId)
+        {
+            string wid = WeaponState.Equipped(memberId);
+            if (GoWeapons.TryGet(wid, out var w)) return w.Type;
+            return GoWeapons.TypeOf(memberId);
+        }
+
         /// <summary>그 인물이 든 무기의 모델 이름 — 장착 무기(없으면 제 종류 수련용)의 종류·희귀도로.</summary>
         public static string ModelFor(string memberId)
         {
