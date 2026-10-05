@@ -21,7 +21,8 @@ const LOG_DIR = path.join(HERE, '_log');
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 && args[i + 1] ? args[i + 1] : d; };
 const BRANCH = opt('--branch', 'tools'), AT = opt('--at', '02:30'), EVERY_H = +opt('--every', 0), PORT = +opt('--port', 8798);
-const RUN_ARGS = ['--branch', BRANCH, '--max-tickets', opt('--max-tickets', '1'), '--budget-usd', opt('--budget-usd', '20')];
+/* 밤 세션은 소넷(설계·티켓은 페이블, 실행은 소넷 — ARCH §6). --model 로 바꿀 수 있다 */
+const RUN_ARGS = ['--branch', BRANCH, '--max-tickets', opt('--max-tickets', '1'), '--budget-usd', opt('--budget-usd', '20'), '--model', opt('--model', 'claude-sonnet-5-5')];
 
 const state = { branch: BRANCH, at: AT, everyH: EVERY_H, running: null, startedAt: null, lastRun: null, lastExit: null, lastReason: '', runs: 0, bootedAt: new Date().toISOString() };
 fs.mkdirSync(LOG_DIR, { recursive: true });

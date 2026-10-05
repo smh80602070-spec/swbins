@@ -22,9 +22,12 @@ $daemon = Join-Path $here "daemon.mjs"
 $cfg = $env:CLAUDE_CONFIG_DIR
 $lines = @('Set sh = CreateObject("WScript.Shell")')
 if ($cfg) { $lines += ('sh.Environment("Process")("CLAUDE_CONFIG_DIR") = "' + $cfg + '"') }
-$lines += ('sh.Run """' + $node + '"" """' + $daemon + '"" --branch ' + $Branch + ' --at ' + $At + ' --port ' + $Port + '", 0, False')
+# VBS string: "" is an escaped quote. Result: sh.Run """<node>"" ""<daemon>"" --branch ...", 0, False
+$lines += ('sh.Run """' + $node + '"" ""' + $daemon + '"" --branch ' + $Branch + ' --at ' + $At + ' --port ' + $Port + '", 0, False')
 Set-Content -Path $vbs -Value ($lines -join "`r`n") -Encoding ASCII
 Write-Output "installed $vbs"
-Write-Output ("runs at logon: node daemon.mjs --branch " + $Branch + " --at " + $At + " --port " + $Port + (if ($cfg) { " (CLAUDE_CONFIG_DIR=" + $cfg + ")" } else { "" }))
+$cfgNote = ""
+if ($cfg) { $cfgNote = " (CLAUDE_CONFIG_DIR=" + $cfg + ")" }
+Write-Output ("runs at logon: node daemon.mjs --branch " + $Branch + " --at " + $At + " --port " + $Port + $cfgNote)
 Write-Output ("control page: http://127.0.0.1:" + $Port)
 if ($StartNow) { Start-Process -FilePath "wscript.exe" -ArgumentList ('"' + $vbs + '"'); Write-Output "started now" }

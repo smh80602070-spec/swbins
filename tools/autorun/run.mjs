@@ -2,7 +2,7 @@
 /**
  * 무인 기동 러너 — K-0074. 사람이 "이어해" 를 치지 않아도 갈래 큐를 돈다(사용자 10-05 "완전 자동화 — 여러 에이전트가 각자 맡은 업무").
  *
- *   node tools/autorun/run.mjs --branch tools|web|godot|unity [--max-tickets 1] [--max-minutes 120] [--budget-usd 20] [--dry]
+ *   node tools/autorun/run.mjs --branch tools|web|godot|unity [--max-tickets 1] [--max-minutes 120] [--budget-usd 20] [--model claude-sonnet-5-5] [--dry]
  *   node tools/autorun/run.mjs --selftest                 claude -p 가 이 환경(설정 폴더·로그인)에서 뜨는지 10초 시험
  *   node tools/autorun/run.mjs --register tools [--at 02:30]   Windows 작업 스케줄러에 매일 등록(사용자가 시킬 때만) · --unregister tools
  *
@@ -34,6 +34,8 @@ const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 && args[i + 1] 
 const has = (k) => args.includes(k);
 const branch = opt('--branch', null) || opt('--register', null) || opt('--unregister', null);
 const MAX_TICKETS = +opt('--max-tickets', 1), MAX_MIN = +opt('--max-minutes', 120), BUDGET = +opt('--budget-usd', 20);
+/* 무인 티켓 실행은 소넷(ARCH §6 — 설계·티켓은 페이블, 실행은 소넷). --model 로 바꿀 수 있다 */
+const MODEL = opt('--model', 'claude-sonnet-5-5');
 const dry = has('--dry');
 
 fs.mkdirSync(LOG_DIR, { recursive: true });
@@ -117,7 +119,7 @@ async function main() {
     const before = git('rev-parse', 'HEAD');
     log(`#${n} 큐 맨 위 ${top.id} [${top.status.slice(0, 60)}] → "${b.prompt}"`);
     if (dry) { log('(dry) 세션은 안 띄움'); break; }
-    const code = await runClaude(b.prompt, MAX_MIN, BUDGET);
+    const code = await runClaude(b.prompt, MAX_MIN, BUDGET, MODEL);
     const after = git('rev-parse', 'HEAD');
     log(`세션 끝 exit=${code} · 커밋 ${before.slice(0, 8)} → ${after.slice(0, 8)}`);
     if (after === before) { log('HEAD 가 안 움직였다(사람 대기·막힘) → 되풀이 안 함'); break; }
