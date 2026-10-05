@@ -11,11 +11,11 @@
   "polyhaven: white_stucco"
  ],
  "size_m": [
-  0.24,
-  0.25,
-  0.23
+  0.28,
+  0.32,
+  0.25
  ],
- "tris": 102,
+ "tris": 220,
  "nodes": [
   "attach"
  ],

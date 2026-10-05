@@ -23,6 +23,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_prop as BP  # noqa: E402
 import wf_common as W  # noqa: E402
 from build_prop import tube, obox, A, arg  # noqa: E402
+from wf_shapes import loft, plate  # noqa: E402,F401
 
 BP.TRIS_MAX = 600
 BP.GENERATOR = 'tools/world-forge/build_equip.py'
@@ -60,94 +61,162 @@ class Pal:
 
 
 # ---------------------------------------------------------------- 갑옷 슬롯 6 (뼈 기준 좌표, T-자세)
+# 10-06 재설계: 상자·원통 → 몸을 따라가는 곡면 껍데기(surf). 눈 판정 "종이 상자 갑옷" 후속.
+
+def surf(M, rows, centers, slot, closed=True, tile=0.3):
+    """점 격자(rows[i][j]) 를 사각형으로 잇는다. centers[i] = 그 줄의 안쪽 기준점 — 첫 면 법선이 안쪽을 보면 열 순서를 뒤집는다(면이 따로 놀아 법선 재계산이 안 되므로)."""
+    rows = [[Vector(p) for p in r] for r in rows]
+    nc = len(rows[0])
+    a, b, d = rows[0][0], rows[0][1], rows[1][0]
+    nrm = (b - a).cross(d - a)
+    if nrm.dot(a - Vector(centers[0])) < 0:
+        rows = [list(reversed(r)) for r in rows]
+    cols = nc if closed else nc - 1
+    for i in range(len(rows) - 1):
+        for j in range(cols):
+            j2 = (j + 1) % nc
+            p0, p1, p2, p3 = rows[i][j], rows[i][j2], rows[i + 1][j2], rows[i + 1][j]
+            u0, u1 = j / cols / tile, (j + 1) / cols / tile
+            v0, v1 = i / tile * 0.2, (i + 1) / tile * 0.2
+            M.quad(p0, p1, p2, p3, slot, (u0, v0), (u1, v0), (u1, v1), (u0, v1))
+
+
+def ring(axis, c, rx, ry, n=14, a0=-math.pi, a1=math.pi, closed=True):
+    """axis 'z'(가로 고리, 앞 = -y)·'x'(팔 방향)·'y'. 각도 a0~a1(닫힘이면 끝 점 빼고). rx·ry = 두 반지름."""
+    cnt = n if closed else n + 1
+    pts = []
+    for k in range(cnt):
+        t = a0 + (a1 - a0) * k / (n if closed else n)
+        u, v = math.sin(t) * rx, -math.cos(t) * ry          # t=0 → 앞(-y 또는 +z)
+        if axis == 'z':
+            pts.append((c[0] + u, c[1] + v, c[2]))
+        elif axis == 'x':
+            pts.append((c[0], c[1] + u, c[2] - v))           # x 축 고리: t=0 → 위(+z)
+        else:
+            pts.append((c[0] + u, c[1], c[2] - v))
+    return pts
+
 
 def head(C, p):
+    """투구 — 얼굴 앞이 열린 돔(아래 줄은 뒤·옆 260°, 이마 위로 갈수록 닫힘). 시대: 옛 = 코 가리개·깃, 지금 = 가림 띠, 미래 = 발광 바이저·지느러미."""
     M, s = C.M, p.s
-    r = s(0.125)
-    tube(M, (0, 0, 0.0), (0, 0, s(0.10)), r * 0.93, r, p.main, 0.6, 10)                       # 투구 몸통
-    tube(M, (0, 0, s(0.10)), (0, 0, s(0.2)), r, r * 0.55, p.main, 0.6, 10)                       # 윗면
-    tube(M, (0, 0, s(0.2)), (0, 0, s(0.235)), r * 0.55, 0.0, p.main, 0.6, 10)
+    prof = [(-0.01, 0.132), (0.05, 0.142), (0.11, 0.140), (0.16, 0.122), (0.20, 0.090), (0.225, 0.050), (0.236, 0.004)]
+    rows, cen = [], []
+    for i, (z, r) in enumerate(prof):
+        gap = max(0.0, 1 - i / 3) * 0.75                    # 아래 세 줄은 앞(얼굴)이 열림(라디안 반쪽)
+        rows.append(ring('z', (0, 0.01, s(z)), s(r), s(r * 1.08), 16, gap, 2 * math.pi - gap, closed=False))   # 각 0 = 앞 — 앞을 비운다
+        cen.append((0, 0.01, s(z)))
+    surf(M, rows, cen, p.main, closed=False)
     if p.era == 'past':
-        obox(M, (0, -r * 0.96, s(0.03)), (0.03, 0.02, s(0.1)), 0, p.sec, 0.3)                    # 코 가리개
+        plate(M, [(-0.018, 0.0), (0.018, 0.0), (0.012, 0.12), (-0.012, 0.12)], (0, -s(0.148), s(0.02)), (1, 0, 0), (0, 0, 1), 0.006, p.sec, bevel=0.005)
         if p.g >= 2:
-            tube(M, (0, 0, s(0.23)), (0, 0.0, s(0.34)), 0.012, 0.012, p.sec, 0.3, 5)
-            obox(M, (0, 0, s(0.26)), (0.02, s(0.2), s(0.12)), 0, p.cloth, 0.3)                    # 깃 장식
+            plate(M, [(0.0, 0.0), (0.16, 0.02), (0.20, 0.10), (0.04, 0.09)], (0, s(0.08), s(0.2)), (0, -1, 0), (0, 0, 1), 0.008, p.cloth, bevel=0.01)
     elif p.era == 'present':
-        obox(M, (0, -r * 0.9, s(0.07)), (s(0.2), 0.03, 0.05), 0, p.dark, 0.3)                    # 얼굴 가림 띠
-        for sx in (-1, 1):
-            tube(M, (sx * r * 0.95, 0, s(0.02)), (sx * r * 0.9, -0.03, -s(0.07)), 0.012, 0.01, p.sec, 0.3, 4)   # 턱끈
+        surf(M, [ring('z', (0, 0.0, s(0.10)), s(0.148), s(0.158), 10, -1.0, 1.0, closed=False),
+                 ring('z', (0, 0.0, s(0.13)), s(0.148), s(0.158), 10, -1.0, 1.0, closed=False)],
+             [(0, 0, s(0.10)), (0, 0, s(0.13))], p.dark, closed=False)
     else:
-        obox(M, (0, -r * 0.93, s(0.06)), (s(0.21), 0.03, 0.07), 0, p.glow or p.sec, 0.3)         # 발광 바이저
-        obox(M, (0, r * 0.2, s(0.08)), (0.03, s(0.12), s(0.2)), 0, p.sec, 0.3)                     # 뒤 지느러미
+        surf(M, [ring('z', (0, 0.0, s(0.08)), s(0.15), s(0.16), 10, -1.1, 1.1, closed=False),
+                 ring('z', (0, 0.0, s(0.12)), s(0.15), s(0.16), 10, -1.1, 1.1, closed=False)],
+             [(0, 0, s(0.08)), (0, 0, s(0.12))], p.glow or p.sec, closed=False)
+        plate(M, [(0.0, 0.0), (0.16, 0.0), (0.1, 0.12)], (0, s(0.02), s(0.2)), (0, 1, 0), (0, 0, 1), 0.008, p.sec, bevel=0.01)
     if p.g == 3 and p.glow is not None:
-        tube(M, (0, -r * 0.97, s(0.17)), (0, -r * 0.99, s(0.2)), 0.02, 0.01, p.glow, 0.3, 6)
+        tube(M, (0, -s(0.15), s(0.15)), (0, -s(0.165), s(0.15)), 0.022, 0.012, p.glow, 0.3, 6)
     node('attach')
 
 
 def chest(C, p):
+    """흉갑 — 허리가 좁고 가슴이 부푼 타원 단면 껍데기(목·허리는 열림). 옛 = 허리 겹판 띠, 지금 = 조끼 주머니, 미래 = 동력핵·발광 선."""
     M, s = C.M, p.s
-    obox(M, (0, 0, -s(0.1)), (s(0.38), s(0.22), s(0.44)), 0, p.main, 0.6)                       # 몸통판
-    obox(M, (0, -s(0.115), s(0.04)), (s(0.3), 0.03, s(0.26)), 0, p.sec, 0.3)                    # 가슴 겹판
-    obox(M, (0, 0, -s(0.13)), (s(0.4), s(0.24), 0.06), 0, p.sec, 0.3)                          # 허리띠
+    prof = [(-0.11, 0.150, 0.100, 0.0), (-0.02, 0.155, 0.106, -0.004), (0.08, 0.172, 0.118, -0.012), (0.18, 0.186, 0.120, -0.012),
+            (0.27, 0.180, 0.108, -0.004), (0.33, 0.140, 0.086, 0.0), (0.355, 0.090, 0.066, 0.0)]
+    rows = [ring('z', (0, s(cy), s(z)), s(rx), s(ry), 18) for z, rx, ry, cy in prof]
+    surf(M, rows, [(0, s(cy), s(z)) for z, rx, ry, cy in prof], p.main)
     if p.era == 'past':
-        for sx in (-1, 1):
-            obox(M, (sx * s(0.12), 0, s(0.3)), (0.06, s(0.2), 0.05), 0, p.sec, 0.3)             # 어깨끈
+        for z, rx, ry in ((-0.09, 0.156, 0.106), (-0.045, 0.159, 0.109), (0.0, 0.162, 0.111)):      # 허리 겹판(띠 셋)
+            surf(M, [ring('z', (0, -0.004, s(z)), s(rx), s(ry), 18), ring('z', (0, -0.004, s(z + 0.035)), s(rx), s(ry), 18)],
+                 [(0, 0, s(z)), (0, 0, s(z + 0.035))], p.sec)
+        if p.g >= 2:
+            plate(M, [(-0.09, 0.0), (0.09, 0.0), (0.07, 0.14), (0.0, 0.17), (-0.07, 0.14)], (0, -s(0.132), s(0.08)), (1, 0, 0), (0, 0, 1), 0.006, p.sec, bevel=0.012)
     elif p.era == 'present':
         for sx in (-1, 0, 1):
-            obox(M, (sx * s(0.11), -s(0.14), -s(0.09)), (s(0.09), 0.04, s(0.1)), 0, p.dark, 0.3)  # 탄창 주머니
+            obox(M, (sx * s(0.08), -s(0.115), -s(0.06)), (s(0.065), 0.035, s(0.085)), 0, p.dark, 0.3)  # 탄창 주머니
+        for sx in (-1, 1):
+            surf(M, [ring('x', (sx * s(0.1), 0, s(0.3)), s(0.12), s(0.05), 8, -1.4, 1.4, closed=False),
+                     ring('x', (sx * s(0.1) + 0.04 * sx, 0, s(0.3)), s(0.12), s(0.05), 8, -1.4, 1.4, closed=False)],
+                 [(sx * s(0.1), 0, s(0.28)), (sx * s(0.14), 0, s(0.28))], p.cloth, closed=False)            # 어깨 끈
     else:
-        tube(M, (0, -s(0.118), s(0.1)), (0, -s(0.135), s(0.1)), s(0.05), s(0.04), p.glow or p.sec, 0.3, 8)   # 가슴 동력핵
+        tube(M, (0, -s(0.128), s(0.12)), (0, -s(0.15), s(0.12)), s(0.05), s(0.04), p.glow or p.sec, 0.3, 10)   # 가슴 동력핵
+        for sx in (-1, 1):
+            plate(M, [(0.0, 0.0), (0.012, 0.0), (0.012, 0.2), (0.0, 0.2)], (sx * s(0.1), -s(0.12), -s(0.06)), (1, 0, 0), (0, 0, 1), 0.004, p.glow or p.sec, bevel=0.002)
     if p.g == 3 and p.glow is not None and p.era != 'future':
-        tube(M, (0, -s(0.118), s(0.1)), (0, -s(0.13), s(0.1)), 0.03, 0.02, p.glow, 0.3, 6)
+        tube(M, (0, -s(0.13), s(0.12)), (0, -s(0.145), s(0.12)), 0.03, 0.02, p.glow, 0.3, 8)
     node('attach')
 
 
 def shoulder(C, p):
+    """어깨 덮개 — 어깨를 위에서 덮는 반구(겹판 1~3장). 옛 = 뾰족 장식, 지금 = 덧댄 패드, 미래 = 발광 줄."""
     M, s = C.M, p.s
-    r = s(0.115)
-    for dz, rr in ((0.0, r), (-0.045, r * 1.04)):                                              # 어깨 덮개(겹)
-        tube(M, (s(0.06), 0, 0.035 + dz), (s(0.06), 0, 0.075 + dz), rr * 0.95, rr, p.main, 0.6, 10)
-    tube(M, (s(0.06), 0, 0.075), (s(0.06), 0, 0.125), r, r * 0.5, p.main, 0.6, 10)
+    layers = 1 + min(2, p.g - 1 + (p.era == 'past'))
+    for L in range(layers):
+        prof = [(0.0, 0.07), (0.04, 0.104), (0.09, 0.112), (0.14, 0.098), (0.175, 0.06)]
+        off = L * 0.035
+        rows = [ring('x', (s(x + off), 0, s(0.02 - L * 0.03)), s(r + L * 0.01), s(r * 0.95 + L * 0.01), 12, -1.9, 1.9, closed=False) for x, r in prof]
+        surf(M, rows, [(s(x + off), 0, s(-0.02 - L * 0.03)) for x, r in prof], p.main if L == 0 else p.sec, closed=False)
     if p.era == 'past' and p.g >= 2:
-        tube(M, (s(0.06), 0, 0.125), (s(0.06), 0, 0.2), 0.015, 0.0, p.sec, 0.3, 4)               # 뾰족 장식
+        tube(M, (s(0.08), 0, s(0.12)), (s(0.09), 0, s(0.2)), 0.016, 0.0, p.sec, 0.3, 5)
     if p.era == 'future' and p.glow is not None:
-        obox(M, (s(0.06), 0, 0.01), (s(0.2), 0.02, 0.014), 0, p.glow, 0.3)
+        surf(M, [ring('x', (s(0.09), 0, s(0.02)), s(0.116), s(0.11), 12, -1.9, 1.9, closed=False),
+                 ring('x', (s(0.1), 0, s(0.02)), s(0.116), s(0.11), 12, -1.9, 1.9, closed=False)],
+             [(s(0.09), 0, 0), (s(0.1), 0, 0)], p.glow, closed=False)
     if p.era == 'present':
-        obox(M, (s(0.06), 0, 0.12), (s(0.14), s(0.1), 0.03), 0, p.dark, 0.3)
+        obox(M, (s(0.08), 0, s(0.1)), (s(0.12), s(0.11), 0.025), 0, p.dark, 0.3)
     node('attach')
 
 
 def arm(C, p):
+    """팔뚝 보호대 — 손목 쪽으로 가늘어지고 양끝이 살짝 벌어지는 타원 관."""
     M, s = C.M, p.s
-    tube(M, (0.02, 0, 0), (s(0.24), 0, 0), s(0.048), s(0.04), p.main, 0.6, 8)                    # 팔뚝 보호대
-    tube(M, (s(0.02), 0, 0), (s(0.05), 0, 0), s(0.056), s(0.056), p.sec, 0.3, 8)
-    tube(M, (s(0.2), 0, 0), (s(0.23), 0, 0), s(0.046), s(0.046), p.sec, 0.3, 8)
+    prof = [(0.02, 0.058, 0.052), (0.05, 0.052, 0.047), (0.15, 0.047, 0.043), (0.22, 0.044, 0.040), (0.25, 0.050, 0.046)]
+    rows = [ring('x', (s(x), 0, 0), s(ry), s(rz), 12) for x, ry, rz in prof]
+    surf(M, rows, [(s(x), 0, 0) for x, ry, rz in prof], p.main)
+    for x in (0.03, 0.235):
+        surf(M, [ring('x', (s(x), 0, 0), s(0.055), s(0.05), 12), ring('x', (s(x + 0.018), 0, 0), s(0.055), s(0.05), 12)],
+             [(s(x), 0, 0), (s(x + 0.018), 0, 0)], p.sec)
     if p.glow is not None and p.era != 'present':
-        tube(M, (s(0.11), 0, 0), (s(0.14), 0, 0), s(0.05), s(0.05), p.glow, 0.3, 8, caps=False)
+        surf(M, [ring('x', (s(0.12), 0, 0), s(0.05), s(0.046), 12), ring('x', (s(0.135), 0, 0), s(0.05), s(0.046), 12)],
+             [(s(0.12), 0, 0), (s(0.135), 0, 0)], p.glow)
     if p.g == 3:
-        obox(M, (s(0.12), -s(0.04), s(0.03)), (s(0.1), 0.02, 0.03), 0, p.sec, 0.3)
+        plate(M, [(0.0, 0.0), (0.12, 0.0), (0.1, 0.04), (0.02, 0.04)], (s(0.07), 0, s(0.045)), (1, 0, 0), (0, 1, 0), 0.006, p.sec, bevel=0.008)
     node('attach')
 
 
 def leg(C, p):
+    """정강이 받이 — 앞이 능선진 타원 관(무릎 쪽 넓음) + 무릎 덮개 반구."""
     M, s = C.M, p.s
-    tube(M, (0, 0, 0.03), (0, 0, -s(0.38)), s(0.06), s(0.045), p.main, 0.6, 8)                    # 정강이
-    tube(M, (0, 0, s(0.05)), (0, 0, -s(0.01)), s(0.068), s(0.062), p.sec, 0.3, 8)                 # 무릎
-    obox(M, (0, -s(0.058), -s(0.03)), (s(0.08), 0.03, s(0.07)), 0, p.sec, 0.3)                    # 무릎 덮개
-    tube(M, (0, 0, -s(0.34)), (0, 0, -s(0.38)), s(0.05), s(0.05), p.sec, 0.3, 8)
+    prof = [(0.03, 0.064, 0.066), (-0.04, 0.060, 0.064), (-0.18, 0.055, 0.060), (-0.32, 0.046, 0.050), (-0.38, 0.052, 0.055)]
+    rows = [ring('z', (0, -0.004, s(z)), s(rx), s(ry), 12) for z, rx, ry in prof]
+    surf(M, rows, [(0, 0, s(z)) for z, rx, ry in prof], p.main)
+    kp = [(0.07, 0.03), (0.03, 0.062), (-0.01, 0.07), (-0.05, 0.06), (-0.08, 0.03)]
+    surf(M, [ring('z', (0, -s(0.04), s(z)), s(r), s(r * 0.7), 10, -1.5, 1.5, closed=False) for z, r in kp],
+         [(0, -s(0.03), s(z)) for z, r in kp], p.sec, closed=False)
     if p.glow is not None and p.era != 'present':
-        obox(M, (0, -s(0.05), -s(0.2)), (0.02, 0.014, s(0.14)), 0, p.glow, 0.3)
+        plate(M, [(0.0, 0.0), (0.012, 0.0), (0.012, 0.16), (0.0, 0.16)], (0, -s(0.065), -s(0.28)), (1, 0, 0), (0, 0, 1), 0.004, p.glow, bevel=0.002)
     node('attach')
 
 
 def boot(C, p):
+    """장화 — 발목에서 올라가는 목(타원 관) + 앞으로 둥글게 좁아지는 발등(앞 = -y) + 밑창."""
     M, s = C.M, p.s
-    obox(M, (0, -s(0.07), s(0.02)), (s(0.1), s(0.27), s(0.1)), 0, p.main, 0.6)                    # 발등·앞코(앞 = -y)
-    tube(M, (0, 0, s(0.02)), (0, 0, s(0.2)), s(0.055), s(0.06), p.main, 0.6, 8)                   # 목
-    obox(M, (0, -s(0.07), -s(0.02)), (s(0.11), s(0.28), 0.04), 0, p.dark, 0.3)                     # 밑창
-    tube(M, (0, 0, s(0.18)), (0, 0, s(0.21)), s(0.064), s(0.064), p.sec, 0.3, 8)
+    shaft = [(0.0, 0.062, 0.07), (0.1, 0.058, 0.064), (0.2, 0.064, 0.07), (0.23, 0.068, 0.074)]
+    surf(M, [ring('z', (0, 0.0, s(z)), s(rx), s(ry), 12) for z, rx, ry in shaft], [(0, 0, s(z)) for z, rx, ry in shaft], p.main)
+    toe = [(0.05, 0.058, 0.06), (-0.02, 0.06, 0.055), (-0.1, 0.055, 0.045), (-0.17, 0.045, 0.035), (-0.205, 0.022, 0.02), (-0.215, 0.002, 0.002)]
+    surf(M, [ring('y', (0, s(y), s(0.015)), s(rx), s(rz), 12) for y, rx, rz in toe], [(0, s(y), s(0.015)) for y, rx, rz in toe], p.main)
+    obox(M, (0, -s(0.075), -s(0.04)), (s(0.12), s(0.29), 0.022), 0, p.dark, 0.3)                                   # 밑창
+    surf(M, [ring('z', (0, 0, s(0.2)), s(0.07), s(0.076), 12), ring('z', (0, 0, s(0.225)), s(0.07), s(0.076), 12)],
+         [(0, 0, s(0.2)), (0, 0, s(0.225))], p.sec)
     if p.era == 'future' and p.glow is not None:
-        obox(M, (0, -s(0.2), -s(0.005)), (s(0.1), 0.01, 0.015), 0, p.glow, 0.3)
+        obox(M, (0, -s(0.17), -s(0.02)), (s(0.1), 0.01, 0.015), 0, p.glow, 0.3)
     node('attach')
 
 

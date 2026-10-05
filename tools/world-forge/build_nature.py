@@ -251,7 +251,7 @@ def _grow(M, slot, p, d, ln, r, depth, rnd):
 
 def tree_dead_01(C):
     M = C.M
-    bark = C.s('black_painted_planks', 1.0, '#6e6358')
+    bark = C.s('brown_planks_03', 0.8, '#b0a08c', gain=1.15)                     # 바랜 회갈색(10-06 — 검정 칠 판자는 거의 검게 보였다)
     rnd = random.Random(5)
     tube(M, (0, 0, 0), (0.1, 0, 1.6), 0.3, 0.18, bark, 1.0, 7)
     roots(M, bark, 0.3, 5, 9, z=0.5)

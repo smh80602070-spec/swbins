@@ -1,0 +1,1500 @@
+{
+ "note": "인물 → 2D 시트에 그린 무기(기본값, make_combat_sprite_plan.py). 게임이 바꾸면 이 표를 고쳐 그 인물만 다시 굽는다.",
+ "heroes": {
+  "sg_guanyu": {
+   "weapon": "dagger",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "sg_zhangfei": {
+   "weapon": "fist",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "sg_zhaoyun": {
+   "weapon": "spear",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "sg_zhugeliang": {
+   "weapon": "dagger",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "sg_liubei": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "sg_machao": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "sg_huangzhong": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "sg_caocao": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "sg_simayi": {
+   "weapon": "bow",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "sg_xiahoudun": {
+   "weapon": "axe",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "sg_zhangliao": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "sg_xunyu": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "sg_sunquan": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "sg_zhouyu": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "sg_luxun": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "sg_taishici": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "sg_ganning": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "sg_lubu": {
+   "weapon": "spear",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "sg_diaochan": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "sg_pangtong": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "sg_huatuo": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "sg_menghuo": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "trait"
+  },
+  "kr_yisunsin": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "kr_euljimundeok": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "kr_ganggamchan": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "kr_kimyusin": {
+   "weapon": "dagger",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "kr_gyebaek": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "kr_yeongaesomun": {
+   "weapon": "axe",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "kr_gwanggaeto": {
+   "weapon": "spear",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "kr_sejong": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "kr_jangyeongsil": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "kr_choemuseon": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "kr_daejoyeong": {
+   "weapon": "bow",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "kr_wanggeon": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "kr_jeongyakyong": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "kr_heojun": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "kr_sinsaimdang": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "kr_ahnjunggeun": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "kr_yugwansun": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "kr_kimgu": {
+   "weapon": "spear",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "kr_wonhyo": {
+   "weapon": "dagger",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "kr_kimjeongho": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "kr_gwakjaeu": {
+   "weapon": "fist",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "kr_nongae": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "kr_yihwang": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "kr_yii": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "kr_hwanghui": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "trait"
+  },
+  "kr_jeongmongju": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "jp_himiko": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "jp_taira": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "jp_yoritomo": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "jp_yoshitsune": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "jp_murasaki": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "jp_seishonagon": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "jp_tomoegozen": {
+   "weapon": "dagger",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "jp_nobunaga": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "jp_hideyoshi": {
+   "weapon": "bow",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "jp_ieyasu": {
+   "weapon": "spear",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "jp_shingen": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "jp_kenshin": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "jp_masamune": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "jp_yukimura": {
+   "weapon": "spear",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "jp_musashi": {
+   "weapon": "dagger",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "jp_hanzo": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "jp_mitsukuni": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "jp_naosuke": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "jp_saigo": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "jp_ryoma": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "eu_caesar": {
+   "weapon": "dagger",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "eu_alexander": {
+   "weapon": "spear",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "eu_hannibal": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "eu_charlemagne": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "eu_joan": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "eu_napoleon": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "eu_davinci": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "eu_augustus": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "eu_scipio": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "eu_leonidas": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "eu_aurelius": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "eu_richard": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "eu_william": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "eu_harald": {
+   "weapon": "axe",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "eu_frederick": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "eu_peter": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "eu_elizabeth": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "eu_nelson": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "eu_machiavelli": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "eu_newton": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "eu_michelangelo": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "eu_eleanor": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "trait"
+  },
+  "wd_ashoka": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "wd_akbar": {
+   "weapon": "bow",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "wd_saladin": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "wd_suleiman": {
+   "weapon": "bow",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "wd_ibnsina": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "wd_genghis": {
+   "weapon": "bow",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "wd_khubilai": {
+   "weapon": "spear",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "wd_mansamusa": {
+   "weapon": "spear",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "wd_shaka": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "wd_cleopatra": {
+   "weapon": "dagger",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "wd_pachacuti": {
+   "weapon": "dagger",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "wd_moctezuma": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "wd_ibnbattuta": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "wd_hammurabi": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "wd_attila": {
+   "weapon": "spear",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "dj_doseo": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "dj_gapju": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "dj_gijang": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "dj_haean": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "dj_hopak": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "dj_hwanggeum": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "dj_seohae": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "dj_seoncheok": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "dj_yuri": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "fu_gangma": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "fu_hwanryeong": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "fu_janhon": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "fu_jongwang": {
+   "weapon": "gun",
+   "grade": "rare",
+   "why": "era"
+  },
+  "fu_myeongje": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "fu_noejang": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "fu_seonghon": {
+   "weapon": "gun",
+   "grade": "rare",
+   "why": "era"
+  },
+  "fu_yugwi": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "fu_yuseong": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "jiao_banrok": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "jiao_botran": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "jiao_dinggo": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "jiao_hoangmi": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "jiao_jinja": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "jiao_luyan": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "jiao_madang": {
+   "weapon": "axe",
+   "grade": "common",
+   "why": "trait"
+  },
+  "jiao_muya": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "jiao_riquan": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "jp_asahime": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "jp_hikoyama": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "jp_himetsu": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "jp_kazenari": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "jp_shioji": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "jp_taketsumi": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "jp_tamakiri": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "jp_umihiko": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "jp_wakahiko": {
+   "weapon": "dagger",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "kr2_ajinsa": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "kr2_dokgaru": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "kr2_gokdol": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "kr2_jimasol": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "kr2_mokrihae": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "kr2_pasodan": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "kr2_seolharan": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "kr2_sogaram": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "kr2_umorin": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "kr2_yeonuru": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "kr2_yeoyul": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "ly_byeokjeon": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "ly_heuksang": {
+   "weapon": "fist",
+   "grade": "common",
+   "why": "trait"
+  },
+  "ly_jeonchung": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "ly_jinju": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "ly_juoh": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "ly_nogyong": {
+   "weapon": "fist",
+   "grade": "common",
+   "why": "trait"
+  },
+  "ly_sanga": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "trait"
+  },
+  "ly_sangnim": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "ly_uhwa": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "mb_baekwoon": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "mb_cheolgak": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "mb_gangho": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "mb_hanam": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "mb_hanpung": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "mb_hoja": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "mb_hwangto": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "mb_janggwang": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "trait"
+  },
+  "mb_seonwoo": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "nh_bandoja": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "nh_daemo": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "nh_jinju": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "nh_metong": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "nh_migyeon": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "nh_sasin": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "nh_torak": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "nh_wion": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "nh_yeombun": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "nz_ahyang": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "nz_eunga": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "nz_geumsang": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "nz_heukwol": {
+   "weapon": "axe",
+   "grade": "common",
+   "why": "trait"
+  },
+  "nz_hyeoncheon": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "nz_jeokpyo": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "trait"
+  },
+  "nz_mokro": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "nz_soman": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "nz_unhwa": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_caimao": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_caohong": {
+   "weapon": "fist",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_caoren": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "rf_chengong": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "rf_chengpu": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "rf_chengyu": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_dianwei": {
+   "weapon": "axe",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "rf_fazheng": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "emoji"
+  },
+  "rf_gaolan": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_gaoshun": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "rf_gongsunzan": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_guojia": {
+   "weapon": "bow",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "rf_guosi": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_handang": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_hansui": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_huanggai": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "rf_huangzu": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_jianyong": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_jiaxu": {
+   "weapon": "staff",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "rf_jiling": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_jushou": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "rf_kongrong": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_kuailiang": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_lidian": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_lijue": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_liubiao": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_liuzhang": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_mateng": {
+   "weapon": "axe",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_mizhu": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_pangde": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "rf_shenpei": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_sunce": {
+   "weapon": "sword",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "rf_tianfeng": {
+   "weapon": "fist",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "rf_wenchou": {
+   "weapon": "dagger",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "rf_wenpin": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_wuanguo": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_wuyi": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_xiahouyuan": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "rf_xuchu": {
+   "weapon": "axe",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "rf_yangang": {
+   "weapon": "fist",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_yanghong": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_yangren": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_yangsong": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_yanliang": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "rf_yanyan": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "rf_yuanshao": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "rf_yuanshu": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_yuejin": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "rf_yujin": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_zhanghe": {
+   "weapon": "bow",
+   "grade": "legend",
+   "why": "trait"
+  },
+  "rf_zhangji": {
+   "weapon": "axe",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_zhanglu": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "rf_zhangren": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "rf_zhoutai": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "ru_busaeng": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "ru_doksi": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "ru_geohae": {
+   "weapon": "gun",
+   "grade": "rare",
+   "why": "era"
+  },
+  "ru_gogol": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "ru_mangdok": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "ru_sanaek": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "ru_sayeong": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "ru_seogun": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "ru_wadok": {
+   "weapon": "gun",
+   "grade": "common",
+   "why": "era"
+  },
+  "sl_cheonsan": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "sl_daetaek": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "sl_geumhwa": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "sl_heupu": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "sl_hosang": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "sl_hwachin": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "trait"
+  },
+  "sl_josang": {
+   "weapon": "dagger",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "sl_nakta": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "sl_wangjeong": {
+   "weapon": "bow",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "tb_amseup": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "tb_baekgi": {
+   "weapon": "dagger",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "tb_ganghae": {
+   "weapon": "fist",
+   "grade": "common",
+   "why": "trait"
+  },
+  "tb_gojeon": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "tb_heukju": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "tb_jamhon": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "tb_japgol": {
+   "weapon": "axe",
+   "grade": "common",
+   "why": "trait"
+  },
+  "tb_jongja": {
+   "weapon": "fist",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "tb_saryeong": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "tz_beonwang": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "tz_daehacheon": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "tz_ganda": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "tz_hangha": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "tz_hyanggae": {
+   "weapon": "dagger",
+   "grade": "common",
+   "why": "trait"
+  },
+  "tz_sanri": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "tz_sawi": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "trait"
+  },
+  "tz_seoksang": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "tz_seolsan": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "xb_bonghwa": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "xb_daein": {
+   "weapon": "sword",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "xb_eoryang": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "xb_gaseul": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "xb_gyeon": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "xb_hoja": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "xb_hondo": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "trait"
+  },
+  "xb_honin": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "trait"
+  },
+  "xb_yong": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "xiyu_banwol": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "xiyu_cheonma": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "xiyu_chongryeong": {
+   "weapon": "dagger",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "xiyu_dansu": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "xiyu_gumo": {
+   "weapon": "spear",
+   "grade": "rare",
+   "why": "trait"
+  },
+  "xiyu_gyoha": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "xiyu_jeongcheon": {
+   "weapon": "staff",
+   "grade": "common",
+   "why": "emoji"
+  },
+  "xiyu_mokjil": {
+   "weapon": "sword",
+   "grade": "common",
+   "why": "trait"
+  },
+  "xiyu_ochi": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  },
+  "xiyu_sarim": {
+   "weapon": "staff",
+   "grade": "rare",
+   "why": "emoji"
+  },
+  "xiyu_talban": {
+   "weapon": "spear",
+   "grade": "common",
+   "why": "trait"
+  },
+  "xiyu_yeoje": {
+   "weapon": "bow",
+   "grade": "common",
+   "why": "trait"
+  }
+ }
+}

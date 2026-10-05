@@ -24,6 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_prop as BP  # noqa: E402
 import wf_common as W  # noqa: E402
 from build_prop import tube, obox, A, arg  # noqa: E402
+from wf_shapes import loft, plate, ball  # noqa: E402
 
 BP.TRIS_MAX = 1500
 BP.GENERATOR = 'tools/world-forge/build_weapon.py'
@@ -67,66 +68,6 @@ def gem_at(M, t, pos, r=0.025):
     x, y, z = pos
     tube(M, (x, y, z - r), (x, y, z + r), r, r * 0.4, t.gem, 0.3, 6)
     tube(M, (x, y, z - r * 1.6), (x, y, z - r), r * 0.4, r, t.gem, 0.3, 6)
-
-
-def loft(M, secs, slot, tile=0.4):
-    """날 — 높이(z)마다 단면 (z, cx, w, t) 를 이어 붙인다. 단면 = 날(±x 끝이 날카로움)·등(±y) 네 점의 마름모.
-    cx = 단면 가운데 x(휘는 날), w = 반폭, t = 반두께. 마지막 단면 w=0 이면 끝이 한 점(날끝). 바깥에서 보아 반시계."""
-    rings = []
-    for z, cx, w, t in secs:
-        rings.append([Vector((cx + w, 0, z)), Vector((cx, t, z)), Vector((cx - w, 0, z)), Vector((cx, -t, z))])
-    for i in range(len(rings) - 1):
-        a, b = rings[i], rings[i + 1]
-        z0, z1 = secs[i][0] / tile, secs[i + 1][0] / tile
-        tip = secs[i + 1][2] < 1e-5
-        for k in range(4):
-            k2 = (k + 1) % 4
-            u0, u1 = k * 0.05, (k + 1) * 0.05
-            if tip:
-                M.face([a[k], a[k2], b[0]], [(u0, z0), (u1, z0), ((u0 + u1) / 2, z1)], slot)
-            else:
-                M.quad(a[k], a[k2], b[k2], b[k], slot, (u0, z0), (u1, z0), (u1, z1), (u0, z1))
-        if tip:
-            break
-    r0 = rings[0]
-    M.face([r0[3], r0[2], r0[1], r0[0]], [(0, 0), (0.05, 0), (0.05, 0.05), (0, 0.05)], slot)       # 밑면(아래에서 보아 반시계)
-
-
-def plate(M, outline, o, U, V, tc, slot, bevel=0.02, te=0.003, tile=0.4):
-    """판 — (U, V) 평면의 윤곽(반시계)을 가운데 두께 ±tc, 가장자리 ±te 로 돌출(가장자리로 갈수록 얇아지는 날·판).
-    bevel = 가장자리에서 안쪽 평평한 면까지 거리(m). 오목한 윤곽(초승달 도끼날)도 꼭짓점별 안쪽 이동이라 괜찮다."""
-    o, U, V = Vector(o), Vector(U).normalized(), Vector(V).normalized()
-    N = U.cross(V).normalized()
-    if sum(outline[i - 1][0] * outline[i][1] - outline[i][0] * outline[i - 1][1] for i in range(len(outline))) < 0:
-        outline = list(reversed(outline))                                                       # 시계 방향으로 줘도 반시계로
-    n = len(outline)
-    P = [Vector(p) for p in outline]
-    Q = []
-    for i in range(n):
-        p0, p1, p2 = P[i - 1], P[i], P[(i + 1) % n]
-        e0, e1 = (p1 - p0).normalized(), (p2 - p1).normalized()
-        n0, n1 = Vector((-e0.y, e0.x)), Vector((-e1.y, e1.x))        # 왼쪽 = 안쪽(반시계)
-        m = (n0 + n1)
-        m = m.normalized() if m.length > 1e-6 else n0
-        c = max(0.35, m.dot(n0))
-        Q.append(p1 + m * (bevel / c))
-    w = lambda p, h: o + U * p.x + V * p.y + N * h
-    uv = lambda p: (p.x / tile, p.y / tile)
-    M.face([w(q, tc) for q in Q], [uv(q) for q in Q], slot)                                     # 윗면
-    M.face([w(q, -tc) for q in reversed(Q)], [uv(q) for q in reversed(Q)], slot)               # 아랫면
-    for i in range(n):
-        j = (i + 1) % n
-        M.quad(w(P[i], te), w(P[j], te), w(Q[j], tc), w(Q[i], tc), slot, uv(P[i]), uv(P[j]), uv(Q[j]), uv(Q[i]))
-        M.quad(w(Q[i], -tc), w(Q[j], -tc), w(P[j], -te), w(P[i], -te), slot, uv(Q[i]), uv(Q[j]), uv(P[j]), uv(P[i]))
-        M.quad(w(P[i], -te), w(P[j], -te), w(P[j], te), w(P[i], te), slot, uv(P[i]), uv(P[j]), (uv(P[j])[0], uv(P[j])[1] + 0.02), (uv(P[i])[0], uv(P[i])[1] + 0.02))
-
-
-def ball(M, c, r, slot, n=6):
-    """둥근 덩이(손잡이 끝·보석 받침) — 원뿔대 세 칸으로 구에 가깝게."""
-    x, y, z = c
-    tube(M, (x, y, z - r), (x, y, z - r * 0.5), r * 0.35, r * 0.87, slot, 0.3, n)
-    tube(M, (x, y, z - r * 0.5), (x, y, z + r * 0.5), r * 0.87, r * 0.87, slot, 0.3, n, caps=False)
-    tube(M, (x, y, z + r * 0.5), (x, y, z + r), r * 0.87, r * 0.35, slot, 0.3, n)
 
 
 def grip_wrap(M, t, z0, z1, r, rings):

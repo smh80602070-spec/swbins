@@ -69,19 +69,28 @@ def main():
     print(f'{len(ents)}벌 × 동작 {len(clips)} × 방향 {len(dirs)} × {frames}프레임 · {px}px')
     if dry:
         return
-    os.makedirs(OUT, exist_ok=True)
+    out_root = os.path.join(ROOT, plan['out']) if plan.get('out') else OUT   # 시범·새 형식은 다른 폴더로(옛 시트를 안 건드림)
+    os.makedirs(out_root, exist_ok=True)
     total = 0
     for e in ents:
-        odir = os.path.join(OUT, e['id'])
-        todo = [c for c in clips if not os.path.exists(os.path.join(odir, c + '.webp'))]
+        odir = os.path.join(out_root, e['id'])
+        epx, eortho, ecz = e.get('px', px), e.get('ortho', plan.get('ortho', 2.5)), e.get('cam_z', plan.get('cam_z', 0.95))   # 긴 무기 인물은 칸만 키운다(px/m 같게)
+        cmap = e.get('clipmap') or {c: c for c in clips}           # 역할(시트 파일 이름) → _anims.glb 안 동작 이름(K-0029 무기별)
+        roles = list(cmap)
+        todo = [c for c in roles if not os.path.exists(os.path.join(odir, c + '.webp'))]
         if not todo:
             print('건너뜀(있음):', e['id'])
             continue
         body = os.path.abspath(os.path.join(ROOT, plan['bodies'][e['body']]))
         anims = ensure_anims(body)
         tmp = os.path.join(odir, '_frames')
-        env = dict(os.environ, SPRITE_MODE='1', CLIP=','.join(todo), NFR=str(frames), NDIR='4', DIR_LIST=','.join(map(str, dirs)),
-                   SPRITE_PX=str(px), ORTHO=str(plan.get('ortho', 2.5)), CAM_Z=str(plan.get('cam_z', 0.95)), ANIM_GLB=anims, VIEW_DEG='180')
+        acts = list(dict.fromkeys(cmap[c] for c in todo))
+        env = dict(os.environ, SPRITE_MODE='1', CLIP=','.join(acts), NFR=str(frames), NDIR=str(plan.get('ndir', 4)), DIR_LIST=','.join(map(str, dirs)),
+                   SPRITE_PX=str(epx), ORTHO=str(eortho), CAM_Z=str(ecz), ANIM_GLB=anims, VIEW_DEG='180')
+        if e.get('weapon'):
+            env['WEAPON'] = os.path.abspath(os.path.join(ROOT, e['weapon']))
+            if e.get('two_hand_clips'):
+                env['TWO_HAND_CLIPS'] = ','.join(e['two_hand_clips'])
         os.makedirs(odir, exist_ok=True)
         t0 = time.time()
         rc = run([BLENDER, '-b', '--factory-startup', '-P', os.path.join(HERE, 'gear_sprites.py'), '--', body, tmp, e['kind']],
@@ -91,12 +100,14 @@ def main():
             continue
         sizes = {}
         for c in todo:
-            folder = os.path.join(tmp, c) if len(todo) > 1 else tmp
-            sizes[c] = sheet_from_frames(folder, dirs, frames, os.path.join(odir, c + '.webp'), px)
-        json.dump({'id': e['id'], 'body': e['body'], 'kind': e['kind'], 'px': px, 'frames': frames, 'dirs': dirs, 'clips': clips,
-                   'ortho_m': plan.get('ortho', 2.5), 'cam_z': plan.get('cam_z', 0.95),
-                   'license': 'CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vroid, 코드 gear_sprites.py'},
-                  open(os.path.join(odir, 'manifest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+            folder = os.path.join(tmp, cmap[c]) if len(acts) > 1 else tmp
+            sizes[c] = sheet_from_frames(folder, dirs, frames, os.path.join(odir, c + '.webp'), epx)
+        man = {'id': e['id'], 'body': e['body'], 'kind': e['kind'], 'px': epx, 'frames': frames, 'dirs': dirs, 'clips': roles,
+                   'ortho_m': eortho, 'cam_z': ecz, 'side_faces': 'right', 'px_per_m': round(epx / eortho, 2),
+                   'license': 'CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vroid, 코드 gear_sprites.py'}
+        if plan.get('ndir', 4) != 4 or e.get('weapon'):                 # K-0029 8방향·무기별 시트 — 웹(W-0073)이 읽는 칸
+            man.update({'ndir': plan.get('ndir', 4), 'mirror': True, 'weapon': e.get('weapon_kind'), 'clipmap': cmap})
+        json.dump(man, open(os.path.join(odir, 'manifest.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         import shutil
         shutil.rmtree(tmp, ignore_errors=True)
         kb = sum(sizes.values()) / 1024

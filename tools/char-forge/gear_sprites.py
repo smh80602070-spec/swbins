@@ -589,6 +589,10 @@ if os.environ.get('SPRITE_MODE'):
     for o in [o for o in bpy.data.objects if o.name not in objs_before]:
         bpy.data.objects.remove(o)
     arm.animation_data_create()
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import weapon_attach                                       # WEAPON=<무기.glb> 이면 손에 쥐고 찍는다(K-0029 무기별 2D 시트)
+    wobjs = weapon_attach.from_env(arm) or []
+    two_clips = [x for x in os.environ.get('TWO_HAND_CLIPS', '').split(',') if x]   # 두 손 겨누기는 이 동작에서만(걷기·피격에선 앞손이 흔들려 무기가 휘청인다)
     sc.render.film_transparent = True
     sc.render.resolution_x = sc.render.resolution_y = px
     import json as _json
@@ -596,6 +600,9 @@ if os.environ.get('SPRITE_MODE'):
     meshes = [o for o in bpy.data.objects if o.type == 'MESH']
     for cname in clips:
         act = acts[cname]
+        for o in wobjs[:1]:
+            for c in o.constraints:
+                c.influence = 1.0 if (not two_clips or cname in two_clips) else 0.0
         arm.animation_data.action = act
         if hasattr(arm.animation_data, 'action_slot') and act.slots:
             arm.animation_data.action_slot = act.slots[0]
@@ -619,7 +626,7 @@ if os.environ.get('SPRITE_MODE'):
                     'anchor_feet_y_px': px * (0.5 + cam_z / size_m)},
                    open(os.path.join(odir, 'meta.json'), 'w'), indent=1)
         for d in dir_list:
-            piv.rotation_euler.z = base_deg + 2 * math.pi * d / ndir
+            piv.rotation_euler.z = base_deg - 2 * math.pi * d / ndir   # 10-06: − 로 돌려 옆(d=ndir/4)이 오른쪽을 본다 — 웹 mode2d 는 옆 = 오른쪽, 왼쪽은 뒤집음
             for f in range(nfr):
                 sc.frame_set(int(round(f0 + (f1 - f0) * f / nfr)))
                 sc.render.filepath = os.path.join(odir, f'd{d}_f{f:02d}.png')

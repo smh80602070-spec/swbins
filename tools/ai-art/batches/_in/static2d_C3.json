@@ -1,0 +1,28 @@
+{
+ "name": "static2d_C3",
+ "spec": "sprite",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 6,
+ "note": "K-0068 C 결함 재시도(10-06 눈 판정): 고목 검은 실루엣(주제 dark·3D 검정) → 3D 회갈색·주제 고침, 자작나무 잎 한 장(주제에 B 꼬리말 섞임) → 주제 고침·씨앗 바꿈.",
+ "items": [
+  {
+   "id": "tree_dead_01",
+   "subject": "dead bare tree, gnarled gray-brown branches, weathered pale bark, no leaves",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:/swbins/tools/ai-art/_out/static2d_init/tree_dead_01.png",
+   "denoise": 0.65,
+   "seed": 86117553
+  },
+  {
+   "id": "tree_birch_01",
+   "subject": "white birch tree, slender white trunk with black marks, round light green leafy crown",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:/swbins/tools/ai-art/_out/static2d_init/tree_birch_01.png",
+   "denoise": 0.6,
+   "seed": 2268537906
+  }
+ ]
+}

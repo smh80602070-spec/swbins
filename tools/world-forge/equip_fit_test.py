@@ -53,12 +53,17 @@ for pid in pieces:
                 o.location = pos
                 o.scale = (scale * sx, scale, scale)
 
-for eng in ('BLENDER_EEVEE_NEXT', 'BLENDER_EEVEE'):
-    try:
-        sc.render.engine = eng
-        break
-    except TypeError:
-        pass
+if os.environ.get('WF_CPU'):                     # WF_CPU=1 → Cycles CPU(SD 등 GPU 작업과 겹칠 때)
+    sc.render.engine = 'CYCLES'
+    sc.cycles.device = 'CPU'
+    sc.cycles.samples = 16
+else:
+    for eng in ('BLENDER_EEVEE_NEXT', 'BLENDER_EEVEE'):
+        try:
+            sc.render.engine = eng
+            break
+        except TypeError:
+            pass
 W, H = 420, 560
 sc.render.resolution_x, sc.render.resolution_y = W, H
 wd = bpy.data.worlds.new('w')

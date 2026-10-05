@@ -53,50 +53,9 @@ if arm.animation_data is None:
     arm.animation_data_create()
 
 
-def attach_weapon(path, side='R'):
-    """WEAPON=<무기.glb>(world-forge build_weapon, 원점 = grip·날 축 +z·날 면 +y) 를 손뼈에 붙인다(K-0029 점검용).
-    주먹을 쥐면 날은 엄지 쪽으로 나온다: z = 엄지 방향에서 손가락 방향을 뺀 것, x = 손가락 × z(손바닥 쪽 = 날 끝이 향하는 쪽)."""
-    from mathutils import Matrix
-    hb, mb, tb = (arm.data.bones.get(f'J_Bip_{side}_{n}') for n in ('Hand', 'Middle1', 'Thumb1'))
-    if not (hb and mb and tb):
-        print('NOHAND', side)
-        return
-    mw = arm.matrix_world
-    h, m, t = mw @ hb.head_local, mw @ mb.head_local, mw @ tb.head_local
-    f = (m - h).normalized()
-    z = (t - h) - f * (t - h).dot(f)
-    z = z.normalized()
-    x = f.cross(z).normalized()
-    y = z.cross(x)
-    grip = h + (m - h) * 0.75 + (t - h).dot(z) * z * 0.3
-    M = Matrix((x, y, z)).transposed().to_4x4()
-    M.translation = grip
-    before_w = set(bpy.data.objects)
-    bpy.ops.import_scene.gltf(filepath=os.path.abspath(path))
-    new = [o for o in bpy.data.objects if o not in before_w]
-    root = bpy.data.objects.new('wp_root', None)
-    sc.collection.objects.link(root)
-    for o in new:
-        if o.parent is None:
-            o.parent = root
-    arm.data.pose_position = 'REST'
-    bpy.context.view_layer.update()
-    root.parent = arm
-    root.parent_type = 'BONE'
-    root.parent_bone = hb.name
-    bpy.context.view_layer.update()
-    root.matrix_world = M
-    bpy.context.view_layer.update()
-    if os.environ.get('TWO_HAND'):              # 두 손 무기(창·도끼·지팡이): 축(+z)을 매 프레임 반대 손 쪽으로 겨눈다
-        other = arm.data.bones.get('J_Bip_%s_Hand' % ('L' if side == 'R' else 'R'))
-        c = root.constraints.new('DAMPED_TRACK')
-        c.target, c.subtarget, c.track_axis = arm, other.name, 'TRACK_Z'
-    arm.data.pose_position = 'POSE'
-    print('WEAPON', os.path.basename(path), side)
-
-
-if os.environ.get('WEAPON'):
-    attach_weapon(os.environ['WEAPON'], os.environ.get('WEAPON_HAND', 'R'))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import weapon_attach  # noqa: E402  WEAPON=<무기.glb>(종류로 손·두 손 기본값) · WEAPON_HAND · TWO_HAND
+weapon_attach.from_env(arm)
 
 
 def place(view):
