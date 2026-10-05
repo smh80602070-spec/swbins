@@ -29,7 +29,7 @@
 | 8 | 마을 draw 262 · 삼각형 27.7만(예산 draw 260 에 2 초과) | `render_budget` | 체감 매끄러움 |
 | 2 | 손잡이 환경변수(SAGA_MOVE·ENEMY·CAM_PUNCH) 배선 | `probe_combat_feel` | 손맛 자체(재미 판정) |
 
-알려진 기존 실패(이번 변경과 무관): `probe_all` 의 combat(kits)·perf·qmap·wq·anim_cc0.
+알려진 기존 실패(이번 변경과 무관): `probe_all` 의 perf·qmap·wq·anim_cc0 (combat(kits)는 10-05 점검 쪽 오류를 고쳐 풀림).
 
 ## Claude 가 직접 눈으로 본 결과 (2026-10-05, 창 모드 촬영 — 사용자 ○ 아님, 판정 참고용)
 촬영 도구: `probe_shots`(마을 컷 10장) · `probe_traversal` 에 `SAGA_TRAVERSAL_SHOTS=<절대 경로>` 를 주면 동작 점검 순간마다 글자판을 숨기고 PNG 로 남긴다(창 모드로 돌릴 때만). 1280×720 한 장씩 보고 적었다.

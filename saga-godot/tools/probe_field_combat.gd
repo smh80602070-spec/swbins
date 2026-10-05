@@ -222,15 +222,17 @@ func _physics_process(_delta: float) -> void:
 				(pack[i] as Node3D).global_position = stand + Vector3(2.0 * (i - 1), 0.0, -2.5)
 			_fc.set("active", 2) # 뇌
 			_fc.set("_energy", {})
+			## 낙뢰는 8m 안 가장 가까운 셋을 친다 — 쫓아온 다른 적이 더 가까울 수 있으니 8m 안 적 전부의 체력으로 센다.
+			var near := _alive_near(stand, 8.0)
 			var hp_before: Array = []
-			for e in pack:
+			for e in near:
 				hp_before.append(float(e.get("hp")))
 			_fc.call("skill")
 			var hit := 0
-			for i in pack.size():
-				if float(pack[i].get("hp")) < hp_before[i] or pack[i].call("is_dead"):
+			for i in near.size():
+				if float(near[i].get("hp")) < hp_before[i] or near[i].call("is_dead"):
 					hit += 1
-			var want := mini(3, pack.size())
+			var want := mini(3, near.size())
 			var e_now: float = _fc.call("energy_of", _hero_of("thunder"))
 			var e_off: float = _fc.call("energy_of", "self")
 			_check("kits", healed and hit == want and e_now > 0.0 and is_equal_approx(e_off, e_now * 0.6),
