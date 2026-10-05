@@ -1,0 +1,785 @@
+{
+  "generated\\buildings\\house_camp_a.glb": {
+    "size": 21096,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:04.070Z"
+  },
+  "generated\\buildings\\house_camp_b.glb": {
+    "size": 20880,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:04.575Z"
+  },
+  "generated\\buildings\\house_camp_c.glb": {
+    "size": 21076,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:05.057Z"
+  },
+  "generated\\buildings\\house_stone_museum.glb": {
+    "size": 13480,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:05.521Z"
+  },
+  "generated\\buildings\\house_wood_cottage.glb": {
+    "size": 14784,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:05.987Z"
+  },
+  "generated\\buildings\\house_wood_home.glb": {
+    "size": 16068,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:06.448Z"
+  },
+  "generated\\people\\anime\\npc_angler.glb": {
+    "size": 2272660,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:06.450Z"
+  },
+  "generated\\people\\anime\\npc_courier.glb": {
+    "size": 1760880,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:06.451Z"
+  },
+  "generated\\people\\anime\\npc_explorer.glb": {
+    "size": 2580296,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:06.452Z"
+  },
+  "generated\\people\\anime\\npc_herbalist.glb": {
+    "size": 1927164,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:06.453Z"
+  },
+  "generated\\people\\anime\\npc_keeper.glb": {
+    "size": 1931808,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:06.454Z"
+  },
+  "generated\\people\\anime\\npc_merchant.glb": {
+    "size": 1763948,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:06.455Z"
+  },
+  "generated\\people\\anime\\npc_wanderer.glb": {
+    "size": 2275048,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:06.457Z"
+  },
+  "models\\animals\\Bird.glb": {
+    "size": 78744,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:06.967Z"
+  },
+  "models\\animals\\Deer.glb": {
+    "size": 236584,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:07.606Z"
+  },
+  "models\\animals\\Duck.glb": {
+    "size": 8892,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:08.048Z"
+  },
+  "models\\animals\\Fox.glb": {
+    "size": 238140,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:08.585Z"
+  },
+  "models\\animals\\Frog.glb": {
+    "size": 140172,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:09.107Z"
+  },
+  "models\\animals\\Rabbit.glb": {
+    "size": 112136,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:09.570Z"
+  },
+  "models\\animals\\Snake.glb": {
+    "size": 65416,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:10.053Z"
+  },
+  "models\\animals\\Squirrel.glb": {
+    "size": 85920,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:10.506Z"
+  },
+  "models\\animals\\Wolf.glb": {
+    "size": 241324,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:11.050Z"
+  },
+  "models\\buildings\\kenney_parts\\chimney.glb": {
+    "size": 4656,
+    "result": "kept-original",
+    "at": "2026-10-05T00:59:11.561Z"
+  },
+  "models\\buildings\\kenney_parts\\roof-flat.glb": {
+    "size": 3448,
+    "result": "kept-original",
+    "at": "2026-10-05T00:59:12.017Z"
+  },
+  "models\\buildings\\kenney_parts\\roof-gable-accent.glb": {
+    "size": 8276,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:12.509Z"
+  },
+  "models\\buildings\\kenney_parts\\roof-gable-stem.glb": {
+    "size": 8300,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:12.950Z"
+  },
+  "models\\buildings\\kenney_parts\\roof-gable-stone.glb": {
+    "size": 8084,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:13.417Z"
+  },
+  "models\\buildings\\kenney_parts\\roof-gable.glb": {
+    "size": 7632,
+    "result": "kept-original",
+    "at": "2026-10-05T00:59:13.889Z"
+  },
+  "models\\buildings\\kenney_parts\\roof-high-gable.glb": {
+    "size": 7456,
+    "result": "kept-original",
+    "at": "2026-10-05T00:59:14.379Z"
+  },
+  "models\\buildings\\kenney_parts\\wall-door.glb": {
+    "size": 18624,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:14.862Z"
+  },
+  "models\\buildings\\kenney_parts\\wall-window-stone.glb": {
+    "size": 12484,
+    "result": "kept-original",
+    "at": "2026-10-05T00:59:15.354Z"
+  },
+  "models\\buildings\\kenney_parts\\wall-wood-door.glb": {
+    "size": 18648,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:15.852Z"
+  },
+  "models\\buildings\\kenney_parts\\wall-wood-window-round.glb": {
+    "size": 16432,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:16.332Z"
+  },
+  "models\\buildings\\kenney_parts\\wall-wood.glb": {
+    "size": 4808,
+    "result": "kept-original",
+    "at": "2026-10-05T00:59:16.801Z"
+  },
+  "models\\buildings\\kenney_parts\\wall.glb": {
+    "size": 4792,
+    "result": "kept-original",
+    "at": "2026-10-05T00:59:17.265Z"
+  },
+  "models\\buildings\\realistic\\tower_ruin.glb": {
+    "size": 262332,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:17.883Z"
+  },
+  "models\\nature\\BirchTree_1.glb": {
+    "size": 29408,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:18.369Z"
+  },
+  "models\\nature\\BirchTree_2.glb": {
+    "size": 26308,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:18.854Z"
+  },
+  "models\\nature\\BirchTree_Autumn_1.glb": {
+    "size": 29420,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:19.348Z"
+  },
+  "models\\nature\\BirchTree_Autumn_2.glb": {
+    "size": 26308,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:19.856Z"
+  },
+  "models\\nature\\BirchTree_Snow_1.glb": {
+    "size": 32192,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:20.362Z"
+  },
+  "models\\nature\\BirchTree_Snow_2.glb": {
+    "size": 28168,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:20.869Z"
+  },
+  "models\\nature\\BushBerries_1.glb": {
+    "size": 15844,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:21.358Z"
+  },
+  "models\\nature\\Bush_1.glb": {
+    "size": 7676,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:21.832Z"
+  },
+  "models\\nature\\Bush_2.glb": {
+    "size": 6224,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:22.308Z"
+  },
+  "models\\nature\\CommonTree_1.glb": {
+    "size": 41568,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:22.813Z"
+  },
+  "models\\nature\\CommonTree_2.glb": {
+    "size": 42780,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:23.291Z"
+  },
+  "models\\nature\\CommonTree_3.glb": {
+    "size": 25980,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:23.772Z"
+  },
+  "models\\nature\\CommonTree_Autumn_1.glb": {
+    "size": 41584,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:24.317Z"
+  },
+  "models\\nature\\CommonTree_Autumn_2.glb": {
+    "size": 44000,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:24.814Z"
+  },
+  "models\\nature\\CommonTree_Autumn_3.glb": {
+    "size": 25996,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:25.282Z"
+  },
+  "models\\nature\\CommonTree_Dead_1.glb": {
+    "size": 33016,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:25.747Z"
+  },
+  "models\\nature\\CommonTree_Snow_1.glb": {
+    "size": 43956,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:26.226Z"
+  },
+  "models\\nature\\CommonTree_Snow_2.glb": {
+    "size": 45428,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:26.713Z"
+  },
+  "models\\nature\\CommonTree_Snow_3.glb": {
+    "size": 28576,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:27.296Z"
+  },
+  "models\\nature\\Flowers.glb": {
+    "size": 10892,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:28.194Z"
+  },
+  "models\\nature\\Grass_2.glb": {
+    "size": 5016,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:28.660Z"
+  },
+  "models\\nature\\Grass_Short.glb": {
+    "size": 5028,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:29.118Z"
+  },
+  "models\\nature\\Mountain_1.glb": {
+    "size": 7720,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:29.568Z"
+  },
+  "models\\nature\\Mountain_2.glb": {
+    "size": 16848,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:30.030Z"
+  },
+  "models\\nature\\PineTree_1.glb": {
+    "size": 30512,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:30.494Z"
+  },
+  "models\\nature\\PineTree_2.glb": {
+    "size": 26992,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:30.944Z"
+  },
+  "models\\nature\\PineTree_Autumn_1.glb": {
+    "size": 31748,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:31.405Z"
+  },
+  "models\\nature\\PineTree_Autumn_2.glb": {
+    "size": 28236,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:31.865Z"
+  },
+  "models\\nature\\PineTree_Snow_1.glb": {
+    "size": 31760,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:32.322Z"
+  },
+  "models\\nature\\PineTree_Snow_2.glb": {
+    "size": 28244,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:32.789Z"
+  },
+  "models\\nature\\Plant_1.glb": {
+    "size": 6900,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:33.237Z"
+  },
+  "models\\nature\\Plant_2.glb": {
+    "size": 7056,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:33.768Z"
+  },
+  "models\\nature\\realistic\\MossRock_a.glb": {
+    "size": 318532,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:34.266Z"
+  },
+  "models\\nature\\realistic\\MossRock_b.glb": {
+    "size": 288504,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:34.731Z"
+  },
+  "models\\nature\\realistic\\MossRock_c.glb": {
+    "size": 345212,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:35.240Z"
+  },
+  "models\\nature\\realistic\\PineSapling.glb": {
+    "size": 1355136,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:35.873Z"
+  },
+  "models\\nature\\realistic\\Rock_07.glb": {
+    "size": 414132,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:36.392Z"
+  },
+  "models\\nature\\realistic\\Shrub_04.glb": {
+    "size": 420996,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:36.914Z"
+  },
+  "models\\nature\\realistic\\TreeDead.glb": {
+    "size": 402312,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:37.421Z"
+  },
+  "models\\nature\\Rock_1.glb": {
+    "size": 3272,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:37.870Z"
+  },
+  "models\\nature\\Rock_2.glb": {
+    "size": 3460,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:38.302Z"
+  },
+  "models\\nature\\Rock_3.glb": {
+    "size": 3376,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:38.737Z"
+  },
+  "models\\nature\\Rock_Moss_1.glb": {
+    "size": 4500,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:39.170Z"
+  },
+  "models\\nature\\TreeStump.glb": {
+    "size": 8024,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:39.612Z"
+  },
+  "models\\nature\\TreeStump_Moss.glb": {
+    "size": 6828,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:40.046Z"
+  },
+  "models\\nature\\WoodLog.glb": {
+    "size": 11192,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:40.490Z"
+  },
+  "models\\nature\\WoodLog_Moss.glb": {
+    "size": 15692,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:40.931Z"
+  },
+  "models\\people\\anime\\avatar_custom_01.glb": {
+    "size": 3588252,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:40.933Z"
+  },
+  "models\\people\\anime\\avatar_sample_a.glb": {
+    "size": 2249408,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:40.934Z"
+  },
+  "models\\people\\anime\\avatar_sample_b.glb": {
+    "size": 2641640,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:40.935Z"
+  },
+  "models\\people\\anime\\avatar_sample_c.glb": {
+    "size": 2110840,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:59:40.935Z"
+  },
+  "models\\people\\mpfb_real\\female.glb": {
+    "size": 2795864,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:42.332Z"
+  },
+  "models\\people\\mpfb_real\\male.glb": {
+    "size": 2775364,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:43.236Z"
+  },
+  "models\\people\\mpfb_real\\v10.glb": {
+    "size": 2973484,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:44.196Z"
+  },
+  "models\\people\\mpfb_real\\v11.glb": {
+    "size": 2557652,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:45.099Z"
+  },
+  "models\\people\\mpfb_real\\v12.glb": {
+    "size": 2637464,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:46.004Z"
+  },
+  "models\\people\\mpfb_real\\v13.glb": {
+    "size": 2581096,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:46.749Z"
+  },
+  "models\\people\\mpfb_real\\v14.glb": {
+    "size": 2640584,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:47.586Z"
+  },
+  "models\\people\\mpfb_real\\v15.glb": {
+    "size": 2743924,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:48.490Z"
+  },
+  "models\\people\\mpfb_real\\v16.glb": {
+    "size": 2636172,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:49.488Z"
+  },
+  "models\\people\\mpfb_real\\v17.glb": {
+    "size": 2448440,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:50.413Z"
+  },
+  "models\\people\\mpfb_real\\v18.glb": {
+    "size": 2806860,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:51.398Z"
+  },
+  "models\\people\\mpfb_real\\v19.glb": {
+    "size": 2867552,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:52.378Z"
+  },
+  "models\\people\\mpfb_real\\v20.glb": {
+    "size": 2720652,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:53.218Z"
+  },
+  "models\\people\\mpfb_real\\v21.glb": {
+    "size": 2868236,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:54.152Z"
+  },
+  "models\\people\\mpfb_real\\v22.glb": {
+    "size": 2360360,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:55.032Z"
+  },
+  "models\\people\\mpfb_real\\v23.glb": {
+    "size": 2869592,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:55.943Z"
+  },
+  "models\\people\\mpfb_real\\v3.glb": {
+    "size": 2841812,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:57.045Z"
+  },
+  "models\\people\\mpfb_real\\v7.glb": {
+    "size": 2684316,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:58.186Z"
+  },
+  "models\\people\\mpfb_real\\v8.glb": {
+    "size": 2586872,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:59.024Z"
+  },
+  "models\\people\\mpfb_real\\v9.glb": {
+    "size": 2946384,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:59:59.939Z"
+  },
+  "models\\people\\quaternius_rpg\\Cleric.glb": {
+    "size": 1295864,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:00.639Z"
+  },
+  "models\\people\\quaternius_rpg\\Monk.glb": {
+    "size": 1041508,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:01.330Z"
+  },
+  "models\\people\\quaternius_rpg\\Ranger.glb": {
+    "size": 1144852,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:02.053Z"
+  },
+  "models\\people\\quaternius_rpg\\Rogue.glb": {
+    "size": 1082684,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:02.762Z"
+  },
+  "models\\people\\quaternius_rpg\\Warrior.glb": {
+    "size": 1193296,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:03.582Z"
+  },
+  "models\\people\\quaternius_rpg\\Wizard.glb": {
+    "size": 1278804,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:04.274Z"
+  },
+  "models\\props\\Arch.glb": {
+    "size": 61352,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:04.762Z"
+  },
+  "models\\props\\Bench_1.glb": {
+    "size": 7160,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:05.256Z"
+  },
+  "models\\props\\Bonfire_Lit.glb": {
+    "size": 19704,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:05.762Z"
+  },
+  "models\\props\\Bridge.glb": {
+    "size": 8480,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:06.664Z"
+  },
+  "models\\props\\Cart.glb": {
+    "size": 30972,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:07.276Z"
+  },
+  "models\\props\\Fence.glb": {
+    "size": 4836,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:07.743Z"
+  },
+  "models\\props\\Gazebo.glb": {
+    "size": 13236,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:08.219Z"
+  },
+  "models\\props\\Mushroom_1.glb": {
+    "size": 5756,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:08.736Z"
+  },
+  "models\\props\\Mushroom_2.glb": {
+    "size": 12104,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:09.187Z"
+  },
+  "models\\props\\Tent.glb": {
+    "size": 15112,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:09.635Z"
+  },
+  "models\\props\\Well.glb": {
+    "size": 27788,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:10.089Z"
+  },
+  "models\\props\\WoodenTorch.glb": {
+    "size": 10952,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:10.539Z"
+  },
+  "models\\standin\\Birb.glb": {
+    "size": 49960,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:11.038Z"
+  },
+  "models\\standin\\Pigeon.glb": {
+    "size": 35964,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:11.517Z"
+  },
+  "models\\standin\\Snake_angry.glb": {
+    "size": 66676,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:12.005Z"
+  }
+}

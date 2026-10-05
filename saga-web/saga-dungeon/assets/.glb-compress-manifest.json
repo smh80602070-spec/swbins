@@ -1,0 +1,58 @@
+{
+  "models\\people\\anime\\avatar_custom_01.glb": {
+    "size": 3588252,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:58:00.998Z"
+  },
+  "models\\people\\anime\\avatar_sample_a.glb": {
+    "size": 2249408,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:58:01.000Z"
+  },
+  "models\\people\\anime\\avatar_sample_b.glb": {
+    "size": 2641640,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:58:01.001Z"
+  },
+  "models\\people\\anime\\avatar_sample_c.glb": {
+    "size": 2110840,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T00:58:01.002Z"
+  },
+  "models\\standin\\Birb.glb": {
+    "size": 49960,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:58:01.685Z"
+  },
+  "models\\standin\\Pigeon.glb": {
+    "size": 35964,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:58:02.153Z"
+  },
+  "models\\standin\\Snake.glb": {
+    "size": 65416,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:58:02.644Z"
+  },
+  "models\\standin\\Snake_angry.glb": {
+    "size": 66676,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T00:58:03.124Z"
+  }
+}

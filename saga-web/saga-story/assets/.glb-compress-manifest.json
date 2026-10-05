@@ -1,0 +1,370 @@
+{
+  "models\\animals\\Cow.glb": {
+    "size": 243512,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:12.734Z"
+  },
+  "models\\animals\\Deer.glb": {
+    "size": 236584,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:13.326Z"
+  },
+  "models\\animals\\Fox.glb": {
+    "size": 238140,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:13.937Z"
+  },
+  "models\\animals\\Wolf.glb": {
+    "size": 241324,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:14.539Z"
+  },
+  "models\\buildings\\House_1.glb": {
+    "size": 84484,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:15.130Z"
+  },
+  "models\\buildings\\House_2.glb": {
+    "size": 103180,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:15.643Z"
+  },
+  "models\\buildings\\House_3.glb": {
+    "size": 69132,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:16.143Z"
+  },
+  "models\\buildings\\House_4.glb": {
+    "size": 43696,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:16.629Z"
+  },
+  "models\\buildings\\Well.glb": {
+    "size": 27788,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:17.108Z"
+  },
+  "models\\nature\\Bush_1.glb": {
+    "size": 7676,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:17.600Z"
+  },
+  "models\\nature\\Bush_2.glb": {
+    "size": 6224,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:18.054Z"
+  },
+  "models\\nature\\CommonTree_1.glb": {
+    "size": 41568,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:18.540Z"
+  },
+  "models\\nature\\CommonTree_2.glb": {
+    "size": 42780,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:19.048Z"
+  },
+  "models\\nature\\CommonTree_3.glb": {
+    "size": 25980,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:19.522Z"
+  },
+  "models\\nature\\Flowers.glb": {
+    "size": 10892,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:20.006Z"
+  },
+  "models\\nature\\Grass_2.glb": {
+    "size": 5016,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:20.479Z"
+  },
+  "models\\nature\\Grass_Short.glb": {
+    "size": 5028,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:20.955Z"
+  },
+  "models\\nature\\Mountain_1.glb": {
+    "size": 7720,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:21.419Z"
+  },
+  "models\\nature\\Mountain_2.glb": {
+    "size": 16848,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:21.899Z"
+  },
+  "models\\nature\\PineTree_1.glb": {
+    "size": 30512,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:22.387Z"
+  },
+  "models\\nature\\PineTree_2.glb": {
+    "size": 26992,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:22.851Z"
+  },
+  "models\\nature\\Rock_1.glb": {
+    "size": 3272,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:23.320Z"
+  },
+  "models\\nature\\Rock_2.glb": {
+    "size": 3460,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:23.804Z"
+  },
+  "models\\nature\\Rock_3.glb": {
+    "size": 3376,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:24.302Z"
+  },
+  "models\\nature\\Rock_Moss_1.glb": {
+    "size": 4500,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:24.767Z"
+  },
+  "models\\people\\anime\\avatar_custom_01.glb": {
+    "size": 3588252,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T01:00:24.769Z"
+  },
+  "models\\people\\anime\\avatar_sample_a.glb": {
+    "size": 2249408,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T01:00:24.770Z"
+  },
+  "models\\people\\anime\\avatar_sample_b.glb": {
+    "size": 2641640,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T01:00:24.771Z"
+  },
+  "models\\people\\anime\\avatar_sample_c.glb": {
+    "size": 2110840,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T01:00:24.772Z"
+  },
+  "models\\people\\mpfb_real\\female.glb": {
+    "size": 2795864,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:25.525Z"
+  },
+  "models\\people\\mpfb_real\\male.glb": {
+    "size": 2775364,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:26.184Z"
+  },
+  "models\\people\\mpfb_real\\v10.glb": {
+    "size": 2973484,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:27.337Z"
+  },
+  "models\\people\\mpfb_real\\v11.glb": {
+    "size": 2557652,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:28.067Z"
+  },
+  "models\\people\\mpfb_real\\v12.glb": {
+    "size": 2637464,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:28.757Z"
+  },
+  "models\\people\\mpfb_real\\v13.glb": {
+    "size": 2581096,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:29.717Z"
+  },
+  "models\\people\\mpfb_real\\v14.glb": {
+    "size": 2640584,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:30.529Z"
+  },
+  "models\\people\\mpfb_real\\v15.glb": {
+    "size": 2743924,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:31.252Z"
+  },
+  "models\\people\\mpfb_real\\v16.glb": {
+    "size": 2636172,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:31.856Z"
+  },
+  "models\\people\\mpfb_real\\v17.glb": {
+    "size": 2448440,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:32.495Z"
+  },
+  "models\\people\\mpfb_real\\v18.glb": {
+    "size": 2806860,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:33.130Z"
+  },
+  "models\\people\\mpfb_real\\v19.glb": {
+    "size": 2867552,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:33.779Z"
+  },
+  "models\\people\\mpfb_real\\v20.glb": {
+    "size": 2720652,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:34.392Z"
+  },
+  "models\\people\\mpfb_real\\v21.glb": {
+    "size": 2868236,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:35.044Z"
+  },
+  "models\\people\\mpfb_real\\v22.glb": {
+    "size": 2360360,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:35.696Z"
+  },
+  "models\\people\\mpfb_real\\v23.glb": {
+    "size": 2869592,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:36.349Z"
+  },
+  "models\\people\\mpfb_real\\v3.glb": {
+    "size": 2841812,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:36.969Z"
+  },
+  "models\\people\\mpfb_real\\v7.glb": {
+    "size": 2684316,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:38.190Z"
+  },
+  "models\\people\\mpfb_real\\v8.glb": {
+    "size": 2586872,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:38.877Z"
+  },
+  "models\\people\\mpfb_real\\v9.glb": {
+    "size": 2946384,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:39.708Z"
+  },
+  "models\\people\\quaternius_rpg\\Cleric.glb": {
+    "size": 1295864,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:40.800Z"
+  },
+  "models\\people\\quaternius_rpg\\Monk.glb": {
+    "size": 1041508,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:41.548Z"
+  },
+  "models\\people\\quaternius_rpg\\Ranger.glb": {
+    "size": 1144852,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:42.254Z"
+  },
+  "models\\people\\quaternius_rpg\\Rogue.glb": {
+    "size": 1082684,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:42.875Z"
+  },
+  "models\\people\\quaternius_rpg\\Warrior.glb": {
+    "size": 1193296,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:43.499Z"
+  },
+  "models\\people\\quaternius_rpg\\Wizard.glb": {
+    "size": 1278804,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:44.168Z"
+  },
+  "models\\props\\Fence.glb": {
+    "size": 4836,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:44.609Z"
+  },
+  "models\\standin\\Birb.glb": {
+    "size": 49960,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:45.082Z"
+  },
+  "models\\standin\\Pigeon.glb": {
+    "size": 35964,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:45.553Z"
+  },
+  "models\\standin\\Snake.glb": {
+    "size": 65416,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:46.034Z"
+  },
+  "models\\standin\\Snake_angry.glb": {
+    "size": 66676,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:46.515Z"
+  }
+}

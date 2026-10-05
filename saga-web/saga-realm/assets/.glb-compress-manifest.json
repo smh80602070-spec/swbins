@@ -1,0 +1,448 @@
+{
+  "generated\\buildings\\city_t2_asian.glb": {
+    "size": 897384,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:47.138Z"
+  },
+  "generated\\buildings\\city_t3_asian.glb": {
+    "size": 907792,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:47.610Z"
+  },
+  "models\\buildings\\asian\\BellStructure.glb": {
+    "size": 1228108,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:48.080Z"
+  },
+  "models\\buildings\\asian_parts\\TempleColumn_Art.glb": {
+    "size": 687588,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:48.532Z"
+  },
+  "models\\buildings\\asian_parts\\TempleRoof01Corner_Art.glb": {
+    "size": 1887364,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:49.005Z"
+  },
+  "models\\buildings\\House_1.glb": {
+    "size": 84484,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:49.480Z"
+  },
+  "models\\buildings\\House_2.glb": {
+    "size": 103180,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:49.966Z"
+  },
+  "models\\buildings\\House_3.glb": {
+    "size": 69132,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:50.428Z"
+  },
+  "models\\buildings\\House_4.glb": {
+    "size": 43696,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:50.885Z"
+  },
+  "models\\buildings\\LargeSquareTowerBricks.glb": {
+    "size": 12772,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:51.332Z"
+  },
+  "models\\buildings\\LargeTower.glb": {
+    "size": 10032,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:51.769Z"
+  },
+  "models\\buildings\\MarketStand_1.glb": {
+    "size": 25184,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:52.210Z"
+  },
+  "models\\buildings\\PointyTower.glb": {
+    "size": 13000,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:52.653Z"
+  },
+  "models\\buildings\\Tower.glb": {
+    "size": 12916,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:53.099Z"
+  },
+  "models\\buildings\\Watchtower.glb": {
+    "size": 6624,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:53.540Z"
+  },
+  "models\\buildings\\Well.glb": {
+    "size": 27788,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:53.992Z"
+  },
+  "models\\gear\\crown.glb": {
+    "size": 15732,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:54.435Z"
+  },
+  "models\\gear\\helmet.glb": {
+    "size": 8332,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:54.872Z"
+  },
+  "models\\gear\\viking_helmet.glb": {
+    "size": 30436,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:55.321Z"
+  },
+  "models\\nature\\Bush_1.glb": {
+    "size": 7676,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:55.816Z"
+  },
+  "models\\nature\\Bush_2.glb": {
+    "size": 6224,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:56.264Z"
+  },
+  "models\\nature\\CommonTree_1.glb": {
+    "size": 41568,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:56.708Z"
+  },
+  "models\\nature\\CommonTree_2.glb": {
+    "size": 42780,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:57.158Z"
+  },
+  "models\\nature\\Flowers.glb": {
+    "size": 10892,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:57.599Z"
+  },
+  "models\\nature\\Grass_2.glb": {
+    "size": 5016,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:58.032Z"
+  },
+  "models\\nature\\Mountain_1.glb": {
+    "size": 7720,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:58.471Z"
+  },
+  "models\\nature\\Mountain_2.glb": {
+    "size": 16848,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:58.913Z"
+  },
+  "models\\nature\\PineTree_1.glb": {
+    "size": 30512,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:59.362Z"
+  },
+  "models\\nature\\Rock_1.glb": {
+    "size": 3272,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:00:59.797Z"
+  },
+  "models\\nature\\Rock_2.glb": {
+    "size": 3460,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:00.231Z"
+  },
+  "models\\nature\\WoodLog.glb": {
+    "size": 11192,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:00.676Z"
+  },
+  "models\\people\\anime\\avatar_custom_01.glb": {
+    "size": 3588252,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T01:01:00.677Z"
+  },
+  "models\\people\\anime\\avatar_sample_a.glb": {
+    "size": 2249408,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T01:01:00.678Z"
+  },
+  "models\\people\\anime\\avatar_sample_b.glb": {
+    "size": 2641640,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T01:01:00.679Z"
+  },
+  "models\\people\\anime\\avatar_sample_c.glb": {
+    "size": 2110840,
+    "result": "kept-unknown-ext",
+    "ext": [
+      "VRM"
+    ],
+    "at": "2026-10-05T01:01:00.681Z"
+  },
+  "models\\people\\mpfb_real\\female.glb": {
+    "size": 2795864,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:01.357Z"
+  },
+  "models\\people\\mpfb_real\\male.glb": {
+    "size": 2775364,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:02.013Z"
+  },
+  "models\\people\\mpfb_real\\v10.glb": {
+    "size": 2973484,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:02.633Z"
+  },
+  "models\\people\\mpfb_real\\v11.glb": {
+    "size": 2557652,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:03.280Z"
+  },
+  "models\\people\\mpfb_real\\v12.glb": {
+    "size": 2637464,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:03.936Z"
+  },
+  "models\\people\\mpfb_real\\v13.glb": {
+    "size": 2581096,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:04.660Z"
+  },
+  "models\\people\\mpfb_real\\v14.glb": {
+    "size": 2640584,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:05.283Z"
+  },
+  "models\\people\\mpfb_real\\v15.glb": {
+    "size": 2743924,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:05.907Z"
+  },
+  "models\\people\\mpfb_real\\v16.glb": {
+    "size": 2636172,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:06.533Z"
+  },
+  "models\\people\\mpfb_real\\v17.glb": {
+    "size": 2448440,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:07.171Z"
+  },
+  "models\\people\\mpfb_real\\v18.glb": {
+    "size": 2806860,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:07.815Z"
+  },
+  "models\\people\\mpfb_real\\v19.glb": {
+    "size": 2867552,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:08.462Z"
+  },
+  "models\\people\\mpfb_real\\v20.glb": {
+    "size": 2720652,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:09.078Z"
+  },
+  "models\\people\\mpfb_real\\v21.glb": {
+    "size": 2868236,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:09.731Z"
+  },
+  "models\\people\\mpfb_real\\v22.glb": {
+    "size": 2360360,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:10.361Z"
+  },
+  "models\\people\\mpfb_real\\v23.glb": {
+    "size": 2869592,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:11.021Z"
+  },
+  "models\\people\\mpfb_real\\v3.glb": {
+    "size": 2841812,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:11.641Z"
+  },
+  "models\\people\\mpfb_real\\v7.glb": {
+    "size": 2684316,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:12.289Z"
+  },
+  "models\\people\\mpfb_real\\v8.glb": {
+    "size": 2586872,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:12.890Z"
+  },
+  "models\\people\\mpfb_real\\v9.glb": {
+    "size": 2946384,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:13.525Z"
+  },
+  "models\\people\\quaternius_rpg\\Cleric.glb": {
+    "size": 1295864,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:14.139Z"
+  },
+  "models\\people\\quaternius_rpg\\Monk.glb": {
+    "size": 1041508,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:14.765Z"
+  },
+  "models\\people\\quaternius_rpg\\Ranger.glb": {
+    "size": 1144852,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:15.435Z"
+  },
+  "models\\people\\quaternius_rpg\\Rogue.glb": {
+    "size": 1082684,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:16.052Z"
+  },
+  "models\\people\\quaternius_rpg\\Warrior.glb": {
+    "size": 1193296,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:16.690Z"
+  },
+  "models\\people\\quaternius_rpg\\Wizard.glb": {
+    "size": 1278804,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:17.354Z"
+  },
+  "models\\props\\Temple.glb": {
+    "size": 57840,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:17.825Z"
+  },
+  "models\\props\\Tent.glb": {
+    "size": 15112,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:18.272Z"
+  },
+  "models\\props\\Wall.glb": {
+    "size": 6996,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:18.712Z"
+  },
+  "models\\props\\WoodenTorch.glb": {
+    "size": 10952,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:19.150Z"
+  },
+  "models\\weapons\\axe.glb": {
+    "size": 22608,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:19.614Z"
+  },
+  "models\\weapons\\bow.glb": {
+    "size": 13076,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:20.061Z"
+  },
+  "models\\weapons\\brush.glb": {
+    "size": 34108,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:20.520Z"
+  },
+  "models\\weapons\\club.glb": {
+    "size": 29400,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:20.972Z"
+  },
+  "models\\weapons\\scroll.glb": {
+    "size": 17200,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:21.413Z"
+  },
+  "models\\weapons\\spear.glb": {
+    "size": 20508,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:21.860Z"
+  },
+  "models\\weapons\\staff.glb": {
+    "size": 5004,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:22.315Z"
+  },
+  "models\\weapons\\sword.glb": {
+    "size": 14652,
+    "result": "ok",
+    "mode": "mesh-only",
+    "at": "2026-10-05T01:01:22.798Z"
+  }
+}
