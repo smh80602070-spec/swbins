@@ -181,9 +181,10 @@ namespace Saga.Go.UI
             var title = EncounterUiKit.NewText(_panel.transform, GoLocalization.T("map.title", "지도"), new Vector2(0.5f, 1f), new Vector2(ColX, -60f), new Vector2(620f, 60f), 36);
             title.fontStyle = FontStyles.Bold;
             _info = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX, 150f), new Vector2(620f, 120f), 22);
-            _regionInfo = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(ColX, -150f), new Vector2(620f, 330f), 22);
+            _regionInfo = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 1f), new Vector2(ColX, -150f), new Vector2(620f, 150f), 22);
+            _regionInfo.enableAutoSizing = true; _regionInfo.fontSizeMin = 14f; _regionInfo.fontSizeMax = 22f; // U-0050 — 긴 지역 설명이 아래 글(임무 줄)로 안 내려오게 칸 안에서 줄인다
             _regionInfo.raycastTarget = false;
-            _advText = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX, 345f), new Vector2(620f, 64f), 19);
+            _advText = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX, 340f), new Vector2(620f, 62f), 19);
             _advText.raycastTarget = false;
             _advButton = EncounterUiKit.NewButton(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX, 285f), new Vector2(460f, 52f), null);
             _advButton.GetComponentInChildren<TextMeshProUGUI>().fontSize = 18;
@@ -281,7 +282,8 @@ namespace Saga.Go.UI
             }
 
             // 고른 표식 카드 — 오른쪽 열, 지역 글(위)과 여정 줄(아래) 사이. 아무것도 안 골랐으면 범례 한 줄.
-            _pickText = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX, 495f), new Vector2(620f, 150f), 19);
+            _pickText = EncounterUiKit.NewText(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX, 462f), new Vector2(620f, 134f), 19);
+            _pickText.enableAutoSizing = true; _pickText.fontSizeMin = 13f; _pickText.fontSizeMax = 19f; // U-0050 — 위 지역 설명(칸 600~750)과 단추(405~457) 사이에 맞춘다
             _pickText.raycastTarget = false;
             _pickTrack = EncounterUiKit.NewButton(_panel.transform, "", new Vector2(0.5f, 0f), new Vector2(ColX - 155f, 405f), new Vector2(300f, 52f), null);
             _pickTrack.GetComponentInChildren<TextMeshProUGUI>().fontSize = 17;

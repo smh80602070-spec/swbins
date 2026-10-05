@@ -101,7 +101,9 @@ namespace Saga.Dungeon.World
             var trial = Saga.Dungeon.UI.TrialCardUi.Instance;
             if (trial != null && trial.IsOpen) return true;
             var scene = Saga.Dungeon.UI.DungeonScenarioUi.Instance; // PLAN.md 109-16 — 시나리오 장면 상자도 모달이라 배너를 숨긴다
-            return scene != null && scene.IsOpen;
+            if (scene != null && scene.IsOpen) return true;
+            var secret = Saga.Dungeon.UI.SecretPanelUi.Instance; // U-0050 — 비결 창도 모달이라 배너가 글자를 덮지 않게(UiLayoutCheck)
+            return secret != null && secret.IsOpen;
         }
 
         /// <summary>진단이 앞뒤로 부른다 — 머묾·배너를 비우고 "마지막으로 알린 지역"을 그 값으로.</summary>

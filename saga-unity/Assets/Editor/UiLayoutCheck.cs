@@ -331,6 +331,12 @@ namespace Saga.EditorTools
             int n = 0;
             foreach (var st in StatesFor(scene))
             {
+                // 새 판 첫 장면(이사 오던 날 등)이 이미 열려 있으면 "새로 뜬 그래픽"이 없어 시나리오 장면 상태가 "안 뜸" 으로 잡혔다 — 먼저 닫아 둔다(U-0050)
+                if (st.name.StartsWith("시나리오") && st.exit != null)
+                {
+                    try { st.exit(); } catch (System.Exception) { }
+                    yield return null; yield return null;
+                }
                 var before = new HashSet<int>(VisibleGraphics().Select(g => g.GetInstanceID()));
                 bool on;
                 try { on = st.enter(); }
