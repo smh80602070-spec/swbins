@@ -87,7 +87,7 @@ limit SAGA-ARCH.md 40960
 limit SAGA-BACKLOG.md 30720
 for f in saga-web/STATE.md saga-godot/docs/STATE.md saga-unity/docs/STATE.md; do limit "$f" 8192; done
 over=''   # CRLF 로 체크아웃된 작업본이 저장소(LF) 크기보다 줄 수만큼 커 보이지 않게 CR 을 빼고 잰다
-while read -r f; do [ "$(tr -d '\r' <"$f" | wc -c)" -gt 6144 ] && over="$over$f"$'\n'; done < <(find tasks -name '*.md' -size +5000c 2>/dev/null)
+while read -r f; do lim=6144; case "$f" in tasks/sheets/*) lim=16384;; esac; [ "$(tr -d '\r' <"$f" | wc -c)" -gt "$lim" ] && over="$over$f"$'\n'; done < <(find tasks -name '*.md' -size +5000c 2>/dev/null)   # 확인 시트(tasks/sheets)는 사람에게 보내는 답안지라 16KB — 세션이 매번 읽는 티켓·큐만 6KB
 if [ -n "$over" ]; then printf '%s' "$over" | while read -r f; do echo "OVER $f > 6144B"; done; fail=1; else echo "ok   tasks/**/*.md 전부 6144B 이하"; fi
 
 echo "== 정본 범주 반영 (tools/asset-audit/reflect.py --categories · K-0073, WARN 만)"

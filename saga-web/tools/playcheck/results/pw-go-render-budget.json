@@ -1,0 +1,39 @@
+{
+ "script": "pw-go-render-budget.mjs",
+ "game": "saga-go",
+ "rows": [
+  {
+   "want": "LOW",
+   "calls": 204,
+   "tris": 279946,
+   "size": "1266x585",
+   "ms": 200,
+   "tier": "LOW",
+   "shadow": false,
+   "post": false,
+   "dpr": 2
+  },
+  {
+   "want": "MEDIUM",
+   "calls": 1,
+   "tris": 2,
+   "size": "1266x585",
+   "ms": 333,
+   "tier": "MEDIUM",
+   "shadow": true,
+   "post": true,
+   "dpr": 2
+  },
+  {
+   "want": "HIGH",
+   "calls": 1,
+   "tris": 2,
+   "size": "1266x585",
+   "ms": 400,
+   "tier": "HIGH",
+   "shadow": true,
+   "post": true,
+   "dpr": 2
+  }
+ ]
+}
