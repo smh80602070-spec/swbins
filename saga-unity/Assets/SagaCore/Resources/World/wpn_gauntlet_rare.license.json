@@ -14,11 +14,11 @@
   "polyhaven: white_stucco"
  ],
  "size_m": [
-  0.12,
-  0.3,
-  0.13
+  0.13,
+  0.29,
+  0.14
  ],
- "tris": 244,
+ "tris": 388,
  "nodes": [
   "grip",
   "tip",
