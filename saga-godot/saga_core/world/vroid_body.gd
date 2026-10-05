@@ -242,6 +242,10 @@ static func _bone_anchor(skel: Skeleton3D, bone: int) -> Node3D:
 	att.add_child(anchor)
 	return anchor
 
+## G-0029 — 다른 파일(손에 쥐는 무기)이 쓰는 공개 이름.
+static func bone_anchor(skel: Skeleton3D, bone: int) -> Node3D:
+	return _bone_anchor(skel, bone)
+
 static func _tint(root: Node, hair: Color, cloth: Color, gold: bool) -> void:
 	for mi in root.find_children("*", "MeshInstance3D", true, false):
 		var m := (mi as MeshInstance3D).mesh

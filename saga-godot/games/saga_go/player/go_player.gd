@@ -19,6 +19,7 @@ const Characters := preload("res://saga_core/data/characters.gd")
 const FieldCombat := preload("res://games/saga_go/combat/field_combat.gd")
 const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
+const WeaponVisual := preload("res://games/saga_go/player/weapon_visual.gd")
 
 enum Mode { GROUND, AIR, GLIDE, CLIMB, SWIM, MANTLE, FLY }
 
@@ -147,6 +148,7 @@ func set_hero_body(id: String) -> void:
 	_body_id = id
 	## 낚시 중 편성을 바꿔도 낚싯대가 안 사라지게 같이 옮긴다(R-5 점검).
 	swap_body(body, [_glider, visual.get_node_or_null("FishingRod")])
+	_refresh_weapon()
 	_yaw = visual.rotation.y
 	if mounted:   # 탈것을 탄 채 바뀌면 새 몸도 안장 자세로(옛 몸의 SeatPose 는 같이 사라진다)
 		var mt := get_node_or_null("Mount")
@@ -154,8 +156,15 @@ func set_hero_body(id: String) -> void:
 			mt.call("reseat")
 
 
+## G-0029 — 지금 몸의 오른손에 이 인물이 든 무기 모델을 쥔다(몸 교체·장착 변경 때).
+func _refresh_weapon() -> void:
+	if _body_id == "" or not VroidBody.dex_available():
+		return
+	WeaponVisual.attach(visual, PartyState.weapon_of(_body_id))
+
 func _ready() -> void:
 	super._ready()
+	PartyState.weapon_changed.connect(_refresh_weapon)
 	collision_mask = 1 | BORDER_LAYER
 	floor_snap_length = 0.35
 	_last_safe = global_position
