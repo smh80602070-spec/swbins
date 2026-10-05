@@ -5,7 +5,7 @@
 ## 공통(다섯 판)
 - 코드로 그리지 않고 에셋으로(사용자 지시 08-28): 그림·초상·아이콘은 실제 에셋, 스크립트는 판정·규칙·상태만. 결이 안 맞는다는 이유로 안 하지 않고, 못 구하면 "막힌 이유 + 대신 할 것"으로 보고. 옛 그림으로 돌아가는 손잡이는 남긴다(`file://`·LOW·오프라인).
 - 에셋은 CC0 우선, 재배포 불가 금지, 출처는 `assets/ASSET_LICENSES.md` 에 없으면 두지 않는다(CC-BY 는 표기).
-- `js/` 를 고치면 `sw.js` VERSION 을 올린다. 새 js 는 `index.html`·`_test.html`·`_demo.html`·`sw.js`(SHELL) 전부에 넣는다.
+- `js/` 를 고치면 `node saga-web/shared/build/bundle.mjs <판>` 으로 `dist/app*.js` 를 다시 만들고(낡으면 precheck FAIL) `sw.js` VERSION 을 올린다. 새 js 는 `js/manifest.json`(index·test)·`_test.html`·`_demo.html` 에 넣는다 — index.html·sw.js 는 번들이 대신한다(W-0065).
 - 새 진단은 `_test.html` 맨 끝에, 앞 항목 상태에 기대지 않게. 무작위는 `core.hash2` 순수 해시, 씨앗 mulberry32(20260824) 순번을 밀지 않는다.
 - 세로·가로 둘 다, safe-area·orientation·터치 44px. `prompt()` 금지. 성능은 안정성 > FPS > 로딩 > 그래픽 순(폰 DPR ≤1.5, 4K 텍스처·고해상 전면 그림자 금지).
 - 전체 재작성·불필요한 리팩토링·무거운 라이브러리 금지. 기존 UI·기능을 깨지 않는다. 단계별로 고치고 변경 파일·결과만 보고.

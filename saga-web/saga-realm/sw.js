@@ -11,7 +11,7 @@
  *       사내 http 주소로 폰에서 열면 홈 화면 추가는 되지만 이 캐시는 동작하지 않는다.
  */
 
-var VERSION = 'realm-v1.94.28';
+var VERSION = 'realm-v1.94.29';
 var APP_CACHE = 'sr-app-' + VERSION;
 var TILE_CACHE = 'sr-tiles-v1';
 var TILE_MAX = 500;
@@ -24,7 +24,7 @@ var TILE_MAX = 500;
 var SHELL = [
   './',
   './index.html',
-  './assets/portraits/manifest.js',
+  './dist/app.js',
   './manifest.json',
   './css/style.css',
   './css/strategy.css',
@@ -44,50 +44,11 @@ var SHELL = [
   './js/rts/view.js',
   './js/errlog.js',
   './js/data.js',
-  './js/data-city.js',
-  './js/data-force.js',
-  './js/data-item.js',
-  './js/data-relation.js',
-  './js/data-quiz.js',
-  './js/sprite.js',
   './js/core.js',
   './js/assets3d-ids.js',
-  './js/itemicon-ids.js',
-  './js/itemicon.js',
   './js/assets3d.js',
   './js/mode2d.js',
-  './js/map2d.js',
-  './js/sfx.js',
-  './js/bgm.js',
-  './js/vendor/three.iife.js',
-  './js/toon3d-core.js',
-  './js/toon3d.js',
-  './js/anim-own.js',
-  './js/vroid-variant.js',
-  './js/asset3d.js',
   './js/account.js',
-  './js/hero.js',
-  './js/officer.js',
-  './js/mount.js',
-  './js/rtk.js',
-  './js/war.js',
-  './js/diplo.js',
-  './js/rtk-ai.js',
-  './js/event.js',
-  './js/data-scenario.js',
-  './js/scenario.js',
-  './js/cutscene.js',
-  './js/quiz.js',
-  './js/net.js',
-  './js/ai.js',
-  './js/realm3d.js',
-  './js/city3d.js',
-  './js/battle3d.js',
-  './js/ui-rtk.js',
-  './js/cpanel.js',
-  './js/hud.js',
-  './js/perf.js',
-  './js/game.js',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png'

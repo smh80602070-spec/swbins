@@ -112,5 +112,6 @@
    "js/ui.js",
    "js/game.js"
   ]
- ]
+ ],
+ "bundle": "dist/app.js"
 }

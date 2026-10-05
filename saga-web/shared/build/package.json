@@ -1,0 +1,8 @@
+{
+  "name": "saga-web-build",
+  "private": true,
+  "description": "판 번들(bundle.mjs) 전용 — esbuild 하나. node_modules 는 저장소가 무시한다. 설치: cd saga-web/shared/build && npm install",
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

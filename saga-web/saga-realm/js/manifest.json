@@ -109,5 +109,6 @@
    "js/rts/state.js",
    "js/game.js"
   ]
- ]
+ ],
+ "bundle": "dist/app.js"
 }

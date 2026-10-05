@@ -30,8 +30,9 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# PC 단독판 산출물 — build-pc.bat 이 다시 만든다
-dist/
+# PC 단독판 산출물 — build-pc.bat 이 다시 만든다. 번들 dist/app.js(W-0065)만 커밋 — GitHub Pages 가 서빙
+**/dist/*
+!**/dist/app*.js
 
 # IDE
 .idea/

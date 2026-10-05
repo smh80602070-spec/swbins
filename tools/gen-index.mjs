@@ -4,7 +4,7 @@
  *
  *   node tools/gen-index.mjs --init                 manifest 가 없는 판에 지금 html 에서 뽑아 만든다(있으면 건드리지 않는다)
  *   node tools/gen-index.mjs                        manifest 대로 html 의 script 줄을 다시 쓴다
- *   node tools/gen-index.mjs --check                쓰지 않고 비교만. 다르면 줄을 찍고 종료 1 (precheck 가 부른다)
+ *   node tools/gen-index.mjs --check                쓰지 않고 비교만. 다르면 줄을 찍고 종료 1 (precheck 가 부른다). manifest 에 "bundle" 이 있으면 index.html 은 그 한 줄이고 dist 번들이 원본보다 낡았는지도 본다(W-0065)
  *   node tools/gen-index.mjs --add <판> <js/새.js> --after <js/앞.js> [--index|--test]
  *                                                   앞 파일이 든 묶음에 한 줄 끼운다(옵션이 없으면 앞 파일이 있는 쪽 전부)
  *
@@ -17,6 +17,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const WEB = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'saga-web');
+const bundleLib = () => import(new URL('../saga-web/shared/build/bundle.mjs', import.meta.url).href);   // 번들 신선도(W-0065)
 const GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-realm'];
 const KINDS = { index: 'index.html', test: '_test.html' };
 const PLAIN = /^(\s*)<script src="([^"]+)"><\/script>(\s*<!--.*-->)?\s*$/;
@@ -86,14 +87,16 @@ for (const g of GAMES) {
   }
   if (!fs.existsSync(mfPath(g))) { console.log(`FAIL ${g}: js/manifest.json 없음 — --init`); bad++; continue; }
   const m = readMf(g);
+  if (check && m.bundle) { const r = (await bundleLib()).fresh(g); if (!r.ok) { console.log(`FAIL ${r.why} — node saga-web/shared/build/bundle.mjs ${g}`); bad++; } }
   for (const [k, f] of Object.entries(KINDS)) {
     const p = pk[k];
-    if (m[k].length !== p.runs.length) { console.log(`FAIL ${g}/${f}: 묶음 수 manifest ${m[k].length} ≠ html ${p.runs.length}`); bad++; continue; }
+    const want = k === 'index' && m.bundle ? [].concat(m.bundle).map(b => [b]) : m[k];   // 번들 판의 index.html 은 script 한 줄(manifest.bundle)
+    if (want.length !== p.runs.length) { console.log(`FAIL ${g}/${f}: 묶음 수 manifest ${want.length} ≠ html ${p.runs.length}`); bad++; continue; }
     if (check) {
-      p.runs.forEach((r, i) => { if (!same(r.items.map(x => x.src), m[k][i])) { console.log(`DIFF ${g}/${f} ${r.start + 1}줄~ 묶음 ${i + 1} ≠ manifest`); bad++; } });
+      p.runs.forEach((r, i) => { if (!same(r.items.map(x => x.src), want[i])) { console.log(`DIFF ${g}/${f} ${r.start + 1}줄~ 묶음 ${i + 1} ≠ manifest`); bad++; } });
       continue;
     }
-    const out = render(p, m[k]);
+    const out = render(p, want);
     const file = path.join(WEB, g, f);
     if (out !== fs.readFileSync(file, 'utf8')) { fs.writeFileSync(file, out); wrote++; console.log(`쓴 파일 ${g}/${f}`); }
   }

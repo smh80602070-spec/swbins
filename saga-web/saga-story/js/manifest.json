@@ -117,5 +117,9 @@
    "js/region-icon.js",
    "js/game.js"
   ]
+ ],
+ "bundle": [
+  "dist/app.js",
+  "dist/app2.js"
  ]
 }
