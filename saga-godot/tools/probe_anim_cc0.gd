@@ -22,7 +22,8 @@ func _process(_delta: float) -> bool:
 	var total := 0
 	var bodies: Array[String] = []
 	for f in DirAccess.get_files_at(LIB_DIR):
-		if f.ends_with("_lib.res"):
+		## 몸 없이 여럿이 같이 쓰는 라이브러리(dex_common_lib — probe_dex_bodies 가 본다)는 건너뛴다.
+		if f.ends_with("_lib.res") and ResourceLoader.exists("res://assets/characters_vroid/%s.glb" % f.trim_suffix("_lib.res")):
 			bodies.append(f.trim_suffix("_lib.res"))
 	bodies.sort()
 	for body in bodies:
@@ -76,5 +77,6 @@ func _process(_delta: float) -> bool:
 			ok += 1
 		print("PROBE_ANIM ", JSON.stringify({"body": body, "moved_min": moved_min, "fails": fails}))
 	print("RESULT %d/%d" % [ok, total])
+	print("PROBE anim_cc0 %s" % ("OK" if ok == total else "FAIL %d" % (total - ok)))   # probe_all.sh 가 읽는 결과 줄
 	quit(0 if ok == total else 1)
 	return true
