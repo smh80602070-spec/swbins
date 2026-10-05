@@ -3,7 +3,7 @@
 경로: `tools/char-forge·world-forge·ai-art·asset-forge·glb-compress·asset-audit` · `archive/` · `data/`·`tools/gen/` · `scenario/README.md` · `C:\swbins3`. 인간형 몸·모션·VFX 는 안 한다(ARCH §4.5).
 
 **10-05**: 그림체 = **P**(판정기 채택, 거부권 "C") → K-0068 이 재생성 중(정적 51·움직이는 40, `_out/regen_P.log`). 새 배치는 `prompt_kit build` → `gen.py --variants 4 --judge` → `judge.sh pick` 만. "판정 대기"는 판정기가 닫는다(K-0069 단계 5). 새 K 발행 동결 ~10-19.
-**소넷 세션 보호(10-05)**: `tools/ai-art/_out/regen_P.log` 에 REGEN_DONE 이 없으면 SD 사슬이 도는 중 — K-0068(판정·포장)·K-0072(Blender·판정기 GPU)는 건드리지 말고 "사슬 진행 n/364" 한 줄만 메모하고 끝낸다. 있으면 K-0068 메모 순서대로.
+**소넷 보호**: `_out/regen_P.log` 에 REGEN_DONE 없음 = SD 사슬 중 → K-0068·K-0072 안 건드리고 "사슬 n/364" 한 줄만. 단 그 로그가 30분 넘게 안 바뀌면 죽은 것 — `bash tools/ai-art/regen_P.sh`(멱등)를 백그라운드로 다시 켜고 메모. REGEN_DONE 있으면 K-0068 메모 순서대로.
 
 | # | 티켓 | 상태 |
 |---|---|---|
