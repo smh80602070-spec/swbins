@@ -1,0 +1,226 @@
+{
+ "note": "K-0072 단계 4 확정 20명(판정기 --spec portrait --per-group 2 통과 23 → dHash 가까운 쌍 제거). 사용자 거부권용, 답 없어도 진행.",
+ "min_dhash": 36,
+ "rows": [
+  {
+   "id": "vmix_g_e_1",
+   "body": "g",
+   "hair": "e",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "g_e"
+  },
+  {
+   "id": "vmix_g_d_1",
+   "body": "g",
+   "hair": "d",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "g_d"
+  },
+  {
+   "id": "vmix_d_e_1",
+   "body": "d",
+   "hair": "e",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "d_e"
+  },
+  {
+   "id": "vmix_bm_d_4",
+   "body": "bm",
+   "hair": "d",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "bm_d"
+  },
+  {
+   "id": "vmix_bm_d_1",
+   "body": "bm",
+   "hair": "d",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "bm_d"
+  },
+  {
+   "id": "vmix_e_d_3",
+   "body": "e",
+   "hair": "d",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "e_d"
+  },
+  {
+   "id": "vmix_bm_g_3",
+   "body": "bm",
+   "hair": "g",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "bm_g"
+  },
+  {
+   "id": "vmix_bm_e_4",
+   "body": "bm",
+   "hair": "e",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "bm_e"
+  },
+  {
+   "id": "vmix_f_d_1",
+   "body": "f",
+   "hair": "d",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "f_d"
+  },
+  {
+   "id": "vmix_bm_f_1",
+   "body": "bm",
+   "hair": "f",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "bm_f"
+  },
+  {
+   "id": "vmix_f_e_3",
+   "body": "f",
+   "hair": "e",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "f_e"
+  },
+  {
+   "id": "vmix_bm_f_3",
+   "body": "bm",
+   "hair": "f",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "bm_f"
+  },
+  {
+   "id": "vmix_d_f_3",
+   "body": "d",
+   "hair": "f",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "d_f"
+  },
+  {
+   "id": "vmix_e_d_4",
+   "body": "e",
+   "hair": "d",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "e_d"
+  },
+  {
+   "id": "vmix_bm_e_1",
+   "body": "bm",
+   "hair": "e",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "bm_e"
+  },
+  {
+   "id": "vmix_bm_g_4",
+   "body": "bm",
+   "hair": "g",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "bm_g"
+  },
+  {
+   "id": "vmix_f_d_3",
+   "body": "f",
+   "hair": "d",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "f_d"
+  },
+  {
+   "id": "vmix_d_f_4",
+   "body": "d",
+   "hair": "f",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "d_f"
+  },
+  {
+   "id": "vmix_d_g_3",
+   "body": "d",
+   "hair": "g",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "d_g"
+  },
+  {
+   "id": "vmix_d_g_1",
+   "body": "d",
+   "hair": "g",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "d_g"
+  }
+ ]
+}
