@@ -190,6 +190,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoHelp.Run("PlaytestHeadless")) _hadError = true; // tasks U-0043 도움말 창(F1) — 단추·닫기·세 칸·세이브 불변
                 if (!PlaytestGoWeekly.Run("PlaytestHeadless")) _hadError = true; // tasks U-0044 주간 도전 — 진짜 셈으로 채워 창·받기·세이브(금·재료·업적 셈·세이브 되돌림)
                 if (!PlaytestGoCycle.Run("PlaytestHeadless")) _hadError = true; // tasks U-0045 별배 재출항(회차) — 두 번 눌러 재출항·상자 되살림·세이브(모든 상태 되돌림)
+                if (!PlaytestGoEggs.Run("PlaytestHeadless")) _hadError = true; // tasks U-0046 신수 알·동행 — 부화기·걸음·부화·동행·세이브(상태 되돌림)
                 if (!PlaytestGoHomestead.Run("PlaytestHeadless")) _hadError = true; // tasks U-0032 쉼터 마당(자리·창·세이브 — 마당·금·시각·세이브 파일·플레이어 자리 되돌림)
                 if (!PlaytestGoDispatch.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-26 탐사 파견(표·흐름·알림·세이브·화면 — 동행·탐사·돈·재료·레벨·지도·세이브 되돌림)
                 if (!PlaytestGoFrost.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-14-27a 서리봉 고원(표·지역·땅·발견·드나드는 길·세이브 — 발견·돈·연마석·경험·자리·세이브 되돌림)

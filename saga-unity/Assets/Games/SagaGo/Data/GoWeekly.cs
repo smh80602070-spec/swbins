@@ -178,7 +178,8 @@ namespace Saga.Go.Data
             Grant(GoWeekly.BonusReward());
             PlayerStats.AddExp(GoWeekly.BonusExp);
             Changed?.Invoke();
-            return GoWeekly.BonusRewardText();
+            string egg = EggState.Drop("weekly_goal", _week.ToString()); // U-0046 완주 = 빛나는 알
+            return GoWeekly.BonusRewardText() + (egg.Length > 0 ? " · " + egg : "");
         }
 
         /// <summary>새로 채운 도전 — 첫 확인(불러온 직후)은 기준만 잡고 조용히.</summary>

@@ -30,7 +30,7 @@ namespace Saga.Go.Data
         public static void AddExp(int amount)
         {
             if (amount <= 0) return;
-            amount = System.Math.Max(1, Mathf_RoundToInt(amount * (1f + CycleState.Bonus))); // U-0045 회차마다 경험치 +5%(회차 0 은 그대로)
+            amount = System.Math.Max(1, Mathf_RoundToInt(amount * (1f + CycleState.Bonus) * (1f + EggState.BuddyBonus("exp")))); // U-0045 회차마다 경험치 +5%(회차 0 은 그대로)
             Exp += amount;
             while (Exp >= ExpToNext)
             {

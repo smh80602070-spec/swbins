@@ -119,6 +119,15 @@ namespace Saga.Go.Data
             // v24 — PLAN.md 109-14-7 천하 등급 한 단계 낮춤·보상을 받은 여정 등급.
             public bool advLowered;
             public int advPaid;
+            // tasks U-0046 신수 알·동행 — 주머니·부화기·부화 수·걸음·동행·친밀(m)·가진 신수(버전 그대로 — 옛 세이브는 빈 상태)
+            public List<string> eggBag;
+            public List<EggIncSave> eggInc;
+            public int eggHatched;
+            public float eggWalk;
+            public string eggBuddy;
+            public float eggBuddyM;
+            public List<CookState.Entry> eggFriend;
+            public List<string> petOwned;
             public int cycleN; // tasks U-0045 재출항 회차(버전 그대로 — 옛 세이브는 0)
             // v25 — PLAN.md 109-14-8 오늘 일과 마무리 보상을 받았나(날짜는 dailyDate).
             public bool dailyBonus;
@@ -288,6 +297,14 @@ namespace Saga.Go.Data
                 advLowered = AdventureState.Lowered,
                 advPaid = AdventureState.Paid,
                 cycleN = CycleState.Cycle, // U-0045
+                eggBag = EggState.SnapshotBag(), // U-0046
+                eggInc = EggState.SnapshotInc(),
+                eggHatched = EggState.Hatched,
+                eggWalk = EggState.WalkTotal,
+                eggBuddy = EggState.Buddy,
+                eggBuddyM = EggState.SnapshotBuddyM(),
+                eggFriend = EggState.SnapshotFriend(),
+                petOwned = EggState.SnapshotOwned(),
                 dailyBonus = DailyTaskState.BonusClaimed,
                 resin = dom.resin,
                 resinT = dom.t,
@@ -364,6 +381,7 @@ namespace Saga.Go.Data
             ArtifactState.Restore(data.artifacts, data.artifactSeq, data.artifactPolish);
             CookState.Restore(data.cookBag, data.cookProf, data.cookGather);
             DomainState.Restore(data.resin, data.resinT, data.domainClaims, data.weeklyWeek, data.weeklyN);
+            EggState.Restore(data.eggBag, data.eggInc, data.eggHatched, data.eggWalk, data.eggBuddy, data.eggBuddyM, data.eggFriend, data.petOwned); // U-0046 — 없는 세이브는 빈 상태
             CycleState.Restore(data.cycleN); // U-0045 — 천하 등급 상한이 회차에 달려 모험 등급 복원보다 먼저
             AdventureState.RestoreSave(data.advLowered, data.advPaid); // 레벨 뒤 — 천하 등급이 바뀌면 들판 적이 다시 잰다
             StoryState.Restore(data.storyCh, data.storyStep);

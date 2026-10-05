@@ -149,7 +149,8 @@ namespace Saga.Go.Data
                 if (_progress[i] >= def.Target)
                 {
                     _done[i] = true;
-                    TaskCompleted?.Invoke(GrantTask(def));
+                    string eggText = EggState.Drop("commission", _date + "|" + i); // U-0046 신수 알
+                    TaskCompleted?.Invoke(GrantTask(def) + (eggText.Length > 0 ? " · " + eggText : ""));
                 }
                 anyChanged = true;
             }

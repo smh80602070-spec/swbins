@@ -280,8 +280,8 @@ namespace Saga.Go.World
             _state = State.Fight;
             float foeHp = Mathf.Max(1f, Mathf.Round(FoePower * FoeHpMul));
             // PLAN.md 101-2 ⑦ "승급 3택"·⑥ "인연" — BanditEncounter.StartFight()와 같은 배율 적용.
-            float atk = (PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus) * PerkState.AtkMultiplier * BondState.AtkMultiplier;
-            float def = (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier;
+            float atk = (PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus) * PerkState.AtkMultiplier * BondState.AtkMultiplier * (1f + CycleState.Bonus) * (1f + EggState.BuddyBonus("atk")); // U-0045 회차 · U-0046 동행 공격
+            float def = (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier * (1f + EggState.BuddyBonus("def")); // U-0046 동행 방어
             // PLAN.md 101-2 ③ "75초 토벌" — 이 사건만 raid:true(75s·부위 3·저스트 회피).
             _duel = DuelRules.Create(foeHp, atk, def, raid: true);
             _duel.KiMul = PerkState.KiMultiplier;

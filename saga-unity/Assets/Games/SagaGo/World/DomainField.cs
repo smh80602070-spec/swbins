@@ -278,6 +278,8 @@ namespace Saga.Go.World
             if (r.Ore > 0) { WeaponState.AddOre(r.Ore); parts.Add(string.Format(GoLocalization.T("weapon.ore_plus", "강화석 +{0}"), r.Ore)); }
             string mats = TalentState.Add(r.Mats);
             if (mats.Length > 0) parts.Add(mats);
+            string egg = EggState.Drop(k == GoDomain.Kind.Weekly || k == GoDomain.Kind.Echo ? "weekly" : "domain", $"{Current.Site.Name}|{Current.Stage}|{seq}"); // U-0046 신수 알
+            if (egg.Length > 0) parts.Add(egg);
             string text = string.Format(GoLocalization.T("domain.claimed", "{0} {1} 보상 — 원기 {2} · {3}"), Current.Site.Name, GoDomain.Stages[Current.Stage].N, cost, string.Join(" · ", parts));
             End(text);
             return text;

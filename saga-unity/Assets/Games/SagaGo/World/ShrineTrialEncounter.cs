@@ -297,8 +297,8 @@ namespace Saga.Go.World
             _state = State.Fight;
             float foeHp = Mathf.Max(1f, Mathf.Round(FoePower[_waveIndex] * FoeHpMul));
             // PLAN.md 101-2 ⑦ "승급 3택"·⑥ "인연" — 기존 두 사건과 같은 배율 체인.
-            float atk = (PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus) * PerkState.AtkMultiplier * BondState.AtkMultiplier;
-            float def = (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier;
+            float atk = (PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus) * PerkState.AtkMultiplier * BondState.AtkMultiplier * (1f + CycleState.Bonus) * (1f + EggState.BuddyBonus("atk")); // U-0045 회차 · U-0046 동행 공격
+            float def = (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier * (1f + EggState.BuddyBonus("def")); // U-0046 동행 방어
             _duel = DuelRules.Create(foeHp, atk, def, timeSec: timeSecCarryover);
             _duel.KiMul = PerkState.KiMultiplier;
             _combatRoot.SetActive(true);

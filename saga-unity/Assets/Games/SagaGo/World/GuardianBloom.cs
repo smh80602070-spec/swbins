@@ -166,6 +166,8 @@ namespace Saga.Go.World
             int gold = frost ? FrostGoldNow : GoldNow;
             GoldState.Add(gold);
             string art = GoArtifacts.Label(ArtifactState.Get(ArtifactState.Add(ArtRarity)));
+            string egg = EggState.Drop("bloom", (frost ? "frost" : "guard") + "|" + DomainState.Claims); // U-0046 신수 알
+            if (egg.Length > 0) art += " · " + egg;
             if (frost) FrostBossState.MarkPaid(); else GuardianState.MarkPaid();
             string text = string.Format(frost
                 ? GoLocalization.T("boss.claimed_frost", "보상 꽃 — 원기 {0} · 금 +{1} · {2} — 150초 뒤 만년설 바위곰왕이 다시 선다")

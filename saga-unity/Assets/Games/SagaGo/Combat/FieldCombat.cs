@@ -181,7 +181,7 @@ namespace Saga.Go.Combat
             {
                 var md = WeaponState.ModsOf(Active?.Id); // 109-14-5a 든 무기 공격 · 공격%
                 var ab = ArtifactState.BonusOf(Active?.Id); // 109-14-5b 보패 공격% · 고정 공격(웹 식: (기본 + 무기) × (1 + %) + 고정)
-                return ((PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus + md.Atk) * (1f + md.AtkPct + ab.AtkPct) + ab.Atk + CookState.Buff("atk")) * PerkState.AtkMultiplier * BondState.AtkMultiplier * (1f + CycleState.Bonus) // U-0045 회차 공격 +5% · 109-14-6 요리 공격(고정)
+                return ((PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus + md.Atk) * (1f + md.AtkPct + ab.AtkPct) + ab.Atk + CookState.Buff("atk")) * PerkState.AtkMultiplier * BondState.AtkMultiplier * (1f + CycleState.Bonus) * (1f + EggState.BuddyBonus("atk")) // U-0046 동행 공격 · U-0045 회차 공격 +5% · 109-14-6 요리 공격(고정)
                     * (Active != null && Active.BuffLeft > 0f ? GoTalent.C5Atk : 1f) // 109-14-4 깨달음 ⑤
                     * (RallyLeft > 0f ? RallyMul : 1f); // 109-14-11 군기·학날개 진
             }
@@ -258,7 +258,7 @@ namespace Saga.Go.Combat
         /// <summary>109-14-4 나선 사람의 무예 배율·반응 배율(주인공·도감 밖은 1).</summary>
         private float TalentMul(GoTalent.Kind k) => Active != null ? TalentState.Mul(Active.Id, k) : 1f;
         private float ReactMul => (Active != null ? TalentState.ReactMul(Active.Id) * PasMul(Active.Id, "react") : 1f) * (LoreLeft > 0f ? LoreMul : 1f); // 109-14-15 옛 글자 풀이
-        public float Def => (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier;
+        public float Def => (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier * (1f + EggState.BuddyBonus("def")); // U-0046 동행 방어
 
         /// <summary>109-14-5b 나선 사람이 받는 피해에 쓰는 방어(보패 방어% · 고정 방어). 체력 상한은 보패 없는 <see cref="Def"/> 로 센다.</summary>
         public float ActiveDef

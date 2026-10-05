@@ -248,6 +248,8 @@ namespace Saga.Go.World
             if (gear.Length > 0) mats += (mats.Length > 0 ? " · " : "") + gear;
             string arts = ArtifactState.OnChest(Data.Grade); // 109-14-5b 보패(무늬 ★4 · 옻칠 ★5 · 금박 ★5 둘)
             if (arts.Length > 0) mats += (mats.Length > 0 ? " · " : "") + arts;
+            string egg = EggState.Drop("chest:" + Data.Grade.ToString().ToLowerInvariant(), Data.Id); // U-0046 신수 알
+            if (egg.Length > 0) mats += (mats.Length > 0 ? " · " : "") + egg;
             string itemPart = "";
             if (!string.IsNullOrEmpty(Data.ItemId))
             {

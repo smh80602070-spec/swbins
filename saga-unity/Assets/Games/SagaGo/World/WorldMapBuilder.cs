@@ -62,6 +62,8 @@ namespace Saga.Go.World
             if (GetComponent<Saga.Go.UI.HelpUi>() == null) gameObject.AddComponent<Saga.Go.UI.HelpUi>(); // U-0043 도움말 창(F1)
             if (GetComponent<Saga.Go.UI.WeeklyUi>() == null) gameObject.AddComponent<Saga.Go.UI.WeeklyUi>(); // U-0044 주간 도전 창(U)·알림
             if (GetComponent<Saga.Go.UI.CycleUi>() == null) gameObject.AddComponent<Saga.Go.UI.CycleUi>(); // U-0045 별배 재출항 창(N)
+            if (GetComponent<EggWalker>() == null) gameObject.AddComponent<EggWalker>(); // U-0046 신수 알 걸음 세기·동행 몸(에셋이 놓이면)
+            if (GetComponent<Saga.Go.UI.EggUi>() == null) gameObject.AddComponent<Saga.Go.UI.EggUi>(); // U-0046 신수 알·동행 창(I)
             if (GetComponent<HomesteadField>() == null) gameObject.AddComponent<HomesteadField>(); // U-0032 쉼터 마당(표지·놓은 소품)
             if (GetComponent<Saga.Go.UI.HomesteadUi>() == null) gameObject.AddComponent<Saga.Go.UI.HomesteadUi>(); // U-0032 쉼터 창(J)
         }
