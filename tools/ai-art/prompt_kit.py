@@ -37,7 +37,7 @@ QUALITY = {  # 모델별 품질 꼬리표(모델 카드 권장값)
     'v1-5-pruned-emaonly': 'masterpiece, best quality, highly detailed',
 }
 
-DEFAULT_STYLE = 'P'   # 10-05 판정기 추천(K-0070 단계 5: P 통과 4/16·84.7 > C 3/16·68.8) — 사용자 거부권 'C' 한 글자면 되돌린다
+DEFAULT_STYLE = 'C'   # 10-05 판정기는 P 를 추천했으나(K-0070 단계 5) 사용자가 거부권 "C" 를 씀 — K-0068 이 C 로 재생성
 STYLES = {  # 그림체 블록 — 선·명암·색·조명. K-0068 의 B(현재)·P(먹선)·C(동화풍)
     'B': dict(name='부드러운 채색 + 얇은 윤곽(10-03~05 산출)',
               line='thin dark outline', shade='soft painterly shading', color='rich saturated colors, detailed texture',

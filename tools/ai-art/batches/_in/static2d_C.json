@@ -1,0 +1,417 @@
+{
+ "name": "static2d_C",
+ "spec": "sprite",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "items": [
+  {
+   "id": "eu_house_01",
+   "subject": "two-storey half-timbered house, steep tiled roof, chimney, small windows",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\eu_house_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "modern_block_01",
+   "subject": "modern three-storey apartment block, flat roof, ribbon windows, concrete walls",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\modern_block_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "future_dome_01",
+   "subject": "futuristic dome house, round white dome roof, ring windows, sci-fi dwelling, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, plain pastel gray-green background, centered, single object",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\future_dome_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "stone_tower_01",
+   "subject": "tall stone watchtower, four storeys, crenellated top, small arrow slits",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stone_tower_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "chinese_hall_01",
+   "subject": "grand hall, red pillars, wide curved tiled eaves, wooden palace building",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\chinese_hall_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "dungeon_gate_01",
+   "subject": "rocky arch entrance to a dungeon, stone stairs going down, dark opening",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\dungeon_gate_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "forest_cottage_01",
+   "subject": "small thatched cottage, round wooden door, tiny chimney, cozy hut",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\forest_cottage_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "inn_01",
+   "subject": "two-storey village inn, hanging sign board, tiled roof, wooden balcony",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\inn_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "barn_01",
+   "subject": "large red wooden barn, gabled roof, big double doors, hay loft",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\barn_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "hanok_01",
+   "subject": "traditional korean house, gray curved tile roof, wooden pillars, paper doors, stone base",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\hanok_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "jp_minka_01",
+   "subject": "traditional japanese farmhouse, thick thatched hip roof, wooden walls",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\jp_minka_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "silkroad_house_01",
+   "subject": "desert clay-brick house, flat roof, arched door, small windows, sand colored walls",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\silkroad_house_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "well_01",
+   "subject": "stone water well with small wooden roof, bucket and rope",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\well_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "street_lamp_01",
+   "subject": "iron street lamp post, glowing lantern, curved arm",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\street_lamp_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "signal_pylon_01",
+   "subject": "futuristic guide pylon, glowing cyan crystal top, white tapered pillar",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\signal_pylon_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "torch_stand_01",
+   "subject": "wooden torch stand, burning flame in a bowl",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\torch_stand_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "altar_01",
+   "subject": "stone altar, stepped platform, two small pillars",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\altar_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "iron_fence_01",
+   "subject": "black iron spear fence section with posts",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\iron_fence_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wood_fence_01",
+   "subject": "wooden picket fence section, rails and posts",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\wood_fence_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "mailbox_01",
+   "subject": "red wooden mailbox on a post, small flag",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mailbox_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "haystack_01",
+   "subject": "round haystack, golden hay cone",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\haystack_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "bamboo_clump_01",
+   "subject": "clump of green bamboo stalks with leaves",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\bamboo_clump_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "stele_01",
+   "subject": "stone stele monument with carved top roof, on a stone base",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stele_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "stone_lantern_01",
+   "subject": "stone garden lantern, tiered roof, glowing window",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stone_lantern_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "banner_pole_01",
+   "subject": "tall wooden banner pole with a plain red cloth banner, stone base",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\banner_pole_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "city_wall_segment_01",
+   "subject": "stone city wall section with battlements",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\city_wall_segment_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "brazier_01",
+   "subject": "iron fire brazier on three legs, glowing coals and flames",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\brazier_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "sail_boat_01",
+   "subject": "small wooden sailboat with a white sail, side view three-quarter",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\sail_boat_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "mine_cart_01",
+   "subject": "wooden mine cart with iron wheels, filled with ore",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mine_cart_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "raft_01",
+   "subject": "simple wooden log raft with a pole",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\raft_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "ox_cart_01",
+   "subject": "wooden ox cart with two big wheels, hay load",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\ox_cart_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "caravan_wagon_01",
+   "subject": "covered caravan wagon, canvas roof, four wheels",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\caravan_wagon_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_broadleaf_01",
+   "subject": "tall broadleaf tree, round leafy green crown, brown trunk",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_broadleaf_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_broadleaf_02",
+   "subject": "wide low broadleaf tree, thick trunk, spreading green crown",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_broadleaf_02.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_pine_01",
+   "subject": "green pine fir tree, layered cone shape",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_pine_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_pine_01_snow",
+   "subject": "snow covered pine fir tree, white snow on layered branches, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, plain pastel gray-green background, centered, single object",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_pine_01_snow.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_pine_02",
+   "subject": "tall pine tree, bare trunk, tufts of green needles on top",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_pine_02.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_dead_01",
+   "subject": "dead bare tree, twisted dark branches, no leaves",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_dead_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_birch_01",
+   "subject": "white birch tree, white trunk with black marks, light green leaves, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, plain pastel gray-green background, centered, single object",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_birch_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "bush_01",
+   "subject": "round green bush, leafy shrub",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\bush_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "grass_tuft_01",
+   "subject": "tuft of green grass blades",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\grass_tuft_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "flower_patch_01",
+   "subject": "patch of colorful wildflowers, yellow pink white purple, green stems",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\flower_patch_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "rock_small_01",
+   "subject": "small gray rock with a pebble",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\rock_small_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "rock_large_01",
+   "subject": "large gray boulder with two smaller rocks",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\rock_large_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "rock_moss_01",
+   "subject": "gray rock covered with green moss",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\rock_moss_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "pebbles_01",
+   "subject": "handful of small gray pebbles on the ground",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\pebbles_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "log_01",
+   "subject": "fallen tree log with cut end, small twig",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\log_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "stump_01",
+   "subject": "tree stump with roots and cut top rings",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\stump_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "mushroom_01",
+   "subject": "cluster of three mushrooms, red cap with white spots and orange caps",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mushroom_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "hill_01",
+   "subject": "small grassy hill mound, green grass",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\hill_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "mountain_01",
+   "subject": "rocky mountain peak with snow cap",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\mountain_01.png",
+   "denoise": 0.65
+  }
+ ]
+}

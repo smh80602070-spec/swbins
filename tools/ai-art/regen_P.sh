@@ -1,9 +1,9 @@
 #!/bin/bash
 # K-0068 재생성(그림체 P) 사슬 — 배치마다 24장씩 → SD 껐다 켬(RAM) → 다 뽑히면 판정기 score. 멱등(있는 그림은 gen.py 가 건너뜀)이라 끊기면 그냥 다시 돌린다.
-#   bash tools/ai-art/regen_P.sh [배치 이름...]   기본 static2d_P moving2d_P · 로그 tools/ai-art/_out/regen_P.log · 끝 줄 REGEN_DONE
+#   bash tools/ai-art/regen_P.sh [배치 이름...]   기본 static2d_P moving2d_P · 로그 tools/ai-art/_out/regen_P.log(REGEN_LOG=<경로> 로 바꿈) · 끝 줄 REGEN_DONE
 cd "$(dirname "$0")/../.."
 export PYTHONIOENCODING=utf-8
-LOG=tools/ai-art/_out/regen_P.log
+LOG=${REGEN_LOG:-tools/ai-art/_out/regen_P.log}
 BATCHES=("$@"); [ ${#BATCHES[@]} -eq 0 ] && BATCHES=(static2d_P moving2d_P)
 echo "== 시작 $(date +%T) ${BATCHES[*]}" >> "$LOG"
 for b in "${BATCHES[@]}"; do
