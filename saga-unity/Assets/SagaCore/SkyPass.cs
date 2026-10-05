@@ -128,11 +128,13 @@ namespace Saga.Core
                 yield return null; yield return null; // 씬의 Awake/Start 가 끝난 뒤
                 var mode = ModeFor(SceneManager.GetActiveScene().name);
                 if (mode == Mode.None) yield break;
+                if (mode == Mode.SkyAndLight) SkyWeather.Install(Camera.main); // U-0047 구름 3겹·계절 날씨 입자(끄기 SAGA_NO_WEATHER=1)
                 string applied = null;
                 var wait = new WaitForSeconds(60f);
                 while (true)
                 {
                     string want = SkyPanorama.NameFor(HourFn(), Era);
+                    if (SkyWeather.Instance != null) SkyWeather.Instance.Refresh(); // 날씨(3시간)·시간대 색이 바뀌었으면 맞춘다
                     if (want != applied)
                     {
                         bool done = mode == Mode.LightOnly ? SkyPanorama.TryMarker(want, out _) : SkyPanorama.Apply(want, Camera.main);

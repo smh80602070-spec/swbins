@@ -1522,5 +1522,22 @@
   "ticket": "U-0043",
   "since": "2026-10-05",
   "note": "D2(2026-10-05): saga-unity/docs/playcheck/d2-u0043-0046-20261005.json — 줄 5 마다 그 창이 열림·원래 단추 숨김(진단) + UiLayoutCheck 로 첫 화면 겹침 0·밖 0(세 화면비). 모양은 눈"
+ },
+ {
+  "id": "un.go.sky-weather",
+  "name": "하늘 구름 3겹·계절·날씨(비·눈·안개 입자·안개 농도) — 사가고 마을·사가의숲·사가스토리 하늘 씬(U-0047, 고돗 weather.gd·season.gd 이식)",
+  "files": [
+   "saga-unity/Assets/SagaCore/SkyWeather.cs",
+   "saga-unity/Assets/SagaCore/SkyPass.cs"
+  ],
+  "tests": [
+   "PlaytestSkyWeather"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0047",
+  "since": "2026-10-05",
+  "note": "D2(2026-10-05): PlaytestSkyWeather.RunBatch OK(계절·날씨 표·3시간 결정론·분포·강제·구름 겹 3·입자 셋·안개 곱 왕복) + GUI 촬영 비교 saga-unity/docs/playcheck/u0047_sky_no_weather.png ↔ u0047_sky_rain_clouds.png(날씨 끄면 단색 하늘, 켜면 구름 겹·비 줄기). 못 잰 것: 눈·안개 장면 촬영·걸을 때 비가 제자리에 남는 느낌·밤 구름 색(눈 필요)"
  }
 ]
