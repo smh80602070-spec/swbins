@@ -43,6 +43,8 @@ const SHOTS := [
 	["o_skyport_field", "skyport", Vector2(2.4, 3.2), Vector3.ZERO, Vector2(3.4, 2.4), -2.0, 12.0, ""],
 	["o_sunken_field", "sunken", Vector2(4.0, 4.5), Vector3.ZERO, Vector2(5.0, 3.5), -2.0, 12.0, ""],
 	["k_ride_horse", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "mount:pt_jeolyeong"],
+	["k_ride_horse_a", "village", "v_statue", Vector3(9, 0, 0), "v_statue", -6.0, 5.0, "mount:pt_jeolyeong"],
+	["k_ride_horse_b", "village", "v_statue", Vector3(0, 0, 9), "v_statue", -6.0, 5.0, "mount:pt_jeolyeong"],
 	["k_ride_tiger", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -12.0, 7.0, "mount:pt_baekho"],
 	["k_ride_crow", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -14.0, 9.0, "mount:pt_samjogo"],
 	["k_ride_dragon", "village", "v_statue", Vector3(9, 0, 9), "v_statue", -14.0, 11.0, "mount:pt_cheongryong"],

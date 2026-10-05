@@ -125,6 +125,8 @@ func _physics_process(_delta: float) -> void:
 				Input.action_press("move_forward")
 				_next()
 		6: # ⑦ 북쪽 둑(3,6 들판)까지 헤엄쳐 넘어오른다
+			if _frame == 30:
+				_check_pose("pose_swim_move", "swim", "walk")   # G-0025 — 헤엄치며 나아가는 중
 			if _p.mode == _p.Mode.GROUND and _p.is_on_floor():
 				Input.action_release("move_forward")
 				var bank_z := TestMap.world_pos(3, 7).z - TestMap.TILE_SIZE * 0.5
