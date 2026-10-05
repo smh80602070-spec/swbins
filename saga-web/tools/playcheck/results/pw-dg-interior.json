@@ -1,0 +1,33 @@
+{
+ "script": "pw-dg-interior.mjs",
+ "game": "saga-dungeon",
+ "pass": 5,
+ "total": 5,
+ "checks": [
+  {
+   "name": "2D 모드로 들어간다",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "실내 창 — 나그네 쉼터: 열리고 그림 2장이 받아진다",
+   "ok": true,
+   "detail": "{\"name\":\"나그네 쉼터\",\"shown\":true,\"imgs\":2,\"st\":[200,200]}"
+  },
+  {
+   "name": "실내 창 — 마방: 열리고 그림 2장이 받아진다",
+   "ok": true,
+   "detail": "{\"name\":\"마방\",\"shown\":true,\"imgs\":2,\"st\":[200,200]}"
+  },
+  {
+   "name": "실내 창 — 방앗간: 열리고 그림 2장이 받아진다",
+   "ok": true,
+   "detail": "{\"name\":\"방앗간\",\"shown\":true,\"imgs\":2,\"st\":[200,200]}"
+  },
+  {
+   "name": "페이지 예외 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}
