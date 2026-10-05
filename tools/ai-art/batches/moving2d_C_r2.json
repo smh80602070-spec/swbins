@@ -1,0 +1,32 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "moving2d_C_r2",
+ "kit": {
+  "spec": "character",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 640,
+  "height": 896,
+  "steps": 30,
+  "cfg": 6.0,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, bad anatomy, bad hands, extra fingers, extra limbs, multiple views, multiple people, frame, border, ground shadow",
+  "variants": 6
+ },
+ "items": [
+  {
+   "id": "beast_wolf_front",
+   "seed": 1223715635,
+   "prompt": "(gray wolf:1.15), wolf, animal focus, no humans, canine, gray and white fur, bushy gray tail, standing on four legs, natural colors, alert, front view, facing viewer, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "width": 768,
+   "height": 768,
+   "steps": 28,
+   "cfg": 5.5,
+   "spec": "creature"
+  }
+ ]
+}

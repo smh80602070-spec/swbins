@@ -1,0 +1,27 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "static2d_C_r2",
+ "kit": {
+  "spec": "sprite",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 6
+ },
+ "items": [
+  {
+   "id": "flower_patch_01",
+   "seed": 2207449203,
+   "prompt": "(wildflower patch:1.2), flower bed, many blossoms, vivid petals, yellow pink white purple, green stems, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon"
+  }
+ ]
+}

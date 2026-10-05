@@ -32,13 +32,26 @@ report, rows = {}, []
 for cid, views in chars.items():
     cut = {}
     for v, f in views.items():
-        im = matte2(Image.open(os.path.join(src, f)), tol=9, holes_max=(20000 if cid.startswith('beast') else 30000))
+        im = matte2(Image.open(os.path.join(src, f)), tol=int(os.environ.get('MATTE_TOL', 9)), holes_max=int(os.environ.get('MATTE_HOLES', 20000 if cid.startswith('beast') else 30000)))   # C 그림체(윤곽선 없는 연한 색): MATTE_HOLES=0 MATTE_TOL=20 — 몸 안쪽 흰 면을 구멍으로 안 지운다
+        if os.environ.get('MATTE_FLOOR'):      # C 그림체: 바닥 띠 색이 위쪽 배경과 달라 남는다 → 아래 가장자리 색으로 한 번 더 바닥에서부터 지운다(넓고 납작한 것만)
+            src_rgb = np.asarray(Image.open(os.path.join(src, f)).convert('RGB')).astype(np.int16)
+            hh, ww = src_rgb.shape[:2]
+            bbc = np.median(src_rgb[-6:].reshape(-1, 3), axis=0)
+            cand = np.abs(src_rgb - bbc).max(axis=2) <= int(os.environ.get('MATTE_FLOOR'))
+            lab2, n2 = ndimage.label(cand, structure=np.ones((3, 3)))
+            alpha0 = np.asarray(im.getchannel('A')).astype(np.uint8)
+            for i2 in set(lab2[-1][lab2[-1] > 0].tolist()):
+                comp = lab2 == i2
+                ys, xs = np.nonzero(comp)
+                if comp.sum() >= 0.012 * hh * ww and (xs.max() - xs.min()) >= 0.25 * ww and (ys.max() - ys.min()) <= 0.35 * hh:
+                    alpha0[comp] = 0
+            im.putalpha(Image.fromarray(alpha0))
         # 떠 있는 작은 조각(화살 끝·먼지·점) 정리: 가장 큰 덩어리의 2% 미만인 덩어리는 지운다
         al = np.asarray(im.getchannel('A')).astype(np.uint8)
         lab, n = ndimage.label(al > 24, structure=np.ones((3, 3)))
         if n > 1:
             sizes = ndimage.sum(np.ones_like(lab), lab, range(1, n + 1))
-            keep = [i + 1 for i, z in enumerate(sizes) if z >= 0.02 * sizes.max()]
+            keep = [i + 1 for i, z in enumerate(sizes) if z >= float(os.environ.get('MATTE_MINCOMP', 0.02)) * sizes.max()]
             al = np.where(np.isin(lab, keep), al, 0).astype(np.uint8)
             im.putalpha(Image.fromarray(al))
         bb = im.getchannel('A').point(lambda x: 255 if x > 24 else 0).getbbox()
