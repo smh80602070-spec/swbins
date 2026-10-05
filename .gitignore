@@ -54,3 +54,4 @@ tools/asset-forge/_out/
 
 # 그래픽 게이트 새 촬영(tools/graphics-gate) — 기준(baseline)만 커밋한다
 graphics/latest/
+tools/autorun/_log/
