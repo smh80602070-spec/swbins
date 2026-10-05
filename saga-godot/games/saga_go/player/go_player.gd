@@ -145,7 +145,8 @@ func set_hero_body(id: String) -> void:
 	if body == null:
 		return
 	_body_id = id
-	swap_body(body, [_glider])
+	## 낚시 중 편성을 바꿔도 낚싯대가 안 사라지게 같이 옮긴다(R-5 점검).
+	swap_body(body, [_glider, visual.get_node_or_null("FishingRod")])
 	_yaw = visual.rotation.y
 	if mounted:   # 탈것을 탄 채 바뀌면 새 몸도 안장 자세로(옛 몸의 SeatPose 는 같이 사라진다)
 		var mt := get_node_or_null("Mount")
