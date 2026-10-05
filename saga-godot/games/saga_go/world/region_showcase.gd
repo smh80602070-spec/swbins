@@ -249,8 +249,7 @@ func _run_probe() -> void:
 		var gerr := _ground_error(ld)
 		if gerr > 1.5:
 			bad.append("땅 높이가 조각 z 와 평균 %.1fm 어긋남" % gerr)
-		if ld.layout.has("terrain") and (ld.layout.terrain as Dictionary).get("materials") is Dictionary and (ld.layout.get("fog") is Dictionary) and int(ld.stats.lid_cells) == 0:
-			bad.append("안개 뚜껑 칸 0 (걷어낼 게 없음?)")
+		## 안개 뚜껑 칸(lid_cells)은 참고 값 — K-0051(dcae226ed)이 배치표 땅 높이를 땅 오브젝트만 재도록 고친 뒤로 서리봉·나루는 0 이 정상이다(땅 높이 오차 검사가 맞는지 본다).
 		var flipped := _flipped_tris(ld)
 		if flipped > 0:
 			bad.append("뒤집힌 삼각형 %d" % flipped)

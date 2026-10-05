@@ -2,7 +2,7 @@ extends SceneTree
 ## GLB 몇 개를 밝은 무대에 나란히 세워 한 장 찍는다 — 시험 씬이 어두울 때 모양만 눈으로 볼 때(평소엔 안 쓴다).
 ##
 ##   SAGA_VIEW_GLBS=res://assets/world/a.glb,res://assets/world/b.glb SAGA_VIEW_OUT=<절대 경로.png> SAGA_VIEW_GAP=14 \
-##     "$GODOT_CONSOLE" --path saga-godot --rendering-method mobile --position -4000,0 --resolution 1280x720 --script res://tools/probe_glb_view.gd </dev/null
+##     "$GODOT_CONSOLE" --path saga-godot --rendering-method mobile --position -4000,0 --resolution 1280x720 --script res://tools/view_glb.gd </dev/null
 ##
 ## 카메라는 가운데 GLB 를 위에서 비스듬히(거리 SAGA_VIEW_DIST, 기본 26) 내려다본다.
 
