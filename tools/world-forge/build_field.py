@@ -49,6 +49,11 @@ def stone_mat(C, tint='#9b968c', tile=1.2):
     return C.s('castle_wall_slates', tile, tint)
 
 
+def rock_mat(C, tint='#9b968c', tile=1.5):
+    """흩어진 돌(디딤돌·잔해) — 판석 무늬는 작은 덩이에선 나무껍질처럼 보여(10-06 눈 판정) 자연 세트 바위와 같은 재질로."""
+    return C.s('concrete_wall_001', tile, tint, gain=1.25)
+
+
 # ---------------------------------------------------------------- field 13
 
 def _wheat(C, n, h, hue, ear, seed, lean):
@@ -137,7 +142,7 @@ def _stepping(C, spec, seed):
     M = C.M
     rnd = random.Random(seed)
     for k, (x, y, rx, ry, h) in enumerate(spec):
-        st = stone_mat(C, ('#a39d90', '#8f8a80', '#b0a898')[k % 3], 1.0)
+        st = rock_mat(C, ('#a39d90', '#8f8a80', '#b0a898')[k % 3], 1.0)
         tube(M, (x, y, 0), (x, y, h), rx, rx * 0.93, st, 1.0, 7)
         tube(M, (x, y, h), (x, y, h + 0.01), rx * 0.93 * ry / rx, rx * 0.8, st, 1.0, 7)
 
@@ -149,13 +154,13 @@ def stepping_stone_01(C):
 def stepping_stone_02(C):
     M = C.M
     for k, (x, y, w, d, yaw, h) in enumerate([(-0.3, -0.7, 0.62, 0.5, 8, 0.1), (0.25, -0.1, 0.56, 0.6, -12, 0.12), (-0.25, 0.5, 0.64, 0.46, 15, 0.09), (0.3, 1.0, 0.5, 0.5, -6, 0.1)]):
-        obox(M, (x, y, 0), (w, d, h), yaw, stone_mat(C, ('#a39d90', '#8f8a80')[k % 2], 1.0), 1.0)
+        obox(M, (x, y, 0), (w, d, h), yaw, rock_mat(C, ('#a39d90', '#8f8a80')[k % 2], 1.0), 1.0)
 
 
 def rubble_pillar_01(C):
     M = C.M
-    st = stone_mat(C, '#9b968c')
-    dk = stone_mat(C, '#7f7a72')
+    st = rock_mat(C, '#9b968c')
+    dk = rock_mat(C, '#7f7a72')
     obox(M, (0, 0, 0), (1.2, 1.2, 0.28), 0, dk)
     tube(M, (0, 0, 0.28), (0, 0, 1.15), 0.44, 0.42, st, 1.5, 8)                                # 부러진 몸통
     tube(M, (0, 0, 1.15), (0.1, 0.05, 1.42), 0.42, 0.22, st, 1.5, 8)                           # 삐죽한 부러진 끝
@@ -167,8 +172,8 @@ def rubble_pillar_01(C):
 
 def rubble_wall_01(C):
     M = C.M
-    st = stone_mat(C, '#8f8a80')
-    st2 = stone_mat(C, '#a29d92')
+    st = rock_mat(C, '#8f8a80')
+    st2 = rock_mat(C, '#a29d92')
     rows = [(0.0, 0.5, [0.9, 0.8, 1.0, 0.9]), (0.5, 0.45, [0.8, 1.1, 0.6]), (0.95, 0.4, [0.7, 0.9])]
     for z, h, parts in rows:
         x = -1.8 + (0 if z == 0 else 0.2 * (z > 0.9) + 0.4 * (z > 0.4 and z < 0.9))

@@ -3,6 +3,7 @@
 바탕 투명·그림자 없음·부드러운 앞빛 — 웹 장면의 빛 위에 얹어 쓴다.
 """
 import math
+import os
 import sys
 
 import bpy
@@ -34,10 +35,15 @@ cam = bpy.data.objects.new('c', cam_d); sc.collection.objects.link(cam); sc.came
 azr, elr = math.radians(az), math.radians(el)
 cam.location = ctr + Vector((math.sin(azr) * math.cos(elr), -math.cos(azr) * math.cos(elr), math.sin(elr))) * rad * 4
 cam.rotation_euler = (ctr - cam.location).to_track_quat('-Z', 'Y').to_euler()
-try:
-    sc.render.engine = 'BLENDER_EEVEE_NEXT'
-except TypeError:
-    sc.render.engine = 'BLENDER_EEVEE'
+if os.environ.get('WF_CPU'):                     # WF_CPU=1 → Cycles CPU(SD 등 GPU 작업과 겹칠 때 확인용, 빛 느낌은 약간 다르다)
+    sc.render.engine = 'CYCLES'
+    sc.cycles.device = 'CPU'
+    sc.cycles.samples = 32
+else:
+    try:
+        sc.render.engine = 'BLENDER_EEVEE_NEXT'
+    except TypeError:
+        sc.render.engine = 'BLENDER_EEVEE'
 sc.render.film_transparent = True
 sc.render.resolution_x = sc.render.resolution_y = size
 sc.view_settings.view_transform = 'Standard'
