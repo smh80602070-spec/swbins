@@ -82,6 +82,12 @@ def setup_light():
 
 
 def set_engine():
+    if os.environ.get('WF_CPU'):                 # WF_CPU=1 → Cycles CPU(SD 등 GPU 작업과 겹칠 때 확인용)
+        sc.render.engine = 'CYCLES'
+        sc.cycles.device = 'CPU'
+        sc.cycles.samples = 16
+        sc.view_settings.view_transform = 'AgX'
+        return
     for eng in ('BLENDER_EEVEE_NEXT', 'BLENDER_EEVEE'):
         try:
             sc.render.engine = eng
