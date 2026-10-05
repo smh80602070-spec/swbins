@@ -184,7 +184,34 @@ func _physics_process(_delta: float) -> void:
 			var ok: bool = is_equal_approx(float(a.player_pos[0]), 580.0) and is_equal_approx(float(b.player_pos[2]), 482.0) 				and is_equal_approx(float(c.player_pos[0]), -24.0) and int(a.version) == int(SaveState.SAVE_VERSION)
 			_check("save_migrate", ok, "%s %s %s" % [str(a.player_pos), str(b.player_pos), str(c.player_pos)])
 			_next()
-		12:
+		12: # ⑬ G-0025 — 낙하 공격 동작(공중 높이 40m 에서 시작)
+			if _frame == 1:
+				_teleport(TestMap.world_pos(5, 4) + Vector3(0, 40.0, 0))
+			if _frame == 12:
+				_check("plunge_start", _p.start_plunge(), "mode=%d %s" % [_p.mode, _pos()])
+			if _frame == 26:
+				_check_pose("pose_plunge", "plunge", "idle")   # 0.8초 공격 동작(_action_t)이 클립을 막지 않는지
+				_next()
+		13: # ⑭ G-0025 — 턱 넘기 동작
+			if _frame == 1:
+				_p.stamina = _p.STAMINA_MAX
+				_teleport(TestMap.world_pos(5, 4) + Vector3(0, 1.0, 0))
+			if _frame == 40:
+				_p._start_mantle(_p.global_position + Vector3(1.0, 1.2, 0.0))
+			if _frame == 44:
+				_check_pose("pose_mantle", "mantle", "idle")
+				_next()
+		14: # ⑮ G-0025 — 시전·폭발 동작
+			if _frame == 60:
+				_p.play_action("skill", 0.4, 0.5)
+			if _frame == 62:
+				_check_pose("pose_skill", "skill", "attack")
+			if _frame == 120:
+				_p.play_action("burst", 0.6, 0.0)
+			if _frame == 122:
+				_check_pose("pose_burst", "burst", "attack")
+				_next()
+		15:
 			print("TRAVERSAL_PROBE_DONE fails=%d" % _fails)
 			get_tree().quit()
 

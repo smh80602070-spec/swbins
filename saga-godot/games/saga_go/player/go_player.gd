@@ -628,7 +628,8 @@ func start_plunge() -> bool:
 	_plunge = true
 	_plunge_from_y = global_position.y
 	velocity = Vector3(0.0, -PLUNGE_SPEED, 0.0)
-	play_action("attack", 0.8, 0.0)
+	if _anim == null or not _anim.has_animation("plunge"):
+		play_action("attack", 0.8, 0.0)   # G-0025 — 낙하 클립이 있는 몸은 클립이 막히지 않게 공격 동작을 안 건다
 	return true
 
 func is_plunging() -> bool:
