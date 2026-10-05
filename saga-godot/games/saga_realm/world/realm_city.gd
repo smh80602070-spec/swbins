@@ -84,11 +84,11 @@ func _ready() -> void:
 func _show_scenario_picker() -> void:
 	var layer_box := {}
 	var choices: Array = [
-		{"label": "194년 · 군웅할거 (조조, 성 3곳)",
+		{"label": "194년 · 군웅할거 (패헌, 성 3곳)",
 		 "cb": func() -> void: _pick_scenario("194", layer_box)},
-		{"label": "200년 · 관도 (조조, 성 8곳)",
+		{"label": "200년 · 관도 (패헌, 성 8곳)",
 		 "cb": func() -> void: _pick_scenario("200", layer_box)},
-		{"label": "208년 · 적벽 (조조, 성 19곳)",
+		{"label": "208년 · 적벽 (패헌, 성 19곳)",
 		 "cb": func() -> void: _pick_scenario("208", layer_box)},
 	]
 	layer_box["layer"] = ChoicePrompt.build(self, "새 게임 — 시나리오를 고른다", choices)
