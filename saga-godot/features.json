@@ -2294,10 +2294,175 @@
   "tests": [
    "item_icons"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": "G-0016",
   "since": "2026-10-03"
+ },
+ {
+  "id": "gd.go.nature_unified",
+  "name": "통일 자연 소품(K-0052) — 마을·고원·폐허·성·스토리·마당 나무·풀·꽃·바위를 assets/world GLB 로",
+  "files": [
+   "games/saga_go/world/vegetation_builder.gd",
+   "saga_core/world/world_asset.gd",
+   "games/saga_story/world/story_background.gd"
+  ],
+  "tests": [
+   "nature_assets",
+   "world_asset"
+  ],
+  "level": "D3",
+  "verified": "2026-10-06",
+  "fun": {},
+  "ticket": "G-0017",
+  "since": "2026-10-04",
+  "human": true
+ },
+ {
+  "id": "gd.go.feel_tuning",
+  "name": "전투·이동 손맛 단계 1~5 — 타격감·입력 버퍼·이동 프리셋(SAGA_MOVE)·카메라 타격 당김·적 행동 손잡이",
+  "files": [
+   "games/saga_go/combat/feel_tuning.gd",
+   "games/saga_go/player/go_player.gd",
+   "games/saga_go/player/camera_rig.gd",
+   "games/saga_go/combat/field_combat.gd",
+   "tools/probe_feel.gd"
+  ],
+  "tests": [
+   "feel"
+  ],
+  "level": "D3",
+  "verified": "2026-10-06",
+  "fun": {},
+  "ticket": "G-0018",
+  "since": "2026-10-04",
+  "human": true
+ },
+ {
+  "id": "gd.fs.nature_unified",
+  "name": "사가의숲 자연 소품을 통일 툰 GLB 로(곡률 재질에 표면별 텍스처)",
+  "files": [
+   "saga_core/world/world_curve_material.gd",
+   "games/saga_forest/world/forest_vegetation_builder.gd",
+   "games/saga_forest/world/forest_biome_scatter.gd"
+  ],
+  "tests": [
+   "forest_assets"
+  ],
+  "level": "D3",
+  "verified": "2026-10-06",
+  "fun": {},
+  "ticket": "G-0019",
+  "since": "2026-10-04",
+  "human": true
+ },
+ {
+  "id": "gd.go.kenney_out",
+  "name": "Kenney 원본 에셋 걷어냄 — 채집물·밀·동굴 입구·제단·기둥·숲 집·다리 널판·던전 방 키트를 새 GLB 로",
+  "files": [
+   "games/saga_go/world/landmarks_builder.gd",
+   "games/saga_forest/world/gatherable_builder.gd",
+   "games/saga_dungeon/world/test_room.gd"
+  ],
+  "tests": [
+   "world_asset"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0020",
+  "since": "2026-10-04",
+  "human": true
+ },
+ {
+  "id": "gd.go.procgen_glb",
+  "name": "옛 procgen 소품·디딤돌·노획물 지상 모델을 K-0053·K-0057 GLB 로",
+  "files": [
+   "saga_core/world/world_asset.gd",
+   "games/saga_go/world/vegetation_builder.gd",
+   "games/saga_dungeon/world/loot_pickup.gd"
+  ],
+  "tests": [
+   "nature_assets",
+   "loot_glow",
+   "ruins_procgen",
+   "world_asset"
+  ],
+  "level": "D3",
+  "verified": "2026-10-06",
+  "fun": {},
+  "ticket": "G-0021",
+  "since": "2026-10-04",
+  "human": true
+ },
+ {
+  "id": "gd.go.dex_bodies",
+  "name": "인물 299명(characters_dex) 몸을 마을 주민·어부·이야기 인물·스토리 NPC 에(없으면 옛 몸)",
+  "files": [
+   "saga_core/world/vroid_body.gd",
+   "tools/probe_dex_bodies.gd"
+  ],
+  "tests": [
+   "dex_bodies"
+  ],
+  "level": "D3",
+  "verified": "2026-10-06",
+  "fun": {},
+  "ticket": "G-0022",
+  "since": "2026-10-04",
+  "human": true
+ },
+ {
+  "id": "gd.go.perf_village",
+  "name": "마을 PERF 예산 — 다른 지역 식생 거리 컷, draw ≤260·삼각형 평균 ≤35만",
+  "files": [
+   "games/saga_go/world/render_budget.gd",
+   "tools/probe_perf.gd"
+  ],
+  "tests": [
+   "perf"
+  ],
+  "level": "D3",
+  "verified": "2026-10-06",
+  "fun": {},
+  "ticket": "G-0023",
+  "since": "2026-10-04"
+ },
+ {
+  "id": "gd.go.hero_body_swap",
+  "name": "플레이어·도감 주역을 새 인물 몸으로 — 편성 전환 때 몸 교체, 탈것 안장 자세 유지",
+  "files": [
+   "games/saga_go/player/go_player.gd",
+   "saga_core/world/vroid_body.gd",
+   "tools/probe_dex_bodies.gd"
+  ],
+  "tests": [
+   "dex_bodies",
+   "traversal"
+  ],
+  "level": "D3",
+  "verified": "2026-10-06",
+  "fun": {},
+  "ticket": "G-0024",
+  "since": "2026-10-04",
+  "human": true
+ },
+ {
+  "id": "gd.go.traversal_clips",
+  "name": "이동·시전 동작 10종(K-0059) — 점프·낙하·착지·활공·등반·수영·턱·낙하 공격·스킬·폭발",
+  "files": [
+   "games/saga_go/player/go_player.gd",
+   "saga_core/world/vroid_body.gd"
+  ],
+  "tests": [
+   "traversal"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0025",
+  "since": "2026-10-04",
+  "human": true
  }
 ]
