@@ -222,7 +222,20 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 3:
 				_check("rod_keeps", _p.visual.get_node_or_null("FishingRod") != null, "body=%s" % str(_p._body_id))
 				_next()
-		16:
+		16: # ⑰ G-0020 — 새 널판 다리를 끝에서 끝까지 걸어 건넌다(물에 안 빠지고 길이 이어진다)
+			if _frame == 1:
+				var b := TestMap.world_pos(5, 7)
+				_teleport(Vector3(b.x, 3.0, b.z - 26.0))
+				_x0 = b.z
+			if _frame == 30:
+				Input.action_press("move_back")
+			if _frame == 300:
+				_check("bridge_mid", _p.mode == _p.Mode.GROUND and absf(_p.global_position.z - _x0) < 12.0, "mode=%d %s mid_z=%.1f" % [_p.mode, _pos(), _x0])
+			if _frame == 640:
+				Input.action_release("move_back")
+				_check("bridge_cross", _p.mode == _p.Mode.GROUND and _p.global_position.z > _x0 + 18.0, "mode=%d %s mid_z=%.1f" % [_p.mode, _pos(), _x0])
+				_next()
+		17:
 			print("TRAVERSAL_PROBE_DONE fails=%d" % _fails)
 			get_tree().quit()
 

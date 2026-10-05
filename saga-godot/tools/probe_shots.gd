@@ -32,6 +32,7 @@ const SHOTS := [
 	["n_statue_far", "village", "v_statue", Vector3(3, 0, 12), "v_statue", -2.0, 14.0, "night"],
 	["c_sea", "coast", Vector2(3.0, 3.75), Vector3.ZERO, Vector2(3.0, 2.2), -22.0, 12.0, ""],
 	["v_river", "village", Vector2(3.5, 6.6), Vector3.ZERO, Vector2(3.5, 7.0), -25.0, 10.0, ""],
+	["v_bridge", "village", Vector2(5.0, 6.2), Vector3(8, 0, 0), Vector2(5.0, 7.0), -12.0, 14.0, ""],
 	["x_swing", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing3"],
 	["x_swing_late", "ruins", "r_statue", Vector3(9, 0, 9), "r_statue", -24.0, 7.5, "swing8"],
 	["x_fxring", "ruins", "r_statue", Vector3(14, 0, -4), "r_statue", -32.0, 14.0, "fxring"],
