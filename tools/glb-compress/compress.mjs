@@ -13,10 +13,14 @@
  * 그대로 두고 **용량만 줄인다** — simplify(정점 삭감)·palette·join·flatten·
  * instance 는 전부 꺼서 모양·구조를 안 건드린다.
  *
- * 사용법: node compress.mjs <대상 폴더> [--dry] [--force]
+ * 사용법: node compress.mjs <대상 폴더> [--dry] [--force] [--mesh-only]
  *   대상 폴더    예: ../../saga-web/saga-dungeon/assets/models
  *   --dry        실제로 바꾸지 않고 크기 변화만 미리 본다
  *   --force      이미 처리 표시(manifest)가 있어도 다시 돌린다
+ *   --mesh-only  (K-0071 웹 모드) 메시·애니만 Meshopt, **텍스처는 바이트 하나 안 건드린다**(WebP 변환·축소 없음).
+ *                이미 EXT_meshopt_compression 이 들어 있는 파일은 건너뛰고, gltf-transform 이 모르는 확장(VRM)이 든 파일은
+ *                optimize 가 그 데이터를 버리므로 원본을 지킨다. 산출은 verify.mjs(삼각형·쉼 자세 바운딩·스킨·애니·
+ *                그림 바이트)를 통과한 것만 제자리 교체한다. 화질 안 깎기 규칙(사용자).
  *
  * 처리 기록은 대상 폴더 안 `.glb-compress-manifest.json`에 남는다 — 이미
  * 압축된 파일을 또 압축하면(특히 손실 WebP) 화질이 거듭 깎이므로, 한 번
@@ -35,10 +39,11 @@ const CLI_JS = path.join(HERE, 'node_modules', '@gltf-transform', 'cli', 'bin', 
 const args = process.argv.slice(2);
 const dry = args.includes('--dry');
 const force = args.includes('--force');
+const meshOnly = args.includes('--mesh-only');
 const target = args.find((a) => !a.startsWith('--'));
 
 if (!target) {
-  console.error('사용법: node compress.mjs <대상 폴더> [--dry] [--force]');
+  console.error('사용법: node compress.mjs <대상 폴더> [--dry] [--force] [--mesh-only]');
   process.exit(1);
 }
 
@@ -50,6 +55,7 @@ if (!fs.existsSync(root)) {
 
 const manifestPath = path.join(root, '.glb-compress-manifest.json');
 const manifest = fs.existsSync(manifestPath) ? JSON.parse(fs.readFileSync(manifestPath, 'utf8')) : {};
+const verifyPair = meshOnly ? (await import('./verify.mjs')).verifyPair : null;
 
 function walk(dir, out) {
   for (const name of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -60,18 +66,35 @@ function walk(dir, out) {
   return out;
 }
 
+/* GLB 머리(12B) 다음 첫 청크 = JSON. extensionsUsed 만 본다(파일 전체를 파싱하지 않는다) */
+function glbExtensions(file) {
+  const fd = fs.openSync(file, 'r');
+  try {
+    const head = Buffer.alloc(20);
+    fs.readSync(fd, head, 0, 20, 0);
+    if (head.readUInt32LE(0) !== 0x46546C67) return null;
+    const len = head.readUInt32LE(12);
+    const json = Buffer.alloc(len);
+    fs.readSync(fd, json, 0, len, 20);
+    const j = JSON.parse(json.toString('utf8'));
+    return new Set([...(j.extensionsUsed || []), ...(j.extensionsRequired || [])]);
+  } finally { fs.closeSync(fd); }
+}
+/* gltf-transform 이 모르는 확장(VRM 등)은 optimize 가 **버린다** — 그런 파일은 원본을 지킨다 */
+const KNOWN_EXT = meshOnly ? new Set((await import('@gltf-transform/extensions')).ALL_EXTENSIONS.map((e) => e.EXTENSION_NAME)) : null;
+
 const files = walk(root, []);
-console.log(`${files.length}개 GLB 발견 (${root})`);
+console.log(`${files.length}개 GLB 발견 (${root})` + (meshOnly ? ' — 메시만(--mesh-only), 텍스처 그대로' : ''));
 
 const OPTIMIZE_FLAGS = [
   '--compress', 'meshopt', '--meshopt-level', 'high',
-  '--texture-compress', 'webp', '--texture-size', '1024',
+  ...(meshOnly ? ['--texture-compress', 'false'] : ['--texture-compress', 'webp', '--texture-size', '1024']),
   '--simplify', 'false', '--palette', 'false', '--join', 'false',
   '--flatten', 'false', '--instance', 'false',
   '--resample', 'true', '--prune', 'true', '--weld', 'true', '--sparse', 'true'
 ];
 
-let totalBefore = 0, totalAfter = 0, done = 0, skipped = 0, failed = 0;
+let totalBefore = 0, totalAfter = 0, done = 0, skipped = 0, failed = 0, already = 0, rejected = 0, unknownExt = 0;
 
 for (const file of files) {
   const rel = path.relative(root, file);
@@ -81,6 +104,22 @@ for (const file of files) {
     skipped++;
     totalBefore += before; totalAfter += before;
     continue;
+  }
+  if (meshOnly) {
+    const ext = glbExtensions(file);
+    if (ext && ext.has('EXT_meshopt_compression')) {
+      already++;
+      totalBefore += before; totalAfter += before;
+      continue;
+    }
+    const unknown = ext ? [...ext].filter((e) => !KNOWN_EXT.has(e)) : [];
+    if (unknown.length) {
+      unknownExt++;
+      manifest[rel] = { size: before, result: 'kept-unknown-ext', ext: unknown, at: new Date().toISOString() };
+      totalBefore += before; totalAfter += before;
+      console.log(`- ${rel}  ${(before / 1024).toFixed(0)}KB → 그대로(모르는 확장 ${unknown.join(',')} — optimize 가 버린다)`);
+      continue;
+    }
   }
   const tmp = file + '.tmp.glb';
   try {
@@ -92,13 +131,24 @@ for (const file of files) {
       manifest[rel] = { size: before, result: 'kept-original', at: new Date().toISOString() };
       totalBefore += before; totalAfter += before;
       console.log(`- ${rel}  ${(before / 1024).toFixed(0)}KB → 그대로(이미 작음)`);
-    } else {
-      if (!dry) { fs.renameSync(tmp, file); } else { fs.unlinkSync(tmp); }
-      manifest[rel] = { size: dry ? before : after, result: 'ok', at: new Date().toISOString() };
-      totalBefore += before; totalAfter += after;
-      done++;
-      console.log(`✔ ${rel}  ${(before / 1024).toFixed(0)}KB → ${(after / 1024).toFixed(0)}KB` + (dry ? ' (dry-run, 실제로는 안 바꿈)' : ''));
+      continue;
     }
+    if (verifyPair) {
+      const v = await verifyPair(file, tmp, { keepImages: true });
+      if (!v.ok) {
+        fs.unlinkSync(tmp);
+        rejected++;
+        manifest[rel] = { size: before, result: 'verify-failed', why: v.why, at: new Date().toISOString() };
+        totalBefore += before; totalAfter += before;
+        console.log(`✘ ${rel}  검사 탈락 → 원본 유지: ${v.why.join(' · ')}`);
+        continue;
+      }
+    }
+    if (!dry) { fs.renameSync(tmp, file); } else { fs.unlinkSync(tmp); }
+    manifest[rel] = { size: dry ? before : after, result: 'ok', mode: meshOnly ? 'mesh-only' : 'full', at: new Date().toISOString() };
+    totalBefore += before; totalAfter += after;
+    done++;
+    console.log(`✔ ${rel}  ${(before / 1024).toFixed(0)}KB → ${(after / 1024).toFixed(0)}KB` + (dry ? ' (dry-run, 실제로는 안 바꿈)' : ''));
   } catch (e) {
     failed++;
     totalBefore += before; totalAfter += before;
@@ -110,6 +160,6 @@ for (const file of files) {
 if (!dry) { fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2)); }
 
 console.log('---');
-console.log(`처리 ${done} · 건너뜀(이미 처리) ${skipped} · 실패 ${failed}`);
+console.log(`처리 ${done} · 건너뜀(이미 처리) ${skipped} · 이미 Meshopt ${already} · 모르는 확장 유지 ${unknownExt} · 검사 탈락 ${rejected} · 실패 ${failed}`);
 console.log(`용량 ${(totalBefore / 1024 / 1024).toFixed(1)}MB → ${(totalAfter / 1024 / 1024).toFixed(1)}MB` +
   (totalBefore > 0 ? ` (${(100 - totalAfter / totalBefore * 100).toFixed(0)}% 감소)` : ''));
