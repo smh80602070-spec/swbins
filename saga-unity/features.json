@@ -1437,5 +1437,22 @@
   "ticket": "U-0037",
   "since": "2026-10-04",
   "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 폭·접지·없는 이름 null"
+ },
+ {
+  "id": "un.go.help",
+  "name": "도움말 F1 — 이 트랙 실제 키 표 셋(U-0043, 고돗 help.gd 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Data/GoHelp.cs",
+   "saga-unity/Assets/Games/SagaGo/UI/HelpUi.cs"
+  ],
+  "tests": [
+   "PlaytestGoHelp"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0043",
+  "since": "2026-10-05",
+  "note": "표 22줄·ko/en 번역·코드 키 25개가 소스에서 읽힘·창 열고 닫기·세이브 불변. 창 모양·글 읽힘은 눈"
  }
 ]

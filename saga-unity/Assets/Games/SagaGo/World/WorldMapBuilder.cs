@@ -59,6 +59,7 @@ namespace Saga.Go.World
             if (GetComponent<MountField>() == null) gameObject.AddComponent<MountField>(); // 109-15 탈것·비행
             if (GetComponent<Saga.Go.UI.AchieveUi>() == null) gameObject.AddComponent<Saga.Go.UI.AchieveUi>(); // 109-14-25 업적 창(Y)·알림
             if (GetComponent<Saga.Go.UI.HuntLogUi>() == null) gameObject.AddComponent<Saga.Go.UI.HuntLogUi>(); // U-0031 사냥 기록 창(K)·알림
+            if (GetComponent<Saga.Go.UI.HelpUi>() == null) gameObject.AddComponent<Saga.Go.UI.HelpUi>(); // U-0043 도움말 창(F1)
             if (GetComponent<HomesteadField>() == null) gameObject.AddComponent<HomesteadField>(); // U-0032 쉼터 마당(표지·놓은 소품)
             if (GetComponent<Saga.Go.UI.HomesteadUi>() == null) gameObject.AddComponent<Saga.Go.UI.HomesteadUi>(); // U-0032 쉼터 창(J)
         }
