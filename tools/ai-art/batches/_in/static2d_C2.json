@@ -1,0 +1,820 @@
+{
+ "name": "static2d_C2",
+ "spec": "sprite",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0068 C 통일 2차 — B 그림체로 남은 웹 2D 지물(마을·가구·무기·자연 보강)을 C 로. 주제·밑그림은 원래 B 배치 그대로.",
+ "items": [
+  {
+   "id": "altar_base_01",
+   "subject": "round stepped stone altar base, glowing purple ring on top, four small stone posts",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\altar_base_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "armor_stand_01",
+   "subject": "metal armor stand with chest plate and helmet",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\armor_stand_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "barrel_01",
+   "subject": "wooden barrel with iron hoops",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\barrel_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "bars_door_01",
+   "subject": "dungeon iron bars gate in a stone doorframe, black vertical bars",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\bars_door_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "bed_futon_01",
+   "subject": "folded futon bedding on floor with blue blanket and pillow",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\bed_futon_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "bed_wood_01",
+   "subject": "wooden bed with pillow and red blanket",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\bed_wood_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "bench_01",
+   "subject": "wooden park bench with backrest, dark iron legs",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\bench_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "bookshelf_01",
+   "subject": "tall wooden bookshelf full of colorful books",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\bookshelf_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "bush_02",
+   "subject": "round green flowering bush with small pink and white flowers",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\bush_02.png",
+   "denoise": 0.65,
+   "from": "nature_hq"
+  },
+  {
+   "id": "cabinet_low_01",
+   "subject": "low wooden cabinet with two doors",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\cabinet_low_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "campfire_logs_01",
+   "subject": "campfire pit, ring of stones, leaning firewood logs, no flames",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\campfire_logs_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "candlestick_01",
+   "subject": "brass candlestick with a lit white candle",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\candlestick_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "chair_wood_01",
+   "subject": "simple wooden chair with high back",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\chair_wood_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "chest_01",
+   "subject": "dark wooden treasure chest with rounded lid, iron bands and small gold lock",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\chest_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "counter_01",
+   "subject": "wooden shop counter with dark top and a brass bell",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\counter_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "crate_small_01",
+   "subject": "small wooden crate with dark corners",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\crate_small_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "crate_stack_01",
+   "subject": "stack of four wooden crates with dark iron corners",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\crate_stack_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "cushion_01",
+   "subject": "round red floor cushion",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\cushion_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "desk_01",
+   "subject": "wooden writing desk with drawers",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\desk_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "display_stand_01",
+   "subject": "merchant display stand with red cloth and golden trinkets",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\display_stand_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "dungeon_pillar_01",
+   "subject": "ancient stone pillar, square base and capital, weathered gray stone",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\dungeon_pillar_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "globe_stand_01",
+   "subject": "blue world globe on a dark stand",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\globe_stand_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "grass_tuft_02",
+   "subject": "tall thin grass with golden seed heads",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\grass_tuft_02.png",
+   "denoise": 0.65,
+   "from": "nature_hq"
+  },
+  {
+   "id": "handcart_01",
+   "subject": "wooden hand cart with one spoked wheel pair, two long handles",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\handcart_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "hanging_lantern_01",
+   "subject": "hanging lantern with glowing window, short chain",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\hanging_lantern_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "hearth_stone_01",
+   "subject": "stone fireplace with logs and glowing embers",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\hearth_stone_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "holo_panel_01",
+   "subject": "futuristic standing holographic panel with glowing cyan screen",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\holo_panel_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "hologram_globe_01",
+   "subject": "sci-fi hologram globe, glowing cyan, on a dark base",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\hologram_globe_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "jar_01",
+   "subject": "large brown clay jar with two handles",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\jar_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "keg_01",
+   "subject": "small wooden keg with iron hoops and a brass tap",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\keg_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "kitchen_pot_01",
+   "subject": "iron cooking pot hanging on a tripod over embers",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\kitchen_pot_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "low_stone_wall_01",
+   "subject": "low stone wall section, rough stacked gray stones with flat cap stones",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\low_stone_wall_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "low_table_01",
+   "subject": "low wooden table, traditional style",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\low_table_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "map_table_01",
+   "subject": "wooden map table with a parchment map and a red marker",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\map_table_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "market_stall_01",
+   "subject": "market stall, wooden counter with red and cream striped awning, fruit and crates on top",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\market_stall_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "mirror_stand_01",
+   "subject": "tall standing mirror in a dark wooden frame",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\mirror_stand_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "notice_board_01",
+   "subject": "village notice board, wooden frame with small roof, paper notes pinned on",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\notice_board_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "oil_lamp_01",
+   "subject": "small brass oil lamp with a flame",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\oil_lamp_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "rock_large_02",
+   "subject": "tall standing gray rock pillar with small boulders at the base",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\rock_large_02.png",
+   "denoise": 0.65,
+   "from": "nature_hq"
+  },
+  {
+   "id": "rug_rect_01",
+   "subject": "rectangular woven rug, red border, gold and blue pattern",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\rug_rect_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "rug_round_01",
+   "subject": "round woven rug in green, cream and red rings",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\rug_round_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "sack_pile_01",
+   "subject": "pile of five tied burlap grain sacks, beige cloth",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\sack_pile_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "screen_folding_01",
+   "subject": "four panel folding screen with cream paper panels",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\screen_folding_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "shelf_wall_01",
+   "subject": "wooden wall shelf with jars and boxes",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\shelf_wall_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "signpost_01",
+   "subject": "wooden signpost, dark pole with two pointed arrow boards, small stone base",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\signpost_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "sofa_01",
+   "subject": "brown cloth sofa with armrests",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\sofa_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "spinning_wheel_01",
+   "subject": "wooden spinning wheel",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\spinning_wheel_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "stool_01",
+   "subject": "small round wooden three legged stool",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\stool_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "stove_iron_01",
+   "subject": "small black iron stove with a chimney pipe",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\stove_iron_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "table_lamp_01",
+   "subject": "modern table lamp with a warm glowing shade",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\table_lamp_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "table_round_01",
+   "subject": "round wooden table on a single pedestal",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\table_round_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "table_wood_01",
+   "subject": "rectangular wooden dining table with dark legs",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\table_wood_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "tatami_mat_01",
+   "subject": "straw tatami mat with dark edges",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\tatami_mat_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "tent_large_01",
+   "subject": "large round circus style tent, red and cream stripes, small red flag on top",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\tent_large_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "tent_small_01",
+   "subject": "small beige canvas a-frame tent with ropes and pegs",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\tent_small_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "terminal_01",
+   "subject": "sci-fi computer terminal with glowing cyan screen",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\terminal_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "tree_broadleaf_03",
+   "subject": "tall slim broadleaf tree, oval yellow-green leafy crown, thin brown trunk",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\tree_broadleaf_03.png",
+   "denoise": 0.65,
+   "from": "nature_hq"
+  },
+  {
+   "id": "tree_pine_03",
+   "subject": "wide dark green spruce tree, big drooping layered branches",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\tree_pine_03.png",
+   "denoise": 0.65,
+   "from": "nature_hq"
+  },
+  {
+   "id": "trunk_01",
+   "subject": "old wooden travel trunk with iron straps and brass lock",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\trunk_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "vase_tall_01",
+   "subject": "tall blue ceramic vase",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\vase_tall_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "wall_piece_01",
+   "subject": "tall dungeon stone brick wall section, rough stones",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\wall_piece_01.png",
+   "denoise": 0.65,
+   "from": "village"
+  },
+  {
+   "id": "wardrobe_01",
+   "subject": "tall wooden wardrobe with two doors",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\wardrobe_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "weapon_rack_01",
+   "subject": "wooden weapon rack with swords and spears",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\weapon_rack_01.png",
+   "denoise": 0.65,
+   "from": "furniture"
+  },
+  {
+   "id": "wpn_axe_common",
+   "subject": "plain iron battle axe with wooden haft, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_axe_common.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_axe_legend",
+   "subject": "golden double bladed battle axe with ornate head and glowing gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_axe_legend.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_axe_rare",
+   "subject": "blue steel battle axe with brass trim and gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_axe_rare.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_bow_common",
+   "subject": "plain wooden recurve bow with string, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_bow_common.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_bow_legend",
+   "subject": "golden ornate recurve bow with glowing gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_bow_legend.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_bow_rare",
+   "subject": "blue and brass trimmed recurve bow with string and a gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_bow_rare.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_dagger_common",
+   "subject": "plain iron dagger with leather grip, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_dagger_common.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_dagger_legend",
+   "subject": "golden ornate dagger with glowing gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_dagger_legend.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_dagger_rare",
+   "subject": "blue steel dagger with brass guard and small gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_dagger_rare.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_gauntlet_common",
+   "subject": "leather fist gauntlet with iron knuckle plate, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gauntlet_common.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_gauntlet_legend",
+   "subject": "golden red ornate fist gauntlet with glowing gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gauntlet_legend.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_gauntlet_rare",
+   "subject": "blue and brass fist gauntlet with gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gauntlet_rare.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_gun_common",
+   "subject": "plain gray steel pistol, long barrel, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gun_common.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_gun_legend",
+   "subject": "golden ornate pistol with glowing orange strip, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gun_legend.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_gun_rare",
+   "subject": "blue steel pistol with brass trim and gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gun_rare.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_shield_common",
+   "subject": "round wooden shield with iron rim and boss, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_shield_common.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_shield_legend",
+   "subject": "round golden shield with ornate rays and glowing gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_shield_legend.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_shield_rare",
+   "subject": "round blue steel shield with brass studs and gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_shield_rare.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_spear_common",
+   "subject": "plain wooden spear with iron leaf head, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_spear_common.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_spear_legend",
+   "subject": "golden spear with ornate head, gold rings, glowing gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_spear_legend.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_spear_rare",
+   "subject": "long spear with blue steel head, brass rings and a red tassel, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_spear_rare.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_staff_common",
+   "subject": "plain wooden staff with iron claw head, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_staff_common.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_staff_legend",
+   "subject": "ornate staff with gold claws and a glowing orange crystal, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_staff_legend.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_staff_rare",
+   "subject": "wooden staff with brass rings and a glowing yellow crystal, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_staff_rare.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_sword_common",
+   "subject": "plain iron straight sword with leather grip, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_sword_common.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_sword_legend",
+   "subject": "golden ornate sword with winged crossguard and glowing orange gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_sword_legend.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  },
+  {
+   "id": "wpn_sword_rare",
+   "subject": "steel blue sword with brass crossguard and a small golden gem, fantasy game weapon item",
+   "view": "three_quarter",
+   "extra": "from above",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_sword_rare.png",
+   "denoise": 0.65,
+   "from": "weapon"
+  }
+ ]
+}

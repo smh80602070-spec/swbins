@@ -1,0 +1,741 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "static2d_C2",
+ "kit": {
+  "spec": "sprite",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "altar_base_01",
+   "seed": 2545791285,
+   "prompt": "(round stepped stone altar base:1.15), glowing purple ring on top, four small stone posts, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\altar_base_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "armor_stand_01",
+   "seed": 3471021970,
+   "prompt": "(metal armor stand with chest plate and helmet:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\armor_stand_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "barrel_01",
+   "seed": 4233859866,
+   "prompt": "(wooden barrel with iron hoops:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\barrel_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "bars_door_01",
+   "seed": 4174920312,
+   "prompt": "(dungeon iron bars gate in a stone doorframe:1.15), black vertical bars, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\bars_door_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "bed_futon_01",
+   "seed": 3773401504,
+   "prompt": "(folded futon bedding on floor with blue blanket and pillow:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\bed_futon_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "bed_wood_01",
+   "seed": 2978028676,
+   "prompt": "(wooden bed with pillow and red blanket:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\bed_wood_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "bench_01",
+   "seed": 1584197555,
+   "prompt": "(wooden park bench with backrest:1.15), dark iron legs, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\bench_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "bookshelf_01",
+   "seed": 869832364,
+   "prompt": "(tall wooden bookshelf full of colorful books:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\bookshelf_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "bush_02",
+   "seed": 2657000753,
+   "prompt": "(round green flowering bush with small pink and white flowers:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\bush_02.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "cabinet_low_01",
+   "seed": 128644153,
+   "prompt": "(low wooden cabinet with two doors:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\cabinet_low_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "campfire_logs_01",
+   "seed": 987155080,
+   "prompt": "(campfire pit:1.15), ring of stones, leaning firewood logs, no flames, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\campfire_logs_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "candlestick_01",
+   "seed": 3205525867,
+   "prompt": "(brass candlestick with a lit white candle:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\candlestick_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "chair_wood_01",
+   "seed": 940033314,
+   "prompt": "(simple wooden chair with high back:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\chair_wood_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "chest_01",
+   "seed": 258417847,
+   "prompt": "(dark wooden treasure chest with rounded lid:1.15), iron bands and small gold lock, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\chest_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "counter_01",
+   "seed": 390497496,
+   "prompt": "(wooden shop counter with dark top and a brass bell:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\counter_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "crate_small_01",
+   "seed": 2158610967,
+   "prompt": "(small wooden crate with dark corners:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\crate_small_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "crate_stack_01",
+   "seed": 2640788549,
+   "prompt": "(stack of four wooden crates with dark iron corners:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\crate_stack_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "cushion_01",
+   "seed": 1184569967,
+   "prompt": "(round red floor cushion:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\cushion_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "desk_01",
+   "seed": 1759603063,
+   "prompt": "(wooden writing desk with drawers:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\desk_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "display_stand_01",
+   "seed": 2678083347,
+   "prompt": "(merchant display stand with red cloth and golden trinkets:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\display_stand_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "dungeon_pillar_01",
+   "seed": 3125558397,
+   "prompt": "(ancient stone pillar:1.15), square base and capital, weathered gray stone, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\dungeon_pillar_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "globe_stand_01",
+   "seed": 1273811208,
+   "prompt": "(blue world globe on a dark stand:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\globe_stand_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "grass_tuft_02",
+   "seed": 2803440492,
+   "prompt": "(tall thin grass with golden seed heads:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\grass_tuft_02.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "handcart_01",
+   "seed": 2561082866,
+   "prompt": "(wooden hand cart with one spoked wheel pair:1.15), two long handles, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\handcart_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "hanging_lantern_01",
+   "seed": 3974021653,
+   "prompt": "(hanging lantern with glowing window:1.15), short chain, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\hanging_lantern_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "hearth_stone_01",
+   "seed": 1729600997,
+   "prompt": "(stone fireplace with logs and glowing embers:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\hearth_stone_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "holo_panel_01",
+   "seed": 2425470983,
+   "prompt": "(futuristic standing holographic panel with glowing cyan screen:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\holo_panel_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "hologram_globe_01",
+   "seed": 2274328780,
+   "prompt": "(sci-fi hologram globe:1.15), glowing cyan, on a dark base, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\hologram_globe_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "jar_01",
+   "seed": 2486744078,
+   "prompt": "(large brown clay jar with two handles:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\jar_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "keg_01",
+   "seed": 2752416309,
+   "prompt": "(small wooden keg with iron hoops and a brass tap:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\keg_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "kitchen_pot_01",
+   "seed": 302999140,
+   "prompt": "(iron cooking pot hanging on a tripod over embers:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\kitchen_pot_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "low_stone_wall_01",
+   "seed": 3549015040,
+   "prompt": "(low stone wall section:1.15), rough stacked gray stones with flat cap stones, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\low_stone_wall_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "low_table_01",
+   "seed": 156407293,
+   "prompt": "(low wooden table:1.15), traditional style, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\low_table_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "map_table_01",
+   "seed": 1005234002,
+   "prompt": "(wooden map table with a parchment map and a red marker:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\map_table_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "market_stall_01",
+   "seed": 3205544554,
+   "prompt": "(market stall:1.15), wooden counter with red and cream striped awning, fruit and crates on top, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\market_stall_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "mirror_stand_01",
+   "seed": 2041978309,
+   "prompt": "(tall standing mirror in a dark wooden frame:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\mirror_stand_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "notice_board_01",
+   "seed": 4055218035,
+   "prompt": "(village notice board:1.15), wooden frame with small roof, paper notes pinned on, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\notice_board_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "oil_lamp_01",
+   "seed": 1162966754,
+   "prompt": "(small brass oil lamp with a flame:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\oil_lamp_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "rock_large_02",
+   "seed": 2702367083,
+   "prompt": "(tall standing gray rock pillar with small boulders at the base:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\rock_large_02.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "rug_rect_01",
+   "seed": 1743642701,
+   "prompt": "(rectangular woven rug:1.15), red border, gold and blue pattern, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\rug_rect_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "rug_round_01",
+   "seed": 831155701,
+   "prompt": "(round woven rug in green:1.15), cream and red rings, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\rug_round_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "sack_pile_01",
+   "seed": 703806985,
+   "prompt": "(pile of five tied burlap grain sacks:1.15), beige cloth, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\sack_pile_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "screen_folding_01",
+   "seed": 3458479521,
+   "prompt": "(four panel folding screen with cream paper panels:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\screen_folding_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "shelf_wall_01",
+   "seed": 3603854280,
+   "prompt": "(wooden wall shelf with jars and boxes:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\shelf_wall_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "signpost_01",
+   "seed": 2892840064,
+   "prompt": "(wooden signpost:1.15), dark pole with two pointed arrow boards, small stone base, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\signpost_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "sofa_01",
+   "seed": 138113546,
+   "prompt": "(brown cloth sofa with armrests:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\sofa_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "spinning_wheel_01",
+   "seed": 2526828723,
+   "prompt": "(wooden spinning wheel:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\spinning_wheel_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "stool_01",
+   "seed": 3942482693,
+   "prompt": "(small round wooden three legged stool:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\stool_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "stove_iron_01",
+   "seed": 2831197197,
+   "prompt": "(small black iron stove with a chimney pipe:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\stove_iron_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "table_lamp_01",
+   "seed": 4081209486,
+   "prompt": "(modern table lamp with a warm glowing shade:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\table_lamp_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "table_round_01",
+   "seed": 1836648004,
+   "prompt": "(round wooden table on a single pedestal:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\table_round_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "table_wood_01",
+   "seed": 1175461252,
+   "prompt": "(rectangular wooden dining table with dark legs:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\table_wood_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tatami_mat_01",
+   "seed": 656235635,
+   "prompt": "(straw tatami mat with dark edges:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\tatami_mat_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tent_large_01",
+   "seed": 259677273,
+   "prompt": "(large round circus style tent:1.15), red and cream stripes, small red flag on top, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\tent_large_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tent_small_01",
+   "seed": 3887483939,
+   "prompt": "(small beige canvas a-frame tent with ropes and pegs:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\tent_small_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "terminal_01",
+   "seed": 3309984637,
+   "prompt": "(sci-fi computer terminal with glowing cyan screen:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\terminal_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_broadleaf_03",
+   "seed": 504340984,
+   "prompt": "(tall slim broadleaf tree:1.15), oval yellow-green leafy crown, thin brown trunk, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\tree_broadleaf_03.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_pine_03",
+   "seed": 4251050782,
+   "prompt": "(wide dark green spruce tree:1.15), big drooping layered branches, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\nature_hq_init\\tree_pine_03.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "trunk_01",
+   "seed": 2376774080,
+   "prompt": "(old wooden travel trunk with iron straps and brass lock:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\trunk_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "vase_tall_01",
+   "seed": 1223048988,
+   "prompt": "(tall blue ceramic vase:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\vase_tall_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wall_piece_01",
+   "seed": 926801496,
+   "prompt": "(tall dungeon stone brick wall section:1.15), rough stones, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\village_init\\wall_piece_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wardrobe_01",
+   "seed": 2683362453,
+   "prompt": "(tall wooden wardrobe with two doors:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\wardrobe_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "weapon_rack_01",
+   "seed": 2089668416,
+   "prompt": "(wooden weapon rack with swords and spears:1.15), from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\furniture_init\\weapon_rack_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_axe_common",
+   "seed": 1035335743,
+   "prompt": "(plain iron battle axe with wooden haft:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_axe_common.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_axe_legend",
+   "seed": 2235750582,
+   "prompt": "(golden double bladed battle axe with ornate head and glowing gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_axe_legend.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_axe_rare",
+   "seed": 854227357,
+   "prompt": "(blue steel battle axe with brass trim and gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_axe_rare.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_bow_common",
+   "seed": 3696962760,
+   "prompt": "(plain wooden recurve bow with string:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_bow_common.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_bow_legend",
+   "seed": 1612438888,
+   "prompt": "(golden ornate recurve bow with glowing gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_bow_legend.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_bow_rare",
+   "seed": 50791643,
+   "prompt": "(blue and brass trimmed recurve bow with string and a gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_bow_rare.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_dagger_common",
+   "seed": 2784736971,
+   "prompt": "(plain iron dagger with leather grip:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_dagger_common.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_dagger_legend",
+   "seed": 2434723188,
+   "prompt": "(golden ornate dagger with glowing gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_dagger_legend.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_dagger_rare",
+   "seed": 606513985,
+   "prompt": "(blue steel dagger with brass guard and small gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_dagger_rare.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_gauntlet_common",
+   "seed": 197588255,
+   "prompt": "(leather fist gauntlet with iron knuckle plate:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gauntlet_common.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_gauntlet_legend",
+   "seed": 2007291302,
+   "prompt": "(golden red ornate fist gauntlet with glowing gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gauntlet_legend.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_gauntlet_rare",
+   "seed": 3776079017,
+   "prompt": "(blue and brass fist gauntlet with gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gauntlet_rare.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_gun_common",
+   "seed": 2541113878,
+   "prompt": "(plain gray steel pistol:1.15), long barrel, fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gun_common.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_gun_legend",
+   "seed": 3852458886,
+   "prompt": "(golden ornate pistol with glowing orange strip:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gun_legend.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_gun_rare",
+   "seed": 2778757676,
+   "prompt": "(blue steel pistol with brass trim and gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_gun_rare.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_shield_common",
+   "seed": 4000256012,
+   "prompt": "(round wooden shield with iron rim and boss:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_shield_common.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_shield_legend",
+   "seed": 3710103152,
+   "prompt": "(round golden shield with ornate rays and glowing gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_shield_legend.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_shield_rare",
+   "seed": 1249025953,
+   "prompt": "(round blue steel shield with brass studs and gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_shield_rare.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_spear_common",
+   "seed": 3517667652,
+   "prompt": "(plain wooden spear with iron leaf head:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_spear_common.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_spear_legend",
+   "seed": 2594819969,
+   "prompt": "(golden spear with ornate head:1.15), gold rings, glowing gem, fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_spear_legend.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_spear_rare",
+   "seed": 3122558186,
+   "prompt": "(long spear with blue steel head:1.15), brass rings and a red tassel, fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_spear_rare.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_staff_common",
+   "seed": 3083455520,
+   "prompt": "(plain wooden staff with iron claw head:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_staff_common.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_staff_legend",
+   "seed": 881095415,
+   "prompt": "(ornate staff with gold claws and a glowing orange crystal:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_staff_legend.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_staff_rare",
+   "seed": 3122996154,
+   "prompt": "(wooden staff with brass rings and a glowing yellow crystal:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_staff_rare.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_sword_common",
+   "seed": 276733908,
+   "prompt": "(plain iron straight sword with leather grip:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_sword_common.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_sword_legend",
+   "seed": 490683145,
+   "prompt": "(golden ornate sword with winged crossguard and glowing orange gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_sword_legend.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_sword_rare",
+   "seed": 3715018413,
+   "prompt": "(steel blue sword with brass crossguard and a small golden gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init\\wpn_sword_rare.png",
+   "denoise": 0.65
+  }
+ ]
+}
