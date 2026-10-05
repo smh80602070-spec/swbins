@@ -505,7 +505,7 @@
   };
 })(window);
 
-/* 옷 무늬 설정 — saga-web/shared/js/vroid-variant.js 가 읽는다(W-0020). 무늬 64종(webp + patterns.json)은 자체툴이 assets/patterns/ 에 놓는다 —
+/* 옷 무늬 설정 — saga-web/shared/js/vroid-variant.js 가 읽는다(W-0020). 무늬 64종(webp + patterns.json)은 자체툴이 shared/assets/patterns/ 에 놓는다 —
    없으면 기존 옷 그대로(표를 못 받으면 아무 것도 안 한다) */
 (function (global) {
   'use strict';
@@ -515,5 +515,5 @@
     /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 제단·횃불·동굴 입구(바위 아치)·종탑(석탑) */
     reg: { 'altar': ['altar_01'], 'dg:torch': ['torch_stand_01'], 'cavemouth': ['dungeon_gate_01'], 'belltower': ['stone_tower_01'] }
   };
-  global.DG.cfg.vroidPattern = { base: 'assets/patterns/', repeat: 3 };
+  global.DG.cfg.vroidPattern = { base: '../shared/assets/patterns/', repeat: 3 };   // 무늬는 판 폴더가 아니라 shared 에만 있다(W-0071) — 기준 주소 시험이 끝나기 전에 받아도 404 가 안 나게
 })(window);
