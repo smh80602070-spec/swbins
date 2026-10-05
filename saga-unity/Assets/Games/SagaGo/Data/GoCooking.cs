@@ -540,6 +540,9 @@ namespace Saga.Go.Data
             return l;
         }
 
+        /// <summary>U-0045 재출항 — 채집 자리를 전부 돌려놓는다(다시 자라기 기록을 지운다).</summary>
+        public static void ClearGather() { _gather.Clear(); Touch(); }
+
         public static List<TimeEntry> SnapshotGather()
         {
             Prune();

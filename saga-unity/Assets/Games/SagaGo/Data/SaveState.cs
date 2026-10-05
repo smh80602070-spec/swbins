@@ -119,6 +119,7 @@ namespace Saga.Go.Data
             // v24 — PLAN.md 109-14-7 천하 등급 한 단계 낮춤·보상을 받은 여정 등급.
             public bool advLowered;
             public int advPaid;
+            public int cycleN; // tasks U-0045 재출항 회차(버전 그대로 — 옛 세이브는 0)
             // v25 — PLAN.md 109-14-8 오늘 일과 마무리 보상을 받았나(날짜는 dailyDate).
             public bool dailyBonus;
             // v26 — PLAN.md 109-14-9 원기(값·기준 유닉스 초 — 0 이면 가득)·숨은 터 받은 수·이 주 주간 보스.
@@ -286,6 +287,7 @@ namespace Saga.Go.Data
                 cookGather = CookState.SnapshotGather(),
                 advLowered = AdventureState.Lowered,
                 advPaid = AdventureState.Paid,
+                cycleN = CycleState.Cycle, // U-0045
                 dailyBonus = DailyTaskState.BonusClaimed,
                 resin = dom.resin,
                 resinT = dom.t,
@@ -362,6 +364,7 @@ namespace Saga.Go.Data
             ArtifactState.Restore(data.artifacts, data.artifactSeq, data.artifactPolish);
             CookState.Restore(data.cookBag, data.cookProf, data.cookGather);
             DomainState.Restore(data.resin, data.resinT, data.domainClaims, data.weeklyWeek, data.weeklyN);
+            CycleState.Restore(data.cycleN); // U-0045 — 천하 등급 상한이 회차에 달려 모험 등급 복원보다 먼저
             AdventureState.RestoreSave(data.advLowered, data.advPaid); // 레벨 뒤 — 천하 등급이 바뀌면 들판 적이 다시 잰다
             StoryState.Restore(data.storyCh, data.storyStep);
             GoTutorial.Restore(data.tutDone); // tasks U-0013

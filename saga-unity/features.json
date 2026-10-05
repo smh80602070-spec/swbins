@@ -1471,5 +1471,22 @@
   "ticket": "U-0044",
   "since": "2026-10-05",
   "note": "규칙 층(풀 10·뽑기·주 갈림 월 4시·진척·받기·완주·알림·세이브 왕복)+장면 층(진짜 셈으로 채워 받기 단추·세이브 파일·옛 세이브). 창 모양·글 읽힘은 눈"
+ },
+ {
+  "id": "un.go.cycle",
+  "name": "별배 재출항 N — 이야기 끝난 뒤 회차(상자·채집·잔불 되살림, 영구 +5%, 천하 상한 +2)(U-0045, 고돗 cycle.gd 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Data/GoCycle.cs",
+   "saga-unity/Assets/Games/SagaGo/UI/CycleUi.cs"
+  ],
+  "tests": [
+   "PlaytestGoCycle"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0045",
+  "since": "2026-10-05",
+  "note": "규칙 층(막힘·Advance 효과 전부·보너스·천하 상한 회차 반영·세이브)+장면 층(두 번 눌러 재출항·상자 기록 되살림·세이브 파일·옛 세이브). 회차 0 천하 진단은 옛 값 그대로 통과. 창 모양·글 읽힘은 눈"
  }
 ]

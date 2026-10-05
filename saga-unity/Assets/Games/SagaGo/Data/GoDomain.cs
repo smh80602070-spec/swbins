@@ -250,6 +250,8 @@ namespace Saga.Go.Data
         public static long ResinNextSec { get { Fill(); return _resin >= GoDomain.ResinMax ? 0 : System.Math.Max(0, _resinT + GoDomain.ResinSec - Now); } }
 
         public static int WeeklyUsed { get { Week(); return _weekN; } }
+        /// <summary>U-0045 재출항 — 이번 주 주간 숨은 터 사용 횟수를 0 으로(주 키는 그대로).</summary>
+        public static void ResetWeekly() { Week(); _weekN = 0; }
         public static int CostOf(GoDomain.Kind k) => k == GoDomain.Kind.Echo ? (WeeklyUsed < GoDomain.WeeklyHalfN ? GoDomain.EchoCost / 2 : GoDomain.EchoCost) // 109-14-56 메아리는 주간 보스와 같은 횟수를 센다
             : k == GoDomain.Kind.Weekly ? (WeeklyUsed < GoDomain.WeeklyHalfN ? GoDomain.WeeklyHalf : GoDomain.WeeklyCost) : GoDomain.Cost;
 

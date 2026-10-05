@@ -333,7 +333,7 @@ namespace Saga.Go.World
             // 여기서 곱한다.
             // PLAN.md 101-2 ⑥ "인연" — BondState.AtkMultiplier/DefMultiplier도
             // PerkState와 같은 결로 곱한다(등용된 인물이 없으면 1f, 무해).
-            float atk = (PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus) * PerkState.AtkMultiplier * BondState.AtkMultiplier;
+            float atk = (PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus) * PerkState.AtkMultiplier * BondState.AtkMultiplier * (1f + CycleState.Bonus); // U-0045 회차 공격 +5%
             float def = (PartyState.Def + PlayerStats.DefBonus + Inventory.DefBonus) * PerkState.DefMultiplier * BondState.DefMultiplier;
             _duel = DuelRules.Create(foeHp, atk, def);
             _duel.KiMul = PerkState.KiMultiplier;

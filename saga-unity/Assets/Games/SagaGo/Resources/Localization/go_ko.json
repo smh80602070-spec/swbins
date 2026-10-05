@@ -3189,6 +3189,21 @@
     { "key": "weekly.desc.chests", "value": "보물 상자 {0}개 열기" },
     { "key": "weekly.name.orbs", "value": "구슬 줍기" },
     { "key": "weekly.desc.orbs", "value": "빛 구슬 {0}개 줍기" },
-    { "key": "help.screen.10", "value": "U | 주간 도전 — 이번 주 다섯 목표(월요일 새벽 4시에 새로), 다 받으면 완주 보상" }
+    { "key": "help.screen.10", "value": "U | 주간 도전 — 이번 주 다섯 목표(월요일 새벽 4시에 새로), 다 받으면 완주 보상" },
+    { "key": "cycle.button", "value": "재출항" },
+    { "key": "cycle.title", "value": "별배 재출항 — {0}/{1}회차" },
+    { "key": "cycle.go", "value": "재출항" },
+    { "key": "cycle.confirm", "value": "정말 재출항? (한 번 더)" },
+    { "key": "cycle.done", "value": "별배가 다시 떠난다 — {0}회차! 되살아난 상자 {1}개 · {2}" },
+    { "key": "cycle.now", "value": "지금: 공격력·경험치 +{0}% · 천하 등급 상한 {1}" },
+    { "key": "cycle.story", "value": "이야기: {0}/{1}장{2}" },
+    { "key": "cycle.story_done", "value": "(끝)" },
+    { "key": "cycle.effects", "value": "재출항하면: 열어 둔 상자가 되살아나고 · 채집 자리가 돌아오고 · 주간 숨은 터 횟수와 밤의 잔불이 새로 시작하고 · 낮춘 천하 등급이 풀린다. 이야기·도감·인물·무기는 그대로." },
+    { "key": "cycle.reward", "value": "재출항 보상: {0}" },
+    { "key": "cycle.perm", "value": "회차마다 영구: 공격력·경험치 +{0}% · 천하 등급 상한 +{1} (최대 {2}회차)" },
+    { "key": "cycle.ready", "value": "재출항할 수 있다 — 다음은 {0}회차" },
+    { "key": "cycle.why.max", "value": "이미 마지막 회차({0})다" },
+    { "key": "cycle.why.story", "value": "이야기를 끝까지 마쳐야 한다 (지금 {0}/{1}장)" },
+    { "key": "help.screen.11", "value": "N | 별배 재출항 = 회차 — 이야기를 끝낸 뒤 세계를 새로 연다(최대 5회차)" }
   ]
 }

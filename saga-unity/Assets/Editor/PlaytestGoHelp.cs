@@ -12,7 +12,7 @@ namespace Saga.EditorTools
     /// tasks U-0043 도움말 진단. 두 길 —
     /// ① <see cref="RunBatch"/>(`-executeMethod …PlaytestGoHelp.RunBatch`, 장면 없이): 표(갈래 셋·줄 키 중복 없음·모든 줄이 "키 | 설명") ·
     ///    번역(ko·en json 에 표의 키가 전부 있고 값이 "키 | 설명" 꼴) · **표에 적힌 코드 키가 소스에서 정말 읽힌다**(`jKey`·`f1Key` 등) ·
-    ///    고돗 전용 키(알 I·회차 N·사진 P)가 표에 없다 — 주간 도전은 U-0044 로 들어와 이 트랙 키 U.
+    ///    고돗 전용 키(알 I·사진 P)가 표에 없다 — 주간 도전은 U-0044(U)·재출항은 U-0045(N)로 들어옴.
     /// ② <see cref="Run"/>(`PlaytestHeadless` 가 사냥 기록 진단 뒤에 부른다, 장면 안): 창이 붙어 있고 단추·닫는다로 열고 닫히며 세 칸에 갈래 이름과
     ///    줄이 다 들어간다. 세이브 파일은 건드리지 않는다.
     /// </summary>
@@ -58,7 +58,7 @@ namespace Saga.EditorTools
             }
             // 고돗 전용 시스템이 이 트랙 표에 새어 들어오지 않았다 — 알·주머니·재출항·회차·사진첩·주간 도전
             string joined = string.Join("\n", secs.SelectMany(s => s.Lines).Select(l => l.Fallback));
-            foreach (var bad in new[] { "알 주머니", "부화", "재출항", "회차", "사진첩" })
+            foreach (var bad in new[] { "알 주머니", "부화", "사진첩" })
                 PlaytestKit.Check(!joined.Contains(bad), $"고돗 전용 '{bad}' 가 표에 있음");
             Debug.Log($"[PlaytestGoHelp] table 갈래 {secs.Length} · 줄 {secs.Sum(s => s.Lines.Length)}");
         }

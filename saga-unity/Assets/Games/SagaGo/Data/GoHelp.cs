@@ -52,6 +52,7 @@ namespace Saga.Go.Data
                 new Line("help.screen.7", "F | 가까이 있는 것과 상호작용 — 대화·낚시·탐사 게시판·비경 입구", "fKey"),
                 new Line("help.screen.8", "T | 낚시 중 미끼 바꾸기", "tKey"),
                 new Line("help.screen.10", "U | 주간 도전 — 이번 주 다섯 목표(월요일 새벽 4시에 새로), 다 받으면 완주 보상", "uKey"),
+                new Line("help.screen.11", "N | 별배 재출항 = 회차 — 이야기를 끝낸 뒤 세계를 새로 연다(최대 5회차)", "nKey"),
                 new Line("help.screen.9", "F1 · Esc | 이 도움말 열기·닫기(열린 창은 Esc 로 닫는다)", "f1Key", "escapeKey")),
         };
 

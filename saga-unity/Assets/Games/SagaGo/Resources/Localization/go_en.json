@@ -3189,6 +3189,21 @@
     { "key": "weekly.desc.chests", "value": "Open {0} treasure chests" },
     { "key": "weekly.name.orbs", "value": "Orb Gathering" },
     { "key": "weekly.desc.orbs", "value": "Collect {0} light orbs" },
-    { "key": "help.screen.10", "value": "U | Weekly challenges — five goals a week (reset Monday 4 AM), full-clear reward" }
+    { "key": "help.screen.10", "value": "U | Weekly challenges — five goals a week (reset Monday 4 AM), full-clear reward" },
+    { "key": "cycle.button", "value": "Set Sail Again" },
+    { "key": "cycle.title", "value": "Star-Boat Voyage — Cycle {0}/{1}" },
+    { "key": "cycle.go", "value": "Set sail again" },
+    { "key": "cycle.confirm", "value": "Really? (press again)" },
+    { "key": "cycle.done", "value": "The star boat sails again — cycle {0}! {1} chests revived · {2}" },
+    { "key": "cycle.now", "value": "Now: ATK & EXP +{0}% · World level cap {1}" },
+    { "key": "cycle.story", "value": "Story: {0}/{1} chapters{2}" },
+    { "key": "cycle.story_done", "value": "(done)" },
+    { "key": "cycle.effects", "value": "When you set sail: opened chests return · gathering spots regrow · weekly hidden-grounds uses and night embers reset · a lowered world level is lifted. Story, codex, heroes and weapons stay." },
+    { "key": "cycle.reward", "value": "Voyage reward: {0}" },
+    { "key": "cycle.perm", "value": "Permanent per cycle: ATK & EXP +{0}% · World level cap +{1} (up to cycle {2})" },
+    { "key": "cycle.ready", "value": "Ready to set sail — next is cycle {0}" },
+    { "key": "cycle.why.max", "value": "Already at the last cycle ({0})" },
+    { "key": "cycle.why.story", "value": "Finish the whole story first (now {0}/{1} chapters)" },
+    { "key": "help.screen.11", "value": "N | Set sail again = new cycle — reopen the world after finishing the story (up to cycle 5)" }
   ]
 }

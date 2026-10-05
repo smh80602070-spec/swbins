@@ -181,7 +181,7 @@ namespace Saga.Go.Combat
             {
                 var md = WeaponState.ModsOf(Active?.Id); // 109-14-5a 든 무기 공격 · 공격%
                 var ab = ArtifactState.BonusOf(Active?.Id); // 109-14-5b 보패 공격% · 고정 공격(웹 식: (기본 + 무기) × (1 + %) + 고정)
-                return ((PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus + md.Atk) * (1f + md.AtkPct + ab.AtkPct) + ab.Atk + CookState.Buff("atk")) * PerkState.AtkMultiplier * BondState.AtkMultiplier // 109-14-6 요리 공격(고정)
+                return ((PartyState.Atk + PlayerStats.AtkBonus + Inventory.AtkBonus + md.Atk) * (1f + md.AtkPct + ab.AtkPct) + ab.Atk + CookState.Buff("atk")) * PerkState.AtkMultiplier * BondState.AtkMultiplier * (1f + CycleState.Bonus) // U-0045 회차 공격 +5% · 109-14-6 요리 공격(고정)
                     * (Active != null && Active.BuffLeft > 0f ? GoTalent.C5Atk : 1f) // 109-14-4 깨달음 ⑤
                     * (RallyLeft > 0f ? RallyMul : 1f); // 109-14-11 군기·학날개 진
             }

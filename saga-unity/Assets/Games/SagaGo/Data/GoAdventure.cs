@@ -14,7 +14,11 @@ namespace Saga.Go.Data
     public static class GoAdventure
     {
         public static readonly int[] WlAt = { 1, 3, 6, 9, 12, 15, 18, 21, 24 };
-        public static int WlMax => WlAt.Length - 1;
+        public static int WlMaxBase => WlAt.Length - 1;
+        /// <summary>U-0045 재출항마다 천하 등급 상한 +2(회차 0 은 옛 값 8 그대로).</summary>
+        public static int WlMax => WlMaxBase + GoCycle.WorldCapPerCycle * CycleState.Cycle;
+        /// <summary>그 천하 등급이 열리는 여정 등급 — 표 끝(24)을 넘으면 3레벨마다 하나씩(27·30·…).</summary>
+        public static int WlAtOf(int i) => i <= WlMaxBase ? WlAt[i] : WlAt[WlMaxBase] + GoCycle.WlStepBeyond * (i - WlMaxBase);
         public const float HpStep = 0.35f, AtkStep = 0.22f, LootStep = 0.25f;
         public const int GoldPerRank = 100, OrePerRank = 2, KnotEvery = 5;
 
@@ -22,7 +26,7 @@ namespace Saga.Go.Data
         public static int NaturalOf(int ar)
         {
             int w = 0;
-            for (int i = 1; i <= WlMax; i++) if (ar >= WlAt[i]) w = i;
+            for (int i = 1; i <= WlMax; i++) if (ar >= WlAtOf(i)) w = i;
             return w;
         }
 
@@ -35,7 +39,7 @@ namespace Saga.Go.Data
         public static int NextAt(int ar)
         {
             int n = NaturalOf(ar);
-            return n < WlMax ? WlAt[n + 1] : 0;
+            return n < WlMax ? WlAtOf(n + 1) : 0;
         }
 
         /// <summary>여정 등급 ar 에 오르면 받는 것.</summary>
