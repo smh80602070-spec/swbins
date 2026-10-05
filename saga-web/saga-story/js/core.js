@@ -504,7 +504,18 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.assets3d = {
     /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 집(한옥·민가·현대 — 과거·현대 한 자리) */
-    reg: { 'house': ['hanok_01', 'jp_minka_01', 'modern_block_01'] }
+    reg: { 'house': ['hanok_01', 'jp_minka_01', 'modern_block_01'] },
+    /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(사람 적·마을 사람·내 몸 스타일·이름 없는 적)은 시대 구분 없이
+       옛 몸(VRoid 샘플·OGA·Quaternius·poly.pizza·KayKit) 대신 도감과 안 겹치는 VRoid 통일 몸을 입는다(사용자 10-06 "인물은 모두 교체").
+       named 는 서로 다른 몸(손으로 짝지었던 고정 몸 표 순서 그대로) */
+    borrow: {
+      named: [
+        '황건적', '산적', '도적떼', '떠돌이 병졸', '왜구', '마적', '오랑캐 궁수', '거란 기병', '여진 궁수', '몽골 기병', '왜군 조총병', '위군 창병', '수군 척후선', '철갑 중장병', '근위 기병', '연노 사수',
+        '수군 함대', '흑기병', '황건 두목', '산채 두령', '왜구 선장', '오랑캐 족장', '거란 도통', '몽골 만호장', '왜장', '위군 도독', '관문 수호장', '적국 대장군', '노략 궁수', '유민 폭도', '요동 철기',
+        '왜군 낭인', '중장 방패병', '중장 창병', '자객대', '창귀병(槍鬼兵)', '황실 궁병', '뇌격 기병', '폐도 흉장', '암굴 귀장', '전장 원혼 장수', '폐허 도심 통제관', '궤도 기지 감시관', 'npc:elder',
+        'npc:guard', 'npc:merchant', 'npc:wanderer', 'npc:healer', 'foe:swat', 'folk:worker', 'folk:hoodie', 'folk:scifi', 'folk:astronaut'
+      ]
+    }
   };
   global.DG.cfg.vroidPattern = { base: '../shared/assets/patterns/', repeat: 3 };   // 무늬는 판 폴더가 아니라 shared 에만 있다(W-0071) — 기준 주소 시험이 끝나기 전에 받아도 404 가 안 나게
 })(window);

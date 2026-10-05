@@ -484,7 +484,7 @@ setTimeout(function () {
   if (hash.indexOf('people') >= 0) {
     var zmP = /zoom=([\d.]+)/.exec(hash);
     var peopleZoom = zmP ? Math.max(0.3, Math.min(9, parseFloat(zmP[1]))) : 0.9;
-    var who = ['sg_guanyu', 'sg_zhugeliang', 'kr_leesunsin', 'kr_sejong',
+    var who = ['sg_guanyu', 'sg_zhugeliang', 'kr_yisunsin', 'kr_sejong',
                'eu_caesar', 'eu_napoleon'];
     setInterval(function () {
       var pos0 = C.save.player.pos;
@@ -517,7 +517,7 @@ setTimeout(function () {
      `asset3d`(배우) 와 `prop3d`(소품) 를 함께 찍고, 인물 여섯을 따로 세워 재 둔다.
      (사가블로 `#fx` 가 같은 이유로 이 한 줄을 달고 있다) */
   if (hash.indexOf('people') >= 0 || hash.indexOf('stat') >= 0) {
-    var pw = ['sg_guanyu', 'sg_zhugeliang', 'kr_leesunsin', 'kr_sejong',
+    var pw = ['sg_guanyu', 'sg_zhugeliang', 'kr_yisunsin', 'kr_sejong',
               'eu_caesar', 'eu_napoleon'];
   setInterval(function () {
     var b = document.getElementById('demo-stat');

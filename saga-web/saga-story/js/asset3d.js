@@ -484,7 +484,8 @@
 
   /** 표에서 이 씨앗이 고를 몸+옷+머리 조합 — 조합 객체일 때만 돌려준다 */
   function heroRecipe(seed) {
-    var frec = (global.DG.assets3d && global.DG.assets3d.heroRecipe(seed)) || fixedRecipe(seed);   // 통일 GLB(W-0021) 먼저
+    var A3U = global.DG.assets3d;
+    var frec = (A3U && (A3U.heroRecipe(seed) || A3U.borrowRecipe(seed))) || fixedRecipe(seed);   // 통일 GLB(W-0021) 먼저, 제 몸 없으면 빌린 몸(W-0074)
     if (frec) { return frec; }
     if (wantsAnimeAvatar()) {
       var arec = oneOf(HERO_RECIPES_ANIME, seed);
@@ -752,7 +753,12 @@
     var url = REG[key];
     return typeof url === 'string' ? { key: key, body: url, anim: url } : null;
   }
-  function buildModel(key, heightPx, cb) { buildRecipe(modelRecipe(key), key, heightPx, null, cb); }
+  function buildModel(key, heightPx, cb) {
+    /* W-0074 — 사람 몸(people/ 아래 folk 옷)은 시대 구분 없이 VRoid 통일 몸으로(빌린 몸). 괴물·기계는 그대로 */
+    var url = REG[key], A3U = global.DG.assets3d;
+    var b = (typeof url === 'string' && url.indexOf('/people/') >= 0 && A3U) ? A3U.borrowRecipe(key) : null;
+    buildRecipe(b || modelRecipe(key), key, heightPx, null, cb);
+  }
 
   function buildRecipe(rec, seed, heightPx, tintHex, cb) {
     var t = three();

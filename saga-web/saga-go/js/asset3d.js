@@ -626,7 +626,7 @@
   }
 
   function heroRecipe(ref) {
-    var frec = (global.DG.assets3d && global.DG.assets3d.heroRecipe(ref)) || fixedRecipe(ref);   // 통일 GLB(W-0021) 먼저
+    var A3U = global.DG.assets3d, frec = (A3U && (A3U.heroRecipe(ref) || A3U.borrowRecipe(ref))) || fixedRecipe(ref);   // 통일 GLB(W-0021) 먼저, 제 몸 없으면 빌린 몸(W-0074)
     if (frec) { return frec; }
     /* ⑱ 땅 사람(`folk.js`)은 시대 옷이 곧 그 사람이라 애니메 몸으로 바꾸지 않는다 */
     if (wantsAnimeAvatar() && !(ref && /^folk_/.test(String(ref.era || '')))) {

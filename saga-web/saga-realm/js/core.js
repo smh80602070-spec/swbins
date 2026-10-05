@@ -438,7 +438,13 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.assets3d = {
     /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 사당·성벽·횃불(화로)·집 */
-    reg: { 'temple': ['chinese_hall_01'], 'wall': ['city_wall_segment_01'], 'torch': ['brazier_01'], 'house': ['silkroad_house_01'] }
+    reg: { 'temple': ['chinese_hall_01'], 'wall': ['city_wall_segment_01'], 'torch': ['brazier_01'], 'house': ['silkroad_house_01'] },
+    /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(시간 틈 무장 아홉·도시 군중)도 시대 구분 없이 VRoid 통일 몸.
+       이 판은 도감 105 + 장수 194 = 299 전부가 판 인물이라 pool: 'all'(얼굴이 장수와 겹친다 — NPC 몸이 더 오면 풀린다). named 는 서로 다른 몸 */
+    borrow: {
+      pool: 'all',
+      named: ['tm_gangseo', 'tm_gongseok', 'tm_geumdam', 'tm_myeongbyeon', 'tm_doha', 'tm_seongyeon', 'tm_gwedo', 'tm_eunha', 'tm_yeongjeom']
+    }
   };
   global.DG.cfg.mode2d = {
     /* 2D 국토 지도 꾸밈(W-0023) — 2D 모드 = 3D 지도가 안 서 있을 때. 땅 종류(land) → K-0020 `realm_*` 타일, 성 단계 → K-0017 `world2d` 스프라이트(map2d.js) */

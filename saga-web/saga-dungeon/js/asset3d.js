@@ -1091,7 +1091,7 @@
   }
 
   function heroRecipe(seed) {
-    var frec = (global.DG.assets3d && global.DG.assets3d.heroRecipe(seed)) || fixedRecipe(seed);   // 통일 GLB(W-0021) 먼저
+    var A3U = global.DG.assets3d, frec = (A3U && (A3U.heroRecipe(seed) || A3U.borrowRecipe(seed))) || fixedRecipe(seed);   // 통일 GLB(W-0021) 먼저, 제 몸 없으면 빌린 몸(W-0074)
     if (frec) { return frec; }
     if (wantsAnimeAvatar()) {
       var arec = oneOf(HERO_RECIPES_ANIME, seed);

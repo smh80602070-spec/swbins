@@ -552,9 +552,12 @@
   function heroRecipe(ref) {
     if (ref && ref.monster) { return { body: ref.monster, anim: ref.monster }; }
     /* 시간 틈 사람(§5-12) — 제 시대 옷 몸(`body`, 제 클립 내장). 애니메 몸으로 바꾸지 않는다 */
-    if (ref && ref.body) { return { body: ref.body, anim: ref.body }; }
-    var urec = global.DG.assets3d && global.DG.assets3d.heroRecipe(ref);   // 통일 GLB(W-0021)
+    /* W-0074 — 사람 몸(people/ 아래 folk 옷)은 시대 구분 없이 VRoid 통일 몸으로(빌린 몸) */
+    var A3U = global.DG.assets3d, human = ref && ref.body && ref.body.indexOf('/people/') >= 0;
+    if (ref && ref.body && !human) { return { body: ref.body, anim: ref.body }; }
+    var urec = A3U && (A3U.heroRecipe(ref) || A3U.borrowRecipe(ref));   // 통일 GLB(W-0021), 제 몸 없으면 빌린 몸(W-0074)
     if (urec) { return urec; }
+    if (human) { return { body: ref.body, anim: ref.body }; }
     if (wantsAnimeAvatar()) {
       var arec = oneOf(HERO_RECIPES_ANIME, ref);
       if (arec) { return arec; }

@@ -496,7 +496,20 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.assets3d = {
     /* 통일 3D 에셋(W-0021, shared/assets/world3d) — prop3d 소품 이름 → 그 판 9칸 id. 마을은 과거·현대·미래 한 자리라 집·등롱을 시대 섞어 쓴다 */
-    prop: { house: ['eu_house_01', 'modern_block_01', 'future_dome_01'], lamp: ['street_lamp_01', 'signal_pylon_01'], well: ['well_01'] }
+    prop: { house: ['eu_house_01', 'modern_block_01', 'future_dome_01'], lamp: ['street_lamp_01', 'signal_pylon_01'], well: ['well_01'] },
+    /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(주민·이야기·세계 임무·절차 인물·땅 사람)은 시대 구분 없이
+       옛 몸(VRoid 샘플·OGA·Quaternius·folk) 대신 도감과 안 겹치는 VRoid 통일 몸을 입는다(사용자 10-06 "인물은 모두 교체").
+       named 는 서로 다른 몸, skip 은 사람이 아닌 것(드론·말 — pet 몸) */
+    borrow: {
+      named: ['npc_elder', 'npc_merchant', 'npc_old', 'npc_soldier', 'npc_scholar', 'npc_herb', 'npc_smith', 'npc_ronin', 'npc_bandit', 'npc_stranger',
+        'story_elder', 'story_ferryman', 'story_scholar', 'story_wanderer', 'story_blackmask', 'story_thief', 'story_dareum', 'story_ara',
+        'story_hangyeol', 'story_mulsae', 'story_saebyeok', 'story_neoul', 'story_maru', 'story_sodam', 'story_byeori', 'story_bawoo',
+        'story_gamyeon', 'story_captain', 'story_haram', 'story_daon', 'story_gaon', 'story_dodam', 'story_hanbyeol', 'story_yeoul',
+        'story_haneul', 'story_chorong', 'story_narae', 'story_haemi', 'story_saegil',
+        'wq_postmaster', 'wq_dolsoe', 'wq_rider', 'wq_researcher', 'wq_hanbit', 'wq_byeori'],
+      same: { story_haesol: 'story_blackmask' },
+      skip: ['story_bandi', 'story_parang', 'story_carrier', 'story_garmuri', 'story_partthief', 'story_seeddrone', 'story_horse']
+    }
   };
   global.DG.cfg.vroidPattern = { base: '../shared/assets/patterns/', repeat: 3 };   // 무늬는 판 폴더가 아니라 shared 에만 있다(W-0071) — 기준 주소 시험이 끝나기 전에 받아도 404 가 안 나게
 })(window);

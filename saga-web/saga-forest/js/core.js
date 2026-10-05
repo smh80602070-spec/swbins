@@ -466,7 +466,13 @@
   global.DG.cfg = global.DG.cfg || {};
   global.DG.cfg.assets3d = {
     /* 통일 3D 에셋(W-0021, shared/assets/world3d) — asset3d 키 → 그 판 9칸 id. 있는 자리만: 집·우편함·울타리 */
-    reg: { 'building:home': ['forest_cottage_01'], 'building:mail': ['mailbox_01'], 'fence': ['wood_fence_01'] }
+    reg: { 'building:home': ['forest_cottage_01'], 'building:mail': ['mailbox_01'], 'fence': ['wood_fence_01'] },
+    /* 빌린 몸(W-0074, shared/js/assets3d.js borrowRecipe) — 제 몸이 없는 사람(이름 있는 주민 NPC·손님·나·절차 주민)은 시대 구분 없이
+       옛 몸(VRoid 샘플·숲 NPC 전용 VRoid·QRPG·folk·우주복) 대신 도감과 안 겹치는 VRoid 통일 몸(사용자 10-06 "인물은 모두 교체"). named 는 서로 다른 몸 */
+    borrow: {
+      named: ['me', 'npc_keeper', 'npc_angler', 'npc_merchant', 'npc_explorer', 'npc_herbalist', 'npc_wanderer', 'npc_courier',
+        'visitor:fox', 'visitor:sailor', 'visitor:angler', 'visitor:bugdoc', 'visitor:traveler', 'visitor:alien', 'visitor:courier', 'visitor:photo']
+    }
   };
   global.DG.cfg.vroidPattern = { base: '../shared/assets/patterns/', repeat: 3 };   // 무늬는 판 폴더가 아니라 shared 에만 있다(W-0071) — 기준 주소 시험이 끝나기 전에 받아도 404 가 안 나게
 })(window);

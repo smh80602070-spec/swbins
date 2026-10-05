@@ -1060,7 +1060,9 @@
   function buildHero(ref, cb) {
     /* §5.13 — 손님 제 몸(`ref.body`, 제 클립 든 CC0 GLB: 로봇·우주복·유령·도깨비·작업복). 몸이 곧 몸짓 파일이다.
        못 실리면 옛 길(애니메·QRPG)로 */
-    if (ref && ref.body && three()) {
+    /* W-0074 — 사람 손님 몸(people/ 아래: 우주복·작업복·후드)은 시대 구분 없이 VRoid 통일 몸으로(빌린 몸). 유령·로봇·도깨비는 제 몸 그대로 */
+    var humanBody = ref && ref.body && ref.body.indexOf('/people/') >= 0 && global.DG.assets3d && global.DG.assets3d.borrowRecipe(borrowSeed(ref));
+    if (ref && ref.body && !humanBody && three()) {
       loadHeroRecipe({ key: 'body:' + ref.body, body: ref.body, anim: ref.body }, function (model) {
         if (model) { cb(model); return; }
         buildHeroPlain(ref, cb);
@@ -1069,12 +1071,17 @@
     }
     buildHeroPlain(ref, cb);
   }
+  /** 빌린 몸 씨앗 — 손님은 날마다 id 가 visit_·settle_ 로 바뀌니 손님 키로 고정(꼬마는 제 id) */
+  function borrowSeed(ref) { return ref && ref.visitor && !ref.kid ? 'visitor:' + ref.visitor : ref; }
   function buildHeroPlain(ref, cb, skipUni) {
     var t = three();
     if (!t) { cb(null); return; }
     /* 통일 3D 에셋(W-0021) — 영웅 id 로 shared/assets/characters3d 에 몸이 있으면 그것 먼저, 못 실리면 아래 옛 길 */
     var urec = !skipUni && global.DG.assets3d && global.DG.assets3d.heroRecipe(ref);
     if (urec) { loadHeroRecipe(urec, function (model) { if (model) { cb(model); return; } buildHeroPlain(ref, cb, true); }); return; }
+    /* 제 몸 없는 사람(주민 NPC·손님·나)은 빌린 몸(W-0074) — 옛 VRoid 샘플·QRPG 대신 도감과 안 겹치는 VRoid 통일 몸 */
+    var brec = !skipUni && global.DG.assets3d && global.DG.assets3d.borrowRecipe(borrowSeed(ref));
+    if (brec) { loadHeroRecipe(brec, function (model) { if (model) { cb(model); return; } buildHeroPlain(ref, cb, true); }); return; }
     if (wantsMixamoReal()) {
       var mrec = oneOf(HERO_RECIPES_MIXAMO, ref);
       if (mrec) {

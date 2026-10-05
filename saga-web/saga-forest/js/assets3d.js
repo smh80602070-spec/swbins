@@ -37,6 +37,19 @@
   /** 한 번만 — 기준 주소 후보를 차례로 두드려 되는 쪽을 정한다(작은 출처 파일 하나) */
   function probe() {
     if (state !== 'init') { return; }
+    /* W-0074 — 동기 한 번으로 정한다. 비동기로 두면 시험이 끝나기 전에 세운 사람(부팅 직후 주민·주인공)이 url() null 을 받아
+       옛 몸(VRoid 샘플·QRPG·mpfb)으로 서 버리고 다시 안 바뀌었다(사가의숲 주민·주인공에서 확인). 작은 출처 파일 하나·부팅 때 한 번뿐 */
+    if (global.XMLHttpRequest) {
+      var sl = bases(), si;
+      for (si = 0; si < sl.length; si++) {
+        try {
+          var x = new global.XMLHttpRequest();
+          x.open('GET', sl[si] + 'world3d/altar_01.license.json', false); x.send();
+          if (x.status >= 200 && x.status < 300) { root = sl[si]; state = 'ok'; whenLoaded(applyProps); return; }
+        } catch (e) { /* file: 등 — 다음 후보 */ }
+      }
+      state = 'fail'; return;
+    }
     if (!global.fetch) { state = 'fail'; return; }
     state = 'probing';
     var list = bases(), i = 0;
@@ -109,12 +122,59 @@
 
   /** 영웅 몸 레시피(asset3d `heroRecipe` 맨 앞) — 통일 GLB 가 있으면 `{key, body}`(몸짓은 몸에서 읽어 굽는다 = anim-own), 없으면 null */
   function heroRecipe(ref) {
-    var id = ref && typeof ref === 'object' ? ref.id : String(ref || '').replace(/^hero:/, ''), u = url('hero', id);   // 사가블로는 'hero:<id>' 문자열 씨앗을 준다
+    var id = refId(ref), u = url('hero', id);
     return u ? { key: 'uni:' + id, body: u } : null;
+  }
+  /** 씨앗 → 인물 id. 사가블로는 'hero:<id>'·동료는 'ally:<id>' 문자열 씨앗을 준다(동료도 제 몸을 입게 — W-0074) */
+  function refId(ref) { return ref && typeof ref === 'object' ? ref.id : String(ref || '').replace(/^(hero|ally):/, ''); }
+
+  /**
+   * 빌린 몸(W-0074) — 통일 몸이 없는 사람(주민·이야기 NPC·사람 적·절차 인물)에게 **이 판 도감과 안 겹치는** 통일 몸을 입힌다.
+   * 옛 몸(VRoid 샘플 넷·Quaternius·OGA·poly.pizza)을 대신한다. 설정 `DG.cfg.assets3d.borrow` 가 있는 판만 켜진다:
+   *   named: [씨앗…]  이름 있는 사람 — 이 순서대로 서로 다른 몸을 하나씩(겹치지 않는다)
+   *   skip:  [씨앗…]  빌리지 않는다(현대·미래 옷이 곧 그 사람인 경우 — 맞는 새 몸이 아직 없다)
+   *   skipEra: [ref.era…]  같은 뜻을 시대로(사가고 땅 사람 folk_modern·folk_future)
+   *   same:  {씨앗: 씨앗}  같은 사람(가면 벗은 참이름 등)은 같은 몸
+   *   exclude: [id…]  풀에서 더 뺄 몸(도감 105 는 늘 빠진다)
+   *   pool: 'all'  도감 몸도 빌린다(사가국지 — 판 인물이 299 전부라 안 겹치는 몸이 없다. 얼굴이 장수와 겹친다)
+   * 나머지(절차 인물·이름 없는 적)는 named 가 안 쓴 몸에서 씨앗 해시로 고른다. 손잡이 `assets3d.borrow` 0 이면 늘 null.
+   */
+  var borrowed = null;   // { named: {씨앗: 몸id}, rest: [몸id…] }
+  function borrowTable() {
+    if (borrowed) { return borrowed; }
+    var c = cfg().borrow, D = global.DG && global.DG.data, own = {}, i;
+    borrowed = { named: {}, rest: [] };
+    if (!c) { return borrowed; }
+    if (c.pool !== 'all') { ((D && D.heroes) || []).forEach(function (h) { own[h.id] = 1; }); }
+    (c.exclude || []).forEach(function (x) { own[x] = 1; });
+    var pool = (ids().hero || []).filter(function (x) { return !own[x]; }).sort();
+    var names = c.named || [], step = Math.max(1, Math.floor(pool.length / Math.max(1, names.length))), used = {};
+    for (i = 0; i < names.length && i < pool.length; i++) {   // 고르게 띄엄띄엄 — 같은 갈래(서역·선비…) 몸이 한 마을에 몰리지 않게
+      var k = (i * step) % pool.length;
+      while (used[pool[k]]) { k = (k + 1) % pool.length; }
+      used[pool[k]] = 1; borrowed.named[names[i]] = pool[k];
+    }
+    borrowed.rest = pool.filter(function (x) { return !used[x]; });
+    return borrowed;
+  }
+  function borrowRecipe(ref) {
+    var c = cfg().borrow, C = global.DG && global.DG.core;
+    if (!c || (C && C.tuned && !C.tuned('assets3d.borrow', 1))) { return null; }
+    var seed = ref && typeof ref === 'object' ? ref.id : String(ref || ''), id = refId(ref);
+    if (!seed || set('hero')[id] || (c.skip || []).indexOf(seed) >= 0) { return null; }
+    if (ref && typeof ref === 'object' && (c.skipEra || []).indexOf(ref.era) >= 0) { return null; }
+    if ((c.same || {})[seed]) { seed = c.same[seed]; }
+    var t = borrowTable(), b = t.named[seed], i, h = 0;
+    if (!b && t.rest.length) {
+      for (i = 0; i < seed.length; i++) { h = (h * 31 + seed.charCodeAt(i)) >>> 0; }
+      b = t.rest[h % t.rest.length];
+    }
+    var u = b && url('hero', b);
+    return u ? { key: 'uni:' + b, body: u, borrowedFor: seed } : null;
   }
 
   global.DG.assets3d = {
-    url: url, spriteUrl: spriteUrl, probe: probe, heroRecipe: heroRecipe, applyProps: applyProps,
+    url: url, spriteUrl: spriteUrl, probe: probe, heroRecipe: heroRecipe, borrowRecipe: borrowRecipe, borrowTable: borrowTable, applyProps: applyProps,
     has: function (kind, id) { return !!set(kind)[id]; },
     /** 진단·점검용 — 'init' | 'probing' | 'ok' | 'fail' */
     state: function () { return state; },
@@ -124,7 +184,7 @@
       probe();
       (function wait() { if (state === 'ok' || state === 'fail') { cb(state === 'ok'); } else { setTimeout(wait, 50); } })();
     },
-    _reset: function () { state = 'init'; root = null; sets = null; }
+    _reset: function () { state = 'init'; root = null; sets = null; borrowed = null; }
   };
   probe();
 })(typeof window !== 'undefined' ? window : this);

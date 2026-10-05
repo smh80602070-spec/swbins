@@ -1414,7 +1414,7 @@
   function buildPlayer() {
     var save = C().save;
     var heroId = (save.party && save.party[0]) || null;
-    asset3d().build('hero', { id: heroId }, function (g) {
+    asset3d().build('hero', { id: heroId || 'me' }, function (g) {   // 동료가 아직 없으면 'me' — 빌린 몸(W-0074)이 고정 한 벌을 준다
       if (!g || !scene) { return; }
       player.group = g;
       player.mixer = g.userData.mixer || null;
