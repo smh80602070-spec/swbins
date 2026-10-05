@@ -229,6 +229,23 @@ func _check_pose(name: String, clip: String, fallback: String) -> void:
 	var has: bool = _p._anim != null and _p._anim.has_animation(clip)
 	var want := clip if has else fallback
 	_check(name, _p._current_anim == want, "now=%s want=%s has_clip=%s" % [_p._current_anim, want, str(has)])
+	## 창 모드로 돌릴 때만(SAGA_TRAVERSAL_SHOTS=<절대 경로>) 그 순간의 화면을 PNG 로 — 동작이 보기에 맞는지 눈으로 볼 때 쓴다.
+	var dir := OS.get_environment("SAGA_TRAVERSAL_SHOTS")
+	if dir != "":
+		_shot(dir, name)
+
+## 화면 글자판(CanvasLayer)을 숨기고 화면을 PNG 로 — 몸 동작이 글자판에 안 가리게.
+func _shot(dir: String, name: String) -> void:
+	var hidden: Array = []
+	for n in get_tree().root.find_children("*", "CanvasLayer", true, false):
+		if (n as CanvasLayer).visible:
+			(n as CanvasLayer).visible = false
+			hidden.append(n)
+	await RenderingServer.frame_post_draw
+	var img := get_viewport().get_texture().get_image()
+	for n in hidden:
+		(n as CanvasLayer).visible = true
+	img.save_png("%s/%s.png" % [dir, name])
 
 func _teleport(pos: Vector3) -> void:
 	_p.global_position = pos
