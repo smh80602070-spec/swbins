@@ -1454,5 +1454,22 @@
   "ticket": "U-0043",
   "since": "2026-10-05",
   "note": "표 22줄·ko/en 번역·코드 키 25개가 소스에서 읽힘·창 열고 닫기·세이브 불변. 창 모양·글 읽힘은 눈"
+ },
+ {
+  "id": "un.go.weekly",
+  "name": "주간 도전 U — 주 시작 값 대비 목표 다섯·받기·완주 보상(U-0044, 고돗 weekly_goals.gd 이식)",
+  "files": [
+   "saga-unity/Assets/Games/SagaGo/Data/GoWeekly.cs",
+   "saga-unity/Assets/Games/SagaGo/UI/WeeklyUi.cs"
+  ],
+  "tests": [
+   "PlaytestGoWeekly"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0044",
+  "since": "2026-10-05",
+  "note": "규칙 층(풀 10·뽑기·주 갈림 월 4시·진척·받기·완주·알림·세이브 왕복)+장면 층(진짜 셈으로 채워 받기 단추·세이브 파일·옛 세이브). 창 모양·글 읽힘은 눈"
  }
 ]

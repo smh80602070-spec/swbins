@@ -150,6 +150,11 @@ namespace Saga.Go.Data
             // tasks U-0031 사냥 기록 — 종별 처치 수·받은 단계 수(버전 그대로 — 옛 세이브는 0 에서)
             public List<CookState.Entry> huntKills;
             public List<CookState.Entry> huntClaimed;
+            // tasks U-0044 주간 도전 — 주 번호·주 시작 셈 값·받은 도전·완주 보상(버전 그대로 — 옛 세이브는 새 주로 읽힘)
+            public int wgWeek;
+            public List<CookState.Entry> wgBase;
+            public List<CookState.Entry> wgClaimed;
+            public bool wgBonus;
             // tasks U-0032 쉼터 마당 — 놓은 소품·마지막 정산 시각(유닉스 초)·쌓인 금·총 쓴 금(버전 그대로 — 옛 세이브는 빈 마당)
             public List<HomePlaced> homeItems;
             public long homeT;
@@ -211,6 +216,10 @@ namespace Saga.Go.Data
                 achGot = AchieveState.SnapshotGot(),
                 huntKills = HuntState.SnapshotKills(), // U-0031
                 huntClaimed = HuntState.SnapshotClaimed(),
+                wgWeek = WeeklyState.SnapshotWeek(), // U-0044
+                wgBase = WeeklyState.SnapshotBase(),
+                wgClaimed = WeeklyState.SnapshotClaimed(),
+                wgBonus = WeeklyState.SnapshotBonus(),
                 homeItems = HomeState.Snapshot(), // U-0032
                 homeT = HomeState.SnapshotT(),
                 homeAcc = HomeState.SnapshotAcc(),
@@ -363,6 +372,7 @@ namespace Saga.Go.Data
             FishState.Restore(data.fishBag, data.fishLog, data.fishGone); // 109-14-24 — 요리 가방(CookState) 뒤
             AchieveState.Restore(data.achStats, data.achKinds, data.achGot); // 109-14-25
             HuntState.Restore(data.huntKills, data.huntClaimed); // U-0031 — 없는 세이브(null)는 0 에서
+            WeeklyState.Restore(data.wgWeek, data.wgBase, data.wgClaimed, data.wgBonus); // U-0044 — 없는 세이브(0·null)는 새 주
             HomeState.Restore(data.homeItems, data.homeT, data.homeAcc, data.homeSpent); // U-0032 — 없는 세이브(null·0)는 빈 마당
             DispatchState.Restore(data.dispOut, data.dispDone); // 109-14-26
             FrostState.Restore(data.frostFound); // 109-14-27a
