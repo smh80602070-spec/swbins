@@ -18,7 +18,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const WEB = path.resolve(HERE, '..', '..');
-const HEAD = /^\/\*bundle ([0-9a-f]{40}) (\d+) files\*\/\n/;
+const HEAD = /^\/\*bundle ([0-9a-f]{40}) (\d+) files\*\/\r?\n/;   // 윈도 체크아웃(CRLF)에서도 맞게
 const NUL = String.fromCharCode(0);
 
 /** 번들 명세 — manifest.bundle 과 manifest.index 의 묶음을 짝지은 [{ out, files }] */
