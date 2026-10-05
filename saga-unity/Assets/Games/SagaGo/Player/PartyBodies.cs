@@ -10,7 +10,7 @@ namespace Saga.Go.Player
     /// 동료는 id 로 고른 사실 모델(등용한 "산적" = Abe, 그 밖 = 기사·농부·아낙 중 FNV 해시)을 처음 나설 때 한 번
     /// 만들어 두고 켜고 끈다. 몸은 전부 Humanoid 라 주인공과 같은 Maria.controller 를 씌워(아바타 리타깃)
     /// 걷기·공격·등반·활공·수영 상태가 그대로 돈다. Humanoid 가 아닌 모델·빠진 모델은 쓰지 않고 주인공 몸에
-    /// 원소 빛깔만 입힌다(예전 방식). 무기(`WeaponVisual`)는 주인공 몸 손에만 있다.
+    /// 원소 빛깔만 입힌다(예전 방식). 무기(`WeaponVisual`)는 `Shown` 이벤트로 몸을 따라온다(U-0049).
     ///
     /// 109-7 — 도감 인물은 `GoHeroLooks` 표의 몸(역사풍 열일곱 중 하나)에 키·체격·등·허리·머리 꾸밈을 입는다(`HeroDresser`).
     /// 표 밖 id(옛 세이브의 이름 없는 동행)만 예전처럼 기사·농부·아낙 해시. 들판 인물·겨루기 상대도 <see cref="Dress"/> 로 같은 겉모습.
@@ -45,6 +45,8 @@ namespace Saga.Go.Player
         }
 
         public string ShownId { get; private set; } = HeroId;
+        /// <summary>몸이 바뀐 직후(인물 id) — U-0049 무기가 따라온다.</summary>
+        public static event System.Action<string> Shown;
 
         // ---- 109-8 교체 연출 ----
         public const float EnterSec = 0.35f;
@@ -167,6 +169,7 @@ namespace Saga.Go.Player
                 if (motion && prev != null && prev != next) { StartLeave(prev); StartEnter(next); }
             }
             ShownId = body != null ? memberId : HeroId;
+            Shown?.Invoke(ShownId); // U-0049 — 무기(WeaponVisual)가 새 몸 손으로 옮긴다
             return body != null;
         }
 

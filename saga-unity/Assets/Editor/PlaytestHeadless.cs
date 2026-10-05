@@ -165,6 +165,7 @@ namespace Saga.EditorTools
                 if (!PlaytestGoTreasure.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107-4 보물 상자(세이브·상자 기록 되돌림 포함)
                 if (!PlaytestGoRegionMission.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107-8 지역 사명 사슬(사명·지도·수호장·상자 기록·세이브 되돌림)
                 if (!PlaytestGoPartyBodies.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 107-6 동료 모델
+                if (!PlaytestGoWeaponModel.Run("PlaytestHeadless")) _hadError = true; // tasks U-0049 무기 모델 — 인물 무기를 GLB 로 쥐고 편성 교체로 몸이 바뀌면 따라온다
                 if (!PlaytestGoHeroes.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-6 도감 105·싸워서 등용(동행·인연·경험치 되돌림)
                 if (!PlaytestGoHeroDex.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-6b 도감 화면(동행·만남·세이브 되돌림)
                 if (!PlaytestGoHeroLooks.Run("PlaytestHeadless")) _hadError = true; // PLAN.md 109-7 인물 105 몸 배정(표·105 벌 입혀 보기·교체·들판)
