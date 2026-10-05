@@ -1,7 +1,9 @@
 """world-forge 곡면 도우미(10-06) — 무기(build_weapon)·장비(build_equip)가 같이 쓴다. 상자·원통 조립이 "허접" 판정을 받아 만든 것.
-loft = 높이마다 마름모 단면을 이은 날 · plate = 윤곽 → 가장자리가 얇은 판 · ball = 둥근 덩이.
+loft = 높이마다 마름모 단면을 이은 날 · plate = 윤곽 → 가장자리가 얇은 판 · ball = 둥근 덩이 · surf = 점 격자 면(바깥 법선 자동) · ring = 타원 고리·부분 호.
 면은 버텍스를 공유하지 않으므로(Mesh.face) 바깥에서 보아 반시계로 감는다.
 """
+import math
+
 from mathutils import Vector
 
 from build_prop import tube
@@ -65,3 +67,37 @@ def ball(M, c, r, slot, n=6):
     tube(M, (x, y, z - r), (x, y, z - r * 0.5), r * 0.35, r * 0.87, slot, 0.3, n)
     tube(M, (x, y, z - r * 0.5), (x, y, z + r * 0.5), r * 0.87, r * 0.87, slot, 0.3, n, caps=False)
     tube(M, (x, y, z + r * 0.5), (x, y, z + r), r * 0.87, r * 0.35, slot, 0.3, n)
+
+
+def surf(M, rows, centers, slot, closed=True, tile=0.3):
+    """점 격자(rows[i][j]) 를 사각형으로 잇는다. centers[i] = 그 줄의 안쪽 기준점 — 첫 면 법선이 안쪽을 보면 열 순서를 뒤집는다(면이 따로 놀아 법선 재계산이 안 되므로)."""
+    rows = [[Vector(p) for p in r] for r in rows]
+    nc = len(rows[0])
+    a, b, d = rows[0][0], rows[0][1], rows[1][0]
+    nrm = (b - a).cross(d - a)
+    if nrm.dot(a - Vector(centers[0])) < 0:
+        rows = [list(reversed(r)) for r in rows]
+    cols = nc if closed else nc - 1
+    for i in range(len(rows) - 1):
+        for j in range(cols):
+            j2 = (j + 1) % nc
+            p0, p1, p2, p3 = rows[i][j], rows[i][j2], rows[i + 1][j2], rows[i + 1][j]
+            u0, u1 = j / cols / tile, (j + 1) / cols / tile
+            v0, v1 = i / tile * 0.2, (i + 1) / tile * 0.2
+            M.quad(p0, p1, p2, p3, slot, (u0, v0), (u1, v0), (u1, v1), (u0, v1))
+
+
+def ring(axis, c, rx, ry, n=14, a0=-math.pi, a1=math.pi, closed=True):
+    """axis 'z'(가로 고리, 앞 = -y)·'x'(팔 방향)·'y'. 각도 a0~a1(닫힘이면 끝 점 빼고). rx·ry = 두 반지름."""
+    cnt = n if closed else n + 1
+    pts = []
+    for k in range(cnt):
+        t = a0 + (a1 - a0) * k / (n if closed else n)
+        u, v = math.sin(t) * rx, -math.cos(t) * ry          # t=0 → 앞(-y 또는 +z)
+        if axis == 'z':
+            pts.append((c[0] + u, c[1] + v, c[2]))
+        elif axis == 'x':
+            pts.append((c[0], c[1] + u, c[2] - v))           # x 축 고리: t=0 → 위(+z)
+        else:
+            pts.append((c[0] + u, c[1], c[2] - v))
+    return pts

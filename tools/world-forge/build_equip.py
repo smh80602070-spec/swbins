@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_prop as BP  # noqa: E402
 import wf_common as W  # noqa: E402
 from build_prop import tube, obox, A, arg  # noqa: E402
-from wf_shapes import loft, plate  # noqa: E402,F401
+from wf_shapes import loft, plate, surf, ring  # noqa: E402,F401
 
 BP.TRIS_MAX = 600
 BP.GENERATOR = 'tools/world-forge/build_equip.py'
@@ -62,40 +62,6 @@ class Pal:
 
 # ---------------------------------------------------------------- 갑옷 슬롯 6 (뼈 기준 좌표, T-자세)
 # 10-06 재설계: 상자·원통 → 몸을 따라가는 곡면 껍데기(surf). 눈 판정 "종이 상자 갑옷" 후속.
-
-def surf(M, rows, centers, slot, closed=True, tile=0.3):
-    """점 격자(rows[i][j]) 를 사각형으로 잇는다. centers[i] = 그 줄의 안쪽 기준점 — 첫 면 법선이 안쪽을 보면 열 순서를 뒤집는다(면이 따로 놀아 법선 재계산이 안 되므로)."""
-    rows = [[Vector(p) for p in r] for r in rows]
-    nc = len(rows[0])
-    a, b, d = rows[0][0], rows[0][1], rows[1][0]
-    nrm = (b - a).cross(d - a)
-    if nrm.dot(a - Vector(centers[0])) < 0:
-        rows = [list(reversed(r)) for r in rows]
-    cols = nc if closed else nc - 1
-    for i in range(len(rows) - 1):
-        for j in range(cols):
-            j2 = (j + 1) % nc
-            p0, p1, p2, p3 = rows[i][j], rows[i][j2], rows[i + 1][j2], rows[i + 1][j]
-            u0, u1 = j / cols / tile, (j + 1) / cols / tile
-            v0, v1 = i / tile * 0.2, (i + 1) / tile * 0.2
-            M.quad(p0, p1, p2, p3, slot, (u0, v0), (u1, v0), (u1, v1), (u0, v1))
-
-
-def ring(axis, c, rx, ry, n=14, a0=-math.pi, a1=math.pi, closed=True):
-    """axis 'z'(가로 고리, 앞 = -y)·'x'(팔 방향)·'y'. 각도 a0~a1(닫힘이면 끝 점 빼고). rx·ry = 두 반지름."""
-    cnt = n if closed else n + 1
-    pts = []
-    for k in range(cnt):
-        t = a0 + (a1 - a0) * k / (n if closed else n)
-        u, v = math.sin(t) * rx, -math.cos(t) * ry          # t=0 → 앞(-y 또는 +z)
-        if axis == 'z':
-            pts.append((c[0] + u, c[1] + v, c[2]))
-        elif axis == 'x':
-            pts.append((c[0], c[1] + u, c[2] - v))           # x 축 고리: t=0 → 위(+z)
-        else:
-            pts.append((c[0] + u, c[1], c[2] - v))
-    return pts
-
 
 def head(C, p):
     """투구 — 얼굴 앞이 열린 돔(아래 줄은 뒤·옆 260°, 이마 위로 갈수록 닫힘). 시대: 옛 = 코 가리개·깃, 지금 = 가림 띠, 미래 = 발광 바이저·지느러미."""

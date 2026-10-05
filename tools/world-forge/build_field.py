@@ -20,6 +20,7 @@ from mathutils import Vector
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_prop as BP  # noqa: E402
 from build_prop import tube, obox, gable, annulus, A, arg  # noqa: E402
+import wf_shapes as WS  # noqa: E402
 
 BP.TRIS_MAX = 1500
 BP.GENERATOR = 'tools/world-forge/build_field.py'
@@ -225,9 +226,9 @@ def temple_roof_01(C):
 # ---------------------------------------------------------------- dkit 5 × 3
 
 VARIANTS = {
-    'dirt': dict(floor=('brown_mud', 2.0, '#6f5236'), wall=('cliff_side', 3.0, '#6b5238'), glow=None),
+    'dirt': dict(floor=('brown_mud', 2.0, '#6f5236'), wall=('coast_sand_rocks_02', 3.0, '#9a7f62'), glow=None),
     'limestone': dict(floor=('coast_sand_rocks_02', 2.0, '#c9c0aa'), wall=('coast_sand_rocks_02', 3.0, '#d8d0bb'), glow=None),
-    'lava': dict(floor=('concrete_wall_001', 2.0, '#2a2523'), wall=('cliff_side', 3.0, '#3b2b28'), glow='#ff6a20'),
+    'lava': dict(floor=('concrete_wall_001', 2.0, '#2a2523'), wall=('coast_sand_rocks_02', 3.0, '#4a3c38'), glow='#ff6a20'),
 }
 ROOM = 4.0
 WALL_H = 3.0
@@ -243,27 +244,43 @@ def _mats(C, variant):
 
 
 def _rough_wall(M, a, b, y0, slot, seed, h=WALL_H, thick=0.5, axis='x'):
-    """a→b 선분 위 거친 바위 벽. 0.5m 마디마다 두께·높이 흔들림, 양 끝은 고정(이어 붙임)."""
+    """a→b 선분 위 거친 바위 벽 — 한 장의 울퉁불퉁한 표면(10-06, 상자 마디 → "판자 성가퀴" 로 보였다).
+    단면 = 앞면 아래→위 → 둥근 윗면 → 뒷면 위→아래, 벽 따라 0.25m 마다 결정적 잡음으로 밀고 당긴다. 양 끝 열은 잡음 0(모듈 이어 붙임)·끝면 막음."""
     rnd = random.Random(seed)
-    n = max(1, int(round(abs(b - a) / 0.5)))
-    step = (b - a) / n
-    for i in range(n):
-        end = i == 0 or i == n - 1
-        t = thick * (1.0 if end else rnd.uniform(0.85, 1.15))
-        hh = h * (1.0 if end else rnd.uniform(0.9, 1.0))
-        c = a + step * (i + 0.5)
-        size = (abs(step) + 0.01, t, hh) if axis == 'x' else (t, abs(step) + 0.01, hh)
-        pos = (c, y0, 0.0) if axis == 'x' else (y0, c, 0.0)
-        obox(M, pos, size, 0, slot, 1.5)
-    # 윗단 울퉁불퉁
-    for i in range(n):
-        if i in (0, n - 1):
-            continue
-        c = a + step * (i + 0.5)
-        hh = rnd.uniform(0.05, 0.22)
-        size = (abs(step) * 0.8, thick * 0.8, hh) if axis == 'x' else (thick * 0.8, abs(step) * 0.8, hh)
-        pos = (c, y0, h) if axis == 'x' else (y0, c, h)
-        obox(M, pos, size, rnd.uniform(-8, 8), slot, 1.5)
+    n = max(2, int(round(abs(b - a) / (0.25 if abs(b - a) <= 4.5 else 0.9))))       # 긴 벽(12m 방)은 0.9m 마디 — 삼각형 예산
+    ht = [0.0, 0.7, 1.45, 2.2, 2.8]
+    prof = [(-1, z) for z in ht] + [(-0.5, 3.0), (0.0, 3.08), (0.5, 3.0)] + [(1, z) for z in reversed(ht)]   # (앞뒤 −1..1, 높이)
+    noise = [[0.0] * len(prof) for _ in range(n + 1)]
+    for i in range(1, n):
+        base = rnd.uniform(-0.06, 0.06)
+        for k in range(len(prof)):
+            noise[i][k] = base + rnd.uniform(-0.09, 0.09) * (0.4 if prof[k][1] < 0.3 else 1.0)
+    for k in range(len(prof)):                                                        # 가로로 한 번 부드럽게
+        col = [noise[i][k] for i in range(n + 1)]
+        for i in range(1, n):
+            noise[i][k] = (col[i - 1] + 2 * col[i] + col[i + 1]) / 4
+
+    def pt(i, k):
+        u = a + (b - a) * i / n
+        side, z = prof[k]
+        sc = h / 3.0
+        d = side * thick / 2 * (1.0 if abs(side) == 1 else 0.9) + (noise[i][k] if abs(side) == 1 else 0.0) * side
+        zz = z * sc + (noise[i][k] * 0.6 if z * sc > 2.5 else 0.0)
+        return (u, y0 + d, zz) if axis == 'x' else (y0 + d, u, zz)
+
+    rows = [[pt(i, k) for i in range(n + 1)] for k in range(len(prof))]
+    cen = [((a + b) / 2, y0, 1.4) if axis == 'x' else (y0, (a + b) / 2, 1.4)] * len(prof)
+    WS.surf(M, rows, cen, slot, closed=False, tile=1.5)
+    out_dir = Vector((1, 0, 0) if axis == 'x' else (0, 1, 0)) * (1 if b > a else -1)
+    for i, sgn in ((0, -1), (n, 1)):                                                   # 끝면(문 옆·모듈 끝) — 법선이 벽 밖(축 방향)을 보게
+        pts = [Vector(pt(i, k)) for k in range(len(prof))]
+        nrm = Vector((0, 0, 0))
+        for k in range(len(pts)):
+            p0, p1 = pts[k], pts[(k + 1) % len(pts)]
+            nrm += Vector(((p0.y - p1.y) * (p0.z + p1.z), (p0.z - p1.z) * (p0.x + p1.x), (p0.x - p1.x) * (p0.y + p1.y)))
+        if nrm.dot(out_dir * sgn) < 0:
+            pts = list(reversed(pts))
+        M.face([tuple(p) for p in pts], [(p.y if axis == 'x' else p.x, p.z) for p in pts], slot)
 
 
 def _floor(M, w, d, slot, cx=0.0, cy=0.0, th=0.2):

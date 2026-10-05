@@ -6,12 +6,12 @@
  "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
  "inputs": [
   "polyhaven: brown_mud",
-  "polyhaven: cliff_side"
+  "polyhaven: coast_sand_rocks_02"
  ],
  "size_m": [
-  4.01,
+  4.0,
   0.8,
-  3.2
+  3.28
  ],
- "tris": 96
+ "tris": 284
 }

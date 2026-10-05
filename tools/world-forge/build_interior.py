@@ -35,6 +35,7 @@ def node(name, pos, scale=None):
 # ---------------------------------------------------------------- 방
 
 # 건물 id → (방 크기, 높이, 바닥 재질(tile,tint), 벽 재질(tile,tint), 천장 재질, 보 여부, 부가)
+BIG = set()   # 방 예산(2500)을 받는 다른 모듈의 id(build_kit 12m 방)
 ROOMS = {
     'int_eu_house_01': ('M', 3.0, ('brown_planks_03', 1.2, '#7a5a3c'), ('clay_plaster', 2.0, '#d9c7a4'), ('brown_planks_03', 1.2, '#5a3f2b'), True, 'hearth'),
     'int_modern_block_01': ('M', 3.0, ('brown_planks_03', 1.4, '#a88a64'), ('white_stucco', 2.0, '#e8e6e0'), ('white_stucco', 2.0, '#f2f1ec'), False, 'strip'),
@@ -632,7 +633,7 @@ def build_scene(pid, out, style):
            'inputs': sorted(f'polyhaven: {m}' for m in C.mats), 'size_m': size, 'tris': tris, 'nodes': [n[0] for n in NODES]}
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     kb = os.path.getsize(out) // 1024
-    lim = 2500 if pid in ROOMS else 1500
+    lim = 2500 if (pid in ROOMS or pid in BIG) else 1500
     print('WORLDFORGE', json.dumps({'id': pid, 'tris': tris, 'size_m': size, 'kb': kb, 'nodes': len(NODES), 'ok': tris <= lim and (style != 'toon' or kb <= 512)}))
 
 

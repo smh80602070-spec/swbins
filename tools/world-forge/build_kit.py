@@ -125,6 +125,7 @@ for _m in MOODS:
     SPEC[f'dungeon_gate_44_{_m}'] = (GATE_W, GATE_D, GATE_H)
     SPEC[f'dungeon_corridor_4_{_m}'] = (COR_W, COR_L, COR_H)
 BI.ALL.update(KIT)
+BI.BIG.update(k for k in KIT if k.startswith('dungeon_room_'))                      # 12m 방은 방 예산(2500) — 소품 예산(1500)이 아니다
 BI.BP.GENERATOR = 'tools/world-forge/build_kit.py'
 
 
