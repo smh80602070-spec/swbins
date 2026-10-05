@@ -118,7 +118,7 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 1:
 				var picked: bool = _map.call("select_mark", "wq_open", "wq_rift")
 				var btn: Button = _map.get("_track_button")
-				var near: String = _map.call("nearest_active_point", _sq.call("npc_pos", "byeori"))
+				var near: String = _map.call("nearest_active_point", _sq.call("npc_pos", "wq_byeori"))
 				_v = near
 				var warp: Button = _map.get("_warp_button")
 				var ok: bool = picked and btn.disabled and not _map.call("track_selected") and near != "" and not warp.disabled

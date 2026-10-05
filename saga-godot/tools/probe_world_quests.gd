@@ -86,7 +86,7 @@ func _physics_process(_delta: float) -> void:
 				var ev := _event_clear(spots)
 				var tr := _trunk_clear(spots)
 				var npc := _story_npc_clear(spots)
-				var marks: bool = _mark("postmaster") and _mark("researcher") and _mark("byeori") and not _mark("rider")
+				var marks: bool = _mark("postmaster") and _mark("researcher") and _mark("wq_byeori") and not _mark("rider")
 				_check("spots", float(ev[0]) > 2.0 and float(tr[0]) > 1.2 and float(npc[0]) > 6.0 and marks,
 					"event=%.1f@%s trunk=%.1f@%s story_npc=%.1f@%s marks=%s" % [ev[0], ev[1], tr[0], tr[1], npc[0], npc[1], marks])
 				_next()
@@ -225,7 +225,7 @@ func _physics_process(_delta: float) -> void:
 			var q := "wq_rift"
 			if _frame == 1:
 				_v = {}
-				_near("byeori")
+				_near("wq_byeori")
 			if _frame == 10:
 				_talk()
 				_drain()
@@ -234,7 +234,7 @@ func _physics_process(_delta: float) -> void:
 					e.call("_die")
 			if _frame == 18:
 				_v.s2 = int(_sq.call("wq_step", q))
-				_near("byeori")
+				_near("wq_byeori")
 			if _frame == 26:
 				_talk()
 				_drain()
@@ -261,7 +261,7 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 410:
 				_talk()
 				_drain()
-				_near("byeori")
+				_near("wq_byeori")
 			if _frame == 420:
 				_talk()
 				_drain()
@@ -276,7 +276,7 @@ func _physics_process(_delta: float) -> void:
 				_sq.call("toggle_journal")
 				var wt: String = (_sq.get("_wq_label") as Label).text
 				_sq.call("toggle_journal")
-				var ok: bool = not _mark("postmaster") and not _mark("researcher") and not _mark("byeori") and wt.count("✔") == 3 and _sq.call("track") == ""
+				var ok: bool = not _mark("postmaster") and not _mark("researcher") and not _mark("wq_byeori") and wt.count("✔") == 3 and _sq.call("track") == ""
 				_check("all_done", ok, "journal='%s'" % wt.replace("\n", " / "))
 				_next()
 		12:
