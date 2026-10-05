@@ -3,6 +3,7 @@
 경로: `tools/char-forge·world-forge·ai-art·asset-forge·glb-compress·asset-audit` · `archive/` · `data/`·`tools/gen/` · `scenario/README.md` · `C:\swbins3`. 인간형 몸·모션·VFX 는 안 한다(ARCH §4.5).
 
 **10-05**: 그림체 = **P**(판정기 채택, 거부권 "C") → K-0068 이 재생성 중(정적 51·움직이는 40, `_out/regen_P.log`). 새 배치는 `prompt_kit build` → `gen.py --variants 4 --judge` → `judge.sh pick` 만. "판정 대기"는 판정기가 닫는다(K-0069 단계 5). 새 K 발행 동결 ~10-19.
+**다음 소넷 세션 첫 일(K-0074 후속)**: `powershell -ExecutionPolicy Bypass -File tools/autorun/install-startup.ps1`(StartNow 없이) 로 .vbs 둘을 새 옵션(`--at none --on-boot 5` + 트레이)으로 갱신, done/K-0074 메모 한 줄. 데몬 재시작은 다음 로그온.
 
 | # | 티켓 | 상태 |
 |---|---|---|
