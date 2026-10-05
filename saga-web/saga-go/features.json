@@ -80,7 +80,8 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인"
+  "note": "PLAN §3: 미확인",
+  "human": true
  },
  {
   "id": "go.asset3d",
@@ -160,7 +161,8 @@
     "🤖 자동 전투를 켜 본다"
    ],
    "expect": "때리는 손맛·회피 무적·스태거가 보이고 🤖 이 입력을 대신한다"
-  }
+  },
+  "human": true
  },
  {
   "id": "go.battle3d",
@@ -175,7 +177,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "human": true
  },
  {
   "id": "go.field-combat",
@@ -211,7 +214,8 @@
     "적 방패(원소)를 깨 비틀거리게 한다"
    ],
    "expect": "적 머리 위 이름·체력·방패 줄, 우하단 ⚔️ 단추·우상단 동행 초상 4, 피해 숫자가 원소 빛깔"
-  }
+  },
+  "human": true
  },
  {
   "id": "go.biome",
@@ -567,7 +571,8 @@
    "G": "△"
   },
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "human": true
  },
  {
   "id": "go.expansion",

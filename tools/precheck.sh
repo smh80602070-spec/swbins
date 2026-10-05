@@ -65,7 +65,7 @@ fi
 echo "== 문서 크기"
 limit() { # 파일 상한(바이트)
   local f=$1 max=$2; [ -f "$f" ] || return 0
-  local n; n=$(wc -c <"$f")
+  local n; n=$(tr -d '\r' <"$f" | wc -c)   # 작업본이 CRLF 여도 저장소(LF) 크기로 잰다
   if [ "$n" -gt "$max" ]; then echo "OVER $f ${n}B > ${max}B"; fail=1; else echo "ok   $f ${n}B"; fi
 }
 limit CLAUDE.md 6144
@@ -77,7 +77,7 @@ limit saga-godot/docs/PROJECT_STATE.md 15360
 limit saga-unity/docs/PROJECT_STATE.md 15360
 warnlimit() { # 지금 넘는 문서 — 정리(K-0002·archive) 뒤 FAIL 로 올린다
   local f=$1 max=$2; [ -f "$f" ] || return 0
-  local n; n=$(wc -c <"$f")
+  local n; n=$(tr -d '\r' <"$f" | wc -c)   # 작업본이 CRLF 여도 저장소(LF) 크기로 잰다
   if [ "$n" -gt "$max" ]; then echo "WARN $f ${n}B > ${max}B (정리 뒤 FAIL 로)"; else echo "ok   $f ${n}B"; fi
 }
 warnlimit saga-godot/PLAN.md 102400
@@ -86,8 +86,9 @@ warnlimit tools/char-forge/README.md 16384
 limit SAGA-ARCH.md 40960
 limit SAGA-BACKLOG.md 30720
 for f in saga-web/STATE.md saga-godot/docs/STATE.md saga-unity/docs/STATE.md; do limit "$f" 8192; done
-over=$(find tasks -name '*.md' -size +6144c 2>/dev/null)
-if [ -n "$over" ]; then echo "$over" | while read -r f; do echo "OVER $f > 6144B"; done; fail=1; else echo "ok   tasks/**/*.md 전부 6144B 이하"; fi
+over=''   # CRLF 로 체크아웃된 작업본이 저장소(LF) 크기보다 줄 수만큼 커 보이지 않게 CR 을 빼고 잰다
+while read -r f; do [ "$(tr -d '\r' <"$f" | wc -c)" -gt 6144 ] && over="$over$f"$'\n'; done < <(find tasks -name '*.md' -size +5000c 2>/dev/null)
+if [ -n "$over" ]; then printf '%s' "$over" | while read -r f; do echo "OVER $f > 6144B"; done; fail=1; else echo "ok   tasks/**/*.md 전부 6144B 이하"; fi
 
 echo "== 정본 범주 반영 (tools/asset-audit/reflect.py --categories · K-0073, WARN 만)"
 if [ -d saga-assets ]; then PYTHONIOENCODING=utf-8 py tools/asset-audit/reflect.py --categories 2>/dev/null || echo "WARN reflect.py --categories 실행 실패(py 없음?)"; fi

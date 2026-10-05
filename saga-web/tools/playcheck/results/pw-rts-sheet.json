@@ -1,0 +1,69 @@
+{
+ "script": "pw-rts-sheet.mjs",
+ "game": "saga-realm",
+ "pass": 12,
+ "total": 12,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "열림 — 지도 캔버스·상단 자원 줄·거점과 적 기지가 선다",
+   "ok": true,
+   "detail": "{\"w\":1280,\"h\":544,\"top\":\"1일 100 -4.2 300 +4.8 12/16 0/0\",\"buildings\":2}"
+  },
+  {
+   "name": "스타크래프트식 콘솔 배치(W-0061) — 미니맵 왼쪽 아래·명령 카드 오른쪽 아래·선택 정보 가운데",
+   "ok": true,
+   "detail": "{\"miniLeft\":12,\"miniBottom\":12,\"toolsRight\":12,\"toolsBottom\":12,\"selMid\":true}"
+  },
+  {
+   "name": "건설 — 도로·주거·농지·군영이 서고 도로로 이어진다",
+   "ok": true,
+   "detail": "{\"castle\":1,\"road\":8,\"house\":1,\"farm\":1,\"barracks\":1,\"stronghold\":1}"
+  },
+  {
+   "name": "군영 생산 단추 — 병종 단추와 영웅 모집이 보인다",
+   "ok": true,
+   "detail": "{\"n\":3,\"hero\":true}"
+  },
+  {
+   "name": "생산 — 큐에 들어가고(4배속) 시간이 차면 병사가 나온다",
+   "ok": true,
+   "detail": "큐 1 · 병사 1"
+  },
+  {
+   "name": "조작 — 왼쪽 클릭으로 고르고 우클릭으로 이동 명령(W-0061)",
+   "ok": true,
+   "detail": "{\"goal\":true,\"path\":4,\"am\":false}"
+  },
+  {
+   "name": "조작 — A 다음 클릭은 공격 이동(amGoal)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "폰 배치 — 미니맵은 오른쪽, 도구 막대는 아래, 가로 스크롤 없음",
+   "ok": true,
+   "detail": "{\"miniRight\":12,\"miniW\":122,\"toolsBottom\":12,\"scrollX\":true}"
+  },
+  {
+   "name": "전장 안개(W-0062) — 거점 둘레는 보이고 적 기지는 못 본 칸이다",
+   "ok": true,
+   "detail": "{\"seeCastle\":true,\"seeBase\":false}"
+  },
+  {
+   "name": "적 AI(W-0063) — 병력을 뽑고 모이면 출정(attack)한다",
+   "ok": true,
+   "detail": "{\"mode\":\"attack\",\"group\":1,\"units\":1,\"made\":1,\"tip\":\"⚠️ 곧 적이 온다 — 도로에 이어 군영을 지어 병사를 모으세요\"}"
+  },
+  {
+   "name": "루프 — 4배속에서 HUD 가 계속 갱신된다",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "페이지 예외 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

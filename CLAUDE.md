@@ -1,6 +1,6 @@
 # saga — 역사 인물로 노는 게임 다섯 판(웹 + 3D 두 트랙)
 
-개인 취미 저장소. 회사 일은 `C:\link`, 개인 도구는 `C:\swbins2` 세션. 이 파일은 **길잡이**다.
+개인 취미 저장소. 회사 일은 `C:\link` 세션. 이 파일은 **길잡이**다.
 
 - **다음 일 = `tasks/QUEUE.md` 의 갈래(웹·고돗·유니티·자체툴) 큐 맨 위 티켓**(절차 `tasks/README.md` · 체제 `SAGA-ARCH.md` · 중간 지시 `tasks/INTAKE.md`). "<갈래> 이어해" = 이것
 - 공통 설계: `SAGA-DESIGN.md`(일곱 PLAN 의 상위) · 다섯 판 이야기 정본: `scenario/`
@@ -27,7 +27,6 @@
 
 - 로컬: 각 폴더 `run.bat`(브라우저 열림) · `start_server.bat`(허브용) · 사가고 폰용 `run-phone.bat`(HTTPS)
 - 제작 도구: `saga-web/tools/run-tools.bat`(편집기·엔진 :8799~8801)
-- 허브 카드 경로: `C:\swbins2\services.json`(별개 저장소) — 경로를 옮기면 그쪽도 고친다
 - 공개: <https://smh8627-jpg.github.io/swbins/saga-web/saga-go/> 식 하위 경로(GitHub Pages)
 
 ## git

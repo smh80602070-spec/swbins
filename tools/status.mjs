@@ -7,7 +7,7 @@
  *   node tools/status.mjs --json   같은 내용을 tools/_out/status.json 에도
  *   node tools/status.mjs --sheet <판>  D1·D2(+조작이 써진 D0) 기능 10개의 확인 시트 → tasks/sheets/<판>-<날짜>.md
  *
- * 완성도 % = D3 이상 기능 ÷ 전체. WIP = D0+D1, 10 을 넘으면 `초과`. 등급 규칙은 SAGA-ARCH §3.1.
+ * 완성도 % = 끝낸 기능 ÷ 전체(W-0069). 끝 = 기계로 닫을 수 있는 기능(human 아님)은 D2 이상, 재미·손맛·그림체(`human: true`)는 D3 이상(사람 ○). WIP = D0+D1, 10 을 넘으면 `초과`. 등급 규칙은 SAGA-ARCH §3.1.
  * 의존 없는 node 한 파일. features.json·게임 코드는 쓰지 않는다.
  */
 import fs from 'node:fs';
@@ -20,6 +20,9 @@ const GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story', 'saga-rea
 const BIG_LINES = 1500, WIP_MAX = 10, STATE_MAX = 8192;
 const argv = process.argv.slice(2);
 
+/* 완성도(W-0069) — 숫자·촬영으로 닫을 수 있는 건 D2 가 끝, 사람 몫(human:true: 재미·손맛·그림체)만 D3(사람 ○)가 끝 */
+const isDone = x => (x.human === true ? (x.level === 'D3' || x.level === 'D4') : (x.level === 'D2' || x.level === 'D3' || x.level === 'D4'));
+const humanOf = a => ({ n: a.filter(x => x.human === true).length, open: a.filter(x => x.human === true && x.level !== 'D3' && x.level !== 'D4').length });
 function readJson(p, dflt) { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (e) { return dflt; } }
 function lineCount(p) { const b = fs.readFileSync(p); let n = 0; for (const c of b) if (c === 10) n++; return b.length && b[b.length - 1] !== 10 ? n + 1 : n; }
 
@@ -80,17 +83,17 @@ for (const g of GAMES) {
   const r = runner[g];
   const fails = new Set(r ? r.fails : []);
   const failFeatures = r ? a.filter(x => x.tests.some(t => fails.has(t))).map(x => x.id) : [];
-  const d3 = lv('D3') + lv('D4'), wip = lv('D0') + lv('D1');
+  const d3 = a.filter(isDone).length, hum = humanOf(a), wip = lv('D0') + lv('D1');
   rows.push({
-    game: g, total: a.length, D0: lv('D0'), D1: lv('D1'), D2: lv('D2'), D3p: d3,
+    game: g, total: a.length, D0: lv('D0'), D1: lv('D1'), D2: lv('D2'), D3p: d3, hum: hum,
     pct: a.length ? Math.round(d3 * 1000 / a.length) / 10 : 0, wip, over: wip > WIP_MAX,
     runner: r ? `${r.n}/${r.m}` : '-', failFeatures,
   });
 }
 
 function table() {
-  const L = ['| 판 | 기능 | D0 | D1 | D2 | D3+ | 완성도 | WIP | 초과 | 러너 n/m | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|'];
-  rows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.wip} | ${r.over ? '초과' : '-'} | ${r.runner} | ${r.failFeatures.length ? 'FAIL ' + r.failFeatures.length : '-'} |`));
+  const L = ['| 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 n/m | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|---|'];
+  rows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.hum.n}(미확인 ${r.hum.open}) | ${r.wip} | ${r.over ? '초과' : '-'} | ${r.runner} | ${r.failFeatures.length ? 'FAIL ' + r.failFeatures.length : '-'} |`));
   return L.join('\n');
 }
 
@@ -98,7 +101,7 @@ const big = bigFiles();
 const at = new Date().toISOString().slice(0, 16).replace('T', ' ') + 'Z';
 function stateMd(bigN) {
   const L = [`<!-- 생성: tools/status.mjs · ${at} — 손으로 고치지 않는다(덮어쓴다) -->`, '# saga-web 상태', '',
-    '완성도 = D3+ ÷ 전체 · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1', '', table(), ''];
+    '완성도 = 끝 ÷ 전체(끝 = 사람 몫 아님 D2+ · 사람 몫 human:true 는 D3+) · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1', '', table(), ''];
   const over = rows.filter(r => r.over).map(r => r.game);
   L.push('## 초과 판', '', over.length ? over.join(' · ') : '없음', '');
   const fl = rows.filter(r => r.failFeatures.length);
@@ -136,19 +139,19 @@ const uFails = new Set(uRun ? uRun.fails || [] : []);
 const uRows = UNITY_GAMES.map(([pre, name]) => {
   const a = uAll.filter(x => x.id.startsWith(pre));
   const lv = k => a.filter(x => x.level === k).length;
-  const d3 = lv('D3') + lv('D4'), wip = lv('D0') + lv('D1');
-  return { game: name, total: a.length, D0: lv('D0'), D1: lv('D1'), D2: lv('D2'), D3p: d3,
+  const d3 = a.filter(isDone).length, hum = humanOf(a), wip = lv('D0') + lv('D1');
+  return { game: name, total: a.length, D0: lv('D0'), D1: lv('D1'), D2: lv('D2'), D3p: d3, hum: hum,
     pct: a.length ? Math.round(d3 * 1000 / a.length) / 10 : 0, wip, over: wip > WIP_MAX,
     failN: uRun ? a.filter(x => x.tests.some(t => uFails.has(t))).length : 0 };
 });
 function uTable() {
-  const L = ['| 판 | 기능 | D0 | D1 | D2 | D3+ | 완성도 | WIP | 초과 | 러너 | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|'];
-  uRows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.wip} | ${r.over ? '초과' : '-'} | ${uRun ? `${uRun.n}/${uRun.m}` : '-'} | ${r.failN ? 'FAIL ' + r.failN : '-'} |`));
+  const L = ['| 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|---|'];
+  uRows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.hum.n}(미확인 ${r.hum.open}) | ${r.wip} | ${r.over ? '초과' : '-'} | ${uRun ? `${uRun.n}/${uRun.m}` : '-'} | ${r.failN ? 'FAIL ' + r.failN : '-'} |`));
   return L.join('\n');
 }
 const uNoTest = uAll.filter(x => x.tests.length === 0).length;
 const uState = [`<!-- 생성: tools/status.mjs · ${at} — 손으로 고치지 않는다(덮어쓴다) -->`, '# saga-unity 상태', '',
-  '완성도 = D3+ ÷ 전체 · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1 · 기능 목록 `saga-unity/features.json`', '',
+  '완성도 = 끝 ÷ 전체(끝 = 사람 몫 아님 D2+ · 사람 몫 human:true 는 D3+) · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1 · 기능 목록 `saga-unity/features.json`', '',
   uTable(), '', `Playtest 가 안 붙은 기능(D0): ${uNoTest}개 — 목록은 features.json 에서 tests 가 빈 것`, ''].join('\n');
 if (uAll.length) {
   fs.mkdirSync(path.join(UNITY, 'docs'), { recursive: true });
@@ -164,20 +167,20 @@ const gFails = new Set(gRun ? gRun.results.filter(x => x.fails > 0).map(x => x.n
 const gRows = GODOT_GAMES.map(([pre, name]) => {
   const a = gAll.filter(x => x.id.startsWith(pre));
   const lv = k => a.filter(x => x.level === k).length;
-  const d3 = lv('D3') + lv('D4'), wip = lv('D0') + lv('D1');
-  return { game: name, total: a.length, D0: lv('D0'), D1: lv('D1'), D2: lv('D2'), D3p: d3,
+  const d3 = a.filter(isDone).length, hum = humanOf(a), wip = lv('D0') + lv('D1');
+  return { game: name, total: a.length, D0: lv('D0'), D1: lv('D1'), D2: lv('D2'), D3p: d3, hum: hum,
     pct: a.length ? Math.round(d3 * 1000 / a.length) / 10 : 0, wip, over: wip > WIP_MAX,
     failN: gRun ? a.filter(x => x.tests.some(t => gFails.has(t))).length : 0 };
 });
 function gTable() {
-  const L = ['| 판 | 기능 | D0 | D1 | D2 | D3+ | 완성도 | WIP | 초과 | 러너 | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|'];
+  const L = ['| 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 | 표시 |', '|---|---|---|---|---|---|---|---|---|---|---|---|'];
   const run = gRun ? `${gRun.probes - gFails.size}/${gRun.probes}` : '-';
-  gRows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.wip} | ${r.over ? '초과' : '-'} | ${run} | ${r.failN ? 'FAIL ' + r.failN : '-'} |`));
+  gRows.forEach(r => L.push(`| ${r.game} | ${r.total} | ${r.D0} | ${r.D1} | ${r.D2} | ${r.D3p} | ${r.pct}% | ${r.hum.n}(미확인 ${r.hum.open}) | ${r.wip} | ${r.over ? '초과' : '-'} | ${run} | ${r.failN ? 'FAIL ' + r.failN : '-'} |`));
   return L.join('\n');
 }
 const gNoTest = gAll.filter(x => x.tests.length === 0).length;
 const gState = [`<!-- 생성: tools/status.mjs · ${at} — 손으로 고치지 않는다(덮어쓴다) -->`, '# saga-godot 상태', '',
-  '완성도 = D3+ ÷ 전체 · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1 · 기능 목록 `saga-godot/features.json` · 러너 = `tools/probe_all.sh`(마지막 실행의 통과/실행 probe 수)', '',
+  '완성도 = 끝 ÷ 전체(끝 = 사람 몫 아님 D2+ · 사람 몫 human:true 는 D3+) · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1 · 기능 목록 `saga-godot/features.json` · 러너 = `tools/probe_all.sh`(마지막 실행의 통과/실행 probe 수)', '',
   gTable(), '', `probe 가 안 붙은 기능(D0): ${gNoTest}개 — 목록은 features.json 에서 tests 가 빈 것`, ''].join('\n');
 if (gAll.length) {
   fs.mkdirSync(path.join(GODOT, 'docs'), { recursive: true });

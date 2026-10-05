@@ -27,7 +27,8 @@
    ],
    "expect": "발판 위에서만 뛰어지고 줄을 타며 아래로 내려오는 동작이 자연스럽다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)"
+  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)",
+  "human": true
  },
  {
   "id": "st.data-side",
@@ -98,7 +99,8 @@
    ],
    "expect": "맞는 순간 숫자가 뜨고 적이 밀려나며 내가 맞은 직후엔 잠깐 무적이다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)"
+  "note": "D2: saga-web/tools/playcheck/pw-st-sheet.mjs(Playwright) 13/13 — results/pw-st-sheet.json. 기계 확인(움직임의 맛·그림은 D3 사람 몫)",
+  "human": true
  },
  {
   "id": "st.data-enemy",
@@ -296,7 +298,8 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인"
+  "note": "PLAN §3: 미확인",
+  "human": true
  },
  {
   "id": "st.asset3d",

@@ -265,7 +265,8 @@
    ],
    "expect": "강공격이 묵직하고 회피 순간 피해가 안 들어오며 쿨다운 링이 돈다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)"
+  "note": "D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)",
+  "human": true
  },
  {
   "id": "dg.dungeon-5",
@@ -295,7 +296,8 @@
    ],
    "expect": "타격 순간 잠깐 멈칫하고(hitstop) 콤보 숫자가 뜨며 치명타에 화면이 흔들린다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)"
+  "note": "D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)",
+  "human": true
  },
  {
   "id": "dg.dungeon-6",
@@ -323,7 +325,8 @@
    ],
    "expect": "멀리선 가만있다가 가까이 가면 달려들고 보스는 항상 쫓아온다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)"
+  "note": "D2: saga-web/tools/playcheck/pw-dg-sheet.mjs(Playwright) 10/10 — results/pw-dg-sheet.json. 기계 확인(손맛·그림은 D3 사람 몫)",
+  "human": true
  },
  {
   "id": "dg.dungeon-7",
@@ -590,7 +593,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "human": true
  },
  {
   "id": "dg.dungeon3d-2",

@@ -73,7 +73,8 @@
    ],
    "expect": "줍기·낚시가 되고 입질 순간 반응이 보이며 가방에 쌓인다"
   },
-  "note": "D2: saga-web/tools/playcheck/pw-fs-sheet.mjs(Playwright) 17/17 — results/pw-fs-sheet.json. 기계 확인이며 D3(사람 ○)은 아직"
+  "note": "D2: saga-web/tools/playcheck/pw-fs-sheet.mjs(Playwright) 17/17 — results/pw-fs-sheet.json. 기계 확인이며 D3(사람 ○)은 아직",
+  "human": true
  },
  {
   "id": "fs.bug",
@@ -464,7 +465,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "human": true
  },
  {
   "id": "fs.village-view3d",
@@ -490,7 +492,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "human": true
  },
  {
   "id": "fs.asset3d",
