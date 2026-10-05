@@ -112,6 +112,13 @@ const SHOTS := [
 	["ui_map", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "map"],
 	["ui_character", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "character"],
 	["ui_dispatch", "village", "board", Vector3(1.5, 0, 1.0), "v_station", -25.0, 8.0, "dispatch"],
+	["ui_cook", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_cooking_screen:open_screen::close_screen"],
+	["ui_achieve", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_achievements:open_screen::close_screen"],
+	["ui_weekly", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_weekly_goals:open_screen::close_screen"],
+	["ui_commission", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_commissions:toggle_panel::toggle_panel"],
+	["ui_fishboard", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_fishing:open_board::close_board"],
+	["ui_domain", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_domains:open_menu:school:close_menu"],
+	["ui_cycle", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_cycle:open_screen::close_screen"],
 ]
 
 var _p: CharacterBody3D
@@ -123,6 +130,7 @@ var _dir := ""
 var _only: PackedStringArray = []
 var _lineup: Array[Node3D] = []
 var _done: Array = []
+var _close_call: Array = []   # "call:" 할 일이 연 화면 [노드, 닫는 함수]
 var _swing_enemy: Node3D = null   # "swing" 할 일 — 가장 가까운 들판 적 곁에 서서 찍기 직전에 한 번 휘두른다(09-28 전투 이펙트)
 
 func _ready() -> void:
@@ -319,10 +327,24 @@ func _act(a: String) -> void:
 			var dn := get_tree().get_first_node_in_group("go_dispatch")
 			if dn:
 				dn.call("open_screen")
+		_ when a.begins_with("call:"):
+			## "call:<그룹>:<여는 함수>:<인자>:<닫는 함수>" — 화면 하나를 열어 찍고 다음 컷 전에 닫는다(10-06 오래된 기능 판정).
+			var parts := a.split(":")
+			var node := get_tree().get_first_node_in_group(parts[1])
+			if node:
+				if parts[3] != "":
+					node.call(parts[2], parts[3])
+				else:
+					node.call(parts[2])
+				_close_call = [node, parts[4]]
 
 func _undo() -> void:
 	if Input.is_action_pressed("jump"):
 		Input.action_release("jump")
+	if not _close_call.is_empty():
+		if is_instance_valid(_close_call[0]) and String(_close_call[1]) != "":
+			(_close_call[0] as Node).call(String(_close_call[1]))
+		_close_call = []
 	var mn := _p.get_node_or_null("Mount") if _p else null
 	if mn and bool(mn.call("is_riding")):
 		mn.call("dismount", "", true)
@@ -346,6 +368,11 @@ func _undo() -> void:
 		var n := get_tree().get_first_node_in_group(pair[0])
 		if n and not get_tree().get_nodes_in_group("ui_modal").is_empty():
 			n.call(pair[1])
+	## 걷다 레벨업하면 뜨는 특성 3택(ChoicePrompt) 같은 이름 없는 선택 창 — 고를 사람이 없어 다음 컷 한가운데를 가린다(10-06).
+	## 사건 선택 창은 지어 두고 숨겼다 보였다 하므로(camera_rig._modal_open) 지우지 않고 숨기기만.
+	for n in get_tree().get_nodes_in_group("ui_modal"):
+		if n is CanvasLayer and n.get_groups().size() == 1 and (n as CanvasLayer).visible:
+			(n as CanvasLayer).visible = false
 	for n in _lineup:
 		n.queue_free()
 	_lineup.clear()

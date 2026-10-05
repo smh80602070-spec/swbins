@@ -6,8 +6,8 @@
   "tests": [
    "events"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -19,7 +19,7 @@
   "tests": [
    "heroes"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -32,8 +32,8 @@
   "tests": [
    "codex"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -45,8 +45,8 @@
   "tests": [
    "animals"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -58,8 +58,8 @@
   "tests": [
    "weather"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -71,8 +71,8 @@
   "tests": [
    "posts"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -84,8 +84,8 @@
   "tests": [
    "regions"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -97,8 +97,8 @@
   "tests": [
    "autosave"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -110,8 +110,8 @@
   "tests": [
    "duel"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-20"
@@ -123,8 +123,8 @@
   "tests": [
    "duel"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-20"
@@ -136,7 +136,7 @@
   "tests": [
    "daycard"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -149,8 +149,8 @@
   "tests": [
    "promotion"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -162,8 +162,8 @@
   "tests": [
    "defeat"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -175,8 +175,8 @@
   "tests": [
    "shrine"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -188,8 +188,8 @@
   "tests": [
    "beacon"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -201,7 +201,7 @@
   "tests": [
    "duel"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -214,7 +214,7 @@
   "tests": [
    "companions"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -227,8 +227,8 @@
   "tests": [
    "triplanar"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -240,8 +240,8 @@
   "tests": [
    "ruins_procgen"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-22"
@@ -253,8 +253,8 @@
   "tests": [
    "traversal"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-23"
@@ -277,8 +277,8 @@
   "tests": [
    "combat"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-23"
@@ -301,8 +301,8 @@
   "tests": [
    "regions"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-23"
@@ -314,8 +314,8 @@
   "tests": [
    "treasure"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-23"
@@ -327,8 +327,8 @@
   "tests": [
    "element"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-23"
@@ -340,8 +340,8 @@
   "tests": [
    "combat"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -353,8 +353,8 @@
   "tests": [
    "map"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -366,8 +366,8 @@
   "tests": [
    "growth"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -379,8 +379,8 @@
   "tests": [
    "shard"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -392,8 +392,8 @@
   "tests": [
    "talent"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -405,8 +405,8 @@
   "tests": [
    "sight"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -418,8 +418,8 @@
   "tests": [
    "element"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -431,8 +431,8 @@
   "tests": [
    "element"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -444,8 +444,8 @@
   "tests": [
    "weapon"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -457,8 +457,8 @@
   "tests": [
    "artifact"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -470,8 +470,8 @@
   "tests": [
    "cook"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -483,8 +483,8 @@
   "tests": [
    "commission"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -496,8 +496,8 @@
   "tests": [
    "domain"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -509,8 +509,8 @@
   "tests": [
    "weekly"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -522,8 +522,8 @@
   "tests": [
    "adventure"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -535,8 +535,8 @@
   "tests": [
    "field_boss"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -548,8 +548,8 @@
   "tests": [
    "kit"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -561,8 +561,8 @@
   "tests": [
    "story"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-24"
@@ -574,8 +574,8 @@
   "tests": [
    "kit"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -587,7 +587,7 @@
   "tests": [
    "story"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -600,7 +600,7 @@
   "tests": [
    "gestures"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -613,7 +613,7 @@
   "tests": [
    "story_members"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -626,8 +626,8 @@
   "tests": [
    "party"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -639,8 +639,8 @@
   "tests": [
    "wq"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -652,7 +652,7 @@
   "tests": [
    "archery"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -665,8 +665,8 @@
   "tests": [
    "qmap"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -678,8 +678,8 @@
   "tests": [
    "fish"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -691,8 +691,8 @@
   "tests": [
    "achieve"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -704,8 +704,8 @@
   "tests": [
    "dispatch"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -717,8 +717,8 @@
   "tests": [
    "frost"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -730,8 +730,8 @@
   "tests": [
    "story2"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -743,8 +743,8 @@
   "tests": [
    "story2"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -756,8 +756,8 @@
   "tests": [
    "story2"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -769,8 +769,8 @@
   "tests": [
    "frost"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -782,8 +782,8 @@
   "tests": [
    "frost"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -795,8 +795,8 @@
   "tests": [
    "frost"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -808,8 +808,8 @@
   "tests": [
    "frost"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -821,7 +821,7 @@
   "tests": [
    "story3"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -835,8 +835,8 @@
    "story4",
    "skyport"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -849,8 +849,8 @@
    "story5",
    "crossing"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -863,8 +863,8 @@
    "story6",
    "sunken"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -877,7 +877,7 @@
    "story7",
    "skyroute"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -890,7 +890,7 @@
   "tests": [
    "story_members"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -905,7 +905,7 @@
   "tests": [
    "stormeye"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -918,8 +918,8 @@
   "tests": [
    "story8"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -931,8 +931,8 @@
   "tests": [
    "aftermath"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -946,7 +946,7 @@
   "tests": [
    "amber"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -959,8 +959,8 @@
   "tests": [
    "story9"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -974,7 +974,7 @@
   "tests": [
    "vault"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -987,8 +987,8 @@
   "tests": [
    "story10"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -1002,7 +1002,7 @@
   "tests": [
    "fork"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
@@ -1015,8 +1015,8 @@
   "tests": [
    "story11"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
@@ -2240,8 +2240,8 @@
   "tests": [
    "tutorial"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": "G-0012",
   "since": "2026-10-01"
@@ -2258,8 +2258,8 @@
   "tests": [
    "world_asset"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": "G-0014",
   "since": "2026-10-03"
@@ -2276,8 +2276,8 @@
   "tests": [
    "region_showcase"
   ],
-  "level": "D1",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
   "ticket": "G-0015",
   "since": "2026-10-03"
