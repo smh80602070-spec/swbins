@@ -1539,5 +1539,22 @@
   "ticket": "U-0047",
   "since": "2026-10-05",
   "note": "D2(2026-10-05): PlaytestSkyWeather.RunBatch OK(계절·날씨 표·3시간 결정론·분포·강제·구름 겹 3·입자 셋·안개 곱 왕복) + GUI 촬영 비교 saga-unity/docs/playcheck/u0047_sky_no_weather.png ↔ u0047_sky_rain_clouds.png(날씨 끄면 단색 하늘, 켜면 구름 겹·비 줄기). 못 잰 것: 눈·안개 장면 촬영·걸을 때 비가 제자리에 남는 느낌·밤 구름 색(눈 필요)"
+ },
+ {
+  "id": "un.go.sfx",
+  "name": "효과음 연결 — 이름으로 찾아 사건에 붙임(UI 클릭·창·레벨업·일과·상자·채집·낚시 입질·타격·피격·회피·우두머리·부화)(U-0048, K-0045 92종)",
+  "files": [
+   "saga-unity/Assets/SagaCore/SagaSfx.cs",
+   "saga-unity/Assets/Games/SagaGo/Audio/GoSfx.cs"
+  ],
+  "tests": [
+   "PlaytestGoSfx"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0048",
+  "since": "2026-10-05",
+  "note": "D1: 규칙(가짜 로더 — 단일·변형 돌려 가기·없는 이름 null·기록·간격)+코드가 부르는 이름이 정본 sfx 파일에 있음+장면 3연속(진짜 클릭·창·레벨업·타격·피격·상자·부화에서 이름을 부름). **소리는 아직 안 난다 — 유니티에 파일이 없다(asset-place sfx 대상이 web·godot 뿐, K-0076 요청)** → 배치 뒤 사용자 귀. 무기별 소리·발소리는 후속"
  }
 ]
