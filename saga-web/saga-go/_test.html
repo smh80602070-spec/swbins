@@ -16077,6 +16077,54 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return art === 'assets/store/go_key' && (!st || (st.textContent.indexOf(art + '_h.webp') > 0 && st.textContent.indexOf(art + '_v.webp') > 0)) && ('go 키 아트 가로·세로');
     });
 
+    /* ── go.expansion: 보관 모듈(js/_expansion — 환생·방치) ──────────────────
+       본편엔 안 싣는다(위 「이 게임에 실린 것만」이 DG.prestige·DG.idle 이 없음을 본다).
+       그래서 실제 DG 는 건드리지 않고, 가짜 core 를 쥔 따로 된 창 객체에 원본을 띄워 규칙만 잰다.
+       되살릴 때 깨져 있지 않은지 지키는 항목이다. */
+    function expansionSandbox() {
+      var save = {
+        player: { level: 9, exp: 5, gold: 1000, fame: 300, feat: 40, featTotal: 55 * 16 },
+        battle: { stage: 7, wave: 2, best: 7 }, dungeon: { best: 4 },
+        heroes: { h1: { lv: 9, exp: 3, rank: 2 } }, dex: { heroes: {} }
+      };
+      var core = { save: save, log: function () {}, emit: function () {}, persist: function () {} };
+      var win = { DG: { core: core } };
+      ['js/_expansion/prestige.js', 'js/_expansion/idle.js'].forEach(function (f) {
+        var src = funSrc(f);
+        if (!src) { throw new Error(f + ' 못 읽음'); }
+        new Function('window', src)(win);
+      });
+      return win.DG;
+    }
+
+    t('go.expansion: 환생 — 도장 계산·구매·효과 합산·재봉(경영 필드 없는 지금 세이브)', function () {
+      var X = expansionSandbox(), P = X.prestige, s = X.core.save;
+      var g = P.sealGain();                                   // 공적 √(880/55)=4 · 관문 7/3=2 · 층 4/2=2
+      if (g.feat !== 4 || g.stage !== 2 || g.floor !== 2 || g.total !== 8) { return '실패 도장 ' + JSON.stringify(g); }
+      if (!P.canReborn().ok) { return '실패 재봉 불가'; }
+      if (!P.reborn()) { return '실패 재봉'; }
+      if (s.player.level !== 1 || s.heroes.h1.lv !== 1 || P.state().seals !== 8 || P.state().count !== 1) { return '실패 되돌림·도장'; }
+      if (s.territory || s.build) { return '실패 경영 필드가 되살아남'; }
+      if (!P.buy('lineage') || !P.buy('lineage') || P.level('lineage') !== 2) { return '실패 구매'; }
+      var b = P.bonus();                                      // 세습 2단계 = 금 12/분 · 명성 2.4/분
+      if (b['gold/min'] !== 12 || Math.abs(b['fame/min'] - 2.4) > 1e-9) { return '실패 효과 ' + JSON.stringify(b); }
+      if (P.state().seals !== 8 - 1 - 2) { return '실패 도장 차감 ' + P.state().seals; }
+      return '도장 8 · 재봉 1회 · 세습 2단계 효과 합산';
+    });
+
+    t('go.expansion: 방치 — 금으로 강화·효과 합산, 자동화는 환생 도장 해금 뒤에만 켜진다', function () {
+      var X = expansionSandbox(), I = X.idle, P = X.prestige, s = X.core.save;
+      var key = I.UPS[0].key, cost0 = I.UPS[0].cost(0);
+      if (!I.buy(key) || I.level(key) !== 1 || s.player.gold !== 1000 - cost0) { return '실패 구매 ' + key; }
+      var b = I.bonus(), want = I.UPS[0].eff(1), k;
+      for (k in want) { if (want.hasOwnProperty(k) && b[k] !== want[k]) { return '실패 효과 ' + k; } }
+      if (I.toggle('recruit') || I.on('recruit')) { return '실패 해금 전 자동화가 켜짐'; }
+      P.state().seals = 5;
+      if (!P.buy(P.BUYS.filter(function (x) { return x.flag === 'recruit'; })[0].key)) { return '실패 해금 구매'; }
+      if (!I.toggle('recruit') || !I.on('recruit')) { return '실패 해금 뒤 자동화'; }
+      return key + ' 1단계(금 ' + cost0 + ') · 자동 등용 해금 뒤 켜짐';
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

@@ -576,12 +576,15 @@
  },
  {
   "id": "go.expansion",
-  "name": "방치 전투·환생",
+  "name": "방치 전투·환생 (보관 — 본편에 안 실림)",
   "files": [
    "js/_expansion/"
   ],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "go.expansion: 환생 — 도장 계산·구매·효과 합산·재봉(경영 필드 없는 지금 세이브)",
+   "go.expansion: 방치 — 금으로 강화·효과 합산, 자동화는 환생 도장 해금 뒤에만 켜진다"
+  ],
+  "level": "D1",
   "verified": null,
   "fun": {},
   "ticket": null,

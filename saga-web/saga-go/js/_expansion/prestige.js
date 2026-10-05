@@ -167,12 +167,12 @@
     s.player.fame = 60;
     s.player.feat = 0;
     s.player.featTotal = 0;
-    s.build.done = {};
-    s.build.site = null;
-    s.territory.regions = {};
-    s.territory.pending = {};
-    s.territory.governors = {};
-    s.territory.capital = null;
+    // 경영(건설·영지)은 삭제됐다 — 옛 세이브에 남은 경우만 되돌린다(없으면 TypeError 였다)
+    if (s.build) { s.build.done = {}; s.build.site = null; }
+    if (s.territory) {
+      s.territory.regions = {}; s.territory.pending = {};
+      s.territory.governors = {}; s.territory.capital = null;
+    }
     s.battle = {
       stage: startStage(), wave: 1, auto: true,
       lastTick: Date.now(), best: startStage()
