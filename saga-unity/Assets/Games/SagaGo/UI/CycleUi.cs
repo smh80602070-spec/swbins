@@ -91,13 +91,16 @@ namespace Saga.Go.UI
 
         public void Open()
         {
+            if (!IsOpen) Saga.Go.Audio.GoSfx.Play("ui_open"); // U-0048
             if (_panel == null) return;
             _armedLeft = 0f;
             _panel.SetActive(true);
             Refresh();
         }
 
-        public void Close() { _armedLeft = 0f; if (_panel != null) _panel.SetActive(false); }
+        public void Close() {
+            if (IsOpen) Saga.Go.Audio.GoSfx.Play("ui_close"); // U-0048
+            _armedLeft = 0f; if (_panel != null) _panel.SetActive(false); }
 
         /// <summary>"재출항" 단추 — 첫 번째는 확인으로 바뀌고, 4초 안의 두 번째에 실제로 한다.</summary>
         public void Press()
@@ -106,6 +109,7 @@ namespace Saga.Go.UI
             if (!Armed) { _armedLeft = ConfirmSec; Refresh(); return; }
             _armedLeft = 0f;
             var r = CycleState.Advance();
+            if (r.Ok) Saga.Go.Audio.GoSfx.Play("victory");
             if (r.Ok) Toast(string.Format(GoLocalization.T("cycle.done", "별배가 다시 떠난다 — {0}회차! 되살아난 상자 {1}개 · {2}"), r.Cycle, r.Chests, GoCycle.RewardText()));
             else Toast(r.Error);
             Refresh();

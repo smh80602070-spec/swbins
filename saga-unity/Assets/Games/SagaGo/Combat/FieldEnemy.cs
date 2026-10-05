@@ -998,12 +998,12 @@ namespace Saga.Go.Combat
             if (_animator != null) Trig("Death");
             _headUi.gameObject.SetActive(false);
             RefreshElementFx();
-            if (DomainFoe || StoryFoe) { if (IsWeeklyBoss || IsStoryBoss) AchieveState.Bump("boss"); Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음(109-14-12 임무 적도)
+            if (DomainFoe || StoryFoe) { if (IsWeeklyBoss || IsStoryBoss) { AchieveState.Bump("boss"); Saga.Go.Audio.GoSfx.Play("victory"); } Killed?.Invoke(this); Invoke(nameof(HideBody), 2.5f); return; } // 109-14-9 경험·전리품·일과 없음(109-14-12 임무 적도)
             if (!(IsGuardian && BossDefeated)) PlayerStats.AddExp(ExpReward); // 109-14-10 다시 선 수호장은 경험 없이 꽃만
             DailyTaskState.ReportProgress(DailyTaskState.Kind.FieldKill, 1); // 109-14-8 일일 의뢰 — 들판 적
             AchieveState.Bump("kills"); // 109-14-25 업적 — 들판 처치
             HuntState.Record(kind); // U-0031 사냥 기록 — 종별(업적과 같은 범위: 도메인·이야기 적은 위에서 return)
-            if (IsGuardian) AchieveState.Bump("boss");
+            if (IsGuardian) { AchieveState.Bump("boss"); Saga.Go.Audio.GoSfx.Play("victory"); }
             if (IsElemental && ShieldMax > 0f && !IsGuardian && !IsHero) AchieveState.Bump("elite");
             if (EnemyKind == Kind.Bandit && !IsHero)
             {

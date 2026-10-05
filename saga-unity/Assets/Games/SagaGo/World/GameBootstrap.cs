@@ -62,6 +62,7 @@ namespace Saga.Go.World
         private void OnLeveledUp(int newLevel)
         {
             _cameraRig?.PlayLevelUpCut();
+            Saga.Go.Audio.GoSfx.Play("levelup"); // U-0048
             // 109-14-7 여정 등급 보상·천하 등급
             var adv = AdventureState.OnLevelUp(newLevel);
             if (adv.Count > 0) Saga.Go.UI.DialogueLabel.Instance?.Show(string.Join("\n", adv), 4f);

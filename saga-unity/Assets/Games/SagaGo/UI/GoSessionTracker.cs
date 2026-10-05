@@ -60,7 +60,7 @@ namespace Saga.Go.UI
             DailyTaskState.TaskCompleted -= OnTaskCompleted;
         }
 
-        private void OnTaskCompleted(string text) => DialogueLabel.Instance?.Show(text, 3.5f);
+        private void OnTaskCompleted(string text) { Saga.Go.Audio.GoSfx.Play("quest_done"); DialogueLabel.Instance?.Show(text, 3.5f); } // U-0048
 
         private void OnBondLeveledUp(string heroId, int level)
         {

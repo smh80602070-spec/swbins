@@ -243,6 +243,7 @@ namespace Saga.Go.World
             int exp = GoTreasure.ExpByGrade[g], gold = GoTreasure.GoldByGrade[g];
             PlayerStats.AddExp(exp);
             GoldState.Add(gold);
+            Saga.Go.Audio.GoSfx.Play(Data.Grade >= GoTreasure.Grade.Precious ? "gacha" : "item_pick"); // U-0048
             string mats = TalentState.Add(GoTalent.ChestMats[g]); // 109-14-4 무예 재료
             string gear = WeaponState.OnChest(Data.Id, Data.Grade); // 109-14-5a 강화석·무기
             if (gear.Length > 0) mats += (mats.Length > 0 ? " · " : "") + gear;

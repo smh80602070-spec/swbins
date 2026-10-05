@@ -87,8 +87,12 @@ namespace Saga.Go.UI
         }
 
         public void Toggle() { if (IsOpen) Close(); else Open(); }
-        public void Open() { if (_panel == null) return; _panel.SetActive(true); Refresh(); }
-        public void Close() { if (_panel != null) _panel.SetActive(false); }
+        public void Open() {
+            if (!IsOpen) Saga.Go.Audio.GoSfx.Play("ui_open"); // U-0048
+            if (_panel == null) return; _panel.SetActive(true); Refresh(); }
+        public void Close() {
+            if (IsOpen) Saga.Go.Audio.GoSfx.Play("ui_close"); // U-0048
+            if (_panel != null) _panel.SetActive(false); }
 
         /// <summary>줄 글·허브 단추의 ● 를 새로 하고, 각 창이 만든 원래 단추는 숨긴다(이 허브가 대신 연다).</summary>
         public void Refresh()

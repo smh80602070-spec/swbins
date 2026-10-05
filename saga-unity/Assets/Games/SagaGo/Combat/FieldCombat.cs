@@ -767,6 +767,7 @@ namespace Saga.Go.Combat
             Vector3 dir = player != null ? player.MoveIntent : Vector3.zero;
             if (dir.sqrMagnitude < 0.01f) dir = -Forward(); // 입력 없으면 뒤로 물러선다
             if (player != null) player.Dash(dir, DodgeDistance, DodgeSec);
+            Saga.Go.Audio.GoSfx.Play("whoosh"); // U-0048
             return true;
         }
 
@@ -837,6 +838,7 @@ namespace Saga.Go.Combat
             }
             m.Hp = Mathf.Max(0f, m.Hp - dmg);
             _sinceHit = 0f;
+            Saga.Go.Audio.GoSfx.Play("sword_hurt", 1f, 0.1f); // U-0048
             FieldDamageText.Spawn(transform.position + Vector3.up * 4f, Mathf.RoundToInt(dmg).ToString(), new Color(1f, 0.3f, 0.25f));
             if (player != null && player.Animator != null) player.Animator.SetTrigger("Hit");
             if (m.Down) OnMemberDown();

@@ -13,6 +13,7 @@ namespace Saga.Go.Combat
         /// <paramref name="atk"/> 는 반응 피해를 셀 공격력. <paramref name="heavy"/> = 기본 공격 3타째(얼어붙은 적을 깨뜨린다, 109-14-1a).</summary>
         public float TakeHit(float amount, GoElement element, float atk, out GoReaction reaction, bool heavy = false, bool crit = false)
         {
+            Saga.Go.Audio.GoSfx.Play("sword_hit", 0.9f, 0.07f); // U-0048 — 무기별 소리는 후속
             reaction = GoReaction.None;
             if (!Alive) return 0f;
             FieldCombat.Instance?.MarkFought(); // 109-14-18 방금 싸움(편성 막기)

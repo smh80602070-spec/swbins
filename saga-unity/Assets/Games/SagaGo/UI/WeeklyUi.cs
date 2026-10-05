@@ -135,19 +135,22 @@ namespace Saga.Go.UI
 
         public void Open()
         {
+            if (!IsOpen) Saga.Go.Audio.GoSfx.Play("ui_open"); // U-0048
             if (_panel == null) return;
             _panel.SetActive(true);
             Refresh();
         }
 
-        public void Close() { if (_panel != null) _panel.SetActive(false); }
+        public void Close() {
+            if (IsOpen) Saga.Go.Audio.GoSfx.Play("ui_close"); // U-0048
+            if (_panel != null) _panel.SetActive(false); }
 
         public void Claim(int row)
         {
             var picks = WeeklyState.Picks();
             if (row < 0 || row >= picks.Length) return;
             string t = WeeklyState.Claim(picks[row]);
-            if (t.Length > 0) Toast(string.Format(GoLocalization.T("weekly.got", "주간 도전 보상을 받았다 — {0}"), t));
+            if (t.Length > 0) { Toast(string.Format(GoLocalization.T("weekly.got", "주간 도전 보상을 받았다 — {0}"), t)); Saga.Go.Audio.GoSfx.Play("quest_done"); }
             Refresh();
         }
 

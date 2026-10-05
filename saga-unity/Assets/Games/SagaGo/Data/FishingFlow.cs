@@ -380,7 +380,7 @@ namespace Saga.Go.Data
                         T = 0f;
                         _gap = Rand(GoFishing.NibbleGapMin, GoFishing.NibbleGapMax);
                         _nibbles--;
-                        if (_nibbles <= 0) { SetState(Phase.Bite); Note(GoLocalization.T("fish.bite", "입질! — 지금 당겨라")); }
+                        if (_nibbles <= 0) { SetState(Phase.Bite); Note(GoLocalization.T("fish.bite", "입질! — 지금 당겨라")); Saga.Go.Audio.GoSfx.Play("fish_bite"); }
                     }
                     break;
                 case Phase.Bite:

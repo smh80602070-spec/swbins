@@ -133,12 +133,15 @@ namespace Saga.Go.UI
 
         public void Open()
         {
+            if (!IsOpen) Saga.Go.Audio.GoSfx.Play("ui_open"); // U-0048
             if (_panel == null) return;
             _panel.SetActive(true);
             Refresh();
         }
 
-        public void Close() { if (_panel != null) _panel.SetActive(false); }
+        public void Close() {
+            if (IsOpen) Saga.Go.Audio.GoSfx.Play("ui_close"); // U-0048
+            if (_panel != null) _panel.SetActive(false); }
 
         public void Claim(int row)
         {
