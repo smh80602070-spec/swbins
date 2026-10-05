@@ -449,6 +449,7 @@
     on: function () { var V3 = global.DG.villageView3d; return !(V3 && V3.active && V3.active()); },
     poolH: { pool_f_elder_137: 86, pool_basem_elder_105: 84, pool_f_teen_138: 75, pool_basef_child_116: 51 },   // 프레임 안 몸 높이(px, pw-sheet-bbox.mjs 로 잼)
     /** 한 장 모드 풀(W-0032, K-0056 정면·옆·뒤 3장) — 값이 참인 풀은 시트 대신 mode2d.drawStill 로 그린다 */
+    vroid2d: { kinds: ['adult', 'kid', 'me'], h: 85, foot: 0.89 },   // 사람은 VRoid 2D 시트(W-0074, 사용자 10-06 "인물은 모두 VRoid") — 몸 높이 68~91px 평균·발 y≈114/128 실측. 없으면 아래 옛 풀
     still: { villager_a: 1, villager_b: 1, villager_c: 1, hero_m: 1, hero_f: 1 },
     pools: {
       adult: ['villager_a', 'villager_b', 'villager_c'],

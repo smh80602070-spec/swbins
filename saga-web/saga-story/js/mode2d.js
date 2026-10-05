@@ -40,7 +40,23 @@
     return t && isStill(t[0]) ? { pool: t[0], k: t[1] || 1 } : null;
   }
 
+  /* ── VRoid 2D 시트(W-0074 2D) — 사람은 시대 구분 없이 VRoid 로 만든 시트(`shared/assets/characters2d/<id>/`, 규격은 위와 같음)로.
+     판 설정 `cfg.mode2d.vroid2d = { kinds: [사람 종류…], h: 프레임 안 몸 높이(px), foot }` 가 있는 판·종류만. 제 시트가 있는 인물(도감·장수 299)은
+     제 것, 없는 사람(주민·적·나)은 3D 와 같은 빌린 몸(assets3d.borrowRecipe) — 2D·3D 에서 같은 사람이 같은 몸. 통일 에셋 시험이 안 됐으면 null(옛 풀) */
+  var VPRE = 'vroid:';
+  function vroidPick(kind, seed) {
+    var v = C().vroid2d, A = global.DG && global.DG.assets3d;
+    if (!v || (v.kinds || []).indexOf(kind) < 0 || !A || !A.state || A.state() !== 'ok') { return null; }
+    var id = String(seed === undefined || seed === null ? '' : seed);
+    if (id && A.has('hero', id)) { return VPRE + id; }
+    var r = A.borrowRecipe && A.borrowRecipe(id || kind);
+    return r && r.key && r.key.indexOf('uni:') === 0 ? VPRE + r.key.slice(4) : null;
+  }
+  function isVroid(pool) { return typeof pool === 'string' && pool.indexOf(VPRE) === 0; }
+
   function pick(kind, seed) {
+    var vp = vroidPick(kind, seed);
+    if (vp) { return vp; }
     var list = (C().pools || {})[kind];
     if (!list || !list.length) { return null; }
     return list[hashOf(seed) % list.length];
@@ -68,7 +84,7 @@
     var im = new global.Image();
     im.onload = function () { e.ok = true; };
     im.onerror = function () { e.fail = true; };   // 파일이 없으면 영영 기존 그림 — 다시 받으려 들지 않는다
-    im.src = base() + pool + '/' + clip + '.webp';
+    im.src = isVroid(pool) ? global.DG.assets3d.root() + 'characters2d/' + pool.slice(VPRE.length) + '/' + clip + '.webp' : base() + pool + '/' + clip + '.webp';
     e.img = im;
     return e;
   }
@@ -93,12 +109,12 @@
       e = base; o = Object.assign({}, o, { clip: 'idle' });
     }
     var d = dirOf(o.facing), f = frameAt(o.clip || 'idle', o.ms || 0);
-    var cf = C(), ph = (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1), w = PX * sc, h = PX * sc;
+    var cf = C(), vr = isVroid(o.pool) && cf.vroid2d, ph = vr ? (vr.h || 85) : (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1), w = PX * sc, h = PX * sc;
     ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
     ctx.imageSmoothingEnabled = true;
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
-    ctx.drawImage(e.img, f * PX, d.row * PX, PX, PX, o.x - w / 2, o.y - h * (cf.foot || 0.87), w, h);
+    ctx.drawImage(e.img, f * PX, d.row * PX, PX, PX, o.x - w / 2, o.y - h * ((vr && vr.foot) || cf.foot || 0.87), w, h);
     ctx.restore();
     return true;
   }
@@ -334,7 +350,7 @@
     preloadBg: function (region) { getBg(region); },
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS,
-    isOn: isOn, pick: pick, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
+    isOn: isOn, pick: pick, vroidPick: vroidPick, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },

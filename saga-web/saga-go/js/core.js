@@ -483,6 +483,7 @@
     /** 2D 모드인가 — 3D 장면이 안 서 있을 때(평면·2.5D 캔버스) */
     on: function () { var W3 = global.DG.world3d; return !(W3 && W3.active && W3.active()); },
     poolH: { pool_f_human_139: 91, pool_g_human_147: 89, pool_e_demon_128: 86, pool_e_undead_127: 79 },   // 프레임 안 몸 높이(px, pw-sheet-bbox.mjs 로 잼)
+    vroid2d: { kinds: ['human', 'me'], h: 85, foot: 0.89 },   // 사람은 VRoid 2D 시트(W-0074, 사용자 10-06 "인물은 모두 VRoid") — 몸 높이 68~91px 평균·발 y≈114/128 실측. 없으면 아래 옛 풀
     still: { villager_a: 1, villager_b: 1, villager_c: 1, hero_m: 1, hero_f: 1 },   // 한 장 모드 풀(W-0032, K-0056 정면·옆·뒤 3장)
     pools: { human: ['villager_a', 'villager_b', 'villager_c'], me: ['hero_m', 'hero_f'] }
   };

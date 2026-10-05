@@ -493,6 +493,7 @@
     /** 2D 모드인가 — 3D 가 안 서 있을 때(= 아이소 2D 그림) */
     on: function () { var T = global.DG.dungeon3d; return !(T && T.active && T.active()); },
     poolH: { pool_d_goblin_118: 61, pool_e_orc_125: 90, pool_g_undead_143: 91, pool_basem_demon_104: 106 },   // 프레임 안 몸 높이(px, pw-sheet-bbox.mjs 로 잼)
+    vroid2d: { kinds: ['me', 'ally', 'npc'], h: 85, foot: 0.89 },   // 사람은 VRoid 2D 시트(W-0074, 사용자 10-06 "인물은 모두 VRoid") — 몸 높이 68~91px 평균·발 y≈114/128 실측. 없으면 아래 옛 풀
     still: { hero_m: 1, hero_f: 1, companion_warrior: 1, companion_archer: 1, companion_mage: 1, villager_a: 1, villager_b: 1, villager_c: 1, beast_dog: 1, beast_wolf: 1, beast_big: 1 },   // 한 장 모드 풀(W-0042, K-0056 정면·옆·뒤 3장) — 사람
     beast: { '들개': ['beast_dog', 0.8], '멧돼지': ['beast_big', 1.1], '왕멧돼지': ['beast_big', 1.3], '산군': ['beast_wolf', 1.0], '백두산군': ['beast_wolf', 1.25], '산짐승 요괴': ['beast_wolf', 1.0], '노괴 산짐승': ['beast_wolf', 1.15] },   // 짐승형 적 → 몸·배수(W-0051, 어울리는 것만)
     pools: {
