@@ -1,0 +1,54 @@
+{
+ "script": "pw-go-loops.mjs",
+ "game": "saga-go",
+ "rows": [
+  {
+   "state": "① 마을 대기",
+   "rafPerSec": 2.7,
+   "renderPerSec": 19,
+   "loops": {
+    "p": 2.7
+   }
+  },
+  {
+   "state": "② 시트(메뉴) 열림",
+   "rafPerSec": 5,
+   "renderPerSec": 5,
+   "loops": {
+    "p": 5
+   }
+  },
+  {
+   "state": "③ 2D 모드(3D 끔)",
+   "rafPerSec": 32,
+   "renderPerSec": 0,
+   "loops": {
+    "p": 32
+   }
+  },
+  {
+   "state": "④-1 결투 중",
+   "rafPerSec": 8.7,
+   "renderPerSec": 4.3,
+   "loops": {
+    "p": 4.3,
+    "t": 4.3
+   }
+  },
+  {
+   "state": "④ 결투 끝난 뒤",
+   "rafPerSec": 5.3,
+   "renderPerSec": 5.3,
+   "loops": {
+    "p": 5.3
+   }
+  },
+  {
+   "state": "⑤ 탭 숨김",
+   "rafPerSec": 0,
+   "renderPerSec": 0,
+   "loops": {}
+  }
+ ],
+ "pageErrors": []
+}

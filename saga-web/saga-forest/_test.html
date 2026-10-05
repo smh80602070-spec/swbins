@@ -140,6 +140,24 @@ window.DG_NO_TUNE = true;
   setTimeout(function () {
     var C = DG.core, V = DG.village, VD = DG.villageData, AU = DG.auto;
 
+    t('루프 문지기(W-0066) — 숨김이면 park(다음 프레임 예약 없음)·보이되 포커스 없으면 wait·보이고 포커스면 run, 깨우기는 멈춰 있을 때만 한 번(사슬이 둘이 되지 않는다)', function () {
+      var G = DG.game, saved = window.requestAnimationFrame, n = 0, prevParked = G._parked(), r = {};
+      function hide(v) { if (v) { Object.defineProperty(document, 'hidden', { configurable: true, get: function () { return true; } }); } else { delete document.hidden; } }
+      try {
+        hide(true); r.park = G.loopGate() === 'park'; hide(false);
+        document.hasFocus = function () { return false; }; r.wait = G.loopGate() === 'wait';
+        document.hasFocus = function () { return true; }; r.run = G.loopGate() === 'run';
+        delete document.hasFocus;
+        window.requestAnimationFrame = function () { n++; return n; };
+        G._park(false); G.wakeLoop(); r.noop = n === 0;                                   // 멈춰 있지 않으면 아무것도 안 한다
+        G._park(true); G.wakeLoop(); r.once = n === 1 && G._parked() === false;            // 멈춰 있으면 한 번 켠다
+        G.wakeLoop(); r.again = n === 1;                                                  // 두 번째 깨우기는 무시
+        hide(true); G._park(true); G.wakeLoop(); r.stay = n === 1 && G._parked() === true; // 아직 숨김이면 안 깨운다
+      } finally { window.requestAnimationFrame = saved; hide(false); delete document.hasFocus; G._park(prevParked); }
+      var bad = Object.keys(r).filter(function (k) { return !r[k]; });
+      return bad.length === 0 ? 'park·wait·run · 깨우기 1회' : ('실패 ' + bad.join(','));
+    });
+
     t('다른 게임의 모듈은 실려 있지 않다', function () {
       var gone = ['world', 'encounter', 'dungeon', 'item'];
       var leaked = gone.filter(function (k) { return !!DG[k]; });

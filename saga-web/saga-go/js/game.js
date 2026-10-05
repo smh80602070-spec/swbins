@@ -176,8 +176,11 @@
           if (ui.showSessionCard) { ui.showSessionCard(d); }
         }
         snapshotSession();
+        wakeLoop();
       }
     });
+    global.addEventListener('focus', wakeLoop);
+    global.addEventListener('pageshow', wakeLoop);
     global.addEventListener('blur', function () { core.persist(); }); // 포커스만 잃어도 저장
   }
 
@@ -360,13 +363,29 @@
     return fps > 0 ? 1000 / fps : 0;
   }
 
+  /* 루프 문지기(W-0066) — 'park' 탭이 숨겨졌다: 다음 프레임을 예약조차 안 한다(visibilitychange 가 깨운다)
+     · 'wait' 보이지만 창이 포커스를 잃었다: 0.5초마다 한 번만 들여다본다 · 'run' 돈다 */
+  function loopGate() {
+    if (document.hidden) { return 'park'; }
+    return document.hasFocus() ? 'run' : 'wait';
+  }
+  var parked = false;
+  /** 숨김으로 멈춘 루프를 다시 켠다 — 멈춰 있을 때만(사슬이 둘이 되지 않게) */
+  function wakeLoop() {
+    if (!parked || document.hidden) { return; }
+    parked = false; lastFrame = performance.now();
+    requestAnimationFrame(loop);
+  }
+
   function loop(now) {
     /* 탭이 숨겨졌거나 창이 포커스를 잃으면 3D 를 완전히 멈춘다 — 브라우저가
        알아서 줄여 주는 건 "다른 탭으로 전환"뿐이고, "화면엔 보이는데 다른
        창을 쓰는 중"은 안 줄여 준다. 이 판이 그 상태로 계속 풀가동해 다른
        작업 CPU 를 잡아먹는다는 제보로 추가(2026-09-08) */
-    if (document.hidden || !document.hasFocus()) {
+    var gate = loopGate();
+    if (gate !== 'run') {
       lastFrame = now;
+      if (gate === 'park') { parked = true; return; }
       global.setTimeout(function () { requestAnimationFrame(loop); }, 500);
       return;
     }
@@ -439,7 +458,9 @@
   global.DG.game = {
     tickSupply: tickSupply, SUPPLY_STEP: SUPPLY_STEP, frameGapMs: frameGapMs,
     /** 자가진단이 5분 실제로 안 기다리고도 마무리 카드 경로를 재볼 수 있게 */
-    snapshotSession: snapshotSession, sessionDiff: sessionDiff, maybeShowSessionCard: maybeShowSessionCard
+    snapshotSession: snapshotSession, sessionDiff: sessionDiff, maybeShowSessionCard: maybeShowSessionCard,
+    /** 자가진단용(W-0066) — 문지기 판정과 숨김 정지·깨우기. 실제 루프는 건드리지 않는다 */
+    loopGate: loopGate, wakeLoop: wakeLoop, _park: function (v) { parked = !!v; }, _parked: function () { return parked; }
   };
 
   /** 진입 — **가입(프로필)이 정해진 뒤에** 게임을 켠다.

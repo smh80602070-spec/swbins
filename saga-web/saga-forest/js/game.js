@@ -208,13 +208,31 @@
     return fps > 0 ? 1000 / fps : 0;
   }
 
+  /* 루프 문지기(W-0066) — 'park' 탭이 숨겨졌다(다음 프레임 예약 없음) · 'wait' 보이지만 창이 포커스를 잃었다(0.5초마다 한 번만 들여다봄) · 'run' */
+  function loopGate() {
+    if (document.hidden) { return 'park'; }
+    return document.hasFocus() ? 'run' : 'wait';
+  }
+  var parkedLoop = false;
+  /** 숨김으로 멈춘 루프를 다시 켠다 — 멈춰 있을 때만(사슬이 둘이 되지 않게) */
+  function wakeLoop() {
+    if (!parkedLoop || document.hidden) { return; }
+    parkedLoop = false; lastFrame = performance.now();
+    requestAnimationFrame(loop);
+  }
+  document.addEventListener('visibilitychange', wakeLoop);
+  global.addEventListener('focus', wakeLoop);
+  global.addEventListener('pageshow', wakeLoop);
+
   function loop(now) {
     /* 탭이 숨겨졌거나 창이 포커스를 잃으면 3D 를 완전히 멈춘다 — "화면엔
        보이는데 다른 창을 쓰는 중"은 브라우저가 알아서 안 줄여 준다. 이 판이
        그 상태로 계속 풀가동해 다른 작업 CPU 를 잡아먹는다는 제보로 추가
        (2026-09-08) */
-    if (document.hidden || !document.hasFocus()) {
+    var gate = loopGate();
+    if (gate !== 'run') {
       lastFrame = now;
+      if (gate === 'park') { parkedLoop = true; return; }   // 숨김 — 다음 프레임을 예약조차 안 한다(W-0066, visibilitychange 가 깨운다)
       global.setTimeout(function () { requestAnimationFrame(loop); }, 500);
       return;
     }
@@ -253,7 +271,7 @@
   }
 
   global.DG = global.DG || {};
-  global.DG.game = { boot: boot, start: start };
+  global.DG.game = { boot: boot, start: start, loopGate: loopGate, wakeLoop: wakeLoop, _park: function (v) { parkedLoop = !!v; }, _parked: function () { return parkedLoop; } };
 
   /** 진입 — **가입(프로필)이 정해진 뒤에** 게임을 켠다.
    *  account.gate() 가 세이브 키를 정하고 start() 를 돌린다. */
