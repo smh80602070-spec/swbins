@@ -20,6 +20,38 @@ const inp = ev.tool_input || {};
 
 function block(msg) { process.stderr.write(msg + '\n'); process.exit(2); }
 
+// 커밋 범위(W-0075) — `git commit … -- <경로…>`·`--pathspec-from-file=<파일>` 의 경로를 저장소 기준 목록으로(경로를 주면 git 은 그 경로만 커밋 — 남이 add 해 둔 것은 안 들어간다).
+// precheck 는 이 범위 밖(같은 폴더를 쓰는 남의 세션이 작업 중인 파일)의 실패를 WARN 으로 낮춘다.
+// 경로를 확실히 모르면 null → 예전처럼 트리 전체 검사(느슨해지는 쪽으로는 안 간다): 셸 변수·글롭·`git -C`·`-a`·경로 없는 커밋·저장소 밖 경로.
+function commitScope(cmd) {
+  const seg = cmd.split(/&&|\|\||;|\n/).find(s => /\bgit\b[^|]*?\bcommit\b/.test(s));
+  if (!seg || /\bgit\s+-C\s/.test(seg)) return null;
+  const toks = (seg.match(/'[^']*'|"[^"]*"|\S+/g) || []).map(t => t.replace(/^(['"])([^]*)\1$/, '$2'));
+  const dd = toks.indexOf('--'), flags = dd >= 0 ? toks.slice(0, dd) : toks;
+  if (flags.some(t => t === '--all' || /^-[a-zA-Z]*a[a-zA-Z]*$/.test(t))) return null;   // -a·-am = 추적 파일 전부
+  const raw = [];
+  const pf = toks.findIndex(t => t.startsWith('--pathspec-from-file'));
+  if (pf >= 0) {
+    const f = toks[pf].includes('=') ? toks[pf].slice(toks[pf].indexOf('=') + 1) : toks[pf + 1];
+    if (!f || /[$`]/.test(f)) return null;
+    try { fs.readFileSync(f, 'utf8').split(/\r?\n/).map(s => s.trim()).filter(Boolean).forEach(x => raw.push(x)); } catch (e) { return null; }
+  }
+  if (dd >= 0) { for (const t of toks.slice(dd + 1)) { if (/[$`*?\[]/.test(t)) return null; raw.push(t); } }
+  if (!raw.length) return null;
+  const root = process.cwd().replace(/\\/g, '/').replace(/\/$/, '');
+  const git = a => { const r = spawnSync('git', a, { encoding: 'utf8' }); return r.status === 0 ? String(r.stdout).split(/\r?\n/).filter(Boolean) : null; };
+  const out = new Set();
+  for (let p of raw) {
+    p = p.replace(/\\/g, '/').replace(/^\/([a-z])\//i, (m, d) => d.toUpperCase() + ':/');   // /c/swbins/x → C:/swbins/x
+    if (/^[a-z]:\//i.test(p)) { if (p.toLowerCase().indexOf(root.toLowerCase() + '/') !== 0) return null; p = p.slice(root.length + 1); }
+    p = p.replace(/^\.\//, '');
+    let st = null; try { st = fs.statSync(p); } catch (e) { /* 지운 파일 — 그대로 경로로 */ }
+    if (st && st.isDirectory()) { const l = git(['ls-files', '-m', '-o', '-d', '--exclude-standard', '--', p]); if (!l) return null; l.forEach(x => out.add(x)); }
+    else out.add(p);
+  }
+  return [...out];
+}
+
 // 인물 변환본(저장소 밖, .gitignore)이 이 PC 에 없으면 백그라운드로 만든다 — 다른 PC 에서 git pull 뒤 손으로 안 해도 되게(K-0065·G-0022).
 // setup_local.sh 는 이미 있으면 아무것도 안 하고 자기 잠금으로 겹쳐 돌지 않는다. 끄려면 환경변수 SAGA_NO_AUTOSETUP=1.
 function autoSetup() {
@@ -44,7 +76,10 @@ if (name === 'SessionStart') {
 if (name === 'PreToolUse' && tool === 'Bash') {
   const cmd = String(inp.command || '');
   if (/\bgit\s+commit\b/.test(cmd) && !/precheck\.sh/.test(cmd)) {
-    const r = spawnSync('bash', ['tools/precheck.sh'], { encoding: 'utf8' });
+    const scope = commitScope(cmd);
+    const env = Object.assign({}, process.env);
+    if (scope) env.PRECHECK_PATHS = scope.join('\n'); else delete env.PRECHECK_PATHS;
+    const r = spawnSync('bash', ['tools/precheck.sh'], { encoding: 'utf8', env });
     if (r.error || r.status !== 0) {
       const lines = String(r.stdout || '').split('\n').filter(l => /FAIL|OVER|MISMATCH/.test(l));
       block('precheck 실패 — 커밋을 막았다. 고친 뒤 다시 커밋:\n' + lines.join('\n') + (r.stderr ? '\n' + r.stderr : '') + (r.error ? '\n' + r.error.message : ''));

@@ -640,6 +640,9 @@ def main():
     sys.stdout.reconfigure(encoding='utf-8')
     if a.quick:
         ch = changed_paths()
+        scope = os.environ.get('PRECHECK_PATHS')   # 커밋 범위(W-0075) — 같은 폴더의 남의 작업 중 에셋은 안 본다
+        if scope:
+            ch &= {s.strip() for s in scope.splitlines() if s.strip()}
         r = audit(sel, a.game, quick=ch)
         red = [i for i in r['issues'] if i['sev'] == 3]
         print(f"에셋 빠른 점검: 바뀐 경로 {len(ch)} · 본 에셋 {len(r['files'])} · 🔴 {len(red)} ({r['seconds']}s)")

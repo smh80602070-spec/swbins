@@ -37,8 +37,8 @@
 - `.nojekyll` 지우지 말 것(`_test.html`·`js/_expansion/` 등 `_` 파일이 Pages 에서 빠진다)
 - 새 파일에 키·토큰·회사 도메인·PC 이름·개인 경로 금지. 푸시 전 한 번 훑는다
 - **다른 세션이 같은 트리에서 동시에 돈다.** `git add` 해 두고 뜸 들이지 말고
-  `git commit -F <메시지파일> -- <손댄 경로>` 로 곧바로 커밋한다. "커밋해" = 푸시까지
-- 푸시가 거부되면 `git pull --rebase --autostash` 뒤 다시 푸시(남의 안 올린 파일은 건드리지 않는다)
+  `git commit -F <메시지파일> -- <손댄 경로>` 로 곧바로 커밋한다(경로는 글자 그대로 — 훅이 그 경로만 검사). "커밋해" = 푸시까지
+- 푸시 `bash tools/push.sh` · 받기 `bash tools/push.sh --pull`. `git pull`·`--autostash`·`stash` 금지(남의 작업 중 파일을 먹는다)
 
 ## 하지 말 것
 
