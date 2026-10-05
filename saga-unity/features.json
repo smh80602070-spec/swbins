@@ -1350,5 +1350,92 @@
   "fun": {},
   "ticket": null,
   "since": "2026-09-16"
+ },
+ {
+  "id": "un.go.vroid-bodies",
+  "name": "사람 몸 VRoid 39자리(U-0034, Mixamo 교체)",
+  "files": [],
+  "tests": [
+   "PlaytestVroidSwap"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0034",
+  "since": "2026-10-04",
+  "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 키·손 소켓·몸 없음 0 기계 확인. 걷기 모습·외곽선 그림체는 D3 사람 몫",
+  "human": true
+ },
+ {
+  "id": "un.dg.weapon-models",
+  "name": "무기 3D 9벌 — WeaponVisual 소켓(U-0038)",
+  "files": [],
+  "tests": [
+   "PlaytestWeaponModels"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0038",
+  "since": "2026-10-04",
+  "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 읽힘·grip 원점·길이. 칼날 굵기·쥔 위치는 눈 필요",
+  "human": true
+ },
+ {
+  "id": "un.go.house-interior",
+  "name": "마을 집 실내 방 입장(U-0039)",
+  "files": [],
+  "tests": [
+   "PlaytestHeadless"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0039",
+  "since": "2026-10-04",
+  "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 방 크기·순간이동 왕복·방 안 저장 치환. 실제 걸어 들어가기는 눈 필요"
+ },
+ {
+  "id": "un.go.anon-crowd",
+  "name": "이름 없는 군중 — 인물 299 행인 10명(U-0042, GO·숲)",
+  "files": [],
+  "tests": [
+   "PlaytestHeadless",
+   "PlaytestForestHeadless"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0042",
+  "since": "2026-10-04",
+  "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 10명·서로 다른 인물·키·자리·같은 시드. 걷는 모습은 눈 필요"
+ },
+ {
+  "id": "un.go.sky-panorama",
+  "name": "하늘·조명 시간대 12장(U-0041)",
+  "files": [],
+  "tests": [
+   "PlaytestSkyPanorama"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0041",
+  "since": "2026-10-04",
+  "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 12/12 읽힘·해 방향 계산. 그림자가 해와 맞는지는 눈 필요"
+ },
+ {
+  "id": "un.go.world-models",
+  "name": "마을 소품·장터 좌판 모델 7종(U-0037)",
+  "files": [],
+  "tests": [
+   "PlaytestWorldModels"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "U-0037",
+  "since": "2026-10-04",
+  "note": "D2: 배치 진단 saga-unity/docs/playcheck/diag-20261005.json — 폭·접지·없는 이름 null"
  }
 ]

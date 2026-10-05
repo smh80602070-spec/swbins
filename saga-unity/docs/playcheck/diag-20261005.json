@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-05",
+  "how": "bash saga-unity/tools/unity-batch.sh -- Unity.exe -batchmode -nographics -projectPath . -executeMethod Saga.EditorTools.<진단>.Run (6000.3.24f1)",
+  "results": {
+    "PlaytestVroidSwap": "OK — 자리 39·구움 39·대기 없음 0·몸 없음 0·키 1.18~1.88m·손 소켓 39/39",
+    "PlaytestWeaponModels": "OK — 9벌 읽힘·grip 원점·grip→tip=+Y·길이 일치·배율 0.3~5.4",
+    "PlaytestWorldModels": "OK — 7종 읽힘·폭 ≤2.4m·바닥 접지·없는 이름 null",
+    "PlaytestSkyPanorama": "OK — 하늘 12/12 읽힘",
+    "PlaytestHeadless": "OK — 10 frames, no errors (house interior·anon crowd 포함)",
+    "PlaytestDungeonHeadless": "OK — 10 frames, no errors (포로 Kneel·동행 Paladin 포함)",
+    "PlaytestForestHeadless": "OK — 10 frames, no errors (손님 299·마을 사람 6/6·군중 10명·탈것 포함, 날짜·땅 높이 고정 수정 뒤)"
+  },
+  "notEyeChecked": "걷고 달리는 동작·외곽선·칼날 굵기·문 앞 걸어 들어가기·행인 걷는 모습·그림자 방향 — tasks/sheets/unity-eyes-20261005.md 사람 몫"
+}
