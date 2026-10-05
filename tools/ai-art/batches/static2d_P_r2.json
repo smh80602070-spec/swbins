@@ -1,0 +1,45 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "static2d_P_r2",
+ "kit": {
+  "spec": "sprite",
+  "style": "P",
+  "style_name": "굵은 먹선 회화풍(기본, 판정기 10-05)"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 6
+ },
+ "items": [
+  {
+   "id": "street_lamp_01",
+   "seed": 1955635141,
+   "prompt": "(iron street lamp post:1.15), glowing lantern, curved arm, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\street_lamp_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_dead_01",
+   "seed": 86111552,
+   "prompt": "(dead bare tree:1.15), twisted dark branches, no leaves, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_dead_01.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "tree_birch_01",
+   "seed": 2268531905,
+   "prompt": "(white birch tree:1.15), white trunk with black marks, light green leaves, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, plain pastel gray-green background, centered, single object, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\static2d_init\\tree_birch_01.png",
+   "denoise": 0.65
+  }
+ ]
+}

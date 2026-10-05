@@ -3,9 +3,9 @@
  "generator": "tools/ai-art/gen.py",
  "model": "animagine-xl-4.0-opt",
  "model_license": "CreativeML OpenRAIL++-M",
- "prompt": "masterpiece, high score, great score, absurdres, large brown bear, brown fur, standing on all fours, four legs on the ground, natural bear anatomy, front view, facing the viewer, no humans, game sprite, soft painterly shading, thin dark outline, rich colors, detailed texture, simple background, white background, centered, single animal, full body",
- "negative_prompt": "lowres, bad anatomy, extra limbs, text, error, signature, watermark, username, blurry, cropped, worst quality, low quality, ground shadow, gradient background, background scenery, multiple views, border, frame, human, person, people, multiple animals, blue fur, muscular human-like body, standing upright, grass, flowers, debris, ground, puddle, color change",
- "seed": 2737236155,
+ "prompt": "masterpiece, high score, great score, absurdres, (large brown bear:1.15), brown fur, standing on all fours, four legs on the ground, natural bear anatomy, front view, facing viewer, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, bold black ink outlines, varied line weight, sumi-e inspired linework, painterly flat shading, visible brush strokes, muted earth tones with one accent color, flat lighting, no gloss",
+ "negative_prompt": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, thin lines, airbrush, glossy, photorealistic, 3d render, gradient shading",
+ "seed": 35984570,
  "steps": 28,
  "cfg_scale": 5.5,
  "sampler": "Euler a",
@@ -14,7 +14,7 @@
   256
  ],
  "seconds": 25.7,
- "date": "2026-10-03",
+ "date": "2026-10-05",
  "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
  "packed_by": "tools/ai-art/pack_moving2d.py"
 }
