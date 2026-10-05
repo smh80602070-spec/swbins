@@ -8,13 +8,14 @@
   "polyhaven: cliff_side",
   "polyhaven: coast_sand_rocks_02",
   "polyhaven: corrugated_iron",
+  "polyhaven: forest_ground_04",
   "polyhaven: white_stucco"
  ],
  "size_m": [
-  5.76,
-  4.69,
-  3.27
+  3.74,
+  2.83,
+  2.0
  ],
- "tris": 812,
+ "tris": 2656,
  "family": "wing"
 }

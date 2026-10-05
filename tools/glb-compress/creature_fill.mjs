@@ -7,7 +7,7 @@
  * 파일에 없는 칸만 더한다(있는 클립은 안 건드린다). 장면 루트의 자식을 새 노드 `MotionRoot` 밑으로 옮겨 그 노드를 움직인다.
  * 앞쪽(전진 축)은 몸 바운딩 박스의 긴 가로축(+) — 틀리면 달려듦이 옆으로 보일 수 있어 시험 시트에서 계통별로 본다.
  *
- * 사용법: node creature_fill.mjs <입력 폴더> <출력 폴더> [--only 종이름,..] [--force]
+ * 사용법: node creature_fill.mjs <입력 폴더> <출력 폴더> [--only 종이름,..] [--force] [--forward-z]
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -18,6 +18,7 @@ import { MeshoptDecoder, MeshoptEncoder } from 'meshoptimizer';
 
 const args = process.argv.slice(2);
 const force = args.includes('--force');
+const fwdZ = args.includes('--forward-z');          // 몸이 전부 +Z(glTF) 를 보고 있으면 — 날개 폭이 길이보다 넓은 몸에서 전진 축이 X 로 잘못 잡히는 것을 막는다
 const oi = args.indexOf('--only');
 const only = oi >= 0 ? args[oi + 1].split(',') : null;
 const pos = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--only');
@@ -39,7 +40,7 @@ const qMul = (a, b) => [
 
 function makeClips(b) {
   const w = b.max[0] - b.min[0], h = b.max[1] - b.min[1], d = b.max[2] - b.min[2];
-  const alongX = w > d;
+  const alongX = !fwdZ && w > d;
   const F = alongX ? [1, 0, 0] : [0, 0, 1];          // 전진 축
   const S = alongX ? [0, 0, 1] : [1, 0, 0];          // 옆 축(피치 축)
   const L = Math.max(w, d), W = Math.min(w, d), H = Math.max(h, 0.05);
@@ -97,7 +98,8 @@ for (const f of files) {
     scene.addChild(root);
     const clips = makeClips(b);
     const w = b.max[0] - b.min[0], d = b.max[2] - b.min[2];
-    const F = w > d ? [1, 0, 0] : [0, 0, 1], S = w > d ? [0, 0, 1] : [1, 0, 0];
+    const alongX = !fwdZ && w > d;
+    const F = alongX ? [1, 0, 0] : [0, 0, 1], S = alongX ? [0, 0, 1] : [1, 0, 0];
     for (const n of miss) addClip(doc, root, n, clips[n], n === 'Idle' || n === 'Walk' || n === 'Run', F, S);
     await io.write(out, doc);
     made++; added += miss.length;

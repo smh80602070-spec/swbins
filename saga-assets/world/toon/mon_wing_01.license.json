@@ -7,13 +7,14 @@
  "inputs": [
   "polyhaven: coast_sand_rocks_02",
   "polyhaven: dry_ground_01",
+  "polyhaven: forest_ground_04",
   "polyhaven: white_stucco"
  ],
  "size_m": [
-  2.03,
-  1.4,
-  1.09
+  1.1,
+  0.93,
+  0.66
  ],
- "tris": 740,
+ "tris": 2604,
  "family": "wing"
 }

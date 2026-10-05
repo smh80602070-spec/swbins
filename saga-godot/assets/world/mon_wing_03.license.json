@@ -10,10 +10,10 @@
   "polyhaven: white_stucco"
  ],
  "size_m": [
-  1.62,
-  1.45,
-  1.09
+  1.1,
+  0.81,
+  0.7
  ],
- "tris": 740,
+ "tris": 2620,
  "family": "wing"
 }

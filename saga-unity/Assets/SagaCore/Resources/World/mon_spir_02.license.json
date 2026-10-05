@@ -9,10 +9,10 @@
   "polyhaven: white_stucco"
  ],
  "size_m": [
-  0.88,
-  1.08,
-  1.13
+  0.6,
+  0.57,
+  0.88
  ],
- "tris": 330,
+ "tris": 550,
  "family": "spir"
 }

@@ -10,10 +10,10 @@
   "polyhaven: white_stucco"
  ],
  "size_m": [
-  1.08,
-  0.84,
-  1.52
+  0.66,
+  0.48,
+  0.88
  ],
- "tris": 320,
+ "tris": 768,
  "family": "cons"
 }
