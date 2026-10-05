@@ -63,6 +63,56 @@ def delete_material_faces(obj, mat_key):
     bm.to_mesh(obj.data); bm.free()
 
 
+def apply_proportions(arm, meshes, r):
+    """뼈 비율 — 포즈로 늘이고(head=머리 전체·arm=위팔+아래팔 길이·leg=위다리+아래다리 길이) 그 결과를 메시와 뼈의 기본 자세로 굽는다.
+    Face 처럼 모프(shape key)가 있는 메시는 모디파이어를 못 굽는다 → 평가된 정점과 기본 모프의 차이를 모든 모프에 더한다. 끝나면 발이 땅(z=0)에 오게 아마추어를 올리거나 내린다."""
+    if all(abs(v - 1.0) < 1e-6 for v in r.values()):
+        return
+    bpy.context.view_layer.objects.active = arm
+    bpy.ops.object.mode_set(mode='POSE')
+    P = arm.pose.bones
+    head_desc = set()
+    hb = arm.data.bones.get('J_Bip_C_Head')
+    if hb:
+        head_desc = {c.name for c in hb.children_recursive}
+    for bn in arm.data.bones:
+        if bn.name != 'J_Bip_C_Head' and bn.name not in head_desc:
+            bn.inherit_scale = 'NONE'        # 늘인 뼈의 배율이 자식 뼈로 번지지 않게(자식은 위치만 따라 움직인다)
+    for side in 'LR':
+        for part in ('UpperArm', 'LowerArm'):
+            pb = P.get(f'J_Bip_{side}_{part}')
+            if pb:
+                pb.scale = (1, r['arm'], 1)
+        for part in ('UpperLeg', 'LowerLeg'):
+            pb = P.get(f'J_Bip_{side}_{part}')
+            if pb:
+                pb.scale = (1, r['leg'], 1)
+    ph = P.get('J_Bip_C_Head')
+    if ph:
+        ph.scale = (r['head'], r['head'], r['head'])
+    bpy.context.view_layer.update()
+    dg = bpy.context.evaluated_depsgraph_get()
+    newco = {}
+    for o in meshes:
+        evm = o.evaluated_get(dg).to_mesh()
+        newco[o.name] = [v.co.copy() for v in evm.vertices]
+        o.evaluated_get(dg).to_mesh_clear()
+    bpy.ops.pose.armature_apply(selected=False)
+    bpy.ops.object.mode_set(mode='OBJECT')
+    for o in meshes:
+        me = o.data; nc = newco[o.name]
+        if me.shape_keys:
+            basis = me.shape_keys.key_blocks[0]
+            delta = [nc[i] - basis.data[i].co for i in range(len(nc))]
+            for kb in me.shape_keys.key_blocks:
+                for i in range(len(nc)):
+                    kb.data[i].co += delta[i]
+        for i in range(len(nc)):
+            me.vertices[i].co = nc[i]
+    zmin = min((o.matrix_world @ v.co).z for o in meshes for v in o.data.vertices)
+    arm.location.z -= zmin
+
+
 bpy.ops.wm.read_factory_settings(use_empty=True)
 tarm, tk, tnew = load(tgt_path, 'tgt')
 darm, dk, dnew = load(don_path, 'don')
@@ -76,8 +126,7 @@ def face_height(o):
     return max(zs) - min(zs)
 
 
-s = face_height(tk['Face']) / face_height(dk['Face'])     # 머리 크기 = 얼굴 메시 높이 비율
-s *= ratios['head']
+s = face_height(tk['Face']) / face_height(dk['Face'])     # 머리카락 크기 = 얼굴 메시 높이 비율(head 배율은 뒤에서 뼈로 따로 준다)
 M = Matrix.Translation(Ht) @ Matrix.Scale(s, 4) @ Matrix.Translation(-Hd)       # donor 월드 → target 월드(머리 기준)
 
 # 1) donor 머리카락 오브젝트: 뒷머리(Body 의 HairBack 면) 떼어 오기
@@ -132,7 +181,8 @@ for n in dnew_names:
     if n in bpy.data.objects and n not in keep:
         bpy.data.objects.remove(bpy.data.objects[n], do_unlink=True)
 
-# 5) 뼈 비율(머리는 위에서 머리카락 따라감 — 메시 자체 스케일은 아직 안 건드린다: 시험 단계라 head 배율만 머리카락에 반영)
+# 5) 뼈 비율
+apply_proportions(tarm, [o for o in bpy.data.objects if o.type == 'MESH' and o.parent == tarm], ratios)
 
 for o in bpy.data.objects:
     o.select_set(False)

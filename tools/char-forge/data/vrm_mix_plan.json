@@ -1,0 +1,709 @@
+{
+ "note": "K-0072 단계 4 계획표 — 밑몸×머리카락 donor×뼈 비율. 얼굴은 만들지 않는다(샘플 재료).",
+ "rows": [
+  {
+   "id": "vmix_d_e_1",
+   "body": "d",
+   "hair": "e",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "d_e"
+  },
+  {
+   "id": "vmix_d_e_2",
+   "body": "d",
+   "hair": "e",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "d_e"
+  },
+  {
+   "id": "vmix_d_e_3",
+   "body": "d",
+   "hair": "e",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "d_e"
+  },
+  {
+   "id": "vmix_d_e_4",
+   "body": "d",
+   "hair": "e",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "d_e"
+  },
+  {
+   "id": "vmix_d_f_1",
+   "body": "d",
+   "hair": "f",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "d_f"
+  },
+  {
+   "id": "vmix_d_f_2",
+   "body": "d",
+   "hair": "f",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "d_f"
+  },
+  {
+   "id": "vmix_d_f_3",
+   "body": "d",
+   "hair": "f",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "d_f"
+  },
+  {
+   "id": "vmix_d_f_4",
+   "body": "d",
+   "hair": "f",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "d_f"
+  },
+  {
+   "id": "vmix_d_g_1",
+   "body": "d",
+   "hair": "g",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "d_g"
+  },
+  {
+   "id": "vmix_d_g_2",
+   "body": "d",
+   "hair": "g",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "d_g"
+  },
+  {
+   "id": "vmix_d_g_3",
+   "body": "d",
+   "hair": "g",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "d_g"
+  },
+  {
+   "id": "vmix_d_g_4",
+   "body": "d",
+   "hair": "g",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "d_g"
+  },
+  {
+   "id": "vmix_e_d_1",
+   "body": "e",
+   "hair": "d",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "e_d"
+  },
+  {
+   "id": "vmix_e_d_2",
+   "body": "e",
+   "hair": "d",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "e_d"
+  },
+  {
+   "id": "vmix_e_d_3",
+   "body": "e",
+   "hair": "d",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "e_d"
+  },
+  {
+   "id": "vmix_e_d_4",
+   "body": "e",
+   "hair": "d",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "e_d"
+  },
+  {
+   "id": "vmix_e_f_1",
+   "body": "e",
+   "hair": "f",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "e_f"
+  },
+  {
+   "id": "vmix_e_f_2",
+   "body": "e",
+   "hair": "f",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "e_f"
+  },
+  {
+   "id": "vmix_e_f_3",
+   "body": "e",
+   "hair": "f",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "e_f"
+  },
+  {
+   "id": "vmix_e_f_4",
+   "body": "e",
+   "hair": "f",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "e_f"
+  },
+  {
+   "id": "vmix_e_g_1",
+   "body": "e",
+   "hair": "g",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "e_g"
+  },
+  {
+   "id": "vmix_e_g_2",
+   "body": "e",
+   "hair": "g",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "e_g"
+  },
+  {
+   "id": "vmix_e_g_3",
+   "body": "e",
+   "hair": "g",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "e_g"
+  },
+  {
+   "id": "vmix_e_g_4",
+   "body": "e",
+   "hair": "g",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "e_g"
+  },
+  {
+   "id": "vmix_f_d_1",
+   "body": "f",
+   "hair": "d",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "f_d"
+  },
+  {
+   "id": "vmix_f_d_2",
+   "body": "f",
+   "hair": "d",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "f_d"
+  },
+  {
+   "id": "vmix_f_d_3",
+   "body": "f",
+   "hair": "d",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "f_d"
+  },
+  {
+   "id": "vmix_f_d_4",
+   "body": "f",
+   "hair": "d",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "f_d"
+  },
+  {
+   "id": "vmix_f_e_1",
+   "body": "f",
+   "hair": "e",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "f_e"
+  },
+  {
+   "id": "vmix_f_e_2",
+   "body": "f",
+   "hair": "e",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "f_e"
+  },
+  {
+   "id": "vmix_f_e_3",
+   "body": "f",
+   "hair": "e",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "f_e"
+  },
+  {
+   "id": "vmix_f_e_4",
+   "body": "f",
+   "hair": "e",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "f_e"
+  },
+  {
+   "id": "vmix_f_g_1",
+   "body": "f",
+   "hair": "g",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "f_g"
+  },
+  {
+   "id": "vmix_f_g_2",
+   "body": "f",
+   "hair": "g",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "f_g"
+  },
+  {
+   "id": "vmix_f_g_3",
+   "body": "f",
+   "hair": "g",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "f_g"
+  },
+  {
+   "id": "vmix_f_g_4",
+   "body": "f",
+   "hair": "g",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "f_g"
+  },
+  {
+   "id": "vmix_g_d_1",
+   "body": "g",
+   "hair": "d",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "g_d"
+  },
+  {
+   "id": "vmix_g_d_2",
+   "body": "g",
+   "hair": "d",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "g_d"
+  },
+  {
+   "id": "vmix_g_d_3",
+   "body": "g",
+   "hair": "d",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "g_d"
+  },
+  {
+   "id": "vmix_g_d_4",
+   "body": "g",
+   "hair": "d",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "g_d"
+  },
+  {
+   "id": "vmix_g_e_1",
+   "body": "g",
+   "hair": "e",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "g_e"
+  },
+  {
+   "id": "vmix_g_e_2",
+   "body": "g",
+   "hair": "e",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "g_e"
+  },
+  {
+   "id": "vmix_g_e_3",
+   "body": "g",
+   "hair": "e",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "g_e"
+  },
+  {
+   "id": "vmix_g_e_4",
+   "body": "g",
+   "hair": "e",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "g_e"
+  },
+  {
+   "id": "vmix_g_f_1",
+   "body": "g",
+   "hair": "f",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "g_f"
+  },
+  {
+   "id": "vmix_g_f_2",
+   "body": "g",
+   "hair": "f",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "g_f"
+  },
+  {
+   "id": "vmix_g_f_3",
+   "body": "g",
+   "hair": "f",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "g_f"
+  },
+  {
+   "id": "vmix_g_f_4",
+   "body": "g",
+   "hair": "f",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "g_f"
+  },
+  {
+   "id": "vmix_bm_d_1",
+   "body": "bm",
+   "hair": "d",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "bm_d"
+  },
+  {
+   "id": "vmix_bm_d_2",
+   "body": "bm",
+   "hair": "d",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "bm_d"
+  },
+  {
+   "id": "vmix_bm_d_3",
+   "body": "bm",
+   "hair": "d",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "bm_d"
+  },
+  {
+   "id": "vmix_bm_d_4",
+   "body": "bm",
+   "hair": "d",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "bm_d"
+  },
+  {
+   "id": "vmix_bm_e_1",
+   "body": "bm",
+   "hair": "e",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "bm_e"
+  },
+  {
+   "id": "vmix_bm_e_2",
+   "body": "bm",
+   "hair": "e",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "bm_e"
+  },
+  {
+   "id": "vmix_bm_e_3",
+   "body": "bm",
+   "hair": "e",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "bm_e"
+  },
+  {
+   "id": "vmix_bm_e_4",
+   "body": "bm",
+   "hair": "e",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "bm_e"
+  },
+  {
+   "id": "vmix_bm_f_1",
+   "body": "bm",
+   "hair": "f",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "bm_f"
+  },
+  {
+   "id": "vmix_bm_f_2",
+   "body": "bm",
+   "hair": "f",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "bm_f"
+  },
+  {
+   "id": "vmix_bm_f_3",
+   "body": "bm",
+   "hair": "f",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "bm_f"
+  },
+  {
+   "id": "vmix_bm_f_4",
+   "body": "bm",
+   "hair": "f",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "bm_f"
+  },
+  {
+   "id": "vmix_bm_g_1",
+   "body": "bm",
+   "hair": "g",
+   "ratio": {
+    "head": 1.0,
+    "arm": 1.0,
+    "leg": 1.0
+   },
+   "group": "bm_g"
+  },
+  {
+   "id": "vmix_bm_g_2",
+   "body": "bm",
+   "hair": "g",
+   "ratio": {
+    "head": 1.08,
+    "arm": 0.95,
+    "leg": 0.92
+   },
+   "group": "bm_g"
+  },
+  {
+   "id": "vmix_bm_g_3",
+   "body": "bm",
+   "hair": "g",
+   "ratio": {
+    "head": 0.95,
+    "arm": 1.08,
+    "leg": 1.1
+   },
+   "group": "bm_g"
+  },
+  {
+   "id": "vmix_bm_g_4",
+   "body": "bm",
+   "hair": "g",
+   "ratio": {
+    "head": 1.04,
+    "arm": 1.05,
+    "leg": 1.14
+   },
+   "group": "bm_g"
+  }
+ ]
+}
