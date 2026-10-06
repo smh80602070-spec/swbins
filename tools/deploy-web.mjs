@@ -56,8 +56,9 @@ const npx = process.platform === 'win32' ? 'npx.cmd' : 'npx';
 const run = (args) => spawnSync(npx, ['--yes', 'wrangler', ...args], { cwd: ROOT, stdio: 'inherit', shell: process.platform === 'win32' });
 const list = spawnSync(npx, ['--yes', 'wrangler', 'pages', 'project', 'list'], { cwd: ROOT, encoding: 'utf8', shell: process.platform === 'win32' });
 if (list.status !== 0) { console.log('wrangler 로그인이 안 돼 있다 — 프롬프트에 `! npx wrangler login` 후 다시'); process.exit(1); }
+/* --force = 옛 Pages 로 직접 만든다(wrangler 4.147 은 Workers 로 넘기다 실패, 10-06) */
 if (!new RegExp('\\b' + PROJECT + '\\b').test(list.stdout || '')) {
-  if (run(['pages', 'project', 'create', PROJECT, '--production-branch', 'main']).status !== 0) { process.exit(1); }
+  if (run(['pages', 'project', 'create', PROJECT, '--production-branch', 'main', '--force']).status !== 0) { process.exit(1); }
 }
 const r = run(['pages', 'deploy', STAGE, '--project-name', PROJECT, '--branch', 'main', '--commit-dirty=true']);
 if (r.status === 0) { console.log(`주소: https://${PROJECT}.pages.dev/saga-web/saga-go/`); }
