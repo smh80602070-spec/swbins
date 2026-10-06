@@ -745,6 +745,23 @@
    ]
   },
   {
+   "id": "characters-sprites2d8",
+   "src": "saga-assets/characters/sprites2d8",
+   "recursive": true,
+   "include": [
+    "*.webp",
+    "manifest.json",
+    "*.license.json"
+   ],
+   "note": "K-0029 단계 5 인물 무기별 8방향 2D 시트(8프레임 × 5행 d0~d4, 역할 8, 긴 무기 192px) — 웹 W-0073 이 읽는다. 정본은 promote_sprites8.py 가 올린다",
+   "targets": [
+    {
+     "track": "web",
+     "dir": "saga-web/shared/assets/characters2d8"
+    }
+   ]
+  },
+  {
    "id": "icons-web",
    "src": "saga-assets/icons",
    "recursive": true,

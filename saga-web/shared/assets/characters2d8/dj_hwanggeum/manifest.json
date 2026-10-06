@@ -1,0 +1,42 @@
+{
+ "id": "dj_hwanggeum",
+ "body": "dj_hwanggeum",
+ "kind": "human",
+ "px": 128,
+ "frames": 8,
+ "dirs": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "clips": [
+  "idle",
+  "attack",
+  "attack2",
+  "heavy",
+  "walk",
+  "hit",
+  "death",
+  "knockdown"
+ ],
+ "ortho_m": 2.5,
+ "cam_z": 0.95,
+ "side_faces": "right",
+ "px_per_m": 51.2,
+ "license": "CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vroid, 코드 gear_sprites.py",
+ "ndir": 8,
+ "mirror": true,
+ "weapon": "sword",
+ "clipmap": {
+  "idle": "guard",
+  "attack": "attack",
+  "attack2": "sword_2",
+  "heavy": "sword_heavy",
+  "walk": "walk",
+  "hit": "hit",
+  "death": "death",
+  "knockdown": "knockdown"
+ }
+}
