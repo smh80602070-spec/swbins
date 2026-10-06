@@ -2526,7 +2526,8 @@
   "files": [
    "saga_core/data/save_base.gd",
    "games/saga_go/ui/save_transfer.gd",
-   "tools/probe_savemove.gd"
+   "tools/probe_savemove.gd",
+   "saga_core/ui/save_transfer_screen.gd"
   ],
   "tests": [
    "savemove"
@@ -2552,6 +2553,78 @@
   "verified": null,
   "fun": {},
   "ticket": "G-0036",
+  "since": "2026-10-06"
+ },
+ {
+  "id": "gd.dg.save_transfer",
+  "name": "사가블로 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
+  "files": [
+   "saga_core/ui/save_transfer_screen.gd",
+   "saga_core/ui/save_transfer_button.gd",
+   "games/saga_dungeon/ui/DungeonHUD.tscn",
+   "tools/probe_save_transfer4.gd"
+  ],
+  "tests": [
+   "save_transfer4"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0037",
+  "since": "2026-10-06"
+ },
+ {
+  "id": "gd.fs.save_transfer",
+  "name": "사가의숲 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
+  "files": [
+   "saga_core/ui/save_transfer_screen.gd",
+   "saga_core/ui/save_transfer_button.gd",
+   "games/saga_forest/ui/ForestHUD.tscn",
+   "tools/probe_save_transfer4.gd"
+  ],
+  "tests": [
+   "save_transfer4"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0037",
+  "since": "2026-10-06"
+ },
+ {
+  "id": "gd.st.save_transfer",
+  "name": "사가스토리 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
+  "files": [
+   "saga_core/ui/save_transfer_screen.gd",
+   "saga_core/ui/save_transfer_button.gd",
+   "games/saga_story/ui/StoryHUD.tscn",
+   "tools/probe_save_transfer4.gd"
+  ],
+  "tests": [
+   "save_transfer4"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0037",
+  "since": "2026-10-06"
+ },
+ {
+  "id": "gd.rk.save_transfer",
+  "name": "사가국지 세이브 옮기기 — HUD \"옮기기\" 단추 → 공용 화면(내보내기·붙여넣기·불러오기, 다른 판 거절)",
+  "files": [
+   "saga_core/ui/save_transfer_screen.gd",
+   "saga_core/ui/save_transfer_button.gd",
+   "games/saga_realm/ui/RealmHUD.tscn",
+   "tools/probe_save_transfer4.gd"
+  ],
+  "tests": [
+   "save_transfer4"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0037",
   "since": "2026-10-06"
  }
 ]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="PackedScene" path="res://games/saga_realm/ui/LordPortrait.tscn" id="17"]
 [ext_resource type="Script" path="res://saga_core/ui/goal_board.gd" id="14"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://games/saga_realm/ui/realm_event_button.gd" id="15"]
 [ext_resource type="Script" path="res://games/saga_realm/ui/realm_succession_button.gd" id="16"]
 [ext_resource type="Texture2D" path="res://assets/generated/sprites/panel_9slice.png" id="18"]
+[ext_resource type="Script" path="res://saga_core/ui/save_transfer_button.gd" id="save_transfer_btn"]
 
 [node name="RealmHUD" type="CanvasLayer"]
 
@@ -220,6 +221,18 @@ offset_top = -80.0
 offset_right = -40.0
 offset_bottom = -20.0
 script = ExtResource("4")
+
+[node name="TransferSaveButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -80.0
+offset_right = -170.0
+offset_bottom = -20.0
+script = ExtResource("save_transfer_btn")
+game_id = "realm"
 
 [node name="LordPortrait" parent="." instance=ExtResource("17")]
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://saga_core/ui/virtual_joystick.gd" id="1"]
 [ext_resource type="Script" path="res://games/saga_forest/ui/gather_label.gd" id="2"]
 [ext_resource type="Script" path="res://games/saga_forest/ui/forest_save_button.gd" id="3"]
 [ext_resource type="Script" path="res://saga_core/ui/goal_board.gd" id="4"]
 [ext_resource type="Texture2D" path="res://assets/generated/sprites/panel_9slice.png" id="5"]
+[ext_resource type="Script" path="res://saga_core/ui/save_transfer_button.gd" id="save_transfer_btn"]
 
 [node name="ForestHUD" type="CanvasLayer"]
 
@@ -94,6 +95,18 @@ offset_top = -100.0
 offset_right = -40.0
 offset_bottom = -40.0
 script = ExtResource("3")
+
+[node name="TransferSaveButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -100.0
+offset_right = -170.0
+offset_bottom = -40.0
+script = ExtResource("save_transfer_btn")
+game_id = "forest"
 
 [node name="GoalBoard" type="Label" parent="."]
 anchor_left = 1.0
