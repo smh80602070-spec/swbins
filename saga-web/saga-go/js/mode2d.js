@@ -109,6 +109,17 @@
     return { row: Math.abs(k), flip: k < 0 };
   }
 
+  /* 짧은 몸짓(공격 0.2~0.4초·피격 0.3초) — 게임은 "남은 초"만 갖고 있다. 처음 본 값을 길이로 잡아 진행률 0..1 을 돌려준다(8프레임이 그 안에 다 돈다).
+     남은 초가 다시 커지면 새 몸짓. 끝났으면(≤0) null → 부른 쪽은 걷기·서기로 */
+  var acts = {};
+  function actT(key, left) {
+    var a = acts[key];
+    if (!(left > 0)) { if (a) { delete acts[key]; } return null; }
+    if (!a || left > a.last + 1e-3) { a = acts[key] = { dur: left }; }
+    a.last = left;
+    return Math.min(1, Math.max(0, 1 - left / a.dur));
+  }
+
   function getImg(pool, clip, eight) {
     var key = pool + '/' + clip + (eight ? '#8' : ''), e = imgs[key];
     if (e) { return e; }
@@ -145,7 +156,7 @@
       if (!(base && base.ok)) { return false; }
       e = base; role = 'idle';
     }
-    var P = eight ? s8[0] : PX, d = eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = frameAt(role, o.ms || 0);
+    var P = eight ? s8[0] : PX, d = eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = (o.t !== undefined && o.t !== null) ? Math.min(FRAMES - 1, Math.max(0, Math.floor(o.t * FRAMES))) : frameAt(role, o.ms || 0);
     var cf = C(), vr = isVroid(o.pool) && cf.vroid2d, ph = vr ? (vr.h || 85) : (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1), w = P * sc, h = P * sc;
     var foot = eight ? (P / 2 + s8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
     ctx.save();
@@ -388,7 +399,7 @@
     preloadBg: function (region) { getBg(region); },
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS,
-    isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, dirOf8: dirOf8, roleOf: roleOf, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
+    isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, dirOf8: dirOf8, roleOf: roleOf, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },

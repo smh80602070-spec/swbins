@@ -5898,6 +5898,17 @@ window.DG_NO_TUNE = true;
         V.draw(c, 'nope', 0, 0, 10, 0) === false && V.SHEETS.spark_hit[0] === 8 && V.SHEETS.death_smoke[0] === 10 && ('프레임 계산 · 모르는 이름은 false');
     });
 
+    t('2D 공격·피격 몸짓(W-0073 단계 4) — 주인공 맞음 > 공격 > 걷기, 공격 0.28초 안에 8프레임이 다 돈다', function () {
+      var M = DG.mode2d, keep = M.draw, seen = [], ctx = document.createElement('canvas').getContext('2d'), ref = DG.data.heroes[0];
+      M.draw = function (c, o) { seen.push(o.clip + (o.t !== null && o.t !== undefined ? '@' + o.t.toFixed(2) : '')); return true; };
+      try {
+        DG.actor2d.me(ctx, ref, 0, 0, 60, { atk: 0.28 }); DG.actor2d.me(ctx, ref, 0, 0, 60, { atk: 0.07 });
+        DG.actor2d.me(ctx, ref, 0, 0, 60, { hurt: 0.3, atk: 0 }); DG.actor2d.me(ctx, ref, 0, 0, 60, { walking: true });
+      } finally { M.draw = keep; }
+      var s = seen.join(',');
+      return s === 'attack@0.00,attack@0.75,hit@0.00,walk' && s || '실패 ' + s;
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

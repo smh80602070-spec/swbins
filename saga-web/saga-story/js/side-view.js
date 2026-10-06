@@ -990,7 +990,7 @@
       ctx.fillText(mtd.emoji, x, y + 4);
       y -= 20;
     }
-    if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && !(global.DG.actor2d && global.DG.actor2d.me(ctx, ref, x, y, S.P_H * 1.12, { facing: p.facing, walking: !!p.vx && p.onGround }))) {
+    if (!(global.DG.sideView3d && global.DG.sideView3d.ready()) && !(global.DG.actor2d && global.DG.actor2d.me(ctx, ref, x, y, S.P_H * 1.12, { facing: p.facing, walking: !!p.vx && p.onGround, atk: p.atkCd, hurt: p.hurt }))) {
       global.DG.sprite.stamp(ctx, {
         kind: 'human', ref: ref, x: x, y: y, s: 1.05,
         facing: p.facing, phase: p.phase, walking: !!p.vx && p.onGround,

@@ -15,7 +15,9 @@
     if (!pool) { return false; }
     o = o || {};
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 40;
-    return M.draw(ctx, { pool: pool, clip: o.walking ? 'walk' : 'idle', facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH });
+    var key = role + ':' + ((ref && (ref.id || ref.name)) || ''), ht = M.actT ? M.actT(key + ':hit', o.hurt) : null, at = M.actT ? M.actT(key + ':atk', o.atk) : null;   // W-0073 단계 4
+    var clip = ht !== null ? 'hit' : (at !== null ? 'attack' : (o.walking ? 'walk' : 'idle'));
+    return M.draw(ctx, { pool: pool, clip: clip, t: ht !== null ? ht : at, facing: M.face ? M.face(o.dirX, o.dirY, o.facing) : o.facing, dirX: o.dirX, dirY: o.dirY, ms: (o.now || Date.now()) + (o.phase || 0) * 160, x: x, y: y, scale: s * 40 * 1.2 / tH });
   }
 
   global.DG = global.DG || {};

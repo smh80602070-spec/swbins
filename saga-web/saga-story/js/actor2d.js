@@ -14,7 +14,8 @@
     if (!pool) { return false; }
     o = o || {};
     var tH = (global.DG.cfg && global.DG.cfg.mode2d && global.DG.cfg.mode2d.targetH) || 62;
-    return M.draw(ctx, { pool: pool, clip: o.walking ? 'walk' : 'idle', facing: o.facing, ms: o.now || Date.now(), x: x, y: y, scale: h / tH });
+    var ht = M.actT ? M.actT('me:hit', o.hurt) : null, at = M.actT ? M.actT('me:atk', o.atk) : null;   // W-0073 단계 4 — 맞음 > 공격 > 걷기 > 서기
+    return M.draw(ctx, { pool: pool, clip: ht !== null ? 'hit' : (at !== null ? 'attack' : (o.walking ? 'walk' : 'idle')), t: ht !== null ? ht : at, facing: o.facing, ms: o.now || Date.now(), x: x, y: y, scale: h / tH });
   }
 
   global.DG = global.DG || {};
