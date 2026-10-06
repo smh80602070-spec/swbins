@@ -178,7 +178,7 @@
     if (v.hp <= 0) { res.killed = true; kill(s, v); if (u.team === 0) { s.kills = (s.kills | 0) + 1; } }
     else {
       var r = rangeOf(v), d = man(tx(v), ty(v), tx(u), ty(u));
-      if (d >= r[0] && d <= r[1]) { res.counter = Math.round(damage(s, v, u) * COUNTER); u.hp -= res.counter; if (u.hp <= 0) { kill(s, u); } }
+      if (d >= r[0] && d <= r[1]) { res.counter = Math.round(damage(s, v, u) * COUNTER); u.hp -= res.counter; if (u.hp <= 0) { kill(s, u); if (v.team === 0) { s.kills = (s.kills | 0) + 1; } } }   // 반격으로 쓰러뜨려도 아군 공
     }
     check(s);
     return res;
@@ -319,7 +319,7 @@
     s.ai = null; s.raid.next = 1e12; s.speed = 0;
     for (i = 0; i < o.units.length; i++) {
       u = o.units[i]; if (!UD[u.t] || !(u.id > 0)) { continue; }
-      n = { id: u.id | 0, t: u.t, team: u.team === 1 ? 1 : 0, x: (u.x | 0) + 0.5, y: (u.y | 0) + 0.5, hp: +u.hp > 0 ? +u.hp : UD[u.t].hp, path: [], goal: null, face: 1 };
+      n = { id: u.id | 0, t: u.t, team: u.team === 1 ? 1 : 0, x: (u.x | 0) + 0.5, y: (u.y | 0) + 0.5, hp: +u.hp > 0 ? +u.hp : UD[u.t].hp, path: [], goal: null };   // face 는 비워 둔다 — 그림이 편마다 기본 방향(적은 왼쪽)으로
       if (u.t === 'hero' && u.hid && R().heroes) { n.hid = u.hid; n.st = R().heroes.statsOf(u.hid); n.mhp = +u.mhp > 0 ? +u.mhp : n.st.hp; }
       s.units[n.id] = n; s.nextUid = Math.max(s.nextUid, n.id + 1);
     }
