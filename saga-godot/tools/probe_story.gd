@@ -1367,6 +1367,7 @@ func _physics_process(_delta: float) -> void:
 				_v.infl = float(face.get("influence"))
 				_v.done_reveal = not bool(_sq.call("is_revealing"))
 				_v.open_mid = bool(_sq.call("is_dialogue_open"))
+				_v.marker_off = not (_sq.get("_marker") as Node3D).visible   # G-0044 — 대화 중 빛기둥 숨김
 				face.call("set_mood", "joy")
 			if _frame == 150:
 				_v.joy = float(face.call("mood_weight", "joy"))
@@ -1380,7 +1381,7 @@ func _physics_process(_delta: float) -> void:
 				var faced := bool(face.call("has_mouth"))
 				var drawn: bool = bool(_v.pic) and String(face.call("mouth_kind")) == "" # 그림은 말이 끝나면 다물린 원본으로 돌아온다
 				var ok: bool = _v.map == [0, 1, 2, 3, 4, -1, -1] and bool(_v.opened) and bool(_v.revealing) \
-					and float(_v.lift) > 0.12 and float(_v.fwd) > 0.08 and float(_v.infl) > 0.9 and bool(_v.done_reveal) and bool(_v.open_mid) \
+					and float(_v.lift) > 0.12 and float(_v.fwd) > 0.08 and float(_v.infl) > 0.9 and bool(_v.done_reveal) and bool(_v.open_mid) and bool(_v.marker_off) \
 					and bool(_v.closed) and float(face.get("influence")) < 0.05 and back \
 					and (not faced or (float(_v.mouth) > 0.2 and float(_v.joy) > 0.5 and float(_v.blink) > 0.99)) and (faced or drawn or (face.get("_mouth_mats") as Array).is_empty())
 				_check("talk_face", ok, "map=%s reveal=%s mouth=%.2f lift=%.2f fwd=%.2f infl=%.2f joy=%.2f closed=%s back=%s blink=%.1f front=%+.0f pic=%s" % [

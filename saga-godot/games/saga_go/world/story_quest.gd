@@ -68,6 +68,7 @@ func open_dialogue(lines: Array, on_done: Callable, npc_id := "") -> void:
 	_dlg_npc = npc_id if _npc_pos.has(npc_id) else ""
 	_dlg_open = true
 	_dlg.visible = true
+	_marker.visible = false   # G-0044
 	add_to_group("ui_modal")
 	_frozen_before = bool(_player.get("frozen"))
 	_player.set("frozen", true)
@@ -215,6 +216,7 @@ func _close_dialogue() -> void:
 	_reveal = -1.0
 	_reveal_face = null
 	_dlg_open = false
+	_refresh_marker()   # G-0044 — 대화가 끝나면 빛기둥을 다시
 	_dlg.visible = false
 	remove_from_group("ui_modal")
 	_player.set("frozen", _frozen_before)
@@ -245,7 +247,7 @@ func _refresh() -> void:
 
 func _refresh_marker() -> void:
 	var t := target_pos()
-	_marker.visible = t != Vector3.INF
+	_marker.visible = t != Vector3.INF and not _dlg_open   # G-0044 — 대화 중엔 빛기둥이 말하는 인물을 덮지 않게 숨긴다
 	if not _marker.visible:
 		return
 	_marker.global_position = t
