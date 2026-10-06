@@ -30,6 +30,11 @@ var _live: AudioStreamPlayer
 var _tween: Tween
 ## G-0034 스팅어 — 세 번째 재생기. last_stinger·stinger_count 는 곡이 없거나 헤드리스여도 남는다(점검용).
 const DUCK_DB := -10.0
+## 짧은 음악 파일은 8초(소리는 앞 1~2초, 뒤는 잔향)라 끝까지 낮추면 배경음이 오래 죽는다 — 앞 DUCK_HOLD 초만 낮추고 DUCK_BACK 초에 걸쳐 되돌린다(10-06 녹음 판정).
+const DUCK_HOLD := 2.5
+const DUCK_BACK := 0.8
+const DUCK_DELAY := 0.4   # 짧은 음악 앞 0.4초쯤은 조용하다 — 바로 내리면 곡의 조용한 대목과 겹쳐 소리가 빈다(10-06 녹음 판정)
+const DUCK_IN := 0.3
 const STINGER_GAP := 1.5
 var last_stinger := ""
 var stinger_count := 0
@@ -185,7 +190,10 @@ func _stinger(key: String) -> void:
 		if _duck != null and _duck.is_valid():
 			_duck.kill()
 		_duck = create_tween()
-		_duck.tween_property(_live, "volume_db", maxf(_target_db() + DUCK_DB, SILENT_DB), 0.2)
+		_duck.tween_interval(DUCK_DELAY)
+		_duck.tween_property(_live, "volume_db", maxf(_target_db() + DUCK_DB, SILENT_DB), DUCK_IN)
+		_duck.tween_interval(maxf(minf(DUCK_HOLD, stream.get_length()) - DUCK_DELAY - DUCK_IN, 0.0))
+		_duck.tween_callback(_unduck)
 
 
 func _unduck() -> void:
@@ -194,7 +202,7 @@ func _unduck() -> void:
 	if _duck != null and _duck.is_valid():
 		_duck.kill()
 	_duck = create_tween()
-	_duck.tween_property(_live, "volume_db", _target_db(), 0.6)
+	_duck.tween_property(_live, "volume_db", _target_db(), DUCK_BACK)
 
 
 func _fade_out_live() -> void:
