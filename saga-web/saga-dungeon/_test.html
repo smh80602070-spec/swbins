@@ -8029,6 +8029,18 @@ window.requestAnimationFrame = function () { return 0; };
       return a === '0,0.5,,0' && s === 'attack@0.00,attack@0.50,hit@0.00,walk,attack2@0.00,heavy@0.00' && ('진행률 ' + a + ' · ' + s) || '실패 ' + a + ' | ' + s;
     });
 
+    t('2D 몸짓 묵은 기록(W-0073 R-5) — 강공격 도중 그리기가 끊겼다(0.25초+) 다시 짧은 평타가 오면 이어 붙이지 않고 새 몸짓 0 부터', function () {
+      var M = DG.mode2d, keepNow = Date.now, clock = 1e6, r;
+      Date.now = function () { return clock; };
+      try {
+        M.actT('_st', 0.38); clock += 16; M.actT('_st', 0.36);          // 강공격 시작, 곧 끊김(3D 로 바꿈 등)
+        clock += 2000; r = [M.actT('_st', 0.2), M.actInfo('_st').dur];  // 2초 뒤 평타 0.2초 — 묵은 dur 0.38 을 쓰면 0.47 에서 시작
+        clock += 16; r.push(M.actT('_st', 0.19).toFixed(2));            // 이어지는 프레임은 그대로 이어진다
+        M.actT('_st', 0);
+      } finally { Date.now = keepNow; }
+      return r[0] === 0 && r[1] === 0.2 && r[2] === '0.05' && ('새 몸짓 ' + r.join(',')) || '실패 ' + r.join(',');
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

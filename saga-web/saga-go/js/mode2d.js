@@ -110,13 +110,13 @@
   }
 
   /* 짧은 몸짓(공격 0.2~0.4초·피격 0.3초) — 게임은 "남은 초"만 갖고 있다. 처음 본 값을 길이로 잡아 진행률 0..1 을 돌려준다(8프레임이 그 안에 다 돈다).
-     남은 초가 다시 커지면 새 몸짓. 끝났으면(≤0) null → 부른 쪽은 걷기·서기로 */
-  var acts = {}, actN = {};   // actN = 그 열쇠의 몸짓이 몇 번째인가(연타 번갈기)
+     남은 초가 다시 커지거나 0.25초 넘게 안 불렸으면(3D 로 바꿨다 돌아옴·방 옮김 — 묵은 기록을 잇지 않는다) 새 몸짓. 끝났으면(≤0) null → 부른 쪽은 걷기·서기로 */
+  var acts = {}, actN = {}, ACT_STALE = 250;   // actN = 그 열쇠의 몸짓이 몇 번째인가(연타 번갈기)
   function actT(key, left) {
-    var a = acts[key];
+    var a = acts[key], now = Date.now();
     if (!(left > 0)) { if (a) { delete acts[key]; } return null; }
-    if (!a || left > a.last + 1e-3) { a = acts[key] = { dur: left, n: (actN[key] = (actN[key] || 0) + 1) }; }
-    a.last = left;
+    if (!a || left > a.last + 1e-3 || now - a.at > ACT_STALE) { a = acts[key] = { dur: left, n: (actN[key] = (actN[key] || 0) + 1) }; }
+    a.last = left; a.at = now;
     return Math.min(1, Math.max(0, 1 - left / a.dur));
   }
 
@@ -356,7 +356,7 @@
     if (!u) { return null; }
     if (!e) {
       e = sprites[id] = loadImg(u);
-      var im = e.img, done = im.onload;
+      var im = e.img;
       im.onload = function () {
         try {   // 알파가 있는 범위만 잘라 쓴다(256px 칸에 여백이 있다)
           var c = global.document.createElement('canvas'), x, y, d, w = im.naturalWidth, h = im.naturalHeight, x0 = w, y0 = h, x1 = -1, y1 = -1;
