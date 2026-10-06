@@ -138,13 +138,13 @@ func _open_shop() -> void:
 		var it: Dictionary = StoryCombat.GEAR_ITEMS[key]
 		var label: Dictionary = StoryCombat.SLOT_LABEL[String(it.slot)]
 		choices.append({
-			"label": "%s %s(%s) · 🪙 %d" % [String(label.emoji), String(it.name), String(label.name), int(it.price)],
+			"label": "%s %s(%s) · 💰 %d" % [String(label.emoji), String(it.name), String(label.name), int(it.price)],
 			"cb": func() -> void: _on_gear_picked(key, layer_box),
 		})
 	for key: String in scroll_offers:
 		var sc: Dictionary = StoryCombat.SCROLLS[key]
 		choices.append({
-			"label": "📜 %s · 🪙 %d" % [String(sc.name), int(sc.price)],
+			"label": "📜 %s · 💰 %d" % [String(sc.name), int(sc.price)],
 			"cb": func() -> void: _on_scroll_picked(key, layer_box),
 		})
 
@@ -164,10 +164,10 @@ func _on_gear_picked(key: String, layer_box: Dictionary) -> void:
 	var it: Dictionary = StoryCombat.GEAR_ITEMS[key]
 	var price := int(it.price)
 	if not StorySaveState.spend_gold(price):
-		Toast.show(self, "🪙 금이 모자라다 (%d / 보유 %d)" % [price, StorySaveState.gold], 2.5)
+		Toast.show(self, "💰 금이 모자라다 (%d / 보유 %d)" % [price, StorySaveState.gold], 2.5)
 		return
 	StorySaveState.equip_gear(key)
-	Toast.show(self, "🏪 %s 구매 · 🪙 -%d" % [String(it.name), price], 2.5)
+	Toast.show(self, "🏪 %s 구매 · 💰 -%d" % [String(it.name), price], 2.5)
 
 
 ## **재해석 — 가방 없이 "사는 즉시 적용".** 원작은 가방에 쌓아 뒀다 원하는
@@ -179,14 +179,14 @@ func _on_scroll_picked(key: String, layer_box: Dictionary) -> void:
 	var sc: Dictionary = StoryCombat.SCROLLS[key]
 	var price := int(sc.price)
 	if not StorySaveState.spend_gold(price):
-		Toast.show(self, "🪙 금이 모자라다 (%d / 보유 %d)" % [price, StorySaveState.gold], 2.5)
+		Toast.show(self, "💰 금이 모자라다 (%d / 보유 %d)" % [price, StorySaveState.gold], 2.5)
 		return
 	var target_slot: String = "weapon" if String(sc.get("for", "")) == "weapon" else _pick_armor_slot()
 	var hit := StorySaveState.apply_scroll(target_slot, sc)
 	if hit:
-		Toast.show(self, "✨ %s 성공 · 🪙 -%d" % [String(sc.name), price], 2.5)
+		Toast.show(self, "✨ %s 성공 · 💰 -%d" % [String(sc.name), price], 2.5)
 	else:
-		Toast.show(self, "💨 %s 실패(업횟만 닳음) · 🪙 -%d" % [String(sc.name), price], 2.5)
+		Toast.show(self, "💨 %s 실패(업횟만 닳음) · 💰 -%d" % [String(sc.name), price], 2.5)
 
 
 ## ARMOR_SLOTS 중 지금 낄 수 있는(equip 상태 + 업횟 남음) 곳을 무작위로

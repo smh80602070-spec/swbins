@@ -937,7 +937,7 @@ offset_left = -180.0
 offset_top = -4420.0
 offset_right = -40.0
 offset_bottom = -4350.0
-text = "🪭"
+text = "🎐"
 theme_override_font_sizes/font_size = 30
 script = ExtResource("61")
 

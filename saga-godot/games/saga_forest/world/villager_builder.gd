@@ -211,7 +211,7 @@ func _talk(v: Dictionary) -> void:
 		ForestSaveState.add_gold(money)
 		ForestSaveState.mark_bowed(v.id)
 		_gain_heart(v, 2)
-		Toast.show(self, "%s — 새해 복 많이 받으시오. 🧧 🪙 +%d" % [v.name, money], LINE_SHOW_SEC)
+		Toast.show(self, "%s — 새해 복 많이 받으시오. 🧧 💰 +%d" % [v.name, money], LINE_SHOW_SEC)
 		return
 
 	if ForestSaveState.is_quest_done(v.id):
@@ -232,7 +232,7 @@ func _talk(v: Dictionary) -> void:
 		ForestSaveState.items[q.item_label] = ForestSaveState.item_count(q.item_label) - int(q.count)
 	ForestSaveState.add_gold(int(q.reward))
 	_gain_heart(v, 2)
-	Toast.show(self, "%s — 「%s」을 마쳤다! 🪙 +%d" % [v.name, q.title, q.reward], LINE_SHOW_SEC)
+	Toast.show(self, "%s — 「%s」을 마쳤다! 💰 +%d" % [v.name, q.title, q.reward], LINE_SHOW_SEC)
 
 
 ## PLAN 101-2 FOREST ②후보 "관계 하트" 공용 진입점 — 하루 상한(§5.4 "+4")과
@@ -252,7 +252,7 @@ func _check_heart_reward(v: Dictionary) -> void:
 	if ForestSaveState.heart(v.id) >= 10 and not ForestSaveState.heart_reward_10.get(v.id, false):
 		ForestSaveState.heart_reward_10[v.id] = true
 		ForestSaveState.add_gold(2000)
-		Toast.show(self, "%s — 10년이 가도 한결같구먼, 이 마음이나 받아두게. 🪙 +2000" % v.name, LINE_SHOW_SEC)
+		Toast.show(self, "%s — 10년이 가도 한결같구먼, 이 마음이나 받아두게. 💰 +2000" % v.name, LINE_SHOW_SEC)
 
 
 ## bagcat(가방 속 채집물 개수)·meetnpc(만난 주민 수) 둘만 안다 — 웹판
@@ -282,7 +282,7 @@ func _open_interact_menu(v: Dictionary) -> void:
 		var tool: Dictionary = v.sells_tool
 		if not ForestSaveState.has_tool(tool.key):
 			choices.append({
-				"label": "%s 사기 (🪙%d)" % [tool.name, tool.price],
+				"label": "%s 사기 (💰%d)" % [tool.name, tool.price],
 				"cb": func() -> void: _buy_tool(v, tool, layer_box),
 			})
 
@@ -295,14 +295,14 @@ func _open_interact_menu(v: Dictionary) -> void:
 		if ForestTurnip.market_open():
 			var buy_price: int = ForestTurnip.buy_price()
 			choices.append({
-				"label": "🥬 순무 %d개 사기 (🪙%d)" % [ForestTurnip.UNIT, buy_price * ForestTurnip.UNIT],
+				"label": "🥬 순무 %d개 사기 (💰%d)" % [ForestTurnip.UNIT, buy_price * ForestTurnip.UNIT],
 				"cb": func() -> void: _trade_turnip(v, true, layer_box),
 			})
 		if ForestSaveState.has_turnip():
 			var n: int = int(ForestSaveState.turnip.get("n", 0))
 			var price: int = ForestSaveState.turnip_now_price()
 			choices.append({
-				"label": "🥬 순무 팔기 (%d개, 개당 🪙%d)" % [n, price],
+				"label": "🥬 순무 팔기 (%d개, 개당 💰%d)" % [n, price],
 				"cb": func() -> void: _trade_turnip(v, false, layer_box),
 			})
 
@@ -312,7 +312,7 @@ func _open_interact_menu(v: Dictionary) -> void:
 			if ForestSaveState.item_count(cat) > 0:
 				var unit: int = int(round(float(SELL_BASE_PRICE[cat]) * ForestFestival.price_mul(cat)))
 				choices.append({
-					"label": "%s 팔기 (%d개, 개당 🪙%d)" % [cat, ForestSaveState.item_count(cat), unit],
+					"label": "%s 팔기 (%d개, 개당 💰%d)" % [cat, ForestSaveState.item_count(cat), unit],
 					"cb": func() -> void: _sell_items(v, cat, unit, layer_box),
 				})
 
@@ -374,7 +374,7 @@ func _buy_tool(v: Dictionary, tool: Dictionary, layer_box: Dictionary) -> void:
 	if ForestSaveState.buy_tool(tool.key, int(tool.price)):
 		Toast.show(self, "%s 에게서 %s 을(를) 샀다." % [v.name, tool.name], LINE_SHOW_SEC)
 	else:
-		Toast.show(self, "골드가 모자란다 (🪙%d 필요)" % int(tool.price), 2.5)
+		Toast.show(self, "골드가 모자란다 (💰%d 필요)" % int(tool.price), 2.5)
 
 
 func _trade_turnip(v: Dictionary, buying: bool, layer_box: Dictionary) -> void:
@@ -383,7 +383,7 @@ func _trade_turnip(v: Dictionary, buying: bool, layer_box: Dictionary) -> void:
 		var price := ForestTurnip.buy_price()
 		var err := ForestSaveState.buy_turnip(ForestTurnip.UNIT)
 		if err.is_empty():
-			Toast.show(self, "🥬 순무 %d개를 샀다 (개당 🪙%d · 모두 🪙%d)" %
+			Toast.show(self, "🥬 순무 %d개를 샀다 (개당 💰%d · 모두 💰%d)" %
 				[ForestTurnip.UNIT, price, price * ForestTurnip.UNIT], LINE_SHOW_SEC)
 		else:
 			Toast.show(self, "%s — %s" % [v.name, err], 2.5)
@@ -394,7 +394,7 @@ func _trade_turnip(v: Dictionary, buying: bool, layer_box: Dictionary) -> void:
 func _sell_items(v: Dictionary, cat: String, unit_price: int, layer_box: Dictionary) -> void:
 	(layer_box["layer"] as CanvasLayer).queue_free()
 	var revenue := ForestSaveState.sell_items(cat, unit_price)
-	Toast.show(self, "%s 에게 %s 을(를) 팔았다 — 🪙 +%d" % [v.name, cat, revenue], LINE_SHOW_SEC)
+	Toast.show(self, "%s 에게 %s 을(를) 팔았다 — 💰 +%d" % [v.name, cat, revenue], LINE_SHOW_SEC)
 
 
 ## 침선방 1단계 — 넷(겉옷·머리·옷 빛·덧옷) 중 어느 칸을 볼지.
@@ -426,7 +426,7 @@ func _open_wear_part_menu(v: Dictionary, part: Dictionary, outer_layer_box: Dict
 		elif owned:
 			label = "%s 입기" % it.name
 		else:
-			label = "%s 사기 (🪙%d)" % [it.name, int(it.price)]
+			label = "%s 사기 (💰%d)" % [it.name, int(it.price)]
 		choices.append({
 			"label": label,
 			"cb": func() -> void: _choose_wear(v, part.key, it.key, int(it.price), layer_box),
@@ -441,7 +441,7 @@ func _choose_wear(v: Dictionary, part: String, key: String, price: int, layer_bo
 		return
 	if not ForestSaveState.owns_wear(part, key):
 		if not ForestSaveState.buy_wear(part, key, price):
-			Toast.show(self, "골드가 모자란다 (🪙%d 필요)" % price, 2.5)
+			Toast.show(self, "골드가 모자란다 (💰%d 필요)" % price, 2.5)
 			return
 	ForestSaveState.set_wear(part, key)
 	Toast.show(self, "🧵 %s (으)로 갈아입었다." % ForestWear.item(part, key).name, LINE_SHOW_SEC)

@@ -75,7 +75,7 @@ func _pick_plot(target_id: String, layer_box: Dictionary) -> void:
 			var preview_target_id: String = String(preview.get("target_id", ""))
 			if not preview_target_id.is_empty():
 				who = " — %s" % _officer_name(preview_target_id)
-			label = "%s %s%s (🪙%d, 성공률 %d%%) — %s" % [
+			label = "%s %s%s (💰%d, 성공률 %d%%) — %s" % [
 				String(p.emoji), String(p.name), who, int(p.gold),
 				roundi(float(preview.get("chance", 0.0)) * 100.0), String(p.desc)]
 		else:

@@ -41,6 +41,6 @@ static func spawn_at(parent: Node, pos: Vector3, amount: int) -> void:
 	area.body_entered.connect(func(body: Node3D) -> void:
 		if body.is_in_group("player"):
 			StorySaveState.add_gold(amount)
-			Toast.show(area, "🪙 금 +%d" % amount, 2.0)
+			Toast.show(area, "💰 금 +%d" % amount, 2.0)
 			area.queue_free()
 	)

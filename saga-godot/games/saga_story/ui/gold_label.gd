@@ -6,4 +6,4 @@ extends Label
 const NumberFormat := preload("res://saga_core/ui/number_format.gd")
 
 func _process(_delta: float) -> void:
-	text = "🪙 %s" % NumberFormat.comma(StorySaveState.gold)
+	text = "💰 %s" % NumberFormat.comma(StorySaveState.gold)

@@ -311,7 +311,7 @@ func buy_turnip(n: int) -> String:
 	var price: int = ForestTurnip.buy_price()
 	var cost: int = price * buy_n
 	if gold < cost:
-		return "골드가 모자란다 (🪙%d 필요)" % cost
+		return "골드가 모자란다 (💰%d 필요)" % cost
 	gold -= cost
 	var total_cost: int = int(turnip.get("buy", 0)) * already + cost
 	var total_n: int = already + buy_n
@@ -334,8 +334,8 @@ func sell_turnip() -> String:
 	var profit: int = revenue - cost
 	gold += revenue
 	turnip = {}
-	return "🥬 순무 %d개를 팔았다 (개당 🪙%d) — %s%d" % \
-		[n, price, "이문 🪙+" if profit >= 0 else "밑진 것 🪙", absi(profit)]
+	return "🥬 순무 %d개를 팔았다 (개당 💰%d) — %s%d" % \
+		[n, price, "이문 💰+" if profit >= 0 else "밑진 것 💰", absi(profit)]
 
 
 ## 설날 세배 — 웹판 village.js talk()의 그 자리(500 + 친밀도*150). 사람마다

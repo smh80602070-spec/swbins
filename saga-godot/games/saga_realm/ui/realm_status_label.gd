@@ -31,7 +31,7 @@ func _process(_delta: float) -> void:
 		var d := RealmOrders.disaster_by_key(disaster_key)
 		disaster_text = " · %s %s(%d개월)" % [String(d.get("emoji", "")), String(d.get("name", "")), int(c.get("d_left", 0))]
 
-	text = "%s · %d년 %d월 · 🪙 %s · 🌾 %d · 🏪 %d · 🪧 %d · 🪖 %d · 🧱 %d%%%s · 재야 %d" % [
+	text = "%s · %d년 %d월 · 💰 %s · 🌾 %d · 🏪 %d · ⚖️ %d · 🛡️ %d · 🧱 %d%%%s · 재야 %d" % [
 		String(city_def.get("name", "")),
 		RealmSaveState.year, RealmSaveState.month,
 		NumberFormat.comma(RealmSaveState.gold),

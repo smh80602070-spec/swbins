@@ -9,7 +9,7 @@ extends Label
 ## 오늘이 그 여덟 날 중 하나면 이름도 같이 보여준다.
 
 func _process(_delta: float) -> void:
-	var line := "🎒 채집물 %d개 · 🪙 %d" % [ForestSaveState.total_items(), ForestSaveState.gold]
+	var line := "🎒 채집물 %d개 · 💰 %d" % [ForestSaveState.total_items(), ForestSaveState.gold]
 	var e := ForestFestival.event_of_today()
 	if not e.is_empty():
 		line += " · 🎊 %s" % e.name

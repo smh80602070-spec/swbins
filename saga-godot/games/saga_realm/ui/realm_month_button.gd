@@ -28,7 +28,7 @@ func _ready() -> void:
 func _on_pressed() -> void:
 	## rtk.js endMonth() "if (!st.started || st.result) return null;" —
 	## 승패가 정해지면 다음 달로 안 넘어간다(2026-09-14, check_result()).
-	## 여기서 미리 걸러 잘못된 "🪙 +0" 안내가 뜨지 않게 한다.
+	## 여기서 미리 걸러 잘못된 "💰 +0" 안내가 뜨지 않게 한다.
 	if not RealmSaveState.result.is_empty():
 		Toast.show(self, "이미 승부가 났습니다 — %s" % RealmSaveState.result, TOAST_SEC)
 		return
@@ -40,7 +40,7 @@ func _on_pressed() -> void:
 	var gold_diff := RealmSaveState.gold - before_gold
 	var food_diff := int(RealmSaveState.cities[city_id].food) - before_food
 	SessionCard.show(get_tree().current_scene, "%d년 %d월 정산" % [RealmSaveState.year, RealmSaveState.month], [
-		"🪙 %s%d" % ["+" if gold_diff >= 0 else "", gold_diff],
+		"💰 %s%d" % ["+" if gold_diff >= 0 else "", gold_diff],
 		"🌾 %s%d" % ["+" if food_diff >= 0 else "", food_diff],
 		"성 %d개 보유" % RealmSaveState.cities.size(),
 	])

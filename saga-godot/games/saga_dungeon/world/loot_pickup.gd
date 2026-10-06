@@ -376,7 +376,7 @@ static func _spawn_mat(parent: Node, pos: Vector3, floor_num: int) -> void:
 			area.body_entered.connect(func(body: Node3D) -> void:
 				if body.is_in_group("player"):
 					DungeonMaterialsState.add_rune(str(mat.key))
-					Toast.show(area, "🪨 부문 획득 · %s(%s)" % [r.glyph, r.name], TOAST_SEC)
+					Toast.show(area, "🔶 부문 획득 · %s(%s)" % [r.glyph, r.name], TOAST_SEC)
 					area.queue_free()
 			)
 		"gem":

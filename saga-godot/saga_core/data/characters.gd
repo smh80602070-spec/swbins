@@ -146,7 +146,7 @@ const HEROES := [
 			"command": 92
 		},
 		"hanja": "玄策",
-		"emoji": "🪭",
+		"emoji": "📜",
 		"quote": "삼고초려의 뜻, 잊지 않겠습니다."
 	},
 	{
@@ -498,7 +498,7 @@ const HEROES := [
 			"command": 90
 		},
 		"hanja": "陣威",
-		"emoji": "🪖",
+		"emoji": "🛡️",
 		"quote": "함진영(陷陣營)은 물러선 적이 없습니다."
 	},
 	{
@@ -786,7 +786,7 @@ const HEROES := [
 			"command": 70
 		},
 		"hanja": "柔豪",
-		"emoji": "🪶",
+		"emoji": "🖋️",
 		"quote": "형주의 호족을 달래는 일부터 하십시오."
 	},
 	{
@@ -866,7 +866,7 @@ const HEROES := [
 			"command": 70
 		},
 		"hanja": "糧行",
-		"emoji": "🛖",
+		"emoji": "🏚️",
 		"quote": "군량만 있으면 어디든 갑니다."
 	},
 	{
@@ -978,7 +978,7 @@ const HEROES := [
 			"command": 30
 		},
 		"hanja": "金門",
-		"emoji": "🪙",
+		"emoji": "💰",
 		"quote": "금이면 열리지 않는 문이 없지요."
 	},
 	{
@@ -1058,7 +1058,7 @@ const HEROES := [
 			"command": 82
 		},
 		"hanja": "益兵",
-		"emoji": "🪧",
+		"emoji": "⚖️",
 		"quote": "익주의 병사는 아직 쓸 만합니다."
 	},
 	{
@@ -2003,7 +2003,7 @@ const HEROES := [
 			"command": 60
 		},
 		"hanja": "舍衛",
-		"emoji": "🪷",
+		"emoji": "🌸",
 		"quote": "순례자를 막지 않는 것이 이 저자의 오랜 법입니다."
 	},
 	{
@@ -2051,7 +2051,7 @@ const HEROES := [
 			"command": 62
 		},
 		"hanja": "白雲",
-		"emoji": "🪶",
+		"emoji": "🖋️",
 		"quote": "기러기 넘는 고개, 봉화가 늦으면 안 됩니다."
 	},
 	{
@@ -2712,7 +2712,7 @@ const HEROES := [
 			"command": 44
 		},
 		"hanja": "雜骨",
-		"emoji": "🩻",
+		"emoji": "💀",
 		"quote": "이름은 잊었지만, 자리는 안 잊었습니다."
 	},
 	{
@@ -3032,7 +3032,7 @@ const HEROES := [
 			"command": 50
 		},
 		"hanja": "覺圓",
-		"emoji": "🪷",
+		"emoji": "🌸",
 		"quote": "모든 것은 마음이 짓는 것이오."
 	},
 	{
@@ -3400,7 +3400,7 @@ const HEROES := [
 			"command": 65
 		},
 		"hanja": "暗影祖",
-		"emoji": "🥷",
+		"emoji": "🗡️",
 		"quote": "그림자는 소리를 남기지 않는다."
 	},
 	{
@@ -3576,7 +3576,7 @@ const HEROES := [
 			"command": 58
 		},
 		"hanja": "Marano",
-		"emoji": "🪶",
+		"emoji": "🖋️",
 		"quote": "아직 그리지 못한 것이 너무 많소."
 	},
 	{
@@ -3944,7 +3944,7 @@ const HEROES := [
 			"command": 90
 		},
 		"hanja": "Mansaren",
-		"emoji": "🪙",
+		"emoji": "💰",
 		"quote": "금은 나눌수록 내 것이 된다."
 	},
 	{
@@ -4040,7 +4040,7 @@ const HEROES := [
 			"command": 88
 		},
 		"hanja": "Hammuran",
-		"emoji": "🪨",
+		"emoji": "🗿",
 		"quote": "눈에는 눈, 이에는 이, 돌에 새겨 두겠다."
 	},
 	{

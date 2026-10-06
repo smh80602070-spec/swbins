@@ -81,7 +81,7 @@ const BOONS: Array[Dictionary] = [
 		"desc": "치명타 확률 +8%", "eff": { "critPct": 8.0 } },
 	{ "key": "reach", "name": "장병(長兵)", "emoji": "📏", "max": 3, "axis": "hero", "rarity": "common",
 		"desc": "공격 사거리 +18%", "eff": { "reachPct": 18.0 } },
-	{ "key": "greed", "name": "재물운(財)", "emoji": "🪙", "max": 4, "axis": "world", "rarity": "common",
+	{ "key": "greed", "name": "재물운(財)", "emoji": "💰", "max": 4, "axis": "world", "rarity": "common",
 		"desc": "던전에서 얻는 금 +30%", "eff": { "goldPct": 30.0 } },
 	{ "key": "eye", "name": "탐색안(眼)", "emoji": "🔎", "max": 4, "axis": "world", "rarity": "common",
 		"desc": "좋은 물건이 나올 확률 +20%", "eff": { "worldFindPct": 20.0 } },

@@ -395,7 +395,7 @@ class_name DungeonSkills
 ## buff·책사의 첫 swing·도독의 첫 curse라는 점만 새롭다). 신규 10개:
 ## skill_buff_archer.gd/buff_archer_button.gd(🏃)·skill_dash_warrior3.gd/
 ## dash_warrior3_button.gd(🔥)·skill_swing_scholar.gd/swing_scholar_button.gd
-## (🪭)·skill_curse_marshal.gd/curse_marshal_button.gd(📛)·skill_curse_
+## (🎐)·skill_curse_marshal.gd/curse_marshal_button.gd(📛)·skill_curse_
 ## mystic2.gd/curse_mystic2_button.gd(☠️). 입력 액션 dungeon_skill_46~50 —
 ## F6~F10 다음이라 F11~F15로 이어간다(조회로 확인 후 배정).
 ##

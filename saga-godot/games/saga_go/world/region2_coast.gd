@@ -523,7 +523,7 @@ func _on_driftwood_entered(body: Node3D) -> void:
 
 func _show_driftwood_prompt() -> void:
 	var layer_box := {}
-	layer_box["layer"] = ChoicePrompt.build(self, "🪵 표류물\n파도에 밀려온 나무 상자 하나가 모래에 반쯤 묻혀 있다.", [
+	layer_box["layer"] = ChoicePrompt.build(self, "📦 표류물\n파도에 밀려온 나무 상자 하나가 모래에 반쯤 묻혀 있다.", [
 		{"label": "상자를 연다", "cb": func() -> void: _resolve_driftwood(layer_box, "방수포에 싸인 여행 물자가 조금 나왔다.", 15.0)},
 		{"label": "그냥 둔다", "cb": func() -> void: _resolve_driftwood(layer_box, "괜히 손대고 싶지 않아 그대로 두었다.", 0.0)},
 	])

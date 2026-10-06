@@ -37,7 +37,7 @@ const BUNDLE_DECOR := {
 	"꽃":    {"name": "등롱길",     "emoji": "🏮", "color": Color(1.0, 0.72, 0.32)},
 	"물고기": {"name": "호수 정자", "emoji": "🎣", "color": Color(0.32, 0.55, 0.75)},
 	"곤충":  {"name": "반딧불이 정원", "emoji": "✨", "color": Color(0.62, 0.92, 0.42)},
-	"화석":  {"name": "사고 앞 석비", "emoji": "🪨", "color": Color(0.55, 0.55, 0.55)},
+	"화석":  {"name": "사고 앞 석비", "emoji": "🗿", "color": Color(0.55, 0.55, 0.55)},
 	"조개":  {"name": "조개 길",     "emoji": "🐚", "color": Color(0.86, 0.8, 0.7)},
 	"과일":  {"name": "장터 천막",  "emoji": "🎪", "color": Color(0.8, 0.36, 0.3)},
 }
@@ -225,4 +225,4 @@ func _donate(cat: String, layer_box: Dictionary) -> void:
 			ForestSaveState.village_bundle_grand_reward = true
 			ForestSaveState.add_gold(3000)
 			_spawn_grand_flag()
-			Toast.show(self, "🚩 번들 여섯을 다 모았다 — 사고 위에 깃발이 올랐다! 🪙 +3000", 4.0)
+			Toast.show(self, "🚩 번들 여섯을 다 모았다 — 사고 위에 깃발이 올랐다! 💰 +3000", 4.0)

@@ -47,7 +47,7 @@ const BLESSINGS: Array[Dictionary] = [
 	## 유틸(util) 축
 	{ "key": "dash", "name": "질주(疾走)", "emoji": "🏃", "max": 3, "axis": "util", "rarity": "common",
 		"desc": "이동 속도 +15%", "eff": { "moveSpdPct": 15.0 } },
-	{ "key": "fortune", "name": "재물운(財)", "emoji": "🪙", "max": 3, "axis": "util", "rarity": "common",
+	{ "key": "fortune", "name": "재물운(財)", "emoji": "💰", "max": 3, "axis": "util", "rarity": "common",
 		"desc": "비경 안 보물·사건 보상 +25%", "eff": { "rewardPct": 25.0 } },
 	{ "key": "memory", "name": "기억(記憶)", "emoji": "💠", "max": 3, "axis": "util", "rarity": "rare",
 		"desc": "이 회차를 마칠 때 기억 조각 +1", "eff": { "fragmentBonus": 1.0 } },

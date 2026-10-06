@@ -49,13 +49,13 @@ func _submit(p: Dictionary, idx: int, layer_box: Dictionary) -> void:
 		msg = "⭕ 정답! %s" % String(r.why)
 		var reward: Dictionary = r.reward
 		if bool(r.first):
-			msg += " (첫 정답 +🪙%d)" % int(reward.gold)
+			msg += " (첫 정답 +💰%d)" % int(reward.gold)
 			var got_id: String = String(reward.found)
 			if not got_id.is_empty():
 				var h = Characters.find(got_id)
 				msg += " · 📚 %s 의 이름이 들려왔다" % (String(h.name) if h else got_id)
 		else:
-			msg += " (복습 +🪙%d)" % int(reward.gold)
+			msg += " (복습 +💰%d)" % int(reward.gold)
 	else:
 		msg = "❌ 오답 — 정답은 「%s」. %s" % [String(r.answer_text), String(r.why)]
 	Toast.show(self, msg, TOAST_SEC)

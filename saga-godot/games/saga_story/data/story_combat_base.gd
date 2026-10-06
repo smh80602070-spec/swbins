@@ -112,7 +112,7 @@ const GATHER_INFO := {
 	"herb": {"name": "들꽃", "emoji": "🌼"},
 	"berry": {"name": "덤불 열매", "emoji": "🍇"},
 	"ore": {"name": "이끼 광물", "emoji": "⛏️"},
-	"cinder": {"name": "그은 돌", "emoji": "🪨"},
+	"cinder": {"name": "그은 돌", "emoji": "⚫"},
 }
 
 ## data-side.js field.boss(황건 두목) — hpMul 12·dmgMul 2.0·cool 15(분) 그대로.
@@ -230,7 +230,7 @@ const GEAR_DROP_CHANCE_BOSS := 0.9
 ## 이모지) — 열 부위를 이 순서로 늘어놓는다(story_merchant.gd 참고).
 const SLOT_LABEL := {
 	"weapon":   {"name": "무기",       "emoji": "🗡️"},
-	"hat":      {"name": "투구",       "emoji": "🪖"},
+	"hat":      {"name": "투구",       "emoji": "⛑️"},
 	"top":      {"name": "갑옷",       "emoji": "🥋"},
 	"bottom":   {"name": "전군(戰裙)", "emoji": "👖"},
 	"shoes":    {"name": "전화(戰靴)", "emoji": "👢"},
@@ -390,7 +390,7 @@ const ACHIEVES := {
 	"a_boss5":    {"name": "토벌장", "need": 5, "feat": 30, "emoji": "👺"},
 	"a_lv10":     {"name": "한 사람 몫", "need": 10, "feat": 15, "emoji": "🌱"},
 	"a_lv30":     {"name": "노련한 몸", "need": 30, "feat": 50, "emoji": "🌳"},
-	"a_gold5000": {"name": "군자금", "need": 5000, "feat": 20, "emoji": "🪙"},
+	"a_gold5000": {"name": "군자금", "need": 5000, "feat": 20, "emoji": "💰"},
 	"a_gear7":    {"name": "온몸 무장", "need": 7, "feat": 25, "emoji": "🛡️"},
 	"a_quest10":  {"name": "믿을 만한 사람", "need": 10, "feat": 20, "emoji": "📋"},
 }

@@ -121,7 +121,7 @@ script = ExtResource("11")
 [node name="StoneTextEvent" type="Node3D" parent="."]
 script = ExtResource("11")
 grid = Vector2i(3, 4)
-event_title = "🪨 고대 비문\n\"이끼 아래로 글자가 반쯤 남아 있다.\""
+event_title = "🗿 고대 비문\n\"이끼 아래로 글자가 반쯤 남아 있다.\""
 choice_a_label = "읽어 본다"
 choice_a_outcome = "옛 싸움의 날짜와 이름 셋을 읽어 냈다."
 choice_a_exp = 35.0

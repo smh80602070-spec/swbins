@@ -436,7 +436,7 @@ func _open_finish_menu() -> void:
 		if not ForestSaveState.owns_finish(kind, String(today.key)):
 			var word := "벽지" if kind == "wall" else "장판"
 			choices.append({
-				"label": "%s %s 사기 (🪙%d)" % [word, today.name, int(today.price)],
+				"label": "%s %s 사기 (💰%d)" % [word, today.name, int(today.price)],
 				"cb": func() -> void: _buy_finish(kind, today, layer_box),
 			})
 
@@ -459,7 +459,7 @@ func _open_finish_menu() -> void:
 	## home.js shopToday() 그대로, 날짜 해시라 하루 한 벌).
 	for f: Dictionary in ForestHome.daily_shop(day):
 		choices.append({
-			"label": "🪑 %s 사기 (🪙%d)" % [f.name, int(f.price)],
+			"label": "🪑 %s 사기 (💰%d)" % [f.name, int(f.price)],
 			"cb": func() -> void: _buy_furniture(f, layer_box),
 		})
 	if not ForestSaveState.home_stock.is_empty():
@@ -472,14 +472,14 @@ func _open_finish_menu() -> void:
 	## 빚이 있으면 증축 신청 자체를 막고 "빚 갚기"만 보여준다.
 	if ForestSaveState.home_debt > 0:
 		choices.append({
-			"label": "🪙 빚 갚기 (남은 🪙%d)" % ForestSaveState.home_debt,
+			"label": "💰 빚 갚기 (남은 💰%d)" % ForestSaveState.home_debt,
 			"cb": func() -> void: _repay_home_debt(layer_box),
 		})
 	else:
 		var nx: Dictionary = ForestHome.next_tier(ForestSaveState.home_tier)
 		if not nx.is_empty():
 			choices.append({
-				"label": "🏠 %s (으)로 넓히기 (빚 🪙%d 생김)" % [nx.name, int(nx.cost)],
+				"label": "🏠 %s (으)로 넓히기 (빚 💰%d 생김)" % [nx.name, int(nx.cost)],
 				"cb": func() -> void: _expand_home(nx, layer_box),
 			})
 
@@ -492,7 +492,7 @@ func _open_finish_menu() -> void:
 func _buy_furniture(f: Dictionary, layer_box: Dictionary) -> void:
 	(layer_box["layer"] as CanvasLayer).queue_free()
 	if ForestSaveState.gold < int(f.price):
-		Toast.show(self, "골드가 모자란다 (🪙%d 필요)" % int(f.price), 2.5)
+		Toast.show(self, "골드가 모자란다 (💰%d 필요)" % int(f.price), 2.5)
 		return
 	ForestSaveState.gold -= int(f.price)
 	ForestSaveState.home_stock_add(String(f.key), 1)
@@ -521,7 +521,7 @@ func _expand_home(nx: Dictionary, layer_box: Dictionary) -> void:
 		Toast.show(self, "빚이 남아 있어 증축을 신청할 수 없다.", 2.5)
 		return
 	_rebuild_interior_shell()
-	Toast.show(self, "🏠 %s (으)로 넓혔다 — 빚 🪙%d 이 생겼다." % [nx.name, int(nx.cost)], 3.0)
+	Toast.show(self, "🏠 %s (으)로 넓혔다 — 빚 💰%d 이 생겼다." % [nx.name, int(nx.cost)], 3.0)
 
 
 ## 웹판 home.js repay() — 가진 금 안에서 최대한 갚는다.
@@ -532,9 +532,9 @@ func _repay_home_debt(layer_box: Dictionary) -> void:
 		Toast.show(self, "금이 없다.", 2.0)
 		return
 	if ForestSaveState.home_debt <= 0:
-		Toast.show(self, "🪙 빚을 다 갚았다 (-%d)." % paid, 3.0)
+		Toast.show(self, "💰 빚을 다 갚았다 (-%d)." % paid, 3.0)
 	else:
-		Toast.show(self, "🪙 빚을 갚았다 (-%d) — 남은 빚 🪙%d" % [paid, ForestSaveState.home_debt], 3.0)
+		Toast.show(self, "💰 빚을 갚았다 (-%d) — 남은 빚 💰%d" % [paid, ForestSaveState.home_debt], 3.0)
 
 
 func _buy_finish(kind: String, f: Dictionary, layer_box: Dictionary) -> void:
@@ -542,7 +542,7 @@ func _buy_finish(kind: String, f: Dictionary, layer_box: Dictionary) -> void:
 	if ForestSaveState.buy_finish(kind, String(f.key), int(f.price)):
 		Toast.show(self, "🎨 %s 을(를) 샀다 — 집 시트에서 갈아 끼운다." % f.name, 3.0)
 	else:
-		Toast.show(self, "골드가 모자란다 (🪙%d 필요)" % int(f.price), 2.5)
+		Toast.show(self, "골드가 모자란다 (💰%d 필요)" % int(f.price), 2.5)
 
 
 func _set_finish(kind: String, key: String, layer_box: Dictionary) -> void:
