@@ -7,6 +7,7 @@ extends WorldEnvironment
 
 const ENV_PC: Environment = preload("res://assets/environment/env_pc.tres")
 const ENV_MOBILE: Environment = preload("res://assets/environment/env_mobile.tres")
+const Gfx := preload("res://saga_core/data/graphics_settings.gd")
 
 
 ## PLAN 106장 ② — GO 만 손그림 하늘(sky_toon.gdshader). 이 스크립트와 env_*.tres 는
@@ -27,6 +28,13 @@ const GO_EXPOSURE := 0.88
 
 
 func _ready() -> void:
+	_pick_environment()
+	## G-0054 — 설정 "화질/성능"(graphics_settings.gd). 화질이면 아무것도 안 바뀐다.
+	add_to_group(Gfx.GROUP)
+	Gfx.apply(get_tree())
+
+
+func _pick_environment() -> void:
 	var base := ENV_MOBILE if (OS.has_feature("mobile") or OS.has_feature("web")) else ENV_PC
 	var scene_path := owner.scene_file_path if owner != null else ""
 	if not scene_path.begins_with(TOON_SKY_SCENE_PREFIX):

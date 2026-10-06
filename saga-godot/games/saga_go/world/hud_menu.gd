@@ -33,6 +33,7 @@ const ENTRIES := [
 	["go_homestead", "쉼터 마당 (T)"],
 	["go_cycle", "별배 재출항 (N)"],
 	["go_save_transfer", "세이브 옮기기"],   # G-0035
+	["go_graphics", "화질·성능"],   # G-0054
 	["go_help", "도움말 (F1)"],
 ]
 ## 받을 게 있어 메뉴 단추에도 ●로 모아 보이는 항목.

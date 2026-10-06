@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3]
+[gd_scene load_steps=93 format=3]
 
 [ext_resource type="Script" path="res://saga_core/ui/virtual_joystick.gd" id="1"]
 [ext_resource type="Script" path="res://games/saga_dungeon/ui/hp_label.gd" id="2"]
@@ -94,6 +94,7 @@
 [ext_resource type="Script" path="res://saga_core/ui/goal_board.gd" id="92"]
 [ext_resource type="Texture2D" path="res://assets/generated/sprites/panel_9slice.png" id="93"]
 [ext_resource type="Script" path="res://saga_core/ui/save_transfer_button.gd" id="save_transfer_btn"]
+[ext_resource type="Script" path="res://saga_core/ui/graphics_button.gd" id="graphics_btn"]
 
 [node name="DungeonHUD" type="CanvasLayer"]
 
@@ -1356,3 +1357,14 @@ offset_right = -40.0
 offset_bottom = -6830.0
 script = ExtResource("save_transfer_btn")
 game_id = "dungeon"
+[node name="GraphicsButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_top = -6980.0
+offset_right = -40.0
+offset_bottom = -6910.0
+script = ExtResource("graphics_btn")
+

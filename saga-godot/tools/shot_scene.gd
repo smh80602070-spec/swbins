@@ -24,6 +24,8 @@ const DUNGEON := "res://games/saga_dungeon/world/TestRoom.tscn"
 const STORY_CAVE := "res://games/saga_story/world/CaveHuntGround.tscn"
 const REALM := "res://games/saga_realm/world/TestCity.tscn"
 const LOOT := "res://games/saga_dungeon/world/loot_pickup.gd"
+const GO := "res://games/saga_go/world/TestVillage.tscn"
+const GFX := "res://saga_core/data/graphics_settings.gd"
 
 const CUTS := [
 	["fs_villager", FOREST, [["near", "Villager/Villager_npc_keeper", 0.0, 3.0]]],
@@ -51,6 +53,10 @@ const CUTS := [
 	["st_ladder", STORY_CAVE, [["near", "LadderArea", -1.4, 0.0]]],
 	# G-0050 — 시나리오를 시작해야 장수 명단이 생겨 등용 설전 문제가 뽑힌다
 	["rk_debate", REALM, [["free_modal"], ["call", "/root/RealmSaveState", "start_scenario", ["194"]], ["call", "RealmHUD/OrderButton", "_start_order", ["hire", "등용", "@box"]]]],
+	# G-0054 — 화질/성능. 사가고 둘은 설정 파일을 안 쓰고(save=false) 메모리에서만 바꾼다 — forward_plus 로 찍어야 SSAO 차이가 보인다.
+	["rk_gfx_menu", REALM, [["free_modal"], ["call", "RealmHUD/GraphicsButton/GraphicsMenu", "open_screen", []]]],
+	["go_gfx_quality", GO, [["static", GFX, "set_mode", ["quality", "@tree", false]]]],
+	["go_gfx_perf", GO, [["static", GFX, "set_mode", ["performance", "@tree", false]]]],
 	["rk_orders", REALM, [["free_modal"], ["call", "RealmHUD/OrderButton", "_on_pressed", []]]],   # G-0052 — 긴 글 열 줄 선택 창
 	["rk_duel", REALM, [["free_modal"], ["call", "RealmHUD/AttackButton", "_duel_round", ["enemy", []]]]],
 ]
@@ -119,6 +125,8 @@ func _steps(steps: Array) -> void:
 func _arg(a: Variant, sc: Node, p: Node3D) -> Variant:
 	if a is String and a == "@box":
 		return {"layer": CanvasLayer.new()}
+	if a is String and a == "@tree": # G-0054
+		return self
 	if a is String and a == "@scene":
 		return sc
 	if a is String and String(a).begins_with("@near:"):

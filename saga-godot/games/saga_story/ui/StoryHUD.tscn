@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://games/saga_story/ui/quest_label.gd" id="1"]
 [ext_resource type="Script" path="res://games/saga_story/ui/story_save_button.gd" id="2"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://games/saga_story/ui/goal_board_feed.gd" id="9"]
 [ext_resource type="Texture2D" path="res://assets/generated/sprites/panel_9slice.png" id="10"]
 [ext_resource type="Script" path="res://saga_core/ui/save_transfer_button.gd" id="save_transfer_btn"]
+[ext_resource type="Script" path="res://saga_core/ui/graphics_button.gd" id="graphics_btn"]
 
 [node name="StoryHUD" type="CanvasLayer"]
 
@@ -172,6 +173,17 @@ offset_right = -170.0
 offset_bottom = -40.0
 script = ExtResource("save_transfer_btn")
 game_id = "story"
+[node name="GraphicsButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -440.0
+offset_top = -100.0
+offset_right = -310.0
+offset_bottom = -40.0
+script = ExtResource("graphics_btn")
+
 
 [node name="GoalBoard" type="Label" parent="."]
 anchor_left = 1.0

@@ -371,6 +371,11 @@ func _ready() -> void:
 	add_child(save_transfer)
 	if OS.get_environment("SAGA_SAVEMOVE_PROBE") != "":
 		add_child(load("res://tools/probe_savemove.gd").new())
+	## G-0054 — 화질/성능 고르기(메뉴 "화질·성능", 네 판은 HUD 단추).
+	var gfx := preload("res://saga_core/ui/graphics_menu.gd").new()
+	gfx.name = "GraphicsMenu"
+	gfx.add_to_group("go_graphics")
+	add_child(gfx)
 
 	## 그리기 부담 — 다 지은 뒤 지도 전체 MultiMesh 를 칸으로 쪼개고 카메라 far 를 안개에 맞춘다(보이는 것은 그대로, render_budget.gd).
 	(func() -> void: preload("res://games/saga_go/world/render_budget.gd").apply(self)).call_deferred()
