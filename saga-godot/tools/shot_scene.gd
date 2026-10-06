@@ -44,6 +44,8 @@ const CUTS := [
 		["static", LOOT, "spawn_at", ["@scene", "@near:0:-3.2", 30, true, false, 1000.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:2.6:-5.2", 30, false, true, 1.0]],
 		["static", LOOT, "spawn_at", ["@scene", "@near:-2.6:-5.2", 30, false, false, 1.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:0:-6.6", 30, false, false, 1.0]]]],
 	["st_ladder", STORY_CAVE, [["near", "LadderArea", -1.4, 0.0]]],
+	# G-0050 — 시나리오를 시작해야 장수 명단이 생겨 등용 설전 문제가 뽑힌다
+	["rk_debate", REALM, [["free_modal"], ["call", "/root/RealmSaveState", "start_scenario", ["194"]], ["call", "RealmHUD/OrderButton", "_start_order", ["hire", "등용", "@box"]]]],
 	["rk_duel", REALM, [["free_modal"], ["call", "RealmHUD/AttackButton", "_duel_round", ["enemy", []]]]],
 ]
 
@@ -99,12 +101,18 @@ func _steps(steps: Array) -> void:
 			"touch":
 				n.call(String(st[2]), p)
 			"call":
-				n.callv(String(st[2]), st[3] if st.size() > 3 else [])
+				var cargs: Array = []
+				for a in (st[3] if st.size() > 3 else []):
+					cargs.append(_arg(a, sc, p))
+				n.callv(String(st[2]), cargs)
 			"set":
 				n.set(String(st[2]), st[3])
 
 ## G-0048 — 정적 함수 인자 낱말: "@scene" → 지금 씬, "@near:dx:dz" → 플레이어 자리 + (dx, 0, dz). 그 밖은 그대로.
+## G-0050 — "@box" → 선택 창 상자 {"layer": 빈 CanvasLayer}(앞 창을 닫고 시작하는 _start_order 류용). call 인자도 같이 푼다.
 func _arg(a: Variant, sc: Node, p: Node3D) -> Variant:
+	if a is String and a == "@box":
+		return {"layer": CanvasLayer.new()}
 	if a is String and a == "@scene":
 		return sc
 	if a is String and String(a).begins_with("@near:"):

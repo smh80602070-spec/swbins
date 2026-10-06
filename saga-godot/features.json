@@ -2203,10 +2203,10 @@
    "realm_data",
    "realm_state"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-07",
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0050",
   "since": "2026-09-16"
  },
  {
