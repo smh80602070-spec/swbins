@@ -77,12 +77,6 @@ def proj(el, t, i):
     ph = 2 * math.pi * t
     pulse = 1.0 + 0.1 * math.sin(ph)
     if el == 'fire':                                     # 불덩이 + 뒤로 흩날리는 불꽃
-        for k in range(10):
-            a = rng.uniform(-0.5, 0.5)
-            ln = 20 + 26 * ((k / 10 + t) % 1)
-            x, y = cx - ln, cy + math.sin(a) * ln * 0.6
-            r = 10 * (1 - ln / 56) + 2
-            d.ellipse((x - r, y - r, x + r, y + r), fill=lerp_c(M, D, ln / 56))
         d.ellipse((cx - 16 * pulse, cy - 16 * pulse, cx + 16 * pulse, cy + 16 * pulse), fill=M)
         d.ellipse((cx - 9, cy - 9, cx + 9, cy + 9), fill=L)
     elif el == 'water':                                  # 물방울 구 + 고리
@@ -91,9 +85,6 @@ def proj(el, t, i):
             d.ellipse((cx - rr, cy - rr, cx + rr, cy + rr), outline=lerp_c(M, D, (k / 3 + t) % 1), width=2)
         d.ellipse((cx - 14 * pulse, cy - 14 * pulse, cx + 14 * pulse, cy + 14 * pulse), fill=M)
         d.ellipse((cx - 9, cy - 11, cx - 1, cy - 3), fill=L)
-        for k in range(6):
-            x = cx - 18 - 30 * ((k / 6 + t) % 1)
-            d.ellipse((x - 3, cy + (k - 3) * 5 - 3, x + 3, cy + (k - 3) * 5 + 3), fill=M)
     elif el == 'lightning':                              # 번쩍이는 구 + 갈라진 번개
         d.ellipse((cx - 11, cy - 11, cx + 11, cy + 11), fill=L)
         for k in range(5):
@@ -108,32 +99,42 @@ def proj(el, t, i):
             base2 = (cx + math.cos(a - 2.4) * 8, cy + math.sin(a - 2.4) * 8)
             d.polygon([tip, base1, base2], fill=lerp_c(L, M, k / 3))
         d.ellipse((cx - 9, cy - 9, cx + 9, cy + 9), fill=M)
-        for k in range(6):
-            x = cx - 20 - 30 * ((k / 6 + t) % 1)
-            d.polygon([(x, cy - 5 + (k % 3) * 4), (x - 5, cy + (k % 3) * 4 - 2), (x - 2, cy + 3 + (k % 3) * 4)], fill=L)
     elif el == 'wind':                                   # 초승달 휘도는 칼날
         for k in range(3):
             a0 = ph + k * 2.1
             box = (cx - 24 + k * 2, cy - 24 + k * 2, cx + 24 - k * 2, cy + 24 - k * 2)
             d.arc(box, math.degrees(a0), math.degrees(a0) + 120, fill=lerp_c(L, M, k / 3), width=5 - k)
-        for k in range(5):
-            x = cx - 30 - 26 * ((k / 5 + t) % 1)
-            d.line((x, cy - 14 + k * 7, x - 16, cy - 14 + k * 7), fill=M, width=2)
     elif el == 'earth':                                  # 바위 덩이 + 파편
         pts = [(cx + math.cos(ph / 2 + a) * (14 + 3 * math.sin(a * 3)), cy + math.sin(ph / 2 + a) * (14 + 3 * math.sin(a * 3))) for a in np.linspace(0, 2 * math.pi, 8, endpoint=False)]
         d.polygon(pts, fill=M)
         d.polygon([(x * 0.7 + cx * 0.3, y * 0.7 + cy * 0.3) for x, y in pts[:4]], fill=L)
-        for k in range(7):
-            x = cx - 22 - 30 * ((k / 7 + t) % 1)
-            y = cy + math.sin(k * 2 + ph) * 12
-            d.rectangle((x - 3, y - 3, x + 3, y + 3), fill=lerp_c(M, D, (k / 7 + t) % 1))
+        for k in range(4):                               # 떨어져 나가는 돌 조각(각진 세모)
+            x = cx - 22 - 34 * ((k / 4 + t) % 1)
+            y = cy + math.sin(k * 2 + ph) * 10
+            d.polygon([(x, y - 4), (x + 4, y + 2), (x - 3, y + 3)], fill=lerp_c(M, D, (k / 4 + t) % 1))
     else:                                                # light — 별 구
         for k in range(8):
             a = ph / 2 + k * math.pi / 4
             ln = 30 if k % 2 == 0 else 20
             d.line((cx, cy, cx + math.cos(a) * ln, cy + math.sin(a) * ln), fill=M, width=3 if k % 2 == 0 else 2)
         d.ellipse((cx - 11 * pulse, cy - 11 * pulse, cx + 11 * pulse, cy + 11 * pulse), fill=L)
-    return add(im.filter(ImageFilter.GaussianBlur(1.0)), glow(im, 5))
+    head = add(im.filter(ImageFilter.GaussianBlur(1.0)), glow(im, 5))
+    return add(proj_trail(el, t, i, cx, cy), head)
+
+
+def proj_trail(el, t, i, cx, cy):
+    """10-06 저녁: 발사체 꼬리 — 머리 뒤로 가늘어지며 흐르는 가로 잡음(루프). 머리 모양은 그대로 위에 얹는다."""
+    L, M, D = ELEMENTS[el]
+    n = _noise_tile(950 + i)
+    N = n.shape[0]
+    yy, xx = np.mgrid[0:F, 0:F].astype(np.float32)
+    noise = n[(yy * 1.2).astype(np.int32) % N, ((xx * 0.3 + t * N) % N).astype(np.int32)]
+    dx = cx - xx
+    w = 15 * np.clip(1 - dx / 84, 0.15, 1)
+    m = sstep(w, w * 0.25, np.abs(yy - cy)) * sstep(0, 10, dx) * sstep(78, 12, dx)
+    k = {'fire': 1.35, 'water': 1.1, 'lightning': 0.7, 'ice': 1.0, 'wind': 1.2, 'earth': 0.85, 'light': 1.1}[el]
+    v = np.clip((0.25 + sstep(0.32, 0.72, noise)) * m * k, 0, 1)
+    return to_img(ramp(v, [(0, (0, 0, 0)), (0.35, D), (0.7, M), (1.0, L)])).filter(ImageFilter.GaussianBlur(0.8))
 
 
 def lerp_c(a, b, t):
