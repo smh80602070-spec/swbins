@@ -8,13 +8,13 @@
 import os
 
 import bpy
-from mathutils import Matrix
+from mathutils import Matrix, Vector
 
 TWO_HAND = ('spear', 'axe', 'staff')
 OFF_HAND = ('bow', 'shield')
 
 
-def attach(arm, path, side='R', two_hand=False):
+def attach(arm, path, side='R', two_hand=False, upright=False):
     hb, mb, tb = (arm.data.bones.get(f'J_Bip_{side}_{n}') for n in ('Hand', 'Middle1', 'Thumb1'))
     if not (hb and mb and tb):
         print('NOHAND', side)
@@ -48,7 +48,16 @@ def attach(arm, path, side='R', two_hand=False):
     if two_hand:
         other = arm.data.bones.get('J_Bip_%s_Hand' % ('L' if side == 'R' else 'R'))
         c = root.constraints.new('DAMPED_TRACK')
+        c.name = 'two_hand'
         c.target, c.subtarget, c.track_axis = arm, other.name, 'TRACK_Z'
+    if upright:                                    # 긴 무기를 걷기·피격 등에서 똑바로 세워 든다(손을 따라 풍차처럼 돌지 않게) — 영향도는 동작마다 굽는 쪽이 정한다
+        up = bpy.data.objects.new('wp_up', None)
+        sc.collection.objects.link(up)
+        up.parent = arm
+        up.matrix_world = Matrix.Translation(arm.matrix_world.translation + Vector((0, 0, 50)))
+        c = root.constraints.new('DAMPED_TRACK')
+        c.name = 'upright'
+        c.target, c.track_axis, c.influence = up, 'TRACK_Z', 0.0
     arm.data.pose_position = old
     bpy.context.view_layer.update()
     print('WEAPON', os.path.basename(path), side, 'two' if two_hand else 'one')
@@ -63,4 +72,4 @@ def from_env(arm):
     kind = os.path.basename(p).split('_')[1] if os.path.basename(p).startswith('wpn_') else ''
     side = os.environ.get('WEAPON_HAND') or ('L' if kind in OFF_HAND else 'R')
     two = os.environ.get('TWO_HAND', '1' if kind in TWO_HAND else '') not in ('', '0')
-    return attach(arm, p, side, two)
+    return attach(arm, p, side, two, upright=kind in TWO_HAND + OFF_HAND[:1])   # 창·도끼·지팡이·활

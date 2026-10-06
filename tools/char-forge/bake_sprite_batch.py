@@ -91,6 +91,7 @@ def main():
             env['WEAPON'] = os.path.abspath(os.path.join(ROOT, e['weapon']))
             if e.get('two_hand_clips'):
                 env['TWO_HAND_CLIPS'] = ','.join(e['two_hand_clips'])
+            env['COMBAT_CLIPS'] = ','.join(cmap[r] for r in ('idle', 'attack', 'attack2', 'heavy') if r in cmap)
         os.makedirs(odir, exist_ok=True)
         t0 = time.time()
         rc = run([BLENDER, '-b', '--factory-startup', '-P', os.path.join(HERE, 'gear_sprites.py'), '--', body, tmp, e['kind']],

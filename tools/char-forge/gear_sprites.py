@@ -450,6 +450,9 @@ def build(kind, x):
     _d = open(src, 'rb').read()
     _jj = _j.loads(_d[20:20 + _s.unpack('<I', _d[12:16])[0]])
     vrm0 = 'VRMC_vrm' not in _jj.get('extensions', {})
+    _ft, _to = arm.data.bones.get('J_Bip_L_Foot'), arm.data.bones.get('J_Bip_L_ToeBase')
+    if _ft and _to:                # 10-06: 확장 유무가 아니라 발끝이 발목보다 어느 쪽인지로 — 옷 이식 GLB(확장 없음)는 −Y 정면인데 VRM0 로 잘못 봐서 시트 정면·뒷면이 뒤바뀌었다
+        vrm0 = ((arm.matrix_world @ _to.head_local) - (arm.matrix_world @ _ft.head_local)).y > 0
     global FS
     FS = 1.0 if vrm0 else -1.0     # 정면이 +Y(VRM0) 인지 −Y(VRM1) 인지
     p = P[kind]
@@ -600,9 +603,13 @@ if os.environ.get('SPRITE_MODE'):
     meshes = [o for o in bpy.data.objects if o.type == 'MESH']
     for cname in clips:
         act = acts[cname]
+        combat = [x for x in os.environ.get('COMBAT_CLIPS', '').split(',') if x]
         for o in wobjs[:1]:
             for c in o.constraints:
-                c.influence = 1.0 if (not two_clips or cname in two_clips) else 0.0
+                if c.name == 'two_hand':                               # 두 손 겨누기: 그 동작에서만
+                    c.influence = 1.0 if (not two_clips or cname in two_clips) else 0.0
+                elif c.name == 'upright':                              # 세워 들기: 전투가 아닌 동작(걷기·피격·죽음·넘어짐)
+                    c.influence = 0.0 if (not combat or cname in combat) else 0.85
         arm.animation_data.action = act
         if hasattr(arm.animation_data, 'action_slot') and act.slots:
             arm.animation_data.action_slot = act.slots[0]
@@ -626,7 +633,7 @@ if os.environ.get('SPRITE_MODE'):
                     'anchor_feet_y_px': px * (0.5 + cam_z / size_m)},
                    open(os.path.join(odir, 'meta.json'), 'w'), indent=1)
         for d in dir_list:
-            piv.rotation_euler.z = base_deg - 2 * math.pi * d / ndir   # 10-06: − 로 돌려 옆(d=ndir/4)이 오른쪽을 본다 — 웹 mode2d 는 옆 = 오른쪽, 왼쪽은 뒤집음
+            piv.rotation_euler.z = base_deg + 2 * math.pi * d / ndir   # 정면이 맞으면 + 로 옆(d=ndir/4)이 오른쪽을 본다(웹 mode2d 옆 = 오른쪽) — 10-06 확인
             for f in range(nfr):
                 sc.frame_set(int(round(f0 + (f1 - f0) * f / nfr)))
                 sc.render.filepath = os.path.join(odir, f'd{d}_f{f:02d}.png')
