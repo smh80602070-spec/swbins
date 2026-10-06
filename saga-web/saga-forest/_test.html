@@ -6796,6 +6796,15 @@ window.DG_NO_TUNE = true;
       return r.join(',') === 'back,front,1,-1,-1,1' && ('위 back · 아래 front · 옆·멈춤 좌우') || '실패 ' + r.join(',');
     });
 
+    t('2D 8방향 시트(W-0073) — dirOf8 45° 칸 표·왼쪽은 뒤집기, 역할 고르기(8역할/3행 폴백), 표에 없는 인물은 8방향 안 씀', function () {
+      var M = DG.mode2d, d = function (x, y, f) { var r = M.dirOf8(x, y, f); return r.row + (r.flip ? 'm' : ''); };
+      var dirs = [d(0, 1), d(1, 1), d(1, 0), d(1, -1), d(0, -1), d(-1, -1), d(-1, 0), d(-1, 1), d(0, 0, -1), d(0, 0, 'back')].join(',');
+      var roles = ['attack2', 'heavy', 'knockdown', 'cast'].map(function (c) { return M.roleOf(c, true) + '/' + M.roleOf(c, false); }).join(',');
+      var none = M.sheet8('vroid:__없는_인물__') === null && M.sheet8('villager_a') === null;
+      return dirs === '0,1,2,3,4,3m,2m,1m,2m,4' && roles === 'attack2/attack,heavy/attack,knockdown/death,idle/idle' && none &&
+        ('8쪽 행 표 · 역할 8/3행 폴백 · 표 밖은 3행') || '실패 ' + dirs + ' | ' + roles + ' | ' + none;
+    });
+
     t('런타임 에러 없음', function () {
       return errors.length === 0 || ('에러 ' + errors.length + '건: ' + errors.join(' | ')) === '';
     });

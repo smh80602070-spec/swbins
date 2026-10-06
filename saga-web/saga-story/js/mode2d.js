@@ -18,8 +18,8 @@
   /** 판 설정 — 부를 때마다 읽는다(이 파일이 core.js 보다 먼저 로드돼도 된다) */
   function C() { return (global.DG && global.DG.cfg && global.DG.cfg.mode2d) || {}; }
   function base() { return C().base || 'assets/sprites2d_sheets/'; }
-  var FRAMES = 8, PX = 128, FPS = { idle: 6, walk: 10, attack: 14, hit: 12, death: 10 };
-  var ONCE = { attack: true, hit: true, death: true };      // 한 번 돌고 마지막 프레임에 머문다
+  var FRAMES = 8, PX = 128, FPS = { idle: 6, walk: 10, attack: 14, attack2: 14, heavy: 11, hit: 12, death: 10, knockdown: 10 };
+  var ONCE = { attack: true, attack2: true, heavy: true, hit: true, death: true, knockdown: true };      // 한 번 돌고 마지막 프레임에 머문다
   var ROW = { front: 0, side: 1, back: 2 };
 
   var imgs = {};          // 'pool/clip' → { img, ok, fail }
@@ -83,15 +83,41 @@
     return { row: ROW.side, flip: left };
   }
 
-  function getImg(pool, clip) {
-    var key = pool + '/' + clip, e = imgs[key];
+  /* ── 8방향 무기 시트(W-0073, K-0029 단계 5) — `characters2d8/<id>/<역할>.webp` 8프레임 × 5행(d0 정면·d1 오른쪽 앞 3/4·d2 오른쪽 옆·
+     d3 오른쪽 뒤 3/4·d4 뒤, 왼쪽 셋은 d1~d3 좌우 뒤집기). 어느 인물에 있나·칸 크기·카메라 높이는 assets3d-ids `hero2d8 = {id: [px, cam_z]}`
+     (폴더에서 생성 — 파일을 두드리지 않아 404 가 없다). 표에 없으면 지금 3행 시트 그대로 */
+  var ROLES8 = { idle: 1, walk: 1, attack: 1, attack2: 1, heavy: 1, hit: 1, death: 1, knockdown: 1 };
+  var PPM = 51.2;   // 1m = 51.2px — 128 칸(2.5m)·192 칸(3.75m) 공통(K-0029 manifest px_per_m)
+  function sheet8(pool) {
+    var t = isVroid(pool) && global.DG && global.DG.assets3dIds && global.DG.assets3dIds.hero2d8;
+    return (t && t[pool.slice(VPRE.length)]) || null;
+  }
+  /** 동작 이름 → 시트에 있는 역할. 8방향은 8역할, 3행 시트는 idle·walk·attack·hit·death 다섯(나머지는 가까운 것) */
+  function roleOf(clip, eight) {
+    clip = clip || 'idle';
+    if (eight) { return ROLES8[clip] ? clip : (/^attack/.test(clip) ? 'attack' : 'idle'); }
+    return { attack2: 'attack', heavy: 'attack', knockdown: 'death' }[clip] || (FPS[clip] && clip) || 'idle';   // 3행 시트에 없는 이름은 idle(없는 파일 404 막기)
+  }
+  /** 움직인 쪽(dx, dy — 화면 아래가 +) → 8방향 행·뒤집기. 45° 칸. 둘 다 0 이면 facing('front'·'back'·±1·'left'/'right')으로 */
+  function dirOf8(dx, dy, facing) {
+    dx = +dx || 0; dy = +dy || 0;
+    var k;
+    if (dx || dy) { k = Math.round(Math.atan2(dx, dy) / (Math.PI / 4)); }      // 0 정면(아래) · 2 오른쪽 · ±4 뒤 · 음수 = 왼쪽
+    else if (facing === 'front') { k = 0; } else if (facing === 'back') { k = 4; }
+    else { k = (facing === 'left' || (typeof facing === 'number' && facing < 0)) ? -2 : 2; }
+    if (k === -4) { k = 4; }
+    return { row: Math.abs(k), flip: k < 0 };
+  }
+
+  function getImg(pool, clip, eight) {
+    var key = pool + '/' + clip + (eight ? '#8' : ''), e = imgs[key];
     if (e) { return e; }
     e = imgs[key] = { img: null, ok: false, fail: false };
     if (!global.Image) { e.fail = true; return e; }
     var im = new global.Image();
     im.onload = function () { e.ok = true; };
     im.onerror = function () { e.fail = true; };   // 파일이 없으면 영영 기존 그림 — 다시 받으려 들지 않는다
-    im.src = isVroid(pool) ? global.DG.assets3d.root() + 'characters2d/' + pool.slice(VPRE.length) + '/' + clip + '.webp' : base() + pool + '/' + clip + '.webp';
+    im.src = isVroid(pool) ? global.DG.assets3d.root() + (eight ? 'characters2d8/' : 'characters2d/') + pool.slice(VPRE.length) + '/' + clip + '.webp' : base() + pool + '/' + clip + '.webp';
     e.img = im;
     return e;
   }
@@ -108,20 +134,25 @@
   function draw(ctx, o) {
     if (!ctx || !o || !o.pool || !isOn()) { return false; }
     if (isStill(o.pool)) { return drawStill(ctx, o); }      // 한 장 모드 풀(W-0032)
-    var e = getImg(o.pool, o.clip || 'idle');
+    var s8 = sheet8(o.pool), eight = !!s8, role = roleOf(o.clip, eight), e = getImg(o.pool, role, eight);
+    if (eight && !e.ok) {
+      /* 8방향이 아직 안 왔으면(받는 중·실패) 같은 사람의 3행 시트로 — 몸이 깜박이지 않게 */
+      eight = false; s8 = null; role = roleOf(o.clip, false); e = getImg(o.pool, role, false);
+    }
     if (!e.ok) {
       /* 받는 동안 몸이 깜박이지 않게 같은 풀의 idle 이 이미 있으면 그걸로 */
-      var base = o.clip !== 'idle' ? imgs[o.pool + '/idle'] : null;
+      var base = role !== 'idle' ? imgs[o.pool + '/idle' + (eight ? '#8' : '')] : null;
       if (!(base && base.ok)) { return false; }
-      e = base; o = Object.assign({}, o, { clip: 'idle' });
+      e = base; role = 'idle';
     }
-    var d = dirOf(o.facing), f = frameAt(o.clip || 'idle', o.ms || 0);
-    var cf = C(), vr = isVroid(o.pool) && cf.vroid2d, ph = vr ? (vr.h || 85) : (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1), w = PX * sc, h = PX * sc;
+    var P = eight ? s8[0] : PX, d = eight ? dirOf8(o.dirX, o.dirY, o.facing) : dirOf(o.facing), f = frameAt(role, o.ms || 0);
+    var cf = C(), vr = isVroid(o.pool) && cf.vroid2d, ph = vr ? (vr.h || 85) : (cf.poolH || {})[o.pool], sc = (ph ? (cf.targetH || 62) / ph : (cf.scale || 1)) * (o.scale || 1), w = P * sc, h = P * sc;
+    var foot = eight ? (P / 2 + s8[1] * PPM + 1.5) / P : ((vr && vr.foot) || cf.foot || 0.87);   // 8방향 칸: 가운데 + 카메라 높이(실측 114/128·156/192 와 ±1px)
     ctx.save();
     if (o.alpha !== undefined) { ctx.globalAlpha = o.alpha; }
     ctx.imageSmoothingEnabled = true;
     if (d.flip) { ctx.translate(o.x, 0); ctx.scale(-1, 1); ctx.translate(-o.x, 0); }
-    ctx.drawImage(e.img, f * PX, d.row * PX, PX, PX, o.x - w / 2, o.y - h * ((vr && vr.foot) || cf.foot || 0.87), w, h);
+    ctx.drawImage(e.img, f * P, d.row * P, P, P, o.x - w / 2, o.y - h * foot, w, h);
     ctx.restore();
     return true;
   }
@@ -357,7 +388,7 @@
     preloadBg: function (region) { getBg(region); },
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS,
-    isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
+    isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, dirOf8: dirOf8, roleOf: roleOf, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },
