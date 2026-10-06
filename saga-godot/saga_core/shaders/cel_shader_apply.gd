@@ -19,96 +19,9 @@ static var _skin_tex: Texture2D = null # 이 몸 살갗 재질 텍스처(감은 
 
 ## root 아래 모든 MeshInstance3D의 서피스 재질을 cel_toon 셰이더로 덮는다.
 ## 반환값은 적용된 서피스 개수.
-## VRoid GLB의 "Face" 메시는 같은 자리에 겹친 알파컷아웃 데칼 7장
-## (피부·눈흰자·홍채·하이라이트·눈썹·눈꺼풀선·입)으로 얼굴을 쌓는다 —
-## 원래 Unity MToon의 렌더큐 순서에만 기대는 방식이라 Godot에 그대로
-## 들여오면 카메라 거리에 따라 서피스 순서가 흔들려 하얗게 빈다
-## (2026-09-19④). cull_mode(09-19⑤)는 진범이 아니었다 — 실제 원인은
-## `AvatarSample_A_Face_Baked.png` 1차 베이크 산출물 자체가 "7서피스가
-## 하나의 UV 아틀라스를 공유한다"는 잘못된 가정으로 만들어져 깨져
-## 있었던 것(09-19⑩). Blender "Selected to Active" 투사 베이크로 다시
-## 구워(`tools/asset-forge/vroid_face_bake_project.py`) SKIN 서피스
-## **한 장에** 눈·눈썹·입까지 전부 합성해 넣었다(09-19⑪).
-##
-## SKIN 메시 자체를 trimesh로 실측(09-19⑫)하니 눈 소켓 자리엔 SKIN
-## 정점이 **하나도 없다**(진짜 지오메트리 구멍 — 텍스처만의 문제가
-## 아니다). 그래서:
-## - SKIN: 새로 구운 합성 텍스처(입·눈썹·눈꺼풀선까지 이미 얹혀 있다).
-## - EyeWhite·EyeIris·EyeHighlight: SKIN에 구멍 난 자리를 채우는
-##   유일한 지오메트리라 반드시 그려야 한다 — 원래 자기 전용 텍스처를
-##   그대로 쓴다(이 셋은 애초에 서로 겹치지도, 카메라 거리로 순서가
-##   흔들리지도 않았다 — 문제는 늘 SKIN 쪽이었다).
-## - FaceBrow·FaceEyeline·FaceMouth: SKIN 위에 이미 같은 내용이 구워져
-##   있으니 그대로 두면 이중으로 겹쳐 그려진다 — 완전히 지운다.
-const LAYERED_FACE_MESH_NAMES := ["Face"]
-const SKIN_KEY := "SKIN"
-const HIDE_KEYS := ["FaceBrow", "FaceEyeline", "FaceMouth"]
-
-## VRoid GLB 경로별 베이크 텍스처 — 2026-09-19⑮, FOREST용 두 번째 캐릭터가
-## 붙으며 AvatarSample_A 전용이던 단일 상수를 GLB 단위 표로 바꿨다. `root`
-## (Player.tscn 등의 Visual 인스턴스)의 `scene_file_path`가 곧 이 GLB 경로다
-## (`PackedScene.instantiate()`가 뿌리 노드에 그대로 남겨 준다 — 실측 확인).
-const FACE_BAKE_BY_GLB := {
-	"res://assets/characters_vroid/avatar_sample_z.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_z_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_y.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_y_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_x.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_x_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_w.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_w_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_v.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_v_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_u.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_u_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_t.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_t_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_s.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_s_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_r.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_r_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_q.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_q_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_p.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_p_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_o.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_o_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_n.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_n_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_m.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_m_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_l.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_l_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_k.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_k_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_j.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_j_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_i.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_i_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_h.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_h_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_g.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_g_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_f.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_f_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_e.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_e_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_d.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_d_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_c.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_c_Face_Baked.png"),
-	"res://assets/characters_vroid/avatar_sample_b.glb":
-		preload("res://assets/characters_vroid/generated/avatar_sample_b_Face_Baked.png"),
-	"res://assets/characters_vroid/AvatarSample_A.glb":
-		preload("res://assets/characters_vroid/generated/AvatarSample_A_Face_Baked.png"),
-	"res://assets/characters_vroid/saga_forest_avatar_01.glb":
-		preload("res://assets/characters_vroid/generated/saga_forest_avatar_01_Face_Baked.png"),
-	"res://assets/characters_vroid/dungeon_hero_01.glb":
-		preload("res://assets/characters_vroid/generated/dungeon_hero_01_Face_Baked.png"),
-}
-
+## G-0030 — 옛 VRoid 샘플(AvatarSample·avatar_sample_*·숲/던전 아바타)의 얼굴 구운 그림 표(FACE_BAKE_BY_GLB)와 그 갈래를 걷어냈다.
+## 사람 몸은 이제 새 인물 몸(characters_dex)뿐이고, 그 얼굴은 표면마다 셀 재질로 그대로 그린다.
 static func apply_to(root: Node) -> int:
-	var baked_face: Texture2D = FACE_BAKE_BY_GLB.get(root.scene_file_path)
 	_iris_seed = root.scene_file_path
 	_skin_tex = null
 	for mi in _find_mesh_instances(root):
@@ -123,9 +36,6 @@ static func apply_to(root: Node) -> int:
 	for mesh_instance in _find_mesh_instances(root):
 		if String(mesh_instance.name).contains("ShadowProxy"):
 			continue # 그림자 대역은 색 패스에 안 나온다 — 셀 재질·외곽선 불필요
-		if mesh_instance.name in LAYERED_FACE_MESH_NAMES and baked_face != null:
-			_apply_baked_face(mesh_instance, baked_face)
-			continue
 		applied += _apply_one(mesh_instance)
 	return applied
 
@@ -144,38 +54,6 @@ static func setup_shadow_proxy(root: Node) -> void:
 	for mi in meshes:
 		mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY if mi == proxy \
 			else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-
-static func _apply_baked_face(mesh_instance: MeshInstance3D, baked_face: Texture2D) -> void:
-	var mesh := mesh_instance.mesh
-	if mesh == null:
-		return
-	for surface_index in mesh.get_surface_count():
-		## 덮어쓰기 전에 원본 재질을 먼저 읽어야 한다(덮은 뒤엔
-		## get_active_material이 이 override를 돌려준다).
-		var original := mesh_instance.get_active_material(surface_index)
-		var original_name: String = original.resource_name if original else ""
-		var hide := false
-		for key in HIDE_KEYS:
-			if key in original_name:
-				hide = true
-				break
-
-		var mat := StandardMaterial3D.new()
-		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		mat.cull_mode = BaseMaterial3D.CULL_DISABLED
-		if hide:
-			mat.albedo_color = Color(0, 0, 0, 0)
-			mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		elif SKIN_KEY in original_name:
-			mat.albedo_texture = baked_face
-			mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
-		else:
-			## EyeWhite·EyeIris·EyeHighlight — 원래 자기 텍스처 그대로.
-			var orig_tex: Texture2D = (original as BaseMaterial3D).albedo_texture if original is BaseMaterial3D else null
-			mat.albedo_texture = orig_tex
-			mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
-		mesh_instance.set_surface_override_material(surface_index, mat)
-	mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
 static func _find_mesh_instances(node: Node) -> Array[MeshInstance3D]:
 	var result: Array[MeshInstance3D] = []

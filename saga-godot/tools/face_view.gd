@@ -1,6 +1,6 @@
 extends SceneTree
-## 얼굴 클로즈업 촬영 — 몸 glb 하나에 셀 재질을 입혀 머리 높이에서 정면으로 찍는다(2026-09-30 원신풍 눈).
-##   FACE_OUT=<png 경로> [FACE_GLB=res://assets/characters_cf/cmp_go_01.glb] "$GODOT_CONSOLE" --path saga-godot --rendering-method mobile \
+## 얼굴 클로즈업 촬영 — 몸 glb·gltf 하나에(G-0030 부터 기본은 새 인물 몸 주인공 dj_haean) 셀 재질을 입혀 머리 높이에서 정면으로 찍는다(2026-09-30 원신풍 눈).
+##   FACE_OUT=<png 경로> [FACE_GLB=res://assets/characters_dex/dj_haean.gltf] "$GODOT_CONSOLE" --path saga-godot --rendering-method mobile \
 ##       --position -4000,0 --resolution 1000x1000 --script res://tools/face_view.gd
 ## 머리 높이는 뼈 "Head" 로 잰다. 카메라는 몸 앞(+Z)에서 머리를 바라본다.
 
@@ -13,7 +13,7 @@ var _cam: Camera3D
 func _init() -> void:
 	var glb := OS.get_environment("FACE_GLB")
 	if glb == "":
-		glb = "res://assets/characters_cf/cmp_go_01.glb"
+		glb = "res://assets/characters_dex/dj_haean.gltf"
 	var body: Node3D = (load(glb) as PackedScene).instantiate()
 	root.add_child(body)
 	CelShaderApply.apply_to(body)

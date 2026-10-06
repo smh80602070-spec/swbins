@@ -50,7 +50,7 @@ func _initialize() -> void:
 	for v: Dictionary in vil:
 		ids[v.id] = true
 		var g: Vector2i = v.grid
-		vil_ok = vil_ok and VMap.tile_at(g.x, g.y) == "." and ResourceLoader.exists(String(v.glb)) and VB.GIFT_CATS.has(String(v.gift_like)) and String(v.name) != "" and String(v.line) != "" and String(v.heart_line) != ""
+		vil_ok = vil_ok and VMap.tile_at(g.x, g.y) == "." and VB.GIFT_CATS.has(String(v.gift_like)) and String(v.name) != "" and String(v.line) != "" and String(v.heart_line) != ""
 		var q: Dictionary = v.quest
 		vil_ok = vil_ok and ["bagcat", "meetnpc"].has(String(q.type)) and int(q.reward) > 0 and int(q.count) > 0 and String(q.title) != ""
 		if q.type == "bagcat":

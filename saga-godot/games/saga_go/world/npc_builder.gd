@@ -17,11 +17,6 @@ const TALK_RADIUS := 14.0
 const TALK_GAP_SEC := 45.0
 const LINE_SHOW_SEC := 4.0
 
-## character-a.glb는 플레이어 몫(Player.tscn) — 주민마다 다른 글자를 써서
-## 최소한 옷 색만으로도 플레이어·서로와 구별되게 한다(같은 킷 공유,
-## docs/ASSET_GUIDE.md 참고). 실측 키(2.7m)·스케일도 플레이어와 같다 —
-## 105 Q-h 결정(c, 2026-09-19)으로 1.7m 표준에 맞춰 옛 1.25배의 절반.
-const NPC_CHAR_SCALE := 0.625
 
 ## 2026-09-11② — GO 사건 다양화(VERTICAL_SLICE §31 "마을의 부탁"). 촌장에게
 ## quest_* 필드를 추가했다 — 있으면 처음 말 걸었을 때 사명 제안 패널을
@@ -32,14 +27,14 @@ const NPC_CHAR_SCALE := 0.625
 const VILLAGERS := [
 	{"id": "npc_elder", "name": "마을 촌장", "role": "elder",
 	 "line": "이 마을에 무슨 일로 오셨소.",
-	 "grid": Vector2i(3, 5), "glb": "res://assets/characters/character-b.glb",
+	 "grid": Vector2i(3, 5),
 	 "quest_id": "village_ask", "quest_name": "도적 두목을 물리쳐라",
 	 "quest_offer_title": "🙏 마을의 부탁\n\"보아하니 멀리서 오신 분 같은데, 청이 하나 있소. 요 며칠 산길에 도적 두목이 나타나 오가는 이들을 괴롭힌다오. 그자를 물리쳐 주실 수 있겠소?\"",
 	 "quest_wait_line": "아직인가... 부디 조심하시게.",
 	 "quest_done_line": "정말 고맙소이다! 이 은혜는 잊지 않겠소."},
 	{"id": "npc_merchant", "name": "떠돌이 상인", "role": "merchant",
 	 "line": "북쪽 산길은 요즘 값이 오르오. 짐꾼을 못 구해서.",
-	 "grid": Vector2i(6, 5), "glb": "res://assets/characters/character-c.glb",
+	 "grid": Vector2i(6, 5),
 	 "offer_title": "🧺 길 위의 상인\n\"수레가 무거워 못 가겠소. 값은 후하게 쳐 드리리다.\"",
 	 "offer_a_label": "짐을 덜어 준다", "offer_a_outcome": "상인이 등용서와 사료를 얹어 주었다.",
 	 "offer_a_exp": 8.0,
@@ -101,27 +96,9 @@ func _spawn(v: Dictionary) -> void:
 	if v.has("quest_id"):
 		_quest_prompt_by_id[v.id] = _build_quest_prompt(v)
 
-## GLB 캐릭터를 통째로 인스턴스한다(대화만 하는 주민이라 애니메이션은
-## idle 그대로 둔다 — player.gd처럼 걷기 전환이 필요 없다). 못 받아 왔으면
-## 예전 캡슐로 대체해 주민이 아예 안 보이는 것보단 낫게 한다.
-## PLAN 106장 ④ — Kenney 블록 → VRoid 몸(주민 id 로 머리·옷 색 고정). VRoid 를 못
-## 읽을 때만 예전 GLB·캡슐로.
+## 대화만 하는 주민이라 idle 그대로. G-0022·G-0030 — 새 인물 몸(주민 id 해시로 299 중 하나).
 func _build_body(v: Dictionary) -> Node3D:
-	if ResourceLoader.exists(VroidBody.BODIES[0].glb):
-		return VroidBody.build(v.id, 2, null, true)  # G-0022 — dex 299 설치돼 있으면 그 몸, 없으면 BODIES
-	var scene: PackedScene = load(v.glb)
-	if scene != null:
-		var inst := scene.instantiate()
-		inst.scale = Vector3.ONE * NPC_CHAR_SCALE
-		return inst
-
-	var body := MeshInstance3D.new()
-	var mesh := CapsuleMesh.new()
-	mesh.radius = 0.45
-	mesh.height = 1.7
-	body.mesh = mesh
-	body.position = Vector3(0, 0.85, 0)
-	return body
+	return VroidBody.build(v.id, 2)
 
 ## 지나가다 듣는 한 마디다(웹판 npc.js와 같은 감각) — 누르는 대화창은
 ## 아니다. 조우 판정에는 손대지 않는다. 사명이 딸린 NPC(촌장)는 처음

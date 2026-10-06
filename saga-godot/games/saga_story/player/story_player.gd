@@ -1,5 +1,7 @@
 extends StorySkillsMage
 
+const VroidBody := preload("res://saga_core/world/vroid_body.gd")
+
 ## 사가스토리 플레이어 코어 — 이동·피해·상태·_physics_process. 상태 변수는 story_player_base.gd, 무예 `_cast_*` 는 story_skills_*.gd (상속 사슬, G-0007).
 
 ## side.js hurtMe()의 gear.cut(power().def) 그대로 — 방어구 def 합으로
@@ -38,6 +40,9 @@ func heal_pct(pct: float) -> void:
 
 
 func _ready() -> void:
+	if body_id != "":   # G-0030 — 새 인물 몸으로
+		visual = VroidBody.wear(visual, body_id)
+		_anim = visual.find_child("AnimationPlayer", true, false)
 	visual.rotation.y = PI * 0.5  # 오른쪽(+X)을 보고 시작 — StoryPlayer.tscn 참고
 	_play_anim("idle")
 	CelShaderApply.apply_to(visual)

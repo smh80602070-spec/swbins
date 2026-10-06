@@ -44,6 +44,8 @@ const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 const BlobShadow := preload("res://saga_core/world/blob_shadow.gd")
 
 @onready var visual: Node3D = $Visual
+## G-0030 — 이 판 주인공 몸(새 인물 몸 id). 장면의 빈 Visual 을 story_player._ready 가 이 몸으로 갈아 끼운다.
+@export var body_id := ""
 
 ## 2026-09-30 탈것(games/saga_go/player/mount.gd, data/mounts.gd — 다섯 판 공용).
 ## 땅 탈것: 이동·점프 배율 · 나는 탈것(fly_on): 점프=오르기·손 떼면 내려앉기·Shift(story_dash)=급강하 — 가로 평면(X·Y)에서.

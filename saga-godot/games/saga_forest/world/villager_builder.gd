@@ -26,8 +26,8 @@ extends Node3D
 
 const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
-const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
+const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 ## PLAN 103-1 spritegen.py 산출물(09-20, 그동안 어디서도 안 쓰였다) — 관계
@@ -38,7 +38,6 @@ const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const HEART_ICON_FILLED := preload("res://assets/generated/sprites/icon_heart_filled.png")
 const HEART_ICON_EMPTY := preload("res://assets/generated/sprites/icon_heart_empty.png")
 
-const NPC_CHAR_SCALE := 0.625  # GO npc_builder.gd와 같은 값(105 Q-h 결정, 1.7m 표준)
 const TALK_RADIUS := 5.0
 const TALK_GAP_SEC := 45.0
 const LINE_SHOW_SEC := 4.0
@@ -81,19 +80,19 @@ const SELL_BASE_PRICE := {
 const VILLAGERS := [
 	{"id": "npc_keeper", "name": "숲지기", "line": "이 숲은 내가 돌본다 — 짐승을 함부로 놀라게 하지 마시게",
 	 "heart_line": "자네가 다녀간 뒤로 숲이 덜 사나워졌어 — 고맙네, 정말로.",
-	 "grid": Vector2i(19, 9), "glb": "res://assets/characters/character-b.glb",
+	 "grid": Vector2i(19, 9),
 	 "gift_like": "과일",
 	 "quest": {"title": "숲의 몫", "type": "bagcat", "item_label": "과일", "count": 5, "reward": 300,
 		"desc": "겨울 채비로 과일을 다섯 개만 나눠 주게"}},
 	{"id": "npc_angler", "name": "낚시꾼", "line": "이 물엔 씨알 좋은 놈들이 산다네",
 	 "heart_line": "자네랑 나란히 낚싯대 드리우는 게 요즘 제일 낙이야.",
-	 "grid": Vector2i(26, 5), "glb": "res://assets/characters/character-c.glb",
+	 "grid": Vector2i(26, 5),
 	 "gift_like": "물고기",
 	 "quest": {"title": "씨알 좋은 물고기", "type": "bagcat", "item_label": "물고기", "count": 3, "reward": 350,
 		"desc": "물고기 세 마리만 낚아다 주게"}},
 	{"id": "npc_merchant", "name": "상인", "line": "먼 길 다니며 이것저것 모았지 — 나중에 풀어놓겠네",
 	 "heart_line": "자네한테는 값 안 매기고 그냥 줘도 아깝지 않겠어.",
-	 "grid": Vector2i(5, 14), "glb": "res://assets/characters/character-d.glb",
+	 "grid": Vector2i(5, 14),
 	 "gift_like": "꽃",
 	 "quest": {"title": "꽃 다섯 송이", "type": "bagcat", "item_label": "꽃", "count": 5, "reward": 300,
 		"desc": "꽃 다섯 송이만 모아다 주게 — 팔 데가 있어"},
@@ -103,19 +102,19 @@ const VILLAGERS := [
 	 "sells_tool": {"key": "spade", "name": "삽", "price": 700}},
 	{"id": "npc_explorer", "name": "탐험가", "line": "이 폭포 너머에 뭐가 있는지 아직 아무도 몰라",
 	 "heart_line": "다음에 폭포 너머로 갈 땐 자네부터 부르겠네.",
-	 "grid": Vector2i(25, 8), "glb": "res://assets/characters/character-b.glb",
+	 "grid": Vector2i(25, 8),
 	 "gift_like": "광석",
 	 "quest": {"title": "숲의 나머지 사람들", "type": "meetnpc", "count": ROSTER_SIZE - 1, "reward": 500,
 		"desc": "이 숲 다른 사람들도 다 만나고 왔나?"}},
 	{"id": "npc_herbalist", "name": "약초꾼", "line": "버섯 숲엔 좋은 약초가 지천이야",
 	 "heart_line": "자네 안색만 봐도 요즘 어디 아픈 데는 없나 먼저 살피게 되네.",
-	 "grid": Vector2i(5, 8), "glb": "res://assets/characters/character-c.glb",
+	 "grid": Vector2i(5, 8),
 	 "gift_like": "솔방울",
 	 "quest": {"title": "광석 세 덩이", "type": "bagcat", "item_label": "광석", "count": 3, "reward": 400,
 		"desc": "약을 지으려니 단단한 광석이 세 덩이 필요하네"}},
 	{"id": "npc_wanderer", "name": "나그네", "line": "이 외딴집에서 하룻밤 신세 좀 지고 있다네",
 	 "heart_line": "자네 덕에 이 숲이 남의 땅 같지 않고 편안해졌네.",
-	 "grid": Vector2i(14, 15), "glb": "res://assets/characters/character-d.glb",
+	 "grid": Vector2i(14, 15),
 	 "gift_like": "과일",
 	 "quest": {"title": "길양식", "type": "bagcat", "item_label": "솔방울", "count": 4, "reward": 320,
 		"desc": "먼 길 갈 양식으로 솔방울 네 알만 나눠 주게"}},
@@ -140,7 +139,7 @@ func _spawn(v: Dictionary) -> void:
 	root.add_to_group("codex_discoverable")
 	add_child(root)
 
-	root.add_child(_build_body(v.glb))
+	root.add_child(_build_body(String(v.id)))
 
 	var area := Area3D.new()
 	area.name = "TalkArea"
@@ -157,28 +156,21 @@ func _spawn(v: Dictionary) -> void:
 	_in_range[v.id] = false
 
 
-func _build_body(glb_path: String) -> Node3D:
-	var scene: PackedScene = load(glb_path)
-	if scene == null:
-		var fallback := MeshInstance3D.new()
-		var mesh := CapsuleMesh.new()
-		mesh.radius = 0.45
-		mesh.height = 1.7
-		fallback.mesh = mesh
-		fallback.position = Vector3(0, 0.85, 0)
-		return fallback
-
-	var inst := scene.instantiate()
-	inst.scale = Vector3.ONE * NPC_CHAR_SCALE
-	## GO의 npc_builder.gd와 달리 여기는 각자 다른 텍스처를 쓰는 캐릭터가
-	## 셋뿐(b/c/d)이라 파일명에서 곧바로 텍스처 경로를 뽑는다(a→player만
-	## 예외라 이 목록엔 안 나온다).
-	var letter: String = glb_path.get_file().trim_suffix(".glb").right(1)
-	var texture_path := "res://assets/characters/Textures/texture-%s.png" % letter
-	var mat := WorldCurveMaterial.textured_material(texture_path, CURVE_AMOUNT)
-	for mi: MeshInstance3D in GLBUtils.find_all_mesh_instances(inst):
-		mi.material_override = mat
-	return inst
+## G-0030 — 옛 Kenney 블록 대신 새 인물 몸(주민 id 해시로 299 중 하나). 숲은 구면 투영이라 셀 셰이더 대신
+## 표면마다 원본 그림을 곡률 재질로 다시 입힌다(머리카락·속눈썹처럼 투명한 면은 컷아웃). 새 몸이 없으면 VroidBody 가 오류·빈 몸.
+func _build_body(id: String) -> Node3D:
+	var body := VroidBody.build(id, 2)
+	for mi in body.find_children("*", "MeshInstance3D", true, false):
+		var m := (mi as MeshInstance3D).mesh
+		if m == null:
+			continue
+		for i in m.get_surface_count():
+			var src := m.surface_get_material(i) as BaseMaterial3D
+			if src == null or src.albedo_texture == null:
+				continue
+			var cut := src.transparency != BaseMaterial3D.TRANSPARENCY_DISABLED
+			(mi as MeshInstance3D).set_surface_override_material(i, WorldCurveMaterial.cutout_material(src.albedo_texture, CURVE_AMOUNT, 0.9, 0.3) if cut 				else WorldCurveMaterial.textured_material_from(src.albedo_texture, CURVE_AMOUNT))
+	return body
 
 
 func _on_body_entered(body: Node3D, v: Dictionary) -> void:

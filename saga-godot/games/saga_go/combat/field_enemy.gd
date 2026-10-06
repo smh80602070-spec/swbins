@@ -655,17 +655,17 @@ func _set_tell(on: bool) -> void:
 	if _visual:
 		_visual.scale = Vector3.ONE * _visual_scale * (1.12 if on else 1.0)
 
-## PLAN 106장 ④ — 도적은 VRoid 몸(검붉은 옷, 개체마다 머리색만 다름), 늑대는
+## PLAN 106장 ④·G-0030 — 도적은 새 인물 몸(거친 세력 묶음 VroidBody.BANDIT_POOL, 개체 이름 해시), 늑대는
 ## 코드로 그린 네발짐승(creature_builder.gd). 사건 늑대 무리(bandit_encounter)와 같은 모양.
 ## 09-29 — 코드 짐승도 AnimationPlayer(idle/walk)를 가져 _play 가 걸음을 바꾸고, 원소 적은 눈·장식이 그 원소 빛으로 빛난다.
 func _build_visual() -> Node3D:
 	var v: Node3D
 	if kind == "bandit":
-		v = VroidBody.build(String(name), 2, Color(0.55, 0.28, 0.25))
+		v = VroidBody.build_pool(VroidBody.BANDIT_POOL, String(name), 2)
 		_anim = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
 	elif def.get("vroid", false):
-		## 106장 ㉜ 사람 몸 보스 — 검은 옷 + 가면(VroidBody.add_mask).
-		v = VroidBody.build(String(name), 5, def.cloth)
+		## 106장 ㉜ 사람 몸 보스 — 가면(VroidBody.add_mask). G-0030 — 옷 색 덮기 없이 새 인물 몸.
+		v = VroidBody.build(String(name), 5)
 		_anim = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
 		if def.has("mask"):
 			VroidBody.add_mask(v, def.mask, def.get("mask_face", Color(0.08, 0.07, 0.1)), def.get("crack", false))

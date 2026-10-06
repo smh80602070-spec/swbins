@@ -221,7 +221,7 @@ func _hide_for_share() -> void:
 			match k:
 				"people":
 					var p := String(node.scene_file_path)
-					hit = (p.contains("characters_cf") or p.contains("characters_vroid")) and not _p.is_ancestor_of(node)
+					hit = p.contains("characters_dex") and not _p.is_ancestor_of(node)   # G-0030 — 사람 몸은 새 인물 몸뿐
 				"player":
 					hit = node.get_parent() == _p and node.name == "Visual"
 				"playershadow", "playeroutline":

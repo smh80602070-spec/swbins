@@ -6,7 +6,7 @@ extends SceneTree
 ## 한 줄 md5 로 낸다. 끝에 "PROBE realm_golden OK md5=…". 기대값(GOLDEN)이 비어 있으면 값만 찍고 OK, 채워져 있으면 다르면 FAIL.
 ## 진짜 세이브는 안 건드린다(save()·try_load() 안 부름).
 
-const GOLDEN := "c0419613079e7c7c177b195d0752708d"  # 분리 전 HEAD(2026-10-01)에서 잰 값
+const GOLDEN := "9f622a79aca4f4907623c124ff15f2ee"  # 10-06 문답 260 을 웹 가명판으로 다시 옮긴 뒤(옛 문답이면 분리 전 값 c0419613… 그대로 — 차이는 문답 글자뿐, 확인함)
 const MONTHS := 36
 
 var _log := ""

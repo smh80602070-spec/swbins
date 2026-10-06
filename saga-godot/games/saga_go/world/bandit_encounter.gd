@@ -26,10 +26,6 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const DuelHud := preload("res://saga_core/ui/duel_hud.gd")
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 
-## 2026-09-11 GLB 교체 — 플레이어(character-a)·주민(b·c)과 다른 글자를 써서
-## 산적임을 옷 색만으로도 구별한다(docs/ASSET_GUIDE.md). 실측·스케일 근거는
-## Player.tscn과 동일(2.7m 실측 → 1.25배).
-const BANDIT_GLB := "res://assets/characters/character-d.glb"
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 ## PLAN 106장 ④ — 씬 노드 이름 → 겉모습(씬 파일은 안 고친다).
@@ -38,18 +34,9 @@ const LOOK_BY_NODE := {
 	"WolfPackEvent": "wolf",
 	"EnemyScoutEvent": "scout",
 }
-const LOOK_CLOTH := {
-	"bandit": Color(0.55, 0.28, 0.25),
-	"leader": Color(0.35, 0.18, 0.2),
-	"scout": Color(0.45, 0.55, 0.7),
-}
 
-## 2026-09-12 — 늑대 무리·정찰병은 사람이 아니다(늑대 무리는 짐승,
-## 정찰병은 그냥 사람이지만 character-d를 또 쓰면 "산적이 사실 정찰병?"
-## 하는 혼란이 생긴다, simple_event.gd의 부상병과 같은 경계). 어울리는
-## GLB가 없으면(짐승 킷을 새로 안 받음) 빈 문자열로 두면 캡슐 fallback을
-## 쓴다 — @export로 인스턴스마다 GLB 경로와 캡슐 색을 다르게 잡을 수 있다.
-@export var visual_glb_path := BANDIT_GLB
+## G-0030 — 겉모습은 LOOK_BY_NODE(노드 이름)로만 정한다. 이 값은 TestVillage.tscn 이 아직 적어 두는 칸이라 남겨 둘 뿐 안 읽는다.
+@export var visual_glb_path := ""
 
 const AMBUSH_RADIUS := 20.0
 const RETRY_COOLDOWN_SEC := 8.0
@@ -161,36 +148,19 @@ func _spawn_visual() -> void:
 	position = TestMap.world_pos(grid.x, grid.y) + Vector3(0, ground, 0)
 
 	_base_color = visual_fallback_color
-	## PLAN 106장 ④ — 사람은 VRoid 몸(무리마다 옷색 하나), 늑대는 코드로 그린 짐승.
-	## Kenney 블록·캡슐은 이제 둘 다 못 쓸 때만의 대비책이다.
-	var look: String = LOOK_BY_NODE.get(String(name), "bandit" if visual_glb_path == BANDIT_GLB else "")
-	var scene: PackedScene = load(visual_glb_path) if visual_glb_path != "" and look == "" else null
+	## PLAN 106장 ④·G-0030 — 사람은 새 인물 몸(도적·두목은 거친 세력 묶음 BANDIT_POOL, 정찰병은 이름 해시로 299 중 하나), 늑대는 코드로 그린 짐승.
+	var look: String = LOOK_BY_NODE.get(String(name), "bandit")
 	if look == "wolf":
 		_visual = CreatureBuilder.build("wolf", [Color(0.42, 0.4, 0.38), Color(0.62, 0.6, 0.56), Color(0.95, 0.8, 0.25)], {"enemy": true})
 		_visual.scale = Vector3.ONE * 0.9
 		bandit_scale = 0.9
-		_using_glb = true
-	elif look != "":
-		_visual = VroidBody.build(String(name), 4 if look == "leader" else 2, LOOK_CLOTH[look])
+	elif look == "scout":
+		_visual = VroidBody.build(String(name), 2)
 		bandit_scale = _visual.scale.x
-		_using_glb = true
-	elif scene != null:
-		_visual = scene.instantiate()
-		_visual.scale = Vector3.ONE * bandit_scale
-		_using_glb = true
 	else:
-		## GLB가 없거나(visual_glb_path 비움) 못 받아 왔으면 캡슐 — 아예 안
-		## 보이는 것보단 낫다(hurt_soldier 등 다른 primitive 사건과 같은 경계).
-		var mi := MeshInstance3D.new()
-		var mesh := CapsuleMesh.new()
-		mesh.radius = 0.45
-		mesh.height = 1.7
-		mi.mesh = mesh
-		mi.position = Vector3(0, 0.85, 0)
-		var mat := StandardMaterial3D.new()
-		mat.albedo_color = _base_color
-		mi.material_override = mat
-		_visual = mi
+		_visual = VroidBody.build_pool(VroidBody.BANDIT_POOL, String(name), 4 if look == "leader" else 2)
+		bandit_scale = _visual.scale.x
+	_using_glb = true
 	add_child(_visual)
 	## PLAN 101-2 GO(2026-09-18, combat_feel.gd 연결) — npc_builder.gd·
 	## player.gd와 같은 한 줄. GLB 쪽만 실제로 먹는다(캡슐 fallback은

@@ -1,8 +1,6 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://games/saga_story/player/story_player.gd" id="1"]
-[ext_resource type="PackedScene" path="res://assets/characters_cf/cmp_go_01.glb" id="2"]
-[ext_resource type="Script" path="res://saga_core/player/anim_library_loader.gd" id="3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape1"]
 radius = 0.6
@@ -10,23 +8,11 @@ height = 1.8
 
 [node name="StoryPlayer" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1")
+body_id = "self"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape1")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 
-[node name="Visual" parent="." instance=ExtResource("2")]
-## GO/FOREST/REALM/DUNGEON이 쓰는 VRoid 자리표시자(AvatarSample_A, 103-4)로
-## 교체(옛 character-a.glb는 볼거리가 크게 떨어진다는 지적으로 09-20 교체).
-## 이 GLB 자체엔 애니메이션이 없어 아래 AnimationPlayer가 idle/walk를
-## 재생한다(story_player.gd `_play_anim`, sprint는 이 판에 없어 안 씀).
-## 회전은 여기서 안 건다 — saga-godot/CLAUDE.md "Transform3D는 행 우선
-## (row-major)" 삽질 기록대로 씬 파일에 손으로 회전 행렬을 적지 않는다.
-## story_player.gd `_ready()`가 코드로 `rotation.y`를 돌린다(옆에서 보는
-## 판이라 오른쪽(+X)을 보게).
-## 2026-09-29 사용자 결정 "다섯 판 모두 공방 몸으로"(char-forge 2단계) — 동작 여덟은 몸 glb 안 AnimationPlayer(아래는 스크립트만 얹어 반복 동작을 켠다).
-transform = Transform3D(1.083, 0, 0, 0, 1.083, 0, 0, 0, 1.083, 0, 0, 0)
+[node name="Visual" type="Node3D" parent="."]
 
-[node name="AnimationPlayer" parent="Visual" index="1"]
-script = ExtResource("3")
-library_path = ""

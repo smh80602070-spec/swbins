@@ -29,7 +29,8 @@ func _skill_keys() -> Dictionary:
 func _snapshot(p: Node) -> Dictionary:
 	var out := {}
 	for prop in p.get_property_list():
-		if (int(prop.usage) & PROPERTY_USAGE_SCRIPT_VARIABLE) == 0:
+		## body_id(G-0030) 는 겉모습 설정이라 스킬 동작 비교에서 뺀다 — 빼면 분리 전 기준값과 같다(10-06 확인).
+		if (int(prop.usage) & PROPERTY_USAGE_SCRIPT_VARIABLE) == 0 or prop.name == "body_id":
 			continue
 		var v: Variant = p.get(prop.name)
 		match typeof(v):

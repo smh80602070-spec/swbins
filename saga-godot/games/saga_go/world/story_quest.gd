@@ -345,7 +345,7 @@ func _build_npc(id: String) -> void:
 	add_child(root)
 	root.global_position = p
 	var body: Node3D = _drone_body(info.cloth) if String(info.get("body", "")) == "drone" \
-		else VroidBody.build("story_" + String(info.get("body", id)), int(info.rarity), info.cloth)
+		else VroidBody.build("story_" + String(info.get("body", id)), int(info.rarity))   # G-0030 — 새 인물 몸(색 덮기 없음)
 	body.name = "Body"
 	root.add_child(body)
 	var anim := body.get_node_or_null("AnimationPlayer") as AnimationPlayer
@@ -510,7 +510,7 @@ func _build_thief(s: Dictionary) -> void:
 	elif horse:
 		body = CreatureBuilder.build("horse", s.get("colors", [Color(0.42, 0.28, 0.18), Color(0.16, 0.12, 0.1), Color(0.1, 0.08, 0.06)]))
 	else:
-		body = VroidBody.build("story_thief", 2, s.get("cloth", Color(0.35, 0.3, 0.28)))
+		body = VroidBody.build_pool(VroidBody.BANDIT_POOL, "story_thief", 2)   # G-0030
 	body.name = "Body"
 	_thief.add_child(body)
 	if captain:

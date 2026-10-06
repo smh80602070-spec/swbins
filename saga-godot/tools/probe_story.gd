@@ -1376,13 +1376,13 @@ func _physics_process(_delta: float) -> void:
 			if _frame == 420:
 				var hp: Vector3 = (_v.hand as Node3D).global_position - body.global_position
 				var back := absf(hp.y - float(_v.base_y) / float(_v.n)) < 0.05
-				## 09-29 공방 몸(char-forge)엔 입·눈 변형(blend shape)이 없다 — 있는 몸만 입·기쁨·깜빡임을 본다. 손짓·끄덕임은 늘.
+				## 입·눈 변형(blend shape)이 있는 몸만 입·기쁨·깜빡임을 본다. G-0030 새 몸(characters_dex)은 변형도 입 그림도 없어(K 요청) 손짓·끄덕임만.
 				var faced := bool(face.call("has_mouth"))
 				var drawn: bool = bool(_v.pic) and String(face.call("mouth_kind")) == "" # 그림은 말이 끝나면 다물린 원본으로 돌아온다
 				var ok: bool = _v.map == [0, 1, 2, 3, 4, -1, -1] and bool(_v.opened) and bool(_v.revealing) \
 					and float(_v.lift) > 0.12 and float(_v.fwd) > 0.08 and float(_v.infl) > 0.9 and bool(_v.done_reveal) and bool(_v.open_mid) \
 					and bool(_v.closed) and float(face.get("influence")) < 0.05 and back \
-					and (not faced or (float(_v.mouth) > 0.2 and float(_v.joy) > 0.5 and float(_v.blink) > 0.99)) and (faced or drawn)
+					and (not faced or (float(_v.mouth) > 0.2 and float(_v.joy) > 0.5 and float(_v.blink) > 0.99)) and (faced or drawn or (face.get("_mouth_mats") as Array).is_empty())
 				_check("talk_face", ok, "map=%s reveal=%s mouth=%.2f lift=%.2f fwd=%.2f infl=%.2f joy=%.2f closed=%s back=%s blink=%.1f front=%+.0f pic=%s" % [
 					_v.map, _v.revealing, _v.mouth, _v.lift, _v.fwd, _v.infl, _v.joy, _v.closed, back, _v.blink, face.call("front_sign"), _v.pic])
 				(_v.hand as Node).queue_free()

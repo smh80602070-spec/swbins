@@ -22,7 +22,7 @@
 // 전제 — 이 프로젝트의 월드 오브젝트는 Y축 회전(요)만 쓴다(GO/DUNGEON
 // 어디에도 피치·롤이 없다, player.gd도 이동 방향으로 Y축만 돈다). Y축
 // 회전은 로컬 Y 성분을 안 바꾸므로, 월드 XZ로 굽힘량만 구해 로컬
-// VERTEX.y에서 바로 빼는 것으로 충분하다 — 모델 역행렬이 필요 없다.
+// VERTEX.y에서 바로 빼는 것으로 충분했다 — G-0030 부터는 배율이 걸린 물체도 맞게 모델 역행렬로 되돌린다.
 // 나중에 피치·롤이 있는 오브젝트에 이 include를 쓸 일이 생기면 이 전제부터
 // 다시 볼 것.
 //
@@ -40,6 +40,8 @@ global uniform vec3 saga_world_curve_center;
 vec3 saga_apply_world_curve(vec3 vertex_local, mat4 model_matrix, float curve_amount) {
 	vec2 world_xz = (model_matrix * vec4(vertex_local, 1.0)).xz;
 	vec2 delta = world_xz - saga_world_curve_center.xz;
-	vertex_local.y -= dot(delta, delta) * curve_amount;
+	// G-0030 — 굽힘은 월드 아래로 내리고, 물체 배율·회전을 되돌려 로컬로 뺀다. 배율 1·Y축 회전만인 물체는 전과 같고,
+	// 배율이 걸린 소품(바위 ×0.225 등)·키 맞춤 배율이 걸린 인물 몸은 이제 땅과 같은 만큼 휜다(전엔 배율만큼 덜 휘어 멀리서 떴다).
+	vertex_local -= inverse(mat3(model_matrix)) * vec3(0.0, dot(delta, delta) * curve_amount, 0.0);
 	return vertex_local;
 }

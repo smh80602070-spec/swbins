@@ -1,43 +1,19 @@
 extends RefCounted
 
-## PLAN 106장 ④ — 역사 인물·주민·도적을 캡슐/Kenney 블록에서 VRoid 몸으로.
-## 이 저장소에 있는 VRoid 셋(플레이어 몫 AvatarSample_A 는 빼고 둘)을 쓰고,
-## 인물마다 머리·옷 색을 id 해시로 바꿔(셀 셰이더 albedo_tint) 같은 몸이라도
-## 구별되게 한다. ★5 는 가장자리 빛(rim)을 금색으로 — 원신의 "전설 등급" 신호.
-## 얼굴·피부는 건드리지 않는다. 주역 전용 조형은 사람 몫(VRoid Studio)이다.
+## PLAN 106장 ④ — 역사 인물·주민·도적의 사람 몸. G-0030(10-06 사용자 "기존꺼는 안쓸꺼야")부터 **새 인물 몸(characters_dex) 하나만** 쓴다 —
+## 옛 공방 몸(characters_cf)·Kenney 블록·VRoid 샘플로 물러서는 길은 없다. 새 몸이 안 깔린 PC 면 오류를 띄우고 빈 몸(설치: tools/char-forge/engine_characters.sh --install godot).
+## 옷·머리가 그림으로 입혀져 있어 색을 곱하지 않는다. ★5 는 가장자리 빛(rim)만 금색으로 — 원신의 "전설 등급" 신호.
 
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
 
-## 2026-09-29 사용자 결정 "새 공방 몸으로 교체"(char-forge 2단계) — VRoid 둘 → 공방 몸(CC0, 동작 여덟이 몸에 들어 있어 lib 없음).
-## 키는 옛 몸과 같게(여 1.57m·남 1.78m 원본 → 약 1.70m).
-## 09-29 마을 사람 몸 여섯(tools/char-forge/recipes/npc_*.json — 농부 남 둘·노인·두건 나그네·농부 여·짧은 머리 순찰자 여, 조각을 한 메시로 합침).
-## 플레이어 몸(cmp_*)은 여기 안 쓴다 — 조각 몸이라 여럿 세우면 draw call 이 크다. 레시피 키(1.60~1.78m) 그대로 — 사람마다 키가 다르게.
-## boost = 옷빛 곱(어두운 가죽 순찰자 옷은 크게, 밝은 농부 옷은 조금).
-const BODIES := [
-	{"glb": "res://assets/characters_cf/npc_m_peasant_01.glb", "scale": 1.0, "lib": "", "boost": 2.2},
-	{"glb": "res://assets/characters_cf/npc_m_peasant_02.glb", "scale": 1.0, "lib": "", "boost": 2.2},
-	{"glb": "res://assets/characters_cf/npc_m_elder_01.glb", "scale": 1.0, "lib": "", "boost": 2.2},
-	{"glb": "res://assets/characters_cf/npc_m_hood_01.glb", "scale": 1.0, "lib": "", "boost": 2.1},
-	{"glb": "res://assets/characters_cf/npc_f_peasant_01.glb", "scale": 1.0, "lib": "", "boost": 2.2},
-	{"glb": "res://assets/characters_cf/npc_f_ranger_01.glb", "scale": 1.0, "lib": "", "boost": 2.1},
-]
 const HEAD_BONES := ["J_Bip_C_Head", "Head"]
 const NECK_BONES := ["J_Bip_C_Neck", "neck_01"]
 const LOOP_CLIPS := ["idle", "walk", "sprint"]
 
-const HAIR_TINTS := [
-	Color(1, 1, 1), Color(0.55, 0.45, 0.4), Color(0.4, 0.42, 0.55), Color(1.0, 0.85, 0.7),
-	Color(0.75, 0.55, 0.5), Color(0.6, 0.7, 0.85), Color(0.35, 0.33, 0.35), Color(0.9, 0.75, 0.95),
-]
-## 09-30 여덟 → 열 — 연보라 둘이 한 줄에 겹쳐 서던 것을 색상환에 고르게(진홍·남·이끼·겨자·자두·청록·모래 …).
-const CLOTH_TINTS := [
-	Color(1, 0.95, 0.85), Color(0.85, 0.4, 0.35), Color(0.4, 0.5, 0.9), Color(0.5, 0.78, 0.5), Color(0.92, 0.75, 0.3),
-	Color(0.6, 0.35, 0.6), Color(0.45, 0.55, 0.6), Color(0.95, 0.6, 0.35), Color(0.3, 0.7, 0.7), Color(0.75, 0.65, 0.45),
-]
 const GOLD_RIM := Color(1.0, 0.82, 0.35)
 
 ## G-0022 — 웹과 같은 인물 299명(`tools/char-forge/engine_characters.sh --install godot` 가 만드는 `assets/characters_dex/dj_*.gltf`,
-## 저장소 밖이라 PC 마다 설치). 폴더가 없으면 `build(..., use_dex=true)` 도 위 BODIES 로 물러선다. 옷·머리가 텍스처로 입혀져 있어
+## 저장소 밖이라 PC 마다 설치). 옷·머리가 텍스처로 입혀져 있어
 ## 색 곱(`_tint`·boost)은 안 건다(금 테두리만). 동작은 같은 J_Bip 뼈 이름이라 VRoid 동작 라이브러리를 붙이되,
 ## 뼈 트랙이 "Skeleton3D:뼈" 라 AnimationPlayer 기준 노드를 Armature 로 둔다(안 그러면 T포즈). 키는 몸마다 달라(머리뼈 y 1.22~1.64m)
 ## 머리뼈 높이를 id 해시로 정한 목표(1.38~1.50m ≈ 키 1.57~1.70m)에 맞춰 배율을 구한다.
@@ -55,55 +31,46 @@ const DEX_SELF_ID := "dj_haean"
 static var _dex_names: PackedStringArray = PackedStringArray()
 static var _dex_scanned := false
 
-## 같은 id 는 늘 같은 몸·색. rarity 5 면 금 테두리. cloth_override 가 있으면 옷색을 그걸로
-## (도적 = 검붉은 옷처럼 무리 전체를 한 색으로 묶을 때).
-static func build(id: String, rarity: int = 3, cloth_override: Variant = null, use_dex := false) -> Node3D:
-	if use_dex:
-		var dex := _build_dex(id, rarity)
-		if dex != null:
-			return dex
-	var h := _hash(id)
-	var body: Dictionary = BODIES[h % BODIES.size()]
-	var v := (load(body.glb) as PackedScene).instantiate() as Node3D
-	v.scale = Vector3.ONE * float(body.scale)
-	## 2026-09-24 — saga_forest_avatar_01 은 뼈대 공간 앞이 -Z(VRM 1.0 식)라, 부르는 쪽이 모두 "앞 = +Z"로
-	## 돌리던(atan2(x, z)) 인물·도적이 등을 보이며 걸었다. 안쪽 자식을 Y축 180° 돌려 돌려주는 몸은 늘 +Z 를 보게 한다
-	## (애니 트랙은 "Skeleton3D:뼈" 경로라 안 바뀐다. 뼈대 공간 자체는 그대로 -Z 라 뼈에 뭘 붙일 땐 front_sign 을 본다).
-	var skels := v.find_children("*", "Skeleton3D", true, false)
-	if not skels.is_empty() and front_sign(skels[0]) < 0.0:
-		for c in v.get_children():
-			if c is Node3D:
-				(c as Node3D).transform = Transform3D(Basis(Vector3.UP, PI), Vector3.ZERO) * (c as Node3D).transform
-	CelShaderApply.apply_to(v)
-	tune_lod(v)
-	## 부르는 쪽이 또 apply_to 하면 얼굴 베이크가 두 번 덮여 단색이 된다(재질 감사 flat-tint).
-	v.set_meta("cel_applied", true)
-	var hair: Color = HAIR_TINTS[(h >> 3) % HAIR_TINTS.size()]
-	var cloth: Color = cloth_override if cloth_override != null else CLOTH_TINTS[(h >> 7) % CLOTH_TINTS.size()]
-	## 공방 몸 옷 그림은 어두운 가죽이라 곱하기만 하면 모두 검은 무리가 된다 — 옷빛을 밝혀(1 넘게) 색이 보이게.
-	var boost := float(body.get("boost", 1.0))
-	if boost != 1.0:
-		cloth = Color(cloth.r * boost, cloth.g * boost, cloth.b * boost)
-		hair = Color(hair.r * 1.3, hair.g * 1.3, hair.b * 1.3)
-	_tint(v, hair, cloth, rarity >= 5)
-	var ap: AnimationPlayer = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
-	if String(body.lib) != "" or ap == null:
-		ap = AnimationPlayer.new()
-		ap.name = "AnimationPlayer"
-		v.add_child(ap)
-		ap.add_animation_library("", load(body.lib))
-	for c in LOOP_CLIPS:
-		if ap.has_animation(c):
-			ap.get_animation(c).loop_mode = Animation.LOOP_LINEAR
-	if ap.has_animation("idle"):
-		ap.play("idle")
-		## 무리가 박자 맞춰 숨쉬지 않게 시작점을 어긋낸다.
-		ap.seek(float(h % 100) / 100.0 * ap.current_animation_length, true)
-	return v
+## 같은 id 는 늘 같은 몸(같은 이름의 몸이 있으면 그 몸, 없으면 id 해시로 299 중 하나). rarity 5 면 금 테두리.
+## cloth_override·use_dex 는 옛 호출 모양을 받아 두기만 한다(G-0030 — 색 덮기 없음, 늘 새 몸).
+static func build(id: String, rarity: int = 3, _cloth_override: Variant = null, _use_dex := true) -> Node3D:
+	return _dex_or_missing(id, rarity)
+
+## G-0030 — 무리(도적 등)는 이 묶음 안에서 seed 해시로 고른다. 군중 180(K-0033 npc_*)이 들어오면 그 역할 몸으로 바꾼다.
+## 폐허·막북 세력의 힘(might) 쓰는 인물 — 이름이 아니라 몸(차림)만 빌린다.
+const BANDIT_POOL := ["ru_busaeng", "ru_geohae", "ru_gogol", "mb_cheolgak", "mb_hanpung", "mb_hoja", "mb_janggwang", "tb_ganghae", "tb_japgol", "nh_torak"]
+static func build_pool(pool: Array, seed_id: String, rarity: int = 2) -> Node3D:
+	return _dex_or_missing(String(pool[_hash(seed_id) % pool.size()]), rarity)
+
+static var _missing_warned := false
+static func _dex_or_missing(id: String, rarity: int) -> Node3D:
+	var v := _build_dex(id, rarity)
+	if v != null:
+		return v
+	if not _missing_warned:
+		_missing_warned = true
+		push_error("VroidBody: 새 인물 몸(assets/characters_dex)이 없다 — bash tools/char-forge/engine_characters.sh --install godot")
+	var empty := Node3D.new()
+	empty.name = "MissingBody"
+	return empty
 
 ## 주인공("self")이면 DEX_SELF_ID, 아니면 id 그대로 — 편성원 id 로 부르는 쪽(플레이어 몸 교체)이 쓴다. dex 없으면 null.
 static func build_hero(id: String, rarity: int = 3) -> Node3D:
-	return _build_dex(DEX_SELF_ID if id == "self" else id, rarity)
+	return _dex_or_missing(DEX_SELF_ID if id == "self" else id, rarity)
+
+## G-0030 — 장면에 둔 빈 "Visual" 자리를 새 몸으로 갈아 끼운다(위치·회전·형제 순서 그대로). 플레이어 장면·군주 초상이 시작할 때 쓴다.
+static func wear(slot: Node3D, id: String, rarity: int = 3) -> Node3D:
+	var body := build_hero(id, rarity)
+	var parent := slot.get_parent()
+	var idx := slot.get_index()
+	body.position = slot.position
+	body.rotation = slot.rotation
+	parent.remove_child(slot)
+	slot.queue_free()
+	body.name = "Visual"
+	parent.add_child(body)
+	parent.move_child(body, idx)
+	return body
 
 
 ## G-0023 — 눈·입·눈썹·속눈썹 같은 작은 얼굴 조각(재질 이름에 FACE·EYE, 피부 얼굴판 "Face_00_SKIN" 은 제외)은 그림자를 안 드리운다.
@@ -141,7 +108,7 @@ static func dex_available() -> bool:
 	return not dex_names().is_empty()
 
 
-## dex 몸 한 벌 — 없거나 못 읽으면 null(부르는 쪽이 BODIES 로 물러선다).
+## dex 몸 한 벌 — 없거나 못 읽으면 null(_dex_or_missing 이 오류·빈 몸).
 static func _build_dex(id: String, rarity: int) -> Node3D:
 	var names := dex_names()
 	if names.is_empty():
@@ -190,7 +157,8 @@ static func _build_dex(id: String, rarity: int) -> Node3D:
 	tune_lod(v)
 	v.set_meta("cel_applied", true)
 	_no_cast_small_parts(v)
-	_tint(v, Color.WHITE, Color.WHITE, rarity >= 5)
+	if rarity >= 5:
+		_gold_rim(v)
 	var ap := AnimationPlayer.new()
 	ap.name = "AnimationPlayer"
 	v.add_child(ap)
@@ -246,25 +214,17 @@ static func _bone_anchor(skel: Skeleton3D, bone: int) -> Node3D:
 static func bone_anchor(skel: Skeleton3D, bone: int) -> Node3D:
 	return _bone_anchor(skel, bone)
 
-static func _tint(root: Node, hair: Color, cloth: Color, gold: bool) -> void:
+static func _gold_rim(root: Node) -> void:
 	for mi in root.find_children("*", "MeshInstance3D", true, false):
 		var m := (mi as MeshInstance3D).mesh
 		if m == null:
 			continue
 		for i in m.get_surface_count():
-			var src := m.surface_get_material(i)
 			var over := (mi as MeshInstance3D).get_surface_override_material(i) as ShaderMaterial
-			if src == null or over == null:
+			if over == null:
 				continue
-			var n := src.resource_name.to_upper() # VRoid "…HAIR…" · 공방 "hair_2"·"cloth_a"
-			var base: Color = over.get_shader_parameter("albedo_tint")
-			if n.contains("HAIR"):
-				over.set_shader_parameter("albedo_tint", base * hair)
-			elif n.contains("CLOTH"):
-				over.set_shader_parameter("albedo_tint", base * cloth)
-			if gold:
-				over.set_shader_parameter("rim_color", GOLD_RIM)
-				over.set_shader_parameter("rim_strength", 0.55)
+			over.set_shader_parameter("rim_color", GOLD_RIM)
+			over.set_shader_parameter("rim_strength", 0.55)
 
 static func _hash(id: String) -> int:
 	var h := 7

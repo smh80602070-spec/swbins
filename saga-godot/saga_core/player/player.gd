@@ -2,9 +2,7 @@ extends CharacterBody3D
 
 ## VERTICAL_SLICE.md Phase 5 — 51~54절.
 ## 2026-09-11 — 51절(3D 모델 연결)·52절(Idle/Walk/Run) GLB 교체.
-## Visual은 이제 캡슐이 아니라 assets/characters/character-a.glb
-## (CC0 Kenney Blocky Characters, ASSET_GUIDE.md 참고) — 안에 idle·walk·
-## sprint 애니메이션이 이미 들어 있어서 그걸 그대로 재생만 한다.
+## G-0030 — 장면의 Visual 은 빈 자리이고, 시작할 때 body_id 의 새 인물 몸(characters_dex)으로 갈아 끼운다(동작은 몸에 붙은 공용 라이브러리).
 
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const CelShaderApply := preload("res://saga_core/shaders/cel_shader_apply.gd")
@@ -46,7 +44,8 @@ var fly_on := false
 @onready var visual: Node3D = $Visual
 @onready var _anim: AnimationPlayer = visual.find_child("AnimationPlayer", true, false)
 
-const CLOTH_BOOST := 1.7
+## G-0030 — 이 판 주인공 몸(새 인물 몸 id, "self" = VroidBody.DEX_SELF_ID). 장면 뿌리 노드에 적는다.
+@export var body_id := ""
 var _joystick: Control = null
 var _current_anim := ""
 
@@ -60,17 +59,6 @@ func _ready() -> void:
 		var mount_node := Node3D.new()
 		mount_node.set_script(load("res://saga_core/player/mount.gd"))
 		add_child(mount_node)
-	## 2026-09-30 — 공방 옷 그림이 어두운 가죽이라 주인공만 칙칙했다(마을 사람은 vroid_body boost). 옷 재질 빛을 올려 초록 조끼가 산다.
-	for mi in visual.find_children("*", "MeshInstance3D", true, false):
-		var m := (mi as MeshInstance3D).mesh
-		if m == null:
-			continue
-		for i in m.get_surface_count():
-			var src := m.surface_get_material(i)
-			var over := (mi as MeshInstance3D).get_surface_override_material(i) as ShaderMaterial
-			if src != null and over != null and src.resource_name.to_lower().contains("cloth"):
-				var base: Color = over.get_shader_parameter("albedo_tint")
-				over.set_shader_parameter("albedo_tint", Color(base.r * CLOTH_BOOST, base.g * CLOTH_BOOST, base.b * CLOTH_BOOST, base.a))
 	## 2026-09-24 — FOREST 아바타(saga_forest_avatar_01)는 뼈대 공간 앞이 -Z 라, 아래 target_yaw = atan2(x, z)(앞 = +Z)로
 	## 돌리면 등을 앞으로 한 채 달렸다. world/vroid_body.gd 와 같게 Visual 안쪽을 Y축 180° 돌려 앞을 +Z 로(앞이 +Z 인 GO·DUNGEON 몸은 그대로).
 	var skels := visual.find_children("*", "Skeleton3D", true, false)
@@ -81,6 +69,9 @@ func _ready() -> void:
 	var shadow := BlobShadow.make_decal()
 	shadow.position = Vector3(0, 0.15, 0)
 	add_child(shadow)
+	## G-0030 — 새 몸은 VroidBody 가 앞(+Z)·셀 셰이더·동작까지 맞춰 주므로 위 회전·셰이더 손질 뒤에 끼운다.
+	if body_id != "":
+		swap_body(VroidBody.build_hero(body_id))
 
 ## G-0024 — Visual 을 새 몸으로 통째 바꾼다(편성원 전환·주인공 몸). 이름·위치·회전을 이어받고, 옛 몸에 얹힌 부속(글라이더 등)은
 ## keep 으로 넘긴 것만 새 몸으로 옮긴다. 새 몸은 VroidBody 가 셀 셰이더·동작 라이브러리까지 입혀 준 것.

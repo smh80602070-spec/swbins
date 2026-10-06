@@ -136,14 +136,11 @@ const BEACH_DEBRIS_TRIGGER_RADIUS := 15.0
 ## 오가 화면에 동시에 안 보이니 겹쳐도 무해하다).
 const FISHER_ID := "npc_fisher"
 const FISHER_NAME := "늙은 어부"
-const FISHER_GLB := "res://assets/characters/character-b.glb"
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const FISHER_TALK_RADIUS := 14.0
 const FISHER_TALK_GAP_SEC := 45.0
 const FISHER_LINE := "그물은 무겁지만 바다는 정직하지."
 const FISHER_OFFER_EVENT_ID := "offer_npc_fisher"
-## 105 Q-h 결정(c, 2026-09-19) — 1.7m 표준, npc_builder.gd와 같은 값.
-const NPC_CHAR_SCALE := 0.625
 const LINE_SHOW_SEC := 4.0
 
 var _village_layer: CanvasLayer
@@ -439,22 +436,8 @@ func _build_fisherman() -> void:
 
 
 func _build_fisher_body() -> Node3D:
-	## PLAN 106장 ④ — Kenney 블록 → VRoid 몸(바다색 옷).
-	if ResourceLoader.exists(VroidBody.BODIES[0].glb):
-		return VroidBody.build("coast_fisher", 2, Color(0.45, 0.6, 0.75))
-	var scene: PackedScene = load(FISHER_GLB)
-	if scene != null:
-		var inst := scene.instantiate()
-		inst.scale = Vector3.ONE * NPC_CHAR_SCALE
-		return inst
-
-	var body := MeshInstance3D.new()
-	var mesh := CapsuleMesh.new()
-	mesh.radius = 0.45
-	mesh.height = 1.7
-	body.mesh = mesh
-	body.position = Vector3(0, 0.85, 0)
-	return body
+	## PLAN 106장 ④·G-0030 — 새 인물 몸(이름 해시로 299 중 하나, 색 덮기 없음).
+	return VroidBody.build("coast_fisher", 2)
 
 
 ## npc_builder.gd _on_body_entered()의 상인 갈래(offer_title 있고
