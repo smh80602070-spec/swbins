@@ -54,6 +54,9 @@ const SHOTS := [
 	["g40_sky_orbit", "sunken", "isle:orbit", Vector3(6, 0, 6), "isle:orbit", -10.0, 12.0, "ch:25:0"],
 	["g40_storm_eye", "village", "stormeye", Vector3(8, 0, 8), "stormeye", -12.0, 14.0, "ch:28:0"],
 	["g40_knot", "ruins", "knot:0", Vector3(5, 0, 5), "knot:0", -10.0, 8.0, "ch:26:0"],
+	# G-0043 — 대화 카메라(촌장 누리와 대화 창)·활 조준(활 인물로 바꿔 조준). 이 둘은 컷 각도로 카메라를 덮어쓰지 않는다(_own_camera)
+	["g43_dialogue", "village", Vector2(5.8, 3.38), Vector3.ZERO, Vector2(5.8, 3.3), -8.0, 6.0, "dialogue:elder"],
+	["g43_aim", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -6.0, 6.0, "aim"],
 	# G-0038 — 휑한 지역 셋 꾸밈 전후(SAGA_NO_DRESSING=1 이면 꾸밈 없이)
 	["g38_amber_street", "amber", Vector2(3.6, 6.8), Vector3.ZERO, Vector2(4.6, 4.6), -4.0, 14.0, ""],
 	["g38_amber_market", "amber", Vector2(2.7, 4.9), Vector3.ZERO, Vector2(1.5, 3.6), -6.0, 14.0, ""],
@@ -151,6 +154,7 @@ var _only: PackedStringArray = []
 var _lineup: Array[Node3D] = []
 var _done: Array = []
 var _close_call: Array = []   # "call:" 할 일이 연 화면 [노드, 닫는 함수]
+var _members_saved: Variant = null   # "aim" 할 일이 바꾸기 전 편성(G-0043)
 var _story_saved: Variant = null   # "ch:" 할 일이 바꾸기 전 이야기 진행(G-0040)
 var _swing_enemy: Node3D = null   # "swing" 할 일 — 가장 가까운 들판 적 곁에 서서 찍기 직전에 한 번 휘두른다(09-28 전투 이펙트)
 
@@ -210,8 +214,12 @@ func _process(_delta: float) -> void:
 			if is_instance_valid(_swing_enemy):
 				CombatFx.slash(_p, _swing_enemy.global_position - _p.global_position, 2.6, CombatFx.PHYSICAL, 1)
 				CombatFx.spark(_p, _swing_enemy.global_position + Vector3.UP * 0.9, Color(0.75, 0.45, 1.0), true)
-	if _frame < SETTLE:
+	if _frame < SETTLE and not (_own_camera(String(SHOTS[_i][7])) and _frame > 20):
 		_aim(SHOTS[_i])
+	if String(SHOTS[_i][7]) == "aim" and _frame == 40:   # 바꾼 인물이 자리 잡은 뒤 조준(probe_archery 와 같은 간격)
+		var fca := get_tree().get_first_node_in_group("go_field_combat")
+		if fca and fca.get("aim"):
+			print("SHOT_AIM enter=%s" % (fca.get("aim") as Node).call("enter", false))
 	if _frame == SETTLE:
 		_capture(String(SHOTS[_i][0]))
 
@@ -361,6 +369,26 @@ func _act(a: String) -> void:
 			var dn := get_tree().get_first_node_in_group("go_dispatch")
 			if dn:
 				dn.call("open_screen")
+		_ when a.begins_with("dialogue:"):
+			## "dialogue:<인물 id>" — 그 인물과 대화 창(world/story_quest.gd open_dialogue, 줄마다 말하는 이를 카메라가 잡는다). 찍은 뒤 닫는다(G-0043).
+			var sq := get_tree().get_first_node_in_group("go_story")
+			if sq:
+				var nid := a.substr(9)
+				var npc: Dictionary = (load("res://games/saga_go/data/story.gd") as Script).get_script_constant_map()["NPCS"].get(nid, {})
+				print("SHOT_DIALOGUE npc=%s placed=%s" % [nid, (sq.get("_npc_pos") as Dictionary).has(nid)])
+				sq.call("open_dialogue", [[String(npc.get("name", nid)), String(npc.get("idle", "…")), "joy"], ["나", "네, 꼭 그렇게 될 거예요."]], Callable(), nid)
+				_close_call = [sq, "_close_dialogue"]
+		"aim":   # 활 인물 하나로 편성을 바꾸고(40프레임에 조준) — 찍은 뒤 편성·조준을 되돌린다(G-0043)
+			var bow := ""
+			for h in Characters.HEROES:
+				if (load("res://games/saga_go/data/weapons.gd") as Script).call("type_of", h.id) == "bow":
+					bow = h.id
+					break
+			var fcb := get_tree().get_first_node_in_group("go_field_combat")
+			if bow != "" and fcb:
+				_members_saved = PartyState.members.duplicate()
+				PartyState.members.assign([bow])
+				fcb.call("switch_to", 1, true)
 		_ when a.begins_with("touch:"):
 			## "touch:<그룹>:<닫는 함수>" — 만남 칸에 들어온 것처럼(인물 설득 창). 찍은 뒤 닫는다(G-0040).
 			var tp := a.split(":")
@@ -381,12 +409,23 @@ func _act(a: String) -> void:
 					node.call(parts[2])
 				_close_call = [node, parts[4]]
 
+func _own_camera(a: String) -> bool:
+	return a == "aim" or a.begins_with("dialogue:")
+
 func _refresh_story_stages() -> void:
 	for g in ["go_sky_route", "go_storm_eye"]:
 		for n in get_tree().get_nodes_in_group(g):
 			n.call("_refresh")
 
 func _undo() -> void:
+	if _members_saved != null:
+		var fcu := get_tree().get_first_node_in_group("go_field_combat")
+		if fcu and fcu.get("aim") and bool((fcu.get("aim") as Node).get("active")):
+			(fcu.get("aim") as Node).call("exit")
+		PartyState.members.assign(_members_saved)
+		_members_saved = null
+		if fcu:
+			fcu.call("switch_to", 1, true)
 	if _story_saved != null:
 		PartyState.story = _story_saved
 		_story_saved = null
