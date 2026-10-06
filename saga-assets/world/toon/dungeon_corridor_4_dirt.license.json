@@ -9,11 +9,11 @@
   "polyhaven: coast_sand_rocks_02"
  ],
  "size_m": [
-  4.18,
+  4.09,
   4.0,
-  3.99
+  3.96
  ],
- "tris": 824,
+ "tris": 980,
  "nodes": [
   "col_corridor"
  ]

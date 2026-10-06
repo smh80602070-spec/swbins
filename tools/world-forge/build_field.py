@@ -243,11 +243,20 @@ def _mats(C, variant):
     return fl, wl, gl
 
 
-def _rough_wall(M, a, b, y0, slot, seed, h=WALL_H, thick=0.5, axis='x'):
+def _rough_wall(M, a, b, y0, slot, seed, h=WALL_H, thick=0.5, axis='x', step=None, meander=0.0, inward=0):   # meander·inward 는 방 키트(build_kit)가 켠다 — 굴 키트 모양은 그대로
     """a→b 선분 위 거친 바위 벽 — 한 장의 울퉁불퉁한 표면(10-06, 상자 마디 → "판자 성가퀴" 로 보였다).
     단면 = 앞면 아래→위 → 둥근 윗면 → 뒷면 위→아래, 벽 따라 0.25m 마다 결정적 잡음으로 밀고 당긴다. 양 끝 열은 잡음 0(모듈 이어 붙임)·끝면 막음."""
     rnd = random.Random(seed)
-    n = max(2, int(round(abs(b - a) / (0.25 if abs(b - a) <= 4.5 else 0.9))))       # 긴 벽(12m 방)은 0.9m 마디 — 삼각형 예산
+    n = max(2, int(round(abs(b - a) / (step or (0.25 if abs(b - a) <= 4.5 else 0.9)))))   # 긴 벽(12m 방)은 0.9m 마디 — 삼각형 예산
+    ph = [rnd.uniform(0, 2 * math.pi) for _ in range(3)]
+
+    def bend(i):                                                                       # 10-06 저녁: 긴 파장으로 벽이 들고난다(위에서 보면 구불구불), 양 끝은 0(모듈 이음)
+        u = abs(b - a) * i / n
+        taper = max(0.0, math.sin(math.pi * i / n)) ** 0.5
+        m = meander * taper * (0.13 * math.sin(2 * math.pi * u / 3.1 + ph[0]) + 0.06 * math.sin(2 * math.pi * u / 1.3 + ph[1]))
+        if inward:                                                                     # 모듈 바깥 면(규격 AABB)을 넘지 않게 안쪽으로만
+            m = inward * abs(m)
+        return m, -meander * taper * 0.2 * abs(math.sin(2 * math.pi * u / 2.3 + ph[2]))   # 윗선은 아래로만 들쭉날쭉(높이 규격 유지)
     ht = [0.0, 0.7, 1.45, 2.2, 2.8]
     prof = [(-1, z) for z in ht] + [(-0.5, 3.0), (0.0, 3.08), (0.5, 3.0)] + [(1, z) for z in reversed(ht)]   # (앞뒤 −1..1, 높이)
     noise = [[0.0] * len(prof) for _ in range(n + 1)]
@@ -264,13 +273,14 @@ def _rough_wall(M, a, b, y0, slot, seed, h=WALL_H, thick=0.5, axis='x'):
         u = a + (b - a) * i / n
         side, z = prof[k]
         sc = h / 3.0
-        d = side * thick / 2 * (1.0 if abs(side) == 1 else 0.9) + (noise[i][k] if abs(side) == 1 else 0.0) * side
-        zz = z * sc + (noise[i][k] * 0.6 if z * sc > 2.5 else 0.0)
+        mv, hv = bend(i)
+        d = side * thick / 2 * (1.0 if abs(side) == 1 else 0.9) + (noise[i][k] if abs(side) == 1 else 0.0) * side + mv
+        zz = z * sc + (noise[i][k] * 0.6 + hv if z * sc > 2.5 else 0.0)
         return (u, y0 + d, zz) if axis == 'x' else (y0 + d, u, zz)
 
     rows = [[pt(i, k) for i in range(n + 1)] for k in range(len(prof))]
     cen = [((a + b) / 2, y0, 1.4) if axis == 'x' else (y0, (a + b) / 2, 1.4)] * len(prof)
-    WS.surf(M, rows, cen, slot, closed=False, tile=1.5)
+    WS.surf(M, rows, cen, slot, closed=False, tile=1.5, uv_m=2.5)                   # UV = 실제 길이(2.5m 한 장) — 긴 벽 윗면 픽셀 깨짐 고침
     out_dir = Vector((1, 0, 0) if axis == 'x' else (0, 1, 0)) * (1 if b > a else -1)
     for i, sgn in ((0, -1), (n, 1)):                                                   # 끝면(문 옆·모듈 끝) — 법선이 벽 밖(축 방향)을 보게
         pts = [Vector(pt(i, k)) for k in range(len(prof))]

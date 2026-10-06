@@ -69,8 +69,9 @@ def ball(M, c, r, slot, n=6):
     tube(M, (x, y, z + r * 0.5), (x, y, z + r), r * 0.87, r * 0.35, slot, 0.3, n)
 
 
-def surf(M, rows, centers, slot, closed=True, tile=0.3):
-    """점 격자(rows[i][j]) 를 사각형으로 잇는다. centers[i] = 그 줄의 안쪽 기준점 — 첫 면 법선이 안쪽을 보면 열 순서를 뒤집는다(면이 따로 놀아 법선 재계산이 안 되므로)."""
+def surf(M, rows, centers, slot, closed=True, tile=0.3, uv_m=None):
+    """점 격자(rows[i][j]) 를 사각형으로 잇는다. centers[i] = 그 줄의 안쪽 기준점 — 첫 면 법선이 안쪽을 보면 열 순서를 뒤집는다(면이 따로 놀아 법선 재계산이 안 되므로).
+    uv_m = 질감 한 장의 길이(m)면 UV 를 실제 거리(열·줄 방향 누적 길이)로 잡는다 — 긴 벽에서 한 장이 끝까지 늘어나 픽셀이 깨지던 것(10-06). None 이면 옛 방식(번호 기준)."""
     rows = [[Vector(p) for p in r] for r in rows]
     nc = len(rows[0])
     a, b, d = rows[0][0], rows[0][1], rows[1][0]
@@ -78,10 +79,23 @@ def surf(M, rows, centers, slot, closed=True, tile=0.3):
     if nrm.dot(a - Vector(centers[0])) < 0:
         rows = [list(reversed(r)) for r in rows]
     cols = nc if closed else nc - 1
+    if uv_m:
+        mid = rows[len(rows) // 2]
+        U = [0.0]
+        for j in range(cols):
+            U.append(U[-1] + (mid[(j + 1) % nc] - mid[j]).length / uv_m)
+        cj = nc // 2
+        V = [0.0]
+        for i in range(len(rows) - 1):
+            V.append(V[-1] + (rows[i + 1][cj] - rows[i][cj]).length / uv_m)
     for i in range(len(rows) - 1):
         for j in range(cols):
             j2 = (j + 1) % nc
             p0, p1, p2, p3 = rows[i][j], rows[i][j2], rows[i + 1][j2], rows[i + 1][j]
+            if uv_m:
+                u0, u1, v0, v1 = U[j], U[j + 1], V[i], V[i + 1]
+                M.quad(p0, p1, p2, p3, slot, (u0, v0), (u1, v0), (u1, v1), (u0, v1))
+                continue
             u0, u1 = j / cols / tile, (j + 1) / cols / tile
             v0, v1 = i / tile * 0.2, (i + 1) / tile * 0.2
             M.quad(p0, p1, p2, p3, slot, (u0, v0), (u1, v0), (u1, v1), (u0, v1))
