@@ -7,7 +7,7 @@ extends Node
 ##   이어지지 않는 단추(공격·소켓·상인·대장간·하드코어·무예 창)는 늘 보인다.
 ## 원래 자리(offset)는 처음 볼 때 메타로 적어 두고 거기서부터 계산한다 — 단추를 다른 코드가 옮기지 않는다(확인함).
 
-const TOP_MARGIN := 170.0 # 우상단 목표판·경고 글자 아래
+const TOP_MARGIN := 215.0 # 우상단 목표판·경고 글자 아래
 const BOTTOM_MARGIN := 40.0
 const COL_GAP := 20.0
 const TICK := 0.3

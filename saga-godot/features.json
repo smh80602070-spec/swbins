@@ -1897,14 +1897,19 @@
  {
   "id": "gd.st.goal-board",
   "name": "101-4 ①목표판+세션 카드",
-  "files": [],
-  "tests": [
-   "goal_boards"
+  "files": [
+   "saga_core/ui/goal_board.gd",
+   "games/saga_story/world/story_field.gd",
+   "tools/probe_goal_readable.gd"
   ],
-  "level": "D2",
-  "verified": null,
+  "tests": [
+   "goal_boards",
+   "goal_readable"
+  ],
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0039",
   "since": "2026-09-16"
  },
  {
