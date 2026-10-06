@@ -9,5 +9,5 @@
  "fps": 12,
  "loop": true,
  "blend": "additive (_k = 검은 바탕 가산 합성용 · _a = 알파)",
- "pulse_hz": 0.0
+ "pulse_hz": 1.0
 }

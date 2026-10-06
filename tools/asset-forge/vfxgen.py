@@ -556,6 +556,121 @@ def common_frame(name, t, i):
     return add(im.filter(ImageFilter.GaussianBlur(0.7)), glow(im, 3))
 
 
+def common_frame2(name, t, i):
+    """10-06 저녁: 공용 9종을 원소 28 과 같은 질감(잡음·색 사다리·불티)으로. 칼자국·죽음 연기·치명타는 옛 함수."""
+    rng = np.random.default_rng(500 + i)
+    cx = cy = F / 2
+    yy, xx = np.mgrid[0:F, 0:F].astype(np.float32)
+    r = np.hypot(xx - cx, yy - cy)
+    th = np.arctan2(yy - cy, xx - cx)
+    ph = 2 * math.pi * t
+    if name == 'spark_hit':
+        R = 8 + 38 * (1 - (1 - t) ** 2)
+        core = sstep(R * 0.45, 0, r) * (1 - t) ** 1.5
+        n1 = fbm(1100 + i, 20 * t, 0)
+        star = sstep(0.6, 0.95, 0.5 + 0.5 * np.cos(8 * th + (n1 - 0.5) * 3)) * sstep(R, R * 0.2, r) * (1 - t)
+        im = to_img(ramp(np.clip(core + star * 0.7, 0, 1), [(0, (0, 0, 0)), (0.4, (200, 120, 40)), (0.75, (255, 220, 140)), (1.0, (255, 255, 240))]))
+        sparks(im, rng, 16, cx, cy, R * 0.5, R * 1.3, (255, 235, 170), 1.5, 9, 14, t)
+        return add(im.filter(ImageFilter.GaussianBlur(0.5)), glow(im, 3))
+    if name in ('heal_ring', 'heal_cross'):
+        foot = F * 0.82
+        ground = sstep(0.14, 0.0, np.abs(np.sqrt(((xx - cx) / (F * 0.36)) ** 2 + ((yy - foot) / (F * 0.08)) ** 2) - 1))
+        h = np.clip((foot - yy) / (F * 0.7), 0, 1)
+        col = streaks(1110 + i, t, xx * 1.5, yy, 1.0, 0.2)
+        aura = sstep(0.5, 0.8, col) * sstep(F * 0.36, F * 0.12, np.abs(xx - cx)) * (1 - h) ** 1.3 * sstep(foot + 4, foot - 8, yy)
+        v = np.clip(aura * 0.8 + ground * 0.7, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.35, (30, 120, 60)), (0.7, (110, 240, 150)), (1.0, (220, 255, 225))]))
+        d = ImageDraw.Draw(im)
+        for k in range(8):
+            a = rng.uniform(0, 2 * math.pi)
+            life = (t + k / 8) % 1
+            x, y = cx + math.cos(a) * F * 0.24, foot - life * F * 0.62
+            f = math.sin(math.pi * life)
+            c = (int(190 * f), int(255 * f), int(205 * f))
+            if name == 'heal_cross':
+                s = 5
+                d.rectangle((x - s, y - 1.6, x + s, y + 1.6), fill=c)
+                d.rectangle((x - 1.6, y - s, x + 1.6, y + s), fill=c)
+            else:
+                d.ellipse((x - 2.5, y - 2.5, x + 2.5, y + 2.5), fill=c)
+        return add(im.filter(ImageFilter.GaussianBlur(0.6)), glow(im, 3))
+    if name in ('buff_up', 'debuff_down'):
+        up = name == 'buff_up'
+        L, M, D = ((255, 250, 210), (255, 215, 90), (170, 110, 20)) if up else ((240, 200, 255), (190, 90, 230), (90, 30, 130))
+        col = streaks(1120 + i, t if up else (1 - t) % 1, xx * 1.4, yy, 1.0, 0.22)
+        pillar = sstep(0.5, 0.82, col) * sstep(F * 0.34, F * 0.1, np.abs(xx - cx)) * sstep(F * 0.95, F * 0.75, yy) * sstep(F * 0.05, F * 0.25, yy)
+        im = to_img(ramp(np.clip(pillar * 0.75, 0, 1), [(0, (0, 0, 0)), (0.5, D), (1.0, M)]))
+        d = ImageDraw.Draw(im)
+        for k in range(3):                                                     # 꺾쇠 셋이 차례로 오르거나 내린다
+            life = (t + k / 3) % 1
+            y = (F * 0.82 - life * F * 0.6) if up else (F * 0.18 + life * F * 0.6)
+            f = math.sin(math.pi * life)
+            c = tuple(int(v * f) for v in L)
+            s = 15
+            tip = y - s * 0.6 if up else y + s * 0.6
+            back = y + s * 0.3 if up else y - s * 0.3
+            d.line(((cx - s, back), (cx, tip), (cx + s, back)), fill=c, width=5, joint='curve')
+        return add(im.filter(ImageFilter.GaussianBlur(0.7)), glow(im, 4))
+    if name == 'shield_bubble':
+        R = 46 + 2 * math.sin(ph)
+        fres = sstep(R * 0.55, R, r) * sstep(R + 3, R - 1, r)                    # 가장자리가 밝은 구(프레넬)
+        hexg = 0.5 + 0.5 * np.cos(0.33 * (xx - cx)) * np.cos(0.33 * (yy - cy) * 0.866 + 0.165 * (xx - cx))
+        cells = sstep(0.82, 0.95, hexg) * sstep(R, R * 0.4, r) * (0.35 + 0.65 * (0.5 + 0.5 * np.sin(th * 2 - ph)))
+        hi = sstep(R * 0.35, 0, np.hypot(xx - (cx - R * 0.35), yy - (cy - R * 0.4)))  # 왼위 반사광
+        v = np.clip(fres * 0.85 + cells * 0.3 + hi * 0.35, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.35, (40, 90, 170)), (0.7, (130, 195, 255)), (1.0, (230, 245, 255))]))
+        return add(im.filter(ImageFilter.GaussianBlur(0.6)), glow(im, 3))
+    if name == 'levelup_burst':
+        R = 10 + 48 * t
+        ring = sstep(5, 0, np.abs(r - R)) * (1 - t)
+        rays = sstep(0.55, 0.9, 0.5 + 0.5 * np.cos(12 * th + 0.4 * np.sin(5 * th))) * sstep(R * 1.2, R * 0.3, r) * (1 - t) ** 0.8
+        core = sstep(22 * (1 - t) + 2, 0, r)
+        im = to_img(ramp(np.clip(ring + rays * 0.7 + core, 0, 1), [(0, (0, 0, 0)), (0.35, (190, 120, 30)), (0.7, (255, 220, 110)), (1.0, (255, 252, 230))]))
+        sparks(im, rng, 18, cx, cy, R * 0.6, R * 1.2, (255, 235, 150), 1.5, 6, 6, t)
+        return add(im.filter(ImageFilter.GaussianBlur(0.5)), glow(im, 4))
+    if name == 'coin_pop':
+        im = canvas()
+        d = ImageDraw.Draw(im)
+        fade = 1 - max(0, t - 0.7) / 0.3
+        for k in range(5):
+            a = -math.pi / 2 + (k - 2) * 0.5
+            x, y = cx + math.cos(a) * 40 * t, F * 0.7 + math.sin(a) * 52 * t + 60 * t * t
+            w = 6 * abs(math.cos(ph * 1.5 + k))  + 1.5                      # 돌아가는 동전(폭이 변함)
+            c1 = tuple(int(v * fade) for v in (200, 140, 30))
+            c2 = tuple(int(v * fade) for v in (255, 215, 80))
+            c3 = tuple(int(v * fade) for v in (255, 250, 200))
+            d.ellipse((x - w, y - 6, x + w, y + 6), fill=c1)
+            d.ellipse((x - w * 0.75, y - 5, x + w * 0.75, y + 4), fill=c2)
+            d.ellipse((x - w * 0.35, y - 4, x + w * 0.1, y - 1), fill=c3)
+            if (k + int(t * 10)) % 3 == 0:                                       # 반짝임
+                d.line((x + 6, y - 8, x + 6, y - 2), fill=c3, width=1)
+                d.line((x + 3, y - 5, x + 9, y - 5), fill=c3, width=1)
+        return add(im.filter(ImageFilter.GaussianBlur(0.4)), glow(im, 2))
+    if name == 'dust_step':
+        acc = np.zeros((F, F), np.float32)
+        n1 = fbm(1130 + i, 10 * t, 0)
+        for k in range(5):
+            a = math.pi + (k - 2) * 0.45
+            rr = 10 + 30 * t
+            x, y = cx + math.cos(a) * rr * 1.2, F * 0.78 - 4 + math.sin(a) * rr * 0.25 - 10 * t
+            s = 10 + 14 * t
+            acc += sstep(s, 0, np.hypot(xx - x, (yy - y) * 1.4)) * (0.6 + 0.6 * n1)
+        v = np.clip(acc * 0.8 * (1 - t) ** 0.9, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.4, (110, 96, 74)), (1.0, (205, 188, 155))]))
+        return add(im.filter(ImageFilter.GaussianBlur(0.8)), glow(im, 2))
+    if name == 'crit_flash':                                                 # 밝기 정점 한 번(광과민) — 부드러운 별 빛살 + 퍼지는 충격 고리
+        pulse = math.sin(math.pi * (0.18 + 0.82 * t)) ** 2
+        R = 18 + 44 * t
+        rays = np.clip(np.cos(4 * th), 0, 1) ** 24 + 0.6 * np.clip(np.cos(4 * th + math.pi / 4), 0, 1) ** 40   # 큰 빛살 넷 + 작은 넷
+        star = rays * sstep(R * 1.5, 0, r)
+        ring = sstep(4, 0, np.abs(r - R)) * (1 - t)
+        core = sstep(R * 0.45, 0, r)
+        v = np.clip((star + core * 0.8) * pulse * 0.85 + ring * 0.6, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.35, (180, 110, 40)), (0.7, (255, 225, 150)), (1.0, (255, 250, 235))]))
+        return add(im.filter(ImageFilter.GaussianBlur(0.5)), glow(im, 3))
+    return common_frame(name, t, i)
+
+
 COMMON = [('spark_hit', 8, False), ('slash_arc', 8, False), ('heal_ring', 12, True), ('heal_cross', 12, True), ('buff_up', 10, True), ('debuff_down', 10, True),
           ('shield_bubble', 12, True), ('death_smoke', 10, False), ('levelup_burst', 12, False), ('coin_pop', 10, False), ('dust_step', 8, False), ('crit_flash', 8, False)]
 PLAN = []
@@ -569,7 +684,7 @@ def make(pid, el, kind, n, loop, idx):
     frames = []
     for f in range(n):
         t = f / n if loop else f / (n - 1)
-        frames.append(common_frame(kind, t, idx) if el == 'common' else FUNC[kind](el, t, idx))
+        frames.append(common_frame2(kind, t, idx) if el == 'common' else FUNC[kind](el, t, idx))
     sheet = Image.new('RGB', (F * n, F))
     for f, im in enumerate(frames):
         sheet.paste(im, (f * F, 0))
