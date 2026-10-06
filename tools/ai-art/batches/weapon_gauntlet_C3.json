@@ -1,0 +1,46 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "weapon_gauntlet_C3",
+ "kit": {
+  "spec": "sprite",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy",
+  "variants": 4
+ },
+ "note": "10-07: 건틀릿 3D 를 10-06 저녁 다시 만든 뒤(ba6258b50) 2D 가 옛 상자 꼴 → 새 렌더 밑그림으로 C2 와 같은 프롬프트·씨앗 img2img",
+ "items": [
+  {
+   "id": "wpn_gauntlet_common",
+   "seed": 197588255,
+   "prompt": "(leather fist gauntlet with iron knuckle plate:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init2\\wpn_gauntlet_common.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_gauntlet_legend",
+   "seed": 2007291302,
+   "prompt": "(golden red ornate fist gauntlet with glowing gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init2\\wpn_gauntlet_legend.png",
+   "denoise": 0.65
+  },
+  {
+   "id": "wpn_gauntlet_rare",
+   "seed": 3776079017,
+   "prompt": "(blue and brass fist gauntlet with gem:1.15), fantasy game weapon item, from above, three-quarter view, no humans, game sprite, full body, single object, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple objects, frame, border, bad anatomy, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "C:\\swbins\\tools\\ai-art\\_out\\weapon_init2\\wpn_gauntlet_rare.png",
+   "denoise": 0.65
+  }
+ ]
+}
