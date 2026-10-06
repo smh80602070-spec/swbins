@@ -179,6 +179,8 @@ GODOT=<콘솔 exe> bash saga-godot/tools/probe_all.sh --only=save_dungeon,save_f
 
 **비경(101-2 ⑤)** — 허도 문으로 입장하면 5층 발판 노드 지도(`StoryLabyrinth.tscn`)가 열린다. 1~4층은 발판(전투·정예·보물·휴식·사건 중 2~3개) 위에 올라서 K로 확정, 5층은 곧바로 보스. 진입 직후·정예 처치 후 축복 3택 카드가 뜬다. 죽거나 클리어하면 기억 조각을 챙겨 허도로 돌아온다 — 문에서 조각으로 영구 강화(최대 HP)를 새길 수 있다.
 
+**사냥터 쓰러짐(G-0036, 표준 F)** — 사냥터(허창 들판·동굴·숲·협곡)에서 체력이 0 이 되면 그 사냥터에 들어온 뒤 주운 금의 절반을 잃고 1.5초 뒤 허도(비경 문 곁)로 돌아온다. 조작 없음, 경험치·장비는 그대로. 자동 점검: `godot --headless --path saga-godot --script res://tools/probe_story_fall.gd` → `PROBE story_fall OK`
+
 **전직 전 (허도 트레이너 앞, `job`이 "무명"일 때)**
 | 키 | 동작 |
 |---|---|

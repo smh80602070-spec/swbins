@@ -2536,5 +2536,22 @@
   "fun": {},
   "ticket": "G-0035",
   "since": "2026-10-06"
+ },
+ {
+  "id": "gd.st.fall",
+  "name": "사가스토리 사냥터 쓰러짐 — 체력 0 이면 주운 금 절반 잃고 허도로(표준 F, 웹 die())",
+  "files": [
+   "games/saga_story/world/story_field.gd",
+   "games/saga_story/data/story_save_state.gd",
+   "tools/probe_story_fall.gd"
+  ],
+  "tests": [
+   "story_fall"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0036",
+  "since": "2026-10-06"
  }
 ]

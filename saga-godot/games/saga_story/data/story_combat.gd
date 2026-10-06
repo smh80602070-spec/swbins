@@ -34,6 +34,17 @@ static func warrior_rush_dist_m() -> float:
 	return WARRIOR_RUSH_DIST_PX * WARRIOR_RUSH_SCALE
 
 
+## G-0036 — 사냥터 쓰러짐(재미 표준 F). side.js die()의 `goldKept =
+## round(run.gold * 0.5)` 그대로: 이번 사냥터에서 주운 금의 절반만 남는다.
+## 경험치·장비·도감은 그대로(죽어도 남는 것). 비경은 따로(패퇴).
+const FALL_GOLD_KEEP := 0.5
+
+
+static func fall_gold_lost(gained: int) -> int:
+	var g := maxi(0, gained)
+	return g - roundi(g * FALL_GOLD_KEEP)
+
+
 ## **2026-09-13 추가(같은 날 더 더 더) — 무사 다섯째·여섯째 무예
 ## (파공검·생기결).** data-job.js SKILLS job:'warrior' 나머지 둘 —
 ## w_edge는 원문 effect가 이미 'bolt'(기탄과 같은 재해석, 사거리 2배).

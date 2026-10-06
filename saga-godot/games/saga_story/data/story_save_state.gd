@@ -232,6 +232,15 @@ func add_gold(n: int) -> void:
 	check_quests()
 
 
+## G-0036 — 사냥터에서 쓰러졌을 때(story_field.gd). start_gold = 그 사냥터에
+## 들어온 때의 금. 그 뒤 주운 만큼의 절반을 잃고 잃은 양을 돌려준다. add_gold를
+## 안 거쳐 사명·업적 되먹임이 없다. 상점에서 써서 시작보다 적으면 0.
+func apply_fall(start_gold: int) -> int:
+	var lost: int = mini(gold, StoryCombat.fall_gold_lost(gold - start_gold))
+	gold -= lost
+	return lost
+
+
 ## 모자라면 아무것도 안 하고 false — DUNGEON DungeonGoldState.spend()와 같은 계약.
 func spend_gold(n: int) -> bool:
 	if n <= 0 or gold < n:
