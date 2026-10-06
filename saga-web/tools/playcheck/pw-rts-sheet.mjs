@@ -10,7 +10,7 @@ const check = (name, ok, detail) => { results.push(!!ok); rows.push({ name, ok: 
 async function session(opts, body) {
   const r = await open('saga-realm', opts);
   await r.page.addInitScript(() => { window.DG_NO_ACCOUNT = true; });
-  await r.page.goto(r.url('rts.html?diff=1')); await sleep(1500);
+  await r.page.goto(r.url('rts.html?diff=1&mode=rts')); await sleep(1500);
   try { await body(r); } catch (e) { check('예외 — ' + e.message.slice(0, 80), false); }
   const errs = r.errors.filter((e) => !/status of 404/.test(e));
   await r.close();

@@ -5,6 +5,10 @@
  *         오른쪽·가운데 버튼이나 Shift+끌기도 이동 · WASD/방향키 이동 · 1~6 건물 · X 철거 · Esc 이동 · Space 일시정지
  *         폰: 한 손가락 끌기(이동 도구) · 두 손가락 핀치(확대) · 도구 단추 누르고 칸 누르기
  *   시간: 10Hz 고정 틱, 하루 = 50틱, 일시정지·1×·2×·4×. 10일마다·떠날 때 저장(`core.save.rts`).
+ *
+ * 턴 전투 모드(W-0081, 기본) — 건설·생산·실시간 틱 없이 rts/tactics.js 의 조조전식 턴 전투를 그린다. 옛 RTS 는 주소 `?mode=rts` 로만.
+ *   조작: 내 유닛 누르기 → 파란 칸(이동)·빨간 적(공격) · 빨간 적을 바로 누르면 다가가 친다 · 끌면 지도 이동 · 턴 끝·자동 단추
+ *   그림: 규칙은 한 번에 끝나고, 화면은 그 전 모습(ghost)에서 기록 줄을 하나씩 따라 움직여 보인다. 저장 `core.save.rtsTb`(옛 `save.rts` 안 건드림)
  */
 (function (global) {
   'use strict';
@@ -23,6 +27,9 @@
   var sel = {}, selB = 0, box = null, down = null;   // 고른 유닛 id 모음 · 고른 군영 id · 끌고 있는 선택 상자 · 눌린 자리
   var acc = 0, lastT = 0, lastHud = 0, lastSaveDay = 0, tipMsg = '', tipUntil = 0, dirty = true, overlay = 0, lastStats = null, overSeen = false, pokeUntil = 0;
   var OVERLAYS = ['보기: 없음', '보기: 행복', '보기: 닿는 범위'];
+  /* 턴 전투(W-0081) — 고른 유닛·표식·그림 줄(ghost 위에서 기록 줄을 하나씩) */
+  var TB = false, tsel = 0, tReach = null, tTargets = [], tDanger = {}, ghost = null, anim = null, queue = [], busy = false, enemyAnim = false, animDone = null, floats = [], AK = 1;
+  var SLIDE_T = 90, SLIDE_MAX = 520, HIT_T = 380, GAP_T = 80;
 
   function $(id) { return global.document.getElementById(id); }
   function fmt(n) { return String(Math.round(n * 10) / 10).replace(/\.0$/, ''); }
@@ -55,7 +62,7 @@
         }
       }
     }
-    if (z >= 14 && isBuildTool(tool) && tool !== 'erase') {   // 격자선은 짓는 중에만(실시간이라 평소엔 안 보인다)
+    if (z >= 14 && ((isBuildTool(tool) && tool !== 'erase') || TB)) {   // 격자선은 짓는 중에만(실시간이라 평소엔 안 보인다) · 턴 전투는 늘
       ctx.strokeStyle = 'rgba(0,0,0,.22)'; ctx.lineWidth = 1; ctx.beginPath();
       for (x = x0; x <= x1 + 1; x++) { p = toScreen(x, y0); ctx.moveTo(p.x + .5, p.y); ctx.lineTo(p.x + .5, p.y + (y1 - y0 + 1) * z); }
       for (y = y0; y <= y1 + 1; y++) { p = toScreen(x0, y); ctx.moveTo(p.x, p.y + .5); ctx.lineTo(p.x + (x1 - x0 + 1) * z, p.y + .5); }
@@ -90,8 +97,10 @@
     });
     if (fogOn && fogSt && fogSt.cv && !S.won && !S.over) { ctx.imageSmoothingEnabled = true; ctx.drawImage(fogSt.cv, p00.x, p00.y, g.W * z, g.H * z); }   // 전장 안개(W-0062) — 본 건물·유닛 밑, 유닛·표식 위
     if (overlay) { drawOverlay(); }
+    if (TB) { drawMarks(); }
     drawUnits();
     art.fxs(ctx, S, toScreen, z, Date.now());   // 타격 불꽃·화살·불
+    if (TB) { drawFloats(); }
     if (hover && isBuildTool(tool)) { drawGhost(); }
     if (box) { ctx.fillStyle = 'rgba(120,220,255,.14)'; ctx.strokeStyle = '#7fdcff'; ctx.lineWidth = 1; ctx.fillRect(box.x0, box.y0, box.x1 - box.x0, box.y1 - box.y0); ctx.strokeRect(box.x0 + .5, box.y0 + .5, box.x1 - box.x0, box.y1 - box.y0); }
     drawMini(); dirty = false;
@@ -120,11 +129,13 @@
 
   /** 유닛 — 색 원+글자, 고른 유닛은 금빛 고리와 목적지 선, 다친 유닛은 체력 막대 */
   function drawUnits() {
-    var U = R().units, id, u, p, z = px(), r = z * 0.34, d, gp;
-    for (id in S.units) {
-      u = S.units[id]; d = U.statOf(u); p = toScreen(u.x, u.y);
+    var U = R().units, id, u, p, z = px(), r = z * 0.34, d, gp, all = ghost || S.units;
+    for (id in all) {
+      u = all[id]; d = U.statOf(u); p = toScreen(u.x, u.y);
       if (fogOn && u.team === 1 && !S.won && !S.over && !R().fog.visibleAt(fogSt, u.x, u.y)) { continue; }   // 안개 속 적(W-0062)
       if (p.x < -20 || p.y < -20 || p.x > size().w + 20 || p.y > size().h + 20) { continue; }
+      ctx.globalAlpha = TB && !ghost && u.team === 0 && S.tb.side === 0 && S.tb.acted[id] ? 0.5 : 1;   // 턴 전투: 행동 끝난 아군은 흐리게
+      if (TB && +id === tsel && !busy) { ctx.beginPath(); ctx.arc(p.x, p.y, r + 4, 0, 6.2832); ctx.strokeStyle = '#ffd36a'; ctx.lineWidth = 3; ctx.stroke(); }
       if (sel[id]) {
         if (u.path && u.path.length && u.goal) { gp = toScreen(u.goal.x + .5, u.goal.y + .5); ctx.strokeStyle = 'rgba(255,230,120,.55)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(gp.x, gp.y); ctx.stroke(); ctx.setLineDash([]); }
         ctx.beginPath(); ctx.arc(p.x, p.y, r + 3, 0, 6.2832); ctx.strokeStyle = '#ffd36a'; ctx.lineWidth = 2; ctx.stroke();
@@ -135,8 +146,9 @@
       ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 6.2832); ctx.fillStyle = d.color; ctx.fill(); ctx.strokeStyle = u.team === 0 ? '#2b6fb8' : '#b83a2b'; ctx.lineWidth = 2; ctx.stroke();
       if (z >= 14) { ctx.font = Math.floor(r * 1.3) + 'px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#000'; ctx.fillText(d.icon, p.x, p.y + 1); }
       }
-      var mh = u.mhp || d.hp; if (u.hp < mh) { ctx.fillStyle = '#300'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2, 4); ctx.fillStyle = '#6fe07a'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2 * u.hp / mh, 4); }
+      var mh = u.mhp || d.hp; if (u.hp < mh) { ctx.fillStyle = '#300'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2, 4); ctx.fillStyle = '#6fe07a'; ctx.fillRect(p.x - r, p.y - r - 7, r * 2 * Math.max(0, u.hp) / mh, 4); }
     }
+    ctx.globalAlpha = 1;
     if (selB && S.buildings[selB]) { var b = S.buildings[selB], D = R().rules.DEFS[b.t], bp = toScreen(b.x, b.y); ctx.strokeStyle = '#ffd36a'; ctx.lineWidth = 2.5; ctx.strokeRect(bp.x - 1, bp.y - 1, D.w * z + 2, D.h * z + 2); }
   }
 
@@ -176,6 +188,7 @@
   /* ── HUD ───────────────────────────────────────────── */
 
   function hud() {
+    if (TB) { hudTurn(); return; }
     if (S.notes && S.notes.length) { say(S.notes.shift()); }   // 적 출정·건물 파괴 알림(W-0063)
     var st = R().econ.stats(S), r = S.res;
     els.top.innerHTML = '<b class="rt-day">' + S.day + '일</b>' +
@@ -335,6 +348,19 @@
   function askDiff(end) {
     var box2 = global.document.createElement('div'), names = R().rules.DIFF.names;
     box2.id = 'rts-diff'; box2.className = 'rt-box';
+    if (TB) {
+      box2.innerHTML = (end ? '<h3>' + (S.won ? '🏆 승리' : '💀 패배') + '</h3><p>' + S.tb.why + ' · ' + S.tb.turn + '턴 · 쓰러뜨린 적 ' + (S.kills || 0) + ' — 난이도를 골라 새 전투를 시작하세요.</p>'
+        : '<h3>난이도</h3><p>적군이 두 거점 사이에 진을 쳤다. 차례대로 움직여 적을 쓸어내거나 적 기지를 무너뜨리면 이긴다.</p>') + names.map(function (n, i) { return '<button data-diff="' + i + '"' + (i === 1 ? ' class="on"' : '') + '>' + n + '</button>'; }).join('');
+      global.document.body.appendChild(box2);
+      box2.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-diff]'); if (!b) { return; }
+        var auto = !!S.tb.auto;
+        S = TT().start(end ? (Date.now() & 0xffff) + 1 : S.seed, +b.getAttribute('data-diff')); S.tb.auto = auto && !end ? auto : false;
+        overSeen = false; floats = []; pick(0); if (fogOn) { fogSt = R().fog.create(); R().fog.update(fogSt, S); }
+        miniBase = null; camToArmy(); box2.parentNode.removeChild(box2); save(); hud();
+      });
+      return;
+    }
     box2.innerHTML = (end ? '<h3>' + (S.won ? '🏆 평정!' : '💀 거점이 무너졌다') + '</h3><p>' + S.day + '일 · 막아 낸 파도 ' + Math.max(0, S.raid.n - (S.over ? 1 : 0)) + ' · 쓰러뜨린 적 ' + (S.kills || 0) + ' — 난이도를 골라 새 판을 시작하세요.</p>'
       : '<h3>난이도</h3><p>적 기지가 멀리 서 있다. 군대를 키워 쳐부수거나, 거점이 먼저 무너지면 진다.</p>') + names.map(function (n, i) { return '<button data-diff="' + i + '"' + (i === 1 ? ' class="on"' : '') + '>' + n + '</button>'; }).join('');
     global.document.body.appendChild(box2); S.speed = 0;
@@ -357,6 +383,7 @@
       var p = pointerPos(e); ptrs[e.pointerId] = p; try { cv.setPointerCapture(e.pointerId); } catch (x) { /* noop */ }
       if (Object.keys(ptrs).length === 2) { pinch = dist2(); painting = false; panning = false; return; }
       down = { btn: e.button, x: p.x, y: p.y, moved: false };
+      if (TB) { if (e.button === 2) { pick(0); down = null; return; } down.touch = true; panning = true; panLast = p; return; }   // 턴 전투: 끌면 지도 이동, 짧게 누르면(클릭) 고르기·이동·공격 · 우클릭 = 풀기
       if (e.button === 2) { if (tool !== 'select') { tool = 'select'; hud(); } amMode = false; return; }   // 우클릭은 명령(up) — 끌어도 지도는 안 움직인다(W-0061)
       if (amMode && e.button === 0) { amMode = false; attackMove(p); return; }
       if (e.button === 1 || e.shiftKey || tool === 'pan') { panning = true; panLast = p; return; }
@@ -382,7 +409,7 @@
     function up(e) {
       var p = pointerPos(e);
       if (down && down.btn === 2) { commandMove(p); }
-      else if (down && down.touch && !down.moved) { tapAt(p); dirty = true; }
+      else if (down && down.touch && !down.moved) { if (TB) { tapTurn(p); } else { tapAt(p); } dirty = true; }
       if (box) { finishBox(p); }
       down = null; delete ptrs[e.pointerId];
       if (!Object.keys(ptrs).length) { painting = false; panning = false; panLast = null; pinch = 0; }
@@ -399,6 +426,11 @@
     global.addEventListener('resize', resize);
     global.addEventListener('keydown', function (e) {
       var k = e.key, step = 3 / cam.z * 2, n, code = e.code || '', tl;
+      if (TB) {
+        if (k === 'Escape') { pick(0); } else if (k === 'e' || k === 'E') { endTurnPlay(); }
+        else if (k === 'ArrowLeft') { cam.x -= step; } else if (k === 'ArrowRight') { cam.x += step; } else if (k === 'ArrowUp') { cam.y -= step; } else if (k === 'ArrowDown') { cam.y += step; }
+        clampCam(); dirty = true; return;
+      }
       if (k === 'Escape') { tool = 'select'; sel = {}; selB = 0; amMode = false; }
       else if (k === ' ') { S.speed = S.speed === 0 ? 1 : 0; e.preventDefault(); }
       else if (k === 'x' || k === 'X') { tool = 'erase'; }
@@ -415,6 +447,16 @@
     mini.addEventListener('pointerdown', function (e) { md = true; try { mini.setPointerCapture(e.pointerId); } catch (x) { /* noop */ } mini2cam(e); });
     mini.addEventListener('pointermove', function (e) { if (md) { mini2cam(e); } });
     mini.addEventListener('pointerup', function () { md = false; });
+    global.addEventListener('beforeunload', save);
+    global.document.addEventListener('visibilitychange', function () { if (global.document.hidden) { save(); } });
+    if (TB) {
+      els.sel.addEventListener('click', function (e) { var b = e.target.closest('button[data-tact]'); if (b && !b.disabled) { tAct(b.getAttribute('data-tact')); } });
+      els.turn.addEventListener('click', function (e) {
+        if (e.target.closest('button[data-end]')) { endTurnPlay(); return; }
+        if (e.target.closest('button[data-auto]')) { S.tb.auto = !S.tb.auto; save(); hud(); if (S.tb.auto) { autoGo(); } }
+      });
+      return;
+    }
     els.tools.addEventListener('click', function (e) { var b = e.target.closest('button[data-tool]'); if (b) { tool = b.getAttribute('data-tool'); dirty = true; } });
     els.sel.addEventListener('click', function (e) {
       var al = e.target.closest('button[data-all]');
@@ -435,14 +477,246 @@
       dirty = true; hud();
     });
     els.speed.addEventListener('click', function (e) { var b = e.target.closest('button[data-speed]'); if (b) { S.speed = +b.getAttribute('data-speed'); } });
-    global.addEventListener('beforeunload', save);
-    global.document.addEventListener('visibilitychange', function () { if (global.document.hidden) { save(); } });
+  }
+
+  /* ── 턴 전투(W-0081) ───────────────────────────────── */
+
+  function TT() { return R().tactics; }
+  function now() { return global.performance && global.performance.now ? global.performance.now() : Date.now(); }
+  function tileOf(u) { return { x: Math.floor(u.x), y: Math.floor(u.y) }; }
+  function sameT(a, b) { return a.kind === b.kind && (a.kind === 'base' || a.id === b.id); }
+  function inT(list, t) { return list.some(function (x) { return sameT(x, t); }); }
+  function visibleFoe(u) { return !fogOn || R().fog.visibleAt(fogSt, u.x, u.y); }
+
+  /** 고른다(0 = 풀기) — 닿는 칸·지금 칠 것·닿는 칸에서 칠 수 있는 적(빨간 테두리)을 다시 구한다 */
+  function pick(id) {
+    var u = id ? S.units[id] : null, i, j, l;
+    tsel = u ? u.id : 0; tReach = null; tTargets = []; tDanger = {};
+    if (u) {
+      tReach = TT().reach(S, u); tTargets = TT().targets(S, u);
+      if (!S.tb.moved[u.id]) { for (i = 0; i < tReach.length; i++) { l = TT().targets(S, u, tReach[i].x, tReach[i].y); for (j = 0; j < l.length; j++) { tDanger[l[j].kind === 'base' ? 'base' : l[j].id] = 1; } } }
+    }
+    dirty = true; hud();
+  }
+
+  /** 파란 칸(이동) · 빨간 칸(지금 칠 수 있는 적) · 빨간 테두리(다가가면 칠 수 있는 적) */
+  function drawMarks() {
+    if (!tsel || busy || !S.units[tsel]) { return; }
+    var z = px(), i, p, id, v, sb = S.buildings[-1], D = R().rules.DEFS;
+    if (tReach && !S.tb.moved[tsel]) { ctx.fillStyle = 'rgba(70,150,255,.32)'; ctx.strokeStyle = 'rgba(140,200,255,.6)'; ctx.lineWidth = 1; for (i = 0; i < tReach.length; i++) { p = toScreen(tReach[i].x, tReach[i].y); ctx.fillRect(p.x + 1, p.y + 1, z - 2, z - 2); ctx.strokeRect(p.x + 1.5, p.y + 1.5, z - 3, z - 3); } }
+    for (id in tDanger) { if (id === 'base') { continue; } v = S.units[id]; if (!v || !visibleFoe(v)) { continue; } p = toScreen(Math.floor(v.x), Math.floor(v.y)); ctx.strokeStyle = 'rgba(255,90,74,.9)'; ctx.lineWidth = 2; ctx.strokeRect(p.x + 2, p.y + 2, z - 4, z - 4); }
+    for (i = 0; i < tTargets.length; i++) {
+      if (tTargets[i].kind === 'base') { if (sb) { p = toScreen(sb.x, sb.y); ctx.fillStyle = 'rgba(255,70,50,.35)'; ctx.fillRect(p.x, p.y, D.stronghold.w * z, D.stronghold.h * z); } continue; }
+      v = S.units[tTargets[i].id]; if (!v) { continue; } p = toScreen(Math.floor(v.x), Math.floor(v.y)); ctx.fillStyle = 'rgba(255,70,50,.45)'; ctx.fillRect(p.x + 1, p.y + 1, z - 2, z - 2);
+    }
+  }
+
+  /** 피해 숫자 — 위로 떠오르며 사라진다 */
+  function drawFloats() {
+    var t = now(), z = px(), i, f, k, p;
+    floats = floats.filter(function (x) { return t - x.t0 < 1100; });
+    for (i = 0; i < floats.length; i++) {
+      f = floats[i]; k = (t - f.t0) / 1100; p = toScreen(f.x, f.y);
+      ctx.globalAlpha = 1 - k * k; ctx.font = 'bold ' + Math.max(13, Math.floor(z * 0.6)) + 'px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.lineWidth = 3; ctx.strokeStyle = '#000'; ctx.strokeText(f.txt, p.x, p.y - z * (0.6 + k)); ctx.fillStyle = f.col; ctx.fillText(f.txt, p.x, p.y - z * (0.6 + k));
+    }
+    ctx.globalAlpha = 1;
+    if (floats.length) { dirty = true; }
+  }
+  function floatAt(x, y, txt, col) { floats.push({ x: x, y: y, txt: txt, col: col || '#ff8a7a', t0: now() }); }
+
+  /** 지금 모습 사본 — 그림 줄이 이 위에서 움직인다 */
+  function snap() { var o = {}, id, u, k, c; for (id in S.units) { u = S.units[id]; c = {}; for (k in u) { c[k] = u[k]; } c.path = []; c.cd = 0; o[id] = c; } return o; }
+
+  /** 기록 줄을 하나씩 그린다 — 끝나면 ghost 를 버리고 done() */
+  function play(log, before, done, enemy) {
+    ghost = before; queue = log.slice(); busy = true; enemyAnim = !!enemy; animDone = done || null; nextAnim();
+  }
+  function nextAnim() {
+    var r, g, pts, i, path;
+    while (queue.length) {
+      r = queue.shift(); g = ghost[r.id];
+      if (!g) { continue; }
+      pts = [{ x: r.from.x + 0.5, y: r.from.y + 0.5 }];
+      if (r.from.x !== r.to.x || r.from.y !== r.to.y) { path = R().units.findPath(S, r.from.x, r.from.y, r.to.x, r.to.y); for (i = 0; i < path.length; i++) { pts.push(path[i]); } if (!path.length || Math.floor(path[path.length - 1].x) !== r.to.x || Math.floor(path[path.length - 1].y) !== r.to.y) { pts.push({ x: r.to.x + 0.5, y: r.to.y + 0.5 }); } }
+      anim = { r: r, g: g, pts: pts, t0: now(), slide: pts.length > 1 ? Math.min(SLIDE_MAX, SLIDE_T * (pts.length - 1)) * AK * (S.tb.auto ? 0.6 : 1) : 0, hit: r.act === 'wait' ? 0 : HIT_T * AK * (S.tb.auto ? 0.6 : 1), done: false };
+      if (enemyAnim && fogOn && !R().fog.visibleAt(fogSt, r.to.x + 0.5, r.to.y + 0.5) && !R().fog.visibleAt(fogSt, r.from.x + 0.5, r.from.y + 0.5) && r.act === 'wait') { anim.slide = 0; }   // 안개 속 적의 그냥 걸음은 건너뛴다
+      return;
+    }
+    anim = null; ghost = null; busy = false; enemyAnim = false; dirty = true;
+    var d = animDone; animDone = null; if (d) { d(); }
+  }
+  function stepAnim() {
+    var a = anim; if (!a) { return; }
+    var e = now() - a.t0, g = a.g, r = a.r, k, seg, i, n = a.pts.length - 1, f;
+    if (e < a.slide) {
+      k = e / a.slide * n; i = Math.min(n - 1, Math.floor(k)); f = k - i; seg = [a.pts[i], a.pts[i + 1]];
+      g.x = seg[0].x + (seg[1].x - seg[0].x) * f; g.y = seg[0].y + (seg[1].y - seg[0].y) * f; g.path = [1];
+      if (seg[1].x !== seg[0].x) { g.face = seg[1].x > seg[0].x ? 1 : -1; }
+    } else {
+      g.x = r.to.x + 0.5; g.y = r.to.y + 0.5; g.path = [];
+      if (a.hit && !a.done) { a.done = true; hitGhost(r); }
+      g.cd = a.hit && e - a.slide < 300 ? 9 : 0;   // art.unit — cd 7 이상이면 공격 몸짓
+    }
+    dirty = true;
+    if (e >= a.slide + a.hit + (a.hit ? GAP_T * AK : 0)) { g.cd = 0; anim = null; nextAnim(); }
+  }
+  /** 그림 줄 한 칸의 결과를 ghost 에 — 피해 숫자·쓰러짐 */
+  function hitGhost(r) {
+    var g = ghost[r.id], id, v, sb = S.buildings[-1], cs = S.buildings[1];
+    function baseAt(team) { var b = team === 0 ? sb : cs; if (b) { floatAt(b.x + 1.5, b.y + 1, '-' + r.dmg, '#ffd36a'); } }
+    if (r.act === 'attack' && r.target) {
+      if (r.target.kind === 'base') { baseAt(r.team); return; }
+      v = ghost[r.target.id]; if (!v) { return; }
+      if (Math.floor(v.x) !== Math.floor(g.x)) { g.face = v.x > g.x ? 1 : -1; }
+      v.hp -= r.dmg; floatAt(v.x, v.y, '-' + r.dmg, r.team === 0 ? '#ffe08a' : '#ff8a7a');
+      if (r.killed || v.hp <= 0) { delete ghost[v.id]; }
+      if (r.counter) { g.hp -= r.counter; floatAt(g.x, g.y, '-' + r.counter, '#ffb0a0'); if (g.hp <= 0) { delete ghost[g.id]; } }
+    } else if (r.act === 'cast') {
+      floatAt(g.x, g.y, '일격!', '#ffd36a');
+      for (id in ghost) { v = ghost[id]; if (v.team !== r.team && Math.abs(Math.floor(v.x) - r.to.x) + Math.abs(Math.floor(v.y) - r.to.y) <= TT().CAST_R) { v.hp -= r.dmg; floatAt(v.x, v.y, '-' + r.dmg, '#ffe08a'); if (v.hp <= 0) { delete ghost[id]; } } }
+    }
+  }
+
+  /** 아군 한 수(이동·공격·일격)를 그림 줄 하나로 */
+  function act1(u, rec, before, then) { play([rec], before, function () { afterAct(u); if (then) { then(); } }); }
+  function afterAct(u) {
+    save();
+    if (S.won || S.over) { pick(0); finishTurnGame(); return; }
+    if (u && S.units[u.id] && !S.tb.acted[u.id]) { pick(u.id); } else { pick(0); }
+    if (!TT().left(S)) { say('남은 행동이 없습니다 — 턴 끝을 누르세요'); }
+  }
+  function tMove(u, x, y, then) {
+    var before = snap(), from = tileOf(u), r = TT().move(S, u, x, y);
+    if (!r.ok) { say(r.why); return; }
+    act1(u, { id: u.id, team: 0, from: from, to: { x: x, y: y }, act: 'wait' }, before, function () {
+      if (then) { then(); return; }
+      if (!TT().targets(S, u).length && !(u.t === 'hero' && !(S.tb.cd[u.id] > 0) && castable(u))) { TT().wait(S, u); afterAct(u); }   // 칠 게 없으면 바로 대기
+    });
+  }
+  function castable(u) { var id, v, x = Math.floor(u.x), y = Math.floor(u.y); for (id in S.units) { v = S.units[id]; if (v.team !== u.team && Math.abs(Math.floor(v.x) - x) + Math.abs(Math.floor(v.y) - y) <= TT().CAST_R) { return true; } } return false; }
+  function tAttack(u, tg) {
+    var before = snap(), at = tileOf(u), r = TT().attack(S, u, tg);
+    if (!r.ok) { say(r.why); return; }
+    act1(u, { id: u.id, team: 0, from: at, to: at, act: 'attack', target: tg, dmg: r.dmg, counter: r.counter, killed: r.killed }, before);
+  }
+  function tCast(u) {
+    var before = snap(), at = tileOf(u), r = TT().cast(S, u);
+    if (!r.ok) { say('일격 — ' + r.why); return; }
+    act1(u, { id: u.id, team: 0, from: at, to: at, act: 'cast', target: null, dmg: r.dmg, n: r.n }, before);
+  }
+  /** 다가가 칠 칸 — 닿는 칸 중 그 대상을 칠 수 있는 곳, 이동력 적게 드는 곳 → 숲·언덕 */
+  function bestSpot(u, tg) {
+    var best = null, i, p, g = R().grid, land;
+    for (i = 0; i < (tReach || []).length; i++) {
+      p = tReach[i]; if (!inT(TT().targets(S, u, p.x, p.y), tg)) { continue; }
+      land = S.tiles[g.idx(p.x, p.y)] === g.T.FOREST || S.tiles[g.idx(p.x, p.y)] === g.T.HILL;
+      if (!best || p.c < best.c || (p.c === best.c && land && !best.land)) { best = { x: p.x, y: p.y, c: p.c, land: land }; }
+    }
+    return best;
+  }
+  /** 누른 칸의 적(보이는 유닛)이나 적 기지 */
+  function foeAt(t) {
+    var v = TT().unitAt(S, t.x, t.y), sb = S.buildings[-1], D = R().rules.DEFS.stronghold;
+    if (v && v.team === 1 && visibleFoe(v)) { return { kind: 'unit', id: v.id }; }
+    if (sb && sb.hp > 0 && t.x >= sb.x && t.x < sb.x + D.w && t.y >= sb.y && t.y < sb.y + D.h && (!fogOn || R().fog.seenAt(fogSt, t.x, t.y))) { return { kind: 'base' }; }
+    return null;
+  }
+
+  /** 짧게 누름(마우스 클릭도) — 고르기 · 이동 · 공격 · 풀기 */
+  function tapTurn(p) {
+    if (busy || S.won || S.over || S.tb.side !== 0) { return; }
+    var t = toTile(p.x, p.y), u = tsel ? S.units[tsel] : null, at = TT().unitAt(S, t.x, t.y), tg, spot;
+    if (at && at.team === 0) {
+      if (u && at.id === u.id) { if (!S.tb.moved[u.id]) { tMove(u, t.x, t.y); } return; }   // 제자리 한 번 더 = 여기 선다
+      if (S.tb.acted[at.id]) { say('이번 턴에 이미 움직였다'); return; }
+      pick(at.id); return;
+    }
+    tg = foeAt(t);
+    if (!u) { if (tg && tg.kind === 'unit') { var v = S.units[tg.id], st = R().units.statOf(v); say('적 ' + (st.name || R().units.UDEF[v.t].name) + ' · 체력 ' + Math.ceil(v.hp) + ' · 이동 ' + TT().mv(v)); } return; }
+    if (tg) {
+      if (inT(TT().targets(S, u), tg)) { tAttack(u, tg); return; }
+      if (!S.tb.moved[u.id]) { spot = bestSpot(u, tg); if (spot) { tMove(u, spot.x, spot.y, function () { tAttack(u, tg); }); return; } }
+      say('닿지 않는다'); return;
+    }
+    if (!S.tb.moved[u.id] && tReach && tReach.some(function (q) { return q.x === t.x && q.y === t.y; })) { tMove(u, t.x, t.y); return; }
+    if (S.tb.moved[u.id]) { say('움직인 뒤엔 공격하거나 대기를 누르세요'); return; }
+    pick(0);
+  }
+
+  /** 턴 끝 → 적 차례 그림 → (자동이면) 다음 아군 차례 */
+  function endTurnPlay() {
+    if (busy || S.won || S.over || S.tb.side !== 0) { return; }
+    pick(0);
+    var before = snap(), log = TT().endTurn(S);
+    save();
+    play(log, before, function () { if (S.won || S.over) { finishTurnGame(); return; } save(); hud(); if (S.tb.auto) { autoGo(); } }, true);
+  }
+  function autoGo() {
+    if (!S.tb.auto || busy || S.won || S.over || S.tb.side !== 0) { return; }
+    pick(0);
+    var before = snap(), log = TT().autoTurn(S, 0);
+    play(log, before, function () { if (S.won || S.over) { save(); finishTurnGame(); return; } endTurnPlay(); });
+  }
+  function finishTurnGame() {
+    if (overSeen) { return; }
+    overSeen = true; var c = global.DG.core; if (c && c.save) { c.save.rtsTb = null; c.persist(); }
+    hud(); askDiff(true);
+  }
+
+  function hudTurn() {
+    var tb = S.tb, sb = S.buildings[-1], turn = enemyAnim ? tb.turn - (S.won || S.over ? 0 : 1) : tb.turn, mine = 0, id, k;
+    for (id in S.units) { if (S.units[id].team === 0) { mine++; } }
+    els.top.innerHTML = '<b class="rt-day">' + Math.max(1, turn) + '턴</b>' +
+      '<span class="tb-side ' + (enemyAnim ? 'neg' : 'pos') + '">' + (S.won ? '승리' : S.over ? '패배' : enemyAnim ? '적 차례' : '아군 차례') + '</span>' +
+      '<span title="이번 턴에 아직 안 움직인 아군 / 아군">남은 행동 <b>' + TT().left(S) + '</b>/' + mine + '</span>' +
+      '<span title="거점 체력 — 0 이 되면 진다">🏯 <b class="' + (S.cHp < 150 ? 'neg' : '') + '">' + Math.ceil(S.cHp) + '</b></span>' +
+      (sb ? '<span title="적 기지 체력 — 0 이 되면 이긴다">🏴 <b>' + Math.ceil(sb.hp) + '</b></span>' : '') +
+      '<span title="쓰러뜨린 적">⚔️ <b>' + (S.kills || 0) + '</b></span>';
+    var eb = els.turn.querySelector('[data-end]'), ab = els.turn.querySelector('[data-auto]');
+    eb.disabled = busy || S.won || S.over; eb.classList.toggle('hot', !busy && !TT().left(S) && !S.won && !S.over);
+    ab.classList.toggle('on', !!tb.auto);
+    var u = tsel ? S.units[tsel] : null, h = '';
+    if (u && !busy) {
+      var st = R().units.statOf(u), rg = TT().rangeOf(u), cd = S.tb.cd[u.id] | 0;
+      h = '<div class="sl-h"><b>' + (st.name || R().units.UDEF[u.t].name) + '</b> <small class="tb-hp">체력 ' + Math.ceil(u.hp) + '/' + (u.mhp || st.hp) + '</small></div>' +
+        '<div class="sl-u">이동 ' + TT().mv(u) + ' · 사거리 ' + (rg[0] === rg[1] ? rg[0] : rg[0] + '~' + rg[1]) + ' · 공격 ' + st.atk + (S.tb.moved[u.id] ? ' · 움직임 끝' : '') + '</div><div class="sl-btns">' +
+        '<button data-tact="attack"' + (tTargets.length ? '' : ' disabled') + '><span>⚔️</span><small>공격</small></button>' +
+        (u.t === 'hero' ? '<button data-tact="cast"' + (cd > 0 ? ' disabled' : '') + ' title="둘레 2칸의 적 전부"><span>💥</span><small>일격' + (cd > 0 ? '<br>' + cd + '턴' : '') + '</small></button>' : '') +
+        '<button data-tact="wait"><span>⏸</span><small>대기</small></button><button data-tact="cancel"><span>✖</span><small>취소</small></button></div>';
+    }
+    if (h !== els.sel.__h) { els.sel.innerHTML = h; els.sel.__h = h; }
+    els.sel.classList.toggle('show', !!h);
+    k = S.won ? '승리 — ' + tb.why : S.over ? '패배 — ' + tb.why : busy ? (enemyAnim ? '적 차례…' : tb.auto ? '자동 진행 중 — 자동을 누르면 멈춥니다' : '…')
+      : Date.now() < tipUntil ? tipMsg : u ? (S.tb.moved[u.id] ? '빨간 적을 눌러 공격 · 대기' : '파란 칸을 눌러 이동 · 빨간 테두리 적을 누르면 다가가 칩니다')
+      : TT().left(S) ? '유닛을 눌러 움직이세요' : '남은 행동이 없습니다 — 턴 끝을 누르세요';
+    els.tip.textContent = k; els.tip.classList.toggle('warn', S.over || S.won || Date.now() < tipUntil);
+  }
+  /** 패널 단추 — 공격(가장 약한 대상)·일격·대기·취소 */
+  function tAct(k) {
+    var u = tsel ? S.units[tsel] : null; if (!u || busy) { return; }
+    if (k === 'cancel') { pick(0); return; }
+    if (k === 'wait') { var r = TT().wait(S, u); if (!r.ok) { say(r.why); } afterAct(u); return; }
+    if (k === 'cast') { tCast(u); return; }
+    if (k === 'attack' && tTargets.length) {
+      var best = tTargets[0], i, v, bv = 1e9;
+      for (i = 0; i < tTargets.length; i++) { v = tTargets[i].kind === 'unit' ? S.units[tTargets[i].id] : null; if (v && v.hp < bv) { bv = v.hp; best = tTargets[i]; } }
+      tAttack(u, best);
+    }
+  }
+  /** 아군 무리 가운데로 카메라 */
+  function camToArmy() {
+    var n = 0, sx = 0, sy = 0, id; for (id in S.units) { if (S.units[id].team === 0) { n++; sx += S.units[id].x; sy += S.units[id].y; } }
+    if (n) { cam.x = sx / n; cam.y = sy / n; } else { var cs = R().grid.castleSite(); cam.x = cs.x + 1.5; cam.y = cs.y + 1.5; }
+    clampCam(); dirty = true;
   }
 
   /* ── 저장·시간 ─────────────────────────────────────── */
 
   function save() {
-    var c = global.DG.core; if (!S || !c || !c.save || S.over || S.won) { return; }
+    var c = global.DG.core;
+    if (TB) { if (!S || !c || !c.save) { return; } c.save.rtsTb = S.over || S.won ? null : TT().serialize(S); c.persist(); return; }   // 턴 전투는 수마다(옛 save.rts 는 안 건드림)
+    if (!S || !c || !c.save || S.over || S.won) { return; }
     c.save.rts = R().state.serialize(S); c.persist(); lastSaveDay = S.day;
   }
 
@@ -450,7 +724,8 @@
     var dt = Math.min(250, t - (lastT || t)); lastT = t;
     if (!pokeUntil) { pokeUntil = t + 10000; }
     if (t < pokeUntil) { dirty = true; }   // 새 그림(타일·건물·몸)이 받아지는 동안
-    if (S.speed > 0) {
+    if (TB) { stepAnim(); }
+    else if (S.speed > 0) {
       acc += dt * S.speed; var n = 0;
       while (acc >= TICK_MS && n < 40) {
         acc -= TICK_MS; n++; S.tick++; R().units.tick(S); R().combat.tick(S); dirty = true;
@@ -467,7 +742,9 @@
 
   /** 입구 — 저장이 있으면 이어서, 없으면 새 판 */
   function init() {
-    var doc = global.document, c = global.DG.core;
+    var doc = global.document, c = global.DG.core, q = global.location ? global.location.search : '';
+    TB = !/[?&]mode=rts(&|$)/.test(q) && !!R().tactics;
+    if (TB) { initTurn(doc, c, q); return; }
     doc.body.insertAdjacentHTML('beforeend',
       '<canvas id="rts-map"></canvas><div id="rts-top" class="rt-box"></div>' +
       '<div id="rts-speed" class="rt-box"><button data-speed="0" title="일시정지 (Space)">⏸</button><button data-speed="1">1×</button><button data-speed="2">2×</button><button data-speed="4">4×</button></div>' +
@@ -484,8 +761,25 @@
     resize(); bindInput(); hud(); global.requestAnimationFrame(loop);
     if (!saved && !/[?&]diff=/.test(global.location ? global.location.search : '')) { askDiff(); }
   }
+  /** 턴 전투 입구 — 저장(`save.rtsTb`)이 있으면 이어서, 없으면 새 전투. 주소 `fast=1` 은 그림 줄을 거의 건너뛴다(시험용) */
+  function initTurn(doc, c, q) {
+    doc.body.classList.add('rt-tb');
+    doc.body.insertAdjacentHTML('beforeend',
+      '<canvas id="rts-map"></canvas><div id="rts-top" class="rt-box"></div>' +
+      '<div id="rts-turn" class="rt-box"><button data-end="1" title="턴 끝 (E)">턴 끝</button><button data-auto="1" title="자동 — 아군도 컴퓨터가 둔다">자동</button></div>' +
+      '<canvas id="rts-mini" class="rt-box" width="240" height="150"></canvas><div id="rts-tip" class="rt-box"></div><div id="rts-sel" class="rt-box"></div><a id="rts-back" class="rt-box" href="./">턴제로</a>');
+    cv = $('rts-map'); ctx = cv.getContext('2d'); mini = $('rts-mini'); mctx = mini.getContext('2d');
+    els = { top: $('rts-top'), tip: $('rts-tip'), sel: $('rts-sel'), turn: $('rts-turn') };
+    AK = /[?&]fast=1/.test(q) ? 0.03 : 1;
+    var saved = c && c.save && c.save.rtsTb ? TT().restore(c.save.rtsTb) : null;
+    S = saved || TT().start((Date.now() & 0xffff) + 1, diffFromUrl());
+    fogOn = !/[?&]fog=0/.test(q); fogSt = R().fog.create(); R().fog.update(fogSt, S);
+    camToArmy(); resize(); bindInput(); hud(); global.requestAnimationFrame(loop);
+    if (!saved && !/[?&]diff=/.test(q)) { askDiff(); } else if (S.tb.auto) { autoGo(); }
+  }
 
   global.DG = global.DG || {};
   global.DG.rts = global.DG.rts || {};
-  global.DG.rts.view = { init: init, save: save, state: function () { return S; }, toScreen: toScreen, toTile: toTile, camera: cam, tool: function (t) { if (t) { tool = t; } return tool; } };
+  global.DG.rts.view = { init: init, save: save, state: function () { return S; }, toScreen: toScreen, toTile: toTile, camera: cam, tool: function (t) { if (t) { tool = t; } return tool; },
+    turn: function () { return { on: TB, busy: busy, sel: tsel, reach: tReach ? tReach.length : 0, targets: tTargets.length, danger: Object.keys(tDanger).length }; } };   // 턴 전투 시험용(W-0081)
 })(typeof window !== 'undefined' ? window : this);

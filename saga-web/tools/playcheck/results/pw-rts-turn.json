@@ -1,0 +1,98 @@
+{
+ "script": "pw-rts-turn.mjs",
+ "game": "saga-realm",
+ "pass": 18,
+ "total": 18,
+ "checks": [
+  {
+   "name": "[PC] 열림 — 턴 모드·양편 유닛·건설 막대 없음·턴 끝 단추",
+   "ok": true,
+   "detail": "{\"on\":true,\"a\":9,\"e\":7,\"turn\":1,\"tools\":false,\"end\":true}"
+  },
+  {
+   "name": "[PC] 고르기 — 내 유닛을 누르면 파란 칸이 생긴다",
+   "ok": true,
+   "detail": "{\"on\":true,\"busy\":false,\"sel\":1,\"reach\":33,\"targets\":0,\"danger\":0}"
+  },
+  {
+   "name": "[PC] 이동 — 파란 칸을 누르면 그 칸으로 간다",
+   "ok": true,
+   "detail": "{\"dst\":[74,54],\"mv\":{\"x\":74,\"y\":54,\"moved\":true}}"
+  },
+  {
+   "name": "[PC] 공격 — 붙은 적이 빨갛게 뜨고, 누르면 체력이 준다",
+   "ok": true,
+   "detail": "{\"targets\":1,\"before\":60,\"after\":36}"
+  },
+  {
+   "name": "[PC] 턴 끝 — 적 차례가 돌고 2턴 아군 차례로 돌아온다",
+   "ok": true,
+   "detail": "{\"turn\":2,\"side\":0,\"n\":16,\"top\":\"2턴아군 차례남은 행동 9/9🏯 400🏴 600⚔️ 0\"}"
+  },
+  {
+   "name": "[PC] 저장 — 새로고침 뒤 턴·유닛 수가 같다",
+   "ok": true,
+   "detail": "{\"turn\":2,\"n\":16}"
+  },
+  {
+   "name": "[PC] 자동 — 30턴 안에 결판이 나고 결과 창이 뜬다",
+   "ok": true,
+   "detail": "{\"won\":true,\"over\":false,\"turn\":8,\"box\":\"🏆 승리적 전멸 · 8턴 · 쓰러뜨린 적 7 — 난이도를 골라 새 전투\"}"
+  },
+  {
+   "name": "[PC] 배치 — 가로 스크롤 없음",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "[PC] 페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "[폰] 열림 — 턴 모드·양편 유닛·건설 막대 없음·턴 끝 단추",
+   "ok": true,
+   "detail": "{\"on\":true,\"a\":9,\"e\":7,\"turn\":1,\"tools\":false,\"end\":true}"
+  },
+  {
+   "name": "[폰] 고르기 — 내 유닛을 누르면 파란 칸이 생긴다",
+   "ok": true,
+   "detail": "{\"on\":true,\"busy\":false,\"sel\":1,\"reach\":33,\"targets\":0,\"danger\":0}"
+  },
+  {
+   "name": "[폰] 이동 — 파란 칸을 누르면 그 칸으로 간다",
+   "ok": true,
+   "detail": "{\"dst\":[74,54],\"mv\":{\"x\":74,\"y\":54,\"moved\":true}}"
+  },
+  {
+   "name": "[폰] 공격 — 붙은 적이 빨갛게 뜨고, 누르면 체력이 준다",
+   "ok": true,
+   "detail": "{\"targets\":1,\"before\":60,\"after\":36}"
+  },
+  {
+   "name": "[폰] 턴 끝 — 적 차례가 돌고 2턴 아군 차례로 돌아온다",
+   "ok": true,
+   "detail": "{\"turn\":2,\"side\":0,\"n\":16,\"top\":\"2턴아군 차례남은 행동 9/9🏯 400🏴 600⚔️ 0\"}"
+  },
+  {
+   "name": "[폰] 저장 — 새로고침 뒤 턴·유닛 수가 같다",
+   "ok": true,
+   "detail": "{\"turn\":2,\"n\":16}"
+  },
+  {
+   "name": "[폰] 자동 — 30턴 안에 결판이 나고 결과 창이 뜬다",
+   "ok": true,
+   "detail": "{\"won\":true,\"over\":false,\"turn\":9,\"box\":\"🏆 승리적 전멸 · 9턴 · 쓰러뜨린 적 6 — 난이도를 골라 새 전투\"}"
+  },
+  {
+   "name": "[폰] 배치 — 가로 스크롤 없음",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "[폰] 페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

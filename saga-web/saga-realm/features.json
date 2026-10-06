@@ -794,9 +794,12 @@
  },
  {
   "id": "rk.rts-turn",
-  "name": "전장 턴 전투(조조전식) — 이동 칸·공격·반격·상성·땅 방어·영웅 일격·적 차례 AI·자동·저장 (규칙 층)",
+  "name": "전장 턴 전투(조조전식) — 이동 칸·공격·반격·상성·땅 방어·영웅 일격·적 차례 AI·자동·저장 + 화면(파란/빨간 칸·턴 끝·자동)",
   "files": [
-   "js/rts/tactics.js"
+   "js/rts/tactics.js",
+   "js/rts/view.js",
+   "css/rts.css",
+   "rts.html"
   ],
   "tests": [
    "RTS 턴 전투(W-0080) — 시작: 아군 9(영웅 3)·적은 쉬움 < 보통 < 어려움(적장 1), 모두 밟을 수 있는 서로 다른 칸, 1턴 아군 차례",
@@ -809,11 +812,11 @@
    "RTS 턴 전투(W-0080) — 양쪽 자동: 30턴 안에 결판이 나고, 같은 시드는 같은 결과(쉬움·보통·어려움)",
    "RTS 턴 전투(W-0080) — 저장: serialize → restore → serialize 가 같고(쿨다운·행동·체력·거점), 깨진 꼴은 null"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": "W-0080",
+  "ticket": "W-0081",
   "since": "2026-10-07",
-  "note": "D1: _test.html 진단 9개(규칙 층). 화면은 W-0081"
+  "note": "D2: saga-web/tools/playcheck/pw-rts-turn.mjs 18/18(PC·폰 각각 열림·고르기·이동·공격·턴 끝·새로고침 저장·자동 결판·스크롤·콘솔) — results/pw-rts-turn.json. 규칙 진단 9(W-0080). 재미·조조전 같은가는 W-0082 시트"
  }
 ]

@@ -77,3 +77,25 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0d1016; col
   #rts-speed { top: 60px; right: 12px; }
   #rts-opts { top: 108px; right: 12px; }
 }
+
+/* W-0081 — 턴 전투 모드(body.rt-tb). 건설·속도·세율 상자는 안 만든다. 턴 끝·자동 단추는 폰은 아래 가운데, 데스크톱은 콘솔 오른쪽 */
+#rts-turn { left: 50%; bottom: calc(12px + var(--rt-safe-b)); transform: translateX(-50%); display: flex; gap: 6px; padding: 6px; }
+#rts-turn button { min-width: 84px; min-height: 48px; padding: 4px 12px; background: rgba(0, 0, 0, .3); border: 1px solid rgba(216, 181, 106, .4); color: var(--rt-ink); border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 700; }
+#rts-turn button.on { background: linear-gradient(180deg, #e8c46a, #b98f3c); color: #22190a; }
+#rts-turn button.hot { border-color: #f1d98f; box-shadow: 0 0 0 2px rgba(232, 196, 106, .55); animation: rt-hot 1.2s ease-in-out infinite; }
+#rts-turn button:disabled { opacity: .45; cursor: default; animation: none; }
+@keyframes rt-hot { 50% { box-shadow: 0 0 0 5px rgba(232, 196, 106, .15); } }
+.rt-tb .tb-side.pos { color: #8fc8ff; } .rt-tb .tb-side.neg { color: #ff8a7a; }
+.rt-tb .tb-hp { color: var(--rt-dim); }
+.rt-tb .sl-btns button:disabled { opacity: .4; cursor: default; }
+.rt-tb #rts-map { cursor: pointer; }
+@media (max-width: 780px) {   /* 폰: 안내 줄은 위 줄 밑 왼쪽, 미니맵은 그 오른쪽(아래는 패널·턴 단추 자리) */
+  .rt-tb #rts-sel { bottom: calc(76px + var(--rt-safe-b)); }
+  .rt-tb #rts-tip { display: block; top: 100px; left: 8px; max-width: calc(100% - 150px); font-size: 12px; padding: 6px 10px; }
+  .rt-tb #rts-mini { top: 100px; right: 8px; bottom: auto; width: 120px; height: 75px; }
+}
+@media (min-width: 781px) {
+  .rt-tb #rts-turn { left: auto; right: 12px; transform: none; bottom: calc(12px + var(--rt-safe-b)); flex-direction: column; width: 300px; box-sizing: border-box; }
+  .rt-tb #rts-turn button { min-height: 64px; font-size: 18px; }
+  .rt-tb #rts-sel:empty::before { content: "유닛을 누르면 파란 칸(이동)·빨간 적(공격)이 보입니다 — 빨간 테두리 적을 누르면 다가가 칩니다 · 끌기: 지도 이동 · 우클릭·Esc: 풀기 · E: 턴 끝"; }
+}

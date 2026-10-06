@@ -5,7 +5,7 @@ import { open, sleep } from './pw.mjs';
 const r = await open('saga-realm', { w: 390, h: 760, mobile: true });
 const { page } = r;
 await page.addInitScript(() => { window.DG_NO_ACCOUNT = true; });
-await page.goto(r.url('rts.html')); await sleep(1500);
+await page.goto(r.url('rts.html?mode=rts')); await sleep(1500);
 const ask = await page.evaluate(() => ({ overlay: !!document.getElementById('rts-diff'), speed: DG.rts.view.state().speed }));
 await page.tap('#rts-diff button[data-diff="0"]'); await sleep(300);
 const set = await page.evaluate(() => { const S = DG.rts.view.state(); return { gone: !document.getElementById('rts-diff'), diff: S.diff, hp: S.buildings[-1].hp, speed: S.speed }; });

@@ -3,7 +3,7 @@
 import { open, sleep } from './pw.mjs';
 const r = await open('saga-realm', { w: 1100, h: 700 });
 await r.page.addInitScript(() => { window.DG_NO_ACCOUNT = true; });
-await r.page.goto(r.url('rts.html?diff=1&qa=1')); await sleep(1500);
+await r.page.goto(r.url('rts.html?diff=1&qa=1&mode=rts')); await sleep(1500);
 await r.page.evaluate(() => {
   const R = DG.rts, V = R.view, S = V.state(), cs = R.grid.castleSite(), U = R.units; S.speed = 0;
   for (let i = 0; i < 10; i++) { R.rules.place(S, 'road', cs.x + 3 + i, cs.y + 1); }

@@ -5,7 +5,7 @@ import { open, sleep } from './pw.mjs';
 const r = await open('saga-realm');
 const { page } = r;
 await page.addInitScript(() => { window.DG_NO_ACCOUNT = true; });
-await page.goto(r.url('rts.html?diff=1')); await sleep(1500);
+await page.goto(r.url('rts.html?diff=1&mode=rts')); await sleep(1500);
 const info = await page.evaluate(() => {
   const R = DG.rts, V = R.view, S = V.state(), cs = R.grid.castleSite(); S.res.gold = 9999; S.res.food = 9999; S.raid.next = 1e9; S.speed = 1;
   for (let i = 0; i < 8; i++) { R.rules.place(S, 'road', cs.x + 3 + i, cs.y + 1); }
