@@ -42,11 +42,12 @@
    "태수의 자질이 그 성의 수입에 곱해진다",
    "치안이 낮으면 수입이 준다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-domestic.mjs 7/7 — results/pw-rk-domestic.json(W-0083)."
  },
  {
   "id": "rk.rtk-3",
@@ -61,11 +62,12 @@
    "시장 — 없는 만큼은 못 판다·못 산다",
    "군량 없이는 출진할 수 없다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-domestic.mjs 7/7 — results/pw-rk-domestic.json(W-0083)."
  },
  {
   "id": "rk.rtk-4",
@@ -76,11 +78,12 @@
   "tests": [
    "재해는 수확을 깎고 풍년은 늘린다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-domestic.mjs 7/7 — results/pw-rk-domestic.json(W-0083)."
  },
  {
   "id": "rk.officer",
@@ -132,11 +135,12 @@
    "군주 계승 — 손잡이를 켜고 세월을 당겨 24달(AI 세력 포함) 굴려도 에러 0 · 살아 있는 세력의 군주는 늘 산 사람 · 충성 0~100 · 즉위 기록 있음",
    "군주 계승 — 옛 세이브(forces 칸에 lord·heir 없음, 무장에 unrest 없음)도 그대로 열리고, 화면: 손잡이를 켜면 후계 단추·배지, 끄면 없다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-domestic.mjs 7/7 — results/pw-rk-domestic.json(W-0083)."
  },
  {
   "id": "rk.data-item",
@@ -148,11 +152,12 @@
   "tests": [
    "보물 등급(등급 체계) — 보너스 +6·+8·+9·+10 이 기본·상급·희귀·영웅, 이름·색은 무장 RARITY 와 같다(값은 그대로)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-domestic.mjs 7/7 — results/pw-rk-domestic.json(W-0083)."
  },
  {
   "id": "rk.diplo",
@@ -193,11 +198,12 @@
    "유언비어는 치안을 깎는다",
    "손이 닿지 않는 성에는 계략을 걸 수 없다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-domestic.mjs 7/7 — results/pw-rk-domestic.json(W-0083)."
  },
  {
   "id": "rk.war",

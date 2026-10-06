@@ -1,0 +1,44 @@
+{
+ "script": "pw-rk-domestic.mjs",
+ "game": "saga-realm",
+ "pass": 7,
+ "total": 7,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "rk.rtk-2 내정 — 개간 명령으로 농업이 오르고, 상한(capOf)에 닿으면 더 안 오른다 · 명령 10종",
+   "ok": true,
+   "detail": "{\"ok1\":true,\"a0\":300,\"a1\":306,\"cap\":900,\"ok2\":true,\"a2\":900,\"orders\":10}"
+  },
+  {
+   "name": "rk.rtk-3 시장 — 성 창에서 군량을 사면 금이 줄고 군량이 늘며, 환율은 0.35~0.7",
+   "ok": true,
+   "detail": "{\"m0\":{\"gold\":24280,\"food\":10400,\"rate\":0.7},\"m1\":{\"gold\":16997,\"food\":15498}}"
+  },
+  {
+   "name": "rk.rtk-4 재해 — 다섯 종, 수해가 지도(🌊)·성 창에 뜨고 수확 ×0.6, 다음 달 성벽 −400·남은 달 1",
+   "ok": true,
+   "detail": "{\"d0\":{\"n\":5,\"wall\":4800,\"harvest\":0.6,\"map\":1,\"sheet\":true},\"d1\":{\"wall\":4400,\"left\":1,\"dis\":\"flood\"}}"
+  },
+  {
+   "name": "rk.officer-2 나이 — 생년 130~178 결정적, 해가 바뀌면 나이가 1 오른다",
+   "ok": true,
+   "detail": "{\"a0\":{\"id\":\"sg_huangzhong\",\"by\":160,\"age\":34,\"year\":194},\"a1\":{\"age\":35,\"year\":195}}"
+  },
+  {
+   "name": "rk.data-item 보물 — 11종, 끼우면 능력 +bonus, 벗기면 그대로",
+   "ok": true,
+   "detail": "{\"n\":11,\"stat\":\"might\",\"bonus\":6,\"s0\":95,\"s1\":101,\"s2\":95}"
+  },
+  {
+   "name": "rk.diplo-2 계략 — 맞닿은 적 성 창에서 계략 단추를 누르면 금이 들고 결과 글이 뜬다 · 계략 4종",
+   "ok": true,
+   "detail": "{\"pt\":{\"to\":\"wan\",\"gold\":29154,\"plots\":4},\"hasBtn\":true,\"p1\":{\"gold\":28954,\"toast\":\"이간 실패 — 들통났다\"}}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}
