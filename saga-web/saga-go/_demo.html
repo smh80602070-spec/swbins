@@ -898,7 +898,7 @@ setTimeout(function () {
     var ds = DG.duel.open({
       title: '⚔️ 토벌 — ★5 적장',
       foeName: foe.name,
-      portrait: DG.sprite.portrait('hero', foe, 96),
+      stage3d: { kind: 'hero', ref: foe },             // 게임(토벌 fort.js·적도 rogue.js)과 같은 길 — 구운 초상. 전엔 코드 그림을 넘겨 캡슐 모양이 나왔다
       foeHp: 2600, myAtk: pw.atk, myDef: pw.def,
       onDone: function () {}
     });
