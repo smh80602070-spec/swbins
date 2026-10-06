@@ -1,0 +1,34 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "icons_reroll1007",
+ "kit": {
+  "spec": "icon",
+  "style": "B",
+  "style_name": "부드러운 채색 + 얇은 윤곽(10-03~05 산출)"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery",
+  "variants": 6
+ },
+ "items": [
+  {
+   "id": "st_u_cape",
+   "seed": 5100700,
+   "prompt": "masterpiece, high score, great score, absurdres, (folded blue cloak:1.2), cape draped over itself, gold trim, ornate gold clasp, collar, no humans, still life, object focus, game icon, simple background, white background, centered, single object, no cast shadow, hand-painted",
+   "negative": "1girl, 1boy, solo, human, lowres, bad anatomy, text, error, signature, watermark, username, blurry, frame, border, multiple objects, hands, person, character, ground shadow, gradient background, background scenery, cropped, worst quality, low quality, box, gift box, case, package, frame, picture frame, border, cube, mannequin, body, shoulders"
+  },
+  {
+   "id": "reward_coinbag",
+   "seed": 5100800,
+   "prompt": "masterpiece, high score, great score, absurdres, (leather coin pouch tied with cord:1.2), drawstring bag, a few gold coins on top, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, no reflection, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art, pot, bowl, cauldron, jar"
+  }
+ ],
+ "note": "10-07 재뽑기: st_u_cape(K-0035, --seg 로도 미달 — 흰 테·네모 판) · reward_coinbag(K-0050, 단지 밑 파란 반사·주머니로 안 읽힘)"
+}
