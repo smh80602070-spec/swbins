@@ -279,10 +279,22 @@ def common_frame(name, t, i):
             d.line((cx + math.cos(a) * r * 0.3, cy + math.sin(a) * r * 0.3, cx + math.cos(a) * r, cy + math.sin(a) * r), fill=(255, 245, 200), width=3 if k % 2 else 2)
         im = Image.eval(im, lambda v: int(v * (1 - t) ** 1.2))
     elif name == 'slash_arc':
-        a0 = -60 + 130 * t
-        for k in range(4):
-            d.arc((cx - 46 + k * 4, cy - 46 + k * 4, cx + 46 - k * 4, cy + 46 - k * 4), a0 - 70 + k * 6, a0 + 10, fill=(255, 255, 255) if k == 0 else (200, 220, 255), width=6 - k)
-        im = Image.eval(im, lambda v: int(v * (1 - max(0, t - 0.6) / 0.4)))
+        # 초승달 칼자국(10-06 — 흰 원호 선이 약했다): 머리가 원을 따라 돌고, 두께는 가운데가 두껍고 양끝이 뾰족, 꼬리로 갈수록 사라진다
+        yy, xx = np.mgrid[0:F, 0:F]
+        ang = np.arctan2(yy - cy, xx - cx)
+        rr = np.hypot(xx - cx, yy - cy)
+        head = math.radians(-100 + 230 * min(1.0, t * 1.4))
+        span = math.radians(150) * min(1.0, 0.25 + t * 1.6)
+        u = ((head - ang) % (2 * math.pi)) / max(span, 1e-3)                 # 0 = 머리, 1 = 꼬리
+        inside = (u >= 0) & (u <= 1)
+        R, W = 44.0, 15.0
+        w = W * np.sin(np.pi * np.clip(1 - u, 0, 1) ** 0.6) + 1.0            # 머리 쪽이 두껍다
+        dist = np.abs(rr - (R - 4 * u)) / (w / 2)
+        core = np.clip(1 - dist, 0, 1) ** 1.4 * (1 - u) ** 0.8 * inside
+        fade = 1 - max(0.0, t - 0.55) / 0.45
+        col = np.dstack([core * (200 + 55 * core), core * (220 + 35 * core), core * 255]) * fade
+        im = Image.fromarray(np.clip(col, 0, 255).astype(np.uint8))
+        d = ImageDraw.Draw(im)
     elif name in ('heal_ring', 'heal_cross'):
         for k in range(3):
             life = (t + k / 3) % 1
@@ -312,14 +324,23 @@ def common_frame(name, t, i):
             a = k * math.pi / 3 + ph / 3
             d.polygon([(cx + math.cos(a) * 34, cy + math.sin(a) * 34), (cx + math.cos(a + 0.5) * 42, cy + math.sin(a + 0.5) * 42), (cx + math.cos(a + 1.0) * 34, cy + math.sin(a + 1.0) * 34)], outline=(190, 225, 255))
     elif name == 'death_smoke':
-        for k in range(8):
+        # 부드러운 연기 뭉치(그라데이션) + 잔불 — 납작한 회색 원(10-06 지적) 대신
+        acc = np.zeros((F, F, 3))
+        for k in range(9):
             a = rng.uniform(0, 2 * math.pi)
-            r0 = rng.uniform(4, 18)
-            life = t
-            x, y = cx + math.cos(a) * r0 * (1 + life * 2), cy - life * 30 + math.sin(a) * r0 * 0.6
-            s = 10 + 16 * life
-            g = int(150 * (1 - life))
-            d.ellipse((x - s, y - s, x + s, y + s), fill=(g, g, g))
+            r0 = rng.uniform(4, 16)
+            x, y = cx + math.cos(a) * r0 * (1 + t * 1.8), cy + 10 - t * 34 + math.sin(a) * r0 * 0.5
+            s_ = 12 + 20 * t + rng.uniform(-3, 3)
+            g = (1 - t) ** 1.2
+            tone = np.array([70, 62, 82]) * g * rng.uniform(0.75, 1.0)                # 겹쳐 더해지므로 낮게(하얗게 타지 않게)
+            acc += np.asarray(radial(x, y, s_, tuple(tone), 1.6)).astype(float)
+        for k in range(10):                                                # 잔불(위로 떠오르며 꺼짐)
+            x = cx + rng.uniform(-28, 28)
+            y = cy + 20 - (t + k / 10) % 1 * 70
+            e = (1 - (t + k / 10) % 1) * (1 - t * 0.5)
+            acc += np.asarray(radial(x, y, 3.5, (255 * e, 170 * e, 90 * e), 1.2)).astype(float)
+        im = Image.fromarray(np.clip(acc, 0, 255).astype(np.uint8))
+        d = ImageDraw.Draw(im)
     elif name == 'levelup_burst':
         for k in range(14):
             a = k * math.pi / 7
@@ -342,7 +363,7 @@ def common_frame(name, t, i):
             g = int(130 * (1 - t))
             d.ellipse((x - s, y - s * 0.7, x + s, y + s * 0.7), fill=(g, int(g * 0.9), int(g * 0.75)))
     else:                                                  # crit_flash — 밝기 펄스는 한 번(광과민)
-        pulse = math.sin(math.pi * t) ** 2
+        pulse = math.sin(math.pi * (0.18 + 0.82 * t)) ** 2                 # 첫 칸부터 보이게(10-06 — 0 이면 빈 칸)
         r = 20 + 40 * t
         d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=(int(255 * pulse * 0.7),) * 3)
         for k in range(8):
