@@ -1448,14 +1448,16 @@
  {
   "id": "gd.fs.fishing",
   "name": "낚시",
-  "files": [],
+  "files": [
+   "games/saga_forest/world/fishing_spot.gd"
+  ],
   "tests": [
    "forest_world"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0046",
   "since": "2026-09-16"
  },
  {

@@ -23,6 +23,7 @@ const CUTS := [
 	["fs_finish_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_finish_menu"]]],
 	["fs_place_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_place_menu"]]],
 	["fs_fishing", FOREST, [["near", "Fishing", 0.0, 5.0]]],
+	["fs_fishing_near", FOREST, [["near", "Fishing", 0.0, 2.6]]],   # G-0046 — 못 가까이
 ]
 
 var _done := 0

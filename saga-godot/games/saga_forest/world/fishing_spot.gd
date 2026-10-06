@@ -21,6 +21,7 @@ const ForestMap := preload("res://games/saga_forest/data/village_map.gd")
 const TerrainBuilder := preload("res://games/saga_forest/world/forest_terrain_builder.gd")
 const WorldCurveMaterial := preload("res://saga_core/world/world_curve_material.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
+const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 
 const GRID := Vector2i(22, 5)
 const CAST_RADIUS := 3.5
@@ -32,6 +33,15 @@ const BITE_WINDOW_MS := 700
 const LATE_GRACE_MS := 400
 const FISH_ITEM_LABEL := "물고기"
 const CURVE_AMOUNT := 0.004
+## G-0046 — 못 모양·둘레(파란 네모 판이 도형 대역으로 보였다). 반지름 m·조각 수·가장자리 흔들림 비율.
+const POND_R := 1.8
+const POND_SEG := 28
+const POND_WOBBLE := 0.1
+const POND_DEEP := Color(0.02, 0.09, 0.2)
+const POND_MID := Color(0.05, 0.18, 0.3)
+const POND_EDGE := Color(0.18, 0.3, 0.27)
+const RIM_ROCK_GLB := "res://assets/world/rock_small_01.glb"
+const RIM_GRASS_GLB := "res://assets/world/grass_tuft_01.glb"
 
 enum State { IDLE, LINE_OUT }
 
@@ -54,11 +64,10 @@ func _ready() -> void:
 	## landmarks_builder.gd의 폭포 물웅덩이와 같은 결(장식 평면).
 	var pond := MeshInstance3D.new()
 	pond.name = "Pond"
-	var mesh := PlaneMesh.new()
-	mesh.size = Vector2(2.5, 2.5)
-	pond.mesh = mesh
-	pond.material_override = WorldCurveMaterial.vertex_color_material(CURVE_AMOUNT, 0.15, Color(0.25, 0.45, 0.62))
+	pond.mesh = pond_mesh()
+	pond.material_override = WorldCurveMaterial.vertex_color_material(CURVE_AMOUNT, 0.5)
 	add_child(pond)
+	_build_rim()
 
 	var area := Area3D.new()
 	area.name = "CastArea"
@@ -71,6 +80,52 @@ func _ready() -> void:
 	area.body_entered.connect(_on_entered)
 	area.body_exited.connect(_on_exited)
 
+
+## G-0046 — 둥근 못: 가운데 한 점 + 가장자리 POND_SEG 점 부채꼴, 가운데 짙은 남색 → 가장자리 옅은 청록(정점색). 가장자리는 각도 해시로 ±POND_WOBBLE 흔들어 고르지 않게.
+static func pond_mesh() -> ArrayMesh:
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var ring_in: Array[Vector3] = []
+	var ring_out: Array[Vector3] = []
+	for i in POND_SEG:
+		var a := TAU * float(i) / float(POND_SEG)
+		var r := POND_R * (1.0 + POND_WOBBLE * sin(a * 3.0 + 0.7) * cos(a * 2.0))
+		var d := Vector3(cos(a), 0.0, sin(a))
+		ring_in.append(d * r * 0.6)
+		ring_out.append(d * r)
+	for i in POND_SEG:
+		var j := (i + 1) % POND_SEG
+		## 안쪽 부채꼴(가운데 → 중간 고리) — 위에서 봐 시계 방향이 앞면(각도가 +x→+z 로 늘어 i→j 순서가 그 방향)
+		st.set_normal(Vector3.UP)
+		st.set_color(POND_DEEP); st.add_vertex(Vector3.ZERO)
+		st.set_color(POND_MID); st.add_vertex(ring_in[i])
+		st.set_color(POND_MID); st.add_vertex(ring_in[j])
+		## 바깥 띠(중간 고리 → 가장자리)
+		st.set_color(POND_MID); st.add_vertex(ring_in[i])
+		st.set_color(POND_EDGE); st.add_vertex(ring_out[j])
+		st.set_color(POND_MID); st.add_vertex(ring_in[j])
+		st.set_color(POND_MID); st.add_vertex(ring_in[i])
+		st.set_color(POND_EDGE); st.add_vertex(ring_out[i])
+		st.set_color(POND_EDGE); st.add_vertex(ring_out[j])
+	return st.commit()
+
+## G-0046 — 못 둘레 돌 여덟·풀 포기 다섯(이미 있는 world GLB, 곡률 텍스처 재질 — forest_biome_scatter.gd 와 같은 방식). 충돌 없음.
+func _build_rim() -> void:
+	var rock: Mesh = GLBUtils.extract_mesh(RIM_ROCK_GLB)
+	var grass: Mesh = GLBUtils.extract_mesh(RIM_GRASS_GLB)
+	for k in 13:
+		var is_rock := k < 8
+		var src: Mesh = rock if is_rock else grass
+		if src == null:
+			continue
+		var a := TAU * (float(k) / 8.0 if is_rock else (float(k - 8) + 0.5) / 5.0) + 0.3
+		var mi := MeshInstance3D.new()
+		mi.name = ("RimRock%d" if is_rock else "RimGrass%d") % k
+		mi.mesh = WorldCurveMaterial.textured_surfaces(src, CURVE_AMOUNT, 0.9)
+		mi.scale = Vector3.ONE * (0.42 + 0.12 * float(k % 3) if is_rock else 0.8)
+		mi.rotation.y = a * 2.3
+		mi.position = Vector3(cos(a), 0.0, sin(a)) * POND_R * (1.08 if is_rock else 1.2)
+		add_child(mi)
 
 func _on_entered(body: Node3D) -> void:
 	if not body.is_in_group("player"):
