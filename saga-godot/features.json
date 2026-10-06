@@ -1678,14 +1678,16 @@
  {
   "id": "gd.fs.triplanar",
   "name": "지형 트라이플레이너",
-  "files": [],
+  "files": [
+   "games/saga_forest/world/forest_terrain_builder.gd"
+  ],
   "tests": [
    "forest_terrain"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0042",
   "since": "2026-09-22"
  },
  {

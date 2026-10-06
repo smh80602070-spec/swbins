@@ -25,6 +25,8 @@ const LEGEND := {
 }
 
 const CURVE_AMOUNT := 0.004
+## G-0042 — 경계 섞기에서 흙길 칸 무게. 한 칸 폭 길이 풀과 반반 섞여 사라지지 않게(길 가운데 꼭짓점이 길 색 쪽으로).
+const PATH_WEIGHT := 3.0
 
 
 func _ready() -> void:
@@ -32,11 +34,20 @@ func _ready() -> void:
 	_build_collision()
 
 
-## 칸마다 색이 다른 사각형 하나씩(GO처럼 경계를 섞지 않는다 — 위 주석
-## 참고) — 한 장의 메시로 합쳐 draw call은 하나뿐이다.
+## 칸마다 사각형 하나씩 — 한 장의 메시로 합쳐 draw call은 하나뿐이다.
+## G-0042 — 바이옴 사분면 색·숲 테두리·흙길이 칸마다 한 색이라 경계가 네모 얼룩으로 보였다(위 머리말의 "한 색" 전제가
+## 바이옴 색이 들어온 뒤로 틀렸다). 꼭짓점(격자 점) 색을 그 점에 닿는 칸들(최대 넷)의 평균으로 — 경계가 한 칸 폭으로 부드럽게 섞인다.
 func _build_ground() -> void:
 	var rows := ForestMap.ROWS
 	var half := ForestMap.TILE_SIZE * 0.5
+
+	var tile_col := {}   # Vector2i → 칸 색
+	for y in rows.size():
+		var r: String = rows[y]
+		for x in r.length():
+			if LEGEND.has(r[x]):
+				var w := PATH_WEIGHT if r[x] == "=" else 1.0
+				tile_col[Vector2i(x, y)] = [ForestBiome.color_at(x, y) if r[x] == "." else (LEGEND[r[x]].color as Color), w]
 
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -52,7 +63,10 @@ func _build_ground() -> void:
 			var center := ForestMap.world_pos(x, y) + Vector3(0, info.height, 0)
 			## 제외 목록 7번(바이옴 지형 다양성) — 풀밭(".")만 사분면
 			## 바이옴 색으로, 나머지(숲 테두리·흙길·집 자리)는 그대로.
-			var col: Color = ForestBiome.color_at(x, y) if ch == "." else info.color
+			var c00 := corner_color(tile_col, x, y)
+			var c10 := corner_color(tile_col, x + 1, y)
+			var c01 := corner_color(tile_col, x, y + 1)
+			var c11 := corner_color(tile_col, x + 1, y + 1)
 
 			var p00 := center + Vector3(-half, 0, -half)
 			var p10 := center + Vector3(half, 0, -half)
@@ -61,14 +75,14 @@ func _build_ground() -> void:
 
 			st.set_normal(Vector3.UP)
 			## 시계 방향이 앞면(위에서 본 GO 땅과 같다 — 반시계면 cull_back 재질에서 땅이 통째로 안 보인다).
-			st.set_color(col); st.add_vertex(p00)
-			st.set_color(col); st.add_vertex(p10)
-			st.set_color(col); st.add_vertex(p11)
+			st.set_color(c00); st.add_vertex(p00)
+			st.set_color(c10); st.add_vertex(p10)
+			st.set_color(c11); st.add_vertex(p11)
 
 			st.set_normal(Vector3.UP)
-			st.set_color(col); st.add_vertex(p00)
-			st.set_color(col); st.add_vertex(p11)
-			st.set_color(col); st.add_vertex(p01)
+			st.set_color(c00); st.add_vertex(p00)
+			st.set_color(c11); st.add_vertex(p11)
+			st.set_color(c01); st.add_vertex(p01)
 
 	var mesh := st.commit()
 	## PLAN 102-5 "바닥 한 색" 처방(2026-09-22) — GO에 먼저 물린
@@ -82,6 +96,21 @@ func _build_ground() -> void:
 	mi.name = "Ground"
 	mi.material_override = mat
 	add_child(mi)
+
+
+## 격자 점 (gx, gy) — 칸 (gx-1..gx, gy-1..gy) 의 왼위 모서리 — 에 닿는 칸 색 평균(G-0042, 흙길은 PATH_WEIGHT 배).
+static func corner_color(tile_col: Dictionary, gx: int, gy: int) -> Color:
+	var sum := Color(0, 0, 0, 0)
+	var n := 0.0
+	for dy in [-1, 0]:
+		for dx in [-1, 0]:
+			var k := Vector2i(gx + dx, gy + dy)
+			if tile_col.has(k):
+				var c: Color = tile_col[k][0]
+				var w: float = tile_col[k][1]
+				sum += c * w
+				n += w
+	return sum / n if n > 0.0 else Color(0.32, 0.52, 0.22)
 
 
 ## 이번 슬라이스는 높낮이가 없어(전부 height=0) GO처럼 칸마다 충돌체를

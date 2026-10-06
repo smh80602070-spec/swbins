@@ -33,6 +33,23 @@ func _initialize() -> void:
 			_fail("정점 수 %d (기대 칸 %d × 6)" % [verts.size(), tiles])
 		if arrays[Mesh.ARRAY_COLOR] == null:
 			_fail("정점색(지형 종류·바이옴 tint) 없음")
+		else:
+			## G-0042 — 같은 자리 정점은 같은 색(칸 경계가 섞여 네모 얼룩이 없다) · 이웃 칸 색이 다른 경계가 실제로 있다
+			var cols: PackedColorArray = arrays[Mesh.ARRAY_COLOR]
+			var at := {}
+			var seams := 0
+			for i in verts.size():
+				var key := Vector2i(roundi(verts[i].x * 10.0), roundi(verts[i].z * 10.0))
+				if at.has(key) and not (at[key] as Color).is_equal_approx(cols[i]):
+					seams += 1
+				at[key] = cols[i]
+			if seams > 0:
+				_fail("칸 경계 이음새 %d곳 — 같은 자리 정점 색이 다름(네모 얼룩)" % seams)
+			var distinct := {}
+			for c in cols:
+				distinct[c.to_html()] = true
+			if distinct.size() < 8:
+				_fail("정점색이 %d가지뿐 — 경계 섞임이 없다" % distinct.size())
 		var mat := ground.material_override as ShaderMaterial
 		if mat == null or mat.shader == null or not mat.shader.resource_path.ends_with("curved_triplanar.gdshader"):
 			_fail("곡률 트라이플레이너 재질이 아님")
