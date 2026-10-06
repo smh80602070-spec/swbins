@@ -243,7 +243,7 @@ def _mats(C, variant):
     return fl, wl, gl
 
 
-def _rough_wall(M, a, b, y0, slot, seed, h=WALL_H, thick=0.5, axis='x', step=None, meander=0.0, inward=0):   # meander·inward 는 방 키트(build_kit)가 켠다 — 굴 키트 모양은 그대로
+def _rough_wall(M, a, b, y0, slot, seed, h=WALL_H, thick=0.5, axis='x', step=None, meander=0.0, inward=0):   # meander·inward = 방 키트(build_kit)·굴 키트(10-07, 문 모듈만 곧게)
     """a→b 선분 위 거친 바위 벽 — 한 장의 울퉁불퉁한 표면(10-06, 상자 마디 → "판자 성가퀴" 로 보였다).
     단면 = 앞면 아래→위 → 둥근 윗면 → 뒷면 위→아래, 벽 따라 0.25m 마다 결정적 잡음으로 밀고 당긴다. 양 끝 열은 잡음 0(모듈 이어 붙임)·끝면 막음."""
     rnd = random.Random(seed)
@@ -309,12 +309,12 @@ def cave_room(C, variant):
     fl, wl, gl = _mats(C, variant)
     h = ROOM / 2
     _floor(M, ROOM, ROOM, fl)
-    _rough_wall(M, -h, -OPEN / 2, -h, wl, 1, axis='x')                                          # 남쪽 벽(가운데 2m 열림)
-    _rough_wall(M, OPEN / 2, h, -h, wl, 2, axis='x')
-    _rough_wall(M, -h, -OPEN / 2, h, wl, 3, axis='x')                                           # 북쪽 벽(가운데 열림)
-    _rough_wall(M, OPEN / 2, h, h, wl, 4, axis='x')
-    _rough_wall(M, -h, h, -h, wl, 5, axis='y')                                                  # 서·동 벽(막힘)
-    _rough_wall(M, -h, h, h, wl, 6, axis='y')
+    _rough_wall(M, -h, -OPEN / 2, -h, wl, 1, axis='x', meander=1.0, inward=1)                                          # 남쪽 벽(가운데 2m 열림)
+    _rough_wall(M, OPEN / 2, h, -h, wl, 2, axis='x', meander=1.0, inward=1)
+    _rough_wall(M, -h, -OPEN / 2, h, wl, 3, axis='x', meander=1.0, inward=-1)                                           # 북쪽 벽(가운데 열림)
+    _rough_wall(M, OPEN / 2, h, h, wl, 4, axis='x', meander=1.0, inward=-1)
+    _rough_wall(M, -h, h, -h, wl, 5, axis='y', meander=1.0, inward=1)                                                  # 서·동 벽(막힘)
+    _rough_wall(M, -h, h, h, wl, 6, axis='y', meander=1.0, inward=-1)
     _cracks(M, gl, [(-1.4, -0.8, -0.3, 0.2), (-0.3, 0.2, 0.9, 0.7), (0.9, 0.7, 1.5, 1.6), (-0.3, 0.2, 0.2, -1.1)])
 
 
@@ -335,8 +335,8 @@ def cave_corridor(C, variant):
     M = C.M
     fl, wl, gl = _mats(C, variant)
     _floor(M, OPEN, ROOM, fl)
-    _rough_wall(M, -2.0, 2.0, -1.0 - 0.25, wl, 9, axis='y')
-    _rough_wall(M, -2.0, 2.0, 1.0 + 0.25, wl, 10, axis='y')
+    _rough_wall(M, -2.0, 2.0, -1.0 - 0.25, wl, 9, axis='y', meander=1.0, inward=1)
+    _rough_wall(M, -2.0, 2.0, 1.0 + 0.25, wl, 10, axis='y', meander=1.0, inward=-1)
     _cracks(M, gl, [(0.0, -1.7, 0.2, -0.5), (0.2, -0.5, -0.1, 0.8), (-0.1, 0.8, 0.1, 1.8)])
 
 
@@ -346,10 +346,10 @@ def cave_corner(C, variant):
     _floor(M, OPEN, OPEN, fl)                                                                    # 가운데 2x2
     _floor(M, OPEN, 2.0, fl, cx=0.0, cy=-2.0)                                                    # 남쪽 팔
     _floor(M, 2.0, OPEN, fl, cx=2.0, cy=0.0)                                                     # 동쪽 팔
-    _rough_wall(M, -3.0, 1.25, -1.25, wl, 11, axis='y')                                          # 서쪽 바깥 벽
-    _rough_wall(M, -1.25, 3.0, 1.25, wl, 12, axis='x')                                           # 북쪽 바깥 벽
-    _rough_wall(M, 1.25, 3.0, -1.25, wl, 13, axis='x')                                           # 동쪽 팔 남쪽 벽
-    _rough_wall(M, -3.0, -1.25, 1.25, wl, 14, axis='y')                                          # 남쪽 팔 동쪽 벽
+    _rough_wall(M, -3.0, 1.25, -1.25, wl, 11, axis='y', meander=1.0, inward=1)                                          # 서쪽 바깥 벽
+    _rough_wall(M, -1.25, 3.0, 1.25, wl, 12, axis='x', meander=1.0, inward=-1)                                           # 북쪽 바깥 벽
+    _rough_wall(M, 1.25, 3.0, -1.25, wl, 13, axis='x', meander=1.0, inward=1)                                           # 동쪽 팔 남쪽 벽
+    _rough_wall(M, -3.0, -1.25, 1.25, wl, 14, axis='y', meander=1.0, inward=-1)                                          # 남쪽 팔 동쪽 벽
     _cracks(M, gl, [(0.0, -2.5, 0.1, -0.2), (0.1, -0.2, 2.5, 0.1)])
 
 
@@ -359,8 +359,8 @@ def cave_stairs(C, variant):
     steps = 8
     for k in range(steps):
         obox(M, (0, -2.0 + (k + 0.5) * ROOM / steps, -0.2), (OPEN, ROOM / steps + 0.01, 0.2 + 0.15 * (k + 1)), 0, fl, 1.0)
-    _rough_wall(M, -2.0, 2.0, -1.25, wl, 17, axis='y')
-    _rough_wall(M, -2.0, 2.0, 1.25, wl, 18, axis='y')
+    _rough_wall(M, -2.0, 2.0, -1.25, wl, 17, axis='y', meander=1.0, inward=1)
+    _rough_wall(M, -2.0, 2.0, 1.25, wl, 18, axis='y', meander=1.0, inward=-1)
     _cracks(M, gl, [(0.0, -1.5, 0.0, 1.5)])
 
 
