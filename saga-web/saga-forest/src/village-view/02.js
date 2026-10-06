@@ -66,7 +66,7 @@
       ctx.font = Math.round(34 * k) + 'px "Segoe UI Emoji", system-ui'; ctx.textAlign = 'center';
       ctx.fillText(mtd.emoji, p.x, p.y - (MTd.isFly(mtd) ? 12 * k : 0) + 2 * k);
     }
-    if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'me', me.ref, 'me', p.x, p.y - lift, 1 * k, { facing: p0.facing, moving: p0.walking, phase: p0.phase, now: now }))) global.DG.sprite.stamp(ctx, {
+    if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'me', me.ref, 'me', p.x, p.y - lift, 1 * k, { facing: p0.facing, dirX: p0.dirX, dirY: p0.dirY, moving: p0.walking, phase: p0.phase, now: now }))) global.DG.sprite.stamp(ctx, {
       kind: 'human', ref: me.ref, x: p.x, y: p.y - lift, s: 1 * k,
       facing: p0.facing, phase: p0.phase, walking: p0.walking,
       color: me.color, look: me.look,
@@ -1008,7 +1008,7 @@
     var k = core.clamp(inSc * 0.95, 0.65, 1.9);
     var me = meStamp();
     shadow(q.x, q.y + 2 * k, 14 * k, 5 * k);
-    if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'me', me.ref, 'me', q.x, q.y, k, { facing: p0.facing, moving: p0.walking, phase: p0.phase, now: now }))) global.DG.sprite.stamp(ctx, {
+    if (!(global.DG.actor2d && global.DG.actor2d.draw(ctx, 'me', me.ref, 'me', q.x, q.y, k, { facing: p0.facing, dirX: p0.dirX, dirY: p0.dirY, moving: p0.walking, phase: p0.phase, now: now }))) global.DG.sprite.stamp(ctx, {
       kind: 'human', ref: me.ref, x: q.x, y: q.y, s: k,
       facing: p0.facing, phase: p0.phase, walking: p0.walking,
       color: me.color, look: me.look,

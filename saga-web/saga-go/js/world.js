@@ -380,7 +380,7 @@
     }
     player.speed = Math.hypot(player.vx, player.vy);
 
-    if (Math.abs(player.vx) > 1.2) { player.facing = player.vx > 0 ? 1 : -1; }
+    if (Math.abs(player.vx) > 1.2) { player.facing = player.vx > 0 ? 1 : -1; } if (player.speed > 1.5) { player.dirX = player.vx; player.dirY = player.vy; }   // 2D 앞·뒤 모습(W-0073)
     if (player.speed > 1.5) {
       player.phase += dt * (4.2 + player.speed * 0.10);
       // 일정 거리마다 좌우 번갈아 발자국을 남긴다
@@ -461,7 +461,7 @@
       s.x += dx / d * step;
       s.y += dy / d * step;
       s.moving = true;
-      if (Math.abs(dx) > 0.4) { s.facing = dx > 0 ? 1 : -1; }
+      if (Math.abs(dx) > 0.4) { s.facing = dx > 0 ? 1 : -1; } s.dirX = dx; s.dirY = dy;
       s.phase += dt * 7.5;
     }
   }
@@ -1833,7 +1833,7 @@
     ctx.fillStyle = 'rgba(0,0,0,0.22)';
     ctx.fill();
 
-    if (!(isHero && global.DG.actor2d && global.DG.actor2d.human(ctx, s.ref, null, p.x, p.y, scale, { facing: s.facing, moving: s.moving, phase: s.phase, now: now }))) sp.stamp(ctx, {
+    if (!(isHero && global.DG.actor2d && global.DG.actor2d.human(ctx, s.ref, null, p.x, p.y, scale, { facing: s.facing, dirX: s.dirX, dirY: s.dirY, moving: s.moving, phase: s.phase, now: now }))) sp.stamp(ctx, {
       kind: isHero ? 'human' : 'beast', ref: s.ref,
       x: p.x, y: p.y, s: scale, facing: s.facing, phase: s.phase, walking: s.moving,
       color: isHero ? data.faction(s.ref.faction).color : sp.beastColorOf(s.ref),
@@ -2000,7 +2000,7 @@
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, lead, 'player', X, Y, geom.mode === 2 ? 1.5 : 1.25, { facing: player.facing, moving: moving, phase: player.phase, now: now }))) sp.stamp(ctx, {
+    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, lead, 'player', X, Y, geom.mode === 2 ? 1.5 : 1.25, { facing: player.facing, dirX: player.dirX, dirY: player.dirY, moving: moving, phase: player.phase, now: now }))) sp.stamp(ctx, {
       kind: 'human', ref: lead, key: lead ? null : 'player',
       // 3D 는 카메라가 낮아 캐릭터를 조금 더 크게 (원작 느낌)
       x: X, y: Y, s: geom.mode === 2 ? 1.5 : 1.25,

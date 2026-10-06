@@ -1703,7 +1703,7 @@
       /* 축마다 따로 막는다 — 벽을 스치며 걸을 수 있게. 떠서 가는 탈것(학·용)은 물·나무 칸을 넘는다(마을 둘레 EDGE_TILES 칸 안) */
       if (walkable(nx, player.y) || (flyOn && MTv.canFly(nx, player.y))) { player.x = nx; }
       if (walkable(player.x, ny) || (flyOn && MTv.canFly(player.x, ny))) { player.y = ny; }
-      if (dx) { player.facing = dx > 0 ? 1 : -1; }
+      if (dx) { player.facing = dx > 0 ? 1 : -1; } player.dirX = dx; player.dirY = dy;   // 2D 앞·뒤 모습(W-0073)
       player.phase += dt * 7;
     }
     /* 집 안에서는 마을이 돌지 않는다 — 주민도 벌레도 낚시도 밖의 일이다 */

@@ -380,7 +380,7 @@
     }
     player.speed = Math.hypot(player.vx, player.vy);
 
-    if (Math.abs(player.vx) > 1.2) { player.facing = player.vx > 0 ? 1 : -1; }
+    if (Math.abs(player.vx) > 1.2) { player.facing = player.vx > 0 ? 1 : -1; } if (player.speed > 1.5) { player.dirX = player.vx; player.dirY = player.vy; }   // 2D 앞·뒤 모습(W-0073)
     if (player.speed > 1.5) {
       player.phase += dt * (4.2 + player.speed * 0.10);
       // 일정 거리마다 좌우 번갈아 발자국을 남긴다
@@ -461,7 +461,7 @@
       s.x += dx / d * step;
       s.y += dy / d * step;
       s.moving = true;
-      if (Math.abs(dx) > 0.4) { s.facing = dx > 0 ? 1 : -1; }
+      if (Math.abs(dx) > 0.4) { s.facing = dx > 0 ? 1 : -1; } s.dirX = dx; s.dirY = dy;
       s.phase += dt * 7.5;
     }
   }

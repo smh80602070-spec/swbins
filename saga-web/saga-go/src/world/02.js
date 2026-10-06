@@ -858,7 +858,7 @@
     ctx.fillStyle = 'rgba(0,0,0,0.22)';
     ctx.fill();
 
-    if (!(isHero && global.DG.actor2d && global.DG.actor2d.human(ctx, s.ref, null, p.x, p.y, scale, { facing: s.facing, moving: s.moving, phase: s.phase, now: now }))) sp.stamp(ctx, {
+    if (!(isHero && global.DG.actor2d && global.DG.actor2d.human(ctx, s.ref, null, p.x, p.y, scale, { facing: s.facing, dirX: s.dirX, dirY: s.dirY, moving: s.moving, phase: s.phase, now: now }))) sp.stamp(ctx, {
       kind: isHero ? 'human' : 'beast', ref: s.ref,
       x: p.x, y: p.y, s: scale, facing: s.facing, phase: s.phase, walking: s.moving,
       color: isHero ? data.faction(s.ref.faction).color : sp.beastColorOf(s.ref),
@@ -1025,7 +1025,7 @@
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, lead, 'player', X, Y, geom.mode === 2 ? 1.5 : 1.25, { facing: player.facing, moving: moving, phase: player.phase, now: now }))) sp.stamp(ctx, {
+    if (!(global.DG.actor2d && global.DG.actor2d.human(ctx, lead, 'player', X, Y, geom.mode === 2 ? 1.5 : 1.25, { facing: player.facing, dirX: player.dirX, dirY: player.dirY, moving: moving, phase: player.phase, now: now }))) sp.stamp(ctx, {
       kind: 'human', ref: lead, key: lead ? null : 'player',
       // 3D 는 카메라가 낮아 캐릭터를 조금 더 크게 (원작 느낌)
       x: X, y: Y, s: geom.mode === 2 ? 1.5 : 1.25,

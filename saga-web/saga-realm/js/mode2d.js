@@ -68,6 +68,13 @@
     return ONCE[clip] ? Math.min(FRAMES - 1, i) : i % FRAMES;
   }
 
+  /** 움직인 쪽 → 보는 쪽(W-0073 단계 1) — 세로가 가로보다 확실히 크면 'front'(화면 아래로)·'back'(위로), 아니면 좌우 side(±1).
+   *  (dx, dy) 는 마지막 이동 방향(멈춰도 남겨 둔 값) — 위로 걷다 서면 뒷모습 그대로. 둘 다 0 이면 side */
+  function face(dx, dy, side) {
+    dx = +dx || 0; dy = +dy || 0;
+    return Math.abs(dy) > Math.abs(dx) * 1.2 ? (dy > 0 ? 'front' : 'back') : side;
+  }
+
   /** 보는 쪽 → 시트의 (행, 좌우 뒤집기). 'left'/'right' 는 옆모습(오른쪽이 기준, 왼쪽은 뒤집기) */
   function dirOf(facing) {
     if (facing === 'front') { return { row: ROW.front, flip: false }; }
@@ -350,7 +357,7 @@
     preloadBg: function (region) { getBg(region); },
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS,
-    isOn: isOn, pick: pick, vroidPick: vroidPick, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
+    isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },
