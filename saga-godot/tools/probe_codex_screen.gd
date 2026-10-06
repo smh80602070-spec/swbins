@@ -113,7 +113,31 @@ func _physics_process(_delta: float) -> void:
 				var k: String = CodexScreen.KIND_ORDER[i]
 				var lb := grid.get_child(i).get_child(0) as Label
 				ok = ok and lb.text.contains("%d / %d" % [CodexScreen.kind_count(k), int(CodexState.TOTAL[k])])
-			_check("find_tab", ok, "rows=%d" % grid.get_child_count())
+			## G-0032 이름 목록 — 갈래마다 칸 수 = TOTAL, 찾은 칸만 이름(나머지 ???), 같은 id 두 번 없음.
+			var cells := {}
+			var bad := []
+			for l in grid.find_children("*", "Label", true, false):
+				if not l.has_meta("codex_kind"):
+					continue
+				var k := String(l.get_meta("codex_kind"))
+				var id := String(l.get_meta("codex_id"))
+				cells[k] = int(cells.get(k, 0)) + 1
+				if CodexState.has(k, id) == ((l as Label).text == "???"):
+					bad.append(k + ":" + id)
+			for k in CodexScreen.KIND_ORDER:
+				if int(cells.get(k, 0)) != int(CodexState.TOTAL[k]):
+					bad.append("%s %d/%d" % [k, int(cells.get(k, 0)), int(CodexState.TOTAL[k])])
+			## 장면의 발견 지점(Discover_<id>)이 이름표에 다 있다.
+			var Catalog: GDScript = load("res://games/saga_go/data/codex_catalog.gd")
+			var known := {}
+			for k in ["place", "beast"]:
+				for e: Array in Catalog.call("entries", k):
+					known[String(e[0])] = true
+			for n in get_tree().get_nodes_in_group("codex_discoverable"):
+				var nm := String(n.name)
+				if nm.begins_with("Discover_") and not known.has(nm.substr(9)):
+					bad.append("scene:" + nm.substr(9))
+			_check("find_tab", ok and bad.is_empty(), "rows=%d cells=%s bad=%s" % [grid.get_child_count(), cells, bad.slice(0, 6)])
 			var ev := InputEventAction.new()
 			ev.action = "go_codex"
 			ev.pressed = true

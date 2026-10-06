@@ -2467,9 +2467,10 @@
  },
  {
   "id": "gd.go.codex_screen",
-  "name": "도감 화면(X) — 인물 105(영입·만남·모름)·신수 11·발견 갈래, 고른 칸 3D 미리보기·모르면 실루엣",
+  "name": "도감 화면(X) — 인물 105(영입·만남·모름)·신수 11·발견 갈래와 이름 목록(지역 160 땅마다), 고른 칸 3D 미리보기·모르면 실루엣",
   "files": [
    "games/saga_go/ui/codex_screen.gd",
+   "games/saga_go/data/codex_catalog.gd",
    "tools/probe_codex_screen.gd"
   ],
   "tests": [

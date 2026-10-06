@@ -3,13 +3,14 @@ extends Node
 ##   인물 — 도감 인물 105(HEROES 중 시대가 삼국지·한국사·일본사·세계사이고 국지 전용 rf_ 가 아닌 것). 영입(PartyState.members)·
 ##          만남(CodexState "record")·모름("???"). 고른 칸은 오른쪽에 새 인물 몸(characters_dex, 같은 이름)이 돈다.
 ##   신수 — PETS 11. 잡음(CodexState "pet")이면 CreatureBuilder 몸·설명, 아니면 검은 실루엣.
-##   발견 — CodexState 갈래(지역·사람·짐승·사건·기록·신수)별 찾은 수/전체 막대. 지명 목록은 지역 파일에 흩어져 있어 아직 숫자만.
+##   발견 — CodexState 갈래(지역·사람·짐승·사건·기록·신수)별 찾은 수/전체 막대 + 이름 목록(data/codex_catalog.gd, 지역은 땅마다, 못 찾은 것은 ???).
 ## 읽기만 한다(새 저장 없음). 화면·열기/닫기·ui_modal 은 world/achievements.gd 와 같은 결.
 
 const Characters := preload("res://saga_core/data/characters.gd")
 const Pets := preload("res://saga_core/data/pets.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
+const Catalog := preload("res://games/saga_go/data/codex_catalog.gd")
 
 const DEX_ERAS := ["삼국지", "한국사", "일본사", "세계사"]
 const KIND_NAMES := {"place": "지역", "people": "사람", "beast": "짐승", "event": "사건", "record": "역사 인물", "pet": "신수"}
@@ -240,6 +241,7 @@ func show_tab(t: String) -> void:
 		_grid.remove_child(c)
 		c.queue_free()
 	_clear_model()
+	_view_box.visible = tab != "find"   # 발견 탭엔 3D 몸이 없다
 	_detail_name.text = ""
 	_detail_text.text = ""
 	if tab == "hero":
@@ -274,16 +276,50 @@ func show_tab(t: String) -> void:
 			var n := kind_count(k)
 			var all := int(CodexState.TOTAL.get(k, 0))
 			lb.text = "%s  %d / %d" % [KIND_NAMES[k], n, all]
+			lb.add_theme_font_size_override("font_size", 17)
+			lb.add_theme_color_override("font_color", Color(1.0, 0.86, 0.5))
 			row.add_child(lb)
 			var bar := ProgressBar.new()
 			bar.max_value = maxi(all, 1)
 			bar.value = n
 			bar.show_percentage = false
-			bar.custom_minimum_size = Vector2(480, 14)
+			bar.custom_minimum_size = Vector2(480, 10)
 			row.add_child(bar)
+			## G-0032 — 이름 목록(Catalog). 지역은 땅마다 묶고, 찾은 것은 이름·못 찾은 것은 ???.
+			if k == "place":
+				for r: String in Catalog.REGION_ORDER:
+					var items: Array = Catalog.places_in(r)
+					var got := 0
+					for e: Array in items:
+						if CodexState.has(k, String(e[0])):
+							got += 1
+					var rl := Label.new()
+					rl.text = "  %s %d/%d" % [Catalog.REGION_NAMES[r], got, items.size()]
+					rl.add_theme_color_override("font_color", Color(0.75, 0.85, 1.0))
+					row.add_child(rl)
+					row.add_child(_name_flow(k, items))
+			else:
+				row.add_child(_name_flow(k, Catalog.entries(k)))
 			_grid.add_child(row)
 		_detail_name.text = "발견 %d / %d" % [CodexState.count(), CodexState.total()]
-		_detail_text.text = "들판에서 처음 본 것마다 도장이 찍히고 경험치를 받는다.\n지역 160곳·사람·짐승·사건·역사 인물·신수."
+		_detail_text.text = "들판에서 처음 본 것마다 도장이 찍히고 경험치를 받는다.\n찾은 것은 이름이, 아직 못 찾은 것은 ??? 로 보인다."
+
+## 이름 칸 줄(넘치면 다음 줄로) — 칸마다 meta kind·id·found(점검용).
+func _name_flow(kind: String, items: Array) -> HFlowContainer:
+	var flow := HFlowContainer.new()
+	flow.custom_minimum_size = Vector2(500, 0)
+	flow.add_theme_constant_override("h_separation", 10)
+	for e: Array in items:
+		var found := CodexState.has(kind, String(e[0]))
+		var l := Label.new()
+		l.text = String(e[1]) if found else "???"
+		l.add_theme_font_size_override("font_size", 15)
+		l.add_theme_color_override("font_color", Color(0.92, 0.92, 0.88) if found else Color(0.45, 0.45, 0.5))
+		l.set_meta("codex_kind", kind)
+		l.set_meta("codex_id", String(e[0]))
+		l.set_meta("found", found)
+		flow.add_child(l)
+	return flow
 
 func _cell(text: String, state: String) -> Button:
 	var b := Button.new()
