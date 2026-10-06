@@ -143,99 +143,244 @@ def lerp_c(a, b, t):
 
 # ---------------------------------------------------------------- 타격(한 번 10)
 
-def hit(el, t, i):
-    L, M, D = ELEMENTS[el]
-    rng = np.random.default_rng(200 + i)
-    im = canvas()
-    d = ImageDraw.Draw(im)
-    cx = cy = F / 2
-    r = 8 + 46 * (1 - (1 - t) ** 2)
-    fade = (1 - t) ** 1.3
-    if el in ('fire', 'light'):
-        for k in range(12):
-            a = k * math.pi / 6 + rng.uniform(-0.1, 0.1)
-            r0, r1 = r * 0.35, r * (0.8 + 0.2 * (k % 2))
-            d.line((cx + math.cos(a) * r0, cy + math.sin(a) * r0, cx + math.cos(a) * r1, cy + math.sin(a) * r1), fill=lerp_c(L, M, t), width=4 if k % 2 else 2)
-        d.ellipse((cx - r * 0.5, cy - r * 0.5, cx + r * 0.5, cy + r * 0.5), outline=M, width=3)
-    elif el == 'water':
-        for k in range(2):
-            rr = r * (1 - 0.25 * k)
-            d.ellipse((cx - rr, cy - rr, cx + rr, cy + rr), outline=lerp_c(L, M, k * 0.6), width=4 - k)
-        for k in range(10):
-            a = k * math.pi / 5 + rng.uniform(-0.2, 0.2)
-            x, y = cx + math.cos(a) * r * 0.9, cy + math.sin(a) * r * 0.9 - 8 * t * t * 10
-            d.ellipse((x - 3, y - 3, x + 3, y + 3), fill=M)
-    elif el == 'lightning':
-        for k in range(7):
-            a = k * 2 * math.pi / 7 + rng.uniform(-0.2, 0.2)
-            draw_poly(im, lightning_poly(rng, (cx, cy), (cx + math.cos(a) * r, cy + math.sin(a) * r), 3, 6), L if k % 2 else M, 2)
-        d.ellipse((cx - 8 * (1 - t), cy - 8 * (1 - t), cx + 8 * (1 - t), cy + 8 * (1 - t)), fill=L)
-    elif el == 'ice':
-        for k in range(10):
-            a = k * math.pi / 5 + rng.uniform(-0.1, 0.1)
-            ln = r * (0.7 + 0.3 * (k % 3) / 2)
-            tip = (cx + math.cos(a) * ln, cy + math.sin(a) * ln)
-            d.polygon([tip, (cx + math.cos(a + 0.18) * ln * 0.45, cy + math.sin(a + 0.18) * ln * 0.45), (cx + math.cos(a - 0.18) * ln * 0.45, cy + math.sin(a - 0.18) * ln * 0.45)], fill=lerp_c(L, M, (k % 3) / 3))
-    elif el == 'wind':
-        for k in range(3):
-            d.arc((cx - r * (0.5 + k * 0.25), cy - r * (0.5 + k * 0.25), cx + r * (0.5 + k * 0.25), cy + r * (0.5 + k * 0.25)), 20 + k * 40 + t * 200, 130 + k * 40 + t * 200, fill=lerp_c(L, M, k / 3), width=4)
-    else:
-        for k in range(12):
-            a = k * math.pi / 6 + rng.uniform(-0.15, 0.15)
-            dist = r * (0.5 + 0.5 * rng.random())
-            x, y = cx + math.cos(a) * dist, cy + math.sin(a) * dist + 14 * t * t
-            s = 4 * (1 - t) + 2
-            d.rectangle((x - s, y - s, x + s, y + s), fill=lerp_c(M, D, t))
-        d.ellipse((cx - r * 0.6, cy - r * 0.6, cx + r * 0.6, cy + r * 0.6), outline=L, width=2)
-    im = Image.eval(im, lambda v: int(v * fade))
-    return add(im.filter(ImageFilter.GaussianBlur(0.8)), glow(im, 4))
-
-
 # ---------------------------------------------------------------- 장판(루프 12) — 바닥 타원
 
+# ---------------------------------------------------------------- 10-06 저녁: 잡음 장(fbm)·색 사다리 — 타격·장판을 도형에서 "불·물·연기" 질감으로(K-0039 눈 판정 "도형 위주")
+_NOISE = {}
+
+
+def _noise_tile(seed, size=2 * F):
+    """2F 크기 부드러운 잡음(0~1, 옥타브 셋). 창을 원을 따라 옮겨 루프를 잇는다."""
+    if seed not in _NOISE:
+        rng = np.random.default_rng(seed)
+        acc = np.zeros((size, size), np.float32)
+        amp, tot = 1.0, 0.0
+        for g in (6, 12, 24):
+            small = Image.fromarray((rng.random((g, g)) * 255).astype(np.uint8))
+            acc += amp * np.asarray(small.resize((size, size), Image.BICUBIC)).astype(np.float32) / 255
+            tot += amp
+            amp *= 0.5
+        _NOISE[seed] = np.clip(acc / tot, 0, 1)
+    return _NOISE[seed]
+
+
+def fbm(seed, ox=0.0, oy=0.0):
+    """F×F 잡음 창 — (ox, oy) 만큼 밀어 읽는다(0~F)."""
+    n = _noise_tile(seed)
+    x0, y0 = int(ox) % F, int(oy) % F
+    return n[y0:y0 + F, x0:x0 + F]
+
+
+def loop_fbm(seed, t, rad=18.0):
+    """t(0~1) 한 바퀴에 처음으로 돌아오는 잡음 — 창을 원을 따라 옮긴다."""
+    return fbm(seed, F / 2 + rad * math.cos(2 * math.pi * t), F / 2 + rad * math.sin(2 * math.pi * t))
+
+
+def streaks(seed, t, xx, yy, sx=1.0, sy=0.22):
+    """세로로 늘인 잡음(불길·빛줄기) — 위로 흐르고 t=1 에서 처음과 이어진다."""
+    n = _noise_tile(seed)
+    N = n.shape[0]
+    iy = ((yy * sy + t * N) % N).astype(np.int32)
+    ix = ((xx * sx) % N).astype(np.int32)
+    return n[iy, ix]
+
+
+def polar(cx=F / 2, cy=F / 2, sy=1.0):
+    yy, xx = np.mgrid[0:F, 0:F].astype(np.float32)
+    dx, dy = xx - cx, (yy - cy) / sy
+    return np.sqrt(dx * dx + dy * dy), np.arctan2(dy, dx), xx, yy
+
+
+def ramp(v, stops):
+    """v(0~1) → 색 사다리. stops = [(값, (r,g,b)), …] 오름차순."""
+    v = np.clip(v, 0, 1)
+    out = np.zeros(v.shape + (3,), np.float32)
+    for (a, ca), (b, cb) in zip(stops, stops[1:]):
+        m = (v >= a) & (v <= b)
+        f = ((v - a) / max(1e-6, b - a))[m][:, None]
+        out[m] = np.array(ca, np.float32) * (1 - f) + np.array(cb, np.float32) * f
+    return out
+
+
+def to_img(rgb):
+    return Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8))
+
+
+def sstep(a, b, x):
+    x = np.clip((x - a) / (b - a), 0, 1)
+    return x * x * (3 - 2 * x)
+
+
+def sparks(im, rng, n, cx, cy, r0, r1, col, size=2.0, trail=6.0, grav=0.0, t=0.0):
+    """날아가는 불티 — 꼬리 선 + 머리 점."""
+    d = ImageDraw.Draw(im)
+    for _ in range(n):
+        a = rng.uniform(0, 2 * math.pi)
+        sp = rng.uniform(0.6, 1.0)
+        r = r0 + (r1 - r0) * sp
+        x, y = cx + math.cos(a) * r, cy + math.sin(a) * r + grav * t * t
+        tx, ty = x - math.cos(a) * trail * sp, y - math.sin(a) * trail * sp - grav * t * 0.5
+        d.line((tx, ty, x, y), fill=tuple(int(c * 0.6) for c in col), width=1)
+        s = size * sp
+        d.ellipse((x - s, y - s, x + s, y + s), fill=col)
+
+
+def hit(el, t, i):
+    """타격 한 번 — 10장. 터지는 중심 + 원소 질감 + 흩어지는 조각, 끝은 사그라짐."""
+    L, M, D = ELEMENTS[el]
+    rng = np.random.default_rng(200 + i)
+    cx = cy = F / 2
+    r, th, xx, yy = polar(cx, cy)
+    grow = 1 - (1 - t) ** 2.2
+    R = 10 + 44 * grow
+    fade = (1 - t) ** 1.2
+    n1 = fbm(700 + i, 10 + 30 * t, 20)
+    if el == 'fire':
+        ring = sstep(R, R * 0.35, r + (n1 - 0.5) * 26)                                       # 일렁이는 화염구
+        heat = ring * (0.55 + 0.6 * n1) * (1 - 0.75 * t)
+        smoke = sstep(R * 1.1, R * 0.5, r + (n1 - 0.5) * 30) * sstep(0.25, 0.8, t) * 0.5
+        rgb = ramp(heat, [(0, (0, 0, 0)), (0.25, D), (0.5, M), (0.78, L), (1.0, (255, 255, 240))]) + np.dstack([smoke * 70, smoke * 55, smoke * 50])
+        im = to_img(rgb)
+        sparks(im, rng, 14, cx, cy, R * 0.6, R * 1.25, L, 1.6, 7, 10, t)
+    elif el == 'water':
+        lobes = 0.5 + 0.5 * np.cos(9 * th + 2 * np.sin(3 * th))                                # 물방울 왕관
+        crown = sstep(R * 0.55, R * 0.85, r) * sstep(R * (1.05 + 0.25 * lobes), R * 0.85, r)
+        foam = sstep(R * 0.55, 0, r) * (1 - t) * (0.5 + 0.5 * n1)
+        v = np.clip(crown * (0.6 + 0.5 * n1) + foam, 0, 1) * fade
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.3, D), (0.65, M), (1.0, L)]))
+        d = ImageDraw.Draw(im)
+        for k in range(12):
+            a = k * math.pi / 6 + rng.uniform(-0.2, 0.2)
+            rr = R * (1.05 + 0.2 * rng.random())
+            x, y = cx + math.cos(a) * rr, cy + math.sin(a) * rr + 40 * t * t
+            s = 3.2 * (1 - t) + 1
+            d.ellipse((x - s, y - s * 1.3, x + s, y + s), fill=L)
+    elif el == 'lightning':
+        im = to_img(np.dstack([sstep(R * 0.45, 0, r) * (1 - t) ** 2 * c for c in M]))      # 가운데 섬광
+        for k in range(8):
+            a = k * 2 * math.pi / 8 + rng.uniform(-0.25, 0.25)
+            pts = lightning_poly(rng, (cx, cy), (cx + math.cos(a) * R * 1.1, cy + math.sin(a) * R * 1.1), 4, 9)
+            draw_poly(im, pts, M, 4)
+            draw_poly(im, pts, L, 2)
+            if k % 2 == 0:                                                                     # 곁가지
+                j = len(pts) // 2
+                b = a + rng.choice([-0.7, 0.7])
+                draw_poly(im, lightning_poly(rng, pts[j], (pts[j][0] + math.cos(b) * R * 0.4, pts[j][1] + math.sin(b) * R * 0.4), 3, 5), L, 1)
+        im = Image.eval(im, lambda v: int(v * fade))
+    elif el == 'ice':
+        frost = sstep(R * 0.7, R, r) * sstep(R * 1.15, R, r) * (0.4 + 0.8 * n1)               # 서리 고리
+        core = sstep(R * 0.4, 0, r) * (1 - t)
+        im = to_img(ramp(np.clip(frost + core, 0, 1), [(0, (0, 0, 0)), (0.35, D), (0.7, M), (1.0, L)]))
+        d = ImageDraw.Draw(im)
+        for k in range(9):                                                                     # 결정 조각(밝은 면·어두운 면)
+            a = k * 2 * math.pi / 9 + rng.uniform(-0.15, 0.15)
+            ln = R * (0.55 + 0.45 * rng.random())
+            w = 0.16 + 0.06 * rng.random()
+            tip = (cx + math.cos(a) * ln, cy + math.sin(a) * ln)
+            base = (cx + math.cos(a) * ln * 0.25, cy + math.sin(a) * ln * 0.25)
+            l_ = (cx + math.cos(a + w) * ln * 0.5, cy + math.sin(a + w) * ln * 0.5)
+            r_ = (cx + math.cos(a - w) * ln * 0.5, cy + math.sin(a - w) * ln * 0.5)
+            d.polygon([base, l_, tip], fill=L)
+            d.polygon([base, r_, tip], fill=M)
+        sparks(im, rng, 10, cx, cy, R * 0.8, R * 1.3, (255, 255, 255), 1.2, 0, 0, t)
+        im = Image.eval(im, lambda v: int(v * fade))
+    elif el == 'wind':
+        sw = 0.5 + 0.5 * np.sin(3 * (th - 0.09 * r) + 7 * t + (n1 - 0.5) * 3)                # 소용돌이 줄
+        band = sstep(R * 0.25, R * 0.6, r) * sstep(R * 1.15, R * 0.8, r)
+        v = np.clip(sstep(0.55, 0.95, sw) * band * (0.6 + 0.6 * n1), 0, 1) * fade
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.4, D), (0.75, M), (1.0, L)]))
+    elif el == 'earth':
+        dust = sstep(R * 1.2, R * 0.3, r + (n1 - 0.5) * 30) * (0.3 + 0.5 * n1) * sstep(0.0, 0.3, t) * fade   # 먼지구름
+        im = to_img(np.dstack([dust * c * 0.9 for c in M]))
+        d = ImageDraw.Draw(im)
+        for k in range(11):                                                                    # 각진 돌 파편(밝은 윗면)
+            a = rng.uniform(0, 2 * math.pi)
+            dist = R * (0.45 + 0.6 * rng.random())
+            x, y = cx + math.cos(a) * dist, cy + math.sin(a) * dist + 26 * t * t
+            s = (5 + 3 * rng.random()) * (1 - 0.5 * t)
+            ang = rng.uniform(0, math.pi)
+            poly = [(x + math.cos(ang + q * 2.1 + rng.uniform(-0.3, 0.3)) * s, y + math.sin(ang + q * 2.1) * s * 0.8) for q in range(3)] + [(x + math.cos(ang + 5.6) * s * 0.7, y + math.sin(ang + 5.6) * s * 0.6)]
+            d.polygon(poly, fill=lerp_c(M, D, 0.4))
+            d.polygon(poly[:3], fill=lerp_c(L, M, 0.3))
+        im = Image.eval(im, lambda v: int(v * (0.35 + 0.65 * fade)))
+    else:
+        rays = 0.5 + 0.5 * np.cos(14 * th + (fbm(760 + i, 0, 0)[..., ] - 0.5) * 4)            # 부드러운 빛살
+        v = np.clip(sstep(R * 1.2, R * 0.2, r) * (0.35 + 0.65 * rays) + sstep(R * 0.35, 0, r), 0, 1) * fade
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.3, D), (0.6, M), (0.85, L), (1.0, (255, 255, 255))]))
+        sparks(im, rng, 12, cx, cy, R * 0.7, R * 1.3, L, 1.5, 0, 0, t)
+        im = Image.eval(im, lambda v: int(v * (0.3 + 0.7 * fade)))
+    return add(im.filter(ImageFilter.GaussianBlur(0.6)), glow(im, 3))
+
+
 def area(el, t, i):
+    """장판 루프 — 12장. 바닥 타원 안을 원소 무늬로 채우고(잡음은 원을 따라 돌아 처음으로 이어짐) 가장자리는 밝은 테."""
     L, M, D = ELEMENTS[el]
     rng = np.random.default_rng(300 + i)
-    im = canvas()
-    d = ImageDraw.Draw(im)
-    cx, cy, rx, ry = F / 2, F * 0.55, F * 0.44, F * 0.2
+    cx, cy, rx, ry = F / 2, F * 0.58, F * 0.45, F * 0.21
+    yy, xx = np.mgrid[0:F, 0:F].astype(np.float32)
+    e = np.sqrt(((xx - cx) / rx) ** 2 + ((yy - cy) / ry) ** 2)                               # 타원 거리(1 = 테)
+    inside = sstep(1.02, 0.9, e)
+    rim = sstep(0.82, 0.97, e) * sstep(1.08, 0.97, e)
+    n1 = loop_fbm(800 + i, t)
+    n2 = loop_fbm(850 + i, (t + 0.37) % 1, 26)
     ph = 2 * math.pi * t
-    d.ellipse((cx - rx, cy - ry, cx + rx, cy + ry), outline=M, width=3)
-    d.ellipse((cx - rx * 0.72, cy - ry * 0.72, cx + rx * 0.72, cy + ry * 0.72), outline=D, width=2)
     if el == 'fire':
-        for k in range(14):
-            a = rng.uniform(0, 2 * math.pi)
-            rr = rng.uniform(0.1, 0.9)
-            life = (t * 1 + k / 14) % 1
-            x, y = cx + math.cos(a) * rx * rr, cy + math.sin(a) * ry * rr - 22 * life
-            s = 5 * (1 - life) + 1
-            d.ellipse((x - s, y - s * 1.6, x + s, y + s * 0.8), fill=lerp_c(L, D, life))
+        lava = inside * (0.35 + 0.65 * sstep(0.35, 0.75, n1)) * (0.75 + 0.25 * n2)
+        yt = cy - ry * np.sqrt(np.clip(1 - ((xx - cx) / rx) ** 2, 0, 1))                     # 그 x 에서 타원 윗 테 높이
+        h = (yt - yy) / (F * 0.42)                                                           # 테에서 위로 잰 높이(0 = 테)
+        col = streaks(870 + i, t, xx, yy)
+        flame = sstep(0.42, 0.78, col) * np.exp(-np.clip(h, 0, None) * 2.6) * sstep(-0.12, 0.02, h) * sstep(rx * 0.98, rx * 0.55, np.abs(xx - cx)) * 1.25
+        v = np.clip(lava * 0.8 + flame + rim * 0.6, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.2, D), (0.5, M), (0.8, L), (1.0, (255, 255, 230))]))
     elif el == 'water':
-        for k in range(3):
-            life = (t + k / 3) % 1
-            d.ellipse((cx - rx * life, cy - ry * life, cx + rx * life, cy + ry * life), outline=lerp_c(L, M, life), width=2)
+        caus = sstep(0.42, 0.5, n1) * sstep(0.58, 0.5, n1) + sstep(0.44, 0.5, n2) * sstep(0.56, 0.5, n2)   # 물결 빛무늬
+        ripple = 0.5 + 0.5 * np.cos(e * 14 - ph * 2)
+        v = np.clip(inside * (0.16 + 0.5 * caus + 0.16 * ripple * (1 - e)) + rim * 0.7, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.3, D), (0.65, M), (1.0, L)]))
     elif el == 'lightning':
-        for k in range(6):
-            a = k * math.pi / 3 + ph
-            draw_poly(im, lightning_poly(np.random.default_rng(300 + i * 7 + k), (cx, cy), (cx + math.cos(a) * rx * 0.9, cy + math.sin(a) * ry * 0.9), 3, 4), L, 1)
+        v = inside * 0.25 * (0.5 + n1) + rim * 0.5
+        im = to_img(ramp(np.clip(v, 0, 1), [(0, (0, 0, 0)), (0.5, D), (1.0, M)]))
+        for k in range(5):                                                                     # 바닥을 기는 전기(원을 따라 돈다)
+            a = k * 2 * math.pi / 5 + ph
+            b = a + 1.1
+            pts = lightning_poly(np.random.default_rng(300 + i * 7 + k + int(t * 12)), (cx + math.cos(a) * rx * 0.85, cy + math.sin(a) * ry * 0.85),
+                                 (cx + math.cos(b) * rx * 0.5, cy + math.sin(b) * ry * 0.5), 3, 5)
+            draw_poly(im, pts, M, 3)
+            draw_poly(im, pts, L, 1)
     elif el == 'ice':
-        for k in range(10):
-            a = k * 2 * math.pi / 10
-            x, y = cx + math.cos(a) * rx * 0.7, cy + math.sin(a) * ry * 0.7
-            d.polygon([(x, y - 14), (x - 4, y), (x + 4, y)], fill=lerp_c(L, M, k % 3 / 3))
+        cryst = sstep(0.5, 0.7, n1) * 0.7 + sstep(0.45, 0.48, n2) * sstep(0.51, 0.48, n2) * 0.6   # 서리 결
+        v = np.clip(inside * (0.14 + 0.5 * cryst) + rim * 0.7, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.3, D), (0.7, M), (1.0, L)]))
+        d = ImageDraw.Draw(im)
+        for k in range(9):                                                                     # 솟은 얼음 가시(밝은 면·어두운 면)
+            a = k * 2 * math.pi / 9 + 0.2
+            x, y = cx + math.cos(a) * rx * 0.72, cy + math.sin(a) * ry * 0.72
+            h = 12 + 6 * ((k * 7) % 3) + 2 * math.sin(ph + k)
+            d.polygon([(x, y - h), (x - 4, y), (x, y + 1)], fill=L)
+            d.polygon([(x, y - h), (x + 4, y), (x, y + 1)], fill=M)
     elif el == 'wind':
-        for k in range(3):
-            d.arc((cx - rx * (0.4 + 0.2 * k), cy - ry * (0.4 + 0.2 * k), cx + rx * (0.4 + 0.2 * k), cy + ry * (0.4 + 0.2 * k)), ph * 57 + k * 120, ph * 57 + 100 + k * 120, fill=lerp_c(L, M, k / 3), width=3)
+        th = np.arctan2((yy - cy) / ry, (xx - cx) / rx)
+        sw = 0.5 + 0.5 * np.sin(4 * th - 6 * e + ph * 2 + (n1 - 0.5) * 2)                   # 도는 소용돌이
+        v = np.clip(inside * (0.15 + 0.85 * sstep(0.6, 0.95, sw) * (1 - 0.5 * e)) + rim * 0.5, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.35, D), (0.7, M), (1.0, L)]))
     elif el == 'earth':
-        for k in range(8):
-            a = k * math.pi / 4 + 0.3
-            draw_poly(im, [(cx, cy), (cx + math.cos(a) * rx * 0.5, cy + math.sin(a) * ry * 0.6), (cx + math.cos(a + 0.2) * rx * 0.9, cy + math.sin(a + 0.2) * ry * 0.9)], M, 2)
+        fr = (fbm(880 + i, 0, 0) * 7) % 1                                                     # 갈라진 땅(잡음 등고선 여러 겹 = 금)
+        crack = sstep(0.09, 0.0, np.minimum(fr, 1 - fr)) * sstep(0.95, 0.75, e)
+        glowc = crack * (0.6 + 0.4 * (0.5 + 0.5 * math.sin(ph)))
+        base = inside * (0.25 + 0.2 * n1)
+        rgb = ramp(np.clip(base, 0, 1), [(0, (0, 0, 0)), (1.0, D)]) + ramp(np.clip(glowc + rim * 0.6, 0, 1), [(0, (0, 0, 0)), (0.5, M), (1.0, L)])
+        im = to_img(rgb)
+        sparks(im, rng, 6, cx, cy - 6, 2, 20, M, 1.4, 0, 0, t)
     else:
-        for k in range(8):
-            a = k * math.pi / 4 + ph / 2
-            x, y = cx + math.cos(a) * rx * 0.86, cy + math.sin(a) * ry * 0.86
-            d.polygon([(x, y - 4), (x + 3, y), (x, y + 4), (x - 3, y)], fill=L)
-    return add(im.filter(ImageFilter.GaussianBlur(0.7)), glow(im, 4))
+        th = np.arctan2((yy - cy) / ry, (xx - cx) / rx)
+        runes = sstep(0.6, 0.62, e) * sstep(0.7, 0.68, e) * (0.6 + 0.4 * (0.5 + 0.5 * np.cos(12 * th + ph)))   # 빛 고리 두 겹
+        inner = sstep(0.32, 0.3, np.abs(e - 0.32)) * 0
+        h = (cy - yy) / (F * 0.55)
+        rays = sstep(0.5, 0.8, streaks(890 + i, t, xx * 2.0, yy, 1.0, 0.18))                  # 위로 오르는 빛줄기(세로 잡음)
+        pillar = rays * np.exp(-np.clip(h, 0, None) * 2.6) * (h > -0.05) * sstep(rx * 0.8, rx * 0.2, np.abs(xx - cx))
+        v = np.clip(inside * 0.1 + runes * 0.85 + rim * 0.7 + pillar * 0.75 + inner, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.3, D), (0.6, M), (0.9, L), (1.0, (255, 255, 255))]))
+    return add(im.filter(ImageFilter.GaussianBlur(0.6)), glow(im, 3))
 
 
 # ---------------------------------------------------------------- 상태(루프 8) — 몸 둘레 입자
