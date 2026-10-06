@@ -138,16 +138,41 @@ def dungeon_room_12(C, mood):
 
 
 def dungeon_gate_44(C, mood):
+    """문틀 — 거친 돌기둥 둘(밑동 넓고 단마다 어긋난 팔각 단면) + 아래가 살짝 휜 상인방 + 가운데 쐐기돌. 10-06 저녁: 상자 셋 → 돌 문.
+    규격(통로 3.4 × 3.4, 바깥 4.4 × 1.4 × 4.4)·노드는 그대로."""
     M = C.M
     fl, wl, gl = _kit_mats(C, mood)
-    pw = 0.5                                                                       # 문설주 폭 → 통로 3.4
+    pw = 0.5
+    rnd = random.Random(44)
     for sx in (-1, 1):
-        obox(M, (sx * (GATE_W / 2 - pw / 2), 0, 0), (pw, GATE_D, GATE_H - 1.0), 0, wl, 1.5)
-        obox(M, (sx * (GATE_W / 2 - pw / 2), 0, GATE_H - 1.6), (pw, GATE_D, 0.18), 0, wl, 0.8)          # 문설주 머리 띠
-    obox(M, (0, 0, GATE_H - 1.0), (GATE_W, GATE_D, 1.0), 0, wl, 1.5)                                    # 상인방
-    obox(M, (0, 0, GATE_H - 1.18), (GATE_W - pw * 2 + 0.3, GATE_D - 0.2, 0.18), 0, wl, 1.5)             # 상인방 밑 장식 띠
+        x0 = sx * (GATE_W / 2 - pw / 2)
+        zs = [0.0, 0.5, 1.2, 1.9, 2.6, GATE_H - 1.0]
+        rows, cen = [], []
+        for k, z in enumerate(zs):
+            wx = pw / 2 * (1.0 if k == 0 else 0.9) + rnd.uniform(-0.02, 0.0)
+            wy = GATE_D / 2 * (0.97 if k == 0 else 0.9) + rnd.uniform(-0.03, 0.0)
+            off = rnd.uniform(-0.03, 0.03) if 0 < k < len(zs) - 1 else 0.0
+            rows.append(WS.ring('z', (x0 + off, 0, z), wx, wy, 8))
+            cen.append((x0, 0, z))
+        WS.surf(M, rows, cen, wl, uv_m=1.5)
+        obox(M, (x0 - sx * 0.01, 0, -0.02), (pw * 0.98, GATE_D, 0.14), 0, wl, 0.8)                     # 주춧돌(규격 안)
+    lz = GATE_H - 1.0                                                                               # 상인방 — 아래면이 가운데로 살짝 올라간 활
+    xs = [-GATE_W / 2 + GATE_W * k / 8 for k in range(9)]
+    prof = lambda x: 0.12 * (1 - (2 * x / GATE_W) ** 2)
+    rows = []
+    for y in (-GATE_D / 2, GATE_D / 2):
+        rows.append([(x, y, lz + prof(x)) for x in xs])
+    top = [[(x, y, GATE_H - rnd.uniform(0.0, 0.06)) for x in xs] for y in (GATE_D / 2, -GATE_D / 2)]
+    ring = rows[:1] + top + rows[1:]
+    WS.surf(M, [rows[0], top[1], top[0], rows[1]], [(0, 0, lz + 0.5)] * 4, wl, closed=False, uv_m=1.5)    # 앞·윗·뒤 면
+    WS.surf(M, [rows[1], rows[0]], [(0, 0, lz + 0.5)] * 2, wl, closed=False, uv_m=1.5)                   # 아랫면(활)
+    for sx in (-1, 1):                                                                              # 상인방 양 끝면
+        e = sx * GATE_W / 2
+        M.face([(e, -GATE_D / 2, lz + prof(e)), (e, GATE_D / 2, lz + prof(e)), (e, GATE_D / 2, GATE_H), (e, -GATE_D / 2, GATE_H)][::sx],
+               [(0, 0), (1, 0), (1, 1), (0, 1)][::sx], wl)
+    WS.plate(M, [(-0.32, 0.0), (0.32, 0.0), (0.22, 0.62), (-0.22, 0.62)], (0, -GATE_D / 2 + 0.05, lz + 0.05), (1, 0, 0), (0, 0, 1), 0.06, wl, bevel=0.05)   # 쐐기돌(앞, 규격 안)
     if gl is not None:
-        obox(M, (0, -GATE_D / 2 + 0.02, GATE_H - 1.45), (GATE_W - pw * 2 - 0.4, 0.04, 0.08), 0, gl, 0.5)
+        obox(M, (0, -GATE_D / 2 + 0.0, lz + 0.28), (0.12, 0.02, 0.2), 0, gl, 0.5)                      # 쐐기돌의 빛나는 홈
     BI.node('col_gate', (0, 0, GATE_H / 2), (GATE_W, GATE_D, GATE_H))
     BI.node('passage', (0, 0, (GATE_H - 1.18) / 2), (GATE_W - pw * 2, GATE_D, GATE_H - 1.18))
 
