@@ -12,11 +12,18 @@ extends SceneTree
 ##   ["touch", <노드 경로>, <함수>]  플레이어를 넘겨 부른다(영역 들어감 흉내 — 예: 집 문)
 ##   ["call", <노드 경로>, <함수>, [인자…]]   부른다(인자 배열은 없어도 됨, 예: 메뉴 열기)
 ##   ["set", <노드 경로>, <속성>, 값]   속성을 바꾼다(autoload 는 "/root/이름" — 메모리만, 저장 안 함)
+##   ["static", <스크립트 경로>, <함수>, [인자…]]   정적 함수 — 인자 낱말 "@scene"(지금 씬)·"@near:dx:dz"(플레이어 자리 + 차이) (G-0048)
+##   ["free_modal"]   떠 있는 선택 창(그룹 ui_modal 의 CanvasLayer)을 닫는다 — 예: 사가국지 시나리오 고르기
+## near 의 노드 경로를 못 찾으면 그 이름의 첫 노드를 씬 전체에서 찾는다(지형 빌더가 만드는 LadderArea 등).
 ## SETTLE 프레임에 뷰포트를 <이름>_<가로>x<세로>.png 로. 끝에 "SHOT_SCENE_DONE shots=N".
 
 const SETTLE := 120
 const STEP_AT := 30
 const FOREST := "res://games/saga_forest/world/TestVillageForest.tscn"
+const DUNGEON := "res://games/saga_dungeon/world/TestRoom.tscn"
+const STORY_CAVE := "res://games/saga_story/world/CaveHuntGround.tscn"
+const REALM := "res://games/saga_realm/world/TestCity.tscn"
+const LOOT := "res://games/saga_dungeon/world/loot_pickup.gd"
 
 const CUTS := [
 	["fs_villager", FOREST, [["near", "Villager/Villager_npc_keeper", 0.0, 3.0]]],
@@ -30,6 +37,12 @@ const CUTS := [
 		["call", "House", "_spawn_furniture_visual", [{"key": "deungjan", "x": 1.4, "z": 1.6}]], ["call", "House", "_spawn_furniture_visual", [{"key": "mulhang", "x": -2.2, "z": 0.2}]],
 		["call", "House", "_spawn_furniture_visual", [{"key": "mungab", "x": 2.2, "z": 0.4}]], ["call", "House", "_spawn_furniture_visual", [{"key": "byeongpung", "x": 0.0, "z": 2.6}]]]],
 	["fs_fishing_near", FOREST, [["near", "Fishing", 0.0, 2.6]]],   # G-0046 — 못 가까이
+	## G-0048 — 사가블로 노획물 여섯(보스 노획·전설 배율 40 — 등급색 외곽선·전설 잔광) · 사가스토리 동굴 사다리 · 사가국지 일기토 1합째
+	["dg_loot", DUNGEON, [["static", LOOT, "spawn_at", ["@scene", "@near:1.6:0", 30, true, false, 40.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:-1.6:0", 30, true, false, 40.0]],
+		["static", LOOT, "spawn_at", ["@scene", "@near:0:1.6", 30, true, false, 40.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:0:-1.6", 30, false, false, 1.0]],
+		["static", LOOT, "spawn_at", ["@scene", "@near:1.2:1.2", 30, false, true, 1.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:-1.2:-1.2", 30, false, false, 1.0]]]],
+	["st_ladder", STORY_CAVE, [["near", "LadderArea", -1.4, 0.0]]],
+	["rk_duel", REALM, [["free_modal"], ["call", "RealmHUD/AttackButton", "_duel_round", ["enemy", []]]]],
 ]
 
 var _done := 0
@@ -58,7 +71,20 @@ func _steps(steps: Array) -> void:
 	var sc := current_scene
 	var p := get_first_node_in_group("player") as Node3D
 	for st: Array in steps:
+		if String(st[0]) == "free_modal":
+			for m in get_nodes_in_group("ui_modal"):
+				if m is CanvasLayer:
+					m.queue_free()
+			continue
+		if String(st[0]) == "static":
+			var args: Array = []
+			for a in st[3]:
+				args.append(_arg(a, sc, p))
+			(load(String(st[1])) as Script).callv(String(st[2]), args)
+			continue
 		var n := sc.get_node_or_null(NodePath(String(st[1])))
+		if n == null and String(st[0]) == "near":
+			n = sc.find_child(String(st[1]), true, false)
 		if n == null:
 			print("SHOT_STEP 노드 없음 %s" % st[1])
 			continue
@@ -74,3 +100,12 @@ func _steps(steps: Array) -> void:
 				n.callv(String(st[2]), st[3] if st.size() > 3 else [])
 			"set":
 				n.set(String(st[2]), st[3])
+
+## G-0048 — 정적 함수 인자 낱말: "@scene" → 지금 씬, "@near:dx:dz" → 플레이어 자리 + (dx, 0, dz). 그 밖은 그대로.
+func _arg(a: Variant, sc: Node, p: Node3D) -> Variant:
+	if a is String and a == "@scene":
+		return sc
+	if a is String and String(a).begins_with("@near:"):
+		var q := String(a).split(":")
+		return (p.global_position if p else Vector3.ZERO) + Vector3(float(q[1]), 0.0, float(q[2]))
+	return a
