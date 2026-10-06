@@ -2519,5 +2519,22 @@
   "ticket": "G-0034",
   "since": "2026-10-06",
   "human": true
+ },
+ {
+  "id": "gd.go.save_transfer",
+  "name": "세이브 옮기기 — 문자열 내보내기(클립보드)/붙여넣고 불러오기, 거절·직전본 남김(다섯 판 공용 부모 + 사가고 메뉴 화면)",
+  "files": [
+   "saga_core/data/save_base.gd",
+   "games/saga_go/ui/save_transfer.gd",
+   "tools/probe_savemove.gd"
+  ],
+  "tests": [
+   "savemove"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0035",
+  "since": "2026-10-06"
  }
 ]

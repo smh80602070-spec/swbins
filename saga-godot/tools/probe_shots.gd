@@ -120,6 +120,7 @@ const SHOTS := [
 	["ui_domain", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_domains:open_menu:school:close_menu"],
 	["ui_cycle", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_cycle:open_screen::close_screen"],
 	["ui_codex", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_codex:open_screen::close_screen"],
+	["ui_savemove", "village", "v_statue", Vector3(6, 0, 6), "v_statue", -25.0, 8.0, "call:go_save_transfer:open_screen::close_screen"],
 ]
 
 var _p: CharacterBody3D
