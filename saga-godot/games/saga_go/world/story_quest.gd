@@ -154,7 +154,8 @@ func _show_line() -> void:
 			var b := Button.new()
 			b.text = "▸ " + String(opts[i])
 			b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-			b.custom_minimum_size = Vector2(0, 40)
+			b.custom_minimum_size = Vector2(0, 60)
+			b.add_theme_font_size_override("font_size", 26)
 			var k: int = i
 			b.pressed.connect(func() -> void: choose(k))
 			_dlg_choices.add_child(b)
@@ -699,6 +700,8 @@ func _build_ui() -> void:
 	close.pressed.connect(toggle_journal)
 	_journal.add_child(close)
 	## 대화 창 — 아래 가운데. 창을 누르면 다음 줄.
+	## G-0056 — 기준 화면이 가로 1920×1280 이라 1280×720 창에선 0.56배: 폭 760·글씨 18 은 10px 로 찍혔다. 선택 창(G-0052)과 같은 결로
+	## 키우고(폭 1000 은 세로 기준 폭 1080 안), 아래 끝을 HP 막대(-64) 위로.
 	var dl := CanvasLayer.new()
 	dl.layer = 7
 	add_child(dl)
@@ -707,10 +710,10 @@ func _build_ui() -> void:
 	_dlg.anchor_right = 0.5
 	_dlg.anchor_top = 1.0
 	_dlg.anchor_bottom = 1.0
-	_dlg.offset_left = -380
-	_dlg.offset_right = 380
-	_dlg.offset_top = -250
-	_dlg.offset_bottom = -40
+	_dlg.offset_left = -500
+	_dlg.offset_right = 500
+	_dlg.offset_top = -430
+	_dlg.offset_bottom = -100
 	_dlg.visible = false
 	dl.add_child(_dlg)
 	var bg := Button.new()
@@ -720,34 +723,35 @@ func _build_ui() -> void:
 	bg.pressed.connect(next_line)
 	_dlg.add_child(bg)
 	_dlg_name = Label.new()
-	_dlg_name.position = Vector2(24, 14)
-	_dlg_name.add_theme_font_size_override("font_size", 20)
+	_dlg_name.position = Vector2(32, 16)
+	_dlg_name.add_theme_font_size_override("font_size", 30)
 	_dlg_name.add_theme_color_override("font_color", GOLD)
 	_dlg_name.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_dlg.add_child(_dlg_name)
 	_dlg_text = Label.new()
-	_dlg_text.position = Vector2(24, 48)
-	_dlg_text.size = Vector2(712, 70)
+	_dlg_text.position = Vector2(32, 66)
+	_dlg_text.size = Vector2(936, 170)
 	_dlg_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_dlg_text.add_theme_font_size_override("font_size", 18)
+	_dlg_text.add_theme_font_size_override("font_size", 28)
 	_dlg_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_dlg.add_child(_dlg_text)
 	_dlg_choices = VBoxContainer.new()
-	_dlg_choices.position = Vector2(420, 96)
-	_dlg_choices.custom_minimum_size = Vector2(320, 0)
+	_dlg_choices.position = Vector2(440, 62)
+	_dlg_choices.custom_minimum_size = Vector2(528, 0)
+	_dlg_choices.add_theme_constant_override("separation", 8)
 	_dlg.add_child(_dlg_choices)
 	_dlg_skip = Button.new()
 	_dlg_skip.name = "SkipButton"
 	_dlg_skip.text = "건너뛰기 ▶▶"
-	_dlg_skip.position = Vector2(606, 166)
-	_dlg_skip.size = Vector2(134, 34)
-	_dlg_skip.add_theme_font_size_override("font_size", 15)
+	_dlg_skip.position = Vector2(788, 268)
+	_dlg_skip.size = Vector2(180, 48)
+	_dlg_skip.add_theme_font_size_override("font_size", 24)
 	_dlg_skip.pressed.connect(skip_dialogue)
 	_dlg.add_child(_dlg_skip)
 	var hint := Label.new()
 	hint.text = "F · Space · 누르기 ▶    Esc 건너뛰기"
-	hint.position = Vector2(24, 176)
-	hint.add_theme_font_size_override("font_size", 13)
+	hint.position = Vector2(32, 280)
+	hint.add_theme_font_size_override("font_size", 20)
 	hint.modulate = Color(1, 1, 1, 0.6)
 	hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_dlg.add_child(hint)
