@@ -111,14 +111,17 @@
 
   /* 짧은 몸짓(공격 0.2~0.4초·피격 0.3초) — 게임은 "남은 초"만 갖고 있다. 처음 본 값을 길이로 잡아 진행률 0..1 을 돌려준다(8프레임이 그 안에 다 돈다).
      남은 초가 다시 커지면 새 몸짓. 끝났으면(≤0) null → 부른 쪽은 걷기·서기로 */
-  var acts = {};
+  var acts = {}, actN = {};   // actN = 그 열쇠의 몸짓이 몇 번째인가(연타 번갈기)
   function actT(key, left) {
     var a = acts[key];
     if (!(left > 0)) { if (a) { delete acts[key]; } return null; }
-    if (!a || left > a.last + 1e-3) { a = acts[key] = { dur: left }; }
+    if (!a || left > a.last + 1e-3) { a = acts[key] = { dur: left, n: (actN[key] = (actN[key] || 0) + 1) }; }
     a.last = left;
     return Math.min(1, Math.max(0, 1 - left / a.dur));
   }
+
+  /** 지금 몸짓의 { dur(처음 본 남은 초), n(몇 번째) } — 없으면 null */
+  function actInfo(key) { return acts[key] || null; }
 
   function getImg(pool, clip, eight) {
     var key = pool + '/' + clip + (eight ? '#8' : ''), e = imgs[key];
@@ -399,7 +402,7 @@
     preloadBg: function (region) { getBg(region); },
     tileOk: function (id) { var t = tiles[id]; return t ? t.ok : null; },
     FRAMES: FRAMES, PX: PX, FPS: FPS,
-    isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, dirOf8: dirOf8, roleOf: roleOf, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
+    isOn: isOn, pick: pick, vroidPick: vroidPick, face: face, actT: actT, actInfo: actInfo, dirOf8: dirOf8, roleOf: roleOf, sheet8: sheet8, beastOf: beastOf, frameAt: frameAt, dirOf: dirOf, hashOf: hashOf,
     draw: draw, preload: preload, loadIndex: loadIndex,
     drawStill: drawStill, stillPose: stillPose, isStill: isStill,
     stillLoaded: function (pool, view) { var e = stills[pool + '/' + view]; return e ? e.ok : null; },

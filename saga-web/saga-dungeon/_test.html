@@ -8016,16 +8016,17 @@ window.requestAnimationFrame = function () { return 0; };
         ('8쪽 행 표 · 역할 8/3행 폴백 · 표 밖은 3행') || '실패 ' + dirs + ' | ' + roles + ' | ' + none;
     });
 
-    t('2D 공격·피격 몸짓(W-0073 단계 4) — actT 진행률, 나 맞음 > 공격 > 걷기 순으로 동작을 고른다', function () {
+    t('2D 공격·피격 몸짓(W-0073 단계 4) — actT 진행률, 나 맞음 > 공격 > 걷기 순, 평타는 연타 번갈아·강공격은 heavy', function () {
       var M = DG.mode2d, a = [M.actT('_t', 0.2), M.actT('_t', 0.1), M.actT('_t', 0), M.actT('_t', 0.3)].join(',');
       var keep = M.draw, seen = [], ref = DG.data.heroes[0], ctx = document.createElement('canvas').getContext('2d');
       M.draw = function (c, o) { seen.push(o.clip + (o.t !== null && o.t !== undefined ? '@' + o.t.toFixed(2) : '')); return true; };
       try {
         DG.actor2d.draw(ctx, 'me', ref, 0, 0, 1, { atk: 0.22, walking: true }); DG.actor2d.draw(ctx, 'me', ref, 0, 0, 1, { atk: 0.11, walking: true });
         DG.actor2d.draw(ctx, 'me', ref, 0, 0, 1, { atk: 0.05, hurt: 0.28 }); DG.actor2d.draw(ctx, 'me', ref, 0, 0, 1, { walking: true });
+        DG.actor2d.draw(ctx, 'me', ref, 0, 0, 1, { atk: 0.22 }); DG.actor2d.draw(ctx, 'me', ref, 0, 0, 1, { atk: 0.38 });
       } finally { M.draw = keep; }
       var s = seen.join(',');
-      return a === '0,0.5,,0' && s === 'attack@0.00,attack@0.50,hit@0.00,walk' && ('진행률 ' + a + ' · ' + s) || '실패 ' + a + ' | ' + s;
+      return a === '0,0.5,,0' && s === 'attack@0.00,attack@0.50,hit@0.00,walk,attack2@0.00,heavy@0.00' && ('진행률 ' + a + ' · ' + s) || '실패 ' + a + ' | ' + s;
     });
 
     t('런타임 에러 없음', function () {
