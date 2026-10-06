@@ -57,6 +57,7 @@ const CUTS := [
 	["rk_gfx_menu", REALM, [["free_modal"], ["call", "RealmHUD/GraphicsButton/GraphicsMenu", "open_screen", []]]],
 	["go_gfx_quality", GO, [["static", GFX, "set_mode", ["quality", "@tree", false]]]],
 	["go_gfx_perf", GO, [["static", GFX, "set_mode", ["performance", "@tree", false]]]],
+	["go_dialogue", GO, [["call", "StoryQuest", "open_dialogue", [[["촌장", "먹구름이 몰려오기 전에 포구 사공을 찾아가게. 길은 강을 따라 남쪽일세."], ["나", "알겠습니다."]], "@noop"]]]],   # G-0055 건너뛰기 단추
 	["rk_orders", REALM, [["free_modal"], ["call", "RealmHUD/OrderButton", "_on_pressed", []]]],   # G-0052 — 긴 글 열 줄 선택 창
 	["rk_duel", REALM, [["free_modal"], ["call", "RealmHUD/AttackButton", "_duel_round", ["enemy", []]]]],
 ]
@@ -127,6 +128,8 @@ func _arg(a: Variant, sc: Node, p: Node3D) -> Variant:
 		return {"layer": CanvasLayer.new()}
 	if a is String and a == "@tree": # G-0054
 		return self
+	if a is String and a == "@noop": # G-0055 — 끝 콜백 자리
+		return func() -> void: pass
 	if a is String and a == "@scene":
 		return sc
 	if a is String and String(a).begins_with("@near:"):

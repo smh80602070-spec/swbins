@@ -23,6 +23,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		if next:
 			next_line()
 			get_viewport().set_input_as_handled()
+		## G-0055 — Esc(패드 B 는 창이 열려 있으면 Esc 로 바뀐다, gamepad.gd) = 건너뛰기.
+		elif event is InputEventKey and (event as InputEventKey).pressed and not (event as InputEventKey).echo \
+				and (event as InputEventKey).keycode == KEY_ESCAPE:
+			skip_dialogue()
+			get_viewport().set_input_as_handled()
 		return
 	if event.is_action_pressed("go_journal"):
 		toggle_journal()
@@ -105,6 +110,19 @@ func next_line() -> void:
 		_finish_reveal()
 		return
 	_dlg_i += 1
+	if _dlg_i >= _dlg_lines.size():
+		_close_dialogue()
+	else:
+		_show_line()
+
+## G-0055 — 건너뛰기: 다음 고르는 줄 앞까지 한 번에(없으면 닫는다 — 끝 콜백은 그대로). 고르는 중이면 아무것도 안 한다.
+func skip_dialogue() -> void:
+	if not _dlg_open or _dlg_waiting_choice:
+		return
+	_finish_reveal()
+	_dlg_i += 1
+	while _dlg_i < _dlg_lines.size() and String((_dlg_lines[_dlg_i] as Array)[0]) != "?":
+		_dlg_i += 1
 	if _dlg_i >= _dlg_lines.size():
 		_close_dialogue()
 	else:
@@ -718,8 +736,16 @@ func _build_ui() -> void:
 	_dlg_choices.position = Vector2(420, 96)
 	_dlg_choices.custom_minimum_size = Vector2(320, 0)
 	_dlg.add_child(_dlg_choices)
+	_dlg_skip = Button.new()
+	_dlg_skip.name = "SkipButton"
+	_dlg_skip.text = "건너뛰기 ▶▶"
+	_dlg_skip.position = Vector2(606, 166)
+	_dlg_skip.size = Vector2(134, 34)
+	_dlg_skip.add_theme_font_size_override("font_size", 15)
+	_dlg_skip.pressed.connect(skip_dialogue)
+	_dlg.add_child(_dlg_skip)
 	var hint := Label.new()
-	hint.text = "F · Space · 누르기 ▶"
+	hint.text = "F · Space · 누르기 ▶    Esc 건너뛰기"
 	hint.position = Vector2(24, 176)
 	hint.add_theme_font_size_override("font_size", 13)
 	hint.modulate = Color(1, 1, 1, 0.6)

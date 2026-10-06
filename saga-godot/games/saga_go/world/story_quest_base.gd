@@ -57,6 +57,7 @@ var _dlg: Control = null
 var _dlg_name: Label = null
 var _dlg_text: Label = null
 var _dlg_choices: VBoxContainer = null
+var _dlg_skip: Button = null # G-0055 건너뛰기
 var _dlg_lines: Array = []
 var _dlg_i := 0
 var _dlg_waiting_choice := false
