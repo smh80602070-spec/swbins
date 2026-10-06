@@ -23,7 +23,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_prop as BP  # noqa: E402
 import wf_common as W  # noqa: E402
 from build_prop import tube, obox, A, arg  # noqa: E402
-from wf_shapes import loft, plate, surf, ring  # noqa: E402,F401
+from wf_shapes import loft, plate, surf, ring, ball  # noqa: E402,F401
 
 BP.TRIS_MAX = 600
 BP.GENERATOR = 'tools/world-forge/build_equip.py'
@@ -352,10 +352,16 @@ def a_goggles(C):
 
 @acc('acc_mask_half', 'J_Bip_C_Head')
 def a_mask(C):
+    """반 가면 — 코 아래 얼굴을 감싸는 곡면(콧등 솟음) + 옆 숨구멍. 10-06: 얼굴 앞 납작 상자 → 곡면."""
     M = C.M
-    obox(M, (0, -0.118, 0.02), (0.15, 0.03, 0.08), 0, _c(C, '#e8e0d0'), 0.3)
+    prof = [(-0.015, 0.072, 0.100), (0.015, 0.084, 0.112), (0.045, 0.090, 0.120), (0.07, 0.088, 0.118)]
+    rows = []
+    for z, rx, ry in prof:
+        r = ring('z', (0, 0.0, z), rx, ry, 12, -1.35, 1.35, closed=False)
+        rows.append([(x, y - (0.012 * max(0.0, 1 - abs(x) / 0.03) if z > 0.02 else 0.0), zz) for x, y, zz in r])   # 콧등
+    surf(M, rows, [(0, 0.0, z) for z, rx, ry in prof], _c(C, '#e8e0d0'), closed=False)
     for sx in (-1, 1):
-        obox(M, (sx * 0.06, -0.133, 0.045), (0.035, 0.005, 0.012), 0, _c(C, '#2a2a2a'), 0.3)
+        tube(M, (sx * 0.062, -0.088, 0.015), (sx * 0.068, -0.096, 0.012), 0.016, 0.016, _c(C, '#2a2a2a'), 0.3, 8)
     node('attach')
 
 
@@ -395,8 +401,8 @@ def a_horns(C):
 
 @acc('acc_halo', 'J_Bip_C_Head')
 def a_halo(C):
-    tube(C.M, (0, 0, 0.36), (0, 0, 0.375), 0.14, 0.14, _g(C, '#ffe07a', 1.8), 0.3, 16, caps=False)
-    tube(C.M, (0, 0, 0.365), (0, 0, 0.38), 0.12, 0.12, _g(C, '#ffe07a', 1.8), 0.3, 16, caps=False)
+    tube(C.M, (0, 0, 0.31), (0, 0, 0.325), 0.14, 0.14, _g(C, '#ffe07a', 1.8), 0.3, 16, caps=False)
+    tube(C.M, (0, 0, 0.315), (0, 0, 0.33), 0.12, 0.12, _g(C, '#ffe07a', 1.8), 0.3, 16, caps=False)
     node('attach')
 
 
@@ -458,31 +464,51 @@ def a_scarf(C):
     node('attach')
 
 
+def _cape(M, slot, rows_p, clasp):
+    """망토 — 어깨에서 등으로 늘어지는 곡면(아래로 갈수록 넓고 주름 물결). rows_p = (z, rx, ry). 10-06: 납작한 판 → 곡면."""
+    rows = []
+    for i, (z, rx, ry) in enumerate(rows_p):
+        w = min(1.0, i / 2) * 0.05                       # 아래로 갈수록 주름이 깊다
+        r = ring('z', (0, 0.0, z), rx, ry, 14, math.pi - 1.4, math.pi + 1.4, closed=False)
+        rows.append([(x * (1 + w * math.sin(k * 2.2)), y * (1 + w * math.sin(k * 2.2)), z) for k, (x, y, _) in enumerate(r)])
+    surf(M, rows, [(0, 0.0, z) for z, rx, ry in rows_p], slot, closed=False)
+    z0, rx0, ry0 = rows_p[0]
+    surf(M, [ring('z', (0, 0.0, z0 + 0.01), rx0 * 0.98, ry0 * 0.98, 14, math.pi - 1.75, math.pi + 1.75, closed=False),
+             ring('z', (0, 0.0, z0 - 0.035), rx0 * 1.04, ry0 * 1.04, 14, math.pi - 1.75, math.pi + 1.75, closed=False)],
+         [(0, 0, z0), (0, 0, z0 - 0.03)], clasp, closed=False)                                        # 깃
+
+
 @acc('acc_cape_short', 'J_Bip_C_UpperChest')
 def a_cape_short(C):
     M = C.M
-    obox(M, (0, 0.13, -0.38), (0.34, 0.025, 0.46), 0, _c(C, '#6a2a3a'), 0.4)
-    tube(M, (0, 0.02, 0.06), (0, 0.13, 0.06), 0.012, 0.012, _m(C, '#e6bc48'), 0.3, 5)
-    obox(M, (0, 0.1, 0.05), (0.3, 0.04, 0.05), 0, _c(C, '#4a1a28'), 0.3)
+    _cape(M, _c(C, '#6a2a3a'), [(0.07, 0.15, 0.115), (-0.05, 0.19, 0.15), (-0.22, 0.21, 0.175), (-0.42, 0.23, 0.195)], _c(C, '#4a1a28'))
+    for sx in (-1, 1):
+        ball(M, (sx * 0.1, -0.075, 0.05), 0.018, _m(C, '#e6bc48'))
     node('attach')
 
 
 @acc('acc_cape_long', 'J_Bip_C_UpperChest')
 def a_cape_long(C):
     M = C.M
-    obox(M, (0, 0.14, -0.78), (0.38, 0.025, 0.86), 0, _c(C, '#2a3a6a'), 0.4)
-    obox(M, (0, 0.11, 0.04), (0.34, 0.05, 0.06), 0, _c(C, '#e8e0d0'), 0.3)
+    _cape(M, _c(C, '#2a3a6a'), [(0.07, 0.15, 0.115), (-0.05, 0.19, 0.15), (-0.25, 0.215, 0.18), (-0.5, 0.24, 0.205), (-0.72, 0.26, 0.225), (-0.9, 0.275, 0.24)], _c(C, '#e8e0d0'))
     node('attach')
 
 
 @acc('acc_backpack', 'J_Bip_C_UpperChest')
 def a_backpack(C):
+    """배낭 — 둥근 모서리 몸통(위 돔) + 앞주머니 + 아래 말이 + 어깨끈. 10-06: 상자 → 곡면."""
     M = C.M
-    obox(M, (0, 0.17, -0.26), (0.3, 0.14, 0.38), 0, _c(C, '#6a5a3a'), 0.6)
-    obox(M, (0, 0.25, -0.1), (0.26, 0.04, 0.14), 0, _c(C, '#4a3a22'), 0.4)
-    tube(M, (0, 0.24, -0.4), (0, 0.24, -0.46), 0.1, 0.1, _c(C, '#a0a8b0'), 0.4, 10)
+    cy = 0.205
+    prof = [(-0.42, 0.115, 0.055), (-0.40, 0.135, 0.072), (-0.12, 0.14, 0.078), (0.0, 0.13, 0.072), (0.04, 0.10, 0.056), (0.06, 0.04, 0.03)]
+    surf(M, [ring('z', (0, cy, z), rx, ry, 14) for z, rx, ry in prof], [(0, cy, z) for z, rx, ry in prof], _c(C, '#6a5a3a'))
+    pk = [(-0.36, 0.1, 0.098), (-0.33, 0.11, 0.108), (-0.16, 0.11, 0.108), (-0.13, 0.095, 0.096)]
+    surf(M, [ring('z', (0, cy - 0.01, z), rx, ry, 10, math.pi - 1.0, math.pi + 1.0, closed=False) for z, rx, ry in pk],
+         [(0, cy, z) for z, rx, ry in pk], _c(C, '#4a3a22'), closed=False)                           # 앞주머니
+    tube(M, (-0.15, cy, -0.47), (0.15, cy, -0.47), 0.05, 0.05, _c(C, '#a0a8b0'), 0.4, 10)            # 아래 말이(담요)
     for sx in (-1, 1):
-        obox(M, (sx * 0.1, 0.0, -0.05), (0.04, 0.2, 0.05), 0, _c(C, '#4a3a22'), 0.3)
+        pts = [(sx * 0.09, 0.13, -0.02), (sx * 0.09, 0.07, 0.085), (sx * 0.09, -0.04, 0.09), (sx * 0.09, -0.1, 0.0), (sx * 0.1, -0.11, -0.22)]
+        for a, b in zip(pts, pts[1:]):
+            tube(M, a, b, 0.014, 0.014, _c(C, '#4a3a22'), 0.3, 5)
     node('attach')
 
 
@@ -498,10 +524,17 @@ def a_quiver(C):
 
 @acc('acc_wings_small', 'J_Bip_C_UpperChest')
 def a_wings(C):
+    """작은 날개 — 등에서 옆·위로 펼친 깃 두 겹(아래 끝 깃 물결). 10-06: 세로 막대 여섯 → 날개 판."""
     M = C.M
+    big = [(0.0, 0.0), (0.08, 0.1), (0.2, 0.2), (0.32, 0.24), (0.36, 0.2), (0.3, 0.1), (0.25, 0.05), (0.27, -0.02), (0.2, -0.03),
+           (0.21, -0.1), (0.14, -0.08), (0.13, -0.15), (0.07, -0.1), (0.02, -0.06)]
+    small = [(0.0, 0.0), (0.08, 0.08), (0.18, 0.13), (0.24, 0.12), (0.2, 0.06), (0.21, 0.0), (0.14, 0.0), (0.13, -0.06), (0.06, -0.04)]
     for sx in (-1, 1):
-        for k, (ln, ang) in enumerate(((0.5, 25), (0.42, 5), (0.34, -15))):
-            obox(M, (sx * (0.12 + 0.16 * math.cos(math.radians(ang))), 0.16, -0.05 + 0.2 * math.sin(math.radians(ang))), (0.04, 0.012, ln), sx * (60 - 20 * k), _c(C, '#f0f0f8'), 0.3)
+        for out, y, tint in ((big, 0.13, '#f0f0f8'), (small, 0.122, '#d8dce8')):
+            o = [(sx * u, v) for u, v in out]
+            if sx < 0:
+                o = list(reversed(o))
+            plate(M, o, (sx * 0.035, y, 0.0), (1, 0, 0), (0, 0, 1), 0.008, _c(C, tint), bevel=0.03)
     node('attach')
 
 
@@ -528,8 +561,12 @@ def a_tail_cat(C):
 def a_belt_pouch(C):
     M = C.M
     tube(M, (0, 0, -0.04), (0, 0, 0.02), 0.19, 0.19, _c(C, '#4a3a22'), 0.4, 12, caps=False)
-    obox(M, (0.17, -0.05, -0.14), (0.1, 0.08, 0.12), 0, _c(C, '#6a5a3a'), 0.4)
-    obox(M, (0.17, -0.05, -0.04), (0.1, 0.085, 0.03), 0, _c(C, '#4a3a22'), 0.3)
+    pc = (0.175, -0.05)                                    # 10-06: 상자 → 둥근 주머니(아래 볼록) + 덮개
+    prof = [(-0.15, 0.025, 0.018), (-0.14, 0.048, 0.036), (-0.08, 0.052, 0.04), (-0.03, 0.05, 0.038), (-0.02, 0.03, 0.02)]
+    surf(M, [ring('z', (pc[0], pc[1], z), rx, ry, 10) for z, rx, ry in prof], [(pc[0], pc[1], z) for z, rx, ry in prof], _c(C, '#6a5a3a'))
+    fl = [(-0.015, 0.054, 0.042), (-0.07, 0.056, 0.044)]
+    surf(M, [ring('z', (pc[0], pc[1], z), rx, ry, 10, -1.6, 1.6, closed=False) for z, rx, ry in fl], [(pc[0], pc[1], z) for z, rx, ry in fl], _c(C, '#4a3a22'), closed=False)
+    ball(M, (pc[0], pc[1] - 0.046, -0.068), 0.01, _m(C, '#c8b88a'), n=5)
     node('attach')
 
 
@@ -538,27 +575,39 @@ def a_sash(C):
     M = C.M
     c = _c(C, '#c04a3a')
     tube(M, (0, 0, -0.04), (0, 0, 0.04), 0.195, 0.195, c, 0.4, 12, caps=False)
-    obox(M, (-0.12, -0.19, -0.3), (0.06, 0.02, 0.3), -10, c, 0.3)
-    obox(M, (-0.04, -0.19, -0.26), (0.06, 0.02, 0.26), 6, _c(C, '#a0302a'), 0.3)
+    for x0, ln, lean, tint in ((-0.1, 0.3, -0.05, c), (-0.05, 0.25, 0.04, _c(C, '#a0302a'))):   # 10-06: 상자 → 끝이 갈라진 띠 자락
+        plate(M, [(-0.03, 0.0), (0.03, 0.0), (0.035 + lean, -ln), (lean, -ln + 0.035), (-0.035 + lean, -ln)], (x0, -0.2, -0.02), (1, 0, 0), (0, 0, 1), 0.006, tint, bevel=0.01)
+    ball(M, (-0.075, -0.205, -0.01), 0.03, c, n=6)                                                   # 매듭
     node('attach')
+
+
+def _pad(M, slot, r=0.068):
+    """어깨 받침 — 위팔 뼈 머리를 덮는 낮은 돔(갑옷 어깨와 같은 꼴, 작게). 어깨 겉면 실측 ~0.06."""
+    prof = [(-0.03, r * 0.66), (0.0, r), (0.05, r * 1.1), (0.10, r * 1.03), (0.12, r * 1.1)]
+    surf(M, [ring('x', (x, 0, 0.004), rr, rr * 0.94, 12, -1.7, 1.7, closed=False) for x, rr in prof],
+         [(x, 0, -0.04) for x, rr in prof], slot, closed=False)
+    return 0.004 + r * 1.1 * 0.94                       # 돔 꼭대기 높이
 
 
 @acc('acc_shoulder_gem', 'J_Bip_L_UpperArm', True)
 def a_shoulder_gem(C):
     M = C.M
-    tube(M, (0.06, 0, 0.08), (0.06, 0, 0.1), 0.06, 0.06, _m(C, '#e6bc48', 1.3), 0.3, 8)
-    tube(M, (0.06, 0, 0.1), (0.06, 0, 0.15), 0.04, 0.0, _g(C, '#ff4a6a', 1.6), 0.3, 6)
+    top = _pad(M, _m(C, '#e6bc48', 1.3), 0.062)
+    tube(M, (0.05, 0, top - 0.01), (0.05, 0, top + 0.012), 0.03, 0.026, _m(C, '#b8902a', 1.2), 0.3, 8)
+    ball(M, (0.05, 0, top + 0.03), 0.024, _g(C, '#ff4a6a', 1.6))
     node('attach')
 
 
 @acc('acc_shoulder_fur', 'J_Bip_L_UpperArm', True)
 def a_shoulder_fur(C):
+    """털 어깨 — 받침 돔 위 둥근 털 뭉치가 어깨선을 따라 줄지어 덮는다."""
     M = C.M
     c = _c(C, '#d8d0c0')
-    for k in range(6):
-        a = 2 * math.pi * k / 6
-        tube(M, (0.06 + math.cos(a) * 0.07, math.sin(a) * 0.07, 0.07), (0.06 + math.cos(a) * 0.09, math.sin(a) * 0.09, 0.0), 0.04, 0.02, c, 0.3, 5)
-    tube(M, (0.06, 0, 0.06), (0.06, 0, 0.11), 0.09, 0.05, c, 0.3, 8)
+    _pad(M, _c(C, '#6a5a3a'), 0.064)
+    for k in range(9):
+        x = -0.02 + 0.13 * (k // 3) / 2
+        a = (k % 3 - 1) * 0.95
+        ball(M, (x, math.sin(a) * 0.07, 0.006 + math.cos(a) * 0.066), 0.034 - 0.004 * (k // 3), c, n=5)
     node('attach')
 
 
@@ -583,9 +632,10 @@ def a_jetpack(C):
 @acc('acc_pauldron_spike', 'J_Bip_L_UpperArm', True)
 def a_pauldron_spike(C):
     M = C.M
+    top = _pad(M, _m(C, '#6a6a72'), 0.07)
     for k in range(3):
-        tube(M, (0.06 + 0.04 * (k - 1), 0, 0.1), (0.06 + 0.07 * (k - 1), 0, 0.22), 0.03, 0.0, _m(C, '#6a6a72'), 0.3, 5)
-    tube(M, (0.06, 0, 0.07), (0.06, 0, 0.11), 0.07, 0.06, _m(C, '#6a6a72'), 0.3, 8)
+        x = 0.0 + 0.045 * k
+        tube(M, (x, 0, top - 0.02), (x + 0.02 * (k - 1), 0, top + 0.07 + 0.015 * (1 - abs(k - 1))), 0.02, 0.0, _m(C, '#8a8a92'), 0.3, 5)
     node('attach')
 
 

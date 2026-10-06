@@ -8,11 +8,11 @@
   "polyhaven: concrete_wall_001"
  ],
  "size_m": [
-  0.14,
-  0.14,
-  0.15
+  0.15,
+  0.15,
+  0.17
  ],
- "tris": 52,
+ "tris": 120,
  "nodes": [
   "attach"
  ],
