@@ -2482,5 +2482,23 @@
   "ticket": "G-0031",
   "since": "2026-10-06",
   "human": true
+ },
+ {
+  "id": "gd.go.gamepad",
+  "name": "게임패드(엑스박스식) — 스틱 이동·카메라, A 점프·X 공격·B 대시/닫기·Y 상호작용·RB/RT/LT 스킬·폭발·조준·LB 시야·L3 탈것·십자키 교체·Back 지도·Start 인물, 창 초점",
+  "files": [
+   "games/saga_go/player/gamepad.gd",
+   "games/saga_go/player/camera_rig.gd",
+   "tools/probe_gamepad.gd"
+  ],
+  "tests": [
+   "gamepad"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0033",
+  "since": "2026-10-06",
+  "human": true
  }
 ]

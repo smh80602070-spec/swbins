@@ -160,6 +160,7 @@ func _process(delta: float) -> void:
 	_exclude_enemies(delta)
 	if mouse_look:
 		_update_capture()
+	_pad_look(delta)
 	if not _aim_settled():
 		_process_aim(delta)
 	if _talk_on or _return_left > 0.0:
@@ -324,6 +325,20 @@ func _look_input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 	elif event is InputEventKey and (event as InputEventKey).pressed and (event as InputEventKey).keycode == KEY_ESCAPE:
 		_look_released = true
+
+## G-0033 — 오른쪽 스틱(0번 패드)으로 돌린다. 마우스 픽셀로 바꿔(초당 PAD_LOOK_PX) 마우스 시점·조준과 같은 길로. 대화·창(플레이어 멈춤) 중엔 안 돈다.
+const PAD_DEADZONE := 0.18
+const PAD_LOOK_PX := 900.0
+func _pad_look(delta: float) -> void:
+	var v := Vector2(Input.get_joy_axis(0, JOY_AXIS_RIGHT_X), Input.get_joy_axis(0, JOY_AXIS_RIGHT_Y))
+	if v.length() < PAD_DEADZONE or _talk_on or bool(get_parent().get("frozen")):
+		return
+	var rel := v * PAD_LOOK_PX * delta
+	if aiming:
+		_aim_turn(rel)
+		return
+	rotate_y(-rel.x * LOOK_SPEED)
+	rotation_degrees.x = clamp(rotation_degrees.x - rel.y * LOOK_SPEED * 57.3, -MAX_PITCH, LOOK_UP_PITCH)
 
 ## 조준 중 돌리기 — rel 은 마우스 픽셀 단위(LOOK_SPEED 기준).
 func _aim_turn(rel: Vector2) -> void:

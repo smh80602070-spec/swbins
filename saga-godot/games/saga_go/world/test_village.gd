@@ -357,6 +357,13 @@ func _ready() -> void:
 	if OS.get_environment("SAGA_CODEXUI_PROBE") != "":
 		add_child(load("res://tools/probe_codex_screen.gd").new())
 
+	## G-0033 — 게임패드(모든 기능이 동작을 만든 뒤 두 프레임째에 패드 입력을 덧붙인다).
+	var gamepad := preload("res://games/saga_go/player/gamepad.gd").new()
+	gamepad.name = "Gamepad"
+	add_child(gamepad)
+	if OS.get_environment("SAGA_GAMEPAD_PROBE") != "":
+		add_child(load("res://tools/probe_gamepad.gd").new())
+
 	## 그리기 부담 — 다 지은 뒤 지도 전체 MultiMesh 를 칸으로 쪼개고 카메라 far 를 안개에 맞춘다(보이는 것은 그대로, render_budget.gd).
 	(func() -> void: preload("res://games/saga_go/world/render_budget.gd").apply(self)).call_deferred()
 

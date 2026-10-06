@@ -75,7 +75,7 @@ func _run() -> void:
 	for id in Help.TIPS:
 		if Help.tip(String(id)) == "":
 			bad.append("tip " + String(id))
-	_check("tables", bad.is_empty() and Help.SECTIONS.size() == 4 and _g != null, "bad=%s sections=%d tips=%d" % [bad, Help.SECTIONS.size(), Help.TIPS.size()])
+	_check("tables", bad.is_empty() and Help.SECTIONS.size() == 5 and _g != null, "bad=%s sections=%d tips=%d" % [bad, Help.SECTIONS.size(), Help.TIPS.size()])
 
 	# ② 글이 실제 키와 맞는가
 	var wrong: Array = []
@@ -147,7 +147,7 @@ func _run() -> void:
 	await _frames(2)
 	var rows2 := (_g.get("_body") as Node).get_child_count()
 	_g.call("close_screen")
-	_check("screen", opened and frozen and tabs == 4 and rows0 == (Help.SECTIONS[0].lines as Array).size() and rows2 == (Help.SECTIONS[2].lines as Array).size() and not bool(_p.get("frozen")),
+	_check("screen", opened and frozen and tabs == Help.SECTIONS.size() and rows0 == (Help.SECTIONS[0].lines as Array).size() and rows2 == (Help.SECTIONS[2].lines as Array).size() and not bool(_p.get("frozen")),
 		"opened=%s frozen=%s tabs=%d rows=%d/%d" % [opened, frozen, tabs, rows0, rows2])
 
 	PartyState.tips = _saved.tips
