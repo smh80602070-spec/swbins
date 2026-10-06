@@ -19,5 +19,6 @@
  "ortho_m": 2.5,
  "cam_z": 0.95,
  "license": "CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vroid, 코드 gear_sprites.py",
- "side_faces": "right"
+ "side_faces": "right",
+ "fix_1006": "정면·뒷면 줄 바꿈(옷 이식 GLB 정면 오판, gear_sprites 0d099a031 이전 굽기)"
 }

@@ -19,5 +19,6 @@
  "ortho_m": 2.5,
  "cam_z": 0.95,
  "license": "CC0 VRoid 몸 + 절차 생성 장비(자체) — 출처 tools/char-forge/_src/cc0_vroid, 코드 gear_sprites.py",
- "side_faces": "right"
+ "side_faces": "right",
+ "fix_1006": "옆 줄 좌우 반전 되돌림(풀 몸은 정면이 맞아 옆이 원래 오른쪽이었다)"
 }
