@@ -68,6 +68,12 @@ func _physics_process(_delta: float) -> void:
 			if int(CodexState.TOTAL.place) < 112:
 				bad.append("codex total %d" % CodexState.TOTAL.place)
 			_check("ch27_knots", bad.is_empty(), str(bad))
+			## G-0041 — 매듭 연기는 연기 입자(공 도형 없음)
+			var puff_bad := []
+			for kn in _se.get("_knots"):
+				if not _particles_only(kn.smoke):
+					puff_bad.append((kn.root as Node).name)
+			_check("knot_smoke_particles", puff_bad.is_empty(), str(puff_bad))
 			_set_story(StormEye.CH27, 4)
 			_next()
 		3: # [3] 첫째 매듭만 묶임 — 줄 곧게 위로
@@ -100,6 +106,8 @@ func _physics_process(_delta: float) -> void:
 			if _frame < 40:
 				return
 			var bad: Array = []
+			if not _particles_only(_se.get("_vortex")):   # G-0041 — 소용돌이도 연기 입자(번개 줄 넷만 메시)
+				bad.append("vortex spheres")
 			if not bool(_se.call("is_shown")) or not bool(_se.call("vortex_visible")) or bool(_se.call("draft_active")):
 				bad.append("eye=%s vortex=%s draft=%s" % [_se.call("is_shown"), _se.call("vortex_visible"), _se.call("draft_active")])
 			var ec := StormEye.center()
@@ -187,3 +195,12 @@ func _check(name: String, ok: bool, detail: String) -> void:
 	else:
 		_fails += 1
 		print("STORMEYE_PROBE FAIL %s — %s" % [name, detail])
+
+## G-0041 — 연기 노드 안에 입자가 있고 공(SphereMesh) 메시는 없다.
+func _particles_only(n: Node) -> bool:
+	if n == null or n.find_children("*", "CPUParticles3D", true, false).is_empty():
+		return false
+	for m in n.find_children("*", "MeshInstance3D", true, false):
+		if (m as MeshInstance3D).mesh is SphereMesh:
+			return false
+	return true

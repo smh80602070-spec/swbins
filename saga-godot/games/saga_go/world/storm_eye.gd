@@ -242,6 +242,61 @@ func _emit(c: Color, energy: float) -> StandardMaterial3D:
 	m.emission_energy_multiplier = energy
 	return m
 
+## G-0041 — 연기 입자(빌보드 한 장 + 둥근 흐림 무늬). 커지며 옅어진다. amount·수명·한 장 크기(m)·가장 짙을 때 불투명.
+func _smoke(parent: Node3D, amount: int, life: float, size: float, alpha: float) -> CPUParticles3D:
+	var p := CPUParticles3D.new()
+	p.name = "SmokeParticles"
+	p.amount = amount
+	p.lifetime = life
+	p.preprocess = life
+	var q := QuadMesh.new()
+	q.size = Vector2(size, size)
+	p.mesh = q
+	p.scale_amount_min = 0.7
+	p.scale_amount_max = 1.3
+	var grow := Curve.new()
+	grow.add_point(Vector2(0, 0.45))
+	grow.add_point(Vector2(1, 1.0))
+	p.scale_amount_curve = grow
+	p.angle_min = 0.0
+	p.angle_max = 360.0
+	var ramp := Gradient.new()
+	ramp.set_color(0, Color(GLOOM.r, GLOOM.g, GLOOM.b, 0.0))
+	ramp.set_color(1, Color(GLOOM.r * 0.8, GLOOM.g * 0.8, GLOOM.b * 0.9, 0.0))
+	ramp.add_point(0.2, Color(GLOOM.r, GLOOM.g, GLOOM.b, alpha))
+	ramp.add_point(0.7, Color(GLOOM.r * 0.9, GLOOM.g * 0.9, GLOOM.b, alpha * 0.6))
+	p.color_ramp = ramp
+	var m := StandardMaterial3D.new()
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	m.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	m.vertex_color_use_as_albedo = true
+	m.albedo_texture = _puff_texture()
+	m.billboard_mode = BaseMaterial3D.BILLBOARD_PARTICLES
+	m.billboard_keep_scale = true
+	p.material_override = m
+	p.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	parent.add_child(p)
+	return p
+
+static var _puff_tex: Texture2D = null
+
+## 가운데가 짙고 가장자리로 사라지는 둥근 흐림(코드로 만든 무늬 — 에셋 파일 없음).
+static func _puff_texture() -> Texture2D:
+	if _puff_tex == null:
+		var g := Gradient.new()
+		g.set_color(0, Color(1, 1, 1, 1))
+		g.set_color(1, Color(1, 1, 1, 0))
+		g.add_point(0.45, Color(1, 1, 1, 0.75))
+		var t := GradientTexture2D.new()
+		t.gradient = g
+		t.fill = GradientTexture2D.FILL_RADIAL
+		t.fill_from = Vector2(0.5, 0.5)
+		t.fill_to = Vector2(1.0, 0.5)
+		t.width = 64
+		t.height = 64
+		_puff_tex = t
+	return _puff_tex
+
 func _veil(c: Color, alpha: float) -> StandardMaterial3D:
 	var m := StandardMaterial3D.new()
 	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
@@ -307,13 +362,16 @@ func _build_knot(k: int) -> void:
 	var smoke := Node3D.new()
 	smoke.name = "Smoke"
 	root.add_child(smoke)
-	var sm := _veil(GLOOM, 0.5)
-	for i in 3:
-		var pm := SphereMesh.new()
-		pm.radius = 0.6 + i * 0.35
-		pm.height = pm.radius * 1.3
-		var pmi := _mesh(smoke, pm, sm, Vector3((i - 1) * 0.4, 2.4 + i * 1.1, 0.0), false)
-		_floaters.append([pmi, pmi.position.y, float(k) + i])
+	## G-0041 — 공 셋 대신 위로 오르며 퍼지고 옅어지는 연기 입자(처음부터 기둥이 서게 미리 채움).
+	var sp := _smoke(smoke, 34, 3.6, 2.2, 0.85)
+	sp.position = Vector3(0, 2.3, 0)
+	sp.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
+	sp.emission_sphere_radius = 0.35
+	sp.direction = Vector3.UP
+	sp.spread = 14.0
+	sp.initial_velocity_min = 0.9
+	sp.initial_velocity_max = 1.5
+	sp.gravity = Vector3(0.25, 0.15, 0.1)   # 살짝 바람에 기운다
 	_label3d(root, String(r[3]), Vector3(0, 3.0, 0), Color(1.0, 0.92, 0.7), 40)
 	var bm := CylinderMesh.new()
 	bm.top_radius = 0.22
@@ -415,15 +473,20 @@ func _build_eye() -> void:
 	_vortex = Node3D.new()
 	_vortex.name = "Vortex"
 	_eye.add_child(_vortex)
-	var vm := _veil(GLOOM, 0.62)
-	for i in 16:
-		var a := TAU * i / 16.0
-		var rr := 20.0 + (i % 3) * 2.5
-		var puff := SphereMesh.new()
-		puff.radius = 4.0 + (i % 4) * 0.7
-		puff.height = puff.radius * 1.4
-		var pm := _mesh(_vortex, puff, vm, Vector3(cos(a) * rr, 3.0 + (i % 3) * 3.5, sin(a) * rr), false)
-		_floaters.append([pm, pm.position.y, float(i)])
+	## G-0041 — 공 열여섯 대신 고리(반지름 18~24m)에서 피어오르는 큰 연기 입자. local_coords 라 Vortex 와 같이 돈다.
+	var vp := _smoke(_vortex, 280, 7.0, 13.0, 0.9)
+	vp.local_coords = true
+	vp.position = Vector3(0, 3.0, 0)
+	vp.emission_shape = CPUParticles3D.EMISSION_SHAPE_RING
+	vp.emission_ring_axis = Vector3.UP
+	vp.emission_ring_radius = 24.0
+	vp.emission_ring_inner_radius = 18.0
+	vp.emission_ring_height = 6.0
+	vp.direction = Vector3.UP
+	vp.spread = 25.0
+	vp.initial_velocity_min = 0.4
+	vp.initial_velocity_max = 1.2
+	vp.gravity = Vector3.ZERO
 	for i in 4:
 		var a := TAU * (i + 0.25) / 4.0
 		var bolt := _box(_vortex, Vector3(0.18, 7.0, 0.18), Vector3(cos(a) * 19.0, 6.0, sin(a) * 19.0), _emit(STORM, 3.0), false)
