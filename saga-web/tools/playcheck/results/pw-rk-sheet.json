@@ -37,12 +37,12 @@
   {
    "name": "출진 — 맞닿은 적 성으로 출진하면 전투가 치러져 승패·손실이 나오고 출진한 성의 병력이 줄어든다",
    "ok": true,
-   "detail": "{\"ok\":true,\"won\":false,\"lossA\":929,\"lossD\":76,\"troopsFrom\":[5444,4515]}"
+   "detail": "{\"ok\":true,\"won\":false,\"lossA\":756,\"lossD\":74,\"troopsFrom\":[5444,4688]}"
   },
   {
    "name": "개입형 전투 — 출진하면 합마다 명령을 물어 오고(돌격·수비) 끝에 보고가 나온다",
    "ok": true,
-   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":169}"
+   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":131}"
   },
   {
    "name": "무장 — 공과 금을 갖추면 승진해 관직이 한 단 오르고 금이 들고 충성이 오른다",
