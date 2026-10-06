@@ -38,9 +38,11 @@ const CUTS := [
 		["call", "House", "_spawn_furniture_visual", [{"key": "mungab", "x": 2.2, "z": 0.4}]], ["call", "House", "_spawn_furniture_visual", [{"key": "byeongpung", "x": 0.0, "z": 2.6}]]]],
 	["fs_fishing_near", FOREST, [["near", "Fishing", 0.0, 2.6]]],   # G-0046 — 못 가까이
 	## G-0048 — 사가블로 노획물 여섯(보스 노획·전설 배율 40 — 등급색 외곽선·전설 잔광) · 사가스토리 동굴 사다리 · 사가국지 일기토 1합째
-	["dg_loot", DUNGEON, [["static", LOOT, "spawn_at", ["@scene", "@near:1.6:0", 30, true, false, 40.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:-1.6:0", 30, true, false, 40.0]],
-		["static", LOOT, "spawn_at", ["@scene", "@near:0:1.6", 30, true, false, 40.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:0:-1.6", 30, false, false, 1.0]],
-		["static", LOOT, "spawn_at", ["@scene", "@near:1.2:1.2", 30, false, true, 1.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:-1.2:-1.2", 30, false, false, 1.0]]]],
+	# G-0049 — 출사표 창 먼저 닫고, 줍기 반경(1.4m)+몸 밖 3m 에 떨군다(1.6m 는 찍기 전에 주워졌다)
+	# 화면 앞(+z)은 카메라 밑이라 안 보인다 — 전부 옆·뒤(-z)에. 앞 셋은 전설 배율 1000(전설 확정), 뒤 셋은 보통.
+	["dg_loot", DUNGEON, [["free_modal"], ["static", LOOT, "spawn_at", ["@scene", "@near:3.2:0", 30, true, false, 1000.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:-3.2:0", 30, true, false, 1000.0]],
+		["static", LOOT, "spawn_at", ["@scene", "@near:0:-3.2", 30, true, false, 1000.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:2.6:-5.2", 30, false, true, 1.0]],
+		["static", LOOT, "spawn_at", ["@scene", "@near:-2.6:-5.2", 30, false, false, 1.0]], ["static", LOOT, "spawn_at", ["@scene", "@near:0:-6.6", 30, false, false, 1.0]]]],
 	["st_ladder", STORY_CAVE, [["near", "LadderArea", -1.4, 0.0]]],
 	["rk_duel", REALM, [["free_modal"], ["call", "RealmHUD/AttackButton", "_duel_round", ["enemy", []]]]],
 ]
