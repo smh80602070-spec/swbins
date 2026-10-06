@@ -1,0 +1,219 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "icons_flat2",
+ "kit": {
+  "spec": "icon",
+  "style": "B",
+  "style_name": "부드러운 채색 + 얇은 윤곽(10-03~05 산출)"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "medal_1",
+   "seed": 3752727067,
+   "prompt": "(gold medal:1.15), engraved number one, red and blue ribbon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "medal_2",
+   "seed": 1578391955,
+   "prompt": "(silver medal:1.15), engraved number two, blue ribbon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "medal_3",
+   "seed": 120672778,
+   "prompt": "(bronze medal:1.15), engraved number three, green ribbon, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rank_badge_1_bronze",
+   "seed": 1900948684,
+   "prompt": "(bronze shield badge emblem:1.15), one chevron, rivets, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rank_badge_2_silver",
+   "seed": 1284588971,
+   "prompt": "(silver shield badge emblem:1.15), two chevrons, polished, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rank_badge_3_gold",
+   "seed": 3666378778,
+   "prompt": "(gold shield badge emblem:1.15), three chevrons, shiny, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rank_badge_4_platinum",
+   "seed": 3564830893,
+   "prompt": "(platinum shield badge emblem:1.15), pale cyan metal, small wings, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rank_badge_5_sapphire",
+   "seed": 3658544497,
+   "prompt": "(shield badge emblem:1.15), large blue sapphire gem, silver frame, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rank_badge_6_ruby",
+   "seed": 1722899721,
+   "prompt": "(shield badge emblem:1.15), large red ruby gem, gold frame, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rank_badge_7_obsidian",
+   "seed": 1164403068,
+   "prompt": "(black obsidian shield badge emblem:1.15), purple glow, crystal spikes, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rank_badge_8_celestial",
+   "seed": 1883675965,
+   "prompt": "(white gold shield badge emblem:1.15), star, feathered wings, radiant, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_blades",
+   "seed": 1075006510,
+   "prompt": "(two crossed swords:1.15), steel blades, leather grips, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_chest",
+   "seed": 3347316549,
+   "prompt": "(wooden treasure chest:1.15), gold trim, closed lid, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_coinbag",
+   "seed": 124256682,
+   "prompt": "(leather coin pouch:1.15), gold coins spilling, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_crown",
+   "seed": 119200298,
+   "prompt": "(golden crown:1.15), red and blue jewels, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_cup",
+   "seed": 4186664914,
+   "prompt": "(golden trophy cup:1.15), two handles, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_feather",
+   "seed": 3448399071,
+   "prompt": "(white quill feather:1.15), ink tip, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_flame",
+   "seed": 2756434575,
+   "prompt": "(magic orange flame:1.15), glowing ember, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_gem",
+   "seed": 1622042487,
+   "prompt": "(blue diamond gem:1.15), faceted, sparkle, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_key",
+   "seed": 2211199770,
+   "prompt": "(ornate golden key:1.15), round bow, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_scroll",
+   "seed": 3258314615,
+   "prompt": "(rolled parchment scroll:1.15), red wax seal, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_shield",
+   "seed": 1004729868,
+   "prompt": "(blue heater shield:1.15), golden cross emblem, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_star",
+   "seed": 633665579,
+   "prompt": "(golden star:1.15), five points, shiny, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_food",
+   "seed": 3083689510,
+   "prompt": "(sheaf of wheat:1.15), round bread loaf, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_gold",
+   "seed": 2665431321,
+   "prompt": "(stack of gold coins:1.15), three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_happy",
+   "seed": 1106680,
+   "prompt": "(festival paper lantern:1.15), warm glow, flower, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_hero",
+   "seed": 1747101144,
+   "prompt": "(golden laurel wreath:1.15), three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_pop",
+   "seed": 1641336144,
+   "prompt": "(cluster of three small village houses:1.15), three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_strike",
+   "seed": 3192899290,
+   "prompt": "(yellow lightning bolt:1.15), sparks, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_tower",
+   "seed": 1088310954,
+   "prompt": "(stone watchtower:1.15), red flag on top, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_troop",
+   "seed": 3504348599,
+   "prompt": "(two crossed spears:1.15), small round shield, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_wall",
+   "seed": 3711546968,
+   "prompt": "(stone brick wall segment:1.15), battlements, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_work",
+   "seed": 3314538679,
+   "prompt": "(iron hammer and anvil:1.15), three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  }
+ ]
+}
