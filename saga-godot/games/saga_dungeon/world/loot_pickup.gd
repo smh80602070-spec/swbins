@@ -45,6 +45,13 @@ const Toast := preload("res://saga_core/ui/toast.gd")
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 const OUTLINE_SHADER := preload("res://saga_core/shaders/cel_outline.gdshader")
 const LEGENDARY_TIER_KEY := 4 # DungeonItems.TIERS[4] == "전설"
+## G-0049 — 카메라가 12m 뒤라 한 화소 ≈ 2.5cm. 외곽선 셰이더 기본 1.5cm(메시 배율까지 곱해져
+## 더 얇다)는 화면에 안 남아서, 세계 기준 두께를 정해 메시 배율로 나눠 넣는다(2~3화소).
+const OUTLINE_WORLD := 0.05
+const RING_INNER := 0.42 # 장비 노획물 밑 등급색 고리(m) — 위에서 내려다봐도 등급이 읽히게
+const RING_OUTER := 0.56
+const BEAM_HEIGHT := 1.8 # 전설 빛기둥(m) — 카메라가 위에서 비스듬히 보므로 3m 면 카메라 쪽으로 넓게 번진다(G-0049 촬영)
+const LEGENDARY_GLOW_AMOUNT := 18
 
 ## 2026-09-20 — 101-3 G "성장 가시화". 무기 노획물은 등급색 박스 대신
 ## 무기 GLB 를 쓴다(G-0021 이후 K-0057 의 바닥에 눕는 `loot_*_g0~4` 통일 툰 모델 — 옛 KayKit 은 손에 쥐는 자세였다). dungeon_
@@ -132,11 +139,67 @@ static func spawn_mat_at(parent: Node, pos: Vector3, floor_num: int) -> void:
 ## 등급 색으로 바꿔 그대로 재사용한다(주석에 적힌 예정대로). Player·NPC의
 ## next_pass 배선(cel_shader_apply.gd)과는 별개 경로 — 노획물은 텍스처가
 ## 없는 단색 재질이라 그쪽 함수가 아예 건너뛴다.
-static func _outline_material(tier: Dictionary) -> ShaderMaterial:
+## G-0049 — `mesh_scale` 은 그 메시에 걸린 배율(셰이더는 메시 좌표로 미므로 나눠야 세계 두께가 맞는다).
+static func _outline_material(tier: Dictionary, mesh_scale: float = 1.0) -> ShaderMaterial:
 	var outline := ShaderMaterial.new()
 	outline.shader = OUTLINE_SHADER
 	outline.set_shader_parameter("outline_color", Color(String(tier.color)))
+	outline.set_shader_parameter("thickness", OUTLINE_WORLD / maxf(mesh_scale, 0.01))
 	return outline
+
+
+## G-0049 — 장비 노획물마다 바닥에 등급색 고리(빛을 안 받아 어두운 방에서도 그 색 그대로).
+static func _spawn_tier_ring(area: Node3D, tier: Dictionary) -> void:
+	var ring := TorusMesh.new()
+	ring.inner_radius = RING_INNER
+	ring.outer_radius = RING_OUTER
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.albedo_color = Color(String(tier.color))
+	ring.surface_set_material(0, mat)
+	var mi := MeshInstance3D.new()
+	mi.name = "TierRing"
+	mi.mesh = ring
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mi.transform = Transform3D(Basis.IDENTITY.scaled(Vector3(1.0, 0.15, 1.0)), Vector3(0, 0.03, 0))
+	area.add_child(mi)
+
+
+## G-0049 — 전설 빛기둥: 반투명 더하기 원기둥, 아래가 진하고 위로 옅어진다(세로 그라디언트).
+static func _spawn_legendary_beam(area: Node3D, tier: Dictionary) -> void:
+	var beam := CylinderMesh.new()
+	beam.top_radius = 0.07
+	beam.bottom_radius = 0.16
+	beam.height = BEAM_HEIGHT
+	beam.cap_top = false
+	beam.cap_bottom = false
+	var grad := Gradient.new()
+	## CylinderMesh 옆면 UV 는 위끝 v=0 · 아래끝 v=0.5(나머지는 뚜껑 몫) — 0 투명 → 0.5 진하게.
+	grad.set_color(0, Color(1, 1, 1, 0.0))
+	grad.set_color(1, Color(1, 1, 1, 1.0))
+	grad.set_offset(1, 0.5)
+	var tex := GradientTexture2D.new()
+	tex.gradient = grad
+	tex.width = 4
+	tex.height = 64
+	tex.fill_from = Vector2(0, 0)
+	tex.fill_to = Vector2(0, 1)
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	mat.albedo_texture = tex
+	var c := Color(String(tier.color))
+	c.a = 0.55
+	mat.albedo_color = c
+	beam.surface_set_material(0, mat)
+	var mi := MeshInstance3D.new()
+	mi.name = "LegendaryBeam"
+	mi.mesh = beam
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mi.position = Vector3(0, BEAM_HEIGHT * 0.5, 0)
+	area.add_child(mi)
 
 
 ## 101-3 G "이펙트(전설 = 잔광 파티클 1)" — 이 저장소 최초의 파티클(다른
@@ -147,8 +210,8 @@ static func _outline_material(tier: Dictionary) -> ShaderMaterial:
 ## "색만 보고 줍는다"는 반사신경이 흐려진다).
 static func _spawn_legendary_glow(area: Node3D, tier: Dictionary) -> void:
 	var glow_mesh := SphereMesh.new()
-	glow_mesh.radius = 0.035
-	glow_mesh.height = 0.07
+	glow_mesh.radius = 0.05 # G-0049 — 3.5cm 는 12m 에서 3화소라 안 보였다
+	glow_mesh.height = 0.1
 	var glow_mat := StandardMaterial3D.new()
 	glow_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	glow_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
@@ -162,16 +225,16 @@ static func _spawn_legendary_glow(area: Node3D, tier: Dictionary) -> void:
 	p.name = "LegendaryGlow"
 	p.position = Vector3(0, 0.5, 0)
 	p.mesh = glow_mesh
-	p.amount = 10
-	p.lifetime = 1.4
-	p.preprocess = 1.4 # 처음 보일 때부터 이미 도는 것처럼(빈 채로 시작 안 함)
+	p.amount = LEGENDARY_GLOW_AMOUNT
+	p.lifetime = 1.8
+	p.preprocess = 1.8 # 처음 보일 때부터 이미 도는 것처럼(빈 채로 시작 안 함)
 	p.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
-	p.emission_sphere_radius = 0.12
+	p.emission_sphere_radius = 0.35
 	p.direction = Vector3(0, 1, 0)
 	p.spread = 20.0
-	p.gravity = Vector3(0, 0.15, 0) # 아래로 안 떨어지고 위로 살짝 떠오르는 "잔광"
-	p.initial_velocity_min = 0.1
-	p.initial_velocity_max = 0.25
+	p.gravity = Vector3(0, 0.1, 0) # 아래로 안 떨어지고 위로 떠오르는 "잔광"
+	p.initial_velocity_min = 0.2
+	p.initial_velocity_max = 0.45
 	p.scale_amount_min = 0.5
 	p.scale_amount_max = 1.0
 	var glow_color := Color(String(tier.color))
@@ -215,7 +278,7 @@ static func spawn_at(parent: Node, pos: Vector3, ilvl: int, is_boss: bool = fals
 				var base_mat := mi.get_active_material(si)
 				if base_mat != null:
 					var outlined := base_mat.duplicate() as Material
-					outlined.next_pass = _outline_material(tier)
+					outlined.next_pass = _outline_material(tier, s)
 					mi.set_surface_override_material(si, outlined)
 	if mi.mesh == null:
 		var mesh := BoxMesh.new()
@@ -231,8 +294,10 @@ static func spawn_at(parent: Node, pos: Vector3, ilvl: int, is_boss: bool = fals
 		mat.next_pass = _outline_material(tier) # 101-3 G
 		mi.material_override = mat
 	area.add_child(mi)
+	_spawn_tier_ring(area, tier)
 	if it.tier == LEGENDARY_TIER_KEY:
 		_spawn_legendary_glow(area, tier)
+		_spawn_legendary_beam(area, tier)
 
 	var cs := CollisionShape3D.new()
 	var shape := SphereShape3D.new()
