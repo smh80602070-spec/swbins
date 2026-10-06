@@ -18,6 +18,9 @@ const CombatFx := preload("res://games/saga_go/combat/combat_fx.gd")
 const Elements := preload("res://games/saga_go/combat/elements.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
+const SkyRoute := preload("res://games/saga_go/world/sky_route.gd")
+const StormEye := preload("res://games/saga_go/world/storm_eye.gd")
+const SessionCard := preload("res://saga_core/ui/session_card.gd")
 
 const SETTLE := 90
 
@@ -44,6 +47,13 @@ const SHOTS := [
 	["o_crossing_field", "crossing", Vector2(6.6, 4.4), Vector3.ZERO, Vector2(5.6, 3.0), -2.0, 12.0, ""],
 	["o_skyport_field", "skyport", Vector2(2.4, 3.2), Vector3.ZERO, Vector2(3.4, 2.4), -2.0, 12.0, ""],
 	["o_sunken_field", "sunken", Vector2(4.0, 4.5), Vector3.ZERO, Vector2(5.0, 3.5), -2.0, 12.0, ""],
+	# G-0040 — 못 본 화면 넷(인물 조우·일과판 카드·7부 하늘 섬·8부 먹구름 눈과 매듭). ch:<장 0부터>:<단계> 는 컷 동안만 이야기 진행을 바꾼다
+	["g40_hero", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 9.0, "touch:go_heroes:_flee"],
+	["g40_daycard", "village", Vector2(5.5, 6.3), Vector3.ZERO, Vector2(4.7, 5.3), -12.0, 9.0, "card"],
+	["g40_sky_shrine", "sunken", "isle:shrine", Vector3(10, 0, 8), "isle:shrine", -14.0, 12.0, "ch:25:0"],
+	["g40_sky_orbit", "sunken", "isle:orbit", Vector3(6, 0, 6), "isle:orbit", -10.0, 12.0, "ch:25:0"],
+	["g40_storm_eye", "village", "stormeye", Vector3(8, 0, 8), "stormeye", -12.0, 14.0, "ch:28:0"],
+	["g40_knot", "ruins", "knot:0", Vector3(5, 0, 5), "knot:0", -10.0, 8.0, "ch:26:0"],
 	# G-0038 — 휑한 지역 셋 꾸밈 전후(SAGA_NO_DRESSING=1 이면 꾸밈 없이)
 	["g38_amber_street", "amber", Vector2(3.6, 6.8), Vector3.ZERO, Vector2(4.6, 4.6), -4.0, 14.0, ""],
 	["g38_amber_market", "amber", Vector2(2.7, 4.9), Vector3.ZERO, Vector2(1.5, 3.6), -6.0, 14.0, ""],
@@ -141,6 +151,7 @@ var _only: PackedStringArray = []
 var _lineup: Array[Node3D] = []
 var _done: Array = []
 var _close_call: Array = []   # "call:" 할 일이 연 화면 [노드, 닫는 함수]
+var _story_saved: Variant = null   # "ch:" 할 일이 바꾸기 전 이야기 진행(G-0040)
 var _swing_enemy: Node3D = null   # "swing" 할 일 — 가장 가까운 들판 적 곁에 서서 찍기 직전에 한 번 휘두른다(09-28 전투 이펙트)
 
 func _ready() -> void:
@@ -233,6 +244,12 @@ func _pos_of(region: String, v: Variant) -> Vector3:
 		var fb := get_tree().get_first_node_in_group("go_field_bosses")
 		var b: Node3D = fb.call("boss", String(v).substr(5)) if fb else null
 		return b.global_position + Vector3(0, 1.5, 0) if b else Vector3.ZERO
+	elif String(v).begins_with("isle:"):   # G-0040 — 하늘 섬·먹구름 눈·매듭은 그 높이 그대로
+		return SkyRoute.center(String(v).substr(5))
+	elif String(v) == "stormeye":
+		return StormEye.center()
+	elif String(v).begins_with("knot:"):
+		return StormEye.knot_pos(int(String(v).substr(5)))
 	elif String(v) == "lineup":
 		return _lineup_center() + Vector3(0, 1.2, 0)
 	else:
@@ -241,12 +258,19 @@ func _pos_of(region: String, v: Variant) -> Vector3:
 	return p
 
 func _place(s: Array) -> void:
+	if String(s[7]).begins_with("ch:"):   # 먼저 무대를 띄워야 하늘 섬에 세울 때 안 떨어진다
+		var cp := String(s[7]).split(":")
+		_story_saved = PartyState.story.duplicate(true)
+		PartyState.story["ch"] = int(cp[1])
+		PartyState.story["step"] = int(cp[2]) if cp.size() > 2 else 0
+		_refresh_story_stages()
 	if String(s[7]).begins_with("lineup"):
 		_build_lineup(_pos_of(String(s[1]), s[2]) + (s[3] as Vector3))
 	elif String(s[7]).begins_with("beast") or String(s[7]) == "pets":
 		_build_beasts(_pos_of(String(s[1]), s[2]) + (s[3] as Vector3), String(s[7]))
 	var e := _pos_of(String(s[1]), s[2]) + (s[3] as Vector3)
-	e.y = TerrainBuilder.height_at(String(s[1]), e) + 0.6
+	var sky := str(s[2]).begins_with("isle:") or str(s[2]) == "stormeye"
+	e.y = (_pos_of(String(s[1]), s[2]).y if sky else TerrainBuilder.height_at(String(s[1]), e)) + 0.6
 	_p.global_position = e
 	_p.velocity = Vector3.ZERO
 
@@ -337,6 +361,15 @@ func _act(a: String) -> void:
 			var dn := get_tree().get_first_node_in_group("go_dispatch")
 			if dn:
 				dn.call("open_screen")
+		_ when a.begins_with("touch:"):
+			## "touch:<그룹>:<닫는 함수>" — 만남 칸에 들어온 것처럼(인물 설득 창). 찍은 뒤 닫는다(G-0040).
+			var tp := a.split(":")
+			var tn := get_tree().get_first_node_in_group(tp[1])
+			if tn:
+				tn.call("_on_body_entered", _p)
+				_close_call = [tn, tp[2] if tp.size() > 2 else ""]
+		"card":   # 저장 마무리 카드 — 저장은 안 하고 카드만(save_button.gd 와 같은 줄)
+			SessionCard.show(get_tree().current_scene, "저장했다 — 이번 세션", ["경험치 +%.0f" % PartyState.session_exp_gained(), "발견 +%d" % CodexState.session_discovered(), "부대 %d명" % PartyState.members.size()])
 		_ when a.begins_with("call:"):
 			## "call:<그룹>:<여는 함수>:<인자>:<닫는 함수>" — 화면 하나를 열어 찍고 다음 컷 전에 닫는다(10-06 오래된 기능 판정).
 			var parts := a.split(":")
@@ -348,7 +381,16 @@ func _act(a: String) -> void:
 					node.call(parts[2])
 				_close_call = [node, parts[4]]
 
+func _refresh_story_stages() -> void:
+	for g in ["go_sky_route", "go_storm_eye"]:
+		for n in get_tree().get_nodes_in_group(g):
+			n.call("_refresh")
+
 func _undo() -> void:
+	if _story_saved != null:
+		PartyState.story = _story_saved
+		_story_saved = null
+		_refresh_story_stages()
 	if Input.is_action_pressed("jump"):
 		Input.action_release("jump")
 	if not _close_call.is_empty():
