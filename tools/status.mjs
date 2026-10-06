@@ -56,7 +56,7 @@ if (si >= 0) {
   const cand = a.map((x, i) => ({ x, i })).filter(({ x }) => x.level === 'D1' || x.level === 'D2' || (x.level === 'D0' && x.sheet));
   cand.sort((u, v) => (!!v.x.sheet - !!u.x.sheet) || String(u.x.since).localeCompare(String(v.x.since)) || (u.i - v.i));
   const pick = cand.slice(0, 10).map(c => c.x);
-  const base = 'https://smh8627-jpg.github.io/swbins/saga-web/' + game + '/';
+  const base = 'https://smh80602070-spec.github.io/swbins/saga-web/' + game + '/';
   const d = new Date(); const ymd = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   const cell = s => String(s).replace(/\|/g, '/').replace(/\s+/g, ' ');
   const L = [`# 확인 시트 — ${game}`, `${ymd} · 판 ${game} · 기능 ${pick.length}개`, '○/× 만 적어 주세요. 10개 넘게 보지 않아도 됩니다.', '',

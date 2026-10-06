@@ -27,11 +27,11 @@
 
 - 로컬: 각 폴더 `run.bat`(브라우저 열림) · `start_server.bat`(허브용) · 사가고 폰용 `run-phone.bat`(HTTPS)
 - 제작 도구: `saga-web/tools/run-tools.bat`(편집기·엔진 :8799~8801)
-- 공개: <https://smh8627-jpg.github.io/swbins/saga-web/saga-go/> 식 하위 경로(GitHub Pages)
+- 공개: <https://smh80602070-spec.github.io/swbins/saga-web/saga-go/> 식 하위 경로(GitHub Pages)
 
 ## git
 
-`origin` = <https://github.com/smh8627-jpg/swbins> (**공개**).
+`origin` = <https://github.com/smh80602070-spec/swbins> (**공개**, 옛 계정 정지 중 임시 — 풀리면 `py tools/switch-origin.py old`).
 
 - `saga-web/saga-go/server/certs/` 절대 커밋 금지(자체 서명 CA 개인키). `.gitignore` 풀지 말 것
 - `.nojekyll` 지우지 말 것(`_test.html`·`js/_expansion/` 등 `_` 파일이 Pages 에서 빠진다)

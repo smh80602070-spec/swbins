@@ -1,7 +1,7 @@
 # 사가스토리(saga-story) PLAN — 정본
 
 상위 문서 `../../SAGA-DESIGN.md`(재미 표준 8·참고 게임 카탈로그·그래픽·에셋·문서 규칙). 이 파일은 그중 **이 판에 해당하는 것**만 든다.
-공개 주소 <https://smh8627-jpg.github.io/swbins/saga-web/saga-story/> · 포트 8794 · 세이브 키 `yeoksa-side/save/<프로필>`.
+공개 주소 <https://smh80602070-spec.github.io/swbins/saga-web/saga-story/> · 포트 8794 · 세이브 키 `yeoksa-side/save/<프로필>`.
 
 ## 0. 읽는 법
 

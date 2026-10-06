@@ -6,12 +6,12 @@
 받아다 씁니다(기준은 [`SAGA-DESIGN.md`](SAGA-DESIGN.md) §7 에셋) — 원작의 그림·소리·데이터는
 하나도 가져오지 않았습니다. 원작이 있는 판은 원작의 **축(구조)**만 옮겼습니다.
 
-**바로 해 보기** — [첫 화면](https://smh8627-jpg.github.io/swbins/) ·
-[사가고](https://smh8627-jpg.github.io/swbins/saga-web/saga-go/) ·
-[사가블로](https://smh8627-jpg.github.io/swbins/saga-web/saga-dungeon/) ·
-[사가의숲](https://smh8627-jpg.github.io/swbins/saga-web/saga-forest/) ·
-[사가스토리](https://smh8627-jpg.github.io/swbins/saga-web/saga-story/) ·
-[사가국지](https://smh8627-jpg.github.io/swbins/saga-web/saga-realm/) (GitHub Pages)
+**바로 해 보기** — [첫 화면](https://smh80602070-spec.github.io/swbins/) ·
+[사가고](https://smh80602070-spec.github.io/swbins/saga-web/saga-go/) ·
+[사가블로](https://smh80602070-spec.github.io/swbins/saga-web/saga-dungeon/) ·
+[사가의숲](https://smh80602070-spec.github.io/swbins/saga-web/saga-forest/) ·
+[사가스토리](https://smh80602070-spec.github.io/swbins/saga-web/saga-story/) ·
+[사가국지](https://smh80602070-spec.github.io/swbins/saga-web/saga-realm/) (GitHub Pages)
 
 | 게임 | 폴더 | 무엇 | 원작 |
 |---|---|---|---|

@@ -216,7 +216,7 @@ saga-unity 전체는 **파이널 판타지·젤다 기준**. 이 둘은 "웹에�
 서버      각 폴더 run.bat (브라우저 열림) / start_server.bat (허브 워치독용)
 자가진단  chrome --headless=new --disable-gpu --virtual-time-budget=45000 --dump-dom \
             http://127.0.0.1:<포트>/_test.html      → RESULT n/n
-배포 확인 같은 명령을 https://smh8627-jpg.github.io/swbins/saga-web/<폴더>/_test.html 로.
+배포 확인 같은 명령을 https://smh80602070-spec.github.io/swbins/saga-web/<폴더>/_test.html 로.
           로컬과 수치가 같아야 한다. 회사망에서는 curl 이 github.io 인증서 검증에
           실패하니 크롬으로 본다(github.com 은 된다). 푸시 뒤 1~3분 걸린다
 PC 묶음   각 폴더 build-pc.bat → dist/<게임>.html (다섯 판 공용 묶음 도구는 2026-09-08 제거)
