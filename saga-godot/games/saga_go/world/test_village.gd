@@ -350,6 +350,13 @@ func _ready() -> void:
 	if OS.get_environment("SAGA_ACHIEVE_PROBE") != "":
 		add_child(load("res://tools/probe_achievements.gd").new())
 
+	## G-0031 — 도감 화면(X).
+	var codex_screen := preload("res://games/saga_go/ui/codex_screen.gd").new()
+	codex_screen.name = "CodexScreen"
+	add_child(codex_screen)
+	if OS.get_environment("SAGA_CODEXUI_PROBE") != "":
+		add_child(load("res://tools/probe_codex_screen.gd").new())
+
 	## 그리기 부담 — 다 지은 뒤 지도 전체 MultiMesh 를 칸으로 쪼개고 카메라 far 를 안개에 맞춘다(보이는 것은 그대로, render_budget.gd).
 	(func() -> void: preload("res://games/saga_go/world/render_budget.gd").apply(self)).call_deferred()
 

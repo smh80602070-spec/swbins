@@ -2464,5 +2464,22 @@
   "ticket": "G-0025",
   "since": "2026-10-04",
   "human": true
+ },
+ {
+  "id": "gd.go.codex_screen",
+  "name": "도감 화면(X) — 인물 105(영입·만남·모름)·신수 11·발견 갈래, 고른 칸 3D 미리보기·모르면 실루엣",
+  "files": [
+   "games/saga_go/ui/codex_screen.gd",
+   "tools/probe_codex_screen.gd"
+  ],
+  "tests": [
+   "codexui"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0031",
+  "since": "2026-10-06",
+  "human": true
  }
 ]
