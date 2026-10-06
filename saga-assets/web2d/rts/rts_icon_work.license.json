@@ -1,10 +1,20 @@
 {
- "generator": "tools/asset-forge/rtsgen.py",
- "license": "CC0-1.0 (코드로 그린 그림 — 외부 입력 없음)",
  "id": "rts_icon_work",
+ "generator": "tools/ai-art/gen.py",
+ "model": "animagine-xl-4.0-opt",
+ "model_license": "CreativeML OpenRAIL++-M",
+ "prompt": "masterpiece, high score, great score, absurdres, (iron hammer and anvil:1.15), three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+ "negative_prompt": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art",
+ "seed": 3314538682,
+ "steps": 28,
+ "cfg_scale": 5.5,
+ "sampler": "Euler a",
  "size": [
   64,
   64
  ],
- "kind": "work"
+ "seconds": 24.6,
+ "date": "2026-10-06",
+ "note": "AI 생성 — 저작권 보호가 약하다(사람의 창작 기여가 적으면). 상업 사용은 모델 라이선스 허용 범위 안.",
+ "packed_by": "tools/ai-art/icon_pack.py (content) — K-0050/0061 10-06 회화풍 재생성"
 }
