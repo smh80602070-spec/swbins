@@ -609,7 +609,7 @@ if os.environ.get('SPRITE_MODE'):
                 if c.name == 'two_hand':                               # 두 손 겨누기: 그 동작에서만
                     c.influence = 1.0 if (not two_clips or cname in two_clips) else 0.0
                 elif c.name == 'upright':                              # 세워 들기: 전투가 아닌 동작(걷기·피격·죽음·넘어짐)
-                    c.influence = 0.0 if (not combat or cname in combat) else 0.85
+                    c.influence = 1.0 if o.get('upright_always') else (0.0 if (not combat or cname in combat) else 0.85)   # 활은 늘 세움
         arm.animation_data.action = act
         if hasattr(arm.animation_data, 'action_slot') and act.slots:
             arm.animation_data.action_slot = act.slots[0]

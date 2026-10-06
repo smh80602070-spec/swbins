@@ -3,6 +3,7 @@
 무기 = world-forge build_weapon 산출(원점 = grip 손바닥 가운데, 날·자루 축 +z, 날 면 +y).
 한 손: 주먹을 쥐면 날은 엄지 쪽으로 나온다 — z = 엄지 방향에서 손가락 방향 성분을 뺀 것, x = 손가락 × z.
 두 손(창·도끼·지팡이): 축 +z 를 매 프레임 반대 손뼈로 겨눈다(DAMPED_TRACK) — keyframes.py `_two` 가 뒷손(오른손)→앞손(왼손)을 자루 방향으로 둔다.
+활: 모든 동작에서 축 +z 를 하늘로 세운다(upright 영향 1) — 활 동작의 왼손은 손바닥이 아래라 엄지 축을 따르면 활대가 수평으로 눕는다(10-06 2D 시트 눈 판정).
 엔진도 같은 규칙으로 붙이면 3D·2D 가 같은 모양이 된다.
 """
 import os
@@ -50,14 +51,15 @@ def attach(arm, path, side='R', two_hand=False, upright=False):
         c = root.constraints.new('DAMPED_TRACK')
         c.name = 'two_hand'
         c.target, c.subtarget, c.track_axis = arm, other.name, 'TRACK_Z'
-    if upright:                                    # 긴 무기를 걷기·피격 등에서 똑바로 세워 든다(손을 따라 풍차처럼 돌지 않게) — 영향도는 동작마다 굽는 쪽이 정한다
+    if upright:                                    # 긴 무기를 걷기·피격 등에서 똑바로 세워 든다(손을 따라 풍차처럼 돌지 않게) — 영향도는 동작마다 굽는 쪽이 정한다, 'always' 면 늘 1(활)
         up = bpy.data.objects.new('wp_up', None)
         sc.collection.objects.link(up)
         up.parent = arm
         up.matrix_world = Matrix.Translation(arm.matrix_world.translation + Vector((0, 0, 50)))
         c = root.constraints.new('DAMPED_TRACK')
         c.name = 'upright'
-        c.target, c.track_axis, c.influence = up, 'TRACK_Z', 0.0
+        c.target, c.track_axis, c.influence = up, 'TRACK_Z', 1.0 if upright == 'always' else 0.0
+        root['upright_always'] = upright == 'always'
     arm.data.pose_position = old
     bpy.context.view_layer.update()
     print('WEAPON', os.path.basename(path), side, 'two' if two_hand else 'one')
@@ -72,4 +74,4 @@ def from_env(arm):
     kind = os.path.basename(p).split('_')[1] if os.path.basename(p).startswith('wpn_') else ''
     side = os.environ.get('WEAPON_HAND') or ('L' if kind in OFF_HAND else 'R')
     two = os.environ.get('TWO_HAND', '1' if kind in TWO_HAND else '') not in ('', '0')
-    return attach(arm, p, side, two, upright=kind in TWO_HAND + OFF_HAND[:1])   # 창·도끼·지팡이·활
+    return attach(arm, p, side, two, upright='always' if kind == 'bow' else kind in TWO_HAND)   # 창·도끼·지팡이(전투 밖에서만)·활(늘)
