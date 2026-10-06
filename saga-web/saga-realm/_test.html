@@ -115,6 +115,7 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
 <script src="js/rts/ai.js"></script>
 <script src="js/rts/art.js"></script>
 <script src="js/rts/state.js"></script>
+<script src="js/rts/tactics.js"></script>
 <script src="js/game.js"></script>
 <script>
 (function () {
@@ -750,6 +751,99 @@ window.DG_NO_DRAW = true; window.DG_NO_ACCOUNT = true; window.DG_NO_TUNE = true;
       s.won = true; var won = G.next(s).key; s.won = false; s.over = true; var over = G.next(s).key;
       var order = k.join(',') === 'house,farm,barracks,train,hero,march,defend';
       return order && soon === 'raid-soon' && won === 'won' && over === 'over' && !!b && G.text(s) !== '' && ('순서 ' + k.join('→') + ' · 임박·승리·함락');
+    });
+
+    /* ── 전장 턴 전투(W-0080, js/rts/tactics.js) — 조조전식 규칙 층 ─── */
+
+    function tbField() {   /* 지형 걱정 없는 시험 마당 — 60..74 × 30..44 를 풀로, 유닛은 비움 */
+      var R = DG.rts, g = R.grid, s = R.tactics.start(7, 1), x, y;
+      s.units = {}; for (y = 30; y <= 44; y++) { for (x = 60; x <= 74; x++) { s.tiles[g.idx(x, y)] = g.T.GRASS; } }
+      s.put = function (t, team, x, y, hid) { return R.units.spawn(s, t, team, x + 0.5, y + 0.5, hid); };
+      return s;
+    }
+    function tbHas(list, x, y) { for (var i = 0; i < list.length; i++) { if (list[i].x === x && list[i].y === y) { return list[i]; } } return null; }
+
+    t('RTS 턴 전투(W-0080) — 시작: 아군 9(영웅 3)·적은 쉬움 < 보통 < 어려움(적장 1), 모두 밟을 수 있는 서로 다른 칸, 1턴 아군 차례', function () {
+      var T = DG.rts.tactics, U = DG.rts.units, n = [], ok = true, d;
+      for (d = 0; d < 3; d++) {
+        var s = T.start(7, d), a = 0, e = 0, h0 = 0, h1 = 0, seen = {}, id, u, k;
+        for (id in s.units) { u = s.units[id]; k = Math.floor(u.x) + ',' + Math.floor(u.y); if (seen[k] || !U.walkable(s, Math.floor(u.x), Math.floor(u.y))) { ok = false; } seen[k] = 1;
+          if (u.team === 0) { a++; if (u.t === 'hero') { h0++; } } else { e++; if (u.t === 'hero') { h1++; } } }
+        ok = ok && a === 9 && h0 === 3 && h1 === 1 && s.tb.turn === 1 && s.tb.side === 0; n.push(e);
+      }
+      return ok && n[0] < n[1] && n[1] < n[2] && ('적 ' + n.join('·'));
+    });
+
+    t('RTS 턴 전투(W-0080) — 이동: 평지 보병 닿는 칸 41, 숲은 2 들고, 물·적 칸은 막히며, 아군 칸은 지나되 못 멈춘다', function () {
+      var T = DG.rts.tactics, g = DG.rts.grid, s = tbField(), u = s.put('soldier', 0, 67, 37);
+      var plain = T.reach(s, u).length === 41;
+      s.tiles[g.idx(68, 37)] = g.T.FOREST; s.tiles[g.idx(66, 37)] = g.T.WATER;
+      var r = T.reach(s, u), forest = tbHas(r, 68, 37) && tbHas(r, 68, 37).c === 2, water = !tbHas(r, 66, 37);
+      s = tbField(); u = s.put('soldier', 0, 67, 37); s.put('cavalry', 1, 67, 36); s.put('soldier', 0, 67, 38); r = T.reach(s, u);   /* 새 마당 — 66,36 으로 돌아 67,35 = 4 */
+      var foe = !tbHas(r, 67, 36) && tbHas(r, 67, 35) && tbHas(r, 67, 35).c === 4, ally = !tbHas(r, 67, 38) && tbHas(r, 67, 39) && tbHas(r, 67, 39).c === 2;
+      return plain && !!forest && water && !!foe && !!ally && ('41칸 · 숲 2 · 물·적 막힘 · 아군 통과');
+    });
+
+    t('RTS 턴 전투(W-0080) — 피해: 보병→기병 36(8×3×1.5), 숲 위 기병은 ×0.85 로 31', function () {
+      var T = DG.rts.tactics, g = DG.rts.grid, s = tbField(), a = s.put('soldier', 0, 67, 37), v = s.put('cavalry', 1, 68, 37), b = s.put('soldier', 0, 67, 40), w = s.put('cavalry', 1, 68, 40);
+      s.tiles[g.idx(68, 40)] = g.T.FOREST;
+      var r1 = T.attack(s, a, { kind: 'unit', id: v.id }), r2 = T.attack(s, b, { kind: 'unit', id: w.id });
+      return r1.ok && r1.dmg === 36 && v.hp === 80 - 36 && r2.ok && r2.dmg === 31 && ('36 · 숲 31');
+    });
+
+    t('RTS 턴 전투(W-0080) — 반격 ½(보병끼리 24→12), 궁병은 붙은 적을 못 쏘고 근접 반격도 없으며, 근접은 궁병 화살에 반격 못 한다', function () {
+      var T = DG.rts.tactics, s = tbField(), a = s.put('soldier', 0, 67, 37), v = s.put('soldier', 1, 68, 37);
+      var r1 = T.attack(s, a, { kind: 'unit', id: v.id }), c1 = r1.dmg === 24 && r1.counter === 12 && a.hp === 48;
+      var ar = s.put('archer', 0, 64, 37), near = s.put('soldier', 1, 63, 37), far = s.put('soldier', 1, 64, 39);
+      var tg = T.targets(s, ar), adj = !tg.some(function (x) { return x.id === near.id; }) && tg.some(function (x) { return x.id === far.id; });
+      var r2 = T.attack(s, ar, { kind: 'unit', id: far.id }), c2 = r2.ok && r2.counter === 0;
+      var b = s.put('soldier', 0, 70, 42), arc = s.put('archer', 1, 71, 42), r3 = T.attack(s, b, { kind: 'unit', id: arc.id }), c3 = r3.ok && r3.counter === 0;
+      return c1 && adj && c2 && c3 && ('반격 12 · 궁병 사거리 2~3 · 반격 없음 둘');
+    });
+
+    t('RTS 턴 전투(W-0080) — 행동은 한 번: 친 뒤엔 이동·공격·대기 거부, 적 유닛은 아군 차례에 못 움직인다', function () {
+      var T = DG.rts.tactics, s = tbField(), a = s.put('soldier', 0, 67, 37), v = s.put('cavalry', 1, 68, 37);
+      var first = T.attack(s, a, { kind: 'unit', id: v.id }).ok;
+      var again = !T.attack(s, a, { kind: 'unit', id: v.id }).ok && !T.move(s, a, 67, 38).ok && !T.wait(s, a).ok;
+      var foe = !T.move(s, v, 69, 37).ok && !T.wait(s, v).ok;
+      var b = s.put('soldier', 0, 62, 32), mv1 = T.move(s, b, 62, 33).ok, mv2 = !T.move(s, b, 62, 34).ok, still = T.wait(s, b).ok && T.left(s) === 0;
+      return first && again && foe && mv1 && mv2 && still && ('행동 1 · 이동 1');
+    });
+
+    t('RTS 턴 전투(W-0080) — 영웅 일격: 둘레 맨해튼 2 의 적 전부에 공격×(1+지력/100)×2, 쿨다운 3턴(턴 끝마다 1씩)', function () {
+      var T = DG.rts.tactics, s = tbField(), h = s.put('hero', 0, 67, 37, DG.rts.heroes.roster()[0].id);
+      var e1 = s.put('soldier', 1, 68, 37), e2 = s.put('soldier', 1, 67, 39), e3 = s.put('cavalry', 1, 67, 41);
+      e1.hp = e2.hp = e3.hp = 999;
+      var st = DG.rts.units.statOf(h), want = Math.round(st.atk * (1 + st.wis / 100) * 2), r = T.cast(s, h);
+      var hit = r.ok && r.n === 2 && r.dmg === want && e1.hp === 999 - want && e2.hp === 999 - want && e3.hp === 999;
+      var cds = [s.tb.cd[h.id]]; T.endTurn(s); cds.push(s.tb.cd[h.id]); var no = !T.cast(s, h).ok; T.endTurn(s); cds.push(s.tb.cd[h.id]); T.endTurn(s); cds.push(s.tb.cd[h.id]);
+      return hit && no && cds.join(',') === '3,2,1,0' && ('일격 ' + want + '×2 · 쿨 ' + cds.join('→'));
+    });
+
+    t('RTS 턴 전투(W-0080) — 턴 끝: 적 차례(AI)가 돌고 2턴 아군 차례로 돌아오며, 같은 시드 두 판은 자릿수까지 같다', function () {
+      var T = DG.rts.tactics, a = T.start(7, 1), b = T.start(7, 1);
+      var la = T.endTurn(a), lb = T.endTurn(b);
+      var same = JSON.stringify(T.serialize(a)) === JSON.stringify(T.serialize(b)) && JSON.stringify(la) === JSON.stringify(lb);
+      return same && a.tb.turn === 2 && a.tb.side === 0 && T.left(a) === 9 && la.length > 0 && ('적 수 ' + la.length + '개 · 결정론');
+    });
+
+    t('RTS 턴 전투(W-0080) — 양쪽 자동: 30턴 안에 결판이 나고, 같은 시드는 같은 결과(쉬움·보통·어려움)', function () {
+      var T = DG.rts.tactics, out = [], ok = true, d;
+      function run(seed, diff) { var s = T.start(seed, diff), n = 0; while (!s.won && !s.over && n++ < 40) { T.autoTurn(s, 0); T.endTurn(s); } return s; }
+      for (d = 0; d < 3; d++) {
+        var a = run(20260824, d), b = run(20260824, d);
+        ok = ok && (a.won || a.over) && a.tb.turn <= T.MAX_TURN && JSON.stringify(T.serialize(a)) === JSON.stringify(T.serialize(b));
+        out.push((a.won ? '승' : '패') + a.tb.turn);
+      }
+      return ok && out.join(' · ');
+    });
+
+    t('RTS 턴 전투(W-0080) — 저장: serialize → restore → serialize 가 같고(쿨다운·행동·체력·거점), 깨진 꼴은 null', function () {
+      var T = DG.rts.tactics, s = T.start(8, 2), ids = Object.keys(s.units).filter(function (id) { return s.units[id].team === 0; });
+      T.apply(s, s.units[ids[0]], T.plan(s, s.units[ids[0]])); T.endTurn(s); T.autoTurn(s, 0);
+      if (s.units[ids[3]]) { s.tb.cd[ids[3]] = 2; } s.cHp = 321;
+      var o = T.serialize(s), back = T.restore(JSON.parse(JSON.stringify(o)));
+      return !!back && JSON.stringify(T.serialize(back)) === JSON.stringify(o) && T.restore(null) === null && T.restore({ v: 9 }) === null && ('유닛 ' + o.units.length);
     });
 
     t('RTS 시험 프리셋 — qaPreset 은 금 5000·식량 2000 을 주고 첫 습격을 60틱 뒤로 당기며, 판의 다른 것(지도·거점·기지)은 그대로다', function () {

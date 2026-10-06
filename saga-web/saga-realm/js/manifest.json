@@ -107,6 +107,7 @@
    "js/rts/ai.js",
    "js/rts/art.js",
    "js/rts/state.js",
+   "js/rts/tactics.js",
    "js/game.js"
   ]
  ],
