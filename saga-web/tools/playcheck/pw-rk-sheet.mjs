@@ -26,6 +26,13 @@ try {
   const base = await ev(() => { var R = DG.rtk, me = R.me(), f = R.myForce(); return { me: me, turn: R.state().turn, gold: f.gold, cities: R.citiesOf(me).map((c) => c.id || c) }; });
   check('준비 — 시나리오·세력을 실제 단추로 골라 판이 선다', !!base.me && base.cities.length >= 1 && base.turn === 0, JSON.stringify(base));
 
+  /* 0) 명령 창 무장 줄 — 초상은 36px 칸, 이름·능력은 옆에 가로로(W-0079: .pt 기본 100% 라 줄을 꽉 채우고 글자가 세로로 섰다) */
+  await ev((c) => { DG.ui.openCity(c); }, base.cities[0]); await sleep(800);
+  await page.locator('[data-act="sel-order"]').first().click(); await sleep(600);
+  const row = await ev(() => { var r = document.querySelector('.offrow'), p = r && r.querySelector('.pt'), n = r && r.querySelector('.offname'); return r ? { pt: p ? Math.round(p.getBoundingClientRect().width) : null, name: n ? Math.round(n.getBoundingClientRect().width) : null } : null; });
+  check('명령 창 무장 줄 — 초상 36px·이름 가로(W-0079)', !!row && row.pt !== null && row.pt <= 40 && row.name >= 80, JSON.stringify(row));
+  await ev(() => { DG.ui.closeSheet(); }); await sleep(300);
+
   /* 1) 달 루프 — 명령 하나 + ▶ 다음 달 */
   const ord = await ev(() => {
     var R = DG.rtk, me = R.me(), cid = R.citiesOf(me)[0].id || R.citiesOf(me)[0];

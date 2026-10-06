@@ -1,15 +1,23 @@
 {
  "script": "pw-rk-sheet.mjs",
  "game": "saga-realm",
- "pass": 7,
- "total": 7,
+ "pass": 8,
+ "total": 8,
  "pageErrors": [],
- "notFound": [],
+ "notFound": [
+  "saga-realm/_shared/assets/world3d/altar_01.license.json",
+  "saga-realm/_shared/assets/world3d/altar_01.license.json"
+ ],
  "checks": [
   {
    "name": "준비 — 시나리오·세력을 실제 단추로 골라 판이 선다",
    "ok": true,
    "detail": "{\"me\":\"biao\",\"turn\":0,\"gold\":4400,\"cities\":[\"wan\",\"xinye\",\"xiangyang\",\"jiangling\",\"jiangxia\",\"changsha\"]}"
+  },
+  {
+   "name": "명령 창 무장 줄 — 초상 36px·이름 가로(W-0079)",
+   "ok": true,
+   "detail": "{\"pt\":36,\"name\":274}"
   },
   {
    "name": "달 루프 — 무장 한 사람에게 명령을 내리면 되고, 같은 달 두 번째는 막힌다(1인 1명령)",
@@ -29,12 +37,12 @@
   {
    "name": "출진 — 맞닿은 적 성으로 출진하면 전투가 치러져 승패·손실이 나오고 출진한 성의 병력이 줄어든다",
    "ok": true,
-   "detail": "{\"ok\":true,\"won\":false,\"lossA\":751,\"lossD\":180,\"troopsFrom\":[5444,4693]}"
+   "detail": "{\"ok\":true,\"won\":false,\"lossA\":929,\"lossD\":76,\"troopsFrom\":[5444,4515]}"
   },
   {
    "name": "개입형 전투 — 출진하면 합마다 명령을 물어 오고(돌격·수비) 끝에 보고가 나온다",
    "ok": true,
-   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":373}"
+   "detail": "{\"ok\":true,\"intro\":true,\"prompts\":1,\"rounds\":1,\"cmds\":[\"press\"],\"hasReport\":true,\"ms\":169}"
   },
   {
    "name": "무장 — 공과 금을 갖추면 승진해 관직이 한 단 오르고 금이 들고 충성이 오른다",

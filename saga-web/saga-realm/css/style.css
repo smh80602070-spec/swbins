@@ -1403,6 +1403,7 @@ body.sheet-open #realm3d { right: calc(min(420px, 92vw) + 20px); }
 .offrow .offname { flex: 1; display: flex; flex-direction: column; font-size: 13px; }
 .offrow .offname small { font-size: 11px; }
 .offrow > b { font-variant-numeric: tabular-nums; color: var(--gold, #e8c46a); }
+.offrow .pt { flex: 0 0 auto; width: 36px; height: 36px; border-radius: 8px; object-fit: cover; }   /* W-0079 — 기본 .pt 는 100% 라 줄을 꽉 채웠다 */
 .offcard .dt-top { display: flex; gap: 10px; align-items: flex-start; }
 /* 초상은 옆에 작게, 이름·능력치가 나머지 폭(2026-09-28, 실기 보고 Q13 — 폰에서 글자가 한 자씩 세로로 깨졌다) */
 .offcard .dt-top > .pt { flex: 0 0 auto; width: 104px; height: 116px; border-radius: 10px; }
