@@ -32,10 +32,20 @@ for f in sorted(os.listdir(src)):
     if not f.endswith('.png'):
         continue
     iid = f[:-4]
-    im = matte2(Image.open(os.path.join(src, f)), tol=26, holes_max=0, strip=False) if iid in TINT else matte2(Image.open(os.path.join(src, f)), tol=9, holes_max=WIDE_HOLES.get(iid, 7000))
+    im = matte2(Image.open(os.path.join(src, f)), tol=26, holes_max=0, strip=False) if iid in TINT else matte2(Image.open(os.path.join(src, f)), tol=int(os.environ.get('STATIC_TOL', 9)), holes_max=WIDE_HOLES.get(iid, 7000))   # C 그림체(수채 번짐 배경): STATIC_TOL=22
     r_w, i_w = white_ratio(im)                                                  # AI 가 둘레에 그린 흰 스티커 테(K-0058 후속) — 안쪽이 안 흰데 테만 흰 것만 벗긴다
     if r_w >= 0.25 and i_w < 0.25:
         im = defringe(im)
+    mc = float(os.environ.get('STATIC_MINCOMP', 0))                              # C 그림체: 떠 있는 점·얼룩(수채 튀김)을 지운다 — 가장 큰 덩어리의 이 비율 미만
+    if mc > 0:
+        import numpy as np
+        from scipy import ndimage
+        al = np.asarray(im.getchannel('A')).astype(np.uint8)
+        lab, n = ndimage.label(al > 24, structure=np.ones((3, 3)))
+        if n > 1:
+            sizes = ndimage.sum(np.ones_like(lab), lab, range(1, n + 1))
+            keep = [i + 1 for i, z in enumerate(sizes) if z >= mc * sizes.max()]
+            im.putalpha(Image.fromarray(np.where(np.isin(lab, keep), al, 0).astype(np.uint8)))
     bb = im.getchannel('A').point(lambda v: 255 if v > 24 else 0).getbbox()
     if not bb:
         report[iid] = {'ok': False, 'why': ['알맹이를 못 땄다']}
