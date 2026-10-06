@@ -386,26 +386,63 @@ def area(el, t, i):
 # ---------------------------------------------------------------- 상태(루프 8) — 몸 둘레 입자
 
 def status(el, t, i):
+    """상태 루프 — 8장. 몸(가운데 세로 타원) 둘레 오라: 바닥 고리 + 원소 질감(위로 흐르는 잡음) + 입자. 10-06 저녁: 점만 떠오르던 것 → 오라."""
     L, M, D = ELEMENTS[el]
     rng = np.random.default_rng(400 + i)
-    im = canvas()
+    yy, xx = np.mgrid[0:F, 0:F].astype(np.float32)
+    cx, foot, top = F / 2, F * 0.86, F * 0.12
+    body = sstep(1.0, 0.55, np.abs(xx - cx) / (F * 0.30)) * sstep(top - 6, top + 20, yy) * sstep(foot + 4, foot - 10, yy)   # 몸을 감싸는 기둥
+    edge = body * sstep(0.15, 0.65, np.abs(xx - cx) / (F * 0.30))                                               # 가장자리가 진하고 가운데(몸)는 비운다
+    ground = sstep(0.12, 0.0, np.abs(np.sqrt(((xx - cx) / (F * 0.34)) ** 2 + ((yy - foot) / (F * 0.07)) ** 2) - 1))
+    h = np.clip((foot - yy) / (foot - top), 0, 1)
+    im = None
+    if el == 'fire':
+        s = 0.5 * streaks(910 + i, t, xx * 2.0, yy, 1.0, 0.25) + 0.5 * streaks(915 + i, (t + 0.5) % 1, xx * 2.0 + 37, yy, 1.0, 0.3)   # 두 겹이라 늘 불길이 있다
+        v = np.clip(sstep(0.42, 0.72, s) * edge * (1 - h) ** 1.4 * 1.2 + ground * 0.55, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.25, D), (0.55, M), (0.85, L), (1.0, (255, 255, 230))]))
+    elif el == 'light':
+        s = streaks(920 + i, t, xx * 1.5, yy, 1.0, 0.15)
+        halo = sstep(0.3, 0.0, np.abs(np.sqrt(((xx - cx) / (F * 0.3)) ** 2 + ((yy - F * 0.5) / (F * 0.42)) ** 2) - 0.92))
+        v = np.clip(sstep(0.55, 0.85, s) * edge * (1 - h) * 0.9 + halo * 0.12 * (1 - h) + ground * 0.6, 0, 1)
+        im = to_img(ramp(v, [(0, (0, 0, 0)), (0.3, D), (0.6, M), (0.9, L), (1.0, (255, 255, 255))]))
+    elif el == 'wind':
+        ph = 2 * math.pi * t
+        im = to_img(np.dstack([ground * 0.4 * c for c in M]))
+        d = ImageDraw.Draw(im)
+        for k in range(3):                                                                    # 몸을 감고 오르는 띠(앞쪽만 밝게)
+            y0 = foot - 14 - k * 24
+            for j in range(24):
+                a0 = ph + k * 2.1 + j * 0.26
+                a1 = a0 + 0.26
+                p0 = (cx + math.cos(a0) * F * 0.32, y0 - j * 0.9 + math.sin(a0) * 6)
+                p1 = (cx + math.cos(a1) * F * 0.32, y0 - (j + 1) * 0.9 + math.sin(a1) * 6)
+                fr = (0.5 + 0.5 * math.sin(a0)) * (j / 24)
+                d.line((p0, p1), fill=lerp_c(D, L, fr), width=2 + int(2 * fr))
+    else:
+        n = loop_fbm(930 + i, t, 14)
+        mist = edge * (0.25 + 0.5 * n) * (1 - h) * (0.6 if el in ('ice', 'water') else 0.35)
+        im = to_img(ramp(np.clip(mist + ground * 0.6, 0, 1), [(0, (0, 0, 0)), (0.5, D), (1.0, M)]))
     d = ImageDraw.Draw(im)
-    for k in range(16):
+    for k in range(14):                                                                       # 입자 — 원소마다 꼴
         a = rng.uniform(0, 2 * math.pi)
-        rr = rng.uniform(0.35, 0.8) * F * 0.4
-        life = (t + k / 16) % 1
-        x = F / 2 + math.cos(a) * rr
-        y = F * 0.8 - life * F * 0.62 + (math.sin(a * 3 + life * 6) * 3)
-        s = (4 if el in ('fire', 'light') else 3) * (1 - life * 0.7)
-        col = lerp_c(L, M, life)
-        if el in ('ice', 'earth'):
-            d.polygon([(x, y - s * 1.6), (x - s, y), (x + s, y)], fill=col)
+        life = (t + k / 14) % 1
+        x = cx + math.cos(a) * F * rng.uniform(0.18, 0.34)
+        y = foot - life * (foot - top) + math.sin(a * 3 + life * 6) * 3
+        fade = math.sin(math.pi * life)
+        col = tuple(int(c * fade) for c in lerp_c(L, M, life))
+        s = (3.0 - 1.5 * life)
+        if el == 'water':
+            d.ellipse((x - s, y - s, x + s, y + s), outline=col, width=1)
         elif el == 'lightning':
-            d.line((x, y, x + rng.uniform(-6, 6), y - 8), fill=col, width=2)
-        elif el == 'wind':
-            d.arc((x - 8, y - 4, x + 8, y + 4), 0, 200, fill=col, width=2)
-        else:
-            d.ellipse((x - s, y - s, x + s, y + s), fill=col)
+            pts = lightning_poly(np.random.default_rng(1000 * i + k + int(t * 8)), (x, y), (x + rng.uniform(-8, 8), y - 12), 2, 4)
+            draw_poly(im, pts, col, 2)
+        elif el == 'ice':
+            d.line((x - s, y, x + s, y), fill=col, width=1)
+            d.line((x, y - s * 1.6, x, y + s * 1.6), fill=col, width=1)
+        elif el == 'earth':
+            d.polygon([(x, y - s), (x + s, y + s * 0.5), (x - s * 0.8, y + s * 0.6)], fill=col)
+        elif el in ('fire', 'light'):
+            d.ellipse((x - s * 0.6, y - s * 0.6, x + s * 0.6, y + s * 0.6), fill=col)
     return add(im.filter(ImageFilter.GaussianBlur(0.6)), glow(im, 3))
 
 
