@@ -1,0 +1,17 @@
+{
+ "name": "static2d_C4",
+ "spec": "sprite",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 6,
+ "note": "K-0068 자작나무 3차 — img2img 밑그림(가는 3D)이 막대사탕 꼴을 만든다 → 밑그림 없이 text2img, 잎 덩이를 여럿으로.",
+ "items": [
+  {
+   "id": "tree_birch_01",
+   "subject": "white birch tree, slender white trunk with black marks, several round light green leaf clusters, branches",
+   "view": "three_quarter",
+   "extra": "from above",
+   "seed": 3100917
+  }
+ ]
+}
