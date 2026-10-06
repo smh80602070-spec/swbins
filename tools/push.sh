@@ -21,8 +21,11 @@ align() {
   git fetch -q origin || { say "fetch 실패"; return 1; }
   local old new; old=$(git rev-parse HEAD); new=$(git rev-parse origin/main)
   if [ "$old" = "$new" ]; then say "로컬 main = origin — 맞출 것 없음"; return 0; fi
-  local ahead; ahead=$(git cherry origin/main HEAD | grep -c '^+')
-  if [ "$ahead" -gt 0 ] && [ "${1:-}" != "--trusted" ]; then say "origin 에 없는 내 커밋 ${ahead}개 — 먼저 'bash tools/push.sh' (맞추면 잃는다)"; return 1; fi
+  local ahead h; ahead=0
+  # 아직 안 올라간 커밋 — --trusted(방금 올린 묶음)여도 그 묶음 밖의 것(푸시하는 사이 다른 세션이 이 트리에 새로 커밋한 것)은 센다
+  while read -r h; do [ -z "$h" ] && continue; [ "${1:-}" = "--trusted" ] && case " ${PUSHED:-} " in *" $h "*) continue;; esac; ahead=$((ahead + 1)); done \
+    < <(git cherry origin/main HEAD | sed -n 's/^+ //p')
+  if [ "$ahead" -gt 0 ]; then say "origin 에 없는 내 커밋 ${ahead}개 — 먼저 'bash tools/push.sh' (맞추면 잃는다)"; return 1; fi
   declare -A dirty=() staged=()
   local e f
   while IFS= read -r -d '' e; do dirty["${e:3}"]=1; case "${e:0:1}" in R|C) IFS= read -r -d '' f; dirty["$f"]=1;; esac; done \
@@ -108,4 +111,4 @@ attempt; r=$?
 [ $r -ne 0 ] && { say "푸시 못 함(위 사유). 로컬 커밋은 그대로 있다"; exit 1; }
 say "푸시: $(git -C "$W" log --oneline -1 HEAD | cut -c1-70)"
 cleanup
-align --trusted   # 방금 내 커밋을 전부 올렸다(또는 이미 있어 건너뜀) — 그 커밋들 때문에 맞추기를 거절하지 않는다
+PUSHED="${mine[*]}" align --trusted   # 방금 내 커밋을 전부 올렸다(또는 이미 있어 건너뜀) — 그 커밋들 때문에 맞추기를 거절하지 않는다

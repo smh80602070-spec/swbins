@@ -26,6 +26,7 @@ function block(msg) { process.stderr.write(msg + '\n'); process.exit(2); }
 function commitScope(cmd) {
   const seg = cmd.split(/&&|\|\||;|\n/).find(s => /\bgit\b[^|]*?\bcommit\b/.test(s));
   if (!seg || /\bgit\s+-C\s/.test(seg)) return null;
+  if (/(^|[\s;&|(])(cd|pushd)\s/.test(cmd)) return null;   // 앞에서 폴더를 옮기면 상대 경로가 어디 기준인지 모른다 — 전체 검사
   const toks = (seg.match(/'[^']*'|"[^"]*"|\S+/g) || []).map(t => t.replace(/^(['"])([^]*)\1$/, '$2'));
   const dd = toks.indexOf('--'), flags = dd >= 0 ? toks.slice(0, dd) : toks;
   if (flags.some(t => t === '--all' || /^-[a-zA-Z]*a[a-zA-Z]*$/.test(t))) return null;   // -a·-am = 추적 파일 전부
@@ -38,15 +39,19 @@ function commitScope(cmd) {
   }
   if (dd >= 0) { for (const t of toks.slice(dd + 1)) { if (/[$`*?\[]/.test(t)) return null; raw.push(t); } }
   if (!raw.length) return null;
-  const root = process.cwd().replace(/\\/g, '/').replace(/\/$/, '');
   const git = a => { const r = spawnSync('git', a, { encoding: 'utf8' }); return r.status === 0 ? String(r.stdout).split(/\r?\n/).filter(Boolean) : null; };
+  const root = ((git(['rev-parse', '--show-toplevel']) || [''])[0] || process.cwd()).replace(/\\/g, '/').replace(/\/$/, '');   // 저장소 뿌리
   const out = new Set();
+  const pre = (git(['rev-parse', '--show-prefix']) || [''])[0] || '';   // 훅이 하위 폴더에서 돌면 저장소 기준으로 붙인다
   for (let p of raw) {
     p = p.replace(/\\/g, '/').replace(/^\/([a-z])\//i, (m, d) => d.toUpperCase() + ':/');   // /c/swbins/x → C:/swbins/x
     if (/^[a-z]:\//i.test(p)) { if (p.toLowerCase().indexOf(root.toLowerCase() + '/') !== 0) return null; p = p.slice(root.length + 1); }
-    p = p.replace(/^\.\//, '');
-    let st = null; try { st = fs.statSync(p); } catch (e) { /* 지운 파일 — 그대로 경로로 */ }
-    if (st && st.isDirectory()) { const l = git(['ls-files', '-m', '-o', '-d', '--exclude-standard', '--', p]); if (!l) return null; l.forEach(x => out.add(x)); }
+    else p = pre + p.replace(/^\.\//, '');
+    let st = null; try { st = fs.statSync(root + '/' + p); } catch (e) { /* 지운 파일 — 그대로 경로로 */ }
+    if (st && st.isDirectory()) {
+      const l = git(['ls-files', '--full-name', '-m', '-o', '-d', '--exclude-standard', '--', ':/' + p]), c = git(['diff', '--cached', '--name-only', '--', ':/' + p]);   // add 해 둔 것도(커밋에 들어간다)
+      if (!l || !c) return null; l.concat(c).forEach(x => out.add(x));
+    }
     else out.add(p);
   }
   return [...out];
