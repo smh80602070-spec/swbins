@@ -128,6 +128,11 @@ func _ready() -> void:
 	for d in SMALL:
 		_build_small(String(d[0]), d[1], String(d[2]))
 		_add_discovery(String(d[0]), cell_pos(d[1]), SMALL_R)
+	## G-0038 — 둘레 꾸밈(있는 world GLB 소품 무리, 명소·상자·NPC 자리는 비움 — region_dressing.gd)
+	var dress := Node3D.new()
+	dress.set_script(preload("res://games/saga_go/world/region_dressing.gd"))
+	dress.set("region_id", REGION)
+	add_child(dress)
 	_refresh()
 
 static func cell_pos(c: Vector2) -> Vector3:

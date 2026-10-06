@@ -941,15 +941,17 @@
   "id": "gd.go.part9-region",
   "name": "9부 53-1 여덟째 지역 굳은 거리",
   "files": [
-   "games/saga_go/world/region8_amber.gd"
+   "games/saga_go/world/region8_amber.gd",
+   "games/saga_go/world/region_dressing.gd"
   ],
   "tests": [
-   "amber"
+   "amber",
+   "dressing"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0038",
   "since": "2026-09-16"
  },
  {
@@ -969,15 +971,17 @@
   "id": "gd.go.part10-region",
   "name": "10부 54-1 아홉째 지역 갈무리 벌",
   "files": [
-   "games/saga_go/world/region9_vault.gd"
+   "games/saga_go/world/region9_vault.gd",
+   "games/saga_go/world/region_dressing.gd"
   ],
   "tests": [
-   "vault"
+   "vault",
+   "dressing"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0038",
   "since": "2026-09-16"
  },
  {
@@ -997,15 +1001,17 @@
   "id": "gd.go.part11-region",
   "name": "11부 55-1 열째 지역 세갈래 고을",
   "files": [
-   "games/saga_go/world/region10_fork.gd"
+   "games/saga_go/world/region10_fork.gd",
+   "games/saga_go/world/region_dressing.gd"
   ],
   "tests": [
-   "fork"
+   "fork",
+   "dressing"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0038",
   "since": "2026-09-16"
  },
  {
@@ -2625,6 +2631,22 @@
   "verified": null,
   "fun": {},
   "ticket": "G-0037",
+  "since": "2026-10-06"
+ },
+ {
+  "id": "gd.go.dressing",
+  "name": "휑한 지역 셋 꾸밈 — 굳은 거리·갈무리 벌·세갈래 고을에 world GLB 소품 무리(건물 줄·짐·밭·한옥 마을, 표 자리 비움)",
+  "files": [
+   "games/saga_go/world/region_dressing.gd",
+   "tools/probe_dressing.gd"
+  ],
+  "tests": [
+   "dressing"
+  ],
+  "level": "D3",
+  "verified": "2026-10-06",
+  "fun": {},
+  "ticket": "G-0038",
   "since": "2026-10-06"
  }
 ]
