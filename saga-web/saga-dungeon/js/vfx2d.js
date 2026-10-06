@@ -29,11 +29,31 @@
   /** 등급 시트(K-0048 `rarity_*`)는 다른 폴더·이름꼴(`rarity_aura_3_k.webp`) */
   function urlOf(name) { return name.indexOf('rarity_') === 0 ? 'assets/rarity/' + name + '_k.webp' : base() + 'vfx_' + name + '_k.webp'; }
 
+  /** 검은 바탕 → 알파(W-0078) — 가장 센 채널을 알파로, 색은 그만큼 키운다(RGBA 배열을 제자리에서, 순수). lighter 로 얹으면 불투명 바탕 위는 지금과 같고,
+   *  투명 2D 층(3D 바탕 위)에선 검은 칸이 남지 않는다 — lighter 는 알파도 더해 검은 바탕이 불투명 검정으로 찍혔다 */
+  function keyAlpha(d) {
+    for (var i = 0, m; i < d.length; i += 4) {
+      m = Math.max(d[i], d[i + 1], d[i + 2]);
+      if (!m) { d[i + 3] = 0; continue; }
+      d[i] = d[i] * 255 / m; d[i + 1] = d[i + 1] * 255 / m; d[i + 2] = d[i + 2] * 255 / m; d[i + 3] = m * d[i + 3] / 255;
+    }
+    return d;
+  }
+  /** 받은 시트를 캔버스로 옮겨 keyAlpha — 못 하면(캔버스 없음·오염) null → 원래 그림 그대로 */
+  function keyed(im) {
+    try {
+      var c = global.document.createElement('canvas'), g, px;
+      c.width = im.naturalWidth; c.height = im.naturalHeight; g = c.getContext('2d'); g.drawImage(im, 0, 0);
+      px = g.getImageData(0, 0, c.width, c.height); keyAlpha(px.data); g.putImageData(px, 0, 0);
+      return c;
+    } catch (err) { return null; }
+  }
+
   function sheet(name) {
     var e = imgs[name];
     if (!e) {
       e = imgs[name] = { img: null, ok: false };
-      if (global.Image && SHEETS[name]) { var im = new global.Image(); im.onload = function () { e.ok = true; }; im.src = urlOf(name); e.img = im; }
+      if (global.Image && SHEETS[name]) { var im = new global.Image(); im.onload = function () { e.img = keyed(im) || im; e.ok = true; }; im.src = urlOf(name); e.img = im; }
     }
     return e.ok ? e.img : null;
   }
@@ -110,5 +130,5 @@
 
   preload(((global.DG.cfg && global.DG.cfg.vfx && global.DG.cfg.vfx.preload) || []).concat(['spark_hit', 'crit_flash', 'death_smoke']));   // 첫 타격에 한 박자 늦지 않게 — 판이 cfg.vfx.preload 로 더 주면 같이
 
-  global.DG.vfx2d = { draw: draw, fxLayer: fxLayer, aura: aura, rarOfTier: rarOfTier, proj: proj, PROJ: PROJ, frameAt: frameAt, ELEM_HIT: ELEM_HIT, preload: preload, SHEETS: SHEETS, FRAME: FRAME };
+  global.DG.vfx2d = { draw: draw, fxLayer: fxLayer, aura: aura, rarOfTier: rarOfTier, proj: proj, PROJ: PROJ, frameAt: frameAt, ELEM_HIT: ELEM_HIT, preload: preload, keyAlpha: keyAlpha, SHEETS: SHEETS, FRAME: FRAME };
 })(typeof window !== 'undefined' ? window : this);

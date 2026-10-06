@@ -8002,6 +8002,12 @@ window.requestAnimationFrame = function () { return 0; };
         DG.item.tierOf({ tier: 2 }).key === 2 && V.rarOfTier(0) === 0 && V.rarOfTier(1) === 0 && V.rarOfTier(2) === 5 && V.rarOfTier(3) === 2 && V.rarOfTier(4) === 5 && ('등급 1~5 시트 · 금/등급만 연출');
     });
 
+    t('vfx2d 검은 바탕 → 알파(W-0078) — 검정은 투명, 순색은 그대로, 어두운 색은 밝기만큼 알파·색은 키움(lighter 결과는 불투명 바탕 위 그대로)', function () {
+      var d = new Uint8ClampedArray([0, 0, 0, 255, 255, 128, 0, 255, 100, 50, 0, 255, 100, 50, 0, 128]), r;
+      DG.vfx2d.keyAlpha(d); r = Array.prototype.join.call(d, ',');
+      return r === '0,0,0,0,255,128,0,255,255,128,0,100,255,128,0,50' && ('알파 ' + r) || '실패 ' + r;
+    });
+
     t('2D 앞·뒤 모습(W-0073) — mode2d.face: 위로 걸으면 back·아래로 front·옆은 좌우 그대로·멈춰 남은 방향 0 이면 좌우', function () {
       var F = DG.mode2d.face, r = [F(0, -3, 1), F(0.5, 3, -1), F(3, 0.5, 1), F(-3, 1, -1), F(0, 0, -1), F(undefined, undefined, 1)];
       return r.join(',') === 'back,front,1,-1,-1,1' && ('위 back · 아래 front · 옆·멈춤 좌우') || '실패 ' + r.join(',');
