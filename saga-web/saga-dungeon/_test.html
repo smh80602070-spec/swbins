@@ -5108,6 +5108,16 @@ window.requestAnimationFrame = function () { return 0; };
          ' · 높이 ' + Math.round(fresh.rise) + ' → ' + Math.round(old.rise));
     });
 
+    t('연출 — 잇달아 뜬 숫자는 칸을 나눠 비킨다(W-0077): 같은 자리 셋 0·1·2, 먼 것·0.35초 지난 것 0, 1 칸 오른쪽·2 칸 왼쪽·위로', function () {
+      var L = [{ t: 'hit', x: 100, y: 100, v: 1, life: 0.6 }, { t: 'hit', x: 104, y: 98, v: 2, life: 0.6 }, { t: 'elem', x: 98, y: 102, v: 3, life: 0.6 },
+               { t: 'hit', x: 400, y: 100, v: 4, life: 0.6 }, { t: 'pop', x: 100, y: 100, life: 0.5 }], i, s = [];
+      for (i = 0; i < L.length; i++) { s.push(FX.slotOf(L, i)); }
+      var late = [{ t: 'hit', x: 0, y: 0, v: 1, life: 0.2 }, { t: 'hit', x: 0, y: 0, v: 2, life: 0.6 }]; FX.slotOf(late, 0); FX.slotOf(late, 1);
+      var p0 = FX.plan(L[0]), p1 = FX.plan(L[1]), p2 = FX.plan({ t: 'hit', x: 0, y: 0, v: 5, life: 0.6, nslot: 2 });
+      var ok = s.join(',') === '0,1,2,0,0' && late[1].nslot === 0 && FX.slotOf(L, 1) === 1 && p0.dx === 0 && p1.dx > 0 && p2.dx < 0 && p1.rise > p0.rise;
+      return ok && ('칸 ' + s.join(',') + ' · dx ' + [p0.dx, p1.dx, p2.dx].join('/') + ' · 높이 ' + Math.round(p0.rise) + '→' + Math.round(p1.rise)) || '실패 ' + s.join(',') + ' late ' + late[1].nslot;
+    });
+
     t('연출 — 판정이 흘리는 아홉 가지를 다 받는다 (PLAN 51절)', function () {
       var kinds = {}, miss = [], i;
       var all = ['hit', 'elem', 'get', 'slash', 'pop', 'burst', 'whirl', 'ring', 'trail'];

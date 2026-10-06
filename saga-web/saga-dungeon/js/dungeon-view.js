@@ -1448,7 +1448,7 @@
       }
     }
     var fxs2 = d().fx();
-    for (i = 0; i < fxs2.length; i++) { drawFxOver(m, fxs2[i]); }
+    for (i = 0; i < fxs2.length; i++) { if (global.DG.fx3d && global.DG.fx3d.slotOf) { global.DG.fx3d.slotOf(fxs2, i); } drawFxOver(m, fxs2[i]); }   // W-0077 숫자 칸(3D 와 같은 값)
     ctx.restore();
 
     /* 피격 시 화면이 붉어진다 + 흔들림 */
@@ -2025,7 +2025,7 @@
     var p; if (global.DG.vfx2d && (f.t === 'hit' || f.t === 'pop' || f.t === 'elem' || f.t === 'lvl' || f.t === 'get')) { p = proj(m, f.x, f.y); global.DG.vfx2d.fxLayer(ctx, f, p.x, p.y - 14); }   // W-0053 전투 이펙트 시트(K-0039) — 숫자 아래에 얹는다
     if (f.t === 'hit') {
       p = proj(m, f.x, f.y);
-      var up = (0.6 - f.life) * 26;
+      var FXS = global.DG.fx3d, nsz = f.crit ? 18 : 13, up = (0.6 - f.life) * 26 + (FXS && FXS.slotUp ? FXS.slotUp(f.nslot, nsz) : 0), sx = FXS && FXS.slotDx ? FXS.slotDx(f.nslot, nsz) : 0;   // W-0077 칸 비킴
       /* §5.8① 크리 숫자는 1.4배(13×1.4=18)·주황(2026-09-18, 3D fx3d.js 와 같은 색) */
       ctx.font = (f.crit ? '700 18px ' : '600 13px ') + D2_FONT;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
@@ -2034,16 +2034,16 @@
                             : (f.crit ? 'rgba(255,140,60,' + (f.life / 0.6) + ')'
                                       : (f.resist ? 'rgba(150,150,160,' + (f.life / 0.6) + ')'
                                                   : 'rgba(255,255,255,' + (f.life / 0.6) + ')'));
-      ctx.fillText((f.crit ? '★' : '') + f.v, p.x, p.y - 24 - up);
+      ctx.fillText((f.crit ? '★' : '') + f.v, p.x + sx, p.y - 24 - up);
     } else if (f.t === 'elem') {
       /* 원소 피해 — 그 결의 색으로 뜬다. 독은 몇 초에 걸쳐 들어가므로 괄호를 씌운다 */
       p = proj(m, f.x, f.y);
-      var eu = (0.6 - f.life) * 22;
+      var FXE = global.DG.fx3d, eu = (0.6 - f.life) * 22 + (FXE && FXE.slotUp ? FXE.slotUp(f.nslot, 12) : 0), ex = FXE && FXE.slotDx ? FXE.slotDx(f.nslot, 12) : 0;   // W-0077 칸 비킴
       ctx.font = '700 12px ' + D2_FONT;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.globalAlpha = core.clamp(f.life / 0.6, 0, 1);
       ctx.fillStyle = f.color || '#fff';
-      ctx.fillText((f.dot ? '(' + f.v + ')' : '' + f.v), p.x, p.y - 30 - eu);
+      ctx.fillText((f.dot ? '(' + f.v + ')' : '' + f.v), p.x + ex, p.y - 30 - eu);
       ctx.globalAlpha = 1;
     } else if (f.t === 'get') {
       p = proj(m, f.x, f.y);

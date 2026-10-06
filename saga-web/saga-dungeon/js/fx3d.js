@@ -117,6 +117,24 @@
    *
    * 모르는 종류에는 null 을 준다 — 판정이 새 이벤트를 흘려도 조용히 넘긴다.
    */
+  /* 숫자 칸(W-0077) — 0.35초 안에 같은 몸(±24)에서 뜬 피해 숫자는 0~3 칸으로 나눠 좌우 번갈아·한 단씩 위로 비킨다.
+     갓 태어난 fx 에 한 번만 `nslot` 을 적는다(shake3d 와 같은 방식). 3D step·2D 층이 같은 값을 쓴다 */
+  var SLOT_R = 24, SLOT_AGE = 0.35, SLOT_N = 4;
+  function isNumFx(f) { return !!f && (f.t === 'hit' || f.t === 'elem'); }
+  function slotOf(fxs, i) {
+    var f = fxs && fxs[i], n = 0, j, g;
+    if (!isNumFx(f)) { return 0; }
+    if (f.nslot !== undefined) { return f.nslot; }
+    for (j = 0; j < i; j++) {
+      g = fxs[j];
+      if (isNumFx(g) && g.nslot !== undefined && Math.abs(g.x - f.x) < SLOT_R && Math.abs(g.y - f.y) < SLOT_R && full(g) - g.life < SLOT_AGE) { n++; }
+    }
+    return (f.nslot = n % SLOT_N);
+  }
+  /** 칸 → 옆 비킴(글자 크기 size 단위 1.6배 — 세 자리 숫자 폭 1.5배보다 넓게: 1 칸 오른쪽·2 칸 왼쪽·3 칸 오른쪽 두 배) · 위 비킴(한 칸 = size×0.9) */
+  function slotDx(ns, size) { ns = ns || 0; return ns ? (ns % 2 ? 1 : -1) * Math.ceil(ns / 2) * size * 1.6 : 0; }
+  function slotUp(ns, size) { return (ns || 0) * size * 0.9; }
+
   function plan(f) {
     if (!f || !f.t) { return null; }
     var fu = full(f);
@@ -130,7 +148,8 @@
         kind: 'num', hex: numHex(f), alpha: a, k: k,
         text: textOf(f),
         size: f.crit ? 28 : (f.t === 'elem' ? 17 : 20),   /* §5.8① 크리 1.4배(20×1.4=28, 2026-09-18) */
-        rise: 34 + (fu - f.life) * (f.t === 'elem' ? 40 : 46),
+        rise: 34 + (fu - f.life) * (f.t === 'elem' ? 40 : 46) + slotUp(f.nslot, f.crit ? 28 : (f.t === 'elem' ? 17 : 20)),
+        dx: slotDx(f.nslot, f.crit ? 28 : (f.t === 'elem' ? 17 : 20)),   /* W-0077 숫자 칸 — 글자 크기 단위로 좌우·위로 비킨다 */
         glow: !!f.crit
       };
     }
@@ -513,7 +532,7 @@
   function putNum(node, pl, x, y, z) {
     var gs = glyphs(pl.text), n = Math.min(gs.length, NUM_LEN), i;
     var w = pl.size * 0.5;
-    var x0 = -(n - 1) * w / 2;
+    var x0 = -(n - 1) * w / 2 + (pl.dx || 0);   // 칸 비킴은 빌보드 안에서 — 화면 가로 그대로(W-0077)
     for (i = 0; i < NUM_LEN; i++) {
       var q = node.children[i];
       if (i >= n || gs[i] < 0) { q.visible = false; continue; }
@@ -634,6 +653,7 @@
         var s = shakeOf(f);
         if (s > shake) { shake = Math.min(SHAKE_MAX, s); }
       }
+      slotOf(fxs, i);
       var pl = plan(f);
       if (!pl) { continue; }
       var node = null;
@@ -690,7 +710,7 @@
     shakeAmt: shakeAmt, shakeNudge: shakeNudge,
     ready: function () { return ready; },
     /* 값 층 — three 없이도 돈다 (자가진단이 이것만 따로 본다) */
-    plan: plan, textOf: textOf, glyphs: glyphs, numHex: numHex,
+    plan: plan, slotOf: slotOf, slotDx: slotDx, slotUp: slotUp, textOf: textOf, glyphs: glyphs, numHex: numHex,
     shakeOf: shakeOf, shakeStep: shakeStep, flashOf: flashOf,
     shotHex: shotHex, hurtTint: hurtTint, pool: pool,
     GLYPHS: GLYPHS, FULL: FULL, SHAKE_MAX: SHAKE_MAX
