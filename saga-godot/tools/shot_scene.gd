@@ -36,6 +36,11 @@ const CUTS := [
 		["call", "House", "_spawn_furniture_visual", [{"key": "bangseok", "x": -1.2, "z": 1.8}]], ["call", "House", "_spawn_furniture_visual", [{"key": "soban", "x": 0.0, "z": 1.2}]],
 		["call", "House", "_spawn_furniture_visual", [{"key": "deungjan", "x": 1.4, "z": 1.6}]], ["call", "House", "_spawn_furniture_visual", [{"key": "mulhang", "x": -2.2, "z": 0.2}]],
 		["call", "House", "_spawn_furniture_visual", [{"key": "mungab", "x": 2.2, "z": 0.4}]], ["call", "House", "_spawn_furniture_visual", [{"key": "byeongpung", "x": 0.0, "z": 2.6}]]]],
+	# G-0051 — 옷은 메모리에서만 바꾼다(저장은 저장 단추로만 — 세이브 파일 안 바뀜)
+	# 들판 카메라(14m)로는 몸이 20화소라 팔 길이 3.5m 로 당겨 찍는다. _plain 은 기본 옷(비교용) — 자동 로드는 컷 사이에 남으니 옷을 늘 명시한다.
+	["fs_wear", FOREST, [["set", "/root/ForestSaveState", "wear_on", {"coat": "leather", "head": "topknot", "dye": "crimson", "cape": "on"}], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.5]]],
+	["fs_wear_plain", FOREST, [["set", "/root/ForestSaveState", "wear_on", {"coat": "leather", "head": "topknot", "dye": "none", "cape": "off"}], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.5]]],
+	["fs_wear_menu", FOREST, [["set", "/root/ForestSaveState", "wear_on", {"coat": "leather", "head": "topknot", "dye": "crimson", "cape": "on"}], ["call", "Villager", "_open_wear_menu", [{}, "@box"]]]],
 	["fs_fishing_near", FOREST, [["near", "Fishing", 0.0, 2.6]]],   # G-0046 — 못 가까이
 	## G-0048 — 사가블로 노획물 여섯(보스 노획·전설 배율 40 — 등급색 외곽선·전설 잔광) · 사가스토리 동굴 사다리 · 사가국지 일기토 1합째
 	# G-0049 — 출사표 창 먼저 닫고, 줍기 반경(1.4m)+몸 밖 3m 에 떨군다(1.6m 는 찍기 전에 주워졌다)
