@@ -1,0 +1,14 @@
+{
+ "name": "icons_crown2",
+ "spec": "icon",
+ "style": "B",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 6,
+ "note": "K-0050 후속(10-07 Claude 눈): icons_flat2 왕관 v03 에 그림자 덩어리가 matte 뒤에도 남음, v02·v04 는 받침대 → 왕관만 다시.",
+ "items": [
+  {
+   "id": "reward_crown",
+   "subject": "small golden royal crown floating alone, red and blue jewels, five points, front three-quarter view, no cushion, no pedestal, no cast shadow"
+  }
+ ]
+}

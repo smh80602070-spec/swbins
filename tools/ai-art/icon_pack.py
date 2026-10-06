@@ -1,6 +1,7 @@
 """아이템 아이콘 포장(K-0035 단계 2~3) — AI 가 흰 배경에 그린 알맹이를 투명하게 따고, 등급 틀(코드)과 합쳐 아이콘 세트를 만든다.
 
-    py tools/ai-art/icon_pack.py <원본폴더> <출력폴더> [--spec tools/ai-art/data/icon_trial30.json]
+    py tools/ai-art/icon_pack.py <원본폴더> <출력폴더> [--spec tools/ai-art/data/icon_trial30.json] [--seg]
+      --seg: u2net 분리 마스크를 겹쳐 흰 배경 위 그림자·받침 판까지 지우고, 떠 있는 작은 조각도 지운다(seg_mask.py, 10-07)
       원본폴더: gen.py 결과(<id>.png + <id>.license.json)   출력: content/<id>.png(알맹이 128px 투명) · frames/<등급>.png(틀 128px)
       icon/<id>_g<등급>.png(합성 128px) · icon64/<id>_g<등급>.png · sheet.jpg(확인용 한 장) · report.json(검사 결과)
 
@@ -29,7 +30,7 @@ GRADES = {
 }
 
 
-def matte(im, tol=26):
+def matte(im, tol=26, seg=False):
     """흰 배경 제거 — 가장자리에서 시작해 배경색과 비슷한 이어진 영역을 지운다(안쪽 흰 부분은 남김). 가장자리는 1px 부드럽게."""
     im = im.convert('RGB')
     a = np.asarray(im).astype(np.int16)
@@ -47,11 +48,29 @@ def matte(im, tol=26):
         seen[y, x] = True
         stack += [(y + 1, x), (y - 1, x), (y, x + 1), (y, x - 1)]
     alpha = np.where(seen, 0, 255).astype(np.uint8)
+    if seg:
+        from seg_mask import object_mask
+        obj = Image.fromarray((object_mask(im) > 0.5).astype(np.uint8) * 255)
+        k = max(3, (min(w, h) // 120) | 1)                # 가장자리 1% 정도 넉넉히(가는 끈·깃털 끝을 안 자르게)
+        obj = np.asarray(obj.filter(ImageFilter.MaxFilter(k))) > 0
+        alpha = np.where(obj, alpha, 0).astype(np.uint8)
+        alpha = drop_islands(alpha)
     # 작은 구멍 메우기 + 가장자리 번짐
     al = Image.fromarray(alpha).filter(ImageFilter.MedianFilter(5)).filter(ImageFilter.GaussianBlur(1.0))
     out = im.convert('RGBA')
     out.putalpha(al)
     return out
+
+
+def drop_islands(alpha, keep=0.04):
+    """가장 큰 덩어리의 keep 배 보다 작은 떠 있는 조각(글자 자국·부스러기)을 지운다."""
+    from scipy import ndimage
+    lab, n = ndimage.label(alpha > 24)
+    if n <= 1:
+        return alpha
+    sizes = ndimage.sum(alpha > 24, lab, range(1, n + 1))
+    big = np.isin(lab, 1 + np.nonzero(sizes >= keep * sizes.max())[0])
+    return np.where(big, alpha, 0).astype(np.uint8)
 
 
 def fit_content(rgba, box=0.84):
@@ -181,7 +200,7 @@ def main():
         if not os.path.exists(p):
             report[iid] = {'ok': False, 'why': ['원본 없음']}
             continue
-        c = fit_content(matte(Image.open(p)))
+        c = fit_content(matte(Image.open(p), seg='--seg' in sys.argv))
         if c is None:
             report[iid] = {'ok': False, 'why': ['알맹이를 못 땄다']}
             continue

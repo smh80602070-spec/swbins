@@ -1,0 +1,22 @@
+{
+ "name": "icons_noshadow",
+ "spec": "icon",
+ "style": "B",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 6,
+ "note": "K-0050·K-0061 후속(10-07 Claude 눈): icon_pack --seg 로도 안 지워지는 그림 속 그림자(단지 밑 파란 반사·보석 보라 그림자·모루 밑 흰 번짐) → 그림자 없이 다시. 왕관은 icons_crown2.",
+ "items": [
+  {
+   "id": "reward_coinbag",
+   "subject": "leather coin pouch, gold coins spilling, floating alone, no cast shadow, no reflection, no ground"
+  },
+  {
+   "id": "reward_gem",
+   "subject": "blue diamond gem, faceted, sparkle, floating alone, no cast shadow, no reflection, no ground"
+  },
+  {
+   "id": "rts_icon_work",
+   "subject": "iron hammer and anvil, floating alone, no cast shadow, no reflection, no ground"
+  }
+ ]
+}

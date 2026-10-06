@@ -1,0 +1,39 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "icons_noshadow",
+ "kit": {
+  "spec": "icon",
+  "style": "B",
+  "style_name": "부드러운 채색 + 얇은 윤곽(10-03~05 산출)"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery",
+  "variants": 6
+ },
+ "items": [
+  {
+   "id": "reward_coinbag",
+   "seed": 124256682,
+   "prompt": "(leather coin pouch:1.15), gold coins spilling, floating alone, no cast shadow, no reflection, no ground, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "reward_gem",
+   "seed": 1622042487,
+   "prompt": "(blue diamond gem:1.15), faceted, sparkle, floating alone, no cast shadow, no reflection, no ground, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  },
+  {
+   "id": "rts_icon_work",
+   "seed": 3314538679,
+   "prompt": "(iron hammer and anvil:1.15), floating alone, no cast shadow, no reflection, no ground, three-quarter view, no humans, still life, object focus, game icon, single object, centered, simple background, white background, no cast shadow, thin dark outline, soft painterly shading, rich saturated colors, detailed texture, soft diffuse lighting",
+   "negative": "1girl, 1boy, human, hands, person, character, multiple objects, frame, border, box, text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, gradient background, background scenery, sketch, monochrome, flat color, pixel art"
+  }
+ ]
+}
