@@ -28,21 +28,23 @@ align() {
   while IFS= read -r -d '' e; do dirty["${e:3}"]=1; case "${e:0:1}" in R|C) IFS= read -r -d '' f; dirty["$f"]=1;; esac; done \
     < <(git status --porcelain=v1 -z --untracked-files=all)
   while IFS= read -r -d '' f; do staged["$f"]=1; done < <(git diff --cached --name-only -z)
-  local changed=() kept=() n=0
+  local changed=() kept=() clean=() gone=() n=0
   while IFS= read -r -d '' f; do changed+=("$f"); done < <(git diff --name-only --no-renames -z "$old" "$new")
+  declare -A del=(); while IFS= read -r -d '' f; do del["$f"]=1; done < <(git diff --name-only --no-renames --diff-filter=D -z "$old" "$new")
   git reset -q --mixed "$new" || { say "reset 실패"; return 1; }
+  # 바뀐 파일 중 남이 작업 중인 것: 작업본이 이미 origin 내용과 같으면(그 세션이 올린 것) 정리됨, 다르면 남긴다 — git 한두 번으로 일괄
+  declare -A differ=()
+  while IFS= read -r -d '' f; do differ["$f"]=1; done < <(git diff --name-only -z; git ls-files -o -z --exclude-standard)
   for f in "${changed[@]}"; do
-    if [ -n "${dirty[$f]:-}" ]; then
-      # 남이 작업 중인 파일 — 작업본이 이미 origin 내용과 같으면 정리된 것, 아니면 그대로 둔다
-      local want have; want=$(git rev-parse -q --verify "$new:$f" 2>/dev/null || echo none)
-      if [ -e "$f" ]; then have=$(git hash-object -- "$f"); else have=none; fi
-      [ "$want" = "$have" ] || kept+=("$f")
-    else
-      if git cat-file -e "$new:$f" 2>/dev/null; then git checkout -q "$new" -- "$f"; else rm -f -- "$f"; fi
-      n=$((n + 1))
-    fi
+    if [ -n "${dirty[$f]:-}" ]; then [ -n "${differ[$f]:-}" ] && kept+=("$f")
+    elif [ -z "${del[$f]:-}" ]; then clean+=("$f")
+    else gone+=("$f"); fi
   done
-  local re=() s; for s in "${!staged[@]}"; do case " ${changed[*]} " in *" $s "*) ;; *) re+=("$s");; esac; done
+  [ ${#clean[@]} -gt 0 ] && printf '%s\0' "${clean[@]}" | git checkout-index -f -z --stdin
+  [ ${#gone[@]} -gt 0 ] && printf '%s\0' "${gone[@]}" | xargs -0 rm -f --
+  n=$(( ${#clean[@]} + ${#gone[@]} ))
+  declare -A inch=(); for f in "${changed[@]}"; do inch["$f"]=1; done
+  local re=() s; for s in "${!staged[@]}"; do [ -z "${inch[$s]:-}" ] && re+=("$s"); done
   [ ${#re[@]} -gt 0 ] && git add -A -- "${re[@]}" 2>/dev/null   # 남이 add 해 둔 것은 다시 add(reset 이 풀었으니)
   say "로컬 main → $(git log --oneline -1 HEAD | cut -c1-70)  (origin 쪽 파일 ${n}개 갱신)"
   if [ ${#kept[@]} -gt 0 ]; then
