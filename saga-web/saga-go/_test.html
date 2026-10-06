@@ -58,6 +58,9 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
   window.DG_SEED = seed;
+  /* 다시 맞추기 — 부팅 뒤 진단이 돌기 전까지 화면 루프·타이머가 난수를 몇 번 쓰는지가 판마다 달라
+     (`--runs=3` 에서 상세 숫자가 흔들렸다) 진단 항목마다(t) 시작 전에 씨앗을 처음 값으로 되돌린다 */
+  window.DG_RESEED = function () { s = seed >>> 0; };
 })(20260824);
 </script>
 <script src="js/errlog.js"></script>
@@ -187,6 +190,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
   /* 설명 글을 돌려주는 시험 중 "실패 …" 로 시작하는 글은 실패다 — 전엔 빈 글이 아니라서 PASS 로 찍혔다 */
   function t(name, fn) {
     try {
+      if (window.DG_RESEED) { window.DG_RESEED(); }   // 항목마다 같은 수열에서 — 앞 항목이 상태 따라 난수를 몇 번 썼는지에 안 끌려가게
       var r = fn();
       if (typeof r === 'string' && /^실패 /.test(r)) { r = { failText: r }; }
       var ok = !!r && !r.failText, txt = typeof r === 'string' ? r : (r && r.failText) || '';
@@ -465,19 +469,23 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
     });
 
     t('적도 — 점거된 역참은 보급을 주지 않는다', function () {
-      /* 시계를 돌릴 수 없으니 **지금 칸**에 점거된 역참을 찾아 본다.
-         지금 칸이 비어 있으면 그 사실만 확인하고 넘어간다(규칙상 있을 수 있다). */
+      /* 시계를 붙든다 — 고정 기준 시각부터 칸(SLOT_MS)을 넘겨 가며 점거된 (역참, 시각) 한 쌍을 찾고 그 시각으로 Date.now 를 잠깐 고정.
+         전엔 "지금 칸"만 봐서 돌린 시각에 따라 문구가 갈렸다(`--runs=3` DIFF, 10-06). */
       C.save.stations = {};
       var all = DG.world.stationsIn(0, 0)
         .concat(DG.world.stationsIn(1, 0), DG.world.stationsIn(0, 1),
                 DG.world.stationsIn(2, 3), DG.world.stationsIn(-2, 4));
-      var held = null, i;
-      for (i = 0; i < all.length; i++) { if (DG.rogue.occupied(all[i])) { held = all[i]; break; } }
-      if (!held) { return '지금 칸엔 점거된 역참이 없다 (규칙상 정상)'; }
-      var g0 = C.save.player.gold;
-      var r = DG.station.visit(held);
-      return !r.ok && r.reason === 'rogue' && C.save.player.gold === g0 &&
-        (held.name + ' — 보급 없음');
+      var S = DG.rogue.SLOT_MS, base = Math.floor(Date.UTC(2026, 9, 1) / S) * S, held = null, at = 0, i, k;
+      for (k = 0; k < 200 && !held; k++) { for (i = 0; i < all.length; i++) { if (DG.rogue.occupied(all[i], base + k * S + 1)) { held = all[i]; at = base + k * S + 1; break; } } }
+      if (!held) { return '실패 200칸 안에 점거된 역참이 없다'; }
+      var now0 = Date.now;
+      Date.now = function () { return at; };
+      try {
+        var g0 = C.save.player.gold;
+        var r = DG.station.visit(held);
+        return !r.ok && r.reason === 'rogue' && C.save.player.gold === g0 &&
+          (held.name + ' — 보급 없음');
+      } finally { Date.now = now0; }
     });
 
     t('적도 — 물리치면 역참이 풀리고 암영이 남는다 (도감엔 아직 안 든다)', function () {
