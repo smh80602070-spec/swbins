@@ -107,7 +107,10 @@ attempt() {
 }
 
 attempt; r=$?
-[ $r -eq 1 ] && { say "푸시 거부 — origin 이 그새 바뀜, 한 번 더"; attempt; r=$?; }
+for n in 2 3 4; do   # 세션 여럿이 연달아 올리면 한 번으로 모자란다(10-06 두 번 연속 거부) — 최대 3번 더
+  [ $r -eq 1 ] || break
+  say "푸시 거부 — origin 이 그새 바뀜, 다시($n/4)"; sleep $((n * 3)); attempt; r=$?
+done
 [ $r -ne 0 ] && { say "푸시 못 함(위 사유). 로컬 커밋은 그대로 있다"; exit 1; }
 say "푸시: $(git -C "$W" log --oneline -1 HEAD | cut -c1-70)"
 cleanup
