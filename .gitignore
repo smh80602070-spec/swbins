@@ -56,3 +56,5 @@ tools/asset-forge/_out/
 # 그래픽 게이트 새 촬영(tools/graphics-gate) — 기준(baseline)만 커밋한다
 graphics/latest/
 tools/autorun/_log/
+# Cloudflare wrangler CLI 로컬 캐시(계정 정보 포함 — 공개 저장소 금지, autorun "트리 더럽다" 원인)
+.wrangler/

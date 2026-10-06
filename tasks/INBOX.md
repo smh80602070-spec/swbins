@@ -12,3 +12,4 @@
 - [ ] 2026-10-06 · "기존꺼는 안쓸꺼야" · (G-0030) 고돗 옛 인물 파일 삭제는 K 몫: `assets/characters_cf/`·`characters/character-*`·`characters_vroid/` 샘플 GLB·얼굴 베이크(`anim_cc0/` 남김). `wardrobe.gd`·`probe_wardrobe` 가 AvatarSample_A 에 기댐 — 같이 정리 · K+고돗
 - [ ] 2026-10-06 · (G-0030) 새 인물 몸 299(web3d→characters_dex)에 표정 변형 0개 — 입·깜박임 안 움직임. `Fcl_MTH_*`·`Fcl_EYE_Close`·`Fcl_ALL_Joy` 남기기 요청 · K
 - [ ] 2026-10-06 · (G-0032 판정) 도감 인물 몸이 인물과 안 맞음 — 예: 해장(kr_yisunsin, 바다 장수)이 붉은 치마 소녀. 105명 성별·차림 전수 판정 필요 · K
+- [ ] 2026-10-07 · "vs코드에서 ctx가 70프로 넘어가면 다른 세션에서 이어 하고 세션 닫고 다른 세션에서 이어 할수 있어? 메크로 인 건지" · 읽은 뜻: 대화형 세션 문맥이 70% 넘으면 체크포인트 커밋 후 멈추고 새 세션이 "이어해"로 잇게 — 지금은 없음(autorun 은 티켓마다 새 `claude -p` 라 문맥이 안 쌓임, 대화형은 자동 압축). 방법 후보: statusline.js 문맥 % → 훅이 "체크포인트 커밋·멈춤" 주입 → autorun 데몬이 새 세션 기동(VS Code 창 자체는 못 닫음) · 자체툴(tools/autorun·claude-home) → 페이블 R-0. 참고: 이 PC autorun 은 갈래 tools 로 등록, 10-06 실행은 "트리 더럽다(.wrangler/ 추정)"로 안 돎
