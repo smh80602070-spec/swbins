@@ -50,6 +50,25 @@ const FLOORS := [
 	{"key": "hongmok", "name": "홍목마루", "price": 5800, "a": "#8a3d2b"},
 	{"key": "okdol", "name": "옥돌마루", "price": 6600, "a": "#6fa287"},
 ]
+## G-0047 — 벽지·장판 무늬(assets/wardrobe/patterns, K-0019 무늬 64 중 어울리는 것). 집 안은 곡률을 안 쓰니 표준 재질에 월드 삼면 투영.
+## 키 → [무늬 파일, 색 곱(흰색이면 무늬 그대로)]. 표에 없으면 옛처럼 단색.
+const PATTERN_DIR := "res://assets/wardrobe/patterns/"
+const WALL_PATTERN := {
+	"earth": ["ochre_hemp", Color(1, 1, 1)], "hanji": ["knit_cream", Color(1, 1, 1)], "sol": ["bamboo_green", Color(1, 1, 1)],
+	"muk": ["pinstripe_charcoal", Color(1, 1, 1)], "dan": ["damask_crimson", Color(1, 1, 1)], "cheonghwa": ["floral_blue", Color(1, 1, 1)],
+	"geumbak": ["brocade_gold", Color(1, 1, 1)],
+}
+const FLOOR_PATTERN := {
+	"wood": ["herringbone_camel", Color(1, 1, 1)], "mat": ["canvas_beige", Color(1, 1, 1)], "jangpan": ["corduroy_brown", Color(1, 1, 1)],
+	"stone": ["tweed_grey", Color(1, 1, 1)], "ondol": ["leather_brown", Color(1, 1, 1)], "hongmok": ["herringbone_camel", Color(0.75, 0.38, 0.3)],
+	"okdol": ["jade_peony_silk", Color(1, 1, 1)],
+}
+const PATTERN_SCALE := 0.55   # 삼면 투영 배율 — 무늬 한 장이 약 1.8m
+## G-0047 — 가구 모양 → world GLB(이미 있는 것)와 목표 높이(m). 표에 없는 모양(족자·거문고)은 옛 도형 그대로.
+const FURNITURE_GLB := {
+	"cushion": ["cushion_01", 0.15], "table": ["low_table_01", 0.35], "lamp": ["candlestick_01", 0.7], "vase": ["jar_01", 0.6],
+	"brazier": ["brazier_01", 0.55], "chest": ["trunk_01", 0.55], "screen": ["screen_folding_01", 1.2], "plant": ["flower_patch_01", 0.45],
+}
 const FINISH_SHOP_RADIUS := 1.6
 
 ## FOREST 콘텐츠 확장 1호(가구) — 웹판 home.js "놓기·집어 들기"를
@@ -82,6 +101,9 @@ var _in_finish_shop := false
 var _interior_node: Node3D = null
 var _player_indoors := false
 var _home_items_synced := false
+var _applied_wall := ""   # G-0047 — 무늬는 키가 바뀔 때만 바꾼다(_apply_finish_visuals 가 매 프레임 불린다)
+var _applied_floor := ""
+static var _pattern_cache := {}
 var _furniture_nodes: Array = []  # ForestSaveState.home_items와 같은 인덱스
 
 ## FOREST 콘텐츠 확장 2호(증축) — 방 크기가 ForestSaveState.home_tier에
@@ -344,8 +366,29 @@ func _on_finish_shop_exited(body: Node3D) -> void:
 func _apply_finish_visuals() -> void:
 	if _wall_mat == null or _floor_mat == null:
 		return
-	_wall_mat.albedo_color = Color(String(_wall_by_key(ForestSaveState.wall_key).c))
-	_floor_mat.albedo_color = Color(String(_floor_by_key(ForestSaveState.floor_key).a))
+	if ForestSaveState.wall_key != _applied_wall:
+		_applied_wall = ForestSaveState.wall_key
+		_dress(_wall_mat, WALL_PATTERN.get(_applied_wall, []), Color(String(_wall_by_key(_applied_wall).c)))
+	if ForestSaveState.floor_key != _applied_floor:
+		_applied_floor = ForestSaveState.floor_key
+		_dress(_floor_mat, FLOOR_PATTERN.get(_applied_floor, []), Color(String(_floor_by_key(_applied_floor).a)))
+
+
+## G-0047 — 무늬가 있으면 텍스처(삼면 투영)+색 곱, 없거나 안 열리면 옛 단색.
+static func _dress(mat: StandardMaterial3D, pat: Array, flat: Color) -> void:
+	var tex: Texture2D = _pattern(String(pat[0])) if not pat.is_empty() else null
+	mat.albedo_texture = tex
+	mat.albedo_color = (pat[1] as Color) if tex != null else flat
+	mat.uv1_triplanar = tex != null
+	mat.uv1_world_triplanar = tex != null
+	mat.uv1_scale = Vector3.ONE * PATTERN_SCALE
+
+
+static func _pattern(name: String) -> Texture2D:
+	if not _pattern_cache.has(name):
+		var path := PATTERN_DIR + name + ".webp"
+		_pattern_cache[name] = load(path) if ResourceLoader.exists(path) else null
+	return _pattern_cache[name]
 
 
 static func _wall_by_key(key: String) -> Dictionary:
@@ -597,13 +640,22 @@ func _spawn_furniture_visual(entry: Dictionary) -> void:
 	var f := ForestHome.furn(String(entry.key))
 	if f.is_empty() or _interior_node == null:
 		return
-	var shape := _furniture_shape(String(f.form))
 	var mi := MeshInstance3D.new()
-	mi.mesh = shape.mesh
-	mi.position = Vector3(float(entry.x), float(shape.y), float(entry.z))
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = _furniture_color(String(f.set))
-	mi.material_override = mat
+	var glb: Array = FURNITURE_GLB.get(String(f.form), [])
+	var gm: Mesh = GLBUtils.extract_mesh("res://assets/world/%s.glb" % glb[0]) if not glb.is_empty() else null
+	if gm != null:   # G-0047 — 있는 world GLB(자기 재질), 목표 높이로 배율·바닥에 앉힘
+		var a := gm.get_aabb()
+		var k: float = float(glb[1]) / maxf(a.size.y, 0.01)
+		mi.mesh = gm
+		mi.scale = Vector3.ONE * k
+		mi.position = Vector3(float(entry.x), -a.position.y * k, float(entry.z))
+	else:
+		var shape := _furniture_shape(String(f.form))
+		mi.mesh = shape.mesh
+		mi.position = Vector3(float(entry.x), float(shape.y), float(entry.z))
+		var mat := StandardMaterial3D.new()
+		mat.albedo_color = _furniture_color(String(f.set))
+		mi.material_override = mat
 	_interior_node.add_child(mi)
 	_furniture_nodes.append(mi)
 

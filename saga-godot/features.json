@@ -1502,14 +1502,16 @@
  {
   "id": "gd.fs.wallpaper",
   "name": "벽지/장판",
-  "files": [],
+  "files": [
+   "games/saga_forest/world/forest_house.gd"
+  ],
   "tests": [
    "forest_rules"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0047",
   "since": "2026-09-16"
  },
  {
@@ -1567,14 +1569,16 @@
  {
   "id": "gd.fs.furniture",
   "name": "가구·집 증축",
-  "files": [],
+  "files": [
+   "games/saga_forest/world/forest_house.gd"
+  ],
   "tests": [
    "forest_rules"
   ],
-  "level": "D2",
-  "verified": null,
+  "level": "D3",
+  "verified": "2026-10-06",
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0047",
   "since": "2026-09-16"
  },
  {

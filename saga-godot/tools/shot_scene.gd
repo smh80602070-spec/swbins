@@ -10,7 +10,8 @@ extends SceneTree
 ## CUTS 한 줄 = [이름, 씬, 단계들]. 단계(30프레임째 차례로):
 ##   ["near", <노드 경로>, dx, dz]   그 노드 자리 + (dx, 0, dz) 에 플레이어를 세운다(영역에 들어가면 그 신호가 그대로 돈다)
 ##   ["touch", <노드 경로>, <함수>]  플레이어를 넘겨 부른다(영역 들어감 흉내 — 예: 집 문)
-##   ["call", <노드 경로>, <함수>]   인자 없이 부른다(예: 메뉴 열기)
+##   ["call", <노드 경로>, <함수>, [인자…]]   부른다(인자 배열은 없어도 됨, 예: 메뉴 열기)
+##   ["set", <노드 경로>, <속성>, 값]   속성을 바꾼다(autoload 는 "/root/이름" — 메모리만, 저장 안 함)
 ## SETTLE 프레임에 뷰포트를 <이름>_<가로>x<세로>.png 로. 끝에 "SHOT_SCENE_DONE shots=N".
 
 const SETTLE := 120
@@ -23,6 +24,11 @@ const CUTS := [
 	["fs_finish_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_finish_menu"]]],
 	["fs_place_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_place_menu"]]],
 	["fs_fishing", FOREST, [["near", "Fishing", 0.0, 5.0]]],
+	## G-0047 — 집 안: 벽지 한지·장판 마루로 놓고 가구 여섯(컷 동안만, 세이브 안 건드림)
+	["fs_room", FOREST, [["set", "/root/ForestSaveState", "wall_key", "hanji"], ["set", "/root/ForestSaveState", "floor_key", "wood"], ["touch", "House", "_on_enter_house"],
+		["call", "House", "_spawn_furniture_visual", [{"key": "bangseok", "x": -1.2, "z": 1.8}]], ["call", "House", "_spawn_furniture_visual", [{"key": "soban", "x": 0.0, "z": 1.2}]],
+		["call", "House", "_spawn_furniture_visual", [{"key": "deungjan", "x": 1.4, "z": 1.6}]], ["call", "House", "_spawn_furniture_visual", [{"key": "mulhang", "x": -2.2, "z": 0.2}]],
+		["call", "House", "_spawn_furniture_visual", [{"key": "mungab", "x": 2.2, "z": 0.4}]], ["call", "House", "_spawn_furniture_visual", [{"key": "byeongpung", "x": 0.0, "z": 2.6}]]]],
 	["fs_fishing_near", FOREST, [["near", "Fishing", 0.0, 2.6]]],   # G-0046 — 못 가까이
 ]
 
@@ -65,4 +71,6 @@ func _steps(steps: Array) -> void:
 			"touch":
 				n.call(String(st[2]), p)
 			"call":
-				n.call(String(st[2]))
+				n.callv(String(st[2]), st[3] if st.size() > 3 else [])
+			"set":
+				n.set(String(st[2]), st[3])
