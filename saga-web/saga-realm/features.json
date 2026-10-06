@@ -728,7 +728,7 @@
   "fun": {},
   "ticket": "W-0029",
   "since": "2026-10-05",
-  "note": "D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). 재미·손맛은 W-0068 플레이 판정 시트"
+  "note": "접음(10-05 사용자 — 턴 전투로 대체, ?mode=rts 만) · D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). 재미·손맛은 W-0068 플레이 판정 시트"
  },
  {
   "id": "rk.rts-ui",
@@ -752,7 +752,7 @@
   "ticket": "W-0061",
   "since": "2026-10-05",
   "human": true,
-  "note": "D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). \"스타크래프트 같은가\"는 사람 몫(D3, W-0068)"
+  "note": "접음(10-05 사용자 — 턴 전투로 대체, ?mode=rts 만) · D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). \"스타크래프트 같은가\"는 사람 몫(D3, W-0068)"
  },
  {
   "id": "rk.rts-fog",
@@ -769,7 +769,7 @@
   "fun": {},
   "ticket": "W-0062",
   "since": "2026-10-05",
-  "note": "D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). 안개 규칙은 화면 층이라 진단은 거점 시야·봤던 곳만"
+  "note": "D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). 안개 규칙은 화면 층이라 진단은 거점 시야·봤던 곳만 · 턴 모드 재사용(W-0081)"
  },
  {
   "id": "rk.rts-ai",
@@ -790,7 +790,7 @@
   "ticket": "W-0063",
   "since": "2026-10-05",
   "human": true,
-  "note": "D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). \"디펜스가 아니라 RTS 같은가\"는 사람 몫(D3, W-0068)"
+  "note": "접음(10-05 사용자 — 턴 전투로 대체, ?mode=rts 만) · D2: saga-web/tools/playcheck/pw-rts-sheet.mjs(Playwright) 12/12 — results/pw-rts-sheet.json. 기계 확인(콘솔·입력·안개·적 AI 출정). \"디펜스가 아니라 RTS 같은가\"는 사람 몫(D3, W-0068)"
  },
  {
   "id": "rk.rts-turn",
