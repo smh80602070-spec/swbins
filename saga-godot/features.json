@@ -2500,5 +2500,24 @@
   "ticket": "G-0033",
   "since": "2026-10-06",
   "human": true
+ },
+ {
+  "id": "gd.go.music_moments",
+  "name": "보스 곡·엔딩 곡·짧은 음악 9(레벨업·발견·임무·승리·패배·보스 등장·위험·희귀/전설·비밀) — 배경음 덕킹",
+  "files": [
+   "saga_core/audio/bgm.gd",
+   "games/saga_go/world/go_bgm.gd",
+   "tools/probe_music.gd"
+  ],
+  "tests": [
+   "music",
+   "bgm"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0034",
+  "since": "2026-10-06",
+  "human": true
  }
 ]

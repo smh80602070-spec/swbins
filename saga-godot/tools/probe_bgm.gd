@@ -105,9 +105,9 @@ func _initialize() -> void:
 	var n2 := root.get_node_or_null("SagaBgm")
 	check(n2 != null and n2.enabled == false and absf(float(n2.volume) - 0.5) < 0.001, "다시 만들어도 끔·음량 0.5 유지")
 
-	# ⑤ 진짜 곡 — 다섯 판 × 세 장면 15곡이 키 = 파일 이름으로 있고, 코드가 거는 키 문자열이 전부 그 15곡 안에 있다(G-0013)
+	# ⑤ 진짜 곡 — 다섯 판 × 다섯 장면 25곡이(G-0034 보스·엔딩 더함) 키 = 파일 이름으로 있고, 코드가 거는 키 문자열이 전부 그 15곡 안에 있다(G-0013)
 	var games := ["go", "dungeon", "forest", "story", "realm"]
-	var scenes := ["town", "field", "battle"]
+	var scenes := ["town", "field", "battle", "boss", "ending"]
 	var real := {}
 	for g in games:
 		for sc in scenes:
@@ -123,7 +123,7 @@ func _initialize() -> void:
 			found[m.get_string(1)] = f
 	check(found.size() >= 8, "코드가 거는 곡 키 %d개를 찾음(8 이상)" % found.size())
 	for k in found:
-		check(real.has(k), "코드의 곡 키 \"%s\" 가 15곡 안에 있다(%s)" % [k, String(found[k]).get_file()])
+		check(real.has(k), "코드의 곡 키 \"%s\" 가 25곡 안에 있다(%s)" % [k, String(found[k]).get_file()])
 	for old in ["dg-", "fs-", "st-", "rk-"]:
 		var bad := false
 		for f in _gd_files("res://games/"):

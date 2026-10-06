@@ -6,6 +6,7 @@ extends Node
 ##   Bgm.stop(self)                # 페이드 아웃
 ##   Bgm.set_enabled(false) · Bgm.set_volume(0.5)   # UI 없이 API 만 — user://audio.cfg [bgm] enabled, volume 에 저장
 ## 곡 찾기: `res://assets/audio/bgm/<키>.ogg`(없으면 `.wav`). 없으면 아무 일도 안 한다(경고·로그 없음) — 곡은 K-0004 가 낸다.
+##   Bgm.stinger(self, "levelup")  # G-0034 짧은 음악 `stinger-<키>` 한 번 — 배경음을 잠깐 낮췄다(덕킹) 끝나면 되돌린다. 같은 키 STINGER_GAP 초 안은 무시
 ## 전용 버스 "BGM" 을 런타임에 만들어 효과음(CombatFeel)과 섞이지 않는다. 시험용으로 dir·cfg_path·fade 를 덮어쓸 수 있다.
 
 const NODE_NAME := "SagaBgm"
@@ -27,6 +28,14 @@ var _a: AudioStreamPlayer
 var _b: AudioStreamPlayer
 var _live: AudioStreamPlayer
 var _tween: Tween
+## G-0034 스팅어 — 세 번째 재생기. last_stinger·stinger_count 는 곡이 없거나 헤드리스여도 남는다(점검용).
+const DUCK_DB := -10.0
+const STINGER_GAP := 1.5
+var last_stinger := ""
+var stinger_count := 0
+var _s: AudioStreamPlayer
+var _st_at := {}
+var _duck: Tween
 
 
 static var _node: Node
@@ -75,6 +84,12 @@ static func set_volume(v: float) -> void:
 		n._set_volume(v)
 
 
+static func stinger(_ctx: Node, key: String) -> void:
+	var n := _inst()
+	if n != null:
+		n._stinger(key)
+
+
 static func current_key() -> String:
 	var n := _inst()
 	return "" if n == null else String(n.current)
@@ -89,6 +104,8 @@ func _ready() -> void:
 	_a = _make_player()
 	_b = _make_player()
 	_live = _a
+	_s = _make_player()
+	_s.finished.connect(_unduck)
 
 
 func _make_player() -> AudioStreamPlayer:
@@ -140,6 +157,44 @@ func _apply(key: String) -> void:
 		_tween.chain().tween_callback(old.stop)
 	_live = next
 	current = key
+
+
+func _stinger(key: String) -> void:
+	var now := Time.get_ticks_msec()
+	if now - int(_st_at.get(key, -100000)) < int(STINGER_GAP * 1000.0):
+		return
+	_st_at[key] = now
+	last_stinger = key
+	stinger_count += 1
+	if not enabled:
+		return
+	if _s == null:
+		await ready
+	var stream := _find("stinger-" + key)
+	if stream == null:
+		return
+	if stream is AudioStreamOggVorbis:
+		(stream as AudioStreamOggVorbis).loop = false   # 배경음과 달리 한 번만
+	elif stream is AudioStreamWAV:
+		(stream as AudioStreamWAV).loop_mode = AudioStreamWAV.LOOP_DISABLED
+	_s.stop()
+	_s.stream = stream
+	_s.volume_db = _target_db()
+	_s.play()
+	if _live != null and _live.playing:
+		if _duck != null and _duck.is_valid():
+			_duck.kill()
+		_duck = create_tween()
+		_duck.tween_property(_live, "volume_db", maxf(_target_db() + DUCK_DB, SILENT_DB), 0.2)
+
+
+func _unduck() -> void:
+	if _live == null or not _live.playing or current == "":
+		return
+	if _duck != null and _duck.is_valid():
+		_duck.kill()
+	_duck = create_tween()
+	_duck.tween_property(_live, "volume_db", _target_db(), 0.6)
 
 
 func _fade_out_live() -> void:
