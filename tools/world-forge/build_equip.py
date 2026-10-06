@@ -172,22 +172,26 @@ def chest(C, p):
 
 
 def shoulder(C, p):
-    """어깨 덮개 — 어깨를 위에서 덮는 반구(겹판 1~3장). 옛 = 뾰족 장식, 지금 = 덧댄 패드, 미래 = 발광 줄."""
+    """어깨 덮개 — 어깨 관절을 덮는 낮은 돔(바깥 끝이 벌어짐) + 팔을 따라 내려가는 겹판 0~2장. 옛 = 뾰족 장식, 지금 = 덧댄 패드, 미래 = 발광 줄.
+    10-06: 반지름 0.11 관에 끝이 오므라든 "공" → 팔에 붙는 돔(0.08)·종 모양 끝."""
     M, s = C.M, p.s
-    layers = 1 + min(2, p.g - 1 + (p.era == 'past'))
-    for L in range(layers):
-        prof = [(0.0, 0.07), (0.04, 0.104), (0.09, 0.112), (0.14, 0.098), (0.175, 0.06)]
-        off = L * 0.035
-        rows = [ring('x', (s(x + off), 0, s(0.02 - L * 0.03)), s(r + L * 0.01), s(r * 0.95 + L * 0.01), 12, -1.9, 1.9, closed=False) for x, r in prof]
-        surf(M, rows, [(s(x + off), 0, s(-0.02 - L * 0.03)) for x, r in prof], p.main if L == 0 else p.sec, closed=False)
+    zc = 0.008
+    prof = [(-0.035, 0.050), (0.0, 0.078), (0.04, 0.088), (0.085, 0.088), (0.12, 0.095), (0.132, 0.103)]
+    rows = [ring('x', (s(x), 0, s(zc)), s(r), s(r * 0.94), 12, -1.75, 1.75, closed=False) for x, r in prof]
+    surf(M, rows, [(s(x), 0, s(zc - 0.04)) for x, r in prof], p.main, closed=False)
+    for L in range(1, 1 + min(2, p.g - 1 + (p.era == 'past'))):           # 겹판 — 돔 아래로 팔을 따라 한 장씩
+        x0, r0 = 0.112 + (L - 1) * 0.042, 0.084 + 0.004 * L
+        rows = [ring('x', (s(x0 + dx), 0, s(zc - 0.004 * L)), s(r0 + dr), s((r0 + dr) * 0.94), 10, -1.6, 1.6, closed=False) for dx, dr in ((0.0, 0.0), (0.05, 0.012))]
+        surf(M, rows, [(s(x0), 0, s(zc - 0.05)), (s(x0 + 0.05), 0, s(zc - 0.05))], p.sec, closed=False)
+    top = zc + 0.088 * 0.94
     if p.era == 'past' and p.g >= 2:
-        tube(M, (s(0.08), 0, s(0.12)), (s(0.09), 0, s(0.2)), 0.016, 0.0, p.sec, 0.3, 5)
+        tube(M, (s(0.05), 0, s(top - 0.01)), (s(0.06), 0, s(top + 0.07)), 0.014, 0.0, p.sec, 0.3, 5)
     if p.era == 'future' and p.glow is not None:
-        surf(M, [ring('x', (s(0.09), 0, s(0.02)), s(0.116), s(0.11), 12, -1.9, 1.9, closed=False),
-                 ring('x', (s(0.1), 0, s(0.02)), s(0.116), s(0.11), 12, -1.9, 1.9, closed=False)],
-             [(s(0.09), 0, 0), (s(0.1), 0, 0)], p.glow, closed=False)
+        surf(M, [ring('x', (s(0.07), 0, s(zc)), s(0.092), s(0.087), 12, -1.75, 1.75, closed=False),
+                 ring('x', (s(0.08), 0, s(zc)), s(0.092), s(0.087), 12, -1.75, 1.75, closed=False)],
+             [(s(0.07), 0, 0), (s(0.08), 0, 0)], p.glow, closed=False)
     if p.era == 'present':
-        obox(M, (s(0.08), 0, s(0.1)), (s(0.12), s(0.11), 0.025), 0, p.dark, 0.3)
+        obox(M, (s(0.05), 0, s(top - 0.012)), (s(0.1), s(0.09), 0.022), 0, p.dark, 0.3)
     node('attach')
 
 
