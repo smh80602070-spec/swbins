@@ -1,0 +1,298 @@
+{
+ "name": "monster_dex_C",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0032 몬스터 도감 초상 다시 — K-0043 새 몸(10-06 Skin 방식) 렌더를 밑그림으로 img2img, 그림체 C. 주제는 새 몸 모양(종·뿔·날개·색)을 그대로.",
+ "items": [
+  {
+   "id": "mon_quad_01",
+   "subject": "white wolf beast, gray patches, small spikes on back, glowing yellow eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_quad_01.png",
+   "denoise": 0.62,
+   "seed": 20271006
+  },
+  {
+   "id": "mon_quad_02",
+   "subject": "brown boar beast, tusks, spikes on back, glowing cyan eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_quad_02.png",
+   "denoise": 0.62,
+   "seed": 20271103
+  },
+  {
+   "id": "mon_quad_03",
+   "subject": "white spotted cat beast, long tail, small horn, glowing cyan eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_quad_03.png",
+   "denoise": 0.62,
+   "seed": 20271200
+  },
+  {
+   "id": "mon_quad_04",
+   "subject": "mossy green bull beast, curved horns, spikes on back",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_quad_04.png",
+   "denoise": 0.62,
+   "seed": 20271297
+  },
+  {
+   "id": "mon_wing_01",
+   "subject": "brown bird beast, broad wings, sharp beak, glowing yellow eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_wing_01.png",
+   "denoise": 0.62,
+   "seed": 20271394
+  },
+  {
+   "id": "mon_wing_02",
+   "subject": "olive green bat creature, membrane wings, big ears, glowing cyan eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_wing_02.png",
+   "denoise": 0.62,
+   "seed": 20271491
+  },
+  {
+   "id": "mon_wing_03",
+   "subject": "green owl creature, round head, spread wings, glowing yellow eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_wing_03.png",
+   "denoise": 0.62,
+   "seed": 20271588
+  },
+  {
+   "id": "mon_wing_04",
+   "subject": "white wyvern, dark membrane wings, curved horns, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_wing_04.png",
+   "denoise": 0.62,
+   "seed": 20271685
+  },
+  {
+   "id": "mon_serp_01",
+   "subject": "mossy green viper, fangs, forked tongue, glowing red eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_serp_01.png",
+   "denoise": 0.62,
+   "seed": 20271782
+  },
+  {
+   "id": "mon_serp_02",
+   "subject": "brown cobra, raised hood, fangs, glowing red eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_serp_02.png",
+   "denoise": 0.62,
+   "seed": 20271879
+  },
+  {
+   "id": "mon_serp_03",
+   "subject": "mossy horned worm creature, spikes along back, segmented body",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_serp_03.png",
+   "denoise": 0.62,
+   "seed": 20271976
+  },
+  {
+   "id": "mon_serp_04",
+   "subject": "tan rattlesnake, coiled body, rattle tail, fangs",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_serp_04.png",
+   "denoise": 0.62,
+   "seed": 20272073
+  },
+  {
+   "id": "mon_cons_01",
+   "subject": "blocky stone golem robot, glowing purple chest core, antenna, metal limbs",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_cons_01.png",
+   "denoise": 0.62,
+   "seed": 20272170
+  },
+  {
+   "id": "mon_cons_02",
+   "subject": "mechanical spider, long thin metal legs, glowing cyan eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_cons_02.png",
+   "denoise": 0.62,
+   "seed": 20272267
+  },
+  {
+   "id": "mon_cons_03",
+   "subject": "tracked turret machine, cannon barrels, tank treads, purple armor",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_cons_03.png",
+   "denoise": 0.62,
+   "seed": 20272364
+  },
+  {
+   "id": "mon_cons_04",
+   "subject": "floating spiked metal orb, blue gray, antenna, small claws",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_cons_04.png",
+   "denoise": 0.62,
+   "seed": 20272461
+  },
+  {
+   "id": "mon_spir_01",
+   "subject": "pink flame spirit, flickering flame body, glowing yellow eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_spir_01.png",
+   "denoise": 0.62,
+   "seed": 20272558
+  },
+  {
+   "id": "mon_spir_02",
+   "subject": "pink ghost, cat ears, ragged hem, glowing red eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_spir_02.png",
+   "denoise": 0.62,
+   "seed": 20272655
+  },
+  {
+   "id": "mon_spir_03",
+   "subject": "orange crystal spirit, floating gem core, cyan crystal shards",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_spir_03.png",
+   "denoise": 0.62,
+   "seed": 20272752
+  },
+  {
+   "id": "mon_spir_04",
+   "subject": "mint jellyfish spirit, translucent bell, long tentacles, glowing eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_spir_04.png",
+   "denoise": 0.62,
+   "seed": 20272849
+  },
+  {
+   "id": "boss_01",
+   "subject": "giant brown bull beast, curved horns, black spiked armor plates",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_01.png",
+   "denoise": 0.62,
+   "seed": 20272946
+  },
+  {
+   "id": "boss_02",
+   "subject": "giant mossy wolf beast, crown of black spikes, glowing eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_02.png",
+   "denoise": 0.62,
+   "seed": 20273043
+  },
+  {
+   "id": "boss_03",
+   "subject": "giant brown boar beast, tusks, glowing purple rune stripes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_03.png",
+   "denoise": 0.62,
+   "seed": 20273140
+  },
+  {
+   "id": "boss_04",
+   "subject": "giant blue gray wyvern, black horn crown, spread membrane wings",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_04.png",
+   "denoise": 0.62,
+   "seed": 20273237
+  },
+  {
+   "id": "boss_05",
+   "subject": "giant brown bat creature, spiked armor plates, membrane wings",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_05.png",
+   "denoise": 0.62,
+   "seed": 20273334
+  },
+  {
+   "id": "boss_06",
+   "subject": "giant mossy horned worm, crown of black spikes, fangs",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_06.png",
+   "denoise": 0.62,
+   "seed": 20273431
+  },
+  {
+   "id": "boss_07",
+   "subject": "giant dark cobra, glowing orange rune bands, raised hood",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_07.png",
+   "denoise": 0.62,
+   "seed": 20273528
+  },
+  {
+   "id": "boss_08",
+   "subject": "giant stone golem robot, heavy armor plates, glowing purple core",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_08.png",
+   "denoise": 0.62,
+   "seed": 20273625
+  },
+  {
+   "id": "boss_09",
+   "subject": "giant tracked turret machine, glowing cyan runes, cannons",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_09.png",
+   "denoise": 0.62,
+   "seed": 20273722
+  },
+  {
+   "id": "boss_10",
+   "subject": "giant mossy ghost spirit, crown of ice spikes, glowing red eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_10.png",
+   "denoise": 0.62,
+   "seed": 20273819
+  },
+  {
+   "id": "boss_11",
+   "subject": "giant crystal spirit orb, cyan crystal wings, glowing red core",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_11.png",
+   "denoise": 0.62,
+   "seed": 20273916
+  },
+  {
+   "id": "boss_12",
+   "subject": "giant slate gray cat beast, spiked armor plates, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_12.png",
+   "denoise": 0.62,
+   "seed": 20274013
+  }
+ ]
+}

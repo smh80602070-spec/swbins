@@ -6,6 +6,9 @@
   py tools/ai-art/make_monster_dex.py pack [picks]   # 고른 후보 → <id>_s.webp(192 정사각)·<id>_c.webp(카드 300×344) (_out/monster_dex_final/), picks = _out/monster_dex_picks.json {"id":k}
   py tools/ai-art/make_monster_dex.py check    # 32 × 2 · .license.json 100%
 
+10-06 다시(K-0043 새 몸): batch 대신 키트 — `batches/_in/monster_dex_C.json`(몸마다 주제 태그, 그림체 C, img2img 0.62) → prompt_kit build → regen_P.sh(후보 4 + 판정기)
+→ 눈으로 고른 `_out/monster_dex_picks_C.json`({id: "monster_dex_C/<id>_v0N.png"}) → pack. 아래 FAM_TXT·batch 는 옛 몸(9-말) 기록.
+
 도감 데이터(`MONSTERS`)는 웹 갈래가 아직 안 만들었다 — id 는 몸 파일 이름(`mon_quad_01`·`boss_03`)을 그대로 쓰고 표시 이름은 웹이 정한다(원작 몬스터 이름 금지).
 초상 규격은 인물·펫 도감과 같다(정사각 192 + 카드 300×344). 글씨·원작 이름 없음(gen.py BLOCK).
 """
@@ -124,14 +127,14 @@ def pack(picks_path=None):
     os.makedirs(FINAL, exist_ok=True)
     for pid in IDS:
         k = picks.get(pid, 1)
-        src = os.path.join(OUT, 'monster_dex', f'{pid}_{k}.png')
+        src = os.path.join(OUT, k) if isinstance(k, str) else os.path.join(OUT, 'monster_dex', f'{pid}_{k}.png')   # 10-06: 값이 문자열이면 _out 기준 경로(키트 배치 monster_dex_C/<id>_v0N.png)
         im = Image.open(src).convert('RGB')
         im.crop((0, 0, 768, 768)).resize((192, 192), Image.LANCZOS).save(os.path.join(FINAL, pid + '_s.webp'), 'WEBP', quality=88, method=6)
         im.crop((0, 0, 768, 768)).resize((300, 300), Image.LANCZOS).convert('RGB')
         card = Image.new('RGB', (300, 344), (255, 255, 255))
         card.paste(im.resize((300, 300), Image.LANCZOS), (0, 22))
         card.save(os.path.join(FINAL, pid + '_c.webp'), 'WEBP', quality=86, method=6)
-        lp = os.path.join(OUT, 'monster_dex', f'{pid}_{k}.license.json')
+        lp = src[:-4] + '.license.json'
         lic = json.load(open(lp, encoding='utf-8')) if os.path.exists(lp) else {}
         lic.update({'id': pid, 'picked_candidate': k, 'sizes': {'s': [192, 192], 'c': [300, 344]}, 'packed_by': 'tools/ai-art/make_monster_dex.py pack'})
         json.dump(lic, open(os.path.join(FINAL, pid + '.license.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)

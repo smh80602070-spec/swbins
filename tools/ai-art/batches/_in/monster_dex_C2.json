@@ -1,0 +1,19 @@
+{
+ "name": "monster_dex_C2",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "K-0032 몬스터 도감 다시 — mon_quad_04 가 1차에서 4장 모두 흐린 얼룩(판정기는 v2 통과시킴). 이끼 사진 질감 밑그림 + \"mossy\" 가 원인으로 보여 주제를 바꾸고 denoise 를 올림.",
+ "items": [
+  {
+   "id": "mon_quad_04",
+   "subject": "green horned bull beast, two curved horns, row of spikes on back, sturdy legs, glowing purple eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_quad_04.png",
+   "denoise": 0.7,
+   "seed": 20271106
+  }
+ ]
+}
