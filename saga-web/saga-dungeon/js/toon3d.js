@@ -84,6 +84,7 @@
       '#include <common>',
       '#include <uv_pars_vertex>',
       '#include <skinning_pars_vertex>',
+      '#include <fog_pars_vertex>',
       'uniform float outlineWidth;',
       'attribute vec3 outlineNormal;',
       'void main() {',
@@ -97,20 +98,26 @@
       '  transformed += normalize(outlineNormal) * outlineWidth;',
       '  #include <skinning_vertex>',
       '  #include <project_vertex>',
+      '  #include <fog_vertex>',
       '}'
     ].join('\n');
+    /* 안개를 받는다(2026-10-06) — 전엔 몸만 안개에 묻히고 외곽선은 그대로 검게 남아, 먼 탑·사람·짐승이 하늘에 선 그림으로 떠 보였다 */
     var frag = [
+      '#include <common>',
+      '#include <fog_pars_fragment>',
       'uniform vec3 outlineColor;',
       'void main() {',
       '  gl_FragColor = vec4(outlineColor, 1.0);',
+      '  #include <fog_fragment>',
       '}'
     ].join('\n');
 
     var m = new t.ShaderMaterial({
-      uniforms: {
+      uniforms: t.UniformsUtils.merge([t.UniformsLib.fog, {
         outlineWidth: { value: width },
         outlineColor: { value: new t.Color(OUTLINE_COLOR) }
-      },
+      }]),
+      fog: true,
       vertexShader: vert,
       fragmentShader: frag,
       side: t.BackSide   // (옛 `skinning` 속성은 r169 에 없다 — 재질마다 경고만 냈다. 스키닝은 SkinnedMesh 가 알아서 켠다)
