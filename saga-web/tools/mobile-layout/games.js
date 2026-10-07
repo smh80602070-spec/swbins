@@ -32,7 +32,8 @@ var GATE_GONE = "!(document.getElementById('acc-host') && document.getElementByI
 var MAIN = { open: "var x = document.getElementById('sheet-close'); if (x && x.offsetParent) { x.click(); }", repeat: 4, wait: 700 };
 
 module.exports = {
-  'saga-go': { base: 'deungyong-go/save', pass: passGate, ready: GATE_GONE, scenes: { main: MAIN } },
+  /* 지도 출처 표기(#map-attrib, W-0059 OSM 조건) — 누르는 단추가 아니라 의무 표기라 터치 40px 를 안 잰다. 키우면 지도 아래 가운데 끌기를 먹는다(W-0093) */
+  'saga-go': { base: 'deungyong-go/save', pass: passGate, ready: GATE_GONE, ignore: 'map-attrib', scenes: { main: MAIN } },
   'saga-dungeon': {
     /* 들판 지도 시트가 전체 지도(#dg-automap, z 90)를 띄우고 둔다 — 시트 닫을 때 같이 닫는다 */
     closeExtra: "var a = document.getElementById('dg-automap'); if (a && a.checkVisibility()) { a.click(); }",

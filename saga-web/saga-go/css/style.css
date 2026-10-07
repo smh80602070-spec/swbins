@@ -2042,5 +2042,7 @@ body.fs-on #dock, body.fs-on #near { display: none !important; }
 }
 
 /* 지도 출처 표기(W-0059, OSM 타일 조건) — 맨 아래 가운데, 눌리는 단추 밑에 깔릴 만큼 작게 */
-#map-attrib { position: fixed; left: 50%; bottom: calc(2px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 3; font-size: 10px; line-height: 1.2; color: rgba(255, 255, 255, .72); text-shadow: 0 1px 2px rgba(0, 0, 0, .8); text-decoration: none; white-space: nowrap; padding: 1px 6px; }
+#map-attrib { position: fixed; left: 50%; bottom: calc(2px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 3; font-size: 11px; line-height: 1.2; color: rgba(255, 255, 255, .72); text-shadow: 0 1px 2px rgba(0, 0, 0, .8); text-decoration: none; white-space: nowrap; padding: 1px 6px; }
 #map-attrib:hover { color: #fff; text-decoration: underline; }
+/* 프로필 카드 안 <small>(튜토리얼 "(1/5)")이 브라우저 기본 0.8배로 9px 대로 떨어졌다 — 바닥 11px(W-0093, 사가국지 strategy.css 와 같은 줄) */
+:where(#profile) small { font-size: max(11px, .8em); }
