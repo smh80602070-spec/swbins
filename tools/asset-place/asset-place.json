@@ -177,6 +177,30 @@
    ]
   },
   {
+   "id": "pets3d",
+   "src": "saga-assets/pets3d",
+   "include": [
+    "*.glb",
+    "*.license.json"
+   ],
+   "targets": [
+    {
+     "track": "godot",
+     "dir": "saga-godot/assets/world",
+     "sidecar": [
+      ".import"
+     ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/World",
+     "sidecar": [
+      ".meta"
+     ]
+    }
+   ]
+  },
+  {
    "id": "world-web",
    "src": "saga-assets/world/web",
    "include": [

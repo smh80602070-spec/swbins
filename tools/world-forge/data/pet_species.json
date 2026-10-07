@@ -1,0 +1,221 @@
+{
+ "note": "K-0075 — 동행 신수 11종(saga-godot/saga_core/data/pets.gd PETS id) → 몬스터 몸 꼴(build_monster.py 종 표와 같은 칸). 새 wing0 · 네발 quad(0 늑대·1 멧돼지·2 고양이·3 황소·4 곰·5 거북) · 용 serp2(뿔 가시) · 도깨비 spir1. 말꼴 = 다리 가장 긴 quad0(목덜미 갈기 가시). 색 3개(몸·둘째·빛)는 설화 색 — 원작 꼴·이름 없음. 보스 아님, scale 로 키 0.6~1.2m. 굽기: blender -b --factory-startup -P tools/world-forge/build_monster.py -- --species <이 파일> --prefix pet_ --out-dir <절대> --style toon → pet_<id>.glb",
+ "species": {
+  "pt_samjogo": {
+   "form": [
+    "wing",
+    0
+   ],
+   "element": "thunder",
+   "colors": [
+    "#1c1a24",
+    "#d9a62e",
+    "#ffd24a"
+   ],
+   "scale": 1.2,
+   "shape": {
+    "legs3": true,
+    "crest": true,
+    "tail": 1.3
+   }
+  },
+  "pt_haetae": {
+   "form": [
+    "quad",
+    3
+   ],
+   "element": "rock",
+   "colors": [
+    "#4f8a78",
+    "#d8c890",
+    "#7fe8d0"
+   ],
+   "scale": 1.05,
+   "shape": {
+    "tail": 0.6,
+    "tup": -0.1,
+    "ear": "tuft",
+    "nospikes": true
+   },
+   "seed": "h"
+  },
+  "pt_cheongryong": {
+   "form": [
+    "serp",
+    2
+   ],
+   "element": "water",
+   "colors": [
+    "#1f8a80",
+    "#c4ecd0",
+    "#ffd24a"
+   ],
+   "scale": 1.6
+  },
+  "pt_baekho": {
+   "form": [
+    "quad",
+    2
+   ],
+   "element": "ice",
+   "colors": [
+    "#f2f2ee",
+    "#26262c",
+    "#8cd8ff"
+   ],
+   "scale": 1.15,
+   "shape": {
+    "pat": "stripes",
+    "bw": 0.25,
+    "bh": 0.25,
+    "nospikes": true
+   }
+  },
+  "pt_jujak": {
+   "form": [
+    "wing",
+    0
+   ],
+   "element": "fire",
+   "colors": [
+    "#e0401f",
+    "#ffb347",
+    "#ffe066"
+   ],
+   "scale": 1.2,
+   "deco": "runes",
+   "shape": {
+    "tail": 1.8,
+    "plume": true,
+    "crest": true
+   }
+  },
+  "pt_hyeonmu": {
+   "form": [
+    "quad",
+    5
+   ],
+   "element": "water",
+   "colors": [
+    "#2c3a32",
+    "#5a8a4e",
+    "#7fffb0"
+   ],
+   "scale": 1.5
+  },
+  "pt_gumiho": {
+   "form": [
+    "quad",
+    0
+   ],
+   "element": "fire",
+   "colors": [
+    "#d0903c",
+    "#f6efe2",
+    "#ffa0e0"
+   ],
+   "scale": 0.95,
+   "shape": {
+    "tails": 9,
+    "tail": 0.95,
+    "tup": 0.55,
+    "sn": 0.32,
+    "bw": 0.19,
+    "bh": 0.19,
+    "lh": 0.33,
+    "nospikes": true
+   },
+   "seed": "g"
+  },
+  "pt_dokkaebi": {
+   "form": [
+    "spir",
+    1
+   ],
+   "element": "fire",
+   "colors": [
+    "#b8352a",
+    "#6a4a34",
+    "#ffd24a"
+   ],
+   "scale": 1.1
+  },
+  "pt_bulgasari": {
+   "form": [
+    "quad",
+    4
+   ],
+   "element": "rock",
+   "colors": [
+    "#6e7378",
+    "#3a3e44",
+    "#ff9a3a"
+   ],
+   "scale": 1.25
+  },
+  "pt_jeoktoma": {
+   "form": [
+    "quad",
+    0
+   ],
+   "element": "fire",
+   "colors": [
+    "#a8321e",
+    "#3a1c16",
+    "#ffb04a"
+   ],
+   "scale": 1.3,
+   "shape": {
+    "leg": "str",
+    "lh": 0.62,
+    "bl": 0.42,
+    "bw": 0.21,
+    "bh": 0.25,
+    "nl": 0.58,
+    "hr": 0.14,
+    "sn": 0.34,
+    "tail": 0.6,
+    "tup": -0.2,
+    "ear": "tuft",
+    "pat": "plain",
+    "mane": true,
+    "nospikes": true
+   },
+   "seed": "r"
+  },
+  "pt_jeolyeong": {
+   "form": [
+    "quad",
+    0
+   ],
+   "element": "wind",
+   "colors": [
+    "#c8ccd2",
+    "#5a6068",
+    "#bfe8ff"
+   ],
+   "scale": 1.25,
+   "shape": {
+    "leg": "str",
+    "lh": 0.66,
+    "bl": 0.4,
+    "bw": 0.19,
+    "bh": 0.22,
+    "nl": 0.55,
+    "hr": 0.13,
+    "sn": 0.3,
+    "tail": 0.65,
+    "tup": -0.25,
+    "ear": "small",
+    "pat": "saddle",
+    "mane": true,
+    "nospikes": true
+   },
+   "seed": "s",
+   "tex": [
+    "grey_plaster",
+    1.2
+   ]
+  }
+ }
+}

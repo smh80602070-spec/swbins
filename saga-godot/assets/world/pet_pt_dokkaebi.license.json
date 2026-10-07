@@ -1,0 +1,20 @@
+{
+ "id": "pet_pt_dokkaebi",
+ "generator": "tools/world-forge/build_monster.py",
+ "blender": "5.2.1 LTS",
+ "style": "toon",
+ "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
+ "inputs": [
+  "polyhaven: bitumen",
+  "polyhaven: grey_plaster",
+  "polyhaven: white_stucco"
+ ],
+ "size_m": [
+  0.71,
+  0.6,
+  0.98
+ ],
+ "tris": 538,
+ "family": "spir",
+ "command": "blender -b --factory-startup -P tools/world-forge/build_monster.py -- --species tools/world-forge/data/pet_species.json --prefix pet_ --out-dir <절대> --style toon ; node tools/glb-compress/creature_fill.mjs <그 폴더> saga-assets/pets3d --forward-z (동작 7칸)"
+}
