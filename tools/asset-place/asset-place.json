@@ -707,6 +707,13 @@
      "sidecar": [
       ".import"
      ]
+    },
+    {
+     "track": "unity",
+     "dir": "saga-unity/Assets/SagaCore/Resources/Audio/Sfx",
+     "sidecar": [
+      ".meta"
+     ]
     }
    ]
   },

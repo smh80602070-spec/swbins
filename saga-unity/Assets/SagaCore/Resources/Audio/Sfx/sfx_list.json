@@ -1,0 +1,466 @@
+{
+ "note": "K-0045 효과음 목록 — 카테고리 안 RMS 같은 값, 라운드로빈은 _1·_2 변형",
+ "count": 92,
+ "items": [
+  {
+   "id": "sfx_sword_hit_1",
+   "category": "combat",
+   "duration_ms": 350
+  },
+  {
+   "id": "sfx_sword_hit_2",
+   "category": "combat",
+   "duration_ms": 350
+  },
+  {
+   "id": "sfx_sword_hurt_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_sword_hurt_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_spear_hit_1",
+   "category": "combat",
+   "duration_ms": 160
+  },
+  {
+   "id": "sfx_spear_hit_2",
+   "category": "combat",
+   "duration_ms": 160
+  },
+  {
+   "id": "sfx_spear_hurt_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_spear_hurt_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_axe_hit_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_axe_hit_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_axe_hurt_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_axe_hurt_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_dagger_hit_1",
+   "category": "combat",
+   "duration_ms": 70
+  },
+  {
+   "id": "sfx_dagger_hit_2",
+   "category": "combat",
+   "duration_ms": 70
+  },
+  {
+   "id": "sfx_dagger_hurt_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_dagger_hurt_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_bow_hit_1",
+   "category": "combat",
+   "duration_ms": 110
+  },
+  {
+   "id": "sfx_bow_hit_2",
+   "category": "combat",
+   "duration_ms": 110
+  },
+  {
+   "id": "sfx_bow_hurt_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_bow_hurt_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_staff_hit_1",
+   "category": "combat",
+   "duration_ms": 330
+  },
+  {
+   "id": "sfx_staff_hit_2",
+   "category": "combat",
+   "duration_ms": 330
+  },
+  {
+   "id": "sfx_staff_hurt_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_staff_hurt_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_gun_hit_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_gun_hit_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_gun_hurt_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_gun_hurt_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_shield_hit_1",
+   "category": "combat",
+   "duration_ms": 300
+  },
+  {
+   "id": "sfx_shield_hit_2",
+   "category": "combat",
+   "duration_ms": 300
+  },
+  {
+   "id": "sfx_shield_hurt_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_shield_hurt_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_gauntlet_hit_1",
+   "category": "combat",
+   "duration_ms": 120
+  },
+  {
+   "id": "sfx_gauntlet_hit_2",
+   "category": "combat",
+   "duration_ms": 120
+  },
+  {
+   "id": "sfx_gauntlet_hurt_1",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_gauntlet_hurt_2",
+   "category": "combat",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_block",
+   "category": "combat",
+   "duration_ms": 300
+  },
+  {
+   "id": "sfx_step_grass_1",
+   "category": "foot",
+   "duration_ms": 90
+  },
+  {
+   "id": "sfx_step_grass_2",
+   "category": "foot",
+   "duration_ms": 90
+  },
+  {
+   "id": "sfx_step_dirt_1",
+   "category": "foot",
+   "duration_ms": 80
+  },
+  {
+   "id": "sfx_step_dirt_2",
+   "category": "foot",
+   "duration_ms": 80
+  },
+  {
+   "id": "sfx_step_stone_1",
+   "category": "foot",
+   "duration_ms": 70
+  },
+  {
+   "id": "sfx_step_stone_2",
+   "category": "foot",
+   "duration_ms": 70
+  },
+  {
+   "id": "sfx_step_wood_1",
+   "category": "foot",
+   "duration_ms": 120
+  },
+  {
+   "id": "sfx_step_wood_2",
+   "category": "foot",
+   "duration_ms": 120
+  },
+  {
+   "id": "sfx_step_sand_1",
+   "category": "foot",
+   "duration_ms": 140
+  },
+  {
+   "id": "sfx_step_sand_2",
+   "category": "foot",
+   "duration_ms": 140
+  },
+  {
+   "id": "sfx_step_snow_1",
+   "category": "foot",
+   "duration_ms": 120
+  },
+  {
+   "id": "sfx_step_snow_2",
+   "category": "foot",
+   "duration_ms": 120
+  },
+  {
+   "id": "sfx_ui_click",
+   "category": "ui",
+   "duration_ms": 45
+  },
+  {
+   "id": "sfx_ui_confirm",
+   "category": "ui",
+   "duration_ms": 320
+  },
+  {
+   "id": "sfx_ui_cancel",
+   "category": "ui",
+   "duration_ms": 320
+  },
+  {
+   "id": "sfx_ui_open",
+   "category": "ui",
+   "duration_ms": 140
+  },
+  {
+   "id": "sfx_ui_close",
+   "category": "ui",
+   "duration_ms": 120
+  },
+  {
+   "id": "sfx_ui_tab",
+   "category": "ui",
+   "duration_ms": 50
+  },
+  {
+   "id": "sfx_ui_error",
+   "category": "ui",
+   "duration_ms": 200
+  },
+  {
+   "id": "sfx_ui_toggle",
+   "category": "ui",
+   "duration_ms": 65
+  },
+  {
+   "id": "sfx_ui_hover",
+   "category": "ui",
+   "duration_ms": 25
+  },
+  {
+   "id": "sfx_ui_tick",
+   "category": "ui",
+   "duration_ms": 20
+  },
+  {
+   "id": "sfx_ui_page",
+   "category": "ui",
+   "duration_ms": 160
+  },
+  {
+   "id": "sfx_ui_notify",
+   "category": "ui",
+   "duration_ms": 510
+  },
+  {
+   "id": "sfx_coin",
+   "category": "event",
+   "duration_ms": 310
+  },
+  {
+   "id": "sfx_coin_big",
+   "category": "event",
+   "duration_ms": 600
+  },
+  {
+   "id": "sfx_item_pick",
+   "category": "event",
+   "duration_ms": 430
+  },
+  {
+   "id": "sfx_levelup",
+   "category": "event",
+   "duration_ms": 1250
+  },
+  {
+   "id": "sfx_quest_accept",
+   "category": "event",
+   "duration_ms": 800
+  },
+  {
+   "id": "sfx_quest_done",
+   "category": "event",
+   "duration_ms": 1100
+  },
+  {
+   "id": "sfx_chest_open",
+   "category": "event",
+   "duration_ms": 570
+  },
+  {
+   "id": "sfx_door_open",
+   "category": "event",
+   "duration_ms": 350
+  },
+  {
+   "id": "sfx_heal",
+   "category": "event",
+   "duration_ms": 790
+  },
+  {
+   "id": "sfx_buff",
+   "category": "event",
+   "duration_ms": 610
+  },
+  {
+   "id": "sfx_debuff",
+   "category": "event",
+   "duration_ms": 640
+  },
+  {
+   "id": "sfx_death",
+   "category": "event",
+   "duration_ms": 600
+  },
+  {
+   "id": "sfx_crit",
+   "category": "event",
+   "duration_ms": 250
+  },
+  {
+   "id": "sfx_dodge",
+   "category": "event",
+   "duration_ms": 220
+  },
+  {
+   "id": "sfx_jump",
+   "category": "event",
+   "duration_ms": 120
+  },
+  {
+   "id": "sfx_land",
+   "category": "event",
+   "duration_ms": 140
+  },
+  {
+   "id": "sfx_splash",
+   "category": "event",
+   "duration_ms": 300
+  },
+  {
+   "id": "sfx_whoosh",
+   "category": "event",
+   "duration_ms": 280
+  },
+  {
+   "id": "sfx_gacha_1",
+   "category": "event",
+   "duration_ms": 510
+  },
+  {
+   "id": "sfx_gacha_2",
+   "category": "event",
+   "duration_ms": 690
+  },
+  {
+   "id": "sfx_gacha_3",
+   "category": "event",
+   "duration_ms": 920
+  },
+  {
+   "id": "sfx_gacha_4",
+   "category": "event",
+   "duration_ms": 1250
+  },
+  {
+   "id": "sfx_gacha_5",
+   "category": "event",
+   "duration_ms": 1700
+  },
+  {
+   "id": "sfx_summon",
+   "category": "event",
+   "duration_ms": 500
+  },
+  {
+   "id": "sfx_capture",
+   "category": "event",
+   "duration_ms": 580
+  },
+  {
+   "id": "sfx_equip",
+   "category": "event",
+   "duration_ms": 100
+  },
+  {
+   "id": "sfx_fish_bite",
+   "category": "event",
+   "duration_ms": 100
+  },
+  {
+   "id": "sfx_cook_done",
+   "category": "event",
+   "duration_ms": 460
+  },
+  {
+   "id": "sfx_turn_start",
+   "category": "event",
+   "duration_ms": 290
+  },
+  {
+   "id": "sfx_victory",
+   "category": "event",
+   "duration_ms": 2040
+  },
+  {
+   "id": "sfx_defeat",
+   "category": "event",
+   "duration_ms": 1640
+  }
+ ]
+}

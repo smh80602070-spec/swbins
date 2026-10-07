@@ -1,0 +1,10 @@
+{
+ "id": "sfx_gacha_3",
+ "generator": "tools/asset-forge/sfxset.py",
+ "license": "CC0-1.0 (코드 합성 — 외부 입력 없음)",
+ "category": "event",
+ "duration_ms": 920,
+ "rms_db": -23.0,
+ "sample_rate": 44100,
+ "channels": 1
+}
