@@ -6,6 +6,7 @@ extends RefCounted
 ##   GLB 규약(license.json·tools/world-forge/data/equip_slots.json): 원점 = 붙일 뼈의 머리, 인물 앞 = Blender -Y(= 고돗 +Z, 몸 앞과 같다).
 ##   왼쪽 부위(J_Bip_L_*)는 오른쪽에 X 뒤집은 사본. 몸마다 균등 배율 = 머리 뼈 높이 / 1.5m(기준 몸).
 ## 붙이는 길(앵커·배율·거울)은 G-0063 에서 다섯 판 공용 saga_core/world/bone_gear.gd 로 옮겼다(사가마을 옷도 쓴다).
+## G-0083 — K-0081 몸 맞춤: 가슴판은 어깨 폭 비율로 X 만(fit "chest"), 관은 앞·윗머리(_Hair_)·신은 신발(_Shoes_) 표면을 숨긴다.
 
 const BoneGear := preload("res://saga_core/world/bone_gear.gd")
 const TAG := "armor"
@@ -22,6 +23,8 @@ const BONES := {
 	"boot": [BoneGear.L_FOOT, BoneGear.R_FOOT],
 }
 const FUTURE_ERAS := ["균열(가상)", "폐허(가상)"]
+## 부위 → 숨길 몸 재질 이름 조각(equip_slots.json armor_slots.hides → hide_match, K-0081). 상의·소매·바지는 한 메시라 빈칸(K 정본).
+const HIDES := {"head": ["_Hair_"], "boot": ["_Shoes_"]}
 
 
 static func era_of(era: String) -> String:
@@ -49,7 +52,8 @@ static func pieces_for(artifacts: Array, era: String) -> Array:
 		for part: String in PARTS_OF.get(String(a.get("slot", "")), []):
 			var b: Array = BONES[part]
 			out.append({"slot": String(a.slot), "part": part, "path": "%seq_%s_%d_%s.glb" % [DIR, e, grade_of(a), part],
-				"bones": b[0], "mirror_bones": b[1], "mirror": not (b[1] as Array).is_empty()})
+				"bones": b[0], "mirror_bones": b[1], "mirror": not (b[1] as Array).is_empty(),
+				"fit": "chest" if part == "chest" else "", "hides": HIDES.get(part, [])})
 	return out
 
 
@@ -60,7 +64,10 @@ static func attach(body: Node3D, pieces: Array) -> int:
 		return 0
 	var n := 0
 	for p: Dictionary in pieces:
-		n += BoneGear.attach(body, String(p.path), p.bones, p.mirror_bones if bool(p.mirror) else [], TAG, "Armor_%s" % p.part)
+		var got := BoneGear.attach(body, String(p.path), p.bones, p.mirror_bones if bool(p.mirror) else [], TAG, "Armor_%s" % p.part, String(p.get("fit", "")))
+		if got > 0:
+			BoneGear.hide_surfaces(body, p.get("hides", []), TAG)
+		n += got
 	return n
 
 
@@ -68,7 +75,7 @@ static func body_scale(skel: Skeleton3D) -> float:
 	return BoneGear.body_scale(skel)
 
 
-## 몸에 붙은 갑옷 조각을 치운다(앵커째).
+## 몸에 붙은 갑옷 조각을 치운다(앵커째, 숨긴 머리카락·신발은 되돌림).
 static func clear(body: Node3D) -> void:
 	BoneGear.clear(body, TAG)
 
