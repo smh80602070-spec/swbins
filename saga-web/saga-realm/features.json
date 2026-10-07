@@ -288,11 +288,12 @@
    "armyPower — 진형 배율이 실제로 부대 전투력에 곱해진다",
    "진형 수동 — 문턱을 넘으면 고른 진형 그대로, 못 넘으면 서되 덧붙는 몫이 절반, 자동·없는 key 는 예전과 같다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-war.mjs 8/8 — results/pw-rk-war.json(W-0084)."
  },
  {
   "id": "rk.war-4",
@@ -310,11 +311,12 @@
    "포위 끝에 함락하면 진영이 걷히고 치중이 성으로 들어간다",
    "나라를 잃은 원정군은 그 자리에서 사로잡힌다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-war.mjs 8/8 — results/pw-rk-war.json(W-0084)."
  },
  {
   "id": "rk.war-5",
@@ -331,11 +333,12 @@
    "resolveJourneys — 국경 거점이 주인 없는 땅이어도 march() 없이 곧바로 붙는다",
    "resolveJourneys — 중간 성이 함락되면 원정이 그 자리에서 되돌아간다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-war.mjs 8/8 — results/pw-rk-war.json(W-0084)."
  },
  {
   "id": "rk.war-6",
@@ -348,11 +351,12 @@
    "원정 사건 — \"유물 발견\" 은 원정 간 장수 하나에게 보물을 곧바로 씌우고, hero.js 장비 계약(global.DG.item.statBonus)을 타고 스탯이 실제로 오른다",
    "원정 도중 사건 — 손잡이를 100%로 잡으면 가는 달마다 실제로 붙고, 도착 전투 판정은 그대로다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-war.mjs 8/8 — results/pw-rk-war.json(W-0084)."
  },
  {
   "id": "rk.war-7",
@@ -372,11 +376,12 @@
    "수군 명부는 data.js 를 건드리지 않고 정한다",
    "AI 는 배 없이 물길을 고르지 않는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-war.mjs 8/8 — results/pw-rk-war.json(W-0084)."
  },
  {
   "id": "rk.war-8",
@@ -391,11 +396,12 @@
    "탐험·보스전 — 랜드마크 성을 처음 함락하면 발견 보상이, boss 수비 무장을 꺾으면 처치 보상이 함께 붙는다",
    "무장 수집 — 세작 손잡이를 100%로 잡으면 문답 없이도 매달 재야가 드러난다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-war.mjs 8/8 — results/pw-rk-war.json(W-0084)."
  },
  {
   "id": "rk.data-force",
@@ -502,11 +508,12 @@
    "AI 는 아쉬운 것부터 명령한다",
    "AI 는 이웃 성에서 병력을 끌어모은다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-war.mjs 8/8 — results/pw-rk-war.json(W-0084)."
  },
  {
   "id": "rk.quiz",

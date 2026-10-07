@@ -1,0 +1,49 @@
+{
+ "script": "pw-rk-war.mjs",
+ "game": "saga-realm",
+ "pass": 8,
+ "total": 8,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "rk.war-3 진형 — 3종, 문턱 75 넘는 장수가 있으면 진형이 붙어 armyPower 가 ×mul 커지고, 못 넘는 무리는 무진형",
+   "ok": true,
+   "detail": "{\"n\":3,\"strong\":3,\"form\":\"chukyi\",\"mul\":1.15,\"weak\":1,\"weakForm\":null,\"pWith\":6676,\"pNo\":5805}"
+  },
+  {
+   "name": "rk.war-4 진영 — 못 떨어뜨리면 성 밖 진영이 서고(치중 n달), 다음 달 사기 ×0.94 뒤 다시 친다",
+   "ok": true,
+   "detail": "{\"c4\":{\"ok\":true,\"camp\":\"camp1\",\"morale\":1,\"to\":\"luoyang\",\"tries\":[{\"won\":false,\"routed\":false,\"camp\":\"camp1\"}],\"left\":2},\"c4b\":{\"morale\":0.94,\"decay\":0.94,\"still\":false}}"
+  },
+  {
+   "name": "rk.war-5 원정 — 🚩 원정 단추로 원정군이 서고, 다음 달 걸은 달이 1 늘거나 닿는다",
+   "ok": true,
+   "detail": "{\"j0\":{\"from\":\"luoyang\",\"before\":0},\"j1\":{\"n\":1,\"id\":\"journey1\",\"total\":3,\"el\":0},\"j2\":{\"el\":1,\"total\":3}}"
+  },
+  {
+   "name": "rk.war-6 원정 사건 — 7종, 굴리면 사건이 나고 원정군에 글이 붙는다",
+   "ok": true,
+   "detail": "{\"n\":7,\"key\":\"lost\",\"text\":\"안개 속에서 길을 잃어 하루를 더 걷는다.\",\"tries\":1}"
+  },
+  {
+   "name": "rk.war-7 수군 — 물길 출진은 수전(배 대 배)이 되고 출진 성의 배가 준다",
+   "ok": true,
+   "detail": "{\"from\":\"puyang\",\"to\":\"xiapi\",\"water\":true,\"s0\":300,\"s1\":200,\"won\":true,\"navy\":13}"
+  },
+  {
+   "name": "rk.war-8 탐험 — landmark 성을 처음 떨어뜨리면 \"처음 밟는 땅\" 금 +1000·유물",
+   "ok": true,
+   "detail": "{\"L\":\"guknae\",\"won\":true,\"gold\":1000,\"line\":\"🗺️ 처음 밟는 땅 — 국내성(國內城) 발견! 금 1,000 · 📜병서 → 수사\",\"disc\":true}"
+  },
+  {
+   "name": "rk.rtk-ai AI — 다른 세력들이 한 달에 명령·출진·외교를 둔다(runAll), 다음 달도 막힘 없이 넘어간다",
+   "ok": true,
+   "detail": "{\"forces\":10,\"acted\":10,\"sample\":\"{\\\"orders\\\":9,\\\"march\\\":null,\\\"plot\\\":null,\\\"envoy\\\":null,\\\"supply\\\":null,\\\"trade\\\":null,\\\"promote\\\":null}\"}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}
