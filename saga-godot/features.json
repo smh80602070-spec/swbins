@@ -263,11 +263,13 @@
   "id": "gd.go.g1-toon",
   "name": "106장 ①~⑥ 툰 물·손그림 하늘",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "toon_look"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0065",
   "since": "2026-09-23"
  },
  {
@@ -1278,11 +1280,13 @@
   "id": "gd.dg.hero-vroid",
   "name": "플레이어 전용 VRoid(dungeon_hero_01)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "player_bodies"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0065",
   "since": "2026-09-16"
  },
  {
@@ -1597,11 +1601,13 @@
   "id": "gd.fs.player-vroid",
   "name": "플레이어 VRoid(105 Q3)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "player_bodies"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0065",
   "since": "2026-09-16"
  },
  {
@@ -1898,11 +1904,13 @@
   "id": "gd.st.player-vroid",
   "name": "플레이어 VRoid(임시)",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "player_bodies"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0065",
   "since": "2026-09-16"
  },
  {
