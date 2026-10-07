@@ -1,0 +1,44 @@
+{
+ "script": "pw-dg-close3.mjs",
+ "game": "saga-dungeon",
+ "pass": 7,
+ "total": 7,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "dg.town 오픈월드 — 마을 104(손 4 + 절차 100), 첫 마을이 활성, 안 가 본 마을로는 역참 이동이 거부되고 가 본 마을로는 옮겨 가며, 안개는 가 본 칸만 걷힌다",
+   "ok": true,
+   "detail": "{\"n\":104,\"hand\":4,\"gen\":100,\"cur0\":\"moru\",\"other\":\"galdae\",\"refuse\":false,\"ok\":true,\"cur1\":\"galdae\",\"seen\":25,\"far\":false,\"active\":true}"
+  },
+  {
+   "name": "dg.town-2 길·유적 — 길 조각 100 이상, 들판 유적을 밟으면(town:mark 가 부르는 rewardFieldRelic) 도감에 들고 금 +20·공적 +4, 같은 유적은 두 번 안 준다",
+   "ok": true,
+   "detail": "{\"rl0\":{\"segs\":102,\"n\":30},\"d\":[20,4],\"twice\":0}"
+  },
+  {
+   "name": "dg.ui 도감 완성 — 들판 유적 마지막 하나를 밟으면 「유적」 도감이 차고 완성 보상(금 1200)이 한 번 든다",
+   "ok": true,
+   "detail": "{\"dx0\":{\"gold\":195,\"full0\":false},\"dx1\":{\"gold\":1415,\"full\":true,\"n\":30,\"total\":30}}"
+  },
+  {
+   "name": "dg.minimap 자동지도 — 코너 미니맵이 서서 그리고, 실제 M 키로 큰 지도가 열렸다 다시 M 으로 닫힌다",
+   "ok": true,
+   "detail": "{\"mm0\":{\"folded\":false,\"size\":128,\"mounted\":true,\"drawn\":11},\"b1\":true,\"b2\":false}"
+  },
+  {
+   "name": "dg.auto 자동 순회 — 🤖 단추로 켜면 스스로 할 일을 잡고(doing), 깃발을 뒤집을 수 있고, 다시 누르면 꺼진다",
+   "ok": true,
+   "detail": "{\"au0\":{\"on\":false,\"retry\":true},\"autoBtn\":true,\"au1\":{\"on\":true,\"doing\":\"📜 🌾 흑기 도적의 밤 · 토벌 0/10 — 3412보\",\"retry\":false},\"au2\":{\"on\":false}}"
+  },
+  {
+   "name": "dg.x 목표판 — 지금·세션·주간 세 줄이 이름과 목표를 갖고, 도감 % 가 숫자",
+   "ok": true,
+   "detail": "{\"keys\":[\"now\",\"session\",\"weekly\"],\"ok\":true,\"dex\":12,\"L\":{\"now\":{\"label\":\"이 방 정리\",\"progress\":0,\"target\":1},\"session\":{\"label\":\"3층 내려가기\",\"progress\":0,\"target\":3},\"weekly\":{\"label\":\"월드 보스 1회\",\"progress\":0,\"target\":1}}}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

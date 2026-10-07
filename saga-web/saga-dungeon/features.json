@@ -429,11 +429,12 @@
    "세계 앵커(PLAN §28-8) — 마을 넷의 발판이 서로 안 겹친다",
    "옛 세이브(town.current만 있음, pos 없음)를 불러오면 그 마을 스폰 자리로 마이그레이션한다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098)."
  },
  {
   "id": "dg.town-2",
@@ -452,11 +453,12 @@
    "절차 생성 마을 — 전부 NPC·decor 최소 간격을 지키고, 스폰 자리와도 안 겹친다",
    "절차 생성 마을 — biome마다 지형 성향이 실제로 갈린다(forest는 숲, mountain은 바위)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098). 공개 fieldRelics() 엔 좌표가 없어 밟기는 town:mark 가 부르는 rewardFieldRelic 으로. 길목 발견거리·탐험 문턱은 이번엔 안 봄."
  },
  {
   "id": "dg.dungeon-8",
@@ -524,11 +526,12 @@
    "지역 도감 — 층 테마 여섯 곳에 처음 닿으면 등록된다",
    "도감 완성 — 지역 전부를 밟으면 한 번만 보상"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098). 도감 완성은 「유적」 칸으로 봄(마지막 하나 → 금 1200 한 번)."
  },
  {
   "id": "dg.auto",
@@ -543,11 +546,12 @@
    "자동 — 축복은 축·희귀도가 높은 쪽을 고른다 (2026-09-18, §5.1)",
    "자동 — 던전을 실제로 굴리면 층이 내려간다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098)."
  },
  {
   "id": "dg.minimap",
@@ -569,11 +573,12 @@
    "전체 지도 — 비율 계산이 방 비율을 그대로 지킨다",
    "코너 미니맵 지형(PLAN §28-8 후속, 2026-09-06) — 마을 발판 칸은 town 색, 밝힌 칸만 낸다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098). 이야기 장면이 떠 있는 동안은 장면이 키를 먹어 M 이 안 먹는다(일부러) — 장면을 넘기고 봄."
  },
  {
   "id": "dg.dungeon3d",
@@ -741,10 +746,11 @@
    "월드 보스 — 75초가 지나면 도주 처리되고 보상은 정확히 30% 다 (§5.4)",
    "월드 보스 — 같은 슬롯은 두 번 보상하지 않는다 (§5.4)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098)."
  }
 ]
