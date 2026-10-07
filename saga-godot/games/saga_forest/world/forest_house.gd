@@ -69,6 +69,8 @@ const FURNITURE_GLB := {
 	"cushion": ["cushion_01", 0.15], "table": ["low_table_01", 0.35], "lamp": ["candlestick_01", 0.7], "vase": ["jar_01", 0.6],
 	"brazier": ["brazier_01", 0.55], "chest": ["trunk_01", 0.55], "screen": ["screen_folding_01", 1.2], "plant": ["flower_patch_01", 0.45],
 }
+## G-0062 — 키별 덮어쓰기(모양 공용 GLB 보다 더 맞는 것): 서안 = 낮은 책상 · 문갑 = 낮은 장 · 도자기 = 키 큰 병 · 등잔 = 기름 등잔.
+const KEY_GLB := {"seoan": ["desk_01", 0.4], "mungab": ["cabinet_low_01", 0.5], "dokja": ["vase_tall_01", 0.7], "deungjan": ["oil_lamp_01", 0.4]}
 const FINISH_SHOP_RADIUS := 1.6
 
 ## FOREST 콘텐츠 확장 1호(가구) — 웹판 home.js "놓기·집어 들기"를
@@ -641,7 +643,7 @@ func _spawn_furniture_visual(entry: Dictionary) -> void:
 	if f.is_empty() or _interior_node == null:
 		return
 	var mi := MeshInstance3D.new()
-	var glb: Array = FURNITURE_GLB.get(String(f.form), [])
+	var glb: Array = KEY_GLB.get(String(f.key), FURNITURE_GLB.get(String(f.form), []))
 	var gm: Mesh = GLBUtils.extract_mesh("res://assets/world/%s.glb" % glb[0]) if not glb.is_empty() else null
 	if gm != null:   # G-0047 — 있는 world GLB(자기 재질), 목표 높이로 배율·바닥에 앉힘
 		var a := gm.get_aabb()

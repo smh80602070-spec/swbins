@@ -23,7 +23,8 @@ const SHADOW_MIN_H := 1.2
 const TRIES := 14
 
 ## 큰 것(충돌 상자를 준다). 나머지는 보기만.
-const SOLID := ["modern_block_01", "hanok_01", "haystack_01", "crate_stack_01", "ox_cart_01", "sack_pile_01", "street_lamp_01",
+const SOLID := ["barn_01", "caravan_wagon_01", "jp_minka_01", "silkroad_house_01", "chinese_hall_01", "tent_large_01", "inn_01", "future_dome_01",   # G-0062
+	"modern_block_01", "hanok_01", "haystack_01", "crate_stack_01", "ox_cart_01", "sack_pile_01", "street_lamp_01",
 	"stone_lantern_01", "signal_pylon_01", "notice_board_01", "rubble_wall_01", "mine_cart_01", "handcart_01", "well_01", "scarecrow_01"]
 
 ## 표 자리를 모을 스크립트(상수만 읽는다) — Dictionary {"region": R, "cell": Vector2} 또는 R 과 Vector2(i) 가 같이 든 배열.
@@ -64,6 +65,10 @@ const PLAN := {
 		["c", "rock_small_01", Vector2(4.0, 4.0), 30, 170.0],
 		["c", "bush_01", Vector2(4.0, 4.0), 24, 170.0],
 		["c", "bush_02", Vector2(4.0, 4.0), 20, 170.0],
+		# G-0062 — 과거 장터 주막 · 미래 탑 둥근 지붕·홀로 지구본
+		["c", "inn_01", Vector2(1.4, 4.8), 1, 50.0],
+		["c", "future_dome_01", Vector2(5.6, 1.4), 1, 50.0],
+		["c", "hologram_globe_01", Vector2(4.2, 1.6), 3, 40.0],
 	],
 	"vault": [
 		# 과거 곳간 마을·밭
@@ -93,6 +98,13 @@ const PLAN := {
 		["c", "bush_01", Vector2(4.0, 4.0), 24, 170.0],
 		["c", "stump_01", Vector2(3.0, 4.6), 10, 100.0],
 		["c", "haystack_01", Vector2(5.4, 6.8), 4, 50.0],
+		# G-0062 — 밭에 밀(자람·새싹) · 곳간 · 짐수레 · 모닥불 · 이정표
+		["c", "wheat_growing_01", Vector2(2.0, 7.0), 16, 40.0],
+		["c", "wheat_sprout_01", Vector2(2.8, 7.2), 12, 36.0],
+		["c", "barn_01", Vector2(5.8, 7.0), 1, 80.0],   # 마을 서쪽은 빈터가 좁아 남동 벌판(볏가리 곁)
+		["c", "caravan_wagon_01", Vector2(3.0, 5.4), 1, 40.0],
+		["c", "campfire_logs_01", Vector2(5.4, 6.4), 2, 40.0],
+		["c", "signpost_01", Vector2(3.4, 3.2), 2, 50.0],
 	],
 	"fork": [
 		# 옛 고을 마당 — 한옥·장독·돌담·볏가리
@@ -123,6 +135,15 @@ const PLAN := {
 		["c", "rock_small_01", Vector2(4.0, 4.0), 24, 170.0],
 		["c", "bush_01", Vector2(4.0, 4.0), 24, 170.0],
 		["c", "stump_01", Vector2(4.0, 4.0), 10, 170.0],
+		# G-0062 — 세 갈래 = 세 땅: 일본 민가·비단길 집·중국 전각 · 대숲 · 갈림길 깃대·횃대 · 공사장 천막
+		["c", "jp_minka_01", Vector2(2.0, 6.6), 1, 60.0],
+		["c", "silkroad_house_01", Vector2(6.4, 6.4), 1, 60.0],
+		["c", "chinese_hall_01", Vector2(1.8, 2.6), 1, 60.0],
+		["c", "bamboo_clump_01", Vector2(1.4, 5.4), 8, 70.0],
+		["c", "banner_pole_01", Vector2(4.0, 4.0), 6, 40.0],
+		["c", "torch_stand_01", Vector2(3.8, 3.8), 6, 40.0],
+		["c", "tent_large_01", Vector2(6.4, 2.2), 1, 50.0],
+		["c", "tent_small_01", Vector2(6.8, 3.0), 2, 40.0],
 	],
 }
 
