@@ -1675,11 +1675,13 @@
   "id": "gd.fs.heart-icon",
   "name": "하트 아이콘 배선",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "forest_hearts"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0064",
   "since": "2026-09-22"
  },
  {

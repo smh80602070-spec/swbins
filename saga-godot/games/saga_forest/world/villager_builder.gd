@@ -349,22 +349,33 @@ func _open_interact_menu(v: Dictionary) -> void:
 ## 하트 10개(채움/빔)를 그린다 — 패널 내부에 끼워 넣지 않는 건 그 스크립트가
 ## 5판 39곳에서 같은 모양(제목+버튼 목록)만 가정하고 있어, 새 줄 하나 때문에
 ## 공유 코드를 건드리고 싶지 않아서다.
-func _add_heart_row(layer: CanvasLayer, heart: int) -> void:
+## G-0064 — 자리는 패널 위 끝에서 잰다(G-0052 에서 선택 창이 커지고 가운데 정렬이 돼 옛 고정 자리 -146 은 창 안 제목에 겹쳤다).
+const HEART_PX := 40.0   # 그림 안 하트가 칸의 절반쯤이라(여백) 28 은 가로 창에서 8px 로 보였다
+const HEART_GAP := 4
+static func _add_heart_row(layer: CanvasLayer, heart: int) -> void:
+	var panel_top := -120.0
+	for c in layer.get_children():
+		if c is PanelContainer:
+			panel_top = (c as PanelContainer).offset_top
+			break
+	var w := HEART_PX * 10.0 + HEART_GAP * 9.0
 	var row := HBoxContainer.new()
+	row.name = "HeartRow"
 	row.anchor_left = 0.5
 	row.anchor_right = 0.5
 	row.anchor_top = 0.5
 	row.anchor_bottom = 0.5
-	row.offset_left = -90.0
-	row.offset_right = 90.0
-	row.offset_top = -146.0
-	row.offset_bottom = -124.0
-	row.add_theme_constant_override("separation", 2)
+	row.offset_left = -w * 0.5
+	row.offset_right = w * 0.5
+	row.offset_bottom = panel_top - 6.0
+	row.offset_top = row.offset_bottom - HEART_PX
+	row.add_theme_constant_override("separation", HEART_GAP)
 	layer.add_child(row)
 	for i in range(10):
 		var t := TextureRect.new()
 		t.texture = HEART_ICON_FILLED if i < heart else HEART_ICON_EMPTY
-		t.custom_minimum_size = Vector2(16.0, 16.0)
+		t.custom_minimum_size = Vector2(HEART_PX, HEART_PX)
+		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		row.add_child(t)
 
