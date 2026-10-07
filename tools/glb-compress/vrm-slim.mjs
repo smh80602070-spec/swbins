@@ -11,15 +11,21 @@
  * 뼈·스킨·재질·텍스처·애니메이션은 한 글자도 안 건드린다. `extensions.VRM`(메타·휴머노이드)은 통째 다시 붙인다
  * (gltf-transform 이 모르는 확장이라 떨어뜨린다) — 단 blendShapeMaster 의 모프 결합은 가리킬 곳이 없어 비운다.
  *
- * 사용법: node vrm-slim.mjs <입력.glb> [출력.glb]   (출력 생략 시 입력을 덮어쓴다)
+ * 사용법: node vrm-slim.mjs <입력.glb> [출력.glb] [--keep-morph Fcl_MTH_A,Fcl_EYE_Close,…]   (출력 생략 시 입력을 덮어쓴다)
+ * --keep-morph(K-0078): 이름 끝(`Fcl_…`)이 목록에 든 모프만 남기고 나머지만 뗀다 — 입·눈 깜박임용. 남은 모프 이름은
+ *   `extras.targetNames` 에 `Fcl_MTH_A` 처럼 접두 없이 적는다(샘플마다 접두가 달라 엔진이 이름으로 찾기 어렵다).
  * 다섯 판 복사본은 md5 가 같아야 하니 **한 번만 돌려 나온 파일을 다섯 곳에 복사**한다.
  */
 import fs from 'node:fs';
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 
-const [, , inp, outArg] = process.argv;
-if (!inp) { console.error('사용법: node vrm-slim.mjs <입력.glb> [출력.glb]'); process.exit(1); }
+const argv = process.argv.slice(2);
+const ki = argv.indexOf('--keep-morph');
+const KEEP = ki >= 0 ? new Set(argv.splice(ki, 2)[1].split(',').filter(Boolean)) : new Set();
+const [inp, outArg] = argv;
+if (!inp) { console.error('사용법: node vrm-slim.mjs <입력.glb> [출력.glb] [--keep-morph 이름,…]'); process.exit(1); }
+const fclName = (n) => { const i = String(n).lastIndexOf('Fcl_'); return i >= 0 ? String(n).slice(i) : String(n); };
 const out = outArg || inp;
 
 function readJson(buf) {
@@ -36,15 +42,20 @@ const doc = await io.read(inp);
 const root = doc.getRoot();
 const buffer = root.listBuffers()[0];
 
-let primsBefore = 0, primsAfter = 0, targetsDropped = 0;
+let primsBefore = 0, primsAfter = 0, targetsDropped = 0, targetsKept = 0;
 
 for (const mesh of root.listMeshes()) {
-  mesh.setWeights([]);
   const prims = mesh.listPrimitives();
   primsBefore += prims.length;
+  const extras = mesh.getExtras() || {};
+  const names = Array.isArray(extras.targetNames) ? extras.targetNames : [];
+  const keepIdx = names.map((n, i) => (KEEP.has(fclName(n)) ? i : -1)).filter((i) => i >= 0);
   for (const p of prims) {
-    for (const t of p.listTargets()) { p.removeTarget(t); t.dispose(); targetsDropped++; }
+    const ts = p.listTargets();
+    ts.forEach((t, i) => { if (!keepIdx.includes(i)) { p.removeTarget(t); t.dispose(); targetsDropped++; } else { targetsKept++; } });
   }
+  mesh.setWeights(keepIdx.map(() => 0));
+  if (names.length) { mesh.setExtras(Object.assign({}, extras, { targetNames: keepIdx.map((i) => fclName(names[i])) })); }
   /* 재질(같은 mode) 별로 묶는다. 순서는 처음 나온 순서 그대로 */
   const groups = new Map();
   for (const p of prims) {
@@ -104,4 +115,4 @@ if (vrmExt) {
 
 fs.writeFileSync(out, final);
 console.log(`${inp.split(/[\\/]/).pop()}  ${(srcBuf.length / 1e6).toFixed(2)}MB → ${(final.length / 1e6).toFixed(2)}MB` +
-  `  프리미티브 ${primsBefore} → ${primsAfter}  모프 타깃 ${targetsDropped}개 뗌`);
+  `  프리미티브 ${primsBefore} → ${primsAfter}  모프 타깃 ${targetsDropped}개 뗌` + (KEEP.size ? ` · ${targetsKept}개 남김` : ''));

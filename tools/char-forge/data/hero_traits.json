@@ -1,0 +1,425 @@
+{
+ "note": "K-0078 — 도감 105 의 성별·차림 갈래(id 열쇠, 실제 인물 기준 판단). outfit_swap_plan.py 가 해시 대신 이 성별을 쓴다. 모르면 \"?\" (지금 0). 차림: armor 갑옷·naval 수군·robe 관복·학자·monk 승려·royal 왕실·tribal 부족·court 궁중 여인·plain 평복·근대. realm 194 는 아직 없음(해시 그대로).",
+ "heroes": {
+  "sg_guanyu": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_zhangfei": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_zhaoyun": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_zhugeliang": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_liubei": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "sg_machao": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_huangzhong": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_caocao": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "sg_simayi": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_xiahoudun": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_zhangliao": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_xunyu": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_sunquan": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "sg_zhouyu": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_luxun": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_taishici": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_ganning": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_lubu": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "sg_diaochan": {
+   "gender": "F",
+   "attire": "court"
+  },
+  "sg_pangtong": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_huatuo": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "sg_menghuo": {
+   "gender": "M",
+   "attire": "tribal"
+  },
+  "kr_yisunsin": {
+   "gender": "M",
+   "attire": "naval"
+  },
+  "kr_euljimundeok": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_ganggamchan": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_kimyusin": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_gyebaek": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_yeongaesomun": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_gwanggaeto": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_sejong": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "kr_jangyeongsil": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_choemuseon": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_daejoyeong": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_wanggeon": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "kr_jeongyakyong": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_heojun": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_sinsaimdang": {
+   "gender": "F",
+   "attire": "court"
+  },
+  "kr_ahnjunggeun": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr_yugwansun": {
+   "gender": "F",
+   "attire": "plain"
+  },
+  "kr_kimgu": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "kr_wonhyo": {
+   "gender": "M",
+   "attire": "monk"
+  },
+  "kr_kimjeongho": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_gwakjaeu": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "kr_nongae": {
+   "gender": "F",
+   "attire": "court"
+  },
+  "kr_yihwang": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_yii": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_hwanghui": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "kr_jeongmongju": {
+   "gender": "M",
+   "attire": "robe"
+  },
+  "jp_himiko": {
+   "gender": "F",
+   "attire": "royal"
+  },
+  "jp_taira": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_yoritomo": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_yoshitsune": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_murasaki": {
+   "gender": "F",
+   "attire": "court"
+  },
+  "jp_seishonagon": {
+   "gender": "F",
+   "attire": "court"
+  },
+  "jp_tomoegozen": {
+   "gender": "F",
+   "attire": "armor"
+  },
+  "jp_nobunaga": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_hideyoshi": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "jp_ieyasu": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_shingen": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_kenshin": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_masamune": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_yukimura": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "jp_musashi": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_hanzo": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_mitsukuni": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_naosuke": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_saigo": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "jp_ryoma": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_caesar": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_alexander": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_hannibal": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_charlemagne": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_joan": {
+   "gender": "F",
+   "attire": "armor"
+  },
+  "eu_napoleon": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_davinci": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_augustus": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "eu_scipio": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_leonidas": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_aurelius": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "eu_richard": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_william": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_harald": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "eu_frederick": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "eu_peter": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "eu_elizabeth": {
+   "gender": "F",
+   "attire": "royal"
+  },
+  "eu_nelson": {
+   "gender": "M",
+   "attire": "naval"
+  },
+  "eu_machiavelli": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_newton": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_michelangelo": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "eu_eleanor": {
+   "gender": "F",
+   "attire": "royal"
+  },
+  "wd_ashoka": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_akbar": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_saladin": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "wd_suleiman": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_ibnsina": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "wd_genghis": {
+   "gender": "M",
+   "attire": "armor"
+  },
+  "wd_khubilai": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_mansamusa": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_shaka": {
+   "gender": "M",
+   "attire": "tribal"
+  },
+  "wd_cleopatra": {
+   "gender": "F",
+   "attire": "royal"
+  },
+  "wd_pachacuti": {
+   "gender": "M",
+   "attire": "tribal"
+  },
+  "wd_moctezuma": {
+   "gender": "M",
+   "attire": "tribal"
+  },
+  "wd_ibnbattuta": {
+   "gender": "M",
+   "attire": "plain"
+  },
+  "wd_hammurabi": {
+   "gender": "M",
+   "attire": "royal"
+  },
+  "wd_attila": {
+   "gender": "M",
+   "attire": "armor"
+  }
+ }
+}

@@ -4,7 +4,9 @@
     py tools/char-forge/outfit_swap_plan.py --check    # 겹침·조각 존재·몸 원래 옷 그대로가 아닌지 검사만
 
 - 조각 목록은 `_out/parts/<샘플>/parts.json`(export_parts_all.sh). 슬롯: top · bottom · shoes · cloth(원피스: 상·하의 대신).
-- 성별은 명단에 없어 id 해시로 정한다(근거 없는 값 — 바꾸려면 plan 의 gender 만 고치고 다시 굽는다). 풀은 unity_bodies_plan 과 같다.
+- 성별은 명단에 없어 id 해시로 정한다(근거 없는 값). 풀은 unity_bodies_plan 과 같다.
+- K-0078: `data/hero_traits.json` 에 성별이 있는 인물(도감 105)은 그 성별을 따른다. 해시 성별과 같으면 줄 그대로,
+  다르면 그 사람만 맞는 풀에서 몸(덜 쓰인 것)·옷을 다시 고른다 — 나머지 줄은 안 바뀐다(다시 굽기를 바뀐 사람만).
 - 같은 샘플 풀 안에서만 섞는다(남자 몸에 치마 원피스가 가지 않게). 시드 고정 → 다시 돌려도 같다.
 """
 import json, os, sys, random, hashlib
@@ -14,6 +16,7 @@ PARTS = os.path.join(HERE, '_out', 'parts')
 FEMALE = list('abdefhijkmoqsuwy')
 MALE = list('cglnprvxz')              # t 는 재배포 불가라 뺀다
 OUT = os.path.join(HERE, 'data', 'outfit_swap_plan.json')
+TRAITS = os.path.join(HERE, 'data', 'hero_traits.json')
 
 
 def load_parts():
@@ -68,6 +71,52 @@ def build():
     return rows, parts
 
 
+def pick_kit(rng, g, pool, parts, body, used):
+    for _ in range(500):
+        dress = [L for L in pool if 'cloth' in parts[L]]
+        if dress and rng.random() < 0.3 and g == 'F':
+            kit = {'cloth': rng.choice(dress), 'shoes': rng.choice([L for L in pool if 'shoes' in parts[L]])}
+        else:
+            kit = {'top': rng.choice([L for L in pool if 'top' in parts[L]]),
+                   'bottom': rng.choice([L for L in pool if 'bottom' in parts[L]]),
+                   'shoes': rng.choice([L for L in pool if 'shoes' in parts[L]])}
+        key = (body, tuple(sorted(kit.items())))
+        if key in used or all(v == body for v in kit.values()):
+            continue
+        if 'cloth' not in kit and sum(v == body for v in kit.values()) > 1:
+            continue
+        return kit
+    return None
+
+
+def apply_traits(rows, parts):
+    """hero_traits.json 성별과 다른 줄만 다시 고른다(K-0078). 바뀐 id 목록을 돌려준다."""
+    if not os.path.exists(TRAITS):
+        return []
+    tr = json.load(open(TRAITS, encoding='utf-8'))['heroes']
+    used = {(r['body'], tuple(sorted(r['kit'].items()))) for r in rows}
+    changed = []
+    for r in rows:
+        g = tr.get(r['id'], {}).get('gender')
+        if g not in ('M', 'F') or g == r['gender']:
+            continue
+        pool = [L for L in (MALE if g == 'M' else FEMALE) if L in parts]
+        rng = random.Random(int(hashlib.md5(('k78' + r['id']).encode()).hexdigest(), 16))
+        n = {L: 0 for L in pool}
+        for q in rows:
+            if q['body'] in n:
+                n[q['body']] += 1
+        body = min(pool, key=lambda L: (n[L], rng.random()))
+        used.discard((r['body'], tuple(sorted(r['kit'].items()))))
+        kit = pick_kit(rng, g, pool, parts, body, used)
+        if kit is None:
+            raise SystemExit('조합을 못 찾음(성별 표): ' + r['id'])
+        used.add((body, tuple(sorted(kit.items()))))
+        r.update(gender=g, body=body, kit=kit)
+        changed.append(r['id'])
+    return changed
+
+
 def check(rows, parts):
     errs = []
     seen = set()
@@ -86,6 +135,9 @@ def check(rows, parts):
 
 if __name__ == '__main__':
     rows, parts = build()
+    changed = apply_traits(rows, parts)
+    if changed:
+        print('성별 표로 바뀐 인물', len(changed), ':', ','.join(changed))
     errs = check(rows, parts)
     bodies = {}
     for r in rows:
