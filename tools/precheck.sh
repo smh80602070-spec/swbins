@@ -102,8 +102,17 @@ over=''   # CRLF 로 체크아웃된 작업본이 저장소(LF) 크기보다 줄
 while read -r f; do lim=6144; case "$f" in tasks/sheets/*) lim=16384;; esac; [ "$(tr -d '\r' <"$f" | wc -c)" -gt "$lim" ] && over="$over$f"$'\n'; done < <(find tasks -name '*.md' -size +5000c 2>/dev/null)   # 확인 시트(tasks/sheets)는 사람에게 보내는 답안지라 16KB — 세션이 매번 읽는 티켓·큐만 6KB
 if [ -n "$over" ]; then printf '%s' "$over" | while read -r f; do echo "OVER $f > 6144B"; done; badfiles "$(printf '%s' "$over" | sed 's/^/FAIL /')"; else echo "ok   tasks/**/*.md 전부 6144B 이하"; fi
 
-echo "== 정본 범주 반영 (tools/asset-audit/reflect.py --categories · K-0073, WARN 만)"
-if [ -d saga-assets ]; then PYTHONIOENCODING=utf-8 py tools/asset-audit/reflect.py --categories 2>/dev/null || echo "WARN reflect.py --categories 실행 실패(py 없음?)"; fi
+echo "== 정본 범주 반영 (tools/asset-audit/reflect.py --categories · K-0073, 새 범주 FAIL — tools/reflect-allow.txt 는 봐줌 · W-0086)"
+if [ -d saga-assets ]; then
+  if rout=$(PYTHONIOENCODING=utf-8 py tools/asset-audit/reflect.py --categories 2>/dev/null); then
+    echo "$rout"
+    allow=$(tr -d '\r' < tools/reflect-allow.txt 2>/dev/null | grep -v '^\s*#' | sed 's/\s*$//' | grep -v '^$')
+    warned=$(printf '%s\n' "$rout" | tr -d '\r' | sed -n 's/^WARN 정본 범주[^:]*: //p' | tr ',' '\n' | sed 's/^\s*//;s/\s*$//' | grep -v '^$')
+    newc=''; for c in $warned; do printf '%s\n' "$allow" | grep -qxF "$c" || newc="$newc $c"; done
+    for c in $allow; do printf '%s\n' "$warned" | grep -qxF "$c" || echo "ok   허용 목록에서 지워도 됨: $c"; done
+    if [ -n "$newc" ]; then echo "FAIL 새 정본 범주가 화면에 안 쓰임:$newc — 배선 티켓을 먼저 닫거나 tools/reflect-allow.txt 에 이유와 함께"; fail=1; fi
+  else echo "WARN reflect.py --categories 실행 실패(py 없음?)"; fi
+fi
 
 echo "== features.json 스키마 (saga-web/*/features.json · tools/features-schema.json)"
 if ls saga-web/*/features.json >/dev/null 2>&1; then
