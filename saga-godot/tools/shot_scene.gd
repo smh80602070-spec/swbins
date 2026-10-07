@@ -71,6 +71,7 @@ const CUTS := [
 	# G-0060 — 성유물 없음 / ★5 Lv20 다섯(메모리에서만, tools/shot_armor.gd), 팔 3.2m 근접
 	["go_armor_none", GO, [["static", "res://tools/shot_armor.gd", "dress", ["@tree", false]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.2]]],
 	["go_armor_full", GO, [["static", "res://tools/shot_armor.gd", "dress", ["@tree", true]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.2]]],
+	["go_assist", GO, [["static", "res://tools/shot_assist.gd", "stage", ["@tree"]]]],   # G-0071 협공 — 찍기 직전 대기 동료가 끼어든다(명단은 메모리에서만)
 	["rk_orders", REALM, [["free_modal"], ["call", "RealmHUD/OrderButton", "_on_pressed", []]]],   # G-0052 — 긴 글 열 줄 선택 창
 	["rk_duel", REALM, [["free_modal"], ["call", "RealmHUD/AttackButton", "_duel_round", ["enemy", []]]]],
 ]

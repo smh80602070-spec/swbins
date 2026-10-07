@@ -23,7 +23,7 @@ const CompanionFollow := preload("res://saga_core/world/companion_follow.gd")
 
 ## 점검(SAGA_*_PROBE)은 실제 세이브를 불러온 채 돌고 명단을 members 로 바꿔 끼운다 — 편성(㉝)으로 줄여 둔 자리 수가 점검을 흔들지 않게.
 const PROBES := ["ADVENTURE", "ARTIFACT", "TREASURE", "FIELD_BOSS", "SHARD", "MAP", "COOK", "STORY", "DOMAIN", "WEEKLY", "COMMISSION", "GROWTH",
-	"TALENT", "SIGHT", "TRAVERSAL", "COMBAT", "PERF", "KIT", "ELEMENT", "WEAPON", "LAYOUT", "ARCHERY", "QMAP", "FISH", "ACHIEVE", "DISPATCH", "FROST", "STORY2"]
+	"TALENT", "SIGHT", "TRAVERSAL", "COMBAT", "PERF", "KIT", "ELEMENT", "WEAPON", "LAYOUT", "ARCHERY", "QMAP", "FISH", "ACHIEVE", "DISPATCH", "FROST", "STORY2", "ASSIST"]
 
 static func _any_probe() -> bool:
 	for p in PROBES:
@@ -202,6 +202,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_traversal.gd").new())
 	if OS.get_environment("SAGA_COMBAT_PROBE") != "":
 		add_child(load("res://tools/probe_field_combat.gd").new())
+	if OS.get_environment("SAGA_ASSIST_PROBE") != "": # G-0071 협공
+		add_child(load("res://tools/probe_assist.gd").new())
 	## G-0018 전투·이동 손맛 기준선 측정 — 측정할 때만 붙인다.
 	if OS.get_environment("SAGA_FEEL_PROBE") != "":
 		add_child(load("res://tools/probe_feel.gd").new())

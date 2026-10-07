@@ -32,6 +32,7 @@ const Kits := preload("res://games/saga_go/data/kits.gd")
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const AimedShot := preload("res://games/saga_go/combat/aimed_shot.gd")
 const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
+const FieldAssist := preload("res://games/saga_go/combat/field_assist.gd")
 
 const COMBO_MUL := [0.35, 0.4, 0.6]
 const COMBO_SEC := [0.32, 0.32, 0.45]
@@ -205,6 +206,9 @@ var _heavy := false # 지금 치는 게 강공격·낙하·양손검인가(쇄�
 var _crit_id := "" # 지금 치는 인물(치명타 굴림) — 비었으면 치명타 없음(점검이 _deal 을 바로 부를 때)
 var force_crit := false # 106장 ㊵ 급소 화살 — 이 한 방은 반드시 치명타
 var aim: Node = null # 106장 ㊵ 활 조준 사격(combat/aimed_shot.gd)
+var assist: Node = null # G-0071 협공(combat/field_assist.gd)
+var since_hit := 99.0 # G-0071 지금 인물이 마지막으로 적을 친 뒤 지난 초
+var last_target: Node3D = null # G-0071 지금 인물이 마지막으로 친 적
 var _rng := RandomNumberGenerator.new()
 
 func _ready() -> void:
@@ -217,6 +221,9 @@ func _ready() -> void:
 	aim = AimedShot.new()
 	aim.name = "AimedShot"
 	add_child(aim)
+	assist = FieldAssist.new()
+	assist.name = "FieldAssist"
+	add_child(assist)
 	_refresh_hud()
 
 ## 새 입력 액션·키는 project.godot 를 고치지 않고 여기서 등록한다(GO 만 — 다른 판엔 안 샌다).
@@ -514,6 +521,7 @@ func _physics_process(delta: float) -> void:
 			if not (Weapons.type_of(active_id()) == "bow" and aim.enter(true)):
 				charged_attack()
 	_since_hurt += delta
+	since_hit += delta
 	if _burn_left > 0 and hp > 0.0:
 		_burn_t -= delta
 		if _burn_t <= 0.0:
@@ -1167,6 +1175,10 @@ func _enemies_near(pos: Vector3, radius: float) -> Array:
 
 ## 한 번의 타격. 원소가 있으면 적의 부착 원소와 반응을 본다. 실제 준 피해를 돌려준다.
 func _deal(enemy: Node, base: float, element: String, dir: Vector3) -> float:
+	## G-0071 협공이 보는 "싸우는 중" — 지금 인물이 친 것만(협공은 그 동료 id 로 친다).
+	if _crit_id != "" and _crit_id == active_id():
+		since_hit = 0.0
+		last_target = enemy as Node3D
 	## 원소 방패가 있으면 반응·부착 없이 방패만 깎는다(106장 ⑦).
 	if enemy.call("is_shielded"):
 		last_reaction = ""
