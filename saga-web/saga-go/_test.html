@@ -176,6 +176,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/net.js"></script>
 <script src="js/ai.js"></script>
 <script src="js/auto.js"></script>
+<script src="js/party-sheet.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/game.js"></script>
 <script>
@@ -2730,6 +2731,21 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       });
       DG.ui.closeSheet();
       return bad.length ? false : (names.length + '/' + names.length + ' 정상');
+    });
+
+    t('go.party: 동행 시트(W-0092) — 나 한 장·동행 칸 수 = 편성 MAX·채운 칸은 무기/보패 줄·카드 누르면 인물 상세', function () {
+      var FM = DG.formation, max = FM ? FM.MAX : 5, s = C.save, h = DG.data.heroes[0], keep = s.party.slice();
+      if (!s.dex.heroes[h.id]) { s.dex.heroes[h.id] = { count: 1, firstAt: 1 }; }
+      s.party = [h.id];
+      DG.ui.openSheet('party');
+      var body = document.getElementById('sheet-body'), cards = body.querySelectorAll('.pc-card'), me = body.querySelector('.pc-me');
+      var filled = body.querySelector('.pc-card[data-id="' + h.id + '"]'), gear = filled ? filled.querySelectorAll('.pc-gear').length : 0;
+      if (filled) { filled.click(); }
+      var det = document.getElementById('detail'), opened = !!(det && det.classList.contains('show'));
+      if (DG.ui.closeDetail) { DG.ui.closeDetail(); }
+      DG.ui.closeSheet(); s.party = keep;
+      var want = (DG.weapon ? 1 : 0) + (DG.artifact ? 1 : 0);
+      return !!me && cards.length === max && gear === want && opened && ('칸 ' + cards.length + ' · 장비 줄 ' + gear + ' · 상세 열림') || ('실패 나 ' + !!me + ' · 칸 ' + cards.length + '/' + max + ' · 장비 줄 ' + gear + '/' + want + ' · 상세 ' + opened);
     });
 
     t('근처 대상 조회', function () {

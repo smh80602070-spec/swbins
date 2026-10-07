@@ -614,5 +614,24 @@
   "ticket": "W-0015",
   "since": "2026-10-01",
   "note": "D2: saga-web/tools/playcheck/pw-go-close1.mjs 8/8 — results/pw-go-close1.json(W-0087). 걷기는 실제 ↑ 키 50m, 등용·포획·상자는 그 화면이 쏘는 사건(dex:new·treasure:open)으로, 사명 창은 독 단추."
+ },
+ {
+  "id": "go.party",
+  "name": "동행 시트(👤) — 나(칭호·모험 등급·경험·금·명성) + 동행 다섯 칸(초상·⚔자리·레벨·능력·무기·보패 낀 부위/세트), 카드 → 인물 상세",
+  "files": [
+   "js/party-sheet.js",
+   "src/ui/01.js",
+   "index.html",
+   "css/style.css"
+  ],
+  "tests": [
+   "go.party: 동행 시트(W-0092) — 나 한 장·동행 칸 수 = 편성 MAX·채운 칸은 무기/보패 줄·카드 누르면 인물 상세"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "W-0092",
+  "since": "2026-10-07",
+  "note": "D2: saga-web/tools/playcheck/pw-go-party.mjs 6/6(PC·폰) — results/pw-go-party.json(W-0092). 사용자 10-07 \"내 캐릭터 정보 볼 곳이 없다 — 동행도, 장비 착용여부도\"."
  }
 ]

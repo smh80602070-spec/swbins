@@ -115,6 +115,7 @@
    "js/net.js",
    "js/ai.js",
    "js/auto.js",
+   "js/party-sheet.js",
    "js/ui.js",
    "js/game.js"
   ]
@@ -234,6 +235,7 @@
    "js/net.js",
    "js/ai.js",
    "js/auto.js",
+   "js/party-sheet.js",
    "js/ui.js",
    "js/game.js"
   ]

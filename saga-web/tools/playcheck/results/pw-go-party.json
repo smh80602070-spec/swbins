@@ -1,0 +1,39 @@
+{
+ "script": "pw-go-party.mjs",
+ "game": "saga-go",
+ "pass": 6,
+ "total": 6,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "PC 새 세이브 — 독 👤 단추로 「동행」 시트가 열리고 나 한 장·빈 칸 5개",
+   "ok": true,
+   "detail": "{\"title\":\"👤 동행\",\"me\":true,\"cards\":5,\"empty\":5,\"max\":5}"
+  },
+  {
+   "name": "PC 동행 다섯 — 칸마다 이름·능력·무기·보패 줄, 시트가 가로로 넘치지 않고, 카드를 누르면 인물 상세가 열린다",
+   "ok": true,
+   "detail": "{\"b\":{\"n\":5,\"gearRows\":[2,2,2,2,2],\"first\":\"⚔1 정복왕 ★★★★★\",\"weapon\":\"🔱 ★1 수련용 장대 · 공격 20\",\"over\":false,\"want\":2,\"party\":5},\"c\":{\"open\":true,\"text\":\"✕정복왕征服王高 고구려한국사전설 ★★★★★武Lv.1경험치 0 / 28 · 성장 배율 ×1.00🧭 동행 중무\"}}"
+  },
+  {
+   "name": "PC 페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "폰 새 세이브 — 독 👤 단추로 「동행」 시트가 열리고 나 한 장·빈 칸 5개",
+   "ok": true,
+   "detail": "{\"title\":\"👤 동행\",\"me\":true,\"cards\":5,\"empty\":5,\"max\":5}"
+  },
+  {
+   "name": "폰 동행 다섯 — 칸마다 이름·능력·무기·보패 줄, 시트가 가로로 넘치지 않고, 카드를 누르면 인물 상세가 열린다",
+   "ok": true,
+   "detail": "{\"b\":{\"n\":5,\"gearRows\":[2,2,2,2,2],\"first\":\"⚔1 정복왕 ★★★★★\",\"weapon\":\"🔱 ★1 수련용 장대 · 공격 20\",\"over\":false,\"want\":2,\"party\":5},\"c\":{\"open\":true,\"text\":\"✕정복왕征服王高 고구려한국사전설 ★★★★★武Lv.1경험치 0 / 28 · 성장 배율 ×1.00🧭 동행 중무\"}}"
+  },
+  {
+   "name": "폰 페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}
