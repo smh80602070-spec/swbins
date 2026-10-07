@@ -130,7 +130,7 @@ const FLY_TURN := 5.0
 var combat: Node = null
 var aiming := false # 106장 ㊵ 활 조준 중(combat/aimed_shot.gd 가 켜고 끈다)
 
-var _glider: MeshInstance3D = null
+var _glider: Node3D = null
 var _ring: StaminaRing = null
 
 ## G-0024 — 편성원 id("self" = 주인공)의 몸으로 교체. dex 몸이 설치돼 있을 때만(없으면 지금 몸 그대로).
@@ -809,7 +809,7 @@ func _anim_scale(s: float) -> void:
 func _apply_pose(delta: float) -> void:
 	var target := 0.0
 	if mode == Mode.GLIDE:
-		target = deg_to_rad(55.0)
+		target = deg_to_rad(GLIDE_PITCH)
 	elif mode == Mode.SWIM:
 		target = deg_to_rad(72.0)
 	_pose_pitch = lerpf(_pose_pitch, target, clampf(8.0 * delta, 0.0, 1.0))
@@ -817,8 +817,28 @@ func _apply_pose(delta: float) -> void:
 	visual.rotation = Vector3(_pose_pitch, _yaw, 0.0)
 	visual.position = Vector3.UP * CHEST - b * (Vector3.UP * CHEST) + Vector3.UP * ride_height
 
-## 활공 날개 — 어깨 위로 펼친 연 모양 천 두 장(코드로 그린다, 원작 에셋 아님).
-func _build_glider() -> MeshInstance3D:
+## G-0072 활공 날개 — 자체툴 글라이더(assets/world/glider_01.glb, K-0077: 원점 = 손잡이 막대 가운데, Blender +y 앞).
+## glTF 로 오면 앞이 -z 라 y 180° 돌려 몸 앞(+z)에 맞추고, 활공 땐 몸이 가슴 축으로 GLIDE_PITCH 숙이니 그만큼 되돌려
+## 날개가 땅과 나란히 — 막대는 머리 위 손 높이(GLIDER_BAR). 못 불러오면 옛 코드 삼각형.
+const GLIDER_GLB := "res://assets/world/glider_01.glb"
+const GLIDER_BAR := Vector3(0.0, 1.95, 0.05)
+const GLIDE_PITCH := 55.0
+
+func _build_glider() -> Node3D:
+	var ps := load(GLIDER_GLB) as PackedScene if ResourceLoader.exists(GLIDER_GLB) else null
+	if ps != null:
+		var holder := Node3D.new()
+		holder.name = "Glider"
+		var g := ps.instantiate() as Node3D
+		g.rotation.y = PI
+		holder.add_child(g)
+		holder.position = GLIDER_BAR
+		holder.rotation.x = -deg_to_rad(GLIDE_PITCH)
+		return holder
+	return _build_glider_code()
+
+## 옛 활공 날개 — 어깨 위로 펼친 연 모양 천 두 장(코드로 그린다). GLB 를 못 불러올 때만.
+func _build_glider_code() -> MeshInstance3D:
 	var l := Vector3(-1.35, 1.42, -0.35)
 	var r := Vector3(1.35, 1.42, -0.35)
 	var top := Vector3(0.0, 1.72, 0.22)

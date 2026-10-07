@@ -73,6 +73,7 @@ const CUTS := [
 	["go_armor_full", GO, [["static", "res://tools/shot_armor.gd", "dress", ["@tree", true]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.2]]],
 	["go_assist", GO, [["static", "res://tools/shot_assist.gd", "stage", ["@tree"]]]],   # G-0071 협공 — 찍기 직전 대기 동료가 끼어든다(명단은 메모리에서만)
 	["go_monsters", GO, [["static", "res://tools/shot_monsters.gd", "line_up", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0059 들판 여덟 종(SAGA_GLB_MONSTERS=1 이면 GLB 몸)
+	["go_glide", GO, [["static", "res://tools/shot_glide.gd", "lift", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0]]],   # G-0072 활공 날개(glider_01.glb)
 	["rk_orders", REALM, [["free_modal"], ["call", "RealmHUD/OrderButton", "_on_pressed", []]]],   # G-0052 — 긴 글 열 줄 선택 창
 	["rk_duel", REALM, [["free_modal"], ["call", "RealmHUD/AttackButton", "_duel_round", ["enemy", []]]]],
 ]

@@ -2623,6 +2623,22 @@
   "since": "2026-10-07"
  },
  {
+  "id": "gd.go.glider_model",
+  "name": "활공 날개 모델 — 코드 빨간 삼각형 둘 → 자체툴 글라이더 glider_01.glb(앞 = 몸 앞, 활공 숙임만큼 되돌려 땅과 나란히, 막대는 머리 위)",
+  "files": [
+   "games/saga_go/player/go_player.gd",
+   "tools/shot_glide.gd"
+  ],
+  "tests": [
+   "traversal"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0072",
+  "since": "2026-10-07"
+ },
+ {
   "id": "gd.go.graphics",
   "name": "설정 화질/성능 2단 — 성능이면 30fps·3D 해상도 0.75·MSAA·SSAO/SSIL/SDFGI 끔, user://graphics.cfg(다섯 판 공용 — 사가고 메뉴, 네 판 HUD \"화질\" 단추)",
   "files": [],
