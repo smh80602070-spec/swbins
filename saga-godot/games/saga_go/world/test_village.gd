@@ -215,6 +215,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_elements.gd").new())
 	if OS.get_environment("SAGA_WEAPON_PROBE") != "":
 		add_child(load("res://tools/probe_weapons.gd").new())
+	if OS.get_environment("SAGA_ARMOR_PROBE") != "": # G-0060 장비 외형
+		add_child(load("res://tools/probe_armor.gd").new())
 	if OS.get_environment("SAGA_ARTIFACT_PROBE") != "":
 		add_child(load("res://tools/probe_artifacts.gd").new())
 	if OS.get_environment("SAGA_TREASURE_PROBE") != "":

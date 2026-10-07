@@ -2597,6 +2597,19 @@
   "since": "2026-10-07"
  },
  {
+  "id": "gd.go.armor_visual",
+  "name": "장비 외형 — 낀 성유물이 갑옷 조각(eq GLB 54)으로: 꽃 가슴·깃 어깨·해시계 팔·술잔 다리·신·관 머리, 등급=강화, 시대=인물 era",
+  "files": [],
+  "tests": [
+   "armor"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0060",
+  "since": "2026-10-07"
+ },
+ {
   "id": "gd.st.fall",
   "name": "사가스토리 사냥터 쓰러짐 — 체력 0 이면 주운 금 절반 잃고 허도로(표준 F, 웹 die())",
   "files": [
