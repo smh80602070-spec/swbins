@@ -289,11 +289,13 @@
   "id": "gd.go.g1-pet-model",
   "name": "106장 ①~⑥ VRoid/코드 신수 모델",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "creature_bodies"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0066",
   "since": "2026-09-23"
  },
  {
@@ -1590,11 +1592,13 @@
   "id": "gd.fs.fusion-monsters",
   "name": "퓨전 몬스터 4+바이옴별 2~4종째",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "creature_bodies"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0066",
   "since": "2026-09-16"
  },
  {
@@ -2159,11 +2163,13 @@
   "id": "gd.rk.monster-sil",
   "name": "3D 몬스터 실루엣",
   "files": [],
-  "tests": [],
-  "level": "D0",
+  "tests": [
+   "creature_bodies"
+  ],
+  "level": "D2",
   "verified": null,
   "fun": {},
-  "ticket": null,
+  "ticket": "G-0066",
   "since": "2026-09-16"
  },
  {
