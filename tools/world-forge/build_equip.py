@@ -5,7 +5,8 @@
   blender -b --factory-startup -P tools/world-forge/build_equip.py -- --list
 
 **좌표 규약(엔진이 읽는 규칙)**: 조각의 원점 = 붙일 뼈의 머리(head) 위치, 몸은 T-자세(VRM 쉼 자세), 인물이 보는 쪽 = Blender -Y(glTF +Z).
-단위 m, 기준 몸 = UAL 표준 몸(골반 0.92m·어깨 1.44m). 엔진은 조각을 그 뼈의 자식으로 붙이고, 몸마다 `ref_len` 대비 뼈 길이 비로 균등 배율을 곱한다(`data/equip_slots.json`).
+단위 m, 모양은 UAL 표준 몸(골반 0.92m·어깨 1.44m)으로 짓고 마지막에 `FIT` 로 VRoid 몸에 맞춘다(K-0081, 실측 `data/equip_body_ref.json`).
+엔진은 조각을 그 뼈의 자식으로 붙이고 균등 배율 k(머리 뼈 높이/1.5)를 곱한다 — 가슴판은 가로만 어깨 폭 비율을 더 곱한다(`data/equip_slots.json` fit).
 슬롯 6 = head(J_Bip_C_Head)·chest(J_Bip_C_Chest)·shoulder(L UpperArm)·arm(L LowerArm)·leg(L LowerLeg)·boot(L Foot). shoulder·arm·leg·boot 는 **왼쪽** 한 짝만 있고 오른쪽은 X 축 -1 배율로 거울.
 GLB 안 빈 노드: `attach`(원점, 뼈 머리). license.json 에 `bone`(J_Bip 이름)·`slot`·`mirror`·`era`·`grade`.
 시대 = past(가죽·강철) / present(전술복·플라스틱) / future(흰 장갑·발광 띠). 등급 1 민무늬 · 2 장식·발광 한 줄 · 3 금·보석·크기 +8%.
@@ -653,6 +654,32 @@ def acc_names():
 
 # ---------------------------------------------------------------- 만들기
 
+# K-0081 — VRoid 몸 맞춤(조각을 다 지은 뒤 정점에 곱한다). 실측 = dex·realm 299, 엔진 배율 k 로 나눈 값(equip_body_ref.json):
+#   가슴(가슴뼈 기준 0~+0.15) 반폭 90분위 0.18~0.19 · 앞 0.13~0.14 · 등 0.13~0.14, 목뼈 +0.25(10분위)~+0.26, 등뼈 −0.12, 엉덩이뼈 −0.18 —
+#   UAL 흉갑은 반폭 0.168·등 0.10·윗선 +0.30 이라 등이 비치고 턱을 덮었다(G-0060 촬영). 가로는 어깨 폭 0.145 몸 기준 — 엔진이 몸마다 어깨 폭 비율을 곱한다.
+#   아래팔 둘레(소매 포함) 90분위 반지름 0.066(중앙값)~0.12 — 팔 보호대(0.044~0.058)를 굵힌다.
+FIT = {
+    'chest': {'sx': 1.19, 'front': 1.10, 'back': 1.40, 'ztop': 0.235 / 0.30},
+    'arm': {'radial': 1.25},
+}
+
+
+def fit_slot(M, slot):
+    f = FIT.get(slot)
+    if not f:
+        return
+    for v in M.bm.verts:
+        x, y, z = v.co
+        if slot == 'chest':
+            v.co.x = x * f['sx']
+            v.co.y = y * (f['front'] if y < 0 else f['back'])
+            if z > 0:
+                v.co.z = z * f['ztop']
+        elif slot == 'arm':
+            v.co.y = y * f['radial']
+            v.co.z = z * f['radial']
+
+
 ARMOR_IDS = [f'eq_{e}_{g}_{s}' for e in ERAS for g in (1, 2, 3) for s in SLOTS]
 ALL_IDS = ARMOR_IDS + acc_names()
 
@@ -668,6 +695,7 @@ def build_scene(pid, out, style):
         _, era, g, slot = pid.split('_')
         SLOT_FN[slot](C, Pal(C, era, int(g)))
         meta = {'kind': 'armor', 'era': era, 'grade': int(g), 'slot': slot, 'bone': BONE[slot], 'mirror': MIRROR[slot]}
+        fit_slot(C.M, slot)
         lim = 600
     else:
         f, bone, mirror = ACC[pid]

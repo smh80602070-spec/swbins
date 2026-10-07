@@ -58,5 +58,31 @@
  "ids": {
   "armor": "eq_<past|present|future>_<1|2|3>_<슬롯>",
   "accessory": "acc_<이름>"
+ },
+ "fit": {
+  "_": "K-0081 — 균등 배율 k 위에 더하는 몸 맞춤. 몸 실측(dex·realm 299): tools/world-forge/data/equip_body_ref.json",
+  "chest": {
+   "x_scale": "(shoulder_x / k) / ref_shoulder_x_m 를 clamp 로 자른 값을 가슴판 X 축에만 곱한다(Y·Z 는 k 그대로)",
+   "shoulder_x": "|J_Bip_L_UpperArm 머리.x − J_Bip_C_Chest 머리.x| (T-자세·몸 공간)",
+   "ref_shoulder_x_m": 0.145,
+   "clamp": [
+    0.75,
+    1.15
+   ],
+   "why": "어깨 폭과 몸통 폭 상관 0.69 — 마른 몸(여 중앙값 0.114 → 0.79배)에 가슴판이 상자처럼 남지 않게"
+  }
+ },
+ "hide_match": {
+  "_": "K-0081 — hides 칸 → 몸(VRoid) 재질 이름에 든 글자(대소문자 무시). 그 슬롯을 입으면 이 재질을 쓰는 메시를 숨긴다.",
+  "hair_top": [
+   "_Hair_"
+  ],
+  "clothing_top": [],
+  "clothing_shoes": [
+   "_Shoes_"
+  ],
+  "clothing_sleeve": [],
+  "clothing_bottom_lower": [],
+  "note": "VRoid 소매·원피스·기모노 치마는 상의(_Tops_) 한 메시라 숨기면 팔·다리가 맨살이 된다(10-07 확인 렌더: 원피스 몸이 다리째 사라짐) — clothing_top·sleeve 는 빈칸, 대신 가슴판을 VRoid 몸 90분위로 키워(build_equip FIT) 상의를 덮는다. 정강이 쪽 바지도 하의(_Bottoms_) 한 메시라 빈칸. _Hair_ 는 앞·윗머리만(뒷머리 _HairBack_ 은 남는다)."
  }
 }
