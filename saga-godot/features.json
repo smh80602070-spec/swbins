@@ -2953,5 +2953,23 @@
   "fun": {},
   "ticket": "G-0085",
   "since": "2026-10-08"
+ },
+ {
+  "id": "gd.fs.scenario-spring",
+  "name": "사가마을 이야기 봄 네 장(이사 오던 날·폐허의 옛 우체통·여우 화상의 봄 장터·사고를 채우다) — 가구·숲지기 곁·꽃밭·옛 우체통 표지·꽃 채집·기념 꽃놀이·하트·화석 기증·고르기, 공용 대화 창 saga_core/ui/talk_box.gd",
+  "files": [
+   "games/saga_forest/data/scenario.gd",
+   "games/saga_forest/world/scenario_runner.gd",
+   "saga_core/ui/talk_box.gd",
+   "tools/probe_scenario_forest.gd"
+  ],
+  "tests": [
+   "scenario_forest"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0086",
+  "since": "2026-10-08"
  }
 ]

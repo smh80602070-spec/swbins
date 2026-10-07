@@ -70,6 +70,8 @@ var museum_donated := 0     # 사고에 기증한 누적 개수(종 수가 아�
 ## THRESHOLD 참고) — 갈래(곤충·물고기·화석·조개·꽃·과일) 자체가 곧
 ## 웹판 번들 하나하나에 대응한다.
 var museum_donated_by_cat: Dictionary = {}  # item_label(String) -> int
+## G-0086 이야기 진행(data/scenario.gd fresh() 모양). 순수 추가 필드, 버전 안 올림.
+var scenario: Dictionary = {}
 var bundles_done: Dictionary = {}           # item_label(String) -> true(그 번들 완성)
 var village_bundle_grand_reward := false    # 웹판 "6개 완성 → 평가 상한 해제+깃발"의
                                              # 재해석 보상(사례금+깃발 장식)을 한 번만 준다
@@ -446,6 +448,7 @@ func save() -> bool:
 		"home_items": home_items,
 		"home_tier": home_tier,
 		"home_debt": home_debt,
+		"scenario": scenario,   # G-0086
 	}
 	return SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -512,6 +515,8 @@ func try_load() -> bool:
 	home_items = loaded_home_items if typeof(loaded_home_items) == TYPE_ARRAY else []
 	home_tier = int(data.get("home_tier", 0))
 	home_debt = int(data.get("home_debt", 0))
+	var loaded_scenario: Variant = data.get("scenario", {})   # G-0086 — 없으면(옛 세이브) 봄 1장부터
+	scenario = (loaded_scenario as Dictionary).duplicate(true) if typeof(loaded_scenario) == TYPE_DICTIONARY else {}
 
 	var pos: Array = data.get("player_pos", [])
 	if pos.size() != 3:

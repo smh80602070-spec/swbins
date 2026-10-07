@@ -1,0 +1,248 @@
+extends RefCounted
+## G-0086 — 사가마을 이야기 표(정본 `scenario/saga-forest.md` "하늘 금 우체통"). 봄 · 옛 우체통 네 장.
+## 대사·고르기는 웹 구현(saga-web/saga-forest/js/data-scenario.js SCENES)과 같다. 단계는 고돗 사가마을(바이옴 넷·주민 여섯·
+## 집 가구·박물관, 택배·폐허·행사 놀이 없음)에 맞춰 바꿨다 — 까닭은 티켓 G-0086 "단계 바꿈".
+## 엔진은 world/scenario_runner.gd, 진행은 ForestSaveState.scenario(fresh() 모양). 인물은 전부 가상(이름 정책). 싸움·실패 없음.
+##
+## 한 장 = {id, no, season, title, stage, mix{past,now,future}, steps, gold, blurb}
+##   steps 차례대로:
+##     {"t": "talk", "scene": id}                대화(고르기가 있으면 답이 choices[고르기 id])
+##     {"t": "place", "n": n}                    집에 놓인 가구 n 이상
+##     {"t": "visit", "npc": 주민 id, "why": 글}  그 주민 곁(4m)에 간다
+##     {"t": "biome", "key": 바이옴 키}          그 바이옴(meadow 꽃밭·dark 어둑숲·mush 버섯숲·rocky 바위 지대)에 든다
+##     {"t": "spot", "key": 명소 id, "label": 표지}  그 명소 곁(4m) — 이 단계 동안만 표지(코드 도형)가 선다
+##     {"t": "gather", "cat": 이름, "n": n}      이 단계 시작 뒤 그 갈래를 n 번 채집(채집 신호 "꽃 +1" 을 엔진이 센다)
+##     {"t": "fest", "key": 행사 키, "npc": 주민 id}  그 주민 곁에 가면 기념 놀이를 연다(그날이 아니어도 — 정본 "기념 놀이")
+##     {"t": "heart", "n": n}                    주민 누구든 하트 n 이상
+##     {"t": "donate", "cat": 이름, "n": n}      사고에 그 갈래를 n 점 이상 기증
+## 장면 = {"lines": [[누가, 말]…], "choice": {id, prompt, options:[{key,label}]}?} — 누가 = "me"(나) 또는 CAST 키.
+
+const CAST := {
+	"keeper": {"name": "숲지기 솔바람", "emoji": "🌲"},
+	"dareum": {"name": "택배 기사 달음", "emoji": "📦"},
+	"hoyeon": {"name": "여우 화상 호연", "emoji": "🦊"},
+	"k7": {"name": "시간 여행자 K-7", "emoji": "⌛"},
+}
+
+const SCENES := {
+	"move1": {"lines": [
+		["keeper", "이사 온 첫 밤이 저물었구려. 짐은 다 풀었소? 이 숲은 초가 지붕 사이로 별이 잘 들어오는 곳이라오."],
+		["me", "짐을 풀다 보니 저 하늘에 가느다란 금이 하나 보입니다. 별똥별이 지나간 자국인가요?"],
+		["keeper", "금이라니… 이 늙은이는 처음 보오. 우선 집에 가구 하나라도 놓고 보시오. 집이 서야 마음이 놓이지."],
+	]},
+	"move2": {"lines": [
+		["dareum", "으아아! 여기가 어디죠? 택배 기사 달음입니다! 금이 쫙 갈라지더니 이 소포와 함께 떨어졌어요."],
+		["dareum", "받는 이가 \"이 마을 새 이웃\"인데, 보낸 날짜가 먼 앞날이에요. 상자 속에서 빛 편지가 새어 나오고요."],
+		["keeper", "먼 앞날에서 온 소포라니. 접수대에 알려 배달 일부터 해 보시오. 그 길에 뭔가 보일 게요."],
+	]},
+	"post1": {"lines": [
+		["keeper", "빛 편지가 가리키는 곳이 있소 — 탑성 폐허의 옛 우체통이오. 오래전 이곳을 오가던 편지가 지금도 쌓여 있다 하오."],
+		["dareum", "억새 바람벌을 지나서 폐허까지 가면 된대요! 폐허 옆에는 오래된 공중전화가 서 있다던데, 우체통이 왜 전화 곁에 있을까요."],
+	]},
+	"post2": {"lines": [
+		["me", "우체통이 정말 있었습니다. 안에는 붓글씨 편지, 택배 송장, 빛나는 홀로그램 도장이 찍힌 편지까지 섞여 있어요."],
+		["keeper", "여러 시대의 편지가 한 통에 쌓였구려. 이 우체통이 버려진 채 오래 되어 시대 사이 우체통이 된 모양이오."],
+		["dareum", "그럼 하늘의 금은 이 우체통이 부른 길이에요? 이 편지들을 마을로 배달해 봐요!"],
+	]},
+	"fox1": {"lines": [
+		["hoyeon", "어이쿠, 금 사이로 넘어와 버렸군. 여우 화상 호연이오. 시대를 잃은 물건을 파는 장사꾼이지. 이 빛 부채는 앞날 것이고, 저 옛 방울은 이 땅 것이오."],
+		["me", "삼짇날 꽃놀이를 연다는 소문이 있던데요, 장터를 그날 맞춰 열 수 있을까요?"],
+		["hoyeon", "꽃 다섯 송이만 모아 오시오. 꽃놀이에 쓸 꽃 좌판을 내가 펼치겠소."],
+	]},
+	"fox2": {"lines": [
+		["hoyeon", "꽃놀이 안내판 곁에 좌판을 폈소. 확성기가 딸린 장터라 소리가 멀리 가지. 꽃놀이를 마치면 이 마을에서 장사를 해도 되겠소?"],
+		["keeper", "이 마을에는 새 이웃이 반갑소. 호연 좌판은 마을 상점 칸에 내주지."],
+	]},
+	"fox3": {"lines": [
+		["hoyeon", "꽃놀이가 끝났구려. 빛 부채가 한 자루 남았소, 선물로 받아 두시오."],
+		["me", "한 주민과 마음이 통했습니다. 이 마을이 좋아지고 있어요."],
+	]},
+	"mus1": {"lines": [
+		["k7", "…착륙 성공. 시간 여행자 K-7, 기록원입니다. 저는 앞날의 기록을 들고 왔어요. 이 숲의 기록 칸은 \"사라진 숲\"입니다."],
+		["me", "사라진 숲이라니요? 이 마을이 없어진다는 뜻입니까?"],
+		["k7", "잊힌 곳은 앞날에서 지워집니다. 사고에 화석을 채우면 그 줄이 흐려지는 걸 확인했어요. 화석 다섯 점만 넣어 보시겠습니까?"],
+	]},
+	"mus2": {"lines": [
+		["k7", "기록판의 \"사라진 숲\"이 한 줄 흐려졌습니다! 이 마을이 기억되기 시작했다는 뜻이에요. 그런데 부탁이 하나 있습니다."],
+		["k7", "앞날 기록에 이 마을 이름을 적어 두고 싶습니다. 알려 주시겠어요?"],
+		["me", "마을 이름을 알려 주는 건 이 마을의 미래를 맡기는 일이지요. 정하겠습니다."],
+	], "choice": {"id": "name", "prompt": "K-7 에게 마을 이름을 알려 줄까", "options": [{"key": "tell", "label": "알려 준다"}, {"key": "secret", "label": "비밀로 한다"}]}},
+}
+
+const CHAPTERS := [
+	{"id": "sp_move", "no": 1, "season": "spring", "title": "이사 오던 날", "stage": "마을 · 접수대",
+		"blurb": "짐을 풀던 밤, 하늘에 금이 가고 택배 기사 달음이 소포와 함께 떨어진다.",
+		"mix": {"past": "초가·숲지기", "now": "달음·택배 상자", "future": "소포 속 빛 편지"},
+		"steps": [{"t": "talk", "scene": "move1"}, {"t": "place", "n": 1}, {"t": "talk", "scene": "move2"},
+			{"t": "visit", "npc": "npc_keeper", "why": "숲지기에게 소포를 알리기"}],
+		"gold": 300},
+	{"id": "sp_postbox", "no": 2, "season": "spring", "title": "폐허의 옛 우체통", "stage": "꽃밭 → 옛 돌사당",
+		"blurb": "빛 편지가 가리키는 곳 — 옛 우체통. 안에 여러 시대 편지가 쌓여 있다.",
+		"mix": {"past": "옛 돌사당·옛 우체통", "now": "우체통 옆 공중전화", "future": "편지 속 홀로그램 도장"},
+		"steps": [{"t": "talk", "scene": "post1"}, {"t": "biome", "key": "meadow"},
+			{"t": "spot", "key": "forest_shrine_stone", "label": "📮 옛 우체통"}, {"t": "talk", "scene": "post2"},
+			{"t": "visit", "npc": "npc_keeper", "why": "편지를 마을 숲지기에게"}],
+		"gold": 400},
+	{"id": "sp_fox", "no": 3, "season": "spring", "title": "여우 화상의 봄 장터", "stage": "꽃밭 · 마을",
+		"blurb": "호연이 금으로 넘어와 \"시대를 잃은 물건\"을 판다. 삼짇날 꽃놀이로 장터를 연다.",
+		"mix": {"past": "여우 화상·꽃놀이", "now": "장터 확성기", "future": "호연 좌판의 빛 부채"},
+		"steps": [{"t": "talk", "scene": "fox1"}, {"t": "gather", "cat": "꽃", "n": 5}, {"t": "talk", "scene": "fox2"},
+			{"t": "fest", "key": "samjin", "npc": "npc_keeper"}, {"t": "heart", "n": 1}, {"t": "talk", "scene": "fox3"}],
+		"gold": 500},
+	{"id": "sp_museum", "no": 4, "season": "spring", "title": "사고를 채우다", "stage": "사고",
+		"blurb": "K-7 이 떨어져 \"사라진 숲\" 기록을 보인다. 사고에 화석을 채우면 기록 한 줄이 흐려진다.",
+		"mix": {"past": "화석·석비", "now": "사고 전시 조명", "future": "K-7 기록판"},
+		"steps": [{"t": "talk", "scene": "mus1"}, {"t": "donate", "cat": "화석", "n": 5}, {"t": "talk", "scene": "mus2"}],
+		"gold": 600},
+]
+
+const BIOME_NAMES := {"meadow": "꽃밭", "dark": "어둑숲", "mush": "버섯숲", "rocky": "바위 지대"}
+const FEST_NAMES := {"samjin": "삼짇날 꽃놀이"}
+
+
+static func fresh() -> Dictionary:
+	return {"ch": 0, "step": 0, "base": 0, "gathered": {}, "done": [], "choices": {}}
+
+
+static func normalize(st: Variant) -> Dictionary:
+	var out := fresh()
+	if st is Dictionary:
+		for k in out:
+			if (st as Dictionary).has(k):
+				out[k] = (st as Dictionary)[k]
+	out.done = (out.done as Array).duplicate()
+	out.gathered = (out.gathered as Dictionary).duplicate() if out.gathered is Dictionary else {}
+	out.choices = (out.choices as Dictionary).duplicate() if out.choices is Dictionary else {}
+	return out
+
+
+static func chapter(st: Dictionary) -> Dictionary:
+	var i := int(st.get("ch", 0))
+	return CHAPTERS[i] if i >= 0 and i < CHAPTERS.size() else {}
+
+
+static func step(st: Dictionary) -> Dictionary:
+	var ch := chapter(st)
+	if ch.is_empty():
+		return {}
+	var steps: Array = ch.steps
+	var i := int(st.get("step", 0))
+	return steps[i] if i < steps.size() else {}
+
+
+static func finished(st: Dictionary) -> bool:
+	return chapter(st).is_empty()
+
+
+static func pending_scene(st: Dictionary) -> String:
+	var s := step(st)
+	return String(s.get("scene", "")) if String(s.get("t", "")) == "talk" else ""
+
+
+static func gathered(st: Dictionary, cat: String) -> int:
+	return int((st.get("gathered", {}) as Dictionary).get(cat, 0))
+
+
+## 채집 하나(엔진이 채집 신호마다 부른다).
+static func add_gather(st: Dictionary, cat: String) -> void:
+	var g: Dictionary = st.get("gathered", {})
+	g[cat] = int(g.get(cat, 0)) + 1
+	st.gathered = g
+
+
+## ctx(엔진이 모은 지금 모습): home_items:int · near:{주민·명소 id: bool} · biome:String · max_heart:int · donated:{갈래: n}
+static func step_met(st: Dictionary, ctx: Dictionary) -> bool:
+	var s := step(st)
+	var near: Dictionary = ctx.get("near", {})
+	match String(s.get("t", "")):
+		"place":
+			return int(ctx.get("home_items", 0)) >= int(s.n)
+		"visit", "fest":
+			return bool(near.get(String(s.npc), false))
+		"spot":
+			return bool(near.get(String(s.key), false))
+		"biome":
+			return String(ctx.get("biome", "")) == String(s.key)
+		"gather":
+			return gathered(st, String(s.cat)) - int(st.get("base", 0)) >= int(s.n)
+		"heart":
+			return int(ctx.get("max_heart", 0)) >= int(s.n)
+		"donate":
+			return int((ctx.get("donated", {}) as Dictionary).get(String(s.cat), 0)) >= int(s.n)
+	return false
+
+
+## 다음 단계로. {"chapter": 장, "fest": 키} 중 해당하는 것(보상·알림은 엔진이).
+static func advance(st: Dictionary) -> Dictionary:
+	var ch := chapter(st)
+	if ch.is_empty():
+		return {}
+	var out := {}
+	var cur := step(st)
+	if String(cur.get("t", "")) == "fest":
+		out.fest = String(cur.key)
+	st.step = int(st.step) + 1
+	if int(st.step) >= (ch.steps as Array).size():
+		(st.done as Array).append(String(ch.id))
+		st.ch = int(st.ch) + 1
+		st.step = 0
+		out.chapter = ch
+	var nxt := step(st)
+	st.base = gathered(st, String(nxt.cat)) if String(nxt.get("t", "")) == "gather" else 0
+	return out
+
+
+## talk 아닌 단계를 끝난 만큼 넘긴다. advance 결과 목록.
+static func check(st: Dictionary, ctx: Dictionary) -> Array:
+	var out: Array = []
+	var guard := 0
+	while not finished(st) and pending_scene(st) == "" and step_met(st, ctx) and guard < 32:
+		out.append(advance(st))
+		guard += 1
+	return out
+
+
+## 대화를 다 읽었다(답 = 고르기 key 또는 "") → 다음 단계. advance 결과 목록.
+static func finish_talk(st: Dictionary, ctx: Dictionary, answer := "") -> Array:
+	var scene := pending_scene(st)
+	if scene == "":
+		return []
+	var ch_def: Dictionary = SCENES.get(scene, {}).get("choice", {})
+	if not ch_def.is_empty() and answer != "":
+		(st.choices as Dictionary)[String(ch_def.id)] = answer
+	return [advance(st)] + check(st, ctx)
+
+
+static func objective(st: Dictionary) -> String:
+	var ch := chapter(st)
+	if ch.is_empty():
+		return ""
+	var s := step(st)
+	var what := ""
+	match String(s.get("t", "")):
+		"talk":
+			what = "이야기"
+		"place":
+			what = "집에 가구 %d개 놓기" % int(s.n)
+		"visit":
+			what = String(s.get("why", "주민 만나기"))
+		"biome":
+			what = "%s에 들기" % BIOME_NAMES.get(String(s.key), String(s.key))
+		"spot":
+			what = "%s 찾기(옛 돌사당 곁)" % String(s.label)
+		"gather":
+			what = "%s 채집 %d/%d" % [String(s.cat), mini(gathered(st, String(s.cat)) - int(st.get("base", 0)), int(s.n)), int(s.n)]
+		"fest":
+			what = "숲지기에게 가 %s 열기" % FEST_NAMES.get(String(s.key), String(s.key))
+		"heart":
+			what = "주민 하트 %d 이상" % int(s.n)
+		"donate":
+			what = "사고에 %s %d점 기증" % [String(s.cat), int(s.n)]
+	return "📜 봄 %d장 %s — %s" % [int(ch.no), String(ch.title), what]
+
+
+static func speaker(who: String) -> String:
+	if who == "me":
+		return "나"
+	var c: Dictionary = CAST.get(who, {})
+	return "%s %s" % [String(c.get("emoji", "")), String(c.get("name", who))]
