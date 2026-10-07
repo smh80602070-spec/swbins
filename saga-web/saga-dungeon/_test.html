@@ -151,6 +151,7 @@ window.requestAnimationFrame = function () { return 0; };
 <script src="js/forge.js"></script>
 <script src="js/quest.js"></script>
 <script src="js/goals.js"></script>
+<script src="js/grace.js"></script>
 <script src="js/scenario.js"></script>
 <script src="js/cutscene.js"></script>
 <script src="js/tutorial.js"></script>
@@ -839,6 +840,71 @@ window.requestAnimationFrame = function () { return 0; };
       DN.state().fallen = null;
       DN.state().hardcore = false;
       return fallen && noGrave && ('결사 사망 · fallen ' + fallen + ' · 유품 없음 ' + noGrave);
+    });
+
+    /* ── W-0102 은총 자리·사망 카드·은총에서 다시 (`grace.js`, PLAN §5.2 보강 · 재미표준 F) ── */
+    var grCard = null, grEnd = null;
+    C.on('goals:card', function (c) { grCard = c; });
+    C.on('dungeon:end', function (e) { grEnd = e; });
+    function grDie(floor, gold, src) {
+      DN.enter({ floor: floor });
+      var raw = DN.raw();
+      raw.loot.gold = gold; raw.loot.items = [];
+      raw.player.invuln = 0; raw.hp = 1;
+      grCard = null; grEnd = null;
+      DN._hurt(9999, 'fire', src || { ref: { name: '시험 불도깨비' } });
+    }
+
+    t('dg.dungeon-9: 은총 ① 쓰러지면 유품 층 = 카드의 어디서 층(where.floor)', function () {
+      DN.state().grave = null;
+      grDie(6, 70);
+      var g = DN.graveOf(), w = grEnd && grEnd.where;
+      var ok = !!g && !!w && g.floor === w.floor && w.floor === 6 && w.lastHit && w.lastHit.who === '시험 불도깨비';
+      return ok && ('유품 제' + g.floor + '층 = where 제' + w.floor + '층 · 마지막 피해 ' + w.lastHit.who + ' / ' + w.lastHit.how);
+    });
+
+    t('dg.dungeon-9: 은총 ② 「은총에서 다시」 한 번에 같은 층 은총(들머리)에서 체력 가득으로 선다 — 유품은 그 층에 남는다', function () {
+      var ok0 = !DN.active() && grCard && grCard.restart;
+      var r = DG.grace.restartAtGrace(grCard ? grCard.graceFloor : 0);
+      var raw = DN.raw(), good = r && DN.active() && raw.floor === 6 && raw.roomIdx === 0 && raw.grace && raw.grace.floor === 6 &&
+        raw.hp === raw.hpMax && !!raw.room.grave;
+      var again = DG.grace.restartAtGrace(6);                          // 이미 회차 중이면 안 된다
+      DN.leave();
+      DN.state().grave = null;
+      return ok0 && good && again === false && ('제' + raw.floor + '층 · ' + (raw.roomIdx + 1) + '번째 방 · 체력 ' + raw.hp + '/' + raw.hpMax + ' · 유품 표식 있음');
+    });
+
+    t('dg.dungeon-9: 은총 ③ 결사(hardcore) 사망은 다시 단추가 없고 restart 도 안 된다', function () {
+      DN.state().grave = null;
+      DN.setHardcore();
+      try {
+        grDie(3, 0);
+        var noBtn = grCard && grCard.restart === false && DG.grace.btnHtml(grCard) === '';
+        var r = DG.grace.restartAtGrace(3);
+        return noBtn && r === false && !DN.active() && ('결사 카드 restart ' + grCard.restart + ' · 다시 ' + r);
+      } finally { DN.state().fallen = null; DN.state().hardcore = false; }
+    });
+
+    t('dg.dungeon-9: 은총 ④ 카드 어디서·누구·무슨 피해·남는 것 네 칸 + 화면 글 · 난입 사망은 은총 칸 없음', function () {
+      DN.state().grave = null;
+      grDie(4, 30, { ref: { name: '시험 창병' } });
+      var c = grCard, html = DG.grace.cardHtml(c) + DG.grace.btnHtml(c);
+      var four = c && c.where && c.who === '시험 창병' && c.how === '불 피해' && c.keep && c.next.indexOf('은총에서 다시') >= 0;
+      var shown = html.indexOf('시험 창병') >= 0 && html.indexOf('data-grace-restart="4"') >= 0;
+      DN.state().grave = null;
+      DN.enterHorde();
+      var hr = DN.raw(); hr.player.invuln = 0; hr.hp = 1;
+      grCard = null;
+      DN._hurt(9999, null, { ref: { name: '난입 적' } });
+      var horde = grCard && !grCard.where && !grCard.restart;
+      return four && shown && horde && ('어디서 「' + c.where + '」 · 누구 ' + c.who + ' · ' + c.how + ' · ' + c.keep + ' · 난입은 칸 없음');
+    });
+
+    t('재미표준 F 실패와 회복(측정)', function () {
+      var GR = DG.grace, taps = GR.RESTART_TAPS, sec = GR.RESTART_SEC;
+      var mark = (taps <= 3 && sec <= 120) ? '○' : '△';
+      return mark + ' — 비용 = 그 회차 노획물(금·장비 100%, 상한 없음 — 유품으로 그 층에 남아 회수 가능) · 사망→재도전 조작 ' + taps +
+        '(카드 단추 → 시작, 규격 ≤3) · 회복 ' + sec + '초(규격 ≤2분, 은총=그 층 들머리) · 결사는 판 끝(단추 없음)';
     });
 
     t('결사 서약자(정본 side_vow) — 결사로 10·20·30·36층을 처음 지나면 묵향 한 줄과 금·업적, 판마다 한 번 · 결사가 아니면 아무 일도 없다', function () {

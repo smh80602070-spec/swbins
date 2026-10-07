@@ -280,6 +280,8 @@
       card.nmNext = !!payload.nightmare.nextSigil;
     }
     if (reason === 'nightmare-fail') { card.nmFail = true; }
+    /* W-0102 — 보통 사망: 어디서·누구에게·무슨 피해 + 남는 것 + 은총에서 다시(grace.js) */
+    if (reason === 'dead' && global.DG.grace) { global.DG.grace.decorate(card, payload); }
     /* 시련(§5.11) — 단계·걸린 시간·순위·새로 열린 단계 */
     if (payload && payload.trial) {
       card.trialLv = payload.trial.lv;

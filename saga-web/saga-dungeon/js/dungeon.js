@@ -765,7 +765,7 @@
       fx.push({ t: 'zone', x: zs[0].x, y: zs[0].y, r: zs[0].r, life: sig.last, max: sig.last, color: sig.color, pool: true });
     }
     s.zones = null;
-    if (inZones(zs, p)) { hurtPlayer(en.dmg * sig.mul, sig.el); if (!run) { return; } }
+    if (inZones(zs, p)) { hurtPlayer(en.dmg * sig.mul, sig.el, en); if (!run) { return; } }
     if (sig.kind === 'hops' && --s.left > 0) { beginGuardSig(en, sig, s, p); return; }
     s.left = 0;
     s.cd = sig.cd;
@@ -782,7 +782,7 @@
       s.poolT -= dt;
       if (s.poolT <= 0) {
         s.poolT = GUARD_POOL_TICK;
-        if (inZones(s.pools, p)) { hurtPlayer(en.dmg * sig.poolMul, sig.el); if (!run) { return true; } }
+        if (inZones(s.pools, p)) { hurtPlayer(en.dmg * sig.poolMul, sig.el, en, '장판'); if (!run) { return true; } }
       }
     }
     if (sig.kind === 'summon') {
@@ -1726,12 +1726,12 @@
     if (run.nightmare) { dieNightmare(); return; }
     var lostGold = Math.round(run.loot.gold), lostItems = run.loot.items.length;
     var lostItemsArr = run.loot.items.slice();
-    var floor = run.floor;
+    var floor = run.floor, where = { floor: floor, room: run.roomIdx || 0, rooms: run.roomTotal || 0, lastHit: run.lastHit || null };   // W-0102 사망 카드
     dstate().deaths = (dstate().deaths || 0) + 1;
     core.log('💀 제' + floor + '층에서 쓰러졌다 — 노획물 소실 (금 ' +
       core.fmt(lostGold) + ' · 장비 ' + lostItems + '점)', 'bad');
     run = null;
-    core.emit('dungeon:end', { reason: 'dead', floor: floor, lost: { gold: lostGold, items: lostItems } });
+    core.emit('dungeon:end', { reason: 'dead', floor: floor, lost: { gold: lostGold, items: lostItems }, where: where, hardcore: hardcore() });
     /* 결사(決死) — 원작의 하드코어. 쓰러지면 그 판이 끝난다. 유품도 없다 —
        하드코어는 되돌릴 길이 아예 없어야 한다(§5.2). */
     if (hardcore()) {
@@ -1863,14 +1863,14 @@
    * @param el 이 공격의 결 (없으면 물리). 갑주에 박은 보석이 그 결을 막는다 —
    *           **원작에서 갑옷에 젬을 박는 이유가 바로 이것**이다.
    */
-  function hurtPlayer(amount, el) {
+  function hurtPlayer(amount, el, src, how) {   // src·how — 마지막 피해(사망 카드 W-0102): 적 개체·이름, 무슨 공격
     if (!run) { return; }
     if (run.player.invuln > 0) { return; }        // 돌진 중에는 맞지 않는다
     amount = amount * (1 - boonVal('guardPct') / 100);
     if (el && el !== 'phys') { amount *= 1 - elemResOf(el) / 100; }
     if (nmHasMod('glass')) { amount *= 1.5; }   // 부적 '유리대포' 변형자(§5.3) — 받는 피해도 는다
     amount = Math.max(1, amount);
-    run.hp -= amount;
+    run.hp -= amount; run.lastHit = { who: src ? (typeof src === 'string' ? src : enemyName(src)) : '', how: how || (global.DG.grace ? global.DG.grace.howOf(el) : '') };
     run.player.hurt = 0.28;
     if (global.DG.mount && global.DG.mount.onHurt) { global.DG.mount.onHurt(); }      // 탈것 — 맞으면 내린다
     fx.push({ t: 'hit', x: run.player.x, y: run.player.y, v: Math.round(amount),
@@ -1909,7 +1909,7 @@
       en.slamWarn -= dt;
       if (en.slamWarn <= 0) {
         if (dist(en, p) < SLAM_RANGE) {
-          hurtPlayer(en.dmg * SLAM_MUL, en.ref && en.ref.atkEl);
+          hurtPlayer(en.dmg * SLAM_MUL, en.ref && en.ref.atkEl, en, '강타');
           if (!run) { return; }
         }
         fx.push({ t: 'pop', x: en.x, y: en.y, life: 0.5, boss: true });
@@ -1937,7 +1937,7 @@
         en.x += (p.x - en.x) / cd * step;
         en.y += (p.y - en.y) / cd * step;
         if (dist(en, p) < en.r + P_R + 14) {
-          hurtPlayer(en.dmg * CHARGE_MUL, en.ref && en.ref.atkEl);
+          hurtPlayer(en.dmg * CHARGE_MUL, en.ref && en.ref.atkEl, en, '돌진');
           if (!run) { return; }
         }
         fx.push({ t: 'burst', x: en.x, y: en.y, life: 0.4, color: '#ffb43a' });
@@ -1963,7 +1963,7 @@
         var tdx = p.x - en.x, tdy = p.y - en.y;
         var td = Math.sqrt(tdx * tdx + tdy * tdy) || 1;
         if (td <= THRUST_RANGE && (tdx * fdx + tdy * fdy) / td >= Math.cos(THRUST_HALF)) {
-          hurtPlayer(en.dmg * THRUST_MUL, en.ref && en.ref.atkEl);
+          hurtPlayer(en.dmg * THRUST_MUL, en.ref && en.ref.atkEl, en, '찌르기');
           if (!run) { return; }
         }
         fx.push({ t: 'slash', x: en.x + fdx * THRUST_RANGE * 0.5,
@@ -1989,7 +1989,7 @@
       en.flurryT -= dt;
       if (en.flurryT <= 0) {
         if (dist(en, p) < en.r + P_R + 10) {
-          hurtPlayer(en.dmg * FLURRY_MUL, en.ref && en.ref.atkEl);
+          hurtPlayer(en.dmg * FLURRY_MUL, en.ref && en.ref.atkEl, en, '연격');
           if (!run) { return; }
         }
         fx.push({ t: 'slash', x: p.x, y: p.y, life: 0.3, color: '#ff7a7a' });
@@ -2846,7 +2846,7 @@
         fsh.y += fsh.dy * fsh.spd * dt;
         fsh.life -= dt;
         if (dist(fsh, p) < P_R + 8) {
-          hurtPlayer(fsh.dmg, fsh.el);
+          hurtPlayer(fsh.dmg, fsh.el, fsh.from, '화살·탄환');
           if (!run) { return; }
           run.foeShots.splice(i, 1);
           continue;
@@ -2948,7 +2948,7 @@
           en.cd -= dt;
           if (ed <= en.r + P_R + 6 + reachBonus && en.cd <= 0) {
             en.cd = ENEMY_CD * (el && el.cd ? el.cd : 1) / chill;
-            hurtPlayer(en.dmg, en.ref && en.ref.atkEl);
+            hurtPlayer(en.dmg, en.ref && en.ref.atkEl, en);
             if (!run) { return; }
           } else if (ranged && ed > en.r + P_R + 6 && ed <= RANGED_MAX && en.cd <= 0) {
             en.cd = ENEMY_CD * 1.4 * (el && el.cd ? el.cd : 1) / chill;
@@ -2957,7 +2957,7 @@
             var frEl = (en.ref && en.ref.atkEl) || 'phys';
             run.foeShots.push({
               x: en.x, y: en.y - 8, dx: frdx / frd, dy: frdy / frd, spd: 260, life: 1.8,
-              dmg: en.dmg, el: frEl, color: elemColorOf(frEl)
+              dmg: en.dmg, el: frEl, color: elemColorOf(frEl), from: enemyName(en)
             });
           }
           /* 들판 로머는 늘 boss:false 로 태어나므로(spawnFieldEncounters) 보스
@@ -3191,7 +3191,7 @@
       fsh.y += fsh.dy * fsh.spd * dt;
       fsh.life -= dt;
       if (dist(fsh, p) < P_R + 8) {
-        hurtPlayer(fsh.dmg, fsh.el);
+        hurtPlayer(fsh.dmg, fsh.el, fsh.from, '화살·탄환');
         if (!run) { return; }
         run.foeShots.splice(i, 1);
         continue;
@@ -3304,7 +3304,7 @@
         if (ed <= en.r + P_R + 6 + reachBonus && en.cd <= 0) {
           /* 붙었으면 궁수·조총병도 그냥 몸으로 밀친다(막다른 곳에 몰렸을 때) */
           en.cd = ENEMY_CD * (el && el.cd ? el.cd : 1) / chill;
-          hurtPlayer(en.dmg, en.ref && en.ref.atkEl);
+          hurtPlayer(en.dmg, en.ref && en.ref.atkEl, en);
           if (!run) { return; }
         } else if (ranged && ed > en.r + P_R + 6 && ed <= RANGED_MAX && en.cd <= 0) {
           en.cd = ENEMY_CD * 1.4 * (el && el.cd ? el.cd : 1) / chill;
@@ -3313,7 +3313,7 @@
           var frEl = (en.ref && en.ref.atkEl) || 'phys';
           run.foeShots.push({
             x: en.x, y: en.y - 8, dx: frdx / frd, dy: frdy / frd, spd: 260, life: 1.8,
-            dmg: en.dmg, el: frEl, color: elemColorOf(frEl)
+            dmg: en.dmg, el: frEl, color: elemColorOf(frEl), from: enemyName(en)
           });
         }
 
@@ -3751,7 +3751,7 @@
     /* 가시 돋친 정예 — 때린 만큼 조금 되돌아온다 */
     var elS = e.elite ? eliteOf(e.elite) : null;
     if (elS && elS.thorn && e.hp > 0) {
-      hurtPlayer(Math.max(1, Math.round(dmg * elS.thorn)));
+      hurtPlayer(Math.max(1, Math.round(dmg * elS.thorn)), null, e, '가시 되받기');
       if (!run) { return; }
     }
     if (e.hp <= 0) { e.dieKb = push; e.dieOver = dmg / Math.max(1, e.hpMax); kill(e, kind, dmg); }

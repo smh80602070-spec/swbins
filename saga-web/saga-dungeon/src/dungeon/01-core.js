@@ -765,7 +765,7 @@
       fx.push({ t: 'zone', x: zs[0].x, y: zs[0].y, r: zs[0].r, life: sig.last, max: sig.last, color: sig.color, pool: true });
     }
     s.zones = null;
-    if (inZones(zs, p)) { hurtPlayer(en.dmg * sig.mul, sig.el); if (!run) { return; } }
+    if (inZones(zs, p)) { hurtPlayer(en.dmg * sig.mul, sig.el, en); if (!run) { return; } }
     if (sig.kind === 'hops' && --s.left > 0) { beginGuardSig(en, sig, s, p); return; }
     s.left = 0;
     s.cd = sig.cd;
@@ -782,7 +782,7 @@
       s.poolT -= dt;
       if (s.poolT <= 0) {
         s.poolT = GUARD_POOL_TICK;
-        if (inZones(s.pools, p)) { hurtPlayer(en.dmg * sig.poolMul, sig.el); if (!run) { return true; } }
+        if (inZones(s.pools, p)) { hurtPlayer(en.dmg * sig.poolMul, sig.el, en, '장판'); if (!run) { return true; } }
       }
     }
     if (sig.kind === 'summon') {

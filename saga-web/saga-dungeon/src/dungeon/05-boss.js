@@ -136,7 +136,7 @@
         fsh.y += fsh.dy * fsh.spd * dt;
         fsh.life -= dt;
         if (dist(fsh, p) < P_R + 8) {
-          hurtPlayer(fsh.dmg, fsh.el);
+          hurtPlayer(fsh.dmg, fsh.el, fsh.from, '화살·탄환');
           if (!run) { return; }
           run.foeShots.splice(i, 1);
           continue;
@@ -238,7 +238,7 @@
           en.cd -= dt;
           if (ed <= en.r + P_R + 6 + reachBonus && en.cd <= 0) {
             en.cd = ENEMY_CD * (el && el.cd ? el.cd : 1) / chill;
-            hurtPlayer(en.dmg, en.ref && en.ref.atkEl);
+            hurtPlayer(en.dmg, en.ref && en.ref.atkEl, en);
             if (!run) { return; }
           } else if (ranged && ed > en.r + P_R + 6 && ed <= RANGED_MAX && en.cd <= 0) {
             en.cd = ENEMY_CD * 1.4 * (el && el.cd ? el.cd : 1) / chill;
@@ -247,7 +247,7 @@
             var frEl = (en.ref && en.ref.atkEl) || 'phys';
             run.foeShots.push({
               x: en.x, y: en.y - 8, dx: frdx / frd, dy: frdy / frd, spd: 260, life: 1.8,
-              dmg: en.dmg, el: frEl, color: elemColorOf(frEl)
+              dmg: en.dmg, el: frEl, color: elemColorOf(frEl), from: enemyName(en)
             });
           }
           /* 들판 로머는 늘 boss:false 로 태어나므로(spawnFieldEncounters) 보스
@@ -481,7 +481,7 @@
       fsh.y += fsh.dy * fsh.spd * dt;
       fsh.life -= dt;
       if (dist(fsh, p) < P_R + 8) {
-        hurtPlayer(fsh.dmg, fsh.el);
+        hurtPlayer(fsh.dmg, fsh.el, fsh.from, '화살·탄환');
         if (!run) { return; }
         run.foeShots.splice(i, 1);
         continue;
@@ -594,7 +594,7 @@
         if (ed <= en.r + P_R + 6 + reachBonus && en.cd <= 0) {
           /* 붙었으면 궁수·조총병도 그냥 몸으로 밀친다(막다른 곳에 몰렸을 때) */
           en.cd = ENEMY_CD * (el && el.cd ? el.cd : 1) / chill;
-          hurtPlayer(en.dmg, en.ref && en.ref.atkEl);
+          hurtPlayer(en.dmg, en.ref && en.ref.atkEl, en);
           if (!run) { return; }
         } else if (ranged && ed > en.r + P_R + 6 && ed <= RANGED_MAX && en.cd <= 0) {
           en.cd = ENEMY_CD * 1.4 * (el && el.cd ? el.cd : 1) / chill;
@@ -603,7 +603,7 @@
           var frEl = (en.ref && en.ref.atkEl) || 'phys';
           run.foeShots.push({
             x: en.x, y: en.y - 8, dx: frdx / frd, dy: frdy / frd, spd: 260, life: 1.8,
-            dmg: en.dmg, el: frEl, color: elemColorOf(frEl)
+            dmg: en.dmg, el: frEl, color: elemColorOf(frEl), from: enemyName(en)
           });
         }
 
@@ -1041,7 +1041,7 @@
     /* 가시 돋친 정예 — 때린 만큼 조금 되돌아온다 */
     var elS = e.elite ? eliteOf(e.elite) : null;
     if (elS && elS.thorn && e.hp > 0) {
-      hurtPlayer(Math.max(1, Math.round(dmg * elS.thorn)));
+      hurtPlayer(Math.max(1, Math.round(dmg * elS.thorn)), null, e, '가시 되받기');
       if (!run) { return; }
     }
     if (e.hp <= 0) { e.dieKb = push; e.dieOver = dmg / Math.max(1, e.hpMax); kill(e, kind, dmg); }

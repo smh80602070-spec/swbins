@@ -755,5 +755,32 @@
   "ticket": null,
   "since": "2026-09-30",
   "note": "D2: saga-web/tools/playcheck/pw-dg-close3.mjs 7/7 — results/pw-dg-close3.json(W-0098)."
+ },
+ {
+  "id": "dg.dungeon-9",
+  "name": "은총 자리(층 들머리)·사망 카드(어디서·누구·무슨 피해·남는 것)·「은총에서 다시」 한 번 재시작",
+  "files": [
+   "js/grace.js",
+   "src/dungeon/03-items.js",
+   "src/dungeon/05-boss.js",
+   "src/dungeon/01-core.js",
+   "js/goals.js",
+   "src/ui/01.js"
+  ],
+  "tests": [
+   "dg.dungeon-9: 은총 ① 쓰러지면 유품 층 = 카드의 어디서 층(where.floor)",
+   "dg.dungeon-9: 은총 ② 「은총에서 다시」 한 번에 같은 층 은총(들머리)에서 체력 가득으로 선다 — 유품은 그 층에 남는다",
+   "dg.dungeon-9: 은총 ③ 결사(hardcore) 사망은 다시 단추가 없고 restart 도 안 된다",
+   "dg.dungeon-9: 은총 ④ 카드 어디서·누구·무슨 피해·남는 것 네 칸 + 화면 글 · 난입 사망은 은총 칸 없음",
+   "재미표준 F 실패와 회복(측정)"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "F": "사망→재도전 조작 2 · 회복 즉시 ○"
+  },
+  "ticket": "W-0102",
+  "since": "2026-10-08",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-grace.mjs 3/3 — results/pw-dg-grace.json(W-0102). 실제로 쓰러져 카드 세 줄을 보고 「은총에서 다시」 단추를 실제 클릭. Claude 눈: 카드 ○(세 줄·단추 두 개 겹침 없음), 복귀 화면 ○(제3층 1/5 방)."
  }
 ]

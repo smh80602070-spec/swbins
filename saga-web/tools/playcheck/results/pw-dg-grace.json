@@ -1,0 +1,25 @@
+{
+ "script": "pw-dg-grace.mjs",
+ "game": "saga-dungeon",
+ "mobile": false,
+ "pass": 3,
+ "total": 3,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "사망 카드 — 어디서(제3층)·누구(불꽃 도깨비)·무슨 피해(불)·남는 것 줄과 「은총에서 다시」 단추가 선다",
+   "ok": true,
+   "detail": "{\"btn\":true,\"text\":\"💀 패퇴했다\\n제3층까지\\n💰 유품으로 남은 금 120\\n📦 유품으로 남은 장비 0점\\n📍 제3층 · 1번째 방(5칸 중)\\n⚔️ 불꽃 도깨비에게 · 불 피해\\n🕯️ 남는 것: 도감·인물·공적은 그대로\\n🏅 공적 +72\\n📖 도감 1%\\n다음 할 것\\n제3층 은총에서 다시(유품 회수)\\n🕯️ 은총에서 다시 · 제3층확인\",\"active\":false}"
+  },
+  {
+   "name": "「은총에서 다시」 한 번 — 카드가 닫히고 제3층 들머리(1번째 방)에 체력 가득으로 서며 유품 표식이 그 층에 있다",
+   "ok": true,
+   "detail": "{\"active\":true,\"floor\":3,\"room\":0,\"hp\":495,\"max\":495,\"grave\":true,\"card\":false}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}
