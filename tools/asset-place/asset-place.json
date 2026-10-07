@@ -206,14 +206,14 @@
   },
   {
    "id": "vroid-bodies",
-   "src": "saga-godot/assets/characters_vroid",
+   "src": "saga-assets/characters/vroid",
    "include": [
     "AvatarSample_A.glb",
     "avatar_sample_*.glb",
     "dungeon_hero_01.glb",
     "saga_forest_avatar_01.glb"
    ],
-   "note": "K-0018(2026-10-02 사용자: Unity 사람 몸은 VRoid): Godot 쪽 VRoid GLB(내용 같은 사본 — git 은 한 번만 저장)를 Unity 에 둔다. 정본은 Godot 폴더(코드가 res:// 로 읽는다).",
+   "note": "K-0018(2026-10-02 사용자: Unity 사람 몸은 VRoid): Godot 쪽 VRoid GLB(내용 같은 사본 — git 은 한 번만 저장)를 Unity 에 둔다. 정본은 Godot 폴더(코드가 res:// 로 읽는다). K-0078(10-07): 고돗이 옛 몸을 걷어내도 유니티가 안 끊기게 정본을 saga-assets/characters/vroid 로 옮김(같은 파일).",
    "targets": [
     {
      "track": "unity",
