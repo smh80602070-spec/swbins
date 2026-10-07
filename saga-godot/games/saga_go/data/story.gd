@@ -47,6 +47,7 @@ extends RefCounted
 ##     둘 다 {ch, from, to, region?, cell?} 한 칸 또는 여러 칸. region·cell 이 있으면 그 동안 거기에 선다.
 ##   대화 줄 말하는 이가 바뀌면 카메라가 그쪽으로(player/camera_rig.gd talk_shot — 인물 말은 내 어깨 너머, 내 말은 인물 어깨 너머).
 ##   단계마다 부대 경험 STEP_EXP, 장 끝에 reward + exp. 장은 모험 등급 ar 에 열린다.
+##   G-0074 장 칸 cycle = 별배 재출항 그 회차 이상에만 열린다(13부 회차 전용 — 본편은 MAIN_CHAPTERS 장).
 ##   join 이 있는 장은 끝날 때 그 이야기 인물(MEMBERS)이 동료로 들어온다(원신 이야기 보상 인물) — 이미 지난 장이면 불러올 때 들어온다.
 ##   목표 자리엔 금빛 기둥·"◆ 거리", 왼쪽 미니맵 밑에 임무 이름·목표, 지도·미니맵에 금빛 마름모(미니맵 밖이면 가장자리).
 ## 이야기·이름은 이 판 것(오마주 문법만). 등장인물은 가상의 마을 사람.
@@ -84,7 +85,9 @@ const NPCS := {
 			## 106장 52-2 27장 — 셋째 매듭을 묶은 뒤(8) 봉우리 꼭대기(6장 나그네 자리).
 			{"ch": 26, "from": 8, "to": 8, "region": "village", "cell": Vector2(7.35, 1.3)},
 			## 52-4 29장 — 임금을 쓰러뜨린 뒤(6) 먹구름 눈 북동쪽(바람 기둥 쪽).
-			{"ch": 28, "from": 6, "to": 6, "region": "village", "cell": Vector2(6.4646, 0.9167), "eye": true}]},
+			{"ch": 28, "from": 6, "to": 6, "region": "village", "cell": Vector2(6.4646, 0.9167), "eye": true},
+			## G-0074 13부 43장 — 봉우리에 올라온 뒤(2~4) 27장과 같은 꼭대기 자리.
+			{"ch": 42, "from": 2, "to": 4, "region": "village", "cell": Vector2(7.35, 1.3)}]},
 	## 106장 ㊺ 이야기 2부 — 서리봉 고원(world/region4_frost.gd). 관측원은 기상 관측소 앞, 조종 기계는 추락한 비행선 곁.
 	"haram": {"name": "기상 관측원 하람", "era": "현대", "region": "frost", "cell": Vector2(3.85, 1.7), "rarity": 4, "cloth": Color(0.86, 0.46, 0.2),
 		"idle": "기압계 바늘이 또 얼었네… 사흘째 눈이 안 멎어요."},
@@ -232,7 +235,9 @@ const STATIONS := {
 	## 사공은 8장 섬에 건너간 동안(5~10 단계) 섬 남쪽 물가 배 댄 자리에.
 	"ferryman": [{"ch": 7, "from": 5, "to": 10, "region": "coast", "cell": Vector2(6.03, 2.3)},
 		## 52-3 28장 — 바위섬에 건너간 뒤(4~9) 8장과 같은 배 댄 자리.
-		{"ch": 27, "from": 4, "to": 9, "region": "coast", "cell": Vector2(6.03, 2.3)}],
+		{"ch": 27, "from": 4, "to": 9, "region": "coast", "cell": Vector2(6.03, 2.3)},
+		## G-0074 13부 44장 — 바위섬에 건너간 동안(2~4) 같은 배 댄 자리.
+		{"ch": 43, "from": 2, "to": 4, "region": "coast", "cell": Vector2(6.03, 2.3)}],
 	## 106장 53-3 31장 — 초롱은 가게 문을 닫고 따라와 석등·너울·도둑 동안(1~4) 장터 동쪽 앞(석등 고리 SEAL_RING 밖), 되감기(5~)는 시계방 앞 제자리.
 	## 106장 54-3 34장 — 마루는 지게차를 몰고 곳간 마을로(1~) 곳간 동남쪽(석등 고리 SEAL_RING 밖).
 	"maru": [{"ch": 33, "from": 1, "to": 999, "region": "vault", "cell": Vector2(1.62, 5.62)}],
@@ -263,7 +268,11 @@ const STATIONS := {
 		## 11장 — 불씨를 들고 비행선으로 가는 마지막 단계(8)에 먼저 가 있다.
 		{"ch": 10, "from": 8, "to": 8, "region": "frost", "cell": Vector2(5.85, 4.85)}],
 	## 106장 ㊺-4 12장 — 반디는 구미호를 물리친 뒤(5) 얼음굴 앞에 날아와 있다.
-	"bandi": [{"ch": 11, "from": 5, "to": 5, "region": "frost", "cell": Vector2(6.15, 2.5)},
+	"bandi": [
+		## G-0074 13부 — 42장 첫 대화는 은하 나루 별배 곁(0), 44장 섬 꼭대기 해솔 자리(3).
+		{"ch": 41, "from": 0, "to": 0, "region": "skyport", "cell": Vector2(5.44, 1.8)},
+		{"ch": 43, "from": 3, "to": 3, "region": "coast", "cell": Vector2(6.12, 2.05)},
+		{"ch": 11, "from": 5, "to": 5, "region": "frost", "cell": Vector2(6.15, 2.5)},
 		## ㊼-1 13장 — 날개 조각을 꺼낸 뒤(6~8) 조선소로 날아와 있다.
 		{"ch": 12, "from": 6, "to": 8, "region": "coast", "cell": Vector2(7.05, 4.02)},
 		## ㊼-2 14장 — 관측대 위 파수를 물리친 뒤(9) 떠 있는 관측대 위로 날아와 있다(lift = era_sites.gd OBS_RISE).
@@ -405,7 +414,10 @@ const _Chapters1 := preload("res://games/saga_go/data/story_chapters_1.gd")
 const _Chapters2 := preload("res://games/saga_go/data/story_chapters_2.gd")
 const _Chapters3 := preload("res://games/saga_go/data/story_chapters_3.gd")
 const _Chapters4 := preload("res://games/saga_go/data/story_chapters_4.gd")
-const CHAPTERS := _Chapters1.CHAPTERS + _Chapters2.CHAPTERS + _Chapters3.CHAPTERS + _Chapters4.CHAPTERS
+const _Chapters5 := preload("res://games/saga_go/data/story_chapters_5.gd") # G-0074 13부(회차 전용)
+const CHAPTERS := _Chapters1.CHAPTERS + _Chapters2.CHAPTERS + _Chapters3.CHAPTERS + _Chapters4.CHAPTERS + _Chapters5.CHAPTERS
+## 본편 장 수(1~41장, 3차 결말까지) — 별배 재출항(data/cycle.gd)은 이것만 끝내면 된다. 그 뒤 장은 장 칸 cycle 로 잠긴다.
+const MAIN_CHAPTERS := 41
 
 static func chapter(i: int) -> Dictionary:
 	return CHAPTERS[i] if i >= 0 and i < CHAPTERS.size() else {}
@@ -419,6 +431,16 @@ static func step_of(ch: int, st: int) -> Dictionary:
 
 static func all_done(ch: int) -> bool:
 	return ch >= CHAPTERS.size()
+
+## 본편(MAIN_CHAPTERS 장)을 끝냈나 — 회차 조건.
+static func main_done(ch: int) -> bool:
+	return ch >= MAIN_CHAPTERS
+
+## 잠긴 장의 열림 글 — 회차가 모자라면 회차, 아니면 모험 등급. cycle = 지금 회차(PartyState.cycle — 이 표 파일은 자동 로드를 모른다).
+static func lock_text(c: Dictionary, cycle: int) -> String:
+	if cycle < int(c.get("cycle", 0)):
+		return "별배 재출항(%d회차) 뒤에 열린다" % int(c.cycle)
+	return "모험 등급 %d 에 열린다" % int(c.get("ar", 0))
 
 ## appear·stations 값 → 칸 목록(한 칸짜리 사전도 받는다).
 static func windows(v: Variant) -> Array:

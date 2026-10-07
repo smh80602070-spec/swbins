@@ -253,7 +253,7 @@ func _advance_wq(id: String) -> void:
 ## 지금 장이 모험 등급에 막혀 있는가.
 func locked() -> bool:
 	var c := Story.chapter(ch())
-	return not c.is_empty() and Adventure.ar() < int(c.ar)
+	return not c.is_empty() and (Adventure.ar() < int(c.ar) or PartyState.cycle < int(c.get("cycle", 0))) # G-0074 회차 전용 장
 
 func npc_pos(id: String) -> Vector3:
 	return _npc_pos.get(id, Vector3.INF)

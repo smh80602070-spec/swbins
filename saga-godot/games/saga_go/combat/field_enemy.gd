@@ -204,6 +204,13 @@ const KINDS := {
 		"rotation": ["slam", "halo", "storm", "shadow", "tide", "halo", "bite", "storm"], "summon": ["wind_hawk", "thunder_cat"],
 		"vroid": true, "size": 2.4, "body_r": 1.0, "cloth": Color(0.12, 0.1, 0.16),
 		"mask": Color(0.92, 0.9, 0.86), "mask_face": Color(0.1, 0.08, 0.14), "crown": Color(0.2, 0.16, 0.28)},
+	## G-0074 13부 43장 이야기 보스 "그날의 검은 가면"(북쪽 봉우리) — 먹구름이 해솔의 노래를 처음 삼킨 순간의 잔상. 6장 검은 가면 틀(사람 몸·금 없는 가면)에
+	## 회차 세기. 패턴은 있는 틀: 그림자·회오리·물기·내려찍기·고리. 2단계 뇌 방패(불로 깬다) · 가면 졸개와 살쾡이를 부른다.
+	"dawn_mask": {"name": "그날의 검은 가면", "hp": 13600.0, "atk": 62.0, "speed": 4.8, "aggro": 24.0,
+		"reach": 2.4, "tell": 0.75, "cd": 1.5, "exp": 0.0, "element": "thunder", "shield": 0.0, "phase_shield": 1300.0,
+		"phase_text": "그날의 가면이 해솔의 노래를 삼킨 먹구름을 두르고 졸개를 부른다 — 불로 방패를 깨라",
+		"rotation": ["shadow", "storm", "bite", "slam", "shadow", "halo"], "summon": ["bandit", "thunder_cat"],
+		"vroid": true, "cloth": Color(0.12, 0.11, 0.16), "mask": Color(0.62, 0.42, 0.92)},
 }
 
 const GRAVITY := 20.0

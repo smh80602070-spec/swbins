@@ -2639,6 +2639,26 @@
   "since": "2026-10-07"
  },
  {
+  "id": "gd.go.story13",
+  "name": "이야기 13부 「같은 날, 다른 눈」(42~44장, 회차 전용) — 별배 재출항 1회차부터 열림(장 칸 cycle), 1부의 그날을 미래·현대의 눈으로 다시 보기, 이야기 보스 그날의 검은 가면, 회차 조건은 본편 41장(MAIN_CHAPTERS)",
+  "files": [
+   "games/saga_go/data/story_chapters_5.gd",
+   "games/saga_go/data/story.gd",
+   "tools/probe_story13.gd",
+   "tools/shot_story13.gd"
+  ],
+  "tests": [
+   "story13",
+   "story_data",
+   "cycle"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0074",
+  "since": "2026-10-07"
+ },
+ {
   "id": "gd.go.graphics",
   "name": "설정 화질/성능 2단 — 성능이면 30fps·3D 해상도 0.75·MSAA·SSAO/SSIL/SDFGI 끔, user://graphics.cfg(다섯 판 공용 — 사가고 메뉴, 네 판 HUD \"화질\" 단추)",
   "files": [],

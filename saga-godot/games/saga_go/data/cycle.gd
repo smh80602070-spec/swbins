@@ -1,7 +1,7 @@
 extends RefCounted
 
 ## 별배 재출항 = 회차 (2026-09-30 새 시스템) — 이야기를 끝낸 뒤 다시 도는 길. 이야기·도감·인물·무기는 그대로 두고 세계를 새로 연다.
-##   조건 — 이야기 41장까지 끝(Story.all_done) · 모험 등급 REQ_AR 이상 · 회차 MAX_CYCLE 미만.
+##   조건 — 본편 이야기 41장까지 끝(Story.main_done — 13부~ 회차 전용 장은 안 본다) · 모험 등급 REQ_AR 이상 · 회차 MAX_CYCLE 미만.
 ##   재출항 — PartyState.cycle +1. ① 열어 둔 상자(chest_*)가 되살아난다 ② 채집 자리 회복 ③ 주간 비경 횟수·밤의 잔불 초기화
 ##            ④ 세계 등급 낮춤 해제 ⑤ 보상 CYCLE_REWARD.
 ##   영구 — 회차마다 공격력·경험치 +5%. 세계 등급 상한이 회차당 +2(9~18, 모험 등급 45·50·…로 하나씩 열린다):
@@ -19,7 +19,7 @@ const CYCLE_EXP := 200.0
 
 
 static func story_done() -> bool:
-	return Story.all_done(int(PartyState.story.get("ch", 0)))
+	return Story.main_done(int(PartyState.story.get("ch", 0)))
 
 
 ## 재출항할 수 없는 까닭(가능하면 "").
@@ -27,7 +27,7 @@ static func blocker() -> String:
 	if PartyState.cycle >= MAX_CYCLE:
 		return "이미 마지막 회차(%d)다" % MAX_CYCLE
 	if not story_done():
-		return "이야기를 끝까지 마쳐야 한다 (지금 %d/%d장)" % [int(PartyState.story.get("ch", 0)), Story.CHAPTERS.size()]
+		return "이야기를 끝까지 마쳐야 한다 (지금 %d/%d장)" % [int(PartyState.story.get("ch", 0)), Story.MAIN_CHAPTERS]
 	if Adventure.ar() < REQ_AR:
 		return "모험 등급 %d 이상이어야 한다 (지금 %d)" % [REQ_AR, Adventure.ar()]
 	return ""

@@ -144,11 +144,15 @@ func _refresh() -> void:
 	var cyc: int = PartyState.cycle
 	_label("⛵ 별배 재출항 — %d회차 (최대 %d)" % [cyc, Cycle.MAX_CYCLE], 20, Color(1.0, 0.86, 0.5))
 	_label("지금: 공격력·경험치 +%d%% · 세계 등급 상한 %d" % [int(100.0 * Cycle.bonus()), 8 + Adventure.CYCLE_WL * cyc], 15, Color(0.7, 0.95, 0.75))
-	_label("이야기: %s · 모험 등급 %d/%d" % ["끝났다 ✔" if Cycle.story_done() else "끝나지 않았다 (%d/%d장)" % [int(PartyState.story.get("ch", 0)), Story.CHAPTERS.size()], Adventure.ar(), Cycle.REQ_AR], 15)
+	_label("이야기: %s · 모험 등급 %d/%d" % ["끝났다 ✔" if Cycle.story_done() else "끝나지 않았다 (%d/%d장)" % [int(PartyState.story.get("ch", 0)), Story.MAIN_CHAPTERS], Adventure.ar(), Cycle.REQ_AR], 15)
 	_label("출항하면", 17, Color(1.0, 0.9, 0.6))
 	_label("· 열어 둔 상자가 모두 되살아난다 · 채집 자리 회복 · 주간 비경 횟수·밤의 잔불 초기화 · 세계 등급 낮춤 해제", 14)
 	_label("· 공격력·경험치가 영구히 +%d%% 더 · 세계 등급 상한 +%d(모험 등급 45·50·… 에 하나씩 열림 — 적이 더 세지고 전리품이 더 붙는다)" % [int(100.0 * Cycle.BONUS_PER_CYCLE), Adventure.CYCLE_WL], 14)
 	_label("· 보상: 냥 %d · 두꺼운 견문록 %d · 인연 매듭 %d" % [int(Cycle.CYCLE_REWARD.mora), int(Cycle.CYCLE_REWARD.book_l), int(Cycle.CYCLE_REWARD.fate_knot)], 14)
+	## G-0074 — 회차 전용 이야기(장 칸 cycle). 첫 회차 장이 아직 잠겨 있으면 무엇이 열리는지 알려 준다.
+	var first_cycle_ch := Story.chapter(Story.MAIN_CHAPTERS)
+	if not first_cycle_ch.is_empty() and cyc < int(first_cycle_ch.get("cycle", 0)):
+		_label("· 회차 전용 이야기 13부 「같은 날, 다른 눈」(%s~)이 열린다 — 1부의 그날을 다른 시대의 눈으로" % String(first_cycle_ch.name).get_slice(" · ", 0), 14, Color(1.0, 0.8, 0.95))
 	_label("그대로 남는 것: 이야기 진행·도감·인물·무기·성유물·신수·마당", 14, Color(0.7, 0.8, 0.95))
 	var why := Cycle.blocker()
 	if why != "":

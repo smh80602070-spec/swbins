@@ -258,7 +258,7 @@ func _refresh() -> void:
 	elif c.is_empty():
 		_tracker.text = ""
 	elif locked():
-		_tracker.text = "◆ %s\n   모험 등급 %d 에 열린다" % [c.name, int(c.ar)]
+		_tracker.text = "◆ %s\n   %s" % [c.name, Story.lock_text(c, PartyState.cycle)]
 	else:
 		_tracker.text = "◆ %s\n   %s" % [c.name, step_text()]
 	_refresh_journal()
@@ -306,7 +306,7 @@ func _refresh_journal() -> void:
 		var mark := "✔" if i < ch() else ("▶" if i == ch() else "○")
 		var tail := ""
 		if i == ch() and locked():
-			tail = "  (모험 등급 %d 에 열림)" % int(c.ar)
+			tail = "  (%s)" % Story.lock_text(c, PartyState.cycle)
 		out.append("\n%s %s%s" % [mark, c.name, tail])
 		if i == ch() and not locked():
 			var steps: Array = c.steps
