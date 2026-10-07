@@ -4,13 +4,15 @@
 # 인물마다 단계(이미 된 건 건너뜀):
 #   1 glb   _out/vroid/<id>/<id>.glb            (.vrm 또는 옷 이식 .glb(K-0024)를 복사 — Godot·Unity·웹 3D 공통 원본)
 #   2 anim  _out/vroid/<id>/<id>_anims.glb      (bake_for_rig 로 CC0·CF 동작 54 굽기) + verify.ok (verify.py 뼈 방향 ≤5°·땅 ≤1cm)
-#   3 web   _out/vroid/<id>/web/<id>.glb        (vrm-slim 모프 제거 + Meshopt·WebP 1024px — 웹 3D 는 한 벌만 쓴다, K-0022 3b)
+#   3 web   _out/vroid/<id>/web/<id>.glb        (vrm-slim 표정 모프 9개만 남김 + Meshopt·WebP 1024px — 웹 3D 는 한 벌만 쓴다, K-0022 3b)
 #   4 2d    _out/sprites/<id>/…                 (bake_sprite_batch: 128px·8프레임·3방향·idle/walk/attack/hit/death)
 # Godot 부(얼굴 데칼·anim_cc0/<id>_lib.res·셰이더 표)는 분리 — Godot 세션에서 vroid_intake.sh. 여기선 안 한다.
 # 실패는 _out/vroid/<id>/log_<단계>.txt 에 남기고 다음 인물로 계속, 같은 단계 3회 실패면 "건너뜀"(fails_<단계>.txt).
 # Blender 는 낮은 우선순위로, 모든 호출 </dev/null(헤드리스는 stdin 을 물려받으면 멈춘다). 서버·크롬은 안 쓴다.
 # 중단: tools/char-forge/_out/vroid/STOP 파일을 만들면 다음 인물 전에 멈춘다.
 set -u
+# K-0078 — 웹 단계에서 남길 표정 모프(입 다섯·눈 감기·기쁨·화남·슬픔). 나머지 모프는 vrm-slim 이 뗀다.
+KEEP_MORPH=Fcl_MTH_A,Fcl_MTH_I,Fcl_MTH_U,Fcl_MTH_E,Fcl_MTH_O,Fcl_EYE_Close,Fcl_ALL_Joy,Fcl_ALL_Angry,Fcl_ALL_Sorrow
 cd "$(dirname "$0")/../.."
 ONLY=""; DRY=0
 while [ $# -gt 0 ]; do
@@ -61,7 +63,7 @@ do_anim() {
 do_web() {
   local O="$OUTR/$1"
   mkdir -p "$O/web" && cp "$O/$1.glb" "$O/web/$1.glb" || return 1
-  ( cd tools/glb-compress && node vrm-slim.mjs "$ABS/$O/web/$1.glb" && node compress.mjs "$ABS/$O/web" ) || return 1
+  ( cd tools/glb-compress && node vrm-slim.mjs "$ABS/$O/web/$1.glb" --keep-morph "$KEEP_MORPH" && node compress.mjs "$ABS/$O/web" ) || return 1
 }
 do_2d() {
   local O="$OUTR/$1"
