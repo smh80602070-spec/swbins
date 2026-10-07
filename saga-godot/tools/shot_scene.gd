@@ -75,6 +75,7 @@ const CUTS := [
 	["go_monsters", GO, [["static", "res://tools/shot_monsters.gd", "line_up", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0059 들판 여덟 종(SAGA_GLB_MONSTERS=1 이면 GLB 몸)
 	["go_glide", GO, [["static", "res://tools/shot_glide.gd", "lift", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0]]],   # G-0072 활공 날개(glider_01.glb)
 	["go_story13", GO, [["static", "res://tools/shot_story13.gd", "duel", ["@tree"]]]],   # G-0074 13부 43장 그날의 검은 가면(회차·이야기는 메모리에서만)
+	["go_story14", GO, [["static", "res://tools/shot_story13.gd", "duel14", ["@tree"]]]],   # G-0077 14부 47장 그 밤의 서리 구미호(메모리에서만)
 	["rk_orders", REALM, [["free_modal"], ["call", "RealmHUD/OrderButton", "_on_pressed", []]]],   # G-0052 — 긴 글 열 줄 선택 창
 	["rk_duel", REALM, [["free_modal"], ["call", "RealmHUD/AttackButton", "_duel_round", ["enemy", []]]]],
 ]

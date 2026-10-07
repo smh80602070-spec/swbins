@@ -17,3 +17,20 @@ static func duel(tree: SceneTree) -> void:
 	var t: Vector3 = sq.call("target_pos")
 	p.global_position = t + Vector3(0.0, 0.3, 3.5)
 	p.set("velocity", Vector3.ZERO)
+
+## G-0077 — 14부 47장 셋째 단계(그 밤의 서리 구미호, 회차 2). 보스 남쪽 3.5m.
+static func duel14(tree: SceneTree) -> void:
+	var p := tree.get_first_node_in_group("player") as Node3D
+	var sq := tree.get_first_node_in_group("go_story")
+	if p == null or sq == null:
+		return
+	PartyState.cycle = maxi(PartyState.cycle, 2)
+	PartyState.exp = maxf(PartyState.exp, 86.0 * PartyState.EXP_PER_LEVEL)
+	PartyState.level = maxi(PartyState.level, 86)
+	PartyState.ar_paid = maxi(PartyState.ar_paid, PartyState.level + 1)
+	PartyState.story = {"ch": 46, "step": 2}
+	sq.call("set_track", "")
+	sq.call("_enter_step")
+	var t: Vector3 = sq.call("target_pos")
+	p.global_position = t + Vector3(0.0, 0.3, 3.5)
+	p.set("velocity", Vector3.ZERO)

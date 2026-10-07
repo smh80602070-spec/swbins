@@ -7,8 +7,8 @@ extends SceneTree
 
 const Story := preload("res://games/saga_go/data/story.gd")
 
-const GOLDEN := "853c63cb4248925c929e12647e718c4e"  # G-0074 13부(42~44장)·인물 자리 더한 뒤(2026-10-07). 처음 값 e901126a… 는 쪼개기 전 HEAD(10-01)
-const CHAPTER_COUNT := 44
+const GOLDEN := "8253d4cd5831818eac0e88eca6b1be50"  # G-0077 14부(45~47장)·바우·반디 자리 더한 뒤(2026-10-07). 그 전 G-0074 853c63cb…. 처음 값 e901126a… 는 쪼개기 전 HEAD(10-01)
+const CHAPTER_COUNT := 47
 
 var fails := 0
 

@@ -222,7 +222,11 @@ const NPCS := {
 		"appear": [{"ch": 36, "from": 2, "to": 999}, {"ch": 37, "ch_to": 999, "from": 0, "to": 999}]},
 	"bawoo": {"name": "산성지기 바우", "era": "과거", "region": "frost", "cell": Vector2(3.0, 4.11), "rarity": 4, "cloth": Color(0.48, 0.2, 0.16),
 		"helmet": true, "idle": "……불씨가 식지 않게. 그것만이 내 일이다.",
-		"appear": [{"ch": 10, "from": 2, "to": 2},
+		"appear": [
+			## G-0077 14부(회차 2) — 45장 문루(3~4)·호숫가(5) · 46장 호숫가(0~1)·문루(2~3) · 47장 문루(4). 47장 뒤엔 다시 안 선다(돌담을 떠남).
+			{"ch": 44, "from": 3, "to": 4}, {"ch": 44, "from": 5, "to": 5, "region": "frost", "cell": Vector2(3.25, 2.36)},
+			{"ch": 45, "from": 0, "to": 1, "region": "frost", "cell": Vector2(3.25, 2.36)}, {"ch": 45, "from": 2, "to": 3}, {"ch": 46, "from": 4, "to": 4},
+			{"ch": 10, "from": 2, "to": 2},
 			{"ch": 10, "from": 3, "to": 5, "region": "frost", "cell": Vector2(3.25, 2.36)},
 			{"ch": 10, "from": 6, "to": 7}]},
 }
@@ -272,6 +276,9 @@ const STATIONS := {
 		## G-0074 13부 — 42장 첫 대화는 은하 나루 별배 곁(0), 44장 섬 꼭대기 해솔 자리(3).
 		{"ch": 41, "from": 0, "to": 0, "region": "skyport", "cell": Vector2(5.44, 1.8)},
 		{"ch": 43, "from": 3, "to": 3, "region": "coast", "cell": Vector2(6.12, 2.05)},
+		## G-0077 14부 — 45장 첫 대화는 은하 나루 별배 곁(0), 47장 첫 대화는 고원 옛 비행선 자리(0).
+		{"ch": 44, "from": 0, "to": 0, "region": "skyport", "cell": Vector2(5.44, 1.8)},
+		{"ch": 46, "from": 0, "to": 0, "region": "frost", "cell": Vector2(6.0, 4.8)},
 		{"ch": 11, "from": 5, "to": 5, "region": "frost", "cell": Vector2(6.15, 2.5)},
 		## ㊼-1 13장 — 날개 조각을 꺼낸 뒤(6~8) 조선소로 날아와 있다.
 		{"ch": 12, "from": 6, "to": 8, "region": "coast", "cell": Vector2(7.05, 4.02)},

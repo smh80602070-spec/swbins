@@ -93,6 +93,13 @@ const DOMAINS := {
 		"sets": ["crimson", "emblem"],
 		"reward": [{"mora": 4000, "boss_mat": 1, "talent_3": 1}, {"mora": 5800, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 8000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
+	## G-0077 14부(회차 2) 끝(47장) 뒤 재대결 — 그 밤의 서리 구미호. 입구는 서리봉 고원 얼음굴 쪽.
+	"rematch_nightfox": {"name": "봉화 밤의 메아리", "kind": "boss", "boss": true, "after_ch": 47, "gate": ["frost", Vector2(5.4, 3.0)], "arena": Vector3(-1400.0, 40.0, 2400.0),
+		"waves": [["night_fox"]], "modifier": "none", "time": 240.0,
+		"modifier_text": "재대결: 그 밤의 서리 구미호 · 처음 열린 틈의 서리 방패(불로 깬다)",
+		"sets": ["crimson", "depth"],
+		"reward": [{"mora": 4300, "boss_mat": 1, "talent_3": 1}, {"mora": 6200, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 8600, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
+		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 	"rematch_colossus": {"name": "빛 돔의 메아리", "kind": "boss", "boss": true, "after_ch": 29, "gate": ["sunken", Vector2(3.7, 2.1)], "arena": Vector3(-1400.0, 40.0, 1400.0),
 		"waves": [["dome_colossus"]], "modifier": "none", "time": 240.0,
 		"modifier_text": "재대결: 돔 파수 거신 · 체력 절반에서 암 방패(초로 깬다)",
@@ -100,7 +107,7 @@ const DOMAINS := {
 		"reward": [{"mora": 3000, "boss_mat": 1, "talent_3": 1}, {"mora": 4500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 6000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 }
-const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus", "rematch_first_crow", "rematch_garmuri", "rematch_seed", "rematch_dawn"]
+const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus", "rematch_first_crow", "rematch_garmuri", "rematch_seed", "rematch_dawn", "rematch_nightfox"]
 const KIND_NAMES := {"artifact": "성유물", "talent": "특성 재료", "weapon": "무기 재료", "boss": "주간 보스"}
 const WEEKLY_COST := 60
 const WEEKLY_DISCOUNT_COST := 30

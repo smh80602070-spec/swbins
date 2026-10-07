@@ -276,6 +276,11 @@ func _refresh_marker() -> void:
 	var t := target_pos()
 	_marker.visible = t != Vector3.INF and not _dlg_open and not _fighting_at(t)   # G-0075 싸우는 자리에선 숨김 · G-0044 — 대화 중엔 빛기둥이 말하는 인물을 덮지 않게 숨긴다
 	if not _marker.visible:
+		## G-0075 — 싸우는 자리에선 거리 글자를 떼어 둔다(숨기기 전 거리가 남지 않게).
+		if t != Vector3.INF and not _dlg_open and track() == "":
+			var fl := _tracker.text.split("\n")
+			if fl.size() >= 2:
+				_tracker.text = "%s\n   %s" % [fl[0], step_text()]
 		return
 	_marker.global_position = t
 	var d := 0

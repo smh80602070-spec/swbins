@@ -211,6 +211,13 @@ const KINDS := {
 		"phase_text": "그날의 가면이 해솔의 노래를 삼킨 먹구름을 두르고 졸개를 부른다 — 불로 방패를 깨라",
 		"rotation": ["shadow", "storm", "bite", "slam", "shadow", "halo"], "summon": ["bandit", "thunder_cat"],
 		"vroid": true, "cloth": Color(0.12, 0.11, 0.16), "mask": Color(0.62, 0.42, 0.92)},
+	## G-0077 14부 47장 이야기 보스 "그 밤의 서리 구미호"(얼음굴 어귀) — 시간 틈이 처음 열린 밤 산성을 넘은 흰 여우의 잔상(12장 틈새 서리 구미호의 처음).
+	## 코드 몸 fox9 3.0m(눈빛 흰 털·밤빛 푸른 끝·얼음 눈). 패턴은 있는 틀: 틈새 질주·물기·회오리·내려찍기·고리. 2단계 빙 방패(불로 깬다).
+	"night_fox": {"name": "그 밤의 서리 구미호", "hp": 15000.0, "atk": 66.0, "speed": 5.4, "aggro": 24.0,
+		"reach": 3.0, "tell": 0.72, "cd": 1.4, "exp": 0.0, "element": "ice", "shield": 0.0, "phase_shield": 1400.0,
+		"phase_text": "그 밤의 여우가 처음 열린 틈의 서리를 두르고 여우와 매를 부른다 — 불로 방패를 깨라",
+		"rotation": ["rift", "bite", "storm", "rift", "slam", "halo"], "summon": ["ice_fox", "wind_hawk"],
+		"shape": "fox9", "height": 3.0, "colors": [Color(0.95, 0.97, 1.0), Color(0.32, 0.42, 0.78), Color(0.55, 0.9, 1.0)]},
 }
 
 const GRAVITY := 20.0
