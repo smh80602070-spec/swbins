@@ -82,7 +82,7 @@ func swap_body(body: Node3D, keep: Array = []) -> void:
 	body.position = old.position
 	body.rotation = old.rotation
 	for k in keep:
-		if k is Node and is_instance_valid(k) and k.get_parent() == old:
+		if is_instance_valid(k) and k is Node and k.get_parent() == old: # 해제된 객체에 is 를 쓰면 오류라 먼저(G-0081)
 			old.remove_child(k)
 			body.add_child(k)
 	remove_child(old)

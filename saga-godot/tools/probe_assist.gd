@@ -10,6 +10,7 @@ extends Node
 ## ⑥ 쓰러진 동료는 안 끼어든다. 명단을 잠깐 바꿨다가 되돌린다. 저장은 안 한다.
 
 const Elements := preload("res://games/saga_go/combat/elements.gd")
+const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const FieldAssist := preload("res://games/saga_go/combat/field_assist.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const Characters := preload("res://saga_core/data/characters.gd")
@@ -148,7 +149,24 @@ func _physics_process(_delta: float) -> void:
 			var r: Dictionary = _as.call("try_assist")
 			_check("downed", r.get("id") == _hero.ice and r.get("reaction") == "melt", "r=%s" % [r])
 			_next()
-		6:
+		6: # ⑦ G-0081 — 마지막에 친 적이 해제돼도(쓰러진 임무 적은 queue_free) 오류 없이 둘레의 다른 적을 고른다
+			_fc.call("revive_all")
+			_as.set("_cd", {})
+			_as.set("_gap", 0.0)
+			_fc.set("since_hit", 0.0)
+			var gone := FieldEnemy.new()
+			gone.name = "AssistGone"
+			gone.setup("wolf", _p.global_position + Vector3(0.0, 0.0, -3.0), 1)
+			get_tree().current_scene.add_child(gone)
+			_fc.set("last_target", gone)
+			gone.free()
+			var e2 := _plain_enemy(TestMap.world_pos(1, 4))
+			_place_facing(e2)
+			e2.call("set_aura", "fire")
+			var r2: Variant = _as.call("try_assist")
+			_check("freed_target", r2 is Dictionary and not (r2 as Dictionary).is_empty(), "r=%s" % [r2])
+			_next()
+		7:
 			_fc.call("revive_all")
 			PartyState.members.assign(_members0)
 			PartyState.party_size = _party0

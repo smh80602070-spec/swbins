@@ -108,7 +108,8 @@ func try_assist() -> Dictionary:
 ## 내가 마지막으로 친 적(살아 있고 RANGE 안), 아니면 RANGE 안 가장 가까운 적.
 func _target(player: Node3D) -> Node3D:
 	var t: Variant = _fc.get("last_target")
-	if t is Node3D and is_instance_valid(t) and not (t as Node).call("is_dead") \
+	## 쓰러진 이야기·임무 적은 queue_free 된다 — 해제된 객체에 is 를 쓰면 오류라 is_instance_valid 를 먼저(R-5 G-0081).
+	if is_instance_valid(t) and t is Node3D and not (t as Node).call("is_dead") \
 			and (t as Node3D).global_position.distance_to(player.global_position) <= RANGE:
 		return t
 	var near: Array = _fc.call("_nearest", player.global_position, RANGE, 1)
