@@ -8,11 +8,12 @@
   "tests": [
    "지형 결정성(같은 좌표=같은 지형)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). 시점은 #btn-tilt 실제 클릭(2D·2.5D·3D 돌기)."
  },
  {
   "id": "go.geo",
@@ -25,12 +26,12 @@
    "지형(geo) — world.terrainAt 레이어 순서: 손그림 땅 > 실제 지형 > 해시",
    "땅 — 길이 하나로 이어진다 (다리를 길로 친다)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인"
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). OSM 그물 요청에 기대지 않고 태그 분류·칸 열쇠·원점 땅 갈래만 봄. PLAN §3: 미확인"
  },
  {
   "id": "go.land",
@@ -42,11 +43,12 @@
    "땅 — 손으로 놓은 소품(deco)이 제 칸에 서고 집은 벽이 된다",
    "땅 — 마을 칸 밖에 놓은 deco 집도 벽이고, 들판엔 안 보이는 집이 없다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). 하북 땅엔 손으로 놓은 소품(deco)이 아직 0개 — 편집기 꼴로 한 점 놓아 그 칸에서만 나오는지 보고 치움."
  },
  {
   "id": "go.world3d",
@@ -125,11 +127,12 @@
    "조우 무대 — 던진 것은 포물선을 그린다",
    "조우 무대 — 무대가 없으면 결과가 곧바로 뜬다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). 지금 인물은 등용서·명성이 있으면 카드 대신 들판 겨루기(⑯) — J 로 굴복시켜 등용. 펫은 사료가 있으면 실전(rogue-action) 뒤 포획 — 자동 전투로 확인. 설득 3라운드 카드는 모자랄 때의 옛길."
  },
  {
   "id": "go.rogue-action",
@@ -427,12 +430,12 @@
   "tests": [
    "땅 사람 ⑱ — 탑마다 셋(제 시대 + 나머지 둘)이 둘레에 서고 수호자 자리를 비킨다 · 오가는 자리는 시각의 순수 함수 · 말에 땅 이름(조사 맞음) · 시대 옷 · 고향·끄면 0"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인"
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). 말 걸기는 talk.pick→tap(주민 1m 곁). PLAN §3: 미확인"
  },
  {
   "id": "go.codex",
@@ -533,12 +536,12 @@
    "서역 권역(region-xy) — 대표 도시 다섯 곳이 각각 맞는 권역으로 잡히고, 넷 병합에서도 제 나라로 잡힌다",
    "절차적 인물(genchar-xy) — 결정적이고, 도감(105명)에 안 섞이며, 다른 세 나라와 id 가 안 겹치고, data.find/bio 로 되살아난다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인"
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094). PLAN §3: 미확인"
  },
  {
   "id": "go.net",
@@ -571,14 +574,15 @@
   "tests": [
    "스프라이트 스탬프 캐시 재사용"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {
    "G": "△"
   },
   "ticket": null,
   "since": "2026-09-30",
-  "human": true
+  "human": true,
+  "note": "D2: saga-web/tools/playcheck/pw-go-close2.mjs 8/8 — results/pw-go-close2.json(W-0094)."
  },
  {
   "id": "go.expansion",

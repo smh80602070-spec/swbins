@@ -1,0 +1,49 @@
+{
+ "script": "pw-go-close2.mjs",
+ "game": "saga-go",
+ "pass": 8,
+ "total": 8,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "go.world 지도 — 구역 이름 30·같은 칸은 늘 같은 이름, 시점 단추를 누르면 2D·2.5D·3D 셋을 돌아 처음으로, 곁에 스폰이 있다",
+   "ok": true,
+   "detail": "{\"w0\":{\"names\":30,\"same\":true,\"near\":true,\"tilt\":\"3D ×1.4\"},\"tilts\":[\"3D ×1.4\",\"2D ×1.0\",\"2.5D ×1.4\",\"3D ×1.4\"]}"
+  },
+  {
+   "name": "go.geo 실제 지형 — OSM 태그가 물·숲·길로 갈리고, 층 순서 6, 칸 열쇠가 늘 같고, 그물 없이도 원점 땅 갈래가 나온다",
+   "ok": true,
+   "detail": "{\"order\":[\"town\",\"farm\",\"forest\",\"mount\",\"water\",\"road\"],\"water\":\"water\",\"forest\":\"forest\",\"road\":\"road\",\"key\":[\"0,0\",\"0,0\"],\"t0\":\"town\",\"t1\":\"grass\"}"
+  },
+  {
+   "name": "go.land 손그림 땅 — 하북 땅 검사 0건, 땅 갈래를 세고, 손으로 놓은 소품은 그 칸에서만 나온다(하북엔 아직 0개 — 한 점 놓아 봄)",
+   "ok": true,
+   "detail": "{\"has\":true,\"bad\":[],\"kinds\":13,\"deco0\":0,\"at\":1,\"atT\":\"well\",\"off\":0,\"after\":0,\"info\":true}"
+  },
+  {
+   "name": "go.encounter 등용·포획 — 등용서·명성이 있으면 들판 겨루기가 서고 J 로 굴복시키면 등용되어 도감·금이 오르고, 펫은 실전(자동 전투)을 치르면 사료 하나를 쓰고 포획 판정이 난다",
+   "ok": true,
+   "detail": "{\"e0\":{\"id\":\"sg_guanyu\",\"trait\":\"virtue\",\"g0\":120},\"duel\":{\"uid\":6,\"hp\":1},\"pressed\":3,\"e1\":{\"dex\":true,\"gold\":395,\"txt\":\"명운 굴복 — 등용! \\\"의(義)를 아는 이와 함께라면 어디든 가겠소.\\\" 공적 +40 · 경험치 +74 · 금 +75 확인\"},\"thrown\":{\"at\":1791356556005},\"p1\":{\"feed\":4,\"done\":true,\"caught\":true,\"txt\":\"삼족오 포획! 완파하고 붙잡았다 (가한 피해 100%) 공적 +25 · 명성 +30 · 경험치 +47 · 금 +50 · 보정 지력 +12 🌿 \"}}"
+  },
+  {
+   "name": "go.npc 주민·짐승 — 주민 10·짐승 15(5종), 주민 곁에서 말을 걸면 대화 카드가 뜬다",
+   "ok": true,
+   "detail": "{\"people\":10,\"beasts\":15,\"kinds\":5,\"live\":2,\"hit\":\"npc\",\"tapped\":true,\"active\":true,\"card\":\"마을 촌장 \\\"이 마을에 무슨 일로 오셨소.\\\" 느리고 다정하다 · 마을 한가운데에 있다 · 1m 이 마을 사람\"}"
+  },
+  {
+   "name": "go.region 권역·절차 인물 — 권역 넷 × 9, 같은 입력은 같은 사람, 다른 번호는 다른 사람, id 로 되찾으면 같다",
+   "ok": true,
+   "detail": "{\"regs\":[9,9,9,9],\"same\":true,\"differ\":true,\"id\":\"kr_gyeonggi_3_7\",\"back\":true}"
+  },
+  {
+   "name": "go.sprite 2D 스프라이트 — 같은 인물은 늘 같은 모양, 인물 120명에서 모양이 50가지 이상",
+   "ok": true,
+   "detail": "{\"same\":true,\"distinct\":80,\"seed\":true}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}
