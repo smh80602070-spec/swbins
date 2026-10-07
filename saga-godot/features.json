@@ -2584,6 +2584,19 @@
   "since": "2026-10-07"
  },
  {
+  "id": "gd.go.photo_share",
+  "name": "사진 공유용 — 찍을 때 HUD 전부 숨김·워터마크(사가고·지역·날짜)·PC 사진 폴더/사가고 저장",
+  "files": [],
+  "tests": [
+   "photo"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0057",
+  "since": "2026-10-07"
+ },
+ {
   "id": "gd.st.fall",
   "name": "사가스토리 사냥터 쓰러짐 — 체력 0 이면 주운 금 절반 잃고 허도로(표준 F, 웹 die())",
   "files": [

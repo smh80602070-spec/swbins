@@ -59,6 +59,7 @@ const CUTS := [
 	["go_gfx_perf", GO, [["static", GFX, "set_mode", ["performance", "@tree", false]]]],
 	["go_dialogue", GO, [["call", "StoryQuest", "open_dialogue", [[["촌장", "먹구름이 몰려오기 전에 포구 사공을 찾아가게. 길은 강을 따라 남쪽일세."], ["나", "알겠습니다."]], "@noop"]]]],   # G-0055 건너뛰기 단추
 	["go_dialogue_choice", GO, [["call", "StoryQuest", "open_dialogue", [[["?", ["바로 가겠습니다.", "먼저 장터에 들르겠습니다.", "사공이 누구인지 더 묻는다."]]], "@noop"]]]],   # G-0056 고르는 줄
+	["go_photo", GO, [["call", "MobileHUD/PhotoModeButton", "_on_pressed", []], ["call", "MobileHUD/PhotoModeButton", "_on_capture_pressed", []]]],   # G-0057 — SAGA_PHOTO_DIR 에 사진이 하나 생긴다
 	["rk_orders", REALM, [["free_modal"], ["call", "RealmHUD/OrderButton", "_on_pressed", []]]],   # G-0052 — 긴 글 열 줄 선택 창
 	["rk_duel", REALM, [["free_modal"], ["call", "RealmHUD/AttackButton", "_duel_round", ["enemy", []]]]],
 ]

@@ -18,10 +18,19 @@ extends Button
 ## CaptureButton(켜진 동안만 보임)을 누르면 현재 화면을 PNG로 저장한다
 ## (`get_viewport().get_texture().get_image()`) — user://photos/ 밑에
 ## 저장, Toast로 파일 경로를 보여준다.
+##
+## G-0057 — 공유용으로: 찍는 한 프레임 동안 **모든** CanvasLayer(목표판·미니맵·위쪽 단추·메뉴 등 MobileHUD 밖 층까지)를 숨기고,
+## 오른쪽 아래 워터마크("사가고 · 지역 · 날짜")만 얹어 찍는다. 저장은 사용자가 찾을 수 있는 곳 — PC 는 OS 사진 폴더/사가고,
+## 폰은 그대로 user://photos(안드로이드 공용 폴더는 권한이 따로 든다). 환경 SAGA_PHOTO_DIR 가 있으면 그쪽(점검·촬영용).
 
 const Toast := preload("res://saga_core/ui/toast.gd")
+const TestMap := preload("res://games/saga_go/data/test_map.gd")
+const WorldMap := preload("res://games/saga_go/ui/world_map.gd")
 
 var _on := false
+var _busy := false
+var _mark_layer: CanvasLayer = null
+var _mark: Label = null
 @onready var _capture_button: Button = $"../CaptureButton"
 
 
@@ -30,6 +39,66 @@ func _ready() -> void:
 	pressed.connect(_on_pressed)
 	_capture_button.visible = false
 	_capture_button.pressed.connect(_on_capture_pressed)
+	_build_watermark()
+
+
+## 저장 폴더 — SAGA_PHOTO_DIR → PC 면 사진 폴더/사가고 → user://photos.
+static func photo_dir() -> String:
+	var env := OS.get_environment("SAGA_PHOTO_DIR")
+	if env != "":
+		return env
+	if OS.has_feature("pc"):
+		var pics := OS.get_system_dir(OS.SYSTEM_DIR_PICTURES)
+		if pics != "":
+			return pics.path_join("사가고")
+	return "user://photos"
+
+
+## "사가고 · 청하 마을 · 2026-10-07" — 지역 밖(경계)이면 지역 칸을 뺀다.
+static func watermark_text(pos: Vector3) -> String:
+	var region := String(WorldMap.REGION_NAMES.get(TestMap.region_at(pos), ""))
+	var date := Time.get_date_string_from_system()
+	return "사가고 · %s · %s" % [region, date] if region != "" else "사가고 · %s" % date
+
+
+func _build_watermark() -> void:
+	_mark_layer = CanvasLayer.new()
+	_mark_layer.name = "PhotoWatermark"
+	_mark_layer.layer = 120
+	_mark_layer.visible = false
+	add_child(_mark_layer)
+	_mark = Label.new()
+	_mark.anchor_left = 1.0
+	_mark.anchor_right = 1.0
+	_mark.anchor_top = 1.0
+	_mark.anchor_bottom = 1.0
+	_mark.offset_left = -900
+	_mark.offset_right = -36
+	_mark.offset_top = -86
+	_mark.offset_bottom = -30
+	_mark.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_mark.add_theme_font_size_override("font_size", 30)
+	_mark.add_theme_color_override("font_color", Color(1, 1, 1, 0.9))
+	_mark.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.7))
+	_mark.add_theme_constant_override("outline_size", 8)
+	_mark_layer.add_child(_mark)
+
+
+## 보이는 CanvasLayer 를 다 숨기고 숨긴 것들을 돌려준다(워터마크 층은 뺀다).
+func _hide_layers() -> Array:
+	var hidden: Array = []
+	for n in get_tree().root.find_children("*", "CanvasLayer", true, false):
+		var cl := n as CanvasLayer
+		if cl != _mark_layer and cl.visible:
+			cl.visible = false
+			hidden.append(cl)
+	return hidden
+
+
+func _restore_layers(hidden: Array) -> void:
+	for cl in hidden:
+		if is_instance_valid(cl):
+			(cl as CanvasLayer).visible = true
 
 
 func _on_pressed() -> void:
@@ -52,18 +121,30 @@ func _on_pressed() -> void:
 
 
 func _on_capture_pressed() -> void:
+	if _busy:
+		return
+	_busy = true
+	## G-0057 — HUD 를 다 숨기고 워터마크만 얹은 화면이 실제로 그려진 뒤(frame_post_draw)에 읽는다.
+	var player := get_tree().get_first_node_in_group("player") as Node3D
+	_mark.text = watermark_text(player.global_position if player != null else Vector3.ZERO)
+	var hidden := _hide_layers()
+	_mark_layer.visible = true
+	await RenderingServer.frame_post_draw
 	## get_image()는 화면을 실제로 그리는 렌더러가 없으면(헤드리스 null
 	## 드라이버 등, ASSET_GUIDE.md "MultiMesh 인스턴스별 transform" 항목과
 	## 같은 종류의 엔진 한계) null을 줄 수 있다 — 그대로 부르면 크래시라
 	## 방어한다.
 	var img: Image = get_viewport().get_texture().get_image() if get_viewport().get_texture() != null else null
+	_mark_layer.visible = false
+	_restore_layers(hidden)
+	_busy = false
 	if img == null:
 		Toast.show(self, "사진 저장 실패 — 화면을 읽을 수 없다.", 2.5)
 		return
 	## 사진 도감(world/photo_album.gd) — 화면 안 적·신수·인물을 담아 점수·보상.
 	get_tree().call_group("go_album", "shoot", img)
-	var dir_path := "user://photos"
+	var dir_path := photo_dir()
 	DirAccess.make_dir_recursive_absolute(dir_path)
-	var fname := "%s/photo_%d.png" % [dir_path, Time.get_unix_time_from_system()]
+	var fname := "%s/saga_go_%s.png" % [dir_path, Time.get_datetime_string_from_system().replace(":", "").replace("-", "").replace("T", "_")]
 	var err := img.save_png(fname)
 	Toast.show(self, "사진 저장됨: %s" % fname if err == OK else "사진 저장 실패(%d)" % err, 2.5)

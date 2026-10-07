@@ -231,6 +231,8 @@ func _ready() -> void:
 	add_child(photo_album)
 	if OS.get_environment("SAGA_ALBUM_PROBE") != "":
 		add_child(load("res://tools/probe_album.gd").new())
+	if OS.get_environment("SAGA_PHOTO_PROBE") != "": # G-0057 사진 모드 공유
+		add_child(load("res://tools/probe_photo.gd").new())
 	var weekly_goals := preload("res://games/saga_go/world/weekly_goals.gd").new()
 	weekly_goals.name = "WeeklyGoals"
 	add_child(weekly_goals)
