@@ -2936,5 +2936,22 @@
   "fun": {},
   "ticket": "G-0038",
   "since": "2026-10-06"
+ },
+ {
+  "id": "gd.dg.scenario-act1",
+  "name": "사가나락 이야기 1막(3장) — 모루골 부임·흑기 도적의 밤·순장 왕릉: 대화 창(멈춤)·처치/보스/층/구출 단계·목표판·금 보상·세이브 scenario 칸(웹 대사 그대로, 단계는 방 일곱에 맞춤)",
+  "files": [
+   "games/saga_dungeon/data/scenario.gd",
+   "games/saga_dungeon/world/scenario_runner.gd",
+   "tools/probe_scenario_dungeon.gd"
+  ],
+  "tests": [
+   "scenario_dungeon"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0085",
+  "since": "2026-10-08"
  }
 ]

@@ -38,6 +38,8 @@ var player_pos := Vector3.ZERO
 ## 완전히 같은 모양(방마다 하나씩인 bool 배열)이라 같은 패턴을 그대로
 ## 옮겼다. 순수 추가 필드라 버전은 안 올린다.
 var hero_resolved: Array[bool] = []
+## G-0085 이야기 진행(data/scenario.gd fresh() 모양 — 장 차례·단계·처치/보스/구출 합계·끝낸 장 id). 순수 추가 필드, 버전 안 올림.
+var scenario: Dictionary = {}
 
 
 func is_room_cleared(index: int) -> bool:
@@ -125,6 +127,7 @@ func save(player: Node3D) -> void:
 		## state.gd 헤더 참고 — 슬롯은 벽시계로만 늘어나 이 값 하나로 "같은
 		## 슬롯 두 번 보상 안 함"이 계속 유지된다).
 		"worldboss_last_slot": DungeonWorldBossState.last_rewarded_slot,
+		"scenario": scenario,   # G-0085
 	}
 	SafeFile.write_text(save_path(), JSON.stringify(data))
 
@@ -151,6 +154,9 @@ func try_load() -> bool:
 	if hr is Array:
 		for v in hr:
 			hero_resolved.append(bool(v))
+
+	var sc: Variant = data.get("scenario", {})   # G-0085 — 없으면(옛 세이브) 1장부터
+	scenario = (sc as Dictionary).duplicate(true) if sc is Dictionary else {}
 
 	var p: Variant = data.get("player_pos", [0.0, 0.0, 0.0])
 	if not (p is Array) or p.size() < 3:

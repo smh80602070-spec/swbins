@@ -125,6 +125,7 @@ const ROOM_SPACING := ROOM_HALF.z * 2.0 + CORRIDOR_GAP # 방 원점 사이 거�
 
 var _exit_used: Array[bool] = []
 var _room_origin_z: Array[float] = []
+var _scenario: Node   # G-0085 이야기 엔진(world/scenario_runner.gd)
 var _session_start_cleared := 0  # 표준 B(세션 카드) — 이번 세션에 새로 연 방 수 계산용
 
 
@@ -216,6 +217,11 @@ func _ready() -> void:
 	## 표준 A/B(목표판·세션 카드, PLAN.md 101-4 공통 순서 1번, 2026-09-17) —
 	## GO test_village.gd와 같은 자리(로드가 끝난 뒤 세션을 연다 — 세션
 	## 델타의 기준점이 로드 전 값이면 안 된다).
+	## G-0085 — 이야기 1막(scenario_runner.gd). 세이브를 불러온 뒤(scenario 칸)·출사표 고르기 창이 닫힌 뒤 첫 대화가 뜬다.
+	_scenario = preload("res://games/saga_dungeon/world/scenario_runner.gd").new()
+	_scenario.name = "ScenarioRunner"
+	add_child(_scenario)
+
 	_session_start_cleared = DungeonSaveState.rooms_cleared.count(true)
 	DungeonGoldState.begin_session()
 	DungeonGoldState.gold_changed.connect(_refresh_goal_board)
@@ -248,6 +254,9 @@ func _refresh_goal_board() -> void:
 		now = "부적 던전 — 티어 %d" % int(DungeonSigilState.active_sigil().get("tier", 0))
 	else:
 		now = "방 클리어 %d/%d" % [DungeonSaveState.rooms_cleared.count(true), ROOM_COUNT]
+		var story: String = _scenario.call("objective") if _scenario != null else ""
+		if story != "":
+			now = story + " · " + now   # G-0085 이야기 목표 먼저
 	var session := "금 +%d · 새로 연 방 +%d" % [
 		DungeonGoldState.session_gold_gained(),
 		DungeonSaveState.rooms_cleared.count(true) - _session_start_cleared]
