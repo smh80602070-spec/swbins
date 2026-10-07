@@ -23,9 +23,10 @@ const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 && args[i + 1] 
 /* --at HH:MM 매일 · --at none 예약 없음(수동만) · --every N 시간마다 · --on-boot M 데몬 시작 M분 뒤 한 번(PC 를 켜 둘 일이 없는 사용자 10-05) */
 const BRANCH = opt('--branch', 'tools'), AT = opt('--at', 'none'), EVERY_H = +opt('--every', 0), ON_BOOT = +opt('--on-boot', 0), PORT = +opt('--port', 8798);
 /* 밤 세션은 소넷(설계·티켓은 페이블, 실행은 소넷 — ARCH §6). --model 로 바꿀 수 있다 */
+const LANES = ['tools', 'web', 'godot', 'unity'];   // run.mjs 갈래 표와 같다
 const RUN_ARGS = ['--branch', BRANCH, '--max-tickets', opt('--max-tickets', '1'), '--budget-usd', opt('--budget-usd', '20'), '--model', opt('--model', 'claude-sonnet-5-5')];
 
-const state = { branch: BRANCH, at: AT, everyH: EVERY_H, running: null, startedAt: null, lastRun: null, lastExit: null, lastReason: '', runs: 0, bootedAt: new Date().toISOString() };
+const state = { branch: BRANCH, at: AT, everyH: EVERY_H, running: null, runningBranch: null, queued: null, startedAt: null, lastRun: null, lastExit: null, lastReason: '', runs: 0, bootedAt: new Date().toISOString() };
 fs.mkdirSync(LOG_DIR, { recursive: true });
 const paused = () => fs.existsSync(STOP);
 
@@ -40,12 +41,17 @@ function nextRunTime(from = new Date()) {
 }
 let next = nextRunTime();
 
-function runOnce(reason) {
-  if (state.running) return false;
+/* branch: 다른 갈래로 한 번(K-0079 문맥 넘기기 — 대화 세션의 갈래를 이어 간다). 실행 중이면 한 개만 줄 세운다 */
+function runOnce(reason, branch = BRANCH) {
+  if (state.running) { if (reason.startsWith('handoff')) state.queued = { reason, branch }; return false; }
   if (paused() && reason !== 'manual') { state.lastReason = `${reason}: STOP 파일 있어 건너뜀`; return false; }
-  const child = spawn(process.execPath, [path.join(HERE, 'run.mjs'), ...RUN_ARGS], { cwd: path.resolve(HERE, '..', '..'), env: process.env, stdio: 'ignore' });
-  state.running = child.pid; state.startedAt = new Date().toISOString(); state.lastReason = reason; state.runs++;
-  child.on('close', (code) => { state.running = null; state.lastRun = new Date().toISOString(); state.lastExit = code; next = nextRunTime(); });
+  const args = RUN_ARGS.slice(); args[1] = branch;
+  const child = spawn(process.execPath, [path.join(HERE, 'run.mjs'), ...args], { cwd: path.resolve(HERE, '..', '..'), env: process.env, stdio: 'ignore' });
+  state.running = child.pid; state.runningBranch = branch; state.startedAt = new Date().toISOString(); state.lastReason = reason; state.runs++;
+  child.on('close', (code) => {
+    state.running = null; state.runningBranch = null; state.lastRun = new Date().toISOString(); state.lastExit = code; next = nextRunTime();
+    if (state.queued) { const qd = state.queued; state.queued = null; runOnce(qd.reason, qd.branch); }
+  });
   return true;
 }
 
@@ -81,7 +87,16 @@ http.createServer((q, s) => {
   const u = q.url.split('?')[0];
   if (q.method === 'POST' && u === '/api/stop') { fs.writeFileSync(STOP, new Date().toISOString()); if (state.running) { try { process.kill(state.running); } catch (e) { /* 이미 끝남 */ } } }
   else if (q.method === 'POST' && u === '/api/start') { if (paused()) fs.unlinkSync(STOP); next = nextRunTime(); }
-  else if (q.method === 'POST' && u === '/api/run') { runOnce('manual'); }
+  else if (q.method === 'POST' && u === '/api/run') {
+    const qs = new URLSearchParams(q.url.split('?')[1] || '');
+    if (qs.has('branch')) {                                      // K-0079 — 훅이 부르는 입구, JSON 으로 답한다
+      const b = qs.get('branch');
+      if (!LANES.includes(b)) { s.writeHead(400, { 'content-type': 'application/json' }); s.end(JSON.stringify({ ok: false, why: '모르는 갈래 ' + b })); return; }
+      const started = runOnce('handoff:' + String(qs.get('from') || '').slice(0, 40), b);
+      s.writeHead(202, { 'content-type': 'application/json' }); s.end(JSON.stringify({ ok: true, started, queued: !!state.queued, branch: b })); return;
+    }
+    runOnce('manual');
+  }
   else if (u === '/api/status') { s.writeHead(200, { 'content-type': 'application/json' }); s.end(JSON.stringify({ ...state, paused: paused(), next })); return; }
   if (q.method === 'POST') { s.writeHead(303, { location: '/' }); s.end(); return; }
   s.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); s.end(page());

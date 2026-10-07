@@ -22,3 +22,12 @@ http://127.0.0.1:8798                                                   # 상태
 - 갈래 = PC 에 맞춰 등록한다: 자체툴은 `C:\swbins3`(SD) 있는 PC, 고돗·유니티는 엔진 있는 PC, 웹은 어디서나.
 - 모델: 무인 티켓 세션은 **소넷**(`--model claude-sonnet-5-5` 기본, ARCH §6 "설계·티켓은 페이블, 실행은 소넷"). 페이블은 티켓 쓰기(R-0)·막힌 티켓·그림체 판단만. 데몬 옵션을 바꾸면 데몬을 다시 켜야 적용된다(node 끄고 `install-startup.ps1 -StartNow`).
 - 비용: 티켓당 `--max-budget-usd`(기본 20) 상한. 세션은 문맥 로드(CLAUDE.md·메모리·훅)만으로 0.5달러를 넘는다(10-05 실측, 자가 시험은 하이쿠·3달러). 매일 갈래당 1~2 티켓이면 하루 ≤ 갈래 수 × 2 × 20 달러가 천장.
+
+## 문맥 70% 넘기기 (K-0079)
+
+대화 세션(VS Code 등)이 문맥 70% 를 넘으면 단계 체크포인트를 커밋하고 멈추고, autorun 데몬이 **같은 갈래**로 새 `claude -p "<갈래> 이어해"` 를 띄운다. 창 자체는 바깥에서 못 닫는다 — 이어지는 건 백그라운드 세션(로그 `_log/`).
+
+- 설치: `node tools/claude-home/install.js`(멱등) — `statusline.js`·`ctx-guard.js` 를 `~/.claude` 로 복사, ctx-guard 를 UserPromptSubmit·PostToolUse·Stop 에 건다. 상태줄 정본은 `tools/claude-home/statusline.js`.
+- 흐름: 상태줄이 문맥 % 를 `tools/autorun/_ctx/<session>.json`(git 밖)에 쓴다 → 프롬프트가 "<갈래> 이어해" 면 갈래 기록 → 70% 넘으면 지시 한 번(도구 뒤·프롬프트 때, 못 봤으면 Stop 을 한 번 막고) → 그 뒤 멈추면 `POST /api/run?branch=<갈래>`(실행 중이면 한 개 줄 세움).
+- 끄기: `SAGA_CTX_GUARD=0` · 문턱 `SAGA_CTX_LIMIT`(기본 70) · 데몬 포트 `SAGA_AUTORUN_PORT`. 갈래 모르는 세션·저장소 밖 세션(`C:\link` 등)은 아무것도 안 한다.
+- **한계**: run.mjs 는 트리가 더러우면 안 돈다(남의 세션 보호) — 다른 세션 미커밋 파일이 있으면 넘김이 exit 3 으로 끝난다(`_ctx` 의 `sent` 에 데몬 답, `_log` 에 이유). 데몬 코드를 바꾸면 데몬을 다시 켜야 `?branch=` 가 먹는다(옛 데몬은 자기 갈래로 한 번 돈다).
