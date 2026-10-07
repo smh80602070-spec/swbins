@@ -1,0 +1,84 @@
+{
+ "script": "pw-rk-world.mjs",
+ "game": "saga-realm",
+ "pass": 15,
+ "total": 15,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "rk.data-force 시나리오 — 고르기 카드가 SCENARIOS 수만큼, 적벽(208)을 고르면 세력 카드 6",
+   "ok": true,
+   "detail": "{\"s0\":{\"cards\":9,\"n\":9},\"s1\":{\"forces\":6,\"want\":6}}"
+  },
+  {
+   "name": "rk.data-force-2 이정표 — 5단, 첫 단 조건을 맞추고 ▶ 다음 달이면 이정표 카드(이름·금 +)가 뜨고 다음 단으로",
+   "ok": true,
+   "detail": "{\"m0\":{\"total\":5,\"idx\":0,\"name\":\"첫 발걸음\",\"cond\":{\"c\":\"core\",\"n\":9},\"gold\":500,\"ok\":true,\"given\":3,\"g0\":4400,\"logs0\":1},\"m1\":{\"idx\":1,\"at\":1,\"turn\":1},\"card\":\"🚩 첫 발걸음 이정표 1/5 · 중국 땅의 성 9곳을 쥔다 🪙 금 +500 다음 — 뿌리내림: 중국 땅의 성 12곳을 쥔다 확인\"}"
+  },
+  {
+   "name": "rk.data-city 지도 — 성 135 이상, 2D 지도의 성 점(g.rcity) 수가 CITIES 와 같다",
+   "ok": true,
+   "detail": "{\"n\":135,\"dots\":135}"
+  },
+  {
+   "name": "rk.ui-rtk 지도 — 마우스로 끌면 viewBox 가 옮겨 가고, ➕ 를 누르면 창이 좁아진다(확대)",
+   "ok": true,
+   "detail": "{\"v0\":\"5.66 39.50 92.68 50.00\",\"v1\":\"24.50 51.37 92.68 50.00\",\"v2\":\"40.09 59.87 63.33 34.17\"}"
+  },
+  {
+   "name": "rk.quiz 학당 — 정답 단추를 누르면 익힌 수·맞힌 수가 오르고, 오답을 누르면 오답노트에 든다",
+   "ok": true,
+   "detail": "{\"learned\":[0,1],\"correct\":[0,1],\"wrong\":[0,1],\"ca\":{\"i\":2,\"q\":\"제1차 세계대전이 일어난 해는?\"},\"wa\":{\"i\":1,\"q\":\"\\\"갓생\\\"의 뜻은?\"}}"
+  },
+  {
+   "name": "rk.core 계정·세이브 — saga-realm/save/<프로필> 의 rtk 칸에 들고, 새로고침 뒤 이어하기면 세력·달·금이 같다",
+   "ok": true,
+   "detail": "{\"k0\":{\"key\":\"saga-realm/save/pmuxemcugczs\",\"turn\":1,\"gold\":6129,\"me\":\"biao\",\"savedTurn\":1},\"k1\":{\"turn\":1,\"gold\":6129,\"me\":\"biao\",\"vol\":0}}"
+  },
+  {
+   "name": "rk.sfx 소리 — 단서 24종 이상, ⚙️ 음량을 0 으로 끌면 volume 0 이고 새로고침 뒤에도 0",
+   "ok": true,
+   "detail": "{\"f0\":{\"cues\":27,\"vol\":0,\"label\":\"0%\"},\"after\":0}"
+  },
+  {
+   "name": "rk.data-relation 관계 — 관계 표 45쌍, 짝이 걸린 사연은 이어하기 화면에 관계(🤝의형제)를 달고 뜬다",
+   "ok": true,
+   "detail": "{\"rl\":{\"n\":45,\"pairs\":33,\"ev\":\"brothers_feast\",\"kind\":\"의형제\",\"emoji\":\"🤝\",\"moved\":[\"sg_liubei\",\"sg_guanyu\"]},\"card\":\"🍶 의형제의 잔치 🤝 의형제 · 사연 명운 과(와) 인형 이(가) 형제의 정을 나눌 자리를 청한다. ⚔️ 군사를 불러 조련한다 금 200 · 그 성 훈련 +8🛡️ 조용히 넘긴다 값은 없다 · 둘 다 충성 +2💡 잔치를 열어 민심을 얻는다 금 4\"}"
+  },
+  {
+   "name": "rk.city3d 성 안 3D — 성 창을 열면 성 안 캔버스가 그려지고(크기>0) 콘솔 오류가 늘지 않는다",
+   "ok": true,
+   "detail": "{\"ct\":{\"avail\":true,\"w\":390,\"h\":168,\"inSheet\":true,\"tab\":\"city\"},\"newErr\":[]}"
+  },
+  {
+   "name": "rk.realm3d-2 3D 국토 — 🧊 를 누르면 3D 지도가 켜져 캔버스가 서고 소품이 그려진다(drawn>0)",
+   "ok": true,
+   "detail": "{\"avail\":true,\"active\":true,\"w\":1280,\"drawn\":7764,\"all\":10688,\"runs\":4}"
+  },
+  {
+   "name": "rk.realm3d 지도 위 배우 — 🚩 원정을 띄우면 actorPlan 의 원정군 배우가 하나 는다",
+   "ok": true,
+   "detail": "{\"j0\":{\"from\":\"beiping\",\"before\":0},\"journeys\":1,\"actors\":[0,1]}"
+  },
+  {
+   "name": "rk.battle3d 전투 3D — ⚔️ 출진하면 실시간 전장 캔버스가 서고 양쪽 병사(armyView)가 선다",
+   "ok": true,
+   "detail": "{\"b0\":{\"from\":\"nanpi\",\"to\":\"ye\"},\"b1\":{\"canvas\":true,\"w\":1280,\"view\":{\"a\":22,\"d\":22}}}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음(PC)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "rk.ui-rtk 폰 390×844 — 지도 손잡이(🏠➕➖)가 보이고 ➕ 를 누르면 확대된다",
+   "ok": true,
+   "detail": "{\"shown\":true,\"p0\":\"5.66 39.50 92.68 50.00\",\"p1\":\"20.33 47.42 63.33 34.17\"}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음(폰)",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

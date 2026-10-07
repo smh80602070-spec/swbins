@@ -423,11 +423,12 @@
    "시나리오 ⑨ 삼계 균열 — 이계 셋이 다 서고 폐왕·명계는 동맹, 누구로든 잡을 수 있다",
    "퓨전 사연 — 폐허 곁 성에서 역병이 뜨고, 성문을 닫으면 석 달 뒤 \"역병의 근원\" 이 이어진다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). 시나리오는 지금 9(이름의 \"6\" 은 낡음) — 고르기 카드 9장, 적벽 세력 6."
  },
  {
   "id": "rk.data-relation",
@@ -450,11 +451,12 @@
    "사연 — 60달 시뮬(확률 0.6 로 몰아 자동 선택): 에러 0·금 음수 0·충성 0~100·능력 유한",
    "사연 — 옛 세이브(사연·화해도 칸 없음)도 안 터지고, 카드는 세 단추, 고르면 결과 카드로 바뀐다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). 표 45쌍(PAIRS 33 + 지역). 무장 창엔 관계 줄이 없다 — 관계는 사연 카드(🤝 의형제 등)에 뜬다."
  },
  {
   "id": "rk.data-force-2",
@@ -472,11 +474,12 @@
    "이정표 — 옛 세이브(칸 없음)는 지금을 기준으로 0단에서 다시 시작한다",
    "이정표 — 화면: 상단 한 줄·시나리오 카드 전부·카드는 다른 카드가 닫힌 뒤에 뜬다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085)."
  },
  {
   "id": "rk.data-city",
@@ -490,11 +493,12 @@
    "열다섯째 확장 실크로드 + 서역 보강(2026-09-23) — 새 성 아홉이 낙양에서 닿고, 주인 없이 시작하며, 수비 무장이 제 성에 선다",
    "지도의 성마다 손가락이 닿는 목표가 있다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085)."
  },
  {
   "id": "rk.rtk-ai",
@@ -527,11 +531,12 @@
    "학식이 차면 재야가 저절로 드러난다",
    "quiz:answered — 정답/오답을 가른다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085)."
  },
  {
   "id": "rk.ui-rtk",
@@ -551,12 +556,13 @@
    "세력 고르기 화면에 열세 깃발이 뜬다",
    "시나리오를 고르는 화면이 먼저 뜬다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "human": true
+  "human": true,
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). 2D 지도는 휠 확대가 없다(3D 캔버스만) — 끌기 + ➕ 단추, 폰 390×844 도 ➕."
  },
  {
   "id": "rk.realm3d",
@@ -575,11 +581,12 @@
    "realm3d — zoomFor 성 누르면 태수로 줌·누른 성 태수는 반드시 선다 (PLAN §5-10 ⑤)",
    "realm3d — actorPlan 태수 몸짓: 명령→클립 표 완결·이 달 명령 반영·원정 뒤 자리 채움·가까운 성 먼저 (PLAN §5-10 ②)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). realm3d.all() 은 없다 — actorPlan() 의 원정군 배우 수로 본다."
  },
  {
   "id": "rk.realm3d-2",
@@ -592,12 +599,13 @@
    "realm3d — elevAt·straitFactor·isSea 순수 함수 (SAGA-DESIGN §7-2 3D 진단 공백)",
    "asset3d — mapClips 순수 함수 (SAGA-DESIGN §7-2 3D 진단 공백)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "human": true
+  "human": true,
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085)."
  },
  {
   "id": "rk.battle3d",
@@ -608,12 +616,13 @@
   "tests": [
    "싸움터 땅(SAGA-DESIGN §12) — 성의 땅·주가 싸움터를 정한다: 늘 같고, 사막·균열 같은 주는 제 결, 물 싸움은 물빛"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "human": true
+  "human": true,
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). armyCount 는 병력→병사 수 순수 함수라 armyView() 양쪽 병사로 본다."
  },
  {
   "id": "rk.city3d",
@@ -626,11 +635,12 @@
    "초상 자리표시(SAGA-DESIGN §11 Phase 0) — 3D 로 갈아 끼울 자리는 코드 스프라이트 대신 자리표시로 시작하고, 굽기를 포기하면 옛 그림으로 되돌리며, 갈아 끼워지지 않을 자리는 옛 그림 그대로다",
    "디스크 초상(SAGA-DESIGN §11 Phase 1) — 구워 둔 파일이 목록에 있으면 of() 가 굽기 없이 파일 주소를 주고 warm() 이 다시 안 굽는다, 목록에 없거나 꼴이 안 맞으면 파일로 안 간다, sweep() 이 이름표 <img> 를 그 파일로 갈아 끼운다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085). 성 안 3D 는 따로 단추 없이 성 창을 열면 그려진다."
  },
  {
   "id": "rk.sfx",
@@ -652,11 +662,12 @@
    "toast 머리 이모지로만 갈래를 가른다 (천기·동맹/합류·귀순·발견·재해) — 판정 파일은 안 건드렸다",
    "승진(\"✨\")·사관 오류(\"⚠️\") 토스트는 따로 안 듣는다 (rtk:promote 로 이미 울렸다 — 중복 방지)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085)."
  },
  {
   "id": "rk.core",
@@ -679,11 +690,12 @@
    "가명 정책 — BIOS·PETS·quote에 실제 역사 인물의 실명이 없다",
    "세이브 버전이 안 맞아도 안 버려진다 (SAGA-DESIGN §8-3)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-world.mjs 15/15 — results/pw-rk-world.json(W-0085)."
  },
  {
   "id": "rk.admin",
