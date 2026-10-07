@@ -22,7 +22,7 @@
 - 10-07 고돗 G-0049~0070 닫음(티켓 메모가 정본): 노획물 빛·설전/옷 촬영 판정·공용 선택 창·윈도 10 이모지·화질/성능 설정·사가고 대화 건너뛰기·대화창·사진 공유·장비 외형(성유물 → 갑옷 조각)·사가의숲 머리/덧옷/갑옷·지역 꾸밈·가구·하트 줄·D0 일곱 점검·코드 리뷰 반영(G-0067)·오류 기록 보기(화질 창 셋째 줄, G-0068)·자동 저장 표시 키움(G-0069)·저장 슬롯 셋(G-0070, 슬롯 1 = 원래 세이브 파일). **features D0·D1 0**(사가고 97%·네 판 100%).
 - 공용 새 길: `saga_core/world/bone_gear.gd`(장비 GLB 뼈 붙이기)·`saga_core/data/graphics_settings.gd`(user://graphics.cfg)·`saga_core/ui/choice_prompt.gd`(가로 창 16px). 촬영 도구 `tools/shot_scene.gd`(컷 표·@box·@tree·@noop).
 - 10-07 오후~저녁: R-4 probe_story.gd 셋으로 · **G-0071 협공**(대기 동료 셋이 원소 노려 끼어듦, `games/saga_go/combat/field_assist.gd`, SAGA_NO_ASSIST=1 로 끔) · **G-0059 몬스터 GLB 몸 배선 — 기본 꺼짐**(`saga_core/world/monster_body.gd`, SAGA_GLB_MONSTERS=1; 촬영상 원소색·모양이 코드 짐승보다 못해 K 손질 대기) · G-0072 활공 날개 → glider_01.glb · G-0073 옛 인물 파일 약 970MB 지움(dex_common_lib.res 만 남김).
-- 10-07 밤: **G-0074 회차 전용 이야기 13부 「같은 날, 다른 눈」(42~44장)** — 별배 재출항 1회차부터(장 칸 cycle, 회차 조건은 본편 MAIN_CHAPTERS 41), 1부의 그날을 미래·현대의 눈으로. 점검 story13.
+- 10-07 밤: **G-0074 회차 전용 이야기 13부 「같은 날, 다른 눈」(42~44장)** — 별배 재출항 1회차부터(장 칸 cycle, 회차 조건은 본편 MAIN_CHAPTERS 41), 1부의 그날을 미래·현대의 눈으로. 점검 story13. G-0075 싸움 자리(이야기 적이 살아 있고 30m 안)에선 금빛 목표 빛기둥 숨김 · G-0076 13부 보스 재대결 비경 「그날 노래의 메아리」(44장 뒤).
 - 다음 후보: 14부~(사용자 결정) · 웹·유니티 13부 이식 · K 대기 — 몬스터 GLB 색·모양·앞 방향(고치면 monster_body.enabled() 한 줄), 새 폭발 CF_Burst(원본 dj_haean_anims.glb 가 K PC 에만), 인물 몸 표정 모프(이 PC 몸은 10-04 설치라 모프 없음 → 새 묶음 필요).
 - 큐: G-0061(굴·실내 키트, 보류 — 새 장면 때)만. 안 쓰는 world GLB 는 mon/boss 가 기본 꺼짐이라 그대로 셈.
 - 이 PC Godot = WinGet Links/godot_console.exe(4.7.2). `--import` 는 추적 .import(uid 다시 매김)·스크립트 .uid 를 수십~수천 개 고쳐 쓴다 → `git checkout -- assets`·새 .uid 지우기.
