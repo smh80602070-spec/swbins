@@ -1,0 +1,44 @@
+{
+ "script": "pw-st-close1.mjs",
+ "game": "saga-story",
+ "pass": 7,
+ "total": 7,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "st.data-gear 장비 — 부위 10·각 4단, 주문서 100/60/10%, 가방 24, 판값 3할 · 요구 레벨 못 채운 장비는 거부, 가방 「낀다」 단추로 끼면 힘이 오른다 · 방어 깎기는 6할까지",
+   "ok": true,
+   "detail": "{\"gr0\":{\"slots\":10,\"per\":{\"weapon\":4,\"hat\":4,\"top\":4,\"bottom\":4,\"shoes\":4,\"glove\":4,\"cape\":4,\"ring\":4,\"necklace\":4,\"earring\":4},\"rates\":[0.1,0.6,1],\"uniq\":10,\"bag\":24,\"sell\":0.3,\"hiOk\":false,\"uid\":2,\"key\":\"hat1\",\"cutMax\":0.6,\"cut40\":0.5},\"eqBtn\":true,\"worn\":true,\"pUp\":true}"
+  },
+  {
+   "name": "st.data-job 직업·무예 — 직업 21·무예 104, 5차는 각성기 둘씩 · 레벨이 모자라면 전직 거부, 직업 시트 「전직」 단추로 무장이 되고, 앞 무예 없이는 뒷 무예 거부, 「올린다」 단추로 올린 뒤 되돌리면 쓴 점수 0",
+   "ok": true,
+   "detail": "{\"jb0\":{\"jobs\":21,\"skills\":104,\"awaken\":[2,2,2,2],\"lowWhy\":\"Lv.10 부터입니다\"},\"joinBtn\":true,\"jb1\":{\"cur\":\"warrior\",\"root\":\"w_cut\",\"spLeft\":22},\"raiseBtn\":true,\"jb2\":{\"lv1\":1,\"joined\":true,\"locked\":\"g_roar\",\"lockWhy\":\"선풍(旋風) 5 이 먼저입니다\",\"lockRaise\":false,\"lockLv\":0,\"sp1\":5,\"reset\":true,\"sp2\":0,\"cur2\":\"none\"}}"
+  },
+  {
+   "name": "st.data-quest 사명·업적 — 사명 20 이상(지금 33, 일일 2)·업적 9 · 「받는다」 단추 전엔 0, 받은 뒤 허창 들판 적을 잡으면 1 늘고 다른 사냥터 적은 안 센다 · 레벨 10 업적이 선다 · 경험치 곡선은 25 넘어 완만",
+   "ok": true,
+   "detail": "{\"qd0\":{\"n\":33,\"daily\":2,\"ach\":9,\"p0\":0},\"qBtn\":true,\"qd1\":{\"taken\":true,\"a\":0,\"b\":1,\"c\":1,\"ach\":[1,1],\"lv10\":true,\"r25\":1.2799863154293534,\"r26\":1.0400384882664244}}"
+  },
+  {
+   "name": "st.side-3 사냥터 사건 — 채집물 위를 → 키로 지나가면 가방에 들고 그 자리가 비었다 때가 되면 다시 돋는다, 채집 보너스 터 안에선 더 많이, 보물상자를 밟으면 열려 금",
+   "ok": true,
+   "detail": "{\"sd0\":{\"kind\":\"herb\",\"gx\":480,\"m0\":0,\"forage\":true},\"sd1\":{\"m1\":1,\"alive\":false,\"wait\":44284,\"back\":true},\"gain1\":1,\"gain2\":2,\"sd3\":{\"opened\":true,\"gold\":71},\"entered\":true}"
+  },
+  {
+   "name": "st.sfx 소리 — 적을 치면 hit·hit2·hit3 가 돌아가며 요청되고, 효과음을 꺼도 요청은 남으며, 잡으면 kill 소리",
+   "ok": true,
+   "detail": "{\"hits\":[\"hit2\",\"hit3\",\"hit\",\"hit2\",\"hit3\",\"hit\"],\"off\":[\"swing\",\"hit2\"],\"kill\":[\"swing\",\"hit3\",\"kill\"],\"groups\":42}"
+  },
+  {
+   "name": "st.data-side-2 보스 — 보스 사냥터 넷 이상(지금 9), 체력 12배 이상·다시 나오기 15분 이상, 사냥터 오른쪽 끝(너비−220)에 서고, 66%·33% 에서 패턴 단계가 올라 수가 늘며, 잡은 뒤엔 쿨 동안 다시 안 나온다",
+   "ok": true,
+   "detail": "{\"bs0\":{\"n\":9,\"keys\":[\"field\",\"forest\",\"cave\",\"gorge\",\"ruin\",\"deepcave\",\"beyond_past\",\"beyond_now\",\"beyond_future\"],\"mul\":[12,14,17,20,22,25,27,28,30],\"cool\":[15,20,30,40,45,50,52,50,50],\"need\":[1,5,12,25,45,70,72,74,76]},\"bs1\":{\"ok\":true,\"stage\":\"field\",\"width\":2200,\"bx\":1980,\"ready\":true,\"ph\":[0,1,2],\"pool\":[2,4,4],\"dead\":true,\"readyAfter\":false,\"left\":899998}}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

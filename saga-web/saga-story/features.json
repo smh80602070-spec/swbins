@@ -142,11 +142,12 @@
    "보스 고유 기술 — 사냥터 보스 아홉이 다 제 기술이 있고, 등장 뒤 첫 기술이 그것이며 모든 단계 후보에 낀다",
    "보스 고유 기술 — 도넛은 붙으면 살고, 공중 쇠뇌는 땅에 있으면 산다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-st-close1.mjs 7/7 — results/pw-st-close1.json(W-0091). 이름의 \"10종 중 4종·12~17배·15~30분\" 은 낡음 — 지금 보스 사냥터 9·체력 12~30배·쿨 15~52분."
  },
  {
   "id": "st.side-3",
@@ -166,12 +167,12 @@
    "이동 상인(PLAN 11절) — 마주치면 상점이 잠깐 싸진다",
    "NPC 구조(PLAN 11절) — 지키는 잡졸을 다 잡으면 사례금을 받는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인"
+  "note": "D2: saga-web/tools/playcheck/pw-st-close1.mjs 7/7 — results/pw-st-close1.json(W-0091). 이벤트 7 중 채집·채집 보너스 터·보물상자를 봄(습격·미니보스·상인·구조는 아직). PLAN §3: 미확인"
  },
  {
   "id": "st.data-job",
@@ -184,12 +185,12 @@
   "tests": [
    "여섯째 무예(2026-09-11)도 자기들끼리만 need 사슬을 잇는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인"
+  "note": "D2: saga-web/tools/playcheck/pw-st-close1.mjs 7/7 — results/pw-st-close1.json(W-0091). 선행 무예는 2차부터라 1차 다섯 올려 장군 전직 뒤 잠금을 봄. PLAN §3: 미확인"
  },
  {
   "id": "st.data-gear",
@@ -213,11 +214,12 @@
    "저자 — 사면 금이 줄고, 팔면 산 값의 3할이 돌아온다",
    "끼고 있는 것은 못 판다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-st-close1.mjs 7/7 — results/pw-st-close1.json(W-0091)."
  },
  {
   "id": "st.data-quest",
@@ -242,11 +244,12 @@
    "목표판(§5-6) — 부팅(ensureDailyTrack) 직후 3줄이 비어 있지 않다",
    "목표판(§5-6) — trackedInfo() 는 읽기만 한다(렌더마다 몰래 사명을 받지 않는다)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-st-close1.mjs 7/7 — results/pw-st-close1.json(W-0091). 사명은 지금 33(이름의 20 은 낡음, 일일 2)."
  },
  {
   "id": "st.auto",
@@ -401,11 +404,12 @@
    "소리는 요청을 다 적는다 — 꺼져 있어도 남는다",
    "적을 잡으면 타격과 죽음이 소리로 남는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-st-close1.mjs 7/7 — results/pw-st-close1.json(W-0091). 꼬리(_tail)는 공중 몸의 land 가 덮어 처치음은 land 를 걸러 본다."
  },
  {
   "id": "st.account",

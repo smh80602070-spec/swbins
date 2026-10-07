@@ -4,7 +4,10 @@
  "pass": 14,
  "total": 14,
  "pageErrors": [],
- "notFound": [],
+ "notFound": [
+  "saga-story/_shared/assets/world3d/altar_01.license.json",
+  "saga-story/_shared/assets/world3d/altar_01.license.json"
+ ],
  "checks": [
   {
    "name": "준비 — 새 계정이 허창 들판 사냥터에 들어간다",
@@ -14,7 +17,7 @@
   {
    "name": "물리·조작 — → 를 누르면 오른쪽으로 달린다(기본 속도 270px/s × 인물·직업 보정, 게임 시간 0.7초)",
    "ok": true,
-   "detail": "속도 370px/s = 기본의 1.37배 (259px / 0.7s)"
+   "detail": "속도 324px/s = 기본의 1.20배 (227px / 0.7s)"
   },
   {
    "name": "물리·조작 — ␣ 로 뛰어올라 공중에 떴다가 발판 위에 내려선다",
@@ -44,12 +47,12 @@
   {
    "name": "전투 — 1번 무예를 쓰면 무예가 쿨다운에 들고 적 체력이 줄고 맞은 적이 밀려난다",
    "ok": true,
-   "detail": "무예 준비 true→false · 체력 99999→99911 · x 493→484"
+   "detail": "무예 준비 true→false · 체력 99661→99420 · x 447→350"
   },
   {
    "name": "전투 — 적에게 맞으면 피해를 입고 잠깐 무적이 선다",
    "ok": true,
-   "detail": "{\"lost\":16,\"maxInvuln\":0.65}"
+   "detail": "{\"lost\":8,\"maxInvuln\":0.65}"
   },
   {
    "name": "사냥터 사슬 — 레벨 1 에선 문턱(레벨 1/5/12/25…)이 안 넘은 곳이 잠겨 있다",
@@ -69,12 +72,12 @@
   {
    "name": "자동 사냥 — 켜면 스스로 돌아다니며 적을 잡는다",
    "ok": true,
-   "detail": "{\"켜짐\":true,\"처치\":[1,5],\"금\":[11,81],\"x\":[665,543]}"
+   "detail": "{\"켜짐\":true,\"처치\":[1,5],\"금\":[12,237],\"x\":[1487,1210]}"
   },
   {
    "name": "2D 모드 시트 — 3D 바탕을 끄면 사람형 적이 시트로 그려진다(walk 이미지를 받아 둠, 실패 0)",
    "ok": true,
-   "detail": "{\"on\":true,\"humans\":5,\"loaded\":5,\"failed\":0}"
+   "detail": "{\"on\":true,\"humans\":1,\"loaded\":1,\"failed\":0}"
   }
  ]
 }
