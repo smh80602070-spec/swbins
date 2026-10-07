@@ -15,9 +15,9 @@ A1111 1.10.1(2025-02 멈춤) → **ComfyUI**(Windows ROCm 공식, 포트 8188). 
   **sdxl**(`animagine-xl-4.0-opt`·`Illustrious-XL-v2.0`, 태그형 + 품질 꼬리표 + 부정 프롬프트). SDXL base·SD1.5·NoobAI 는 지웠다(밀리거나 NC).
 - 이음매 타일(`tiling`)은 **sdxl 에서만** 된다(합성곱 순환 패딩, swbins3 `comfyui-saga/saga_seamless.py`). DiT(Z-Image)는 타일이 안 된다 → 타일 배치는 Illustrious.
 - sampler 는 A1111 이름("Euler a")을 그대로 써도 된다(`SAMPLERS` 로 옮김). hires(`hr`)는 잠재 공간 확대 + 둘째 KSampler.
-- 켜기 플래그(`start_sd.ps1`): `--use-pytorch-cross-attention --lowvram --disable-pinned-memory --fp32-vae`, `TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1`. MIOpen 은 ComfyUI 가 RDNA3 에서 스스로 끈다.
+- 켜기 플래그(`start_sd.ps1`): `--use-pytorch-cross-attention --disable-dynamic-vram --lowvram --disable-pinned-memory --fp32-vae`(실측으로 고름 — 동적 VRAM 은 모델을 프롬프트마다 갈아 끼우고, fp16 VAE 는 Z-Image 가 깨진다), `TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1`. MIOpen 은 ComfyUI 가 RDNA3 에서 스스로 끈다. 기동 5~6분.
 - 판정기(`asset-audit/judge/judge.sh`)도 `C:\swbins3\comfyui\venv` 파이썬으로 돈다.
-- 측정(RX 7600): swbins3 `SETUP_GUIDE.md` §6.
+- 측정(RX 7600, 10-08): Z-Image 1024² 184초·768² 101초(샘플링은 40·19초, 나머지가 CPU 인코딩) · Illustrious 832×1216 86~150초·768² 64초. 상세·다음 최적화 후보는 swbins3 `SETUP_GUIDE.md` §6. 첫 그림 품질: Z-Image 아이콘(청동 호랑이 부적)은 사진급, Illustrious 초상은 애니 정상 — 사용자 눈 판정은 K-0082.
 
 ## 새 배치는 키트로만 (K-0070, 2026-10-05)
 프롬프트는 손으로 쓰지 않는다. 소넷은 **주제(영어 태그 5~8개)** 만 적고 구도·배경·그림체·부정어·크기·씨앗은 `prompt_kit.py` 가 채운다. 입력은 `batches/_in/<이름>.json`:

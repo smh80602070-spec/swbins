@@ -6,7 +6,7 @@
 # fp32 VAE (bf16 VAE is slow on RDNA3). ComfyUI disables MIOpen on RDNA3 by itself (set COMFYUI_ENABLE_MIOPEN=1 for ESRGAN upscales).
 param(
     [string]$Swbins3 = "C:\swbins3",
-    [int]$WaitSeconds = 300,
+    [int]$WaitSeconds = 600,   # ROCm torch import + backend probing takes 5-6 min on this PC (measured 2026-10-07)
     [int]$Port = 8188
 )
 $ErrorActionPreference = "Stop"
@@ -29,7 +29,7 @@ $env:TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL = "1"
 $env:PYTHONIOENCODING = "utf-8"
 $py = Join-Path $comfy "venv\Scripts\python.exe"
 $args = @("main.py", "--listen", "127.0.0.1", "--port", "$Port", "--disable-auto-launch",
-          "--use-pytorch-cross-attention", "--lowvram", "--disable-pinned-memory", "--fp32-vae",
+          "--use-pytorch-cross-attention", "--disable-dynamic-vram", "--lowvram", "--disable-pinned-memory", "--fp32-vae",
           "--output-directory", (Join-Path $comfy "output"))
 $p = Start-Process -FilePath $py -ArgumentList $args -WorkingDirectory $comfy -WindowStyle Hidden -PassThru `
     -RedirectStandardOutput (Join-Path $logs "comfy.out.log") -RedirectStandardError (Join-Path $logs "comfy.err.log")

@@ -156,7 +156,8 @@ def workflow(item, model, d, seed, dry=False):
                                                         'cfg': cfg, 'sampler_name': sampler, 'scheduler': scheduler,
                                                         'denoise': float(item.get('hr_denoise', d.get('hr_denoise', 0.45)))}}
         last = ['13', 0]
-    g['14'] = {'class_type': 'VAEDecode', 'inputs': {'samples': last, 'vae': vae_ref}}
+    # 타일 디코드: 한 번에 풀면 1MP fp 디코드가 2~3GB 를 먹어 8GB 에서 UNet 이 쫓겨나고 다음 장에 다시 올라온다(장당 +60~70초, 10-08 실측)
+    g['14'] = {'class_type': 'VAEDecodeTiled', 'inputs': {'samples': last, 'vae': vae_ref, 'tile_size': 512, 'overlap': 64, 'temporal_size': 64, 'temporal_overlap': 8}}
     g['15'] = {'class_type': 'SaveImage', 'inputs': {'images': ['14', 0], 'filename_prefix': 'saga/' + re.sub(r'[^A-Za-z0-9_-]', '_', item['id'])}}
     settings = {'prompt': prompt, 'negative_prompt': neg, 'seed': seed, 'steps': steps, 'cfg_scale': cfg, 'sampler': f'{sampler}/{scheduler}',
                 'size': [w, h], 'tiling': tiling, 'hr': hr if hr > 1.0 and not init else 0, 'denoise': denoise if init else None}
@@ -239,6 +240,10 @@ def main():
     if not up():
         sys.exit('ComfyUI 가 안 떠 있다 — powershell -ExecutionPolicy Bypass -File tools/ai-art/start_sd.ps1')
     os.makedirs(out_dir, exist_ok=True)
+    try:    # 배치 시작마다 앞 배치의 모델을 RAM·VRAM 에서 내린다 — 두 계열(SDXL 6.6GB + Z-Image 10GB)이 RAM 에 같이 남으면 페이지 파일로 밀려 48s/it 까지 떨어졌다(10-07)
+        call('/free', {'unload_models': True, 'free_memory': True}, timeout=30)
+    except Exception:
+        pass
     fails = 0
     for n, it in enumerate(items):
         p = os.path.join(out_dir, it['id'] + '.png')
