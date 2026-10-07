@@ -264,9 +264,17 @@ func _refresh() -> void:
 	_refresh_journal()
 	_refresh_marker()
 
+## G-0075 — 이야기 적(보스·무리·지키기 물결)이 살아 있고 내가 그 자리 FIGHT_HIDE_M 안이면 빛기둥이 보스 몸을 덮지 않게 숨긴다
+## (적마다 머리 위 막대·보스 막대가 이미 있다). 멀리서 찾아갈 땐 그대로 보인다.
+const FIGHT_HIDE_M := 30.0
+func _fighting_at(t: Vector3) -> bool:
+	if _player == null or not ["duel", "kill", "defend"].has(String(current_step().get("type", ""))) or alive_quest_enemies().is_empty():
+		return false
+	return Vector2(_player.global_position.x - t.x, _player.global_position.z - t.z).length() <= FIGHT_HIDE_M
+
 func _refresh_marker() -> void:
 	var t := target_pos()
-	_marker.visible = t != Vector3.INF and not _dlg_open   # G-0044 — 대화 중엔 빛기둥이 말하는 인물을 덮지 않게 숨긴다
+	_marker.visible = t != Vector3.INF and not _dlg_open and not _fighting_at(t)   # G-0075 싸우는 자리에선 숨김 · G-0044 — 대화 중엔 빛기둥이 말하는 인물을 덮지 않게 숨긴다
 	if not _marker.visible:
 		return
 	_marker.global_position = t

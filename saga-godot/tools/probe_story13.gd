@@ -8,7 +8,7 @@ extends Node
 ##     · 단계 자리(지역 안·충돌에 안 묻힘)
 ## [2] 잠금 — 회차 0 이면 42장 잠김·추적 글 "별배 재출항(1회차)"·일지 같은 글 · 그래도 재출항은 막히지 않음(본편 41장 끝) · 회차 1 이면 열림
 ## [3] 42장부터 44장 끝까지 단계마다 자동으로 밟는다(talk·go·kill·light·climb·duel·sail) — 장 끝 보상
-## [4] 끝 — ch=44·일지 ✔ 제44장·모라
+## [4] 끝 — ch=44·일지 ✔ 제44장·모라 · G-0075 보스 곁에선 금빛 빛기둥 숨김(50m 밖에선 보임)
 ## 이야기 상태·회차·부대 경험·가방은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
@@ -33,6 +33,7 @@ var _sf := 0 # 단계 안 프레임
 var _log: Array = []
 var _mora0 := 0
 var _pressed: Array = []
+var _mk := {} # G-0075 보스 곁 빛기둥 {near: 숨김?, far: 보임?}
 
 func _ready() -> void:
 	Weather.force("clear")
@@ -135,6 +136,7 @@ func _physics_process(_delta: float) -> void:
 			var jt: String = _sq.call("journal_text")
 			_sq.call("toggle_journal")
 			var ok: bool = int(_sq.call("ch")) == CH44 + 1 and jt.contains("✔ 제44장") and PartyState.count("mora") >= _mora0 + 240000 + 270000 + 360000
+			_check("marker_fight", bool(_mk.get("near", false)) and bool(_mk.get("far", false)), "%s" % [_mk])
 			_check("finished", ok, "ch=%d mora +%d" % [_sq.call("ch"), PartyState.count("mora") - _mora0])
 			_next()
 		5:
@@ -175,7 +177,19 @@ func _drive(sd: Dictionary) -> void:
 				_put(_target() + Vector3(0.0, 0.0, 3.0))
 			if _sf == 10:
 				_sq.call("receive_element", _target() + Vector3(0.4, 0.0, 0.4), 3.0, "fire")
-		"kill", "defend", "duel":
+		"duel": # G-0075 — 곁(3m)에선 빛기둥 숨김, 50m 밖에선 보임, 그다음 쓰러뜨림
+			if _sf == 2:
+				_put(_target() + Vector3(0.0, 0.0, 3.0))
+			if _sf == 5:
+				_mk.near = not (_sq.get("_marker") as Node3D).visible
+				_put(_target() + Vector3(0.0, 40.0, 50.0))
+			if _sf == 8:
+				_mk.far = (_sq.get("_marker") as Node3D).visible
+				_put(_target() + Vector3(0.0, 0.0, 3.0))
+			if _sf > 10 and _sf % 6 == 0:
+				for e in _sq.call("alive_quest_enemies"):
+					e.call("_die")
+		"kill", "defend":
 			if _sf == 2:
 				_put(_target() + Vector3(0.0, 0.0, 3.0))
 			if _sf > 4 and _sf % 6 == 0:
