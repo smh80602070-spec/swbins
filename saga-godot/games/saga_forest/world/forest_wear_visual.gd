@@ -5,8 +5,7 @@ extends Node3D
 ## StandardMaterial3D.albedo_color를 곱색으로 얹고(games/saga_go/world/
 ## bandit_encounter.gd의 강타 예고 물들이기와 같은 GLBUtils.
 ## find_all_mesh_instances 활용 — 다만 여기는 되돌리지 않고 계속
-## 남긴다), 덧옷(cape)은 등에 붙는 얇은 판 하나를 켜고 끈다. 겉옷·머리는
-## 그림 자산이 없어 이 스크립트가 아예 안 본다(폴링할 이유가 없다).
+## 남긴다). 덧옷·머리·겉옷 갑옷은 G-0063 부터 자체툴 GLB 를 뼈에 붙인다(아래 HEAD_GLB 등 — 그림이 없는 것은 안 붙임).
 ##
 ## GO/DUNGEON의 Player.tscn·player.gd는 건드리지 않는다 — 이 스크립트가
 ## TestVillageForest.tscn에만 붙어 FOREST 안에서만 플레이어를 찾아
@@ -23,10 +22,24 @@ extends Node3D
 const CLOTH_KEY := "CLOTH" # 대문자로 견준다 — VRoid "…_CLOTH…" · 공방 몸(09-29) "cloth_a"
 const BASE_TINT_META := &"dye_base_tint"
 
+## G-0063 — 머리·덧옷·겉옷 갑옷을 자체툴 GLB 로 몸 뼈에 붙인다(saga_core/world/bone_gear.gd, 사가고 갑옷과 같은 길).
+## 판 도형 덧옷(_build_cape)은 걷어냈다. 그림이 없는 것(맨머리·상투·평상복·도포·두루마기)은 아무것도 안 붙인다.
+const BoneGear := preload("res://saga_core/world/bone_gear.gd")
+const TAG := "forest_gear"
+const DIR := "res://assets/world/"
+const HEAD_BONES := ["J_Bip_C_Head", "head"]
+const CHEST_BONES := ["J_Bip_C_Chest", "spine_03", "spine_02"]
+const UPPER_CHEST_BONES := ["J_Bip_C_UpperChest", "spine_03"]
+const L_UPPER_ARM := ["J_Bip_L_UpperArm", "upperarm_l"]
+const R_UPPER_ARM := ["J_Bip_R_UpperArm", "upperarm_r"]
+const HEAD_GLB := {"braid": "acc_ribbon", "scholar": "acc_headband", "gat": "acc_hat_wide", "hairpin": "acc_crown", "helmet": "acc_hat_pointed"}
+const CAPE_GLB := "acc_cape_long"
+const PLATE_GLB := ["eq_past_2_chest", "eq_past_2_shoulder"]
+
 var _player: Node3D = null
-var _cape: MeshInstance3D = null
+var _skel: Skeleton3D = null
 var _last_dye := ""
-var _last_cape := ""
+var _last_gear := ""
 
 
 func _process(_delta: float) -> void:
@@ -34,19 +47,53 @@ func _process(_delta: float) -> void:
 		_player = get_tree().get_first_node_in_group("player")
 		if _player == null:
 			return
-		_cape = _build_cape(_player)
 		_last_dye = ""  # 처음 찾았을 때 강제로 한 번 다시 칠한다
-		_last_cape = ""
+		_last_gear = ""
+	var skel := BoneGear.skeleton_of(_player)
+	if skel != _skel:   # 몸이 바뀌면(swap_body) 다시 붙이고 다시 칠한다
+		_skel = skel
+		_last_dye = ""
+		_last_gear = ""
 
 	var dye: String = ForestSaveState.wearing("dye")
 	if dye != _last_dye:
 		_last_dye = dye
 		_apply_dye(dye)
 
-	var cape: String = ForestSaveState.wearing("cape")
-	if cape != _last_cape:
-		_last_cape = cape
-		_cape.visible = cape == "on"
+	var gear := "%s|%s|%s" % [ForestSaveState.wearing("head"), ForestSaveState.wearing("cape"), ForestSaveState.wearing("coat")]
+	if gear != _last_gear:
+		_last_gear = gear
+		apply_gear(_player, ForestSaveState.wearing("head"), ForestSaveState.wearing("cape"), ForestSaveState.wearing("coat"))
+
+
+## 머리·덧옷·겉옷 → 붙일 GLB 줄기 목록(화면 없이 셈 — 점검이 부른다).
+static func gear_ids(head: String, cape: String, coat: String) -> Array:
+	var out: Array = []
+	if HEAD_GLB.has(head):
+		out.append(HEAD_GLB[head])
+	if cape == "on":
+		out.append(CAPE_GLB)
+	if coat == "plate":
+		out.append_array(PLATE_GLB)
+	return out
+
+
+## 옛 것을 치우고 다시 붙인다. 붙인 조각 수(어깨는 좌우 둘)를 돌려준다.
+static func apply_gear(player: Node3D, head: String, cape: String, coat: String) -> int:
+	BoneGear.clear(player, TAG)
+	var n := 0
+	for id: String in gear_ids(head, cape, coat):
+		var bones: Array = HEAD_BONES
+		var mirror: Array = []
+		if id == CAPE_GLB:
+			bones = UPPER_CHEST_BONES
+		elif id == "eq_past_2_chest":
+			bones = CHEST_BONES
+		elif id == "eq_past_2_shoulder":
+			bones = L_UPPER_ARM
+			mirror = R_UPPER_ARM
+		n += BoneGear.attach(player, "%s%s.glb" % [DIR, id], bones, mirror, TAG, "Wear_%s" % id)
+	return n
 
 
 func _apply_dye(dye: String) -> void:
@@ -55,7 +102,7 @@ func _apply_dye(dye: String) -> void:
 	if String(it.get("c", "")) != "":
 		tint = Color(String(it.c))
 	for mi: MeshInstance3D in GLBUtils.find_all_mesh_instances(_player):
-		if mi.mesh == null or mi.name == "WearCape":
+		if mi.mesh == null:
 			continue
 		for i in mi.mesh.get_surface_count():
 			var orig := mi.mesh.surface_get_material(i)
@@ -70,23 +117,3 @@ func _apply_dye(dye: String) -> void:
 				mat.set_meta(BASE_TINT_META, mat.get_shader_parameter("albedo_tint"))
 			var base: Color = mat.get_meta(BASE_TINT_META)
 			mat.set_shader_parameter("albedo_tint", base * tint)
-
-
-## 덧옷은 회전하는 Visual(VRoid, ×1.0344)의 자식으로 붙여 캐릭터가 도는 대로
-## 등판이 따라온다(예전엔 루트에 붙어 안 돌았다). 크기·자리는 1.7m 사람
-## 기준(어깨 ≈1.4m 아래로 무릎 위까지) — 모델이 +Z를 보므로(player.gd
-## target_yaw = atan2(x, z)) 등은 -Z. 미세조정은 실기 확인 때.
-func _build_cape(player: Node3D) -> MeshInstance3D:
-	var mi := MeshInstance3D.new()
-	mi.name = "WearCape"
-	var box := BoxMesh.new()
-	box.size = Vector3(0.42, 0.72, 0.03)
-	mi.mesh = box
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = Color(0.35, 0.28, 0.5)
-	mi.material_override = mat
-	mi.position = Vector3(0, 1.0, -0.14)
-	mi.visible = false
-	var visual: Node3D = player.get_node_or_null("Visual")
-	(visual if visual != null else player).add_child(mi)
-	return mi

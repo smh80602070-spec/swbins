@@ -1545,12 +1545,13 @@
   "name": "옷",
   "files": [],
   "tests": [
-   "forest_rules"
+   "forest_rules",
+   "forest_gear"
   ],
   "level": "D3",
   "verified": "2026-10-07",
   "fun": {},
-  "ticket": "G-0051",
+  "ticket": "G-0063",
   "since": "2026-09-16"
  },
  {

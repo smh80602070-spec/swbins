@@ -41,6 +41,7 @@ const CUTS := [
 	# G-0051 — 옷은 메모리에서만 바꾼다(저장은 저장 단추로만 — 세이브 파일 안 바뀜)
 	# 들판 카메라(14m)로는 몸이 20화소라 팔 길이 3.5m 로 당겨 찍는다. _plain 은 기본 옷(비교용) — 자동 로드는 컷 사이에 남으니 옷을 늘 명시한다.
 	["fs_wear", FOREST, [["set", "/root/ForestSaveState", "wear_on", {"coat": "leather", "head": "topknot", "dye": "crimson", "cape": "on"}], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.5]]],
+	["fs_wear_gat", FOREST, [["set", "/root/ForestSaveState", "wear_on", {"coat": "plate", "head": "gat", "dye": "crimson", "cape": "on"}], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.5]]],   # G-0063 갓·덧옷·갑옷
 	["fs_wear_plain", FOREST, [["set", "/root/ForestSaveState", "wear_on", {"coat": "leather", "head": "topknot", "dye": "none", "cape": "off"}], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.5]]],
 	["fs_wear_menu", FOREST, [["set", "/root/ForestSaveState", "wear_on", {"coat": "leather", "head": "topknot", "dye": "crimson", "cape": "on"}], ["call", "Villager", "_open_wear_menu", [{}, "@box"]]]],
 	["fs_fishing_near", FOREST, [["near", "Fishing", 0.0, 2.6]]],   # G-0046 — 못 가까이

@@ -5,9 +5,10 @@ extends RefCounted
 ##   시대(인물 era): 삼국지·한국사·일본사 → past · 세계사 → present · 균열(가상)·폐허(가상) → future · 나머지 → past.
 ##   GLB 규약(license.json·tools/world-forge/data/equip_slots.json): 원점 = 붙일 뼈의 머리, 인물 앞 = Blender -Y(= 고돗 +Z, 몸 앞과 같다).
 ##   왼쪽 부위(J_Bip_L_*)는 오른쪽에 X 뒤집은 사본. 몸마다 균등 배율 = 머리 뼈 높이 / 1.5m(기준 몸).
-## 붙이는 길은 weapon_visual.gd(G-0029)와 같다 — 뼈 축을 몸 축으로 되돌리는 앵커(VroidBody.bone_anchor) 아래.
+## 붙이는 길(앵커·배율·거울)은 G-0063 에서 다섯 판 공용 saga_core/world/bone_gear.gd 로 옮겼다(사가의숲 옷도 쓴다).
 
-const VroidBody := preload("res://saga_core/world/vroid_body.gd")
+const BoneGear := preload("res://saga_core/world/bone_gear.gd")
+const TAG := "armor"
 
 const DIR := "res://assets/world/"
 const PARTS_OF := {"flower": ["chest"], "plume": ["shoulder"], "sands": ["arm"], "goblet": ["leg", "boot"], "circlet": ["head"]}
@@ -22,8 +23,6 @@ const BONES := {
 }
 const PAST_ERAS := ["삼국지", "한국사", "일본사"]
 const FUTURE_ERAS := ["균열(가상)", "폐허(가상)"]
-const ANCHOR_NAME := "ArmorAnchor"
-const REF_HEAD_H := 1.5 # equip_slots.json ref_head_bone_height_m
 
 
 static func era_of(era: String) -> String:
@@ -58,65 +57,23 @@ static func pieces_for(artifacts: Array, era: String) -> Array:
 ## 몸(Visual)에 조각을 붙인다(옛 조각은 먼저 치움). 붙인 GLB 수를 돌려준다.
 static func attach(body: Node3D, pieces: Array) -> int:
 	clear(body)
-	if body == null or pieces.is_empty():
+	if body == null:
 		return 0
-	var skel: Skeleton3D = null
-	for s in body.find_children("*", "Skeleton3D", true, false):
-		skel = s as Skeleton3D
-		break
-	if skel == null:
-		return 0
-	var k := body_scale(skel)
 	var n := 0
 	for p: Dictionary in pieces:
-		if not ResourceLoader.exists(String(p.path)):
-			continue
-		var packed := load(String(p.path)) as PackedScene
-		if packed == null:
-			continue
-		n += _put(skel, packed, p.bones, false, String(p.part), k)
-		if bool(p.mirror):
-			n += _put(skel, packed, p.mirror_bones, true, String(p.part), k)
+		n += BoneGear.attach(body, String(p.path), p.bones, p.mirror_bones if bool(p.mirror) else [], TAG, "Armor_%s" % p.part)
 	return n
 
 
-## 뼈대 공간 머리 뼈 높이 / 1.5 — 앵커가 뼈대(와 그 위 몸) 배율을 이미 물려받으므로 뼈대 공간 값으로 충분하다.
 static func body_scale(skel: Skeleton3D) -> float:
-	var head := VroidBody.find_bone_of(skel, BONES.head[0])
-	if head < 0:
-		return 1.0
-	return maxf(skel.get_bone_global_rest(head).origin.y, 0.3) / REF_HEAD_H
-
-
-static func _put(skel: Skeleton3D, packed: PackedScene, bone_names: Array, mirrored: bool, part: String, k: float) -> int:
-	var bone := VroidBody.find_bone_of(skel, bone_names)
-	if bone < 0:
-		return 0
-	var anchor := VroidBody.bone_anchor(skel, bone)
-	anchor.name = ANCHOR_NAME
-	var model := packed.instantiate() as Node3D
-	model.name = "Armor_%s%s" % [part, "_R" if mirrored else ""]
-	model.scale = Vector3(-k if mirrored else k, k, k)
-	anchor.add_child(model)
-	return 1
+	return BoneGear.body_scale(skel)
 
 
 ## 몸에 붙은 갑옷 조각을 치운다(앵커째).
 static func clear(body: Node3D) -> void:
-	if body == null:
-		return
-	for n in body.find_children(ANCHOR_NAME, "Node3D", true, false):
-		var att := n.get_parent()
-		if att != null and att.get_parent() != null:
-			att.get_parent().remove_child(att)
-			att.queue_free()
+	BoneGear.clear(body, TAG)
 
 
 ## 붙어 있는 조각 노드들(점검용).
 static func worn(body: Node3D) -> Array:
-	var out: Array = []
-	if body == null:
-		return out
-	for n in body.find_children("Armor_*", "Node3D", true, false):
-		out.append(n)
-	return out
+	return BoneGear.worn(body, TAG)
