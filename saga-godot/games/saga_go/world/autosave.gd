@@ -37,13 +37,15 @@ func _ready() -> void:
 	add_child(layer)
 	_label = Label.new()
 	_label.text = "💾 자동 저장"
-	_label.add_theme_font_size_override("font_size", 13)
+	_label.add_theme_font_size_override("font_size", 26)   # G-0069 — 13 은 가로 창에서 7px
+	_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.8))
+	_label.add_theme_constant_override("outline_size", 6)
 	_label.add_theme_color_override("font_color", Color(1, 1, 1, 0.85))
 	_label.anchor_top = 1.0
 	_label.anchor_bottom = 1.0
-	_label.offset_left = 120
-	_label.offset_top = -40
-	_label.offset_bottom = -12
+	_label.offset_left = 210   # G-0069 — 폰 조이스틱(왼쪽 아래) 오른쪽 위로
+	_label.offset_top = -110
+	_label.offset_bottom = -70
 	_label.visible = false
 	layer.add_child(_label)
 	_sig = signature()
