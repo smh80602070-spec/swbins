@@ -68,3 +68,20 @@ static func duel16(tree: SceneTree) -> void:
 	var t: Vector3 = sq.call("target_pos")
 	p.global_position = t + Vector3(0.0, 0.3, 3.5)
 	p.set("velocity", Vector3.ZERO)
+
+## G-0080 — 17부 56장 셋째 단계(놓지 못한 선장의 잔상, 회차 5, 갈림길 끝 섬 위). 보스 남쪽 3.5m.
+static func duel17(tree: SceneTree) -> void:
+	var p := tree.get_first_node_in_group("player") as Node3D
+	var sq := tree.get_first_node_in_group("go_story")
+	if p == null or sq == null:
+		return
+	PartyState.cycle = maxi(PartyState.cycle, 5)
+	PartyState.exp = maxf(PartyState.exp, 86.0 * PartyState.EXP_PER_LEVEL)
+	PartyState.level = maxi(PartyState.level, 86)
+	PartyState.ar_paid = maxi(PartyState.ar_paid, PartyState.level + 1)
+	PartyState.story = {"ch": 55, "step": 2}
+	sq.call("set_track", "")
+	sq.call("_enter_step")
+	var t: Vector3 = sq.call("target_pos")
+	p.global_position = t + Vector3(0.0, 0.5, 3.5)
+	p.set("velocity", Vector3.ZERO)

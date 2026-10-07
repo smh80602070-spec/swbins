@@ -2731,6 +2731,25 @@
   "since": "2026-10-08"
  },
  {
+  "id": "gd.go.story17",
+  "name": "이야기 17부 「붙든 일 분」(54~56장, 회차 5 전용 — 회차 이야기의 끝) — 13~16부의 그 일 분을 한별이 놓아 세 시대의 멈춘 시간이 함께 흐름, 이야기 보스 놓지 못한 선장의 잔상, 끝난 뒤 재대결 「일 분의 메아리」",
+  "files": [
+   "games/saga_go/data/story_chapters_5.gd",
+   "tools/probe_story17.gd",
+   "tools/shot_story13.gd"
+  ],
+  "tests": [
+   "story17",
+   "aftermath",
+   "story_data"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0080",
+  "since": "2026-10-08"
+ },
+ {
   "id": "gd.go.graphics",
   "name": "설정 화질/성능 2단 — 성능이면 30fps·3D 해상도 0.75·MSAA·SSAO/SSIL/SDFGI 끔, user://graphics.cfg(다섯 판 공용 — 사가고 메뉴, 네 판 HUD \"화질\" 단추)",
   "files": [],

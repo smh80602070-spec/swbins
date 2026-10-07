@@ -232,6 +232,13 @@ const KINDS := {
 		"phase_text": "이무기가 그 밤 찢긴 하늘의 번개를 두르고 살쾡이와 매를 부른다 — 불로 방패를 깨라",
 		"rotation": ["bite", "tide", "slam", "halo", "tide", "storm"], "summon": ["thunder_cat", "wind_hawk"],
 		"shape": "serpent", "height": 3.8, "colors": [Color(0.2, 0.22, 0.32), Color(0.78, 0.62, 0.28), Color(0.78, 0.62, 1.0)]},
+	## G-0080 17부 56장 이야기 보스 "놓지 못한 선장의 잔상"(갈림길 끝) — 그 일 분을 쥔 채 굳은 한별의 그림자. 사람 몸 2배·남색 옷·금빛 표지(왕관 틀).
+	## 패턴은 있는 틀: 고리·틈새 질주·회오리·내려찍기·그림자. 2단계 풍 방패(암으로 깬다). 섬 밖으로 떨어지면 제자리로(story_quest DUEL_FALL).
+	"captain_echo": {"name": "놓지 못한 선장의 잔상", "hp": 18000.0, "atk": 78.0, "speed": 4.6, "aggro": 28.0,
+		"reach": 3.0, "tell": 0.8, "cd": 1.4, "exp": 0.0, "element": "wind", "shield": 0.0, "phase_shield": 1700.0,
+		"phase_text": "선장의 잔상이 붙든 일 분의 바람을 두르고 매와 여우를 부른다 — 암으로 방패를 깨라",
+		"rotation": ["halo", "rift", "storm", "slam", "shadow", "halo"], "summon": ["wind_hawk", "ice_fox"],
+		"vroid": true, "size": 2.0, "body_r": 0.9, "cloth": Color(0.14, 0.18, 0.34), "crown": Color(0.9, 0.75, 0.35)},
 }
 
 const GRAVITY := 20.0

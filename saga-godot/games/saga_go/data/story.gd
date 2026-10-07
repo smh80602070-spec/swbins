@@ -121,7 +121,12 @@ const NPCS := {
 	## 19장 7단계에 떠 있는 섬돌 꼭대기(lift = region6_crossing.gd TOP_H + 0.3)에 처음 서고, 8~9 섬돌 아래, 19장 뒤엔 첫 정거장 곁.
 	"hanbyeol": {"name": "별배 선장 한별", "era": "미래", "region": "crossing", "cell": Vector2(4.8, 2.4), "rarity": 5, "cloth": Color(0.14, 0.18, 0.34),
 		"captain_hat": true, "idle": "틈의 끝을 찾아야 해. 준비가 되면 말해 주게.",
-		"appear": [{"ch": 18, "from": 7, "to": 7, "region": "crossing", "cell": Vector2(2.54, 7.0), "lift": 17.9},
+		"appear": [
+			## G-0080 17부 — 55장 내내 첫 정거장 곁 · 56장 첫 정거장(0) → 갈림길 끝 섬 위(3, 20장 자리).
+			{"ch": 54, "from": 0, "to": 999, "region": "crossing", "cell": Vector2(4.8, 2.4)},
+			{"ch": 55, "from": 0, "to": 0, "region": "crossing", "cell": Vector2(4.8, 2.4)},
+			{"ch": 55, "from": 3, "to": 3, "region": "crossing", "cell": Vector2(6.394, 2.438), "rift_end": true},
+			{"ch": 18, "from": 7, "to": 7, "region": "crossing", "cell": Vector2(2.54, 7.0), "lift": 17.9},
 			{"ch": 18, "from": 8, "to": 9, "region": "crossing", "cell": Vector2(2.95, 6.4)},
 			## ㊾-3 20장 — 막차가 갈림길 끝에 닿은 뒤(2~10) 섬 위 옛 나무 선로 곁. 끝나면 다시 첫 정거장 곁.
 			{"ch": 19, "from": 2, "to": 10, "region": "crossing", "cell": Vector2(6.394, 2.438), "rift_end": true},
@@ -284,6 +289,11 @@ const STATIONS := {
 		{"ch": 49, "from": 4, "to": 4, "region": "coast", "cell": Vector2(7.05, 4.02)},
 		## G-0079 16부 — 51장 첫 대화는 은하 나루 별배 곁(0).
 		{"ch": 50, "from": 0, "to": 0, "region": "skyport", "cell": Vector2(5.44, 1.8)},
+		## G-0080 17부 — 54장 나루(0)·첫 정거장(4) · 55장 시계탑 발치(2) · 56장 갈림길 끝(4, 20장 반디 자리).
+		{"ch": 53, "from": 0, "to": 0, "region": "skyport", "cell": Vector2(5.44, 1.8)},
+		{"ch": 53, "from": 4, "to": 4, "region": "crossing", "cell": Vector2(4.75, 2.4)},
+		{"ch": 54, "from": 2, "to": 2, "region": "crossing", "cell": Vector2(6.2, 6.35)},
+		{"ch": 55, "from": 4, "to": 4, "region": "crossing", "cell": Vector2(6.206, 2.438), "rift_end": true},
 		{"ch": 11, "from": 5, "to": 5, "region": "frost", "cell": Vector2(6.15, 2.5)},
 		## ㊼-1 13장 — 날개 조각을 꺼낸 뒤(6~8) 조선소로 날아와 있다.
 		{"ch": 12, "from": 6, "to": 8, "region": "coast", "cell": Vector2(7.05, 4.02)},
@@ -349,7 +359,12 @@ const STATIONS := {
 		{"ch": 18, "from": 2, "to": 9, "region": "crossing", "cell": Vector2(4.85, 1.9)},
 		## ㊾-3 20장 — 첫 정거장에서 막차를 대기(0~1) → 갈림길 끝 섬 위 막차 곁(2~10).
 		{"ch": 19, "from": 0, "to": 1, "region": "crossing", "cell": Vector2(4.85, 1.9)},
-		{"ch": 19, "from": 2, "to": 10, "region": "crossing", "cell": Vector2(6.092, 2.6), "rift_end": true}],
+		{"ch": 19, "from": 2, "to": 10, "region": "crossing", "cell": Vector2(6.092, 2.6), "rift_end": true},
+		## G-0080 17부 — 54장 막차로 첫 정거장에 닿은 뒤(2~4)·55장 내내 선로 서쪽, 56장 첫 정거장(0~1) → 갈림길 끝 막차 곁(2~4).
+		{"ch": 53, "from": 2, "to": 4, "region": "crossing", "cell": Vector2(4.85, 1.9)},
+		{"ch": 54, "from": 0, "to": 999, "region": "crossing", "cell": Vector2(4.85, 1.9)},
+		{"ch": 55, "from": 0, "to": 1, "region": "crossing", "cell": Vector2(4.85, 1.9)},
+		{"ch": 55, "from": 2, "to": 4, "region": "crossing", "cell": Vector2(6.092, 2.6), "rift_end": true}],
 	## ㊽-3 17장 — 비탈의 짐승을 물리친 뒤(4~7) 쓰러진 종 곁에 와 있다.
 	"hangyeol": [{"ch": 16, "from": 4, "to": 7, "region": "skyport", "cell": Vector2(1.55, 4.88)}],
 	## ㊼-3 15장 — 조각 셋을 들고 별배로 가는 동안(8~10) 달음이 먼저 별배 곁에 와 있다.

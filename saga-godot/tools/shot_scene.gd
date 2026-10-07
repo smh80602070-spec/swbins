@@ -75,6 +75,7 @@ const CUTS := [
 	["go_monsters", GO, [["static", "res://tools/shot_monsters.gd", "line_up", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0059 들판 여덟 종(SAGA_GLB_MONSTERS=1 이면 GLB 몸)
 	["go_glide", GO, [["static", "res://tools/shot_glide.gd", "lift", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0]]],   # G-0072 활공 날개(glider_01.glb)
 	["go_story13", GO, [["static", "res://tools/shot_story13.gd", "duel", ["@tree"]]]],   # G-0074 13부 43장 그날의 검은 가면(회차·이야기는 메모리에서만)
+	["go_story17", GO, [["static", "res://tools/shot_story13.gd", "duel17", ["@tree"]]]],   # G-0080 17부 56장 놓지 못한 선장의 잔상(메모리에서만)
 	["go_story16", GO, [["static", "res://tools/shot_story13.gd", "duel16", ["@tree"]]]],   # G-0079 16부 53장 선로를 감은 번개 이무기(메모리에서만)
 	["go_story15", GO, [["static", "res://tools/shot_story13.gd", "duel15", ["@tree"]]]],   # G-0078 15부 50장 멈춘 진수대의 쇠 거신(메모리에서만)
 	["go_story14", GO, [["static", "res://tools/shot_story13.gd", "duel14", ["@tree"]]]],   # G-0077 14부 47장 그 밤의 서리 구미호(메모리에서만)
