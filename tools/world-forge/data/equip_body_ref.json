@@ -1,5 +1,5 @@
 {
- "note": "K-0081 — VRoid 몸 단면(dex·realm 299, 옷 포함 바깥면)을 엔진 배율 k(머리 뼈 높이/1.5)로 나눈 값. 좌표: 가슴뼈(J_Bip_C_Chest) 머리 기준, Z 위·앞 −Y, m. 생성: py tools/char-forge/summarize_sections.py <measure_vroid_section.py 결과> --write. build_equip.py 가 조각 맞춤에 쓴다.",
+ "note": "K-0081 — VRoid 몸 단면(dex·realm 299, 옷 포함 바깥면)을 엔진 배율 k(머리 뼈 높이/1.5)로 나눈 값. 좌표: 가슴뼈(J_Bip_C_Chest) 머리 기준, Z 위·앞 −Y, m. 생성: py tools/char-forge/summarize_sections.py <measure_vroid_section.py 결과> --write. build_equip.py FIT 상수의 근거(빌드가 읽지 않음 — 값이 바뀌면 FIT 도 고칠 것).",
  "source_bodies": 299,
  "groups": {
   "all": {

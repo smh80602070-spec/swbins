@@ -1,5 +1,6 @@
 """VRoid 몸 단면 요약 (K-0081) — measure_vroid_section.py 결과를 엔진 배율 k(머리 뼈 높이/1.5)로 나눠 남·녀 중앙값·90분위로 접고,
-장비 조각 기준 몸 표 `tools/world-forge/data/equip_body_ref.json` 을 쓴다(build_equip.py 가 읽어 조각을 몸에 맞춘다).
+장비 조각 기준 몸 표 `tools/world-forge/data/equip_body_ref.json` 을 쓴다 — build_equip.py `FIT` 상수의 근거(빌드는 이 파일을 읽지 않는다,
+다시 재서 값이 바뀌면 FIT 를 손으로 고친다). 한계: 층은 몸 높이 0.05m 칸으로 잰 뒤 k 로 나눠 다시 묶는다 — 키 큰 몸은 이웃 칸이 섞일 수 있다.
 
   py tools/char-forge/summarize_sections.py <sections.json> [--write]
 """
@@ -43,7 +44,7 @@ def collect(ids):
 groups = {'all': list(d), 'M': [i for i in d if plan.get(i) == 'M'], 'F': [i for i in d if plan.get(i) == 'F']}
 summ = {g: dict(n=len(ids), **collect(ids)) for g, ids in groups.items() if ids}
 doc = {'note': 'K-0081 — VRoid 몸 단면(dex·realm 299, 옷 포함 바깥면)을 엔진 배율 k(머리 뼈 높이/1.5)로 나눈 값. 좌표: 가슴뼈(J_Bip_C_Chest) 머리 기준, Z 위·앞 −Y, m. '
-               '생성: py tools/char-forge/summarize_sections.py <measure_vroid_section.py 결과> --write. build_equip.py 가 조각 맞춤에 쓴다.',
+               '생성: py tools/char-forge/summarize_sections.py <measure_vroid_section.py 결과> --write. build_equip.py FIT 상수의 근거(빌드가 읽지 않음 — 값이 바뀌면 FIT 도 고칠 것).',
        'source_bodies': len(d), 'groups': summ}
 print(json.dumps({g: {k: v for k, v in s.items() if k != 'torso'} for g, s in summ.items()}, ensure_ascii=False, indent=1)[:4000])
 for g in ('M', 'F'):

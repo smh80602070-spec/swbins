@@ -106,7 +106,7 @@ if os.path.exists(OUT):
     except Exception:
         out = {}
 for i, gid in enumerate(ids):
-    if gid in out:
+    if gid in out and 'error' not in out[gid]:                               # 실패한 몸은 다음 실행에서 다시 잰다
         continue
     try:
         out[gid] = measure(os.path.join(SRC, gid, gid + '.glb'))

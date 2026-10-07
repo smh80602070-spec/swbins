@@ -5,7 +5,8 @@
   blender -b --factory-startup -P tools/world-forge/build_equip.py -- --list
 
 **좌표 규약(엔진이 읽는 규칙)**: 조각의 원점 = 붙일 뼈의 머리(head) 위치, 몸은 T-자세(VRM 쉼 자세), 인물이 보는 쪽 = Blender -Y(glTF +Z).
-단위 m, 모양은 UAL 표준 몸(골반 0.92m·어깨 1.44m)으로 짓고 마지막에 `FIT` 로 VRoid 몸에 맞춘다(K-0081, 실측 `data/equip_body_ref.json`).
+단위 m, 모양은 UAL 표준 몸(골반 0.92m·어깨 1.44m)으로 짓고 마지막에 `FIT` 로 VRoid 몸에 맞춘다(K-0081 — FIT 는 `data/equip_body_ref.json` 실측에서 손으로 옮긴 상수,
+빌드는 그 파일을 읽지 않는다. 앞·등 배율은 가슴뼈 y 기준이라 몸통 가운데가 뼈에서 0.01m 쯤 어긋난 몸은 그만큼 덜 맞는다).
 엔진은 조각을 그 뼈의 자식으로 붙이고 균등 배율 k(머리 뼈 높이/1.5)를 곱한다 — 가슴판은 가로만 어깨 폭 비율을 더 곱한다(`data/equip_slots.json` fit).
 슬롯 6 = head(J_Bip_C_Head)·chest(J_Bip_C_Chest)·shoulder(L UpperArm)·arm(L LowerArm)·leg(L LowerLeg)·boot(L Foot). shoulder·arm·leg·boot 는 **왼쪽** 한 짝만 있고 오른쪽은 X 축 -1 배율로 거울.
 GLB 안 빈 노드: `attach`(원점, 뼈 머리). license.json 에 `bone`(J_Bip 이름)·`slot`·`mirror`·`era`·`grade`.

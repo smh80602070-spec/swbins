@@ -11,7 +11,8 @@
 (몸 루트 노드 변환 키프레임)로 7칸을 채운다 — 부품이 한 메시라 뼈 리깅 없이 쓴다. 모든 레시피는 1배 크기로 짓고 마지막에 배율을 곱한다.
 
 K-0080 종별 몸: `-- --species tools/world-forge/data/monster_species.json --out-dir <절대>` → 종마다 `mon_sp_<종 id>.glb`.
-표의 꼴(계통·변형, 보스면 배율·장식)에 종 색 3개(몸·둘째·빛)를 구워 넣는다(전역 PAL) — 몸 모양 난수 순서는 같은 꼴의 기본 몸과 같다.
+표의 꼴(계통·변형, 보스면 배율·장식)에 종 색 3개(몸·둘째·빛)를 구워 넣는다(전역 PAL) — 몸 모양 난수 순서는 같은 꼴의 기본 몸과 같다
+(단 보스 장식 runes 는 빛 색 난수를 하나 더 써서 그 뒤 모양 난수가 한 칸 밀린다 — 같은 꼴, 세부 비율만 다르다).
 네발 변형 4 = 곰, 5 = 거북(등딱지)은 종별 몸에만 쓴다(기본 32벌은 그대로).
 """
 import json
@@ -711,6 +712,8 @@ def build_species(pid):
     global PAL
     sp = SPECIES[pid[len('mon_sp_'):]]
     fam, v = sp['form']
+    if fam not in FAMILIES or not (0 <= v < (len(QUAD) if fam == 'quad' else VARIANTS)):
+        raise SystemExit(f'monster_species: {pid} 꼴 {fam}/{v} 없음 — 변형 4·5(곰·거북)는 quad 만')
     base = f'mon_{fam}_{v + 1:02d}' if v < 4 else f'mon_{fam}_x{v}'
     rnd = random.Random(sum(ord(c) * (i + 3) for i, c in enumerate(base)))
     C = BP.Ctx(pid)
@@ -762,6 +765,8 @@ if __name__ == '__main__':
         SPECIES.update(json.load(open(arg('--species'), encoding='utf-8'))['species'])
         only = [x for x in (arg('--only') or '').split(',') if x]
         d = arg('--out-dir')
+        if not d:
+            raise SystemExit('--species 에는 --out-dir <절대 폴더> 가 필요하다')
         for kid in SPECIES:
             if not only or kid in only:
                 build('mon_sp_' + kid, os.path.join(d, 'mon_sp_' + kid + '.glb'), style)

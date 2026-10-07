@@ -36,15 +36,23 @@ if fc:                                                                       # �
     sh = abs(bones['J_Bip_L_UpperArm'].x - bones['J_Bip_C_Chest'].x) / k
     cx = min(max(sh / fc['ref_shoulder_x_m'], fc['clamp'][0]), fc['clamp'][1])
 
-hidden = []
+hidden, mixed = [], []
 if not NO_HIDE:
     for slot, sp in SPEC['armor_slots'].items():
+        if not os.path.exists(os.path.join(pieces, f'eq_{eg}_{slot}.glb')):
+            continue                                                             # 안 입은 슬롯의 옷은 안 숨긴다
         for cat in sp.get('hides', []):
             for pat in SPEC.get('hide_match', {}).get(cat, []):
                 for o in bobjs:
-                    if o.type == 'MESH' and any(pat.upper() in (s.material.name.upper() if s.material else '') for s in o.material_slots):
+                    if o.type != 'MESH':
+                        continue
+                    names = [s.material.name.upper() if s.material else '' for s in o.material_slots]
+                    hit = [pat.upper() in n for n in names]
+                    if hit and all(hit):
                         o.hide_render = True
                         hidden.append(o.name)
+                    elif any(hit):                                               # 재질이 섞인 메시 — 통째로 숨기면 몸이 사라진다(엔진은 표면 단위로)
+                        mixed.append(o.name)
 
 for slot, sp in SPEC['armor_slots'].items():
     f = os.path.join(pieces, f'eq_{eg}_{slot}.glb')
@@ -91,4 +99,4 @@ for view, loc, rot in (('front', (0, -6, cz), (90, 0, 0)), ('side', (6, 0, cz), 
     cam.rotation_euler = [math.radians(r) for r in rot]
     sc.render.filepath = f'{out}_{view}.png'
     bpy.ops.render.render(write_still=True)
-print('EQUIP_FIT', json.dumps({'k': round(k, 3), 'chest_x': round(cx, 3), 'hidden': hidden}))
+print('EQUIP_FIT', json.dumps({'k': round(k, 3), 'chest_x': round(cx, 3), 'hidden': hidden, 'mixed_not_hidden': mixed}))
