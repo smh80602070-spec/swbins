@@ -9,6 +9,10 @@
 변형 4 는 번호마다 일부러 다른 몸(늑대형·멧돼지형·고양이형·황소형 …)이고, 같은 번호 안의 작은 차이(비율·피부·무늬)만 id 씨앗으로 정한다.
 원점 = 발 밑 가운데, 얼굴이 Blender -y(glTF +z) 쪽, 단위 m. 한 변 약 1~1.6m(보스는 ×2.8~3.4). 동작은 뼈 없이 `tools/glb-compress/creature_fill.mjs`
 (몸 루트 노드 변환 키프레임)로 7칸을 채운다 — 부품이 한 메시라 뼈 리깅 없이 쓴다. 모든 레시피는 1배 크기로 짓고 마지막에 배율을 곱한다.
+
+K-0080 종별 몸: `-- --species tools/world-forge/data/monster_species.json --out-dir <절대>` → 종마다 `mon_sp_<종 id>.glb`.
+표의 꼴(계통·변형, 보스면 배율·장식)에 종 색 3개(몸·둘째·빛)를 구워 넣는다(전역 PAL) — 몸 모양 난수 순서는 같은 꼴의 기본 몸과 같다.
+네발 변형 4 = 곰, 5 = 거북(등딱지)은 종별 몸에만 쓴다(기본 32벌은 그대로).
 """
 import json
 import math
@@ -27,6 +31,7 @@ from build_prop import tube, obox, A, arg  # noqa: E402
 
 BP.TRIS_MAX = 4500
 BP.GENERATOR = 'tools/world-forge/build_monster.py'
+PAL = None          # K-0080 종 색 (몸, 둘째, 빛) 헥스 — None 이면 계통 기본 색
 BASE = 0.6          # 레시피는 크게(늑대 길이 ~3m) 짓고 마지막에 이 배율로 줄인다
 SKIN_TRIS = 2300      # Skin 몸에 주는 삼각형 예산(Decimate 비율을 여기에 맞춘다) — 나머지는 뿔·눈·가시
 
@@ -210,10 +215,12 @@ def mats(C, rnd, skin=None, boss=False, deco=None):
     sk = skin or rnd.choice(SKINS)
     body = C.s(sk[0], sk[1], sk[2], gain=1.5)
     dark = C.s(sk[0], sk[1], _shade(sk[2], 0.6), gain=1.15)
-    belly = C.s(sk[0], sk[1], _shade(sk[2], 1.35), gain=1.5)
-    eye = C.s('white_stucco', 1.0, rnd.choice(EYES), gain=1.9)
+    belly = C.s(sk[0], sk[1], PAL[1] if PAL else _shade(sk[2], 1.35), gain=1.5)
+    ec = rnd.choice(EYES)
+    eye = C.s('white_stucco', 1.0, PAL[2] if PAL else ec, gain=1.9)
     horn_m = C.s('coast_sand_rocks_02', 1.0, '#d8cdb0' if not boss else '#2e2a33')
-    glow = C.s('white_stucco', 1.0, rnd.choice(['#ff4a2a', '#ff9a2a', '#b86aff', '#4adfff']), gain=2.1) if deco == 'runes' else None
+    gc = rnd.choice(['#ff4a2a', '#ff9a2a', '#b86aff', '#4adfff']) if deco == 'runes' else None
+    glow = C.s('white_stucco', 1.0, PAL[2] if PAL else gc, gain=2.1) if deco == 'runes' else None
     return body, dark, belly, eye, horn_m, glow
 
 
@@ -223,6 +230,9 @@ QUAD = [
     dict(bl=0.46, bw=0.34, bh=0.32, lh=0.25, nl=0.02, hr=0.25, sn=0.15, leg='str', tail=0.30, tup=-0.1, ear='small', horn='tusk', pat='saddle'),
     dict(bl=0.55, bw=0.21, bh=0.21, lh=0.30, nl=0.20, hr=0.15, sn=0.09, leg='digi', tail=1.05, tup=0.40, ear='tuft', horn=None, pat='spots'),
     dict(bl=0.50, bw=0.33, bh=0.33, lh=0.34, nl=0.10, hr=0.21, sn=0.15, leg='str', tail=0.50, tup=-0.15, ear='small', horn='bull', pat='plain'),
+    # K-0080 종별 몸에만: 4 곰(굵은 몸·짧은 꼬리·둥근 귀) · 5 거북(낮은 몸·짧은 다리 + 등딱지)
+    dict(bl=0.46, bw=0.38, bh=0.37, lh=0.28, nl=0.03, hr=0.23, sn=0.12, leg='str', tail=0.14, tup=0.05, ear='small', horn=None, pat='plain'),
+    dict(bl=0.40, bw=0.34, bh=0.20, lh=0.15, nl=0.16, hr=0.15, sn=0.06, leg='str', tail=0.22, tup=0.0, ear='none', horn=None, pat='plain', shell=True),
 ]
 
 
@@ -280,7 +290,7 @@ def quad(C, rnd, v, boss=False, deco=None, skin=None):
         elif P['ear'] == 'tuft':
             cone(M, eb, eb + Vector((s * hr * 0.35, 0.02, hr * 1.1)), hr * 0.34, body, 4)
             cone(M, eb + Vector((0, 0, hr * 0.9)), eb + Vector((s * hr * 0.4, 0.0, hr * 1.7)), hr * 0.1, dark, 4)
-        else:
+        elif P['ear'] != 'none':
             blob(M, tuple(eb + Vector((s * hr * 0.2, 0, hr * 0.1))), (hr * 0.28, hr * 0.12, hr * 0.38), body, 6, 4)
         if P['horn'] == 'tusk':
             horn(M, tuple(hp + Vector((s * hr * 0.55, -hr * 1.05 - sn * 0.5, -hr * 0.5))), (s * 0.35, -0.6, 0.55), (s * 0.05, -0.1, 0.5), 0.3 + 0.1 * boss, 0.045, horn_m, 5, 4)
@@ -292,7 +302,12 @@ def quad(C, rnd, v, boss=False, deco=None, skin=None):
             cone(M, (0, y, zc + 0.22 + i * 0.03 + bh * 0.3), (0, y + 0.06, zc + 0.5 + i * 0.03 + bh * 0.3), 0.045, dark, 4)
     if v == 2 or v == 1:
         pass
-    if rnd.random() < 0.55 or boss:                                          # 등 가시
+    if P.get('shell'):                                                       # 거북 등딱지 — 몸 위 낮은 돔 + 테두리 + 마디
+        blob(M, (0, 0.02, zc + bh * 0.35), (bw * 1.75, bl * 1.55, bh * 1.55), dark, 14, 8)
+        blob(M, (0, 0.02, zc + bh * 0.1), (bw * 1.9, bl * 1.68, bh * 0.45), belly, 14, 4)
+        for i, (sx, sy) in enumerate(((0, -0.35), (0, 0.0), (0, 0.35), (-0.5, -0.18), (0.5, -0.18), (-0.5, 0.2), (0.5, 0.2))):
+            blob(M, (sx * bw * 1.6, sy * bl * 1.6, zc + bh * 1.62 - abs(sx) * bh * 0.55), (bw * 0.42, bl * 0.34, bh * 0.22), body, 6, 3)
+    if (rnd.random() < 0.55 or boss) and not P.get('shell'):                 # 등 가시
         n = rnd.randint(3, 5)
         for i in range(n):
             y = -bl * 0.6 + i * bl * 1.3 / max(1, n - 1)
@@ -482,10 +497,11 @@ def serp(C, rnd, v, boss=False, deco=None, skin=None):
 # ---------------------------------------------------------------- 기계 — 0 두발 골렘 · 1 거미 · 2 궤도 포대 · 3 떠 있는 구
 def cons(C, rnd, v, boss=False, deco=None, skin=None):
     M = C.M
-    metal = C.s('corrugated_iron', 1.2, rnd.choice(['#6a727d', '#7b6a58', '#4f5f6a', '#6b5470']))
+    mc, cc, tc = rnd.choice(['#6a727d', '#7b6a58', '#4f5f6a', '#6b5470']), rnd.choice(EYES), rnd.choice(['#b08a4a', '#8f9aa5', '#a35a3a'])
+    metal = C.s('corrugated_iron', 1.2, PAL[0] if PAL else mc)
     dark = C.s('bitumen', 1.0, '#26282e')
-    core = C.s('white_stucco', 1.0, rnd.choice(EYES), gain=2.1)
-    trim = C.s('corrugated_iron', 1.0, rnd.choice(['#b08a4a', '#8f9aa5', '#a35a3a']))
+    core = C.s('white_stucco', 1.0, PAL[2] if PAL else cc, gain=2.1)
+    trim = C.s('corrugated_iron', 1.0, PAL[1] if PAL else tc)
     bw, bd, bh = rnd.uniform(0.5, 0.64), rnd.uniform(0.4, 0.5), rnd.uniform(0.5, 0.66)
     if v == 1:
         bw, bd, bh = rnd.uniform(0.5, 0.6), rnd.uniform(0.6, 0.75), rnd.uniform(0.28, 0.36)
@@ -559,9 +575,10 @@ def spir(C, rnd, v, boss=False, deco=None, skin=None):
     M = C.M
     sk = skin or rnd.choice([('snow_02', 1.0, '#9fd8ff'), ('white_stucco', 1.0, '#c9a6ff'), ('white_stucco', 1.0, '#9ff2c0'), ('white_stucco', 1.0, '#ffb46a')])
     body = C.s(sk[0], sk[1], sk[2], gain=1.35)
-    inner = C.s('white_stucco', 1.0, _shade(sk[2], 1.0), gain=2.0)
+    inner = C.s('white_stucco', 1.0, PAL[1] if PAL else _shade(sk[2], 1.0), gain=2.0)
     dark = C.s('bitumen', 1.0, '#2a2f45')
-    eye = C.s('white_stucco', 1.0, rnd.choice(EYES), gain=2.0)
+    ec = rnd.choice(EYES)
+    eye = C.s('white_stucco', 1.0, PAL[2] if PAL else ec, gain=2.0)
     zc = rnd.uniform(0.62, 0.8)
     r = rnd.uniform(0.24, 0.32)
     g = Rig()
@@ -594,7 +611,8 @@ def spir(C, rnd, v, boss=False, deco=None, skin=None):
         blob(M, (0, -r * 0.6, hz0 - r * 0.3), (r * 0.13, r * 0.05, r * 0.17), dark, 6, 3)
         info_head = (0, -r * 0.3, hz0, r * 0.62)
     elif v == 2:                                                             # 결정 — 핵 + 맴도는 결정 무리
-        core = C.s('white_stucco', 1.0, rnd.choice(['#9fd8ff', '#ff9ac8', '#a6ffb8']), gain=2.2)
+        cc = rnd.choice(['#9fd8ff', '#ff9ac8', '#a6ffb8'])
+        core = C.s('white_stucco', 1.0, PAL[2] if PAL else cc, gain=2.2)
         blob(M, (0, 0, zc), (r * 0.7, r * 0.7, r * 0.8), inner, 8, 6)
         for k in range(rnd.randint(7, 9)):
             a = 2 * math.pi * k / 8 + rnd.uniform(-0.2, 0.2)
@@ -682,11 +700,39 @@ def build_one(pid):
 IDS = [f'mon_{f}_{i:02d}' for f in FAMILIES for i in range(1, VARIANTS + 1)] + [f'boss_{i:02d}' for i in range(1, len(BOSSES) + 1)]
 
 
+# K-0080 — 원소 → 몸 질감(색은 종 색이 정한다). 갈색 사진(진흙·절벽)은 종 색을 덮어 회색 계열로(10-07 눈: 만년설 곰왕이 주황, 여우불이 갈색 · 바위 사진은 이끼 초록으로 찍혀 풀처럼 보임). 표에 tex 가 있으면 그것
+ELEM_TEX = {'fire': ('grey_plaster', 1.2), 'water': ('grey_plaster', 1.2), 'thunder': ('aerial_rocks_02', 1.5), 'wind': ('coast_sand_rocks_02', 1.5),
+            'ice': ('snow_02', 1.5), 'rock': ('grey_plaster', 1.3), 'grass': ('forest_ground_04', 1.2)}
+SPECIES = {}
+
+
+def build_species(pid):
+    """mon_sp_<종> — 표의 꼴에 종 색을 구워 넣는다. 씨앗은 그 꼴의 기본 id(같은 모양 난수)."""
+    global PAL
+    sp = SPECIES[pid[len('mon_sp_'):]]
+    fam, v = sp['form']
+    base = f'mon_{fam}_{v + 1:02d}' if v < 4 else f'mon_{fam}_x{v}'
+    rnd = random.Random(sum(ord(c) * (i + 3) for i, c in enumerate(base)))
+    C = BP.Ctx(pid)
+    PAL = tuple(sp['colors'])
+    tex = tuple(sp['tex']) if sp.get('tex') else ELEM_TEX.get(sp.get('element', ''), ('dry_ground_01', 1.2))
+    try:
+        boss = bool(sp.get('boss'))
+        if fam in MON_SKINS and not boss:
+            rnd.choice(SKINS)                                                   # 기본 몸과 같은 난수 순서
+        info = FAMILIES[fam](C, rnd, v, boss, sp.get('deco'), (tex[0], tex[1], sp['colors'][0]))
+        if boss:
+            decorate(C, rnd, fam, sp.get('deco'), info)
+    finally:
+        PAL = None
+    return C, float(sp.get('scale', 1.0)) * BASE
+
+
 def build(pid, out, style):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     W._mat_cache.clear()
     W.set_style(style)
-    C, k = build_one(pid)
+    C, k = build_species(pid) if pid.startswith('mon_sp_') else build_one(pid)
     for v in C.M.bm.verts:
         v.co *= k
     ob = C.M.build()
@@ -703,7 +749,8 @@ def build(pid, out, style):
     W.export_glb([ob], out, int(os.environ.get('WF_TOON_PX', '256')) if style == 'toon' else 1024, 'JPEG' if style == 'toon' else 'AUTO')
     lic = {'id': pid, 'generator': BP.GENERATOR, 'blender': bpy.app.version_string, 'style': style,
            'license': 'CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)', 'inputs': sorted(f'polyhaven: {m}' for m in C.mats),
-           'size_m': size, 'tris': tris, 'family': pid.split('_')[1] if pid.startswith('mon') else BOSSES[int(pid.split('_')[1]) - 1][0]}
+           'size_m': size, 'tris': tris,
+           'family': (SPECIES[pid[7:]]['form'][0] if pid.startswith('mon_sp_') else pid.split('_')[1] if pid.startswith('mon') else BOSSES[int(pid.split('_')[1]) - 1][0])}
     json.dump(lic, open(os.path.splitext(out)[0] + '.license.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     kb = os.path.getsize(out) // 1024
     print('WORLDFORGE', json.dumps({'id': pid, 'tris': tris, 'size_m': size, 'kb': kb, 'ok': tris <= BP.TRIS_MAX and (style != 'toon' or kb <= 512)}))
@@ -711,7 +758,14 @@ def build(pid, out, style):
 
 if __name__ == '__main__':
     style = arg('--style', 'real')
-    if '--list' in A:
+    if '--species' in A:                                                     # K-0080 종별 몸 전부(또는 --only a,b)
+        SPECIES.update(json.load(open(arg('--species'), encoding='utf-8'))['species'])
+        only = [x for x in (arg('--only') or '').split(',') if x]
+        d = arg('--out-dir')
+        for kid in SPECIES:
+            if not only or kid in only:
+                build('mon_sp_' + kid, os.path.join(d, 'mon_sp_' + kid + '.glb'), style)
+    elif '--list' in A:
         print('IDS', ' '.join(IDS))
     elif '--all' in A:
         d = arg('--out-dir')

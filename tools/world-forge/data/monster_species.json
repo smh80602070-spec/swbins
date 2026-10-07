@@ -1,0 +1,345 @@
+{
+ "note": "K-0080 — 고돗 들판 종(id) → 몬스터 몸 꼴(계통·변형 0~5, 4 곰·5 거북)·보스 배율·장식. 색 3개(몸·둘째·빛)는 saga-godot/games/saga_go/combat/field_enemy.gd KINDS colors 를 옮겨 적음(종 색이 바뀌면 이 표도). 굽기: blender -b --factory-startup -P tools/world-forge/build_monster.py -- --species <이 파일> --out-dir <절대> --style toon → mon_sp_<id>.glb",
+ "species": {
+  "abyss_angler": {
+   "form": [
+    "serp",
+    1
+   ],
+   "element": "water",
+   "colors": [
+    "#1a293d",
+    "#59808c",
+    "#ffc759"
+   ],
+   "boss": true,
+   "scale": 3.0,
+   "deco": "runes"
+  },
+  "amber_turtle": {
+   "form": [
+    "quad",
+    5
+   ],
+   "element": "rock",
+   "colors": [
+    "#f29e33",
+    "#6b6157",
+    "#ffd959"
+   ],
+   "boss": true,
+   "scale": 3.2,
+   "deco": "crown"
+  },
+  "dome_colossus": {
+   "form": [
+    "cons",
+    0
+   ],
+   "element": "rock",
+   "colors": [
+    "#808580",
+    "#d6e6f0",
+    "#73e6ff"
+   ],
+   "boss": true,
+   "scale": 3.0,
+   "deco": "plates"
+  },
+  "ember_king": {
+   "form": [
+    "spir",
+    1
+   ],
+   "element": "fire",
+   "colors": [
+    "#8c2e1f",
+    "#38241f",
+    "#ff9933"
+   ],
+   "boss": true,
+   "scale": 3.0,
+   "deco": "crown"
+  },
+  "fire_imp": {
+   "form": [
+    "spir",
+    1
+   ],
+   "element": "fire",
+   "colors": [
+    "#d9472e",
+    "#592e24",
+    "#ffd94c"
+   ]
+  },
+  "first_crow": {
+   "form": [
+    "wing",
+    3
+   ],
+   "element": "thunder",
+   "colors": [
+    "#242138",
+    "#9e73ff",
+    "#ffeb66"
+   ],
+   "boss": true,
+   "scale": 3.4,
+   "deco": "crown"
+  },
+  "gale_roc": {
+   "form": [
+    "wing",
+    0
+   ],
+   "element": "wind",
+   "colors": [
+    "#4c9e8c",
+    "#e6f7eb",
+    "#ffd94c"
+   ],
+   "boss": true,
+   "scale": 3.0,
+   "deco": "crown"
+  },
+  "garmuri_true": {
+   "form": [
+    "spir",
+    2
+   ],
+   "element": "rock",
+   "colors": [
+    "#d6e0ed",
+    "#ffad38",
+    "#73d9ff"
+   ],
+   "boss": true,
+   "scale": 3.3,
+   "deco": "runes"
+  },
+  "grass_snake": {
+   "form": [
+    "serp",
+    0
+   ],
+   "element": "grass",
+   "colors": [
+    "#4c9938",
+    "#b2d959",
+    "#f28cbf"
+   ]
+  },
+  "ice_fox": {
+   "form": [
+    "quad",
+    0
+   ],
+   "element": "ice",
+   "colors": [
+    "#e6f2ff",
+    "#8cccf2",
+    "#59b2ff"
+   ]
+  },
+  "moss_serpent": {
+   "form": [
+    "serp",
+    2
+   ],
+   "element": "grass",
+   "colors": [
+    "#426633",
+    "#a3854c",
+    "#c7f56b"
+   ],
+   "boss": true,
+   "scale": 3.4,
+   "deco": "plates"
+  },
+  "rift_crow": {
+   "form": [
+    "wing",
+    1
+   ],
+   "element": "ice",
+   "colors": [
+    "#242138",
+    "#9e73ff",
+    "#ffd659"
+   ],
+   "boss": true,
+   "scale": 3.2,
+   "deco": "runes"
+  },
+  "rift_fox": {
+   "form": [
+    "quad",
+    0
+   ],
+   "element": "ice",
+   "colors": [
+    "#ebf5ff",
+    "#998cf2",
+    "#73f2ff"
+   ],
+   "boss": true,
+   "scale": 3.2,
+   "deco": "runes"
+  },
+  "rift_fox_ember": {
+   "form": [
+    "quad",
+    0
+   ],
+   "element": "fire",
+   "colors": [
+    "#ffedd1",
+    "#ff732e",
+    "#ffcc4c"
+   ],
+   "boss": true,
+   "scale": 3.4,
+   "deco": "crown"
+  },
+  "rock_bear": {
+   "form": [
+    "quad",
+    4
+   ],
+   "element": "rock",
+   "colors": [
+    "#80664c",
+    "#e6b24c",
+    "#ffd959"
+   ]
+  },
+  "seed_giant": {
+   "form": [
+    "spir",
+    0
+   ],
+   "element": "grass",
+   "colors": [
+    "#8cd966",
+    "#806640",
+    "#ffd959"
+   ],
+   "boss": true,
+   "scale": 3.4,
+   "deco": "crown"
+  },
+  "snow_bear_king": {
+   "form": [
+    "quad",
+    4
+   ],
+   "element": "rock",
+   "colors": [
+    "#99948f",
+    "#edf5ff",
+    "#8cd9ff"
+   ],
+   "boss": true,
+   "scale": 3.2,
+   "deco": "crown",
+   "tex": [
+    "snow_02",
+    1.5
+   ]
+  },
+  "storm_serpent": {
+   "form": [
+    "serp",
+    2
+   ],
+   "element": "thunder",
+   "colors": [
+    "#383d5c",
+    "#8c80d9",
+    "#d9b2ff"
+   ],
+   "boss": true,
+   "scale": 3.4,
+   "deco": "crown"
+  },
+  "thunder_cat": {
+   "form": [
+    "quad",
+    2
+   ],
+   "element": "thunder",
+   "colors": [
+    "#6b4c99",
+    "#c7a6ff",
+    "#fff273"
+   ]
+  },
+  "tide_turtle": {
+   "form": [
+    "quad",
+    5
+   ],
+   "element": "water",
+   "colors": [
+    "#295785",
+    "#4c94a8",
+    "#f2e6b2"
+   ],
+   "boss": true,
+   "scale": 3.0,
+   "deco": "plates"
+  },
+  "vault_queen": {
+   "form": [
+    "cons",
+    1
+   ],
+   "element": "wind",
+   "colors": [
+    "#d6e0ed",
+    "#73d9ff",
+    "#8cff99"
+   ],
+   "boss": true,
+   "scale": 3.2,
+   "deco": "runes"
+  },
+  "water_turtle": {
+   "form": [
+    "quad",
+    5
+   ],
+   "element": "water",
+   "colors": [
+    "#336b9e",
+    "#599eb8",
+    "#d9f2ff"
+   ]
+  },
+  "wind_hawk": {
+   "form": [
+    "wing",
+    0
+   ],
+   "element": "wind",
+   "colors": [
+    "#59c7a8",
+    "#e0faf0",
+    "#fff280"
+   ]
+  },
+  "wolf": {
+   "form": [
+    "quad",
+    0
+   ],
+   "element": "",
+   "colors": [
+    "#8a7a6a",
+    "#5a4a3a",
+    "#ffd24a"
+   ]
+  }
+ }
+}

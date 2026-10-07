@@ -1,0 +1,103 @@
+{
+ "note": "K-0080 단계 1 실측(10-07): 32벌 렌더 시트 눈 판정 + 정점 실측. 앞 방향 = 전부 glTF +z(머리 끝이 +z, 동작 쉼 회전 없음) — 고돗 field_enemy._face(앞 = +Z)와 같다.",
+ "forms": {
+  "mon_quad_01": {
+   "form": "늑대",
+   "front": "+z"
+  },
+  "mon_quad_02": {
+   "form": "멧돼지",
+   "front": "+z"
+  },
+  "mon_quad_03": {
+   "form": "고양이",
+   "front": "+z"
+  },
+  "mon_quad_04": {
+   "form": "황소",
+   "front": "+z"
+  },
+  "mon_wing_01": {
+   "form": "새",
+   "front": "+z"
+  },
+  "mon_wing_02": {
+   "form": "박쥐",
+   "front": "+z"
+  },
+  "mon_wing_03": {
+   "form": "올빼미",
+   "front": "+z"
+  },
+  "mon_wing_04": {
+   "form": "비룡",
+   "front": "+z"
+  },
+  "mon_serp_01": {
+   "form": "독사",
+   "front": "+z"
+  },
+  "mon_serp_02": {
+   "form": "코브라",
+   "front": "+z"
+  },
+  "mon_serp_03": {
+   "form": "뿔 지렁이(가시)",
+   "front": "+z"
+  },
+  "mon_serp_04": {
+   "form": "방울뱀",
+   "front": "+z"
+  },
+  "mon_cons_01": {
+   "form": "인형 로봇",
+   "front": "+z"
+  },
+  "mon_cons_02": {
+   "form": "거미 기계",
+   "front": "+z"
+  },
+  "mon_cons_03": {
+   "form": "궤도 전차",
+   "front": "+z"
+  },
+  "mon_cons_04": {
+   "form": "가시공 로봇",
+   "front": "+z"
+  },
+  "mon_spir_01": {
+   "form": "불꽃·싹 정령",
+   "front": "+z"
+  },
+  "mon_spir_02": {
+   "form": "뿔 유령(도깨비)",
+   "front": "+z"
+  },
+  "mon_spir_03": {
+   "form": "결정 무리",
+   "front": "+z"
+  },
+  "mon_spir_04": {
+   "form": "해파리",
+   "front": "+z"
+  }
+ },
+ "extra_forms": {
+  "quad_4": "곰(종별 몸 전용)",
+  "quad_5": "거북(종별 몸 전용)"
+ },
+ "bosses": {
+  "boss_01": "황소",
+  "boss_02": "늑대",
+  "boss_03": "멧돼지",
+  "boss_04": "비룡",
+  "boss_05": "박쥐",
+  "boss_06": "뿔 지렁이",
+  "boss_07": "코브라",
+  "boss_08": "인형 로봇",
+  "boss_09": "궤도 전차",
+  "boss_10": "뿔 유령",
+  "boss_11": "결정 무리",
+  "boss_12": "고양이"
+ }
+}
