@@ -20,8 +20,8 @@
 ## 현재 작업 — 중단 지점(2026-10-07)
 
 - 10-07 고돗 G-0049~0066 닫음(티켓 메모가 정본): 노획물 빛·설전/옷 촬영 판정·공용 선택 창·윈도 10 이모지·화질/성능 설정·사가고 대화 건너뛰기·대화창·사진 공유·장비 외형(성유물 → 갑옷 조각)·사가의숲 머리/덧옷/갑옷·지역 꾸밈·가구·하트 줄·D0 일곱 점검. **features D0·D1 0**(사가고 97%·네 판 100%).
-- 공용 새 길: (장비 GLB 뼈 붙이기)·(user://graphics.cfg)·(가로 창 16px). 촬영 도구 (컷 표·@box·@tree·@noop).
-- 큐: G-0059(들판 적·보스 몸, **K 가 mon/boss .glb.import 를 만들어야 시작**) · G-0061(굴·실내 키트, 보류 — 새 장면 때). 안 쓰는 world GLB 132().
+- 공용 새 길: `saga_core/world/bone_gear.gd`(장비 GLB 뼈 붙이기)·`saga_core/data/graphics_settings.gd`(user://graphics.cfg)·`saga_core/ui/choice_prompt.gd`(가로 창 16px). 촬영 도구 `tools/shot_scene.gd`(컷 표·@box·@tree·@noop).
+- 큐: G-0059(들판 적·보스 몸, **K 가 mon/boss .glb.import 를 만들어야 시작**) · G-0061(굴·실내 키트, 보류 — 새 장면 때). 안 쓰는 world GLB 132(`docs/unused_world_glb.md`).
 - 함정: forward_plus 로 창을 화면 밖(-4000)에 두고 찍으면 SDFGI 화면이 검은 네모 조각(원래 그럼, 성능 모드는 정상) · 사가고 장면은 한 프로세스에서 두 번 부르면 set_count 오류(컷 하나씩).
 
 ## 다음 작업 (우선순위)
