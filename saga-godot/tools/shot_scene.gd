@@ -59,6 +59,7 @@ const CUTS := [
 	# G-0050 — 시나리오를 시작해야 장수 명단이 생겨 등용 설전 문제가 뽑힌다
 	["rk_debate", REALM, [["free_modal"], ["call", "/root/RealmSaveState", "start_scenario", ["194"]], ["call", "RealmHUD/OrderButton", "_start_order", ["hire", "등용", "@box"]]]],
 	# G-0054 — 화질/성능. 사가고 둘은 설정 파일을 안 쓰고(save=false) 메모리에서만 바꾼다 — forward_plus 로 찍어야 SSAO 차이가 보인다.
+	["rk_errlog", REALM, [["free_modal"], ["call", "RealmHUD/GraphicsButton/GraphicsMenu", "_open_errors", ["@box"]]]],   # G-0068 오류 기록 창
 	["rk_gfx_menu", REALM, [["free_modal"], ["call", "RealmHUD/GraphicsButton/GraphicsMenu", "open_screen", []]]],
 	["go_gfx_quality", GO, [["static", GFX, "set_mode", ["quality", "@tree", false]]]],
 	["go_gfx_perf", GO, [["static", GFX, "set_mode", ["performance", "@tree", false]]]],

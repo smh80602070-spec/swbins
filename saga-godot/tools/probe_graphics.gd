@@ -3,7 +3,7 @@ extends SceneTree
 ## G-0054 설정 "화질/성능" 점검 — graphics_settings.gd 를 화면 없이 부른다.
 ##   godot --headless --path saga-godot --script res://tools/probe_graphics.gd
 ## ① 파일 없으면 화질, 화질 적용은 기본값(fps 0·배율 1·MSAA 프로젝트 값) ② 성능 → fps 30·배율 0.75·MSAA 끔·환경 SSAO/SSIL/SDFGI 끔
-## ③ 파일 왕복(다시 읽어도 성능) ④ 화질로 → 환경 처음 값 되살림 ⑤ 메뉴 창 두 줄·고르면 모드 바뀜 ⑥ 사가고 메뉴 항목 go_graphics
+## ③ 파일 왕복(다시 읽어도 성능) ④ 화질로 → 환경 처음 값 되살림 ⑤ 메뉴 창 세 줄·고르면 모드 바뀜 ⑥ 사가고 메뉴 항목 go_graphics
 ## 설정 파일은 임시 폴더에 쓰고 지운다(user:// 의 graphics.cfg 는 안 만든다). 끝에 "PROBE graphics OK" 또는 실패 줄.
 
 const Gfx := preload("res://saga_core/data/graphics_settings.gd")
@@ -58,8 +58,8 @@ func _initialize() -> void:
 	for n in get_nodes_in_group("ui_modal"):
 		modal = n
 	var btns: Array = modal.find_children("*", "Button", true, false) if modal != null else []
-	check(btns.size() == 2, "⑤ 메뉴 두 줄 (%d)" % btns.size())
-	if btns.size() == 2:
+	check(btns.size() == 3, "⑤ 메뉴 세 줄(화질·성능·오류 기록) (%d)" % btns.size())
+	if btns.size() == 3:
 		(btns[1] as Button).pressed.emit()
 		check(Gfx.mode() == Gfx.PERFORMANCE, "⑤ 두 번째 줄 → 성능")
 		Gfx.set_mode(Gfx.QUALITY, self)

@@ -2588,6 +2588,19 @@
   "since": "2026-10-07"
  },
  {
+  "id": "gd.go.error_log",
+  "name": "오류 기록 보기 — 화질 창 셋째 줄, 최근 로그 둘의 ERROR·SCRIPT ERROR·WARNING(+at:)·같은 줄 ×n·복사(다섯 판 공용, 폰도 로그 켬)",
+  "files": [],
+  "tests": [
+   "error_log"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0068",
+  "since": "2026-10-07"
+ },
+ {
   "id": "gd.go.dialogue_skip",
   "name": "대화 건너뛰기 — Esc·패드 B·\"건너뛰기 ▶▶\" 단추로 고르는 줄 앞(없으면 끝)까지",
   "files": [],

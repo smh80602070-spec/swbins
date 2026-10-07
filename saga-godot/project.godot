@@ -41,6 +41,10 @@ StorySaveState="*res://games/saga_story/data/story_save_state.gd"
 StoryLabyrinthState="*res://games/saga_story/data/story_labyrinth_state.gd"
 RealmSaveState="*res://games/saga_realm/data/realm_save_state.gd"
 
+[debug]
+
+file_logging/enable_file_logging.mobile=true
+
 [display]
 
 window/size/viewport_width=1080
