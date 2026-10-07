@@ -14,6 +14,7 @@
  * 사용법: node vrm-slim.mjs <입력.glb> [출력.glb] [--keep-morph Fcl_MTH_A,Fcl_EYE_Close,…]   (출력 생략 시 입력을 덮어쓴다)
  * --keep-morph(K-0078): 이름 끝(`Fcl_…`)이 목록에 든 모프만 남기고 나머지만 뗀다 — 입·눈 깜박임용. 남은 모프 이름은
  *   `extras.targetNames` 에 `Fcl_MTH_A` 처럼 접두 없이 적는다(샘플마다 접두가 달라 엔진이 이름으로 찾기 어렵다).
+ *   VRM blendShapeGroups 의 binds 는 여전히 비운다 — 게임(웹 talkface.js·고돗 talk_face.gd)은 모프 이름으로만 찾는다.
  * 다섯 판 복사본은 md5 가 같아야 하니 **한 번만 돌려 나온 파일을 다섯 곳에 복사**한다.
  */
 import fs from 'node:fs';
@@ -22,7 +23,9 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 
 const argv = process.argv.slice(2);
 const ki = argv.indexOf('--keep-morph');
-const KEEP = ki >= 0 ? new Set(argv.splice(ki, 2)[1].split(',').filter(Boolean)) : new Set();
+const kv = ki >= 0 ? argv.splice(ki, 2)[1] : null;
+if (ki >= 0 && (!kv || kv.startsWith('--'))) { console.error('--keep-morph 뒤에 이름 목록(쉼표)이 없다'); process.exit(1); }
+const KEEP = new Set(kv ? kv.split(',').filter(Boolean) : []);
 const [inp, outArg] = argv;
 if (!inp) { console.error('사용법: node vrm-slim.mjs <입력.glb> [출력.glb] [--keep-morph 이름,…]'); process.exit(1); }
 const fclName = (n) => { const i = String(n).lastIndexOf('Fcl_'); return i >= 0 ? String(n).slice(i) : String(n); };
@@ -50,6 +53,9 @@ for (const mesh of root.listMeshes()) {
   const extras = mesh.getExtras() || {};
   const names = Array.isArray(extras.targetNames) ? extras.targetNames : [];
   const keepIdx = names.map((n, i) => (KEEP.has(fclName(n)) ? i : -1)).filter((i) => i >= 0);
+  if (KEEP.size && !names.length && prims.some((p) => p.listTargets().length)) {
+    console.warn(`경고: ${mesh.getName()} 에 모프는 있는데 extras.targetNames 가 없어 --keep-morph 로 못 고른다 — 전부 뗀다`);
+  }
   for (const p of prims) {
     const ts = p.listTargets();
     ts.forEach((t, i) => { if (!keepIdx.includes(i)) { p.removeTarget(t); t.dispose(); targetsDropped++; } else { targetsKept++; } });

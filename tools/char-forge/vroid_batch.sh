@@ -11,8 +11,10 @@
 # Blender 는 낮은 우선순위로, 모든 호출 </dev/null(헤드리스는 stdin 을 물려받으면 멈춘다). 서버·크롬은 안 쓴다.
 # 중단: tools/char-forge/_out/vroid/STOP 파일을 만들면 다음 인물 전에 멈춘다.
 set -u
-# K-0078 — 웹 단계에서 남길 표정 모프(입 다섯·눈 감기·기쁨·화남·슬픔). 나머지 모프는 vrm-slim 이 뗀다.
-KEEP_MORPH=Fcl_MTH_A,Fcl_MTH_I,Fcl_MTH_U,Fcl_MTH_E,Fcl_MTH_O,Fcl_EYE_Close,Fcl_ALL_Joy,Fcl_ALL_Angry,Fcl_ALL_Sorrow
+# K-0078 — 웹 단계에서 남길 표정 모프 = 대화 표정이 쓰는 것(웹 talkface.js·고돗 talk_face.gd: 입 다섯·눈 감기·기쁨·화남·슬픔·놀람·즐거움).
+# 목록을 바꾸면 WEB_MARK 이름도 바꾼다 — 예전 목록으로 구운 몸이 다시 구워지게(표시 파일 = 웹 단계 끝 표시).
+KEEP_MORPH=Fcl_MTH_A,Fcl_MTH_I,Fcl_MTH_U,Fcl_MTH_E,Fcl_MTH_O,Fcl_EYE_Close,Fcl_ALL_Joy,Fcl_ALL_Angry,Fcl_ALL_Sorrow,Fcl_ALL_Surprised,Fcl_ALL_Fun
+WEB_MARK=.morph11
 cd "$(dirname "$0")/../.."
 ONLY=""; DRY=0
 while [ $# -gt 0 ]; do
@@ -62,8 +64,9 @@ do_anim() {
 }
 do_web() {
   local O="$OUTR/$1"
-  mkdir -p "$O/web" && cp "$O/$1.glb" "$O/web/$1.glb" || return 1
+  rm -rf "$O/web" && mkdir -p "$O/web" && cp "$O/$1.glb" "$O/web/$1.glb" || return 1   # 압축 기록(.glb-compress-manifest)이 남으면 새 파일을 건너뛴다
   ( cd tools/glb-compress && node vrm-slim.mjs "$ABS/$O/web/$1.glb" --keep-morph "$KEEP_MORPH" && node compress.mjs "$ABS/$O/web" ) || return 1
+  touch "$O/web/$WEB_MARK"
 }
 do_2d() {
   local O="$OUTR/$1"
@@ -87,7 +90,7 @@ for vrm in "$IN"/*.vrm "$IN"/*.glb; do
   good=1
   stage "$id" glb  "$OUTR/$id/$id.glb"            do_glb  || good=0
   [ $good = 1 ] && { stage "$id" anim "$OUTR/$id/anims_k29.ok" do_anim || good=0; }   # 표시가 K-0029 것이 아니면 전투 동작까지 다시 굽는다
-  [ $good = 1 ] && { stage "$id" web  "$OUTR/$id/web/$id.glb" do_web || good=0; }
+  [ $good = 1 ] && { stage "$id" web  "$OUTR/$id/web/$WEB_MARK" do_web || good=0; }
   [ $good = 1 ] && { stage "$id" 2d   "tools/char-forge/_out/sprites/$id/manifest.json" do_2d || good=0; }
   [ $good = 1 ] && ok=$((ok + 1))
 done

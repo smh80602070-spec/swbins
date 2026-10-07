@@ -47,31 +47,16 @@ def build():
         pool = [L for L in (MALE if g == 'M' else FEMALE) if L in parts]
         cnt[g] += 1
         body = pool[(cnt[g] * 7) % len(pool)]            # 몸이 고르게 쓰이도록 순환
-        for _ in range(500):
-            dress = [L for L in pool if 'cloth' in parts[L]]
-            if dress and rng.random() < 0.3 and g == 'F':
-                src = rng.choice(dress)
-                kit = {'cloth': src, 'shoes': rng.choice([L for L in pool if 'shoes' in parts[L]])}
-            else:
-                kit = {'top': rng.choice([L for L in pool if 'top' in parts[L]]),
-                       'bottom': rng.choice([L for L in pool if 'bottom' in parts[L]]),
-                       'shoes': rng.choice([L for L in pool if 'shoes' in parts[L]])}
-            key = (body, tuple(sorted(kit.items())))
-            if key in used:
-                continue
-            if all(v == body for v in kit.values()):     # 몸 원래 옷 그대로면 다시
-                continue
-            if 'cloth' not in kit and sum(v == body for v in kit.values()) > 1:
-                continue                                  # 세 칸 중 둘 이상이 원래 옷이면 너무 같다
-            used.add(key)
-            break
-        else:
+        kit = pick_kit(rng, g, pool, parts, body, used)
+        if kit is None:
             raise SystemExit('조합을 못 찾음: ' + h['id'])
+        used.add((body, tuple(sorted(kit.items()))))
         rows.append({'id': h['id'], 'gender': g, 'body': body, 'kit': kit})
     return rows, parts
 
 
 def pick_kit(rng, g, pool, parts, body, used):
+    """옷 고르기 규칙 한 곳 — 겹치는 조합·몸 원래 옷 그대로·세 칸 중 둘 이상이 원래 옷이면 다시(500번까지). 못 찾으면 None."""
     for _ in range(500):
         dress = [L for L in pool if 'cloth' in parts[L]]
         if dress and rng.random() < 0.3 and g == 'F':
@@ -138,6 +123,8 @@ if __name__ == '__main__':
     changed = apply_traits(rows, parts)
     if changed:
         print('성별 표로 바뀐 인물', len(changed), ':', ','.join(changed))
+        print('  → 처음 바뀐 때(이미 다시 구웠으면 무시) 굽기 산출은 옛 몸이다: _out/vroid/<id>/<id>.glb·anims_k29.ok·web/·_out/sprites/<id>·_out/sprites8/<id> 를 지우고 '
+              'outfit_swap.py --plan 으로 _in/vroid/<id>.glb 를 다시 만든 뒤 vroid_batch.sh --only <목록>(굽기는 산출이 있으면 건너뛴다)')
     errs = check(rows, parts)
     bodies = {}
     for r in rows:

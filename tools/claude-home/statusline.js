@@ -5,7 +5,8 @@
 // 여기서는 자식 프로세스를 하나도 안 띄우고(브랜치는 .git/HEAD 를 직접 읽음),
 // 무슨 일이 있어도 2초 뒤엔 스스로 끝난다.
 // 정본 = 저장소 tools/claude-home/statusline.js — install.js 가 ~/.claude 로 복사한다.
-// K-0079: saga 저장소(위로 tools/autorun/run.mjs 가 있는 곳) 안 세션이면 문맥 % 를 tools/autorun/_ctx/<session>.json 에 남긴다
+// K-0079: saga 저장소(위로 tools/autorun/run.mjs 가 있는 곳) 안 세션이면 문맥 % 를 tools/autorun/_ctx/<session>.pct 에 남긴다
+// (훅 상태 <session>.json 과 파일을 나눈다 — 읽고 고쳐 쓰다 서로 덮어쓰지 않게)
 // (훅 ctx-guard.js 가 읽는다 — 훅 입력엔 문맥 % 가 없다). 쓰기 실패해도 상태줄은 그대로 그린다.
 'use strict';
 const fs = require('fs');
@@ -62,11 +63,7 @@ function writeCtx(cwd, sid, pct, model) {
     if (!root) return;
     const dir = path.join(root, 'tools', 'autorun', '_ctx');
     fs.mkdirSync(dir, { recursive: true });
-    const f = path.join(dir, sid + '.json');
-    let cur = {};
-    try { cur = JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { cur = {}; }
-    cur.pct = pct; cur.model = model || cur.model || ''; cur.ts = Date.now();
-    fs.writeFileSync(f, JSON.stringify(cur));
+    fs.writeFileSync(path.join(dir, sid + '.pct'), JSON.stringify({ pct, model: model || '', ts: Date.now() }));
   } catch (e) { /* 상태줄은 계속 */ }
 }
 

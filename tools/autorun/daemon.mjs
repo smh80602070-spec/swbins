@@ -26,7 +26,7 @@ const BRANCH = opt('--branch', 'tools'), AT = opt('--at', 'none'), EVERY_H = +op
 const LANES = ['tools', 'web', 'godot', 'unity'];   // run.mjs 갈래 표와 같다
 const RUN_ARGS = ['--branch', BRANCH, '--max-tickets', opt('--max-tickets', '1'), '--budget-usd', opt('--budget-usd', '20'), '--model', opt('--model', 'claude-sonnet-5-5')];
 
-const state = { branch: BRANCH, at: AT, everyH: EVERY_H, running: null, runningBranch: null, queued: null, startedAt: null, lastRun: null, lastExit: null, lastReason: '', runs: 0, bootedAt: new Date().toISOString() };
+const state = { branch: BRANCH, at: AT, everyH: EVERY_H, running: null, runningBranch: null, queued: [], startedAt: null, lastRun: null, lastExit: null, lastReason: '', runs: 0, bootedAt: new Date().toISOString() };
 fs.mkdirSync(LOG_DIR, { recursive: true });
 const paused = () => fs.existsSync(STOP);
 
@@ -41,16 +41,20 @@ function nextRunTime(from = new Date()) {
 }
 let next = nextRunTime();
 
-/* branch: 다른 갈래로 한 번(K-0079 문맥 넘기기 — 대화 세션의 갈래를 이어 간다). 실행 중이면 한 개만 줄 세운다 */
+/* branch: 다른 갈래로 한 번(K-0079 문맥 넘기기 — 대화 세션의 갈래를 이어 간다). 실행 중이면 갈래마다 하나씩 줄 세운다(같은 갈래 넘김은 한 번만) */
 function runOnce(reason, branch = BRANCH) {
-  if (state.running) { if (reason.startsWith('handoff')) state.queued = { reason, branch }; return false; }
+  if (state.running) {
+    if (reason.startsWith('handoff') && !state.queued.some((x) => x.branch === branch)) state.queued.push({ reason, branch });
+    return false;
+  }
   if (paused() && reason !== 'manual') { state.lastReason = `${reason}: STOP 파일 있어 건너뜀`; return false; }
   const args = RUN_ARGS.slice(); args[1] = branch;
   const child = spawn(process.execPath, [path.join(HERE, 'run.mjs'), ...args], { cwd: path.resolve(HERE, '..', '..'), env: process.env, stdio: 'ignore' });
   state.running = child.pid; state.runningBranch = branch; state.startedAt = new Date().toISOString(); state.lastReason = reason; state.runs++;
   child.on('close', (code) => {
     state.running = null; state.runningBranch = null; state.lastRun = new Date().toISOString(); state.lastExit = code; next = nextRunTime();
-    if (state.queued) { const qd = state.queued; state.queued = null; runOnce(qd.reason, qd.branch); }
+    const qd = state.queued.shift();
+    if (qd) runOnce(qd.reason, qd.branch);
   });
   return true;
 }
@@ -85,15 +89,19 @@ function page() {
 
 http.createServer((q, s) => {
   const u = q.url.split('?')[0];
+  /* 브라우저의 다른 페이지가 POST 로 유료 세션을 띄우지 못하게: Origin 이 있으면 이 제어 페이지 것만(폼은 같은 출처로 보낸다) */
+  const og = q.headers.origin;
+  if (q.method === 'POST' && og && og !== `http://127.0.0.1:${PORT}` && og !== `http://localhost:${PORT}`) { s.writeHead(403); s.end('origin'); return; }
   if (q.method === 'POST' && u === '/api/stop') { fs.writeFileSync(STOP, new Date().toISOString()); if (state.running) { try { process.kill(state.running); } catch (e) { /* 이미 끝남 */ } } }
   else if (q.method === 'POST' && u === '/api/start') { if (paused()) fs.unlinkSync(STOP); next = nextRunTime(); }
   else if (q.method === 'POST' && u === '/api/run') {
     const qs = new URLSearchParams(q.url.split('?')[1] || '');
-    if (qs.has('branch')) {                                      // K-0079 — 훅이 부르는 입구, JSON 으로 답한다
+    if (qs.has('branch')) {                                      // K-0079 — 훅이 부르는 입구, JSON 으로 답한다(전용 헤더 필수 — 브라우저 단순 요청으로는 못 붙인다)
+      if (q.headers['x-saga-handoff'] !== '1') { s.writeHead(403, { 'content-type': 'application/json' }); s.end(JSON.stringify({ ok: false, why: '헤더 없음' })); return; }
       const b = qs.get('branch');
       if (!LANES.includes(b)) { s.writeHead(400, { 'content-type': 'application/json' }); s.end(JSON.stringify({ ok: false, why: '모르는 갈래 ' + b })); return; }
       const started = runOnce('handoff:' + String(qs.get('from') || '').slice(0, 40), b);
-      s.writeHead(202, { 'content-type': 'application/json' }); s.end(JSON.stringify({ ok: true, started, queued: !!state.queued, branch: b })); return;
+      s.writeHead(202, { 'content-type': 'application/json' }); s.end(JSON.stringify({ ok: true, started, queued: state.queued.map((x) => x.branch), branch: b })); return;
     }
     runOnce('manual');
   }
