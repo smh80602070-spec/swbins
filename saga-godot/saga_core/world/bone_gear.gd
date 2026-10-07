@@ -113,6 +113,7 @@ static func hide_surfaces(body: Node3D, patterns: Array, tag: String) -> int:
 		sh.code = HIDE_SHADER
 		_hide_mat = ShaderMaterial.new()
 		_hide_mat.shader = sh
+		_hide_mat.set_meta("gear_hidden", true)   # 재질 감사(material_audit)가 flat-tint 로 안 잡게
 	var n := 0
 	for node in body.find_children("*", "MeshInstance3D", true, false):
 		var mi := node as MeshInstance3D

@@ -45,6 +45,9 @@ static func _check(root: Node, node: Node, mesh: Mesh, i: int, active: Material,
 	## G-0019 — 일부러 단색 실루엣으로 칠하는 먼 배경(story_background: 대기 원근 색 한 장)은 노드에 이 메타를 달아 flat-tint 감사에서 뺀다.
 	if node.has_meta("flat_silhouette"):
 		return
+	## G-0083 — 갑옷이 일부러 숨긴 머리카락·신발 표면(bone_gear.hide_surfaces)도 뺀다.
+	if active.has_meta("gear_hidden"):
+		return
 	var orig_tex := orig.albedo_texture.resource_path
 	## surface_get_format()은 ArrayMesh에만 있다 — 그 밖(PrimitiveMesh 등)은 정점색 없음.
 	var has_color := false
