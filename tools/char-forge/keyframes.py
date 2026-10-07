@@ -614,21 +614,19 @@ def _mantle():
 
 
 def _burst():
-    """폭발 시전(0.8s) — 무릎을 굽혀 두 손을 가슴 앞에 모아 기운을 죄고, 몸을 활처럼 펴며 두 팔을 양옆 위로 활짝 벌려 터뜨린 뒤 숨을 고른다."""
-    feet = {'foot_l': (0.20, 0.04, 0.104), 'foot_r': (-0.20, 0.04, 0.104)}
-    fdir = {'foot_l': (0.10, 1, -0.6), 'foot_r': (-0.10, 1, -0.6), 'clavicle_l': (1, -0.3, 0), 'clavicle_r': (-1, -0.3, 0)}
-    idle = P(base=('Idle_Loop', 0), pelvis=(0, 0, -0.02), dirs=dict(fdir, hand_l=(0.05, 0.3, -1), hand_r=(-0.05, 0.3, -1)),
-             ik={'hand_l': (0.28, 0.02, 0.90), 'hand_r': (-0.28, 0.02, 0.90), **feet})
-    crouch = P(base=('Idle_Loop', 0), pelvis=(0, 0.04, -0.16),
-               dirs=dict(fdir, spine_01=(0, 0.20, 1), spine_02=(0, 0.22, 1), spine_03=(0, 0.20, 1), neck_01=(0, 0.20, 1), hand_l=(-0.5, 0.6, 0.5), hand_r=(0.5, 0.6, 0.5)),
-               pole={'hand_l': (1, -0.2, -0.6), 'hand_r': (-1, -0.2, -0.6)},
-               ik={'hand_l': (0.06, 0.28, 1.02), 'hand_r': (-0.06, 0.28, 1.02), **feet})
-    burst = P(base=('Idle_Loop', 0), pelvis=(0, -0.02, 0.03),
-              dirs=dict(fdir, spine_01=(0, -0.10, 1), spine_02=(0, -0.16, 1), spine_03=(0, -0.20, 1), neck_01=(0, -0.30, 1), hand_l=(1, 0.1, 0.7), hand_r=(-1, 0.1, 0.7)),
-              pole={'hand_l': (0.3, -0.5, -1), 'hand_r': (-0.3, -0.5, -1)},
-              ik={'hand_l': (0.82, 0.05, 1.82), 'hand_r': (-0.82, 0.05, 1.82), **feet})
-    hold = dict(burst, ik={'hand_l': (0.86, 0.04, 1.86), 'hand_r': (-0.86, 0.04, 1.86), **feet})
-    return False, [(0, idle), (8, crouch), (14, burst), (22, hold), (34, idle)]
+    """폭발 시전 — 첫 프레임부터 움직인다(K-0077: 옛 판은 서서 손 모은 채 시작해 밋밋). 오른발을 뒤로 빼며 몸을 오른쪽으로 꼬아
+    두 손을 오른 허리 옆에 포개 기운을 죄고(예비), 왼발을 크게 내딛으며 몸을 풀어 두 손바닥을 가슴 높이 정면으로 곧게 내지른다.
+    체중을 앞에 싣고 버틴 뒤 돌아온다. 길이·열쇠 마지막 프레임(34)은 옛 판과 같다 — 고돗이 같은 배속으로 튼다."""
+    pole = {'hand_l': (0.8, -0.3, -0.6), 'hand_r': (-0.8, -0.3, -0.6)}
+    ready = P(base=('Idle_Loop', 0), pelvis=(0, 0, -0.03), dirs={'hand_l': (0.05, 0.3, -1), 'hand_r': (-0.05, 0.3, -1)},
+              ik={'hand_l': (0.27, 0.04, 0.90), 'hand_r': (-0.27, 0.04, 0.90), **WIDE})
+    load = P(base=('Idle_Loop', 0), yaw=-55, pelvis=(0, -0.16, -0.16), pole=pole, dirs=dict(LEAN_B, hand_l=(-0.4, 0.2, 0.8), hand_r=(-0.2, 0.3, 0.9)),
+             ik={'hand_l': (-0.10, -0.06, 1.04), 'hand_r': (-0.30, -0.14, 0.98),
+                 'foot_l': (0.16, 0.20, 0.104), 'foot_r': (-0.16, -0.26, 0.104)})
+    hit = P(base=('Idle_Loop', 0), yaw=-6, pelvis=(0, 0.36, -0.20), pole=pole, dirs=dict(LEAN_F, hand_l=(0.1, 0.3, 1), hand_r=(-0.1, 0.3, 1)),
+            ik={'hand_l': (0.12, 1.00, 1.30), 'hand_r': (-0.12, 1.00, 1.30), **LUNGE})
+    hold = dict(hit, pelvis=(0, 0.40, -0.22), ik={'hand_l': (0.13, 1.06, 1.32), 'hand_r': (-0.13, 1.06, 1.32), **LUNGE})
+    return False, [(0, ready), (6, load), (12, hit), (22, hold), (34, ready)]
 
 
 def _plunge():
