@@ -120,16 +120,20 @@ try {
   await page.keyboard.press('Escape'); await sleep(300);
   const hs = await ev(() => ({ n: DG.home.stockList().length, first: DG.home.stockList()[0] && DG.home.stockList()[0].furn.key, items0: DG.home.state().items.length }));
   const homeProp = await ev(() => { var p = DG.village.raw().props.find((p) => p.kind === 'home'); return p ? { id: p.id, x: p.x, y: p.y } : null; });
-  let inside = false;
-  for (let t = 0; t < 3 && !inside; t++) {
-    await ev((a) => { var pl = DG.village.raw().player; pl.x = a.x; pl.y = a.y + 12; }, homeProp);
+  let inside = false, why = '';
+  const OFF = [[0, 12], [-10, 12], [10, 12], [0, 18], [-16, 10], [16, 10]];   // 문 앞에 나무가 서면 그쪽이 초점을 가져간다 — 자리를 돌아가며
+  for (let t = 0; t < OFF.length && !inside; t++) {
+    /* W-0090: 바로 앞 🏠 시트를 Esc 로 닫은 게 덜 닫히면 ␣ 가 시트에 먹혀 들어가지 않았다(세 번에 두 번) — 시트·카드를 먼저 닫는다 */
+    await ev(() => { if (DG.ui.closeSheet) { DG.ui.closeSheet(); } if (DG.ui.closeEnc) { DG.ui.closeEnc(); } if (document.activeElement && document.activeElement.blur) { document.activeElement.blur(); } });
+    await ev((a) => { var pl = DG.village.raw().player; pl.x = a.p.x + a.o[0]; pl.y = a.p.y + a.o[1]; }, { p: homeProp, o: OFF[t] });
     await sleep(500);
     const f = await ev(() => { var f = DG.village.focus(); return f && f.obj && f.obj.kind; });
+    why = 'focus ' + f + ' · sheet ' + await ev(() => !!document.querySelector('#sheet.show'));
     if (f !== 'home') { continue; }
     await page.keyboard.press('Space'); await sleep(1200);
     inside = await ev(() => DG.village.indoors());
   }
-  check('집 — 집 문 앞에서 ␣ 를 누르면 집 안으로 들어간다', inside, 'indoors ' + inside);
+  check('집 — 집 문 앞에서 ␣ 를 누르면 집 안으로 들어간다', inside, 'indoors ' + inside + (inside ? '' : ' · ' + why));
   if (inside) {
     await ev(() => { var T = DG.village.TILE, r = DG.home.room(), pl = DG.village.raw().player; pl.x = Math.floor(r.tw / 2) * T + T * 0.5; pl.y = Math.floor(r.th / 2) * T + T * 0.5; });
     await sleep(300);
@@ -160,15 +164,15 @@ try {
   check('침선방 — 다른 옷을 입으면 입은 옷이 바뀐다', !!sw && sw.to !== sw.from, JSON.stringify(sw).slice(0, 110));
 
   /* 7) 2D 모드 시트(W-0019) — 3D 마을을 끄면 구면 투영 2D 그림에서 주민·방문객·나가 새 시트로 그려진다 */
+  /* W-0090: 사람은 이제 VRoid 풀(characters2d·characters2d8)이고 옛 풀은 한 장 모드라 mode2d.loaded 캐시를 안 거친다 — 3D 를 끈 뒤 받는 인물 시트 응답을 센다(사가고 W-0087 과 같은 고침) */
+  const sheets2d = { ok: 0, bad: 0, sample: '' };
+  page.on('response', (res) => { const u = res.url(); if (/\/characters2d8?\//.test(u)) { if (res.status() < 400) { sheets2d.ok++; sheets2d.sample = sheets2d.sample || u.split('/').slice(-3).join('/'); } else { sheets2d.bad++; } } });
   await boot(true);
   await ev(() => { if (DG.villageView3d.active()) { DG.villageView3d.toggle(); } var R = DG.village.raw(), n = R.residents[0]; if (n) { R.player.x = n.x - 40; R.player.y = n.y + 10; } });
   await sleep(4000);
-  const m2 = await ev(() => {
-    var pools = [].concat(DG.cfg.mode2d.pools.adult, DG.cfg.mode2d.pools.me), uniq = pools.filter((p, i) => pools.indexOf(p) === i);
-    var ok = uniq.filter((p) => DG.mode2d.loaded(p, 'idle') === true || DG.mode2d.loaded(p, 'walk') === true).length, bad = uniq.filter((p) => DG.mode2d.failed(p, 'idle') === true || DG.mode2d.failed(p, 'walk') === true).length;
-    return { on: DG.mode2d.isOn(), w3: DG.villageView3d.active(), residents: DG.village.raw().residents.length, pools: uniq.length, loaded: ok, failed: bad };
-  });
-  check('2D 모드 시트 — 3D 마을을 끄면 주민·나가 시트로 그려진다(풀 이미지를 받아 둠, 실패 0)', m2.on && !m2.w3 && m2.residents > 0 && m2.loaded > 0 && m2.failed === 0, JSON.stringify(m2));
+  const m2 = await ev(() => ({ on: DG.mode2d.isOn(), w3: DG.villageView3d.active(), residents: DG.village.raw().residents.length }));
+  Object.assign(m2, sheets2d);
+  check('2D 모드 시트 — 3D 마을을 끄면 주민·나가 시트로 그려진다(인물 2D 시트를 받아 옴, 실패 0)', m2.on && !m2.w3 && m2.residents > 0 && m2.ok > 0 && m2.bad === 0, JSON.stringify(m2));
 } catch (e) { console.log('ERR', e.message); results.push(false); }
 
 const real = r.errors.filter((e) => !/status of 404/.test(e));

@@ -93,11 +93,12 @@
    "말벌은 저절로 나오지 않는다 (나무를 흔들어야 만난다)",
    "벌에 쏘인 날은 걸음이 무겁다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close1.mjs 8/8 — results/pw-fs-close1.json(W-0090). 계절·때·날씨는 손잡이 time.season·time.phase·time.weather 로 붙든다. 잠자리채는 가방 시트 전방 「산다」 단추."
  },
  {
   "id": "fs.animal",
@@ -157,11 +158,12 @@
    "주민 — 두 사람이 번갈아 말한다",
    "주민 — 대화를 끝까지 들으면 정이 늘고, 자리를 뜨면 안 는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close1.mjs 8/8 — results/pw-fs-close1.json(W-0090). inChat 은 주민끼리 대화. 하트는 하루 +4 상한이라 동행 문턱까지 날을 넘겨 올린다."
  },
  {
   "id": "fs.mail",
@@ -284,11 +286,12 @@
    "마을 — 깃발을 그림으로 뽑아 준다 (시트의 미리보기)",
    "게시판과 깃대는 마을 시트를 연다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close1.mjs 8/8 — results/pw-fs-close1.json(W-0090). 마을 이름 단추는 prompt 라 setName 으로. 새 세이브엔 잡초가 없어 growWeeds(하루치) 뒤 ␣ 로 뽑아 평가를 본다."
  },
  {
   "id": "fs.turnip",
@@ -372,11 +375,12 @@
    "축제 — 백중 등롱 밤 산책: 낮엔 못 밝히고 저녁·밤에 셋을 밝히면 완성, 밝힌 등롱은 사라진다",
    "축제 — 한가위 줄다리기: 10초 안에 30번, 시간이 지나면 처음부터"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close1.mjs 8/8 — results/pw-fs-close1.json(W-0090). nextEventOf 는 {event, left}. 행사는 time.event 손잡이, 세배는 실제 ␣."
  },
  {
   "id": "fs.data-village-3",
@@ -394,11 +398,12 @@
    "날짜 — 요일이 실제 달력과 맞는다",
    "계절 폴링 — season() 값이 바뀌면 한 번만 울린다(village.js 안 건드리고 값만 비교)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close1.mjs 8/8 — results/pw-fs-close1.json(W-0090)."
  },
  {
   "id": "fs.terrain",
@@ -419,11 +424,12 @@
    "공사 단추는 개토패를 사기 전에는 독에 서지 않는다",
    "공사 — 끝나면 마을은 고치기 전 그대로다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close1.mjs 8/8 — results/pw-fs-close1.json(W-0090). rawTile 은 덮개 아래 원래 땅(공사해도 안 바뀜) — 바뀌는 건 tileAt. 개토패는 전방 단추."
  },
  {
   "id": "fs.village-4",
@@ -442,11 +448,12 @@
    "택배 — 폐허 옛 우체통·작은 마을 상인·외딴집 나그네에게도 배달되고, 그 사람의 부탁 흐름은 안 깨진다",
    "택배 — 등급: 10건 수레가 서고, 30건에 우주복이 옷장에 들고(그 전엔 🔒), 60건에 탐사차에 앉을 수 있다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close1.mjs 8/8 — results/pw-fs-close1.json(W-0090)."
  },
  {
   "id": "fs.village-view",

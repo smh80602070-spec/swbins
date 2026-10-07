@@ -1,0 +1,49 @@
+{
+ "script": "pw-fs-close1.mjs",
+ "game": "saga-forest",
+ "pass": 8,
+ "total": 8,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "fs.data-village-3 날씨 — 같은 날은 같은 하늘, 겨울은 비 대신 눈, 하늘 있는 행사날은 그 하늘, 달팽이는 비 오는 날만",
+   "ok": true,
+   "detail": "{\"same\":true,\"winterRain\":0,\"winterSnow\":16,\"sky\":[\"daeborum:clear=clear\",\"samjin:clear=clear\",\"chilseok:clear=clear\",\"baekjung:clear=clear\",\"chuseok:clear=clear\",\"dongji:snow=snow\"],\"skyOk\":true,\"rainSnail\":true,\"drySnail\":false}"
+  },
+  {
+   "name": "fs.bug 곤충 — 잠자리채 없이 ␣ 는 못 잡고, 전방 「산다」 단추로 채를 산 뒤 ␣ 로 잡으면 가방에 든다 · 여름밤엔 반딧불이, 겨울밤엔 없다",
+   "ok": true,
+   "detail": "{\"b0\":{\"net\":false,\"bag\":0},\"b1\":{\"bag\":0},\"netBtn\":true,\"b2\":{\"net\":true,\"bag\":1,\"dex\":true},\"summerNight\":[\"firefly\",\"rhino\",\"stag\",\"spider\"],\"winterNight\":[\"spider\"]}"
+  },
+  {
+   "name": "fs.terrain 땅 공사 — 개토패 없이는 거부, 전방 단추로 개토패를 산 뒤 흙길이면 그 칸 땅이 바뀌고 삯이 빠지며, 되돌리면 원래 땅·세이브에서 빠진다 · 사물 칸은 거부",
+   "ok": true,
+   "detail": "{\"t0\":{\"has\":false,\"spot\":{\"tx\":9,\"ty\":5},\"noDeed\":false,\"prop\":{\"tx\":18,\"ty\":0}},\"deedBtn\":true,\"t1\":{\"sp\":{\"tx\":14,\"ty\":11},\"tile0\":\"grass\",\"w1\":\"build\",\"mid\":{\"worked\":true,\"tile\":\"path\",\"raw\":\"grass\",\"paid\":300,\"cost\":300},\"after\":\"grass\",\"worked\":false,\"saved\":false,\"propCan\":{\"ok\":false,\"why\":\"손이 닿지 않습니다 (선 자리 둘레만)\"}}}"
+  },
+  {
+   "name": "fs.village-4 택배 — 소포 셋은 종류가 다 다르고, 단추로 하나를 받으면 들고 다니며 둘째는 거부, 가져다주면 금이 든다",
+   "ok": true,
+   "detail": "{\"offers\":[{\"kind\":\"plain\",\"dest\":\"hamlet\"},{\"kind\":\"fragile\",\"dest\":\"hamlet2\"},{\"kind\":\"timed\",\"dest\":\"space\"}],\"p1\":{\"carrying\":true,\"kind\":\"plain\",\"dest\":\"hamlet\"},\"second\":\"no\",\"p2\":{\"kept\":\"plain\",\"gold\":280,\"res\":\"quest\",\"after\":false}}"
+  },
+  {
+   "name": "fs.town 마을 — 이름이 바뀌고, 마을 시트 깃발 단추로 깃발이 바뀌며, 잠긴 무늬는 거부 · 잡초를 ␣ 로 뽑으면 평가 점수가 오른다",
+   "ok": true,
+   "detail": "{\"tw0\":{\"name\":\"확인마을\",\"nm\":\"name\",\"locked\":\"stele\",\"lockRes\":\"no\",\"flag0\":\"{\\\"bg\\\":\\\"white\\\",\\\"fg\\\":\\\"black\\\",\\\"sym\\\":\\\"circle\\\"}\"},\"flagBtn\":{\"kind\":\"bg\",\"id\":\"blue\"},\"changed\":true,\"weed\":{\"x\":300,\"y\":540,\"n\":3,\"beauty\":121},\"weed2\":{\"n\":2,\"beauty\":124}}"
+  },
+  {
+   "name": "fs.data-village-2 행사 — 설날은 행사, 다음 행사까지 남은 날이 나오고, 대보름엔 견과 값 ×2, 설날 세배(␣)는 한 번만 세뱃돈",
+   "ok": true,
+   "detail": "{\"e0\":{\"ny\":\"seollal\",\"next\":\"daeborum\",\"days\":44,\"plain\":1},\"nutMul\":2,\"bow\":{\"first\":500,\"second\":0,\"newYear\":true}}"
+  },
+  {
+   "name": "fs.folk 주민 — 갈래는 늘 같고, 둘이 말을 붙이면 대화 중·끝내면 풀림 · 곁에서 가방 🎁 단추로 반기는 것을 건네면 정이 +3 · 정이 깊으면 함께 걷고 그만둘 수 있다",
+   "ok": true,
+   "detail": "{\"fk\":{\"a\":\"jp_masamune\",\"b\":\"sg_ganning\",\"same\":true,\"on\":true,\"off\":false,\"like\":\"ore\",\"item\":\"iron\",\"h0\":0,\"f0\":1},\"fk2\":{\"h1\":3,\"f1\":4,\"can\":true,\"rf\":\"follow\",\"follow\":\"sg_ganning\",\"stop\":null,\"gave\":true}}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}
