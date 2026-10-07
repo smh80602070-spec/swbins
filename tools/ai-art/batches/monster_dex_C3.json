@@ -1,0 +1,85 @@
+{
+ "model": "animagine-xl-4.0-opt",
+ "out": "monster_dex_C3",
+ "kit": {
+  "spec": "creature",
+  "style": "C",
+  "style_name": "부드러운 동화풍"
+ },
+ "defaults": {
+  "prompt_prefix": "masterpiece, high score, great score, absurdres",
+  "width": 768,
+  "height": 768,
+  "steps": 28,
+  "cfg": 5.5,
+  "sampler": "Euler a",
+  "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs",
+  "variants": 4
+ },
+ "items": [
+  {
+   "id": "mon_quad_01",
+   "seed": 20271006,
+   "prompt": "(gray-blue wolf beast:1.15), dark stripes, small spikes on back, glowing yellow eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/monster_init/mon_quad_01.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "mon_quad_04",
+   "seed": 20271297,
+   "prompt": "(tan brown bull beast:1.15), curved horns, spikes on back, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/monster_init/mon_quad_04.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "mon_wing_02",
+   "seed": 20271491,
+   "prompt": "(gray-blue bat creature:1.15), wide spread membrane wings, big pointed ears, glowing cyan eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/monster_init/mon_wing_02.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "mon_wing_03",
+   "seed": 20271588,
+   "prompt": "(white snowy owl creature standing upright:1.15), wings folded at sides, ear tufts, big glowing yellow eyes, small beak, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/monster_init/mon_wing_03.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "mon_wing_04",
+   "seed": 20271685,
+   "prompt": "(olive green wyvern:1.15), dark membrane wings, curved horns, long tail, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/monster_init/mon_wing_04.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "mon_serp_01",
+   "seed": 20271782,
+   "prompt": "(olive green viper:1.15), fangs, forked tongue, glowing red eyes, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/monster_init/mon_serp_01.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "mon_serp_03",
+   "seed": 20271976,
+   "prompt": "(reddish brown horned worm creature:1.15), spikes along back, segmented body, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/monster_init/mon_serp_03.png",
+   "denoise": 0.62
+  },
+  {
+   "id": "boss_05",
+   "seed": 20273334,
+   "prompt": "(giant brown bat creature:1.15), wide spread membrane wings, spiked armor plates, no humans, monster, three-quarter view, game sprite, full body, standing, single creature, centered, simple background, plain pastel gray-green background, no cast shadow, soft rounded shapes, no hard outline, soft watercolor shading, gentle gradients, warm pastel palette, cream highlights, warm afternoon light",
+   "negative": "text, signature, watermark, cropped, blurry, lowres, worst quality, low quality, ground shadow, multiple creatures, human, frame, border, bad anatomy, extra limbs, harsh outline, dark palette, gritty, photorealistic, neon",
+   "init_image": "tools/ai-art/_out/monster_init/boss_05.png",
+   "denoise": 0.62
+  }
+ ]
+}

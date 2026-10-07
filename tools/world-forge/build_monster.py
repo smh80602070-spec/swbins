@@ -323,12 +323,16 @@ def wing(C, rnd, v, boss=False, deco=None, skin=None):
     zc = rnd.uniform(0.36, 0.44) if v != 3 else rnd.uniform(0.42, 0.5)
     br = (0.27 if fat else 0.2 if v != 3 else 0.23) * rnd.uniform(0.92, 1.1)
     g = Rig()
-    g.add('pel', (0, bl, zc), (br * 0.85, br * 0.8))
-    g.add('che', (0, -bl * 0.4, zc + 0.04), (br * 1.1, br * 1.05), 'pel')
+    if v == 2:                                                               # 10-07 올빼미는 선 자세(골반 아래·가슴 위)
+        g.add('pel', (0, bl * 0.3, zc - 0.02), (br * 0.95, br * 0.9))
+        g.add('che', (0, -bl * 0.05, zc + br * 0.95), (br * 1.05, br), 'pel')
+    else:
+        g.add('pel', (0, bl, zc), (br * 0.85, br * 0.8))
+        g.add('che', (0, -bl * 0.4, zc + 0.04), (br * 1.1, br * 1.05), 'pel')
     nl = (0.1 if fat else 0.2) * rnd.uniform(0.9, 1.15) + (0.1 if v == 3 else 0)
-    g.add('nk', (0, -bl * 0.75 - 0.04, zc + 0.12 + nl * 0.7), (br * 0.55, br * 0.55), 'che')
+    g.add('nk', (0, -bl * 0.12, zc + br * 1.6) if v == 2 else (0, -bl * 0.75 - 0.04, zc + 0.12 + nl * 0.7), (br * 0.55, br * 0.55), 'che')
     hr = (0.17 if fat else 0.12) * rnd.uniform(0.92, 1.1)
-    hp = Vector((0, -bl * 0.85 - 0.08, zc + 0.14 + nl * 1.1))
+    hp = Vector((0, -bl * 0.2, zc + br * 1.95)) if v == 2 else Vector((0, -bl * 0.85 - 0.08, zc + 0.14 + nl * 1.1))
     g.add('hed', hp, (hr, hr * 0.95), 'nk')
     if v in (0, 2):                                                          # 부리
         bk = 0.10 if v == 0 else 0.07
@@ -344,24 +348,43 @@ def wing(C, rnd, v, boss=False, deco=None, skin=None):
     # 날개 뼈대(굵은 팔) — 막이든 깃이든 같은 팔
     span = rnd.uniform(0.85, 1.05) * (1.35 if v == 3 else 1.0)
     for s in (-1, 1):
-        g.add(f'sh{s}', (s * br * 0.8, -bl * 0.2, zc + br * 0.6), (0.075, 0.075), 'che')
-        g.add(f'el{s}', (s * span * 0.4, -bl * 0.15, zc + br + 0.28), (0.055, 0.055), f'sh{s}')
-        g.add(f'wr{s}', (s * span * 0.72, 0.0, zc + br + 0.5), (0.045, 0.045), f'el{s}')
+        g.add(f'sh{s}', (s * br * 1.0, -bl * 0.05, zc + br * 1.3) if v == 2 else (s * br * 0.8, -bl * 0.2, zc + br * 0.6), (0.075, 0.075), 'che')
+        if v == 1:                                                           # 10-07 박쥐: 옆으로 넓게 편 팔(새·비룡처럼 쳐들지 않는다)
+            el, wr = (s * span * 0.5, -bl * 0.2, zc + br + 0.16), (s * span * 0.98, -bl * 0.1, zc + br + 0.22)
+        elif v == 2:                                                         # 10-07 올빼미: 몸 옆에 접은 날개(둥근 몸 실루엣)
+            el, wr = (s * br * 1.12, bl * 0.05, zc + br * 0.75), (s * br * 1.0, bl * 0.55, zc - br * 0.15)
+        else:
+            el, wr = (s * span * 0.4, -bl * 0.15, zc + br + 0.28), (s * span * 0.72, 0.0, zc + br + 0.5)
+        g.add(f'el{s}', el, (0.055, 0.055), f'sh{s}')
+        g.add(f'wr{s}', wr, (0.045, 0.045), f'el{s}')
     top = zc + br + 0.45
     pick = make_pick(rnd, body, dark, belly, glow, deco, top=top, foot=0.10, pattern=rnd.choice(['plain', 'spots', 'saddle']))
     skin_into(C, g, pick, ground=False)
     mem = C.s(*(('forest_ground_04', 1.0, _shade('#7a6a8a', 1.0)) if memb else ('forest_ground_04', 1.0, '#9a8f7a')))
-    ntip = 3 if memb else 5
+    ntip = 4 if v == 1 else 3 if memb else 5
     for s in (-1, 1):
         sh, el, wr = g.p(f'sh{s}'), g.p(f'el{s}'), g.p(f'wr{s}')
         back = Vector((s * br * 0.55, bl * 0.8, zc + br * 0.1))
         tips = []
         for i in range(ntip):                                                # 앞가장자리 → 뒷가장자리 순으로 살대 끝
             u = i / (ntip - 1)
-            tips.append(wr + Vector((s * span * (0.32 - 0.13 * u), -0.10 + u * bl * 1.0, 0.02 - 0.32 * u)))
+            if v == 1:                                                       # 박쥐 손가락: 바깥 끝 → 몸 쪽 뒤로 처지며 펼친다
+                tips.append(wr + Vector((s * span * (0.22 - 0.62 * u), -0.04 + u * bl * 1.25, -0.06 - 0.36 * u)))
+            elif v == 2:                                                     # 올빼미 접은 날개 끝 깃: 꼬리 쪽에서 아래로
+                tips.append(wr + Vector((s * 0.02, 0.08 - u * 0.20, -0.02 - u * 0.14)))
+            else:
+                tips.append(wr + Vector((s * span * (0.32 - 0.13 * u), -0.10 + u * bl * 1.0, 0.02 - 0.32 * u)))
+        if v == 2:
+            back = Vector((s * br * 1.12, -bl * 0.15, zc + br * 0.35))
         for tp in tips:                                                      # 막 살대(새는 깃대)
             tube(M, tuple(wr), tuple(tp), 0.022, 0.008, horn_m if boss else dark, 1.0, 4, caps=False)
-        _membrane(M, [tuple(sh), tuple(el), tuple(wr)] + [tuple(t) for t in tips] + [tuple(back)], mem if memb else dark)
+        edge = []
+        for i, t in enumerate(tips):                                         # 박쥐는 손가락 사이 뒷가장자리가 안으로 패인다
+            edge.append(tuple(t))
+            if v == 1 and i < len(tips) - 1:
+                mid = (t + tips[i + 1]) / 2
+                edge.append(tuple(mid + (wr - mid) * 0.3))
+        _membrane(M, [tuple(sh), tuple(el), tuple(wr)] + edge + [tuple(back)], mem if memb else dark)
     for s in (-1, 1):                                                        # 발톱
         f = g.p(f'lf{s}')
         for t in (-1, 0, 1):
@@ -379,6 +402,9 @@ def wing(C, rnd, v, boss=False, deco=None, skin=None):
             horn(M, tuple(hp + Vector((s * hr * 0.5, hr * 0.3, hr * 0.7))), (s * 0.4, 0.8, 0.5), (s * 0.1, 0.5, -0.3), 0.32, 0.05, horn_m, 5, 4)
     elif rnd.random() < 0.6 or boss:
         cone(M, tuple(hp + Vector((0, 0.02, hr * 0.8))), tuple(hp + Vector((0, 0.12, hr * 1.9))), hr * 0.3, horn_m, 5)
+    if v == 1:                                                               # 10-07 박쥐 큰 귀
+        for s in (-1, 1):
+            cone(M, tuple(hp + Vector((s * hr * 0.55, hr * 0.1, hr * 0.6))), tuple(hp + Vector((s * hr * 1.1, hr * 0.25, hr * 2.0))), hr * 0.42, body, 4)
     if v in (0, 1) or v == 3:                                                # 꼬리 깃/가시
         tp = g.p('t1')
         if v == 3:
@@ -608,6 +634,12 @@ VARIANTS = 4
 # 보스 12 — (계통, 변형 번호 0~3, 배율, 장식)
 BOSSES = [('quad', 3, 3.0, 'plates'), ('quad', 0, 3.2, 'crown'), ('quad', 1, 2.8, 'runes'), ('wing', 3, 3.2, 'crown'), ('wing', 1, 3.0, 'plates'),
           ('serp', 2, 3.4, 'crown'), ('serp', 1, 3.0, 'runes'), ('cons', 0, 3.0, 'plates'), ('cons', 2, 3.2, 'runes'), ('spir', 1, 3.0, 'crown'), ('spir', 2, 3.3, 'runes'), ('quad', 2, 3.4, 'plates')]
+# 10-07: 몸 재질을 무작위로 고르니 같은 계통 안에서 겹쳤다(네발 01·03 눈 흰색, 날개 02·03·뱀 01·03 이끼 초록) → 변형마다 정한다(spir·cons 는 제 색).
+MON_SKINS = {
+    'quad': [SKINS[6], SKINS[4], SKINS[7], SKINS[1]],   # 늑대 청회 · 멧돼지 갈색 · 고양이 흰색 · 황소 황갈 (렌더에서 보이는 색 기준 — 바위·모래 사진은 이끼 초록으로 찍힌다)
+    'wing': [SKINS[1], SKINS[6], SKINS[7], SKINS[0]],   # 새 황갈 · 박쥐 청회 · 흰올빼미 · 비룡 초록
+    'serp': [SKINS[0], SKINS[4], SKINS[2], SKINS[1]],   # 독사 초록 · 코브라 갈색 · 뿔 지렁이 적갈 · 방울뱀 황갈
+}
 BOSS_SKINS = [('cliff_side', 1.5, '#6a5a64'), ('aerial_rocks_02', 1.5, '#4f5a6e'), ('brown_mud', 1.2, '#6e4a44'), ('grey_plaster', 1.2, '#4f6480')]
 
 
@@ -635,7 +667,11 @@ def build_one(pid):
     C = BP.Ctx(pid)
     if kind == 'mon':
         fam, nn = rest.split('_')
-        info = FAMILIES[fam](C, rnd, int(nn) - 1, False, None, None)
+        sk = None
+        if fam in MON_SKINS:
+            rnd.choice(SKINS)                                                   # mats 의 무작위 고르기 한 번을 그대로 소비 — 나머지 형태 난수 순서 유지
+            sk = MON_SKINS[fam][int(nn) - 1]
+        info = FAMILIES[fam](C, rnd, int(nn) - 1, False, None, sk)
         return C, BASE
     fam, v, k, deco = BOSSES[int(rest) - 1]
     info = FAMILIES[fam](C, rnd, v, True, deco, BOSS_SKINS[(int(rest) - 1) % len(BOSS_SKINS)])

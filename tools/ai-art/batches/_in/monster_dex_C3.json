@@ -1,0 +1,82 @@
+{
+ "name": "monster_dex_C3",
+ "spec": "creature",
+ "style": "C",
+ "model": "animagine-xl-4.0-opt",
+ "variants": 4,
+ "note": "10-07 K-0043 몸 8종 바뀜(변형마다 다른 색·박쥐 편 날개·선 올빼미) → 같은 씨앗·새 밑그림·새 주제로 초상만 다시",
+ "items": [
+  {
+   "id": "mon_quad_01",
+   "subject": "gray-blue wolf beast, dark stripes, small spikes on back, glowing yellow eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_quad_01.png",
+   "denoise": 0.62,
+   "seed": 20271006
+  },
+  {
+   "id": "mon_quad_04",
+   "subject": "tan brown bull beast, curved horns, spikes on back",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_quad_04.png",
+   "denoise": 0.62,
+   "seed": 20271297
+  },
+  {
+   "id": "mon_wing_02",
+   "subject": "gray-blue bat creature, wide spread membrane wings, big pointed ears, glowing cyan eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_wing_02.png",
+   "denoise": 0.62,
+   "seed": 20271491
+  },
+  {
+   "id": "mon_wing_03",
+   "subject": "white snowy owl creature standing upright, wings folded at sides, ear tufts, big glowing yellow eyes, small beak",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_wing_03.png",
+   "denoise": 0.62,
+   "seed": 20271588
+  },
+  {
+   "id": "mon_wing_04",
+   "subject": "olive green wyvern, dark membrane wings, curved horns, long tail",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_wing_04.png",
+   "denoise": 0.62,
+   "seed": 20271685
+  },
+  {
+   "id": "mon_serp_01",
+   "subject": "olive green viper, fangs, forked tongue, glowing red eyes",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_serp_01.png",
+   "denoise": 0.62,
+   "seed": 20271782
+  },
+  {
+   "id": "mon_serp_03",
+   "subject": "reddish brown horned worm creature, spikes along back, segmented body",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/mon_serp_03.png",
+   "denoise": 0.62,
+   "seed": 20271976
+  },
+  {
+   "id": "boss_05",
+   "subject": "giant brown bat creature, wide spread membrane wings, spiked armor plates",
+   "view": "three_quarter",
+   "extra": "no humans, monster",
+   "init_image": "tools/ai-art/_out/monster_init/boss_05.png",
+   "denoise": 0.62,
+   "seed": 20273334
+  }
+ ]
+}

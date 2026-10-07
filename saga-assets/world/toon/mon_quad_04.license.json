@@ -6,6 +6,7 @@
  "license": "CC0-1.0 (재질 사진 전부 Poly Haven CC0, 형태는 전부 코드)",
  "inputs": [
   "polyhaven: coast_sand_rocks_02",
+  "polyhaven: dry_ground_01",
   "polyhaven: white_stucco"
  ],
  "size_m": [
