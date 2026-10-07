@@ -426,7 +426,7 @@
    *  비석은 PLAN §5 ①②⑤가 서면 여기 후보에 합류한다). 텍스트만 낸다 —
    *  마무리 카드의 "다음" 줄도 이 함수를 그대로 쓴다. */
   function goalNowText() {
-    var w = global.DG.world, cands = [], tl = global.DG.tut ? global.DG.tut.line() : ''; if (tl) { return tl; }   // 첫 10분 안내가 남았으면 그 단계가 첫 줄(tutorial.js)
+    var w = global.DG.world, cands = [], tl = global.DG.tut ? global.DG.tut.line() : ''; if (tl) { return tl; }   // 첫 10분 안내가 남았으면 그 단계가 첫 줄(tutorial.js) var tk = global.DG.track ? global.DG.track.goalText(core.save.player.pos) : ''; if (tk) { return esc(tk); }   // ㉑ 사냥 의뢰 — 큰 짐승을 쫓는 중이거나 흔적이 10m 안
     var n = w.nearest ? w.nearest() : null;
     if (n) {
       cands.push({ d: n.dist, txt: (n.spawn.kind === 'hero' ? '🧑 ' : '🐾 ') + esc(n.spawn.ref.name) +

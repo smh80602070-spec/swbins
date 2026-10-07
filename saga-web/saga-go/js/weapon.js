@@ -257,6 +257,37 @@
   }
   function onElite() { addOre(ELITE_ORE); return '🪨 +' + ELITE_ORE; }
 
+  /* ── ㉑ 무기 빛 — 강화(Lv 5 마다)·벼림이 한 단씩 외곽선 빛을 짙게 한다(재미표준 G, 에셋 없이 재질 값만) ── */
+
+  var GLOW_BASE = [0x14, 0x12, 0x0f], GLOW_TOP = [0xff, 0xc8, 0x3a], GLOW_STEPS = 11;
+  /** 강화 Lv·벼림 → 빛 단계(0~11)와 외곽선 색(#rrggbb). 수련용(Lv1·벼림 0)은 0 — 옛 검은 외곽선 그대로. **순수 함수** */
+  function glowOf(lv, asc) {
+    var tier = Math.max(0, Math.min(GLOW_STEPS, Math.floor(Math.max(1, lv || 1) / 5) + Math.max(0, asc || 0)));
+    var k = tier / GLOW_STEPS, rgb = GLOW_BASE.map(function (b, i) { return Math.round(b + (GLOW_TOP[i] - b) * k); });
+    return { tier: tier, color: '#' + rgb.map(function (v) { return (v < 16 ? '0' : '') + v.toString(16); }).join('') };
+  }
+  /** 선두가 든 무기의 빛 */
+  function leadGlow() {
+    var p = core.save && core.save.party, id = p && p[0];
+    var r = id ? rec(equipped(id)) : null;
+    return glowOf(r ? r.lv : 1, r ? r.asc : 0);
+  }
+  var glowSeen = { node: null, color: '' };
+  /** 3D 선두 배우의 외곽선 색을 무기 빛으로 — 선두·무기·몸이 바뀔 때만 훑는다. 재질은 처음 바꿀 때 복제(같은 GLB 다른 배우에 안 번지게) */
+  function paintGlow() {
+    var w = global.DG.world3d;
+    if (global.DG_NO_DRAW || !w || !w.active || !w.active() || !w.actorNode) { return; }
+    var node = w.actorNode('me'), g = leadGlow();
+    if (!node || (node === glowSeen.node && g.color === glowSeen.color)) { return; }
+    glowSeen.node = node; glowSeen.color = g.color;
+    node.traverse(function (m) {
+      var u = m.material && m.material.uniforms && m.material.uniforms.outlineColor;
+      if (!u) { return; }
+      if (!m.userData._glowOwn) { m.material = m.material.clone(); m.userData._glowOwn = true; u = m.material.uniforms.outlineColor; }
+      u.value.set(g.color);
+    });
+  }
+
   global.DG = global.DG || {};
   global.DG.weapon = {
     TYPES: TYPES, TYPE_NAMES: TYPE_NAMES, TYPE_ICON: TYPE_ICON, KIT: KIT, WEAPONS: WEAPONS,
@@ -267,6 +298,7 @@
     atkAt: atkAt, subAt: subAt, passiveAt: passiveAt, upCost: upCost, ascCost: ascCost, chestWeapon: chestWeapon,
     mat: mat, ore: ore, addOre: addOre, rec: rec, owned: owned, equipped: equipped, holderOf: holderOf, choicesFor: choicesFor,
     give: give, equip: equip, upCheck: upCheck, up: up, ascCheck: ascCheck, ascend: ascend,
-    mods: mods, onChest: onChest, onElite: onElite
+    mods: mods, onChest: onChest, onElite: onElite,
+    glowOf: glowOf, leadGlow: leadGlow, paintGlow: paintGlow
   };
 })(window);

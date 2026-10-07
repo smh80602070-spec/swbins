@@ -2031,6 +2031,8 @@
     get spawns() { return spawns; },
     removeSpawn: removeSpawn,
     nearest: nearest, maxSpawns: maxSpawns, spawnSpecial: spawnSpecial,
+    /** ㉑ 반경 R 안 흔적 수(track.js) — 재미표준 E 가 상호작용 수에 더한다 */
+    trackCells: function (R, x, y) { return global.DG.track ? global.DG.track.trackCells(R, x, y) : 0; },
     currentRegionKey: currentRegionKey,
     regionName: regionName,
     stationsIn: stationsIn, stationsNear: stationsNear, nearestStation: nearestStation,

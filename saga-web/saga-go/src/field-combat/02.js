@@ -968,7 +968,7 @@
         floatNum(e.x, e.y, e.next ? '겉 방패 깨짐! ' + EL[e.next].icon + ' 속 방패' : '방패 깨짐!', null, 1.4, true);
         if (e.next) { toast('🛡️ 속 방패 ' + EL[e.next].icon + ' — ' + EL[COUNTER[e.next]].icon + ' 원소 동행으로 바꿔라'); }
         ring(e.x, e.y, 2.4, '#ffffff', 0.4);
-        if (W3()) { W3().shake(0.45); W3().hold(100); }
+        if (W3()) { W3().shake(0.45); W3().hold(100); } c.emit('field:break', { camp: e.camp, left: e.left });   // ㉑ 방패 한 겹 = 부위 하나(track.js)
       } else if (e.t === 'swing') {
         if (W3()) { W3().playAnim('me', 'attack', 280); }
         if (e.ranged && e.tx != null) { ring(e.tx, e.ty, 0.8, e.el && EL[e.el] ? EL[e.el].color : '#e8e2d0', 0.25); }   // ⑲-5 서책·활

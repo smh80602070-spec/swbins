@@ -55,6 +55,8 @@
     drop:        { c: '#ffb36b', r: 3.4 },
     story:       { c: '#ffd24a', r: 4.2 },
     fish:        { c: '#6ec8ff', r: 3.4 },
+    trail:       { c: '#e0b070', r: 2.2 },
+    hunt:        { c: '#ff6a3d', r: 4.4 },
     frost:       { c: 'rgba(232,244,255,.45)', r: 3.2 },
     'frost-found': { c: '#e8f4ff', r: 3.6 },
     wq:          { c: '#5fb8ff', r: 4.2 },
@@ -272,6 +274,10 @@
     /* 낚시터(§5 ⑲-24) — 탑을 찾은 지역만, 둘레 안일 때만 */
     var FSm = global.DG.fishing, fsl = FSm && FSm.mapSpots ? FSm.mapSpots() : [];
     for (i = 0; i < fsl.length; i++) { put('fish', fsl[i].x, fsl[i].y, '🎣 ' + fsl[i].name); }
+
+    /* ㉑ 사냥 의뢰 — 안 읽은 흔적(둘레 안만)·오늘의 큰 짐승(테두리에도 붙어 방향을 알린다) */
+    var TKm = global.DG.track, tkl = TKm && TKm.marks ? TKm.marks(pos, r) : [];
+    for (i = 0; i < tkl.length; i++) { put(tkl[i].t, tkl[i].x, tkl[i].y, tkl[i].name, !!tkl[i].edge); }
 
     /* 서리봉 고원(§5 ⑲-27) — 명소는 늘(안 찾으면 흐리게), 작은 발견은 찾은 것만 */
     var FRm = global.DG.frost, frl = FRm && FRm.on() && FRm.marks ? FRm.marks() : [];

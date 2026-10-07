@@ -165,6 +165,7 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
 <script src="js/treasure.js"></script>
 <script src="js/domain.js"></script>
 <script src="js/fieldboss.js"></script>
+<script src="js/track.js"></script>
 <script src="js/worldquest.js"></script>
 <script src="js/story.js"></script>
 <script src="js/skyisle.js"></script>
@@ -15842,14 +15843,117 @@ window.DG_NO_DRAW = true; window.DG_NO_TUT = true; window.DG_NO_ACCOUNT = true; 
       return funMark(three && bad === 0, true) + '100회: 후보 수 ' + JSON.stringify(sizes) + ' · 같은 축 중복 ' + bad + ' · 거절 소량 보상 ' + (DG.perk.DECLINE_DAN || '-');
     });
 
+    /* ── ㉑ 사냥 의뢰 — 흔적 → 큰 짐승 → 부위 → 소재 → 벼림 (`track.js`, PLAN §5 ㉑, W-0101) ── */
+    function tkTerr() { var W = DG.world; return function (tx, ty) { return W.terrainAt(tx, ty); }; }
+    /** 표본 자리 (x, y) 둘레에서 수호자가 있는 흔적 n 개 */
+    function tkPick(x, y, n) {
+      var TK = DG.track, cs = TK.cellsNear(x, y, 400).filter(function (c) { return !!TK.guardOf(c.region); });
+      return cs.slice(0, n);
+    }
+    function tkKeep() {
+      var s = C.save;
+      return { track: JSON.stringify(s.track || null), dust: s.dust, gm: JSON.stringify(s.gearMat || null) };
+    }
+    function tkBack(k) {
+      var s = C.save, tr = JSON.parse(k.track);
+      if (tr) { s.track = tr; } else { delete s.track; }
+      s.dust = k.dust;
+      var gm = JSON.parse(k.gm); if (gm) { s.gearMat = gm; } else { delete s.gearMat; }
+    }
+
+    t('go.track: 흔적 ① 자리 결정성 — 같은 칸 두 번 = 같음·고향 300m 안 0·물 위 0', function () {
+      var TK = DG.track, terr = tkTerr(), i, j, n = 0, same = true, home = 0, wet = 0;
+      for (j = -40; j <= 40; j += 2) { for (i = -40; i <= 40; i += 2) {
+        var a = TK.cellAt(i, j, terr), b = TK.cellAt(i, j, terr);
+        if (JSON.stringify(a) !== JSON.stringify(b)) { same = false; }
+        if (!a) { continue; }
+        n++;
+        if (Math.hypot(a.x, a.y) < TK.HOME_R) { home++; }
+        if (terr(Math.floor(a.x / 48), Math.floor(a.y / 48)) === 'water') { wet++; }
+      } }
+      return same && n > 100 && home === 0 && wet === 0 && ('흔적 ' + n + ' 칸 · 고향 안 ' + home + ' · 물 위 ' + wet);
+    });
+
+    t('go.track: 흔적 ② 종류 여섯이 다 나오고 바이옴 수호자 꼴을 따른다', function () {
+      var TK = DG.track, terr = tkTerr(), kinds = {}, biomes = {}, bad = 0, i, j;
+      for (j = -120; j <= 120; j += 6) { for (i = -120; i <= 120; i += 6) {
+        var c = TK.cellAt(i, j, terr);
+        if (!c) { continue; }
+        kinds[c.kind] = 1; biomes[c.biome] = 1;
+        if (TK.BY_BIOME[c.biome].indexOf(c.kind) < 0) { bad++; }
+      } }
+      var nk = Object.keys(kinds).length, nb = Object.keys(biomes).length;
+      return nk === 6 && nb === 5 && bad === 0 && ('종류 ' + Object.keys(kinds).join('·') + ' · 바이옴 ' + nb);
+    });
+
+    t('go.track: 흔적 ③ 같은 날 셋을 읽으면 셋째가 가리킨 수호자가 오늘의 큰 짐승', function () {
+      var TK = DG.track, k = tkKeep();
+      try {
+        C.save.track = {};
+        var cs = tkPick(2400, 300, 3);
+        if (cs.length < 3) { return '× — 표본 흔적 ' + cs.length; }
+        TK.read(cs[0]); TK.read(cs[1]);
+        var before = TK.hunt(), again = TK.read(cs[1]).ok;
+        TK.read(cs[2]);
+        var h = TK.hunt(), g = h && TK.guardOf(h.region);
+        return !before && !again && h && h.region === cs[2].region && TK.readCount() === 3 && TK.isRead(cs[0].key) && g &&
+          ('셋째에 의뢰 — ' + g.name + ' (' + g.place + ') · 같은 흔적 두 번 안 셈');
+      } finally { tkBack(k); }
+    });
+
+    t('go.track: 흔적 ④ 의뢰는 하루 하나 — 넷째를 읽어도 그대로, 날이 바뀌면 흔적·의뢰가 새로', function () {
+      var TK = DG.track, k = tkKeep();
+      try {
+        C.save.track = {};
+        var cs = tkPick(-1800, 1500, 4);
+        if (cs.length < 4) { return '× — 표본 흔적 ' + cs.length; }
+        cs.slice(0, 3).forEach(TK.read);
+        var h1 = JSON.stringify(TK.hunt());
+        TK.read(cs[3]);
+        var same = JSON.stringify(TK.hunt()) === h1;
+        C.save.track.day = '2000-1-1'; C.save.track.hunt.day = '2000-1-1';     // 어제 것으로 돌려 놓는다
+        var fresh = TK.hunt() === null && TK.readCount() === 0 && !TK.isRead(cs[0].key);
+        return same && fresh && ('넷째 뒤에도 같은 의뢰 · 다음 날 읽은 흔적 0·의뢰 없음');
+      } finally { tkBack(k); }
+    });
+
+    t('go.track: 흔적 ⑤ 방패 둘 깨고 쓰러뜨리면 부위 3 → 단사 12·강화석 2, 두 번은 안 준다 · 무기 빛은 강화·벼림마다 짙어진다', function () {
+      var TK = DG.track, WP = DG.weapon, k = tkKeep();
+      try {
+        C.save.track = {};
+        var cs = tkPick(600, -2600, 3);
+        if (cs.length < 3) { return '× — 표본 흔적 ' + cs.length; }
+        cs.forEach(TK.read);
+        var h = TK.hunt(), d0 = C.save.dust || 0, o0 = WP.ore();
+        TK.onBreak({ camp: 'g:other' });                     // 남의 수호자 방패는 안 센다
+        TK.onBreak({ camp: 'g:' + h.region }); TK.onBreak({ camp: 'g:' + h.region }); TK.onBreak({ camp: 'g:' + h.region });
+        TK.onGuard({ region: h.region });
+        var dd = (C.save.dust || 0) - d0, od = WP.ore() - o0, p = TK.hunt().parts;
+        var twice = TK.onKill(3) === null && (C.save.dust || 0) - d0 === dd;
+        var g = [WP.glowOf(1, 0), WP.glowOf(5, 0), WP.glowOf(10, 1), WP.glowOf(30, 5)];
+        var up = g[0].tier === 0 && g[0].color === '#14120f' && g[1].tier > g[0].tier && g[2].tier > g[1].tier && g[3].tier === 11 && g[3].color !== g[2].color;
+        return dd === 12 && od === 2 && p === 3 && twice && up &&
+          ('부위 ' + p + ' · 단사 +' + dd + ' · 강화석 +' + od + ' · 빛 ' + g.map(function (x) { return x.tier; }).join('→') + ' ' + g[3].color);
+      } finally { tkBack(k); }
+    });
+
+    t('go.track: 흔적 ⑥ 재미표준 E — 흔적을 더하면 60m 칸 빈칸 ≤50%', function () {
+      var R = 320, cell = 60, cells = Math.PI * R * R / (cell * cell);
+      var spawns = W.maxSpawns ? W.maxSpawns() : 0, stations = 2 * Math.PI * R * R / (576 * 576), tc = W.trackCells(R);
+      var empty = Math.max(0, 1 - (spawns + stations + tc) / cells);
+      return empty <= 0.5 && ('칸 ' + Math.round(cells) + ' · 대상 ' + spawns + ' + 역참 ' + stations.toFixed(1) + ' + 흔적 ' + tc.toFixed(1) +
+        ' → 빈칸 ' + Math.round(empty * 100) + '%(1차 목표 ≤50%) · 흔적 몫 ' + DG.track.share());
+    });
+
     t('재미표준 E 발견 밀도(측정)', function () {
       var R = 320, cell = 60, cells = Math.PI * R * R / (cell * cell);
       var spawns = W.maxSpawns ? W.maxSpawns() : 0;
       var stations = 2 * Math.PI * R * R / (576 * 576);   // 역참: 구역(576m)마다 2
-      var n = spawns + stations, empty = Math.max(0, 1 - n / cells);
+      var tracks = W.trackCells ? W.trackCells(R) : 0;    // ㉑ 흔적(track.js) — 고향 300m 밖 표본 평균
+      var n = spawns + stations + tracks, empty = Math.max(0, 1 - n / cells);
       var ev = DG.core.tuned('event.stepM', 300) / DG.core.tuned('event.chance', 0.62);
       return funMark(empty <= 0.1, empty <= 0.3) + '60m 칸 ' + Math.round(cells) + '개에 상호작용 ≈' + n.toFixed(1) + '개 → 빈칸 ≈' + Math.round(empty * 100) +
-        '%(규격 ≤10%) · 사건 평균 ' + Math.round(ev) + 'm';
+        '%(규격 ≤10%) · 흔적 ' + tracks.toFixed(1) + ' · 사건 평균 ' + Math.round(ev) + 'm';
     });
 
     t('재미표준 F 실패와 회복(측정)', function () {

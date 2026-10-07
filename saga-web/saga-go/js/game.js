@@ -415,6 +415,8 @@
     if (global.DG.biome) { global.DG.biome.tick(dt); }               // 지역 이름 띠·랜드마크 발견(§5⑩)
     if (global.DG.landform) { global.DG.landform.tick(dt); }         // 기력·점프·정상 발견(§5⑰)
     if (global.DG.treasure) { global.DG.treasure.tick(dt); }         // 보물 상자·수집 구슬·기척 보기(§5⑲-3)
+    if (global.DG.track) { global.DG.track.tick(dt); }               // 흔적·큰 짐승 사냥 의뢰(§5㉑)
+    if (global.DG.weapon && global.DG.weapon.paintGlow) { global.DG.weapon.paintGlow(); }   // 무기 빛 → 선두 외곽선(§5㉑)
     if (global.DG.cooking) { global.DG.cooking.tick(dt); }           // 채집·솥·요리 버프(§5⑲-6)
     if (global.DG.fishing) { global.DG.fishing.tick(dt); }           // 낚시터·줄다리기·낚시 조합(§5⑲-24)
     if (global.DG.achieve) { global.DG.achieve.tick(dt); }           // 업적 셈·알림(§5⑲-25)

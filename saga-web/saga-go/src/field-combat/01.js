@@ -824,11 +824,11 @@
       f.shEl = L[f.layer];
       f.shield = f.shieldMax;
       f.stun = LAYER_STUN();
-      push(S, { t: 'break', uid: f.uid, x: f.x, y: f.y, next: f.shEl, left: L.length - f.layer });
+      push(S, { t: 'break', uid: f.uid, camp: f.camp, x: f.x, y: f.y, next: f.shEl, left: L.length - f.layer });
       return;
     }
     f.stun = L.length > 1 ? CORE_STUN() : SHIELD_STUN();
-    push(S, { t: 'break', uid: f.uid, x: f.x, y: f.y, next: null, left: 0 });
+    push(S, { t: 'break', uid: f.uid, camp: f.camp, x: f.x, y: f.y, next: null, left: 0 });
   }
 
   /** 방패부터 깎는 날것의 피해(광역 반응 조각·물벼락 틱이 쓴다) */

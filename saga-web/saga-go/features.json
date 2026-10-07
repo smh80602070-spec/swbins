@@ -638,5 +638,37 @@
   "ticket": "W-0092",
   "since": "2026-10-07",
   "note": "D2: saga-web/tools/playcheck/pw-go-party.mjs 6/6(PC·폰) — results/pw-go-party.json(W-0092). 사용자 10-07 \"내 캐릭터 정보 볼 곳이 없다 — 동행도, 장비 착용여부도\"."
+ },
+ {
+  "id": "go.track",
+  "name": "사냥 의뢰 — 흔적 여섯 종(60m 칸) → 오늘의 큰 짐승(지역 수호자) → 부위 → 단사·강화석 → 무기 빛(외곽선)",
+  "files": [
+   "js/track.js",
+   "src/world/02.js",
+   "js/minimap.js",
+   "src/ui/01.js",
+   "src/field-combat/01.js",
+   "src/field-combat/02.js",
+   "js/weapon.js",
+   "src/world3d/05-render.js",
+   "js/game.js"
+  ],
+  "tests": [
+   "go.track: 흔적 ① 자리 결정성 — 같은 칸 두 번 = 같음·고향 300m 안 0·물 위 0",
+   "go.track: 흔적 ② 종류 여섯이 다 나오고 바이옴 수호자 꼴을 따른다",
+   "go.track: 흔적 ③ 같은 날 셋을 읽으면 셋째가 가리킨 수호자가 오늘의 큰 짐승",
+   "go.track: 흔적 ④ 의뢰는 하루 하나 — 넷째를 읽어도 그대로, 날이 바뀌면 흔적·의뢰가 새로",
+   "go.track: 흔적 ⑤ 방패 둘 깨고 쓰러뜨리면 부위 3 → 단사 12·강화석 2, 두 번은 안 준다 · 무기 빛은 강화·벼림마다 짙어진다",
+   "go.track: 흔적 ⑥ 재미표준 E — 흔적을 더하면 60m 칸 빈칸 ≤50%"
+  ],
+  "level": "D1",
+  "verified": null,
+  "fun": {
+   "E": "빈칸 ≈80% → ≈41~47%(1차 목표 ≤50%, △ 는 ≤30%)",
+   "G": "무기 빛 0~11단 외곽선"
+  },
+  "ticket": "W-0101",
+  "since": "2026-10-08",
+  "note": "D1: 진단 6 PASS · QC 2D/3D 장면 PASS(2026-10-08). D2 는 흔적이 보이는 장면 눈 판정 뒤 — QC 장면은 고향 300m 안이라 흔적이 안 찍힌다(고향 밖 장면 필요)."
  }
 ]
