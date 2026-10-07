@@ -348,6 +348,8 @@ func _ready() -> void:
 		add_child(load("res://tools/probe_village.gd").new())
 	if OS.get_environment("SAGA_FORK_PROBE") != "": # 106장 55-1 열째 지역 세갈래 고을
 		add_child(load("res://tools/probe_fork.gd").new())
+	if OS.get_environment("SAGA_STORY16_PROBE") != "": # G-0079 이야기 16부(51장~, 회차 4 전용)
+		add_child(load("res://tools/probe_story16.gd").new())
 	if OS.get_environment("SAGA_STORY15_PROBE") != "": # G-0078 이야기 15부(48장~, 회차 3 전용)
 		add_child(load("res://tools/probe_story15.gd").new())
 	if OS.get_environment("SAGA_STORY14_PROBE") != "": # G-0077 이야기 14부(45장~, 회차 2 전용)

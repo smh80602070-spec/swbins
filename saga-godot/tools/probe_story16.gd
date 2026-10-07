@@ -1,14 +1,14 @@
 extends Node
-## GO 이야기 15부(G-0078, 48장~ — 회차 3 전용) 자동 점검 — 평소엔 안 붙는다. 14부 probe_story14.
-## test_village.gd 가 SAGA_STORY15_PROBE 가 있을 때만 단다.
+## GO 이야기 16부(G-0079, 51장~ — 회차 4 전용) 자동 점검 — 평소엔 안 붙는다. 15부 probe_story15.
+## test_village.gd 가 SAGA_STORY16_PROBE 가 있을 때만 단다.
 ##
-##   SAGA_STORY15_PROBE=1 "$GODOT" --headless --path saga-godot res://games/saga_go/world/TestVillage.tscn
+##   SAGA_STORY16_PROBE=1 "$GODOT" --headless --path saga-godot res://games/saga_go/world/TestVillage.tscn
 ##
-## [1] 표·자리 — 본편 41장·전체 50장 · 48·49·50장 단계 종류·장 id·ar 85·cycle 3 · 보스 "멈춘 진수대의 쇠 거신"(수·goblin, 방패는 뇌로 깨짐)
+## [1] 표·자리 — 본편 41장·전체 53장 · 51·52·53장 단계 종류·장 id·ar 85·cycle 4 · 보스 "선로를 감은 번개 이무기"(뇌·serpent, 방패는 불로 깨짐)
 ##     · 단계 자리(지역 안·충돌에 안 묻힘)
-## [2] 잠금 — 회차 2 면 48장 잠김·추적 글 "별배 재출항(3회차)"·일지 같은 글 · 회차 3 이면 열림
-## [3] 48장부터 50장 끝까지 단계마다 자동으로 밟는다(talk·go·kill·seal·climb·duel) — 장 끝 보상
-## [4] 끝 — ch=50·일지 ✔ 제50장·모라 · G-0075 보스 곁에선 금빛 빛기둥 숨김(50m 밖에선 보임)
+## [2] 잠금 — 회차 3 이면 51장 잠김·추적 글 "별배 재출항(4회차)"·일지 같은 글 · 회차 4 면 열림
+## [3] 51장부터 53장 끝까지 단계마다 자동으로 밟는다(talk·go·kill·climb·light·duel) — 장 끝 보상
+## [4] 끝 — ch=53·일지 ✔ 제53장·모라 · G-0075 보스 곁에선 금빛 빛기둥 숨김(50m 밖에선 보임)
 ## 이야기 상태·회차·부대 경험·가방은 끝에 되돌린다. 저장은 안 한다.
 
 const Story := preload("res://games/saga_go/data/story.gd")
@@ -19,8 +19,8 @@ const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const Elements := preload("res://games/saga_go/combat/elements.gd")
 const EraSites := preload("res://games/saga_go/world/era_sites.gd")
 
-const CH42 := 47 # 48장(0부터) — 상수 이름은 13부 점검과 같게 둔다
-const CH44 := 49
+const CH42 := 50 # 51장(0부터) — 상수 이름은 13부 점검과 같게 둔다
+const CH44 := 52
 const STEP_FRAMES := 900
 
 var _p: CharacterBody3D
@@ -56,7 +56,7 @@ func _physics_process(_delta: float) -> void:
 			PartyState.exp = maxf(PartyState.exp, 86.0 * PartyState.EXP_PER_LEVEL)
 			PartyState.level = maxi(PartyState.level, 86)
 			PartyState.ar_paid = maxi(PartyState.ar_paid, PartyState.level + 1)
-			PartyState.cycle = 2
+			PartyState.cycle = 3
 			PartyState.story = {"ch": CH42, "step": 0}
 			_sq.call("set_track", "")
 			_sq.call("_enter_step")
@@ -66,16 +66,16 @@ func _physics_process(_delta: float) -> void:
 			if _frame < 60:
 				return
 			var bad: Array = []
-			if Story.MAIN_CHAPTERS != 41 or Story.CHAPTERS.size() < 50 or not Story.main_done(41) or Story.main_done(40):
+			if Story.MAIN_CHAPTERS != 41 or Story.CHAPTERS.size() != 53 or not Story.main_done(41) or Story.main_done(40):
 				bad.append("count main=%d all=%d" % [Story.MAIN_CHAPTERS, Story.CHAPTERS.size()])
-			var want := {"ch48": ["talk", "go", "talk", "kill", "talk"], "ch49": ["talk", "seal", "talk", "talk"],
-				"ch50": ["talk", "climb", "duel", "talk", "talk"]}
+			var want := {"ch51": ["talk", "talk", "kill", "climb", "talk"], "ch52": ["talk", "light", "kill", "talk"],
+				"ch53": ["talk", "go", "duel", "talk", "talk"]}
 			for i in 3:
 				var c := Story.chapter(CH42 + i)
 				var types: Array = (c.steps as Array).map(func(sd: Dictionary) -> String: return String(sd.type))
-				var cid := "ch%d" % (48 + i)
-				if String(c.get("id", "")) != cid or types != want[cid] or int(c.ar) != 85 or int(c.get("cycle", 0)) != 3 or c.has("join"):
-					bad.append("chapter %d %s ar=%s cycle=%s" % [48 + i, types, c.get("ar"), c.get("cycle")])
+				var cid := "ch%d" % (51 + i)
+				if String(c.get("id", "")) != cid or types != want[cid] or int(c.ar) != 85 or int(c.get("cycle", 0)) != 4 or c.has("join"):
+					bad.append("chapter %d %s ar=%s cycle=%s" % [51 + i, types, c.get("ar"), c.get("cycle")])
 				for si in (c.steps as Array).size():
 					var sd: Dictionary = c.steps[si]
 					if sd.has("npc") and not Story.NPCS.has(String(sd.npc)):
@@ -83,31 +83,33 @@ func _physics_process(_delta: float) -> void:
 					if sd.has("region"):
 						var pos := _cell(String(sd.region), sd.cell)
 						if TestMap.region_at(pos) != String(sd.region):
-							bad.append("region ch%d/%d" % [48 + i, si])
-						if not _hits(pos).is_empty():
-							bad.append("buried ch%d/%d %s" % [48 + i, si, _hits(pos)])
-			var boss: Dictionary = FieldEnemy.KINDS.get("launch_colossus", {})
-			if String(boss.get("element", "")) != "water" or float(boss.get("phase_shield", 0.0)) <= 0.0 or Elements.SHIELD_COUNTER.get("water", "") != "thunder" \
-					or String(boss.get("shape", "")) != "goblin":
+							bad.append("region ch%d/%d" % [51 + i, si])
+						## 구조물이 목표인 단계(계류 탑 오르기·종각 종·넓은 도착 구역)는 4부와 같은 자리라 묻힘 검사에서 뺀다.
+						var on_structure: bool = String(sd.type) == "climb" or bool(sd.get("bell", false)) or (String(sd.type) == "go" and float(sd.get("radius", 0.0)) >= 10.0)
+						if not on_structure and not _hits(pos).is_empty():
+							bad.append("buried ch%d/%d %s" % [51 + i, si, _hits(pos)])
+			var boss: Dictionary = FieldEnemy.KINDS.get("rail_serpent", {})
+			if String(boss.get("element", "")) != "thunder" or float(boss.get("phase_shield", 0.0)) <= 0.0 or Elements.SHIELD_COUNTER.get("thunder", "") != "fire" \
+					or String(boss.get("shape", "")) != "serpent":
 				bad.append("boss")
 			_check("tables", bad.is_empty(), str(bad))
 			_next()
-		2: # [2] 잠금 — 회차 2 → 잠김 · 회차 3 → 열림
+		2: # [2] 잠금 — 회차 3 → 잠김 · 회차 4 → 열림
 			if _frame == 5:
 				_sq.call("toggle_journal")
 				var jt: String = _sq.call("journal_text")
 				_sq.call("toggle_journal")
 				var tt: String = _sq.call("tracker_text")
-				var ok: bool = bool(_sq.call("locked")) and tt.contains("별배 재출항(3회차)") and jt.contains("제48장 · 십 년 전의 종소리  (별배 재출항(3회차)") \
+				var ok: bool = bool(_sq.call("locked")) and tt.contains("별배 재출항(4회차)") and jt.contains("제51장 · 기다림의 첫날  (별배 재출항(4회차)") \
 					and Cycle.story_done()
 				_check("locked_until_cycle", ok, "locked=%s tracker='%s' blocker='%s'" % [_sq.call("locked"), tt.replace("\n", " / "), Cycle.blocker()])
-				PartyState.cycle = 3
+				PartyState.cycle = 4
 				_sq.call("_enter_step")
 			if _frame == 30:
 				var tt2: String = _sq.call("tracker_text")
 				_check("open_on_cycle", not bool(_sq.call("locked")) and not tt2.contains("열린다"), "tracker='%s'" % tt2.replace("\n", " / "))
 				_next()
-		3: # [3] 48~50장을 자동으로 밟는다
+		3: # [3] 51~53장을 자동으로 밟는다
 			var ch := int(_sq.call("ch"))
 			if ch > CH44:
 				_check("playthrough", true, "log=%s" % [_log])
@@ -136,7 +138,7 @@ func _physics_process(_delta: float) -> void:
 			_sq.call("toggle_journal")
 			var jt: String = _sq.call("journal_text")
 			_sq.call("toggle_journal")
-			var ok: bool = int(_sq.call("ch")) == CH44 + 1 and jt.contains("✔ 제50장") and PartyState.count("mora") >= _mora0 + 520000 + 560000 + 640000
+			var ok: bool = int(_sq.call("ch")) == CH44 + 1 and jt.contains("✔ 제53장") and PartyState.count("mora") >= _mora0 + 700000 + 750000 + 840000
 			_check("marker_fight", bool(_mk.get("near", false)) and bool(_mk.get("far", false)), "%s" % [_mk])
 			_check("finished", ok, "ch=%d mora +%d" % [_sq.call("ch"), PartyState.count("mora") - _mora0])
 			_next()
@@ -152,7 +154,7 @@ func _physics_process(_delta: float) -> void:
 			PartyState.world_quests = _saved.wq
 			PartyState.party_size = _saved.party_size
 			_p.global_position = _saved.pos
-			print("STORY15_PROBE_DONE fails=%d" % _fails)
+			print("STORY16_PROBE_DONE fails=%d" % _fails)
 			get_tree().quit()
 
 ## 이 단계를 한 걸음 밟는다(프레임마다 불림).
@@ -176,9 +178,9 @@ func _drive(sd: Dictionary) -> void:
 			for k in (sd.order as Array).size():
 				if _sf == 10 + k * 6:
 					_sq.call("receive_element", _sq.call("seal_lamp_pos", String(sd.order[k])), 0.5, "fire")
-		"climb": # 50장 — 기중기 들보 윗면(13장 기중기, era_sites.gd crane_top)에 세운다
+		"climb": # 51장 — 계류 탑 윗면(칸 땅높이 + above - CLIMB_SLACK + 0.6 = 탑 윗면 바로 위에서 내려앉음)
 			if _sf == 2:
-				_put(EraSites.crane_top())
+				_put(_target() + Vector3(0.0, float(sd.get("above", 0.0)) - Story.CLIMB_SLACK + 0.6, 0.0))
 		"go":
 			if _sf == 2:
 				_put(_target())
@@ -256,7 +258,7 @@ func _put(pos: Vector3) -> void:
 func _check(name: String, ok: bool, detail: String) -> void:
 	if not ok:
 		_fails += 1
-	print("STORY15_PROBE %s %s %s" % [name, "ok" if ok else "FAIL", detail])
+	print("STORY16_PROBE %s %s %s" % [name, "ok" if ok else "FAIL", detail])
 
 func _next() -> void:
 	_step += 1

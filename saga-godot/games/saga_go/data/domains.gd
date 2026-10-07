@@ -107,6 +107,13 @@ const DOMAINS := {
 		"sets": ["depth", "emblem"],
 		"reward": [{"mora": 4600, "boss_mat": 1, "talent_3": 1}, {"mora": 6600, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 9200, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
+	## G-0079 16부(회차 4) 끝(53장) 뒤 재대결 — 선로를 감은 번개 이무기. 입구는 은하 나루 은하역 곁.
+	"rematch_rail": {"name": "막차 선로의 메아리", "kind": "boss", "boss": true, "after_ch": 53, "gate": ["skyport", Vector2(4.4, 4.6)], "arena": Vector3(-1400.0, 40.0, 2800.0),
+		"waves": [["rail_serpent"]], "modifier": "none", "time": 240.0,
+		"modifier_text": "재대결: 선로를 감은 번개 이무기 · 번개 방패(불로 깬다)",
+		"sets": ["viridescent", "gladiator"],
+		"reward": [{"mora": 4900, "boss_mat": 1, "talent_3": 1}, {"mora": 7000, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 9800, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
+		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 	"rematch_colossus": {"name": "빛 돔의 메아리", "kind": "boss", "boss": true, "after_ch": 29, "gate": ["sunken", Vector2(3.7, 2.1)], "arena": Vector3(-1400.0, 40.0, 1400.0),
 		"waves": [["dome_colossus"]], "modifier": "none", "time": 240.0,
 		"modifier_text": "재대결: 돔 파수 거신 · 체력 절반에서 암 방패(초로 깬다)",
@@ -114,7 +121,7 @@ const DOMAINS := {
 		"reward": [{"mora": 3000, "boss_mat": 1, "talent_3": 1}, {"mora": 4500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 6000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 }
-const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus", "rematch_first_crow", "rematch_garmuri", "rematch_seed", "rematch_dawn", "rematch_nightfox", "rematch_launch"]
+const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus", "rematch_first_crow", "rematch_garmuri", "rematch_seed", "rematch_dawn", "rematch_nightfox", "rematch_launch", "rematch_rail"]
 const KIND_NAMES := {"artifact": "성유물", "talent": "특성 재료", "weapon": "무기 재료", "boss": "주간 보스"}
 const WEEKLY_COST := 60
 const WEEKLY_DISCOUNT_COST := 30

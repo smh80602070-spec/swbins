@@ -282,6 +282,8 @@ const STATIONS := {
 		## G-0078 15부 — 48장 첫 대화는 은하 나루 별배 곁(0), 50장 끝 대화는 조선소(4, 13장 조선소 자리).
 		{"ch": 47, "from": 0, "to": 0, "region": "skyport", "cell": Vector2(5.44, 1.8)},
 		{"ch": 49, "from": 4, "to": 4, "region": "coast", "cell": Vector2(7.05, 4.02)},
+		## G-0079 16부 — 51장 첫 대화는 은하 나루 별배 곁(0).
+		{"ch": 50, "from": 0, "to": 0, "region": "skyport", "cell": Vector2(5.44, 1.8)},
 		{"ch": 11, "from": 5, "to": 5, "region": "frost", "cell": Vector2(6.15, 2.5)},
 		## ㊼-1 13장 — 날개 조각을 꺼낸 뒤(6~8) 조선소로 날아와 있다.
 		{"ch": 12, "from": 6, "to": 8, "region": "coast", "cell": Vector2(7.05, 4.02)},

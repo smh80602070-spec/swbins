@@ -225,6 +225,13 @@ const KINDS := {
 		"phase_text": "쇠 거신이 십 년 묵은 바닷물을 두르고 물거북과 살쾡이를 부른다 — 뇌로 방패를 깨라",
 		"rotation": ["slam", "tide", "halo", "storm", "slam", "tide"], "summon": ["water_turtle", "thunder_cat"],
 		"shape": "goblin", "height": 4.6, "colors": [Color(0.4, 0.44, 0.48), Color(0.62, 0.36, 0.2), Color(0.45, 0.92, 1.0)]},
+	## G-0079 16부 53장 이야기 보스 "선로를 감은 번개 이무기"(은하역 선로) — 별배가 떠나던 밤 찢긴 하늘에서 떨어져 막차 선로를 감고 굳은 틈 뱀.
+	## 코드 몸 serpent 3.8m(밤빛 비늘·놋쇠 배·번개빛 눈). 패턴은 있는 틀: 물기·밀물 줄·내려찍기·고리·회오리. 2단계 뇌 방패(불로 깬다).
+	"rail_serpent": {"name": "선로를 감은 번개 이무기", "hp": 17200.0, "atk": 74.0, "speed": 4.0, "aggro": 26.0,
+		"reach": 3.4, "tell": 0.8, "cd": 1.5, "exp": 0.0, "element": "thunder", "shield": 0.0, "phase_shield": 1600.0,
+		"phase_text": "이무기가 그 밤 찢긴 하늘의 번개를 두르고 살쾡이와 매를 부른다 — 불로 방패를 깨라",
+		"rotation": ["bite", "tide", "slam", "halo", "tide", "storm"], "summon": ["thunder_cat", "wind_hawk"],
+		"shape": "serpent", "height": 3.8, "colors": [Color(0.2, 0.22, 0.32), Color(0.78, 0.62, 0.28), Color(0.78, 0.62, 1.0)]},
 }
 
 const GRAVITY := 20.0

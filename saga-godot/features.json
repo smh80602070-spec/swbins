@@ -2712,6 +2712,25 @@
   "since": "2026-10-07"
  },
  {
+  "id": "gd.go.story16",
+  "name": "이야기 16부 「떠나던 밤의 나루」(51~53장, 회차 4 전용) — 4부 은하 나루의 별배가 떠나던 밤을 나루지기 아라의 눈으로, 이야기 보스 선로를 감은 번개 이무기, 끝난 뒤 재대결 「막차 선로의 메아리」",
+  "files": [
+   "games/saga_go/data/story_chapters_5.gd",
+   "tools/probe_story16.gd",
+   "tools/shot_story13.gd"
+  ],
+  "tests": [
+   "story16",
+   "aftermath",
+   "story_data"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {},
+  "ticket": "G-0079",
+  "since": "2026-10-08"
+ },
+ {
   "id": "gd.go.graphics",
   "name": "설정 화질/성능 2단 — 성능이면 30fps·3D 해상도 0.75·MSAA·SSAO/SSIL/SDFGI 끔, user://graphics.cfg(다섯 판 공용 — 사가고 메뉴, 네 판 HUD \"화질\" 단추)",
   "files": [],
