@@ -8,7 +8,7 @@ extends RefCounted
 ## GLB로 바꾼 뒤에도 그대로 지킨다).
 
 ## glb_path가 가리키는 씬의 메시를 Mesh 하나로 반환한다 — 뼈대가 있는
-## 캐릭터(assets/characters/*)에는 쓰지 않는다. MeshInstance3D가 하나뿐이면
+## 인물 몸(assets/characters_dex)에는 쓰지 않는다. MeshInstance3D가 하나뿐이면
 ## (Kenney 소품·Quaternius 원본 gltf·바위 스냅본 등 대부분) 그 Mesh를 그대로
 ## 돌려주고, 여럿이면 `_merge_mesh_instances()`로 표면을 합친다.
 ##
@@ -98,7 +98,7 @@ static func with_lods(mesh: Mesh) -> Mesh:
 	im.generate_lods(25.0, 60.0, [])
 	return im.get_mesh()
 
-## 뼈대 있는 캐릭터(assets/characters/*)는 몸통·팔·다리·머리가 각각
+## 뼈대 있는 캐릭터는 몸통·팔·다리·머리가 각각
 ## 별도 MeshInstance3D다 — 산적 강타 예고처럼 "몸 전체를 한 색으로
 ## 물들인다" 같은 연출은 이걸로 전부 찾아 material_override를 같이
 ## 바꿔야 한다(games/saga_go/world/bandit_encounter.gd 참고).
