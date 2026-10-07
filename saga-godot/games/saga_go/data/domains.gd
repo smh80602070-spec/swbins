@@ -86,6 +86,13 @@ const DOMAINS := {
 		"sets": ["viridescent", "depth"],
 		"reward": [{"mora": 3800, "boss_mat": 1, "talent_3": 1}, {"mora": 5500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 7500, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
+	## G-0076 13부(회차 전용) 끝(44장) 뒤 재대결 — 이야기 보스 그날의 검은 가면(after_ch 44). 입구는 청하 마을 북쪽 봉우리 발치.
+	"rematch_dawn": {"name": "그날 노래의 메아리", "kind": "boss", "boss": true, "after_ch": 44, "gate": ["village", Vector2(6.0, 2.85)], "arena": Vector3(-1400.0, 40.0, 2200.0),
+		"waves": [["dawn_mask"]], "modifier": "none", "time": 240.0,
+		"modifier_text": "재대결: 그날의 검은 가면 · 먹구름 방패(불로 깬다)",
+		"sets": ["crimson", "emblem"],
+		"reward": [{"mora": 4000, "boss_mat": 1, "talent_3": 1}, {"mora": 5800, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 8000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
+		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 	"rematch_colossus": {"name": "빛 돔의 메아리", "kind": "boss", "boss": true, "after_ch": 29, "gate": ["sunken", Vector2(3.7, 2.1)], "arena": Vector3(-1400.0, 40.0, 1400.0),
 		"waves": [["dome_colossus"]], "modifier": "none", "time": 240.0,
 		"modifier_text": "재대결: 돔 파수 거신 · 체력 절반에서 암 방패(초로 깬다)",
@@ -93,7 +100,7 @@ const DOMAINS := {
 		"reward": [{"mora": 3000, "boss_mat": 1, "talent_3": 1}, {"mora": 4500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 6000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 }
-const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus", "rematch_first_crow", "rematch_garmuri", "rematch_seed"]
+const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus", "rematch_first_crow", "rematch_garmuri", "rematch_seed", "rematch_dawn"]
 const KIND_NAMES := {"artifact": "성유물", "talent": "특성 재료", "weapon": "무기 재료", "boss": "주간 보스"}
 const WEEKLY_COST := 60
 const WEEKLY_DISCOUNT_COST := 30
