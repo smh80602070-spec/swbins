@@ -24,6 +24,7 @@
   function freshSave() {
     return {
       v: 1,
+      spCutLv: 1,         // W-0104 — 새 판은 Lv.1 부터 레벨업 3택(job.js). 옛 세이브는 load() 가 지워 job.js 가 그때 레벨로 채운다
       createdAt: Date.now(),
       lastSeen: Date.now(),
       player: {
@@ -197,7 +198,8 @@
       // 누락 필드 보정 — 버전이 맞든 안 맞든 `freshSave()` 위에 덧씌워 빈 자리를 채운다
       var base = freshSave();
       save = mergeDeep(base, parsed);
-      if (parsed.tut === undefined) { delete save.tut; }   // 안내가 생기기 전 세이브 — 이미 끝난 것으로(새로 보이지 않게)
+      if (parsed.tut === undefined) { delete save.tut; }
+      if (parsed.spCutLv === undefined) { delete save.spCutLv; }   // W-0104 — 옛 세이브는 여태 SP 그대로(job.js st() 가 지금 레벨로)   // 안내가 생기기 전 세이브 — 이미 끝난 것으로(새로 보이지 않게)
       return true;
     } catch (e) {
       console.warn('세이브 불러오기 실패, 새로 시작합니다.', e);

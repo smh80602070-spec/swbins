@@ -378,7 +378,7 @@
       exp: run.expGained, gear: run.gearFound,
       feat: achieveDoneCount() - run.feat0,
       next: Q ? Q.nextTodo() : null,
-      rift: riftSum
+      rift: riftSum, rank: global.DG.runRank ? global.DG.runRank.finish() : null   // W-0104 결과 등급
     };
     core.save.player.gold += got.gold;
     core.log('🚪 ' + got.stage + ' 에서 나왔다 · 🪙 ' + core.fmt(got.gold) +
@@ -1159,7 +1159,7 @@
        프레임의 물리·쿨다운이 같이 늦춰진다, update() 머리 참고). 흔들림은
        이제 **모든 타격**에 걸린다(2px/80ms) — 급소·거함타(100 이상)는 그
        위에 더 크게(8px/220ms·3.6px/180ms, 예전 그대로). */
-    run.hitstopT = Math.max(run.hitstopT || 0, e.boss ? HITSTOP_BOSS : (crit ? HITSTOP_CRIT : HITSTOP_NORMAL));
+    run.hitstopT = Math.max(run.hitstopT || 0, e.boss ? HITSTOP_BOSS : (crit ? HITSTOP_CRIT : HITSTOP_NORMAL)); if (global.DG.runRank) { global.DG.runRank.onHit(); }   // W-0104 콤보
     var shAmt = crit ? 8 : (dmg >= 100 ? 3.6 : 2);
     var shSpan = crit ? 0.22 : (dmg >= 100 ? 0.18 : 0.08);
     fx.push({ t: 'shake', x: e.x, y: e.y, life: shSpan, span: shSpan, amt: shAmt, big: crit });
@@ -1292,7 +1292,7 @@
     var b = buffOn();
     if (b && b.guard) { cut = Math.min(0.85, cut + b.guard); }   // 철갑 같은 것
     if (run.rm && run.rm.guard) { cut = Math.min(0.85, cut + run.rm.guard); }   // 철벽(§5-3)
-    run.hp -= Math.max(1, Math.round(amount * (1 - cut)));
+    run.hp -= Math.max(1, Math.round(amount * (1 - cut))); if (global.DG.runRank) { global.DG.runRank.onHurt(); }   // W-0104 피격 수
     sfx('hurt');
     fx.push({ t: 'ouch', x: p.x, y: p.y, life: 0.45 });
     fx.push({ t: 'shake', x: p.x, y: p.y, life: 0.18, big: false });
@@ -1323,7 +1323,7 @@
       exp: run.expGained, gear: run.gearFound,
       feat: achieveDoneCount() - run.feat0,
       next: Q ? Q.nextTodo() : null,
-      rift: riftSum
+      rift: riftSum, rank: global.DG.runRank ? global.DG.runRank.finish() : null   // W-0104 결과 등급
     };
     run = null;
     core.emit('side:end', got);

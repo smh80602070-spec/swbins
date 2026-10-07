@@ -11,6 +11,11 @@
  * 에서 찍은 레벨의 합을 뺀 것이 남은 점수다 — 파생값이라 옛 세이브에도 그냥
  * 맞고, 레벨이 오르면 저절로 는다.
  *
+ * **레벨업 3택(W-0104, §5-2 보강)** — `save.spCutLv`(없으면 그때 레벨로 마이그레이션 — 옛 세이브 SP 그대로,
+ * 새 판은 1) 까지만 레벨마다 SP 가 붙는다. 그 뒤 레벨은 **3택**: 사슬(유파) 서로 다른 무예 셋 중 하나를 +1
+ * (`save.offers = [{lv, keys}]`, 레벨마다 한 장). 고른 것은 `save.skillsFree` 에 따로 세어 SP 에서 안 뺀다.
+ * 거절 = 강화 점수(SP) 1(`save.spBonus`). 고를 무예가 없으면(무명·다 익힘) 그 레벨은 옛날처럼 SP 2.
+ *
  * **유파(§5-2)** — 띠(bar())에 놓인 것들 중 같은 `school`(SKILLS 의 태그)이
  * 2개면 소효과, 4개면 대효과가 붙는다. 세이브 칸은 안 늘린다 — 지금 찍은
  * 무예·직업만으로 매번 다시 계산한다(schoolBonus 참고).
@@ -33,6 +38,9 @@
     var s = core.save;
     if (!s.job) { s.job = 'none'; }
     if (!s.skills) { s.skills = {}; }
+    if (!s.skillsFree) { s.skillsFree = {}; }
+    if (!s.offers) { s.offers = []; }
+    if (typeof s.spCutLv !== 'number') { s.spCutLv = Math.max(1, (s.player && s.player.level) || 1); }   // W-0104 마이그레이션 — 이 레벨까지는 옛 SP
     return s;
   }
 
@@ -45,14 +53,18 @@
     return core.save.skills[key] || 0;
   }
 
-  function spTotal() { return Math.max(0, (core.save.player.level - 1) * JD.SP_PER_LEVEL); }
+  function spTotal() {
+    st();
+    return Math.max(0, (Math.min(core.save.player.level, core.save.spCutLv) - 1) * JD.SP_PER_LEVEL) + (core.save.spBonus || 0);
+  }
 
+  /** 찍은 합 — 3택으로 공짜로 얻은 레벨(skillsFree)은 SP 에서 안 뺀다 */
   function spSpent() {
     st();
     var sum = 0, k;
     for (k in core.save.skills) {
       if (Object.prototype.hasOwnProperty.call(core.save.skills, k)) {
-        sum += core.save.skills[k] || 0;
+        sum += Math.max(0, (core.save.skills[k] || 0) - (core.save.skillsFree[k] || 0));
       }
     }
     return sum;
@@ -183,8 +195,14 @@
       core.emit('toast', '⚠️ 전직 되돌리기는 하루에 한 번만 됩니다');
       return false;
     }
+    /* 3택으로 얻은 레벨은 되돌릴 때 강화 점수로 바꿔 준다(W-0104) — 공짜로 받은 것을 잃지 않게 */
+    var free = 0, fk;
+    for (fk in core.save.skillsFree) { if (Object.prototype.hasOwnProperty.call(core.save.skillsFree, fk)) { free += core.save.skillsFree[fk] || 0; } }
+    core.save.spBonus = (core.save.spBonus || 0) + free;
     core.save.job = 'none';
     core.save.skills = {};
+    core.save.skillsFree = {};
+    core.save.offers = [];
     core.save.jobResetDay = today;
     sfx('jobup');
     core.log('🔄 전직을 되돌렸다 — 처음부터 다른 길을 고를 수 있다', 'info');
@@ -196,14 +214,14 @@
 
   /* ── 무예 점수 ────────────────────────────────────────── */
 
-  function canRaise(key) {
+  function canRaise(key, free) {
     var sk = JD.skill(key);
     if (!sk) { return '없는 무예입니다'; }
     if (sk.max === 0) { return '더 올릴 수 없습니다'; }
     var mine = JD.skillsOf(core.save.job);
     if (mine.indexOf(sk) < 0) { return '이 직업의 무예가 아닙니다'; }
     if (levelOf(key) >= sk.max) { return '이미 다 익혔습니다'; }
-    if (spLeft() <= 0) { return '무예 점수가 없습니다'; }
+    if (!free && spLeft() <= 0) { return '강화 점수가 없습니다'; }
     if (sk.need && levelOf(sk.need.key) < sk.need.lv) {
       return JD.skill(sk.need.key).name + ' ' + sk.need.lv + ' 이 먼저입니다';
     }
@@ -216,6 +234,79 @@
     st();
     core.save.skills[key] = (core.save.skills[key] || 0) + 1;
     sfx('skillup');
+    core.emit('changed');
+    core.persist();
+    return true;
+  }
+
+  /** 3택으로 +1 — SP 검사 없이(그 밖의 조건은 canRaise 그대로) */
+  function raiseFree(key) {
+    var why = canRaise(key, true);
+    if (why) { return false; }
+    st();
+    core.save.skills[key] = (core.save.skills[key] || 0) + 1;
+    core.save.skillsFree[key] = (core.save.skillsFree[key] || 0) + 1;
+    sfx('skillup');
+    core.emit('changed');
+    core.persist();
+    return true;
+  }
+
+  /* ── 레벨업 3택(W-0104) ───────────────────────────────── */
+
+  /** 지금 올릴 수 있는 무예 중 사슬(유파)이 서로 다른 셋(모자라면 둘·하나·없음) */
+  function offer3() {
+    st();
+    var by = {}, schools = [], i;
+    JD.skillsOf(core.save.job).forEach(function (sk) {
+      if (!sk.school || canRaise(sk.key, true)) { return; }
+      if (!by[sk.school]) { by[sk.school] = []; schools.push(sk.school); }
+      by[sk.school].push(sk.key);
+    });
+    for (i = schools.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = schools[i]; schools[i] = schools[j]; schools[j] = t; }
+    return schools.slice(0, 3).map(function (sc) { var l = by[sc]; return l[Math.floor(Math.random() * l.length)]; });
+  }
+  /** 레벨 하나를 3택 한 장으로 — 고를 것이 없으면 옛날처럼 SP(레벨당 몫)로 */
+  function onLevel(lv) {
+    if (typeof core.save.spCutLv !== 'number') { core.save.spCutLv = Math.max(1, lv - 1); }   // 옛 세이브가 처음 오르는 레벨부터 3택
+    st();
+    if (lv <= core.save.spCutLv) { return null; }
+    var keys = offer3();
+    if (!keys.length) { core.save.spBonus = (core.save.spBonus || 0) + JD.SP_PER_LEVEL; return null; }
+    var o = { lv: lv, keys: keys };
+    core.save.offers.push(o);
+    core.emit('job:offer', o);
+    return o;
+  }
+  core.on('levelup', function (lv) { onLevel(lv); });
+  /** 맨 앞 3택 한 장(없으면 null) — 직업이 바뀌어 못 올리게 된 무예는 그 자리에서 다시 굴린다 */
+  function offer() {
+    st();
+    var o = core.save.offers[0];
+    if (!o) { return null; }
+    if (o.keys.some(function (k) { return canRaise(k, true); })) {
+      o.keys = offer3();
+      if (!o.keys.length) { core.save.offers.shift(); core.save.spBonus = (core.save.spBonus || 0) + JD.SP_PER_LEVEL; return offer(); }
+    }
+    return o;
+  }
+  function pick(idx) {
+    var o = offer();
+    if (!o || !o.keys[idx]) { return false; }
+    var key = o.keys[idx];
+    core.save.offers.shift();
+    if (!raiseFree(key)) { return false; }
+    var sk = JD.skill(key);
+    core.log('📜 Lv.' + o.lv + ' 3택 — ' + sk.emoji + ' ' + sk.name + ' ' + levelOf(key), 'good');
+    return key;
+  }
+  /** 거절 — 강화 점수 1(무예 화면에서 아무 데나 쓴다) */
+  function decline() {
+    var o = offer();
+    if (!o) { return false; }
+    core.save.offers.shift();
+    core.save.spBonus = (core.save.spBonus || 0) + 1;
+    core.log('📜 Lv.' + o.lv + ' 3택을 거절했다 — 강화 점수 +1', 'info');
     core.emit('changed');
     core.persist();
     return true;
@@ -373,6 +464,7 @@
     state: st, cur: cur, levelOf: levelOf,
     spTotal: spTotal, spSpent: spSpent, spLeft: spLeft,
     canJoin: canJoin, join: join, resetJob: resetJob, canRaise: canRaise, raise: raise,
+    raiseFree: raiseFree, offer3: offer3, onLevel: onLevel, offer: offer, pick: pick, decline: decline,
     bar: bar, mulOf: mulOf, grow: grow,
     schoolCounts: schoolCounts, activeSchools: activeSchools, schoolBonus: schoolBonus,
     dodgeCdMul: dodgeCdMul,

@@ -448,7 +448,7 @@
         (g.rift.clear ? '정복!' : (g.rift.floors + '층 통과')) + ' · 🧩 +' + g.rift.shards +
         ' · 축복 ' + g.rift.boons + '</b></div>';
     }
-    if (g.feat) { html += '<div class="stat-row"><span>업적 진척</span><b>🏅 +' + g.feat + '</b></div>'; }
+    if (g.feat) { html += '<div class="stat-row"><span>업적 진척</span><b>🏅 +' + g.feat + '</b></div>'; } if (g.rank && global.DG.runRank) { html += '<div class="stat-row"><span><b>' + esc(global.DG.runRank.line(g.rank)) + '</b></span></div>'; }   // W-0104
     html += '<div class="card on"><div class="stat-row"><span><b>다음에 할 것</b></span></div>' +
       '<div class="stat-row"><span>' + esc(g.next || '🏃 사냥터로 돌아가기') + '</span></div></div>';
     return html;
@@ -1286,8 +1286,8 @@
       '<div class="stat-row"><span>' + me.emoji + ' <b>' + esc(me.name) + '</b></span>' +
         '<span class="muted">Lv.' + core.save.player.level + '</span></div>' +
       '<div class="stat-row"><span class="muted">' + esc(me.desc) + '</span>' +
-        '<b>무예 점수 ' + left + '</b></div>' +
-      '<small class="muted">점수는 레벨마다 ' + JD.SP_PER_LEVEL + '점씩 늘어납니다 ' +
+        '<b>강화 점수 ' + left + '</b></div>' +   // W-0104 — 레벨업은 3택(📜), 점수는 거절·옛 레벨 몫
+      '<small class="muted">' + ((core.save.spCutLv || 1) > 1 ? 'Lv.' + core.save.spCutLv + ' 까지는 레벨마다 ' + JD.SP_PER_LEVEL + '점, 그 뒤로는 ' : '') + '레벨마다 📜 무예 3택(거절하면 강화 점수 1) ' +
         '(쓴 것 ' + J.spSpent() + ' / 모두 ' + J.spTotal() + '). ' +
         '<b>찍은 무예만 조작 띠에 놓입니다.</b></small>' +
       (me.key !== 'none'

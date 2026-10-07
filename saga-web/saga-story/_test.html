@@ -103,6 +103,8 @@ window.DG_NO_TUNE = true;
 <script src="js/portrait3d.js"></script>
 <script src="js/gear.js"></script>
 <script src="js/job.js"></script>
+<script src="js/runrank.js"></script>
+<script src="js/levelpick.js"></script>
 <script src="js/quest.js"></script>
 <script src="js/tutorial.js"></script>
 <script src="js/rift.js"></script>
@@ -1396,6 +1398,7 @@ window.DG_NO_TUNE = true;
     function unlearn() {                       // 무명으로 되돌린다
       C.save.job = 'none';
       C.save.skills = {};
+      C.save.spCutLv = 999; C.save.spBonus = 0; C.save.skillsFree = {}; C.save.offers = [];   // W-0104 — 옛 SP 식(레벨마다 점수)을 재는 시험은 3택 전 세이브처럼
       C.emit('changed');
     }
 
@@ -1408,6 +1411,68 @@ window.DG_NO_TUNE = true;
       var noJoin = J.canJoin('warrior');
       return bar.length === 4 && names === 'slash,sweep,bolt,brace' && !!no && !!noJoin &&
         ('띠 ' + bar.length + '칸 · 전직 거절 "' + noJoin + '"');
+    });
+
+    /* ── W-0104 레벨업 무예 3택·사냥터 결과 등급 (job.js·runrank.js, PLAN §5-2 보강 · 재미표준 D·B) ── */
+    function lpKeep() { var s = C.save; return JSON.stringify({ job: s.job, skills: s.skills, free: s.skillsFree || {}, offers: s.offers || [], cut: s.spCutLv, bonus: s.spBonus || 0, lv: s.player.level }); }
+    function lpBack(k) { var o = JSON.parse(k), s = C.save; s.job = o.job; s.skills = o.skills; s.skillsFree = o.free; s.offers = o.offers; s.spCutLv = o.cut; s.spBonus = o.bonus; s.player.level = o.lv; C.emit('changed'); }
+
+    t('st.job-2: 3택 ① 옛 세이브(Lv.30, 무예 20점) — spCutLv 가 없으면 지금 레벨로 채워 남은 점수가 전과 같다', function () {
+      var k = lpKeep(), s = C.save;
+      try {
+        s.job = 'warrior'; s.skills = { w_cut: 10, w_whirl: 10 }; s.skillsFree = {}; s.offers = []; s.spBonus = 0; s.player.level = 30;
+        var before = 29 * JD.SP_PER_LEVEL - 20;
+        delete s.spCutLv;
+        var left = J.spLeft();
+        return s.spCutLv === 30 && left === before && J.spTotal() === 29 * JD.SP_PER_LEVEL &&
+          ('Lv.30 · 찍은 20 → cut ' + s.spCutLv + ' · 남은 ' + left + ' = 전 ' + before);
+      } finally { lpBack(k); }
+    });
+
+    t('재미표준 D 성장 선택(측정) — 레벨업 3택 100회: 사슬(유파) 서로 다른 셋·중복 0·거절 보상', function () {
+      var k = lpKeep(), s = C.save;
+      try {
+        s.job = 'warrior'; s.skills = {}; s.player.level = 30;
+        var dup = 0, three = 0, i;
+        for (i = 0; i < 100; i++) {
+          var o = J.offer3(), seen = {};
+          if (o.length === 3) { three++; }
+          o.forEach(function (key) { var sc = JD.skill(key).school; if (seen[sc]) { dup++; } seen[sc] = 1; });
+        }
+        return (three === 100 && dup === 0 ? '○' : '×') + ' — 100회: 셋 ' + three + ' · 같은 사슬 중복 ' + dup + ' · 거절 = 강화 점수 1 · 3택은 Lv.' + 'spCutLv 뒤 레벨마다 한 장';
+      } finally { lpBack(k); }
+    });
+
+    t('st.job-2: 3택 ③ 레벨이 오르면 한 장 — 고르면 그 무예 +1, 강화 점수(SP)는 그대로', function () {
+      var k = lpKeep(), s = C.save;
+      try {
+        s.job = 'warrior'; s.skills = {}; s.skillsFree = {}; s.offers = []; s.spBonus = 0; s.player.level = 15; s.spCutLv = 12;
+        var sp0 = J.spLeft();
+        var o = J.onLevel(16), key = o && o.keys[0], lv0 = J.levelOf(key);
+        var picked = J.pick(0);
+        return !!o && o.keys.length === 3 && picked === key && J.levelOf(key) === lv0 + 1 && J.spLeft() === sp0 && s.offers.length === 0 && s.skillsFree[key] === 1 &&
+          ('Lv.16 한 장(' + o.keys.join('·') + ') → ' + key + ' ' + lv0 + '→' + J.levelOf(key) + ' · 강화 점수 ' + sp0 + ' 그대로');
+      } finally { lpBack(k); }
+    });
+
+    t('st.job-2: 3택 ④ 거절하면 강화 점수 +1 · cut 이전 레벨은 장이 안 선다', function () {
+      var k = lpKeep(), s = C.save;
+      try {
+        s.job = 'warrior'; s.skills = {}; s.skillsFree = {}; s.offers = []; s.spBonus = 0; s.player.level = 20; s.spCutLv = 18;
+        var sp0 = J.spLeft(), none = J.onLevel(17) === null && s.offers.length === 0;
+        J.onLevel(19);
+        var ok = J.decline();
+        return none && ok && J.spLeft() === sp0 + 1 && s.offers.length === 0 && ('Lv.17 장 없음 · Lv.19 거절 → 강화 점수 ' + sp0 + '→' + J.spLeft());
+      } finally { lpBack(k); }
+    });
+
+    t('st.job-2: 결과 등급 ⑤ rankOf — (피격 0·콤보 20·90초)=S, (피격 15·콤보 3·600초)=C · 카드 한 줄', function () {
+      var RR = DG.runRank, a = RR.rankOf({ hits: 0, comboMax: 20, sec: 90 }), c = RR.rankOf({ hits: 15, comboMax: 3, sec: 600 });
+      var b = RR.rankOf({ hits: 3, comboMax: 12, sec: 160 });
+      RR.start(); RR.onHit(); var none = RR.finish() === null;                 // 셋 못 잡고 나온 판은 등급 없음
+      RR.start(); RR.onHit(); RR.onHit(); RR.onHurt(); RR.onHit(); RR.onKill(); RR.onKill(); RR.onKill(); var f = RR.finish();
+      return none && a.rank === 'S' && c.rank === 'C' && f.hits === 1 && f.comboMax === 2 && RR.line(b).indexOf('⭐ 이번 판 등급 ' + b.rank + ' — 피격 3 · 콤보 12 · 2:40') === 0 &&
+        ('S · C · ' + RR.line(b) + ' · 셈(맞으면 콤보 0) 피격 ' + f.hits + ' 최대 콤보 ' + f.comboMax);
     });
 
     t('무예 점수는 레벨에서 나온다 (세이브에 담지 않는다)', function () {
@@ -1546,7 +1611,7 @@ window.DG_NO_TUNE = true;
       var kept = J.spSpent() === 23 && J.levelOf('w_cut') === 10 && J.levelOf('w_rush') === 3;
       var blocked = J.canRaise('w_rush');
       unlearn();
-      return kept && blocked === '무예 점수가 없습니다' &&
+      return kept && blocked === '강화 점수가 없습니다' &&   // W-0104 — 무예 점수 → 강화 점수(레벨업은 3택)
         ('찍어 둔 23점 그대로 · 더 못 찍음 "' + blocked + '"');
     });
 

@@ -452,5 +452,35 @@
   "ticket": null,
   "since": "2026-09-30",
   "note": "D2: saga-web/tools/playcheck/pw-st-close2.mjs 5/5 — results/pw-st-close2.json(W-0097). 손잡이는 지금 17(이름의 8 은 낡음). 맨 앞 프리셋은 \"새 판\"이라 맨 뒤 것을 눌러 봄."
+ },
+ {
+  "id": "st.job-2",
+  "name": "레벨업 무예 3택(사슬 서로 다른 셋·거절 강화 점수 1) + 사냥터 결과 등급 S·A·B·C(세션 카드 한 줄)",
+  "files": [
+   "js/job.js",
+   "js/levelpick.js",
+   "js/runrank.js",
+   "js/core.js",
+   "src/side/01.js",
+   "src/side/02.js",
+   "src/ui/01.js",
+   "src/ui/02.js"
+  ],
+  "tests": [
+   "st.job-2: 3택 ① 옛 세이브(Lv.30, 무예 20점) — spCutLv 가 없으면 지금 레벨로 채워 남은 점수가 전과 같다",
+   "재미표준 D 성장 선택(측정) — 레벨업 3택 100회: 사슬(유파) 서로 다른 셋·중복 0·거절 보상",
+   "st.job-2: 3택 ③ 레벨이 오르면 한 장 — 고르면 그 무예 +1, 강화 점수(SP)는 그대로",
+   "st.job-2: 3택 ④ 거절하면 강화 점수 +1 · cut 이전 레벨은 장이 안 선다",
+   "st.job-2: 결과 등급 ⑤ rankOf — (피격 0·콤보 20·90초)=S, (피격 15·콤보 3·600초)=C · 카드 한 줄"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "D": "레벨업 3택 ○(같은 사슬 중복 0)",
+   "B": "결과 등급 한 줄"
+  },
+  "ticket": "W-0104",
+  "since": "2026-10-08",
+  "note": "D2: saga-web/tools/playcheck/pw-st-pick.mjs 4/4 — results/pw-st-pick.json(W-0104). 실제 레벨업 → 「📜 무예 3택」 단추·고르기 실제 클릭, 사냥터 나온 세션 카드 등급 줄. Claude 눈: 3택 창 ○·카드 줄 ○ — 처음엔 바로 나와도 A 라 3마리 문턱을 넣음."
  }
 ]

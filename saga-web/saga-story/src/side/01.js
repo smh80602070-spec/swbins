@@ -378,7 +378,7 @@
       exp: run.expGained, gear: run.gearFound,
       feat: achieveDoneCount() - run.feat0,
       next: Q ? Q.nextTodo() : null,
-      rift: riftSum
+      rift: riftSum, rank: global.DG.runRank ? global.DG.runRank.finish() : null   // W-0104 결과 등급
     };
     core.save.player.gold += got.gold;
     core.log('🚪 ' + got.stage + ' 에서 나왔다 · 🪙 ' + core.fmt(got.gold) +

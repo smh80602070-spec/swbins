@@ -1,0 +1,29 @@
+{
+ "script": "pw-st-pick.mjs",
+ "game": "saga-story",
+ "pass": 4,
+ "total": 4,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "레벨업 3택 — 새 판은 cut 1, 레벨이 오르면 「📜 무예 3택」 단추가 서고 실제로 누르면 무예 셋 + 거절 창이 열린다",
+   "ok": true,
+   "detail": "{\"lv\":{\"cut0\":1,\"l0\":12,\"l1\":13,\"offers\":1},\"btnShown\":true,\"win\":{\"open\":true,\"opts\":3,\"decline\":true}}"
+  },
+  {
+   "name": "3택 하나를 실제로 누르면 그 무예 +1 · 강화 점수 그대로 · 장 하나가 줄어든다",
+   "ok": true,
+   "detail": "{\"before\":{\"key\":\"w_vital\",\"lv\":0,\"sp\":22,\"n\":1},\"after\":{\"lv\":1,\"sp\":22,\"n\":0}}"
+  },
+  {
+   "name": "사냥터에서 나오면 세션 카드에 \"⭐ 이번 판 등급\" 한 줄이 선다",
+   "ok": true,
+   "detail": "사냥터\n신야성\n잡은 수\n0마리\n경험치\n0\n금\n🪙 0\n⭐ 이번 판 등급 A — 피격 0 · 콤보 6 · 0:00\n다음에 할 것\n📋 첫 사냥 (3/10)"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}
