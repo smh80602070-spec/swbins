@@ -44,6 +44,10 @@ func _ready() -> void:
 		StorySaveState.try_load()
 		StorySaveState.begin_session()
 	_start_gold = StorySaveState.gold
+	## G-0087 이야기 엔진(세이브를 읽은 뒤 — 장면마다 새로, 진행은 StorySaveState.scenario).
+	var runner: Node = preload("res://games/saga_story/world/scenario_runner.gd").new()
+	runner.name = "ScenarioRunner"
+	add_child(runner)
 
 
 func _process(_delta: float) -> void:

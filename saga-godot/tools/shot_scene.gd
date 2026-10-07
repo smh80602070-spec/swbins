@@ -73,6 +73,7 @@ const CUTS := [
 	["go_armor_full", GO, [["static", "res://tools/shot_armor.gd", "dress", ["@tree", true]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.2]]],
 	["go_assist", GO, [["static", "res://tools/shot_assist.gd", "stage", ["@tree"]]]],   # G-0071 협공 — 찍기 직전 대기 동료가 끼어든다(명단은 메모리에서만)
 	["go_monsters", GO, [["static", "res://tools/shot_monsters.gd", "line_up", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0059 들판 여덟 종(G-0082 기본 GLB 몸, SAGA_CODE_CREATURES=1 이면 코드 짐승)
+	["st_story", "res://games/saga_story/world/SinyaField.tscn", []],   # G-0087 사가종횡 이야기 첫 대화(새 판 신야성)
 	["fs_story", FOREST, []],   # G-0086 사가마을 이야기 첫 대화(새 판)
 	["dg_story", DUNGEON, [["free_modal"]]],   # G-0085 사가나락 이야기 첫 대화(새 판 — 출사표 창을 닫으면 뜬다)
 	["go_pets", GO, [["static", "res://tools/shot_pets.gd", "line_up", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 7.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-18.0, 0.0, 0.0)]]],   # G-0084 신수 열하나

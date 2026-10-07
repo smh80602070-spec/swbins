@@ -19,6 +19,10 @@ func _process(_delta: float) -> void:
 	if board == null:
 		return
 	var now := "사명 완수 %d/%d" % [StorySaveState.quests_done.size(), StoryCombat.QUESTS.size()]
+	var runner := get_tree().get_first_node_in_group("story_scenario")   # G-0087 이야기 목표 먼저
+	var story: String = runner.call("objective") if runner != null else ""
+	if story != "":
+		now = story + " · " + now
 	var session := "처치 +%d · 골드 +%d" % [
 		StorySaveState.session_kills_gained(), StorySaveState.session_gold_gained()]
 	board.set_goals(now, session, "—")

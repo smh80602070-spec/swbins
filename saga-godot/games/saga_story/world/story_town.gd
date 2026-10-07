@@ -25,3 +25,7 @@ func _ready() -> void:
 		var x_m: float = StorySaveState.consume_pending_spawn()
 		if player != null:
 			player.global_position = Vector3(x_m, 0.1, 0)
+	## G-0087 이야기 엔진(장면마다 새로, 진행은 StorySaveState.scenario).
+	var runner: Node = preload("res://games/saga_story/world/scenario_runner.gd").new()
+	runner.name = "ScenarioRunner"
+	add_child(runner)
