@@ -978,7 +978,7 @@
   }
 
   /** 사연 카드(§5-2) — 세 갈래를 고를 때까지 안 닫힌다. 고르지 않고 나가도 세이브에 남아 다시 뜬다 */
-  var EV_AXIS = { atk: '⚔️', def: '🛡️', util: '💡' };
+  var EV_AXIS = { atk: '⚔️', def: '🛡️', util: '💡' }; function speakerHtml(v) { var h = v.speaker && off().find(v.speaker); return h ? '<div style="display:flex;gap:10px;align-items:center;margin:10px 0 2px;text-align:left"><div style="flex:0 0 64px;width:64px;height:64px;border-radius:10px;overflow:hidden">' + pt(h, 64) + '</div><div><b>' + esc(h.name) + '</b><br><i>“' + esc(v.line || '') + '”</i></div></div>' : ''; }   // 영내 소식 초상 + 한 줄(W-0105)
   function showEvent() {
     var E = global.DG.event, v = E && E.view();
     if (!v) { return; }
@@ -987,7 +987,7 @@
     html = '<div style="text-align:center">' + (global.DG.cutscene ? global.DG.cutscene.banner('realm', String(v.id).replace(/_end$/, '')) : '') + '<div class="enc-big">' + v.emoji + '</div>' +
       '<h3 style="margin:6px 0 2px;font-size:19px;color:var(--gold)">' + esc(v.name) + '</h3>' +
       '<small class="muted">' + (kd ? kd.emoji + ' ' + kd.name + ' · ' : '') + (v.tag || (v.step > 1 ? v.step + '번째 이야기' : '사연')) + '</small></div>' +
-      '<div class="enc-hist">' + esc(v.text) + '</div>';
+      speakerHtml(v) + '<div class="enc-hist">' + esc(v.text) + '</div>';
     for (i = 0; i < v.choices.length; i++) {
       var c = v.choices[i];
       html += '<button class="btn wide' + (c.k === 'atk' ? ' primary' : '') + '" data-act="ev-pick" data-k="' + c.k + '"' + (c.ok ? '' : ' disabled') + '>' +

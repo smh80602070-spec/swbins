@@ -195,9 +195,13 @@
   function add(d) { DEFS[d.id] = d; if (!d.chain) { ORDER.push(d.id); } }
   /* 시나리오(scenario.js) — 밖에서 사연 정의를 더하고, 사람 세력에게 정해진 때에 카드를 내는 "원천"을 단다 */
   var SOURCES = [];
-  function addSource(fn) { SOURCES.push(fn); }
-  function fromSources(F) {
-    for (var i = 0; i < SOURCES.length; i++) { var f = SOURCES[i](F); if (f) { return f; } }
+  /** opt.all — 사람 세력만이 아니라 모든 세력에 내는 원천(영내 소식 W-0105 — AI 는 autoPick 으로 고른다) */
+  function addSource(fn, opt) { SOURCES.push({ fn: fn, all: !!(opt && opt.all) }); }
+  /** 사람 몫 원천(시나리오)이 먼저, 그다음 모든 세력 원천 */
+  function fromSources(F, isMe) {
+    var i, f;
+    if (isMe) { for (i = 0; i < SOURCES.length; i++) { if (!SOURCES[i].all) { f = SOURCES[i].fn(F); if (f) { return f; } } } }
+    for (i = 0; i < SOURCES.length; i++) { if (SOURCES[i].all) { f = SOURCES[i].fn(F); if (f) { return f; } } }
     return null;
   }
 
@@ -702,7 +706,7 @@
       var F = ids[i], isMe = F === st.me;
       if (isMe && ev.pending) { continue; }
       var fire = dueChain(F);
-      if (!fire && isMe) { fire = fromSources(F); }        // 시나리오 카드 — 정해진 때, 사람 세력만
+      if (!fire) { fire = fromSources(F, isMe); }          // 시나리오 카드(사람 세력만) → 영내 소식(모든 세력, W-0105)
       if (!fire && activeCount(F) < MAX_ACTIVE && roll(F, 'r') < chance()) { fire = pickNew(F); }
       if (!fire) { continue; }
       if (isMe) {
@@ -725,6 +729,7 @@
       id: p.id, step: p.step, tag: d.tag || '', name: d.name, emoji: d.emoji, text: d.text(p.ctx, p.step),
       pre: d.pre && d.pre(p.ctx) ? Object.assign({ done: p.ctx.pre !== undefined }, d.pre(p.ctx)) : null,
       a: p.ctx.a, b: p.ctx.b, kind: p.ctx.b ? kindOf(p.ctx.a, p.ctx.b) : null,
+      speaker: d.speaker ? d.speaker(p.ctx) : '', line: d.line ? d.line(p.ctx) : '',   // 초상 + 한 줄(영내 소식 W-0105)
       choices: d.choices.map(function (ch) {
         return { k: ch.k, label: labelOf(ch, p.ctx), hint: ch.hint || '', cost: ch.cost || 0, ok: choiceOk(ch, p.ctx, p.ctx.force) };
       })
@@ -911,7 +916,71 @@
     ]
   });
 
+  /* ── 영내 소식(W-0105, PLAN §5-15) — 달마다 성마다 `rtk.newsChance`(0.12), 세력당 한 달 한 장까지 ─────
+   * 표는 `data-news.js`. 세 갈래는 축 고정(💡 금 util · ⚔️ 병 atk · 🛡️ 민심 def), 효과는 gold·adjust 뿐(새 판정 0).
+   * 화자 = 그 성 태수(우리 사람일 때), 없으면 그 성에서 가장 지혜로운 우리 사람 — 아무도 없는 성엔 소식이 안 뜬다.
+   * 고르기 전엔 pending 에 남는다(다른 사연과 같다). 같은 소식은 COOL 달 동안 같은 세력에 또 안 뜬다.
+   */
+  var ND = global.DG.newsData;
+  function newsChance() { return ND ? core.tuned('rtk.newsChance', ND.CHANCE) : 0; }
+  function speakerOf(cityId, F) {
+    var c = cityRec(cityId);
+    if (c && c.gov && mineOf(c.gov, F)) { return c.gov; }
+    var w = wisest(cityId, F);
+    return w ? w.id : '';
+  }
+  /** 대사 — 화자 특성이 용맹·호전이면 거친 말, 아니면 점잖은 말 */
+  function newsLine(n, sp) {
+    if (!sp) { return ''; }
+    var ts = OFF().traitsOf(sp), rough = false, i;
+    for (i = 0; i < ts.length; i++) { if (ND.ROUGH[ts[i].k]) { rough = true; } }
+    return n.lines[rough ? 0 : 1];
+  }
+  function newsEffect(e) {
+    return function (c, F) {
+      if (e.gold) { gold(F, e.gold); }
+      if (e.troops) { adjust(c.city, 'troops', e.troops, 0, 999999); }
+      if (e.train) { adjust(c.city, 'train', e.train, 0, 100); }
+      if (e.sec) { adjust(c.city, 'sec', e.sec, 0, 100); }
+      return { text: cname(c.city) + ' — ' + e.label };
+    };
+  }
+  if (ND) {
+    ND.NEWS.forEach(function (n) {
+      add({
+        id: 'news_' + n.key, name: n.name, emoji: n.emoji, tag: '영내 소식', chain: true, news: true,   // chain — pickNew 순번엔 안 든다
+        valid: function (c, F) { var cr = cityRec(c.city); return cr && cr.force === F ? c : null; },
+        text: function (c) { return n.text.replace('{city}', cname(c.city)); },
+        speaker: function (c) { return c.a; },
+        line: function (c) { return newsLine(n, c.a); },
+        choices: ND.AXES.map(function (k) { var e = n[k]; return { k: k, label: e.label, hint: e.hint, go: newsEffect(e) }; })
+      });
+    });
+  }
+  /** 이 세력에 이번 달 소식 한 장(없으면 null) — 성 순서를 (세력·달) 해시로 돌려 같은 성만 안 뜨게 */
+  function newsFor(F) {
+    if (!(newsChance() > 0)) { return null; }
+    var st = S(), ev = st.events, cs = R().citiesOf(F).slice().sort(), i, j;
+    if (!cs.length) { return null; }
+    var o = hashOf(F + '|' + st.turn + '|nc') % cs.length, n = ND.NEWS.length;
+    for (i = 0; i < cs.length; i++) {
+      var cid = cs[(o + i) % cs.length];
+      if (roll(F, 'news|' + cid) >= newsChance()) { continue; }
+      var sp = speakerOf(cid, F);
+      if (!sp) { continue; }
+      var k0 = hashOf((st.seed || 0) + '|' + F + '|' + st.turn + '|' + cid) % n;
+      for (j = 0; j < n; j++) {
+        var id = 'news_' + ND.NEWS[(k0 + j) % n].key;
+        if (ev.cool[F + '|' + id] !== undefined && st.turn - ev.cool[F + '|' + id] < COOL) { continue; }
+        return { id: id, step: 1, ctx: { a: sp, b: '', city: cid, force: F } };
+      }
+    }
+    return null;
+  }
+  addSource(newsFor, { all: true });
+
   global.DG.event = {
+    newsFor: newsFor, speakerOf: speakerOf, newsChance: newsChance,
     DEFS: DEFS, ORDER: ORDER, CHANCE: CHANCE, MAX_ACTIVE: MAX_ACTIVE, COOL: COOL, MAX_STEP: MAX_STEP,
     relLv: relLv, relAdd: relAdd, kindOf: kindOf, pairsOf: pairsOf,
     tick: tick, view: view, choose: choose, resolve: resolve, autoPick: autoPick, pref: pref,

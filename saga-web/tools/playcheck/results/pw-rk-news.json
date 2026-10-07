@@ -1,0 +1,24 @@
+{
+ "script": "pw-rk-news.mjs",
+ "game": "saga-realm",
+ "pass": 3,
+ "total": 3,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "▶ 다음 달 → 영내 소식 카드 — 태수 초상·이름·한 줄·세 갈래(💡⚔️🛡️)",
+   "ok": true,
+   "detail": "{\"news\":\"news_rift\",\"card\":{\"text\":\"🌀\\n시간 틈 소문\\n영내 소식\\n노궁\\n“저 번쩍이는 걸 무기로 쓸 수 있으면 좋겠소.”\\n신야 하늘에 금이 가고, 낯선 옷을 입은 이가 빛나는 도구를 놓고 사라졌다.\\n💡 낯선 도구를 상단에 판다\\n금 +500⚔️ 빛나는 도구로 조련한다\\n훈련 +6 · 병사 +200🛡️ 성 사람들을 안심시킨다\\n치안 +8\",\"pt\":true,\"btns\":3,\"speaker\":\"sg_huangzhong\",\"line\":\"저 번쩍이는 걸 무기로 쓸 수 있으면 좋겠소.\",\"gold\":5238}}"
+  },
+  {
+   "name": "💡 금 갈래를 실제로 누르면 세력 금이 오르고 카드가 닫힌다",
+   "ok": true,
+   "detail": "{\"before\":5238,\"after\":{\"gold\":5738,\"pending\":false}}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

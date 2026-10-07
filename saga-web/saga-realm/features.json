@@ -843,5 +843,30 @@
   "ticket": "W-0081",
   "since": "2026-10-07",
   "note": "D2: saga-web/tools/playcheck/pw-rts-turn.mjs 18/18(PC·폰 각각 열림·고르기·이동·공격·턴 끝·새로고침 저장·자동 결판·스크롤·콘솔) — results/pw-rts-turn.json. 규칙 진단 9(W-0080). 재미·조조전 같은가는 W-0082 시트"
+ },
+ {
+  "id": "rk.news",
+  "name": "영내 소식 — 달마다 내 성에서 태수 초상 + 한 줄 + 3택(금·병·민심), 열두 가지, AI 도 같은 원천",
+  "files": [
+   "js/data-news.js",
+   "js/event.js",
+   "src/ui-rtk/02.js"
+  ],
+  "tests": [
+   "rk.news: 소식 ① 열두 가지가 60달 안에 다 뜬다(달마다 하나 골라 닫으면 COOL 로 돌아간다) · 화자는 그 성 우리 사람",
+   "rk.news: 소식 ② 세 갈래 축 고정(💡 금 util=금만 · ⚔️ 병 atk=병사·훈련만 · 🛡️ 민심 def=치안만·값 0) · 고르면 그 손잡이만 바뀐다",
+   "rk.news: 소식 ③ 결정적 — 같은 씨앗·같은 달이면 같은 소식·같은 성, 달이 바뀌면 다시 굴린다",
+   "rk.news: 소식 ④ AI 세력도 같은 원천 — newsFor 가 서고 autoPick(군주 특성)으로 골라 resolve",
+   "rk.news: 소식 ⑤ 글·대사에 실명 0 · 화자 특성이 용맹·호전이면 거친 말, 아니면 점잖은 말 · 카드에 화자·한 줄",
+   "재미표준 E 내 땅 발견(측정) — 60달 동안 영내 소식이 뜨는 달 수 ≥ 60×(1−0.88^성 수)×0.8"
+  ],
+  "level": "D2",
+  "verified": null,
+  "fun": {
+   "E": "내 땅 소식 ○(성 3 · 60달 중 20달)"
+  },
+  "ticket": "W-0105",
+  "since": "2026-10-08",
+  "note": "D2: saga-web/tools/playcheck/pw-rk-news.mjs 3/3 — results/pw-rk-news.json(W-0105). 실제 ▶ 다음 달 → 이달 카드 닫고 → 소식 카드 → 💡 실제 클릭 금 +500. Claude 눈: 카드 ○ — 처음 초상이 카드 절반으로 커져(.pt 100%) 64px 칸에 가둠."
  }
 ]
