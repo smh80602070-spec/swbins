@@ -8,6 +8,7 @@
   SPRITE_MODE=1 CLIP=walk NFR=8 NDIR=4 SPRITE_PX=128 ORTHO=2.5 CAM_Z=0.95 ANIM_GLB=<bake_for_rig 가 만든 *_anims.glb> VIEW_DEG=180 \
   blender -b --factory-startup -P gear_sprites.py -- <몸.glb> <out_폴더> orc_warlord
   -> <out_폴더>/d<방향>_f<프레임>.png (투명) + meta.json   (CLIP=walk,attack 처럼 쉼표면 <out>/<동작>/ , DIR_LIST=0,1,2 로 방향 골라 굽기)
+  K-0037 층 굽기: EQUIP=<조각 폴더>|eq_past_2 WEAPON=<무기.glb> LAYERS=body,armor,weapon[,full] → <동작 폴더>/<층>/d…png (층마다 몸은 holdout)
 
 kind: human goblin orc undead demon child teen elder · 장비 벌 orc_warlord goblin_scrapper undead_knight demon_lord elder_sage dark_ranger
       · 무작위 벌 rand:<orc|goblin|undead|demon>:<씨앗> · 다른 몸은 kind@경로
@@ -595,12 +596,27 @@ if os.environ.get('SPRITE_MODE'):
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import weapon_attach                                       # WEAPON=<무기.glb> 이면 손에 쥐고 찍는다(K-0029 무기별 2D 시트)
     wobjs = weapon_attach.from_env(arm) or []
+    import equip_attach                                        # K-0037 단계 4: EQUIP=<조각 폴더>|eq_past_2,acc_… 면 갑옷·악세사리를 뼈에 붙인다
+    eobjs = equip_attach.from_env(arm) or []
+    layers = [x for x in os.environ.get('LAYERS', '').split(',') if x]   # 층 굽기 body,armor,weapon(,full = 다 보이는 비교용) → <out>/<층>/
     two_clips = [x for x in os.environ.get('TWO_HAND_CLIPS', '').split(',') if x]   # 두 손 겨누기는 이 동작에서만(걷기·피격에선 앞손이 흔들려 무기가 휘청인다)
     sc.render.film_transparent = True
     sc.render.resolution_x = sc.render.resolution_y = px
     import json as _json
     base_deg = piv.rotation_euler.z
     meshes = [o for o in bpy.data.objects if o.type == 'MESH']
+    wset, eset = {o for o in wobjs if o.type == 'MESH'}, {o for o in eobjs if o.type == 'MESH'}
+    bset = [o for o in meshes if o not in wset and o not in eset]
+
+    def set_layer(ly):
+        """그 층만 보이고 몸은 가림판(holdout) — 몸 앞뒤 가림이 층 안에 구워진다(게임은 몸→갑옷→무기 순으로 겹치기만).
+        무기 층은 갑옷을 가림판으로 쓰지 않는다 — 갑옷을 갈아입어도 같은 무기 층을 쓰게."""
+        for o in bset:
+            o.hide_render, o.is_holdout = False, ly in ('armor', 'weapon')
+        for o in eset:
+            o.hide_render, o.is_holdout = ly not in ('armor', 'full'), False
+        for o in wset:
+            o.hide_render, o.is_holdout = ly not in ('weapon', 'full'), False
     for cname in clips:
         act = acts[cname]
         combat = [x for x in os.environ.get('COMBAT_CLIPS', '').split(',') if x]
@@ -636,8 +652,11 @@ if os.environ.get('SPRITE_MODE'):
             piv.rotation_euler.z = base_deg + 2 * math.pi * d / ndir   # 정면이 맞으면 + 로 옆(d=ndir/4)이 오른쪽을 본다(웹 mode2d 옆 = 오른쪽) — 10-06 확인
             for f in range(nfr):
                 sc.frame_set(int(round(f0 + (f1 - f0) * f / nfr)))
-                sc.render.filepath = os.path.join(odir, f'd{d}_f{f:02d}.png')
-                bpy.ops.render.render(write_still=True)
+                for ly in layers or ['']:
+                    if ly:
+                        set_layer(ly)
+                    sc.render.filepath = os.path.join(odir, ly, f'd{d}_f{f:02d}.png')
+                    bpy.ops.render.render(write_still=True)
         print('SPRITES', odir, dir_list, nfr)
 else:
     sc.render.filepath = out
