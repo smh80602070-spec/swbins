@@ -124,6 +124,13 @@ try {
     return { id: id, rank: [rk0, DG.off.grow(id).rank], cost: cost, g: [g0, f.gold], loyal: [l0, DG.off.loyalOf(id)], name: DG.off.rankName(id), res: res && res.ok, earlyWhy: early.ok ? '' : early.why };
   });
   check('무장 — 공과 금을 갖추면 승진해 관직이 한 단 오르고 금이 들고 충성이 오른다', !pm.none && pm.res === true && pm.rank[1] === pm.rank[0] + 1 && pm.g[1] === pm.g[0] - pm.cost.gold && pm.loyal[1] >= pm.loyal[0], JSON.stringify(pm).slice(0, 260));
+
+  /* 6) 전략 화면 틀(W-0088) — 1280×720 에서 #cpanel·#dock 단추가 K-0060 옻칠·금테 그림(border-image)을 입고, 그 그림이 404 가 아니다 */
+  await clearCards(); await ev(() => { DG.ui.closeSheet(); }); await sleep(300);
+  await page.locator('#realm g.rcity.mine').first().click({ force: true }); await sleep(800);   // 넓은 화면에서 성을 누르면 #cpanel 이 처음 생긴다(cpanel.js)
+  const fr = await ev(() => { var g = (sel) => { var e = document.querySelector(sel); return e ? getComputedStyle(e).borderImageSource : null; }; var out = { cpanel: g('#cpanel'), dock: g('#dock button'), banner: g('#banner'), open: g('#cpanel .cp-open') }; return Promise.all([out.cpanel, out.dock, out.banner, out.open].map((v) => { var m = /url\("?([^")]+)"?\)/.exec(v || ''); return m ? fetch(m[1]).then((x) => x.status, () => 0) : Promise.resolve(0); })).then((st) => { out.status = st; return out; }); });
+  const uiMiss = r.notFound.filter((u) => /assets\/ui\/realm\//.test(u));
+  check('전략 화면 틀 — #cpanel 은 realm/window.png, 독 단추는 btn_normal, 배너는 popup·성 열기는 tab_on 9-slice 그림을 입고 그림이 다 온다(W-0088)', /realm\/window\.png/.test(fr.cpanel || '') && /realm\/btn_normal\.png/.test(fr.dock || '') && /realm\/popup\.png/.test(fr.banner || '') && /realm\/tab_on\.png/.test(fr.open || '') && uiMiss.length === 0 && fr.status.every((x) => x === 200), JSON.stringify({ fr, uiMiss }));
 } catch (e) { console.log('ERR', e.message); results.push(false); }
 
 const ext = r.errors.filter((e) => /ERR_CONNECTION_TIMED_OUT|ERR_NAME_NOT_RESOLVED|ERR_INTERNET_DISCONNECTED/.test(e)).length;

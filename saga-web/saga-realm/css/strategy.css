@@ -72,7 +72,7 @@ body.sheet-open #minimap { display: none; }
 :where(#profile) small { font-size: max(11px, .8em); }
 
 /* ── 틀·색·글꼴 (W-0027 단계 4) — 먹칠 옻칠 바탕에 금 테두리 두 겹. 넓은 화면에서만 입힌다(폰은 그대로).
-   그림 에셋(양피지·목재)이 오기 전까지 CSS 만으로 만든 임시 틀 — 에셋이 오면 border-image 로 갈아 끼운다. */
+   틀 그림은 자체툴 K-0060 옻칠·금테(shared/assets/ui/realm, 9-slice 값은 ui_parts.json) — W-0088 에서 border-image 로 갈아 끼웠다. */
 @media (min-width: 781px) and (min-height: 501px) {
   :root {
     --sg-lacquer: linear-gradient(180deg, rgba(38, 29, 20, .93), rgba(17, 13, 10, .93));
@@ -80,18 +80,21 @@ body.sheet-open #minimap { display: none; }
     --sg-trim-soft: rgba(216, 181, 106, .22);
     --sg-serif: "Noto Serif KR", "Nanum Myeongjo", "Batang", "AppleMyungjo", serif;
   }
-  #cpanel, #banner, #minimap, #profile, #wallet, #dock button {
+  #minimap {
     background: var(--sg-lacquer); border-color: var(--sg-trim);
     box-shadow: 0 6px 18px rgba(0, 0, 0, .45), inset 0 0 0 3px rgba(0, 0, 0, .4), inset 0 0 0 4px var(--sg-trim-soft);
   }
-  #cpanel, #banner, #profile, #wallet { border-radius: 8px; }
-  #dock button { border-radius: 8px; }
-  #dock button:hover { border-color: var(--gold); }
-  #dock button.on { background: linear-gradient(180deg, #e8c46a, #b98f3c); border-color: #f1d98f; }
+  #cpanel, #banner, #profile, #wallet, #dock button { background: none; border-style: solid; box-shadow: 0 6px 18px rgba(0, 0, 0, .45); }
+  #cpanel, #profile, #wallet { border-image: url(../../shared/assets/ui/realm/window.png) 32 fill / 32px stretch; }
+  #banner { border-image: url(../../shared/assets/ui/realm/popup.png) 36 fill / 36px stretch; }
+  #dock button { border-image: url(../../shared/assets/ui/realm/btn_normal.png) 24 fill / 24px stretch; }
+  #dock button:hover { border-image-source: url(../../shared/assets/ui/realm/btn_hover.png); }
+  #dock button.on { border-image-source: url(../../shared/assets/ui/realm/btn_pressed.png); }
+  #dock button[disabled] { border-image-source: url(../../shared/assets/ui/realm/btn_disabled.png); }
   .cp-name b, .bn-date, #profile .p-title { font-family: var(--sg-serif); letter-spacing: .04em; }
   .cp-head { border-bottom: 1px solid var(--sg-trim); padding-bottom: 8px; }
   .cp-force { border-radius: 4px; }
   .cp-grid > div { border-radius: 4px; border: 1px solid var(--sg-trim-soft); background: rgba(0, 0, 0, .28); }
-  .cp-open { border-radius: 6px; background: linear-gradient(180deg, #e8c46a, #b98f3c); border-color: #f1d98f; }
+  .cp-open { background: none; border-style: solid; border-image: url(../../shared/assets/ui/realm/tab_on.png) 14 fill / 14px stretch; }
   #realm .rmap { background: radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, .55) 100%); }
 }
