@@ -27,9 +27,14 @@ static func build(parent: Node, title_text: String, choices: Array) -> CanvasLay
 	## 부모가 아직 트리 밖이면 뷰포트가 없다 — 가로 기준 높이 1280 으로 셈한다.
 	var vp := parent.get_viewport()
 	var screen_h := vp.get_visible_rect().size.y if vp != null else 1280.0
-	var list_h := choices.size() * (BUTTON_H + SEP)
-	var scroll_h := minf(list_h, screen_h * MAX_SCREEN_FRAC - 120.0)
-	var panel_h := 90.0 + scroll_h
+	## G-0067 — 줄바꿈까지 어림해 높이를 센다(글 길이 × 글씨 크기 / 줄 폭). 예전엔 단추마다 고정 72 로 세어 긴 명령 설명이
+	## 두 줄로 접히면 실제가 더 커서 스크롤 없이 화면 밖으로 넘칠 수 있었다.
+	var header := 36.0 + _lines(title_text, TITLE_FONT) * TITLE_FONT * 1.35 + SEP
+	var list_h := 0.0
+	for c in choices:
+		list_h += maxf(BUTTON_H, _lines(String(c.label), BUTTON_FONT) * BUTTON_FONT * 1.35 + 16.0) + SEP
+	var scroll_h := maxf(minf(list_h, screen_h * MAX_SCREEN_FRAC - header), BUTTON_H)
+	var panel_h := header + scroll_h
 
 	var panel := PanelContainer.new()
 	panel.anchor_left = 0.5
@@ -93,6 +98,12 @@ static func build(parent: Node, title_text: String, choices: Array) -> CanvasLay
 		list.add_child(b)
 
 	return layer
+
+
+## 폭 WIDTH 안에서 이 글이 몇 줄로 접힐지 어림(한글 한 자 ≈ 글씨 크기, 넉넉히 셈).
+static func _lines(text: String, font: int) -> int:
+	var usable := WIDTH - 36.0 - 28.0
+	return maxi(1, ceili(text.length() * font * 0.95 / usable))
 
 
 static func _button_box(bg: Color, border: Color) -> StyleBoxFlat:

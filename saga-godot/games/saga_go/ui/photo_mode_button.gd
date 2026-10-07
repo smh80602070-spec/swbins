@@ -29,6 +29,8 @@ const WorldMap := preload("res://games/saga_go/ui/world_map.gd")
 
 var _on := false
 var _busy := false
+var _hud_vis := {}   # G-0067 — 켤 때의 HUD 자식 보임(끌 때 그대로 되돌린다 — 원래 숨은 것은 숨은 채)
+var _was_frozen := false
 var _mark_layer: CanvasLayer = null
 var _mark: Label = null
 @onready var _capture_button: Button = $"../CaptureButton"
@@ -107,15 +109,26 @@ func _on_pressed() -> void:
 	_capture_button.visible = _on
 
 	var hud: Node = get_parent()
+	if _on:
+		_hud_vis.clear()
 	for child in hud.get_children():
 		if child == self or child == _capture_button:
 			continue
 		if child is CanvasItem:
-			(child as CanvasItem).visible = not _on
+			if _on:
+				_hud_vis[child] = (child as CanvasItem).visible
+				(child as CanvasItem).visible = false
+			else:
+				(child as CanvasItem).visible = bool(_hud_vis.get(child, true))
 
+	## G-0067 — 끌 때는 켜기 전 멈춤 값으로(대화·창이 멈춰 둔 것을 풀지 않는다).
 	var player := get_tree().get_first_node_in_group("player")
 	if player != null and "frozen" in player:
-		player.frozen = _on
+		if _on:
+			_was_frozen = bool(player.frozen)
+			player.frozen = true
+		else:
+			player.frozen = _was_frozen
 
 	Toast.show(self, "사진 모드 — 화면을 끌어 구도를 잡는다" if _on else "사진 모드 해제", 2.0)
 
@@ -130,6 +143,10 @@ func _on_capture_pressed() -> void:
 	var hidden := _hide_layers()
 	_mark_layer.visible = true
 	await RenderingServer.frame_post_draw
+	## G-0067 — 기다리는 동안 장면이 바뀌어 이 노드가 사라졌으면 숨긴 층만 되돌리고 끝.
+	if not is_instance_valid(self) or not is_inside_tree():
+		_restore_layers(hidden)
+		return
 	## get_image()는 화면을 실제로 그리는 렌더러가 없으면(헤드리스 null
 	## 드라이버 등, ASSET_GUIDE.md "MultiMesh 인스턴스별 transform" 항목과
 	## 같은 종류의 엔진 한계) null을 줄 수 있다 — 그대로 부르면 크래시라
@@ -145,6 +162,11 @@ func _on_capture_pressed() -> void:
 	get_tree().call_group("go_album", "shoot", img)
 	var dir_path := photo_dir()
 	DirAccess.make_dir_recursive_absolute(dir_path)
-	var fname := "%s/saga_go_%s.png" % [dir_path, Time.get_datetime_string_from_system().replace(":", "").replace("-", "").replace("T", "_")]
+	var stem := "%s/saga_go_%s" % [dir_path, Time.get_datetime_string_from_system().replace(":", "").replace("-", "").replace("T", "_")]
+	var fname := stem + ".png"
+	var k := 2
+	while FileAccess.file_exists(fname):   # G-0067 — 같은 초에 두 장이면 덮어쓰지 않게
+		fname = "%s_%d.png" % [stem, k]
+		k += 1
 	var err := img.save_png(fname)
 	Toast.show(self, "사진 저장됨: %s" % fname if err == OK else "사진 저장 실패(%d)" % err, 2.5)

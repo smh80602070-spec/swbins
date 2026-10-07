@@ -8,7 +8,20 @@ extends RefCounted
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 
 const REF_HEAD_H := 1.5 # equip_slots.json ref_head_bone_height_m
+## 뼈 이름 후보 — VRoid 이름 먼저, 공방 몸(UE 식) 이름 다음. 갑옷(armor_visual)·사가의숲 옷이 같이 쓴다(G-0067: 세 곳에 복사돼 있던 것).
 const HEAD_BONES := ["J_Bip_C_Head", "head"]
+const NECK_BONES := ["J_Bip_C_Neck", "neck_01"]
+const CHEST_BONES := ["J_Bip_C_Chest", "spine_03", "spine_02"]
+const UPPER_CHEST_BONES := ["J_Bip_C_UpperChest", "spine_03"]
+const HIPS_BONES := ["J_Bip_C_Hips", "pelvis"]
+const L_UPPER_ARM := ["J_Bip_L_UpperArm", "upperarm_l"]
+const R_UPPER_ARM := ["J_Bip_R_UpperArm", "upperarm_r"]
+const L_LOWER_ARM := ["J_Bip_L_LowerArm", "lowerarm_l"]
+const R_LOWER_ARM := ["J_Bip_R_LowerArm", "lowerarm_r"]
+const L_LOWER_LEG := ["J_Bip_L_LowerLeg", "calf_l"]
+const R_LOWER_LEG := ["J_Bip_R_LowerLeg", "calf_r"]
+const L_FOOT := ["J_Bip_L_Foot", "foot_l"]
+const R_FOOT := ["J_Bip_R_Foot", "foot_r"]
 
 
 static func skeleton_of(body: Node3D) -> Skeleton3D:
@@ -46,9 +59,15 @@ static func _put(skel: Skeleton3D, packed: PackedScene, bone_names: Array, mirro
 	var bone := VroidBody.find_bone_of(skel, bone_names)
 	if bone < 0:
 		return 0
+	## G-0067 — 먼저 지어 보고(뿌리가 Node3D 가 아니면 빈 앵커를 남기지 않게) 앵커를 단다.
+	var inst := packed.instantiate()
+	var model := inst as Node3D
+	if model == null:
+		if inst != null:
+			inst.free()
+		return 0
 	var anchor := VroidBody.bone_anchor(skel, bone)
 	anchor.name = anchor_name(tag)
-	var model := packed.instantiate() as Node3D
 	model.name = name
 	model.scale = Vector3(-k if mirrored else k, k, k)
 	anchor.add_child(model)

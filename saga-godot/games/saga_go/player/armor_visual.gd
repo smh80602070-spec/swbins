@@ -14,14 +14,13 @@ const DIR := "res://assets/world/"
 const PARTS_OF := {"flower": ["chest"], "plume": ["shoulder"], "sands": ["arm"], "goblet": ["leg", "boot"], "circlet": ["head"]}
 ## 부위 → [왼쪽(또는 가운데) 뼈 이름 후보, 오른쪽 뼈 이름 후보(거울 부위만)] — VRoid 이름 먼저, 공방 몸(UE 식) 이름 다음.
 const BONES := {
-	"head": [["J_Bip_C_Head", "head"], []],
-	"chest": [["J_Bip_C_Chest", "spine_03", "spine_02"], []],
-	"shoulder": [["J_Bip_L_UpperArm", "upperarm_l"], ["J_Bip_R_UpperArm", "upperarm_r"]],
-	"arm": [["J_Bip_L_LowerArm", "lowerarm_l"], ["J_Bip_R_LowerArm", "lowerarm_r"]],
-	"leg": [["J_Bip_L_LowerLeg", "calf_l"], ["J_Bip_R_LowerLeg", "calf_r"]],
-	"boot": [["J_Bip_L_Foot", "foot_l"], ["J_Bip_R_Foot", "foot_r"]],
+	"head": [BoneGear.HEAD_BONES, []],
+	"chest": [BoneGear.CHEST_BONES, []],
+	"shoulder": [BoneGear.L_UPPER_ARM, BoneGear.R_UPPER_ARM],
+	"arm": [BoneGear.L_LOWER_ARM, BoneGear.R_LOWER_ARM],
+	"leg": [BoneGear.L_LOWER_LEG, BoneGear.R_LOWER_LEG],
+	"boot": [BoneGear.L_FOOT, BoneGear.R_FOOT],
 }
-const PAST_ERAS := ["삼국지", "한국사", "일본사"]
 const FUTURE_ERAS := ["균열(가상)", "폐허(가상)"]
 
 
