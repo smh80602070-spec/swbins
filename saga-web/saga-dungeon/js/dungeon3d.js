@@ -2187,7 +2187,7 @@
       g.add(gnode);
     }
   }
-  function foeGear(g, look, hh, r, tint, humanGlb) {   // humanGlb: 사람 GLB 몸엔 갑주·투구를 안 씌운다(VRM 을 화분처럼 덮었다, W-0100)
+  function foeGear(g, look, hh, r, tint, humanGlb) {   // humanGlb: GLB 로 설 사람 몸(레시피 있고 GLB 켜짐)엔 갑주·투구를 안 씌운다(VRM 을 화분처럼 덮었다, W-0100) — 도형 몸은 상자 신호 그대로
     var handX = r * 1.05, handZ = r * 0.25, shoulderY = hh * 0.68;
     var woodcol = 0x5a4a34;
     var AS3 = AS();
@@ -2393,7 +2393,7 @@
       g.userData.mixerNode = meBody;
       /* 실제 장착 무기·투구·갑주는 GLB 진행 상태와 무관하게 `g`(바깥 껍데기)에
          따로 얹는다(`foeGear()`가 내부에서 `attachWeapon`을 부른다). */
-      foeGear(g, meLookOf(), 31.2, 12, null, !!AS3);
+      foeGear(g, meLookOf(), 31.2, 12, null, !!(AS3 && meBody.userData.body && AS3.tuned('asset3d.glb', 1)));
       return g;
     }
     if (kind === 'mount') {
@@ -2412,7 +2412,7 @@
       var allyBody = AS3 ? AS3.buildHero('ally:' + allyId, 42, null, null) : new T.Group();
       g.add(allyBody);
       g.userData.mixerNode = allyBody;
-      foeGear(g, meLookOf(allyId), 31.2, 12, null, !!AS3);
+      foeGear(g, meLookOf(allyId), 31.2, 12, null, !!(AS3 && allyBody.userData.body && AS3.tuned('asset3d.glb', 1)));
       return g;
     }
     var r = (ref && ref.r) || 12;
@@ -2471,7 +2471,7 @@
           beard: lk.beard, cape: lk.cape
         };
       }
-      foeGear(g, lk, hh, r, col, !!(AS3 && !isBeast));
+      foeGear(g, lk, hh, r, col, !!(AS3 && !isBeast && foeBody.userData.body && AS3.tuned('asset3d.glb', 1)));
     }
     return g;
   }

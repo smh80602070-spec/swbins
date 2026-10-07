@@ -10,6 +10,8 @@ import { open, sleep } from './pw.mjs';
 const SHOTS = 'shots/visual-20261007';
 fs.mkdirSync(SHOTS, { recursive: true });
 const want = process.argv.slice(2);
+const GAMES = ['saga-go', 'saga-dungeon', 'saga-forest', 'saga-story'];
+if (want.some((g) => !GAMES.includes(g))) { console.log('모르는 판: ' + want.filter((g) => !GAMES.includes(g)).join(' ') + ' — 고를 수 있는 판: ' + GAMES.join(' ')); process.exit(1); }
 const results = [], rows = [], scenes = [];
 const check = (name, ok, detail) => { results.push(!!ok); rows.push({ name, ok: !!ok, detail: detail || '' }); console.log((ok ? 'PASS ' : 'FAIL ') + name + (detail ? ' — ' + String(detail).slice(0, 400) : '')); };
 const SEED = () => { let a = 20260824 >>> 0; Math.random = function () { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; };
@@ -102,7 +104,7 @@ async function runGo() {
     await ev(() => { DG.core.setTune('world.render3d', 0); }); await sleep(2500);
     await shoot(r, 'saga-go', '5-2d', '3D 끔(2D 캔버스로 되돌림)', ['go.world3d'], await gl());
     await ev(() => { DG.core.setTune('world.render3d', 1); });
-  } catch (e) { check('사가고 예외 — ' + e.message.slice(0, 200), false); }
+  } catch (e) { check('사가고 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
   const real = realErrors(r.errors);
   check('사가고 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
   await r.close();
@@ -156,8 +158,9 @@ async function runDungeon() {
     await settle();
     const after = await st();
     await shoot(r, 'saga-dungeon', '5-gear', '명품 한 벌 입은 몸(휠로 당김)', ['dg.dungeon3d-2'], after);
-    check('사가블로 장비를 입으면 겉모습 값이 바뀐다(무기·투구·갑주 look)', JSON.stringify(before.look) !== JSON.stringify(after.look), JSON.stringify({ before: before.look, after: after.look }));
-  } catch (e) { check('사가블로 예외 — ' + e.message.slice(0, 200), false); }
+    check('사가블로 몸 GLB 실패 0 — 장면마다 assetState fail 이 없다', scenes.filter((s) => s.game === 'saga-dungeon').every((s) => !s.metrics.bodies || s.metrics.bodies.fail === 0), JSON.stringify(scenes.filter((s) => s.game === 'saga-dungeon').map((s) => s.metrics.bodies)));
+    check('사가블로 장비를 입으면 겉모습 값(look 데이터)이 바뀐다 — 그림은 5-gear 를 눈으로(W-0100: 사람 GLB 몸엔 갑주·투구 안 그림)', JSON.stringify(before.look) !== JSON.stringify(after.look), JSON.stringify({ before: before.look, after: after.look }));
+  } catch (e) { check('사가블로 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
   const real = realErrors(r.errors);
   check('사가블로 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
   await r.close();
@@ -191,7 +194,7 @@ async function runForest() {
     await ev(() => document.getElementById('btn-auto').click()); await sleep(300);
     const a2 = await ev(() => DG.auto.status().on);
     check('fs.auto 자동 순행 — 🤖 단추로 켜면 스스로 할 일을 잡고(doing), 다시 누르면 꺼진다', !a0 && a1.on && !!a1.doing && !a2, JSON.stringify({ a0, a1, a2 }));
-  } catch (e) { check('사가의숲 예외 — ' + e.message.slice(0, 200), false); }
+  } catch (e) { check('사가의숲 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
   const real = realErrors(r.errors);
   check('사가의숲 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
   await r.close();
@@ -213,7 +216,7 @@ async function runForest() {
     check('fs.admin 어드민 — 🔍 점검이 모두 통과, 프리셋 단추를 누르면 세이브가 바뀐다', /모두 통과/.test(out) && np > 0 && after.length > 0 && after !== before, JSON.stringify({ out: out.slice(0, 60), presets: np, changed: after !== before }));
     const real2 = realErrors(a.errors);
     check('사가의숲 어드민 페이지 예외 없음', real2.length === 0, real2.slice(0, 2).join(' | '));
-  } catch (e) { check('사가의숲 어드민 예외 — ' + e.message.slice(0, 200), false); }
+  } catch (e) { check('사가의숲 어드민 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
   await a.close();
 }
 
@@ -238,7 +241,7 @@ async function runStory() {
     await shoot(r, 'saga-story', '4-portrait', '3D 초상 판(영웅·사슴·구미호)', ['st.portrait3d'], pb);
     check('사가스토리 초상 — 굽기를 청한 것 중 반 넘게 그림이 나온다', pb.got > 0 && pb.got * 2 >= pb.asked, JSON.stringify(pb));
     await clearBoard(r);
-  } catch (e) { check('사가스토리 예외 — ' + e.message.slice(0, 200), false); }
+  } catch (e) { check('사가스토리 예외 — ' + String((e && e.message) || e).slice(0, 200), false); }
   const real = realErrors(r.errors);
   check('사가스토리 페이지 예외·console.error 없음', real.length === 0, real.slice(0, 2).join(' | '));
   await r.close();
