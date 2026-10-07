@@ -4,7 +4,7 @@ extends Node3D
 ##   · 걸음 — 플레이어가 움직인 거리(m)를 부화기의 알에 준다(순간이동은 안 센다). 다 차면 부화 → 신수 도감에 도장.
 ##   · 화면 — I(터치 "신수 알" 단추): 부화기 칸(진행 막대)·알 주머니(넣기)·동행 신수 고르기. 열려 있는 동안 플레이어는 얼음.
 ##   · 알 얻기 — 상자·의뢰·비경·보스 꽃이 그룹 "go_eggs" 의 award(곳, 열쇠)를 부른다.
-##   · 동행 — 고른 신수가 뒤따라 걷는다(CreatureBuilder.build_pet). 탈것을 타면 숨는다.
+##   · 동행 — 고른 신수가 뒤따라 걷는다(G-0084 PetBody — 신수 GLB, 없으면 코드 신수). 탈것을 타면 숨는다.
 
 signal hatched(pet_id: String, dup: bool)
 signal egg_gained(tier_id: String)
@@ -13,7 +13,7 @@ signal changed()
 const Eggs := preload("res://games/saga_go/data/eggs.gd")
 const Adventure := preload("res://games/saga_go/data/adventure.gd")
 const Pets := preload("res://saga_core/data/pets.gd")
-const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
+const PetBody := preload("res://saga_core/world/pet_body.gd")
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
@@ -126,7 +126,7 @@ func _update_buddy(delta: float) -> void:
 			_buddy.queue_free()
 			_buddy = null
 		if want != "":
-			_buddy = CreatureBuilder.build_pet(want, BUDDY_HEIGHT)
+			_buddy = PetBody.build(want, BUDDY_HEIGHT)
 			add_child(_buddy)
 			_buddy.global_position = _player.global_position - _dir * FOLLOW_GAP
 			_buddy_anim = ""
@@ -154,8 +154,9 @@ func _update_buddy(delta: float) -> void:
 	var anim := "walk" if moving else "idle"
 	if anim != _buddy_anim:
 		var ap := _buddy.get_node_or_null("AnimationPlayer") as AnimationPlayer
-		if ap != null and ap.has_animation(anim):
-			ap.play(anim)
+		var n := PetBody.anim_of(ap, anim)
+		if n != "":
+			ap.play(n)
 			_buddy_anim = anim
 
 

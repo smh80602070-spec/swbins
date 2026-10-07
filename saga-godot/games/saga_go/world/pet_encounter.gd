@@ -25,7 +25,7 @@ extends Node3D
 
 const TestMap := preload("res://games/saga_go/data/test_map.gd")
 const TerrainBuilder := preload("res://games/saga_go/world/terrain_builder.gd")
-const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
+const PetBody := preload("res://saga_core/world/pet_body.gd")
 const ChoicePrompt := preload("res://saga_core/ui/choice_prompt.gd")
 const Toast := preload("res://saga_core/ui/toast.gd")
 const Pets := preload("res://saga_core/data/pets.gd")
@@ -60,7 +60,8 @@ func _spawn_visual() -> void:
 	## 5(사신 전부)는 hero_encounter.gd와 같은 금빛, 정예감을 신수도
 	## 같은 규칙으로 준다(rarity 색 감각을 새로 안 만든다).
 	## PLAN 106장 ④ — 캡슐 → 코드로 그린 신수(creature_builder.gd). 희귀할수록 크다.
-	add_child(CreatureBuilder.build_pet(pet_id, 1.2 + 0.2 * float(_pet.rarity)))
+	## G-0084 — 신수 GLB(K-0075)가 있으면 그 몸(PetBody), 없으면 코드 신수.
+	add_child(PetBody.build(pet_id, 1.2 + 0.2 * float(_pet.rarity)))
 
 func _spawn_area() -> void:
 	var area := Area3D.new()

@@ -2,14 +2,14 @@ extends Node
 ## G-0031 — 사가만리 도감 화면. X(터치 "도감")로 연다. 탭 셋:
 ##   인물 — 도감 인물 105(HEROES 중 시대가 삼국지·한국사·일본사·세계사이고 국지 전용 rf_ 가 아닌 것). 영입(PartyState.members)·
 ##          만남(CodexState "record")·모름("???"). 고른 칸은 오른쪽에 새 인물 몸(characters_dex, 같은 이름)이 돈다.
-##   신수 — PETS 11. 잡음(CodexState "pet")이면 CreatureBuilder 몸·설명, 아니면 검은 실루엣.
+##   신수 — PETS 11. 잡음(CodexState "pet")이면 신수 몸(PetBody — GLB, 없으면 코드 신수)·설명, 아니면 검은 실루엣.
 ##   발견 — CodexState 갈래(지역·사람·짐승·사건·기록·신수)별 찾은 수/전체 막대 + 이름 목록(data/codex_catalog.gd, 지역은 땅마다, 못 찾은 것은 ???).
 ## 읽기만 한다(새 저장 없음). 화면·열기/닫기·ui_modal 은 world/achievements.gd 와 같은 결.
 
 const Characters := preload("res://saga_core/data/characters.gd")
 const Pets := preload("res://saga_core/data/pets.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
-const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
+const PetBody := preload("res://saga_core/world/pet_body.gd")
 const Catalog := preload("res://games/saga_go/data/codex_catalog.gd")
 
 const DEX_ERAS := ["삼국지", "한국사", "일본사", "세계사"]
@@ -357,7 +357,7 @@ func select(id: String) -> void:
 		var got := CodexState.has("pet", id)
 		_detail_name.text = ("%s %s %s" % [String(p.emoji), String(p.name), "★".repeat(int(p.rarity))]) if got else "???"
 		_detail_text.text = String(p.desc) if got else "아직 잡지 못한 신수"
-		_show_model(CreatureBuilder.build_pet(id, 1.3), not got)
+		_show_model(PetBody.build(id, 1.3), not got)   # G-0084 신수 GLB
 
 func _show_model(m: Node3D, silhouette: bool) -> void:
 	if m == null:

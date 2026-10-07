@@ -287,8 +287,11 @@
  },
  {
   "id": "gd.go.g1-pet-model",
-  "name": "106장 ①~⑥ VRoid/코드 신수 모델",
-  "files": [],
+  "name": "106장 ①~⑥ VRoid/코드 신수 모델 — G-0084 동행·들판 만남·도감 미리보기는 신수 GLB 11(pet_<id>.glb, K-0075, PetBody), 없거나 SAGA_CODE_CREATURES=1 이면 코드 신수. 탈것은 코드 몸",
+  "files": [
+   "saga_core/world/pet_body.gd",
+   "tools/shot_pets.gd"
+  ],
   "tests": [
    "creature_bodies"
   ],

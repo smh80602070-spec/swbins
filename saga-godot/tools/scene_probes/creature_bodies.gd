@@ -1,10 +1,12 @@
 extends Node
 ## G-0066 [R-3] 코드로 그린 몸 셋 — scene_probe_host 로 돈다(오토로드 필요). features gd.go.g1-pet-model · gd.fs.fusion-monsters · gd.rk.monster-sil.
 ## ① 사가만리 신수: PETS 의 모든 신수가 PET_LOOKS 에 모양이 있고 build_pet 이 메시를 가진 몸·키가 목표의 0.6~2배(장식 포함)
+##    G-0084 — 신수 열하나가 GLB(pet_<id>.glb)로 서고(PetBody) AnimationPlayer 에 Idle·Walk, 키가 목표 ±10%. SAGA_CODE_CREATURES=1 이면 코드 신수.
 ## ② 사가마을 괴물: 굴 표(CREATURES)의 종마다 몸에 메시·종 12 이상 ③ 사가천하 몬스터 실루엣: 보스가 일반보다 크고 메시가 더 많다.
 
 const Pets := preload("res://saga_core/data/pets.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
+const PetBody := preload("res://saga_core/world/pet_body.gd")
 const ForestCreature := preload("res://games/saga_forest/world/forest_creature.gd")
 const ForestCreatureBuilder := preload("res://games/saga_forest/world/forest_creature_builder.gd")
 const RealmWorldmap := preload("res://games/saga_realm/world/realm_worldmap.gd")
@@ -35,6 +37,20 @@ func _height(n: Node3D) -> float:
 	return hi - lo if hi > lo else 0.0
 
 
+## 몸 뿌리 배율까지 넣은 세로 크기(GLB 몸은 뿌리 scale 로 키를 맞춘다 — _height 는 뿌리 공간이라 그 배율이 빠진다).
+func _world_height(n: Node3D) -> float:
+	var lo := INF
+	var hi := -INF
+	for mi in _meshes(n):
+		var m := mi as MeshInstance3D
+		if m.mesh == null:
+			continue
+		var a: AABB = m.global_transform * m.mesh.get_aabb()
+		lo = minf(lo, a.position.y)
+		hi = maxf(hi, a.end.y)
+	return hi - lo if hi > lo else 0.0
+
+
 func run() -> int:
 	# ① 신수
 	var missing: Array = []
@@ -50,6 +66,27 @@ func run() -> int:
 		if _meshes(body).is_empty() or h < 1.2 * 0.6 or h > 1.2 * 2.0:   # 뿔·갈기·불꽃 장식까지 재므로 넓게 — 맞추기가 깨졌는지(수 배)만 본다
 			bad.append("%s(h=%.2f)" % [id, h])
 		body.queue_free()
+	# ①-2 신수 GLB 몸(G-0084)
+	var glb_bad: Array = []
+	for p: Dictionary in Pets.PETS:
+		var id := String(p.id)
+		var body := PetBody.build(id, 1.2)
+		var nm := String(body.name)   # 넣기 전 이름(지운 앞 몸과 겹치면 add_child 가 이름을 바꾼다)
+		add_child(body)
+		var ap := body.get_node_or_null("AnimationPlayer") as AnimationPlayer
+		var h := _world_height(body)
+		if PetBody.path_for(id) == "" or nm != "PetBody" or PetBody.anim_of(ap, "idle") != "Idle" or PetBody.anim_of(ap, "walk") != "Walk" or absf(h - 1.2) > 0.12:
+			glb_bad.append("%s(name=%s h=%.2f)" % [id, nm, h])
+		body.queue_free()
+	OS.set_environment("SAGA_CODE_CREATURES", "1")
+	var code := PetBody.build("pt_baekho", 1.2)
+	if String(code.name) != "Creature":
+		glb_bad.append("스위치 꺼도 %s" % code.name)
+	code.free()
+	OS.unset_environment("SAGA_CODE_CREATURES")
+	print("  신수 GLB %d/%d %s" % [Pets.PETS.size() - glb_bad.size(), Pets.PETS.size(), glb_bad])
+	if not glb_bad.is_empty():
+		_fail("신수 GLB 몸 %s" % [glb_bad])
 	if not missing.is_empty():
 		_fail("PET_LOOKS 에 없는 신수 %s" % [missing])
 	if not bad.is_empty():
