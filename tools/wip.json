@@ -2,8 +2,9 @@
  "_": "WIP 게이트(SAGA-ARCH §8-2). 판마다 features.json 의 D0+D1 이 limit 을 넘으면 새기능 티켓 파일을 커밋할 수 없다. flagship 은 limit_flagship. tools_open 은 K 갈래 열린 티켓 상한. 사용자만 고친다.",
  "limit": 10,
  "limit_flagship": 20,
- "flagship": [],
+ "flagship": ["web:go", "web:realm"],
  "tools_open": 20,
  "frozen_until": "2026-10-04",
+ "flagship_note": "사용자 2026-10-07 \"둘 다\" — 웹 플래그십 = 사가고·사가국지(수신함 10-05 제안). Unity 사가고·사가블로(ARCH §3.4)는 이 목록에 아직 안 넣음.",
  "frozen_note": "동결 해제(사용자 2026-10-05 '동결 풀고 다음 작업 0번부터 시작해' — 유니티 갈래). 이전: 새 기능 티켓 발행 동결(사용자 2026-10-05). 종류가 닫기·통합·버그·측정·도구·설계 인 티켓만 새로 만든다."
 }
