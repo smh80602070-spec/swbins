@@ -30,6 +30,9 @@ const GFX := "res://saga_core/data/graphics_settings.gd"
 const CUTS := [
 	["fs_villager", FOREST, [["near", "Villager/Villager_npc_keeper", 0.0, 3.0]]],
 	["fs_house_in", FOREST, [["touch", "House", "_on_enter_house"]]],
+	["fs_room2", FOREST, [["set", "/root/ForestSaveState", "wall_key", "hanji"], ["set", "/root/ForestSaveState", "floor_key", "wood"], ["touch", "House", "_on_enter_house"],   # G-0062 서안·문갑·도자기·등잔
+		["call", "House", "_spawn_furniture_visual", [{"key": "seoan", "x": -1.0, "z": 1.6}]], ["call", "House", "_spawn_furniture_visual", [{"key": "mungab", "x": 1.2, "z": 1.4}]],
+		["call", "House", "_spawn_furniture_visual", [{"key": "dokja", "x": -2.0, "z": 0.6}]], ["call", "House", "_spawn_furniture_visual", [{"key": "deungjan", "x": 0.2, "z": 2.2}]]]],
 	["fs_finish_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_finish_menu"]]],
 	["fs_place_menu", FOREST, [["touch", "House", "_on_enter_house"], ["call", "House", "_open_place_menu"]]],
 	["fs_fishing", FOREST, [["near", "Fishing", 0.0, 5.0]]],
