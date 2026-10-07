@@ -12,7 +12,7 @@
  * 로그 tools/autorun/_log/<날짜시각>-<갈래>.log(git 제외). 게이트(precheck 훅·WIP 동결)는 세션 안에서 그대로 돈다.
  * 비용 상한: --budget-usd(기본 20 달러/티켓 — 10-05 실측: 문맥 로드만으로 0.5달러를 넘는다) — claude --max-budget-usd 로 넘긴다. 설정 폴더는 CLAUDE_CONFIG_DIR 를 그대로 쓴다.
  */
-import { spawn, execFileSync } from 'node:child_process';
+import { spawn, spawnSync, execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -123,6 +123,14 @@ async function main() {
     const after = git('rev-parse', 'HEAD');
     log(`세션 끝 exit=${code} · 커밋 ${before.slice(0, 8)} → ${after.slice(0, 8)}`);
     if (after === before) { log('HEAD 가 안 움직였다(사람 대기·막힘) → 되풀이 안 함'); break; }
+    /* QC 자동(사용자 10-07 "실기 요청할 때 자동으로") — 티켓 세션이 커밋을 남겼으면 그 갈래 QC 를 돌리고 결과를 로그·tools/_out/qc-last.md 에 남긴다.
+       FAIL 이면 다음 세션이 큐를 집기 전에 먼저 고친다(tasks/README 절차 1). 사람에게 "실기 확인" 을 넘기지 않는다. */
+    if (!has('--no-qc')) {
+      const q = spawnSync(process.execPath, [path.join(ROOT, 'tools', 'qc.mjs'), '--branch', branch], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 60 * 60 * 1000, env: process.env });
+      const tail = String(q.stdout || '').trim().split('\n').filter((l) => /^QC /.test(l)).pop() || ('exit ' + q.status);
+      log(`QC(${branch}) ${tail}`);
+      if (q.status !== 0) { log('QC FAIL → 다음 세션이 tools/_out/qc-last.md 부터 고친다(되풀이 안 함)'); break; }
+    }
     if (+git('rev-list', '--count', 'origin/main..HEAD') > 0) {
       try { git('push', '-q', 'origin', 'main'); log('push'); } catch (e) { log('push 실패: ' + e.message.split('\n')[0]); break; }
     }

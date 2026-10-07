@@ -16,6 +16,7 @@ node tools/autorun/daemon.mjs --branch tools --at none --on-boot 5      # 기본
 powershell -STA -WindowStyle Hidden -ExecutionPolicy Bypass -File tools\autorun\tray.ps1   # 트레이: 초록 대기·파랑 실행 중·회색 중지·빨강 데몬 꺼짐, 우클릭 메뉴(지금 실행·시작·중지·데몬 켜기/끄기·제어 페이지)
 http://127.0.0.1:8798                                                   # 상태 · 시작/중지 · 지금 한 번 실행 · 최근 로그(15초마다 갱신) · /api/status JSON
 ```
+- **QC 자동(10-07)**: 티켓 세션이 커밋을 남기면 `node tools/qc.mjs --branch <갈래>` 를 돌려 로그와 `tools/_out/qc-last.md` 에 남긴다. FAIL 이면 그 갈래 다음 세션이 큐보다 먼저 고친다(tasks/README 절차 1). `--no-qc` 로 끈다.
 - 멈추기: 제어 페이지 "중지" = `tools/autorun/STOP` 파일(있으면 run.mjs 도 안 돈다). "시작" = 파일 삭제. 로그 `tools/autorun/_log/`(git 제외).
 - 안 도는 때: 트리가 더럽다(다른 세션 것 보호) · origin 과 갈라짐 · 큐 비었음 · 세션 뒤 HEAD 가 안 움직임(사람 대기 티켓을 되풀이해 토큰을 태우지 않는다).
 - 계정: `claude2` 는 따로 있는 exe 가 아니라 PowerShell 함수(`claude.exe` + `CLAUDE_CONFIG_DIR=~/.claude-account2`). 러너는 그 변수를 상속하고, 등록 때 `--config-dir <폴더>`(기본 = 지금 변수 값)를 작업에 박는다. 실행 파일은 PATH·`~/.local/bin` 에서 찾고 `CLAUDE_BIN` 으로 바꿀 수 있다.

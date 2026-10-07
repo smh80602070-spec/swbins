@@ -13,11 +13,11 @@
 
 | 게임 | 폴더 | 포트 | 원작 | 세이브 키 |
 |---|---|---|---|---|
-| 사가고 | `saga-web/saga-go` | 8791 | 포켓몬GO | `deungyong-go/save/<프로필>` |
-| 사가블로 | `saga-web/saga-dungeon` | 8792 | 디아블로 | `yeoksa-dungeon/save/<프로필>` |
-| 사가의숲 | `saga-web/saga-forest` | 8793 | 동물의숲 | `yeoksa-village/save/<프로필>` |
-| 사가스토리 | `saga-web/saga-story` | 8794 | 메이플스토리 | `yeoksa-side/save/<프로필>` |
-| 사가국지 | `saga-web/saga-realm` | 8795 | 코에이 삼국지 | `saga-realm/save/<프로필>` |
+| 사가만리 | `saga-web/saga-go` | 8791 | 포켓몬GO | `deungyong-go/save/<프로필>` |
+| 사가나락 | `saga-web/saga-dungeon` | 8792 | 디아블로 | `yeoksa-dungeon/save/<프로필>` |
+| 사가마을 | `saga-web/saga-forest` | 8793 | 동물의숲 | `yeoksa-village/save/<프로필>` |
+| 사가종횡 | `saga-web/saga-story` | 8794 | 메이플스토리 | `yeoksa-side/save/<프로필>` |
+| 사가천하 | `saga-web/saga-realm` | 8795 | 코에이 삼국지 | `saga-realm/save/<프로필>` |
 
 - 세이브 키·앱 id 는 폴더 이름과 **다르다**. 맞추려고 바꾸면 진행이 사라진다.
 - `data.js`·`sprite.js`·`core.js`·`hero.js` 는 다섯 벌 복사본이다. 합치자고 제안하지 않는다.
@@ -25,7 +25,7 @@
 
 ## 어디서 도는가
 
-- 로컬: 각 폴더 `run.bat`(브라우저 열림) · `start_server.bat`(허브용) · 사가고 폰용 `run-phone.bat`(HTTPS)
+- 로컬: 각 폴더 `run.bat`(브라우저 열림) · `start_server.bat`(허브용) · 사가만리 폰용 `run-phone.bat`(HTTPS)
 - 제작 도구: `saga-web/tools/run-tools.bat`(편집기·엔진 :8799~8801)
 - 공개: <https://smh80602070-spec.github.io/swbins/saga-web/saga-go/> 식 하위 경로(GitHub Pages)
 
@@ -48,20 +48,20 @@
   `BIOS`·`PETS` 의 `desc` 도 "표시 글자"다. 새 인물·괴물도 실명 금지.
 - 원작 개체값(IV)·CP 도입 — 이 판의 펫은 개체가 아니라 **종**
 - 경영·문답을 `saga-realm` 밖으로 퍼뜨리기
-- 사가의숲 구면 투영을 평평한 탑다운으로 되돌리기(집 안만 일부러 안 휜다)
+- 사가마을 구면 투영을 평평한 탑다운으로 되돌리기(집 안만 일부러 안 휜다)
 - 원작사의 실제 에셋(그림·소리·데이터) 넣기 — 문법만 따른다. 그림은 CC0·코드·상업 허용 로컬 AI(`tools/ai-art`, §7.4)
 
 ## 검증
 
 ```
 구문        node -c <파일>
-진단        chrome --headless=new --disable-gpu --virtual-time-budget=45000 --dump-dom \
-              http://127.0.0.1:<포트>/_test.html   → RESULT n/n  (세 번 돌려 한 줄도 안 다른지)
+진단        node tools/test-web.mjs <판> [--runs=3]   → RESULT n/n (DIFF 없음)
+QC          node tools/qc.mjs [--game <판>|--branch <갈래>]  → 실기 확인 대신 자동(tools/_out/qc-last.md)
 어드민      _admin.html  (세이브·균형 손잡이·QA 프리셋)  /  데모  _demo.html#<장면>
 ```
 
-- **작업 중 스크린샷(헤드리스·CDP) 금지** — 사용자가 요청할 때만(3D 는 `--use-angle=swiftshader
-  --enable-unsafe-swiftshader --disable-gpu-sandbox`). 실기기 확인은 사용자 몫.
+- **작업 중 스크린샷(헤드리스·CDP) 금지** — QC·사용자 요청 때만(3D 는 `--use-angle=swiftshader
+  --enable-unsafe-swiftshader --disable-gpu-sandbox`). 실기기 대신 QC 가 돈다(PNG 는 세션이 본다).
 - 헤드리스 크롬은 전용 `--user-data-dir` 로 띄우고 그 turn 안에 **그 PID 만** `taskkill //F //T //PID`.
   `//IM chrome.exe`(사용자 크롬)·`//IM node.exe`(다른 세션 서버) 금지.
 - 진단 씨앗은 mulberry32(20260824) 고정. 시각 의존 축(날씨·떠돌이 등)은 진단에서 붙든다 — 방법은 그 판 PLAN §9.
