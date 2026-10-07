@@ -628,12 +628,12 @@
    "외모 — styleSeed는 QRPG(안전) 여섯 자리만 고른다(MPFB 실사 쪽은 안 감)",
    "외모 — 값을 내도 세이브는 그대로다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "D1 유지: 겉모습 값은 바뀌나 갑주·투구 GLB 가 VRM 몸을 화분처럼 덮음(× — W-0100, 시트 tasks/sheets/web-visual-20261007.md)."
+  "note": "D2: pw-visual-close.mjs 5-gear + Claude 눈(W-0100) — 사람 GLB 몸엔 갑주·투구 안 씌움, 갑주 입은 티는 사람 판정."
  },
  {
   "id": "dg.sfx",

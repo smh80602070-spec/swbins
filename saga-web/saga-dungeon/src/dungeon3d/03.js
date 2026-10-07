@@ -462,7 +462,7 @@
       g.add(gnode);
     }
   }
-  function foeGear(g, look, hh, r, tint) {
+  function foeGear(g, look, hh, r, tint, humanGlb) {   // humanGlb: 사람 GLB 몸엔 갑주·투구를 안 씌운다(VRM 을 화분처럼 덮었다, W-0100)
     var handX = r * 1.05, handZ = r * 0.25, shoulderY = hh * 0.68;
     var woodcol = 0x5a4a34;
     var AS3 = AS();
@@ -472,7 +472,7 @@
        GLB가 없으니 몸통을 감싸는 색 다른 상자로 "가죽/판금" 실루엣 신호만
        준다. 나중에 진짜 갑주 GLB를 구하면 이 키(`gear:armor:*`)로 등록만
        하면 AS3.build가 자동으로 갈아 끼운다. */
-    if (look.armor === 'leather' || look.armor === 'plate') {
+    if (!humanGlb && (look.armor === 'leather' || look.armor === 'plate')) {
       var armMul = hh * 0.62;
       var armFallback = function () {
         var sg = new T.Group();
@@ -514,8 +514,8 @@
       capeNode.rotation.x = -0.1;
       g.add(capeNode);
     }
-    var headY = hh + r * 0.5;
-    if (look.helm === 'helmet' || look.helm === 'plume') {
+    var headY = hh + r * 0.5, helm = humanGlb ? 'none' : look.helm;
+    if (helm === 'helmet' || helm === 'plume') {
       var helmMul = r * 0.7;
       var helmFallback = function () {
         var sg = new T.Group();
@@ -523,10 +523,10 @@
         return sg;
       };
       wornGearCentered('gear:helmet', helmMul, headY + r * 0.35, helmFallback);
-      if (look.helm === 'plume') {
+      if (helm === 'plume') {
         box(g, 0, headY + r * 0.85, 0, r * 0.2, r * 0.85, r * 0.2, mix(tint, 0xff5a3a, 0.5), 'glow', false);
       }
-    } else if (look.helm === 'gapju') {
+    } else if (helm === 'gapju') {
       /* 2026-09-05(이어서) — "gapju"(원뿔형 동아시아 투구)란 이름의 CC0/CC-BY는
          끝까지 못 찾았다 — 대신 바이킹 투구(뿔 달림, CC-BY 3.0)를 쓴다.
          대장간=집 모델과 같은 판단: 모양이 정확히 안 맞아도 "이 적은 다른
@@ -543,7 +543,7 @@
         return sg;
       };
       wornGearCentered('gear:gapju', gapjuMul, headY + r * 0.55, gapjuFallback);
-    } else if (look.helm === 'crown') {
+    } else if (helm === 'crown') {
       var crownMul = r * 0.86;
       var crownFallback = function () {
         var sg = new T.Group();
@@ -668,7 +668,7 @@
       g.userData.mixerNode = meBody;
       /* 실제 장착 무기·투구·갑주는 GLB 진행 상태와 무관하게 `g`(바깥 껍데기)에
          따로 얹는다(`foeGear()`가 내부에서 `attachWeapon`을 부른다). */
-      foeGear(g, meLookOf(), 31.2, 12, null);
+      foeGear(g, meLookOf(), 31.2, 12, null, !!AS3);
       return g;
     }
     if (kind === 'mount') {
@@ -687,7 +687,7 @@
       var allyBody = AS3 ? AS3.buildHero('ally:' + allyId, 42, null, null) : new T.Group();
       g.add(allyBody);
       g.userData.mixerNode = allyBody;
-      foeGear(g, meLookOf(allyId), 31.2, 12, null);
+      foeGear(g, meLookOf(allyId), 31.2, 12, null, !!AS3);
       return g;
     }
     var r = (ref && ref.r) || 12;
@@ -746,7 +746,7 @@
           beard: lk.beard, cape: lk.cape
         };
       }
-      foeGear(g, lk, hh, r, col);
+      foeGear(g, lk, hh, r, col, !!(AS3 && !isBeast));
     }
     return g;
   }

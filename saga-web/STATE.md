@@ -1,4 +1,4 @@
-<!-- 생성: tools/status.mjs · 2026-10-07 10:13Z — 손으로 고치지 않는다(덮어쓴다) -->
+<!-- 생성: tools/status.mjs · 2026-10-07 11:07Z — 손으로 고치지 않는다(덮어쓴다) -->
 # saga-web 상태
 
 완성도 = 끝 ÷ 전체(끝 = 사람 몫 아님 D2+ · 사람 몫 human:true 는 D3+) · WIP = D0+D1(10 초과 시 `초과`) · 등급 규칙 SAGA-ARCH §3.1
@@ -6,7 +6,7 @@
 | 판 | 기능 | D0 | D1 | D2 | 끝 | 완성도 | 사람 몫 | WIP | 초과 | 러너 n/m | 표시 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | saga-go | 25 | 0 | 3 | 22 | 18 | 72% | 5(미확인 5) | 3 | - | 865/865 | - |
-| saga-dungeon | 31 | 0 | 3 | 28 | 24 | 77.4% | 4(미확인 4) | 3 | - | 469/469 | - |
+| saga-dungeon | 31 | 0 | 2 | 29 | 25 | 80.6% | 4(미확인 4) | 2 | - | 469/469 | - |
 | saga-forest | 28 | 0 | 0 | 28 | 25 | 89.3% | 3(미확인 3) | 0 | - | 413/413 | - |
 | saga-story | 18 | 0 | 0 | 18 | 15 | 83.3% | 3(미확인 3) | 0 | - | 283/283 | - |
 | saga-realm | 36 | 0 | 0 | 36 | 30 | 83.3% | 6(미확인 6) | 0 | - | 331/331 | - |
@@ -20,7 +20,7 @@
 - 4946 — saga-web/saga-dungeon/js/dungeon.js
 - 3503 — saga-web/saga-go/js/world3d.js
 - 3281 — saga-web/saga-go/js/story.js
-- 3202 — saga-web/saga-dungeon/js/dungeon3d.js
+- 3207 — saga-web/saga-dungeon/js/dungeon3d.js
 - 2800 — saga-web/saga-forest/js/village-view.js
 - 2672 — saga-web/saga-dungeon/js/ui.js
 - 2604 — saga-web/saga-forest/js/village.js
