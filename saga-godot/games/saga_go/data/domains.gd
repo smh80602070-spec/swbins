@@ -100,6 +100,13 @@ const DOMAINS := {
 		"sets": ["crimson", "depth"],
 		"reward": [{"mora": 4300, "boss_mat": 1, "talent_3": 1}, {"mora": 6200, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 8600, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
+	## G-0078 15부(회차 3) 끝(50장) 뒤 재대결 — 멈춘 진수대의 쇠 거신. 입구는 갯바람 포구 조선소 곁.
+	"rematch_launch": {"name": "진수 종의 메아리", "kind": "boss", "boss": true, "after_ch": 50, "gate": ["coast", Vector2(6.6, 4.6)], "arena": Vector3(-1400.0, 40.0, 2600.0),
+		"waves": [["launch_colossus"]], "modifier": "none", "time": 240.0,
+		"modifier_text": "재대결: 멈춘 진수대의 쇠 거신 · 바닷물 방패(뇌로 깬다)",
+		"sets": ["depth", "emblem"],
+		"reward": [{"mora": 4600, "boss_mat": 1, "talent_3": 1}, {"mora": 6600, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 9200, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
+		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 	"rematch_colossus": {"name": "빛 돔의 메아리", "kind": "boss", "boss": true, "after_ch": 29, "gate": ["sunken", Vector2(3.7, 2.1)], "arena": Vector3(-1400.0, 40.0, 1400.0),
 		"waves": [["dome_colossus"]], "modifier": "none", "time": 240.0,
 		"modifier_text": "재대결: 돔 파수 거신 · 체력 절반에서 암 방패(초로 깬다)",
@@ -107,7 +114,7 @@ const DOMAINS := {
 		"reward": [{"mora": 3000, "boss_mat": 1, "talent_3": 1}, {"mora": 4500, "boss_mat": 2, "talent_3": 1, "book_l": 1}, {"mora": 6000, "boss_mat": 3, "talent_3": 2, "fate_knot": 1}],
 		"artifacts": [[0, 1], [0, 1], [0, 2]]},
 }
-const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus", "rematch_first_crow", "rematch_garmuri", "rematch_seed", "rematch_dawn", "rematch_nightfox"]
+const ORDER := ["tomb", "school", "forge", "weekly", "rematch_king", "rematch_fox", "rematch_crow", "rematch_colossus", "rematch_first_crow", "rematch_garmuri", "rematch_seed", "rematch_dawn", "rematch_nightfox", "rematch_launch"]
 const KIND_NAMES := {"artifact": "성유물", "talent": "특성 재료", "weapon": "무기 재료", "boss": "주간 보스"}
 const WEEKLY_COST := 60
 const WEEKLY_DISCOUNT_COST := 30

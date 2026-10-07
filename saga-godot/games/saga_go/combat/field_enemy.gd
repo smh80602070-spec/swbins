@@ -218,6 +218,13 @@ const KINDS := {
 		"phase_text": "그 밤의 여우가 처음 열린 틈의 서리를 두르고 여우와 매를 부른다 — 불로 방패를 깨라",
 		"rotation": ["rift", "bite", "storm", "rift", "slam", "halo"], "summon": ["ice_fox", "wind_hawk"],
 		"shape": "fox9", "height": 3.0, "colors": [Color(0.95, 0.97, 1.0), Color(0.32, 0.42, 0.78), Color(0.55, 0.9, 1.0)]},
+	## G-0078 15부 50장 이야기 보스 "멈춘 진수대의 쇠 거신"(갯바람 포구 녹슨 조선소) — 십 년 전 진수식 날 시간에 붙들려 배를 쥐고 있던 진수대 쇠틀.
+	## 코드 몸 goblin 4.6m(강철 몸·녹빛 테두리·바닷물빛 눈). 패턴은 있는 틀: 내려찍기·밀물 줄·고리·회오리. 2단계 수 방패(뇌로 깬다).
+	"launch_colossus": {"name": "멈춘 진수대의 쇠 거신", "hp": 16400.0, "atk": 70.0, "speed": 3.8, "aggro": 26.0,
+		"reach": 3.6, "tell": 0.85, "cd": 1.5, "exp": 0.0, "element": "water", "shield": 0.0, "phase_shield": 1500.0,
+		"phase_text": "쇠 거신이 십 년 묵은 바닷물을 두르고 물거북과 살쾡이를 부른다 — 뇌로 방패를 깨라",
+		"rotation": ["slam", "tide", "halo", "storm", "slam", "tide"], "summon": ["water_turtle", "thunder_cat"],
+		"shape": "goblin", "height": 4.6, "colors": [Color(0.4, 0.44, 0.48), Color(0.62, 0.36, 0.2), Color(0.45, 0.92, 1.0)]},
 }
 
 const GRAVITY := 20.0

@@ -25,7 +25,9 @@ const REMATCH3 := ["rematch_seed"]
 const REMATCH4 := ["rematch_dawn"]
 ## G-0077 — 14부(회차 2) 끝(47장) 뒤에만 열리는 재대결 하나
 const REMATCH5 := ["rematch_nightfox"]
-const BOSS_OF := {"rematch_king": "storm_king_true", "rematch_fox": "rift_fox", "rematch_crow": "rift_crow", "rematch_colossus": "dome_colossus", "rematch_dawn": "dawn_mask", "rematch_nightfox": "night_fox", "rematch_first_crow": "first_crow", "rematch_garmuri": "garmuri_true", "rematch_seed": "seed_giant"}
+## G-0078 — 15부(회차 3) 끝(50장) 뒤에만 열리는 재대결 하나
+const REMATCH6 := ["rematch_launch"]
+const BOSS_OF := {"rematch_king": "storm_king_true", "rematch_fox": "rift_fox", "rematch_crow": "rift_crow", "rematch_colossus": "dome_colossus", "rematch_dawn": "dawn_mask", "rematch_nightfox": "night_fox", "rematch_launch": "launch_colossus", "rematch_first_crow": "first_crow", "rematch_garmuri": "garmuri_true", "rematch_seed": "seed_giant"}
 
 var _p: CharacterBody3D
 var _ne: Node
@@ -257,6 +259,9 @@ func _physics_process(_delta: float) -> void:
 						bad.append("gate5 region %s" % id)
 					if not _hits(gp).is_empty():
 						bad.append("gate5 buried %s %s" % [id, _hits(gp)])
+				for id in REMATCH6:
+					if _gate_node(id).visible or Domains.domain_open(id):
+						bad.append("gate6 early %s" % id)
 				_check("after_cycle2_story", bad.is_empty(), str(bad))
 				_put(_dm.call("gate_pos", "rematch_nightfox") + Vector3(0, 0, 1.0))
 			if _frame == 50:
@@ -269,7 +274,33 @@ func _physics_process(_delta: float) -> void:
 				_dm.call("leave")
 			if _frame == 400:
 				_next()
-		11:
+		11: # [11] G-0078 15부 끝(50장) 뒤 — 진수 종의 메아리 입구가 열림·자리 맞음·입장
+			if _frame == 1:
+				PartyState.story = {"ch": 50, "step": 0}
+			if _frame == 45:
+				var bad: Array = []
+				for id in REMATCH6:
+					var d: Dictionary = Domains.DOMAINS[id]
+					if not _gate_node(id).visible or not Domains.domain_open(id) or String(d.waves[0][0]) != String(BOSS_OF[id]):
+						bad.append("gate6 %s" % id)
+					var gp: Vector3 = _dm.call("gate_pos", id)
+					if TestMap.region_at(gp) != String(d.gate[0]):
+						bad.append("gate6 region %s" % id)
+					if not _hits(gp).is_empty():
+						bad.append("gate6 buried %s %s" % [id, _hits(gp)])
+				_check("after_cycle3_story", bad.is_empty(), str(bad))
+				_put(_dm.call("gate_pos", "rematch_launch") + Vector3(0, 0, 1.0))
+			if _frame == 50:
+				_v = {"near": String(_dm.call("near_gate")), "entered": bool(_dm.call("enter", "rematch_launch", 0))}
+			if _frame == 250:
+				var alive: Array = _dm.call("alive_enemies")
+				_check("rematch_launch", _v.near == "rematch_launch" and bool(_v.entered) and alive.size() == 1 and String(alive[0].get("kind")) == "launch_colossus", "%s n=%d" % [_v, alive.size()])
+				for e in alive:
+					e.call("_die")
+				_dm.call("leave")
+			if _frame == 400:
+				_next()
+		12:
 			TimeOfDay.force(null)
 			PartyState.story = _saved.story
 			PartyState.bag = _saved.bag
