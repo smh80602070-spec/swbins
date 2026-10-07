@@ -122,7 +122,8 @@ static func find_all_mesh_instances(node: Node) -> Array[MeshInstance3D]:
 ## 남기고 계속 돈다 — 자가진단에서 실제로 잡아냈다). 그래서 `_relative_
 ## transform()`으로 node까지의 로컬 transform만 직접 곱해 구한다.
 ##
-## **아직 어디서도 호출하지 않는다.** 지금 다섯 판은 캐릭터마다 임의
+## G-0059 — 몬스터 GLB 몸(monster_body.gd)이 처음 쓴다(들판 적 키 = KINDS height).
+## 사람 캐릭터엔 아직 안 쓴다. 지금 다섯 판은 캐릭터마다 임의
 ## 배율(플레이어·NPC 1.25배 등, 102-7 "스케일 뒤죽박죽")을 써 왔고, 그
 ## 결과 실측 캐릭터 키가 이미 3.4m 안팎(카메라·충돌·지역 크기 전부 이
 ## 키에 맞춰 튜닝됨 — GO/DUNGEON/FOREST는 사용자 실기 승인까지 받았다).

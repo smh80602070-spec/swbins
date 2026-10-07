@@ -11,6 +11,7 @@ const FeelTuning := preload("res://games/saga_go/combat/feel_tuning.gd")
 const Growth := preload("res://games/saga_go/data/growth.gd")
 const VroidBody := preload("res://saga_core/world/vroid_body.gd")
 const CreatureBuilder := preload("res://saga_core/world/creature_builder.gd")
+const MonsterBody := preload("res://saga_core/world/monster_body.gd")
 const Adventure := preload("res://games/saga_go/data/adventure.gd")
 
 signal died(enemy: Node)
@@ -216,6 +217,7 @@ const BREAK_STAGGER := 2.0
 ## 폰 발열(2026-09-24) — 플레이어에게서 SLEEP_M 밖에서 쉬는(배회) 적은 AI·물리를 멈추고 제자리에 선다(원신도 먼 적은 서 있다).
 ## SLEEP_CHECK 초마다 거리만 보고, WAKE_M 안으로 들어오면 다시 움직인다. 세 지역 적 32마리가 물리 시간의 3/4 을 먹던 것.
 const SLEEP_M := 100.0
+const WOLF_HEIGHT := 1.05 # 모양 칸이 없는 들늑대 키(코드 짐승·GLB 몸 같게)
 const WAKE_M := 90.0
 const SLEEP_CHECK := 0.5
 
@@ -264,6 +266,8 @@ var _shield_bg: MeshInstance3D = null
 var _aura_dot: MeshInstance3D = null
 var _tell_label: Label3D = null
 var _anim: AnimationPlayer = null
+var glb_path := "" # G-0059 몬스터 GLB 몸이면 그 경로(아니면 "" — 코드 짐승·사람 몸)
+var _anim_lock := 0 # G-0059 공격·맞기 한 번 애니가 끝나는 시각(ms) — 그 전엔 걷기·서기로 안 바꾼다
 var _rng := RandomNumberGenerator.new()
 var asleep := false
 var _sleep_t := 1.0 # 처음 1초는 땅에 내려앉게 깨어 있는다
@@ -510,6 +514,8 @@ func apply_damage(amount: float, crit: bool, from_dir: Vector3 = Vector3.ZERO, i
 	_refresh_bar()
 	if hp <= 0.0:
 		_die()
+	elif ai != AI.WINDUP:
+		_one_shot("hit")
 	return amount
 
 func is_shielded() -> bool:
@@ -597,6 +603,7 @@ func _die() -> void:
 	phys_vuln_t = 0.0
 	quicken_t = 0.0
 	_dots.clear()
+	_leave_corpse()
 	visible = false
 	collision_layer = 0
 	if not drops:
@@ -646,12 +653,44 @@ func _play(moving: bool) -> void:
 	if _anim == null:
 		return
 	var want := "walk" if moving else "idle"
+	if glb_path != "":
+		if Time.get_ticks_msec() < _anim_lock:
+			return
+		want = MonsterBody.anim_name("run" if moving and (ai == AI.CHASE or ai == AI.LUNGE) else want)
 	if _anim.has_animation(want) and _anim.current_animation != want:
 		_anim.play(want)
+
+## G-0059 GLB 몸의 한 번 애니(attack·hit·death) — 끝날 때까지 걷기·서기로 안 바꾼다.
+func _one_shot(want: String) -> void:
+	if _anim == null or glb_path == "":
+		return
+	var n := MonsterBody.anim_name(want)
+	if not _anim.has_animation(n):
+		return
+	_anim.stop()
+	_anim.play(n)
+	_anim_lock = Time.get_ticks_msec() + int(_anim.get_animation(n).length * 1000.0)
+
+## G-0059 GLB 몸 — 쓰러진 몸을 장면에 남겨 Death 를 한 번 틀고 1.2초 뒤 치운다. 이 적은 새 몸을 지어(숨은 채) 되살아날 때 쓴다.
+func _leave_corpse() -> void:
+	if glb_path == "" or _visual == null or not is_inside_tree() or get_tree().current_scene == null:
+		return
+	var corpse := _visual
+	var xf := corpse.global_transform
+	remove_child(corpse)
+	get_tree().current_scene.add_child(corpse)
+	corpse.global_transform = xf
+	_one_shot("death")
+	get_tree().create_timer(1.2).timeout.connect(corpse.queue_free)
+	_visual = _build_visual()
+	add_child(_visual)
+	_visual.global_rotation.y = xf.basis.get_euler().y
 
 func _set_tell(on: bool) -> void:
 	if _tell_label:
 		_tell_label.visible = on
+	if on:
+		_one_shot("attack")
 	if _visual:
 		_visual.scale = Vector3.ONE * _visual_scale * (1.12 if on else 1.0)
 
@@ -660,6 +699,15 @@ func _set_tell(on: bool) -> void:
 ## 09-29 — 코드 짐승도 AnimationPlayer(idle/walk)를 가져 _play 가 걸음을 바꾸고, 원소 적은 눈·장식이 그 원소 빛으로 빛난다.
 func _build_visual() -> Node3D:
 	var v: Node3D
+	## G-0059 — 몬스터 GLB 몸(saga_core monster_body.gd). 못 불러오면 아래 코드 짐승으로.
+	glb_path = MonsterBody.path_for(KINDS, kind, String(name))
+	if glb_path != "":
+		v = MonsterBody.build(glb_path, float(def.get("height", WOLF_HEIGHT)))
+		if v != null:
+			_anim = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
+			_visual_scale = v.scale.x
+			return v
+		glb_path = ""
 	if kind == "bandit":
 		v = VroidBody.build_pool(VroidBody.BANDIT_POOL, String(name), 2)
 		_anim = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
@@ -678,7 +726,7 @@ func _build_visual() -> Node3D:
 		_anim = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
 	else:
 		v = CreatureBuilder.build("wolf", [Color(0.42, 0.4, 0.38), Color(0.62, 0.6, 0.56), Color(0.95, 0.8, 0.25)], {"enemy": true})
-		CreatureBuilder._fit(v, "wolf", 1.05)
+		CreatureBuilder._fit(v, "wolf", WOLF_HEIGHT)
 		_anim = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
 	_visual_scale = v.scale.x
 	return v
