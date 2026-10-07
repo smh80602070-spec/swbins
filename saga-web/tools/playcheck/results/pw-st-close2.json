@@ -1,0 +1,34 @@
+{
+ "script": "pw-st-close2.mjs",
+ "game": "saga-story",
+ "pass": 5,
+ "total": 5,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "st.account 계정 — 옛 세이브를 이어받아 만든 프로필은 키 yeoksa-side/save/<프로필> 에 옛 세이브 원문이 그대로 옮겨지고(들어가면 금 4321 에서 이어감), 옛 키는 남으며, 둘째 프로필은 키가 다르다",
+   "ok": true,
+   "detail": "{\"ac0\":{\"base\":\"yeoksa-side/save\",\"legacy\":\"yeoksa-side/save/v1\",\"id\":\"pmuxv3iebczs\",\"key\":\"yeoksa-side/save/pmuxv3iebczs\",\"hadLegacy\":true,\"copied\":true},\"ac1\":{\"gold\":4351,\"keyHas\":true,\"legacyKept\":true,\"cur\":\"pmuxv3iebczs\"},\"ac2\":{\"id\":\"pmuxv3r6ckbe\",\"key\":\"yeoksa-side/save/pmuxv3r6ckbe\",\"n\":2}}"
+  },
+  {
+   "name": "st.data-enemy 적 — 잡졸·보스 표(tier 1~4)·현대/미래 적, 사냥터 여러 곳에서 세운 적에 유형 다섯(근접·원거리·돌진·탱커·마법)이 다 나오고 원거리는 든 무기가 원거리",
+   "ok": true,
+   "detail": "{\"mobs\":32,\"bosses\":15,\"tiers\":[1,2,3,4],\"era\":8,\"roles\":{\"melee\":62,\"ranged\":68,\"magic\":7,\"tank\":57,\"dash\":31},\"rangedOk\":true,\"stages\":9}"
+  },
+  {
+   "name": "st.ui 화면 — 설정 시트 효과음·진동 단추로 켜짐이 뒤집히고 음량 막대가 음량을 바꾸며, ⛶ 를 누르면 도구줄이 감춰졌다 다시 누르면 돌아온다",
+   "ok": true,
+   "detail": "{\"u0\":{\"snd\":true,\"vib\":true},\"u1\":{\"snd\":false,\"vib\":false,\"vol\":0.2},\"f1\":true,\"f2\":false}"
+  },
+  {
+   "name": "st.admin 어드민 — ?selftest 제목이 ADMIN n/n(실패 0), 손잡이 8 이상(지금 17), 프리셋 단추를 누르면 세이브가 바뀐다",
+   "ok": true,
+   "detail": "{\"title\":\"ADMIN 10/10\",\"ad\":{\"knobs\":17,\"presets\":13},\"changed\":true}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

@@ -114,12 +114,12 @@
    "세 시대 적(§5-12) — 2D 도 제 몸 시트(사가블로에서 구운 같은 GLB) · 옛 적은 늑대·코끼리·멧돼지 그대로",
    "세 시대 적(§5-12) — 관문대마다 현대·미래가 있고 몸은 표에 있다 · 사냥터 잡졸 약 40% 가 시대 적 · 원거리·탱커는 무기로 · 손잡이 0 이면 옛 적만"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인"
+  "note": "D2: saga-web/tools/playcheck/pw-st-close2.mjs 5/5 — results/pw-st-close2.json(W-0097). 유형은 사냥터에서 적이 설 때 정해져(enemyRole·마법 12%) 여러 사냥터에서 세워 다섯을 다 봄. PLAN §3: 미확인"
  },
  {
   "id": "st.data-side-2",
@@ -386,11 +386,12 @@
    "손가락 안내는 키보드 기기에서 예전 문구 그대로다",
    "레벨업·사명완료 배너 + 아이템 획득 팝업(PLAN 35절)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-st-close2.mjs 5/5 — results/pw-st-close2.json(W-0097). 소리를 끄면 음량 막대가 잠긴다(막대 먼저). ⛶ 는 사냥터 화면에서만 보인다."
  },
  {
   "id": "st.sfx",
@@ -425,11 +426,12 @@
    "가입 — 프로필을 지우면 그 세이브도 사라진다",
    "가입 — 진단에서는 가입 화면을 띄우지 않는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-st-close2.mjs 5/5 — results/pw-st-close2.json(W-0097). 이어받기는 만든 직후 새 키 원문 = 옛 키 원문으로 봄(들어가면 첫 접속 보상으로 금이 +30)."
  },
  {
   "id": "st.admin",
@@ -443,10 +445,11 @@
    "손잡이를 잡으면 그 값이 나오고, 놓으면 기본값으로 돌아온다",
    "손잡이는 세이브와 다른 칸에 산다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-st-close2.mjs 5/5 — results/pw-st-close2.json(W-0097). 손잡이는 지금 17(이름의 8 은 낡음). 맨 앞 프리셋은 \"새 판\"이라 맨 뒤 것을 눌러 봄."
  }
 ]
