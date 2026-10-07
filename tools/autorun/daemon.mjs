@@ -4,7 +4,7 @@
  * 작업 스케줄러 없이 이 프로세스가 켜져 있는 동안 매일 --at 시각(또는 --every 시간마다) run.mjs 를 띄우고,
  * 127.0.0.1:--port 에 제어 페이지를 연다: 상태 · 시작/중지 · 지금 실행 · 최근 로그.
  *
- *   node tools/autorun/daemon.mjs [--branch tools] [--at none|02:30] [--on-boot 5] [--every 0] [--port 8798] [--max-tickets 1] [--budget-usd 20] [--model claude-sonnet-5-5]
+ *   node tools/autorun/daemon.mjs [--branch tools] [--at none|02:30] [--on-boot 5] [--every 0] [--port 8798] [--max-tickets 1] [--budget-usd 20] [--model claude-opus-5-5]
  *   제어: http://127.0.0.1:8798   (중지 = tools/autorun/STOP 파일, run.mjs 와 같은 스위치 · 지금 실행 = 즉시 한 번)
  *   시작 프로그램 등록: powershell -ExecutionPolicy Bypass -File tools/autorun/install-startup.ps1 (-Uninstall 로 해제)
  * 로그는 run.mjs 가 _log/ 에 남긴다. 이 파일은 세션을 직접 만들지 않고 run.mjs 를 자식으로 띄울 뿐이다.
@@ -22,9 +22,9 @@ const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 && args[i + 1] ? args[i + 1] : d; };
 /* --at HH:MM 매일 · --at none 예약 없음(수동만) · --every N 시간마다 · --on-boot M 데몬 시작 M분 뒤 한 번(PC 를 켜 둘 일이 없는 사용자 10-05) */
 const BRANCH = opt('--branch', 'tools'), AT = opt('--at', 'none'), EVERY_H = +opt('--every', 0), ON_BOOT = +opt('--on-boot', 0), PORT = +opt('--port', 8798);
-/* 밤 세션은 소넷(설계·티켓은 페이블, 실행은 소넷 — ARCH §6). --model 로 바꿀 수 있다 */
+/* 무인 세션 = Opus 5.5(10-07 사용자 — 소넷 5.5 폐지, ARCH 머리말). --model 로 바꿀 수 있다 */
 const LANES = ['tools', 'web', 'godot', 'unity'];   // run.mjs 갈래 표와 같다
-const RUN_ARGS = ['--branch', BRANCH, '--max-tickets', opt('--max-tickets', '1'), '--budget-usd', opt('--budget-usd', '20'), '--model', opt('--model', 'claude-sonnet-5-5')];
+const RUN_ARGS = ['--branch', BRANCH, '--max-tickets', opt('--max-tickets', '1'), '--budget-usd', opt('--budget-usd', '20'), '--model', opt('--model', 'claude-opus-5-5')];
 
 const state = { branch: BRANCH, at: AT, everyH: EVERY_H, running: null, runningBranch: null, queued: [], startedAt: null, lastRun: null, lastExit: null, lastReason: '', runs: 0, bootedAt: new Date().toISOString() };
 fs.mkdirSync(LOG_DIR, { recursive: true });
