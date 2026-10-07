@@ -296,12 +296,12 @@
    "세 시대 적(§5-12) — 관문대마다 현대·미래가 있고 몸은 표에 있다 · 사냥터 잡졸 약 40% 가 시대 적 · 원거리·탱커는 무기로 · 손잡이 0 이면 옛 적만",
    "세 시대 마을 사람(§5-12) — 마을 다섯 모두 현대 하나·미래 하나 이상 · 서로 80·문 150 넘게 떨어짐 · 몸은 제 옷(표에 있음) · 말 건다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인",
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099).",
   "human": true
  },
  {
@@ -325,12 +325,12 @@
    "anim-own — 어느 클립에서도 관절이 땅에 박히거나 각속도가 튀지 않는다",
    "anim-own — 실제 three 뼈대에 굽혀 믹서로 돌려도 FK 계산과 같은 자리에 선다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인"
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099)."
  },
  {
   "id": "st.post3d",
@@ -343,11 +343,12 @@
    "toon3d — 림 라이트(밝기 비례)가 툰 템플릿 자리에 다 꽂히고, cloneMat 사본도 달고 간다, 손잡이 끄면 없음",
    "toon3d.skyBackground — 아래는 안개색 그대로·위는 더 짙은 하늘, 색마다 한 장, 손잡이 끄면 예전 단색"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). HIGH↔LOW 둘 다 봄."
  },
  {
   "id": "st.portrait3d",
@@ -360,12 +361,12 @@
    "초상 자리표시(SAGA-DESIGN §11 Phase 0) — 3D 로 갈아 끼울 자리는 코드 스프라이트 대신 자리표시로 시작하고, 굽기를 포기하면 옛 그림으로 되돌리며, 갈아 끼워지지 않을 자리는 옛 그림 그대로다",
    "디스크 초상(SAGA-DESIGN §11 Phase 1) — 구워 둔 파일이 목록에 있으면 of() 가 굽기 없이 파일 주소를 주고 warm() 이 다시 안 굽는다, 목록에 없거나 꼴이 안 맞으면 파일로 안 간다, sweep() 이 이름표 <img> 를 그 파일로 갈아 끼운다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 부분"
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 영웅 옷이 거의 다 초록 물들임."
  },
  {
   "id": "st.ui",

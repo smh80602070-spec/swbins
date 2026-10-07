@@ -79,11 +79,12 @@
    "위성↔위성 통로도 새 테마 항목 없이 기존 표를 그대로 쓴다 — 통로:jajak / 통로:galdae",
    "갈대나루↔소금벌도 새 테마 항목 없이 기존 표를 그대로 쓴다 — 통로:sogeum / 통로:galdae"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099)."
  },
  {
   "id": "dg.data-skill",
@@ -605,12 +606,13 @@
    "3D — 핀치·휠 확대는 세이브에 저장되고 범위를 넘지 않는다",
    "3D — 줌과 기울기가 듣는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "human": true
+  "human": true,
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 마을이 어둡다."
  },
  {
   "id": "dg.dungeon3d-2",
@@ -630,7 +632,8 @@
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D1 유지: 겉모습 값은 바뀌나 갑주·투구 GLB 가 VRM 몸을 화분처럼 덮음(× — W-0100, 시트 tasks/sheets/web-visual-20261007.md)."
  },
  {
   "id": "dg.sfx",

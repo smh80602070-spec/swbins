@@ -472,12 +472,13 @@
    "집 안에서는 마을이 돌지 않는다 (벌레도 낚시도 밖의 일)",
    "집 안의 투영은 휘지 않는다 (왕복이 그대로 돌아온다)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "human": true
+  "human": true,
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099)."
  },
  {
   "id": "fs.village-view3d",
@@ -499,12 +500,13 @@
    "village-view3d — 땅 색은 villageData.TILES 와 완전히 같다 (2D 와 같은 색)",
    "village-view3d — init 전에는 색칠한 타일도 0개다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "human": true
+  "human": true,
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 저녁·비라 어둡다."
  },
  {
   "id": "fs.asset3d",
@@ -526,11 +528,12 @@
    "asset3d — 애니메 아바타 손잡이(world3d.animeAvatar)는 기본 켜짐, 레시피 넷은 anime 경로를 가리킨다",
    "asset3d — 애니메 아바타는 이름 있는 숲 NPC 7명에만 건다(§6.5 \"이질감\" 뒤 축소)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099)."
  },
  {
   "id": "fs.ui",
@@ -602,11 +605,12 @@
    "초상 자리표시(SAGA-DESIGN §11 Phase 0) — 3D 로 갈아 끼울 자리는 코드 스프라이트 대신 자리표시로 시작하고, 굽기를 포기하면 옛 그림으로 되돌리며, 갈아 끼워지지 않을 자리는 옛 그림 그대로다",
    "디스크 초상(SAGA-DESIGN §11 Phase 1) — 구워 둔 파일이 목록에 있으면 of() 가 굽기 없이 파일 주소를 주고 warm() 이 다시 안 굽는다, 목록에 없거나 꼴이 안 맞으면 파일로 안 간다, sweep() 이 이름표 <img> 를 그 파일로 갈아 끼운다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 펫 대역 셋이 이름과 안 맞음(에셋, K 몫)."
  },
  {
   "id": "fs.auto",
@@ -623,11 +627,12 @@
    "자동 — 10분치를 굴리면 실제로 모이고 팔린다",
    "자동 — 잠자리채가 있으면 벌레를 노리고 살금살금 걷는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). 🤖 켜기·끄기 기계 확인."
  },
  {
   "id": "fs.admin",
@@ -639,11 +644,12 @@
    "자가진단은 어드민 손잡이를 읽지도 쓰지도 않는다",
    "손잡이를 잡으면 규칙이 그 값으로 읽힌다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). 🔍 점검 모두 통과·프리셋 기계 확인."
  },
  {
   "id": "fs.account",

@@ -77,12 +77,12 @@
    "사물 — 도심에는 높은 집이 서고 변두리에는 안 선다",
    "사물 — 길에는 등롱이 선다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인",
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). △ 땅 네 칸 이음매·하늘 물고기는 사람 판정.",
   "human": true
  },
  {
@@ -105,12 +105,12 @@
    "에셋 — 클립이 하나도 없어도 안 깨진다",
    "에셋 — 이름을 씻는 규칙"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "note": "PLAN §3: 미확인"
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099)."
  },
  {
   "id": "go.encounter",
@@ -176,12 +176,13 @@
   "tests": [
    "교전 무대에 둘이 마주 서고, 친 쪽에 동작이 붙는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
   "since": "2026-09-30",
-  "human": true
+  "human": true,
+  "note": "D2: saga-web/tools/playcheck/pw-visual-close.mjs + Claude 눈 1차(시트 tasks/sheets/web-visual-20261007.md, W-0099). 흔들림·hold 손맛은 사람."
  },
  {
   "id": "go.field-combat",
