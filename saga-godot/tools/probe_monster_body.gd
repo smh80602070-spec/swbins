@@ -4,10 +4,11 @@ extends Node
 ##
 ##   SAGA_MONSTER_BODY_PROBE=1 "$GODOT" --headless --path saga-godot res://games/saga_go/world/TestVillage.tscn
 ##
-## ① 짝 표 — 들판 여덟 종이 정한 갈래 mon_, 보스 다섯이 정한 boss_, 도적·사람 몸 보스는 "" ② 실제로 세운 여덟 종·보스 다섯이
-## GLB 몸(glb_path)이고 AnimationPlayer 에 Idle·Walk·Attack·Hit·Death ③ 키가 def.height(늑대 1.05) ±10%
-## ④ 같은 종 넷을 세우면 변형이 둘 이상 ⑤ 예고 → Attack, 맞으면 Hit, 쓰러지면 쓰러진 몸이 장면에 남아 Death·새 몸은 GLB
-## ⑥ 기본(SAGA_GLB_MONSTERS 없음)·SAGA_CODE_CREATURES=1 이면 "" (코드 짐승). 점검 동안만 SAGA_GLB_MONSTERS=1 을 켠다. 세운 적은 플레이어에게서 150m 밖(잠듦)에 두고 끝에 치운다. 저장 안 함.
+## G-0082 — 종 전용 몸(mon_sp_<종>.glb, K-0080) 24 가 먼저, 없는 종만 갈래 mon_/boss_. 기본 켜짐.
+## ① 짝 표 — 종 24 가 mon_sp_<종>, 도적·사람 몸 보스는 "", 모든 종의 길이 실제 파일 ② 실제로 세운 여덟 종·보스 다섯이
+## 제 종 GLB 몸이고 AnimationPlayer 에 Idle·Walk·Attack·Hit·Death ③ 키가 def.height(늑대 1.05) ±10%
+## ④ 같은 종 넷은 같은 몸 ⑤ 예고 → Attack, 맞으면 Hit, 쓰러지면 쓰러진 몸이 장면에 남아 Death·새 몸은 GLB
+## ⑥ 기본(환경 없음)은 GLB, SAGA_CODE_CREATURES=1 이면 "" (코드 짐승). 세운 적은 플레이어에게서 150m 밖(잠듦)에 두고 끝에 치운다. 저장 안 함.
 
 const FieldEnemy := preload("res://games/saga_go/combat/field_enemy.gd")
 const MonsterBody := preload("res://saga_core/world/monster_body.gd")
@@ -26,7 +27,6 @@ var _base := Vector3.ZERO
 
 func _ready() -> void:
 	_p = get_tree().get_first_node_in_group("player")
-	OS.set_environment("SAGA_GLB_MONSTERS", "1")
 
 func _physics_process(_delta: float) -> void:
 	_frame += 1
@@ -35,14 +35,15 @@ func _physics_process(_delta: float) -> void:
 	match _step:
 		0: # ① 짝 표
 			var bad: Array = []
-			for k in FIELD:
+			var sp := 0
+			for k in FieldEnemy.KINDS:
 				var path := MonsterBody.path_for(FieldEnemy.KINDS, k, "x")
-				if not path.begins_with("res://assets/world/mon_%s_0" % FIELD[k]):
+				if path == "res://assets/world/mon_sp_%s.glb" % k:
+					sp += 1
+				elif FIELD.has(k) or BOSSES.has(k):
 					bad.append("%s→%s" % [k, path])
-			for k in BOSSES:
-				var path := MonsterBody.path_for(FieldEnemy.KINDS, k, "x")
-				if path != "res://assets/world/%s.glb" % BOSSES[k]:
-					bad.append("%s→%s" % [k, path])
+			if sp != 24:
+				bad.append("mon_sp %d/24" % sp)
 			for k in ["bandit", "black_mask", "storm_king"]:
 				if MonsterBody.path_for(FieldEnemy.KINDS, k, "x") != "":
 					bad.append(k)
@@ -67,7 +68,7 @@ func _physics_process(_delta: float) -> void:
 				for e in _made:
 					var path := String(e.get("glb_path"))
 					var ap := e.get("_anim") as AnimationPlayer
-					var want: String = ("mon_" + FIELD[e.kind]) if FIELD.has(e.kind) else String(BOSSES.get(e.kind, "?"))
+					var want := "mon_sp_%s.glb" % e.kind
 					if not path.contains(want) or ap == null:
 						bad.append("%s path=%s ap=%s" % [e.kind, path, ap])
 						continue
@@ -82,7 +83,7 @@ func _physics_process(_delta: float) -> void:
 				_check("bodies", bad.is_empty(), "bad=%s" % [bad])
 				_check("height", bad.filter(func(s: String) -> bool: return s.contains("키")).is_empty(), " ".join(tall))
 				_next()
-		2: # ④ 같은 종 넷 — 변형이 갈린다
+		2: # ④ 같은 종 넷 — 같은 몸(종 전용)
 			if _frame == 1:
 				for n in 4:
 					_made.append(_spawn("wolf", "FieldEnemy_probe_%d" % n, _base + Vector3(float(n) * 4.0, 0.0, -20.0)))
@@ -90,7 +91,7 @@ func _physics_process(_delta: float) -> void:
 				var seen := {}
 				for e in _made.slice(_made.size() - 4):
 					seen[String(e.get("glb_path"))] = true
-				_check("variants", seen.size() >= 2, "paths=%s" % [seen.keys()])
+				_check("variants", seen.size() == 1 and String(seen.keys()[0]).ends_with("mon_sp_wolf.glb"), "paths=%s" % [seen.keys()])
 				_next()
 		3: # ⑤ 예고 → Attack · 맞기 → Hit · 쓰러짐 → 장면에 쓰러진 몸(Death)·새 몸
 			var e: Node = _made[0] # wolf
@@ -117,14 +118,10 @@ func _physics_process(_delta: float) -> void:
 			var e := _spawn("fire_imp", "MB_code", _base + Vector3(0.0, 0.0, -40.0))
 			var code_ok := MonsterBody.path_for(FieldEnemy.KINDS, "wolf", "x") == "" and String(e.get("glb_path")) == "" and e.get("_visual") != null
 			OS.unset_environment("SAGA_CODE_CREATURES")
-			OS.unset_environment("SAGA_GLB_MONSTERS")
-			code_ok = code_ok and MonsterBody.path_for(FieldEnemy.KINDS, "wolf", "x") == ""
-			OS.set_environment("SAGA_GLB_MONSTERS", "1")
 			_made.append(e)
 			_check("code_creatures", code_ok and MonsterBody.path_for(FieldEnemy.KINDS, "wolf", "x") != "", "glb=%s" % e.get("glb_path"))
 			_next()
 		5:
-			OS.unset_environment("SAGA_GLB_MONSTERS")
 			for e in _made:
 				if is_instance_valid(e):
 					e.queue_free()

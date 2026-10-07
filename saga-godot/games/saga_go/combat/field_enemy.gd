@@ -742,6 +742,7 @@ func _build_visual() -> Node3D:
 			_anim = v.get_node_or_null("AnimationPlayer") as AnimationPlayer
 			_visual_scale = v.scale.x
 			return v
+		push_warning("monster_body fallback %s %s" % [kind, glb_path])
 		glb_path = ""
 	if kind == "bandit":
 		v = VroidBody.build_pool(VroidBody.BANDIT_POOL, String(name), 2)

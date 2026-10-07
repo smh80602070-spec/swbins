@@ -6,8 +6,8 @@ extends RefCounted
 ##   들판 적 — 같은 갈래 mon_ 변형 01~04 를 개체 이름 해시로(같은 종 무리도 몸이 갈린다).
 ##   보스 — hp ≥ BOSS_HP 이고 사람 몸(vroid)이 아닌 종. KINDS 순서대로 같은 갈래 boss_ 를 돌려 준다.
 ## 사람 몸(도적·vroid 보스)은 여기 안 온다.
-## **기본은 꺼짐** — 환경 SAGA_GLB_MONSTERS=1 일 때만 GLB 몸(G-0059 촬영: 지금 GLB 는 원소색이 안 읽히고 이름과 모양이
-## 어긋나 코드 짐승보다 못하다 — K 가 고친 뒤 기본을 켠다). SAGA_CODE_CREATURES=1 이면 켜 둬도 코드 짐승.
+## G-0082 — 종마다 몸 하나(mon_sp_<종 id>.glb, K-0080: 종 색·꼴 맞춤)가 있으면 그것을 먼저 쓴다. 없는 종만 위 갈래 길.
+## **기본은 켜짐.** 끄는 스위치: SAGA_CODE_CREATURES=1 이면 코드 짐승(creature_builder). SAGA_GLB_MONSTERS 는 옛 켜기(무시해도 켜짐).
 
 const GLBUtils := preload("res://saga_core/world/glb_utils.gd")
 
@@ -24,7 +24,7 @@ const ANIMS := {"idle": "Idle", "walk": "Walk", "run": "Run", "attack": "Attack"
 const LOOPED := ["Idle", "Walk", "Run"]
 
 static func enabled() -> bool:
-	return OS.get_environment("SAGA_GLB_MONSTERS") != "" and OS.get_environment("SAGA_CODE_CREATURES") == ""
+	return OS.get_environment("SAGA_CODE_CREATURES") == ""
 
 static func family_of(def: Dictionary) -> String:
 	if def.get("vroid", false):
@@ -39,6 +39,11 @@ static func path_for(kinds: Dictionary, kind: String, enemy_name: String) -> Str
 	if not enabled() or kind == "bandit" or not kinds.has(kind):
 		return ""
 	var def: Dictionary = kinds[kind]
+	if def.get("vroid", false):
+		return ""
+	var sp := species_path(kind)
+	if sp != "":
+		return sp
 	var fam := family_of(def)
 	if fam == "":
 		return ""
@@ -52,6 +57,11 @@ static func path_for(kinds: Dictionary, kind: String, enemy_name: String) -> Str
 		var list: Array = BOSS_BY_FAMILY[fam]
 		return DIR + String(list[i % list.size()]) + ".glb"
 	return DIR + "mon_%s_%02d.glb" % [fam, variant_of(enemy_name) + 1]
+
+## 종 전용 몸(K-0080) 경로. 없으면 "".
+static func species_path(kind: String) -> String:
+	var p := DIR + "mon_sp_%s.glb" % kind
+	return p if ResourceLoader.exists(p) else ""
 
 ## 개체 이름 → 변형 0~3(문자 해시, 실행마다 같다).
 static func variant_of(enemy_name: String) -> int:

@@ -72,7 +72,11 @@ const CUTS := [
 	["go_armor_none", GO, [["static", "res://tools/shot_armor.gd", "dress", ["@tree", false]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.2]]],
 	["go_armor_full", GO, [["static", "res://tools/shot_armor.gd", "dress", ["@tree", true]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 3.2]]],
 	["go_assist", GO, [["static", "res://tools/shot_assist.gd", "stage", ["@tree"]]]],   # G-0071 협공 — 찍기 직전 대기 동료가 끼어든다(명단은 메모리에서만)
-	["go_monsters", GO, [["static", "res://tools/shot_monsters.gd", "line_up", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0059 들판 여덟 종(SAGA_GLB_MONSTERS=1 이면 GLB 몸)
+	["go_monsters", GO, [["static", "res://tools/shot_monsters.gd", "line_up", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 6.0]]],   # G-0059 들판 여덟 종(G-0082 기본 GLB 몸, SAGA_CODE_CREATURES=1 이면 코드 짐승)
+	["go_bosses0", GO, [["static", "res://tools/shot_monsters.gd", "line_up_bosses", ["@tree", 0]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 9.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-12.0, 0.0, 0.0)]]],   # G-0082 보스 열여섯(넷씩)
+	["go_bosses1", GO, [["static", "res://tools/shot_monsters.gd", "line_up_bosses", ["@tree", 1]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 9.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-12.0, 0.0, 0.0)]]],
+	["go_bosses2", GO, [["static", "res://tools/shot_monsters.gd", "line_up_bosses", ["@tree", 2]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 9.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-12.0, 0.0, 0.0)]]],
+	["go_bosses3", GO, [["static", "res://tools/shot_monsters.gd", "line_up_bosses", ["@tree", 3]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 9.0], ["set", "Player/CameraRig", "rotation_degrees", Vector3(-12.0, 0.0, 0.0)]]],
 	["go_glide", GO, [["static", "res://tools/shot_glide.gd", "lift", ["@tree"]], ["set", "Player/CameraRig/SpringArm3D", "spring_length", 5.0]]],   # G-0072 활공 날개(glider_01.glb)
 	["go_story13", GO, [["static", "res://tools/shot_story13.gd", "duel", ["@tree"]]]],   # G-0074 13부 43장 그날의 검은 가면(회차·이야기는 메모리에서만)
 	["go_story17", GO, [["static", "res://tools/shot_story13.gd", "duel17", ["@tree"]]]],   # G-0080 17부 56장 놓지 못한 선장의 잔상(메모리에서만)

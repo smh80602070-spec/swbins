@@ -2606,12 +2606,13 @@
  },
  {
   "id": "gd.go.monster_body",
-  "name": "들판 적·보스 GLB 몸(K-0043 mon 20·boss 12) 배선 — 갈래 짝·변형 해시·보스 돌림·키 맞춤·Run/Attack/Hit/Death, 기본 꺼짐(SAGA_GLB_MONSTERS=1) — 촬영상 원소색·모양이 코드 짐승보다 못해 K 손질 뒤 켠다",
+  "name": "들판 적·보스 GLB 몸 — G-0082 종 전용 mon_sp_<종> 24(K-0080) 먼저, 없는 종만 갈래 mon_/boss_(K-0043)·키 맞춤·Run/Attack/Hit/Death, 기본 켜짐(끄기 SAGA_CODE_CREATURES=1) — 촬영 ○16 △8, 앞 방향 넷 등 K 손질 대기",
   "files": [
    "saga_core/world/monster_body.gd",
    "games/saga_go/combat/field_enemy.gd",
    "tools/probe_monster_body.gd",
-   "tools/shot_monsters.gd"
+   "tools/shot_monsters.gd",
+   "tools/shot_scene.gd"
   ],
   "tests": [
    "monster_body"
