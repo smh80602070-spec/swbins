@@ -1,0 +1,49 @@
+{
+ "script": "pw-dg-close1.mjs",
+ "game": "saga-dungeon",
+ "pass": 8,
+ "total": 8,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "dg.ui-2 설정 — 효과음 단추를 누르면 켜짐이 뒤집히고, 진동은 되는 기기면 단추가 서서 뒤집힌다(안 되면 숨거나 막힘)",
+   "ok": true,
+   "detail": "{\"u0\":{\"snd\":true,\"vib\":true,\"vsup\":true},\"u1\":{\"snd\":false,\"vib\":false},\"vibShown\":true}"
+  },
+  {
+   "name": "dg.data-item 장비·세공 — 장비 시트 「~에게」 단추로 입으면 그 인물 능력이 오른다 · 구멍 수는 부위 상한 이하 · 주옥을 박으면 빈 구멍이 줄고 빼는 길이 없다",
+   "ok": true,
+   "detail": "{\"owner\":\"sg_guanyu\",\"eqHas\":true,\"worn\":true,\"s\":[648,724],\"over\":[],\"sock\":[1,0],\"sok\":true,\"left\":false,\"undo\":[]}"
+  },
+  {
+   "name": "dg.vendor 행상·단약 — 단약 단추로 사면 금이 들고 요대가 하나 늘며, 요대가 차면 또 눌러도 금이 그대로 · 재고는 등급 상한(2) 이하",
+   "ok": true,
+   "detail": "{\"pk\":{\"kind\":\"heal\",\"g\":0},\"v0\":{\"gold\":50000,\"total\":0},\"v1\":{\"gold\":49953,\"total\":1},\"vfull\":{\"total\":16,\"gold\":49953},\"v2\":{\"gold\":49953,\"total\":16,\"tiers\":[0,0,2,1,0,0],\"max\":2}}"
+  },
+  {
+   "name": "dg.data-skill 무예 — 다섯 직업 모두 24 · 다른 직업 무기를 입으면 직업이 바뀐다 · 앞 무예가 없으면 뒤 무예는 🔒(단추 없음), 앞 무예를 배우면 「배운다」 단추로 배운다",
+   "ok": true,
+   "detail": "{\"sk0\":{\"lead\":\"sg_guanyu\",\"per\":[\"archer:24\",\"warrior:24\",\"scholar:24\",\"marshal:24\",\"mystic:24\"],\"c0\":\"warrior\",\"c1\":\"marshal\",\"eq\":true,\"want\":\"bow\",\"later\":\"m_guard\",\"rank0\":0,\"left\":15},\"lk\":{\"btn\":false,\"lock\":true,\"pre\":\"m_rally\"},\"lbHas\":true,\"sk1\":{\"rank\":1}}"
+  },
+  {
+   "name": "dg.data-set 투장 — 2점 보너스보다 3점이 많고, 세 점을 선두가 걸치면 던전에서 F 키로 투장 무예가 나가 쿨다운이 돈다(MP 는 그대로)",
+   "ok": true,
+   "detail": "{\"st0\":{\"eqd\":[true,true,true],\"set\":\"chungmu\",\"b2\":1,\"b3\":3,\"worn\":3,\"sk\":true},\"entered\":true,\"mp0\":100,\"st1\":{\"avail\":true,\"cd\":15.849999999999998,\"mp\":100,\"active\":true}}"
+  },
+  {
+   "name": "dg.dungeon-3 원소 — 원소 일곱, 갑주에 빙 보석을 박으면 냉기 저항이 오르고, 냉기로 맞은 값은 물리 × (1 − 저항%)",
+   "ok": true,
+   "detail": "{\"aeq\":true,\"n\":7,\"key\":true,\"gem\":\"pearl\",\"sock\":[true,true],\"r0\":0,\"r1\":112,\"res\":75,\"phys\":200,\"cold\":50,\"want\":50}"
+  },
+  {
+   "name": "dg.data-dungeon 층 — 테마 여섯이 1·6·11·16·21·26 층에서 바뀌고, 두목 층은 3의 배수(3·6 참, 5 거짓), 층마다 방이 넷 이상",
+   "ok": true,
+   "detail": "{\"th\":[\"고분(古墳)\",\"폐성(廢城)\",\"산채(山寨)\",\"수궁(水宮)\",\"지옥문(地獄門)\",\"천계(天界)\"],\"distinct\":6,\"boss3\":true,\"boss6\":true,\"boss5\":false,\"rooms\":[4,6,7,9,9,9]}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

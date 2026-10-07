@@ -50,11 +50,12 @@
   "tests": [
    "지역 도감 — 층 테마 여섯 곳에 처음 닿으면 등록된다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close1.mjs 8/8 — results/pw-dg-close1.json(W-0089). 두목 층은 3의 배수(5층 아님), roomsFor 는 방 수(4+층/3, 최대 9)."
  },
  {
   "id": "dg.dungeon-2",
@@ -103,11 +104,12 @@
    "무예 — 걸어 둔 것을 실제로 쓴다 (기력이 줄고 재냉각이 돈다)",
    "무예 — 연환(chain)은 가까운 적을 치고 다음 적으로 옮겨 붙는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close1.mjs 8/8 — results/pw-dg-close1.json(W-0089). 앞 무예가 없으면 「배운다」 단추가 아예 없고 🔒 줄 — 앞 무예를 배운 뒤 단추로 배움."
  },
  {
   "id": "dg.dungeon-3",
@@ -130,11 +132,12 @@
    "저항 — 정예 접두 둘이 결을 하나씩 막는다",
    "저항 — 면역(100%)은 두지 않는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close1.mjs 8/8 — results/pw-dg-close1.json(W-0089). 들어오는 원소 피해는 _hurt(양, 결) — _forceElemDmg 는 내가 주는 피해라 이 검사엔 안 씀."
  },
  {
   "id": "dg.data-hero-skill",
@@ -176,11 +179,12 @@
    "투장 무예 — 실제로 쓰면 쿨다운이 돌고 MP는 안 든다",
    "투장 무예 — 세 점을 못 갖췄으면 눌러도 아무 일이 없다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close1.mjs 8/8 — results/pw-dg-close1.json(W-0089). 투장 2점 보너스는 비어 있지 않다(2점 1·3점 3). 세트 조각은 roll(opts.set) 로 붙인다."
  },
  {
   "id": "dg.data-item",
@@ -206,11 +210,12 @@
    "정예는 접두를 달고 나오고, 깊을수록 잦다",
    "접두마다 규칙이 하나씩 다르다 (규칙 없는 접두는 없다)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close1.mjs 8/8 — results/pw-dg-close1.json(W-0089). 장착은 장비 시트 gear-sel → 「~에게」(gear-equip), 시트가 계속 다시 그려져 DOM click. 주옥 id 는 addJewel 이 붙인다, 빼는 API 없음."
  },
  {
   "id": "dg.vendor",
@@ -233,11 +238,12 @@
    "투전 — 걸면 금이 줄고 그 자리에 새 물건이 놓인다",
    "연단 — 보석 셋이 한 등급 위 한 알이 된다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close1.mjs 8/8 — results/pw-dg-close1.json(W-0089)."
  },
  {
   "id": "dg.dungeon-4",
@@ -652,11 +658,12 @@
    "설정 시트 — 효과음 단추가 실제로 sfx.enabled() 를 뒤집는다 (2026-09-10)",
    "설정 시트 — 진동 단추가 실제로 sfx.vibrateEnabled() 를 뒤집는다 (2026-09-14, 지원 기기에서만)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-dg-close1.mjs 8/8 — results/pw-dg-close1.json(W-0089)."
  },
  {
   "id": "dg.account",
