@@ -17,11 +17,12 @@
 
 **공통(saga_core)**: `data/characters.gd`(인물 105, id 불변)·`data/pets.gd`(신수 11) · `ui/toast.gd`·`ui/virtual_joystick.gd`·`ui/goal_board.gd`+`ui/session_card.gd`(101-4, 목표판 3줄·마무리 카드, 다섯 판 전부 붙음)·`ui/duel_hud.gd` · `combat_feel.gd`(101-3, 다섯 판 끝, 09-20㉒ 타격음 배선, 09-21 UI 사운드(`ui()`) 신설+`session_card.gd` "닫기" 배선) · `world/world_curve_material.gd`+`shaders/curved_*`(FOREST 구면) · `world/density_report.gd`(104-5, 발견 밀도, FOREST는 반경 10m) · `shaders/cel_toon.gdshader`+`cel_shader_apply.gd`(66-2/102-3, hit_flash+아웃라인 next_pass 자동) · `world/glb_utils.gd::fit_height()`(102-1, 여전히 미호출). 렌더러 Forward+/Mobile 이중(66-1, `env_pc.tres`·`env_mobile.tres`, 102-2 값).
 
-## 현재 작업 — 중단 지점(2026-10-04, 고돗 큐 비음)
+## 현재 작업 — 중단 지점(2026-10-07)
 
-- 고돗 큐 G-0016~0021 **코드분 전부 끝**(`tasks/godot/`) — 전부 사용자 눈 대기. G-0020 의 다리·방 키트는 K-0063(자체툴) 대기. 고돗 세션은 에셋·인물 모델을 만들지 않는다(K 가 제작 중, 산출 오면 교체).
-- 최근: G-0017·19 자연 소품 교체 · G-0018 전투·이동 손맛(SAGA_MOVE·SAGA_ENEMY_* 손잡이) · G-0020 Kenney 걷어냄 · G-0021 `WorldAsset.MAP` 확장·노획물 `loot_*`.
-- 원래 실패: QMAP 3·WQ 1. 흔들림: COMBAT. 그래픽 상세 이력은 `archive/godot/HISTORY.md`(grep).
+- 10-07 고돗 G-0049~0066 닫음(티켓 메모가 정본): 노획물 빛·설전/옷 촬영 판정·공용 선택 창·윈도 10 이모지·화질/성능 설정·사가고 대화 건너뛰기·대화창·사진 공유·장비 외형(성유물 → 갑옷 조각)·사가의숲 머리/덧옷/갑옷·지역 꾸밈·가구·하트 줄·D0 일곱 점검. **features D0·D1 0**(사가고 97%·네 판 100%).
+- 공용 새 길: (장비 GLB 뼈 붙이기)·(user://graphics.cfg)·(가로 창 16px). 촬영 도구 (컷 표·@box·@tree·@noop).
+- 큐: G-0059(들판 적·보스 몸, **K 가 mon/boss .glb.import 를 만들어야 시작**) · G-0061(굴·실내 키트, 보류 — 새 장면 때). 안 쓰는 world GLB 132().
+- 함정: forward_plus 로 창을 화면 밖(-4000)에 두고 찍으면 SDFGI 화면이 검은 네모 조각(원래 그럼, 성능 모드는 정상) · 사가고 장면은 한 프로세스에서 두 번 부르면 set_count 오류(컷 하나씩).
 
 ## 다음 작업 (우선순위)
 
