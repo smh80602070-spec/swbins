@@ -11,6 +11,7 @@ extends SagaSaveBase
 ## project.godot [autoload]에 DungeonSaveState로 등록.
 
 const SAVE_PATH := "user://save_dungeon.json"
+const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
 const SAVE_VERSION := 2
 
@@ -20,7 +21,7 @@ func save_version() -> int:
 
 
 func save_path() -> String:
-	return SAVE_PATH
+	return SaveSlots.path_for("dungeon", SAVE_PATH)
 
 
 ## "제외" 목록 2번(여러 방 연결) — 방 하나짜리 `room_cleared: bool`을
@@ -125,13 +126,13 @@ func save(player: Node3D) -> void:
 		## 슬롯 두 번 보상 안 함"이 계속 유지된다).
 		"worldboss_last_slot": DungeonWorldBossState.last_rewarded_slot,
 	}
-	SafeFile.write_text(SAVE_PATH, JSON.stringify(data))
+	SafeFile.write_text(save_path(), JSON.stringify(data))
 
 
 ## GO의 save_state.gd::try_load()와 같은 계약 — 있으면 읽어서 true,
 ## 없거나 마이그레이션 경로가 없거나 깨져 있으면 false(안전하게 포기).
 func try_load() -> bool:
-	var parsed: Variant = SafeFile.read_json(SAVE_PATH)
+	var parsed: Variant = SafeFile.read_json(save_path())
 	if parsed == null:
 		return false
 	var migrated: Variant = _migrate(parsed)

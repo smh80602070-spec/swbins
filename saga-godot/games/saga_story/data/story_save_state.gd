@@ -16,6 +16,7 @@ const StoryLabyrinth := preload("res://games/saga_story/data/story_labyrinth.gd"
 const Toast := preload("res://saga_core/ui/toast.gd")
 
 const SAVE_PATH := "user://save_story.json"
+const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
 const SAVE_VERSION := 17  # 1→2: mats, 2→3: has_weapon, 3→4: equipped, 4→5: gold, 5→6: job(1차 전직), 6→7: skills(SP 투자), 7→8: scroll_bonus/scroll_left(주문서), 8→9: bosses/feat/achievements(업적), 9→10: quests_done(사명), 10→11: stage_kills(사냥터별 킬 수 사명), 11→12: visited_stages(q_explore1), 12→13: talks(q_talk1), 13→14: repeat_progress/daily_done_day(반복/일일 사명), 14→15: weekly_champion_week(관문 대장), 15→16: memory_fragments/memory_tier(비경), 16→17: mentor_bond(사제 유대, 51장 STORY "관계" 축 첫 걸음)
 
@@ -25,7 +26,7 @@ func save_version() -> int:
 
 
 func save_path() -> String:
-	return SAVE_PATH
+	return SaveSlots.path_for("story", SAVE_PATH)
 
 
 var level := 1
@@ -651,11 +652,11 @@ func save() -> bool:
 		"scroll_bonus": scroll_bonus,
 		"scroll_left": scroll_left,
 	}
-	return SafeFile.write_text(SAVE_PATH, JSON.stringify(data))
+	return SafeFile.write_text(save_path(), JSON.stringify(data))
 
 
 func try_load() -> bool:
-	var parsed: Variant = SafeFile.read_json(SAVE_PATH)
+	var parsed: Variant = SafeFile.read_json(save_path())
 	if parsed == null:
 		return false
 	var migrated: Variant = _migrate(parsed)

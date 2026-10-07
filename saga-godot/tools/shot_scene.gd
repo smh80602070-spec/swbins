@@ -61,6 +61,7 @@ const CUTS := [
 	# G-0054 — 화질/성능. 사가고 둘은 설정 파일을 안 쓰고(save=false) 메모리에서만 바꾼다 — forward_plus 로 찍어야 SSAO 차이가 보인다.
 	["rk_errlog", REALM, [["free_modal"], ["call", "RealmHUD/GraphicsButton/GraphicsMenu", "_open_errors", ["@box"]]]],   # G-0068 오류 기록 창
 	["rk_autosave_flash", REALM, [["free_modal"], ["call", "AutosaveTimer", "flash", [30.0]]]],   # G-0069 자동 저장 표시
+	["rk_slots", REALM, [["free_modal"], ["call", "SaveTransfer", "open_screen", []]]],   # G-0070 슬롯 줄
 	["rk_gfx_menu", REALM, [["free_modal"], ["call", "RealmHUD/GraphicsButton/GraphicsMenu", "open_screen", []]]],
 	["go_gfx_quality", GO, [["static", GFX, "set_mode", ["quality", "@tree", false]]]],
 	["go_gfx_perf", GO, [["static", GFX, "set_mode", ["performance", "@tree", false]]]],

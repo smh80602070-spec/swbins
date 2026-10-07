@@ -3,6 +3,7 @@ extends RealmRulesMonth
 ## 사가국지 세이브 상태(autoload) — 저장·불러오기·마이그레이션만. 상태 변수는 realm_state.gd, 규칙은 realm_rules*.gd (상속 사슬, G-0006).
 
 const SAVE_PATH := "user://save_realm.json"
+const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
 const SAVE_VERSION := 16  # 1(성 하나) → 2(성 여러 곳) → 3(officer_city) → 4(enemies) → 5(diplomacy) → 6(정복 성 편입) → 7(충성·계략) → 8(문답) → 9(이간·매수) → 10(인구 증감+재해: cities[].disaster/d_left) → 11(승진/관직: officer_growth) → 12(승패 판정: result) → 13(시나리오: scenario_id) → 14(특성·야망: officer_ambition/enemies_subverted, PLAN 101-2 REALM ③) → 15(이벤트 체인: active_events/events_done, PLAN 101-2 REALM ⑤) → 16(계승: lord_succession_enabled/current_lord_id/heir_id/_succession_shock_until, PLAN 101-2 REALM ⑥)
 
@@ -12,7 +13,7 @@ func save_version() -> int:
 
 
 func save_path() -> String:
-	return SAVE_PATH
+	return SaveSlots.path_for("realm", SAVE_PATH)
 
 
 func save() -> bool:
@@ -42,11 +43,11 @@ func save() -> bool:
 		"heir_id": heir_id,
 		"succession_shock_until": _succession_shock_until,
 	}
-	return SafeFile.write_text(SAVE_PATH, JSON.stringify(data))
+	return SafeFile.write_text(save_path(), JSON.stringify(data))
 
 
 func try_load() -> bool:
-	var parsed: Variant = SafeFile.read_json(SAVE_PATH)
+	var parsed: Variant = SafeFile.read_json(save_path())
 	if parsed == null:
 		return false
 	var migrated: Variant = _migrate(parsed)

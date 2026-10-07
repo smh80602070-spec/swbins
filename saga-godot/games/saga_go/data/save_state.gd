@@ -10,6 +10,7 @@ extends SagaSaveBase
 ## project.godot [autoload]에 SaveState로 등록된 싱글턴.
 
 const SAVE_PATH := "user://save.json"
+const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")
 
 ## 점검이 임시 파일로 돌릴 때만 채운다(진짜 세이브를 건드리지 않게).
@@ -17,7 +18,7 @@ var path_override := ""
 
 
 func save_path() -> String:
-	return path_override if path_override != "" else SAVE_PATH
+	return path_override if path_override != "" else SaveSlots.path_for("go", SAVE_PATH)
 const SAVE_VERSION := 3
 const Growth := preload("res://games/saga_go/data/growth.gd")
 

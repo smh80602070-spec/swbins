@@ -8,6 +8,7 @@ extends Node
 ## 네 판은 saga_core/ui/save_transfer_button.gd 가 만든다. 화면·열기/닫기·ui_modal 은 사가고 world/achievements.gd 와 같은 결.
 
 const AUTOSAVE_GROUPS := ["go_autosave", "autosave_timer"]
+const SaveSlots := preload("res://saga_core/data/save_slots.gd")
 
 var game_id := ""
 var state: Node = null   # SagaSaveBase(export_string·import_string·save_path)
@@ -26,6 +27,7 @@ var _panel: PanelContainer
 var _text: TextEdit
 var _status: Label
 var _import_btn: Button
+var _slot_btns: Array = []   # G-0070 슬롯 1·2·3
 
 func _ready() -> void:
 	add_to_group(group_name)
@@ -40,10 +42,13 @@ func _build() -> void:
 	_panel.anchor_right = 0.5
 	_panel.anchor_top = 0.5
 	_panel.anchor_bottom = 0.5
-	_panel.offset_left = -360
-	_panel.offset_right = 360
-	_panel.offset_top = -250
-	_panel.offset_bottom = 250
+	## G-0070 — 가로 창 0.56배에서 글씨가 10px 이라(G-0052 선택 창과 같은 문제) 판·글씨를 키웠다. 가운데에서 양쪽으로 자란다.
+	_panel.offset_left = -500
+	_panel.offset_right = 500
+	_panel.offset_top = -310
+	_panel.offset_bottom = 310
+	_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
 	_panel.visible = false
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color(0.07, 0.07, 0.09, 0.94)
@@ -58,24 +63,41 @@ func _build() -> void:
 	box.add_theme_constant_override("separation", 8)
 	_panel.add_child(box)
 	var title := Label.new()
-	title.text = "세이브 옮기기"
-	title.add_theme_font_size_override("font_size", 20)
+	title.text = "세이브 — 슬롯·옮기기"
+	title.add_theme_font_size_override("font_size", 32)
 	title.add_theme_color_override("font_color", Color(1.0, 0.86, 0.5))
 	box.add_child(title)
+	## G-0070 — 슬롯 셋. 바꾸면 지금을 저장하고 그 슬롯으로 다시 시작(빈 슬롯이면 지금 진행을 복사해 이어 간다).
+	var slots := HBoxContainer.new()
+	slots.name = "SlotRow"
+	slots.add_theme_constant_override("separation", 8)
+	box.add_child(slots)
+	for n in range(1, SaveSlots.SLOTS + 1):
+		var sb2 := Button.new()
+		sb2.name = "Slot%d" % n
+		sb2.custom_minimum_size = Vector2(300, 60)
+		sb2.add_theme_font_size_override("font_size", 24)
+		var k: int = n
+		sb2.pressed.connect(func() -> void: switch_slot(k))
+		slots.add_child(sb2)
+		_slot_btns.append(sb2)
 	var help := Label.new()
 	var file_name: String = state.call("save_path").get_file() if state != null else "save.json"
 	help.text = "내보내기 → 나온 글을 다른 PC 로 옮겨(메신저·메모) → 그쪽에서 붙여넣기 → 불러오기.\n불러오면 그쪽 세이브가 이 글로 바뀐다(바뀌기 전 것은 %s.before_import 로 남는다)." % file_name
 	help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	help.custom_minimum_size = Vector2(680, 0)
+	help.custom_minimum_size = Vector2(940, 0)
+	help.add_theme_font_size_override("font_size", 22)
 	box.add_child(help)
 	_text = TextEdit.new()
-	_text.custom_minimum_size = Vector2(680, 220)
+	_text.custom_minimum_size = Vector2(940, 260)
+	_text.add_theme_font_size_override("font_size", 20)
 	_text.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
 	_text.placeholder_text = "여기에 세이브 글이 나온다 / 붙여 넣는다"
 	box.add_child(_text)
 	_status = Label.new()
 	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_status.custom_minimum_size = Vector2(680, 0)
+	_status.custom_minimum_size = Vector2(940, 0)
+	_status.add_theme_font_size_override("font_size", 22)
 	box.add_child(_status)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 8)
@@ -83,11 +105,55 @@ func _build() -> void:
 	for spec in [["내보내기 (복사)", export_now], ["붙여넣기", paste], ["불러오기", import_now], ["닫기 (Esc)", close_screen]]:
 		var b := Button.new()
 		b.text = String(spec[0])
-		b.custom_minimum_size = Vector2(160, 42)
+		b.custom_minimum_size = Vector2(225, 60)
+		b.add_theme_font_size_override("font_size", 24)
 		b.pressed.connect(spec[1])
 		row.add_child(b)
 		if String(spec[0]) == "불러오기":
 			_import_btn = b
+
+## 판의 원래 세이브 경로(슬롯 1) — 각 판 상수 SAVE_PATH.
+func _base_path() -> String:
+	if state == null or state.get_script() == null:
+		return ""
+	return String((state.get_script() as Script).get_script_constant_map().get("SAVE_PATH", ""))
+
+
+func _refresh_slots() -> void:
+	var base := _base_path()
+	for i in _slot_btns.size():
+		(_slot_btns[i] as Button).text = SaveSlots.slot_label(game_id, base, i + 1) if base != "" else "슬롯 %d" % (i + 1)
+		(_slot_btns[i] as Button).disabled = base == ""
+
+
+## 슬롯을 바꾼다 — 같은 슬롯이면 아무것도 안 함. 바뀌면 true(장면을 다시 띄운다).
+func switch_slot(n: int) -> bool:
+	var base := _base_path()
+	if base == "" or n == SaveSlots.current(game_id):
+		return false
+	if save_call.is_valid():
+		save_call.call()
+	var from := String(state.call("save_path"))
+	SaveSlots.set_current(game_id, n)
+	var to := String(state.call("save_path"))
+	var copied := false
+	if not FileAccess.file_exists(to) and FileAccess.file_exists(from):
+		var f := FileAccess.open(to, FileAccess.WRITE)
+		if f != null:
+			f.store_buffer(FileAccess.get_file_as_bytes(from))
+			f.close()
+			copied = true
+	_say("슬롯 %d 로 바꿨다%s — 다시 시작한다." % [n, " (빈 슬롯이라 지금 진행을 복사)" if copied else ""])
+	_refresh_slots()
+	for g in AUTOSAVE_GROUPS:
+		for auto in get_tree().get_nodes_in_group(g):
+			auto.queue_free()   # 다시 띄우기 전에 옛 상태로 덮어쓰지 않게
+	if reload_after:
+		if load_before_reload and state.has_method("try_load"):
+			state.call("try_load")
+		get_tree().reload_current_scene.call_deferred()
+	return true
+
 
 func _say(t: String) -> void:
 	status = t
@@ -162,6 +228,7 @@ func open_screen() -> bool:
 	_disarm()
 	_text.text = ""
 	_say("")
+	_refresh_slots()
 	return true
 
 func close_screen() -> void:

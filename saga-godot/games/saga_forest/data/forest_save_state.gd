@@ -17,6 +17,7 @@ extends SagaSaveBase
 ## 처음으로 채웠다.
 
 const SAVE_PATH := "user://save_forest.json"
+const SaveSlots := preload("res://saga_core/data/save_slots.gd")   # G-0070 슬롯(1 = 이 파일 그대로)
 const SafeFile := preload("res://saga_core/data/safe_file.gd")  # 임시 파일 → .bak → 바꿔치기(쓰는 도중 꺼져도 직전본이 남는다)
 const SAVE_VERSION := 2
 
@@ -26,7 +27,7 @@ func save_version() -> int:
 
 
 func save_path() -> String:
-	return SAVE_PATH
+	return SaveSlots.path_for("forest", SAVE_PATH)
 
 
 var items: Dictionary = {}  # item_label(String) -> count(int)
@@ -446,11 +447,11 @@ func save() -> bool:
 		"home_tier": home_tier,
 		"home_debt": home_debt,
 	}
-	return SafeFile.write_text(SAVE_PATH, JSON.stringify(data))
+	return SafeFile.write_text(save_path(), JSON.stringify(data))
 
 
 func try_load() -> bool:
-	var parsed: Variant = SafeFile.read_json(SAVE_PATH)
+	var parsed: Variant = SafeFile.read_json(save_path())
 	if parsed == null:
 		return false
 	var migrated: Variant = _migrate(parsed)
