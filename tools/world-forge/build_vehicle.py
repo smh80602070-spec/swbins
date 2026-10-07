@@ -161,7 +161,39 @@ def caravan_wagon_01(C):
     obox(M, (0, 1.55, 1.45), (1.2, 0.5, 0.08), 0, wood)                                # 마부석
 
 
-BUILDERS = {f.__name__: f for f in (sail_boat_01, mine_cart_01, raft_01, ox_cart_01, caravan_wagon_01)}
+def glider_01(C):
+    """활공 날개(K-0077, 고돗 빨간 삼각형 대체). 원점 = 손잡이 막대 가운데 — 활공 동작 `CF_Glide_Loop` 의 두 손(좌우 0.52m·
+    머리 위)이 막대 양끝을 잡는다. 날개 폭 2.6m, 천은 위·아래 두 겹(뒤에서 봐도 보이게), 뒷전은 살 끝마다 물결."""
+    M = C.M
+    cloth = C.s('white_stucco', 1.5, '#4f8f9a')
+    wood = C.s('coated_pine', 1.0, '#b8955a')
+    nose, tail = Vector((0, 0.72, 0.34)), Vector((0, -0.56, 0.31))
+    keel_mid = Vector((0, 0.02, 0.36))
+    uv = lambda p: (p.x / 2.6 + 0.5, p.y / 1.4 + 0.5)
+    for sx in (-1, 1):
+        f = lambda x, y, z: Vector((sx * x, y, z))
+        le_mid, tip = f(0.66, 0.26, 0.40), f(1.30, -0.20, 0.46)
+        trail = [f(1.02, -0.50, 0.42), f(0.70, -0.40, 0.39), f(0.34, -0.64, 0.35)]
+        loop = [nose, le_mid, tip] + trail + [tail]
+        if sx > 0:                                                                     # 위 겹 법선이 위로
+            loop = loop[::-1]
+        c = f(0.48, -0.06, 0.42)                                                       # 바람에 부푼 가운데
+        for a, b in zip(loop, loop[1:] + loop[:1]):
+            M.face([c, a, b], [uv(c), uv(a), uv(b)], cloth)                               # 위 겹
+            d = Vector((0, 0, -0.012))
+            M.face([c + d, b + d, a + d], [uv(c), uv(b), uv(a)], cloth)                   # 아래 겹
+        tube(M, nose, le_mid, 0.032, 0.028, wood, 1.0, 6)                                 # 앞전 살
+        tube(M, le_mid, tip, 0.028, 0.018, wood, 1.0, 6)
+        for t in (trail[0], trail[2]):                                                    # 뒤로 뻗은 살
+            tube(M, keel_mid, t + Vector((0, 0, 0.012)), 0.022, 0.014, wood, 1.0, 5)
+        tube(M, f(0.62, 0, 0), f(0.46, 0.02, 0.40), 0.022, 0.022, wood, 1.0, 6)            # 손잡이 기둥
+    tube(M, nose, tail, 0.036, 0.026, wood, 1.0, 6)                                       # 용골
+    tube(M, (-0.66, 0, 0), (0.66, 0, 0), 0.026, 0.026, wood, 1.0, 8)                      # 손잡이 막대
+    for sx in (-0.52, 0.52):                                                              # 손 감는 끈(손 자리 표시)
+        tube(M, (sx - 0.06, 0, 0), (sx + 0.06, 0, 0), 0.034, 0.034, cloth, 1.0, 8)
+
+
+BUILDERS = {f.__name__: f for f in (sail_boat_01, mine_cart_01, raft_01, ox_cart_01, caravan_wagon_01, glider_01)}
 
 
 def build(pid, out, style):
