@@ -1,0 +1,59 @@
+{
+ "script": "pw-fs-close2.mjs",
+ "game": "saga-forest",
+ "pass": 10,
+ "total": 10,
+ "pageErrors": [],
+ "checks": [
+  {
+   "name": "fs.village 마을 생성 — 같은 씨앗이면 사물을 다시 짜도 갈래·수가 같고, 바이옴 5, 숲 고리가 둘렀다",
+   "ok": true,
+   "detail": "{\"seed\":360942587,\"same\":true,\"n\":3237,\"biomes\":5,\"seen\":[\"meadow\",\"dark\",\"rocky\",\"green\",\"mushroom\"],\"margin\":32}"
+  },
+  {
+   "name": "fs.village-2 고정 자리 — 다리·폭포·캠프 둘·폐허·동굴·바위산·우주기지 사물과 물 칸(호수·강)이 있다",
+   "ok": true,
+   "detail": "{\"miss\":[],\"camp\":2,\"tent\":3,\"water\":24}"
+  },
+  {
+   "name": "fs.animal 짐승 — 갈래 11, 마을에 짐승이 쉬고 거닐며, 곁에 다가가면 달아난다",
+   "ok": true,
+   "detail": "{\"defs\":11,\"n\":8,\"states\":[\"wander\",\"idle\",\"eat\"],\"kind\":\"bird\",\"after\":\"flee\"}"
+  },
+  {
+   "name": "fs.data-village 숲 NPC — 일곱(숲지기·낚시꾼·상인·탐험가·약초꾼·나그네·배달원)·부탁 6, NPC 곁에서 ␣ 로 말을 걸면 만난 것으로 남고 답이 뜬다",
+   "ok": true,
+   "detail": "{\"np0\":{\"kinds\":[\"keeper\",\"angler\",\"merchant\",\"explorer\",\"herbalist\",\"wanderer\",\"courier\"],\"defs\":7,\"quests\":6,\"kind\":\"keeper\",\"met0\":false},\"foc\":\"npc\",\"met\":true,\"enc\":\"\",\"toast\":\"\"}"
+  },
+  {
+   "name": "fs.ui 전체지도 — M 키로 전체지도 시트가 열리고 다시 M 으로 닫힌다",
+   "ok": true,
+   "detail": "{\"m1\":{\"show\":true,\"title\":\"🗺️ 전체지도\"},\"m2\":{\"show\":false,\"title\":\"🗺️ 전체지도\"}}"
+  },
+  {
+   "name": "fs.ui-2 설정 — 효과음·음악·안개 단추로 켜짐이 뒤집히고, 품질 단추로 등급이 바뀐다",
+   "ok": true,
+   "detail": "{\"s0\":{\"snd\":true,\"bgm\":true,\"fog\":false,\"q\":\"auto\"},\"s1\":{\"snd\":false,\"bgm\":false,\"fog\":true,\"q\":\"low\"},\"lvl\":\"low\"}"
+  },
+  {
+   "name": "fs.sfx 소리 — 효과음 단서 20 이상, 마을 BGM 트랙은 forest",
+   "ok": true,
+   "detail": "{\"cues\":26,\"track\":\"forest\"}"
+  },
+  {
+   "name": "fs.account 계정 — 세이브 키 yeoksa-village/save/<프로필>",
+   "ok": true,
+   "detail": "yeoksa-village/save/pmuxu9ulnktu"
+  },
+  {
+   "name": "fs.core 세이브·손잡이 — 저장본 v:1, core.tuned 는 없으면 기본값·잡으면 그 값",
+   "ok": true,
+   "detail": "{\"v\":1,\"tuned\":[7,3]}"
+  },
+  {
+   "name": "페이지 예외·console.error 없음",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

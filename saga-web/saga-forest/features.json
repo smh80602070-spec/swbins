@@ -8,11 +8,12 @@
   "tests": [
    "마을이 만들어졌다 — 땅·사물·주민"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close2.mjs 10/10 — results/pw-fs-close2.json(W-0096)."
  },
  {
   "id": "fs.village-2",
@@ -34,11 +35,12 @@
    "다리 — 호수가 사라지면(margin 부족) 다리도 같이 사라진다",
    "다리 — buildProps() 가 다리 프롭을 세운다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close2.mjs 10/10 — results/pw-fs-close2.json(W-0096)."
  },
  {
   "id": "fs.village-3",
@@ -110,11 +112,12 @@
   "tests": [
    "짐승 — 등록된 자산이 있는 종(사슴·여우·늑대·토끼·다람쥐·오리·새·개구리·뱀·포자괴물·성간충)만 나고, 제 바이옴에만 선다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close2.mjs 10/10 — results/pw-fs-close2.json(W-0096). 지금 마을에 도는 짐승은 판마다 다르다(이번 8마리) — 갈래 표는 11."
  },
  {
   "id": "fs.data-village",
@@ -135,11 +138,12 @@
    "Quest — meetnpc 부탁(탐험가)은 나머지 여섯을 만나야 채워진다",
    "Quest — chest 부탁(숲지기)은 동굴 보물을 열어야 채워진다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close2.mjs 10/10 — results/pw-fs-close2.json(W-0096)."
  },
  {
   "id": "fs.folk",
@@ -538,11 +542,12 @@
    "시트 6개와 손이 닿는 카드가 그려진다",
    "전체지도 — 우주기지·야영·소포 목적지(점선 원)·정령 힌트(금빛 원)가 지도 시트에 그려진다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close2.mjs 10/10 — results/pw-fs-close2.json(W-0096)."
  },
  {
   "id": "fs.ui-2",
@@ -555,11 +560,12 @@
    "BGM 은 첫 눌림 전에는 안 풀린다(브라우저 규칙, sfx.js 와 같은 요령)",
    "BGM 음량 손잡이는 0~1로 끊긴다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close2.mjs 10/10 — results/pw-fs-close2.json(W-0096). 설정 단추 실제 클릭 뒤 원래 값으로 되돌림."
  },
  {
   "id": "fs.sfx",
@@ -579,11 +585,12 @@
    "BGM 은 첫 눌림 전에는 안 풀린다(브라우저 규칙, sfx.js 와 같은 요령)",
    "BGM 음량 손잡이는 0~1로 끊긴다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close2.mjs 10/10 — results/pw-fs-close2.json(W-0096)."
  },
  {
   "id": "fs.portrait3d",
@@ -652,11 +659,12 @@
    "가입 — 프로필을 지우면 그 세이브도 사라진다",
    "가입 — 진단에서는 가입 화면을 띄우지 않는다"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close2.mjs 10/10 — results/pw-fs-close2.json(W-0096)."
  },
  {
   "id": "fs.core",
@@ -672,10 +680,11 @@
    "세이브 버전이 안 맞아도 안 버려진다 (SAGA-DESIGN §8-3)",
    "오류 링버퍼 상한 (SAGA-DESIGN §8-2)"
   ],
-  "level": "D1",
+  "level": "D2",
   "verified": null,
   "fun": {},
   "ticket": null,
-  "since": "2026-09-30"
+  "since": "2026-09-30",
+  "note": "D2: saga-web/tools/playcheck/pw-fs-close2.mjs 10/10 — results/pw-fs-close2.json(W-0096)."
  }
 ]
